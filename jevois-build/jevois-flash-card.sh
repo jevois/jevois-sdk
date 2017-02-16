@@ -39,17 +39,21 @@ fi
 
 # Make sure the card was not automatically mounted:
 umount ${card}* > /dev/null 2>&1
+sleep 3
 
 # Nuke any old partition table and bootloader:
 echo
 echo "Erasing old partitions and partition table..."
 dd if=/dev/zero of=${card} bs=1M count=100
+sync
 
 echo "Flashing boot0 loader..."
 dd if=boot0_sdcard.fex of=${card} bs=1k seek=8
+sync
 
 echo "Flashing u-boot loader..."
 dd if=u-boot.fex of=${card} bs=1k seek=19096
+sync
 
 # Units for sfdisk are sectors; u-boot starts at 38192 and is about 510k, so start partitions after sector 39200.
 # Here we first define desired partition sizes in MEGABYTES to make it simple:
@@ -86,12 +90,27 @@ ${p1start},${p1sec},c
 ${p2start},${p2sec},L
 ${p3start},,c
 EOT
+sync
+sleep 2
 
 echo "Creating filesystems on ${card} ..."
 p=""
 mkfs.vfat -n BOOT ${card}${p}1
-mkfs.ext4 -L LINUX ${card}${p}2
+sync
+
+# For future reference, because we run kernel 3.4 on the platform, we need
+# to make sure we do not here create the fs with unsupported features. These
+# features are ok, disable any extra ones:
+#
+# sudo tune2fs -l /dev/sdb2 
+# Filesystem features: has_journal ext_attr resize_inode dir_index filetype
+# needs_recovery extent flex_bg sparse_super large_file huge_file uninit_bg
+# dir_nlink extra_isize
+mkfs.ext4 -L LINUX -O ^64bit,uninit_bg,^metadata_csum ${card}${p}2
+sync
 mkfs.vfat -n JEVOIS ${card}${p}3
+sync
+sleep 2
 
 mkdir mnt-jevois
 mount ${card}${p}2 mnt-jevois
@@ -110,12 +129,14 @@ if [ $usedef -ne 1 ]; then
     read -p "Disable serial-over-USB port [y/N] "
     if [ "X$REPLY" = "Xy" ]; then touch mnt-jevois/boot/nousbserial; fi
 fi
+sync
 
 echo "Populating root partition ${card}2 and jevois partition ${card}3 ..."
 
 mkdir rootfs-jevois
 mount -o loop rootfs.ext4 rootfs-jevois
 cp -arv rootfs-jevois/* mnt-jevois/
+sync
 umount rootfs-jevois
 /bin/rm -rf rootfs-jevois
 
