@@ -1,0 +1,17 @@
+# uEnv.txt - command-line arguments passed to JeVois kernel during boot
+#
+# Uncomment (remove the leading # sign) one and only one of the three possible boot modes below:
+#
+
+
+
+# Use this for quiet boot (production mode):
+#bootargs=loglevel=0 init=/init rootfstype=ext4 root=/dev/mmcblk0p2 rootwait
+
+
+# Use this for mild debug mode to the 4-pin hardware serial port:
+bootargs=earlyprintk=ttyS0,115200 loglevel=8 initcall_debug=0 console=ttyS0,115200 init=/init rootfstype=ext4 root=/dev/mmcblk0p2 rootwait
+
+
+# Use this for extra verbose debug mode to the 4-pin hardware serial port:
+#bootargs=earlyprintk=ttyS0,115200 loglevel=8 initcall_debug=1 console=ttyS0,115200 init=/init rootfstype=ext4 root=/dev/mmcblk0p2 rootwait

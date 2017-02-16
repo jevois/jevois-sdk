@@ -1,0 +1,103 @@
+/******************************************************************************
+ *
+ *  (C)Copyright 1998,1999 SysKonnect,
+ *  a business unit of Schneider & Koch & Co. Datensysteme GmbH.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  The information in this file is provided "AS IS" without warranty.
+ *
+ ******************************************************************************/
+
+/*
+ * Operating system-dependent definitions that have to be defined
+ * before any other header files are included.
+ */
+
+
+#include <asm/byteorder.h>
+
+#ifdef __LITTLE_ENDIAN
+#define LITTLE_ENDIAN
+#else
+#define BIG_ENDIAN
+#endif
+
+
+
+#define USE_CAN_ADDR    /* DA and SA in MAC header are canonical. */
+
+#define MB_OUTSIDE_SMC    /* SMT Mbufs outside of smc struct. */
+
+
+
+#define SYNC            /* allow synchronous frames */
+
+/* not available as free source */
+
+#define ESS     /* SBA End Station Support */
+
+#define SMT_PANIC(smc, nr, msg) printk(KERN_INFO "SMT PANIC: code: %d, msg: %s\n",nr,msg)
+
+
+#ifdef DEBUG
+#define printf(s,args...) printk(KERN_INFO s, ## args)
+#endif
+
+
+
+
+
+#define NUM_RECEIVE_BUFFERS   10
+
+#define NUM_TRANSMIT_BUFFERS    10
+
+#define NUM_SMT_BUF 4
+
+#define HWM_ASYNC_TXD_COUNT (NUM_TRANSMIT_BUFFERS + NUM_SMT_BUF)
+
+#define HWM_SYNC_TXD_COUNT  HWM_ASYNC_TXD_COUNT
+
+
+#if (NUM_RECEIVE_BUFFERS > 100)
+#define SMT_R1_RXD_COUNT  (1 + 100)
+#else
+#define SMT_R1_RXD_COUNT  (1 + NUM_RECEIVE_BUFFERS)
+#endif
+
+#define SMT_R2_RXD_COUNT  0
+
+
+
+/*
+ * OS-specific part of the transmit/receive descriptor structure (TXD/RXD).
+ *
+ * Note: The size of these structures must follow this rule:
+ *
+ *  sizeof(struct) + 2*sizeof(void*) == n * 16, n >= 1
+ *
+ * We use the dma_addr fields under Linux to keep track of the
+ * DMA address of the packet data, for later pci_unmap_single. -DaveM
+ */
+
+struct s_txd_os {
+  struct sk_buff * skb;
+  dma_addr_t dma_addr;
+} ;
+
+struct s_rxd_os {
+  struct sk_buff * skb;
+  dma_addr_t dma_addr;
+} ;
+
+
+/*
+ * So we do not need to make too many modifications to the generic driver
+ * parts, we take advantage of the AIX byte swapping macro interface.
+ */
+
+#define AIX_REVERSE(x)    ((u32)le32_to_cpu((u32)(x)))
+#define MDR_REVERSE(x)    ((u32)le32_to_cpu((u32)(x)))

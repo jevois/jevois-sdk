@@ -1,0 +1,138 @@
+/******************************************************************************
+ *
+ * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of version 2 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110, USA
+ *
+ *
+ ******************************************************************************/
+
+#include <drv_conf.h>
+#include <osdep_service.h>
+#include <drv_types.h>
+#include <rtl8188e_hal.h>
+
+
+
+
+
+
+void
+SwLedOn (
+  _adapter   *   padapter,
+  PLED_871x   pLed
+)
+{
+  u8  LedCfg;
+  
+  if ( (padapter->bSurpriseRemoved == _TRUE) || ( padapter->bDriverStopped == _TRUE) )
+  {
+    return;
+  }
+  
+  LedCfg = rtw_read8 (padapter, REG_LEDCFG2);
+  switch (pLed->LedPin)
+  {
+  case LED_PIN_LED0:
+    rtw_write8 (padapter, REG_LEDCFG2, (LedCfg & 0xf0) | BIT5 | BIT6);
+    break;
+    
+  case LED_PIN_LED1:
+    rtw_write8 (padapter, REG_LEDCFG2, (LedCfg & 0x0f) | BIT5);
+    break;
+    
+  default:
+    break;
+  }
+  
+  pLed->bLedOn = _TRUE;
+}
+
+
+void
+SwLedOff (
+  _adapter   *   padapter,
+  PLED_871x   pLed
+)
+{
+  u8  LedCfg;
+  HAL_DATA_TYPE * pHalData = GET_HAL_DATA (padapter);
+  
+  if ( (padapter->bSurpriseRemoved == _TRUE) || ( padapter->bDriverStopped == _TRUE) )
+  {
+    goto exit;
+  }
+  
+  
+  LedCfg = rtw_read8 (padapter, REG_LEDCFG2);
+  
+  switch (pLed->LedPin)
+  {
+  case LED_PIN_LED0:
+    if (pHalData->bLedOpenDrain == _TRUE)
+    {
+      LedCfg &= 0x90;
+      rtw_write8 (padapter, REG_LEDCFG2, (LedCfg | BIT3) );
+      LedCfg = rtw_read8 (padapter, REG_MAC_PINMUX_CFG);
+      LedCfg &= 0xFE;
+      rtw_write8 (padapter, REG_MAC_PINMUX_CFG, LedCfg);
+    }
+    else
+    {
+      rtw_write8 (padapter, REG_LEDCFG2, (LedCfg | BIT3 | BIT5 | BIT6) );
+    }
+    break;
+    
+  case LED_PIN_LED1:
+    LedCfg &= 0x0f;
+    rtw_write8 (padapter, REG_LEDCFG2, (LedCfg | BIT3) );
+    break;
+    
+  default:
+    break;
+  }
+exit:
+  pLed->bLedOn = _FALSE;
+  
+}
+
+
+
+
+void
+rtl8188eu_InitSwLeds (
+  _adapter * padapter
+)
+{
+  struct led_priv * pledpriv = & (padapter->ledpriv);
+  
+  pledpriv->LedControlHandler = LedControl871x;
+  
+  InitLed871x (padapter, & (pledpriv->SwLed0), LED_PIN_LED0);
+  
+  InitLed871x (padapter, & (pledpriv->SwLed1), LED_PIN_LED1);
+}
+
+
+void
+rtl8188eu_DeInitSwLeds (
+  _adapter * padapter
+)
+{
+  struct led_priv * ledpriv = & (padapter->ledpriv);
+  
+  DeInitLed871x ( & (ledpriv->SwLed0) );
+  DeInitLed871x ( & (ledpriv->SwLed1) );
+}
+

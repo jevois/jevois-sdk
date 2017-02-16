@@ -1,0 +1,7 @@
+config BR2_PACKAGE_OPENCV_CONTRIB
+        bool "opencv_contrib"
+	help
+          Contrib packages for OpenCV 3.2+
+
+          https://github.com/opencv/opencv_contrib
+

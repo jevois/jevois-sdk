@@ -1,0 +1,366 @@
+#!/bin/bash
+#
+# pack/pack
+# (c) Copyright 2013
+# Allwinner Technology Co., Ltd. <www.allwinnertech.com>
+# James Deng <csjamesdeng@allwinnertech.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+if [ $(basename `pwd`) != "pack" ] ; then
+    echo "Please run at the top directory of pack"
+    exit 1
+fi
+
+function pack_error()
+{
+    echo -e "\033[47;31mERROR: $*\033[0m"
+}
+
+function pack_warn()
+{
+    echo -e "\033[47;34mWARN: $*\033[0m"
+}
+
+function pack_info()
+{
+    echo -e "\033[47;30mINFO: $*\033[0m"
+}
+
+. ../../buildroot/scripts/shflags/shflags
+
+# define option, format:
+#   'long option' 'default value' 'help message' 'short option'
+DEFINE_string 'chip' '' 'chip to build, e.g. sun7i' 'c'
+DEFINE_string 'platform' '' 'platform to build, e.g. linux, android' 'p'
+DEFINE_string 'board' '' 'board to build, e.g. evb' 'b'
+DEFINE_string 'debug_mode' 'uart0' 'config debug mode, e.g. uart0, card0' 'd'
+DEFINE_string 'signture' 'none' 'pack boot signture to do secure boot' 's'
+DEFINE_string 'mode' 'normal' 'pack dump firmware' 'm'
+DEFINE_string 'function' 'android' 'pack private firmware' 'f'
+
+# parse the command-line
+FLAGS "$@" || exit $?
+eval set -- "${FLAGS_ARGV}"
+
+PACK_CHIP=${FLAGS_chip}
+PACK_PLATFORM=${FLAGS_platform}
+PACK_BOARD=${FLAGS_board}
+PACK_DEBUG=${FLAGS_debug_mode}
+PACK_SIG=${FLAGS_signture}
+PACK_MODE=${FLAGS_mode}
+PACK_FUNC=${FLAGS_function}
+
+ROOT_DIR=`pwd`
+TOOLS_DIR="${ROOT_DIR}/pctools/linux"
+LICHEE_OUT="../../out/${PACK_CHIP}/${PACK_PLATFORM}/common"
+if [ -d ${LICHEE_OUT} ] ; then
+    LICHEE_OUT=`cd ${LICHEE_OUT}; pwd`
+else
+    pack_error "build lichee before you pack"
+    exit 1
+fi
+
+export PATH=${TOOLS_DIR}/mod_update:${TOOLS_DIR}/eDragonEx:${TOOLS_DIR}/fsbuild200:${TOOLS_DIR}/android:$PATH
+
+tools_file_list=(
+common/tools/split_xxxx.fex
+chips/${PACK_CHIP}/tools/split_xxxx.fex
+common/tools/usbtool_test.fex
+chips/${PACK_CHIP}/tools/usbtool_test.fex
+common/tools/cardscript.fex
+chips/${PACK_CHIP}/tools/cardscript.fex
+common/tools/cardtool.fex
+chips/${PACK_CHIP}/tools/cardtool.fex
+common/tools/usbtool.fex
+chips/${PACK_CHIP}/tools/usbtool.fex
+common/tools/aultls32.fex
+chips/${PACK_CHIP}/tools/aultls32.fex
+common/tools/aultools.fex
+chips/${PACK_CHIP}/tools/aultools.fex
+)
+
+configs_file_list=(
+common/imagecfg/image_linux.cfg
+common/partition/sys_partition_dump.fex
+common/partition/sys_partition_private.fex
+chips/${PACK_CHIP}/configs/default/*
+chips/${PACK_CHIP}/configs/${PACK_BOARD}/*.fex
+chips/${PACK_CHIP}/configs/${PACK_BOARD}/*.cfg
+)
+
+boot_resource_list=(
+chips/${PACK_CHIP}/boot-resource/boot-resource:out/
+chips/${PACK_CHIP}/boot-resource/boot-resource.ini:out/
+chips/${PACK_CHIP}/configs/${PACK_BOARD}/bootlogo.bmp:out/boot-resource/
+)
+
+boot_file_list=(
+chips/${PACK_CHIP}/bin/boot0_nand_${PACK_CHIP}.bin:out/boot0_nand.fex
+chips/${PACK_CHIP}/bin/boot0_sdcard_${PACK_CHIP}.bin:out/boot0_sdcard.fex
+chips/${PACK_CHIP}/bin/fes1_${PACK_CHIP}.bin:out/fes1.fex
+chips/${PACK_CHIP}/bin/u-boot-${PACK_CHIP}.bin:out/u-boot.fex
+)
+
+function show_boards()
+{
+    printf "\nAll avaiable chips, platforms and boards:\n\n"
+    printf "Chip            Board\n"
+    for chipdir in $(find chips/ -mindepth 1 -maxdepth 1 -type d) ; do
+        chip=`basename ${chipdir}`
+        printf "${chip}\n"
+        for boarddir in $(find chips/${chip}/configs/${platform} -mindepth 1 -maxdepth 1 -type d) ; do
+             board=`basename ${boarddir}`
+             printf "                ${board}\n"
+        done
+    done
+    printf "\nFor Usage:\n"
+    printf "     $(basename $0) -h\n\n"
+}
+
+function do_prepare()
+{
+	if [ -z "${PACK_CHIP}" -o -z "${PACK_PLATFORM}" -o -z "${PACK_BOARD}" ] ; then
+		pack_error "invalid chip, platform or board."
+		show_boards
+		exit 1
+	fi
+
+	if [ ! -d chips/${PACK_CHIP}/configs/${PACK_BOARD} ] ; then
+		pack_error "board dir or path do not exist."
+		show_boards
+		exit 1
+	fi
+
+	# cleanup
+	rm -rf out/
+	mkdir -p out/
+
+	printf "copying tools file\n"
+	for file in ${tools_file_list[@]} ; do
+		cp -f $file out/ 2> /dev/null
+	done
+
+if [ "x${PACK_MODE}" = "xdump" ] ; then
+    cp -rf common/tools/usbtool_test.fex out/usbtool.fex
+fi
+
+	printf "copying configs file\n"
+	for file in ${configs_file_list[@]} ; do
+		cp -f $file out/ 2> /dev/null
+	done
+
+	printf "copying boot resource\n"
+	for file in ${boot_resource_list[@]} ; do
+		cp -rf `echo $file | awk -F: '{print $1}'` `echo $file | awk -F: '{print $2}'`
+	done
+
+	printf "copying boot file\n"
+	for file in ${boot_file_list[@]} ; do
+		cp -f `echo $file | awk -F: '{print $1}'` `echo $file | awk -F: '{print $2}'`
+	done
+
+	if [ "x${PACK_PLATFORM}" = "xlinux" -a -f out/sys_partition_linux.fex \
+		-a "x${PACK_FUNC}" != "xprvt" -a "x${PACK_MODE}" != "xdump" ] ; then
+		mv out/image_linux.cfg out/image.cfg
+		mv out/sys_partition_linux.fex out/sys_partition.fex
+	elif [ "x${PACK_PLATFORM}" = "xdragonboard" -a -f out/sys_partition_dragonboard.fex ] ; then
+		mv out/sys_partition_dragonboard.fex out/sys_partition.fex
+	fi
+
+	if [ "x${PACK_DEBUG}" = "xcard0" -a "x${PACK_MODE}" != "xdump" \
+		-a "x${PACK_FUNC}" != "xprvt" ] ; then
+		cp $TOOLS_DIR/awk_debug_card0 out/awk_debug_card0
+		TX=`awk  '$0~"'$PACK_CHIP'"{print $2}' pctools/linux/card_debug_pin`
+		RX=`awk  '$0~"'$PACK_CHIP'"{print $3}' pctools/linux/card_debug_pin`
+		MS=`awk  '$0~"'$PACK_CHIP'"{print $4}' pctools/linux/card_debug_pin`
+		CK=`awk  '$0~"'$PACK_CHIP'"{print $5}' pctools/linux/card_debug_pin`
+		DO=`awk  '$0~"'$PACK_CHIP'"{print $6}' pctools/linux/card_debug_pin`
+		DI=`awk  '$0~"'$PACK_CHIP'"{print $7}' pctools/linux/card_debug_pin`
+
+		sed -i s'/jtag_ms = /jtag_ms = '$MS'/g' out/awk_debug_card0
+		sed -i s'/jtag_ck = /jtag_ck = '$CK'/g' out/awk_debug_card0
+		sed -i s'/jtag_do = /jtag_do = '$DO'/g' out/awk_debug_card0
+		sed -i s'/jtag_di = /jtag_di = '$DI'/g' out/awk_debug_card0
+		sed -i s'/uart_debug_tx =/uart_debug_tx = '$TX'/g' out/awk_debug_card0
+		sed -i s'/uart_debug_rx =/uart_debug_rx = '$RX'/g' out/awk_debug_card0
+		sed -i s'/uart_tx =/uart_tx = '$TX'/g' out/awk_debug_card0
+		sed -i s'/uart_rx =/uart_rx = '$RX'/g' out/awk_debug_card0
+		awk -f out/awk_debug_card0 out/sys_config.fex > out/a.fex
+		rm out/sys_config.fex
+		mv out/a.fex out/sys_config.fex
+		echo "uart -> card0"
+	fi
+
+	#support dragonboard test emmc when boot from card0, add by liujianqiang 20140704
+	if [ "x${PACK_PLATFORM}" = "xdragonboard" ] ; then
+	    cp $TOOLS_DIR/awk_db_emmc out/awk_db_emmc
+	    awk -f out/awk_db_emmc out/sys_config.fex > out/a.fex
+	    rm out/sys_config.fex
+	    mv out/a.fex out/sys_config.fex
+	    echo "support dragonboard test emmc when boot from card0"
+	    echo "[mmc2_para]-sdc_used: 0 -> 1"
+	fi
+
+    sed -i 's/\\boot-resource/\/boot-resource/g' out/boot-resource.ini
+    sed -i 's/\\\\/\//g' out/image.cfg
+    sed -i 's/imagename/;imagename/g' out/image.cfg
+
+	if [ "x${PACK_DEBUG}" = "xcard0" ] ; then
+		if [ "x${PACK_SIG}" = "xsig" ] ; then
+			IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_BOARD}_${PACK_DEBUG}_${PACK_SIG}.img"
+		else
+			IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_BOARD}_${PACK_DEBUG}.img"
+		fi
+	else
+		if [ "x${PACK_SIG}" = "xsig" ] ; then
+			IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_BOARD}_${PACK_SIG}.img"
+		else
+			IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_BOARD}.img"
+		fi
+	fi
+
+	if [ "x${PACK_MODE}" = "xdump" ] ; then
+		IMG_NAME="${PACK_CHIP}_${PACK_PLATFORM}_${PACK_BOARD}_${PACK_MODE}.img"
+	fi
+	if [ "x${PACK_FUNC}" = "xprvt" ] ; then
+		IMG_NAME="${PACK_CHIP}_${PACK_FUNC}.img"
+	fi
+
+	echo "imagename = $IMG_NAME" >> out/image.cfg
+	echo "" >> out/image.cfg
+}
+
+function do_common()
+{
+	cd out/
+
+	busybox unix2dos sys_config.fex
+	busybox unix2dos sys_partition.fex
+	script sys_config.fex > /dev/null
+	script sys_partition.fex > /dev/null
+	cp sys_config.bin config.fex
+
+	if [ "x${PACK_PLATFORM}" = "xdragonboard" ] ; then
+		busybox dos2unix test_config.fex
+		cp test_config.fex boot-resource/
+		busybox unix2dos test_config.fex
+		script test_config.fex > /dev/null
+		cp test_config.bin boot-resource/
+	fi
+
+	update_boot0 boot0_nand.fex		sys_config.bin NAND > /dev/null
+	update_boot0 boot0_sdcard.fex	sys_config.bin SDMMC_CARD > /dev/null
+
+	update_uboot u-boot.fex  		sys_config.bin > /dev/null
+	update_fes1  fes1.fex			sys_config.bin > /dev/null
+
+	update_mbr sys_partition.bin 4 > /dev/null
+
+	fsbuild boot-resource.ini split_xxxx.fex > /dev/null
+
+	if [ "x${PACK_FUNC}" = "xprvt" ] ; then
+		u_boot_env_gen env_burn.cfg env.fex > /dev/null
+	else
+		u_boot_env_gen env.cfg env.fex > /dev/null
+	fi
+
+	ln -s $LICHEE_OUT/arisc arisc.fex
+}
+
+function do_finish()
+{
+	if [ -e ${IMG_NAME} ]; then
+        mv ${IMG_NAME} ../${IMG_NAME}
+        echo '----------image is at----------'
+        echo -e '\033[0;31;1m'
+        echo ${ROOT_DIR}/${IMG_NAME}
+        echo -e '\033[0m'
+    fi
+
+	cd ..
+	printf "pack finish\n"
+}
+
+function do_pack_android()
+{
+	printf "packing for android\n"
+
+	if [ -z "${ANDROID_IMAGE_OUT}" ] ; then
+		pack_error "please specify ANDROID_IMAGE_OUT env"
+		exit 1
+	fi
+
+	ln -s ${ANDROID_IMAGE_OUT}/boot.img boot.fex
+	ln -s ${ANDROID_IMAGE_OUT}/system.img system.fex
+	ln -s ${ANDROID_IMAGE_OUT}/recovery.img recovery.fex
+
+	if [ -f ${ANDROID_IMAGE_OUT}/userdata.img ] ; then
+		ln -s ${ANDROID_IMAGE_OUT}/userdata.img userdata.fex
+	fi
+
+	if [ "x${PACK_SIG}" = "xsig" ] ; then
+		echo "signature sunxi mbr"
+		signature sunxi_mbr.fex dlinfo.fex
+		echo "signature over"
+	else
+		echo "normal"
+	fi
+
+	dragon image.cfg sys_partition.fex
+}
+
+function do_pack_dragonboard()
+{
+	printf "packing for dragonboard\n"
+
+	ln -s ${LICHEE_OUT}/boot.img boot.fex
+	ln -s ${LICHEE_OUT}/rootfs.ext4 rootfs.fex
+
+	dragon image.cfg sys_partition.fex
+}
+
+function do_pack_linux()
+{
+	printf "packing for linux\n"
+
+	ln -s ${LICHEE_OUT}/vmlinux.tar.bz2 vmlinux.fex
+	ln -s ${LICHEE_OUT}/boot.img boot.fex
+	ln -s ${LICHEE_OUT}/rootfs.ext4 rootfs.fex
+
+	dragon image.cfg sys_partition.fex
+}
+
+function do_pack_dump()
+{
+	busybox unix2dos sys_partition_dump.fex
+	script sys_partition_dump.fex > /dev/null
+
+	update_mbr sys_partition_dump.bin 4 > /dev/null
+
+	dragon image.cfg sys_partition_dump.fex
+}
+
+function do_pack_prvt()
+{
+	busybox unix2dos sys_partition_private.fex
+	script sys_partition_private.fex > /dev/null
+
+	update_mbr sys_partition_private.bin 4 > /dev/null
+
+	dragon image.cfg sys_partition_private.fex
+}
+
+do_prepare
+do_common
+if [ "x${PACK_MODE}" = "xdump" ] ; then
+	do_pack_dump
+elif [ "x${PACK_FUNC}" = "xprvt" ] ; then
+	do_pack_prvt
+else
+	do_pack_${PACK_PLATFORM}
+fi
+do_finish

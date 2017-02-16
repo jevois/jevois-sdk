@@ -1,0 +1,31 @@
+# Latest: rebuild from scratch:
+
+rm -rf out
+
+# possibly config buildroot:
+
+cd buildroot
+make mrproper
+cp configs/sun8i_defconfig .config
+make xconfig
+cp .config configs/sun8i_defconfig
+cd ..
+
+# possibly configure kernel
+
+cd linux-3.4
+make mrproper
+cp config-jevois .config
+make xconfig
+cp .config config-jevois
+cd ..
+
+# configure sunxi build system: choose sun8iw5p1, linux, jevois-a33
+./build.sh config
+
+# build it
+./build.sh
+
+# pack it
+./build.sh pack
+

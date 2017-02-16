@@ -1,0 +1,4 @@
+# tools for kernel standby
+There is a firmware for processing the hardware when kernel enter standby,
+this tool is used to shape the binary file which build from the pm project.
+
