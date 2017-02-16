@@ -1,6 +1,6 @@
 #!/bin/sh
 
-./build.sh && ./build.sh pack
+./build.sh # && ./build.sh pack
 
 if [ $? -ne 0 ]; then exit 1; fi
 
@@ -15,8 +15,8 @@ cp tools/pack/chips/sun8iw5p1/bin/u-boot-sun8iw5p1.bin ${tmp}/u-boot.fex
 
 cp ${tmp}/u-boot.fex ${tmp}/boot0_sdcard.fex jevois-build/
 cp ${tmp}/sys_config.bin jevois-build/script.bin
-cp lichee/linux-3.4/arch/arm/boot/uImage jevois-build/
-cp ./lichee/out/sun8iw5p1/linux/common/rootfs.ext4 jevois-build/
+cp linux-3.4/arch/arm/boot/uImage jevois-build/
+cp out/sun8iw5p1/linux/common/rootfs.ext4 jevois-build/
 
 /bin/rm -rf "${tmp}"
 
