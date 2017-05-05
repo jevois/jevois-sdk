@@ -93,8 +93,10 @@ EOT
 sync
 sleep 2
 
-echo "Creating filesystems on ${card} ..."
 p=""
+if [[ -b "${card}p1" ]]; then p="p"; fi
+
+echo "Creating filesystems on ${card} ..."
 mkfs.vfat -n BOOT ${card}${p}1
 sync
 
