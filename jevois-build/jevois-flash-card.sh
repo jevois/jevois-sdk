@@ -108,7 +108,13 @@ sync
 # Filesystem features: has_journal ext_attr resize_inode dir_index filetype
 # needs_recovery extent flex_bg sparse_super large_file huge_file uninit_bg
 # dir_nlink extra_isize
-mkfs.ext4 -L LINUX -O ^64bit,uninit_bg,^metadata_csum ${card}${p}2
+
+if [ `cat /etc/issue | grep 15 | wc -l ` -eq 1 ]; then
+    mkfs.ext4 -L LINUX ${card}${p}2 # no extra options needed on ubuntu 15.x
+else
+    mkfs.ext4 -L LINUX -O ^64bit,uninit_bg,^metadata_csum ${card}${p}2 # need to disable some new features on 16.x
+fi
+
 sync
 mkfs.vfat -n JEVOIS ${card}${p}3
 sync

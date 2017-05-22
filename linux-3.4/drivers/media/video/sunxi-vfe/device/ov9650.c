@@ -258,7 +258,7 @@ static struct regval_list sensor_default_regs[] = {
   { REG_VSTOP, 0x3d },
   { REG_VSTART, 0x01 },
   { REG_EDGE, 0xa6 },
-  { REG_COM9, 0x2e | COM9_EXPO_DROP },
+  { REG_COM9, 0x6e | COM9_EXPO_DROP },
   { REG_COM16, 0x02 },
   { REG_COM17, 0x08 },
   { REG_PSHFT, 0x00 },
@@ -329,6 +329,10 @@ static struct regval_list sensor_default_regs[] = {
   { 0x3f, 0xa6 },
   { 0x3d, 0x92 },
   { 0x66, 0x01 },
+  
+  { REG_LCC5, 0x01 },
+  { REG_LCC4, 25 },
+  { REG_LCC3, 15 },
 };
 
 static struct regval_list sensor_sxga_regs[] = {
@@ -1027,41 +1031,41 @@ static int sensor_s_vflip (struct v4l2_subdev * sd, int value)
 
 static struct regval_list sensor_wbp_auto_regs[] = {
   { REG_COM8, 0xe7 }, { REG_COM16, 0x02 }, { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 },
-  { REG_COM9, 0x1e },
+  { REG_COM9, 0x6e },
 };
 
 static struct regval_list sensor_wbp_sunny_regs[] = {
-  { REG_COM8, 0xc5 }, { REG_BLUE, 0x74 }, { REG_RED, 0x90 }, { REG_COM9, 0x0e }, { REG_COM16, 0x02 },
+  { REG_COM8, 0xc5 }, { REG_BLUE, 0x74 }, { REG_RED, 0x90 }, { REG_COM9, 0x6e }, { REG_COM16, 0x02 },
   { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 },
 };
 
 static struct regval_list sensor_wbp_cloudy_regs[] = {
-  { REG_COM8, 0xc5 }, { REG_BLUE, 0x74 }, { REG_RED, 0x90 }, { REG_COM9, 0x1e }, { REG_COM16, 0x02 },
+  { REG_COM8, 0xc5 }, { REG_BLUE, 0x74 }, { REG_RED, 0x90 }, { REG_COM9, 0x6e }, { REG_COM16, 0x02 },
   { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 },
 };
 
 static struct regval_list sensor_wbp_office_regs[] = {
-  { REG_COM8, 0xe5 }, { REG_BLUE, 0x97 }, { REG_RED, 0x7d }, { REG_COM9, 0x1e }, { REG_COM16, 0x02 },
+  { REG_COM8, 0xe5 }, { REG_BLUE, 0x97 }, { REG_RED, 0x7d }, { REG_COM9, 0x6e }, { REG_COM16, 0x02 },
   { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 },
 };
 
 static struct regval_list sensor_wbp_home_regs[] = {
-  { REG_COM8, 0xe5 }, { REG_BLUE, 0x9c }, { REG_RED, 0x54 }, { REG_COM9, 0x1e }, { REG_COM16, 0x02 },
+  { REG_COM8, 0xe5 }, { REG_BLUE, 0x9c }, { REG_RED, 0x54 }, { REG_COM9, 0x6e }, { REG_COM16, 0x02 },
   { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 },
 };
 
 static struct regval_list sensor_wbp_night_regs[] = {
   { REG_COM16, 0x00 }, { REG_EDGE, 0xf3 }, { REG_COM13, 0x12 }, { REG_LCC5, 0x00 }, { REG_COM8, 0xe7 },
-  { REG_COM9, 0x1e },
+  { REG_COM9, 0x6e },
 };
 
 static struct regval_list sensor_wbp_horizon_regs[] = {
-  { REG_COM8, 0xc5 }, { REG_BLUE, 0x9c }, { REG_RED, 0x54 }, { REG_COM9, 0x0e }, { REG_COM16, 0x02 },
+  { REG_COM8, 0xc5 }, { REG_BLUE, 0x9c }, { REG_RED, 0x54 }, { REG_COM9, 0x6e }, { REG_COM16, 0x02 },
   { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 },
 };
 
 static struct regval_list sensor_wbp_flash_regs[] = {
-  { REG_COM8, 0xe5 }, { REG_BLUE, 0x97 }, { REG_RED, 0x7d }, { REG_COM9, 0x0e }, { REG_COM16, 0x02 },
+  { REG_COM8, 0xe5 }, { REG_BLUE, 0x97 }, { REG_RED, 0x7d }, { REG_COM9, 0x6e }, { REG_COM16, 0x02 },
   { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 },
 };
 
