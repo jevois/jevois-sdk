@@ -129,6 +129,7 @@ mkdir mnt-jevois/jevois/data mnt-jevois/jevois/lib mnt-jevois/jevois/modules  mn
 
 echo "Populating boot partition ${card}1 ..."
 cp uImage script.bin uEnv.txt mnt-jevois/boot/
+cp microsd-readme.txt mnt-jevois/boot/README.txt
 
 if [ $usedef -ne 1 ]; then
     read -p "Drop to login prompt instead of starting JeVois software automatically [y/N] "

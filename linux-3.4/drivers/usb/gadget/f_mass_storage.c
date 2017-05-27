@@ -2548,7 +2548,7 @@ static int fsg_set_alt (struct usb_function * f, unsigned intf, unsigned alt)
   struct fsg_dev * fsg = fsg_from_func (f);
   fsg->common->new_fsg = fsg;
   raise_exception (fsg->common, FSG_STATE_CONFIG_CHANGE);
-  return USB_GADGET_DELAYED_STATUS;
+  return 0;////////////////////////////////////////////JEVOIS USB_GADGET_DELAYED_STATUS;
 }
 
 static void fsg_disable (struct usb_function * f)
@@ -2684,8 +2684,10 @@ static void handle_exception (struct fsg_common * common)
     
   case FSG_STATE_CONFIG_CHANGE:
     do_set_interface (common, common->new_fsg);
+    #ifdef NOJEVOIS
     if (common->new_fsg)
     { usb_composite_setup_continue (common->cdev); }
+    #endif
     break;
     
   case FSG_STATE_EXIT:
