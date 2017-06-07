@@ -1,4 +1,12 @@
 #!/bin/sh
+# USAGE: jevois-build.sh [destdir|jevois-flash-card args]
+#
+# This script compiles the platform operating system and all its packages, then installs the resulting bootloaders and
+# root filesystem to /var/lib/jevois-build (or destdir, if specified), and finally runs jevois-flash-card (unless
+# destdir was specified) to flash a microSD card.
+
+destdir=$1
+if [ "X${destdir}" = "X" ]; then destdir="/var/lib/jevois-build"; fi
 
 ./build.sh && ./build.sh pack
 
@@ -13,12 +21,19 @@ cp tools/pack/out/sys_config.bin ${tmp}/sys_config.bin
 cp tools/pack/chips/sun8iw5p1/bin/u-boot-sun8iw5p1.bin ${tmp}/u-boot.fex
 ./tools/pack/pctools/linux/mod_update/update_uboot ${tmp}/u-boot.fex ${tmp}/sys_config.bin 
 
-cp ${tmp}/u-boot.fex ${tmp}/boot0_sdcard.fex jevois-build/
-cp ${tmp}/sys_config.bin jevois-build/script.bin
-cp linux-3.4/arch/arm/boot/uImage jevois-build/
-cp out/sun8iw5p1/linux/common/rootfs.ext4 jevois-build/
+sudo mkdir -p ${destdir}
+sudo cp ${tmp}/u-boot.fex ${tmp}/boot0_sdcard.fex ${destdir}/
+sudo cp ${tmp}/sys_config.bin ${destdir}/script.bin
+sudo cp linux-3.4/arch/arm/boot/uImage ${destdir}/
+sudo cp out/sun8iw5p1/linux/common/rootfs.ext4 ${destdir}/
+sudo cp jevois-build/microsd-readme.txt ${destdir}/
+sudo cp jevois-build/uEnv.txt ${destdir}/
 
 /bin/rm -rf "${tmp}"
 
-cd jevois-build && sudo ./jevois-flash-card.sh $*
+# proceed with flashing an SD unless a custom destination was chosen, in which case probably this script is used as a
+# step in a broader build process:
+if [ "X${destdir}" = "X/var/lib/jevois-build" ]; then
+    cd jevois-build && sudo ./jevois-flash-card $*
+fi
 

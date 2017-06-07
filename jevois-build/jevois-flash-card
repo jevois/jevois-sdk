@@ -1,9 +1,20 @@
 #!/bin/bash
-# USAGE: jevois-flash-card.sh [-y] [device]
+# USAGE: jevois-flash-card [-y] [device]
 # If -y is specified, assume all defaults are ok
+# This script needs to be run with root permissions (e.g., sudo jevois-flash-card)
 
-echo "JeVois microSD card builder. Copyright (C) 2017 by Laurent Itti, iLab and USC."
+echo "#################### JeVois microSD card builder. Copyright (C) 2017 by Laurent Itti, iLab and USC."
 echo
+
+if [ ! -d /var/lib/jevois-build ]; then echo "Directory /var/lib/jevois-build/ is missing -- ABORT"; exit 10; fi
+
+cd /var/lib/jevois-build
+
+failed=""
+for f in boot0_sdcard.fex microsd-readme.txt rootfs.ext4 script.bin u-boot.fex uEnv.txt uImage; do
+    if [ ! -f $f ]; then echo "Missing file $f in /var/lib/jevois-build/"; failed="$f ${failed}"; fi
+done
+if [ "X${failed}" != "X" ]; then echo "Directory /var/lib/jevois-build/ is missing: ${failed} -- ABORT"; exit 11; fi
 
 usedef=0
 card=$1
@@ -43,15 +54,15 @@ sleep 3
 
 # Nuke any old partition table and bootloader:
 echo
-echo "Erasing old partitions and partition table..."
+echo "#################### Erasing old partitions and partition table..."
 dd if=/dev/zero of=${card} bs=1M count=100
 sync
 
-echo "Flashing boot0 loader..."
+echo "#################### Flashing boot0 loader..."
 dd if=boot0_sdcard.fex of=${card} bs=1k seek=8
 sync
 
-echo "Flashing u-boot loader..."
+echo "#################### Flashing u-boot loader..."
 dd if=u-boot.fex of=${card} bs=1k seek=19096
 sync
 
@@ -72,7 +83,7 @@ if [ $usedef -ne 1 ]; then
     if [ "X$REPLY" != "X" ]; then p2siz=$REPLY; fi
 fi
 
-echo "Creating partitions on ${card} ..."
+echo "#################### Creating partitions on ${card} ..."
 
 # Compute all offsets and sizes in sectors of 512 bytes:
 p1start=39936
@@ -96,18 +107,16 @@ sleep 2
 p=""
 if [[ -b "${card}p1" ]]; then p="p"; fi
 
-echo "Creating filesystems on ${card} ..."
+echo "#################### Creating filesystems on ${card} ..."
 mkfs.vfat -n BOOT ${card}${p}1
 sync
 
-# For future reference, because we run kernel 3.4 on the platform, we need
-# to make sure we do not here create the fs with unsupported features. These
-# features are ok, disable any extra ones:
+# For future reference, because we run kernel 3.4 on the platform, we need to make sure we do not here create the fs
+# with unsupported features. These features are ok, disable any extra ones:
 #
-# sudo tune2fs -l /dev/sdb2 
-# Filesystem features: has_journal ext_attr resize_inode dir_index filetype
-# needs_recovery extent flex_bg sparse_super large_file huge_file uninit_bg
-# dir_nlink extra_isize
+# sudo tune2fs -l /dev/sdb2
+# Filesystem features: has_journal ext_attr resize_inode dir_index filetype needs_recovery extent flex_bg sparse_super
+# large_file huge_file uninit_bg dir_nlink extra_isize
 
 if [ `cat /etc/issue | grep 15 | wc -l ` -eq 1 ]; then
     mkfs.ext4 -L LINUX ${card}${p}2 # no extra options needed on ubuntu 15.x
@@ -125,9 +134,9 @@ mount ${card}${p}2 mnt-jevois
 mkdir mnt-jevois/boot mnt-jevois/jevois
 mount ${card}${p}1 mnt-jevois/boot
 mount ${card}${p}3 mnt-jevois/jevois
-mkdir mnt-jevois/jevois/data mnt-jevois/jevois/lib mnt-jevois/jevois/modules  mnt-jevois/jevois/packages
+mkdir mnt-jevois/jevois/data mnt-jevois/jevois/lib mnt-jevois/jevois/modules mnt-jevois/jevois/packages
 
-echo "Populating boot partition ${card}1 ..."
+echo "#################### Populating boot partition ${card}${p}1 ..."
 cp uImage script.bin uEnv.txt mnt-jevois/boot/
 cp microsd-readme.txt mnt-jevois/boot/README.txt
 
@@ -140,7 +149,7 @@ if [ $usedef -ne 1 ]; then
 fi
 sync
 
-echo "Populating root partition ${card}2 and jevois partition ${card}3 ..."
+echo "#################### Populating root partition ${card}${p}2 ..."
 
 mkdir rootfs-jevois
 mount -o loop rootfs.ext4 rootfs-jevois
@@ -167,7 +176,7 @@ cat > mnt-jevois/etc/init.d/rcS <<EOF
 hostname jevois
 MODULES_DIR=/lib/modules/3.4.39
 
-if [ ! -f /boot/login ]; then /usr/bin/jevois.sh; fi
+if [ ! -f /boot/login ]; then /jevois/bin/jevois.sh; fi
 EOF
 
 # Do not activate a console on ttyS0 by default, since we use it for communication with Arduino:
@@ -175,7 +184,11 @@ if [ ! -f mnt-jevois/boot/login ]; then
     sed -i s/ttyS0/ttyS1/ mnt-jevois/etc/inittab
 fi
 
-echo "Flushing caches and releasing card..."
+echo "#################### Populating jevois partition ${card}${p}2 ..."
+
+cp -arv /var/lib/jevois-microsd/* mnt-jevois/jevois/
+
+echo "#################### Flushing caches and releasing card..."
 
 sync
 umount mnt-jevois/jevois
@@ -185,5 +198,5 @@ sync
 
 /bin/rm -rf mnt-jevois
 
-echo "microSD card is now loaded with JeVois software."
-echo "microSD card is ready to be inserted into your JeVois smart camera."
+echo "#################### microSD card is now loaded with JeVois software."
+echo "#################### microSD card is ready to be inserted into your JeVois smart camera."
