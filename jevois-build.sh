@@ -1,9 +1,9 @@
 #!/bin/sh
-# USAGE: jevois-build.sh [destdir|jevois-flash-card args]
+# USAGE: jevois-build.sh [destdir]
 #
 # This script compiles the platform operating system and all its packages, then installs the resulting bootloaders and
-# root filesystem to /var/lib/jevois-build (or destdir, if specified), and finally runs jevois-flash-card (unless
-# destdir was specified) to flash a microSD card.
+# root filesystem to /var/lib/jevois-build (or destdir, if specified). After running jevois-build.sh, you should run
+# jevois-flash-card to flash a microSD card.
 
 destdir=$1
 if [ "X${destdir}" = "X" ]; then destdir="/var/lib/jevois-build"; fi
@@ -30,10 +30,3 @@ sudo cp jevois-build/microsd-readme.txt ${destdir}/
 sudo cp jevois-build/uEnv.txt ${destdir}/
 
 /bin/rm -rf "${tmp}"
-
-# proceed with flashing an SD unless a custom destination was chosen, in which case probably this script is used as a
-# step in a broader build process:
-if [ "X${destdir}" = "X/var/lib/jevois-build" ]; then
-    cd jevois-build && sudo ./jevois-flash-card $*
-fi
-

@@ -673,7 +673,13 @@ static int __init webcam_bind (struct usb_composite_dev * cdev)
   #ifdef JEVOIS_STORAGE
   if (use_storage)
   {
-    retp = fsg_common_from_params (&fsg_common, cdev, &fsg_mod_data);
+    struct fsg_config cfg;
+    
+    fsg_config_from_params (&cfg, &fsg_mod_data);
+    cfg.vendor_name = "JeVois";
+    cfg.product_name = "Smart Camera";
+    retp = fsg_common_init (&fsg_common, cdev, &cfg);
+    
     if (IS_ERR (retp) ) { ret = PTR_ERR (retp); goto error2; }
   }
   #endif

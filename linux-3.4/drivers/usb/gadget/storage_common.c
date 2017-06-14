@@ -54,6 +54,12 @@
 #include <scsi/scsi.h>
 #include <asm/unaligned.h>
 
+/* JEVOIS: do not apply the sunxi hacks as those seem to be for android anyway */
+#ifndef NOJEVOIS
+#ifdef CONFIG_USB_SUNXI_USB
+#undef CONFIG_USB_SUNXI_USB
+#endif
+#endif
 
 /*
  * Thanks to NetChip Technologies for donating this product ID.
@@ -201,6 +207,9 @@ struct fsg_lun {
   unsigned int  nofua: 1;
   #ifdef CONFIG_USB_SUNXI_USB
   unsigned int  zero_disk: 1;
+  #endif
+  #ifndef NOJEVOIS
+  unsigned int  jevois_inuse: 1;
   #endif
   
   u32   sense_data;
@@ -722,6 +731,9 @@ static int fsg_lun_open (struct fsg_lun * curlun, const char * filename)
   curlun->filp = filp;
   curlun->file_length = size;
   curlun->num_sectors = num_sectors;
+  #ifndef NOJEVOIS
+  curlun->jevois_inuse = 1;
+  #endif
   LDBG (curlun, "open backing file: %s\n", filename);
   printk ("usb open backing file: %s, 0x%p\n", filename, curlun);
   
@@ -741,6 +753,10 @@ static void fsg_lun_close (struct fsg_lun * curlun)
     printk ("usb close backing file: 0x%p\n", curlun);
     
     fsg_lun_fsync_sub (curlun);
+    
+    #ifndef NOJEVOIS
+    curlun->jevois_inuse = 0;
+    #endif
     
     fput (curlun->filp);
     curlun->filp = NULL;
@@ -937,5 +953,27 @@ static ssize_t fsg_zero_disk (struct device * dev, struct device_attribute * att
   curlun->zero_disk = value;
   
   return count;
+}
+#endif
+
+#ifndef NOJEVOIS
+static ssize_t fsg_jevois_show_msiu (struct device * dev, struct device_attribute * attr, char * buf)
+{
+  struct fsg_lun * curlun = fsg_lun_from_dev (dev);
+  
+  return sprintf (buf, "%u\n", curlun->jevois_inuse);
+}
+
+static ssize_t fsg_jevois_store_msiu (struct device * dev, struct device_attribute * attr,
+                                      const char * buf, size_t count)
+{
+  ssize_t   rc;
+  struct fsg_lun * curlun = fsg_lun_from_dev (dev);
+  unsigned  msiu;
+  
+  rc = kstrtouint (buf, 2, &msiu);
+  if (rc) { return rc; }
+  curlun->jevois_inuse = msiu;
+  return rc;
 }
 #endif

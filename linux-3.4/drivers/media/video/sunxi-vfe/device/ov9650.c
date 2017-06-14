@@ -1031,42 +1031,42 @@ static int sensor_s_vflip (struct v4l2_subdev * sd, int value)
 
 static struct regval_list sensor_wbp_auto_regs[] = {
   { REG_COM8, 0xe7 }, { REG_COM16, 0x02 }, { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 },
-  { REG_COM9, 0x6e },
+  { REG_COM9, 0x4e }, { REG_COM11, 0x09 },
 };
 
 static struct regval_list sensor_wbp_sunny_regs[] = {
-  { REG_COM8, 0xc5 }, { REG_BLUE, 0x74 }, { REG_RED, 0x90 }, { REG_COM9, 0x6e }, { REG_COM16, 0x02 },
-  { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 },
+  { REG_COM8, 0xc5 }, { REG_BLUE, 0x74 }, { REG_RED, 0x90 }, { REG_COM9, 0x4e }, { REG_COM16, 0x02 },
+  { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 }, { REG_COM11, 0x09 },
 };
 
 static struct regval_list sensor_wbp_cloudy_regs[] = {
-  { REG_COM8, 0xc5 }, { REG_BLUE, 0x74 }, { REG_RED, 0x90 }, { REG_COM9, 0x6e }, { REG_COM16, 0x02 },
-  { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 },
+  { REG_COM8, 0xc5 }, { REG_BLUE, 0x74 }, { REG_RED, 0x90 }, { REG_COM9, 0x4e }, { REG_COM16, 0x02 },
+  { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 }, { REG_COM11, 0x09 },
 };
 
 static struct regval_list sensor_wbp_office_regs[] = {
   { REG_COM8, 0xe5 }, { REG_BLUE, 0x97 }, { REG_RED, 0x7d }, { REG_COM9, 0x6e }, { REG_COM16, 0x02 },
-  { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 },
+  { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 }, { REG_COM11, 0x09 },
 };
 
 static struct regval_list sensor_wbp_home_regs[] = {
   { REG_COM8, 0xe5 }, { REG_BLUE, 0x9c }, { REG_RED, 0x54 }, { REG_COM9, 0x6e }, { REG_COM16, 0x02 },
-  { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 },
+  { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 }, { REG_COM11, 0xe8 },
 };
 
 static struct regval_list sensor_wbp_night_regs[] = {
   { REG_COM16, 0x00 }, { REG_EDGE, 0xf3 }, { REG_COM13, 0x12 }, { REG_LCC5, 0x00 }, { REG_COM8, 0xe7 },
-  { REG_COM9, 0x6e },
+  { REG_COM9, 0x6e }, { REG_COM11, 0xe8 },
 };
 
 static struct regval_list sensor_wbp_horizon_regs[] = {
-  { REG_COM8, 0xc5 }, { REG_BLUE, 0x9c }, { REG_RED, 0x54 }, { REG_COM9, 0x6e }, { REG_COM16, 0x02 },
-  { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 },
+  { REG_COM8, 0xc5 }, { REG_BLUE, 0x9c }, { REG_RED, 0x54 }, { REG_COM9, 0x4e }, { REG_COM16, 0x02 },
+  { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 }, { REG_COM11, 0x09 },
 };
 
 static struct regval_list sensor_wbp_flash_regs[] = {
-  { REG_COM8, 0xe5 }, { REG_BLUE, 0x97 }, { REG_RED, 0x7d }, { REG_COM9, 0x6e }, { REG_COM16, 0x02 },
-  { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 },
+  { REG_COM8, 0xe5 }, { REG_BLUE, 0x97 }, { REG_RED, 0x7d }, { REG_COM9, 0x2e }, { REG_COM16, 0x02 },
+  { REG_EDGE, 0xa6 }, { REG_COM13, 0x92 }, { REG_LCC5, 0x01 }, { REG_COM11, 0x09 },
 };
 
 static int sensor_g_wb (struct v4l2_subdev * sd, int * value)
@@ -1097,6 +1097,7 @@ static int sensor_s_wb (struct v4l2_subdev * sd, enum v4l2_auto_n_preset_white_b
     switch (value)
     {
     case V4L2_WHITE_BALANCE_MANUAL:
+      ret = sensor_write_array (sd, sensor_wbp_auto_regs, ARRAY_SIZE (sensor_wbp_auto_regs) );
       break;
       
     case V4L2_WHITE_BALANCE_CLOUDY:
@@ -1308,7 +1309,6 @@ static int sensor_init (struct v4l2_subdev * sd, u32 val)
   info->band_filter = V4L2_CID_POWER_LINE_FREQUENCY_60HZ;
   info->tpf.numerator = 1;
   info->tpf.denominator = 30;    /* 30fps */
-  
   info->sharpness = 6;
   info->exp = 500;
   

@@ -6,6 +6,7 @@
 echo "#################### JeVois microSD card builder. Copyright (C) 2017 by Laurent Itti, iLab and USC."
 echo
 
+if [ ! -d /var/lib/jevois-microsd ]; then echo "Directory /var/lib/jevois-microsd/ is missing -- ABORT"; exit 9; fi
 if [ ! -d /var/lib/jevois-build ]; then echo "Directory /var/lib/jevois-build/ is missing -- ABORT"; exit 10; fi
 
 cd /var/lib/jevois-build
@@ -56,6 +57,7 @@ sleep 3
 echo
 echo "#################### Erasing old partitions and partition table..."
 dd if=/dev/zero of=${card} bs=1M count=100
+if [ $? -ne 0 ]; then echo "Cannot erase ${card} - make sure you run jevois-flash-card as sudo -- ABORT"; exit 8; fi
 sync
 
 echo "#################### Flashing boot0 loader..."
@@ -129,23 +131,23 @@ mkfs.vfat -n JEVOIS ${card}${p}3
 sync
 sleep 2
 
-mkdir mnt-jevois
-mount ${card}${p}2 mnt-jevois
-mkdir mnt-jevois/boot mnt-jevois/jevois
-mount ${card}${p}1 mnt-jevois/boot
-mount ${card}${p}3 mnt-jevois/jevois
-mkdir mnt-jevois/jevois/data mnt-jevois/jevois/lib mnt-jevois/jevois/modules mnt-jevois/jevois/packages
+mkdir sdcard
+mount ${card}${p}2 sdcard
+mkdir sdcard/boot sdcard/jevois
+mount ${card}${p}1 sdcard/boot
+mount ${card}${p}3 sdcard/jevois
+mkdir sdcard/jevois/data sdcard/jevois/lib sdcard/jevois/modules sdcard/jevois/packages
 
 echo "#################### Populating boot partition ${card}${p}1 ..."
-cp uImage script.bin uEnv.txt mnt-jevois/boot/
-cp microsd-readme.txt mnt-jevois/boot/README.txt
+cp uImage script.bin uEnv.txt sdcard/boot/
+cp microsd-readme.txt sdcard/boot/README.txt
 
 if [ $usedef -ne 1 ]; then
     read -p "Drop to login prompt instead of starting JeVois software automatically [y/N] "
-    if [ "X$REPLY" = "Xy" ]; then touch mnt-jevois/boot/login; fi
+    if [ "X$REPLY" = "Xy" ]; then touch sdcard/boot/login; fi
 
     read -p "Disable serial-over-USB port [y/N] "
-    if [ "X$REPLY" = "Xy" ]; then touch mnt-jevois/boot/nousbserial; fi
+    if [ "X$REPLY" = "Xy" ]; then touch sdcard/boot/nousbserial; fi
 fi
 sync
 
@@ -153,25 +155,25 @@ echo "#################### Populating root partition ${card}${p}2 ..."
 
 mkdir rootfs-jevois
 mount -o loop rootfs.ext4 rootfs-jevois
-cp -arv rootfs-jevois/* mnt-jevois/
+cp -arv rootfs-jevois/* sdcard/
 sync
 umount rootfs-jevois
 /bin/rm -rf rootfs-jevois
 
 # patch up the rootfs:
-cat > mnt-jevois/etc/fstab <<EOF
-/dev/root	/		ext4	rw,noauto	0	0
+cat > sdcard/etc/fstab <<EOF
+/dev/root	/		ext4	ro,noatime,noauto	0	0
 devpts		/dev/pts	devpts	defaults,gid=5,mode=620	0	0
 tmpfs		/dev/shm	tmpfs	mode=0777	0	0
 tmpfs		/tmp		tmpfs	mode=1777	0	0
 tmpfs		/run		tmpfs	mode=0755,nosuid,nodev	0	0
 sysfs		/sys		sysfs	defaults	0	0
-debugfs         /sys/kernel/debug      debugfs  defaults  0 0
-/dev/mmcblk0p1  /boot           vfat    defaults 0 0
-/dev/mmcblk0p3  /jevois         vfat    defaults 0 0
+debugfs         /sys/kernel/debug       debugfs  defaults  0 0
+/dev/mmcblk0p1  /boot           vfat    ro,flush,noatime,umask=000 0 0
+/dev/mmcblk0p3  /jevois         vfat    rw,flush,noatime,umask=000 0 0
 EOF
 
-cat > mnt-jevois/etc/init.d/rcS <<EOF
+cat > sdcard/etc/init.d/rcS <<EOF
 #!/bin/sh
 hostname jevois
 MODULES_DIR=/lib/modules/3.4.39
@@ -179,24 +181,32 @@ MODULES_DIR=/lib/modules/3.4.39
 if [ ! -f /boot/login ]; then /jevois/bin/jevois.sh; fi
 EOF
 
+# fixup opencv python if needed:
+if [ ! -f sdcard/usr/lib/python3.5/site-packages/cv2.so ]; then
+    # There is a flaw in the buildroot building of opencv, where the library file name still shows up as compiled for
+    # whatever the host architecture was, even though it has been correctly cross-compiled for the JeVois ARM
+    # processor. Here we fix that and also move the library to the python site-packages:
+    mv sdcard/usr/python/3.5/cv2.cpython-35m-x86_64-linux-gnu.so sdcard/usr/lib/python3.5/site-packages/cv2.so
+fi
+    
 # Do not activate a console on ttyS0 by default, since we use it for communication with Arduino:
-if [ ! -f mnt-jevois/boot/login ]; then
-    sed -i s/ttyS0/ttyS1/ mnt-jevois/etc/inittab
+if [ ! -f sdcard/boot/login ]; then
+    sed -i s/ttyS0/ttyS1/g sdcard/etc/inittab
 fi
 
 echo "#################### Populating jevois partition ${card}${p}2 ..."
 
-cp -arv /var/lib/jevois-microsd/* mnt-jevois/jevois/
+cp -arv /var/lib/jevois-microsd/* sdcard/jevois/
 
 echo "#################### Flushing caches and releasing card..."
 
 sync
-umount mnt-jevois/jevois
-umount mnt-jevois/boot
-umount mnt-jevois
+umount sdcard/jevois
+umount sdcard/boot
+umount sdcard
 sync
 
-/bin/rm -rf mnt-jevois
+/bin/rm -rf sdcard
 
 echo "#################### microSD card is now loaded with JeVois software."
 echo "#################### microSD card is ready to be inserted into your JeVois smart camera."
