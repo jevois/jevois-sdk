@@ -3,28 +3,58 @@
 # If -y is specified, assume all defaults are ok
 # This script needs to be run with root permissions (e.g., sudo jevois-flash-card)
 
+####################################################################################################
+# Basic checks for required files and directories:
+####################################################################################################
+
 echo "#################### JeVois microSD card builder. Copyright (C) 2017 by Laurent Itti, iLab and USC."
 echo
 
-if [ ! -d /var/lib/jevois-microsd ]; then echo "Directory /var/lib/jevois-microsd/ is missing -- ABORT"; exit 9; fi
-if [ ! -d /var/lib/jevois-build ]; then echo "Directory /var/lib/jevois-build/ is missing -- ABORT"; exit 10; fi
-
-cd /var/lib/jevois-build
-
-failed=""
-for f in boot0_sdcard.fex microsd-readme.txt rootfs.ext4 script.bin u-boot.fex uEnv.txt uImage; do
-    if [ ! -f $f ]; then echo "Missing file $f in /var/lib/jevois-build/"; failed="$f ${failed}"; fi
-done
-if [ "X${failed}" != "X" ]; then echo "Directory /var/lib/jevois-build/ is missing: ${failed} -- ABORT"; exit 11; fi
-
-usedef=0
-card=$1
-
-if [ "x$card" = "x-y" ]; then
-    usedef=1
-    card=$2
+if [ ! -d /var/lib/jevois-microsd ]; then
+    echo "Directory /var/lib/jevois-microsd/ is missing -- run ./rebuild-platform.sh in jevois -- ABORT"
+    exit 1
 fi
 
+if [ ! -d /var/lib/jevois-microsd/modules ]; then
+    echo "Directory /var/lib/jevois-microsd/modules/ is missing -- run ./rebuild-platform.sh in jevoisbase -- ABORT"
+    exit 2
+fi
+
+if [ ! -d /var/lib/jevois-build ]; then
+    echo "Directory /var/lib/jevois-build/ is missing -- run ./rebuild-platform.sh in jevois -- ABORT"
+    exit 3
+fi
+
+if [ ! -d /var/lib/jevois-build/boot ]; then
+    echo "Directory /var/lib/jevois-build/boot is missing -- run ./jevois-build.sh in jevois-sdk -- ABORT"
+    exit 4
+fi
+if [ ! -d /var/lib/jevois-build/usr ]; then
+    echo "Directory /var/lib/jevois-build/usr is missing -- run ./rebuild-platform.sh in jevois -- ABORT"
+    exit 5
+fi
+
+####################################################################################################
+# Secondary check for necessary boot files:
+####################################################################################################
+
+cd /var/lib/jevois-build
+failed=0
+for f in boot0_sdcard.fex microsd-readme.txt rootfs.ext4 script.bin u-boot.fex uEnv.txt uImage; do
+    if [ ! -f "boot/${f}" ]; then echo "Missing file $f in /var/lib/jevois-build/boot"; failed=1; fi
+done
+if [ "X${failed}" != "X0" ]; then exit 6; fi
+
+####################################################################################################
+# Handle -y option:
+####################################################################################################
+usedef=0
+card=$1
+if [ "x$card" = "x-y" ]; then usedef=1; card=$2; fi
+
+####################################################################################################
+# Check/get card device:
+####################################################################################################
 if [ "x$card" = "x" ]; then
     read -p "Enter device name for microSD card: ";
     if [ "X$REPLY" != "X" ]; then card=$REPLY; fi
@@ -35,8 +65,8 @@ else
     fi
 fi
 
-if [ "x$card" = "x" ]; then echo "Cannot write to empty card device -- ABORT"; exit 2; fi
-if [ ! -b "$card" ]; then echo "Specified card device [$card] not a block device -- ABORT"; exit 3; fi
+if [ "x$card" = "x" ]; then echo "Cannot write to empty card device -- ABORT"; exit 7; fi
+if [ ! -b "$card" ]; then echo "Specified card device [$card] not a block device -- ABORT"; exit 8; fi
 
 echo
 echo "=============================== Contents of $card:"
@@ -46,26 +76,28 @@ echo
 echo
 if [ $usedef -ne 1 ]; then
     read -p "Ok to ERASE ALL DATA on $card? [y/N] "
-    if [ "X$REPLY" != "Xy" ]; then echo "Operation aborted by user."; exit 2; fi
+    if [ "X$REPLY" != "Xy" ]; then echo "Operation aborted by user."; exit 9; fi
 fi
 
 # Make sure the card was not automatically mounted:
 umount ${card}* > /dev/null 2>&1
 sleep 3
 
-# Nuke any old partition table and bootloader:
+####################################################################################################
+# Nuke any old partition table and install bootloaders and new partitions:
+####################################################################################################
 echo
 echo "#################### Erasing old partitions and partition table..."
 dd if=/dev/zero of=${card} bs=1M count=100
-if [ $? -ne 0 ]; then echo "Cannot erase ${card} - make sure you run jevois-flash-card as sudo -- ABORT"; exit 8; fi
+if [ $? -ne 0 ]; then echo "Cannot erase ${card} - make sure you run jevois-flash-card as sudo -- ABORT"; exit 10; fi
 sync
 
 echo "#################### Flashing boot0 loader..."
-dd if=boot0_sdcard.fex of=${card} bs=1k seek=8
+dd if=boot/boot0_sdcard.fex of=${card} bs=1k seek=8
 sync
 
 echo "#################### Flashing u-boot loader..."
-dd if=u-boot.fex of=${card} bs=1k seek=19096
+dd if=boot/u-boot.fex of=${card} bs=1k seek=19096
 sync
 
 # Units for sfdisk are sectors; u-boot starts at 38192 and is about 510k, so start partitions after sector 39200.
@@ -106,6 +138,10 @@ EOT
 sync
 sleep 2
 
+####################################################################################################
+# Create filesystems:
+####################################################################################################
+
 p=""
 if [[ -b "${card}p1" ]]; then p="p"; fi
 
@@ -131,6 +167,10 @@ mkfs.vfat -n JEVOIS ${card}${p}3
 sync
 sleep 2
 
+####################################################################################################
+# Populate partitions:
+####################################################################################################
+
 mkdir sdcard
 mount ${card}${p}2 sdcard
 mkdir sdcard/boot sdcard/jevois
@@ -139,8 +179,8 @@ mount ${card}${p}3 sdcard/jevois
 mkdir sdcard/jevois/data sdcard/jevois/lib sdcard/jevois/modules sdcard/jevois/packages
 
 echo "#################### Populating boot partition ${card}${p}1 ..."
-cp uImage script.bin uEnv.txt sdcard/boot/
-cp microsd-readme.txt sdcard/boot/README.txt
+cp boot/uImage boot/script.bin boot/uEnv.txt sdcard/boot/
+cp boot/microsd-readme.txt sdcard/boot/README.txt
 
 if [ $usedef -ne 1 ]; then
     read -p "Drop to login prompt instead of starting JeVois software automatically [y/N] "
@@ -154,7 +194,7 @@ sync
 echo "#################### Populating root partition ${card}${p}2 ..."
 
 mkdir rootfs-jevois
-mount -o loop rootfs.ext4 rootfs-jevois
+mount -o loop boot/rootfs.ext4 rootfs-jevois
 cp -arv rootfs-jevois/* sdcard/
 sync
 umount rootfs-jevois
@@ -162,7 +202,7 @@ umount rootfs-jevois
 
 # patch up the rootfs:
 cat > sdcard/etc/fstab <<EOF
-/dev/root	/		ext4	ro,noatime,noauto	0	0
+/dev/root	/		ext4	ro,flush,noatime,noauto	0	0
 devpts		/dev/pts	devpts	defaults,gid=5,mode=620	0	0
 tmpfs		/dev/shm	tmpfs	mode=0777	0	0
 tmpfs		/tmp		tmpfs	mode=1777	0	0
@@ -178,8 +218,11 @@ cat > sdcard/etc/init.d/rcS <<EOF
 hostname jevois
 MODULES_DIR=/lib/modules/3.4.39
 
-if [ ! -f /boot/login ]; then /jevois/bin/jevois.sh; fi
+if [ ! -f /boot/login ]; then /usr/bin/jevois.sh; fi
 EOF
+
+# Copy core jevois executables, libraries, etc
+cp -arv usr sdcard/
 
 # fixup opencv python if needed:
 if [ ! -f sdcard/usr/lib/python3.5/site-packages/cv2.so ]; then
@@ -197,6 +240,10 @@ fi
 echo "#################### Populating jevois partition ${card}${p}2 ..."
 
 cp -arv /var/lib/jevois-microsd/* sdcard/jevois/
+
+####################################################################################################
+# Final fix:
+####################################################################################################
 
 echo "#################### Flushing caches and releasing card..."
 
