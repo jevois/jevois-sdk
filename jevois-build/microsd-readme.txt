@@ -33,5 +33,11 @@ In the BOOT partition of JeVois, you can:
 
 - create an empty file BOOT:nousbsd if you wish to not enable the microSD-over-USB feature for some reason.
 
-- create an empty file BOOT:nousbsdauto if you wish to not automatically export microSD JEVOIS partition over USB for
-  some reason.
+- create an empty file BOOT:usbsdauto if you wish to automatically export microSD JEVOIS partition over USB as soon as
+  JeVois starts.
+
+- create an empty file BOOT:serialtty if you wish to get a login prompt on the 4-pin hardware serial
+  port instead of the JeVois console.
+
+- create an empty file BOOT:usbserialtty if you wish to get a login prompt on the serial-over-USB port instead of the
+  JeVois console. Has no effect if BOOT:nousbserial is also present.

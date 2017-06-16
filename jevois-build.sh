@@ -23,7 +23,7 @@ cp tools/pack/chips/sun8iw5p1/bin/u-boot-sun8iw5p1.bin ${tmp}/boot/u-boot.fex
 ./tools/pack/pctools/linux/mod_update/update_uboot ${tmp}/boot/u-boot.fex ${tmp}/boot/sys_config.bin 
 
 sudo mkdir -p ${destdir}/boot
-sudo cp ${tmp}/boot/u-boot.fex ${tmp}/boot/boot0_sdcard.fex ${destdir}/boot
+sudo cp ${tmp}/boot/u-boot.fex ${tmp}/boot/boot0_sdcard.fex ${destdir}/boot/
 sudo cp ${tmp}/boot/sys_config.bin ${destdir}/boot/script.bin
 sudo cp linux-3.4/arch/arm/boot/uImage ${destdir}/boot/
 sudo cp out/sun8iw5p1/linux/common/rootfs.ext4 ${destdir}/boot/
