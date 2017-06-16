@@ -111,13 +111,13 @@ static const struct sw_udc_fifo ep_fifo[] = {
 
 static const struct sw_udc_fifo ep_fifo[] = {
   {ep0name,          0,    512,  0},
-  {ep1in_bulk_name,  512,  1024, 1},
-  {ep1out_bulk_name, 1536, 1024, 1},
-  {ep2in_bulk_name,  2560, 256,  0},
-  {ep2out_bulk_name, 2816, 256,  0},
-  {ep3_int_name,     3072, 512,  0},
-  {ep4_iso_name,     3584, 4096, 0},
-  {ep5_int_name,     7680, 512,  0},
+  {ep1in_bulk_name,  512,  512,  0},
+  {ep1out_bulk_name, 1024, 512,  0},
+  {ep2in_bulk_name,  1536, 512,  0},
+  {ep2out_bulk_name, 2048, 512,  0},
+  {ep3_int_name,     2560, 512,  0},
+  {ep4_iso_name,     3072, 4096, 0},
+  {ep5_int_name,     7168, 512,  0},
 };
 /*
  * ep_fifo_in[i] = {n} i: the physic ep index, n: ep_fifo's index for the ep

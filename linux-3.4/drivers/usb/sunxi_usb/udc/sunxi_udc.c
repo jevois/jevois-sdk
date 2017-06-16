@@ -116,7 +116,13 @@ static inline void sunxi_udc_map_dma_buffer (struct sunxi_udc_request * req, str
 static inline void sunxi_udc_unmap_dma_buffer (struct sunxi_udc_request * req, struct sunxi_udc * udc,
     struct sunxi_udc_ep * ep)
 {
-  if (!is_buffer_mapped (req, ep) ) { DMSG_PANIC ("err: need not to dma ummap\n"); return; }
+  if (!is_buffer_mapped (req, ep) ) {
+    #ifdef NOJEVOIS
+    DMSG_PANIC ("err: need not to dma ummap\n");
+    #endif
+    return;
+  }
+  
   if (req->req.dma == DMA_ADDR_INVALID) { DMSG_PANIC ("not unmapping a never mapped buffer\n"); return; }
   
   if (req->map_state == SW_UDC_USB_MAPPED)
@@ -765,6 +771,7 @@ static void sunxi_udc_handle_ep0_idle (struct sunxi_udc * dev, struct sunxi_udc_
   else { dev->ep0state = EP0_OUT_DATA_PHASE; }
   
   if (!dev->driver) { return; }
+  
   
   spin_unlock (&dev->lock);
   ret = dev->driver->setup (&dev->gadget, crq);
@@ -2142,7 +2149,7 @@ static struct sunxi_udc sunxi_udc =
   
   .ep[3] = {
     .num            = 2,
-    .ep                 = { .name = ep2in_bulk_name, .ops = &sunxi_udc_ep_ops, .maxpacket = 256, },
+    .ep                 = { .name = ep2in_bulk_name, .ops = &sunxi_udc_ep_ops, .maxpacket = 512, },
     .dev            = &sunxi_udc,
     .bEndpointAddress   = (USB_DIR_IN | 2),
     .bmAttributes     = USB_ENDPOINT_XFER_BULK,
@@ -2150,7 +2157,7 @@ static struct sunxi_udc sunxi_udc =
   
   .ep[4] = {
     .num            = 2,
-    .ep                 = { .name = ep2out_bulk_name, .ops = &sunxi_udc_ep_ops, .maxpacket = 256, },
+    .ep                 = { .name = ep2out_bulk_name, .ops = &sunxi_udc_ep_ops, .maxpacket = 512, },
     .dev            = &sunxi_udc,
     .bEndpointAddress   = (USB_DIR_OUT | 2),
     .bmAttributes     = USB_ENDPOINT_XFER_BULK,

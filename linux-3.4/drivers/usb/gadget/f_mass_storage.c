@@ -296,6 +296,12 @@
 
 #include "gadget_chips.h"
 
+/* JEVOIS: do not apply the sunxi hacks as those seem to be for android anyway */
+#ifndef NOJEVOIS
+#ifdef CONFIG_USB_SUNXI_USB
+#undef CONFIG_USB_SUNXI_USB
+#endif
+#endif
 
 /*------------------------------------------------------------------------*/
 
@@ -2548,7 +2554,11 @@ static int fsg_set_alt (struct usb_function * f, unsigned intf, unsigned alt)
   struct fsg_dev * fsg = fsg_from_func (f);
   fsg->common->new_fsg = fsg;
   raise_exception (fsg->common, FSG_STATE_CONFIG_CHANGE);
-  return USB_GADGET_DELAYED_STATUS;
+  #ifndef NOJEVOIS
+  return 0;
+  #else
+  return JEVOIS USB_GADGET_DELAYED_STATUS;
+  #endif
 }
 
 static void fsg_disable (struct usb_function * f)
@@ -2684,8 +2694,10 @@ static void handle_exception (struct fsg_common * common)
     
   case FSG_STATE_CONFIG_CHANGE:
     do_set_interface (common, common->new_fsg);
+    #ifdef NOJEVOIS
     if (common->new_fsg)
     { usb_composite_setup_continue (common->cdev); }
+    #endif
     break;
     
   case FSG_STATE_EXIT:
@@ -2803,6 +2815,9 @@ static DEVICE_ATTR (file, 0644, fsg_show_file, fsg_store_file);
 #ifdef CONFIG_USB_SUNXI_USB
 static DEVICE_ATTR (zero_disk, 0644, fsg_show_zero_disk, fsg_zero_disk);
 #endif
+#ifndef NOJEVOIS
+static DEVICE_ATTR (mass_storage_in_use, 0644, fsg_jevois_show_msiu, fsg_jevois_store_msiu);
+#endif
 
 /****************************** FSG COMMON ******************************/
 
@@ -2904,6 +2919,9 @@ static struct fsg_common * fsg_common_init (struct fsg_common * common,
     curlun->nofua = lcfg->nofua;
     curlun->zero_disk = 0;
     #endif
+    #ifndef NOJEVOIS
+    curlun->jevois_inuse = 0;
+    #endif
     curlun->dev.release = fsg_lun_release;
     curlun->dev.parent = &gadget->dev;
     /* curlun->dev.driver = &fsg_driver.driver; XXX */
@@ -2933,6 +2951,11 @@ static struct fsg_common * fsg_common_init (struct fsg_common * common,
     { goto error_luns; }
     #ifdef CONFIG_USB_SUNXI_USB
     rc = device_create_file (&curlun->dev, &dev_attr_zero_disk);
+    if (rc)
+    { goto error_luns; }
+    #endif
+    #ifndef NOJEVOIS
+    rc = device_create_file (&curlun->dev, &dev_attr_mass_storage_in_use);
     if (rc)
     { goto error_luns; }
     #endif
@@ -3088,6 +3111,9 @@ static void fsg_common_release (struct kref * ref)
       device_remove_file (&lun->dev, &dev_attr_file);
       #ifdef CONFIG_USB_SUNXI_USB
       device_remove_file (&lun->dev, &dev_attr_zero_disk);
+      #endif
+      #ifndef NOJEVOIS
+      device_remove_file (&lun->dev, &dev_attr_mass_storage_in_use);
       #endif
       fsg_lun_close (lun);
       device_unregister (&lun->dev);

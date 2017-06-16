@@ -22,6 +22,7 @@
 #include <asm/div64.h>
 
 #define JEVOIS_SERIAL
+#define JEVOIS_STORAGE
 
 #include "f_uvc.h"
 #ifdef JEVOIS_SERIAL
@@ -42,6 +43,10 @@
 #include "f_acm.c"
 #endif
 
+#ifdef JEVOIS_STORAGE
+#include "f_mass_storage.c"
+#endif
+
 static char * modes = "0/1448695129-320x240:333333";
 module_param (modes, charp, S_IRUGO | S_IWUSR);
 MODULE_PARM_DESC (modes, "Supported USB/UVC video modes, as compiled by the jevois-module-param utility.");
@@ -49,6 +54,10 @@ MODULE_PARM_DESC (modes, "Supported USB/UVC video modes, as compiled by the jevo
 static bool use_serial = 1;
 module_param (use_serial, bool, S_IRUGO);
 MODULE_PARM_DESC (use_serial, "Add a CDC ACM serial-over-USB port when true");
+
+static bool use_storage = 1;
+module_param (use_storage, bool, S_IRUGO);
+MODULE_PARM_DESC (use_storage, "Add access to microSD over USB when true");
 
 /* --------------------------------------------------------------------------
  * Device descriptor
@@ -580,6 +589,17 @@ error1:
   return -1;
 }
 
+#ifdef JEVOIS_STORAGE
+
+static struct fsg_module_parameters fsg_mod_data = {
+  .stall = 0 
+};
+FSG_MODULE_PARAMETERS (/* no prefix */, fsg_mod_data);
+
+static struct fsg_common fsg_common;
+
+#endif
+
 static int __init webcam_config_bind (struct usb_configuration * c)
 {
   int status;
@@ -590,15 +610,24 @@ static int __init webcam_config_bind (struct usb_configuration * c)
   status = uvc_bind_config (c, uvc_control_cls,
                             (const struct uvc_descriptor_header * const *) uvc_hs_streaming_cls,
                             (const struct uvc_descriptor_header * const *) uvc_hs_streaming_cls);
-                            
+  if (status < 0) { return status; }
+  
   #ifdef JEVOIS_SERIAL
   if (use_serial)
   {
+    status = acm_bind_config (c, 0);
     if (status < 0) { return status; }
-    
-    return acm_bind_config (c, 0);
   }
   #endif
+  
+  #ifdef JEVOIS_STORAGE
+  if (use_storage)
+  {
+    status = fsg_bind_config (c->cdev, c, &fsg_common);
+    if (status < 0) { return status; }
+  }
+  #endif
+  
   return status;
 }
 
@@ -620,39 +649,65 @@ static int /* __init_or_exit */ webcam_unbind (struct usb_composite_dev * cdev)
 
 static int __init webcam_bind (struct usb_composite_dev * cdev)
 {
-  int ret;
+  int ret; void * retp;
   
-  if ( (ret = usb_string_id (cdev) ) < 0) { goto error; }
+  if ( (ret = usb_string_id (cdev) ) < 0) { goto error3; }
   webcam_strings[STRING_MANUFACTURER_IDX].id = ret;
   webcam_device_descriptor.iManufacturer = ret;
   
-  if ( (ret = usb_string_id (cdev) ) < 0) { goto error; }
+  if ( (ret = usb_string_id (cdev) ) < 0) { goto error3; }
   webcam_strings[STRING_PRODUCT_IDX].id = ret;
   webcam_device_descriptor.iProduct = ret;
   
-  if ( (ret = usb_string_id (cdev) ) < 0) { goto error; }
+  if ( (ret = usb_string_id (cdev) ) < 0) { goto error3; }
   webcam_strings[STRING_DESCRIPTION_IDX].id = ret;
   webcam_config_driver.iConfiguration = ret;
-  
-  /* Register our configuration. */
-  if ( (ret = usb_add_config (cdev, &webcam_config_driver, webcam_config_bind) ) < 0) { goto error2; }
   
   #ifdef JEVOIS_SERIAL
   if (use_serial)
   {
-    if ( (ret = gserial_setup (cdev->gadget, 1) ) < 0) { goto error3; }
+    if ( (ret = gserial_setup (cdev->gadget, 1) ) < 0) { goto error; }
+  }
+  #endif
+  
+  #ifdef JEVOIS_STORAGE
+  if (use_storage)
+  {
+    struct fsg_config cfg;
+    
+    fsg_config_from_params (&cfg, &fsg_mod_data);
+    cfg.vendor_name = "JeVois";
+    cfg.product_name = "Smart Camera";
+    retp = fsg_common_init (&fsg_common, cdev, &cfg);
+    
+    if (IS_ERR (retp) ) { ret = PTR_ERR (retp); goto error2; }
+  }
+  #endif
+  
+  /* Register our configuration. */
+  if ( (ret = usb_add_config (cdev, &webcam_config_driver, webcam_config_bind) ) < 0) { goto error3; }
+  
+  #ifdef JEVOIS_STORAGE
+  if (use_storage)
+  {
+    fsg_common_put (&fsg_common);
   }
   #endif
   
   INFO (cdev, "JeVois-A33 Smart Camera Gadget\n");
   return 0;
   
+  
 error3:
+  #ifdef JEVOIS_STORAGE
+  fsg_common_put (&fsg_common);
+  #endif
+  
+error2:
   #ifdef JEVOIS_SERIAL
   if (use_serial) { gserial_cleanup(); }
   #endif
-error2:
-  webcam_unbind (cdev);
+  
 error:
   return ret;
 }
@@ -685,5 +740,5 @@ module_exit (webcam_cleanup);
 MODULE_AUTHOR ("JeVois Inc");
 MODULE_DESCRIPTION ("JeVois-A33 Smart Camera Gadget");
 MODULE_LICENSE ("GPL");
-MODULE_VERSION ("1.0.0");
+MODULE_VERSION ("1.1.0");
 
