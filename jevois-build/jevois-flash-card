@@ -68,6 +68,10 @@ fi
 if [ "x$card" = "x" ]; then echo "Cannot write to empty card device -- ABORT"; exit 7; fi
 if [ ! -b "$card" ]; then echo "Specified card device [$card] not a block device -- ABORT"; exit 8; fi
 
+# Block device may exist if card reader is present but no card is inserted; also check for card:
+sudo dd if="$card" of=/dev/null count=1 status=none
+if [ $? -ne 0 ]; then "Device [$card] not readable -- insert microSD card -- ABORT"; exit 9; fi
+
 echo
 echo "=============================== Contents of $card:"
 echo abort | sfdisk --no-reread --force ${card} | grep -v Checking | grep -v Leaving.
@@ -76,7 +80,7 @@ echo
 echo
 if [ $usedef -ne 1 ]; then
     read -p "Ok to ERASE ALL DATA on $card? [y/N] "
-    if [ "X$REPLY" != "Xy" ]; then echo "Operation aborted by user."; exit 9; fi
+    if [ "X$REPLY" != "Xy" ]; then echo "Operation aborted by user."; exit 10; fi
 fi
 
 # Make sure the card was not automatically mounted:
@@ -89,7 +93,7 @@ sleep 3
 echo
 echo "#################### Erasing old partitions and partition table..."
 dd if=/dev/zero of=${card} bs=1M count=100
-if [ $? -ne 0 ]; then echo "Cannot erase ${card} - make sure you run jevois-flash-card as sudo -- ABORT"; exit 10; fi
+if [ $? -ne 0 ]; then echo "Cannot erase ${card} - make sure you run jevois-flash-card as sudo -- ABORT"; exit 11; fi
 sync
 
 echo "#################### Flashing boot0 loader..."
@@ -178,7 +182,7 @@ mount ${card}${p}1 sdcard/boot
 mount ${card}${p}3 sdcard/jevois
 mkdir sdcard/jevois/data sdcard/jevois/lib sdcard/jevois/modules sdcard/jevois/packages
 
-echo "#################### Populating boot partition ${card}${p}1 ..."
+echo "#################### Populating boot partition ${card}${p}1 from /var/lib/jevois-build/boot/ ..."
 cp boot/uImage boot/script.bin boot/uEnv.txt sdcard/boot/
 cp boot/microsd-readme.txt sdcard/boot/README.txt
 
@@ -191,11 +195,11 @@ if [ $usedef -ne 1 ]; then
 fi
 sync
 
-echo "#################### Populating root partition ${card}${p}2 ..."
+echo "#################### Populating root partition ${card}${p}2 from /var/lib/jevois-build/boot/rootfs.ext4 ..."
 
 mkdir rootfs-jevois
 mount -o loop boot/rootfs.ext4 rootfs-jevois
-cp -arv rootfs-jevois/* sdcard/
+cp -ar rootfs-jevois/* sdcard/
 sync
 umount rootfs-jevois
 /bin/rm -rf rootfs-jevois
@@ -218,11 +222,12 @@ cat > sdcard/etc/init.d/rcS <<EOF
 hostname jevois
 MODULES_DIR=/lib/modules/3.4.39
 
-if [ ! -f /boot/login ]; then /usr/bin/jevois.sh; fi
+if [ ! -f /boot/login ]; then /usr/bin/jevois.sh
+else while true; do /sbin/getty -L ttyS0 115200 vt100; done; fi
 EOF
 
-# Copy core jevois executables, libraries, etc
-cp -arv usr sdcard/
+echo "#################### Populating JeVois core in ${card}${p}2 from /var/lib/jevois-build/usr/ ..."
+cp -ar usr sdcard/
 
 # fixup opencv python if needed:
 if [ ! -f sdcard/usr/lib/python3.5/site-packages/cv2.so ]; then
@@ -232,14 +237,12 @@ if [ ! -f sdcard/usr/lib/python3.5/site-packages/cv2.so ]; then
     mv sdcard/usr/python/3.5/cv2.cpython-35m-x86_64-linux-gnu.so sdcard/usr/lib/python3.5/site-packages/cv2.so
 fi
     
-# Do not activate a console on ttyS0 by default, since we use it for communication with Arduino:
-if [ ! -f sdcard/boot/login ]; then
-    sed -i s/ttyS0/ttyS1/g sdcard/etc/inittab
-fi
+# Do not activate a console on ttyS0 by default in inittab, we do it in rcS above if needed, or in jevois.sh:
+sed -i '/ttyS0/d' sdcard/etc/inittab
 
-echo "#################### Populating jevois partition ${card}${p}2 ..."
+echo "#################### Populating jevois partition ${card}${p}2 from /var/lib/jevois-microsd/ ..."
 
-cp -arv /var/lib/jevois-microsd/* sdcard/jevois/
+cp -ar /var/lib/jevois-microsd/* sdcard/jevois/
 
 ####################################################################################################
 # Final fix:
