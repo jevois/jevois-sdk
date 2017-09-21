@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2010-2013 ARM Limited. All rights reserved.
- *
+ * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- *
+ * 
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -30,22 +30,22 @@ extern "C"
  */
 struct _mali_osk_device_data
 {
-  /* Dedicated GPU memory range (physical). */
-  u32 dedicated_mem_start;
-  u32 dedicated_mem_size;
-  
-  /* Shared GPU memory */
-  u32 shared_mem_size;
-  
-  /* Frame buffer memory to be accessible by Mali GPU (physical) */
-  u32 fb_start;
-  u32 fb_size;
-  
-  /* Report GPU utilization in this interval (specified in ms) */
-  u32 utilization_interval;
-  
-  /* Function that will receive periodic GPU utilization numbers */
-  void (*utilization_handler) (unsigned int);
+	/* Dedicated GPU memory range (physical). */
+	u32 dedicated_mem_start;
+	u32 dedicated_mem_size;
+
+	/* Shared GPU memory */
+	u32 shared_mem_size;
+
+	/* Frame buffer memory to be accessible by Mali GPU (physical) */
+	u32 fb_start;
+	u32 fb_size;
+
+	/* Report GPU utilization in this interval (specified in ms) */
+	u32 utilization_interval;
+
+	/* Function that will receive periodic GPU utilization numbers */
+	void (*utilization_handler)(unsigned int);
 };
 
 /** @brief Find Mali GPU HW resource
@@ -54,26 +54,26 @@ struct _mali_osk_device_data
  * @param res Storage for resource information if resource is found.
  * @return _MALI_OSK_ERR_OK on success, _MALI_OSK_ERR_ITEM_NOT_FOUND if resource is not found
  */
-_mali_osk_errcode_t _mali_osk_resource_find (u32 addr, _mali_osk_resource_t * res);
+_mali_osk_errcode_t _mali_osk_resource_find(u32 addr, _mali_osk_resource_t *res);
 
 
 /** @brief Find Mali GPU HW base address
  *
  * @return 0 if resources are found, otherwise the Mali GPU component with lowest address.
  */
-u32 _mali_osk_resource_base_address (void);
+u32 _mali_osk_resource_base_address(void);
 
 /** @brief Retrieve the Mali GPU specific data
  *
  * @return _MALI_OSK_ERR_OK on success, otherwise failure.
  */
-_mali_osk_errcode_t _mali_osk_device_data_get (struct _mali_osk_device_data * data);
+_mali_osk_errcode_t _mali_osk_device_data_get(struct _mali_osk_device_data *data);
 
 /** @brief Determines if Mali GPU has been configured with shared interrupts.
  *
  * @return MALI_TRUE if shared interrupts, MALI_FALSE if not.
  */
-mali_bool _mali_osk_shared_interrupts (void);
+mali_bool _mali_osk_shared_interrupts(void);
 
 /** @} */ /* end group _mali_osk_miscellaneous */
 
@@ -115,7 +115,7 @@ mali_bool _mali_osk_shared_interrupts (void);
  *
  * @param descriptor the mali_memory_allocation to initialize.
  */
-_mali_osk_errcode_t _mali_osk_mem_mapregion_init ( mali_memory_allocation * descriptor );
+_mali_osk_errcode_t _mali_osk_mem_mapregion_init( mali_memory_allocation * descriptor );
 
 /** @brief Terminate a user-space accessible memory range
  *
@@ -138,7 +138,7 @@ _mali_osk_errcode_t _mali_osk_mem_mapregion_init ( mali_memory_allocation * desc
  *
  * @param descriptor the mali_memory_allocation to terminate.
  */
-void _mali_osk_mem_mapregion_term ( mali_memory_allocation * descriptor );
+void _mali_osk_mem_mapregion_term( mali_memory_allocation * descriptor );
 
 /** @brief Map physical pages into a user process's virtual address range
  *
@@ -195,7 +195,7 @@ void _mali_osk_mem_mapregion_term ( mali_memory_allocation * descriptor );
  * \ref MALI_MEMORY_ALLOCATION_OS_ALLOCATED_PHYSADDR_MAGIC, but note that we must
  * also modify the mali process address manager in the mmu/memory engine code.
  */
-_mali_osk_errcode_t _mali_osk_mem_mapregion_map ( mali_memory_allocation * descriptor, u32 offset, u32 * phys_addr, u32 size );
+_mali_osk_errcode_t _mali_osk_mem_mapregion_map( mali_memory_allocation * descriptor, u32 offset, u32 *phys_addr, u32 size );
 
 
 /** @brief Unmap physical pages from a user process's virtual address range
@@ -238,7 +238,7 @@ _mali_osk_errcode_t _mali_osk_mem_mapregion_map ( mali_memory_allocation * descr
  * of pages that were originally OS allocated, this must have
  * \ref _MALI_OSK_MEM_MAPREGION_FLAG_OS_ALLOCATED_PHYSADDR set.
  */
-void _mali_osk_mem_mapregion_unmap ( mali_memory_allocation * descriptor, u32 offset, u32 size, _mali_osk_mem_mapregion_flags_t flags );
+void _mali_osk_mem_mapregion_unmap( mali_memory_allocation * descriptor, u32 offset, u32 size, _mali_osk_mem_mapregion_flags_t flags );
 
 /** @brief Copy as much data as possible from src to dest, do not crash if src or dest isn't available.
  *
@@ -247,7 +247,7 @@ void _mali_osk_mem_mapregion_unmap ( mali_memory_allocation * descriptor, u32 of
  * @param size Number of bytes to copy
  * @return Number of bytes actually copied
  */
-u32 _mali_osk_mem_write_safe (void * dest, const void * src, u32 size);
+u32 _mali_osk_mem_write_safe(void *dest, const void *src, u32 size);
 
 /** @} */ /* end group _mali_osk_low_level_memory */
 

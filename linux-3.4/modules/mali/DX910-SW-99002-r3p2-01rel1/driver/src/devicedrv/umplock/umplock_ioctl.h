@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2012 ARM Limited. All rights reserved.
- *
+ * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- *
+ * 
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -31,16 +31,16 @@ extern "C" {
 
 typedef enum
 {
-  _LOCK_ACCESS_RENDERABLE = 1,
-  _LOCK_ACCESS_TEXTURE,
-  _LOCK_ACCESS_CPU_WRITE,
-  _LOCK_ACCESS_CPU_READ,
+	_LOCK_ACCESS_RENDERABLE = 1,
+	_LOCK_ACCESS_TEXTURE,
+	_LOCK_ACCESS_CPU_WRITE,
+	_LOCK_ACCESS_CPU_READ,
 } _lock_access_usage;
 
 typedef struct _lock_item_s
 {
-  unsigned int secure_id;
-  _lock_access_usage usage;
+	unsigned int secure_id;
+	_lock_access_usage usage;
 } _lock_item_s;
 
 

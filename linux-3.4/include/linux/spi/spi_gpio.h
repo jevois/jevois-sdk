@@ -15,19 +15,19 @@
  * that the controller_data being the GPIO used for each device's
  * chipselect:
  *
- *  static struct spi_board_info ... [] = {
- *  ...
- *   
- *    .controller_data = (void *) 42,
- *  ...
- *   
- *    .controller_data = (void *) 86,
- *  ...
- *  };
+ *	static struct spi_board_info ... [] = {
+ *	...
+ *	
+ *		.controller_data = (void *) 42,
+ *	...
+ *	
+ *		.controller_data = (void *) 86,
+ *	...
+ *	};
  *
  * If chipselect is not used (there's only one device on the bus), assign
  * SPI_GPIO_NO_CHIPSELECT to the controller_data:
- *    .controller_data = (void *) SPI_GPIO_NO_CHIPSELECT;
+ *		.controller_data = (void *) SPI_GPIO_NO_CHIPSELECT;
  *
  * If the MISO or MOSI pin is not available then it should be set to
  * SPI_GPIO_NO_MISO or SPI_GPIO_NO_MOSI.
@@ -36,9 +36,9 @@
  * that platform_device and controller_data should be removed.
  */
 
-#define SPI_GPIO_NO_CHIPSELECT    ((unsigned long)-1l)
-#define SPI_GPIO_NO_MISO    ((unsigned long)-1l)
-#define SPI_GPIO_NO_MOSI    ((unsigned long)-1l)
+#define SPI_GPIO_NO_CHIPSELECT		((unsigned long)-1l)
+#define SPI_GPIO_NO_MISO		((unsigned long)-1l)
+#define SPI_GPIO_NO_MOSI		((unsigned long)-1l)
 
 /**
  * struct spi_gpio_platform_data - parameter for bitbanged SPI master
@@ -61,11 +61,11 @@
  * drivers expect to see all-ones data as the no slave "response".)
  */
 struct spi_gpio_platform_data {
-  unsigned  sck;
-  unsigned  mosi;
-  unsigned  miso;
-  
-  u16   num_chipselect;
+	unsigned	sck;
+	unsigned	mosi;
+	unsigned	miso;
+
+	u16		num_chipselect;
 };
 
 #endif /* __LINUX_SPI_GPIO_H */

@@ -14,22 +14,22 @@
 #ifndef __ASSEMBLY__
 
 #ifdef CONFIG_SMP
-#define NR_CPU_IRQS GxICR_NUM_EXT_IRQS
+#define NR_CPU_IRQS	GxICR_NUM_EXT_IRQS
 #else
-#define NR_CPU_IRQS GxICR_NUM_IRQS
+#define NR_CPU_IRQS	GxICR_NUM_IRQS
 #endif
 
 enum {
-  FPGA_LAN_IRQ  = NR_CPU_IRQS,
-  FPGA_UART_IRQ,
-  FPGA_I2C_IRQ,
-  FPGA_USB_IRQ,
-  FPGA_RESERVED_IRQ,
-  FPGA_FPGA_IRQ,
-  NR_IRQS
+	FPGA_LAN_IRQ	= NR_CPU_IRQS,
+	FPGA_UART_IRQ,
+	FPGA_I2C_IRQ,
+	FPGA_USB_IRQ,
+	FPGA_RESERVED_IRQ,
+	FPGA_FPGA_IRQ,
+	NR_IRQS
 };
 
-extern void __init irq_fpga_init (void);
+extern void __init irq_fpga_init(void);
 
 #endif /* !__ASSEMBLY__ */
 #endif /* _UNIT_IRQ_H */

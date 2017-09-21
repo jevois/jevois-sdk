@@ -16,8 +16,8 @@
 
 /*
  * Clock Settings
- *  CCLK = (CLKIN * VCO_MULT) / CCLK_DIV
- *  SCLK = (CLKIN * VCO_MULT) / SCLK_DIV
+ *	CCLK = (CLKIN * VCO_MULT) / CCLK_DIV
+ *	SCLK = (CLKIN * VCO_MULT) / SCLK_DIV
  */
 #define CONFIG_CLKIN_HZ                 25000000
 #define CONFIG_CLKIN_HALF               0
@@ -86,10 +86,10 @@
 
 #define ENV_IS_EMBEDDED
 #define LDS_BOARD_TEXT \
-  arch/blackfin/lib/libblackfin.o (.text*); \
-  arch/blackfin/cpu/libblackfin.o (.text*); \
-  . = DEFINED(env_offset) ? env_offset : .; \
-  common/env_embedded.o (.text*);
+	arch/blackfin/lib/libblackfin.o (.text*); \
+	arch/blackfin/cpu/libblackfin.o (.text*); \
+	. = DEFINED(env_offset) ? env_offset : .; \
+	common/env_embedded.o (.text*);
 
 /*
  * Misc Settings
@@ -110,12 +110,12 @@
 
 /* Convenience commands to update Linux in NOR flash */
 #define CONFIG_EXTRA_ENV_SETTINGS \
-  "fetchme=tftpboot 0x01000000 uImage;" \
-  "iminfo\0" \
-  "flashme=protect off 0x20030000 0x2003ffff;" \
-  "erase 0x20030000 0x202effff;" \
-  "cp.b 0x01000000 0x20030000 0x2c0000\0" \
-  "runme=bootm 0x01000000\0"
+	"fetchme=tftpboot 0x01000000 uImage;" \
+		"iminfo\0" \
+	"flashme=protect off 0x20030000 0x2003ffff;" \
+		"erase 0x20030000 0x202effff;" \
+		"cp.b 0x01000000 0x20030000 0x2c0000\0" \
+	"runme=bootm 0x01000000\0"
 
 /* this sets up the default list of enabled commands */
 #include <config_cmd_default.h>

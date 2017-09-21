@@ -52,10 +52,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 extern "C" {
 #endif
 
-typedef struct _SCP_CONTEXT_ SCP_CONTEXT; /*!< Opaque handle to a software command processor context */
+typedef struct _SCP_CONTEXT_ SCP_CONTEXT;	/*!< Opaque handle to a software command processor context */
 
-typedef IMG_BOOL (*SCPReady) (IMG_PVOID pvReadyData);
-typedef IMG_VOID (*SCPDo) (IMG_PVOID pvReadyData, IMG_PVOID pvCompleteData);
+typedef IMG_BOOL (*SCPReady)(IMG_PVOID pvReadyData);
+typedef IMG_VOID (*SCPDo)(IMG_PVOID pvReadyData, IMG_PVOID pvCompleteData);
 
 /*************************************************************************/ /*!
 @Function       SCPCreate
@@ -70,9 +70,9 @@ typedef IMG_VOID (*SCPDo) (IMG_PVOID pvReadyData, IMG_PVOID pvCompleteData);
 */
 /*****************************************************************************/
 IMG_IMPORT
-PVRSRV_ERROR IMG_CALLCONV SCPCreate (IMG_UINT32 ui32CCBSizeLog2,
-                                     SCP_CONTEXT ** ppsContext);
-                                     
+PVRSRV_ERROR IMG_CALLCONV SCPCreate(IMG_UINT32 ui32CCBSizeLog2,
+									SCP_CONTEXT **ppsContext);
+
 /*************************************************************************/ /*!
 @Function       SCPAllocCommand
 
@@ -114,19 +114,19 @@ PVRSRV_ERROR IMG_CALLCONV SCPCreate (IMG_UINT32 ui32CCBSizeLog2,
 */
 /*****************************************************************************/
 IMG_IMPORT
-PVRSRV_ERROR IMG_CALLCONV SCPAllocCommand (SCP_CONTEXT * psSCPContext,
-    IMG_UINT32 ui32SyncPrimCount,
-    SERVER_SYNC_PRIMITIVE ** papsSync,
-    IMG_BOOL * pabUpdate,
-    IMG_INT32 i32AcquireFenceFd,
-    SCPReady pfnCommandReady,
-    SCPDo pfnCommandDo,
-    IMG_SIZE_T ui32ReadyDataByteSize,
-    IMG_SIZE_T ui32CompleteDataByteSize,
-    IMG_PVOID * ppvReadyData,
-    IMG_PVOID * ppvCompleteData,
-    IMG_INT32 * pi32ReleaseFenceFd);
-    
+PVRSRV_ERROR IMG_CALLCONV SCPAllocCommand(SCP_CONTEXT *psSCPContext,
+										  IMG_UINT32 ui32SyncPrimCount,
+										  SERVER_SYNC_PRIMITIVE **papsSync,
+										  IMG_BOOL *pabUpdate,
+										  IMG_INT32 i32AcquireFenceFd,
+										  SCPReady pfnCommandReady,
+										  SCPDo pfnCommandDo,
+										  IMG_SIZE_T ui32ReadyDataByteSize,
+										  IMG_SIZE_T ui32CompleteDataByteSize,
+										  IMG_PVOID *ppvReadyData,
+										  IMG_PVOID *ppvCompleteData,
+										  IMG_INT32 *pi32ReleaseFenceFd);
+
 /*************************************************************************/ /*!
 @Function       SCPSubmitCommand
 
@@ -141,7 +141,7 @@ PVRSRV_ERROR IMG_CALLCONV SCPAllocCommand (SCP_CONTEXT * psSCPContext,
 */
 /*****************************************************************************/
 IMG_IMPORT
-PVRSRV_ERROR SCPSubmitCommand (SCP_CONTEXT * psContext);
+PVRSRV_ERROR SCPSubmitCommand(SCP_CONTEXT *psContext);
 
 
 /*************************************************************************/ /*!
@@ -156,7 +156,7 @@ PVRSRV_ERROR SCPSubmitCommand (SCP_CONTEXT * psContext);
 */
 /*****************************************************************************/
 IMG_IMPORT
-PVRSRV_ERROR SCPRun (SCP_CONTEXT * psContext);
+PVRSRV_ERROR SCPRun(SCP_CONTEXT *psContext);
 
 /*************************************************************************/ /*!
 @Function       SCPCommandComplete
@@ -171,7 +171,7 @@ PVRSRV_ERROR SCPRun (SCP_CONTEXT * psContext);
 */
 /*****************************************************************************/
 IMG_IMPORT
-IMG_VOID SCPCommandComplete (SCP_CONTEXT * psContext);
+IMG_VOID SCPCommandComplete(SCP_CONTEXT *psContext);
 
 /*************************************************************************/ /*!
 @Function       SCPFlush
@@ -181,11 +181,11 @@ IMG_VOID SCPCommandComplete (SCP_CONTEXT * psContext);
 @Input          psSCPContext            Context to process
 
 @Return         PVRSRV_OK if all commands have been completed, otherwise
-        PVRSRV_ERROR_RETRY
+				PVRSRV_ERROR_RETRY
 */
 /*****************************************************************************/
 IMG_EXPORT
-PVRSRV_ERROR SCPFlush (SCP_CONTEXT * psContext);
+PVRSRV_ERROR SCPFlush(SCP_CONTEXT *psContext);
 
 /*************************************************************************/ /*!
 @Function       SCPDumpStatus
@@ -198,7 +198,7 @@ PVRSRV_ERROR SCPFlush (SCP_CONTEXT * psContext);
 */
 /*****************************************************************************/
 IMG_EXPORT
-IMG_VOID IMG_CALLCONV SCPDumpStatus (SCP_CONTEXT * psContext);
+IMG_VOID IMG_CALLCONV SCPDumpStatus(SCP_CONTEXT *psContext);
 
 /*************************************************************************/ /*!
 @Function       SCPDestroy
@@ -211,7 +211,7 @@ IMG_VOID IMG_CALLCONV SCPDumpStatus (SCP_CONTEXT * psContext);
 */
 /*****************************************************************************/
 IMG_IMPORT
-IMG_VOID IMG_CALLCONV SCPDestroy (SCP_CONTEXT * psContext);
+IMG_VOID IMG_CALLCONV SCPDestroy(SCP_CONTEXT *psContext);
 
 #if defined (__cplusplus)
 }

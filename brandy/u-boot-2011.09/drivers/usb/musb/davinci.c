@@ -28,96 +28,96 @@
 
 /* MUSB platform configuration */
 struct musb_config musb_cfg = {
-  .regs   = (struct musb_regs *) MENTOR_USB0_BASE,
-  .timeout  = DAVINCI_USB_TIMEOUT,
-  .musb_speed = 0,
+	.regs		= (struct musb_regs *)MENTOR_USB0_BASE,
+	.timeout	= DAVINCI_USB_TIMEOUT,
+	.musb_speed	= 0,
 };
 
 /* MUSB module register overlay */
-struct davinci_usb_regs * dregs;
+struct davinci_usb_regs *dregs;
 
 /*
  * Enable the USB phy
  */
-static u8 phy_on (void)
+static u8 phy_on(void)
 {
-  u32 timeout;
-  #ifdef DAVINCI_DM365EVM
-  u32 val;
-  #endif
-  /* Wait until the USB phy is turned on */
-  #ifdef DAVINCI_DM365EVM
-  writel (USBPHY_PHY24MHZ | USBPHY_SESNDEN |
-          USBPHY_VBDTCTEN, USBPHY_CTL_PADDR);
-  #else
-  writel (USBPHY_SESNDEN | USBPHY_VBDTCTEN, USBPHY_CTL_PADDR);
-  #endif
-  timeout = musb_cfg.timeout;
-  
-  #ifdef DAVINCI_DM365EVM
-  /* Set the ownership of GIO33 to USB */
-  val = readl (PINMUX4);
-  val &= ~ (PINMUX4_USBDRVBUS_BITCLEAR);
-  val |= PINMUX4_USBDRVBUS_BITSET;
-  writel (val, PINMUX4);
-  #endif
-  while (timeout--)
-    if (readl (USBPHY_CTL_PADDR) & USBPHY_PHYCLKGD)
-    { return 1; }
-    
-  /* USB phy was not turned on */
-  return 0;
+	u32 timeout;
+#ifdef DAVINCI_DM365EVM
+	u32 val;
+#endif
+	/* Wait until the USB phy is turned on */
+#ifdef DAVINCI_DM365EVM
+	writel(USBPHY_PHY24MHZ | USBPHY_SESNDEN |
+			USBPHY_VBDTCTEN, USBPHY_CTL_PADDR);
+#else
+	writel(USBPHY_SESNDEN | USBPHY_VBDTCTEN, USBPHY_CTL_PADDR);
+#endif
+	timeout = musb_cfg.timeout;
+
+#ifdef DAVINCI_DM365EVM
+	/* Set the ownership of GIO33 to USB */
+	val = readl(PINMUX4);
+	val &= ~(PINMUX4_USBDRVBUS_BITCLEAR);
+	val |= PINMUX4_USBDRVBUS_BITSET;
+	writel(val, PINMUX4);
+#endif
+	while (timeout--)
+		if (readl(USBPHY_CTL_PADDR) & USBPHY_PHYCLKGD)
+			return 1;
+
+	/* USB phy was not turned on */
+	return 0;
 }
 
 /*
  * Disable the USB phy
  */
-static void phy_off (void)
+static void phy_off(void)
 {
-  /* powerdown the on-chip PHY and its oscillator */
-  writel (USBPHY_OSCPDWN | USBPHY_PHYPDWN, USBPHY_CTL_PADDR);
+	/* powerdown the on-chip PHY and its oscillator */
+	writel(USBPHY_OSCPDWN | USBPHY_PHYPDWN, USBPHY_CTL_PADDR);
 }
 
 /*
  * This function performs Davinci platform specific initialization for usb0.
  */
-int musb_platform_init (void)
+int musb_platform_init(void)
 {
-  u32  revision;
-  
-  /* enable USB VBUS */
-  #ifndef DAVINCI_DM365EVM
-  enable_vbus();
-  #endif
-  /* start the on-chip USB phy and its pll */
-  if (!phy_on() )
-  { return -1; }
-  
-  /* reset the controller */
-  dregs = (struct davinci_usb_regs *) DAVINCI_USB0_BASE;
-  writel (1, &dregs->ctrlr);
-  udelay (5000);
-  
-  /* Returns zero if e.g. not clocked */
-  revision = readl (&dregs->version);
-  if (!revision)
-  { return -1; }
-  
-  /* Disable all interrupts */
-  writel (DAVINCI_USB_USBINT_MASK | DAVINCI_USB_RXINT_MASK |
-          DAVINCI_USB_TXINT_MASK , &dregs->intmsksetr);
-  return 0;
+	u32  revision;
+
+	/* enable USB VBUS */
+#ifndef DAVINCI_DM365EVM
+	enable_vbus();
+#endif
+	/* start the on-chip USB phy and its pll */
+	if (!phy_on())
+		return -1;
+
+	/* reset the controller */
+	dregs = (struct davinci_usb_regs *)DAVINCI_USB0_BASE;
+	writel(1, &dregs->ctrlr);
+	udelay(5000);
+
+	/* Returns zero if e.g. not clocked */
+	revision = readl(&dregs->version);
+	if (!revision)
+		return -1;
+
+	/* Disable all interrupts */
+	writel(DAVINCI_USB_USBINT_MASK | DAVINCI_USB_RXINT_MASK |
+			DAVINCI_USB_TXINT_MASK , &dregs->intmsksetr);
+	return 0;
 }
 
 /*
  * This function performs Davinci platform specific deinitialization for usb0.
  */
-void musb_platform_deinit (void)
+void musb_platform_deinit(void)
 {
-  /* Turn of the phy */
-  phy_off();
-  
-  /* flush any interrupts */
-  writel (DAVINCI_USB_USBINT_MASK | DAVINCI_USB_TXINT_MASK |
-          DAVINCI_USB_RXINT_MASK , &dregs->intclrr);
+	/* Turn of the phy */
+	phy_off();
+
+	/* flush any interrupts */
+	writel(DAVINCI_USB_USBINT_MASK | DAVINCI_USB_TXINT_MASK |
+			DAVINCI_USB_RXINT_MASK , &dregs->intclrr);
 }

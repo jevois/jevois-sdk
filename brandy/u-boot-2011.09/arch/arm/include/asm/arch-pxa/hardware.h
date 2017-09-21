@@ -1,9 +1,9 @@
 /*
  *  linux/include/asm-arm/arch-pxa/hardware.h
  *
- *  Author: Nicolas Pitre
- *  Created:  Jun 15, 2001
- *  Copyright:  MontaVista Software Inc.
+ *  Author:	Nicolas Pitre
+ *  Created:	Jun 15, 2001
+ *  Copyright:	MontaVista Software Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -27,11 +27,11 @@
  * the exact CPU has to be selected. CONFIG_CPU_MONAHANS is a helper for common
  * drivers and compatibility glue with old source then.
  */
-#ifndef CONFIG_CPU_MONAHANS
-#if defined(CONFIG_CPU_PXA300) || \
-defined(CONFIG_CPU_PXA310) || \
-defined(CONFIG_CPU_PXA320)
-#define CONFIG_CPU_MONAHANS
+#ifndef	CONFIG_CPU_MONAHANS
+#if	defined(CONFIG_CPU_PXA300) || \
+	defined(CONFIG_CPU_PXA310) || \
+	defined(CONFIG_CPU_PXA320)
+#define	CONFIG_CPU_MONAHANS
 #endif
 #endif
 
@@ -40,21 +40,21 @@ defined(CONFIG_CPU_PXA320)
  * generic IO bus, typically with ISA parts, hardwired IDE interfaces, etc.
  * The actual PCMCIA code is mapping required IO region at run time.
  */
-#define PCMCIA_IO_0_BASE  0xf6000000
-#define PCMCIA_IO_1_BASE  0xf7000000
+#define PCMCIA_IO_0_BASE	0xf6000000
+#define PCMCIA_IO_1_BASE	0xf7000000
 
 
 /*
  * We requires absolute addresses.
  */
-#define PCIO_BASE   0
+#define PCIO_BASE		0
 
 /*
  * Workarounds for at least 2 errata so far require this.
  * The mapping is set in mach-pxa/generic.c.
  */
-#define UNCACHED_PHYS_0   0xff000000
-#define UNCACHED_ADDR   UNCACHED_PHYS_0
+#define UNCACHED_PHYS_0		0xff000000
+#define UNCACHED_ADDR		UNCACHED_PHYS_0
 
 /*
  * Intel PXA internal I/O mappings:
@@ -74,20 +74,20 @@ defined(CONFIG_CPU_PXA320)
  * This must be called *before* the corresponding IRQ is registered.
  * Use this instead of directly setting GRER/GFER.
  */
-#define GPIO_FALLING_EDGE 1
-#define GPIO_RISING_EDGE  2
-#define GPIO_BOTH_EDGES   3
-extern void set_GPIO_IRQ_edge ( int gpio_nr, int edge_mask );
+#define GPIO_FALLING_EDGE	1
+#define GPIO_RISING_EDGE	2
+#define GPIO_BOTH_EDGES		3
+extern void set_GPIO_IRQ_edge( int gpio_nr, int edge_mask );
 
 /*
  * Handy routine to set GPIO alternate functions
  */
-extern void set_GPIO_mode ( int gpio_mode );
+extern void set_GPIO_mode( int gpio_mode );
 
 /*
  * return current lclk frequency in units of 10kHz
  */
-extern unsigned int get_lclk_frequency_10khz (void);
+extern unsigned int get_lclk_frequency_10khz(void);
 
 #endif
 
@@ -120,4 +120,4 @@ extern unsigned int get_lclk_frequency_10khz (void);
 #include "pleb.h"
 #endif
 
-#endif  /* _ASM_ARCH_HARDWARE_H */
+#endif	/* _ASM_ARCH_HARDWARE_H */

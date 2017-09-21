@@ -27,7 +27,7 @@
 #if defined(CONFIG_AT91RM9200)
 # include <asm/arch/at91rm9200.h>
 #elif defined(CONFIG_AT91SAM9260) || defined(CONFIG_AT91SAM9G20) || \
-defined(CONFIG_AT91SAM9XE)
+	defined(CONFIG_AT91SAM9XE)
 # include <asm/arch/at91sam9260.h>
 #elif defined(CONFIG_AT91SAM9261) || defined(CONFIG_AT91SAM9G10)
 # include <asm/arch/at91sam9261.h>

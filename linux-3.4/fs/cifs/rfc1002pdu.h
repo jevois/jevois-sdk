@@ -23,7 +23,7 @@
 
 /* NB: unlike smb/cifs packets, the RFC1002 structures are big endian */
 
-/* RFC 1002 session packet types */
+	/* RFC 1002 session packet types */
 #define RFC1002_SESSION_MESSAGE 0x00
 #define RFC1002_SESSION_REQUEST  0x81
 #define RFC1002_POSITIVE_SESSION_RESPONSE 0x82
@@ -31,32 +31,32 @@
 #define RFC1002_RETARGET_SESSION_RESPONSE 0x84
 #define RFC1002_SESSION_KEEP_ALIVE 0x85
 
-/* RFC 1002 flags (only one defined */
+	/* RFC 1002 flags (only one defined */
 #define RFC1002_LENGTH_EXTEND 0x80 /* high order bit of length (ie +64K) */
 
 struct rfc1002_session_packet {
-  __u8  type;
-  __u8  flags;
-  __u16 length;
-  union {
-    struct {
-      __u8 called_len;
-      __u8 called_name[32];
-      __u8 scope1; /* null */
-      __u8 calling_len;
-      __u8 calling_name[32];
-      __u8 scope2; /* null */
-    } __attribute__ ( (packed) ) session_req;
-    struct {
-      __u32 retarget_ip_addr;
-      __u16 port;
-    } __attribute__ ( (packed) ) retarget_resp;
-    __u8 neg_ses_resp_error_code;
-    /* POSITIVE_SESSION_RESPONSE packet does not include trailer.
-    SESSION_KEEP_ALIVE packet also does not include a trailer.
-    Trailer for the SESSION_MESSAGE packet is SMB/CIFS header */
-  } __attribute__ ( (packed) ) trailer;
-} __attribute__ ( (packed) );
+	__u8	type;
+	__u8	flags;
+	__u16	length;
+	union {
+		struct {
+			__u8 called_len;
+			__u8 called_name[32];
+			__u8 scope1; /* null */
+			__u8 calling_len;
+			__u8 calling_name[32];
+			__u8 scope2; /* null */
+		} __attribute__((packed)) session_req;
+		struct {
+			__u32 retarget_ip_addr;
+			__u16 port;
+		} __attribute__((packed)) retarget_resp;
+		__u8 neg_ses_resp_error_code;
+		/* POSITIVE_SESSION_RESPONSE packet does not include trailer.
+		SESSION_KEEP_ALIVE packet also does not include a trailer.
+		Trailer for the SESSION_MESSAGE packet is SMB/CIFS header */
+	} __attribute__((packed)) trailer;
+} __attribute__((packed));
 
 /* Negative Session Response error codes */
 #define RFC1002_NOT_LISTENING_CALLED  0x80 /* not listening on called name */

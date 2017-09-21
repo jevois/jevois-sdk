@@ -20,12 +20,12 @@
  *
  *  CONTACTS:
  *
- *  Mark Allyn    mark.a.allyn@intel.com
+ *  Mark Allyn		mark.a.allyn@intel.com
  *  Jayant Mangalampalli jayant.mangalampalli@intel.com
  *
  *  CHANGES:
  *
- *  2010.09.20  Upgrade to Medfield
+ *  2010.09.20	Upgrade to Medfield
  *  2011.02.22  Enable kernel crypto
  *
  */
@@ -40,17 +40,17 @@
 
 
 /* cf registers */
-#define   HW_HOST_IRR_REG_ADDR      0x0A00UL
-#define   HW_HOST_IMR_REG_ADDR      0x0A04UL
-#define   HW_HOST_ICR_REG_ADDR      0x0A08UL
-#define   HW_HOST_SEP_HOST_GPR0_REG_ADDR    0x0B00UL
-#define   HW_HOST_SEP_HOST_GPR1_REG_ADDR    0x0B04UL
-#define   HW_HOST_SEP_HOST_GPR2_REG_ADDR    0x0B08UL
-#define   HW_HOST_SEP_HOST_GPR3_REG_ADDR    0x0B0CUL
-#define   HW_HOST_HOST_SEP_GPR0_REG_ADDR    0x0B80UL
-#define   HW_HOST_HOST_SEP_GPR1_REG_ADDR    0x0B84UL
-#define   HW_HOST_HOST_SEP_GPR2_REG_ADDR    0x0B88UL
-#define   HW_HOST_HOST_SEP_GPR3_REG_ADDR    0x0B8CUL
-#define   HW_SRAM_DATA_READY_REG_ADDR   0x0F08UL
+#define		HW_HOST_IRR_REG_ADDR			0x0A00UL
+#define		HW_HOST_IMR_REG_ADDR			0x0A04UL
+#define		HW_HOST_ICR_REG_ADDR			0x0A08UL
+#define		HW_HOST_SEP_HOST_GPR0_REG_ADDR		0x0B00UL
+#define		HW_HOST_SEP_HOST_GPR1_REG_ADDR		0x0B04UL
+#define		HW_HOST_SEP_HOST_GPR2_REG_ADDR		0x0B08UL
+#define		HW_HOST_SEP_HOST_GPR3_REG_ADDR		0x0B0CUL
+#define		HW_HOST_HOST_SEP_GPR0_REG_ADDR		0x0B80UL
+#define		HW_HOST_HOST_SEP_GPR1_REG_ADDR		0x0B84UL
+#define		HW_HOST_HOST_SEP_GPR2_REG_ADDR		0x0B88UL
+#define		HW_HOST_HOST_SEP_GPR3_REG_ADDR		0x0B8CUL
+#define		HW_SRAM_DATA_READY_REG_ADDR		0x0F08UL
 
-#endif    /* ifndef HW_DEFS */
+#endif		/* ifndef HW_DEFS */

@@ -38,21 +38,21 @@
 
 int cleanup_before_linux (void)
 {
-  /*
-   * this function is called just before we call linux
-   * it prepares the processor for linux
-   *
-   * we turn off caches etc ...
-   * and we set the CPU-speed to 73 MHz - see start.S for details
-   */
-  
-  #if defined(CONFIG_NETARM) || defined(CONFIG_S3C4510B) || defined(CONFIG_LPC2292)
-  disable_interrupts ();
-  /* Nothing more needed */
-  #elif defined(CONFIG_INTEGRATOR) && defined(CONFIG_ARCH_INTEGRATOR)
-  /* No cleanup before linux for IntegratorAP/CM720T as yet */
-  #else
+	/*
+	 * this function is called just before we call linux
+	 * it prepares the processor for linux
+	 *
+	 * we turn off caches etc ...
+	 * and we set the CPU-speed to 73 MHz - see start.S for details
+	 */
+
+#if defined(CONFIG_NETARM) || defined(CONFIG_S3C4510B) || defined(CONFIG_LPC2292)
+	disable_interrupts ();
+	/* Nothing more needed */
+#elif defined(CONFIG_INTEGRATOR) && defined(CONFIG_ARCH_INTEGRATOR)
+	/* No cleanup before linux for IntegratorAP/CM720T as yet */
+#else
 #error No cleanup_before_linux() defined for this CPU type
-  #endif
-  return 0;
+#endif
+	return 0;
 }

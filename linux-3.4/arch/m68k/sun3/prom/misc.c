@@ -16,19 +16,19 @@
 
 /* Reset and reboot the machine with the command 'bcommand'. */
 void
-prom_reboot (char * bcommand)
+prom_reboot(char *bcommand)
 {
-  unsigned long flags;
-  local_irq_save (flags);
-  (* (romvec->pv_reboot) ) (bcommand);
-  local_irq_restore (flags);
+	unsigned long flags;
+	local_irq_save(flags);
+	(*(romvec->pv_reboot))(bcommand);
+	local_irq_restore(flags);
 }
 
 /* Drop into the prom, with the chance to continue with the 'go'
  * prom command.
  */
 void
-prom_cmdline (void)
+prom_cmdline(void)
 {
 }
 
@@ -36,59 +36,59 @@ prom_cmdline (void)
  * No chance of continuing.
  */
 void
-prom_halt (void)
+prom_halt(void)
 {
-  unsigned long flags;
+	unsigned long flags;
 again:
-  local_irq_save (flags);
-  (* (romvec->pv_halt) ) ();
-  local_irq_restore (flags);
-  goto again; /* PROM is out to get me -DaveM */
+	local_irq_save(flags);
+	(*(romvec->pv_halt))();
+	local_irq_restore(flags);
+	goto again; /* PROM is out to get me -DaveM */
 }
 
-typedef void (*sfunc_t) (void);
+typedef void (*sfunc_t)(void);
 
 /* Get the idprom and stuff it into buffer 'idbuf'.  Returns the
  * format type.  'num_bytes' is the number of bytes that your idbuf
  * has space for.  Returns 0xff on error.
  */
 unsigned char
-prom_get_idprom (char * idbuf, int num_bytes)
+prom_get_idprom(char *idbuf, int num_bytes)
 {
-  int i, oldsfc;
-  GET_SFC (oldsfc);
-  SET_SFC (FC_CONTROL);
-  for (i = 0; i < num_bytes; i++)
-  {
-    /* There is a problem with the GET_CONTROL_BYTE
-    macro; defining the extra variable
-    gets around it.
-    */
-    int c;
-    GET_CONTROL_BYTE (SUN3_IDPROM_BASE + i, c);
-    idbuf[i] = c;
-  }
-  SET_SFC (oldsfc);
-  return idbuf[0];
+	int i, oldsfc;
+	GET_SFC(oldsfc);
+	SET_SFC(FC_CONTROL);
+	for(i=0;i<num_bytes; i++)
+	{
+		/* There is a problem with the GET_CONTROL_BYTE
+		macro; defining the extra variable
+		gets around it.
+		*/
+		int c;
+		GET_CONTROL_BYTE(SUN3_IDPROM_BASE + i, c);
+		idbuf[i] = c;
+	}
+	SET_SFC(oldsfc);
+	return idbuf[0];
 }
 
 /* Get the major prom version number. */
 int
-prom_version (void)
+prom_version(void)
 {
-  return romvec->pv_romvers;
+	return romvec->pv_romvers;
 }
 
 /* Get the prom plugin-revision. */
 int
-prom_getrev (void)
+prom_getrev(void)
 {
-  return prom_rev;
+	return prom_rev;
 }
 
 /* Get the prom firmware print revision. */
 int
-prom_getprev (void)
+prom_getprev(void)
 {
-  return prom_prev;
+	return prom_prev;
 }

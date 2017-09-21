@@ -37,28 +37,28 @@
 
 enum hpd_status
 {
-  STATUE_CLOSE = 0,
-  STATUE_OPEN  = 1,
-  
+	STATUE_CLOSE = 0,
+	STATUE_OPEN  = 1,
+
 };
 
 
-s32 tv_init (void);
-s32 tv_exit (void);
-s32 tv_get_mode (u32 sel);
-s32 tv_set_mode (u32 sel, disp_tv_mode tv_mod);
-s32 tv_get_input_csc (void);
-s32 tv_get_video_timing_info (u32 sel, disp_video_timings ** video_info);
-s32 tv_enable (u32 sel);
-s32 tv_disable (u32 sel);
-s32 tv_suspend (void);
-s32 tv_resume (void);
-s32 tv_mode_support (disp_tv_mode mode);
-void tv_report_hpd_work (void);
-s32 tv_detect_thread (void * parg);
-s32 tv_detect_enable (void);
-s32 tv_detect_disable (void);
-s32 tv_get_dac_hpd (u32 sel);
+s32 tv_init(void);
+s32 tv_exit(void);
+s32 tv_get_mode(u32 sel);
+s32 tv_set_mode(u32 sel, disp_tv_mode tv_mod);
+s32 tv_get_input_csc(void);
+s32 tv_get_video_timing_info(u32 sel, disp_video_timings **video_info);
+s32 tv_enable(u32 sel);
+s32 tv_disable(u32 sel);
+s32 tv_suspend(void);
+s32 tv_resume(void);
+s32 tv_mode_support(disp_tv_mode mode);
+void tv_report_hpd_work(void);
+s32 tv_detect_thread(void *parg);
+s32 tv_detect_enable(void);
+s32 tv_detect_disable(void);
+s32 tv_get_dac_hpd(u32 sel);
 s32 tv_hot_plugging_detect (u32 state);
 
 #endif

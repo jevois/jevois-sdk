@@ -13,4 +13,4 @@
 #include "portmux.h"
 #include "ports.h"
 
-#define BF561_FAMILY 1  /* Linux glue */
+#define BF561_FAMILY 1	/* Linux glue */

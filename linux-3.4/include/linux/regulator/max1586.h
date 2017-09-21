@@ -39,9 +39,9 @@
  * @platform_data: regulator init data (constraints, supplies, ...)
  */
 struct max1586_subdev_data {
-  int       id;
-  char    *    name;
-  struct regulator_init_data * platform_data;
+	int				id;
+	char				*name;
+	struct regulator_init_data	*platform_data;
 };
 
 /**
@@ -55,9 +55,9 @@ struct max1586_subdev_data {
  *           data sheet (R25=100kOhm).
  */
 struct max1586_platform_data {
-  int num_subdevs;
-  struct max1586_subdev_data * subdevs;
-  int v3_gain;
+	int num_subdevs;
+	struct max1586_subdev_data *subdevs;
+	int v3_gain;
 };
 
 #endif

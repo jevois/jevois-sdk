@@ -13,11 +13,11 @@
 #include <linux/mtd/physmap.h>
 
 #define IRQ_RES(resname, irq) \
-  {.name = #resname, .start = (irq), .flags = IORESOURCE_IRQ}
+	{.name = #resname, .start = (irq), .flags = IORESOURCE_IRQ}
 
-extern void ltq_register_nor (struct physmap_flash_data * data);
-extern void ltq_register_wdt (void);
-extern void ltq_register_asc (int port);
-extern void ltq_register_pci (struct ltq_pci_data * data);
+extern void ltq_register_nor(struct physmap_flash_data *data);
+extern void ltq_register_wdt(void);
+extern void ltq_register_asc(int port);
+extern void ltq_register_pci(struct ltq_pci_data *data);
 
 #endif

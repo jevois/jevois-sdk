@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -25,9 +25,9 @@
 #ifndef MCTL_SYS_H_
 #define MCTL_SYS_H_
 
-extern int dram_power_save_process (void);
-extern int dram_power_up_process (void);
-extern void mctl_self_refresh_entry (void);
-extern void mctl_self_refresh_exit (void);
+extern int dram_power_save_process(void);
+extern int dram_power_up_process(void);
+extern void mctl_self_refresh_entry(void);
+extern void mctl_self_refresh_exit(void);
 
 #endif

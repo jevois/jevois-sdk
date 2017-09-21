@@ -25,22 +25,22 @@
 
 struct snd_vx222 {
 
-  struct vx_core core;
-  
-  /* h/w config; for PLX and for DSP */
-  struct pci_dev * pci;
-  unsigned long port[2];
-  
-  unsigned int regCDSP; /* current CDSP register */
-  unsigned int regCFG;  /* current CFG register */
-  unsigned int regSELMIC; /* current SELMIC reg. (for VX222 Mic) */
-  
-  int input_level[2]; /* input level for vx222 mic */
-  int mic_level;    /* mic level for vx222 mic */
+	struct vx_core core;
+
+	/* h/w config; for PLX and for DSP */
+	struct pci_dev *pci;
+	unsigned long port[2];
+
+	unsigned int regCDSP;	/* current CDSP register */
+	unsigned int regCFG;	/* current CFG register */
+	unsigned int regSELMIC;	/* current SELMIC reg. (for VX222 Mic) */
+
+	int input_level[2];	/* input level for vx222 mic */
+	int mic_level;		/* mic level for vx222 mic */
 };
 
 /* we use a lookup table with 148 values, see vx_mixer.c */
-#define VX2_AKM_LEVEL_MAX 0x93
+#define VX2_AKM_LEVEL_MAX	0x93
 
 extern struct snd_vx_ops vx222_ops;
 extern struct snd_vx_ops vx222_old_ops;

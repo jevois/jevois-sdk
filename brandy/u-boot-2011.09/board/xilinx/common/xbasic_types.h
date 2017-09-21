@@ -52,18 +52,18 @@
 * <pre>
 * MODIFICATION HISTORY:
 *
-* Ver Who    Date   Changes
+* Ver	Who    Date   Changes
 * ----- ---- -------- -------------------------------------------------------
 * 1.00a rmm  12/14/01 First release
-* rmm  05/09/03 Added "xassert always" macros to rid ourselves of diab
-*         compiler warnings
+*	rmm  05/09/03 Added "xassert always" macros to rid ourselves of diab
+*		      compiler warnings
 * 1.00a rpm  11/07/03 Added XNullHandler function as a stub interrupt handler
 * </pre>
 *
 ******************************************************************************/
 
-#ifndef XBASIC_TYPES_H    /* prevent circular inclusions */
-#define XBASIC_TYPES_H    /* by using protection macros */
+#ifndef XBASIC_TYPES_H		/* prevent circular inclusions */
+#define XBASIC_TYPES_H		/* by using protection macros */
 
 /***************************** Include Files *********************************/
 
@@ -81,20 +81,20 @@
 #endif
 /** Null */
 
-#define XCOMPONENT_IS_READY 0x11111111  /* component has been initialized */
-#define XCOMPONENT_IS_STARTED 0x22222222  /* component has been started */
+#define XCOMPONENT_IS_READY	0x11111111	/* component has been initialized */
+#define XCOMPONENT_IS_STARTED	0x22222222	/* component has been started */
 
 /* the following constants and declarations are for unit test purposes and are
  * designed to be used in test applications.
  */
-#define XTEST_PASSED  0
-#define XTEST_FAILED  1
+#define XTEST_PASSED	0
+#define XTEST_FAILED	1
 
-#define XASSERT_NONE   0
+#define XASSERT_NONE	 0
 #define XASSERT_OCCURRED 1
 
 extern unsigned int XAssertStatus;
-extern void XAssert (char *, int);
+extern void XAssert(char *, int);
 
 /**************************** Type Definitions *******************************/
 
@@ -106,8 +106,8 @@ extern void XAssert (char *, int);
 #include <linux/types.h>
 
 typedef struct {
-  u32 Upper;
-  u32 Lower;
+	u32 Upper;
+	u32 Lower;
 } Xuint64;
 
 /*@}*/
@@ -116,13 +116,13 @@ typedef struct {
  * This data type defines an interrupt handler for a device.
  * The argument points to the instance of the component
  */
-typedef void (*XInterruptHandler) (void * InstancePtr);
+typedef void (*XInterruptHandler) (void *InstancePtr);
 
 /**
  * This data type defines a callback to be invoked when an
  * assert occurs. The callback is invoked only when asserts are enabled
  */
-typedef void (*XAssertCallback) (char * FilenamePtr, int LineNumber);
+typedef void (*XAssertCallback) (char *FilenamePtr, int LineNumber);
 
 /***************** Macros (Inline Functions) Definitions *********************/
 
@@ -169,7 +169,7 @@ typedef void (*XAssertCallback) (char * FilenamePtr, int LineNumber);
 * accomodate tests so that asserts which fail allow execution to continue.
 *
 * @param expression is the expression to evaluate. If it evaluates to false,
-*  the assert occurs.
+*	 the assert occurs.
 *
 * @return
 *
@@ -181,16 +181,16 @@ typedef void (*XAssertCallback) (char * FilenamePtr, int LineNumber);
 * None.
 *
 ******************************************************************************/
-#define XASSERT_VOID(expression)      \
-  {             \
-    if (expression) {       \
-      XAssertStatus = XASSERT_NONE;   \
-    } else {          \
-      XAssert(__FILE__, __LINE__);    \
-      XAssertStatus = XASSERT_OCCURRED; \
-      return;         \
-    }           \
-  }
+#define XASSERT_VOID(expression)			\
+{							\
+	if (expression) {				\
+		XAssertStatus = XASSERT_NONE;		\
+	} else {					\
+		XAssert(__FILE__, __LINE__);		\
+		XAssertStatus = XASSERT_OCCURRED;	\
+		return;					\
+	}						\
+}
 
 /*****************************************************************************/
 /**
@@ -199,7 +199,7 @@ typedef void (*XAssertCallback) (char * FilenamePtr, int LineNumber);
 * that asserts which fail allow execution to continue.
 *
 * @param expression is the expression to evaluate. If it evaluates to false,
-*  the assert occurs.
+*	 the assert occurs.
 *
 * @return
 *
@@ -211,16 +211,16 @@ typedef void (*XAssertCallback) (char * FilenamePtr, int LineNumber);
 * None.
 *
 ******************************************************************************/
-#define XASSERT_NONVOID(expression)      \
-  {              \
-    if (expression) {        \
-      XAssertStatus = XASSERT_NONE;    \
-    } else {           \
-      XAssert(__FILE__, __LINE__);     \
-      XAssertStatus = XASSERT_OCCURRED;  \
-      return 0;        \
-    }            \
-  }
+#define XASSERT_NONVOID(expression)		   \
+{						   \
+	if (expression) {			   \
+		XAssertStatus = XASSERT_NONE;	   \
+	} else {				   \
+		XAssert(__FILE__, __LINE__);	   \
+		XAssertStatus = XASSERT_OCCURRED;  \
+		return 0;			   \
+	}					   \
+}
 
 /*****************************************************************************/
 /**
@@ -238,12 +238,12 @@ typedef void (*XAssertCallback) (char * FilenamePtr, int LineNumber);
 * None.
 *
 ******************************************************************************/
-#define XASSERT_VOID_ALWAYS()        \
-  {              \
-    XAssert(__FILE__, __LINE__);       \
-    XAssertStatus = XASSERT_OCCURRED;    \
-    return;            \
-  }
+#define XASSERT_VOID_ALWAYS()			   \
+{						   \
+	XAssert(__FILE__, __LINE__);		   \
+	XAssertStatus = XASSERT_OCCURRED;	   \
+	return;					   \
+}
 
 /*****************************************************************************/
 /**
@@ -260,12 +260,12 @@ typedef void (*XAssertCallback) (char * FilenamePtr, int LineNumber);
 * None.
 *
 ******************************************************************************/
-#define XASSERT_NONVOID_ALWAYS()       \
-  {              \
-    XAssert(__FILE__, __LINE__);       \
-    XAssertStatus = XASSERT_OCCURRED;    \
-    return 0;          \
-  }
+#define XASSERT_NONVOID_ALWAYS()		   \
+{						   \
+	XAssert(__FILE__, __LINE__);		   \
+	XAssertStatus = XASSERT_OCCURRED;	   \
+	return 0;				   \
+}
 
 #else
 
@@ -277,7 +277,7 @@ typedef void (*XAssertCallback) (char * FilenamePtr, int LineNumber);
 
 /************************** Function Prototypes ******************************/
 
-void XAssertSetCallback (XAssertCallback Routine);
-void XNullHandler (void * NullParameter);
+void XAssertSetCallback(XAssertCallback Routine);
+void XNullHandler(void *NullParameter);
 
-#endif  /* end of protection macro */
+#endif	/* end of protection macro */

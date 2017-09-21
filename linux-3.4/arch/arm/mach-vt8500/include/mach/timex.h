@@ -21,6 +21,6 @@
 #ifndef MACH_TIMEX_H
 #define MACH_TIMEX_H
 
-#define CLOCK_TICK_RATE   (3000000)
+#define CLOCK_TICK_RATE		(3000000)
 
 #endif /* MACH_TIMEX_H */

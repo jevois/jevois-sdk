@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -26,15 +26,15 @@
 
 #define  SUNXI_BAT_BMP_MAX    (11)
 
-extern int battery_charge_cartoon_init (int rate);
+extern int battery_charge_cartoon_init(int rate);
 
-extern int battery_charge_cartoon_exit (void);
+extern int battery_charge_cartoon_exit(void);
 
-extern int battery_charge_cartoon_rate (int rate);
+extern int battery_charge_cartoon_rate(int rate);
 
-extern int battery_charge_cartoon_reset (void);
+extern int battery_charge_cartoon_reset(void);
 
-extern int battery_charge_cartoon_degrade (int alpha_step);
+extern int battery_charge_cartoon_degrade(int alpha_step);
 
 
 #endif 

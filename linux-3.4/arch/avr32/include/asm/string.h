@@ -9,9 +9,9 @@
 #define __ASM_AVR32_STRING_H
 
 #define __HAVE_ARCH_MEMSET
-extern void * memset (void * b, int c, size_t len);
+extern void *memset(void *b, int c, size_t len);
 
 #define __HAVE_ARCH_MEMCPY
-extern void * memcpy (void * to, const void * from, size_t len);
+extern void *memcpy(void *to, const void *from, size_t len);
 
 #endif /* __ASM_AVR32_STRING_H */

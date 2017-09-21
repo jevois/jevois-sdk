@@ -2,7 +2,7 @@
 #define __HW_S3C4510_H
 
 /*
- * Copyright (c) 2004 Cucy Systems (http://www.cucy.com)
+ * Copyright (c) 2004	Cucy Systems (http://www.cucy.com)
  * Curt Brune <curt@cucy.com>
  *
  * See file CREDITS for list of people who contributed to this
@@ -27,98 +27,98 @@
  */
 
 /*------------------------------------------------------------------------
- *    ASIC Address Definition
+ *	  ASIC Address Definition
  *----------------------------------------------------------------------*/
 
 /* L1 8KB on chip SRAM base address */
 #define SRAM_BASE       (0x03fe0000)
 
 /* Special Register Start Address After System Reset */
-#define REG_BASE  (0x03ff0000)
-#define SPSTR   (REG_BASE)
+#define REG_BASE	(0x03ff0000)
+#define SPSTR		(REG_BASE)
 
 /* *********************** */
 /* System Manager Register */
 /* *********************** */
-#define REG_SYSCFG  (REG_BASE+0x0000)
+#define REG_SYSCFG	(REG_BASE+0x0000)
 
 #define REG_CLKCON      (REG_BASE+0x3000)
-#define REG_EXTACON0  (REG_BASE+0x3008)
-#define REG_EXTACON1  (REG_BASE+0x300c)
-#define REG_EXTDBWTH  (REG_BASE+0x3010)
-#define REG_ROMCON0 (REG_BASE+0x3014)
-#define REG_ROMCON1 (REG_BASE+0x3018)
-#define REG_ROMCON2 (REG_BASE+0x301c)
-#define REG_ROMCON3 (REG_BASE+0x3020)
-#define REG_ROMCON4 (REG_BASE+0x3024)
-#define REG_ROMCON5 (REG_BASE+0x3028)
-#define REG_DRAMCON0  (REG_BASE+0x302c)
-#define REG_DRAMCON1  (REG_BASE+0x3030)
-#define REG_DRAMCON2  (REG_BASE+0x3034)
-#define REG_DRAMCON3  (REG_BASE+0x3038)
-#define REG_REFEXTCON (REG_BASE+0x303c)
+#define REG_EXTACON0	(REG_BASE+0x3008)
+#define REG_EXTACON1	(REG_BASE+0x300c)
+#define REG_EXTDBWTH	(REG_BASE+0x3010)
+#define REG_ROMCON0	(REG_BASE+0x3014)
+#define REG_ROMCON1	(REG_BASE+0x3018)
+#define REG_ROMCON2	(REG_BASE+0x301c)
+#define REG_ROMCON3	(REG_BASE+0x3020)
+#define REG_ROMCON4	(REG_BASE+0x3024)
+#define REG_ROMCON5	(REG_BASE+0x3028)
+#define REG_DRAMCON0	(REG_BASE+0x302c)
+#define REG_DRAMCON1	(REG_BASE+0x3030)
+#define REG_DRAMCON2	(REG_BASE+0x3034)
+#define REG_DRAMCON3	(REG_BASE+0x3038)
+#define REG_REFEXTCON	(REG_BASE+0x303c)
 
 /* *********************** */
 /* Ethernet BDMA Register  */
 /* *********************** */
-#define REG_BDMATXCON (REG_BASE+0x9000)
-#define REG_BDMARXCON (REG_BASE+0x9004)
-#define REG_BDMATXPTR (REG_BASE+0x9008)
-#define REG_BDMARXPTR (REG_BASE+0x900c)
-#define REG_BDMARXLSZ (REG_BASE+0x9010)
-#define REG_BDMASTAT  (REG_BASE+0x9014)
+#define REG_BDMATXCON	(REG_BASE+0x9000)
+#define REG_BDMARXCON	(REG_BASE+0x9004)
+#define REG_BDMATXPTR	(REG_BASE+0x9008)
+#define REG_BDMARXPTR	(REG_BASE+0x900c)
+#define REG_BDMARXLSZ	(REG_BASE+0x9010)
+#define REG_BDMASTAT	(REG_BASE+0x9014)
 
 /* Content Address Memory */
-#define REG_CAM_BASE  (REG_BASE+0x9100)
+#define REG_CAM_BASE	(REG_BASE+0x9100)
 
-#define REG_BDMATXBUF (REG_BASE+0x9200)
-#define REG_BDMARXBUF (REG_BASE+0x9800)
+#define REG_BDMATXBUF	(REG_BASE+0x9200)
+#define REG_BDMARXBUF	(REG_BASE+0x9800)
 
 /* *********************** */
 /* Ethernet MAC Register   */
 /* *********************** */
-#define REG_MACCON  (REG_BASE+0xa000)
-#define REG_CAMCON  (REG_BASE+0xa004)
-#define REG_MACTXCON  (REG_BASE+0xa008)
-#define REG_MACTXSTAT (REG_BASE+0xa00c)
-#define REG_MACRXCON  (REG_BASE+0xa010)
-#define REG_MACRXSTAT (REG_BASE+0xa014)
-#define REG_STADATA (REG_BASE+0xa018)
-#define REG_STACON  (REG_BASE+0xa01c)
-#define REG_CAMEN (REG_BASE+0xa028)
-#define REG_EMISSCNT  (REG_BASE+0xa03c)
-#define REG_EPZCNT  (REG_BASE+0xa040)
-#define REG_ERMPZCNT  (REG_BASE+0xa044)
-#define REG_ETXSTAT (REG_BASE+0x9040)
-#define REG_MACRXDESTR  (REG_BASE+0xa064)
-#define REG_MACRXSTATEM (REG_BASE+0xa090)
-#define REG_MACRXFIFO (REG_BASE+0xa200)
+#define REG_MACCON	(REG_BASE+0xa000)
+#define REG_CAMCON	(REG_BASE+0xa004)
+#define REG_MACTXCON	(REG_BASE+0xa008)
+#define REG_MACTXSTAT	(REG_BASE+0xa00c)
+#define REG_MACRXCON	(REG_BASE+0xa010)
+#define REG_MACRXSTAT	(REG_BASE+0xa014)
+#define REG_STADATA	(REG_BASE+0xa018)
+#define REG_STACON	(REG_BASE+0xa01c)
+#define REG_CAMEN	(REG_BASE+0xa028)
+#define REG_EMISSCNT	(REG_BASE+0xa03c)
+#define REG_EPZCNT	(REG_BASE+0xa040)
+#define REG_ERMPZCNT	(REG_BASE+0xa044)
+#define REG_ETXSTAT	(REG_BASE+0x9040)
+#define REG_MACRXDESTR	(REG_BASE+0xa064)
+#define REG_MACRXSTATEM	(REG_BASE+0xa090)
+#define REG_MACRXFIFO	(REG_BASE+0xa200)
 
 /********************/
 /* I2C Bus Register */
 /********************/
-#define REG_I2C_CON (REG_BASE+0xf000)
-#define REG_I2C_BUF (REG_BASE+0xf004)
-#define REG_I2C_PS  (REG_BASE+0xf008)
-#define REG_I2C_COUNT (REG_BASE+0xf00c)
+#define REG_I2C_CON	(REG_BASE+0xf000)
+#define REG_I2C_BUF	(REG_BASE+0xf004)
+#define REG_I2C_PS	(REG_BASE+0xf008)
+#define REG_I2C_COUNT	(REG_BASE+0xf00c)
 
 /********************/
 /*    GDMA 0        */
 /********************/
-#define REG_GDMACON0  (REG_BASE+0xb000)
+#define REG_GDMACON0	(REG_BASE+0xb000)
 #define REG_GDMA0_RUN_ENABLE (REG_BASE+0xb020)
-#define REG_GDMASRC0  (REG_BASE+0xb004)
-#define REG_GDMADST0  (REG_BASE+0xb008)
-#define REG_GDMACNT0  (REG_BASE+0xb00c)
+#define REG_GDMASRC0	(REG_BASE+0xb004)
+#define REG_GDMADST0	(REG_BASE+0xb008)
+#define REG_GDMACNT0	(REG_BASE+0xb00c)
 
 /********************/
 /*    GDMA 1        */
 /********************/
-#define REG_GDMACON1  (REG_BASE+0xc000)
+#define REG_GDMACON1	(REG_BASE+0xc000)
 #define REG_GDMA1_RUN_ENABLE (REG_BASE+0xc020)
-#define REG_GDMASRC1  (REG_BASE+0xc004)
-#define REG_GDMADST1  (REG_BASE+0xc008)
-#define REG_GDMACNT1  (REG_BASE+0xc00c)
+#define REG_GDMASRC1	(REG_BASE+0xc004)
+#define REG_GDMADST1	(REG_BASE+0xc008)
+#define REG_GDMACNT1	(REG_BASE+0xc00c)
 
 /********************/
 /*      UART 0      */
@@ -149,18 +149,18 @@
 /********************/
 /*  Timer Register  */
 /********************/
-#define REG_TMOD  (REG_BASE+0x6000)
-#define REG_TDATA0  (REG_BASE+0x6004)
-#define REG_TDATA1  (REG_BASE+0x6008)
-#define REG_TCNT0 (REG_BASE+0x600c)
-#define REG_TCNT1 (REG_BASE+0x6010)
+#define REG_TMOD	(REG_BASE+0x6000)
+#define REG_TDATA0	(REG_BASE+0x6004)
+#define REG_TDATA1	(REG_BASE+0x6008)
+#define REG_TCNT0	(REG_BASE+0x600c)
+#define REG_TCNT1	(REG_BASE+0x6010)
 
 /**********************/
 /* I/O Port Interface */
 /**********************/
-#define REG_IOPMODE (REG_BASE+0x5000)
-#define REG_IOPCON  (REG_BASE+0x5004)
-#define REG_IOPDATA (REG_BASE+0x5008)
+#define REG_IOPMODE	(REG_BASE+0x5000)
+#define REG_IOPCON	(REG_BASE+0x5004)
+#define REG_IOPDATA	(REG_BASE+0x5008)
 
 /*********************************/
 /* Interrupt Controller Register */
@@ -170,14 +170,14 @@
 #define REG_INTMASK     (REG_BASE+0x4008)
 
 #define REG_INTPRI0     (REG_BASE+0x400c)
-#define REG_INTPRI1 (REG_BASE+0x4010)
-#define REG_INTPRI2 (REG_BASE+0x4014)
-#define REG_INTPRI3 (REG_BASE+0x4018)
-#define REG_INTPRI4 (REG_BASE+0x401c)
-#define REG_INTPRI5 (REG_BASE+0x4020)
-#define REG_INTOFFSET (REG_BASE+0x4024)
-#define REG_INTPNDPRI (REG_BASE+0x4028)
-#define REG_INTPNDTST (REG_BASE+0x402C)
+#define REG_INTPRI1	(REG_BASE+0x4010)
+#define REG_INTPRI2	(REG_BASE+0x4014)
+#define REG_INTPRI3	(REG_BASE+0x4018)
+#define REG_INTPRI4	(REG_BASE+0x401c)
+#define REG_INTPRI5	(REG_BASE+0x4020)
+#define REG_INTOFFSET	(REG_BASE+0x4024)
+#define REG_INTPNDPRI	(REG_BASE+0x4028)
+#define REG_INTPNDTST	(REG_BASE+0x402C)
 
 /*********************************/
 /* CACHE CONTROL MASKS           */
@@ -224,7 +224,7 @@
 #define t_data_ms(t)       (t_data_us((t)*1000))  /* t is time tick,unit[ms] */
 
 /*********************************************************/
-/*         TIMER MODE REGISTER                       */
+/*	       TIMER MODE REGISTER                       */
 /*********************************************************/
 #define  TM0_RUN      0x01  /* Timer 0 enable */
 #define  TM0_TOGGLE   0x02  /* 0, interval mode */
@@ -237,34 +237,34 @@
 /*********************************/
 /* INTERRUPT SOURCES             */
 /*********************************/
-#define INT_EXTINT0 0
-#define INT_EXTINT1 1
-#define INT_EXTINT2 2
-#define INT_EXTINT3 3
-#define INT_UARTTX0 4
-#define INT_UARTRX0 5
-#define INT_UARTTX1 6
-#define INT_UARTRX1 7
-#define INT_GDMA0 8
-#define INT_GDMA1 9
-#define INT_TIMER0  10
-#define INT_TIMER1  11
-#define INT_HDLCTXA 12
-#define INT_HDLCRXA 13
-#define INT_HDLCTXB 14
-#define INT_HDLCRXB 15
-#define INT_BDMATX  16
-#define INT_BDMARX  17
-#define INT_MACTX 18
-#define INT_MACRX 19
-#define INT_IIC   20
-#define INT_GLOBAL  21
+#define INT_EXTINT0	0
+#define INT_EXTINT1	1
+#define INT_EXTINT2	2
+#define INT_EXTINT3	3
+#define INT_UARTTX0	4
+#define INT_UARTRX0	5
+#define INT_UARTTX1	6
+#define INT_UARTRX1	7
+#define INT_GDMA0	8
+#define INT_GDMA1	9
+#define INT_TIMER0	10
+#define INT_TIMER1	11
+#define INT_HDLCTXA	12
+#define INT_HDLCRXA	13
+#define INT_HDLCTXB	14
+#define INT_HDLCRXB	15
+#define INT_BDMATX	16
+#define INT_BDMARX	17
+#define INT_MACTX	18
+#define INT_MACRX	19
+#define INT_IIC		20
+#define INT_GLOBAL	21
 #define N_IRQS         (21)
 
 #ifndef __ASSEMBLER__
 struct _irq_handler {
-  void        *        m_data;
-  void (*m_func) ( void * data);
+	void                *m_data;
+	void (*m_func)( void *data);
 };
 
 #endif

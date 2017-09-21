@@ -50,7 +50,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /** Resource arena.
  *  struct _RA_ARENA_ deliberately opaque
  */
-typedef struct _RA_ARENA_ RA_ARENA;    
+typedef struct _RA_ARENA_ RA_ARENA;		
 
 /*
  * Per-Arena handle - this is private data for the caller of the RA.
@@ -84,9 +84,9 @@ typedef IMG_UINT32 RA_FLAGS_T;
 
 struct _RA_SEGMENT_DETAILS_
 {
-  RA_LENGTH_T      uiSize;
-  IMG_CPU_PHYADDR sCpuPhyAddr;
-  IMG_HANDLE      hSegment;
+	RA_LENGTH_T      uiSize;
+	IMG_CPU_PHYADDR sCpuPhyAddr;
+	IMG_HANDLE      hSegment;
 };
 typedef struct _RA_SEGMENT_DETAILS_ RA_SEGMENT_DETAILS;
 
@@ -108,7 +108,7 @@ typedef struct _RA_SEGMENT_DETAILS_ RA_SEGMENT_DETAILS;
  *  @Return arena handle, or IMG_NULL.
  */
 RA_ARENA *
-RA_Create (IMG_CHAR * name,
+RA_Create (IMG_CHAR *name,
 
            /* "initial" import */
            RA_BASE_T base,
@@ -117,13 +117,13 @@ RA_Create (IMG_CHAR * name,
            IMG_HANDLE hPriv,
 
            /* subsequent imports: */
-           RA_LOG2QUANTUM_T uLog2Quantum,
-           IMG_BOOL (*imp_alloc) (RA_PERARENA_HANDLE _h,
-                                  RA_LENGTH_T uSize,
-                                  RA_FLAGS_T uFlags,
-                                  RA_BASE_T * pBase,
-                                  RA_LENGTH_T * pActualSize,
-                                  RA_PERISPAN_HANDLE * phPriv),
+           RA_LOG2QUANTUM_T uLog2Quantum, 
+           IMG_BOOL (*imp_alloc)(RA_PERARENA_HANDLE _h,
+                                 RA_LENGTH_T uSize,
+                                 RA_FLAGS_T uFlags,
+                                 RA_BASE_T *pBase,
+                                 RA_LENGTH_T *pActualSize,
+                                 RA_PERISPAN_HANDLE *phPriv),
            IMG_VOID (*imp_free) (RA_PERARENA_HANDLE,
                                  RA_BASE_T,
                                  RA_PERISPAN_HANDLE),
@@ -136,12 +136,12 @@ RA_Create (IMG_CHAR * name,
  *
  *  To delete a resource arena. All resources allocated from the arena
  *  must be freed before deleting the arena.
- *
+ *                  
  *  @Input  pArena - the arena to delete.
  *  @Return None
  */
 IMG_VOID
-RA_Delete (RA_ARENA * pArena);
+RA_Delete (RA_ARENA *pArena);
 
 /**
  *  @Function   RA_Add
@@ -157,7 +157,7 @@ RA_Delete (RA_ARENA * pArena);
  *  @Return IMG_TRUE - success, IMG_FALSE - failure
  */
 IMG_BOOL
-RA_Add (RA_ARENA * pArena, RA_BASE_T base, RA_LENGTH_T uSize, RA_FLAGS_T uFlags);
+RA_Add (RA_ARENA *pArena, RA_BASE_T base, RA_LENGTH_T uSize, RA_FLAGS_T uFlags);
 
 /**
  *  @Function   RA_Alloc
@@ -179,27 +179,27 @@ RA_Add (RA_ARENA * pArena, RA_BASE_T base, RA_LENGTH_T uSize, RA_FLAGS_T uFlags)
  *  @Return IMG_TRUE - success, IMG_FALSE - failure
  */
 IMG_BOOL
-RA_Alloc (RA_ARENA * pArena,
+RA_Alloc (RA_ARENA *pArena, 
           RA_LENGTH_T uSize,
           RA_FLAGS_T uFlags,
           RA_LENGTH_T uAlignment,
-          RA_BASE_T * pBase,
-          RA_LENGTH_T * pActualSize,
-          RA_PERISPAN_HANDLE * phPriv);
+          RA_BASE_T *pBase,
+          RA_LENGTH_T *pActualSize,
+          RA_PERISPAN_HANDLE *phPriv);
 
 /**
  *  @Function   RA_Free
  *
  *  @Description    To free a resource segment.
- *
+ *  
  *  @Input  pArena - the arena the segment was originally allocated from.
  *  @Input  base - the base of the resource span to free.
- *  @Input  bFreeBackingStore - Should backing store memory be freed?
+ *	@Input	bFreeBackingStore - Should backing store memory be freed?
  *
  *  @Return None
  */
-IMG_VOID
-RA_Free (RA_ARENA * pArena, RA_BASE_T base);
+IMG_VOID 
+RA_Free (RA_ARENA *pArena, RA_BASE_T base);
 
 #endif
 

@@ -1,6 +1,6 @@
 /*
  * quota.h - Defines for NTFS kernel quota ($Quota) handling.  Part of the
- *       Linux-NTFS project.
+ *	     Linux-NTFS project.
  *
  * Copyright (c) 2004 Anton Altaparmakov
  *
@@ -28,7 +28,7 @@
 #include "types.h"
 #include "volume.h"
 
-extern bool ntfs_mark_quotas_out_of_date (ntfs_volume * vol);
+extern bool ntfs_mark_quotas_out_of_date(ntfs_volume *vol);
 
 #endif /* NTFS_RW */
 

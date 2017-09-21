@@ -25,11 +25,11 @@
  */
 #ifndef __DIVA_XDI_CARD_CONFIG_HELPERS_INC__
 #define __DIVA_XDI_CARD_CONFIG_HELPERS_INC__
-dword diva_get_protocol_file_features (byte * File,
-                                       int offset,
-                                       char * IdStringBuffer,
-                                       dword IdBufferSize);
-void diva_configure_protocol (PISDN_ADAPTER IoAdapter);
+dword diva_get_protocol_file_features(byte *File,
+				      int offset,
+				      char *IdStringBuffer,
+				      dword IdBufferSize);
+void diva_configure_protocol(PISDN_ADAPTER IoAdapter);
 /*
   Low level file access system abstraction
 */
@@ -38,14 +38,14 @@ void diva_configure_protocol (PISDN_ADAPTER IoAdapter);
    Return pointer to the image of the requested file,
    write image length to 'FileLength'
    ------------------------------------------------------------------------- */
-void * xdiLoadFile (char * FileName, dword * FileLength, unsigned long MaxLoadSize);
+void *xdiLoadFile(char *FileName, dword *FileLength, unsigned long MaxLoadSize);
 /* -------------------------------------------------------------------------
    Dependent on the protocol settings does read return pointer
    to the image of appropriate protocol file
    ------------------------------------------------------------------------- */
-void * xdiLoadArchive (PISDN_ADAPTER IoAdapter, dword * FileLength, unsigned long MaxLoadSize);
+void *xdiLoadArchive(PISDN_ADAPTER IoAdapter, dword *FileLength, unsigned long MaxLoadSize);
 /* --------------------------------------------------------------------------
    Free all system resources accessed by xdiLoadFile and xdiLoadArchive
    -------------------------------------------------------------------------- */
-void xdiFreeFile (void * handle);
+void xdiFreeFile(void *handle);
 #endif

@@ -10,118 +10,118 @@
 #define IO_SPACE_LIMIT  0xFFFFFFFF
 
 /**
- *  virt_to_phys  - map virtual addresses to physical
- *  @address: address to remap
+ *	virt_to_phys	-	map virtual addresses to physical
+ *	@address: address to remap
  *
- *  The returned physical address is the physical (CPU) mapping for
- *  the memory address given. It is only valid to use this function on
- *  addresses directly mapped or allocated via kmalloc.
+ *	The returned physical address is the physical (CPU) mapping for
+ *	the memory address given. It is only valid to use this function on
+ *	addresses directly mapped or allocated via kmalloc.
  *
- *  This function does not give bus mappings for DMA transfers. In
- *  almost all conceivable cases a device driver should not be using
- *  this function
+ *	This function does not give bus mappings for DMA transfers. In
+ *	almost all conceivable cases a device driver should not be using
+ *	this function
  */
 
-static inline unsigned long virt_to_phys (volatile void * address)
+static inline unsigned long virt_to_phys(volatile void * address)
 {
-  return __pa (address);
+	return __pa(address);
 }
 
 /**
- *  phys_to_virt  - map physical address to virtual
- *  @address: address to remap
+ *	phys_to_virt	-	map physical address to virtual
+ *	@address: address to remap
  *
- *  The returned virtual address is a current CPU mapping for
- *  the memory address given. It is only valid to use this function on
- *  addresses that have a kernel mapping
+ *	The returned virtual address is a current CPU mapping for
+ *	the memory address given. It is only valid to use this function on
+ *	addresses that have a kernel mapping
  *
- *  This function does not handle bus mappings for DMA transfers. In
- *  almost all conceivable cases a device driver should not be using
- *  this function
+ *	This function does not handle bus mappings for DMA transfers. In
+ *	almost all conceivable cases a device driver should not be using
+ *	this function
  */
 
-static inline void * phys_to_virt (unsigned long address)
+static inline void *phys_to_virt(unsigned long address)
 {
-  return __va (address);
+	return __va(address);
 }
 
 extern void __iomem *
-__ioremap (unsigned long offset, unsigned long size, unsigned long flags);
+__ioremap(unsigned long offset, unsigned long size, unsigned long flags);
 
 /**
- *  ioremap   - map bus memory into CPU space
- *  @offset:  bus address of the memory
- *  @size:    size of the resource to map
+ *	ioremap		-	map bus memory into CPU space
+ *	@offset:	bus address of the memory
+ *	@size:		size of the resource to map
  *
- *  ioremap performs a platform specific sequence of operations to
- *  make bus memory CPU accessible via the readb/readw/readl/writeb/
- *  writew/writel functions and the other mmio helpers. The returned
- *  address is not guaranteed to be usable directly as a virtual
- *  address.
+ *	ioremap performs a platform specific sequence of operations to
+ *	make bus memory CPU accessible via the readb/readw/readl/writeb/
+ *	writew/writel functions and the other mmio helpers. The returned
+ *	address is not guaranteed to be usable directly as a virtual
+ *	address.
  */
 
-static inline void __iomem * ioremap (unsigned long offset, unsigned long size)
+static inline void __iomem *ioremap(unsigned long offset, unsigned long size)
 {
-  return __ioremap (offset, size, 0);
+	return __ioremap(offset, size, 0);
 }
 
-extern void iounmap (volatile void __iomem * addr);
+extern void iounmap(volatile void __iomem *addr);
 #define ioremap_nocache(off,size) ioremap(off,size)
 
 /*
  * IO bus memory addresses are also 1:1 with the physical address
  */
-#define page_to_phys(page)  (page_to_pfn(page) << PAGE_SHIFT)
-#define page_to_bus page_to_phys
-#define virt_to_bus virt_to_phys
+#define page_to_phys(page)	(page_to_pfn(page) << PAGE_SHIFT)
+#define page_to_bus	page_to_phys
+#define virt_to_bus	virt_to_phys
 
-extern unsigned char _inb (unsigned long);
-extern unsigned short _inw (unsigned long);
-extern unsigned long _inl (unsigned long);
-extern unsigned char _inb_p (unsigned long);
-extern unsigned short _inw_p (unsigned long);
-extern unsigned long _inl_p (unsigned long);
-extern void _outb (unsigned char, unsigned long);
-extern void _outw (unsigned short, unsigned long);
-extern void _outl (unsigned long, unsigned long);
-extern void _outb_p (unsigned char, unsigned long);
-extern void _outw_p (unsigned short, unsigned long);
-extern void _outl_p (unsigned long, unsigned long);
-extern void _insb (unsigned int, void *, unsigned long);
-extern void _insw (unsigned int, void *, unsigned long);
-extern void _insl (unsigned int, void *, unsigned long);
-extern void _outsb (unsigned int, const void *, unsigned long);
-extern void _outsw (unsigned int, const void *, unsigned long);
-extern void _outsl (unsigned int, const void *, unsigned long);
+extern unsigned char _inb(unsigned long);
+extern unsigned short _inw(unsigned long);
+extern unsigned long _inl(unsigned long);
+extern unsigned char _inb_p(unsigned long);
+extern unsigned short _inw_p(unsigned long);
+extern unsigned long _inl_p(unsigned long);
+extern void _outb(unsigned char, unsigned long);
+extern void _outw(unsigned short, unsigned long);
+extern void _outl(unsigned long, unsigned long);
+extern void _outb_p(unsigned char, unsigned long);
+extern void _outw_p(unsigned short, unsigned long);
+extern void _outl_p(unsigned long, unsigned long);
+extern void _insb(unsigned int, void *, unsigned long);
+extern void _insw(unsigned int, void *, unsigned long);
+extern void _insl(unsigned int, void *, unsigned long);
+extern void _outsb(unsigned int, const void *, unsigned long);
+extern void _outsw(unsigned int, const void *, unsigned long);
+extern void _outsl(unsigned int, const void *, unsigned long);
 
-static inline unsigned char _readb (unsigned long addr)
+static inline unsigned char _readb(unsigned long addr)
 {
-  return * (volatile unsigned char __force *) addr;
+	return *(volatile unsigned char __force *)addr;
 }
 
-static inline unsigned short _readw (unsigned long addr)
+static inline unsigned short _readw(unsigned long addr)
 {
-  return * (volatile unsigned short __force *) addr;
+	return *(volatile unsigned short __force *)addr;
 }
 
-static inline unsigned long _readl (unsigned long addr)
+static inline unsigned long _readl(unsigned long addr)
 {
-  return * (volatile unsigned long __force *) addr;
+	return *(volatile unsigned long __force *)addr;
 }
 
-static inline void _writeb (unsigned char b, unsigned long addr)
+static inline void _writeb(unsigned char b, unsigned long addr)
 {
-  * (volatile unsigned char __force *) addr = b;
+	*(volatile unsigned char __force *)addr = b;
 }
 
-static inline void _writew (unsigned short w, unsigned long addr)
+static inline void _writew(unsigned short w, unsigned long addr)
 {
-  * (volatile unsigned short __force *) addr = w;
+	*(volatile unsigned short __force *)addr = w;
 }
 
-static inline void _writel (unsigned long l, unsigned long addr)
+static inline void _writel(unsigned long l, unsigned long addr)
 {
-  * (volatile unsigned long __force *) addr = l;
+	*(volatile unsigned long __force *)addr = l;
 }
 
 #define inb     _inb
@@ -174,33 +174,33 @@ static inline void _writel (unsigned long l, unsigned long addr)
 #define flush_write_buffers() do { } while (0)  /* M32R_FIXME */
 
 static inline void
-memset_io (volatile void __iomem * addr, unsigned char val, int count)
+memset_io(volatile void __iomem *addr, unsigned char val, int count)
 {
-  memset ( (void __force *) addr, val, count);
+	memset((void __force *) addr, val, count);
 }
 
 static inline void
-memcpy_fromio (void * dst, volatile void __iomem * src, int count)
+memcpy_fromio(void *dst, volatile void __iomem *src, int count)
 {
-  memcpy (dst, (void __force *) src, count);
+	memcpy(dst, (void __force *) src, count);
 }
 
 static inline void
-memcpy_toio (volatile void __iomem * dst, const void * src, int count)
+memcpy_toio(volatile void __iomem *dst, const void *src, int count)
 {
-  memcpy ( (void __force *) dst, src, count);
+	memcpy((void __force *) dst, src, count);
 }
 
 /*
  * Convert a physical pointer to a virtual kernel pointer for /dev/mem
  * access
  */
-#define xlate_dev_mem_ptr(p)  __va(p)
+#define xlate_dev_mem_ptr(p)	__va(p)
 
 /*
  * Convert a virtual cached pointer to an uncached pointer
  */
-#define xlate_dev_kmem_ptr(p) p
+#define xlate_dev_kmem_ptr(p)	p
 
 #endif  /* __KERNEL__ */
 

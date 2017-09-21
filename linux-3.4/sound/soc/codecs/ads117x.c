@@ -24,43 +24,42 @@
 #define ADS117X_FORMATS (SNDRV_PCM_FMTBIT_S16_LE)
 
 static struct snd_soc_dai_driver ads117x_dai = {
-  /* ADC */
-  .name = "ads117x-hifi",
-  .capture = {
-    .stream_name = "Capture",
-    .channels_min = 1,
-    .channels_max = 32,
-    .rates = ADS117X_RATES,
-    .formats = ADS117X_FORMATS,
-  },
+/* ADC */
+	.name = "ads117x-hifi",
+	.capture = {
+		.stream_name = "Capture",
+		.channels_min = 1,
+		.channels_max = 32,
+		.rates = ADS117X_RATES,
+		.formats = ADS117X_FORMATS,},
 };
 
 static struct snd_soc_codec_driver soc_codec_dev_ads117x;
 
-static __devinit int ads117x_probe (struct platform_device * pdev)
+static __devinit int ads117x_probe(struct platform_device *pdev)
 {
-  return snd_soc_register_codec (&pdev->dev,
-                                 &soc_codec_dev_ads117x, &ads117x_dai, 1);
+	return snd_soc_register_codec(&pdev->dev,
+			&soc_codec_dev_ads117x, &ads117x_dai, 1);
 }
 
-static int __devexit ads117x_remove (struct platform_device * pdev)
+static int __devexit ads117x_remove(struct platform_device *pdev)
 {
-  snd_soc_unregister_codec (&pdev->dev);
-  return 0;
+	snd_soc_unregister_codec(&pdev->dev);
+	return 0;
 }
 
 static struct platform_driver ads117x_codec_driver = {
-  .driver = {
-    .name = "ads117x-codec",
-    .owner = THIS_MODULE,
-  },
-  
-  .probe = ads117x_probe,
-  .remove = __devexit_p (ads117x_remove),
+	.driver = {
+			.name = "ads117x-codec",
+			.owner = THIS_MODULE,
+	},
+
+	.probe = ads117x_probe,
+	.remove = __devexit_p(ads117x_remove),
 };
 
-module_platform_driver (ads117x_codec_driver);
+module_platform_driver(ads117x_codec_driver);
 
-MODULE_DESCRIPTION ("ASoC ads117x driver");
-MODULE_AUTHOR ("Graeme Gregory");
-MODULE_LICENSE ("GPL");
+MODULE_DESCRIPTION("ASoC ads117x driver");
+MODULE_AUTHOR("Graeme Gregory");
+MODULE_LICENSE("GPL");

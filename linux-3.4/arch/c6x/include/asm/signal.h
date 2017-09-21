@@ -8,10 +8,10 @@
 
 struct pt_regs;
 
-extern asmlinkage int do_rt_sigreturn (struct pt_regs * regs);
-extern asmlinkage void do_notify_resume (struct pt_regs * regs,
-    u32 thread_info_flags,
-    int syscall);
+extern asmlinkage int do_rt_sigreturn(struct pt_regs *regs);
+extern asmlinkage void do_notify_resume(struct pt_regs *regs,
+					u32 thread_info_flags,
+					int syscall);
 #endif
 
 #endif /* _ASM_C6X_SIGNAL_H */

@@ -32,7 +32,7 @@
  *
  *   Returns: 0 on success, not 0 on failure
  */
-int tws_read (uchar * buffer, int len);
-int tws_write (uchar * buffer, int len);
+int tws_read(uchar *buffer, int len);
+int tws_write(uchar *buffer, int len);
 
-#endif  /* _TWS_H_ */
+#endif	/* _TWS_H_ */

@@ -17,16 +17,16 @@
 #include <mach/hardware.h>
 
 static struct map_desc imx_lluart_desc = {
-  #ifdef CONFIG_DEBUG_IMX6Q_UART4
-  .virtual  = MX6Q_IO_P2V (MX6Q_UART4_BASE_ADDR),
-  .pfn    = __phys_to_pfn (MX6Q_UART4_BASE_ADDR),
-  .length   = MX6Q_UART4_SIZE,
-  .type   = MT_DEVICE,
-  #endif
+#ifdef CONFIG_DEBUG_IMX6Q_UART4
+	.virtual	= MX6Q_IO_P2V(MX6Q_UART4_BASE_ADDR),
+	.pfn		= __phys_to_pfn(MX6Q_UART4_BASE_ADDR),
+	.length		= MX6Q_UART4_SIZE,
+	.type		= MT_DEVICE,
+#endif
 };
 
-void __init imx_lluart_map_io (void)
+void __init imx_lluart_map_io(void)
 {
-  if (imx_lluart_desc.virtual)
-  { iotable_init (&imx_lluart_desc, 1); }
+	if (imx_lluart_desc.virtual)
+		iotable_init(&imx_lluart_desc, 1);
 }

@@ -19,7 +19,7 @@
  *
  * You should have received a copy of the GNU General Public License along
  * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ * 51 Franklin Street, Fifth Floor, Boston, MA	02110-1301, USA.
  *
  */
 
@@ -44,14 +44,14 @@
  * @vsel1_def_state: Default state of vsel1. 1 if it is high else 0.
  */
 struct tps62360_regulator_platform_data {
-  struct regulator_init_data reg_init_data;
-  bool en_force_pwm;
-  bool en_discharge;
-  bool en_internal_pulldn;
-  int vsel0_gpio;
-  int vsel1_gpio;
-  int vsel0_def_state;
-  int vsel1_def_state;
+	struct regulator_init_data reg_init_data;
+	bool en_force_pwm;
+	bool en_discharge;
+	bool en_internal_pulldn;
+	int vsel0_gpio;
+	int vsel1_gpio;
+	int vsel0_def_state;
+	int vsel1_def_state;
 };
 
 #endif /* __LINUX_REGULATOR_TPS62360_H */

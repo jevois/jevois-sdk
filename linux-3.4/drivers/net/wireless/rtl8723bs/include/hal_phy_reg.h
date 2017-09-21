@@ -1,7 +1,7 @@
 /******************************************************************************
  *
  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
- *
+ *                                        
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of version 2 of the GNU General Public License as
  * published by the Free Software Foundation.
@@ -20,7 +20,7 @@
 #ifndef __HAL_PHY_REG_H__
 #define __HAL_PHY_REG_H__
 
-#define     bRFRegOffsetMask  0xfffff
+#define 		bRFRegOffsetMask	0xfffff
 
 #endif
 

@@ -16,8 +16,8 @@
 #include <asm/processor.h>
 #include <linux/stringify.h>
 
-#define _INTLEVEL(x)  XCHAL_INT ## x ## _LEVEL
-#define INTLEVEL(x) _INTLEVEL(x)
+#define _INTLEVEL(x)	XCHAL_INT ## x ## _LEVEL
+#define INTLEVEL(x)	_INTLEVEL(x)
 
 #if INTLEVEL(XCHAL_TIMER0_INTERRUPT) == 1
 # define LINUX_TIMER     0
@@ -34,7 +34,7 @@
 
 #define LINUX_TIMER_MASK        (1L << LINUX_TIMER_INT)
 
-#define CLOCK_TICK_RATE   1193180 /* (everyone is using this value) */
+#define CLOCK_TICK_RATE 	1193180	/* (everyone is using this value) */
 #define CLOCK_TICK_FACTOR       20 /* Factor of both 10^6 and CLOCK_TICK_RATE */
 
 #ifdef CONFIG_XTENSA_CALIBRATE_CCOUNT
@@ -56,41 +56,41 @@ typedef unsigned long long cycles_t;
 
 extern cycles_t cacheflush_time;
 
-#define get_cycles()  (0)
+#define get_cycles()	(0)
 
 
 /*
  * Register access.
  */
 
-#define WSR_CCOUNT(r)   asm volatile ("wsr %0,"__stringify(CCOUNT) :: "a" (r))
-#define RSR_CCOUNT(r)   asm volatile ("rsr %0,"__stringify(CCOUNT) : "=a" (r))
+#define WSR_CCOUNT(r)	  asm volatile ("wsr %0,"__stringify(CCOUNT) :: "a" (r))
+#define RSR_CCOUNT(r)	  asm volatile ("rsr %0,"__stringify(CCOUNT) : "=a" (r))
 #define WSR_CCOMPARE(x,r) asm volatile ("wsr %0,"__stringify(CCOMPARE)"+"__stringify(x) :: "a"(r))
 #define RSR_CCOMPARE(x,r) asm volatile ("rsr %0,"__stringify(CCOMPARE)"+"__stringify(x) : "=a"(r))
 
 static inline unsigned long get_ccount (void)
 {
-  unsigned long ccount;
-  RSR_CCOUNT (ccount);
-  return ccount;
+	unsigned long ccount;
+	RSR_CCOUNT(ccount);
+	return ccount;
 }
 
 static inline void set_ccount (unsigned long ccount)
 {
-  WSR_CCOUNT (ccount);
+	WSR_CCOUNT(ccount);
 }
 
 static inline unsigned long get_linux_timer (void)
 {
-  unsigned ccompare;
-  RSR_CCOMPARE (LINUX_TIMER, ccompare);
-  return ccompare;
+	unsigned ccompare;
+	RSR_CCOMPARE(LINUX_TIMER, ccompare);
+	return ccompare;
 }
 
 static inline void set_linux_timer (unsigned long ccompare)
 {
-  WSR_CCOMPARE (LINUX_TIMER, ccompare);
+	WSR_CCOMPARE(LINUX_TIMER, ccompare);
 }
 
-#endif  /* __KERNEL__ */
-#endif  /* _XTENSA_TIMEX_H */
+#endif	/* __KERNEL__ */
+#endif	/* _XTENSA_TIMEX_H */

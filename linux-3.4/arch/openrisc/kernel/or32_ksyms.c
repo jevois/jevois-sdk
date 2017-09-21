@@ -34,13 +34,13 @@
 #define DECLARE_EXPORT(name) extern void name(void); EXPORT_SYMBOL(name)
 
 /* compiler generated symbols */
-DECLARE_EXPORT (__udivsi3);
-DECLARE_EXPORT (__divsi3);
-DECLARE_EXPORT (__umodsi3);
-DECLARE_EXPORT (__modsi3);
-DECLARE_EXPORT (__muldi3);
-DECLARE_EXPORT (__ashrdi3);
-DECLARE_EXPORT (__ashldi3);
-DECLARE_EXPORT (__lshrdi3);
+DECLARE_EXPORT(__udivsi3);
+DECLARE_EXPORT(__divsi3);
+DECLARE_EXPORT(__umodsi3);
+DECLARE_EXPORT(__modsi3);
+DECLARE_EXPORT(__muldi3);
+DECLARE_EXPORT(__ashrdi3);
+DECLARE_EXPORT(__ashldi3);
+DECLARE_EXPORT(__lshrdi3);
 
-EXPORT_SYMBOL (__copy_tofrom_user);
+EXPORT_SYMBOL(__copy_tofrom_user);

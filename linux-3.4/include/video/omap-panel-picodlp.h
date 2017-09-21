@@ -13,11 +13,11 @@
 #define __PANEL_PICODLP_H
 /**
  * struct : picodlp panel data
- * picodlp_adapter_id:  i2c_adapter number for picodlp
+ * picodlp_adapter_id:	i2c_adapter number for picodlp
  */
 struct picodlp_panel_data {
-  int picodlp_adapter_id;
-  int emu_done_gpio;
-  int pwrgood_gpio;
+	int picodlp_adapter_id;
+	int emu_done_gpio;
+	int pwrgood_gpio;
 };
 #endif /* __PANEL_PICODLP_H */

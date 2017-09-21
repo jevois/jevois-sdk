@@ -16,35 +16,35 @@
 #define   NAND_IO_BASE_ADDR1   0x1c04000
 #endif
 
-extern void * NAND_IORemap (unsigned int base_addr, unsigned int size);
+extern void *NAND_IORemap(unsigned int base_addr, unsigned int size);
 
-extern int NAND_ClkRequest (unsigned int nand_index);
-extern void NAND_ClkRelease (unsigned int nand_index);
-extern int NAND_SetClk (unsigned int nand_index, unsigned int nand_clk);
-extern int NAND_GetClk (unsigned int nand_index);
+extern int NAND_ClkRequest(unsigned int nand_index);
+extern void NAND_ClkRelease(unsigned int nand_index);
+extern int NAND_SetClk(unsigned int nand_index, unsigned int nand_clk);
+extern int NAND_GetClk(unsigned int nand_index);
 
-extern void NAND_PIORequest (unsigned int nand_index);
-extern void NAND_PIORelease (unsigned int nand_index);
+extern void NAND_PIORequest(unsigned int nand_index);
+extern void NAND_PIORelease(unsigned int nand_index);
 
-extern void NAND_EnRbInt (void);
-extern void NAND_ClearRbInt (void);
-extern int NAND_WaitRbReady (void);
-extern int NAND_WaitDmaFinish (void);
-extern void NAND_RbInterrupt (void);
+extern void NAND_EnRbInt(void);
+extern void NAND_ClearRbInt(void);
+extern int NAND_WaitRbReady(void);
+extern int NAND_WaitDmaFinish(void);
+extern void NAND_RbInterrupt(void);
 
-extern void * NAND_Malloc (unsigned int Size);
-extern void NAND_Free (void * pAddr, unsigned int Size);
-extern int  NAND_Print (const char * str, ...);
+extern void* NAND_Malloc(unsigned int Size);
+extern void NAND_Free(void *pAddr, unsigned int Size);
+extern int  NAND_Print(const char * str, ...);
 
-#define MEMSET(x,y,z)                 memset((x),(y),(z))
+#define MEMSET(x,y,z)            			memset((x),(y),(z))
 
-#define MEMCPY(x,y,z)                     memcpy((x),(y),(z))
+#define MEMCPY(x,y,z)                   	memcpy((x),(y),(z))
 
-#define MALLOC(x)                         NAND_Malloc((x))
+#define MALLOC(x)                       	NAND_Malloc((x))
 
-#define FREE(x,size)                      NAND_Free((x),(size))
+#define FREE(x,size)                    	NAND_Free((x),(size))
 
-#define PRINT(...)              NAND_Print(__VA_ARGS__)
+#define PRINT(...)							NAND_Print(__VA_ARGS__)
 
 
 #endif

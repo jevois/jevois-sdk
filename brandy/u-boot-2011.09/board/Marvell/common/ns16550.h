@@ -19,30 +19,30 @@
    wired in with the 3 address lines shifted over by 2 bits */
 struct NS16550
 {
-  unsigned char rbr;  /* 0 = 0-3*/
-  int pad1: 24;
-  
-  unsigned char ier;  /* 1 = 4-7*/
-  int pad2: 24;
-  
-  unsigned char fcr;  /* 2 = 8-b*/
-  int pad3: 24;
-  
-  unsigned char lcr;  /* 3 = c-f*/
-  int pad4: 24;
-  
-  unsigned char mcr;  /* 4 = 10-13*/
-  int pad5: 24;
-  
-  unsigned char lsr;  /* 5 = 14-17*/
-  int pad6: 24;
-  
-  unsigned char msr;  /* 6 =18-1b*/
-  int pad7: 24;
-  
-  unsigned char scr;  /* 7 =1c-1f*/
-  int pad8: 24;
-} __attribute__ ( (packed) );
+	unsigned char rbr;  /* 0 = 0-3*/
+	int pad1:24;
+
+	unsigned char ier;  /* 1 = 4-7*/
+	int pad2:24;
+
+	unsigned char fcr;  /* 2 = 8-b*/
+	int pad3:24;
+
+	unsigned char lcr;  /* 3 = c-f*/
+	int pad4:24;
+
+	unsigned char mcr;  /* 4 = 10-13*/
+	int pad5:24;
+
+	unsigned char lsr;  /* 5 = 14-17*/
+	int pad6:24;
+
+	unsigned char msr;  /* 6 =18-1b*/
+	int pad7:24;
+
+	unsigned char scr;  /* 7 =1c-1f*/
+	int pad8:24;
+} __attribute__ ((packed));
 
 /* aliases */
 #define thr rbr
@@ -89,13 +89,13 @@ struct NS16550
 #define COM1 0x03F8
 #define COM2 0x02F8
 
-volatile struct NS16550 * NS16550_init (int chan, int baud_divisor);
-void NS16550_putc (volatile struct NS16550 * com_port, unsigned char c);
-unsigned char NS16550_getc (volatile struct NS16550 * com_port);
-int NS16550_tstc (volatile struct NS16550 * com_port);
-void NS16550_reinit (volatile struct NS16550 * com_port, int baud_divisor);
+volatile struct NS16550 * NS16550_init(int chan, int baud_divisor);
+void NS16550_putc(volatile struct NS16550 *com_port, unsigned char c);
+unsigned char NS16550_getc(volatile struct NS16550 *com_port);
+int NS16550_tstc(volatile struct NS16550 *com_port);
+void NS16550_reinit(volatile struct NS16550 *com_port, int baud_divisor);
 
-typedef struct NS16550 * NS16550_t;
+typedef struct NS16550 *NS16550_t;
 
 extern const NS16550_t COM_PORTS[];
 

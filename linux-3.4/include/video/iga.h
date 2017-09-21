@@ -7,8 +7,8 @@
 #ifndef _IGA1682_H
 #define _IGA1682_H 1
 
-#define IGA_ATTR_CTL      0x3C0
-#define   IGA_IDX_VGA_OVERSCAN    0x11
+#define IGA_ATTR_CTL			0x3C0
+#define   IGA_IDX_VGA_OVERSCAN		0x11
 #define DAC_W_INDEX                     0x03C8
 #define DAC_DATA                        0x03C9
 #define IGA_EXT_CNTRL                   0x3CE

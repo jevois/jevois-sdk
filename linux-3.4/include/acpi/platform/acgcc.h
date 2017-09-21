@@ -68,4 +68,4 @@
 #define inline
 #endif
 
-#endif        /* __ACGCC_H__ */
+#endif				/* __ACGCC_H__ */

@@ -1,7 +1,7 @@
 /* linux/arch/arm/plat-s3c2416/setup-sdhci-gpio.c
  *
  * Copyright 2010 Promwad Innovation Company
- *  Yauhen Kharuzhy <yauhen.kharuzhy@promwad.com>
+ *	Yauhen Kharuzhy <yauhen.kharuzhy@promwad.com>
  *
  * S3C2416 - Helper functions for setting up SDHCI device(s) GPIO (HSMMC)
  *
@@ -22,13 +22,13 @@
 #include <mach/regs-gpio.h>
 #include <plat/gpio-cfg.h>
 
-void s3c2416_setup_sdhci0_cfg_gpio (struct platform_device * dev, int width)
+void s3c2416_setup_sdhci0_cfg_gpio(struct platform_device *dev, int width)
 {
-  s3c_gpio_cfgrange_nopull (S3C2410_GPE (5), 2 + width, S3C_GPIO_SFN (2) );
+	s3c_gpio_cfgrange_nopull(S3C2410_GPE(5), 2 + width, S3C_GPIO_SFN(2));
 }
 
-void s3c2416_setup_sdhci1_cfg_gpio (struct platform_device * dev, int width)
+void s3c2416_setup_sdhci1_cfg_gpio(struct platform_device *dev, int width)
 {
-  s3c_gpio_cfgrange_nopull (S3C2410_GPL (0), width, S3C_GPIO_SFN (2) );
-  s3c_gpio_cfgrange_nopull (S3C2410_GPL (8), 2, S3C_GPIO_SFN (2) );
+	s3c_gpio_cfgrange_nopull(S3C2410_GPL(0), width, S3C_GPIO_SFN(2));
+	s3c_gpio_cfgrange_nopull(S3C2410_GPL(8), 2, S3C_GPIO_SFN(2));
 }

@@ -22,14 +22,14 @@
 #define S3C24XX_CLKSRC_MPLL 1
 
 /* Clock dividers */
-#define S3C24XX_DIV_MCLK  0
-#define S3C24XX_DIV_BCLK  1
-#define S3C24XX_DIV_PRESCALER 2
+#define S3C24XX_DIV_MCLK	0
+#define S3C24XX_DIV_BCLK	1
+#define S3C24XX_DIV_PRESCALER	2
 
 /* prescaler */
 #define S3C24XX_PRESCALE(a,b) \
-  (((a - 1) << S3C2410_IISPSR_INTSHIFT) | ((b - 1) << S3C2410_IISPSR_EXTSHFIT))
+	(((a - 1) << S3C2410_IISPSR_INTSHIFT) | ((b - 1) << S3C2410_IISPSR_EXTSHFIT))
 
-u32 s3c24xx_i2s_get_clockrate (void);
+u32 s3c24xx_i2s_get_clockrate(void);
 
 #endif /*S3C24XXI2S_H_*/

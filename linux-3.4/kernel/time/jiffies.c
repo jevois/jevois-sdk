@@ -37,7 +37,7 @@
  * requested HZ value. It is also not recommended
  * for "tick-less" systems.
  */
-#define NSEC_PER_JIFFY  ((u32)((((u64)NSEC_PER_SEC)<<8)/ACTHZ))
+#define NSEC_PER_JIFFY	((u32)((((u64)NSEC_PER_SEC)<<8)/ACTHZ))
 
 /* Since jiffies uses a simple NSEC_PER_JIFFY multiplier
  * conversion, the .shift value could be zero. However
@@ -51,48 +51,47 @@
  * HZ shrinks, so values greater than 8 overflow 32bits when
  * HZ=100.
  */
-#define JIFFIES_SHIFT 8
+#define JIFFIES_SHIFT	8
 
-static cycle_t jiffies_read (struct clocksource * cs)
+static cycle_t jiffies_read(struct clocksource *cs)
 {
-  return (cycle_t) jiffies;
+	return (cycle_t) jiffies;
 }
 
 struct clocksource clocksource_jiffies = {
-  .name   = "jiffies",
-  .rating   = 1, /* lowest valid rating*/
-  .read   = jiffies_read,
-  .mask   = 0xffffffff, /*32bits*/
-  .mult   = NSEC_PER_JIFFY << JIFFIES_SHIFT, /* details above */
-  .shift    = JIFFIES_SHIFT,
+	.name		= "jiffies",
+	.rating		= 1, /* lowest valid rating*/
+	.read		= jiffies_read,
+	.mask		= 0xffffffff, /*32bits*/
+	.mult		= NSEC_PER_JIFFY << JIFFIES_SHIFT, /* details above */
+	.shift		= JIFFIES_SHIFT,
 };
 
 #if (BITS_PER_LONG < 64)
-u64 get_jiffies_64 (void)
+u64 get_jiffies_64(void)
 {
-  unsigned long seq;
-  u64 ret;
-  
-  do {
-    seq = read_seqbegin (&xtime_lock);
-    ret = jiffies_64;
-  }
-  while (read_seqretry (&xtime_lock, seq) );
-  return ret;
+	unsigned long seq;
+	u64 ret;
+
+	do {
+		seq = read_seqbegin(&xtime_lock);
+		ret = jiffies_64;
+	} while (read_seqretry(&xtime_lock, seq));
+	return ret;
 }
-EXPORT_SYMBOL (get_jiffies_64);
+EXPORT_SYMBOL(get_jiffies_64);
 #endif
 
-EXPORT_SYMBOL (jiffies);
+EXPORT_SYMBOL(jiffies);
 
-static int __init init_jiffies_clocksource (void)
+static int __init init_jiffies_clocksource(void)
 {
-  return clocksource_register (&clocksource_jiffies);
+	return clocksource_register(&clocksource_jiffies);
 }
 
-core_initcall (init_jiffies_clocksource);
+core_initcall(init_jiffies_clocksource);
 
-struct clocksource * __init __weak clocksource_default_clock (void)
+struct clocksource * __init __weak clocksource_default_clock(void)
 {
-  return &clocksource_jiffies;
+	return &clocksource_jiffies;
 }

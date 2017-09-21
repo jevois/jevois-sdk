@@ -6,16 +6,16 @@
  *
  * @brief This file contains the macros for the IxNpeDl component.
  *
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,7 +28,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -41,7 +41,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
 */
@@ -50,7 +50,7 @@
  * @defgroup IxNpeDlMacros_p IxNpeDlMacros_p
  *
  * @brief Macros for the IxNpeDl component.
- *
+ * 
  * @{
  */
 
@@ -66,7 +66,7 @@
 #include <stdio.h>
 #include "test/IxNpeDlTestReg.h"
 
-#else
+#else   
 #include "IxOsal.h"
 
 #endif
@@ -82,9 +82,9 @@
  */
 typedef enum
 {
-  IX_NPEDL_TRACE_OFF,     /**< no trace */
-  IX_NPEDL_DEBUG,         /**< debug */
-  IX_NPEDL_FN_ENTRY_EXIT  /**< function entry/exit */
+    IX_NPEDL_TRACE_OFF,     /**< no trace */
+    IX_NPEDL_DEBUG,         /**< debug */
+    IX_NPEDL_FN_ENTRY_EXIT  /**< function entry/exit */
 } IxNpeDlTraceTypes;
 
 
@@ -139,44 +139,44 @@ typedef enum
  * @param unsigned [in] LEVEL - one of IxNpeDlTraceTypes enumerated values
  * @param char* [in] STR - Trace string
  *
- * This macro simply prints the trace string passed, if the level is supported.
+ * This macro simply prints the trace string passed, if the level is supported. 
  * Intended for use with IxNpeDl unit test code.
  *
  * @return none
  */
 #define IX_NPEDL_TRACE0(LEVEL, STR) \
-  { \
+{ \
     if (LEVEL <= IX_NPEDL_TRACE_LEVEL) \
     { \
-      printf ("IxNpeDl TRACE: "); \
-      printf ((STR)); \
-      printf ("\n"); \
+        printf ("IxNpeDl TRACE: "); \
+        printf ((STR)); \
+        printf ("\n"); \
     } \
-  }
+}
 
-/**
-* @def IX_NPEDL_TRACE1
-*
-* @brief Mechanism for tracing debug for the IxNpeDl component, with 1 argument
-*
-* @param unsigned [in] LEVEL - one of IxNpeDlTraceTypes enumerated values
-* @param char* [in] STR - Trace string
-* @param argType [in] ARG1 - Argument to trace
-*
-* This macro simply prints the trace string passed, if the level is supported.
-* Intended for use with IxNpeDl unit test code.
-*
-* @return none
-*/
+ /**
+ * @def IX_NPEDL_TRACE1
+ *
+ * @brief Mechanism for tracing debug for the IxNpeDl component, with 1 argument
+ *
+ * @param unsigned [in] LEVEL - one of IxNpeDlTraceTypes enumerated values
+ * @param char* [in] STR - Trace string
+ * @param argType [in] ARG1 - Argument to trace
+ *
+ * This macro simply prints the trace string passed, if the level is supported.
+ * Intended for use with IxNpeDl unit test code.
+ *
+ * @return none
+ */
 #define IX_NPEDL_TRACE1(LEVEL, STR, ARG1) \
-  { \
+{ \
     if (LEVEL <= IX_NPEDL_TRACE_LEVEL) \
     { \
-      printf ("IxNpeDl TRACE: "); \
-      printf (STR, ARG1); \
-      printf ("\n"); \
+        printf ("IxNpeDl TRACE: "); \
+        printf (STR, ARG1); \
+        printf ("\n"); \
     } \
-  }
+}
 
 /**
  * @def IX_NPEDL_TRACE2
@@ -188,20 +188,20 @@ typedef enum
  * @param argType [in] ARG1 - Argument to trace
  * @param argType [in] ARG2 - Argument to trace
  *
- * This macro simply prints the trace string passed, if the level is supported.
+ * This macro simply prints the trace string passed, if the level is supported. 
  * Intended for use with IxNpeDl unit test code.
  *
  * @return none
  */
 #define IX_NPEDL_TRACE2(LEVEL, STR, ARG1, ARG2) \
-  { \
+{ \
     if (LEVEL <= IX_NPEDL_TRACE_LEVEL) \
     { \
-      printf ("IxNpeDl TRACE: "); \
-      printf (STR, ARG1, ARG2); \
-      printf ("\n"); \
+        printf ("IxNpeDl TRACE: "); \
+        printf (STR, ARG1, ARG2); \
+        printf ("\n"); \
     } \
-  }
+}
 
 
 /**
@@ -219,9 +219,9 @@ typedef enum
  * @return none
  */
 #define IX_NPEDL_REG_WRITE(base, offset, value) \
-  { \
+{ \
     ixNpeDlTestRegWrite (base, offset, value); \
-  }
+}
 
 
 /**
@@ -239,9 +239,9 @@ typedef enum
  * @return none
  */
 #define IX_NPEDL_REG_READ(base, offset, value) \
-  { \
+{ \
     ixNpeDlTestRegRead (base, offset, value); \
-  }
+}
 
 
 /* Implementation of the following macros when integrated with IxOsal */
@@ -268,7 +268,7 @@ typedef enum
  * @return none
  */
 #define IX_NPEDL_ERROR_REPORT(STR) \
-  ixOsalLog (IX_OSAL_LOG_LVL_ERROR, IX_OSAL_LOG_DEV_STDERR, STR, 0, 0, 0, 0, 0, 0);
+    ixOsalLog (IX_OSAL_LOG_LVL_ERROR, IX_OSAL_LOG_DEV_STDERR, STR, 0, 0, 0, 0, 0, 0);
 
 /**
  * @def IX_NPEDL_WARNING_REPORT
@@ -282,7 +282,7 @@ typedef enum
  * @return none
  */
 #define IX_NPEDL_WARNING_REPORT(STR) \
-  ixOsalLog (IX_OSAL_LOG_LVL_WARNING, IX_OSAL_LOG_DEV_STDOUT, STR, 0, 0, 0, 0, 0, 0);
+    ixOsalLog (IX_OSAL_LOG_LVL_WARNING, IX_OSAL_LOG_DEV_STDOUT, STR, 0, 0, 0, 0, 0, 0);
 
 
 /**
@@ -298,19 +298,19 @@ typedef enum
  * @return none
  */
 #define IX_NPEDL_TRACE0(LEVEL, STR) \
-  { \
+{ \
     if (LEVEL <= IX_NPEDL_TRACE_LEVEL) \
     { \
-      if (LEVEL == IX_NPEDL_FN_ENTRY_EXIT) \
-      { \
-        ixOsalLog (IX_OSAL_LOG_LVL_DEBUG3, IX_OSAL_LOG_DEV_STDOUT, STR, 0, 0, 0, 0, 0, 0); \
-      } \
-      else if (LEVEL == IX_NPEDL_DEBUG) \
-      { \
-        ixOsalLog (IX_OSAL_LOG_LVL_MESSAGE, IX_OSAL_LOG_DEV_STDOUT, STR, 0, 0, 0, 0, 0, 0); \
-      } \
+        if (LEVEL == IX_NPEDL_FN_ENTRY_EXIT) \
+        { \
+            ixOsalLog (IX_OSAL_LOG_LVL_DEBUG3, IX_OSAL_LOG_DEV_STDOUT, STR, 0, 0, 0, 0, 0, 0); \
+        } \
+        else if (LEVEL == IX_NPEDL_DEBUG) \
+        { \
+            ixOsalLog (IX_OSAL_LOG_LVL_MESSAGE, IX_OSAL_LOG_DEV_STDOUT, STR, 0, 0, 0, 0, 0, 0); \
+        } \
     } \
-  }
+}
 
 /**
  * @def IX_NPEDL_TRACE1
@@ -321,24 +321,24 @@ typedef enum
  * @param char* [in] STR - Trace string
  * @param argType [in] ARG1 - Argument to trace
  *
- * This macro simply prints the trace string passed, if the level is supported.
+ * This macro simply prints the trace string passed, if the level is supported. 
  *
  * @return none
  */
 #define IX_NPEDL_TRACE1(LEVEL, STR, ARG1) \
-  { \
+{ \
     if (LEVEL <= IX_NPEDL_TRACE_LEVEL) \
     { \
-      if (LEVEL == IX_NPEDL_FN_ENTRY_EXIT) \
-      { \
-        ixOsalLog (IX_OSAL_LOG_LVL_DEBUG3, IX_OSAL_LOG_DEV_STDOUT, STR, ARG1, 0, 0, 0, 0, 0); \
-      } \
-      else if (LEVEL == IX_NPEDL_DEBUG) \
-      { \
-        ixOsalLog (IX_OSAL_LOG_LVL_MESSAGE, IX_OSAL_LOG_DEV_STDOUT, STR, ARG1, 0, 0, 0, 0, 0); \
-      } \
+        if (LEVEL == IX_NPEDL_FN_ENTRY_EXIT) \
+        { \
+            ixOsalLog (IX_OSAL_LOG_LVL_DEBUG3, IX_OSAL_LOG_DEV_STDOUT, STR, ARG1, 0, 0, 0, 0, 0); \
+        } \
+        else if (LEVEL == IX_NPEDL_DEBUG) \
+        { \
+            ixOsalLog (IX_OSAL_LOG_LVL_MESSAGE, IX_OSAL_LOG_DEV_STDOUT, STR, ARG1, 0, 0, 0, 0, 0); \
+        } \
     } \
-  }
+}
 
 /**
  * @def IX_NPEDL_TRACE2
@@ -350,24 +350,24 @@ typedef enum
  * @param argType [in] ARG1 - Argument to trace
  * @param argType [in] ARG2 - Argument to trace
  *
- * This macro simply prints the trace string passed, if the level is supported.
+ * This macro simply prints the trace string passed, if the level is supported. 
  *
  * @return none
  */
 #define IX_NPEDL_TRACE2(LEVEL, STR, ARG1, ARG2) \
-  { \
+{ \
     if (LEVEL <= IX_NPEDL_TRACE_LEVEL) \
     { \
-      if (LEVEL == IX_NPEDL_FN_ENTRY_EXIT) \
-      { \
-        ixOsalLog (IX_OSAL_LOG_LVL_DEBUG3, IX_OSAL_LOG_DEV_STDOUT, STR, ARG1, ARG2, 0, 0, 0, 0); \
-      } \
-      else if (LEVEL == IX_NPEDL_DEBUG) \
-      { \
-        ixOsalLog (IX_OSAL_LOG_LVL_MESSAGE, IX_OSAL_LOG_DEV_STDOUT, STR, ARG1, ARG2, 0, 0, 0, 0); \
-      } \
+        if (LEVEL == IX_NPEDL_FN_ENTRY_EXIT) \
+        { \
+            ixOsalLog (IX_OSAL_LOG_LVL_DEBUG3, IX_OSAL_LOG_DEV_STDOUT, STR, ARG1, ARG2, 0, 0, 0, 0); \
+        } \
+        else if (LEVEL == IX_NPEDL_DEBUG) \
+        { \
+            ixOsalLog (IX_OSAL_LOG_LVL_MESSAGE, IX_OSAL_LOG_DEV_STDOUT, STR, ARG1, ARG2, 0, 0, 0, 0); \
+        } \
     } \
-  }
+}
 
 /**
  * @def IX_NPEDL_REG_WRITE
@@ -378,13 +378,13 @@ typedef enum
  * @param UINT32 [in] offset - Offset from base memory address
  * @param UINT32 [in] value  - Value to write to register
  *
- * This macro forms the address of the register from base address + offset, and
+ * This macro forms the address of the register from base address + offset, and 
  * dereferences that address to write the contents of the register.
  *
  * @return none
  */
 #define IX_NPEDL_REG_WRITE(base, offset, value) \
-  IX_OSAL_WRITE_LONG(((base) + (offset)), (value))
+    IX_OSAL_WRITE_LONG(((base) + (offset)), (value))
 
 
 
@@ -397,13 +397,13 @@ typedef enum
  * @param UINT32 [in] offset  - Offset from base memory address
  * @param UINT32 *[out] value  - Value read from register
  *
- * This macro forms the address of the register from base address + offset, and
+ * This macro forms the address of the register from base address + offset, and 
  * dereferences that address to read the register contents.
  *
  * @return none
  */
 #define IX_NPEDL_REG_READ(base, offset, value) \
-  *(value) = IX_OSAL_READ_LONG(((base) + (offset)))
+    *(value) = IX_OSAL_READ_LONG(((base) + (offset)))
 
 #endif  /* #if (CPU != XSCALE) */
 

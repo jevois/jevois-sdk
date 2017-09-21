@@ -30,8 +30,8 @@
  * by logical partition, containing the storage that may be accessed with
  * translate off.
  */
-#define RMA_START 0x0
-#define RMA_END   (ppc64_rma_size)
+#define RMA_START	0x0
+#define RMA_END		(ppc64_rma_size)
 
 /*
  * On some Power systems where RMO is 128MB, it still requires minimum of
@@ -40,69 +40,69 @@
  * loading modules related to network setup. Hence we need aditional 64M
  * of memory to avoid OOM issue.
  */
-#define MIN_BOOT_MEM  (((RMA_END < (0x1UL << 28)) ? (0x1UL << 28) : RMA_END) \
-                       + (0x1UL << 26))
+#define MIN_BOOT_MEM	(((RMA_END < (0x1UL << 28)) ? (0x1UL << 28) : RMA_END) \
+			+ (0x1UL << 26))
 
-#define memblock_num_regions(memblock_type) (memblock.memblock_type.cnt)
+#define memblock_num_regions(memblock_type)	(memblock.memblock_type.cnt)
 
 #ifndef ELF_CORE_EFLAGS
 #define ELF_CORE_EFLAGS 0
 #endif
 
 /* Firmware provided dump sections */
-#define FADUMP_CPU_STATE_DATA 0x0001
-#define FADUMP_HPTE_REGION  0x0002
-#define FADUMP_REAL_MODE_REGION 0x0011
+#define FADUMP_CPU_STATE_DATA	0x0001
+#define FADUMP_HPTE_REGION	0x0002
+#define FADUMP_REAL_MODE_REGION	0x0011
 
 /* Dump request flag */
-#define FADUMP_REQUEST_FLAG 0x00000001
+#define FADUMP_REQUEST_FLAG	0x00000001
 
 /* FAD commands */
-#define FADUMP_REGISTER   1
-#define FADUMP_UNREGISTER 2
-#define FADUMP_INVALIDATE 3
+#define FADUMP_REGISTER		1
+#define FADUMP_UNREGISTER	2
+#define FADUMP_INVALIDATE	3
 
 /* Dump status flag */
-#define FADUMP_ERROR_FLAG 0x2000
+#define FADUMP_ERROR_FLAG	0x2000
 
-#define FADUMP_CPU_ID_MASK  ((1UL << 32) - 1)
+#define FADUMP_CPU_ID_MASK	((1UL << 32) - 1)
 
-#define CPU_UNKNOWN   (~((u32)0))
+#define CPU_UNKNOWN		(~((u32)0))
 
 /* Utility macros */
-#define SKIP_TO_NEXT_CPU(reg_entry)     \
-  ({              \
-    while (reg_entry->reg_id != REG_ID("CPUEND")) \
-      reg_entry++;        \
-    reg_entry++;          \
-  })
+#define SKIP_TO_NEXT_CPU(reg_entry)			\
+({							\
+	while (reg_entry->reg_id != REG_ID("CPUEND"))	\
+		reg_entry++;				\
+	reg_entry++;					\
+})
 
 /* Kernel Dump section info */
 struct fadump_section {
-  u32 request_flag;
-  u16 source_data_type;
-  u16 error_flags;
-  u64 source_address;
-  u64 source_len;
-  u64 bytes_dumped;
-  u64 destination_address;
+	u32	request_flag;
+	u16	source_data_type;
+	u16	error_flags;
+	u64	source_address;
+	u64	source_len;
+	u64	bytes_dumped;
+	u64	destination_address;
 };
 
 /* ibm,configure-kernel-dump header. */
 struct fadump_section_header {
-  u32 dump_format_version;
-  u16 dump_num_sections;
-  u16 dump_status_flag;
-  u32 offset_first_dump_section;
-  
-  /* Fields for disk dump option. */
-  u32 dd_block_size;
-  u64 dd_block_offset;
-  u64 dd_num_blocks;
-  u32 dd_offset_disk_path;
-  
-  /* Maximum time allowed to prevent an automatic dump-reboot. */
-  u32 max_time_auto;
+	u32	dump_format_version;
+	u16	dump_num_sections;
+	u16	dump_status_flag;
+	u32	offset_first_dump_section;
+
+	/* Fields for disk dump option. */
+	u32	dd_block_size;
+	u64	dd_block_offset;
+	u64	dd_num_blocks;
+	u32	dd_offset_disk_path;
+
+	/* Maximum time allowed to prevent an automatic dump-reboot. */
+	u32	max_time_auto;
 };
 
 /*
@@ -112,34 +112,34 @@ struct fadump_section_header {
  * No disk dump option. Hence disk dump path string section is not included.
  */
 struct fadump_mem_struct {
-  struct fadump_section_header  header;
-  
-  /* Kernel dump sections */
-  struct fadump_section   cpu_state_data;
-  struct fadump_section   hpte_region;
-  struct fadump_section   rmr_region;
+	struct fadump_section_header	header;
+
+	/* Kernel dump sections */
+	struct fadump_section		cpu_state_data;
+	struct fadump_section		hpte_region;
+	struct fadump_section		rmr_region;
 };
 
 /* Firmware-assisted dump configuration details. */
 struct fw_dump {
-  unsigned long cpu_state_data_size;
-  unsigned long hpte_region_size;
-  unsigned long boot_memory_size;
-  unsigned long reserve_dump_area_start;
-  unsigned long reserve_dump_area_size;
-  /* cmd line option during boot */
-  unsigned long reserve_bootvar;
-  
-  unsigned long fadumphdr_addr;
-  unsigned long cpu_notes_buf;
-  unsigned long cpu_notes_buf_size;
-  
-  int   ibm_configure_kernel_dump;
-  
-  unsigned long fadump_enabled: 1;
-  unsigned long fadump_supported: 1;
-  unsigned long dump_active: 1;
-  unsigned long dump_registered: 1;
+	unsigned long	cpu_state_data_size;
+	unsigned long	hpte_region_size;
+	unsigned long	boot_memory_size;
+	unsigned long	reserve_dump_area_start;
+	unsigned long	reserve_dump_area_size;
+	/* cmd line option during boot */
+	unsigned long	reserve_bootvar;
+
+	unsigned long	fadumphdr_addr;
+	unsigned long	cpu_notes_buf;
+	unsigned long	cpu_notes_buf_size;
+
+	int		ibm_configure_kernel_dump;
+
+	unsigned long	fadump_enabled:1;
+	unsigned long	fadump_supported:1;
+	unsigned long	dump_active:1;
+	unsigned long	dump_registered:1;
 };
 
 /*
@@ -148,20 +148,20 @@ struct fw_dump {
  * e.g.
  *  The string "FADMPINF" will be converted into 0x4641444d50494e46
  */
-static inline u64 str_to_u64 (const char * str)
+static inline u64 str_to_u64(const char *str)
 {
-  u64 val = 0;
-  int i;
-  
-  for (i = 0; i < sizeof (val); i++)
-  { val = (*str) ? (val << 8) | *str++ : val << 8; }
-  return val;
-}
-#define STR_TO_HEX(x) str_to_u64(x)
-#define REG_ID(x) str_to_u64(x)
+	u64 val = 0;
+	int i;
 
-#define FADUMP_CRASH_INFO_MAGIC   STR_TO_HEX("FADMPINF")
-#define REGSAVE_AREA_MAGIC    STR_TO_HEX("REGSAVE")
+	for (i = 0; i < sizeof(val); i++)
+		val = (*str) ? (val << 8) | *str++ : val << 8;
+	return val;
+}
+#define STR_TO_HEX(x)	str_to_u64(x)
+#define REG_ID(x)	str_to_u64(x)
+
+#define FADUMP_CRASH_INFO_MAGIC		STR_TO_HEX("FADMPINF")
+#define REGSAVE_AREA_MAGIC		STR_TO_HEX("REGSAVE")
 
 /* The firmware-assisted dump format.
  *
@@ -174,45 +174,45 @@ static inline u64 str_to_u64 (const char * str)
 
 /* Register save area header. */
 struct fadump_reg_save_area_header {
-  u64   magic_number;
-  u32   version;
-  u32   num_cpu_offset;
+	u64		magic_number;
+	u32		version;
+	u32		num_cpu_offset;
 };
 
 /* Register entry. */
 struct fadump_reg_entry {
-  u64   reg_id;
-  u64   reg_value;
+	u64		reg_id;
+	u64		reg_value;
 };
 
 /* fadump crash info structure */
 struct fadump_crash_info_header {
-  u64   magic_number;
-  u64   elfcorehdr_addr;
-  u32   crashing_cpu;
-  struct pt_regs  regs;
-  struct cpumask  cpu_online_mask;
+	u64		magic_number;
+	u64		elfcorehdr_addr;
+	u32		crashing_cpu;
+	struct pt_regs	regs;
+	struct cpumask	cpu_online_mask;
 };
 
 /* Crash memory ranges */
-#define INIT_CRASHMEM_RANGES  (INIT_MEMBLOCK_REGIONS + 2)
+#define INIT_CRASHMEM_RANGES	(INIT_MEMBLOCK_REGIONS + 2)
 
 struct fad_crash_memory_ranges {
-  unsigned long long  base;
-  unsigned long long  size;
+	unsigned long long	base;
+	unsigned long long	size;
 };
 
-extern int early_init_dt_scan_fw_dump (unsigned long node,
-                                       const char * uname, int depth, void * data);
-extern int fadump_reserve_mem (void);
-extern int setup_fadump (void);
-extern int is_fadump_active (void);
-extern void crash_fadump (struct pt_regs *, const char *);
-extern void fadump_cleanup (void);
+extern int early_init_dt_scan_fw_dump(unsigned long node,
+		const char *uname, int depth, void *data);
+extern int fadump_reserve_mem(void);
+extern int setup_fadump(void);
+extern int is_fadump_active(void);
+extern void crash_fadump(struct pt_regs *, const char *);
+extern void fadump_cleanup(void);
 
-extern void vmcore_cleanup (void);
-#else /* CONFIG_FA_DUMP */
-static inline int is_fadump_active (void) { return 0; }
-static inline void crash_fadump (struct pt_regs * regs, const char * str) { }
+extern void vmcore_cleanup(void);
+#else	/* CONFIG_FA_DUMP */
+static inline int is_fadump_active(void) { return 0; }
+static inline void crash_fadump(struct pt_regs *regs, const char *str) { }
 #endif
 #endif

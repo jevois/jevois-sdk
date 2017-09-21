@@ -27,62 +27,62 @@
 #include "devices-imx27.h"
 
 static const int mx27lite_pins[] __initconst = {
-  /* UART1 */
-  PE12_PF_UART1_TXD,
-  PE13_PF_UART1_RXD,
-  PE14_PF_UART1_CTS,
-  PE15_PF_UART1_RTS,
-  /* FEC */
-  PD0_AIN_FEC_TXD0,
-  PD1_AIN_FEC_TXD1,
-  PD2_AIN_FEC_TXD2,
-  PD3_AIN_FEC_TXD3,
-  PD4_AOUT_FEC_RX_ER,
-  PD5_AOUT_FEC_RXD1,
-  PD6_AOUT_FEC_RXD2,
-  PD7_AOUT_FEC_RXD3,
-  PD8_AF_FEC_MDIO,
-  PD9_AIN_FEC_MDC,
-  PD10_AOUT_FEC_CRS,
-  PD11_AOUT_FEC_TX_CLK,
-  PD12_AOUT_FEC_RXD0,
-  PD13_AOUT_FEC_RX_DV,
-  PD14_AOUT_FEC_RX_CLK,
-  PD15_AOUT_FEC_COL,
-  PD16_AIN_FEC_TX_ER,
-  PF23_AIN_FEC_TX_EN,
+	/* UART1 */
+	PE12_PF_UART1_TXD,
+	PE13_PF_UART1_RXD,
+	PE14_PF_UART1_CTS,
+	PE15_PF_UART1_RTS,
+	/* FEC */
+	PD0_AIN_FEC_TXD0,
+	PD1_AIN_FEC_TXD1,
+	PD2_AIN_FEC_TXD2,
+	PD3_AIN_FEC_TXD3,
+	PD4_AOUT_FEC_RX_ER,
+	PD5_AOUT_FEC_RXD1,
+	PD6_AOUT_FEC_RXD2,
+	PD7_AOUT_FEC_RXD3,
+	PD8_AF_FEC_MDIO,
+	PD9_AIN_FEC_MDC,
+	PD10_AOUT_FEC_CRS,
+	PD11_AOUT_FEC_TX_CLK,
+	PD12_AOUT_FEC_RXD0,
+	PD13_AOUT_FEC_RX_DV,
+	PD14_AOUT_FEC_RX_CLK,
+	PD15_AOUT_FEC_COL,
+	PD16_AIN_FEC_TX_ER,
+	PF23_AIN_FEC_TX_EN,
 };
 
 static const struct imxuart_platform_data uart_pdata __initconst = {
-  .flags = IMXUART_HAVE_RTSCTS,
+	.flags = IMXUART_HAVE_RTSCTS,
 };
 
-static void __init mx27lite_init (void)
+static void __init mx27lite_init(void)
 {
-  imx27_soc_init();
-  
-  mxc_gpio_setup_multiple_pins (mx27lite_pins, ARRAY_SIZE (mx27lite_pins),
-                                "imx27lite");
-  imx27_add_imx_uart0 (&uart_pdata);
-  imx27_add_fec (NULL);
+	imx27_soc_init();
+
+	mxc_gpio_setup_multiple_pins(mx27lite_pins, ARRAY_SIZE(mx27lite_pins),
+		"imx27lite");
+	imx27_add_imx_uart0(&uart_pdata);
+	imx27_add_fec(NULL);
 }
 
-static void __init mx27lite_timer_init (void)
+static void __init mx27lite_timer_init(void)
 {
-  mx27_clocks_init (26000000);
+	mx27_clocks_init(26000000);
 }
 
 static struct sys_timer mx27lite_timer = {
-  .init = mx27lite_timer_init,
+	.init	= mx27lite_timer_init,
 };
 
-MACHINE_START (IMX27LITE, "LogicPD i.MX27LITE")
-.atag_offset = 0x100,
- .map_io = mx27_map_io,
-  .init_early = imx27_init_early,
-   .init_irq = mx27_init_irq,
-    .handle_irq = imx27_handle_irq,
-     .timer = &mx27lite_timer,
-      .init_machine = mx27lite_init,
-       .restart  = mxc_restart,
-        MACHINE_END
+MACHINE_START(IMX27LITE, "LogicPD i.MX27LITE")
+	.atag_offset = 0x100,
+	.map_io = mx27_map_io,
+	.init_early = imx27_init_early,
+	.init_irq = mx27_init_irq,
+	.handle_irq = imx27_handle_irq,
+	.timer = &mx27lite_timer,
+	.init_machine = mx27lite_init,
+	.restart	= mxc_restart,
+MACHINE_END

@@ -169,7 +169,7 @@
 /* ALT_TIMING Bit in PPI_CONTROL Register Is Not Functional */
 #define ANOMALY_05000306 (__SILICON_REVISION__ < 5)
 /* SCKELOW Bit Does Not Maintain State Through Hibernate */
-#define ANOMALY_05000307 (1)  /* note: brokenness is noted in documentation, not anomaly sheet */
+#define ANOMALY_05000307 (1)	/* note: brokenness is noted in documentation, not anomaly sheet */
 /* False Hardware Errors Caused by Fetches at the Boundary of Reserved Memory */
 #define ANOMALY_05000310 (1)
 /* Erroneous Flag (GPIO) Pin Operations under Specific Sequences */

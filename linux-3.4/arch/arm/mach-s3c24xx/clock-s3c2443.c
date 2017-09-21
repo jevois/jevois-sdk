@@ -1,7 +1,7 @@
 /* linux/arch/arm/mach-s3c2443/clock.c
  *
  * Copyright (c) 2007, 2010 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * S3C2443 Clock control support
  *
@@ -66,14 +66,14 @@
 */
 
 static unsigned int armdiv[16] = {
-  [S3C2443_CLKDIV0_ARMDIV_1 >> S3C2443_CLKDIV0_ARMDIV_SHIFT]  = 1,
-  [S3C2443_CLKDIV0_ARMDIV_2 >> S3C2443_CLKDIV0_ARMDIV_SHIFT]  = 2,
-  [S3C2443_CLKDIV0_ARMDIV_3 >> S3C2443_CLKDIV0_ARMDIV_SHIFT]  = 3,
-  [S3C2443_CLKDIV0_ARMDIV_4 >> S3C2443_CLKDIV0_ARMDIV_SHIFT]  = 4,
-  [S3C2443_CLKDIV0_ARMDIV_6 >> S3C2443_CLKDIV0_ARMDIV_SHIFT]  = 6,
-  [S3C2443_CLKDIV0_ARMDIV_8 >> S3C2443_CLKDIV0_ARMDIV_SHIFT]  = 8,
-  [S3C2443_CLKDIV0_ARMDIV_12 >> S3C2443_CLKDIV0_ARMDIV_SHIFT] = 12,
-  [S3C2443_CLKDIV0_ARMDIV_16 >> S3C2443_CLKDIV0_ARMDIV_SHIFT] = 16,
+	[S3C2443_CLKDIV0_ARMDIV_1 >> S3C2443_CLKDIV0_ARMDIV_SHIFT]	= 1,
+	[S3C2443_CLKDIV0_ARMDIV_2 >> S3C2443_CLKDIV0_ARMDIV_SHIFT]	= 2,
+	[S3C2443_CLKDIV0_ARMDIV_3 >> S3C2443_CLKDIV0_ARMDIV_SHIFT]	= 3,
+	[S3C2443_CLKDIV0_ARMDIV_4 >> S3C2443_CLKDIV0_ARMDIV_SHIFT]	= 4,
+	[S3C2443_CLKDIV0_ARMDIV_6 >> S3C2443_CLKDIV0_ARMDIV_SHIFT]	= 6,
+	[S3C2443_CLKDIV0_ARMDIV_8 >> S3C2443_CLKDIV0_ARMDIV_SHIFT]	= 8,
+	[S3C2443_CLKDIV0_ARMDIV_12 >> S3C2443_CLKDIV0_ARMDIV_SHIFT]	= 12,
+	[S3C2443_CLKDIV0_ARMDIV_16 >> S3C2443_CLKDIV0_ARMDIV_SHIFT]	= 16,
 };
 
 /* hsspi
@@ -82,13 +82,13 @@ static unsigned int armdiv[16] = {
 */
 
 static struct clksrc_clk clk_hsspi = {
-  .clk  = {
-    .name   = "hsspi-if",
-    .parent   = &clk_esysclk.clk,
-    .ctrlbit  = S3C2443_SCLKCON_HSSPICLK,
-    .enable   = s3c2443_clkcon_enable_s,
-  },
-  .reg_div = { .reg = S3C2443_CLKDIV1, .size = 2, .shift = 4 },
+	.clk	= {
+		.name		= "hsspi-if",
+		.parent		= &clk_esysclk.clk,
+		.ctrlbit	= S3C2443_SCLKCON_HSSPICLK,
+		.enable		= s3c2443_clkcon_enable_s,
+	},
+	.reg_div = { .reg = S3C2443_CLKDIV1, .size = 2, .shift = 4 },
 };
 
 
@@ -100,117 +100,116 @@ static struct clksrc_clk clk_hsspi = {
 */
 
 static struct clksrc_clk clk_hsmmc_div = {
-  .clk  = {
-    .name   = "hsmmc-div",
-    .devname  = "s3c-sdhci.1",
-    .parent   = &clk_esysclk.clk,
-  },
-  .reg_div = { .reg = S3C2443_CLKDIV1, .size = 2, .shift = 6 },
+	.clk	= {
+		.name		= "hsmmc-div",
+		.devname	= "s3c-sdhci.1",
+		.parent		= &clk_esysclk.clk,
+	},
+	.reg_div = { .reg = S3C2443_CLKDIV1, .size = 2, .shift = 6 },
 };
 
-static int s3c2443_setparent_hsmmc (struct clk * clk, struct clk * parent)
+static int s3c2443_setparent_hsmmc(struct clk *clk, struct clk *parent)
 {
-  unsigned long clksrc = __raw_readl (S3C2443_SCLKCON);
-  
-  clksrc &= ~ (S3C2443_SCLKCON_HSMMCCLK_EXT |
-               S3C2443_SCLKCON_HSMMCCLK_EPLL);
-               
-  if (parent == &clk_epll)
-  { clksrc |= S3C2443_SCLKCON_HSMMCCLK_EPLL; }
-  else
-    if (parent == &clk_ext)
-    { clksrc |= S3C2443_SCLKCON_HSMMCCLK_EXT; }
-    else
-    { return -EINVAL; }
-    
-  if (clk->usage > 0) {
-    __raw_writel (clksrc, S3C2443_SCLKCON);
-  }
-  
-  clk->parent = parent;
-  return 0;
+	unsigned long clksrc = __raw_readl(S3C2443_SCLKCON);
+
+	clksrc &= ~(S3C2443_SCLKCON_HSMMCCLK_EXT |
+		    S3C2443_SCLKCON_HSMMCCLK_EPLL);
+
+	if (parent == &clk_epll)
+		clksrc |= S3C2443_SCLKCON_HSMMCCLK_EPLL;
+	else if (parent == &clk_ext)
+		clksrc |= S3C2443_SCLKCON_HSMMCCLK_EXT;
+	else
+		return -EINVAL;
+
+	if (clk->usage > 0) {
+		__raw_writel(clksrc, S3C2443_SCLKCON);
+	}
+
+	clk->parent = parent;
+	return 0;
 }
 
-static int s3c2443_enable_hsmmc (struct clk * clk, int enable)
+static int s3c2443_enable_hsmmc(struct clk *clk, int enable)
 {
-  return s3c2443_setparent_hsmmc (clk, clk->parent);
+	return s3c2443_setparent_hsmmc(clk, clk->parent);
 }
 
 static struct clk clk_hsmmc = {
-  .name   = "hsmmc-if",
-  .devname  = "s3c-sdhci.1",
-  .parent   = &clk_hsmmc_div.clk,
-  .enable   = s3c2443_enable_hsmmc,
-  .ops    = & (struct clk_ops) {
-    .set_parent = s3c2443_setparent_hsmmc,
-  },
+	.name		= "hsmmc-if",
+	.devname	= "s3c-sdhci.1",
+	.parent		= &clk_hsmmc_div.clk,
+	.enable		= s3c2443_enable_hsmmc,
+	.ops		= &(struct clk_ops) {
+		.set_parent	= s3c2443_setparent_hsmmc,
+	},
 };
 
 /* standard clock definitions */
 
 static struct clk init_clocks_off[] = {
-  {
-    .name   = "sdi",
-    .parent   = &clk_p,
-    .enable   = s3c2443_clkcon_enable_p,
-    .ctrlbit  = S3C2443_PCLKCON_SDI,
-  }, {
-    .name   = "spi",
-    .devname  = "s3c2410-spi.0",
-    .parent   = &clk_p,
-    .enable   = s3c2443_clkcon_enable_p,
-    .ctrlbit  = S3C2443_PCLKCON_SPI0,
-  }, {
-    .name   = "spi",
-    .devname  = "s3c2410-spi.1",
-    .parent   = &clk_p,
-    .enable   = s3c2443_clkcon_enable_p,
-    .ctrlbit  = S3C2443_PCLKCON_SPI1,
-  }
+	{
+		.name		= "sdi",
+		.parent		= &clk_p,
+		.enable		= s3c2443_clkcon_enable_p,
+		.ctrlbit	= S3C2443_PCLKCON_SDI,
+	}, {
+		.name		= "spi",
+		.devname	= "s3c2410-spi.0",
+		.parent		= &clk_p,
+		.enable		= s3c2443_clkcon_enable_p,
+		.ctrlbit	= S3C2443_PCLKCON_SPI0,
+	}, {
+		.name		= "spi",
+		.devname	= "s3c2410-spi.1",
+		.parent		= &clk_p,
+		.enable		= s3c2443_clkcon_enable_p,
+		.ctrlbit	= S3C2443_PCLKCON_SPI1,
+	}
 };
 
 /* clocks to add straight away */
 
-static struct clksrc_clk * clksrcs[] __initdata = {
-  &clk_hsspi,
-  &clk_hsmmc_div,
+static struct clksrc_clk *clksrcs[] __initdata = {
+	&clk_hsspi,
+	&clk_hsmmc_div,
 };
 
-static struct clk * clks[] __initdata = {
-  &clk_hsmmc,
+static struct clk *clks[] __initdata = {
+	&clk_hsmmc,
 };
 
-void __init s3c2443_init_clocks (int xtal)
+void __init s3c2443_init_clocks(int xtal)
 {
-  unsigned long epllcon = __raw_readl (S3C2443_EPLLCON);
-  int ptr;
-  
-  clk_epll.rate = s3c2443_get_epll (epllcon, xtal);
-  clk_epll.parent = &clk_epllref.clk;
-  
-  s3c2443_common_init_clocks (xtal, s3c2443_get_mpll,
-                              armdiv, ARRAY_SIZE (armdiv),
-                              S3C2443_CLKDIV0_ARMDIV_MASK);
-                              
-  s3c24xx_register_clocks (clks, ARRAY_SIZE (clks) );
-  
-  for (ptr = 0; ptr < ARRAY_SIZE (clksrcs); ptr++)
-  { s3c_register_clksrc (clksrcs[ptr], 1); }
-  
-  /* We must be careful disabling the clocks we are not intending to
-   * be using at boot time, as subsystems such as the LCD which do
-   * their own DMA requests to the bus can cause the system to lockup
-   * if they where in the middle of requesting bus access.
-   *
-   * Disabling the LCD clock if the LCD is active is very dangerous,
-   * and therefore the bootloader should be careful to not enable
-   * the LCD clock if it is not needed.
-  */
-  
-  /* install (and disable) the clocks we do not need immediately */
-  
-  s3c_register_clocks (init_clocks_off, ARRAY_SIZE (init_clocks_off) );
-  s3c_disable_clocks (init_clocks_off, ARRAY_SIZE (init_clocks_off) );
-  
-  s3c_pwmclk_init();
+	unsigned long epllcon = __raw_readl(S3C2443_EPLLCON);
+	int ptr;
+
+	clk_epll.rate = s3c2443_get_epll(epllcon, xtal);
+	clk_epll.parent = &clk_epllref.clk;
+
+	s3c2443_common_init_clocks(xtal, s3c2443_get_mpll,
+				   armdiv, ARRAY_SIZE(armdiv),
+				   S3C2443_CLKDIV0_ARMDIV_MASK);
+
+	s3c24xx_register_clocks(clks, ARRAY_SIZE(clks));
+
+	for (ptr = 0; ptr < ARRAY_SIZE(clksrcs); ptr++)
+		s3c_register_clksrc(clksrcs[ptr], 1);
+
+	/* We must be careful disabling the clocks we are not intending to
+	 * be using at boot time, as subsystems such as the LCD which do
+	 * their own DMA requests to the bus can cause the system to lockup
+	 * if they where in the middle of requesting bus access.
+	 *
+	 * Disabling the LCD clock if the LCD is active is very dangerous,
+	 * and therefore the bootloader should be careful to not enable
+	 * the LCD clock if it is not needed.
+	*/
+
+	/* install (and disable) the clocks we do not need immediately */
+
+	s3c_register_clocks(init_clocks_off, ARRAY_SIZE(init_clocks_off));
+	s3c_disable_clocks(init_clocks_off, ARRAY_SIZE(init_clocks_off));
+
+	s3c_pwmclk_init();
 }

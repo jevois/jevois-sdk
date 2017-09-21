@@ -196,21 +196,21 @@
 #define WM831X_AUX_CAL_NOMINAL 0x222
 
 enum wm831x_auxadc {
-  WM831X_AUX_CAL = 15,
-  WM831X_AUX_BKUP_BATT = 10,
-  WM831X_AUX_WALL = 9,
-  WM831X_AUX_BATT = 8,
-  WM831X_AUX_USB = 7,
-  WM831X_AUX_SYSVDD = 6,
-  WM831X_AUX_BATT_TEMP = 5,
-  WM831X_AUX_CHIP_TEMP = 4,
-  WM831X_AUX_AUX4 = 3,
-  WM831X_AUX_AUX3 = 2,
-  WM831X_AUX_AUX2 = 1,
-  WM831X_AUX_AUX1 = 0,
+	WM831X_AUX_CAL = 15,
+	WM831X_AUX_BKUP_BATT = 10,
+	WM831X_AUX_WALL = 9,
+	WM831X_AUX_BATT = 8,
+	WM831X_AUX_USB = 7,
+	WM831X_AUX_SYSVDD = 6,
+	WM831X_AUX_BATT_TEMP = 5,
+	WM831X_AUX_CHIP_TEMP = 4,
+	WM831X_AUX_AUX4 = 3,
+	WM831X_AUX_AUX3 = 2,
+	WM831X_AUX_AUX2 = 1,
+	WM831X_AUX_AUX1 = 0,
 };
 
-int wm831x_auxadc_read (struct wm831x * wm831x, enum wm831x_auxadc input);
-int wm831x_auxadc_read_uv (struct wm831x * wm831x, enum wm831x_auxadc input);
+int wm831x_auxadc_read(struct wm831x *wm831x, enum wm831x_auxadc input);
+int wm831x_auxadc_read_uv(struct wm831x *wm831x, enum wm831x_auxadc input);
 
 #endif

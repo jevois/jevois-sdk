@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -35,19 +35,19 @@
 #endif
 
 enum ublimage_cmd {
-  CMD_INVALID,
-  CMD_BOOT_MODE,
-  CMD_ENTRY,
-  CMD_PAGE,
-  CMD_ST_BLOCK,
-  CMD_ST_PAGE,
-  CMD_LD_ADDR
+	CMD_INVALID,
+	CMD_BOOT_MODE,
+	CMD_ENTRY,
+	CMD_PAGE,
+	CMD_ST_BLOCK,
+	CMD_ST_PAGE,
+	CMD_LD_ADDR
 };
 
 enum ublimage_fld_types {
-  CFG_INVALID = -1,
-  CFG_COMMAND,
-  CFG_REG_VALUE
+	CFG_INVALID = -1,
+	CFG_COMMAND,
+	CFG_REG_VALUE
 };
 
 /*
@@ -73,31 +73,31 @@ enum ublimage_fld_types {
 
 /* from sprufg5a.pdf Table 109 */
 struct ubl_header {
-  uint32_t  magic;  /* Magic Number, see UBL_* defines */
-  uint32_t  entry;  /* entry point address for bootloader */
-  uint32_t  pages;  /* number of pages (size of bootloader) */
-  uint32_t  block;  /*
-         * blocknumber where user bootloader is
-         * present
-         */
-  uint32_t  page; /*
-         * page number where user bootloader is
-         * present.
-         */
-  uint32_t  pll_m;  /*
-         * PLL setting -Multiplier (only valid if
-         * Magic Number indicates PLL enable).
-         */
-  uint32_t  pll_n;  /*
-         * PLL setting -Divider (only valid if
-         * Magic Number indicates PLL enable).
-         */
-  uint32_t  emif; /*
-         * fast EMIF setting (only valid if
-         * Magic Number indicates fast EMIF boot).
-         */
-  /* to fit in one nand block */
-  unsigned char res[CONFIG_SYS_UBL_BLOCK - 8 * 4];
+	uint32_t	magic;	/* Magic Number, see UBL_* defines */
+	uint32_t	entry;	/* entry point address for bootloader */
+	uint32_t	pages;	/* number of pages (size of bootloader) */
+	uint32_t	block;	/*
+				 * blocknumber where user bootloader is
+				 * present
+				 */
+	uint32_t	page;	/*
+				 * page number where user bootloader is
+				 * present.
+				 */
+	uint32_t	pll_m;	/*
+				 * PLL setting -Multiplier (only valid if
+				 * Magic Number indicates PLL enable).
+				 */
+	uint32_t	pll_n;	/*
+				 * PLL setting -Divider (only valid if
+				 * Magic Number indicates PLL enable).
+				 */
+	uint32_t	emif;	/*
+				 * fast EMIF setting (only valid if
+				 * Magic Number indicates fast EMIF boot).
+				 */
+	/* to fit in one nand block */
+	unsigned char	res[CONFIG_SYS_UBL_BLOCK - 8 * 4];
 };
 
 #endif /* _UBLIMAGE_H_ */

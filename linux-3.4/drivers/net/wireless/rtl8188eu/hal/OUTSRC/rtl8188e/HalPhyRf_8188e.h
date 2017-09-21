@@ -22,107 +22,107 @@
 #define __HAL_PHY_RF_8188E_H__
 
 /*--------------------------Define Parameters-------------------------------*/
-#define IQK_DELAY_TIME_88E    10   
-#define index_mapping_NUM_88E 15
-#define AVG_THERMAL_NUM_88E 4
+#define	IQK_DELAY_TIME_88E		10	
+#define	index_mapping_NUM_88E	15
+#define AVG_THERMAL_NUM_88E	4
 
 
 VOID
-ODM_TxPwrTrackAdjust88E (
-  PDM_ODM_T pDM_Odm,
-  u1Byte    Type,      
-  pu1Byte   pDirection,    
-  pu4Byte   pOutWriteVal   
-);
+ODM_TxPwrTrackAdjust88E(
+	PDM_ODM_T	pDM_Odm,
+	u1Byte		Type,			
+	pu1Byte		pDirection,		
+	pu4Byte		pOutWriteVal	
+	);
 
 
 VOID
-odm_TXPowerTrackingCallback_ThermalMeter_8188E (
-  #if (DM_ODM_SUPPORT_TYPE & ODM_AP)
-  IN PDM_ODM_T    pDM_Odm
-  #else
-  IN PADAPTER Adapter
-  #endif
+odm_TXPowerTrackingCallback_ThermalMeter_8188E(
+#if (DM_ODM_SUPPORT_TYPE & ODM_AP)
+	IN PDM_ODM_T		pDM_Odm
+#else
+	IN PADAPTER	Adapter
+#endif
+	);
+
+
+
+void	
+PHY_IQCalibrate_8188E(	
+#if (DM_ODM_SUPPORT_TYPE & ODM_AP)
+	IN PDM_ODM_T		pDM_Odm,
+#else
+	IN PADAPTER	Adapter,
+#endif
+							IN	BOOLEAN 	bReCovery);
+
+
+void	
+PHY_LCCalibrate_8188E(
+#if (DM_ODM_SUPPORT_TYPE & ODM_AP)
+	IN PDM_ODM_T		pDM_Odm
+#else
+	IN	PADAPTER	pAdapter
+#endif
 );
 
-
-
-void
-PHY_IQCalibrate_8188E (
-  #if (DM_ODM_SUPPORT_TYPE & ODM_AP)
-  IN PDM_ODM_T    pDM_Odm,
-  #else
-  IN PADAPTER Adapter,
-  #endif
-  IN  BOOLEAN   bReCovery);
-
-
-void
-PHY_LCCalibrate_8188E (
-  #if (DM_ODM_SUPPORT_TYPE & ODM_AP)
-  IN PDM_ODM_T    pDM_Odm
-  #else
-  IN  PADAPTER  pAdapter
-  #endif
-);
-
-void
-PHY_APCalibrate_8188E (
-  #if (DM_ODM_SUPPORT_TYPE & ODM_AP)
-  IN PDM_ODM_T    pDM_Odm,
-  #else
-  IN  PADAPTER  pAdapter,
-  #endif
-  IN  s1Byte    delta);
-void
-PHY_DigitalPredistortion_8188E (   IN  PADAPTER  pAdapter);
+void	
+PHY_APCalibrate_8188E(		
+#if (DM_ODM_SUPPORT_TYPE & ODM_AP)
+	IN PDM_ODM_T		pDM_Odm,
+#else
+	IN	PADAPTER	pAdapter,
+#endif
+							IN 	s1Byte		delta);
+void	
+PHY_DigitalPredistortion_8188E(		IN	PADAPTER	pAdapter);
 
 
 VOID
-_PHY_SaveADDARegisters (
-  #if (DM_ODM_SUPPORT_TYPE & ODM_AP)
-  IN PDM_ODM_T    pDM_Odm,
-  #else
-  IN  PADAPTER  pAdapter,
-  #endif
-  IN  pu4Byte   ADDAReg,
-  IN  pu4Byte   ADDABackup,
-  IN  u4Byte    RegisterNum
-);
+_PHY_SaveADDARegisters(
+#if (DM_ODM_SUPPORT_TYPE & ODM_AP)
+	IN PDM_ODM_T		pDM_Odm,
+#else
+	IN	PADAPTER	pAdapter,
+#endif
+	IN	pu4Byte		ADDAReg,
+	IN	pu4Byte		ADDABackup,
+	IN	u4Byte		RegisterNum
+	);
 
 VOID
-_PHY_PathADDAOn (
-  #if (DM_ODM_SUPPORT_TYPE & ODM_AP)
-  IN PDM_ODM_T    pDM_Odm,
-  #else
-  IN  PADAPTER  pAdapter,
-  #endif
-  IN  pu4Byte   ADDAReg,
-  IN  BOOLEAN   isPathAOn,
-  IN  BOOLEAN   is2T
-);
+_PHY_PathADDAOn(
+#if (DM_ODM_SUPPORT_TYPE & ODM_AP)
+	IN PDM_ODM_T		pDM_Odm,
+#else
+	IN	PADAPTER	pAdapter,
+#endif
+	IN	pu4Byte		ADDAReg,
+	IN	BOOLEAN		isPathAOn,
+	IN	BOOLEAN		is2T
+	);
 
 VOID
-_PHY_MACSettingCalibration (
-  #if (DM_ODM_SUPPORT_TYPE & ODM_AP)
-  IN PDM_ODM_T    pDM_Odm,
-  #else
-  IN  PADAPTER  pAdapter,
-  #endif
-  IN  pu4Byte   MACReg,
-  IN  pu4Byte   MACBackup
-);
+_PHY_MACSettingCalibration(
+#if (DM_ODM_SUPPORT_TYPE & ODM_AP)
+	IN PDM_ODM_T		pDM_Odm,
+#else
+	IN	PADAPTER	pAdapter,
+#endif
+	IN	pu4Byte		MACReg,
+	IN	pu4Byte		MACBackup	
+	);
 
 
 VOID
-_PHY_PathAStandBy (
-  #if (DM_ODM_SUPPORT_TYPE & ODM_AP)
-  IN PDM_ODM_T    pDM_Odm
-  #else
-  IN  PADAPTER  pAdapter
-  #endif
-);
+_PHY_PathAStandBy(
+#if (DM_ODM_SUPPORT_TYPE & ODM_AP)
+	IN PDM_ODM_T		pDM_Odm
+#else
+	IN	PADAPTER	pAdapter
+#endif
+	);
 
-
-#endif 
+								
+#endif
 

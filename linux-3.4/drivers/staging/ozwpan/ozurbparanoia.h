@@ -7,11 +7,11 @@
  */
 
 #ifdef WANT_URB_PARANOIA
-void oz_remember_urb (struct urb * urb);
-int oz_forget_urb (struct urb * urb);
+void oz_remember_urb(struct urb *urb);
+int oz_forget_urb(struct urb *urb);
 #else
 #define oz_remember_urb(__x)
-#define oz_forget_urb(__x)  0
+#define oz_forget_urb(__x)	0
 #endif /* WANT_URB_PARANOIA */
 
 

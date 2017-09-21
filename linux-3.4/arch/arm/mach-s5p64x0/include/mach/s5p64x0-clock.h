@@ -1,7 +1,7 @@
 /* linux/arch/arm/mach-s5p64x0/include/mach/s5p64x0-clock.h
  *
  * Copyright (c) 2010 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com
+ *		http://www.samsung.com
  *
  * Header file for s5p64x0 clock support
  *
@@ -19,21 +19,21 @@ extern struct clksrc_clk clk_mout_apll;
 extern struct clksrc_clk clk_mout_mpll;
 extern struct clksrc_clk clk_mout_epll;
 
-extern int s5p64x0_epll_enable (struct clk * clk, int enable);
-extern unsigned long s5p64x0_epll_get_rate (struct clk * clk);
+extern int s5p64x0_epll_enable(struct clk *clk, int enable);
+extern unsigned long s5p64x0_epll_get_rate(struct clk *clk);
 
 extern struct clksrc_clk clk_armclk;
 extern struct clksrc_clk clk_dout_mpll;
 
 extern struct clksrc_sources clkset_hclk_low;
 
-extern int s5p64x0_pclk_ctrl (struct clk * clk, int enable);
-extern int s5p64x0_hclk0_ctrl (struct clk * clk, int enable);
-extern int s5p64x0_hclk1_ctrl (struct clk * clk, int enable);
-extern int s5p64x0_sclk_ctrl (struct clk * clk, int enable);
-extern int s5p64x0_sclk1_ctrl (struct clk * clk, int enable);
-extern int s5p64x0_mem_ctrl (struct clk * clk, int enable);
+extern int s5p64x0_pclk_ctrl(struct clk *clk, int enable);
+extern int s5p64x0_hclk0_ctrl(struct clk *clk, int enable);
+extern int s5p64x0_hclk1_ctrl(struct clk *clk, int enable);
+extern int s5p64x0_sclk_ctrl(struct clk *clk, int enable);
+extern int s5p64x0_sclk1_ctrl(struct clk *clk, int enable);
+extern int s5p64x0_mem_ctrl(struct clk *clk, int enable);
 
-extern int s5p64x0_clk48m_ctrl (struct clk * clk, int enable);
+extern int s5p64x0_clk48m_ctrl(struct clk *clk, int enable);
 
 #endif /* __ASM_ARCH_CLOCK_H */

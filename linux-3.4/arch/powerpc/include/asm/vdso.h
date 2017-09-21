@@ -4,13 +4,13 @@
 #ifdef __KERNEL__
 
 /* Default link addresses for the vDSOs */
-#define VDSO32_LBASE  0x100000
-#define VDSO64_LBASE  0x100000
+#define VDSO32_LBASE	0x100000
+#define VDSO64_LBASE	0x100000
 
 /* Default map addresses for 32bit vDSO */
-#define VDSO32_MBASE  VDSO32_LBASE
+#define VDSO32_MBASE	VDSO32_LBASE
 
-#define VDSO_VERSION_STRING LINUX_2.6.15
+#define VDSO_VERSION_STRING	LINUX_2.6.15
 
 /* Define if 64 bits VDSO has procedure descriptors */
 #undef VDS64_HAS_DESCRIPTORS
@@ -26,30 +26,30 @@ extern unsigned long vdso32_rt_sigtramp;
 
 #ifdef __VDSO64__
 #ifdef VDS64_HAS_DESCRIPTORS
-#define V_FUNCTION_BEGIN(name)    \
-  .globl name;      \
-  .section ".opd","a";    \
-  .align 3;     \
-  name:       \
-  .quad .name,.TOC.@tocbase,0;  \
-  .previous;      \
-  .globl .name;     \
-  .type .name,@function;    \
-  .name:        \
-   
-#define V_FUNCTION_END(name)    \
-  .size .name,.-.name;
+#define V_FUNCTION_BEGIN(name)		\
+	.globl name;			\
+        .section ".opd","a";		\
+        .align 3;			\
+	name:				\
+	.quad .name,.TOC.@tocbase,0;	\
+	.previous;			\
+	.globl .name;			\
+	.type .name,@function; 		\
+	.name:				\
+
+#define V_FUNCTION_END(name)		\
+	.size .name,.-.name;
 
 #define V_LOCAL_FUNC(name) (.name)
 
 #else /* VDS64_HAS_DESCRIPTORS */
 
-#define V_FUNCTION_BEGIN(name)    \
-  .globl name;      \
-  name:       \
-   
-#define V_FUNCTION_END(name)    \
-  .size name,.-name;
+#define V_FUNCTION_BEGIN(name)		\
+	.globl name;			\
+	name:				\
+
+#define V_FUNCTION_END(name)		\
+	.size name,.-name;
 
 #define V_LOCAL_FUNC(name) (name)
 
@@ -58,13 +58,13 @@ extern unsigned long vdso32_rt_sigtramp;
 
 #ifdef __VDSO32__
 
-#define V_FUNCTION_BEGIN(name)    \
-  .globl name;      \
-  .type name,@function;     \
-  name:       \
-   
-#define V_FUNCTION_END(name)    \
-  .size name,.-name;
+#define V_FUNCTION_BEGIN(name)		\
+	.globl name;			\
+	.type name,@function; 		\
+	name:				\
+
+#define V_FUNCTION_END(name)		\
+	.size name,.-name;
 
 #define V_LOCAL_FUNC(name) (name)
 

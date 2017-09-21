@@ -43,62 +43,62 @@
 #error "Timer frequency unknown - please config PXA CPU type"
 #endif
 
-static inline unsigned long long tick_to_time (unsigned long long tick)
+static inline unsigned long long tick_to_time(unsigned long long tick)
 {
-  tick *= CONFIG_SYS_HZ;
-  do_div (tick, TIMER_FREQ_HZ);
-  return tick;
+	tick *= CONFIG_SYS_HZ;
+	do_div(tick, TIMER_FREQ_HZ);
+	return tick;
 }
 
-static inline unsigned long long us_to_tick (unsigned long long us)
+static inline unsigned long long us_to_tick(unsigned long long us)
 {
-  us = us * TIMER_FREQ_HZ + 999999;
-  do_div (us, 1000000);
-  return us;
+	us = us * TIMER_FREQ_HZ + 999999;
+	do_div(us, 1000000);
+	return us;
 }
 
 int timer_init (void)
 {
-  writel (0, OSCR);
-  
-  return 0;
+	writel(0, OSCR);
+
+	return 0;
 }
 
 ulong get_timer (ulong base)
 {
-  return get_timer_masked () - base;
+	return get_timer_masked () - base;
 }
 
 void __udelay (unsigned long usec)
 {
-  udelay_masked (usec);
+	udelay_masked (usec);
 }
 
 ulong get_timer_masked (void)
 {
-  return tick_to_time (get_ticks() );
+	return tick_to_time(get_ticks());
 }
 
 void udelay_masked (unsigned long usec)
 {
-  unsigned long long tmp;
-  ulong tmo;
-  
-  tmo = us_to_tick (usec);
-  tmp = get_ticks() + tmo;  /* get current timestamp */
-  
-  while (get_ticks() < tmp) /* loop till event */
-    /*NOP*/;
-    
+	unsigned long long tmp;
+	ulong tmo;
+
+	tmo = us_to_tick(usec);
+	tmp = get_ticks() + tmo;	/* get current timestamp */
+
+	while (get_ticks() < tmp)	/* loop till event */
+		 /*NOP*/;
+
 }
 
 /*
  * This function is derived from PowerPC code (read timebase as long long).
  * On ARM it just returns the timer value.
  */
-unsigned long long get_ticks (void)
+unsigned long long get_ticks(void)
 {
-  return readl (OSCR);
+	return readl(OSCR);
 }
 
 /*
@@ -107,7 +107,7 @@ unsigned long long get_ticks (void)
  */
 ulong get_tbclk (void)
 {
-  ulong tbclk;
-  tbclk = TIMER_FREQ_HZ;
-  return tbclk;
+	ulong tbclk;
+	tbclk = TIMER_FREQ_HZ;
+	return tbclk;
 }

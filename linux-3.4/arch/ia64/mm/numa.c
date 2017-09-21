@@ -6,7 +6,7 @@
  * This file contains NUMA specific variables and functions which can
  * be split away from DISCONTIGMEM and are used on NUMA machines with
  * contiguous memory.
- *
+ * 
  *                         2002/08/07 Erich Focht <efocht@ess.nec.de>
  */
 
@@ -28,7 +28,7 @@
 int num_node_memblks;
 struct node_memblk_s node_memblk[NR_NODE_MEMBLKS];
 struct node_cpuid_s node_cpuid[NR_CPUS] =
-{ [0 ... NR_CPUS - 1] = { .phys_id = 0, .nid = NUMA_NO_NODE } };
+	{ [0 ... NR_CPUS-1] = { .phys_id = 0, .nid = NUMA_NO_NODE } };
 
 /*
  * This is a matrix with "distances" between nodes, they should be
@@ -38,16 +38,16 @@ u8 numa_slit[MAX_NUMNODES * MAX_NUMNODES];
 
 /* Identify which cnode a physical address resides on */
 int
-paddr_to_nid (unsigned long paddr)
+paddr_to_nid(unsigned long paddr)
 {
-  int i;
-  
-  for (i = 0; i < num_node_memblks; i++)
-    if (paddr >= node_memblk[i].start_paddr &&
-        paddr < node_memblk[i].start_paddr + node_memblk[i].size)
-    { break; }
-    
-  return (i < num_node_memblks) ? node_memblk[i].nid : (num_node_memblks ? -1 : 0);
+	int	i;
+
+	for (i = 0; i < num_node_memblks; i++)
+		if (paddr >= node_memblk[i].start_paddr &&
+		    paddr < node_memblk[i].start_paddr + node_memblk[i].size)
+			break;
+
+	return (i < num_node_memblks) ? node_memblk[i].nid : (num_node_memblks ? -1 : 0);
 }
 
 #if defined(CONFIG_SPARSEMEM) && defined(CONFIG_NUMA)
@@ -58,19 +58,19 @@ paddr_to_nid (unsigned long paddr)
  * SPARSEMEM to allocate the SPARSEMEM sectionmap on the NUMA node where
  * the section resides.
  */
-int __meminit __early_pfn_to_nid (unsigned long pfn)
+int __meminit __early_pfn_to_nid(unsigned long pfn)
 {
-  int i, section = pfn >> PFN_SECTION_SHIFT, ssec, esec;
-  
-  for (i = 0; i < num_node_memblks; i++) {
-    ssec = node_memblk[i].start_paddr >> PA_SECTION_SHIFT;
-    esec = (node_memblk[i].start_paddr + node_memblk[i].size +
-            ( (1L << PA_SECTION_SHIFT) - 1) ) >> PA_SECTION_SHIFT;
-    if (section >= ssec && section < esec)
-    { return node_memblk[i].nid; }
-  }
-  
-  return -1;
+	int i, section = pfn >> PFN_SECTION_SHIFT, ssec, esec;
+
+	for (i = 0; i < num_node_memblks; i++) {
+		ssec = node_memblk[i].start_paddr >> PA_SECTION_SHIFT;
+		esec = (node_memblk[i].start_paddr + node_memblk[i].size +
+			((1L << PA_SECTION_SHIFT) - 1)) >> PA_SECTION_SHIFT;
+		if (section >= ssec && section < esec)
+			return node_memblk[i].nid;
+	}
+
+	return -1;
 }
 
 #ifdef CONFIG_MEMORY_HOTPLUG
@@ -79,14 +79,14 @@ int __meminit __early_pfn_to_nid (unsigned long pfn)
  *  information at memory-hot-add if necessary.
  */
 
-int memory_add_physaddr_to_nid (u64 addr)
+int memory_add_physaddr_to_nid(u64 addr)
 {
-  int nid = paddr_to_nid (addr);
-  if (nid < 0)
-  { return 0; }
-  return nid;
+	int nid = paddr_to_nid(addr);
+	if (nid < 0)
+		return 0;
+	return nid;
 }
 
-EXPORT_SYMBOL_GPL (memory_add_physaddr_to_nid);
+EXPORT_SYMBOL_GPL(memory_add_physaddr_to_nid);
 #endif
 #endif

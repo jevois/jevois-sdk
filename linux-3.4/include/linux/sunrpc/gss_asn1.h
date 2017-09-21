@@ -62,20 +62,20 @@
 #define G_WRONG_TOKID                            (-2045022960L)
 
 #define g_OID_equal(o1,o2) \
-  (((o1)->len == (o2)->len) && \
-   (memcmp((o1)->data,(o2)->data,(int) (o1)->len) == 0))
+   (((o1)->len == (o2)->len) && \
+    (memcmp((o1)->data,(o2)->data,(int) (o1)->len) == 0))
 
-u32 g_verify_token_header (
-  struct xdr_netobj * mech,
-  int * body_size,
-  unsigned char ** buf_in,
-  int toksize);
+u32 g_verify_token_header(
+     struct xdr_netobj *mech,
+     int *body_size,
+     unsigned char **buf_in,
+     int toksize);
 
-int g_token_size (
-  struct xdr_netobj * mech,
-  unsigned int body_size);
+int g_token_size(
+     struct xdr_netobj *mech,
+     unsigned int body_size);
 
-void g_make_token_header (
-  struct xdr_netobj * mech,
-  int body_size,
-  unsigned char ** buf);
+void g_make_token_header(
+     struct xdr_netobj *mech,
+     int body_size,
+     unsigned char **buf);

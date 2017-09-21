@@ -77,39 +77,39 @@
  */
 
 enum drbd_req_event {
-  created,
-  to_be_send,
-  to_be_submitted,
-  
-  /* XXX yes, now I am inconsistent...
-   * these are not "events" but "actions"
-   * oh, well... */
-  queue_for_net_write,
-  queue_for_net_read,
-  queue_for_send_oos,
-  
-  send_canceled,
-  send_failed,
-  handed_over_to_network,
-  oos_handed_to_network,
-  connection_lost_while_pending,
-  read_retry_remote_canceled,
-  recv_acked_by_peer,
-  write_acked_by_peer,
-  write_acked_by_peer_and_sis, /* and set_in_sync */
-  conflict_discarded_by_peer,
-  neg_acked,
-  barrier_acked, /* in protocol A and B */
-  data_received, /* (remote read) */
-  
-  read_completed_with_error,
-  read_ahead_completed_with_error,
-  write_completed_with_error,
-  completed_ok,
-  resend,
-  fail_frozen_disk_io,
-  restart_frozen_disk_io,
-  nothing, /* for tracing only */
+	created,
+	to_be_send,
+	to_be_submitted,
+
+	/* XXX yes, now I am inconsistent...
+	 * these are not "events" but "actions"
+	 * oh, well... */
+	queue_for_net_write,
+	queue_for_net_read,
+	queue_for_send_oos,
+
+	send_canceled,
+	send_failed,
+	handed_over_to_network,
+	oos_handed_to_network,
+	connection_lost_while_pending,
+	read_retry_remote_canceled,
+	recv_acked_by_peer,
+	write_acked_by_peer,
+	write_acked_by_peer_and_sis, /* and set_in_sync */
+	conflict_discarded_by_peer,
+	neg_acked,
+	barrier_acked, /* in protocol A and B */
+	data_received, /* (remote read) */
+
+	read_completed_with_error,
+	read_ahead_completed_with_error,
+	write_completed_with_error,
+	completed_ok,
+	resend,
+	fail_frozen_disk_io,
+	restart_frozen_disk_io,
+	nothing, /* for tracing only */
 };
 
 /* encoding of request states for now.  we don't actually need that many bits.
@@ -118,82 +118,82 @@ enum drbd_req_event {
  * same time, so we should hold the request lock anyways.
  */
 enum drbd_req_state_bits {
-  /* 210
-   * 000: no local possible
-   * 001: to be submitted
-   *    UNUSED, we could map: 011: submitted, completion still pending
-   * 110: completed ok
-   * 010: completed with error
-   */
-  __RQ_LOCAL_PENDING,
-  __RQ_LOCAL_COMPLETED,
-  __RQ_LOCAL_OK,
-  
-  /* 76543
-   * 00000: no network possible
-   * 00001: to be send
-   * 00011: to be send, on worker queue
-   * 00101: sent, expecting recv_ack (B) or write_ack (C)
-   * 11101: sent,
-   *        recv_ack (B) or implicit "ack" (A),
-   *        still waiting for the barrier ack.
-   *        master_bio may already be completed and invalidated.
-   * 11100: write_acked (C),
-   *        data_received (for remote read, any protocol)
-   *        or finally the barrier ack has arrived (B,A)...
-   *        request can be freed
-   * 01100: neg-acked (write, protocol C)
-   *        or neg-d-acked (read, any protocol)
-   *        or killed from the transfer log
-   *        during cleanup after connection loss
-   *        request can be freed
-   * 01000: canceled or send failed...
-   *        request can be freed
-   */
-  
-  /* if "SENT" is not set, yet, this can still fail or be canceled.
-   * if "SENT" is set already, we still wait for an Ack packet.
-   * when cleared, the master_bio may be completed.
-   * in (B,A) the request object may still linger on the transaction log
-   * until the corresponding barrier ack comes in */
-  __RQ_NET_PENDING,
-  
-  /* If it is QUEUED, and it is a WRITE, it is also registered in the
-   * transfer log. Currently we need this flag to avoid conflicts between
-   * worker canceling the request and tl_clear_barrier killing it from
-   * transfer log.  We should restructure the code so this conflict does
-   * no longer occur. */
-  __RQ_NET_QUEUED,
-  
-  /* well, actually only "handed over to the network stack".
-   *
-   * TODO can potentially be dropped because of the similar meaning
-   * of RQ_NET_SENT and ~RQ_NET_QUEUED.
-   * however it is not exactly the same. before we drop it
-   * we must ensure that we can tell a request with network part
-   * from a request without, regardless of what happens to it. */
-  __RQ_NET_SENT,
-  
-  /* when set, the request may be freed (if RQ_NET_QUEUED is clear).
-   * basically this means the corresponding P_BARRIER_ACK was received */
-  __RQ_NET_DONE,
-  
-  /* whether or not we know (C) or pretend (B,A) that the write
-   * was successfully written on the peer.
-   */
-  __RQ_NET_OK,
-  
-  /* peer called drbd_set_in_sync() for this write */
-  __RQ_NET_SIS,
-  
-  /* keep this last, its for the RQ_NET_MASK */
-  __RQ_NET_MAX,
-  
-  /* Set when this is a write, clear for a read */
-  __RQ_WRITE,
-  
-  /* Should call drbd_al_complete_io() for this request... */
-  __RQ_IN_ACT_LOG,
+	/* 210
+	 * 000: no local possible
+	 * 001: to be submitted
+	 *    UNUSED, we could map: 011: submitted, completion still pending
+	 * 110: completed ok
+	 * 010: completed with error
+	 */
+	__RQ_LOCAL_PENDING,
+	__RQ_LOCAL_COMPLETED,
+	__RQ_LOCAL_OK,
+
+	/* 76543
+	 * 00000: no network possible
+	 * 00001: to be send
+	 * 00011: to be send, on worker queue
+	 * 00101: sent, expecting recv_ack (B) or write_ack (C)
+	 * 11101: sent,
+	 *        recv_ack (B) or implicit "ack" (A),
+	 *        still waiting for the barrier ack.
+	 *        master_bio may already be completed and invalidated.
+	 * 11100: write_acked (C),
+	 *        data_received (for remote read, any protocol)
+	 *        or finally the barrier ack has arrived (B,A)...
+	 *        request can be freed
+	 * 01100: neg-acked (write, protocol C)
+	 *        or neg-d-acked (read, any protocol)
+	 *        or killed from the transfer log
+	 *        during cleanup after connection loss
+	 *        request can be freed
+	 * 01000: canceled or send failed...
+	 *        request can be freed
+	 */
+
+	/* if "SENT" is not set, yet, this can still fail or be canceled.
+	 * if "SENT" is set already, we still wait for an Ack packet.
+	 * when cleared, the master_bio may be completed.
+	 * in (B,A) the request object may still linger on the transaction log
+	 * until the corresponding barrier ack comes in */
+	__RQ_NET_PENDING,
+
+	/* If it is QUEUED, and it is a WRITE, it is also registered in the
+	 * transfer log. Currently we need this flag to avoid conflicts between
+	 * worker canceling the request and tl_clear_barrier killing it from
+	 * transfer log.  We should restructure the code so this conflict does
+	 * no longer occur. */
+	__RQ_NET_QUEUED,
+
+	/* well, actually only "handed over to the network stack".
+	 *
+	 * TODO can potentially be dropped because of the similar meaning
+	 * of RQ_NET_SENT and ~RQ_NET_QUEUED.
+	 * however it is not exactly the same. before we drop it
+	 * we must ensure that we can tell a request with network part
+	 * from a request without, regardless of what happens to it. */
+	__RQ_NET_SENT,
+
+	/* when set, the request may be freed (if RQ_NET_QUEUED is clear).
+	 * basically this means the corresponding P_BARRIER_ACK was received */
+	__RQ_NET_DONE,
+
+	/* whether or not we know (C) or pretend (B,A) that the write
+	 * was successfully written on the peer.
+	 */
+	__RQ_NET_OK,
+
+	/* peer called drbd_set_in_sync() for this write */
+	__RQ_NET_SIS,
+
+	/* keep this last, its for the RQ_NET_MASK */
+	__RQ_NET_MAX,
+
+	/* Set when this is a write, clear for a read */
+	__RQ_WRITE,
+
+	/* Should call drbd_al_complete_io() for this request... */
+	__RQ_IN_ACT_LOG,
 };
 
 #define RQ_LOCAL_PENDING   (1UL << __RQ_LOCAL_PENDING)
@@ -224,160 +224,160 @@ enum drbd_req_state_bits {
 
 /* epoch entries */
 static inline
-struct hlist_head * ee_hash_slot (struct drbd_conf * mdev, sector_t sector)
+struct hlist_head *ee_hash_slot(struct drbd_conf *mdev, sector_t sector)
 {
-  BUG_ON (mdev->ee_hash_s == 0);
-  return mdev->ee_hash +
-         ( (unsigned int) (sector >> HT_SHIFT) % mdev->ee_hash_s);
+	BUG_ON(mdev->ee_hash_s == 0);
+	return mdev->ee_hash +
+		((unsigned int)(sector>>HT_SHIFT) % mdev->ee_hash_s);
 }
 
 /* transfer log (drbd_request objects) */
 static inline
-struct hlist_head * tl_hash_slot (struct drbd_conf * mdev, sector_t sector)
+struct hlist_head *tl_hash_slot(struct drbd_conf *mdev, sector_t sector)
 {
-  BUG_ON (mdev->tl_hash_s == 0);
-  return mdev->tl_hash +
-         ( (unsigned int) (sector >> HT_SHIFT) % mdev->tl_hash_s);
+	BUG_ON(mdev->tl_hash_s == 0);
+	return mdev->tl_hash +
+		((unsigned int)(sector>>HT_SHIFT) % mdev->tl_hash_s);
 }
 
 /* application reads (drbd_request objects) */
-static struct hlist_head * ar_hash_slot (struct drbd_conf * mdev, sector_t sector)
+static struct hlist_head *ar_hash_slot(struct drbd_conf *mdev, sector_t sector)
 {
-  return mdev->app_reads_hash
-         + ( (unsigned int) (sector) % APP_R_HSIZE);
+	return mdev->app_reads_hash
+		+ ((unsigned int)(sector) % APP_R_HSIZE);
 }
 
 /* when we receive the answer for a read request,
  * verify that we actually know about it */
-static inline struct drbd_request * _ar_id_to_req (struct drbd_conf * mdev,
-    u64 id, sector_t sector)
+static inline struct drbd_request *_ar_id_to_req(struct drbd_conf *mdev,
+	u64 id, sector_t sector)
 {
-  struct hlist_head * slot = ar_hash_slot (mdev, sector);
-  struct hlist_node * n;
-  struct drbd_request * req;
-  
-  hlist_for_each_entry (req, n, slot, collision) {
-    if ( (unsigned long) req == (unsigned long) id) {
-      D_ASSERT (req->sector == sector);
-      return req;
-    }
-  }
-  return NULL;
+	struct hlist_head *slot = ar_hash_slot(mdev, sector);
+	struct hlist_node *n;
+	struct drbd_request *req;
+
+	hlist_for_each_entry(req, n, slot, collision) {
+		if ((unsigned long)req == (unsigned long)id) {
+			D_ASSERT(req->sector == sector);
+			return req;
+		}
+	}
+	return NULL;
 }
 
-static inline void drbd_req_make_private_bio (struct drbd_request * req, struct bio * bio_src)
+static inline void drbd_req_make_private_bio(struct drbd_request *req, struct bio *bio_src)
 {
-  struct bio * bio;
-  bio = bio_clone (bio_src, GFP_NOIO); /* XXX cannot fail?? */
-  
-  req->private_bio = bio;
-  
-  bio->bi_private  = req;
-  bio->bi_end_io   = drbd_endio_pri;
-  bio->bi_next     = NULL;
+	struct bio *bio;
+	bio = bio_clone(bio_src, GFP_NOIO); /* XXX cannot fail?? */
+
+	req->private_bio = bio;
+
+	bio->bi_private  = req;
+	bio->bi_end_io   = drbd_endio_pri;
+	bio->bi_next     = NULL;
 }
 
-static inline struct drbd_request * drbd_req_new (struct drbd_conf * mdev,
-    struct bio * bio_src)
+static inline struct drbd_request *drbd_req_new(struct drbd_conf *mdev,
+	struct bio *bio_src)
 {
-  struct drbd_request * req =
-    mempool_alloc (drbd_request_mempool, GFP_NOIO);
-  if (likely (req) ) {
-    drbd_req_make_private_bio (req, bio_src);
-    
-    req->rq_state    = bio_data_dir (bio_src) == WRITE ? RQ_WRITE : 0;
-    req->mdev        = mdev;
-    req->master_bio  = bio_src;
-    req->epoch       = 0;
-    req->sector      = bio_src->bi_sector;
-    req->size        = bio_src->bi_size;
-    INIT_HLIST_NODE (&req->collision);
-    INIT_LIST_HEAD (&req->tl_requests);
-    INIT_LIST_HEAD (&req->w.list);
-  }
-  return req;
+	struct drbd_request *req =
+		mempool_alloc(drbd_request_mempool, GFP_NOIO);
+	if (likely(req)) {
+		drbd_req_make_private_bio(req, bio_src);
+
+		req->rq_state    = bio_data_dir(bio_src) == WRITE ? RQ_WRITE : 0;
+		req->mdev        = mdev;
+		req->master_bio  = bio_src;
+		req->epoch       = 0;
+		req->sector      = bio_src->bi_sector;
+		req->size        = bio_src->bi_size;
+		INIT_HLIST_NODE(&req->collision);
+		INIT_LIST_HEAD(&req->tl_requests);
+		INIT_LIST_HEAD(&req->w.list);
+	}
+	return req;
 }
 
-static inline void drbd_req_free (struct drbd_request * req)
+static inline void drbd_req_free(struct drbd_request *req)
 {
-  mempool_free (req, drbd_request_mempool);
+	mempool_free(req, drbd_request_mempool);
 }
 
-static inline int overlaps (sector_t s1, int l1, sector_t s2, int l2)
+static inline int overlaps(sector_t s1, int l1, sector_t s2, int l2)
 {
-  return ! ( (s1 + (l1 >> 9) <= s2) || (s1 >= s2 + (l2 >> 9) ) );
+	return !((s1 + (l1>>9) <= s2) || (s1 >= s2 + (l2>>9)));
 }
 
 /* Short lived temporary struct on the stack.
  * We could squirrel the error to be returned into
  * bio->bi_size, or similar. But that would be too ugly. */
 struct bio_and_error {
-  struct bio * bio;
-  int error;
+	struct bio *bio;
+	int error;
 };
 
-extern void _req_may_be_done (struct drbd_request * req,
-                              struct bio_and_error * m);
-extern int __req_mod (struct drbd_request * req, enum drbd_req_event what,
-                      struct bio_and_error * m);
-extern void complete_master_bio (struct drbd_conf * mdev,
-                                 struct bio_and_error * m);
-extern void request_timer_fn (unsigned long data);
-extern void tl_restart (struct drbd_conf * mdev, enum drbd_req_event what);
+extern void _req_may_be_done(struct drbd_request *req,
+		struct bio_and_error *m);
+extern int __req_mod(struct drbd_request *req, enum drbd_req_event what,
+		struct bio_and_error *m);
+extern void complete_master_bio(struct drbd_conf *mdev,
+		struct bio_and_error *m);
+extern void request_timer_fn(unsigned long data);
+extern void tl_restart(struct drbd_conf *mdev, enum drbd_req_event what);
 
 /* use this if you don't want to deal with calling complete_master_bio()
  * outside the spinlock, e.g. when walking some list on cleanup. */
-static inline int _req_mod (struct drbd_request * req, enum drbd_req_event what)
+static inline int _req_mod(struct drbd_request *req, enum drbd_req_event what)
 {
-  struct drbd_conf * mdev = req->mdev;
-  struct bio_and_error m;
-  int rv;
-  
-  /* __req_mod possibly frees req, do not touch req after that! */
-  rv = __req_mod (req, what, &m);
-  if (m.bio)
-  { complete_master_bio (mdev, &m); }
-  
-  return rv;
+	struct drbd_conf *mdev = req->mdev;
+	struct bio_and_error m;
+	int rv;
+
+	/* __req_mod possibly frees req, do not touch req after that! */
+	rv = __req_mod(req, what, &m);
+	if (m.bio)
+		complete_master_bio(mdev, &m);
+
+	return rv;
 }
 
 /* completion of master bio is outside of our spinlock.
  * We still may or may not be inside some irqs disabled section
  * of the lower level driver completion callback, so we need to
  * spin_lock_irqsave here. */
-static inline int req_mod (struct drbd_request * req,
-                           enum drbd_req_event what)
+static inline int req_mod(struct drbd_request *req,
+		enum drbd_req_event what)
 {
-  unsigned long flags;
-  struct drbd_conf * mdev = req->mdev;
-  struct bio_and_error m;
-  int rv;
-  
-  spin_lock_irqsave (&mdev->req_lock, flags);
-  rv = __req_mod (req, what, &m);
-  spin_unlock_irqrestore (&mdev->req_lock, flags);
-  
-  if (m.bio)
-  { complete_master_bio (mdev, &m); }
-  
-  return rv;
+	unsigned long flags;
+	struct drbd_conf *mdev = req->mdev;
+	struct bio_and_error m;
+	int rv;
+
+	spin_lock_irqsave(&mdev->req_lock, flags);
+	rv = __req_mod(req, what, &m);
+	spin_unlock_irqrestore(&mdev->req_lock, flags);
+
+	if (m.bio)
+		complete_master_bio(mdev, &m);
+
+	return rv;
 }
 
-static inline bool drbd_should_do_remote (union drbd_state s)
+static inline bool drbd_should_do_remote(union drbd_state s)
 {
-  return s.pdsk == D_UP_TO_DATE ||
-         (s.pdsk >= D_INCONSISTENT &&
-          s.conn >= C_WF_BITMAP_T &&
-          s.conn < C_AHEAD);
-  /* Before proto 96 that was >= CONNECTED instead of >= C_WF_BITMAP_T.
-     That is equivalent since before 96 IO was frozen in the C_WF_BITMAP*
-     states. */
+	return s.pdsk == D_UP_TO_DATE ||
+		(s.pdsk >= D_INCONSISTENT &&
+		 s.conn >= C_WF_BITMAP_T &&
+		 s.conn < C_AHEAD);
+	/* Before proto 96 that was >= CONNECTED instead of >= C_WF_BITMAP_T.
+	   That is equivalent since before 96 IO was frozen in the C_WF_BITMAP*
+	   states. */
 }
-static inline bool drbd_should_send_oos (union drbd_state s)
+static inline bool drbd_should_send_oos(union drbd_state s)
 {
-  return s.conn == C_AHEAD || s.conn == C_WF_BITMAP_S;
-  /* pdsk = D_INCONSISTENT as a consequence. Protocol 96 check not necessary
-     since we enter state C_AHEAD only if proto >= 96 */
+	return s.conn == C_AHEAD || s.conn == C_WF_BITMAP_S;
+	/* pdsk = D_INCONSISTENT as a consequence. Protocol 96 check not necessary
+	   since we enter state C_AHEAD only if proto >= 96 */
 }
 
 #endif

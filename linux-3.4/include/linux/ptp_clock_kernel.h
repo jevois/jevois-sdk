@@ -25,15 +25,15 @@
 
 
 struct ptp_clock_request {
-  enum {
-    PTP_CLK_REQ_EXTTS,
-    PTP_CLK_REQ_PEROUT,
-    PTP_CLK_REQ_PPS,
-  } type;
-  union {
-    struct ptp_extts_request extts;
-    struct ptp_perout_request perout;
-  };
+	enum {
+		PTP_CLK_REQ_EXTTS,
+		PTP_CLK_REQ_PEROUT,
+		PTP_CLK_REQ_PPS,
+	} type;
+	union {
+		struct ptp_extts_request extts;
+		struct ptp_perout_request perout;
+	};
 };
 
 /**
@@ -72,19 +72,19 @@ struct ptp_clock_request {
  */
 
 struct ptp_clock_info {
-  struct module * owner;
-  char name[16];
-  s32 max_adj;
-  int n_alarm;
-  int n_ext_ts;
-  int n_per_out;
-  int pps;
-  int (*adjfreq) (struct ptp_clock_info * ptp, s32 delta);
-  int (*adjtime) (struct ptp_clock_info * ptp, s64 delta);
-  int (*gettime) (struct ptp_clock_info * ptp, struct timespec * ts);
-  int (*settime) (struct ptp_clock_info * ptp, const struct timespec * ts);
-  int (*enable) (struct ptp_clock_info * ptp,
-                 struct ptp_clock_request * request, int on);
+	struct module *owner;
+	char name[16];
+	s32 max_adj;
+	int n_alarm;
+	int n_ext_ts;
+	int n_per_out;
+	int pps;
+	int (*adjfreq)(struct ptp_clock_info *ptp, s32 delta);
+	int (*adjtime)(struct ptp_clock_info *ptp, s64 delta);
+	int (*gettime)(struct ptp_clock_info *ptp, struct timespec *ts);
+	int (*settime)(struct ptp_clock_info *ptp, const struct timespec *ts);
+	int (*enable)(struct ptp_clock_info *ptp,
+		      struct ptp_clock_request *request, int on);
 };
 
 struct ptp_clock;
@@ -95,7 +95,7 @@ struct ptp_clock;
  * @info:  Structure describing the new clock.
  */
 
-extern struct ptp_clock * ptp_clock_register (struct ptp_clock_info * info);
+extern struct ptp_clock *ptp_clock_register(struct ptp_clock_info *info);
 
 /**
  * ptp_clock_unregister() - unregister a PTP hardware clock driver
@@ -103,13 +103,13 @@ extern struct ptp_clock * ptp_clock_register (struct ptp_clock_info * info);
  * @ptp:  The clock to remove from service.
  */
 
-extern int ptp_clock_unregister (struct ptp_clock * ptp);
+extern int ptp_clock_unregister(struct ptp_clock *ptp);
 
 
 enum ptp_clock_events {
-  PTP_CLOCK_ALARM,
-  PTP_CLOCK_EXTTS,
-  PTP_CLOCK_PPS,
+	PTP_CLOCK_ALARM,
+	PTP_CLOCK_EXTTS,
+	PTP_CLOCK_PPS,
 };
 
 /**
@@ -121,9 +121,9 @@ enum ptp_clock_events {
  */
 
 struct ptp_clock_event {
-  int type;
-  int index;
-  u64 timestamp;
+	int type;
+	int index;
+	u64 timestamp;
 };
 
 /**
@@ -133,7 +133,7 @@ struct ptp_clock_event {
  * @event:  Message structure describing the event.
  */
 
-extern void ptp_clock_event (struct ptp_clock * ptp,
-                             struct ptp_clock_event * event);
+extern void ptp_clock_event(struct ptp_clock *ptp,
+			    struct ptp_clock_event *event);
 
 #endif

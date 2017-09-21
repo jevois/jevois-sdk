@@ -13,4 +13,4 @@
 
 #include <asm-generic/hardirq.h>
 
-#endif  /* _XTENSA_HARDIRQ_H */
+#endif	/* _XTENSA_HARDIRQ_H */

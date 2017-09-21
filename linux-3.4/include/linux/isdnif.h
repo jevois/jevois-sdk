@@ -5,7 +5,7 @@
  *
  * Copyright 1994,95,96 by Fritz Elfert (fritz@isdn4linux.de)
  * Copyright 1995,96    Thinking Objects Software GmbH Wuerzburg
- *
+ * 
  * This software may be used and distributed according to the terms
  * of the GNU General Public License, incorporated herein by reference.
  *
@@ -46,11 +46,11 @@
 /*
  * Values for Layer-3-protocol-selection
  */
-#define ISDN_PROTO_L3_TRANS 0 /* Transparent */
-#define ISDN_PROTO_L3_TRANSDSP  1 /* Transparent with DSP */
-#define ISDN_PROTO_L3_FCLASS2 2 /* Fax Group 2/3 CLASS 2 */
-#define ISDN_PROTO_L3_FCLASS1 3 /* Fax Group 2/3 CLASS 1 */
-#define ISDN_PROTO_L3_MAX 7 /* Max. 8 Protocols */
+#define ISDN_PROTO_L3_TRANS	0	/* Transparent */
+#define ISDN_PROTO_L3_TRANSDSP	1	/* Transparent with DSP */
+#define ISDN_PROTO_L3_FCLASS2	2	/* Fax Group 2/3 CLASS 2 */
+#define ISDN_PROTO_L3_FCLASS1	3	/* Fax Group 2/3 CLASS 1 */
+#define ISDN_PROTO_L3_MAX	7	/* Max. 8 Protocols */
 
 #ifdef __KERNEL__
 
@@ -58,29 +58,29 @@
 
 /***************************************************************************/
 /* Extensions made by Werner Cornelius (werner@ikt.de)                     */
-/*                                                                         */
+/*                                                                         */ 
 /* The proceed command holds a incoming call in a state to leave processes */
 /* enough time to check whether ist should be accepted.                    */
 /* The PROT_IO Command extends the interface to make protocol dependent    */
 /* features available (call diversion, call waiting...).                   */
-/*                                                                         */
+/*                                                                         */ 
 /* The PROT_IO Command is executed with the desired driver id and the arg  */
 /* parameter coded as follows:                                             */
 /* The lower 8 bits of arg contain the desired protocol from ISDN_PTYPE    */
 /* definitions. The upper 24 bits represent the protocol specific cmd/stat.*/
 /* Any additional data is protocol and command specific.                   */
-/* This mechanism also applies to the statcallb callback STAT_PROT.        */
+/* This mechanism also applies to the statcallb callback STAT_PROT.        */    
 /*                                                                         */
 /* This suggested extension permits an easy expansion of protocol specific */
 /* handling. Extensions may be added at any time without changing the HL   */
 /* driver code and not getting conflicts without certifications.           */
 /* The well known CAPI 2.0 interface handles such extensions in a similar  */
 /* way. Perhaps a protocol specific module may be added and separately     */
-/* loaded and linked to the basic isdn module for handling.                */
+/* loaded and linked to the basic isdn module for handling.                */                    
 /***************************************************************************/
 
 /*****************/
-/* DSS1 commands */
+/* DSS1 commands */ 
 /*****************/
 #define DSS1_CMD_INVOKE       ((0x00 << 8) | ISDN_PTYPE_EURO)   /* invoke a supplementary service */
 #define DSS1_CMD_INVOKE_ABORT ((0x01 << 8) | ISDN_PTYPE_EURO)   /* abort a invoke cmd */
@@ -121,11 +121,11 @@
 /*                                                                   */
 /* Broadcast invoke frames from the network are reported via the     */
 /* STAT_INVOKE_BRD callback. The ll_id is set to 0, the other fields */
-/* are supplied by the network and not by the HL.                    */
+/* are supplied by the network and not by the HL.                    */   
 /*********************************************************************/
 
 /*****************/
-/* NI1 commands */
+/* NI1 commands */ 
 /*****************/
 #define NI1_CMD_INVOKE       ((0x00 << 8) | ISDN_PTYPE_NI1)   /* invoke a supplementary service */
 #define NI1_CMD_INVOKE_ABORT ((0x01 << 8) | ISDN_PTYPE_NI1)   /* abort a invoke cmd */
@@ -138,21 +138,21 @@
 #define NI1_STAT_INVOKE_BRD  ((0x82 << 8) | ISDN_PTYPE_NI1)   /* Deliver invoke broadcast info */
 
 typedef struct
-{ ulong ll_id; /* ID supplied by LL when executing    */
-  /* a command and returned by HL for    */
-  /* INVOKE_RES and INVOKE_ERR           */
-  int hl_id;   /* ID supplied by HL when called       */
-  /* for executing a cmd and delivered   */
-  /* for results and errors              */
-  /* must be supplied by LL when aborting*/
-  int proc;    /* invoke procedure used by CMD_INVOKE */
-  /* returned by callback and broadcast  */
-  int timeout; /* timeout for INVOKE CMD in ms        */
-  /* -1  in stat callback when timed out */
-  /* error value when error callback     */
-  int datalen; /* length of cmd or stat data          */
-  u_char * data; /* pointer to data delivered or send   */
-} isdn_cmd_stat;
+  { ulong ll_id; /* ID supplied by LL when executing    */
+		 /* a command and returned by HL for    */
+                 /* INVOKE_RES and INVOKE_ERR           */
+    int hl_id;   /* ID supplied by HL when called       */
+                 /* for executing a cmd and delivered   */
+                 /* for results and errors              */
+                 /* must be supplied by LL when aborting*/  
+    int proc;    /* invoke procedure used by CMD_INVOKE */
+                 /* returned by callback and broadcast  */ 
+    int timeout; /* timeout for INVOKE CMD in ms        */
+                 /* -1  in stat callback when timed out */
+                 /* error value when error callback     */
+    int datalen; /* length of cmd or stat data          */
+    u_char *data;/* pointer to data delivered or send   */
+  } isdn_cmd_stat;
 
 /*
  * Commands from linklevel to lowlevel
@@ -214,8 +214,8 @@ typedef struct
 /*
  * Audio commands
  */
-#define ISDN_AUDIO_SETDD  0 /* Set DTMF detection           */
-#define ISDN_AUDIO_DTMF   1 /* Rx/Tx DTMF                   */
+#define ISDN_AUDIO_SETDD	0	/* Set DTMF detection           */
+#define ISDN_AUDIO_DTMF		1	/* Rx/Tx DTMF                   */
 
 /*
  * Values for errcode field
@@ -238,7 +238,7 @@ typedef struct
 #define ISDN_FEATURE_L2_V11019  (0x0001 << ISDN_PROTO_L2_V11019)
 #define ISDN_FEATURE_L2_V11038  (0x0001 << ISDN_PROTO_L2_V11038)
 #define ISDN_FEATURE_L2_MODEM   (0x0001 << ISDN_PROTO_L2_MODEM)
-#define ISDN_FEATURE_L2_FAX (0x0001 << ISDN_PROTO_L2_FAX)
+#define ISDN_FEATURE_L2_FAX	(0x0001 << ISDN_PROTO_L2_FAX)
 #define ISDN_FEATURE_L2_HDLC_56K (0x0001 << ISDN_PROTO_L2_HDLC_56K)
 
 #define ISDN_FEATURE_L2_MASK    (0x0FFFF) /* Max. 16 protocols */
@@ -247,8 +247,8 @@ typedef struct
 /* Layer 3 */
 #define ISDN_FEATURE_L3_TRANS   (0x10000 << ISDN_PROTO_L3_TRANS)
 #define ISDN_FEATURE_L3_TRANSDSP (0x10000 << ISDN_PROTO_L3_TRANSDSP)
-#define ISDN_FEATURE_L3_FCLASS2 (0x10000 << ISDN_PROTO_L3_FCLASS2)
-#define ISDN_FEATURE_L3_FCLASS1 (0x10000 << ISDN_PROTO_L3_FCLASS1)
+#define ISDN_FEATURE_L3_FCLASS2	(0x10000 << ISDN_PROTO_L3_FCLASS2)
+#define ISDN_FEATURE_L3_FCLASS1	(0x10000 << ISDN_PROTO_L3_FCLASS1)
 
 #define ISDN_FEATURE_L3_MASK    (0x0FF0000) /* Max. 8 Protocols */
 #define ISDN_FEATURE_L3_SHIFT   (16)
@@ -263,12 +263,12 @@ typedef struct
 #define ISDN_FEATURE_P_SHIFT    (24)
 
 typedef struct setup_parm {
-  unsigned char phone[32];  /* Remote Phone-Number */
-  unsigned char eazmsn[32]; /* Local EAZ or MSN    */
-  unsigned char si1;      /* Service Indicator 1 */
-  unsigned char si2;      /* Service Indicator 2 */
-  unsigned char plan;     /* Numbering plan      */
-  unsigned char screen;   /* Screening info      */
+    unsigned char phone[32];	/* Remote Phone-Number */
+    unsigned char eazmsn[32];	/* Local EAZ or MSN    */
+    unsigned char si1;      /* Service Indicator 1 */
+    unsigned char si2;      /* Service Indicator 2 */
+    unsigned char plan;     /* Numbering plan      */
+    unsigned char screen;   /* Screening info      */
 } setup_parm;
 
 
@@ -278,103 +278,103 @@ typedef struct setup_parm {
 #define FAXIDLEN 21
 
 typedef struct T30_s {
-  /* session parameters */
-  __u8 resolution;
-  __u8 rate;
-  __u8 width;
-  __u8 length;
-  __u8 compression;
-  __u8 ecm;
-  __u8 binary;
-  __u8 scantime;
-  __u8 id[FAXIDLEN];
-  /* additional parameters */
-  __u8 phase;
-  __u8 direction;
-  __u8 code;
-  __u8 badlin;
-  __u8 badmul;
-  __u8 bor;
-  __u8 fet;
-  __u8 pollid[FAXIDLEN];
-  __u8 cq;
-  __u8 cr;
-  __u8 ctcrty;
-  __u8 minsp;
-  __u8 phcto;
-  __u8 rel;
-  __u8 nbc;
-  /* remote station parameters */
-  __u8 r_resolution;
-  __u8 r_rate;
-  __u8 r_width;
-  __u8 r_length;
-  __u8 r_compression;
-  __u8 r_ecm;
-  __u8 r_binary;
-  __u8 r_scantime;
-  __u8 r_id[FAXIDLEN];
-  __u8 r_code;
+	/* session parameters */
+	__u8 resolution;
+	__u8 rate;
+	__u8 width;
+	__u8 length;
+	__u8 compression;
+	__u8 ecm;
+	__u8 binary;
+	__u8 scantime;
+	__u8 id[FAXIDLEN];
+	/* additional parameters */
+	__u8 phase;
+	__u8 direction;
+	__u8 code;
+	__u8 badlin;
+	__u8 badmul;
+	__u8 bor;
+	__u8 fet;
+	__u8 pollid[FAXIDLEN];
+	__u8 cq;
+	__u8 cr;
+	__u8 ctcrty;
+	__u8 minsp;
+	__u8 phcto;
+	__u8 rel;
+	__u8 nbc;
+	/* remote station parameters */
+	__u8 r_resolution;
+	__u8 r_rate;
+	__u8 r_width;
+	__u8 r_length;
+	__u8 r_compression;
+	__u8 r_ecm;
+	__u8 r_binary;
+	__u8 r_scantime;
+	__u8 r_id[FAXIDLEN];
+	__u8 r_code;
 } __packed T30_s;
 
-#define ISDN_TTY_FAX_CONN_IN  0
-#define ISDN_TTY_FAX_CONN_OUT 1
+#define ISDN_TTY_FAX_CONN_IN	0
+#define ISDN_TTY_FAX_CONN_OUT	1
 
-#define ISDN_TTY_FAX_FCON 0
-#define ISDN_TTY_FAX_DIS  1
-#define ISDN_TTY_FAX_FTT  2
-#define ISDN_TTY_FAX_MCF  3
-#define ISDN_TTY_FAX_DCS  4
-#define ISDN_TTY_FAX_TRAIN_OK 5
-#define ISDN_TTY_FAX_EOP  6
-#define ISDN_TTY_FAX_EOM  7
-#define ISDN_TTY_FAX_MPS  8
-#define ISDN_TTY_FAX_DTC  9
-#define ISDN_TTY_FAX_RID  10
-#define ISDN_TTY_FAX_HNG  11
-#define ISDN_TTY_FAX_DT   12
-#define ISDN_TTY_FAX_FCON_I 13
-#define ISDN_TTY_FAX_DR   14
-#define ISDN_TTY_FAX_ET   15
-#define ISDN_TTY_FAX_CFR  16
-#define ISDN_TTY_FAX_PTS  17
-#define ISDN_TTY_FAX_SENT 18
+#define ISDN_TTY_FAX_FCON	0
+#define ISDN_TTY_FAX_DIS 	1
+#define ISDN_TTY_FAX_FTT 	2
+#define ISDN_TTY_FAX_MCF 	3
+#define ISDN_TTY_FAX_DCS 	4
+#define ISDN_TTY_FAX_TRAIN_OK	5
+#define ISDN_TTY_FAX_EOP 	6
+#define ISDN_TTY_FAX_EOM 	7
+#define ISDN_TTY_FAX_MPS 	8
+#define ISDN_TTY_FAX_DTC 	9
+#define ISDN_TTY_FAX_RID 	10
+#define ISDN_TTY_FAX_HNG 	11
+#define ISDN_TTY_FAX_DT  	12
+#define ISDN_TTY_FAX_FCON_I	13
+#define ISDN_TTY_FAX_DR  	14
+#define ISDN_TTY_FAX_ET  	15
+#define ISDN_TTY_FAX_CFR 	16
+#define ISDN_TTY_FAX_PTS 	17
+#define ISDN_TTY_FAX_SENT	18
 
-#define ISDN_FAX_PHASE_IDLE 0
-#define ISDN_FAX_PHASE_A  1
-#define ISDN_FAX_PHASE_B    2
-#define ISDN_FAX_PHASE_C    3
-#define ISDN_FAX_PHASE_D    4
-#define ISDN_FAX_PHASE_E    5
+#define ISDN_FAX_PHASE_IDLE	0
+#define ISDN_FAX_PHASE_A	1
+#define ISDN_FAX_PHASE_B   	2
+#define ISDN_FAX_PHASE_C   	3
+#define ISDN_FAX_PHASE_D   	4
+#define ISDN_FAX_PHASE_E   	5
 
 #endif /* TTY_FAX */
 
-#define ISDN_FAX_CLASS1_FAE 0
-#define ISDN_FAX_CLASS1_FTS 1
-#define ISDN_FAX_CLASS1_FRS 2
-#define ISDN_FAX_CLASS1_FTM 3
-#define ISDN_FAX_CLASS1_FRM 4
-#define ISDN_FAX_CLASS1_FTH 5
-#define ISDN_FAX_CLASS1_FRH 6
-#define ISDN_FAX_CLASS1_CTRL  7
+#define ISDN_FAX_CLASS1_FAE	0
+#define ISDN_FAX_CLASS1_FTS	1
+#define ISDN_FAX_CLASS1_FRS	2
+#define ISDN_FAX_CLASS1_FTM	3
+#define ISDN_FAX_CLASS1_FRM	4
+#define ISDN_FAX_CLASS1_FTH	5
+#define ISDN_FAX_CLASS1_FRH	6
+#define ISDN_FAX_CLASS1_CTRL	7
 
-#define ISDN_FAX_CLASS1_OK  0
-#define ISDN_FAX_CLASS1_CONNECT 1
-#define ISDN_FAX_CLASS1_NOCARR  2
-#define ISDN_FAX_CLASS1_ERROR 3
-#define ISDN_FAX_CLASS1_FCERROR 4
-#define ISDN_FAX_CLASS1_QUERY 5
+#define ISDN_FAX_CLASS1_OK	0
+#define ISDN_FAX_CLASS1_CONNECT	1
+#define ISDN_FAX_CLASS1_NOCARR	2
+#define ISDN_FAX_CLASS1_ERROR	3
+#define ISDN_FAX_CLASS1_FCERROR	4
+#define ISDN_FAX_CLASS1_QUERY	5
 
 typedef struct {
-  __u8  cmd;
-  __u8  subcmd;
-  __u8  para[50];
+	__u8	cmd;
+	__u8	subcmd;
+	__u8	para[50];
 } aux_s;
 
-#define AT_COMMAND  0
-#define AT_EQ_VALUE 1
-#define AT_QUERY  2
-#define AT_EQ_QUERY 3
+#define AT_COMMAND	0
+#define AT_EQ_VALUE	1
+#define AT_QUERY	2
+#define AT_EQ_QUERY	3
 
 /* CAPI structs */
 
@@ -382,20 +382,20 @@ typedef struct {
 #define MAX_CAPI_PARA_LEN 50
 
 typedef struct {
-  /* Header */
-  __u16 Length;
-  __u16 ApplId;
-  __u8 Command;
-  __u8 Subcommand;
-  __u16 Messagenumber;
-  
-  /* Parameter */
-  union {
-    __u32 Controller;
-    __u32 PLCI;
-    __u32 NCCI;
-  } adr;
-  __u8 para[MAX_CAPI_PARA_LEN];
+	/* Header */
+	__u16 Length;
+	__u16 ApplId;
+	__u8 Command;
+	__u8 Subcommand;
+	__u16 Messagenumber;
+
+	/* Parameter */
+	union {
+		__u32 Controller;
+		__u32 PLCI;
+		__u32 NCCI;
+	} adr;
+	__u8 para[MAX_CAPI_PARA_LEN];
 } capi_msg;
 
 /*
@@ -403,23 +403,23 @@ typedef struct {
  *
  */
 typedef struct {
-  int   driver;   /* Lowlevel-Driver-ID            */
-  int   command;    /* Command or Status (see above) */
-  ulong arg;    /* Additional Data               */
-  union {
-    ulong errcode;  /* Type of error with STAT_L1ERR  */
-    int length; /* Amount of bytes sent with STAT_BSENT */
-    u_char num[50]; /* Additional Data      */
-    setup_parm setup;/* For SETUP msg     */
-    capi_msg cmsg;  /* For CAPI like messages   */
-    char display[85];/* display message data    */
-    isdn_cmd_stat isdn_io; /* ISDN IO-parameter/result  */
-    aux_s aux;  /* for modem commands/indications */
-    #ifdef CONFIG_ISDN_TTY_FAX
-    T30_s * fax; /* Pointer to ttys fax struct   */
-    #endif
-    ulong userdata; /* User Data */
-  } parm;
+	int   driver;		/* Lowlevel-Driver-ID            */
+	int   command;		/* Command or Status (see above) */
+	ulong arg;		/* Additional Data               */
+	union {
+		ulong errcode;	/* Type of error with STAT_L1ERR	*/
+		int length;	/* Amount of bytes sent with STAT_BSENT	*/
+		u_char num[50];	/* Additional Data			*/
+		setup_parm setup;/* For SETUP msg			*/
+		capi_msg cmsg;	/* For CAPI like messages		*/
+		char display[85];/* display message data		*/ 
+		isdn_cmd_stat isdn_io; /* ISDN IO-parameter/result	*/
+		aux_s aux;	/* for modem commands/indications	*/
+#ifdef CONFIG_ISDN_TTY_FAX
+		T30_s	*fax;	/* Pointer to ttys fax struct		*/
+#endif
+		ulong userdata;	/* User Data */
+	} parm;
 } isdn_ctrl;
 
 #define dss1_io    isdn_io
@@ -433,29 +433,29 @@ typedef struct {
  *
  */
 typedef struct {
-  struct module * owner;
-  
+  struct module *owner;
+
   /* Number of channels supported by this driver
    */
   int channels;
-  
-  /*
+
+  /* 
    * Maximum Size of transmit/receive-buffer this driver supports.
    */
   int maxbufsize;
-  
+
   /* Feature-Flags for this driver.
    * See defines ISDN_FEATURE_... for Values
    */
   unsigned long features;
-  
+
   /*
    * Needed for calculating
    * dev->hard_header_len = linklayer header + hl_hdrlen;
    * Drivers, not supporting sk_buff's should set this to 0.
    */
   unsigned short hl_hdrlen;
-  
+
   /*
    * Receive-Callback using sk_buff's
    * Parameters:
@@ -463,8 +463,8 @@ typedef struct {
    *             int                    local channel-number (0 ...)
    *             struct sk_buff *skb    received Data
    */
-  void (*rcvcallb_skb) (int, int, struct sk_buff *);
-  
+  void (*rcvcallb_skb)(int, int, struct sk_buff *);
+
   /* Status-Callback
    * Parameters:
    *             isdn_ctrl*
@@ -473,8 +473,8 @@ typedef struct {
    *                   arg     = depending on status-type.
    *                   num     = depending on status-type.
    */
-  int (*statcallb) (isdn_ctrl *);
-  
+  int (*statcallb)(isdn_ctrl*);
+
   /* Send command
    * Parameters:
    *             isdn_ctrl*
@@ -483,8 +483,8 @@ typedef struct {
    *                   arg     = depending on command.
    *                   num     = depending on command.
    */
-  int (*command) (isdn_ctrl *);
-  
+  int (*command)(isdn_ctrl*);
+
   /*
    * Send data using sk_buff's
    * Parameters:
@@ -494,7 +494,7 @@ typedef struct {
    *             struct sk_buff *skb    Data to send
    */
   int (*writebuf_skb) (int, int, int, struct sk_buff *);
-  
+
   /* Send raw D-Channel-Commands
    * Parameters:
    *             u_char pointer data
@@ -502,16 +502,16 @@ typedef struct {
    *             int    driverId
    *             int    local channel-number (0 ...)
    */
-  int (*writecmd) (const u_char __user *, int, int, int);
-  
+  int (*writecmd)(const u_char __user *, int, int, int);
+
   /* Read raw Status replies
    *             u_char pointer data (volatile)
    *             int    length of buffer
    *             int    driverId
    *             int    local channel-number (0 ...)
    */
-  int (*readstat) (u_char __user *, int, int, int);
-  
+  int (*readstat)(u_char __user *, int, int, int);
+
   char id[20];
 } isdn_if;
 
@@ -536,7 +536,7 @@ typedef struct {
  * statcallb        "    "     "    for status-changes.
  *
  */
-extern int register_isdn (isdn_if *);
+extern int register_isdn(isdn_if*);
 #include <asm/uaccess.h>
 
 #endif /* __KERNEL__ */

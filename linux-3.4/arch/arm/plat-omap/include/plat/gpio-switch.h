@@ -14,41 +14,41 @@
 #include <linux/types.h>
 
 /* Cover:
- *  high -> closed
- *  low  -> open
+ *	high -> closed
+ *	low  -> open
  * Connection:
- *  high -> connected
- *  low  -> disconnected
+ *	high -> connected
+ *	low  -> disconnected
  * Activity:
- *  high -> active
- *  low  -> inactive
+ *	high -> active
+ *	low  -> inactive
  *
  */
-#define OMAP_GPIO_SWITCH_TYPE_COVER   0x0000
-#define OMAP_GPIO_SWITCH_TYPE_CONNECTION  0x0001
-#define OMAP_GPIO_SWITCH_TYPE_ACTIVITY    0x0002
-#define OMAP_GPIO_SWITCH_FLAG_INVERTED    0x0001
-#define OMAP_GPIO_SWITCH_FLAG_OUTPUT    0x0002
+#define OMAP_GPIO_SWITCH_TYPE_COVER		0x0000
+#define OMAP_GPIO_SWITCH_TYPE_CONNECTION	0x0001
+#define OMAP_GPIO_SWITCH_TYPE_ACTIVITY		0x0002
+#define OMAP_GPIO_SWITCH_FLAG_INVERTED		0x0001
+#define OMAP_GPIO_SWITCH_FLAG_OUTPUT		0x0002
 
 struct omap_gpio_switch {
-  const char * name;
-  s16 gpio;
-  unsigned flags: 4;
-  unsigned type: 4;
-  
-  /* Time in ms to debounce when transitioning from
-   * inactive state to active state. */
-  u16 debounce_rising;
-  /* Same for transition from active to inactive state. */
-  u16 debounce_falling;
-  
-  /* notify board-specific code about state changes */
-  void (* notify) (void * data, int state);
-  void * notify_data;
+	const char *name;
+	s16 gpio;
+	unsigned flags:4;
+	unsigned type:4;
+
+	/* Time in ms to debounce when transitioning from
+	 * inactive state to active state. */
+	u16 debounce_rising;
+	/* Same for transition from active to inactive state. */
+	u16 debounce_falling;
+
+	/* notify board-specific code about state changes */
+	void (* notify)(void *data, int state);
+	void *notify_data;
 };
 
 /* Call at init time only */
-extern void omap_register_gpio_switches (const struct omap_gpio_switch * tbl,
-    int count);
+extern void omap_register_gpio_switches(const struct omap_gpio_switch *tbl,
+					int count);
 
 #endif

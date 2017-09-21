@@ -8,4 +8,4 @@
  * published by the Free Software Foundation.
  */
 
-extern void __init at91sam9_ioremap_smc (int id, u32 addr);
+extern void __init at91sam9_ioremap_smc(int id, u32 addr);

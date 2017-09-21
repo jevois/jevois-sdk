@@ -24,28 +24,28 @@
 #include <linux/seq_file.h>
 
 struct rtw_proc_hdl {
-  char * name;
-  int (*show) (struct seq_file *, void *);
-  ssize_t (*write) (struct file * file, const char __user * buffer, size_t count, loff_t * pos, void * data);
+	char *name;
+	int (*show)(struct seq_file *, void *);
+	ssize_t (*write)(struct file *file, const char __user *buffer, size_t count, loff_t *pos, void *data);
 };
 
 #ifdef CONFIG_PROC_DEBUG
 
-struct proc_dir_entry * get_rtw_drv_proc (void);
-int rtw_drv_proc_init (void);
-void rtw_drv_proc_deinit (void);
-struct proc_dir_entry * rtw_adapter_proc_init (struct net_device * dev);
-void rtw_adapter_proc_deinit (struct net_device * dev);
-void rtw_adapter_proc_replace (struct net_device * dev);
+struct proc_dir_entry *get_rtw_drv_proc(void);
+int rtw_drv_proc_init(void);
+void rtw_drv_proc_deinit(void);
+struct proc_dir_entry *rtw_adapter_proc_init(struct net_device *dev);
+void rtw_adapter_proc_deinit(struct net_device *dev);
+void rtw_adapter_proc_replace(struct net_device *dev);
 
 #else
 
-struct proc_dir_entry * get_rtw_drv_proc (void) {return NULL;}
-int rtw_drv_proc_init (void) {return 0;}
-void rtw_drv_proc_deinit (void) {}
-struct proc_dir_entry * rtw_adapter_proc_init (struct net_device * dev) {return NULL;}
-void rtw_adapter_proc_deinit (struct net_device * dev) {}
-void rtw_adapter_proc_replace (struct net_device * dev) {}
+struct proc_dir_entry *get_rtw_drv_proc(void) {return NULL;}
+int rtw_drv_proc_init(void) {return 0;}
+void rtw_drv_proc_deinit(void) {}
+struct proc_dir_entry *rtw_adapter_proc_init(struct net_device *dev){return NULL;}
+void rtw_adapter_proc_deinit(struct net_device *dev){}
+void rtw_adapter_proc_replace(struct net_device *dev){}
 
 #endif
 

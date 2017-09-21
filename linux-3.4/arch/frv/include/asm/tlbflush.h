@@ -18,54 +18,54 @@
 #ifdef CONFIG_MMU
 
 #ifndef __ASSEMBLY__
-extern void asmlinkage __flush_tlb_all (void);
-extern void asmlinkage __flush_tlb_mm (unsigned long contextid);
-extern void asmlinkage __flush_tlb_page (unsigned long contextid, unsigned long start);
-extern void asmlinkage __flush_tlb_range (unsigned long contextid,
-    unsigned long start, unsigned long end);
+extern void asmlinkage __flush_tlb_all(void);
+extern void asmlinkage __flush_tlb_mm(unsigned long contextid);
+extern void asmlinkage __flush_tlb_page(unsigned long contextid, unsigned long start);
+extern void asmlinkage __flush_tlb_range(unsigned long contextid,
+					 unsigned long start, unsigned long end);
 #endif /* !__ASSEMBLY__ */
 
-#define flush_tlb_all()       \
-  do {            \
-    preempt_disable();      \
-    __flush_tlb_all();      \
-    preempt_enable();     \
-  } while(0)
+#define flush_tlb_all()				\
+do {						\
+	preempt_disable();			\
+	__flush_tlb_all();			\
+	preempt_enable();			\
+} while(0)
 
-#define flush_tlb_mm(mm)      \
-  do {            \
-    preempt_disable();      \
-    __flush_tlb_mm((mm)->context.id); \
-    preempt_enable();     \
-  } while(0)
+#define flush_tlb_mm(mm)			\
+do {						\
+	preempt_disable();			\
+	__flush_tlb_mm((mm)->context.id);	\
+	preempt_enable();			\
+} while(0)
 
-#define flush_tlb_range(vma,start,end)          \
-  do {                  \
-    preempt_disable();            \
-    __flush_tlb_range((vma)->vm_mm->context.id, start, end);  \
-    preempt_enable();           \
-  } while(0)
+#define flush_tlb_range(vma,start,end)					\
+do {									\
+	preempt_disable();						\
+	__flush_tlb_range((vma)->vm_mm->context.id, start, end);	\
+	preempt_enable();						\
+} while(0)
 
-#define flush_tlb_page(vma,addr)        \
-  do {                \
-    preempt_disable();          \
-    __flush_tlb_page((vma)->vm_mm->context.id, addr); \
-    preempt_enable();         \
-  } while(0)
+#define flush_tlb_page(vma,addr)				\
+do {								\
+	preempt_disable();					\
+	__flush_tlb_page((vma)->vm_mm->context.id, addr);	\
+	preempt_enable();					\
+} while(0)
 
 
-#define __flush_tlb_global()      flush_tlb_all()
-#define flush_tlb()       flush_tlb_all()
-#define flush_tlb_kernel_range(start, end)  flush_tlb_all()
+#define __flush_tlb_global()			flush_tlb_all()
+#define flush_tlb()				flush_tlb_all()
+#define flush_tlb_kernel_range(start, end)	flush_tlb_all()
 
 #else
 
-#define flush_tlb()       BUG()
-#define flush_tlb_all()       BUG()
-#define flush_tlb_mm(mm)      BUG()
-#define flush_tlb_page(vma,addr)    BUG()
-#define flush_tlb_range(mm,start,end)   BUG()
-#define flush_tlb_kernel_range(start, end)  BUG()
+#define flush_tlb()				BUG()
+#define flush_tlb_all()				BUG()
+#define flush_tlb_mm(mm)			BUG()
+#define flush_tlb_page(vma,addr)		BUG()
+#define flush_tlb_range(mm,start,end)		BUG()
+#define flush_tlb_kernel_range(start, end)	BUG()
 
 #endif
 

@@ -19,13 +19,13 @@
 #include <linux/fb.h>
 
 struct vt8500fb_platform_data {
-  struct fb_videomode mode;
-  u32     xres_virtual;
-  u32     yres_virtual;
-  u32     bpp;
-  unsigned long   video_mem_phys;
-  void   *   video_mem_virt;
-  unsigned long   video_mem_len;
+	struct fb_videomode	mode;
+	u32			xres_virtual;
+	u32			yres_virtual;
+	u32			bpp;
+	unsigned long		video_mem_phys;
+	void			*video_mem_virt;
+	unsigned long		video_mem_len;
 };
 
 #endif /* _VT8500FB_H */

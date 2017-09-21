@@ -18,8 +18,8 @@
 #ifdef CONFIG_VARIANT_IRQ_SWITCH
 #include <variant/irq.h>
 #else
-static inline void variant_irq_enable (unsigned int irq) { }
-static inline void variant_irq_disable (unsigned int irq) { }
+static inline void variant_irq_enable(unsigned int irq) { }
+static inline void variant_irq_disable(unsigned int irq) { }
 #endif
 
 #ifndef VARIANT_NR_IRQS
@@ -32,16 +32,16 @@ static inline void variant_irq_disable (unsigned int irq) { }
 #define NR_IRQS (XTENSA_NR_IRQS + VARIANT_NR_IRQS + PLATFORM_NR_IRQS)
 
 #if VARIANT_NR_IRQS == 0
-static inline void variant_init_irq (void) { }
+static inline void variant_init_irq(void) { }
 #else
-void variant_init_irq (void) __init;
+void variant_init_irq(void) __init;
 #endif
 
-static __inline__ int irq_canonicalize (int irq)
+static __inline__ int irq_canonicalize(int irq)
 {
-  return (irq);
+	return (irq);
 }
 
 struct irqaction;
 
-#endif  /* _XTENSA_IRQ_H */
+#endif	/* _XTENSA_IRQ_H */

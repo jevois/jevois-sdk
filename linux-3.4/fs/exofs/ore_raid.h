@@ -10,7 +10,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with "ore". If not, write to the Free Software Foundation, Inc:
- *  "Free Software Foundation <info@fsf.org>"
+ *	"Free Software Foundation <info@fsf.org>"
  */
 
 #include <scsi/osd_ore.h>
@@ -19,10 +19,10 @@
 
 #ifdef CONFIG_EXOFS_DEBUG
 #define ORE_DBGMSG(fmt, a...) \
-  printk(KERN_NOTICE "ore @%s:%d: " fmt, __func__, __LINE__, ##a)
+	printk(KERN_NOTICE "ore @%s:%d: " fmt, __func__, __LINE__, ##a)
 #else
 #define ORE_DBGMSG(fmt, a...) \
-  do { if (0) printk(fmt, ##a); } while (0)
+	do { if (0) printk(fmt, ##a); } while (0)
 #endif
 
 /* u64 has problems with printk this will cast it to unsigned long long */
@@ -34,46 +34,46 @@
 /* Calculate the component order in a stripe. eg the logical data unit
  * address within the stripe of @dev given the @par_dev of this stripe.
  */
-static inline unsigned _dev_order (unsigned devs_in_group, unsigned mirrors_p1,
-                                   unsigned par_dev, unsigned dev)
+static inline unsigned _dev_order(unsigned devs_in_group, unsigned mirrors_p1,
+				  unsigned par_dev, unsigned dev)
 {
-  unsigned first_dev = dev - dev % devs_in_group;
-  
-  dev -= first_dev;
-  par_dev -= first_dev;
-  
-  if (devs_in_group == par_dev) /* The raid 0 case */
-  { return dev / mirrors_p1; }
-  /* raid4/5/6 case */
-  return ( (devs_in_group + dev - par_dev - mirrors_p1) % devs_in_group) /
-         mirrors_p1;
+	unsigned first_dev = dev - dev % devs_in_group;
+
+	dev -= first_dev;
+	par_dev -= first_dev;
+
+	if (devs_in_group == par_dev) /* The raid 0 case */
+		return dev / mirrors_p1;
+	/* raid4/5/6 case */
+	return ((devs_in_group + dev - par_dev - mirrors_p1) % devs_in_group) /
+	       mirrors_p1;
 }
 
 /* ios_raid.c stuff needed by ios.c */
-int _ore_post_alloc_raid_stuff (struct ore_io_state * ios);
-void _ore_free_raid_stuff (struct ore_io_state * ios);
+int _ore_post_alloc_raid_stuff(struct ore_io_state *ios);
+void _ore_free_raid_stuff(struct ore_io_state *ios);
 
-void _ore_add_sg_seg (struct ore_per_dev_state * per_dev, unsigned cur_len,
-                      bool not_last);
-int _ore_add_parity_unit (struct ore_io_state * ios, struct ore_striping_info * si,
-                          struct ore_per_dev_state * per_dev, unsigned cur_len);
-void _ore_add_stripe_page (struct __stripe_pages_2d * sp2d,
-                           struct ore_striping_info * si, struct page * page);
-static inline void _add_stripe_page (struct __stripe_pages_2d * sp2d,
-                                     struct ore_striping_info * si, struct page * page)
+void _ore_add_sg_seg(struct ore_per_dev_state *per_dev, unsigned cur_len,
+		 bool not_last);
+int _ore_add_parity_unit(struct ore_io_state *ios, struct ore_striping_info *si,
+		     struct ore_per_dev_state *per_dev, unsigned cur_len);
+void _ore_add_stripe_page(struct __stripe_pages_2d *sp2d,
+		       struct ore_striping_info *si, struct page *page);
+static inline void _add_stripe_page(struct __stripe_pages_2d *sp2d,
+				struct ore_striping_info *si, struct page *page)
 {
-  if (!sp2d) /* Inline the fast path */
-  { return; } /* Hay no raid stuff */
-  _ore_add_stripe_page (sp2d, si, page);
+	if (!sp2d) /* Inline the fast path */
+		return; /* Hay no raid stuff */
+	_ore_add_stripe_page(sp2d, si, page);
 }
 
 /* ios.c stuff needed by ios_raid.c */
-int  _ore_get_io_state (struct ore_layout * layout,
-                        struct ore_components * oc, unsigned numdevs,
-                        unsigned sgs_per_dev, unsigned num_par_pages,
-                        struct ore_io_state ** pios);
-int _ore_add_stripe_unit (struct ore_io_state * ios,  unsigned * cur_pg,
-                          unsigned pgbase, struct page ** pages,
-                          struct ore_per_dev_state * per_dev, int cur_len);
-int _ore_read_mirror (struct ore_io_state * ios, unsigned cur_comp);
-int ore_io_execute (struct ore_io_state * ios);
+int  _ore_get_io_state(struct ore_layout *layout,
+			struct ore_components *oc, unsigned numdevs,
+			unsigned sgs_per_dev, unsigned num_par_pages,
+			struct ore_io_state **pios);
+int _ore_add_stripe_unit(struct ore_io_state *ios,  unsigned *cur_pg,
+		unsigned pgbase, struct page **pages,
+		struct ore_per_dev_state *per_dev, int cur_len);
+int _ore_read_mirror(struct ore_io_state *ios, unsigned cur_comp);
+int ore_io_execute(struct ore_io_state *ios);

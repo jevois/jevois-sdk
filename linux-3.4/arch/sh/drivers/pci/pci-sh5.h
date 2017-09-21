@@ -10,10 +10,10 @@
 #define __PCI_SH5_H
 
 /* Product ID */
-#define PCISH5_PID    0x350d
+#define PCISH5_PID		0x350d
 
 /* vendor ID */
-#define PCISH5_VID    0x1054
+#define PCISH5_VID		0x1054
 
 /* Configuration types */
 #define ST_TYPE0                0x00    /* Configuration cycle type 0 */
@@ -67,7 +67,7 @@
 #define PCISH5_ICR_PDR         0x220   /* Pio data register values                               */
 
 /* These are configs space registers */
-#define PCISH5_ICR_CSR_VID     0x000  /* Vendor id                           */
+#define PCISH5_ICR_CSR_VID     0x000	/* Vendor id                           */
 #define PCISH5_ICR_CSR_DID     0x002   /* Device id                           */
 #define PCISH5_ICR_CSR_CMD     0x004   /* Command register                    */
 #define PCISH5_ICR_CSR_STATUS  0x006   /* Stautus                             */
@@ -102,8 +102,8 @@ extern unsigned long pcicr_virt;
 #define CONFIG_CMD(bus, devfn, where)            SET_CONFIG_BITS(bus->number,devfn,where)
 
 /* Size converters */
-#define PCISH5_MEM_SIZCONV(x)     (((x / 0x40000) - 1) << 18)
-#define PCISH5_IO_SIZCONV(x)      (((x / 0x40000) - 1) << 18)
+#define PCISH5_MEM_SIZCONV(x)		  (((x / 0x40000) - 1) << 18)
+#define PCISH5_IO_SIZCONV(x)		  (((x / 0x40000) - 1) << 18)
 
 extern struct pci_ops sh5_pci_ops;
 

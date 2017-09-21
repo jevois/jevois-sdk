@@ -15,38 +15,38 @@ struct pci_sys_data;
 struct pci_bus;
 
 struct hw_pci {
-  #ifdef CONFIG_PCI_DOMAINS
-  int   domain;
-  #endif
-  struct list_head buses;
-  int   nr_controllers;
-  int   (*setup) (int nr, struct pci_sys_data *);
-  struct pci_bus * (*scan) (int nr, struct pci_sys_data *);
-  void    (*preinit) (void);
-  void    (*postinit) (void);
-  u8    (*swizzle) (struct pci_dev * dev, u8 * pin);
-  int   (*map_irq) (const struct pci_dev * dev, u8 slot, u8 pin);
+#ifdef CONFIG_PCI_DOMAINS
+	int		domain;
+#endif
+	struct list_head buses;
+	int		nr_controllers;
+	int		(*setup)(int nr, struct pci_sys_data *);
+	struct pci_bus *(*scan)(int nr, struct pci_sys_data *);
+	void		(*preinit)(void);
+	void		(*postinit)(void);
+	u8		(*swizzle)(struct pci_dev *dev, u8 *pin);
+	int		(*map_irq)(const struct pci_dev *dev, u8 slot, u8 pin);
 };
 
 /*
  * Per-controller structure
  */
 struct pci_sys_data {
-  #ifdef CONFIG_PCI_DOMAINS
-  int   domain;
-  #endif
-  struct list_head node;
-  int   busnr;    /* primary bus number     */
-  u64   mem_offset; /* bus->cpu memory mapping offset */
-  unsigned long io_offset;  /* bus->cpu IO mapping offset   */
-  struct pci_bus * bus;   /* PCI bus        */
-  struct list_head resources; /* root bus resources (apertures)       */
-  /* Bridge swizzling     */
-  u8    (*swizzle) (struct pci_dev *, u8 *);
-  /* IRQ mapping        */
-  int   (*map_irq) (const struct pci_dev *, u8, u8);
-  struct hw_pci * hw;
-  void  *  private_data;  /* platform controller private data */
+#ifdef CONFIG_PCI_DOMAINS
+	int		domain;
+#endif
+	struct list_head node;
+	int		busnr;		/* primary bus number			*/
+	u64		mem_offset;	/* bus->cpu memory mapping offset	*/
+	unsigned long	io_offset;	/* bus->cpu IO mapping offset		*/
+	struct pci_bus	*bus;		/* PCI bus				*/
+	struct list_head resources;	/* root bus resources (apertures)       */
+					/* Bridge swizzling			*/
+	u8		(*swizzle)(struct pci_dev *, u8 *);
+					/* IRQ mapping				*/
+	int		(*map_irq)(const struct pci_dev *, u8, u8);
+	struct hw_pci	*hw;
+	void		*private_data;	/* platform controller private data	*/
 };
 
 /*
@@ -57,28 +57,28 @@ struct pci_sys_data {
 /*
  * Call this with your hw_pci struct to initialise the PCI system.
  */
-void pci_common_init (struct hw_pci *);
+void pci_common_init(struct hw_pci *);
 
 /*
  * PCI controllers
  */
-extern int iop3xx_pci_setup (int nr, struct pci_sys_data *);
-extern struct pci_bus * iop3xx_pci_scan_bus (int nr, struct pci_sys_data *);
-extern void iop3xx_pci_preinit (void);
-extern void iop3xx_pci_preinit_cond (void);
+extern int iop3xx_pci_setup(int nr, struct pci_sys_data *);
+extern struct pci_bus *iop3xx_pci_scan_bus(int nr, struct pci_sys_data *);
+extern void iop3xx_pci_preinit(void);
+extern void iop3xx_pci_preinit_cond(void);
 
-extern int dc21285_setup (int nr, struct pci_sys_data *);
-extern struct pci_bus * dc21285_scan_bus (int nr, struct pci_sys_data *);
-extern void dc21285_preinit (void);
-extern void dc21285_postinit (void);
+extern int dc21285_setup(int nr, struct pci_sys_data *);
+extern struct pci_bus *dc21285_scan_bus(int nr, struct pci_sys_data *);
+extern void dc21285_preinit(void);
+extern void dc21285_postinit(void);
 
-extern int via82c505_setup (int nr, struct pci_sys_data *);
-extern struct pci_bus * via82c505_scan_bus (int nr, struct pci_sys_data *);
-extern void via82c505_init (void * sysdata);
+extern int via82c505_setup(int nr, struct pci_sys_data *);
+extern struct pci_bus *via82c505_scan_bus(int nr, struct pci_sys_data *);
+extern void via82c505_init(void *sysdata);
 
-extern int pci_v3_setup (int nr, struct pci_sys_data *);
-extern struct pci_bus * pci_v3_scan_bus (int nr, struct pci_sys_data *);
-extern void pci_v3_preinit (void);
-extern void pci_v3_postinit (void);
+extern int pci_v3_setup(int nr, struct pci_sys_data *);
+extern struct pci_bus *pci_v3_scan_bus(int nr, struct pci_sys_data *);
+extern void pci_v3_preinit(void);
+extern void pci_v3_postinit(void);
 
 #endif /* __ASM_MACH_PCI_H */

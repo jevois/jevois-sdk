@@ -19,12 +19,12 @@
 /*
  * Clocks are derived from MCLK, which is 25Mhz
  */
-#define KS8695_CLOCK_RATE 25000000
+#define KS8695_CLOCK_RATE	25000000
 
 /*
  * Physical RAM address.
  */
-#define KS8695_SDRAM_PA   0x00000000
+#define KS8695_SDRAM_PA		0x00000000
 
 
 /*
@@ -32,14 +32,14 @@
  * though only 64KiB is needed. This makes it easier for use with the
  * head debug code as the initial MMU setup only deals in L1 sections.
  */
-#define KS8695_IO_PA    0x03F00000
-#define KS8695_IO_VA    0xF0000000
-#define KS8695_IO_SIZE    SZ_1M
+#define KS8695_IO_PA		0x03F00000
+#define KS8695_IO_VA		0xF0000000
+#define KS8695_IO_SIZE		SZ_1M
 
-#define KS8695_PCIMEM_PA  0x60000000
-#define KS8695_PCIMEM_SIZE  SZ_512M
+#define KS8695_PCIMEM_PA	0x60000000
+#define KS8695_PCIMEM_SIZE	SZ_512M
 
-#define KS8695_PCIIO_PA   0x80000000
-#define KS8695_PCIIO_SIZE SZ_64K
+#define KS8695_PCIIO_PA		0x80000000
+#define KS8695_PCIIO_SIZE	SZ_64K
 
 #endif

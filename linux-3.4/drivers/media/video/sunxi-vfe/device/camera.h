@@ -62,7 +62,7 @@
 
 struct sensor_info {
   struct v4l2_subdev                    sd;
-  struct sensor_format_struct      *     fmt;  /* Current format */
+  struct sensor_format_struct           *fmt;  /* Current format */
   enum standby_mode                     stby_mode;
   unsigned int                          width;
   unsigned int                          height;
@@ -89,10 +89,10 @@ struct sensor_info {
   enum v4l2_colorfx                     clrfx;
   enum v4l2_flash_led_mode              flash_mode;
   enum v4l2_power_line_frequency        band_filter;
-  struct v4l2_fract                     tpf;
-  struct sensor_win_size        *        current_wins;
-  struct flash_dev_info         *        fl_dev_info;
-  
+  struct v4l2_fract                     tpf; 
+  struct sensor_win_size                *current_wins;
+  struct flash_dev_info                 *fl_dev_info;
+
   int sharpness;
   unsigned int exp_max_lines;
   unsigned int trow;

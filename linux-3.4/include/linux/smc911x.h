@@ -5,9 +5,9 @@
 #define SMC911X_USE_32BIT (1 << 1)
 
 struct smc911x_platdata {
-  unsigned long flags;
-  unsigned long irq_flags; /* IRQF_... */
-  int irq_polarity;
+	unsigned long flags;
+	unsigned long irq_flags; /* IRQF_... */
+	int irq_polarity;
 };
 
 #endif /* __SMC911X_H__ */

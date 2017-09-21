@@ -21,25 +21,25 @@
 #define  USBC_MAX_OPEN_NUM    8
 
 /* record USB common info */
-typedef struct __fifo_info {
-  __u32 port0_fifo_addr;
-  __u32 port0_fifo_size;
-  
-  __u32 port1_fifo_addr;
-  __u32 port1_fifo_size;
-  
-  __u32 port2_fifo_addr;
-  __u32 port2_fifo_size;
-} __fifo_info_t;
+typedef struct __fifo_info{
+	__u32 port0_fifo_addr;
+	__u32 port0_fifo_size;
+
+	__u32 port1_fifo_addr;
+	__u32 port1_fifo_size;
+
+	__u32 port2_fifo_addr;
+	__u32 port2_fifo_size;
+}__fifo_info_t;
 
 /* record current USB port's all hardware info */
-typedef struct __usbc_otg {
-  __u32 port_num;
-  __u32 base_addr;        /* usb base address     */
-  
-  __u32 used;             /* is used or not       */
-  __u32 no;               /* index in manager table */
-} __usbc_otg_t;
+typedef struct __usbc_otg{
+	__u32 port_num;
+	__u32 base_addr;        /* usb base address 		*/
+
+	__u32 used;             /* is used or not   		*/
+	__u32 no;               /* index in manager table	*/
+}__usbc_otg_t;
 
 #endif  
 

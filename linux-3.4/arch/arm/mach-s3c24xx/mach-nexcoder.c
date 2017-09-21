@@ -49,7 +49,7 @@
 #include "common.h"
 
 static struct map_desc nexcoder_iodesc[] __initdata = {
-  /* nothing here yet */
+	/* nothing here yet */
 };
 
 #define UCON S3C2410_UCON_DEFAULT
@@ -57,103 +57,103 @@ static struct map_desc nexcoder_iodesc[] __initdata = {
 #define UFCON S3C2410_UFCON_RXTRIG12 | S3C2410_UFCON_FIFOMODE
 
 static struct s3c2410_uartcfg nexcoder_uartcfgs[] __initdata = {
-  [0] = {
-    .hwport      = 0,
-    .flags       = 0,
-    .ucon      = UCON,
-    .ulcon       = ULCON,
-    .ufcon       = UFCON,
-  },
-  [1] = {
-    .hwport      = 1,
-    .flags       = 0,
-    .ucon      = UCON,
-    .ulcon       = ULCON,
-    .ufcon       = UFCON,
-  },
-  [2] = {
-    .hwport      = 2,
-    .flags       = 0,
-    .ucon      = UCON,
-    .ulcon       = ULCON,
-    .ufcon       = UFCON,
-  }
+	[0] = {
+		.hwport	     = 0,
+		.flags	     = 0,
+		.ucon	     = UCON,
+		.ulcon	     = ULCON,
+		.ufcon	     = UFCON,
+	},
+	[1] = {
+		.hwport	     = 1,
+		.flags	     = 0,
+		.ucon	     = UCON,
+		.ulcon	     = ULCON,
+		.ufcon	     = UFCON,
+	},
+	[2] = {
+		.hwport	     = 2,
+		.flags	     = 0,
+		.ucon	     = UCON,
+		.ulcon	     = ULCON,
+		.ufcon	     = UFCON,
+	}
 };
 
 /* NOR Flash on NexVision NexCoder 2440 board */
 
 static struct resource nexcoder_nor_resource[] = {
-  [0] = {
-    .start = S3C2410_CS0,
-    .end   = S3C2410_CS0 + (8 * 1024 * 1024) - 1,
-    .flags = IORESOURCE_MEM,
-  }
+	[0] = {
+		.start = S3C2410_CS0,
+		.end   = S3C2410_CS0 + (8*1024*1024) - 1,
+		.flags = IORESOURCE_MEM,
+	}
 };
 
 static struct map_info nexcoder_nor_map = {
-  .bankwidth = 2,
+	.bankwidth = 2,
 };
 
 static struct platform_device nexcoder_device_nor = {
-  .name   = "mtd-flash",
-  .id   = -1,
-  .num_resources  = ARRAY_SIZE (nexcoder_nor_resource),
-  .resource = nexcoder_nor_resource,
-  .dev =
-  {
-    .platform_data = &nexcoder_nor_map,
-  }
+	.name		= "mtd-flash",
+	.id		= -1,
+	.num_resources	= ARRAY_SIZE(nexcoder_nor_resource),
+	.resource	= nexcoder_nor_resource,
+	.dev =
+	{
+		.platform_data = &nexcoder_nor_map,
+	}
 };
 
 /* Standard Nexcoder devices */
 
-static struct platform_device * nexcoder_devices[] __initdata = {
-  &s3c_device_ohci,
-  &s3c_device_lcd,
-  &s3c_device_wdt,
-  &s3c_device_i2c0,
-  &s3c_device_iis,
-  &s3c_device_rtc,
-  &s3c_device_camif,
-  &s3c_device_spi0,
-  &s3c_device_spi1,
-  &nexcoder_device_nor,
+static struct platform_device *nexcoder_devices[] __initdata = {
+	&s3c_device_ohci,
+	&s3c_device_lcd,
+	&s3c_device_wdt,
+	&s3c_device_i2c0,
+	&s3c_device_iis,
+ 	&s3c_device_rtc,
+	&s3c_device_camif,
+	&s3c_device_spi0,
+	&s3c_device_spi1,
+	&nexcoder_device_nor,
 };
 
-static void __init nexcoder_sensorboard_init (void)
+static void __init nexcoder_sensorboard_init(void)
 {
-  s3c2410_gpio_setpin (S3C2410_GPE (14), 1);
-  s3c_gpio_cfgpin (S3C2410_GPE (14), S3C2410_GPIO_OUTPUT);
-  s3c2410_gpio_setpin (S3C2410_GPE (15), 1);
-  s3c_gpio_cfgpin (S3C2410_GPE (15), S3C2410_GPIO_OUTPUT);
-  
-  s3c2410_gpio_setpin (S3C2410_GPF (1), 1);
-  s3c_gpio_cfgpin (S3C2410_GPF (1), S3C2410_GPIO_OUTPUT);
-  s3c2410_gpio_setpin (S3C2410_GPF (2), 0);
-  s3c_gpio_cfgpin (S3C2410_GPF (2), S3C2410_GPIO_OUTPUT);
+	s3c2410_gpio_setpin(S3C2410_GPE(14), 1);
+	s3c_gpio_cfgpin(S3C2410_GPE(14), S3C2410_GPIO_OUTPUT);
+	s3c2410_gpio_setpin(S3C2410_GPE(15), 1);
+	s3c_gpio_cfgpin(S3C2410_GPE(15), S3C2410_GPIO_OUTPUT);
+
+	s3c2410_gpio_setpin(S3C2410_GPF(1), 1);
+	s3c_gpio_cfgpin(S3C2410_GPF(1), S3C2410_GPIO_OUTPUT);
+	s3c2410_gpio_setpin(S3C2410_GPF(2), 0);
+	s3c_gpio_cfgpin(S3C2410_GPF(2), S3C2410_GPIO_OUTPUT);
 }
 
-static void __init nexcoder_map_io (void)
+static void __init nexcoder_map_io(void)
 {
-  s3c24xx_init_io (nexcoder_iodesc, ARRAY_SIZE (nexcoder_iodesc) );
-  s3c24xx_init_clocks (0);
-  s3c24xx_init_uarts (nexcoder_uartcfgs, ARRAY_SIZE (nexcoder_uartcfgs) );
-  
-  nexcoder_sensorboard_init();
+	s3c24xx_init_io(nexcoder_iodesc, ARRAY_SIZE(nexcoder_iodesc));
+	s3c24xx_init_clocks(0);
+	s3c24xx_init_uarts(nexcoder_uartcfgs, ARRAY_SIZE(nexcoder_uartcfgs));
+
+	nexcoder_sensorboard_init();
 }
 
-static void __init nexcoder_init (void)
+static void __init nexcoder_init(void)
 {
-  s3c_i2c0_set_platdata (NULL);
-  platform_add_devices (nexcoder_devices, ARRAY_SIZE (nexcoder_devices) );
+	s3c_i2c0_set_platdata(NULL);
+	platform_add_devices(nexcoder_devices, ARRAY_SIZE(nexcoder_devices));
 };
 
-MACHINE_START (NEXCODER_2440, "NexVision - Nexcoder 2440")
-/* Maintainer: Guillaume GOURAT <guillaume.gourat@nexvision.tv> */
-.atag_offset  = 0x100,
- .map_io   = nexcoder_map_io,
-  .init_machine = nexcoder_init,
-   .init_irq = s3c24xx_init_irq,
-    .timer    = &s3c24xx_timer,
-     .restart  = s3c244x_restart,
-      MACHINE_END
+MACHINE_START(NEXCODER_2440, "NexVision - Nexcoder 2440")
+	/* Maintainer: Guillaume GOURAT <guillaume.gourat@nexvision.tv> */
+	.atag_offset	= 0x100,
+	.map_io		= nexcoder_map_io,
+	.init_machine	= nexcoder_init,
+	.init_irq	= s3c24xx_init_irq,
+	.timer		= &s3c24xx_timer,
+	.restart	= s3c244x_restart,
+MACHINE_END

@@ -49,14 +49,14 @@
 #define __HAVE_INLINE_ASSEMBLER__
 #endif
 
-u32 get_flags_asm (void);
+u32 get_flags_asm(void);
 #pragma aux get_flags_asm =         \
     "pushf"                         \
     "pop    eax"                    \
     value [eax]                     \
     modify exact [eax];
 
-u16 aaa_word_asm (u32 * flags, u16 d);
+u16 aaa_word_asm(u32 * flags, u16 d);
 #pragma aux aaa_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -67,7 +67,7 @@ u16 aaa_word_asm (u32 * flags, u16 d);
     value [ax]                      \
     modify exact [ax];
 
-u16 aas_word_asm (u32 * flags, u16 d);
+u16 aas_word_asm(u32 * flags, u16 d);
 #pragma aux aas_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -78,7 +78,7 @@ u16 aas_word_asm (u32 * flags, u16 d);
     value [ax]                      \
     modify exact [ax];
 
-u16 aad_word_asm (u32 * flags, u16 d);
+u16 aad_word_asm(u32 * flags, u16 d);
 #pragma aux aad_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -89,7 +89,7 @@ u16 aad_word_asm (u32 * flags, u16 d);
     value [ax]                      \
     modify exact [ax];
 
-u16 aam_word_asm (u32 * flags, u8 d);
+u16 aam_word_asm(u32 * flags, u8 d);
 #pragma aux aam_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -100,7 +100,7 @@ u16 aam_word_asm (u32 * flags, u8 d);
     value [ax]                      \
     modify exact [ax];
 
-u8 adc_byte_asm (u32 * flags, u8 d, u8 s);
+u8 adc_byte_asm(u32 * flags, u8 d, u8 s);
 #pragma aux adc_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -111,7 +111,7 @@ u8 adc_byte_asm (u32 * flags, u8 d, u8 s);
     value [al]                      \
     modify exact [al bl];
 
-u16 adc_word_asm (u32 * flags, u16 d, u16 s);
+u16 adc_word_asm(u32 * flags, u16 d, u16 s);
 #pragma aux adc_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -122,7 +122,7 @@ u16 adc_word_asm (u32 * flags, u16 d, u16 s);
     value [ax]                      \
     modify exact [ax bx];
 
-u32 adc_long_asm (u32 * flags, u32 d, u32 s);
+u32 adc_long_asm(u32 * flags, u32 d, u32 s);
 #pragma aux adc_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -133,7 +133,7 @@ u32 adc_long_asm (u32 * flags, u32 d, u32 s);
     value [eax]                     \
     modify exact [eax ebx];
 
-u8 add_byte_asm (u32 * flags, u8 d, u8 s);
+u8 add_byte_asm(u32 * flags, u8 d, u8 s);
 #pragma aux add_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -144,7 +144,7 @@ u8 add_byte_asm (u32 * flags, u8 d, u8 s);
     value [al]                      \
     modify exact [al bl];
 
-u16 add_word_asm (u32 * flags, u16 d, u16 s);
+u16 add_word_asm(u32 * flags, u16 d, u16 s);
 #pragma aux add_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -155,7 +155,7 @@ u16 add_word_asm (u32 * flags, u16 d, u16 s);
     value [ax]                      \
     modify exact [ax bx];
 
-u32 add_long_asm (u32 * flags, u32 d, u32 s);
+u32 add_long_asm(u32 * flags, u32 d, u32 s);
 #pragma aux add_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -166,7 +166,7 @@ u32 add_long_asm (u32 * flags, u32 d, u32 s);
     value [eax]                     \
     modify exact [eax ebx];
 
-u8 and_byte_asm (u32 * flags, u8 d, u8 s);
+u8 and_byte_asm(u32 * flags, u8 d, u8 s);
 #pragma aux and_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -177,7 +177,7 @@ u8 and_byte_asm (u32 * flags, u8 d, u8 s);
     value [al]                      \
     modify exact [al bl];
 
-u16 and_word_asm (u32 * flags, u16 d, u16 s);
+u16 and_word_asm(u32 * flags, u16 d, u16 s);
 #pragma aux and_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -188,7 +188,7 @@ u16 and_word_asm (u32 * flags, u16 d, u16 s);
     value [ax]                      \
     modify exact [ax bx];
 
-u32 and_long_asm (u32 * flags, u32 d, u32 s);
+u32 and_long_asm(u32 * flags, u32 d, u32 s);
 #pragma aux and_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -199,7 +199,7 @@ u32 and_long_asm (u32 * flags, u32 d, u32 s);
     value [eax]                     \
     modify exact [eax ebx];
 
-u8 cmp_byte_asm (u32 * flags, u8 d, u8 s);
+u8 cmp_byte_asm(u32 * flags, u8 d, u8 s);
 #pragma aux cmp_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -210,7 +210,7 @@ u8 cmp_byte_asm (u32 * flags, u8 d, u8 s);
     value [al]                      \
     modify exact [al bl];
 
-u16 cmp_word_asm (u32 * flags, u16 d, u16 s);
+u16 cmp_word_asm(u32 * flags, u16 d, u16 s);
 #pragma aux cmp_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -221,7 +221,7 @@ u16 cmp_word_asm (u32 * flags, u16 d, u16 s);
     value [ax]                      \
     modify exact [ax bx];
 
-u32 cmp_long_asm (u32 * flags, u32 d, u32 s);
+u32 cmp_long_asm(u32 * flags, u32 d, u32 s);
 #pragma aux cmp_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -232,7 +232,7 @@ u32 cmp_long_asm (u32 * flags, u32 d, u32 s);
     value [eax]                     \
     modify exact [eax ebx];
 
-u8 daa_byte_asm (u32 * flags, u8 d);
+u8 daa_byte_asm(u32 * flags, u8 d);
 #pragma aux daa_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -243,7 +243,7 @@ u8 daa_byte_asm (u32 * flags, u8 d);
     value [al]                      \
     modify exact [al];
 
-u8 das_byte_asm (u32 * flags, u8 d);
+u8 das_byte_asm(u32 * flags, u8 d);
 #pragma aux das_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -254,7 +254,7 @@ u8 das_byte_asm (u32 * flags, u8 d);
     value [al]                      \
     modify exact [al];
 
-u8 dec_byte_asm (u32 * flags, u8 d);
+u8 dec_byte_asm(u32 * flags, u8 d);
 #pragma aux dec_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -265,7 +265,7 @@ u8 dec_byte_asm (u32 * flags, u8 d);
     value [al]                      \
     modify exact [al];
 
-u16 dec_word_asm (u32 * flags, u16 d);
+u16 dec_word_asm(u32 * flags, u16 d);
 #pragma aux dec_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -276,7 +276,7 @@ u16 dec_word_asm (u32 * flags, u16 d);
     value [ax]                      \
     modify exact [ax];
 
-u32 dec_long_asm (u32 * flags, u32 d);
+u32 dec_long_asm(u32 * flags, u32 d);
 #pragma aux dec_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -287,7 +287,7 @@ u32 dec_long_asm (u32 * flags, u32 d);
     value [eax]                     \
     modify exact [eax];
 
-u8 inc_byte_asm (u32 * flags, u8 d);
+u8 inc_byte_asm(u32 * flags, u8 d);
 #pragma aux inc_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -298,7 +298,7 @@ u8 inc_byte_asm (u32 * flags, u8 d);
     value [al]                      \
     modify exact [al];
 
-u16 inc_word_asm (u32 * flags, u16 d);
+u16 inc_word_asm(u32 * flags, u16 d);
 #pragma aux inc_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -309,7 +309,7 @@ u16 inc_word_asm (u32 * flags, u16 d);
     value [ax]                      \
     modify exact [ax];
 
-u32 inc_long_asm (u32 * flags, u32 d);
+u32 inc_long_asm(u32 * flags, u32 d);
 #pragma aux inc_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -320,7 +320,7 @@ u32 inc_long_asm (u32 * flags, u32 d);
     value [eax]                     \
     modify exact [eax];
 
-u8 or_byte_asm (u32 * flags, u8 d, u8 s);
+u8 or_byte_asm(u32 * flags, u8 d, u8 s);
 #pragma aux or_byte_asm =           \
     "push   [edi]"                  \
     "popf"                          \
@@ -331,7 +331,7 @@ u8 or_byte_asm (u32 * flags, u8 d, u8 s);
     value [al]                      \
     modify exact [al bl];
 
-u16 or_word_asm (u32 * flags, u16 d, u16 s);
+u16 or_word_asm(u32 * flags, u16 d, u16 s);
 #pragma aux or_word_asm =           \
     "push   [edi]"                  \
     "popf"                          \
@@ -342,7 +342,7 @@ u16 or_word_asm (u32 * flags, u16 d, u16 s);
     value [ax]                      \
     modify exact [ax bx];
 
-u32 or_long_asm (u32 * flags, u32 d, u32 s);
+u32 or_long_asm(u32 * flags, u32 d, u32 s);
 #pragma aux or_long_asm =           \
     "push   [edi]"                  \
     "popf"                          \
@@ -353,7 +353,7 @@ u32 or_long_asm (u32 * flags, u32 d, u32 s);
     value [eax]                     \
     modify exact [eax ebx];
 
-u8 neg_byte_asm (u32 * flags, u8 d);
+u8 neg_byte_asm(u32 * flags, u8 d);
 #pragma aux neg_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -364,7 +364,7 @@ u8 neg_byte_asm (u32 * flags, u8 d);
     value [al]                      \
     modify exact [al];
 
-u16 neg_word_asm (u32 * flags, u16 d);
+u16 neg_word_asm(u32 * flags, u16 d);
 #pragma aux neg_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -375,7 +375,7 @@ u16 neg_word_asm (u32 * flags, u16 d);
     value [ax]                      \
     modify exact [ax];
 
-u32 neg_long_asm (u32 * flags, u32 d);
+u32 neg_long_asm(u32 * flags, u32 d);
 #pragma aux neg_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -386,7 +386,7 @@ u32 neg_long_asm (u32 * flags, u32 d);
     value [eax]                     \
     modify exact [eax];
 
-u8 not_byte_asm (u32 * flags, u8 d);
+u8 not_byte_asm(u32 * flags, u8 d);
 #pragma aux not_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -397,7 +397,7 @@ u8 not_byte_asm (u32 * flags, u8 d);
     value [al]                      \
     modify exact [al];
 
-u16 not_word_asm (u32 * flags, u16 d);
+u16 not_word_asm(u32 * flags, u16 d);
 #pragma aux not_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -408,7 +408,7 @@ u16 not_word_asm (u32 * flags, u16 d);
     value [ax]                      \
     modify exact [ax];
 
-u32 not_long_asm (u32 * flags, u32 d);
+u32 not_long_asm(u32 * flags, u32 d);
 #pragma aux not_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -419,7 +419,7 @@ u32 not_long_asm (u32 * flags, u32 d);
     value [eax]                     \
     modify exact [eax];
 
-u8 rcl_byte_asm (u32 * flags, u8 d, u8 s);
+u8 rcl_byte_asm(u32 * flags, u8 d, u8 s);
 #pragma aux rcl_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -430,7 +430,7 @@ u8 rcl_byte_asm (u32 * flags, u8 d, u8 s);
     value [al]                      \
     modify exact [al cl];
 
-u16 rcl_word_asm (u32 * flags, u16 d, u8 s);
+u16 rcl_word_asm(u32 * flags, u16 d, u8 s);
 #pragma aux rcl_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -441,7 +441,7 @@ u16 rcl_word_asm (u32 * flags, u16 d, u8 s);
     value [ax]                      \
     modify exact [ax cl];
 
-u32 rcl_long_asm (u32 * flags, u32 d, u8 s);
+u32 rcl_long_asm(u32 * flags, u32 d, u8 s);
 #pragma aux rcl_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -452,7 +452,7 @@ u32 rcl_long_asm (u32 * flags, u32 d, u8 s);
     value [eax]                     \
     modify exact [eax cl];
 
-u8 rcr_byte_asm (u32 * flags, u8 d, u8 s);
+u8 rcr_byte_asm(u32 * flags, u8 d, u8 s);
 #pragma aux rcr_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -463,7 +463,7 @@ u8 rcr_byte_asm (u32 * flags, u8 d, u8 s);
     value [al]                      \
     modify exact [al cl];
 
-u16 rcr_word_asm (u32 * flags, u16 d, u8 s);
+u16 rcr_word_asm(u32 * flags, u16 d, u8 s);
 #pragma aux rcr_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -474,7 +474,7 @@ u16 rcr_word_asm (u32 * flags, u16 d, u8 s);
     value [ax]                      \
     modify exact [ax cl];
 
-u32 rcr_long_asm (u32 * flags, u32 d, u8 s);
+u32 rcr_long_asm(u32 * flags, u32 d, u8 s);
 #pragma aux rcr_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -485,7 +485,7 @@ u32 rcr_long_asm (u32 * flags, u32 d, u8 s);
     value [eax]                     \
     modify exact [eax cl];
 
-u8 rol_byte_asm (u32 * flags, u8 d, u8 s);
+u8 rol_byte_asm(u32 * flags, u8 d, u8 s);
 #pragma aux rol_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -496,7 +496,7 @@ u8 rol_byte_asm (u32 * flags, u8 d, u8 s);
     value [al]                      \
     modify exact [al cl];
 
-u16 rol_word_asm (u32 * flags, u16 d, u8 s);
+u16 rol_word_asm(u32 * flags, u16 d, u8 s);
 #pragma aux rol_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -507,7 +507,7 @@ u16 rol_word_asm (u32 * flags, u16 d, u8 s);
     value [ax]                      \
     modify exact [ax cl];
 
-u32 rol_long_asm (u32 * flags, u32 d, u8 s);
+u32 rol_long_asm(u32 * flags, u32 d, u8 s);
 #pragma aux rol_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -518,7 +518,7 @@ u32 rol_long_asm (u32 * flags, u32 d, u8 s);
     value [eax]                     \
     modify exact [eax cl];
 
-u8 ror_byte_asm (u32 * flags, u8 d, u8 s);
+u8 ror_byte_asm(u32 * flags, u8 d, u8 s);
 #pragma aux ror_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -529,7 +529,7 @@ u8 ror_byte_asm (u32 * flags, u8 d, u8 s);
     value [al]                      \
     modify exact [al cl];
 
-u16 ror_word_asm (u32 * flags, u16 d, u8 s);
+u16 ror_word_asm(u32 * flags, u16 d, u8 s);
 #pragma aux ror_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -540,7 +540,7 @@ u16 ror_word_asm (u32 * flags, u16 d, u8 s);
     value [ax]                      \
     modify exact [ax cl];
 
-u32 ror_long_asm (u32 * flags, u32 d, u8 s);
+u32 ror_long_asm(u32 * flags, u32 d, u8 s);
 #pragma aux ror_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -551,7 +551,7 @@ u32 ror_long_asm (u32 * flags, u32 d, u8 s);
     value [eax]                     \
     modify exact [eax cl];
 
-u8 shl_byte_asm (u32 * flags, u8 d, u8 s);
+u8 shl_byte_asm(u32 * flags, u8 d, u8 s);
 #pragma aux shl_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -562,7 +562,7 @@ u8 shl_byte_asm (u32 * flags, u8 d, u8 s);
     value [al]                      \
     modify exact [al cl];
 
-u16 shl_word_asm (u32 * flags, u16 d, u8 s);
+u16 shl_word_asm(u32 * flags, u16 d, u8 s);
 #pragma aux shl_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -573,7 +573,7 @@ u16 shl_word_asm (u32 * flags, u16 d, u8 s);
     value [ax]                      \
     modify exact [ax cl];
 
-u32 shl_long_asm (u32 * flags, u32 d, u8 s);
+u32 shl_long_asm(u32 * flags, u32 d, u8 s);
 #pragma aux shl_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -584,7 +584,7 @@ u32 shl_long_asm (u32 * flags, u32 d, u8 s);
     value [eax]                     \
     modify exact [eax cl];
 
-u8 shr_byte_asm (u32 * flags, u8 d, u8 s);
+u8 shr_byte_asm(u32 * flags, u8 d, u8 s);
 #pragma aux shr_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -595,7 +595,7 @@ u8 shr_byte_asm (u32 * flags, u8 d, u8 s);
     value [al]                      \
     modify exact [al cl];
 
-u16 shr_word_asm (u32 * flags, u16 d, u8 s);
+u16 shr_word_asm(u32 * flags, u16 d, u8 s);
 #pragma aux shr_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -606,7 +606,7 @@ u16 shr_word_asm (u32 * flags, u16 d, u8 s);
     value [ax]                      \
     modify exact [ax cl];
 
-u32 shr_long_asm (u32 * flags, u32 d, u8 s);
+u32 shr_long_asm(u32 * flags, u32 d, u8 s);
 #pragma aux shr_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -617,7 +617,7 @@ u32 shr_long_asm (u32 * flags, u32 d, u8 s);
     value [eax]                     \
     modify exact [eax cl];
 
-u8 sar_byte_asm (u32 * flags, u8 d, u8 s);
+u8 sar_byte_asm(u32 * flags, u8 d, u8 s);
 #pragma aux sar_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -628,7 +628,7 @@ u8 sar_byte_asm (u32 * flags, u8 d, u8 s);
     value [al]                      \
     modify exact [al cl];
 
-u16 sar_word_asm (u32 * flags, u16 d, u8 s);
+u16 sar_word_asm(u32 * flags, u16 d, u8 s);
 #pragma aux sar_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -639,7 +639,7 @@ u16 sar_word_asm (u32 * flags, u16 d, u8 s);
     value [ax]                      \
     modify exact [ax cl];
 
-u32 sar_long_asm (u32 * flags, u32 d, u8 s);
+u32 sar_long_asm(u32 * flags, u32 d, u8 s);
 #pragma aux sar_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -650,7 +650,7 @@ u32 sar_long_asm (u32 * flags, u32 d, u8 s);
     value [eax]                     \
     modify exact [eax cl];
 
-u16 shld_word_asm (u32 * flags, u16 d, u16 fill, u8 s);
+u16 shld_word_asm(u32 * flags, u16 d, u16 fill, u8 s);
 #pragma aux shld_word_asm =         \
     "push   [edi]"                  \
     "popf"                          \
@@ -661,7 +661,7 @@ u16 shld_word_asm (u32 * flags, u16 d, u16 fill, u8 s);
     value [ax]                      \
     modify exact [ax dx cl];
 
-u32 shld_long_asm (u32 * flags, u32 d, u32 fill, u8 s);
+u32 shld_long_asm(u32 * flags, u32 d, u32 fill, u8 s);
 #pragma aux shld_long_asm =         \
     "push   [edi]"                  \
     "popf"                          \
@@ -672,7 +672,7 @@ u32 shld_long_asm (u32 * flags, u32 d, u32 fill, u8 s);
     value [eax]                     \
     modify exact [eax edx cl];
 
-u16 shrd_word_asm (u32 * flags, u16 d, u16 fill, u8 s);
+u16 shrd_word_asm(u32 * flags, u16 d, u16 fill, u8 s);
 #pragma aux shrd_word_asm =         \
     "push   [edi]"                  \
     "popf"                          \
@@ -683,7 +683,7 @@ u16 shrd_word_asm (u32 * flags, u16 d, u16 fill, u8 s);
     value [ax]                      \
     modify exact [ax dx cl];
 
-u32 shrd_long_asm (u32 * flags, u32 d, u32 fill, u8 s);
+u32 shrd_long_asm(u32 * flags, u32 d, u32 fill, u8 s);
 #pragma aux shrd_long_asm =         \
     "push   [edi]"                  \
     "popf"                          \
@@ -694,7 +694,7 @@ u32 shrd_long_asm (u32 * flags, u32 d, u32 fill, u8 s);
     value [eax]                     \
     modify exact [eax edx cl];
 
-u8 sbb_byte_asm (u32 * flags, u8 d, u8 s);
+u8 sbb_byte_asm(u32 * flags, u8 d, u8 s);
 #pragma aux sbb_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -705,7 +705,7 @@ u8 sbb_byte_asm (u32 * flags, u8 d, u8 s);
     value [al]                      \
     modify exact [al bl];
 
-u16 sbb_word_asm (u32 * flags, u16 d, u16 s);
+u16 sbb_word_asm(u32 * flags, u16 d, u16 s);
 #pragma aux sbb_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -716,7 +716,7 @@ u16 sbb_word_asm (u32 * flags, u16 d, u16 s);
     value [ax]                      \
     modify exact [ax bx];
 
-u32 sbb_long_asm (u32 * flags, u32 d, u32 s);
+u32 sbb_long_asm(u32 * flags, u32 d, u32 s);
 #pragma aux sbb_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -727,7 +727,7 @@ u32 sbb_long_asm (u32 * flags, u32 d, u32 s);
     value [eax]                     \
     modify exact [eax ebx];
 
-u8 sub_byte_asm (u32 * flags, u8 d, u8 s);
+u8 sub_byte_asm(u32 * flags, u8 d, u8 s);
 #pragma aux sub_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -738,7 +738,7 @@ u8 sub_byte_asm (u32 * flags, u8 d, u8 s);
     value [al]                      \
     modify exact [al bl];
 
-u16 sub_word_asm (u32 * flags, u16 d, u16 s);
+u16 sub_word_asm(u32 * flags, u16 d, u16 s);
 #pragma aux sub_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -749,7 +749,7 @@ u16 sub_word_asm (u32 * flags, u16 d, u16 s);
     value [ax]                      \
     modify exact [ax bx];
 
-u32 sub_long_asm (u32 * flags, u32 d, u32 s);
+u32 sub_long_asm(u32 * flags, u32 d, u32 s);
 #pragma aux sub_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -760,7 +760,7 @@ u32 sub_long_asm (u32 * flags, u32 d, u32 s);
     value [eax]                     \
     modify exact [eax ebx];
 
-void test_byte_asm (u32 * flags, u8 d, u8 s);
+void test_byte_asm(u32 * flags, u8 d, u8 s);
 #pragma aux test_byte_asm =         \
     "push   [edi]"                  \
     "popf"                          \
@@ -770,7 +770,7 @@ void test_byte_asm (u32 * flags, u8 d, u8 s);
     parm [edi] [al] [bl]            \
     modify exact [al bl];
 
-void test_word_asm (u32 * flags, u16 d, u16 s);
+void test_word_asm(u32 * flags, u16 d, u16 s);
 #pragma aux test_word_asm =         \
     "push   [edi]"                  \
     "popf"                          \
@@ -780,7 +780,7 @@ void test_word_asm (u32 * flags, u16 d, u16 s);
     parm [edi] [ax] [bx]            \
     modify exact [ax bx];
 
-void test_long_asm (u32 * flags, u32 d, u32 s);
+void test_long_asm(u32 * flags, u32 d, u32 s);
 #pragma aux test_long_asm =         \
     "push   [edi]"                  \
     "popf"                          \
@@ -790,7 +790,7 @@ void test_long_asm (u32 * flags, u32 d, u32 s);
     parm [edi] [eax] [ebx]          \
     modify exact [eax ebx];
 
-u8 xor_byte_asm (u32 * flags, u8 d, u8 s);
+u8 xor_byte_asm(u32 * flags, u8 d, u8 s);
 #pragma aux xor_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -801,7 +801,7 @@ u8 xor_byte_asm (u32 * flags, u8 d, u8 s);
     value [al]                      \
     modify exact [al bl];
 
-u16 xor_word_asm (u32 * flags, u16 d, u16 s);
+u16 xor_word_asm(u32 * flags, u16 d, u16 s);
 #pragma aux xor_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -812,7 +812,7 @@ u16 xor_word_asm (u32 * flags, u16 d, u16 s);
     value [ax]                      \
     modify exact [ax bx];
 
-u32 xor_long_asm (u32 * flags, u32 d, u32 s);
+u32 xor_long_asm(u32 * flags, u32 d, u32 s);
 #pragma aux xor_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -823,7 +823,7 @@ u32 xor_long_asm (u32 * flags, u32 d, u32 s);
     value [eax]                     \
     modify exact [eax ebx];
 
-void imul_byte_asm (u32 * flags, u16 * ax, u8 d, u8 s);
+void imul_byte_asm(u32 * flags, u16 * ax, u8 d, u8 s);
 #pragma aux imul_byte_asm =         \
     "push   [edi]"                  \
     "popf"                          \
@@ -834,7 +834,7 @@ void imul_byte_asm (u32 * flags, u16 * ax, u8 d, u8 s);
     parm [edi] [esi] [al] [bl]      \
     modify exact [esi ax bl];
 
-void imul_word_asm (u32 * flags, u16 * ax, u16 * dx, u16 d, u16 s);
+void imul_word_asm(u32 * flags, u16 * ax, u16 * dx, u16 d, u16 s);
 #pragma aux imul_word_asm =         \
     "push   [edi]"                  \
     "popf"                          \
@@ -846,7 +846,7 @@ void imul_word_asm (u32 * flags, u16 * ax, u16 * dx, u16 d, u16 s);
     parm [edi] [esi] [ecx] [ax] [bx]\
     modify exact [esi edi ax bx dx];
 
-void imul_long_asm (u32 * flags, u32 * eax, u32 * edx, u32 d, u32 s);
+void imul_long_asm(u32 * flags, u32 * eax, u32 * edx, u32 d, u32 s);
 #pragma aux imul_long_asm =         \
     "push   [edi]"                  \
     "popf"                          \
@@ -858,7 +858,7 @@ void imul_long_asm (u32 * flags, u32 * eax, u32 * edx, u32 d, u32 s);
     parm [edi] [esi] [ecx] [eax] [ebx] \
     modify exact [esi edi eax ebx edx];
 
-void mul_byte_asm (u32 * flags, u16 * ax, u8 d, u8 s);
+void mul_byte_asm(u32 * flags, u16 * ax, u8 d, u8 s);
 #pragma aux mul_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -869,7 +869,7 @@ void mul_byte_asm (u32 * flags, u16 * ax, u8 d, u8 s);
     parm [edi] [esi] [al] [bl]      \
     modify exact [esi ax bl];
 
-void mul_word_asm (u32 * flags, u16 * ax, u16 * dx, u16 d, u16 s);
+void mul_word_asm(u32 * flags, u16 * ax, u16 * dx, u16 d, u16 s);
 #pragma aux mul_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -881,7 +881,7 @@ void mul_word_asm (u32 * flags, u16 * ax, u16 * dx, u16 d, u16 s);
     parm [edi] [esi] [ecx] [ax] [bx]\
     modify exact [esi edi ax bx dx];
 
-void mul_long_asm (u32 * flags, u32 * eax, u32 * edx, u32 d, u32 s);
+void mul_long_asm(u32 * flags, u32 * eax, u32 * edx, u32 d, u32 s);
 #pragma aux mul_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -893,7 +893,7 @@ void mul_long_asm (u32 * flags, u32 * eax, u32 * edx, u32 d, u32 s);
     parm [edi] [esi] [ecx] [eax] [ebx] \
     modify exact [esi edi eax ebx edx];
 
-void idiv_byte_asm (u32 * flags, u8 * al, u8 * ah, u16 d, u8 s);
+void idiv_byte_asm(u32 * flags, u8 * al, u8 * ah, u16 d, u8 s);
 #pragma aux idiv_byte_asm =         \
     "push   [edi]"                  \
     "popf"                          \
@@ -905,7 +905,7 @@ void idiv_byte_asm (u32 * flags, u8 * al, u8 * ah, u16 d, u8 s);
     parm [edi] [esi] [ecx] [ax] [bl]\
     modify exact [esi edi ax bl];
 
-void idiv_word_asm (u32 * flags, u16 * ax, u16 * dx, u16 dlo, u16 dhi, u16 s);
+void idiv_word_asm(u32 * flags, u16 * ax, u16 * dx, u16 dlo, u16 dhi, u16 s);
 #pragma aux idiv_word_asm =         \
     "push   [edi]"                  \
     "popf"                          \
@@ -917,7 +917,7 @@ void idiv_word_asm (u32 * flags, u16 * ax, u16 * dx, u16 dlo, u16 dhi, u16 s);
     parm [edi] [esi] [ecx] [ax] [dx] [bx]\
     modify exact [esi edi ax dx bx];
 
-void idiv_long_asm (u32 * flags, u32 * eax, u32 * edx, u32 dlo, u32 dhi, u32 s);
+void idiv_long_asm(u32 * flags, u32 * eax, u32 * edx, u32 dlo, u32 dhi, u32 s);
 #pragma aux idiv_long_asm =         \
     "push   [edi]"                  \
     "popf"                          \
@@ -929,7 +929,7 @@ void idiv_long_asm (u32 * flags, u32 * eax, u32 * edx, u32 dlo, u32 dhi, u32 s);
     parm [edi] [esi] [ecx] [eax] [edx] [ebx]\
     modify exact [esi edi eax edx ebx];
 
-void div_byte_asm (u32 * flags, u8 * al, u8 * ah, u16 d, u8 s);
+void div_byte_asm(u32 * flags, u8 * al, u8 * ah, u16 d, u8 s);
 #pragma aux div_byte_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -941,7 +941,7 @@ void div_byte_asm (u32 * flags, u8 * al, u8 * ah, u16 d, u8 s);
     parm [edi] [esi] [ecx] [ax] [bl]\
     modify exact [esi edi ax bl];
 
-void div_word_asm (u32 * flags, u16 * ax, u16 * dx, u16 dlo, u16 dhi, u16 s);
+void div_word_asm(u32 * flags, u16 * ax, u16 * dx, u16 dlo, u16 dhi, u16 s);
 #pragma aux div_word_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -953,7 +953,7 @@ void div_word_asm (u32 * flags, u16 * ax, u16 * dx, u16 dlo, u16 dhi, u16 s);
     parm [edi] [esi] [ecx] [ax] [dx] [bx]\
     modify exact [esi edi ax dx bx];
 
-void div_long_asm (u32 * flags, u32 * eax, u32 * edx, u32 dlo, u32 dhi, u32 s);
+void div_long_asm(u32 * flags, u32 * eax, u32 * edx, u32 dlo, u32 dhi, u32 s);
 #pragma aux div_long_asm =          \
     "push   [edi]"                  \
     "popf"                          \
@@ -967,4 +967,4 @@ void div_long_asm (u32 * flags, u32 * eax, u32 * edx, u32 dlo, u32 dhi, u32 s);
 
 #endif
 
-#endif        /* __X86EMU_PRIM_ASM_H */
+#endif				/* __X86EMU_PRIM_ASM_H */

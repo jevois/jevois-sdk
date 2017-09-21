@@ -50,27 +50,27 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include PVR_ANDROID_ION_HEADER
 
 
-PVRSRV_ERROR IonInit (void * phPrivateData);
+PVRSRV_ERROR IonInit(void *phPrivateData);
 
-struct ion_device * IonDevAcquire (IMG_VOID);
+struct ion_device *IonDevAcquire(IMG_VOID);
 
-IMG_VOID IonDevRelease (struct ion_device * psIonDev);
+IMG_VOID IonDevRelease(struct ion_device *psIonDev);
 
-IMG_UINT32 IonPhysHeapID (IMG_VOID);
+IMG_UINT32 IonPhysHeapID(IMG_VOID);
 
 #if defined(LMA)
-IMG_DEV_PHYADDR IonCPUPhysToDevPhys (IMG_CPU_PHYADDR sCPUPhysAddr,
-                                     IMG_UINT32 ui32Offset);
+IMG_DEV_PHYADDR IonCPUPhysToDevPhys(IMG_CPU_PHYADDR sCPUPhysAddr,
+									IMG_UINT32 ui32Offset);
 #else
 /* This is a no-op for UMA systems. */
 static inline
-IMG_DEV_PHYADDR IonCPUPhysToDevPhys (IMG_CPU_PHYADDR sCPUPhysAddr,
-                                     IMG_UINT32 ui32Offset)
+IMG_DEV_PHYADDR IonCPUPhysToDevPhys(IMG_CPU_PHYADDR sCPUPhysAddr,
+									IMG_UINT32 ui32Offset)
 {
-  return (IMG_DEV_PHYADDR) { .uiAddr = sCPUPhysAddr.uiAddr + ui32Offset };
+	return (IMG_DEV_PHYADDR){ .uiAddr = sCPUPhysAddr.uiAddr + ui32Offset };
 }
 #endif
 
-IMG_VOID IonDeinit (IMG_VOID);
+IMG_VOID IonDeinit(IMG_VOID);
 
 #endif /* _ION_SYS_H_ */

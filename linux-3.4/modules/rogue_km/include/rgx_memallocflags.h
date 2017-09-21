@@ -43,6 +43,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef _RGX_MEMALLOCFLAGS_H_
 #define _RGX_MEMALLOCFLAGS_H_
 
-#define PMMETA_PROTECT    (1 << 0)  /* Memory that only the PM and Meta can access */
+#define PMMETA_PROTECT		(1 << 0)	/* Memory that only the PM and Meta can access */
 
 #endif

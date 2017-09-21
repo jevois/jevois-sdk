@@ -3,8 +3,8 @@
 /* (C)ChaN, 2012                                                          */
 /*------------------------------------------------------------------------*/
 
-#include <stdlib.h>   /* ANSI memory controls */
-#include <malloc.h>   /* ANSI memory controls */
+#include <stdlib.h>		/* ANSI memory controls */
+#include <malloc.h>		/* ANSI memory controls */
 
 #include "../ff.h"
 
@@ -18,21 +18,21 @@
 /  returned, the f_mount function fails with FR_INT_ERR.
 */
 
-int ff_cre_syncobj (  /* 1:Function succeeded, 0:Could not create due to any error */
-  BYTE vol,     /* Corresponding logical drive being processed */
-  _SYNC_t * sobj  /* Pointer to return the created sync object */
+int ff_cre_syncobj (	/* 1:Function succeeded, 0:Could not create due to any error */
+	BYTE vol,			/* Corresponding logical drive being processed */
+	_SYNC_t *sobj		/* Pointer to return the created sync object */
 )
 {
-  int ret;
+	int ret;
 
 
-  *sobj = CreateMutex (NULL, FALSE, NULL);  /* Win32 */
-  ret = (*sobj != INVALID_HANDLE_VALUE);
-  
+	*sobj = CreateMutex(NULL, FALSE, NULL);		/* Win32 */
+	ret = (*sobj != INVALID_HANDLE_VALUE);
 
 
 
-  return ret;
+
+	return ret;
 }
 
 
@@ -45,19 +45,19 @@ int ff_cre_syncobj (  /* 1:Function succeeded, 0:Could not create due to any err
 /  returned, the f_mount function fails with FR_INT_ERR.
 */
 
-int ff_del_syncobj (  /* 1:Function succeeded, 0:Could not delete due to any error */
-  _SYNC_t sobj    /* Sync object tied to the logical drive to be deleted */
+int ff_del_syncobj (	/* 1:Function succeeded, 0:Could not delete due to any error */
+	_SYNC_t sobj		/* Sync object tied to the logical drive to be deleted */
 )
 {
-  int ret;
-  
-  
-  ret = CloseHandle (sobj); /* Win32 */
-  
+	int ret;
+
+
+	ret = CloseHandle(sobj);	/* Win32 */
 
 
 
-  return ret;
+
+	return ret;
 }
 
 
@@ -69,18 +69,18 @@ int ff_del_syncobj (  /* 1:Function succeeded, 0:Could not delete due to any err
 /  When a FALSE is returned, the file function fails with FR_TIMEOUT.
 */
 
-int ff_req_grant (  /* TRUE:Got a grant to access the volume, FALSE:Could not get a grant */
-  _SYNC_t sobj  /* Sync object to wait */
+int ff_req_grant (	/* TRUE:Got a grant to access the volume, FALSE:Could not get a grant */
+	_SYNC_t sobj	/* Sync object to wait */
 )
 {
-  int ret;
-  
-  ret = (WaitForSingleObject (sobj, _FS_TIMEOUT) == WAIT_OBJECT_0); /* Win32 */
-  
+	int ret;
+
+	ret = (WaitForSingleObject(sobj, _FS_TIMEOUT) == WAIT_OBJECT_0);	/* Win32 */
 
 
 
-  return ret;
+
+	return ret;
 }
 
 
@@ -92,11 +92,11 @@ int ff_req_grant (  /* TRUE:Got a grant to access the volume, FALSE:Could not ge
 */
 
 void ff_rel_grant (
-  _SYNC_t sobj  /* Sync object to be signaled */
+	_SYNC_t sobj	/* Sync object to be signaled */
 )
 {
-  ReleaseMutex (sobj);  /* Win32 */
-  
+	ReleaseMutex(sobj);		/* Win32 */
+
 
 
 }
@@ -106,18 +106,18 @@ void ff_rel_grant (
 
 
 
-#if _USE_LFN == 3 /* LFN with a working buffer on the heap */
+#if _USE_LFN == 3	/* LFN with a working buffer on the heap */
 /*------------------------------------------------------------------------*/
 /* Allocate a memory block                                                */
 /*------------------------------------------------------------------------*/
 /* If a NULL is returned, the file function fails with FR_NOT_ENOUGH_CORE.
 */
 
-void * ff_memalloc ( /* Returns pointer to the allocated memory block */
-  UINT msize    /* Number of bytes to allocate */
+void* ff_memalloc (	/* Returns pointer to the allocated memory block */
+	UINT msize		/* Number of bytes to allocate */
 )
 {
-  return malloc (msize);
+	return malloc(msize);
 }
 
 
@@ -126,10 +126,10 @@ void * ff_memalloc ( /* Returns pointer to the allocated memory block */
 /*------------------------------------------------------------------------*/
 
 void ff_memfree (
-  void * mblock /* Pointer to the memory block to free */
+	void* mblock	/* Pointer to the memory block to free */
 )
 {
-  free (mblock);
+	free(mblock);
 }
 
 #endif

@@ -51,87 +51,87 @@ extern bool msp_dolby;
 extern int msp_stereo_thresh;
 
 struct msp_state {
-  struct v4l2_subdev sd;
-  struct v4l2_ctrl_handler hdl;
-  int rev1, rev2;
-  int ident;
-  u8 has_nicam;
-  u8 has_radio;
-  u8 has_headphones;
-  u8 has_ntsc_jp_d_k3;
-  u8 has_scart2;
-  u8 has_scart3;
-  u8 has_scart4;
-  u8 has_scart2_out;
-  u8 has_scart2_out_volume;
-  u8 has_i2s_conf;
-  u8 has_subwoofer;
-  u8 has_sound_processing;
-  u8 has_virtual_dolby_surround;
-  u8 has_dolby_pro_logic;
-  u8 force_btsc;
-  
-  int radio;
-  int opmode;
-  int std;
-  int mode;
-  v4l2_std_id v4l2_std, detected_std;
-  int nicam_on;
-  int acb;
-  int in_scart;
-  int i2s_mode;
-  int main, second; /* sound carrier */
-  int input;
-  u32 route_in;
-  u32 route_out;
-  
-  /* v4l2 */
-  int audmode;
-  int rxsubchans;
-  
-  struct {
-    /* volume cluster */
-    struct v4l2_ctrl * volume;
-    struct v4l2_ctrl * muted;
-  };
-  
-  int scan_in_progress;
-  
-  /* thread */
-  struct task_struct  * kthread;
-  wait_queue_head_t    wq;
-  unsigned int         restart: 1;
-  unsigned int         watch_stereo: 1;
+	struct v4l2_subdev sd;
+	struct v4l2_ctrl_handler hdl;
+	int rev1, rev2;
+	int ident;
+	u8 has_nicam;
+	u8 has_radio;
+	u8 has_headphones;
+	u8 has_ntsc_jp_d_k3;
+	u8 has_scart2;
+	u8 has_scart3;
+	u8 has_scart4;
+	u8 has_scart2_out;
+	u8 has_scart2_out_volume;
+	u8 has_i2s_conf;
+	u8 has_subwoofer;
+	u8 has_sound_processing;
+	u8 has_virtual_dolby_surround;
+	u8 has_dolby_pro_logic;
+	u8 force_btsc;
+
+	int radio;
+	int opmode;
+	int std;
+	int mode;
+	v4l2_std_id v4l2_std, detected_std;
+	int nicam_on;
+	int acb;
+	int in_scart;
+	int i2s_mode;
+	int main, second;	/* sound carrier */
+	int input;
+	u32 route_in;
+	u32 route_out;
+
+	/* v4l2 */
+	int audmode;
+	int rxsubchans;
+
+	struct {
+		/* volume cluster */
+		struct v4l2_ctrl *volume;
+		struct v4l2_ctrl *muted;
+	};
+
+	int scan_in_progress;
+
+	/* thread */
+	struct task_struct   *kthread;
+	wait_queue_head_t    wq;
+	unsigned int         restart:1;
+	unsigned int         watch_stereo:1;
 };
 
-static inline struct msp_state * to_state (struct v4l2_subdev * sd)
+static inline struct msp_state *to_state(struct v4l2_subdev *sd)
 {
-  return container_of (sd, struct msp_state, sd);
+	return container_of(sd, struct msp_state, sd);
 }
 
-static inline struct msp_state * ctrl_to_state (struct v4l2_ctrl * ctrl)
+static inline struct msp_state *ctrl_to_state(struct v4l2_ctrl *ctrl)
 {
-  return container_of (ctrl->handler, struct msp_state, hdl);
+	return container_of(ctrl->handler, struct msp_state, hdl);
 }
 
 /* msp3400-driver.c */
-int msp_write_dem (struct i2c_client * client, int addr, int val);
-int msp_write_dsp (struct i2c_client * client, int addr, int val);
-int msp_read_dem (struct i2c_client * client, int addr);
-int msp_read_dsp (struct i2c_client * client, int addr);
-int msp_reset (struct i2c_client * client);
-void msp_set_scart (struct i2c_client * client, int in, int out);
-void msp_update_volume (struct msp_state * state);
-int msp_sleep (struct msp_state * state, int timeout);
+int msp_write_dem(struct i2c_client *client, int addr, int val);
+int msp_write_dsp(struct i2c_client *client, int addr, int val);
+int msp_read_dem(struct i2c_client *client, int addr);
+int msp_read_dsp(struct i2c_client *client, int addr);
+int msp_reset(struct i2c_client *client);
+void msp_set_scart(struct i2c_client *client, int in, int out);
+void msp_update_volume(struct msp_state *state);
+int msp_sleep(struct msp_state *state, int timeout);
 
 /* msp3400-kthreads.c */
-const char * msp_standard_std_name (int std);
-void msp_set_audmode (struct i2c_client * client);
-int msp_detect_stereo (struct i2c_client * client);
-int msp3400c_thread (void * data);
-int msp3410d_thread (void * data);
-int msp34xxg_thread (void * data);
-void msp3400c_set_mode (struct i2c_client * client, int mode);
-void msp3400c_set_carrier (struct i2c_client * client, int cdo1, int cdo2);
+const char *msp_standard_std_name(int std);
+void msp_set_audmode(struct i2c_client *client);
+int msp_detect_stereo(struct i2c_client *client);
+int msp3400c_thread(void *data);
+int msp3410d_thread(void *data);
+int msp34xxg_thread(void *data);
+void msp3400c_set_mode(struct i2c_client *client, int mode);
+void msp3400c_set_carrier(struct i2c_client *client, int cdo1, int cdo2);
 
 #endif /* MSP3400_DRIVER_H */

@@ -28,6 +28,6 @@
 #define PCI_V3_VADDR            0xed000000
 #define PCI_IO_VADDR            0xee000000
 
-#define __io(a)     ((void __iomem *)(PCI_IO_VADDR + (a)))
+#define __io(a)			((void __iomem *)(PCI_IO_VADDR + (a)))
 
 #endif

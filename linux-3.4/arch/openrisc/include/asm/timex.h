@@ -23,9 +23,9 @@
 #include <asm/spr.h>
 #include <asm/spr_defs.h>
 
-static inline cycles_t get_cycles (void)
+static inline cycles_t get_cycles(void)
 {
-  return mfspr (SPR_TTCR);
+	return mfspr(SPR_TTCR);
 }
 
 /* This isn't really used any more */

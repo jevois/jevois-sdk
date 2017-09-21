@@ -16,7 +16,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -33,37 +33,37 @@
 #include <command.h>
 #include <asm/system.h>
 
-static void cache_flush (void);
+static void cache_flush(void);
 
 int cleanup_before_linux (void)
 {
-  /*
-   * this function is called just before we call linux
-   * it prepares the processor for linux
-   *
-   * we turn off caches etc ...
-   */
-  
-  disable_interrupts ();
-  
-  /* ARM926E-S needs the protection unit enabled for the icache to have
-   * been enabled  - left for possible later use
-   * should turn off the protection unit as well....
-   */
-  /* turn off I/D-cache */
-  icache_disable();
-  dcache_disable();
-  /* flush I/D-cache */
-  cache_flush();
-  
-  return 0;
+	/*
+	 * this function is called just before we call linux
+	 * it prepares the processor for linux
+	 *
+	 * we turn off caches etc ...
+	 */
+
+	disable_interrupts ();
+
+	/* ARM926E-S needs the protection unit enabled for the icache to have
+	 * been enabled	 - left for possible later use
+	 * should turn off the protection unit as well....
+	 */
+	/* turn off I/D-cache */
+	icache_disable();
+	dcache_disable();
+	/* flush I/D-cache */
+	cache_flush();
+
+	return 0;
 }
 
 /* flush I/D-cache */
 static void cache_flush (void)
 {
-  unsigned long i = 0;
-  
-  asm ("mcr p15, 0, %0, c7, c5, 0": :"r" (i) );
-  asm ("mcr p15, 0, %0, c7, c6, 0": :"r" (i) );
+	unsigned long i = 0;
+
+	asm ("mcr p15, 0, %0, c7, c5, 0": :"r" (i));
+	asm ("mcr p15, 0, %0, c7, c6, 0": :"r" (i));
 }

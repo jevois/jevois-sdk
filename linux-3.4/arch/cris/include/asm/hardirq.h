@@ -3,7 +3,7 @@
 
 #include <asm/irq.h>
 
-#define HARDIRQ_BITS  8
+#define HARDIRQ_BITS	8
 
 /*
  * The hardirq mask has to be large enough to have

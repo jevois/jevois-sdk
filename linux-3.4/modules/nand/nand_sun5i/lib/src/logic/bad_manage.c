@@ -24,31 +24,31 @@ extern struct __NandDriverGlobal_t     NandDriverInfo;
 *               = -1    restore data failed.
 ************************************************************************************************************************
 */
-static __s32 _RestorePageData (struct __SuperPhyBlkType_t * pBadBlk, __u32 nZoneNum, __u32 nErrPage, struct __SuperPhyBlkType_t * pNewBlk)
+static __s32 _RestorePageData(struct __SuperPhyBlkType_t *pBadBlk, __u32 nZoneNum, __u32 nErrPage, struct __SuperPhyBlkType_t *pNewBlk)
 {
-  __s32 i, result;
-  struct __PhysicOpPara_t tmpSrcPage, tmpDstPage;
-  
-  tmpSrcPage.SectBitmap = FULL_BITMAP_OF_SUPER_PAGE;
-  tmpDstPage.SectBitmap = FULL_BITMAP_OF_SUPER_PAGE;
-  tmpSrcPage.MDataPtr = NULL;
-  tmpSrcPage.SDataPtr = NULL;
-  
-  for (i = 0; i < nErrPage; i++)
-  {
-    LML_CalculatePhyOpPar (&tmpSrcPage, nZoneNum, pBadBlk->PhyBlkNum, i);
-    LML_CalculatePhyOpPar (&tmpDstPage, nZoneNum, pNewBlk->PhyBlkNum, i);
-    
-    PHY_PageCopyback (&tmpSrcPage, &tmpDstPage);
-    result = PHY_SynchBank (tmpDstPage.BankNum, SYNC_CHIP_MODE);
-    if (result < 0)
+    __s32 i, result;
+    struct __PhysicOpPara_t tmpSrcPage, tmpDstPage;
+
+    tmpSrcPage.SectBitmap = FULL_BITMAP_OF_SUPER_PAGE;
+    tmpDstPage.SectBitmap = FULL_BITMAP_OF_SUPER_PAGE;
+    tmpSrcPage.MDataPtr = NULL;
+    tmpSrcPage.SDataPtr = NULL;
+
+    for(i=0; i<nErrPage; i++)
     {
-      LOGICCTL_DBG ("[LOGICCTL_DBG] Copy page failed when restore bad block data!\n");
-      return -1;
+        LML_CalculatePhyOpPar(&tmpSrcPage, nZoneNum, pBadBlk->PhyBlkNum, i);
+        LML_CalculatePhyOpPar(&tmpDstPage, nZoneNum, pNewBlk->PhyBlkNum, i);
+
+        PHY_PageCopyback(&tmpSrcPage, &tmpDstPage);
+        result = PHY_SynchBank(tmpDstPage.BankNum, SYNC_CHIP_MODE);
+        if(result < 0)
+        {
+            LOGICCTL_DBG("[LOGICCTL_DBG] Copy page failed when restore bad block data!\n");
+            return -1;
+        }
     }
-  }
-  
-  return 0;
+
+    return 0;
 }
 
 
@@ -65,39 +65,39 @@ static __s32 _RestorePageData (struct __SuperPhyBlkType_t * pBadBlk, __u32 nZone
 *               = -1    mark bad block failed.
 ************************************************************************************************************************
 */
-static __s32 _MarkBadBlk (struct __SuperPhyBlkType_t * pBadBlk, __u32 nZoneNum)
+static __s32 _MarkBadBlk(struct __SuperPhyBlkType_t *pBadBlk, __u32 nZoneNum)
 {
-  __s32   i;
-  __s32   ret;
-  struct __PhysicOpPara_t tmpPage;
-  struct __NandUserData_t tmpSpare[2];
-  
-  /* erase bad blcok */
-  ret = LML_VirtualBlkErase (nZoneNum, pBadBlk->PhyBlkNum);
-  if (ret)
-  {
-    LOGICCTL_DBG ("[LOGICCTL_DBG] erase bad block fail!\n");
-  }
-  
-  
-  MEMSET ( (void *) tmpSpare, 0x00, 2 * sizeof (struct __NandUserData_t) );
-  
-  tmpPage.SectBitmap = FULL_BITMAP_OF_SUPER_PAGE;
-  tmpPage.MDataPtr = LML_TEMP_BUF;
-  tmpPage.SDataPtr = (void *) tmpSpare;
-  
-  for (i = 0; i < INTERLEAVE_BANK_CNT; i++)
-  {
-    LML_CalculatePhyOpPar (&tmpPage, nZoneNum, pBadBlk->PhyBlkNum, i);
-    LML_VirtualPageWrite (&tmpPage);
-    PHY_SynchBank (tmpPage.BankNum, SYNC_CHIP_MODE);
-    
-    LML_CalculatePhyOpPar (&tmpPage, nZoneNum, pBadBlk->PhyBlkNum, PAGE_CNT_OF_SUPER_BLK - INTERLEAVE_BANK_CNT + i);
-    LML_VirtualPageWrite (&tmpPage);
-    PHY_SynchBank (tmpPage.BankNum, SYNC_CHIP_MODE);
-  }
-  
-  return 0;
+    __s32   i;
+	__s32   ret;
+    struct __PhysicOpPara_t tmpPage;
+    struct __NandUserData_t tmpSpare[2];
+
+	/* erase bad blcok */
+	ret = LML_VirtualBlkErase(nZoneNum, pBadBlk->PhyBlkNum);
+	if(ret)
+	{
+		LOGICCTL_DBG("[LOGICCTL_DBG] erase bad block fail!\n");
+	}
+
+
+    MEMSET((void *)tmpSpare, 0x00, 2*sizeof(struct __NandUserData_t));
+
+    tmpPage.SectBitmap = FULL_BITMAP_OF_SUPER_PAGE;
+    tmpPage.MDataPtr = LML_TEMP_BUF;
+    tmpPage.SDataPtr = (void *)tmpSpare;
+
+    for(i=0; i<INTERLEAVE_BANK_CNT; i++)
+    {
+        LML_CalculatePhyOpPar(&tmpPage, nZoneNum, pBadBlk->PhyBlkNum, i);
+        LML_VirtualPageWrite(&tmpPage);
+        PHY_SynchBank(tmpPage.BankNum, SYNC_CHIP_MODE);
+
+        LML_CalculatePhyOpPar(&tmpPage, nZoneNum, pBadBlk->PhyBlkNum, PAGE_CNT_OF_SUPER_BLK - INTERLEAVE_BANK_CNT + i);
+        LML_VirtualPageWrite(&tmpPage);
+        PHY_SynchBank(tmpPage.BankNum, SYNC_CHIP_MODE);
+    }
+
+    return 0;
 }
 
 
@@ -117,43 +117,43 @@ static __s32 _MarkBadBlk (struct __SuperPhyBlkType_t * pBadBlk, __u32 nZoneNum)
 *               = -1    do bad block manage failed.
 ************************************************************************************************************************
 */
-__s32 LML_BadBlkManage (struct __SuperPhyBlkType_t * pBadBlk, __u32 nZoneNum, __u32 nErrPage, struct __SuperPhyBlkType_t * pNewBlk)
+__s32 LML_BadBlkManage(struct __SuperPhyBlkType_t *pBadBlk, __u32 nZoneNum, __u32 nErrPage, struct __SuperPhyBlkType_t *pNewBlk)
 {
-  __s32   result;
-  struct __SuperPhyBlkType_t tmpFreeBlk;
-  struct __SuperPhyBlkType_t tmpBadBlk;
-  
-  tmpBadBlk = *pBadBlk;
-  
-  LOGICCTL_ERR ("%s : %d : bad block manage go ,bad block: %x\n", __FUNCTION__, __LINE__, tmpBadBlk.PhyBlkNum);
-  
+    __s32   result;
+    struct __SuperPhyBlkType_t tmpFreeBlk;
+    struct __SuperPhyBlkType_t tmpBadBlk;
+
+    tmpBadBlk = *pBadBlk;
+
+	LOGICCTL_ERR("%s : %d : bad block manage go ,bad block: %x\n",__FUNCTION__,__LINE__,tmpBadBlk.PhyBlkNum);
+
 __PROCESS_BAD_BLOCK:
 
-  if (pNewBlk)
-  {
-    BMM_GetFreeBlk (LOWEST_EC_TYPE, &tmpFreeBlk);
-    if (tmpFreeBlk.PhyBlkNum == 0xffff)
+    if(pNewBlk)
     {
-      LOGICCTL_ERR ("[LOGICCTL_ERR] Look for free block failed when replace bad block\n");
-      return -1;
+        BMM_GetFreeBlk(LOWEST_EC_TYPE, &tmpFreeBlk);
+        if(tmpFreeBlk.PhyBlkNum == 0xffff)
+        {
+            LOGICCTL_ERR("[LOGICCTL_ERR] Look for free block failed when replace bad block\n");
+            return -1;
+        }
+
+        if(nErrPage)
+        {
+            result = _RestorePageData(&tmpBadBlk, nZoneNum, nErrPage, &tmpFreeBlk);
+            if(result < 0)
+            {
+                _MarkBadBlk(&tmpFreeBlk, nZoneNum);
+
+                goto __PROCESS_BAD_BLOCK;
+            }
+        }
+
+        *pNewBlk = tmpFreeBlk;
     }
-    
-    if (nErrPage)
-    {
-      result = _RestorePageData (&tmpBadBlk, nZoneNum, nErrPage, &tmpFreeBlk);
-      if (result < 0)
-      {
-        _MarkBadBlk (&tmpFreeBlk, nZoneNum);
-        
-        goto __PROCESS_BAD_BLOCK;
-      }
-    }
-    
-    *pNewBlk = tmpFreeBlk;
-  }
-  
-  _MarkBadBlk (&tmpBadBlk, nZoneNum);
-  
-  return 0;
+
+    _MarkBadBlk(&tmpBadBlk, nZoneNum);
+
+    return 0;
 }
 

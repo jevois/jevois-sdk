@@ -4,7 +4,7 @@
 *                                     Nand flash driver physical module define
 *
 *                             Copyright(C), 2006-2008, SoftWinners Microelectronic Co., Ltd.
-*                            All Rights Reserved
+*											       All Rights Reserved
 *
 * File Name : nand_physic.h
 *
@@ -131,8 +131,8 @@ extern struct __NandPageCachePool_t PageCachePool;
 *                   = -1    initiate failed.
 ************************************************************************************************************************
 */
-__s32 PHY_Init (void);
-__s32 PHY_ChangeMode (__u8 serial_mode);
+__s32 PHY_Init(void);
+__s32 PHY_ChangeMode(__u8 serial_mode);
 
 /*
 ************************************************************************************************************************
@@ -147,7 +147,7 @@ __s32 PHY_ChangeMode (__u8 serial_mode);
 *                   = -1    exit failed.
 ************************************************************************************************************************
 */
-__s32 PHY_Exit (void);
+__s32 PHY_Exit(void);
 
 
 /*
@@ -163,7 +163,7 @@ __s32 PHY_Exit (void);
 *               = -1    reset nand chip failed.
 ************************************************************************************************************************
 */
-__s32 PHY_ResetChip (__u32 nChip);
+__s32 PHY_ResetChip(__u32 nChip);
 
 
 /*
@@ -180,8 +180,8 @@ __s32 PHY_ResetChip (__u32 nChip);
 *               = -1    read chip ID failed.
 ************************************************************************************************************************
 */
-__s32 PHY_ReadNandId (__s32 nChip, void * pChipID);
-__s32 PHY_ReadNandUniqueId (__s32 bank, void * pChipID);
+__s32 PHY_ReadNandId(__s32 nChip, void *pChipID);
+__s32 PHY_ReadNandUniqueId(__s32 bank, void *pChipID);
 
 
 /*
@@ -198,7 +198,7 @@ __s32 PHY_ReadNandUniqueId (__s32 bank, void * pChipID);
 *             = -1      check status failed.
 ************************************************************************************************************************
 */
-__s32 PHY_CheckWp (__u32 nChip);
+__s32 PHY_CheckWp(__u32 nChip);
 
 
 /*
@@ -214,7 +214,7 @@ __s32 PHY_CheckWp (__u32 nChip);
 *               = -1    erase physical block failed.
 ************************************************************************************************************************
 */
-__s32 PHY_BlockErase (struct __PhysicOpPara_t * pBlkAdr);
+__s32 PHY_BlockErase(struct __PhysicOpPara_t *pBlkAdr);
 
 
 /*
@@ -231,10 +231,10 @@ __s32 PHY_BlockErase (struct __PhysicOpPara_t * pBlkAdr);
 *               < 0     read physical page failed.
 ************************************************************************************************************************
 */
-__s32 PHY_PageRead (struct __PhysicOpPara_t * pPageAdr);
+__s32 PHY_PageRead(struct __PhysicOpPara_t *pPageAdr);
 
 
-__s32  PHY_PageReadSpare (struct __PhysicOpPara_t * pPageAdr);
+__s32  PHY_PageReadSpare(struct __PhysicOpPara_t *pPageAdr);
 
 /*
 ************************************************************************************************************************
@@ -250,7 +250,7 @@ __s32  PHY_PageReadSpare (struct __PhysicOpPara_t * pPageAdr);
 *               < 0     page write failed.
 ************************************************************************************************************************
 */
-__s32 PHY_PageWrite (struct __PhysicOpPara_t * pPageAdr);
+__s32 PHY_PageWrite(struct __PhysicOpPara_t  *pPageAdr);
 
 
 /*
@@ -267,7 +267,7 @@ __s32 PHY_PageWrite (struct __PhysicOpPara_t * pPageAdr);
 *               = -1        page copy-back failed.
 ************************************************************************************************************************
 */
-__s32 PHY_PageCopyback (struct __PhysicOpPara_t * pSrcPage, struct __PhysicOpPara_t * pDstPage);
+__s32 PHY_PageCopyback(struct __PhysicOpPara_t *pSrcPage, struct __PhysicOpPara_t *pDstPage);
 
 
 /*
@@ -290,13 +290,13 @@ __s32 PHY_PageCopyback (struct __PhysicOpPara_t * pSrcPage, struct __PhysicOpPar
 *               = -1    synch nand flash failed.
 ************************************************************************************************************************
 */
-__s32 PHY_SynchBank (__u32 nBank, __u32 bMode);
+__s32 PHY_SynchBank(__u32 nBank, __u32 bMode);
 
 
-__s32 PHY_GetDefaultParam (__u32 bank);
-__s32 PHY_SetDefaultParam (__u32 bank);
+__s32 PHY_GetDefaultParam(__u32 bank);
+__s32 PHY_SetDefaultParam(__u32 bank);
 
-__s32 PHY_ScanDDRParam (void);
+__s32 PHY_ScanDDRParam(void);
 
 #endif 
 

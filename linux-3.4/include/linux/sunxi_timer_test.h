@@ -19,14 +19,14 @@
 
 enum e_sunxi_timer_test_cmd
 {
-  TIMER_TEST_CMD_FUNC_NORMAL,
-  TIMER_TEST_CMD_FUNC_HRTIMER,
+	TIMER_TEST_CMD_FUNC_NORMAL,
+	TIMER_TEST_CMD_FUNC_HRTIMER,
 };
 
 struct timer_test_para {
-  unsigned int  timer_interv_us;  /* timer interval in us */
-  unsigned int  print_gap_s;    /* print gap in s */
-  unsigned int  total_test_s;   /* total test time in s */
+	unsigned int 	timer_interv_us;	/* timer interval in us */
+	unsigned int 	print_gap_s;		/* print gap in s */
+	unsigned int 	total_test_s;		/* total test time in s */
 };
 
 #endif

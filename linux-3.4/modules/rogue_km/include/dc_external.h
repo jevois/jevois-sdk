@@ -48,24 +48,24 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "img_types.h"
 
-#define DC_NAME_SIZE  50
+#define DC_NAME_SIZE	50
 typedef struct _DC_DISPLAY_INFO_
 {
-  IMG_CHAR    szDisplayName[DC_NAME_SIZE];
-  IMG_UINT32    ui32MinDisplayPeriod;
-  IMG_UINT32    ui32MaxDisplayPeriod;
-  IMG_UINT32    ui32MaxPipes;
-  IMG_BOOL    bUnlatchedSupported;
+	IMG_CHAR		szDisplayName[DC_NAME_SIZE];
+	IMG_UINT32		ui32MinDisplayPeriod;
+	IMG_UINT32		ui32MaxDisplayPeriod;
+	IMG_UINT32		ui32MaxPipes;
+	IMG_BOOL		bUnlatchedSupported;
 } DC_DISPLAY_INFO;
 
 typedef struct _DC_BUFFER_IMPORT_INFO_
 {
-  IMG_UINT32    ePixFormat;
-  IMG_UINT32    ui32BPP;
-  IMG_UINT32    ui32Width[3];
-  IMG_UINT32    ui32Height[3];
-  IMG_UINT32    ui32ByteStride[3];
-  IMG_UINT32    ui32PrivData[3];
+	IMG_UINT32		ePixFormat;
+	IMG_UINT32		ui32BPP;
+	IMG_UINT32		ui32Width[3];
+	IMG_UINT32		ui32Height[3];
+	IMG_UINT32		ui32ByteStride[3];
+	IMG_UINT32		ui32PrivData[3];
 } DC_BUFFER_IMPORT_INFO;
 
 #endif /* _DC_EXTERNAL_H_ */

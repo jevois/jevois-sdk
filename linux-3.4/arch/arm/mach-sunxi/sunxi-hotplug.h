@@ -17,8 +17,8 @@
 #ifndef __SUNXI_HOTPLUG_H
 #define __SUNXI_HOTPLUG_H
 
-int  sunxi_cpu_kill (unsigned int cpu);
-void sunxi_cpu_die (unsigned int cpu);
-int  sunxi_cpu_disable (unsigned int cpu);
+int  sunxi_cpu_kill(unsigned int cpu);
+void sunxi_cpu_die(unsigned int cpu);
+int  sunxi_cpu_disable(unsigned int cpu);
 
 #endif /* __SUNXI_HOTPLUG_H */

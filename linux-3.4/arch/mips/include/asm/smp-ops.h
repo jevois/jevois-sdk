@@ -20,81 +20,81 @@
 struct task_struct;
 
 struct plat_smp_ops {
-  void (*send_ipi_single) (int cpu, unsigned int action);
-  void (*send_ipi_mask) (const struct cpumask * mask, unsigned int action);
-  void (*init_secondary) (void);
-  void (*smp_finish) (void);
-  void (*cpus_done) (void);
-  void (*boot_secondary) (int cpu, struct task_struct * idle);
-  void (*smp_setup) (void);
-  void (*prepare_cpus) (unsigned int max_cpus);
-  #ifdef CONFIG_HOTPLUG_CPU
-  int (*cpu_disable) (void);
-  void (*cpu_die) (unsigned int cpu);
-  #endif
+	void (*send_ipi_single)(int cpu, unsigned int action);
+	void (*send_ipi_mask)(const struct cpumask *mask, unsigned int action);
+	void (*init_secondary)(void);
+	void (*smp_finish)(void);
+	void (*cpus_done)(void);
+	void (*boot_secondary)(int cpu, struct task_struct *idle);
+	void (*smp_setup)(void);
+	void (*prepare_cpus)(unsigned int max_cpus);
+#ifdef CONFIG_HOTPLUG_CPU
+	int (*cpu_disable)(void);
+	void (*cpu_die)(unsigned int cpu);
+#endif
 };
 
-extern void register_smp_ops (struct plat_smp_ops * ops);
+extern void register_smp_ops(struct plat_smp_ops *ops);
 
-static inline void plat_smp_setup (void)
+static inline void plat_smp_setup(void)
 {
-  extern struct plat_smp_ops * mp_ops; /* private */
-  
-  mp_ops->smp_setup();
+	extern struct plat_smp_ops *mp_ops;	/* private */
+
+	mp_ops->smp_setup();
 }
 
 #else /* !CONFIG_SMP */
 
 struct plat_smp_ops;
 
-static inline void plat_smp_setup (void)
+static inline void plat_smp_setup(void)
 {
-  /* UP, nothing to do ...  */
+	/* UP, nothing to do ...  */
 }
 
-static inline void register_smp_ops (struct plat_smp_ops * ops)
+static inline void register_smp_ops(struct plat_smp_ops *ops)
 {
 }
 
 #endif /* !CONFIG_SMP */
 
-static inline int register_up_smp_ops (void)
+static inline int register_up_smp_ops(void)
 {
-  #ifdef CONFIG_SMP_UP
-  extern struct plat_smp_ops up_smp_ops;
-  
-  register_smp_ops (&up_smp_ops);
-  
-  return 0;
-  #else
-  return -ENODEV;
-  #endif
+#ifdef CONFIG_SMP_UP
+	extern struct plat_smp_ops up_smp_ops;
+
+	register_smp_ops(&up_smp_ops);
+
+	return 0;
+#else
+	return -ENODEV;
+#endif
 }
 
-static inline int register_cmp_smp_ops (void)
+static inline int register_cmp_smp_ops(void)
 {
-  #ifdef CONFIG_MIPS_CMP
-  extern struct plat_smp_ops cmp_smp_ops;
-  
-  register_smp_ops (&cmp_smp_ops);
-  
-  return 0;
-  #else
-  return -ENODEV;
-  #endif
+#ifdef CONFIG_MIPS_CMP
+	extern struct plat_smp_ops cmp_smp_ops;
+
+	register_smp_ops(&cmp_smp_ops);
+
+	return 0;
+#else
+	return -ENODEV;
+#endif
 }
 
-static inline int register_vsmp_smp_ops (void)
+static inline int register_vsmp_smp_ops(void)
 {
-  #ifdef CONFIG_MIPS_MT_SMP
-  extern struct plat_smp_ops vsmp_smp_ops;
-  
-  register_smp_ops (&vsmp_smp_ops);
-  
-  return 0;
-  #else
-  return -ENODEV;
-  #endif
+#ifdef CONFIG_MIPS_MT_SMP
+	extern struct plat_smp_ops vsmp_smp_ops;
+
+	register_smp_ops(&vsmp_smp_ops);
+
+	return 0;
+#else
+	return -ENODEV;
+#endif
 }
 
 #endif /* __ASM_SMP_OPS_H */

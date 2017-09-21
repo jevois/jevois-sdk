@@ -31,8 +31,8 @@
 
 struct arisc_semaphore_cache
 {
-  atomic_t          number;
-  struct semaphore * cache[ARISC_SEM_CACHE_MAX];
+	atomic_t          number;
+	struct semaphore *cache[ARISC_SEM_CACHE_MAX];
 };
 
 /*
@@ -41,8 +41,8 @@ struct arisc_semaphore_cache
  */
 typedef struct arisc_message_cache
 {
-  atomic_t              number;                           /* valid message number */
-  struct arisc_message * cache[ARISC_MESSAGE_CACHED_MAX]; /* message cache table */
+	atomic_t              number;                           /* valid message number */
+	struct arisc_message *cache[ARISC_MESSAGE_CACHED_MAX];  /* message cache table */
 } arisc_message_cache_t;
 
 #endif  /* __ARISC_MESSAGE_MANAGER_I_H */

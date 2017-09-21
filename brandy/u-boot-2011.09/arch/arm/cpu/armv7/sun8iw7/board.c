@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -45,158 +45,158 @@
  */
 DECLARE_GLOBAL_DATA_PTR;
 
-extern int sunxi_clock_get_axi (void);
-extern int sunxi_clock_get_ahb (void);
-extern int sunxi_clock_get_apb1 (void);
-extern int sunxi_clock_get_pll6 (void);
+extern int sunxi_clock_get_axi(void);
+extern int sunxi_clock_get_ahb(void);
+extern int sunxi_clock_get_apb1(void);
+extern int sunxi_clock_get_pll6(void);
 
 
-u32 get_base (void)
+u32 get_base(void)
 {
 
-  u32 val;
-  
-  __asm__ __volatile__ ("mov %0, pc \n":"=r" (val) ::"memory");
-  val &= 0xF0000000;
-  val >>= 28;
-  return val;
+	u32 val;
+
+	__asm__ __volatile__("mov %0, pc \n":"=r"(val)::"memory");
+	val &= 0xF0000000;
+	val >>= 28;
+	return val;
 }
 
 /* do some early init */
-void s_init (void)
+void s_init(void)
 {
-  watchdog_disable();
+	watchdog_disable();
 }
 
-void reset_cpu (ulong addr)
+void reset_cpu(ulong addr)
 {
-  watchdog_enable();
-  #ifndef CONFIG_FPGA
+	watchdog_enable();
+#ifndef CONFIG_FPGA
 loop_to_die:
-  goto loop_to_die;
-  #endif
+	goto loop_to_die;
+#endif
 }
 
-void v7_outer_cache_enable (void)
+void v7_outer_cache_enable(void)
 {
-  return ;
+	return ;
 }
 
-void v7_outer_cache_inval_all (void)
+void v7_outer_cache_inval_all(void)
 {
-  return ;
+	return ;
 }
 
-void v7_outer_cache_flush_range (u32 start, u32 stop)
+void v7_outer_cache_flush_range(u32 start, u32 stop)
 {
-  return ;
+	return ;
 }
 
-void enable_caches (void)
+void enable_caches(void)
 {
-  icache_enable();
-  dcache_enable();
+    icache_enable();
+    dcache_enable();
 }
 
-void disable_caches (void)
+void disable_caches(void)
 {
-  icache_disable();
-  dcache_disable();
+    icache_disable();
+	dcache_disable();
 }
 
-int display_inner (void)
+int display_inner(void)
 {
-  tick_printf ("version: %s\n", uboot_spare_head.boot_head.version);
-  
-  return 0;
+	tick_printf("version: %s\n", uboot_spare_head.boot_head.version);
+
+	return 0;
 }
 
-int script_init (void)
+int script_init(void)
 {
-  uint offset, length;
-  char * addr;
-  
-  offset = uboot_spare_head.boot_head.uboot_length;
-  length = uboot_spare_head.boot_head.length - uboot_spare_head.boot_head.uboot_length;
-  addr   = (char *) CONFIG_SYS_TEXT_BASE + offset;
-  
-  debug ("script offset=%x, length = %x\n", offset, length);
-  
-  if (length)
-  {
-    memcpy ( (void *) SYS_CONFIG_MEMBASE, addr, length);
-    script_parser_init ( (char *) SYS_CONFIG_MEMBASE);
-  }
-  else
-  {
-    script_parser_init (NULL);
-  }
-  #if defined(CONFIG_SUNXI_SCRIPT_REINIT)
-  {
-    void * tmp_target_buffer = (void *) (CONFIG_SYS_TEXT_BASE - 0x01000000);
-    
-    memset (tmp_target_buffer, 0, 1024 * 1024);
-    memcpy (tmp_target_buffer, (void *) CONFIG_SYS_TEXT_BASE, uboot_spare_head.boot_head.length);
-  }
-  #endif
-  return 0;
+    uint offset, length;
+	char *addr;
+
+	offset = uboot_spare_head.boot_head.uboot_length;
+	length = uboot_spare_head.boot_head.length - uboot_spare_head.boot_head.uboot_length;
+	addr   = (char *)CONFIG_SYS_TEXT_BASE + offset;
+
+    debug("script offset=%x, length = %x\n", offset, length);
+
+	if(length)
+	{
+		memcpy((void *)SYS_CONFIG_MEMBASE, addr, length);
+		script_parser_init((char *)SYS_CONFIG_MEMBASE);
+	}
+	else
+	{
+		script_parser_init(NULL);
+	}
+#if defined(CONFIG_SUNXI_SCRIPT_REINIT)
+	{
+		void *tmp_target_buffer = (void *)(CONFIG_SYS_TEXT_BASE - 0x01000000);
+
+		memset(tmp_target_buffer, 0, 1024 * 1024);
+		memcpy(tmp_target_buffer, (void *)CONFIG_SYS_TEXT_BASE, uboot_spare_head.boot_head.length);
+	}
+#endif
+	return 0;
 }
 
-void sunxi_set_cpux_voltage (void);
+void sunxi_set_cpux_voltage(void);
 
-int power_source_init (void)
+int power_source_init(void)
 {
-  int pll1;
-  int dcdc3_vol;
-  
-  if (script_parser_fetch ("power_sply", "dcdc3_vol", &dcdc3_vol, 1) )
-  {
-    dcdc3_vol = 1200;
-  }
-  if (axp_probe() > 0)
-  {
-    axp_probe_factory_mode();
-    if (!axp_probe_power_supply_condition() )
-    {
-      if (!axp_set_supply_status (0, PMU_SUPPLY_DCDC3, dcdc3_vol, -1) )
-      {
-        tick_printf ("PMU: dcdc3 %d\n", dcdc3_vol);
-        sunxi_clock_set_corepll (uboot_spare_head.boot_data.run_clock, 0);
-      }
-      else
-      {
-        printf ("axp_set_dcdc3 fail\n");
-      }
-    }
-    else
-    {
-      printf ("axp_probe_power_supply_condition error\n");
-    }
-  }
-  else
-  {
-    printf ("axp_probe error\n");
-    sunxi_set_cpux_voltage();
-    sunxi_clock_set_corepll (uboot_spare_head.boot_data.run_clock, 0);
-  }
-  
-  pll1 = sunxi_clock_get_corepll();
-  
-  tick_printf ("PMU: pll1 %d Mhz,PLL6=%d Mhz\n", pll1, sunxi_clock_get_pll6() );
-  printf ("AXI=%d Mhz,AHB=%d Mhz, APB1=%d Mhz \n", sunxi_clock_get_axi(), sunxi_clock_get_ahb(), sunxi_clock_get_apb1() );
-  
-  #ifdef CONFIG_SUNXI_AXP_MAIN
-  axp_set_charge_vol_limit();
-  axp_set_all_limit();
-  axp_set_hardware_poweron_vol();
-  
-  axp_set_power_supply_output();
-  
-  power_limit_init();
-  #endif
-  sid_read();
-  
-  return 0;
+	int pll1;
+	int dcdc3_vol;
+
+	if(script_parser_fetch("power_sply", "dcdc3_vol", &dcdc3_vol, 1))
+	{
+		dcdc3_vol = 1200;
+	}
+	if(axp_probe() > 0)
+	{
+		axp_probe_factory_mode();
+		if(!axp_probe_power_supply_condition())
+		{
+			if(!axp_set_supply_status(0, PMU_SUPPLY_DCDC3, dcdc3_vol, -1))
+			{
+				tick_printf("PMU: dcdc3 %d\n", dcdc3_vol);
+				sunxi_clock_set_corepll(uboot_spare_head.boot_data.run_clock, 0);
+			}
+			else
+			{
+				printf("axp_set_dcdc3 fail\n");
+			}
+		}
+		else
+		{
+			printf("axp_probe_power_supply_condition error\n");
+		}
+	}
+	else
+	{
+		printf("axp_probe error\n");
+        sunxi_set_cpux_voltage();
+		sunxi_clock_set_corepll(uboot_spare_head.boot_data.run_clock, 0);
+	}
+
+	pll1 = sunxi_clock_get_corepll();
+
+	tick_printf("PMU: pll1 %d Mhz,PLL6=%d Mhz\n", pll1,sunxi_clock_get_pll6());
+    printf("AXI=%d Mhz,AHB=%d Mhz, APB1=%d Mhz \n", sunxi_clock_get_axi(),sunxi_clock_get_ahb(),sunxi_clock_get_apb1());
+
+#ifdef CONFIG_SUNXI_AXP_MAIN
+    axp_set_charge_vol_limit();
+    axp_set_all_limit();
+    axp_set_hardware_poweron_vol();
+
+	axp_set_power_supply_output();
+
+	power_limit_init();
+#endif
+    sid_read();
+
+    return 0;
 }
 /*
 ************************************************************************************************************
@@ -214,27 +214,27 @@ int power_source_init (void)
 *
 ************************************************************************************************************
 */
-int power_off (void)
+int power_off(void)
 {
-  volatile unsigned int reg_val;
-  reg_val = readl (R_PIO_BASE + 0x00);
-  reg_val &= ~ (0xF << 20);
-  reg_val |= (0x1 << 20);
-  writel (reg_val, R_PIO_BASE + 0x00);
-  
-  reg_val = readl (R_PIO_BASE + 0x10);
-  reg_val |= (0x1 << 5);
-  writel (reg_val, R_PIO_BASE + 0x10);
-  
-  reg_val = readl (R_PIO_BASE + 0x04);
-  reg_val &= ~ (0xFF);
-  reg_val |= 0x11;
-  writel (reg_val, R_PIO_BASE + 0x04);
-  
-  reg_val = readl (R_PIO_BASE + 0x10);
-  reg_val &= ~ (0x3 << 8);
-  writel (reg_val, R_PIO_BASE + 0x10);
-  return 0;
+	volatile unsigned int reg_val;
+	reg_val = readl(R_PIO_BASE + 0x00);
+	reg_val &= ~(0xF << 20);
+	reg_val |= (0x1 << 20);
+	writel(reg_val, R_PIO_BASE + 0x00);
+
+	reg_val = readl(R_PIO_BASE + 0x10);
+	reg_val |= (0x1 << 5);
+	writel(reg_val, R_PIO_BASE + 0x10);
+
+	reg_val = readl(R_PIO_BASE + 0x04);
+	reg_val &= ~(0xFF);
+	reg_val |= 0x11;
+	writel(reg_val, R_PIO_BASE + 0x04);
+
+	reg_val = readl(R_PIO_BASE + 0x10);
+	reg_val &= ~(0x3 << 8);
+	writel(reg_val, R_PIO_BASE + 0x10);
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -252,9 +252,9 @@ int power_off (void)
 *
 ************************************************************************************************************
 */
-void sunxi_set_fel_flag (void)
+void sunxi_set_fel_flag(void)
 {
-  writel (SUNXI_RUN_EFEX_FLAG, RTC_GENERAL_PURPOSE_REG (2) );
+	writel(SUNXI_RUN_EFEX_FLAG, RTC_GENERAL_PURPOSE_REG(2));
 }
 /*
 ************************************************************************************************************
@@ -272,9 +272,9 @@ void sunxi_set_fel_flag (void)
 *
 ************************************************************************************************************
 */
-void sunxi_clear_fel_flag (void)
+void sunxi_clear_fel_flag(void)
 {
-  writel (0, RTC_GENERAL_PURPOSE_REG (0) );
+	writel(0, RTC_GENERAL_PURPOSE_REG(0));
 }
 /*
 ************************************************************************************************************
@@ -293,41 +293,41 @@ void sunxi_clear_fel_flag (void)
 ************************************************************************************************************
 */
 #ifdef CONFIG_SUNXI_SECURE_SYSTEM
-int sunxi_probe_securemode (void)
+int sunxi_probe_securemode(void)
 {
-  uint reg_val;
-  
-  writel (0xffff, CONFIG_SYS_SRAMA2_BASE);
-  reg_val = readl (CONFIG_SYS_SRAMA2_BASE);
-  if (!reg_val) //读到数据全是0，那么只能是使能secure的normal模式
-  {
-    if (uboot_spare_head.boot_data.secureos_exist == 1) //如果是1，由sbromsw传递，表示存在安全系统，否则没有
-    {
-      gd->securemode = SUNXI_SECURE_MODE_WITH_SECUREOS;
-      printf ("normal mode: with secureos\n");
-    }
-    else
-    {
-      gd->securemode = SUNXI_SECURE_MODE_NO_SECUREOS;   //不存在安全系统
-      printf ("normal mode: no secureos\n");
-    }
-  }
-  else     //读到数据非0，那么只能是未使能secure
-  {
-    if (uboot_spare_head.boot_data.secureos_exist == 0 )
-    {
-      printf ("SUNXI_SECURE_MODE  \n");
-      gd->securemode = SUNXI_SECURE_MODE;
-    }
-    else
-    {
-      printf ("SUNXI_NORMAL_MODE   \n");
-      gd->securemode = SUNXI_NORMAL_MODE;
-    }
-    printf ("already secure mode\n");
-  }
-  
-  return 0;
+	uint reg_val;
+
+	writel(0xffff, CONFIG_SYS_SRAMA2_BASE);
+	reg_val = readl(CONFIG_SYS_SRAMA2_BASE);
+	if(!reg_val)  //读到数据全是0，那么只能是使能secure的normal模式
+	{
+		if(uboot_spare_head.boot_data.secureos_exist == 1)	//如果是1，由sbromsw传递，表示存在安全系统，否则没有
+		{
+			gd->securemode = SUNXI_SECURE_MODE_WITH_SECUREOS;
+			printf("normal mode: with secureos\n");
+		}
+		else
+		{
+			gd->securemode = SUNXI_SECURE_MODE_NO_SECUREOS;		//不存在安全系统
+			printf("normal mode: no secureos\n");
+		}
+	}
+	else		 //读到数据非0，那么只能是未使能secure
+	{
+            if(uboot_spare_head.boot_data.secureos_exist == 0 )
+            {
+                printf("SUNXI_SECURE_MODE  \n");
+                gd->securemode = SUNXI_SECURE_MODE;
+            }
+            else
+            {
+                printf("SUNXI_NORMAL_MODE   \n");
+		gd->securemode = SUNXI_NORMAL_MODE;
+            }
+	    printf("already secure mode\n");
+	}
+
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -345,50 +345,50 @@ int sunxi_probe_securemode (void)
 *
 ************************************************************************************************************
 */
-int sunxi_set_secure_mode (void)
+int sunxi_set_secure_mode(void)
 {
-  int mode;
-  int secure_bit = 0;
-  if (gd->securemode == SUNXI_NORMAL_MODE)
-  {
-    printf ("normal mode\n");
-    if (!script_parser_fetch ("platform", "secure_bit", &secure_bit, 1) )
-    {
-      if (secure_bit == 1)
-      {
-        printf ("/*===ready to burn secure bit==== */\n");
-        gd->securemode = SUNXI_SECURE_MODE_NO_SECUREOS;
-        mode = sid_probe_security_mode();
-        if (!mode)
+	int mode;
+    int secure_bit = 0;
+	if(gd->securemode == SUNXI_NORMAL_MODE)
+	{
+		printf("normal mode\n");
+        if(!script_parser_fetch("platform","secure_bit",&secure_bit,1))
         {
-          sid_set_security_mode();
+            if(secure_bit == 1)
+            {
+                printf("/*===ready to burn secure bit==== */\n");
+                gd->securemode = SUNXI_SECURE_MODE_NO_SECUREOS;
+				mode = sid_probe_security_mode();
+				if(!mode)
+				{
+					sid_set_security_mode();
+				}
+                printf("burn secure bit success \n");
+            }
         }
-        printf ("burn secure bit success \n");
-      }
-    }
-  }
-  
-  return 0;
+	}
+
+	return 0;
 }
-int sunxi_get_securemode (void)
+int sunxi_get_securemode(void)
 {
-  return gd->securemode;
+	return gd->securemode;
 }
 #endif
 
 #define VOL2REG(v) (u8)(((v - 680) / 10) | 0x80)
-#define PMU_ADDR    0x65
-#define VOL_REG_ADDR  0x01
-extern int i2c_write (uchar chip, uint addr, int alen, uchar * buffer, int len);
-void sunxi_set_cpux_voltage_by_i2c (uint volt)
+#define PMU_ADDR 		0x65
+#define VOL_REG_ADDR	0x01
+extern int i2c_write(uchar chip, uint addr, int alen, uchar *buffer, int len);
+void sunxi_set_cpux_voltage_by_i2c(uint volt)
 {
-  u8 change = VOL2REG (volt);
-  debug ("=== volt %d = %x ===\n", volt, change);
-  if (i2c_write (PMU_ADDR, VOL_REG_ADDR, 1, (uchar *) &change, 1) )
-  {
-    printf ("sunxi_set_cpux_voltage_by_i2c error \n");
-  }
-  return ;
+	u8 change = VOL2REG(volt);
+	debug("=== volt %d = %x ===\n",volt,change);
+	if(i2c_write(PMU_ADDR, VOL_REG_ADDR, 1, (uchar *)&change, 1))
+	{
+		printf("sunxi_set_cpux_voltage_by_i2c error \n");
+	}
+	return ;
 }
 /*
 ************************************************************************************************************
@@ -406,86 +406,85 @@ void sunxi_set_cpux_voltage_by_i2c (uint volt)
 *
 ************************************************************************************************************
 */
-void sunxi_set_cpux_voltage (void)
+void sunxi_set_cpux_voltage(void)
 {
-  uint max_freq = 0;
-  uint min_freq = 0;
-  uint lel_num = 0;
-  uint volt = 0;
-  char freq_lel[16];
-  char volt_lel[16];
-  uint pmuic_type = 0;
-  uint freq = 0;
-  uint i = 0;
-  uint set_clock = uboot_spare_head.boot_data.run_clock * 1000000;
-  
-  memset (freq_lel, 0x00, 16);
-  memset (volt_lel , 0x00, 16);
-  
-  if (script_parser_fetch ("dvfs_table", "max_freq", (int *) &max_freq, 1) )
-  {
-    printf ("sunxi_set_cpux_voltage error : can not find max_freq from dvfs_table  \n");
-    return ;
-  }
-  debug ("max_freq is %d \n", max_freq);
-  if (script_parser_fetch ("dvfs_table", "min_freq", (int *) &min_freq, 1) )
-  {
-    printf ("sunxi_set_cpux_voltage error : can not find min_freq from dvfs_table  \n");
-    return ;
-  }
-  debug ("min_freq is %d \n", min_freq);
-  
-  if (max_freq < set_clock)
-  { set_clock = max_freq; }
-  if (min_freq > set_clock)
-  { set_clock = min_freq; }
-  
-  uboot_spare_head.boot_data.run_clock  = set_clock / 1000000;
-  if (script_parser_fetch ("dvfs_table", "LV_count", (int *) &lel_num, sizeof (int) / 4) )
-  {
-    printf ("can not find LV_count from script \n");
-    return ;
-  }
-  debug ("lel_num is %d\n", lel_num);
-  for (i = lel_num; i >= 0; i--)
-  {
-    sprintf (freq_lel, "%s%d%s", "LV", i, "_freq");
-    if (script_parser_fetch ("dvfs_table", freq_lel, (int *) &freq, sizeof (int) / 4) )
-    {
-      printf ("can not find B_LV_count from script \n");
-      return ;
-    }
-    debug ("==== %s = %d ====\n", freq_lel, freq);
-    
-    if (set_clock <= freq)
-    {
-      sprintf (volt_lel, "%s%d%s", "LV", i, "_volt");
-      if (script_parser_fetch ("dvfs_table", volt_lel, (int *) &volt, sizeof (int) / 4) )
-      {
-        printf ("can not find volt_lel from script \n");
-        return ;
-      }
-      debug ("find volt_lel = %d \n", volt);
-      break;
-    }
-  }
-  
-  if (script_parser_fetch ("dvfs_table", "pmuic_type", (int *) &pmuic_type, sizeof (int) / 4) )
-  {
-    printf ("can not find pmuic_type form script  \n");
-    return ;
-  }
-  
-  if (pmuic_type == 2)
-  {
-    debug ("I2C type \n");
-    sunxi_set_cpux_voltage_by_i2c (volt);
-  }
-  else
-    if (pmuic_type == 1)
-    {
-      debug ("gpio type \n");
-      gpio_request_simple ("dvfs_table", NULL);
-    }
-  return ;
+	uint max_freq = 0;
+	uint min_freq = 0;
+	uint lel_num = 0;
+	uint volt = 0;
+    char freq_lel[16];
+    char volt_lel[16];
+	uint pmuic_type = 0;
+	uint freq = 0;
+	uint i = 0;
+	uint set_clock = uboot_spare_head.boot_data.run_clock * 1000000;
+
+    memset(freq_lel, 0x00,16);
+    memset(volt_lel , 0x00,16);
+
+	if(script_parser_fetch("dvfs_table", "max_freq", (int*)&max_freq, 1))
+	{
+		printf("sunxi_set_cpux_voltage error : can not find max_freq from dvfs_table  \n");
+		return ;
+	}
+	debug("max_freq is %d \n",max_freq);
+	if(script_parser_fetch("dvfs_table", "min_freq", (int*)&min_freq, 1))
+	{
+		printf("sunxi_set_cpux_voltage error : can not find min_freq from dvfs_table  \n");
+		return ;
+	}
+	debug("min_freq is %d \n",min_freq);
+	
+	if(max_freq < set_clock)
+		set_clock = max_freq;
+	if(min_freq > set_clock)
+		set_clock = min_freq;
+
+	uboot_spare_head.boot_data.run_clock  = set_clock / 1000000;
+   if(script_parser_fetch("dvfs_table","LV_count",(int*)&lel_num,sizeof(int)/4))
+   {
+           printf("can not find LV_count from script \n");
+           return ;
+   }
+   debug("lel_num is %d\n",lel_num);
+   for(i = lel_num; i >= 0;i--)
+   {
+        sprintf(freq_lel,"%s%d%s","LV",i,"_freq");
+        if(script_parser_fetch("dvfs_table",freq_lel,(int*)&freq,sizeof(int)/4)) 
+        {
+                printf("can not find B_LV_count from script \n");
+                return ;
+        }
+        debug("==== %s = %d ====\n",freq_lel,freq);
+
+        if(set_clock <= freq)
+        {
+             sprintf(volt_lel,"%s%d%s","LV",i,"_volt");
+             if(script_parser_fetch("dvfs_table",volt_lel,(int*)&volt,sizeof(int)/4))
+             {
+                     printf("can not find volt_lel from script \n");
+                     return ;
+             }
+             debug("find volt_lel = %d \n",volt);
+			 break;
+        }
+   }
+
+   if(script_parser_fetch("dvfs_table","pmuic_type",(int*)&pmuic_type,sizeof(int)/4))
+   {
+		printf("can not find pmuic_type form script  \n");
+		return ;
+   }
+
+	if(pmuic_type == 2)
+	{
+		debug("I2C type \n");
+		sunxi_set_cpux_voltage_by_i2c(volt);	
+	}
+	else if(pmuic_type == 1)
+	{
+		debug("gpio type \n");
+		gpio_request_simple("dvfs_table",NULL);
+	}
+	return ;
 }

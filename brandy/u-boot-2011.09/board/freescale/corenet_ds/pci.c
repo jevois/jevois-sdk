@@ -28,12 +28,12 @@
 #include <fdt_support.h>
 #include <asm/fsl_serdes.h>
 
-void pci_init_board (void)
+void pci_init_board(void)
 {
-  fsl_pcie_init_board (0);
+	fsl_pcie_init_board(0);
 }
 
-void pci_of_setup (void * blob, bd_t * bd)
+void pci_of_setup(void *blob, bd_t *bd)
 {
-  FT_FSL_PCI_SETUP;
+	FT_FSL_PCI_SETUP;
 }

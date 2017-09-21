@@ -17,7 +17,7 @@
  * Use "vrfkill" as supply id when declaring the regulator consumer:
  *
  * static struct regulator_consumer_supply pcap_regulator_V6_consumers [] = {
- *  { .dev_name = "rfkill-regulator.0", .supply = "vrfkill" },
+ * 	{ .dev_name = "rfkill-regulator.0", .supply = "vrfkill" },
  * };
  *
  * If you have several regulator driven rfkill, you can append a numerical id to
@@ -25,24 +25,24 @@
  * device:
  *
  * static struct rfkill_regulator_platform_data ezx_rfkill_bt_data = {
- *  .name  = "ezx-bluetooth",
- *  .type  = RFKILL_TYPE_BLUETOOTH,
+ * 	.name  = "ezx-bluetooth",
+ * 	.type  = RFKILL_TYPE_BLUETOOTH,
  * };
  *
  * static struct platform_device a910_rfkill = {
- *  .name  = "rfkill-regulator",
- *  .id    = 0,
- *  .dev   = {
- *    .platform_data = &ezx_rfkill_bt_data,
- *  },
+ * 	.name  = "rfkill-regulator",
+ * 	.id    = 0,
+ * 	.dev   = {
+ * 		.platform_data = &ezx_rfkill_bt_data,
+ * 	},
  * };
  */
 
 #include <linux/rfkill.h>
 
 struct rfkill_regulator_platform_data {
-  char * name;            /* the name for the rfkill switch */
-  enum rfkill_type type;  /* the type as specified in rfkill.h */
+	char *name;             /* the name for the rfkill switch */
+	enum rfkill_type type;  /* the type as specified in rfkill.h */
 };
 
 #endif /* __LINUX_RFKILL_REGULATOR_H */

@@ -37,12 +37,12 @@ struct vm_area_struct;
  * ZERO_PAGE is a global shared page that is always zero: used
  * for zero-mapped memory areas etc..
  */
-extern unsigned long empty_zero_page[PAGE_SIZE / sizeof (unsigned long)];
+extern unsigned long empty_zero_page[PAGE_SIZE/sizeof(unsigned long)];
 #define ZERO_PAGE(vaddr) (virt_to_page(empty_zero_page))
 
 extern pgd_t swapper_pg_dir[];
 extern pgprot_t swapper_pgprot;
-extern struct kmem_cache * pgd_cache;
+extern struct kmem_cache *pgd_cache;
 extern spinlock_t pgd_lock;
 extern struct list_head pgd_list;
 
@@ -61,11 +61,11 @@ extern struct list_head pgd_list;
 #define list_to_pgd(list) \
   ((pgd_t *)((char *)(list) - PGD_LIST_OFFSET))
 
-extern void pgtable_cache_init (void);
-extern void paging_init (void);
-extern void set_page_homes (void);
+extern void pgtable_cache_init(void);
+extern void paging_init(void);
+extern void set_page_homes(void);
 
-#define FIRST_USER_ADDRESS  0
+#define FIRST_USER_ADDRESS	0
 
 #define _PAGE_PRESENT           HV_PTE_PRESENT
 #define _PAGE_HUGE_PAGE         HV_PTE_PAGE
@@ -83,48 +83,48 @@ extern void set_page_homes (void);
  * all the bits, and to mask away the cache control bits for mprotect.
  */
 #define _PAGE_ALL (\
-                   _PAGE_PRESENT | \
-                   _PAGE_HUGE_PAGE | \
-                   _PAGE_READABLE | \
-                   _PAGE_WRITABLE | \
-                   _PAGE_EXECUTABLE | \
-                   _PAGE_ACCESSED | \
-                   _PAGE_DIRTY | \
-                   _PAGE_GLOBAL | \
-                   _PAGE_USER \
-                  )
+  _PAGE_PRESENT | \
+  _PAGE_HUGE_PAGE | \
+  _PAGE_READABLE | \
+  _PAGE_WRITABLE | \
+  _PAGE_EXECUTABLE | \
+  _PAGE_ACCESSED | \
+  _PAGE_DIRTY | \
+  _PAGE_GLOBAL | \
+  _PAGE_USER \
+)
 
 #define PAGE_NONE \
-  __pgprot(_PAGE_PRESENT | _PAGE_ACCESSED)
+	__pgprot(_PAGE_PRESENT | _PAGE_ACCESSED)
 #define PAGE_SHARED \
-  __pgprot(_PAGE_PRESENT | _PAGE_READABLE | _PAGE_WRITABLE | \
-           _PAGE_USER | _PAGE_ACCESSED)
+	__pgprot(_PAGE_PRESENT | _PAGE_READABLE | _PAGE_WRITABLE | \
+		 _PAGE_USER | _PAGE_ACCESSED)
 
 #define PAGE_SHARED_EXEC \
-  __pgprot(_PAGE_PRESENT | _PAGE_READABLE | _PAGE_WRITABLE | \
-           _PAGE_EXECUTABLE | _PAGE_USER | _PAGE_ACCESSED)
+	__pgprot(_PAGE_PRESENT | _PAGE_READABLE | _PAGE_WRITABLE | \
+		 _PAGE_EXECUTABLE | _PAGE_USER | _PAGE_ACCESSED)
 #define PAGE_COPY_NOEXEC \
-  __pgprot(_PAGE_PRESENT | _PAGE_USER | _PAGE_ACCESSED | _PAGE_READABLE)
+	__pgprot(_PAGE_PRESENT | _PAGE_USER | _PAGE_ACCESSED | _PAGE_READABLE)
 #define PAGE_COPY_EXEC \
-  __pgprot(_PAGE_PRESENT | _PAGE_USER | _PAGE_ACCESSED | \
-           _PAGE_READABLE | _PAGE_EXECUTABLE)
+	__pgprot(_PAGE_PRESENT | _PAGE_USER | _PAGE_ACCESSED | \
+		 _PAGE_READABLE | _PAGE_EXECUTABLE)
 #define PAGE_COPY \
-  PAGE_COPY_NOEXEC
+	PAGE_COPY_NOEXEC
 #define PAGE_READONLY \
-  __pgprot(_PAGE_PRESENT | _PAGE_USER | _PAGE_ACCESSED | _PAGE_READABLE)
+	__pgprot(_PAGE_PRESENT | _PAGE_USER | _PAGE_ACCESSED | _PAGE_READABLE)
 #define PAGE_READONLY_EXEC \
-  __pgprot(_PAGE_PRESENT | _PAGE_USER | _PAGE_ACCESSED | \
-           _PAGE_READABLE | _PAGE_EXECUTABLE)
+	__pgprot(_PAGE_PRESENT | _PAGE_USER | _PAGE_ACCESSED | \
+		 _PAGE_READABLE | _PAGE_EXECUTABLE)
 
 #define _PAGE_KERNEL_RO \
-  (_PAGE_PRESENT | _PAGE_GLOBAL | _PAGE_READABLE | _PAGE_ACCESSED)
+ (_PAGE_PRESENT | _PAGE_GLOBAL | _PAGE_READABLE | _PAGE_ACCESSED)
 #define _PAGE_KERNEL \
-  (_PAGE_KERNEL_RO | _PAGE_WRITABLE | _PAGE_DIRTY)
+ (_PAGE_KERNEL_RO | _PAGE_WRITABLE | _PAGE_DIRTY)
 #define _PAGE_KERNEL_EXEC       (_PAGE_KERNEL_RO | _PAGE_EXECUTABLE)
 
-#define PAGE_KERNEL   __pgprot(_PAGE_KERNEL)
-#define PAGE_KERNEL_RO    __pgprot(_PAGE_KERNEL_RO)
-#define PAGE_KERNEL_EXEC  __pgprot(_PAGE_KERNEL_EXEC)
+#define PAGE_KERNEL		__pgprot(_PAGE_KERNEL)
+#define PAGE_KERNEL_RO		__pgprot(_PAGE_KERNEL_RO)
+#define PAGE_KERNEL_EXEC	__pgprot(_PAGE_KERNEL_EXEC)
 
 #define page_to_kpgprot(p) PAGE_KERNEL
 
@@ -132,23 +132,23 @@ extern void set_page_homes (void);
  * We could tighten these up, but for now writable or executable
  * implies readable.
  */
-#define __P000  PAGE_NONE
-#define __P001  PAGE_READONLY
-#define __P010  PAGE_COPY      /* this is write-only, which we won't support */
-#define __P011  PAGE_COPY
-#define __P100  PAGE_READONLY_EXEC
-#define __P101  PAGE_READONLY_EXEC
-#define __P110  PAGE_COPY_EXEC
-#define __P111  PAGE_COPY_EXEC
+#define __P000	PAGE_NONE
+#define __P001	PAGE_READONLY
+#define __P010	PAGE_COPY      /* this is write-only, which we won't support */
+#define __P011	PAGE_COPY
+#define __P100	PAGE_READONLY_EXEC
+#define __P101	PAGE_READONLY_EXEC
+#define __P110	PAGE_COPY_EXEC
+#define __P111	PAGE_COPY_EXEC
 
-#define __S000  PAGE_NONE
-#define __S001  PAGE_READONLY
-#define __S010  PAGE_SHARED
-#define __S011  PAGE_SHARED
-#define __S100  PAGE_READONLY_EXEC
-#define __S101  PAGE_READONLY_EXEC
-#define __S110  PAGE_SHARED_EXEC
-#define __S111  PAGE_SHARED_EXEC
+#define __S000	PAGE_NONE
+#define __S001	PAGE_READONLY
+#define __S010	PAGE_SHARED
+#define __S011	PAGE_SHARED
+#define __S100	PAGE_READONLY_EXEC
+#define __S101	PAGE_READONLY_EXEC
+#define __S110	PAGE_SHARED_EXEC
+#define __S111	PAGE_SHARED_EXEC
 
 /*
  * All the normal _PAGE_ALL bits are ignored for PMDs, except PAGE_PRESENT
@@ -169,16 +169,16 @@ extern void set_page_homes (void);
  * clearing a page table entry, so clear the bottom half first and
  * enforce ordering with a barrier.
  */
-static inline void __pte_clear (pte_t * ptep)
+static inline void __pte_clear(pte_t *ptep)
 {
-  #ifdef __tilegx__
-  ptep->val = 0;
-  #else
-  u32 * tmp = (u32 *) ptep;
-  tmp[0] = 0;
-  barrier();
-  tmp[1] = 0;
-  #endif
+#ifdef __tilegx__
+	ptep->val = 0;
+#else
+	u32 *tmp = (u32 *)ptep;
+	tmp[0] = 0;
+	barrier();
+	tmp[1] = 0;
+#endif
 }
 #define pte_clear(mm, addr, ptep) __pte_clear(ptep)
 
@@ -228,19 +228,19 @@ static inline void __pte_clear (pte_t * ptep)
 #define pte_donemigrate(x) hv_pte_set_present(hv_pte_clear_migrating(x))
 
 #define pte_ERROR(e) \
-  pr_err("%s:%d: bad pte 0x%016llx.\n", __FILE__, __LINE__, pte_val(e))
+	pr_err("%s:%d: bad pte 0x%016llx.\n", __FILE__, __LINE__, pte_val(e))
 #define pgd_ERROR(e) \
-  pr_err("%s:%d: bad pgd 0x%016llx.\n", __FILE__, __LINE__, pgd_val(e))
+	pr_err("%s:%d: bad pgd 0x%016llx.\n", __FILE__, __LINE__, pgd_val(e))
 
 /* Return PA and protection info for a given kernel VA. */
-int va_to_cpa_and_pte (void * va, phys_addr_t * cpa, pte_t * pte);
+int va_to_cpa_and_pte(void *va, phys_addr_t *cpa, pte_t *pte);
 
 /*
  * __set_pte() ensures we write the 64-bit PTE with 32-bit words in
  * the right order on 32-bit platforms and also allows us to write
  * hooks to check valid PTEs, etc., if we want.
  */
-void __set_pte (pte_t * ptep, pte_t pte);
+void __set_pte(pte_t *ptep, pte_t pte);
 
 /*
  * set_pte() sets the given PTE and also sanity-checks the
@@ -248,34 +248,34 @@ void __set_pte (pte_t * ptep, pte_t pte);
  * of the PTE are filled in when it is written to memory, i.e. all
  * caching attributes if "!forcecache", or the home cpu if "anyhome".
  */
-extern void set_pte (pte_t * ptep, pte_t pte);
+extern void set_pte(pte_t *ptep, pte_t pte);
 #define set_pte_at(mm, addr, ptep, pteval) set_pte(ptep, pteval)
 #define set_pte_atomic(pteptr, pteval) set_pte(pteptr, pteval)
 
-#define pte_page(x)   pfn_to_page(pte_pfn(x))
+#define pte_page(x)		pfn_to_page(pte_pfn(x))
 
-static inline int pte_none (pte_t pte)
+static inline int pte_none(pte_t pte)
 {
-  return !pte.val;
+	return !pte.val;
 }
 
-static inline unsigned long pte_pfn (pte_t pte)
+static inline unsigned long pte_pfn(pte_t pte)
 {
-  return hv_pte_get_pfn (pte);
+	return hv_pte_get_pfn(pte);
 }
 
 /* Set or get the remote cache cpu in a pgprot with remote caching. */
-extern pgprot_t set_remote_cache_cpu (pgprot_t prot, int cpu);
-extern int get_remote_cache_cpu (pgprot_t prot);
+extern pgprot_t set_remote_cache_cpu(pgprot_t prot, int cpu);
+extern int get_remote_cache_cpu(pgprot_t prot);
 
-static inline pte_t pfn_pte (unsigned long pfn, pgprot_t prot)
+static inline pte_t pfn_pte(unsigned long pfn, pgprot_t prot)
 {
-  return hv_pte_set_pfn (prot, pfn);
+	return hv_pte_set_pfn(prot, pfn);
 }
 
 /* Support for priority mappings. */
-extern void start_mm_caching (struct mm_struct * mm);
-extern void check_mm_caching (struct mm_struct * prev, struct mm_struct * next);
+extern void start_mm_caching(struct mm_struct *mm);
+extern void check_mm_caching(struct mm_struct *prev, struct mm_struct *next);
 
 /*
  * Support non-linear file mappings (see sys_remap_file_pages).
@@ -293,26 +293,26 @@ extern void check_mm_caching (struct mm_struct * prev, struct mm_struct * next);
  * We put the swap file type+offset in the 32 high bits;
  * I believe we can just leave the low bits clear.
  */
-#define __swp_type(swp)   ((swp).val & 0x1f)
-#define __swp_offset(swp) ((swp).val >> 5)
-#define __swp_entry(type, off)  ((swp_entry_t) { (type) | ((off) << 5) })
-#define __pte_to_swp_entry(pte) ((swp_entry_t) { (pte).val >> 32 })
-#define __swp_entry_to_pte(swp) ((pte_t) { (((long long) ((swp).val)) << 32) })
+#define __swp_type(swp)		((swp).val & 0x1f)
+#define __swp_offset(swp)	((swp).val >> 5)
+#define __swp_entry(type, off)	((swp_entry_t) { (type) | ((off) << 5) })
+#define __pte_to_swp_entry(pte)	((swp_entry_t) { (pte).val >> 32 })
+#define __swp_entry_to_pte(swp)	((pte_t) { (((long long) ((swp).val)) << 32) })
 
 /*
  * Conversion functions: convert a page and protection to a page entry,
  * and a page entry and page directory to the page they refer to.
  */
 
-#define mk_pte(page, pgprot)  pfn_pte(page_to_pfn(page), (pgprot))
+#define mk_pte(page, pgprot)	pfn_pte(page_to_pfn(page), (pgprot))
 
 /*
  * If we are doing an mprotect(), just accept the new vma->vm_page_prot
  * value and combine it with the PFN from the old PTE to get a new PTE.
  */
-static inline pte_t pte_modify (pte_t pte, pgprot_t newprot)
+static inline pte_t pte_modify(pte_t pte, pgprot_t newprot)
 {
-  return pfn_pte (hv_pte_get_pfn (pte), newprot);
+	return pfn_pte(hv_pte_get_pfn(pte), newprot);
 }
 
 /*
@@ -336,7 +336,7 @@ static inline pte_t pte_modify (pte_t pte, pgprot_t newprot)
 #define pgd_offset_k(address) pgd_offset(&init_mm, address)
 
 #if defined(CONFIG_HIGHPTE)
-extern pte_t * pte_offset_map (pmd_t *, unsigned long address);
+extern pte_t *pte_offset_map(pmd_t *, unsigned long address);
 #define pte_unmap(pte) kunmap_atomic(pte)
 #else
 #define pte_offset_map(dir, address) pte_offset_kernel(dir, address)
@@ -344,11 +344,11 @@ extern pte_t * pte_offset_map (pmd_t *, unsigned long address);
 #endif
 
 /* Clear a non-executable kernel PTE and flush it from the TLB. */
-#define kpte_clear_flush(ptep, vaddr)   \
-  do {            \
-    pte_clear(&init_mm, (vaddr), (ptep)); \
-    local_flush_tlb_page(FLUSH_NONEXEC, (vaddr), PAGE_SIZE); \
-  } while (0)
+#define kpte_clear_flush(ptep, vaddr)		\
+do {						\
+	pte_clear(&init_mm, (vaddr), (ptep));	\
+	local_flush_tlb_page(FLUSH_NONEXEC, (vaddr), PAGE_SIZE); \
+} while (0)
 
 /*
  * The kernel page tables contain what we need, and we flush when we
@@ -357,13 +357,13 @@ extern pte_t * pte_offset_map (pmd_t *, unsigned long address);
 #define update_mmu_cache(vma, address, pte) do { } while (0)
 
 #ifdef CONFIG_FLATMEM
-#define kern_addr_valid(addr) (1)
+#define kern_addr_valid(addr)	(1)
 #endif /* CONFIG_FLATMEM */
 
-#define io_remap_pfn_range(vma, vaddr, pfn, size, prot)   \
-  remap_pfn_range(vma, vaddr, pfn, size, prot)
+#define io_remap_pfn_range(vma, vaddr, pfn, size, prot)		\
+		remap_pfn_range(vma, vaddr, pfn, size, prot)
 
-extern void vmalloc_sync_all (void);
+extern void vmalloc_sync_all(void);
 
 #endif /* !__ASSEMBLY__ */
 
@@ -375,28 +375,28 @@ extern void vmalloc_sync_all (void);
 
 #ifndef __ASSEMBLY__
 
-static inline int pmd_none (pmd_t pmd)
+static inline int pmd_none(pmd_t pmd)
 {
-  /*
-   * Only check low word on 32-bit platforms, since it might be
-   * out of sync with upper half.
-   */
-  return (unsigned long) pmd_val (pmd) == 0;
+	/*
+	 * Only check low word on 32-bit platforms, since it might be
+	 * out of sync with upper half.
+	 */
+	return (unsigned long)pmd_val(pmd) == 0;
 }
 
-static inline int pmd_present (pmd_t pmd)
+static inline int pmd_present(pmd_t pmd)
 {
-  return pmd_val (pmd) & _PAGE_PRESENT;
+	return pmd_val(pmd) & _PAGE_PRESENT;
 }
 
-static inline int pmd_bad (pmd_t pmd)
+static inline int pmd_bad(pmd_t pmd)
 {
-  return ( (pmd_val (pmd) & _PAGE_ALL) != _PAGE_TABLE);
+	return ((pmd_val(pmd) & _PAGE_ALL) != _PAGE_TABLE);
 }
 
-static inline unsigned long pages_to_mb (unsigned long npg)
+static inline unsigned long pages_to_mb(unsigned long npg)
 {
-  return npg >> (20 - PAGE_SHIFT);
+	return npg >> (20 - PAGE_SHIFT);
 }
 
 /*
@@ -405,9 +405,9 @@ static inline unsigned long pages_to_mb (unsigned long npg)
  * This function returns the index of the entry in the pmd which would
  * control the given virtual address.
  */
-static inline unsigned long pmd_index (unsigned long address)
+static inline unsigned long pmd_index(unsigned long address)
 {
-  return (address >> PMD_SHIFT) & (PTRS_PER_PMD - 1);
+	return (address >> PMD_SHIFT) & (PTRS_PER_PMD - 1);
 }
 
 /*
@@ -416,11 +416,11 @@ static inline unsigned long pmd_index (unsigned long address)
  * tables can be aligned at sub-page granularity, this function can
  * return non-page-aligned pointers, despite its name.
  */
-static inline unsigned long pmd_page_vaddr (pmd_t pmd)
+static inline unsigned long pmd_page_vaddr(pmd_t pmd)
 {
-  phys_addr_t pa =
-    (phys_addr_t) pmd_ptfn (pmd) << HV_LOG2_PAGE_TABLE_ALIGN;
-  return (unsigned long) __va (pa);
+	phys_addr_t pa =
+		(phys_addr_t)pmd_ptfn(pmd) << HV_LOG2_PAGE_TABLE_ALIGN;
+	return (unsigned long)__va(pa);
 }
 
 /*
@@ -438,27 +438,27 @@ static inline unsigned long pmd_page_vaddr (pmd_t pmd)
  * This macro returns the index of the entry in the pte page which would
  * control the given virtual address.
  */
-static inline unsigned long pte_index (unsigned long address)
+static inline unsigned long pte_index(unsigned long address)
 {
-  return (address >> PAGE_SHIFT) & (PTRS_PER_PTE - 1);
+	return (address >> PAGE_SHIFT) & (PTRS_PER_PTE - 1);
 }
 
-static inline pte_t * pte_offset_kernel (pmd_t * pmd, unsigned long address)
+static inline pte_t *pte_offset_kernel(pmd_t *pmd, unsigned long address)
 {
-  return (pte_t *) pmd_page_vaddr (*pmd) + pte_index (address);
+       return (pte_t *)pmd_page_vaddr(*pmd) + pte_index(address);
 }
 
-static inline int pmd_huge_page (pmd_t pmd)
+static inline int pmd_huge_page(pmd_t pmd)
 {
-  return pmd_val (pmd) & _PAGE_HUGE_PAGE;
+	return pmd_val(pmd) & _PAGE_HUGE_PAGE;
 }
 
 #include <asm-generic/pgtable.h>
 
 /* Support /proc/NN/pgtable API. */
 struct seq_file;
-int arch_proc_pgtable_show (struct seq_file * m, struct mm_struct * mm,
-                            unsigned long vaddr, pte_t * ptep, void ** datap);
+int arch_proc_pgtable_show(struct seq_file *m, struct mm_struct *mm,
+			   unsigned long vaddr, pte_t *ptep, void **datap);
 
 #endif /* !__ASSEMBLY__ */
 

@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -72,33 +72,33 @@
 #endif
 typedef struct
 {
-  int mul_sel;
-  int pull;
-  int drv_level;
-  int data;
+    int mul_sel;
+    int pull;
+    int drv_level;
+    int data;
 } gpio_status_set_t;
 
 typedef struct
 {
-  char    gpio_name[32];
-  int     port;
-  int     port_num;
-  gpio_status_set_t user_gpio_status;
-  gpio_status_set_t hardware_gpio_status;
+    char    gpio_name[32];
+    int     port;
+    int     port_num;
+    gpio_status_set_t user_gpio_status;
+    gpio_status_set_t hardware_gpio_status;
 } system_gpio_set_t;
 
 typedef struct
 {
-  unsigned char      port;                       //端口号
-  unsigned char      port_num;                   //端口内编号
-  char               mul_sel;                    //功能编号
-  char               pull;                       //电阻状态
-  char               drv_level;                  //驱动驱动能力
-  char               data;                       //输出电平
-  unsigned char      reserved[2];                //保留位，保证对齐
+    unsigned char      port;                       //端口号
+    unsigned char      port_num;                   //端口内编号
+    char               mul_sel;                    //功能编号
+    char               pull;                       //电阻状态
+    char               drv_level;                  //驱动驱动能力
+    char               data;                       //输出电平
+    unsigned char      reserved[2];                //保留位，保证对齐
 }
 normal_gpio_set_t;
 
-int boot_set_gpio (void * user_gpio_list, __u32 group_count_max, __s32 set_gpio);
+int boot_set_gpio(void  *user_gpio_list, __u32 group_count_max, __s32 set_gpio);
 
 #endif /* _SUNXI_GPIO_H */

@@ -43,13 +43,13 @@ DECLARE_GLOBAL_DATA_PTR;
  * include/asm-arm/u-boot.h and include/asm-arm/global_data.h, so any changes
  * need to reflect their current state and layout of structures involved!
  */
-int platform_sys_info (struct sys_info * si)
+int platform_sys_info(struct sys_info *si)
 {
-  int i;
-  
-  for (i = 0; i < CONFIG_NR_DRAM_BANKS; i++)
-    platform_set_mr (si, gd->bd->bi_dram[i].start,
-                     gd->bd->bi_dram[i].size, MR_ATTR_DRAM);
-                     
-  return 1;
+	int i;
+
+	for (i = 0; i < CONFIG_NR_DRAM_BANKS; i++)
+		platform_set_mr(si, gd->bd->bi_dram[i].start,
+				gd->bd->bi_dram[i].size, MR_ATTR_DRAM);
+
+	return 1;
 }

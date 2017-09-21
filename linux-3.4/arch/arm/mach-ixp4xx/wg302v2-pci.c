@@ -6,8 +6,8 @@
  * Copyright (C) 2007 Imre Kaloz <kaloz@openwrt.org>
  *
  * based on coyote-pci.c:
- *  Copyright (C) 2002 Jungo Software Technologies.
- *  Copyright (C) 2003 MontaVista Software, Inc.
+ *	Copyright (C) 2002 Jungo Software Technologies.
+ *	Copyright (C) 2003 MontaVista Software, Inc.
  *
  * Maintainer: Imre Kaloz <kaloz@openwrt.org>
  *
@@ -27,38 +27,37 @@
 
 #include <asm/mach/pci.h>
 
-void __init wg302v2_pci_preinit (void)
+void __init wg302v2_pci_preinit(void)
 {
-  irq_set_irq_type (IRQ_IXP4XX_GPIO8, IRQ_TYPE_LEVEL_LOW);
-  irq_set_irq_type (IRQ_IXP4XX_GPIO9, IRQ_TYPE_LEVEL_LOW);
-  
-  ixp4xx_pci_preinit();
+	irq_set_irq_type(IRQ_IXP4XX_GPIO8, IRQ_TYPE_LEVEL_LOW);
+	irq_set_irq_type(IRQ_IXP4XX_GPIO9, IRQ_TYPE_LEVEL_LOW);
+
+	ixp4xx_pci_preinit();
 }
 
-static int __init wg302v2_map_irq (const struct pci_dev * dev, u8 slot, u8 pin)
+static int __init wg302v2_map_irq(const struct pci_dev *dev, u8 slot, u8 pin)
 {
-  if (slot == 1)
-  { return IRQ_IXP4XX_GPIO8; }
-  else
-    if (slot == 2)
-    { return IRQ_IXP4XX_GPIO9; }
-    else { return -1; }
+	if (slot == 1)
+		return IRQ_IXP4XX_GPIO8;
+	else if (slot == 2)
+		return IRQ_IXP4XX_GPIO9;
+	else return -1;
 }
 
 struct hw_pci wg302v2_pci __initdata = {
-  .nr_controllers = 1,
-  .preinit =        wg302v2_pci_preinit,
-  .swizzle =        pci_std_swizzle,
-  .setup =          ixp4xx_setup,
-  .scan =           ixp4xx_scan_bus,
-  .map_irq =        wg302v2_map_irq,
+	.nr_controllers = 1,
+	.preinit =        wg302v2_pci_preinit,
+	.swizzle =        pci_std_swizzle,
+	.setup =          ixp4xx_setup,
+	.scan =           ixp4xx_scan_bus,
+	.map_irq =        wg302v2_map_irq,
 };
 
-int __init wg302v2_pci_init (void)
+int __init wg302v2_pci_init(void)
 {
-  if (machine_is_wg302v2() )
-  { pci_common_init (&wg302v2_pci); }
-  return 0;
+	if (machine_is_wg302v2())
+		pci_common_init(&wg302v2_pci);
+	return 0;
 }
 
-subsys_initcall (wg302v2_pci_init);
+subsys_initcall(wg302v2_pci_init);

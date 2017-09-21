@@ -29,7 +29,7 @@
  *
  * returns:  OK if initialize hwmsgbox succeeded, others if failed.
  */
-int arisc_hwmsgbox_init (void);
+int arisc_hwmsgbox_init(void);
 
 /**
  * exit hwmsgbox.
@@ -37,7 +37,7 @@ int arisc_hwmsgbox_init (void);
  *
  * returns:  OK if exit hwmsgbox succeeded, others if failed.
  */
-int arisc_hwmsgbox_exit (void);
+int arisc_hwmsgbox_exit(void);
 
 /**
  * send one message to another processor by hwmsgbox.
@@ -47,7 +47,7 @@ int arisc_hwmsgbox_exit (void);
  *
  * returns:  OK if send message succeeded, other if failed.
  */
-int arisc_hwmsgbox_send_message (struct arisc_message * pmessage, unsigned int timeout);
+int arisc_hwmsgbox_send_message(struct arisc_message *pmessage, unsigned int timeout);
 
 /**
  * Description:     query message of hwmsgbox by hand, mainly for.
@@ -55,14 +55,14 @@ int arisc_hwmsgbox_send_message (struct arisc_message * pmessage, unsigned int t
  *
  * returns:  the point of message, NULL if timeout.
  */
-struct arisc_message * arisc_hwmsgbox_query_message (void);
+struct arisc_message *arisc_hwmsgbox_query_message(void);
 
-int arisc_hwmsgbox_enable_receiver_int (int queue, int user);
-int arisc_hwmsgbox_disable_receiver_int (int queue, int user);
+int arisc_hwmsgbox_enable_receiver_int(int queue, int user);
+int arisc_hwmsgbox_disable_receiver_int(int queue, int user);
 
-int arisc_hwmsgbox_feedback_message (struct arisc_message * pmessage, unsigned int timeout);
+int arisc_hwmsgbox_feedback_message(struct arisc_message *pmessage, unsigned int timeout);
 
-int arisc_hwmsgbox_standby_resume (void);
-int arisc_hwmsgbox_standby_suspend (void);
+int arisc_hwmsgbox_standby_resume(void);
+int arisc_hwmsgbox_standby_suspend(void);
 
 #endif  /* __ARISC_HWMSGBOX_H */

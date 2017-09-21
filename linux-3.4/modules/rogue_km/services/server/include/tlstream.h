@@ -5,16 +5,16 @@
 @Description    TL provides driver components with a way to copy data from kernel
                 space to user space (e.g. screen/file).
 
-                Data can be passed to the Transport Layer through the
+                Data can be passed to the Transport Layer through the 
                 TL Stream (kernel space) API interface.
 
-                The buffer provided to every stream is a modified version of a
+                The buffer provided to every stream is a modified version of a 
                 circular buffer. Which CB version is created is specified by
                 relevant flags when creating a stream. Currently two types
                 of buffer are available:
                 - TL_FLAG_DROP_DATA:
-                  When the buffer is full, incoming data are dropped
-                  (instead of overwriting older data) and a marker is set
+                  When the buffer is full, incoming data are dropped 
+                  (instead of overwriting older data) and a marker is set 
                   to let the user know that data have been lost.
                 - TL_FLAG_BLOCKING_RESERVE:
                   When the circular buffer is full, reserve/write calls block
@@ -23,19 +23,19 @@
                 All size/space requests are in bytes. However, the actual
                 implementation uses native word sizes (i.e. 4 byte aligned).
 
-                The user does not need to provide space for the stream buffer
+                The user does not need to provide space for the stream buffer 
                 as the TL handles memory allocations and usage.
 
                 Inserting data to a stream's buffer can be done either:
                 - by using TLReserve/TLCommit: User is provided with a buffer
                                                  to write data to.
-                - or by using TLWrite:         User provides a buffer with
-                                                 data to be committed. The TL
-                                                 copies the data from the
-                                                 buffer into the stream buffer
+                - or by using TLWrite:         User provides a buffer with 
+                                                 data to be committed. The TL 
+                                                 copies the data from the 
+                                                 buffer into the stream buffer 
                                                  and returns.
-                Users should be aware that there are implementation overheads
-                associated with every stream buffer. If you find that less
+                Users should be aware that there are implementation overheads 
+                associated with every stream buffer. If you find that less 
                 data are captured than expected then try increasing the
                 stream buffer size or use TLInfo to obtain buffer parameters
                 and calculate optimum required values at run time.
@@ -87,10 +87,10 @@ extern "C" {
 /*! Flags specifying stream and circular buffer behaviour */
 /*! Discard new data if the buffer is full */
 #define TL_FLAG_DROP_DATA              (1U<<0)
-/*! Block Reserve (subsequently Write) calls if there is not enough space
+/*! Block Reserve (subsequently Write) calls if there is not enough space 
  *    until some space is freed. */
-#define TL_FLAG_BLOCKING_RESERVE      (1U<<1)
-/*! Do not destroy stream if there still are data that have not been
+#define TL_FLAG_BLOCKING_RESERVE	    (1U<<1)
+/*! Do not destroy stream if there still are data that have not been 
  *     copied in user space. BLock until the stream is emptied. */
 #define TL_FLAG_FORCE_FLUSH            (1U<<2)
 /*! Do not signal consumers on commit automatically when the stream buffer
@@ -101,10 +101,10 @@ extern "C" {
 /*! Structure used to pass internal TL stream sizes information to users.*/
 typedef struct _TL_STREAM_INFO_
 {
-  IMG_UINT32 headerSize;          /*!< Packet header size in bytes */
-  IMG_UINT32 minReservationSize;  /*!< Minimum data size reserved in bytes */
-  IMG_UINT32 pageSize;            /*!< Page size in bytes */
-  IMG_UINT32 pageAlign;           /*!< Page alignment in bytes */
+    IMG_UINT32 headerSize;          /*!< Packet header size in bytes */
+    IMG_UINT32 minReservationSize;  /*!< Minimum data size reserved in bytes */
+    IMG_UINT32 pageSize;            /*!< Page size in bytes */
+    IMG_UINT32 pageAlign;           /*!< Page alignment in bytes */
 } TL_STREAM_INFO, *PTL_STREAM_INFO;
 
 /*! Callback operations or notifications that a stream producer may handle
@@ -118,18 +118,18 @@ typedef struct _TL_STREAM_INFO_
  * that writes data to the TL stream.  Producer should handle the notification
  * or operation supplied in ui32ReqOp on stream hStream. The
  * Operations and notifications are defined above in TL_SOURCECB_OP */
-typedef PVRSRV_ERROR (*TL_STREAM_SOURCECB) (IMG_HANDLE hStream,
-    IMG_UINT32 ui32ReqOp, IMG_UINT32 * ui32Resp, IMG_VOID * pvUser);
-    
+typedef PVRSRV_ERROR (*TL_STREAM_SOURCECB)(IMG_HANDLE hStream,
+		IMG_UINT32 ui32ReqOp, IMG_UINT32* ui32Resp, IMG_VOID* pvUser);
+
 /*************************************************************************/ /*!
  @Function      TLStreamCreate
  @Description   Request the creation of a new stream and open a handle.
-        If creating a stream which should continue to exist after the
-        current context is finished, then TLStreamCreate must be
-        followed by a TLStreamOpen call. On any case, the number of
-        create/open calls must balance with the number of close calls
-        used. This ensures the resources of a stream are released when
-        it is no longer required.
+ 				If creating a stream which should continue to exist after the
+				current context is finished, then TLStreamCreate must be 
+				followed by a TLStreamOpen call. On any case, the number of 
+				create/open calls must balance with the number of close calls
+				used. This ensures the resources of a stream are released when
+				it is no longer required.
  @Output        phStream        Pointer to handle to store the new stream.
  @Input         szStreamName    Name of stream, maximum length:
                                   PRVSRVTL_MAX_STREAM_NAME_SIZE.
@@ -138,24 +138,24 @@ typedef PVRSRV_ERROR (*TL_STREAM_SOURCECB) (IMG_HANDLE hStream,
  @Input         ui32StreamFlags Flags that configure buffer behaviour.See above.
  @Input         pfProducerDB    Optional callback, may be null.
  @Input         pvProducerData  Optional user data for callback, may be null.
- @Return        PVRSRV_ERROR_INVALID_PARAMS  NULL stream handle or string name
+ @Return        PVRSRV_ERROR_INVALID_PARAMS  NULL stream handle or string name 
                                                exceeded MAX_STREAM_NAME_SIZE
  @Return        PVRSRV_ERROR_OUT_OF_MEMORY   Failed to allocate space for stream
                                                handle.
  @Return        PVRSRV_ERROR_DUPLICATE_VALUE There already exists a stream with
-                         the same stream name string.
+ 											   the same stream name string.
  @Return        eError                       Internal services call returned
                                                eError error number.
  @Return        PVRSRV_OK
 */ /**************************************************************************/
-PVRSRV_ERROR
-TLStreamCreate (IMG_HANDLE * phStream,
-                IMG_CHAR  * szStreamName,
-                IMG_UINT32 ui32Size,
-                IMG_UINT32 ui32StreamFlags,
-                TL_STREAM_SOURCECB pfProducerCB,
-                IMG_PVOID pvProducerUD);
-                
+PVRSRV_ERROR 
+TLStreamCreate(IMG_HANDLE *phStream,
+               IMG_CHAR	  *szStreamName,
+               IMG_UINT32 ui32Size,
+               IMG_UINT32 ui32StreamFlags,
+               TL_STREAM_SOURCECB pfProducerCB,
+               IMG_PVOID pvProducerUD);
+
 /*************************************************************************/ /*!
  @Function      TLStreamOpen
  @Description   Attach to existing stream that has already been created by a
@@ -165,27 +165,27 @@ TLStreamCreate (IMG_HANDLE * phStream,
                                   existing stream name
  @Return        PVRSRV_ERROR_NOT_FOUND        None of the streams matched the
                                                  requested stream name.
-        PVRSRV_ERROR_INVALID_PARAMS    non NULL pointer to stream
-                           handler is required.
+				PVRSRV_ERROR_INVALID_PARAMS	   non NULL pointer to stream 
+											     handler is required.
  @Return        PVRSRV_OK                      Success.
 */ /**************************************************************************/
 PVRSRV_ERROR
-TLStreamOpen (IMG_HANDLE * phStream,
-              IMG_CHAR  * szStreamName);
-              
+TLStreamOpen(IMG_HANDLE *phStream,
+             IMG_CHAR   *szStreamName);
+
 /*************************************************************************/ /*!
  @Function      TLStreamClose
  @Description   Detach from the stream associated with the given handle. If
-                  the current handle is the last one accessing the stream
-          (i.e. the number of TLStreamCreate+TLStreamOpen calls matches
-          the number of TLStreamClose calls) then the stream is also
-          deleted.
-        On return the handle is no longer valid.
+                  the current handle is the last one accessing the stream 
+				  (i.e. the number of TLStreamCreate+TLStreamOpen calls matches
+				  the number of TLStreamClose calls) then the stream is also
+				  deleted.
+				On return the handle is no longer valid.
  @Input         hStream     Handle to stream that will be closed.
  @Return        None.
 */ /**************************************************************************/
 IMG_VOID
-TLStreamClose (IMG_HANDLE hStream);
+TLStreamClose(IMG_HANDLE hStream);
 
 /*************************************************************************/ /*!
  @Function      TLStreamReserve
@@ -195,24 +195,24 @@ TLStreamClose (IMG_HANDLE hStream);
                   for a stream, subsequent TLStreamReserve calls for this
                   stream will fail.
  @Input         hStream         Stream handle.
- @Output        ppui8Data       Pointer to a pointer to a location in the
+ @Output        ppui8Data       Pointer to a pointer to a location in the 
                                   buffer. The caller can then use this address
-                                  in writing data into the stream.
+                                  in writing data into the stream. 
  @Input         ui32Size        Number of bytes to reserve in buffer.
  @Return        PVRSRV_INVALID_PARAMS       NULL stream handler.
  @Return        PVRSRV_ERROR_NOT_READY      There are data previously reserved
                                               that are pending to be committed.
- @Return        PVRSRV_ERROR_STREAM_MISUSE  Misusing the stream by trying to
-                                              reserve more space than the
+ @Return        PVRSRV_ERROR_STREAM_MISUSE  Misusing the stream by trying to 
+                                              reserve more space than the 
                                               buffer size.
                 PVRSRV_ERROR_STREAM_FULL    Stream buffer full, data not written
  @Return        PVRSRV_OK                   Success, output arguments valid.
 */ /**************************************************************************/
-PVRSRV_ERROR
-TLStreamReserve (IMG_HANDLE hStream,
-                 IMG_UINT8 ** ppui8Data,
-                 IMG_UINT32 ui32Size);
-                 
+PVRSRV_ERROR 
+TLStreamReserve(IMG_HANDLE hStream, 
+                IMG_UINT8  **ppui8Data,
+                IMG_UINT32 ui32Size);
+
 /*************************************************************************/ /*!
  @Function      TLStreamReserve2
  @Description   Reserve space in stream buffer. When successful every
@@ -228,7 +228,7 @@ TLStreamReserve (IMG_HANDLE hStream,
  @Input         ui32SizeMin     Minimum number of bytes to reserve in buffer.
  @Input         pui32Available  Optional, but when present and the FULL error
                                   is returned, a size suggestion is returned
-                  in this argument which the caller can attempt
+								  in this argument which the caller can attempt
                                   to reserve again for a successful allocation.
  @Return        PVRSRV_INVALID_PARAMS       NULL stream handler.
  @Return        PVRSRV_ERROR_NOT_READY      There are data previously reserved
@@ -240,12 +240,12 @@ TLStreamReserve (IMG_HANDLE hStream,
  @Return        PVRSRV_OK                   Success, output arguments valid.
 */ /**************************************************************************/
 PVRSRV_ERROR
-TLStreamReserve2 (IMG_HANDLE hStream,
-                  IMG_UINT8 ** ppui8Data,
-                  IMG_UINT32 ui32Size,
-                  IMG_UINT32 ui32SizeMin,
-                  IMG_UINT32 * pui32Available);
-                  
+TLStreamReserve2(IMG_HANDLE hStream,
+                IMG_UINT8  **ppui8Data,
+                IMG_UINT32 ui32Size,
+                IMG_UINT32 ui32SizeMin,
+                IMG_UINT32* pui32Available);
+
 /*************************************************************************/ /*!
  @Function      TLStreamCommit
  @Description   Notify TL that data have been written in the stream buffer.
@@ -254,21 +254,21 @@ TLStreamReserve2 (IMG_HANDLE hStream,
  @Input         ui32Size        Number of bytes that have been added to the
                                   stream.
  @Return        PVRSRV_ERROR_INVALID_PARAMS  NULL stream handle.
- @Return        PVRSRV_ERROR_STREAM_MISUSE   Commit results in more data
+ @Return        PVRSRV_ERROR_STREAM_MISUSE   Commit results in more data 
                                                committed than the buffer size,
                                                the stream is misused.
- @Return        eError                       Commit was successful but
+ @Return        eError                       Commit was successful but 
                                                internal services call returned
                                                eError error number.
  @Return        PVRSRV_OK
 */ /**************************************************************************/
-PVRSRV_ERROR
-TLStreamCommit (IMG_HANDLE hStream,
-                IMG_UINT32 ui32Size);
-                
+PVRSRV_ERROR 
+TLStreamCommit(IMG_HANDLE hStream,
+               IMG_UINT32 ui32Size);
+
 /*************************************************************************/ /*!
  @Function      TLStreamWrite
- @Description   Combined Reserve/Commit call. This function Reserves space in
+ @Description   Combined Reserve/Commit call. This function Reserves space in 
                   the specified stream buffer, copies ui32Size bytes of data
                   from the array pui8Src points to and Commits in an "atomic"
                   style operation.
@@ -276,15 +276,15 @@ TLStreamCommit (IMG_HANDLE hStream,
  @Input         pui8Src         Source to read data from.
  @Input         ui32Size        Number of bytes to copy and commit.
  @Return        PVRSRV_ERROR_INVALID_PARAMS  NULL stream handler.
- @Return        eError                       Error codes returned by either
+ @Return        eError                       Error codes returned by either 
                                                Reserve or Commit.
  @Return        PVRSRV_OK
  */ /**************************************************************************/
-PVRSRV_ERROR
-TLStreamWrite (IMG_HANDLE hStream,
-               IMG_UINT8 * pui8Src,
-               IMG_UINT32 ui32Size);
-               
+PVRSRV_ERROR 
+TLStreamWrite(IMG_HANDLE hStream, 
+              IMG_UINT8  *pui8Src,
+              IMG_UINT32 ui32Size);
+
 /*************************************************************************/ /*!
  @Function      TLStreamSync
  @Description   Signal the consumer to start acquiring data from the stream
@@ -298,32 +298,32 @@ TLStreamWrite (IMG_HANDLE hStream,
  @Return        PVRSRV_OK
  */ /**************************************************************************/
 PVRSRV_ERROR
-TLStreamSync (IMG_HANDLE hStream);
+TLStreamSync(IMG_HANDLE hStream);
 
 
 /*************************************************************************/ /*!
  @Function      TLStreamMarkEOS
  @Description   Insert a EOS marker packet in the given stream.
  @Input         hStream         Stream handle.
- @Return        PVRSRV_ERROR_INVALID_PARAMS NULL stream handler.
- @Return        eError                      Error codes returned by either
+ @Return        PVRSRV_ERROR_INVALID_PARAMS	NULL stream handler.
+ @Return        eError                     	Error codes returned by either
                                               Reserve or Commit.
- @Return        PVRSRV_OK             Success.
+ @Return        PVRSRV_OK       			Success.
 */ /**************************************************************************/
-PVRSRV_ERROR
-TLStreamMarkEOS (IMG_HANDLE hStream);
+PVRSRV_ERROR 
+TLStreamMarkEOS(IMG_HANDLE hStream);
 
 /*************************************************************************/ /*!
  @Function      TLStreamInfo
  @Description   Run time information about buffer elemental sizes.
                 It sets psInfo members accordingly. Users can use those values
-                to calculate the parameters they use in TLStreamCreate and
+                to calculate the parameters they use in TLStreamCreate and 
                 TLStreamReserve.
  @Output        psInfo          pointer to stream info structure.
  @Return        None.
 */ /**************************************************************************/
-IMG_VOID
-TLStreamInfo (PTL_STREAM_INFO psInfo);
+IMG_VOID 
+TLStreamInfo(PTL_STREAM_INFO psInfo);
 
 #if defined (__cplusplus)
 }

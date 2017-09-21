@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2012-2014 ARM Limited. All rights reserved.
- *
+ * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- *
+ * 
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -18,9 +18,9 @@
 #define MALI_DMA_CMD_BUF_SIZE 1024
 
 typedef struct mali_dma_cmd_buf {
-  u32 * virt_addr;          /**< CPU address of command buffer */
-  u32 phys_addr;            /**< Physical address of command buffer */
-  u32 size;                 /**< Number of prepared words in command buffer */
+	u32 *virt_addr;           /**< CPU address of command buffer */
+	u32 phys_addr;            /**< Physical address of command buffer */
+	u32 size;                 /**< Number of prepared words in command buffer */
 } mali_dma_cmd_buf;
 
 /** @brief Create a new DMA unit
@@ -31,7 +31,7 @@ typedef struct mali_dma_cmd_buf {
  * @param resource it will be a pointer to a DMA resource
  * @return DMA object on success, NULL on failure
  */
-struct mali_dma_core * mali_dma_create (_mali_osk_resource_t * resource);
+struct mali_dma_core *mali_dma_create(_mali_osk_resource_t *resource);
 
 /** @brief Delete DMA unit
  *
@@ -41,13 +41,13 @@ struct mali_dma_core * mali_dma_create (_mali_osk_resource_t * resource);
  *
  * @param dma Pointer to DMA unit object
  */
-void mali_dma_delete (struct mali_dma_core * dma);
+void mali_dma_delete(struct mali_dma_core *dma);
 
 /** @brief Retrieves the MALI DMA core object (if there is)
  *
  * @return The Mali DMA object otherwise NULL
  */
-struct mali_dma_core * mali_dma_get_global_dma_core (void);
+struct mali_dma_core *mali_dma_get_global_dma_core(void);
 
 /**
  * @brief Run a command buffer on the DMA unit
@@ -57,7 +57,7 @@ struct mali_dma_core * mali_dma_get_global_dma_core (void);
  * @return _MALI_OSK_ERR_OK if the buffer was started successfully,
  *         _MALI_OSK_ERR_BUSY if the DMA unit is busy.
  */
-_mali_osk_errcode_t mali_dma_start (struct mali_dma_core * dma, mali_dma_cmd_buf * buf);
+_mali_osk_errcode_t mali_dma_start(struct mali_dma_core *dma, mali_dma_cmd_buf *buf);
 
 /**
  * @brief Create a DMA command
@@ -66,16 +66,16 @@ _mali_osk_errcode_t mali_dma_start (struct mali_dma_core * dma, mali_dma_cmd_buf
  * @param reg offset to register of core
  * @param n number of registers to write
  */
-MALI_STATIC_INLINE u32 mali_dma_command_write (struct mali_hw_core * core, u32 reg, u32 n)
+MALI_STATIC_INLINE u32 mali_dma_command_write(struct mali_hw_core *core, u32 reg, u32 n)
 {
-  u32 core_offset = core->phys_offset;
-  
-  MALI_DEBUG_ASSERT (reg < 0x2000);
-  MALI_DEBUG_ASSERT (n < 0x800);
-  MALI_DEBUG_ASSERT (core_offset < 0x30000);
-  MALI_DEBUG_ASSERT (0 == ( (core_offset + reg) & ~0x7FFFF) );
-  
-  return (n << 20) | (core_offset + reg);
+	u32 core_offset = core->phys_offset;
+
+	MALI_DEBUG_ASSERT(reg < 0x2000);
+	MALI_DEBUG_ASSERT(n < 0x800);
+	MALI_DEBUG_ASSERT(core_offset < 0x30000);
+	MALI_DEBUG_ASSERT(0 == ((core_offset + reg) & ~0x7FFFF));
+
+	return (n << 20) | (core_offset + reg);
 }
 
 /**
@@ -87,16 +87,16 @@ MALI_STATIC_INLINE u32 mali_dma_command_write (struct mali_hw_core * core, u32 r
  * @param data Pointer to data to write
  * @param count Number of 4 byte words to write
  */
-MALI_STATIC_INLINE void mali_dma_write_array (mali_dma_cmd_buf * buf, struct mali_hw_core * core,
-    u32 reg, u32 * data, u32 count)
+MALI_STATIC_INLINE void mali_dma_write_array(mali_dma_cmd_buf *buf, struct mali_hw_core *core,
+		u32 reg, u32 *data, u32 count)
 {
-  MALI_DEBUG_ASSERT ( (buf->size + 1 + count) < MALI_DMA_CMD_BUF_SIZE / 4);
-  
-  buf->virt_addr[buf->size++] = mali_dma_command_write (core, reg, count);
-  
-  _mali_osk_memcpy (buf->virt_addr + buf->size, data, count * sizeof (*buf->virt_addr) );
-  
-  buf->size += count;
+	MALI_DEBUG_ASSERT((buf->size + 1 + count) < MALI_DMA_CMD_BUF_SIZE / 4);
+
+	buf->virt_addr[buf->size++] = mali_dma_command_write(core, reg, count);
+
+	_mali_osk_memcpy(buf->virt_addr + buf->size, data, count * sizeof(*buf->virt_addr));
+
+	buf->size += count;
 }
 
 /**
@@ -109,12 +109,12 @@ MALI_STATIC_INLINE void mali_dma_write_array (mali_dma_cmd_buf * buf, struct mal
  * @param count Number of 4 byte words to write
  * @param ref Pointer to referance data that can be skipped if equal
  */
-MALI_STATIC_INLINE void mali_dma_write_array_conditional (mali_dma_cmd_buf * buf, struct mali_hw_core * core,
-    u32 reg, u32 * data, u32 count, const u32 * ref)
+MALI_STATIC_INLINE void mali_dma_write_array_conditional(mali_dma_cmd_buf *buf, struct mali_hw_core *core,
+		u32 reg, u32 *data, u32 count, const u32 *ref)
 {
-  /* Do conditional array writes are not yet implemented, fallback to a
-   * normal array write. */
-  mali_dma_write_array (buf, core, reg, data, count);
+	/* Do conditional array writes are not yet implemented, fallback to a
+	 * normal array write. */
+	mali_dma_write_array(buf, core, reg, data, count);
 }
 
 /**
@@ -128,17 +128,17 @@ MALI_STATIC_INLINE void mali_dma_write_array_conditional (mali_dma_cmd_buf * buf
  * @param data Pointer to data to write
  * @param ref Pointer to referance data that can be skipped if equal
  */
-MALI_STATIC_INLINE void mali_dma_write_conditional (mali_dma_cmd_buf * buf, struct mali_hw_core * core,
-    u32 reg, u32 data, const u32 ref)
+MALI_STATIC_INLINE void mali_dma_write_conditional(mali_dma_cmd_buf *buf, struct mali_hw_core *core,
+		u32 reg, u32 data, const u32 ref)
 {
-  /* Skip write if reference value is equal to data. */
-  if (data == ref) { return; }
-  
-  buf->virt_addr[buf->size++] = mali_dma_command_write (core, reg, 1);
-  
-  buf->virt_addr[buf->size++] = data;
-  
-  MALI_DEBUG_ASSERT (buf->size < MALI_DMA_CMD_BUF_SIZE / 4);
+	/* Skip write if reference value is equal to data. */
+	if (data == ref) return;
+
+	buf->virt_addr[buf->size++] = mali_dma_command_write(core, reg, 1);
+
+	buf->virt_addr[buf->size++] = data;
+
+	MALI_DEBUG_ASSERT(buf->size < MALI_DMA_CMD_BUF_SIZE / 4);
 }
 
 /**
@@ -149,14 +149,14 @@ MALI_STATIC_INLINE void mali_dma_write_conditional (mali_dma_cmd_buf * buf, stru
  * @param reg Register on core to start writing to
  * @param data Pointer to data to write
  */
-MALI_STATIC_INLINE void mali_dma_write (mali_dma_cmd_buf * buf, struct mali_hw_core * core,
-                                        u32 reg, u32 data)
+MALI_STATIC_INLINE void mali_dma_write(mali_dma_cmd_buf *buf, struct mali_hw_core *core,
+				       u32 reg, u32 data)
 {
-  buf->virt_addr[buf->size++] = mali_dma_command_write (core, reg, 1);
-  
-  buf->virt_addr[buf->size++] = data;
-  
-  MALI_DEBUG_ASSERT (buf->size < MALI_DMA_CMD_BUF_SIZE / 4);
+	buf->virt_addr[buf->size++] = mali_dma_command_write(core, reg, 1);
+
+	buf->virt_addr[buf->size++] = data;
+
+	MALI_DEBUG_ASSERT(buf->size < MALI_DMA_CMD_BUF_SIZE / 4);
 }
 
 /**
@@ -167,7 +167,7 @@ MALI_STATIC_INLINE void mali_dma_write (mali_dma_cmd_buf * buf, struct mali_hw_c
  * @param buf The mali_dma_cmd_buf to prepare
  * @return _MALI_OSK_ERR_OK if the \a buf is ready to use
  */
-_mali_osk_errcode_t mali_dma_get_cmd_buf (mali_dma_cmd_buf * buf);
+_mali_osk_errcode_t mali_dma_get_cmd_buf(mali_dma_cmd_buf *buf);
 
 /**
  * @brief Check if a DMA command buffer is ready for use
@@ -175,9 +175,9 @@ _mali_osk_errcode_t mali_dma_get_cmd_buf (mali_dma_cmd_buf * buf);
  * @param buf The mali_dma_cmd_buf to check
  * @return MALI_TRUE if buffer is usable, MALI_FALSE otherwise
  */
-MALI_STATIC_INLINE mali_bool mali_dma_cmd_buf_is_valid (mali_dma_cmd_buf * buf)
+MALI_STATIC_INLINE mali_bool mali_dma_cmd_buf_is_valid(mali_dma_cmd_buf *buf)
 {
-  return NULL != buf->virt_addr;
+	return NULL != buf->virt_addr;
 }
 
 /**
@@ -185,6 +185,6 @@ MALI_STATIC_INLINE mali_bool mali_dma_cmd_buf_is_valid (mali_dma_cmd_buf * buf)
  *
  * @param buf Pointer to DMA command buffer to return
  */
-void mali_dma_put_cmd_buf (mali_dma_cmd_buf * buf);
+void mali_dma_put_cmd_buf(mali_dma_cmd_buf *buf);
 
 #endif /* __MALI_DMA_H__ */

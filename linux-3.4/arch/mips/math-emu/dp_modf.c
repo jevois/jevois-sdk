@@ -28,52 +28,52 @@
 
 /* modf function is always exact for a finite number
 */
-ieee754dp ieee754dp_modf (ieee754dp x, ieee754dp * ip)
+ieee754dp ieee754dp_modf(ieee754dp x, ieee754dp *ip)
 {
-  COMPXDP;
-  
-  CLEARCX;
-  
-  EXPLODEXDP;
-  
-  switch (xc) {
-  case IEEE754_CLASS_SNAN:
-  case IEEE754_CLASS_QNAN:
-  case IEEE754_CLASS_INF:
-  case IEEE754_CLASS_ZERO:
-    *ip = x;
-    return x;
-  case IEEE754_CLASS_DNORM:
-    /* far to small */
-    *ip = ieee754dp_zero (xs);
-    return x;
-  case IEEE754_CLASS_NORM:
-    break;
-  }
-  if (xe < 0) {
-    *ip = ieee754dp_zero (xs);
-    return x;
-  }
-  if (xe >= DP_MBITS) {
-    *ip = x;
-    return ieee754dp_zero (xs);
-  }
-  /* generate ipart mantissa by clearing bottom bits
-   */
-  *ip = builddp (xs, xe + DP_EBIAS,
-                 ( (xm >> (DP_MBITS - xe) ) << (DP_MBITS - xe) ) &
-                 ~DP_HIDDEN_BIT);
-                 
-  /* generate fpart mantissa by clearing top bits
-   * and normalizing (must be able to normalize)
-   */
-  xm = (xm << (64 - (DP_MBITS - xe) ) ) >> (64 - (DP_MBITS - xe) );
-  if (xm == 0)
-  { return ieee754dp_zero (xs); }
-  
-  while ( (xm >> DP_MBITS) == 0) {
-    xm <<= 1;
-    xe--;
-  }
-  return builddp (xs, xe + DP_EBIAS, xm & ~DP_HIDDEN_BIT);
+	COMPXDP;
+
+	CLEARCX;
+
+	EXPLODEXDP;
+
+	switch (xc) {
+	case IEEE754_CLASS_SNAN:
+	case IEEE754_CLASS_QNAN:
+	case IEEE754_CLASS_INF:
+	case IEEE754_CLASS_ZERO:
+		*ip = x;
+		return x;
+	case IEEE754_CLASS_DNORM:
+		/* far to small */
+		*ip = ieee754dp_zero(xs);
+		return x;
+	case IEEE754_CLASS_NORM:
+		break;
+	}
+	if (xe < 0) {
+		*ip = ieee754dp_zero(xs);
+		return x;
+	}
+	if (xe >= DP_MBITS) {
+		*ip = x;
+		return ieee754dp_zero(xs);
+	}
+	/* generate ipart mantissa by clearing bottom bits
+	 */
+	*ip = builddp(xs, xe + DP_EBIAS,
+		      ((xm >> (DP_MBITS - xe)) << (DP_MBITS - xe)) &
+		      ~DP_HIDDEN_BIT);
+
+	/* generate fpart mantissa by clearing top bits
+	 * and normalizing (must be able to normalize)
+	 */
+	xm = (xm << (64 - (DP_MBITS - xe))) >> (64 - (DP_MBITS - xe));
+	if (xm == 0)
+		return ieee754dp_zero(xs);
+
+	while ((xm >> DP_MBITS) == 0) {
+		xm <<= 1;
+		xe--;
+	}
+	return builddp(xs, xe + DP_EBIAS, xm & ~DP_HIDDEN_BIT);
 }

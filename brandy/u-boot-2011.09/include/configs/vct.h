@@ -38,19 +38,19 @@
 #ifndef __CONFIG_H
 #define __CONFIG_H
 
-#define CONFIG_MIPS32       /* MIPS 4Kc CPU core  */
-#define CPU_CLOCK_RATE      324000000 /* Clock for the MIPS core */
-#define CONFIG_SYS_MIPS_TIMER_FREQ  (CPU_CLOCK_RATE / 2)
-#define CONFIG_SYS_HZ     1000
+#define CONFIG_MIPS32				/* MIPS 4Kc CPU core	*/
+#define CPU_CLOCK_RATE			324000000 /* Clock for the MIPS core */
+#define CONFIG_SYS_MIPS_TIMER_FREQ	(CPU_CLOCK_RATE / 2)
+#define CONFIG_SYS_HZ			1000
 
-#define CONFIG_SKIP_LOWLEVEL_INIT /* SDRAM is initialized by the bootstrap code */
+#define CONFIG_SKIP_LOWLEVEL_INIT	/* SDRAM is initialized by the bootstrap code */
 
-#define CONFIG_SYS_MONITOR_BASE   CONFIG_SYS_TEXT_BASE
-#define CONFIG_SYS_MONITOR_LEN    (256 << 10)
-#define CONFIG_STACKSIZE    (256 << 10)
-#define CONFIG_SYS_MALLOC_LEN   (1 << 20)
-#define CONFIG_SYS_BOOTPARAMS_LEN (128 << 10)
-#define CONFIG_SYS_INIT_SP_OFFSET 0x400000
+#define CONFIG_SYS_MONITOR_BASE		CONFIG_SYS_TEXT_BASE
+#define CONFIG_SYS_MONITOR_LEN		(256 << 10)
+#define CONFIG_STACKSIZE		(256 << 10)
+#define CONFIG_SYS_MALLOC_LEN		(1 << 20)
+#define CONFIG_SYS_BOOTPARAMS_LEN	(128 << 10)
+#define CONFIG_SYS_INIT_SP_OFFSET	0x400000
 
 #if !defined(CONFIG_VCT_NAND) && !defined(CONFIG_VCT_ONENAND)
 #define CONFIG_VCT_NOR
@@ -62,37 +62,37 @@
  * UART
  */
 #ifdef CONFIG_VCT_PLATINUMAVC
-#define UART_1_BASE   0xBDC30000
+#define UART_1_BASE		0xBDC30000
 #else
-#define UART_1_BASE   0xBF89C000
+#define UART_1_BASE		0xBF89C000
 #endif
 
 #define CONFIG_SYS_NS16550_SERIAL
 #define CONFIG_SYS_NS16550
-#define CONFIG_SYS_NS16550_REG_SIZE -4
-#define CONFIG_SYS_NS16550_COM1   UART_1_BASE
-#define CONFIG_CONS_INDEX   1
-#define CONFIG_SYS_NS16550_CLK    921600
-#define CONFIG_BAUDRATE     115200
-#define CONFIG_SYS_BAUDRATE_TABLE { 9600, 19200, 38400, 57600, 115200 }
+#define CONFIG_SYS_NS16550_REG_SIZE	-4
+#define CONFIG_SYS_NS16550_COM1		UART_1_BASE
+#define CONFIG_CONS_INDEX		1
+#define CONFIG_SYS_NS16550_CLK		921600
+#define CONFIG_BAUDRATE			115200
+#define CONFIG_SYS_BAUDRATE_TABLE	{ 9600, 19200, 38400, 57600, 115200 }
 
 /*
  * SDRAM
  */
-#define CONFIG_SYS_SDRAM_BASE   0x80000000
-#define CONFIG_SYS_MBYTES_SDRAM   128
-#define CONFIG_SYS_MEMTEST_START  0x80200000
-#define CONFIG_SYS_MEMTEST_END    0x80400000
-#define CONFIG_SYS_LOAD_ADDR    0x80400000  /* default load address */
+#define CONFIG_SYS_SDRAM_BASE		0x80000000
+#define CONFIG_SYS_MBYTES_SDRAM		128
+#define CONFIG_SYS_MEMTEST_START	0x80200000
+#define CONFIG_SYS_MEMTEST_END		0x80400000
+#define CONFIG_SYS_LOAD_ADDR		0x80400000	/* default load address */
 
 #if defined(CONFIG_VCT_PREMIUM) || defined(CONFIG_VCT_PLATINUM)
 /*
  * SMSC91C11x Network Card
  */
 #define CONFIG_SMC911X
-#define CONFIG_SMC911X_BASE 0x00000000
+#define CONFIG_SMC911X_BASE	0x00000000
 #define CONFIG_SMC911X_32_BIT
-#define CONFIG_NET_RETRY_COUNT    20
+#define CONFIG_NET_RETRY_COUNT		20
 #define CONFIG_NET_MULTI
 #endif
 
@@ -110,7 +110,7 @@
  * Only Premium/Platinum have ethernet support right now
  */
 #if (defined(CONFIG_VCT_PREMIUM) || defined(CONFIG_VCT_PLATINUM)) && \
-!defined(CONFIG_VCT_SMALL_IMAGE)
+	!defined(CONFIG_VCT_SMALL_IMAGE)
 #define CONFIG_CMD_PING
 #define CONFIG_CMD_SNTP
 #else
@@ -122,7 +122,7 @@
  * Only Premium/Platinum have USB-EHCI support right now
  */
 #if (defined(CONFIG_VCT_PREMIUM) || defined(CONFIG_VCT_PLATINUM)) && \
-!defined(CONFIG_VCT_SMALL_IMAGE)
+	!defined(CONFIG_VCT_SMALL_IMAGE)
 #define CONFIG_CMD_USB
 #define CONFIG_CMD_FAT
 #endif
@@ -137,9 +137,9 @@
 /*
  * USB/EHCI
  */
-#define CONFIG_USB_EHCI     /* Enable EHCI USB support  */
-#define CONFIG_USB_EHCI_VCT   /* on VCT platform    */
-#define CONFIG_EHCI_DCACHE    /* with dcache handling support */
+#define CONFIG_USB_EHCI			/* Enable EHCI USB support	*/
+#define CONFIG_USB_EHCI_VCT		/* on VCT platform		*/
+#define CONFIG_EHCI_DCACHE		/* with dcache handling support	*/
 #define CONFIG_EHCI_MMIO_BIG_ENDIAN
 #define CONFIG_EHCI_DESC_BIG_ENDIAN
 #define CONFIG_EHCI_IS_TDI
@@ -171,15 +171,15 @@
 /*
  * Miscellaneous configurable options
  */
-#define CONFIG_SYS_LONGHELP     /* undef to save memory   */
-#define CONFIG_SYS_PROMPT "VCT# "   /* Monitor Command Prompt */
-#define CONFIG_SYS_CBSIZE 512   /* Console I/O Buffer Size  */
-#define CONFIG_SYS_PBSIZE (CONFIG_SYS_CBSIZE + \
-                           sizeof(CONFIG_SYS_PROMPT) + 16)
-#define CONFIG_SYS_MAXARGS  16    /* max number of command args */
-#define CONFIG_TIMESTAMP      /* Print image info with timestamp */
-#define CONFIG_CMDLINE_EDITING      /* add command line history */
-#define CONFIG_SYS_CONSOLE_INFO_QUIET   /* don't print console @ startup*/
+#define CONFIG_SYS_LONGHELP			/* undef to save memory		*/
+#define CONFIG_SYS_PROMPT	"VCT# "		/* Monitor Command Prompt	*/
+#define CONFIG_SYS_CBSIZE	512		/* Console I/O Buffer Size	*/
+#define CONFIG_SYS_PBSIZE	(CONFIG_SYS_CBSIZE + \
+				 sizeof(CONFIG_SYS_PROMPT) + 16)
+#define CONFIG_SYS_MAXARGS	16		/* max number of command args	*/
+#define CONFIG_TIMESTAMP			/* Print image info with timestamp */
+#define CONFIG_CMDLINE_EDITING			/* add command line history	*/
+#define CONFIG_SYS_CONSOLE_INFO_QUIET		/* don't print console @ startup*/
 
 /*
  * FLASH and environment organization
@@ -200,109 +200,109 @@
  * function, since we check for flash access in the very early
  * U-Boot code, before the NOR FLASH is detected.
  */
-#define CONFIG_FLASH_BASE   0xb0000000
-#define CONFIG_FLASH_END    0xbfffffff
+#define CONFIG_FLASH_BASE		0xb0000000
+#define CONFIG_FLASH_END		0xbfffffff
 
 /*
  * CFI driver settings
  */
-#define CONFIG_SYS_FLASH_CFI      /* The flash is CFI compatible  */
-#define CONFIG_FLASH_CFI_DRIVER   /* Use common CFI driver  */
-#define CONFIG_SYS_FLASH_CFI_AMD_RESET  1 /* Use AMD (Spansion) reset cmd */
-#define CONFIG_SYS_FLASH_CFI_WIDTH  FLASH_CFI_16BIT /* no byte writes on IXP4xx */
+#define CONFIG_SYS_FLASH_CFI			/* The flash is CFI compatible	*/
+#define CONFIG_FLASH_CFI_DRIVER		/* Use common CFI driver	*/
+#define CONFIG_SYS_FLASH_CFI_AMD_RESET	1	/* Use AMD (Spansion) reset cmd */
+#define CONFIG_SYS_FLASH_CFI_WIDTH	FLASH_CFI_16BIT	/* no byte writes on IXP4xx	*/
 
-#define CONFIG_SYS_FLASH_BASE   0xb0000000
+#define CONFIG_SYS_FLASH_BASE		0xb0000000
 #define CONFIG_SYS_FLASH_BANKS_LIST    { CONFIG_SYS_FLASH_BASE }
-#define CONFIG_SYS_MAX_FLASH_BANKS  1 /* max number of memory banks   */
-#define CONFIG_SYS_MAX_FLASH_SECT 512 /* max number of sectors on one chip  */
+#define CONFIG_SYS_MAX_FLASH_BANKS	1	/* max number of memory banks		*/
+#define CONFIG_SYS_MAX_FLASH_SECT	512	/* max number of sectors on one chip	*/
 
-#define CONFIG_SYS_FLASH_ERASE_TOUT 120000  /* Timeout for Flash Erase (in ms)  */
-#define CONFIG_SYS_FLASH_WRITE_TOUT 500 /* Timeout for Flash Write (in ms)  */
+#define CONFIG_SYS_FLASH_ERASE_TOUT	120000	/* Timeout for Flash Erase (in ms)	*/
+#define CONFIG_SYS_FLASH_WRITE_TOUT	500	/* Timeout for Flash Write (in ms)	*/
 
 #ifdef CONFIG_ENV_IS_IN_FLASH
-#define CONFIG_ENV_SECT_SIZE  0x10000   /* size of one complete sector  */
-#define CONFIG_ENV_ADDR   (CONFIG_SYS_FLASH_BASE + CONFIG_SYS_MONITOR_LEN)
-#define CONFIG_ENV_SIZE   0x4000  /* Total Size of Environment Sector */
+#define CONFIG_ENV_SECT_SIZE	0x10000		/* size of one complete sector	*/
+#define CONFIG_ENV_ADDR		(CONFIG_SYS_FLASH_BASE + CONFIG_SYS_MONITOR_LEN)
+#define	CONFIG_ENV_SIZE		0x4000	/* Total Size of Environment Sector	*/
 
-/* Address and size of Redundant Environment Sector */
-#define CONFIG_ENV_ADDR_REDUND  (CONFIG_ENV_ADDR + CONFIG_ENV_SECT_SIZE)
-#define CONFIG_ENV_SIZE_REDUND  (CONFIG_ENV_SIZE)
+/* Address and size of Redundant Environment Sector	*/
+#define CONFIG_ENV_ADDR_REDUND	(CONFIG_ENV_ADDR + CONFIG_ENV_SECT_SIZE)
+#define CONFIG_ENV_SIZE_REDUND	(CONFIG_ENV_SIZE)
 #endif /* CONFIG_ENV_IS_IN_FLASH */
 #endif /* CONFIG_VCT_NOR */
 
 #if defined(CONFIG_VCT_ONENAND)
 #define CONFIG_USE_ONENAND_BOARD_INIT
-#define CONFIG_ENV_IS_IN_ONENAND
-#define CONFIG_SYS_ONENAND_BASE   0x00000000  /* this is not real address */
-#define CONFIG_SYS_FLASH_BASE   0x00000000
-#define CONFIG_ENV_ADDR     (128 << 10) /* after compr. U-Boot image */
-#define CONFIG_ENV_SIZE     (128 << 10) /* erase size */
+#define	CONFIG_ENV_IS_IN_ONENAND
+#define	CONFIG_SYS_ONENAND_BASE		0x00000000	/* this is not real address */
+#define CONFIG_SYS_FLASH_BASE		0x00000000
+#define CONFIG_ENV_ADDR			(128 << 10)	/* after compr. U-Boot image */
+#define	CONFIG_ENV_SIZE			(128 << 10)	/* erase size */
 #endif /* CONFIG_VCT_ONENAND */
 
 /*
  * Cache Configuration
  */
-#define CONFIG_SYS_DCACHE_SIZE    16384
-#define CONFIG_SYS_ICACHE_SIZE    16384
-#define CONFIG_SYS_CACHELINE_SIZE 32
+#define CONFIG_SYS_DCACHE_SIZE		16384
+#define CONFIG_SYS_ICACHE_SIZE		16384
+#define CONFIG_SYS_CACHELINE_SIZE	32
 
 /*
  * I2C/EEPROM
  */
-#undef  CONFIG_HARD_I2C     /* I2C with hardware support  */
-#define CONFIG_SOFT_I2C     /* I2C bit-banged   */
+#undef	CONFIG_HARD_I2C			/* I2C with hardware support	*/
+#define	CONFIG_SOFT_I2C			/* I2C bit-banged		*/
 
-#define CONFIG_SYS_I2C_SPEED    83000 /* 83 kHz is supposed to work */
-#define CONFIG_SYS_I2C_SLAVE    0x7f
+#define CONFIG_SYS_I2C_SPEED		83000	/* 83 kHz is supposed to work	*/
+#define CONFIG_SYS_I2C_SLAVE		0x7f
 
 /*
  * Software (bit-bang) I2C driver configuration
  */
-#define CONFIG_SYS_GPIO_I2C_SCL   11
-#define CONFIG_SYS_GPIO_I2C_SDA   10
+#define CONFIG_SYS_GPIO_I2C_SCL		11
+#define CONFIG_SYS_GPIO_I2C_SDA		10
 
 #ifndef __ASSEMBLY__
-int vct_gpio_dir (int pin, int dir);
-void vct_gpio_set (int pin, int val);
-int vct_gpio_get (int pin);
+int vct_gpio_dir(int pin, int dir);
+void vct_gpio_set(int pin, int val);
+int vct_gpio_get(int pin);
 #endif
 
-#define I2C_INIT  vct_gpio_dir(CONFIG_SYS_GPIO_I2C_SCL, 1)
-#define I2C_ACTIVE  vct_gpio_dir(CONFIG_SYS_GPIO_I2C_SDA, 1)
-#define I2C_TRISTATE  vct_gpio_dir(CONFIG_SYS_GPIO_I2C_SDA, 0)
-#define I2C_READ  vct_gpio_get(CONFIG_SYS_GPIO_I2C_SDA)
-#define I2C_SDA(bit)  vct_gpio_set(CONFIG_SYS_GPIO_I2C_SDA, bit)
-#define I2C_SCL(bit)  vct_gpio_set(CONFIG_SYS_GPIO_I2C_SCL, bit)
-#define I2C_DELAY udelay(5) /* 1/4 I2C clock duration */
+#define I2C_INIT	vct_gpio_dir(CONFIG_SYS_GPIO_I2C_SCL, 1)
+#define I2C_ACTIVE	vct_gpio_dir(CONFIG_SYS_GPIO_I2C_SDA, 1)
+#define I2C_TRISTATE	vct_gpio_dir(CONFIG_SYS_GPIO_I2C_SDA, 0)
+#define I2C_READ	vct_gpio_get(CONFIG_SYS_GPIO_I2C_SDA)
+#define I2C_SDA(bit)	vct_gpio_set(CONFIG_SYS_GPIO_I2C_SDA, bit)
+#define I2C_SCL(bit)	vct_gpio_set(CONFIG_SYS_GPIO_I2C_SCL, bit)
+#define I2C_DELAY	udelay(5)	/* 1/4 I2C clock duration */
 
-#define CONFIG_SYS_I2C_EEPROM_ADDR  0x50
+#define CONFIG_SYS_I2C_EEPROM_ADDR	0x50
 /* CAT24WC32 */
-#define CONFIG_SYS_I2C_EEPROM_ADDR_LEN  2 /* Bytes of address   */
-#define CONFIG_SYS_EEPROM_PAGE_WRITE_BITS 5 /* The Catalyst CAT24WC32 has */
-/* 32 byte page write mode using*/
-/* last 5 bits of the address */
-#define CONFIG_SYS_EEPROM_PAGE_WRITE_DELAY_MS 10   /* and takes up to 10 msec */
+#define CONFIG_SYS_I2C_EEPROM_ADDR_LEN	2	/* Bytes of address		*/
+#define CONFIG_SYS_EEPROM_PAGE_WRITE_BITS 5	/* The Catalyst CAT24WC32 has	*/
+					/* 32 byte page write mode using*/
+					/* last 5 bits of the address	*/
+#define CONFIG_SYS_EEPROM_PAGE_WRITE_DELAY_MS	10   /* and takes up to 10 msec */
 
-#define CONFIG_BOOTCOMMAND  "run test3"
-#define CONFIG_BOOTDELAY  5 /* autoboot after 5 seconds */
+#define CONFIG_BOOTCOMMAND	"run test3"
+#define CONFIG_BOOTDELAY	5	/* autoboot after 5 seconds	*/
 
 /*
  * UBI configuration
  */
 #if defined(CONFIG_VCT_ONENAND)
 #define CONFIG_SYS_USE_UBI
-#define CONFIG_CMD_JFFS2
-#define CONFIG_CMD_UBI
-#define CONFIG_RBTREE
-#define CONFIG_MTD_DEVICE   /* needed for mtdparts commands */
+#define	CONFIG_CMD_JFFS2
+#define	CONFIG_CMD_UBI
+#define	CONFIG_RBTREE
+#define CONFIG_MTD_DEVICE		/* needed for mtdparts commands */
 #define CONFIG_MTD_PARTITIONS
 #define CONFIG_CMD_MTDPARTS
 
-#define MTDIDS_DEFAULT    "onenand0=onenand"
-#define MTDPARTS_DEFAULT  "mtdparts=onenand:128k(u-boot),"  \
-  "128k(env),"    \
-  "20m(kernel),"    \
-  "-(rootfs)"
+#define MTDIDS_DEFAULT		"onenand0=onenand"
+#define MTDPARTS_DEFAULT	"mtdparts=onenand:128k(u-boot),"	\
+					"128k(env),"		\
+					"20m(kernel),"		\
+					"-(rootfs)"
 #endif
 
 /*

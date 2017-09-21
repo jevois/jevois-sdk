@@ -41,30 +41,30 @@ typedef unsigned long elf_fpregset_t;
 /*
  * These are used to set parameters in the core dumps.
  */
-#define ELF_CLASS ELFCLASS32
-#define ELF_DATA  ELFDATA2LSB
-#define ELF_ARCH  EM_CRIS
+#define ELF_CLASS	ELFCLASS32
+#define ELF_DATA	ELFDATA2LSB
+#define ELF_ARCH	EM_CRIS
 
 #include <arch/elf.h>
 
 /* The master for these definitions is {binutils}/include/elf/cris.h:  */
 /* User symbols in this file have a leading underscore.  */
-#define EF_CRIS_UNDERSCORE    0x00000001
+#define EF_CRIS_UNDERSCORE		0x00000001
 
 /* This is a mask for different incompatible machine variants.  */
-#define EF_CRIS_VARIANT_MASK    0x0000000e
+#define EF_CRIS_VARIANT_MASK		0x0000000e
 
 /* Variant 0; may contain v0..10 object.  */
-#define EF_CRIS_VARIANT_ANY_V0_V10  0x00000000
+#define EF_CRIS_VARIANT_ANY_V0_V10	0x00000000
 
 /* Variant 1; contains v32 object.  */
-#define EF_CRIS_VARIANT_V32   0x00000002
+#define EF_CRIS_VARIANT_V32		0x00000002
 
 /* Variant 2; contains object compatible with v32 and v10.  */
-#define EF_CRIS_VARIANT_COMMON_V10_V32  0x00000004
+#define EF_CRIS_VARIANT_COMMON_V10_V32	0x00000004
 /* End of excerpt from {binutils}/include/elf/cris.h.  */
 
-#define ELF_EXEC_PAGESIZE 8192
+#define ELF_EXEC_PAGESIZE	8192
 
 /* This is the location that an ET_DYN program is loaded if exec'ed.  Typical
    use of this is to invoke "./ld.so someprog" to test out a new version of

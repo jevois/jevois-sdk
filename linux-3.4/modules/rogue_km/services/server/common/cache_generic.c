@@ -44,10 +44,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "pvr_debug.h"
 #include "pvrsrv.h"
 
-PVRSRV_ERROR CacheOpQueue (PVRSRV_CACHE_OP uiCacheOp)
+PVRSRV_ERROR CacheOpQueue(PVRSRV_CACHE_OP uiCacheOp)
 {
-  PVRSRV_DATA * psData = PVRSRVGetPVRSRVData();
-  
-  psData->uiCacheOp = SetCacheOp (psData->uiCacheOp, uiCacheOp);
-  return PVRSRV_OK;
+	PVRSRV_DATA *psData = PVRSRVGetPVRSRVData();
+
+	psData->uiCacheOp = SetCacheOp(psData->uiCacheOp, uiCacheOp);
+	return PVRSRV_OK;
 }

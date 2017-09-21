@@ -70,38 +70,38 @@
 static struct map_desc vr1000_iodesc[] __initdata = {
   /* ISA IO areas */
   {
-    .virtual  = (u32) S3C24XX_VA_ISA_BYTE,
-    .pfn    = PA_CS2 (BAST_PA_ISAIO),
-    .length = SZ_16M,
-    .type   = MT_DEVICE,
+	  .virtual	= (u32)S3C24XX_VA_ISA_BYTE,
+	  .pfn		= PA_CS2(BAST_PA_ISAIO),
+	  .length	= SZ_16M,
+	  .type		= MT_DEVICE,
   }, {
-    .virtual  = (u32) S3C24XX_VA_ISA_WORD,
-    .pfn    = PA_CS3 (BAST_PA_ISAIO),
-    .length = SZ_16M,
-    .type   = MT_DEVICE,
+	  .virtual	= (u32)S3C24XX_VA_ISA_WORD,
+	  .pfn		= PA_CS3(BAST_PA_ISAIO),
+	  .length	= SZ_16M,
+	  .type		= MT_DEVICE,
   },
-  
+
   /*  CPLD control registers, and external interrupt controls */
   {
-    .virtual  = (u32) VR1000_VA_CTRL1,
-    .pfn    = __phys_to_pfn (VR1000_PA_CTRL1),
-    .length = SZ_1M,
-    .type   = MT_DEVICE,
+	  .virtual	= (u32)VR1000_VA_CTRL1,
+	  .pfn		= __phys_to_pfn(VR1000_PA_CTRL1),
+	  .length	= SZ_1M,
+	  .type		= MT_DEVICE,
   }, {
-    .virtual  = (u32) VR1000_VA_CTRL2,
-    .pfn    = __phys_to_pfn (VR1000_PA_CTRL2),
-    .length = SZ_1M,
-    .type   = MT_DEVICE,
+	  .virtual	= (u32)VR1000_VA_CTRL2,
+	  .pfn		= __phys_to_pfn(VR1000_PA_CTRL2),
+	  .length	= SZ_1M,
+	  .type		= MT_DEVICE,
   }, {
-    .virtual  = (u32) VR1000_VA_CTRL3,
-    .pfn    = __phys_to_pfn (VR1000_PA_CTRL3),
-    .length = SZ_1M,
-    .type   = MT_DEVICE,
+	  .virtual	= (u32)VR1000_VA_CTRL3,
+	  .pfn		= __phys_to_pfn(VR1000_PA_CTRL3),
+	  .length	= SZ_1M,
+	  .type		= MT_DEVICE,
   }, {
-    .virtual  = (u32) VR1000_VA_CTRL4,
-    .pfn    = __phys_to_pfn (VR1000_PA_CTRL4),
-    .length = SZ_1M,
-    .type   = MT_DEVICE,
+	  .virtual	= (u32)VR1000_VA_CTRL4,
+	  .pfn		= __phys_to_pfn(VR1000_PA_CTRL4),
+	  .length	= SZ_1M,
+	  .type		= MT_DEVICE,
   },
 };
 
@@ -110,28 +110,28 @@ static struct map_desc vr1000_iodesc[] __initdata = {
 #define UFCON S3C2410_UFCON_RXTRIG8 | S3C2410_UFCON_FIFOMODE
 
 static struct s3c2410_uartcfg vr1000_uartcfgs[] __initdata = {
-  [0] = {
-    .hwport      = 0,
-    .flags       = 0,
-    .ucon      = UCON,
-    .ulcon       = ULCON,
-    .ufcon       = UFCON,
-  },
-  [1] = {
-    .hwport      = 1,
-    .flags       = 0,
-    .ucon      = UCON,
-    .ulcon       = ULCON,
-    .ufcon       = UFCON,
-  },
-  /* port 2 is not actually used */
-  [2] = {
-    .hwport      = 2,
-    .flags       = 0,
-    .ucon      = UCON,
-    .ulcon       = ULCON,
-    .ufcon       = UFCON,
-  }
+	[0] = {
+		.hwport	     = 0,
+		.flags	     = 0,
+		.ucon	     = UCON,
+		.ulcon	     = ULCON,
+		.ufcon	     = UFCON,
+	},
+	[1] = {
+		.hwport	     = 1,
+		.flags	     = 0,
+		.ucon	     = UCON,
+		.ulcon	     = ULCON,
+		.ufcon	     = UFCON,
+	},
+	/* port 2 is not actually used */
+	[2] = {
+		.hwport	     = 2,
+		.flags	     = 0,
+		.ucon	     = UCON,
+		.ulcon	     = ULCON,
+		.ufcon	     = UFCON,
+	}
 };
 
 /* definitions for the vr1000 extra 16550 serial ports */
@@ -141,86 +141,86 @@ static struct s3c2410_uartcfg vr1000_uartcfgs[] __initdata = {
 #define VR1000_SERIAL_MAPBASE(x) (VR1000_PA_SERIAL + 0x80 + ((x) << 5))
 
 static struct plat_serial8250_port serial_platform_data[] = {
-  [0] = {
-    .mapbase  = VR1000_SERIAL_MAPBASE (0),
-    .irq    = IRQ_VR1000_SERIAL + 0,
-    .flags    = UPF_BOOT_AUTOCONF | UPF_IOREMAP,
-    .iotype   = UPIO_MEM,
-    .regshift = 0,
-    .uartclk  = VR1000_BAUDBASE,
-  },
-  [1] = {
-    .mapbase  = VR1000_SERIAL_MAPBASE (1),
-    .irq    = IRQ_VR1000_SERIAL + 1,
-    .flags    = UPF_BOOT_AUTOCONF | UPF_IOREMAP,
-    .iotype   = UPIO_MEM,
-    .regshift = 0,
-    .uartclk  = VR1000_BAUDBASE,
-  },
-  [2] = {
-    .mapbase  = VR1000_SERIAL_MAPBASE (2),
-    .irq    = IRQ_VR1000_SERIAL + 2,
-    .flags    = UPF_BOOT_AUTOCONF | UPF_IOREMAP,
-    .iotype   = UPIO_MEM,
-    .regshift = 0,
-    .uartclk  = VR1000_BAUDBASE,
-  },
-  [3] = {
-    .mapbase  = VR1000_SERIAL_MAPBASE (3),
-    .irq    = IRQ_VR1000_SERIAL + 3,
-    .flags    = UPF_BOOT_AUTOCONF | UPF_IOREMAP,
-    .iotype   = UPIO_MEM,
-    .regshift = 0,
-    .uartclk  = VR1000_BAUDBASE,
-  },
-  { },
+	[0] = {
+		.mapbase	= VR1000_SERIAL_MAPBASE(0),
+		.irq		= IRQ_VR1000_SERIAL + 0,
+		.flags		= UPF_BOOT_AUTOCONF | UPF_IOREMAP,
+		.iotype		= UPIO_MEM,
+		.regshift	= 0,
+		.uartclk	= VR1000_BAUDBASE,
+	},
+	[1] = {
+		.mapbase	= VR1000_SERIAL_MAPBASE(1),
+		.irq		= IRQ_VR1000_SERIAL + 1,
+		.flags		= UPF_BOOT_AUTOCONF | UPF_IOREMAP,
+		.iotype		= UPIO_MEM,
+		.regshift	= 0,
+		.uartclk	= VR1000_BAUDBASE,
+	},
+	[2] = {
+		.mapbase	= VR1000_SERIAL_MAPBASE(2),
+		.irq		= IRQ_VR1000_SERIAL + 2,
+		.flags		= UPF_BOOT_AUTOCONF | UPF_IOREMAP,
+		.iotype		= UPIO_MEM,
+		.regshift	= 0,
+		.uartclk	= VR1000_BAUDBASE,
+	},
+	[3] = {
+		.mapbase	= VR1000_SERIAL_MAPBASE(3),
+		.irq		= IRQ_VR1000_SERIAL + 3,
+		.flags		= UPF_BOOT_AUTOCONF | UPF_IOREMAP,
+		.iotype		= UPIO_MEM,
+		.regshift	= 0,
+		.uartclk	= VR1000_BAUDBASE,
+	},
+	{ },
 };
 
 static struct platform_device serial_device = {
-  .name     = "serial8250",
-  .id     = PLAT8250_DEV_PLATFORM,
-  .dev      = {
-    .platform_data  = serial_platform_data,
-  },
+	.name			= "serial8250",
+	.id			= PLAT8250_DEV_PLATFORM,
+	.dev			= {
+		.platform_data	= serial_platform_data,
+	},
 };
 
 /* DM9000 ethernet devices */
 
 static struct resource vr1000_dm9k0_resource[] = {
-  [0] = {
-    .start = S3C2410_CS5 + VR1000_PA_DM9000,
-    .end   = S3C2410_CS5 + VR1000_PA_DM9000 + 3,
-    .flags = IORESOURCE_MEM
-  },
-  [1] = {
-    .start = S3C2410_CS5 + VR1000_PA_DM9000 + 0x40,
-    .end   = S3C2410_CS5 + VR1000_PA_DM9000 + 0x7f,
-    .flags = IORESOURCE_MEM
-  },
-  [2] = {
-    .start = IRQ_VR1000_DM9000A,
-    .end   = IRQ_VR1000_DM9000A,
-    .flags = IORESOURCE_IRQ | IORESOURCE_IRQ_HIGHLEVEL,
-  }
-  
+	[0] = {
+		.start = S3C2410_CS5 + VR1000_PA_DM9000,
+		.end   = S3C2410_CS5 + VR1000_PA_DM9000 + 3,
+		.flags = IORESOURCE_MEM
+	},
+	[1] = {
+		.start = S3C2410_CS5 + VR1000_PA_DM9000 + 0x40,
+		.end   = S3C2410_CS5 + VR1000_PA_DM9000 + 0x7f,
+		.flags = IORESOURCE_MEM
+	},
+	[2] = {
+		.start = IRQ_VR1000_DM9000A,
+		.end   = IRQ_VR1000_DM9000A,
+		.flags = IORESOURCE_IRQ | IORESOURCE_IRQ_HIGHLEVEL,
+	}
+
 };
 
 static struct resource vr1000_dm9k1_resource[] = {
-  [0] = {
-    .start = S3C2410_CS5 + VR1000_PA_DM9000 + 0x80,
-    .end   = S3C2410_CS5 + VR1000_PA_DM9000 + 0x83,
-    .flags = IORESOURCE_MEM
-  },
-  [1] = {
-    .start = S3C2410_CS5 + VR1000_PA_DM9000 + 0xC0,
-    .end   = S3C2410_CS5 + VR1000_PA_DM9000 + 0xFF,
-    .flags = IORESOURCE_MEM
-  },
-  [2] = {
-    .start = IRQ_VR1000_DM9000N,
-    .end   = IRQ_VR1000_DM9000N,
-    .flags = IORESOURCE_IRQ | IORESOURCE_IRQ_HIGHLEVEL,
-  }
+	[0] = {
+		.start = S3C2410_CS5 + VR1000_PA_DM9000 + 0x80,
+		.end   = S3C2410_CS5 + VR1000_PA_DM9000 + 0x83,
+		.flags = IORESOURCE_MEM
+	},
+	[1] = {
+		.start = S3C2410_CS5 + VR1000_PA_DM9000 + 0xC0,
+		.end   = S3C2410_CS5 + VR1000_PA_DM9000 + 0xFF,
+		.flags = IORESOURCE_MEM
+	},
+	[2] = {
+		.start = IRQ_VR1000_DM9000N,
+		.end   = IRQ_VR1000_DM9000N,
+		.flags = IORESOURCE_IRQ | IORESOURCE_IRQ_HIGHLEVEL,
+	}
 };
 
 /* for the moment we limit ourselves to 16bit IO until some
@@ -228,158 +228,158 @@ static struct resource vr1000_dm9k1_resource[] = {
 */
 
 static struct dm9000_plat_data vr1000_dm9k_platdata = {
-  .flags    = DM9000_PLATF_16BITONLY,
+	.flags		= DM9000_PLATF_16BITONLY,
 };
 
 static struct platform_device vr1000_dm9k0 = {
-  .name   = "dm9000",
-  .id   = 0,
-  .num_resources  = ARRAY_SIZE (vr1000_dm9k0_resource),
-  .resource = vr1000_dm9k0_resource,
-  .dev    = {
-    .platform_data = &vr1000_dm9k_platdata,
-  }
+	.name		= "dm9000",
+	.id		= 0,
+	.num_resources	= ARRAY_SIZE(vr1000_dm9k0_resource),
+	.resource	= vr1000_dm9k0_resource,
+	.dev		= {
+		.platform_data = &vr1000_dm9k_platdata,
+	}
 };
 
 static struct platform_device vr1000_dm9k1 = {
-  .name   = "dm9000",
-  .id   = 1,
-  .num_resources  = ARRAY_SIZE (vr1000_dm9k1_resource),
-  .resource = vr1000_dm9k1_resource,
-  .dev    = {
-    .platform_data = &vr1000_dm9k_platdata,
-  }
+	.name		= "dm9000",
+	.id		= 1,
+	.num_resources	= ARRAY_SIZE(vr1000_dm9k1_resource),
+	.resource	= vr1000_dm9k1_resource,
+	.dev		= {
+		.platform_data = &vr1000_dm9k_platdata,
+	}
 };
 
 /* LEDS */
 
 static struct s3c24xx_led_platdata vr1000_led1_pdata = {
-  .name   = "led1",
-  .gpio   = S3C2410_GPB (0),
-  .def_trigger  = "",
+	.name		= "led1",
+	.gpio		= S3C2410_GPB(0),
+	.def_trigger	= "",
 };
 
 static struct s3c24xx_led_platdata vr1000_led2_pdata = {
-  .name   = "led2",
-  .gpio   = S3C2410_GPB (1),
-  .def_trigger  = "",
+	.name		= "led2",
+	.gpio		= S3C2410_GPB(1),
+	.def_trigger	= "",
 };
 
 static struct s3c24xx_led_platdata vr1000_led3_pdata = {
-  .name   = "led3",
-  .gpio   = S3C2410_GPB (2),
-  .def_trigger  = "",
+	.name		= "led3",
+	.gpio		= S3C2410_GPB(2),
+	.def_trigger	= "",
 };
 
 static struct platform_device vr1000_led1 = {
-  .name   = "s3c24xx_led",
-  .id   = 1,
-  .dev    = {
-    .platform_data  = &vr1000_led1_pdata,
-  },
+	.name		= "s3c24xx_led",
+	.id		= 1,
+	.dev		= {
+		.platform_data	= &vr1000_led1_pdata,
+	},
 };
 
 static struct platform_device vr1000_led2 = {
-  .name   = "s3c24xx_led",
-  .id   = 2,
-  .dev    = {
-    .platform_data  = &vr1000_led2_pdata,
-  },
+	.name		= "s3c24xx_led",
+	.id		= 2,
+	.dev		= {
+		.platform_data	= &vr1000_led2_pdata,
+	},
 };
 
 static struct platform_device vr1000_led3 = {
-  .name   = "s3c24xx_led",
-  .id   = 3,
-  .dev    = {
-    .platform_data  = &vr1000_led3_pdata,
-  },
+	.name		= "s3c24xx_led",
+	.id		= 3,
+	.dev		= {
+		.platform_data	= &vr1000_led3_pdata,
+	},
 };
 
 /* I2C devices. */
 
 static struct i2c_board_info vr1000_i2c_devs[] __initdata = {
-  {
-    I2C_BOARD_INFO ("tlv320aic23", 0x1a),
-  }, {
-    I2C_BOARD_INFO ("tmp101", 0x48),
-  }, {
-    I2C_BOARD_INFO ("m41st87", 0x68),
-  },
+	{
+		I2C_BOARD_INFO("tlv320aic23", 0x1a),
+	}, {
+		I2C_BOARD_INFO("tmp101", 0x48),
+	}, {
+		I2C_BOARD_INFO("m41st87", 0x68),
+	},
 };
 
 /* devices for this board */
 
-static struct platform_device * vr1000_devices[] __initdata = {
-  &s3c_device_ohci,
-  &s3c_device_lcd,
-  &s3c_device_wdt,
-  &s3c_device_i2c0,
-  &s3c_device_adc,
-  &serial_device,
-  &vr1000_dm9k0,
-  &vr1000_dm9k1,
-  &vr1000_led1,
-  &vr1000_led2,
-  &vr1000_led3,
+static struct platform_device *vr1000_devices[] __initdata = {
+	&s3c_device_ohci,
+	&s3c_device_lcd,
+	&s3c_device_wdt,
+	&s3c_device_i2c0,
+	&s3c_device_adc,
+	&serial_device,
+	&vr1000_dm9k0,
+	&vr1000_dm9k1,
+	&vr1000_led1,
+	&vr1000_led2,
+	&vr1000_led3,
 };
 
-static struct clk * vr1000_clocks[] __initdata = {
-  &s3c24xx_dclk0,
-  &s3c24xx_dclk1,
-  &s3c24xx_clkout0,
-  &s3c24xx_clkout1,
-  &s3c24xx_uclk,
+static struct clk *vr1000_clocks[] __initdata = {
+	&s3c24xx_dclk0,
+	&s3c24xx_dclk1,
+	&s3c24xx_clkout0,
+	&s3c24xx_clkout1,
+	&s3c24xx_uclk,
 };
 
-static void vr1000_power_off (void)
+static void vr1000_power_off(void)
 {
-  gpio_direction_output (S3C2410_GPB (9), 1);
+	gpio_direction_output(S3C2410_GPB(9), 1);
 }
 
-static void __init vr1000_map_io (void)
+static void __init vr1000_map_io(void)
 {
-  /* initialise clock sources */
-  
-  s3c24xx_dclk0.parent = &clk_upll;
-  s3c24xx_dclk0.rate   = 12 * 1000 * 1000;
-  
-  s3c24xx_dclk1.parent = NULL;
-  s3c24xx_dclk1.rate   = 3692307;
-  
-  s3c24xx_clkout0.parent  = &s3c24xx_dclk0;
-  s3c24xx_clkout1.parent  = &s3c24xx_dclk1;
-  
-  s3c24xx_uclk.parent  = &s3c24xx_clkout1;
-  
-  s3c24xx_register_clocks (vr1000_clocks, ARRAY_SIZE (vr1000_clocks) );
-  
-  pm_power_off = vr1000_power_off;
-  
-  s3c24xx_init_io (vr1000_iodesc, ARRAY_SIZE (vr1000_iodesc) );
-  s3c24xx_init_clocks (0);
-  s3c24xx_init_uarts (vr1000_uartcfgs, ARRAY_SIZE (vr1000_uartcfgs) );
+	/* initialise clock sources */
+
+	s3c24xx_dclk0.parent = &clk_upll;
+	s3c24xx_dclk0.rate   = 12*1000*1000;
+
+	s3c24xx_dclk1.parent = NULL;
+	s3c24xx_dclk1.rate   = 3692307;
+
+	s3c24xx_clkout0.parent  = &s3c24xx_dclk0;
+	s3c24xx_clkout1.parent  = &s3c24xx_dclk1;
+
+	s3c24xx_uclk.parent  = &s3c24xx_clkout1;
+
+	s3c24xx_register_clocks(vr1000_clocks, ARRAY_SIZE(vr1000_clocks));
+
+	pm_power_off = vr1000_power_off;
+
+	s3c24xx_init_io(vr1000_iodesc, ARRAY_SIZE(vr1000_iodesc));
+	s3c24xx_init_clocks(0);
+	s3c24xx_init_uarts(vr1000_uartcfgs, ARRAY_SIZE(vr1000_uartcfgs));
 }
 
-static void __init vr1000_init (void)
+static void __init vr1000_init(void)
 {
-  s3c_i2c0_set_platdata (NULL);
-  platform_add_devices (vr1000_devices, ARRAY_SIZE (vr1000_devices) );
-  
-  i2c_register_board_info (0, vr1000_i2c_devs,
-                           ARRAY_SIZE (vr1000_i2c_devs) );
-                           
-  nor_simtec_init();
-  simtec_audio_add (NULL, true, NULL);
-  
-  WARN_ON (gpio_request (S3C2410_GPB (9), "power off") );
+	s3c_i2c0_set_platdata(NULL);
+	platform_add_devices(vr1000_devices, ARRAY_SIZE(vr1000_devices));
+
+	i2c_register_board_info(0, vr1000_i2c_devs,
+				ARRAY_SIZE(vr1000_i2c_devs));
+
+	nor_simtec_init();
+	simtec_audio_add(NULL, true, NULL);
+
+	WARN_ON(gpio_request(S3C2410_GPB(9), "power off"));
 }
 
-MACHINE_START (VR1000, "Thorcom-VR1000")
-/* Maintainer: Ben Dooks <ben@simtec.co.uk> */
-.atag_offset  = 0x100,
- .map_io   = vr1000_map_io,
-  .init_machine = vr1000_init,
-   .init_irq = s3c24xx_init_irq,
-    .timer    = &s3c24xx_timer,
-     .restart  = s3c2410_restart,
-      MACHINE_END
+MACHINE_START(VR1000, "Thorcom-VR1000")
+	/* Maintainer: Ben Dooks <ben@simtec.co.uk> */
+	.atag_offset	= 0x100,
+	.map_io		= vr1000_map_io,
+	.init_machine	= vr1000_init,
+	.init_irq	= s3c24xx_init_irq,
+	.timer		= &s3c24xx_timer,
+	.restart	= s3c2410_restart,
+MACHINE_END

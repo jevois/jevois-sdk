@@ -49,36 +49,36 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *******************************************************************************
  * @brief Mmap initialisation code
  *
- * @param void
+ * @param void  
  *
- * @return
+ * @return 
  ******************************************************************************/
-IMG_VOID PVRMMapInit (IMG_VOID);
+IMG_VOID PVRMMapInit(IMG_VOID);
 
 
 /*!
  *******************************************************************************
  * @brief Mmap de-initialisation code
  *
- * @param void
+ * @param void  
  *
- * @return
+ * @return 
  ******************************************************************************/
-IMG_VOID PVRMMapCleanup (IMG_VOID);
+IMG_VOID PVRMMapCleanup(IMG_VOID);
 
 
 /*!
  *******************************************************************************
  * @brief driver mmap entry point
- *
+ * 
  * @param pFile : user file structure
  *
  * @param ps_vma : vm area structure
- *
+ * 
  * @return 0 for success, -errno for failure.
  ******************************************************************************/
-int MMapPMR (struct file * pFile, struct vm_area_struct * ps_vma);
+int MMapPMR(struct file* pFile, struct vm_area_struct* ps_vma);
 
 
-#endif  /* __MMAP_H__ */
+#endif	/* __MMAP_H__ */
 

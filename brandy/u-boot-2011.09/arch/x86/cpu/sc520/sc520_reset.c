@@ -30,11 +30,11 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-void reset_cpu (ulong addr)
+void reset_cpu(ulong addr)
 {
-  printf ("Resetting using SC520 MMCR\n");
-  /* Write a '1' to the SYS_RST of the RESCFG MMCR */
-  writeb (0x01, &sc520_mmcr->rescfg);
-  
-  /* NOTREACHED */
+	printf("Resetting using SC520 MMCR\n");
+	/* Write a '1' to the SYS_RST of the RESCFG MMCR */
+	writeb(0x01, &sc520_mmcr->rescfg);
+
+	/* NOTREACHED */
 }

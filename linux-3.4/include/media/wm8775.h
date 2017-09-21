@@ -34,11 +34,11 @@
 
 
 struct wm8775_platform_data {
-  /*
-   * FIXME: Instead, we should parametrize the params
-   * that need different settings between ivtv, pvrusb2, and Nova-S
-   */
-  bool is_nova_s;
+	/*
+	 * FIXME: Instead, we should parametrize the params
+	 * that need different settings between ivtv, pvrusb2, and Nova-S
+	 */
+	bool is_nova_s;
 };
 
 #endif

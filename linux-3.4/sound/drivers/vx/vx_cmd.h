@@ -24,73 +24,73 @@
 #define __VX_CMD_H
 
 enum {
-  CMD_VERSION,
-  CMD_SUPPORTED,
-  CMD_TEST_IT,
-  CMD_SEND_IRQA,
-  CMD_IBL,
-  CMD_ASYNC,
-  CMD_RES_PIPE,
-  CMD_FREE_PIPE,
-  CMD_CONF_PIPE,
-  CMD_ABORT_CONF_PIPE,
-  CMD_PARAM_OUTPUT_PIPE,
-  CMD_STOP_PIPE,
-  CMD_PIPE_STATE,
-  CMD_PIPE_SPL_COUNT,
-  CMD_CAN_START_PIPE,
-  CMD_SIZE_HBUFFER,
-  CMD_START_STREAM,
-  CMD_START_ONE_STREAM,
-  CMD_PAUSE_STREAM,
-  CMD_PAUSE_ONE_STREAM,
-  CMD_STREAM_OUT_LEVEL_ADJUST,
-  CMD_STOP_STREAM,
-  CMD_FORMAT_STREAM_OUT,
-  CMD_FORMAT_STREAM_IN,
-  CMD_GET_STREAM_STATE,
-  CMD_DROP_BYTES_AWAY,
-  CMD_GET_REMAINING_BYTES,
-  CMD_CONNECT_AUDIO,
-  CMD_AUDIO_LEVEL_ADJUST,
-  CMD_AUDIO_VU_PIC_METER,
-  CMD_GET_AUDIO_LEVELS,
-  CMD_GET_NOTIFY_EVENT,
-  CMD_INFO_NOTIFIED,
-  CMD_ACCESS_IO_FCT,
-  CMD_STATUS_R_BUFFERS,
-  CMD_UPDATE_R_BUFFERS,
-  CMD_LOAD_EFFECT_CONTEXT,
-  CMD_EFFECT_ONE_PIPE,
-  CMD_MODIFY_CLOCK,
-  CMD_STREAM1_OUT_SET_N_LEVELS,
-  CMD_PURGE_STREAM_DCMDS,
-  CMD_NOTIFY_PIPE_TIME,
-  CMD_LOAD_EFFECT_CONTEXT_PACKET,
-  CMD_RELIC_R_BUFFER,
-  CMD_RESYNC_AUDIO_INPUTS,
-  CMD_NOTIFY_STREAM_TIME,
-  CMD_STREAM_SAMPLE_COUNT,
-  CMD_CONFIG_TIME_CODE,
-  CMD_GET_TIME_CODE,
-  CMD_MANAGE_SIGNAL,
-  CMD_PARAMETER_STREAM_OUT,
-  CMD_READ_BOARD_FREQ,
-  CMD_GET_STREAM_LEVELS,
-  CMD_PURGE_PIPE_DCMDS,
-  CMD_CONNECT_MONITORING,
-  CMD_STREAM2_OUT_SET_N_LEVELS,
-  CMD_CANCEL_R_BUFFERS,
-  CMD_NOTIFY_END_OF_BUFFER,
-  CMD_GET_STREAM_VU_METER,
-  CMD_LAST_INDEX
+	CMD_VERSION,
+	CMD_SUPPORTED,
+	CMD_TEST_IT,
+	CMD_SEND_IRQA,
+	CMD_IBL,
+	CMD_ASYNC,
+	CMD_RES_PIPE,
+	CMD_FREE_PIPE,
+	CMD_CONF_PIPE,
+	CMD_ABORT_CONF_PIPE,
+	CMD_PARAM_OUTPUT_PIPE,
+	CMD_STOP_PIPE,
+	CMD_PIPE_STATE,
+	CMD_PIPE_SPL_COUNT,
+	CMD_CAN_START_PIPE,
+	CMD_SIZE_HBUFFER,
+	CMD_START_STREAM,
+	CMD_START_ONE_STREAM,
+	CMD_PAUSE_STREAM,
+	CMD_PAUSE_ONE_STREAM,
+	CMD_STREAM_OUT_LEVEL_ADJUST,
+	CMD_STOP_STREAM,
+	CMD_FORMAT_STREAM_OUT,
+	CMD_FORMAT_STREAM_IN,
+	CMD_GET_STREAM_STATE,
+	CMD_DROP_BYTES_AWAY,
+	CMD_GET_REMAINING_BYTES,
+	CMD_CONNECT_AUDIO,
+	CMD_AUDIO_LEVEL_ADJUST,
+	CMD_AUDIO_VU_PIC_METER,
+	CMD_GET_AUDIO_LEVELS,
+	CMD_GET_NOTIFY_EVENT,
+	CMD_INFO_NOTIFIED,
+	CMD_ACCESS_IO_FCT,
+	CMD_STATUS_R_BUFFERS,
+	CMD_UPDATE_R_BUFFERS,
+	CMD_LOAD_EFFECT_CONTEXT,
+	CMD_EFFECT_ONE_PIPE,
+	CMD_MODIFY_CLOCK,
+	CMD_STREAM1_OUT_SET_N_LEVELS,
+	CMD_PURGE_STREAM_DCMDS,
+	CMD_NOTIFY_PIPE_TIME,
+	CMD_LOAD_EFFECT_CONTEXT_PACKET,
+	CMD_RELIC_R_BUFFER,
+	CMD_RESYNC_AUDIO_INPUTS,
+	CMD_NOTIFY_STREAM_TIME,
+	CMD_STREAM_SAMPLE_COUNT,
+	CMD_CONFIG_TIME_CODE,
+	CMD_GET_TIME_CODE,
+	CMD_MANAGE_SIGNAL,
+	CMD_PARAMETER_STREAM_OUT,
+	CMD_READ_BOARD_FREQ,
+	CMD_GET_STREAM_LEVELS,
+	CMD_PURGE_PIPE_DCMDS,
+	CMD_CONNECT_MONITORING,
+	CMD_STREAM2_OUT_SET_N_LEVELS,
+	CMD_CANCEL_R_BUFFERS,
+	CMD_NOTIFY_END_OF_BUFFER,
+	CMD_GET_STREAM_VU_METER,
+	CMD_LAST_INDEX
 };
 
 struct vx_cmd_info {
-  unsigned int opcode;  /* command word */
-  int length;   /* command length (in words) */
-  int st_type;    /* status type (RMH_SSIZE_XXX) */
-  int st_length;    /* fixed length */
+	unsigned int opcode;	/* command word */
+	int length;		/* command length (in words) */
+	int st_type;		/* status type (RMH_SSIZE_XXX) */
+	int st_length;		/* fixed length */
 };
 
 /* Family and code op of some DSP requests. */
@@ -162,16 +162,16 @@ struct vx_cmd_info {
 #define COMMAND_RECORD_MASK     0x000800
 
 /* PipeManagement definition bits (PIPE_DECL_INFO) */
-#define P_UNDERRUN_SKIP_SOUND_MASK        0x01
-#define P_PREPARE_FOR_MPEG3_MASK        0x02
-#define P_DO_NOT_RESET_ANALOG_LEVELS      0x04
-#define P_ALLOW_UNDER_ALLOCATION_MASK     0x08
-#define P_DATA_MODE_MASK        0x10
-#define P_ASIO_BUFFER_MANAGEMENT_MASK     0x20
+#define P_UNDERRUN_SKIP_SOUND_MASK				0x01
+#define P_PREPARE_FOR_MPEG3_MASK				0x02
+#define P_DO_NOT_RESET_ANALOG_LEVELS			0x04
+#define P_ALLOW_UNDER_ALLOCATION_MASK			0x08
+#define P_DATA_MODE_MASK				0x10
+#define P_ASIO_BUFFER_MANAGEMENT_MASK			0x20
 
-#define BIT_SKIP_SOUND          0x08 
-#define BIT_DATA_MODE         0x10 
-
+#define BIT_SKIP_SOUND					0x08
+#define BIT_DATA_MODE					0x10
+    
 /* Bits in the CMD_MODIFY_CLOCK request. */
 #define CMD_MODIFY_CLOCK_FD_BIT     0x00000001
 #define CMD_MODIFY_CLOCK_T_BIT      0x00000002
@@ -189,7 +189,7 @@ struct vx_cmd_info {
 
 /* Values for the CMD_CONFIG_TIME_CODE RMH. */
 #define CONFIG_TIME_CODE_CANCEL     0x00001000
-
+    
 /* Mask to get only the effective time from the
  * high word out of the 2 returned by the DSP
  */
@@ -207,7 +207,7 @@ struct vx_cmd_info {
 /*
  *
  */
-void vx_init_rmh (struct vx_rmh * rmh, unsigned int cmd);
+void vx_init_rmh(struct vx_rmh *rmh, unsigned int cmd);
 
 /**
  * vx_send_pipe_cmd_params - fill first command word for pipe commands
@@ -216,16 +216,16 @@ void vx_init_rmh (struct vx_rmh * rmh, unsigned int cmd);
  * @param1: first pipe-parameter
  * @param2: second pipe-parameter
  */
-static inline void vx_set_pipe_cmd_params (struct vx_rmh * rmh, int is_capture,
-    int param1, int param2)
+static inline void vx_set_pipe_cmd_params(struct vx_rmh *rmh, int is_capture,
+					  int param1, int param2)
 {
-  if (is_capture)
-  { rmh->Cmd[0] |= COMMAND_RECORD_MASK; }
-  rmh->Cmd[0] |= ( ( (u32) param1 & MASK_FIRST_FIELD) << FIELD_SIZE) & MASK_DSP_WORD;
-  
-  if (param2)
-  { rmh->Cmd[0] |= ( (u32) param2 & MASK_FIRST_FIELD) & MASK_DSP_WORD; }
-  
+	if (is_capture)
+		rmh->Cmd[0] |= COMMAND_RECORD_MASK;
+	rmh->Cmd[0] |= (((u32)param1 & MASK_FIRST_FIELD) << FIELD_SIZE) & MASK_DSP_WORD;
+		
+	if (param2)
+		rmh->Cmd[0] |= ((u32)param2 & MASK_FIRST_FIELD) & MASK_DSP_WORD;
+	
 }
 
 /**
@@ -234,11 +234,11 @@ static inline void vx_set_pipe_cmd_params (struct vx_rmh * rmh, int is_capture,
  * @is_capture: 0 = playback, 1 = capture operation
  * @pipe: the pipe index (zero-based)
  */
-static inline void vx_set_stream_cmd_params (struct vx_rmh * rmh, int is_capture, int pipe)
+static inline void vx_set_stream_cmd_params(struct vx_rmh *rmh, int is_capture, int pipe)
 {
-  if (is_capture)
-  { rmh->Cmd[0] |= COMMAND_RECORD_MASK; }
-  rmh->Cmd[0] |= ( ( (u32) pipe & MASK_FIRST_FIELD) << FIELD_SIZE) & MASK_DSP_WORD;
+	if (is_capture)
+		rmh->Cmd[0] |= COMMAND_RECORD_MASK;
+	rmh->Cmd[0] |= (((u32)pipe & MASK_FIRST_FIELD) << FIELD_SIZE) & MASK_DSP_WORD;
 }
 
 #endif /* __VX_CMD_H */

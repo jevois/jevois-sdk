@@ -31,22 +31,22 @@
 DECLARE_GLOBAL_DATA_PTR;
 
 struct irq_action {
-  interrupt_handler_t * handler;
-  void * arg;
-  ulong count;
+	interrupt_handler_t *handler;
+	void *arg;
+	ulong count;
 };
 
-int interrupt_init_cpu (unsigned * decrementer_count)
+int interrupt_init_cpu (unsigned *decrementer_count)
 {
-  volatile immap_t * immr = (immap_t *) CONFIG_SYS_IMMR;
-  
-  *decrementer_count = (gd->bus_clk / 4) / CONFIG_SYS_HZ;
-  
-  /* Enable e300 time base */
-  
-  immr->sysconf.spcr |= 0x00400000;
-  
-  return 0;
+	volatile immap_t *immr = (immap_t *) CONFIG_SYS_IMMR;
+
+	*decrementer_count = (gd->bus_clk / 4) / CONFIG_SYS_HZ;
+
+	/* Enable e300 time base */
+
+	immr->sysconf.spcr |= 0x00400000;
+
+	return 0;
 }
 
 
@@ -54,7 +54,7 @@ int interrupt_init_cpu (unsigned * decrementer_count)
  * Handle external interrupts
  */
 
-void external_interrupt (struct pt_regs * regs)
+void external_interrupt (struct pt_regs *regs)
 {
 }
 
@@ -64,7 +64,7 @@ void external_interrupt (struct pt_regs * regs)
  */
 
 void
-irq_install_handler (int irq, interrupt_handler_t * handler, void * arg)
+irq_install_handler (int irq, interrupt_handler_t * handler, void *arg)
 {
 }
 
@@ -74,10 +74,10 @@ void irq_free_handler (int irq)
 }
 
 
-void timer_interrupt_cpu (struct pt_regs * regs)
+void timer_interrupt_cpu (struct pt_regs *regs)
 {
-  /* nothing to do here */
-  return;
+	/* nothing to do here */
+	return;
 }
 
 
@@ -90,7 +90,7 @@ void timer_interrupt_cpu (struct pt_regs * regs)
  */
 
 void
-do_irqinfo (cmd_tbl_t * cmdtp, bd_t * bd, int flag, int argc, char * const argv[])
+do_irqinfo(cmd_tbl_t *cmdtp, bd_t *bd, int flag, int argc, char * const argv[])
 {
 }
 

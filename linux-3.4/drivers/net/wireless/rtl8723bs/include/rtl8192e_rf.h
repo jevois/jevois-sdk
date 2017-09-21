@@ -21,14 +21,14 @@
 #define __RTL8192E_RF_H__
 
 VOID
-PHY_RF6052SetBandwidth8192E (
-  IN  PADAPTER        Adapter,
-  IN  CHANNEL_WIDTH   Bandwidth);
+PHY_RF6052SetBandwidth8192E(
+	IN	PADAPTER				Adapter,
+	IN	CHANNEL_WIDTH		Bandwidth);
 
 
 int
-PHY_RF6052_Config_8192E (
-  IN  PADAPTER  Adapter );
+PHY_RF6052_Config_8192E(
+	IN	PADAPTER	Adapter	);
 
 #endif//__RTL8192E_RF_H__
 

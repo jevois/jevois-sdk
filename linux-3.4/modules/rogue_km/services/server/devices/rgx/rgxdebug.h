@@ -52,7 +52,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /*!
 *******************************************************************************
 
- @Function  RGXPanic
+ @Function	RGXPanic
 
  @Description
 
@@ -64,33 +64,33 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  @Return IMG_VOID
 
 ******************************************************************************/
-IMG_VOID RGXPanic (PVRSRV_RGXDEV_INFO * psDevInfo);
+IMG_VOID RGXPanic(PVRSRV_RGXDEV_INFO	*psDevInfo);
 
 
-typedef IMG_VOID (DUMPDEBUG_PRINTF_FUNC) (const IMG_CHAR * pszFormat, ...);
+typedef IMG_VOID (DUMPDEBUG_PRINTF_FUNC)(const IMG_CHAR *pszFormat, ...);
 
 /*!
 *******************************************************************************
 
- @Function  RGXDumpDebugInfo
+ @Function	RGXDumpDebugInfo
 
  @Description
 
  Dump useful debugging info
 
  @Input pfnDumpDebugPrintf  - Optional replacement print function
- @Input psDevInfo         - RGX device info
+ @Input psDevInfo	        - RGX device info
 
  @Return   IMG_VOID
 
 ******************************************************************************/
-IMG_VOID RGXDumpDebugInfo (DUMPDEBUG_PRINTF_FUNC * pfnDumpDebugPrintf,
-                           PVRSRV_RGXDEV_INFO * psDevInfo);
+IMG_VOID RGXDumpDebugInfo(DUMPDEBUG_PRINTF_FUNC *pfnDumpDebugPrintf,
+                          PVRSRV_RGXDEV_INFO	*psDevInfo);
 
 /*!
 *******************************************************************************
 
- @Function  RGXDebugRequestProcess
+ @Function	RGXDebugRequestProcess
 
  @Description
 
@@ -98,55 +98,55 @@ IMG_VOID RGXDumpDebugInfo (DUMPDEBUG_PRINTF_FUNC * pfnDumpDebugPrintf,
  verbosity
 
  @Input pfnDumpDebugPrintf  - Optional replacement print function
- @Input psDevInfo         - RGX device info
+ @Input psDevInfo	        - RGX device info
  @Input ui32VerbLevel       - Verbosity level
 
  @Return   IMG_VOID
 
 ******************************************************************************/
-IMG_VOID RGXDebugRequestProcess (DUMPDEBUG_PRINTF_FUNC * pfnDumpDebugPrintf,
-                                 PVRSRV_RGXDEV_INFO * psDevInfo,
-                                 IMG_UINT32      ui32VerbLevel);
+IMG_VOID RGXDebugRequestProcess(DUMPDEBUG_PRINTF_FUNC *pfnDumpDebugPrintf,
+                                PVRSRV_RGXDEV_INFO	*psDevInfo,
+                                IMG_UINT32			ui32VerbLevel);
 
 
 #if defined(PVRSRV_ENABLE_FW_TRACE_DEBUGFS)
 /*!
 *******************************************************************************
 
- @Function  RGXDumpFirmwareTrace
+ @Function	RGXDumpFirmwareTrace
 
  @Description Dumps the decoded version of the firmware trace buffer.
 
  Dump useful debugging info
 
  @Input pfnDumpDebugPrintf  - Optional replacement print function
- @Input psDevInfo         - RGX device info
+ @Input psDevInfo	        - RGX device info
 
  @Return   IMG_VOID
 
 ******************************************************************************/
-IMG_VOID RGXDumpFirmwareTrace (DUMPDEBUG_PRINTF_FUNC * pfnDumpDebugPrintf,
-                               PVRSRV_RGXDEV_INFO * psDevInfo);
+IMG_VOID RGXDumpFirmwareTrace(DUMPDEBUG_PRINTF_FUNC *pfnDumpDebugPrintf,
+                              PVRSRV_RGXDEV_INFO	*psDevInfo);
 #endif
 
 
 /*!
 *******************************************************************************
 
- @Function  RGXQueryDMState
+ @Function	RGXQueryDMState
 
  @Description
 
  Query DM state
 
- @Input  psDevInfo      - RGX device info
- @Input  eDM        - DM number for which to return status
- @Output peState      - RGXFWIF_DM_STATE
+ @Input  psDevInfo	 		- RGX device info
+ @Input  eDM 				- DM number for which to return status
+ @Output peState			- RGXFWIF_DM_STATE
  @Output psComCtxDevVAddr   - If DM is locked-up, Firmware address of Firmware Common Context, otherwise IMG_NULL
 
  @Return PVRSRV_ERROR
 ******************************************************************************/
-PVRSRV_ERROR RGXQueryDMState (PVRSRV_RGXDEV_INFO * psDevInfo, RGXFWIF_DM eDM, RGXFWIF_DM_STATE * peState, RGXFWIF_DEV_VIRTADDR * psComCtxDevVAddr);
+PVRSRV_ERROR RGXQueryDMState(PVRSRV_RGXDEV_INFO *psDevInfo, RGXFWIF_DM eDM, RGXFWIF_DM_STATE *peState, RGXFWIF_DEV_VIRTADDR *psComCtxDevVAddr);
 
 
 #endif /* __RGXDEBUG_H__ */

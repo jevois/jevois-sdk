@@ -1,7 +1,7 @@
 /* linux/arch/arm/plat-samsung/include/plat/s3c2412.h
  *
  * Copyright (c) 2006 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * Header file for s3c2412 cpu support
  *
@@ -12,17 +12,17 @@
 
 #ifdef CONFIG_CPU_S3C2412
 
-extern  int s3c2412_init (void);
+extern  int s3c2412_init(void);
 
-extern void s3c2412_map_io (void);
+extern void s3c2412_map_io(void);
 
-extern void s3c2412_init_uarts (struct s3c2410_uartcfg * cfg, int no);
+extern void s3c2412_init_uarts(struct s3c2410_uartcfg *cfg, int no);
 
-extern void s3c2412_init_clocks (int xtal);
+extern void s3c2412_init_clocks(int xtal);
 
-extern  int s3c2412_baseclk_add (void);
+extern  int s3c2412_baseclk_add(void);
 
-extern void s3c2412_restart (char mode, const char * cmd);
+extern void s3c2412_restart(char mode, const char *cmd);
 #else
 #define s3c2412_init_clocks NULL
 #define s3c2412_init_uarts NULL

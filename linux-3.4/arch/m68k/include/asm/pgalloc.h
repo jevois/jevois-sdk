@@ -15,7 +15,7 @@
 #include <asm/motorola_pgalloc.h>
 #endif
 
-extern void m68k_setup_node (int node);
+extern void m68k_setup_node(int node);
 #endif
 
 #endif /* M68K_PGALLOC_H */

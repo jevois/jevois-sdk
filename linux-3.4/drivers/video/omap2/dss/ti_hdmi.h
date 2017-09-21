@@ -24,93 +24,93 @@
 struct hdmi_ip_data;
 
 enum hdmi_pll_pwr {
-  HDMI_PLLPWRCMD_ALLOFF = 0,
-  HDMI_PLLPWRCMD_PLLONLY = 1,
-  HDMI_PLLPWRCMD_BOTHON_ALLCLKS = 2,
-  HDMI_PLLPWRCMD_BOTHON_NOPHYCLK = 3
+	HDMI_PLLPWRCMD_ALLOFF = 0,
+	HDMI_PLLPWRCMD_PLLONLY = 1,
+	HDMI_PLLPWRCMD_BOTHON_ALLCLKS = 2,
+	HDMI_PLLPWRCMD_BOTHON_NOPHYCLK = 3
 };
 
 enum hdmi_core_hdmi_dvi {
-  HDMI_DVI = 0,
-  HDMI_HDMI = 1
+	HDMI_DVI = 0,
+	HDMI_HDMI = 1
 };
 
 enum hdmi_clk_refsel {
-  HDMI_REFSEL_PCLK = 0,
-  HDMI_REFSEL_REF1 = 1,
-  HDMI_REFSEL_REF2 = 2,
-  HDMI_REFSEL_SYSCLK = 3
+	HDMI_REFSEL_PCLK = 0,
+	HDMI_REFSEL_REF1 = 1,
+	HDMI_REFSEL_REF2 = 2,
+	HDMI_REFSEL_SYSCLK = 3
 };
 
 /* HDMI timing structure */
 struct hdmi_video_timings {
-  u16 x_res;
-  u16 y_res;
-  /* Unit: KHz */
-  u32 pixel_clock;
-  u16 hsw;
-  u16 hfp;
-  u16 hbp;
-  u16 vsw;
-  u16 vfp;
-  u16 vbp;
-  bool vsync_pol;
-  bool hsync_pol;
-  bool interlace;
+	u16 x_res;
+	u16 y_res;
+	/* Unit: KHz */
+	u32 pixel_clock;
+	u16 hsw;
+	u16 hfp;
+	u16 hbp;
+	u16 vsw;
+	u16 vfp;
+	u16 vbp;
+	bool vsync_pol;
+	bool hsync_pol;
+	bool interlace;
 };
 
 struct hdmi_cm {
-  int code;
-  int mode;
+	int	code;
+	int	mode;
 };
 
 struct hdmi_config {
-  struct hdmi_video_timings timings;
-  struct hdmi_cm cm;
+	struct hdmi_video_timings timings;
+	struct hdmi_cm cm;
 };
 
 /* HDMI PLL structure */
 struct hdmi_pll_info {
-  u16 regn;
-  u16 regm;
-  u32 regmf;
-  u16 regm2;
-  u16 regsd;
-  u16 dcofreq;
-  enum hdmi_clk_refsel refsel;
+	u16 regn;
+	u16 regm;
+	u32 regmf;
+	u16 regm2;
+	u16 regsd;
+	u16 dcofreq;
+	enum hdmi_clk_refsel refsel;
 };
 
 struct ti_hdmi_ip_ops {
 
-  void (*video_configure) (struct hdmi_ip_data * ip_data);
-  
-  int (*phy_enable) (struct hdmi_ip_data * ip_data);
-  
-  void (*phy_disable) (struct hdmi_ip_data * ip_data);
-  
-  int (*read_edid) (struct hdmi_ip_data * ip_data, u8 * edid, int len);
-  
-  bool (*detect) (struct hdmi_ip_data * ip_data);
-  
-  int (*pll_enable) (struct hdmi_ip_data * ip_data);
-  
-  void (*pll_disable) (struct hdmi_ip_data * ip_data);
-  
-  void (*video_enable) (struct hdmi_ip_data * ip_data, bool start);
-  
-  void (*dump_wrapper) (struct hdmi_ip_data * ip_data, struct seq_file * s);
-  
-  void (*dump_core) (struct hdmi_ip_data * ip_data, struct seq_file * s);
-  
-  void (*dump_pll) (struct hdmi_ip_data * ip_data, struct seq_file * s);
-  
-  void (*dump_phy) (struct hdmi_ip_data * ip_data, struct seq_file * s);
-  
-  #if defined(CONFIG_SND_OMAP_SOC_OMAP4_HDMI) || \
-  defined(CONFIG_SND_OMAP_SOC_OMAP4_HDMI_MODULE)
-  void (*audio_enable) (struct hdmi_ip_data * ip_data, bool start);
-  #endif
-  
+	void (*video_configure)(struct hdmi_ip_data *ip_data);
+
+	int (*phy_enable)(struct hdmi_ip_data *ip_data);
+
+	void (*phy_disable)(struct hdmi_ip_data *ip_data);
+
+	int (*read_edid)(struct hdmi_ip_data *ip_data, u8 *edid, int len);
+
+	bool (*detect)(struct hdmi_ip_data *ip_data);
+
+	int (*pll_enable)(struct hdmi_ip_data *ip_data);
+
+	void (*pll_disable)(struct hdmi_ip_data *ip_data);
+
+	void (*video_enable)(struct hdmi_ip_data *ip_data, bool start);
+
+	void (*dump_wrapper)(struct hdmi_ip_data *ip_data, struct seq_file *s);
+
+	void (*dump_core)(struct hdmi_ip_data *ip_data, struct seq_file *s);
+
+	void (*dump_pll)(struct hdmi_ip_data *ip_data, struct seq_file *s);
+
+	void (*dump_phy)(struct hdmi_ip_data *ip_data, struct seq_file *s);
+
+#if defined(CONFIG_SND_OMAP_SOC_OMAP4_HDMI) || \
+	defined(CONFIG_SND_OMAP_SOC_OMAP4_HDMI_MODULE)
+	void (*audio_enable)(struct hdmi_ip_data *ip_data, bool start);
+#endif
+
 };
 
 /*
@@ -118,71 +118,71 @@ struct ti_hdmi_ip_ops {
  * details about infoframe databytes
  */
 struct hdmi_core_infoframe_avi {
-  /* Y0, Y1 rgb,yCbCr */
-  u8  db1_format;
-  /* A0  Active information Present */
-  u8  db1_active_info;
-  /* B0, B1 Bar info data valid */
-  u8  db1_bar_info_dv;
-  /* S0, S1 scan information */
-  u8  db1_scan_info;
-  /* C0, C1 colorimetry */
-  u8  db2_colorimetry;
-  /* M0, M1 Aspect ratio (4:3, 16:9) */
-  u8  db2_aspect_ratio;
-  /* R0...R3 Active format aspect ratio */
-  u8  db2_active_fmt_ar;
-  /* ITC IT content. */
-  u8  db3_itc;
-  /* EC0, EC1, EC2 Extended colorimetry */
-  u8  db3_ec;
-  /* Q1, Q0 Quantization range */
-  u8  db3_q_range;
-  /* SC1, SC0 Non-uniform picture scaling */
-  u8  db3_nup_scaling;
-  /* VIC0..6 Video format identification */
-  u8  db4_videocode;
-  /* PR0..PR3 Pixel repetition factor */
-  u8  db5_pixel_repeat;
-  /* Line number end of top bar */
-  u16 db6_7_line_eoftop;
-  /* Line number start of bottom bar */
-  u16 db8_9_line_sofbottom;
-  /* Pixel number end of left bar */
-  u16 db10_11_pixel_eofleft;
-  /* Pixel number start of right bar */
-  u16 db12_13_pixel_sofright;
+	/* Y0, Y1 rgb,yCbCr */
+	u8	db1_format;
+	/* A0  Active information Present */
+	u8	db1_active_info;
+	/* B0, B1 Bar info data valid */
+	u8	db1_bar_info_dv;
+	/* S0, S1 scan information */
+	u8	db1_scan_info;
+	/* C0, C1 colorimetry */
+	u8	db2_colorimetry;
+	/* M0, M1 Aspect ratio (4:3, 16:9) */
+	u8	db2_aspect_ratio;
+	/* R0...R3 Active format aspect ratio */
+	u8	db2_active_fmt_ar;
+	/* ITC IT content. */
+	u8	db3_itc;
+	/* EC0, EC1, EC2 Extended colorimetry */
+	u8	db3_ec;
+	/* Q1, Q0 Quantization range */
+	u8	db3_q_range;
+	/* SC1, SC0 Non-uniform picture scaling */
+	u8	db3_nup_scaling;
+	/* VIC0..6 Video format identification */
+	u8	db4_videocode;
+	/* PR0..PR3 Pixel repetition factor */
+	u8	db5_pixel_repeat;
+	/* Line number end of top bar */
+	u16	db6_7_line_eoftop;
+	/* Line number start of bottom bar */
+	u16	db8_9_line_sofbottom;
+	/* Pixel number end of left bar */
+	u16	db10_11_pixel_eofleft;
+	/* Pixel number start of right bar */
+	u16	db12_13_pixel_sofright;
 };
 
 struct hdmi_ip_data {
-  void __iomem * base_wp; /* HDMI wrapper */
-  unsigned long core_sys_offset;
-  unsigned long core_av_offset;
-  unsigned long pll_offset;
-  unsigned long phy_offset;
-  const struct ti_hdmi_ip_ops * ops;
-  struct hdmi_config cfg;
-  struct hdmi_pll_info pll_data;
-  struct hdmi_core_infoframe_avi avi_cfg;
-  
-  /* ti_hdmi_4xxx_ip private data. These should be in a separate struct */
-  int hpd_gpio;
-  bool phy_tx_enabled;
+	void __iomem	*base_wp;	/* HDMI wrapper */
+	unsigned long	core_sys_offset;
+	unsigned long	core_av_offset;
+	unsigned long	pll_offset;
+	unsigned long	phy_offset;
+	const struct ti_hdmi_ip_ops *ops;
+	struct hdmi_config cfg;
+	struct hdmi_pll_info pll_data;
+	struct hdmi_core_infoframe_avi avi_cfg;
+
+	/* ti_hdmi_4xxx_ip private data. These should be in a separate struct */
+	int hpd_gpio;
+	bool phy_tx_enabled;
 };
-int ti_hdmi_4xxx_phy_enable (struct hdmi_ip_data * ip_data);
-void ti_hdmi_4xxx_phy_disable (struct hdmi_ip_data * ip_data);
-int ti_hdmi_4xxx_read_edid (struct hdmi_ip_data * ip_data, u8 * edid, int len);
-bool ti_hdmi_4xxx_detect (struct hdmi_ip_data * ip_data);
-void ti_hdmi_4xxx_wp_video_start (struct hdmi_ip_data * ip_data, bool start);
-int ti_hdmi_4xxx_pll_enable (struct hdmi_ip_data * ip_data);
-void ti_hdmi_4xxx_pll_disable (struct hdmi_ip_data * ip_data);
-void ti_hdmi_4xxx_basic_configure (struct hdmi_ip_data * ip_data);
-void ti_hdmi_4xxx_wp_dump (struct hdmi_ip_data * ip_data, struct seq_file * s);
-void ti_hdmi_4xxx_pll_dump (struct hdmi_ip_data * ip_data, struct seq_file * s);
-void ti_hdmi_4xxx_core_dump (struct hdmi_ip_data * ip_data, struct seq_file * s);
-void ti_hdmi_4xxx_phy_dump (struct hdmi_ip_data * ip_data, struct seq_file * s);
+int ti_hdmi_4xxx_phy_enable(struct hdmi_ip_data *ip_data);
+void ti_hdmi_4xxx_phy_disable(struct hdmi_ip_data *ip_data);
+int ti_hdmi_4xxx_read_edid(struct hdmi_ip_data *ip_data, u8 *edid, int len);
+bool ti_hdmi_4xxx_detect(struct hdmi_ip_data *ip_data);
+void ti_hdmi_4xxx_wp_video_start(struct hdmi_ip_data *ip_data, bool start);
+int ti_hdmi_4xxx_pll_enable(struct hdmi_ip_data *ip_data);
+void ti_hdmi_4xxx_pll_disable(struct hdmi_ip_data *ip_data);
+void ti_hdmi_4xxx_basic_configure(struct hdmi_ip_data *ip_data);
+void ti_hdmi_4xxx_wp_dump(struct hdmi_ip_data *ip_data, struct seq_file *s);
+void ti_hdmi_4xxx_pll_dump(struct hdmi_ip_data *ip_data, struct seq_file *s);
+void ti_hdmi_4xxx_core_dump(struct hdmi_ip_data *ip_data, struct seq_file *s);
+void ti_hdmi_4xxx_phy_dump(struct hdmi_ip_data *ip_data, struct seq_file *s);
 #if defined(CONFIG_SND_OMAP_SOC_OMAP4_HDMI) || \
-defined(CONFIG_SND_OMAP_SOC_OMAP4_HDMI_MODULE)
-void ti_hdmi_4xxx_wp_audio_enable (struct hdmi_ip_data * ip_data, bool enable);
+	defined(CONFIG_SND_OMAP_SOC_OMAP4_HDMI_MODULE)
+void ti_hdmi_4xxx_wp_audio_enable(struct hdmi_ip_data *ip_data, bool enable);
 #endif
 #endif

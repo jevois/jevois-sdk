@@ -2,7 +2,7 @@
  * Driver for Samsung SoC onboard UARTs.
  *
  * Ben Dooks, Copyright (c) 2003-2008 Simtec Electronics
- *  http://armlinux.simtec.co.uk/
+ *	http://armlinux.simtec.co.uk/
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -10,55 +10,55 @@
 */
 
 struct s3c24xx_uart_info {
-  char   *   name;
-  unsigned int    type;
-  unsigned int    fifosize;
-  unsigned long   rx_fifomask;
-  unsigned long   rx_fifoshift;
-  unsigned long   rx_fifofull;
-  unsigned long   tx_fifomask;
-  unsigned long   tx_fifoshift;
-  unsigned long   tx_fifofull;
-  unsigned int    def_clk_sel;
-  unsigned long   num_clks;
-  unsigned long   clksel_mask;
-  unsigned long   clksel_shift;
-  
-  /* uart port features */
-  
-  unsigned int    has_divslot: 1;
-  
-  /* uart controls */
-  int (*reset_port) (struct uart_port *, struct s3c2410_uartcfg *);
+	char			*name;
+	unsigned int		type;
+	unsigned int		fifosize;
+	unsigned long		rx_fifomask;
+	unsigned long		rx_fifoshift;
+	unsigned long		rx_fifofull;
+	unsigned long		tx_fifomask;
+	unsigned long		tx_fifoshift;
+	unsigned long		tx_fifofull;
+	unsigned int		def_clk_sel;
+	unsigned long		num_clks;
+	unsigned long		clksel_mask;
+	unsigned long		clksel_shift;
+
+	/* uart port features */
+
+	unsigned int		has_divslot:1;
+
+	/* uart controls */
+	int (*reset_port)(struct uart_port *, struct s3c2410_uartcfg *);
 };
 
 struct s3c24xx_serial_drv_data {
-  struct s3c24xx_uart_info * info;
-  struct s3c2410_uartcfg  *  def_cfg;
-  unsigned int      fifosize[CONFIG_SERIAL_SAMSUNG_UARTS];
+	struct s3c24xx_uart_info	*info;
+	struct s3c2410_uartcfg		*def_cfg;
+	unsigned int			fifosize[CONFIG_SERIAL_SAMSUNG_UARTS];
 };
 
 struct s3c24xx_uart_port {
-  unsigned char     rx_claimed;
-  unsigned char     tx_claimed;
-  unsigned int      pm_level;
-  unsigned long     baudclk_rate;
-  
-  unsigned int      rx_irq;
-  unsigned int      tx_irq;
-  
-  struct s3c24xx_uart_info * info;
-  struct clk   *   clk;
-  struct clk   *   baudclk;
-  struct uart_port    port;
-  struct s3c24xx_serial_drv_data * drv_data;
-  
-  /* reference to platform data */
-  struct s3c2410_uartcfg  *  cfg;
-  
-  #ifdef CONFIG_CPU_FREQ
-  struct notifier_block   freq_transition;
-  #endif
+	unsigned char			rx_claimed;
+	unsigned char			tx_claimed;
+	unsigned int			pm_level;
+	unsigned long			baudclk_rate;
+
+	unsigned int			rx_irq;
+	unsigned int			tx_irq;
+
+	struct s3c24xx_uart_info	*info;
+	struct clk			*clk;
+	struct clk			*baudclk;
+	struct uart_port		port;
+	struct s3c24xx_serial_drv_data	*drv_data;
+
+	/* reference to platform data */
+	struct s3c2410_uartcfg		*cfg;
+
+#ifdef CONFIG_CPU_FREQ
+	struct notifier_block		freq_transition;
+#endif
 };
 
 /* conversion functions */
@@ -78,18 +78,18 @@ struct s3c24xx_uart_port {
 
 #ifdef CONFIG_SERIAL_SAMSUNG_DEBUG
 
-extern void printascii (const char *);
+extern void printascii(const char *);
 
-static void dbg (const char * fmt, ...)
+static void dbg(const char *fmt, ...)
 {
-  va_list va;
-  char buff[256];
-  
-  va_start (va, fmt);
-  vsprintf (buff, fmt, va);
-  va_end (va);
-  
-  printascii (buff);
+	va_list va;
+	char buff[256];
+
+	va_start(va, fmt);
+	vsprintf(buff, fmt, va);
+	va_end(va);
+
+	printascii(buff);
 }
 
 #else

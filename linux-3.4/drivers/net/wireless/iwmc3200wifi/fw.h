@@ -51,9 +51,9 @@
  * @buf: The record payload
  */
 struct iwm_fw_hdr_rec {
-  u16 op_code;
-  u16 len;
-  u8 buf[0];
+	u16 op_code;
+	u16 len;
+	u8 buf[0];
 };
 
 /* Header's definitions */
@@ -84,17 +84,17 @@ struct iwm_fw_hdr_rec {
 #define IWM_BUILD_DAY(date) (date & 0xff)
 
 struct iwm_fw_img_desc {
-  u32 offset;
-  u32 address;
-  u32 length;
+	u32 offset;
+	u32 address;
+	u32 length;
 };
 
 struct iwm_fw_img_ver {
-  u8 minor;
-  u8 major;
-  u16 reserved;
+	u8 minor;
+	u8 major;
+	u16 reserved;
 };
 
-int iwm_load_fw (struct iwm_priv * iwm);
+int iwm_load_fw(struct iwm_priv *iwm);
 
 #endif

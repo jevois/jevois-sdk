@@ -31,22 +31,22 @@
  * @rep - enable or disable key repeat bit
  */
 struct pm8xxx_keypad_platform_data {
-  const struct matrix_keymap_data * keymap_data;
-  
-  const char * input_name;
-  const char * input_phys_device;
-  
-  unsigned int num_cols;
-  unsigned int num_rows;
-  unsigned int rows_gpio_start;
-  unsigned int cols_gpio_start;
-  
-  unsigned int debounce_ms;
-  unsigned int scan_delay_ms;
-  unsigned int row_hold_ns;
-  
-  bool wakeup;
-  bool rep;
+	const struct matrix_keymap_data *keymap_data;
+
+	const char *input_name;
+	const char *input_phys_device;
+
+	unsigned int num_cols;
+	unsigned int num_rows;
+	unsigned int rows_gpio_start;
+	unsigned int cols_gpio_start;
+
+	unsigned int debounce_ms;
+	unsigned int scan_delay_ms;
+	unsigned int row_hold_ns;
+
+	bool wakeup;
+	bool rep;
 };
 
 #endif /*__PMIC8XXX_KEYPAD_H__ */

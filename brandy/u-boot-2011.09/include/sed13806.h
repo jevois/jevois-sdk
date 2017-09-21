@@ -34,30 +34,30 @@
 
 #define DEFAULT_VIDEO_MEMORY_SIZE  0x140000     /* Video Memory Size */
 
-#define HWCURSORSIZE       1024     /* Size of memory reserved
-               for HW cursor*/
+#define HWCURSORSIZE		   1024     /* Size of memory reserved
+						   for HW cursor*/
 
 /* Offset of chipset registers                                               */
-#define BLT_CTRL0 (0x0100)
-#define BLT_CTRL1 (0x0101)
-#define BLT_ROP   (0x0102)
-#define BLT_OP    (0x0103)
-#define BLT_SRC_ADDR0 (0x0104)
-#define BLT_SRC_ADDR1 (0x0105)
-#define BLT_SRC_ADDR2 (0x0106)
-#define BLT_DST_ADDR0 (0x0108)
-#define BLT_DST_ADDR1 (0x0109)
-#define BLT_DST_ADDR2 (0x010A)
-#define BLT_MEM_OFF0  (0x010C)
-#define BLT_MEM_OFF1  (0x010D)
-#define BLT_WIDTH0  (0x0110)
-#define BLT_WIDTH1  (0x0111)
-#define BLT_HEIGHT0 (0x0112)
-#define BLT_HEIGHT1 (0x0113)
-#define BLT_BGCOLOR0  (0x0114)
-#define BLT_BGCOLOR1  (0x0115)
-#define BLT_FGCOLOR0  (0x0118)
-#define BLT_FGCOLOR1  (0x0119)
+#define	BLT_CTRL0	(0x0100)
+#define	BLT_CTRL1	(0x0101)
+#define BLT_ROP		(0x0102)
+#define	BLT_OP		(0x0103)
+#define BLT_SRC_ADDR0	(0x0104)
+#define	BLT_SRC_ADDR1	(0x0105)
+#define	BLT_SRC_ADDR2	(0x0106)
+#define	BLT_DST_ADDR0	(0x0108)
+#define BLT_DST_ADDR1	(0x0109)
+#define	BLT_DST_ADDR2	(0x010A)
+#define BLT_MEM_OFF0	(0x010C)
+#define BLT_MEM_OFF1	(0x010D)
+#define BLT_WIDTH0	(0x0110)
+#define BLT_WIDTH1	(0x0111)
+#define BLT_HEIGHT0	(0x0112)
+#define BLT_HEIGHT1	(0x0113)
+#define	BLT_BGCOLOR0	(0x0114)
+#define	BLT_BGCOLOR1	(0x0115)
+#define	BLT_FGCOLOR0	(0x0118)
+#define BLT_FGCOLOR1	(0x0119)
 
 #define BLT_REG         (0x100000)
 
@@ -82,15 +82,15 @@
 
 typedef struct
 {
-  unsigned short      Index;
-  unsigned char       Value;
+    unsigned short      Index;
+    unsigned char       Value;
 } S1D_REGS;
 
 
 /* Board specific functions                                                  */
 unsigned int board_video_init (void);
 void board_validate_screen (unsigned int base);
-const S1D_REGS * board_get_regs (void);
+const S1D_REGS *board_get_regs (void);
 int board_get_width (void);
 int board_get_height (void);
 

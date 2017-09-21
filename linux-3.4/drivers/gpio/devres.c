@@ -19,18 +19,18 @@
 #include <linux/device.h>
 #include <linux/gfp.h>
 
-static void devm_gpio_release (struct device * dev, void * res)
+static void devm_gpio_release(struct device *dev, void *res)
 {
-  unsigned * gpio = res;
-  
-  gpio_free (*gpio);
+	unsigned *gpio = res;
+
+	gpio_free(*gpio);
 }
 
-static int devm_gpio_match (struct device * dev, void * res, void * data)
+static int devm_gpio_match(struct device *dev, void *res, void *data)
 {
-  unsigned * this = res, *gpio = data;
-  
-  return *this == *gpio;
+	unsigned *this = res, *gpio = data;
+
+	return *this == *gpio;
 }
 
 /**
@@ -48,27 +48,27 @@ static int devm_gpio_match (struct device * dev, void * res, void * data)
  *      separately, devm_gpio_free() must be used.
  */
 
-int devm_gpio_request (struct device * dev, unsigned gpio, const char * label)
+int devm_gpio_request(struct device *dev, unsigned gpio, const char *label)
 {
-  unsigned * dr;
-  int rc;
-  
-  dr = devres_alloc (devm_gpio_release, sizeof (unsigned), GFP_KERNEL);
-  if (!dr)
-  { return -ENOMEM; }
-  
-  rc = gpio_request (gpio, label);
-  if (rc) {
-    devres_free (dr);
-    return rc;
-  }
-  
-  *dr = gpio;
-  devres_add (dev, dr);
-  
-  return 0;
+	unsigned *dr;
+	int rc;
+
+	dr = devres_alloc(devm_gpio_release, sizeof(unsigned), GFP_KERNEL);
+	if (!dr)
+		return -ENOMEM;
+
+	rc = gpio_request(gpio, label);
+	if (rc) {
+		devres_free(dr);
+		return rc;
+	}
+
+	*dr = gpio;
+	devres_add(dev, dr);
+
+	return 0;
 }
-EXPORT_SYMBOL (devm_gpio_request);
+EXPORT_SYMBOL(devm_gpio_request);
 
 /**
  *      devm_gpio_free - free an interrupt
@@ -80,11 +80,11 @@ EXPORT_SYMBOL (devm_gpio_request);
  *      This function instead of gpio_free() should be used to manually
  *      free GPIOs allocated with devm_gpio_request().
  */
-void devm_gpio_free (struct device * dev, unsigned int gpio)
+void devm_gpio_free(struct device *dev, unsigned int gpio)
 {
 
-  WARN_ON (devres_destroy (dev, devm_gpio_release, devm_gpio_match,
-                           &gpio) );
-  gpio_free (gpio);
+	WARN_ON(devres_destroy(dev, devm_gpio_release, devm_gpio_match,
+		&gpio));
+	gpio_free(gpio);
 }
-EXPORT_SYMBOL (devm_gpio_free);
+EXPORT_SYMBOL(devm_gpio_free);

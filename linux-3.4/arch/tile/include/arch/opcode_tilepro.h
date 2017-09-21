@@ -32,33 +32,33 @@ enum
 {
   /* Maximum number of instructions in a bundle (2 for X, 3 for Y). */
   TILEPRO_MAX_INSTRUCTIONS_PER_BUNDLE = 3,
-  
+
   /* How many different pipeline encodings are there? X0, X1, Y0, Y1, Y2. */
   TILEPRO_NUM_PIPELINE_ENCODINGS = 5,
-  
+
   /* Log base 2 of TILEPRO_BUNDLE_SIZE_IN_BYTES. */
   TILEPRO_LOG2_BUNDLE_SIZE_IN_BYTES = 3,
-  
+
   /* Instructions take this many bytes. */
   TILEPRO_BUNDLE_SIZE_IN_BYTES = 1 << TILEPRO_LOG2_BUNDLE_SIZE_IN_BYTES,
-  
+
   /* Log base 2 of TILEPRO_BUNDLE_ALIGNMENT_IN_BYTES. */
   TILEPRO_LOG2_BUNDLE_ALIGNMENT_IN_BYTES = 3,
-  
+
   /* Bundles should be aligned modulo this number of bytes. */
   TILEPRO_BUNDLE_ALIGNMENT_IN_BYTES =
     (1 << TILEPRO_LOG2_BUNDLE_ALIGNMENT_IN_BYTES),
-    
+
   /* Log base 2 of TILEPRO_SN_INSTRUCTION_SIZE_IN_BYTES. */
   TILEPRO_LOG2_SN_INSTRUCTION_SIZE_IN_BYTES = 1,
-  
+
   /* Static network instructions take this many bytes. */
   TILEPRO_SN_INSTRUCTION_SIZE_IN_BYTES =
     (1 << TILEPRO_LOG2_SN_INSTRUCTION_SIZE_IN_BYTES),
-    
+
   /* Number of registers (some are magic, such as network I/O). */
   TILEPRO_NUM_REGISTERS = 64,
-  
+
   /* Number of static network registers. */
   TILEPRO_NUM_SN_REGISTERS = 4
 };
@@ -76,932 +76,932 @@ typedef tilepro_bundle_bits tile_bundle_bits;
 #define TILEPRO_BPT_BUNDLE 0x400b3cae70166000ULL
 
 static __inline unsigned int
-get_BrOff_SN (tilepro_bundle_bits num)
+get_BrOff_SN(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 0) ) & 0x3ff);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 0)) & 0x3ff);
 }
 
 static __inline unsigned int
-get_BrOff_X1 (tilepro_bundle_bits n)
+get_BrOff_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 43) ) & 0x00007fff) |
-         ( ( (unsigned int) (n >> 20) ) & 0x00018000);
+  return (((unsigned int)(n >> 43)) & 0x00007fff) |
+         (((unsigned int)(n >> 20)) & 0x00018000);
 }
 
 static __inline unsigned int
-get_BrType_X1 (tilepro_bundle_bits n)
+get_BrType_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 31) ) & 0xf);
+  return (((unsigned int)(n >> 31)) & 0xf);
 }
 
 static __inline unsigned int
-get_Dest_Imm8_X1 (tilepro_bundle_bits n)
+get_Dest_Imm8_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 31) ) & 0x0000003f) |
-         ( ( (unsigned int) (n >> 43) ) & 0x000000c0);
+  return (((unsigned int)(n >> 31)) & 0x0000003f) |
+         (((unsigned int)(n >> 43)) & 0x000000c0);
 }
 
 static __inline unsigned int
-get_Dest_SN (tilepro_bundle_bits num)
+get_Dest_SN(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 2) ) & 0x3);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 2)) & 0x3);
 }
 
 static __inline unsigned int
-get_Dest_X0 (tilepro_bundle_bits num)
+get_Dest_X0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 0) ) & 0x3f);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 0)) & 0x3f);
 }
 
 static __inline unsigned int
-get_Dest_X1 (tilepro_bundle_bits n)
+get_Dest_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 31) ) & 0x3f);
+  return (((unsigned int)(n >> 31)) & 0x3f);
 }
 
 static __inline unsigned int
-get_Dest_Y0 (tilepro_bundle_bits num)
+get_Dest_Y0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 0) ) & 0x3f);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 0)) & 0x3f);
 }
 
 static __inline unsigned int
-get_Dest_Y1 (tilepro_bundle_bits n)
+get_Dest_Y1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 31) ) & 0x3f);
+  return (((unsigned int)(n >> 31)) & 0x3f);
 }
 
 static __inline unsigned int
-get_Imm16_X0 (tilepro_bundle_bits num)
+get_Imm16_X0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 12) ) & 0xffff);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 12)) & 0xffff);
 }
 
 static __inline unsigned int
-get_Imm16_X1 (tilepro_bundle_bits n)
+get_Imm16_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 43) ) & 0xffff);
+  return (((unsigned int)(n >> 43)) & 0xffff);
 }
 
 static __inline unsigned int
-get_Imm8_SN (tilepro_bundle_bits num)
+get_Imm8_SN(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 0) ) & 0xff);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 0)) & 0xff);
 }
 
 static __inline unsigned int
-get_Imm8_X0 (tilepro_bundle_bits num)
+get_Imm8_X0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 12) ) & 0xff);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 12)) & 0xff);
 }
 
 static __inline unsigned int
-get_Imm8_X1 (tilepro_bundle_bits n)
+get_Imm8_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 43) ) & 0xff);
+  return (((unsigned int)(n >> 43)) & 0xff);
 }
 
 static __inline unsigned int
-get_Imm8_Y0 (tilepro_bundle_bits num)
+get_Imm8_Y0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 12) ) & 0xff);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 12)) & 0xff);
 }
 
 static __inline unsigned int
-get_Imm8_Y1 (tilepro_bundle_bits n)
+get_Imm8_Y1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 43) ) & 0xff);
+  return (((unsigned int)(n >> 43)) & 0xff);
 }
 
 static __inline unsigned int
-get_ImmOpcodeExtension_X0 (tilepro_bundle_bits num)
+get_ImmOpcodeExtension_X0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 20) ) & 0x7f);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 20)) & 0x7f);
 }
 
 static __inline unsigned int
-get_ImmOpcodeExtension_X1 (tilepro_bundle_bits n)
+get_ImmOpcodeExtension_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 51) ) & 0x7f);
+  return (((unsigned int)(n >> 51)) & 0x7f);
 }
 
 static __inline unsigned int
-get_ImmRROpcodeExtension_SN (tilepro_bundle_bits num)
+get_ImmRROpcodeExtension_SN(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 8) ) & 0x3);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 8)) & 0x3);
 }
 
 static __inline unsigned int
-get_JOffLong_X1 (tilepro_bundle_bits n)
+get_JOffLong_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 43) ) & 0x00007fff) |
-         ( ( (unsigned int) (n >> 20) ) & 0x00018000) |
-         ( ( (unsigned int) (n >> 14) ) & 0x001e0000) |
-         ( ( (unsigned int) (n >> 16) ) & 0x07e00000) |
-         ( ( (unsigned int) (n >> 31) ) & 0x18000000);
+  return (((unsigned int)(n >> 43)) & 0x00007fff) |
+         (((unsigned int)(n >> 20)) & 0x00018000) |
+         (((unsigned int)(n >> 14)) & 0x001e0000) |
+         (((unsigned int)(n >> 16)) & 0x07e00000) |
+         (((unsigned int)(n >> 31)) & 0x18000000);
 }
 
 static __inline unsigned int
-get_JOff_X1 (tilepro_bundle_bits n)
+get_JOff_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 43) ) & 0x00007fff) |
-         ( ( (unsigned int) (n >> 20) ) & 0x00018000) |
-         ( ( (unsigned int) (n >> 14) ) & 0x001e0000) |
-         ( ( (unsigned int) (n >> 16) ) & 0x07e00000) |
-         ( ( (unsigned int) (n >> 31) ) & 0x08000000);
+  return (((unsigned int)(n >> 43)) & 0x00007fff) |
+         (((unsigned int)(n >> 20)) & 0x00018000) |
+         (((unsigned int)(n >> 14)) & 0x001e0000) |
+         (((unsigned int)(n >> 16)) & 0x07e00000) |
+         (((unsigned int)(n >> 31)) & 0x08000000);
 }
 
 static __inline unsigned int
-get_MF_Imm15_X1 (tilepro_bundle_bits n)
+get_MF_Imm15_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 37) ) & 0x00003fff) |
-         ( ( (unsigned int) (n >> 44) ) & 0x00004000);
+  return (((unsigned int)(n >> 37)) & 0x00003fff) |
+         (((unsigned int)(n >> 44)) & 0x00004000);
 }
 
 static __inline unsigned int
-get_MMEnd_X0 (tilepro_bundle_bits num)
+get_MMEnd_X0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 18) ) & 0x1f);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 18)) & 0x1f);
 }
 
 static __inline unsigned int
-get_MMEnd_X1 (tilepro_bundle_bits n)
+get_MMEnd_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 49) ) & 0x1f);
+  return (((unsigned int)(n >> 49)) & 0x1f);
 }
 
 static __inline unsigned int
-get_MMStart_X0 (tilepro_bundle_bits num)
+get_MMStart_X0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 23) ) & 0x1f);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 23)) & 0x1f);
 }
 
 static __inline unsigned int
-get_MMStart_X1 (tilepro_bundle_bits n)
+get_MMStart_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 54) ) & 0x1f);
+  return (((unsigned int)(n >> 54)) & 0x1f);
 }
 
 static __inline unsigned int
-get_MT_Imm15_X1 (tilepro_bundle_bits n)
+get_MT_Imm15_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 31) ) & 0x0000003f) |
-         ( ( (unsigned int) (n >> 37) ) & 0x00003fc0) |
-         ( ( (unsigned int) (n >> 44) ) & 0x00004000);
+  return (((unsigned int)(n >> 31)) & 0x0000003f) |
+         (((unsigned int)(n >> 37)) & 0x00003fc0) |
+         (((unsigned int)(n >> 44)) & 0x00004000);
 }
 
 static __inline unsigned int
-get_Mode (tilepro_bundle_bits n)
+get_Mode(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 63) ) & 0x1);
+  return (((unsigned int)(n >> 63)) & 0x1);
 }
 
 static __inline unsigned int
-get_NoRegOpcodeExtension_SN (tilepro_bundle_bits num)
+get_NoRegOpcodeExtension_SN(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 0) ) & 0xf);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 0)) & 0xf);
 }
 
 static __inline unsigned int
-get_Opcode_SN (tilepro_bundle_bits num)
+get_Opcode_SN(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 10) ) & 0x3f);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 10)) & 0x3f);
 }
 
 static __inline unsigned int
-get_Opcode_X0 (tilepro_bundle_bits num)
+get_Opcode_X0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 28) ) & 0x7);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 28)) & 0x7);
 }
 
 static __inline unsigned int
-get_Opcode_X1 (tilepro_bundle_bits n)
+get_Opcode_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 59) ) & 0xf);
+  return (((unsigned int)(n >> 59)) & 0xf);
 }
 
 static __inline unsigned int
-get_Opcode_Y0 (tilepro_bundle_bits num)
+get_Opcode_Y0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 27) ) & 0xf);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 27)) & 0xf);
 }
 
 static __inline unsigned int
-get_Opcode_Y1 (tilepro_bundle_bits n)
+get_Opcode_Y1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 59) ) & 0xf);
+  return (((unsigned int)(n >> 59)) & 0xf);
 }
 
 static __inline unsigned int
-get_Opcode_Y2 (tilepro_bundle_bits n)
+get_Opcode_Y2(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 56) ) & 0x7);
+  return (((unsigned int)(n >> 56)) & 0x7);
 }
 
 static __inline unsigned int
-get_RROpcodeExtension_SN (tilepro_bundle_bits num)
+get_RROpcodeExtension_SN(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 4) ) & 0xf);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 4)) & 0xf);
 }
 
 static __inline unsigned int
-get_RRROpcodeExtension_X0 (tilepro_bundle_bits num)
+get_RRROpcodeExtension_X0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 18) ) & 0x1ff);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 18)) & 0x1ff);
 }
 
 static __inline unsigned int
-get_RRROpcodeExtension_X1 (tilepro_bundle_bits n)
+get_RRROpcodeExtension_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 49) ) & 0x1ff);
+  return (((unsigned int)(n >> 49)) & 0x1ff);
 }
 
 static __inline unsigned int
-get_RRROpcodeExtension_Y0 (tilepro_bundle_bits num)
+get_RRROpcodeExtension_Y0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 18) ) & 0x3);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 18)) & 0x3);
 }
 
 static __inline unsigned int
-get_RRROpcodeExtension_Y1 (tilepro_bundle_bits n)
+get_RRROpcodeExtension_Y1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 49) ) & 0x3);
+  return (((unsigned int)(n >> 49)) & 0x3);
 }
 
 static __inline unsigned int
-get_RouteOpcodeExtension_SN (tilepro_bundle_bits num)
+get_RouteOpcodeExtension_SN(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 0) ) & 0x3ff);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 0)) & 0x3ff);
 }
 
 static __inline unsigned int
-get_S_X0 (tilepro_bundle_bits num)
+get_S_X0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 27) ) & 0x1);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 27)) & 0x1);
 }
 
 static __inline unsigned int
-get_S_X1 (tilepro_bundle_bits n)
+get_S_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 58) ) & 0x1);
+  return (((unsigned int)(n >> 58)) & 0x1);
 }
 
 static __inline unsigned int
-get_ShAmt_X0 (tilepro_bundle_bits num)
+get_ShAmt_X0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 12) ) & 0x1f);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 12)) & 0x1f);
 }
 
 static __inline unsigned int
-get_ShAmt_X1 (tilepro_bundle_bits n)
+get_ShAmt_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 43) ) & 0x1f);
+  return (((unsigned int)(n >> 43)) & 0x1f);
 }
 
 static __inline unsigned int
-get_ShAmt_Y0 (tilepro_bundle_bits num)
+get_ShAmt_Y0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 12) ) & 0x1f);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 12)) & 0x1f);
 }
 
 static __inline unsigned int
-get_ShAmt_Y1 (tilepro_bundle_bits n)
+get_ShAmt_Y1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 43) ) & 0x1f);
+  return (((unsigned int)(n >> 43)) & 0x1f);
 }
 
 static __inline unsigned int
-get_SrcA_X0 (tilepro_bundle_bits num)
+get_SrcA_X0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 6) ) & 0x3f);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 6)) & 0x3f);
 }
 
 static __inline unsigned int
-get_SrcA_X1 (tilepro_bundle_bits n)
+get_SrcA_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 37) ) & 0x3f);
+  return (((unsigned int)(n >> 37)) & 0x3f);
 }
 
 static __inline unsigned int
-get_SrcA_Y0 (tilepro_bundle_bits num)
+get_SrcA_Y0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 6) ) & 0x3f);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 6)) & 0x3f);
 }
 
 static __inline unsigned int
-get_SrcA_Y1 (tilepro_bundle_bits n)
+get_SrcA_Y1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 37) ) & 0x3f);
+  return (((unsigned int)(n >> 37)) & 0x3f);
 }
 
 static __inline unsigned int
-get_SrcA_Y2 (tilepro_bundle_bits n)
+get_SrcA_Y2(tilepro_bundle_bits n)
 {
-  return ( ( (n >> 26) ) & 0x00000001) |
-         ( ( (unsigned int) (n >> 50) ) & 0x0000003e);
+  return (((n >> 26)) & 0x00000001) |
+         (((unsigned int)(n >> 50)) & 0x0000003e);
 }
 
 static __inline unsigned int
-get_SrcBDest_Y2 (tilepro_bundle_bits num)
+get_SrcBDest_Y2(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 20) ) & 0x3f);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 20)) & 0x3f);
 }
 
 static __inline unsigned int
-get_SrcB_X0 (tilepro_bundle_bits num)
+get_SrcB_X0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 12) ) & 0x3f);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 12)) & 0x3f);
 }
 
 static __inline unsigned int
-get_SrcB_X1 (tilepro_bundle_bits n)
+get_SrcB_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 43) ) & 0x3f);
+  return (((unsigned int)(n >> 43)) & 0x3f);
 }
 
 static __inline unsigned int
-get_SrcB_Y0 (tilepro_bundle_bits num)
+get_SrcB_Y0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 12) ) & 0x3f);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 12)) & 0x3f);
 }
 
 static __inline unsigned int
-get_SrcB_Y1 (tilepro_bundle_bits n)
+get_SrcB_Y1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 43) ) & 0x3f);
+  return (((unsigned int)(n >> 43)) & 0x3f);
 }
 
 static __inline unsigned int
-get_Src_SN (tilepro_bundle_bits num)
+get_Src_SN(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 0) ) & 0x3);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 0)) & 0x3);
 }
 
 static __inline unsigned int
-get_UnOpcodeExtension_X0 (tilepro_bundle_bits num)
+get_UnOpcodeExtension_X0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 12) ) & 0x1f);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 12)) & 0x1f);
 }
 
 static __inline unsigned int
-get_UnOpcodeExtension_X1 (tilepro_bundle_bits n)
+get_UnOpcodeExtension_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 43) ) & 0x1f);
+  return (((unsigned int)(n >> 43)) & 0x1f);
 }
 
 static __inline unsigned int
-get_UnOpcodeExtension_Y0 (tilepro_bundle_bits num)
+get_UnOpcodeExtension_Y0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 12) ) & 0x1f);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 12)) & 0x1f);
 }
 
 static __inline unsigned int
-get_UnOpcodeExtension_Y1 (tilepro_bundle_bits n)
+get_UnOpcodeExtension_Y1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 43) ) & 0x1f);
+  return (((unsigned int)(n >> 43)) & 0x1f);
 }
 
 static __inline unsigned int
-get_UnShOpcodeExtension_X0 (tilepro_bundle_bits num)
+get_UnShOpcodeExtension_X0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 17) ) & 0x3ff);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 17)) & 0x3ff);
 }
 
 static __inline unsigned int
-get_UnShOpcodeExtension_X1 (tilepro_bundle_bits n)
+get_UnShOpcodeExtension_X1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 48) ) & 0x3ff);
+  return (((unsigned int)(n >> 48)) & 0x3ff);
 }
 
 static __inline unsigned int
-get_UnShOpcodeExtension_Y0 (tilepro_bundle_bits num)
+get_UnShOpcodeExtension_Y0(tilepro_bundle_bits num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (n >> 17) ) & 0x7);
+  const unsigned int n = (unsigned int)num;
+  return (((n >> 17)) & 0x7);
 }
 
 static __inline unsigned int
-get_UnShOpcodeExtension_Y1 (tilepro_bundle_bits n)
+get_UnShOpcodeExtension_Y1(tilepro_bundle_bits n)
 {
-  return ( ( (unsigned int) (n >> 48) ) & 0x7);
+  return (((unsigned int)(n >> 48)) & 0x7);
 }
 
 
 static __inline int
-sign_extend (int n, int num_bits)
+sign_extend(int n, int num_bits)
 {
-  int shift = (int) (sizeof (int) * 8 - num_bits);
+  int shift = (int)(sizeof(int) * 8 - num_bits);
   return (n << shift) >> shift;
 }
 
 
 
 static __inline tilepro_bundle_bits
-create_BrOff_SN (int num)
+create_BrOff_SN(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x3ff) << 0);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x3ff) << 0);
 }
 
 static __inline tilepro_bundle_bits
-create_BrOff_X1 (int num)
+create_BrOff_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x00007fff) ) << 43) |
-         ( ( (tilepro_bundle_bits) (n & 0x00018000) ) << 20);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x00007fff)) << 43) |
+         (((tilepro_bundle_bits)(n & 0x00018000)) << 20);
 }
 
 static __inline tilepro_bundle_bits
-create_BrType_X1 (int num)
+create_BrType_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0xf) ) << 31);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0xf)) << 31);
 }
 
 static __inline tilepro_bundle_bits
-create_Dest_Imm8_X1 (int num)
+create_Dest_Imm8_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x0000003f) ) << 31) |
-         ( ( (tilepro_bundle_bits) (n & 0x000000c0) ) << 43);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x0000003f)) << 31) |
+         (((tilepro_bundle_bits)(n & 0x000000c0)) << 43);
 }
 
 static __inline tilepro_bundle_bits
-create_Dest_SN (int num)
+create_Dest_SN(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x3) << 2);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x3) << 2);
 }
 
 static __inline tilepro_bundle_bits
-create_Dest_X0 (int num)
+create_Dest_X0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x3f) << 0);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x3f) << 0);
 }
 
 static __inline tilepro_bundle_bits
-create_Dest_X1 (int num)
+create_Dest_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x3f) ) << 31);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x3f)) << 31);
 }
 
 static __inline tilepro_bundle_bits
-create_Dest_Y0 (int num)
+create_Dest_Y0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x3f) << 0);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x3f) << 0);
 }
 
 static __inline tilepro_bundle_bits
-create_Dest_Y1 (int num)
+create_Dest_Y1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x3f) ) << 31);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x3f)) << 31);
 }
 
 static __inline tilepro_bundle_bits
-create_Imm16_X0 (int num)
+create_Imm16_X0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0xffff) << 12);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0xffff) << 12);
 }
 
 static __inline tilepro_bundle_bits
-create_Imm16_X1 (int num)
+create_Imm16_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0xffff) ) << 43);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0xffff)) << 43);
 }
 
 static __inline tilepro_bundle_bits
-create_Imm8_SN (int num)
+create_Imm8_SN(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0xff) << 0);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0xff) << 0);
 }
 
 static __inline tilepro_bundle_bits
-create_Imm8_X0 (int num)
+create_Imm8_X0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0xff) << 12);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0xff) << 12);
 }
 
 static __inline tilepro_bundle_bits
-create_Imm8_X1 (int num)
+create_Imm8_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0xff) ) << 43);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0xff)) << 43);
 }
 
 static __inline tilepro_bundle_bits
-create_Imm8_Y0 (int num)
+create_Imm8_Y0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0xff) << 12);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0xff) << 12);
 }
 
 static __inline tilepro_bundle_bits
-create_Imm8_Y1 (int num)
+create_Imm8_Y1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0xff) ) << 43);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0xff)) << 43);
 }
 
 static __inline tilepro_bundle_bits
-create_ImmOpcodeExtension_X0 (int num)
+create_ImmOpcodeExtension_X0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x7f) << 20);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x7f) << 20);
 }
 
 static __inline tilepro_bundle_bits
-create_ImmOpcodeExtension_X1 (int num)
+create_ImmOpcodeExtension_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x7f) ) << 51);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x7f)) << 51);
 }
 
 static __inline tilepro_bundle_bits
-create_ImmRROpcodeExtension_SN (int num)
+create_ImmRROpcodeExtension_SN(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x3) << 8);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x3) << 8);
 }
 
 static __inline tilepro_bundle_bits
-create_JOffLong_X1 (int num)
+create_JOffLong_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x00007fff) ) << 43) |
-         ( ( (tilepro_bundle_bits) (n & 0x00018000) ) << 20) |
-         ( ( (tilepro_bundle_bits) (n & 0x001e0000) ) << 14) |
-         ( ( (tilepro_bundle_bits) (n & 0x07e00000) ) << 16) |
-         ( ( (tilepro_bundle_bits) (n & 0x18000000) ) << 31);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x00007fff)) << 43) |
+         (((tilepro_bundle_bits)(n & 0x00018000)) << 20) |
+         (((tilepro_bundle_bits)(n & 0x001e0000)) << 14) |
+         (((tilepro_bundle_bits)(n & 0x07e00000)) << 16) |
+         (((tilepro_bundle_bits)(n & 0x18000000)) << 31);
 }
 
 static __inline tilepro_bundle_bits
-create_JOff_X1 (int num)
+create_JOff_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x00007fff) ) << 43) |
-         ( ( (tilepro_bundle_bits) (n & 0x00018000) ) << 20) |
-         ( ( (tilepro_bundle_bits) (n & 0x001e0000) ) << 14) |
-         ( ( (tilepro_bundle_bits) (n & 0x07e00000) ) << 16) |
-         ( ( (tilepro_bundle_bits) (n & 0x08000000) ) << 31);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x00007fff)) << 43) |
+         (((tilepro_bundle_bits)(n & 0x00018000)) << 20) |
+         (((tilepro_bundle_bits)(n & 0x001e0000)) << 14) |
+         (((tilepro_bundle_bits)(n & 0x07e00000)) << 16) |
+         (((tilepro_bundle_bits)(n & 0x08000000)) << 31);
 }
 
 static __inline tilepro_bundle_bits
-create_MF_Imm15_X1 (int num)
+create_MF_Imm15_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x00003fff) ) << 37) |
-         ( ( (tilepro_bundle_bits) (n & 0x00004000) ) << 44);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x00003fff)) << 37) |
+         (((tilepro_bundle_bits)(n & 0x00004000)) << 44);
 }
 
 static __inline tilepro_bundle_bits
-create_MMEnd_X0 (int num)
+create_MMEnd_X0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x1f) << 18);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x1f) << 18);
 }
 
 static __inline tilepro_bundle_bits
-create_MMEnd_X1 (int num)
+create_MMEnd_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x1f) ) << 49);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x1f)) << 49);
 }
 
 static __inline tilepro_bundle_bits
-create_MMStart_X0 (int num)
+create_MMStart_X0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x1f) << 23);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x1f) << 23);
 }
 
 static __inline tilepro_bundle_bits
-create_MMStart_X1 (int num)
+create_MMStart_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x1f) ) << 54);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x1f)) << 54);
 }
 
 static __inline tilepro_bundle_bits
-create_MT_Imm15_X1 (int num)
+create_MT_Imm15_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x0000003f) ) << 31) |
-         ( ( (tilepro_bundle_bits) (n & 0x00003fc0) ) << 37) |
-         ( ( (tilepro_bundle_bits) (n & 0x00004000) ) << 44);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x0000003f)) << 31) |
+         (((tilepro_bundle_bits)(n & 0x00003fc0)) << 37) |
+         (((tilepro_bundle_bits)(n & 0x00004000)) << 44);
 }
 
 static __inline tilepro_bundle_bits
-create_Mode (int num)
+create_Mode(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x1) ) << 63);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x1)) << 63);
 }
 
 static __inline tilepro_bundle_bits
-create_NoRegOpcodeExtension_SN (int num)
+create_NoRegOpcodeExtension_SN(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0xf) << 0);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0xf) << 0);
 }
 
 static __inline tilepro_bundle_bits
-create_Opcode_SN (int num)
+create_Opcode_SN(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x3f) << 10);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x3f) << 10);
 }
 
 static __inline tilepro_bundle_bits
-create_Opcode_X0 (int num)
+create_Opcode_X0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x7) << 28);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x7) << 28);
 }
 
 static __inline tilepro_bundle_bits
-create_Opcode_X1 (int num)
+create_Opcode_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0xf) ) << 59);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0xf)) << 59);
 }
 
 static __inline tilepro_bundle_bits
-create_Opcode_Y0 (int num)
+create_Opcode_Y0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0xf) << 27);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0xf) << 27);
 }
 
 static __inline tilepro_bundle_bits
-create_Opcode_Y1 (int num)
+create_Opcode_Y1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0xf) ) << 59);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0xf)) << 59);
 }
 
 static __inline tilepro_bundle_bits
-create_Opcode_Y2 (int num)
+create_Opcode_Y2(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x7) ) << 56);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x7)) << 56);
 }
 
 static __inline tilepro_bundle_bits
-create_RROpcodeExtension_SN (int num)
+create_RROpcodeExtension_SN(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0xf) << 4);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0xf) << 4);
 }
 
 static __inline tilepro_bundle_bits
-create_RRROpcodeExtension_X0 (int num)
+create_RRROpcodeExtension_X0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x1ff) << 18);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x1ff) << 18);
 }
 
 static __inline tilepro_bundle_bits
-create_RRROpcodeExtension_X1 (int num)
+create_RRROpcodeExtension_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x1ff) ) << 49);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x1ff)) << 49);
 }
 
 static __inline tilepro_bundle_bits
-create_RRROpcodeExtension_Y0 (int num)
+create_RRROpcodeExtension_Y0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x3) << 18);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x3) << 18);
 }
 
 static __inline tilepro_bundle_bits
-create_RRROpcodeExtension_Y1 (int num)
+create_RRROpcodeExtension_Y1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x3) ) << 49);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x3)) << 49);
 }
 
 static __inline tilepro_bundle_bits
-create_RouteOpcodeExtension_SN (int num)
+create_RouteOpcodeExtension_SN(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x3ff) << 0);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x3ff) << 0);
 }
 
 static __inline tilepro_bundle_bits
-create_S_X0 (int num)
+create_S_X0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x1) << 27);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x1) << 27);
 }
 
 static __inline tilepro_bundle_bits
-create_S_X1 (int num)
+create_S_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x1) ) << 58);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x1)) << 58);
 }
 
 static __inline tilepro_bundle_bits
-create_ShAmt_X0 (int num)
+create_ShAmt_X0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x1f) << 12);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x1f) << 12);
 }
 
 static __inline tilepro_bundle_bits
-create_ShAmt_X1 (int num)
+create_ShAmt_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x1f) ) << 43);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x1f)) << 43);
 }
 
 static __inline tilepro_bundle_bits
-create_ShAmt_Y0 (int num)
+create_ShAmt_Y0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x1f) << 12);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x1f) << 12);
 }
 
 static __inline tilepro_bundle_bits
-create_ShAmt_Y1 (int num)
+create_ShAmt_Y1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x1f) ) << 43);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x1f)) << 43);
 }
 
 static __inline tilepro_bundle_bits
-create_SrcA_X0 (int num)
+create_SrcA_X0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x3f) << 6);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x3f) << 6);
 }
 
 static __inline tilepro_bundle_bits
-create_SrcA_X1 (int num)
+create_SrcA_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x3f) ) << 37);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x3f)) << 37);
 }
 
 static __inline tilepro_bundle_bits
-create_SrcA_Y0 (int num)
+create_SrcA_Y0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x3f) << 6);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x3f) << 6);
 }
 
 static __inline tilepro_bundle_bits
-create_SrcA_Y1 (int num)
+create_SrcA_Y1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x3f) ) << 37);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x3f)) << 37);
 }
 
 static __inline tilepro_bundle_bits
-create_SrcA_Y2 (int num)
+create_SrcA_Y2(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x00000001) << 26) |
-         ( ( (tilepro_bundle_bits) (n & 0x0000003e) ) << 50);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x00000001) << 26) |
+         (((tilepro_bundle_bits)(n & 0x0000003e)) << 50);
 }
 
 static __inline tilepro_bundle_bits
-create_SrcBDest_Y2 (int num)
+create_SrcBDest_Y2(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x3f) << 20);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x3f) << 20);
 }
 
 static __inline tilepro_bundle_bits
-create_SrcB_X0 (int num)
+create_SrcB_X0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x3f) << 12);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x3f) << 12);
 }
 
 static __inline tilepro_bundle_bits
-create_SrcB_X1 (int num)
+create_SrcB_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x3f) ) << 43);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x3f)) << 43);
 }
 
 static __inline tilepro_bundle_bits
-create_SrcB_Y0 (int num)
+create_SrcB_Y0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x3f) << 12);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x3f) << 12);
 }
 
 static __inline tilepro_bundle_bits
-create_SrcB_Y1 (int num)
+create_SrcB_Y1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x3f) ) << 43);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x3f)) << 43);
 }
 
 static __inline tilepro_bundle_bits
-create_Src_SN (int num)
+create_Src_SN(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x3) << 0);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x3) << 0);
 }
 
 static __inline tilepro_bundle_bits
-create_UnOpcodeExtension_X0 (int num)
+create_UnOpcodeExtension_X0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x1f) << 12);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x1f) << 12);
 }
 
 static __inline tilepro_bundle_bits
-create_UnOpcodeExtension_X1 (int num)
+create_UnOpcodeExtension_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x1f) ) << 43);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x1f)) << 43);
 }
 
 static __inline tilepro_bundle_bits
-create_UnOpcodeExtension_Y0 (int num)
+create_UnOpcodeExtension_Y0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x1f) << 12);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x1f) << 12);
 }
 
 static __inline tilepro_bundle_bits
-create_UnOpcodeExtension_Y1 (int num)
+create_UnOpcodeExtension_Y1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x1f) ) << 43);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x1f)) << 43);
 }
 
 static __inline tilepro_bundle_bits
-create_UnShOpcodeExtension_X0 (int num)
+create_UnShOpcodeExtension_X0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x3ff) << 17);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x3ff) << 17);
 }
 
 static __inline tilepro_bundle_bits
-create_UnShOpcodeExtension_X1 (int num)
+create_UnShOpcodeExtension_X1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x3ff) ) << 48);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x3ff)) << 48);
 }
 
 static __inline tilepro_bundle_bits
-create_UnShOpcodeExtension_Y0 (int num)
+create_UnShOpcodeExtension_Y0(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( (n & 0x7) << 17);
+  const unsigned int n = (unsigned int)num;
+  return ((n & 0x7) << 17);
 }
 
 static __inline tilepro_bundle_bits
-create_UnShOpcodeExtension_Y1 (int num)
+create_UnShOpcodeExtension_Y1(int num)
 {
-  const unsigned int n = (unsigned int) num;
-  return ( ( (tilepro_bundle_bits) (n & 0x7) ) << 48);
+  const unsigned int n = (unsigned int)num;
+  return (((tilepro_bundle_bits)(n & 0x7)) << 48);
 }
 
 

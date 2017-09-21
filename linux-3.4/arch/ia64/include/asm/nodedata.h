@@ -24,39 +24,39 @@
 
 struct pglist_data;
 struct ia64_node_data {
-  short     active_cpu_count;
-  short     node;
-  struct pglist_data * pg_data_ptrs[MAX_NUMNODES];
+	short			active_cpu_count;
+	short			node;
+	struct pglist_data	*pg_data_ptrs[MAX_NUMNODES];
 };
 
 
 /*
  * Return a pointer to the node_data structure for the executing cpu.
  */
-#define local_node_data   (local_cpu_data->node_data)
+#define local_node_data		(local_cpu_data->node_data)
 
 /*
  * Given a node id, return a pointer to the pg_data_t for the node.
  *
- * NODE_DATA  - should be used in all code not related to system
- *      initialization. It uses pernode data structures to minimize
- *      offnode memory references. However, these structure are not
- *      present during boot. This macro can be used once cpu_init
- *      completes.
+ * NODE_DATA 	- should be used in all code not related to system
+ *		  initialization. It uses pernode data structures to minimize
+ *		  offnode memory references. However, these structure are not 
+ *		  present during boot. This macro can be used once cpu_init
+ *		  completes.
  */
-#define NODE_DATA(nid)    (local_node_data->pg_data_ptrs[nid])
+#define NODE_DATA(nid)		(local_node_data->pg_data_ptrs[nid])
 
 /*
  * LOCAL_DATA_ADDR - This is to calculate the address of other node's
- *         "local_node_data" at hot-plug phase. The local_node_data
- *         is pointed by per_cpu_page. Kernel usually use it for
- *         just executing cpu. However, when new node is hot-added,
- *         the addresses of local data for other nodes are necessary
- *         to update all of them.
+ *		     "local_node_data" at hot-plug phase. The local_node_data
+ *		     is pointed by per_cpu_page. Kernel usually use it for
+ *		     just executing cpu. However, when new node is hot-added,
+ *		     the addresses of local data for other nodes are necessary
+ *		     to update all of them.
  */
-#define LOCAL_DATA_ADDR(pgdat)        \
-  ((struct ia64_node_data *)((u64)(pgdat) +   \
-                             L1_CACHE_ALIGN(sizeof(struct pglist_data))))
+#define LOCAL_DATA_ADDR(pgdat)  			\
+	((struct ia64_node_data *)((u64)(pgdat) + 	\
+				   L1_CACHE_ALIGN(sizeof(struct pglist_data))))
 
 #endif /* CONFIG_NUMA */
 

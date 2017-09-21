@@ -30,55 +30,55 @@
 /* references to names in env_common.c */
 extern uchar default_environment[];
 
-char * env_name_spec = "MG_DISK";
+char *env_name_spec = "MG_DISK";
 
-env_t * env_ptr = 0;
+env_t *env_ptr = 0;
 
 DECLARE_GLOBAL_DATA_PTR;
 
-uchar env_get_char_spec (int index)
+uchar env_get_char_spec(int index)
 {
-  return (* ( (uchar *) (gd->env_addr + index) ) );
+	return (*((uchar *)(gd->env_addr + index)));
 }
 
-void env_relocate_spec (void)
+void env_relocate_spec(void)
 {
-  char buf[CONFIG_ENV_SIZE];
-  unsigned int err, rc;
-  
-  err = mg_disk_init();
-  if (err) {
-    set_default_env ("!mg_disk_init error");
-    return;
-  }
-  
-  err = mg_disk_read (CONFIG_ENV_ADDR, buf, CONFIG_ENV_SIZE);
-  if (err) {
-    set_default_env ("!mg_disk_read error");
-    return;
-  }
-  
-  env_import (buf, 1);
+	char buf[CONFIG_ENV_SIZE];
+	unsigned int err, rc;
+
+	err = mg_disk_init();
+	if (err) {
+		set_default_env("!mg_disk_init error");
+		return;
+	}
+
+	err = mg_disk_read(CONFIG_ENV_ADDR, buf, CONFIG_ENV_SIZE);
+	if (err) {
+		set_default_env("!mg_disk_read error");
+		return;
+	}
+
+	env_import(buf, 1);
 }
 
-int saveenv (void)
+int saveenv(void)
 {
-  unsigned int err;
-  
-  env_ptr->crc = crc32 (0, env_ptr->data, ENV_SIZE);
-  err = mg_disk_write (CONFIG_ENV_ADDR, (u_char *) env_ptr,
-                       CONFIG_ENV_SIZE);
-  if (err)
-  { puts ("*** Warning - mg_disk_write error\n\n"); }
-  
-  return err;
+	unsigned int err;
+
+	env_ptr->crc = crc32(0, env_ptr->data, ENV_SIZE);
+	err = mg_disk_write(CONFIG_ENV_ADDR, (u_char *)env_ptr,
+			CONFIG_ENV_SIZE);
+	if (err)
+		puts("*** Warning - mg_disk_write error\n\n");
+
+	return err;
 }
 
-int env_init (void)
+int env_init(void)
 {
-  /* use default */
-  gd->env_addr = (ulong) &default_environment[0];
-  gd->env_valid = 1;
-  
-  return 0;
+	/* use default */
+	gd->env_addr = (ulong)&default_environment[0];
+	gd->env_valid = 1;
+
+	return 0;
 }

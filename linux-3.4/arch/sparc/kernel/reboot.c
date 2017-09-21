@@ -19,35 +19,35 @@ int scons_pwroff = 1;
 /* This isn't actually used, it exists merely to satisfy the
  * reference in kernel/sys.c
  */
-void (*pm_power_off) (void) = machine_power_off;
-EXPORT_SYMBOL (pm_power_off);
+void (*pm_power_off)(void) = machine_power_off;
+EXPORT_SYMBOL(pm_power_off);
 
-void machine_power_off (void)
+void machine_power_off(void)
 {
-  if (strcmp (of_console_device->type, "serial") || scons_pwroff)
-  { prom_halt_power_off(); }
-  
-  prom_halt();
+	if (strcmp(of_console_device->type, "serial") || scons_pwroff)
+		prom_halt_power_off();
+
+	prom_halt();
 }
 
-void machine_halt (void)
+void machine_halt(void)
 {
-  prom_halt();
-  panic ("Halt failed!");
+	prom_halt();
+	panic("Halt failed!");
 }
 
-void machine_restart (char * cmd)
+void machine_restart(char *cmd)
 {
-  char * p;
-  
-  p = strchr (reboot_command, '\n');
-  if (p)
-  { *p = 0; }
-  if (cmd)
-  { prom_reboot (cmd); }
-  if (*reboot_command)
-  { prom_reboot (reboot_command); }
-  prom_reboot ("");
-  panic ("Reboot failed!");
+	char *p;
+
+	p = strchr(reboot_command, '\n');
+	if (p)
+		*p = 0;
+	if (cmd)
+		prom_reboot(cmd);
+	if (*reboot_command)
+		prom_reboot(reboot_command);
+	prom_reboot("");
+	panic("Reboot failed!");
 }
 

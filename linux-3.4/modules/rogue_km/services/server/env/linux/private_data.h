@@ -69,28 +69,28 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 typedef struct
 {
-  IMG_PVOID pvConnectionData;
-  
-  #if defined(PVR_SECURE_FD_EXPORT)
-  /* Global kernel MemInfo handle */
-  IMG_HANDLE hKernelMemInfo;
-  #endif /* defined(PVR_SECURE_FD_EXPORT) */
-  
-  #if defined(SUPPORT_DRM_AUTH_IMPORT)
-  struct list_head sDRMAuthListItem;
-  
-  IMG_PID uPID;
-  #endif
+	IMG_PVOID pvConnectionData;
+
+#if defined(PVR_SECURE_FD_EXPORT)
+	/* Global kernel MemInfo handle */
+	IMG_HANDLE hKernelMemInfo;
+#endif /* defined(PVR_SECURE_FD_EXPORT) */
+
+#if defined(SUPPORT_DRM_AUTH_IMPORT)
+	struct list_head sDRMAuthListItem;
+
+	IMG_PID uPID;
+#endif
 }
 PVRSRV_FILE_PRIVATE_DATA;
 
 #if defined(SUPPORT_DRM)
-CONNECTION_DATA * LinuxConnectionFromFile (struct drm_file * pFile);
+CONNECTION_DATA *LinuxConnectionFromFile(struct drm_file *pFile);
 #else
-CONNECTION_DATA * LinuxConnectionFromFile (struct file * pFile);
+CONNECTION_DATA *LinuxConnectionFromFile(struct file *pFile);
 #endif
 
-struct file * LinuxFileFromEnvConnection (ENV_CONNECTION_DATA * psEnvConnection);
+struct file *LinuxFileFromEnvConnection(ENV_CONNECTION_DATA *psEnvConnection);
 
 #endif /* !defined(__INCLUDED_PRIVATE_DATA_H_) */
 

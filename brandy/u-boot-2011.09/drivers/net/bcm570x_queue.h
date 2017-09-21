@@ -38,7 +38,7 @@
 /******************************************************************************/
 
 /* Entry for queueing. */
-typedef void * PQQ_ENTRY;
+typedef void *PQQ_ENTRY;
 
 /* Linux Atomic Ops support */
 typedef struct { int counter; } atomic_t;
@@ -54,60 +54,60 @@ typedef struct { int counter; } atomic_t;
  * in the library.
  */
 extern __inline void
-atomic_set (atomic_t * entry, int val)
+atomic_set(atomic_t* entry, int val)
 {
-  entry->counter = val;
+    entry->counter = val;
 }
 extern __inline int
-atomic_read (atomic_t * entry)
+atomic_read(atomic_t* entry)
 {
-  return entry->counter;
+    return entry->counter;
 }
 extern __inline void
-atomic_inc (atomic_t * entry)
+atomic_inc(atomic_t* entry)
 {
-  if (entry)
-  { entry->counter++; }
-}
-
-extern __inline void
-atomic_dec (atomic_t * entry)
-{
-  if (entry)
-  { entry->counter--; }
+    if(entry)
+	entry->counter++;
 }
 
 extern __inline void
-atomic_sub (int a, atomic_t * entry)
+atomic_dec(atomic_t* entry)
 {
-  if (entry)
-  { entry->counter -= a; }
+    if(entry)
+	entry->counter--;
+}
+
+extern __inline void
+atomic_sub(int a, atomic_t* entry)
+{
+    if(entry)
+	entry->counter -= a;
 }
 extern __inline void
-atomic_add (int a, atomic_t * entry)
+atomic_add(int a, atomic_t* entry)
 {
-  if (entry)
-  { entry->counter += a; }
+    if(entry)
+	entry->counter += a;
 }
 
 
 /* Queue header -- base type. */
 typedef struct {
-  unsigned int Head;
-  unsigned int Tail;
-  unsigned int Size;
-  atomic_t EntryCnt;
-  PQQ_ENTRY Array[1];
+    unsigned int Head;
+    unsigned int Tail;
+    unsigned int Size;
+    atomic_t EntryCnt;
+    PQQ_ENTRY Array[1];
 } QQ_CONTAINER, *PQQ_CONTAINER;
 
 
 /* Declare queue type macro. */
 #define DECLARE_QUEUE_TYPE(_QUEUE_TYPE, _QUEUE_SIZE)            \
-  \
-  typedef struct {                                            \
-    QQ_CONTAINER Container;                                 \
-    PQQ_ENTRY EntryBuffer[_QUEUE_SIZE];                     \
-  } _QUEUE_TYPE, *P##_QUEUE_TYPE
+								\
+    typedef struct {                                            \
+	QQ_CONTAINER Container;                                 \
+	PQQ_ENTRY EntryBuffer[_QUEUE_SIZE];                     \
+    } _QUEUE_TYPE, *P##_QUEUE_TYPE
 
 
 /******************************************************************************/
@@ -133,13 +133,13 @@ typedef struct {
 /* Return:                                                                    */
 /******************************************************************************/
 extern __inline void
-QQ_InitQueue (
-  PQQ_CONTAINER pQueue,
-  unsigned int QueueSize) {
-  pQueue->Head = 0;
-  pQueue->Tail = 0;
-  pQueue->Size = QueueSize + 1;
-  atomic_set (&pQueue->EntryCnt, 0);
+QQ_InitQueue(
+PQQ_CONTAINER pQueue,
+unsigned int QueueSize) {
+    pQueue->Head = 0;
+    pQueue->Tail = 0;
+    pQueue->Size = QueueSize+1;
+    atomic_set(&pQueue->EntryCnt, 0);
 } /* QQ_InitQueue */
 
 
@@ -149,13 +149,13 @@ QQ_InitQueue (
 /* Return:                                                                    */
 /******************************************************************************/
 extern __inline char
-QQ_Full (
-  PQQ_CONTAINER pQueue) {
-  unsigned int NewHead;
+QQ_Full(
+PQQ_CONTAINER pQueue) {
+    unsigned int NewHead;
 
-  NewHead = (pQueue->Head + 1) % pQueue->Size;
+    NewHead = (pQueue->Head + 1) % pQueue->Size;
 
-  return (NewHead == pQueue->Tail);
+    return(NewHead == pQueue->Tail);
 } /* QQ_Full */
 
 
@@ -165,9 +165,9 @@ QQ_Full (
 /* Return:                                                                    */
 /******************************************************************************/
 extern __inline char
-QQ_Empty (
-  PQQ_CONTAINER pQueue) {
-  return (pQueue->Head == pQueue->Tail);
+QQ_Empty(
+PQQ_CONTAINER pQueue) {
+    return(pQueue->Head == pQueue->Tail);
 } /* QQ_Empty */
 
 
@@ -177,9 +177,9 @@ QQ_Empty (
 /* Return:                                                                    */
 /******************************************************************************/
 extern __inline unsigned int
-QQ_GetSize (
-  PQQ_CONTAINER pQueue) {
-  return pQueue->Size;
+QQ_GetSize(
+PQQ_CONTAINER pQueue) {
+    return pQueue->Size;
 } /* QQ_GetSize */
 
 
@@ -189,9 +189,9 @@ QQ_GetSize (
 /* Return:                                                                    */
 /******************************************************************************/
 extern __inline unsigned int
-QQ_GetEntryCnt (
-  PQQ_CONTAINER pQueue) {
-  return atomic_read (&pQueue->EntryCnt);
+QQ_GetEntryCnt(
+PQQ_CONTAINER pQueue) {
+    return atomic_read(&pQueue->EntryCnt);
 } /* QQ_GetEntryCnt */
 
 
@@ -203,25 +203,25 @@ QQ_GetEntryCnt (
 /*    FALSE queue is full.                                                    */
 /******************************************************************************/
 extern __inline char
-QQ_PushHead (
-  PQQ_CONTAINER pQueue,
-  PQQ_ENTRY pEntry) {
-  unsigned int Head;
+QQ_PushHead(
+PQQ_CONTAINER pQueue,
+PQQ_ENTRY pEntry) {
+    unsigned int Head;
 
-  Head = (pQueue->Head + 1) % pQueue->Size;
+    Head = (pQueue->Head + 1) % pQueue->Size;
 
-  #if !defined(QQ_NO_OVERFLOW_CHECK)
-  if (Head == pQueue->Tail) {
-    return 0;
-  } /* if */
-  #endif /* QQ_NO_OVERFLOW_CHECK */
+#if !defined(QQ_NO_OVERFLOW_CHECK)
+    if(Head == pQueue->Tail) {
+	return 0;
+    } /* if */
+#endif /* QQ_NO_OVERFLOW_CHECK */
 
-  pQueue->Array[pQueue->Head] = pEntry;
-  wmb();
-  pQueue->Head = Head;
-  atomic_inc (&pQueue->EntryCnt);
+    pQueue->Array[pQueue->Head] = pEntry;
+    wmb();
+    pQueue->Head = Head;
+    atomic_inc(&pQueue->EntryCnt);
 
-  return -1;
+    return -1;
 } /* QQ_PushHead */
 
 
@@ -233,29 +233,29 @@ QQ_PushHead (
 /*    FALSE queue is full.                                                    */
 /******************************************************************************/
 extern __inline char
-QQ_PushTail (
-  PQQ_CONTAINER pQueue,
-  PQQ_ENTRY pEntry) {
-  unsigned int Tail;
+QQ_PushTail(
+PQQ_CONTAINER pQueue,
+PQQ_ENTRY pEntry) {
+    unsigned int Tail;
 
-  Tail = pQueue->Tail;
-  if (Tail == 0) {
-    Tail = pQueue->Size;
-  } /* if */
-  Tail--;
+    Tail = pQueue->Tail;
+    if(Tail == 0) {
+	Tail = pQueue->Size;
+    } /* if */
+    Tail--;
 
-  #if !defined(QQ_NO_OVERFLOW_CHECK)
-  if (Tail == pQueue->Head) {
-    return 0;
-  } /* if */
-  #endif /* QQ_NO_OVERFLOW_CHECK */
+#if !defined(QQ_NO_OVERFLOW_CHECK)
+    if(Tail == pQueue->Head) {
+	return 0;
+    } /* if */
+#endif /* QQ_NO_OVERFLOW_CHECK */
 
-  pQueue->Array[Tail] = pEntry;
-  wmb();
-  pQueue->Tail = Tail;
-  atomic_inc (&pQueue->EntryCnt);
+    pQueue->Array[Tail] = pEntry;
+    wmb();
+    pQueue->Tail = Tail;
+    atomic_inc(&pQueue->EntryCnt);
 
-  return -1;
+    return -1;
 } /* QQ_PushTail */
 
 
@@ -265,34 +265,34 @@ QQ_PushTail (
 /* Return:                                                                    */
 /******************************************************************************/
 extern __inline PQQ_ENTRY
-QQ_PopHead (
-  PQQ_CONTAINER pQueue) {
-  unsigned int Head;
-  PQQ_ENTRY Entry;
+QQ_PopHead(
+PQQ_CONTAINER pQueue) {
+    unsigned int Head;
+    PQQ_ENTRY Entry;
 
-  Head = pQueue->Head;
+    Head = pQueue->Head;
 
-  #if !defined(QQ_NO_UNDERFLOW_CHECK)
-  if (Head == pQueue->Tail) {
-    return (PQQ_ENTRY) 0;
-  } /* if */
-  #endif /* QQ_NO_UNDERFLOW_CHECK */
+#if !defined(QQ_NO_UNDERFLOW_CHECK)
+    if(Head == pQueue->Tail) {
+	return (PQQ_ENTRY) 0;
+    } /* if */
+#endif /* QQ_NO_UNDERFLOW_CHECK */
 
-  if (Head == 0) {
-    Head = pQueue->Size;
-  } /* if */
-  Head--;
+    if(Head == 0) {
+	Head = pQueue->Size;
+    } /* if */
+    Head--;
 
-  Entry = pQueue->Array[Head];
-  #ifdef EMBEDDED
-  membar();
-  #else
-  mb();
-  #endif
-  pQueue->Head = Head;
-  atomic_dec (&pQueue->EntryCnt);
+    Entry = pQueue->Array[Head];
+#ifdef EMBEDDED
+    membar();
+#else
+    mb();
+#endif
+    pQueue->Head = Head;
+    atomic_dec(&pQueue->EntryCnt);
 
-  return Entry;
+    return Entry;
 } /* QQ_PopHead */
 
 
@@ -302,29 +302,29 @@ QQ_PopHead (
 /* Return:                                                                    */
 /******************************************************************************/
 extern __inline PQQ_ENTRY
-QQ_PopTail (
-  PQQ_CONTAINER pQueue) {
-  unsigned int Tail;
-  PQQ_ENTRY Entry;
+QQ_PopTail(
+PQQ_CONTAINER pQueue) {
+    unsigned int Tail;
+    PQQ_ENTRY Entry;
 
-  Tail = pQueue->Tail;
+    Tail = pQueue->Tail;
 
-  #if !defined(QQ_NO_UNDERFLOW_CHECK)
-  if (Tail == pQueue->Head) {
-    return (PQQ_ENTRY) 0;
-  } /* if */
-  #endif /* QQ_NO_UNDERFLOW_CHECK */
+#if !defined(QQ_NO_UNDERFLOW_CHECK)
+    if(Tail == pQueue->Head) {
+	return (PQQ_ENTRY) 0;
+    } /* if */
+#endif /* QQ_NO_UNDERFLOW_CHECK */
 
-  Entry = pQueue->Array[Tail];
-  #ifdef EMBEDDED
-  membar();
-  #else
-  mb();
-  #endif
-  pQueue->Tail = (Tail + 1) % pQueue->Size;
-  atomic_dec (&pQueue->EntryCnt);
+    Entry = pQueue->Array[Tail];
+#ifdef EMBEDDED
+    membar();
+#else
+    mb();
+#endif
+    pQueue->Tail = (Tail + 1) % pQueue->Size;
+    atomic_dec(&pQueue->EntryCnt);
 
-  return Entry;
+    return Entry;
 } /* QQ_PopTail */
 
 
@@ -334,26 +334,26 @@ QQ_PopTail (
 /* Return:                                                                    */
 /******************************************************************************/
 extern __inline PQQ_ENTRY
-QQ_GetHead (
-  PQQ_CONTAINER pQueue,
-  unsigned int Idx)
+QQ_GetHead(
+    PQQ_CONTAINER pQueue,
+    unsigned int Idx)
 {
-  if (Idx >= atomic_read (&pQueue->EntryCnt) )
-  {
-    return (PQQ_ENTRY) 0;
-  }
+    if(Idx >= atomic_read(&pQueue->EntryCnt))
+    {
+	return (PQQ_ENTRY) 0;
+    }
 
-  if (pQueue->Head > Idx)
-  {
-    Idx = pQueue->Head - Idx;
-  }
-  else
-  {
-    Idx = pQueue->Size - (Idx - pQueue->Head);
-  }
-  Idx--;
+    if(pQueue->Head > Idx)
+    {
+	Idx = pQueue->Head - Idx;
+    }
+    else
+    {
+	Idx = pQueue->Size - (Idx - pQueue->Head);
+    }
+    Idx--;
 
-  return pQueue->Array[Idx];
+    return pQueue->Array[Idx];
 }
 
 
@@ -363,22 +363,22 @@ QQ_GetHead (
 /* Return:                                                                    */
 /******************************************************************************/
 extern __inline PQQ_ENTRY
-QQ_GetTail (
-  PQQ_CONTAINER pQueue,
-  unsigned int Idx)
+QQ_GetTail(
+    PQQ_CONTAINER pQueue,
+    unsigned int Idx)
 {
-  if (Idx >= atomic_read (&pQueue->EntryCnt) )
-  {
-    return (PQQ_ENTRY) 0;
-  }
+    if(Idx >= atomic_read(&pQueue->EntryCnt))
+    {
+	return (PQQ_ENTRY) 0;
+    }
 
-  Idx += pQueue->Tail;
-  if (Idx >= pQueue->Size)
-  {
-    Idx = Idx - pQueue->Size;
-  }
+    Idx += pQueue->Tail;
+    if(Idx >= pQueue->Size)
+    {
+	Idx = Idx - pQueue->Size;
+    }
 
-  return pQueue->Array[Idx];
+    return pQueue->Array[Idx];
 }
 
 #endif /* QQ_USE_MACROS */

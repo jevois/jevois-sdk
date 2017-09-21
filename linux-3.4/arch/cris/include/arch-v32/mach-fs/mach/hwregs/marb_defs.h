@@ -6,7 +6,7 @@
  *   file:           ../../inst/memarb/rtl/guinness/marb_top.r
  *     id:           <not found>
  *     last modfied: Mon Apr 11 16:12:16 2005
- *
+ * 
  *   by /n/asic/design/tools/rdesc/src/rdes2c --outfile marb_defs.h ../../inst/memarb/rtl/guinness/marb_top.r
  *      id: $Id: marb_defs.h,v 1.1 2007/02/13 11:55:30 starvik Exp $
  * Any changes here will be lost.
@@ -30,14 +30,14 @@
 #define REG_RD_VECT( scope, inst, reg, index ) \
   REG_READ( reg_##scope##_##reg, \
             (inst) + REG_RD_ADDR_##scope##_##reg + \
-            (index) * STRIDE_##scope##_##reg )
+	    (index) * STRIDE_##scope##_##reg )
 #endif
 
 #ifndef REG_WR_VECT
 #define REG_WR_VECT( scope, inst, reg, index, val ) \
   REG_WRITE( reg_##scope##_##reg, \
              (inst) + REG_WR_ADDR_##scope##_##reg + \
-             (index) * STRIDE_##scope##_##reg, (val) )
+	     (index) * STRIDE_##scope##_##reg, (val) )
 #endif
 
 #ifndef REG_RD_INT
@@ -53,13 +53,13 @@
 #ifndef REG_RD_INT_VECT
 #define REG_RD_INT_VECT( scope, inst, reg, index ) \
   REG_READ( int, (inst) + REG_RD_ADDR_##scope##_##reg + \
-            (index) * STRIDE_##scope##_##reg )
+	    (index) * STRIDE_##scope##_##reg )
 #endif
 
 #ifndef REG_WR_INT_VECT
 #define REG_WR_INT_VECT( scope, inst, reg, index, val ) \
   REG_WRITE( int, (inst) + REG_WR_ADDR_##scope##_##reg + \
-             (index) * STRIDE_##scope##_##reg, (val) )
+	     (index) * STRIDE_##scope##_##reg, (val) )
 #endif
 
 #ifndef REG_TYPE_CONV
@@ -265,7 +265,7 @@ enum {
  *   file:           ../../inst/memarb/rtl/guinness/marb_top.r
  *     id:           <not found>
  *     last modfied: Mon Apr 11 16:12:16 2005
- *
+ * 
  *   by /n/asic/design/tools/rdesc/src/rdes2c --outfile marb_defs.h ../../inst/memarb/rtl/guinness/marb_top.r
  *      id: $Id: marb_defs.h,v 1.1 2007/02/13 11:55:30 starvik Exp $
  * Any changes here will be lost.
@@ -289,14 +289,14 @@ enum {
 #define REG_RD_VECT( scope, inst, reg, index ) \
   REG_READ( reg_##scope##_##reg, \
             (inst) + REG_RD_ADDR_##scope##_##reg + \
-            (index) * STRIDE_##scope##_##reg )
+	    (index) * STRIDE_##scope##_##reg )
 #endif
 
 #ifndef REG_WR_VECT
 #define REG_WR_VECT( scope, inst, reg, index, val ) \
   REG_WRITE( reg_##scope##_##reg, \
              (inst) + REG_WR_ADDR_##scope##_##reg + \
-             (index) * STRIDE_##scope##_##reg, (val) )
+	     (index) * STRIDE_##scope##_##reg, (val) )
 #endif
 
 #ifndef REG_RD_INT
@@ -312,13 +312,13 @@ enum {
 #ifndef REG_RD_INT_VECT
 #define REG_RD_INT_VECT( scope, inst, reg, index ) \
   REG_READ( int, (inst) + REG_RD_ADDR_##scope##_##reg + \
-            (index) * STRIDE_##scope##_##reg )
+	    (index) * STRIDE_##scope##_##reg )
 #endif
 
 #ifndef REG_WR_INT_VECT
 #define REG_WR_INT_VECT( scope, inst, reg, index, val ) \
   REG_WRITE( int, (inst) + REG_WR_ADDR_##scope##_##reg + \
-             (index) * STRIDE_##scope##_##reg, (val) )
+	     (index) * STRIDE_##scope##_##reg, (val) )
 #endif
 
 #ifndef REG_TYPE_CONV

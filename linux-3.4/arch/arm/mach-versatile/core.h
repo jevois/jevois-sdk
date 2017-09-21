@@ -25,21 +25,21 @@
 #include <linux/amba/bus.h>
 #include <linux/of_platform.h>
 
-extern void __init versatile_init (void);
-extern void __init versatile_init_early (void);
-extern void __init versatile_init_irq (void);
-extern void __init versatile_map_io (void);
+extern void __init versatile_init(void);
+extern void __init versatile_init_early(void);
+extern void __init versatile_init_irq(void);
+extern void __init versatile_map_io(void);
 extern struct sys_timer versatile_timer;
-extern void versatile_restart (char, const char *);
-extern unsigned int mmc_status (struct device * dev);
+extern void versatile_restart(char, const char *);
+extern unsigned int mmc_status(struct device *dev);
 #ifdef CONFIG_OF
 extern struct of_dev_auxdata versatile_auxdata_lookup[];
 #endif
 
-#define APB_DEVICE(name, busid, base, plat) \
-  static AMBA_APB_DEVICE(name, busid, 0, VERSATILE_##base##_BASE, base##_IRQ, plat)
+#define APB_DEVICE(name, busid, base, plat)	\
+static AMBA_APB_DEVICE(name, busid, 0, VERSATILE_##base##_BASE, base##_IRQ, plat)
 
-#define AHB_DEVICE(name, busid, base, plat) \
-  static AMBA_AHB_DEVICE(name, busid, 0, VERSATILE_##base##_BASE, base##_IRQ, plat)
+#define AHB_DEVICE(name, busid, base, plat)	\
+static AMBA_AHB_DEVICE(name, busid, 0, VERSATILE_##base##_BASE, base##_IRQ, plat)
 
 #endif

@@ -15,7 +15,7 @@
 #ifndef _S6E8AX0_H
 #define _S6E8AX0_H
 
-extern void s6e8ax0_init (void);
+extern void s6e8ax0_init(void);
 
 #endif
 

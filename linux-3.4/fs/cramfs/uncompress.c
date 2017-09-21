@@ -25,53 +25,53 @@ static z_stream stream;
 static int initialized;
 
 /* Returns length of decompressed data. */
-int cramfs_uncompress_block (void * dst, int dstlen, void * src, int srclen)
+int cramfs_uncompress_block(void *dst, int dstlen, void *src, int srclen)
 {
-  int err;
-  
-  stream.next_in = src;
-  stream.avail_in = srclen;
-  
-  stream.next_out = dst;
-  stream.avail_out = dstlen;
-  
-  err = zlib_inflateReset (&stream);
-  if (err != Z_OK) {
-    printk ("zlib_inflateReset error %d\n", err);
-    zlib_inflateEnd (&stream);
-    zlib_inflateInit (&stream);
-  }
-  
-  err = zlib_inflate (&stream, Z_FINISH);
-  if (err != Z_STREAM_END)
-  { goto err; }
-  return stream.total_out;
-  
+	int err;
+
+	stream.next_in = src;
+	stream.avail_in = srclen;
+
+	stream.next_out = dst;
+	stream.avail_out = dstlen;
+
+	err = zlib_inflateReset(&stream);
+	if (err != Z_OK) {
+		printk("zlib_inflateReset error %d\n", err);
+		zlib_inflateEnd(&stream);
+		zlib_inflateInit(&stream);
+	}
+
+	err = zlib_inflate(&stream, Z_FINISH);
+	if (err != Z_STREAM_END)
+		goto err;
+	return stream.total_out;
+
 err:
-  printk ("Error %d while decompressing!\n", err);
-  printk ("%p(%d)->%p(%d)\n", src, srclen, dst, dstlen);
-  return -EIO;
+	printk("Error %d while decompressing!\n", err);
+	printk("%p(%d)->%p(%d)\n", src, srclen, dst, dstlen);
+	return -EIO;
 }
 
-int cramfs_uncompress_init (void)
+int cramfs_uncompress_init(void)
 {
-  if (!initialized++) {
-    stream.workspace = vmalloc (zlib_inflate_workspacesize() );
-    if ( !stream.workspace ) {
-      initialized = 0;
-      return -ENOMEM;
-    }
-    stream.next_in = NULL;
-    stream.avail_in = 0;
-    zlib_inflateInit (&stream);
-  }
-  return 0;
+	if (!initialized++) {
+		stream.workspace = vmalloc(zlib_inflate_workspacesize());
+		if ( !stream.workspace ) {
+			initialized = 0;
+			return -ENOMEM;
+		}
+		stream.next_in = NULL;
+		stream.avail_in = 0;
+		zlib_inflateInit(&stream);
+	}
+	return 0;
 }
 
-void cramfs_uncompress_exit (void)
+void cramfs_uncompress_exit(void)
 {
-  if (!--initialized) {
-    zlib_inflateEnd (&stream);
-    vfree (stream.workspace);
-  }
+	if (!--initialized) {
+		zlib_inflateEnd(&stream);
+		vfree(stream.workspace);
+	}
 }

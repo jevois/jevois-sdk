@@ -11,7 +11,7 @@ enum byte_order
 {
   WCh_WCl_DI,
   DI_WCh_WCl,
-  WCl_WCh, DI,
+  WCl_WCh,DI,
   DI_WCl_WCh,
 };
 
@@ -40,7 +40,7 @@ enum pkt_fmt
   MIPI_SDAT4          = 0X0C,
   MIPI_SDAT5          = 0X0D,
   MIPI_SDAT6          = 0X0E,
-  MIPI_SDAT7          = 0X0F,
+  MIPI_SDAT7          = 0X0F,             
   MIPI_BLK            = 0X11,
   MIPI_EMBD         = 0X12,
   MIPI_YUV420       = 0X18,

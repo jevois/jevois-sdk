@@ -104,18 +104,18 @@ static XAssertCallback XAssertCallbackRoutine = (XAssertCallback) NULL;
 *
 ******************************************************************************/
 void
-XAssert (char * File, int Line)
+XAssert(char *File, int Line)
 {
-  /* if the callback has been set then invoke it */
-  if (XAssertCallbackRoutine != NULL) {
-    (*XAssertCallbackRoutine) (File, Line);
-  }
-  
-  /* if specified, wait indefinitely such that the assert will show up
-   * in testing
-   */
-  while (XWaitInAssert) {
-  }
+	/* if the callback has been set then invoke it */
+	if (XAssertCallbackRoutine != NULL) {
+		(*XAssertCallbackRoutine) (File, Line);
+	}
+
+	/* if specified, wait indefinitely such that the assert will show up
+	 * in testing
+	 */
+	while (XWaitInAssert) {
+	}
 }
 
 /*****************************************************************************/
@@ -136,9 +136,9 @@ XAssert (char * File, int Line)
 *
 ******************************************************************************/
 void
-XAssertSetCallback (XAssertCallback Routine)
+XAssertSetCallback(XAssertCallback Routine)
 {
-  XAssertCallbackRoutine = Routine;
+	XAssertCallbackRoutine = Routine;
 }
 
 /*****************************************************************************/
@@ -160,6 +160,6 @@ XAssertSetCallback (XAssertCallback Routine)
 *
 ******************************************************************************/
 void
-XNullHandler (void * NullParameter)
+XNullHandler(void *NullParameter)
 {
 }

@@ -42,8 +42,8 @@
 #ifdef CONFIG_MTD_UBI_DEBUG_MSG
 /* Generic debugging message */
 #define dbg_msg(fmt, ...)                                    \
-  printk(KERN_DEBUG "UBI DBG: %s: " fmt "\n", \
-         __FUNCTION__, ##__VA_ARGS__)
+	printk(KERN_DEBUG "UBI DBG: %s: " fmt "\n", \
+	       __FUNCTION__, ##__VA_ARGS__)
 
 #define ubi_dbg_dump_stack() dump_stack()
 
@@ -55,13 +55,13 @@ struct ubi_scan_volume;
 struct ubi_scan_leb;
 struct ubi_mkvol_req;
 
-void ubi_dbg_dump_ec_hdr (const struct ubi_ec_hdr * ec_hdr);
-void ubi_dbg_dump_vid_hdr (const struct ubi_vid_hdr * vid_hdr);
-void ubi_dbg_dump_vol_info (const struct ubi_volume * vol);
-void ubi_dbg_dump_vtbl_record (const struct ubi_vtbl_record * r, int idx);
-void ubi_dbg_dump_sv (const struct ubi_scan_volume * sv);
-void ubi_dbg_dump_seb (const struct ubi_scan_leb * seb, int type);
-void ubi_dbg_dump_mkvol_req (const struct ubi_mkvol_req * req);
+void ubi_dbg_dump_ec_hdr(const struct ubi_ec_hdr *ec_hdr);
+void ubi_dbg_dump_vid_hdr(const struct ubi_vid_hdr *vid_hdr);
+void ubi_dbg_dump_vol_info(const struct ubi_volume *vol);
+void ubi_dbg_dump_vtbl_record(const struct ubi_vtbl_record *r, int idx);
+void ubi_dbg_dump_sv(const struct ubi_scan_volume *sv);
+void ubi_dbg_dump_seb(const struct ubi_scan_leb *seb, int type);
+void ubi_dbg_dump_mkvol_req(const struct ubi_mkvol_req *req);
 
 #else
 
@@ -111,9 +111,9 @@ void ubi_dbg_dump_mkvol_req (const struct ubi_mkvol_req * req);
  *
  * Returns non-zero if a bit-flip should be emulated, otherwise returns zero.
  */
-static inline int ubi_dbg_is_bitflip (void)
+static inline int ubi_dbg_is_bitflip(void)
 {
-  return ! (random32() % 200);
+	return !(random32() % 200);
 }
 #else
 #define ubi_dbg_is_bitflip() 0
@@ -126,9 +126,9 @@ static inline int ubi_dbg_is_bitflip (void)
  * Returns non-zero if a write failure should be emulated, otherwise returns
  * zero.
  */
-static inline int ubi_dbg_is_write_failure (void)
+static inline int ubi_dbg_is_write_failure(void)
 {
-  return ! (random32() % 500);
+	return !(random32() % 500);
 }
 #else
 #define ubi_dbg_is_write_failure() 0
@@ -141,9 +141,9 @@ static inline int ubi_dbg_is_write_failure (void)
  * Returns non-zero if an erase failure should be emulated, otherwise returns
  * zero.
  */
-static inline int ubi_dbg_is_erase_failure (void)
+static inline int ubi_dbg_is_erase_failure(void)
 {
-  return ! (random32() % 400);
+		return !(random32() % 400);
 }
 #else
 #define ubi_dbg_is_erase_failure() 0

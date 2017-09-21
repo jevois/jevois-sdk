@@ -5,7 +5,7 @@
 #include <asm/page.h>
 #endif
 
-#define PIPE_BUF  PAGE_SIZE
+#define PIPE_BUF	PAGE_SIZE
 
 #endif
 

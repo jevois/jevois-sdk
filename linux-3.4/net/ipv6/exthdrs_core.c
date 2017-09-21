@@ -9,17 +9,17 @@
  * find out if nexthdr is a well-known extension header or a protocol
  */
 
-int ipv6_ext_hdr (u8 nexthdr)
+int ipv6_ext_hdr(u8 nexthdr)
 {
-  /*
-   * find out if nexthdr is an extension header or a protocol
-   */
-  return   (nexthdr == NEXTHDR_HOP) ||
-           (nexthdr == NEXTHDR_ROUTING) ||
-           (nexthdr == NEXTHDR_FRAGMENT)  ||
-           (nexthdr == NEXTHDR_AUTH)  ||
-           (nexthdr == NEXTHDR_NONE)  ||
-           (nexthdr == NEXTHDR_DEST);
+	/*
+	 * find out if nexthdr is an extension header or a protocol
+	 */
+	return   (nexthdr == NEXTHDR_HOP)	||
+		 (nexthdr == NEXTHDR_ROUTING)	||
+		 (nexthdr == NEXTHDR_FRAGMENT)	||
+		 (nexthdr == NEXTHDR_AUTH)	||
+		 (nexthdr == NEXTHDR_NONE)	||
+		 (nexthdr == NEXTHDR_DEST);
 }
 
 /*
@@ -52,65 +52,63 @@ int ipv6_ext_hdr (u8 nexthdr)
  *
  * NOTES: - if packet terminated with NEXTHDR_NONE it returns NULL.
  *        - it may return pointer pointing beyond end of packet,
- *      if the last recognized header is truncated in the middle.
+ *	    if the last recognized header is truncated in the middle.
  *        - if packet is truncated, so that all parsed headers are skipped,
- *      it returns NULL.
- *    - First fragment header is skipped, not-first ones
- *      are considered as unparsable.
- *    - Reports the offset field of the final fragment header so it is
- *      possible to tell whether this is a first fragment, later fragment,
- *      or not fragmented.
- *    - ESP is unparsable for now and considered like
- *      normal payload protocol.
- *    - Note also special handling of AUTH header. Thanks to IPsec wizards.
+ *	    it returns NULL.
+ *	  - First fragment header is skipped, not-first ones
+ *	    are considered as unparsable.
+ *	  - Reports the offset field of the final fragment header so it is
+ *	    possible to tell whether this is a first fragment, later fragment,
+ *	    or not fragmented.
+ *	  - ESP is unparsable for now and considered like
+ *	    normal payload protocol.
+ *	  - Note also special handling of AUTH header. Thanks to IPsec wizards.
  *
  * --ANK (980726)
  */
 
-int ipv6_skip_exthdr (const struct sk_buff * skb, int start, u8 * nexthdrp,
-                      __be16 * frag_offp)
+int ipv6_skip_exthdr(const struct sk_buff *skb, int start, u8 *nexthdrp,
+		     __be16 *frag_offp)
 {
-  u8 nexthdr = *nexthdrp;
-  
-  *frag_offp = 0;
-  
-  while (ipv6_ext_hdr (nexthdr) ) {
-    struct ipv6_opt_hdr _hdr, *hp;
-    int hdrlen;
-    
-    if (nexthdr == NEXTHDR_NONE)
-    { return -1; }
-    hp = skb_header_pointer (skb, start, sizeof (_hdr), &_hdr);
-    if (hp == NULL)
-    { return -1; }
-    if (nexthdr == NEXTHDR_FRAGMENT) {
-      __be16 _frag_off, *fp;
-      fp = skb_header_pointer (skb,
-                               start + offsetof (struct frag_hdr,
-                                   frag_off),
-                               sizeof (_frag_off),
-                               &_frag_off);
-      if (fp == NULL)
-      { return -1; }
-      
-      *frag_offp = *fp;
-      if (ntohs (*frag_offp) & ~0x7)
-      { break; }
-      hdrlen = 8;
-    }
-    else
-      if (nexthdr == NEXTHDR_AUTH)
-      { hdrlen = (hp->hdrlen + 2) << 2; }
-      else
-      { hdrlen = ipv6_optlen (hp); }
-      
-    nexthdr = hp->nexthdr;
-    start += hdrlen;
-  }
-  
-  *nexthdrp = nexthdr;
-  return start;
+	u8 nexthdr = *nexthdrp;
+
+	*frag_offp = 0;
+
+	while (ipv6_ext_hdr(nexthdr)) {
+		struct ipv6_opt_hdr _hdr, *hp;
+		int hdrlen;
+
+		if (nexthdr == NEXTHDR_NONE)
+			return -1;
+		hp = skb_header_pointer(skb, start, sizeof(_hdr), &_hdr);
+		if (hp == NULL)
+			return -1;
+		if (nexthdr == NEXTHDR_FRAGMENT) {
+			__be16 _frag_off, *fp;
+			fp = skb_header_pointer(skb,
+						start+offsetof(struct frag_hdr,
+							       frag_off),
+						sizeof(_frag_off),
+						&_frag_off);
+			if (fp == NULL)
+				return -1;
+
+			*frag_offp = *fp;
+			if (ntohs(*frag_offp) & ~0x7)
+				break;
+			hdrlen = 8;
+		} else if (nexthdr == NEXTHDR_AUTH)
+			hdrlen = (hp->hdrlen+2)<<2;
+		else
+			hdrlen = ipv6_optlen(hp);
+
+		nexthdr = hp->nexthdr;
+		start += hdrlen;
+	}
+
+	*nexthdrp = nexthdr;
+	return start;
 }
 
-EXPORT_SYMBOL (ipv6_ext_hdr);
-EXPORT_SYMBOL (ipv6_skip_exthdr);
+EXPORT_SYMBOL(ipv6_ext_hdr);
+EXPORT_SYMBOL(ipv6_skip_exthdr);

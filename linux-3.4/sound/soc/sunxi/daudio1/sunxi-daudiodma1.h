@@ -18,14 +18,14 @@
 
 #undef DAUDIO_DBG
 #if (0)
-#define DAUDIO_DBG(format,args...)  printk("[DAUDIO] "format,##args)
+    #define DAUDIO_DBG(format,args...)  printk("[DAUDIO] "format,##args)    
 #else
-#define DAUDIO_DBG(...)
+    #define DAUDIO_DBG(...)    
 #endif
 
 struct sunxi_dma_params {
-  char * name;
-  dma_addr_t dma_addr;
+	char *name;		
+	dma_addr_t dma_addr;
 };
 
 #endif

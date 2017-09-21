@@ -34,22 +34,22 @@
 #include <mach/dma.h>
 
 struct tegra_pcm_dma_params {
-  unsigned long addr;
-  unsigned long wrap;
-  unsigned long width;
-  unsigned long req_sel;
+	unsigned long addr;
+	unsigned long wrap;
+	unsigned long width;
+	unsigned long req_sel;
 };
 
 struct tegra_runtime_data {
-  struct snd_pcm_substream * substream;
-  spinlock_t lock;
-  int running;
-  int dma_pos;
-  int dma_pos_end;
-  int period_index;
-  int dma_req_idx;
-  struct tegra_dma_req dma_req[2];
-  struct tegra_dma_channel * dma_chan;
+	struct snd_pcm_substream *substream;
+	spinlock_t lock;
+	int running;
+	int dma_pos;
+	int dma_pos_end;
+	int period_index;
+	int dma_req_idx;
+	struct tegra_dma_req dma_req[2];
+	struct tegra_dma_channel *dma_chan;
 };
 
 #endif

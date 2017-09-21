@@ -25,20 +25,20 @@
 #include <linux/of_platform.h>
 
 static __initdata struct of_device_id ppc44x_of_bus[] = {
-  { .compatible = "ibm,plb4", },
-  { .compatible = "ibm,opb", },
-  { .compatible = "ibm,ebc", },
-  { .compatible = "simple-bus", },
-  {},
+	{ .compatible = "ibm,plb4", },
+	{ .compatible = "ibm,opb", },
+	{ .compatible = "ibm,ebc", },
+	{ .compatible = "simple-bus", },
+	{},
 };
 
-static int __init ppc44x_device_probe (void)
+static int __init ppc44x_device_probe(void)
 {
-  of_platform_bus_probe (NULL, ppc44x_of_bus, NULL);
-  
-  return 0;
+	of_platform_bus_probe(NULL, ppc44x_of_bus, NULL);
+
+	return 0;
 }
-machine_device_initcall (ppc44x_simple, ppc44x_device_probe);
+machine_device_initcall(ppc44x_simple, ppc44x_device_probe);
 
 /* This is the list of boards that can be supported by this simple
  * platform code.  This does _not_ mean the boards are compatible,
@@ -49,43 +49,43 @@ machine_device_initcall (ppc44x_simple, ppc44x_device_probe);
  * Again, if your board needs to do things differently then create a
  * board.c file for it rather than adding it to this list.
  */
-static char * board[] __initdata = {
-  "amcc,arches",
-  "amcc,bamboo",
-  "apm,bluestone",
-  "amcc,glacier",
-  "ibm,ebony",
-  "amcc,eiger",
-  "amcc,katmai",
-  "amcc,rainier",
-  "amcc,redwood",
-  "amcc,sequoia",
-  "amcc,taishan",
-  "amcc,yosemite",
-  "mosaixtech,icon"
+static char *board[] __initdata = {
+	"amcc,arches",
+	"amcc,bamboo",
+	"apm,bluestone",
+	"amcc,glacier",
+	"ibm,ebony",
+	"amcc,eiger",
+	"amcc,katmai",
+	"amcc,rainier",
+	"amcc,redwood",
+	"amcc,sequoia",
+	"amcc,taishan",
+	"amcc,yosemite",
+	"mosaixtech,icon"
 };
 
-static int __init ppc44x_probe (void)
+static int __init ppc44x_probe(void)
 {
-  unsigned long root = of_get_flat_dt_root();
-  int i = 0;
-  
-  for (i = 0; i < ARRAY_SIZE (board); i++) {
-    if (of_flat_dt_is_compatible (root, board[i]) ) {
-      pci_set_flags (PCI_REASSIGN_ALL_RSRC);
-      return 1;
-    }
-  }
-  
-  return 0;
+	unsigned long root = of_get_flat_dt_root();
+	int i = 0;
+
+	for (i = 0; i < ARRAY_SIZE(board); i++) {
+		if (of_flat_dt_is_compatible(root, board[i])) {
+			pci_set_flags(PCI_REASSIGN_ALL_RSRC);
+			return 1;
+		}
+	}
+
+	return 0;
 }
 
-define_machine (ppc44x_simple) {
-  .name = "PowerPC 44x Platform",
-   .probe = ppc44x_probe,
-    .progress = udbg_progress,
-     .init_IRQ = uic_init_tree,
-      .get_irq = uic_get_irq,
-       .restart = ppc4xx_reset_system,
-        .calibrate_decr = generic_calibrate_decr,
+define_machine(ppc44x_simple) {
+	.name = "PowerPC 44x Platform",
+	.probe = ppc44x_probe,
+	.progress = udbg_progress,
+	.init_IRQ = uic_init_tree,
+	.get_irq = uic_get_irq,
+	.restart = ppc4xx_reset_system,
+	.calibrate_decr = generic_calibrate_decr,
 };

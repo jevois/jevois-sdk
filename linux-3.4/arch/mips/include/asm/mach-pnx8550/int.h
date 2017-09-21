@@ -22,29 +22,29 @@
 #ifndef __PNX8550_INT_H
 #define __PNX8550_INT_H
 
-#define PNX8550_GIC_BASE  0xBBE3E000
+#define PNX8550_GIC_BASE	0xBBE3E000
 
-#define PNX8550_GIC_PRIMASK_0 *(volatile unsigned long *)(PNX8550_GIC_BASE + 0x000)
-#define PNX8550_GIC_PRIMASK_1 *(volatile unsigned long *)(PNX8550_GIC_BASE + 0x004)
-#define PNX8550_GIC_VECTOR_0  *(volatile unsigned long *)(PNX8550_GIC_BASE + 0x100)
-#define PNX8550_GIC_VECTOR_1  *(volatile unsigned long *)(PNX8550_GIC_BASE + 0x104)
-#define PNX8550_GIC_PEND_1_31 *(volatile unsigned long *)(PNX8550_GIC_BASE + 0x200)
-#define PNX8550_GIC_PEND_32_63  *(volatile unsigned long *)(PNX8550_GIC_BASE + 0x204)
-#define PNX8550_GIC_PEND_64_70  *(volatile unsigned long *)(PNX8550_GIC_BASE + 0x208)
-#define PNX8550_GIC_FEATURES  *(volatile unsigned long *)(PNX8550_GIC_BASE + 0x300)
-#define PNX8550_GIC_REQ(x)  *(volatile unsigned long *)(PNX8550_GIC_BASE + 0x400 + (x)*4)
-#define PNX8550_GIC_MOD_ID  *(volatile unsigned long *)(PNX8550_GIC_BASE + 0xFFC)
+#define PNX8550_GIC_PRIMASK_0	*(volatile unsigned long *)(PNX8550_GIC_BASE + 0x000)
+#define PNX8550_GIC_PRIMASK_1	*(volatile unsigned long *)(PNX8550_GIC_BASE + 0x004)
+#define PNX8550_GIC_VECTOR_0	*(volatile unsigned long *)(PNX8550_GIC_BASE + 0x100)
+#define PNX8550_GIC_VECTOR_1	*(volatile unsigned long *)(PNX8550_GIC_BASE + 0x104)
+#define PNX8550_GIC_PEND_1_31	*(volatile unsigned long *)(PNX8550_GIC_BASE + 0x200)
+#define PNX8550_GIC_PEND_32_63	*(volatile unsigned long *)(PNX8550_GIC_BASE + 0x204)
+#define PNX8550_GIC_PEND_64_70	*(volatile unsigned long *)(PNX8550_GIC_BASE + 0x208)
+#define PNX8550_GIC_FEATURES	*(volatile unsigned long *)(PNX8550_GIC_BASE + 0x300)
+#define PNX8550_GIC_REQ(x)	*(volatile unsigned long *)(PNX8550_GIC_BASE + 0x400 + (x)*4)
+#define PNX8550_GIC_MOD_ID	*(volatile unsigned long *)(PNX8550_GIC_BASE + 0xFFC)
 
-#define PNX8550_INT_CP0_TOTINT  8
-#define PNX8550_INT_CP0_MIN 0
-#define PNX8550_INT_CP0_MAX (PNX8550_INT_CP0_MIN + PNX8550_INT_CP0_TOTINT - 1)
+#define PNX8550_INT_CP0_TOTINT	8
+#define PNX8550_INT_CP0_MIN	0
+#define PNX8550_INT_CP0_MAX	(PNX8550_INT_CP0_MIN + PNX8550_INT_CP0_TOTINT - 1)
 
 #define MIPS_CPU_GIC_IRQ        2
 #define MIPS_CPU_TIMER_IRQ      7
 
-#define PNX8550_INT_GIC_TOTINT  71
-#define PNX8550_INT_GIC_MIN (PNX8550_INT_CP0_MAX+1)
-#define PNX8550_INT_GIC_MAX (PNX8550_INT_GIC_MIN + PNX8550_INT_GIC_TOTINT - 1)
+#define PNX8550_INT_GIC_TOTINT	71
+#define PNX8550_INT_GIC_MIN	(PNX8550_INT_CP0_MAX+1)
+#define PNX8550_INT_GIC_MAX	(PNX8550_INT_GIC_MIN + PNX8550_INT_GIC_TOTINT - 1)
 
 #define PNX8550_INT_UNDEF              (PNX8550_INT_GIC_MIN+0)
 #define PNX8550_INT_IPC_TARGET0_MIPS   (PNX8550_INT_GIC_MIN+1)
@@ -126,7 +126,7 @@
 #define PNX8550_INT_I2C4               (PNX8550_INT_GIC_MIN+70)
 
 #define PNX8550_INT_TIMER_TOTINT       3
-#define PNX8550_INT_TIMER_MIN        (PNX8550_INT_GIC_MAX+1)
+#define PNX8550_INT_TIMER_MIN	       (PNX8550_INT_GIC_MAX+1)
 #define PNX8550_INT_TIMER_MAX          (PNX8550_INT_TIMER_MIN + PNX8550_INT_TIMER_TOTINT - 1)
 
 #define PNX8550_INT_TIMER1             (PNX8550_INT_TIMER_MIN+0)

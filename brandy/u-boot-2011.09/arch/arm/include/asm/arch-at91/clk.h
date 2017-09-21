@@ -28,71 +28,71 @@
 #include <asm/arch/hardware.h>
 #include <asm/global_data.h>
 
-static inline unsigned long get_cpu_clk_rate (void)
+static inline unsigned long get_cpu_clk_rate(void)
 {
-  DECLARE_GLOBAL_DATA_PTR;
-  return gd->cpu_clk_rate_hz;
+	DECLARE_GLOBAL_DATA_PTR;
+	return gd->cpu_clk_rate_hz;
 }
 
-static inline unsigned long get_main_clk_rate (void)
+static inline unsigned long get_main_clk_rate(void)
 {
-  DECLARE_GLOBAL_DATA_PTR;
-  return gd->main_clk_rate_hz;
+	DECLARE_GLOBAL_DATA_PTR;
+	return gd->main_clk_rate_hz;
 }
 
-static inline unsigned long get_mck_clk_rate (void)
+static inline unsigned long get_mck_clk_rate(void)
 {
-  DECLARE_GLOBAL_DATA_PTR;
-  return gd->mck_rate_hz;
+	DECLARE_GLOBAL_DATA_PTR;
+	return gd->mck_rate_hz;
 }
 
-static inline unsigned long get_plla_clk_rate (void)
+static inline unsigned long get_plla_clk_rate(void)
 {
-  DECLARE_GLOBAL_DATA_PTR;
-  return gd->plla_rate_hz;
+	DECLARE_GLOBAL_DATA_PTR;
+	return gd->plla_rate_hz;
 }
 
-static inline unsigned long get_pllb_clk_rate (void)
+static inline unsigned long get_pllb_clk_rate(void)
 {
-  DECLARE_GLOBAL_DATA_PTR;
-  return gd->pllb_rate_hz;
+	DECLARE_GLOBAL_DATA_PTR;
+	return gd->pllb_rate_hz;
 }
 
-static inline u32 get_pllb_init (void)
+static inline u32 get_pllb_init(void)
 {
-  DECLARE_GLOBAL_DATA_PTR;
-  return gd->at91_pllb_usb_init;
+	DECLARE_GLOBAL_DATA_PTR;
+	return gd->at91_pllb_usb_init;
 }
 
-static inline unsigned long get_macb_pclk_rate (unsigned int dev_id)
+static inline unsigned long get_macb_pclk_rate(unsigned int dev_id)
 {
-  return get_mck_clk_rate();
+	return get_mck_clk_rate();
 }
 
-static inline unsigned long get_usart_clk_rate (unsigned int dev_id)
+static inline unsigned long get_usart_clk_rate(unsigned int dev_id)
 {
-  return get_mck_clk_rate();
+	return get_mck_clk_rate();
 }
 
-static inline unsigned long get_lcdc_clk_rate (unsigned int dev_id)
+static inline unsigned long get_lcdc_clk_rate(unsigned int dev_id)
 {
-  return get_mck_clk_rate();
+	return get_mck_clk_rate();
 }
 
-static inline unsigned long get_spi_clk_rate (unsigned int dev_id)
+static inline unsigned long get_spi_clk_rate(unsigned int dev_id)
 {
-  return get_mck_clk_rate();
+	return get_mck_clk_rate();
 }
 
-static inline unsigned long get_twi_clk_rate (unsigned int dev_id)
+static inline unsigned long get_twi_clk_rate(unsigned int dev_id)
 {
-  return get_mck_clk_rate();
+	return get_mck_clk_rate();
 }
 
-static inline unsigned long get_mci_clk_rate (void)
+static inline unsigned long get_mci_clk_rate(void)
 {
-  return get_mck_clk_rate();
+	return get_mck_clk_rate();
 }
 
-int at91_clock_init (unsigned long main_clock);
+int at91_clock_init(unsigned long main_clock);
 #endif /* __ASM_ARM_ARCH_CLK_H__ */

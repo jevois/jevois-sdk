@@ -3,5 +3,5 @@
 
 #include <linux/workqueue.h>
 
-extern struct workqueue_struct * kcrypto_wq;
+extern struct workqueue_struct *kcrypto_wq;
 #endif

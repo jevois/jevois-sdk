@@ -13,20 +13,20 @@
 /* IPv6 tunnel */
 
 struct ip6_tnl {
-  struct ip6_tnl __rcu * next; /* next tunnel in list */
-  struct net_device * dev; /* virtual device associated with tunnel */
-  struct ip6_tnl_parm parms;  /* tunnel configuration parameters */
-  struct flowi fl;  /* flowi template for xmit */
-  struct dst_entry * dst_cache;   /* cached dst */
-  u32 dst_cookie;
+	struct ip6_tnl __rcu *next;	/* next tunnel in list */
+	struct net_device *dev;	/* virtual device associated with tunnel */
+	struct ip6_tnl_parm parms;	/* tunnel configuration parameters */
+	struct flowi fl;	/* flowi template for xmit */
+	struct dst_entry *dst_cache;    /* cached dst */
+	u32 dst_cookie;
 };
 
 /* Tunnel encapsulation limit destination sub-option */
 
 struct ipv6_tlv_tnl_enc_lim {
-  __u8 type;    /* type-code for option         */
-  __u8 length;    /* option length                */
-  __u8 encap_limit; /* tunnel encapsulation limit   */
+	__u8 type;		/* type-code for option         */
+	__u8 length;		/* option length                */
+	__u8 encap_limit;	/* tunnel encapsulation limit   */
 } __packed;
 
 #endif

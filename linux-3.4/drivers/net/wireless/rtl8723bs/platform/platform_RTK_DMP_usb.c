@@ -19,18 +19,18 @@
  ******************************************************************************/
 #include <drv_types.h>
 
-int platform_wifi_power_on (void)
+int platform_wifi_power_on(void)
 {
-  int ret = 0;
-  u32 tmp;
-  tmp = readl ( (volatile unsigned int *) 0xb801a608);
-  tmp &= 0xffffff00;
-  tmp |= 0x55;
-  writel (tmp, (volatile unsigned int *) 0xb801a608);
-  return ret;
+	int ret = 0;
+	u32 tmp;
+	tmp=readl((volatile unsigned int*)0xb801a608);
+	tmp &= 0xffffff00;
+	tmp |= 0x55;
+	writel(tmp,(volatile unsigned int*)0xb801a608);//write dummy register for 1055
+	return ret;
 }
 
-void platform_wifi_power_off (void)
+void platform_wifi_power_off(void)
 {
 }
 

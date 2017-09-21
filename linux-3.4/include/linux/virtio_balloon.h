@@ -29,18 +29,18 @@
 #include <linux/virtio_config.h>
 
 /* The feature bitmap for virtio balloon */
-#define VIRTIO_BALLOON_F_MUST_TELL_HOST 0 /* Tell before reclaiming pages */
-#define VIRTIO_BALLOON_F_STATS_VQ 1 /* Memory Stats virtqueue */
+#define VIRTIO_BALLOON_F_MUST_TELL_HOST	0 /* Tell before reclaiming pages */
+#define VIRTIO_BALLOON_F_STATS_VQ	1 /* Memory Stats virtqueue */
 
 /* Size of a PFN in the balloon interface. */
 #define VIRTIO_BALLOON_PFN_SHIFT 12
 
 struct virtio_balloon_config
 {
-  /* Number of pages host wants Guest to give up. */
-  __le32 num_pages;
-  /* Number of pages we've actually got in balloon. */
-  __le32 actual;
+	/* Number of pages host wants Guest to give up. */
+	__le32 num_pages;
+	/* Number of pages we've actually got in balloon. */
+	__le32 actual;
 };
 
 #define VIRTIO_BALLOON_S_SWAP_IN  0   /* Amount of memory swapped in */
@@ -52,8 +52,8 @@ struct virtio_balloon_config
 #define VIRTIO_BALLOON_S_NR       6
 
 struct virtio_balloon_stat {
-  u16 tag;
-  u64 val;
-} __attribute__ ( (packed) );
+	u16 tag;
+	u64 val;
+} __attribute__((packed));
 
 #endif /* _LINUX_VIRTIO_BALLOON_H */

@@ -29,7 +29,7 @@
 #define CMD_DIGITAL       0x51
 
 struct cxusb_state {
-  u8 gpio_write_state[3];
+	u8 gpio_write_state[3];
 };
 
 #endif

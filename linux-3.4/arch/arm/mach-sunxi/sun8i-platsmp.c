@@ -30,15 +30,15 @@
 #include <asm/hardware/gic.h>
 
 
-bool __init sun8i_smp_init_ops (void)
+bool __init sun8i_smp_init_ops(void)
 {
-  #ifdef CONFIG_MCPM
-  /* the mcpm smp ops just use for MCPM platform */
-  early_printk ("------%s----%d-----\n", __func__, __LINE__);
-  mcpm_smp_set_ops();
-  return true;
-  #else
-  /* default use machine_desc->smp ops */
-  return false;
-  #endif
+#ifdef CONFIG_MCPM
+	/* the mcpm smp ops just use for MCPM platform */
+	early_printk("------%s----%d-----\n",__func__,__LINE__);
+	mcpm_smp_set_ops();
+	return true;
+#else
+	/* default use machine_desc->smp ops */
+	return false;
+#endif
 }

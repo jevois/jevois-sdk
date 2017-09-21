@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #endif
 
-void * yaffs_malloc (size_t size);
-void yaffs_free (void * ptr);
+void *yaffs_malloc(size_t size);
+void yaffs_free(void *ptr);
 
 #endif

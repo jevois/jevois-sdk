@@ -4,11 +4,11 @@
 #include <linux/init.h>
 
 #ifdef CONFIG_SMP
-void __init mpc85xx_smp_init (void);
+void __init mpc85xx_smp_init(void);
 #else
-static inline void mpc85xx_smp_init (void)
+static inline void mpc85xx_smp_init(void)
 {
-  /* Nothing to do */
+	/* Nothing to do */
 }
 #endif
 

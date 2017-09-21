@@ -11,7 +11,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -39,67 +39,67 @@
 #ifndef __ASSEMBLY__
 
 /* flush data cache */
-static __inline__ void sparc_dcache_flush_all (void)
+static __inline__ void sparc_dcache_flush_all(void)
 {
-  __asm__ __volatile__ ("sta %%g0, [%%g0] %0\n\t"::"i" (ASI_DFLUSH) :"memory");
+      __asm__ __volatile__("sta %%g0, [%%g0] %0\n\t"::"i"(ASI_DFLUSH):"memory");
 }
 
 /* flush instruction cache */
-static __inline__ void sparc_icache_flush_all (void)
+static __inline__ void sparc_icache_flush_all(void)
 {
-  __asm__ __volatile__ ("sta %%g0, [%%g0] %0\n\t"::"i" (ASI_IFLUSH) :"memory");
+      __asm__ __volatile__("sta %%g0, [%%g0] %0\n\t"::"i"(ASI_IFLUSH):"memory");
 }
 
 /* do a cache miss load */
-static __inline__ unsigned long long sparc_load_reg_cachemiss_qword (unsigned
-    long paddr)
+static __inline__ unsigned long long sparc_load_reg_cachemiss_qword(unsigned
+								    long paddr)
 {
-  unsigned long long retval;
-  __asm__ __volatile__ ("ldda [%1] %2, %0\n\t":
-                        "=r" (retval) :"r" (paddr), "i" (ASI_CACHEMISS) );
-  return retval;
+	unsigned long long retval;
+	__asm__ __volatile__("ldda [%1] %2, %0\n\t":
+			     "=r"(retval):"r"(paddr), "i"(ASI_CACHEMISS));
+	return retval;
 }
 
-static __inline__ unsigned long sparc_load_reg_cachemiss (unsigned long paddr)
+static __inline__ unsigned long sparc_load_reg_cachemiss(unsigned long paddr)
 {
-  unsigned long retval;
-  __asm__ __volatile__ ("lda [%1] %2, %0\n\t":
-                        "=r" (retval) :"r" (paddr), "i" (ASI_CACHEMISS) );
-  return retval;
+	unsigned long retval;
+	__asm__ __volatile__("lda [%1] %2, %0\n\t":
+			     "=r"(retval):"r"(paddr), "i"(ASI_CACHEMISS));
+	return retval;
 }
 
-static __inline__ unsigned short sparc_load_reg_cachemiss_word (unsigned long
-    paddr)
+static __inline__ unsigned short sparc_load_reg_cachemiss_word(unsigned long
+							       paddr)
 {
-  unsigned short retval;
-  __asm__ __volatile__ ("lduha [%1] %2, %0\n\t":
-                        "=r" (retval) :"r" (paddr), "i" (ASI_CACHEMISS) );
-  return retval;
+	unsigned short retval;
+	__asm__ __volatile__("lduha [%1] %2, %0\n\t":
+			     "=r"(retval):"r"(paddr), "i"(ASI_CACHEMISS));
+	return retval;
 }
 
-static __inline__ unsigned char sparc_load_reg_cachemiss_byte (unsigned long
-    paddr)
+static __inline__ unsigned char sparc_load_reg_cachemiss_byte(unsigned long
+							      paddr)
 {
-  unsigned char retval;
-  __asm__ __volatile__ ("lduba [%1] %2, %0\n\t":
-                        "=r" (retval) :"r" (paddr), "i" (ASI_CACHEMISS) );
-  return retval;
+	unsigned char retval;
+	__asm__ __volatile__("lduba [%1] %2, %0\n\t":
+			     "=r"(retval):"r"(paddr), "i"(ASI_CACHEMISS));
+	return retval;
 }
 
 /* do a physical address bypass write, i.e. for 0x80000000 */
-static __inline__ void sparc_store_reg_bypass (unsigned long paddr,
-    unsigned long value)
+static __inline__ void sparc_store_reg_bypass(unsigned long paddr,
+					      unsigned long value)
 {
-  __asm__ __volatile__ ("sta %0, [%1] %2\n\t"::"r" (value), "r" (paddr),
-                        "i" (ASI_BYPASS) :"memory");
+	__asm__ __volatile__("sta %0, [%1] %2\n\t"::"r"(value), "r"(paddr),
+			     "i"(ASI_BYPASS):"memory");
 }
 
-static __inline__ unsigned long sparc_load_reg_bypass (unsigned long paddr)
+static __inline__ unsigned long sparc_load_reg_bypass(unsigned long paddr)
 {
-  unsigned long retval;
-  __asm__ __volatile__ ("lda [%1] %2, %0\n\t":
-                        "=r" (retval) :"r" (paddr), "i" (ASI_BYPASS) );
-  return retval;
+	unsigned long retval;
+	__asm__ __volatile__("lda [%1] %2, %0\n\t":
+			     "=r"(retval):"r"(paddr), "i"(ASI_BYPASS));
+	return retval;
 }
 
 /* Macros for bypassing cache when reading */
@@ -113,4 +113,4 @@ static __inline__ unsigned long sparc_load_reg_bypass (unsigned long paddr)
 
 #endif
 
-#endif        /* __ASM_SPARC_PROCESSOR_H */
+#endif				/* __ASM_SPARC_PROCESSOR_H */

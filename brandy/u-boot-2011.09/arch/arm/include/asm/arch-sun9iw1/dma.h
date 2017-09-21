@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -22,8 +22,8 @@
  * MA 02111-1307 USA
  */
 
-#ifndef _DMA_H_
-#define _DMA_H_
+#ifndef	_DMA_H_
+#define	_DMA_H_
 
 #include <asm/arch/intc.h>
 
@@ -34,120 +34,120 @@
 
 /* DMA 传输目的端 配置 */
 /* DMA 目的端 传输宽度 */
-#define DMAC_CFG_DEST_DATA_WIDTH_8BIT     (0x00)
-#define DMAC_CFG_DEST_DATA_WIDTH_16BIT      (0x01)
-#define DMAC_CFG_DEST_DATA_WIDTH_32BIT      (0x02)
+#define	DMAC_CFG_DEST_DATA_WIDTH_8BIT			(0x00)
+#define	DMAC_CFG_DEST_DATA_WIDTH_16BIT			(0x01)
+#define	DMAC_CFG_DEST_DATA_WIDTH_32BIT			(0x02)
 
 /* DMA 目的端 突发传输模式 */
-#define DMAC_CFG_DEST_1_BURST             (0x00)
-#define DMAC_CFG_DEST_4_BURST           (0x01)
-#define DMAC_CFG_DEST_8_BURST         (0x02)
+#define	DMAC_CFG_DEST_1_BURST       			(0x00)
+#define	DMAC_CFG_DEST_4_BURST		    		(0x01)
+#define	DMAC_CFG_DEST_8_BURST					(0x02)
 
 /* DMA 目的端 地址变化模式 */
-#define DMAC_CFG_DEST_ADDR_TYPE_LINEAR_MODE   (0x00)
-#define DMAC_CFG_DEST_ADDR_TYPE_IO_MODE     (0x01)
+#define	DMAC_CFG_DEST_ADDR_TYPE_LINEAR_MODE		(0x00)
+#define	DMAC_CFG_DEST_ADDR_TYPE_IO_MODE 		(0x01)
 
 
 /* DMA 传输源端 配置 */
 /* DMA 源端 传输宽度 */
-#define DMAC_CFG_SRC_DATA_WIDTH_8BIT      (0x00)
-#define DMAC_CFG_SRC_DATA_WIDTH_16BIT     (0x01)
-#define DMAC_CFG_SRC_DATA_WIDTH_32BIT     (0x02)
+#define	DMAC_CFG_SRC_DATA_WIDTH_8BIT			(0x00)
+#define	DMAC_CFG_SRC_DATA_WIDTH_16BIT			(0x01)
+#define	DMAC_CFG_SRC_DATA_WIDTH_32BIT			(0x02)
 
 /* DMA 源端 突发传输模式 */
-#define DMAC_CFG_SRC_1_BURST              (0x00)
-#define DMAC_CFG_SRC_4_BURST            (0x01)
-#define DMAC_CFG_SRC_8_BURST            (0x02)
+#define	DMAC_CFG_SRC_1_BURST       				(0x00)
+#define	DMAC_CFG_SRC_4_BURST		    		(0x01)
+#define	DMAC_CFG_SRC_8_BURST		    		(0x02)
 
 /* DMA 源端 地址变化模式 */
-#define DMAC_CFG_SRC_ADDR_TYPE_LINEAR_MODE    (0x00)
-#define DMAC_CFG_SRC_ADDR_TYPE_IO_MODE      (0x01)
+#define	DMAC_CFG_SRC_ADDR_TYPE_LINEAR_MODE		(0x00)
+#define	DMAC_CFG_SRC_ADDR_TYPE_IO_MODE 			(0x01)
 
 
 /* DMA 传输目的端 配置 */
-#define DMAC_CFG_DEST_TYPE_SRAM         (0x00)
-#define DMAC_CFG_DEST_TYPE_DRAM           (0x01)
+#define	DMAC_CFG_DEST_TYPE_SRAM					(0x00)
+#define	DMAC_CFG_DEST_TYPE_DRAM		    		(0x01)
 
-#define DMAC_CFG_DEST_TYPE_NAND         (5)
+#define DMAC_CFG_DEST_TYPE_NAND					(5)
 
-#define DMAC_CFG_DEST_TYPE_CODEC          (15)
+#define	DMAC_CFG_DEST_TYPE_CODEC	    		(15)
 
-#define DMAC_CFG_DEST_TYPE_OTG_EP1          (17)
-#define DMAC_CFG_DEST_TYPE_OTG_EP2          (18)
-#define DMAC_CFG_DEST_TYPE_OTG_EP3          (19)
-#define DMAC_CFG_DEST_TYPE_OTG_EP4          (20)
-#define DMAC_CFG_DEST_TYPE_OTG_EP5          (21)
+#define	DMAC_CFG_DEST_TYPE_OTG_EP1	    		(17)
+#define	DMAC_CFG_DEST_TYPE_OTG_EP2	    		(18)
+#define	DMAC_CFG_DEST_TYPE_OTG_EP3	    		(19)
+#define	DMAC_CFG_DEST_TYPE_OTG_EP4	    		(20)
+#define	DMAC_CFG_DEST_TYPE_OTG_EP5	    		(21)
 /* DMA 传输源端 配置 */
-#define DMAC_CFG_SRC_TYPE_SRAM          (0x00)
-#define DMAC_CFG_SRC_TYPE_DRAM              (0x01)
+#define	DMAC_CFG_SRC_TYPE_SRAM					(0x00)
+#define	DMAC_CFG_SRC_TYPE_DRAM		    	   	(0x01)
 
-#define DMAC_CFG_SRC_TYPE_NAND          (5)
+#define DMAC_CFG_SRC_TYPE_NAND					(5)
 
-#define DMAC_CFG_SRC_TYPE_CODEC           (15)
+#define	DMAC_CFG_SRC_TYPE_CODEC	    			(15)
 
-#define DMAC_CFG_SRC_TYPE_OTG_EP1         (17)
-#define DMAC_CFG_SRC_TYPE_OTG_EP2         (18)
-#define DMAC_CFG_SRC_TYPE_OTG_EP3         (19)
-#define DMAC_CFG_SRC_TYPE_OTG_EP4         (20)
-#define DMAC_CFG_SRC_TYPE_OTG_EP5         (21)
+#define	DMAC_CFG_SRC_TYPE_OTG_EP1	    		(17)
+#define	DMAC_CFG_SRC_TYPE_OTG_EP2	    		(18)
+#define	DMAC_CFG_SRC_TYPE_OTG_EP3	    		(19)
+#define	DMAC_CFG_SRC_TYPE_OTG_EP4	    		(20)
+#define	DMAC_CFG_SRC_TYPE_OTG_EP5	    		(21)
 
 
 typedef struct
 {
-  unsigned int config;
-  unsigned int source_addr;
-  unsigned int dest_addr;
-  unsigned int byte_count;
-  unsigned int commit_para;
-  unsigned int link;
-  unsigned int reserved[2];
+	unsigned int config;
+	unsigned int source_addr;
+	unsigned int dest_addr;
+	unsigned int byte_count;
+	unsigned int commit_para;
+	unsigned int link;
+	unsigned int reserved[2];
 }
 sunxi_dma_start_t;
 
 
 typedef struct
 {
-  unsigned int      src_drq_type     : 5;            //源地址存储类型，如DRAM, SPI,NAND等，参见  __ndma_drq_type_t
-  unsigned int      src_addr_mode    : 1;            //原地址类型 0:递增模式  1:保持不变
-  unsigned int      src_burst_length : 2;            //发起一次burst宽度 0:1   1:4   2:8
-  unsigned int      reserved0        : 1;
-  unsigned int      src_data_width   : 2;            //数据传输宽度，0:一次传输8bit，1:一次传输16bit，2:一次传输32bit，3:保留
-  unsigned int      reserved1        : 5;
-  unsigned int      dst_drq_type     : 5;            //目的地址存储类型，如DRAM, SPI,NAND等
-  unsigned int      dst_addr_mode    : 1;            //目的地址类型，如递增，或者不变  0:递增模式  1:保持不变
-  unsigned int      dst_burst_length : 2;            //发起一次burst宽度 填0对应于1，填1对应于4,
-  unsigned int      reserved2        : 1;
-  unsigned int      dst_data_width   : 2;            //数据传输宽度，0:一次传输8bit，1:一次传输16bit，2:一次传输32bit，3:保留
-  unsigned int      reserved3        : 5;
+    unsigned int      src_drq_type     : 5;            //源地址存储类型，如DRAM, SPI,NAND等，参见  __ndma_drq_type_t
+    unsigned int      src_addr_mode    : 1;            //原地址类型 0:递增模式  1:保持不变
+    unsigned int      src_burst_length : 2;            //发起一次burst宽度 0:1   1:4   2:8
+    unsigned int      reserved0        : 1;
+    unsigned int      src_data_width   : 2;            //数据传输宽度，0:一次传输8bit，1:一次传输16bit，2:一次传输32bit，3:保留
+    unsigned int      reserved1        : 5;
+    unsigned int      dst_drq_type     : 5;            //目的地址存储类型，如DRAM, SPI,NAND等
+    unsigned int      dst_addr_mode    : 1;            //目的地址类型，如递增，或者不变  0:递增模式  1:保持不变
+    unsigned int      dst_burst_length : 2;            //发起一次burst宽度 填0对应于1，填1对应于4,
+    unsigned int      reserved2        : 1;
+    unsigned int      dst_data_width   : 2;            //数据传输宽度，0:一次传输8bit，1:一次传输16bit，2:一次传输32bit，3:保留
+    unsigned int      reserved3        : 5;
 }
 sunxi_dma_channal_config;
 
 typedef struct
 {
-  sunxi_dma_channal_config  cfg;
-  unsigned int  loop_mode;
-  unsigned int  data_block_size;
-  unsigned int  wait_cyc;
+	sunxi_dma_channal_config  cfg;
+	unsigned int	loop_mode;
+	unsigned int	data_block_size;
+	unsigned int	wait_cyc;
 }
 sunxi_dma_setting_t;
 
-extern    void          sunxi_dma_init (void);
-extern    void          sunxi_dma_exit (void);
+extern    void          sunxi_dma_init(void);
+extern    void          sunxi_dma_exit(void);
 
-extern    unsigned int  sunxi_dma_request     (unsigned int dmatype);
-extern    int       sunxi_dma_release     (unsigned int hdma);
-extern    int       sunxi_dma_setting     (unsigned int hdma, sunxi_dma_setting_t * cfg);
-extern    int       sunxi_dma_start         (unsigned int hdma, unsigned int saddr, unsigned int daddr, unsigned int bytes);
-extern    int       sunxi_dma_stop          (unsigned int hdma);
-extern    int       sunxi_dma_querystatus   (unsigned int hdma);
+extern    unsigned int 	sunxi_dma_request			(unsigned int dmatype);
+extern    int 			sunxi_dma_release			(unsigned int hdma);
+extern    int 			sunxi_dma_setting			(unsigned int hdma, sunxi_dma_setting_t *cfg);
+extern    int 			sunxi_dma_start			    (unsigned int hdma, unsigned int saddr, unsigned int daddr, unsigned int bytes);
+extern    int 			sunxi_dma_stop			    (unsigned int hdma);
+extern    int 			sunxi_dma_querystatus		(unsigned int hdma);
 
-extern    int       sunxi_dma_install_int (uint hdma, interrupt_handler_t dma_int_func, void * p);
-extern    int       sunxi_dma_disable_int (uint hdma);
+extern    int 			sunxi_dma_install_int(uint hdma, interrupt_handler_t dma_int_func, void *p);
+extern    int 			sunxi_dma_disable_int(uint hdma);
 
-extern    int       sunxi_dma_enable_int (uint hdma);
-extern    int       sunxi_dma_free_int (uint hdma);
+extern    int 			sunxi_dma_enable_int(uint hdma);
+extern    int 			sunxi_dma_free_int(uint hdma);
 
-#endif 
+#endif
 
 /* end of _DMA_H_ */
 

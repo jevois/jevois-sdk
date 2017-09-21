@@ -20,10 +20,10 @@
 #include <plat/clock.h>
 
 struct clk {
-  unsigned long   rate;
-  const struct clk_ops * ops;
-  const struct icst_params * params;
-  void __iomem  *  vcoreg;
+	unsigned long		rate;
+	const struct clk_ops	*ops;
+	const struct icst_params *params;
+	void __iomem		*vcoreg;
 };
 
 #define __clk_get(clk) ({ 1; })

@@ -20,21 +20,21 @@
 #define CHNLDEFS_
 
 /* Channel id option. */
-#define CHNL_PICKFREE       (~0UL)  /* Let manager pick a free channel. */
+#define CHNL_PICKFREE       (~0UL)	/* Let manager pick a free channel. */
 
 /* Channel modes */
-#define CHNL_MODETODSP    0 /* Data streaming to the DSP. */
-#define CHNL_MODEFROMDSP  1 /* Data streaming from the DSP. */
+#define CHNL_MODETODSP		0	/* Data streaming to the DSP. */
+#define CHNL_MODEFROMDSP	1	/* Data streaming from the DSP. */
 
 /* GetIOCompletion flags */
-#define CHNL_IOCINFINITE     0xffffffff /* Wait forever for IO completion. */
-#define CHNL_IOCNOWAIT       0x0  /* Dequeue an IOC, if available. */
+#define CHNL_IOCINFINITE     0xffffffff	/* Wait forever for IO completion. */
+#define CHNL_IOCNOWAIT       0x0	/* Dequeue an IOC, if available. */
 
 /* IO Completion Record status: */
-#define CHNL_IOCSTATCOMPLETE 0x0000 /* IO Completed. */
-#define CHNL_IOCSTATCANCEL   0x0002 /* IO was cancelled */
-#define CHNL_IOCSTATTIMEOUT  0x0008 /* Wait for IOC timed out. */
-#define CHNL_IOCSTATEOS      0x8000 /* End Of Stream reached. */
+#define CHNL_IOCSTATCOMPLETE 0x0000	/* IO Completed. */
+#define CHNL_IOCSTATCANCEL   0x0002	/* IO was cancelled */
+#define CHNL_IOCSTATTIMEOUT  0x0008	/* Wait for IOC timed out. */
+#define CHNL_IOCSTATEOS      0x8000	/* End Of Stream reached. */
 
 /* Macros for checking I/O Completion status: */
 #define CHNL_IS_IO_COMPLETE(ioc)  (!(ioc.status & ~CHNL_IOCSTATEOS))
@@ -43,21 +43,21 @@
 
 /* Channel attributes: */
 struct chnl_attr {
-  u32 uio_reqs;   /* Max # of preallocated I/O requests. */
-  void * event_obj; /* User supplied auto-reset event object. */
-  char * str_event_name; /* Ptr to name of user event object. */
-  void * reserved1; /* Reserved for future use. */
-  u32 reserved2;    /* Reserved for future use. */
-  
+	u32 uio_reqs;		/* Max # of preallocated I/O requests. */
+	void *event_obj;	/* User supplied auto-reset event object. */
+	char *str_event_name;	/* Ptr to name of user event object. */
+	void *reserved1;	/* Reserved for future use. */
+	u32 reserved2;		/* Reserved for future use. */
+
 };
 
 /* I/O completion record: */
 struct chnl_ioc {
-  void * buf;   /* Buffer to be filled/emptied. */
-  u32 byte_size;    /* Bytes transferred. */
-  u32 buf_size;   /* Actual buffer size in bytes */
-  u32 status;   /* Status of IO completion. */
-  u32 arg;    /* User argument associated with buf. */
+	void *buf;		/* Buffer to be filled/emptied. */
+	u32 byte_size;		/* Bytes transferred. */
+	u32 buf_size;		/* Actual buffer size in bytes */
+	u32 status;		/* Status of IO completion. */
+	u32 arg;		/* User argument associated with buf. */
 };
 
 #endif /* CHNLDEFS_ */

@@ -12,6 +12,6 @@
 #ifndef _ATH79_DEV_WMAC_H
 #define _ATH79_DEV_WMAC_H
 
-void ath79_register_wmac (u8 * cal_data);
+void ath79_register_wmac(u8 *cal_data);
 
 #endif /* _ATH79_DEV_WMAC_H */

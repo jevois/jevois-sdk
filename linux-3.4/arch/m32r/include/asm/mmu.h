@@ -4,7 +4,7 @@
 #if !defined(CONFIG_MMU)
 
 typedef struct {
-  unsigned long   end_brk;
+	unsigned long		end_brk;
 } mm_context_t;
 
 #else /* CONFIG_MMU */

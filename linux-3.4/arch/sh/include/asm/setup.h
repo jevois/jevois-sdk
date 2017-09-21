@@ -7,7 +7,7 @@
 /*
  * This is set up by the setup-routine at boot-time
  */
-#define PARAM ((unsigned char *)empty_zero_page)
+#define PARAM	((unsigned char *)empty_zero_page)
 
 #define MOUNT_ROOT_RDONLY (*(unsigned long *) (PARAM+0x000))
 #define RAMDISK_FLAGS (*(unsigned long *) (PARAM+0x004))
@@ -18,9 +18,9 @@
 /* ... */
 #define COMMAND_LINE ((char *) (PARAM+0x100))
 
-void sh_mv_setup (void);
-void check_for_initrd (void);
-void per_cpu_trap_init (void);
+void sh_mv_setup(void);
+void check_for_initrd(void);
+void per_cpu_trap_init(void);
 
 #endif /* __KERNEL__ */
 

@@ -19,25 +19,25 @@
 #include <mach/gpio.h>
 
 /* pio end, invalid macro */
-#define GPIO_INDEX_INVALID  (0xFFFFFFF0      )
-#define GPIO_CFG_INVALID  (0xEEEEEEEE      )
-#define GPIO_PULL_INVALID (0xDDDDDDDD      )
-#define GPIO_DRVLVL_INVALID (0xCCCCCCCC      )
-#define IRQ_NUM_INVALID   (0xFFFFFFFF      )
-#define AXP_PORT_VAL    (0x0000FFFF      ) /* port val for axp pin in sys_config.fex */
+#define GPIO_INDEX_INVALID	(0xFFFFFFF0      )
+#define GPIO_CFG_INVALID	(0xEEEEEEEE      )
+#define GPIO_PULL_INVALID	(0xDDDDDDDD      )
+#define GPIO_DRVLVL_INVALID	(0xCCCCCCCC      )
+#define IRQ_NUM_INVALID		(0xFFFFFFFF      )
+#define AXP_PORT_VAL		(0x0000FFFF      ) /* port val for axp pin in sys_config.fex */
 
 /* pio default macro */
-#define GPIO_PULL_DEFAULT ((u32)-1         )
-#define GPIO_DRVLVL_DEFAULT ((u32)-1         )
-#define GPIO_DATA_DEFAULT ((u32)-1         )
+#define GPIO_PULL_DEFAULT	((u32)-1         )
+#define GPIO_DRVLVL_DEFAULT	((u32)-1         )
+#define GPIO_DATA_DEFAULT	((u32)-1         )
 
 /* gpio config info */
 struct gpio_config {
-  u32 gpio;   /* gpio global index, must be unique */
-  u32   mul_sel;  /* multi sel val: 0 - input, 1 - output... */
-  u32   pull;   /* pull val: 0 - pull up/down disable, 1 - pull up... */
-  u32   drv_level;  /* driver level val: 0 - level 0, 1 - level 1... */
-  u32 data;   /* data val: 0 - low, 1 - high, only vaild when mul_sel is input/output */
+	u32	gpio;		/* gpio global index, must be unique */
+	u32 	mul_sel;	/* multi sel val: 0 - input, 1 - output... */
+	u32 	pull;		/* pull val: 0 - pull up/down disable, 1 - pull up... */
+	u32 	drv_level;	/* driver level val: 0 - level 0, 1 - level 1... */
+	u32	data;		/* data val: 0 - low, 1 - high, only vaild when mul_sel is input/output */
 };
 
 /*
@@ -48,10 +48,10 @@ struct gpio_config {
  * @SCIRPT_ITEM_VALUE_TYPE_PIO: gpio item type
  */
 typedef enum {
-  SCIRPT_ITEM_VALUE_TYPE_INVALID = 0,
-  SCIRPT_ITEM_VALUE_TYPE_INT,
-  SCIRPT_ITEM_VALUE_TYPE_STR,
-  SCIRPT_ITEM_VALUE_TYPE_PIO,
+	SCIRPT_ITEM_VALUE_TYPE_INVALID = 0,
+	SCIRPT_ITEM_VALUE_TYPE_INT,
+	SCIRPT_ITEM_VALUE_TYPE_STR,
+	SCIRPT_ITEM_VALUE_TYPE_PIO,
 } script_item_value_type_e;
 
 
@@ -62,12 +62,12 @@ typedef enum {
  * @gpio: gpio config for gpio type item
  */
 typedef union {
-  int                 val;
-  char        *        str;
-  struct gpio_config  gpio;
+    int                 val;
+    char                *str;
+    struct gpio_config  gpio;
 } script_item_u;
 
-int __init script_init (void);
+int __init script_init(void);
 
 /*
  * script_get_item
@@ -77,7 +77,7 @@ int __init script_init (void);
  * @item        item pointer for return value
  * @return      type of the item
  */
-script_item_value_type_e script_get_item (char * main_key, char * sub_key, script_item_u * item);
+script_item_value_type_e script_get_item(char *main_key, char *sub_key, script_item_u *item);
 
 
 /*
@@ -87,7 +87,7 @@ script_item_value_type_e script_get_item (char * main_key, char * sub_key, scrip
  * @list        list pointer for return gpio list
  * @return      count of the gpios
  */
-int script_get_pio_list (char * main_key, script_item_u ** list);
+int script_get_pio_list(char *main_key, script_item_u **list);
 
 /*
  * script_dump_mainkey
@@ -96,7 +96,7 @@ int script_get_pio_list (char * main_key, script_item_u ** list);
  *              if NULL, dump all main key info in script
  * @return      0
  */
-int script_dump_mainkey (char * main_key);
+int script_dump_mainkey(char *main_key);
 
 /*
  * script_get_main_key_count
@@ -104,7 +104,7 @@ int script_dump_mainkey (char * main_key);
  *
  * @return     the count of main_key
  */
-unsigned int script_get_main_key_count (void);
+unsigned int script_get_main_key_count(void);
 
 
 /*
@@ -115,7 +115,7 @@ unsigned int script_get_main_key_count (void);
  * @main_key_name    the buffer to store target main_key_name
  * @return     the pointer of target mainkey name
  */
-char * script_get_main_key_name (unsigned int main_key_index);
+char *script_get_main_key_name(unsigned int main_key_index);
 
 /*
  * script_is_main_key_exist
@@ -124,6 +124,6 @@ char * script_get_main_key_name (unsigned int main_key_index);
  * @main_key    the buffer to store target main key name
  * @return      true if exist, false if not exist or script not initialized
  */
-bool script_is_main_key_exist (char * main_key);
+bool script_is_main_key_exist(char *main_key);
 
 #endif

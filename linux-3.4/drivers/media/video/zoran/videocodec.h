@@ -80,24 +80,24 @@
    master_data ->  data ref. for the master (e.g. the zr36055,57,67)
    readreg -> ref. to read-fn from register (setup by master, used by slave)
    writereg -> ref. to write-fn to register (setup by master, used by slave)
-         this two functions do the lowlevel I/O job
+	       this two functions do the lowlevel I/O job
 
    ==== slave functionality setup ====
    slave_data -> data ref. for the slave (e.g. the zr36050,60)
    check -> fn-ref. checks availability of an device, returns -EIO on failure or
-      the type on success
-      this makes espcecially sense if a driver module supports more than
-      one codec which may be quite similar to access, nevertheless it
-      is good for a first functionality check
+	    the type on success
+	    this makes espcecially sense if a driver module supports more than
+	    one codec which may be quite similar to access, nevertheless it
+	    is good for a first functionality check
 
    -- main functions you always need for compression/decompression --
 
    set_mode -> this fn-ref. resets the entire codec, and sets up the mode
-         with the last defined norm/size (or device default if not
-         available) - it returns 0 if the mode is possible
+	       with the last defined norm/size (or device default if not
+	       available) - it returns 0 if the mode is possible
    set_size -> this fn-ref. sets the norm and image size for
-         compression/decompression (returns 0 on success)
-         the norm param is defined in videodev2.h (V4L2_STD_*)
+	       compression/decompression (returns 0 on success)
+	       the norm param is defined in videodev2.h (V4L2_STD_*)
 
    additional setup may be available, too - but the codec should work with
    some default values even without this
@@ -112,8 +112,8 @@
    if the device delivers pictures, they may be handled here
    put_image -> puts image data to the codec (not needed for 36050/60)
    get_image -> gets image data from the codec (not needed for 36050/60)
-    the calls include frame numbers and flags (even/odd/...)
-    if needed and a flag which allows blocking until its ready
+		the calls include frame numbers and flags (even/odd/...)
+		if needed and a flag which allows blocking until its ready
 */
 
 /* ============== */
@@ -151,18 +151,18 @@ M                       zr36055[1] 0001 0000c001 00000000 (zr36050[1])
 
 /* this are the current codec flags I think they are needed */
 /*  -> type value in structure */
-#define CODEC_FLAG_JPEG      0x00000001L 
-#define CODEC_FLAG_MPEG      0x00000002L 
-#define CODEC_FLAG_DIVX      0x00000004L 
-#define CODEC_FLAG_WAVELET   0x00000008L 
+#define CODEC_FLAG_JPEG      0x00000001L
+#define CODEC_FLAG_MPEG      0x00000002L
+#define CODEC_FLAG_DIVX      0x00000004L
+#define CODEC_FLAG_WAVELET   0x00000008L
 
-#define CODEC_FLAG_MAGIC     0x00000800L 
-#define CODEC_FLAG_HARDWARE  0x00001000L 
-#define CODEC_FLAG_VFE       0x00002000L 
-#define CODEC_FLAG_ENCODER   0x00004000L 
-#define CODEC_FLAG_DECODER   0x00008000L 
-#define CODEC_FLAG_NEEDIRQ   0x00010000L 
-#define CODEC_FLAG_RDWRPIC   0x00020000L 
+#define CODEC_FLAG_MAGIC     0x00000800L
+#define CODEC_FLAG_HARDWARE  0x00001000L
+#define CODEC_FLAG_VFE       0x00002000L
+#define CODEC_FLAG_ENCODER   0x00004000L
+#define CODEC_FLAG_DECODER   0x00008000L
+#define CODEC_FLAG_NEEDIRQ   0x00010000L
+#define CODEC_FLAG_RDWRPIC   0x00020000L
 
 /* a list of modes, some are just examples (is there any HW?) */
 #define CODEC_MODE_BJPG      0x0001
@@ -184,35 +184,35 @@ M                       zr36055[1] 0001 0000c001 00000000 (zr36050[1])
 
 /* the type of data may be enhanced by future implementations (data-fn.'s) */
 /*  -> used in command                                                     */
-#define CODEC_G_STATUS         0x0000 /* codec status (query only) */
-#define CODEC_S_CODEC_MODE     0x0001 /* codec mode (baseline JPEG, MPEG1,... */
+#define CODEC_G_STATUS         0x0000	/* codec status (query only) */
+#define CODEC_S_CODEC_MODE     0x0001	/* codec mode (baseline JPEG, MPEG1,... */
 #define CODEC_G_CODEC_MODE     0x8001
-#define CODEC_S_VFE            0x0002 /* additional video frontend setup */
+#define CODEC_S_VFE            0x0002	/* additional video frontend setup */
 #define CODEC_G_VFE            0x8002
-#define CODEC_S_MMAP           0x0003 /* MMAP setup (if available) */
+#define CODEC_S_MMAP           0x0003	/* MMAP setup (if available) */
 
-#define CODEC_S_JPEG_TDS_BYTE  0x0010 /* target data size in bytes */
+#define CODEC_S_JPEG_TDS_BYTE  0x0010	/* target data size in bytes */
 #define CODEC_G_JPEG_TDS_BYTE  0x8010
-#define CODEC_S_JPEG_SCALE     0x0011 /* scaling factor for quant. tables */
+#define CODEC_S_JPEG_SCALE     0x0011	/* scaling factor for quant. tables */
 #define CODEC_G_JPEG_SCALE     0x8011
-#define CODEC_S_JPEG_HDT_DATA  0x0018 /* huffman-tables */
+#define CODEC_S_JPEG_HDT_DATA  0x0018	/* huffman-tables */
 #define CODEC_G_JPEG_HDT_DATA  0x8018
-#define CODEC_S_JPEG_QDT_DATA  0x0019 /* quantizing-tables */
+#define CODEC_S_JPEG_QDT_DATA  0x0019	/* quantizing-tables */
 #define CODEC_G_JPEG_QDT_DATA  0x8019
-#define CODEC_S_JPEG_APP_DATA  0x001A /* APP marker */
+#define CODEC_S_JPEG_APP_DATA  0x001A	/* APP marker */
 #define CODEC_G_JPEG_APP_DATA  0x801A
-#define CODEC_S_JPEG_COM_DATA  0x001B /* COM marker */
+#define CODEC_S_JPEG_COM_DATA  0x001B	/* COM marker */
 #define CODEC_G_JPEG_COM_DATA  0x801B
 
-#define CODEC_S_PRIVATE        0x1000 /* "private" commands start here */
+#define CODEC_S_PRIVATE        0x1000	/* "private" commands start here */
 #define CODEC_G_PRIVATE        0x9000
 
-#define CODEC_G_FLAG           0x8000 /* this is how 'get' is detected */
+#define CODEC_G_FLAG           0x8000	/* this is how 'get' is detected */
 
 /* types of transfer, directly user space or a kernel buffer (image-fn.'s) */
 /*  -> used in get_image, put_image                                        */
-#define CODEC_TRANSFER_KERNEL 0 /* use "memcopy" */
-#define CODEC_TRANSFER_USER   1 /* use "to/from_user" */
+#define CODEC_TRANSFER_KERNEL 0	/* use "memcopy" */
+#define CODEC_TRANSFER_USER   1	/* use "to/from_user" */
 
 
 /* ========================= */
@@ -220,107 +220,107 @@ M                       zr36055[1] 0001 0000c001 00000000 (zr36050[1])
 /* ========================= */
 
 struct vfe_polarity {
-  unsigned int vsync_pol: 1;
-  unsigned int hsync_pol: 1;
-  unsigned int field_pol: 1;
-  unsigned int blank_pol: 1;
-  unsigned int subimg_pol: 1;
-  unsigned int poe_pol: 1;
-  unsigned int pvalid_pol: 1;
-  unsigned int vclk_pol: 1;
+	unsigned int vsync_pol:1;
+	unsigned int hsync_pol:1;
+	unsigned int field_pol:1;
+	unsigned int blank_pol:1;
+	unsigned int subimg_pol:1;
+	unsigned int poe_pol:1;
+	unsigned int pvalid_pol:1;
+	unsigned int vclk_pol:1;
 };
 
 struct vfe_settings {
-  __u32 x, y;   /* Offsets into image */
-  __u32 width, height;  /* Area to capture */
-  __u16 decimation; /* Decimation divider */
-  __u16 flags;    /* Flags for capture */
-  __u16 quality;    /* quality of the video */
+	__u32 x, y;		/* Offsets into image */
+	__u32 width, height;	/* Area to capture */
+	__u16 decimation;	/* Decimation divider */
+	__u16 flags;		/* Flags for capture */
+	__u16 quality;		/* quality of the video */
 };
 
 struct tvnorm {
-  u16 Wt, Wa, HStart, HSyncStart, Ht, Ha, VStart;
+	u16 Wt, Wa, HStart, HSyncStart, Ht, Ha, VStart;
 };
 
 struct jpeg_com_marker {
-  int len; /* number of usable bytes in data */
-  char data[60];
+	int len; /* number of usable bytes in data */
+	char data[60];
 };
 
 struct jpeg_app_marker {
-  int appn; /* number app segment */
-  int len; /* number of usable bytes in data */
-  char data[60];
+	int appn; /* number app segment */
+	int len; /* number of usable bytes in data */
+	char data[60];
 };
 
 struct videocodec {
-  struct module * owner;
-  /* -- filled in by slave device during register -- */
-  char name[32];
-  unsigned long magic;  /* may be used for client<->master attaching */
-  unsigned long flags;  /* functionality flags */
-  unsigned int type;  /* codec type */
-  
-  /* -- these is filled in later during master device attach -- */
-  
-  struct videocodec_master * master_data;
-  
-  /* -- these are filled in by the slave device during register -- */
-  
-  void * data;  /* private slave data */
-  
-  /* attach/detach client functions (indirect call) */
-  int (*setup) (struct videocodec * codec);
-  int (*unset) (struct videocodec * codec);
-  
-  /* main functions, every client needs them for sure! */
-  int (*set_mode) (struct videocodec * codec,
-                   int mode);
-  int (*set_video) (struct videocodec * codec,
-                    struct tvnorm * norm,
-                    struct vfe_settings * cap,
-                    struct vfe_polarity * pol);
-  int (*control) (struct videocodec * codec,
-                  int type,
-                  int size,
-                  void * data);
-                  
-  /* additional setup/query/processing (may be NULL pointer) */
-  int (*setup_interrupt) (struct videocodec * codec,
-                          long mode);
-  int (*handle_interrupt) (struct videocodec * codec,
-                           int source,
-                           long flag);
-  long (*put_image) (struct videocodec * codec,
-                     int tr_type,
-                     int block,
-                     long * fr_num,
-                     long * flag,
-                     long size,
-                     void * buf);
-  long (*get_image) (struct videocodec * codec,
-                     int tr_type,
-                     int block,
-                     long * fr_num,
-                     long * flag,
-                     long size,
-                     void * buf);
+	struct module *owner;
+	/* -- filled in by slave device during register -- */
+	char name[32];
+	unsigned long magic;	/* may be used for client<->master attaching */
+	unsigned long flags;	/* functionality flags */
+	unsigned int type;	/* codec type */
+
+	/* -- these is filled in later during master device attach -- */
+
+	struct videocodec_master *master_data;
+
+	/* -- these are filled in by the slave device during register -- */
+
+	void *data;		/* private slave data */
+
+	/* attach/detach client functions (indirect call) */
+	int (*setup) (struct videocodec * codec);
+	int (*unset) (struct videocodec * codec);
+
+	/* main functions, every client needs them for sure! */
+	int (*set_mode) (struct videocodec * codec,
+			 int mode);
+	int (*set_video) (struct videocodec * codec,
+			  struct tvnorm * norm,
+			  struct vfe_settings * cap,
+			  struct vfe_polarity * pol);
+	int (*control) (struct videocodec * codec,
+			int type,
+			int size,
+			void *data);
+
+	/* additional setup/query/processing (may be NULL pointer) */
+	int (*setup_interrupt) (struct videocodec * codec,
+				long mode);
+	int (*handle_interrupt) (struct videocodec * codec,
+				 int source,
+				 long flag);
+	long (*put_image) (struct videocodec * codec,
+			   int tr_type,
+			   int block,
+			   long *fr_num,
+			   long *flag,
+			   long size,
+			   void *buf);
+	long (*get_image) (struct videocodec * codec,
+			   int tr_type,
+			   int block,
+			   long *fr_num,
+			   long *flag,
+			   long size,
+			   void *buf);
 };
 
 struct videocodec_master {
-  /* -- filled in by master device for registration -- */
-  char name[32];
-  unsigned long magic;  /* may be used for client<->master attaching */
-  unsigned long flags;  /* functionality flags */
-  unsigned int type;  /* master type */
-  
-  void * data;  /* private master data */
-  
-  __u32 (*readreg) (struct videocodec * codec,
-                    __u16 reg);
-  void (*writereg) (struct videocodec * codec,
-                    __u16 reg,
-                    __u32 value);
+	/* -- filled in by master device for registration -- */
+	char name[32];
+	unsigned long magic;	/* may be used for client<->master attaching */
+	unsigned long flags;	/* functionality flags */
+	unsigned int type;	/* master type */
+
+	void *data;		/* private master data */
+
+	 __u32(*readreg) (struct videocodec * codec,
+			  __u16 reg);
+	void (*writereg) (struct videocodec * codec,
+			  __u16 reg,
+			  __u32 value);
 };
 
 
@@ -329,13 +329,13 @@ struct videocodec_master {
 /* ================================================= */
 
 /* attach and detach commands for the master */
-extern struct videocodec * videocodec_attach (struct videocodec_master *);
-extern int videocodec_detach (struct videocodec *);
+extern struct videocodec *videocodec_attach(struct videocodec_master *);
+extern int videocodec_detach(struct videocodec *);
 
 /* register and unregister commands for the slaves */
-extern int videocodec_register (const struct videocodec *);
-extern int videocodec_unregister (const struct videocodec *);
+extern int videocodec_register(const struct videocodec *);
+extern int videocodec_unregister(const struct videocodec *);
 
 /* the other calls are directly done via the videocodec structure! */
 
-#endif        /*ifndef __LINUX_VIDEOCODEC_H */
+#endif				/*ifndef __LINUX_VIDEOCODEC_H */

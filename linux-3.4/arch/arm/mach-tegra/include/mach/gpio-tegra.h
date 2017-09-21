@@ -4,7 +4,7 @@
  * Copyright (C) 2010 Google, Inc.
  *
  * Author:
- *  Erik Gilling <konkers@google.com>
+ *	Erik Gilling <konkers@google.com>
  *
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
@@ -23,15 +23,15 @@
 #include <linux/types.h>
 #include <mach/irqs.h>
 
-#define TEGRA_NR_GPIOS    INT_GPIO_NR
+#define TEGRA_NR_GPIOS		INT_GPIO_NR
 
 struct tegra_gpio_table {
-  int gpio; /* GPIO number */
-  bool  enable; /* Enable for GPIO at init? */
+	int	gpio;	/* GPIO number */
+	bool	enable;	/* Enable for GPIO at init? */
 };
 
-void tegra_gpio_config (struct tegra_gpio_table * table, int num);
-void tegra_gpio_enable (int gpio);
-void tegra_gpio_disable (int gpio);
+void tegra_gpio_config(struct tegra_gpio_table *table, int num);
+void tegra_gpio_enable(int gpio);
+void tegra_gpio_disable(int gpio);
 
 #endif

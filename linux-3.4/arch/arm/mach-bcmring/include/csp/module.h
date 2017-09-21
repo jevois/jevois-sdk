@@ -19,9 +19,9 @@
 /* ---- Include Files ---------------------------------------------------- */
 
 #ifdef __KERNEL__
-#include <linux/module.h>
+    #include <linux/module.h>
 #else
-#define EXPORT_SYMBOL(symbol)
+    #define EXPORT_SYMBOL(symbol)
 #endif
 
 /* ---- Public Constants and Types --------------------------------------- */

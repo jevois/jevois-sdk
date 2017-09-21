@@ -1,10 +1,10 @@
 /*
 **********************************************************************************************************************
 *
-*                      the Embedded Secure Bootloader System
+*						           the Embedded Secure Bootloader System
 *
 *
-*                  Copyright(C), 2006-2014, Allwinnertech Co., Ltd.
+*						       Copyright(C), 2006-2014, Allwinnertech Co., Ltd.
 *                                           All Rights Reserved
 *
 * File    :
@@ -13,7 +13,7 @@
 *
 * Version : V2.00
 *
-* Date    :
+* Date	  :
 *
 * Descript:
 **********************************************************************************************************************
@@ -35,33 +35,33 @@
 *
 ************************************************************************************************************
 */
-void ndump (u8 * buf, int count)
+void ndump(u8 *buf, int count)
 {
-  int i, j = 0;
-  int rest;
-  char c;
-  
-  rest = count;
-  if (count > 16)
-  {
-    for (j = 0; j < count - 16; j += 16)
-    {
-      for (i = 0; i < 16; i++)
-      {
-        c = buf[j + i] & 0xff;
-        printf ("%x  ", c);
-      }
-      rest -= 16;
-      printf ("\n");
-    }
-  }
-  for (i = 0; i < rest; i++)
-  {
-    c = buf[j + i] & 0xff;
-    printf ("%x  ", c);
-  }
-  
-  printf ("\n");
+	int i,j=0;
+	int rest;
+	char c;
+
+	rest = count;
+	if(count > 16)
+	{
+		for(j=0;j<count-16;j+=16)
+		{
+			for(i=0;i<16;i++)
+			{
+				c = buf[j+i] & 0xff;
+				printf("%x  ", c);
+			}
+			rest -= 16;
+			printf("\n");
+		}
+	}
+	for(i=0;i<rest;i++)
+	{
+		c = buf[j+i] & 0xff;
+		printf("%x  ", c);
+	}
+
+	printf("\n");
 }
 /*
 ************************************************************************************************************
@@ -79,48 +79,48 @@ void ndump (u8 * buf, int count)
 *
 ************************************************************************************************************
 */
-void xdump (u8 * buf, int count)
+void xdump(u8 *buf, int count)
 {
-  int i, j = 0;
-  int rest;
-  char c;
-  
-  rest = count;
-  if (count > 16)
-  {
-    for (j = 0; j < count - 16; j += 16)
-    {
-      for (i = 0; i < 16; i++)
-      {
-        c = buf[j + i] & 0xff;
-        printf ("%02x", c);
-        if ( (c > 20) && (c < 0x7e) )
-        {
-          printf ("(%c)  ", c);
-        }
-        else
-        {
-          printf ("  ");
-        }
-      }
-      rest -= 16;
-      printf ("\n");
-    }
-  }
-  for (i = 0; i < rest; i++)
-  {
-    c = buf[j + i] & 0xff;
-    printf ("%02x", c);
-    if ( (c > 20) && (c < 0x7e) )
-    {
-      printf ("(%c)  ", c);
-    }
-    else
-    {
-      printf ("  ");
-    }
-  }
-  
-  printf ("\n");
+	int i,j=0;
+	int rest;
+	char c;
+
+	rest = count;
+	if(count > 16)
+	{
+		for(j=0;j<count-16;j+=16)
+		{
+			for(i=0;i<16;i++)
+			{
+				c = buf[j+i] & 0xff;
+				printf("%02x", c);
+				if((c > 20) && (c < 0x7e))
+				{
+					printf("(%c)  ", c);
+				}
+				else
+				{
+					printf("  ");
+				}
+			}
+			rest -= 16;
+			printf("\n");
+		}
+	}
+	for(i=0;i<rest;i++)
+	{
+		c = buf[j+i] & 0xff;
+		printf("%02x", c);
+		if((c > 20) && (c < 0x7e))
+		{
+			printf("(%c)  ", c);
+		}
+		else
+		{
+			printf("  ");
+		}
+	}
+
+	printf("\n");
 }
 

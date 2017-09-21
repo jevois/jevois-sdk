@@ -55,24 +55,24 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 extern "C" {
 #endif
 
-PVRSRV_ERROR SysCreateConfigData (PVRSRV_SYSTEM_CONFIG ** ppsSysConfig);
-IMG_VOID SysDestroyConfigData (PVRSRV_SYSTEM_CONFIG * psSysConfig);
-PVRSRV_ERROR SysAcquireSystemData (IMG_HANDLE hSysData);
-PVRSRV_ERROR SysReleaseSystemData (IMG_HANDLE hSysData);
-PVRSRV_ERROR SysDebugInfo (PVRSRV_SYSTEM_CONFIG * psSysConfig);
+PVRSRV_ERROR SysCreateConfigData(PVRSRV_SYSTEM_CONFIG **ppsSysConfig);
+IMG_VOID SysDestroyConfigData(PVRSRV_SYSTEM_CONFIG *psSysConfig);
+PVRSRV_ERROR SysAcquireSystemData(IMG_HANDLE hSysData);
+PVRSRV_ERROR SysReleaseSystemData(IMG_HANDLE hSysData);
+PVRSRV_ERROR SysDebugInfo(PVRSRV_SYSTEM_CONFIG *psSysConfig);
 
 #if defined(SUPPORT_SYSTEM_INTERRUPT_HANDLING)
-PVRSRV_ERROR SysInstallDeviceLISR (IMG_UINT32 ui32IRQ,
-                                   IMG_BOOL bShared,
-                                   IMG_CHAR * pszName,
-                                   PFN_LISR pfnLISR,
-                                   IMG_PVOID pvData,
-                                   IMG_HANDLE * phLISRData);
-                                   
-PVRSRV_ERROR SysUninstallDeviceLISR (IMG_HANDLE hLISRData);
+PVRSRV_ERROR SysInstallDeviceLISR(IMG_UINT32 ui32IRQ,
+				  IMG_BOOL bShared,
+				  IMG_CHAR *pszName,
+				  PFN_LISR pfnLISR,
+				  IMG_PVOID pvData,
+				  IMG_HANDLE *phLISRData);
+
+PVRSRV_ERROR SysUninstallDeviceLISR(IMG_HANDLE hLISRData);
 
 #if defined(SUPPORT_DRM)
-IMG_BOOL SystemISRHandler (IMG_VOID * pvData);
+IMG_BOOL SystemISRHandler(IMG_VOID *pvData);
 #endif
 #endif /* defined(SUPPORT_SYSTEM_INTERRUPT_HANDLING) */
 
@@ -83,40 +83,40 @@ IMG_BOOL SystemISRHandler (IMG_VOID * pvData);
  * NO_HARDWARE systems.
  */
 #if !(defined(NO_HARDWARE) && defined(__linux__) && defined(__KERNEL__))
-#define SysReadHWReg(p, o) OSReadHWReg(p, o)
+#define	SysReadHWReg(p, o) OSReadHWReg(p, o)
 #define SysWriteHWReg(p, o, v) OSWriteHWReg(p, o, v)
-#else /* !(defined(NO_HARDWARE) && defined(__linux__)) */
+#else	/* !(defined(NO_HARDWARE) && defined(__linux__)) */
 /*!
 ******************************************************************************
 
- @Function  SysReadHWReg
+ @Function	SysReadHWReg
 
  @Description
 
  register read function
 
- @input pvLinRegBaseAddr :  lin addr of register block base
+ @input pvLinRegBaseAddr :	lin addr of register block base
 
  @input ui32Offset :
 
  @Return   register value
 
 ******************************************************************************/
-static inline IMG_UINT32 SysReadHWReg (IMG_PVOID pvLinRegBaseAddr, IMG_UINT32 ui32Offset)
+static inline IMG_UINT32 SysReadHWReg(IMG_PVOID pvLinRegBaseAddr, IMG_UINT32 ui32Offset)
 {
-  return (IMG_UINT32) readl (pvLinRegBaseAddr + ui32Offset);
+	return (IMG_UINT32) readl(pvLinRegBaseAddr + ui32Offset);
 }
 
 /*!
 ******************************************************************************
 
- @Function  SysWriteHWReg
+ @Function	SysWriteHWReg
 
  @Description
 
  register write function
 
- @input pvLinRegBaseAddr :  lin addr of register block base
+ @input pvLinRegBaseAddr :	lin addr of register block base
 
  @input ui32Offset :
 
@@ -125,35 +125,35 @@ static inline IMG_UINT32 SysReadHWReg (IMG_PVOID pvLinRegBaseAddr, IMG_UINT32 ui
  @Return   none
 
 ******************************************************************************/
-static inline IMG_VOID SysWriteHWReg (IMG_PVOID pvLinRegBaseAddr, IMG_UINT32 ui32Offset, IMG_UINT32 ui32Value)
+static inline IMG_VOID SysWriteHWReg(IMG_PVOID pvLinRegBaseAddr, IMG_UINT32 ui32Offset, IMG_UINT32 ui32Value)
 {
-  writel (ui32Value, pvLinRegBaseAddr + ui32Offset);
+	writel(ui32Value, pvLinRegBaseAddr + ui32Offset);
 }
-#endif  /* !(defined(NO_HARDWARE) && defined(__linux__)) */
+#endif	/* !(defined(NO_HARDWARE) && defined(__linux__)) */
 
 /*!
 ******************************************************************************
 
- @Function    SysCheckMemAllocSize
+ @Function		SysCheckMemAllocSize
 
- @Description Function to apply memory budgeting policies
+ @Description	Function to apply memory budgeting policies
 
- @input     psDevNode
+ @input			psDevNode
 
- @input     uiChunkSize
+ @input			uiChunkSize
 
- @input     ui32NumPhysChunks
+ @input			ui32NumPhysChunks
 
- @Return    PVRSRV_ERROR
+ @Return		PVRSRV_ERROR
 
 ******************************************************************************/
-FORCE_INLINE PVRSRV_ERROR SysCheckMemAllocSize (struct _PVRSRV_DEVICE_NODE_ *psDevNode,
-    IMG_UINT64 ui64MemSize)
+FORCE_INLINE PVRSRV_ERROR SysCheckMemAllocSize(struct _PVRSRV_DEVICE_NODE_ *psDevNode,
+												IMG_UINT64 ui64MemSize)
 {
-  PVR_UNREFERENCED_PARAMETER (psDevNode);
-  PVR_UNREFERENCED_PARAMETER (ui64MemSize);
-  
-  return PVRSRV_OK;
+	PVR_UNREFERENCED_PARAMETER(psDevNode);
+	PVR_UNREFERENCED_PARAMETER(ui64MemSize);
+
+	return PVRSRV_OK;
 }
 
 #if defined(__cplusplus)

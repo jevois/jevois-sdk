@@ -27,8 +27,8 @@
  * connection.  OCP_TARGET_AGENT represents the device's L4
  * interconnect connection.
  */
-#define OCP_TARGET_AGENT    1
-#define OCP_INITIATOR_AGENT   2
+#define OCP_TARGET_AGENT		1
+#define OCP_INITIATOR_AGENT		2
 
 /**
  * omap_pm_if_early_init - OMAP PM init code called before clock fw init
@@ -40,7 +40,7 @@
  * framework starts.  The "_if_" is to avoid name collisions with the
  * PM idle-loop code.
  */
-int __init omap_pm_if_early_init (void);
+int __init omap_pm_if_early_init(void);
 
 /**
  * omap_pm_if_init - OMAP PM init code called after clock fw init
@@ -48,7 +48,7 @@ int __init omap_pm_if_early_init (void);
  * The main initialization code.  OPP tables are passed in here.  The
  * "_if_" is to avoid name collisions with the PM idle-loop code.
  */
-int __init omap_pm_if_init (void);
+int __init omap_pm_if_init(void);
 
 /**
  * omap_pm_if_exit - OMAP PM exit code
@@ -56,7 +56,7 @@ int __init omap_pm_if_init (void);
  * Exit code; currently unused.  The "_if_" is to avoid name
  * collisions with the PM idle-loop code.
  */
-void omap_pm_if_exit (void);
+void omap_pm_if_exit(void);
 
 /*
  * Device-driver-originated constraints (via board-*.c files, platform_data)
@@ -97,7 +97,7 @@ void omap_pm_if_exit (void);
  * Returns -EINVAL for an invalid argument, -ERANGE if the constraint
  * is not satisfiable, or 0 upon success.
  */
-int omap_pm_set_max_mpu_wakeup_lat (struct device * dev, long t);
+int omap_pm_set_max_mpu_wakeup_lat(struct device *dev, long t);
 
 
 /**
@@ -129,7 +129,7 @@ int omap_pm_set_max_mpu_wakeup_lat (struct device * dev, long t);
  * Returns -EINVAL for an invalid argument, -ERANGE if the constraint
  * is not satisfiable, or 0 upon success.
  */
-int omap_pm_set_min_bus_tput (struct device * dev, u8 agent_id, unsigned long r);
+int omap_pm_set_min_bus_tput(struct device *dev, u8 agent_id, unsigned long r);
 
 
 /**
@@ -158,8 +158,8 @@ int omap_pm_set_min_bus_tput (struct device * dev, u8 agent_id, unsigned long r)
  * Returns -EINVAL for an invalid argument, -ERANGE if the constraint
  * is not satisfiable, or 0 upon success.
  */
-int omap_pm_set_max_dev_wakeup_lat (struct device * req_dev, struct device * dev,
-                                    long t);
+int omap_pm_set_max_dev_wakeup_lat(struct device *req_dev, struct device *dev,
+				   long t);
 
 
 /**
@@ -189,7 +189,7 @@ int omap_pm_set_max_dev_wakeup_lat (struct device * req_dev, struct device * dev
  * Returns -EINVAL for an invalid argument, -ERANGE if the constraint
  * is not satisfiable, or 0 upon success.
  */
-int omap_pm_set_max_sdma_lat (struct device * dev, long t);
+int omap_pm_set_max_sdma_lat(struct device *dev, long t);
 
 
 /**
@@ -250,7 +250,7 @@ int omap_pm_set_max_sdma_lat (struct device * dev, long t);
  * Returns -EINVAL for an invalid argument, -ERANGE if the constraint
  * is not satisfiable, or 0 upon success.
  */
-int omap_pm_set_min_clk_rate (struct device * dev, struct clk * c, long r);
+int omap_pm_set_min_clk_rate(struct device *dev, struct clk *c, long r);
 
 /*
  * DSP Bridge-specific constraints
@@ -263,7 +263,7 @@ int omap_pm_set_min_clk_rate (struct device * dev, struct clk * c, long r);
  * frequency entries.  The final item in the array should have .rate =
  * .opp_id = 0.
  */
-const struct omap_opp * omap_pm_dsp_get_opp_table (void);
+const struct omap_opp *omap_pm_dsp_get_opp_table(void);
 
 /**
  * omap_pm_dsp_set_min_opp - receive desired OPP target ID from DSP Bridge
@@ -274,7 +274,7 @@ const struct omap_opp * omap_pm_dsp_get_opp_table (void);
  * information that code receives from the DSP/BIOS load estimator is the
  * target OPP ID; hence, this interface.  No return value.
  */
-void omap_pm_dsp_set_min_opp (u8 opp_id);
+void omap_pm_dsp_set_min_opp(u8 opp_id);
 
 /**
  * omap_pm_dsp_get_opp - report the current DSP OPP ID
@@ -286,7 +286,7 @@ void omap_pm_dsp_set_min_opp (u8 opp_id);
  *
  * Returns the current VDD1 OPP ID, or 0 upon error.
  */
-u8 omap_pm_dsp_get_opp (void);
+u8 omap_pm_dsp_get_opp(void);
 
 
 /*
@@ -303,7 +303,7 @@ u8 omap_pm_dsp_get_opp (void);
  * Returns a pointer to a struct cpufreq_frequency_table array or NULL
  * upon error.
  */
-struct cpufreq_frequency_table ** omap_pm_cpu_get_freq_table (void);
+struct cpufreq_frequency_table **omap_pm_cpu_get_freq_table(void);
 
 /**
  * omap_pm_cpu_set_freq - set the current minimum MPU frequency
@@ -314,14 +314,14 @@ struct cpufreq_frequency_table ** omap_pm_cpu_get_freq_table (void);
  * Intended to be called by plat-omap/cpu_omap.c:omap_target().  No
  * return value.
  */
-void omap_pm_cpu_set_freq (unsigned long f);
+void omap_pm_cpu_set_freq(unsigned long f);
 
 /**
  * omap_pm_cpu_get_freq - report the current CPU frequency
  *
  * Returns the current MPU frequency, or 0 upon error.
  */
-unsigned long omap_pm_cpu_get_freq (void);
+unsigned long omap_pm_cpu_get_freq(void);
 
 
 /*
@@ -344,9 +344,9 @@ unsigned long omap_pm_cpu_get_freq (void);
  * continue counting.  Returns the number of context losses for this device,
  * or negative value upon error.
  */
-int omap_pm_get_dev_context_loss_count (struct device * dev);
+int omap_pm_get_dev_context_loss_count(struct device *dev);
 
-void omap_pm_enable_off_mode (void);
-void omap_pm_disable_off_mode (void);
+void omap_pm_enable_off_mode(void);
+void omap_pm_disable_off_mode(void);
 
 #endif

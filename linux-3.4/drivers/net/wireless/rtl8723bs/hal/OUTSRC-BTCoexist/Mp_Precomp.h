@@ -23,7 +23,7 @@
 #include <drv_types.h>
 #include <hal_data.h>
 
-#define BT_TMP_BUF_SIZE 100
+#define BT_TMP_BUF_SIZE	100
 
 #ifdef PLATFORM_LINUX
 #define rsprintf snprintf
@@ -31,9 +31,9 @@
 #define rsprintf sprintf_s
 #endif
 
-#define DCMD_Printf     DBG_BT_INFO
+#define DCMD_Printf			DBG_BT_INFO
 
-#define delay_ms(ms)    rtw_mdelay_os(ms)
+#define delay_ms(ms)		rtw_mdelay_os(ms)
 
 #ifdef bEnable
 #undef bEnable

@@ -2,16 +2,16 @@
 #define _ASM_PARISC_FTRACE_H
 
 #ifndef __ASSEMBLY__
-extern void mcount (void);
+extern void mcount(void);
 
 /*
  * Stack of return addresses for functions of a thread.
  * Used in struct thread_info
  */
 struct ftrace_ret_stack {
-  unsigned long ret;
-  unsigned long func;
-  unsigned long long calltime;
+	unsigned long ret;
+	unsigned long func;
+	unsigned long long calltime;
 };
 
 /*
@@ -19,10 +19,10 @@ struct ftrace_ret_stack {
  * It relays on ftrace_return_to_handler.
  * Defined in entry.S
  */
-extern void return_to_handler (void);
+extern void return_to_handler(void);
 
 
-extern unsigned long return_address (unsigned int);
+extern unsigned long return_address(unsigned int);
 
 #define HAVE_ARCH_CALLER_ADDR
 

@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -25,37 +25,37 @@
 #define  _SUNXI_NAND_H
 
 
-extern int nand_get_mbr (char * buffer, uint len);
+extern int nand_get_mbr(char* buffer, uint len);
 
-extern int nand_uboot_init (int boot_mode);
-extern int nand_uboot_exit (int force);
+extern int nand_uboot_init(int boot_mode);
+extern int nand_uboot_exit(int force);
 
-extern int nand_uboot_probe (void);
+extern int nand_uboot_probe(void);
 
-extern uint nand_uboot_read (uint start, uint sectors, void * buffer);
+extern uint nand_uboot_read(uint start, uint sectors, void *buffer);
 
-extern uint nand_uboot_write (uint start, uint sectors, void * buffer);
+extern uint nand_uboot_write(uint start, uint sectors, void *buffer);
 
 
-extern int nand_download_boot0 (uint length, void * buffer);
-extern int nand_download_uboot (uint length, void * buffer);
+extern int nand_download_boot0(uint length, void *buffer);
+extern int nand_download_uboot(uint length, void *buffer);
 
-extern int nand_force_download_uboot (uint length , void * buffer);
-extern int nand_uboot_erase (int user_erase);
+extern int nand_force_download_uboot(uint length ,void *buffer);
+extern int nand_uboot_erase(int user_erase);
 
-extern uint nand_uboot_get_flash_info (void * buffer, uint length);
+extern uint nand_uboot_get_flash_info(void *buffer, uint length);
 
-extern uint nand_uboot_set_flash_info (void * buffer, uint length);
+extern uint nand_uboot_set_flash_info(void *buffer, uint length);
 
-extern uint nand_uboot_get_flash_size (void);
+extern uint nand_uboot_get_flash_size(void);
 
-extern int nand_uboot_flush (void);
+extern int nand_uboot_flush(void);
 
-extern int NAND_Uboot_Force_Erase (void);
+extern int NAND_Uboot_Force_Erase(void);
 
-uint nand_upload_boot0 (uint length, void * buf);
+uint nand_upload_boot0(uint length, void *buf);
 
-int nand_download_boot0_simple (uint length, void * buffer);
+int nand_download_boot0_simple(uint length, void *buffer);
 
 #endif
 

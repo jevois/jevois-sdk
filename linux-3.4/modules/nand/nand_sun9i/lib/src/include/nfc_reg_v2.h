@@ -64,7 +64,7 @@
 
 
 
-/* registers */
+  /* registers */
 #define NDFC_REG_CTL_v2                __NDFC_REG( NDFC_REG_o_CTL_v2           )
 #define NDFC_REG_ST_v2                 __NDFC_REG( NDFC_REG_o_ST_v2            )
 #define NDFC_REG_INT_v2                __NDFC_REG( NDFC_REG_o_INT_v2           )
@@ -96,19 +96,19 @@
 #define NDFC_REG_SPARE_AREA_v2         __NDFC_REG( NDFC_REG_o_SPARE_AREA_v2    )
 #define NDFC_REG_PATTERN_ID_0_v2       __NDFC_REG( NDFC_REG_o_PATTERN_ID_0_v2  )
 #define NDFC_REG_PATTERN_ID_1_v2       __NDFC_REG( NDFC_REG_o_PATTERN_ID_1_v2  )
-#define NDFC_REG_SPEC_CTL_v2       __NDFC_REG( NDFC_REG_o_SPEC_CTL_v2      )
+#define NDFC_REG_SPEC_CTL_v2		   __NDFC_REG( NDFC_REG_o_SPEC_CTL_v2      )
 #define NDFC_REG_DMA_DL_BASE_v2        __NDFC_REG( NDFC_REG_o_DMA_DL_BASE_v2   )
 #define NDFC_REG_DMA_INT_STA_v2        __NDFC_REG( NDFC_REG_o_DMA_INT_STA_v2   )
 #define NDFC_REG_DMA_INT_MASK_v2       __NDFC_REG( NDFC_REG_o_DMA_INT_MASK_v2  )
-#define NDFC_REG_DMA_CUR_DESC_v2     __NDFC_REG( NDFC_REG_o_DMA_CUR_DESC_v2  )
+#define NDFC_REG_DMA_CUR_DESC_v2 	   __NDFC_REG( NDFC_REG_o_DMA_CUR_DESC_v2  )
 #define NDFC_REG_DMA_CUR_BUF_v2        __NDFC_REG( NDFC_REG_o_DMA_CUR_BUF_v2   )
 #define NDFC_RAM0_BASE_v2              ( NAND_IO_BASE + NDFC_o_RAM0_BASE_v2    )
 #define NDFC_RAM1_BASE_v2              ( NAND_IO_BASE + NDFC_o_RAM1_BASE_v2    )
 #define NDFC_REG_INT_DEBUG_v2          __NDFC_REG( NDFC_REG_o_INT_DEBUG_v2     )
 
 
-#define nfc_read_w(n)     (*((volatile unsigned int   *)(n)))          /* word input */
-#define nfc_write_w(n,c)  (*((volatile unsigned int   *)(n)) = (c))    /* word output */
+#define nfc_read_w(n)   	(*((volatile unsigned int   *)(n)))          /* word input */
+#define nfc_write_w(n,c) 	(*((volatile unsigned int   *)(n)) = (c))    /* word output */
 
 #if 0
 #define NFC_ERR_CNT_REG(blk_num)          (NAND_IO_BASE + NFC_REG_o_ECC_CNT_x_BASE + (((blk_num)&0x1F)>>2)*0x4)
@@ -124,14 +124,14 @@
 #define NDFC_DESC_LAST_FLAG     (0x1<<2)
 #define NDFC_DESC_BSIZE(bsize)  ((bsize)&0xFFFF) 
 typedef struct {
-  __u32   cfg;
-  __u32   bcnt;
-  __u32 buff; /*buffer address*/
-  struct _ndfc_dma_desc_t * next; /*pointer to next descriptor*/
+	__u32 	cfg;
+	__u32 	bcnt;
+	__u32	buff; /*buffer address*/
+	struct _ndfc_dma_desc_t *next; /*pointer to next descriptor*/
 } _ndfc_dma_desc_t;
 
-extern _ndfc_dma_desc_t * ndfc_dma_desc ;
-extern _ndfc_dma_desc_t * ndfc_dma_desc_cpu ;
+extern _ndfc_dma_desc_t *ndfc_dma_desc ;
+extern _ndfc_dma_desc_t *ndfc_dma_desc_cpu ;
 
 #endif
 

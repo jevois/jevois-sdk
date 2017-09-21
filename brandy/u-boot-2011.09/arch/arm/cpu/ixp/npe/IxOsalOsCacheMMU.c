@@ -54,14 +54,14 @@
 void *
 ixOsalCacheDmaMalloc (UINT32 n)
 {
-  return malloc (n);
+	return malloc(n);
 }
 
 /*
  *
  */
 void
-ixOsalCacheDmaFree (void * ptr)
+ixOsalCacheDmaFree (void *ptr)
 {
-  free (ptr);
+	free(ptr);
 }

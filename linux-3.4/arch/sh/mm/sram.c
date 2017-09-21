@@ -19,17 +19,17 @@
  * size, with anything more reasonably sized handled as a NUMA memory
  * node.
  */
-struct gen_pool * sram_pool;
+struct gen_pool *sram_pool;
 
-static int __init sram_pool_init (void)
+static int __init sram_pool_init(void)
 {
-  /*
-   * This is a global pool, we don't care about node locality.
-   */
-  sram_pool = gen_pool_create (1, -1);
-  if (unlikely (!sram_pool) )
-  { return -ENOMEM; }
-  
-  return 0;
+	/*
+	 * This is a global pool, we don't care about node locality.
+	 */
+	sram_pool = gen_pool_create(1, -1);
+	if (unlikely(!sram_pool))
+		return -ENOMEM;
+
+	return 0;
 }
-core_initcall (sram_pool_init);
+core_initcall(sram_pool_init);

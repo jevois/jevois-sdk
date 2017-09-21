@@ -462,12 +462,12 @@
 #define SIM_SHAPING_SPR_ARG(shim, type, units, rate) \
   (SIM_CONTROL_SHAPING | \
    ((shim) | \
-    ((type) << (SIM_CONTROL_SHAPING_SHIM_ID_BITS)) | \
-    ((units) << (SIM_CONTROL_SHAPING_SHIM_ID_BITS + \
-                 SIM_CONTROL_SHAPING_TYPE_BITS)) | \
-    ((rate) << (SIM_CONTROL_SHAPING_SHIM_ID_BITS + \
-                SIM_CONTROL_SHAPING_TYPE_BITS + \
-                SIM_CONTROL_SHAPING_UNITS_BITS))) << _SIM_CONTROL_OPERATOR_BITS)
+   ((type) << (SIM_CONTROL_SHAPING_SHIM_ID_BITS)) | \
+   ((units) << (SIM_CONTROL_SHAPING_SHIM_ID_BITS + \
+                SIM_CONTROL_SHAPING_TYPE_BITS)) | \
+   ((rate) << (SIM_CONTROL_SHAPING_SHIM_ID_BITS + \
+               SIM_CONTROL_SHAPING_TYPE_BITS + \
+               SIM_CONTROL_SHAPING_UNITS_BITS))) << _SIM_CONTROL_OPERATOR_BITS)
 
 
 /*

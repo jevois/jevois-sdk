@@ -9,28 +9,28 @@
  * See the file COPYING for details.
  *
  * This file contains the declarations for the functions for the actual tests,
- * called from the main routine in memtester.c.  See other comments in that
+ * called from the main routine in memtester.c.  See other comments in that 
  * file.
  *
  */
 
 /* Function declaration. */
 
-extern int test_stuck_address (unsigned long volatile * bufa, size_t count);
-extern int test_random_value (unsigned long volatile * bufa, unsigned long volatile * bufb, size_t count);
-extern int test_xor_comparison (unsigned long volatile * bufa, unsigned long volatile * bufb, size_t count);
-extern int test_sub_comparison (unsigned long volatile * bufa, unsigned long volatile * bufb, size_t count);
-extern int test_mul_comparison (unsigned long volatile * bufa, unsigned long volatile * bufb, size_t count);
-extern int test_div_comparison (unsigned long volatile * bufa, unsigned long volatile * bufb, size_t count);
-extern int test_or_comparison (unsigned long volatile * bufa, unsigned long volatile * bufb, size_t count);
-extern int test_and_comparison (unsigned long volatile * bufa, unsigned long volatile * bufb, size_t count);
-extern int test_seqinc_comparison (unsigned long volatile * bufa, unsigned long volatile * bufb, size_t count);
-extern int test_solidbits_comparison (unsigned long volatile * bufa, unsigned long volatile * bufb, size_t count);
-extern int test_checkerboard_comparison (unsigned long volatile * bufa, unsigned long volatile * bufb, size_t count);
-extern int test_blockseq_comparison (unsigned long volatile * bufa, unsigned long volatile * bufb, size_t count);
-extern int test_walkbits0_comparison (unsigned long volatile * bufa, unsigned long volatile * bufb, size_t count);
-extern int test_walkbits1_comparison (unsigned long volatile * bufa, unsigned long volatile * bufb, size_t count);
-extern int test_bitspread_comparison (unsigned long volatile * bufa, unsigned long volatile * bufb, size_t count);
-extern int test_bitflip_comparison (unsigned long volatile * bufa, unsigned long volatile * bufb, size_t count);
+extern int test_stuck_address(unsigned long volatile *bufa, size_t count);
+extern int test_random_value(unsigned long volatile *bufa, unsigned long volatile *bufb, size_t count);
+extern int test_xor_comparison(unsigned long volatile *bufa, unsigned long volatile *bufb, size_t count);
+extern int test_sub_comparison(unsigned long volatile *bufa, unsigned long volatile *bufb, size_t count);
+extern int test_mul_comparison(unsigned long volatile *bufa, unsigned long volatile *bufb, size_t count);
+extern int test_div_comparison(unsigned long volatile *bufa, unsigned long volatile *bufb, size_t count);
+extern int test_or_comparison(unsigned long volatile *bufa, unsigned long volatile *bufb, size_t count);
+extern int test_and_comparison(unsigned long volatile *bufa, unsigned long volatile *bufb, size_t count);
+extern int test_seqinc_comparison(unsigned long volatile *bufa, unsigned long volatile *bufb, size_t count);
+extern int test_solidbits_comparison(unsigned long volatile *bufa, unsigned long volatile *bufb, size_t count);
+extern int test_checkerboard_comparison(unsigned long volatile *bufa, unsigned long volatile *bufb, size_t count);
+extern int test_blockseq_comparison(unsigned long volatile *bufa, unsigned long volatile *bufb, size_t count);
+extern int test_walkbits0_comparison(unsigned long volatile *bufa, unsigned long volatile *bufb, size_t count);
+extern int test_walkbits1_comparison(unsigned long volatile *bufa, unsigned long volatile *bufb, size_t count);
+extern int test_bitspread_comparison(unsigned long volatile *bufa, unsigned long volatile *bufb, size_t count);
+extern int test_bitflip_comparison(unsigned long volatile *bufa, unsigned long volatile *bufb, size_t count);
 
 

@@ -15,4 +15,4 @@
 
 #include <asm-generic/bug.h>
 
-#endif  /* _XTENSA_BUG_H */
+#endif	/* _XTENSA_BUG_H */

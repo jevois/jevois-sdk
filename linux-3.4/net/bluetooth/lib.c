@@ -35,158 +35,158 @@
 
 #include <net/bluetooth/bluetooth.h>
 
-void baswap (bdaddr_t * dst, bdaddr_t * src)
+void baswap(bdaddr_t *dst, bdaddr_t *src)
 {
-  unsigned char * d = (unsigned char *) dst;
-  unsigned char * s = (unsigned char *) src;
-  unsigned int i;
-  
-  for (i = 0; i < 6; i++)
-  { d[i] = s[5 - i]; }
-}
-EXPORT_SYMBOL (baswap);
+	unsigned char *d = (unsigned char *) dst;
+	unsigned char *s = (unsigned char *) src;
+	unsigned int i;
 
-char * batostr (bdaddr_t * ba)
-{
-  static char str[2][18];
-  static int i = 1;
-  
-  i ^= 1;
-  sprintf (str[i], "%2.2X:%2.2X:%2.2X:%2.2X:%2.2X:%2.2X",
-           ba->b[5], ba->b[4], ba->b[3],
-           ba->b[2], ba->b[1], ba->b[0]);
-           
-  return str[i];
+	for (i = 0; i < 6; i++)
+		d[i] = s[5 - i];
 }
-EXPORT_SYMBOL (batostr);
+EXPORT_SYMBOL(baswap);
+
+char *batostr(bdaddr_t *ba)
+{
+	static char str[2][18];
+	static int i = 1;
+
+	i ^= 1;
+	sprintf(str[i], "%2.2X:%2.2X:%2.2X:%2.2X:%2.2X:%2.2X",
+		ba->b[5], ba->b[4], ba->b[3],
+		ba->b[2], ba->b[1], ba->b[0]);
+
+	return str[i];
+}
+EXPORT_SYMBOL(batostr);
 
 /* Bluetooth error codes to Unix errno mapping */
-int bt_to_errno (__u16 code)
+int bt_to_errno(__u16 code)
 {
-  switch (code) {
-  case 0:
-    return 0;
-    
-  case 0x01:
-    return EBADRQC;
-    
-  case 0x02:
-    return ENOTCONN;
-    
-  case 0x03:
-    return EIO;
-    
-  case 0x04:
-    return EHOSTDOWN;
-    
-  case 0x05:
-    return EACCES;
-    
-  case 0x06:
-    return EBADE;
-    
-  case 0x07:
-    return ENOMEM;
-    
-  case 0x08:
-    return ETIMEDOUT;
-    
-  case 0x09:
-    return EMLINK;
-    
-  case 0x0a:
-    return EMLINK;
-    
-  case 0x0b:
-    return EALREADY;
-    
-  case 0x0c:
-    return EBUSY;
-    
-  case 0x0d:
-  case 0x0e:
-  case 0x0f:
-    return ECONNREFUSED;
-    
-  case 0x10:
-    return ETIMEDOUT;
-    
-  case 0x11:
-  case 0x27:
-  case 0x29:
-  case 0x20:
-    return EOPNOTSUPP;
-    
-  case 0x12:
-    return EINVAL;
-    
-  case 0x13:
-  case 0x14:
-  case 0x15:
-    return ECONNRESET;
-    
-  case 0x16:
-    return ECONNABORTED;
-    
-  case 0x17:
-    return ELOOP;
-    
-  case 0x18:
-    return EACCES;
-    
-  case 0x1a:
-    return EPROTONOSUPPORT;
-    
-  case 0x1b:
-    return ECONNREFUSED;
-    
-  case 0x19:
-  case 0x1e:
-  case 0x23:
-  case 0x24:
-  case 0x25:
-    return EPROTO;
-    
-  default:
-    return ENOSYS;
-  }
-}
-EXPORT_SYMBOL (bt_to_errno);
+	switch (code) {
+	case 0:
+		return 0;
 
-int bt_info (const char * format, ...)
-{
-  struct va_format vaf;
-  va_list args;
-  int r;
-  
-  va_start (args, format);
-  
-  vaf.fmt = format;
-  vaf.va = &args;
-  
-  r = pr_info ("%pV", &vaf);
-  
-  va_end (args);
-  
-  return r;
-}
-EXPORT_SYMBOL (bt_info);
+	case 0x01:
+		return EBADRQC;
 
-int bt_err (const char * format, ...)
-{
-  struct va_format vaf;
-  va_list args;
-  int r;
-  
-  va_start (args, format);
-  
-  vaf.fmt = format;
-  vaf.va = &args;
-  
-  r = pr_err ("%pV", &vaf);
-  
-  va_end (args);
-  
-  return r;
+	case 0x02:
+		return ENOTCONN;
+
+	case 0x03:
+		return EIO;
+
+	case 0x04:
+		return EHOSTDOWN;
+
+	case 0x05:
+		return EACCES;
+
+	case 0x06:
+		return EBADE;
+
+	case 0x07:
+		return ENOMEM;
+
+	case 0x08:
+		return ETIMEDOUT;
+
+	case 0x09:
+		return EMLINK;
+
+	case 0x0a:
+		return EMLINK;
+
+	case 0x0b:
+		return EALREADY;
+
+	case 0x0c:
+		return EBUSY;
+
+	case 0x0d:
+	case 0x0e:
+	case 0x0f:
+		return ECONNREFUSED;
+
+	case 0x10:
+		return ETIMEDOUT;
+
+	case 0x11:
+	case 0x27:
+	case 0x29:
+	case 0x20:
+		return EOPNOTSUPP;
+
+	case 0x12:
+		return EINVAL;
+
+	case 0x13:
+	case 0x14:
+	case 0x15:
+		return ECONNRESET;
+
+	case 0x16:
+		return ECONNABORTED;
+
+	case 0x17:
+		return ELOOP;
+
+	case 0x18:
+		return EACCES;
+
+	case 0x1a:
+		return EPROTONOSUPPORT;
+
+	case 0x1b:
+		return ECONNREFUSED;
+
+	case 0x19:
+	case 0x1e:
+	case 0x23:
+	case 0x24:
+	case 0x25:
+		return EPROTO;
+
+	default:
+		return ENOSYS;
+	}
 }
-EXPORT_SYMBOL (bt_err);
+EXPORT_SYMBOL(bt_to_errno);
+
+int bt_info(const char *format, ...)
+{
+	struct va_format vaf;
+	va_list args;
+	int r;
+
+	va_start(args, format);
+
+	vaf.fmt = format;
+	vaf.va = &args;
+
+	r = pr_info("%pV", &vaf);
+
+	va_end(args);
+
+	return r;
+}
+EXPORT_SYMBOL(bt_info);
+
+int bt_err(const char *format, ...)
+{
+	struct va_format vaf;
+	va_list args;
+	int r;
+
+	va_start(args, format);
+
+	vaf.fmt = format;
+	vaf.va = &args;
+
+	r = pr_err("%pV", &vaf);
+
+	va_end(args);
+
+	return r;
+}
+EXPORT_SYMBOL(bt_err);

@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -33,25 +33,25 @@
 #define  USBC_MAX_OPEN_NUM    8
 
 /* 记录USB的公共信息 */
-typedef struct __fifo_info {
-  uint port0_fifo_addr;
-  uint port0_fifo_size;
-  
-  uint port1_fifo_addr;
-  uint port1_fifo_size;
-  
-  uint port2_fifo_addr;
-  uint port2_fifo_size;
-} __fifo_info_t;
+typedef struct __fifo_info{
+    uint port0_fifo_addr;
+	uint port0_fifo_size;
+
+    uint port1_fifo_addr;
+	uint port1_fifo_size;
+
+	uint port2_fifo_addr;
+	uint port2_fifo_size;
+}__fifo_info_t;
 
 /* 记录当前USB port所有的硬件信息 */
-typedef struct __usbc_otg {
-  uint port_num;
-  uint base_addr;        /* usb base address    */
-  
-  uint used;             /* 是否正在被使用      */
-  uint no;               /* 在管理数组中的位置    */
-} __usbc_otg_t;
+typedef struct __usbc_otg{
+    uint port_num;
+	uint base_addr;        /* usb base address 		*/
+
+	uint used;             /* 是否正在被使用   		*/
+    uint no;               /* 在管理数组中的位置 		*/
+}__usbc_otg_t;
 
 #endif  
 

@@ -18,7 +18,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -35,9 +35,9 @@
  * (easy to change)
  */
 
-#define CONFIG_LEON3    /* This is an LEON3 CPU */
-#define CONFIG_LEON   1 /* This is an LEON CPU */
-#define CONFIG_CPCI_AX2000  1 /* ... on GR-CPCI-AX2000 board */
+#define CONFIG_LEON3		/* This is an LEON3 CPU */
+#define CONFIG_LEON		1	/* This is an LEON CPU */
+#define CONFIG_CPCI_AX2000	1	/* ... on GR-CPCI-AX2000 board */
 
 #define CONFIG_LEON_RAM_SRAM 1
 #define CONFIG_LEON_RAM_SDRAM 2
@@ -58,7 +58,7 @@
 #define CONFIG_LEON_RAM_SELECT CONFIG_LEON_RAM_SRAM
 
 /* CPU / AMBA BUS configuration */
-#define CONFIG_SYS_CLK_FREQ 20000000  /* 20MHz */
+#define CONFIG_SYS_CLK_FREQ	20000000	/* 20MHz */
 
 /* Number of SPARC register windows */
 #define CONFIG_SYS_SPARC_NWINDOWS 8
@@ -66,8 +66,8 @@
 /*
  * Serial console configuration
  */
-#define CONFIG_BAUDRATE   38400 /* ... at 38400 bps */
-#define CONFIG_SYS_BAUDRATE_TABLE { 9600, 19200, 38400, 57600, 115200, 230400 }
+#define CONFIG_BAUDRATE		38400	/* ... at 38400 bps */
+#define CONFIG_SYS_BAUDRATE_TABLE	{ 9600, 19200, 38400, 57600, 115200, 230400 }
 
 /* Partitions */
 #define CONFIG_DOS_PARTITION
@@ -88,48 +88,48 @@
 /*
  * Autobooting
  */
-#define CONFIG_BOOTDELAY  5 /* autoboot after 5 seconds */
+#define CONFIG_BOOTDELAY	5	/* autoboot after 5 seconds */
 
-#define CONFIG_PREBOOT  "echo;" \
-  "echo Type \"run flash_nfs\" to mount root filesystem over NFS;" \
-  "echo"
+#define CONFIG_PREBOOT	"echo;"	\
+	"echo Type \"run flash_nfs\" to mount root filesystem over NFS;" \
+	"echo"
 
-#undef  CONFIG_BOOTARGS
+#undef	CONFIG_BOOTARGS
 
-#define CONFIG_EXTRA_ENV_SETTINGS_BASE          \
-  "netdev=eth0\0"             \
-  "nfsargs=setenv bootargs console=ttyS0,38400 root=/dev/nfs rw " \
-  "nfsroot=${serverip}:${rootpath}\0"     \
-  "ramargs=setenv bootargs console=ttyS0,${baudrate} root=/dev/ram rw\0"      \
-  "addip=setenv bootargs ${bootargs} "        \
-  "ip=${ipaddr}:${serverip}:${gatewayip}:${netmask}"  \
-  ":${hostname}:${netdev}:off panic=1\0"      \
-  "flash_nfs=run nfsargs addip;"          \
-  "bootm ${kernel_addr}\0"        \
-  "flash_self=run ramargs addip;"         \
-  "bootm ${kernel_addr} ${ramdisk_addr}\0"    \
-  "getkernel=tftpboot \$\(scratch\)\ \$\(bootfile\)\0" \
-  "bootargs=console=ttyS0,38400 root=/dev/nfs rw nfsroot=192.168.0.20:/export/rootfs ip=192.168.0.206:192.168.0.20:192.168.0.1:255.255.255.0:ax2000:eth0\0"
+#define	CONFIG_EXTRA_ENV_SETTINGS_BASE					\
+	"netdev=eth0\0"							\
+	"nfsargs=setenv bootargs console=ttyS0,38400 root=/dev/nfs rw "	\
+		"nfsroot=${serverip}:${rootpath}\0"			\
+	"ramargs=setenv bootargs console=ttyS0,${baudrate} root=/dev/ram rw\0"			\
+	"addip=setenv bootargs ${bootargs} "				\
+		"ip=${ipaddr}:${serverip}:${gatewayip}:${netmask}"	\
+		":${hostname}:${netdev}:off panic=1\0"			\
+	"flash_nfs=run nfsargs addip;"					\
+		"bootm ${kernel_addr}\0"				\
+	"flash_self=run ramargs addip;"					\
+		"bootm ${kernel_addr} ${ramdisk_addr}\0"		\
+	"getkernel=tftpboot \$\(scratch\)\ \$\(bootfile\)\0" \
+	"bootargs=console=ttyS0,38400 root=/dev/nfs rw nfsroot=192.168.0.20:/export/rootfs ip=192.168.0.206:192.168.0.20:192.168.0.1:255.255.255.0:ax2000:eth0\0"
 
 #if CONFIG_LEON_RAM_SELECT == CONFIG_LEON_RAM_SRAM
 #define CONFIG_EXTRA_ENV_SETTINGS_SELECT \
-  "net_nfs=tftp 40000000 ${bootfile};run nfsargs addip;bootm\0" \
-  "scratch=40200000\0"          \
-  ""
+	"net_nfs=tftp 40000000 ${bootfile};run nfsargs addip;bootm\0"	\
+	"scratch=40200000\0"					\
+	""
 #elif CONFIG_LEON_RAM_SELECT == CONFIG_LEON_RAM_SDRAM
 #define CONFIG_EXTRA_ENV_SETTINGS_SELECT \
-  "net_nfs=tftp 60000000 ${bootfile};run nfsargs addip;bootm\0" \
-  "scratch=60800000\0"          \
-  ""
+	"net_nfs=tftp 60000000 ${bootfile};run nfsargs addip;bootm\0"	\
+	"scratch=60800000\0"					\
+	""
 #else
 /* More than 4Mb is assumed when running from SDRAM */
 #define CONFIG_EXTRA_ENV_SETTINGS_SELECT \
-  "net_nfs=tftp 40000000 ${bootfile};run nfsargs addip;bootm\0" \
-  "scratch=40800000\0"          \
-  ""
+	"net_nfs=tftp 40000000 ${bootfile};run nfsargs addip;bootm\0"	\
+	"scratch=40800000\0"					\
+	""
 #endif
 
-#define CONFIG_EXTRA_ENV_SETTINGS CONFIG_EXTRA_ENV_SETTINGS_BASE CONFIG_EXTRA_ENV_SETTINGS_SELECT
+#define	CONFIG_EXTRA_ENV_SETTINGS CONFIG_EXTRA_ENV_SETTINGS_BASE CONFIG_EXTRA_ENV_SETTINGS_SELECT
 
 #define CONFIG_NETMASK 255.255.255.0
 #define CONFIG_GATEWAYIP 192.168.0.1
@@ -139,7 +139,7 @@
 #define CONFIG_HOSTNAME  ax2000
 #define CONFIG_BOOTFILE  /uImage
 
-#define CONFIG_BOOTCOMMAND  "run flash_self"
+#define CONFIG_BOOTCOMMAND	"run flash_self"
 
 /* Memory MAP
  *
@@ -192,22 +192,22 @@
  *               0xFF000000 for 16 MB
  *               0xFF800000 for  8 MB
  */
-/*#define CONFIG_SYS_NO_FLASH   1*/
-#define CONFIG_SYS_FLASH_BASE   0x00000000
-#define CONFIG_SYS_FLASH_SIZE   0x00800000
+/*#define CONFIG_SYS_NO_FLASH		1*/
+#define CONFIG_SYS_FLASH_BASE		0x00000000
+#define CONFIG_SYS_FLASH_SIZE		0x00800000
 
-#define PHYS_FLASH_SECT_SIZE  0x00020000  /* 128 KB sectors */
-#define CONFIG_SYS_MAX_FLASH_SECT 64  /* max num of sects on one chip */
-#define CONFIG_SYS_MAX_FLASH_BANKS  1 /* max num of memory banks      */
+#define PHYS_FLASH_SECT_SIZE	0x00020000	/* 128 KB sectors */
+#define CONFIG_SYS_MAX_FLASH_SECT	64	/* max num of sects on one chip */
+#define CONFIG_SYS_MAX_FLASH_BANKS	1	/* max num of memory banks      */
 
-#define CONFIG_SYS_FLASH_ERASE_TOUT 240000  /* Flash Erase Timeout (in ms)  */
-#define CONFIG_SYS_FLASH_WRITE_TOUT 500 /* Flash Write Timeout (in ms)  */
-#define CONFIG_SYS_FLASH_LOCK_TOUT  5 /* Timeout for Flash Set Lock Bit (in ms) */
-#define CONFIG_SYS_FLASH_UNLOCK_TOUT  10000 /* Timeout for Flash Clear Lock Bits (in ms) */
-#define CONFIG_SYS_FLASH_PROTECTION /* "Real" (hardware) sectors protection */
+#define CONFIG_SYS_FLASH_ERASE_TOUT	240000	/* Flash Erase Timeout (in ms)  */
+#define CONFIG_SYS_FLASH_WRITE_TOUT	500	/* Flash Write Timeout (in ms)  */
+#define CONFIG_SYS_FLASH_LOCK_TOUT	5	/* Timeout for Flash Set Lock Bit (in ms) */
+#define CONFIG_SYS_FLASH_UNLOCK_TOUT	10000	/* Timeout for Flash Clear Lock Bits (in ms) */
+#define CONFIG_SYS_FLASH_PROTECTION	/* "Real" (hardware) sectors protection */
 
 /*** CFI CONFIG ***/
-#define CONFIG_SYS_FLASH_CFI_WIDTH  FLASH_CFI_8BIT
+#define CONFIG_SYS_FLASH_CFI_WIDTH	FLASH_CFI_8BIT
 #define CONFIG_FLASH_CFI_DRIVER
 #define CONFIG_SYS_FLASH_CFI
 /* Bypass cache when reading regs from flash memory */
@@ -219,12 +219,12 @@
  * Environment settings
  */
 /*#define CONFIG_ENV_IS_NOWHERE 1*/
-#define CONFIG_ENV_IS_IN_FLASH  1
+#define CONFIG_ENV_IS_IN_FLASH	1
 /* CONFIG_ENV_ADDR need to be at sector boundary */
-#define CONFIG_ENV_SIZE   0x8000
-#define CONFIG_ENV_SECT_SIZE  0x20000
-#define CONFIG_ENV_ADDR   (CONFIG_SYS_FLASH_BASE+CONFIG_SYS_FLASH_SIZE-CONFIG_ENV_SECT_SIZE)
-#define CONFIG_ENV_OVERWRITE  1
+#define CONFIG_ENV_SIZE		0x8000
+#define CONFIG_ENV_SECT_SIZE	0x20000
+#define CONFIG_ENV_ADDR		(CONFIG_SYS_FLASH_BASE+CONFIG_SYS_FLASH_SIZE-CONFIG_ENV_SECT_SIZE)
+#define CONFIG_ENV_OVERWRITE	1
 
 /*
  * Memory map
@@ -235,13 +235,13 @@
  */
 
 #if CONFIG_LEON_RAM_SELECT == CONFIG_LEON_RAM_SDRAM_NOSRAM
-#define CONFIG_SYS_SDRAM_BASE   0x40000000
+#define CONFIG_SYS_SDRAM_BASE		0x40000000
 #else
-#define CONFIG_SYS_SDRAM_BASE   0x60000000
+#define CONFIG_SYS_SDRAM_BASE		0x60000000
 #endif
 
-#define CONFIG_SYS_SDRAM_SIZE   0x08000000
-#define CONFIG_SYS_SDRAM_END    (CONFIG_SYS_SDRAM_BASE+CONFIG_SYS_SDRAM_SIZE)
+#define CONFIG_SYS_SDRAM_SIZE		0x08000000
+#define CONFIG_SYS_SDRAM_END		(CONFIG_SYS_SDRAM_BASE+CONFIG_SYS_SDRAM_SIZE)
 
 /* 4Mb SRAM available */
 #if CONFIG_LEON_RAM_SELECT != CONFIG_LEON_RAM_SDRAM_NOSRAM
@@ -261,25 +261,25 @@
 #define CONFIG_SYS_RAM_END CONFIG_SYS_SDRAM_END
 #endif
 
-#define CONFIG_SYS_GBL_DATA_OFFSET  (CONFIG_SYS_RAM_END - GENERATED_GBL_DATA_SIZE)
+#define CONFIG_SYS_GBL_DATA_OFFSET	(CONFIG_SYS_RAM_END - GENERATED_GBL_DATA_SIZE)
 
-#define CONFIG_SYS_PROM_SIZE    (8192-GENERATED_GBL_DATA_SIZE)
-#define CONFIG_SYS_PROM_OFFSET    (CONFIG_SYS_GBL_DATA_OFFSET-CONFIG_SYS_PROM_SIZE)
+#define CONFIG_SYS_PROM_SIZE		(8192-GENERATED_GBL_DATA_SIZE)
+#define CONFIG_SYS_PROM_OFFSET		(CONFIG_SYS_GBL_DATA_OFFSET-CONFIG_SYS_PROM_SIZE)
 
-#define CONFIG_SYS_INIT_SP_OFFSET (CONFIG_SYS_PROM_OFFSET-32)
-#define CONFIG_SYS_STACK_SIZE   (0x10000-32)
+#define CONFIG_SYS_INIT_SP_OFFSET	(CONFIG_SYS_PROM_OFFSET-32)
+#define CONFIG_SYS_STACK_SIZE		(0x10000-32)
 
 #define CONFIG_SYS_MONITOR_BASE    CONFIG_SYS_TEXT_BASE
 #if (CONFIG_SYS_MONITOR_BASE < CONFIG_SYS_FLASH_BASE)
-#   define CONFIG_SYS_RAMBOOT   1
+#   define CONFIG_SYS_RAMBOOT		1
 #endif
 
-#define CONFIG_SYS_MONITOR_LEN    (256 << 10) /* Reserve 256 kB for Monitor   */
-#define CONFIG_SYS_MALLOC_LEN   (128 << 10) /* Reserve 128 kB for malloc()  */
-#define CONFIG_SYS_BOOTMAPSZ    (8 << 20) /* Initial Memory map for Linux */
+#define CONFIG_SYS_MONITOR_LEN		(256 << 10)	/* Reserve 256 kB for Monitor   */
+#define CONFIG_SYS_MALLOC_LEN		(128 << 10)	/* Reserve 128 kB for malloc()  */
+#define CONFIG_SYS_BOOTMAPSZ		(8 << 20)	/* Initial Memory map for Linux */
 
-#define CONFIG_SYS_MALLOC_END   (CONFIG_SYS_INIT_SP_OFFSET-CONFIG_SYS_STACK_SIZE)
-#define CONFIG_SYS_MALLOC_BASE    (CONFIG_SYS_MALLOC_END-CONFIG_SYS_MALLOC_LEN)
+#define CONFIG_SYS_MALLOC_END		(CONFIG_SYS_INIT_SP_OFFSET-CONFIG_SYS_STACK_SIZE)
+#define CONFIG_SYS_MALLOC_BASE		(CONFIG_SYS_MALLOC_END-CONFIG_SYS_MALLOC_LEN)
 
 /* relocated monitor area */
 #define CONFIG_SYS_RELOC_MONITOR_MAX_END   CONFIG_SYS_MALLOC_BASE
@@ -293,35 +293,35 @@
  */
 #define CONFIG_NET_MULTI
 #define CONFIG_SMC91111          1
-#define CONFIG_SMC91111_BASE    0x20000300  /* chip select 3         */
-#define CONFIG_SMC_USE_32_BIT   1 /* 32 bit bus  */
-#undef  CONFIG_SMC_91111_EXT_PHY  /* we use internal phy   */
+#define CONFIG_SMC91111_BASE		0x20000300	/* chip select 3         */
+#define CONFIG_SMC_USE_32_BIT		1	/* 32 bit bus  */
+#undef  CONFIG_SMC_91111_EXT_PHY	/* we use internal phy   */
 /*#define CONFIG_SHOW_ACTIVITY*/
-#define CONFIG_NET_RETRY_COUNT    10  /* # of retries          */
+#define CONFIG_NET_RETRY_COUNT		10	/* # of retries          */
 
 #define CONFIG_ETHADDR   00:00:7a:cc:00:13
-#define CONFIG_PHY_ADDR  0x00
+#define CONFIG_PHY_ADDR	 0x00
 
 /*
  * Miscellaneous configurable options
  */
-#define CONFIG_SYS_LONGHELP   /* undef to save memory     */
-#define CONFIG_SYS_PROMPT   "=> " /* Monitor Command Prompt   */
+#define CONFIG_SYS_LONGHELP		/* undef to save memory     */
+#define CONFIG_SYS_PROMPT		"=> "	/* Monitor Command Prompt   */
 #if defined(CONFIG_CMD_KGDB)
-#define CONFIG_SYS_CBSIZE   1024  /* Console I/O Buffer Size  */
+#define CONFIG_SYS_CBSIZE		1024	/* Console I/O Buffer Size  */
 #else
-#define CONFIG_SYS_CBSIZE   256 /* Console I/O Buffer Size  */
+#define CONFIG_SYS_CBSIZE		256	/* Console I/O Buffer Size  */
 #endif
-#define CONFIG_SYS_PBSIZE (CONFIG_SYS_CBSIZE+sizeof(CONFIG_SYS_PROMPT)+16)  /* Print Buffer Size */
-#define CONFIG_SYS_MAXARGS    16  /* max number of command args   */
-#define CONFIG_SYS_BARGSIZE   CONFIG_SYS_CBSIZE /* Boot Argument Buffer Size    */
+#define CONFIG_SYS_PBSIZE (CONFIG_SYS_CBSIZE+sizeof(CONFIG_SYS_PROMPT)+16)	/* Print Buffer Size */
+#define CONFIG_SYS_MAXARGS		16	/* max number of command args   */
+#define CONFIG_SYS_BARGSIZE		CONFIG_SYS_CBSIZE	/* Boot Argument Buffer Size    */
 
-#define CONFIG_SYS_MEMTEST_START  0x00100000  /* memtest works on */
-#define CONFIG_SYS_MEMTEST_END    0x00f00000  /* 1 ... 15 MB in DRAM  */
+#define CONFIG_SYS_MEMTEST_START	0x00100000	/* memtest works on */
+#define CONFIG_SYS_MEMTEST_END		0x00f00000	/* 1 ... 15 MB in DRAM  */
 
-#define CONFIG_SYS_LOAD_ADDR    0x100000  /* default load address */
+#define CONFIG_SYS_LOAD_ADDR		0x100000	/* default load address */
 
-#define CONFIG_SYS_HZ     1000  /* decrementer freq: 1 ms ticks */
+#define CONFIG_SYS_HZ			1000	/* decrementer freq: 1 ms ticks */
 
 /*
  * Various low-level settings
@@ -331,8 +331,8 @@
  * USB stuff
  *-----------------------------------------------------------------------
  */
-#define CONFIG_USB_CLOCK  0x0001BBBB
-#define CONFIG_USB_CONFIG 0x00005000
+#define CONFIG_USB_CLOCK	0x0001BBBB
+#define CONFIG_USB_CONFIG	0x00005000
 
 /***** Gaisler GRLIB IP-Cores Config ********/
 
@@ -369,7 +369,7 @@
 
 /* Calculate scaler register value from default baudrate */
 #define CONFIG_SYS_GRLIB_APBUART_SCALER \
-  ((((CONFIG_SYS_CLK_FREQ*10)/(CONFIG_BAUDRATE*8))-5)/10)
+ ((((CONFIG_SYS_CLK_FREQ*10)/(CONFIG_BAUDRATE*8))-5)/10)
 
 /* Identification string */
 #define CONFIG_IDENT_STRING "GAISLER LEON3 GR-CPCI-AX2000"
@@ -377,4 +377,4 @@
 /* default kernel command line */
 #define CONFIG_DEFAULT_KERNEL_COMMAND_LINE "console=ttyS0,38400\0\0"
 
-#endif        /* __CONFIG_H */
+#endif				/* __CONFIG_H */

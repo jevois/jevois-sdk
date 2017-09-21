@@ -46,56 +46,55 @@
 
 #if defined(CONFIG_CMD_DATE)
 
-int rtc_get (struct rtc_time * tmp)
+int rtc_get (struct rtc_time *tmp)
 {
-  at91_rtt_t * rtt = (at91_rtt_t *) ATMEL_BASE_RTT;
-  at91_gpbr_t * gpbr = (at91_gpbr_t *) ATMEL_BASE_GPBR;
-  ulong tim;
-  ulong tim2;
-  ulong off;
-  
-  do {
-    tim = readl (&rtt->vr);
-    tim2 = readl (&rtt->vr);
-  }
-  while (tim != tim2);
-  off = readl (&gpbr->reg[AT91_GPBR_INDEX_TIMEOFF]);
-  /* off==0 means time is invalid, but we ignore that */
-  to_tm (tim + off, tmp);
-  return 0;
+	at91_rtt_t *rtt = (at91_rtt_t *) ATMEL_BASE_RTT;
+	at91_gpbr_t *gpbr = (at91_gpbr_t *) ATMEL_BASE_GPBR;
+	ulong tim;
+	ulong tim2;
+	ulong off;
+
+	do {
+		tim = readl(&rtt->vr);
+		tim2 = readl(&rtt->vr);
+	} while (tim!=tim2);
+	off = readl(&gpbr->reg[AT91_GPBR_INDEX_TIMEOFF]);
+	/* off==0 means time is invalid, but we ignore that */
+	to_tm (tim+off, tmp);
+	return 0;
 }
 
-int rtc_set (struct rtc_time * tmp)
+int rtc_set (struct rtc_time *tmp)
 {
-  at91_rtt_t * rtt = (at91_rtt_t *) ATMEL_BASE_RTT;
-  at91_gpbr_t * gpbr = (at91_gpbr_t *) ATMEL_BASE_GPBR;
-  ulong tim;
-  
-  tim = mktime (tmp->tm_year, tmp->tm_mon, tmp->tm_mday,
-                tmp->tm_hour, tmp->tm_min, tmp->tm_sec);
-                
-  /* clear alarm, set prescaler to 32768, clear counter */
-  writel (32768 + AT91_RTT_RTTRST, &rtt->mr);
-  writel (~0, &rtt->ar);
-  writel (tim, &gpbr->reg[AT91_GPBR_INDEX_TIMEOFF]);
-  /* wait for counter clear to happen, takes less than a 1/32768th second */
-  while (readl (&rtt->vr) != 0)
-    ;
-  return 0;
+	at91_rtt_t *rtt = (at91_rtt_t *) ATMEL_BASE_RTT;
+	at91_gpbr_t *gpbr = (at91_gpbr_t *) ATMEL_BASE_GPBR;
+	ulong tim;
+
+	tim = mktime (tmp->tm_year, tmp->tm_mon, tmp->tm_mday,
+		      tmp->tm_hour, tmp->tm_min, tmp->tm_sec);
+
+	/* clear alarm, set prescaler to 32768, clear counter */
+	writel(32768+AT91_RTT_RTTRST, &rtt->mr);
+	writel(~0, &rtt->ar);
+	writel(tim, &gpbr->reg[AT91_GPBR_INDEX_TIMEOFF]);
+	/* wait for counter clear to happen, takes less than a 1/32768th second */
+	while (readl(&rtt->vr) != 0)
+		;
+	return 0;
 }
 
 void rtc_reset (void)
 {
-  at91_rtt_t * rtt = (at91_rtt_t *) ATMEL_BASE_RTT;
-  at91_gpbr_t * gpbr = (at91_gpbr_t *) ATMEL_BASE_GPBR;
-  
-  /* clear alarm, set prescaler to 32768, clear counter */
-  writel (32768 + AT91_RTT_RTTRST, &rtt->mr);
-  writel (~0, &rtt->ar);
-  writel (0, &gpbr->reg[AT91_GPBR_INDEX_TIMEOFF]);
-  /* wait for counter clear to happen, takes less than a 1/32768th second */
-  while (readl (&rtt->vr) != 0)
-    ;
+	at91_rtt_t *rtt = (at91_rtt_t *) ATMEL_BASE_RTT;
+	at91_gpbr_t *gpbr = (at91_gpbr_t *) ATMEL_BASE_GPBR;
+
+	/* clear alarm, set prescaler to 32768, clear counter */
+	writel(32768+AT91_RTT_RTTRST, &rtt->mr);
+	writel(~0, &rtt->ar);
+	writel(0, &gpbr->reg[AT91_GPBR_INDEX_TIMEOFF]);
+	/* wait for counter clear to happen, takes less than a 1/32768th second */
+	while (readl(&rtt->vr) != 0)
+		;
 }
 
 #endif

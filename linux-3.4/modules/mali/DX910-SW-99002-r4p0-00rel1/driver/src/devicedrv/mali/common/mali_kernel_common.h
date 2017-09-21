@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2010, 2012-2014 ARM Limited. All rights reserved.
- *
+ * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- *
+ * 
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -80,10 +80,10 @@
  *  MALI_CHECK_NO_ERROR
  */
 #define MALI_CHECK_NO_ERROR(expression) \
-  do { _mali_osk_errcode_t _check_no_error_result=(expression); \
-    if(_check_no_error_result != _MALI_OSK_ERR_OK) \
-      MALI_ERROR(_check_no_error_result); \
-  } while(0)
+	do { _mali_osk_errcode_t _check_no_error_result=(expression); \
+		if(_check_no_error_result != _MALI_OSK_ERR_OK) \
+			MALI_ERROR(_check_no_error_result); \
+	} while(0)
 
 /**
  *  Pointer check macro. Checks non-null pointer.
@@ -114,16 +114,16 @@
 #endif
 
 #define MALI_PRINT_ERROR(args) do{ \
-    MALI_PRINTF(("Mali: ERR: %s\n" ,__FILE__)); \
-    MALI_PRINTF(("           %s()%4d\n           ", __FUNCTION__, __LINE__)) ; \
-    MALI_PRINTF(args); \
-    MALI_PRINTF(("\n")); \
-  } while(0)
+		MALI_PRINTF(("Mali: ERR: %s\n" ,__FILE__)); \
+		MALI_PRINTF(("           %s()%4d\n           ", __FUNCTION__, __LINE__)) ; \
+		MALI_PRINTF(args); \
+		MALI_PRINTF(("\n")); \
+	} while(0)
 
 #define MALI_PRINT(args) do{ \
-    MALI_PRINTF(("Mali: ")); \
-    MALI_PRINTF(args); \
-  } while (0)
+		MALI_PRINTF(("Mali: ")); \
+		MALI_PRINTF(args); \
+	} while (0)
 
 #ifdef DEBUG
 #ifndef mali_debug_level
@@ -132,19 +132,19 @@ extern int mali_debug_level;
 
 #define MALI_DEBUG_CODE(code) code
 #define MALI_DEBUG_PRINT(level, args)  do { \
-    if((level) <=  mali_debug_level)\
-    {MALI_PRINTF(("Mali<" #level ">: ")); MALI_PRINTF(args); } \
-  } while (0)
+		if((level) <=  mali_debug_level)\
+		{MALI_PRINTF(("Mali<" #level ">: ")); MALI_PRINTF(args); } \
+	} while (0)
 
 #define MALI_DEBUG_PRINT_ERROR(args) MALI_PRINT_ERROR(args)
 
 #define MALI_DEBUG_PRINT_IF(level,condition,args)  \
-  if((condition)&&((level) <=  mali_debug_level))\
-  {MALI_PRINTF(("Mali<" #level ">: ")); MALI_PRINTF(args); }
+	if((condition)&&((level) <=  mali_debug_level))\
+	{MALI_PRINTF(("Mali<" #level ">: ")); MALI_PRINTF(args); }
 
 #define MALI_DEBUG_PRINT_ELSE(level, args)\
-  else if((level) <=  mali_debug_level)\
-  { MALI_PRINTF(("Mali<" #level ">: ")); MALI_PRINTF(args); }
+	else if((level) <=  mali_debug_level)\
+	{ MALI_PRINTF(("Mali<" #level ">: ")); MALI_PRINTF(args); }
 
 /**
  * @note these variants of DEBUG ASSERTS will cause a debugger breakpoint

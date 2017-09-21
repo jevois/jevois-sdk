@@ -80,31 +80,31 @@ typedef unsigned int        __hdle;
 
 /* set bit */
 #undef  x_set_bit
-#define x_set_bit( value, bit )         ( (value) |=  ( 1U << (bit) ) )
+#define x_set_bit( value, bit )      		( (value) |=  ( 1U << (bit) ) )
 
 /* clear bit */
 #undef  x_clear_bit
-#define x_clear_bit( value, bit )       ( (value) &= ~( 1U << (bit) ) )
+#define x_clear_bit( value, bit )    		( (value) &= ~( 1U << (bit) ) )
 
 /* reverse bit */
 #undef  x_reverse_bit
-#define x_reverse_bit( value, bit )   ( (value) ^=  ( 1U << (bit) ) )
+#define x_reverse_bit( value, bit )		( (value) ^=  ( 1U << (bit) ) )
 
 /* test bit */
 #undef  x_test_bit
-#define x_test_bit( value, bit )        ( (value)  &  ( 1U << (bit) ) )
+#define x_test_bit( value, bit )     		( (value)  &  ( 1U << (bit) ) )
 
 /* get min valude */
 #undef  x_min
-#define x_min( x, y )       ( (x) < (y) ? (x) : (y) )
+#define x_min( x, y )				( (x) < (y) ? (x) : (y) )
 
 /* get max valude */
 #undef  x_max
-#define x_max( x, y )       ( (x) > (y) ? (x) : (y) )
+#define x_max( x, y )				( (x) > (y) ? (x) : (y) )
 
 /* get absolute valude */
 #undef  x_absolute
-#define x_absolute(p)       ((p) > 0 ? (p) : -(p))
+#define x_absolute(p)				((p) > 0 ? (p) : -(p))
 
 #endif  
 

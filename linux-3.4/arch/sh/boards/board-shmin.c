@@ -12,23 +12,23 @@
 #include <asm/clock.h>
 #include <asm/io.h>
 
-#define PFC_PHCR  0xa400010eUL
-#define INTC_ICR1 0xa4000010UL
+#define PFC_PHCR	0xa400010eUL
+#define INTC_ICR1	0xa4000010UL
 
-static void __init init_shmin_irq (void)
+static void __init init_shmin_irq(void)
 {
-  __raw_writew (0x2a00, PFC_PHCR);
-  __raw_writew (0x0aaa, INTC_ICR1);
-  plat_irq_setup_pins (IRQ_MODE_IRQ);
+	__raw_writew(0x2a00, PFC_PHCR);
+	__raw_writew(0x0aaa, INTC_ICR1);
+	plat_irq_setup_pins(IRQ_MODE_IRQ);
 }
 
-static void __init shmin_setup (char ** cmdline_p)
+static void __init shmin_setup(char **cmdline_p)
 {
-  __set_io_port_base (SHMIN_IO_BASE);
+	__set_io_port_base(SHMIN_IO_BASE);
 }
 
 static struct sh_machine_vector mv_shmin __initmv = {
-  .mv_name  = "SHMIN",
-  .mv_setup = shmin_setup,
-  .mv_init_irq  = init_shmin_irq,
+	.mv_name	= "SHMIN",
+	.mv_setup	= shmin_setup,
+	.mv_init_irq	= init_shmin_irq,
 };

@@ -143,9 +143,9 @@
 
 
 
-#define AVAIL_TD(p,q) ((p)->sOpts.nTxDescs[(q)]-((p)->iTDUsed[(q)]))
+#define	AVAIL_TD(p,q)	((p)->sOpts.nTxDescs[(q)]-((p)->iTDUsed[(q)]))
 
-#define NUM       64
+#define	NUM				64
 
 
 
@@ -159,143 +159,143 @@
 
 typedef enum _VIA_BB_TYPE
 {
-  BB_TYPE_11A = 0,
-  BB_TYPE_11B,
-  BB_TYPE_11G
+    BB_TYPE_11A=0,
+    BB_TYPE_11B,
+    BB_TYPE_11G
 } VIA_BB_TYPE, *PVIA_BB_TYPE;
 
 typedef enum _VIA_PKT_TYPE
 {
-  PK_TYPE_11A = 0,
-  PK_TYPE_11B,
-  PK_TYPE_11GB,
-  PK_TYPE_11GA
+    PK_TYPE_11A=0,
+    PK_TYPE_11B,
+    PK_TYPE_11GB,
+    PK_TYPE_11GA
 } VIA_PKT_TYPE, *PVIA_PKT_TYPE;
 
 
 typedef enum __device_msg_level {
-  MSG_LEVEL_ERR = 0,         
-  MSG_LEVEL_NOTICE = 1,      
-  MSG_LEVEL_INFO = 2,        
-  MSG_LEVEL_VERBOSE = 3,     
-  MSG_LEVEL_DEBUG = 4        
+    MSG_LEVEL_ERR=0,           
+    MSG_LEVEL_NOTICE=1,        
+    MSG_LEVEL_INFO=2,          
+    MSG_LEVEL_VERBOSE=3,       
+    MSG_LEVEL_DEBUG=4          
 } DEVICE_MSG_LEVEL, *PDEVICE_MSG_LEVEL;
 
 typedef enum __device_init_type {
-  DEVICE_INIT_COLD = 0,      
-  DEVICE_INIT_RESET,         
-  DEVICE_INIT_DXPL           
+    DEVICE_INIT_COLD=0,        
+    DEVICE_INIT_RESET,         
+    DEVICE_INIT_DXPL           
 } DEVICE_INIT_TYPE, *PDEVICE_INIT_TYPE;
 
 
 
 #define MAX_BSSIDINFO_4_PMKID   16
 #define MAX_PMKIDLIST           5
-#define NDIS_802_11_PMKID_CANDIDATE_PREAUTH_ENABLED 0x01
+#define NDIS_802_11_PMKID_CANDIDATE_PREAUTH_ENABLED	0x01
 
 typedef unsigned char NDIS_802_11_PMKID_VALUE[16];
 
 
 typedef enum _NDIS_802_11_WEP_STATUS
 {
-  Ndis802_11WEPEnabled,
-  Ndis802_11Encryption1Enabled = Ndis802_11WEPEnabled,
-  Ndis802_11WEPDisabled,
-  Ndis802_11EncryptionDisabled = Ndis802_11WEPDisabled,
-  Ndis802_11WEPKeyAbsent,
-  Ndis802_11Encryption1KeyAbsent = Ndis802_11WEPKeyAbsent,
-  Ndis802_11WEPNotSupported,
-  Ndis802_11EncryptionNotSupported = Ndis802_11WEPNotSupported,
-  Ndis802_11Encryption2Enabled,
-  Ndis802_11Encryption2KeyAbsent,
-  Ndis802_11Encryption3Enabled,
-  Ndis802_11Encryption3KeyAbsent
+    Ndis802_11WEPEnabled,
+    Ndis802_11Encryption1Enabled = Ndis802_11WEPEnabled,
+    Ndis802_11WEPDisabled,
+    Ndis802_11EncryptionDisabled = Ndis802_11WEPDisabled,
+    Ndis802_11WEPKeyAbsent,
+    Ndis802_11Encryption1KeyAbsent = Ndis802_11WEPKeyAbsent,
+    Ndis802_11WEPNotSupported,
+    Ndis802_11EncryptionNotSupported = Ndis802_11WEPNotSupported,
+    Ndis802_11Encryption2Enabled,
+    Ndis802_11Encryption2KeyAbsent,
+    Ndis802_11Encryption3Enabled,
+    Ndis802_11Encryption3KeyAbsent
 } NDIS_802_11_WEP_STATUS, *PNDIS_802_11_WEP_STATUS,
-NDIS_802_11_ENCRYPTION_STATUS, *PNDIS_802_11_ENCRYPTION_STATUS;
+  NDIS_802_11_ENCRYPTION_STATUS, *PNDIS_802_11_ENCRYPTION_STATUS;
 
 
 typedef enum _NDIS_802_11_STATUS_TYPE
 {
-  Ndis802_11StatusType_Authentication,
-  Ndis802_11StatusType_MediaStreamMode,
-  Ndis802_11StatusType_PMKID_CandidateList,
-  Ndis802_11StatusTypeMax   
+    Ndis802_11StatusType_Authentication,
+    Ndis802_11StatusType_MediaStreamMode,
+    Ndis802_11StatusType_PMKID_CandidateList,
+    Ndis802_11StatusTypeMax   
 } NDIS_802_11_STATUS_TYPE, *PNDIS_802_11_STATUS_TYPE;
 
 typedef struct _PMKID_CANDIDATE {
-  NDIS_802_11_MAC_ADDRESS BSSID;
-  unsigned long Flags;
+    NDIS_802_11_MAC_ADDRESS BSSID;
+    unsigned long Flags;
 } PMKID_CANDIDATE, *PPMKID_CANDIDATE;
 
 
 typedef struct _BSSID_INFO
 {
-  NDIS_802_11_MAC_ADDRESS BSSID;
-  NDIS_802_11_PMKID_VALUE PMKID;
+    NDIS_802_11_MAC_ADDRESS BSSID;
+    NDIS_802_11_PMKID_VALUE PMKID;
 } BSSID_INFO, *PBSSID_INFO;
 
 typedef struct tagSPMKID {
-  unsigned long Length;
-  unsigned long BSSIDInfoCount;
-  BSSID_INFO BSSIDInfo[MAX_BSSIDINFO_4_PMKID];
+    unsigned long Length;
+    unsigned long BSSIDInfoCount;
+    BSSID_INFO BSSIDInfo[MAX_BSSIDINFO_4_PMKID];
 } SPMKID, *PSPMKID;
 
 typedef struct tagSPMKIDCandidateEvent {
-  NDIS_802_11_STATUS_TYPE     StatusType;
-  unsigned long Version;      
-  unsigned long NumCandidates;
-  PMKID_CANDIDATE CandidateList[MAX_PMKIDLIST];
+    NDIS_802_11_STATUS_TYPE     StatusType;
+    unsigned long Version;      
+    unsigned long NumCandidates;
+    PMKID_CANDIDATE CandidateList[MAX_PMKIDLIST];
 } SPMKIDCandidateEvent, *PSPMKIDCandidateEvent;
 
 
 #define MAX_QUIET_COUNT     8
 
 typedef struct tagSQuietControl {
-  bool bEnable;
-  unsigned long dwStartTime;
-  unsigned char byPeriod;
-  unsigned short wDuration;
+    bool bEnable;
+    unsigned long dwStartTime;
+    unsigned char byPeriod;
+    unsigned short wDuration;
 } SQuietControl, *PSQuietControl;
 
-typedef struct __chip_info_tbl {
-  CHIP_TYPE   chip_id;
-  char    *   name;
-  int         io_size;
-  int         nTxQueue;
-  u32         flags;
+typedef struct __chip_info_tbl{
+    CHIP_TYPE   chip_id;
+    char*       name;
+    int         io_size;
+    int         nTxQueue;
+    u32         flags;
 } CHIP_INFO, *PCHIP_INFO;
 
 
 typedef enum {
-  OWNED_BY_HOST = 0,
-  OWNED_BY_NIC = 1
+    OWNED_BY_HOST=0,
+    OWNED_BY_NIC=1
 } DEVICE_OWNER_TYPE, *PDEVICE_OWNER_TYPE;
 
 
-typedef struct tagSCacheEntry {
-  unsigned short wFmSequence;
-  unsigned char abyAddr2[ETH_ALEN];
+typedef struct tagSCacheEntry{
+    unsigned short wFmSequence;
+    unsigned char abyAddr2[ETH_ALEN];
 } SCacheEntry, *PSCacheEntry;
 
-typedef struct tagSCache {
-  /* The receive cache is updated circularly.  The next entry to be written is
-   * indexed by the "InPtr".
-  */
-  unsigned int uInPtr;        
-  SCacheEntry     asCacheEntry[DUPLICATE_RX_CACHE_LENGTH];
+typedef struct tagSCache{
+/* The receive cache is updated circularly.  The next entry to be written is
+ * indexed by the "InPtr".
+*/
+    unsigned int uInPtr;        
+    SCacheEntry     asCacheEntry[DUPLICATE_RX_CACHE_LENGTH];
 } SCache, *PSCache;
 
 #define CB_MAX_RX_FRAG                 64
 typedef struct tagSDeFragControlBlock
 {
-  unsigned short wSequence;
-  unsigned short wFragNum;
-  unsigned char abyAddr2[ETH_ALEN];
-  unsigned int uLifetime;
-  struct sk_buff * skb;
-  unsigned char * pbyRxBuffer;
-  unsigned int cbFrameLength;
-  bool bInUse;
+    unsigned short wSequence;
+    unsigned short wFragNum;
+    unsigned char abyAddr2[ETH_ALEN];
+    unsigned int uLifetime;
+    struct sk_buff* skb;
+    unsigned char *pbyRxBuffer;
+    unsigned int cbFrameLength;
+    bool bInUse;
 } SDeFragControlBlock, *PSDeFragControlBlock;
 
 
@@ -304,8 +304,8 @@ typedef struct tagSDeFragControlBlock
 #define     DEVICE_FLAGS_PREAMBLE_TYPE   0x00000002UL
 #define     DEVICE_FLAGS_OP_MODE         0x00000004UL
 #define     DEVICE_FLAGS_PS_MODE         0x00000008UL
-#define   DEVICE_FLAGS_80211h_MODE   0x00000010UL
-#define   DEVICE_FLAGS_DiversityANT  0x00000020UL
+#define		DEVICE_FLAGS_80211h_MODE	 0x00000010UL
+#define		DEVICE_FLAGS_DiversityANT	 0x00000020UL
 
 #define     DEVICE_FLAGS_OPENED          0x00010000UL
 #define     DEVICE_FLAGS_WOL_ENABLED     0x00080000UL
@@ -325,471 +325,471 @@ typedef struct tagSDeFragControlBlock
 
 
 
-typedef struct _RxManagementQueue
+typedef	struct _RxManagementQueue
 {
-  int packet_num;
-  int head, tail;
-  PSRxMgmtPacket  Q[NUM];
-} RxManagementQueue, *PSRxManagementQueue;
+	int	packet_num;
+	int	head,tail;
+	PSRxMgmtPacket	Q[NUM];
+} RxManagementQueue,*PSRxManagementQueue;
 
 
 
 
 
 typedef struct __device_opt {
-  int         nRxDescs0;   
-  int         nRxDescs1;   
-  int         nTxDescs[2]; 
-  int         int_works;   
-  int         rts_thresh;  
-  int         frag_thresh;
-  int         data_rate;
-  int         channel_num;
-  int         short_retry;
-  int         long_retry;
-  int         bbp_type;
-  u32         flags;
+    int         nRxDescs0;   
+    int         nRxDescs1;   
+    int         nTxDescs[2]; 
+    int         int_works;   
+    int         rts_thresh;  
+    int         frag_thresh;
+    int         data_rate;
+    int         channel_num;
+    int         short_retry;
+    int         long_retry;
+    int         bbp_type;
+    u32         flags;
 } OPTIONS, *POPTIONS;
 
 
 typedef struct __device_info {
-  struct __device_info    *    next;
-  struct __device_info    *    prev;
-  
-  struct pci_dev       *      pcid;
-  
-  #ifdef CONFIG_PM
-  u32                         pci_state[16];
-  #endif
-  
-  struct net_device     *     dev;
-  struct net_device     *     next_module;
-  struct net_device_stats     stats;
-  
-  dma_addr_t                  pool_dma;
-  dma_addr_t                  rd0_pool_dma;
-  dma_addr_t                  rd1_pool_dma;
-  
-  dma_addr_t                  td0_pool_dma;
-  dma_addr_t                  td1_pool_dma;
-  
-  dma_addr_t                  tx_bufs_dma0;
-  dma_addr_t                  tx_bufs_dma1;
-  dma_addr_t                  tx_beacon_dma;
-  
-  unsigned char * tx0_bufs;
-  unsigned char * tx1_bufs;
-  unsigned char * tx_beacon_bufs;
-  
-  CHIP_TYPE                   chip_id;
-  
-  unsigned long               PortOffset;
-  unsigned long dwIsr;
-  u32                         memaddr;
-  u32                         ioaddr;
-  u32                         io_size;
-  
-  unsigned char byRevId;
-  unsigned short SubSystemID;
-  unsigned short SubVendorID;
-  
-  int                         nTxQueues;
-  volatile int                iTDUsed[TYPE_MAXTD];
-  
-  volatile PSTxDesc           apCurrTD[TYPE_MAXTD];
-  volatile PSTxDesc           apTailTD[TYPE_MAXTD];
-  
-  volatile PSTxDesc           apTD0Rings;
-  volatile PSTxDesc           apTD1Rings;
-  
-  volatile PSRxDesc           aRD0Ring;
-  volatile PSRxDesc           aRD1Ring;
-  volatile PSRxDesc           pCurrRD[TYPE_MAXRD];
-  SCache                      sDupRxCache;
-  
-  SDeFragControlBlock         sRxDFCB[CB_MAX_RX_FRAG];
-  unsigned int  cbDFCB;
-  unsigned int  cbFreeDFCB;
-  unsigned int  uCurrentDFCBIdx;
-  
-  OPTIONS                     sOpts;
-  
-  u32                         flags;
-  
-  u32                         rx_buf_sz;
-  int                         multicast_limit;
-  unsigned char byRxMode;
-  
-  spinlock_t                  lock;
-  struct  tasklet_struct    RxMngWorkItem;
-  RxManagementQueue rxManeQueue;
-  pid_t       MLMEThr_pid;
-  struct  completion  notify;
-  struct  semaphore mlme_semaphore;
+    struct __device_info*        next;
+    struct __device_info*        prev;
+
+    struct pci_dev*             pcid;
+
+#ifdef CONFIG_PM
+    u32                         pci_state[16];
+#endif
+
+    struct net_device*          dev;
+    struct net_device*          next_module;
+    struct net_device_stats     stats;
+
+    dma_addr_t                  pool_dma;
+    dma_addr_t                  rd0_pool_dma;
+    dma_addr_t                  rd1_pool_dma;
+
+    dma_addr_t                  td0_pool_dma;
+    dma_addr_t                  td1_pool_dma;
+
+    dma_addr_t                  tx_bufs_dma0;
+    dma_addr_t                  tx_bufs_dma1;
+    dma_addr_t                  tx_beacon_dma;
+
+    unsigned char *tx0_bufs;
+    unsigned char *tx1_bufs;
+    unsigned char *tx_beacon_bufs;
+
+    CHIP_TYPE                   chip_id;
+
+    unsigned long               PortOffset;
+    unsigned long dwIsr;
+    u32                         memaddr;
+    u32                         ioaddr;
+    u32                         io_size;
+
+    unsigned char byRevId;
+    unsigned short SubSystemID;
+    unsigned short SubVendorID;
+
+    int                         nTxQueues;
+    volatile int                iTDUsed[TYPE_MAXTD];
+
+    volatile PSTxDesc           apCurrTD[TYPE_MAXTD];
+    volatile PSTxDesc           apTailTD[TYPE_MAXTD];
+
+    volatile PSTxDesc           apTD0Rings;
+    volatile PSTxDesc           apTD1Rings;
+
+    volatile PSRxDesc           aRD0Ring;
+    volatile PSRxDesc           aRD1Ring;
+    volatile PSRxDesc           pCurrRD[TYPE_MAXRD];
+    SCache                      sDupRxCache;
+
+    SDeFragControlBlock         sRxDFCB[CB_MAX_RX_FRAG];
+    unsigned int	cbDFCB;
+    unsigned int	cbFreeDFCB;
+    unsigned int	uCurrentDFCBIdx;
+
+    OPTIONS                     sOpts;
+
+    u32                         flags;
+
+    u32                         rx_buf_sz;
+    int                         multicast_limit;
+    unsigned char byRxMode;
+
+    spinlock_t                  lock;
+	struct	tasklet_struct 		RxMngWorkItem;
+	RxManagementQueue	rxManeQueue;
+	pid_t				MLMEThr_pid;
+	struct 	completion	notify;
+	struct 	semaphore	mlme_semaphore;
 
 
-  u32                         rx_bytes;
-  
-  unsigned char byLocalID;
-  unsigned char byRFType;
-  
-  unsigned char byMaxPwrLevel;
-  unsigned char byZoneType;
-  bool bZoneRegExist;
-  unsigned char byOriginalZonetype;
-  unsigned char abyMacContext[MAC_MAX_CONTEXT_REG];
-  bool bLinkPass;         
-  unsigned char abyCurrentNetAddr[ETH_ALEN];
-  
-  SStatCounter                scStatistic;
-  SDot11Counters              s802_11Counter;
-  
-  
-  PSMgmtObject                pMgmt;
-  SMgmtObject                 sMgmtObj;
-  
-  unsigned int  uCurrRSSI;
-  unsigned char byCurrSQ;
-  
-  unsigned long dwTxAntennaSel;
-  unsigned long dwRxAntennaSel;
-  unsigned char byAntennaCount;
-  unsigned char byRxAntennaMode;
-  unsigned char byTxAntennaMode;
-  bool bTxRxAntInv;
-  
-  unsigned char * pbyTmpBuff;
-  unsigned int  uSIFS;   
-  unsigned int  uDIFS;   
-  unsigned int  uEIFS;   
-  unsigned int  uSlot;   
-  unsigned int  uCwMin;  
-  unsigned int  uCwMax;  
-  unsigned char bySIFS;
-  unsigned char byDIFS;
-  unsigned char byEIFS;
-  unsigned char bySlot;
-  unsigned char byCWMaxMin;
-  CARD_PHY_TYPE               eCurrentPHYType;
-  
-  
-  VIA_BB_TYPE                 byBBType;
-  VIA_PKT_TYPE                byPacketType;
-  unsigned short wBasicRate;
-  unsigned char byACKRate;
-  unsigned char byTopOFDMBasicRate;
-  unsigned char byTopCCKBasicRate;
-  
-  unsigned char byMinChannel;
-  unsigned char byMaxChannel;
-  unsigned int  uConnectionRate;
-  
-  unsigned char byPreambleType;
-  unsigned char byShortPreamble;
-  
-  unsigned short wCurrentRate;
-  unsigned short wRTSThreshold;
-  unsigned short wFragmentationThreshold;
-  unsigned char byShortRetryLimit;
-  unsigned char byLongRetryLimit;
-  CARD_OP_MODE                eOPMode;
-  unsigned char byOpMode;
-  bool bBSSIDFilter;
-  unsigned short wMaxTransmitMSDULifetime;
-  unsigned char abyBSSID[ETH_ALEN];
-  unsigned char abyDesireBSSID[ETH_ALEN];
-  unsigned short wCTSDuration;      
-  unsigned short wACKDuration;      
-  unsigned short wRTSTransmitLen;   
-  unsigned char byRTSServiceField; 
-  unsigned char byRTSSignalField;  
-  
-  unsigned long dwMaxReceiveLifetime;      
-  
-  bool bCCK;
-  bool bEncryptionEnable;
-  bool bLongHeader;
-  bool bShortSlotTime;
-  bool bProtectMode;
-  bool bNonERPPresent;
-  bool bBarkerPreambleMd;
-  
-  unsigned char byERPFlag;
-  unsigned short wUseProtectCntDown;
-  
-  bool bRadioControlOff;
-  bool bRadioOff;
-  bool bEnablePSMode;
-  unsigned short wListenInterval;
-  bool bPWBitOn;
-  WMAC_POWER_MODE         ePSMode;
-  
-  
-  unsigned char byRadioCtl;
-  unsigned char byGPIO;
-  bool bHWRadioOff;
-  bool bPrvActive4RadioOFF;
-  bool bGPIOBlockRead;
-  
-  unsigned short wSeqCounter;
-  unsigned short wBCNBufLen;
-  bool bBeaconBufReady;
-  bool bBeaconSent;
-  bool bIsBeaconBufReadySet;
-  unsigned int  cbBeaconBufReadySetCnt;
-  bool bFixRate;
-  unsigned char byCurrentCh;
-  unsigned int  uScanTime;
-  
-  CMD_STATE               eCommandState;
-  
-  CMD_CODE                eCommand;
-  bool bBeaconTx;
-  
-  bool bStopBeacon;
-  bool bStopDataPkt;
-  bool bStopTx0Pkt;
-  unsigned int  uAutoReConnectTime;
-  
-  
-  CMD_ITEM                eCmdQueue[CMD_Q_SIZE];
-  unsigned int  uCmdDequeueIdx;
-  unsigned int  uCmdEnqueueIdx;
-  unsigned int  cbFreeCmdQueue;
-  bool bCmdRunning;
-  bool bCmdClear;
-  
-  
-  
-  bool bRoaming;
-  unsigned char abyIPAddr[4];
-  
-  unsigned long ulTxPower;
-  NDIS_802_11_WEP_STATUS  eEncryptionStatus;
-  bool bTransmitKey;
-  NDIS_802_11_WEP_STATUS  eOldEncryptionStatus;
-  
-  SKeyManagement          sKey;
-  unsigned long dwIVCounter;
-  
-  QWORD                   qwPacketNumber;
-  unsigned int  uCurrentWEPMode;
-  
-  RC4Ext                  SBox;
-  unsigned char abyPRNG[WLAN_WEPMAX_KEYLEN + 3];
-  unsigned char byKeyIndex;
-  unsigned int  uKeyLength;
-  unsigned char abyKey[WLAN_WEP232_KEYLEN];
-  
-  bool bAES;
-  unsigned char byCntMeasure;
-  
-  unsigned int  uAssocCount;
-  bool bMoreData;
-  
-  bool bGrpAckPolicy;
-  
-  bool bAssocInfoSet;
-  
-  
-  unsigned char byAutoFBCtrl;
-  
-  bool bTxMICFail;
-  bool bRxMICFail;
-  
-  
-  unsigned int  uRATEIdx;
-  
-  
-  bool bUpdateBBVGA;
-  unsigned int  uBBVGADiffCount;
-  unsigned char byBBVGANew;
-  unsigned char byBBVGACurrent;
-  unsigned char abyBBVGA[BB_VGA_LEVEL];
-  long                    ldBmThreshold[BB_VGA_LEVEL];
-  
-  unsigned char byBBPreEDRSSI;
-  unsigned char byBBPreEDIndex;
-  
-  
-  bool bRadioCmd;
-  unsigned long dwDiagRefCount;
-  
-  unsigned char byFOETuning;
-  
-  
-  unsigned char byAutoPwrTunning;
-  short                   sPSetPointCCK;
-  short                   sPSetPointOFDMG;
-  short                   sPSetPointOFDMA;
-  long                    lPFormulaOffset;
-  short                   sPThreshold;
-  char                    cAdjustStep;
-  char                    cMinTxAGC;
-  
-  unsigned char byCCKPwr;
-  unsigned char byOFDMPwrG;
-  unsigned char byCurPwr;
-  char   byCurPwrdBm;
-  unsigned char abyCCKPwrTbl[CB_MAX_CHANNEL_24G + 1];
-  unsigned char abyOFDMPwrTbl[CB_MAX_CHANNEL + 1];
-  char  abyCCKDefaultPwr[CB_MAX_CHANNEL_24G + 1];
-  char  abyOFDMDefaultPwr[CB_MAX_CHANNEL + 1];
-  char  abyRegPwr[CB_MAX_CHANNEL + 1];
-  char  abyLocalPwr[CB_MAX_CHANNEL + 1];
-  
-  
-  unsigned char byBBCR4d;
-  unsigned char byBBCRc9;
-  unsigned char byBBCR88;
-  unsigned char byBBCR09;
-  
-  struct timer_list       sTimerCommand;
-  #ifdef TxInSleep
-  struct timer_list       sTimerTxData;
-  unsigned long nTxDataTimeCout;
-  bool fTxDataInSleep;
-  bool IsTxDataTrigger;
-  #endif
-  
-  #ifdef WPA_SM_Transtatus
-  bool fWPA_Authened;          
-  #endif
-  unsigned char byReAssocCount;  
-  unsigned char byLinkWaitCount;
-  
-  
-  unsigned char abyNodeName[17];
-  
-  bool bDiversityRegCtlON;
-  bool bDiversityEnable;
-  unsigned long ulDiversityNValue;
-  unsigned long ulDiversityMValue;
-  unsigned char byTMax;
-  unsigned char byTMax2;
-  unsigned char byTMax3;
-  unsigned long ulSQ3TH;
-  
-  unsigned long uDiversityCnt;
-  unsigned char byAntennaState;
-  unsigned long ulRatio_State0;
-  unsigned long ulRatio_State1;
-  
-  struct timer_list           TimerSQ3Tmax1;
-  struct timer_list           TimerSQ3Tmax2;
-  struct timer_list           TimerSQ3Tmax3;
-  
-  
-  unsigned long uNumSQ3[MAX_RATE];
-  unsigned short wAntDiversityMaxRate;
-  
-  
-  SEthernetHeader         sTxEthHeader;
-  SEthernetHeader         sRxEthHeader;
-  unsigned char abyBroadcastAddr[ETH_ALEN];
-  unsigned char abySNAP_RFC1042[ETH_ALEN];
-  unsigned char abySNAP_Bridgetunnel[ETH_ALEN];
-  unsigned char abyEEPROM[EEP_MAX_CONTEXT_SIZE]; 
-  SPMKID                  gsPMKID;
-  SPMKIDCandidateEvent    gsPMKIDCandidate;
-  
-  
-  bool b11hEnable;
-  unsigned char abyCountryCode[3];
-  unsigned int  uNumOfMeasureEIDs;
-  PWLAN_IE_MEASURE_REQ    pCurrMeasureEID;
-  bool bMeasureInProgress;
-  unsigned char byOrgChannel;
-  unsigned char byOrgRCR;
-  unsigned long dwOrgMAR0;
-  unsigned long dwOrgMAR4;
-  unsigned char byBasicMap;
-  unsigned char byCCAFraction;
-  unsigned char abyRPIs[8];
-  unsigned long dwRPIs[8];
-  bool bChannelSwitch;
-  unsigned char byNewChannel;
-  unsigned char byChannelSwitchCount;
-  bool bQuietEnable;
-  bool bEnableFirstQuiet;
-  unsigned char byQuietStartCount;
-  unsigned int  uQuietEnqueue;
-  unsigned long dwCurrentQuietEndTime;
-  SQuietControl           sQuiet[MAX_QUIET_COUNT];
-  bool bCountryInfo5G;
-  bool bCountryInfo24G;
-  
-  unsigned short wBeaconInterval;
-  
-  struct net_device    *   wpadev;
-  bool bWPADEVUp;
-  struct sk_buff     *     skb;
-  #ifdef WPA_SUPPLICANT_DRIVER_WEXT_SUPPORT
-  /*
-          bool bwextstep0;
-          bool bwextstep1;
-          bool bwextstep2;
-          bool bwextstep3;
-          */
-  unsigned int  bwextcount;
-  bool bWPASuppWextEnabled;
-  #endif
-  
-  #ifdef HOSTAP
-  bool bEnableHostapd;
-  bool bEnable8021x;
-  bool bEnableHostWEP;
-  struct net_device    *   apdev;
-  int (*tx_80211) (struct sk_buff * skb, struct net_device * dev);
-  #endif
-  unsigned int  uChannel;
-  bool bMACSuspend;
-  
-  struct iw_statistics  wstats;  
-  bool bCommit;
-  
+    u32                         rx_bytes;
+
+    unsigned char byLocalID;
+    unsigned char byRFType;
+
+    unsigned char byMaxPwrLevel;
+    unsigned char byZoneType;
+    bool bZoneRegExist;
+   unsigned char byOriginalZonetype;
+    unsigned char abyMacContext[MAC_MAX_CONTEXT_REG];
+    bool bLinkPass;         
+    unsigned char abyCurrentNetAddr[ETH_ALEN];
+
+    SStatCounter                scStatistic;
+    SDot11Counters              s802_11Counter;
+
+
+    PSMgmtObject                pMgmt;
+    SMgmtObject                 sMgmtObj;
+
+    unsigned int	uCurrRSSI;
+    unsigned char byCurrSQ;
+
+    unsigned long dwTxAntennaSel;
+    unsigned long dwRxAntennaSel;
+    unsigned char byAntennaCount;
+    unsigned char byRxAntennaMode;
+    unsigned char byTxAntennaMode;
+    bool bTxRxAntInv;
+
+    unsigned char *pbyTmpBuff;
+    unsigned int	uSIFS;   
+    unsigned int	uDIFS;   
+    unsigned int	uEIFS;   
+    unsigned int	uSlot;   
+    unsigned int	uCwMin;  
+    unsigned int	uCwMax;  
+    unsigned char bySIFS;
+    unsigned char byDIFS;
+    unsigned char byEIFS;
+    unsigned char bySlot;
+    unsigned char byCWMaxMin;
+    CARD_PHY_TYPE               eCurrentPHYType;
+
+
+    VIA_BB_TYPE                 byBBType;
+    VIA_PKT_TYPE                byPacketType;
+    unsigned short wBasicRate;
+    unsigned char byACKRate;
+    unsigned char byTopOFDMBasicRate;
+    unsigned char byTopCCKBasicRate;
+
+    unsigned char byMinChannel;
+    unsigned char byMaxChannel;
+    unsigned int	uConnectionRate;
+
+    unsigned char byPreambleType;
+    unsigned char byShortPreamble;
+
+    unsigned short wCurrentRate;
+    unsigned short wRTSThreshold;
+    unsigned short wFragmentationThreshold;
+    unsigned char byShortRetryLimit;
+    unsigned char byLongRetryLimit;
+    CARD_OP_MODE                eOPMode;
+    unsigned char byOpMode;
+    bool bBSSIDFilter;
+    unsigned short wMaxTransmitMSDULifetime;
+    unsigned char abyBSSID[ETH_ALEN];
+    unsigned char abyDesireBSSID[ETH_ALEN];
+    unsigned short wCTSDuration;      
+    unsigned short wACKDuration;      
+    unsigned short wRTSTransmitLen;   
+    unsigned char byRTSServiceField; 
+    unsigned char byRTSSignalField;  
+
+    unsigned long dwMaxReceiveLifetime;      
+
+    bool bCCK;
+    bool bEncryptionEnable;
+    bool bLongHeader;
+    bool bShortSlotTime;
+    bool bProtectMode;
+    bool bNonERPPresent;
+    bool bBarkerPreambleMd;
+
+    unsigned char byERPFlag;
+    unsigned short wUseProtectCntDown;
+
+    bool bRadioControlOff;
+    bool bRadioOff;
+    bool bEnablePSMode;
+    unsigned short wListenInterval;
+    bool bPWBitOn;
+    WMAC_POWER_MODE         ePSMode;
+
+
+    unsigned char byRadioCtl;
+    unsigned char byGPIO;
+    bool bHWRadioOff;
+    bool bPrvActive4RadioOFF;
+    bool bGPIOBlockRead;
+
+    unsigned short wSeqCounter;
+    unsigned short wBCNBufLen;
+    bool bBeaconBufReady;
+    bool bBeaconSent;
+    bool bIsBeaconBufReadySet;
+    unsigned int	cbBeaconBufReadySetCnt;
+    bool bFixRate;
+    unsigned char byCurrentCh;
+    unsigned int	uScanTime;
+
+    CMD_STATE               eCommandState;
+
+    CMD_CODE                eCommand;
+    bool bBeaconTx;
+
+    bool bStopBeacon;
+    bool bStopDataPkt;
+    bool bStopTx0Pkt;
+    unsigned int	uAutoReConnectTime;
+
+
+    CMD_ITEM                eCmdQueue[CMD_Q_SIZE];
+    unsigned int	uCmdDequeueIdx;
+    unsigned int	uCmdEnqueueIdx;
+    unsigned int	cbFreeCmdQueue;
+    bool bCmdRunning;
+    bool bCmdClear;
+
+
+
+    bool bRoaming;
+    unsigned char abyIPAddr[4];
+
+    unsigned long ulTxPower;
+    NDIS_802_11_WEP_STATUS  eEncryptionStatus;
+    bool bTransmitKey;
+    NDIS_802_11_WEP_STATUS  eOldEncryptionStatus;
+
+    SKeyManagement          sKey;
+    unsigned long dwIVCounter;
+
+    QWORD                   qwPacketNumber;
+    unsigned int	uCurrentWEPMode;
+
+    RC4Ext                  SBox;
+    unsigned char abyPRNG[WLAN_WEPMAX_KEYLEN+3];
+    unsigned char byKeyIndex;
+    unsigned int	uKeyLength;
+    unsigned char abyKey[WLAN_WEP232_KEYLEN];
+
+    bool bAES;
+    unsigned char byCntMeasure;
+
+    unsigned int	uAssocCount;
+    bool bMoreData;
+
+    bool bGrpAckPolicy;
+
+    bool bAssocInfoSet;
+
+
+    unsigned char byAutoFBCtrl;
+
+    bool bTxMICFail;
+    bool bRxMICFail;
+
+
+    unsigned int	uRATEIdx;
+
+
+    bool bUpdateBBVGA;
+    unsigned int	uBBVGADiffCount;
+    unsigned char byBBVGANew;
+    unsigned char byBBVGACurrent;
+    unsigned char abyBBVGA[BB_VGA_LEVEL];
+    long                    ldBmThreshold[BB_VGA_LEVEL];
+
+    unsigned char byBBPreEDRSSI;
+    unsigned char byBBPreEDIndex;
+
+
+    bool bRadioCmd;
+    unsigned long dwDiagRefCount;
+
+    unsigned char byFOETuning;
+
+
+    unsigned char byAutoPwrTunning;
+    short                   sPSetPointCCK;
+    short                   sPSetPointOFDMG;
+    short                   sPSetPointOFDMA;
+    long                    lPFormulaOffset;
+    short                   sPThreshold;
+    char                    cAdjustStep;
+    char                    cMinTxAGC;
+
+    unsigned char byCCKPwr;
+    unsigned char byOFDMPwrG;
+    unsigned char byCurPwr;
+    char	 byCurPwrdBm;
+    unsigned char abyCCKPwrTbl[CB_MAX_CHANNEL_24G+1];
+    unsigned char abyOFDMPwrTbl[CB_MAX_CHANNEL+1];
+    char	abyCCKDefaultPwr[CB_MAX_CHANNEL_24G+1];
+    char	abyOFDMDefaultPwr[CB_MAX_CHANNEL+1];
+    char	abyRegPwr[CB_MAX_CHANNEL+1];
+    char	abyLocalPwr[CB_MAX_CHANNEL+1];
+
+
+    unsigned char byBBCR4d;
+    unsigned char byBBCRc9;
+    unsigned char byBBCR88;
+    unsigned char byBBCR09;
+
+    struct timer_list       sTimerCommand;
+#ifdef TxInSleep
+     struct timer_list       sTimerTxData;
+     unsigned long nTxDataTimeCout;
+     bool fTxDataInSleep;
+     bool IsTxDataTrigger;
+#endif
+
+#ifdef WPA_SM_Transtatus
+    bool fWPA_Authened;          
+#endif
+    unsigned char byReAssocCount;  
+    unsigned char byLinkWaitCount;
+
+
+    unsigned char abyNodeName[17];
+
+    bool bDiversityRegCtlON;
+    bool bDiversityEnable;
+    unsigned long ulDiversityNValue;
+    unsigned long ulDiversityMValue;
+    unsigned char byTMax;
+    unsigned char byTMax2;
+    unsigned char byTMax3;
+    unsigned long ulSQ3TH;
+
+    unsigned long uDiversityCnt;
+    unsigned char byAntennaState;
+    unsigned long ulRatio_State0;
+    unsigned long ulRatio_State1;
+
+    struct timer_list           TimerSQ3Tmax1;
+    struct timer_list           TimerSQ3Tmax2;
+    struct timer_list           TimerSQ3Tmax3;
+
+
+    unsigned long uNumSQ3[MAX_RATE];
+    unsigned short wAntDiversityMaxRate;
+
+
+    SEthernetHeader         sTxEthHeader;
+    SEthernetHeader         sRxEthHeader;
+    unsigned char abyBroadcastAddr[ETH_ALEN];
+    unsigned char abySNAP_RFC1042[ETH_ALEN];
+    unsigned char abySNAP_Bridgetunnel[ETH_ALEN];
+     unsigned char abyEEPROM[EEP_MAX_CONTEXT_SIZE]; 
+    SPMKID                  gsPMKID;
+    SPMKIDCandidateEvent    gsPMKIDCandidate;
+
+
+    bool b11hEnable;
+    unsigned char abyCountryCode[3];
+    unsigned int	uNumOfMeasureEIDs;
+    PWLAN_IE_MEASURE_REQ    pCurrMeasureEID;
+    bool bMeasureInProgress;
+    unsigned char byOrgChannel;
+    unsigned char byOrgRCR;
+    unsigned long dwOrgMAR0;
+    unsigned long dwOrgMAR4;
+    unsigned char byBasicMap;
+    unsigned char byCCAFraction;
+    unsigned char abyRPIs[8];
+    unsigned long dwRPIs[8];
+    bool bChannelSwitch;
+    unsigned char byNewChannel;
+    unsigned char byChannelSwitchCount;
+    bool bQuietEnable;
+    bool bEnableFirstQuiet;
+    unsigned char byQuietStartCount;
+    unsigned int	uQuietEnqueue;
+    unsigned long dwCurrentQuietEndTime;
+    SQuietControl           sQuiet[MAX_QUIET_COUNT];
+    bool bCountryInfo5G;
+    bool bCountryInfo24G;
+
+    unsigned short wBeaconInterval;
+
+	struct net_device       *wpadev;
+	bool bWPADEVUp;
+    struct sk_buff          *skb;
+#ifdef WPA_SUPPLICANT_DRIVER_WEXT_SUPPORT
+/*
+        bool bwextstep0;
+        bool bwextstep1;
+        bool bwextstep2;
+        bool bwextstep3;
+        */
+        unsigned int	bwextcount;
+        bool bWPASuppWextEnabled;
+#endif
+
+#ifdef HOSTAP
+	bool bEnableHostapd;
+	bool bEnable8021x;
+	bool bEnableHostWEP;
+	struct net_device       *apdev;
+	int (*tx_80211)(struct sk_buff *skb, struct net_device *dev);
+#endif
+    unsigned int	uChannel;
+    bool bMACSuspend;
+
+	struct iw_statistics	wstats;	
+    bool bCommit;
+
 } DEVICE_INFO, *PSDevice;
 
 
 
 
-inline  static void   EnQueue (PSDevice pDevice, PSRxMgmtPacket  pRxMgmtPacket)
+ inline  static	void   EnQueue (PSDevice pDevice,PSRxMgmtPacket  pRxMgmtPacket)
 {
-  if ( (pDevice->rxManeQueue.tail + 1) % NUM == pDevice->rxManeQueue.head)
-  {
-    return ;
-  }
-  else
-  {
-    pDevice->rxManeQueue.tail = (pDevice->rxManeQueue.tail + 1) % NUM;
-    pDevice->rxManeQueue.Q[pDevice->rxManeQueue.tail] = pRxMgmtPacket;
-    pDevice->rxManeQueue.packet_num++;
-  }
+	if ((pDevice->rxManeQueue.tail+1) % NUM == pDevice->rxManeQueue.head)
+	{
+		return ;
+	}
+	else
+	{
+		pDevice->rxManeQueue.tail = (pDevice->rxManeQueue.tail+1)% NUM;
+		pDevice->rxManeQueue.Q[pDevice->rxManeQueue.tail] = pRxMgmtPacket;
+		pDevice->rxManeQueue.packet_num++;
+	}
 }
 
 
 
 
-inline  static  PSRxMgmtPacket DeQueue (PSDevice pDevice)
+	inline  static  PSRxMgmtPacket DeQueue (PSDevice pDevice)
 {
-  PSRxMgmtPacket  pRxMgmtPacket;
-  if (pDevice->rxManeQueue.tail == pDevice->rxManeQueue.head)
-  {
-    printk ("Queue is Empty\n");
-    return NULL;
-  }
-  else
-  {
-    int x;
-    pDevice->rxManeQueue.head = (pDevice->rxManeQueue.head + 1) % NUM;
-    x = pDevice->rxManeQueue.head;
-    pRxMgmtPacket = pDevice->rxManeQueue.Q[x];
-    pDevice->rxManeQueue.packet_num--;
-    return pRxMgmtPacket;
-  }
+	PSRxMgmtPacket  pRxMgmtPacket;
+	if (pDevice->rxManeQueue.tail == pDevice->rxManeQueue.head)
+	{
+		printk("Queue is Empty\n");
+		return NULL;
+	}
+	else
+	{
+		int	x;
+		pDevice->rxManeQueue.head = (pDevice->rxManeQueue.head+1)%NUM;
+		x = pDevice->rxManeQueue.head;
+		pRxMgmtPacket = pDevice->rxManeQueue.Q[x];
+		pDevice->rxManeQueue.packet_num--;
+		return pRxMgmtPacket;
+	}
 }
 
-void  InitRxManagementQueue (PSDevice   pDevice);
+void	InitRxManagementQueue(PSDevice   pDevice);
 
 
 
@@ -799,49 +799,49 @@ void  InitRxManagementQueue (PSDevice   pDevice);
 
 
 
-inline static bool device_get_ip (PSDevice pInfo) {
-  struct in_device * in_dev = (struct in_device *) pInfo->dev->ip_ptr;
-  struct in_ifaddr * ifa;
-  
-  if (in_dev != NULL) {
-    ifa = (struct in_ifaddr *) in_dev->ifa_list;
-    if (ifa != NULL) {
-      memcpy (pInfo->abyIPAddr, &ifa->ifa_address, 4);
-      return true;
+inline static bool device_get_ip(PSDevice pInfo) {
+    struct in_device* in_dev=(struct in_device*) pInfo->dev->ip_ptr;
+    struct in_ifaddr* ifa;
+
+    if (in_dev!=NULL) {
+        ifa=(struct in_ifaddr*) in_dev->ifa_list;
+        if (ifa!=NULL) {
+            memcpy(pInfo->abyIPAddr,&ifa->ifa_address,4);
+            return true;
+        }
     }
-  }
-  return false;
+    return false;
 }
 
 
 
-static inline PDEVICE_RD_INFO alloc_rd_info (void) {
-  PDEVICE_RD_INFO  ptr;
-  ptr = (PDEVICE_RD_INFO) kmalloc ( (int) sizeof (DEVICE_RD_INFO), (int) GFP_ATOMIC);
-  if (ptr == NULL)
-  { return NULL; }
-  else {
-    memset (ptr, 0, sizeof (DEVICE_RD_INFO) );
-    return ptr;
-  }
+static inline PDEVICE_RD_INFO alloc_rd_info(void) {
+    PDEVICE_RD_INFO  ptr;
+    ptr = (PDEVICE_RD_INFO)kmalloc((int)sizeof(DEVICE_RD_INFO), (int)GFP_ATOMIC);
+    if (ptr == NULL)
+        return NULL;
+    else {
+        memset(ptr,0,sizeof(DEVICE_RD_INFO));
+        return ptr;
+    }
 }
 
-static inline PDEVICE_TD_INFO alloc_td_info (void) {
-  PDEVICE_TD_INFO  ptr;
-  ptr = (PDEVICE_TD_INFO) kmalloc ( (int) sizeof (DEVICE_TD_INFO), (int) GFP_ATOMIC);
-  if (ptr == NULL)
-  { return NULL; }
-  else {
-    memset (ptr, 0, sizeof (DEVICE_TD_INFO) );
-    return ptr;
-  }
+static inline PDEVICE_TD_INFO alloc_td_info(void) {
+    PDEVICE_TD_INFO  ptr;
+    ptr = (PDEVICE_TD_INFO)kmalloc((int)sizeof(DEVICE_TD_INFO), (int)GFP_ATOMIC);
+    if (ptr == NULL)
+        return NULL;
+    else {
+        memset(ptr,0,sizeof(DEVICE_TD_INFO));
+        return ptr;
+    }
 }
 
 /*---------------------  Export Functions  --------------------------*/
 
-bool device_dma0_xmit (PSDevice pDevice, struct sk_buff * skb, unsigned int uNodeIndex);
-bool device_alloc_frag_buf (PSDevice pDevice, PSDeFragControlBlock pDeF);
-int Config_FileOperation (PSDevice pDevice, bool fwrite, unsigned char * Parameter);
+bool device_dma0_xmit(PSDevice pDevice, struct sk_buff *skb, unsigned int uNodeIndex);
+bool device_alloc_frag_buf(PSDevice pDevice, PSDeFragControlBlock pDeF);
+int Config_FileOperation(PSDevice pDevice, bool fwrite, unsigned char *Parameter);
 #endif
 
 

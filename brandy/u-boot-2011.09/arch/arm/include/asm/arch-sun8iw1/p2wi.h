@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -27,33 +27,33 @@
 
 #include "cpu.h"
 
-#define P2WI_SCK      (2000000)
-#define P2WI_SDAODLY    (1)
+#define P2WI_SCK			(2000000)
+#define P2WI_SDAODLY		(1)
 
 #define PMU_TRANS_BYTE_MAX  (8)
-#define P2WI_REG_BASE     (SUNXI_P2WI_BASE)
-#define P2WI_REG_CTRL     (P2WI_REG_BASE + 0x00)
-#define P2WI_REG_CCR      (P2WI_REG_BASE + 0x04)
-#define P2WI_REG_INTE     (P2WI_REG_BASE + 0x08)
-#define P2WI_REG_STAT     (P2WI_REG_BASE + 0x0c)
-#define P2WI_REG_DADDR0     (P2WI_REG_BASE + 0x10)
-#define P2WI_REG_DADDR1     (P2WI_REG_BASE + 0x14)
-#define P2WI_REG_DLEN     (P2WI_REG_BASE + 0x18)
-#define P2WI_REG_DATA0      (P2WI_REG_BASE + 0x1c)
-#define P2WI_REG_DATA1      (P2WI_REG_BASE + 0x20)
-#define P2WI_REG_LCR      (P2WI_REG_BASE + 0x24)
-#define P2WI_REG_PMCR     (P2WI_REG_BASE + 0x28)
+#define	P2WI_REG_BASE			(SUNXI_P2WI_BASE)
+#define P2WI_REG_CTRL			(P2WI_REG_BASE + 0x00)
+#define P2WI_REG_CCR			(P2WI_REG_BASE + 0x04)
+#define P2WI_REG_INTE			(P2WI_REG_BASE + 0x08)
+#define P2WI_REG_STAT			(P2WI_REG_BASE + 0x0c)
+#define P2WI_REG_DADDR0			(P2WI_REG_BASE + 0x10)
+#define P2WI_REG_DADDR1			(P2WI_REG_BASE + 0x14)
+#define P2WI_REG_DLEN			(P2WI_REG_BASE + 0x18)
+#define P2WI_REG_DATA0			(P2WI_REG_BASE + 0x1c)
+#define P2WI_REG_DATA1			(P2WI_REG_BASE + 0x20)
+#define P2WI_REG_LCR			(P2WI_REG_BASE + 0x24)
+#define P2WI_REG_PMCR			(P2WI_REG_BASE + 0x28)
 
-#define P2WI_SOFT_RST   (1U << 0)
-#define P2WI_GLB_INTEN    (1U << 1)
-#define P2WI_ABT_TRANS    (1U << 6)
-#define P2WI_START_TRANS  (1U << 7)
+#define P2WI_SOFT_RST		(1U << 0)
+#define P2WI_GLB_INTEN		(1U << 1)
+#define P2WI_ABT_TRANS		(1U << 6)
+#define P2WI_START_TRANS 	(1U << 7)
 
-#define P2WI_TOVER_INT    (1U << 0)
-#define P2WI_TERR_INT   (1U << 1)
-#define P2WI_LBSY_INT   (1U << 2)
+#define P2WI_TOVER_INT		(1U << 0)
+#define P2WI_TERR_INT		(1U << 1)
+#define P2WI_LBSY_INT		(1U << 2)
 
-#define P2WI_PMU_INIT   (1U << 31)
+#define P2WI_PMU_INIT		(1U << 31)
 
 
-#endif 
+#endif

@@ -7,6 +7,6 @@
 
 #include <asm/pci-bridge.h>
 
-extern void setup_grackle (struct pci_controller * hose);
+extern void setup_grackle(struct pci_controller *hose);
 #endif /* __KERNEL__ */
 #endif /* _ASM_POWERPC_GRACKLE_H */

@@ -11,7 +11,7 @@
 #include <asm/arch/cpu.h>
 #include <asm/arch/ccmu.h>
 
-static serial_hw_t * serial_ctrl_base = NULL;
+static serial_hw_t *serial_ctrl_base = NULL;
 /*
 ************************************************************************************************************
 *
@@ -28,40 +28,40 @@ static serial_hw_t * serial_ctrl_base = NULL;
 *
 ************************************************************************************************************
 */
-void sunxi_serial_init (int uart_port, void * gpio_cfg, int gpio_max)
+void sunxi_serial_init(int uart_port, void *gpio_cfg, int gpio_max)
 {
-  u32 reg, i;
-  u32 uart_clk;
-  
-  if ( (uart_port < 0) || (uart_port > 0) )
-  {
-    return;
-  }
-  reg = readl (CCM_APB1_GATE0_CTRL);
-  reg &= ~ (1 << (CCM_UART_PORT_OFFSET + uart_port) );
-  writel (reg, CCM_APB1_GATE0_CTRL);
-  for ( i = 0; i < 100; i++ );
-  reg |=  (1 << (CCM_UART_PORT_OFFSET + uart_port) );
-  writel (reg, CCM_APB1_GATE0_CTRL);
-  reg = readl (CCM_APB1_RST_REG0);
-  reg &= ~ (1 << (CCM_UART_PORT_OFFSET + uart_port) );
-  writel (reg, CCM_APB1_RST_REG0);
-  for ( i = 0; i < 100; i++ );
-  reg |=  (1 << (CCM_UART_PORT_OFFSET + uart_port) );
-  writel (reg, CCM_APB1_RST_REG0);
-  boot_set_gpio (gpio_cfg, gpio_max, 1);
-  serial_ctrl_base = (serial_hw_t *) (SUNXI_UART0_BASE + uart_port * CCM_UART_ADDR_OFFSET);
-  
-  serial_ctrl_base->mcr = 0x3;
-  uart_clk = (24000000 + 8 * UART_BAUD) / (16 * UART_BAUD);
-  serial_ctrl_base->lcr |= 0x80;
-  serial_ctrl_base->dlh = uart_clk >> 8;
-  serial_ctrl_base->dll = uart_clk & 0xff;
-  serial_ctrl_base->lcr &= ~0x80;
-  serial_ctrl_base->lcr = ( (PARITY & 0x03) << 3) | ( (STOP & 0x01) << 2) | (DLEN & 0x03);
-  serial_ctrl_base->fcr = 0x7;
-  
-  return;
+	u32 reg, i;
+	u32 uart_clk;
+
+	if( (uart_port < 0) ||(uart_port > 0) )
+	{
+		return;
+	}
+	reg = readl(CCM_APB1_GATE0_CTRL);
+	reg &= ~(1<<(CCM_UART_PORT_OFFSET + uart_port));
+	writel(reg, CCM_APB1_GATE0_CTRL);
+	for( i = 0; i < 100; i++ );
+	reg |=  (1<<(CCM_UART_PORT_OFFSET + uart_port));
+	writel(reg, CCM_APB1_GATE0_CTRL);
+	reg = readl(CCM_APB1_RST_REG0);
+	reg &= ~(1<<(CCM_UART_PORT_OFFSET + uart_port));
+	writel(reg, CCM_APB1_RST_REG0);
+	for( i = 0; i < 100; i++ );
+	reg |=  (1<<(CCM_UART_PORT_OFFSET + uart_port));
+	writel(reg, CCM_APB1_RST_REG0);
+	boot_set_gpio(gpio_cfg, gpio_max, 1);
+	serial_ctrl_base = (serial_hw_t *)(SUNXI_UART0_BASE + uart_port * CCM_UART_ADDR_OFFSET);
+
+	serial_ctrl_base->mcr = 0x3;
+	uart_clk = (24000000 + 8 * UART_BAUD)/(16 * UART_BAUD);
+	serial_ctrl_base->lcr |= 0x80;
+	serial_ctrl_base->dlh = uart_clk>>8;
+	serial_ctrl_base->dll = uart_clk&0xff;
+	serial_ctrl_base->lcr &= ~0x80;
+	serial_ctrl_base->lcr = ((PARITY&0x03)<<3) | ((STOP&0x01)<<2) | (DLEN&0x03);
+	serial_ctrl_base->fcr = 0x7;
+
+	return;
 }
 /*
 ************************************************************************************************************
@@ -81,8 +81,8 @@ void sunxi_serial_init (int uart_port, void * gpio_cfg, int gpio_max)
 */
 void sunxi_serial_putc (char c)
 {
-  while ( (serial_ctrl_base->lsr & ( 1 << 6 ) ) == 0);
-  serial_ctrl_base->thr = c;
+	while((serial_ctrl_base->lsr & ( 1 << 6 )) == 0);
+	serial_ctrl_base->thr = c;
 }
 /*
 ************************************************************************************************************
@@ -102,9 +102,9 @@ void sunxi_serial_putc (char c)
 */
 char sunxi_serial_getc (void)
 {
-  while ( (serial_ctrl_base->lsr & 1) == 0);
-  return serial_ctrl_base->rbr;
-  
+	while((serial_ctrl_base->lsr & 1) == 0);
+	return serial_ctrl_base->rbr;
+
 }
 /*
 ************************************************************************************************************
@@ -124,6 +124,6 @@ char sunxi_serial_getc (void)
 */
 int sunxi_serial_tstc (void)
 {
-  return serial_ctrl_base->lsr & 1;
+	return serial_ctrl_base->lsr & 1;
 }
 

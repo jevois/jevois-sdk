@@ -18,35 +18,35 @@
 #ifndef __ASSEMBLY__
 
 struct at91_matrix {
-  u32 mcfg[16];
-  u32 scfg[16];
-  u32 pras[16][2];
-  u32 mrcr;           /* 0x100 Master Remap Control */
-  u32 filler[3];
-  u32 tcmr;
-  u32 filler2;
-  u32 ddrmpr;
-  u32 filler3[3];
-  u32 ebicsa;
-  u32 filler4[47];
-  u32 wpmr;
-  u32 wpsr;
+	u32	mcfg[16];
+	u32	scfg[16];
+	u32	pras[16][2];
+	u32	mrcr;           /* 0x100 Master Remap Control */
+	u32	filler[3];
+	u32	tcmr;
+	u32	filler2;
+	u32	ddrmpr;
+	u32	filler3[3];
+	u32	ebicsa;
+	u32	filler4[47];
+	u32	wpmr;
+	u32	wpsr;
 };
 
 #endif /* __ASSEMBLY__ */
 
-#define AT91_MATRIX_ULBT_INFINITE (0 << 0)
-#define AT91_MATRIX_ULBT_SINGLE   (1 << 0)
-#define AT91_MATRIX_ULBT_FOUR   (2 << 0)
-#define AT91_MATRIX_ULBT_EIGHT    (3 << 0)
-#define AT91_MATRIX_ULBT_SIXTEEN  (4 << 0)
-#define AT91_MATRIX_ULBT_THIRTYTWO  (5 << 0)
-#define AT91_MATRIX_ULBT_SIXTYFOUR  (6 << 0)
-#define AT91_MATRIX_ULBT_128    (7 << 0)
+#define	AT91_MATRIX_ULBT_INFINITE	(0 << 0)
+#define	AT91_MATRIX_ULBT_SINGLE		(1 << 0)
+#define	AT91_MATRIX_ULBT_FOUR		(2 << 0)
+#define	AT91_MATRIX_ULBT_EIGHT		(3 << 0)
+#define	AT91_MATRIX_ULBT_SIXTEEN	(4 << 0)
+#define	AT91_MATRIX_ULBT_THIRTYTWO	(5 << 0)
+#define	AT91_MATRIX_ULBT_SIXTYFOUR	(6 << 0)
+#define	AT91_MATRIX_ULBT_128		(7 << 0)
 
-#define AT91_MATRIX_DEFMSTR_TYPE_NONE (0 << 16)
-#define AT91_MATRIX_DEFMSTR_TYPE_LAST (1 << 16)
-#define AT91_MATRIX_DEFMSTR_TYPE_FIXED  (2 << 16)
+#define	AT91_MATRIX_DEFMSTR_TYPE_NONE	(0 << 16)
+#define	AT91_MATRIX_DEFMSTR_TYPE_LAST	(1 << 16)
+#define	AT91_MATRIX_DEFMSTR_TYPE_FIXED	(2 << 16)
 #define AT91_MATRIX_FIXED_DEFMSTR_SHIFT 18
 
 #define AT91_MATRIX_M0PR_SHIFT          0

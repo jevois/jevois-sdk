@@ -12,9 +12,9 @@
 #include <linux/mbus.h>
 
 struct mvsdio_platform_data {
-  unsigned int clock;
-  int gpio_card_detect;
-  int gpio_write_protect;
+	unsigned int clock;
+	int gpio_card_detect;
+	int gpio_write_protect;
 };
 
 #endif

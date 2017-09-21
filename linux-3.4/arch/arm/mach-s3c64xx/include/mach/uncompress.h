@@ -2,8 +2,8 @@
  *
  * Copyright 2008 Openmoko, Inc.
  * Copyright 2008 Simtec Electronics
- *  http://armlinux.simtec.co.uk/
- *  Ben Dooks <ben@simtec.co.uk>
+ *	http://armlinux.simtec.co.uk/
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * S3C6400 - uncompress code
  *
@@ -18,11 +18,11 @@
 #include <mach/map.h>
 #include <plat/uncompress.h>
 
-static void arch_detect_cpu (void)
+static void arch_detect_cpu(void)
 {
-  /* we do not need to do any cpu detection here at the moment. */
-  fifo_mask = S3C2440_UFSTAT_TXMASK;
-  fifo_max = 63 << S3C2440_UFSTAT_TXSHIFT;
+	/* we do not need to do any cpu detection here at the moment. */
+	fifo_mask = S3C2440_UFSTAT_TXMASK;
+	fifo_max = 63 << S3C2440_UFSTAT_TXSHIFT;
 }
 
 #endif /* __ASM_ARCH_UNCOMPRESS_H */

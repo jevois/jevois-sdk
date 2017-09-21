@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -25,58 +25,58 @@
 #ifndef __CONFIG_H
 #define __CONFIG_H
 
-#define MV_VERSION  "v0.2.0"
+#define MV_VERSION	"v0.2.0"
 
 /* LED0 = Power , LED1 = Error , LED2-5 = error code, LED6-7=00 -->PPCBoot error */
-#define ERR_NONE    0
-#define ERR_ENV     1
-#define ERR_BOOTM_BADMAGIC  2
-#define ERR_BOOTM_BADCRC  3
-#define ERR_BOOTM_GUNZIP  4
-#define ERR_BOOTP_TIMEOUT 5
-#define ERR_DHCP    6
-#define ERR_TFTP    7
-#define ERR_NOLAN   8
-#define ERR_LANDRV    9
+#define ERR_NONE		0
+#define ERR_ENV			1
+#define ERR_BOOTM_BADMAGIC	2
+#define ERR_BOOTM_BADCRC	3
+#define ERR_BOOTM_GUNZIP	4
+#define ERR_BOOTP_TIMEOUT	5
+#define ERR_DHCP		6
+#define ERR_TFTP		7
+#define ERR_NOLAN		8
+#define ERR_LANDRV		9
 
-#define CONFIG_BOARD_TYPES  1
-#define MVBLUE_BOARD_BOX  1
-#define MVBLUE_BOARD_LYNX 2
+#define CONFIG_BOARD_TYPES	1
+#define MVBLUE_BOARD_BOX	1
+#define MVBLUE_BOARD_LYNX	2
 
-#define CONFIG_SYS_TEXT_BASE  0xFFF00000
-#define CONFIG_SYS_LDSCRIPT "board/mvblue/u-boot.lds"
+#define	CONFIG_SYS_TEXT_BASE	0xFFF00000
+#define CONFIG_SYS_LDSCRIPT	"board/mvblue/u-boot.lds"
 
 #if 0
-#define ERR_LED(code) do { if (code) \
-      *(volatile char *)(0xff000003) = ( 3 | (code<<4) ) & 0xf3; \
-    else \
-      *(volatile char *)(0xff000003) = ( 1 ); \
-  } while(0)
+#define ERR_LED(code)	do { if (code) \
+		*(volatile char *)(0xff000003) = ( 3 | (code<<4) ) & 0xf3; \
+	else \
+		*(volatile char *)(0xff000003) = ( 1 ); \
+} while(0)
 #else
 #define ERR_LED(code)
 #endif
 
-#define CONFIG_MPC824X    1
-#define CONFIG_MPC8245    1
-#define CONFIG_MVBLUE   1
+#define CONFIG_MPC824X		1
+#define CONFIG_MPC8245		1
+#define CONFIG_MVBLUE		1
 
-#define CONFIG_CLOCKS_IN_MHZ  1
+#define CONFIG_CLOCKS_IN_MHZ	1
 
-#define CONFIG_BOARD_TYPES  1
+#define CONFIG_BOARD_TYPES	1
 
-#define CONFIG_CONS_INDEX 1
-#define CONFIG_BAUDRATE   115200
-#define CONFIG_SYS_BAUDRATE_TABLE { 9600, 19200, 38400, 57600, 115200 }
+#define CONFIG_CONS_INDEX	1
+#define CONFIG_BAUDRATE		115200
+#define CONFIG_SYS_BAUDRATE_TABLE	{ 9600, 19200, 38400, 57600, 115200 }
 
-#define CONFIG_BOOTDELAY  3
-#define CONFIG_BOOT_RETRY_TIME  -1
+#define CONFIG_BOOTDELAY	3
+#define CONFIG_BOOT_RETRY_TIME	-1
 
 #define CONFIG_AUTOBOOT_KEYED
-#define CONFIG_AUTOBOOT_PROMPT    \
-  "autoboot in %d seconds (stop with 's')...\n", bootdelay
-#define CONFIG_AUTOBOOT_STOP_STR  "s"
+#define CONFIG_AUTOBOOT_PROMPT		\
+	"autoboot in %d seconds (stop with 's')...\n", bootdelay
+#define CONFIG_AUTOBOOT_STOP_STR	"s"
 #define CONFIG_ZERO_BOOTDELAY_CHECK
-#define CONFIG_RESET_TO_RETRY   60
+#define CONFIG_RESET_TO_RETRY		60
 
 
 /*
@@ -119,33 +119,33 @@
 /*
  * Miscellaneous configurable options
  */
-#define CONFIG_SYS_LONGHELP     /* undef to save memory   */
-#define CONFIG_SYS_PROMPT "=> "   /* Monitor Command Prompt */
-#define CONFIG_SYS_CBSIZE 256   /* Console I/O Buffer Size  */
+#define CONFIG_SYS_LONGHELP			/* undef to save memory		*/
+#define CONFIG_SYS_PROMPT	"=> "		/* Monitor Command Prompt	*/
+#define CONFIG_SYS_CBSIZE	256		/* Console I/O Buffer Size	*/
 
-#define CONFIG_SYS_PBSIZE (CONFIG_SYS_CBSIZE + sizeof(CONFIG_SYS_PROMPT) + 16)
-#define CONFIG_SYS_MAXARGS  16    /* Max number of command args */
-#define CONFIG_SYS_BARGSIZE CONFIG_SYS_CBSIZE /* Boot Argument Buffer Size  */
-#define CONFIG_SYS_LOAD_ADDR  0x00100000  /* Default load address     */
+#define CONFIG_SYS_PBSIZE	(CONFIG_SYS_CBSIZE + sizeof(CONFIG_SYS_PROMPT) + 16)
+#define CONFIG_SYS_MAXARGS	16		/* Max number of command args	*/
+#define CONFIG_SYS_BARGSIZE	CONFIG_SYS_CBSIZE	/* Boot Argument Buffer Size	*/
+#define CONFIG_SYS_LOAD_ADDR	0x00100000	/* Default load address			*/
 
-#define CONFIG_BOOTCOMMAND  "run nfsboot"
-#define CONFIG_BOOTARGS     "root=/dev/mtdblock5 ro rootfstype=jffs2"
+#define CONFIG_BOOTCOMMAND	"run nfsboot"
+#define CONFIG_BOOTARGS			"root=/dev/mtdblock5 ro rootfstype=jffs2"
 
-#define CONFIG_NFSBOOTCOMMAND "bootp; run nfsargs addcons;bootm"
+#define CONFIG_NFSBOOTCOMMAND	"bootp; run nfsargs addcons;bootm"
 
-#define CONFIG_EXTRA_ENV_SETTINGS     \
-  "console_nr=0\0"        \
-  "dhcp_client_id=mvBOX-XP\0"       \
-  "dhcp_vendor-class-identifier=mvBOX\0"    \
-  "adminboot=setenv bootargs root=/dev/mtdblock5 rw rootfstype=jffs2;run addcons;bootm ffc00000\0"  \
-  "flashboot=setenv bootargs root=/dev/mtdblock5 ro rootfstype=jffs2;run addcons;bootm ffc00000\0"  \
-  "safeboot=setenv bootargs root=/dev/mtdblock2 rw rootfstype=cramfs;run addcons;bootm ffc00000\0"  \
-  "hdboot=setenv bootargs root=/dev/hda1;run addcons;bootm ffc00000\0"  \
-  "nfsargs=setenv bootargs root=/dev/nfs rw nfsroot=${serverip}:${rootpath} " \
-  "ip=${ipaddr}:${serverip}:${gatewayip}:${netmask}:${hostname}::off\0" \
-  "addcons=setenv bootargs ${bootargs} console=ttyS${console_nr},${baudrate}N8\0" \
-  "mv_version=" MV_VERSION "\0" \
-  "bootretry=30\0"
+#define CONFIG_EXTRA_ENV_SETTINGS			\
+	"console_nr=0\0"				\
+    "dhcp_client_id=mvBOX-XP\0"				\
+    "dhcp_vendor-class-identifier=mvBOX\0"		\
+    "adminboot=setenv bootargs root=/dev/mtdblock5 rw rootfstype=jffs2;run addcons;bootm ffc00000\0"	\
+    "flashboot=setenv bootargs root=/dev/mtdblock5 ro rootfstype=jffs2;run addcons;bootm ffc00000\0"	\
+    "safeboot=setenv bootargs root=/dev/mtdblock2 rw rootfstype=cramfs;run addcons;bootm ffc00000\0"	\
+    "hdboot=setenv bootargs root=/dev/hda1;run addcons;bootm ffc00000\0"	\
+	"nfsargs=setenv bootargs root=/dev/nfs rw nfsroot=${serverip}:${rootpath} "	\
+			"ip=${ipaddr}:${serverip}:${gatewayip}:${netmask}:${hostname}::off\0"	\
+	"addcons=setenv bootargs ${bootargs} console=ttyS${console_nr},${baudrate}N8\0" \
+    "mv_version=" MV_VERSION "\0"	\
+	"bootretry=30\0"
 
 #define CONFIG_OVERWRITE_ETHADDR_ONCE
 
@@ -159,11 +159,11 @@
 #define CONFIG_PCI_SCAN_SHOW
 
 #define CONFIG_NET_MULTI
-#define CONFIG_NET_RETRY_COUNT    5
+#define CONFIG_NET_RETRY_COUNT		5
 
 #define CONFIG_TULIP
-#define CONFIG_TULIP_FIX_DAVICOM  1
-#define CONFIG_ETHADDR      b6:b4:45:eb:fb:c0
+#define CONFIG_TULIP_FIX_DAVICOM	1
+#define CONFIG_ETHADDR			b6:b4:45:eb:fb:c0
 
 #define CONFIG_HW_WATCHDOG
 
@@ -172,22 +172,22 @@
  * (Set up by the startup code)
  * Please note that CONFIG_SYS_SDRAM_BASE _must_ start at 0
  */
-#define CONFIG_SYS_SDRAM_BASE     0x00000000
+#define CONFIG_SYS_SDRAM_BASE	    0x00000000
 
 #define CONFIG_SYS_FLASH_BASE      0xFFF00000
 #define CONFIG_SYS_MONITOR_BASE    CONFIG_SYS_TEXT_BASE
 
 #define CONFIG_SYS_RESET_ADDRESS   0xFFF00100
-#define CONFIG_SYS_EUMB_ADDR      0xFC000000
+#define CONFIG_SYS_EUMB_ADDR	    0xFC000000
 
 #define CONFIG_SYS_MONITOR_LEN     0x00100000
 #define CONFIG_SYS_MALLOC_LEN      (512 << 10) /* Reserve some kB for malloc()  */
 
-#define CONFIG_SYS_MEMTEST_START   0x00100000 /* memtest works on   */
-#define CONFIG_SYS_MEMTEST_END      0x00800000  /* 1M ... 8M in DRAM    */
+#define CONFIG_SYS_MEMTEST_START   0x00100000	/* memtest works on		*/
+#define CONFIG_SYS_MEMTEST_END	    0x00800000	/* 1M ... 8M in DRAM		*/
 
 /* Maximum amount of RAM.  */
-#define CONFIG_SYS_MAX_RAM_SIZE    0x10000000 /* 0 .. 256MB of (S)DRAM */
+#define CONFIG_SYS_MAX_RAM_SIZE    0x10000000	/* 0 .. 256MB of (S)DRAM */
 
 
 #if CONFIG_SYS_MONITOR_BASE >= CONFIG_SYS_FLASH_BASE
@@ -226,7 +226,7 @@
  */
 
 #define CONFIG_SYS_CLK_FREQ  33000000
-#define CONFIG_SYS_HZ      10000
+#define CONFIG_SYS_HZ			 10000
 
 /* Bit-field values for MCCR1.  */
 #define CONFIG_SYS_ROMNAL      7
@@ -263,8 +263,8 @@
  * address. Refer to the MPC8240 book.
  */
 
-#define CONFIG_SYS_BANK0_START      0x00000000
-#define CONFIG_SYS_BANK0_END      (CONFIG_SYS_MAX_RAM_SIZE - 1)
+#define CONFIG_SYS_BANK0_START	    0x00000000
+#define CONFIG_SYS_BANK0_END	    (CONFIG_SYS_MAX_RAM_SIZE - 1)
 #define CONFIG_SYS_BANK0_ENABLE    1
 #define CONFIG_SYS_BANK1_START     0x3ff00000
 #define CONFIG_SYS_BANK1_END       0x3fffffff
@@ -288,7 +288,7 @@
 #define CONFIG_SYS_BANK7_END       0x3fffffff
 #define CONFIG_SYS_BANK7_ENABLE    0
 
-#define CONFIG_SYS_ODCR     0xff
+#define CONFIG_SYS_ODCR	    0xff
 
 #define CONFIG_SYS_IBAT0L  (CONFIG_SYS_SDRAM_BASE | BATL_PP_10 | BATL_MEMCOHERENCE)
 #define CONFIG_SYS_IBAT0U  (CONFIG_SYS_SDRAM_BASE | BATU_BL_256M | BATU_VS | BATU_VP)
@@ -316,30 +316,30 @@
  * have to be in the first 8 MB of memory, since this is
  * the maximum mapped by the Linux kernel during initialization.
  */
-#define CONFIG_SYS_BOOTMAPSZ      (8 << 20) /* Initial Memory map for Linux */
+#define CONFIG_SYS_BOOTMAPSZ	    (8 << 20)	/* Initial Memory map for Linux */
 
 /*-----------------------------------------------------------------------
  * FLASH organization
  */
 #undef  CONFIG_SYS_FLASH_PROTECTION
-#define CONFIG_SYS_MAX_FLASH_BANKS    1 /* Max number of flash banks    */
-#define CONFIG_SYS_MAX_FLASH_SECT   63  /* Max number of sectors per flash  */
+#define CONFIG_SYS_MAX_FLASH_BANKS		1	/* Max number of flash banks		*/
+#define CONFIG_SYS_MAX_FLASH_SECT		63	/* Max number of sectors per flash	*/
 
-#define CONFIG_SYS_FLASH_ERASE_TOUT 12000
-#define CONFIG_SYS_FLASH_WRITE_TOUT 1000
+#define CONFIG_SYS_FLASH_ERASE_TOUT	12000
+#define CONFIG_SYS_FLASH_WRITE_TOUT	1000
 
 
 #define CONFIG_ENV_IS_IN_FLASH
 
-#define CONFIG_ENV_OFFSET   0x00010000
-#define CONFIG_ENV_SIZE   0x00010000
-#define CONFIG_ENV_SECT_SIZE  0x00010000
+#define CONFIG_ENV_OFFSET		0x00010000
+#define CONFIG_ENV_SIZE		0x00010000
+#define CONFIG_ENV_SECT_SIZE	0x00010000
 
 /*-----------------------------------------------------------------------
  * Cache Configuration
  */
-#define CONFIG_SYS_CACHELINE_SIZE 32
+#define CONFIG_SYS_CACHELINE_SIZE	32
 #if defined(CONFIG_CMD_KGDB)
-#define CONFIG_SYS_CACHELINE_SHIFT  5 /* log base 2 of the above value  */
+#define CONFIG_SYS_CACHELINE_SHIFT	5	/* log base 2 of the above value	*/
 #endif
-#endif  /* __CONFIG_H */
+#endif	/* __CONFIG_H */

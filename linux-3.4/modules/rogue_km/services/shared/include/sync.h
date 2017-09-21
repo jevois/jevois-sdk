@@ -68,9 +68,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 /*****************************************************************************/
 PVRSRV_ERROR
-SyncPrimContextCreate (SYNC_BRIDGE_HANDLE  hBridge,
-                       IMG_HANDLE      hDeviceNode,
-                       PSYNC_PRIM_CONTEXT * hSyncPrimContext);
+SyncPrimContextCreate(SYNC_BRIDGE_HANDLE	hBridge,
+					  IMG_HANDLE			hDeviceNode,
+					  PSYNC_PRIM_CONTEXT	*hSyncPrimContext);
 
 /*************************************************************************/ /*!
 @Function       SyncPrimContextDestroy
@@ -84,7 +84,7 @@ SyncPrimContextCreate (SYNC_BRIDGE_HANDLE  hBridge,
 */
 /*****************************************************************************/
 IMG_VOID
-SyncPrimContextDestroy (PSYNC_PRIM_CONTEXT hSyncPrimContext);
+SyncPrimContextDestroy(PSYNC_PRIM_CONTEXT hSyncPrimContext);
 
 /*************************************************************************/ /*!
 @Function       SyncPrimAlloc
@@ -102,8 +102,8 @@ SyncPrimContextDestroy (PSYNC_PRIM_CONTEXT hSyncPrimContext);
 */
 /*****************************************************************************/
 PVRSRV_ERROR
-SyncPrimAlloc (PSYNC_PRIM_CONTEXT    hSyncPrimContext,
-               PVRSRV_CLIENT_SYNC_PRIM ** ppsSync);
+SyncPrimAlloc(PSYNC_PRIM_CONTEXT		hSyncPrimContext,
+			  PVRSRV_CLIENT_SYNC_PRIM	**ppsSync);
 
 /*************************************************************************/ /*!
 @Function       SyncPrimFree
@@ -116,7 +116,7 @@ SyncPrimAlloc (PSYNC_PRIM_CONTEXT    hSyncPrimContext,
 */
 /*****************************************************************************/
 IMG_VOID
-SyncPrimFree (PVRSRV_CLIENT_SYNC_PRIM * psSync);
+SyncPrimFree(PVRSRV_CLIENT_SYNC_PRIM *psSync);
 
 /*************************************************************************/ /*!
 @Function       SyncPrimSet
@@ -131,7 +131,7 @@ SyncPrimFree (PVRSRV_CLIENT_SYNC_PRIM * psSync);
 */
 /*****************************************************************************/
 IMG_VOID
-SyncPrimSet (PVRSRV_CLIENT_SYNC_PRIM * psSync, IMG_UINT32 ui32Value);
+SyncPrimSet(PVRSRV_CLIENT_SYNC_PRIM *psSync, IMG_UINT32 ui32Value);
 
 #if defined(NO_HARDWARE)
 
@@ -148,61 +148,61 @@ SyncPrimSet (PVRSRV_CLIENT_SYNC_PRIM * psSync, IMG_UINT32 ui32Value);
 */
 /*****************************************************************************/
 IMG_VOID
-SyncPrimNoHwUpdate (PVRSRV_CLIENT_SYNC_PRIM * psSync, IMG_UINT32 ui32Value);
+SyncPrimNoHwUpdate(PVRSRV_CLIENT_SYNC_PRIM *psSync, IMG_UINT32 ui32Value);
 #endif
 
 PVRSRV_ERROR
-SyncPrimServerAlloc (SYNC_BRIDGE_HANDLE  hBridge,
-                     IMG_HANDLE      hDeviceNode,
-                     PVRSRV_CLIENT_SYNC_PRIM ** ppsSync
-                     PVR_DBG_FILELINE_PARAM);
+SyncPrimServerAlloc(SYNC_BRIDGE_HANDLE	hBridge,
+					IMG_HANDLE			hDeviceNode,
+					PVRSRV_CLIENT_SYNC_PRIM **ppsSync
+					PVR_DBG_FILELINE_PARAM);
 
 PVRSRV_ERROR
-SyncPrimServerGetStatus (IMG_UINT32 ui32SyncCount,
-                         PVRSRV_CLIENT_SYNC_PRIM ** papsSync,
-                         IMG_UINT32 * pui32UID,
-                         IMG_UINT32 * pui32FWAddr,
-                         IMG_UINT32 * pui32CurrentOp,
-                         IMG_UINT32 * pui32NextOp);
+SyncPrimServerGetStatus(IMG_UINT32 ui32SyncCount,
+						PVRSRV_CLIENT_SYNC_PRIM **papsSync,
+						IMG_UINT32 *pui32UID,
+						IMG_UINT32 *pui32FWAddr,
+						IMG_UINT32 *pui32CurrentOp,
+						IMG_UINT32 *pui32NextOp);
 
 PVRSRV_ERROR
-SyncPrimServerQueueOp (PVRSRV_CLIENT_SYNC_PRIM_OP * psSyncOp);
+SyncPrimServerQueueOp(PVRSRV_CLIENT_SYNC_PRIM_OP *psSyncOp);
 
 IMG_BOOL
-SyncPrimIsServerSync (PVRSRV_CLIENT_SYNC_PRIM * psSync);
+SyncPrimIsServerSync(PVRSRV_CLIENT_SYNC_PRIM *psSync);
 
 IMG_HANDLE
-SyncPrimGetServerHandle (PVRSRV_CLIENT_SYNC_PRIM * psSync);
+SyncPrimGetServerHandle(PVRSRV_CLIENT_SYNC_PRIM *psSync);
 
 
 
 PVRSRV_ERROR
-SyncPrimOpCreate (IMG_UINT32 ui32SyncCount,
-                  PVRSRV_CLIENT_SYNC_PRIM ** papsSyncPrim,
-                  PSYNC_OP_COOKIE * ppsCookie);
+SyncPrimOpCreate(IMG_UINT32 ui32SyncCount,
+				 PVRSRV_CLIENT_SYNC_PRIM **papsSyncPrim,
+				 PSYNC_OP_COOKIE *ppsCookie);
 
 PVRSRV_ERROR
-SyncPrimOpTake (PSYNC_OP_COOKIE psCookie,
-                IMG_UINT32 ui32SyncCount,
-                PVRSRV_CLIENT_SYNC_PRIM_OP * pasSyncOp);
+SyncPrimOpTake(PSYNC_OP_COOKIE psCookie,
+			   IMG_UINT32 ui32SyncCount,
+			   PVRSRV_CLIENT_SYNC_PRIM_OP *pasSyncOp);
 
 PVRSRV_ERROR
-SyncPrimOpReady (PSYNC_OP_COOKIE psCookie,
-                 IMG_BOOL * pbReady);
+SyncPrimOpReady(PSYNC_OP_COOKIE psCookie,
+				IMG_BOOL *pbReady);
 
 PVRSRV_ERROR
-SyncPrimOpComplete (PSYNC_OP_COOKIE psCookie);
+SyncPrimOpComplete(PSYNC_OP_COOKIE psCookie);
 
 IMG_VOID
-SyncPrimOpDestroy (PSYNC_OP_COOKIE psCookie);
+SyncPrimOpDestroy(PSYNC_OP_COOKIE psCookie);
 
 PVRSRV_ERROR
-SyncPrimOpResolve (PSYNC_OP_COOKIE psCookie,
-                   IMG_UINT32 * pui32SyncCount,
-                   PVRSRV_CLIENT_SYNC_PRIM_OP ** ppsSyncOp);
+SyncPrimOpResolve(PSYNC_OP_COOKIE psCookie,
+				  IMG_UINT32 *pui32SyncCount,
+				  PVRSRV_CLIENT_SYNC_PRIM_OP **ppsSyncOp);
 
 PVRSRV_ERROR
-SyncPrimDumpSyncs (IMG_UINT32 ui32SyncCount, PVRSRV_CLIENT_SYNC_PRIM ** papsSync, const IMG_CHAR * pcszExtraInfo);
+SyncPrimDumpSyncs(IMG_UINT32 ui32SyncCount, PVRSRV_CLIENT_SYNC_PRIM **papsSync, const IMG_CHAR *pcszExtraInfo);
 
 #if defined(PDUMP)
 /*************************************************************************/ /*!
@@ -216,22 +216,22 @@ SyncPrimDumpSyncs (IMG_UINT32 ui32SyncCount, PVRSRV_CLIENT_SYNC_PRIM ** papsSync
 */
 /*****************************************************************************/
 IMG_VOID
-SyncPrimPDump (PVRSRV_CLIENT_SYNC_PRIM * psSync);
+SyncPrimPDump(PVRSRV_CLIENT_SYNC_PRIM *psSync);
 
 /*************************************************************************/ /*!
 @Function       SyncPrimPDumpValue
 
-@Description    PDump the ui32Value as the value of the synchronisation
-        primitive (regardless of the current value).
+@Description    PDump the ui32Value as the value of the synchronisation 
+				primitive (regardless of the current value).
 
 @Input          psSync          The synchronisation primitive to PDump
-@Input      ui32Value   Value to give to the sync prim on the pdump
+@Input			ui32Value		Value to give to the sync prim on the pdump
 
 @Return         None
 */
 /*****************************************************************************/
 IMG_VOID
-SyncPrimPDumpValue (PVRSRV_CLIENT_SYNC_PRIM * psSync, IMG_UINT32 ui32Value);
+SyncPrimPDumpValue(PVRSRV_CLIENT_SYNC_PRIM *psSync, IMG_UINT32 ui32Value);
 
 /*************************************************************************/ /*!
 @Function       SyncPrimPDumpPol
@@ -240,7 +240,7 @@ SyncPrimPDumpValue (PVRSRV_CLIENT_SYNC_PRIM * psSync, IMG_UINT32 ui32Value);
 
 @Input          psSync                  The synchronisation primitive to PDump
 
-@Input          ui32Value               Value to poll for
+@Input          ui32Value               Value to poll for 
 
 @Input          ui32Mask                PDump mask operator
 
@@ -250,17 +250,17 @@ SyncPrimPDumpValue (PVRSRV_CLIENT_SYNC_PRIM * psSync, IMG_UINT32 ui32Value);
 */
 /*****************************************************************************/
 IMG_VOID
-SyncPrimPDumpPol (PVRSRV_CLIENT_SYNC_PRIM * psSync,
-                  IMG_UINT32 ui32Value,
-                  IMG_UINT32 ui32Mask,
-                  PDUMP_POLL_OPERATOR eOperator,
-                  IMG_UINT32 ui32PDumpFlags);
+SyncPrimPDumpPol(PVRSRV_CLIENT_SYNC_PRIM *psSync,
+				 IMG_UINT32 ui32Value,
+				 IMG_UINT32 ui32Mask,
+				 PDUMP_POLL_OPERATOR eOperator,
+				 IMG_UINT32 ui32PDumpFlags);
 
 /*************************************************************************/ /*!
 @Function       SyncPrimOpPDumpPol
 
 @Description    Do a PDump poll all the synchronisation primitives on this
-        Operation cookie.
+				Operation cookie.
 
 @Input          psCookie                Operation cookie
 
@@ -270,9 +270,9 @@ SyncPrimPDumpPol (PVRSRV_CLIENT_SYNC_PRIM * psSync,
 */
 /*****************************************************************************/
 IMG_VOID
-SyncPrimOpPDumpPol (PSYNC_OP_COOKIE psCookie,
-                    PDUMP_POLL_OPERATOR eOperator,
-                    IMG_UINT32 ui32PDumpFlags);
+SyncPrimOpPDumpPol(PSYNC_OP_COOKIE psCookie,
+				 PDUMP_POLL_OPERATOR eOperator,
+				 IMG_UINT32 ui32PDumpFlags);
 
 /*************************************************************************/ /*!
 @Function       SyncPrimPDumpCBP
@@ -290,11 +290,11 @@ SyncPrimOpPDumpPol (PSYNC_OP_COOKIE psCookie,
 @Return         None
 */
 /*****************************************************************************/
-IMG_VOID
-SyncPrimPDumpCBP (PVRSRV_CLIENT_SYNC_PRIM * psSync,
-                  IMG_UINT64 uiWriteOffset,
-                  IMG_UINT64 uiPacketSize,
-                  IMG_UINT64 uiBufferSize);
+IMG_VOID 
+SyncPrimPDumpCBP(PVRSRV_CLIENT_SYNC_PRIM *psSync,
+				 IMG_UINT64 uiWriteOffset,
+				 IMG_UINT64 uiPacketSize,
+				 IMG_UINT64 uiBufferSize);
 
 #else
 
@@ -302,65 +302,65 @@ SyncPrimPDumpCBP (PVRSRV_CLIENT_SYNC_PRIM * psSync,
 #pragma inline(SyncPrimPDumpValue)
 #endif
 static INLINE IMG_VOID
-SyncPrimPDumpValue (PVRSRV_CLIENT_SYNC_PRIM * psSync, IMG_UINT32 ui32Value)
+SyncPrimPDumpValue(PVRSRV_CLIENT_SYNC_PRIM *psSync, IMG_UINT32 ui32Value)
 {
-  PVR_UNREFERENCED_PARAMETER (psSync);
-  PVR_UNREFERENCED_PARAMETER (ui32Value);
+	PVR_UNREFERENCED_PARAMETER(psSync);
+	PVR_UNREFERENCED_PARAMETER(ui32Value);
 }
 
 #ifdef INLINE_IS_PRAGMA
 #pragma inline(SyncPrimPDump)
 #endif
 static INLINE IMG_VOID
-SyncPrimPDump (PVRSRV_CLIENT_SYNC_PRIM * psSync)
+SyncPrimPDump(PVRSRV_CLIENT_SYNC_PRIM *psSync)
 {
-  PVR_UNREFERENCED_PARAMETER (psSync);
+	PVR_UNREFERENCED_PARAMETER(psSync);
 }
 
 #ifdef INLINE_IS_PRAGMA
 #pragma inline(SyncPrimPDumpPol)
 #endif
 static INLINE IMG_VOID
-SyncPrimPDumpPol (PVRSRV_CLIENT_SYNC_PRIM * psSync,
-                  IMG_UINT32 ui32Value,
-                  IMG_UINT32 ui32Mask,
-                  PDUMP_POLL_OPERATOR eOperator,
-                  IMG_UINT32 ui32PDumpFlags)
+SyncPrimPDumpPol(PVRSRV_CLIENT_SYNC_PRIM *psSync,
+				 IMG_UINT32 ui32Value,
+				 IMG_UINT32 ui32Mask,
+				 PDUMP_POLL_OPERATOR eOperator,
+				 IMG_UINT32 ui32PDumpFlags)
 {
-  PVR_UNREFERENCED_PARAMETER (psSync);
-  PVR_UNREFERENCED_PARAMETER (ui32Value);
-  PVR_UNREFERENCED_PARAMETER (ui32Mask);
-  PVR_UNREFERENCED_PARAMETER (eOperator);
-  PVR_UNREFERENCED_PARAMETER (ui32PDumpFlags);
+	PVR_UNREFERENCED_PARAMETER(psSync);
+	PVR_UNREFERENCED_PARAMETER(ui32Value);
+	PVR_UNREFERENCED_PARAMETER(ui32Mask);
+	PVR_UNREFERENCED_PARAMETER(eOperator);
+	PVR_UNREFERENCED_PARAMETER(ui32PDumpFlags);
 }
 
 #ifdef INLINE_IS_PRAGMA
 #pragma inline(SyncPrimServerPDumpPol)
 #endif
 static INLINE IMG_VOID
-SyncPrimServerPDumpPol (PVRSRV_CLIENT_SYNC_PRIM * psSync,
-                        PDUMP_POLL_OPERATOR eOperator,
-                        IMG_UINT32 ui32PDumpFlags)
+SyncPrimServerPDumpPol(PVRSRV_CLIENT_SYNC_PRIM *psSync,
+				 PDUMP_POLL_OPERATOR eOperator,
+				 IMG_UINT32 ui32PDumpFlags)
 {
-  PVR_UNREFERENCED_PARAMETER (psSync);
-  PVR_UNREFERENCED_PARAMETER (eOperator);
-  PVR_UNREFERENCED_PARAMETER (ui32PDumpFlags);
+	PVR_UNREFERENCED_PARAMETER(psSync);
+	PVR_UNREFERENCED_PARAMETER(eOperator);
+	PVR_UNREFERENCED_PARAMETER(ui32PDumpFlags);
 }
 
 #ifdef INLINE_IS_PRAGMA
 #pragma inline(SyncPrimPDumpCBP)
 #endif
-static INLINE IMG_VOID
-SyncPrimPDumpCBP (PVRSRV_CLIENT_SYNC_PRIM * psSync,
-                  IMG_UINT64 uiWriteOffset,
-                  IMG_UINT64 uiPacketSize,
-                  IMG_UINT64 uiBufferSize)
+static INLINE IMG_VOID 
+SyncPrimPDumpCBP(PVRSRV_CLIENT_SYNC_PRIM *psSync,
+				 IMG_UINT64 uiWriteOffset,
+				 IMG_UINT64 uiPacketSize,
+				 IMG_UINT64 uiBufferSize)
 {
-  PVR_UNREFERENCED_PARAMETER (psSync);
-  PVR_UNREFERENCED_PARAMETER (uiWriteOffset);
-  PVR_UNREFERENCED_PARAMETER (uiPacketSize);
-  PVR_UNREFERENCED_PARAMETER (uiBufferSize);
+	PVR_UNREFERENCED_PARAMETER(psSync);
+	PVR_UNREFERENCED_PARAMETER(uiWriteOffset);
+	PVR_UNREFERENCED_PARAMETER(uiPacketSize);
+	PVR_UNREFERENCED_PARAMETER(uiBufferSize);
 }
-#endif  /* PDUMP */
-#endif  /* _PVRSRV_SYNC_ */
+#endif	/* PDUMP */
+#endif	/* _PVRSRV_SYNC_ */
 

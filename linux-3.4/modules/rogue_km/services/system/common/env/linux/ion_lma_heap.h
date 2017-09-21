@@ -42,4 +42,4 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include PVR_ANDROID_ION_HEADER
 
-struct ion_heap * lma_heap_create (struct ion_platform_heap * data);
+struct ion_heap *lma_heap_create(struct ion_platform_heap *data);

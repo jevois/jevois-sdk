@@ -5,12 +5,12 @@
 #error "Uncached memory not supported in linux environment"
 #endif
 
-static inline unsigned long __v2p (unsigned long v)
+static inline unsigned long __v2p(unsigned long v)
 {
-  if (v < 0x40000000)
-  { return (v & 0xfffffff); }
-  else
-  { return v; }
+	if (v < 0x40000000)
+		return (v & 0xfffffff);
+	else
+		return v;
 }
 
 #define IX_OSAL_OS_MMU_VIRT_TO_PHYS(addr)        __v2p((u32)addr)
@@ -24,7 +24,7 @@ static inline unsigned long __v2p (unsigned long v)
 #define HAL_DCACHE_INVALIDATE(addr, size)
 #define HAL_DCACHE_FLUSH(addr, size)
 
-#define __ixp42X      /* sr: U-Boot needs this define */
+#define __ixp42X			/* sr: U-Boot needs this define */
 
 #endif /* IxOsalOs_H */
 

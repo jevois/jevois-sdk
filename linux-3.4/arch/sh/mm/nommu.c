@@ -19,86 +19,86 @@
 /*
  * Nothing too terribly exciting here ..
  */
-void copy_page (void * to, void * from)
+void copy_page(void *to, void *from)
 {
-  memcpy (to, from, PAGE_SIZE);
+	memcpy(to, from, PAGE_SIZE);
 }
 
-__kernel_size_t __copy_user (void * to, const void * from, __kernel_size_t n)
+__kernel_size_t __copy_user(void *to, const void *from, __kernel_size_t n)
 {
-  memcpy (to, from, n);
-  return 0;
+	memcpy(to, from, n);
+	return 0;
 }
 
-__kernel_size_t __clear_user (void * to, __kernel_size_t n)
+__kernel_size_t __clear_user(void *to, __kernel_size_t n)
 {
-  memset (to, 0, n);
-  return 0;
+	memset(to, 0, n);
+	return 0;
 }
 
-void local_flush_tlb_all (void)
+void local_flush_tlb_all(void)
 {
-  BUG();
+	BUG();
 }
 
-void local_flush_tlb_mm (struct mm_struct * mm)
+void local_flush_tlb_mm(struct mm_struct *mm)
 {
-  BUG();
+	BUG();
 }
 
-void local_flush_tlb_range (struct vm_area_struct * vma, unsigned long start,
-                            unsigned long end)
+void local_flush_tlb_range(struct vm_area_struct *vma, unsigned long start,
+			    unsigned long end)
 {
-  BUG();
+	BUG();
 }
 
-void local_flush_tlb_page (struct vm_area_struct * vma, unsigned long page)
+void local_flush_tlb_page(struct vm_area_struct *vma, unsigned long page)
 {
-  BUG();
+	BUG();
 }
 
-void local_flush_tlb_one (unsigned long asid, unsigned long page)
+void local_flush_tlb_one(unsigned long asid, unsigned long page)
 {
-  BUG();
+	BUG();
 }
 
-void local_flush_tlb_kernel_range (unsigned long start, unsigned long end)
+void local_flush_tlb_kernel_range(unsigned long start, unsigned long end)
 {
-  BUG();
+	BUG();
 }
 
-void __flush_tlb_global (void)
-{
-}
-
-void __update_tlb (struct vm_area_struct * vma, unsigned long address, pte_t pte)
+void __flush_tlb_global(void)
 {
 }
 
-void __init kmap_coherent_init (void)
+void __update_tlb(struct vm_area_struct *vma, unsigned long address, pte_t pte)
 {
 }
 
-void * kmap_coherent (struct page * page, unsigned long addr)
-{
-  BUG();
-  return NULL;
-}
-
-void kunmap_coherent (void * kvaddr)
-{
-  BUG();
-}
-
-void __init page_table_range_init (unsigned long start, unsigned long end,
-                                   pgd_t * pgd_base)
+void __init kmap_coherent_init(void)
 {
 }
 
-void __set_fixmap (enum fixed_addresses idx, unsigned long phys, pgprot_t prot)
+void *kmap_coherent(struct page *page, unsigned long addr)
+{
+	BUG();
+	return NULL;
+}
+
+void kunmap_coherent(void *kvaddr)
+{
+	BUG();
+}
+
+void __init page_table_range_init(unsigned long start, unsigned long end,
+				  pgd_t *pgd_base)
 {
 }
 
-void pgtable_cache_init (void)
+void __set_fixmap(enum fixed_addresses idx, unsigned long phys, pgprot_t prot)
+{
+}
+
+void pgtable_cache_init(void)
 {
 }

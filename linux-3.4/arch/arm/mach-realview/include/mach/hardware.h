@@ -33,10 +33,10 @@
  * 1exx xxxx -> fdxx xxxx
  * 1fxx xxxx -> fexx xxxx
  */
-#define IO_ADDRESS(x)   (((x) & 0x03ffffff) + 0xfb000000)
+#define IO_ADDRESS(x)		(((x) & 0x03ffffff) + 0xfb000000)
 #else
-#define IO_ADDRESS(x)   (x)
+#define IO_ADDRESS(x)		(x)
 #endif
-#define __io_address(n)   IOMEM(IO_ADDRESS(n))
+#define __io_address(n)		IOMEM(IO_ADDRESS(n))
 
 #endif

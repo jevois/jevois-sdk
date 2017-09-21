@@ -35,74 +35,74 @@
 
 #include <mach/hardware.h>
 
-#define OCPI_BASE   0xfffec320
-#define OCPI_FAULT    (OCPI_BASE + 0x00)
-#define OCPI_CMD_FAULT    (OCPI_BASE + 0x04)
-#define OCPI_SINT0    (OCPI_BASE + 0x08)
-#define OCPI_TABORT   (OCPI_BASE + 0x0c)
-#define OCPI_SINT1    (OCPI_BASE + 0x10)
-#define OCPI_PROT   (OCPI_BASE + 0x14)
-#define OCPI_SEC    (OCPI_BASE + 0x18)
+#define OCPI_BASE		0xfffec320
+#define OCPI_FAULT		(OCPI_BASE + 0x00)
+#define OCPI_CMD_FAULT		(OCPI_BASE + 0x04)
+#define OCPI_SINT0		(OCPI_BASE + 0x08)
+#define OCPI_TABORT		(OCPI_BASE + 0x0c)
+#define OCPI_SINT1		(OCPI_BASE + 0x10)
+#define OCPI_PROT		(OCPI_BASE + 0x14)
+#define OCPI_SEC		(OCPI_BASE + 0x18)
 
 /* USB OHCI OCPI access error registers */
-#define HOSTUEADDR  0xfffba0e0
-#define HOSTUESTATUS  0xfffba0e4
+#define HOSTUEADDR	0xfffba0e0
+#define HOSTUESTATUS	0xfffba0e4
 
-static struct clk * ocpi_ck;
+static struct clk *ocpi_ck;
 
 /*
  * Enables device access to OMAP buses via the OCPI bridge
  * FIXME: Add locking
  */
-int ocpi_enable (void)
+int ocpi_enable(void)
 {
-  unsigned int val;
-  
-  if (!cpu_is_omap16xx() )
-  { return -ENODEV; }
-  
-  /* Enable access for OHCI in OCPI */
-  val = omap_readl (OCPI_PROT);
-  val &= ~0xff;
-  omap_writel (val, OCPI_PROT);
-  
-  val = omap_readl (OCPI_SEC);
-  val &= ~0xff;
-  omap_writel (val, OCPI_SEC);
-  
-  return 0;
-}
-EXPORT_SYMBOL (ocpi_enable);
+	unsigned int val;
 
-static int __init omap_ocpi_init (void)
-{
-  if (!cpu_is_omap16xx() )
-  { return -ENODEV; }
-  
-  ocpi_ck = clk_get (NULL, "l3_ocpi_ck");
-  if (IS_ERR (ocpi_ck) )
-  { return PTR_ERR (ocpi_ck); }
-  
-  clk_enable (ocpi_ck);
-  ocpi_enable();
-  printk ("OMAP OCPI interconnect driver loaded\n");
-  
-  return 0;
-}
+	if (!cpu_is_omap16xx())
+		return -ENODEV;
 
-static void __exit omap_ocpi_exit (void)
+	/* Enable access for OHCI in OCPI */
+	val = omap_readl(OCPI_PROT);
+	val &= ~0xff;
+	omap_writel(val, OCPI_PROT);
+
+	val = omap_readl(OCPI_SEC);
+	val &= ~0xff;
+	omap_writel(val, OCPI_SEC);
+
+	return 0;
+}
+EXPORT_SYMBOL(ocpi_enable);
+
+static int __init omap_ocpi_init(void)
 {
-  /* REVISIT: Disable OCPI */
-  
-  if (!cpu_is_omap16xx() )
-  { return; }
-  
-  clk_disable (ocpi_ck);
-  clk_put (ocpi_ck);
+	if (!cpu_is_omap16xx())
+		return -ENODEV;
+
+	ocpi_ck = clk_get(NULL, "l3_ocpi_ck");
+	if (IS_ERR(ocpi_ck))
+		return PTR_ERR(ocpi_ck);
+
+	clk_enable(ocpi_ck);
+	ocpi_enable();
+	printk("OMAP OCPI interconnect driver loaded\n");
+
+	return 0;
 }
 
-MODULE_AUTHOR ("Tony Lindgren <tony@atomide.com>");
-MODULE_DESCRIPTION ("OMAP OCPI bus controller module");
-MODULE_LICENSE ("GPL");
-module_init (omap_ocpi_init);
-module_exit (omap_ocpi_exit);
+static void __exit omap_ocpi_exit(void)
+{
+	/* REVISIT: Disable OCPI */
+
+	if (!cpu_is_omap16xx())
+		return;
+
+	clk_disable(ocpi_ck);
+	clk_put(ocpi_ck);
+}
+
+MODULE_AUTHOR("Tony Lindgren <tony@atomide.com>");
+MODULE_DESCRIPTION("OMAP OCPI bus controller module");
+MODULE_LICENSE("GPL");
+module_init(omap_ocpi_init);
+module_exit(omap_ocpi_exit);

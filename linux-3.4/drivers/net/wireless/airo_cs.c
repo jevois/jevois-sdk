@@ -43,153 +43,153 @@
 
 /*====================================================================*/
 
-MODULE_AUTHOR ("Benjamin Reed");
-MODULE_DESCRIPTION ("Support for Cisco/Aironet 802.11 wireless ethernet "
-                    "cards.  This is the module that links the PCMCIA card "
-                    "with the airo module.");
-MODULE_LICENSE ("Dual BSD/GPL");
-MODULE_SUPPORTED_DEVICE ("Aironet 4500, 4800 and Cisco 340 PCMCIA cards");
+MODULE_AUTHOR("Benjamin Reed");
+MODULE_DESCRIPTION("Support for Cisco/Aironet 802.11 wireless ethernet "
+		   "cards.  This is the module that links the PCMCIA card "
+		   "with the airo module.");
+MODULE_LICENSE("Dual BSD/GPL");
+MODULE_SUPPORTED_DEVICE("Aironet 4500, 4800 and Cisco 340 PCMCIA cards");
 
 /*====================================================================*/
 
-static int airo_config (struct pcmcia_device * link);
-static void airo_release (struct pcmcia_device * link);
+static int airo_config(struct pcmcia_device *link);
+static void airo_release(struct pcmcia_device *link);
 
-static void airo_detach (struct pcmcia_device * p_dev);
+static void airo_detach(struct pcmcia_device *p_dev);
 
 typedef struct local_info_t {
-  struct net_device * eth_dev;
+	struct net_device *eth_dev;
 } local_info_t;
 
-static int airo_probe (struct pcmcia_device * p_dev)
+static int airo_probe(struct pcmcia_device *p_dev)
 {
-  local_info_t * local;
-  
-  dev_dbg (&p_dev->dev, "airo_attach()\n");
-  
-  /* Allocate space for private device-specific data */
-  local = kzalloc (sizeof (local_info_t), GFP_KERNEL);
-  if (!local) {
-    printk (KERN_ERR "airo_cs: no memory for new device\n");
-    return -ENOMEM;
-  }
-  p_dev->priv = local;
-  
-  return airo_config (p_dev);
+	local_info_t *local;
+
+	dev_dbg(&p_dev->dev, "airo_attach()\n");
+
+	/* Allocate space for private device-specific data */
+	local = kzalloc(sizeof(local_info_t), GFP_KERNEL);
+	if (!local) {
+		printk(KERN_ERR "airo_cs: no memory for new device\n");
+		return -ENOMEM;
+	}
+	p_dev->priv = local;
+
+	return airo_config(p_dev);
 } /* airo_attach */
 
-static void airo_detach (struct pcmcia_device * link)
+static void airo_detach(struct pcmcia_device *link)
 {
-  dev_dbg (&link->dev, "airo_detach\n");
-  
-  airo_release (link);
-  
-  if ( ( (local_info_t *) link->priv)->eth_dev) {
-    stop_airo_card ( ( (local_info_t *) link->priv)->eth_dev, 0);
-  }
-  ( (local_info_t *) link->priv)->eth_dev = NULL;
-  
-  kfree (link->priv);
+	dev_dbg(&link->dev, "airo_detach\n");
+
+	airo_release(link);
+
+	if (((local_info_t *)link->priv)->eth_dev) {
+		stop_airo_card(((local_info_t *)link->priv)->eth_dev, 0);
+	}
+	((local_info_t *)link->priv)->eth_dev = NULL;
+
+	kfree(link->priv);
 } /* airo_detach */
 
-static int airo_cs_config_check (struct pcmcia_device * p_dev, void * priv_data)
+static int airo_cs_config_check(struct pcmcia_device *p_dev, void *priv_data)
 {
-  if (p_dev->config_index == 0)
-  { return -EINVAL; }
-  
-  return pcmcia_request_io (p_dev);
+	if (p_dev->config_index == 0)
+		return -EINVAL;
+
+	return pcmcia_request_io(p_dev);
 }
 
 
-static int airo_config (struct pcmcia_device * link)
+static int airo_config(struct pcmcia_device *link)
 {
-  local_info_t * dev;
-  int ret;
-  
-  dev = link->priv;
-  
-  dev_dbg (&link->dev, "airo_config\n");
-  
-  link->config_flags |= CONF_ENABLE_IRQ | CONF_AUTO_SET_VPP |
-                        CONF_AUTO_AUDIO | CONF_AUTO_SET_IO;
-                        
-  ret = pcmcia_loop_config (link, airo_cs_config_check, NULL);
-  if (ret)
-  { goto failed; }
-  
-  if (!link->irq)
-  { goto failed; }
-  
-  ret = pcmcia_enable_device (link);
-  if (ret)
-  { goto failed; }
-  ( (local_info_t *) link->priv)->eth_dev =
-    init_airo_card (link->irq,
-                    link->resource[0]->start, 1, &link->dev);
-  if (! ( (local_info_t *) link->priv)->eth_dev)
-  { goto failed; }
-  
-  return 0;
-  
-failed:
-  airo_release (link);
-  return -ENODEV;
+	local_info_t *dev;
+	int ret;
+
+	dev = link->priv;
+
+	dev_dbg(&link->dev, "airo_config\n");
+
+	link->config_flags |= CONF_ENABLE_IRQ | CONF_AUTO_SET_VPP |
+		CONF_AUTO_AUDIO | CONF_AUTO_SET_IO;
+
+	ret = pcmcia_loop_config(link, airo_cs_config_check, NULL);
+	if (ret)
+		goto failed;
+
+	if (!link->irq)
+		goto failed;
+
+	ret = pcmcia_enable_device(link);
+	if (ret)
+		goto failed;
+	((local_info_t *)link->priv)->eth_dev =
+		init_airo_card(link->irq,
+			       link->resource[0]->start, 1, &link->dev);
+	if (!((local_info_t *)link->priv)->eth_dev)
+		goto failed;
+
+	return 0;
+
+ failed:
+	airo_release(link);
+	return -ENODEV;
 } /* airo_config */
 
-static void airo_release (struct pcmcia_device * link)
+static void airo_release(struct pcmcia_device *link)
 {
-  dev_dbg (&link->dev, "airo_release\n");
-  pcmcia_disable_device (link);
+	dev_dbg(&link->dev, "airo_release\n");
+	pcmcia_disable_device(link);
 }
 
-static int airo_suspend (struct pcmcia_device * link)
+static int airo_suspend(struct pcmcia_device *link)
 {
-  local_info_t * local = link->priv;
-  
-  netif_device_detach (local->eth_dev);
-  
-  return 0;
+	local_info_t *local = link->priv;
+
+	netif_device_detach(local->eth_dev);
+
+	return 0;
 }
 
-static int airo_resume (struct pcmcia_device * link)
+static int airo_resume(struct pcmcia_device *link)
 {
-  local_info_t * local = link->priv;
-  
-  if (link->open) {
-    reset_airo_card (local->eth_dev);
-    netif_device_attach (local->eth_dev);
-  }
-  
-  return 0;
+	local_info_t *local = link->priv;
+
+	if (link->open) {
+		reset_airo_card(local->eth_dev);
+		netif_device_attach(local->eth_dev);
+	}
+
+	return 0;
 }
 
 static const struct pcmcia_device_id airo_ids[] = {
-  PCMCIA_DEVICE_MANF_CARD (0x015f, 0x000a),
-  PCMCIA_DEVICE_MANF_CARD (0x015f, 0x0005),
-  PCMCIA_DEVICE_MANF_CARD (0x015f, 0x0007),
-  PCMCIA_DEVICE_MANF_CARD (0x0105, 0x0007),
-  PCMCIA_DEVICE_NULL,
+	PCMCIA_DEVICE_MANF_CARD(0x015f, 0x000a),
+	PCMCIA_DEVICE_MANF_CARD(0x015f, 0x0005),
+	PCMCIA_DEVICE_MANF_CARD(0x015f, 0x0007),
+	PCMCIA_DEVICE_MANF_CARD(0x0105, 0x0007),
+	PCMCIA_DEVICE_NULL,
 };
-MODULE_DEVICE_TABLE (pcmcia, airo_ids);
+MODULE_DEVICE_TABLE(pcmcia, airo_ids);
 
 static struct pcmcia_driver airo_driver = {
-  .owner    = THIS_MODULE,
-  .name   = "airo_cs",
-  .probe    = airo_probe,
-  .remove   = airo_detach,
-  .id_table       = airo_ids,
-  .suspend  = airo_suspend,
-  .resume   = airo_resume,
+	.owner		= THIS_MODULE,
+	.name		= "airo_cs",
+	.probe		= airo_probe,
+	.remove		= airo_detach,
+	.id_table       = airo_ids,
+	.suspend	= airo_suspend,
+	.resume		= airo_resume,
 };
 
-static int __init airo_cs_init (void)
+static int __init airo_cs_init(void)
 {
-  return pcmcia_register_driver (&airo_driver);
+	return pcmcia_register_driver(&airo_driver);
 }
 
-static void __exit airo_cs_cleanup (void)
+static void __exit airo_cs_cleanup(void)
 {
-  pcmcia_unregister_driver (&airo_driver);
+	pcmcia_unregister_driver(&airo_driver);
 }
 
 /*
@@ -231,5 +231,5 @@ static void __exit airo_cs_cleanup (void)
     POSSIBILITY OF SUCH DAMAGE.
 */
 
-module_init (airo_cs_init);
-module_exit (airo_cs_cleanup);
+module_init(airo_cs_init);
+module_exit(airo_cs_cleanup);

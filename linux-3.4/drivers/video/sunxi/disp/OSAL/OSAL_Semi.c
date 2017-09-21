@@ -1,20 +1,20 @@
 /*
 *************************************************************************************
-*                               eBsp
-*            Operation System Adapter Layer
+*                         			eBsp
+*					   Operation System Adapter Layer
 *
-*       (c) Copyright 2006-2010, All winners Co,Ld.
-*             All Rights Reserved
+*				(c) Copyright 2006-2010, All winners Co,Ld.
+*							All	Rights Reserved
 *
-* File Name   : OSAL_Semi.h
+* File Name 	: OSAL_Semi.h
 *
-* Author    : javen
+* Author 		: javen
 *
-* Description   : 信号量操作
+* Description 	: 信号量操作
 *
-* History     :
-*      <author>       <time>        <version >        <desc>
-*       javen          2010-09-07          1.0         create this word
+* History 		:
+*      <author>    		<time>       	<version >    		<desc>
+*       javen     	   2010-09-07          1.0         create this word
 *
 *************************************************************************************
 */
@@ -38,9 +38,9 @@
 *
 *******************************************************************************
 */
-OSAL_SemHdle OSAL_CreateSemaphore (u32 Count)
+OSAL_SemHdle OSAL_CreateSemaphore(u32 Count)
 {
-  return NULL;
+	return NULL;
 }
 
 /*
@@ -61,7 +61,7 @@ OSAL_SemHdle OSAL_CreateSemaphore (u32 Count)
 *
 *******************************************************************************
 */
-void OSAL_DeleteSemaphore (OSAL_SemHdle SemHdle)
+void OSAL_DeleteSemaphore(OSAL_SemHdle SemHdle)
 {
 
 
@@ -85,7 +85,7 @@ void OSAL_DeleteSemaphore (OSAL_SemHdle SemHdle)
 *
 *******************************************************************************
 */
-void OSAL_SemPend (OSAL_SemHdle SemHdle, u16 TimeOut)
+void OSAL_SemPend(OSAL_SemHdle SemHdle, u16 TimeOut)
 {
 
 }
@@ -108,7 +108,7 @@ void OSAL_SemPend (OSAL_SemHdle SemHdle, u16 TimeOut)
 *
 *******************************************************************************
 */
-void OSAL_SemPost (OSAL_SemHdle SemHdle)
+void OSAL_SemPost(OSAL_SemHdle SemHdle)
 {
 
 }

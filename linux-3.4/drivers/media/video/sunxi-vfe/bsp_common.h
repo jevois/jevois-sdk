@@ -31,7 +31,7 @@ enum field {
 
 enum bus_pixelcode {
   BUS_FMT_FIXED = 0x0001,
-  
+
   /* RGB - next is 0x1009 */
   BUS_FMT_RGB444_2X8_PADHI_BE = 0x1001,
   BUS_FMT_RGB444_2X8_PADHI_LE = 0x1002,
@@ -41,10 +41,10 @@ enum bus_pixelcode {
   BUS_FMT_BGR565_2X8_LE = 0x1006,
   BUS_FMT_RGB565_2X8_BE = 0x1007,
   BUS_FMT_RGB565_2X8_LE = 0x1008,
-  
+
   BUS_FMT_RGB565_16X1 = 0x1009,
   BUS_FMT_RGB888_24X1 = 0x100a,
-  
+
   /* YUV (including grey) - next is 0x2014 */
   BUS_FMT_Y8_1X8 = 0x2001,
   BUS_FMT_UYVY8_1_5X8 = 0x2002,
@@ -65,13 +65,13 @@ enum bus_pixelcode {
   BUS_FMT_YVYU8_1X16 = 0x2012,
   BUS_FMT_YUYV10_1X20 = 0x200d,
   BUS_FMT_YVYU10_1X20 = 0x200e,
-  
+
   BUS_FMT_YUV8_1X24 = 0x2014,
   BUS_FMT_UYVY8_16X1 = 0x2015,
   BUS_FMT_UYVY10_20X1 = 0x2016,
   BUS_FMT_YY8_UYVY8_12X1 = 0x2018,
   BUS_FMT_YY10_UYVY10_15X1 = 0x2019,
-  
+
   /* Bayer - next is 0x3015 */
   BUS_FMT_SBGGR8_1X8 = 0x3001,
   BUS_FMT_SGBRG8_1X8 = 0x3013,
@@ -93,7 +93,7 @@ enum bus_pixelcode {
   BUS_FMT_SGBRG12_1X12 = 0x3010,
   BUS_FMT_SGRBG12_1X12 = 0x3011,
   BUS_FMT_SRGGB12_1X12 = 0x3012,
-  
+
   BUS_FMT_SBGGR8_8X1 = 0x3015,
   BUS_FMT_SGBRG8_8X1 = 0x3016,
   BUS_FMT_SGRBG8_8X1 = 0x3017,
@@ -106,7 +106,7 @@ enum bus_pixelcode {
   BUS_FMT_SGBRG12_12X1 = 0x301e,
   BUS_FMT_SGRBG12_12X1 = 0x301f,
   BUS_FMT_SRGGB12_12X1 = 0x3020,
-  
+
   /* JPEG compressed formats - next is 0x4002 */
   BUS_FMT_JPEG_1X8 = 0x4001,
 };
@@ -200,9 +200,9 @@ enum bit_width
   W_32BIT,
 };
 
-extern enum bus_pixeltype   find_bus_type (enum bus_pixelcode code);
-extern enum bit_width       find_bus_width (enum bus_pixelcode code);
-extern enum bit_width       find_bus_precision (enum bus_pixelcode code);
-extern enum pixel_fmt_type  find_pixel_fmt_type (enum pixel_fmt code);
+extern enum bus_pixeltype   find_bus_type(enum bus_pixelcode code);
+extern enum bit_width       find_bus_width(enum bus_pixelcode code);
+extern enum bit_width       find_bus_precision(enum bus_pixelcode code);
+extern enum pixel_fmt_type  find_pixel_fmt_type(enum pixel_fmt code);
 
 #endif

@@ -26,8 +26,8 @@
 
 #ifdef __KERNEL__
 
-extern int dns_query (const char * type, const char * name, size_t namelen,
-                      const char * options, char ** _result, time_t * _expiry);
+extern int dns_query(const char *type, const char *name, size_t namelen,
+		     const char *options, char **_result, time_t *_expiry);
 
 #endif /* KERNEL */
 

@@ -6,15 +6,15 @@
 #define SZ_512       0x00000200U
 #define SZ_1K        0x00000400U
 #define SZ_2K        0x00000800U
-#define SZ_3K    0x00000C00U
+#define SZ_3K		 0x00000C00U
 #define SZ_4K        0x00001000U
-#define SZ_6K    0x00001800U
+#define SZ_6K		 0x00001800U
 #define SZ_8K        0x00002000U
-#define SZ_10K     0x00002800U
-#define SZ_12K     0x00003000U
-#define SZ_16K     0x00004000U
-#define SZ_20K     0x00005000U
-#define SZ_24K     0x00006000U
+#define SZ_10K		 0x00002800U
+#define SZ_12K		 0x00003000U
+#define SZ_16K		 0x00004000U
+#define SZ_20K		 0x00005000U
+#define SZ_24K		 0x00006000U
 
 
 #define SZ_32K       0x00008000U

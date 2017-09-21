@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -30,108 +30,107 @@
 #include <pmu.h>
 #include <sys_config.h>
 
-int sunxi_key_init (void)
+int sunxi_key_init(void)
 {
-  struct sunxi_lradc * sunxi_key_base = (struct sunxi_lradc *) SUNXI_LRADC_BASE;
-  uint reg_val;
-  
-  reg_val = sunxi_key_base->ctrl;
-  reg_val &= ~ ( (7 << 1) | (0xffU << 24) );
-  reg_val |=  LRADC_HOLD_EN;
-  reg_val |=  LRADC_EN;
-  sunxi_key_base->ctrl = reg_val;
-  
-  /* disable all key irq */
-  sunxi_key_base->intc = 0;
-  sunxi_key_base->ints = 0x1f1f;
-  
-  return 0;
+	struct sunxi_lradc *sunxi_key_base = (struct sunxi_lradc *)SUNXI_LRADC_BASE;
+    uint reg_val;
+
+	reg_val = sunxi_key_base->ctrl;
+    reg_val &= ~((7<<1) | (0xffU << 24));
+	reg_val |=  LRADC_HOLD_EN;
+	reg_val |=  LRADC_EN;
+    sunxi_key_base->ctrl = reg_val;
+
+	/* disable all key irq */
+	sunxi_key_base->intc = 0;
+	sunxi_key_base->ints = 0x1f1f;
+
+	return 0;
 }
 
-int sunxi_key_exit (void)
+int sunxi_key_exit(void)
 {
-  struct sunxi_lradc * sunxi_key_base = (struct sunxi_lradc *) SUNXI_LRADC_BASE;
-  
-  sunxi_key_base->ctrl = 0;
-  /* disable all key irq */
-  sunxi_key_base->intc = 0;
-  sunxi_key_base->ints = 0x1f1f;
-  
-  return 0;
+	struct sunxi_lradc *sunxi_key_base = (struct sunxi_lradc *)SUNXI_LRADC_BASE;
+
+    sunxi_key_base->ctrl = 0;
+	/* disable all key irq */
+	sunxi_key_base->intc = 0;
+	sunxi_key_base->ints = 0x1f1f;
+
+	return 0;
 }
 
 
-int sunxi_key_read (void)
+int sunxi_key_read(void)
 {
-  #ifdef CONFIG_FPGA
-  return -1;
-  #else
-  u32 ints;
-  int key = -1;
-  int keyen_flag = 0;
-  struct sunxi_lradc * sunxi_key_base = (struct sunxi_lradc *) SUNXI_LRADC_BASE;
-  
-  if ( !script_parser_fetch ("key_detect_en", "keyen_flag", &keyen_flag, 1) )
-  {
-    if (!keyen_flag)
-    { return -1; }
-  }
-  ints = sunxi_key_base->ints;
-  /* clear the pending data */
-  sunxi_key_base->ints |= (ints & 0x1f);
-  /* if there is already data pending,
-   read it */
-  if ( ints & ADC0_KEYDOWN_PENDING)
-  {
-    if (ints & ADC0_DATA_PENDING)
+#ifdef CONFIG_FPGA
+    return -1;
+#else
+	u32 ints;
+	int key = -1;
+	int keyen_flag = 0;
+    struct sunxi_lradc *sunxi_key_base = (struct sunxi_lradc *)SUNXI_LRADC_BASE;
+
+       if( !script_parser_fetch("key_detect_en","keyen_flag",&keyen_flag,1) )
+       {
+           if(!keyen_flag)
+               return -1;
+       }
+	ints = sunxi_key_base->ints;
+	/* clear the pending data */
+	sunxi_key_base->ints |= (ints & 0x1f);
+	/* if there is already data pending,
+	 read it */
+	if( ints & ADC0_KEYDOWN_PENDING)
+	{
+		if(ints & ADC0_DATA_PENDING)
+		{
+			key = sunxi_key_base->data0 & 0x3f;
+			if(!key)
+			{
+				key = -1;
+			}
+		}
+	}
+	else if(ints & ADC0_DATA_PENDING)
+	{
+		key = sunxi_key_base->data0 & 0x3f;
+		if(!key)
+		{
+			key = -1;
+		}
+	}
+	if(key > 0)
+		printf("key pressed value=0x%x\n", key);
+
+	return key;
+#endif
+}
+
+int do_key_test(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
+{
+	struct sunxi_lradc *sunxi_key_base = (struct sunxi_lradc *)SUNXI_LRADC_BASE;
+	int power_key;
+
+	puts("press a key:\n");
+	sunxi_key_base->ints = 0x1f1f;
+
+    while(!ctrlc())
     {
-      key = sunxi_key_base->data0 & 0x3f;
-      if (!key)
-      {
-        key = -1;
-      }
-    }
-  }
-  else
-    if (ints & ADC0_DATA_PENDING)
-    {
-      key = sunxi_key_base->data0 & 0x3f;
-      if (!key)
-      {
-        key = -1;
-      }
-    }
-  if (key > 0)
-  { printf ("key pressed value=0x%x\n", key); }
-  
-  return key;
-  #endif
+		sunxi_key_read();
+		power_key = axp_probe_key();
+		if(power_key > 0)
+		{
+			break;
+		}
+	}
+
+	return 0;
+
 }
 
-int do_key_test (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
-{
-  struct sunxi_lradc * sunxi_key_base = (struct sunxi_lradc *) SUNXI_LRADC_BASE;
-  int power_key;
-  
-  puts ("press a key:\n");
-  sunxi_key_base->ints = 0x1f1f;
-  
-  while (!ctrlc() )
-  {
-    sunxi_key_read();
-    power_key = axp_probe_key();
-    if (power_key > 0)
-    {
-      break;
-    }
-  }
-  
-  return 0;
-  
-}
-
-U_BOOT_CMD (
-  key_test, 1, 0, do_key_test,
-  "Test the key value\n",
-  ""
+U_BOOT_CMD(
+	key_test, 1, 0,	do_key_test,
+	"Test the key value\n",
+	""
 );

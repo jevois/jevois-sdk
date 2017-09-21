@@ -1,10 +1,10 @@
-#ifndef _CM4040_H_
-#define _CM4040_H_
+#ifndef	_CM4040_H_
+#define	_CM4040_H_
 
-#define CM_MAX_DEV    4
+#define	CM_MAX_DEV		4
 
-#define DEVICE_NAME   "cmx"
-#define MODULE_NAME   "cm4040_cs"
+#define	DEVICE_NAME		"cmx"
+#define	MODULE_NAME		"cm4040_cs"
 
 #define REG_OFFSET_BULK_OUT      0
 #define REG_OFFSET_BULK_IN       0
@@ -44,4 +44,4 @@
 #define  CMD_RDR_TO_PC_ESCAPE             0x83
 #define  CMD_RDR_TO_PC_OK_SECURE          0x89
 
-#endif  /* _CM4040_H_ */
+#endif	/* _CM4040_H_ */

@@ -22,35 +22,35 @@
 
 #include "core.h"
 
-extern void secondary_startup (void);
+extern void secondary_startup(void);
 
-int platform_cpu_kill (unsigned int cpu)
+int platform_cpu_kill(unsigned int cpu)
 {
-  return 1;
+	return 1;
 }
 
 /*
  * platform-specific code to shutdown a CPU
  *
  */
-void platform_cpu_die (unsigned int cpu)
+void platform_cpu_die(unsigned int cpu)
 {
-  flush_cache_all();
-  
-  highbank_set_cpu_jump (cpu, secondary_startup);
-  scu_power_mode (scu_base_addr, SCU_PM_POWEROFF);
-  
-  cpu_do_idle();
-  
-  /* We should never return from idle */
-  panic ("highbank: cpu %d unexpectedly exit from shutdown\n", cpu);
+	flush_cache_all();
+
+	highbank_set_cpu_jump(cpu, secondary_startup);
+	scu_power_mode(scu_base_addr, SCU_PM_POWEROFF);
+
+	cpu_do_idle();
+
+	/* We should never return from idle */
+	panic("highbank: cpu %d unexpectedly exit from shutdown\n", cpu);
 }
 
-int platform_cpu_disable (unsigned int cpu)
+int platform_cpu_disable(unsigned int cpu)
 {
-  /*
-   * CPU0 should not be shut down via hotplug.  cpu_idle can WFI
-   * or a proper shutdown or hibernate should be used.
-   */
-  return cpu == 0 ? -EPERM : 0;
+	/*
+	 * CPU0 should not be shut down via hotplug.  cpu_idle can WFI
+	 * or a proper shutdown or hibernate should be used.
+	 */
+	return cpu == 0 ? -EPERM : 0;
 }

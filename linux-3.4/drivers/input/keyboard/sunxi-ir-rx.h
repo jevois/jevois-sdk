@@ -68,7 +68,7 @@
 #define IR_DMAX          (106)            /* 53*42.7 = ~2263us ~= 561*4, D < IR_DMAX */
 
 #else
-#define IR_RXFILT_VAL    (((8)&0x3f)<<2)  /* Filter Threshold = 8*42.7 = ~341us < 500us */
+#define IR_RXFILT_VAL    (((8)&0x3f)<<2)  /* Filter Threshold = 8*42.7 = ~341us	< 500us */
 #define IR_RXIDLE_VAL    (((2)&0xff)<<8)  /* Idle Threshold = (2+1)*128*42.7 = ~16.4ms > 9ms */
 #define IR_ACTIVE_T      ((0&0xff)<<16)   /* Active Threshold */
 #define IR_ACTIVE_T_C    ((1&0xff)<<23)   /* Active Threshold */
@@ -85,28 +85,28 @@
 #define DRV_VERSION      "1.00"
 
 enum {
-  DEBUG_INIT = 1U << 0,
-  DEBUG_INT = 1U << 1,
-  DEBUG_DATA_INFO = 1U << 2,
-  DEBUG_SUSPEND = 1U << 3,
-  DEBUG_ERR = 1U << 4,
+	DEBUG_INIT = 1U << 0,
+	DEBUG_INT = 1U << 1,
+	DEBUG_DATA_INFO = 1U << 2,
+	DEBUG_SUSPEND = 1U << 3,
+	DEBUG_ERR = 1U << 4,
 };
 
 enum ir_mode {
-  CIR_MODE_ENABLE,
-  IR_MODULE_ENABLE,
+	CIR_MODE_ENABLE,
+	IR_MODULE_ENABLE,
 };
 enum ir_sample_config {
-  IR_SAMPLE_REG_CLEAR,
-  IR_CLK_SAMPLE,
-  IR_FILTER_TH,
-  IR_IDLE_TH,
-  IR_ACTIVE_TH,
+	IR_SAMPLE_REG_CLEAR,
+	IR_CLK_SAMPLE,
+	IR_FILTER_TH,
+	IR_IDLE_TH,
+	IR_ACTIVE_TH,
 };
 enum ir_irq_config {
-  IR_IRQ_STATUS_CLEAR,
-  IR_IRQ_ENABLE,
-  IR_IRQ_FIFO_SIZE,
+	IR_IRQ_STATUS_CLEAR,
+	IR_IRQ_ENABLE,
+	IR_IRQ_FIFO_SIZE,
 };
 #endif
 

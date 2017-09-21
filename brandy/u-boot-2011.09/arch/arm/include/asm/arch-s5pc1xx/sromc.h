@@ -18,9 +18,9 @@
  * MA 02111-1307 USA
  *
  * Note: This file contains the register description for Memory subsystem
- *   (SROM, NAND Flash, OneNand, DDR, OneDRAM) on S5PC1XX.
+ * 	 (SROM, NAND Flash, OneNand, DDR, OneDRAM) on S5PC1XX.
  *
- *   Only SROMC is defined as of now
+ * 	 Only SROMC is defined as of now
  */
 
 #ifndef __ASM_ARCH_SROMC_H_
@@ -28,7 +28,7 @@
 
 #define SMC_DATA16_WIDTH(x)    (1<<((x*4)+0))
 #define SMC_BYTE_ADDR_MODE(x)  (1<<((x*4)+1))  /* 0-> Half-word base address*/
-/* 1-> Byte base address*/
+						/* 1-> Byte base address*/
 #define SMC_WAIT_ENABLE(x)     (1<<((x*4)+2))
 #define SMC_BYTE_ENABLE(x)     (1<<((x*4)+3))
 
@@ -42,12 +42,12 @@
 
 #ifndef __ASSEMBLY__
 struct s5p_sromc {
-  unsigned int  bw;
-  unsigned int  bc[6];
+	unsigned int	bw;
+	unsigned int	bc[6];
 };
-#endif  /* __ASSEMBLY__ */
+#endif	/* __ASSEMBLY__ */
 
 /* Configure the Band Width and Bank Control Regs for required SROMC Bank */
-void s5p_config_sromc (u32 srom_bank, u32 srom_bw_conf, u32 srom_bc_conf);
+void s5p_config_sromc(u32 srom_bank, u32 srom_bw_conf, u32 srom_bc_conf);
 
 #endif /* __ASM_ARCH_SMC_H_ */

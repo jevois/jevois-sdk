@@ -22,18 +22,18 @@
 #define AC100_IRQ_GPIO(x) (x + AC100_IRQ_TEMP_WARN)
 
 struct ac100 {
-  struct mutex irq_lock;
-  
-  struct device * dev;
-  struct regmap * regmap;
-  int irq;
+	struct mutex irq_lock;
+
+	struct device *dev;
+	struct regmap *regmap;
+	int irq;
 };
 
 /* Device I/O API */
-int ac100_reg_read (struct ac100 * ac100, unsigned short reg);
-int ac100_reg_write (struct ac100 * ac100, unsigned short reg, unsigned short val);
+int ac100_reg_read(struct ac100 *ac100, unsigned short reg);
+int ac100_reg_write(struct ac100 *ac100, unsigned short reg, unsigned short val);
 
-int ac100_set_bits (struct ac100 * ac100, unsigned short reg,
-                    unsigned short mask, unsigned short val);
+int ac100_set_bits(struct ac100 *ac100, unsigned short reg,
+		    unsigned short mask, unsigned short val);
 
 #endif

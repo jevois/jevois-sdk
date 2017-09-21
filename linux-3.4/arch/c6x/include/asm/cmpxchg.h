@@ -16,37 +16,37 @@
 /*
  * Misc. functions
  */
-static inline unsigned int __xchg (unsigned int x, volatile void * ptr, int size)
+static inline unsigned int __xchg(unsigned int x, volatile void *ptr, int size)
 {
-  unsigned int tmp;
-  unsigned long flags;
-  
-  local_irq_save (flags);
-  
-  switch (size) {
-  case 1:
-    tmp = 0;
-    tmp = * ( (unsigned char *) ptr);
-    * ( (unsigned char *) ptr) = (unsigned char) x;
-    break;
-  case 2:
-    tmp = 0;
-    tmp = * ( (unsigned short *) ptr);
-    * ( (unsigned short *) ptr) = x;
-    break;
-  case 4:
-    tmp = 0;
-    tmp = * ( (unsigned int *) ptr);
-    * ( (unsigned int *) ptr) = x;
-    break;
-  }
-  local_irq_restore (flags);
-  return tmp;
+	unsigned int tmp;
+	unsigned long flags;
+
+	local_irq_save(flags);
+
+	switch (size) {
+	case 1:
+		tmp = 0;
+		tmp = *((unsigned char *) ptr);
+		*((unsigned char *) ptr) = (unsigned char) x;
+		break;
+	case 2:
+		tmp = 0;
+		tmp = *((unsigned short *) ptr);
+		*((unsigned short *) ptr) = x;
+		break;
+	case 4:
+		tmp = 0;
+		tmp = *((unsigned int *) ptr);
+		*((unsigned int *) ptr) = x;
+		break;
+	}
+	local_irq_restore(flags);
+	return tmp;
 }
 
 #define xchg(ptr, x) \
-  ((__typeof__(*(ptr)))__xchg((unsigned int)(x), (void *) (ptr), \
-                              sizeof(*(ptr))))
+	((__typeof__(*(ptr)))__xchg((unsigned int)(x), (void *) (ptr), \
+				    sizeof(*(ptr))))
 #define tas(ptr)    xchg((ptr), 1)
 
 
@@ -56,11 +56,11 @@ static inline unsigned int __xchg (unsigned int x, volatile void * ptr, int size
  * cmpxchg_local and cmpxchg64_local are atomic wrt current CPU. Always make
  * them available.
  */
-#define cmpxchg_local(ptr, o, n)          \
-  ((__typeof__(*(ptr)))__cmpxchg_local_generic((ptr),   \
-      (unsigned long)(o), \
-      (unsigned long)(n), \
-      sizeof(*(ptr))))
+#define cmpxchg_local(ptr, o, n)					\
+	((__typeof__(*(ptr)))__cmpxchg_local_generic((ptr),		\
+						     (unsigned long)(o), \
+						     (unsigned long)(n), \
+						     sizeof(*(ptr))))
 #define cmpxchg64_local(ptr, o, n) __cmpxchg64_local_generic((ptr), (o), (n))
 
 #include <asm-generic/cmpxchg.h>

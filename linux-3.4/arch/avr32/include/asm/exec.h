@@ -8,6 +8,6 @@
 #ifndef __ASM_AVR32_EXEC_H
 #define __ASM_AVR32_EXEC_H
 
-#define arch_align_stack(x) (x)
+#define arch_align_stack(x)	(x)
 
 #endif /* __ASM_AVR32_EXEC_H */

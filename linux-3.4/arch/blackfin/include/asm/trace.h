@@ -24,11 +24,11 @@
 extern unsigned long trace_buff_offset;
 extern unsigned long software_trace_buff[];
 #if defined(CONFIG_DEBUG_VERBOSE)
-extern void decode_address (char * buf, unsigned long address);
-extern bool get_instruction (unsigned int * val, unsigned short * address);
+extern void decode_address(char *buf, unsigned long address);
+extern bool get_instruction(unsigned int *val, unsigned short *address);
 #else
-static inline void decode_address (char * buf, unsigned long address) { }
-static inline bool get_instruction (unsigned int * val, unsigned short * address) { return false; }
+static inline void decode_address(char *buf, unsigned long address) { }
+static inline bool get_instruction(unsigned int *val, unsigned short *address) { return false; }
 #endif
 
 /* Trace Macros for C files */
@@ -38,15 +38,15 @@ static inline bool get_instruction (unsigned int * val, unsigned short * address
 #define trace_buffer_init() bfin_write_TBUFCTL(BFIN_TRACE_INIT)
 
 #define trace_buffer_save(x) \
-  do { \
-    (x) = bfin_read_TBUFCTL(); \
-    bfin_write_TBUFCTL((x) & ~TBUFEN); \
-  } while (0)
+	do { \
+		(x) = bfin_read_TBUFCTL(); \
+		bfin_write_TBUFCTL((x) & ~TBUFEN); \
+	} while (0)
 
 #define trace_buffer_restore(x) \
-  do { \
-    bfin_write_TBUFCTL((x));        \
-  } while (0)
+	do { \
+		bfin_write_TBUFCTL((x));        \
+	} while (0)
 #else /* DEBUG_BFIN_HWTRACE_ON */
 
 #define trace_buffer_save(x)
@@ -58,31 +58,31 @@ static inline bool get_instruction (unsigned int * val, unsigned short * address
 
 #ifdef CONFIG_DEBUG_BFIN_HWTRACE_ON
 
-#define trace_buffer_stop(preg, dreg) \
-  preg.L = LO(TBUFCTL);   \
-  preg.H = HI(TBUFCTL);   \
-  dreg = 0x1;     \
-  [preg] = dreg;
+#define trace_buffer_stop(preg, dreg)	\
+	preg.L = LO(TBUFCTL);		\
+	preg.H = HI(TBUFCTL);		\
+	dreg = 0x1;			\
+	[preg] = dreg;
 
 #define trace_buffer_init(preg, dreg) \
-  preg.L = LO(TBUFCTL);         \
-  preg.H = HI(TBUFCTL);         \
-  dreg = BFIN_TRACE_INIT;       \
-  [preg] = dreg;
+	preg.L = LO(TBUFCTL);         \
+	preg.H = HI(TBUFCTL);         \
+	dreg = BFIN_TRACE_INIT;       \
+	[preg] = dreg;
 
 #define trace_buffer_save(preg, dreg) \
-  preg.L = LO(TBUFCTL); \
-  preg.H = HI(TBUFCTL); \
-  dreg = [preg]; \
-  [--sp] = dreg; \
-  dreg = 0x1; \
-  [preg] = dreg;
+	preg.L = LO(TBUFCTL); \
+	preg.H = HI(TBUFCTL); \
+	dreg = [preg]; \
+	[--sp] = dreg; \
+	dreg = 0x1; \
+	[preg] = dreg;
 
 #define trace_buffer_restore(preg, dreg) \
-  preg.L = LO(TBUFCTL); \
-  preg.H = HI(TBUFCTL); \
-  dreg = [sp++]; \
-  [preg] = dreg;
+	preg.L = LO(TBUFCTL); \
+	preg.H = HI(TBUFCTL); \
+	dreg = [sp++]; \
+	[preg] = dreg;
 
 #else /* CONFIG_DEBUG_BFIN_HWTRACE_ON */
 
@@ -103,4 +103,4 @@ static inline bool get_instruction (unsigned int * val, unsigned short * address
 
 #endif /* __ASSEMBLY__ */
 
-#endif        /* _BLACKFIN_TRACE_ */
+#endif				/* _BLACKFIN_TRACE_ */

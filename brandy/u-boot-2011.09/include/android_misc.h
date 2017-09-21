@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -44,15 +44,15 @@
  * other way around.
  */
 struct bootloader_message {
-  char command[32];
-  char status[32];
-  char recovery[1024];
+    char command[32];
+    char status[32];
+    char recovery[1024];
 };
 
 /* Read and write the bootloader command from the "misc" partition.
  * These return zero on success.
  */
-int get_bootloader_message (struct bootloader_message * out);
-int set_bootloader_message (const struct bootloader_message * in);
+int get_bootloader_message(struct bootloader_message *out);
+int set_bootloader_message(const struct bootloader_message *in);
 
 #endif

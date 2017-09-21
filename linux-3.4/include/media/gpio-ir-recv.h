@@ -14,8 +14,8 @@
 #define __GPIO_IR_RECV_H__
 
 struct gpio_ir_recv_platform_data {
-  int gpio_nr;
-  bool active_low;
+	int gpio_nr;
+	bool active_low;
 };
 
 #endif /* __GPIO_IR_RECV_H__ */

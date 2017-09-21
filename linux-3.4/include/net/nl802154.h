@@ -36,8 +36,8 @@ struct ieee802154_addr;
  *
  * Note: This is in section 7.3.1 of the IEEE 802.15.4-2006 document.
  */
-int ieee802154_nl_assoc_indic (struct net_device * dev,
-                               struct ieee802154_addr * addr, u8 cap);
+int ieee802154_nl_assoc_indic(struct net_device *dev,
+		struct ieee802154_addr *addr, u8 cap);
 
 /**
  * ieee802154_nl_assoc_confirm - Notify userland of association.
@@ -51,8 +51,8 @@ int ieee802154_nl_assoc_indic (struct net_device * dev,
  *
  * Note: This is in section 7.3.2 of the IEEE 802.15.4 document.
  */
-int ieee802154_nl_assoc_confirm (struct net_device * dev,
-                                 u16 short_addr, u8 status);
+int ieee802154_nl_assoc_confirm(struct net_device *dev,
+		u16 short_addr, u8 status);
 
 /**
  * ieee802154_nl_disassoc_indic - Notify userland of disassociation.
@@ -64,8 +64,8 @@ int ieee802154_nl_assoc_confirm (struct net_device * dev,
  *
  * Note: This is in section 7.3.3 of the IEEE 802.15.4 document.
  */
-int ieee802154_nl_disassoc_indic (struct net_device * dev,
-                                  struct ieee802154_addr * addr, u8 reason);
+int ieee802154_nl_disassoc_indic(struct net_device *dev,
+		struct ieee802154_addr *addr, u8 reason);
 
 /**
  * ieee802154_nl_disassoc_confirm - Notify userland of disassociation
@@ -79,8 +79,8 @@ int ieee802154_nl_disassoc_indic (struct net_device * dev,
  *
  * Note: This is in section 7.1.4.3 of the IEEE 802.15.4 document.
  */
-int ieee802154_nl_disassoc_confirm (struct net_device * dev,
-                                    u8 status);
+int ieee802154_nl_disassoc_confirm(struct net_device *dev,
+		u8 status);
 
 /**
  * ieee802154_nl_scan_confirm - Notify userland of completion of scan.
@@ -94,9 +94,9 @@ int ieee802154_nl_disassoc_confirm (struct net_device * dev,
  * Note: This is in section 7.1.11 of the IEEE 802.15.4 document.
  * Note: This API does not permit the return of an active scan result.
  */
-int ieee802154_nl_scan_confirm (struct net_device * dev,
-                                u8 status, u8 scan_type, u32 unscanned, u8 page,
-                                u8 * edl/*, struct list_head *pan_desc_list */);
+int ieee802154_nl_scan_confirm(struct net_device *dev,
+		u8 status, u8 scan_type, u32 unscanned, u8 page,
+		u8 *edl/*, struct list_head *pan_desc_list */);
 
 /**
  * ieee802154_nl_beacon_indic - Notify userland of a received beacon.
@@ -111,8 +111,8 @@ int ieee802154_nl_scan_confirm (struct net_device * dev,
  * Note: This API cannot indicate a beacon frame for a coordinator
  *       operating in long addressing mode.
  */
-int ieee802154_nl_beacon_indic (struct net_device * dev, u16 panid,
-                                u16 coord_addr);
+int ieee802154_nl_beacon_indic(struct net_device *dev, u16 panid,
+		u16 coord_addr);
 
 /**
  * ieee802154_nl_start_confirm - Notify userland of completion of start.
@@ -121,6 +121,6 @@ int ieee802154_nl_beacon_indic (struct net_device * dev, u16 panid,
  *
  * Note: This is in section 7.1.14 of the IEEE 802.15.4 document.
  */
-int ieee802154_nl_start_confirm (struct net_device * dev, u8 status);
+int ieee802154_nl_start_confirm(struct net_device *dev, u8 status);
 
 #endif

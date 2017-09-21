@@ -42,30 +42,30 @@
 #include <flash.h>
 #include <linux/types.h>
 
-void * memcpy (void * trg, const void * src, size_t len)
+void *memcpy(void *trg, const void *src, size_t len)
 {
-  extern void * __memcpy (void *, const void *, size_t);
-  char * s = (char *) src;
-  char * t = (char *) trg;
-  void * dest = (void *) src;
-  
-  /*
-   * Check is source address is in flash:
-   * If not, we use the fast assembler code
-   */
-  if ( ( ( ( (unsigned long) s & 3) == 0) /* source aligned  */
-         &&        /*  AND    */
-         ( ( (unsigned long) t & 3) == 0) ) /* target aligned, */
-       ||        /*  or     */
-       (addr2info ( (ulong) s) == NULL) ) { /* source not in flash */
-    return __memcpy (trg, src, len);
-  }
-  
-  /*
-   * Copying from flash, perform byte by byte copy.
-   */
-  while (len-- > 0)
-  { *t++ = *s++; }
-  
-  return dest;
+	extern void* __memcpy(void *, const void *, size_t);
+	char *s = (char *)src;
+	char *t = (char *)trg;
+	void *dest = (void *)src;
+
+	/*
+	 * Check is source address is in flash:
+	 * If not, we use the fast assembler code
+	 */
+	if (((((unsigned long)s & 3) == 0)	/* source aligned  */
+		&&				/*	AND	   */
+	     (((unsigned long)t & 3) == 0))	/* target aligned, */
+		||				/*	or	   */
+	    (addr2info((ulong)s) == NULL)) {	/* source not in flash */
+		return __memcpy(trg, src, len);
+	}
+
+	/*
+	 * Copying from flash, perform byte by byte copy.
+	 */
+	while (len-- > 0)
+		*t++ = *s++;
+
+	return dest;
 }

@@ -42,93 +42,89 @@
 
 #include "core.h"
 
-HW_DECLARE_SPINLOCK (arch)
-HW_DECLARE_SPINLOCK (gpio)
+HW_DECLARE_SPINLOCK(arch)
+HW_DECLARE_SPINLOCK(gpio)
 #if defined(CONFIG_DEBUG_SPINLOCK)
-EXPORT_SYMBOL (bcmring_gpio_reg_lock);
+    EXPORT_SYMBOL(bcmring_gpio_reg_lock);
 #endif
 
 /* sysctl */
-static int bcmring_arch_warm_reboot;  /* do a warm reboot on hard reset */
+static int bcmring_arch_warm_reboot;	/* do a warm reboot on hard reset */
 
-static void bcmring_restart (char mode, const char * cmd)
+static void bcmring_restart(char mode, const char *cmd)
 {
-  printk ("arch_reset:%c %x\n", mode, bcmring_arch_warm_reboot);
-  
-  if (mode == 'h') {
-    /* Reboot configured in proc entry */
-    if (bcmring_arch_warm_reboot) {
-      printk ("warm reset\n");
-      /* Issue Warm reset (do not reset ethernet switch, keep alive) */
-      chipcHw_reset (chipcHw_REG_SOFT_RESET_CHIP_WARM);
-    }
-    else {
-      /* Force reset of everything */
-      printk ("force reset\n");
-      chipcHw_reset (chipcHw_REG_SOFT_RESET_CHIP_SOFT);
-    }
-  }
-  else {
-    /* Force reset of everything */
-    printk ("force reset\n");
-    chipcHw_reset (chipcHw_REG_SOFT_RESET_CHIP_SOFT);
-  }
+	printk("arch_reset:%c %x\n", mode, bcmring_arch_warm_reboot);
+
+	if (mode == 'h') {
+		/* Reboot configured in proc entry */
+		if (bcmring_arch_warm_reboot) {
+			printk("warm reset\n");
+			/* Issue Warm reset (do not reset ethernet switch, keep alive) */
+			chipcHw_reset(chipcHw_REG_SOFT_RESET_CHIP_WARM);
+		} else {
+			/* Force reset of everything */
+			printk("force reset\n");
+			chipcHw_reset(chipcHw_REG_SOFT_RESET_CHIP_SOFT);
+		}
+	} else {
+		/* Force reset of everything */
+		printk("force reset\n");
+		chipcHw_reset(chipcHw_REG_SOFT_RESET_CHIP_SOFT);
+	}
 }
 
-static struct ctl_table_header * bcmring_sysctl_header;
+static struct ctl_table_header *bcmring_sysctl_header;
 
 static struct ctl_table bcmring_sysctl_warm_reboot[] = {
-  {
-    .procname = "warm",
-    .data = &bcmring_arch_warm_reboot,
-    .maxlen = sizeof (int),
-    .mode = 0644,
-    .proc_handler = proc_dointvec
-  },
-  {}
+	{
+	 .procname = "warm",
+	 .data = &bcmring_arch_warm_reboot,
+	 .maxlen = sizeof(int),
+	 .mode = 0644,
+	 .proc_handler = proc_dointvec},
+	{}
 };
 
 static struct ctl_table bcmring_sysctl_reboot[] = {
-  {
-    .procname = "reboot",
-    .mode = 0555,
-    .child = bcmring_sysctl_warm_reboot
-  },
-  {}
+	{
+	 .procname = "reboot",
+	 .mode = 0555,
+	 .child = bcmring_sysctl_warm_reboot},
+	{}
 };
 
 static struct resource nand_resource[] = {
-  [0] = {
-    .start = MM_ADDR_IO_NAND,
-    .end = MM_ADDR_IO_NAND + 0x1000 - 1,
-    .flags = IORESOURCE_MEM,
-  },
+	[0] = {
+		.start = MM_ADDR_IO_NAND,
+		.end = MM_ADDR_IO_NAND + 0x1000 - 1,
+		.flags = IORESOURCE_MEM,
+	},
 };
 
 static struct platform_device nand_device = {
-  .name = "bcm-nand",
-  .id = -1,
-  .resource = nand_resource,
-  .num_resources  = ARRAY_SIZE (nand_resource),
+	.name = "bcm-nand",
+	.id = -1,
+	.resource = nand_resource,
+	.num_resources	= ARRAY_SIZE(nand_resource),
 };
 
 static struct resource pmu_resource = {
-  .start  = IRQ_PMUIRQ,
-  .end  = IRQ_PMUIRQ,
-  .flags  = IORESOURCE_IRQ,
+	.start	= IRQ_PMUIRQ,
+	.end	= IRQ_PMUIRQ,
+	.flags	= IORESOURCE_IRQ,
 };
 
 static struct platform_device pmu_device = {
-  .name   = "arm-pmu",
-  .id   = ARM_PMU_DEVICE_CPU,
-  .resource = &pmu_resource,
-  .num_resources  = 1,
+	.name		= "arm-pmu",
+	.id		= ARM_PMU_DEVICE_CPU,
+	.resource	= &pmu_resource,
+	.num_resources	= 1,
 };
 
 
-static struct platform_device * devices[] __initdata = {
-  &nand_device,
-  &pmu_device,
+static struct platform_device *devices[] __initdata = {
+	&nand_device,
+	&pmu_device,
 };
 
 /****************************************************************************
@@ -140,19 +136,19 @@ static struct platform_device * devices[] __initdata = {
 *   are called in.
 *
 *****************************************************************************/
-static void __init bcmring_init_machine (void)
+static void __init bcmring_init_machine(void)
 {
 
-  bcmring_sysctl_header = register_sysctl_table (bcmring_sysctl_reboot);
-  
-  /* Enable spread spectrum */
-  chipcHw_enableSpreadSpectrum();
-  
-  platform_add_devices (devices, ARRAY_SIZE (devices) );
-  
-  bcmring_amba_init();
-  
-  dma_init();
+	bcmring_sysctl_header = register_sysctl_table(bcmring_sysctl_reboot);
+
+	/* Enable spread spectrum */
+	chipcHw_enableSpreadSpectrum();
+
+	platform_add_devices(devices, ARRAY_SIZE(devices));
+
+	bcmring_amba_init();
+
+	dma_init();
 }
 
 /****************************************************************************
@@ -162,27 +158,27 @@ static void __init bcmring_init_machine (void)
 *
 *****************************************************************************/
 
-static void __init bcmring_fixup (struct tag * t, char ** cmdline,
-                                  struct meminfo * mi) {
-  #ifdef CONFIG_BLK_DEV_INITRD
-  printk (KERN_NOTICE "bcmring_fixup\n");
-  t->hdr.tag = ATAG_CORE;
-  t->hdr.size = tag_size (tag_core);
-  t->u.core.flags = 0;
-  t->u.core.pagesize = PAGE_SIZE;
-  t->u.core.rootdev = 31 << 8 | 0;
-  t = tag_next (t);
-  
-  t->hdr.tag = ATAG_MEM;
-  t->hdr.size = tag_size (tag_mem32);
-  t->u.mem.start = CFG_GLOBAL_RAM_BASE;
-  t->u.mem.size = CFG_GLOBAL_RAM_SIZE;
-  
-  t = tag_next (t);
-  
-  t->hdr.tag = ATAG_NONE;
-  t->hdr.size = 0;
-  #endif
+static void __init bcmring_fixup(struct tag *t, char **cmdline,
+	struct meminfo *mi) {
+#ifdef CONFIG_BLK_DEV_INITRD
+	printk(KERN_NOTICE "bcmring_fixup\n");
+	t->hdr.tag = ATAG_CORE;
+	t->hdr.size = tag_size(tag_core);
+	t->u.core.flags = 0;
+	t->u.core.pagesize = PAGE_SIZE;
+	t->u.core.rootdev = 31 << 8 | 0;
+	t = tag_next(t);
+
+	t->hdr.tag = ATAG_MEM;
+	t->hdr.size = tag_size(tag_mem32);
+	t->u.mem.start = CFG_GLOBAL_RAM_BASE;
+	t->u.mem.size = CFG_GLOBAL_RAM_SIZE;
+
+	t = tag_next(t);
+
+	t->hdr.tag = ATAG_NONE;
+	t->hdr.size = 0;
+#endif
 }
 
 /****************************************************************************
@@ -191,13 +187,13 @@ static void __init bcmring_fixup (struct tag * t, char ** cmdline,
 *
 *****************************************************************************/
 
-MACHINE_START (BCMRING, "BCMRING")
-/* Maintainer: Broadcom Corporation */
-.fixup = bcmring_fixup,
- .map_io = bcmring_map_io,
-  .init_early = bcmring_init_early,
-   .init_irq = bcmring_init_irq,
-    .timer = &bcmring_timer,
-     .init_machine = bcmring_init_machine,
-      .restart = bcmring_restart,
-       MACHINE_END
+MACHINE_START(BCMRING, "BCMRING")
+	/* Maintainer: Broadcom Corporation */
+	.fixup = bcmring_fixup,
+	.map_io = bcmring_map_io,
+	.init_early = bcmring_init_early,
+	.init_irq = bcmring_init_irq,
+	.timer = &bcmring_timer,
+	.init_machine = bcmring_init_machine,
+	.restart = bcmring_restart,
+MACHINE_END

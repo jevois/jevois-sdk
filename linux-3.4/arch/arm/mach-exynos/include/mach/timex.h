@@ -1,10 +1,10 @@
 /* linux/arch/arm/mach-exynos4/include/mach/timex.h
  *
  * Copyright (c) 2010-2011 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com
+ *		http://www.samsung.com
  *
  * Copyright (c) 2003-2010 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * Based on arch/arm/mach-s5p6442/include/mach/timex.h
  *

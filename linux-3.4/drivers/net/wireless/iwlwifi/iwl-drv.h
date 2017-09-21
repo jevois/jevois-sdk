@@ -104,8 +104,8 @@
  * function should do bus related operations only, and then call to this
  * function.
  */
-int iwl_drv_start (struct iwl_shared * shrd,
-                   struct iwl_trans * trans, const struct iwl_cfg * cfg);
+int iwl_drv_start(struct iwl_shared *shrd,
+		  struct iwl_trans *trans, const struct iwl_cfg *cfg);
 
 /**
  * iwl_drv_stop - stop the drv
@@ -118,6 +118,6 @@ int iwl_drv_start (struct iwl_shared * shrd,
  * implementations. For example, the bus specific remove function should first
  * call this function and then do the bus related operations only.
  */
-void iwl_drv_stop (struct iwl_shared * shrd);
+void iwl_drv_stop(struct iwl_shared *shrd);
 
 #endif /* __iwl_drv_h__ */

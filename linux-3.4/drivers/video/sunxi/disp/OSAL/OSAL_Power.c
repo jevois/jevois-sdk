@@ -3,70 +3,68 @@
 
 #ifndef __OSAL_POWER_MASK__
 
-int OSAL_Power_Enable (char * name)
+int OSAL_Power_Enable(char *name)
 {
-  struct regulator * regu = NULL;
-  int ret = 0;
-  regu = regulator_get (NULL, name);
-  if (IS_ERR (regu) ) {
-    __wrn ("%s: some error happen, fail to get regulator %s\n", __func__, name);
-    goto exit;
-  }
-  
-  ret = regulator_enable (regu);
-  if (0 != ret) {
-    __wrn ("%s: some error happen, fail to enable regulator %s!\n", __func__, name);
-    goto exit1;
-  }
-  else {
-    __inf ("suceess to enable regulator %s!\n", name);
-  }
-  
+	struct regulator *regu= NULL;
+	int ret = 0;
+	regu= regulator_get(NULL, name);
+	if (IS_ERR(regu)) {
+		__wrn("%s: some error happen, fail to get regulator %s\n", __func__, name);
+		goto exit;
+	}
+
+	ret = regulator_enable(regu);
+	if (0 != ret) {
+		__wrn("%s: some error happen, fail to enable regulator %s!\n", __func__, name);
+		goto exit1;
+	} else {
+		__inf("suceess to enable regulator %s!\n", name);
+	}
+
 exit1:
-  regulator_put (regu);
+	regulator_put(regu);
 exit:
-  return ret;
+	return ret;
 }
 
-int OSAL_Power_Disable (char * name)
+int OSAL_Power_Disable(char *name)
 {
-  struct regulator * regu = NULL;
-  int ret = 0;
-  regu = regulator_get (NULL, name);
-  if (IS_ERR (regu) ) {
-    __wrn ("%s: some error happen, fail to get regulator %s\n", __func__, name);
-    goto exit;
-  }
-  
-  ret = regulator_disable (regu);
-  if (0 != ret) {
-    __wrn ("%s: some error happen, fail to disable regulator %s!\n", __func__, name);
-    goto exit1;
-  }
-  else {
-    __inf ("suceess to disable regulator %s!\n", name);
-  }
-  
+	struct regulator *regu= NULL;
+	int ret = 0;
+	regu= regulator_get(NULL, name);
+	if (IS_ERR(regu)) {
+		__wrn("%s: some error happen, fail to get regulator %s\n", __func__, name);
+		goto exit;
+	}
+
+	ret = regulator_disable(regu);
+	if (0 != ret) {
+		__wrn("%s: some error happen, fail to disable regulator %s!\n", __func__, name);
+		goto exit1;
+	} else {
+		__inf("suceess to disable regulator %s!\n", name);
+	}
+
 exit1:
-  regulator_put (regu);
+	regulator_put(regu);
 exit:
-  return ret;
+	return ret;
 }
 
 #else
 
-int OSAL_Power_Enable (char * name)
+int OSAL_Power_Enable(char *name)
 {
-  int ret = 0;
+	int ret = 0;
 
-  return ret;
+	return ret;
 }
 
-int OSAL_Power_Disable (char * name)
+int OSAL_Power_Disable(char *name)
 {
-  int ret = 0;
+	int ret = 0;
 
-  return ret;
+	return ret;
 }
 
 #endif

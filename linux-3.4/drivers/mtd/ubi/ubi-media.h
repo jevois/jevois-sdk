@@ -53,8 +53,8 @@
  * @UBI_VID_STATIC: static volume
  */
 enum {
-  UBI_VID_DYNAMIC = 1,
-  UBI_VID_STATIC  = 2
+	UBI_VID_DYNAMIC = 1,
+	UBI_VID_STATIC  = 2
 };
 
 /*
@@ -91,7 +91,7 @@ enum {
  * means that the pool of reserved physical eraseblocks will always be present.
  */
 enum {
-  UBI_VTBL_AUTORESIZE_FLG = 0x01,
+	UBI_VTBL_AUTORESIZE_FLG = 0x01,
 };
 
 /*
@@ -106,10 +106,10 @@ enum {
  * @UBI_COMPAT_REJECT: reject this UBI image
  */
 enum {
-  UBI_COMPAT_DELETE   = 1,
-  UBI_COMPAT_RO       = 2,
-  UBI_COMPAT_PRESERVE = 4,
-  UBI_COMPAT_REJECT   = 5
+	UBI_COMPAT_DELETE   = 1,
+	UBI_COMPAT_RO       = 2,
+	UBI_COMPAT_PRESERVE = 4,
+	UBI_COMPAT_REJECT   = 5
 };
 
 /* Sizes of UBI headers */
@@ -155,15 +155,15 @@ enum {
  * complete, UBI will detect the error when scanning.
  */
 struct ubi_ec_hdr {
-  __be32  magic;
-  __u8    version;
-  __u8    padding1[3];
-  __be64  ec; /* Warning: the current limit is 31-bit anyway! */
-  __be32  vid_hdr_offset;
-  __be32  data_offset;
-  __be32  image_seq;
-  __u8    padding2[32];
-  __be32  hdr_crc;
+	__be32  magic;
+	__u8    version;
+	__u8    padding1[3];
+	__be64  ec; /* Warning: the current limit is 31-bit anyway! */
+	__be32  vid_hdr_offset;
+	__be32  data_offset;
+	__be32  image_seq;
+	__u8    padding2[32];
+	__be32  hdr_crc;
 } __packed;
 
 /**
@@ -276,22 +276,22 @@ struct ubi_ec_hdr {
  * software (say, cramfs) on top of the UBI volume.
  */
 struct ubi_vid_hdr {
-  __be32  magic;
-  __u8    version;
-  __u8    vol_type;
-  __u8    copy_flag;
-  __u8    compat;
-  __be32  vol_id;
-  __be32  lnum;
-  __u8    padding1[4];
-  __be32  data_size;
-  __be32  used_ebs;
-  __be32  data_pad;
-  __be32  data_crc;
-  __u8    padding2[4];
-  __be64  sqnum;
-  __u8    padding3[12];
-  __be32  hdr_crc;
+	__be32  magic;
+	__u8    version;
+	__u8    vol_type;
+	__u8    copy_flag;
+	__u8    compat;
+	__be32  vol_id;
+	__be32  lnum;
+	__u8    padding1[4];
+	__be32  data_size;
+	__be32  used_ebs;
+	__be32  data_pad;
+	__be32  data_crc;
+	__u8    padding2[4];
+	__be64  sqnum;
+	__u8    padding3[12];
+	__be32  hdr_crc;
 } __packed;
 
 /* Internal UBI volumes count */
@@ -363,16 +363,16 @@ struct ubi_vid_hdr {
  * Empty records contain all zeroes and the CRC checksum of those zeroes.
  */
 struct ubi_vtbl_record {
-  __be32  reserved_pebs;
-  __be32  alignment;
-  __be32  data_pad;
-  __u8    vol_type;
-  __u8    upd_marker;
-  __be16  name_len;
-  __u8    name[UBI_VOL_NAME_MAX + 1];
-  __u8    flags;
-  __u8    padding[23];
-  __be32  crc;
+	__be32  reserved_pebs;
+	__be32  alignment;
+	__be32  data_pad;
+	__u8    vol_type;
+	__u8    upd_marker;
+	__be16  name_len;
+	__u8    name[UBI_VOL_NAME_MAX+1];
+	__u8    flags;
+	__u8    padding[23];
+	__be32  crc;
 } __packed;
 
 #endif /* !__UBI_MEDIA_H__ */

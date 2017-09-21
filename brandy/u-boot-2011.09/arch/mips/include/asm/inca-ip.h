@@ -2,7 +2,7 @@
 /******************************************************************************
        Copyright (c) 2002, Infineon Technologies.  All rights reserved.
 
-             No Warranty
+			       No Warranty
    Because the program is licensed free of charge, there is no warranty for
    the program, to the extent permitted by applicable law.  Except when
    otherwise stated in writing the copyright holders and/or other parties

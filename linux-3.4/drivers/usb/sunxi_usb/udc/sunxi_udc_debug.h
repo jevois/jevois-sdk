@@ -16,7 +16,7 @@
 #ifndef  __SUNXI_UDC_DEBUG_H__
 #define  __SUNXI_UDC_DEBUG_H__
 
-void print_list_node (struct sunxi_udc_ep * ep, char * str);
+void print_list_node(struct sunxi_udc_ep *ep, char *str);
 
 #endif  
 

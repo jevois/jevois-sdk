@@ -33,22 +33,22 @@
 
 #define USING_POLLING_CYCLE_DELINK
 
-extern int  rts51x_check_start_time (struct rts51x_chip * chip);
-extern void rts51x_set_start_time (struct rts51x_chip * chip);
-extern void rts51x_clear_start_time (struct rts51x_chip * chip);
+extern int  rts51x_check_start_time(struct rts51x_chip *chip);
+extern void rts51x_set_start_time(struct rts51x_chip *chip);
+extern void rts51x_clear_start_time(struct rts51x_chip *chip);
 
 /* typedef dma_addr_t ULONG_PTR; */
 
-static inline void rts51x_reset_detected_cards (struct rts51x_chip * chip)
+static inline void rts51x_reset_detected_cards(struct rts51x_chip *chip)
 {
-  /*      rts51x_reset_cards(chip); */
+/*      rts51x_reset_cards(chip); */
 }
 
-static inline void clear_first_install_mark (struct rts51x_chip * chip)
+static inline void clear_first_install_mark(struct rts51x_chip *chip)
 {
 }
 
-void rts51x_enter_ss (struct rts51x_chip * chip);
-void rts51x_exit_ss (struct rts51x_chip * chip);
+void rts51x_enter_ss(struct rts51x_chip *chip);
+void rts51x_exit_ss(struct rts51x_chip *chip);
 
 #endif /* __RTS51X_SYS_H */

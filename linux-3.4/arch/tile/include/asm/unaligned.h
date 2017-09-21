@@ -18,8 +18,8 @@
 #include <linux/unaligned/le_struct.h>
 #include <linux/unaligned/be_byteshift.h>
 #include <linux/unaligned/generic.h>
-#define get_unaligned __get_unaligned_le
-#define put_unaligned __put_unaligned_le
+#define get_unaligned	__get_unaligned_le
+#define put_unaligned	__put_unaligned_le
 
 /*
  * Is the kernel doing fixups of unaligned accesses?  If <0, no kernel

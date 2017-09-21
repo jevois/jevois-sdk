@@ -3,7 +3,7 @@
 
 /*
  * Copyright (C) 1998-2003 Hewlett-Packard Co
- *  David Mosberger-Tang <davidm@hpl.hp.com>
+ *	David Mosberger-Tang <davidm@hpl.hp.com>
  */
 
 #include <linux/elf.h>
@@ -11,7 +11,7 @@
 #include <asm-generic/sections.h>
 
 extern char __per_cpu_start[], __per_cpu_end[], __phys_per_cpu_start[];
-#ifdef  CONFIG_SMP
+#ifdef	CONFIG_SMP
 extern char __cpu0_per_cpu[];
 #endif
 extern char __start___vtop_patchlist[], __end___vtop_patchlist[];
@@ -27,14 +27,14 @@ extern char __start_unwind[], __end_unwind[];
 extern char __start_ivt_text[], __end_ivt_text[];
 
 #undef dereference_function_descriptor
-static inline void * dereference_function_descriptor (void * ptr)
+static inline void *dereference_function_descriptor(void *ptr)
 {
-  struct fdesc * desc = ptr;
-  void * p;
-  
-  if (!probe_kernel_address (&desc->ip, p) )
-  { ptr = p; }
-  return ptr;
+	struct fdesc *desc = ptr;
+	void *p;
+
+	if (!probe_kernel_address(&desc->ip, p))
+		ptr = p;
+	return ptr;
 }
 
 

@@ -4,7 +4,7 @@
 #include <linux/types.h>
 
 #ifdef CONFIG_COMPAT
-extern int s390_classify_syscall (unsigned);
+extern int s390_classify_syscall(unsigned);
 extern __u32 s390_dir_class[];
 extern __u32 s390_write_class[];
 extern __u32 s390_read_class[];

@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -22,13 +22,13 @@
  * MA 02111-1307 USA
  */
 
-#ifndef _DMAC_I_H_
-#define _DMAC_I_H_
+#ifndef	_DMAC_I_H_
+#define	_DMAC_I_H_
 
 #define CFG_SW_DMA_NORMAL_MAX       8
 #define CFG_SW_DMA_DEDICATE_MAX     8
 
-#define DMAC_REGS_BASE        0x01c02000
+#define DMAC_REGS_BASE				0x01c02000
 
 
 #define CFG_SW_DMA_NORMAL_BASE              (DMAC_REGS_BASE + 0x100              )
@@ -63,76 +63,76 @@
 
 struct sw_dma
 {
-  volatile unsigned int config;           /* DMA配置参数              */
-  volatile unsigned int src_addr;         /* DMA传输源地址            */
-  volatile unsigned int dst_addr;         /* DMA传输目的地址          */
-  volatile unsigned int bytes;            /* DMA传输字节数            */
+    volatile unsigned int config;           /* DMA配置参数              */
+    volatile unsigned int src_addr;         /* DMA传输源地址            */
+    volatile unsigned int dst_addr;         /* DMA传输目的地址          */
+    volatile unsigned int bytes;            /* DMA传输字节数            */
 };
 
-typedef volatile struct sw_dma * sw_dma_t;
+typedef volatile struct sw_dma *sw_dma_t;
 
 struct sw_dma_other
 {
-  volatile unsigned int src_wait_cyc    : 8;
-  volatile unsigned int src_data_block_size : 8;
-  volatile unsigned int dst_wait_cyc    : 8;
-  volatile unsigned int dst_data_block_size : 8;
+    volatile unsigned int src_wait_cyc	  :8;    
+    volatile unsigned int src_data_block_size :8;  
+    volatile unsigned int dst_wait_cyc	  :8;     
+    volatile unsigned int dst_data_block_size :8;  
 };
 
-typedef volatile struct sw_dma_other * sw_dma_other_t;
+typedef volatile struct sw_dma_other *sw_dma_other_t;
 
 struct dma_irq_handler
 {
-  void        *        m_data;
-  void (*m_func) ( void * data);
+	void                *m_data;
+	void (*m_func)( void * data);
 };
 
 typedef struct sw_dma_channal_set
 {
-  unsigned int            used;           /* DMA是否被使用            */
-  signed int            channalNo;      /* DMA通道编号              */
-  sw_dma_t                channal;        /* DMA通道                  */
-  sw_dma_other_t          other;          /* DMA其它设置              */
-  struct dma_irq_handler  dma_func;
+    unsigned int            used;           /* DMA是否被使用            */
+      signed int            channalNo;      /* DMA通道编号              */
+    sw_dma_t                channal;        /* DMA通道                  */
+    sw_dma_other_t          other;          /* DMA其它设置              */
+	struct dma_irq_handler  dma_func;
 }
 sw_dma_channal_set_t;
 
 
 typedef struct __ndma_config_set
 {
-  unsigned int      src_drq_type     : 5;            //源地址存储类型，如DRAM, SPI,NAND等，参见  __ndma_drq_type_t
-  unsigned int      src_addr_type    : 1;            //原地址类型，如递增，或者不变  0:递增模式  1:保持不变
-  unsigned int      src_secure       : 1;           
-  unsigned int      src_burst_length : 2;            //发起一次burst宽度 0:1   1:4   2:8
-  unsigned int      src_data_width   : 2;            //数据传输宽度，0:一次传输8bit，1:一次传输16bit，2:一次传输32bit，3:保留
-  unsigned int      reserved0        : 5;
-  unsigned int      dst_drq_type     : 5;            //目的地址存储类型，如DRAM, SPI,NAND等
-  unsigned int      dst_addr_type    : 1;            //目的地址类型，如递增，或者不变  0:递增模式  1:保持不变
-  unsigned int      dst_secure       : 1;           
-  unsigned int      dst_burst_length : 2;            //发起一次burst宽度 填0对应于1，填1对应于4,
-  unsigned int      dst_data_width   : 2;            //数据传输宽度，0:一次传输8bit，1:一次传输16bit，2:一次传输32bit，3:保留
-  unsigned int      wait_state       : 3;            //等待时钟个数 选择范围从0-7
-  unsigned int      continuous_mode  : 1;            //选择连续工作模式 0:传输一次即结束 1:反复传输，当一次DMA传输结束后，重新开始传输
-  unsigned int      reserved1        : 1;
+    unsigned int      src_drq_type     : 5;            //源地址存储类型，如DRAM, SPI,NAND等，参见  __ndma_drq_type_t
+    unsigned int      src_addr_type    : 1;            //原地址类型，如递增，或者不变  0:递增模式  1:保持不变
+    unsigned int      src_secure       : 1;           
+    unsigned int      src_burst_length : 2;            //发起一次burst宽度 0:1   1:4   2:8
+    unsigned int      src_data_width   : 2;            //数据传输宽度，0:一次传输8bit，1:一次传输16bit，2:一次传输32bit，3:保留
+    unsigned int      reserved0        : 5;
+    unsigned int      dst_drq_type     : 5;            //目的地址存储类型，如DRAM, SPI,NAND等
+    unsigned int      dst_addr_type    : 1;            //目的地址类型，如递增，或者不变  0:递增模式  1:保持不变
+    unsigned int      dst_secure       : 1;           
+    unsigned int      dst_burst_length : 2;            //发起一次burst宽度 填0对应于1，填1对应于4,
+    unsigned int      dst_data_width   : 2;            //数据传输宽度，0:一次传输8bit，1:一次传输16bit，2:一次传输32bit，3:保留
+    unsigned int      wait_state       : 3;            //等待时钟个数 选择范围从0-7
+    unsigned int      continuous_mode  : 1;            //选择连续工作模式 0:传输一次即结束 1:反复传输，当一次DMA传输结束后，重新开始传输
+    unsigned int      reserved1        : 1;
 }
 __ndma_config_t;
 
 typedef struct __ddma_config_set
 {
-  unsigned int      src_drq_type     : 5;            //源地址存储类型，如DRAM, SPI,NAND等，参见  __ddma_src_type_t
-  unsigned int      src_addr_type    : 2;            //原地址类型，如递增，或者不变  0:递增模式  1:保持不变  2:H模式  3:V模式
-  unsigned int      src_burst_length : 2;            //发起一次burst宽度 填0对应于1，填1对应于4,
-  unsigned int      src_data_width   : 2;            //数据传输宽度，0:一次传输8bit，1:一次传输16bit，2:一次传输32bit，3:保留
-  unsigned int      reserved0        : 5;
-  unsigned int      dst_drq_type     : 5;            //目的地址存储类型，如DRAM, SPI,NAND等, 参见  __ddma_dst_type_t
-  unsigned int      dst_addr_type    : 2;            //目的地址类型，如递增，或者不变 0:递增模式  1:保持不变  2:H模式  3:V模式
-  unsigned int      dst_burst_length : 2;            //发起一次burst宽度 填0对应于1，填1对应于4,
-  unsigned int      dst_data_width   : 2;            //数据传输宽度，0:一次传输8bit，1:一次传输16bit，2:一次传输32bit，3:保留
-  unsigned int      reserved1        : 3;
-  unsigned int      continuous_mode  : 1;            //选择连续工作模式 0:传输一次即结束 1:反复传输，当一次DMA传输结束后，重新开始传输
-  unsigned int      reserved2        : 1;
+    unsigned int      src_drq_type     : 5;            //源地址存储类型，如DRAM, SPI,NAND等，参见  __ddma_src_type_t
+    unsigned int      src_addr_type    : 2;            //原地址类型，如递增，或者不变  0:递增模式  1:保持不变  2:H模式  3:V模式
+    unsigned int      src_burst_length : 2;            //发起一次burst宽度 填0对应于1，填1对应于4,
+    unsigned int      src_data_width   : 2;            //数据传输宽度，0:一次传输8bit，1:一次传输16bit，2:一次传输32bit，3:保留
+    unsigned int      reserved0        : 5;
+    unsigned int      dst_drq_type     : 5;            //目的地址存储类型，如DRAM, SPI,NAND等, 参见  __ddma_dst_type_t
+    unsigned int      dst_addr_type    : 2;            //目的地址类型，如递增，或者不变 0:递增模式  1:保持不变  2:H模式  3:V模式
+    unsigned int      dst_burst_length : 2;            //发起一次burst宽度 填0对应于1，填1对应于4,
+    unsigned int      dst_data_width   : 2;            //数据传输宽度，0:一次传输8bit，1:一次传输16bit，2:一次传输32bit，3:保留
+    unsigned int      reserved1        : 3;
+    unsigned int      continuous_mode  : 1;            //选择连续工作模式 0:传输一次即结束 1:反复传输，当一次DMA传输结束后，重新开始传输
+    unsigned int      reserved2        : 1;
 }
 __ddma_config_t;
 
-#endif  /* _EGON2_DMAC_I_H_ */
+#endif	/* _EGON2_DMAC_I_H_ */
 

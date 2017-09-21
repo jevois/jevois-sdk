@@ -21,7 +21,7 @@
 
 #include <asm/param.h>
 
-extern void __udelay (unsigned long usecs);
+extern void __udelay(unsigned long usecs);
 
 #define udelay(usecs) __udelay((usecs))
 

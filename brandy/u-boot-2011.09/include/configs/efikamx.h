@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -33,12 +33,12 @@
 #define CONFIG_MX51
 #include <asm/arch/imx-regs.h>
 
-#define CONFIG_SYS_MX5_HCLK   24000000
-#define CONFIG_SYS_MX5_CLK32    32768
+#define CONFIG_SYS_MX5_HCLK		24000000
+#define CONFIG_SYS_MX5_CLK32		32768
 #define CONFIG_DISPLAY_CPUINFO
 #define CONFIG_DISPLAY_BOARDINFO
 
-#define CONFIG_SYS_TEXT_BASE    0x97800000
+#define CONFIG_SYS_TEXT_BASE		0x97800000
 
 /*
  * Bootloader Components Configuration
@@ -55,24 +55,24 @@
  * Environmental settings
  */
 
-#define CONFIG_ENV_OFFSET   (6 * 64 * 1024)
-#define CONFIG_ENV_SECT_SIZE    (1 * 64 * 1024)
-#define CONFIG_ENV_SIZE     (4 * 1024)
+#define CONFIG_ENV_OFFSET		(6 * 64 * 1024)
+#define CONFIG_ENV_SECT_SIZE		(1 * 64 * 1024)
+#define CONFIG_ENV_SIZE			(4 * 1024)
 
 /*
  * ATAG setup
  */
-#define CONFIG_CMDLINE_TAG    /* enable passing of ATAGs */
+#define CONFIG_CMDLINE_TAG		/* enable passing of ATAGs */
 #define CONFIG_REVISION_TAG
 #define CONFIG_SETUP_MEMORY_TAGS
 #define CONFIG_INITRD_TAG
 
-#define CONFIG_OF_LIBFDT    1
+#define CONFIG_OF_LIBFDT		1
 
 /*
  * Size of malloc() pool
  */
-#define CONFIG_SYS_MALLOC_LEN   (CONFIG_ENV_SIZE + 2 * 1024 * 1024)
+#define CONFIG_SYS_MALLOC_LEN		(CONFIG_ENV_SIZE + 2 * 1024 * 1024)
 
 #define CONFIG_BOARD_EARLY_INIT_F
 #define BOARD_LATE_INIT
@@ -82,9 +82,9 @@
  */
 #define CONFIG_MXC_UART
 #define CONFIG_SYS_MX51_UART1
-#define CONFIG_CONS_INDEX   1
-#define CONFIG_BAUDRATE     115200
-#define CONFIG_SYS_BAUDRATE_TABLE {9600, 19200, 38400, 57600, 115200}
+#define CONFIG_CONS_INDEX		1
+#define CONFIG_BAUDRATE			115200
+#define CONFIG_SYS_BAUDRATE_TABLE	{9600, 19200, 38400, 57600, 115200}
 
 #define CONFIG_MXC_GPIO
 
@@ -95,22 +95,22 @@
 
 #define CONFIG_HARD_SPI
 #define CONFIG_MXC_SPI
-#define CONFIG_DEFAULT_SPI_BUS    1
-#define CONFIG_DEFAULT_SPI_MODE   (SPI_MODE_0 | SPI_CS_HIGH)
+#define CONFIG_DEFAULT_SPI_BUS		1
+#define CONFIG_DEFAULT_SPI_MODE		(SPI_MODE_0 | SPI_CS_HIGH)
 
 /* SPI FLASH */
 #ifdef CONFIG_CMD_SF
 
 #define CONFIG_SPI_FLASH
 #define CONFIG_SPI_FLASH_SST
-#define CONFIG_SPI_FLASH_CS   (1 | 121 << 8)
-#define CONFIG_SF_DEFAULT_MODE    (SPI_MODE_0)
-#define CONFIG_SF_DEFAULT_SPEED   25000000
+#define CONFIG_SPI_FLASH_CS		(1 | 121 << 8)
+#define CONFIG_SF_DEFAULT_MODE		(SPI_MODE_0)
+#define CONFIG_SF_DEFAULT_SPEED		25000000
 
-#define CONFIG_ENV_SPI_CS   (1 | 121 << 8)
-#define CONFIG_ENV_SPI_BUS    0
-#define CONFIG_ENV_SPI_MAX_HZ   25000000
-#define CONFIG_ENV_SPI_MODE   (SPI_MODE_0)
+#define CONFIG_ENV_SPI_CS		(1 | 121 << 8)
+#define CONFIG_ENV_SPI_BUS		0
+#define CONFIG_ENV_SPI_MAX_HZ		25000000
+#define CONFIG_ENV_SPI_MODE		(SPI_MODE_0)
 #define CONFIG_FSL_ENV_IN_SF
 #define CONFIG_ENV_IS_IN_SPI_FLASH
 #define CONFIG_SYS_NO_FLASH
@@ -121,10 +121,10 @@
 
 /* SPI PMIC */
 #define CONFIG_FSL_PMIC
-#define CONFIG_FSL_PMIC_BUS   0
-#define CONFIG_FSL_PMIC_CS    (0 | 120 << 8)
-#define CONFIG_FSL_PMIC_CLK   25000000
-#define CONFIG_FSL_PMIC_MODE    (SPI_MODE_0 | SPI_CS_HIGH)
+#define CONFIG_FSL_PMIC_BUS		0
+#define CONFIG_FSL_PMIC_CS		(0 | 120 << 8)
+#define CONFIG_FSL_PMIC_CLK		25000000
+#define CONFIG_FSL_PMIC_MODE		(SPI_MODE_0 | SPI_CS_HIGH)
 #define CONFIG_RTC_MC13783
 #endif
 
@@ -135,8 +135,8 @@
 #define CONFIG_MMC
 #define CONFIG_GENERIC_MMC
 #define CONFIG_FSL_ESDHC
-#define CONFIG_SYS_FSL_ESDHC_ADDR 0
-#define CONFIG_SYS_FSL_ESDHC_NUM  2
+#define CONFIG_SYS_FSL_ESDHC_ADDR	0
+#define CONFIG_SYS_FSL_ESDHC_NUM	2
 #endif
 
 /*
@@ -151,20 +151,20 @@
 
 #define __io
 
-#define CONFIG_SYS_IDE_MAXBUS   1
-#define CONFIG_SYS_IDE_MAXDEVICE  1
+#define CONFIG_SYS_IDE_MAXBUS		1
+#define CONFIG_SYS_IDE_MAXDEVICE	1
 
-#define CONFIG_SYS_ATA_BASE_ADDR  0x83fe0000
-#define CONFIG_SYS_ATA_IDE0_OFFSET  0x0
+#define CONFIG_SYS_ATA_BASE_ADDR	0x83fe0000
+#define CONFIG_SYS_ATA_IDE0_OFFSET	0x0
 
-#define CONFIG_SYS_ATA_DATA_OFFSET  0xa0
-#define CONFIG_SYS_ATA_REG_OFFSET 0xa0
-#define CONFIG_SYS_ATA_ALT_OFFSET 0xd8
+#define CONFIG_SYS_ATA_DATA_OFFSET	0xa0
+#define CONFIG_SYS_ATA_REG_OFFSET	0xa0
+#define CONFIG_SYS_ATA_ALT_OFFSET	0xd8
 
-#define CONFIG_SYS_ATA_STRIDE   4
+#define CONFIG_SYS_ATA_STRIDE		4
 
 #define CONFIG_IDE_PREINIT
-#define CONFIG_MXC_ATA_PIO_MODE   4
+#define CONFIG_MXC_ATA_PIO_MODE		4
 #endif
 
 /*
@@ -184,26 +184,26 @@
  * Miscellaneous configurable options
  */
 #define CONFIG_ENV_OVERWRITE
-#define CONFIG_BOOTDELAY    3
-#define CONFIG_LOADADDR     0x90800000
+#define CONFIG_BOOTDELAY		3
+#define CONFIG_LOADADDR			0x90800000
 
-#define CONFIG_SYS_LONGHELP   /* undef to save memory */
-#define CONFIG_SYS_HUSH_PARSER    /* use "hush" command parser */
-#define CONFIG_SYS_PROMPT_HUSH_PS2  "> "
-#define CONFIG_SYS_PROMPT   "Efika> "
+#define CONFIG_SYS_LONGHELP		/* undef to save memory */
+#define CONFIG_SYS_HUSH_PARSER		/* use "hush" command parser */
+#define CONFIG_SYS_PROMPT_HUSH_PS2	"> "
+#define CONFIG_SYS_PROMPT		"Efika> "
 #define CONFIG_AUTO_COMPLETE
-#define CONFIG_SYS_CBSIZE   256 /* Console I/O Buffer Size */
+#define CONFIG_SYS_CBSIZE		256	/* Console I/O Buffer Size */
 /* Print Buffer Size */
 #define CONFIG_SYS_PBSIZE (CONFIG_SYS_CBSIZE + sizeof(CONFIG_SYS_PROMPT) + 16)
-#define CONFIG_SYS_MAXARGS    16  /* max number of command args */
+#define CONFIG_SYS_MAXARGS		16	/* max number of command args */
 #define CONFIG_SYS_BARGSIZE CONFIG_SYS_CBSIZE /* Boot Argument Buffer Size */
 
-#define CONFIG_SYS_MEMTEST_START  0x90000000
-#define CONFIG_SYS_MEMTEST_END    0x10000
+#define CONFIG_SYS_MEMTEST_START	0x90000000
+#define CONFIG_SYS_MEMTEST_END		0x10000
 
-#define CONFIG_SYS_LOAD_ADDR    CONFIG_LOADADDR
+#define CONFIG_SYS_LOAD_ADDR		CONFIG_LOADADDR
 
-#define CONFIG_SYS_HZ     1000
+#define CONFIG_SYS_HZ			1000
 #define CONFIG_CMDLINE_EDITING
 
 /*-----------------------------------------------------------------------
@@ -211,25 +211,25 @@
  *
  * The stack sizes are set up in start.S using the settings below
  */
-#define CONFIG_STACKSIZE  (128 * 1024)  /* regular stack */
+#define CONFIG_STACKSIZE	(128 * 1024)	/* regular stack */
 
 /*-----------------------------------------------------------------------
  * Physical Memory Map
  */
-#define CONFIG_NR_DRAM_BANKS    1
-#define PHYS_SDRAM_1      CSD0_BASE_ADDR
-#define PHYS_SDRAM_1_SIZE   (512 * 1024 * 1024)
+#define CONFIG_NR_DRAM_BANKS		1
+#define PHYS_SDRAM_1			CSD0_BASE_ADDR
+#define PHYS_SDRAM_1_SIZE		(512 * 1024 * 1024)
 
-#define CONFIG_SYS_SDRAM_BASE   (PHYS_SDRAM_1)
-#define CONFIG_SYS_INIT_RAM_ADDR  (IRAM_BASE_ADDR)
-#define CONFIG_SYS_INIT_RAM_SIZE  (IRAM_SIZE)
+#define CONFIG_SYS_SDRAM_BASE		(PHYS_SDRAM_1)
+#define CONFIG_SYS_INIT_RAM_ADDR	(IRAM_BASE_ADDR)
+#define CONFIG_SYS_INIT_RAM_SIZE	(IRAM_SIZE)
 
 #define CONFIG_SYS_INIT_SP_OFFSET \
-  (CONFIG_SYS_INIT_RAM_SIZE - GENERATED_GBL_DATA_SIZE)
+	(CONFIG_SYS_INIT_RAM_SIZE - GENERATED_GBL_DATA_SIZE)
 #define CONFIG_SYS_INIT_SP_ADDR \
-  (CONFIG_SYS_INIT_RAM_ADDR + CONFIG_SYS_INIT_SP_OFFSET)
+	(CONFIG_SYS_INIT_RAM_ADDR + CONFIG_SYS_INIT_SP_OFFSET)
 
-#define CONFIG_SYS_DDR_CLKSEL   0
-#define CONFIG_SYS_CLKTL_CBCDR    0x59E35100
+#define CONFIG_SYS_DDR_CLKSEL		0
+#define CONFIG_SYS_CLKTL_CBCDR		0x59E35100
 
 #endif

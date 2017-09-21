@@ -4,16 +4,11 @@
 #
 ################################################################################
 
-SNAPPY_VERSION = 1ff9be9b8fafc8528ca9e055646f5932aa5db9c4
+SNAPPY_VERSION = be6dc3db83c4701e3e79694dcbfd1c3da03b91dd
 SNAPPY_SITE = $(call github,google,snappy,$(SNAPPY_VERSION))
-SNAPPY_LICENSE = BSD-3c
+SNAPPY_LICENSE = BSD-3-Clause
 SNAPPY_LICENSE_FILES = COPYING
-# from git
-SNAPPY_AUTORECONF = YES
-SNAPPY_DEPENDENCIES = host-pkgconf
 SNAPPY_INSTALL_STAGING = YES
+SNAPPY_CONF_OPTS = -DSNAPPY_BUILD_TESTS=OFF
 
-# Disable tests
-SNAPPY_CONF_OPTS = --disable-gtest
-
-$(eval $(autotools-package))
+$(eval $(cmake-package))

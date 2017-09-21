@@ -18,32 +18,32 @@
 #include <linux/freezer.h>
 #include <trace/events/sched.h>
 
-static DEFINE_SPINLOCK (kthread_create_lock);
-static LIST_HEAD (kthread_create_list);
-struct task_struct * kthreadd_task;
+static DEFINE_SPINLOCK(kthread_create_lock);
+static LIST_HEAD(kthread_create_list);
+struct task_struct *kthreadd_task;
 
 struct kthread_create_info
 {
-  /* Information passed to kthread() from kthreadd. */
-  int (*threadfn) (void * data);
-  void * data;
-  int node;
-  
-  /* Result passed back to kthread_create() from kthreadd. */
-  struct task_struct * result;
-  struct completion done;
-  
-  struct list_head list;
+	/* Information passed to kthread() from kthreadd. */
+	int (*threadfn)(void *data);
+	void *data;
+	int node;
+
+	/* Result passed back to kthread_create() from kthreadd. */
+	struct task_struct *result;
+	struct completion done;
+
+	struct list_head list;
 };
 
 struct kthread {
-  int should_stop;
-  void * data;
-  struct completion exited;
+	int should_stop;
+	void *data;
+	struct completion exited;
 };
 
-#define to_kthread(tsk) \
-  container_of((tsk)->vfork_done, struct kthread, exited)
+#define to_kthread(tsk)	\
+	container_of((tsk)->vfork_done, struct kthread, exited)
 
 /**
  * kthread_should_stop - should this kthread return now?
@@ -52,11 +52,11 @@ struct kthread {
  * and this will return true.  You should then return, and your return
  * value will be passed through to kthread_stop().
  */
-int kthread_should_stop (void)
+int kthread_should_stop(void)
 {
-  return to_kthread (current)->should_stop;
+	return to_kthread(current)->should_stop;
 }
-EXPORT_SYMBOL (kthread_should_stop);
+EXPORT_SYMBOL(kthread_should_stop);
 
 /**
  * kthread_freezable_should_stop - should this freezable kthread return now?
@@ -67,21 +67,21 @@ EXPORT_SYMBOL (kthread_should_stop);
  * freezer deadlock and freezable kthreads should use this function instead
  * of calling try_to_freeze() directly.
  */
-bool kthread_freezable_should_stop (bool * was_frozen)
+bool kthread_freezable_should_stop(bool *was_frozen)
 {
-  bool frozen = false;
-  
-  might_sleep();
-  
-  if (unlikely (freezing (current) ) )
-  { frozen = __refrigerator (true); }
-  
-  if (was_frozen)
-  { *was_frozen = frozen; }
-  
-  return kthread_should_stop();
+	bool frozen = false;
+
+	might_sleep();
+
+	if (unlikely(freezing(current)))
+		frozen = __refrigerator(true);
+
+	if (was_frozen)
+		*was_frozen = frozen;
+
+	return kthread_should_stop();
 }
-EXPORT_SYMBOL_GPL (kthread_freezable_should_stop);
+EXPORT_SYMBOL_GPL(kthread_freezable_should_stop);
 
 /**
  * kthread_data - return data value specified on kthread creation
@@ -91,62 +91,62 @@ EXPORT_SYMBOL_GPL (kthread_freezable_should_stop);
  * The caller is responsible for ensuring the validity of @task when
  * calling this function.
  */
-void * kthread_data (struct task_struct * task)
+void *kthread_data(struct task_struct *task)
 {
-  return to_kthread (task)->data;
+	return to_kthread(task)->data;
 }
 
-static int kthread (void * _create)
+static int kthread(void *_create)
 {
-  /* Copy data: it's on kthread's stack */
-  struct kthread_create_info * create = _create;
-  int (*threadfn) (void * data) = create->threadfn;
-  void * data = create->data;
-  struct kthread self;
-  int ret;
-  
-  self.should_stop = 0;
-  self.data = data;
-  init_completion (&self.exited);
-  current->vfork_done = &self.exited;
-  
-  /* OK, tell user we're spawned, wait for stop or wakeup */
-  __set_current_state (TASK_UNINTERRUPTIBLE);
-  create->result = current;
-  complete (&create->done);
-  schedule();
-  
-  ret = -EINTR;
-  if (!self.should_stop)
-  { ret = threadfn (data); }
-  
-  /* we can't just return, we must preserve "self" on stack */
-  do_exit (ret);
+	/* Copy data: it's on kthread's stack */
+	struct kthread_create_info *create = _create;
+	int (*threadfn)(void *data) = create->threadfn;
+	void *data = create->data;
+	struct kthread self;
+	int ret;
+
+	self.should_stop = 0;
+	self.data = data;
+	init_completion(&self.exited);
+	current->vfork_done = &self.exited;
+
+	/* OK, tell user we're spawned, wait for stop or wakeup */
+	__set_current_state(TASK_UNINTERRUPTIBLE);
+	create->result = current;
+	complete(&create->done);
+	schedule();
+
+	ret = -EINTR;
+	if (!self.should_stop)
+		ret = threadfn(data);
+
+	/* we can't just return, we must preserve "self" on stack */
+	do_exit(ret);
 }
 
 /* called from do_fork() to get node information for about to be created task */
-int tsk_fork_get_node (struct task_struct * tsk)
+int tsk_fork_get_node(struct task_struct *tsk)
 {
-  #ifdef CONFIG_NUMA
-  if (tsk == kthreadd_task)
-  { return tsk->pref_node_fork; }
-  #endif
-  return numa_node_id();
+#ifdef CONFIG_NUMA
+	if (tsk == kthreadd_task)
+		return tsk->pref_node_fork;
+#endif
+	return numa_node_id();
 }
 
-static void create_kthread (struct kthread_create_info * create)
+static void create_kthread(struct kthread_create_info *create)
 {
-  int pid;
-  
-  #ifdef CONFIG_NUMA
-  current->pref_node_fork = create->node;
-  #endif
-  /* We want our own signal handler (we take no signals by default). */
-  pid = kernel_thread (kthread, create, CLONE_FS | CLONE_FILES | SIGCHLD);
-  if (pid < 0) {
-    create->result = ERR_PTR (pid);
-    complete (&create->done);
-  }
+	int pid;
+
+#ifdef CONFIG_NUMA
+	current->pref_node_fork = create->node;
+#endif
+	/* We want our own signal handler (we take no signals by default). */
+	pid = kernel_thread(kthread, create, CLONE_FS | CLONE_FILES | SIGCHLD);
+	if (pid < 0) {
+		create->result = ERR_PTR(pid);
+		complete(&create->done);
+	}
 }
 
 /**
@@ -171,44 +171,44 @@ static void create_kthread (struct kthread_create_info * create)
  *
  * Returns a task_struct or ERR_PTR(-ENOMEM).
  */
-struct task_struct * kthread_create_on_node (int (*threadfn) (void * data),
-    void * data,
-    int node,
-    const char namefmt[],
-    ...)
+struct task_struct *kthread_create_on_node(int (*threadfn)(void *data),
+					   void *data,
+					   int node,
+					   const char namefmt[],
+					   ...)
 {
-  struct kthread_create_info create;
-  
-  create.threadfn = threadfn;
-  create.data = data;
-  create.node = node;
-  init_completion (&create.done);
-  
-  spin_lock (&kthread_create_lock);
-  list_add_tail (&create.list, &kthread_create_list);
-  spin_unlock (&kthread_create_lock);
-  
-  wake_up_process (kthreadd_task);
-  wait_for_completion (&create.done);
-  
-  if (!IS_ERR (create.result) ) {
-    static const struct sched_param param = { .sched_priority = 0 };
-    va_list args;
-    
-    va_start (args, namefmt);
-    vsnprintf (create.result->comm, sizeof (create.result->comm),
-               namefmt, args);
-    va_end (args);
-    /*
-     * root may have changed our (kthreadd's) priority or CPU mask.
-     * The kernel thread should not inherit these properties.
-     */
-    sched_setscheduler_nocheck (create.result, SCHED_NORMAL, &param);
-    set_cpus_allowed_ptr (create.result, cpu_all_mask);
-  }
-  return create.result;
+	struct kthread_create_info create;
+
+	create.threadfn = threadfn;
+	create.data = data;
+	create.node = node;
+	init_completion(&create.done);
+
+	spin_lock(&kthread_create_lock);
+	list_add_tail(&create.list, &kthread_create_list);
+	spin_unlock(&kthread_create_lock);
+
+	wake_up_process(kthreadd_task);
+	wait_for_completion(&create.done);
+
+	if (!IS_ERR(create.result)) {
+		static const struct sched_param param = { .sched_priority = 0 };
+		va_list args;
+
+		va_start(args, namefmt);
+		vsnprintf(create.result->comm, sizeof(create.result->comm),
+			  namefmt, args);
+		va_end(args);
+		/*
+		 * root may have changed our (kthreadd's) priority or CPU mask.
+		 * The kernel thread should not inherit these properties.
+		 */
+		sched_setscheduler_nocheck(create.result, SCHED_NORMAL, &param);
+		set_cpus_allowed_ptr(create.result, cpu_all_mask);
+	}
+	return create.result;
 }
-EXPORT_SYMBOL (kthread_create_on_node);
+EXPORT_SYMBOL(kthread_create_on_node);
 
 /**
  * kthread_bind - bind a just-created kthread to a cpu.
@@ -219,19 +219,19 @@ EXPORT_SYMBOL (kthread_create_on_node);
  * except that @cpu doesn't need to be online, and the thread must be
  * stopped (i.e., just returned from kthread_create()).
  */
-void kthread_bind (struct task_struct * p, unsigned int cpu)
+void kthread_bind(struct task_struct *p, unsigned int cpu)
 {
-  /* Must have done schedule() in kthread() before we set_task_cpu */
-  if (!wait_task_inactive (p, TASK_UNINTERRUPTIBLE) ) {
-    WARN_ON (1);
-    return;
-  }
-  
-  /* It's safe because the task is inactive. */
-  do_set_cpus_allowed (p, cpumask_of (cpu) );
-  p->flags |= PF_THREAD_BOUND;
+	/* Must have done schedule() in kthread() before we set_task_cpu */
+	if (!wait_task_inactive(p, TASK_UNINTERRUPTIBLE)) {
+		WARN_ON(1);
+		return;
+	}
+
+	/* It's safe because the task is inactive. */
+	do_set_cpus_allowed(p, cpumask_of(cpu));
+	p->flags |= PF_THREAD_BOUND;
 }
-EXPORT_SYMBOL (kthread_bind);
+EXPORT_SYMBOL(kthread_bind);
 
 /**
  * kthread_stop - stop a thread created by kthread_create().
@@ -248,77 +248,77 @@ EXPORT_SYMBOL (kthread_bind);
  * Returns the result of threadfn(), or %-EINTR if wake_up_process()
  * was never called.
  */
-int kthread_stop (struct task_struct * k)
+int kthread_stop(struct task_struct *k)
 {
-  struct kthread * kthread;
-  int ret;
-  
-  trace_sched_kthread_stop (k);
-  get_task_struct (k);
-  
-  kthread = to_kthread (k);
-  barrier(); /* it might have exited */
-  if (k->vfork_done != NULL) {
-    kthread->should_stop = 1;
-    wake_up_process (k);
-    wait_for_completion (&kthread->exited);
-  }
-  ret = k->exit_code;
-  
-  put_task_struct (k);
-  trace_sched_kthread_stop_ret (ret);
-  
-  return ret;
-}
-EXPORT_SYMBOL (kthread_stop);
+	struct kthread *kthread;
+	int ret;
 
-int kthreadd (void * unused)
+	trace_sched_kthread_stop(k);
+	get_task_struct(k);
+
+	kthread = to_kthread(k);
+	barrier(); /* it might have exited */
+	if (k->vfork_done != NULL) {
+		kthread->should_stop = 1;
+		wake_up_process(k);
+		wait_for_completion(&kthread->exited);
+	}
+	ret = k->exit_code;
+
+	put_task_struct(k);
+	trace_sched_kthread_stop_ret(ret);
+
+	return ret;
+}
+EXPORT_SYMBOL(kthread_stop);
+
+int kthreadd(void *unused)
 {
-  struct task_struct * tsk = current;
-  
-  /* Setup a clean context for our children to inherit. */
-  set_task_comm (tsk, "kthreadd");
-  ignore_signals (tsk);
-  set_cpus_allowed_ptr (tsk, cpu_all_mask);
-  set_mems_allowed (node_states[N_HIGH_MEMORY]);
-  
-  current->flags |= PF_NOFREEZE;
-  
-  for (;;) {
-    set_current_state (TASK_INTERRUPTIBLE);
-    if (list_empty (&kthread_create_list) )
-    { schedule(); }
-    __set_current_state (TASK_RUNNING);
-    
-    spin_lock (&kthread_create_lock);
-    while (!list_empty (&kthread_create_list) ) {
-      struct kthread_create_info * create;
-      
-      create = list_entry (kthread_create_list.next,
-                           struct kthread_create_info, list);
-      list_del_init (&create->list);
-      spin_unlock (&kthread_create_lock);
-      
-      create_kthread (create);
-      
-      spin_lock (&kthread_create_lock);
-    }
-    spin_unlock (&kthread_create_lock);
-  }
-  
-  return 0;
+	struct task_struct *tsk = current;
+
+	/* Setup a clean context for our children to inherit. */
+	set_task_comm(tsk, "kthreadd");
+	ignore_signals(tsk);
+	set_cpus_allowed_ptr(tsk, cpu_all_mask);
+	set_mems_allowed(node_states[N_HIGH_MEMORY]);
+
+	current->flags |= PF_NOFREEZE;
+
+	for (;;) {
+		set_current_state(TASK_INTERRUPTIBLE);
+		if (list_empty(&kthread_create_list))
+			schedule();
+		__set_current_state(TASK_RUNNING);
+
+		spin_lock(&kthread_create_lock);
+		while (!list_empty(&kthread_create_list)) {
+			struct kthread_create_info *create;
+
+			create = list_entry(kthread_create_list.next,
+					    struct kthread_create_info, list);
+			list_del_init(&create->list);
+			spin_unlock(&kthread_create_lock);
+
+			create_kthread(create);
+
+			spin_lock(&kthread_create_lock);
+		}
+		spin_unlock(&kthread_create_lock);
+	}
+
+	return 0;
 }
 
-void __init_kthread_worker (struct kthread_worker * worker,
-                            const char * name,
-                            struct lock_class_key * key)
+void __init_kthread_worker(struct kthread_worker *worker,
+				const char *name,
+				struct lock_class_key *key)
 {
-  spin_lock_init (&worker->lock);
-  lockdep_set_class_and_name (&worker->lock, key, name);
-  INIT_LIST_HEAD (&worker->work_list);
-  worker->task = NULL;
+	spin_lock_init(&worker->lock);
+	lockdep_set_class_and_name(&worker->lock, key, name);
+	INIT_LIST_HEAD(&worker->work_list);
+	worker->task = NULL;
 }
-EXPORT_SYMBOL_GPL (__init_kthread_worker);
+EXPORT_SYMBOL_GPL(__init_kthread_worker);
 
 /**
  * kthread_worker_fn - kthread function to process kthread_worker
@@ -335,58 +335,56 @@ EXPORT_SYMBOL_GPL (__init_kthread_worker);
  * kthread_worker without an attached kthread simply collects queued
  * kthread_works.
  */
-int kthread_worker_fn (void * worker_ptr)
+int kthread_worker_fn(void *worker_ptr)
 {
-  struct kthread_worker * worker = worker_ptr;
-  struct kthread_work * work;
-  
-  WARN_ON (worker->task);
-  worker->task = current;
+	struct kthread_worker *worker = worker_ptr;
+	struct kthread_work *work;
+
+	WARN_ON(worker->task);
+	worker->task = current;
 repeat:
-  set_current_state (TASK_INTERRUPTIBLE); /* mb paired w/ kthread_stop */
-  
-  if (kthread_should_stop() ) {
-    __set_current_state (TASK_RUNNING);
-    spin_lock_irq (&worker->lock);
-    worker->task = NULL;
-    spin_unlock_irq (&worker->lock);
-    return 0;
-  }
-  
-  work = NULL;
-  spin_lock_irq (&worker->lock);
-  if (!list_empty (&worker->work_list) ) {
-    work = list_first_entry (&worker->work_list,
-                             struct kthread_work, node);
-    list_del_init (&work->node);
-  }
-  worker->current_work = work;
-  spin_unlock_irq (&worker->lock);
-  
-  if (work) {
-    __set_current_state (TASK_RUNNING);
-    work->func (work);
-  }
-  else
-    if (!freezing (current) )
-    { schedule(); }
-    
-  try_to_freeze();
-  goto repeat;
+	set_current_state(TASK_INTERRUPTIBLE);	/* mb paired w/ kthread_stop */
+
+	if (kthread_should_stop()) {
+		__set_current_state(TASK_RUNNING);
+		spin_lock_irq(&worker->lock);
+		worker->task = NULL;
+		spin_unlock_irq(&worker->lock);
+		return 0;
+	}
+
+	work = NULL;
+	spin_lock_irq(&worker->lock);
+	if (!list_empty(&worker->work_list)) {
+		work = list_first_entry(&worker->work_list,
+					struct kthread_work, node);
+		list_del_init(&work->node);
+	}
+	worker->current_work = work;
+	spin_unlock_irq(&worker->lock);
+
+	if (work) {
+		__set_current_state(TASK_RUNNING);
+		work->func(work);
+	} else if (!freezing(current))
+		schedule();
+
+	try_to_freeze();
+	goto repeat;
 }
-EXPORT_SYMBOL_GPL (kthread_worker_fn);
+EXPORT_SYMBOL_GPL(kthread_worker_fn);
 
 /* insert @work before @pos in @worker */
-static void insert_kthread_work (struct kthread_worker * worker,
-                                 struct kthread_work * work,
-                                 struct list_head * pos)
+static void insert_kthread_work(struct kthread_worker *worker,
+			       struct kthread_work *work,
+			       struct list_head *pos)
 {
-  lockdep_assert_held (&worker->lock);
-  
-  list_add_tail (&work->node, pos);
-  work->worker = worker;
-  if (likely (worker->task) )
-  { wake_up_process (worker->task); }
+	lockdep_assert_held(&worker->lock);
+
+	list_add_tail(&work->node, pos);
+	work->worker = worker;
+	if (likely(worker->task))
+		wake_up_process(worker->task);
 }
 
 /**
@@ -398,32 +396,32 @@ static void insert_kthread_work (struct kthread_worker * worker,
  * must have been created with kthread_worker_create().  Returns %true
  * if @work was successfully queued, %false if it was already pending.
  */
-bool queue_kthread_work (struct kthread_worker * worker,
-                         struct kthread_work * work)
+bool queue_kthread_work(struct kthread_worker *worker,
+			struct kthread_work *work)
 {
-  bool ret = false;
-  unsigned long flags;
-  
-  spin_lock_irqsave (&worker->lock, flags);
-  if (list_empty (&work->node) ) {
-    insert_kthread_work (worker, work, &worker->work_list);
-    ret = true;
-  }
-  spin_unlock_irqrestore (&worker->lock, flags);
-  return ret;
+	bool ret = false;
+	unsigned long flags;
+
+	spin_lock_irqsave(&worker->lock, flags);
+	if (list_empty(&work->node)) {
+		insert_kthread_work(worker, work, &worker->work_list);
+		ret = true;
+	}
+	spin_unlock_irqrestore(&worker->lock, flags);
+	return ret;
 }
-EXPORT_SYMBOL_GPL (queue_kthread_work);
+EXPORT_SYMBOL_GPL(queue_kthread_work);
 
 struct kthread_flush_work {
-  struct kthread_work work;
-  struct completion done;
+	struct kthread_work	work;
+	struct completion	done;
 };
 
-static void kthread_flush_work_fn (struct kthread_work * work)
+static void kthread_flush_work_fn(struct kthread_work *work)
 {
-  struct kthread_flush_work * fwork =
-    container_of (work, struct kthread_flush_work, work);
-  complete (&fwork->done);
+	struct kthread_flush_work *fwork =
+		container_of(work, struct kthread_flush_work, work);
+	complete(&fwork->done);
 }
 
 /**
@@ -432,40 +430,39 @@ static void kthread_flush_work_fn (struct kthread_work * work)
  *
  * If @work is queued or executing, wait for it to finish execution.
  */
-void flush_kthread_work (struct kthread_work * work)
+void flush_kthread_work(struct kthread_work *work)
 {
-  struct kthread_flush_work fwork = {
-    KTHREAD_WORK_INIT (fwork.work, kthread_flush_work_fn),
-    COMPLETION_INITIALIZER_ONSTACK (fwork.done),
-  };
-  struct kthread_worker * worker;
-  bool noop = false;
-  
+	struct kthread_flush_work fwork = {
+		KTHREAD_WORK_INIT(fwork.work, kthread_flush_work_fn),
+		COMPLETION_INITIALIZER_ONSTACK(fwork.done),
+	};
+	struct kthread_worker *worker;
+	bool noop = false;
+
 retry:
-  worker = work->worker;
-  if (!worker)
-  { return; }
-  
-  spin_lock_irq (&worker->lock);
-  if (work->worker != worker) {
-    spin_unlock_irq (&worker->lock);
-    goto retry;
-  }
-  
-  if (!list_empty (&work->node) )
-  { insert_kthread_work (worker, &fwork.work, work->node.next); }
-  else
-    if (worker->current_work == work)
-    { insert_kthread_work (worker, &fwork.work, worker->work_list.next); }
-    else
-    { noop = true; }
-    
-  spin_unlock_irq (&worker->lock);
-  
-  if (!noop)
-  { wait_for_completion (&fwork.done); }
+	worker = work->worker;
+	if (!worker)
+		return;
+
+	spin_lock_irq(&worker->lock);
+	if (work->worker != worker) {
+		spin_unlock_irq(&worker->lock);
+		goto retry;
+	}
+
+	if (!list_empty(&work->node))
+		insert_kthread_work(worker, &fwork.work, work->node.next);
+	else if (worker->current_work == work)
+		insert_kthread_work(worker, &fwork.work, worker->work_list.next);
+	else
+		noop = true;
+
+	spin_unlock_irq(&worker->lock);
+
+	if (!noop)
+		wait_for_completion(&fwork.done);
 }
-EXPORT_SYMBOL_GPL (flush_kthread_work);
+EXPORT_SYMBOL_GPL(flush_kthread_work);
 
 /**
  * flush_kthread_worker - flush all current works on a kthread_worker
@@ -474,14 +471,14 @@ EXPORT_SYMBOL_GPL (flush_kthread_work);
  * Wait until all currently executing or pending works on @worker are
  * finished.
  */
-void flush_kthread_worker (struct kthread_worker * worker)
+void flush_kthread_worker(struct kthread_worker *worker)
 {
-  struct kthread_flush_work fwork = {
-    KTHREAD_WORK_INIT (fwork.work, kthread_flush_work_fn),
-    COMPLETION_INITIALIZER_ONSTACK (fwork.done),
-  };
-  
-  queue_kthread_work (worker, &fwork.work);
-  wait_for_completion (&fwork.done);
+	struct kthread_flush_work fwork = {
+		KTHREAD_WORK_INIT(fwork.work, kthread_flush_work_fn),
+		COMPLETION_INITIALIZER_ONSTACK(fwork.done),
+	};
+
+	queue_kthread_work(worker, &fwork.work);
+	wait_for_completion(&fwork.done);
 }
-EXPORT_SYMBOL_GPL (flush_kthread_worker);
+EXPORT_SYMBOL_GPL(flush_kthread_worker);

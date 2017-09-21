@@ -37,12 +37,12 @@
  * circular buffer.
  */
 
-static void wake_up_event_readers (struct service_processor * sp)
+static void wake_up_event_readers(struct service_processor *sp)
 {
-  struct event_reader * reader;
-  
-  list_for_each_entry (reader, &sp->event_buffer->readers, node)
-  wake_up_interruptible (&reader->wait);
+	struct event_reader *reader;
+
+	list_for_each_entry(reader, &sp->event_buffer->readers, node)
+                wake_up_interruptible(&reader->wait);
 }
 
 /**
@@ -54,32 +54,32 @@ static void wake_up_event_readers (struct service_processor * sp)
  * There is no reader marker in the buffer, therefore readers are
  * responsible for keeping up with the writer, or they will lose events.
  */
-void ibmasm_receive_event (struct service_processor * sp, void * data, unsigned int data_size)
+void ibmasm_receive_event(struct service_processor *sp, void *data, unsigned int data_size)
 {
-  struct event_buffer * buffer = sp->event_buffer;
-  struct ibmasm_event * event;
-  unsigned long flags;
-  
-  data_size = min (data_size, IBMASM_EVENT_MAX_SIZE);
-  
-  spin_lock_irqsave (&sp->lock, flags);
-  /* copy the event into the next slot in the circular buffer */
-  event = &buffer->events[buffer->next_index];
-  memcpy_fromio (event->data, data, data_size);
-  event->data_size = data_size;
-  event->serial_number = buffer->next_serial_number;
-  
-  /* advance indices in the buffer */
-  buffer->next_index = (buffer->next_index + 1) % IBMASM_NUM_EVENTS;
-  buffer->next_serial_number++;
-  spin_unlock_irqrestore (&sp->lock, flags);
-  
-  wake_up_event_readers (sp);
+	struct event_buffer *buffer = sp->event_buffer;
+	struct ibmasm_event *event;
+	unsigned long flags;
+
+	data_size = min(data_size, IBMASM_EVENT_MAX_SIZE);
+
+	spin_lock_irqsave(&sp->lock, flags);
+	/* copy the event into the next slot in the circular buffer */
+	event = &buffer->events[buffer->next_index];
+	memcpy_fromio(event->data, data, data_size);
+	event->data_size = data_size;
+	event->serial_number = buffer->next_serial_number;
+
+	/* advance indices in the buffer */
+	buffer->next_index = (buffer->next_index + 1) % IBMASM_NUM_EVENTS;
+	buffer->next_serial_number++;
+	spin_unlock_irqrestore(&sp->lock, flags);
+
+	wake_up_event_readers(sp);
 }
 
-static inline int event_available (struct event_buffer * b, struct event_reader * r)
+static inline int event_available(struct event_buffer *b, struct event_reader *r)
 {
-  return (r->next_serial_number < b->next_serial_number);
+	return (r->next_serial_number < b->next_serial_number);
 }
 
 /**
@@ -88,90 +88,90 @@ static inline int event_available (struct event_buffer * b, struct event_reader 
  * system).
  * Sleeps until a new event is available.
  */
-int ibmasm_get_next_event (struct service_processor * sp, struct event_reader * reader)
+int ibmasm_get_next_event(struct service_processor *sp, struct event_reader *reader)
 {
-  struct event_buffer * buffer = sp->event_buffer;
-  struct ibmasm_event * event;
-  unsigned int index;
-  unsigned long flags;
-  
-  reader->cancelled = 0;
-  
-  if (wait_event_interruptible (reader->wait,
-                                event_available (buffer, reader) || reader->cancelled) )
-  { return -ERESTARTSYS; }
-  
-  if (!event_available (buffer, reader) )
-  { return 0; }
-  
-  spin_lock_irqsave (&sp->lock, flags);
-  
-  index = buffer->next_index;
-  event = &buffer->events[index];
-  while (event->serial_number < reader->next_serial_number) {
-    index = (index + 1) % IBMASM_NUM_EVENTS;
-    event = &buffer->events[index];
-  }
-  memcpy (reader->data, event->data, event->data_size);
-  reader->data_size = event->data_size;
-  reader->next_serial_number = event->serial_number + 1;
-  
-  spin_unlock_irqrestore (&sp->lock, flags);
-  
-  return event->data_size;
+	struct event_buffer *buffer = sp->event_buffer;
+	struct ibmasm_event *event;
+	unsigned int index;
+	unsigned long flags;
+
+	reader->cancelled = 0;
+
+	if (wait_event_interruptible(reader->wait,
+			event_available(buffer, reader) || reader->cancelled))
+		return -ERESTARTSYS;
+
+	if (!event_available(buffer, reader))
+		return 0;
+
+	spin_lock_irqsave(&sp->lock, flags);
+
+	index = buffer->next_index;
+	event = &buffer->events[index];
+	while (event->serial_number < reader->next_serial_number) {
+		index = (index + 1) % IBMASM_NUM_EVENTS;
+		event = &buffer->events[index];
+	}
+	memcpy(reader->data, event->data, event->data_size);
+	reader->data_size = event->data_size;
+	reader->next_serial_number = event->serial_number + 1;
+
+	spin_unlock_irqrestore(&sp->lock, flags);
+
+	return event->data_size;
 }
 
-void ibmasm_cancel_next_event (struct event_reader * reader)
+void ibmasm_cancel_next_event(struct event_reader *reader)
 {
-  reader->cancelled = 1;
-  wake_up_interruptible (&reader->wait);
+        reader->cancelled = 1;
+        wake_up_interruptible(&reader->wait);
 }
 
-void ibmasm_event_reader_register (struct service_processor * sp, struct event_reader * reader)
+void ibmasm_event_reader_register(struct service_processor *sp, struct event_reader *reader)
 {
-  unsigned long flags;
-  
-  reader->next_serial_number = sp->event_buffer->next_serial_number;
-  init_waitqueue_head (&reader->wait);
-  spin_lock_irqsave (&sp->lock, flags);
-  list_add (&reader->node, &sp->event_buffer->readers);
-  spin_unlock_irqrestore (&sp->lock, flags);
+	unsigned long flags;
+
+	reader->next_serial_number = sp->event_buffer->next_serial_number;
+	init_waitqueue_head(&reader->wait);
+	spin_lock_irqsave(&sp->lock, flags);
+	list_add(&reader->node, &sp->event_buffer->readers);
+	spin_unlock_irqrestore(&sp->lock, flags);
 }
 
-void ibmasm_event_reader_unregister (struct service_processor * sp, struct event_reader * reader)
+void ibmasm_event_reader_unregister(struct service_processor *sp, struct event_reader *reader)
 {
-  unsigned long flags;
-  
-  spin_lock_irqsave (&sp->lock, flags);
-  list_del (&reader->node);
-  spin_unlock_irqrestore (&sp->lock, flags);
+	unsigned long flags;
+
+	spin_lock_irqsave(&sp->lock, flags);
+	list_del(&reader->node);
+	spin_unlock_irqrestore(&sp->lock, flags);
 }
 
-int ibmasm_event_buffer_init (struct service_processor * sp)
+int ibmasm_event_buffer_init(struct service_processor *sp)
 {
-  struct event_buffer * buffer;
-  struct ibmasm_event * event;
-  int i;
-  
-  buffer = kmalloc (sizeof (struct event_buffer), GFP_KERNEL);
-  if (!buffer)
-  { return 1; }
-  
-  buffer->next_index = 0;
-  buffer->next_serial_number = 1;
-  
-  event = buffer->events;
-  for (i = 0; i < IBMASM_NUM_EVENTS; i++, event++)
-  { event->serial_number = 0; }
-  
-  INIT_LIST_HEAD (&buffer->readers);
-  
-  sp->event_buffer = buffer;
-  
-  return 0;
+	struct event_buffer *buffer;
+	struct ibmasm_event *event;
+	int i;
+
+	buffer = kmalloc(sizeof(struct event_buffer), GFP_KERNEL);
+	if (!buffer)
+		return 1;
+
+	buffer->next_index = 0;
+	buffer->next_serial_number = 1;
+
+	event = buffer->events;
+	for (i=0; i<IBMASM_NUM_EVENTS; i++, event++)
+		event->serial_number = 0;
+
+	INIT_LIST_HEAD(&buffer->readers);
+
+	sp->event_buffer = buffer;
+
+	return 0;
 }
 
-void ibmasm_event_buffer_exit (struct service_processor * sp)
+void ibmasm_event_buffer_exit(struct service_processor *sp)
 {
-  kfree (sp->event_buffer);
+	kfree(sp->event_buffer);
 }

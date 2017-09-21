@@ -27,30 +27,30 @@
 DECLARE_GLOBAL_DATA_PTR;
 
 struct clkrst {
-  unsigned int pcken;
-  unsigned int pckdis;
-  unsigned int kcken;
-  unsigned int kckdis;
+	unsigned int pcken;
+	unsigned int pckdis;
+	unsigned int kcken;
+	unsigned int kckdis;
 };
 
 static unsigned int clkrst_base[] = {
-  U8500_CLKRST1_BASE,
-  U8500_CLKRST2_BASE,
-  U8500_CLKRST3_BASE,
-  0,
-  U8500_CLKRST5_BASE,
-  U8500_CLKRST6_BASE,
-  U8500_CLKRST7_BASE, /* ED only */
+	U8500_CLKRST1_BASE,
+	U8500_CLKRST2_BASE,
+	U8500_CLKRST3_BASE,
+	0,
+	U8500_CLKRST5_BASE,
+	U8500_CLKRST6_BASE,
+	U8500_CLKRST7_BASE,	/* ED only */
 };
 
 /* Turn on peripheral clock at PRCC level */
-void u8500_clock_enable (int periph, int cluster, int kern)
+void u8500_clock_enable(int periph, int cluster, int kern)
 {
-  struct clkrst * clkrst = (struct clkrst *) clkrst_base[periph - 1];
-  
-  if (kern != -1)
-  { writel (1 << kern, &clkrst->kcken); }
-  
-  if (cluster != -1)
-  { writel (1 << cluster, &clkrst->pcken); }
+	struct clkrst *clkrst = (struct clkrst *) clkrst_base[periph - 1];
+
+	if (kern != -1)
+		writel(1 << kern, &clkrst->kcken);
+
+	if (cluster != -1)
+		writel(1 << cluster, &clkrst->pcken);
 }

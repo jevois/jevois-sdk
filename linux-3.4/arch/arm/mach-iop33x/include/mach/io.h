@@ -13,7 +13,7 @@
 
 #include <asm/hardware/iop3xx.h>
 
-#define IO_SPACE_LIMIT    0xffffffff
-#define __io(p)   ((void __iomem *)IOP3XX_PCI_IO_PHYS_TO_VIRT(p))
+#define IO_SPACE_LIMIT		0xffffffff
+#define __io(p)		((void __iomem *)IOP3XX_PCI_IO_PHYS_TO_VIRT(p))
 
 #endif

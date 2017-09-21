@@ -9,19 +9,19 @@
 
 typedef struct { int mode; } seccomp_t;
 
-extern void __secure_computing (int);
-static inline void secure_computing (int this_syscall)
+extern void __secure_computing(int);
+static inline void secure_computing(int this_syscall)
 {
-  if (unlikely (test_thread_flag (TIF_SECCOMP) ) )
-  { __secure_computing (this_syscall); }
+	if (unlikely(test_thread_flag(TIF_SECCOMP)))
+		__secure_computing(this_syscall);
 }
 
-extern long prctl_get_seccomp (void);
-extern long prctl_set_seccomp (unsigned long);
+extern long prctl_get_seccomp(void);
+extern long prctl_set_seccomp(unsigned long);
 
-static inline int seccomp_mode (seccomp_t * s)
+static inline int seccomp_mode(seccomp_t *s)
 {
-  return s->mode;
+	return s->mode;
 }
 
 #else /* CONFIG_SECCOMP */
@@ -32,19 +32,19 @@ typedef struct { } seccomp_t;
 
 #define secure_computing(x) do { } while (0)
 
-static inline long prctl_get_seccomp (void)
+static inline long prctl_get_seccomp(void)
 {
-  return -EINVAL;
+	return -EINVAL;
 }
 
-static inline long prctl_set_seccomp (unsigned long arg2)
+static inline long prctl_set_seccomp(unsigned long arg2)
 {
-  return -EINVAL;
+	return -EINVAL;
 }
 
-static inline int seccomp_mode (seccomp_t * s)
+static inline int seccomp_mode(seccomp_t *s)
 {
-  return 0;
+	return 0;
 }
 
 #endif /* CONFIG_SECCOMP */

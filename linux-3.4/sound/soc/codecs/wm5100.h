@@ -17,7 +17,7 @@
 #include <sound/soc.h>
 #include <linux/regmap.h>
 
-int wm5100_detect (struct snd_soc_codec * codec, struct snd_soc_jack * jack);
+int wm5100_detect(struct snd_soc_codec *codec, struct snd_soc_jack *jack);
 
 #define WM5100_CLK_AIF1     1
 #define WM5100_CLK_AIF2     2
@@ -5148,8 +5148,8 @@ int wm5100_detect (struct snd_soc_codec * codec, struct snd_soc_jack * jack);
 #define WM5100_DSP3_ZM_END_SHIFT                     0  /* DSP3_ZM_END - [15:0] */
 #define WM5100_DSP3_ZM_END_WIDTH                    16  /* DSP3_ZM_END - [15:0] */
 
-bool wm5100_readable_register (struct device * dev, unsigned int reg);
-bool wm5100_volatile_register (struct device * dev, unsigned int reg);
+bool wm5100_readable_register(struct device *dev, unsigned int reg);
+bool wm5100_volatile_register(struct device *dev, unsigned int reg);
 
 extern struct reg_default wm5100_reg_defaults[WM5100_REGISTER_COUNT];
 

@@ -51,8 +51,8 @@
 #define RX_DESC_ENCRYPTION_MASK   0x0300
 #define RX_DESC_MEASURMENT        0x0400
 #define RX_DESC_SEQNUM_MASK       0x1800
-#define RX_DESC_MIC_FAIL    0x2000
-#define RX_DESC_DECRYPT_FAIL    0x4000
+#define	RX_DESC_MIC_FAIL	  0x2000
+#define	RX_DESC_DECRYPT_FAIL	  0x4000
 
 /*
  * RX Descriptor flags:
@@ -100,33 +100,33 @@
 #define RX_BUF_UNALIGNED_PAYLOAD     BIT(20)
 
 enum {
-  WL12XX_RX_CLASS_UNKNOWN,
-  WL12XX_RX_CLASS_MANAGEMENT,
-  WL12XX_RX_CLASS_DATA,
-  WL12XX_RX_CLASS_QOS_DATA,
-  WL12XX_RX_CLASS_BCN_PRBRSP,
-  WL12XX_RX_CLASS_EAPOL,
-  WL12XX_RX_CLASS_BA_EVENT,
-  WL12XX_RX_CLASS_AMSDU,
-  WL12XX_RX_CLASS_LOGGER,
+	WL12XX_RX_CLASS_UNKNOWN,
+	WL12XX_RX_CLASS_MANAGEMENT,
+	WL12XX_RX_CLASS_DATA,
+	WL12XX_RX_CLASS_QOS_DATA,
+	WL12XX_RX_CLASS_BCN_PRBRSP,
+	WL12XX_RX_CLASS_EAPOL,
+	WL12XX_RX_CLASS_BA_EVENT,
+	WL12XX_RX_CLASS_AMSDU,
+	WL12XX_RX_CLASS_LOGGER,
 };
 
 struct wl1271_rx_descriptor {
-  __le16 length;
-  u8  status;
-  u8  flags;
-  u8  rate;
-  u8  channel;
-  s8  rssi;
-  u8  snr;
-  __le32 timestamp;
-  u8  packet_class;
-  u8  hlid;
-  u8  pad_len;
-  u8  reserved;
+	__le16 length;
+	u8  status;
+	u8  flags;
+	u8  rate;
+	u8  channel;
+	s8  rssi;
+	u8  snr;
+	__le32 timestamp;
+	u8  packet_class;
+	u8  hlid;
+	u8  pad_len;
+	u8  reserved;
 } __packed;
 
-void wl12xx_rx (struct wl1271 * wl, struct wl12xx_fw_status * status);
-u8 wl1271_rate_to_idx (int rate, enum ieee80211_band band);
+void wl12xx_rx(struct wl1271 *wl, struct wl12xx_fw_status *status);
+u8 wl1271_rate_to_idx(int rate, enum ieee80211_band band);
 
 #endif

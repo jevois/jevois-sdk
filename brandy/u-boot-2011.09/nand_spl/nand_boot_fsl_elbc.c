@@ -30,99 +30,97 @@
 
 #define WINDOW_SIZE 8192
 
-static void nand_wait (void)
+static void nand_wait(void)
 {
-  fsl_lbc_t * regs = LBC_BASE_ADDR;
-  
-  for (;;) {
-    uint32_t status = in_be32 (&regs->ltesr);
-    
-    if (status == 1)
-    { return; }
-    
-    if (status & 1) {
-      puts ("read failed (ltesr)\n");
-      for (;;);
-    }
-  }
+	fsl_lbc_t *regs = LBC_BASE_ADDR;
+
+	for (;;) {
+		uint32_t status = in_be32(&regs->ltesr);
+
+		if (status == 1)
+			return;
+
+		if (status & 1) {
+			puts("read failed (ltesr)\n");
+			for (;;);
+		}
+	}
 }
 
-static void nand_load (unsigned int offs, int uboot_size, uchar * dst)
+static void nand_load(unsigned int offs, int uboot_size, uchar *dst)
 {
-  fsl_lbc_t * regs = LBC_BASE_ADDR;
-  uchar * buf = (uchar *) CONFIG_SYS_NAND_BASE;
-  const int large = CONFIG_SYS_NAND_OR_PRELIM & OR_FCM_PGS;
-  const int block_shift = large ? 17 : 14;
-  const int block_size = 1 << block_shift;
-  const int page_size = large ? 2048 : 512;
-  const int bad_marker = large ? page_size + 0 : page_size + 5;
-  int fmr = (15 << FMR_CWTO_SHIFT) | (2 << FMR_AL_SHIFT) | 2;
-  int pos = 0;
-  
-  if (offs & (block_size - 1) ) {
-    puts ("bad offset\n");
-    for (;;);
-  }
-  
-  if (large) {
-    fmr |= FMR_ECCM;
-    out_be32 (&regs->fcr, (NAND_CMD_READ0 << FCR_CMD0_SHIFT) |
-              (NAND_CMD_READSTART << FCR_CMD1_SHIFT) );
-    out_be32 (&regs->fir,
-              (FIR_OP_CW0 << FIR_OP0_SHIFT) |
-              (FIR_OP_CA  << FIR_OP1_SHIFT) |
-              (FIR_OP_PA  << FIR_OP2_SHIFT) |
-              (FIR_OP_CW1 << FIR_OP3_SHIFT) |
-              (FIR_OP_RBW << FIR_OP4_SHIFT) );
-  }
-  else {
-    out_be32 (&regs->fcr, NAND_CMD_READ0 << FCR_CMD0_SHIFT);
-    out_be32 (&regs->fir,
-              (FIR_OP_CW0 << FIR_OP0_SHIFT) |
-              (FIR_OP_CA  << FIR_OP1_SHIFT) |
-              (FIR_OP_PA  << FIR_OP2_SHIFT) |
-              (FIR_OP_RBW << FIR_OP3_SHIFT) );
-  }
-  
-  out_be32 (&regs->fbcr, 0);
-  clrsetbits_be32 (&regs->bank[0].br, BR_DECC, BR_DECC_CHK_GEN);
-  
-  while (pos < uboot_size) {
-    int i = 0;
-    out_be32 (&regs->fbar, offs >> block_shift);
-    
-    do {
-      int j;
-      unsigned int page_offs = (offs & (block_size - 1) ) << 1;
-      
-      out_be32 (&regs->ltesr, ~0);
-      out_be32 (&regs->lteatr, 0);
-      out_be32 (&regs->fpar, page_offs);
-      out_be32 (&regs->fmr, fmr);
-      out_be32 (&regs->lsor, 0);
-      nand_wait();
-      
-      page_offs %= WINDOW_SIZE;
-      
-      /*
-       * If either of the first two pages are marked bad,
-       * continue to the next block.
-       */
-      if (i++ < 2 && buf[page_offs + bad_marker] != 0xff) {
-        puts ("skipping\n");
-        offs = (offs + block_size) & ~ (block_size - 1);
-        pos &= ~ (block_size - 1);
-        break;
-      }
-      
-      for (j = 0; j < page_size; j++)
-      { dst[pos + j] = buf[page_offs + j]; }
-      
-      pos += page_size;
-      offs += page_size;
-    }
-    while ( (offs & (block_size - 1) ) && (pos < uboot_size) );
-  }
+	fsl_lbc_t *regs = LBC_BASE_ADDR;
+	uchar *buf = (uchar *)CONFIG_SYS_NAND_BASE;
+	const int large = CONFIG_SYS_NAND_OR_PRELIM & OR_FCM_PGS;
+	const int block_shift = large ? 17 : 14;
+	const int block_size = 1 << block_shift;
+	const int page_size = large ? 2048 : 512;
+	const int bad_marker = large ? page_size + 0 : page_size + 5;
+	int fmr = (15 << FMR_CWTO_SHIFT) | (2 << FMR_AL_SHIFT) | 2;
+	int pos = 0;
+
+	if (offs & (block_size - 1)) {
+		puts("bad offset\n");
+		for (;;);
+	}
+
+	if (large) {
+		fmr |= FMR_ECCM;
+		out_be32(&regs->fcr, (NAND_CMD_READ0 << FCR_CMD0_SHIFT) |
+		                     (NAND_CMD_READSTART << FCR_CMD1_SHIFT));
+		out_be32(&regs->fir,
+		         (FIR_OP_CW0 << FIR_OP0_SHIFT) |
+		         (FIR_OP_CA  << FIR_OP1_SHIFT) |
+		         (FIR_OP_PA  << FIR_OP2_SHIFT) |
+		         (FIR_OP_CW1 << FIR_OP3_SHIFT) |
+		         (FIR_OP_RBW << FIR_OP4_SHIFT));
+	} else {
+		out_be32(&regs->fcr, NAND_CMD_READ0 << FCR_CMD0_SHIFT);
+		out_be32(&regs->fir,
+		         (FIR_OP_CW0 << FIR_OP0_SHIFT) |
+		         (FIR_OP_CA  << FIR_OP1_SHIFT) |
+		         (FIR_OP_PA  << FIR_OP2_SHIFT) |
+		         (FIR_OP_RBW << FIR_OP3_SHIFT));
+	}
+
+	out_be32(&regs->fbcr, 0);
+	clrsetbits_be32(&regs->bank[0].br, BR_DECC, BR_DECC_CHK_GEN);
+
+	while (pos < uboot_size) {
+		int i = 0;
+		out_be32(&regs->fbar, offs >> block_shift);
+
+		do {
+			int j;
+			unsigned int page_offs = (offs & (block_size - 1)) << 1;
+
+			out_be32(&regs->ltesr, ~0);
+			out_be32(&regs->lteatr, 0);
+			out_be32(&regs->fpar, page_offs);
+			out_be32(&regs->fmr, fmr);
+			out_be32(&regs->lsor, 0);
+			nand_wait();
+
+			page_offs %= WINDOW_SIZE;
+
+			/*
+			 * If either of the first two pages are marked bad,
+			 * continue to the next block.
+			 */
+			if (i++ < 2 && buf[page_offs + bad_marker] != 0xff) {
+				puts("skipping\n");
+				offs = (offs + block_size) & ~(block_size - 1);
+				pos &= ~(block_size - 1);
+				break;
+			}
+
+			for (j = 0; j < page_size; j++)
+				dst[pos + j] = buf[page_offs + j];
+
+			pos += page_size;
+			offs += page_size;
+		} while ((offs & (block_size - 1)) && (pos < uboot_size));
+	}
 }
 
 /*
@@ -130,25 +128,25 @@ static void nand_load (unsigned int offs, int uboot_size, uchar * dst)
  * configured and available since this code loads the main U-Boot image
  * from NAND into SDRAM and starts it from there.
  */
-void nand_boot (void)
+void nand_boot(void)
 {
-  __attribute__ ( (noreturn) ) void (*uboot) (void);
-  
-  /*
-   * Load U-Boot image from NAND into RAM
-   */
-  nand_load (CONFIG_SYS_NAND_U_BOOT_OFFS, CONFIG_SYS_NAND_U_BOOT_SIZE,
-             (uchar *) CONFIG_SYS_NAND_U_BOOT_DST);
-             
-  /*
-   * Jump to U-Boot image
-   */
-  puts ("transfering control\n");
-  /*
-   * Clean d-cache and invalidate i-cache, to
-   * make sure that no stale data is executed.
-   */
-  flush_cache (CONFIG_SYS_NAND_U_BOOT_DST, CONFIG_SYS_NAND_U_BOOT_SIZE);
-  uboot = (void *) CONFIG_SYS_NAND_U_BOOT_START;
-  uboot();
+	__attribute__((noreturn)) void (*uboot)(void);
+
+	/*
+	 * Load U-Boot image from NAND into RAM
+	 */
+	nand_load(CONFIG_SYS_NAND_U_BOOT_OFFS, CONFIG_SYS_NAND_U_BOOT_SIZE,
+	          (uchar *)CONFIG_SYS_NAND_U_BOOT_DST);
+
+	/*
+	 * Jump to U-Boot image
+	 */
+	puts("transfering control\n");
+	/*
+	 * Clean d-cache and invalidate i-cache, to
+	 * make sure that no stale data is executed.
+	 */
+	flush_cache(CONFIG_SYS_NAND_U_BOOT_DST, CONFIG_SYS_NAND_U_BOOT_SIZE);
+	uboot = (void *)CONFIG_SYS_NAND_U_BOOT_START;
+	uboot();
 }

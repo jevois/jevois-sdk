@@ -2,7 +2,7 @@
  *  Driver for Zarlink DVB-T MT352 demodulator
  *
  *  Written by Holger Waechtler <holger@qanu.de>
- *   and Daniel Mack <daniel@qanu.de>
+ *	 and Daniel Mack <daniel@qanu.de>
  *
  *  AVerMedia AVerTV DVB-T 771 support by
  *       Wolfram Joost <dbox2@frokaschwei.de>
@@ -37,37 +37,37 @@
 
 struct mt352_config
 {
-  /* the demodulator's i2c address */
-  u8 demod_address;
-  
-  /* frequencies in kHz */
-  int adc_clock; 
-  int if2;       
-  
-  /* set if no pll is connected to the secondary i2c bus */
-  int no_tuner;
-  
-  /* Initialise the demodulator and PLL. Cannot be NULL */
-  int (*demod_init) (struct dvb_frontend * fe);
+	/* the demodulator's i2c address */
+	u8 demod_address;
+
+	/* frequencies in kHz */
+	int adc_clock; 
+	int if2;       
+
+	/* set if no pll is connected to the secondary i2c bus */
+	int no_tuner;
+
+	/* Initialise the demodulator and PLL. Cannot be NULL */
+	int (*demod_init)(struct dvb_frontend* fe);
 };
 
 #if defined(CONFIG_DVB_MT352) || (defined(CONFIG_DVB_MT352_MODULE) && defined(MODULE))
-extern struct dvb_frontend * mt352_attach (const struct mt352_config * config,
-    struct i2c_adapter * i2c);
+extern struct dvb_frontend* mt352_attach(const struct mt352_config* config,
+					 struct i2c_adapter* i2c);
 #else
-static inline struct dvb_frontend * mt352_attach (const struct mt352_config * config,
-    struct i2c_adapter * i2c)
+static inline struct dvb_frontend* mt352_attach(const struct mt352_config* config,
+					 struct i2c_adapter* i2c)
 {
-  printk (KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
-  return NULL;
+	printk(KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
+	return NULL;
 }
 #endif
 
-static inline int mt352_write (struct dvb_frontend * fe, const u8 buf[], int len) {
-  int r = 0;
-  if (fe->ops.write)
-  { r = fe->ops.write (fe, buf, len); }
-  return r;
+static inline int mt352_write(struct dvb_frontend *fe, const u8 buf[], int len) {
+	int r = 0;
+	if (fe->ops.write)
+		r = fe->ops.write(fe, buf, len);
+	return r;
 }
 
 #endif

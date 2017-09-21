@@ -17,8 +17,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-void netx_clcd_enable (struct clcd_fb * fb);
-int netx_clcd_setup (struct clcd_fb * fb);
-int netx_clcd_mmap (struct clcd_fb * fb, struct vm_area_struct * vma);
-void netx_clcd_remove (struct clcd_fb * fb);
-int netx_fb_init (struct clcd_board * board, struct clcd_panel * panel);
+void netx_clcd_enable(struct clcd_fb *fb);
+int netx_clcd_setup(struct clcd_fb *fb);
+int netx_clcd_mmap(struct clcd_fb *fb, struct vm_area_struct *vma);
+void netx_clcd_remove(struct clcd_fb *fb);
+int netx_fb_init(struct clcd_board *board, struct clcd_panel *panel);

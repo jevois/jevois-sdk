@@ -18,6 +18,6 @@
 #ifndef _LINUX_WAKEUP_REASON_H
 #define _LINUX_WAKEUP_REASON_H
 
-void log_wakeup_reason (int irq);
+void log_wakeup_reason(int irq);
 
 #endif /* _LINUX_WAKEUP_REASON_H */

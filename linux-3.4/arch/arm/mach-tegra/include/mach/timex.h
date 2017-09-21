@@ -4,8 +4,8 @@
  * Copyright (C) 2010 Google, Inc.
  *
  * Author:
- *  Colin Cross <ccross@google.com>
- *  Erik Gilling <konkers@google.com>
+ *	Colin Cross <ccross@google.com>
+ *	Erik Gilling <konkers@google.com>
  *
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
@@ -21,6 +21,6 @@
 #ifndef __MACH_TEGRA_TIMEX_H
 #define __MACH_TEGRA_TIMEX_H
 
-#define CLOCK_TICK_RATE   1000000
+#define CLOCK_TICK_RATE		1000000
 
 #endif

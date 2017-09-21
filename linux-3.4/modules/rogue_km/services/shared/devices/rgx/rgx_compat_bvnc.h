@@ -61,32 +61,32 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define RGX_BVNC_PACKED_EXTR_N(BVNC) (((BVNC).ui32BNC >> 8) & 0xFF)
 #define RGX_BVNC_PACKED_EXTR_C(BVNC) (((BVNC).ui32BNC >> 0) & 0xFF)
 
-#define RGX_BVNC_EQUAL(L,R,all,version,lenmax,bnc,v) do {                         \
-    (lenmax) = IMG_FALSE;                       \
-    (bnc) = IMG_FALSE;                          \
-    (v) = IMG_FALSE;                          \
-    (version) = ((L).ui32LayoutVersion == (R).ui32LayoutVersion);   \
-    if (version)                            \
-    {                                 \
-      (lenmax) = ((L).ui32VLenMax == (R).ui32VLenMax);        \
-    }                                 \
-    if (lenmax)                             \
-    {                                 \
-      (bnc) = ((L).ui32BNC == (R).ui32BNC);             \
-    }                                 \
-    if (bnc)                              \
-    {                                 \
-      (L).aszV[(L).ui32VLenMax] = '\0';               \
-      (R).aszV[(R).ui32VLenMax] = '\0';               \
-      (v) = (OSStringCompare((L).aszV, (R).aszV)==0);         \
-    }                                 \
-    (all) = (version) && (lenmax) && (bnc) && (v);            \
-  } while (0)
+#define RGX_BVNC_EQUAL(L,R,all,version,lenmax,bnc,v) do {													\
+										(lenmax) = IMG_FALSE;												\
+										(bnc) = IMG_FALSE;													\
+										(v) = IMG_FALSE;													\
+										(version) = ((L).ui32LayoutVersion == (R).ui32LayoutVersion);		\
+										if (version)														\
+										{																	\
+											(lenmax) = ((L).ui32VLenMax == (R).ui32VLenMax);				\
+										}																	\
+										if (lenmax)															\
+										{																	\
+											(bnc) = ((L).ui32BNC == (R).ui32BNC);							\
+										}																	\
+										if (bnc)															\
+										{																	\
+											(L).aszV[(L).ui32VLenMax] = '\0';								\
+											(R).aszV[(R).ui32VLenMax] = '\0';								\
+											(v) = (OSStringCompare((L).aszV, (R).aszV)==0);					\
+										}																	\
+										(all) = (version) && (lenmax) && (bnc) && (v);						\
+									} while (0)
 
-IMG_VOID rgx_bvnc_packed (IMG_UINT32 * pui32OutBNC, IMG_CHAR * pszOutV, IMG_UINT32 ui32OutVMaxLen,
-                          IMG_UINT32 ui32B, IMG_CHAR * pszV, IMG_UINT32 ui32N, IMG_UINT32 ui32C);
-IMG_VOID rgx_bvnc_pack_hw (IMG_UINT32 * pui32OutBNC, IMG_CHAR * pszOutV, IMG_UINT32 ui32OutVMaxLen,
-                           IMG_UINT32 ui32B, IMG_CHAR * pszFwV, IMG_UINT32 ui32V, IMG_UINT32 ui32N, IMG_UINT32 ui32C);
+IMG_VOID rgx_bvnc_packed(IMG_UINT32 *pui32OutBNC, IMG_CHAR *pszOutV, IMG_UINT32 ui32OutVMaxLen,
+							IMG_UINT32 ui32B, IMG_CHAR *pszV, IMG_UINT32 ui32N, IMG_UINT32 ui32C);
+IMG_VOID rgx_bvnc_pack_hw(IMG_UINT32 *pui32OutBNC, IMG_CHAR *pszOutV, IMG_UINT32 ui32OutVMaxLen,
+							IMG_UINT32 ui32B, IMG_CHAR *pszFwV, IMG_UINT32 ui32V, IMG_UINT32 ui32N, IMG_UINT32 ui32C);
 
 #endif /*  __RGX_COMPAT_BVNC_H__ */
 

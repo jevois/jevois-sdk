@@ -11,5 +11,5 @@
  */
 
 #ifndef __ASSEMBLY__
-asm (".code16gcc");
+asm(".code16gcc");
 #endif

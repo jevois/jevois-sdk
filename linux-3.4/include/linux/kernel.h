@@ -6,8 +6,8 @@
 /*
  * 'kernel.h' contains some often-used function prototypes etc
  */
-#define __ALIGN_KERNEL(x, a)    __ALIGN_KERNEL_MASK(x, (typeof(x))(a) - 1)
-#define __ALIGN_KERNEL_MASK(x, mask)  (((x) + (mask)) & ~(mask))
+#define __ALIGN_KERNEL(x, a)		__ALIGN_KERNEL_MASK(x, (typeof(x))(a) - 1)
+#define __ALIGN_KERNEL_MASK(x, mask)	(((x) + (mask)) & ~(mask))
 
 #ifdef __KERNEL__
 
@@ -23,25 +23,25 @@
 #include <linux/dynamic_debug.h>
 #include <asm/byteorder.h>
 
-#define USHRT_MAX ((u16)(~0U))
-#define SHRT_MAX  ((s16)(USHRT_MAX>>1))
-#define SHRT_MIN  ((s16)(-SHRT_MAX - 1))
-#define INT_MAX   ((int)(~0U>>1))
-#define INT_MIN   (-INT_MAX - 1)
-#define UINT_MAX  (~0U)
-#define LONG_MAX  ((long)(~0UL>>1))
-#define LONG_MIN  (-LONG_MAX - 1)
-#define ULONG_MAX (~0UL)
-#define LLONG_MAX ((long long)(~0ULL>>1))
-#define LLONG_MIN (-LLONG_MAX - 1)
-#define ULLONG_MAX  (~0ULL)
+#define USHRT_MAX	((u16)(~0U))
+#define SHRT_MAX	((s16)(USHRT_MAX>>1))
+#define SHRT_MIN	((s16)(-SHRT_MAX - 1))
+#define INT_MAX		((int)(~0U>>1))
+#define INT_MIN		(-INT_MAX - 1)
+#define UINT_MAX	(~0U)
+#define LONG_MAX	((long)(~0UL>>1))
+#define LONG_MIN	(-LONG_MAX - 1)
+#define ULONG_MAX	(~0UL)
+#define LLONG_MAX	((long long)(~0ULL>>1))
+#define LLONG_MIN	(-LLONG_MAX - 1)
+#define ULLONG_MAX	(~0ULL)
 
-#define STACK_MAGIC 0xdeadbeef
+#define STACK_MAGIC	0xdeadbeef
 
-#define ALIGN(x, a)   __ALIGN_KERNEL((x), (a))
-#define __ALIGN_MASK(x, mask) __ALIGN_KERNEL_MASK((x), (mask))
-#define PTR_ALIGN(p, a)   ((typeof(p))ALIGN((unsigned long)(p), (a)))
-#define IS_ALIGNED(x, a)    (((x) & ((typeof(x))(a) - 1)) == 0)
+#define ALIGN(x, a)		__ALIGN_KERNEL((x), (a))
+#define __ALIGN_MASK(x, mask)	__ALIGN_KERNEL_MASK((x), (mask))
+#define PTR_ALIGN(p, a)		((typeof(p))ALIGN((unsigned long)(p), (a)))
+#define IS_ALIGNED(x, a)		(((x) & ((typeof(x))(a) - 1)) == 0)
 
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]) + __must_be_array(arr))
 
@@ -58,7 +58,7 @@
 #define FIELD_SIZEOF(t, f) (sizeof(((t*)0)->f))
 #define DIV_ROUND_UP(n,d) (((n) + (d) - 1) / (d))
 #define DIV_ROUND_UP_ULL(ll,d) \
-  ({ unsigned long long _tmp = (ll)+(d)-1; do_div(_tmp, d); _tmp; })
+	({ unsigned long long _tmp = (ll)+(d)-1; do_div(_tmp, d); _tmp; })
 
 #if BITS_PER_LONG == 32
 # define DIV_ROUND_UP_SECTOR_T(ll,d) DIV_ROUND_UP_ULL(ll, d)
@@ -67,39 +67,39 @@
 #endif
 
 /* The `const' in roundup() prevents gcc-3.3 from calling __divdi3 */
-#define roundup(x, y) (         \
-{             \
-  const typeof(y) __y = y;      \
-  (((x) + (__y - 1)) / __y) * __y;    \
-}             \
-                      )
-#define rounddown(x, y) (       \
-{             \
-  typeof(x) __x = (x);        \
-  __x - (__x % (y));        \
-}             \
-                        )
-#define DIV_ROUND_CLOSEST(x, divisor)(      \
-{             \
-  typeof(divisor) __divisor = divisor;    \
-  (((x) + ((__divisor) / 2)) / (__divisor));  \
-}             \
-                                     )
+#define roundup(x, y) (					\
+{							\
+	const typeof(y) __y = y;			\
+	(((x) + (__y - 1)) / __y) * __y;		\
+}							\
+)
+#define rounddown(x, y) (				\
+{							\
+	typeof(x) __x = (x);				\
+	__x - (__x % (y));				\
+}							\
+)
+#define DIV_ROUND_CLOSEST(x, divisor)(			\
+{							\
+	typeof(divisor) __divisor = divisor;		\
+	(((x) + ((__divisor) / 2)) / (__divisor));	\
+}							\
+)
 
 /*
  * Multiplies an integer by a fraction, while avoiding unnecessary
  * overflow or loss of precision.
  */
-#define mult_frac(x, numer, denom)(     \
-{             \
-  typeof(x) quot = (x) / (denom);     \
-  typeof(x) rem  = (x) % (denom);     \
-  (quot * (numer)) + ((rem * (numer)) / (denom)); \
-}             \
-                                  )
+#define mult_frac(x, numer, denom)(			\
+{							\
+	typeof(x) quot = (x) / (denom);			\
+	typeof(x) rem  = (x) % (denom);			\
+	(quot * (numer)) + ((rem * (numer)) / (denom));	\
+}							\
+)
 
 
-#define _RET_IP_    (unsigned long)__builtin_return_address(0)
+#define _RET_IP_		(unsigned long)__builtin_return_address(0)
 #define _THIS_IP_  ({ __label__ __here; __here: (unsigned long)&&__here; })
 
 #ifdef CONFIG_LBDAF
@@ -108,12 +108,12 @@
 #else
 # define sector_div(n, b)( \
 { \
-  int _res; \
-  _res = (n) % (b); \
-  (n) /= (b); \
-  _res; \
+	int _res; \
+	_res = (n) % (b); \
+	(n) /= (b); \
+	_res; \
 } \
-                         )
+)
 #endif
 
 /**
@@ -137,14 +137,14 @@ struct pt_regs;
 struct user;
 
 #ifdef CONFIG_PREEMPT_VOLUNTARY
-extern int _cond_resched (void);
+extern int _cond_resched(void);
 # define might_resched() _cond_resched()
 #else
 # define might_resched() do { } while (0)
 #endif
 
 #ifdef CONFIG_DEBUG_ATOMIC_SLEEP
-void __might_sleep (const char * file, int line, int preempt_offset);
+  void __might_sleep(const char *file, int line, int preempt_offset);
 /**
  * might_sleep - annotation for functions that can sleep
  *
@@ -156,10 +156,10 @@ void __might_sleep (const char * file, int line, int preempt_offset);
  * supposed to.
  */
 # define might_sleep() \
-  do { __might_sleep(__FILE__, __LINE__, 0); might_resched(); } while (0)
+	do { __might_sleep(__FILE__, __LINE__, 0); might_resched(); } while (0)
 #else
-static inline void __might_sleep (const char * file, int line,
-                                  int preempt_offset) { }
+  static inline void __might_sleep(const char *file, int line,
+				   int preempt_offset) { }
 # define might_sleep() do { might_resched(); } while (0)
 #endif
 
@@ -171,244 +171,244 @@ static inline void __might_sleep (const char * file, int line,
  * abs() should not be used for 64-bit types (s64, u64, long long) - use abs64()
  * for those.
  */
-#define abs(x) ({           \
-    long ret;         \
-    if (sizeof(x) == sizeof(long)) {    \
-      long __x = (x);       \
-      ret = (__x < 0) ? -__x : __x;   \
-    } else {          \
-      int __x = (x);        \
-      ret = (__x < 0) ? -__x : __x;   \
-    }           \
-    ret;            \
-  })
+#define abs(x) ({						\
+		long ret;					\
+		if (sizeof(x) == sizeof(long)) {		\
+			long __x = (x);				\
+			ret = (__x < 0) ? -__x : __x;		\
+		} else {					\
+			int __x = (x);				\
+			ret = (__x < 0) ? -__x : __x;		\
+		}						\
+		ret;						\
+	})
 
-#define abs64(x) ({       \
-    s64 __x = (x);      \
-    (__x < 0) ? -__x : __x;   \
-  })
+#define abs64(x) ({				\
+		s64 __x = (x);			\
+		(__x < 0) ? -__x : __x;		\
+	})
 
 #ifdef CONFIG_PROVE_LOCKING
-void might_fault (void);
+void might_fault(void);
 #else
-static inline void might_fault (void)
+static inline void might_fault(void)
 {
-  might_sleep();
+	might_sleep();
 }
 #endif
 
 extern struct atomic_notifier_head panic_notifier_list;
-extern long (*panic_blink) (int state);
-__printf (1, 2)
-void panic (const char * fmt, ...)
-__noreturn __cold;
-extern void oops_enter (void);
-extern void oops_exit (void);
-void print_oops_end_marker (void);
-extern int oops_may_print (void);
-void do_exit (long error_code)
-__noreturn;
-void complete_and_exit (struct completion *, long)
-__noreturn;
+extern long (*panic_blink)(int state);
+__printf(1, 2)
+void panic(const char *fmt, ...)
+	__noreturn __cold;
+extern void oops_enter(void);
+extern void oops_exit(void);
+void print_oops_end_marker(void);
+extern int oops_may_print(void);
+void do_exit(long error_code)
+	__noreturn;
+void complete_and_exit(struct completion *, long)
+	__noreturn;
 
 /* Internal, do not use. */
-int __must_check _kstrtoul (const char * s, unsigned int base, unsigned long * res);
-int __must_check _kstrtol (const char * s, unsigned int base, long * res);
+int __must_check _kstrtoul(const char *s, unsigned int base, unsigned long *res);
+int __must_check _kstrtol(const char *s, unsigned int base, long *res);
 
-int __must_check kstrtoull (const char * s, unsigned int base, unsigned long long * res);
-int __must_check kstrtoll (const char * s, unsigned int base, long long * res);
-static inline int __must_check kstrtoul (const char * s, unsigned int base, unsigned long * res)
+int __must_check kstrtoull(const char *s, unsigned int base, unsigned long long *res);
+int __must_check kstrtoll(const char *s, unsigned int base, long long *res);
+static inline int __must_check kstrtoul(const char *s, unsigned int base, unsigned long *res)
 {
-  /*
-   * We want to shortcut function call, but
-   * __builtin_types_compatible_p(unsigned long, unsigned long long) = 0.
-   */
-  if (sizeof (unsigned long) == sizeof (unsigned long long) &&
-      __alignof__ (unsigned long) == __alignof__ (unsigned long long) )
-  { return kstrtoull (s, base, (unsigned long long *) res); }
-  else
-  { return _kstrtoul (s, base, res); }
+	/*
+	 * We want to shortcut function call, but
+	 * __builtin_types_compatible_p(unsigned long, unsigned long long) = 0.
+	 */
+	if (sizeof(unsigned long) == sizeof(unsigned long long) &&
+	    __alignof__(unsigned long) == __alignof__(unsigned long long))
+		return kstrtoull(s, base, (unsigned long long *)res);
+	else
+		return _kstrtoul(s, base, res);
 }
 
-static inline int __must_check kstrtol (const char * s, unsigned int base, long * res)
+static inline int __must_check kstrtol(const char *s, unsigned int base, long *res)
 {
-  /*
-   * We want to shortcut function call, but
-   * __builtin_types_compatible_p(long, long long) = 0.
-   */
-  if (sizeof (long) == sizeof (long long) &&
-      __alignof__ (long) == __alignof__ (long long) )
-  { return kstrtoll (s, base, (long long *) res); }
-  else
-  { return _kstrtol (s, base, res); }
+	/*
+	 * We want to shortcut function call, but
+	 * __builtin_types_compatible_p(long, long long) = 0.
+	 */
+	if (sizeof(long) == sizeof(long long) &&
+	    __alignof__(long) == __alignof__(long long))
+		return kstrtoll(s, base, (long long *)res);
+	else
+		return _kstrtol(s, base, res);
 }
 
-int __must_check kstrtouint (const char * s, unsigned int base, unsigned int * res);
-int __must_check kstrtoint (const char * s, unsigned int base, int * res);
+int __must_check kstrtouint(const char *s, unsigned int base, unsigned int *res);
+int __must_check kstrtoint(const char *s, unsigned int base, int *res);
 
-static inline int __must_check kstrtou64 (const char * s, unsigned int base, u64 * res)
+static inline int __must_check kstrtou64(const char *s, unsigned int base, u64 *res)
 {
-  return kstrtoull (s, base, res);
+	return kstrtoull(s, base, res);
 }
 
-static inline int __must_check kstrtos64 (const char * s, unsigned int base, s64 * res)
+static inline int __must_check kstrtos64(const char *s, unsigned int base, s64 *res)
 {
-  return kstrtoll (s, base, res);
+	return kstrtoll(s, base, res);
 }
 
-static inline int __must_check kstrtou32 (const char * s, unsigned int base, u32 * res)
+static inline int __must_check kstrtou32(const char *s, unsigned int base, u32 *res)
 {
-  return kstrtouint (s, base, res);
+	return kstrtouint(s, base, res);
 }
 
-static inline int __must_check kstrtos32 (const char * s, unsigned int base, s32 * res)
+static inline int __must_check kstrtos32(const char *s, unsigned int base, s32 *res)
 {
-  return kstrtoint (s, base, res);
+	return kstrtoint(s, base, res);
 }
 
-int __must_check kstrtou16 (const char * s, unsigned int base, u16 * res);
-int __must_check kstrtos16 (const char * s, unsigned int base, s16 * res);
-int __must_check kstrtou8 (const char * s, unsigned int base, u8 * res);
-int __must_check kstrtos8 (const char * s, unsigned int base, s8 * res);
+int __must_check kstrtou16(const char *s, unsigned int base, u16 *res);
+int __must_check kstrtos16(const char *s, unsigned int base, s16 *res);
+int __must_check kstrtou8(const char *s, unsigned int base, u8 *res);
+int __must_check kstrtos8(const char *s, unsigned int base, s8 *res);
 
-int __must_check kstrtoull_from_user (const char __user * s, size_t count, unsigned int base, unsigned long long * res);
-int __must_check kstrtoll_from_user (const char __user * s, size_t count, unsigned int base, long long * res);
-int __must_check kstrtoul_from_user (const char __user * s, size_t count, unsigned int base, unsigned long * res);
-int __must_check kstrtol_from_user (const char __user * s, size_t count, unsigned int base, long * res);
-int __must_check kstrtouint_from_user (const char __user * s, size_t count, unsigned int base, unsigned int * res);
-int __must_check kstrtoint_from_user (const char __user * s, size_t count, unsigned int base, int * res);
-int __must_check kstrtou16_from_user (const char __user * s, size_t count, unsigned int base, u16 * res);
-int __must_check kstrtos16_from_user (const char __user * s, size_t count, unsigned int base, s16 * res);
-int __must_check kstrtou8_from_user (const char __user * s, size_t count, unsigned int base, u8 * res);
-int __must_check kstrtos8_from_user (const char __user * s, size_t count, unsigned int base, s8 * res);
+int __must_check kstrtoull_from_user(const char __user *s, size_t count, unsigned int base, unsigned long long *res);
+int __must_check kstrtoll_from_user(const char __user *s, size_t count, unsigned int base, long long *res);
+int __must_check kstrtoul_from_user(const char __user *s, size_t count, unsigned int base, unsigned long *res);
+int __must_check kstrtol_from_user(const char __user *s, size_t count, unsigned int base, long *res);
+int __must_check kstrtouint_from_user(const char __user *s, size_t count, unsigned int base, unsigned int *res);
+int __must_check kstrtoint_from_user(const char __user *s, size_t count, unsigned int base, int *res);
+int __must_check kstrtou16_from_user(const char __user *s, size_t count, unsigned int base, u16 *res);
+int __must_check kstrtos16_from_user(const char __user *s, size_t count, unsigned int base, s16 *res);
+int __must_check kstrtou8_from_user(const char __user *s, size_t count, unsigned int base, u8 *res);
+int __must_check kstrtos8_from_user(const char __user *s, size_t count, unsigned int base, s8 *res);
 
-static inline int __must_check kstrtou64_from_user (const char __user * s, size_t count, unsigned int base, u64 * res)
+static inline int __must_check kstrtou64_from_user(const char __user *s, size_t count, unsigned int base, u64 *res)
 {
-  return kstrtoull_from_user (s, count, base, res);
+	return kstrtoull_from_user(s, count, base, res);
 }
 
-static inline int __must_check kstrtos64_from_user (const char __user * s, size_t count, unsigned int base, s64 * res)
+static inline int __must_check kstrtos64_from_user(const char __user *s, size_t count, unsigned int base, s64 *res)
 {
-  return kstrtoll_from_user (s, count, base, res);
+	return kstrtoll_from_user(s, count, base, res);
 }
 
-static inline int __must_check kstrtou32_from_user (const char __user * s, size_t count, unsigned int base, u32 * res)
+static inline int __must_check kstrtou32_from_user(const char __user *s, size_t count, unsigned int base, u32 *res)
 {
-  return kstrtouint_from_user (s, count, base, res);
+	return kstrtouint_from_user(s, count, base, res);
 }
 
-static inline int __must_check kstrtos32_from_user (const char __user * s, size_t count, unsigned int base, s32 * res)
+static inline int __must_check kstrtos32_from_user(const char __user *s, size_t count, unsigned int base, s32 *res)
 {
-  return kstrtoint_from_user (s, count, base, res);
+	return kstrtoint_from_user(s, count, base, res);
 }
 
 /* Obsolete, do not use.  Use kstrto<foo> instead */
 
-extern unsigned long simple_strtoul (const char *, char **, unsigned int);
-extern long simple_strtol (const char *, char **, unsigned int);
-extern unsigned long long simple_strtoull (const char *, char **, unsigned int);
-extern long long simple_strtoll (const char *, char **, unsigned int);
-#define strict_strtoul  kstrtoul
-#define strict_strtol kstrtol
-#define strict_strtoull kstrtoull
-#define strict_strtoll  kstrtoll
+extern unsigned long simple_strtoul(const char *,char **,unsigned int);
+extern long simple_strtol(const char *,char **,unsigned int);
+extern unsigned long long simple_strtoull(const char *,char **,unsigned int);
+extern long long simple_strtoll(const char *,char **,unsigned int);
+#define strict_strtoul	kstrtoul
+#define strict_strtol	kstrtol
+#define strict_strtoull	kstrtoull
+#define strict_strtoll	kstrtoll
 
-extern int num_to_str (char * buf, int size, unsigned long long num);
+extern int num_to_str(char *buf, int size, unsigned long long num);
 
 /* lib/printf utilities */
 
-extern __printf (2, 3) int sprintf (char * buf, const char * fmt, ...);
-extern __printf (2, 0) int vsprintf (char * buf, const char *, va_list);
-extern __printf (3, 4)
-int snprintf (char * buf, size_t size, const char * fmt, ...);
-extern __printf (3, 0)
-int vsnprintf (char * buf, size_t size, const char * fmt, va_list args);
-extern __printf (3, 4)
-int scnprintf (char * buf, size_t size, const char * fmt, ...);
-extern __printf (3, 0)
-int vscnprintf (char * buf, size_t size, const char * fmt, va_list args);
-extern __printf (2, 3)
-char * kasprintf (gfp_t gfp, const char * fmt, ...);
-extern char * kvasprintf (gfp_t gfp, const char * fmt, va_list args);
+extern __printf(2, 3) int sprintf(char *buf, const char * fmt, ...);
+extern __printf(2, 0) int vsprintf(char *buf, const char *, va_list);
+extern __printf(3, 4)
+int snprintf(char *buf, size_t size, const char *fmt, ...);
+extern __printf(3, 0)
+int vsnprintf(char *buf, size_t size, const char *fmt, va_list args);
+extern __printf(3, 4)
+int scnprintf(char *buf, size_t size, const char *fmt, ...);
+extern __printf(3, 0)
+int vscnprintf(char *buf, size_t size, const char *fmt, va_list args);
+extern __printf(2, 3)
+char *kasprintf(gfp_t gfp, const char *fmt, ...);
+extern char *kvasprintf(gfp_t gfp, const char *fmt, va_list args);
 
-extern __scanf (2, 3)
-int sscanf (const char *, const char *, ...);
-extern __scanf (2, 0)
-int vsscanf (const char *, const char *, va_list);
+extern __scanf(2, 3)
+int sscanf(const char *, const char *, ...);
+extern __scanf(2, 0)
+int vsscanf(const char *, const char *, va_list);
 
-extern int get_option (char ** str, int * pint);
-extern char * get_options (const char * str, int nints, int * ints);
-extern unsigned long long memparse (const char * ptr, char ** retptr);
+extern int get_option(char **str, int *pint);
+extern char *get_options(const char *str, int nints, int *ints);
+extern unsigned long long memparse(const char *ptr, char **retptr);
 
-extern int core_kernel_text (unsigned long addr);
-extern int core_kernel_data (unsigned long addr);
-extern int __kernel_text_address (unsigned long addr);
-extern int kernel_text_address (unsigned long addr);
-extern int func_ptr_is_kernel_text (void * ptr);
+extern int core_kernel_text(unsigned long addr);
+extern int core_kernel_data(unsigned long addr);
+extern int __kernel_text_address(unsigned long addr);
+extern int kernel_text_address(unsigned long addr);
+extern int func_ptr_is_kernel_text(void *ptr);
 
 struct pid;
-extern struct pid * session_of_pgrp (struct pid * pgrp);
+extern struct pid *session_of_pgrp(struct pid *pgrp);
 
-unsigned long int_sqrt (unsigned long);
+unsigned long int_sqrt(unsigned long);
 
-extern void bust_spinlocks (int yes);
-extern void wake_up_klogd (void);
-extern int oops_in_progress;    /* If set, an oops, panic(), BUG() or die() is in progress */
+extern void bust_spinlocks(int yes);
+extern void wake_up_klogd(void);
+extern int oops_in_progress;		/* If set, an oops, panic(), BUG() or die() is in progress */
 extern int panic_timeout;
 extern int panic_on_oops;
 extern int panic_on_unrecovered_nmi;
 extern int panic_on_io_nmi;
 extern int sysctl_panic_on_stackoverflow;
-extern const char * print_tainted (void);
-extern void add_taint (unsigned flag);
-extern int test_taint (unsigned flag);
-extern unsigned long get_taint (void);
+extern const char *print_tainted(void);
+extern void add_taint(unsigned flag);
+extern int test_taint(unsigned flag);
+extern unsigned long get_taint(void);
 extern int root_mountflags;
 
 extern bool early_boot_irqs_disabled;
 
 /* Values used for system_state */
 extern enum system_states {
-  SYSTEM_BOOTING,
-  SYSTEM_RUNNING,
-  SYSTEM_HALT,
-  SYSTEM_POWER_OFF,
-  SYSTEM_RESTART,
-  SYSTEM_SUSPEND_DISK,
+	SYSTEM_BOOTING,
+	SYSTEM_RUNNING,
+	SYSTEM_HALT,
+	SYSTEM_POWER_OFF,
+	SYSTEM_RESTART,
+	SYSTEM_SUSPEND_DISK,
 } system_state;
 
-#define TAINT_PROPRIETARY_MODULE  0
-#define TAINT_FORCED_MODULE   1
-#define TAINT_UNSAFE_SMP    2
-#define TAINT_FORCED_RMMOD    3
-#define TAINT_MACHINE_CHECK   4
-#define TAINT_BAD_PAGE      5
-#define TAINT_USER      6
-#define TAINT_DIE     7
-#define TAINT_OVERRIDDEN_ACPI_TABLE 8
-#define TAINT_WARN      9
-#define TAINT_CRAP      10
-#define TAINT_FIRMWARE_WORKAROUND 11
-#define TAINT_OOT_MODULE    12
+#define TAINT_PROPRIETARY_MODULE	0
+#define TAINT_FORCED_MODULE		1
+#define TAINT_UNSAFE_SMP		2
+#define TAINT_FORCED_RMMOD		3
+#define TAINT_MACHINE_CHECK		4
+#define TAINT_BAD_PAGE			5
+#define TAINT_USER			6
+#define TAINT_DIE			7
+#define TAINT_OVERRIDDEN_ACPI_TABLE	8
+#define TAINT_WARN			9
+#define TAINT_CRAP			10
+#define TAINT_FIRMWARE_WORKAROUND	11
+#define TAINT_OOT_MODULE		12
 
 extern const char hex_asc[];
-#define hex_asc_lo(x) hex_asc[((x) & 0x0f)]
-#define hex_asc_hi(x) hex_asc[((x) & 0xf0) >> 4]
+#define hex_asc_lo(x)	hex_asc[((x) & 0x0f)]
+#define hex_asc_hi(x)	hex_asc[((x) & 0xf0) >> 4]
 
-static inline char * hex_byte_pack (char * buf, u8 byte)
+static inline char *hex_byte_pack(char *buf, u8 byte)
 {
-  *buf++ = hex_asc_hi (byte);
-  *buf++ = hex_asc_lo (byte);
-  return buf;
+	*buf++ = hex_asc_hi(byte);
+	*buf++ = hex_asc_lo(byte);
+	return buf;
 }
 
-static inline char * __deprecated pack_hex_byte (char * buf, u8 byte)
+static inline char * __deprecated pack_hex_byte(char *buf, u8 byte)
 {
-  return hex_byte_pack (buf, byte);
+	return hex_byte_pack(buf, byte);
 }
 
-extern int hex_to_bin (char ch);
-extern int __must_check hex2bin (u8 * dst, const char * src, size_t count);
+extern int hex_to_bin(char ch);
+extern int __must_check hex2bin(u8 *dst, const char *src, size_t count);
 
 /*
  * General tracing related utility functions - trace_printk(),
@@ -431,35 +431,35 @@ extern int __must_check hex2bin (u8 * dst, const char * src, size_t count);
  */
 #ifdef CONFIG_RING_BUFFER
 /* trace_off_permanent stops recording with no way to bring it back */
-void tracing_off_permanent (void);
+void tracing_off_permanent(void);
 #else
-static inline void tracing_off_permanent (void) { }
+static inline void tracing_off_permanent(void) { }
 #endif
 
 enum ftrace_dump_mode {
-  DUMP_NONE,
-  DUMP_ALL,
-  DUMP_ORIG,
+	DUMP_NONE,
+	DUMP_ALL,
+	DUMP_ORIG,
 };
 
 #ifdef CONFIG_TRACING
-void tracing_on (void);
-void tracing_off (void);
-int tracing_is_on (void);
+void tracing_on(void);
+void tracing_off(void);
+int tracing_is_on(void);
 
-extern void tracing_start (void);
-extern void tracing_stop (void);
-extern void ftrace_off_permanent (void);
+extern void tracing_start(void);
+extern void tracing_stop(void);
+extern void ftrace_off_permanent(void);
 
-static inline __printf (1, 2)
-void ____trace_printk_check_format (const char * fmt, ...)
+static inline __printf(1, 2)
+void ____trace_printk_check_format(const char *fmt, ...)
 {
 }
-#define __trace_printk_check_format(fmt, args...)     \
-  do {                  \
-    if (0)                \
-      ____trace_printk_check_format(fmt, ##args);   \
-  } while (0)
+#define __trace_printk_check_format(fmt, args...)			\
+do {									\
+	if (0)								\
+		____trace_printk_check_format(fmt, ##args);		\
+} while (0)
 
 /**
  * trace_printk - printf formatting in the ftrace buffer
@@ -478,75 +478,75 @@ void ____trace_printk_check_format (const char * fmt, ...)
  * your code.
  */
 
-#define trace_printk(fmt, args...)          \
-  do {                  \
-    __trace_printk_check_format(fmt, ##args);     \
-    if (__builtin_constant_p(fmt)) {        \
-      static const char *trace_printk_fmt     \
-      __attribute__((section("__trace_printk_fmt"))) =  \
-          __builtin_constant_p(fmt) ? fmt : NULL;   \
-      \
-      __trace_bprintk(_THIS_IP_, trace_printk_fmt, ##args); \
-    } else                \
-      __trace_printk(_THIS_IP_, fmt, ##args);   \
-  } while (0)
+#define trace_printk(fmt, args...)					\
+do {									\
+	__trace_printk_check_format(fmt, ##args);			\
+	if (__builtin_constant_p(fmt)) {				\
+		static const char *trace_printk_fmt			\
+		  __attribute__((section("__trace_printk_fmt"))) =	\
+			__builtin_constant_p(fmt) ? fmt : NULL;		\
+									\
+		__trace_bprintk(_THIS_IP_, trace_printk_fmt, ##args);	\
+	} else								\
+		__trace_printk(_THIS_IP_, fmt, ##args);		\
+} while (0)
 
-extern __printf (2, 3)
-int __trace_bprintk (unsigned long ip, const char * fmt, ...);
+extern __printf(2, 3)
+int __trace_bprintk(unsigned long ip, const char *fmt, ...);
 
-extern __printf (2, 3)
-int __trace_printk (unsigned long ip, const char * fmt, ...);
+extern __printf(2, 3)
+int __trace_printk(unsigned long ip, const char *fmt, ...);
 
-extern void trace_dump_stack (void);
+extern void trace_dump_stack(void);
 
 /*
  * The double __builtin_constant_p is because gcc will give us an error
  * if we try to allocate the static variable to fmt if it is not a
  * constant. Even with the outer if statement.
  */
-#define ftrace_vprintk(fmt, vargs)          \
-  do {                  \
-    if (__builtin_constant_p(fmt)) {        \
-      static const char *trace_printk_fmt     \
-      __attribute__((section("__trace_printk_fmt"))) =  \
-          __builtin_constant_p(fmt) ? fmt : NULL;   \
-      \
-      __ftrace_vbprintk(_THIS_IP_, trace_printk_fmt, vargs);  \
-    } else                \
-      __ftrace_vprintk(_THIS_IP_, fmt, vargs);    \
-  } while (0)
+#define ftrace_vprintk(fmt, vargs)					\
+do {									\
+	if (__builtin_constant_p(fmt)) {				\
+		static const char *trace_printk_fmt			\
+		  __attribute__((section("__trace_printk_fmt"))) =	\
+			__builtin_constant_p(fmt) ? fmt : NULL;		\
+									\
+		__ftrace_vbprintk(_THIS_IP_, trace_printk_fmt, vargs);	\
+	} else								\
+		__ftrace_vprintk(_THIS_IP_, fmt, vargs);		\
+} while (0)
 
 extern int
-__ftrace_vbprintk (unsigned long ip, const char * fmt, va_list ap);
+__ftrace_vbprintk(unsigned long ip, const char *fmt, va_list ap);
 
 extern int
-__ftrace_vprintk (unsigned long ip, const char * fmt, va_list ap);
+__ftrace_vprintk(unsigned long ip, const char *fmt, va_list ap);
 
-extern void ftrace_dump (enum ftrace_dump_mode oops_dump_mode);
+extern void ftrace_dump(enum ftrace_dump_mode oops_dump_mode);
 #else
-static inline __printf (1, 2)
-int trace_printk (const char * fmt, ...);
+static inline __printf(1, 2)
+int trace_printk(const char *fmt, ...);
 
-static inline void tracing_start (void) { }
-static inline void tracing_stop (void) { }
-static inline void ftrace_off_permanent (void) { }
-static inline void trace_dump_stack (void) { }
+static inline void tracing_start(void) { }
+static inline void tracing_stop(void) { }
+static inline void ftrace_off_permanent(void) { }
+static inline void trace_dump_stack(void) { }
 
-static inline void tracing_on (void) { }
-static inline void tracing_off (void) { }
-static inline int tracing_is_on (void) { return 0; }
+static inline void tracing_on(void) { }
+static inline void tracing_off(void) { }
+static inline int tracing_is_on(void) { return 0; }
 
 static inline int
-trace_printk (const char * fmt, ...)
+trace_printk(const char *fmt, ...)
 {
-  return 0;
+	return 0;
 }
 static inline int
-ftrace_vprintk (const char * fmt, va_list ap)
+ftrace_vprintk(const char *fmt, va_list ap)
 {
-  return 0;
+	return 0;
 }
-static inline void ftrace_dump (enum ftrace_dump_mode oops_dump_mode) { }
+static inline void ftrace_dump(enum ftrace_dump_mode oops_dump_mode) { }
 #endif /* CONFIG_TRACING */
 
 /*
@@ -554,45 +554,45 @@ static inline void ftrace_dump (enum ftrace_dump_mode oops_dump_mode) { }
  * strict type-checking.. See the
  * "unnecessary" pointer comparison.
  */
-#define min(x, y) ({        \
-    typeof(x) _min1 = (x);      \
-    typeof(y) _min2 = (y);      \
-    (void) (&_min1 == &_min2);    \
-    _min1 < _min2 ? _min1 : _min2; })
+#define min(x, y) ({				\
+	typeof(x) _min1 = (x);			\
+	typeof(y) _min2 = (y);			\
+	(void) (&_min1 == &_min2);		\
+	_min1 < _min2 ? _min1 : _min2; })
 
-#define max(x, y) ({        \
-    typeof(x) _max1 = (x);      \
-    typeof(y) _max2 = (y);      \
-    (void) (&_max1 == &_max2);    \
-    _max1 > _max2 ? _max1 : _max2; })
+#define max(x, y) ({				\
+	typeof(x) _max1 = (x);			\
+	typeof(y) _max2 = (y);			\
+	(void) (&_max1 == &_max2);		\
+	_max1 > _max2 ? _max1 : _max2; })
 
-#define min3(x, y, z) ({      \
-    typeof(x) _min1 = (x);      \
-    typeof(y) _min2 = (y);      \
-    typeof(z) _min3 = (z);      \
-    (void) (&_min1 == &_min2);    \
-    (void) (&_min1 == &_min3);    \
-    _min1 < _min2 ? (_min1 < _min3 ? _min1 : _min3) : \
-    (_min2 < _min3 ? _min2 : _min3); })
+#define min3(x, y, z) ({			\
+	typeof(x) _min1 = (x);			\
+	typeof(y) _min2 = (y);			\
+	typeof(z) _min3 = (z);			\
+	(void) (&_min1 == &_min2);		\
+	(void) (&_min1 == &_min3);		\
+	_min1 < _min2 ? (_min1 < _min3 ? _min1 : _min3) : \
+		(_min2 < _min3 ? _min2 : _min3); })
 
-#define max3(x, y, z) ({      \
-    typeof(x) _max1 = (x);      \
-    typeof(y) _max2 = (y);      \
-    typeof(z) _max3 = (z);      \
-    (void) (&_max1 == &_max2);    \
-    (void) (&_max1 == &_max3);    \
-    _max1 > _max2 ? (_max1 > _max3 ? _max1 : _max3) : \
-    (_max2 > _max3 ? _max2 : _max3); })
+#define max3(x, y, z) ({			\
+	typeof(x) _max1 = (x);			\
+	typeof(y) _max2 = (y);			\
+	typeof(z) _max3 = (z);			\
+	(void) (&_max1 == &_max2);		\
+	(void) (&_max1 == &_max3);		\
+	_max1 > _max2 ? (_max1 > _max3 ? _max1 : _max3) : \
+		(_max2 > _max3 ? _max2 : _max3); })
 
 /**
  * min_not_zero - return the minimum that is _not_ zero, unless both are zero
  * @x: value1
  * @y: value2
  */
-#define min_not_zero(x, y) ({     \
-    typeof(x) __x = (x);      \
-    typeof(y) __y = (y);      \
-    __x == 0 ? __y : ((__y == 0) ? __x : min(__x, __y)); })
+#define min_not_zero(x, y) ({			\
+	typeof(x) __x = (x);			\
+	typeof(y) __y = (y);			\
+	__x == 0 ? __y : ((__y == 0) ? __x : min(__x, __y)); })
 
 /**
  * clamp - return a value clamped to a given range with strict typechecking
@@ -603,14 +603,14 @@ static inline void ftrace_dump (enum ftrace_dump_mode oops_dump_mode) { }
  * This macro does strict typechecking of min/max to make sure they are of the
  * same type as val.  See the unnecessary pointer comparisons.
  */
-#define clamp(val, min, max) ({     \
-    typeof(val) __val = (val);    \
-    typeof(min) __min = (min);    \
-    typeof(max) __max = (max);    \
-    (void) (&__val == &__min);    \
-    (void) (&__val == &__max);    \
-    __val = __val < __min ? __min: __val; \
-    __val > __max ? __max: __val; })
+#define clamp(val, min, max) ({			\
+	typeof(val) __val = (val);		\
+	typeof(min) __min = (min);		\
+	typeof(max) __max = (max);		\
+	(void) (&__val == &__min);		\
+	(void) (&__val == &__max);		\
+	__val = __val < __min ? __min: __val;	\
+	__val > __max ? __max: __val; })
 
 /*
  * ..and if you can't take the strict
@@ -618,15 +618,15 @@ static inline void ftrace_dump (enum ftrace_dump_mode oops_dump_mode) { }
  *
  * Or not use min/max/clamp at all, of course.
  */
-#define min_t(type, x, y) ({      \
-    type __min1 = (x);      \
-    type __min2 = (y);      \
-    __min1 < __min2 ? __min1: __min2; })
+#define min_t(type, x, y) ({			\
+	type __min1 = (x);			\
+	type __min2 = (y);			\
+	__min1 < __min2 ? __min1: __min2; })
 
-#define max_t(type, x, y) ({      \
-    type __max1 = (x);      \
-    type __max2 = (y);      \
-    __max1 > __max2 ? __max1: __max2; })
+#define max_t(type, x, y) ({			\
+	type __max1 = (x);			\
+	type __max2 = (y);			\
+	__max1 > __max2 ? __max1: __max2; })
 
 /**
  * clamp_t - return a value clamped to a given range using a given type
@@ -638,12 +638,12 @@ static inline void ftrace_dump (enum ftrace_dump_mode oops_dump_mode) { }
  * This macro does no typechecking and uses temporary variables of type
  * 'type' to make all the comparisons.
  */
-#define clamp_t(type, val, min, max) ({   \
-    type __val = (val);     \
-    type __min = (min);     \
-    type __max = (max);     \
-    __val = __val < __min ? __min: __val; \
-    __val > __max ? __max: __val; })
+#define clamp_t(type, val, min, max) ({		\
+	type __val = (val);			\
+	type __min = (min);			\
+	type __max = (max);			\
+	__val = __val < __min ? __min: __val;	\
+	__val > __max ? __max: __val; })
 
 /**
  * clamp_val - return a value clamped to a given range using val's type
@@ -656,30 +656,30 @@ static inline void ftrace_dump (enum ftrace_dump_mode oops_dump_mode) { }
  * type and min and max are literals that will otherwise be assigned a signed
  * integer type.
  */
-#define clamp_val(val, min, max) ({   \
-    typeof(val) __val = (val);    \
-    typeof(val) __min = (min);    \
-    typeof(val) __max = (max);    \
-    __val = __val < __min ? __min: __val; \
-    __val > __max ? __max: __val; })
+#define clamp_val(val, min, max) ({		\
+	typeof(val) __val = (val);		\
+	typeof(val) __min = (min);		\
+	typeof(val) __max = (max);		\
+	__val = __val < __min ? __min: __val;	\
+	__val > __max ? __max: __val; })
 
 
 /*
  * swap - swap value of @a and @b
  */
 #define swap(a, b) \
-  do { typeof(a) __tmp = (a); (a) = (b); (b) = __tmp; } while (0)
+	do { typeof(a) __tmp = (a); (a) = (b); (b) = __tmp; } while (0)
 
 /**
  * container_of - cast a member of a structure out to the containing structure
- * @ptr:  the pointer to the member.
- * @type: the type of the container struct this is embedded in.
- * @member: the name of the member within the struct.
+ * @ptr:	the pointer to the member.
+ * @type:	the type of the container struct this is embedded in.
+ * @member:	the name of the member within the struct.
  *
  */
-#define container_of(ptr, type, member) ({      \
-    const typeof( ((type *)0)->member ) *__mptr = (ptr);  \
-    (type *)( (char *)__mptr - offsetof(type,member) );})
+#define container_of(ptr, type, member) ({			\
+	const typeof( ((type *)0)->member ) *__mptr = (ptr);	\
+	(type *)( (char *)__mptr - offsetof(type,member) );})
 
 /* Trap pasters of __FUNCTION__ at compile-time */
 #define __FUNCTION__ (__func__)
@@ -703,10 +703,10 @@ static inline void ftrace_dump (enum ftrace_dump_mode oops_dump_mode) { }
 # define REBUILD_DUE_TO_FTRACE_MCOUNT_RECORD
 #endif
 
-extern int do_sysinfo (struct sysinfo * info);
+extern int do_sysinfo(struct sysinfo *info);
 
 /* To identify board information in panic logs, set this */
-extern char * mach_panic_string;
+extern char *mach_panic_string;
 
 #endif /* __KERNEL__ */
 

@@ -8,24 +8,24 @@
 #include <linux/rbtree.h>
 
 struct objdump_line {
-  struct list_head node;
-  s64    offset;
-  char   *  line;
+	struct list_head node;
+	s64		 offset;
+	char		 *line;
 };
 
-void objdump_line__free (struct objdump_line * self);
-struct objdump_line * objdump__get_next_ip_line (struct list_head * head,
-    struct objdump_line * pos);
+void objdump_line__free(struct objdump_line *self);
+struct objdump_line *objdump__get_next_ip_line(struct list_head *head,
+					       struct objdump_line *pos);
 
 struct sym_hist {
-  u64   sum;
-  u64   addr[0];
+	u64		sum;
+	u64		addr[0];
 };
 
 struct source_line {
-  struct rb_node  node;
-  double    percent;
-  char  *  path;
+	struct rb_node	node;
+	double		percent;
+	char		*path;
 };
 
 /** struct annotated_source - symbols with hits have this attached as in sannotation
@@ -41,67 +41,67 @@ struct source_line {
  * returns.
  */
 struct annotated_source {
-  struct list_head   source;
-  struct source_line * lines;
-  int          nr_histograms;
-  int          sizeof_sym_hist;
-  struct sym_hist    histograms[0];
+	struct list_head   source;
+	struct source_line *lines;
+	int    		   nr_histograms;
+	int    		   sizeof_sym_hist;
+	struct sym_hist	   histograms[0];
 };
 
 struct annotation {
-  pthread_mutex_t   lock;
-  struct annotated_source * src;
+	pthread_mutex_t		lock;
+	struct annotated_source *src;
 };
 
 struct sannotation {
-  struct annotation annotation;
-  struct symbol   symbol;
+	struct annotation annotation;
+	struct symbol	  symbol;
 };
 
-static inline struct sym_hist * annotation__histogram (struct annotation * notes, int idx)
+static inline struct sym_hist *annotation__histogram(struct annotation *notes, int idx)
 {
-  return ( ( (void *) &notes->src->histograms) +
-           (notes->src->sizeof_sym_hist * idx) );
+	return (((void *)&notes->src->histograms) +
+	 	(notes->src->sizeof_sym_hist * idx));
 }
 
-static inline struct annotation * symbol__annotation (struct symbol * sym)
+static inline struct annotation *symbol__annotation(struct symbol *sym)
 {
-  struct sannotation * a = container_of (sym, struct sannotation, symbol);
-  return &a->annotation;
+	struct sannotation *a = container_of(sym, struct sannotation, symbol);
+	return &a->annotation;
 }
 
-int symbol__inc_addr_samples (struct symbol * sym, struct map * map,
-                              int evidx, u64 addr);
-int symbol__alloc_hist (struct symbol * sym);
-void symbol__annotate_zero_histograms (struct symbol * sym);
+int symbol__inc_addr_samples(struct symbol *sym, struct map *map,
+			     int evidx, u64 addr);
+int symbol__alloc_hist(struct symbol *sym);
+void symbol__annotate_zero_histograms(struct symbol *sym);
 
-int symbol__annotate (struct symbol * sym, struct map * map, size_t privsize);
-int symbol__annotate_init (struct map * map __used, struct symbol * sym);
-int symbol__annotate_printf (struct symbol * sym, struct map * map, int evidx,
-                             bool full_paths, int min_pcnt, int max_lines,
-                             int context);
-void symbol__annotate_zero_histogram (struct symbol * sym, int evidx);
-void symbol__annotate_decay_histogram (struct symbol * sym, int evidx);
-void objdump_line_list__purge (struct list_head * head);
+int symbol__annotate(struct symbol *sym, struct map *map, size_t privsize);
+int symbol__annotate_init(struct map *map __used, struct symbol *sym);
+int symbol__annotate_printf(struct symbol *sym, struct map *map, int evidx,
+			    bool full_paths, int min_pcnt, int max_lines,
+			    int context);
+void symbol__annotate_zero_histogram(struct symbol *sym, int evidx);
+void symbol__annotate_decay_histogram(struct symbol *sym, int evidx);
+void objdump_line_list__purge(struct list_head *head);
 
-int symbol__tty_annotate (struct symbol * sym, struct map * map, int evidx,
-                          bool print_lines, bool full_paths, int min_pcnt,
-                          int max_lines);
+int symbol__tty_annotate(struct symbol *sym, struct map *map, int evidx,
+			 bool print_lines, bool full_paths, int min_pcnt,
+			 int max_lines);
 
 #ifdef NO_NEWT_SUPPORT
-static inline int symbol__tui_annotate (struct symbol * sym __used,
-                                        struct map * map __used,
-                                        int evidx __used,
-                                        void (*timer) (void * arg) __used,
-                                        void * arg __used, int delay_secs __used)
+static inline int symbol__tui_annotate(struct symbol *sym __used,
+				       struct map *map __used,
+				       int evidx __used,
+				       void(*timer)(void *arg) __used,
+				       void *arg __used, int delay_secs __used)
 {
-  return 0;
+	return 0;
 }
 #else
-int symbol__tui_annotate (struct symbol * sym, struct map * map, int evidx,
-                          void (*timer) (void * arg), void * arg, int delay_secs);
+int symbol__tui_annotate(struct symbol *sym, struct map *map, int evidx,
+			 void(*timer)(void *arg), void *arg, int delay_secs);
 #endif
 
-extern const char * disassembler_style;
+extern const char	*disassembler_style;
 
-#endif  /* __PERF_ANNOTATE_H */
+#endif	/* __PERF_ANNOTATE_H */

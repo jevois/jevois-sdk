@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -31,49 +31,49 @@
 int lcd_line_length;
 int lcd_color_fg;
 int lcd_color_bg;
-void * lcd_base;
-void * lcd_console_address;
+void *lcd_base;
+void *lcd_console_address;
 short console_col;
 short console_row;
 
 /*
  * To use this driver you need to provide the following in board files:
- *  a panel_info definition
- *  an lcd_enable function (can't define a weak default with current code)
+ *	a panel_info definition
+ *	an lcd_enable function (can't define a weak default with current code)
  */
 
 /* There is nothing to do with color registers, we use true color */
-void lcd_setcolreg (ushort regno, ushort red, ushort green, ushort blue)
+void lcd_setcolreg(ushort regno, ushort red, ushort green, ushort blue)
 {
-  return;
+	return;
 }
 
 /* Low level initialization of the logic cell: depends on panel_info */
-void lcd_ctrl_init (void * lcdbase)
+void lcd_ctrl_init(void *lcdbase)
 {
-  struct clcd_config * config;
-  struct clcd_registers * regs;
-  u32 cntl;
-  
-  config = panel_info.priv;
-  regs = config->address;
-  cntl = config->cntl & ~CNTL_LCDEN;
-  
-  /* Lazily, just copy the registers over: first control with disable */
-  writel (cntl, &regs->cntl);
-  
-  writel (config->tim0, &regs->tim0);
-  writel (config->tim1, &regs->tim1);
-  writel (config->tim2, &regs->tim2);
-  writel (config->tim3, &regs->tim3);
-  writel ( (u32) lcdbase, &regs->ubas);
-  /* finally, enable */
-  writel (cntl | CNTL_LCDEN, &regs->cntl);
+	struct clcd_config *config;
+	struct clcd_registers *regs;
+	u32 cntl;
+
+	config = panel_info.priv;
+	regs = config->address;
+	cntl = config->cntl & ~CNTL_LCDEN;
+
+	/* Lazily, just copy the registers over: first control with disable */
+	writel(cntl, &regs->cntl);
+
+	writel(config->tim0, &regs->tim0);
+	writel(config->tim1, &regs->tim1);
+	writel(config->tim2, &regs->tim2);
+	writel(config->tim3, &regs->tim3);
+	writel((u32)lcdbase, &regs->ubas);
+	/* finally, enable */
+	writel(cntl | CNTL_LCDEN, &regs->cntl);
 }
 
 /* This is trivial, and copied from atmel_lcdfb.c */
-ulong calc_fbsize (void)
+ulong calc_fbsize(void)
 {
-  return ( (panel_info.vl_col * panel_info.vl_row *
-            NBITS (panel_info.vl_bpix) ) / 8) + PAGE_SIZE;
+	return ((panel_info.vl_col * panel_info.vl_row *
+		NBITS(panel_info.vl_bpix)) / 8) + PAGE_SIZE;
 }

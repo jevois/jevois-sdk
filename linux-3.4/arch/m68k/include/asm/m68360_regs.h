@@ -10,7 +10,7 @@
 #ifndef __REGISTERS_H
 #define __REGISTERS_H
 
-#define CLEAR_BIT(x, bit)  x =bit
+#define CLEAR_BIT(x, bit)  x =bit 
 
 /*****************************************************************
         Command Register
@@ -35,24 +35,24 @@
 #define RESET_ENET_GROUP        0x0900
 
 /* quicc32 CP commands */
-#define STOP_TX_32    0x0e00  /*add chan# bits 2-6 */
-#define ENTER_HUNT_MODE_32  0x1e00
+#define STOP_TX_32		0x0e00	/*add chan# bits 2-6 */
+#define ENTER_HUNT_MODE_32	0x1e00
 
 /* quicc32 mask/event SCC register */
-#define GOV 0x01
-#define GUN 0x02
-#define GINT  0x04
-#define IQOV  0x08
+#define GOV	0x01
+#define GUN	0x02
+#define GINT	0x04
+#define IQOV	0x08
 
 
 /* Timer commands */
 #define SET_TIMER               0x0800
 
 /* Multi channel Interrupt structure */
-#define INTR_VALID  0x8000  /* Valid interrupt entry */
-#define INTR_WRAP 0x4000  /* Wrap bit in the interrupt entry table */
-#define INTR_CH_NU  0x07c0  /* Channel Num in interrupt table */
-#define INTR_MASK_BITS  0x383f
+#define INTR_VALID	0x8000	/* Valid interrupt entry */
+#define INTR_WRAP	0x4000	/* Wrap bit in the interrupt entry table */
+#define INTR_CH_NU	0x07c0	/* Channel Num in interrupt table */
+#define INTR_MASK_BITS	0x383f
 
 /*
  * General SCC mode register (GSMR)
@@ -183,70 +183,70 @@
         CPM Interrupt vector encodings (MC68360UM p. 7-376)
 *****************************************************************/
 
-#define CPMVEC_NR   32
-#define CPMVEC_PIO_PC0    0x1f
-#define CPMVEC_SCC1   0x1e
-#define CPMVEC_SCC2   0x1d
-#define CPMVEC_SCC3   0x1c
-#define CPMVEC_SCC4   0x1b
-#define CPMVEC_PIO_PC1    0x1a
-#define CPMVEC_TIMER1   0x19
-#define CPMVEC_PIO_PC2    0x18
-#define CPMVEC_PIO_PC3    0x17
-#define CPMVEC_SDMA_CB_ERR  0x16
-#define CPMVEC_IDMA1    0x15
-#define CPMVEC_IDMA2    0x14
-#define CPMVEC_RESERVED3  0x13
-#define CPMVEC_TIMER2   0x12
-#define CPMVEC_RISCTIMER  0x11
-#define CPMVEC_RESERVED2  0x10
-#define CPMVEC_PIO_PC4    0x0f
-#define CPMVEC_PIO_PC5    0x0e
-#define CPMVEC_TIMER3   0x0c
-#define CPMVEC_PIO_PC6    0x0b
-#define CPMVEC_PIO_PC7    0x0a
-#define CPMVEC_PIO_PC8    0x09
-#define CPMVEC_RESERVED1  0x08
-#define CPMVEC_TIMER4   0x07
-#define CPMVEC_PIO_PC9    0x06
-#define CPMVEC_SPI    0x05
-#define CPMVEC_SMC1   0x04
-#define CPMVEC_SMC2   0x03
-#define CPMVEC_PIO_PC10   0x02
-#define CPMVEC_PIO_PC11   0x01
-#define CPMVEC_ERROR    0x00
+#define CPMVEC_NR		32
+#define CPMVEC_PIO_PC0		0x1f
+#define CPMVEC_SCC1		0x1e
+#define CPMVEC_SCC2		0x1d
+#define CPMVEC_SCC3		0x1c
+#define CPMVEC_SCC4		0x1b
+#define CPMVEC_PIO_PC1		0x1a
+#define CPMVEC_TIMER1		0x19
+#define CPMVEC_PIO_PC2		0x18
+#define CPMVEC_PIO_PC3		0x17
+#define CPMVEC_SDMA_CB_ERR	0x16
+#define CPMVEC_IDMA1		0x15
+#define CPMVEC_IDMA2		0x14
+#define CPMVEC_RESERVED3	0x13
+#define CPMVEC_TIMER2		0x12
+#define CPMVEC_RISCTIMER	0x11
+#define CPMVEC_RESERVED2	0x10
+#define CPMVEC_PIO_PC4		0x0f
+#define CPMVEC_PIO_PC5		0x0e
+#define CPMVEC_TIMER3		0x0c
+#define CPMVEC_PIO_PC6		0x0b
+#define CPMVEC_PIO_PC7		0x0a
+#define CPMVEC_PIO_PC8		0x09
+#define CPMVEC_RESERVED1	0x08
+#define CPMVEC_TIMER4		0x07
+#define CPMVEC_PIO_PC9		0x06
+#define CPMVEC_SPI		0x05
+#define CPMVEC_SMC1		0x04
+#define CPMVEC_SMC2		0x03
+#define CPMVEC_PIO_PC10		0x02
+#define CPMVEC_PIO_PC11		0x01
+#define CPMVEC_ERROR		0x00
 
-/* #define CPMVEC_PIO_PC0   ((ushort)0x1f) */
-/* #define CPMVEC_SCC1    ((ushort)0x1e) */
-/* #define CPMVEC_SCC2    ((ushort)0x1d) */
-/* #define CPMVEC_SCC3    ((ushort)0x1c) */
-/* #define CPMVEC_SCC4    ((ushort)0x1b) */
-/* #define CPMVEC_PIO_PC1   ((ushort)0x1a) */
-/* #define CPMVEC_TIMER1    ((ushort)0x19) */
-/* #define CPMVEC_PIO_PC2   ((ushort)0x18) */
-/* #define CPMVEC_PIO_PC3   ((ushort)0x17) */
-/* #define CPMVEC_SDMA_CB_ERR ((ushort)0x16) */
-/* #define CPMVEC_IDMA1   ((ushort)0x15) */
-/* #define CPMVEC_IDMA2   ((ushort)0x14) */
-/* #define CPMVEC_RESERVED3 ((ushort)0x13) */
-/* #define CPMVEC_TIMER2    ((ushort)0x12) */
-/* #define CPMVEC_RISCTIMER ((ushort)0x11) */
-/* #define CPMVEC_RESERVED2 ((ushort)0x10) */
-/* #define CPMVEC_PIO_PC4   ((ushort)0x0f) */
-/* #define CPMVEC_PIO_PC5   ((ushort)0x0e) */
-/* #define CPMVEC_TIMER3    ((ushort)0x0c) */
-/* #define CPMVEC_PIO_PC6   ((ushort)0x0b) */
-/* #define CPMVEC_PIO_PC7   ((ushort)0x0a) */
-/* #define CPMVEC_PIO_PC8   ((ushort)0x09) */
-/* #define CPMVEC_RESERVED1 ((ushort)0x08) */
-/* #define CPMVEC_TIMER4    ((ushort)0x07) */
-/* #define CPMVEC_PIO_PC9   ((ushort)0x06) */
-/* #define CPMVEC_SPI   ((ushort)0x05) */
-/* #define CPMVEC_SMC1    ((ushort)0x04) */
-/* #define CPMVEC_SMC2    ((ushort)0x03) */
-/* #define CPMVEC_PIO_PC10    ((ushort)0x02) */
-/* #define CPMVEC_PIO_PC11    ((ushort)0x01) */
-/* #define CPMVEC_ERROR   ((ushort)0x00) */
+/* #define CPMVEC_PIO_PC0		((ushort)0x1f) */
+/* #define CPMVEC_SCC1		((ushort)0x1e) */
+/* #define CPMVEC_SCC2		((ushort)0x1d) */
+/* #define CPMVEC_SCC3		((ushort)0x1c) */
+/* #define CPMVEC_SCC4		((ushort)0x1b) */
+/* #define CPMVEC_PIO_PC1		((ushort)0x1a) */
+/* #define CPMVEC_TIMER1		((ushort)0x19) */
+/* #define CPMVEC_PIO_PC2		((ushort)0x18) */
+/* #define CPMVEC_PIO_PC3		((ushort)0x17) */
+/* #define CPMVEC_SDMA_CB_ERR	((ushort)0x16) */
+/* #define CPMVEC_IDMA1		((ushort)0x15) */
+/* #define CPMVEC_IDMA2		((ushort)0x14) */
+/* #define CPMVEC_RESERVED3	((ushort)0x13) */
+/* #define CPMVEC_TIMER2		((ushort)0x12) */
+/* #define CPMVEC_RISCTIMER	((ushort)0x11) */
+/* #define CPMVEC_RESERVED2	((ushort)0x10) */
+/* #define CPMVEC_PIO_PC4		((ushort)0x0f) */
+/* #define CPMVEC_PIO_PC5		((ushort)0x0e) */
+/* #define CPMVEC_TIMER3		((ushort)0x0c) */
+/* #define CPMVEC_PIO_PC6		((ushort)0x0b) */
+/* #define CPMVEC_PIO_PC7		((ushort)0x0a) */
+/* #define CPMVEC_PIO_PC8		((ushort)0x09) */
+/* #define CPMVEC_RESERVED1	((ushort)0x08) */
+/* #define CPMVEC_TIMER4		((ushort)0x07) */
+/* #define CPMVEC_PIO_PC9		((ushort)0x06) */
+/* #define CPMVEC_SPI		((ushort)0x05) */
+/* #define CPMVEC_SMC1		((ushort)0x04) */
+/* #define CPMVEC_SMC2		((ushort)0x03) */
+/* #define CPMVEC_PIO_PC10		((ushort)0x02) */
+/* #define CPMVEC_PIO_PC11		((ushort)0x01) */
+/* #define CPMVEC_ERROR		((ushort)0x00) */
 
 
 /*****************************************************************
@@ -254,33 +254,33 @@
  *****************************************************************/
 
 /* Port A - See 360UM p. 7-358
- *
+ * 
  *  Note that most of these pins have alternate functions
  */
 
 
 /* The macros are nice, but there are all sorts of references to 1-indexed
  * facilities on the 68360... */
-/* #define PA_RXD(n)  ((ushort)(0x01<<(2*n))) */
-/* #define PA_TXD(n)  ((ushort)(0x02<<(2*n))) */
+/* #define PA_RXD(n)	((ushort)(0x01<<(2*n))) */
+/* #define PA_TXD(n)	((ushort)(0x02<<(2*n))) */
 
-#define PA_RXD1   ((ushort)0x0001)
-#define PA_TXD1   ((ushort)0x0002)
-#define PA_RXD2   ((ushort)0x0004)
-#define PA_TXD2   ((ushort)0x0008)
-#define PA_RXD3   ((ushort)0x0010)
-#define PA_TXD3   ((ushort)0x0020)
-#define PA_RXD4   ((ushort)0x0040)
-#define PA_TXD4   ((ushort)0x0080)
+#define PA_RXD1		((ushort)0x0001)
+#define PA_TXD1		((ushort)0x0002)
+#define PA_RXD2		((ushort)0x0004)
+#define PA_TXD2		((ushort)0x0008)
+#define PA_RXD3		((ushort)0x0010)
+#define PA_TXD3		((ushort)0x0020)
+#define PA_RXD4		((ushort)0x0040)
+#define PA_TXD4		((ushort)0x0080)
 
-#define PA_CLK1   ((ushort)0x0100)
-#define PA_CLK2   ((ushort)0x0200)
-#define PA_CLK3   ((ushort)0x0400)
-#define PA_CLK4   ((ushort)0x0800)
-#define PA_CLK5   ((ushort)0x1000)
-#define PA_CLK6   ((ushort)0x2000)
-#define PA_CLK7   ((ushort)0x4000)
-#define PA_CLK8   ((ushort)0x8000)
+#define PA_CLK1		((ushort)0x0100)
+#define PA_CLK2		((ushort)0x0200)
+#define PA_CLK3		((ushort)0x0400)
+#define PA_CLK4		((ushort)0x0800)
+#define PA_CLK5		((ushort)0x1000)
+#define PA_CLK6		((ushort)0x2000)
+#define PA_CLK7		((ushort)0x4000)
+#define PA_CLK8		((ushort)0x8000)
 
 
 /* Port B - See 360UM p. 7-362
@@ -290,19 +290,19 @@
 /* Port C - See 360UM p. 7-365
  */
 
-#define PC_RTS1   ((ushort)0x0001)
-#define PC_RTS2   ((ushort)0x0002)
-#define PC__RTS3  ((ushort)0x0004) /* !RTS3 */
-#define PC__RTS4  ((ushort)0x0008) /* !RTS4 */
+#define PC_RTS1		((ushort)0x0001)
+#define PC_RTS2		((ushort)0x0002)
+#define PC__RTS3	((ushort)0x0004) /* !RTS3 */
+#define PC__RTS4	((ushort)0x0008) /* !RTS4 */
 
-#define PC_CTS1   ((ushort)0x0010)
-#define PC_CD1    ((ushort)0x0020)
-#define PC_CTS2   ((ushort)0x0040)
-#define PC_CD2    ((ushort)0x0080)
-#define PC_CTS3   ((ushort)0x0100)
-#define PC_CD3    ((ushort)0x0200)
-#define PC_CTS4   ((ushort)0x0400)
-#define PC_CD4    ((ushort)0x0800)
+#define PC_CTS1		((ushort)0x0010)
+#define PC_CD1		((ushort)0x0020)
+#define PC_CTS2		((ushort)0x0040)
+#define PC_CD2		((ushort)0x0080)
+#define PC_CTS3		((ushort)0x0100)
+#define PC_CD3		((ushort)0x0200)
+#define PC_CTS4		((ushort)0x0400)
+#define PC_CD4		((ushort)0x0800)
 
 
 
@@ -318,43 +318,43 @@
         tbase and rbase registers
 *****************************************************************/
 #define TBD_ADDR(quicc,pram) ((struct quicc_bd *) \
-                              (quicc->ch_or_u.u.udata_bd_ucode + pram->tbase))
+    (quicc->ch_or_u.u.udata_bd_ucode + pram->tbase))
 #define RBD_ADDR(quicc,pram) ((struct quicc_bd *) \
-                              (quicc->ch_or_u.u.udata_bd_ucode + pram->rbase))
+    (quicc->ch_or_u.u.udata_bd_ucode + pram->rbase))
 #define TBD_CUR_ADDR(quicc,pram) ((struct quicc_bd *) \
-                                  (quicc->ch_or_u.u.udata_bd_ucode + pram->tbptr))
+    (quicc->ch_or_u.u.udata_bd_ucode + pram->tbptr))
 #define RBD_CUR_ADDR(quicc,pram) ((struct quicc_bd *) \
-                                  (quicc->ch_or_u.u.udata_bd_ucode + pram->rbptr))
+    (quicc->ch_or_u.u.udata_bd_ucode + pram->rbptr))
 #define TBD_SET_CUR_ADDR(bd,quicc,pram) pram->tbptr = \
     ((unsigned short)((char *)(bd) - (char *)(quicc->ch_or_u.u.udata_bd_ucode)))
 #define RBD_SET_CUR_ADDR(bd,quicc,pram) pram->rbptr = \
     ((unsigned short)((char *)(bd) - (char *)(quicc->ch_or_u.u.udata_bd_ucode)))
 #define INCREASE_TBD(bd,quicc,pram) {  \
     if((bd)->status & T_W)             \
-      (bd) = TBD_ADDR(quicc,pram);   \
+        (bd) = TBD_ADDR(quicc,pram);   \
     else                               \
-      (bd)++;                        \
-  }
+        (bd)++;                        \
+}
 #define DECREASE_TBD(bd,quicc,pram) {  \
     if ((bd) == TBD_ADDR(quicc, pram)) \
-      while (!((bd)->status & T_W))  \
-        (bd)++;                    \
+        while (!((bd)->status & T_W))  \
+            (bd)++;                    \
     else                               \
-      (bd)--;                        \
-  }
+        (bd)--;                        \
+}
 #define INCREASE_RBD(bd,quicc,pram) {  \
     if((bd)->status & R_W)             \
-      (bd) = RBD_ADDR(quicc,pram);   \
+        (bd) = RBD_ADDR(quicc,pram);   \
     else                               \
-      (bd)++;                        \
-  }
+        (bd)++;                        \
+}
 #define DECREASE_RBD(bd,quicc,pram) {  \
     if ((bd) == RBD_ADDR(quicc, pram)) \
-      while (!((bd)->status & T_W))  \
-        (bd)++;                    \
+        while (!((bd)->status & T_W))  \
+            (bd)++;                    \
     else                               \
-      (bd)--;                        \
-  }
+        (bd)--;                        \
+}
 
 /*****************************************************************
         Macros for Multi channel
@@ -362,7 +362,7 @@
 #define QMC_BASE(quicc,page) (struct global_multi_pram *)(&quicc->pram[page])
 #define MCBASE(quicc,page) (unsigned long)(quicc->pram[page].m.mcbase)
 #define CHANNEL_PRAM_BASE(quicc,channel) ((struct quicc32_pram *) \
-    (&(quicc->ch_or_u.ch_pram_tbl[channel])))
+		(&(quicc->ch_or_u.ch_pram_tbl[channel])))
 #define TBD_32_ADDR(quicc,page,channel) ((struct quicc_bd *) \
     (MCBASE(quicc,page) + (CHANNEL_PRAM_BASE(quicc,channel)->tbase)))
 #define RBD_32_ADDR(quicc,page,channel) ((struct quicc_bd *) \
@@ -372,37 +372,37 @@
 #define RBD_32_CUR_ADDR(quicc,page,channel) ((struct quicc_bd *) \
     (MCBASE(quicc,page) + (CHANNEL_PRAM_BASE(quicc,channel)->rbptr)))
 #define TBD_32_SET_CUR_ADDR(bd,quicc,page,channel) \
-  CHANNEL_PRAM_BASE(quicc,channel)->tbptr = \
-      ((unsigned short)((char *)(bd) - (char *)(MCBASE(quicc,page))))
+     CHANNEL_PRAM_BASE(quicc,channel)->tbptr = \
+    ((unsigned short)((char *)(bd) - (char *)(MCBASE(quicc,page))))
 #define RBD_32_SET_CUR_ADDR(bd,quicc,page,channel) \
-  CHANNEL_PRAM_BASE(quicc,channel)->rbptr = \
-      ((unsigned short)((char *)(bd) - (char *)(MCBASE(quicc,page))))
+     CHANNEL_PRAM_BASE(quicc,channel)->rbptr = \
+    ((unsigned short)((char *)(bd) - (char *)(MCBASE(quicc,page))))
 
 #define INCREASE_TBD_32(bd,quicc,page,channel) {  \
     if((bd)->status & T_W)                        \
-      (bd) = TBD_32_ADDR(quicc,page,channel);   \
+        (bd) = TBD_32_ADDR(quicc,page,channel);   \
     else                                          \
-      (bd)++;                                   \
-  }
+        (bd)++;                                   \
+}
 #define DECREASE_TBD_32(bd,quicc,page,channel) {  \
     if ((bd) == TBD_32_ADDR(quicc, page,channel)) \
-      while (!((bd)->status & T_W))             \
-        (bd)++;                               \
+        while (!((bd)->status & T_W))             \
+            (bd)++;                               \
     else                                          \
-      (bd)--;                                   \
-  }
+        (bd)--;                                   \
+}
 #define INCREASE_RBD_32(bd,quicc,page,channel) {  \
     if((bd)->status & R_W)                        \
-      (bd) = RBD_32_ADDR(quicc,page,channel);   \
+        (bd) = RBD_32_ADDR(quicc,page,channel);   \
     else                                          \
-      (bd)++;                                   \
-  }
+        (bd)++;                                   \
+}
 #define DECREASE_RBD_32(bd,quicc,page,channel) {  \
     if ((bd) == RBD_32_ADDR(quicc, page,channel)) \
-      while (!((bd)->status & T_W))             \
-        (bd)++;                               \
+        while (!((bd)->status & T_W))             \
+            (bd)++;                               \
     else                                          \
-      (bd)--;                                   \
-  }
+        (bd)--;                                   \
+}
 
 #endif

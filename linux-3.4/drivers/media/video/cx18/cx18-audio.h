@@ -21,4 +21,4 @@
  *  02111-1307  USA
  */
 
-int cx18_audio_set_io (struct cx18 * cx);
+int cx18_audio_set_io(struct cx18 *cx);

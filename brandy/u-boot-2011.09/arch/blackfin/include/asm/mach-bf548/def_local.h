@@ -3,4 +3,4 @@
 #include "portmux.h"
 #include "ports.h"
 
-#define CONFIG_BF54x 1  /* Linux glue */
+#define CONFIG_BF54x 1	/* Linux glue */

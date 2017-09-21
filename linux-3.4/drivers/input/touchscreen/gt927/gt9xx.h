@@ -1,24 +1,24 @@
 /* drivers/input/touchscreen/gt813_827_828.h
- *
+ * 
  * 2010 - 2012 Goodix Technology.
- *
+ * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be a reference
- * to you, when you are integrating the GOODiX's CTP IC into your system,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * 
+ * This program is distributed in the hope that it will be a reference 
+ * to you, when you are integrating the GOODiX's CTP IC into your system, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
  * General Public License for more details.
- *
+ * 
  * Version:1.0
  *      V1.0:2012/08/31,first release.
  */
 
 #ifndef _LINUX_GOODIX_TOUCH_H
-#define _LINUX_GOODIX_TOUCH_H
+#define	_LINUX_GOODIX_TOUCH_H
 
 #include <linux/kernel.h>
 #include <linux/hrtimer.h>
@@ -41,24 +41,24 @@
 #include <mach/sys_config.h>
 
 struct goodix_ts_data {
-  spinlock_t irq_lock;
-  struct i2c_client * client;
-  struct input_dev * input_dev;
-  struct hrtimer timer;
-  struct work_struct  work;
-  struct early_suspend early_suspend;
-  s32 irq_is_disable;
-  s32 use_irq;
-  u16 abs_x_max;
-  u16 abs_y_max;
-  u8  max_touch_num;
-  u8  int_trigger_type;
-  u8  green_wake_mode;
-  u8  chip_type;
-  u8  enter_update;
-  u8  gtp_is_suspend;
-  u8  gtp_rawdiff_mode;
-  u8  gtp_cfg_len;
+    spinlock_t irq_lock;
+    struct i2c_client *client;
+    struct input_dev  *input_dev;
+    struct hrtimer timer;
+    struct work_struct  work;
+    struct early_suspend early_suspend;
+    s32 irq_is_disable;
+    s32 use_irq;
+    u16 abs_x_max;
+    u16 abs_y_max;
+    u8  max_touch_num;
+    u8  int_trigger_type;
+    u8  green_wake_mode;
+    u8  chip_type;
+    u8  enter_update;
+    u8  gtp_is_suspend;
+    u8  gtp_rawdiff_mode;
+    u8  gtp_cfg_len;
 };
 
 extern u16 show_len;
@@ -66,7 +66,7 @@ extern u16 total_len;
 
 
 #define GTP_CUSTOM_CFG        0
-#define GTP_DRIVER_SEND_CFG   1
+#define GTP_DRIVER_SEND_CFG   1 
 #define GTP_HAVE_TOUCH_KEY    0
 #define GTP_POWER_CTRL_SLEEP  1
 #define GTP_AUTO_UPDATE       1
@@ -81,30 +81,30 @@ extern u16 total_len;
 #define GTP_DEBUG_ARRAY_ON    0
 #define GTP_DEBUG_FUNC_ON     0
 
-/*TODO: puts the config info corresponded to your TP here, the following is just
+/*TODO: puts the config info corresponded to your TP here, the following is just 
 a sample config, send this config should cause the chip cannot work normally*/
 
 #define CTP_CFG_GROUP2 {\
-  }
+    }
 #define CTP_CFG_GROUP3 {\
-  }
+    }
 
 #define GTP_INT_IRQ     SW_INT_IRQNO_PIO
 #define GTP_INT_CFG     S3C_GPIO_SFN(0xF)
 #ifdef CONFIG_ARCH_SUN4I
-#define CTP_IRQ_NO      (IRQ_EINT21)
+#define CTP_IRQ_NO			(IRQ_EINT21)
 #elif defined CONFIG_ARCH_SUN5I
-#define CTP_IRQ_NO      (IRQ_EINT9)
+#define CTP_IRQ_NO			(IRQ_EINT9)
 #endif
 
 #define GTP_GPIO_AS_INPUT(pin)          do{\
-    gpio_direction_input(pin);\
-    s3c_gpio_setpull(pin, S3C_GPIO_PULL_NONE);\
-  }while(0)
+                                            gpio_direction_input(pin);\
+                                            s3c_gpio_setpull(pin, S3C_GPIO_PULL_NONE);\
+                                        }while(0)
 #define GTP_GPIO_AS_INT(pin)            do{\
-    GTP_GPIO_AS_INPUT(pin);\
-    s3c_gpio_cfgpin(pin, GTP_INT_CFG);\
-  }while(0)
+                                            GTP_GPIO_AS_INPUT(pin);\
+                                            s3c_gpio_cfgpin(pin, GTP_INT_CFG);\
+                                        }while(0)
 #define GTP_GPIO_GET_VALUE(pin)         gpio_get_value(pin)
 #define GTP_GPIO_OUTPUT(pin,level)      gpio_direction_output(pin,level)
 #define GTP_GPIO_REQUEST(pin, label)    gpio_request(pin, label)
@@ -112,19 +112,19 @@ a sample config, send this config should cause the chip cannot work normally*/
 #define GTP_IRQ_TAB                     {IRQ_TYPE_EDGE_RISING, IRQ_TYPE_EDGE_FALLING, IRQ_TYPE_LEVEL_LOW, IRQ_TYPE_LEVEL_HIGH}
 
 #if GTP_CUSTOM_CFG
-#define GTP_MAX_HEIGHT   800
-#define GTP_MAX_WIDTH    480
-#define GTP_INT_TRIGGER  1   
+  #define GTP_MAX_HEIGHT   800
+  #define GTP_MAX_WIDTH    480
+  #define GTP_INT_TRIGGER  1   
 #else
-#define GTP_MAX_HEIGHT   4096
-#define GTP_MAX_WIDTH    4096
-#define GTP_INT_TRIGGER  1
+  #define GTP_MAX_HEIGHT   4096
+  #define GTP_MAX_WIDTH    4096
+  #define GTP_INT_TRIGGER  1
 #endif
 #define GTP_MAX_TOUCH         10
 #define GTP_ESD_CHECK_CIRCLE  2000
 
 #if GTP_HAVE_TOUCH_KEY
-#define GTP_KEY_TAB  {KEY_MENU, KEY_HOME, KEY_BACK, KEY_SEND}
+    #define GTP_KEY_TAB	 {KEY_MENU, KEY_HOME, KEY_BACK, KEY_SEND}
 #endif
 
 #define GTP_DRIVER_VERSION    "V1.2<2012/10/25>"
@@ -147,35 +147,35 @@ a sample config, send this config should cause the chip cannot work normally*/
 #define GTP_INFO(fmt,arg...)           printk("<<-GTP-INFO->> "fmt"\n",##arg)
 #define GTP_ERROR(fmt,arg...)          printk("<<-GTP-ERROR->> "fmt"\n",##arg)
 #define GTP_DEBUG(fmt,arg...)          do{\
-    if(GTP_DEBUG_ON)\
-      printk("<<-GTP-DEBUG->> [%d]"fmt"\n",__LINE__, ##arg);\
-  }while(0)
+                                         if(GTP_DEBUG_ON)\
+                                         printk("<<-GTP-DEBUG->> [%d]"fmt"\n",__LINE__, ##arg);\
+                                       }while(0)
 #define GTP_DEBUG_ARRAY(array, num)    do{\
-    s32 i;\
-    u8* a = array;\
-    if(GTP_DEBUG_ARRAY_ON)\
-    {\
-      printk("<<-GTP-DEBUG-ARRAY->>\n");\
-      for (i = 0; i < (num); i++)\
-      {\
-        printk("%02x   ", (a)[i]);\
-        if ((i + 1 ) %10 == 0)\
-        {\
-          printk("\n");\
-        }\
-      }\
-      printk("\n");\
-    }\
-  }while(0)
+                                         s32 i;\
+                                         u8* a = array;\
+                                         if(GTP_DEBUG_ARRAY_ON)\
+                                         {\
+                                            printk("<<-GTP-DEBUG-ARRAY->>\n");\
+                                            for (i = 0; i < (num); i++)\
+                                            {\
+                                                printk("%02x   ", (a)[i]);\
+                                                if ((i + 1 ) %10 == 0)\
+                                                {\
+                                                    printk("\n");\
+                                                }\
+                                            }\
+                                            printk("\n");\
+                                        }\
+                                       }while(0)
 #define GTP_DEBUG_FUNC()               do{\
-    if(GTP_DEBUG_FUNC_ON)\
-      printk("<<-GTP-FUNC->> Func:%s@Line:%d\n",__func__,__LINE__);\
-  }while(0)
+                                         if(GTP_DEBUG_FUNC_ON)\
+                                         printk("<<-GTP-FUNC->> Func:%s@Line:%d\n",__func__,__LINE__);\
+                                       }while(0)
 #define GTP_SWAP(x, y)                 do{\
-    typeof(x) z = x;\
-    x = y;\
-    y = z;\
-  }while (0)
+                                         typeof(x) z = x;\
+                                         x = y;\
+                                         y = z;\
+                                       }while (0)
 
 #define ERROR_NO_FILE           2  
 #define ERROR_FILE_READ         23 
@@ -187,24 +187,24 @@ a sample config, send this config should cause the chip cannot work normally*/
 
 extern struct ctp_config_info config_info;
 
-s32 gup_enter_update_mode (struct i2c_client * client);
-void gup_leave_update_mode (void);
-s32 gup_update_proc (void * dir);
+s32 gup_enter_update_mode(struct i2c_client *client);
+void gup_leave_update_mode(void);
+s32 gup_update_proc(void *dir);
 
-void gtp_irq_disable (struct goodix_ts_data *);
-void gtp_irq_enable (struct goodix_ts_data *);
+void gtp_irq_disable(struct goodix_ts_data *);
+void gtp_irq_enable(struct goodix_ts_data *);
 
-s32 init_wr_node (struct i2c_client *);
-void uninit_wr_node (void);
+s32 init_wr_node(struct i2c_client*);
+void uninit_wr_node(void);
 
-u8 gup_init_update_proc (struct goodix_ts_data *);
+u8 gup_init_update_proc(struct goodix_ts_data *);
 
-void int2io (int status, int level);
+void int2io(int status,int level);
 
-s32  gtp_i2c_read (struct i2c_client * client, uint8_t * buf, s32 len);
-s32  gtp_i2c_write (struct i2c_client * client, uint8_t * data, s32 len);
-void gtp_reset_guitar (s32 ms);
-s32  gtp_send_cfg (struct i2c_client * client);
+s32  gtp_i2c_read(struct i2c_client *client, uint8_t *buf, s32 len);
+s32  gtp_i2c_write(struct i2c_client *client,uint8_t *data,s32 len);
+void gtp_reset_guitar(s32 ms);
+s32  gtp_send_cfg(struct i2c_client *client);
 
 
 #endif /* _LINUX_GOODIX_TOUCH_H */

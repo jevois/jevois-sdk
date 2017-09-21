@@ -110,7 +110,7 @@
 #define NV50_EVO_CRTC_REAL_RES                                       0x000008c8
 #define NV50_EVO_CRTC_SCALE_CENTER_OFFSET                            0x000008d4
 #define NV50_EVO_CRTC_SCALE_CENTER_OFFSET_VAL(x, y) \
-  ((((unsigned)y << 16) & 0xFFFF0000) | (((unsigned)x) & 0x0000FFFF))
+	((((unsigned)y << 16) & 0xFFFF0000) | (((unsigned)x) & 0x0000FFFF))
 /* Both of these are needed, otherwise nothing happens. */
 #define NV50_EVO_CRTC_SCALE_RES1                                     0x000008d8
 #define NV50_EVO_CRTC_SCALE_RES2                                     0x000008dc

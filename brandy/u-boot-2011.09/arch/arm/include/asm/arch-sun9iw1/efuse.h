@@ -1,10 +1,10 @@
 /*
 **********************************************************************************************************************
 *
-*                      the Embedded Secure Bootloader System
+*						           the Embedded Secure Bootloader System
 *
 *
-*                  Copyright(C), 2006-2014, Allwinnertech Co., Ltd.
+*						       Copyright(C), 2006-2014, Allwinnertech Co., Ltd.
 *                                           All Rights Reserved
 *
 * File    :
@@ -13,7 +13,7 @@
 *
 * Version : V2.00
 *
-* Date    :
+* Date	  :
 *
 * Descript:
 **********************************************************************************************************************
@@ -24,12 +24,12 @@
 
 #include "asm/arch/cpu.h"
 
-#define SID_PRCTL       (SUNXI_SID_BASE + 0x40)
-#define SID_PRKEY       (SUNXI_SID_BASE + 0x50)
-#define SID_RDKEY       (SUNXI_SID_BASE + 0x60)
-#define SJTAG_AT0       (SUNXI_SID_BASE + 0x80)
-#define SJTAG_AT1       (SUNXI_SID_BASE + 0x84)
-#define SJTAG_S         (SUNXI_SID_BASE + 0x88)
+#define SID_PRCTL				(SUNXI_SID_BASE + 0x40)
+#define SID_PRKEY				(SUNXI_SID_BASE + 0x50)
+#define SID_RDKEY				(SUNXI_SID_BASE + 0x60)
+#define SJTAG_AT0				(SUNXI_SID_BASE + 0x80)
+#define SJTAG_AT1				(SUNXI_SID_BASE + 0x84)
+#define SJTAG_S					(SUNXI_SID_BASE + 0x88)
 #define SID_RF(n)               (SUNXI_SID_BASE + (n) * 4 + 0x80)
 
 #define SID_EFUSE               (SUNXI_SID_BASE + 0x200)
@@ -57,7 +57,7 @@
 #define EFUSE_CHIPCONFIG        (0x1FC)
 
 
-extern void sid_set_security_mode (void);
-extern int sid_probe_security_mode (void);
+extern void sid_set_security_mode(void);
+extern int sid_probe_security_mode(void);
 
 #endif    /*  #ifndef __EFUSE_H__  */

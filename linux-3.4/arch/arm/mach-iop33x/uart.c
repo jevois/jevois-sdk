@@ -30,74 +30,74 @@
 #define IOP33X_UART_XTAL 33334000
 
 static struct plat_serial8250_port iop33x_uart0_data[] = {
-  {
-    .membase  = (char *) IOP33X_UART0_VIRT,
-    .mapbase  = IOP33X_UART0_PHYS,
-    .irq    = IRQ_IOP33X_UART0,
-    .uartclk  = IOP33X_UART_XTAL,
-    .regshift = 2,
-    .iotype   = UPIO_MEM,
-    .flags    = UPF_SKIP_TEST,
-  },
-  { },
+	{
+		.membase	= (char *)IOP33X_UART0_VIRT,
+		.mapbase	= IOP33X_UART0_PHYS,
+		.irq		= IRQ_IOP33X_UART0,
+		.uartclk	= IOP33X_UART_XTAL,
+		.regshift	= 2,
+		.iotype		= UPIO_MEM,
+		.flags		= UPF_SKIP_TEST,
+	},
+	{ },
 };
 
 static struct resource iop33x_uart0_resources[] = {
-  [0] = {
-    .start  = IOP33X_UART0_PHYS,
-    .end  = IOP33X_UART0_PHYS + 0x3f,
-    .flags  = IORESOURCE_MEM,
-  },
-  [1] = {
-    .start  = IRQ_IOP33X_UART0,
-    .end  = IRQ_IOP33X_UART0,
-    .flags  = IORESOURCE_IRQ,
-  },
+	[0] = {
+		.start	= IOP33X_UART0_PHYS,
+		.end	= IOP33X_UART0_PHYS + 0x3f,
+		.flags	= IORESOURCE_MEM,
+	},
+	[1] = {
+		.start	= IRQ_IOP33X_UART0,
+		.end	= IRQ_IOP33X_UART0,
+		.flags	= IORESOURCE_IRQ,
+	},
 };
 
 struct platform_device iop33x_uart0_device = {
-  .name   = "serial8250",
-  .id   = PLAT8250_DEV_PLATFORM,
-  .dev    = {
-    .platform_data    = iop33x_uart0_data,
-  },
-  .num_resources  = 2,
-  .resource = iop33x_uart0_resources,
+	.name		= "serial8250",
+	.id		= PLAT8250_DEV_PLATFORM,
+	.dev		= {
+		.platform_data		= iop33x_uart0_data,
+	},
+	.num_resources	= 2,
+	.resource	= iop33x_uart0_resources,
 };
 
 
 static struct resource iop33x_uart1_resources[] = {
-  [0] = {
-    .start  = IOP33X_UART1_PHYS,
-    .end  = IOP33X_UART1_PHYS + 0x3f,
-    .flags  = IORESOURCE_MEM,
-  },
-  [1] = {
-    .start  = IRQ_IOP33X_UART1,
-    .end  = IRQ_IOP33X_UART1,
-    .flags  = IORESOURCE_IRQ,
-  },
+	[0] = {
+		.start	= IOP33X_UART1_PHYS,
+		.end	= IOP33X_UART1_PHYS + 0x3f,
+		.flags	= IORESOURCE_MEM,
+	},
+	[1] = {
+		.start	= IRQ_IOP33X_UART1,
+		.end	= IRQ_IOP33X_UART1,
+		.flags	= IORESOURCE_IRQ,
+	},
 };
 
 static struct plat_serial8250_port iop33x_uart1_data[] = {
-  {
-    .membase  = (char *) IOP33X_UART1_VIRT,
-    .mapbase  = IOP33X_UART1_PHYS,
-    .irq    = IRQ_IOP33X_UART1,
-    .uartclk  = IOP33X_UART_XTAL,
-    .regshift = 2,
-    .iotype   = UPIO_MEM,
-    .flags    = UPF_SKIP_TEST,
-  },
-  { },
+	{
+		.membase	= (char *)IOP33X_UART1_VIRT,
+		.mapbase	= IOP33X_UART1_PHYS,
+		.irq		= IRQ_IOP33X_UART1,
+		.uartclk	= IOP33X_UART_XTAL,
+		.regshift	= 2,
+		.iotype		= UPIO_MEM,
+		.flags		= UPF_SKIP_TEST,
+	},
+	{ },
 };
 
 struct platform_device iop33x_uart1_device = {
-  .name   = "serial8250",
-  .id   = PLAT8250_DEV_PLATFORM1,
-  .dev    = {
-    .platform_data    = iop33x_uart1_data,
-  },
-  .num_resources  = 2,
-  .resource = iop33x_uart1_resources,
+	.name		= "serial8250",
+	.id		= PLAT8250_DEV_PLATFORM1,
+	.dev		= {
+		.platform_data		= iop33x_uart1_data,
+	},
+	.num_resources	= 2,
+	.resource	= iop33x_uart1_resources,
 };

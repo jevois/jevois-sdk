@@ -7,18 +7,18 @@
 
 struct bpp_regs {
   /* DMA registers */
-  __volatile__ __u32 p_csr;   /* DMA Control/Status Register */
-  __volatile__ __u32 p_addr;    /* Address Register */
-  __volatile__ __u32 p_bcnt;    /* Byte Count Register */
-  __volatile__ __u32 p_tst_csr;   /* Test Control/Status (DMA2 only) */
+  __volatile__ __u32 p_csr;		/* DMA Control/Status Register */
+  __volatile__ __u32 p_addr;		/* Address Register */
+  __volatile__ __u32 p_bcnt;		/* Byte Count Register */
+  __volatile__ __u32 p_tst_csr;		/* Test Control/Status (DMA2 only) */
   /* Parallel Port registers */
-  __volatile__ __u16 p_hcr;   /* Hardware Configuration Register */
-  __volatile__ __u16 p_ocr;   /* Operation Configuration Register */
-  __volatile__ __u8 p_dr;   /* Parallel Data Register */
-  __volatile__ __u8 p_tcr;    /* Transfer Control Register */
-  __volatile__ __u8 p_or;   /* Output Register */
-  __volatile__ __u8 p_ir;   /* Input Register */
-  __volatile__ __u16 p_icr;   /* Interrupt Control Register */
+  __volatile__ __u16 p_hcr;		/* Hardware Configuration Register */
+  __volatile__ __u16 p_ocr;		/* Operation Configuration Register */
+  __volatile__ __u8 p_dr;		/* Parallel Data Register */
+  __volatile__ __u8 p_tcr;		/* Transfer Control Register */
+  __volatile__ __u8 p_or;		/* Output Register */
+  __volatile__ __u8 p_ir;		/* Input Register */
+  __volatile__ __u16 p_icr;		/* Interrupt Control Register */
 };
 
 /* P_HCR. Time is in increments of SBus clock. */

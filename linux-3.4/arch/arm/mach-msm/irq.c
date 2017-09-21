@@ -64,88 +64,88 @@
 #define VIC_VECTPRIORITY(n) VIC_REG(0x0200+((n) * 4))
 #define VIC_VECTADDR(n)     VIC_REG(0x0400+((n) * 4))
 
-static void msm_irq_ack (struct irq_data * d)
+static void msm_irq_ack(struct irq_data *d)
 {
-  void __iomem * reg = VIC_INT_CLEAR0 + ( (d->irq & 32) ? 4 : 0);
-  writel (1 << (d->irq & 31), reg);
+	void __iomem *reg = VIC_INT_CLEAR0 + ((d->irq & 32) ? 4 : 0);
+	writel(1 << (d->irq & 31), reg);
 }
 
-static void msm_irq_mask (struct irq_data * d)
+static void msm_irq_mask(struct irq_data *d)
 {
-  void __iomem * reg = VIC_INT_ENCLEAR0 + ( (d->irq & 32) ? 4 : 0);
-  writel (1 << (d->irq & 31), reg);
+	void __iomem *reg = VIC_INT_ENCLEAR0 + ((d->irq & 32) ? 4 : 0);
+	writel(1 << (d->irq & 31), reg);
 }
 
-static void msm_irq_unmask (struct irq_data * d)
+static void msm_irq_unmask(struct irq_data *d)
 {
-  void __iomem * reg = VIC_INT_ENSET0 + ( (d->irq & 32) ? 4 : 0);
-  writel (1 << (d->irq & 31), reg);
+	void __iomem *reg = VIC_INT_ENSET0 + ((d->irq & 32) ? 4 : 0);
+	writel(1 << (d->irq & 31), reg);
 }
 
-static int msm_irq_set_wake (struct irq_data * d, unsigned int on)
+static int msm_irq_set_wake(struct irq_data *d, unsigned int on)
 {
-  return -EINVAL;
+	return -EINVAL;
 }
 
-static int msm_irq_set_type (struct irq_data * d, unsigned int flow_type)
+static int msm_irq_set_type(struct irq_data *d, unsigned int flow_type)
 {
-  void __iomem * treg = VIC_INT_TYPE0 + ( (d->irq & 32) ? 4 : 0);
-  void __iomem * preg = VIC_INT_POLARITY0 + ( (d->irq & 32) ? 4 : 0);
-  int b = 1 << (d->irq & 31);
-  
-  if (flow_type & (IRQF_TRIGGER_FALLING | IRQF_TRIGGER_LOW) )
-  { writel (readl (preg) | b, preg); }
-  if (flow_type & (IRQF_TRIGGER_RISING | IRQF_TRIGGER_HIGH) )
-  { writel (readl (preg) & (~b), preg); }
-  
-  if (flow_type & (IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING) ) {
-    writel (readl (treg) | b, treg);
-    __irq_set_handler_locked (d->irq, handle_edge_irq);
-  }
-  if (flow_type & (IRQF_TRIGGER_HIGH | IRQF_TRIGGER_LOW) ) {
-    writel (readl (treg) & (~b), treg);
-    __irq_set_handler_locked (d->irq, handle_level_irq);
-  }
-  return 0;
+	void __iomem *treg = VIC_INT_TYPE0 + ((d->irq & 32) ? 4 : 0);
+	void __iomem *preg = VIC_INT_POLARITY0 + ((d->irq & 32) ? 4 : 0);
+	int b = 1 << (d->irq & 31);
+
+	if (flow_type & (IRQF_TRIGGER_FALLING | IRQF_TRIGGER_LOW))
+		writel(readl(preg) | b, preg);
+	if (flow_type & (IRQF_TRIGGER_RISING | IRQF_TRIGGER_HIGH))
+		writel(readl(preg) & (~b), preg);
+
+	if (flow_type & (IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING)) {
+		writel(readl(treg) | b, treg);
+		__irq_set_handler_locked(d->irq, handle_edge_irq);
+	}
+	if (flow_type & (IRQF_TRIGGER_HIGH | IRQF_TRIGGER_LOW)) {
+		writel(readl(treg) & (~b), treg);
+		__irq_set_handler_locked(d->irq, handle_level_irq);
+	}
+	return 0;
 }
 
 static struct irq_chip msm_irq_chip = {
-  .name          = "msm",
-  .irq_ack       = msm_irq_ack,
-  .irq_mask      = msm_irq_mask,
-  .irq_unmask    = msm_irq_unmask,
-  .irq_set_wake  = msm_irq_set_wake,
-  .irq_set_type  = msm_irq_set_type,
+	.name          = "msm",
+	.irq_ack       = msm_irq_ack,
+	.irq_mask      = msm_irq_mask,
+	.irq_unmask    = msm_irq_unmask,
+	.irq_set_wake  = msm_irq_set_wake,
+	.irq_set_type  = msm_irq_set_type,
 };
 
-void __init msm_init_irq (void)
+void __init msm_init_irq(void)
 {
-  unsigned n;
-  
-  /* select level interrupts */
-  writel (0, VIC_INT_TYPE0);
-  writel (0, VIC_INT_TYPE1);
-  
-  /* select highlevel interrupts */
-  writel (0, VIC_INT_POLARITY0);
-  writel (0, VIC_INT_POLARITY1);
-  
-  /* select IRQ for all INTs */
-  writel (0, VIC_INT_SELECT0);
-  writel (0, VIC_INT_SELECT1);
-  
-  /* disable all INTs */
-  writel (0, VIC_INT_EN0);
-  writel (0, VIC_INT_EN1);
-  
-  /* don't use 1136 vic */
-  writel (0, VIC_CONFIG);
-  
-  /* enable interrupt controller */
-  writel (1, VIC_INT_MASTEREN);
-  
-  for (n = 0; n < NR_MSM_IRQS; n++) {
-    irq_set_chip_and_handler (n, &msm_irq_chip, handle_level_irq);
-    set_irq_flags (n, IRQF_VALID);
-  }
+	unsigned n;
+
+	/* select level interrupts */
+	writel(0, VIC_INT_TYPE0);
+	writel(0, VIC_INT_TYPE1);
+
+	/* select highlevel interrupts */
+	writel(0, VIC_INT_POLARITY0);
+	writel(0, VIC_INT_POLARITY1);
+
+	/* select IRQ for all INTs */
+	writel(0, VIC_INT_SELECT0);
+	writel(0, VIC_INT_SELECT1);
+
+	/* disable all INTs */
+	writel(0, VIC_INT_EN0);
+	writel(0, VIC_INT_EN1);
+
+	/* don't use 1136 vic */
+	writel(0, VIC_CONFIG);
+
+	/* enable interrupt controller */
+	writel(1, VIC_INT_MASTEREN);
+
+	for (n = 0; n < NR_MSM_IRQS; n++) {
+		irq_set_chip_and_handler(n, &msm_irq_chip, handle_level_irq);
+		set_irq_flags(n, IRQF_VALID);
+	}
 }

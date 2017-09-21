@@ -46,59 +46,59 @@
 #define INT_QUEUE_SIZE    MUSYCC_NIQD
 
 /* RAM image of MUSYCC registers laid out as a C structure */
-struct musycc_groupr
-{
-  VINT32      thp[32];    /* Transmit Head Pointer [5-29]           */
-  VINT32      tmp[32];    /* Transmit Message Pointer [5-30]        */
-  VINT32      rhp[32];    /* Receive Head Pointer [5-29]            */
-  VINT32      rmp[32];    /* Receive Message Pointer [5-30]         */
-  VINT8       ttsm[128];  /* Time Slot Map [5-22]                   */
-  VINT8       tscm[256];  /* Subchannel Map [5-24]                  */
-  VINT32      tcct[32];   /* Channel Configuration [5-26]           */
-  VINT8       rtsm[128];  /* Time Slot Map [5-22]                   */
-  VINT8       rscm[256];  /* Subchannel Map [5-24]                  */
-  VINT32      rcct[32];   /* Channel Configuration [5-26]           */
-  VINT32      __glcd;     /* Global Configuration Descriptor [5-10] */
-  VINT32      __iqp;      /* Interrupt Queue Pointer [5-36]         */
-  VINT32      __iql;      /* Interrupt Queue Length [5-36]          */
-  VINT32      grcd;       /* Group Configuration Descriptor [5-16]  */
-  VINT32      mpd;        /* Memory Protection Descriptor [5-18]    */
-  VINT32      mld;        /* Message Length Descriptor [5-20]       */
-  VINT32      pcd;        /* Port Configuration Descriptor [5-19]   */
-};
+    struct musycc_groupr
+    {
+        VINT32      thp[32];    /* Transmit Head Pointer [5-29]           */
+        VINT32      tmp[32];    /* Transmit Message Pointer [5-30]        */
+        VINT32      rhp[32];    /* Receive Head Pointer [5-29]            */
+        VINT32      rmp[32];    /* Receive Message Pointer [5-30]         */
+        VINT8       ttsm[128];  /* Time Slot Map [5-22]                   */
+        VINT8       tscm[256];  /* Subchannel Map [5-24]                  */
+        VINT32      tcct[32];   /* Channel Configuration [5-26]           */
+        VINT8       rtsm[128];  /* Time Slot Map [5-22]                   */
+        VINT8       rscm[256];  /* Subchannel Map [5-24]                  */
+        VINT32      rcct[32];   /* Channel Configuration [5-26]           */
+        VINT32      __glcd;     /* Global Configuration Descriptor [5-10] */
+        VINT32      __iqp;      /* Interrupt Queue Pointer [5-36]         */
+        VINT32      __iql;      /* Interrupt Queue Length [5-36]          */
+        VINT32      grcd;       /* Group Configuration Descriptor [5-16]  */
+        VINT32      mpd;        /* Memory Protection Descriptor [5-18]    */
+        VINT32      mld;        /* Message Length Descriptor [5-20]       */
+        VINT32      pcd;        /* Port Configuration Descriptor [5-19]   */
+    };
 
 /* hardware MUSYCC registers laid out as a C structure */
-struct musycc_globalr
-{
-  VINT32      gbp;        /* Group Base Pointer                     */
-  VINT32      dacbp;      /* Dual Address Cycle Base Pointer        */
-  VINT32      srd;        /* Service Request Descriptor             */
-  VINT32      isd;        /* Interrupt Service Descriptor           */
-  /*
-   * adjust __thp due to above 4 registers, which are not contained
-   * within musycc_groupr[]. All __XXX[] are just place holders,
-   * anyhow.
-   */
-  VINT32      __thp[32 - 4];      /* Transmit Head Pointer [5-29]           */
-  VINT32      __tmp[32];  /* Transmit Message Pointer [5-30]        */
-  VINT32      __rhp[32];  /* Receive Head Pointer [5-29]            */
-  VINT32      __rmp[32];  /* Receive Message Pointer [5-30]         */
-  VINT8       ttsm[128];  /* Time Slot Map [5-22]                   */
-  VINT8       tscm[256];  /* Subchannel Map [5-24]                  */
-  VINT32      tcct[32];   /* Channel Configuration [5-26]           */
-  VINT8       rtsm[128];  /* Time Slot Map [5-22]                   */
-  VINT8       rscm[256];  /* Subchannel Map [5-24]                  */
-  VINT32      rcct[32];   /* Channel Configuration [5-26]           */
-  VINT32      glcd;       /* Global Configuration Descriptor [5-10] */
-  VINT32      iqp;        /* Interrupt Queue Pointer [5-36]         */
-  VINT32      iql;        /* Interrupt Queue Length [5-36]          */
-  VINT32      grcd;       /* Group Configuration Descriptor [5-16]  */
-  VINT32      mpd;        /* Memory Protection Descriptor [5-18]    */
-  VINT32      mld;        /* Message Length Descriptor [5-20]       */
-  VINT32      pcd;        /* Port Configuration Descriptor [5-19]   */
-  VINT32      rbist;      /* Receive BIST status [5-4]              */
-  VINT32      tbist;      /* Receive BIST status [5-4]              */
-};
+    struct musycc_globalr
+    {
+        VINT32      gbp;        /* Group Base Pointer                     */
+        VINT32      dacbp;      /* Dual Address Cycle Base Pointer        */
+        VINT32      srd;        /* Service Request Descriptor             */
+        VINT32      isd;        /* Interrupt Service Descriptor           */
+        /*
+         * adjust __thp due to above 4 registers, which are not contained
+         * within musycc_groupr[]. All __XXX[] are just place holders,
+         * anyhow.
+         */
+        VINT32      __thp[32 - 4];      /* Transmit Head Pointer [5-29]           */
+        VINT32      __tmp[32];  /* Transmit Message Pointer [5-30]        */
+        VINT32      __rhp[32];  /* Receive Head Pointer [5-29]            */
+        VINT32      __rmp[32];  /* Receive Message Pointer [5-30]         */
+        VINT8       ttsm[128];  /* Time Slot Map [5-22]                   */
+        VINT8       tscm[256];  /* Subchannel Map [5-24]                  */
+        VINT32      tcct[32];   /* Channel Configuration [5-26]           */
+        VINT8       rtsm[128];  /* Time Slot Map [5-22]                   */
+        VINT8       rscm[256];  /* Subchannel Map [5-24]                  */
+        VINT32      rcct[32];   /* Channel Configuration [5-26]           */
+        VINT32      glcd;       /* Global Configuration Descriptor [5-10] */
+        VINT32      iqp;        /* Interrupt Queue Pointer [5-36]         */
+        VINT32      iql;        /* Interrupt Queue Length [5-36]          */
+        VINT32      grcd;       /* Group Configuration Descriptor [5-16]  */
+        VINT32      mpd;        /* Memory Protection Descriptor [5-18]    */
+        VINT32      mld;        /* Message Length Descriptor [5-20]       */
+        VINT32      pcd;        /* Port Configuration Descriptor [5-19]   */
+        VINT32      rbist;      /* Receive BIST status [5-4]              */
+        VINT32      tbist;      /* Receive BIST status [5-4]              */
+    };
 
 /* Global Config Descriptor bit macros */
 #define MUSYCC_GCD_ECLK_ENABLE  0x00000800      /* EBUS clock enable */
@@ -264,7 +264,7 @@ struct musycc_globalr
 #define INTRPT_GRP_S           29
 #define INTRPT_GRP_MSB_S       12
 #define INTRPT_GRP(x)          (((x & INTRPT_GRP_M) >> INTRPT_GRP_S) | \
-                                ((x & INTRPT_GRP_MSB_M) >> INTRPT_GRP_MSB_S))
+                               ((x & INTRPT_GRP_MSB_M) >> INTRPT_GRP_MSB_S))
 
 #define INTRPT_CH_M            0x1F000000
 #define INTRPT_CH_S            24
@@ -331,10 +331,10 @@ struct musycc_globalr
 #define SR_GROUP_INIT           (5<<(SREQ))     /* Group init: read Timeslot
                                                  * and Subchannel maps,
                                                  * Channel Config, */
-/*
- * Group Config, Memory Protect, Message Length, and Port Config
- * Descriptors
- */
+    /*
+     * Group Config, Memory Protect, Message Length, and Port Config
+     * Descriptors
+     */
 #define SR_CHANNEL_ACTIVATE     (8<<(SREQ))     /* Init channel, read Head
                                                  * Pointer, process first
                                                  * Message Descriptor */

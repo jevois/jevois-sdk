@@ -31,14 +31,14 @@
 #include <linux/wait.h>
 
 struct dvb_ringbuffer {
-  u8        *       data;
-  ssize_t           size;
-  ssize_t           pread;
-  ssize_t           pwrite;
-  int               error;
-  
-  wait_queue_head_t queue;
-  spinlock_t        lock;
+	u8               *data;
+	ssize_t           size;
+	ssize_t           pread;
+	ssize_t           pwrite;
+	int               error;
+
+	wait_queue_head_t queue;
+	spinlock_t        lock;
 };
 
 #define DVB_RINGBUFFER_PKTHDRSIZE 3
@@ -74,65 +74,65 @@ struct dvb_ringbuffer {
 */
 
 /* initialize ring buffer, lock and queue */
-extern void dvb_ringbuffer_init (struct dvb_ringbuffer * rbuf, void * data, size_t len);
+extern void dvb_ringbuffer_init(struct dvb_ringbuffer *rbuf, void *data, size_t len);
 
 /* test whether buffer is empty */
-extern int dvb_ringbuffer_empty (struct dvb_ringbuffer * rbuf);
+extern int dvb_ringbuffer_empty(struct dvb_ringbuffer *rbuf);
 
 /* return the number of free bytes in the buffer */
-extern ssize_t dvb_ringbuffer_free (struct dvb_ringbuffer * rbuf);
+extern ssize_t dvb_ringbuffer_free(struct dvb_ringbuffer *rbuf);
 
 /* return the number of bytes waiting in the buffer */
-extern ssize_t dvb_ringbuffer_avail (struct dvb_ringbuffer * rbuf);
+extern ssize_t dvb_ringbuffer_avail(struct dvb_ringbuffer *rbuf);
 
 
 /*
 ** Reset the read and write pointers to zero and flush the buffer
 ** This counts as a read and write operation
 */
-extern void dvb_ringbuffer_reset (struct dvb_ringbuffer * rbuf);
+extern void dvb_ringbuffer_reset(struct dvb_ringbuffer *rbuf);
 
 
 /* read routines & macros */
 /* ---------------------- */
 /* flush buffer */
-extern void dvb_ringbuffer_flush (struct dvb_ringbuffer * rbuf);
+extern void dvb_ringbuffer_flush(struct dvb_ringbuffer *rbuf);
 
 /* flush buffer protected by spinlock and wake-up waiting task(s) */
-extern void dvb_ringbuffer_flush_spinlock_wakeup (struct dvb_ringbuffer * rbuf);
+extern void dvb_ringbuffer_flush_spinlock_wakeup(struct dvb_ringbuffer *rbuf);
 
 /* peek at byte <offs> in the buffer */
-#define DVB_RINGBUFFER_PEEK(rbuf,offs)  \
-  (rbuf)->data[((rbuf)->pread+(offs))%(rbuf)->size]
+#define DVB_RINGBUFFER_PEEK(rbuf,offs)	\
+			(rbuf)->data[((rbuf)->pread+(offs))%(rbuf)->size]
 
 /* advance read ptr by <num> bytes */
-#define DVB_RINGBUFFER_SKIP(rbuf,num) \
-  (rbuf)->pread=((rbuf)->pread+(num))%(rbuf)->size
+#define DVB_RINGBUFFER_SKIP(rbuf,num)	\
+			(rbuf)->pread=((rbuf)->pread+(num))%(rbuf)->size
 
 /*
 ** read <len> bytes from ring buffer into <buf>
 ** <usermem> specifies whether <buf> resides in user space
 ** returns number of bytes transferred or -EFAULT
 */
-extern ssize_t dvb_ringbuffer_read_user (struct dvb_ringbuffer * rbuf,
-    u8 __user * buf, size_t len);
-extern void dvb_ringbuffer_read (struct dvb_ringbuffer * rbuf,
-                                 u8 * buf, size_t len);
+extern ssize_t dvb_ringbuffer_read_user(struct dvb_ringbuffer *rbuf,
+				   u8 __user *buf, size_t len);
+extern void dvb_ringbuffer_read(struct dvb_ringbuffer *rbuf,
+				   u8 *buf, size_t len);
 
 
 /* write routines & macros */
 /* ----------------------- */
 /* write single byte to ring buffer */
-#define DVB_RINGBUFFER_WRITE_BYTE(rbuf,byte)  \
-  { (rbuf)->data[(rbuf)->pwrite]=(byte); \
-    (rbuf)->pwrite=((rbuf)->pwrite+1)%(rbuf)->size; }
+#define DVB_RINGBUFFER_WRITE_BYTE(rbuf,byte)	\
+			{ (rbuf)->data[(rbuf)->pwrite]=(byte); \
+			(rbuf)->pwrite=((rbuf)->pwrite+1)%(rbuf)->size; }
 /*
 ** write <len> bytes to ring buffer
 ** <usermem> specifies whether <buf> resides in user space
 ** returns number of bytes transferred or -EFAULT
 */
-extern ssize_t dvb_ringbuffer_write (struct dvb_ringbuffer * rbuf, const u8 * buf,
-                                     size_t len);
+extern ssize_t dvb_ringbuffer_write(struct dvb_ringbuffer *rbuf, const u8 *buf,
+				    size_t len);
 
 
 /**
@@ -143,8 +143,8 @@ extern ssize_t dvb_ringbuffer_write (struct dvb_ringbuffer * rbuf, const u8 * bu
  * <len> Length of buffer (currently limited to 65535 bytes max).
  * returns Number of bytes written, or -EFAULT, -ENOMEM, -EVINAL.
  */
-extern ssize_t dvb_ringbuffer_pkt_write (struct dvb_ringbuffer * rbuf, u8 * buf,
-    size_t len);
+extern ssize_t dvb_ringbuffer_pkt_write(struct dvb_ringbuffer *rbuf, u8* buf,
+					size_t len);
 
 /**
  * Read from a packet in the ringbuffer. Note: unlike dvb_ringbuffer_read(), this
@@ -159,10 +159,10 @@ extern ssize_t dvb_ringbuffer_pkt_write (struct dvb_ringbuffer * rbuf, u8 * buf,
  * <usermem> Set to 1 if <buf> is in userspace.
  * returns Number of bytes read, or -EFAULT.
  */
-extern ssize_t dvb_ringbuffer_pkt_read_user (struct dvb_ringbuffer * rbuf, size_t idx,
-    int offset, u8 __user * buf, size_t len);
-extern ssize_t dvb_ringbuffer_pkt_read (struct dvb_ringbuffer * rbuf, size_t idx,
-                                        int offset, u8 * buf, size_t len);
+extern ssize_t dvb_ringbuffer_pkt_read_user(struct dvb_ringbuffer *rbuf, size_t idx,
+				       int offset, u8 __user *buf, size_t len);
+extern ssize_t dvb_ringbuffer_pkt_read(struct dvb_ringbuffer *rbuf, size_t idx,
+				       int offset, u8 *buf, size_t len);
 
 /**
  * Dispose of a packet in the ring buffer.
@@ -170,7 +170,7 @@ extern ssize_t dvb_ringbuffer_pkt_read (struct dvb_ringbuffer * rbuf, size_t idx
  * <rbuf> Ring buffer concerned.
  * <idx> Packet index as returned by dvb_ringbuffer_pkt_next().
  */
-extern void dvb_ringbuffer_pkt_dispose (struct dvb_ringbuffer * rbuf, size_t idx);
+extern void dvb_ringbuffer_pkt_dispose(struct dvb_ringbuffer *rbuf, size_t idx);
 
 /**
  * Get the index of the next packet in a ringbuffer.
@@ -180,7 +180,7 @@ extern void dvb_ringbuffer_pkt_dispose (struct dvb_ringbuffer * rbuf, size_t idx
  * <pktlen> On success, will be updated to contain the length of the packet in bytes.
  * returns Packet index (if >=0), or -1 if no packets available.
  */
-extern ssize_t dvb_ringbuffer_pkt_next (struct dvb_ringbuffer * rbuf, size_t idx, size_t * pktlen);
+extern ssize_t dvb_ringbuffer_pkt_next(struct dvb_ringbuffer *rbuf, size_t idx, size_t* pktlen);
 
 
 #endif /* _DVB_RINGBUFFER_H_ */

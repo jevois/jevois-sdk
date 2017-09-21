@@ -28,10 +28,10 @@
 ******************************************************************************/
 #if(DM_ODM_SUPPORT_TYPE & (ODM_AP))
 void
-ODM_ReadFirmware_8188E_FW_AP (
-  IN   PDM_ODM_T    pDM_Odm,
-  OUT  u1Byte    *   pFirmware,
-  OUT  u4Byte    *   pFirmwareSize
+ODM_ReadFirmware_8188E_FW_AP(
+     IN   PDM_ODM_T    pDM_Odm,
+     OUT  u1Byte       *pFirmware,
+     OUT  u4Byte       *pFirmwareSize
 );
 
 #else
@@ -40,10 +40,10 @@ ODM_ReadFirmware_8188E_FW_AP (
 ******************************************************************************/
 #if 0
 void
-ODM_ReadFirmware_8188E_FW_NIC (
-  IN   PDM_ODM_T    pDM_Odm,
-  OUT  u1Byte    *   pFirmware,
-  OUT  u4Byte    *   pFirmwareSize
+ODM_ReadFirmware_8188E_FW_NIC(
+     IN   PDM_ODM_T    pDM_Odm,
+     OUT  u1Byte       *pFirmware,
+     OUT  u4Byte       *pFirmwareSize
 );
 #endif
 /******************************************************************************
@@ -51,10 +51,10 @@ ODM_ReadFirmware_8188E_FW_NIC (
 ******************************************************************************/
 #if 0
 void
-ODM_ReadFirmware_8188E_FW_WoWLAN (
-  IN   PDM_ODM_T    pDM_Odm,
-  OUT  u1Byte    *   pFirmware,
-  OUT  u4Byte    *   pFirmwareSize
+ODM_ReadFirmware_8188E_FW_WoWLAN(
+     IN   PDM_ODM_T    pDM_Odm,
+     OUT  u1Byte       *pFirmware,
+     OUT  u4Byte       *pFirmwareSize
 );
 #endif
 #define ArrayLength_8188E_FW_WoWLAN 15764

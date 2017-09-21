@@ -26,7 +26,7 @@
 #include <asm/kmap_types.h>
 #endif
 
-#define FIXADDR_TOP ((unsigned long)(-PAGE_SIZE))
+#define FIXADDR_TOP	((unsigned long)(-PAGE_SIZE))
 
 /*
  * Here we define all the compile-time 'special' virtual
@@ -47,62 +47,62 @@
  * task switches.
  */
 enum fixed_addresses {
-  FIX_HOLE,
-  #ifdef CONFIG_HIGHMEM
-  FIX_KMAP_BEGIN, /* reserved pte's for temporary kernel mappings */
-  FIX_KMAP_END = FIX_KMAP_BEGIN + (KM_TYPE_NR * num_possible_cpus() ) - 1,
-  #endif
-  __end_of_fixed_addresses
+	FIX_HOLE,
+#ifdef CONFIG_HIGHMEM
+	FIX_KMAP_BEGIN,	/* reserved pte's for temporary kernel mappings */
+	FIX_KMAP_END = FIX_KMAP_BEGIN + (KM_TYPE_NR * num_possible_cpus()) - 1,
+#endif
+	__end_of_fixed_addresses
 };
 
-extern void __set_fixmap (enum fixed_addresses idx,
-                          phys_addr_t phys, pgprot_t flags);
+extern void __set_fixmap(enum fixed_addresses idx,
+					phys_addr_t phys, pgprot_t flags);
 
 #define set_fixmap(idx, phys) \
-  __set_fixmap(idx, phys, PAGE_KERNEL)
+		__set_fixmap(idx, phys, PAGE_KERNEL)
 /*
  * Some hardware wants to get fixmapped without caching.
  */
 #define set_fixmap_nocache(idx, phys) \
-  __set_fixmap(idx, phys, PAGE_KERNEL_CI)
+		__set_fixmap(idx, phys, PAGE_KERNEL_CI)
 
 #define clear_fixmap(idx) \
-  __set_fixmap(idx, 0, __pgprot(0))
+		__set_fixmap(idx, 0, __pgprot(0))
 
-#define __FIXADDR_SIZE  (__end_of_fixed_addresses << PAGE_SHIFT)
-#define FIXADDR_START   (FIXADDR_TOP - __FIXADDR_SIZE)
+#define __FIXADDR_SIZE	(__end_of_fixed_addresses << PAGE_SHIFT)
+#define FIXADDR_START		(FIXADDR_TOP - __FIXADDR_SIZE)
 
-#define __fix_to_virt(x)  (FIXADDR_TOP - ((x) << PAGE_SHIFT))
-#define __virt_to_fix(x)  ((FIXADDR_TOP - ((x)&PAGE_MASK)) >> PAGE_SHIFT)
+#define __fix_to_virt(x)	(FIXADDR_TOP - ((x) << PAGE_SHIFT))
+#define __virt_to_fix(x)	((FIXADDR_TOP - ((x)&PAGE_MASK)) >> PAGE_SHIFT)
 
-extern void __this_fixmap_does_not_exist (void);
+extern void __this_fixmap_does_not_exist(void);
 
 /*
  * 'index to address' translation. If anyone tries to use the idx
  * directly without tranlation, we catch the bug with a NULL-deference
  * kernel oops. Illegal ranges of incoming indices are caught too.
  */
-static __always_inline unsigned long fix_to_virt (const unsigned int idx)
+static __always_inline unsigned long fix_to_virt(const unsigned int idx)
 {
-  /*
-   * this branch gets completely eliminated after inlining,
-   * except when someone tries to use fixaddr indices in an
-   * illegal way. (such as mixing up address types or using
-   * out-of-range indices).
-   *
-   * If it doesn't get removed, the linker will complain
-   * loudly with a reasonably clear error message..
-   */
-  if (idx >= __end_of_fixed_addresses)
-  { __this_fixmap_does_not_exist(); }
-  
-  return __fix_to_virt (idx);
+	/*
+	 * this branch gets completely eliminated after inlining,
+	 * except when someone tries to use fixaddr indices in an
+	 * illegal way. (such as mixing up address types or using
+	 * out-of-range indices).
+	 *
+	 * If it doesn't get removed, the linker will complain
+	 * loudly with a reasonably clear error message..
+	 */
+	if (idx >= __end_of_fixed_addresses)
+		__this_fixmap_does_not_exist();
+
+	return __fix_to_virt(idx);
 }
 
-static inline unsigned long virt_to_fix (const unsigned long vaddr)
+static inline unsigned long virt_to_fix(const unsigned long vaddr)
 {
-  BUG_ON (vaddr >= FIXADDR_TOP || vaddr < FIXADDR_START);
-  return __virt_to_fix (vaddr);
+	BUG_ON(vaddr >= FIXADDR_TOP || vaddr < FIXADDR_START);
+	return __virt_to_fix(vaddr);
 }
 
 #endif /* !__ASSEMBLY__ */

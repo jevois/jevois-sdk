@@ -18,16 +18,16 @@
 /* 64-bit timestamp */
 typedef unsigned long long cycles_t;
 
-static inline cycles_t get_cycles (void)
+static inline cycles_t get_cycles(void)
 {
-  unsigned l, h;
-  
-  asm volatile (" dint\n"
-                " mvc .s2 TSCL,%0\n"
-                " mvc .s2 TSCH,%1\n"
-                " rint\n"
-                : "=b" (l), "=b" (h) );
-  return ( (cycles_t) h << 32) | l;
+	unsigned l, h;
+
+	asm volatile (" dint\n"
+		      " mvc .s2 TSCL,%0\n"
+		      " mvc .s2 TSCH,%1\n"
+		      " rint\n"
+		      : "=b"(l), "=b"(h));
+	return ((cycles_t)h << 32) | l;
 }
 
 #endif /* _ASM_C6X_TIMEX_H */

@@ -17,12 +17,12 @@ typedef atomic_t snd_use_lock_t;
 #define snd_use_lock_free(lockp) atomic_dec(lockp)
 
 /* wait until all locks are released */
-void snd_use_lock_sync_helper (snd_use_lock_t * lock, const char * file, int line);
+void snd_use_lock_sync_helper(snd_use_lock_t *lock, const char *file, int line);
 #define snd_use_lock_sync(lockp) snd_use_lock_sync_helper(lockp, __BASE_FILE__, __LINE__)
 
 #else /* SMP || CONFIG_SND_DEBUG */
 
-typedef spinlock_t snd_use_lock_t;  /* dummy */
+typedef spinlock_t snd_use_lock_t;	/* dummy */
 #define snd_use_lock_init(lockp) /**/
 #define snd_use_lock_use(lockp) /**/
 #define snd_use_lock_free(lockp) /**/

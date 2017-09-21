@@ -11,12 +11,12 @@
 
 #define NUM_GPRS 16
 
-static const char * gpr_names[NUM_GPRS] = {
-  "%r0", "%r1",  "%r2",  "%r3",  "%r4",  "%r5",  "%r6",  "%r7",
-  "%r8", "%r9", "%r10", "%r11", "%r12", "%r13", "%r14", "%r15",
+static const char *gpr_names[NUM_GPRS] = {
+	"%r0", "%r1",  "%r2",  "%r3",  "%r4",  "%r5",  "%r6",  "%r7",
+	"%r8", "%r9", "%r10", "%r11", "%r12", "%r13", "%r14", "%r15",
 };
 
-const char * get_arch_regstr (unsigned int n)
+const char *get_arch_regstr(unsigned int n)
 {
-  return (n >= NUM_GPRS) ? NULL : gpr_names[n];
+	return (n >= NUM_GPRS) ? NULL : gpr_names[n];
 }

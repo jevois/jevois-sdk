@@ -7,16 +7,16 @@
  * @brief This file contains the private API for the Unsolicited Callback
  * Manager module.
  *
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -29,7 +29,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -42,7 +42,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  */
@@ -51,7 +51,7 @@
  * @defgroup IxNpeMhUnsolicitedCbMgr_p IxNpeMhUnsolicitedCbMgr_p
  *
  * @brief The private API for the Unsolicited Callback Manager module.
- *
+ * 
  * @{
  */
 
@@ -101,9 +101,9 @@ void ixNpeMhUnsolicitedCbMgrInitialize (void);
  */
 
 void ixNpeMhUnsolicitedCbMgrCallbackSave (
-  IxNpeMhNpeId npeId,
-  IxNpeMhMessageId unsolicitedMessageId,
-  IxNpeMhCallback unsolicitedCallback);
+    IxNpeMhNpeId npeId,
+    IxNpeMhMessageId unsolicitedMessageId,
+    IxNpeMhCallback unsolicitedCallback);
 
 /**
  * @fn void ixNpeMhUnsolicitedCbMgrCallbackRetrieve (
@@ -126,9 +126,9 @@ void ixNpeMhUnsolicitedCbMgrCallbackSave (
  */
 
 void ixNpeMhUnsolicitedCbMgrCallbackRetrieve (
-  IxNpeMhNpeId npeId,
-  IxNpeMhMessageId unsolicitedMessageId,
-  IxNpeMhCallback * unsolicitedCallback);
+    IxNpeMhNpeId npeId,
+    IxNpeMhMessageId unsolicitedMessageId,
+    IxNpeMhCallback *unsolicitedCallback);
 
 /**
  * @fn void ixNpeMhUnsolicitedCbMgrShow (
@@ -144,7 +144,7 @@ void ixNpeMhUnsolicitedCbMgrCallbackRetrieve (
  */
 
 void ixNpeMhUnsolicitedCbMgrShow (
-  IxNpeMhNpeId npeId);
+    IxNpeMhNpeId npeId);
 
 /**
  * @fn void ixNpeMhUnsolicitedCbMgrShowReset (
@@ -160,7 +160,7 @@ void ixNpeMhUnsolicitedCbMgrShow (
  */
 
 void ixNpeMhUnsolicitedCbMgrShowReset (
-  IxNpeMhNpeId npeId);
+    IxNpeMhNpeId npeId);
 
 #endif /* IXNPEMHUNSOLICITEDCBMGR_P_H */
 

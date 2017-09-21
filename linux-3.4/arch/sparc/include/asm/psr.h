@@ -39,31 +39,31 @@
 
 #ifndef __ASSEMBLY__
 /* Get the %psr register. */
-static inline unsigned int get_psr (void)
+static inline unsigned int get_psr(void)
 {
-  unsigned int psr;
-  __asm__ __volatile__ (
-    "rd	%%psr, %0\n\t"
-    "nop\n\t"
-    "nop\n\t"
-    "nop\n\t"
-    : "=r" (psr)
-    : /* no inputs */
-    : "memory");
-    
-  return psr;
+	unsigned int psr;
+	__asm__ __volatile__(
+		"rd	%%psr, %0\n\t"
+		"nop\n\t"
+		"nop\n\t"
+		"nop\n\t"
+	: "=r" (psr)
+	: /* no inputs */
+	: "memory");
+
+	return psr;
 }
 
-static inline void put_psr (unsigned int new_psr)
+static inline void put_psr(unsigned int new_psr)
 {
-  __asm__ __volatile__ (
-    "wr	%0, 0x0, %%psr\n\t"
-    "nop\n\t"
-    "nop\n\t"
-    "nop\n\t"
-    : /* no outputs */
-    : "r" (new_psr)
-    : "memory", "cc");
+	__asm__ __volatile__(
+		"wr	%0, 0x0, %%psr\n\t"
+		"nop\n\t"
+		"nop\n\t"
+		"nop\n\t"
+	: /* no outputs */
+	: "r" (new_psr)
+	: "memory", "cc");
 }
 
 /* Get the %fsr register.  Be careful, make sure the floating point
@@ -73,17 +73,17 @@ static inline void put_psr (unsigned int new_psr)
 
 extern unsigned int fsr_storage;
 
-static inline unsigned int get_fsr (void)
+static inline unsigned int get_fsr(void)
 {
-  unsigned int fsr = 0;
-  
-  __asm__ __volatile__ (
-    "st	%%fsr, %1\n\t"
-    "ld	%1, %0\n\t"
-    : "=r" (fsr)
-    : "m" (fsr_storage) );
-    
-  return fsr;
+	unsigned int fsr = 0;
+
+	__asm__ __volatile__(
+		"st	%%fsr, %1\n\t"
+		"ld	%1, %0\n\t"
+	: "=r" (fsr)
+	: "m" (fsr_storage));
+
+	return fsr;
 }
 
 #endif /* !(__ASSEMBLY__) */

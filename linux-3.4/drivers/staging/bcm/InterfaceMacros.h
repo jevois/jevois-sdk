@@ -4,7 +4,7 @@
 #define BCM_USB_MAX_READ_LENGTH 2048
 
 #define MAXIMUM_USB_TCB      128
-#define MAXIMUM_USB_RCB    128
+#define MAXIMUM_USB_RCB 	 128
 
 #define MAX_BUFFERS_PER_QUEUE   256
 

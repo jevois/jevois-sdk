@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -25,7 +25,7 @@
 #ifndef _SYS_PROTO_H_
 #define _SYS_PROTO_H_
 
-void sr32 (u32 *, u32, u32, u32);
-void sdelay (unsigned long);
+void sr32(u32 *, u32, u32, u32);
+void sdelay(unsigned long);
 
 #endif

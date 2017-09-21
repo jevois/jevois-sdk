@@ -12,10 +12,10 @@
 
 /* List of all the enabled modules */
 enum d_module {
-  D_SUBMODULE_DECLARE (main),
-  D_SUBMODULE_DECLARE (tx),
-  D_SUBMODULE_DECLARE (rx),
-  D_SUBMODULE_DECLARE (fw)
+	D_SUBMODULE_DECLARE(main),
+	D_SUBMODULE_DECLARE(tx),
+	D_SUBMODULE_DECLARE(rx),
+	D_SUBMODULE_DECLARE(fw)
 };
 
 

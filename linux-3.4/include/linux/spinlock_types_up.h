@@ -15,7 +15,7 @@
 #ifdef CONFIG_DEBUG_SPINLOCK
 
 typedef struct {
-  volatile unsigned int slock;
+	volatile unsigned int slock;
 } arch_spinlock_t;
 
 #define __ARCH_SPIN_LOCK_UNLOCKED { 1 }
@@ -29,7 +29,7 @@ typedef struct { } arch_spinlock_t;
 #endif
 
 typedef struct {
-  /* no debug version on UP */
+	/* no debug version on UP */
 } arch_rwlock_t;
 
 #define __ARCH_RW_LOCK_UNLOCKED { }

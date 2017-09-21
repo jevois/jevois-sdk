@@ -6,5 +6,5 @@
  * the terms of the GNU General Public License version 2 as published by the
  * Free Software Foundation.
  */
-int __init tx28_add_fec0 (void);
-int __init tx28_add_fec1 (void);
+int __init tx28_add_fec0(void);
+int __init tx28_add_fec1(void);

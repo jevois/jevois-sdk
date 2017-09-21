@@ -15,21 +15,21 @@
  * Allocates a new page and creates a new grant reference.
  */
 #define IOCTL_GNTALLOC_ALLOC_GREF \
-  _IOC(_IOC_NONE, 'G', 5, sizeof(struct ioctl_gntalloc_alloc_gref))
+_IOC(_IOC_NONE, 'G', 5, sizeof(struct ioctl_gntalloc_alloc_gref))
 struct ioctl_gntalloc_alloc_gref {
-  /* IN parameters */
-  /* The ID of the domain to be given access to the grants. */
-  uint16_t domid;
-  /* Flags for this mapping */
-  uint16_t flags;
-  /* Number of pages to map */
-  uint32_t count;
-  /* OUT parameters */
-  /* The offset to be used on a subsequent call to mmap(). */
-  uint64_t index;
-  /* The grant references of the newly created grant, one per page */
-  /* Variable size, depending on count */
-  uint32_t gref_ids[1];
+	/* IN parameters */
+	/* The ID of the domain to be given access to the grants. */
+	uint16_t domid;
+	/* Flags for this mapping */
+	uint16_t flags;
+	/* Number of pages to map */
+	uint32_t count;
+	/* OUT parameters */
+	/* The offset to be used on a subsequent call to mmap(). */
+	uint64_t index;
+	/* The grant references of the newly created grant, one per page */
+	/* Variable size, depending on count */
+	uint32_t gref_ids[1];
 };
 
 #define GNTALLOC_FLAG_WRITABLE 1
@@ -39,13 +39,13 @@ struct ioctl_gntalloc_alloc_gref {
  * no other domains are using it.
  */
 #define IOCTL_GNTALLOC_DEALLOC_GREF \
-  _IOC(_IOC_NONE, 'G', 6, sizeof(struct ioctl_gntalloc_dealloc_gref))
+_IOC(_IOC_NONE, 'G', 6, sizeof(struct ioctl_gntalloc_dealloc_gref))
 struct ioctl_gntalloc_dealloc_gref {
-  /* IN parameters */
-  /* The offset returned in the map operation */
-  uint64_t index;
-  /* Number of references to unmap */
-  uint32_t count;
+	/* IN parameters */
+	/* The offset returned in the map operation */
+	uint64_t index;
+	/* Number of references to unmap */
+	uint32_t count;
 };
 
 /*
@@ -59,19 +59,19 @@ struct ioctl_gntalloc_dealloc_gref {
  * to occur.
  */
 #define IOCTL_GNTALLOC_SET_UNMAP_NOTIFY \
-  _IOC(_IOC_NONE, 'G', 7, sizeof(struct ioctl_gntalloc_unmap_notify))
+_IOC(_IOC_NONE, 'G', 7, sizeof(struct ioctl_gntalloc_unmap_notify))
 struct ioctl_gntalloc_unmap_notify {
-  /* IN parameters */
-  /* Offset in the file descriptor for a byte within the page (same as
-   * used in mmap). If using UNMAP_NOTIFY_CLEAR_BYTE, this is the byte to
-   * be cleared. Otherwise, it can be any byte in the page whose
-   * notification we are adjusting.
-   */
-  uint64_t index;
-  /* Action(s) to take on unmap */
-  uint32_t action;
-  /* Event channel to notify */
-  uint32_t event_channel_port;
+	/* IN parameters */
+	/* Offset in the file descriptor for a byte within the page (same as
+	 * used in mmap). If using UNMAP_NOTIFY_CLEAR_BYTE, this is the byte to
+	 * be cleared. Otherwise, it can be any byte in the page whose
+	 * notification we are adjusting.
+	 */
+	uint64_t index;
+	/* Action(s) to take on unmap */
+	uint32_t action;
+	/* Event channel to notify */
+	uint32_t event_channel_port;
 };
 
 /* Clear (set to zero) the byte specified by index */

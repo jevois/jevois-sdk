@@ -58,8 +58,8 @@
 /*****************************************************************************/
 
 static const struct usb_device_id et61x251_id_table[] = {
-  { USB_DEVICE (0x102c, 0x6251), },
-  { }
+	{ USB_DEVICE(0x102c, 0x6251), },
+	{ }
 };
 
 ET61X251_SENSOR_TABLE
@@ -67,97 +67,97 @@ ET61X251_SENSOR_TABLE
 /*****************************************************************************/
 
 enum et61x251_frame_state {
-  F_UNUSED,
-  F_QUEUED,
-  F_GRABBING,
-  F_DONE,
-  F_ERROR,
+	F_UNUSED,
+	F_QUEUED,
+	F_GRABBING,
+	F_DONE,
+	F_ERROR,
 };
 
 struct et61x251_frame_t {
-  void * bufmem;
-  struct v4l2_buffer buf;
-  enum et61x251_frame_state state;
-  struct list_head frame;
-  unsigned long vma_use_count;
+	void* bufmem;
+	struct v4l2_buffer buf;
+	enum et61x251_frame_state state;
+	struct list_head frame;
+	unsigned long vma_use_count;
 };
 
 enum et61x251_dev_state {
-  DEV_INITIALIZED = 0x01,
-  DEV_DISCONNECTED = 0x02,
-  DEV_MISCONFIGURED = 0x04,
+	DEV_INITIALIZED = 0x01,
+	DEV_DISCONNECTED = 0x02,
+	DEV_MISCONFIGURED = 0x04,
 };
 
 enum et61x251_io_method {
-  IO_NONE,
-  IO_READ,
-  IO_MMAP,
+	IO_NONE,
+	IO_READ,
+	IO_MMAP,
 };
 
 enum et61x251_stream_state {
-  STREAM_OFF,
-  STREAM_INTERRUPT,
-  STREAM_ON,
+	STREAM_OFF,
+	STREAM_INTERRUPT,
+	STREAM_ON,
 };
 
 struct et61x251_sysfs_attr {
-  u8 reg, i2c_reg;
+	u8 reg, i2c_reg;
 };
 
 struct et61x251_module_param {
-  u8 force_munmap;
-  u16 frame_timeout;
+	u8 force_munmap;
+	u16 frame_timeout;
 };
 
-static DEFINE_MUTEX (et61x251_sysfs_lock);
-static DECLARE_RWSEM (et61x251_dev_lock);
+static DEFINE_MUTEX(et61x251_sysfs_lock);
+static DECLARE_RWSEM(et61x251_dev_lock);
 
 struct et61x251_device {
-  struct video_device * v4ldev;
-  
-  struct et61x251_sensor sensor;
-  
-  struct usb_device * usbdev;
-  struct urb * urb[ET61X251_URBS];
-  void * transfer_buffer[ET61X251_URBS];
-  u8 * control_buffer;
-  
-  struct et61x251_frame_t * frame_current, frame[ET61X251_MAX_FRAMES];
-  struct list_head inqueue, outqueue;
-  u32 frame_count, nbuffers, nreadbuffers;
-  
-  enum et61x251_io_method io;
-  enum et61x251_stream_state stream;
-  
-  struct v4l2_jpegcompression compression;
-  
-  struct et61x251_sysfs_attr sysfs;
-  struct et61x251_module_param module_param;
-  
-  struct kref kref;
-  enum et61x251_dev_state state;
-  u8 users;
-  
-  struct completion probe;
-  struct mutex open_mutex, fileop_mutex;
-  spinlock_t queue_lock;
-  wait_queue_head_t wait_open, wait_frame, wait_stream;
+	struct video_device* v4ldev;
+
+	struct et61x251_sensor sensor;
+
+	struct usb_device* usbdev;
+	struct urb* urb[ET61X251_URBS];
+	void* transfer_buffer[ET61X251_URBS];
+	u8* control_buffer;
+
+	struct et61x251_frame_t *frame_current, frame[ET61X251_MAX_FRAMES];
+	struct list_head inqueue, outqueue;
+	u32 frame_count, nbuffers, nreadbuffers;
+
+	enum et61x251_io_method io;
+	enum et61x251_stream_state stream;
+
+	struct v4l2_jpegcompression compression;
+
+	struct et61x251_sysfs_attr sysfs;
+	struct et61x251_module_param module_param;
+
+	struct kref kref;
+	enum et61x251_dev_state state;
+	u8 users;
+
+	struct completion probe;
+	struct mutex open_mutex, fileop_mutex;
+	spinlock_t queue_lock;
+	wait_queue_head_t wait_open, wait_frame, wait_stream;
 };
 
 /*****************************************************************************/
 
-struct et61x251_device *
-et61x251_match_id (struct et61x251_device * cam, const struct usb_device_id * id)
+struct et61x251_device*
+et61x251_match_id(struct et61x251_device* cam, const struct usb_device_id *id)
 {
-  return usb_match_id (usb_ifnum_to_if (cam->usbdev, 0), id) ? cam : NULL;
+	return usb_match_id(usb_ifnum_to_if(cam->usbdev, 0), id) ? cam : NULL;
 }
 
 
 void
-et61x251_attach_sensor (struct et61x251_device * cam,
-                        const struct et61x251_sensor * sensor)
+et61x251_attach_sensor(struct et61x251_device* cam,
+		       const struct et61x251_sensor* sensor)
 {
-  memcpy (&cam->sensor, sensor, sizeof (struct et61x251_sensor) );
+	memcpy(&cam->sensor, sensor, sizeof(struct et61x251_sensor));
 }
 
 /*****************************************************************************/
@@ -165,37 +165,37 @@ et61x251_attach_sensor (struct et61x251_device * cam,
 #undef DBG
 #undef KDBG
 #ifdef ET61X251_DEBUG
-#define DBG(level, fmt, ...)            \
-  do {                  \
-    if (debug >= (level)) {           \
-      if ((level) == 1)         \
-        dev_err(&cam->usbdev->dev, fmt "\n",    \
-                ##__VA_ARGS__);       \
-      else if ((level) == 2)          \
-        dev_info(&cam->usbdev->dev, fmt "\n",   \
-                 ##__VA_ARGS__);      \
-      else if ((level) >= 3)          \
-        dev_info(&cam->usbdev->dev, "[%s:%s:%d] " fmt "\n", \
-                 __FILE__, __func__, __LINE__,    \
-                 ##__VA_ARGS__);      \
-    }               \
-  } while (0)
-#define KDBG(level, fmt, ...)           \
-  do {                  \
-    if (debug >= (level)) {           \
-      if ((level) == 1 || (level) == 2)     \
-        pr_info(fmt "\n", ##__VA_ARGS__);   \
-      else if ((level) == 3)          \
-        pr_debug("[%s:%s:%d] " fmt "\n",    \
-                 __FILE__,  __func__, __LINE__,   \
-                 ##__VA_ARGS__);      \
-    }               \
-  } while (0)
-#define V4LDBG(level, name, cmd)          \
-  do {                  \
-    if (debug >= (level))           \
-      v4l_print_ioctl(name, cmd);       \
-  } while (0)
+#define DBG(level, fmt, ...)						\
+do {									\
+	if (debug >= (level)) {						\
+		if ((level) == 1)					\
+			dev_err(&cam->usbdev->dev, fmt "\n",		\
+				##__VA_ARGS__);				\
+		else if ((level) == 2)					\
+			dev_info(&cam->usbdev->dev, fmt "\n",		\
+				 ##__VA_ARGS__);			\
+		else if ((level) >= 3)					\
+			dev_info(&cam->usbdev->dev, "[%s:%s:%d] " fmt "\n", \
+				 __FILE__, __func__, __LINE__,		\
+				 ##__VA_ARGS__);			\
+	}								\
+} while (0)
+#define KDBG(level, fmt, ...)						\
+do {									\
+	if (debug >= (level)) {						\
+		if ((level) == 1 || (level) == 2)			\
+			pr_info(fmt "\n", ##__VA_ARGS__);		\
+		else if ((level) == 3)					\
+			pr_debug("[%s:%s:%d] " fmt "\n",		\
+				 __FILE__,  __func__, __LINE__,		\
+				 ##__VA_ARGS__);			\
+	}								\
+} while (0)
+#define V4LDBG(level, name, cmd)					\
+do {									\
+	if (debug >= (level))						\
+		v4l_print_ioctl(name, cmd);				\
+} while (0)
 #else
 #define DBG(level, fmt, ...) do {;} while(0)
 #define KDBG(level, fmt, ...) do {;} while(0)
@@ -203,9 +203,9 @@ et61x251_attach_sensor (struct et61x251_device * cam,
 #endif
 
 #undef PDBG
-#define PDBG(fmt, ...)              \
-  dev_info(&cam->usbdev->dev, "[%s:%s:%d] " fmt "\n",   \
-           __FILE__, __func__, __LINE__, ##__VA_ARGS__)
+#define PDBG(fmt, ...)							\
+	dev_info(&cam->usbdev->dev, "[%s:%s:%d] " fmt "\n",		\
+		 __FILE__, __func__, __LINE__, ##__VA_ARGS__)
 
 #undef PDBGG
 #define PDBGG(fmt, args...) do {;} while (0) /* placeholder */

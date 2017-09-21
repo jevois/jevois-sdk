@@ -14,107 +14,107 @@
 
 #ifdef DDEBUG
 
-char * pp_tag_t (tag_t * tag);
-char * pp_data_counters (struct data_counters * dc, bool showValues);
-char * pp_tag_node (struct tag_node * tn);
-char * pp_tag_ref (struct tag_ref * tr);
-char * pp_tag_stat (struct tag_stat * ts);
-char * pp_iface_stat (struct iface_stat * is);
-char * pp_sock_tag (struct sock_tag * st);
-char * pp_uid_tag_data (struct uid_tag_data * qtd);
-char * pp_proc_qtu_data (struct proc_qtu_data * pqd);
+char *pp_tag_t(tag_t *tag);
+char *pp_data_counters(struct data_counters *dc, bool showValues);
+char *pp_tag_node(struct tag_node *tn);
+char *pp_tag_ref(struct tag_ref *tr);
+char *pp_tag_stat(struct tag_stat *ts);
+char *pp_iface_stat(struct iface_stat *is);
+char *pp_sock_tag(struct sock_tag *st);
+char *pp_uid_tag_data(struct uid_tag_data *qtd);
+char *pp_proc_qtu_data(struct proc_qtu_data *pqd);
 
 /*------------------------------------------*/
-void prdebug_sock_tag_list (int indent_level,
-                            struct list_head * sock_tag_list);
-void prdebug_sock_tag_tree (int indent_level,
-                            struct rb_root * sock_tag_tree);
-void prdebug_proc_qtu_data_tree (int indent_level,
-                                 struct rb_root * proc_qtu_data_tree);
-void prdebug_tag_ref_tree (int indent_level, struct rb_root * tag_ref_tree);
-void prdebug_uid_tag_data_tree (int indent_level,
-                                struct rb_root * uid_tag_data_tree);
-void prdebug_tag_stat_tree (int indent_level,
-                            struct rb_root * tag_stat_tree);
-void prdebug_iface_stat_list (int indent_level,
-                              struct list_head * iface_stat_list);
+void prdebug_sock_tag_list(int indent_level,
+			   struct list_head *sock_tag_list);
+void prdebug_sock_tag_tree(int indent_level,
+			   struct rb_root *sock_tag_tree);
+void prdebug_proc_qtu_data_tree(int indent_level,
+				struct rb_root *proc_qtu_data_tree);
+void prdebug_tag_ref_tree(int indent_level, struct rb_root *tag_ref_tree);
+void prdebug_uid_tag_data_tree(int indent_level,
+			       struct rb_root *uid_tag_data_tree);
+void prdebug_tag_stat_tree(int indent_level,
+			   struct rb_root *tag_stat_tree);
+void prdebug_iface_stat_list(int indent_level,
+			     struct list_head *iface_stat_list);
 
 #else
 
 /*------------------------------------------*/
-static inline char * pp_tag_t (tag_t * tag)
+static inline char *pp_tag_t(tag_t *tag)
 {
-  return NULL;
+	return NULL;
 }
-static inline char * pp_data_counters (struct data_counters * dc, bool showValues)
+static inline char *pp_data_counters(struct data_counters *dc, bool showValues)
 {
-  return NULL;
+	return NULL;
 }
-static inline char * pp_tag_node (struct tag_node * tn)
+static inline char *pp_tag_node(struct tag_node *tn)
 {
-  return NULL;
+	return NULL;
 }
-static inline char * pp_tag_ref (struct tag_ref * tr)
+static inline char *pp_tag_ref(struct tag_ref *tr)
 {
-  return NULL;
+	return NULL;
 }
-static inline char * pp_tag_stat (struct tag_stat * ts)
+static inline char *pp_tag_stat(struct tag_stat *ts)
 {
-  return NULL;
+	return NULL;
 }
-static inline char * pp_iface_stat (struct iface_stat * is)
+static inline char *pp_iface_stat(struct iface_stat *is)
 {
-  return NULL;
+	return NULL;
 }
-static inline char * pp_sock_tag (struct sock_tag * st)
+static inline char *pp_sock_tag(struct sock_tag *st)
 {
-  return NULL;
+	return NULL;
 }
-static inline char * pp_uid_tag_data (struct uid_tag_data * qtd)
+static inline char *pp_uid_tag_data(struct uid_tag_data *qtd)
 {
-  return NULL;
+	return NULL;
 }
-static inline char * pp_proc_qtu_data (struct proc_qtu_data * pqd)
+static inline char *pp_proc_qtu_data(struct proc_qtu_data *pqd)
 {
-  return NULL;
+	return NULL;
 }
 
 /*------------------------------------------*/
 static inline
-void prdebug_sock_tag_list (int indent_level,
-                            struct list_head * sock_tag_list)
+void prdebug_sock_tag_list(int indent_level,
+			   struct list_head *sock_tag_list)
 {
 }
 static inline
-void prdebug_sock_tag_tree (int indent_level,
-                            struct rb_root * sock_tag_tree)
+void prdebug_sock_tag_tree(int indent_level,
+			   struct rb_root *sock_tag_tree)
 {
 }
 static inline
-void prdebug_proc_qtu_data_tree (int indent_level,
-                                 struct rb_root * proc_qtu_data_tree)
+void prdebug_proc_qtu_data_tree(int indent_level,
+				struct rb_root *proc_qtu_data_tree)
 {
 }
 static inline
-void prdebug_tag_ref_tree (int indent_level, struct rb_root * tag_ref_tree)
+void prdebug_tag_ref_tree(int indent_level, struct rb_root *tag_ref_tree)
 {
 }
 static inline
-void prdebug_uid_tag_data_tree (int indent_level,
-                                struct rb_root * uid_tag_data_tree)
+void prdebug_uid_tag_data_tree(int indent_level,
+			       struct rb_root *uid_tag_data_tree)
 {
 }
 static inline
-void prdebug_tag_stat_tree (int indent_level,
-                            struct rb_root * tag_stat_tree)
+void prdebug_tag_stat_tree(int indent_level,
+			   struct rb_root *tag_stat_tree)
 {
 }
 static inline
-void prdebug_iface_stat_list (int indent_level,
-                              struct list_head * iface_stat_list)
+void prdebug_iface_stat_list(int indent_level,
+			     struct list_head *iface_stat_list)
 {
 }
 #endif
 /*------------------------------------------*/
-const char * netdev_evt_str (int netdev_event);
+const char *netdev_evt_str(int netdev_event);
 #endif  /* ifndef __XT_QTAGUID_PRINT_H__ */

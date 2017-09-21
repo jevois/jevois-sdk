@@ -2,7 +2,7 @@
 #define _ASM_KMAP_TYPES_H
 
 /* Dummy header just to define km_type.  None of this
- * is actually used on cris.
+ * is actually used on cris. 
  */
 
 #include <asm-generic/kmap_types.h>

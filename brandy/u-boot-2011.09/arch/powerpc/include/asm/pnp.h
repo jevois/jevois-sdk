@@ -246,7 +246,7 @@ typedef enum _PnP_BASE_TYPE {
   SystemPeripheral = 8,
   InputDevice = 9,
   ServiceProcessor = 0x0A,              /* 11/2/95                            */
-} PnP_BASE_TYPE;
+  } PnP_BASE_TYPE;
 
 /* Device Sub Type Codes */
 
@@ -256,25 +256,25 @@ typedef enum _PnP_SUB_TYPE {
   FloppyController = 2,
   IPIController = 3,
   OtherMassStorageController = 0x80,
-  
+
   EthernetController = 0,
   TokenRingController = 1,
   FDDIController = 2,
   OtherNetworkController = 0x80,
-  
-  VGAController = 0,
-  SVGAController = 1,
-  XGAController = 2,
+
+  VGAController= 0,
+  SVGAController= 1,
+  XGAController= 2,
   OtherDisplayController = 0x80,
-  
+
   VideoController = 0,
   AudioController = 1,
   OtherMultimediaController = 0x80,
-  
+
   RAM = 0,
   FLASH = 1,
   OtherMemoryDevice = 0x80,
-  
+
   HostProcessorBridge = 0,
   ISABridge = 1,
   EISABridge = 2,
@@ -283,11 +283,11 @@ typedef enum _PnP_SUB_TYPE {
   PCMCIABridge = 5,
   VMEBridge = 6,
   OtherBridgeDevice = 0x80,
-  
+
   RS232Device = 0,
   ATCompatibleParallelPort = 1,
   OtherCommunicationsDevice = 0x80,
-  
+
   ProgrammableInterruptController = 0,
   DMAController = 1,
   SystemTimer = 2,
@@ -303,15 +303,15 @@ typedef enum _PnP_SUB_TYPE {
   GraphicAssist = 0xC,
   SystemPlanar = 0xF,                   /* 10/5/95                            */
   OtherSystemPeripheral = 0x80,
-  
+
   KeyboardController = 0,
   Digitizer = 1,
   MouseController = 2,
   TabletController = 3,                 /* 10/27/95                           */
   OtherInputController = 0x80,
-  
+
   GeneralMemoryController = 0,
-} PnP_SUB_TYPE;
+  } PnP_SUB_TYPE;
 
 /* Device Interface Type Codes */
 
@@ -320,36 +320,36 @@ typedef enum _PnP_INTERFACE {
   GeneralSCSI = 0,
   GeneralIDE = 0,
   ATACompatible = 1,
-  
+
   GeneralFloppy = 0,
   Compatible765 = 1,
   NS398_Floppy = 2,                     /* NS Super I/O wired to use index
-             register at port 398 and data
-             register at port 399               */
+					   register at port 398 and data
+					   register at port 399               */
   NS26E_Floppy = 3,                     /* Ports 26E and 26F                  */
   NS15C_Floppy = 4,                     /* Ports 15C and 15D                  */
   NS2E_Floppy = 5,                      /* Ports 2E and 2F                    */
   CHRP_Floppy = 6,                      /* CHRP Floppy in PR*P system         */
-  
+
   GeneralIPI = 0,
-  
+
   GeneralEther = 0,
   GeneralToken = 0,
   GeneralFDDI = 0,
-  
+
   GeneralVGA = 0,
   GeneralSVGA = 0,
   GeneralXGA = 0,
-  
+
   GeneralVideo = 0,
   GeneralAudio = 0,
   CS4232Audio = 1,                      /* CS 4232 Plug 'n Play Configured    */
-  
+
   GeneralRAM = 0,
   GeneralFLASH = 0,
   PCIMemoryController = 0,              /* PCI Config Method                  */
   RS6KMemoryController = 1,             /* RS6K Config Method                 */
-  
+
   GeneralHostBridge = 0,
   GeneralISABridge = 0,
   GeneralEISABridge = 0,
@@ -360,57 +360,57 @@ typedef enum _PnP_INTERFACE {
   PCIBridgeRS6K = 2,
   GeneralPCMCIABridge = 0,
   GeneralVMEBridge = 0,
-  
+
   GeneralRS232 = 0,
   COMx = 1,
   Compatible16450 = 2,
   Compatible16550 = 3,
   NS398SerPort = 4,                     /* NS Super I/O wired to use index
-             register at port 398 and data
-             register at port 399               */
+					   register at port 398 and data
+					   register at port 399               */
   NS26ESerPort = 5,                     /* Ports 26E and 26F                  */
   NS15CSerPort = 6,                     /* Ports 15C and 15D                  */
   NS2ESerPort = 7,                      /* Ports 2E and 2F                    */
-  
+
   GeneralParPort = 0,
   LPTx = 1,
   NS398ParPort = 2,                     /* NS Super I/O wired to use index
-             register at port 398 and data
-             register at port 399               */
+					   register at port 398 and data
+					   register at port 399               */
   NS26EParPort = 3,                     /* Ports 26E and 26F                  */
   NS15CParPort = 4,                     /* Ports 15C and 15D                  */
   NS2EParPort = 5,                      /* Ports 2E and 2F                    */
-  
+
   GeneralPIC = 0,
   ISA_PIC = 1,
   EISA_PIC = 2,
   MPIC = 3,
   RS6K_PIC = 4,
-  
+
   GeneralDMA = 0,
   ISA_DMA = 1,
   EISA_DMA = 2,
-  
+
   GeneralTimer = 0,
   ISA_Timer = 1,
   EISA_Timer = 2,
   GeneralRTC = 0,
   ISA_RTC = 1,
-  
+
   StoreThruOnly = 1,
   StoreInEnabled = 2,
   RS6KL2Cache = 3,
-  
+
   IndirectNVRAM = 0,                    /* Indirectly addressed               */
   DirectNVRAM = 1,                      /* Memory Mapped                      */
   IndirectNVRAM24 = 2,                  /* Indirectly addressed - 24 bit      */
-  
+
   GeneralPowerManagement = 0,
   EPOWPowerManagement = 1,
   PowerControl = 2,                    /* d1378 */
-  
+
   GeneralCMOS = 0,
-  
+
   GeneralOPPanel = 0,
   HarddiskLight = 1,
   CDROMLight = 2,
@@ -419,16 +419,16 @@ typedef enum _PnP_INTERFACE {
   ANDisplay = 5,                        /* AlphaNumeric Display               */
   SystemStatusLED = 6,                  /* 3 digit 7 segment LED              */
   CHRP_SystemStatusLED = 7,             /* CHRP LEDs in PR*P system           */
-  
+
   GeneralServiceProcessor = 0,
-  
+
   TransferData = 1,
   IGMC32 = 2,
   IGMC64 = 3,
-  
+
   GeneralSystemPlanar = 0,              /* 10/5/95                            */
-  
-} PnP_INTERFACE;
+
+  } PnP_INTERFACE;
 
 /* PnP resources */
 
@@ -436,26 +436,26 @@ typedef enum _PnP_INTERFACE {
 
 typedef struct _SERIAL_ID {
   unsigned char VendorID0;              /*    Bit(7)=0                        */
-  /*    Bits(6:2)=1st character in      */
-  /*       compressed ASCII             */
-  /*    Bits(1:0)=2nd character in      */
-  /*       compressed ASCII bits(4:3)   */
+					/*    Bits(6:2)=1st character in      */
+					/*       compressed ASCII             */
+					/*    Bits(1:0)=2nd character in      */
+					/*       compressed ASCII bits(4:3)   */
   unsigned char VendorID1;              /*    Bits(7:5)=2nd character in      */
-  /*       compressed ASCII bits(2:0)   */
-  /*    Bits(4:0)=3rd character in      */
-  /*       compressed ASCII             */
+					/*       compressed ASCII bits(2:0)   */
+					/*    Bits(4:0)=3rd character in      */
+					/*       compressed ASCII             */
   unsigned char VendorID2;              /* Product number - vendor assigned   */
   unsigned char VendorID3;              /* Product number - vendor assigned   */
-  
-  /* Serial number is to provide uniqueness if more than one board of same      */
-  /* type is in system.  Must be "FFFFFFFF" if feature not supported.           */
-  
+
+/* Serial number is to provide uniqueness if more than one board of same      */
+/* type is in system.  Must be "FFFFFFFF" if feature not supported.           */
+
   unsigned char Serial0;                /* Unique serial number bits (7:0)    */
   unsigned char Serial1;                /* Unique serial number bits (15:8)   */
   unsigned char Serial2;                /* Unique serial number bits (23:16)  */
   unsigned char Serial3;                /* Unique serial number bits (31:24)  */
   unsigned char Checksum;
-} SERIAL_ID;
+  } SERIAL_ID;
 
 typedef enum _PnPItemName {
   Unused = 0,
@@ -479,7 +479,7 @@ typedef enum _PnPItemName {
   LargeVendorItem = 4,
   MemoryRange32 = 5,
   MemoryRangeFixed32 = 6,
-} PnPItemName;
+  } PnPItemName;
 
 /* Define a bunch of access functions for the bits in the tag field */
 
@@ -502,55 +502,55 @@ typedef enum _PnPItemName {
 /* a PnP resource is a bunch of contiguous TAG packets ending with an end tag */
 
 typedef union _PnP_TAG_PACKET {
-  struct _S1_Pack {                     /* VERSION PACKET                     */
+  struct _S1_Pack{                      /* VERSION PACKET                     */
     unsigned char Tag;                  /* small tag = 0x0a                   */
     unsigned char Version[2];           /* PnP version, Vendor version        */
-  } S1_Pack;
-  
-  struct _S2_Pack {                     /* LOGICAL DEVICE ID PACKET           */
+    } S1_Pack;
+
+  struct _S2_Pack{                      /* LOGICAL DEVICE ID PACKET           */
     unsigned char Tag;                  /* small tag = 0x15 or 0x16           */
     unsigned char DevId[4];             /* Logical device id                  */
     unsigned char Flags[2];             /* bit(0) boot device;                */
-    /* bit(7:1) cmd in range x31-x37      */
-    /* bit(7:0) cmd in range x28-x3f (opt)*/
-  } S2_Pack;
-  
-  struct _S3_Pack {                     /* COMPATIBLE DEVICE ID PACKET        */
+					/* bit(7:1) cmd in range x31-x37      */
+					/* bit(7:0) cmd in range x28-x3f (opt)*/
+    } S2_Pack;
+
+  struct _S3_Pack{                      /* COMPATIBLE DEVICE ID PACKET        */
     unsigned char Tag;                  /* small tag = 0x1c                   */
     unsigned char CompatId[4];          /* Compatible device id               */
-  } S3_Pack;
-  
-  struct _S4_Pack {                     /* IRQ PACKET                         */
+    } S3_Pack;
+
+  struct _S4_Pack{                      /* IRQ PACKET                         */
     unsigned char Tag;                  /* small tag = 0x22 or 0x23           */
     unsigned char IRQMask[2];           /* bit(0) is IRQ0, ...;               */
-    /* bit(0) is IRQ8 ...                 */
+					/* bit(0) is IRQ8 ...                 */
     unsigned char IRQInfo;              /* optional; assume bit(0)=1; else    */
-    /*  bit(0) - high true edge sensitive */
-    /*  bit(1) - low true edge sensitive  */
-    /*  bit(2) - high true level sensitive*/
-    /*  bit(3) - low true level sensitive */
-    /*  bit(7:4) - must be 0              */
-  } S4_Pack;
-  
-  struct _S5_Pack {                     /* DMA PACKET                         */
+					/*  bit(0) - high true edge sensitive */
+					/*  bit(1) - low true edge sensitive  */
+					/*  bit(2) - high true level sensitive*/
+					/*  bit(3) - low true level sensitive */
+					/*  bit(7:4) - must be 0              */
+    } S4_Pack;
+
+  struct _S5_Pack{                      /* DMA PACKET                         */
     unsigned char Tag;                  /* small tag = 0x2a                   */
     unsigned char DMAMask;              /* bit(0) is channel 0 ...            */
     unsigned char DMAInfo;
-  } S5_Pack;
-  
-  struct _S6_Pack {                     /* START DEPENDENT FUNCTION PACKET    */
+    } S5_Pack;
+
+  struct _S6_Pack{                      /* START DEPENDENT FUNCTION PACKET    */
     unsigned char Tag;                  /* small tag = 0x30 or 0x31           */
     unsigned char Priority;             /* Optional; if missing then x01; else*/
-    /*  x00 = best possible               */
-    /*  x01 = acceptible                  */
-    /*  x02 = sub-optimal but functional  */
-  } S6_Pack;
-  
-  struct _S7_Pack {                     /* END DEPENDENT FUNCTION PACKET      */
+					/*  x00 = best possible               */
+					/*  x01 = acceptible                  */
+					/*  x02 = sub-optimal but functional  */
+    } S6_Pack;
+
+  struct _S7_Pack{                      /* END DEPENDENT FUNCTION PACKET      */
     unsigned char Tag;                  /* small tag = 0x38                   */
-  } S7_Pack;
-  
-  struct _S8_Pack {                     /* VARIABLE I/O PORT PACKET           */
+    } S7_Pack;
+
+  struct _S8_Pack{                      /* VARIABLE I/O PORT PACKET           */
     unsigned char Tag;                  /* small tag x47                      */
     unsigned char IOInfo;               /* x0  = decode only bits(9:0);       */
 #define  ISAAddr16bit         0x01      /* x01 = decode bits(15:0)            */
@@ -558,86 +558,86 @@ typedef union _PnP_TAG_PACKET {
     unsigned char RangeMax[2];          /* Max base address                   */
     unsigned char IOAlign;              /* base alignmt, incr in 1B blocks    */
     unsigned char IONum;                /* number of contiguous I/O ports     */
-  } S8_Pack;
-  
-  struct _S9_Pack {                     /* FIXED I/O PORT PACKET              */
+    } S8_Pack;
+
+  struct _S9_Pack{                      /* FIXED I/O PORT PACKET              */
     unsigned char Tag;                  /* small tag = 0x4b                   */
     unsigned char Range[2];             /* base address 10 bits               */
     unsigned char IONum;                /* number of contiguous I/O ports     */
-  } S9_Pack;
-  
-  struct _S14_Pack {                    /* VENDOR DEFINED PACKET              */
+    } S9_Pack;
+
+  struct _S14_Pack{                     /* VENDOR DEFINED PACKET              */
     unsigned char Tag;                  /* small tag = 0x7m m = 1-7           */
-    union _S14_Data {
+    union _S14_Data{
       unsigned char Data[7];            /* Vendor defined                     */
-      struct _S14_PPCPack {             /* Pr*p s14 pack                      */
-        unsigned char Type;            /* 00=non-IBM                         */
-        unsigned char PPCData[6];      /* Vendor defined                     */
-      } S14_PPCPack;
-    } S14_Data;
-  } S14_Pack;
-  
-  struct _S15_Pack {                    /* END PACKET                         */
+      struct _S14_PPCPack{              /* Pr*p s14 pack                      */
+	 unsigned char Type;            /* 00=non-IBM                         */
+	 unsigned char PPCData[6];      /* Vendor defined                     */
+	} S14_PPCPack;
+      } S14_Data;
+    } S14_Pack;
+
+  struct _S15_Pack{                     /* END PACKET                         */
     unsigned char Tag;                  /* small tag = 0x78 or 0x79           */
     unsigned char Check;                /* optional - checksum                */
-  } S15_Pack;
-  
-  struct _L1_Pack {                     /* MEMORY RANGE PACKET                */
+    } S15_Pack;
+
+  struct _L1_Pack{                      /* MEMORY RANGE PACKET                */
     unsigned char Tag;                  /* large tag = 0x81                   */
     unsigned char Count0;               /* x09                                */
     unsigned char Count1;               /* x00                                */
     unsigned char Data[9];              /* a variable array of bytes,         */
-    /* count in tag                       */
-  } L1_Pack;
-  
-  struct _L2_Pack {                     /* ANSI ID STRING PACKET              */
+					/* count in tag                       */
+    } L1_Pack;
+
+  struct _L2_Pack{                      /* ANSI ID STRING PACKET              */
     unsigned char Tag;                  /* large tag = 0x82                   */
     unsigned char Count0;               /* Length of string                   */
     unsigned char Count1;
     unsigned char Identifier[1];        /* a variable array of bytes,         */
-    /* count in tag                       */
-  } L2_Pack;
-  
-  struct _L3_Pack {                     /* UNICODE ID STRING PACKET           */
+					/* count in tag                       */
+    } L2_Pack;
+
+  struct _L3_Pack{                      /* UNICODE ID STRING PACKET           */
     unsigned char Tag;                  /* large tag = 0x83                   */
     unsigned char Count0;               /* Length + 2 of string               */
     unsigned char Count1;
     unsigned char Country0;             /* TBD                                */
     unsigned char Country1;             /* TBD                                */
     unsigned char Identifier[1];        /* a variable array of bytes,         */
-    /* count in tag                       */
-  } L3_Pack;
-  
-  struct _L4_Pack {                     /* VENDOR DEFINED PACKET              */
+					/* count in tag                       */
+    } L3_Pack;
+
+  struct _L4_Pack{                      /* VENDOR DEFINED PACKET              */
     unsigned char Tag;                  /* large tag = 0x84                   */
     unsigned char Count0;
     unsigned char Count1;
-    union _L4_Data {
+    union _L4_Data{
       unsigned char Data[1];            /* a variable array of bytes,         */
-      /* count in tag                       */
-      struct _L4_PPCPack {              /* Pr*p L4 packet                     */
-        unsigned char Type;            /* 00=non-IBM                         */
-        unsigned char PPCData[1];      /* a variable array of bytes,         */
-        /* count in tag                       */
-      } L4_PPCPack;
-    } L4_Data;
-  } L4_Pack;
-  
-  struct _L5_Pack {
+					/* count in tag                       */
+      struct _L4_PPCPack{               /* Pr*p L4 packet                     */
+	 unsigned char Type;            /* 00=non-IBM                         */
+	 unsigned char PPCData[1];      /* a variable array of bytes,         */
+					/* count in tag                       */
+	} L4_PPCPack;
+      } L4_Data;
+    } L4_Pack;
+
+  struct _L5_Pack{
     unsigned char Tag;                  /* large tag = 0x85                   */
     unsigned char Count0;               /* Count = 17                         */
     unsigned char Count1;
     unsigned char Data[17];
-  } L5_Pack;
-  
-  struct _L6_Pack {
+    } L5_Pack;
+
+  struct _L6_Pack{
     unsigned char Tag;                  /* large tag = 0x86                   */
     unsigned char Count0;               /* Count = 9                          */
     unsigned char Count1;
     unsigned char Data[9];
-  } L6_Pack;
-  
-} PnP_TAG_PACKET;
+    } L6_Pack;
+
+  } PnP_TAG_PACKET;
 
 #endif /* __ASSEMBLY__ */
 #endif  /* ndef _PNP_ */

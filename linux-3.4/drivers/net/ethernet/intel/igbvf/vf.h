@@ -59,34 +59,34 @@ struct e1000_hw;
 
 /* Receive Descriptor - Advanced */
 union e1000_adv_rx_desc {
-  struct {
-    u64 pkt_addr;             /* Packet buffer address */
-    u64 hdr_addr;             /* Header buffer address */
-  } read;
-  struct {
-    struct {
-      union {
-        u32 data;
-        struct {
-          u16 pkt_info; /* RSS/Packet type */
-          u16 hdr_info; /* Split Header,
-                         * hdr buffer length */
-        } hs_rss;
-      } lo_dword;
-      union {
-        u32 rss;          /* RSS Hash */
-        struct {
-          u16 ip_id;    /* IP id */
-          u16 csum;     /* Packet Checksum */
-        } csum_ip;
-      } hi_dword;
-    } lower;
-    struct {
-      u32 status_error;     /* ext status/error */
-      u16 length;           /* Packet length */
-      u16 vlan;             /* VLAN tag */
-    } upper;
-  } wb;  /* writeback */
+	struct {
+		u64 pkt_addr;             /* Packet buffer address */
+		u64 hdr_addr;             /* Header buffer address */
+	} read;
+	struct {
+		struct {
+			union {
+				u32 data;
+				struct {
+					u16 pkt_info; /* RSS/Packet type */
+					u16 hdr_info; /* Split Header,
+					               * hdr buffer length */
+				} hs_rss;
+			} lo_dword;
+			union {
+				u32 rss;          /* RSS Hash */
+				struct {
+					u16 ip_id;    /* IP id */
+					u16 csum;     /* Packet Checksum */
+				} csum_ip;
+			} hi_dword;
+		} lower;
+		struct {
+			u32 status_error;     /* ext status/error */
+			u16 length;           /* Packet length */
+			u16 vlan;             /* VLAN tag */
+		} upper;
+	} wb;  /* writeback */
 };
 
 #define E1000_RXDADV_HDRBUFLEN_MASK      0x7FE0
@@ -94,16 +94,16 @@ union e1000_adv_rx_desc {
 
 /* Transmit Descriptor - Advanced */
 union e1000_adv_tx_desc {
-  struct {
-    u64 buffer_addr;    /* Address of descriptor's data buf */
-    u32 cmd_type_len;
-    u32 olinfo_status;
-  } read;
-  struct {
-    u64 rsvd;       /* Reserved */
-    u32 nxtseq_seed;
-    u32 status;
-  } wb;
+	struct {
+		u64 buffer_addr;    /* Address of descriptor's data buf */
+		u32 cmd_type_len;
+		u32 olinfo_status;
+	} read;
+	struct {
+		u64 rsvd;       /* Reserved */
+		u32 nxtseq_seed;
+		u32 status;
+	} wb;
 };
 
 /* Adv Transmit Descriptor Config Masks */
@@ -119,10 +119,10 @@ union e1000_adv_tx_desc {
 
 /* Context descriptors */
 struct e1000_adv_tx_context_desc {
-  u32 vlan_macip_lens;
-  u32 seqnum_seed;
-  u32 type_tucmd_mlhl;
-  u32 mss_l4len_idx;
+	u32 vlan_macip_lens;
+	u32 seqnum_seed;
+	u32 type_tucmd_mlhl;
+	u32 mss_l4len_idx;
 };
 
 #define E1000_ADVTXD_MACLEN_SHIFT    9  /* Adv ctxt desc mac len shift */
@@ -132,135 +132,135 @@ struct e1000_adv_tx_context_desc {
 #define E1000_ADVTXD_MSS_SHIFT      16  /* Adv ctxt MSS shift */
 
 enum e1000_mac_type {
-  e1000_undefined = 0,
-  e1000_vfadapt,
-  e1000_vfadapt_i350,
-  e1000_num_macs  /* List is 1-based, so subtract 1 for true count. */
+	e1000_undefined = 0,
+	e1000_vfadapt,
+	e1000_vfadapt_i350,
+	e1000_num_macs  /* List is 1-based, so subtract 1 for true count. */
 };
 
 struct e1000_vf_stats {
-  u64 base_gprc;
-  u64 base_gptc;
-  u64 base_gorc;
-  u64 base_gotc;
-  u64 base_mprc;
-  u64 base_gotlbc;
-  u64 base_gptlbc;
-  u64 base_gorlbc;
-  u64 base_gprlbc;
-  
-  u32 last_gprc;
-  u32 last_gptc;
-  u32 last_gorc;
-  u32 last_gotc;
-  u32 last_mprc;
-  u32 last_gotlbc;
-  u32 last_gptlbc;
-  u32 last_gorlbc;
-  u32 last_gprlbc;
-  
-  u64 gprc;
-  u64 gptc;
-  u64 gorc;
-  u64 gotc;
-  u64 mprc;
-  u64 gotlbc;
-  u64 gptlbc;
-  u64 gorlbc;
-  u64 gprlbc;
+	u64 base_gprc;
+	u64 base_gptc;
+	u64 base_gorc;
+	u64 base_gotc;
+	u64 base_mprc;
+	u64 base_gotlbc;
+	u64 base_gptlbc;
+	u64 base_gorlbc;
+	u64 base_gprlbc;
+
+	u32 last_gprc;
+	u32 last_gptc;
+	u32 last_gorc;
+	u32 last_gotc;
+	u32 last_mprc;
+	u32 last_gotlbc;
+	u32 last_gptlbc;
+	u32 last_gorlbc;
+	u32 last_gprlbc;
+
+	u64 gprc;
+	u64 gptc;
+	u64 gorc;
+	u64 gotc;
+	u64 mprc;
+	u64 gotlbc;
+	u64 gptlbc;
+	u64 gorlbc;
+	u64 gprlbc;
 };
 
 #include "mbx.h"
 
 struct e1000_mac_operations {
-  /* Function pointers for the MAC. */
-  s32  (*init_params) (struct e1000_hw *);
-  s32  (*check_for_link) (struct e1000_hw *);
-  void (*clear_vfta) (struct e1000_hw *);
-  s32  (*get_bus_info) (struct e1000_hw *);
-  s32  (*get_link_up_info) (struct e1000_hw *, u16 *, u16 *);
-  void (*update_mc_addr_list) (struct e1000_hw *, u8 *, u32, u32, u32);
-  s32  (*reset_hw) (struct e1000_hw *);
-  s32  (*init_hw) (struct e1000_hw *);
-  s32  (*setup_link) (struct e1000_hw *);
-  void (*write_vfta) (struct e1000_hw *, u32, u32);
-  void (*mta_set) (struct e1000_hw *, u32);
-  void (*rar_set) (struct e1000_hw *, u8 *, u32);
-  s32  (*read_mac_addr) (struct e1000_hw *);
-  s32  (*set_vfta) (struct e1000_hw *, u16, bool);
+	/* Function pointers for the MAC. */
+	s32  (*init_params)(struct e1000_hw *);
+	s32  (*check_for_link)(struct e1000_hw *);
+	void (*clear_vfta)(struct e1000_hw *);
+	s32  (*get_bus_info)(struct e1000_hw *);
+	s32  (*get_link_up_info)(struct e1000_hw *, u16 *, u16 *);
+	void (*update_mc_addr_list)(struct e1000_hw *, u8 *, u32, u32, u32);
+	s32  (*reset_hw)(struct e1000_hw *);
+	s32  (*init_hw)(struct e1000_hw *);
+	s32  (*setup_link)(struct e1000_hw *);
+	void (*write_vfta)(struct e1000_hw *, u32, u32);
+	void (*mta_set)(struct e1000_hw *, u32);
+	void (*rar_set)(struct e1000_hw *, u8*, u32);
+	s32  (*read_mac_addr)(struct e1000_hw *);
+	s32  (*set_vfta)(struct e1000_hw *, u16, bool);
 };
 
 struct e1000_mac_info {
-  struct e1000_mac_operations ops;
-  u8 addr[6];
-  u8 perm_addr[6];
-  
-  enum e1000_mac_type type;
-  
-  u16 mta_reg_count;
-  u16 rar_entry_count;
-  
-  bool get_link_status;
+	struct e1000_mac_operations ops;
+	u8 addr[6];
+	u8 perm_addr[6];
+
+	enum e1000_mac_type type;
+
+	u16 mta_reg_count;
+	u16 rar_entry_count;
+
+	bool get_link_status;
 };
 
 struct e1000_mbx_operations {
-  s32 (*init_params) (struct e1000_hw * hw);
-  s32 (*read) (struct e1000_hw *, u32 *, u16);
-  s32 (*write) (struct e1000_hw *, u32 *, u16);
-  s32 (*read_posted) (struct e1000_hw *, u32 *, u16);
-  s32 (*write_posted) (struct e1000_hw *, u32 *, u16);
-  s32 (*check_for_msg) (struct e1000_hw *);
-  s32 (*check_for_ack) (struct e1000_hw *);
-  s32 (*check_for_rst) (struct e1000_hw *);
+	s32 (*init_params)(struct e1000_hw *hw);
+	s32 (*read)(struct e1000_hw *, u32 *, u16);
+	s32 (*write)(struct e1000_hw *, u32 *, u16);
+	s32 (*read_posted)(struct e1000_hw *, u32 *, u16);
+	s32 (*write_posted)(struct e1000_hw *, u32 *, u16);
+	s32 (*check_for_msg)(struct e1000_hw *);
+	s32 (*check_for_ack)(struct e1000_hw *);
+	s32 (*check_for_rst)(struct e1000_hw *);
 };
 
 struct e1000_mbx_stats {
-  u32 msgs_tx;
-  u32 msgs_rx;
-  
-  u32 acks;
-  u32 reqs;
-  u32 rsts;
+	u32 msgs_tx;
+	u32 msgs_rx;
+
+	u32 acks;
+	u32 reqs;
+	u32 rsts;
 };
 
 struct e1000_mbx_info {
-  struct e1000_mbx_operations ops;
-  struct e1000_mbx_stats stats;
-  u32 timeout;
-  u32 usec_delay;
-  u16 size;
+	struct e1000_mbx_operations ops;
+	struct e1000_mbx_stats stats;
+	u32 timeout;
+	u32 usec_delay;
+	u16 size;
 };
 
 struct e1000_dev_spec_vf {
-  u32 vf_number;
-  u32 v2p_mailbox;
+	u32 vf_number;
+	u32 v2p_mailbox;
 };
 
 struct e1000_hw {
-  void * back;
-  
-  u8 __iomem * hw_addr;
-  u8 __iomem * flash_address;
-  unsigned long io_base;
-  
-  struct e1000_mac_info  mac;
-  struct e1000_mbx_info mbx;
-  
-  union {
-    struct e1000_dev_spec_vf vf;
-  } dev_spec;
-  
-  u16 device_id;
-  u16 subsystem_vendor_id;
-  u16 subsystem_device_id;
-  u16 vendor_id;
-  
-  u8  revision_id;
+	void *back;
+
+	u8 __iomem *hw_addr;
+	u8 __iomem *flash_address;
+	unsigned long io_base;
+
+	struct e1000_mac_info  mac;
+	struct e1000_mbx_info mbx;
+
+	union {
+		struct e1000_dev_spec_vf vf;
+	} dev_spec;
+
+	u16 device_id;
+	u16 subsystem_vendor_id;
+	u16 subsystem_device_id;
+	u16 vendor_id;
+
+	u8  revision_id;
 };
 
 /* These functions must be implemented by drivers */
-void e1000_rlpml_set_vf (struct e1000_hw *, u16);
-void e1000_init_function_pointers_vf (struct e1000_hw * hw);
+void e1000_rlpml_set_vf(struct e1000_hw *, u16);
+void e1000_init_function_pointers_vf(struct e1000_hw *hw);
 
 
 #endif /* _E1000_VF_H_ */

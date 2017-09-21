@@ -44,8 +44,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #if !defined(__SYSINFO_H__)
 #define __SYSINFO_H__
 
-#define SYS_RGX_DEV_VENDOR_ID (0x1010)
-#define SYS_RGX_DEV_DEVICE_ID (0x1CF2)
+#define SYS_RGX_DEV_VENDOR_ID	(0x1010)
+#define SYS_RGX_DEV_DEVICE_ID	(0x1CF2)
 
 /*!< System specific poll/timeout details */
 #define MAX_HW_TIME_US                           (500000)
@@ -54,13 +54,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define WAIT_TRY_COUNT                           (10000)
 
 /* RGX, DISPLAY (external), BUFFER (external) */
-#define SYS_DEVICE_COUNT  (3)
+#define SYS_DEVICE_COUNT	(3)
 
 /* This should be one higher than the highest possible physical heap ID */
 #define SYS_PHYS_HEAP_COUNT 3
 
 #if defined(__linux__)
-#define SYS_RGX_DEV_NAME  "rgxtc"
+#define SYS_RGX_DEV_NAME	"rgxtc"
 #endif /* defined(__linux__) */
 
 #endif /* !defined(__SYSINFO_H__) */

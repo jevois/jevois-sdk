@@ -1,9 +1,9 @@
-/*
+/*  
  * ioctl defines for ethernet driver
  *
  * Copyright (c) 2001 Axis Communications AB
- *
- * Author: Mikael Starvik
+ * 
+ * Author: Mikael Starvik 
  *
  */
 

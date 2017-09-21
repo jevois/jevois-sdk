@@ -30,25 +30,25 @@
 
 #include "core.h"
 
-static void __init versatile_dt_init (void)
+static void __init versatile_dt_init(void)
 {
-  of_platform_populate (NULL, of_default_bus_match_table,
-                        versatile_auxdata_lookup, NULL);
+	of_platform_populate(NULL, of_default_bus_match_table,
+			     versatile_auxdata_lookup, NULL);
 }
 
-static const char * versatile_dt_match[] __initconst = {
-  "arm,versatile-ab",
-  "arm,versatile-pb",
-  NULL,
+static const char *versatile_dt_match[] __initconst = {
+	"arm,versatile-ab",
+	"arm,versatile-pb",
+	NULL,
 };
 
-DT_MACHINE_START (VERSATILE_PB, "ARM-Versatile (Device Tree Support)")
-.map_io   = versatile_map_io,
- .init_early = versatile_init_early,
-  .init_irq = versatile_init_irq,
-   .handle_irq = vic_handle_irq,
-    .timer    = &versatile_timer,
-     .init_machine = versatile_dt_init,
-      .dt_compat  = versatile_dt_match,
-       .restart  = versatile_restart,
-        MACHINE_END
+DT_MACHINE_START(VERSATILE_PB, "ARM-Versatile (Device Tree Support)")
+	.map_io		= versatile_map_io,
+	.init_early	= versatile_init_early,
+	.init_irq	= versatile_init_irq,
+	.handle_irq	= vic_handle_irq,
+	.timer		= &versatile_timer,
+	.init_machine	= versatile_dt_init,
+	.dt_compat	= versatile_dt_match,
+	.restart	= versatile_restart,
+MACHINE_END

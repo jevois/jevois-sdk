@@ -21,22 +21,22 @@
  * MA 02111-1307 USA
  */
 
-#ifndef _IDE_H
+#ifndef	_IDE_H
 #define _IDE_H
 
-#define IDE_BUS(dev)  (dev >> 1)
+#define	IDE_BUS(dev)	(dev >> 1)
 
-#define ATA_CURR_BASE(dev)  (CONFIG_SYS_ATA_BASE_ADDR+ide_bus_offset[IDE_BUS(dev)])
+#define	ATA_CURR_BASE(dev)	(CONFIG_SYS_ATA_BASE_ADDR+ide_bus_offset[IDE_BUS(dev)])
 
 #ifdef CONFIG_IDE_LED
 
 /*
  * LED Port
  */
-#define LED_PORT  ((uchar *)(PER8_BASE + 0x3000))
-#define LED_IDE1  0x01
-#define LED_IDE2  0x02
-#define DEVICE_LED(d) ((d & 2) | ((d & 2) == 0)) /* depends on bit positions! */
+#define	LED_PORT	((uchar *)(PER8_BASE + 0x3000))
+#define LED_IDE1	0x01
+#define LED_IDE2	0x02
+#define	DEVICE_LED(d)	((d & 2) | ((d & 2) == 0)) /* depends on bit positions! */
 
 #endif /* CONFIG_IDE_LED */
 
@@ -50,18 +50,18 @@ typedef ulong lbaint_t;
  * Function Prototypes
  */
 
-void ide_init (void);
-ulong ide_read (int device, lbaint_t blknr, ulong blkcnt, void * buffer);
-ulong ide_write (int device, lbaint_t blknr, ulong blkcnt, const void * buffer);
+void ide_init(void);
+ulong ide_read(int device, lbaint_t blknr, ulong blkcnt, void *buffer);
+ulong ide_write(int device, lbaint_t blknr, ulong blkcnt, const void *buffer);
 
 #if defined(CONFIG_OF_IDE_FIXUP)
-int ide_device_present (int dev);
+int ide_device_present(int dev);
 #endif
 
 #if defined(CONFIG_IDE_AHB)
-unsigned char ide_read_register (int dev, unsigned int port);
-void ide_write_register (int dev, unsigned int port, unsigned char val);
-void ide_read_data (int dev, ulong * sect_buf, int words);
-void ide_write_data (int dev, ulong * sect_buf, int words);
+unsigned char ide_read_register(int dev, unsigned int port);
+void ide_write_register(int dev, unsigned int port, unsigned char val);
+void ide_read_data(int dev, ulong *sect_buf, int words);
+void ide_write_data(int dev, ulong *sect_buf, int words);
 #endif
 #endif /* _IDE_H */

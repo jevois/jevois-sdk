@@ -2,10 +2,10 @@
  *      Driver for the MTX-1 Watchdog.
  *
  *      (C) Copyright 2005 4G Systems <info@4g-systems.biz>,
- *              All Rights Reserved.
+ *							All Rights Reserved.
  *                              http://www.4g-systems.biz
  *
- *  (C) Copyright 2007 OpenWrt.org, Florian Fainelli <florian@openwrt.org>
+ *	(C) Copyright 2007 OpenWrt.org, Florian Fainelli <florian@openwrt.org>
  *
  *      This program is free software; you can redistribute it and/or
  *      modify it under the terms of the GNU General Public License
@@ -22,8 +22,8 @@
  *      Author: Michael Stickel  michael.stickel@4g-systems.biz
  *
  *      Release 0.02.
- *  Author: Florian Fainelli florian@openwrt.org
- *    use the Linux watchdog/timer APIs
+ *	Author: Florian Fainelli florian@openwrt.org
+ *		use the Linux watchdog/timer APIs
  *
  *      The Watchdog is configured to reset the MTX-1
  *      if it is not triggered for 100 seconds.
@@ -53,211 +53,210 @@
 
 #include <asm/mach-au1x00/au1000.h>
 
-#define MTX1_WDT_INTERVAL (5 * HZ)
+#define MTX1_WDT_INTERVAL	(5 * HZ)
 
 static int ticks = 100 * HZ;
 
 static struct {
-  struct completion stop;
-  spinlock_t lock;
-  int running;
-  struct timer_list timer;
-  int queue;
-  int default_ticks;
-  unsigned long inuse;
-  unsigned gpio;
-  unsigned int gstate;
+	struct completion stop;
+	spinlock_t lock;
+	int running;
+	struct timer_list timer;
+	int queue;
+	int default_ticks;
+	unsigned long inuse;
+	unsigned gpio;
+	unsigned int gstate;
 } mtx1_wdt_device;
 
-static void mtx1_wdt_trigger (unsigned long unused)
+static void mtx1_wdt_trigger(unsigned long unused)
 {
-  spin_lock (&mtx1_wdt_device.lock);
-  if (mtx1_wdt_device.running)
-  { ticks--; }
-  
-  /* toggle wdt gpio */
-  mtx1_wdt_device.gstate = !mtx1_wdt_device.gstate;
-  gpio_set_value (mtx1_wdt_device.gpio, mtx1_wdt_device.gstate);
-  
-  if (mtx1_wdt_device.queue && ticks)
-  { mod_timer (&mtx1_wdt_device.timer, jiffies + MTX1_WDT_INTERVAL); }
-  else
-  { complete (&mtx1_wdt_device.stop); }
-  spin_unlock (&mtx1_wdt_device.lock);
+	spin_lock(&mtx1_wdt_device.lock);
+	if (mtx1_wdt_device.running)
+		ticks--;
+
+	/* toggle wdt gpio */
+	mtx1_wdt_device.gstate = !mtx1_wdt_device.gstate;
+	gpio_set_value(mtx1_wdt_device.gpio, mtx1_wdt_device.gstate);
+
+	if (mtx1_wdt_device.queue && ticks)
+		mod_timer(&mtx1_wdt_device.timer, jiffies + MTX1_WDT_INTERVAL);
+	else
+		complete(&mtx1_wdt_device.stop);
+	spin_unlock(&mtx1_wdt_device.lock);
 }
 
-static void mtx1_wdt_reset (void)
+static void mtx1_wdt_reset(void)
 {
-  ticks = mtx1_wdt_device.default_ticks;
+	ticks = mtx1_wdt_device.default_ticks;
 }
 
 
-static void mtx1_wdt_start (void)
+static void mtx1_wdt_start(void)
 {
-  unsigned long flags;
-  
-  spin_lock_irqsave (&mtx1_wdt_device.lock, flags);
-  if (!mtx1_wdt_device.queue) {
-    mtx1_wdt_device.queue = 1;
-    mtx1_wdt_device.gstate = 1;
-    gpio_set_value (mtx1_wdt_device.gpio, 1);
-    mod_timer (&mtx1_wdt_device.timer, jiffies + MTX1_WDT_INTERVAL);
-  }
-  mtx1_wdt_device.running++;
-  spin_unlock_irqrestore (&mtx1_wdt_device.lock, flags);
+	unsigned long flags;
+
+	spin_lock_irqsave(&mtx1_wdt_device.lock, flags);
+	if (!mtx1_wdt_device.queue) {
+		mtx1_wdt_device.queue = 1;
+		mtx1_wdt_device.gstate = 1;
+		gpio_set_value(mtx1_wdt_device.gpio, 1);
+		mod_timer(&mtx1_wdt_device.timer, jiffies + MTX1_WDT_INTERVAL);
+	}
+	mtx1_wdt_device.running++;
+	spin_unlock_irqrestore(&mtx1_wdt_device.lock, flags);
 }
 
-static int mtx1_wdt_stop (void)
+static int mtx1_wdt_stop(void)
 {
-  unsigned long flags;
-  
-  spin_lock_irqsave (&mtx1_wdt_device.lock, flags);
-  if (mtx1_wdt_device.queue) {
-    mtx1_wdt_device.queue = 0;
-    mtx1_wdt_device.gstate = 0;
-    gpio_set_value (mtx1_wdt_device.gpio, 0);
-  }
-  ticks = mtx1_wdt_device.default_ticks;
-  spin_unlock_irqrestore (&mtx1_wdt_device.lock, flags);
-  return 0;
+	unsigned long flags;
+
+	spin_lock_irqsave(&mtx1_wdt_device.lock, flags);
+	if (mtx1_wdt_device.queue) {
+		mtx1_wdt_device.queue = 0;
+		mtx1_wdt_device.gstate = 0;
+		gpio_set_value(mtx1_wdt_device.gpio, 0);
+	}
+	ticks = mtx1_wdt_device.default_ticks;
+	spin_unlock_irqrestore(&mtx1_wdt_device.lock, flags);
+	return 0;
 }
 
 /* Filesystem functions */
 
-static int mtx1_wdt_open (struct inode * inode, struct file * file)
+static int mtx1_wdt_open(struct inode *inode, struct file *file)
 {
-  if (test_and_set_bit (0, &mtx1_wdt_device.inuse) )
-  { return -EBUSY; }
-  return nonseekable_open (inode, file);
+	if (test_and_set_bit(0, &mtx1_wdt_device.inuse))
+		return -EBUSY;
+	return nonseekable_open(inode, file);
 }
 
 
-static int mtx1_wdt_release (struct inode * inode, struct file * file)
+static int mtx1_wdt_release(struct inode *inode, struct file *file)
 {
-  clear_bit (0, &mtx1_wdt_device.inuse);
-  return 0;
+	clear_bit(0, &mtx1_wdt_device.inuse);
+	return 0;
 }
 
-static long mtx1_wdt_ioctl (struct file * file, unsigned int cmd,
-                            unsigned long arg)
+static long mtx1_wdt_ioctl(struct file *file, unsigned int cmd,
+							unsigned long arg)
 {
-  void __user * argp = (void __user *) arg;
-  int __user * p = (int __user *) argp;
-  unsigned int value;
-  static const struct watchdog_info ident = {
-    .options = WDIOF_CARDRESET,
-    .identity = "MTX-1 WDT",
-  };
-  
-  switch (cmd) {
-  case WDIOC_GETSUPPORT:
-    if (copy_to_user (argp, &ident, sizeof (ident) ) )
-    { return -EFAULT; }
-    break;
-  case WDIOC_GETSTATUS:
-  case WDIOC_GETBOOTSTATUS:
-    put_user (0, p);
-    break;
-  case WDIOC_SETOPTIONS:
-    if (get_user (value, p) )
-    { return -EFAULT; }
-    if (value & WDIOS_ENABLECARD)
-    { mtx1_wdt_start(); }
-    else
-      if (value & WDIOS_DISABLECARD)
-      { mtx1_wdt_stop(); }
-      else
-      { return -EINVAL; }
-    return 0;
-  case WDIOC_KEEPALIVE:
-    mtx1_wdt_reset();
-    break;
-  default:
-    return -ENOTTY;
-  }
-  return 0;
+	void __user *argp = (void __user *)arg;
+	int __user *p = (int __user *)argp;
+	unsigned int value;
+	static const struct watchdog_info ident = {
+		.options = WDIOF_CARDRESET,
+		.identity = "MTX-1 WDT",
+	};
+
+	switch (cmd) {
+	case WDIOC_GETSUPPORT:
+		if (copy_to_user(argp, &ident, sizeof(ident)))
+			return -EFAULT;
+		break;
+	case WDIOC_GETSTATUS:
+	case WDIOC_GETBOOTSTATUS:
+		put_user(0, p);
+		break;
+	case WDIOC_SETOPTIONS:
+		if (get_user(value, p))
+			return -EFAULT;
+		if (value & WDIOS_ENABLECARD)
+			mtx1_wdt_start();
+		else if (value & WDIOS_DISABLECARD)
+			mtx1_wdt_stop();
+		else
+			return -EINVAL;
+		return 0;
+	case WDIOC_KEEPALIVE:
+		mtx1_wdt_reset();
+		break;
+	default:
+		return -ENOTTY;
+	}
+	return 0;
 }
 
 
-static ssize_t mtx1_wdt_write (struct file * file, const char * buf,
-                               size_t count, loff_t * ppos)
+static ssize_t mtx1_wdt_write(struct file *file, const char *buf,
+						size_t count, loff_t *ppos)
 {
-  if (!count)
-  { return -EIO; }
-  mtx1_wdt_reset();
-  return count;
+	if (!count)
+		return -EIO;
+	mtx1_wdt_reset();
+	return count;
 }
 
 static const struct file_operations mtx1_wdt_fops = {
-  .owner    = THIS_MODULE,
-  .llseek   = no_llseek,
-  .unlocked_ioctl = mtx1_wdt_ioctl,
-  .open   = mtx1_wdt_open,
-  .write    = mtx1_wdt_write,
-  .release  = mtx1_wdt_release,
+	.owner		= THIS_MODULE,
+	.llseek		= no_llseek,
+	.unlocked_ioctl	= mtx1_wdt_ioctl,
+	.open		= mtx1_wdt_open,
+	.write		= mtx1_wdt_write,
+	.release	= mtx1_wdt_release,
 };
 
 
 static struct miscdevice mtx1_wdt_misc = {
-  .minor  = WATCHDOG_MINOR,
-  .name = "watchdog",
-  .fops = &mtx1_wdt_fops,
+	.minor	= WATCHDOG_MINOR,
+	.name	= "watchdog",
+	.fops	= &mtx1_wdt_fops,
 };
 
 
-static int __devinit mtx1_wdt_probe (struct platform_device * pdev)
+static int __devinit mtx1_wdt_probe(struct platform_device *pdev)
 {
-  int ret;
-  
-  mtx1_wdt_device.gpio = pdev->resource[0].start;
-  ret = gpio_request_one (mtx1_wdt_device.gpio,
-                          GPIOF_OUT_INIT_HIGH, "mtx1-wdt");
-  if (ret < 0) {
-    dev_err (&pdev->dev, "failed to request gpio");
-    return ret;
-  }
-  
-  spin_lock_init (&mtx1_wdt_device.lock);
-  init_completion (&mtx1_wdt_device.stop);
-  mtx1_wdt_device.queue = 0;
-  clear_bit (0, &mtx1_wdt_device.inuse);
-  setup_timer (&mtx1_wdt_device.timer, mtx1_wdt_trigger, 0L);
-  mtx1_wdt_device.default_ticks = ticks;
-  
-  ret = misc_register (&mtx1_wdt_misc);
-  if (ret < 0) {
-    dev_err (&pdev->dev, "failed to register\n");
-    return ret;
-  }
-  mtx1_wdt_start();
-  dev_info (&pdev->dev, "MTX-1 Watchdog driver\n");
-  return 0;
+	int ret;
+
+	mtx1_wdt_device.gpio = pdev->resource[0].start;
+	ret = gpio_request_one(mtx1_wdt_device.gpio,
+				GPIOF_OUT_INIT_HIGH, "mtx1-wdt");
+	if (ret < 0) {
+		dev_err(&pdev->dev, "failed to request gpio");
+		return ret;
+	}
+
+	spin_lock_init(&mtx1_wdt_device.lock);
+	init_completion(&mtx1_wdt_device.stop);
+	mtx1_wdt_device.queue = 0;
+	clear_bit(0, &mtx1_wdt_device.inuse);
+	setup_timer(&mtx1_wdt_device.timer, mtx1_wdt_trigger, 0L);
+	mtx1_wdt_device.default_ticks = ticks;
+
+	ret = misc_register(&mtx1_wdt_misc);
+	if (ret < 0) {
+		dev_err(&pdev->dev, "failed to register\n");
+		return ret;
+	}
+	mtx1_wdt_start();
+	dev_info(&pdev->dev, "MTX-1 Watchdog driver\n");
+	return 0;
 }
 
-static int __devexit mtx1_wdt_remove (struct platform_device * pdev)
+static int __devexit mtx1_wdt_remove(struct platform_device *pdev)
 {
-  /* FIXME: do we need to lock this test ? */
-  if (mtx1_wdt_device.queue) {
-    mtx1_wdt_device.queue = 0;
-    wait_for_completion (&mtx1_wdt_device.stop);
-  }
-  
-  gpio_free (mtx1_wdt_device.gpio);
-  misc_deregister (&mtx1_wdt_misc);
-  return 0;
+	/* FIXME: do we need to lock this test ? */
+	if (mtx1_wdt_device.queue) {
+		mtx1_wdt_device.queue = 0;
+		wait_for_completion(&mtx1_wdt_device.stop);
+	}
+
+	gpio_free(mtx1_wdt_device.gpio);
+	misc_deregister(&mtx1_wdt_misc);
+	return 0;
 }
 
 static struct platform_driver mtx1_wdt_driver = {
-  .probe = mtx1_wdt_probe,
-  .remove = __devexit_p (mtx1_wdt_remove),
-  .driver.name = "mtx1-wdt",
-  .driver.owner = THIS_MODULE,
+	.probe = mtx1_wdt_probe,
+	.remove = __devexit_p(mtx1_wdt_remove),
+	.driver.name = "mtx1-wdt",
+	.driver.owner = THIS_MODULE,
 };
 
-module_platform_driver (mtx1_wdt_driver);
+module_platform_driver(mtx1_wdt_driver);
 
-MODULE_AUTHOR ("Michael Stickel, Florian Fainelli");
-MODULE_DESCRIPTION ("Driver for the MTX-1 watchdog");
-MODULE_LICENSE ("GPL");
-MODULE_ALIAS_MISCDEV (WATCHDOG_MINOR);
-MODULE_ALIAS ("platform:mtx1-wdt");
+MODULE_AUTHOR("Michael Stickel, Florian Fainelli");
+MODULE_DESCRIPTION("Driver for the MTX-1 watchdog");
+MODULE_LICENSE("GPL");
+MODULE_ALIAS_MISCDEV(WATCHDOG_MINOR);
+MODULE_ALIAS("platform:mtx1-wdt");

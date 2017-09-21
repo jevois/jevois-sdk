@@ -34,13 +34,13 @@
  * High Level Configuration Options
  * (easy to change)
  */
-#define CONFIG_PXA250   1 /* This is an PXA250 CPU            */
-#define CONFIG_INNOKOM    1 /* on an Auerswald Innokom board    */
+#define CONFIG_PXA250		1	/* This is an PXA250 CPU            */
+#define CONFIG_INNOKOM		1	/* on an Auerswald Innokom board    */
 
-#undef CONFIG_USE_IRQ     /* we don't need IRQ/FIQ stuff      */
-/* for timer/console/ethernet       */
+#undef CONFIG_USE_IRQ			/* we don't need IRQ/FIQ stuff      */
+					/* for timer/console/ethernet       */
 
-#define CONFIG_SYS_TEXT_BASE  0x0
+#define	CONFIG_SYS_TEXT_BASE	0x0
 
 /* we will never enable dcache, because we have to setup MMU first */
 #define CONFIG_SYS_DCACHE_OFF
@@ -53,13 +53,13 @@
  * select serial console configuration
  */
 #define CONFIG_PXA_SERIAL
-#define CONFIG_FFUART   1 /* we use FFUART on CSB226 */
+#define CONFIG_FFUART		1	/* we use FFUART on CSB226 */
 
 /* allow to overwrite serial and ethaddr */
 #define CONFIG_ENV_OVERWRITE
 
-#define CONFIG_BAUDRATE   19200
-#define CONFIG_MISC_INIT_R  1 /* we have a misc_init_r() function */
+#define CONFIG_BAUDRATE		19200
+#define CONFIG_MISC_INIT_R	1	/* we have a misc_init_r() function */
 
 
 /*
@@ -90,17 +90,17 @@
 #define CONFIG_CMD_RUN
 
 
-#define CONFIG_BOOTDELAY  3
-/* #define CONFIG_BOOTARGS  "root=/dev/nfs ip=bootp console=ttyS0,19200" */
-#define CONFIG_BOOTARGS   "console=ttyS0,19200"
-#define CONFIG_ETHADDR    FF:FF:FF:FF:FF:FF
-#define CONFIG_NETMASK    255.255.255.0
-#define CONFIG_IPADDR   192.168.1.56
-#define CONFIG_SERVERIP   192.168.1.2
-#define CONFIG_BOOTCOMMAND  "bootm 0x40000"
+#define CONFIG_BOOTDELAY	3
+/* #define CONFIG_BOOTARGS	"root=/dev/nfs ip=bootp console=ttyS0,19200" */
+#define CONFIG_BOOTARGS		"console=ttyS0,19200"
+#define CONFIG_ETHADDR		FF:FF:FF:FF:FF:FF
+#define CONFIG_NETMASK		255.255.255.0
+#define CONFIG_IPADDR		192.168.1.56
+#define CONFIG_SERVERIP		192.168.1.2
+#define CONFIG_BOOTCOMMAND	"bootm 0x40000"
 #define CONFIG_SHOW_BOOT_PROGRESS
 
-#define CONFIG_CMDLINE_TAG  1
+#define CONFIG_CMDLINE_TAG	1
 
 /*
  * Miscellaneous configurable options
@@ -109,65 +109,65 @@
 /*
  * Size of malloc() pool
  */
-#define CONFIG_SYS_MALLOC_LEN   (256*1024)
+#define CONFIG_SYS_MALLOC_LEN		(256*1024)
 
-#define CONFIG_SYS_LONGHELP       /* undef to save memory         */
-#define CONFIG_SYS_PROMPT   "uboot> " /* Monitor Command Prompt       */
-#define CONFIG_SYS_CBSIZE   256   /* Console I/O Buffer Size      */
+#define CONFIG_SYS_LONGHELP				/* undef to save memory         */
+#define CONFIG_SYS_PROMPT		"uboot> "	/* Monitor Command Prompt       */
+#define CONFIG_SYS_CBSIZE		256		/* Console I/O Buffer Size      */
 #define CONFIG_SYS_PBSIZE (CONFIG_SYS_CBSIZE+sizeof(CONFIG_SYS_PROMPT)+16) /* Print Buffer Size */
-#define CONFIG_SYS_MAXARGS    16    /* max number of command args   */
-#define CONFIG_SYS_BARGSIZE   CONFIG_SYS_CBSIZE /* Boot Argument Buffer Size    */
+#define CONFIG_SYS_MAXARGS		16		/* max number of command args   */
+#define CONFIG_SYS_BARGSIZE		CONFIG_SYS_CBSIZE	/* Boot Argument Buffer Size    */
 
-#define CONFIG_SYS_MEMTEST_START  0xa0400000      /* memtest works on     */
+#define CONFIG_SYS_MEMTEST_START	0xa0400000      /* memtest works on     */
 #define CONFIG_SYS_MEMTEST_END         0xa0800000      /* 4 ... 8 MB in DRAM   */
 
 #define CONFIG_SYS_LOAD_ADDR           0xa3000000      /* load kernel to this address   */
 
-#define CONFIG_SYS_HZ     1000
-/* RS: the oscillator is actually 3680130?? */
+#define CONFIG_SYS_HZ			1000
+						/* RS: the oscillator is actually 3680130?? */
 
 #define CONFIG_SYS_CPUSPEED            0x141           /* set core clock to 200/200/100 MHz */
-/* 0101000001 */
-/*      ^^^^^ Memory Speed 99.53 MHz         */
-/*    ^^      Run Mode Speed = 2x Mem Speed  */
-/* ^^         Turbo Mode Sp. = 1x Run M. Sp. */
+						/* 0101000001 */
+						/*      ^^^^^ Memory Speed 99.53 MHz         */
+						/*    ^^      Run Mode Speed = 2x Mem Speed  */
+						/* ^^         Turbo Mode Sp. = 1x Run M. Sp. */
 
-#define CONFIG_SYS_MONITOR_LEN    0x20000   /* 128 KiB */
+#define CONFIG_SYS_MONITOR_LEN		0x20000		/* 128 KiB */
 
-/* valid baudrates */
+						/* valid baudrates */
 #define CONFIG_SYS_BAUDRATE_TABLE      { 9600, 19200, 38400, 57600, 115200 }
 
 /*
  * I2C bus
  */
-#define CONFIG_I2C_MV     1
-#define CONFIG_MV_I2C_REG   0x40301680
-#define CONFIG_HARD_I2C     1
-#define CONFIG_SYS_I2C_SPEED      50000
-#define CONFIG_SYS_I2C_SLAVE      0xfe
+#define CONFIG_I2C_MV			1
+#define CONFIG_MV_I2C_REG		0x40301680
+#define CONFIG_HARD_I2C			1
+#define CONFIG_SYS_I2C_SPEED			50000
+#define CONFIG_SYS_I2C_SLAVE			0xfe
 
-#define CONFIG_ENV_IS_IN_EEPROM   1
+#define CONFIG_ENV_IS_IN_EEPROM		1
 
-#define CONFIG_ENV_OFFSET     0x00  /* environment starts here  */
-#define CONFIG_ENV_SIZE     1024  /* 1 KiB                    */
-#define CONFIG_SYS_I2C_EEPROM_ADDR    0x50  /* A0 = 0 (hardwired)       */
-#define CONFIG_SYS_EEPROM_PAGE_WRITE_BITS 5 /* 5 bits = 32 octets       */
-#define CONFIG_SYS_EEPROM_PAGE_WRITE_DELAY_MS 15  /* between stop and start   */
-#define CONFIG_SYS_I2C_EEPROM_ADDR_LEN    2 /* length of address        */
-#define CONFIG_SYS_EEPROM_SIZE      4096  /* size in bytes            */
-#define CONFIG_SYS_I2C_INIT_BOARD   1 /* board has it's own init  */
+#define CONFIG_ENV_OFFSET			0x00	/* environment starts here  */
+#define CONFIG_ENV_SIZE			1024	/* 1 KiB                    */
+#define CONFIG_SYS_I2C_EEPROM_ADDR		0x50	/* A0 = 0 (hardwired)       */
+#define CONFIG_SYS_EEPROM_PAGE_WRITE_BITS	5	/* 5 bits = 32 octets       */
+#define CONFIG_SYS_EEPROM_PAGE_WRITE_DELAY_MS	15	/* between stop and start   */
+#define CONFIG_SYS_I2C_EEPROM_ADDR_LEN		2	/* length of address        */
+#define CONFIG_SYS_EEPROM_SIZE			4096	/* size in bytes            */
+#define CONFIG_SYS_I2C_INIT_BOARD		1	/* board has it's own init  */
 
 /*
  * SMSC91C111 Network Card
  */
 #define CONFIG_NET_MULTI
-#define CONFIG_SMC91111   1
-#define CONFIG_SMC91111_BASE    0x14000000 /* chip select 5         */
-#undef  CONFIG_SMC_USE_32_BIT              /* 16 bit bus access     */
-#undef  CONFIG_SMC_91111_EXT_PHY       /* we use internal phy   */
-#define CONFIG_SMC_AUTONEG_TIMEOUT  10     /* timeout 10 seconds    */
+#define CONFIG_SMC91111		1
+#define CONFIG_SMC91111_BASE		0x14000000 /* chip select 5         */
+#undef  CONFIG_SMC_USE_32_BIT		           /* 16 bit bus access     */
+#undef  CONFIG_SMC_91111_EXT_PHY		   /* we use internal phy   */
+#define CONFIG_SMC_AUTONEG_TIMEOUT	10	   /* timeout 10 seconds    */
 #undef  CONFIG_SHOW_ACTIVITY
-#define CONFIG_NET_RETRY_COUNT    10     /* # of retries          */
+#define CONFIG_NET_RETRY_COUNT		10	   /* # of retries          */
 
 /*
  * Stack sizes
@@ -183,56 +183,56 @@
 /*
  * Physical Memory Map
  */
-#define CONFIG_NR_DRAM_BANKS  1   /* we have 1 bank of DRAM   */
-#define PHYS_SDRAM_1    0xa0000000  /* SDRAM Bank #1            */
-#define PHYS_SDRAM_1_SIZE 0x04000000  /* 64 MB                    */
+#define CONFIG_NR_DRAM_BANKS	1		/* we have 1 bank of DRAM   */
+#define PHYS_SDRAM_1		0xa0000000	/* SDRAM Bank #1            */
+#define PHYS_SDRAM_1_SIZE	0x04000000	/* 64 MB                    */
 
-#define PHYS_FLASH_1    0x00000000  /* Flash Bank #1            */
-#define PHYS_FLASH_SIZE   0x01000000  /* 16 MB                    */
+#define PHYS_FLASH_1		0x00000000	/* Flash Bank #1            */
+#define PHYS_FLASH_SIZE		0x01000000	/* 16 MB                    */
 
-#define CONFIG_SYS_DRAM_BASE    0xa0000000  /* RAM starts here          */
-#define CONFIG_SYS_DRAM_SIZE    0x04000000
+#define CONFIG_SYS_DRAM_BASE		0xa0000000	/* RAM starts here          */
+#define CONFIG_SYS_DRAM_SIZE		0x04000000
 
 #define CONFIG_SYS_FLASH_BASE          PHYS_FLASH_1
 
-#define CONFIG_SYS_SDRAM_BASE   PHYS_SDRAM_1
-#define CONFIG_SYS_INIT_SP_ADDR   (GENERATED_GBL_DATA_SIZE + PHYS_SDRAM_1)
+#define CONFIG_SYS_SDRAM_BASE		PHYS_SDRAM_1
+#define	CONFIG_SYS_INIT_SP_ADDR		(GENERATED_GBL_DATA_SIZE + PHYS_SDRAM_1)
 
 /*
  * JFFS2 partitions
  *
  */
 /* development flash */
-#define CONFIG_MTD_INNOKOM_16MB 1
+#define CONFIG_MTD_INNOKOM_16MB	1
 #undef CONFIG_MTD_INNOKOM_64MB
 
 /* production flash */
 /*
-#define CONFIG_MTD_INNOKOM_64MB 1
+#define CONFIG_MTD_INNOKOM_64MB	1
 #undef CONFIG_MTD_INNOKOM_16MB
 */
 
 /* No command line, one static partition, whole device */
 #undef CONFIG_CMD_MTDPARTS
-#define CONFIG_JFFS2_DEV    "nor0"
-#define CONFIG_JFFS2_PART_SIZE    0xFFFFFFFF
-#define CONFIG_JFFS2_PART_OFFSET  0x00000000
+#define CONFIG_JFFS2_DEV		"nor0"
+#define CONFIG_JFFS2_PART_SIZE		0xFFFFFFFF
+#define CONFIG_JFFS2_PART_OFFSET	0x00000000
 
 /* mtdparts command line support */
 /* Note: fake mtd_id used, no linux mtd map file */
 /*
 #define CONFIG_CMD_MTDPARTS
-#define MTDIDS_DEFAULT    "nor0=innokom-0"
+#define MTDIDS_DEFAULT		"nor0=innokom-0"
 */
 
 /* development flash */
 /*
-#define MTDPARTS_DEFAULT  "mtdparts=innokom-0:256k(uboot),768k(kernel),8m(user),7m(data)"
+#define MTDPARTS_DEFAULT	"mtdparts=innokom-0:256k(uboot),768k(kernel),8m(user),7m(data)"
 */
 
 /* production flash */
 /*
-#define MTDPARTS_DEFAULT  "mtdparts=innokom-0:256k(uboot),768k(kernel),16256k(user1),16256k(user2),32m(data)"
+#define MTDPARTS_DEFAULT	"mtdparts=innokom-0:256k(uboot),768k(kernel),16256k(user1),16256k(user2),32m(data)"
 */
 
 /*
@@ -348,10 +348,10 @@
  * BFS = 1
  * SSS = 1
  */
-#define CONFIG_SYS_PSSR_VAL   0x37
+#define CONFIG_SYS_PSSR_VAL		0x37
 
-#define CONFIG_SYS_CCCR     CCCR_L27|CCCR_M2|CCCR_N10
-#define CONFIG_SYS_CKEN     0x0
+#define	CONFIG_SYS_CCCR			CCCR_L27|CCCR_M2|CCCR_N10
+#define	CONFIG_SYS_CKEN			0x0
 
 /*
  * Memory settings
@@ -372,7 +372,7 @@
  * [03]    1    - 16 Bit bus width
  * [02:00] 000  - nonburst RAM or FLASH
  */
-#define CONFIG_SYS_MSC0_VAL   0x25b825b8 /* flash banks                   */
+#define CONFIG_SYS_MSC0_VAL		0x25b825b8 /* flash banks                   */
 
 /* This is the configuration for nCS2/3 -> TDM-Switch, DSP
  * configuration for nCS3: DSP
@@ -390,7 +390,7 @@
  * [03]    1    - 16 Bit bus width
  * [02:00] 100  - variable latency I/O
  */
-#define CONFIG_SYS_MSC1_VAL   0x123C593C /* TDM switch, DSP               */
+#define CONFIG_SYS_MSC1_VAL		0x123C593C /* TDM switch, DSP               */
 
 /* This is the configuration for nCS4/5 -> ExtBus, LAN Controller
  *
@@ -409,12 +409,12 @@
  * [03]    1    - 16 Bit bus width
  * [02:00] 100  - variable latency I/O
  */
-#define CONFIG_SYS_MSC2_VAL   0x123C6CDC /* extra bus, LAN controller     */
+#define CONFIG_SYS_MSC2_VAL		0x123C6CDC /* extra bus, LAN controller     */
 
 /* MDCNFG: SDRAM Configuration Register
  *
  * [31:29]   000 - reserved
- * [28]      0   - no SA1111 compatiblity mode
+ * [28]      0	 - no SA1111 compatiblity mode
  * [27]      0   - latch return data with return clock
  * [26]      0   - alternate addressing for pair 2/3
  * [25:24]   00  - timings
@@ -425,7 +425,7 @@
  * [17]      0   - SDRAM partition 3 disabled
  * [16]      0   - SDRAM partition 2 disabled
  * [15:13]   000 - reserved
- * [12]      1   - SA1111 compatiblity mode
+ * [12]      1	 - SA1111 compatiblity mode
  * [11]      1   - latch return data with return clock
  * [10]      0   - no alternate addressing for pair 0/1
  * [09:08]   01  - tRP=2*MemClk CL=2 tRCD=2*MemClk tRAS=5*MemClk tRC=8*MemClk
@@ -437,7 +437,7 @@
  * [00]      1   - enable  SDRAM partition 0
  */
 /* use the configuration above but disable partition 0 */
-#define CONFIG_SYS_MDCNFG_VAL   0x000019c8
+#define CONFIG_SYS_MDCNFG_VAL		0x000019c8
 
 /* MDREFR: SDRAM Refresh Control Register
  *
@@ -458,7 +458,7 @@
  * [12]    1     - E0PIN: disable SDCKE0
  * [11:00] 000000011000 - (64ms/8192)*MemClkFreq/32 = 24
  */
-#define CONFIG_SYS_MDREFR_VAL   0x0081D018
+#define CONFIG_SYS_MDREFR_VAL		0x0081D018
 
 /* MDMRS: Mode Register Set Configuration Register
  *
@@ -473,33 +473,33 @@
  * [03]      0       - MDADD0: SDRAM0/1 burst Type. Fixed to sequential.
  * [02:00]   010     - MDBL0:  SDRAM0/1 burst Length. Fixed to 4.
  */
-#define CONFIG_SYS_MDMRS_VAL    0x00020022
+#define CONFIG_SYS_MDMRS_VAL		0x00020022
 
 /*
  * PCMCIA and CF Interfaces
  */
-#define CONFIG_SYS_MECR_VAL   0x00000000
-#define CONFIG_SYS_MCMEM0_VAL   0x00000000
-#define CONFIG_SYS_MCMEM1_VAL   0x00000000
-#define CONFIG_SYS_MCATT0_VAL   0x00000000
-#define CONFIG_SYS_MCATT1_VAL   0x00000000
-#define CONFIG_SYS_MCIO0_VAL    0x00000000
-#define CONFIG_SYS_MCIO1_VAL    0x00000000
+#define CONFIG_SYS_MECR_VAL		0x00000000
+#define CONFIG_SYS_MCMEM0_VAL		0x00000000
+#define CONFIG_SYS_MCMEM1_VAL		0x00000000
+#define CONFIG_SYS_MCATT0_VAL		0x00000000
+#define CONFIG_SYS_MCATT1_VAL		0x00000000
+#define CONFIG_SYS_MCIO0_VAL		0x00000000
+#define CONFIG_SYS_MCIO1_VAL		0x00000000
 
-#define CONFIG_SYS_FLYCNFG_VAL    0x00000000
-#define CONFIG_SYS_SXCNFG_VAL   0x00000000
+#define	CONFIG_SYS_FLYCNFG_VAL		0x00000000
+#define	CONFIG_SYS_SXCNFG_VAL		0x00000000
 
 /*
-#define CSB226_USER_LED0  0x00000008
-#define CSB226_USER_LED1  0x00000010
-#define CSB226_USER_LED2  0x00000020
+#define CSB226_USER_LED0	0x00000008
+#define CSB226_USER_LED1	0x00000010
+#define CSB226_USER_LED2	0x00000020
 */
 
 /*
  * FLASH and environment organization
  */
-#define CONFIG_SYS_MAX_FLASH_BANKS     1  /* max number of memory banks       */
-#define CONFIG_SYS_MAX_FLASH_SECT 128 /* max number of sect. on one chip  */
+#define CONFIG_SYS_MAX_FLASH_BANKS     1	/* max number of memory banks       */
+#define CONFIG_SYS_MAX_FLASH_SECT	128	/* max number of sect. on one chip  */
 
 /* timeout values are in ticks */
 #define CONFIG_SYS_FLASH_ERASE_TOUT    (2*CONFIG_SYS_HZ) /* Timeout for Flash Erase       */

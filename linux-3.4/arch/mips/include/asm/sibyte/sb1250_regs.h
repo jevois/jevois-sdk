@@ -60,7 +60,7 @@
  * since there is one reg there (but it could get its addr/offset constant).
  */
 
-#if SIBYTE_HDR_FEATURE_1250_112x    /* This MC only on 1250 & 112x */
+#if SIBYTE_HDR_FEATURE_1250_112x		/* This MC only on 1250 & 112x */
 #define A_MC_BASE_0                 0x0010051000
 #define A_MC_BASE_1                 0x0010052000
 #define MC_REGISTER_SPACING         0x1000
@@ -79,10 +79,10 @@
 #define S_MC_CS_STARTEND            16
 
 #define R_MC_CSX_BASE               0x0000000200
-#define R_MC_CSX_ROW                0x0000000000  /* relative to CSX_BASE, above */
-#define R_MC_CSX_COL                0x0000000020  /* relative to CSX_BASE, above */
-#define R_MC_CSX_BA                 0x0000000040  /* relative to CSX_BASE, above */
-#define MC_CSX_SPACING              0x0000000060  /* relative to CSX_BASE, above */
+#define R_MC_CSX_ROW                0x0000000000	/* relative to CSX_BASE, above */
+#define R_MC_CSX_COL                0x0000000020	/* relative to CSX_BASE, above */
+#define R_MC_CSX_BA                 0x0000000040	/* relative to CSX_BASE, above */
+#define MC_CSX_SPACING              0x0000000060	/* relative to CSX_BASE, above */
 
 #define R_MC_CS0_ROW                0x0000000200
 #define R_MC_CS0_COL                0x0000000220
@@ -101,13 +101,13 @@
 #define R_MC_TEST_ECC               0x0000000420
 #define R_MC_MCLK_CFG               0x0000000500
 
-#endif  /* 1250 & 112x */
+#endif	/* 1250 & 112x */
 
 /*  *********************************************************************
     * L2 Cache Control Registers
     ********************************************************************* */
 
-#if SIBYTE_HDR_FEATURE_1250_112x  /* This L2C only on 1250/112x */
+#if SIBYTE_HDR_FEATURE_1250_112x	/* This L2C only on 1250/112x */
 
 #define A_L2_READ_TAG               0x0010040018
 #define A_L2_ECC_TAG                0x0010040038
@@ -119,9 +119,9 @@
 #define A_L2_MGMT_TAG_BASE          0x00D0000000
 
 #if SIBYTE_HDR_FEATURE(1250, PASS2) || SIBYTE_HDR_FEATURE(112x, PASS1)
-#define A_L2_CACHE_DISABLE     0x0010042000
+#define A_L2_CACHE_DISABLE	   0x0010042000
 #define A_L2_MAKECACHEDISABLE(x)   (A_L2_CACHE_DISABLE | (((x)&0x0F) << 8))
-#define A_L2_MISC_CONFIG     0x0010043000
+#define A_L2_MISC_CONFIG	   0x0010043000
 #endif /* 1250 PASS2 || 112x PASS1 */
 
 /* Backward-compatibility definitions.  */
@@ -136,7 +136,7 @@
     * PCI Interface Registers
     ********************************************************************* */
 
-#if SIBYTE_HDR_FEATURE_1250_112x  /* This PCI/HT only on 1250/112x */
+#if SIBYTE_HDR_FEATURE_1250_112x	/* This PCI/HT only on 1250/112x */
 #define A_PCI_TYPE00_HEADER         0x00DE000000
 #define A_PCI_TYPE01_HEADER         0x00DE000800
 #endif
@@ -157,40 +157,40 @@
 #define MAC_DMA_CHANNEL_SPACING     0x0100
 #define DMA_RX                      0
 #define DMA_TX                      1
-#define MAC_NUM_DMACHAN       2       /* channels per direction */
+#define MAC_NUM_DMACHAN		    2		    /* channels per direction */
 
 /* XXX: not correct; depends on SOC type.  */
 #define MAC_NUM_PORTS               3
 
 #define A_MAC_CHANNEL_BASE(macnum)                  \
-  (A_MAC_BASE_0 +                         \
-   MAC_SPACING*(macnum))
+            (A_MAC_BASE_0 +                         \
+             MAC_SPACING*(macnum))
 
 #define A_MAC_REGISTER(macnum,reg)                  \
-  (A_MAC_BASE_0 +                         \
-   MAC_SPACING*(macnum) + (reg))
+            (A_MAC_BASE_0 +                         \
+             MAC_SPACING*(macnum) + (reg))
 
 
-#define R_MAC_DMA_CHANNELS    0x800 /* Relative to A_MAC_CHANNEL_BASE */
+#define R_MAC_DMA_CHANNELS		0x800 /* Relative to A_MAC_CHANNEL_BASE */
 
 #define A_MAC_DMA_CHANNEL_BASE(macnum, txrx, chan)  \
-  ((A_MAC_CHANNEL_BASE(macnum)) +        \
-   R_MAC_DMA_CHANNELS +                   \
-   (MAC_DMA_TXRX_SPACING*(txrx)) +        \
-   (MAC_DMA_CHANNEL_SPACING*(chan)))
+             ((A_MAC_CHANNEL_BASE(macnum)) +        \
+             R_MAC_DMA_CHANNELS +                   \
+             (MAC_DMA_TXRX_SPACING*(txrx)) +        \
+             (MAC_DMA_CHANNEL_SPACING*(chan)))
 
-#define R_MAC_DMA_CHANNEL_BASE(txrx, chan)    \
-  (R_MAC_DMA_CHANNELS +                   \
-   (MAC_DMA_TXRX_SPACING*(txrx)) +        \
-   (MAC_DMA_CHANNEL_SPACING*(chan)))
+#define R_MAC_DMA_CHANNEL_BASE(txrx, chan)		\
+             (R_MAC_DMA_CHANNELS +                   \
+             (MAC_DMA_TXRX_SPACING*(txrx)) +        \
+             (MAC_DMA_CHANNEL_SPACING*(chan)))
 
 #define A_MAC_DMA_REGISTER(macnum, txrx, chan, reg)           \
-  (A_MAC_DMA_CHANNEL_BASE(macnum, txrx, chan) +    \
-   (reg))
+            (A_MAC_DMA_CHANNEL_BASE(macnum, txrx, chan) +    \
+            (reg))
 
 #define R_MAC_DMA_REGISTER(txrx, chan, reg)           \
-  (R_MAC_DMA_CHANNEL_BASE(txrx, chan) +    \
-   (reg))
+            (R_MAC_DMA_CHANNEL_BASE(txrx, chan) +    \
+            (reg))
 
 /*
  * DMA channel registers, relative to A_MAC_DMA_CHANNEL_BASE
@@ -204,7 +204,7 @@
 #define R_MAC_DMA_CUR_DSCRB             0x00000028
 #define R_MAC_DMA_CUR_DSCRADDR          0x00000030
 #if SIBYTE_HDR_FEATURE(1250, PASS3) || SIBYTE_HDR_FEATURE(112x, PASS1)
-#define R_MAC_DMA_OODPKTLOST_RX         0x00000038  /* rx only */
+#define R_MAC_DMA_OODPKTLOST_RX         0x00000038	/* rx only */
 #endif /* 1250 PASS3 || 112x PASS1 */
 
 /*
@@ -245,8 +245,8 @@
 #define R_MAC_ETHERNET_ADDR             0x00000208
 #define R_MAC_PKT_TYPE                  0x00000210
 #if SIBYTE_HDR_FEATURE(1250, PASS3) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
-#define R_MAC_ADMASK0     0x00000218
-#define R_MAC_ADMASK1     0x00000220
+#define R_MAC_ADMASK0			0x00000218
+#define R_MAC_ADMASK1			0x00000220
 #endif /* 1250 PASS3 || 112x PASS1 || 1480 */
 #define R_MAC_HASH_BASE                 0x00000240
 #define R_MAC_ADDR_BASE                 0x00000280
@@ -258,13 +258,13 @@
 #define R_MAC_TXD_CTL                   0x00000420
 #define R_MAC_MDIO                      0x00000428
 #if SIBYTE_HDR_FEATURE(1250, PASS2) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
-#define R_MAC_STATUS1           0x00000430
+#define R_MAC_STATUS1		        0x00000430
 #endif /* 1250 PASS2 || 112x PASS1 || 1480 */
 #define R_MAC_DEBUG_STATUS              0x00000448
 
-#define MAC_HASH_COUNT      8
-#define MAC_ADDR_COUNT      8
-#define MAC_CHMAP_COUNT     4
+#define MAC_HASH_COUNT			8
+#define MAC_ADDR_COUNT			8
+#define MAC_CHMAP_COUNT			4
 
 
 /*  *********************************************************************
@@ -279,22 +279,22 @@
 
 #define DUART_CHANREG_SPACING       0x100
 
-#define A_DUART_CHANREG(chan, reg)          \
-  (A_DUART + DUART_CHANREG_SPACING * ((chan) + 1) + (reg))
-#endif  /* 1250 & 112x */
+#define A_DUART_CHANREG(chan, reg)					\
+	(A_DUART + DUART_CHANREG_SPACING * ((chan) + 1) + (reg))
+#endif	/* 1250 & 112x */
 
-#define R_DUART_MODE_REG_1      0x000
-#define R_DUART_MODE_REG_2      0x010
-#define R_DUART_STATUS        0x020
-#define R_DUART_CLK_SEL       0x030
-#define R_DUART_CMD       0x050
-#define R_DUART_RX_HOLD       0x060
-#define R_DUART_TX_HOLD       0x070
+#define R_DUART_MODE_REG_1	    0x000
+#define R_DUART_MODE_REG_2	    0x010
+#define R_DUART_STATUS		    0x020
+#define R_DUART_CLK_SEL		    0x030
+#define R_DUART_CMD		    0x050
+#define R_DUART_RX_HOLD		    0x060
+#define R_DUART_TX_HOLD		    0x070
 
 #if SIBYTE_HDR_FEATURE(1250, PASS2) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
-#define R_DUART_FULL_CTL      0x040
-#define R_DUART_OPCR_X        0x080
-#define R_DUART_AUXCTL_X      0x090
+#define R_DUART_FULL_CTL	    0x040
+#define R_DUART_OPCR_X		    0x080
+#define R_DUART_AUXCTL_X	    0x090
 #endif /* 1250 PASS2 || 112x PASS1 || 1480 */
 
 
@@ -304,37 +304,37 @@
  */
 
 #if SIBYTE_HDR_FEATURE_1250_112x    /* This MC only on 1250 & 112x */
-#define DUART_IMRISR_SPACING      0x20
-#define DUART_INCHNG_SPACING      0x10
+#define DUART_IMRISR_SPACING	    0x20
+#define DUART_INCHNG_SPACING	    0x10
 
-#define A_DUART_CTRLREG(reg)            \
-  (A_DUART + DUART_CHANREG_SPACING * 3 + (reg))
+#define A_DUART_CTRLREG(reg)						\
+	(A_DUART + DUART_CHANREG_SPACING * 3 + (reg))
 
-#define R_DUART_IMRREG(chan)            \
-  (R_DUART_IMR_A + (chan) * DUART_IMRISR_SPACING)
-#define R_DUART_ISRREG(chan)            \
-  (R_DUART_ISR_A + (chan) * DUART_IMRISR_SPACING)
-#define R_DUART_INCHREG(chan)           \
-  (R_DUART_IN_CHNG_A + (chan) * DUART_INCHNG_SPACING)
+#define R_DUART_IMRREG(chan)						\
+	(R_DUART_IMR_A + (chan) * DUART_IMRISR_SPACING)
+#define R_DUART_ISRREG(chan)						\
+	(R_DUART_ISR_A + (chan) * DUART_IMRISR_SPACING)
+#define R_DUART_INCHREG(chan)						\
+	(R_DUART_IN_CHNG_A + (chan) * DUART_INCHNG_SPACING)
 
-#define A_DUART_IMRREG(chan)      A_DUART_CTRLREG(R_DUART_IMRREG(chan))
-#define A_DUART_ISRREG(chan)      A_DUART_CTRLREG(R_DUART_ISRREG(chan))
-#define A_DUART_INCHREG(chan)     A_DUART_CTRLREG(R_DUART_INCHREG(chan))
-#endif  /* 1250 & 112x */
+#define A_DUART_IMRREG(chan)	    A_DUART_CTRLREG(R_DUART_IMRREG(chan))
+#define A_DUART_ISRREG(chan)	    A_DUART_CTRLREG(R_DUART_ISRREG(chan))
+#define A_DUART_INCHREG(chan)	    A_DUART_CTRLREG(R_DUART_INCHREG(chan))
+#endif	/* 1250 & 112x */
 
-#define R_DUART_AUX_CTRL      0x010
-#define R_DUART_ISR_A       0x020
-#define R_DUART_IMR_A       0x030
-#define R_DUART_ISR_B       0x040
-#define R_DUART_IMR_B       0x050
-#define R_DUART_OUT_PORT      0x060
-#define R_DUART_OPCR        0x070
-#define R_DUART_IN_PORT       0x080
+#define R_DUART_AUX_CTRL	    0x010
+#define R_DUART_ISR_A		    0x020
+#define R_DUART_IMR_A		    0x030
+#define R_DUART_ISR_B		    0x040
+#define R_DUART_IMR_B		    0x050
+#define R_DUART_OUT_PORT	    0x060
+#define R_DUART_OPCR		    0x070
+#define R_DUART_IN_PORT		    0x080
 
-#define R_DUART_SET_OPR       0x0B0
-#define R_DUART_CLEAR_OPR     0x0C0
-#define R_DUART_IN_CHNG_A     0x0D0
-#define R_DUART_IN_CHNG_B     0x0E0
+#define R_DUART_SET_OPR		    0x0B0
+#define R_DUART_CLEAR_OPR	    0x0C0
+#define R_DUART_IN_CHNG_A	    0x0D0
+#define R_DUART_IN_CHNG_B	    0x0E0
 
 
 /*
@@ -374,11 +374,11 @@
 #define A_DUART_INPORT_CHNG_B       0x00100603E0
 
 #if SIBYTE_HDR_FEATURE(1250, PASS2) || SIBYTE_HDR_FEATURE(112x, PASS1)
-#define A_DUART_FULL_CTL_A      0x0010060140
-#define A_DUART_FULL_CTL_B      0x0010060240
+#define A_DUART_FULL_CTL_A	    0x0010060140
+#define A_DUART_FULL_CTL_B	    0x0010060240
 
-#define A_DUART_OPCR_A          0x0010060180
-#define A_DUART_OPCR_B          0x0010060280
+#define A_DUART_OPCR_A	  	    0x0010060180
+#define A_DUART_OPCR_B	  	    0x0010060280
 
 #define A_DUART_INPORT_CHNG_DEBUG   0x00100603F0
 #endif /* 1250 PASS2 || 112x PASS1 */
@@ -389,7 +389,7 @@
     ********************************************************************* */
 
 
-#if SIBYTE_HDR_FEATURE_1250_112x  /* sync serial only on 1250/112x */
+#if SIBYTE_HDR_FEATURE_1250_112x	/* sync serial only on 1250/112x */
 
 #define A_SER_BASE_0                0x0010060400
 #define A_SER_BASE_1                0x0010060800
@@ -400,24 +400,24 @@
 #define SER_NUM_PORTS               2
 
 #define A_SER_CHANNEL_BASE(sernum)                  \
-  (A_SER_BASE_0 +                         \
-   SER_SPACING*(sernum))
+            (A_SER_BASE_0 +                         \
+             SER_SPACING*(sernum))
 
 #define A_SER_REGISTER(sernum,reg)                  \
-  (A_SER_BASE_0 +                         \
-   SER_SPACING*(sernum) + (reg))
+            (A_SER_BASE_0 +                         \
+             SER_SPACING*(sernum) + (reg))
 
 
-#define R_SER_DMA_CHANNELS    0   /* Relative to A_SER_BASE_x */
+#define R_SER_DMA_CHANNELS		0   /* Relative to A_SER_BASE_x */
 
 #define A_SER_DMA_CHANNEL_BASE(sernum,txrx)    \
-  ((A_SER_CHANNEL_BASE(sernum)) +        \
-   R_SER_DMA_CHANNELS +                   \
-   (SER_DMA_TXRX_SPACING*(txrx)))
+             ((A_SER_CHANNEL_BASE(sernum)) +        \
+             R_SER_DMA_CHANNELS +                   \
+             (SER_DMA_TXRX_SPACING*(txrx)))
 
 #define A_SER_DMA_REGISTER(sernum, txrx, reg)           \
-  (A_SER_DMA_CHANNEL_BASE(sernum, txrx) +    \
-   (reg))
+            (A_SER_DMA_CHANNEL_BASE(sernum, txrx) +    \
+            (reg))
 
 
 /*
@@ -460,7 +460,7 @@
 #define R_SER_TX_RD_THRSH           0x00000160
 #define R_SER_TX_WR_THRSH           0x00000168
 #define R_SER_RX_RD_THRSH           0x00000170
-#define R_SER_LINE_MODE       0x00000178
+#define R_SER_LINE_MODE		    0x00000178
 #define R_SER_DMA_ENABLE            0x00000180
 #define R_SER_INT_MASK              0x00000190
 #define R_SER_STATUS                0x00000188
@@ -480,7 +480,7 @@
 #define R_SER_RMON_RX_ERRORS        0x000001F0
 #define R_SER_RMON_RX_BADADDR       0x000001F8
 
-#endif  /* 1250/112x */
+#endif	/* 1250/112x */
 
 /*  *********************************************************************
     * Generic Bus Registers
@@ -488,8 +488,8 @@
 
 #define IO_EXT_CFG_COUNT            8
 
-#define A_IO_EXT_BASE       0x0010061000
-#define A_IO_EXT_REG(r)       (A_IO_EXT_BASE + (r))
+#define A_IO_EXT_BASE		    0x0010061000
+#define A_IO_EXT_REG(r)		    (A_IO_EXT_BASE + (r))
 
 #define A_IO_EXT_CFG_BASE           0x0010061000
 #define A_IO_EXT_MULT_SIZE_BASE     0x0010061100
@@ -497,13 +497,13 @@
 #define A_IO_EXT_TIME_CFG0_BASE     0x0010061600
 #define A_IO_EXT_TIME_CFG1_BASE     0x0010061700
 
-#define IO_EXT_REGISTER_SPACING     8
-#define A_IO_EXT_CS_BASE(cs)      (A_IO_EXT_CFG_BASE+IO_EXT_REGISTER_SPACING*(cs))
-#define R_IO_EXT_REG(reg, cs)     ((cs)*IO_EXT_REGISTER_SPACING + (reg))
+#define IO_EXT_REGISTER_SPACING	    8
+#define A_IO_EXT_CS_BASE(cs)	    (A_IO_EXT_CFG_BASE+IO_EXT_REGISTER_SPACING*(cs))
+#define R_IO_EXT_REG(reg, cs)	    ((cs)*IO_EXT_REGISTER_SPACING + (reg))
 
-#define R_IO_EXT_CFG        0x0000
+#define R_IO_EXT_CFG		    0x0000
 #define R_IO_EXT_MULT_SIZE          0x0100
-#define R_IO_EXT_START_ADDR     0x0200
+#define R_IO_EXT_START_ADDR	    0x0200
 #define R_IO_EXT_TIME_CFG0          0x0600
 #define R_IO_EXT_TIME_CFG1          0x0700
 
@@ -518,14 +518,14 @@
 #define A_IO_INTERRUPT_PARITY       0x0010061A50
 #define A_IO_PCMCIA_CFG             0x0010061A60
 #define A_IO_PCMCIA_STATUS          0x0010061A70
-#define A_IO_DRIVE_0        0x0010061300
-#define A_IO_DRIVE_1        0x0010061308
-#define A_IO_DRIVE_2        0x0010061310
-#define A_IO_DRIVE_3        0x0010061318
-#define A_IO_DRIVE_BASE       A_IO_DRIVE_0
+#define A_IO_DRIVE_0		    0x0010061300
+#define A_IO_DRIVE_1		    0x0010061308
+#define A_IO_DRIVE_2		    0x0010061310
+#define A_IO_DRIVE_3		    0x0010061318
+#define A_IO_DRIVE_BASE		    A_IO_DRIVE_0
 #define IO_DRIVE_REGISTER_SPACING   8
-#define R_IO_DRIVE(x)       ((x)*IO_DRIVE_REGISTER_SPACING)
-#define A_IO_DRIVE(x)       (A_IO_DRIVE_BASE + R_IO_DRIVE(x))
+#define R_IO_DRIVE(x)		    ((x)*IO_DRIVE_REGISTER_SPACING)
+#define A_IO_DRIVE(x)		    (A_IO_DRIVE_BASE + R_IO_DRIVE(x))
 
 #define R_IO_INTERRUPT_STATUS       0x0A00
 #define R_IO_INTERRUPT_DATA0        0x0A10
@@ -551,7 +551,7 @@
 #define A_GPIO_PIN_CLR              0x0010061AB0
 #define A_GPIO_PIN_SET              0x0010061AB8
 
-#define A_GPIO_BASE       0x0010061A80
+#define A_GPIO_BASE		    0x0010061A80
 
 #define R_GPIO_CLR_EDGE             0x00
 #define R_GPIO_INT_TYPE             0x08
@@ -606,16 +606,16 @@
  * Watchdog timers
  */
 
-#define A_SCD_WDOG_0        0x0010020050
+#define A_SCD_WDOG_0		    0x0010020050
 #define A_SCD_WDOG_1                0x0010020150
 #define SCD_WDOG_SPACING            0x100
-#define SCD_NUM_WDOGS       2
+#define SCD_NUM_WDOGS		    2
 #define A_SCD_WDOG_BASE(w)          (A_SCD_WDOG_0+SCD_WDOG_SPACING*(w))
 #define A_SCD_WDOG_REGISTER(w, r)   (A_SCD_WDOG_BASE(w) + (r))
 
-#define R_SCD_WDOG_INIT       0x0000000000
-#define R_SCD_WDOG_CNT        0x0000000008
-#define R_SCD_WDOG_CFG        0x0000000010
+#define R_SCD_WDOG_INIT		    0x0000000000
+#define R_SCD_WDOG_CNT		    0x0000000008
+#define R_SCD_WDOG_CFG		    0x0000000010
 
 #define A_SCD_WDOG_INIT_0           0x0010020050
 #define A_SCD_WDOG_CNT_0            0x0010020058
@@ -629,17 +629,17 @@
  * Generic timers
  */
 
-#define A_SCD_TIMER_0       0x0010020070
+#define A_SCD_TIMER_0		    0x0010020070
 #define A_SCD_TIMER_1               0x0010020078
-#define A_SCD_TIMER_2       0x0010020170
+#define A_SCD_TIMER_2		    0x0010020170
 #define A_SCD_TIMER_3               0x0010020178
-#define SCD_NUM_TIMERS        4
+#define SCD_NUM_TIMERS		    4
 #define A_SCD_TIMER_BASE(w)         (A_SCD_TIMER_0+0x08*((w)&1)+0x100*(((w)&2)>>1))
 #define A_SCD_TIMER_REGISTER(w, r)  (A_SCD_TIMER_BASE(w) + (r))
 
-#define R_SCD_TIMER_INIT      0x0000000000
-#define R_SCD_TIMER_CNT       0x0000000010
-#define R_SCD_TIMER_CFG       0x0000000020
+#define R_SCD_TIMER_INIT	    0x0000000000
+#define R_SCD_TIMER_CNT		    0x0000000010
+#define R_SCD_TIMER_CFG		    0x0000000020
 
 #define A_SCD_TIMER_INIT_0          0x0010020070
 #define A_SCD_TIMER_CNT_0           0x0010020080
@@ -658,13 +658,13 @@
 #define A_SCD_TIMER_CFG_3           0x0010020198
 
 #if SIBYTE_HDR_FEATURE(1250, PASS2) || SIBYTE_HDR_FEATURE(112x, PASS1)
-#define A_SCD_SCRATCH      0x0010020C10
+#define A_SCD_SCRATCH		   0x0010020C10
 #endif /* 1250 PASS2 || 112x PASS1 */
 
 #if SIBYTE_HDR_FEATURE(1250, PASS2) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
-#define A_SCD_ZBBUS_CYCLE_COUNT    0x0010030000
-#define A_SCD_ZBBUS_CYCLE_CP0    0x0010020C00
-#define A_SCD_ZBBUS_CYCLE_CP1    0x0010020C08
+#define A_SCD_ZBBUS_CYCLE_COUNT	   0x0010030000
+#define A_SCD_ZBBUS_CYCLE_CP0	   0x0010020C00
+#define A_SCD_ZBBUS_CYCLE_CP1	   0x0010020C08
 #endif
 
 /*  *********************************************************************
@@ -694,7 +694,7 @@
 #define A_ADDR_TRAP_CFG_2           0x0010020450
 #define A_ADDR_TRAP_CFG_3           0x0010020458
 #if SIBYTE_HDR_FEATURE(1250, PASS2) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
-#define A_ADDR_TRAP_REG_DEBUG     0x0010020460
+#define A_ADDR_TRAP_REG_DEBUG	    0x0010020460
 #endif /* 1250 PASS2 || 112x PASS1 || 1480 */
 
 #define ADDR_TRAP_SPACING 8
@@ -740,7 +740,7 @@
  * for mbox_0_set_cpu2 returns 0x00100240C8
  */
 #define A_MAILBOX_REGISTER(reg,cpu) \
-  (A_IMR_CPU0_BASE + (cpu * IMR_REGISTER_SPACING) + reg)
+    (A_IMR_CPU0_BASE + (cpu * IMR_REGISTER_SPACING) + reg)
 
 /*  *********************************************************************
     * System Performance Counter Registers
@@ -804,49 +804,49 @@
 #define TRACE_REGISTER_SPACING 8
 #define TRACE_NUM_REGISTERS    8
 #define A_SCD_TRACE_EVENT(n) (((n) & 4) ? \
-                              (A_SCD_TRACE_EVENT_4 + (((n) & 3) * TRACE_REGISTER_SPACING)) : \
-                              (A_SCD_TRACE_EVENT_0 + ((n) * TRACE_REGISTER_SPACING)))
+   (A_SCD_TRACE_EVENT_4 + (((n) & 3) * TRACE_REGISTER_SPACING)) : \
+   (A_SCD_TRACE_EVENT_0 + ((n) * TRACE_REGISTER_SPACING)))
 #define A_SCD_TRACE_SEQUENCE(n) (((n) & 4) ? \
-                                 (A_SCD_TRACE_SEQUENCE_4 + (((n) & 3) * TRACE_REGISTER_SPACING)) : \
-                                 (A_SCD_TRACE_SEQUENCE_0 + ((n) * TRACE_REGISTER_SPACING)))
+   (A_SCD_TRACE_SEQUENCE_4 + (((n) & 3) * TRACE_REGISTER_SPACING)) : \
+   (A_SCD_TRACE_SEQUENCE_0 + ((n) * TRACE_REGISTER_SPACING)))
 
 /*  *********************************************************************
     * System Generic DMA Registers
     ********************************************************************* */
 
-#define A_DM_0            0x0010020B00
-#define A_DM_1            0x0010020B20
-#define A_DM_2          0x0010020B40
-#define A_DM_3          0x0010020B60
-#define DM_REGISTER_SPACING     0x20
-#define DM_NUM_CHANNELS       4
+#define A_DM_0		  	    0x0010020B00
+#define A_DM_1		  	    0x0010020B20
+#define A_DM_2			    0x0010020B40
+#define A_DM_3			    0x0010020B60
+#define DM_REGISTER_SPACING	    0x20
+#define DM_NUM_CHANNELS		    4
 #define A_DM_BASE(idx) (A_DM_0 + ((idx) * DM_REGISTER_SPACING))
 #define A_DM_REGISTER(idx, reg) (A_DM_BASE(idx) + (reg))
 
-#define R_DM_DSCR_BASE        0x0000000000
-#define R_DM_DSCR_COUNT       0x0000000008
-#define R_DM_CUR_DSCR_ADDR      0x0000000010
-#define R_DM_DSCR_BASE_DEBUG      0x0000000018
+#define R_DM_DSCR_BASE		    0x0000000000
+#define R_DM_DSCR_COUNT		    0x0000000008
+#define R_DM_CUR_DSCR_ADDR	    0x0000000010
+#define R_DM_DSCR_BASE_DEBUG	    0x0000000018
 
 #if SIBYTE_HDR_FEATURE(1250, PASS3) || SIBYTE_HDR_FEATURE(112x, PASS1)
-#define A_DM_PARTIAL_0        0x0010020ba0
-#define A_DM_PARTIAL_1        0x0010020ba8
-#define A_DM_PARTIAL_2        0x0010020bb0
-#define A_DM_PARTIAL_3        0x0010020bb8
+#define A_DM_PARTIAL_0		    0x0010020ba0
+#define A_DM_PARTIAL_1		    0x0010020ba8
+#define A_DM_PARTIAL_2		    0x0010020bb0
+#define A_DM_PARTIAL_3		    0x0010020bb8
 #define DM_PARTIAL_REGISTER_SPACING 0x8
-#define A_DM_PARTIAL(idx)     (A_DM_PARTIAL_0 + ((idx) * DM_PARTIAL_REGISTER_SPACING))
+#define A_DM_PARTIAL(idx)	    (A_DM_PARTIAL_0 + ((idx) * DM_PARTIAL_REGISTER_SPACING))
 #endif /* 1250 PASS3 || 112x PASS1 */
 
 #if SIBYTE_HDR_FEATURE(1250, PASS3) || SIBYTE_HDR_FEATURE(112x, PASS1)
-#define A_DM_CRC_0        0x0010020b80
-#define A_DM_CRC_1        0x0010020b90
-#define DM_CRC_REGISTER_SPACING     0x10
-#define DM_CRC_NUM_CHANNELS     2
-#define A_DM_CRC_BASE(idx)      (A_DM_CRC_0 + ((idx) * DM_CRC_REGISTER_SPACING))
+#define A_DM_CRC_0		    0x0010020b80
+#define A_DM_CRC_1		    0x0010020b90
+#define DM_CRC_REGISTER_SPACING	    0x10
+#define DM_CRC_NUM_CHANNELS	    2
+#define A_DM_CRC_BASE(idx)	    (A_DM_CRC_0 + ((idx) * DM_CRC_REGISTER_SPACING))
 #define A_DM_CRC_REGISTER(idx, reg)  (A_DM_CRC_BASE(idx) + (reg))
 
-#define R_CRC_DEF_0       0x00
-#define R_CTCP_DEF_0        0x08
+#define R_CRC_DEF_0		    0x00
+#define R_CTCP_DEF_0		    0x08
 #endif /* 1250 PASS3 || 112x PASS1 */
 
 /*  *********************************************************************
@@ -858,8 +858,8 @@
 #define A_PHYS_MEMORY_SIZE              _SB_MAKE64((256*1024*1024))
 #define A_PHYS_SYSTEM_CTL               _SB_MAKE64(0x0010000000)
 #define A_PHYS_IO_SYSTEM                _SB_MAKE64(0x0010060000)
-#define A_PHYS_GENBUS     _SB_MAKE64(0x0010090000)
-#define A_PHYS_GENBUS_END   _SB_MAKE64(0x0040000000)
+#define A_PHYS_GENBUS			_SB_MAKE64(0x0010090000)
+#define A_PHYS_GENBUS_END		_SB_MAKE64(0x0040000000)
 #define A_PHYS_LDTPCI_IO_MATCH_BYTES_32 _SB_MAKE64(0x0040000000)
 #define A_PHYS_LDTPCI_IO_MATCH_BITS_32  _SB_MAKE64(0x0060000000)
 #define A_PHYS_MEMORY_1                 _SB_MAKE64(0x0080000000)

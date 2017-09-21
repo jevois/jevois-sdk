@@ -4,7 +4,7 @@
  * Copyright (C) 2010 Samsung Electronics
  *
  * Author: Pawel Osciak <pawel@osciak.com>
- *     Marek Szyprowski <m.szyprowski@samsung.com>
+ *	   Marek Szyprowski <m.szyprowski@samsung.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,28 +18,28 @@
 
 /**
  * vb2_vmarea_handler - common vma refcount tracking handler
- * @refcount: pointer to refcount entry in the buffer
- * @put:  callback to function that decreases buffer refcount
- * @arg:  argument for @put callback
+ * @refcount:	pointer to refcount entry in the buffer
+ * @put:	callback to function that decreases buffer refcount
+ * @arg:	argument for @put callback
  */
 struct vb2_vmarea_handler {
-  atomic_t  *  refcount;
-  void      (*put) (void * arg);
-  void   *   arg;
+	atomic_t		*refcount;
+	void			(*put)(void *arg);
+	void			*arg;
 };
 
 extern const struct vm_operations_struct vb2_common_vm_ops;
 
-int vb2_get_contig_userptr (unsigned long vaddr, unsigned long size,
-                            struct vm_area_struct ** res_vma, dma_addr_t * res_pa);
+int vb2_get_contig_userptr(unsigned long vaddr, unsigned long size,
+			   struct vm_area_struct **res_vma, dma_addr_t *res_pa);
 
-int vb2_mmap_pfn_range (struct vm_area_struct * vma, unsigned long paddr,
-                        unsigned long size,
-                        const struct vm_operations_struct * vm_ops,
-                        void * priv);
+int vb2_mmap_pfn_range(struct vm_area_struct *vma, unsigned long paddr,
+				unsigned long size,
+				const struct vm_operations_struct *vm_ops,
+				void *priv);
 
-struct vm_area_struct * vb2_get_vma (struct vm_area_struct * vma);
-void vb2_put_vma (struct vm_area_struct * vma);
+struct vm_area_struct *vb2_get_vma(struct vm_area_struct *vma);
+void vb2_put_vma(struct vm_area_struct *vma);
 
 
 #endif

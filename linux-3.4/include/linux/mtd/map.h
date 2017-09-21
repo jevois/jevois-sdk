@@ -143,48 +143,48 @@
 
 #ifndef map_bankwidth
 #warning "No CONFIG_MTD_MAP_BANK_WIDTH_xx selected. No NOR chip support can work"
-static inline int map_bankwidth (void * map)
+static inline int map_bankwidth(void *map)
 {
-  BUG();
-  return 0;
+	BUG();
+	return 0;
 }
 #define map_bankwidth_is_large(map) (0)
 #define map_words(map) (0)
 #define MAX_MAP_BANKWIDTH 1
 #endif
 
-static inline int map_bankwidth_supported (int w)
+static inline int map_bankwidth_supported(int w)
 {
-  switch (w) {
-    #ifdef CONFIG_MTD_MAP_BANK_WIDTH_1
-  case 1:
-    #endif
-    #ifdef CONFIG_MTD_MAP_BANK_WIDTH_2
-  case 2:
-    #endif
-    #ifdef CONFIG_MTD_MAP_BANK_WIDTH_4
-  case 4:
-    #endif
-    #ifdef CONFIG_MTD_MAP_BANK_WIDTH_8
-  case 8:
-    #endif
-    #ifdef CONFIG_MTD_MAP_BANK_WIDTH_16
-  case 16:
-    #endif
-    #ifdef CONFIG_MTD_MAP_BANK_WIDTH_32
-  case 32:
-    #endif
-    return 1;
-    
-  default:
-    return 0;
-  }
+	switch (w) {
+#ifdef CONFIG_MTD_MAP_BANK_WIDTH_1
+	case 1:
+#endif
+#ifdef CONFIG_MTD_MAP_BANK_WIDTH_2
+	case 2:
+#endif
+#ifdef CONFIG_MTD_MAP_BANK_WIDTH_4
+	case 4:
+#endif
+#ifdef CONFIG_MTD_MAP_BANK_WIDTH_8
+	case 8:
+#endif
+#ifdef CONFIG_MTD_MAP_BANK_WIDTH_16
+	case 16:
+#endif
+#ifdef CONFIG_MTD_MAP_BANK_WIDTH_32
+	case 32:
+#endif
+		return 1;
+
+	default:
+		return 0;
+	}
 }
 
 #define MAX_MAP_LONGS ( ((MAX_MAP_BANKWIDTH*8) + BITS_PER_LONG - 1) / BITS_PER_LONG )
 
 typedef union {
-  unsigned long x[MAX_MAP_LONGS];
+	unsigned long x[MAX_MAP_LONGS];
 } map_word;
 
 /* The map stuff is very simple. You fill in your struct map_info with
@@ -206,171 +206,166 @@ typedef union {
 */
 
 struct map_info {
-  const char * name;
-  unsigned long size;
-  resource_size_t phys;
+	const char *name;
+	unsigned long size;
+	resource_size_t phys;
 #define NO_XIP (-1UL)
-  
-  void __iomem * virt;
-  void * cached;
-  
-  int swap; /* this mapping's byte-swapping requirement */
-  int bankwidth; /* in octets. This isn't necessarily the width
-           of actual bus cycles -- it's the repeat interval
-          in bytes, before you are talking to the first chip again.
-          */
 
-  #ifdef CONFIG_MTD_COMPLEX_MAPPINGS
-  map_word (*read) (struct map_info *, unsigned long);
-  void (*copy_from) (struct map_info *, void *, unsigned long, ssize_t);
-  
-  void (*write) (struct map_info *, const map_word, unsigned long);
-  void (*copy_to) (struct map_info *, unsigned long, const void *, ssize_t);
-  
-  /* We can perhaps put in 'point' and 'unpoint' methods, if we really
-     want to enable XIP for non-linear mappings. Not yet though. */
-  #endif
-  /* It's possible for the map driver to use cached memory in its
-     copy_from implementation (and _only_ with copy_from).  However,
-     when the chip driver knows some flash area has changed contents,
-     it will signal it to the map driver through this routine to let
-     the map driver invalidate the corresponding cache as needed.
-     If there is no cache to care about this can be set to NULL. */
-  void (*inval_cache) (struct map_info *, unsigned long, ssize_t);
-  
-  /* set_vpp() must handle being reentered -- enable, enable, disable
-     must leave it enabled. */
-  void (*set_vpp) (struct map_info *, int);
-  
-  unsigned long pfow_base;
-  unsigned long map_priv_1;
-  unsigned long map_priv_2;
-  void * fldrv_priv;
-  struct mtd_chip_driver * fldrv;
+	void __iomem *virt;
+	void *cached;
+
+	int swap; /* this mapping's byte-swapping requirement */
+	int bankwidth; /* in octets. This isn't necessarily the width
+		       of actual bus cycles -- it's the repeat interval
+		      in bytes, before you are talking to the first chip again.
+		      */
+
+#ifdef CONFIG_MTD_COMPLEX_MAPPINGS
+	map_word (*read)(struct map_info *, unsigned long);
+	void (*copy_from)(struct map_info *, void *, unsigned long, ssize_t);
+
+	void (*write)(struct map_info *, const map_word, unsigned long);
+	void (*copy_to)(struct map_info *, unsigned long, const void *, ssize_t);
+
+	/* We can perhaps put in 'point' and 'unpoint' methods, if we really
+	   want to enable XIP for non-linear mappings. Not yet though. */
+#endif
+	/* It's possible for the map driver to use cached memory in its
+	   copy_from implementation (and _only_ with copy_from).  However,
+	   when the chip driver knows some flash area has changed contents,
+	   it will signal it to the map driver through this routine to let
+	   the map driver invalidate the corresponding cache as needed.
+	   If there is no cache to care about this can be set to NULL. */
+	void (*inval_cache)(struct map_info *, unsigned long, ssize_t);
+
+	/* set_vpp() must handle being reentered -- enable, enable, disable
+	   must leave it enabled. */
+	void (*set_vpp)(struct map_info *, int);
+
+	unsigned long pfow_base;
+	unsigned long map_priv_1;
+	unsigned long map_priv_2;
+	void *fldrv_priv;
+	struct mtd_chip_driver *fldrv;
 };
 
 struct mtd_chip_driver {
-  struct mtd_info * (*probe) (struct map_info * map);
-  void (*destroy) (struct mtd_info *);
-  struct module * module;
-  char * name;
-  struct list_head list;
+	struct mtd_info *(*probe)(struct map_info *map);
+	void (*destroy)(struct mtd_info *);
+	struct module *module;
+	char *name;
+	struct list_head list;
 };
 
-void register_mtd_chip_driver (struct mtd_chip_driver *);
-void unregister_mtd_chip_driver (struct mtd_chip_driver *);
+void register_mtd_chip_driver(struct mtd_chip_driver *);
+void unregister_mtd_chip_driver(struct mtd_chip_driver *);
 
-struct mtd_info * do_map_probe (const char * name, struct map_info * map);
-void map_destroy (struct mtd_info * mtd);
+struct mtd_info *do_map_probe(const char *name, struct map_info *map);
+void map_destroy(struct mtd_info *mtd);
 
 #define ENABLE_VPP(map) do { if(map->set_vpp) map->set_vpp(map, 1); } while(0)
 #define DISABLE_VPP(map) do { if(map->set_vpp) map->set_vpp(map, 0); } while(0)
 
 #define INVALIDATE_CACHED_RANGE(map, from, size) \
-  do { if(map->inval_cache) map->inval_cache(map, from, size); } while(0)
+	do { if(map->inval_cache) map->inval_cache(map, from, size); } while(0)
 
 
-static inline int map_word_equal (struct map_info * map, map_word val1, map_word val2)
+static inline int map_word_equal(struct map_info *map, map_word val1, map_word val2)
 {
-  int i;
-  for (i = 0; i < map_words (map); i++) {
-    if (val1.x[i] != val2.x[i])
-    { return 0; }
-  }
-  return 1;
+	int i;
+	for (i=0; i<map_words(map); i++) {
+		if (val1.x[i] != val2.x[i])
+			return 0;
+	}
+	return 1;
 }
 
-static inline map_word map_word_and (struct map_info * map, map_word val1, map_word val2)
+static inline map_word map_word_and(struct map_info *map, map_word val1, map_word val2)
 {
-  map_word r;
-  int i;
-  
-  for (i = 0; i < map_words (map); i++) {
-    r.x[i] = val1.x[i] & val2.x[i];
-  }
-  return r;
+	map_word r;
+	int i;
+
+	for (i=0; i<map_words(map); i++) {
+		r.x[i] = val1.x[i] & val2.x[i];
+	}
+	return r;
 }
 
-static inline map_word map_word_clr (struct map_info * map, map_word val1, map_word val2)
+static inline map_word map_word_clr(struct map_info *map, map_word val1, map_word val2)
 {
-  map_word r;
-  int i;
-  
-  for (i = 0; i < map_words (map); i++) {
-    r.x[i] = val1.x[i] & ~val2.x[i];
-  }
-  return r;
+	map_word r;
+	int i;
+
+	for (i=0; i<map_words(map); i++) {
+		r.x[i] = val1.x[i] & ~val2.x[i];
+	}
+	return r;
 }
 
-static inline map_word map_word_or (struct map_info * map, map_word val1, map_word val2)
+static inline map_word map_word_or(struct map_info *map, map_word val1, map_word val2)
 {
-  map_word r;
-  int i;
-  
-  for (i = 0; i < map_words (map); i++) {
-    r.x[i] = val1.x[i] | val2.x[i];
-  }
-  return r;
+	map_word r;
+	int i;
+
+	for (i=0; i<map_words(map); i++) {
+		r.x[i] = val1.x[i] | val2.x[i];
+	}
+	return r;
 }
 
 #define map_word_andequal(m, a, b, z) map_word_equal(m, z, map_word_and(m, a, b))
 
-static inline int map_word_bitsset (struct map_info * map, map_word val1, map_word val2)
+static inline int map_word_bitsset(struct map_info *map, map_word val1, map_word val2)
 {
-  int i;
-  
-  for (i = 0; i < map_words (map); i++) {
-    if (val1.x[i] & val2.x[i])
-    { return 1; }
-  }
-  return 0;
+	int i;
+
+	for (i=0; i<map_words(map); i++) {
+		if (val1.x[i] & val2.x[i])
+			return 1;
+	}
+	return 0;
 }
 
-static inline map_word map_word_load (struct map_info * map, const void * ptr)
+static inline map_word map_word_load(struct map_info *map, const void *ptr)
 {
-  map_word r;
-  
-  if (map_bankwidth_is_1 (map) )
-  { r.x[0] = * (unsigned char *) ptr; }
-  else
-    if (map_bankwidth_is_2 (map) )
-    { r.x[0] = get_unaligned ( (uint16_t *) ptr); }
-    else
-      if (map_bankwidth_is_4 (map) )
-      { r.x[0] = get_unaligned ( (uint32_t *) ptr); }
-  #if BITS_PER_LONG >= 64
-      else
-        if (map_bankwidth_is_8 (map) )
-        { r.x[0] = get_unaligned ( (uint64_t *) ptr); }
-  #endif
-        else
-          if (map_bankwidth_is_large (map) )
-          { memcpy (r.x, ptr, map->bankwidth); }
-          
-  return r;
+	map_word r;
+
+	if (map_bankwidth_is_1(map))
+		r.x[0] = *(unsigned char *)ptr;
+	else if (map_bankwidth_is_2(map))
+		r.x[0] = get_unaligned((uint16_t *)ptr);
+	else if (map_bankwidth_is_4(map))
+		r.x[0] = get_unaligned((uint32_t *)ptr);
+#if BITS_PER_LONG >= 64
+	else if (map_bankwidth_is_8(map))
+		r.x[0] = get_unaligned((uint64_t *)ptr);
+#endif
+	else if (map_bankwidth_is_large(map))
+		memcpy(r.x, ptr, map->bankwidth);
+
+	return r;
 }
 
-static inline map_word map_word_load_partial (struct map_info * map, map_word orig, const unsigned char * buf, int start, int len)
+static inline map_word map_word_load_partial(struct map_info *map, map_word orig, const unsigned char *buf, int start, int len)
 {
-  int i;
-  
-  if (map_bankwidth_is_large (map) ) {
-    char * dest = (char *) &orig;
-    memcpy (dest + start, buf, len);
-  }
-  else {
-    for (i = start; i < start + len; i++) {
-      int bitpos;
-      #ifdef __LITTLE_ENDIAN
-      bitpos = i * 8;
-      #else /* __BIG_ENDIAN */
-      bitpos = (map_bankwidth (map) - 1 - i) * 8;
-      #endif
-      orig.x[0] &= ~ (0xff << bitpos);
-      orig.x[0] |= buf[i - start] << bitpos;
-    }
-  }
-  return orig;
+	int i;
+
+	if (map_bankwidth_is_large(map)) {
+		char *dest = (char *)&orig;
+		memcpy(dest+start, buf, len);
+	} else {
+		for (i=start; i < start+len; i++) {
+			int bitpos;
+#ifdef __LITTLE_ENDIAN
+			bitpos = i*8;
+#else /* __BIG_ENDIAN */
+			bitpos = (map_bankwidth(map)-1-i)*8;
+#endif
+			orig.x[0] &= ~(0xff << bitpos);
+			orig.x[0] |= buf[i-start] << bitpos;
+		}
+	}
+	return orig;
 }
 
 #if BITS_PER_LONG < 64
@@ -379,80 +374,71 @@ static inline map_word map_word_load_partial (struct map_info * map, map_word or
 #define MAP_FF_LIMIT 8
 #endif
 
-static inline map_word map_word_ff (struct map_info * map)
+static inline map_word map_word_ff(struct map_info *map)
 {
-  map_word r;
-  int i;
-  
-  if (map_bankwidth (map) < MAP_FF_LIMIT) {
-    int bw = 8 * map_bankwidth (map);
-    r.x[0] = (1 << bw) - 1;
-  }
-  else {
-    for (i = 0; i < map_words (map); i++)
-    { r.x[i] = ~0UL; }
-  }
-  return r;
+	map_word r;
+	int i;
+
+	if (map_bankwidth(map) < MAP_FF_LIMIT) {
+		int bw = 8 * map_bankwidth(map);
+		r.x[0] = (1 << bw) - 1;
+	} else {
+		for (i=0; i<map_words(map); i++)
+			r.x[i] = ~0UL;
+	}
+	return r;
 }
 
-static inline map_word inline_map_read (struct map_info * map, unsigned long ofs)
+static inline map_word inline_map_read(struct map_info *map, unsigned long ofs)
 {
-  map_word r;
-  
-  if (map_bankwidth_is_1 (map) )
-  { r.x[0] = __raw_readb (map->virt + ofs); }
-  else
-    if (map_bankwidth_is_2 (map) )
-    { r.x[0] = __raw_readw (map->virt + ofs); }
-    else
-      if (map_bankwidth_is_4 (map) )
-      { r.x[0] = __raw_readl (map->virt + ofs); }
-  #if BITS_PER_LONG >= 64
-      else
-        if (map_bankwidth_is_8 (map) )
-        { r.x[0] = __raw_readq (map->virt + ofs); }
-  #endif
-        else
-          if (map_bankwidth_is_large (map) )
-          { memcpy_fromio (r.x, map->virt + ofs, map->bankwidth); }
-          else
-          { BUG(); }
-          
-  return r;
+	map_word r;
+
+	if (map_bankwidth_is_1(map))
+		r.x[0] = __raw_readb(map->virt + ofs);
+	else if (map_bankwidth_is_2(map))
+		r.x[0] = __raw_readw(map->virt + ofs);
+	else if (map_bankwidth_is_4(map))
+		r.x[0] = __raw_readl(map->virt + ofs);
+#if BITS_PER_LONG >= 64
+	else if (map_bankwidth_is_8(map))
+		r.x[0] = __raw_readq(map->virt + ofs);
+#endif
+	else if (map_bankwidth_is_large(map))
+		memcpy_fromio(r.x, map->virt+ofs, map->bankwidth);
+	else
+		BUG();
+
+	return r;
 }
 
-static inline void inline_map_write (struct map_info * map, const map_word datum, unsigned long ofs)
+static inline void inline_map_write(struct map_info *map, const map_word datum, unsigned long ofs)
 {
-  if (map_bankwidth_is_1 (map) )
-  { __raw_writeb (datum.x[0], map->virt + ofs); }
-  else
-    if (map_bankwidth_is_2 (map) )
-    { __raw_writew (datum.x[0], map->virt + ofs); }
-    else
-      if (map_bankwidth_is_4 (map) )
-      { __raw_writel (datum.x[0], map->virt + ofs); }
-  #if BITS_PER_LONG >= 64
-      else
-        if (map_bankwidth_is_8 (map) )
-        { __raw_writeq (datum.x[0], map->virt + ofs); }
-  #endif
-        else
-          if (map_bankwidth_is_large (map) )
-          { memcpy_toio (map->virt + ofs, datum.x, map->bankwidth); }
-  mb();
+	if (map_bankwidth_is_1(map))
+		__raw_writeb(datum.x[0], map->virt + ofs);
+	else if (map_bankwidth_is_2(map))
+		__raw_writew(datum.x[0], map->virt + ofs);
+	else if (map_bankwidth_is_4(map))
+		__raw_writel(datum.x[0], map->virt + ofs);
+#if BITS_PER_LONG >= 64
+	else if (map_bankwidth_is_8(map))
+		__raw_writeq(datum.x[0], map->virt + ofs);
+#endif
+	else if (map_bankwidth_is_large(map))
+		memcpy_toio(map->virt+ofs, datum.x, map->bankwidth);
+	mb();
 }
 
-static inline void inline_map_copy_from (struct map_info * map, void * to, unsigned long from, ssize_t len)
+static inline void inline_map_copy_from(struct map_info *map, void *to, unsigned long from, ssize_t len)
 {
-  if (map->cached)
-  { memcpy (to, (char *) map->cached + from, len); }
-  else
-  { memcpy_fromio (to, map->virt + from, len); }
+	if (map->cached)
+		memcpy(to, (char *)map->cached + from, len);
+	else
+		memcpy_fromio(to, map->virt + from, len);
 }
 
-static inline void inline_map_copy_to (struct map_info * map, unsigned long to, const void * from, ssize_t len)
+static inline void inline_map_copy_to(struct map_info *map, unsigned long to, const void *from, ssize_t len)
 {
-  memcpy_toio (map->virt + to, from, len);
+	memcpy_toio(map->virt + to, from, len);
 }
 
 #ifdef CONFIG_MTD_COMPLEX_MAPPINGS
@@ -461,7 +447,7 @@ static inline void inline_map_copy_to (struct map_info * map, unsigned long to, 
 #define map_write(map, datum, ofs) (map)->write(map, datum, ofs)
 #define map_copy_to(map, to, from, len) (map)->copy_to(map, to, from, len)
 
-extern void simple_map_init (struct map_info *);
+extern void simple_map_init(struct map_info *);
 #define map_is_linear(map) (map->phys != NO_XIP)
 
 #else

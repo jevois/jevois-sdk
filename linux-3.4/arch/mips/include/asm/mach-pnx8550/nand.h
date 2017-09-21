@@ -2,7 +2,7 @@
 #define __PNX8550_NAND_H
 
 #define PNX8550_NAND_BASE_ADDR   0x10000000
-#define PNX8550_PCIXIO_BASE  0xBBE40000
+#define PNX8550_PCIXIO_BASE	 0xBBE40000
 
 #define PNX8550_DMA_EXT_ADDR     *(volatile unsigned long *)(PNX8550_PCIXIO_BASE + 0x800)
 #define PNX8550_DMA_INT_ADDR     *(volatile unsigned long *)(PNX8550_PCIXIO_BASE + 0x804)
@@ -41,14 +41,14 @@
 
 #define PNX8550_SEL0_DEFAULT ((PNX8550_XIO_SEL0_EN_16BIT)  | \
                               (PNX8550_XIO_SEL0_REN_HIGH*0)| \
-                              (PNX8550_XIO_SEL0_REN_LOW*2) | \
-                              (PNX8550_XIO_SEL0_WEN_HIGH*0)| \
+	                      (PNX8550_XIO_SEL0_REN_LOW*2) | \
+	                      (PNX8550_XIO_SEL0_WEN_HIGH*0)| \
                               (PNX8550_XIO_SEL0_WEN_LOW*2) | \
-                              (PNX8550_XIO_SEL0_WAIT*4)    | \
-                              (PNX8550_XIO_SEL0_OFFSET*0)  | \
-                              (PNX8550_XIO_SEL0_TYPE_NAND) | \
-                              (PNX8550_XIO_SEL0_SIZE_32MB) | \
-                              (PNX8550_XIO_SEL0_ENAB))
+	                      (PNX8550_XIO_SEL0_WAIT*4)    | \
+			      (PNX8550_XIO_SEL0_OFFSET*0)  | \
+			      (PNX8550_XIO_SEL0_TYPE_NAND) | \
+			      (PNX8550_XIO_SEL0_SIZE_32MB) | \
+			      (PNX8550_XIO_SEL0_ENAB))
 
 #define PNX8550_GPXIO_PENDING        0x00000200
 #define PNX8550_GPXIO_DONE           0x00000100
@@ -94,28 +94,28 @@
 #define PNX8550_DMA_CTRL_PCI_CMD_READ    0x00000006
 #define PNX8550_DMA_CTRL_PCI_CMD_WRITE   0x00000007
 
-#define PNX8550_DMA_INT_STAT_ACK_DONE (1<<14)
-#define PNX8550_DMA_INT_STAT_DMA_DONE (1<<12)
-#define PNX8550_DMA_INT_STAT_DMA_ERR  (1<<9)
-#define PNX8550_DMA_INT_STAT_PERR5  (1<<5)
-#define PNX8550_DMA_INT_STAT_PERR4  (1<<4)
-#define PNX8550_DMA_INT_STAT_M_ABORT  (1<<2)
-#define PNX8550_DMA_INT_STAT_T_ABORT  (1<<1)
+#define PNX8550_DMA_INT_STAT_ACK_DONE	(1<<14)
+#define PNX8550_DMA_INT_STAT_DMA_DONE	(1<<12)
+#define PNX8550_DMA_INT_STAT_DMA_ERR	(1<<9)
+#define PNX8550_DMA_INT_STAT_PERR5	(1<<5)
+#define PNX8550_DMA_INT_STAT_PERR4	(1<<4)
+#define PNX8550_DMA_INT_STAT_M_ABORT	(1<<2)
+#define PNX8550_DMA_INT_STAT_T_ABORT	(1<<1)
 
-#define PNX8550_DMA_INT_EN_ACK_DONE (1<<14)
-#define PNX8550_DMA_INT_EN_DMA_DONE (1<<12)
-#define PNX8550_DMA_INT_EN_DMA_ERR  (1<<9)
-#define PNX8550_DMA_INT_EN_PERR5  (1<<5)
-#define PNX8550_DMA_INT_EN_PERR4  (1<<4)
-#define PNX8550_DMA_INT_EN_M_ABORT  (1<<2)
-#define PNX8550_DMA_INT_EN_T_ABORT  (1<<1)
+#define PNX8550_DMA_INT_EN_ACK_DONE	(1<<14)
+#define PNX8550_DMA_INT_EN_DMA_DONE	(1<<12)
+#define PNX8550_DMA_INT_EN_DMA_ERR	(1<<9)
+#define PNX8550_DMA_INT_EN_PERR5	(1<<5)
+#define PNX8550_DMA_INT_EN_PERR4	(1<<4)
+#define PNX8550_DMA_INT_EN_M_ABORT	(1<<2)
+#define PNX8550_DMA_INT_EN_T_ABORT	(1<<1)
 
-#define PNX8550_DMA_INT_CLR_ACK_DONE  (1<<14)
-#define PNX8550_DMA_INT_CLR_DMA_DONE  (1<<12)
-#define PNX8550_DMA_INT_CLR_DMA_ERR (1<<9)
-#define PNX8550_DMA_INT_CLR_PERR5 (1<<5)
-#define PNX8550_DMA_INT_CLR_PERR4 (1<<4)
-#define PNX8550_DMA_INT_CLR_M_ABORT (1<<2)
-#define PNX8550_DMA_INT_CLR_T_ABORT (1<<1)
+#define PNX8550_DMA_INT_CLR_ACK_DONE	(1<<14)
+#define PNX8550_DMA_INT_CLR_DMA_DONE	(1<<12)
+#define PNX8550_DMA_INT_CLR_DMA_ERR	(1<<9)
+#define PNX8550_DMA_INT_CLR_PERR5	(1<<5)
+#define PNX8550_DMA_INT_CLR_PERR4	(1<<4)
+#define PNX8550_DMA_INT_CLR_M_ABORT	(1<<2)
+#define PNX8550_DMA_INT_CLR_T_ABORT	(1<<1)
 
 #endif

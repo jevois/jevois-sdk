@@ -49,66 +49,66 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "pvr_bridge.h"
 
-#define PVRSRV_BRIDGE_SMM_CMD_FIRST     (PVRSRV_BRIDGE_SMM_START)
-#define PVRSRV_BRIDGE_SMM_PMRSECUREEXPORTPMR      PVRSRV_IOWR(PVRSRV_BRIDGE_SMM_CMD_FIRST+0)
-#define PVRSRV_BRIDGE_SMM_PMRSECUREUNEXPORTPMR      PVRSRV_IOWR(PVRSRV_BRIDGE_SMM_CMD_FIRST+1)
-#define PVRSRV_BRIDGE_SMM_PMRSECUREIMPORTPMR      PVRSRV_IOWR(PVRSRV_BRIDGE_SMM_CMD_FIRST+2)
-#define PVRSRV_BRIDGE_SMM_CMD_LAST      (PVRSRV_BRIDGE_SMM_CMD_FIRST+2)
+#define PVRSRV_BRIDGE_SMM_CMD_FIRST			(PVRSRV_BRIDGE_SMM_START)
+#define PVRSRV_BRIDGE_SMM_PMRSECUREEXPORTPMR			PVRSRV_IOWR(PVRSRV_BRIDGE_SMM_CMD_FIRST+0)
+#define PVRSRV_BRIDGE_SMM_PMRSECUREUNEXPORTPMR			PVRSRV_IOWR(PVRSRV_BRIDGE_SMM_CMD_FIRST+1)
+#define PVRSRV_BRIDGE_SMM_PMRSECUREIMPORTPMR			PVRSRV_IOWR(PVRSRV_BRIDGE_SMM_CMD_FIRST+2)
+#define PVRSRV_BRIDGE_SMM_CMD_LAST			(PVRSRV_BRIDGE_SMM_CMD_FIRST+2)
 
 
 /*******************************************
-            PMRSecureExportPMR
+            PMRSecureExportPMR          
  *******************************************/
 
 /* Bridge in structure for PMRSecureExportPMR */
 typedef struct PVRSRV_BRIDGE_IN_PMRSECUREEXPORTPMR_TAG
 {
-  IMG_HANDLE hPMR;
+	IMG_HANDLE hPMR;
 } PVRSRV_BRIDGE_IN_PMRSECUREEXPORTPMR;
 
 
 /* Bridge out structure for PMRSecureExportPMR */
 typedef struct PVRSRV_BRIDGE_OUT_PMRSECUREEXPORTPMR_TAG
 {
-  IMG_SECURE_TYPE Export;
-  PVRSRV_ERROR eError;
+	IMG_SECURE_TYPE Export;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_PMRSECUREEXPORTPMR;
 
 /*******************************************
-            PMRSecureUnexportPMR
+            PMRSecureUnexportPMR          
  *******************************************/
 
 /* Bridge in structure for PMRSecureUnexportPMR */
 typedef struct PVRSRV_BRIDGE_IN_PMRSECUREUNEXPORTPMR_TAG
 {
-  IMG_HANDLE hPMR;
+	IMG_HANDLE hPMR;
 } PVRSRV_BRIDGE_IN_PMRSECUREUNEXPORTPMR;
 
 
 /* Bridge out structure for PMRSecureUnexportPMR */
 typedef struct PVRSRV_BRIDGE_OUT_PMRSECUREUNEXPORTPMR_TAG
 {
-  PVRSRV_ERROR eError;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_PMRSECUREUNEXPORTPMR;
 
 /*******************************************
-            PMRSecureImportPMR
+            PMRSecureImportPMR          
  *******************************************/
 
 /* Bridge in structure for PMRSecureImportPMR */
 typedef struct PVRSRV_BRIDGE_IN_PMRSECUREIMPORTPMR_TAG
 {
-  IMG_SECURE_TYPE Export;
+	IMG_SECURE_TYPE Export;
 } PVRSRV_BRIDGE_IN_PMRSECUREIMPORTPMR;
 
 
 /* Bridge out structure for PMRSecureImportPMR */
 typedef struct PVRSRV_BRIDGE_OUT_PMRSECUREIMPORTPMR_TAG
 {
-  IMG_HANDLE hPMR;
-  IMG_DEVMEM_SIZE_T uiSize;
-  IMG_DEVMEM_ALIGN_T sAlign;
-  PVRSRV_ERROR eError;
+	IMG_HANDLE hPMR;
+	IMG_DEVMEM_SIZE_T uiSize;
+	IMG_DEVMEM_ALIGN_T sAlign;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_PMRSECUREIMPORTPMR;
 
 #endif /* COMMON_SMM_BRIDGE_H */

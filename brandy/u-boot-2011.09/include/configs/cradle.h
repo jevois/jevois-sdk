@@ -39,11 +39,11 @@
 
 /* we will never enable dcache, because we have to setup MMU first */
 #define CONFIG_SYS_DCACHE_OFF
-#define CONFIG_SYS_TEXT_BASE    0x0
+#define	CONFIG_SYS_TEXT_BASE		0x0
 /*
  * Size of malloc() pool
  */
-#define CONFIG_SYS_MALLOC_LEN   (CONFIG_ENV_SIZE + 128*1024)
+#define CONFIG_SYS_MALLOC_LEN		(CONFIG_ENV_SIZE + 128*1024)
 
 /*
  * Hardware drivers
@@ -105,10 +105,10 @@
 
 #define CONFIG_SYS_LOAD_ADDR           0xa2000000      /* default load address */
 
-#define CONFIG_SYS_HZ     1000
+#define CONFIG_SYS_HZ			1000
 #define CONFIG_SYS_CPUSPEED            0x141           /* set core clock to 200/200/100 MHz */
 
-/* valid baudrates */
+						/* valid baudrates */
 #define CONFIG_SYS_BAUDRATE_TABLE      { 9600, 19200, 38400, 57600, 115200 }
 
 /*
@@ -138,8 +138,8 @@
 
 #define CONFIG_SYS_FLASH_BASE          PHYS_FLASH_1
 
-#define CONFIG_SYS_SDRAM_BASE   PHYS_SDRAM_1
-#define CONFIG_SYS_INIT_SP_ADDR   (GENERATED_GBL_DATA_SIZE + PHYS_SDRAM_1)
+#define CONFIG_SYS_SDRAM_BASE		PHYS_SDRAM_1
+#define	CONFIG_SYS_INIT_SP_ADDR		(GENERATED_GBL_DATA_SIZE + PHYS_SDRAM_1)
 
 /*
  * FLASH and environment organization
@@ -151,9 +151,9 @@
 #define CONFIG_SYS_FLASH_ERASE_TOUT    (2*CONFIG_SYS_HZ) /* Timeout for Flash Erase */
 #define CONFIG_SYS_FLASH_WRITE_TOUT    (2*CONFIG_SYS_HZ) /* Timeout for Flash Write */
 
-#define CONFIG_ENV_IS_IN_FLASH  1
-#define CONFIG_ENV_ADDR       0x00020000  /* absolute address for now   */
-#define CONFIG_ENV_SIZE       0x20000    /* 8K ouch, this may later be */
+#define CONFIG_ENV_IS_IN_FLASH	1
+#define CONFIG_ENV_ADDR				0x00020000	/* absolute address for now   */
+#define CONFIG_ENV_SIZE				0x20000	   /* 8K ouch, this may later be */
 
 /******************************************************************************
  *
@@ -312,8 +312,8 @@
 #define CONFIG_SYS_MDMRS_VAL       0x00000000
 #define CONFIG_SYS_MDREFR_VAL      0x00403018  /* Initial setting, individual bits set in lowlevel_init.S */
 #endif
-#define CONFIG_SYS_FLYCNFG_VAL    0x00000000
-#define CONFIG_SYS_SXCNFG_VAL   0x00000000
+#define	CONFIG_SYS_FLYCNFG_VAL		0x00000000
+#define	CONFIG_SYS_SXCNFG_VAL		0x00000000
 
 /*
  * PCMCIA and CF Interfaces (NOT USED, these values from lubbock init)
@@ -352,7 +352,7 @@
 #ifndef __ASSEMBLY__
 
 /* global prototypes */
-void led_code (int code, int color);
+void led_code(int code, int color);
 
 #endif
 

@@ -21,9 +21,9 @@
 
 #define JSFLASH_IDENT   (('F'<<8)|54)
 struct jsflash_ident_arg {
-  __u64 off;                /* 0x20000000 is included */
-  __u32 size;
-  char name[32];    /* With trailing zero */
+	__u64 off;                /* 0x20000000 is included */
+	__u32 size;
+	char name[32];		/* With trailing zero */
 };
 
 #define JSFLASH_ERASE   (('F'<<8)|55)
@@ -31,9 +31,9 @@ struct jsflash_ident_arg {
 
 #define JSFLASH_PROGRAM (('F'<<8)|56)
 struct jsflash_program_arg {
-  __u64 data;   /* char* for sparc and sparc64 */
-  __u64 off;
-  __u32 size;
+	__u64 data;		/* char* for sparc and sparc64 */
+	__u64 off;
+	__u32 size;
 };
 
 #endif /* _SPARC_JSFLASH_H */

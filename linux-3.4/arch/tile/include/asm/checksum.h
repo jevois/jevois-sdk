@@ -18,7 +18,7 @@
 #include <asm-generic/checksum.h>
 
 /* Allow us to provide a more optimized do_csum(). */
-__wsum do_csum (const unsigned char * buff, int len);
+__wsum do_csum(const unsigned char *buff, int len);
 #define do_csum do_csum
 
 #endif /* _ASM_TILE_CHECKSUM_H */

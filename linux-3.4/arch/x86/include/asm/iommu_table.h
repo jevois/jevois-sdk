@@ -31,13 +31,13 @@
  */
 
 struct iommu_table_entry {
-  initcall_t  detect;
-  initcall_t  depend;
-  void    (*early_init) (void); /* No memory allocate available. */
-  void    (*late_init) (void); /* Yes, can allocate memory. */
+	initcall_t	detect;
+	initcall_t	depend;
+	void		(*early_init)(void); /* No memory allocate available. */
+	void		(*late_init)(void); /* Yes, can allocate memory. */
 #define IOMMU_FINISH_IF_DETECTED (1<<0)
-#define IOMMU_DETECTED     (1<<1)
-  int   flags;
+#define IOMMU_DETECTED		 (1<<1)
+	int		flags;
 };
 /*
  * Macro fills out an entry in the .iommu_table that is equivalent
@@ -48,12 +48,12 @@ struct iommu_table_entry {
 
 
 #define __IOMMU_INIT(_detect, _depend, _early_init, _late_init, _finish)\
-  static const struct iommu_table_entry const     \
-      __iommu_entry_##_detect __used        \
-  __attribute__ ((unused, __section__(".iommu_table"),    \
-                  aligned((sizeof(void *))))) \
-    = {_detect, _depend, _early_init, _late_init,     \
-       _finish ? IOMMU_FINISH_IF_DETECTED : 0}
+	static const struct iommu_table_entry const			\
+		__iommu_entry_##_detect __used				\
+	__attribute__ ((unused, __section__(".iommu_table"),		\
+			aligned((sizeof(void *)))))	\
+	= {_detect, _depend, _early_init, _late_init,			\
+	   _finish ? IOMMU_FINISH_IF_DETECTED : 0}
 /*
  * The simplest IOMMU definition. Provide the detection routine
  * and it will be run after the SWIOTLB and the other IOMMUs
@@ -62,11 +62,11 @@ struct iommu_table_entry {
  * are also checked. You can use IOMMU_INIT_POST_FINISH if you prefer
  * to stop detecting the other IOMMUs after yours has been detected.
  */
-#define IOMMU_INIT_POST(_detect)          \
-  __IOMMU_INIT(_detect, pci_swiotlb_detect_4gb,  0, 0, 0)
+#define IOMMU_INIT_POST(_detect)					\
+	__IOMMU_INIT(_detect, pci_swiotlb_detect_4gb,  0, 0, 0)
 
-#define IOMMU_INIT_POST_FINISH(detect)          \
-  __IOMMU_INIT(_detect, pci_swiotlb_detect_4gb,  0, 0, 1)
+#define IOMMU_INIT_POST_FINISH(detect)					\
+	__IOMMU_INIT(_detect, pci_swiotlb_detect_4gb,  0, 0, 1)
 
 /*
  * A more sophisticated version of IOMMU_INIT. This variant requires:
@@ -85,16 +85,16 @@ struct iommu_table_entry {
  * stop the execution chain. Both will still call the 'init' and
  * 'late_init' functions if they are set.
  */
-#define IOMMU_INIT_FINISH(_detect, _depend, _init, _late_init)    \
-  __IOMMU_INIT(_detect, _depend, _init, _late_init, 1)
+#define IOMMU_INIT_FINISH(_detect, _depend, _init, _late_init)		\
+	__IOMMU_INIT(_detect, _depend, _init, _late_init, 1)
 
-#define IOMMU_INIT(_detect, _depend, _init, _late_init)     \
-  __IOMMU_INIT(_detect, _depend, _init, _late_init, 0)
+#define IOMMU_INIT(_detect, _depend, _init, _late_init)			\
+	__IOMMU_INIT(_detect, _depend, _init, _late_init, 0)
 
-void sort_iommu_table (struct iommu_table_entry * start,
-                       struct iommu_table_entry * finish);
+void sort_iommu_table(struct iommu_table_entry *start,
+		      struct iommu_table_entry *finish);
 
-void check_iommu_entries (struct iommu_table_entry * start,
-                          struct iommu_table_entry * finish);
+void check_iommu_entries(struct iommu_table_entry *start,
+			 struct iommu_table_entry *finish);
 
 #endif /* _ASM_X86_IOMMU_TABLE_H */

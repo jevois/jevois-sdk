@@ -27,43 +27,43 @@ extern u_long apollo_model;
 
 struct SCN2681 {
 
-  DECLARE_2681_FIELD (mra);
-  DECLARE_2681_FIELD (sra_csra);
-  DECLARE_2681_FIELD (BRGtest_cra);
-  DECLARE_2681_FIELD (rhra_thra);
-  DECLARE_2681_FIELD (ipcr_acr);
-  DECLARE_2681_FIELD (isr_imr);
-  DECLARE_2681_FIELD (ctu_ctur);
-  DECLARE_2681_FIELD (ctl_ctlr);
-  DECLARE_2681_FIELD (mrb);
-  DECLARE_2681_FIELD (srb_csrb);
-  DECLARE_2681_FIELD (tst_crb);
-  DECLARE_2681_FIELD (rhrb_thrb);
-  DECLARE_2681_FIELD (reserved);
-  DECLARE_2681_FIELD (ip_opcr);
-  DECLARE_2681_FIELD (startCnt_setOutBit);
-  DECLARE_2681_FIELD (stopCnt_resetOutBit);
-  
+	DECLARE_2681_FIELD(mra);
+	DECLARE_2681_FIELD(sra_csra);
+	DECLARE_2681_FIELD(BRGtest_cra);
+	DECLARE_2681_FIELD(rhra_thra);
+	DECLARE_2681_FIELD(ipcr_acr);
+	DECLARE_2681_FIELD(isr_imr);
+	DECLARE_2681_FIELD(ctu_ctur);
+	DECLARE_2681_FIELD(ctl_ctlr);
+	DECLARE_2681_FIELD(mrb);
+	DECLARE_2681_FIELD(srb_csrb);
+	DECLARE_2681_FIELD(tst_crb);
+	DECLARE_2681_FIELD(rhrb_thrb);
+	DECLARE_2681_FIELD(reserved);
+	DECLARE_2681_FIELD(ip_opcr);
+	DECLARE_2681_FIELD(startCnt_setOutBit);
+	DECLARE_2681_FIELD(stopCnt_resetOutBit);
+
 };
 
 #if 0
 struct mc146818 {
 
-  unsigned int second1: 4, second2: 4, alarm_second1: 4, alarm_second2: 4,
-           minute1: 4, minute2: 4, alarm_minute1: 4, alarm_minute2: 4;
-  unsigned int hours1: 4, hours2: 4, alarm_hours1: 4, alarm_hours2: 4,
-           day_of_week1: 4, day_of_week2: 4, day_of_month1: 4, day_of_month2: 4;
-  unsigned int month1: 4, month2: 4, year1: 4, year2: 4, : 16;
-  
+	unsigned int second1:4, second2:4, alarm_second1:4, alarm_second2:4,
+		     minute1:4, minute2:4, alarm_minute1:4, alarm_minute2:4;
+	unsigned int hours1:4, hours2:4, alarm_hours1:4, alarm_hours2:4,
+		     day_of_week1:4, day_of_week2:4, day_of_month1:4, day_of_month2:4;
+	unsigned int month1:4, month2:4, year1:4, year2:4, :16;
+
 };
 #endif
 
 struct mc146818 {
-  unsigned char second, alarm_second;
-  unsigned char minute, alarm_minute;
-  unsigned char hours, alarm_hours;
-  unsigned char day_of_week, day_of_month;
-  unsigned char month, year;
+        unsigned char second, alarm_second;
+        unsigned char minute, alarm_minute;
+        unsigned char hours, alarm_hours;
+        unsigned char day_of_week, day_of_month;
+        unsigned char month, year;
 };
 
 
@@ -103,6 +103,6 @@ extern u_long timer_physaddr;
 
 #define isaIO2mem(x) (((((x) & 0x3f8)  << 7) | (((x) & 0xfc00) >> 6) | ((x) & 0x7)) + 0x40000 + IO_BASE)
 
-#define IRQ_APOLLO  IRQ_USER
+#define IRQ_APOLLO	IRQ_USER
 
 #endif

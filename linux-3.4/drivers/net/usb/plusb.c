@@ -30,7 +30,7 @@
 
 
 /*
- * Prolific PL-2301/PL-2302 driver ... http://www.prolific.com.tw/
+ * Prolific PL-2301/PL-2302 driver ... http://www.prolific.com.tw/ 
  *
  * The protocol and handshaking used here should be bug-compatible
  * with the Linux 2.2 "plusb" driver, by Deti Fliegl.
@@ -57,58 +57,58 @@
  * Bits 0-4 can be used for software handshaking; they're set from
  * one end, cleared from the other, "read" with the interrupt byte.
  */
-#define PL_S_EN   (1<<7)    /* (feature only) suspend enable */
+#define	PL_S_EN		(1<<7)		/* (feature only) suspend enable */
 /* reserved bit -- rx ready (6) ? */
-#define PL_TX_READY (1<<5)    /* (interrupt only) transmit ready */
-#define PL_RESET_OUT  (1<<4)    /* reset output pipe */
-#define PL_RESET_IN (1<<3)    /* reset input pipe */
-#define PL_TX_C   (1<<2)    /* transmission complete */
-#define PL_TX_REQ (1<<1)    /* transmission received */
-#define PL_PEER_E (1<<0)    /* peer exists */
+#define	PL_TX_READY	(1<<5)		/* (interrupt only) transmit ready */
+#define	PL_RESET_OUT	(1<<4)		/* reset output pipe */
+#define	PL_RESET_IN	(1<<3)		/* reset input pipe */
+#define	PL_TX_C		(1<<2)		/* transmission complete */
+#define	PL_TX_REQ	(1<<1)		/* transmission received */
+#define	PL_PEER_E	(1<<0)		/* peer exists */
 
 static inline int
-pl_vendor_req (struct usbnet * dev, u8 req, u8 val, u8 index)
+pl_vendor_req(struct usbnet *dev, u8 req, u8 val, u8 index)
 {
-  return usb_control_msg (dev->udev,
-                          usb_rcvctrlpipe (dev->udev, 0),
-                          req,
-                          USB_DIR_IN | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
-                          val, index,
-                          NULL, 0,
-                          USB_CTRL_GET_TIMEOUT);
-}
-
-static inline int
-pl_clear_QuickLink_features (struct usbnet * dev, int val)
-{
-  return pl_vendor_req (dev, 1, (u8) val, 0);
+	return usb_control_msg(dev->udev,
+		usb_rcvctrlpipe(dev->udev, 0),
+		req,
+		USB_DIR_IN | USB_TYPE_VENDOR | USB_RECIP_DEVICE,
+		val, index,
+		NULL, 0,
+		USB_CTRL_GET_TIMEOUT);
 }
 
 static inline int
-pl_set_QuickLink_features (struct usbnet * dev, int val)
+pl_clear_QuickLink_features(struct usbnet *dev, int val)
 {
-  return pl_vendor_req (dev, 3, (u8) val, 0);
+	return pl_vendor_req(dev, 1, (u8) val, 0);
 }
 
-static int pl_reset (struct usbnet * dev)
+static inline int
+pl_set_QuickLink_features(struct usbnet *dev, int val)
 {
-  int status;
-  
-  /* some units seem to need this reset, others reject it utterly.
-   * FIXME be more like "naplink" or windows drivers.
-   */
-  status = pl_set_QuickLink_features (dev,
-                                      PL_S_EN | PL_RESET_OUT | PL_RESET_IN | PL_PEER_E);
-  if (status != 0 && netif_msg_probe (dev) )
-  { netif_dbg (dev, link, dev->net, "pl_reset --> %d\n", status); }
-  return 0;
+	return pl_vendor_req(dev, 3, (u8) val, 0);
 }
 
-static const struct driver_info prolific_info = {
-  .description =  "Prolific PL-2301/PL-2302/PL-25A1",
-  .flags =  FLAG_POINTTOPOINT | FLAG_NO_SETINT,
-  /* some PL-2302 versions seem to fail usb_set_interface() */
-  .reset =  pl_reset,
+static int pl_reset(struct usbnet *dev)
+{
+	int status;
+
+	/* some units seem to need this reset, others reject it utterly.
+	 * FIXME be more like "naplink" or windows drivers.
+	 */
+	status = pl_set_QuickLink_features(dev,
+		PL_S_EN|PL_RESET_OUT|PL_RESET_IN|PL_PEER_E);
+	if (status != 0 && netif_msg_probe(dev))
+		netif_dbg(dev, link, dev->net, "pl_reset --> %d\n", status);
+	return 0;
+}
+
+static const struct driver_info	prolific_info = {
+	.description =	"Prolific PL-2301/PL-2302/PL-25A1",
+	.flags =	FLAG_POINTTOPOINT | FLAG_NO_SETINT,
+		/* some PL-2302 versions seem to fail usb_set_interface() */
+	.reset =	pl_reset,
 };
 
 
@@ -119,41 +119,41 @@ static const struct driver_info prolific_info = {
  * may not be on the device.
  */
 
-static const struct usb_device_id products [] = {
+static const struct usb_device_id	products [] = {
 
-  /* full speed cables */
-  {
-    USB_DEVICE (0x067b, 0x0000),
-    .driver_info =  (unsigned long) & prolific_info,
-  }, {
-    USB_DEVICE (0x067b, 0x0001),
-    .driver_info =  (unsigned long) & prolific_info,
-  },
-  
-  /* high speed cables */
-  {
-    USB_DEVICE (0x067b, 0x25a1),    /* PL-25A1, no eeprom */
-    .driver_info =  (unsigned long) & prolific_info,
-  }, {
-    USB_DEVICE (0x050d, 0x258a),    /* Belkin F5U258/F5U279 (PL-25A1) */
-    .driver_info =  (unsigned long) & prolific_info,
-  },
-  
-  { },   
+/* full speed cables */
+{
+	USB_DEVICE(0x067b, 0x0000),
+	.driver_info =	(unsigned long) &prolific_info,
+}, {
+	USB_DEVICE(0x067b, 0x0001),
+	.driver_info =	(unsigned long) &prolific_info,
+},
+
+/* high speed cables */
+{
+	USB_DEVICE(0x067b, 0x25a1),     /* PL-25A1, no eeprom */
+	.driver_info =  (unsigned long) &prolific_info,
+}, {
+	USB_DEVICE(0x050d, 0x258a),     /* Belkin F5U258/F5U279 (PL-25A1) */
+	.driver_info =  (unsigned long) &prolific_info,
+},
+
+	{ },	
 };
-MODULE_DEVICE_TABLE (usb, products);
+MODULE_DEVICE_TABLE(usb, products);
 
 static struct usb_driver plusb_driver = {
-  .name =   "plusb",
-  .id_table = products,
-  .probe =  usbnet_probe,
-  .disconnect = usbnet_disconnect,
-  .suspend =  usbnet_suspend,
-  .resume = usbnet_resume,
+	.name =		"plusb",
+	.id_table =	products,
+	.probe =	usbnet_probe,
+	.disconnect =	usbnet_disconnect,
+	.suspend =	usbnet_suspend,
+	.resume =	usbnet_resume,
 };
 
-module_usb_driver (plusb_driver);
+module_usb_driver(plusb_driver);
 
-MODULE_AUTHOR ("David Brownell");
-MODULE_DESCRIPTION ("Prolific PL-2301/2302/25A1 USB Host to Host Link Driver");
-MODULE_LICENSE ("GPL");
+MODULE_AUTHOR("David Brownell");
+MODULE_DESCRIPTION("Prolific PL-2301/2302/25A1 USB Host to Host Link Driver");
+MODULE_LICENSE("GPL");

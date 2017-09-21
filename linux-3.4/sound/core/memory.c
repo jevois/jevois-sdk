@@ -1,6 +1,6 @@
 /*
  *  Copyright (c) by Jaroslav Kysela <perex@perex.cz>
- *
+ * 
  *  Misc memory accessors
  *
  *
@@ -35,28 +35,28 @@
  *
  * Returns zero if successful, or non-zero on failure.
  */
-int copy_to_user_fromio (void __user * dst, const volatile void __iomem * src, size_t count)
+int copy_to_user_fromio(void __user *dst, const volatile void __iomem *src, size_t count)
 {
-  #if defined(__i386__) || defined(CONFIG_SPARC32)
-  return copy_to_user (dst, (const void __force *) src, count) ? -EFAULT : 0;
-  #else
-  char buf[256];
-  while (count) {
-    size_t c = count;
-    if (c > sizeof (buf) )
-    { c = sizeof (buf); }
-    memcpy_fromio (buf, (void __iomem *) src, c);
-    if (copy_to_user (dst, buf, c) )
-    { return -EFAULT; }
-    count -= c;
-    dst += c;
-    src += c;
-  }
-  return 0;
-  #endif
+#if defined(__i386__) || defined(CONFIG_SPARC32)
+	return copy_to_user(dst, (const void __force*)src, count) ? -EFAULT : 0;
+#else
+	char buf[256];
+	while (count) {
+		size_t c = count;
+		if (c > sizeof(buf))
+			c = sizeof(buf);
+		memcpy_fromio(buf, (void __iomem *)src, c);
+		if (copy_to_user(dst, buf, c))
+			return -EFAULT;
+		count -= c;
+		dst += c;
+		src += c;
+	}
+	return 0;
+#endif
 }
 
-EXPORT_SYMBOL (copy_to_user_fromio);
+EXPORT_SYMBOL(copy_to_user_fromio);
 
 /**
  * copy_from_user_toio - copy data from user-space to mmio-space
@@ -68,25 +68,25 @@ EXPORT_SYMBOL (copy_to_user_fromio);
  *
  * Returns zero if successful, or non-zero on failure.
  */
-int copy_from_user_toio (volatile void __iomem * dst, const void __user * src, size_t count)
+int copy_from_user_toio(volatile void __iomem *dst, const void __user *src, size_t count)
 {
-  #if defined(__i386__) || defined(CONFIG_SPARC32)
-  return copy_from_user ( (void __force *) dst, src, count) ? -EFAULT : 0;
-  #else
-  char buf[256];
-  while (count) {
-    size_t c = count;
-    if (c > sizeof (buf) )
-    { c = sizeof (buf); }
-    if (copy_from_user (buf, src, c) )
-    { return -EFAULT; }
-    memcpy_toio (dst, buf, c);
-    count -= c;
-    dst += c;
-    src += c;
-  }
-  return 0;
-  #endif
+#if defined(__i386__) || defined(CONFIG_SPARC32)
+	return copy_from_user((void __force *)dst, src, count) ? -EFAULT : 0;
+#else
+	char buf[256];
+	while (count) {
+		size_t c = count;
+		if (c > sizeof(buf))
+			c = sizeof(buf);
+		if (copy_from_user(buf, src, c))
+			return -EFAULT;
+		memcpy_toio(dst, buf, c);
+		count -= c;
+		dst += c;
+		src += c;
+	}
+	return 0;
+#endif
 }
 
-EXPORT_SYMBOL (copy_from_user_toio);
+EXPORT_SYMBOL(copy_from_user_toio);

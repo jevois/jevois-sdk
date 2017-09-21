@@ -25,12 +25,12 @@
 
 #include "powertv-clock.h"
 
-unsigned int __cpuinit get_c0_compare_int (void)
+unsigned int __cpuinit get_c0_compare_int(void)
 {
-  return irq_mips_timer;
+	return irq_mips_timer;
 }
 
-void __init plat_time_init (void)
+void __init plat_time_init(void)
 {
-  powertv_clocksource_init();
+	powertv_clocksource_init();
 }

@@ -33,8 +33,8 @@
 /* ---- Public Constants and Types --------------------------------------- */
 /* ---- Public Variable Externs ------------------------------------------ */
 /* ---- Public Function Prototypes --------------------------------------- */
-static inline void intcHw_irq_disable (void * basep, uint32_t mask);
-static inline void intcHw_irq_enable (void * basep, uint32_t mask);
+static inline void intcHw_irq_disable(void *basep, uint32_t mask);
+static inline void intcHw_irq_enable(void *basep, uint32_t mask);
 
 #endif /* _INTCHW_H */
 

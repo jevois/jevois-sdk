@@ -18,4 +18,4 @@
  * the file called "COPYING".
  */
 
-void ips_link_to_i915_driver (void);
+void ips_link_to_i915_driver(void);

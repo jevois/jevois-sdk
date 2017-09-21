@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -38,22 +38,22 @@
 *
 ************************************************************************************************************
 */
-void sunxi_dump (void * addr, unsigned int size)
+void sunxi_dump(void *addr, unsigned int size)
 {
-  int i, j;
-  char * buf = (char *) addr;
-  
-  for (j = 0; j < size; j += 16)
-  {
-    for (i = 0; i < 16; i++)
-    {
-      printf ("%02x ", buf[j + i] & 0xff);
-    }
-    printf ("\n");
-  }
-  printf ("\n");
-  
-  return ;
+	int i,j;
+	char *buf = (char *)addr;
+
+	for(j=0;j<size;j+=16)
+	{
+		for(i=0;i<16;i++)
+		{
+			printf("%02x ", buf[j+i] & 0xff);
+		}
+		printf("\n");
+	}
+	printf("\n");
+
+	return ;
 }
 
 

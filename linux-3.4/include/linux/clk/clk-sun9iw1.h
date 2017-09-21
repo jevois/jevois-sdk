@@ -1,7 +1,7 @@
 #ifndef __CLK_SUN9IW1_H
 #define __CLK_SUN9IW1_H
-
-
+ 
+ 
 #define LOSC_CLK "losc"
 #define HOSC_CLK "hosc"
 #define HOSC_750_CLK "hosc_750"
@@ -104,6 +104,6 @@
 #define CPURI2S0_CLK "cpuri2s0"
 #define CPURI2S1_CLK "cpuri2s1"
 #define CPURVDDVE_CLK "cpurvddve"
-
-
+ 
+ 
 #endif

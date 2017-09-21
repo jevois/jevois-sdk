@@ -46,29 +46,29 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 /* Walk through all the nodes on the list until the end or a callback returns FALSE */
-IMG_VOID dllist_foreach_node (PDLLIST_NODE psListHead,
-                              PFN_NODE_CALLBACK pfnCallBack,
-                              IMG_PVOID pvCallbackData)
+IMG_VOID dllist_foreach_node(PDLLIST_NODE psListHead,
+							  PFN_NODE_CALLBACK pfnCallBack,
+							  IMG_PVOID pvCallbackData)
 {
-  PDLLIST_NODE psWalker = psListHead->psNextNode;
-  PDLLIST_NODE psNextWalker;
-  
-  while (psWalker != psListHead)
-  {
-    /*
-      The callback function could remove itself from the list
-      so to avoid NULL pointer deference save the next node pointer
-      before calling the callback
-    */
-    psNextWalker = psWalker->psNextNode;
-    if (pfnCallBack (psWalker, pvCallbackData) )
-    {
-      psWalker = psNextWalker;
-    }
-    else
-    {
-      break;
-    }
-  }
+	PDLLIST_NODE psWalker = psListHead->psNextNode;
+	PDLLIST_NODE psNextWalker;
+
+	while (psWalker != psListHead)
+	{
+		/*
+			The callback function could remove itself from the list
+			so to avoid NULL pointer deference save the next node pointer
+			before calling the callback
+		*/
+		psNextWalker = psWalker->psNextNode;
+		if (pfnCallBack(psWalker, pvCallbackData))
+		{
+			psWalker = psNextWalker;
+		}
+		else
+		{
+			break;
+		}
+	}
 }
 

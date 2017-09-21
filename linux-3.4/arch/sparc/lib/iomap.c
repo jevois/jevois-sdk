@@ -6,20 +6,20 @@
 #include <asm/io.h>
 
 /* Create a virtual mapping cookie for an IO port range */
-void __iomem * ioport_map (unsigned long port, unsigned int nr)
+void __iomem *ioport_map(unsigned long port, unsigned int nr)
 {
-  return (void __iomem *) (unsigned long) port;
+	return (void __iomem *) (unsigned long) port;
 }
 
-void ioport_unmap (void __iomem * addr)
+void ioport_unmap(void __iomem *addr)
 {
-  /* Nothing to do */
+	/* Nothing to do */
 }
-EXPORT_SYMBOL (ioport_map);
-EXPORT_SYMBOL (ioport_unmap);
+EXPORT_SYMBOL(ioport_map);
+EXPORT_SYMBOL(ioport_unmap);
 
-void pci_iounmap (struct pci_dev * dev, void __iomem * addr)
+void pci_iounmap(struct pci_dev *dev, void __iomem * addr)
 {
-  /* nothing to do */
+	/* nothing to do */
 }
-EXPORT_SYMBOL (pci_iounmap);
+EXPORT_SYMBOL(pci_iounmap);

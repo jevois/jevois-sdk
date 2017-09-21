@@ -14,11 +14,11 @@
 
 /* register names for FDC_READ/WRITE macros */
 
-#define FDCREG_CMD    0
-#define FDCREG_STATUS 0
-#define FDCREG_TRACK  2
-#define FDCREG_SECTOR 4
-#define FDCREG_DATA   6
+#define FDCREG_CMD		0
+#define FDCREG_STATUS	0
+#define FDCREG_TRACK	2
+#define FDCREG_SECTOR	4
+#define FDCREG_DATA		6
 
 /* command opcodes */
 
@@ -50,17 +50,17 @@
 
 /* status register bits */
 
-#define FDCSTAT_MOTORON (0x80)   /* motor on */
-#define FDCSTAT_WPROT (0x40)   /* write protected (FDCCMD_WR*) */
-#define FDCSTAT_SPINUP  (0x20)   /* motor speed stable (Type I) */
-#define FDCSTAT_DELDAM  (0x20)   /* sector has deleted DAM (Type II+III) */
-#define FDCSTAT_RECNF (0x10)   /* record not found */
-#define FDCSTAT_CRC   (0x08)   /* CRC error */
-#define FDCSTAT_TR00  (0x04)   /* Track 00 flag (Type I) */
-#define FDCSTAT_LOST  (0x04)   /* Lost Data (Type II+III) */
-#define FDCSTAT_IDX   (0x02)   /* Index status (Type I) */
-#define FDCSTAT_DRQ   (0x02)   /* DRQ status (Type II+III) */
-#define FDCSTAT_BUSY  (0x01)   /* FDC is busy */
+#define	FDCSTAT_MOTORON	(0x80)   /* motor on */
+#define	FDCSTAT_WPROT	(0x40)   /* write protected (FDCCMD_WR*) */
+#define	FDCSTAT_SPINUP	(0x20)   /* motor speed stable (Type I) */
+#define	FDCSTAT_DELDAM	(0x20)   /* sector has deleted DAM (Type II+III) */
+#define	FDCSTAT_RECNF	(0x10)   /* record not found */
+#define	FDCSTAT_CRC		(0x08)   /* CRC error */
+#define	FDCSTAT_TR00	(0x04)   /* Track 00 flag (Type I) */
+#define	FDCSTAT_LOST	(0x04)   /* Lost Data (Type II+III) */
+#define	FDCSTAT_IDX		(0x02)   /* Index status (Type I) */
+#define	FDCSTAT_DRQ		(0x02)   /* DRQ status (Type II+III) */
+#define	FDCSTAT_BUSY	(0x01)   /* FDC is busy */
 
 
 /* PSG Port A Bit Nr 0 .. Side Sel .. 0 -> Side 1  1 -> Side 2 */
@@ -71,9 +71,9 @@
 #define DSKDRV1     (0x04)
 
 /* step rates */
-#define FDCSTEP_6 0x00
-#define FDCSTEP_12  0x01
-#define FDCSTEP_2 0x02
-#define FDCSTEP_3 0x03
+#define	FDCSTEP_6	0x00
+#define	FDCSTEP_12	0x01
+#define	FDCSTEP_2	0x02
+#define	FDCSTEP_3	0x03
 
 #endif

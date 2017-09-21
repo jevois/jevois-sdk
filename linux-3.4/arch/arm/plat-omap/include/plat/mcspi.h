@@ -8,16 +8,16 @@
 #define OMAP4_MCSPI_REG_OFFSET 0x100
 
 struct omap2_mcspi_platform_config {
-  unsigned short  num_cs;
-  unsigned int regs_offset;
+	unsigned short	num_cs;
+	unsigned int regs_offset;
 };
 
 struct omap2_mcspi_dev_attr {
-  unsigned short num_chipselect;
+	unsigned short num_chipselect;
 };
 
 struct omap2_mcspi_device_config {
-  unsigned turbo_mode: 1;
+	unsigned turbo_mode:1;
 };
 
 #endif

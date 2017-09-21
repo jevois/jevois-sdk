@@ -32,27 +32,27 @@
 
 void display_sysid (void)
 {
-  struct nios_sysid_t * sysid = (struct nios_sysid_t *) CONFIG_SYS_NIOS_SYSID_BASE;
-  struct tm t;
-  char asc[32];
-  time_t stamp;
-  
-  stamp = readl (&sysid->timestamp);
-  localtime_r (&stamp, &t);
-  asctime_r (&t, asc);
-  printf ("SYSID : %08lx, %s", readl (&sysid->id), asc);
-  
+	struct nios_sysid_t *sysid = (struct nios_sysid_t *)CONFIG_SYS_NIOS_SYSID_BASE;
+	struct tm t;
+	char asc[32];
+	time_t stamp;
+
+	stamp = readl (&sysid->timestamp);
+	localtime_r (&stamp, &t);
+	asctime_r (&t, asc);
+	printf ("SYSID : %08lx, %s", readl (&sysid->id), asc);
+
 }
 
-int do_sysid (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
+int do_sysid (cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
-  display_sysid ();
-  return (0);
+	display_sysid ();
+	return (0);
 }
 
-U_BOOT_CMD (
-  sysid,  1,  1,  do_sysid,
-  "display Nios-II system id",
-  ""
+U_BOOT_CMD(
+	sysid,	1,	1,	do_sysid,
+	"display Nios-II system id",
+	""
 );
 #endif /* CONFIG_SYS_NIOS_SYSID_BASE */

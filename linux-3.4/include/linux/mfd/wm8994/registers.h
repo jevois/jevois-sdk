@@ -63,8 +63,8 @@
 #define WM8994_MICBIAS                          0x3A
 #define WM8994_LDO_1                            0x3B
 #define WM8994_LDO_2                            0x3C
-#define WM8958_MICBIAS1       0x3D
-#define WM8958_MICBIAS2       0x3E
+#define WM8958_MICBIAS1				0x3D
+#define WM8958_MICBIAS2				0x3E
 #define WM8994_CHARGE_PUMP_1                    0x4C
 #define WM8958_CHARGE_PUMP_2                    0x4D
 #define WM8994_CLASS_W_1                        0x51
@@ -72,7 +72,7 @@
 #define WM8994_DC_SERVO_2                       0x55
 #define WM8994_DC_SERVO_4                       0x57
 #define WM8994_DC_SERVO_READBACK                0x58
-#define WM8994_DC_SERVO_4E      0x59
+#define WM8994_DC_SERVO_4E			0x59
 #define WM8994_ANALOGUE_HP_1                    0x60
 #define WM8958_MIC_DETECT_1                     0xD0
 #define WM8958_MIC_DETECT_2                     0xD1
@@ -250,7 +250,7 @@
 #define WM8994_GPIO_4                           0x703
 #define WM8994_GPIO_5                           0x704
 #define WM8994_GPIO_6                           0x705
-#define WM1811_JACKDET_CTRL     0x705
+#define WM1811_JACKDET_CTRL			0x705
 #define WM8994_GPIO_7                           0x706
 #define WM8994_GPIO_8                           0x707
 #define WM8994_GPIO_9                           0x708

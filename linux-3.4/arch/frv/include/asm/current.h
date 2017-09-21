@@ -17,7 +17,7 @@
 /*
  * dedicate GR29 to keeping the current task pointer
  */
-register struct task_struct * current asm ("gr29");
+register struct task_struct *current asm("gr29");
 
 #define get_current() current
 

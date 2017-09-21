@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -27,7 +27,7 @@
 
 #define SPRITE_CARTOON_GUI_GREEN         0xff00FF00
 #define SPRITE_CARTOON_GUI_RED           0xffFF0000
-#define SPRITE_CARTOON_GUI_BLUE        0xff0000ff
+#define SPRITE_CARTOON_GUI_BLUE		  	 0xff0000ff
 #define SPRITE_CARTOON_GUI_CYAN          0xff00FFFF
 #define SPRITE_CARTOON_GUI_MAGENTA       0xffFF00FF
 #define SPRITE_CARTOON_GUI_YELLOW        0xffFFFF00

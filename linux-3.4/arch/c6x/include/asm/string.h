@@ -14,7 +14,7 @@
 #include <asm/page.h>
 #include <linux/linkage.h>
 
-asmlinkage extern void * memcpy (void * to, const void * from, size_t n);
+asmlinkage extern void *memcpy(void *to, const void *from, size_t n);
 
 #define __HAVE_ARCH_MEMCPY
 

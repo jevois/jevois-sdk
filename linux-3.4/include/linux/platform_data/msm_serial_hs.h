@@ -21,8 +21,8 @@
  * Clients should call request_clock_off() when no uart data is expected,
  * and must call request_clock_on() before any further uart data can be
  * received. */
-extern void msm_hs_request_clock_off (struct uart_port * uport);
-extern void msm_hs_request_clock_on (struct uart_port * uport);
+extern void msm_hs_request_clock_off(struct uart_port *uport);
+extern void msm_hs_request_clock_on(struct uart_port *uport);
 
 /**
  * struct msm_serial_hs_platform_data
@@ -40,10 +40,10 @@ extern void msm_hs_request_clock_on (struct uart_port * uport);
  * while the UART is clocked off in this mode of operation.
  */
 struct msm_serial_hs_platform_data {
-  int rx_wakeup_irq;
-  unsigned char inject_rx_on_wakeup;
-  char rx_to_inject;
-  void (*exit_lpm_cb) (struct uart_port *);
+	int rx_wakeup_irq;
+	unsigned char inject_rx_on_wakeup;
+	char rx_to_inject;
+	void (*exit_lpm_cb)(struct uart_port *);
 };
 
 #endif

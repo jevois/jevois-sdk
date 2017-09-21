@@ -16,12 +16,12 @@
  * an ISA port access but the way to access the date register differs ...
  */
 #define CMOS_READ(addr) ({ \
-    outb_p((addr),RTC_PORT(0)); \
-    inb_p(RTC_PORT(1)); \
-  })
+outb_p((addr),RTC_PORT(0)); \
+inb_p(RTC_PORT(1)); \
+})
 #define CMOS_WRITE(val, addr) ({ \
-    outb_p((addr),RTC_PORT(0)); \
-    outb_p((val),RTC_PORT(1)); \
-  })
+outb_p((addr),RTC_PORT(0)); \
+outb_p((val),RTC_PORT(1)); \
+})
 
 #endif /* __ASM_PPC_MC146818RTC_H */

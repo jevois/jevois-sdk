@@ -21,9 +21,9 @@
  * subsequent reads are up to date.
  */
 static void __naked
-v4wt_copy_user_page (void * kto, const void * kfrom)
+v4wt_copy_user_page(void *kto, const void *kfrom)
 {
-  asm ("\
+	asm("\
 	stmfd	sp!, {r4, lr}			@ 2\n\
 	mov	r2, %2				@ 1\n\
 	ldmia	r1!, {r3, r4, ip, lr}		@ 4\n\
@@ -39,20 +39,20 @@ v4wt_copy_user_page (void * kto, const void * kfrom)
 	bne	1b				@ 1\n\
 	mcr	p15, 0, r2, c7, c7, 0		@ flush ID cache\n\
 	ldmfd	sp!, {r4, pc}			@ 3"
-       :
-       : "r" (kto), "r" (kfrom), "I" (PAGE_SIZE / 64) );
+	:
+	: "r" (kto), "r" (kfrom), "I" (PAGE_SIZE / 64));
 }
 
-void v4wt_copy_user_highpage (struct page * to, struct page * from,
-                              unsigned long vaddr, struct vm_area_struct * vma)
+void v4wt_copy_user_highpage(struct page *to, struct page *from,
+	unsigned long vaddr, struct vm_area_struct *vma)
 {
-  void * kto, *kfrom;
-  
-  kto = kmap_atomic (to);
-  kfrom = kmap_atomic (from);
-  v4wt_copy_user_page (kto, kfrom);
-  kunmap_atomic (kfrom);
-  kunmap_atomic (kto);
+	void *kto, *kfrom;
+
+	kto = kmap_atomic(to);
+	kfrom = kmap_atomic(from);
+	v4wt_copy_user_page(kto, kfrom);
+	kunmap_atomic(kfrom);
+	kunmap_atomic(kto);
 }
 
 /*
@@ -60,10 +60,10 @@ void v4wt_copy_user_highpage (struct page * to, struct page * from,
  *
  * Same story as above.
  */
-void v4wt_clear_user_highpage (struct page * page, unsigned long vaddr)
+void v4wt_clear_user_highpage(struct page *page, unsigned long vaddr)
 {
-  void * ptr, *kaddr = kmap_atomic (page);
-  asm volatile ("\
+	void *ptr, *kaddr = kmap_atomic(page);
+	asm volatile("\
 	mov	r1, %2				@ 1\n\
 	mov	r2, #0				@ 1\n\
 	mov	r3, #0				@ 1\n\
@@ -76,13 +76,13 @@ void v4wt_clear_user_highpage (struct page * page, unsigned long vaddr)
 	subs	r1, r1, #1			@ 1\n\
 	bne	1b				@ 1\n\
 	mcr	p15, 0, r2, c7, c7, 0		@ flush ID cache"
-                : "=r" (ptr)
-                : "0" (kaddr), "I" (PAGE_SIZE / 64)
-                : "r1", "r2", "r3", "ip", "lr");
-  kunmap_atomic (kaddr);
+	: "=r" (ptr)
+	: "0" (kaddr), "I" (PAGE_SIZE / 64)
+	: "r1", "r2", "r3", "ip", "lr");
+	kunmap_atomic(kaddr);
 }
 
 struct cpu_user_fns v4wt_user_fns __initdata = {
-  .cpu_clear_user_highpage = v4wt_clear_user_highpage,
-  .cpu_copy_user_highpage = v4wt_copy_user_highpage,
+	.cpu_clear_user_highpage = v4wt_clear_user_highpage,
+	.cpu_copy_user_highpage	= v4wt_copy_user_highpage,
 };

@@ -23,29 +23,29 @@
    calls the corresponding xencomm_arch_hypercall_X.
    Architectures should defines HYPERVISOR_xxx as xencomm_hypercall_xxx unless
    they want to use their own wrapper.  */
-extern int xencomm_hypercall_console_io (int cmd, int count, char * str);
+extern int xencomm_hypercall_console_io(int cmd, int count, char *str);
 
-extern int xencomm_hypercall_event_channel_op (int cmd, void * op);
+extern int xencomm_hypercall_event_channel_op(int cmd, void *op);
 
-extern int xencomm_hypercall_xen_version (int cmd, void * arg);
+extern int xencomm_hypercall_xen_version(int cmd, void *arg);
 
-extern int xencomm_hypercall_physdev_op (int cmd, void * op);
+extern int xencomm_hypercall_physdev_op(int cmd, void *op);
 
-extern int xencomm_hypercall_grant_table_op (unsigned int cmd, void * op,
-    unsigned int count);
+extern int xencomm_hypercall_grant_table_op(unsigned int cmd, void *op,
+					    unsigned int count);
 
-extern int xencomm_hypercall_sched_op (int cmd, void * arg);
+extern int xencomm_hypercall_sched_op(int cmd, void *arg);
 
-extern int xencomm_hypercall_multicall (void * call_list, int nr_calls);
+extern int xencomm_hypercall_multicall(void *call_list, int nr_calls);
 
-extern int xencomm_hypercall_callback_op (int cmd, void * arg);
+extern int xencomm_hypercall_callback_op(int cmd, void *arg);
 
-extern int xencomm_hypercall_memory_op (unsigned int cmd, void * arg);
+extern int xencomm_hypercall_memory_op(unsigned int cmd, void *arg);
 
-extern int xencomm_hypercall_suspend (unsigned long srec);
+extern int xencomm_hypercall_suspend(unsigned long srec);
 
-extern long xencomm_hypercall_vcpu_op (int cmd, int cpu, void * arg);
+extern long xencomm_hypercall_vcpu_op(int cmd, int cpu, void *arg);
 
-extern long xencomm_hypercall_opt_feature (void * arg);
+extern long xencomm_hypercall_opt_feature(void *arg);
 
 #endif /* _ASM_IA64_XEN_XCOM_HCALL_H */

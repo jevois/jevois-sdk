@@ -34,55 +34,55 @@ DECLARE_GLOBAL_DATA_PTR;
  * so we are using this value to identify memory size.
  */
 
-unsigned int query_sdram_size (void)
+unsigned int query_sdram_size(void)
 {
-  struct pmc_ctlr * const pmc = (struct pmc_ctlr *) NV_PA_PMC_BASE;
-  u32 reg;
-  
-  reg = readl (&pmc->pmc_scratch20);
-  debug ("pmc->pmc_scratch20 (ODMData) = 0x%08lX\n", reg);
-  
-  /* bits 31:28 in OdmData are used for RAM size  */
-  switch ( (reg) >> 28) {
-  case 1:
-    return 0x10000000;  /* 256 MB */
-  case 2:
-    return 0x20000000;  /* 512 MB */
-  case 3:
-  default:
-    return 0x40000000;  /* 1GB */
-  }
+	struct pmc_ctlr *const pmc = (struct pmc_ctlr *)NV_PA_PMC_BASE;
+	u32 reg;
+
+	reg = readl(&pmc->pmc_scratch20);
+	debug("pmc->pmc_scratch20 (ODMData) = 0x%08lX\n", reg);
+
+	/* bits 31:28 in OdmData are used for RAM size  */
+	switch ((reg) >> 28) {
+	case 1:
+		return 0x10000000;	/* 256 MB */
+	case 2:
+		return 0x20000000;	/* 512 MB */
+	case 3:
+	default:
+		return 0x40000000;	/* 1GB */
+	}
 }
 
-void s_init (void)
+void s_init(void)
 {
-  #ifndef CONFIG_ICACHE_OFF
-  icache_enable();
-  #endif
-  invalidate_dcache();
+#ifndef CONFIG_ICACHE_OFF
+	icache_enable();
+#endif
+	invalidate_dcache();
 }
 
-int dram_init (void)
+int dram_init(void)
 {
-  unsigned long rs;
-  
-  /* We do not initialise DRAM here. We just query the size */
-  gd->bd->bi_dram[0].start = PHYS_SDRAM_1;
-  gd->bd->bi_dram[0].size = gd->ram_size = query_sdram_size();
-  
-  /* Now check it dynamically */
-  rs = get_ram_size (CONFIG_SYS_SDRAM_BASE, gd->ram_size);
-  if (rs) {
-    printf ("dynamic ram_size = %lu\n", rs);
-    gd->bd->bi_dram[0].size = gd->ram_size = rs;
-  }
-  return 0;
+	unsigned long rs;
+
+	/* We do not initialise DRAM here. We just query the size */
+	gd->bd->bi_dram[0].start = PHYS_SDRAM_1;
+	gd->bd->bi_dram[0].size = gd->ram_size = query_sdram_size();
+
+	/* Now check it dynamically */
+	rs = get_ram_size(CONFIG_SYS_SDRAM_BASE, gd->ram_size);
+	if (rs) {
+		printf("dynamic ram_size = %lu\n", rs);
+		gd->bd->bi_dram[0].size = gd->ram_size = rs;
+	}
+	return 0;
 }
 
 #ifdef CONFIG_DISPLAY_BOARDINFO
-int checkboard (void)
+int checkboard(void)
 {
-  printf ("Board: %s\n", sysinfo.board_string);
-  return 0;
+	printf("Board: %s\n", sysinfo.board_string);
+	return 0;
 }
-#endif  /* CONFIG_DISPLAY_BOARDINFO */
+#endif	/* CONFIG_DISPLAY_BOARDINFO */

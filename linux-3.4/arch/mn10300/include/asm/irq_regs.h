@@ -18,10 +18,10 @@
 #define ARCH_HAS_OWN_IRQ_REGS
 
 #ifndef __ASSEMBLY__
-static inline __attribute__ ( (const) )
-struct pt_regs * get_irq_regs (void)
+static inline __attribute__((const))
+struct pt_regs *get_irq_regs(void)
 {
-  return current_frame();
+	return current_frame();
 }
 #endif
 

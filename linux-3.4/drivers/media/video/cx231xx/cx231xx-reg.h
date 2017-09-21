@@ -1,6 +1,6 @@
 /*
    cx231xx-reg.h - driver for Conexant Cx23100/101/102
-         USB video capture devices
+	       USB video capture devices
 
    Copyright (C) 2008 <srinivasa.deevi at conexant dot com>
 
@@ -23,31 +23,31 @@
 #define _CX231XX_REG_H
 
 /*****************************************************************************
-        * VBI codes *
+				* VBI codes *
 *****************************************************************************/
 
-#define SAV_ACTIVE_VIDEO_FIELD1   0x80
-#define EAV_ACTIVE_VIDEO_FIELD1   0x90
+#define SAV_ACTIVE_VIDEO_FIELD1		0x80
+#define EAV_ACTIVE_VIDEO_FIELD1		0x90
 
-#define SAV_ACTIVE_VIDEO_FIELD2   0xc0
-#define EAV_ACTIVE_VIDEO_FIELD2   0xd0
+#define SAV_ACTIVE_VIDEO_FIELD2		0xc0
+#define EAV_ACTIVE_VIDEO_FIELD2		0xd0
 
-#define SAV_VBLANK_FIELD1   0xa0
-#define EAV_VBLANK_FIELD1   0xb0
+#define SAV_VBLANK_FIELD1		0xa0
+#define EAV_VBLANK_FIELD1		0xb0
 
-#define SAV_VBLANK_FIELD2   0xe0
-#define EAV_VBLANK_FIELD2   0xf0
+#define SAV_VBLANK_FIELD2		0xe0
+#define EAV_VBLANK_FIELD2		0xf0
 
-#define SAV_VBI_FIELD1      0x20
-#define EAV_VBI_FIELD1      0x30
+#define SAV_VBI_FIELD1			0x20
+#define EAV_VBI_FIELD1			0x30
 
-#define SAV_VBI_FIELD2      0x60
-#define EAV_VBI_FIELD2      0x70
+#define SAV_VBI_FIELD2			0x60
+#define EAV_VBI_FIELD2			0x70
 
 /*****************************************************************************/
 /* Audio ADC Registers */
-#define CH_PWR_CTRL1      0x0000000e
-#define CH_PWR_CTRL2      0x0000000f
+#define CH_PWR_CTRL1			0x0000000e
+#define CH_PWR_CTRL2			0x0000000f
 /*****************************************************************************/
 
 #define      HOST_REG1                0x000
@@ -1433,16 +1433,16 @@
 #define      FLD_AC97_SHUTDOWN        0x00000001
 
 /* Cx231xx redefine */
-#define      QPSK_IAGC_CTL1     0x94c
-#define      QPSK_IAGC_CTL2     0x950
-#define      QPSK_FEPR_FREQ     0x954
-#define      QPSK_BTL_CTL1      0x958
-#define      QPSK_BTL_CTL2      0x95c
-#define      QPSK_CTL_CTL1      0x960
-#define      QPSK_CTL_CTL2      0x964
-#define      QPSK_MF_FAGC_CTL     0x968
-#define      QPSK_EQ_CTL      0x96c
-#define      QPSK_LOCK_CTL      0x970
+#define      QPSK_IAGC_CTL1  		0x94c
+#define      QPSK_IAGC_CTL2  		0x950
+#define      QPSK_FEPR_FREQ  		0x954
+#define      QPSK_BTL_CTL1  		0x958
+#define      QPSK_BTL_CTL2  		0x95c
+#define      QPSK_CTL_CTL1  		0x960
+#define      QPSK_CTL_CTL2  		0x964
+#define      QPSK_MF_FAGC_CTL 		0x968
+#define      QPSK_EQ_CTL  		0x96c
+#define      QPSK_LOCK_CTL  		0x970
 
 /*****************************************************************************/
 #define      FM1_DFT_CTL              0x9a8

@@ -22,6 +22,6 @@
 #ifndef _SYS_PROTO_H_
 #define _SYS_PROTO_H_
 
-void gpio_init (void);
+void gpio_init(void);
 
 #endif  /* _SYS_PROTO_H_ */

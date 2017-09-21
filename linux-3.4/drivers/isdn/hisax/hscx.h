@@ -34,8 +34,8 @@
 #define HSCX_RLCR 0x2e
 #define HSCX_MASK 0x20
 
-extern int HscxVersion (struct IsdnCardState * cs, char * s);
-extern void modehscx (struct BCState * bcs, int mode, int bc);
-extern void clear_pending_hscx_ints (struct IsdnCardState * cs);
-extern void inithscx (struct IsdnCardState * cs);
-extern void inithscxisac (struct IsdnCardState * cs, int part);
+extern int HscxVersion(struct IsdnCardState *cs, char *s);
+extern void modehscx(struct BCState *bcs, int mode, int bc);
+extern void clear_pending_hscx_ints(struct IsdnCardState *cs);
+extern void inithscx(struct IsdnCardState *cs);
+extern void inithscxisac(struct IsdnCardState *cs, int part);

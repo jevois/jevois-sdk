@@ -21,11 +21,11 @@
  */
 
 /* re-define device name depending on support. */
-static inline void samsung_keypad_setname (char * name)
+static inline void samsung_keypad_setname(char *name)
 {
-  #ifdef CONFIG_SAMSUNG_DEV_KEYPAD
-  samsung_device_keypad.name = name;
-  #endif
+#ifdef CONFIG_SAMSUNG_DEV_KEYPAD
+	samsung_device_keypad.name = name;
+#endif
 }
 
 #endif /* __ASM_ARCH_KEYPAD_CORE_H */

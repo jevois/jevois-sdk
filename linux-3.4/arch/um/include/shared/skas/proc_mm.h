@@ -12,33 +12,33 @@
 #define MM_COPY_SEGMENTS 57
 
 struct mm_mmap {
-  unsigned long addr;
-  unsigned long len;
-  unsigned long prot;
-  unsigned long flags;
-  unsigned long fd;
-  unsigned long offset;
+	unsigned long addr;
+	unsigned long len;
+	unsigned long prot;
+	unsigned long flags;
+	unsigned long fd;
+	unsigned long offset;
 };
 
 struct mm_munmap {
-  unsigned long addr;
-  unsigned long len;
+	unsigned long addr;
+	unsigned long len;
 };
 
 struct mm_mprotect {
-  unsigned long addr;
-  unsigned long len;
-  unsigned int prot;
+	unsigned long addr;
+	unsigned long len;
+	unsigned int prot;
 };
 
 struct proc_mm_op {
-  int op;
-  union {
-    struct mm_mmap mmap;
-    struct mm_munmap munmap;
-    struct mm_mprotect mprotect;
-    int copy_segments;
-  } u;
+	int op;
+	union {
+		struct mm_mmap mmap;
+		struct mm_munmap munmap;
+	        struct mm_mprotect mprotect;
+		int copy_segments;
+	} u;
 };
 
 #endif

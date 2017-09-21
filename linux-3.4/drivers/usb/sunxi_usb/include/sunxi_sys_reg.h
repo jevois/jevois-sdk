@@ -17,7 +17,7 @@
 #define  __SUNXI_SYS_REG_H__
 
 
-#define  SRAMC_BASE             0x01c00000
+#define  SRAMC_BASE	            0x01c00000
 
 #endif  
 

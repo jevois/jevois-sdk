@@ -5,8 +5,8 @@
  * struct pcf857x_platform_data - data to set up pcf857x driver
  * @gpio_base: number of the chip's first GPIO
  * @n_latch: optional bit-inverse of initial register value; if
- *  you leave this initialized to zero the driver will act
- *  like the chip was just reset
+ *	you leave this initialized to zero the driver will act
+ *	like the chip was just reset
  * @setup: optional callback issued once the GPIOs are valid
  * @teardown: optional callback issued before the GPIOs are invalidated
  * @context: optional parameter passed to setup() and teardown()
@@ -29,16 +29,16 @@
  * value is presumed to be all ones (as if the chip were just reset).
  */
 struct pcf857x_platform_data {
-  unsigned  gpio_base;
-  unsigned  n_latch;
-  
-  int   (*setup) (struct i2c_client * client,
-                  int gpio, unsigned ngpio,
-                  void * context);
-  int   (*teardown) (struct i2c_client * client,
-                     int gpio, unsigned ngpio,
-                     void * context);
-  void  *  context;
+	unsigned	gpio_base;
+	unsigned	n_latch;
+
+	int		(*setup)(struct i2c_client *client,
+					int gpio, unsigned ngpio,
+					void *context);
+	int		(*teardown)(struct i2c_client *client,
+					int gpio, unsigned ngpio,
+					void *context);
+	void		*context;
 };
 
 #endif /* __LINUX_PCF857X_H */

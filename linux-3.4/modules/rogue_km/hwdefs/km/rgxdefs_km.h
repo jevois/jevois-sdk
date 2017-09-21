@@ -57,17 +57,17 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif
 
 /* Check core/config compatibility */
-#if (RGX_BVNC_KM_B != RGX_BNC_KM_B) || (RGX_BVNC_KM_N != RGX_BNC_KM_N) || (RGX_BVNC_KM_C != RGX_BNC_KM_C)
+#if (RGX_BVNC_KM_B != RGX_BNC_KM_B) || (RGX_BVNC_KM_N != RGX_BNC_KM_N) || (RGX_BVNC_KM_C != RGX_BNC_KM_C) 
 #error "BVNC headers are mismatching (KM core/config)"
 #endif
 
 /******************************************************************************
  * RGX Version name
  *****************************************************************************/
-#define _RGX_BVNC_ST2(S)  #S
-#define _RGX_BVNC_ST(S)   _RGX_BVNC_ST2(S)
-#define RGX_BVNC_KM     _RGX_BVNC_ST(RGX_BVNC_KM_B) "." _RGX_BVNC_ST(RGX_BVNC_KM_V) "." _RGX_BVNC_ST(RGX_BVNC_KM_N) "." _RGX_BVNC_ST(RGX_BVNC_KM_C)
-#define RGX_BVNC_KM_V_ST  _RGX_BVNC_ST(RGX_BVNC_KM_V)
+#define _RGX_BVNC_ST2(S)	#S
+#define _RGX_BVNC_ST(S)		_RGX_BVNC_ST2(S)
+#define RGX_BVNC_KM			_RGX_BVNC_ST(RGX_BVNC_KM_B) "." _RGX_BVNC_ST(RGX_BVNC_KM_V) "." _RGX_BVNC_ST(RGX_BVNC_KM_N) "." _RGX_BVNC_ST(RGX_BVNC_KM_C)
+#define RGX_BVNC_KM_V_ST	_RGX_BVNC_ST(RGX_BVNC_KM_V)
 
 /******************************************************************************
  * RGX Defines
@@ -82,11 +82,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /* ISP requires valid state on all three pipes regardless of the number of
  * active pipes/tiles in flight.
  */
-#define RGX_MAX_NUM_PIPES 3
+#define RGX_MAX_NUM_PIPES	3
 
-#define ROGUE_CACHE_LINE_SIZE       ((RGX_FEATURE_SLC_CACHE_LINE_SIZE_BITS)/8)
+#define ROGUE_CACHE_LINE_SIZE				((RGX_FEATURE_SLC_CACHE_LINE_SIZE_BITS)/8)
 
-#define MAX_HW_TA3DCONTEXTS 2
+#define MAX_HW_TA3DCONTEXTS	2
 
 
 /* useful extra defines for clock ctrl*/
@@ -94,21 +94,21 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define RGX_CR_CLK_CTRL_ALL_AUTO (IMG_UINT64_C(0xaaaaaaaaaaaaaaaa)&RGX_CR_CLK_CTRL_MASKFULL)
 
 /* SOFT_RESET Rascal and DUSTs bits */
-#define RGX_CR_SOFT_RESET_RASCALDUSTS_EN  (RGX_CR_SOFT_RESET_RASCAL_CORE_EN | \
-    RGX_CR_SOFT_RESET_DUST_A_CORE_EN | \
-    RGX_CR_SOFT_RESET_DUST_B_CORE_EN | \
-    RGX_CR_SOFT_RESET_DUST_C_CORE_EN | \
-    RGX_CR_SOFT_RESET_DUST_D_CORE_EN | \
-    RGX_CR_SOFT_RESET_DUST_E_CORE_EN | \
-    RGX_CR_SOFT_RESET_DUST_F_CORE_EN | \
-    RGX_CR_SOFT_RESET_DUST_G_CORE_EN | \
-    RGX_CR_SOFT_RESET_DUST_H_CORE_EN)
+#define RGX_CR_SOFT_RESET_RASCALDUSTS_EN	(RGX_CR_SOFT_RESET_RASCAL_CORE_EN | \
+											 RGX_CR_SOFT_RESET_DUST_A_CORE_EN | \
+											 RGX_CR_SOFT_RESET_DUST_B_CORE_EN | \
+											 RGX_CR_SOFT_RESET_DUST_C_CORE_EN | \
+											 RGX_CR_SOFT_RESET_DUST_D_CORE_EN | \
+											 RGX_CR_SOFT_RESET_DUST_E_CORE_EN | \
+											 RGX_CR_SOFT_RESET_DUST_F_CORE_EN | \
+											 RGX_CR_SOFT_RESET_DUST_G_CORE_EN | \
+											 RGX_CR_SOFT_RESET_DUST_H_CORE_EN)
 
-#define RGX_BIF_PM_PHYSICAL_PAGE_ALIGNSHIFT   (12)
-#define RGX_BIF_PM_PHYSICAL_PAGE_SIZE     (1 << RGX_BIF_PM_PHYSICAL_PAGE_ALIGNSHIFT)
+#define RGX_BIF_PM_PHYSICAL_PAGE_ALIGNSHIFT		(12)
+#define RGX_BIF_PM_PHYSICAL_PAGE_SIZE			(1 << RGX_BIF_PM_PHYSICAL_PAGE_ALIGNSHIFT)
 
-#define RGX_BIF_PM_VIRTUAL_PAGE_ALIGNSHIFT    (14)
-#define RGX_BIF_PM_VIRTUAL_PAGE_SIZE      (1 << RGX_BIF_PM_VIRTUAL_PAGE_ALIGNSHIFT)
+#define RGX_BIF_PM_VIRTUAL_PAGE_ALIGNSHIFT		(14)
+#define RGX_BIF_PM_VIRTUAL_PAGE_SIZE			(1 << RGX_BIF_PM_VIRTUAL_PAGE_ALIGNSHIFT)
 
 /******************************************************************************
  * WA HWBRNs
@@ -120,7 +120,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #undef RGX_CR_SOFT_RESET_SLC_SHIFT
 
 /* Remove the SOFT_RESET_SLC_EN bit from SOFT_RESET_MASKFULL */
-#undef RGX_CR_SOFT_RESET_MASKFULL
+#undef RGX_CR_SOFT_RESET_MASKFULL 
 #define RGX_CR_SOFT_RESET_MASKFULL IMG_UINT64_C(0x000001FFF7FFFC1D)
 
 #endif /* FIX_HW_BRN_36492 */

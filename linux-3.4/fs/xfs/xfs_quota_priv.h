@@ -22,21 +22,21 @@
  * Number of bmaps that we ask from bmapi when doing a quotacheck.
  * We make this restriction to keep the memory usage to a minimum.
  */
-#define XFS_DQITER_MAP_SIZE 10
+#define XFS_DQITER_MAP_SIZE	10
 
 #define XFS_IS_DQUOT_UNINITIALIZED(dqp) ( \
-    !dqp->q_core.d_blk_hardlimit && \
-    !dqp->q_core.d_blk_softlimit && \
-    !dqp->q_core.d_rtb_hardlimit && \
-    !dqp->q_core.d_rtb_softlimit && \
-    !dqp->q_core.d_ino_hardlimit && \
-    !dqp->q_core.d_ino_softlimit && \
-    !dqp->q_core.d_bcount && \
-    !dqp->q_core.d_rtbcount && \
-    !dqp->q_core.d_icount)
+	!dqp->q_core.d_blk_hardlimit && \
+	!dqp->q_core.d_blk_softlimit && \
+	!dqp->q_core.d_rtb_hardlimit && \
+	!dqp->q_core.d_rtb_softlimit && \
+	!dqp->q_core.d_ino_hardlimit && \
+	!dqp->q_core.d_ino_softlimit && \
+	!dqp->q_core.d_bcount && \
+	!dqp->q_core.d_rtbcount && \
+	!dqp->q_core.d_icount)
 
-#define DQFLAGTO_TYPESTR(d) (((d)->dq_flags & XFS_DQ_USER) ? "USR" : \
-                             (((d)->dq_flags & XFS_DQ_GROUP) ? "GRP" : \
-                              (((d)->dq_flags & XFS_DQ_PROJ) ? "PRJ":"???")))
+#define DQFLAGTO_TYPESTR(d)	(((d)->dq_flags & XFS_DQ_USER) ? "USR" : \
+				 (((d)->dq_flags & XFS_DQ_GROUP) ? "GRP" : \
+				 (((d)->dq_flags & XFS_DQ_PROJ) ? "PRJ":"???")))
 
-#endif  /* __XFS_QUOTA_PRIV_H__ */
+#endif	/* __XFS_QUOTA_PRIV_H__ */

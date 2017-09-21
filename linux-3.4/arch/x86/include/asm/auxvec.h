@@ -5,9 +5,9 @@
  * for more of them, start the x86-specific ones at 32.
  */
 #ifdef __i386__
-#define AT_SYSINFO    32
+#define AT_SYSINFO		32
 #endif
-#define AT_SYSINFO_EHDR   33
+#define AT_SYSINFO_EHDR		33
 
 /* entries in ARCH_DLINFO: */
 #if defined(CONFIG_IA32_EMULATION) || !defined(CONFIG_X86_64)

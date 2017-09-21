@@ -31,11 +31,11 @@
 #include <asm/ibmpc.h>
 
 struct timer_isr_function {
-  struct timer_isr_function * next;
-  timer_fnc_t * isr_func;
+	struct timer_isr_function *next;
+	timer_fnc_t *isr_func;
 };
 
-static struct timer_isr_function * first_timer_isr = NULL;
+static struct timer_isr_function *first_timer_isr = NULL;
 static volatile unsigned long system_ticks = 0;
 
 /*
@@ -43,59 +43,58 @@ static volatile unsigned long system_ticks = 0;
  * functions to be called every millisecond. Keep the execution time of
  * each function as low as possible
  */
-int register_timer_isr (timer_fnc_t * isr_func)
+int register_timer_isr (timer_fnc_t *isr_func)
 {
-  struct timer_isr_function * new_func;
-  struct timer_isr_function * temp;
-  int flag;
-  
-  new_func = malloc (sizeof (struct timer_isr_function) );
-  
-  if (new_func == NULL)
-  { return 1; }
-  
-  new_func->isr_func = isr_func;
-  new_func->next = NULL;
-  
-  /*
-   *  Don't allow timer interrupts while the
-   *  linked list is being modified
-   */
-  flag = disable_interrupts ();
-  
-  if (first_timer_isr == NULL) {
-    first_timer_isr = new_func;
-  }
-  else {
-    temp = first_timer_isr;
-    while (temp->next != NULL)
-    { temp = temp->next; }
-    temp->next = new_func;
-  }
-  
-  if (flag)
-  { enable_interrupts (); }
-  
-  return 0;
+	struct timer_isr_function *new_func;
+	struct timer_isr_function *temp;
+	int flag;
+
+	new_func = malloc(sizeof(struct timer_isr_function));
+
+	if (new_func == NULL)
+		return 1;
+
+	new_func->isr_func = isr_func;
+	new_func->next = NULL;
+
+	/*
+	 *  Don't allow timer interrupts while the
+	 *  linked list is being modified
+	 */
+	flag = disable_interrupts ();
+
+	if (first_timer_isr == NULL) {
+		first_timer_isr = new_func;
+	} else {
+		temp = first_timer_isr;
+		while (temp->next != NULL)
+			temp = temp->next;
+		temp->next = new_func;
+	}
+
+	if (flag)
+		enable_interrupts ();
+
+	return 0;
 }
 
 /*
  * timer_isr() MUST be the registered interrupt handler for
  */
-void timer_isr (void * unused)
+void timer_isr(void *unused)
 {
-  struct timer_isr_function * temp = first_timer_isr;
-  
-  system_ticks++;
-  
-  /* Execute each registered function */
-  while (temp != NULL) {
-    temp->isr_func ();
-    temp = temp->next;
-  }
+	struct timer_isr_function *temp = first_timer_isr;
+
+	system_ticks++;
+
+	/* Execute each registered function */
+	while (temp != NULL) {
+		temp->isr_func ();
+		temp = temp->next;
+	}
 }
 
 ulong get_timer (ulong base)
 {
-  return (system_ticks - base);
+	return (system_ticks - base);
 }

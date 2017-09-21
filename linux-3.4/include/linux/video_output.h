@@ -26,32 +26,32 @@
 #include <linux/err.h>
 struct output_device;
 struct output_properties {
-  int (*set_state) (struct output_device *);
-  int (*get_status) (struct output_device *);
+	int (*set_state)(struct output_device *);
+	int (*get_status)(struct output_device *);
 };
 struct output_device {
-  int request_state;
-  struct output_properties * props;
-  struct device dev;
+	int request_state;
+	struct output_properties *props;
+	struct device dev;
 };
 #define to_output_device(obj) container_of(obj, struct output_device, dev)
-#if defined(CONFIG_VIDEO_OUTPUT_CONTROL) || defined(CONFIG_VIDEO_OUTPUT_CONTROL_MODULE)
-struct output_device * video_output_register (const char * name,
-    struct device * dev,
-    void * devdata,
-    struct output_properties * op);
-void video_output_unregister (struct output_device * dev);
+#if	defined(CONFIG_VIDEO_OUTPUT_CONTROL) || defined(CONFIG_VIDEO_OUTPUT_CONTROL_MODULE)
+struct output_device *video_output_register(const char *name,
+	struct device *dev,
+	void *devdata,
+	struct output_properties *op);
+void video_output_unregister(struct output_device *dev);
 #else
-static struct output_device * video_output_register (const char * name,
-    struct device * dev,
-    void * devdata,
-    struct output_properties * op)
+static struct output_device *video_output_register(const char *name,
+        struct device *dev,
+        void *devdata,
+        struct output_properties *op)
 {
-  return ERR_PTR (-ENODEV);
+	return ERR_PTR(-ENODEV);
 }
-static void video_output_unregister (struct output_device * dev)
+static void video_output_unregister(struct output_device *dev)
 {
-  return;
+	return;
 }
 #endif
 #endif

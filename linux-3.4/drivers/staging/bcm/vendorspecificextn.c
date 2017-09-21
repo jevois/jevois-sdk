@@ -1,48 +1,48 @@
 #include "headers.h"
-INT vendorextnGetSectionInfo (PVOID  pContext, PFLASH2X_VENDORSPECIFIC_INFO pVendorInfo)
+INT vendorextnGetSectionInfo(PVOID  pContext,PFLASH2X_VENDORSPECIFIC_INFO pVendorInfo)
 {
-  return STATUS_FAILURE;
+	return STATUS_FAILURE;
 }
 
 
-INT vendorextnInit (PMINI_ADAPTER Adapter)
+INT vendorextnInit(PMINI_ADAPTER Adapter)
 {
-  return STATUS_SUCCESS;
+	return STATUS_SUCCESS;
 }
 
 
-INT vendorextnExit (PMINI_ADAPTER Adapter)
+INT vendorextnExit(PMINI_ADAPTER Adapter)
 {
-  return STATUS_SUCCESS;
+	return STATUS_SUCCESS;
 }
 
-INT vendorextnIoctl (PMINI_ADAPTER Adapter, UINT cmd, ULONG arg)
+INT vendorextnIoctl(PMINI_ADAPTER Adapter, UINT cmd, ULONG arg)
 {
-  return CONTINUE_COMMON_PATH;
-}
-
-
-
-
-INT vendorextnReadSection (PVOID  pContext, PUCHAR pBuffer, FLASH2X_SECTION_VAL SectionVal,
-                           UINT offset, UINT numOfBytes)
-{
-  return STATUS_FAILURE;
+	return CONTINUE_COMMON_PATH;
 }
 
 
 
-INT vendorextnWriteSection (PVOID  pContext, PUCHAR pBuffer, FLASH2X_SECTION_VAL SectionVal,
-                            UINT offset, UINT numOfBytes, BOOLEAN bVerify)
+
+INT vendorextnReadSection(PVOID  pContext, PUCHAR pBuffer, FLASH2X_SECTION_VAL SectionVal,
+			UINT offset, UINT numOfBytes)
 {
-  return STATUS_FAILURE;
+	return STATUS_FAILURE;
 }
 
 
 
-INT vendorextnWriteSectionWithoutErase (PVOID  pContext, PUCHAR pBuffer, FLASH2X_SECTION_VAL SectionVal,
-                                        UINT offset, UINT numOfBytes)
+INT vendorextnWriteSection(PVOID  pContext, PUCHAR pBuffer, FLASH2X_SECTION_VAL SectionVal,
+			UINT offset, UINT numOfBytes, BOOLEAN bVerify)
 {
-  return STATUS_FAILURE;
+	return STATUS_FAILURE;
+}
+
+
+
+INT vendorextnWriteSectionWithoutErase(PVOID  pContext, PUCHAR pBuffer, FLASH2X_SECTION_VAL SectionVal,
+			UINT offset, UINT numOfBytes)
+{
+	return STATUS_FAILURE;
 }
 

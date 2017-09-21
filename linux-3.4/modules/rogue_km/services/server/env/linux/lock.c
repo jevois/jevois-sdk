@@ -47,52 +47,52 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 struct _OS_LOCK_
 {
-  PVRSRV_LINUX_MUTEX sMutex;
+	PVRSRV_LINUX_MUTEX sMutex;
 };
 
-PVRSRV_ERROR OSLockCreate (POS_LOCK * ppsLock, LOCK_TYPE eLockType)
+PVRSRV_ERROR OSLockCreate(POS_LOCK *ppsLock, LOCK_TYPE eLockType)
 {
-  POS_LOCK psLock;
-  /*
-    Linux doesn't have the concept of different lock types
-    we do all our work in process context
-  */
-  PVR_UNREFERENCED_PARAMETER (eLockType);
-  
-  psLock = kmalloc (sizeof (*psLock), GFP_KERNEL);
-  if (psLock == NULL)
-  {
-    return PVRSRV_ERROR_OUT_OF_MEMORY;
-  }
-  LinuxInitMutex (&psLock->sMutex);
-  
-  *ppsLock = psLock;
-  
-  return PVRSRV_OK;
+	POS_LOCK psLock;
+	/*
+		Linux doesn't have the concept of different lock types
+		we do all our work in process context
+	*/
+	PVR_UNREFERENCED_PARAMETER(eLockType);
+
+	psLock = kmalloc(sizeof(*psLock), GFP_KERNEL);
+	if (psLock == NULL)
+	{
+		return PVRSRV_ERROR_OUT_OF_MEMORY;
+	}
+	LinuxInitMutex(&psLock->sMutex);
+
+	*ppsLock = psLock;
+
+	return PVRSRV_OK;
 }
 
-IMG_VOID OSLockDestroy (POS_LOCK psLock)
+IMG_VOID OSLockDestroy(POS_LOCK psLock)
 {
-  kfree (psLock);
+	kfree(psLock);
 }
 
-IMG_VOID OSLockAcquire (POS_LOCK psLock)
+IMG_VOID OSLockAcquire(POS_LOCK psLock)
 {
-  LinuxLockMutex (&psLock->sMutex);
+	LinuxLockMutex(&psLock->sMutex);
 }
 
-IMG_VOID OSLockRelease (POS_LOCK psLock)
+IMG_VOID OSLockRelease(POS_LOCK psLock)
 {
-  LinuxUnLockMutex (&psLock->sMutex);
+	LinuxUnLockMutex(&psLock->sMutex);
 }
 
-IMG_BOOL IMG_CALLCONV OSLockIsLocked (POS_LOCK psLock)
+IMG_BOOL IMG_CALLCONV OSLockIsLocked(POS_LOCK psLock)
 {
-  return LinuxIsLockedMutex (&psLock->sMutex);
+	return LinuxIsLockedMutex(&psLock->sMutex);
 }
 
-IMG_BOOL IMG_CALLCONV OSLockIsLockedByMe (POS_LOCK psLock)
+IMG_BOOL IMG_CALLCONV OSLockIsLockedByMe(POS_LOCK psLock)
 {
-  return LinuxIsLockedByMeMutex (&psLock->sMutex);
+	return LinuxIsLockedByMeMutex(&psLock->sMutex);
 }
 

@@ -11,9 +11,9 @@
 
 #ifdef CONFIG_OF_MTD
 #include <linux/of.h>
-extern const int of_get_nand_ecc_mode (struct device_node * np);
-int of_get_nand_bus_width (struct device_node * np);
-bool of_get_nand_on_flash_bbt (struct device_node * np);
+extern const int of_get_nand_ecc_mode(struct device_node *np);
+int of_get_nand_bus_width(struct device_node *np);
+bool of_get_nand_on_flash_bbt(struct device_node *np);
 #endif
 
 #endif /* __LINUX_OF_MTD_H */

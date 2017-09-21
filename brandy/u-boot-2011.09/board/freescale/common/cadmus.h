@@ -11,7 +11,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -31,24 +31,24 @@
 /*
  * Returns board version register.
  */
-extern unsigned int get_board_version (void);
+extern unsigned int get_board_version(void);
 
 /*
  * Returns either 33000000 or 66000000 as the SYS_CLK_FREQ.
  */
-extern unsigned long get_clock_freq (void);
+extern unsigned long get_clock_freq(void);
 
 
 /*
  * Returns 1 - 4, as found in the USER CSR[6:7] bits.
  */
-extern unsigned int get_pci_slot (void);
+extern unsigned int get_pci_slot(void);
 
 
 /*
  * Returns PCI DUAL as found in CM_PCI[3].
  */
-extern unsigned int get_pci_dual (void);
+extern unsigned int get_pci_dual(void);
 
 
-#endif  /* __CADMUS_H_ */
+#endif	/* __CADMUS_H_ */

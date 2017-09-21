@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -27,22 +27,22 @@
 #include <config.h>
 
 typedef struct sconsole_buffer_s {
-  unsigned long size;
-  unsigned long max_size;
-  unsigned long pos;
-  unsigned long baud;
-  char data[1];
+	unsigned long size;
+	unsigned long max_size;
+	unsigned long pos;
+	unsigned long baud;
+	char data[1];
 } sconsole_buffer_t;
 
-#define SCONSOLE_BUFFER   ((sconsole_buffer_t *) CONFIG_SYS_SCONSOLE_ADDR)
+#define SCONSOLE_BUFFER		((sconsole_buffer_t *) CONFIG_SYS_SCONSOLE_ADDR)
 
-extern void (* sconsole_putc) (char);
-extern void (* sconsole_puts) (const char *);
-extern int  (* sconsole_getc) (void);
-extern int  (* sconsole_tstc) (void);
-extern void (* sconsole_setbrg) (void);
+extern void	(* sconsole_putc)	(char);
+extern void	(* sconsole_puts)	(const char *);
+extern int	(* sconsole_getc)	(void);
+extern int	(* sconsole_tstc)	(void);
+extern void	(* sconsole_setbrg)	(void);
 
-extern void sconsole_flush    (void);
-extern int  sconsole_get_baudrate (void);
+extern void	sconsole_flush		(void);
+extern int	sconsole_get_baudrate	(void);
 
 #endif

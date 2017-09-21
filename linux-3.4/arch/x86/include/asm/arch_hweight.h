@@ -21,41 +21,41 @@
  * ARCH_HWEIGHT_CFLAGS in <arch/x86/Kconfig> for the respective
  * compiler switches.
  */
-static inline unsigned int __arch_hweight32 (unsigned int w)
+static inline unsigned int __arch_hweight32(unsigned int w)
 {
-  unsigned int res = 0;
-  
-  asm (ALTERNATIVE ("call __sw_hweight32", POPCNT32, X86_FEATURE_POPCNT)
-       : "="REG_OUT (res)
-       : REG_IN (w) );
-       
-  return res;
+	unsigned int res = 0;
+
+	asm (ALTERNATIVE("call __sw_hweight32", POPCNT32, X86_FEATURE_POPCNT)
+		     : "="REG_OUT (res)
+		     : REG_IN (w));
+
+	return res;
 }
 
-static inline unsigned int __arch_hweight16 (unsigned int w)
+static inline unsigned int __arch_hweight16(unsigned int w)
 {
-  return __arch_hweight32 (w & 0xffff);
+	return __arch_hweight32(w & 0xffff);
 }
 
-static inline unsigned int __arch_hweight8 (unsigned int w)
+static inline unsigned int __arch_hweight8(unsigned int w)
 {
-  return __arch_hweight32 (w & 0xff);
+	return __arch_hweight32(w & 0xff);
 }
 
-static inline unsigned long __arch_hweight64 (__u64 w)
+static inline unsigned long __arch_hweight64(__u64 w)
 {
-  unsigned long res = 0;
-  
-  #ifdef CONFIG_X86_32
-  return  __arch_hweight32 ( (u32) w) +
-          __arch_hweight32 ( (u32) (w >> 32) );
-  #else
-  asm (ALTERNATIVE ("call __sw_hweight64", POPCNT64, X86_FEATURE_POPCNT)
-       : "="REG_OUT (res)
-       : REG_IN (w) );
-  #endif /* CONFIG_X86_32 */
-          
-  return res;
+	unsigned long res = 0;
+
+#ifdef CONFIG_X86_32
+	return  __arch_hweight32((u32)w) +
+		__arch_hweight32((u32)(w >> 32));
+#else
+	asm (ALTERNATIVE("call __sw_hweight64", POPCNT64, X86_FEATURE_POPCNT)
+		     : "="REG_OUT (res)
+		     : REG_IN (w));
+#endif /* CONFIG_X86_32 */
+
+	return res;
 }
 
 #endif

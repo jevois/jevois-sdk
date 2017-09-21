@@ -7,7 +7,7 @@
 
 #include <asm-generic/mm_hooks.h>
 
-static inline void enter_lazy_tlb (struct mm_struct * mm, struct task_struct * tsk)
+static inline void enter_lazy_tlb(struct mm_struct *mm, struct task_struct *tsk)
 {
 }
 
@@ -23,16 +23,16 @@ static inline void enter_lazy_tlb (struct mm_struct * mm, struct task_struct * t
  * all the page tables have been flushed.  Our job is to destroy
  * any remaining processor-specific state.
  */
-BTFIXUPDEF_CALL (void, destroy_context, struct mm_struct *)
+BTFIXUPDEF_CALL(void, destroy_context, struct mm_struct *)
 
 #define destroy_context(mm) BTFIXUP_CALL(destroy_context)(mm)
 
 /* Switch the current MM context. */
-BTFIXUPDEF_CALL (void, switch_mm, struct mm_struct *, struct mm_struct *, struct task_struct *)
+BTFIXUPDEF_CALL(void, switch_mm, struct mm_struct *, struct mm_struct *, struct task_struct *)
 
 #define switch_mm(old_mm, mm, tsk) BTFIXUP_CALL(switch_mm)(old_mm, mm, tsk)
 
-#define deactivate_mm(tsk,mm) do { } while (0)
+#define deactivate_mm(tsk,mm)	do { } while (0)
 
 /* Activate a new MM instance for the current task. */
 #define activate_mm(active_mm, mm) switch_mm((active_mm), (mm), NULL)

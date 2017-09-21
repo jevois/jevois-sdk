@@ -28,9 +28,9 @@
  * cluster0 : cortex-a7,
  * cluster1 : cortex-a15.
  */
-#define A7_CLUSTER  0
-#define A15_CLUSTER 1
-#define MAX_CLUSTERS  2
+#define A7_CLUSTER	0
+#define A15_CLUSTER	1
+#define MAX_CLUSTERS	2
 
 
 #ifdef CONFIG_ARCH_SUN9IW1P1
@@ -42,8 +42,8 @@
 #endif
 
 /* the actual and virtual freq convert */
-#define ACTUAL_FREQ(cluster, freq)  ((cluster == A7_CLUSTER) ? freq << 1 : freq)
-#define VIRT_FREQ(cluster, freq)  ((cluster == A7_CLUSTER) ? freq >> 1 : freq)
+#define ACTUAL_FREQ(cluster, freq)	((cluster == A7_CLUSTER) ? freq << 1 : freq)
+#define VIRT_FREQ(cluster, freq)	((cluster == A7_CLUSTER) ? freq >> 1 : freq)
 
 /* the threshold freq of cpu big little switch */
 #define SUNXI_BL_SWITCH_THRESHOLD (600000)
@@ -53,20 +53,20 @@
 
 #ifdef CONFIG_BL_SWITCHER
 extern bool bL_switching_enabled;
-#define is_bL_switching_enabled()   bL_switching_enabled
-#define set_switching_enabled(x)    (bL_switching_enabled = (x))
+#define is_bL_switching_enabled()		bL_switching_enabled
+#define set_switching_enabled(x) 		(bL_switching_enabled = (x))
 #else
-#define is_bL_switching_enabled()   false
-#define set_switching_enabled(x)    do { } while (0)
+#define is_bL_switching_enabled()		false
+#define set_switching_enabled(x) 		do { } while (0)
 #endif
 
-static inline int cpu_to_cluster (int cpu)
+static inline int cpu_to_cluster(int cpu)
 {
-  #ifdef CONFIG_SMP
-  return is_bL_switching_enabled() ? MAX_CLUSTERS : topology_physical_package_id (cpu);
-  #else
-  return 0;
-  #endif
+#ifdef CONFIG_SMP
+	return is_bL_switching_enabled() ? MAX_CLUSTERS : topology_physical_package_id(cpu);
+#else
+	return 0;
+#endif
 }
 
 #endif /* CPUFREQ_SUNXI_IKS_H */

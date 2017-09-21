@@ -35,11 +35,11 @@
 #endif
 
 struct ps3fb_ioctl_res {
-  __u32 xres; /* frame buffer x_size */
-  __u32 yres; /* frame buffer y_size */
-  __u32 xoff; /* margine x  */
-  __u32 yoff; /* margine y */
-  __u32 num_frames; /* num of frame buffers */
+	__u32 xres; /* frame buffer x_size */
+	__u32 yres; /* frame buffer y_size */
+	__u32 xoff; /* margine x  */
+	__u32 yoff; /* margine y */
+	__u32 num_frames; /* num of frame buffers */
 };
 
 #endif /* _ASM_POWERPC_PS3FB_H_ */

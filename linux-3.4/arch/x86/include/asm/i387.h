@@ -3,7 +3,7 @@
  *
  * Pentium III FXSR, SSE support
  * General FPU state handling cleanups
- *  Gareth Hughes <gareth@valinux.com>, May 2000
+ *	Gareth Hughes <gareth@valinux.com>, May 2000
  * x86-64 work by Andi Kleen 2002
  */
 
@@ -18,13 +18,13 @@
 struct pt_regs;
 struct user_i387_struct;
 
-extern int init_fpu (struct task_struct * child);
-extern int dump_fpu (struct pt_regs *, struct user_i387_struct *);
-extern void math_state_restore (void);
+extern int init_fpu(struct task_struct *child);
+extern int dump_fpu(struct pt_regs *, struct user_i387_struct *);
+extern void math_state_restore(void);
 
-extern bool irq_fpu_usable (void);
-extern void kernel_fpu_begin (void);
-extern void kernel_fpu_end (void);
+extern bool irq_fpu_usable(void);
+extern void kernel_fpu_begin(void);
+extern void kernel_fpu_end(void);
 
 /*
  * Some instructions like VIA's padlock instructions generate a spurious
@@ -33,28 +33,28 @@ extern void kernel_fpu_end (void);
  * in interrupt context interacting wrongly with other user/kernel fpu usage, we
  * should use them only in the context of irq_ts_save/restore()
  */
-static inline int irq_ts_save (void)
+static inline int irq_ts_save(void)
 {
-  /*
-   * If in process context and not atomic, we can take a spurious DNA fault.
-   * Otherwise, doing clts() in process context requires disabling preemption
-   * or some heavy lifting like kernel_fpu_begin()
-   */
-  if (!in_atomic() )
-  { return 0; }
-  
-  if (read_cr0() & X86_CR0_TS) {
-    clts();
-    return 1;
-  }
-  
-  return 0;
+	/*
+	 * If in process context and not atomic, we can take a spurious DNA fault.
+	 * Otherwise, doing clts() in process context requires disabling preemption
+	 * or some heavy lifting like kernel_fpu_begin()
+	 */
+	if (!in_atomic())
+		return 0;
+
+	if (read_cr0() & X86_CR0_TS) {
+		clts();
+		return 1;
+	}
+
+	return 0;
 }
 
-static inline void irq_ts_restore (int TS_state)
+static inline void irq_ts_restore(int TS_state)
 {
-  if (TS_state)
-  { stts(); }
+	if (TS_state)
+		stts();
 }
 
 /*
@@ -67,12 +67,12 @@ static inline void irq_ts_restore (int TS_state)
  * to save the FP state - we'll just take a #NM
  * fault and get the FPU access back.
  */
-static inline int user_has_fpu (void)
+static inline int user_has_fpu(void)
 {
-  return current->thread.fpu.has_fpu;
+	return current->thread.fpu.has_fpu;
 }
 
-extern void unlazy_fpu (struct task_struct * tsk);
+extern void unlazy_fpu(struct task_struct *tsk);
 
 #endif /* __ASSEMBLY__ */
 

@@ -39,26 +39,26 @@
 #include "cvmx-wqe.h"
 
 typedef enum {
-  CVMX_HELPER_INTERFACE_MODE_DISABLED,
-  CVMX_HELPER_INTERFACE_MODE_RGMII,
-  CVMX_HELPER_INTERFACE_MODE_GMII,
-  CVMX_HELPER_INTERFACE_MODE_SPI,
-  CVMX_HELPER_INTERFACE_MODE_PCIE,
-  CVMX_HELPER_INTERFACE_MODE_XAUI,
-  CVMX_HELPER_INTERFACE_MODE_SGMII,
-  CVMX_HELPER_INTERFACE_MODE_PICMG,
-  CVMX_HELPER_INTERFACE_MODE_NPI,
-  CVMX_HELPER_INTERFACE_MODE_LOOP,
+	CVMX_HELPER_INTERFACE_MODE_DISABLED,
+	CVMX_HELPER_INTERFACE_MODE_RGMII,
+	CVMX_HELPER_INTERFACE_MODE_GMII,
+	CVMX_HELPER_INTERFACE_MODE_SPI,
+	CVMX_HELPER_INTERFACE_MODE_PCIE,
+	CVMX_HELPER_INTERFACE_MODE_XAUI,
+	CVMX_HELPER_INTERFACE_MODE_SGMII,
+	CVMX_HELPER_INTERFACE_MODE_PICMG,
+	CVMX_HELPER_INTERFACE_MODE_NPI,
+	CVMX_HELPER_INTERFACE_MODE_LOOP,
 } cvmx_helper_interface_mode_t;
 
 typedef union {
-  uint64_t u64;
-  struct {
-    uint64_t reserved_20_63: 44;
-    uint64_t link_up: 1;    /**< Is the physical link up? */
-    uint64_t full_duplex: 1;    /**< 1 if the link is full duplex */
-    uint64_t speed: 18;     /**< Speed of the link in Mbps */
-  } s;
+	uint64_t u64;
+	struct {
+		uint64_t reserved_20_63:44;
+		uint64_t link_up:1;	    /**< Is the physical link up? */
+		uint64_t full_duplex:1;	    /**< 1 if the link is full duplex */
+		uint64_t speed:18;	    /**< Speed of the link in Mbps */
+	} s;
 } cvmx_helper_link_info_t;
 
 #include "cvmx-helper-fpa.h"
@@ -80,7 +80,7 @@ typedef union {
  * calling any cvmx-helper operations.
  */
 extern void (*cvmx_override_pko_queue_priority) (int pko_port,
-    uint64_t priorities[16]);
+						 uint64_t priorities[16]);
 
 /**
  * cvmx_override_ipd_port_setup(int ipd_port) is a function
@@ -102,7 +102,7 @@ extern void (*cvmx_override_ipd_port_setup) (int ipd_port);
  * Returns 0 on success
  *         -1 on failure
  */
-extern int cvmx_helper_ipd_and_packet_input_enable (void);
+extern int cvmx_helper_ipd_and_packet_input_enable(void);
 
 /**
  * Initialize the PIP, IPD, and PKO hardware to support
@@ -113,14 +113,14 @@ extern int cvmx_helper_ipd_and_packet_input_enable (void);
  *
  * Returns Zero on success, non-zero on failure
  */
-extern int cvmx_helper_initialize_packet_io_global (void);
+extern int cvmx_helper_initialize_packet_io_global(void);
 
 /**
  * Does core local initialization for packet io
  *
  * Returns Zero on success, non-zero on failure
  */
-extern int cvmx_helper_initialize_packet_io_local (void);
+extern int cvmx_helper_initialize_packet_io_local(void);
 
 /**
  * Returns the number of ports on the given interface.
@@ -132,7 +132,7 @@ extern int cvmx_helper_initialize_packet_io_local (void);
  * Returns Port count for interface
  *         -1 for uninitialized interface
  */
-extern int cvmx_helper_ports_on_interface (int interface);
+extern int cvmx_helper_ports_on_interface(int interface);
 
 /**
  * Return the number of interfaces the chip has. Each interface
@@ -142,7 +142,7 @@ extern int cvmx_helper_ports_on_interface (int interface);
  *
  * Returns Number of interfaces on chip
  */
-extern int cvmx_helper_get_number_of_interfaces (void);
+extern int cvmx_helper_get_number_of_interfaces(void);
 
 /**
  * Get the operating mode of an interface. Depending on the Octeon
@@ -154,8 +154,8 @@ extern int cvmx_helper_get_number_of_interfaces (void);
  * Returns Mode of the interface. Unknown or unsupported interfaces return
  *         DISABLED.
  */
-extern cvmx_helper_interface_mode_t cvmx_helper_interface_get_mode (int
-    interface);
+extern cvmx_helper_interface_mode_t cvmx_helper_interface_get_mode(int
+								   interface);
 
 /**
  * Auto configure an IPD/PKO port link state and speed. This
@@ -166,7 +166,7 @@ extern cvmx_helper_interface_mode_t cvmx_helper_interface_get_mode (int
  *
  * Returns Link state after configure
  */
-extern cvmx_helper_link_info_t cvmx_helper_link_autoconf (int ipd_port);
+extern cvmx_helper_link_info_t cvmx_helper_link_autoconf(int ipd_port);
 
 /**
  * Return the link state of an IPD/PKO port as returned by
@@ -178,7 +178,7 @@ extern cvmx_helper_link_info_t cvmx_helper_link_autoconf (int ipd_port);
  *
  * Returns Link state
  */
-extern cvmx_helper_link_info_t cvmx_helper_link_get (int ipd_port);
+extern cvmx_helper_link_info_t cvmx_helper_link_get(int ipd_port);
 
 /**
  * Configure an IPD/PKO port for the specified link state. This
@@ -192,8 +192,8 @@ extern cvmx_helper_link_info_t cvmx_helper_link_get (int ipd_port);
  *
  * Returns Zero on success, negative on failure
  */
-extern int cvmx_helper_link_set (int ipd_port,
-                                 cvmx_helper_link_info_t link_info);
+extern int cvmx_helper_link_set(int ipd_port,
+				cvmx_helper_link_info_t link_info);
 
 /**
  * This function probes an interface to determine the actual
@@ -206,8 +206,8 @@ extern int cvmx_helper_link_set (int ipd_port,
  *
  * Returns Zero on success, negative on failure
  */
-extern int cvmx_helper_interface_probe (int interface);
-extern int cvmx_helper_interface_enumerate (int interface);
+extern int cvmx_helper_interface_probe(int interface);
+extern int cvmx_helper_interface_enumerate(int interface);
 
 /**
  * Configure a port for internal and/or external loopback. Internal loopback
@@ -222,7 +222,7 @@ extern int cvmx_helper_interface_enumerate (int interface);
  *
  * Returns Zero on success, negative on failure.
  */
-extern int cvmx_helper_configure_loopback (int ipd_port, int enable_internal,
-    int enable_external);
+extern int cvmx_helper_configure_loopback(int ipd_port, int enable_internal,
+					  int enable_external);
 
 #endif /* __CVMX_HELPER_H__ */

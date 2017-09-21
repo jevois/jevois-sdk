@@ -26,65 +26,65 @@
  * Unconditional logging of mmc block erase operations,
  * including cmd, address, size
  */
-DECLARE_EVENT_CLASS (mmc_blk_erase_class,
-                     TP_PROTO (unsigned int cmd, unsigned int addr, unsigned int size),
-                     TP_ARGS (cmd, addr, size),
-                     TP_STRUCT__entry (
-                       __field (unsigned int, cmd)
-                       __field (unsigned int, addr)
-                       __field (unsigned int, size)
-                     ),
-                     TP_fast_assign (
-                       __entry->cmd = cmd;
-                       __entry->addr = addr;
-                       __entry->size = size;
-                     ),
-                     TP_printk ("cmd=%u,addr=0x%08x,size=0x%08x",
-                                __entry->cmd, __entry->addr, __entry->size)
-                    );
+DECLARE_EVENT_CLASS(mmc_blk_erase_class,
+	TP_PROTO(unsigned int cmd, unsigned int addr, unsigned int size),
+	TP_ARGS(cmd, addr, size),
+	TP_STRUCT__entry(
+		__field(unsigned int, cmd)
+		__field(unsigned int, addr)
+		__field(unsigned int, size)
+	),
+	TP_fast_assign(
+		__entry->cmd = cmd;
+		__entry->addr = addr;
+		__entry->size = size;
+	),
+	TP_printk("cmd=%u,addr=0x%08x,size=0x%08x",
+		  __entry->cmd, __entry->addr, __entry->size)
+);
 
-DEFINE_EVENT (mmc_blk_erase_class, mmc_blk_erase_start,
-              TP_PROTO (unsigned int cmd, unsigned int addr, unsigned int size),
-              TP_ARGS (cmd, addr, size) );
+DEFINE_EVENT(mmc_blk_erase_class, mmc_blk_erase_start,
+	TP_PROTO(unsigned int cmd, unsigned int addr, unsigned int size),
+	TP_ARGS(cmd, addr, size));
 
-DEFINE_EVENT (mmc_blk_erase_class, mmc_blk_erase_end,
-              TP_PROTO (unsigned int cmd, unsigned int addr, unsigned int size),
-              TP_ARGS (cmd, addr, size) );
+DEFINE_EVENT(mmc_blk_erase_class, mmc_blk_erase_end,
+	TP_PROTO(unsigned int cmd, unsigned int addr, unsigned int size),
+	TP_ARGS(cmd, addr, size));
 
 /*
  * Logging of start of read or write mmc block operation,
  * including cmd, address, size
  */
-DECLARE_EVENT_CLASS (mmc_blk_rw_class,
-                     TP_PROTO (unsigned int cmd, unsigned int addr, struct mmc_data * data),
-                     TP_ARGS (cmd, addr, data),
-                     TP_STRUCT__entry (
-                       __field (unsigned int, cmd)
-                       __field (unsigned int, addr)
-                       __field (unsigned int, size)
-                     ),
-                     TP_fast_assign (
-                       __entry->cmd = cmd;
-                       __entry->addr = addr;
-                       __entry->size = data->blocks;
-                     ),
-                     TP_printk ("cmd=%u,addr=0x%08x,size=0x%08x",
-                                __entry->cmd, __entry->addr, __entry->size)
-                    );
+DECLARE_EVENT_CLASS(mmc_blk_rw_class,
+	TP_PROTO(unsigned int cmd, unsigned int addr, struct mmc_data *data),
+	TP_ARGS(cmd, addr, data),
+	TP_STRUCT__entry(
+		__field(unsigned int, cmd)
+		__field(unsigned int, addr)
+		__field(unsigned int, size)
+	),
+	TP_fast_assign(
+		__entry->cmd = cmd;
+		__entry->addr = addr;
+		__entry->size = data->blocks;
+	),
+	TP_printk("cmd=%u,addr=0x%08x,size=0x%08x",
+		  __entry->cmd, __entry->addr, __entry->size)
+);
 
-DEFINE_EVENT_CONDITION (mmc_blk_rw_class, mmc_blk_rw_start,
-                        TP_PROTO (unsigned int cmd, unsigned int addr, struct mmc_data * data),
-                        TP_ARGS (cmd, addr, data),
-                        TP_CONDITION ( ( (cmd == MMC_READ_MULTIPLE_BLOCK) ||
-                                       (cmd == MMC_WRITE_MULTIPLE_BLOCK) ) &&
-                                       data) );
+DEFINE_EVENT_CONDITION(mmc_blk_rw_class, mmc_blk_rw_start,
+	TP_PROTO(unsigned int cmd, unsigned int addr, struct mmc_data *data),
+	TP_ARGS(cmd, addr, data),
+	TP_CONDITION(((cmd == MMC_READ_MULTIPLE_BLOCK) ||
+		      (cmd == MMC_WRITE_MULTIPLE_BLOCK)) &&
+		      data));
 
-DEFINE_EVENT_CONDITION (mmc_blk_rw_class, mmc_blk_rw_end,
-                        TP_PROTO (unsigned int cmd, unsigned int addr, struct mmc_data * data),
-                        TP_ARGS (cmd, addr, data),
-                        TP_CONDITION ( ( (cmd == MMC_READ_MULTIPLE_BLOCK) ||
-                                       (cmd == MMC_WRITE_MULTIPLE_BLOCK) ) &&
-                                       data) );
+DEFINE_EVENT_CONDITION(mmc_blk_rw_class, mmc_blk_rw_end,
+	TP_PROTO(unsigned int cmd, unsigned int addr, struct mmc_data *data),
+	TP_ARGS(cmd, addr, data),
+	TP_CONDITION(((cmd == MMC_READ_MULTIPLE_BLOCK) ||
+		      (cmd == MMC_WRITE_MULTIPLE_BLOCK)) &&
+		      data));
 #endif /* _TRACE_MMC_H */
 
 /* This part must be outside protection */

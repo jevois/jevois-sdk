@@ -25,16 +25,16 @@
  * 64K pages in HW or not is irrelevant to those definitions.
  */
 #if defined(CONFIG_PPC_256K_PAGES)
-#define PAGE_SHIFT    18
+#define PAGE_SHIFT		18
 #elif defined(CONFIG_PPC_64K_PAGES)
-#define PAGE_SHIFT    16
+#define PAGE_SHIFT		16
 #elif defined(CONFIG_PPC_16K_PAGES)
-#define PAGE_SHIFT    14
+#define PAGE_SHIFT		14
 #else
-#define PAGE_SHIFT    12
+#define PAGE_SHIFT		12
 #endif
 
-#define PAGE_SIZE   (ASM_CONST(1) << PAGE_SHIFT)
+#define PAGE_SIZE		(ASM_CONST(1) << PAGE_SHIFT)
 
 #ifndef __ASSEMBLY__
 #ifdef CONFIG_HUGETLB_PAGE
@@ -42,14 +42,14 @@ extern unsigned int HPAGE_SHIFT;
 #else
 #define HPAGE_SHIFT PAGE_SHIFT
 #endif
-#define HPAGE_SIZE    ((1UL) << HPAGE_SHIFT)
-#define HPAGE_MASK    (~(HPAGE_SIZE - 1))
-#define HUGETLB_PAGE_ORDER  (HPAGE_SHIFT - PAGE_SHIFT)
-#define HUGE_MAX_HSTATE   (MMU_PAGE_COUNT-1)
+#define HPAGE_SIZE		((1UL) << HPAGE_SHIFT)
+#define HPAGE_MASK		(~(HPAGE_SIZE - 1))
+#define HUGETLB_PAGE_ORDER	(HPAGE_SHIFT - PAGE_SHIFT)
+#define HUGE_MAX_HSTATE		(MMU_PAGE_COUNT-1)
 #endif
 
 /* We do define AT_SYSINFO_EHDR but don't use the gate mechanism */
-#define __HAVE_ARCH_GATE_AREA   1
+#define __HAVE_ARCH_GATE_AREA		1
 
 /*
  * Subtle: (1 << PAGE_SHIFT) is an int, not an unsigned long. So if we
@@ -89,8 +89,8 @@ extern unsigned int HPAGE_SHIFT;
  */
 
 #define KERNELBASE      ASM_CONST(CONFIG_KERNEL_START)
-#define PAGE_OFFSET ASM_CONST(CONFIG_PAGE_OFFSET)
-#define LOAD_OFFSET ASM_CONST((CONFIG_KERNEL_START-CONFIG_PHYSICAL_START))
+#define PAGE_OFFSET	ASM_CONST(CONFIG_PAGE_OFFSET)
+#define LOAD_OFFSET	ASM_CONST((CONFIG_KERNEL_START-CONFIG_PHYSICAL_START))
 
 #if defined(CONFIG_NONSTATIC_KERNEL)
 #ifndef __ASSEMBLY__
@@ -103,10 +103,10 @@ extern long long virt_phys_offset;
 #endif
 
 #endif /* __ASSEMBLY__ */
-#define PHYSICAL_START  kernstart_addr
+#define PHYSICAL_START	kernstart_addr
 
-#else /* !CONFIG_NONSTATIC_KERNEL */
-#define PHYSICAL_START  ASM_CONST(CONFIG_PHYSICAL_START)
+#else	/* !CONFIG_NONSTATIC_KERNEL */
+#define PHYSICAL_START	ASM_CONST(CONFIG_PHYSICAL_START)
 #endif
 
 /* See Description below for VIRT_PHYS_OFFSET */
@@ -118,21 +118,21 @@ extern long long virt_phys_offset;
 
 
 #ifdef CONFIG_PPC64
-#define MEMORY_START  0UL
+#define MEMORY_START	0UL
 #elif defined(CONFIG_NONSTATIC_KERNEL)
-#define MEMORY_START  memstart_addr
+#define MEMORY_START	memstart_addr
 #else
-#define MEMORY_START  (PHYSICAL_START + PAGE_OFFSET - KERNELBASE)
+#define MEMORY_START	(PHYSICAL_START + PAGE_OFFSET - KERNELBASE)
 #endif
 
 #ifdef CONFIG_FLATMEM
-#define ARCH_PFN_OFFSET   ((unsigned long)(MEMORY_START >> PAGE_SHIFT))
-#define pfn_valid(pfn)    ((pfn) >= ARCH_PFN_OFFSET && (pfn) < max_mapnr)
+#define ARCH_PFN_OFFSET		((unsigned long)(MEMORY_START >> PAGE_SHIFT))
+#define pfn_valid(pfn)		((pfn) >= ARCH_PFN_OFFSET && (pfn) < max_mapnr)
 #endif
 
-#define virt_to_page(kaddr) pfn_to_page(__pa(kaddr) >> PAGE_SHIFT)
-#define pfn_to_kaddr(pfn) __va((pfn) << PAGE_SHIFT)
-#define virt_addr_valid(kaddr)  pfn_valid(__pa(kaddr) >> PAGE_SHIFT)
+#define virt_to_page(kaddr)	pfn_to_page(__pa(kaddr) >> PAGE_SHIFT)
+#define pfn_to_kaddr(pfn)	__va((pfn) << PAGE_SHIFT)
+#define virt_addr_valid(kaddr)	pfn_valid(__pa(kaddr) >> PAGE_SHIFT)
 
 /*
  * On Book-E parts we need __va to parse the device tree and we can't
@@ -141,30 +141,30 @@ extern long long virt_phys_offset;
  *
  * On BookE with RELOCATABLE (RELOCATABLE_PPC32)
  *
- *   With RELOCATABLE_PPC32,  we support loading the kernel at any physical
+ *   With RELOCATABLE_PPC32,  we support loading the kernel at any physical 
  *   address without any restriction on the page alignment.
  *
- *   We find the runtime address of _stext and relocate ourselves based on
+ *   We find the runtime address of _stext and relocate ourselves based on 
  *   the following calculation:
  *
- *      virtual_base = ALIGN_DOWN(KERNELBASE,256M) +
- *          MODULO(_stext.run,256M)
+ *  	  virtual_base = ALIGN_DOWN(KERNELBASE,256M) +
+ *  				MODULO(_stext.run,256M)
  *   and create the following mapping:
  *
- *    ALIGN_DOWN(_stext.run,256M) => ALIGN_DOWN(KERNELBASE,256M)
+ * 	  ALIGN_DOWN(_stext.run,256M) => ALIGN_DOWN(KERNELBASE,256M)
  *
  *   When we process relocations, we cannot depend on the
  *   existing equation for the __va()/__pa() translations:
  *
- *     __va(x) = (x)  - PHYSICAL_START + KERNELBASE
+ * 	   __va(x) = (x)  - PHYSICAL_START + KERNELBASE
  *
  *   Where:
- *     PHYSICAL_START = kernstart_addr = Physical address of _stext
- *     KERNELBASE = Compiled virtual address of _stext.
+ *   	 PHYSICAL_START = kernstart_addr = Physical address of _stext
+ *  	 KERNELBASE = Compiled virtual address of _stext.
  *
  *   This formula holds true iff, kernel load address is TLB page aligned.
  *
- *   In our case, we need to also account for the shift in the kernel Virtual
+ *   In our case, we need to also account for the shift in the kernel Virtual 
  *   address.
  *
  *   E.g.,
@@ -176,34 +176,34 @@ extern long long virt_phys_offset;
  *                 = 0xbc100000 , which is wrong.
  *
  *   Rather, it should be : 0xc0000000 + 0x100000 = 0xc0100000
- *        according to our mapping.
+ *      	according to our mapping.
  *
  *   Hence we use the following formula to get the translations right:
  *
- *    __va(x) = (x) - [ PHYSICAL_START - Effective KERNELBASE ]
+ * 	  __va(x) = (x) - [ PHYSICAL_START - Effective KERNELBASE ]
  *
- *    Where :
- *    PHYSICAL_START = dynamic load address.(kernstart_addr variable)
- *    Effective KERNELBASE = virtual_base =
- *             = ALIGN_DOWN(KERNELBASE,256M) +
- *            MODULO(PHYSICAL_START,256M)
+ * 	  Where :
+ * 		PHYSICAL_START = dynamic load address.(kernstart_addr variable)
+ * 		Effective KERNELBASE = virtual_base =
+ * 				     = ALIGN_DOWN(KERNELBASE,256M) +
+ * 						MODULO(PHYSICAL_START,256M)
  *
- *  To make the cost of __va() / __pa() more light weight, we introduce
- *  a new variable virt_phys_offset, which will hold :
+ * 	To make the cost of __va() / __pa() more light weight, we introduce
+ * 	a new variable virt_phys_offset, which will hold :
  *
- *  virt_phys_offset = Effective KERNELBASE - PHYSICAL_START
- *       = ALIGN_DOWN(KERNELBASE,256M) -
- *        ALIGN_DOWN(PHYSICALSTART,256M)
+ * 	virt_phys_offset = Effective KERNELBASE - PHYSICAL_START
+ * 			 = ALIGN_DOWN(KERNELBASE,256M) - 
+ * 			 	ALIGN_DOWN(PHYSICALSTART,256M)
  *
- *  Hence :
+ * 	Hence :
  *
- *  __va(x) = x - PHYSICAL_START + Effective KERNELBASE
- *    = x + virt_phys_offset
+ * 	__va(x) = x - PHYSICAL_START + Effective KERNELBASE
+ * 		= x + virt_phys_offset
  *
- *    and
- *  __pa(x) = x + PHYSICAL_START - Effective KERNELBASE
- *    = x - virt_phys_offset
- *
+ * 		and
+ * 	__pa(x) = x + PHYSICAL_START - Effective KERNELBASE
+ * 		= x - virt_phys_offset
+ * 		
  * On non-Book-E PPC64 PAGE_OFFSET and MEMORY_START are constants so use
  * the other definitions for __va & __pa.
  */
@@ -220,11 +220,11 @@ extern long long virt_phys_offset;
  * and needs to be executable.  This means the whole heap ends
  * up being executable.
  */
-#define VM_DATA_DEFAULT_FLAGS32 (VM_READ | VM_WRITE | VM_EXEC | \
-                                 VM_MAYREAD | VM_MAYWRITE | VM_MAYEXEC)
+#define VM_DATA_DEFAULT_FLAGS32	(VM_READ | VM_WRITE | VM_EXEC | \
+				 VM_MAYREAD | VM_MAYWRITE | VM_MAYEXEC)
 
-#define VM_DATA_DEFAULT_FLAGS64 (VM_READ | VM_WRITE | \
-                                 VM_MAYREAD | VM_MAYWRITE | VM_MAYEXEC)
+#define VM_DATA_DEFAULT_FLAGS64	(VM_READ | VM_WRITE | \
+				 VM_MAYREAD | VM_MAYWRITE | VM_MAYEXEC)
 
 #ifdef __powerpc64__
 #include <asm/page_64.h>
@@ -233,8 +233,8 @@ extern long long virt_phys_offset;
 #endif
 
 /* align addr on a size boundary - adjust address up/down if needed */
-#define _ALIGN_UP(addr,size)  (((addr)+((size)-1))&(~((size)-1)))
-#define _ALIGN_DOWN(addr,size)  ((addr)&(~((size)-1)))
+#define _ALIGN_UP(addr,size)	(((addr)+((size)-1))&(~((size)-1)))
+#define _ALIGN_DOWN(addr,size)	((addr)&(~((size)-1)))
 
 /* align addr on a size boundary - adjust address up if needed */
 #define _ALIGN(addr,size)     _ALIGN_UP(addr,size)
@@ -244,9 +244,9 @@ extern long long virt_phys_offset;
  * "kernelness", use is_kernel_addr() - it should do what you want.
  */
 #ifdef CONFIG_PPC_BOOK3E_64
-#define is_kernel_addr(x) ((x) >= 0x8000000000000000ul)
+#define is_kernel_addr(x)	((x) >= 0x8000000000000000ul)
 #else
-#define is_kernel_addr(x) ((x) >= PAGE_OFFSET)
+#define is_kernel_addr(x)	((x) >= PAGE_OFFSET)
 #endif
 
 /*
@@ -276,8 +276,8 @@ extern long long virt_phys_offset;
 
 /* PTE level */
 typedef struct { pte_basic_t pte; } pte_t;
-#define pte_val(x)  ((x).pte)
-#define __pte(x)  ((pte_t) { (x) })
+#define pte_val(x)	((x).pte)
+#define __pte(x)	((pte_t) { (x) })
 
 /* 64k pages additionally define a bigger "real PTE" type that gathers
  * the "second half" part of the PTE for pseudo 64k pages
@@ -291,26 +291,26 @@ typedef struct { pte_t pte; } real_pte_t;
 /* PMD level */
 #ifdef CONFIG_PPC64
 typedef struct { unsigned long pmd; } pmd_t;
-#define pmd_val(x)  ((x).pmd)
-#define __pmd(x)  ((pmd_t) { (x) })
+#define pmd_val(x)	((x).pmd)
+#define __pmd(x)	((pmd_t) { (x) })
 
 /* PUD level exusts only on 4k pages */
 #ifndef CONFIG_PPC_64K_PAGES
 typedef struct { unsigned long pud; } pud_t;
-#define pud_val(x)  ((x).pud)
-#define __pud(x)  ((pud_t) { (x) })
+#define pud_val(x)	((x).pud)
+#define __pud(x)	((pud_t) { (x) })
 #endif /* !CONFIG_PPC_64K_PAGES */
 #endif /* CONFIG_PPC64 */
 
 /* PGD level */
 typedef struct { unsigned long pgd; } pgd_t;
-#define pgd_val(x)  ((x).pgd)
-#define __pgd(x)  ((pgd_t) { (x) })
+#define pgd_val(x)	((x).pgd)
+#define __pgd(x)	((pgd_t) { (x) })
 
 /* Page protection bits */
 typedef struct { unsigned long pgprot; } pgprot_t;
-#define pgprot_val(x) ((x).pgprot)
-#define __pgprot(x) ((pgprot_t) { (x) })
+#define pgprot_val(x)	((x).pgprot)
+#define __pgprot(x)	((pgprot_t) { (x) })
 
 #else
 
@@ -319,8 +319,8 @@ typedef struct { unsigned long pgprot; } pgprot_t;
  */
 
 typedef pte_basic_t pte_t;
-#define pte_val(x)  (x)
-#define __pte(x)  (x)
+#define pte_val(x)	(x)
+#define __pte(x)	(x)
 
 #if defined(CONFIG_PPC_64K_PAGES) && defined(CONFIG_PPC_STD_MMU_64)
 typedef struct { pte_t pte; unsigned long hidx; } real_pte_t;
@@ -331,54 +331,54 @@ typedef pte_t real_pte_t;
 
 #ifdef CONFIG_PPC64
 typedef unsigned long pmd_t;
-#define pmd_val(x)  (x)
-#define __pmd(x)  (x)
+#define pmd_val(x)	(x)
+#define __pmd(x)	(x)
 
 #ifndef CONFIG_PPC_64K_PAGES
 typedef unsigned long pud_t;
-#define pud_val(x)  (x)
-#define __pud(x)  (x)
+#define pud_val(x)	(x)
+#define __pud(x)	(x)
 #endif /* !CONFIG_PPC_64K_PAGES */
 #endif /* CONFIG_PPC64 */
 
 typedef unsigned long pgd_t;
-#define pgd_val(x)  (x)
-#define pgprot_val(x) (x)
+#define pgd_val(x)	(x)
+#define pgprot_val(x)	(x)
 
 typedef unsigned long pgprot_t;
-#define __pgd(x)  (x)
-#define __pgprot(x) (x)
+#define __pgd(x)	(x)
+#define __pgprot(x)	(x)
 
 #endif
 
 typedef struct { signed long pd; } hugepd_t;
 
 #ifdef CONFIG_HUGETLB_PAGE
-static inline int hugepd_ok (hugepd_t hpd)
+static inline int hugepd_ok(hugepd_t hpd)
 {
-  return (hpd.pd > 0);
+	return (hpd.pd > 0);
 }
 
 #define is_hugepd(pdep)               (hugepd_ok(*((hugepd_t *)(pdep))))
 #else /* CONFIG_HUGETLB_PAGE */
-#define is_hugepd(pdep)     0
+#define is_hugepd(pdep)			0
 #endif /* CONFIG_HUGETLB_PAGE */
 
 struct page;
-extern void clear_user_page (void * page, unsigned long vaddr, struct page * pg);
-extern void copy_user_page (void * to, void * from, unsigned long vaddr,
-                            struct page * p);
-extern int page_is_ram (unsigned long pfn);
-extern int devmem_is_allowed (unsigned long pfn);
+extern void clear_user_page(void *page, unsigned long vaddr, struct page *pg);
+extern void copy_user_page(void *to, void *from, unsigned long vaddr,
+		struct page *p);
+extern int page_is_ram(unsigned long pfn);
+extern int devmem_is_allowed(unsigned long pfn);
 
 #ifdef CONFIG_PPC_SMLPAR
-void arch_free_page (struct page * page, int order);
+void arch_free_page(struct page *page, int order);
 #define HAVE_ARCH_FREE_PAGE
 #endif
 
 struct vm_area_struct;
 
-typedef struct page * pgtable_t;
+typedef struct page *pgtable_t;
 
 #include <asm-generic/memory_model.h>
 #endif /* __ASSEMBLY__ */

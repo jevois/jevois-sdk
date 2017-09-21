@@ -15,21 +15,21 @@
 
 #ifdef __GNUC__
 
-static inline __attribute__ ( (const) )
-__u32 __arch_swab32 (__u32 x)
+static inline __attribute__((const))
+__u32 __arch_swab32(__u32 x)
 {
-  __u32 ret;
-  asm ("swap %1,%0" : "=r" (ret) : "r" (x) );
-  return ret;
+	__u32 ret;
+	asm("swap %1,%0" : "=r" (ret) : "r" (x));
+	return ret;
 }
 #define __arch_swab32 __arch_swab32
 
-static inline __attribute__ ( (const) )
-__u16 __arch_swab16 (__u16 x)
+static inline __attribute__((const))
+__u16 __arch_swab16(__u16 x)
 {
-  __u16 ret;
-  asm ("swaph %1,%0" : "=r" (ret) : "r" (x) );
-  return ret;
+	__u16 ret;
+	asm("swaph %1,%0" : "=r" (ret) : "r" (x));
+	return ret;
 }
 #define __arch_swab32 __arch_swab32
 

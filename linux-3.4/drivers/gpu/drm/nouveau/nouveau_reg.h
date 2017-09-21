@@ -1,69 +1,69 @@
 
-#define NV04_PFB_BOOT_0           0x00100000
-# define NV04_PFB_BOOT_0_RAM_AMOUNT     0x00000003
-# define NV04_PFB_BOOT_0_RAM_AMOUNT_32MB      0x00000000
-# define NV04_PFB_BOOT_0_RAM_AMOUNT_4MB     0x00000001
-# define NV04_PFB_BOOT_0_RAM_AMOUNT_8MB     0x00000002
-# define NV04_PFB_BOOT_0_RAM_AMOUNT_16MB      0x00000003
-# define NV04_PFB_BOOT_0_RAM_WIDTH_128      0x00000004
-# define NV04_PFB_BOOT_0_RAM_TYPE       0x00000028
-# define NV04_PFB_BOOT_0_RAM_TYPE_SGRAM_8MBIT   0x00000000
-# define NV04_PFB_BOOT_0_RAM_TYPE_SGRAM_16MBIT    0x00000008
-# define NV04_PFB_BOOT_0_RAM_TYPE_SGRAM_16MBIT_4BANK  0x00000010
-# define NV04_PFB_BOOT_0_RAM_TYPE_SDRAM_16MBIT    0x00000018
-# define NV04_PFB_BOOT_0_RAM_TYPE_SDRAM_64MBIT    0x00000020
-# define NV04_PFB_BOOT_0_RAM_TYPE_SDRAM_64MBITX16   0x00000028
-# define NV04_PFB_BOOT_0_UMA_ENABLE     0x00000100
-# define NV04_PFB_BOOT_0_UMA_SIZE       0x0000f000
-#define NV04_PFB_DEBUG_0          0x00100080
-# define NV04_PFB_DEBUG_0_PAGE_MODE     0x00000001
-# define NV04_PFB_DEBUG_0_REFRESH_OFF     0x00000010
-# define NV04_PFB_DEBUG_0_REFRESH_COUNTX64    0x00003f00
-# define NV04_PFB_DEBUG_0_REFRESH_SLOW_CLK    0x00004000
-# define NV04_PFB_DEBUG_0_SAFE_MODE     0x00008000
-# define NV04_PFB_DEBUG_0_ALOM_ENABLE     0x00010000
-# define NV04_PFB_DEBUG_0_CASOE       0x00100000
-# define NV04_PFB_DEBUG_0_CKE_INVERT      0x10000000
-# define NV04_PFB_DEBUG_0_REFINC        0x20000000
-# define NV04_PFB_DEBUG_0_SAVE_POWER_OFF      0x40000000
-#define NV04_PFB_CFG0           0x00100200
-# define NV04_PFB_CFG0_SCRAMBLE       0x20000000
-#define NV04_PFB_CFG1           0x00100204
-#define NV04_PFB_FIFO_DATA          0x0010020c
-# define NV10_PFB_FIFO_DATA_RAM_AMOUNT_MB_MASK    0xfff00000
-# define NV10_PFB_FIFO_DATA_RAM_AMOUNT_MB_SHIFT   20
-#define NV10_PFB_REFCTRL          0x00100210
-# define NV10_PFB_REFCTRL_VALID_1       (1 << 31)
-#define NV04_PFB_PAD            0x0010021c
-# define NV04_PFB_PAD_CKE_NORMAL        (1 << 0)
+#define NV04_PFB_BOOT_0						0x00100000
+#	define NV04_PFB_BOOT_0_RAM_AMOUNT			0x00000003
+#	define NV04_PFB_BOOT_0_RAM_AMOUNT_32MB			0x00000000
+#	define NV04_PFB_BOOT_0_RAM_AMOUNT_4MB			0x00000001
+#	define NV04_PFB_BOOT_0_RAM_AMOUNT_8MB			0x00000002
+#	define NV04_PFB_BOOT_0_RAM_AMOUNT_16MB			0x00000003
+#	define NV04_PFB_BOOT_0_RAM_WIDTH_128			0x00000004
+#	define NV04_PFB_BOOT_0_RAM_TYPE				0x00000028
+#	define NV04_PFB_BOOT_0_RAM_TYPE_SGRAM_8MBIT		0x00000000
+#	define NV04_PFB_BOOT_0_RAM_TYPE_SGRAM_16MBIT		0x00000008
+#	define NV04_PFB_BOOT_0_RAM_TYPE_SGRAM_16MBIT_4BANK	0x00000010
+#	define NV04_PFB_BOOT_0_RAM_TYPE_SDRAM_16MBIT		0x00000018
+#	define NV04_PFB_BOOT_0_RAM_TYPE_SDRAM_64MBIT		0x00000020
+#	define NV04_PFB_BOOT_0_RAM_TYPE_SDRAM_64MBITX16		0x00000028
+#	define NV04_PFB_BOOT_0_UMA_ENABLE			0x00000100
+#	define NV04_PFB_BOOT_0_UMA_SIZE				0x0000f000
+#define NV04_PFB_DEBUG_0					0x00100080
+#	define NV04_PFB_DEBUG_0_PAGE_MODE			0x00000001
+#	define NV04_PFB_DEBUG_0_REFRESH_OFF			0x00000010
+#	define NV04_PFB_DEBUG_0_REFRESH_COUNTX64		0x00003f00
+#	define NV04_PFB_DEBUG_0_REFRESH_SLOW_CLK		0x00004000
+#	define NV04_PFB_DEBUG_0_SAFE_MODE			0x00008000
+#	define NV04_PFB_DEBUG_0_ALOM_ENABLE			0x00010000
+#	define NV04_PFB_DEBUG_0_CASOE				0x00100000
+#	define NV04_PFB_DEBUG_0_CKE_INVERT			0x10000000
+#	define NV04_PFB_DEBUG_0_REFINC				0x20000000
+#	define NV04_PFB_DEBUG_0_SAVE_POWER_OFF			0x40000000
+#define NV04_PFB_CFG0						0x00100200
+#	define NV04_PFB_CFG0_SCRAMBLE				0x20000000
+#define NV04_PFB_CFG1						0x00100204
+#define NV04_PFB_FIFO_DATA					0x0010020c
+#	define NV10_PFB_FIFO_DATA_RAM_AMOUNT_MB_MASK		0xfff00000
+#	define NV10_PFB_FIFO_DATA_RAM_AMOUNT_MB_SHIFT		20
+#define NV10_PFB_REFCTRL					0x00100210
+#	define NV10_PFB_REFCTRL_VALID_1				(1 << 31)
+#define NV04_PFB_PAD						0x0010021c
+#	define NV04_PFB_PAD_CKE_NORMAL				(1 << 0)
 #define NV10_PFB_TILE(i)                              (0x00100240 + (i*16))
-#define NV10_PFB_TILE__SIZE         8
+#define NV10_PFB_TILE__SIZE					8
 #define NV10_PFB_TLIMIT(i)                            (0x00100244 + (i*16))
 #define NV10_PFB_TSIZE(i)                             (0x00100248 + (i*16))
 #define NV10_PFB_TSTATUS(i)                           (0x0010024c + (i*16))
-#define NV04_PFB_REF            0x001002d0
-# define NV04_PFB_REF_CMD_REFRESH       (1 << 0)
-#define NV04_PFB_PRE            0x001002d4
-# define NV04_PFB_PRE_CMD_PRECHARGE     (1 << 0)
+#define NV04_PFB_REF						0x001002d0
+#	define NV04_PFB_REF_CMD_REFRESH				(1 << 0)
+#define NV04_PFB_PRE						0x001002d4
+#	define NV04_PFB_PRE_CMD_PRECHARGE			(1 << 0)
 #define NV20_PFB_ZCOMP(i)                              (0x00100300 + 4*(i))
-# define NV20_PFB_ZCOMP_MODE_32       (4 << 24)
-# define NV20_PFB_ZCOMP_EN        (1 << 31)
-# define NV25_PFB_ZCOMP_MODE_16       (1 << 20)
-# define NV25_PFB_ZCOMP_MODE_32       (2 << 20)
-#define NV10_PFB_CLOSE_PAGE2          0x0010033c
+#	define NV20_PFB_ZCOMP_MODE_32				(4 << 24)
+#	define NV20_PFB_ZCOMP_EN				(1 << 31)
+#	define NV25_PFB_ZCOMP_MODE_16				(1 << 20)
+#	define NV25_PFB_ZCOMP_MODE_32				(2 << 20)
+#define NV10_PFB_CLOSE_PAGE2					0x0010033c
 #define NV04_PFB_SCRAMBLE(i)                         (0x00100400 + 4 * (i))
 #define NV40_PFB_TILE(i)                              (0x00100600 + (i*16))
-#define NV40_PFB_TILE__SIZE_0         12
-#define NV40_PFB_TILE__SIZE_1         15
+#define NV40_PFB_TILE__SIZE_0					12
+#define NV40_PFB_TILE__SIZE_1					15
 #define NV40_PFB_TLIMIT(i)                            (0x00100604 + (i*16))
 #define NV40_PFB_TSIZE(i)                             (0x00100608 + (i*16))
 #define NV40_PFB_TSTATUS(i)                           (0x0010060c + (i*16))
-#define NV40_PFB_UNK_800          0x00100800
+#define NV40_PFB_UNK_800					0x00100800
 
-#define NV_PEXTDEV_BOOT_0         0x00101000
-#define NV_PEXTDEV_BOOT_0_RAMCFG        0x0000003c
-# define NV_PEXTDEV_BOOT_0_STRAP_FP_IFACE_12BIT   (8 << 12)
-#define NV_PEXTDEV_BOOT_3         0x0010100c
+#define NV_PEXTDEV_BOOT_0					0x00101000
+#define NV_PEXTDEV_BOOT_0_RAMCFG				0x0000003c
+#	define NV_PEXTDEV_BOOT_0_STRAP_FP_IFACE_12BIT		(8 << 12)
+#define NV_PEXTDEV_BOOT_3					0x0010100c
 
 #define NV_RAMIN                                           0x00700000
 
@@ -138,9 +138,9 @@
  * the card will hang early on in the X init process.
  */
 #    define NV_PMC_ENABLE_UNK13                               (1<<13)
-#define NV40_PMC_GRAPH_UNITS           0x00001540
-#define NV40_PMC_BACKLIGHT           0x000015f0
-# define NV40_PMC_BACKLIGHT_MASK         0x001f0000
+#define NV40_PMC_GRAPH_UNITS				   0x00001540
+#define NV40_PMC_BACKLIGHT				   0x000015f0
+#	define NV40_PMC_BACKLIGHT_MASK			   0x001f0000
 #define NV40_PMC_1700                                      0x00001700
 #define NV40_PMC_1704                                      0x00001704
 #define NV40_PMC_1708                                      0x00001708
@@ -158,9 +158,9 @@
 
 #define NV04_PBUS_PCI_NV_1                                 0x00001804
 #define NV04_PBUS_PCI_NV_19                                0x0000184C
-#define NV04_PBUS_PCI_NV_20       0x00001850
-# define NV04_PBUS_PCI_NV_20_ROM_SHADOW_DISABLED    (0 << 0)
-# define NV04_PBUS_PCI_NV_20_ROM_SHADOW_ENABLED   (1 << 0)
+#define NV04_PBUS_PCI_NV_20				0x00001850
+#	define NV04_PBUS_PCI_NV_20_ROM_SHADOW_DISABLED		(0 << 0)
+#	define NV04_PBUS_PCI_NV_20_ROM_SHADOW_ENABLED		(1 << 0)
 
 #define NV04_PTIMER_INTR_0                                 0x00009100
 #define NV04_PTIMER_INTR_EN_0                              0x00009140
@@ -216,8 +216,8 @@
 #define NV10_PGRAPH_CTX_USER                               0x00400148
 #define NV10_PGRAPH_CTX_SWITCH(i)                         (0x0040014C + 0x4*(i))
 #define NV04_PGRAPH_CTX_SWITCH1                            0x00400160
-#define NV10_PGRAPH_CTX_CACHE(i, j)                       (0x00400160 \
-    + 0x4*(i) + 0x20*(j))
+#define NV10_PGRAPH_CTX_CACHE(i, j)                       (0x00400160	\
+							   + 0x4*(i) + 0x20*(j))
 #define NV04_PGRAPH_CTX_SWITCH2                            0x00400164
 #define NV04_PGRAPH_CTX_SWITCH3                            0x00400168
 #define NV04_PGRAPH_CTX_SWITCH4                            0x0040016C
@@ -572,7 +572,7 @@
 #define NV_CRTC1_INTEN                                     0x00602140
 #    define NV_CRTC_INTR_VBLANK                                (1<<0)
 
-#define NV04_PRAMIN           0x00700000
+#define NV04_PRAMIN						0x00700000
 
 /* Fifo commands. These are not regs, neither masks */
 #define NV03_FIFO_CMD_JUMP                                 0x20000000

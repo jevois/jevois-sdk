@@ -11,9 +11,9 @@
 #ifndef __MACH_IRQS_H
 #define __MACH_IRQS_H
 
-#define IRQ_LOCALTIMER    29
-#define IRQ_LOCALWDOG   30
-#define IRQ_TC11MP_GIC_START  32
+#define IRQ_LOCALTIMER		29
+#define IRQ_LOCALWDOG		30
+#define IRQ_TC11MP_GIC_START	32
 
 #include <mach/cns3xxx.h>
 

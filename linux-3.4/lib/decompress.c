@@ -32,33 +32,33 @@
 #endif
 
 static const struct compress_format {
-  unsigned char magic[2];
-  const char * name;
-  decompress_fn decompressor;
+	unsigned char magic[2];
+	const char *name;
+	decompress_fn decompressor;
 } compressed_formats[] = {
-  { {037, 0213}, "gzip", gunzip },
-  { {037, 0236}, "gzip", gunzip },
-  { {0x42, 0x5a}, "bzip2", bunzip2 },
-  { {0x5d, 0x00}, "lzma", unlzma },
-  { {0xfd, 0x37}, "xz", unxz },
-  { {0x89, 0x4c}, "lzo", unlzo },
-  { {0, 0}, NULL, NULL }
+	{ {037, 0213}, "gzip", gunzip },
+	{ {037, 0236}, "gzip", gunzip },
+	{ {0x42, 0x5a}, "bzip2", bunzip2 },
+	{ {0x5d, 0x00}, "lzma", unlzma },
+	{ {0xfd, 0x37}, "xz", unxz },
+	{ {0x89, 0x4c}, "lzo", unlzo },
+	{ {0, 0}, NULL, NULL }
 };
 
-decompress_fn decompress_method (const unsigned char * inbuf, int len,
-                                 const char ** name)
+decompress_fn decompress_method(const unsigned char *inbuf, int len,
+				const char **name)
 {
-  const struct compress_format * cf;
-  
-  if (len < 2)
-  { return NULL; }  /* Need at least this much... */
-  
-  for (cf = compressed_formats; cf->name; cf++) {
-    if (!memcmp (inbuf, cf->magic, 2) )
-    { break; }
-    
-  }
-  if (name)
-  { *name = cf->name; }
-  return cf->decompressor;
+	const struct compress_format *cf;
+
+	if (len < 2)
+		return NULL;	/* Need at least this much... */
+
+	for (cf = compressed_formats; cf->name; cf++) {
+		if (!memcmp(inbuf, cf->magic, 2))
+			break;
+
+	}
+	if (name)
+		*name = cf->name;
+	return cf->decompressor;
 }

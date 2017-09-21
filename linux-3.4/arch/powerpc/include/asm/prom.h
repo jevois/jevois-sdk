@@ -1,4 +1,4 @@
-#include <linux/of.h> /* linux/of.h gets to determine #include ordering */
+#include <linux/of.h>	/* linux/of.h gets to determine #include ordering */
 #ifndef _POWERPC_PROM_H
 #define _POWERPC_PROM_H
 #ifdef __KERNEL__
@@ -27,36 +27,36 @@
  */
 
 /* Translate a DMA address from device space to CPU space */
-extern u64 of_translate_dma_address (struct device_node * dev,
-                                     const __be32 * in_addr);
+extern u64 of_translate_dma_address(struct device_node *dev,
+				    const __be32 *in_addr);
 
 #ifdef CONFIG_PCI
-extern unsigned long pci_address_to_pio (phys_addr_t address);
+extern unsigned long pci_address_to_pio(phys_addr_t address);
 #define pci_address_to_pio pci_address_to_pio
-#endif  /* CONFIG_PCI */
+#endif	/* CONFIG_PCI */
 
 /* Parse the ibm,dma-window property of an OF node into the busno, phys and
  * size parameters.
  */
-void of_parse_dma_window (struct device_node * dn, const void * dma_window_prop,
-                          unsigned long * busno, unsigned long * phys, unsigned long * size);
+void of_parse_dma_window(struct device_node *dn, const void *dma_window_prop,
+		unsigned long *busno, unsigned long *phys, unsigned long *size);
 
-extern void kdump_move_device_tree (void);
+extern void kdump_move_device_tree(void);
 
 /* CPU OF node matching */
-struct device_node * of_get_cpu_node (int cpu, unsigned int * thread);
+struct device_node *of_get_cpu_node(int cpu, unsigned int *thread);
 
 /* cache lookup */
-struct device_node * of_find_next_cache_node (struct device_node * np);
+struct device_node *of_find_next_cache_node(struct device_node *np);
 
 #ifdef CONFIG_NUMA
-extern int of_node_to_nid (struct device_node * device);
+extern int of_node_to_nid(struct device_node *device);
 #else
-static inline int of_node_to_nid (struct device_node * device) { return 0; }
+static inline int of_node_to_nid(struct device_node *device) { return 0; }
 #endif
 #define of_node_to_nid of_node_to_nid
 
-extern void of_instantiate_rtc (void);
+extern void of_instantiate_rtc(void);
 
 /* These includes are put at the bottom because they may contain things
  * that are overridden by this file.  Ideally they shouldn't be included

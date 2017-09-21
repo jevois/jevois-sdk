@@ -57,32 +57,32 @@
 
 # include <linux/types.h>
 
-extern u_long get_vco (void);
-extern u_long get_cclk (void);
-extern u_long get_sclk (void);
+extern u_long get_vco(void);
+extern u_long get_cclk(void);
+extern u_long get_sclk(void);
 
 # define bfin_revid() (bfin_read_CHIPID() >> 28)
 
-extern bool bfin_os_log_check (void);
-extern void bfin_os_log_dump (void);
+extern bool bfin_os_log_check(void);
+extern void bfin_os_log_dump(void);
 
-extern void blackfin_icache_flush_range (const void *, const void *);
-extern void blackfin_dcache_flush_range (const void *, const void *);
-extern void blackfin_icache_dcache_flush_range (const void *, const void *);
-extern void blackfin_dcache_flush_invalidate_range (const void *, const void *);
+extern void blackfin_icache_flush_range(const void *, const void *);
+extern void blackfin_dcache_flush_range(const void *, const void *);
+extern void blackfin_icache_dcache_flush_range(const void *, const void *);
+extern void blackfin_dcache_flush_invalidate_range(const void *, const void *);
 
 /* Use DMA to move data from on chip to external memory.  The L1 instruction
  * regions can only be accessed via DMA, so if the address in question is in
  * that region, make sure we attempt to DMA indirectly.
  */
 # ifdef __ADSPBF561__
-/* Core B regions all need dma from Core A */
+  /* Core B regions all need dma from Core A */
 #  define addr_bfin_on_chip_mem(addr) \
-  ((((unsigned long)(addr) & 0xFFF00000) == 0xFFA00000) || \
-   (((unsigned long)(addr) & 0xFFC00000) == 0xFF400000))
+	((((unsigned long)(addr) & 0xFFF00000) == 0xFFA00000) || \
+	 (((unsigned long)(addr) & 0xFFC00000) == 0xFF400000))
 # else
 #  define addr_bfin_on_chip_mem(addr) \
-  (((unsigned long)(addr) & 0xFFF00000) == 0xFFA00000)
+	(((unsigned long)(addr) & 0xFFF00000) == 0xFFA00000)
 # endif
 
 # include <asm/system.h>
@@ -94,22 +94,22 @@ extern void blackfin_dcache_flush_invalidate_range (const void *, const void *);
 #endif
 
 #define _bfin_readX(addr, size, asm_size, asm_ext) ({ \
-    u32 __v; \
-    __asm__ __volatile__( \
-                          NOP_PAD_ANOMALY_05000198 \
-                          "%0 = " #asm_size "[%1]" #asm_ext ";" \
-                          : "=d" (__v) \
-                          : "a" (addr) \
-                        ); \
-    __v; })
+	u32 __v; \
+	__asm__ __volatile__( \
+		NOP_PAD_ANOMALY_05000198 \
+		"%0 = " #asm_size "[%1]" #asm_ext ";" \
+		: "=d" (__v) \
+		: "a" (addr) \
+	); \
+	__v; })
 #define _bfin_writeX(addr, val, size, asm_size) \
-  __asm__ __volatile__( \
-                        NOP_PAD_ANOMALY_05000198 \
-                        #asm_size "[%0] = %1;" \
-                        : \
-                        : "a" (addr), "d" ((u##size)(val)) \
-                        : "memory" \
-                      )
+	__asm__ __volatile__( \
+		NOP_PAD_ANOMALY_05000198 \
+		#asm_size "[%0] = %1;" \
+		: \
+		: "a" (addr), "d" ((u##size)(val)) \
+		: "memory" \
+	)
 
 #define bfin_read8(addr)  _bfin_readX(addr,  8, b, (z))
 #define bfin_read16(addr) _bfin_readX(addr, 16, w, (z))
@@ -119,85 +119,83 @@ extern void blackfin_dcache_flush_invalidate_range (const void *, const void *);
 #define bfin_write32(addr, val) _bfin_writeX(addr, val, 32,  )
 
 #define bfin_read(addr) \
-  ({ \
-    sizeof(*(addr)) == 1 ? bfin_read8(addr)  : \
-    sizeof(*(addr)) == 2 ? bfin_read16(addr) : \
-    sizeof(*(addr)) == 4 ? bfin_read32(addr) : \
-    ({ BUG(); 0; }); \
-  })
+({ \
+	sizeof(*(addr)) == 1 ? bfin_read8(addr)  : \
+	sizeof(*(addr)) == 2 ? bfin_read16(addr) : \
+	sizeof(*(addr)) == 4 ? bfin_read32(addr) : \
+	({ BUG(); 0; }); \
+})
 #define bfin_write(addr, val) \
-  do { \
-    switch (sizeof(*(addr))) { \
-    case 1: bfin_write8(addr, val);  break; \
-    case 2: bfin_write16(addr, val); break; \
-    case 4: bfin_write32(addr, val); break; \
-    default: BUG(); \
-    } \
-  } while (0)
+do { \
+	switch (sizeof(*(addr))) { \
+	case 1: bfin_write8(addr, val);  break; \
+	case 2: bfin_write16(addr, val); break; \
+	case 4: bfin_write32(addr, val); break; \
+	default: BUG(); \
+	} \
+} while (0)
 
 #define bfin_write_or(addr, bits) \
-  do { \
-    typeof(addr) __addr = (addr); \
-    bfin_write(__addr, bfin_read(__addr) | (bits)); \
-  } while (0)
+do { \
+	typeof(addr) __addr = (addr); \
+	bfin_write(__addr, bfin_read(__addr) | (bits)); \
+} while (0)
 
 #define bfin_write_and(addr, bits) \
-  do { \
-    typeof(addr) __addr = (addr); \
-    bfin_write(__addr, bfin_read(__addr) & (bits)); \
-  } while (0)
+do { \
+	typeof(addr) __addr = (addr); \
+	bfin_write(__addr, bfin_read(__addr) & (bits)); \
+} while (0)
 
 #define bfin_readPTR(addr) bfin_read32(addr)
 #define bfin_writePTR(addr, val) bfin_write32(addr, val)
 
 /* SSYNC implementation for C file */
-static inline void SSYNC (void)
+static inline void SSYNC(void)
 {
-  int _tmp;
-  if (ANOMALY_05000312)
-    __asm__ __volatile__ (
-      "cli %0;"
-      "nop;"
-      "nop;"
-      "ssync;"
-      "sti %0;"
-      : "=d" (_tmp)
-    );
-  else
-    if (ANOMALY_05000244)
-      __asm__ __volatile__ (
-        "nop;"
-        "nop;"
-        "nop;"
-        "ssync;"
-      );
-    else
-    { __asm__ __volatile__ ("ssync;"); }
+	int _tmp;
+	if (ANOMALY_05000312)
+		__asm__ __volatile__(
+			"cli %0;"
+			"nop;"
+			"nop;"
+			"ssync;"
+			"sti %0;"
+			: "=d" (_tmp)
+		);
+	else if (ANOMALY_05000244)
+		__asm__ __volatile__(
+			"nop;"
+			"nop;"
+			"nop;"
+			"ssync;"
+		);
+	else
+		__asm__ __volatile__("ssync;");
 }
 
 /* CSYNC implementation for C file */
-static inline void CSYNC (void)
+static inline void CSYNC(void)
 {
-  int _tmp;
-  if (ANOMALY_05000312)
-    __asm__ __volatile__ (
-      "cli %0;"
-      "nop;"
-      "nop;"
-      "csync;"
-      "sti %0;"
-      : "=d" (_tmp)
-    );
-  else
-    if (ANOMALY_05000244)
-      __asm__ __volatile__ (
-        "nop;"
-        "nop;"
-        "nop;"
-        "csync;"
-      );
-    else
-    { __asm__ __volatile__ ("csync;"); }
+	int _tmp;
+	if (ANOMALY_05000312)
+		__asm__ __volatile__(
+			"cli %0;"
+			"nop;"
+			"nop;"
+			"csync;"
+			"sti %0;"
+			: "=d" (_tmp)
+		);
+	else if (ANOMALY_05000244)
+		__asm__ __volatile__(
+			"nop;"
+			"nop;"
+			"nop;"
+			"csync;"
+		);
+	else
+		__asm__ __volatile__("csync;");
 }
 
 #else  /* __ASSEMBLY__ */

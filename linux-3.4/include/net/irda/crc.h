@@ -1,14 +1,14 @@
 /*********************************************************************
- *
+ *                
  * Filename:      crc.h
- * Version:
+ * Version:       
  * Description:   CRC routines
  * Status:        Experimental.
  * Author:        Dag Brattli <dagb@cs.uit.no>
  * Created at:    Mon Aug  4 20:40:53 1997
  * Modified at:   Sun May  2 20:25:23 1999
  * Modified by:   Dag Brattli <dagb@cs.uit.no>
- *
+ * 
  ********************************************************************/
 
 #ifndef IRDA_CRC_H

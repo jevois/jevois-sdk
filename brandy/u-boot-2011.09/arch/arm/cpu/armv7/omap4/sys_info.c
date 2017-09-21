@@ -3,8 +3,8 @@
  * Texas Instruments, <www.ti.com>
  *
  * Author :
- *  Aneesh V  <aneesh@ti.com>
- *  Steve Sakoman <steve@sakoman.com>
+ *	Aneesh V	<aneesh@ti.com>
+ *	Steve Sakoman	<steve@sakoman.com>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -28,26 +28,26 @@
 /*
  *  get_device_type(): tell if GP/HS/EMU/TST
  */
-u32 get_device_type (void)
+u32 get_device_type(void)
 {
-  return 0;
+	return 0;
 }
 
 /*
  * get_board_rev() - get board revision
  */
-u32 get_board_rev (void)
+u32 get_board_rev(void)
 {
-  return 0x20;
+	return 0x20;
 }
 
 /*
  * Print CPU information
  */
-int print_cpuinfo (void)
+int print_cpuinfo(void)
 {
 
-  puts ("CPU  : OMAP4430\n");
-  
-  return 0;
+	puts("CPU  : OMAP4430\n");
+
+	return 0;
 }

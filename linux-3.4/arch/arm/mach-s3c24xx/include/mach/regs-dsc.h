@@ -1,7 +1,7 @@
 /* arch/arm/mach-s3c2410/include/mach/regs-dsc.h
  *
  * Copyright (c) 2004 Simtec Electronics <linux@simtec.co.uk>
- *          http://www.simtec.co.uk/products/SWLINUX/
+ *		      http://www.simtec.co.uk/products/SWLINUX/
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -15,57 +15,57 @@
 #define __ASM_ARCH_REGS_DSC_H "2440-dsc"
 
 #if defined(CONFIG_CPU_S3C2412)
-#define S3C2412_DSC0     S3C2410_GPIOREG(0xdc)
-#define S3C2412_DSC1     S3C2410_GPIOREG(0xe0)
+#define S3C2412_DSC0	   S3C2410_GPIOREG(0xdc)
+#define S3C2412_DSC1	   S3C2410_GPIOREG(0xe0)
 #endif
 
 #if defined(CONFIG_CPU_S3C2416)
-#define S3C2416_DSC0     S3C2410_GPIOREG(0xc0)
-#define S3C2416_DSC1     S3C2410_GPIOREG(0xc4)
-#define S3C2416_DSC2     S3C2410_GPIOREG(0xc8)
-#define S3C2416_DSC3     S3C2410_GPIOREG(0x110)
+#define S3C2416_DSC0	   S3C2410_GPIOREG(0xc0)
+#define S3C2416_DSC1	   S3C2410_GPIOREG(0xc4)
+#define S3C2416_DSC2	   S3C2410_GPIOREG(0xc8)
+#define S3C2416_DSC3	   S3C2410_GPIOREG(0x110)
 
-#define S3C2416_SELECT_DSC0 (0 << 30)
-#define S3C2416_SELECT_DSC1 (1 << 30)
-#define S3C2416_SELECT_DSC2 (2 << 30)
-#define S3C2416_SELECT_DSC3 (3 << 30)
+#define S3C2416_SELECT_DSC0	(0 << 30)
+#define S3C2416_SELECT_DSC1	(1 << 30)
+#define S3C2416_SELECT_DSC2	(2 << 30)
+#define S3C2416_SELECT_DSC3	(3 << 30)
 
-#define S3C2416_DSC_GETSHIFT(x) (x & 30)
+#define S3C2416_DSC_GETSHIFT(x)	(x & 30)
 
-#define S3C2416_DSC0_CF   (S3C2416_SELECT_DSC0 | 28)
-#define S3C2416_DSC0_CF_5mA (0 << 28)
-#define S3C2416_DSC0_CF_10mA  (1 << 28)
-#define S3C2416_DSC0_CF_15mA  (2 << 28)
-#define S3C2416_DSC0_CF_21mA  (3 << 28)
-#define S3C2416_DSC0_CF_MASK  (3 << 28)
+#define S3C2416_DSC0_CF		(S3C2416_SELECT_DSC0 | 28)
+#define	S3C2416_DSC0_CF_5mA	(0 << 28)
+#define	S3C2416_DSC0_CF_10mA	(1 << 28)
+#define	S3C2416_DSC0_CF_15mA	(2 << 28)
+#define	S3C2416_DSC0_CF_21mA	(3 << 28)
+#define	S3C2416_DSC0_CF_MASK	(3 << 28)
 
-#define S3C2416_DSC0_nRBE (S3C2416_SELECT_DSC0 | 26)
-#define S3C2416_DSC0_nRBE_5mA (0 << 26)
-#define S3C2416_DSC0_nRBE_10mA  (1 << 26)
-#define S3C2416_DSC0_nRBE_15mA  (2 << 26)
-#define S3C2416_DSC0_nRBE_21mA  (3 << 26)
-#define S3C2416_DSC0_nRBE_MASK  (3 << 26)
+#define S3C2416_DSC0_nRBE	(S3C2416_SELECT_DSC0 | 26)
+#define	S3C2416_DSC0_nRBE_5mA	(0 << 26)
+#define	S3C2416_DSC0_nRBE_10mA	(1 << 26)
+#define	S3C2416_DSC0_nRBE_15mA	(2 << 26)
+#define	S3C2416_DSC0_nRBE_21mA	(3 << 26)
+#define	S3C2416_DSC0_nRBE_MASK	(3 << 26)
 
-#define S3C2416_DSC0_nROE (S3C2416_SELECT_DSC0 | 24)
-#define S3C2416_DSC0_nROE_5mA (0 << 24)
-#define S3C2416_DSC0_nROE_10mA  (1 << 24)
-#define S3C2416_DSC0_nROE_15mA  (2 << 24)
-#define S3C2416_DSC0_nROE_21mA  (3 << 24)
-#define S3C2416_DSC0_nROE_MASK  (3 << 24)
+#define S3C2416_DSC0_nROE	(S3C2416_SELECT_DSC0 | 24)
+#define	S3C2416_DSC0_nROE_5mA	(0 << 24)
+#define	S3C2416_DSC0_nROE_10mA	(1 << 24)
+#define	S3C2416_DSC0_nROE_15mA	(2 << 24)
+#define	S3C2416_DSC0_nROE_21mA	(3 << 24)
+#define	S3C2416_DSC0_nROE_MASK	(3 << 24)
 
 #endif
 
 #if defined(CONFIG_CPU_S3C244X)
 
-#define S3C2440_DSC0     S3C2410_GPIOREG(0xc4)
-#define S3C2440_DSC1     S3C2410_GPIOREG(0xc8)
+#define S3C2440_DSC0	   S3C2410_GPIOREG(0xc4)
+#define S3C2440_DSC1	   S3C2410_GPIOREG(0xc8)
 
 #define S3C2440_SELECT_DSC0 (0)
 #define S3C2440_SELECT_DSC1 (1<<31)
 
 #define S3C2440_DSC_GETSHIFT(x) ((x) & 31)
 
-#define S3C2440_DSC0_DISABLE  (1<<31)
+#define S3C2440_DSC0_DISABLE	(1<<31)
 
 #define S3C2440_DSC0_ADDR       (S3C2440_SELECT_DSC0 | 8)
 #define S3C2440_DSC0_ADDR_12mA  (0<<8)
@@ -216,5 +216,5 @@
 
 #endif /* CONFIG_CPU_S3C2440 */
 
-#endif  /* __ASM_ARCH_REGS_DSC_H */
+#endif	/* __ASM_ARCH_REGS_DSC_H */
 

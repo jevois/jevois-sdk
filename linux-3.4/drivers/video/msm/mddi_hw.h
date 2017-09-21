@@ -77,12 +77,12 @@
 #define MDDI_INT_REV_PKTS_AVAIL     0x100000
 
 #define MDDI_INT_NEED_CLEAR ( \
-                              MDDI_INT_REV_DATA_AVAIL | \
-                              MDDI_INT_PRI_UNDERFLOW | \
-                              MDDI_INT_SEC_UNDERFLOW | \
-                              MDDI_INT_REV_OVERFLOW | \
-                              MDDI_INT_CRC_ERROR | \
-                              MDDI_INT_REV_PKT_RECEIVED)
+	MDDI_INT_REV_DATA_AVAIL | \
+	MDDI_INT_PRI_UNDERFLOW | \
+	MDDI_INT_SEC_UNDERFLOW | \
+	MDDI_INT_REV_OVERFLOW | \
+	MDDI_INT_CRC_ERROR | \
+	MDDI_INT_REV_PKT_RECEIVED)
 
 
 #define MDDI_STAT_LINK_ACTIVE        0x0001
@@ -129,132 +129,132 @@
 #define MDDI_HOST_REV_RATE_DIV  0x0002
 
 
-struct __attribute__ ( (packed) ) mddi_rev_packet {
-  uint16_t length;
-  uint16_t type;
-  uint16_t client_id;
+struct __attribute__((packed)) mddi_rev_packet {
+	uint16_t length;
+	uint16_t type;
+	uint16_t client_id;
 };
 
-struct __attribute__ ( (packed) ) mddi_client_status {
-  uint16_t length;
-  uint16_t type;
-  uint16_t client_id;
-  uint16_t reverse_link_request;  /* bytes needed in rev encap message */
-  uint8_t  crc_error_count;
-  uint8_t  capability_change;
-  uint16_t graphics_busy_flags;
-  uint16_t crc16;
+struct __attribute__((packed)) mddi_client_status {
+	uint16_t length;
+	uint16_t type;
+	uint16_t client_id;
+	uint16_t reverse_link_request;  /* bytes needed in rev encap message */
+	uint8_t  crc_error_count;
+	uint8_t  capability_change;
+	uint16_t graphics_busy_flags;
+	uint16_t crc16;
 };
 
-struct __attribute__ ( (packed) ) mddi_client_caps {
-  uint16_t length; /* length, exclusive of this field */
-  uint16_t type; /* 66 */
-  uint16_t client_id;
-  
-  uint16_t Protocol_Version;
-  uint16_t Minimum_Protocol_Version;
-  uint16_t Data_Rate_Capability;
-  uint8_t  Interface_Type_Capability;
-  uint8_t  Number_of_Alt_Displays;
-  uint16_t PostCal_Data_Rate;
-  uint16_t Bitmap_Width;
-  uint16_t Bitmap_Height;
-  uint16_t Display_Window_Width;
-  uint16_t Display_Window_Height;
-  uint32_t Color_Map_Size;
-  uint16_t Color_Map_RGB_Width;
-  uint16_t RGB_Capability;
-  uint8_t  Monochrome_Capability;
-  uint8_t  Reserved_1;
-  uint16_t Y_Cb_Cr_Capability;
-  uint16_t Bayer_Capability;
-  uint16_t Alpha_Cursor_Image_Planes;
-  uint32_t Client_Feature_Capability_Indicators;
-  uint8_t  Maximum_Video_Frame_Rate_Capability;
-  uint8_t  Minimum_Video_Frame_Rate_Capability;
-  uint16_t Minimum_Sub_frame_Rate;
-  uint16_t Audio_Buffer_Depth;
-  uint16_t Audio_Channel_Capability;
-  uint16_t Audio_Sample_Rate_Capability;
-  uint8_t  Audio_Sample_Resolution;
-  uint8_t  Mic_Audio_Sample_Resolution;
-  uint16_t Mic_Sample_Rate_Capability;
-  uint8_t  Keyboard_Data_Format;
-  uint8_t  pointing_device_data_format;
-  uint16_t content_protection_type;
-  uint16_t Mfr_Name;
-  uint16_t Product_Code;
-  uint16_t Reserved_3;
-  uint32_t Serial_Number;
-  uint8_t  Week_of_Manufacture;
-  uint8_t  Year_of_Manufacture;
-  
-  uint16_t crc16;
+struct __attribute__((packed)) mddi_client_caps {
+	uint16_t length; /* length, exclusive of this field */
+	uint16_t type; /* 66 */
+	uint16_t client_id;
+
+	uint16_t Protocol_Version;
+	uint16_t Minimum_Protocol_Version;
+	uint16_t Data_Rate_Capability;
+	uint8_t  Interface_Type_Capability;
+	uint8_t  Number_of_Alt_Displays;
+	uint16_t PostCal_Data_Rate;
+	uint16_t Bitmap_Width;
+	uint16_t Bitmap_Height;
+	uint16_t Display_Window_Width;
+	uint16_t Display_Window_Height;
+	uint32_t Color_Map_Size;
+	uint16_t Color_Map_RGB_Width;
+	uint16_t RGB_Capability;
+	uint8_t  Monochrome_Capability;
+	uint8_t  Reserved_1;
+	uint16_t Y_Cb_Cr_Capability;
+	uint16_t Bayer_Capability;
+	uint16_t Alpha_Cursor_Image_Planes;
+	uint32_t Client_Feature_Capability_Indicators;
+	uint8_t  Maximum_Video_Frame_Rate_Capability;
+	uint8_t  Minimum_Video_Frame_Rate_Capability;
+	uint16_t Minimum_Sub_frame_Rate;
+	uint16_t Audio_Buffer_Depth;
+	uint16_t Audio_Channel_Capability;
+	uint16_t Audio_Sample_Rate_Capability;
+	uint8_t  Audio_Sample_Resolution;
+	uint8_t  Mic_Audio_Sample_Resolution;
+	uint16_t Mic_Sample_Rate_Capability;
+	uint8_t  Keyboard_Data_Format;
+	uint8_t  pointing_device_data_format;
+	uint16_t content_protection_type;
+	uint16_t Mfr_Name;
+	uint16_t Product_Code;
+	uint16_t Reserved_3;
+	uint32_t Serial_Number;
+	uint8_t  Week_of_Manufacture;
+	uint8_t  Year_of_Manufacture;
+
+	uint16_t crc16;
 } mddi_client_capability_type;
 
 
-struct __attribute__ ( (packed) ) mddi_video_stream {
-  uint16_t length;
-  uint16_t type; /* 16 */
-  uint16_t client_id; /* 0 */
-  
-  uint16_t video_data_format_descriptor;
-  /* format of each pixel in the Pixel Data in the present stream in the
-   * present packet.
-   * If bits [15:13] = 000 monochrome
-   * If bits [15:13] = 001 color pixels (palette).
-   * If bits [15:13] = 010 color pixels in raw RGB
-   * If bits [15:13] = 011 data in 4:2:2 Y Cb Cr format
-   * If bits [15:13] = 100 Bayer pixels
-   */
-  
-  uint16_t pixel_data_attributes;
-  /* interpreted as follows:
-   * Bits [1:0] = 11  pixel data is displayed to both eyes
-   * Bits [1:0] = 10  pixel data is routed to the left eye only.
-   * Bits [1:0] = 01  pixel data is routed to the right eye only.
-   * Bits [1:0] = 00  pixel data is routed to the alternate display.
-   * Bit 2 is 0  Pixel Data is in the standard progressive format.
-   * Bit 2 is 1  Pixel Data is in interlace format.
-   * Bit 3 is 0  Pixel Data is in the standard progressive format.
-   * Bit 3 is 1  Pixel Data is in alternate pixel format.
-   * Bit 4 is 0  Pixel Data is to or from the display frame buffer.
-   * Bit 4 is 1  Pixel Data is to or from the camera.
-   * Bit 5 is 0  pixel data contains the next consecutive row of pixels.
-   * Bit 5 is 1  X Left Edge, Y Top Edge, X Right Edge, Y Bottom Edge,
-   *             X Start, and Y Start parameters are not defined and
-   *             shall be ignored by the client.
-   * Bits [7:6] = 01  Pixel data is written to the offline image buffer.
-   * Bits [7:6] = 00  Pixel data is written to the buffer to refresh display.
-   * Bits [7:6] = 11  Pixel data is written to all image buffers.
-   * Bits [7:6] = 10  Invalid. Reserved for future use.
-   * Bits 8 through 11 alternate display number.
-   * Bits 12 through 14 are reserved for future use and shall be set to zero.
-   * Bit 15 is 1 the row of pixels is the last row of pixels in a frame.
-   */
-  
-  uint16_t x_left_edge;
-  uint16_t y_top_edge;
-  /* X,Y coordinate of the top left edge of the screen window */
-  
-  uint16_t x_right_edge;
-  uint16_t y_bottom_edge;
-  /* X,Y coordinate of the bottom right edge of the window being
-   * updated. */
-  
-  uint16_t x_start;
-  uint16_t y_start;
-  /* (X Start, Y Start) is the first pixel in the Pixel Data field
-   * below. */
-  
-  uint16_t pixel_count;
-  /* number of pixels in the Pixel Data field below. */
-  
-  uint16_t parameter_CRC;
-  /* 16-bit CRC of all bytes from the Packet Length to the Pixel Count. */
-  
-  uint16_t reserved;
-  /* 16-bit variable to make structure align on 4 byte boundary */
+struct __attribute__((packed)) mddi_video_stream {
+	uint16_t length;
+	uint16_t type; /* 16 */
+	uint16_t client_id; /* 0 */
+
+	uint16_t video_data_format_descriptor;
+/* format of each pixel in the Pixel Data in the present stream in the
+ * present packet.
+ * If bits [15:13] = 000 monochrome
+ * If bits [15:13] = 001 color pixels (palette).
+ * If bits [15:13] = 010 color pixels in raw RGB
+ * If bits [15:13] = 011 data in 4:2:2 Y Cb Cr format
+ * If bits [15:13] = 100 Bayer pixels
+ */
+
+	uint16_t pixel_data_attributes;
+/* interpreted as follows:
+ * Bits [1:0] = 11  pixel data is displayed to both eyes
+ * Bits [1:0] = 10  pixel data is routed to the left eye only.
+ * Bits [1:0] = 01  pixel data is routed to the right eye only.
+ * Bits [1:0] = 00  pixel data is routed to the alternate display.
+ * Bit 2 is 0  Pixel Data is in the standard progressive format.
+ * Bit 2 is 1  Pixel Data is in interlace format.
+ * Bit 3 is 0  Pixel Data is in the standard progressive format.
+ * Bit 3 is 1  Pixel Data is in alternate pixel format.
+ * Bit 4 is 0  Pixel Data is to or from the display frame buffer.
+ * Bit 4 is 1  Pixel Data is to or from the camera.
+ * Bit 5 is 0  pixel data contains the next consecutive row of pixels.
+ * Bit 5 is 1  X Left Edge, Y Top Edge, X Right Edge, Y Bottom Edge,
+ *             X Start, and Y Start parameters are not defined and
+ *             shall be ignored by the client.
+ * Bits [7:6] = 01  Pixel data is written to the offline image buffer.
+ * Bits [7:6] = 00  Pixel data is written to the buffer to refresh display.
+ * Bits [7:6] = 11  Pixel data is written to all image buffers.
+ * Bits [7:6] = 10  Invalid. Reserved for future use.
+ * Bits 8 through 11 alternate display number.
+ * Bits 12 through 14 are reserved for future use and shall be set to zero.
+ * Bit 15 is 1 the row of pixels is the last row of pixels in a frame.
+ */
+
+	uint16_t x_left_edge;
+	uint16_t y_top_edge;
+	/* X,Y coordinate of the top left edge of the screen window */
+
+	uint16_t x_right_edge;
+	uint16_t y_bottom_edge;
+	/* X,Y coordinate of the bottom right edge of the window being
+	 * updated. */
+
+	uint16_t x_start;
+	uint16_t y_start;
+	/* (X Start, Y Start) is the first pixel in the Pixel Data field
+	 * below. */
+
+	uint16_t pixel_count;
+	/* number of pixels in the Pixel Data field below. */
+
+	uint16_t parameter_CRC;
+	/* 16-bit CRC of all bytes from the Packet Length to the Pixel Count. */
+
+	uint16_t reserved;
+	/* 16-bit variable to make structure align on 4 byte boundary */
 };
 
 #define TYPE_VIDEO_STREAM      16
@@ -262,44 +262,44 @@ struct __attribute__ ( (packed) ) mddi_video_stream {
 #define TYPE_REGISTER_ACCESS   146
 #define TYPE_CLIENT_STATUS     70
 
-struct __attribute__ ( (packed) ) mddi_register_access {
-  uint16_t length;
-  uint16_t type; /* 146 */
-  uint16_t client_id;
-  
-  uint16_t read_write_info;
-  /* Bits 13:0  a 14-bit unsigned integer that specifies the number of
-   *            32-bit Register Data List items to be transferred in the
-   *            Register Data List field.
-   * Bits[15:14] = 00  Write to register(s);
-   * Bits[15:14] = 10  Read from register(s);
-   * Bits[15:14] = 11  Response to a Read.
-   * Bits[15:14] = 01  this value is reserved for future use. */
+struct __attribute__((packed)) mddi_register_access {
+	uint16_t length;
+	uint16_t type; /* 146 */
+	uint16_t client_id;
+
+	uint16_t read_write_info;
+	/* Bits 13:0  a 14-bit unsigned integer that specifies the number of
+	 *            32-bit Register Data List items to be transferred in the
+	 *            Register Data List field.
+	 * Bits[15:14] = 00  Write to register(s);
+	 * Bits[15:14] = 10  Read from register(s);
+	 * Bits[15:14] = 11  Response to a Read.
+	 * Bits[15:14] = 01  this value is reserved for future use. */
 #define MDDI_WRITE     (0 << 14)
 #define MDDI_READ      (2 << 14)
 #define MDDI_READ_RESP (3 << 14)
-  
-  uint32_t register_address;
-  /* the register address that is to be written to or read from. */
-  
-  uint16_t crc16;
-  
-  uint32_t register_data_list;
-  /* list of 4-byte register data values for/from client registers */
+
+	uint32_t register_address;
+	/* the register address that is to be written to or read from. */
+
+	uint16_t crc16;
+
+	uint32_t register_data_list;
+	/* list of 4-byte register data values for/from client registers */
 };
 
-struct __attribute__ ( (packed) ) mddi_llentry {
-  uint16_t flags;
-  uint16_t header_count;
-  uint16_t data_count;
-  dma_addr_t data; /* 32 bit */
-  struct mddi_llentry * next;
-  uint16_t reserved;
-  union {
-    struct mddi_video_stream v;
-    struct mddi_register_access r;
-    uint32_t _[12];
-  } u;
+struct __attribute__((packed)) mddi_llentry {
+	uint16_t flags;
+	uint16_t header_count;
+	uint16_t data_count;
+	dma_addr_t data; /* 32 bit */
+	struct mddi_llentry *next;
+	uint16_t reserved;
+	union {
+		struct mddi_video_stream v;
+		struct mddi_register_access r;
+		uint32_t _[12];
+	} u;
 };
 
 #endif

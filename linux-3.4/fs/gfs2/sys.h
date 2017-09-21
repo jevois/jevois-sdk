@@ -13,13 +13,13 @@
 #include <linux/spinlock.h>
 struct gfs2_sbd;
 
-int gfs2_sys_fs_add (struct gfs2_sbd * sdp);
-void gfs2_sys_fs_del (struct gfs2_sbd * sdp);
+int gfs2_sys_fs_add(struct gfs2_sbd *sdp);
+void gfs2_sys_fs_del(struct gfs2_sbd *sdp);
 
-int gfs2_sys_init (void);
-void gfs2_sys_uninit (void);
+int gfs2_sys_init(void);
+void gfs2_sys_uninit(void);
 
-int gfs2_recover_set (struct gfs2_sbd * sdp, unsigned jid);
+int gfs2_recover_set(struct gfs2_sbd *sdp, unsigned jid);
 
 #endif /* __SYS_DOT_H__ */
 

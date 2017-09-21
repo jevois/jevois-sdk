@@ -9,13 +9,13 @@
 
 #define __read_mostly __attribute__((__section__(".data.read_mostly")))
 
-void flush_dma_list (dma_descr_data * descr);
-void flush_dma_descr (dma_descr_data * descr, int flush_buf);
+void flush_dma_list(dma_descr_data *descr);
+void flush_dma_descr(dma_descr_data *descr, int flush_buf);
 
 #define flush_dma_context(c) \
   flush_dma_list(phys_to_virt((c)->saved_data));
 
-void cris_flush_cache_range (void * buf, unsigned long len);
-void cris_flush_cache (void);
+void cris_flush_cache_range(void *buf, unsigned long len);
+void cris_flush_cache(void);
 
 #endif /* _ASM_CRIS_ARCH_CACHE_H */

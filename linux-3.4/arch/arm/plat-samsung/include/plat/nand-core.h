@@ -1,7 +1,7 @@
 /* arch/arm/plat-samsung/include/plat/nand-core.h
  *
  * Copyright (c) 2010 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com/
+ *		http://www.samsung.com/
  *
  * S3C -  Nand Controller core functions
  *
@@ -18,11 +18,11 @@
  */
 
 /* re-define device name depending on support. */
-static inline void s3c_nand_setname (char * name)
+static inline void s3c_nand_setname(char *name)
 {
-  #ifdef CONFIG_S3C_DEV_NAND
-  s3c_device_nand.name = name;
-  #endif
+#ifdef CONFIG_S3C_DEV_NAND
+	s3c_device_nand.name = name;
+#endif
 }
 
 #endif /* __ASM_ARCH_NAND_CORE_H */

@@ -37,10 +37,10 @@
 #define __ll_highpart(t) ((UWtype) (t) >> (W_TYPE_SIZE / 2))
 
 #ifndef W_TYPE_SIZE
-#define W_TYPE_SIZE 32
-#define UWtype    USItype
-#define UHWtype   USItype
-#define UDWtype   UDItype
+#define W_TYPE_SIZE	32
+#define UWtype		USItype
+#define UHWtype		USItype
+#define UDWtype		UDItype
 #endif
 
 extern const UQItype __clz_tab[256];
@@ -102,117 +102,117 @@ extern const UQItype __clz_tab[256];
 
 #if !defined (add_ssaaaa)
 #define add_ssaaaa(sh, sl, ah, al, bh, bl) \
-  do {                  \
-    UWtype __x;               \
-    __x = (al) + (bl);              \
-    (sh) = (ah) + (bh) + (__x < (al));          \
-    (sl) = __x;               \
+  do {									\
+    UWtype __x;								\
+    __x = (al) + (bl);							\
+    (sh) = (ah) + (bh) + (__x < (al));					\
+    (sl) = __x;								\
   } while (0)
 #endif
 
 #if !defined (sub_ddmmss)
 #define sub_ddmmss(sh, sl, ah, al, bh, bl) \
-  do {                  \
-    UWtype __x;               \
-    __x = (al) - (bl);              \
-    (sh) = (ah) - (bh) - (__x > (al));          \
-    (sl) = __x;               \
+  do {									\
+    UWtype __x;								\
+    __x = (al) - (bl);							\
+    (sh) = (ah) - (bh) - (__x > (al));					\
+    (sl) = __x;								\
   } while (0)
 #endif
 
 /* If we lack umul_ppmm but have smul_ppmm, define umul_ppmm in terms of
    smul_ppmm.  */
 #if !defined (umul_ppmm) && defined (smul_ppmm)
-#define umul_ppmm(w1, w0, u, v)           \
-  do {                  \
-    UWtype __w1;              \
-    UWtype __xm0 = (u), __xm1 = (v);          \
-    smul_ppmm (__w1, w0, __xm0, __xm1);         \
-    (w1) = __w1 + (-(__xm0 >> (W_TYPE_SIZE - 1)) & __xm1)   \
-           + (-(__xm1 >> (W_TYPE_SIZE - 1)) & __xm0);    \
+#define umul_ppmm(w1, w0, u, v)						\
+  do {									\
+    UWtype __w1;							\
+    UWtype __xm0 = (u), __xm1 = (v);					\
+    smul_ppmm (__w1, w0, __xm0, __xm1);					\
+    (w1) = __w1 + (-(__xm0 >> (W_TYPE_SIZE - 1)) & __xm1)		\
+		+ (-(__xm1 >> (W_TYPE_SIZE - 1)) & __xm0);		\
   } while (0)
 #endif
 
 /* If we still don't have umul_ppmm, define it using plain C.  */
 #if !defined (umul_ppmm)
-#define umul_ppmm(w1, w0, u, v)           \
-  do {                  \
-    UWtype __x0, __x1, __x2, __x3;          \
-    UHWtype __ul, __vl, __uh, __vh;         \
-    \
-    __ul = __ll_lowpart (u);            \
-    __uh = __ll_highpart (u);           \
-    __vl = __ll_lowpart (v);            \
-    __vh = __ll_highpart (v);           \
-    \
-    __x0 = (UWtype) __ul * __vl;          \
-    __x1 = (UWtype) __ul * __vh;          \
-    __x2 = (UWtype) __uh * __vl;          \
-    __x3 = (UWtype) __uh * __vh;          \
-    \
-    __x1 += __ll_highpart (__x0);/* this can't give carry */    \
-    __x1 += __x2;   /* but this indeed can */   \
-    if (__x1 < __x2)    /* did we get it? */      \
-      __x3 += __ll_B;   /* yes, add it in the proper pos.  */ \
-    \
-    (w1) = __x3 + __ll_highpart (__x1);         \
-    (w0) = __ll_lowpart (__x1) * __ll_B + __ll_lowpart (__x0);    \
+#define umul_ppmm(w1, w0, u, v)						\
+  do {									\
+    UWtype __x0, __x1, __x2, __x3;					\
+    UHWtype __ul, __vl, __uh, __vh;					\
+									\
+    __ul = __ll_lowpart (u);						\
+    __uh = __ll_highpart (u);						\
+    __vl = __ll_lowpart (v);						\
+    __vh = __ll_highpart (v);						\
+									\
+    __x0 = (UWtype) __ul * __vl;					\
+    __x1 = (UWtype) __ul * __vh;					\
+    __x2 = (UWtype) __uh * __vl;					\
+    __x3 = (UWtype) __uh * __vh;					\
+									\
+    __x1 += __ll_highpart (__x0);/* this can't give carry */		\
+    __x1 += __x2;		/* but this indeed can */		\
+    if (__x1 < __x2)		/* did we get it? */			\
+      __x3 += __ll_B;		/* yes, add it in the proper pos.  */	\
+									\
+    (w1) = __x3 + __ll_highpart (__x1);					\
+    (w0) = __ll_lowpart (__x1) * __ll_B + __ll_lowpart (__x0);		\
   } while (0)
 #endif
 
 #if !defined (__umulsidi3)
 #define __umulsidi3(u, v) \
-  ({DWunion __w;              \
-    umul_ppmm (__w.s.high, __w.s.low, u, v);        \
+  ({DWunion __w;							\
+    umul_ppmm (__w.s.high, __w.s.low, u, v);				\
     __w.ll; })
 #endif
 
 /* Define this unconditionally, so it can be used for debugging.  */
 #define __udiv_qrnnd_c(q, r, n1, n0, d) \
-  do {                  \
-    UWtype __d1, __d0, __q1, __q0;          \
-    UWtype __r1, __r0, __m;           \
-    __d1 = __ll_highpart (d);           \
-    __d0 = __ll_lowpart (d);            \
-    \
-    __r1 = (n1) % __d1;             \
-    __q1 = (n1) / __d1;             \
-    __m = (UWtype) __q1 * __d0;           \
-    __r1 = __r1 * __ll_B | __ll_highpart (n0);        \
-    if (__r1 < __m)             \
-    {                 \
-      __q1--, __r1 += (d);            \
-      if (__r1 >= (d)) /* i.e. we didn't get carry when adding to __r1 */\
-        if (__r1 < __m)           \
-          __q1--, __r1 += (d);          \
-    }                 \
-    __r1 -= __m;              \
-    \
-    __r0 = __r1 % __d1;             \
-    __q0 = __r1 / __d1;             \
-    __m = (UWtype) __q0 * __d0;           \
-    __r0 = __r0 * __ll_B | __ll_lowpart (n0);       \
-    if (__r0 < __m)             \
-    {                 \
-      __q0--, __r0 += (d);            \
-      if (__r0 >= (d))            \
-        if (__r0 < __m)           \
-          __q0--, __r0 += (d);          \
-    }                 \
-    __r0 -= __m;              \
-    \
-    (q) = (UWtype) __q1 * __ll_B | __q0;        \
-    (r) = __r0;               \
+  do {									\
+    UWtype __d1, __d0, __q1, __q0;					\
+    UWtype __r1, __r0, __m;						\
+    __d1 = __ll_highpart (d);						\
+    __d0 = __ll_lowpart (d);						\
+									\
+    __r1 = (n1) % __d1;							\
+    __q1 = (n1) / __d1;							\
+    __m = (UWtype) __q1 * __d0;						\
+    __r1 = __r1 * __ll_B | __ll_highpart (n0);				\
+    if (__r1 < __m)							\
+      {									\
+	__q1--, __r1 += (d);						\
+	if (__r1 >= (d)) /* i.e. we didn't get carry when adding to __r1 */\
+	  if (__r1 < __m)						\
+	    __q1--, __r1 += (d);					\
+      }									\
+    __r1 -= __m;							\
+									\
+    __r0 = __r1 % __d1;							\
+    __q0 = __r1 / __d1;							\
+    __m = (UWtype) __q0 * __d0;						\
+    __r0 = __r0 * __ll_B | __ll_lowpart (n0);				\
+    if (__r0 < __m)							\
+      {									\
+	__q0--, __r0 += (d);						\
+	if (__r0 >= (d))						\
+	  if (__r0 < __m)						\
+	    __q0--, __r0 += (d);					\
+      }									\
+    __r0 -= __m;							\
+									\
+    (q) = (UWtype) __q1 * __ll_B | __q0;				\
+    (r) = __r0;								\
   } while (0)
 
 /* If the processor has no udiv_qrnnd but sdiv_qrnnd, go through
    __udiv_w_sdiv (defined in libgcc or elsewhere).  */
 #if !defined (udiv_qrnnd) && defined (sdiv_qrnnd)
 #define udiv_qrnnd(q, r, nh, nl, d) \
-  do {                  \
-    USItype __r;              \
-    (q) = __udiv_w_sdiv (&__r, nh, nl, d);        \
-    (r) = __r;                \
+  do {									\
+    USItype __r;							\
+    (q) = __udiv_w_sdiv (&__r, nh, nl, d);				\
+    (r) = __r;								\
   } while (0)
 #endif
 
@@ -224,24 +224,24 @@ extern const UQItype __clz_tab[256];
 
 #if !defined (count_leading_zeros)
 #define count_leading_zeros(count, x) \
-  do {                  \
-    UWtype __xr = (x);              \
-    UWtype __a;               \
-    \
-    if (W_TYPE_SIZE <= 32)            \
-    {                 \
-      __a = __xr < ((UWtype)1<<2*__BITS4)       \
-            ? (__xr < ((UWtype)1<<__BITS4) ? 0 : __BITS4)     \
-            : (__xr < ((UWtype)1<<3*__BITS4) ?  2*__BITS4 : 3*__BITS4); \
-    }                 \
-    else                \
-    {                 \
-      for (__a = W_TYPE_SIZE - 8; __a > 0; __a -= 8)      \
-        if (((__xr >> __a) & 0xff) != 0)        \
-          break;              \
-    }                 \
-    \
-    (count) = W_TYPE_SIZE - (__clz_tab[__xr >> __a] + __a);   \
+  do {									\
+    UWtype __xr = (x);							\
+    UWtype __a;								\
+									\
+    if (W_TYPE_SIZE <= 32)						\
+      {									\
+	__a = __xr < ((UWtype)1<<2*__BITS4)				\
+	  ? (__xr < ((UWtype)1<<__BITS4) ? 0 : __BITS4)			\
+	  : (__xr < ((UWtype)1<<3*__BITS4) ?  2*__BITS4 : 3*__BITS4);	\
+      }									\
+    else								\
+      {									\
+	for (__a = W_TYPE_SIZE - 8; __a > 0; __a -= 8)			\
+	  if (((__xr >> __a) & 0xff) != 0)				\
+	    break;							\
+      }									\
+									\
+    (count) = W_TYPE_SIZE - (__clz_tab[__xr >> __a] + __a);		\
   } while (0)
 #define COUNT_LEADING_ZEROS_0 W_TYPE_SIZE
 #endif
@@ -250,11 +250,11 @@ extern const UQItype __clz_tab[256];
 /* Define count_trailing_zeros using count_leading_zeros.  The latter might be
    defined in asm, but if it is not, the C version above is good enough.  */
 #define count_trailing_zeros(count, x) \
-  do {                  \
-    UWtype __ctz_x = (x);           \
-    UWtype __ctz_c;             \
-    count_leading_zeros (__ctz_c, __ctz_x & -__ctz_x);      \
-    (count) = W_TYPE_SIZE - 1 - __ctz_c;        \
+  do {									\
+    UWtype __ctz_x = (x);						\
+    UWtype __ctz_c;							\
+    count_leading_zeros (__ctz_c, __ctz_x & -__ctz_x);			\
+    (count) = W_TYPE_SIZE - 1 - __ctz_c;				\
   } while (0)
 #endif
 

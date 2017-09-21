@@ -21,31 +21,31 @@
  * bfin ppi registers layout
  */
 struct bfin_ppi_regs {
-  __BFP (control);
-  __BFP (status);
-  __BFP (count);
-  __BFP (delay);
-  __BFP (frame);
+	__BFP(control);
+	__BFP(status);
+	__BFP(count);
+	__BFP(delay);
+	__BFP(frame);
 };
 
 /*
  * bfin eppi registers layout
  */
 struct bfin_eppi_regs {
-  __BFP (status);
-  __BFP (hcount);
-  __BFP (hdelay);
-  __BFP (vcount);
-  __BFP (vdelay);
-  __BFP (frame);
-  __BFP (line);
-  __BFP (clkdiv);
-  u32 control;
-  u32 fs1w_hbl;
-  u32 fs1p_avpl;
-  u32 fs2w_lvb;
-  u32 fs2p_lavf;
-  u32 clip;
+	__BFP(status);
+	__BFP(hcount);
+	__BFP(hdelay);
+	__BFP(vcount);
+	__BFP(vdelay);
+	__BFP(frame);
+	__BFP(line);
+	__BFP(clkdiv);
+	u32 control;
+	u32 fs1w_hbl;
+	u32 fs1p_avpl;
+	u32 fs2w_lvb;
+	u32 fs2p_lavf;
+	u32 clip;
 };
 
 #undef __BFP

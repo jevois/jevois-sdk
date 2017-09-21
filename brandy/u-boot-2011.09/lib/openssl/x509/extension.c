@@ -8,18 +8,18 @@
 #define sk_X509_EXTENSION_num(st) SKM_sk_num(X509_EXTENSION, (st))
 
 
-int sk_num (const STACK * st)
+int sk_num(const STACK *st)
 {
 
-  if (st == NULL) { return -1; }
-  return st->num;
+	if(st == NULL) return -1;
+	return st->num;
 }
 
-char * sk_value (const STACK * st, int i)
+char *sk_value(const STACK *st, int i)
 {
 
-  if (!st || (i < 0) || (i >= st->num) ) { return NULL; }
-  return st->data[i];
+	if(!st || (i < 0) || (i >= st->num)) return NULL;
+	return st->data[i];
 }
 
 

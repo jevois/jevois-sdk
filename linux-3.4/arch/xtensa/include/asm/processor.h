@@ -25,7 +25,7 @@
 # error Linux requires the Xtensa Windowed Registers Option.
 #endif
 
-#define ARCH_SLAB_MINALIGN  XCHAL_DATA_WIDTH
+#define ARCH_SLAB_MINALIGN	XCHAL_DATA_WIDTH
 
 /*
  * User space process size: 1 GB.
@@ -36,13 +36,13 @@
  */
 
 #ifdef CONFIG_MMU
-#define TASK_SIZE __XTENSA_UL_CONST(0x40000000)
+#define TASK_SIZE	__XTENSA_UL_CONST(0x40000000)
 #else
-#define TASK_SIZE (PLATFORM_DEFAULT_MEM_START + PLATFORM_DEFAULT_MEM_SIZE)
+#define TASK_SIZE	(PLATFORM_DEFAULT_MEM_START + PLATFORM_DEFAULT_MEM_SIZE)
 #endif
 
-#define STACK_TOP TASK_SIZE
-#define STACK_TOP_MAX STACK_TOP
+#define STACK_TOP	TASK_SIZE
+#define STACK_TOP_MAX	STACK_TOP
 
 /*
  * General exception cause assigned to debug exceptions. Debug exceptions go
@@ -53,7 +53,7 @@
  * unused EXCCAUSE value was assigned to debug exceptions for this purpose.
  */
 
-#define EXCCAUSE_MAPPED_DEBUG 63
+#define EXCCAUSE_MAPPED_DEBUG	63
 
 /*
  * We use DEPC also as a flag to distinguish between double and regular
@@ -63,7 +63,7 @@
  * (Note: We use it in bgeui, so it should be 64, 128, or 256)
  */
 
-#define VALID_DOUBLE_EXCEPTION_ADDRESS  64
+#define VALID_DOUBLE_EXCEPTION_ADDRESS	64
 
 /* LOCKLEVEL defines the interrupt level that masks all
  * general-purpose interrupts.
@@ -89,29 +89,29 @@
 #define MAKE_PC_FROM_RA(ra,sp)    (((ra) & 0x3fffffff) | ((sp) & 0xc0000000))
 
 typedef struct {
-  unsigned long seg;
+    unsigned long seg;
 } mm_segment_t;
 
 struct thread_struct {
 
-  /* kernel's return address and stack pointer for context switching */
-  unsigned long ra; /* kernel's a0: return address and window call size */
-  unsigned long sp; /* kernel's a1: stack pointer */
-  
-  mm_segment_t current_ds;    /* see uaccess.h for example uses */
-  
-  /* struct xtensa_cpuinfo info; */
-  
-  unsigned long bad_vaddr; /* last user fault */
-  unsigned long bad_uaddr; /* last kernel fault accessing user space */
-  unsigned long error_code;
-  
-  unsigned long ibreak[XCHAL_NUM_IBREAK];
-  unsigned long dbreaka[XCHAL_NUM_DBREAK];
-  unsigned long dbreakc[XCHAL_NUM_DBREAK];
-  
-  /* Make structure 16 bytes aligned. */
-  int align[0] __attribute__ ( (aligned (16) ) );
+	/* kernel's return address and stack pointer for context switching */
+	unsigned long ra; /* kernel's a0: return address and window call size */
+	unsigned long sp; /* kernel's a1: stack pointer */
+
+	mm_segment_t current_ds;    /* see uaccess.h for example uses */
+
+	/* struct xtensa_cpuinfo info; */
+
+	unsigned long bad_vaddr; /* last user fault */
+	unsigned long bad_uaddr; /* last kernel fault accessing user space */
+	unsigned long error_code;
+
+	unsigned long ibreak[XCHAL_NUM_IBREAK];
+	unsigned long dbreaka[XCHAL_NUM_DBREAK];
+	unsigned long dbreakc[XCHAL_NUM_DBREAK];
+
+	/* Make structure 16 bytes aligned. */
+	int align[0] __attribute__ ((aligned(16)));
 };
 
 
@@ -125,18 +125,18 @@ struct thread_struct {
 /* This decides where the kernel will search for a free chunk of vm
  * space during mmap's.
  */
-#define TASK_UNMAPPED_BASE  (TASK_SIZE / 2)
+#define TASK_UNMAPPED_BASE	(TASK_SIZE / 2)
 
 #define INIT_THREAD  \
-  {                 \
-    ra:   0,            \
-  sp:   sizeof(init_stack) + (long) &init_stack,  \
-  current_ds: {0},            \
-    /*info:   {0}, */           \
-    bad_vaddr:  0,            \
-    bad_uaddr:  0,            \
-    error_code: 0,            \
-  }
+{									\
+	ra:		0, 						\
+	sp:		sizeof(init_stack) + (long) &init_stack,	\
+	current_ds:	{0},						\
+	/*info:		{0}, */						\
+	bad_vaddr:	0,						\
+	bad_uaddr:	0,						\
+	error_code:	0,						\
+}
 
 
 /*
@@ -144,22 +144,22 @@ struct thread_struct {
  * Note: We set-up ps as if we did a call4 to the new pc.
  *       set_thread_state in signal.c depends on it.
  */
-#define USER_PS_VALUE ((1 << PS_WOE_BIT) |        \
-                       (1 << PS_CALLINC_SHIFT) |      \
-                       (USER_RING << PS_RING_SHIFT) |     \
-                       (1 << PS_UM_BIT) |       \
+#define USER_PS_VALUE ((1 << PS_WOE_BIT) |				\
+                       (1 << PS_CALLINC_SHIFT) |			\
+                       (USER_RING << PS_RING_SHIFT) |			\
+                       (1 << PS_UM_BIT) |				\
                        (1 << PS_EXCM_BIT))
 
 /* Clearing a0 terminates the backtrace. */
 #define start_thread(regs, new_pc, new_sp) \
-  regs->pc = new_pc; \
-  regs->ps = USER_PS_VALUE; \
-  regs->areg[1] = new_sp; \
-  regs->areg[0] = 0; \
-  regs->wmask = 1; \
-  regs->depc = 0; \
-  regs->windowbase = 0; \
-  regs->windowstart = 1;
+	regs->pc = new_pc; \
+	regs->ps = USER_PS_VALUE; \
+	regs->areg[1] = new_sp; \
+	regs->areg[0] = 0; \
+	regs->wmask = 1; \
+	regs->depc = 0; \
+	regs->windowbase = 0; \
+	regs->windowstart = 1;
 
 /* Forward declaration */
 struct task_struct;
@@ -169,22 +169,22 @@ struct mm_struct;
 #define release_thread(thread) do { } while(0)
 
 /* Prepare to copy thread state - unlazy all lazy status */
-extern void prepare_to_copy (struct task_struct *);
+extern void prepare_to_copy(struct task_struct*);
 
 /* Create a kernel thread without removing it from tasklists */
-extern int kernel_thread (int (*fn) (void *), void * arg, unsigned long flags);
+extern int kernel_thread(int (*fn)(void *), void * arg, unsigned long flags);
 
 /* Copy and release all segment info associated with a VM */
-#define copy_segments(p, mm)  do { } while(0)
-#define release_segments(mm)  do { } while(0)
-#define forget_segments() do { } while (0)
+#define copy_segments(p, mm)	do { } while(0)
+#define release_segments(mm)	do { } while(0)
+#define forget_segments()	do { } while (0)
 
-#define thread_saved_pc(tsk)  (task_pt_regs(tsk)->pc)
+#define thread_saved_pc(tsk)	(task_pt_regs(tsk)->pc)
 
-extern unsigned long get_wchan (struct task_struct * p);
+extern unsigned long get_wchan(struct task_struct *p);
 
-#define KSTK_EIP(tsk)   (task_pt_regs(tsk)->pc)
-#define KSTK_ESP(tsk)   (task_pt_regs(tsk)->areg[1])
+#define KSTK_EIP(tsk)		(task_pt_regs(tsk)->pc)
+#define KSTK_ESP(tsk)		(task_pt_regs(tsk)->areg[1])
 
 #define cpu_relax()  barrier()
 
@@ -196,5 +196,5 @@ extern unsigned long get_wchan (struct task_struct * p);
 #define set_sr(x,sr) ({unsigned int v=(unsigned int)x; WSR(v,sr);})
 #define get_sr(sr) ({unsigned int v; RSR(v,sr); v; })
 
-#endif  /* __ASSEMBLY__ */
-#endif  /* _XTENSA_PROCESSOR_H */
+#endif	/* __ASSEMBLY__ */
+#endif	/* _XTENSA_PROCESSOR_H */

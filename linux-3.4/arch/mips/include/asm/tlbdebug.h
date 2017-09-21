@@ -11,6 +11,6 @@
 /*
  * TLB debugging functions:
  */
-extern void dump_tlb_all (void);
+extern void dump_tlb_all(void);
 
 #endif /* __ASM_TLBDEBUG_H */

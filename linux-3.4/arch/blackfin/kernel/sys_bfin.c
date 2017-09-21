@@ -24,65 +24,65 @@
 #include <asm/cachectl.h>
 #include <asm/ptrace.h>
 
-asmlinkage void * sys_sram_alloc (size_t size, unsigned long flags)
+asmlinkage void *sys_sram_alloc(size_t size, unsigned long flags)
 {
-  return sram_alloc_with_lsl (size, flags);
+	return sram_alloc_with_lsl(size, flags);
 }
 
-asmlinkage int sys_sram_free (const void * addr)
+asmlinkage int sys_sram_free(const void *addr)
 {
-  return sram_free_with_lsl (addr);
+	return sram_free_with_lsl(addr);
 }
 
-asmlinkage void * sys_dma_memcpy (void * dest, const void * src, size_t len)
+asmlinkage void *sys_dma_memcpy(void *dest, const void *src, size_t len)
 {
-  return safe_dma_memcpy (dest, src, len);
+	return safe_dma_memcpy(dest, src, len);
 }
 
 #if defined(CONFIG_FB) || defined(CONFIG_FB_MODULE)
 #include <linux/fb.h>
 #include <linux/export.h>
-unsigned long get_fb_unmapped_area (struct file * filp, unsigned long orig_addr,
-                                    unsigned long len, unsigned long pgoff, unsigned long flags)
+unsigned long get_fb_unmapped_area(struct file *filp, unsigned long orig_addr,
+	unsigned long len, unsigned long pgoff, unsigned long flags)
 {
-  struct fb_info * info = filp->private_data;
-  return (unsigned long) info->screen_base;
+	struct fb_info *info = filp->private_data;
+	return (unsigned long)info->screen_base;
 }
-EXPORT_SYMBOL (get_fb_unmapped_area);
+EXPORT_SYMBOL(get_fb_unmapped_area);
 #endif
 
 /* Needed for legacy userspace atomic emulation */
-static DEFINE_SPINLOCK (bfin_spinlock_lock);
+static DEFINE_SPINLOCK(bfin_spinlock_lock);
 
 #ifdef CONFIG_SYS_BFIN_SPINLOCK_L1
-__attribute__ ( (l1_text) )
+__attribute__((l1_text))
 #endif
-asmlinkage int sys_bfin_spinlock (int * p)
+asmlinkage int sys_bfin_spinlock(int *p)
 {
-  int ret, tmp = 0;
-  
-  spin_lock (&bfin_spinlock_lock); /* This would also hold kernel preemption. */
-  ret = get_user (tmp, p);
-  if (likely (ret == 0) ) {
-    if (unlikely (tmp) )
-    { ret = 1; }
-    else
-    { put_user (1, p); }
-  }
-  spin_unlock (&bfin_spinlock_lock);
-  
-  return ret;
+	int ret, tmp = 0;
+
+	spin_lock(&bfin_spinlock_lock); /* This would also hold kernel preemption. */
+	ret = get_user(tmp, p);
+	if (likely(ret == 0)) {
+		if (unlikely(tmp))
+			ret = 1;
+		else
+			put_user(1, p);
+	}
+	spin_unlock(&bfin_spinlock_lock);
+
+	return ret;
 }
 
-SYSCALL_DEFINE3 (cacheflush, unsigned long, addr, unsigned long, len, int, op)
+SYSCALL_DEFINE3(cacheflush, unsigned long, addr, unsigned long, len, int, op)
 {
-  if (is_user_addr_valid (current, addr, len) != 0)
-  { return -EINVAL; }
-  
-  if (op & DCACHE)
-  { blackfin_dcache_flush_range (addr, addr + len); }
-  if (op & ICACHE)
-  { blackfin_icache_flush_range (addr, addr + len); }
-  
-  return 0;
+	if (is_user_addr_valid(current, addr, len) != 0)
+		return -EINVAL;
+
+	if (op & DCACHE)
+		blackfin_dcache_flush_range(addr, addr + len);
+	if (op & ICACHE)
+		blackfin_icache_flush_range(addr, addr + len);
+
+	return 0;
 }

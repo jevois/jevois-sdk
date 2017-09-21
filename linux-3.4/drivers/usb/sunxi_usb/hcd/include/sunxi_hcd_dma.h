@@ -23,28 +23,28 @@
 #endif
 
 /* the condition to use DMA: 1 - more than one packet, 2 - DMA idle, 3 - not ep0 */
-#define  is_sunxi_hcd_dma_capable(usbc_no, len, maxpacket, epnum) (is_hcd_support_dma(usbc_no) \
-    && (len > maxpacket) \
-    && epnum)
+#define  is_sunxi_hcd_dma_capable(usbc_no, len, maxpacket, epnum)	(is_hcd_support_dma(usbc_no) \
+										&& (len > maxpacket) \
+										&& epnum)
 
-typedef struct sunxi_hcd_dma {
-  char name[32];
-  
-  int dma_hdle; /* dma handle */
-} sunxi_hcd_dma_t;
+typedef struct sunxi_hcd_dma{
+	char name[32];
 
-void sunxi_hcd_switch_bus_to_dma (struct sunxi_hcd_qh * qh, u32 is_in);
-void sunxi_hcd_switch_bus_to_pio (struct sunxi_hcd_qh * qh, __u32 is_in);
+	int dma_hdle;	/* dma handle */
+}sunxi_hcd_dma_t;
 
-void sunxi_hcd_dma_set_config (struct sunxi_hcd_qh * qh, __u32 buff_addr, __u32 len);
-__u32 sunxi_hcd_dma_is_busy (struct sunxi_hcd_qh * qh);
+void sunxi_hcd_switch_bus_to_dma(struct sunxi_hcd_qh *qh, u32 is_in);
+void sunxi_hcd_switch_bus_to_pio(struct sunxi_hcd_qh *qh, __u32 is_in);
 
-void sunxi_hcd_dma_start (struct sunxi_hcd_qh * qh, __u32 fifo, __u32 buffer, __u32 len);
-void sunxi_hcd_dma_stop (struct sunxi_hcd_qh * qh);
-__u32 sunxi_hcd_dma_transmit_length (struct sunxi_hcd_qh * qh, __u32 is_in, __u32 buffer_addr);
+void sunxi_hcd_dma_set_config(struct sunxi_hcd_qh *qh, __u32 buff_addr, __u32 len);
+__u32 sunxi_hcd_dma_is_busy(struct sunxi_hcd_qh *qh);
 
-__s32 sunxi_hcd_dma_probe (struct sunxi_hcd * sunxi_hcd);
-__s32 sunxi_hcd_dma_remove (struct sunxi_hcd * sunxi_hcd);
+void sunxi_hcd_dma_start(struct sunxi_hcd_qh *qh, __u32 fifo, __u32 buffer, __u32 len);
+void sunxi_hcd_dma_stop(struct sunxi_hcd_qh *qh);
+__u32 sunxi_hcd_dma_transmit_length(struct sunxi_hcd_qh *qh, __u32 is_in, __u32 buffer_addr);
+
+__s32 sunxi_hcd_dma_probe(struct sunxi_hcd *sunxi_hcd);
+__s32 sunxi_hcd_dma_remove(struct sunxi_hcd *sunxi_hcd);
 
 #endif  
 

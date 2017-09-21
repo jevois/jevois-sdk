@@ -37,22 +37,22 @@
  *  be allowed to execute directly, lest incorrect semantics result.
  */
 
-#define fc  .error "fc should not be used directly."
-#define thash .error "thash should not be used directly."
+#define fc	.error "fc should not be used directly."
+#define thash	.error "thash should not be used directly."
 
 /* Note that "ttag" and "cover" are also privilege-sensitive; "ttag"
  * is not currently used (though it may be in a long-format VHPT system!)
  * and the semantics of cover only change if psr.ic is off which is very
  * rare (and currently non-existent outside of assembly code
  */
-#define ttag  .error "ttag should not be used directly."
-#define cover .error "cover should not be used directly."
+#define ttag	.error "ttag should not be used directly."
+#define cover	.error "cover should not be used directly."
 
 /* There are also privilege-sensitive registers.  These registers are
  * readable at any privilege level but only writable at PL0.
  */
-#define cpuid .error "cpuid should not be used directly."
-#define pmd .error "pmd should not be used directly."
+#define cpuid	.error "cpuid should not be used directly."
+#define pmd	.error "pmd should not be used directly."
 
 /*
  * mov ar.eflag =
@@ -125,147 +125,147 @@
 
 /* check whether reg is a regular register */
 .macro is_rreg_in reg
-.ifc "\reg", "r0"
-nop 0
-.exitm
-.endif
-;;
-mov \reg = r0
-           ;;
+	.ifc "\reg", "r0"
+		nop 0
+		.exitm
+	.endif
+	;;
+	mov \reg = r0
+	;;
 .endm
-#define IS_RREG_IN(reg) is_rreg_in reg ;
+#define IS_RREG_IN(reg)	is_rreg_in reg ;
 
-#define IS_RREG_OUT(reg)      \
-  ;;          \
-  mov reg = r0        \
-            ;;
+#define IS_RREG_OUT(reg)			\
+	;;					\
+	mov reg = r0				\
+	;;
 
-#define IS_RREG_CLOB(reg) IS_RREG_OUT(reg)
+#define IS_RREG_CLOB(reg)	IS_RREG_OUT(reg)
 
 /* check whether pred is a predicate register */
-#define IS_PRED_IN(pred)      \
-  ;;          \
-  (pred)  nop 0       \
-  ;;
+#define IS_PRED_IN(pred)			\
+	;;					\
+	(pred)	nop 0				\
+	;;
 
-#define IS_PRED_OUT(pred)     \
-  ;;          \
-  cmp.eq pred, p0 = r0, r0    \
-                    ;;
+#define IS_PRED_OUT(pred)			\
+	;;					\
+	cmp.eq pred, p0 = r0, r0		\
+	;;
 
-#define IS_PRED_CLOB(pred)  IS_PRED_OUT(pred)
+#define IS_PRED_CLOB(pred)	IS_PRED_OUT(pred)
 
 
-#define DO_SAVE_MIN(__COVER, SAVE_IFS, EXTRA, WORKAROUND) \
-  nop 0
-#define MOV_FROM_IFA(reg)     \
-  IS_RREG_OUT(reg)
-#define MOV_FROM_ITIR(reg)      \
-  IS_RREG_OUT(reg)
-#define MOV_FROM_ISR(reg)     \
-  IS_RREG_OUT(reg)
-#define MOV_FROM_IHA(reg)     \
-  IS_RREG_OUT(reg)
-#define MOV_FROM_IPSR(pred, reg)    \
-  IS_PRED_IN(pred)      \
-  IS_RREG_OUT(reg)
-#define MOV_FROM_IIM(reg)     \
-  IS_RREG_OUT(reg)
-#define MOV_FROM_IIP(reg)     \
-  IS_RREG_OUT(reg)
-#define MOV_FROM_IVR(reg, clob)     \
-  IS_RREG_OUT(reg)      \
-  IS_RREG_CLOB(clob)
-#define MOV_FROM_PSR(pred, reg, clob)   \
-  IS_PRED_IN(pred)      \
-  IS_RREG_OUT(reg)      \
-  IS_RREG_CLOB(clob)
-#define MOV_FROM_ITC(pred, pred_clob, reg, clob)  \
-  IS_PRED_IN(pred)        \
-  IS_PRED_CLOB(pred_clob)       \
-  IS_RREG_OUT(reg)        \
-  IS_RREG_CLOB(clob)
-#define MOV_TO_IFA(reg, clob)     \
-  IS_RREG_IN(reg)       \
-  IS_RREG_CLOB(clob)
-#define MOV_TO_ITIR(pred, reg, clob)    \
-  IS_PRED_IN(pred)      \
-  IS_RREG_IN(reg)       \
-  IS_RREG_CLOB(clob)
-#define MOV_TO_IHA(pred, reg, clob)   \
-  IS_PRED_IN(pred)      \
-  IS_RREG_IN(reg)       \
-  IS_RREG_CLOB(clob)
-#define MOV_TO_IPSR(pred, reg, clob)    \
-  IS_PRED_IN(pred)      \
-  IS_RREG_IN(reg)       \
-  IS_RREG_CLOB(clob)
-#define MOV_TO_IFS(pred, reg, clob)   \
-  IS_PRED_IN(pred)      \
-  IS_RREG_IN(reg)       \
-  IS_RREG_CLOB(clob)
-#define MOV_TO_IIP(reg, clob)     \
-  IS_RREG_IN(reg)       \
-  IS_RREG_CLOB(clob)
-#define MOV_TO_KR(kr, reg, clob0, clob1)  \
-  IS_RREG_IN(reg)       \
-  IS_RREG_CLOB(clob0)     \
-  IS_RREG_CLOB(clob1)
-#define ITC_I(pred, reg, clob)      \
-  IS_PRED_IN(pred)      \
-  IS_RREG_IN(reg)       \
-  IS_RREG_CLOB(clob)
-#define ITC_D(pred, reg, clob)      \
-  IS_PRED_IN(pred)      \
-  IS_RREG_IN(reg)       \
-  IS_RREG_CLOB(clob)
-#define ITC_I_AND_D(pred_i, pred_d, reg, clob)  \
-  IS_PRED_IN(pred_i)      \
-  IS_PRED_IN(pred_d)      \
-  IS_RREG_IN(reg)       \
-  IS_RREG_CLOB(clob)
-#define THASH(pred, reg0, reg1, clob)   \
-  IS_PRED_IN(pred)      \
-  IS_RREG_OUT(reg0)     \
-  IS_RREG_IN(reg1)      \
-  IS_RREG_CLOB(clob)
-#define SSM_PSR_IC_AND_DEFAULT_BITS_AND_SRLZ_I(clob0, clob1)  \
-  IS_RREG_CLOB(clob0)         \
-  IS_RREG_CLOB(clob1)
-#define SSM_PSR_IC_AND_SRLZ_D(clob0, clob1) \
-  IS_RREG_CLOB(clob0)     \
-  IS_RREG_CLOB(clob1)
-#define RSM_PSR_IC(clob)      \
-  IS_RREG_CLOB(clob)
-#define SSM_PSR_I(pred, pred_clob, clob)  \
-  IS_PRED_IN(pred)      \
-  IS_PRED_CLOB(pred_clob)     \
-  IS_RREG_CLOB(clob)
-#define RSM_PSR_I(pred, clob0, clob1)   \
-  IS_PRED_IN(pred)      \
-  IS_RREG_CLOB(clob0)     \
-  IS_RREG_CLOB(clob1)
-#define RSM_PSR_I_IC(clob0, clob1, clob2) \
-  IS_RREG_CLOB(clob0)     \
-  IS_RREG_CLOB(clob1)     \
-  IS_RREG_CLOB(clob2)
-#define RSM_PSR_DT        \
-  nop 0
-#define RSM_PSR_BE_I(clob0, clob1)    \
-  IS_RREG_CLOB(clob0)     \
-  IS_RREG_CLOB(clob1)
-#define SSM_PSR_DT_AND_SRLZ_I     \
-  nop 0
-#define BSW_0(clob0, clob1, clob2)    \
-  IS_RREG_CLOB(clob0)     \
-  IS_RREG_CLOB(clob1)     \
-  IS_RREG_CLOB(clob2)
-#define BSW_1(clob0, clob1)     \
-  IS_RREG_CLOB(clob0)     \
-  IS_RREG_CLOB(clob1)
-#define COVER         \
-  nop 0
-#define RFI         \
-  br.ret.sptk.many rp /* defining nop causes dependency error */
+#define DO_SAVE_MIN(__COVER, SAVE_IFS, EXTRA, WORKAROUND)	\
+	nop 0
+#define MOV_FROM_IFA(reg)			\
+	IS_RREG_OUT(reg)
+#define MOV_FROM_ITIR(reg)			\
+	IS_RREG_OUT(reg)
+#define MOV_FROM_ISR(reg)			\
+	IS_RREG_OUT(reg)
+#define MOV_FROM_IHA(reg)			\
+	IS_RREG_OUT(reg)
+#define MOV_FROM_IPSR(pred, reg)		\
+	IS_PRED_IN(pred)			\
+	IS_RREG_OUT(reg)
+#define MOV_FROM_IIM(reg)			\
+	IS_RREG_OUT(reg)
+#define MOV_FROM_IIP(reg)			\
+	IS_RREG_OUT(reg)
+#define MOV_FROM_IVR(reg, clob)			\
+	IS_RREG_OUT(reg)			\
+	IS_RREG_CLOB(clob)
+#define MOV_FROM_PSR(pred, reg, clob)		\
+	IS_PRED_IN(pred)			\
+	IS_RREG_OUT(reg)			\
+	IS_RREG_CLOB(clob)
+#define MOV_FROM_ITC(pred, pred_clob, reg, clob)	\
+	IS_PRED_IN(pred)				\
+	IS_PRED_CLOB(pred_clob)				\
+	IS_RREG_OUT(reg)				\
+	IS_RREG_CLOB(clob)
+#define MOV_TO_IFA(reg, clob)			\
+	IS_RREG_IN(reg)				\
+	IS_RREG_CLOB(clob)
+#define MOV_TO_ITIR(pred, reg, clob)		\
+	IS_PRED_IN(pred)			\
+	IS_RREG_IN(reg)				\
+	IS_RREG_CLOB(clob)
+#define MOV_TO_IHA(pred, reg, clob)		\
+	IS_PRED_IN(pred)			\
+	IS_RREG_IN(reg)				\
+	IS_RREG_CLOB(clob)
+#define MOV_TO_IPSR(pred, reg, clob)		\
+	IS_PRED_IN(pred)			\
+	IS_RREG_IN(reg)				\
+	IS_RREG_CLOB(clob)
+#define MOV_TO_IFS(pred, reg, clob)		\
+	IS_PRED_IN(pred)			\
+	IS_RREG_IN(reg)				\
+	IS_RREG_CLOB(clob)
+#define MOV_TO_IIP(reg, clob)			\
+	IS_RREG_IN(reg)				\
+	IS_RREG_CLOB(clob)
+#define MOV_TO_KR(kr, reg, clob0, clob1)	\
+	IS_RREG_IN(reg)				\
+	IS_RREG_CLOB(clob0)			\
+	IS_RREG_CLOB(clob1)
+#define ITC_I(pred, reg, clob)			\
+	IS_PRED_IN(pred)			\
+	IS_RREG_IN(reg)				\
+	IS_RREG_CLOB(clob)
+#define ITC_D(pred, reg, clob)			\
+	IS_PRED_IN(pred)			\
+	IS_RREG_IN(reg)				\
+	IS_RREG_CLOB(clob)
+#define ITC_I_AND_D(pred_i, pred_d, reg, clob)	\
+	IS_PRED_IN(pred_i)			\
+	IS_PRED_IN(pred_d)			\
+	IS_RREG_IN(reg)				\
+	IS_RREG_CLOB(clob)
+#define THASH(pred, reg0, reg1, clob)		\
+	IS_PRED_IN(pred)			\
+	IS_RREG_OUT(reg0)			\
+	IS_RREG_IN(reg1)			\
+	IS_RREG_CLOB(clob)
+#define SSM_PSR_IC_AND_DEFAULT_BITS_AND_SRLZ_I(clob0, clob1)	\
+	IS_RREG_CLOB(clob0)					\
+	IS_RREG_CLOB(clob1)
+#define SSM_PSR_IC_AND_SRLZ_D(clob0, clob1)	\
+	IS_RREG_CLOB(clob0)			\
+	IS_RREG_CLOB(clob1)
+#define RSM_PSR_IC(clob)			\
+	IS_RREG_CLOB(clob)
+#define SSM_PSR_I(pred, pred_clob, clob)	\
+	IS_PRED_IN(pred)			\
+	IS_PRED_CLOB(pred_clob)			\
+	IS_RREG_CLOB(clob)
+#define RSM_PSR_I(pred, clob0, clob1)		\
+	IS_PRED_IN(pred)			\
+	IS_RREG_CLOB(clob0)			\
+	IS_RREG_CLOB(clob1)
+#define RSM_PSR_I_IC(clob0, clob1, clob2)	\
+	IS_RREG_CLOB(clob0)			\
+	IS_RREG_CLOB(clob1)			\
+	IS_RREG_CLOB(clob2)
+#define RSM_PSR_DT				\
+	nop 0
+#define RSM_PSR_BE_I(clob0, clob1)		\
+	IS_RREG_CLOB(clob0)			\
+	IS_RREG_CLOB(clob1)
+#define SSM_PSR_DT_AND_SRLZ_I			\
+	nop 0
+#define BSW_0(clob0, clob1, clob2)		\
+	IS_RREG_CLOB(clob0)			\
+	IS_RREG_CLOB(clob1)			\
+	IS_RREG_CLOB(clob2)
+#define BSW_1(clob0, clob1)			\
+	IS_RREG_CLOB(clob0)			\
+	IS_RREG_CLOB(clob1)
+#define COVER					\
+	nop 0
+#define RFI					\
+	br.ret.sptk.many rp /* defining nop causes dependency error */
 
 #endif /* _ASM_NATIVE_PVCHK_INST_H */

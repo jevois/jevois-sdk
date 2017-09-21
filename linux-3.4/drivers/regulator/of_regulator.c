@@ -15,50 +15,50 @@
 #include <linux/of.h>
 #include <linux/regulator/machine.h>
 
-static void of_get_regulation_constraints (struct device_node * np,
-    struct regulator_init_data ** init_data)
+static void of_get_regulation_constraints(struct device_node *np,
+					struct regulator_init_data **init_data)
 {
-  const __be32 * min_uV, *max_uV, *uV_offset;
-  const __be32 * min_uA, *max_uA;
-  struct regulation_constraints * constraints = & (*init_data)->constraints;
-  
-  constraints->name = of_get_property (np, "regulator-name", NULL);
-  
-  min_uV = of_get_property (np, "regulator-min-microvolt", NULL);
-  if (min_uV)
-  { constraints->min_uV = be32_to_cpu (*min_uV); }
-  max_uV = of_get_property (np, "regulator-max-microvolt", NULL);
-  if (max_uV)
-  { constraints->max_uV = be32_to_cpu (*max_uV); }
-  
-  /* Voltage change possible? */
-  if (constraints->min_uV != constraints->max_uV)
-  { constraints->valid_ops_mask |= REGULATOR_CHANGE_VOLTAGE; }
-  /* Only one voltage?  Then make sure it's set. */
-  if (min_uV && max_uV && constraints->min_uV == constraints->max_uV)
-  { constraints->apply_uV = true; }
-  
-  uV_offset = of_get_property (np, "regulator-microvolt-offset", NULL);
-  if (uV_offset)
-  { constraints->uV_offset = be32_to_cpu (*uV_offset); }
-  min_uA = of_get_property (np, "regulator-min-microamp", NULL);
-  if (min_uA)
-  { constraints->min_uA = be32_to_cpu (*min_uA); }
-  max_uA = of_get_property (np, "regulator-max-microamp", NULL);
-  if (max_uA)
-  { constraints->max_uA = be32_to_cpu (*max_uA); }
-  
-  /* Current change possible? */
-  if (constraints->min_uA != constraints->max_uA)
-  { constraints->valid_ops_mask |= REGULATOR_CHANGE_CURRENT; }
-  
-  if (of_find_property (np, "regulator-boot-on", NULL) )
-  { constraints->boot_on = true; }
-  
-  if (of_find_property (np, "regulator-always-on", NULL) )
-  { constraints->always_on = true; }
-  else /* status change should be possible if not always on. */
-  { constraints->valid_ops_mask |= REGULATOR_CHANGE_STATUS; }
+	const __be32 *min_uV, *max_uV, *uV_offset;
+	const __be32 *min_uA, *max_uA;
+	struct regulation_constraints *constraints = &(*init_data)->constraints;
+
+	constraints->name = of_get_property(np, "regulator-name", NULL);
+
+	min_uV = of_get_property(np, "regulator-min-microvolt", NULL);
+	if (min_uV)
+		constraints->min_uV = be32_to_cpu(*min_uV);
+	max_uV = of_get_property(np, "regulator-max-microvolt", NULL);
+	if (max_uV)
+		constraints->max_uV = be32_to_cpu(*max_uV);
+
+	/* Voltage change possible? */
+	if (constraints->min_uV != constraints->max_uV)
+		constraints->valid_ops_mask |= REGULATOR_CHANGE_VOLTAGE;
+	/* Only one voltage?  Then make sure it's set. */
+	if (min_uV && max_uV && constraints->min_uV == constraints->max_uV)
+		constraints->apply_uV = true;
+
+	uV_offset = of_get_property(np, "regulator-microvolt-offset", NULL);
+	if (uV_offset)
+		constraints->uV_offset = be32_to_cpu(*uV_offset);
+	min_uA = of_get_property(np, "regulator-min-microamp", NULL);
+	if (min_uA)
+		constraints->min_uA = be32_to_cpu(*min_uA);
+	max_uA = of_get_property(np, "regulator-max-microamp", NULL);
+	if (max_uA)
+		constraints->max_uA = be32_to_cpu(*max_uA);
+
+	/* Current change possible? */
+	if (constraints->min_uA != constraints->max_uA)
+		constraints->valid_ops_mask |= REGULATOR_CHANGE_CURRENT;
+
+	if (of_find_property(np, "regulator-boot-on", NULL))
+		constraints->boot_on = true;
+
+	if (of_find_property(np, "regulator-always-on", NULL))
+		constraints->always_on = true;
+	else /* status change should be possible if not always on. */
+		constraints->valid_ops_mask |= REGULATOR_CHANGE_STATUS;
 }
 
 /**
@@ -69,19 +69,19 @@ static void of_get_regulation_constraints (struct device_node * np,
  * tree node, returns a pointer to the populated struture or NULL if memory
  * alloc fails.
  */
-struct regulator_init_data * of_get_regulator_init_data (struct device * dev,
-    struct device_node * node)
+struct regulator_init_data *of_get_regulator_init_data(struct device *dev,
+						struct device_node *node)
 {
-  struct regulator_init_data * init_data;
-  
-  if (!node)
-  { return NULL; }
-  
-  init_data = devm_kzalloc (dev, sizeof (*init_data), GFP_KERNEL);
-  if (!init_data)
-  { return NULL; } /* Out of memory? */
-  
-  of_get_regulation_constraints (node, &init_data);
-  return init_data;
+	struct regulator_init_data *init_data;
+
+	if (!node)
+		return NULL;
+
+	init_data = devm_kzalloc(dev, sizeof(*init_data), GFP_KERNEL);
+	if (!init_data)
+		return NULL; /* Out of memory? */
+
+	of_get_regulation_constraints(node, &init_data);
+	return init_data;
 }
-EXPORT_SYMBOL_GPL (of_get_regulator_init_data);
+EXPORT_SYMBOL_GPL(of_get_regulator_init_data);

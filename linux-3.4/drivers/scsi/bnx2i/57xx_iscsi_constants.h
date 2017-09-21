@@ -20,7 +20,7 @@
 #define ISCSI_OPCODE_CLEANUP_REQUEST    (7)
 
 /* iSCSI response/messages op codes */
-#define ISCSI_OPCODE_CLEANUP_RESPONSE     (0x27)
+#define ISCSI_OPCODE_CLEANUP_RESPONSE 		(0x27)
 #define ISCSI_OPCODE_NOPOUT_LOCAL_COMPLETION    (0)
 
 /* iSCSI task types */
@@ -47,7 +47,7 @@
 #define ISCSI_KCQE_OPCODE_UPDATE_CONN   (0x12)
 #define ISCSI_KCQE_OPCODE_DESTROY_CONN  (0x13)
 #define ISCSI_KCQE_OPCODE_INIT          (0x14)
-#define ISCSI_KCQE_OPCODE_FW_CLEAN_TASK (0x15)
+#define ISCSI_KCQE_OPCODE_FW_CLEAN_TASK	(0x15)
 #define ISCSI_KCQE_OPCODE_TCP_RESET     (0x16)
 #define ISCSI_KCQE_OPCODE_TCP_SYN       (0x17)
 #define ISCSI_KCQE_OPCODE_TCP_FIN       (0X18)
@@ -121,7 +121,7 @@
 /* additional LOM specific iSCSI license not installed */
 #define ISCSI_KCQE_COMPLETION_STATUS_LOM_ISCSI_NOT_ENABLED              (0x51)
 
-#define ISCSI_KCQE_COMPLETION_STATUS_CID_BUSY       (0x80)
+#define ISCSI_KCQE_COMPLETION_STATUS_CID_BUSY				(0x80)
 #define ISCSI_KCQE_COMPLETION_STATUS_PARITY_ERR                         (0x81)
 
 /* SQ/RQ/CQ DB structure sizes */

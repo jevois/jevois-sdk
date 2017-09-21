@@ -41,41 +41,41 @@
  * the beginning of the range mapped.
  */
 
-typedef void * scom_map_t;
+typedef void *scom_map_t;
 
 /* Value for an invalid SCOM map */
-#define SCOM_MAP_INVALID  (NULL)
+#define SCOM_MAP_INVALID	(NULL)
 
 /* The scom_controller data structure is what the platform passes
  * to the core code in scom_init, it provides the actual implementation
  * of all the SCOM functions
  */
 struct scom_controller {
-  scom_map_t (*map) (struct device_node * ctrl_dev, u64 reg, u64 count);
-  void (*unmap) (scom_map_t map);
-  
-  u64 (*read) (scom_map_t map, u32 reg);
-  void (*write) (scom_map_t map, u32 reg, u64 value);
+	scom_map_t (*map)(struct device_node *ctrl_dev, u64 reg, u64 count);
+	void (*unmap)(scom_map_t map);
+
+	u64 (*read)(scom_map_t map, u32 reg);
+	void (*write)(scom_map_t map, u32 reg, u64 value);
 };
 
-extern const struct scom_controller * scom_controller;
+extern const struct scom_controller *scom_controller;
 
 /**
  * scom_init - Initialize the SCOM backend, called by the platform
  * @controller: The platform SCOM controller
  */
-static inline void scom_init (const struct scom_controller * controller)
+static inline void scom_init(const struct scom_controller *controller)
 {
-  scom_controller = controller;
+	scom_controller = controller;
 }
 
 /**
  * scom_map_ok - Test is a SCOM mapping is successful
  * @map: The result of scom_map to test
  */
-static inline int scom_map_ok (scom_map_t map)
+static inline int scom_map_ok(scom_map_t map)
 {
-  return map != SCOM_MAP_INVALID;
+	return map != SCOM_MAP_INVALID;
 }
 
 /**
@@ -86,10 +86,10 @@ static inline int scom_map_ok (scom_map_t map)
  * @count: Number of SCOM registers to map
  */
 
-static inline scom_map_t scom_map (struct device_node * ctrl_dev,
-                                   u64 reg, u64 count)
+static inline scom_map_t scom_map(struct device_node *ctrl_dev,
+				  u64 reg, u64 count)
 {
-  return scom_controller->map (ctrl_dev, reg, count);
+	return scom_controller->map(ctrl_dev, reg, count);
 }
 
 /**
@@ -101,7 +101,7 @@ static inline scom_map_t scom_map (struct device_node * ctrl_dev,
  * device own scom-reg property. Useful for applying HW workarounds
  * on things not properly represented in the device-tree for example.
  */
-struct device_node * scom_find_parent (struct device_node * dev);
+struct device_node *scom_find_parent(struct device_node *dev);
 
 
 /**
@@ -116,17 +116,17 @@ struct device_node * scom_find_parent (struct device_node * dev);
  * each of them having a size defined by the controller's #scom-cells
  * property
  */
-extern scom_map_t scom_map_device (struct device_node * dev, int index);
+extern scom_map_t scom_map_device(struct device_node *dev, int index);
 
 
 /**
  * scom_unmap - Unmap a block of SCOM registers
  * @map: Result of scom_map is to be unmapped
  */
-static inline void scom_unmap (scom_map_t map)
+static inline void scom_unmap(scom_map_t map)
 {
-  if (scom_map_ok (map) )
-  { scom_controller->unmap (map); }
+	if (scom_map_ok(map))
+		scom_controller->unmap(map);
 }
 
 /**
@@ -134,9 +134,9 @@ static inline void scom_unmap (scom_map_t map)
  * @map: Result of scom_map
  * @reg: Register index within that map
  */
-static inline u64 scom_read (scom_map_t map, u32 reg)
+static inline u64 scom_read(scom_map_t map, u32 reg)
 {
-  return scom_controller->read (map, reg);
+	return scom_controller->read(map, reg);
 }
 
 /**
@@ -145,9 +145,9 @@ static inline u64 scom_read (scom_map_t map, u32 reg)
  * @reg: Register index within that map
  * @value: Value to write
  */
-static inline void scom_write (scom_map_t map, u32 reg, u64 value)
+static inline void scom_write(scom_map_t map, u32 reg, u64 value)
 {
-  scom_controller->write (map, reg, value);
+	scom_controller->write(map, reg, value);
 }
 
 #endif /* CONFIG_PPC_SCOM */

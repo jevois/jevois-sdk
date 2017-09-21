@@ -27,17 +27,17 @@
  * to a non-zero value, otherwise the default of 3.2-3.4V is used.
  */
 struct s3c24xx_mci_pdata {
-  unsigned int  no_wprotect: 1;
-  unsigned int  no_detect: 1;
-  unsigned int  wprotect_invert: 1;
-  unsigned int  detect_invert: 1; /* set => detect active high */
-  unsigned int  use_dma: 1;
-  
-  unsigned int  gpio_detect;
-  unsigned int  gpio_wprotect;
-  unsigned long ocr_avail;
-  void    (*set_power) (unsigned char power_mode,
-                        unsigned short vdd);
+	unsigned int	no_wprotect:1;
+	unsigned int	no_detect:1;
+	unsigned int	wprotect_invert:1;
+	unsigned int	detect_invert:1;	/* set => detect active high */
+	unsigned int	use_dma:1;
+
+	unsigned int	gpio_detect;
+	unsigned int	gpio_wprotect;
+	unsigned long	ocr_avail;
+	void		(*set_power)(unsigned char power_mode,
+				     unsigned short vdd);
 };
 
 /**
@@ -47,6 +47,6 @@ struct s3c24xx_mci_pdata {
  * Copy the platform data supplied by @pdata so that this can be marked
  * __initdata.
  */
-extern void s3c24xx_mci_set_platdata (struct s3c24xx_mci_pdata * pdata);
+extern void s3c24xx_mci_set_platdata(struct s3c24xx_mci_pdata *pdata);
 
 #endif /* _ARCH_NCI_H */

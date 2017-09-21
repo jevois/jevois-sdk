@@ -32,26 +32,26 @@
  */
 
 /* The ABSTRACT IRQ definitions */
-#define IRQ_EMU     0 /* Emulation */
-#define IRQ_RST     1 /* reset */
-#define IRQ_NMI     2 /* Non Maskable */
-#define IRQ_EVX     3 /* Exception */
-#define IRQ_UNUSED    4 /* - unused interrupt */
-#define IRQ_HWERR   5 /* Hardware Error */
-#define IRQ_CORETMR   6 /* Core timer */
+#define IRQ_EMU			0	/* Emulation */
+#define IRQ_RST			1	/* reset */
+#define IRQ_NMI			2	/* Non Maskable */
+#define IRQ_EVX			3	/* Exception */
+#define IRQ_UNUSED		4	/* - unused interrupt */
+#define IRQ_HWERR		5	/* Hardware Error */
+#define IRQ_CORETMR		6	/* Core timer */
 
-#define BFIN_IRQ(x)   ((x) + 7)
+#define BFIN_IRQ(x)		((x) + 7)
 
-#define IVG7      7
-#define IVG8      8
-#define IVG9      9
-#define IVG10     10
-#define IVG11     11
-#define IVG12     12
-#define IVG13     13
-#define IVG14     14
-#define IVG15     15
+#define IVG7			7
+#define IVG8			8
+#define IVG9			9
+#define IVG10			10
+#define IVG11			11
+#define IVG12			12
+#define IVG13			13
+#define IVG14			14
+#define IVG15			15
 
-#define NR_IRQS     (NR_MACH_IRQS + NR_SPARE_IRQS)
+#define NR_IRQS			(NR_MACH_IRQS + NR_SPARE_IRQS)
 
 #endif

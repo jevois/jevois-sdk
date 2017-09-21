@@ -25,9 +25,9 @@
 #define CACHE_FLUSH_IS_SAFE   1
 #define BUFMAX       ((NUMREGBYTES * 2) + 512)
 
-static inline void arch_kgdb_breakpoint (void)
+static inline void arch_kgdb_breakpoint(void)
 {
-  asm ("trap0(#0xDB)");
+	asm("trap0(#0xDB)");
 }
 
 /* Registers:

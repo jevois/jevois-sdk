@@ -11,14 +11,14 @@
 #define to_urb(d) container_of(d, struct urb, kref)
 
 
-static void urb_destroy (struct kref * kref)
+static void urb_destroy(struct kref *kref)
 {
-  struct urb * urb = to_urb (kref);
-  
-  if (urb->transfer_flags & URB_FREE_BUFFER)
-  { kfree (urb->transfer_buffer); }
-  
-  kfree (urb);
+	struct urb *urb = to_urb(kref);
+
+	if (urb->transfer_flags & URB_FREE_BUFFER)
+		kfree(urb->transfer_buffer);
+
+	kfree(urb);
 }
 
 /**
@@ -35,21 +35,21 @@ static void urb_destroy (struct kref * kref)
  *
  * Only use this function if you _really_ understand what you are doing.
  */
-void usb_init_urb (struct urb * urb)
+void usb_init_urb(struct urb *urb)
 {
-  if (urb) {
-    memset (urb, 0, sizeof (*urb) );
-    kref_init (&urb->kref);
-    INIT_LIST_HEAD (&urb->anchor_list);
-  }
+	if (urb) {
+		memset(urb, 0, sizeof(*urb));
+		kref_init(&urb->kref);
+		INIT_LIST_HEAD(&urb->anchor_list);
+	}
 }
-EXPORT_SYMBOL_GPL (usb_init_urb);
+EXPORT_SYMBOL_GPL(usb_init_urb);
 
 /**
  * usb_alloc_urb - creates a new urb for a USB driver to use
  * @iso_packets: number of iso packets for this urb
  * @mem_flags: the type of memory to allocate, see kmalloc() for a list of
- *  valid options for this.
+ *	valid options for this.
  *
  * Creates an urb for the USB driver to use, initializes a few internal
  * structures, incrementes the usage counter, and returns a pointer to it.
@@ -61,21 +61,21 @@ EXPORT_SYMBOL_GPL (usb_init_urb);
  *
  * The driver must call usb_free_urb() when it is finished with the urb.
  */
-struct urb * usb_alloc_urb (int iso_packets, gfp_t mem_flags)
+struct urb *usb_alloc_urb(int iso_packets, gfp_t mem_flags)
 {
-  struct urb * urb;
-  
-  urb = kmalloc (sizeof (struct urb) +
-                 iso_packets * sizeof (struct usb_iso_packet_descriptor),
-                 mem_flags);
-  if (!urb) {
-    printk (KERN_ERR "alloc_urb: kmalloc failed\n");
-    return NULL;
-  }
-  usb_init_urb (urb);
-  return urb;
+	struct urb *urb;
+
+	urb = kmalloc(sizeof(struct urb) +
+		iso_packets * sizeof(struct usb_iso_packet_descriptor),
+		mem_flags);
+	if (!urb) {
+		printk(KERN_ERR "alloc_urb: kmalloc failed\n");
+		return NULL;
+	}
+	usb_init_urb(urb);
+	return urb;
 }
-EXPORT_SYMBOL_GPL (usb_alloc_urb);
+EXPORT_SYMBOL_GPL(usb_alloc_urb);
 
 /**
  * usb_free_urb - frees the memory used by a urb when all users of it are finished
@@ -87,12 +87,12 @@ EXPORT_SYMBOL_GPL (usb_alloc_urb);
  * Note: The transfer buffer associated with the urb is not freed unless the
  * URB_FREE_BUFFER transfer flag is set.
  */
-void usb_free_urb (struct urb * urb)
+void usb_free_urb(struct urb *urb)
 {
-  if (urb)
-  { kref_put (&urb->kref, urb_destroy); }
+	if (urb)
+		kref_put(&urb->kref, urb_destroy);
 }
-EXPORT_SYMBOL_GPL (usb_free_urb);
+EXPORT_SYMBOL_GPL(usb_free_urb);
 
 /**
  * usb_get_urb - increments the reference count of the urb
@@ -104,13 +104,13 @@ EXPORT_SYMBOL_GPL (usb_free_urb);
  *
  * A pointer to the urb with the incremented reference counter is returned.
  */
-struct urb * usb_get_urb (struct urb * urb)
+struct urb *usb_get_urb(struct urb *urb)
 {
-  if (urb)
-  { kref_get (&urb->kref); }
-  return urb;
+	if (urb)
+		kref_get(&urb->kref);
+	return urb;
 }
-EXPORT_SYMBOL_GPL (usb_get_urb);
+EXPORT_SYMBOL_GPL(usb_get_urb);
 
 /**
  * usb_anchor_urb - anchors an URB while it is processed
@@ -120,31 +120,31 @@ EXPORT_SYMBOL_GPL (usb_get_urb);
  * This can be called to have access to URBs which are to be executed
  * without bothering to track them
  */
-void usb_anchor_urb (struct urb * urb, struct usb_anchor * anchor)
+void usb_anchor_urb(struct urb *urb, struct usb_anchor *anchor)
 {
-  unsigned long flags;
-  
-  spin_lock_irqsave (&anchor->lock, flags);
-  usb_get_urb (urb);
-  list_add_tail (&urb->anchor_list, &anchor->urb_list);
-  urb->anchor = anchor;
-  
-  if (unlikely (anchor->poisoned) ) {
-    atomic_inc (&urb->reject);
-  }
-  
-  spin_unlock_irqrestore (&anchor->lock, flags);
+	unsigned long flags;
+
+	spin_lock_irqsave(&anchor->lock, flags);
+	usb_get_urb(urb);
+	list_add_tail(&urb->anchor_list, &anchor->urb_list);
+	urb->anchor = anchor;
+
+	if (unlikely(anchor->poisoned)) {
+		atomic_inc(&urb->reject);
+	}
+
+	spin_unlock_irqrestore(&anchor->lock, flags);
 }
-EXPORT_SYMBOL_GPL (usb_anchor_urb);
+EXPORT_SYMBOL_GPL(usb_anchor_urb);
 
 /* Callers must hold anchor->lock */
-static void __usb_unanchor_urb (struct urb * urb, struct usb_anchor * anchor)
+static void __usb_unanchor_urb(struct urb *urb, struct usb_anchor *anchor)
 {
-  urb->anchor = NULL;
-  list_del (&urb->anchor_list);
-  usb_put_urb (urb);
-  if (list_empty (&anchor->urb_list) )
-  { wake_up (&anchor->wait); }
+	urb->anchor = NULL;
+	list_del(&urb->anchor_list);
+	usb_put_urb(urb);
+	if (list_empty(&anchor->urb_list))
+		wake_up(&anchor->wait);
 }
 
 /**
@@ -153,29 +153,29 @@ static void __usb_unanchor_urb (struct urb * urb, struct usb_anchor * anchor)
  *
  * Call this to stop the system keeping track of this URB
  */
-void usb_unanchor_urb (struct urb * urb)
+void usb_unanchor_urb(struct urb *urb)
 {
-  unsigned long flags;
-  struct usb_anchor * anchor;
-  
-  if (!urb)
-  { return; }
-  
-  anchor = urb->anchor;
-  if (!anchor)
-  { return; }
-  
-  spin_lock_irqsave (&anchor->lock, flags);
-  /*
-   * At this point, we could be competing with another thread which
-   * has the same intention. To protect the urb from being unanchored
-   * twice, only the winner of the race gets the job.
-   */
-  if (likely (anchor == urb->anchor) )
-  { __usb_unanchor_urb (urb, anchor); }
-  spin_unlock_irqrestore (&anchor->lock, flags);
+	unsigned long flags;
+	struct usb_anchor *anchor;
+
+	if (!urb)
+		return;
+
+	anchor = urb->anchor;
+	if (!anchor)
+		return;
+
+	spin_lock_irqsave(&anchor->lock, flags);
+	/*
+	 * At this point, we could be competing with another thread which
+	 * has the same intention. To protect the urb from being unanchored
+	 * twice, only the winner of the race gets the job.
+	 */
+	if (likely(anchor == urb->anchor))
+		__usb_unanchor_urb(urb, anchor);
+	spin_unlock_irqrestore(&anchor->lock, flags);
 }
-EXPORT_SYMBOL_GPL (usb_unanchor_urb);
+EXPORT_SYMBOL_GPL(usb_unanchor_urb);
 
 /*-------------------------------------------------------------------*/
 
@@ -183,7 +183,7 @@ EXPORT_SYMBOL_GPL (usb_unanchor_urb);
  * usb_submit_urb - issue an asynchronous transfer request for an endpoint
  * @urb: pointer to the urb describing the request
  * @mem_flags: the type of memory to allocate, see kmalloc() for a list
- *  of valid options for this.
+ *	of valid options for this.
  *
  * This submits a transfer request, and transfers control of the URB
  * describing that request to the USB subsystem.  Request completion will
@@ -298,223 +298,221 @@ EXPORT_SYMBOL_GPL (usb_unanchor_urb);
  *      GFP_NOIO, unless b) or c) apply
  *
  */
-int usb_submit_urb (struct urb * urb, gfp_t mem_flags)
+int usb_submit_urb(struct urb *urb, gfp_t mem_flags)
 {
-  int       xfertype, max;
-  struct usb_device  * dev;
-  struct usb_host_endpoint * ep;
-  int       is_out;
-  
-  if (!urb || urb->hcpriv || !urb->complete)
-  { return -EINVAL; }
-  dev = urb->dev;
-  if ( (!dev) || (dev->state < USB_STATE_UNAUTHENTICATED) )
-  { return -ENODEV; }
-  
-  /* For now, get the endpoint from the pipe.  Eventually drivers
-   * will be required to set urb->ep directly and we will eliminate
-   * urb->pipe.
-   */
-  ep = usb_pipe_endpoint (dev, urb->pipe);
-  if (!ep)
-  { return -ENOENT; }
-  
-  urb->ep = ep;
-  urb->status = -EINPROGRESS;
-  urb->actual_length = 0;
-  
-  /* Lots of sanity checks, so HCDs can rely on clean data
-   * and don't need to duplicate tests
-   */
-  xfertype = usb_endpoint_type (&ep->desc);
-  if (xfertype == USB_ENDPOINT_XFER_CONTROL) {
-    struct usb_ctrlrequest * setup =
-      (struct usb_ctrlrequest *) urb->setup_packet;
-      
-    if (!setup)
-    { return -ENOEXEC; }
-    is_out = ! (setup->bRequestType & USB_DIR_IN) ||
-             !setup->wLength;
-  }
-  else {
-    is_out = usb_endpoint_dir_out (&ep->desc);
-  }
-  
-  /* Clear the internal flags and cache the direction for later use */
-  urb->transfer_flags &= ~ (URB_DIR_MASK | URB_DMA_MAP_SINGLE |
-                            URB_DMA_MAP_PAGE | URB_DMA_MAP_SG | URB_MAP_LOCAL |
-                            URB_SETUP_MAP_SINGLE | URB_SETUP_MAP_LOCAL |
-                            URB_DMA_SG_COMBINED);
-  urb->transfer_flags |= (is_out ? URB_DIR_OUT : URB_DIR_IN);
-  
-  if (xfertype != USB_ENDPOINT_XFER_CONTROL &&
-      dev->state < USB_STATE_CONFIGURED)
-  { return -ENODEV; }
-  
-  max = usb_endpoint_maxp (&ep->desc);
-  if (max <= 0) {
-    dev_dbg (&dev->dev,
-             "bogus endpoint ep%d%s in %s (bad maxpacket %d)\n",
-             usb_endpoint_num (&ep->desc), is_out ? "out" : "in",
-             __func__, max);
-    return -EMSGSIZE;
-  }
-  
-  /* periodic transfers limit size per frame/uframe,
-   * but drivers only control those sizes for ISO.
-   * while we're checking, initialize return status.
-   */
-  if (xfertype == USB_ENDPOINT_XFER_ISOC) {
-    int n, len;
-    
-    /* SuperSpeed isoc endpoints have up to 16 bursts of up to
-     * 3 packets each
-     */
-    if (dev->speed == USB_SPEED_SUPER) {
-      int     burst = 1 + ep->ss_ep_comp.bMaxBurst;
-      int     mult = USB_SS_MULT (ep->ss_ep_comp.bmAttributes);
-      max *= burst;
-      max *= mult;
-    }
-    
-    /* "high bandwidth" mode, 1-3 packets/uframe? */
-    if (dev->speed == USB_SPEED_HIGH) {
-      int mult = 1 + ( (max >> 11) & 0x03);
-      max &= 0x07ff;
-      max *= mult;
-    }
-    
-    if (urb->number_of_packets <= 0)
-    { return -EINVAL; }
-    for (n = 0; n < urb->number_of_packets; n++) {
-      len = urb->iso_frame_desc[n].length;
-      if (len < 0 || len > max)
-      { return -EMSGSIZE; }
-      urb->iso_frame_desc[n].status = -EXDEV;
-      urb->iso_frame_desc[n].actual_length = 0;
-    }
-  }
-  
-  /* the I/O buffer must be mapped/unmapped, except when length=0 */
-  if (urb->transfer_buffer_length > INT_MAX)
-  { return -EMSGSIZE; }
-  
-  #ifdef DEBUG
-  /* stuff that drivers shouldn't do, but which shouldn't
-   * cause problems in HCDs if they get it wrong.
-   */
-  {
-    unsigned int  allowed;
-    static int pipetypes[4] = {
-      PIPE_CONTROL, PIPE_ISOCHRONOUS, PIPE_BULK, PIPE_INTERRUPT
-    };
-    
-    /* Check that the pipe's type matches the endpoint's type */
-    if (usb_pipetype (urb->pipe) != pipetypes[xfertype])
-      dev_WARN (&dev->dev, "BOGUS urb xfer, pipe %x != type %x\n",
-                usb_pipetype (urb->pipe), pipetypes[xfertype]);
-                
-    /* Check against a simple/standard policy */
-    allowed = (URB_NO_TRANSFER_DMA_MAP | URB_NO_INTERRUPT | URB_DIR_MASK |
-               URB_FREE_BUFFER);
-    switch (xfertype) {
-    case USB_ENDPOINT_XFER_BULK:
-      if (is_out)
-      { allowed |= URB_ZERO_PACKET; }
-    /* FALLTHROUGH */
-    case USB_ENDPOINT_XFER_CONTROL:
-      allowed |= URB_NO_FSBR; /* only affects UHCI */
-    /* FALLTHROUGH */
-    default:      /* all non-iso endpoints */
-      if (!is_out)
-      { allowed |= URB_SHORT_NOT_OK; }
-      break;
-    case USB_ENDPOINT_XFER_ISOC:
-      allowed |= URB_ISO_ASAP;
-      break;
-    }
-    allowed &= urb->transfer_flags;
-    
-    /* warn if submitter gave bogus flags */
-    if (allowed != urb->transfer_flags)
-      dev_WARN (&dev->dev, "BOGUS urb flags, %x --> %x\n",
-                urb->transfer_flags, allowed);
-  }
-  #endif
-  /*
-   * Force periodic transfer intervals to be legal values that are
-   * a power of two (so HCDs don't need to).
-   *
-   * FIXME want bus->{intr,iso}_sched_horizon values here.  Each HC
-   * supports different values... this uses EHCI/UHCI defaults (and
-   * EHCI can use smaller non-default values).
-   */
-  switch (xfertype) {
-  case USB_ENDPOINT_XFER_ISOC:
-  case USB_ENDPOINT_XFER_INT:
-    /* too small? */
-    switch (dev->speed) {
-    case USB_SPEED_WIRELESS:
-      if (urb->interval < 6)
-      { return -EINVAL; }
-      break;
-    default:
-      if (urb->interval <= 0)
-      { return -EINVAL; }
-      break;
-    }
-    /* too big? */
-    switch (dev->speed) {
-    case USB_SPEED_SUPER: /* units are 125us */
-      /* Handle up to 2^(16-1) microframes */
-      if (urb->interval > (1 << 15) )
-      { return -EINVAL; }
-      max = 1 << 15;
-      break;
-    case USB_SPEED_WIRELESS:
-      if (urb->interval > 16)
-      { return -EINVAL; }
-      break;
-    case USB_SPEED_HIGH:  /* units are microframes */
-      /* NOTE usb handles 2^15 */
-      if (urb->interval > (1024 * 8) )
-      { urb->interval = 1024 * 8; }
-      max = 1024 * 8;
-      break;
-    case USB_SPEED_FULL:  /* units are frames/msec */
-    case USB_SPEED_LOW:
-      if (xfertype == USB_ENDPOINT_XFER_INT) {
-        if (urb->interval > 255)
-        { return -EINVAL; }
-        /* NOTE ohci only handles up to 32 */
-        max = 128;
-      }
-      else {
-        if (urb->interval > 1024)
-        { urb->interval = 1024; }
-        /* NOTE usb and ohci handle up to 2^15 */
-        max = 1024;
-      }
-      break;
-    default:
-      return -EINVAL;
-    }
-    if (dev->speed != USB_SPEED_WIRELESS) {
-      /* Round down to a power of 2, no more than max */
-      urb->interval = min (max, 1 << ilog2 (urb->interval) );
-    }
-  }
-  
-  return usb_hcd_submit_urb (urb, mem_flags);
+	int				xfertype, max;
+	struct usb_device		*dev;
+	struct usb_host_endpoint	*ep;
+	int				is_out;
+
+	if (!urb || urb->hcpriv || !urb->complete)
+		return -EINVAL;
+	dev = urb->dev;
+	if ((!dev) || (dev->state < USB_STATE_UNAUTHENTICATED))
+		return -ENODEV;
+
+	/* For now, get the endpoint from the pipe.  Eventually drivers
+	 * will be required to set urb->ep directly and we will eliminate
+	 * urb->pipe.
+	 */
+	ep = usb_pipe_endpoint(dev, urb->pipe);
+	if (!ep)
+		return -ENOENT;
+
+	urb->ep = ep;
+	urb->status = -EINPROGRESS;
+	urb->actual_length = 0;
+
+	/* Lots of sanity checks, so HCDs can rely on clean data
+	 * and don't need to duplicate tests
+	 */
+	xfertype = usb_endpoint_type(&ep->desc);
+	if (xfertype == USB_ENDPOINT_XFER_CONTROL) {
+		struct usb_ctrlrequest *setup =
+				(struct usb_ctrlrequest *) urb->setup_packet;
+
+		if (!setup)
+			return -ENOEXEC;
+		is_out = !(setup->bRequestType & USB_DIR_IN) ||
+				!setup->wLength;
+	} else {
+		is_out = usb_endpoint_dir_out(&ep->desc);
+	}
+
+	/* Clear the internal flags and cache the direction for later use */
+	urb->transfer_flags &= ~(URB_DIR_MASK | URB_DMA_MAP_SINGLE |
+			URB_DMA_MAP_PAGE | URB_DMA_MAP_SG | URB_MAP_LOCAL |
+			URB_SETUP_MAP_SINGLE | URB_SETUP_MAP_LOCAL |
+			URB_DMA_SG_COMBINED);
+	urb->transfer_flags |= (is_out ? URB_DIR_OUT : URB_DIR_IN);
+
+	if (xfertype != USB_ENDPOINT_XFER_CONTROL &&
+			dev->state < USB_STATE_CONFIGURED)
+		return -ENODEV;
+
+	max = usb_endpoint_maxp(&ep->desc);
+	if (max <= 0) {
+		dev_dbg(&dev->dev,
+			"bogus endpoint ep%d%s in %s (bad maxpacket %d)\n",
+			usb_endpoint_num(&ep->desc), is_out ? "out" : "in",
+			__func__, max);
+		return -EMSGSIZE;
+	}
+
+	/* periodic transfers limit size per frame/uframe,
+	 * but drivers only control those sizes for ISO.
+	 * while we're checking, initialize return status.
+	 */
+	if (xfertype == USB_ENDPOINT_XFER_ISOC) {
+		int	n, len;
+
+		/* SuperSpeed isoc endpoints have up to 16 bursts of up to
+		 * 3 packets each
+		 */
+		if (dev->speed == USB_SPEED_SUPER) {
+			int     burst = 1 + ep->ss_ep_comp.bMaxBurst;
+			int     mult = USB_SS_MULT(ep->ss_ep_comp.bmAttributes);
+			max *= burst;
+			max *= mult;
+		}
+
+		/* "high bandwidth" mode, 1-3 packets/uframe? */
+		if (dev->speed == USB_SPEED_HIGH) {
+			int	mult = 1 + ((max >> 11) & 0x03);
+			max &= 0x07ff;
+			max *= mult;
+		}
+
+		if (urb->number_of_packets <= 0)
+			return -EINVAL;
+		for (n = 0; n < urb->number_of_packets; n++) {
+			len = urb->iso_frame_desc[n].length;
+			if (len < 0 || len > max)
+				return -EMSGSIZE;
+			urb->iso_frame_desc[n].status = -EXDEV;
+			urb->iso_frame_desc[n].actual_length = 0;
+		}
+	}
+
+	/* the I/O buffer must be mapped/unmapped, except when length=0 */
+	if (urb->transfer_buffer_length > INT_MAX)
+		return -EMSGSIZE;
+
+#ifdef DEBUG
+	/* stuff that drivers shouldn't do, but which shouldn't
+	 * cause problems in HCDs if they get it wrong.
+	 */
+	{
+	unsigned int	allowed;
+	static int pipetypes[4] = {
+		PIPE_CONTROL, PIPE_ISOCHRONOUS, PIPE_BULK, PIPE_INTERRUPT
+	};
+
+	/* Check that the pipe's type matches the endpoint's type */
+	if (usb_pipetype(urb->pipe) != pipetypes[xfertype])
+		dev_WARN(&dev->dev, "BOGUS urb xfer, pipe %x != type %x\n",
+			usb_pipetype(urb->pipe), pipetypes[xfertype]);
+
+	/* Check against a simple/standard policy */
+	allowed = (URB_NO_TRANSFER_DMA_MAP | URB_NO_INTERRUPT | URB_DIR_MASK |
+			URB_FREE_BUFFER);
+	switch (xfertype) {
+	case USB_ENDPOINT_XFER_BULK:
+		if (is_out)
+			allowed |= URB_ZERO_PACKET;
+		/* FALLTHROUGH */
+	case USB_ENDPOINT_XFER_CONTROL:
+		allowed |= URB_NO_FSBR;	/* only affects UHCI */
+		/* FALLTHROUGH */
+	default:			/* all non-iso endpoints */
+		if (!is_out)
+			allowed |= URB_SHORT_NOT_OK;
+		break;
+	case USB_ENDPOINT_XFER_ISOC:
+		allowed |= URB_ISO_ASAP;
+		break;
+	}
+	allowed &= urb->transfer_flags;
+
+	/* warn if submitter gave bogus flags */
+	if (allowed != urb->transfer_flags)
+		dev_WARN(&dev->dev, "BOGUS urb flags, %x --> %x\n",
+			urb->transfer_flags, allowed);
+	}
+#endif
+	/*
+	 * Force periodic transfer intervals to be legal values that are
+	 * a power of two (so HCDs don't need to).
+	 *
+	 * FIXME want bus->{intr,iso}_sched_horizon values here.  Each HC
+	 * supports different values... this uses EHCI/UHCI defaults (and
+	 * EHCI can use smaller non-default values).
+	 */
+	switch (xfertype) {
+	case USB_ENDPOINT_XFER_ISOC:
+	case USB_ENDPOINT_XFER_INT:
+		/* too small? */
+		switch (dev->speed) {
+		case USB_SPEED_WIRELESS:
+			if (urb->interval < 6)
+				return -EINVAL;
+			break;
+		default:
+			if (urb->interval <= 0)
+				return -EINVAL;
+			break;
+		}
+		/* too big? */
+		switch (dev->speed) {
+		case USB_SPEED_SUPER:	/* units are 125us */
+			/* Handle up to 2^(16-1) microframes */
+			if (urb->interval > (1 << 15))
+				return -EINVAL;
+			max = 1 << 15;
+			break;
+		case USB_SPEED_WIRELESS:
+			if (urb->interval > 16)
+				return -EINVAL;
+			break;
+		case USB_SPEED_HIGH:	/* units are microframes */
+			/* NOTE usb handles 2^15 */
+			if (urb->interval > (1024 * 8))
+				urb->interval = 1024 * 8;
+			max = 1024 * 8;
+			break;
+		case USB_SPEED_FULL:	/* units are frames/msec */
+		case USB_SPEED_LOW:
+			if (xfertype == USB_ENDPOINT_XFER_INT) {
+				if (urb->interval > 255)
+					return -EINVAL;
+				/* NOTE ohci only handles up to 32 */
+				max = 128;
+			} else {
+				if (urb->interval > 1024)
+					urb->interval = 1024;
+				/* NOTE usb and ohci handle up to 2^15 */
+				max = 1024;
+			}
+			break;
+		default:
+			return -EINVAL;
+		}
+		if (dev->speed != USB_SPEED_WIRELESS) {
+			/* Round down to a power of 2, no more than max */
+			urb->interval = min(max, 1 << ilog2(urb->interval));
+		}
+	}
+
+	return usb_hcd_submit_urb(urb, mem_flags);
 }
-EXPORT_SYMBOL_GPL (usb_submit_urb);
+EXPORT_SYMBOL_GPL(usb_submit_urb);
 
 /*-------------------------------------------------------------------*/
 
 /**
  * usb_unlink_urb - abort/cancel a transfer request for an endpoint
  * @urb: pointer to urb describing a previously submitted request,
- *  may be NULL
+ *	may be NULL
  *
  * This routine cancels an in-progress request.  URBs complete only once
  * per submission, and may be canceled only once per submission.
@@ -581,22 +579,22 @@ EXPORT_SYMBOL_GPL (usb_submit_urb);
  * is quite likely that the status stage of the transfer will not take
  * place.
  */
-int usb_unlink_urb (struct urb * urb)
+int usb_unlink_urb(struct urb *urb)
 {
-  if (!urb)
-  { return -EINVAL; }
-  if (!urb->dev)
-  { return -ENODEV; }
-  if (!urb->ep)
-  { return -EIDRM; }
-  return usb_hcd_unlink_urb (urb, -ECONNRESET);
+	if (!urb)
+		return -EINVAL;
+	if (!urb->dev)
+		return -ENODEV;
+	if (!urb->ep)
+		return -EIDRM;
+	return usb_hcd_unlink_urb(urb, -ECONNRESET);
 }
-EXPORT_SYMBOL_GPL (usb_unlink_urb);
+EXPORT_SYMBOL_GPL(usb_unlink_urb);
 
 /**
  * usb_kill_urb - cancel a transfer request and wait for it to finish
  * @urb: pointer to URB describing a previously submitted request,
- *  may be NULL
+ *	may be NULL
  *
  * This routine cancels an in-progress request.  It is guaranteed that
  * upon return all completion handlers will have finished and the URB
@@ -620,24 +618,24 @@ EXPORT_SYMBOL_GPL (usb_unlink_urb);
  * This routine should not be called by a driver after its disconnect
  * method has returned.
  */
-void usb_kill_urb (struct urb * urb)
+void usb_kill_urb(struct urb *urb)
 {
-  might_sleep();
-  if (! (urb && urb->dev && urb->ep) )
-  { return; }
-  atomic_inc (&urb->reject);
-  
-  usb_hcd_unlink_urb (urb, -ENOENT);
-  wait_event (usb_kill_urb_queue, atomic_read (&urb->use_count) == 0);
-  
-  atomic_dec (&urb->reject);
+	might_sleep();
+	if (!(urb && urb->dev && urb->ep))
+		return;
+	atomic_inc(&urb->reject);
+
+	usb_hcd_unlink_urb(urb, -ENOENT);
+	wait_event(usb_kill_urb_queue, atomic_read(&urb->use_count) == 0);
+
+	atomic_dec(&urb->reject);
 }
-EXPORT_SYMBOL_GPL (usb_kill_urb);
+EXPORT_SYMBOL_GPL(usb_kill_urb);
 
 /**
  * usb_poison_urb - reliably kill a transfer and prevent further use of an URB
  * @urb: pointer to URB describing a previously submitted request,
- *  may be NULL
+ *	may be NULL
  *
  * This routine cancels an in-progress request.  It is guaranteed that
  * upon return all completion handlers will have finished and the URB
@@ -661,26 +659,26 @@ EXPORT_SYMBOL_GPL (usb_kill_urb);
  * This routine should not be called by a driver after its disconnect
  * method has returned.
  */
-void usb_poison_urb (struct urb * urb)
+void usb_poison_urb(struct urb *urb)
 {
-  might_sleep();
-  if (! (urb && urb->dev && urb->ep) )
-  { return; }
-  atomic_inc (&urb->reject);
-  
-  usb_hcd_unlink_urb (urb, -ENOENT);
-  wait_event (usb_kill_urb_queue, atomic_read (&urb->use_count) == 0);
-}
-EXPORT_SYMBOL_GPL (usb_poison_urb);
+	might_sleep();
+	if (!(urb && urb->dev && urb->ep))
+		return;
+	atomic_inc(&urb->reject);
 
-void usb_unpoison_urb (struct urb * urb)
-{
-  if (!urb)
-  { return; }
-  
-  atomic_dec (&urb->reject);
+	usb_hcd_unlink_urb(urb, -ENOENT);
+	wait_event(usb_kill_urb_queue, atomic_read(&urb->use_count) == 0);
 }
-EXPORT_SYMBOL_GPL (usb_unpoison_urb);
+EXPORT_SYMBOL_GPL(usb_poison_urb);
+
+void usb_unpoison_urb(struct urb *urb)
+{
+	if (!urb)
+		return;
+
+	atomic_dec(&urb->reject);
+}
+EXPORT_SYMBOL_GPL(usb_unpoison_urb);
 
 /**
  * usb_block_urb - reliably prevent further use of an URB
@@ -694,14 +692,14 @@ EXPORT_SYMBOL_GPL (usb_unpoison_urb);
  * particular, when a driver calls this routine, it must insure that the
  * completion handler cannot deallocate the URB.
  */
-void usb_block_urb (struct urb * urb)
+void usb_block_urb(struct urb *urb)
 {
-  if (!urb)
-  { return; }
-  
-  atomic_inc (&urb->reject);
+	if (!urb)
+		return;
+
+	atomic_inc(&urb->reject);
 }
-EXPORT_SYMBOL_GPL (usb_block_urb);
+EXPORT_SYMBOL_GPL(usb_block_urb);
 
 /**
  * usb_kill_anchored_urbs - cancel transfer requests en masse
@@ -713,25 +711,25 @@ EXPORT_SYMBOL_GPL (usb_block_urb);
  * This routine should not be called by a driver after its disconnect
  * method has returned.
  */
-void usb_kill_anchored_urbs (struct usb_anchor * anchor)
+void usb_kill_anchored_urbs(struct usb_anchor *anchor)
 {
-  struct urb * victim;
-  
-  spin_lock_irq (&anchor->lock);
-  while (!list_empty (&anchor->urb_list) ) {
-    victim = list_entry (anchor->urb_list.prev, struct urb,
-                         anchor_list);
-    /* we must make sure the URB isn't freed before we kill it*/
-    usb_get_urb (victim);
-    spin_unlock_irq (&anchor->lock);
-    /* this will unanchor the URB */
-    usb_kill_urb (victim);
-    usb_put_urb (victim);
-    spin_lock_irq (&anchor->lock);
-  }
-  spin_unlock_irq (&anchor->lock);
+	struct urb *victim;
+
+	spin_lock_irq(&anchor->lock);
+	while (!list_empty(&anchor->urb_list)) {
+		victim = list_entry(anchor->urb_list.prev, struct urb,
+				    anchor_list);
+		/* we must make sure the URB isn't freed before we kill it*/
+		usb_get_urb(victim);
+		spin_unlock_irq(&anchor->lock);
+		/* this will unanchor the URB */
+		usb_kill_urb(victim);
+		usb_put_urb(victim);
+		spin_lock_irq(&anchor->lock);
+	}
+	spin_unlock_irq(&anchor->lock);
 }
-EXPORT_SYMBOL_GPL (usb_kill_anchored_urbs);
+EXPORT_SYMBOL_GPL(usb_kill_anchored_urbs);
 
 
 /**
@@ -745,26 +743,26 @@ EXPORT_SYMBOL_GPL (usb_kill_anchored_urbs);
  * This routine should not be called by a driver after its disconnect
  * method has returned.
  */
-void usb_poison_anchored_urbs (struct usb_anchor * anchor)
+void usb_poison_anchored_urbs(struct usb_anchor *anchor)
 {
-  struct urb * victim;
-  
-  spin_lock_irq (&anchor->lock);
-  anchor->poisoned = 1;
-  while (!list_empty (&anchor->urb_list) ) {
-    victim = list_entry (anchor->urb_list.prev, struct urb,
-                         anchor_list);
-    /* we must make sure the URB isn't freed before we kill it*/
-    usb_get_urb (victim);
-    spin_unlock_irq (&anchor->lock);
-    /* this will unanchor the URB */
-    usb_poison_urb (victim);
-    usb_put_urb (victim);
-    spin_lock_irq (&anchor->lock);
-  }
-  spin_unlock_irq (&anchor->lock);
+	struct urb *victim;
+
+	spin_lock_irq(&anchor->lock);
+	anchor->poisoned = 1;
+	while (!list_empty(&anchor->urb_list)) {
+		victim = list_entry(anchor->urb_list.prev, struct urb,
+				    anchor_list);
+		/* we must make sure the URB isn't freed before we kill it*/
+		usb_get_urb(victim);
+		spin_unlock_irq(&anchor->lock);
+		/* this will unanchor the URB */
+		usb_poison_urb(victim);
+		usb_put_urb(victim);
+		spin_lock_irq(&anchor->lock);
+	}
+	spin_unlock_irq(&anchor->lock);
 }
-EXPORT_SYMBOL_GPL (usb_poison_anchored_urbs);
+EXPORT_SYMBOL_GPL(usb_poison_anchored_urbs);
 
 /**
  * usb_unpoison_anchored_urbs - let an anchor be used successfully again
@@ -773,19 +771,19 @@ EXPORT_SYMBOL_GPL (usb_poison_anchored_urbs);
  * Reverses the effect of usb_poison_anchored_urbs
  * the anchor can be used normally after it returns
  */
-void usb_unpoison_anchored_urbs (struct usb_anchor * anchor)
+void usb_unpoison_anchored_urbs(struct usb_anchor *anchor)
 {
-  unsigned long flags;
-  struct urb * lazarus;
-  
-  spin_lock_irqsave (&anchor->lock, flags);
-  list_for_each_entry (lazarus, &anchor->urb_list, anchor_list) {
-    usb_unpoison_urb (lazarus);
-  }
-  anchor->poisoned = 0;
-  spin_unlock_irqrestore (&anchor->lock, flags);
+	unsigned long flags;
+	struct urb *lazarus;
+
+	spin_lock_irqsave(&anchor->lock, flags);
+	list_for_each_entry(lazarus, &anchor->urb_list, anchor_list) {
+		usb_unpoison_urb(lazarus);
+	}
+	anchor->poisoned = 0;
+	spin_unlock_irqrestore(&anchor->lock, flags);
 }
-EXPORT_SYMBOL_GPL (usb_unpoison_anchored_urbs);
+EXPORT_SYMBOL_GPL(usb_unpoison_anchored_urbs);
 /**
  * usb_unlink_anchored_urbs - asynchronously cancel transfer requests en masse
  * @anchor: anchor the requests are bound to
@@ -798,16 +796,16 @@ EXPORT_SYMBOL_GPL (usb_unpoison_anchored_urbs);
  * This routine should not be called by a driver after its disconnect
  * method has returned.
  */
-void usb_unlink_anchored_urbs (struct usb_anchor * anchor)
+void usb_unlink_anchored_urbs(struct usb_anchor *anchor)
 {
-  struct urb * victim;
-  
-  while ( (victim = usb_get_from_anchor (anchor) ) != NULL) {
-    usb_unlink_urb (victim);
-    usb_put_urb (victim);
-  }
+	struct urb *victim;
+
+	while ((victim = usb_get_from_anchor(anchor)) != NULL) {
+		usb_unlink_urb(victim);
+		usb_put_urb(victim);
+	}
 }
-EXPORT_SYMBOL_GPL (usb_unlink_anchored_urbs);
+EXPORT_SYMBOL_GPL(usb_unlink_anchored_urbs);
 
 /**
  * usb_wait_anchor_empty_timeout - wait for an anchor to be unused
@@ -817,13 +815,13 @@ EXPORT_SYMBOL_GPL (usb_unlink_anchored_urbs);
  * Call this is you want to be sure all an anchor's
  * URBs have finished
  */
-int usb_wait_anchor_empty_timeout (struct usb_anchor * anchor,
-                                   unsigned int timeout)
+int usb_wait_anchor_empty_timeout(struct usb_anchor *anchor,
+				  unsigned int timeout)
 {
-  return wait_event_timeout (anchor->wait, list_empty (&anchor->urb_list),
-                             msecs_to_jiffies (timeout) );
+	return wait_event_timeout(anchor->wait, list_empty(&anchor->urb_list),
+				  msecs_to_jiffies(timeout));
 }
-EXPORT_SYMBOL_GPL (usb_wait_anchor_empty_timeout);
+EXPORT_SYMBOL_GPL(usb_wait_anchor_empty_timeout);
 
 /**
  * usb_get_from_anchor - get an anchor's oldest urb
@@ -832,27 +830,26 @@ EXPORT_SYMBOL_GPL (usb_wait_anchor_empty_timeout);
  * this will take the oldest urb from an anchor,
  * unanchor and return it
  */
-struct urb * usb_get_from_anchor (struct usb_anchor * anchor)
+struct urb *usb_get_from_anchor(struct usb_anchor *anchor)
 {
-  struct urb * victim;
-  unsigned long flags;
-  
-  spin_lock_irqsave (&anchor->lock, flags);
-  if (!list_empty (&anchor->urb_list) ) {
-    victim = list_entry (anchor->urb_list.next, struct urb,
-                         anchor_list);
-    usb_get_urb (victim);
-    __usb_unanchor_urb (victim, anchor);
-  }
-  else {
-    victim = NULL;
-  }
-  spin_unlock_irqrestore (&anchor->lock, flags);
-  
-  return victim;
+	struct urb *victim;
+	unsigned long flags;
+
+	spin_lock_irqsave(&anchor->lock, flags);
+	if (!list_empty(&anchor->urb_list)) {
+		victim = list_entry(anchor->urb_list.next, struct urb,
+				    anchor_list);
+		usb_get_urb(victim);
+		__usb_unanchor_urb(victim, anchor);
+	} else {
+		victim = NULL;
+	}
+	spin_unlock_irqrestore(&anchor->lock, flags);
+
+	return victim;
 }
 
-EXPORT_SYMBOL_GPL (usb_get_from_anchor);
+EXPORT_SYMBOL_GPL(usb_get_from_anchor);
 
 /**
  * usb_scuttle_anchored_urbs - unanchor all an anchor's urbs
@@ -860,21 +857,21 @@ EXPORT_SYMBOL_GPL (usb_get_from_anchor);
  *
  * use this to get rid of all an anchor's urbs
  */
-void usb_scuttle_anchored_urbs (struct usb_anchor * anchor)
+void usb_scuttle_anchored_urbs(struct usb_anchor *anchor)
 {
-  struct urb * victim;
-  unsigned long flags;
-  
-  spin_lock_irqsave (&anchor->lock, flags);
-  while (!list_empty (&anchor->urb_list) ) {
-    victim = list_entry (anchor->urb_list.prev, struct urb,
-                         anchor_list);
-    __usb_unanchor_urb (victim, anchor);
-  }
-  spin_unlock_irqrestore (&anchor->lock, flags);
+	struct urb *victim;
+	unsigned long flags;
+
+	spin_lock_irqsave(&anchor->lock, flags);
+	while (!list_empty(&anchor->urb_list)) {
+		victim = list_entry(anchor->urb_list.prev, struct urb,
+				    anchor_list);
+		__usb_unanchor_urb(victim, anchor);
+	}
+	spin_unlock_irqrestore(&anchor->lock, flags);
 }
 
-EXPORT_SYMBOL_GPL (usb_scuttle_anchored_urbs);
+EXPORT_SYMBOL_GPL(usb_scuttle_anchored_urbs);
 
 /**
  * usb_anchor_empty - is an anchor empty
@@ -882,10 +879,10 @@ EXPORT_SYMBOL_GPL (usb_scuttle_anchored_urbs);
  *
  * returns 1 if the anchor has no urbs associated with it
  */
-int usb_anchor_empty (struct usb_anchor * anchor)
+int usb_anchor_empty(struct usb_anchor *anchor)
 {
-  return list_empty (&anchor->urb_list);
+	return list_empty(&anchor->urb_list);
 }
 
-EXPORT_SYMBOL_GPL (usb_anchor_empty);
+EXPORT_SYMBOL_GPL(usb_anchor_empty);
 

@@ -9,7 +9,7 @@
 #ifndef _MACH_PRIMA2_PM_H_
 #define _MACH_PRIMA2_PM_H_
 
-#define SIRFSOC_PWR_SLEEPFORCE    0x01
+#define SIRFSOC_PWR_SLEEPFORCE		0x01
 
 #define SIRFSOC_SLEEP_MODE_MASK         0x3
 #define SIRFSOC_DEEP_SLEEP_MODE         0x1
@@ -22,7 +22,7 @@
 #define SIRFSOC_PWRC_SCRATCH_PAD2       0x1C
 
 #ifndef __ASSEMBLY__
-extern int sirfsoc_finish_suspend (unsigned long);
+extern int sirfsoc_finish_suspend(unsigned long);
 #endif
 
 #endif

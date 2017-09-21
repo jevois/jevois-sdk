@@ -16,16 +16,16 @@
 #define _TEGRA_USB_H_
 
 enum tegra_usb_operating_modes {
-  TEGRA_USB_DEVICE,
-  TEGRA_USB_HOST,
-  TEGRA_USB_OTG,
+	TEGRA_USB_DEVICE,
+	TEGRA_USB_HOST,
+	TEGRA_USB_OTG,
 };
 
 struct tegra_ehci_platform_data {
-  enum tegra_usb_operating_modes operating_mode;
-  /* power down the phy on bus suspend */
-  int power_down_on_bus_suspend;
-  void * phy_config;
+	enum tegra_usb_operating_modes operating_mode;
+	/* power down the phy on bus suspend */
+	int power_down_on_bus_suspend;
+	void *phy_config;
 };
 
 #endif /* _TEGRA_USB_H_ */

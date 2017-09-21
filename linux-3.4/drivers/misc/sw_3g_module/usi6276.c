@@ -13,7 +13,7 @@
 /*
 *******************************************************************************
 *
-*
+*                                   
 *
 * ģ���ڲ�Ĭ��״̬:
 * vbat  : ��
@@ -78,29 +78,29 @@
 
 #define DRIVER_DESC             SW_DRIVER_NAME
 #define DRIVER_VERSION          "1.0"
-#define DRIVER_AUTHOR     "Javen Xu"
+#define DRIVER_AUTHOR			"Javen Xu"
 
 #define MODEM_NAME              "usi6276"
 
 static struct sw_modem g_usi6276;
 static char g_usi6276_name[] = MODEM_NAME;
 
-static void do_wake (struct work_struct * work);
+static void do_wake(struct work_struct *work);
 
-static DECLARE_DELAYED_WORK (wake_work, do_wake);
+static DECLARE_DELAYED_WORK(wake_work, do_wake);
 
 
 
-void usi6276_reset (struct sw_modem * modem)
+void usi6276_reset(struct sw_modem *modem)
 {
-  modem_dbg ("reset %s modem\n", modem->name);
-  
-  modem_reset (modem, 0);
-  sw_module_mdelay (100);
-  modem_reset (modem, 1);
-  sw_module_mdelay (10);
-  
-  return;
+    modem_dbg("reset %s modem\n", modem->name);
+
+	modem_reset(modem, 0);
+    sw_module_mdelay(100);
+	modem_reset(modem, 1);
+	sw_module_mdelay(10);
+
+    return;
 }
 
 /*
@@ -111,27 +111,26 @@ void usi6276_reset (struct sw_modem * modem)
 *
 *******************************************************************************
 */
-static void usi6276_sleep (struct sw_modem * modem, u32 sleep)
+static void usi6276_sleep(struct sw_modem *modem, u32 sleep)
 {
-  modem_dbg ("%s modem %s\n", modem->name, (sleep ? "sleep" : "wakeup") );
-  
-  if (sleep) {
-    modem_reset (modem, 0);
-  }
-  else {
-    modem_reset (modem, 1);
-  }
-  
-  return;
+    modem_dbg("%s modem %s\n", modem->name, (sleep ? "sleep" : "wakeup"));
+
+    if(sleep){
+        modem_reset(modem, 0);
+    }else{
+        modem_reset(modem, 1);
+    }
+
+    return;
 }
 
-static void usi6276_rf_disable (struct sw_modem * modem, u32 disable)
+static void usi6276_rf_disable(struct sw_modem *modem, u32 disable)
 {
-  modem_dbg ("set %s modem rf %s\n", modem->name, (disable ? "disable" : "enable") );
-  
-  modem_rf_disable (modem, disable);
-  
-  return;
+    modem_dbg("set %s modem rf %s\n", modem->name, (disable ? "disable" : "enable"));
+
+    modem_rf_disable(modem, disable);
+
+    return;
 }
 
 /*
@@ -153,162 +152,161 @@ static void usi6276_rf_disable (struct sw_modem * modem, u32 disable)
 *******************************************************************************
 */
 
-void usi6276_power (struct sw_modem * modem, u32 on)
+void usi6276_power(struct sw_modem *modem, u32 on)
 {
-  modem_dbg ("set %s modem power %s\n", modem->name, (on ? "on" : "off") );
-  
-  if (on) {
-    /* default */
-    modem_dldo_on_off (modem, 1);
-    
-    modem_power_on_off (modem, 0);
-    sw_module_mdelay (5);
-    modem_reset (modem, 1);
-    sw_module_mdelay (20);
-    modem_power_on_off (modem, 1);
-    
-  }
-  else {
-    modem_power_on_off (modem, 0);
-    sw_module_mdelay (5);
-    modem_reset (modem, 0);
-    sw_module_mdelay (20);
-    modem_power_on_off (modem, 1);
-    
-    modem_dldo_on_off (modem, 0);
-  }
-  return;
-}
+	modem_dbg("set %s modem power %s\n", modem->name, (on ? "on" : "off"));	
 
+    if(on){
+		/* default */
+		modem_dldo_on_off(modem, 1);
+		
+		modem_power_on_off(modem, 0);
+		sw_module_mdelay(5);
+		modem_reset(modem,1);
+		sw_module_mdelay(20);
+		modem_power_on_off(modem, 1);
 
-static int usi6276_start (struct sw_modem * mdev)
-{
-  int ret = 0;
-  modem_dbg ("usi6276_start: start ======\n");
-  if (!mdev->start) {
-    ret = modem_irq_init (mdev, IRQF_TRIGGER_FALLING);
-    if (ret != 0) {
-      modem_err ("err: sw_module_irq_init failed\n");
-      return -1;
+    }else{
+    	modem_power_on_off(modem, 0);
+		sw_module_mdelay(5);
+		modem_reset(modem,0);
+		sw_module_mdelay(20);
+		modem_power_on_off(modem, 1);
+		
+		modem_dldo_on_off(modem, 0);
     }
-    modem_dbg ("before power on ======\n");
-    usi6276_power (mdev, 1);
-    mdev->start = 1;
-  }
-  
-  return 0;
+    return;
 }
 
-static int usi6276_stop (struct sw_modem * mdev)
+
+static int usi6276_start(struct sw_modem *mdev)
 {
-  if (mdev->start) {
-    usi6276_power (mdev, 0);
-    modem_irq_exit (mdev);
-    mdev->start = 0;
-  }
-  
-  return 0;
+    int ret = 0;
+	modem_dbg("usi6276_start: start ======\n");
+    if(!mdev->start){
+        ret = modem_irq_init(mdev, IRQF_TRIGGER_FALLING);
+        if(ret != 0){
+           modem_err("err: sw_module_irq_init failed\n");
+           return -1;
+        }
+		modem_dbg("before power on ======\n");
+        usi6276_power(mdev, 1);
+        mdev->start = 1;
+    }
+
+    return 0;
 }
 
-static void do_wake (struct work_struct * work)
+static int usi6276_stop(struct sw_modem *mdev)
 {
-  printk ("do_wake\n");
-  usi6276_sleep (&g_usi6276, 0);
-  
+    if(mdev->start){
+        usi6276_power(mdev, 0);
+        modem_irq_exit(mdev);
+        mdev->start = 0;
+    }
+
+    return 0;
 }
 
-static int usi6276_suspend (struct sw_modem * mdev)
+static void do_wake(struct work_struct *work)
 {
-  usi6276_sleep (mdev, 1);
-  
-  return 0;
+    printk("do_wake\n");
+    usi6276_sleep(&g_usi6276, 0);
+
 }
 
-static int usi6276_resume (struct sw_modem * mdev)
+static int usi6276_suspend(struct sw_modem *mdev)
 {
-  schedule_delayed_work (&wake_work, 3 * HZ);
-  
-  return 0;
+    usi6276_sleep(mdev, 1);
+
+    return 0;
+}
+
+static int usi6276_resume(struct sw_modem *mdev)
+{
+	schedule_delayed_work(&wake_work, 3*HZ); 
+
+    return 0;
 }
 
 static struct sw_modem_ops usi6276_ops = {
-  .power          = usi6276_power,
-  .reset          = usi6276_reset,
-  .sleep          = usi6276_sleep,
-  .rf_disable     = usi6276_rf_disable,
-  
-  .start          = usi6276_start,
-  .stop           = usi6276_stop,
-  
-  .early_suspend  = modem_early_suspend,
-  .early_resume   = modem_early_resume,
-  
-  .suspend        = usi6276_suspend,
-  .resume         = usi6276_resume,
+	.power          = usi6276_power,
+	.reset          = usi6276_reset,
+	.sleep          = usi6276_sleep,
+	.rf_disable     = usi6276_rf_disable,
+
+	.start          = usi6276_start,
+	.stop           = usi6276_stop,
+
+	.early_suspend  = modem_early_suspend,
+	.early_resume   = modem_early_resume,
+
+	.suspend        = usi6276_suspend,
+	.resume         = usi6276_resume,
 };
 
 static struct platform_device usi6276_device = {
-  .name       = SW_DRIVER_NAME,
-  .id         = -1,
-  
-  .dev = {
-    .platform_data  = &g_usi6276,
-  },
+	.name				= SW_DRIVER_NAME,
+	.id					= -1,
+
+	.dev = {
+		.platform_data  = &g_usi6276,
+	},
 };
 
-static int __init usi6276_init (void)
+static int __init usi6276_init(void)
 {
-  int ret = 0;
-  
-  memset (&g_usi6276, 0, sizeof (struct sw_modem) );
-  
-  /* gpio */
-  ret = modem_get_config (&g_usi6276);
-  if (ret != 0) {
-    modem_err ("err: usi6276_get_config failed\n");
-    goto get_config_failed;
-  }
-  
-  if (g_usi6276.used == 0) {
-    modem_err ("usi6276 is not used\n");
-    goto get_config_failed;
-  }
-  
-  ret = modem_pin_init (&g_usi6276);
-  if (ret != 0) {
-    modem_err ("err: usi6276_pin_init failed\n");
-    goto pin_init_failed;
-  }
-  
-  /* ��ֹ�ű���ģ������bb_name���������Ʋ�һ�£����ֻʹ���������� */
-  strcpy (g_usi6276.name, g_usi6276_name);
-  g_usi6276.ops = &usi6276_ops;
-  
-  modem_dbg ("%s modem init\n", g_usi6276.name);
-  
-  platform_device_register (&usi6276_device);
-  
-  return 0;
+    int ret = 0;
+
+    memset(&g_usi6276, 0, sizeof(struct sw_modem));
+
+    /* gpio */
+    ret = modem_get_config(&g_usi6276);
+    if(ret != 0){
+        modem_err("err: usi6276_get_config failed\n");
+        goto get_config_failed;
+    }
+
+    if(g_usi6276.used == 0){
+        modem_err("usi6276 is not used\n");
+        goto get_config_failed;
+    }
+
+    ret = modem_pin_init(&g_usi6276);
+    if(ret != 0){
+       modem_err("err: usi6276_pin_init failed\n");
+       goto pin_init_failed;
+    }
+
+    /* ��ֹ�ű���ģ������bb_name���������Ʋ�һ�£����ֻʹ���������� */
+        strcpy(g_usi6276.name, g_usi6276_name);
+    g_usi6276.ops = &usi6276_ops;
+
+    modem_dbg("%s modem init\n", g_usi6276.name);
+
+    platform_device_register(&usi6276_device);
+
+	return 0;
 pin_init_failed:
 
 get_config_failed:
 
-  modem_dbg ("%s modem init failed\n", g_usi6276.name);
-  
-  return -1;
+    modem_dbg("%s modem init failed\n", g_usi6276.name);
+
+	return -1;
 }
 
-static void __exit usi6276_exit (void)
+static void __exit usi6276_exit(void)
 {
-  platform_device_unregister (&usi6276_device);
+    platform_device_unregister(&usi6276_device);
 }
 
-late_initcall (usi6276_init);
-module_exit (usi6276_exit);
+late_initcall(usi6276_init);
+module_exit(usi6276_exit);
 
-MODULE_AUTHOR (DRIVER_AUTHOR);
-MODULE_DESCRIPTION (MODEM_NAME);
-MODULE_VERSION (DRIVER_VERSION);
-MODULE_LICENSE ("GPL");
+MODULE_AUTHOR(DRIVER_AUTHOR);
+MODULE_DESCRIPTION(MODEM_NAME);
+MODULE_VERSION(DRIVER_VERSION);
+MODULE_LICENSE("GPL");
 
 

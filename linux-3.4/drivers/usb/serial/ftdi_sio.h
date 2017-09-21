@@ -23,24 +23,24 @@
  */
 
 /* Commands */
-#define FTDI_SIO_RESET      0 /* Reset the port */
-#define FTDI_SIO_MODEM_CTRL   1 /* Set the modem control register */
-#define FTDI_SIO_SET_FLOW_CTRL    2 /* Set flow control register */
-#define FTDI_SIO_SET_BAUD_RATE    3 /* Set baud rate */
-#define FTDI_SIO_SET_DATA   4 /* Set the data characteristics of
-               the port */
-#define FTDI_SIO_GET_MODEM_STATUS 5 /* Retrieve current value of modem
-               status register */
-#define FTDI_SIO_SET_EVENT_CHAR   6 /* Set the event character */
-#define FTDI_SIO_SET_ERROR_CHAR   7 /* Set the error character */
-#define FTDI_SIO_SET_LATENCY_TIMER  9 /* Set the latency timer */
-#define FTDI_SIO_GET_LATENCY_TIMER  10 /* Get the latency timer */
+#define FTDI_SIO_RESET			0 /* Reset the port */
+#define FTDI_SIO_MODEM_CTRL		1 /* Set the modem control register */
+#define FTDI_SIO_SET_FLOW_CTRL		2 /* Set flow control register */
+#define FTDI_SIO_SET_BAUD_RATE		3 /* Set baud rate */
+#define FTDI_SIO_SET_DATA		4 /* Set the data characteristics of
+					     the port */
+#define FTDI_SIO_GET_MODEM_STATUS	5 /* Retrieve current value of modem
+					     status register */
+#define FTDI_SIO_SET_EVENT_CHAR		6 /* Set the event character */
+#define FTDI_SIO_SET_ERROR_CHAR		7 /* Set the error character */
+#define FTDI_SIO_SET_LATENCY_TIMER	9 /* Set the latency timer */
+#define FTDI_SIO_GET_LATENCY_TIMER	10 /* Get the latency timer */
 
 /* Interface indices for FT2232, FT2232H and FT4232H devices */
-#define INTERFACE_A   1
-#define INTERFACE_B   2
-#define INTERFACE_C   3
-#define INTERFACE_D   4
+#define INTERFACE_A		1
+#define INTERFACE_B		2
+#define INTERFACE_C		3
+#define INTERFACE_D		4
 
 
 /*
@@ -54,11 +54,11 @@
  */
 
 /* Port Identifier Table */
-#define PIT_DEFAULT   0 /* SIOA */
-#define PIT_SIOA    1 /* SIOA */
+#define PIT_DEFAULT		0 /* SIOA */
+#define PIT_SIOA		1 /* SIOA */
 /* The device this driver is tested with one has only one port */
-#define PIT_SIOB    2 /* SIOB */
-#define PIT_PARALLEL    3 /* Parallel */
+#define PIT_SIOB		2 /* SIOB */
+#define PIT_PARALLEL		3 /* Parallel */
 
 /* FTDI_SIO_RESET */
 #define FTDI_SIO_RESET_REQUEST FTDI_SIO_RESET
@@ -150,45 +150,45 @@
  */
 
 enum ftdi_chip_type {
-  SIO = 1,
-  FT8U232AM = 2,
-  FT232BM = 3,
-  FT2232C = 4,
-  FT232RL = 5,
-  FT2232H = 6,
-  FT4232H = 7,
-  FT232H  = 8,
-  FTX     = 9,
+	SIO = 1,
+	FT8U232AM = 2,
+	FT232BM = 3,
+	FT2232C = 4,
+	FT232RL = 5,
+	FT2232H = 6,
+	FT4232H = 7,
+	FT232H  = 8,
+	FTX     = 9,
 };
 
 enum ftdi_sio_baudrate {
-  ftdi_sio_b300 = 0,
-  ftdi_sio_b600 = 1,
-  ftdi_sio_b1200 = 2,
-  ftdi_sio_b2400 = 3,
-  ftdi_sio_b4800 = 4,
-  ftdi_sio_b9600 = 5,
-  ftdi_sio_b19200 = 6,
-  ftdi_sio_b38400 = 7,
-  ftdi_sio_b57600 = 8,
-  ftdi_sio_b115200 = 9
+	ftdi_sio_b300 = 0,
+	ftdi_sio_b600 = 1,
+	ftdi_sio_b1200 = 2,
+	ftdi_sio_b2400 = 3,
+	ftdi_sio_b4800 = 4,
+	ftdi_sio_b9600 = 5,
+	ftdi_sio_b19200 = 6,
+	ftdi_sio_b38400 = 7,
+	ftdi_sio_b57600 = 8,
+	ftdi_sio_b115200 = 9
 };
 
 /*
  * The ftdi_8U232AM_xxMHz_byyy constants have been removed. The encoded divisor
  * values are calculated internally.
  */
-#define FTDI_SIO_SET_DATA_REQUEST FTDI_SIO_SET_DATA
-#define FTDI_SIO_SET_DATA_REQUEST_TYPE  0x40
-#define FTDI_SIO_SET_DATA_PARITY_NONE (0x0 << 8)
-#define FTDI_SIO_SET_DATA_PARITY_ODD  (0x1 << 8)
-#define FTDI_SIO_SET_DATA_PARITY_EVEN (0x2 << 8)
-#define FTDI_SIO_SET_DATA_PARITY_MARK (0x3 << 8)
-#define FTDI_SIO_SET_DATA_PARITY_SPACE  (0x4 << 8)
-#define FTDI_SIO_SET_DATA_STOP_BITS_1 (0x0 << 11)
-#define FTDI_SIO_SET_DATA_STOP_BITS_15  (0x1 << 11)
-#define FTDI_SIO_SET_DATA_STOP_BITS_2 (0x2 << 11)
-#define FTDI_SIO_SET_BREAK    (0x1 << 14)
+#define FTDI_SIO_SET_DATA_REQUEST	FTDI_SIO_SET_DATA
+#define FTDI_SIO_SET_DATA_REQUEST_TYPE	0x40
+#define FTDI_SIO_SET_DATA_PARITY_NONE	(0x0 << 8)
+#define FTDI_SIO_SET_DATA_PARITY_ODD	(0x1 << 8)
+#define FTDI_SIO_SET_DATA_PARITY_EVEN	(0x2 << 8)
+#define FTDI_SIO_SET_DATA_PARITY_MARK	(0x3 << 8)
+#define FTDI_SIO_SET_DATA_PARITY_SPACE	(0x4 << 8)
+#define FTDI_SIO_SET_DATA_STOP_BITS_1	(0x0 << 11)
+#define FTDI_SIO_SET_DATA_STOP_BITS_15	(0x1 << 11)
+#define FTDI_SIO_SET_DATA_STOP_BITS_2	(0x2 << 11)
+#define FTDI_SIO_SET_BREAK		(0x1 << 14)
 /* FTDI_SIO_SET_DATA */
 
 /*
@@ -438,66 +438,66 @@ enum ftdi_sio_baudrate {
  *
  *  Device Descriptor
  *
- * Offset Field   Size  Value Description
- * 0  bLength   1 0x12  Size of descriptor in bytes
- * 1  bDescriptorType 1 0x01  DEVICE Descriptor Type
- * 2  bcdUSB    2 0x0110  USB Spec Release Number
- * 4  bDeviceClass  1 0x00  Class Code
- * 5  bDeviceSubClass 1 0x00  SubClass Code
- * 6  bDeviceProtocol 1 0x00  Protocol Code
- * 7  bMaxPacketSize0 1 0x08  Maximum packet size for endpoint 0
- * 8  idVendor  2 0x0403  Vendor ID
- * 10 idProduct 2 0x8372  Product ID (FTDI_SIO_PID)
- * 12 bcdDevice 2 0x0001  Device release number
- * 14 iManufacturer 1 0x01  Index of man. string desc
- * 15 iProduct  1 0x02  Index of prod string desc
- * 16 iSerialNumber 1 0x02  Index of serial nmr string desc
- * 17 bNumConfigurations 1    0x01  Number of possible configurations
+ * Offset	Field		Size	Value	Description
+ * 0	bLength		1	0x12	Size of descriptor in bytes
+ * 1	bDescriptorType	1	0x01	DEVICE Descriptor Type
+ * 2	bcdUSB		2	0x0110	USB Spec Release Number
+ * 4	bDeviceClass	1	0x00	Class Code
+ * 5	bDeviceSubClass	1	0x00	SubClass Code
+ * 6	bDeviceProtocol	1	0x00	Protocol Code
+ * 7	bMaxPacketSize0 1	0x08	Maximum packet size for endpoint 0
+ * 8	idVendor	2	0x0403	Vendor ID
+ * 10	idProduct	2	0x8372	Product ID (FTDI_SIO_PID)
+ * 12	bcdDevice	2	0x0001	Device release number
+ * 14	iManufacturer	1	0x01	Index of man. string desc
+ * 15	iProduct	1	0x02	Index of prod string desc
+ * 16	iSerialNumber	1	0x02	Index of serial nmr string desc
+ * 17	bNumConfigurations 1    0x01	Number of possible configurations
  *
  * Configuration Descriptor
  *
- * Offset Field     Size  Value
- * 0  bLength     1 0x09  Size of descriptor in bytes
- * 1  bDescriptorType   1 0x02  CONFIGURATION Descriptor Type
- * 2  wTotalLength    2 0x0020  Total length of data
- * 4  bNumInterfaces    1 0x01  Number of interfaces supported
- * 5  bConfigurationValue 1 0x01  Argument for SetCOnfiguration() req
- * 6  iConfiguration    1 0x02  Index of config string descriptor
- * 7  bmAttributes    1 0x20  Config characteristics Remote Wakeup
- * 8  MaxPower    1 0x1E  Max power consumption
+ * Offset	Field			Size	Value
+ * 0	bLength			1	0x09	Size of descriptor in bytes
+ * 1	bDescriptorType		1	0x02	CONFIGURATION Descriptor Type
+ * 2	wTotalLength		2	0x0020	Total length of data
+ * 4	bNumInterfaces		1	0x01	Number of interfaces supported
+ * 5	bConfigurationValue	1	0x01	Argument for SetCOnfiguration() req
+ * 6	iConfiguration		1	0x02	Index of config string descriptor
+ * 7	bmAttributes		1	0x20	Config characteristics Remote Wakeup
+ * 8	MaxPower		1	0x1E	Max power consumption
  *
  * Interface Descriptor
  *
- * Offset Field     Size  Value
- * 0  bLength     1 0x09  Size of descriptor in bytes
- * 1  bDescriptorType   1 0x04  INTERFACE Descriptor Type
- * 2  bInterfaceNumber  1 0x00  Number of interface
- * 3  bAlternateSetting 1 0x00  Value used to select alternate
- * 4  bNumEndpoints   1 0x02  Number of endpoints
- * 5  bInterfaceClass   1 0xFF  Class Code
- * 6  bInterfaceSubClass  1 0xFF  Subclass Code
- * 7  bInterfaceProtocol  1 0xFF  Protocol Code
- * 8  iInterface    1 0x02  Index of interface string description
+ * Offset	Field			Size	Value
+ * 0	bLength			1	0x09	Size of descriptor in bytes
+ * 1	bDescriptorType		1	0x04	INTERFACE Descriptor Type
+ * 2	bInterfaceNumber	1	0x00	Number of interface
+ * 3	bAlternateSetting	1	0x00	Value used to select alternate
+ * 4	bNumEndpoints		1	0x02	Number of endpoints
+ * 5	bInterfaceClass		1	0xFF	Class Code
+ * 6	bInterfaceSubClass	1	0xFF	Subclass Code
+ * 7	bInterfaceProtocol	1	0xFF	Protocol Code
+ * 8	iInterface		1	0x02	Index of interface string description
  *
  * IN Endpoint Descriptor
  *
- * Offset Field     Size  Value
- * 0  bLength     1 0x07  Size of descriptor in bytes
- * 1  bDescriptorType   1 0x05  ENDPOINT descriptor type
- * 2  bEndpointAddress  1 0x82  Address of endpoint
- * 3  bmAttributes    1 0x02  Endpoint attributes - Bulk
- * 4  bNumEndpoints   2 0x0040  maximum packet size
- * 5  bInterval   1 0x00  Interval for polling endpoint
+ * Offset	Field			Size	Value
+ * 0	bLength			1	0x07	Size of descriptor in bytes
+ * 1	bDescriptorType		1	0x05	ENDPOINT descriptor type
+ * 2	bEndpointAddress	1	0x82	Address of endpoint
+ * 3	bmAttributes		1	0x02	Endpoint attributes - Bulk
+ * 4	bNumEndpoints		2	0x0040	maximum packet size
+ * 5	bInterval		1	0x00	Interval for polling endpoint
  *
  * OUT Endpoint Descriptor
  *
- * Offset Field     Size  Value
- * 0  bLength     1 0x07  Size of descriptor in bytes
- * 1  bDescriptorType   1 0x05  ENDPOINT descriptor type
- * 2  bEndpointAddress  1 0x02  Address of endpoint
- * 3  bmAttributes    1 0x02  Endpoint attributes - Bulk
- * 4  bNumEndpoints   2 0x0040  maximum packet size
- * 5  bInterval   1 0x00  Interval for polling endpoint
+ * Offset	Field			Size	Value
+ * 0	bLength			1	0x07	Size of descriptor in bytes
+ * 1	bDescriptorType		1	0x05	ENDPOINT descriptor type
+ * 2	bEndpointAddress	1	0x02	Address of endpoint
+ * 3	bmAttributes		1	0x02	Endpoint attributes - Bulk
+ * 4	bNumEndpoints		2	0x0040	maximum packet size
+ * 5	bInterval		1	0x00	Interval for polling endpoint
  *
  * DATA FORMAT
  *
@@ -510,42 +510,42 @@ enum ftdi_sio_baudrate {
  *
  * Byte 0: Modem Status
  *
- * Offset Description
- * B0 Reserved - must be 1
- * B1 Reserved - must be 0
- * B2 Reserved - must be 0
- * B3 Reserved - must be 0
- * B4 Clear to Send (CTS)
- * B5 Data Set Ready (DSR)
- * B6 Ring Indicator (RI)
- * B7 Receive Line Signal Detect (RLSD)
+ * Offset	Description
+ * B0	Reserved - must be 1
+ * B1	Reserved - must be 0
+ * B2	Reserved - must be 0
+ * B3	Reserved - must be 0
+ * B4	Clear to Send (CTS)
+ * B5	Data Set Ready (DSR)
+ * B6	Ring Indicator (RI)
+ * B7	Receive Line Signal Detect (RLSD)
  *
  * Byte 1: Line Status
  *
- * Offset Description
- * B0 Data Ready (DR)
- * B1 Overrun Error (OE)
- * B2 Parity Error (PE)
- * B3 Framing Error (FE)
- * B4 Break Interrupt (BI)
- * B5 Transmitter Holding Register (THRE)
- * B6 Transmitter Empty (TEMT)
- * B7 Error in RCVR FIFO
+ * Offset	Description
+ * B0	Data Ready (DR)
+ * B1	Overrun Error (OE)
+ * B2	Parity Error (PE)
+ * B3	Framing Error (FE)
+ * B4	Break Interrupt (BI)
+ * B5	Transmitter Holding Register (THRE)
+ * B6	Transmitter Empty (TEMT)
+ * B7	Error in RCVR FIFO
  *
  */
-#define FTDI_RS0_CTS  (1 << 4)
-#define FTDI_RS0_DSR  (1 << 5)
-#define FTDI_RS0_RI (1 << 6)
-#define FTDI_RS0_RLSD (1 << 7)
+#define FTDI_RS0_CTS	(1 << 4)
+#define FTDI_RS0_DSR	(1 << 5)
+#define FTDI_RS0_RI	(1 << 6)
+#define FTDI_RS0_RLSD	(1 << 7)
 
-#define FTDI_RS_DR  1
-#define FTDI_RS_OE  (1<<1)
-#define FTDI_RS_PE  (1<<2)
-#define FTDI_RS_FE  (1<<3)
-#define FTDI_RS_BI  (1<<4)
-#define FTDI_RS_THRE  (1<<5)
-#define FTDI_RS_TEMT  (1<<6)
-#define FTDI_RS_FIFO  (1<<7)
+#define FTDI_RS_DR	1
+#define FTDI_RS_OE	(1<<1)
+#define FTDI_RS_PE	(1<<2)
+#define FTDI_RS_FE	(1<<3)
+#define FTDI_RS_BI	(1<<4)
+#define FTDI_RS_THRE	(1<<5)
+#define FTDI_RS_TEMT	(1<<6)
+#define FTDI_RS_FIFO	(1<<7)
 
 /*
  * OUT Endpoint
@@ -556,9 +556,9 @@ enum ftdi_sio_baudrate {
  *
  * Byte 0: Line Status
  *
- * Offset Description
- * B0 Reserved - must be 1
- * B1 Reserved - must be 0
- * B2..7  Length of message - (not including Byte 0)
+ * Offset	Description
+ * B0	Reserved - must be 1
+ * B1	Reserved - must be 0
+ * B2..7	Length of message - (not including Byte 0)
  *
  */

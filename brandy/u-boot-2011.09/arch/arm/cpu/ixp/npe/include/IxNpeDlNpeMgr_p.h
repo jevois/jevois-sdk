@@ -5,16 +5,16 @@
  * @date 14 December 2001
  * @brief This file contains the private API for the NpeMgr module.
  *
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +27,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -40,7 +40,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
 */
@@ -50,7 +50,7 @@
  * @defgroup IxNpeDlNpeMgr_p IxNpeDlNpeMgr_p
  *
  * @brief The private API for the IxNpeDl NpeMgr module
- *
+ * 
  * @{
  */
 
@@ -72,16 +72,16 @@
 
 /**
  * @fn void ixNpeDlNpeMgrInit (void)
- *
+ * 
  * @brief Initialises the NpeMgr module
  *
  * @param none
- *
+ * 
  * This function initialises the NpeMgr module.
  * It should be called before any other function in this module is called.
  * It only needs to be called once, but can be called multiple times safely.
  * The code will ASSERT on failure.
- *
+ * 
  * @pre
  *     - It must be called before any other function in this module
  *
@@ -90,7 +90,7 @@
  *       IxOsal. This memory will not be unmapped by this module.
  *
  * @return none
- */
+ */ 
 void
 ixNpeDlNpeMgrInit (void);
 
@@ -120,7 +120,7 @@ IX_STATUS ixNpeDlNpeMgrUninit (void);
  * @fn IX_STATUS ixNpeDlNpeMgrImageLoad (IxNpeDlNpeId npeId,
                                            UINT32 *imageCodePtr,
                                            BOOL verify)
- *
+ * 
  * @brief Loads a image of microcode onto an NPE
  *
  * @param IxNpeDlNpeId [in] npeId     - Id of target NPE
@@ -128,11 +128,11 @@ IX_STATUS ixNpeDlNpeMgrUninit (void);
  *                                      downloaded
  * @param BOOL [in] verify            - if TRUE, verify each word written to
  *                                      NPE memory.
- *
+ * 
  * This function loads a image containing blocks of microcode onto a
  * particular NPE. If the <i>verify</i> option is ON, NpeDl will read back each
  * word written and verify that it was written successfully
- *
+ * 
  * @pre
  *     - The NPE should be stopped beforehand
  *
@@ -142,27 +142,27 @@ IX_STATUS ixNpeDlNpeMgrUninit (void);
  * @return
  *     - IX_SUCCESS if the download was successful
  *     - IX_FAIL if the download failed
- *     - IX_NPEDL_CRITICAL_NPE_ERR if the download failed due to timeout error
+ *     - IX_NPEDL_CRITICAL_NPE_ERR if the download failed due to timeout error 
  *       where NPE is not responding
- */
+ */ 
 IX_STATUS
-ixNpeDlNpeMgrImageLoad (IxNpeDlNpeId npeId, UINT32 * imageCodePtr,
-                        BOOL verify);
+ixNpeDlNpeMgrImageLoad (IxNpeDlNpeId npeId, UINT32 *imageCodePtr,
+			  BOOL verify);
 
 
 /**
  * @fn IX_STATUS ixNpeDlNpeMgrNpeReset (IxNpeDlNpeId npeId)
- *
+ * 
  * @brief sets a NPE to RESET state
  *
  * @param IxNpeDlNpeId [in] npeId - id of target NPE
- *
+ * 
  * This function performs a soft NPE reset by writing reset values to the
  * Configuration Bus Execution Control registers, the Execution Context Stack
- * registers, the Physical Register file, and the Context Store registers for
+ * registers, the Physical Register file, and the Context Store registers for 
  * each context number. It also clears inFIFO, outFIFO and Watchpoint FIFO.
  * It does not reset NPE Co-processors.
- *
+ * 
  * @pre
  *     - The NPE should be stopped beforehand
  *
@@ -176,27 +176,27 @@ ixNpeDlNpeMgrImageLoad (IxNpeDlNpeId npeId, UINT32 * imageCodePtr,
  *     - IX_SUCCESS if the operation was successful
  *     - IX_FAIL if the operation failed
  *     - IX_NPEDL_CRITICAL_NPE_ERR if the operation failed due to NPE hang
- */
+ */ 
 IX_STATUS
 ixNpeDlNpeMgrNpeReset (IxNpeDlNpeId npeId);
 
 
 /**
  * @fn IX_STATUS ixNpeDlNpeMgrNpeStart (IxNpeDlNpeId npeId)
- *
+ * 
  * @brief Starts NPE Execution
  *
  * @param IxNpeDlNpeId [in] npeId - Id of target NPE
- *
+ * 
  * Ensures only background Execution Stack Level is Active, clears instruction
  * pipeline, and starts Execution on a NPE by sending a Start NPE command to
  * the NPE. Checks the execution status of the NPE to verify that it is
  * running.
- *
+ * 
  * @pre
  *     - The NPE should be stopped beforehand.
- *     - Note that this function does not set the NPE Next Program Counter
- *       (NextPC), so it should be set beforehand if required by downloading
+ *     - Note that this function does not set the NPE Next Program Counter 
+ *       (NextPC), so it should be set beforehand if required by downloading 
  *       appropriate State Information.
  *
  * @post
@@ -204,18 +204,18 @@ ixNpeDlNpeMgrNpeReset (IxNpeDlNpeId npeId);
  * @return
  *     - IX_SUCCESS if the operation was successful
  *     - IX_FAIL otherwise
- */
+ */ 
 IX_STATUS
 ixNpeDlNpeMgrNpeStart (IxNpeDlNpeId npeId);
 
 
 /**
  * @fn IX_STATUS ixNpeDlNpeMgrNpeStop (IxNpeDlNpeId npeId)
- *
+ * 
  * @brief Halts NPE Execution
  *
  * @param IxNpeDlNpeId [in] npeId - id of target NPE
- *
+ * 
  * Stops execution on an NPE by sending a Stop NPE command to the NPE.
  * Checks the execution status of the NPE to verify that it has stopped.
  *
@@ -223,10 +223,10 @@ ixNpeDlNpeMgrNpeStart (IxNpeDlNpeId npeId);
  *
  * @post
  *
- * @return
+ * @return 
  *     - IX_SUCCESS if the operation was successful
  *     - IX_FAIL otherwise
- */
+ */ 
 IX_STATUS
 ixNpeDlNpeMgrNpeStop (IxNpeDlNpeId npeId);
 

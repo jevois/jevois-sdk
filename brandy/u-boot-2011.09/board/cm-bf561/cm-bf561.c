@@ -11,16 +11,16 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-int checkboard (void)
+int checkboard(void)
 {
-  printf ("Board: Bluetechnix CM-BF561 core module\n");
-  printf ("       Support: http://www.bluetechnix.at/\n");
-  return 0;
+	printf("Board: Bluetechnix CM-BF561 core module\n");
+	printf("       Support: http://www.bluetechnix.at/\n");
+	return 0;
 }
 
 #ifdef CONFIG_SMC911X
-int board_eth_init (bd_t * bis)
+int board_eth_init(bd_t *bis)
 {
-  return smc911x_initialize (0, CONFIG_SMC911X_BASE);
+	return smc911x_initialize(0, CONFIG_SMC911X_BASE);
 }
 #endif

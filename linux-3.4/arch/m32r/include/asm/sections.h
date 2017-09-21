@@ -4,4 +4,4 @@
 /* nothing to see, move along */
 #include <asm-generic/sections.h>
 
-#endif  /* _M32R_SECTIONS_H */
+#endif	/* _M32R_SECTIONS_H */

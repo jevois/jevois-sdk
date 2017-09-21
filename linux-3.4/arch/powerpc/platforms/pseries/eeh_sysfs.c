@@ -37,48 +37,48 @@
  * auto-gen a cut-n-paste routine to display them.
  */
 #define EEH_SHOW_ATTR(_name,_memb,_format)               \
-  static ssize_t eeh_show_##_name(struct device *dev,      \
-                                  struct device_attribute *attr, char *buf)          \
-  {                                                        \
-    struct pci_dev *pdev = to_pci_dev(dev);               \
-    struct eeh_dev *edev = pci_dev_to_eeh_dev(pdev);      \
-    \
-    if (!edev)                                            \
-      return 0;                                     \
-    \
-    return sprintf(buf, _format "\n", edev->_memb);       \
-  }                                                        \
-  static DEVICE_ATTR(_name, S_IRUGO, eeh_show_##_name, NULL);
+static ssize_t eeh_show_##_name(struct device *dev,      \
+		struct device_attribute *attr, char *buf)          \
+{                                                        \
+	struct pci_dev *pdev = to_pci_dev(dev);               \
+	struct eeh_dev *edev = pci_dev_to_eeh_dev(pdev);      \
+	                                                      \
+	if (!edev)                                            \
+		return 0;                                     \
+	                                                      \
+	return sprintf(buf, _format "\n", edev->_memb);       \
+}                                                        \
+static DEVICE_ATTR(_name, S_IRUGO, eeh_show_##_name, NULL);
 
-EEH_SHOW_ATTR (eeh_mode,            mode,            "0x%x");
-EEH_SHOW_ATTR (eeh_config_addr,     config_addr,     "0x%x");
-EEH_SHOW_ATTR (eeh_pe_config_addr,  pe_config_addr,  "0x%x");
-EEH_SHOW_ATTR (eeh_check_count,     check_count,     "%d"  );
-EEH_SHOW_ATTR (eeh_freeze_count,    freeze_count,    "%d"  );
-EEH_SHOW_ATTR (eeh_false_positives, false_positives, "%d"  );
+EEH_SHOW_ATTR(eeh_mode,            mode,            "0x%x");
+EEH_SHOW_ATTR(eeh_config_addr,     config_addr,     "0x%x");
+EEH_SHOW_ATTR(eeh_pe_config_addr,  pe_config_addr,  "0x%x");
+EEH_SHOW_ATTR(eeh_check_count,     check_count,     "%d"  );
+EEH_SHOW_ATTR(eeh_freeze_count,    freeze_count,    "%d"  );
+EEH_SHOW_ATTR(eeh_false_positives, false_positives, "%d"  );
 
-void eeh_sysfs_add_device (struct pci_dev * pdev)
+void eeh_sysfs_add_device(struct pci_dev *pdev)
 {
-  int rc = 0;
-  
-  rc += device_create_file (&pdev->dev, &dev_attr_eeh_mode);
-  rc += device_create_file (&pdev->dev, &dev_attr_eeh_config_addr);
-  rc += device_create_file (&pdev->dev, &dev_attr_eeh_pe_config_addr);
-  rc += device_create_file (&pdev->dev, &dev_attr_eeh_check_count);
-  rc += device_create_file (&pdev->dev, &dev_attr_eeh_false_positives);
-  rc += device_create_file (&pdev->dev, &dev_attr_eeh_freeze_count);
-  
-  if (rc)
-  { printk (KERN_WARNING "EEH: Unable to create sysfs entries\n"); }
+	int rc=0;
+
+	rc += device_create_file(&pdev->dev, &dev_attr_eeh_mode);
+	rc += device_create_file(&pdev->dev, &dev_attr_eeh_config_addr);
+	rc += device_create_file(&pdev->dev, &dev_attr_eeh_pe_config_addr);
+	rc += device_create_file(&pdev->dev, &dev_attr_eeh_check_count);
+	rc += device_create_file(&pdev->dev, &dev_attr_eeh_false_positives);
+	rc += device_create_file(&pdev->dev, &dev_attr_eeh_freeze_count);
+
+	if (rc)
+		printk(KERN_WARNING "EEH: Unable to create sysfs entries\n");
 }
 
-void eeh_sysfs_remove_device (struct pci_dev * pdev)
+void eeh_sysfs_remove_device(struct pci_dev *pdev)
 {
-  device_remove_file (&pdev->dev, &dev_attr_eeh_mode);
-  device_remove_file (&pdev->dev, &dev_attr_eeh_config_addr);
-  device_remove_file (&pdev->dev, &dev_attr_eeh_pe_config_addr);
-  device_remove_file (&pdev->dev, &dev_attr_eeh_check_count);
-  device_remove_file (&pdev->dev, &dev_attr_eeh_false_positives);
-  device_remove_file (&pdev->dev, &dev_attr_eeh_freeze_count);
+	device_remove_file(&pdev->dev, &dev_attr_eeh_mode);
+	device_remove_file(&pdev->dev, &dev_attr_eeh_config_addr);
+	device_remove_file(&pdev->dev, &dev_attr_eeh_pe_config_addr);
+	device_remove_file(&pdev->dev, &dev_attr_eeh_check_count);
+	device_remove_file(&pdev->dev, &dev_attr_eeh_false_positives);
+	device_remove_file(&pdev->dev, &dev_attr_eeh_freeze_count);
 }
 

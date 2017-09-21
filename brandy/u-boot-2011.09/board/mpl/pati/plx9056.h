@@ -22,15 +22,15 @@
 /* PLX9096 register definitions
 */
 #ifndef __PLX9056_H_
-#define __PLX9056_H_  1
+#define __PLX9056_H_	1
 
 #include <pci.h>
 
 #ifdef PLX9056_LOC
-#define LOCAL_OFFSET          0x080
+#define LOCAL_OFFSET					0x080
 /* PCI Config regs */
 #else
-#define LOCAL_OFFSET          0x000
+#define LOCAL_OFFSET					0x000
 #endif
 
 #define PCI9056_VENDOR_ID            PCI_VENDOR_ID
@@ -53,15 +53,15 @@
 #define PCI9056_INT_LINE             PCI_INTERRUPT_LINE
 
 #if defined(PLX9056_LOC)
-#define PCI9056_PM_CAP_ID            0x180
-#define PCI9056_PM_CSR               0x184
-#define PCI9056_HS_CAP_ID            0x188
-#define PCI9056_VPD_CAP_ID           0x18C
-#define PCI9056_VPD_DATA             0x190
+    #define PCI9056_PM_CAP_ID            0x180
+    #define PCI9056_PM_CSR               0x184
+    #define PCI9056_HS_CAP_ID            0x188
+    #define PCI9056_VPD_CAP_ID           0x18C
+    #define PCI9056_VPD_DATA             0x190
 #endif
 
 
-#define PCI_DEVICE_ID_PLX9056   0x9056
+#define PCI_DEVICE_ID_PLX9056		0x9056
 
 /* Local Configuration Registers Accessible via the PCI Base address + Variable */
 #define PCI9056_SPACE0_RANGE         (0x000 + LOCAL_OFFSET)
@@ -88,24 +88,24 @@
 
 /* Runtime registers  PCI Address + LOCAL_OFFSET */
 #ifdef PLX9056_LOC
-#define PCI9056_MAILBOX0        0x0C0
-#define PCI9056_MAILBOX1        0x0C4
+#define PCI9056_MAILBOX0				0x0C0
+#define PCI9056_MAILBOX1				0x0C4
 #else
-#define PCI9056_MAILBOX0        0x078
-#define PCI9056_MAILBOX1        0x07c
+#define PCI9056_MAILBOX0				0x078
+#define PCI9056_MAILBOX1				0x07c
 #endif
 
-#define PCI9056_MAILBOX2        (0x048 + LOCAL_OFFSET)
-#define PCI9056_MAILBOX3        (0x04c + LOCAL_OFFSET)
-#define PCI9056_MAILBOX4        (0x050 + LOCAL_OFFSET)
-#define PCI9056_MAILBOX5        (0x054 + LOCAL_OFFSET)
-#define PCI9056_MAILBOX6        (0x058 + LOCAL_OFFSET)
-#define PCI9056_MAILBOX7        (0x05c + LOCAL_OFFSET)
-#define PCI9056_PCI_TO_LOC_DBELL    (0x060 + LOCAL_OFFSET)
-#define PCI9056_LOC_TO_PCI_DBELL    (0x064 + LOCAL_OFFSET)
-#define PCI9056_INT_CTRL_STAT     (0x068 + LOCAL_OFFSET)
-#define PCI9056_EEPROM_CTRL_STAT    (0x06c + LOCAL_OFFSET)
-#define PCI9056_PERM_VENDOR_ID    (0x070 + LOCAL_OFFSET)
-#define PCI9056_REVISION_ID     (0x074 + LOCAL_OFFSET)
+#define PCI9056_MAILBOX2				(0x048 + LOCAL_OFFSET)
+#define PCI9056_MAILBOX3				(0x04c + LOCAL_OFFSET)
+#define PCI9056_MAILBOX4				(0x050 + LOCAL_OFFSET)
+#define PCI9056_MAILBOX5				(0x054 + LOCAL_OFFSET)
+#define PCI9056_MAILBOX6				(0x058 + LOCAL_OFFSET)
+#define PCI9056_MAILBOX7				(0x05c + LOCAL_OFFSET)
+#define PCI9056_PCI_TO_LOC_DBELL		(0x060 + LOCAL_OFFSET)
+#define PCI9056_LOC_TO_PCI_DBELL		(0x064 + LOCAL_OFFSET)
+#define PCI9056_INT_CTRL_STAT			(0x068 + LOCAL_OFFSET)
+#define PCI9056_EEPROM_CTRL_STAT		(0x06c + LOCAL_OFFSET)
+#define PCI9056_PERM_VENDOR_ID		(0x070 + LOCAL_OFFSET)
+#define PCI9056_REVISION_ID			(0x074 + LOCAL_OFFSET)
 
 #endif /* #ifndef __PLX9056_H_ */

@@ -16,15 +16,15 @@
  *   be meant for a process other than the current one
  */
 asmlinkage
-void unexpected_fpu_exception (struct pt_regs * regs, enum exception_code code)
+void unexpected_fpu_exception(struct pt_regs *regs, enum exception_code code)
 {
-  panic ("An FPU exception was received, but there's no FPU enabled.");
+	panic("An FPU exception was received, but there's no FPU enabled.");
 }
 
 /*
  * fill in the FPU structure for a core dump
  */
-int dump_fpu (struct pt_regs * regs, elf_fpregset_t * fpreg)
+int dump_fpu(struct pt_regs *regs, elf_fpregset_t *fpreg)
 {
-  return 0; /* not valid */
+	return 0; /* not valid */
 }

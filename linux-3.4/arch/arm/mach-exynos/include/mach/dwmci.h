@@ -1,7 +1,7 @@
 /* linux/arch/arm/mach-exynos4/include/mach/dwmci.h
  *
  * Copyright (c) 2011 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com/
+ *		http://www.samsung.com/
  *
  * Synopsys DesignWare Mobile Storage for EXYNOS4210
  *
@@ -15,6 +15,6 @@
 
 #include <linux/mmc/dw_mmc.h>
 
-extern void exynos4_dwmci_set_platdata (struct dw_mci_board * pd);
+extern void exynos4_dwmci_set_platdata(struct dw_mci_board *pd);
 
 #endif /* __ASM_ARM_ARCH_DWMCI_H */

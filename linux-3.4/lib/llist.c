@@ -30,33 +30,33 @@
 
 /**
  * llist_add_batch - add several linked entries in batch
- * @new_first:  first entry in batch to be added
- * @new_last: last entry in batch to be added
- * @head: the head for your lock-less list
+ * @new_first:	first entry in batch to be added
+ * @new_last:	last entry in batch to be added
+ * @head:	the head for your lock-less list
  *
  * Return whether list is empty before adding.
  */
-bool llist_add_batch (struct llist_node * new_first, struct llist_node * new_last,
-                      struct llist_head * head)
+bool llist_add_batch(struct llist_node *new_first, struct llist_node *new_last,
+		     struct llist_head *head)
 {
-  struct llist_node * entry, *old_entry;
-  
-  entry = head->first;
-  for (;;) {
-    old_entry = entry;
-    new_last->next = entry;
-    entry = cmpxchg (&head->first, old_entry, new_first);
-    if (entry == old_entry)
-    { break; }
-  }
-  
-  return old_entry == NULL;
+	struct llist_node *entry, *old_entry;
+
+	entry = head->first;
+	for (;;) {
+		old_entry = entry;
+		new_last->next = entry;
+		entry = cmpxchg(&head->first, old_entry, new_first);
+		if (entry == old_entry)
+			break;
+	}
+
+	return old_entry == NULL;
 }
-EXPORT_SYMBOL_GPL (llist_add_batch);
+EXPORT_SYMBOL_GPL(llist_add_batch);
 
 /**
  * llist_del_first - delete the first entry of lock-less list
- * @head: the head for your lock-less list
+ * @head:	the head for your lock-less list
  *
  * If list is empty, return NULL, otherwise, return the first entry
  * deleted, this is the newest added one.
@@ -68,21 +68,21 @@ EXPORT_SYMBOL_GPL (llist_add_batch);
  * but keep @head->first.  If multiple consumers are needed, please
  * use llist_del_all or use lock between consumers.
  */
-struct llist_node * llist_del_first (struct llist_head * head)
+struct llist_node *llist_del_first(struct llist_head *head)
 {
-  struct llist_node * entry, *old_entry, *next;
-  
-  entry = head->first;
-  for (;;) {
-    if (entry == NULL)
-    { return NULL; }
-    old_entry = entry;
-    next = entry->next;
-    entry = cmpxchg (&head->first, old_entry, next);
-    if (entry == old_entry)
-    { break; }
-  }
-  
-  return entry;
+	struct llist_node *entry, *old_entry, *next;
+
+	entry = head->first;
+	for (;;) {
+		if (entry == NULL)
+			return NULL;
+		old_entry = entry;
+		next = entry->next;
+		entry = cmpxchg(&head->first, old_entry, next);
+		if (entry == old_entry)
+			break;
+	}
+
+	return entry;
 }
-EXPORT_SYMBOL_GPL (llist_del_first);
+EXPORT_SYMBOL_GPL(llist_del_first);

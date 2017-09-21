@@ -16,7 +16,7 @@
 
 #include <linux/serial_reg.h>
 
-#define UART_BASE 0xc0030000
+#define UART_BASE	0xc0030000
 
 #define PHYS(x)          ((volatile unsigned long *)(UART_BASE + x))
 
@@ -29,17 +29,17 @@
 #define UARTSR          PHYS(0x14)      /* Status reg */
 
 
-static inline void putc (int c)
+static inline void putc(int c)
 {
-  int j = 0x1000;
-  
-  while (--j && ! (*UARTSR & UART_LSR_THRE) )
-  { barrier(); }
-  
-  *UARTDR = c;
+	int j = 0x1000;
+
+	while (--j && !(*UARTSR & UART_LSR_THRE))
+		barrier();
+
+	*UARTDR = c;
 }
 
-static inline void flush (void)
+static inline void flush(void)
 {
 }
 

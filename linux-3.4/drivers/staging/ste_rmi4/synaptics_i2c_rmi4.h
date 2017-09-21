@@ -38,10 +38,10 @@
  * This structure gives platform data for rmi4.
  */
 struct synaptics_rmi4_platform_data {
-  int irq_number;
-  int irq_type;
-  bool x_flip;
-  bool y_flip;
+	int irq_number;
+	int irq_type;
+	bool x_flip;
+	bool y_flip;
 };
 
 #endif

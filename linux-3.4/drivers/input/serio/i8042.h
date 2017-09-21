@@ -38,51 +38,51 @@
  * to a non-existent mouse.
  */
 
-#define I8042_CTL_TIMEOUT 10000
+#define I8042_CTL_TIMEOUT	10000
 
 /*
  * Status register bits.
  */
 
-#define I8042_STR_PARITY  0x80
-#define I8042_STR_TIMEOUT 0x40
-#define I8042_STR_AUXDATA 0x20
-#define I8042_STR_KEYLOCK 0x10
-#define I8042_STR_CMDDAT  0x08
-#define I8042_STR_MUXERR  0x04
-#define I8042_STR_IBF   0x02
-#define I8042_STR_OBF   0x01
+#define I8042_STR_PARITY	0x80
+#define I8042_STR_TIMEOUT	0x40
+#define I8042_STR_AUXDATA	0x20
+#define I8042_STR_KEYLOCK	0x10
+#define I8042_STR_CMDDAT	0x08
+#define I8042_STR_MUXERR	0x04
+#define I8042_STR_IBF		0x02
+#define	I8042_STR_OBF		0x01
 
 /*
  * Control register bits.
  */
 
-#define I8042_CTR_KBDINT  0x01
-#define I8042_CTR_AUXINT  0x02
-#define I8042_CTR_IGNKEYLOCK  0x08
-#define I8042_CTR_KBDDIS  0x10
-#define I8042_CTR_AUXDIS  0x20
-#define I8042_CTR_XLATE   0x40
+#define I8042_CTR_KBDINT	0x01
+#define I8042_CTR_AUXINT	0x02
+#define I8042_CTR_IGNKEYLOCK	0x08
+#define I8042_CTR_KBDDIS	0x10
+#define I8042_CTR_AUXDIS	0x20
+#define I8042_CTR_XLATE		0x40
 
 /*
  * Return codes.
  */
 
-#define I8042_RET_CTL_TEST  0x55
+#define I8042_RET_CTL_TEST	0x55
 
 /*
  * Expected maximum internal i8042 buffer size. This is used for flushing
  * the i8042 buffers.
  */
 
-#define I8042_BUFFER_SIZE 16
+#define I8042_BUFFER_SIZE	16
 
 /*
  * Number of AUX ports on controllers supporting active multiplexing
  * specification
  */
 
-#define I8042_NUM_MUX_PORTS 4
+#define I8042_NUM_MUX_PORTS	4
 
 /*
  * Debug.
@@ -91,19 +91,19 @@
 #ifdef DEBUG
 static unsigned long i8042_start_time;
 #define dbg_init() do { i8042_start_time = jiffies; } while (0)
-#define dbg(format, arg...)             \
-  do {                  \
-    if (i8042_debug)            \
-      printk(KERN_DEBUG KBUILD_MODNAME ": [%d] " format,  \
-             (int) (jiffies - i8042_start_time), ##arg);  \
-  } while (0)
+#define dbg(format, arg...)							\
+	do {									\
+		if (i8042_debug)						\
+			printk(KERN_DEBUG KBUILD_MODNAME ": [%d] " format,	\
+			       (int) (jiffies - i8042_start_time), ##arg);	\
+	} while (0)
 #else
 #define dbg_init() do { } while (0)
-#define dbg(format, arg...)             \
-  do {                  \
-    if (0)                \
-      printk(KERN_DEBUG pr_fmt(format), ##arg);   \
-  } while (0)
+#define dbg(format, arg...)							\
+	do {									\
+		if (0)								\
+			printk(KERN_DEBUG pr_fmt(format), ##arg);		\
+	} while (0)
 #endif
 
 #endif /* _I8042_H */

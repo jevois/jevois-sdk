@@ -15,7 +15,7 @@
  * (at your option) any later version.
  */
 
-#include <linux/of.h> /* linux/of.h gets to determine #include ordering */
+#include <linux/of.h>	/* linux/of.h gets to determine #include ordering */
 
 #ifndef _ASM_OPENRISC_PROM_H
 #define _ASM_OPENRISC_PROM_H
@@ -34,26 +34,26 @@
 #define HAVE_ARCH_DEVTREE_FIXUPS
 
 /* Other Prototypes */
-extern int early_uartlite_console (void);
+extern int early_uartlite_console(void);
 
 /* Parse the ibm,dma-window property of an OF node into the busno, phys and
  * size parameters.
  */
-void of_parse_dma_window (struct device_node * dn, const void * dma_window_prop,
-                          unsigned long * busno, unsigned long * phys, unsigned long * size);
+void of_parse_dma_window(struct device_node *dn, const void *dma_window_prop,
+		unsigned long *busno, unsigned long *phys, unsigned long *size);
 
-extern void kdump_move_device_tree (void);
+extern void kdump_move_device_tree(void);
 
 /* CPU OF node matching */
-struct device_node * of_get_cpu_node (int cpu, unsigned int * thread);
+struct device_node *of_get_cpu_node(int cpu, unsigned int *thread);
 
 /* Get the MAC address */
-extern const void * of_get_mac_address (struct device_node * np);
+extern const void *of_get_mac_address(struct device_node *np);
 
 /**
  * of_irq_map_pci - Resolve the interrupt for a PCI device
- * @pdev: the device whose interrupt is to be resolved
- * @out_irq:  structure of_irq filled by this function
+ * @pdev:	the device whose interrupt is to be resolved
+ * @out_irq:	structure of_irq filled by this function
  *
  * This function resolves the PCI interrupt for a given PCI device. If a
  * device-node exists for a given pci_dev, it will use normal OF tree
@@ -62,7 +62,7 @@ extern const void * of_get_mac_address (struct device_node * np);
  * resolving using the OF tree walking.
  */
 struct pci_dev;
-extern int of_irq_map_pci (struct pci_dev * pdev, struct of_irq * out_irq);
+extern int of_irq_map_pci(struct pci_dev *pdev, struct of_irq *out_irq);
 
 #endif /* __ASSEMBLY__ */
 #endif /* __KERNEL__ */

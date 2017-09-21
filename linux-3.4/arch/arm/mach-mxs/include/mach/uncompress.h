@@ -20,13 +20,13 @@
 
 unsigned long mxs_duart_base;
 
-#define MXS_DUART(x)  (*(volatile unsigned long *)(mxs_duart_base + (x)))
+#define MXS_DUART(x)	(*(volatile unsigned long *)(mxs_duart_base + (x)))
 
-#define MXS_DUART_DR    0x00
-#define MXS_DUART_FR    0x18
-#define MXS_DUART_FR_TXFE (1 << 7)
-#define MXS_DUART_CR    0x30
-#define MXS_DUART_CR_UARTEN (1 << 0)
+#define MXS_DUART_DR		0x00
+#define MXS_DUART_FR		0x18
+#define MXS_DUART_FR_TXFE	(1 << 7)
+#define MXS_DUART_CR		0x30
+#define MXS_DUART_CR_UARTEN	(1 << 0)
 
 /*
  * The following code assumes the serial port has already been
@@ -34,44 +34,44 @@ unsigned long mxs_duart_base;
  * simply discarded.
  */
 
-static void putc (int ch)
+static void putc(int ch)
 {
-  if (!mxs_duart_base)
-  { return; }
-  if (! (MXS_DUART (MXS_DUART_CR) & MXS_DUART_CR_UARTEN) )
-  { return; }
-  
-  while (! (MXS_DUART (MXS_DUART_FR) & MXS_DUART_FR_TXFE) )
-  { barrier(); }
-  
-  MXS_DUART (MXS_DUART_DR) = ch;
+	if (!mxs_duart_base)
+		return;
+	if (!(MXS_DUART(MXS_DUART_CR) & MXS_DUART_CR_UARTEN))
+		return;
+
+	while (!(MXS_DUART(MXS_DUART_FR) & MXS_DUART_FR_TXFE))
+		barrier();
+
+	MXS_DUART(MXS_DUART_DR) = ch;
 }
 
-static inline void flush (void)
+static inline void flush(void)
 {
 }
 
-#define MX23_DUART_BASE_ADDR  0x80070000
-#define MX28_DUART_BASE_ADDR  0x80074000
-#define MXS_DIGCTL_CHIPID 0x8001c310
+#define MX23_DUART_BASE_ADDR	0x80070000
+#define MX28_DUART_BASE_ADDR	0x80074000
+#define MXS_DIGCTL_CHIPID	0x8001c310
 
-static inline void __arch_decomp_setup (unsigned long arch_id)
+static inline void __arch_decomp_setup(unsigned long arch_id)
 {
-  u16 chipid = (* (volatile unsigned long *) MXS_DIGCTL_CHIPID) >> 16;
-  
-  switch (chipid) {
-  case 0x3780:
-    mxs_duart_base = MX23_DUART_BASE_ADDR;
-    break;
-  case 0x2800:
-    mxs_duart_base = MX28_DUART_BASE_ADDR;
-    break;
-  default:
-    break;
-  }
+	u16 chipid = (*(volatile unsigned long *) MXS_DIGCTL_CHIPID) >> 16;
+
+	switch (chipid) {
+	case 0x3780:
+		mxs_duart_base = MX23_DUART_BASE_ADDR;
+		break;
+	case 0x2800:
+		mxs_duart_base = MX28_DUART_BASE_ADDR;
+		break;
+	default:
+		break;
+	}
 }
 
-#define arch_decomp_setup() __arch_decomp_setup(arch_id)
+#define arch_decomp_setup()	__arch_decomp_setup(arch_id)
 #define arch_decomp_wdog()
 
 #endif /* __MACH_MXS_UNCOMPRESS_H__ */

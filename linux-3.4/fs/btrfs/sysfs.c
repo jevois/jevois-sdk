@@ -29,18 +29,18 @@
 #include "transaction.h"
 
 /* /sys/fs/btrfs/ entry */
-static struct kset * btrfs_kset;
+static struct kset *btrfs_kset;
 
-int btrfs_init_sysfs (void)
+int btrfs_init_sysfs(void)
 {
-  btrfs_kset = kset_create_and_add ("btrfs", NULL, fs_kobj);
-  if (!btrfs_kset)
-  { return -ENOMEM; }
-  return 0;
+	btrfs_kset = kset_create_and_add("btrfs", NULL, fs_kobj);
+	if (!btrfs_kset)
+		return -ENOMEM;
+	return 0;
 }
 
-void btrfs_exit_sysfs (void)
+void btrfs_exit_sysfs(void)
 {
-  kset_unregister (btrfs_kset);
+	kset_unregister(btrfs_kset);
 }
 

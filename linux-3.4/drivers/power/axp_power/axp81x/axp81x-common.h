@@ -1,5 +1,5 @@
-#ifndef _LINUX_AXP81X_FILENODE_H_
-#define _LINUX_AXP81X_FILENODE_H_
+#ifndef	_LINUX_AXP81X_FILENODE_H_
+#define	_LINUX_AXP81X_FILENODE_H_
 
 #define AXP_POK_SET                     AXP81X_POK_SET
 #define AXP_BUFFERC                     AXP81X_BUFFERC
@@ -13,16 +13,16 @@
 #define AXP_BC_SET                      AXP81X_BC_SET
 #define AXP_BC_DET_STATUS               AXP81X_BC_DET_STATUS
 
-#define AXP_IRQ_USBRE                   AXP81X_IRQ_USBRE
-#define AXP_IRQ_USBIN                   AXP81X_IRQ_USBIN
-#define AXP_IRQ_USBOV                   AXP81X_IRQ_USBOV
-#define AXP_IRQ_ACRE                    AXP81X_IRQ_ACRE
-#define AXP_IRQ_ACIN                    AXP81X_IRQ_ACIN
-#define AXP_IRQ_ACOV                    AXP81X_IRQ_ACOV
-#define AXP_IRQ_CHAOV                   AXP81X_IRQ_CHAOV
-#define AXP_IRQ_CHAST                   AXP81X_IRQ_CHAST
-#define AXP_IRQ_BATATOU                 AXP81X_IRQ_BATATOU
-#define AXP_IRQ_BATATIN                 AXP81X_IRQ_BATATIN
+#define	AXP_IRQ_USBRE                   AXP81X_IRQ_USBRE
+#define	AXP_IRQ_USBIN                   AXP81X_IRQ_USBIN
+#define	AXP_IRQ_USBOV                   AXP81X_IRQ_USBOV
+#define	AXP_IRQ_ACRE                    AXP81X_IRQ_ACRE
+#define	AXP_IRQ_ACIN                    AXP81X_IRQ_ACIN
+#define	AXP_IRQ_ACOV                    AXP81X_IRQ_ACOV
+#define	AXP_IRQ_CHAOV                   AXP81X_IRQ_CHAOV
+#define	AXP_IRQ_CHAST                   AXP81X_IRQ_CHAST
+#define	AXP_IRQ_BATATOU                 AXP81X_IRQ_BATATOU
+#define	AXP_IRQ_BATATIN                 AXP81X_IRQ_BATATIN
 #define AXP_IRQ_BATRE                   AXP81X_IRQ_BATRE
 #define AXP_IRQ_BATIN                   AXP81X_IRQ_BATIN
 #define AXP_IRQ_QBATINWORK              AXP81X_IRQ_QBATINWORK
@@ -101,13 +101,13 @@
 #define CHARGE_FASTTIME_STEP            AXP81X_CHARGE_FASTTIME_STEP
 
 #define AXP81X_NOTIFIER_ON          (AXP_IRQ_USBIN | AXP_IRQ_USBRE | \
-                                     AXP_IRQ_ACIN  | AXP_IRQ_ACRE | \
-                                     AXP_IRQ_BATIN | AXP_IRQ_BATRE | \
-                                     AXP_IRQ_BATINWORK | AXP_IRQ_BATOVWORK | \
-                                     AXP_IRQ_QBATINCHG | AXP_IRQ_BATINCHG | \
-                                     AXP_IRQ_QBATOVCHG | AXP_IRQ_BATOVCHG | \
-                                     AXP_IRQ_CHAST |  AXP_IRQ_CHAOV | \
-                                     (uint64_t)AXP_IRQ_PEK_NEDGE | \
-                                     (uint64_t)AXP_IRQ_PEK_PEDGE)
+                                    AXP_IRQ_ACIN  | AXP_IRQ_ACRE | \
+                                    AXP_IRQ_BATIN | AXP_IRQ_BATRE | \
+                                    AXP_IRQ_BATINWORK | AXP_IRQ_BATOVWORK | \
+                                    AXP_IRQ_QBATINCHG | AXP_IRQ_BATINCHG | \
+                                    AXP_IRQ_QBATOVCHG | AXP_IRQ_BATOVCHG | \
+                                    AXP_IRQ_CHAST |  AXP_IRQ_CHAOV | \
+                                    (uint64_t)AXP_IRQ_PEK_NEDGE | \
+                                    (uint64_t)AXP_IRQ_PEK_PEDGE)
 #endif
 

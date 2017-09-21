@@ -32,11 +32,11 @@
 /**
  * Initialize pool allocator.
  */
-int ttm_page_alloc_init (struct ttm_mem_global * glob, unsigned max_pages);
+int ttm_page_alloc_init(struct ttm_mem_global *glob, unsigned max_pages);
 /**
  * Free pool allocator.
  */
-void ttm_page_alloc_fini (void);
+void ttm_page_alloc_fini(void);
 
 /**
  * ttm_pool_populate:
@@ -45,7 +45,7 @@ void ttm_page_alloc_fini (void);
  *
  * Add backing pages to all of @ttm
  */
-extern int ttm_pool_populate (struct ttm_tt * ttm);
+extern int ttm_pool_populate(struct ttm_tt *ttm);
 
 /**
  * ttm_pool_unpopulate:
@@ -54,45 +54,45 @@ extern int ttm_pool_populate (struct ttm_tt * ttm);
  *
  * Free all pages of @ttm
  */
-extern void ttm_pool_unpopulate (struct ttm_tt * ttm);
+extern void ttm_pool_unpopulate(struct ttm_tt *ttm);
 
 /**
  * Output the state of pools to debugfs file
  */
-extern int ttm_page_alloc_debugfs (struct seq_file * m, void * data);
+extern int ttm_page_alloc_debugfs(struct seq_file *m, void *data);
 
 
 #ifdef CONFIG_SWIOTLB
 /**
  * Initialize pool allocator.
  */
-int ttm_dma_page_alloc_init (struct ttm_mem_global * glob, unsigned max_pages);
+int ttm_dma_page_alloc_init(struct ttm_mem_global *glob, unsigned max_pages);
 
 /**
  * Free pool allocator.
  */
-void ttm_dma_page_alloc_fini (void);
+void ttm_dma_page_alloc_fini(void);
 
 /**
  * Output the state of pools to debugfs file
  */
-extern int ttm_dma_page_alloc_debugfs (struct seq_file * m, void * data);
+extern int ttm_dma_page_alloc_debugfs(struct seq_file *m, void *data);
 
-extern int ttm_dma_populate (struct ttm_dma_tt * ttm_dma, struct device * dev);
-extern void ttm_dma_unpopulate (struct ttm_dma_tt * ttm_dma, struct device * dev);
+extern int ttm_dma_populate(struct ttm_dma_tt *ttm_dma, struct device *dev);
+extern void ttm_dma_unpopulate(struct ttm_dma_tt *ttm_dma, struct device *dev);
 
 #else
-static inline int ttm_dma_page_alloc_init (struct ttm_mem_global * glob,
-    unsigned max_pages)
+static inline int ttm_dma_page_alloc_init(struct ttm_mem_global *glob,
+					  unsigned max_pages)
 {
-  return -ENODEV;
+	return -ENODEV;
 }
 
-static inline void ttm_dma_page_alloc_fini (void) { return; }
+static inline void ttm_dma_page_alloc_fini(void) { return; }
 
-static inline int ttm_dma_page_alloc_debugfs (struct seq_file * m, void * data)
+static inline int ttm_dma_page_alloc_debugfs(struct seq_file *m, void *data)
 {
-  return 0;
+	return 0;
 }
 #endif
 

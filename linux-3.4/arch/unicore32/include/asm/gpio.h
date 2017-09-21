@@ -46,59 +46,59 @@
 #define GPO_LAN_SEL             26
 
 #ifdef CONFIG_PUV3_NB0916
-#define GPI_BTN_TOUCH   14
-#define GPIO_IN     0x000043ff /* 1 for input */
-#define GPIO_OUT    0x0fffbc00 /* 1 for output */
-#endif  /* CONFIG_PUV3_NB0916 */
+#define GPI_BTN_TOUCH		14
+#define GPIO_IN			0x000043ff /* 1 for input */
+#define GPIO_OUT		0x0fffbc00 /* 1 for output */
+#endif	/* CONFIG_PUV3_NB0916 */
 
 #ifdef CONFIG_PUV3_SMW0919
-#define GPIO_IN     0x000003ff /* 1 for input */
-#define GPIO_OUT    0x0ffffc00 /* 1 for output */
+#define GPIO_IN			0x000003ff /* 1 for input */
+#define GPIO_OUT		0x0ffffc00 /* 1 for output */
 #endif  /* CONFIG_PUV3_SMW0919 */
 
 #ifdef CONFIG_PUV3_DB0913
-#define GPIO_IN     0x000001df /* 1 for input */
-#define GPIO_OUT    0x03fee800 /* 1 for output */
+#define GPIO_IN			0x000001df /* 1 for input */
+#define GPIO_OUT		0x03fee800 /* 1 for output */
 #endif  /* CONFIG_PUV3_DB0913 */
 
 #define GPIO_DIR                (~((GPIO_IN) | 0xf0000000))
-/* 0 input, 1 output */
+				/* 0 input, 1 output */
 
-static inline int gpio_get_value (unsigned gpio)
+static inline int gpio_get_value(unsigned gpio)
 {
-  if (__builtin_constant_p (gpio) && (gpio <= GPIO_MAX) )
-  { return readl (GPIO_GPLR) & GPIO_GPIO (gpio); }
-  else
-  { return __gpio_get_value (gpio); }
+	if (__builtin_constant_p(gpio) && (gpio <= GPIO_MAX))
+		return readl(GPIO_GPLR) & GPIO_GPIO(gpio);
+	else
+		return __gpio_get_value(gpio);
 }
 
-static inline void gpio_set_value (unsigned gpio, int value)
+static inline void gpio_set_value(unsigned gpio, int value)
 {
-  if (__builtin_constant_p (gpio) && (gpio <= GPIO_MAX) )
-    if (value)
-    { writel (GPIO_GPIO (gpio), GPIO_GPSR); }
-    else
-    { writel (GPIO_GPIO (gpio), GPIO_GPCR); }
-  else
-  { __gpio_set_value (gpio, value); }
+	if (__builtin_constant_p(gpio) && (gpio <= GPIO_MAX))
+		if (value)
+			writel(GPIO_GPIO(gpio), GPIO_GPSR);
+		else
+			writel(GPIO_GPIO(gpio), GPIO_GPCR);
+	else
+		__gpio_set_value(gpio, value);
 }
 
-#define gpio_cansleep __gpio_cansleep
+#define gpio_cansleep	__gpio_cansleep
 
-static inline unsigned gpio_to_irq (unsigned gpio)
+static inline unsigned gpio_to_irq(unsigned gpio)
 {
-  if ( (gpio < IRQ_GPIOHIGH) && (FIELD (1, 1, gpio) & readl (GPIO_GPIR) ) )
-  { return IRQ_GPIOLOW0 + gpio; }
-  else
-  { return IRQ_GPIO0 + gpio; }
+	if ((gpio < IRQ_GPIOHIGH) && (FIELD(1, 1, gpio) & readl(GPIO_GPIR)))
+		return IRQ_GPIOLOW0 + gpio;
+	else
+		return IRQ_GPIO0 + gpio;
 }
 
-static inline unsigned irq_to_gpio (unsigned irq)
+static inline unsigned irq_to_gpio(unsigned irq)
 {
-  if (irq < IRQ_GPIOHIGH)
-  { return irq - IRQ_GPIOLOW0; }
-  else
-  { return irq - IRQ_GPIO0; }
+	if (irq < IRQ_GPIOHIGH)
+		return irq - IRQ_GPIOLOW0;
+	else
+		return irq - IRQ_GPIO0;
 }
 
 #endif /* __UNICORE_GPIO_H__ */

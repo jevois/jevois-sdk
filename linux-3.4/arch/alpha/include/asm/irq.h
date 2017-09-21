@@ -2,9 +2,9 @@
 #define _ALPHA_IRQ_H
 
 /*
- *  linux/include/alpha/irq.h
+ *	linux/include/alpha/irq.h
  *
- *  (C) 1994 Linus Torvalds
+ *	(C) 1994 Linus Torvalds
  */
 
 #include <linux/linkage.h>
@@ -31,61 +31,61 @@
 # endif
 
 #elif defined(CONFIG_ALPHA_CABRIOLET) || \
-defined(CONFIG_ALPHA_EB66P)     || \
-defined(CONFIG_ALPHA_EB164)     || \
-defined(CONFIG_ALPHA_PC164)     || \
-defined(CONFIG_ALPHA_LX164)
-# define NR_IRQS  35
+      defined(CONFIG_ALPHA_EB66P)     || \
+      defined(CONFIG_ALPHA_EB164)     || \
+      defined(CONFIG_ALPHA_PC164)     || \
+      defined(CONFIG_ALPHA_LX164)
+# define NR_IRQS	35
 
 #elif defined(CONFIG_ALPHA_EB66)      || \
-defined(CONFIG_ALPHA_EB64P)     || \
-defined(CONFIG_ALPHA_MIKASA)
-# define NR_IRQS  32
+      defined(CONFIG_ALPHA_EB64P)     || \
+      defined(CONFIG_ALPHA_MIKASA)
+# define NR_IRQS	32
 
 #elif defined(CONFIG_ALPHA_ALCOR)     || \
-defined(CONFIG_ALPHA_MIATA)     || \
-defined(CONFIG_ALPHA_RUFFIAN)   || \
-defined(CONFIG_ALPHA_RX164)     || \
-defined(CONFIG_ALPHA_NORITAKE)
-# define NR_IRQS  48
+      defined(CONFIG_ALPHA_MIATA)     || \
+      defined(CONFIG_ALPHA_RUFFIAN)   || \
+      defined(CONFIG_ALPHA_RX164)     || \
+      defined(CONFIG_ALPHA_NORITAKE)
+# define NR_IRQS	48
 
 #elif defined(CONFIG_ALPHA_SABLE)     || \
-defined(CONFIG_ALPHA_SX164)
-# define NR_IRQS  40
+      defined(CONFIG_ALPHA_SX164)
+# define NR_IRQS	40
 
 #elif defined(CONFIG_ALPHA_DP264) || \
-defined(CONFIG_ALPHA_LYNX)  || \
-defined(CONFIG_ALPHA_SHARK) || \
-defined(CONFIG_ALPHA_EIGER)
-# define NR_IRQS  64
+      defined(CONFIG_ALPHA_LYNX)  || \
+      defined(CONFIG_ALPHA_SHARK) || \
+      defined(CONFIG_ALPHA_EIGER)
+# define NR_IRQS	64
 
 #elif defined(CONFIG_ALPHA_TITAN)
-#define NR_IRQS   80
+#define NR_IRQS		80
 
 #elif defined(CONFIG_ALPHA_RAWHIDE) || \
-defined(CONFIG_ALPHA_TAKARA)
-# define NR_IRQS  128
+	defined(CONFIG_ALPHA_TAKARA)
+# define NR_IRQS	128
 
 #elif defined(CONFIG_ALPHA_WILDFIRE)
-# define NR_IRQS  2048 /* enuff for 8 QBBs */
+# define NR_IRQS	2048 /* enuff for 8 QBBs */
 
 #elif defined(CONFIG_ALPHA_MARVEL)
-# define NR_IRQS  (32768 + 16)  /* marvel - 32 pids*/
+# define NR_IRQS	(32768 + 16) 	/* marvel - 32 pids*/
 
 #else /* everyone else */
-# define NR_IRQS  16
+# define NR_IRQS	16
 #endif
 
-static __inline__ int irq_canonicalize (int irq)
+static __inline__ int irq_canonicalize(int irq)
 {
-  /*
-   * XXX is this true for all Alpha's?  The old serial driver
-   * did it this way for years without any complaints, so....
-   */
-  return ( (irq == 2) ? 9 : irq);
+	/*
+	 * XXX is this true for all Alpha's?  The old serial driver
+	 * did it this way for years without any complaints, so....
+	 */
+	return ((irq == 2) ? 9 : irq);
 }
 
 struct pt_regs;
-extern void (*perf_irq) (unsigned long, struct pt_regs *);
+extern void (*perf_irq)(unsigned long, struct pt_regs *);
 
 #endif /* _ALPHA_IRQ_H */

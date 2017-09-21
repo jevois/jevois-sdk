@@ -19,8 +19,8 @@
 
 typedef struct
 {
-  void (*delay_us) (unsigned long us);
-  void (*delay_ms) (unsigned long ms);
+	void (*delay_us) (unsigned long us);
+	void (*delay_ms) (unsigned long ms);
 } hdmi_bsp_func;
 
 #ifndef NULL
@@ -29,62 +29,62 @@ typedef struct
 
 enum color_space
 {
-  BT601 = 1,
-  BT709,
-  EXT_CSC,
+	BT601 = 1,
+	BT709,
+	EXT_CSC,
 };
 
 struct video_para
 {
-  unsigned int      vic;
-  enum color_space  csc;
-  unsigned char     is_hdmi;
-  unsigned char     is_yuv;
-  unsigned char     is_hcts;
+	unsigned int 			vic;
+	enum color_space	csc;
+	unsigned char			is_hdmi;
+	unsigned char			is_yuv;
+	unsigned char			is_hcts;
 };
 
 enum audio_type
 {
-  PCM = 1,
-  AC3,
-  MPEG1,
-  MP3,
-  MPEG2,
-  AAC,
-  DTS,
-  ATRAC,
-  OBA,
-  DDP,
-  DTS_HD,
-  MAT,
-  DST,
-  WMA_PRO,
+	PCM = 1,
+	AC3,
+	MPEG1,
+	MP3,
+	MPEG2,
+	AAC,
+	DTS,
+	ATRAC,
+	OBA,
+	DDP,
+	DTS_HD,
+	MAT,
+	DST,
+	WMA_PRO,
 };
 
 struct audio_para
 {
-  enum  audio_type  type;
-  unsigned char     ca;
-  unsigned int      sample_rate;
-  unsigned int      sample_bit;
-  unsigned int      ch_num;
+	enum	audio_type	type;
+	unsigned char			ca;
+	unsigned int			sample_rate;
+	unsigned int			sample_bit;
+	unsigned int			ch_num;
 };
 
 extern unsigned char hdmi_mc_table[];
 extern unsigned int hdmi_mc_table_size;
 
-int bsp_hdmi_set_func (hdmi_bsp_func * func);
-void bsp_hdmi_set_addr (unsigned int base_addr);
-void bsp_hdmi_init (void);
-void bsp_hdmi_set_video_en (unsigned char enable);
-int bsp_hdmi_video (struct video_para * video);
-int bsp_hdmi_audio (struct audio_para * audio);
-int bsp_hdmi_ddc_read (char cmd, char pointer, char offset, int nbyte, char * pbuf);
-unsigned int bsp_hdmi_get_hpd (void);
-void bsp_hdmi_standby (void);
-void bsp_hdmi_hrst (void);
-void bsp_hdmi_hdl (void);
-void bsp_hdmi_set_version (unsigned int version);
-int bsp_hdmi_hdcp_err_check (void);
+int bsp_hdmi_set_func(hdmi_bsp_func *func);
+void bsp_hdmi_set_addr(unsigned int base_addr);
+void bsp_hdmi_init(void);
+void bsp_hdmi_set_video_en(unsigned char enable);
+int bsp_hdmi_video(struct video_para *video);
+int bsp_hdmi_audio(struct audio_para *audio);
+int bsp_hdmi_ddc_read(char cmd,char pointer,char offset,int nbyte,char * pbuf);
+unsigned int bsp_hdmi_get_hpd(void);
+void bsp_hdmi_standby(void);
+void bsp_hdmi_hrst(void);
+void bsp_hdmi_hdl(void);
+void bsp_hdmi_set_version(unsigned int version);
+int bsp_hdmi_hdcp_err_check(void);
 
 #endif

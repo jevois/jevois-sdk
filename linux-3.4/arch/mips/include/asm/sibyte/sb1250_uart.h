@@ -1,7 +1,7 @@
 /*  *********************************************************************
     *  SB1250 Board Support Package
     *
-    *  UART Constants       File: sb1250_uart.h
+    *  UART Constants				File: sb1250_uart.h
     *
     *  This module contains constants and macros useful for
     *  manipulating the SB1250's UARTs
@@ -99,9 +99,9 @@
 
 #define M_DUART_MODE_RESERVED2      _SB_MAKEMASK1(5)    /* must be zero */
 
-#define S_DUART_CHAN_MODE     6
+#define S_DUART_CHAN_MODE	    6
 #define M_DUART_CHAN_MODE           _SB_MAKEMASK(2, S_DUART_CHAN_MODE)
-#define V_DUART_CHAN_MODE(x)      _SB_MAKEVALUE(x, S_DUART_CHAN_MODE)
+#define V_DUART_CHAN_MODE(x)	    _SB_MAKEVALUE(x, S_DUART_CHAN_MODE)
 
 #define K_DUART_CHAN_MODE_NORMAL    0
 #define K_DUART_CHAN_MODE_LCL_LOOP  2
@@ -122,7 +122,7 @@
 #define M_DUART_TX_EN               _SB_MAKEMASK1(2)
 #define M_DUART_TX_DIS              _SB_MAKEMASK1(3)
 
-#define S_DUART_MISC_CMD      4
+#define S_DUART_MISC_CMD	    4
 #define M_DUART_MISC_CMD            _SB_MAKEMASK(3, S_DUART_MISC_CMD)
 #define V_DUART_MISC_CMD(x)         _SB_MAKEVALUE(x, S_DUART_MISC_CMD)
 
@@ -247,13 +247,13 @@
 
 #define M_DUART_ISR_BRK_A           _SB_MAKEMASK1(2)
 #define M_DUART_ISR_IN_A            _SB_MAKEMASK1(3)
-#define M_DUART_ISR_ALL_A     _SB_MAKEMASK(4, 0)
+#define M_DUART_ISR_ALL_A	    _SB_MAKEMASK(4, 0)
 
 #define M_DUART_ISR_TX_B            _SB_MAKEMASK1(4)
 #define M_DUART_ISR_RX_B            _SB_MAKEMASK1(5)
 #define M_DUART_ISR_BRK_B           _SB_MAKEMASK1(6)
 #define M_DUART_ISR_IN_B            _SB_MAKEMASK1(7)
-#define M_DUART_ISR_ALL_B     _SB_MAKEMASK(4, 4)
+#define M_DUART_ISR_ALL_B	    _SB_MAKEMASK(4, 4)
 
 /*
  * DUART Channel A Interrupt Status Register (Table 10-17)
@@ -266,7 +266,7 @@
 #define M_DUART_ISR_RX              _SB_MAKEMASK1(1)
 #define M_DUART_ISR_BRK             _SB_MAKEMASK1(2)
 #define M_DUART_ISR_IN              _SB_MAKEMASK1(3)
-#define M_DUART_ISR_ALL       _SB_MAKEMASK(4, 0)
+#define M_DUART_ISR_ALL		    _SB_MAKEMASK(4, 0)
 #define M_DUART_ISR_RESERVED        _SB_MAKEMASK(4, 4)
 
 /*
@@ -278,7 +278,7 @@
 #define M_DUART_IMR_RX_A            _SB_MAKEMASK1(1)
 #define M_DUART_IMR_BRK_A           _SB_MAKEMASK1(2)
 #define M_DUART_IMR_IN_A            _SB_MAKEMASK1(3)
-#define M_DUART_IMR_ALL_A     _SB_MAKEMASK(4, 0)
+#define M_DUART_IMR_ALL_A	    _SB_MAKEMASK(4, 0)
 
 #define M_DUART_IMR_TX_B            _SB_MAKEMASK1(4)
 #define M_DUART_IMR_RX_B            _SB_MAKEMASK1(5)
@@ -297,7 +297,7 @@
 #define M_DUART_IMR_RX              _SB_MAKEMASK1(1)
 #define M_DUART_IMR_BRK             _SB_MAKEMASK1(2)
 #define M_DUART_IMR_IN              _SB_MAKEMASK1(3)
-#define M_DUART_IMR_ALL       _SB_MAKEMASK(4, 0)
+#define M_DUART_IMR_ALL		    _SB_MAKEMASK(4, 0)
 #define M_DUART_IMR_RESERVED        _SB_MAKEMASK(4, 4)
 
 
@@ -335,9 +335,9 @@
 #define M_DUART_OPRR_RESERVED       _SB_MAKEMASK(4, 4)
 
 #define M_DUART_OUT_PIN_SET(chan) \
-  (chan == 0 ? M_DUART_OUT_PIN_SET0 : M_DUART_OUT_PIN_SET1)
+    (chan == 0 ? M_DUART_OUT_PIN_SET0 : M_DUART_OUT_PIN_SET1)
 #define M_DUART_OUT_PIN_CLR(chan) \
-  (chan == 0 ? M_DUART_OUT_PIN_CLR0 : M_DUART_OUT_PIN_CLR1)
+    (chan == 0 ? M_DUART_OUT_PIN_CLR0 : M_DUART_OUT_PIN_CLR1)
 
 #if SIBYTE_HDR_FEATURE(1250, PASS2) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
 /*

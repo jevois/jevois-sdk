@@ -3,13 +3,13 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-__attribute__ ( (unused) ) static void dummy (void)
+__attribute__((unused)) static void dummy(void)
 {
 }
 
-unsigned long get_version (void)
+unsigned long get_version(void)
 {
-  return XF_VERSION;
+	return XF_VERSION;
 }
 
 /* Reuse _exports.h with a little trickery to avoid bitrot */
@@ -35,8 +35,8 @@ unsigned long get_version (void)
 # define spi_xfer          dummy
 #endif
 
-void jumptable_init (void)
+void jumptable_init(void)
 {
-  gd->jt = malloc (XF_MAX * sizeof (void *) );
+	gd->jt = malloc(XF_MAX * sizeof(void *));
 #include <_exports.h>
 }

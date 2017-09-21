@@ -45,8 +45,8 @@
  * bound to Infiniband devices.  It is called on the client side of a
  * connection and replaces the call to rdma_resolve_route.
  */
-int rdma_set_ib_paths (struct rdma_cm_id * id,
-                       struct ib_sa_path_rec * path_rec, int num_paths);
+int rdma_set_ib_paths(struct rdma_cm_id *id,
+		      struct ib_sa_path_rec *path_rec, int num_paths);
 
 /* Global qkey for UDP QPs and multicast groups. */
 #define RDMA_UDP_QKEY 0x01234567

@@ -12,24 +12,24 @@
 #ifndef __LINUX_SND__STA32X_H
 #define __LINUX_SND__STA32X_H
 
-#define STA32X_OCFG_2CH   0
-#define STA32X_OCFG_2_1CH 1
-#define STA32X_OCFG_1CH   3
+#define STA32X_OCFG_2CH		0
+#define STA32X_OCFG_2_1CH	1
+#define STA32X_OCFG_1CH		3
 
-#define STA32X_OM_CH1   0
-#define STA32X_OM_CH2   1
-#define STA32X_OM_CH3   2
+#define STA32X_OM_CH1		0
+#define STA32X_OM_CH2		1
+#define STA32X_OM_CH3		2
 
-#define STA32X_THERMAL_ADJUSTMENT_ENABLE  1
-#define STA32X_THERMAL_RECOVERY_ENABLE    2
+#define STA32X_THERMAL_ADJUSTMENT_ENABLE	1
+#define STA32X_THERMAL_RECOVERY_ENABLE		2
 
 struct sta32x_platform_data {
-  int output_conf;
-  int ch1_output_mapping;
-  int ch2_output_mapping;
-  int ch3_output_mapping;
-  int thermal_conf;
-  int needs_esd_watchdog;
+	int output_conf;
+	int ch1_output_mapping;
+	int ch2_output_mapping;
+	int ch3_output_mapping;
+	int thermal_conf;
+	int needs_esd_watchdog;
 };
 
 #endif /* __LINUX_SND__STA32X_H */

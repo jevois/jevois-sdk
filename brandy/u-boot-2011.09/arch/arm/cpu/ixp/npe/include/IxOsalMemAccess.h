@@ -1,20 +1,20 @@
-/**
+/** 
  * @file IxOsalMemAccess.h
- *
+ * 
  * @brief Header file for memory access
- *
+ * 
  * @par
  * @version $Revision: 1.0 $
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -27,7 +27,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -40,7 +40,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  */
@@ -50,7 +50,7 @@
 
 
 /* Global BE switch
- *
+ * 
  *  Should be set only in BE mode and only if the component uses I/O memory.
  */
 
@@ -67,10 +67,10 @@
 #define IX_OSAL_STATIC_MEMORY_MAP
 
 
-/*
+/* 
  * SDRAM coherency mode
  * Must be defined to BE, LE_DATA_COHERENT or LE_ADDRESS_COHERENT.
- * The mode changes depending on OS
+ * The mode changes depending on OS 
  */
 #if defined (IX_OSAL_LINUX_BE) || defined (IX_OSAL_VXWORKS_BE)
 
@@ -102,8 +102,8 @@
  **************************************/
 
 /*
- * Only use customized mapping for LE.
- *
+ * Only use customized mapping for LE. 
+ * 
  */
 #if defined (IX_OSAL_VXWORKS_LE) || defined (IX_OSAL_LINUX_LE) || defined (IX_OSAL_WINCE_LE) || defined (IX_OSAL_EBOOT_LE)
 
@@ -146,11 +146,11 @@
 
 /* No more than one mapping can be defined for a component */
 #if   (defined (IX_OSAL_BE_MAPPING)    && defined (IX_OSAL_LE_AC_MAPPING))  \
-||(defined (IX_OSAL_BE_MAPPING)    && defined (IX_OSAL_LE_DC_MAPPING))  \
-||(defined (IX_OSAL_BE_MAPPING)    && defined (IX_OSAL_NO_MAPPING))     \
-||(defined (IX_OSAL_LE_DC_MAPPING) && defined (IX_OSAL_NO_MAPPING))     \
-||(defined (IX_OSAL_LE_DC_MAPPING) && defined (IX_OSAL_LE_AC_MAPPING))  \
-||(defined (IX_OSAL_LE_AC_MAPPING) && defined (IX_OSAL_NO_MAPPING))
+    ||(defined (IX_OSAL_BE_MAPPING)    && defined (IX_OSAL_LE_DC_MAPPING))  \
+    ||(defined (IX_OSAL_BE_MAPPING)    && defined (IX_OSAL_NO_MAPPING))     \
+    ||(defined (IX_OSAL_LE_DC_MAPPING) && defined (IX_OSAL_NO_MAPPING))     \
+    ||(defined (IX_OSAL_LE_DC_MAPPING) && defined (IX_OSAL_LE_AC_MAPPING))	\
+    ||(defined (IX_OSAL_LE_AC_MAPPING) && defined (IX_OSAL_NO_MAPPING))
 
 
 #ifdef IX_OSAL_BE_MAPPING
@@ -202,8 +202,8 @@
 
 /* SDRAM coherency cannot be defined in several ways */
 #if (defined (IX_SDRAM_BE) && (defined (IX_SDRAM_LE_DATA_COHERENT) || defined (IX_SDRAM_LE_ADDRESS_COHERENT))) \
-|| (defined (IX_SDRAM_LE_DATA_COHERENT) && (defined (IX_SDRAM_BE) || defined (IX_SDRAM_LE_ADDRESS_COHERENT))) \
-|| (defined (IX_SDRAM_LE_ADDRESS_COHERENT) && (defined (IX_SDRAM_BE) || defined (IX_SDRAM_LE_DATA_COHERENT)))
+    || (defined (IX_SDRAM_LE_DATA_COHERENT) && (defined (IX_SDRAM_BE) || defined (IX_SDRAM_LE_ADDRESS_COHERENT))) \
+    || (defined (IX_SDRAM_LE_ADDRESS_COHERENT) && (defined (IX_SDRAM_BE) || defined (IX_SDRAM_LE_DATA_COHERENT)))
 
 #error SDRAM coherency cannot be defined in more than one way
 
@@ -226,7 +226,7 @@
 
 #ifdef __linux
 
-/* Linux - specific cookie reads/writes.
+/* Linux - specific cookie reads/writes. 
   Redefine per OS if dynamic memory maps are used
   and I/O memory is accessed via functions instead of raw pointer access. */
 
@@ -246,72 +246,72 @@
 static __inline__ UINT32
 ixOsalWinCEReadLCookie (volatile UINT32 * lCookie)
 {
-  return *lCookie;
+    return *lCookie;
 }
 
 static __inline__ UINT16
 ixOsalWinCEReadWCookie (volatile UINT16 * wCookie)
 {
-  #if 0
-  UINT32 auxVal = * ( (volatile UINT32 *) wCookie);
-  if ( (unsigned) wCookie & 3)
-  { return (UINT16) (auxVal >> 16); }
-  else
-  { return (UINT16) (auxVal & 0xffff); }
-  #else
-  return *wCookie;
-  #endif
+#if 0
+    UINT32 auxVal = *((volatile UINT32 *) wCookie);
+    if ((unsigned) wCookie & 3)
+	return (UINT16) (auxVal >> 16);
+    else
+	return (UINT16) (auxVal & 0xffff);
+#else
+    return *wCookie;
+#endif
 }
 
 static __inline__ UINT8
 ixOsalWinCEReadBCookie (volatile UINT8 * bCookie)
 {
-  #if 0
-  UINT32 auxVal = * ( (volatile UINT32 *) bCookie);
-  return (UINT8) ( (auxVal >> (3 - ( ( (unsigned) bCookie & 3) << 3) ) & 0xff) );
-  #else
-  return *bCookie;
-  #endif
+#if 0
+    UINT32 auxVal = *((volatile UINT32 *) bCookie);
+    return (UINT8) ((auxVal >> (3 - (((unsigned) bCookie & 3) << 3)) & 0xff));
+#else
+    return *bCookie;
+#endif
 }
 
 static __inline__ void
 ixOsalWinCEWriteLCookie (volatile UINT32 * lCookie, UINT32 lVal)
 {
-  *lCookie = lVal;
+    *lCookie = lVal;
 }
 
 static __inline__ void
 ixOsalWinCEWriteWCookie (volatile UINT16 * wCookie, UINT16 wVal)
 {
-  #if 0
-  volatile UINT32 * auxCookie =
-    (volatile UINT32 *) ( (unsigned) wCookie & ~3);
-  if ( (unsigned) wCookie & 3)
-  {
-    *auxCookie &= 0xffff;
-    *auxCookie |= (UINT32) wVal << 16;
-  }
-  else
-  {
-    *auxCookie &= ~0xffff;
-    *auxCookie |= (UINT32) wVal & 0xffff;
-  }
-  #else
-  *wCookie = wVal;
-  #endif
+#if 0
+    volatile UINT32 *auxCookie =
+	(volatile UINT32 *) ((unsigned) wCookie & ~3);
+    if ((unsigned) wCookie & 3)
+    {
+	*auxCookie &= 0xffff;
+	*auxCookie |= (UINT32) wVal << 16;
+    }
+    else
+    {
+	*auxCookie &= ~0xffff;
+	*auxCookie |= (UINT32) wVal & 0xffff;
+    }
+#else
+    *wCookie = wVal;
+#endif
 }
 
 static __inline__ void
 ixOsalWinCEWriteBCookie (volatile UINT8 * bCookie, UINT8 bVal)
 {
-  #if 0
-  volatile UINT32 * auxCookie =
-    (volatile UINT32 *) ( (unsigned) bCookie & ~3);
-  *auxCookie &= 0xff << (3 - ( ( (unsigned) bCookie & 3) << 3) );
-  *auxCookie |= (UINT32) bVal << (3 - ( ( (unsigned) bCookie & 3) << 3) );
-  #else
-  *bCookie = bVal;
-  #endif
+#if 0
+    volatile UINT32 *auxCookie =
+	(volatile UINT32 *) ((unsigned) bCookie & ~3);
+    *auxCookie &= 0xff << (3 - (((unsigned) bCookie & 3) << 3));
+    *auxCookie |= (UINT32) bVal << (3 - (((unsigned) bCookie & 3) << 3));
+#else
+    *bCookie = bVal;
+#endif
 }
 
 
@@ -325,7 +325,7 @@ ixOsalWinCEWriteBCookie (volatile UINT8 * bCookie, UINT8 bVal)
 #endif /* wince */
 
 #if defined (__vxworks) || (defined (__linux) && defined (IX_OSAL_STATIC_MEMORY_MAP)) || \
-(defined (__wince) && defined (IX_OSAL_STATIC_MEMORY_MAP))
+                           (defined (__wince) && defined (IX_OSAL_STATIC_MEMORY_MAP))
 
 #define IX_OSAL_READ_LONG_IO(wAddr)            IX_OSAL_READ_LONG_RAW(wAddr)
 #define IX_OSAL_READ_SHORT_IO(sAddr)           IX_OSAL_READ_SHORT_RAW(sAddr)
@@ -335,7 +335,7 @@ ixOsalWinCEWriteBCookie (volatile UINT8 * bCookie, UINT8 bVal)
 #define IX_OSAL_WRITE_BYTE_IO(bAddr, bData)    IX_OSAL_WRITE_BYTE_RAW(bAddr, bData)
 
 #elif (defined (__linux) && !defined (IX_OSAL_STATIC_MEMORY_MAP)) || \
-(defined (__wince) && !defined (IX_OSAL_STATIC_MEMORY_MAP))
+      (defined (__wince) && !defined (IX_OSAL_STATIC_MEMORY_MAP))
 
 #ifndef __wince
 #include <asm/io.h>
@@ -371,29 +371,29 @@ ixOsalWinCEWriteBCookie (volatile UINT8 * bCookie, UINT8 bVal)
 static __inline__ UINT32
 ixOsalDataCoherentLongReadSwap (volatile UINT32 * wAddr)
 {
-  UINT32 wData = IX_OSAL_READ_LONG_IO (wAddr);
-  return IX_OSAL_LE_DC_BUSTOXSL (wData);
+    UINT32 wData = IX_OSAL_READ_LONG_IO (wAddr);
+    return IX_OSAL_LE_DC_BUSTOXSL (wData);
 }
 
 static __inline__ UINT16
 ixOsalDataCoherentShortReadSwap (volatile UINT16 * sAddr)
 {
-  UINT16 sData = IX_OSAL_READ_SHORT_IO (sAddr);
-  return IX_OSAL_LE_DC_BUSTOXSS (sData);
+    UINT16 sData = IX_OSAL_READ_SHORT_IO (sAddr);
+    return IX_OSAL_LE_DC_BUSTOXSS (sData);
 }
 
 static __inline__ void
 ixOsalDataCoherentLongWriteSwap (volatile UINT32 * wAddr, UINT32 wData)
 {
-  wData = IX_OSAL_LE_DC_XSTOBUSL (wData);
-  IX_OSAL_WRITE_LONG_IO (wAddr, wData);
+    wData = IX_OSAL_LE_DC_XSTOBUSL (wData);
+    IX_OSAL_WRITE_LONG_IO (wAddr, wData);
 }
 
 static __inline__ void
 ixOsalDataCoherentShortWriteSwap (volatile UINT16 * sAddr, UINT16 sData)
 {
-  sData = IX_OSAL_LE_DC_XSTOBUSS (sData);
-  IX_OSAL_WRITE_SHORT_IO (sAddr, sData);
+    sData = IX_OSAL_LE_DC_XSTOBUSS (sData);
+    IX_OSAL_WRITE_SHORT_IO (sAddr, sData);
 }
 
 /* Define LE DC macros */
@@ -407,30 +407,30 @@ ixOsalDataCoherentShortWriteSwap (volatile UINT16 * sAddr, UINT16 sData)
 
 #if defined (IX_OSAL_BE_MAPPING)
 
-#define IX_OSAL_READ_LONG(wAddr)            IX_OSAL_READ_LONG_BE(wAddr)
-#define IX_OSAL_READ_SHORT(sAddr)         IX_OSAL_READ_SHORT_BE(sAddr)
-#define IX_OSAL_READ_BYTE(bAddr)          IX_OSAL_READ_BYTE_BE(bAddr)
-#define IX_OSAL_WRITE_LONG(wAddr, wData)  IX_OSAL_WRITE_LONG_BE(wAddr, wData)
-#define IX_OSAL_WRITE_SHORT(sAddr, sData) IX_OSAL_WRITE_SHORT_BE(sAddr, sData)
-#define IX_OSAL_WRITE_BYTE(bAddr, bData)  IX_OSAL_WRITE_BYTE_BE(bAddr, bData)
+#define IX_OSAL_READ_LONG(wAddr)            IX_OSAL_READ_LONG_BE(wAddr) 
+#define IX_OSAL_READ_SHORT(sAddr)	        IX_OSAL_READ_SHORT_BE(sAddr) 
+#define IX_OSAL_READ_BYTE(bAddr)	        IX_OSAL_READ_BYTE_BE(bAddr) 
+#define IX_OSAL_WRITE_LONG(wAddr, wData)	IX_OSAL_WRITE_LONG_BE(wAddr, wData)
+#define IX_OSAL_WRITE_SHORT(sAddr, sData)	IX_OSAL_WRITE_SHORT_BE(sAddr, sData)
+#define IX_OSAL_WRITE_BYTE(bAddr, bData)	IX_OSAL_WRITE_BYTE_BE(bAddr, bData)
 
 #elif defined (IX_OSAL_LE_AC_MAPPING)
 
-#define IX_OSAL_READ_LONG(wAddr)            IX_OSAL_READ_LONG_LE_AC(wAddr)
-#define IX_OSAL_READ_SHORT(sAddr)         IX_OSAL_READ_SHORT_LE_AC(sAddr)
-#define IX_OSAL_READ_BYTE(bAddr)          IX_OSAL_READ_BYTE_LE_AC(bAddr)
-#define IX_OSAL_WRITE_LONG(wAddr, wData)  IX_OSAL_WRITE_LONG_LE_AC(wAddr, wData)
-#define IX_OSAL_WRITE_SHORT(sAddr, sData) IX_OSAL_WRITE_SHORT_LE_AC(sAddr, sData)
-#define IX_OSAL_WRITE_BYTE(bAddr, bData)  IX_OSAL_WRITE_BYTE_LE_AC(bAddr, bData)
+#define IX_OSAL_READ_LONG(wAddr)            IX_OSAL_READ_LONG_LE_AC(wAddr) 
+#define IX_OSAL_READ_SHORT(sAddr)	        IX_OSAL_READ_SHORT_LE_AC(sAddr) 
+#define IX_OSAL_READ_BYTE(bAddr)	        IX_OSAL_READ_BYTE_LE_AC(bAddr) 
+#define IX_OSAL_WRITE_LONG(wAddr, wData)	IX_OSAL_WRITE_LONG_LE_AC(wAddr, wData)
+#define IX_OSAL_WRITE_SHORT(sAddr, sData)	IX_OSAL_WRITE_SHORT_LE_AC(sAddr, sData)
+#define IX_OSAL_WRITE_BYTE(bAddr, bData)	IX_OSAL_WRITE_BYTE_LE_AC(bAddr, bData)
 
 #elif defined (IX_OSAL_LE_DC_MAPPING)
 
-#define IX_OSAL_READ_LONG(wAddr)            IX_OSAL_READ_LONG_LE_DC(wAddr)
-#define IX_OSAL_READ_SHORT(sAddr)         IX_OSAL_READ_SHORT_LE_DC(sAddr)
-#define IX_OSAL_READ_BYTE(bAddr)          IX_OSAL_READ_BYTE_LE_DC(bAddr)
-#define IX_OSAL_WRITE_LONG(wAddr, wData)  IX_OSAL_WRITE_LONG_LE_DC(wAddr, wData)
-#define IX_OSAL_WRITE_SHORT(sAddr, sData) IX_OSAL_WRITE_SHORT_LE_DC(sAddr, sData)
-#define IX_OSAL_WRITE_BYTE(bAddr, bData)  IX_OSAL_WRITE_BYTE_LE_DC(bAddr, bData)
+#define IX_OSAL_READ_LONG(wAddr)            IX_OSAL_READ_LONG_LE_DC(wAddr) 
+#define IX_OSAL_READ_SHORT(sAddr)	        IX_OSAL_READ_SHORT_LE_DC(sAddr) 
+#define IX_OSAL_READ_BYTE(bAddr)	        IX_OSAL_READ_BYTE_LE_DC(bAddr) 
+#define IX_OSAL_WRITE_LONG(wAddr, wData)	IX_OSAL_WRITE_LONG_LE_DC(wAddr, wData)
+#define IX_OSAL_WRITE_SHORT(sAddr, sData)	IX_OSAL_WRITE_SHORT_LE_DC(sAddr, sData)
+#define IX_OSAL_WRITE_BYTE(bAddr, bData)	IX_OSAL_WRITE_BYTE_LE_DC(bAddr, bData)
 
 #endif   /* End of BE and LE coherency mode switch */
 

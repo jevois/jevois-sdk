@@ -1,7 +1,7 @@
 /* linux/arch/arm/mach-exynos4/include/mach/pmu.h
  *
  * Copyright (c) 2011 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com/
+ *		http://www.samsung.com/
  *
  * EXYNOS4210 - PMU(Power Management Unit) support
  *
@@ -13,22 +13,22 @@
 #ifndef __ASM_ARCH_PMU_H
 #define __ASM_ARCH_PMU_H __FILE__
 
-#define PMU_TABLE_END NULL
+#define PMU_TABLE_END	NULL
 
 enum sys_powerdown {
-  SYS_AFTR,
-  SYS_LPA,
-  SYS_SLEEP,
-  NUM_SYS_POWERDOWN,
+	SYS_AFTR,
+	SYS_LPA,
+	SYS_SLEEP,
+	NUM_SYS_POWERDOWN,
 };
 
 extern unsigned long l2x0_regs_phys;
 struct exynos4_pmu_conf {
-  void __iomem * reg;
-  unsigned int val[NUM_SYS_POWERDOWN];
+	void __iomem *reg;
+	unsigned int val[NUM_SYS_POWERDOWN];
 };
 
-extern void exynos4_sys_powerdown_conf (enum sys_powerdown mode);
-extern void s3c_cpu_resume (void);
+extern void exynos4_sys_powerdown_conf(enum sys_powerdown mode);
+extern void s3c_cpu_resume(void);
 
 #endif /* __ASM_ARCH_PMU_H */

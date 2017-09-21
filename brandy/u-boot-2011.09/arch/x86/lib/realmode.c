@@ -32,65 +32,65 @@ extern ulong __realmode_start;
 extern ulong __realmode_size;
 extern char realmode_enter;
 
-int realmode_setup (void)
+int realmode_setup(void)
 {
-  ulong realmode_start = (ulong) &__realmode_start + gd->reloc_off;
-  ulong realmode_size = (ulong) &__realmode_size;
-  
-  /* copy the realmode switch code */
-  if (realmode_size > (REALMODE_MAILBOX - (char *) REALMODE_BASE) ) {
-    printf ("realmode switch too large (%ld bytes, max is %d)\n",
-            realmode_size,
-            (REALMODE_MAILBOX - (char *) REALMODE_BASE) );
-    return -1;
-  }
-  
-  memcpy ( (char *) REALMODE_BASE, (void *) realmode_start, realmode_size);
-  asm ("wbinvd\n");
-  
-  return 0;
+	ulong realmode_start = (ulong)&__realmode_start + gd->reloc_off;
+	ulong realmode_size = (ulong)&__realmode_size;
+
+	/* copy the realmode switch code */
+	if (realmode_size > (REALMODE_MAILBOX - (char *)REALMODE_BASE)) {
+		printf("realmode switch too large (%ld bytes, max is %d)\n",
+		       realmode_size,
+		       (REALMODE_MAILBOX - (char *)REALMODE_BASE));
+		return -1;
+	}
+
+	memcpy((char *)REALMODE_BASE, (void *)realmode_start, realmode_size);
+	asm("wbinvd\n");
+
+	return 0;
 }
 
-int enter_realmode (u16 seg, u16 off, struct pt_regs * in, struct pt_regs * out)
+int enter_realmode(u16 seg, u16 off, struct pt_regs *in, struct pt_regs *out)
 {
 
-  /* setup out thin bios emulation */
-  if (bios_setup() )
-  { return -1; }
-  
-  if (realmode_setup() )
-  { return -1; }
-  
-  in->eip = off;
-  in->xcs = seg;
-  if (3 > (in->esp & 0xffff) ) {
-    printf ("Warning: entering realmode with sp < 4 will fail\n");
-  }
-  
-  memcpy (REALMODE_MAILBOX, in, sizeof (struct pt_regs) );
-  asm ("wbinvd\n");
-  
-  __asm__ volatile (
-    "lcall $0x20,%0\n"  : :  "i" (&realmode_enter) );
-    
-  asm ("wbinvd\n");
-  memcpy (out, REALMODE_MAILBOX, sizeof (struct pt_regs) );
-  
-  return out->eax;
+	/* setup out thin bios emulation */
+	if (bios_setup())
+		return -1;
+
+	if (realmode_setup())
+		return -1;
+
+	in->eip = off;
+	in->xcs = seg;
+	if (3>(in->esp & 0xffff)) {
+		printf("Warning: entering realmode with sp < 4 will fail\n");
+	}
+
+	memcpy(REALMODE_MAILBOX, in, sizeof(struct pt_regs));
+	asm("wbinvd\n");
+
+	__asm__ volatile (
+		 "lcall $0x20,%0\n"  : :  "i" (&realmode_enter) );
+
+	asm("wbinvd\n");
+	memcpy(out, REALMODE_MAILBOX, sizeof(struct pt_regs));
+
+	return out->eax;
 }
 
 
 /* This code is supposed to access a realmode interrupt
  * it does currently not work for me */
-int enter_realmode_int (u8 lvl, struct pt_regs * in, struct pt_regs * out)
+int enter_realmode_int(u8 lvl, struct pt_regs *in, struct pt_regs *out)
 {
-  /* place two instructions at 0x700 */
-  writeb (0xcd, 0x700); /* int $lvl */
-  writeb (lvl, 0x701);
-  writeb (0xcb, 0x702); /* lret */
-  asm ("wbinvd\n");
-  
-  enter_realmode (0x00, 0x700, in, out);
-  
-  return out->eflags & 1;
+	/* place two instructions at 0x700 */
+	writeb(0xcd, 0x700);  /* int $lvl */
+	writeb(lvl, 0x701);
+	writeb(0xcb, 0x702);  /* lret */
+	asm("wbinvd\n");
+
+	enter_realmode(0x00, 0x700, in, out);
+
+	return out->eflags&1;
 }

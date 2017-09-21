@@ -362,16 +362,16 @@ err: these values should match;
 #define CFG_DRV_ACT_RANGES_STA_4_TOP    1  
 
 #if defined HCF_CFG_PRI_1_TOP || defined HCF_CFG_PRI_1_BOTTOM
-err: PRI_1 not supported for H - I;
+err: PRI_1 not supported for H-I;  
 #endif
 
 #if defined HCF_CFG_PRI_2_TOP || defined HCF_CFG_PRI_2_BOTTOM
-err: PRI_2 not supported for H - I;
+err: PRI_2 not supported for H-I;  
 #endif
 
 #ifdef HCF_CFG_PRI_3_TOP                                   
-#if HCF_CFG_PRI_3_TOP == 0 ||           \
-CFG_DRV_ACT_RANGES_PRI_3_BOTTOM <= HCF_CFG_PRI_3_TOP && HCF_CFG_PRI_3_TOP <= CFG_DRV_ACT_RANGES_PRI_3_TOP
+#if HCF_CFG_PRI_3_TOP == 0 ||						\
+	CFG_DRV_ACT_RANGES_PRI_3_BOTTOM <= HCF_CFG_PRI_3_TOP && HCF_CFG_PRI_3_TOP <= CFG_DRV_ACT_RANGES_PRI_3_TOP
 #undef CFG_DRV_ACT_RANGES_PRI_3_TOP
 #define CFG_DRV_ACT_RANGES_PRI_3_TOP    HCF_CFG_PRI_3_TOP
 #else
@@ -390,24 +390,24 @@ err: ;
 
 
 #if defined HCF_CFG_HSI_0_TOP || defined HCF_CFG_HSI_0_BOTTOM
-err: HSI_0 not supported for H - I;
+err: HSI_0 not supported for H-I;  
 #endif
 
 #if defined HCF_CFG_HSI_1_TOP || defined HCF_CFG_HSI_1_BOTTOM
-err: HSI_1 not supported for H - I;
+err: HSI_1 not supported for H-I;  
 #endif
 
 #if defined HCF_CFG_HSI_2_TOP || defined HCF_CFG_HSI_2_BOTTOM
-err: HSI_2 not supported for H - I;
+err: HSI_2 not supported for H-I;  
 #endif
 
 #if defined HCF_CFG_HSI_3_TOP || defined HCF_CFG_HSI_3_BOTTOM
-err: HSI_3 not supported for H - I;
+err: HSI_3 not supported for H-I;  
 #endif
 
 #ifdef HCF_CFG_HSI_4_TOP                                   
-#if HCF_CFG_HSI_4_TOP == 0 ||           \
-CFG_DRV_ACT_RANGES_HSI_4_BOTTOM <= CF_CFG_HSI_4_TOP && HCF_CFG_HSI_4_TOP <= CFG_DRV_ACT_RANGES_HSI_4_TOP
+#if HCF_CFG_HSI_4_TOP == 0 ||						\
+	CFG_DRV_ACT_RANGES_HSI_4_BOTTOM <= CF_CFG_HSI_4_TOP && HCF_CFG_HSI_4_TOP <= CFG_DRV_ACT_RANGES_HSI_4_TOP
 #undef CFG_DRV_ACT_RANGES_HSI_4_TOP
 #define CFG_DRV_ACT_RANGES_HSI_4_TOP    HCF_CFG_HSI_4_TOP
 #else
@@ -425,8 +425,8 @@ err: ;
 #endif
 
 #ifdef HCF_CFG_HSI_5_TOP                                   
-#if HCF_CFG_HSI_5_TOP == 0 ||           \
-CFG_DRV_ACT_RANGES_HSI_5_BOTTOM <= CF_CFG_HSI_5_TOP && HCF_CFG_HSI_5_TOP <= CFG_DRV_ACT_RANGES_HSI_5_TOP
+#if HCF_CFG_HSI_5_TOP == 0 ||						\
+	CFG_DRV_ACT_RANGES_HSI_5_BOTTOM <= CF_CFG_HSI_5_TOP && HCF_CFG_HSI_5_TOP <= CFG_DRV_ACT_RANGES_HSI_5_TOP
 #undef CFG_DRV_ACT_RANGES_HSI_5_TOP
 #define CFG_DRV_ACT_RANGES_HSI_5_TOP    HCF_CFG_HSI_5_TOP
 #else
@@ -443,12 +443,12 @@ err: ;
 #endif
 #endif
 #if defined HCF_CFG_APF_1_TOP || defined HCF_CFG_APF_1_BOTTOM
-err: APF_1 not supported for H - I;
+err: APF_1 not supported for H-I;  
 #endif
 
 #ifdef HCF_CFG_APF_2_TOP                                   
-#if HCF_CFG_APF_2_TOP == 0 ||           \
-CFG_DRV_ACT_RANGES_APF_2_BOTTOM <= HCF_CFG_APF_2_TOP && HCF_CFG_APF_2_TOP <= CFG_DRV_ACT_RANGES_APF_2_TOP
+#if HCF_CFG_APF_2_TOP == 0 ||						\
+	CFG_DRV_ACT_RANGES_APF_2_BOTTOM <= HCF_CFG_APF_2_TOP && HCF_CFG_APF_2_TOP <= CFG_DRV_ACT_RANGES_APF_2_TOP
 #undef CFG_DRV_ACT_RANGES_APF_2_TOP
 #define CFG_DRV_ACT_RANGES_APF_2_TOP    HCF_CFG_APF_2_TOP
 #else
@@ -466,12 +466,12 @@ err: ;
 #endif
 
 #if defined HCF_CFG_STA_1_TOP || defined HCF_CFG_STA_1_BOTTOM
-err: STA_1 not supported for H - I;
+err: STA_1 not supported for H-I;  
 #endif
 
 #ifdef HCF_CFG_STA_2_TOP                                   
-#if HCF_CFG_STA_2_TOP == 0 ||           \
-CFG_DRV_ACT_RANGES_STA_2_BOTTOM <= HCF_CFG_STA_2_TOP && HCF_CFG_STA_2_TOP <= CFG_DRV_ACT_RANGES_STA_2_TOP
+#if HCF_CFG_STA_2_TOP == 0 ||						\
+	CFG_DRV_ACT_RANGES_STA_2_BOTTOM <= HCF_CFG_STA_2_TOP && HCF_CFG_STA_2_TOP <= CFG_DRV_ACT_RANGES_STA_2_TOP
 #undef CFG_DRV_ACT_RANGES_STA_2_TOP
 #define CFG_DRV_ACT_RANGES_STA_2_TOP    HCF_CFG_STA_2_TOP
 #else
@@ -494,11 +494,11 @@ err: ;
 /************************************************************************************************/
 
 #ifdef HCF_SLEEP
-#define MSF_WAIT(x) do {            \
-    PROT_CNT_INI;           \
-    HCF_WAIT_WHILE((IPW(HREG_IO) & HREG_IO_WOKEN_UP) == 0); \
-    HCFASSERT( prot_cnt, IPW( HREG_IO ) );      \
-  } while (0)
+#define MSF_WAIT(x) do {						\
+		PROT_CNT_INI;						\
+		HCF_WAIT_WHILE((IPW(HREG_IO) & HREG_IO_WOKEN_UP) == 0); \
+		HCFASSERT( prot_cnt, IPW( HREG_IO ) );			\
+	} while (0)
 #else
 #define MSF_WAIT(x) do { } while (0)
 #endif
@@ -512,10 +512,10 @@ err: ;
 #endif
 
 #if ( (HCF_TYPE) & HCF_TYPE_HII5 ) == 0
-#define DAWA_ACK( mask) do {            \
-    OPW( HREG_EV_ACK, mask | HREG_EV_ACK_REG_READY ); \
-    OPW( HREG_EV_ACK, (mask & ~HREG_EV_ALLOC) | HREG_EV_ACK_REG_READY ); \
-  } while (0)
+#define DAWA_ACK( mask) do {						\
+		OPW( HREG_EV_ACK, mask | HREG_EV_ACK_REG_READY );	\
+		OPW( HREG_EV_ACK, (mask & ~HREG_EV_ALLOC) | HREG_EV_ACK_REG_READY ); \
+	} while (0)
 #define DAWA_ZERO_FID(reg) OPW( reg, 0 )
 #else
 #define DAWA_ACK( mask)   OPW( HREG_EV_ACK, mask )
@@ -577,22 +577,22 @@ err: ;
 #endif
 
 #if defined HCF_EX_INT
-; ? out dated checking
-err : you used an invalid bitmask;
+;? out dated checking
+err: you used an invalid bitmask;
 #endif
 
 #if 0
 #if HCF_EX_INT_TICK != HREG_EV_TICK
-; ? out dated checking
-err : someone redefined these macros while the implemenation assumes they are equal;
+;? out dated checking
+err: someone redefined these macros while the implemenation assumes they are equal;
 #endif
 #if HCF_EX_INT_TX_OK != HFS_TX_CNTL_TX_OK || HFS_TX_CNTL_TX_OK != HREG_EV_TX_OK
-; ? out dated checking
-err : someone redefined these macros while the implemenation assumes they are equal;
+;? out dated checking
+err: someone redefined these macros while the implemenation assumes they are equal;
 #endif
 #if HCF_EX_INT_TX_EX != HFS_TX_CNTL_TX_EX || HFS_TX_CNTL_TX_EX != HREG_EV_TX_EX
-; ? out dated checking
-err : someone redefined these macros while the implemenation assumes they are equal;
+;? out dated checking
+err: someone redefined these macros while the implemenation assumes they are equal;
 #endif
 #endif
 
@@ -609,21 +609,21 @@ err : someone redefined these macros while the implemenation assumes they are eq
 #define HCFASSERT(x,q) do { if (!(x)) {mdd_assert(ifbp, __LINE__, q );} } while(0)
 #define MMDASSERT(x,q) {if (!(x)) {mdd_assert( assert_ifbp, __LINE__ + FILE_NAME_OFFSET, q );}}
 
-#define HCFLOGENTRY( where, what ) do {         \
-    if ( (ifbp->IFB_AssertWhere = where) <= 15 ) {    \
-      HCFASSERT( (ifbp->IFB_AssertTrace & 1<<((where)&0xF)) == 0, ifbp->IFB_AssertTrace ); \
-      ifbp->IFB_AssertTrace |= 1<<((where)&0xF);  \
-    }             \
-    HCFTRACE(ifbp, where );         \
-    HCFTRACEVALUE(ifbp, what );       \
-  } while (0)
+#define HCFLOGENTRY( where, what ) do {					\
+		if ( (ifbp->IFB_AssertWhere = where) <= 15 ) {		\
+			HCFASSERT( (ifbp->IFB_AssertTrace & 1<<((where)&0xF)) == 0, ifbp->IFB_AssertTrace ); \
+			ifbp->IFB_AssertTrace |= 1<<((where)&0xF);	\
+		}							\
+		HCFTRACE(ifbp, where );					\
+		HCFTRACEVALUE(ifbp, what );				\
+	} while (0)
 
-#define HCFLOGEXIT( where ) do {          \
-    if ( (ifbp->IFB_AssertWhere = where) <= 15 ) {    \
-      ifbp->IFB_AssertTrace &= ~(1<<((where)&0xF)); \
-    }             \
-    HCFTRACE(ifbp, (where)|HCF_TRACE_EXIT );    \
-  } while (0)
+#define HCFLOGEXIT( where ) do {					\
+		if ( (ifbp->IFB_AssertWhere = where) <= 15 ) {		\
+			ifbp->IFB_AssertTrace &= ~(1<<((where)&0xF));	\
+		}							\
+		HCFTRACE(ifbp, (where)|HCF_TRACE_EXIT );		\
+	} while (0)
 
 #else
 #define HCFASSERT( x, q ) do { } while(0)

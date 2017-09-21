@@ -28,9 +28,9 @@
 
 /* WIP: Wireless keyboard on SMC
  */
-int drv_wlkbd_init (void)
+int	drv_wlkbd_init (void)
 {
-  return 0 ;
+    return 0 ;
 }
 
-#endif  /* CONFIG_WL_4PPM_KEYBOARD */
+#endif	/* CONFIG_WL_4PPM_KEYBOARD */

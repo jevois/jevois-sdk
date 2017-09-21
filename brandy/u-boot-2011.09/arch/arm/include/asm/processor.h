@@ -20,19 +20,19 @@
 #define FP_SIZE 35
 
 struct fp_hard_struct {
-  unsigned int save[FP_SIZE];   /* as yet undefined */
+	unsigned int save[FP_SIZE];		/* as yet undefined */
 };
 
 struct fp_soft_struct {
-  unsigned int save[FP_SIZE];   /* undefined information */
+	unsigned int save[FP_SIZE];		/* undefined information */
 };
 
 union fp_state {
-  struct fp_hard_struct hard;
-  struct fp_soft_struct soft;
+	struct fp_hard_struct	hard;
+	struct fp_soft_struct	soft;
 };
 
-typedef unsigned long mm_segment_t;   /* domain register  */
+typedef unsigned long mm_segment_t;		/* domain register	*/
 
 #ifdef __KERNEL__
 
@@ -42,92 +42,92 @@ typedef unsigned long mm_segment_t;   /* domain register  */
 
 #include <asm/atomic.h>
 #include <asm/ptrace.h>
-#if 0 /* XXX###XXX */
+#if 0	/* XXX###XXX */
 #include <asm/arch/memory.h>
-#endif  /* XXX###XXX */
+#endif	/* XXX###XXX */
 #include <asm/proc/processor.h>
 #include <asm/types.h>
 
 union debug_insn {
-  u32 arm;
-  u16 thumb;
+	u32	arm;
+	u16	thumb;
 };
 
 struct debug_entry {
-  u32     address;
-  union debug_insn  insn;
+	u32			address;
+	union debug_insn	insn;
 };
 
 struct debug_info {
-  int     nsaved;
-  struct debug_entry  bp[2];
+	int			nsaved;
+	struct debug_entry	bp[2];
 };
 
 struct thread_struct {
-  atomic_t      refcount;
-  /* fault info   */
-  unsigned long     address;
-  unsigned long     trap_no;
-  unsigned long     error_code;
-  /* floating point */
-  union fp_state      fpstate;
-  /* debugging    */
-  struct debug_info   debug;
-  /* context info   */
-  struct context_save_struct * save;
-  EXTRA_THREAD_STRUCT
+	atomic_t			refcount;
+							/* fault info	  */
+	unsigned long			address;
+	unsigned long			trap_no;
+	unsigned long			error_code;
+							/* floating point */
+	union fp_state			fpstate;
+							/* debugging	  */
+	struct debug_info		debug;
+							/* context info	  */
+	struct context_save_struct	*save;
+	EXTRA_THREAD_STRUCT
 };
 
-#define INIT_THREAD  {          \
-  refcount: ATOMIC_INIT(1),     \
-    EXTRA_THREAD_STRUCT_INIT      \
-  }
+#define INIT_THREAD  {					\
+	refcount:	ATOMIC_INIT(1),			\
+	EXTRA_THREAD_STRUCT_INIT			\
+}
 
 /*
  * Return saved PC of a blocked thread.
  */
-static inline unsigned long thread_saved_pc (struct thread_struct * t)
+static inline unsigned long thread_saved_pc(struct thread_struct *t)
 {
-  return t->save ? pc_pointer (t->save->pc) : 0;
+	return t->save ? pc_pointer(t->save->pc) : 0;
 }
 
-static inline unsigned long thread_saved_fp (struct thread_struct * t)
+static inline unsigned long thread_saved_fp(struct thread_struct *t)
 {
-  return t->save ? t->save->fp : 0;
+	return t->save ? t->save->fp : 0;
 }
 
 /* Forward declaration, a strange C thing */
 struct task_struct;
 
 /* Free all resources held by a thread. */
-extern void release_thread (struct task_struct *);
+extern void release_thread(struct task_struct *);
 
 /* Copy and release all segment info associated with a VM */
-#define copy_segments(tsk, mm)    do { } while (0)
-#define release_segments(mm)    do { } while (0)
+#define copy_segments(tsk, mm)		do { } while (0)
+#define release_segments(mm)		do { } while (0)
 
-unsigned long get_wchan (struct task_struct * p);
+unsigned long get_wchan(struct task_struct *p);
 
-#define THREAD_SIZE (8192)
+#define THREAD_SIZE	(8192)
 
-extern struct task_struct * alloc_task_struct (void);
-extern void __free_task_struct (struct task_struct *);
-#define get_task_struct(p)  atomic_inc(&(p)->thread.refcount)
-#define free_task_struct(p)         \
-  do {               \
-    if (atomic_dec_and_test(&(p)->thread.refcount))   \
-      __free_task_struct((p));      \
-  } while (0)
+extern struct task_struct *alloc_task_struct(void);
+extern void __free_task_struct(struct task_struct *);
+#define get_task_struct(p)	atomic_inc(&(p)->thread.refcount)
+#define free_task_struct(p)					\
+ do {								\
+	if (atomic_dec_and_test(&(p)->thread.refcount))		\
+		__free_task_struct((p));			\
+ } while (0)
 
-#define init_task (init_task_union.task)
-#define init_stack  (init_task_union.stack)
+#define init_task	(init_task_union.task)
+#define init_stack	(init_task_union.stack)
 
-#define cpu_relax() barrier()
+#define cpu_relax()	barrier()
 
 /*
  * Create a new kernel thread
  */
-extern int arch_kernel_thread (int (*fn) (void *), void * arg, unsigned long flags);
+extern int arch_kernel_thread(int (*fn)(void *), void *arg, unsigned long flags);
 
 #endif
 

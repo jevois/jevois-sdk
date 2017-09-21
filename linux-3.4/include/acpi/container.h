@@ -4,9 +4,9 @@
 #include <linux/kernel.h>
 
 struct acpi_container {
-  acpi_handle handle;
-  unsigned long sun;
-  int state;
+	acpi_handle handle;
+	unsigned long sun;
+	int state;
 };
 
-#endif        /* __ACPI_CONTAINER_H */
+#endif				/* __ACPI_CONTAINER_H */

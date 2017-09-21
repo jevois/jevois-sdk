@@ -11,10 +11,10 @@
 
 #ifndef __ASSEMBLY__
 
-void u300_map_io (void);
-void u300_init_irq (void);
-void u300_init_devices (void);
-void u300_restart (char, const char *);
+void u300_map_io(void);
+void u300_init_irq(void);
+void u300_init_devices(void);
+void u300_restart(char, const char *);
 extern struct sys_timer u300_timer;
 
 #endif

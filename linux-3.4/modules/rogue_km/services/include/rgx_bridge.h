@@ -63,11 +63,11 @@ extern "C" {
 #endif
 #include "common_regconfig_bridge.h"
 
-/*
+/* 
  * Bridge Cmd Ids
  */
 
-/* *REMEMBER* to update PVRSRV_BRIDGE_LAST_RGX_CMD if you add/remove a command!
+/* *REMEMBER* to update PVRSRV_BRIDGE_LAST_RGX_CMD if you add/remove a command! 
  * Also you need to ensure all PVRSRV_BRIDGE_RGX_CMD_BASE+ offsets are sequential!
  */
 

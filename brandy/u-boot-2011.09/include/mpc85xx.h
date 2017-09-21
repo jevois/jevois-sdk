@@ -3,12 +3,12 @@
  * Copyright(c) 2003 Motorola Inc.
  */
 
-#ifndef __MPC85xx_H__
+#ifndef	__MPC85xx_H__
 #define __MPC85xx_H__
 
 /* define for common ppc_asm.tmpl */
-#define EXC_OFF_SYS_RESET 0x100 /* System reset */
-#define _START_OFFSET   0
+#define EXC_OFF_SYS_RESET	0x100	/* System reset */
+#define _START_OFFSET		0
 
 #if defined(CONFIG_E500)
 #include <e500.h>
@@ -26,4 +26,4 @@
 #define SCCR_DFBRG10    0x00000002      /* BRGCLK division by 64 */
 #define SCCR_DFBRG11    0x00000003      /* BRGCLK division by 256 */
 
-#endif  /* __MPC85xx_H__ */
+#endif	/* __MPC85xx_H__ */

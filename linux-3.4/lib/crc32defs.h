@@ -58,7 +58,7 @@
  * lsbit-first.  Be sure to use cpu_to_le32() to append the computed CRC.
  */
 #if CRC_LE_BITS > 64 || CRC_LE_BITS < 1 || CRC_LE_BITS == 16 || \
-CRC_LE_BITS & CRC_LE_BITS-1
+	CRC_LE_BITS & CRC_LE_BITS-1
 # error "CRC_LE_BITS must be one of {1, 2, 4, 8, 32, 64}"
 #endif
 
@@ -67,6 +67,6 @@ CRC_LE_BITS & CRC_LE_BITS-1
  * msbit-first.  Be sure to use cpu_to_be32() to append the computed CRC.
  */
 #if CRC_BE_BITS > 64 || CRC_BE_BITS < 1 || CRC_BE_BITS == 16 || \
-CRC_BE_BITS & CRC_BE_BITS-1
+	CRC_BE_BITS & CRC_BE_BITS-1
 # error "CRC_BE_BITS must be one of {1, 2, 4, 8, 32, 64}"
 #endif

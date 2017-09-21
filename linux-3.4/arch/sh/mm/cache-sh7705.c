@@ -29,35 +29,34 @@
  * The 32KB cache on the SH7705 suffers from the same synonym problem
  * as SH4 CPUs
  */
-static inline void cache_wback_all (void)
+static inline void cache_wback_all(void)
 {
-  unsigned long ways, waysize, addrstart;
-  
-  ways = current_cpu_data.dcache.ways;
-  waysize = current_cpu_data.dcache.sets;
-  waysize <<= current_cpu_data.dcache.entry_shift;
-  
-  addrstart = CACHE_OC_ADDRESS_ARRAY;
-  
-  do {
-    unsigned long addr;
-    
-    for (addr = addrstart;
-         addr < addrstart + waysize;
-         addr += current_cpu_data.dcache.linesz) {
-      unsigned long data;
-      int v = SH_CACHE_UPDATED | SH_CACHE_VALID;
-      
-      data = __raw_readl (addr);
-      
-      if ( (data & v) == v)
-      { __raw_writel (data & ~v, addr); }
-      
-    }
-    
-    addrstart += current_cpu_data.dcache.way_incr;
-  }
-  while (--ways);
+	unsigned long ways, waysize, addrstart;
+
+	ways = current_cpu_data.dcache.ways;
+	waysize = current_cpu_data.dcache.sets;
+	waysize <<= current_cpu_data.dcache.entry_shift;
+
+	addrstart = CACHE_OC_ADDRESS_ARRAY;
+
+	do {
+		unsigned long addr;
+
+		for (addr = addrstart;
+		     addr < addrstart + waysize;
+		     addr += current_cpu_data.dcache.linesz) {
+			unsigned long data;
+			int v = SH_CACHE_UPDATED | SH_CACHE_VALID;
+
+			data = __raw_readl(addr);
+
+			if ((data & v) == v)
+				__raw_writel(data & ~v, addr);
+
+		}
+
+		addrstart += current_cpu_data.dcache.way_incr;
+	} while (--ways);
 }
 
 /*
@@ -65,97 +64,96 @@ static inline void cache_wback_all (void)
  *
  * Called from kernel/module.c:sys_init_module and routine for a.out format.
  */
-static void sh7705_flush_icache_range (void * args)
+static void sh7705_flush_icache_range(void *args)
 {
-  struct flusher_data * data = args;
-  unsigned long start, end;
-  
-  start = data->addr1;
-  end = data->addr2;
-  
-  __flush_wback_region ( (void *) start, end - start);
+	struct flusher_data *data = args;
+	unsigned long start, end;
+
+	start = data->addr1;
+	end = data->addr2;
+
+	__flush_wback_region((void *)start, end - start);
 }
 
 /*
  * Writeback&Invalidate the D-cache of the page
  */
-static void __flush_dcache_page (unsigned long phys)
+static void __flush_dcache_page(unsigned long phys)
 {
-  unsigned long ways, waysize, addrstart;
-  unsigned long flags;
-  
-  phys |= SH_CACHE_VALID;
-  
-  /*
-   * Here, phys is the physical address of the page. We check all the
-   * tags in the cache for those with the same page number as this page
-   * (by masking off the lowest 2 bits of the 19-bit tag; these bits are
-   * derived from the offset within in the 4k page). Matching valid
-   * entries are invalidated.
-   *
-   * Since 2 bits of the cache index are derived from the virtual page
-   * number, knowing this would reduce the number of cache entries to be
-   * searched by a factor of 4. However this function exists to deal with
-   * potential cache aliasing, therefore the optimisation is probably not
-   * possible.
-   */
-  local_irq_save (flags);
-  jump_to_uncached();
-  
-  ways = current_cpu_data.dcache.ways;
-  waysize = current_cpu_data.dcache.sets;
-  waysize <<= current_cpu_data.dcache.entry_shift;
-  
-  addrstart = CACHE_OC_ADDRESS_ARRAY;
-  
-  do {
-    unsigned long addr;
-    
-    for (addr = addrstart;
-         addr < addrstart + waysize;
-         addr += current_cpu_data.dcache.linesz) {
-      unsigned long data;
-      
-      data = __raw_readl (addr) & (0x1ffffC00 | SH_CACHE_VALID);
-      if (data == phys) {
-        data &= ~ (SH_CACHE_VALID | SH_CACHE_UPDATED);
-        __raw_writel (data, addr);
-      }
-    }
-    
-    addrstart += current_cpu_data.dcache.way_incr;
-  }
-  while (--ways);
-  
-  back_to_cached();
-  local_irq_restore (flags);
+	unsigned long ways, waysize, addrstart;
+	unsigned long flags;
+
+	phys |= SH_CACHE_VALID;
+
+	/*
+	 * Here, phys is the physical address of the page. We check all the
+	 * tags in the cache for those with the same page number as this page
+	 * (by masking off the lowest 2 bits of the 19-bit tag; these bits are
+	 * derived from the offset within in the 4k page). Matching valid
+	 * entries are invalidated.
+	 *
+	 * Since 2 bits of the cache index are derived from the virtual page
+	 * number, knowing this would reduce the number of cache entries to be
+	 * searched by a factor of 4. However this function exists to deal with
+	 * potential cache aliasing, therefore the optimisation is probably not
+	 * possible.
+	 */
+	local_irq_save(flags);
+	jump_to_uncached();
+
+	ways = current_cpu_data.dcache.ways;
+	waysize = current_cpu_data.dcache.sets;
+	waysize <<= current_cpu_data.dcache.entry_shift;
+
+	addrstart = CACHE_OC_ADDRESS_ARRAY;
+
+	do {
+		unsigned long addr;
+
+		for (addr = addrstart;
+		     addr < addrstart + waysize;
+		     addr += current_cpu_data.dcache.linesz) {
+			unsigned long data;
+
+			data = __raw_readl(addr) & (0x1ffffC00 | SH_CACHE_VALID);
+		        if (data == phys) {
+				data &= ~(SH_CACHE_VALID | SH_CACHE_UPDATED);
+				__raw_writel(data, addr);
+			}
+		}
+
+		addrstart += current_cpu_data.dcache.way_incr;
+	} while (--ways);
+
+	back_to_cached();
+	local_irq_restore(flags);
 }
 
 /*
  * Write back & invalidate the D-cache of the page.
  * (To avoid "alias" issues)
  */
-static void sh7705_flush_dcache_page (void * arg)
+static void sh7705_flush_dcache_page(void *arg)
 {
-  struct page * page = arg;
-  struct address_space * mapping = page_mapping (page);
-  
-  if (mapping && !mapping_mapped (mapping) )
-  { clear_bit (PG_dcache_clean, &page->flags); }
-  else
-  { __flush_dcache_page (__pa (page_address (page) ) ); }
+	struct page *page = arg;
+	struct address_space *mapping = page_mapping(page);
+
+	if (mapping && !mapping_mapped(mapping))
+		clear_bit(PG_dcache_clean, &page->flags);
+	else
+		__flush_dcache_page(__pa(page_address(page)));
 }
 
-static void sh7705_flush_cache_all (void * args)
+static void sh7705_flush_cache_all(void *args)
 {
-  unsigned long flags;
-  
-  local_irq_save (flags);
-  jump_to_uncached();
-  
-  cache_wback_all();
-  back_to_cached();
-  local_irq_restore (flags);
+	unsigned long flags;
+
+	local_irq_save(flags);
+	jump_to_uncached();
+
+	cache_wback_all();
+	back_to_cached();
+	local_irq_restore(flags);
 }
 
 /*
@@ -163,12 +161,12 @@ static void sh7705_flush_cache_all (void * args)
  *
  * ADDRESS: Virtual Address (U0 address)
  */
-static void sh7705_flush_cache_page (void * args)
+static void sh7705_flush_cache_page(void *args)
 {
-  struct flusher_data * data = args;
-  unsigned long pfn = data->addr2;
-  
-  __flush_dcache_page (pfn << PAGE_SHIFT);
+	struct flusher_data *data = args;
+	unsigned long pfn = data->addr2;
+
+	__flush_dcache_page(pfn << PAGE_SHIFT);
 }
 
 /*
@@ -179,19 +177,19 @@ static void sh7705_flush_cache_page (void * args)
  * Not entirely sure why this is necessary on SH3 with 32K cache but
  * without it we get occasional "Memory fault" when loading a program.
  */
-static void sh7705_flush_icache_page (void * page)
+static void sh7705_flush_icache_page(void *page)
 {
-  __flush_purge_region (page_address (page), PAGE_SIZE);
+	__flush_purge_region(page_address(page), PAGE_SIZE);
 }
 
-void __init sh7705_cache_init (void)
+void __init sh7705_cache_init(void)
 {
-  local_flush_icache_range  = sh7705_flush_icache_range;
-  local_flush_dcache_page   = sh7705_flush_dcache_page;
-  local_flush_cache_all   = sh7705_flush_cache_all;
-  local_flush_cache_mm    = sh7705_flush_cache_all;
-  local_flush_cache_dup_mm  = sh7705_flush_cache_all;
-  local_flush_cache_range   = sh7705_flush_cache_all;
-  local_flush_cache_page    = sh7705_flush_cache_page;
-  local_flush_icache_page   = sh7705_flush_icache_page;
+	local_flush_icache_range	= sh7705_flush_icache_range;
+	local_flush_dcache_page		= sh7705_flush_dcache_page;
+	local_flush_cache_all		= sh7705_flush_cache_all;
+	local_flush_cache_mm		= sh7705_flush_cache_all;
+	local_flush_cache_dup_mm	= sh7705_flush_cache_all;
+	local_flush_cache_range		= sh7705_flush_cache_all;
+	local_flush_cache_page		= sh7705_flush_cache_page;
+	local_flush_icache_page		= sh7705_flush_icache_page;
 }

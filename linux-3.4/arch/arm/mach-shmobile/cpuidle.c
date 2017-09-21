@@ -16,53 +16,53 @@
 #include <asm/cpuidle.h>
 #include <asm/io.h>
 
-static void shmobile_enter_wfi (void)
+static void shmobile_enter_wfi(void)
 {
-  cpu_do_idle();
+	cpu_do_idle();
 }
 
-void (*shmobile_cpuidle_modes[CPUIDLE_STATE_MAX]) (void) = {
-  shmobile_enter_wfi, /* regular sleep mode */
+void (*shmobile_cpuidle_modes[CPUIDLE_STATE_MAX])(void) = {
+	shmobile_enter_wfi, /* regular sleep mode */
 };
 
-static int shmobile_cpuidle_enter (struct cpuidle_device * dev,
-                                   struct cpuidle_driver * drv,
-                                   int index)
+static int shmobile_cpuidle_enter(struct cpuidle_device *dev,
+				  struct cpuidle_driver *drv,
+				  int index)
 {
-  shmobile_cpuidle_modes[index]();
-  
-  return index;
+	shmobile_cpuidle_modes[index]();
+
+	return index;
 }
 
 static struct cpuidle_device shmobile_cpuidle_dev;
 static struct cpuidle_driver shmobile_cpuidle_driver = {
-  .name     = "shmobile_cpuidle",
-  .owner      = THIS_MODULE,
-  .en_core_tk_irqen = 1,
-  .states[0]    = ARM_CPUIDLE_WFI_STATE,
-  .safe_state_index = 0, /* C1 */
-  .state_count    = 1,
+	.name			= "shmobile_cpuidle",
+	.owner			= THIS_MODULE,
+	.en_core_tk_irqen	= 1,
+	.states[0]		= ARM_CPUIDLE_WFI_STATE,
+	.safe_state_index	= 0, /* C1 */
+	.state_count		= 1,
 };
 
-void (*shmobile_cpuidle_setup) (struct cpuidle_driver * drv);
+void (*shmobile_cpuidle_setup)(struct cpuidle_driver *drv);
 
-static int shmobile_cpuidle_init (void)
+static int shmobile_cpuidle_init(void)
 {
-  struct cpuidle_device * dev = &shmobile_cpuidle_dev;
-  struct cpuidle_driver * drv = &shmobile_cpuidle_driver;
-  int i;
-  
-  for (i = 0; i < CPUIDLE_STATE_MAX; i++)
-  { drv->states[i].enter = shmobile_cpuidle_enter; }
-  
-  if (shmobile_cpuidle_setup)
-  { shmobile_cpuidle_setup (drv); }
-  
-  cpuidle_register_driver (drv);
-  
-  dev->state_count = drv->state_count;
-  cpuidle_register_device (dev);
-  
-  return 0;
+	struct cpuidle_device *dev = &shmobile_cpuidle_dev;
+	struct cpuidle_driver *drv = &shmobile_cpuidle_driver;
+	int i;
+
+	for (i = 0; i < CPUIDLE_STATE_MAX; i++)
+		drv->states[i].enter = shmobile_cpuidle_enter;
+
+	if (shmobile_cpuidle_setup)
+		shmobile_cpuidle_setup(drv);
+
+	cpuidle_register_driver(drv);
+
+	dev->state_count = drv->state_count;
+	cpuidle_register_device(dev);
+
+	return 0;
 }
-late_initcall (shmobile_cpuidle_init);
+late_initcall(shmobile_cpuidle_init);

@@ -14,23 +14,23 @@
 
 #include <mach/platform.h>
 
-#define PNX4008_DUMCONF_VA_BASE   IO_ADDRESS(PNX4008_DUMCONF_BASE)
-#define PNX4008_DUM_MAIN_VA_BASE  IO_ADDRESS(PNX4008_DUM_MAINCFG_BASE)
+#define PNX4008_DUMCONF_VA_BASE		IO_ADDRESS(PNX4008_DUMCONF_BASE)
+#define PNX4008_DUM_MAIN_VA_BASE	IO_ADDRESS(PNX4008_DUM_MAINCFG_BASE)
 
 /* DUM CFG ADDRESSES */
-#define DUM_CH_BASE_ADR   (PNX4008_DUMCONF_VA_BASE + 0x00)
-#define DUM_CH_MIN_ADR    (PNX4008_DUMCONF_VA_BASE + 0x00)
-#define DUM_CH_MAX_ADR    (PNX4008_DUMCONF_VA_BASE + 0x04)
-#define DUM_CH_CONF_ADR   (PNX4008_DUMCONF_VA_BASE + 0x08)
-#define DUM_CH_STAT_ADR   (PNX4008_DUMCONF_VA_BASE + 0x0C)
-#define DUM_CH_CTRL_ADR   (PNX4008_DUMCONF_VA_BASE + 0x10)
+#define DUM_CH_BASE_ADR		(PNX4008_DUMCONF_VA_BASE + 0x00)
+#define DUM_CH_MIN_ADR		(PNX4008_DUMCONF_VA_BASE + 0x00)
+#define DUM_CH_MAX_ADR		(PNX4008_DUMCONF_VA_BASE + 0x04)
+#define DUM_CH_CONF_ADR		(PNX4008_DUMCONF_VA_BASE + 0x08)
+#define DUM_CH_STAT_ADR		(PNX4008_DUMCONF_VA_BASE + 0x0C)
+#define DUM_CH_CTRL_ADR		(PNX4008_DUMCONF_VA_BASE + 0x10)
 
-#define CH_MARG   (0x100 / sizeof(u32))
-#define DUM_CH_MIN(i) (*((volatile u32 *)DUM_CH_MIN_ADR + (i) * CH_MARG))
-#define DUM_CH_MAX(i) (*((volatile u32 *)DUM_CH_MAX_ADR + (i) * CH_MARG))
-#define DUM_CH_CONF(i)  (*((volatile u32 *)DUM_CH_CONF_ADR + (i) * CH_MARG))
-#define DUM_CH_STAT(i)  (*((volatile u32 *)DUM_CH_STAT_ADR + (i) * CH_MARG))
-#define DUM_CH_CTRL(i)  (*((volatile u32 *)DUM_CH_CTRL_ADR + (i) * CH_MARG))
+#define CH_MARG		(0x100 / sizeof(u32))
+#define DUM_CH_MIN(i)	(*((volatile u32 *)DUM_CH_MIN_ADR + (i) * CH_MARG))
+#define DUM_CH_MAX(i)	(*((volatile u32 *)DUM_CH_MAX_ADR + (i) * CH_MARG))
+#define DUM_CH_CONF(i)	(*((volatile u32 *)DUM_CH_CONF_ADR + (i) * CH_MARG))
+#define DUM_CH_STAT(i)	(*((volatile u32 *)DUM_CH_STAT_ADR + (i) * CH_MARG))
+#define DUM_CH_CTRL(i)	(*((volatile u32 *)DUM_CH_CTRL_ADR + (i) * CH_MARG))
 
 #define DUM_CONF_ADR          (PNX4008_DUM_MAIN_VA_BASE + 0x00)
 #define DUM_CTRL_ADR          (PNX4008_DUM_MAIN_VA_BASE + 0x04)
@@ -127,85 +127,85 @@
 #define DISPLAY2_IS_NOT_CONNECTED   (0)
 
 /* register values */
-#define V_BAC_ENABLE    (BIT(0))
-#define V_BAC_DISABLE_IDLE  (BIT(1))
-#define V_BAC_DISABLE_TRIG  (BIT(2))
-#define V_DUM_RESET   (BIT(3))
-#define V_MUX_RESET   (BIT(4))
-#define BAC_ENABLED   (BIT(0))
-#define BAC_DISABLED    0
+#define V_BAC_ENABLE		(BIT(0))
+#define V_BAC_DISABLE_IDLE	(BIT(1))
+#define V_BAC_DISABLE_TRIG	(BIT(2))
+#define V_DUM_RESET		(BIT(3))
+#define V_MUX_RESET		(BIT(4))
+#define BAC_ENABLED		(BIT(0))
+#define BAC_DISABLED		0
 
 /* Sony LCD commands */
-#define V_LCD_STANDBY_OFF ((BIT(25)) | (0 << 16) | DISP_0_REG)
-#define V_LCD_USE_9BIT_BUS  ((BIT(25)) | (2 << 16) | DISP_1_REG)
-#define V_LCD_SYNC_RISE_L ((BIT(25)) | (0 << 16) | DISP_SYNC_RISE_L_REG)
-#define V_LCD_SYNC_RISE_H ((BIT(25)) | (0 << 16) | DISP_SYNC_RISE_H_REG)
-#define V_LCD_SYNC_FALL_L ((BIT(25)) | (160 << 16) | DISP_SYNC_FALL_L_REG)
-#define V_LCD_SYNC_FALL_H ((BIT(25)) | (0 << 16) | DISP_SYNC_FALL_H_REG)
-#define V_LCD_SYNC_ENABLE ((BIT(25)) | (128 << 16) | DISP_SYNC_EN_REG)
-#define V_LCD_DISPLAY_ON  ((BIT(25)) | (64 << 16) | DISP_0_REG)
+#define V_LCD_STANDBY_OFF	((BIT(25)) | (0 << 16) | DISP_0_REG)
+#define V_LCD_USE_9BIT_BUS	((BIT(25)) | (2 << 16) | DISP_1_REG)
+#define V_LCD_SYNC_RISE_L	((BIT(25)) | (0 << 16) | DISP_SYNC_RISE_L_REG)
+#define V_LCD_SYNC_RISE_H	((BIT(25)) | (0 << 16) | DISP_SYNC_RISE_H_REG)
+#define V_LCD_SYNC_FALL_L	((BIT(25)) | (160 << 16) | DISP_SYNC_FALL_L_REG)
+#define V_LCD_SYNC_FALL_H	((BIT(25)) | (0 << 16) | DISP_SYNC_FALL_H_REG)
+#define V_LCD_SYNC_ENABLE	((BIT(25)) | (128 << 16) | DISP_SYNC_EN_REG)
+#define V_LCD_DISPLAY_ON	((BIT(25)) | (64 << 16) | DISP_0_REG)
 
 enum {
-  PAD_NONE,
-  PAD_512,
-  PAD_1024
+	PAD_NONE,
+	PAD_512,
+	PAD_1024
 };
 
 enum {
-  RGB888,
-  RGB666,
-  RGB565,
-  BGR565,
-  ARGB1555,
-  ABGR1555,
-  ARGB4444,
-  ABGR4444
+	RGB888,
+	RGB666,
+	RGB565,
+	BGR565,
+	ARGB1555,
+	ABGR1555,
+	ARGB4444,
+	ABGR4444
 };
 
 struct dum_setup {
-  int sync_neg_edge;
-  int round_robin;
-  int mux_int;
-  int synced_dirty_flag_int;
-  int dirty_flag_int;
-  int error_int;
-  int pf_empty_int;
-  int sf_empty_int;
-  int bac_dis_int;
-  u32 dirty_base_adr;
-  u32 command_base_adr;
-  u32 sync_clk_div;
-  int sync_output;
-  u32 sync_restart_val;
-  u32 set_sync_high;
-  u32 set_sync_low;
+	int sync_neg_edge;
+	int round_robin;
+	int mux_int;
+	int synced_dirty_flag_int;
+	int dirty_flag_int;
+	int error_int;
+	int pf_empty_int;
+	int sf_empty_int;
+	int bac_dis_int;
+	u32 dirty_base_adr;
+	u32 command_base_adr;
+	u32 sync_clk_div;
+	int sync_output;
+	u32 sync_restart_val;
+	u32 set_sync_high;
+	u32 set_sync_low;
 };
 
 struct dum_ch_setup {
-  int disp_no;
-  u32 xmin;
-  u32 ymin;
-  u32 xmax;
-  u32 ymax;
-  int xmirror;
-  int ymirror;
-  int rotate;
-  u32 minadr;
-  u32 maxadr;
-  u32 dirtybuffer;
-  int pad;
-  int format;
-  int hwdirty;
-  int slave_trans;
+	int disp_no;
+	u32 xmin;
+	u32 ymin;
+	u32 xmax;
+	u32 ymax;
+	int xmirror;
+	int ymirror;
+	int rotate;
+	u32 minadr;
+	u32 maxadr;
+	u32 dirtybuffer;
+	int pad;
+	int format;
+	int hwdirty;
+	int slave_trans;
 };
 
 struct disp_window {
-  u32 xmin_l;
-  u32 xmin_h;
-  u32 ymin;
-  u32 xmax_l;
-  u32 xmax_h;
-  u32 ymax;
+	u32 xmin_l;
+	u32 xmin_h;
+	u32 ymin;
+	u32 xmax_l;
+	u32 xmax_h;
+	u32 ymax;
 };
 
-#endif        /* #ifndef __PNX008_DUM_H__ */
+#endif				/* #ifndef __PNX008_DUM_H__ */

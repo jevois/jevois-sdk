@@ -27,9 +27,9 @@
 
 /* GPIO Registers */
 struct gpio_regs {
-  u32 gpio_dr;
-  u32 gpio_dir;
-  u32 gpio_psr;
+	u32	gpio_dr;
+	u32	gpio_dir;
+	u32	gpio_psr;
 };
 
 #endif

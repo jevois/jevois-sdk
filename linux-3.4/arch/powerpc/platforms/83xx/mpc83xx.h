@@ -65,26 +65,26 @@
  * mpc83xx_* files. Mostly for use by mpc83xx_setup
  */
 
-extern void mpc83xx_restart (char * cmd);
-extern long mpc83xx_time_init (void);
-extern int mpc837x_usb_cfg (void);
-extern int mpc834x_usb_cfg (void);
-extern int mpc831x_usb_cfg (void);
-extern void mpc83xx_ipic_init_IRQ (void);
+extern void mpc83xx_restart(char *cmd);
+extern long mpc83xx_time_init(void);
+extern int mpc837x_usb_cfg(void);
+extern int mpc834x_usb_cfg(void);
+extern int mpc831x_usb_cfg(void);
+extern void mpc83xx_ipic_init_IRQ(void);
 #ifdef CONFIG_QUICC_ENGINE
-extern void mpc83xx_qe_init_IRQ (void);
-extern void mpc83xx_ipic_and_qe_init_IRQ (void);
+extern void mpc83xx_qe_init_IRQ(void);
+extern void mpc83xx_ipic_and_qe_init_IRQ(void);
 #else
-static inline void __init mpc83xx_qe_init_IRQ (void) {}
+static inline void __init mpc83xx_qe_init_IRQ(void) {}
 #define mpc83xx_ipic_and_qe_init_IRQ mpc83xx_ipic_init_IRQ
 #endif /* CONFIG_QUICC_ENGINE */
 
 #ifdef CONFIG_PCI
-extern void mpc83xx_setup_pci (void);
+extern void mpc83xx_setup_pci(void);
 #else
-#define mpc83xx_setup_pci() do {} while (0)
+#define mpc83xx_setup_pci()	do {} while (0)
 #endif
 
-extern int mpc83xx_declare_of_platform_devices (void);
+extern int mpc83xx_declare_of_platform_devices(void);
 
-#endif        /* __MPC83XX_H__ */
+#endif				/* __MPC83XX_H__ */

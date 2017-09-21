@@ -14,7 +14,7 @@
 #define INPUT_DEV_NAME          ("sunxi-keyboard")
 
 #define KEY_MAX_CNT             (13)
-
+ 
 #ifdef CONFIG_ARCH_SUN9IW1P1
 #define KEY_BASSADDRESS         (0xf6001800)
 #elif defined(CONFIG_ARCH_SUN8IW6P1)
@@ -64,9 +64,9 @@
 #define ONE_CHANNEL
 #define MODE_0V2
 #ifdef MODE_0V2
-/* standard of key maping
+/* standard of key maping 
  * 0.2V mode
- */
+ */					
 #define REPORT_START_NUM            (2)
 #define REPORT_KEY_LOW_LIMIT_COUNT  (1)
 #define MAX_CYCLE_COUNTER           (100)
@@ -75,83 +75,83 @@
 
 #ifdef CONFIG_ARCH_SUN8IW1P1
 static unsigned int sunxi_scankeycodes[KEY_MAX_CNT] = {
-  [0 ] = KEY_VOLUMEUP,
-  [1 ] = KEY_VOLUMEDOWN,
-  [2 ] = KEY_MENU,
-  [3 ] = KEY_ENTER,
-  [4 ] = KEY_HOME,
-  [5 ] = KEY_RESERVED,
-  [6 ] = KEY_RESERVED,
-  [7 ] = KEY_RESERVED,
-  [8 ] = KEY_RESERVED,
-  [9 ] = KEY_RESERVED,
-  [10] = KEY_RESERVED,
-  [11] = KEY_RESERVED,
-  [12] = KEY_RESERVED,
+	[0 ] = KEY_VOLUMEUP,
+	[1 ] = KEY_VOLUMEDOWN,
+	[2 ] = KEY_MENU,
+	[3 ] = KEY_ENTER,
+	[4 ] = KEY_HOME,
+	[5 ] = KEY_RESERVED,
+	[6 ] = KEY_RESERVED,
+	[7 ] = KEY_RESERVED,
+	[8 ] = KEY_RESERVED,
+	[9 ] = KEY_RESERVED,
+	[10] = KEY_RESERVED,
+	[11] = KEY_RESERVED,
+	[12] = KEY_RESERVED,
 };
 #elif defined(CONFIG_ARCH_SUN8IW3P1)
 static unsigned int sunxi_scankeycodes[KEY_MAX_CNT] = {
-  [0 ] = KEY_VOLUMEUP,
-  [1 ] = KEY_VOLUMEDOWN,
-  [2 ] = KEY_HOME,
-  [3 ] = KEY_ENTER,
-  [4 ] = KEY_MENU,
-  [5 ] = KEY_RESERVED,
-  [6 ] = KEY_RESERVED,
-  [7 ] = KEY_RESERVED,
-  [8 ] = KEY_RESERVED,
-  [9 ] = KEY_RESERVED,
-  [10] = KEY_RESERVED,
-  [11] = KEY_RESERVED,
-  [12] = KEY_RESERVED,
+	[0 ] = KEY_VOLUMEUP,
+	[1 ] = KEY_VOLUMEDOWN,
+	[2 ] = KEY_HOME,
+	[3 ] = KEY_ENTER,
+	[4 ] = KEY_MENU,
+	[5 ] = KEY_RESERVED,
+	[6 ] = KEY_RESERVED,
+	[7 ] = KEY_RESERVED,
+	[8 ] = KEY_RESERVED,
+	[9 ] = KEY_RESERVED,
+	[10] = KEY_RESERVED,
+	[11] = KEY_RESERVED,
+	[12] = KEY_RESERVED,
 };
 #elif defined(CONFIG_ARCH_SUN8IW5P1)
 static unsigned int sunxi_scankeycodes[KEY_MAX_CNT] = {
-  [0 ] = KEY_VOLUMEUP,
-  [1 ] = KEY_VOLUMEDOWN,
-  [2 ] = KEY_HOME,
-  [3 ] = KEY_RESERVED,
-  [4 ] = KEY_RESERVED,
-  [5 ] = KEY_RESERVED,
-  [6 ] = KEY_RESERVED,
-  [7 ] = KEY_RESERVED,
-  [8 ] = KEY_RESERVED,
-  [9 ] = KEY_RESERVED,
-  [10] = KEY_RESERVED,
-  [11] = KEY_RESERVED,
-  [12] = KEY_RESERVED,
+	[0 ] = KEY_VOLUMEUP,
+	[1 ] = KEY_VOLUMEDOWN,
+	[2 ] = KEY_HOME,
+	[3 ] = KEY_RESERVED,
+	[4 ] = KEY_RESERVED,
+	[5 ] = KEY_RESERVED,
+	[6 ] = KEY_RESERVED,
+	[7 ] = KEY_RESERVED,
+	[8 ] = KEY_RESERVED,
+	[9 ] = KEY_RESERVED,
+	[10] = KEY_RESERVED,
+	[11] = KEY_RESERVED,
+	[12] = KEY_RESERVED,
 };
 #else
 static unsigned int sunxi_scankeycodes[KEY_MAX_CNT] = {
-  [0 ] = KEY_VOLUMEUP,
-  [1 ] = KEY_VOLUMEDOWN,
-  [2 ] = KEY_MENU,
-  [3 ] = KEY_ENTER,
-  [4 ] = KEY_HOME,
-  [5 ] = KEY_RESERVED,
-  [6 ] = KEY_RESERVED,
-  [7 ] = KEY_RESERVED,
-  [8 ] = KEY_RESERVED,
-  [9 ] = KEY_RESERVED,
-  [10] = KEY_RESERVED,
-  [11] = KEY_RESERVED,
-  [12] = KEY_RESERVED,
+	[0 ] = KEY_VOLUMEUP,
+	[1 ] = KEY_VOLUMEDOWN,
+	[2 ] = KEY_MENU,
+	[3 ] = KEY_ENTER,
+	[4 ] = KEY_HOME,
+	[5 ] = KEY_RESERVED,
+	[6 ] = KEY_RESERVED,
+	[7 ] = KEY_RESERVED,
+	[8 ] = KEY_RESERVED,
+	[9 ] = KEY_RESERVED,
+	[10] = KEY_RESERVED,
+	[11] = KEY_RESERVED,
+	[12] = KEY_RESERVED,
 };
 #endif
 
 enum key_mode {
-  CONCERT_DLY_SET = (1 << 0),
-  ADC_CHAN_SET = (1 << 1),
-  KEY_MODE_SET = (1 << 2),
-  LRADC_HOLD_SET = (1 << 3),
-  LEVELB_VOL_SET = (1 << 4),
-  LRADC_SAMPLE_SET = (1 << 5),
-  LRADC_EN_SET = (1 << 6),
+	CONCERT_DLY_SET = (1<<0),
+	ADC_CHAN_SET = (1<<1),
+	KEY_MODE_SET = (1<<2),
+	LRADC_HOLD_SET = (1<<3),
+	LEVELB_VOL_SET = (1<<4),
+	LRADC_SAMPLE_SET = (1<<5),
+	LRADC_EN_SET = (1<<6),
 };
 
 enum int_mode {
-  ADC0_DOWN_INT_SET = (1 << 0),
-  ADC0_UP_INT_SET = (1 << 1),
-  ADC0_DATA_INT_SET = (1 << 2),
+	ADC0_DOWN_INT_SET = (1<<0),
+	ADC0_UP_INT_SET = (1<<1),
+	ADC0_DATA_INT_SET = (1<<2),
 };
 #endif

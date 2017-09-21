@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -26,135 +26,135 @@
 #include "buf_queue.h"
 #include <malloc.h>
 
-extern int sunxi_sprite_write (uint start_block, uint nblock, void * buffer);
+extern int sunxi_sprite_write(uint start_block, uint nblock, void *buffer);
 buf_element_t      buf_queue_element;
 
-int efex_queue_init (void)
+int efex_queue_init(void)
 {
-  int page_size = 0;
-  if (buf_queue_init() )
-  {
-    return -1;
-  }
-  
-  
-  page_size = buf_queue_get_page_size();
-  if ( page_size == 0)
-  {
-    printf ("efex queue init fail:make sure buf_queue_init function has be called\n");
-    return -1;
-  }
-  
-  memset (&buf_queue_element, 0 , sizeof (buf_element_t) );
-  buf_queue_element.buff = malloc (page_size);
-  if (buf_queue_element.buff == NULL)
-  {
-    printf ("efex_queue_init error: malloc memory size=0x%x fail\n", page_size);
-    return -1;
-  }
-  
-  return 0;
-  
-}
-
-int efex_queue_exit (void)
-{
-
-  if (buf_queue_element.buff)
-  {
-    free (buf_queue_element.buff);
-  }
-  return buf_queue_exit();
-}
-
-int efex_queue_write_one_page ( void )
-{
-  if (buf_queue_empty() )
-  {
-    return 0;
-  }
-  buf_dequeue (&buf_queue_element);
-  
-  if (!sunxi_sprite_write (buf_queue_element.addr, buf_queue_element.sector_num,
-                           (void *) buf_queue_element.buff) )
-  {
-    printf ("efex_queue_write_one_page error: write flash from 0x%x, sectors 0x%x failed\n",
-            buf_queue_element.addr, buf_queue_element.sector_num);
-    return -1;
-  }
-  return 0;
-}
-
-int efex_queue_write_all_page ( void )
-{
-  if (buf_queue_empty() )
-  {
-    return 0;
-  }
-  while (buf_dequeue (&buf_queue_element) == 0)
-  {
-    if (!sunxi_sprite_write (buf_queue_element.addr, buf_queue_element.sector_num,
-                             (void *) buf_queue_element.buff) )
+    int page_size = 0;
+    if(buf_queue_init())
     {
-      printf ("efex_queue_write_one_page error: write flash from 0x%x, sectors 0x%x failed\n",
-              buf_queue_element.addr, buf_queue_element.sector_num);
-      return -1;
-    }
-  }
-  return 0;
-}
-
-
-int efex_save_buff_to_queue (uint flash_start, uint flash_sectors, void * buff)
-{
-  int sec_per_page;
-  int queue_free_page;
-  int offset;
-  buf_element_t element;
-  int require_page ;
-  
-  
-  sec_per_page     = buf_queue_get_page_size() >> 9;
-  require_page = (flash_sectors + sec_per_page - 1) / sec_per_page;
-  
-  queue_free_page   = buf_queue_free_size();
-  if (require_page > queue_free_page)
-  {
-    int i = 0;
-    for (i = 0; i < require_page - queue_free_page; i++)
-    {
-      if (efex_queue_write_one_page() )
-      {
         return -1;
-      }
     }
-  }
-  
-  if (buf_queue_free_size() < require_page)
-  {
-    printf ("efex queue error: free space not enough\n");
-    return -1;
-  }
-  
-  offset = 0;
-  while (flash_sectors > sec_per_page)
-  {
-    element.addr = flash_start;
-    element.sector_num = sec_per_page;
-    element.buff = (u8 *) ( ( (u8 *) buff) + offset * 512);
-    buf_enqueue (&element);
-    flash_sectors -= sec_per_page;
-    offset += sec_per_page;
-    flash_start += sec_per_page;
-  }
-  if (flash_sectors)
-  {
-    element.addr = flash_start;
-    element.sector_num = flash_sectors;
-    element.buff = (u8 *) ( ( (u8 *) buff) + offset * 512);
-    buf_enqueue (&element);
-  }
-  
-  return 0;
+    
+   
+    page_size = buf_queue_get_page_size();
+    if( page_size == 0)
+    {
+        printf("efex queue init fail:make sure buf_queue_init function has be called\n");
+        return -1;
+    }
+
+    memset(&buf_queue_element, 0 , sizeof(buf_element_t));
+    buf_queue_element.buff = malloc(page_size);
+    if(buf_queue_element.buff == NULL) 
+    {
+        printf("efex_queue_init error: malloc memory size=0x%x fail\n",page_size);
+        return -1;
+    }
+
+    return 0;
+
+}
+
+int efex_queue_exit(void)
+{
+    
+    if(buf_queue_element.buff) 
+    {
+        free(buf_queue_element.buff);
+    }
+    return buf_queue_exit();
+}
+
+int efex_queue_write_one_page( void )
+{
+    if(buf_queue_empty())
+    {
+        return 0;
+    }
+    buf_dequeue(&buf_queue_element);
+    
+    if(!sunxi_sprite_write(buf_queue_element.addr, buf_queue_element.sector_num,
+        (void *)buf_queue_element.buff))
+    {
+       printf("efex_queue_write_one_page error: write flash from 0x%x, sectors 0x%x failed\n", 
+        buf_queue_element.addr,buf_queue_element.sector_num);
+       return -1;
+    }
+    return 0;
+}
+
+int efex_queue_write_all_page( void )
+{
+    if(buf_queue_empty())
+    {
+        return 0;
+    }
+    while(buf_dequeue(&buf_queue_element) == 0)
+    {
+        if(!sunxi_sprite_write(buf_queue_element.addr, buf_queue_element.sector_num,
+            (void *)buf_queue_element.buff))
+        {
+            printf("efex_queue_write_one_page error: write flash from 0x%x, sectors 0x%x failed\n", 
+                buf_queue_element.addr,buf_queue_element.sector_num);
+            return -1;
+        }
+    }
+    return 0;
+}
+
+
+int efex_save_buff_to_queue(uint flash_start, uint flash_sectors, void* buff)
+{
+    int sec_per_page;     
+    int queue_free_page;
+    int offset;
+    buf_element_t element;
+    int require_page ;
+    
+
+    sec_per_page     = buf_queue_get_page_size()>>9;
+    require_page = (flash_sectors+sec_per_page-1)/sec_per_page;
+    
+    queue_free_page   = buf_queue_free_size();
+    if(require_page > queue_free_page) 
+    {
+        int i = 0;
+        for(i = 0; i < require_page - queue_free_page; i++)
+        {
+            if(efex_queue_write_one_page())
+            {
+                return -1;
+            }
+        }
+    }
+
+    if(buf_queue_free_size() < require_page)
+    {
+        printf("efex queue error: free space not enough\n");
+        return -1;
+    }
+
+    offset = 0;
+    while(flash_sectors > sec_per_page)
+    {
+        element.addr = flash_start;
+        element.sector_num = sec_per_page;
+        element.buff = (u8*)(((u8*)buff)+offset*512);
+        buf_enqueue(&element);
+        flash_sectors -= sec_per_page;
+        offset += sec_per_page;
+        flash_start += sec_per_page;
+    }
+    if(flash_sectors)
+    {
+        element.addr = flash_start;
+        element.sector_num = flash_sectors;
+        element.buff = (u8*)(((u8*)buff)+offset*512);
+        buf_enqueue(&element);
+    }
+
+    return 0;
 }
 

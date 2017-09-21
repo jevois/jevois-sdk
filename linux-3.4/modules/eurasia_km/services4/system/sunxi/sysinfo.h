@@ -48,10 +48,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * need to wait longer for the hardware if a flush of the swap chain is
  * required.
  */
-#define MAX_HW_TIME_US        (5000000)
-#define WAIT_TRY_COUNT        (20000)
+#define MAX_HW_TIME_US				(5000000)
+#define WAIT_TRY_COUNT				(20000)
 
 
 #define SYS_DEVICE_COUNT 15 /* SGX, DISPLAYCLASS (external), BUFFERCLASS (external) */
 
-#endif  /* __SYSINFO_H__ */
+#endif	/* __SYSINFO_H__ */

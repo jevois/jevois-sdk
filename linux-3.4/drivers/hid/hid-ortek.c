@@ -24,45 +24,43 @@
 
 #include "hid-ids.h"
 
-static __u8 * ortek_report_fixup (struct hid_device * hdev, __u8 * rdesc,
-                                  unsigned int * rsize)
+static __u8 *ortek_report_fixup(struct hid_device *hdev, __u8 *rdesc,
+		unsigned int *rsize)
 {
-  if (*rsize >= 56 && rdesc[54] == 0x25 && rdesc[55] == 0x01) {
-    hid_info (hdev, "Fixing up logical minimum in report descriptor (Ortek)\n");
-    rdesc[55] = 0x92;
-  }
-  else
-    if (*rsize >= 54 && rdesc[52] == 0x25 && rdesc[53] == 0x01) {
-      hid_info (hdev, "Fixing up logical minimum in report descriptor (Skycable)\n");
-      rdesc[53] = 0x65;
-    }
-  return rdesc;
+	if (*rsize >= 56 && rdesc[54] == 0x25 && rdesc[55] == 0x01) {
+		hid_info(hdev, "Fixing up logical minimum in report descriptor (Ortek)\n");
+		rdesc[55] = 0x92;
+	} else if (*rsize >= 54 && rdesc[52] == 0x25 && rdesc[53] == 0x01) {
+		hid_info(hdev, "Fixing up logical minimum in report descriptor (Skycable)\n");
+		rdesc[53] = 0x65;
+	}
+	return rdesc;
 }
 
 static const struct hid_device_id ortek_devices[] = {
-  { HID_USB_DEVICE (USB_VENDOR_ID_ORTEK, USB_DEVICE_ID_ORTEK_PKB1700) },
-  { HID_USB_DEVICE (USB_VENDOR_ID_ORTEK, USB_DEVICE_ID_ORTEK_WKB2000) },
-  { HID_USB_DEVICE (USB_VENDOR_ID_SKYCABLE, USB_DEVICE_ID_SKYCABLE_WIRELESS_PRESENTER) },
-  { }
+	{ HID_USB_DEVICE(USB_VENDOR_ID_ORTEK, USB_DEVICE_ID_ORTEK_PKB1700) },
+	{ HID_USB_DEVICE(USB_VENDOR_ID_ORTEK, USB_DEVICE_ID_ORTEK_WKB2000) },
+	{ HID_USB_DEVICE(USB_VENDOR_ID_SKYCABLE, USB_DEVICE_ID_SKYCABLE_WIRELESS_PRESENTER) },
+	{ }
 };
-MODULE_DEVICE_TABLE (hid, ortek_devices);
+MODULE_DEVICE_TABLE(hid, ortek_devices);
 
 static struct hid_driver ortek_driver = {
-  .name = "ortek",
-  .id_table = ortek_devices,
-  .report_fixup = ortek_report_fixup
+	.name = "ortek",
+	.id_table = ortek_devices,
+	.report_fixup = ortek_report_fixup
 };
 
-static int __init ortek_init (void)
+static int __init ortek_init(void)
 {
-  return hid_register_driver (&ortek_driver);
+	return hid_register_driver(&ortek_driver);
 }
 
-static void __exit ortek_exit (void)
+static void __exit ortek_exit(void)
 {
-  hid_unregister_driver (&ortek_driver);
+	hid_unregister_driver(&ortek_driver);
 }
 
-module_init (ortek_init);
-module_exit (ortek_exit);
-MODULE_LICENSE ("GPL");
+module_init(ortek_init);
+module_exit(ortek_exit);
+MODULE_LICENSE("GPL");

@@ -5,11 +5,11 @@
 
 struct task_struct;
 
-static __inline__ struct task_struct * get_current (void)
+static __inline__ struct task_struct *get_current(void)
 {
-  return current_thread_info()->task;
+	return current_thread_info()->task;
 }
 
-#define current (get_current())
+#define current	(get_current())
 
-#endif  /* _ASM_M32R_CURRENT_H */
+#endif	/* _ASM_M32R_CURRENT_H */

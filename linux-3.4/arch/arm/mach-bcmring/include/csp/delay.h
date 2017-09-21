@@ -24,9 +24,9 @@
 /* void mdelay(unsigned long msecs); */
 
 #if defined(__KERNEL__) && !defined(STANDALONE)
-#include <linux/delay.h>
+   #include <linux/delay.h>
 #else
-#include <mach/csp/delay.h>
+   #include <mach/csp/delay.h>
 #endif
 
 /* ---- Public Constants and Types --------------------------------------- */

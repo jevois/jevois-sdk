@@ -13,24 +13,24 @@
 #error "CONFIG_UPDATE_TFTP required"
 #endif
 
-extern int update_tftp (ulong addr);
+extern int update_tftp(ulong addr);
 
-static int do_fitupd (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
+static int do_fitupd(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
-  ulong addr = 0UL;
-  
-  if (argc > 2)
-  { return cmd_usage (cmdtp); }
-  
-  if (argc == 2)
-  { addr = simple_strtoul (argv[1], NULL, 16); }
-  
-  return update_tftp (addr);
+	ulong addr = 0UL;
+
+	if (argc > 2)
+		return cmd_usage(cmdtp);
+
+	if (argc == 2)
+		addr = simple_strtoul(argv[1], NULL, 16);
+
+	return update_tftp(addr);
 }
 
-U_BOOT_CMD (fitupd, 2, 0, do_fitupd,
-            "update from FIT image",
-            "[addr]\n"
-            "\t- run update from FIT image at addr\n"
-            "\t  or from tftp 'updatefile'"
-           );
+U_BOOT_CMD(fitupd, 2, 0, do_fitupd,
+	"update from FIT image",
+	"[addr]\n"
+	"\t- run update from FIT image at addr\n"
+	"\t  or from tftp 'updatefile'"
+);

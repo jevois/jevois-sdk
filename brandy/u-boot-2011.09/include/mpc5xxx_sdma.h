@@ -35,10 +35,10 @@ ALL PARAMETERS ARE ALL LONGWORDS (FOUR BYTES EACH).
 */
 
 /* base address of SRAM area to store parameters used by Ethernet tasks */
-#define FEC_PARAM_BASE    (MPC5XXX_SRAM + 0x0800)
+#define FEC_PARAM_BASE		(MPC5XXX_SRAM + 0x0800)
 
 /* base address of SRAM area for buffer descriptors */
-#define FEC_BD_BASE   (MPC5XXX_SRAM + 0x0820)
+#define FEC_BD_BASE		(MPC5XXX_SRAM + 0x0820)
 
 /*---------------------------------------------------------------------*/
 
@@ -48,46 +48,46 @@ ALL PARAMETERS ARE ALL LONGWORDS (FOUR BYTES EACH).
 
 /* Disable SmartDMA task */
 #define SDMA_TASK_DISABLE(tasknum)                     \
-  {                                                      \
+{                                                      \
     volatile ushort *tcr = (ushort *)(MPC5XXX_SDMA + 0x0000001c + 2 * tasknum); \
     *tcr = (*tcr) & (~0x8000);                         \
-  }
+}
 
 /* Enable SmartDMA task */
 #define SDMA_TASK_ENABLE(tasknum)                      \
-  {                                                      \
+{                                                      \
     volatile ushort *tcr = (ushort *) (MPC5XXX_SDMA + 0x0000001c + 2 * tasknum); \
     *tcr = (*tcr)  | 0x8000;                           \
-  }
+}
 
 /* Enable interrupt */
 #define SDMA_INT_ENABLE(tasknum)                       \
-  {                                                      \
+{                                                      \
     struct mpc5xxx_sdma *sdma = (struct mpc5xxx_sdma *)MPC5XXX_SDMA; \
     sdma->IntMask &= ~(1 << tasknum);                  \
-  }
+}
 
 /* Disable interrupt */
 #define SDMA_INT_DISABLE(tasknum)   \
-  {                                                      \
+{                                                      \
     struct mpc5xxx_sdma *sdma = (struct mpc5xxx_sdma *)MPC5XXX_SDMA; \
     sdma->IntMask |= (1 << tasknum);                   \
-  }
+}
 
 
 /* Clear interrupt pending bits */
 #define SDMA_CLEAR_IEVENT(tasknum)  \
-  {                                                      \
+{                                                      \
     struct mpc5xxx_sdma *sdma = (struct mpc5xxx_sdma *)MPC5XXX_SDMA; \
     sdma->IntPend = (1 << tasknum);                    \
-  }
+}
 
 /* get interrupt pending bit of a task */
 #define SDMA_GET_PENDINGBIT(tasknum)                   \
-  ((*(vu_long *)(MPC5XXX_SDMA + 0x14)) & (1<<(tasknum)))
+	((*(vu_long *)(MPC5XXX_SDMA + 0x14)) & (1<<(tasknum)))
 
 /* get interrupt mask bit of a task */
 #define SDMA_GET_MASKBIT(tasknum)                      \
-  ((*(vu_long *)(MPC5XXX_SDMA + 0x18)) & (1<<(tasknum)))
+	((*(vu_long *)(MPC5XXX_SDMA + 0x18)) & (1<<(tasknum)))
 
-#endif  /* __MPC5XXX_SDMA_H */
+#endif	/* __MPC5XXX_SDMA_H */

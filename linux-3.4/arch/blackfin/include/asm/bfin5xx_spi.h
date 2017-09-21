@@ -9,7 +9,7 @@
 #ifndef _SPI_CHANNEL_H_
 #define _SPI_CHANNEL_H_
 
-#define MIN_SPI_BAUD_VAL  2
+#define MIN_SPI_BAUD_VAL	2
 
 #define BIT_CTL_ENABLE      0x4000
 #define BIT_CTL_OPENDRAIN   0x2000
@@ -51,13 +51,13 @@
  * bfin spi registers layout
  */
 struct bfin_spi_regs {
-  __BFP (ctl);
-  __BFP (flg);
-  __BFP (stat);
-  __BFP (tdbr);
-  __BFP (rdbr);
-  __BFP (baud);
-  __BFP (shadow);
+	__BFP(ctl);
+	__BFP(flg);
+	__BFP(stat);
+	__BFP(tdbr);
+	__BFP(rdbr);
+	__BFP(baud);
+	__BFP(shadow);
 };
 
 #undef __BFP
@@ -66,21 +66,21 @@ struct bfin_spi_regs {
 
 /* device.platform_data for SSP controller devices */
 struct bfin5xx_spi_master {
-  u16 num_chipselect;
-  u8 enable_dma;
-  u16 pin_req[7];
+	u16 num_chipselect;
+	u8 enable_dma;
+	u16 pin_req[7];
 };
 
 /* spi_board_info.controller_data for SPI slave devices,
  * copied to spi_device.platform_data ... mostly for dma tuning
  */
 struct bfin5xx_spi_chip {
-  u16 ctl_reg;
-  u8 enable_dma;
-  u16 cs_chg_udelay; /* Some devices require 16-bit delays */
-  /* Value to send if no TX value is supplied, usually 0x0 or 0xFFFF */
-  u16 idle_tx_val;
-  u8 pio_interrupt; /* Enable spi data irq */
+	u16 ctl_reg;
+	u8 enable_dma;
+	u16 cs_chg_udelay; /* Some devices require 16-bit delays */
+	/* Value to send if no TX value is supplied, usually 0x0 or 0xFFFF */
+	u16 idle_tx_val;
+	u8 pio_interrupt; /* Enable spi data irq */
 };
 
 #endif /* _SPI_CHANNEL_H_ */

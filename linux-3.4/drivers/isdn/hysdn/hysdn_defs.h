@@ -62,7 +62,7 @@
 #define B3_PROT_T30                0x0010
 #define B3_PROT_T30EXT             0x0020
 
-#define HYSDN_MAXVERSION    8
+#define HYSDN_MAXVERSION		8
 
 /* Number of sendbuffers in CAPI-queue */
 #define HYSDN_MAX_CAPI_SKB             20
@@ -73,21 +73,21 @@
 /* constants and bits for debugging/log outputs */
 /************************************************/
 #define LOG_MAX_LINELEN 120
-#define DEB_OUT_SYSLOG  0x80000000  /* output to syslog instead of proc fs */
-#define LOG_MEM_ERR     0x00000001  /* log memory errors like kmalloc failure */
-#define LOG_POF_OPEN    0x00000010  /* log pof open and close activities */
-#define LOG_POF_RECORD  0x00000020  /* log pof record parser */
-#define LOG_POF_WRITE   0x00000040  /* log detailed pof write operation */
-#define LOG_POF_CARD    0x00000080  /* log pof related card functions */
-#define LOG_CNF_LINE    0x00000100  /* all conf lines are put to procfs */
-#define LOG_CNF_DATA    0x00000200  /* non comment conf lines are shown with channel */
-#define LOG_CNF_MISC    0x00000400  /* additional conf line debug outputs */
-#define LOG_SCHED_ASYN  0x00001000  /* debug schedulers async tx routines */
-#define LOG_PROC_OPEN   0x00100000  /* open and close from procfs are logged */
-#define LOG_PROC_ALL    0x00200000  /* all actions from procfs are logged */
-#define LOG_NET_INIT    0x00010000  /* network init and deinit logging */
+#define DEB_OUT_SYSLOG  0x80000000	/* output to syslog instead of proc fs */
+#define LOG_MEM_ERR     0x00000001	/* log memory errors like kmalloc failure */
+#define LOG_POF_OPEN    0x00000010	/* log pof open and close activities */
+#define LOG_POF_RECORD  0x00000020	/* log pof record parser */
+#define LOG_POF_WRITE   0x00000040	/* log detailed pof write operation */
+#define LOG_POF_CARD    0x00000080	/* log pof related card functions */
+#define LOG_CNF_LINE    0x00000100	/* all conf lines are put to procfs */
+#define LOG_CNF_DATA    0x00000200	/* non comment conf lines are shown with channel */
+#define LOG_CNF_MISC    0x00000400	/* additional conf line debug outputs */
+#define LOG_SCHED_ASYN  0x00001000	/* debug schedulers async tx routines */
+#define LOG_PROC_OPEN   0x00100000	/* open and close from procfs are logged */
+#define LOG_PROC_ALL    0x00200000	/* all actions from procfs are logged */
+#define LOG_NET_INIT    0x00010000	/* network init and deinit logging */
 
-#define DEF_DEB_FLAGS   0x7fff000f  /* everything is logged to procfs */
+#define DEF_DEB_FLAGS   0x7fff000f	/* everything is logged to procfs */
 
 /**********************************/
 /* proc filesystem name constants */
@@ -118,98 +118,98 @@
 /******************************************************/
 /* defined states for cards shown by reading cardconf */
 /******************************************************/
-#define CARD_STATE_UNUSED   0 /* never been used or booted */
-#define CARD_STATE_BOOTING  1 /* booting is in progress */
-#define CARD_STATE_BOOTERR  2 /* a previous boot was aborted */
-#define CARD_STATE_RUN      3 /* card is active */
+#define CARD_STATE_UNUSED   0	/* never been used or booted */
+#define CARD_STATE_BOOTING  1	/* booting is in progress */
+#define CARD_STATE_BOOTERR  2	/* a previous boot was aborted */
+#define CARD_STATE_RUN      3	/* card is active */
 
 /*******************************/
 /* defines for error_log_state */
 /*******************************/
-#define ERRLOG_STATE_OFF   0  /* error log is switched off, nothing to do */
-#define ERRLOG_STATE_ON    1  /* error log is switched on, wait for data */
-#define ERRLOG_STATE_START 2  /* start error logging */
-#define ERRLOG_STATE_STOP  3  /* stop error logging */
+#define ERRLOG_STATE_OFF   0	/* error log is switched off, nothing to do */
+#define ERRLOG_STATE_ON    1	/* error log is switched on, wait for data */
+#define ERRLOG_STATE_START 2	/* start error logging */
+#define ERRLOG_STATE_STOP  3	/* stop error logging */
 
 /*******************************/
 /* data structure for one card */
 /*******************************/
 typedef struct HYSDN_CARD {
 
-  /* general variables for the cards */
-  int myid;   /* own driver card id */
-  unsigned char bus;  /* pci bus the card is connected to */
-  unsigned char devfn;  /* slot+function bit encoded */
-  unsigned short subsysid;/* PCI subsystem id */
-  unsigned char brdtype;  /* type of card */
-  unsigned int bchans;  /* number of available B-channels */
-  unsigned int faxchans;  /* number of available fax-channels */
-  unsigned char mac_addr[6];/* MAC Address read from card */
-  unsigned int irq; /* interrupt number */
-  unsigned int iobase;  /* IO-port base address */
-  unsigned long plxbase;  /* PLX memory base */
-  unsigned long membase;  /* DPRAM memory base */
-  unsigned long memend; /* DPRAM memory end */
-  void * dpram;   /* mapped dpram */
-  int state;    /* actual state of card -> CARD_STATE_** */
-  struct HYSDN_CARD * next; /* pointer to next card */
-  
-  /* data areas for the /proc file system */
-  void * proclog;   /* pointer to proclog filesystem specific data */
-  void * procconf;  /* pointer to procconf filesystem specific data */
-  
-  /* debugging and logging */
-  unsigned char err_log_state;/* actual error log state of the card */
-  unsigned long debug_flags;/* tells what should be debugged and where */
-  void (*set_errlog_state) (struct HYSDN_CARD *, int);
-  
-  /* interrupt handler + interrupt synchronisation */
-  struct work_struct irq_queue; /* interrupt task queue */
-  unsigned char volatile irq_enabled;/* interrupt enabled if != 0 */
-  unsigned char volatile hw_lock;/* hardware is currently locked -> no access */
-  
-  /* boot process */
-  void * boot;  /* pointer to boot private data */
-  int (*writebootimg) (struct HYSDN_CARD *, unsigned char *, unsigned long);
-  int (*writebootseq) (struct HYSDN_CARD *, unsigned char *, int);
-  int (*waitpofready) (struct HYSDN_CARD *);
-  int (*testram) (struct HYSDN_CARD *);
-  
-  /* scheduler for data transfer (only async parts) */
-  unsigned char async_data[256];/* async data to be sent (normally for config) */
-  unsigned short volatile async_len;/* length of data to sent */
-  unsigned short volatile async_channel;/* channel number for async transfer */
-  int volatile async_busy;  /* flag != 0 sending in progress */
-  int volatile net_tx_busy; /* a network packet tx is in progress */
-  
-  /* network interface */
-  void * netif;   /* pointer to network structure */
-  
-  /* init and deinit stopcard for booting, too */
-  void (*stopcard) (struct HYSDN_CARD *);
-  void (*releasehardware) (struct HYSDN_CARD *);
-  
-  spinlock_t hysdn_lock;
-  #ifdef CONFIG_HYSDN_CAPI
-  struct hycapictrl_info {
-    char cardname[32];
-    spinlock_t lock;
-    int versionlen;
-    char versionbuf[1024];
-    char * version[HYSDN_MAXVERSION];
-    
-    char infobuf[128];  /* for function procinfo */
-    
-    struct HYSDN_CARD * card;
-    struct capi_ctr capi_ctrl;
-    struct sk_buff * skbs[HYSDN_MAX_CAPI_SKB];
-    int in_idx, out_idx;  /* indexes to buffer ring */
-    int sk_count;   /* number of buffers currently in ring */
-    struct sk_buff * tx_skb; /* buffer for tx operation */
-    
-    struct list_head ncci_head;
-  } * hyctrlinfo;
-  #endif /* CONFIG_HYSDN_CAPI */
+	/* general variables for the cards */
+	int myid;		/* own driver card id */
+	unsigned char bus;	/* pci bus the card is connected to */
+	unsigned char devfn;	/* slot+function bit encoded */
+	unsigned short subsysid;/* PCI subsystem id */
+	unsigned char brdtype;	/* type of card */
+	unsigned int bchans;	/* number of available B-channels */
+	unsigned int faxchans;	/* number of available fax-channels */
+	unsigned char mac_addr[6];/* MAC Address read from card */
+	unsigned int irq;	/* interrupt number */
+	unsigned int iobase;	/* IO-port base address */
+	unsigned long plxbase;	/* PLX memory base */
+	unsigned long membase;	/* DPRAM memory base */
+	unsigned long memend;	/* DPRAM memory end */
+	void *dpram;		/* mapped dpram */
+	int state;		/* actual state of card -> CARD_STATE_** */
+	struct HYSDN_CARD *next;	/* pointer to next card */
+
+	/* data areas for the /proc file system */
+	void *proclog;		/* pointer to proclog filesystem specific data */
+	void *procconf;		/* pointer to procconf filesystem specific data */
+
+	/* debugging and logging */
+	unsigned char err_log_state;/* actual error log state of the card */
+	unsigned long debug_flags;/* tells what should be debugged and where */
+	void (*set_errlog_state) (struct HYSDN_CARD *, int);
+
+	/* interrupt handler + interrupt synchronisation */
+	struct work_struct irq_queue;	/* interrupt task queue */
+	unsigned char volatile irq_enabled;/* interrupt enabled if != 0 */
+	unsigned char volatile hw_lock;/* hardware is currently locked -> no access */
+
+	/* boot process */
+	void *boot;		/* pointer to boot private data */
+	int (*writebootimg) (struct HYSDN_CARD *, unsigned char *, unsigned long);
+	int (*writebootseq) (struct HYSDN_CARD *, unsigned char *, int);
+	int (*waitpofready) (struct HYSDN_CARD *);
+	int (*testram) (struct HYSDN_CARD *);
+
+	/* scheduler for data transfer (only async parts) */
+	unsigned char async_data[256];/* async data to be sent (normally for config) */
+	unsigned short volatile async_len;/* length of data to sent */
+	unsigned short volatile async_channel;/* channel number for async transfer */
+	int volatile async_busy;	/* flag != 0 sending in progress */
+	int volatile net_tx_busy;	/* a network packet tx is in progress */
+
+	/* network interface */
+	void *netif;		/* pointer to network structure */
+
+	/* init and deinit stopcard for booting, too */
+	void (*stopcard) (struct HYSDN_CARD *);
+	void (*releasehardware) (struct HYSDN_CARD *);
+
+	spinlock_t hysdn_lock;
+#ifdef CONFIG_HYSDN_CAPI
+	struct hycapictrl_info {
+		char cardname[32];
+		spinlock_t lock;
+		int versionlen;
+		char versionbuf[1024];
+		char *version[HYSDN_MAXVERSION];
+
+		char infobuf[128];	/* for function procinfo */
+
+		struct HYSDN_CARD  *card;
+		struct capi_ctr capi_ctrl;
+		struct sk_buff *skbs[HYSDN_MAX_CAPI_SKB];
+		int in_idx, out_idx;	/* indexes to buffer ring */
+		int sk_count;		/* number of buffers currently in ring */
+		struct sk_buff *tx_skb;	/* buffer for tx operation */
+
+		struct list_head ncci_head;
+	} *hyctrlinfo;
+#endif /* CONFIG_HYSDN_CAPI */
 } hysdn_card;
 
 #ifdef CONFIG_HYSDN_CAPI
@@ -220,7 +220,7 @@ typedef struct hycapictrl_info hycapictrl_info;
 /*****************/
 /* exported vars */
 /*****************/
-extern hysdn_card * card_root; /* pointer to first card */
+extern hysdn_card *card_root;	/* pointer to first card */
 
 
 
@@ -229,54 +229,54 @@ extern hysdn_card * card_root; /* pointer to first card */
 /*************************/
 
 /* hysdn_procconf.c */
-extern int hysdn_procconf_init (void); /* init proc config filesys */
-extern void hysdn_procconf_release (void); /* deinit proc config filesys */
+extern int hysdn_procconf_init(void);	/* init proc config filesys */
+extern void hysdn_procconf_release(void);	/* deinit proc config filesys */
 
 /* hysdn_proclog.c */
-extern int hysdn_proclog_init (hysdn_card *); /* init proc log entry */
-extern void hysdn_proclog_release (hysdn_card *); /* deinit proc log entry */
-extern void hysdn_addlog (hysdn_card *, char *, ...); /* output data to log */
-extern void hysdn_card_errlog (hysdn_card *, tErrLogEntry *, int); /* output card log */
+extern int hysdn_proclog_init(hysdn_card *);	/* init proc log entry */
+extern void hysdn_proclog_release(hysdn_card *);	/* deinit proc log entry */
+extern void hysdn_addlog(hysdn_card *, char *, ...);	/* output data to log */
+extern void hysdn_card_errlog(hysdn_card *, tErrLogEntry *, int);	/* output card log */
 
 /* boardergo.c */
-extern int ergo_inithardware (hysdn_card * card); /* get hardware -> module init */
+extern int ergo_inithardware(hysdn_card *card);	/* get hardware -> module init */
 
 /* hysdn_boot.c */
-extern int pof_write_close (hysdn_card *); /* close proc file after writing pof */
-extern int pof_write_open (hysdn_card *, unsigned char **); /* open proc file for writing pof */
-extern int pof_write_buffer (hysdn_card *, int);  /* write boot data to card */
-extern int EvalSysrTokData (hysdn_card *, unsigned char *, int);  /* Check Sysready Token Data */
+extern int pof_write_close(hysdn_card *);	/* close proc file after writing pof */
+extern int pof_write_open(hysdn_card *, unsigned char **);	/* open proc file for writing pof */
+extern int pof_write_buffer(hysdn_card *, int);		/* write boot data to card */
+extern int EvalSysrTokData(hysdn_card *, unsigned char *, int);		/* Check Sysready Token Data */
 
 /* hysdn_sched.c */
-extern int hysdn_sched_tx (hysdn_card *, unsigned char *,
-                           unsigned short volatile *, unsigned short volatile *,
-                           unsigned short);
-extern int hysdn_sched_rx (hysdn_card *, unsigned char *, unsigned short,
-                           unsigned short);
-extern int hysdn_tx_cfgline (hysdn_card *, unsigned char *,
-                             unsigned short);  /* send one cfg line */
+extern int hysdn_sched_tx(hysdn_card *, unsigned char *,
+			  unsigned short volatile *, unsigned short volatile *,
+			  unsigned short);
+extern int hysdn_sched_rx(hysdn_card *, unsigned char *, unsigned short,
+			  unsigned short);
+extern int hysdn_tx_cfgline(hysdn_card *, unsigned char *,
+			    unsigned short);	/* send one cfg line */
 
 /* hysdn_net.c */
 extern unsigned int hynet_enable;
-extern int hysdn_net_create (hysdn_card *); /* create a new net device */
-extern int hysdn_net_release (hysdn_card *); /* delete the device */
-extern char * hysdn_net_getname (hysdn_card *); /* get name of net interface */
-extern void hysdn_tx_netack (hysdn_card *); /* acknowledge a packet tx */
-extern struct sk_buff * hysdn_tx_netget (hysdn_card *); /* get next network packet */
-extern void hysdn_rx_netpkt (hysdn_card *, unsigned char *,
-                             unsigned short);  /* rxed packet from network */
+extern int hysdn_net_create(hysdn_card *);	/* create a new net device */
+extern int hysdn_net_release(hysdn_card *);	/* delete the device */
+extern char *hysdn_net_getname(hysdn_card *);	/* get name of net interface */
+extern void hysdn_tx_netack(hysdn_card *);	/* acknowledge a packet tx */
+extern struct sk_buff *hysdn_tx_netget(hysdn_card *);	/* get next network packet */
+extern void hysdn_rx_netpkt(hysdn_card *, unsigned char *,
+			    unsigned short);	/* rxed packet from network */
 
 #ifdef CONFIG_HYSDN_CAPI
 extern unsigned int hycapi_enable;
-extern int hycapi_capi_create (hysdn_card *); /* create a new capi device */
-extern int hycapi_capi_release (hysdn_card *); /* delete the device */
-extern int hycapi_capi_stop (hysdn_card * card); /* suspend */
-extern void hycapi_rx_capipkt (hysdn_card * card, unsigned char * buf,
-                               unsigned short len);
-extern void hycapi_tx_capiack (hysdn_card * card);
-extern struct sk_buff * hycapi_tx_capiget (hysdn_card * card);
-extern int hycapi_init (void);
-extern void hycapi_cleanup (void);
+extern int hycapi_capi_create(hysdn_card *);	/* create a new capi device */
+extern int hycapi_capi_release(hysdn_card *);	/* delete the device */
+extern int hycapi_capi_stop(hysdn_card *card);   /* suspend */
+extern void hycapi_rx_capipkt(hysdn_card *card, unsigned char *buf,
+			      unsigned short len);
+extern void hycapi_tx_capiack(hysdn_card *card);
+extern struct sk_buff *hycapi_tx_capiget(hysdn_card *card);
+extern int hycapi_init(void);
+extern void hycapi_cleanup(void);
 #endif /* CONFIG_HYSDN_CAPI */
 
 #endif /* HYSDN_DEFS_H */

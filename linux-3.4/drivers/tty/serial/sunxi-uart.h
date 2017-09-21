@@ -21,39 +21,39 @@
 #include <linux/regulator/consumer.h>
 
 struct sw_uart_pdata {
-  unsigned int used;
-  unsigned int base;
-  unsigned int irq;
-  unsigned int max_ios;
-  unsigned int io_num;
-  unsigned int port_no;
-  char        regulator_id[16];
-  struct regulator * regulator;
+	unsigned int used;
+	unsigned int base;
+	unsigned int irq;
+	unsigned int max_ios;
+	unsigned int io_num;
+	unsigned int port_no;
+	char			  regulator_id[16];
+	struct regulator *regulator;
 };
 
 struct sw_uart_port {
-  struct uart_port port;
-  char   name[16];
-  struct clk * mclk;
-  unsigned char id;
-  unsigned char ier;
-  unsigned char lcr;
-  unsigned char mcr;
-  unsigned char fcr;
-  unsigned char dll;
-  unsigned char dlh;
-  unsigned char msr_saved_flags;
-  unsigned int lsr_break_flag;
-  struct sw_uart_pdata * pdata;
-  
-  /* for debug */
-#define MAX_DUMP_SIZE 1024
-  unsigned int dump_len;
-  char * dump_buff;
-  struct proc_dir_entry * proc_root;
-  struct proc_dir_entry * proc_info;
-  
-  struct pinctrl   *  pctrl;
+	struct uart_port port;
+	char   name[16];
+	struct clk *mclk;
+	unsigned char id;
+	unsigned char ier;
+	unsigned char lcr;
+	unsigned char mcr;
+	unsigned char fcr;
+	unsigned char dll;
+	unsigned char dlh;
+	unsigned char msr_saved_flags;
+	unsigned int lsr_break_flag;
+	struct sw_uart_pdata *pdata;
+
+	/* for debug */
+#define MAX_DUMP_SIZE	1024
+	unsigned int dump_len;
+	char* dump_buff;
+	struct proc_dir_entry *proc_root;
+	struct proc_dir_entry *proc_info;
+
+	struct pinctrl		 *pctrl;
 };
 
 /* register offset define */
@@ -84,24 +84,24 @@ struct sw_uart_port {
 /* Interrupt ID Register */
 #define SW_UART_IIR_FEFLAG_MASK (BIT(6)|BIT(7))
 #define SW_UART_IIR_IID_MASK    (BIT(0)|BIT(1)|BIT(2)|BIT(3))
-#define SW_UART_IIR_IID_MSTA    (0)
-#define SW_UART_IIR_IID_NOIRQ   (1)
-#define SW_UART_IIR_IID_THREMP  (2)
-#define SW_UART_IIR_IID_RXDVAL  (4)
-#define SW_UART_IIR_IID_LINESTA (6)
-#define SW_UART_IIR_IID_BUSBSY  (7)
-#define SW_UART_IIR_IID_CHARTO  (12)
+ #define SW_UART_IIR_IID_MSTA    (0)
+ #define SW_UART_IIR_IID_NOIRQ   (1)
+ #define SW_UART_IIR_IID_THREMP  (2)
+ #define SW_UART_IIR_IID_RXDVAL  (4)
+ #define SW_UART_IIR_IID_LINESTA (6)
+ #define SW_UART_IIR_IID_BUSBSY  (7)
+ #define SW_UART_IIR_IID_CHARTO  (12)
 /* FIFO Control Register */
 #define SW_UART_FCR_RXTRG_MASK  (BIT(6)|BIT(7))
-#define SW_UART_FCR_RXTRG_1CH   (0 << 6)
-#define SW_UART_FCR_RXTRG_1_4   (1 << 6)
-#define SW_UART_FCR_RXTRG_1_2   (2 << 6)
-#define SW_UART_FCR_RXTRG_FULL  (3 << 6)
+ #define SW_UART_FCR_RXTRG_1CH   (0 << 6)
+ #define SW_UART_FCR_RXTRG_1_4   (1 << 6)
+ #define SW_UART_FCR_RXTRG_1_2   (2 << 6)
+ #define SW_UART_FCR_RXTRG_FULL  (3 << 6)
 #define SW_UART_FCR_TXTRG_MASK  (BIT(4)|BIT(5))
-#define SW_UART_FCR_TXTRG_EMP   (0 << 4)
-#define SW_UART_FCR_TXTRG_2CH   (1 << 4)
-#define SW_UART_FCR_TXTRG_1_4   (2 << 4)
-#define SW_UART_FCR_TXTRG_1_2   (3 << 4)
+ #define SW_UART_FCR_TXTRG_EMP   (0 << 4)
+ #define SW_UART_FCR_TXTRG_2CH   (1 << 4)
+ #define SW_UART_FCR_TXTRG_1_4   (2 << 4)
+ #define SW_UART_FCR_TXTRG_1_2   (3 << 4)
 #define SW_UART_FCR_TXFIFO_RST  (BIT(2))
 #define SW_UART_FCR_RXFIFO_RST  (BIT(1))
 #define SW_UART_FCR_FIFO_EN     (BIT(0))
@@ -109,15 +109,15 @@ struct sw_uart_port {
 #define SW_UART_LCR_DLAB        (BIT(7))
 #define SW_UART_LCR_SBC         (BIT(6))
 #define SW_UART_LCR_PARITY_MASK (BIT(5)|BIT(4))
-#define SW_UART_LCR_EPAR        (1 << 4)
-#define SW_UART_LCR_OPAR        (0 << 4)
+ #define SW_UART_LCR_EPAR        (1 << 4)
+ #define SW_UART_LCR_OPAR        (0 << 4)
 #define SW_UART_LCR_PARITY      (BIT(3))
 #define SW_UART_LCR_STOP        (BIT(2))
 #define SW_UART_LCR_DLEN_MASK   (BIT(1)|BIT(0))
-#define SW_UART_LCR_WLEN5       (0)
-#define SW_UART_LCR_WLEN6       (1)
-#define SW_UART_LCR_WLEN7       (2)
-#define SW_UART_LCR_WLEN8       (3)
+ #define SW_UART_LCR_WLEN5       (0)
+ #define SW_UART_LCR_WLEN6       (1)
+ #define SW_UART_LCR_WLEN7       (2)
+ #define SW_UART_LCR_WLEN8       (3)
 /* Modem Control Register */
 #define SW_UART_MCR_SIRE       (BIT(6))
 #define SW_UART_MCR_AFE        (BIT(5))
@@ -159,59 +159,59 @@ struct sw_uart_port {
 /* The global infor of UART channel. */
 
 #ifdef CONFIG_ARCH_SUN8IW1P1
-#define SUNXI_UART_NUM      6
+#define SUNXI_UART_NUM			6
 #endif
 #if defined(CONFIG_ARCH_SUN8IW6P1) || defined(CONFIG_ARCH_SUN8IW9)
-#define SUNXI_UART_NUM      5
+#define SUNXI_UART_NUM			5
 #endif
 #if defined(CONFIG_ARCH_SUN8IW3P1) || defined(CONFIG_ARCH_SUN8IW5P1) \
-|| defined(CONFIG_ARCH_SUN8IW7)
-#define SUNXI_UART_NUM      4
+		|| defined(CONFIG_ARCH_SUN8IW7)
+#define SUNXI_UART_NUM			4
 #endif
 #if defined(CONFIG_ARCH_SUN8IW8)
-#define SUNXI_UART_NUM      3
+#define SUNXI_UART_NUM			3
 #endif
 #if defined(CONFIG_ARCH_SUN9IW1P1)
-#define SUNXI_UART_NUM      6
+#define SUNXI_UART_NUM			6
 #endif
 
 #ifndef SUNXI_UART_NUM
-#define SUNXI_UART_NUM      1
+#define SUNXI_UART_NUM			1
 #endif
 
 /* In 50/39 FPGA, two UART is available, but they share one IRQ.
    So we define the number of UART port as 1. */
 #ifndef CONFIG_EVB_PLATFORM
 #undef SUNXI_UART_NUM
-#define SUNXI_UART_NUM      1
+#define SUNXI_UART_NUM			1
 #endif
 
-#define SUNXI_UART_DEV_NAME     "uart"
+#define SUNXI_UART_DEV_NAME			"uart"
 
 /* Memory mapping. */
 
-#define SUNXI_UART_MEM_BASE     SUNXI_UART0_PBASE
-#define SUNXI_UART_MEM_RANGE    0x400
-#define SUNXI_UART_MEM_START(ch)  (SUNXI_UART_MEM_BASE + ch * SUNXI_UART_MEM_RANGE)
+#define SUNXI_UART_MEM_BASE			SUNXI_UART0_PBASE
+#define SUNXI_UART_MEM_RANGE		0x400
+#define SUNXI_UART_MEM_START(ch)	(SUNXI_UART_MEM_BASE + ch * SUNXI_UART_MEM_RANGE)
 
 /* The IRQ number. */
 
-#define SUNXI_UART_IRQ(ch)      (SUNXI_IRQ_UART0 + ch)
+#define SUNXI_UART_IRQ(ch)	    (SUNXI_IRQ_UART0 + ch)
 
 /* Support to use r_uart on sun8iw5 */
 #ifdef CONFIG_ARCH_SUN8IW5P1
 #define SUNXI_S_UART
-#undef  SUNXI_UART_NUM
-#define SUNXI_UART_NUM      5
+#undef	SUNXI_UART_NUM
+#define SUNXI_UART_NUM			5
 #endif
 
 #ifdef SUNXI_S_UART
-#define SUNXI_S_UART_DEV_NAME   "s_uart"
-#define SUNXI_S_UART_MEM_BASE   SUNXI_R_UART_PBASE
-#define SUNXI_S_UART_MEM_RANGE    0x400
-#define SUNXI_S_UART_MEM_START    (SUNXI_S_UART_MEM_BASE)
-#define SUNXI_S_UART_MEM_END    (SUNXI_S_UART_MEM_START + SUNXI_S_UART_MEM_RANGE - 1)
-#define SUNXI_S_UART_IRQ        SUNXI_IRQ_RUART
+#define SUNXI_S_UART_DEV_NAME		"s_uart"
+#define SUNXI_S_UART_MEM_BASE		SUNXI_R_UART_PBASE
+#define SUNXI_S_UART_MEM_RANGE		0x400
+#define SUNXI_S_UART_MEM_START		(SUNXI_S_UART_MEM_BASE)
+#define SUNXI_S_UART_MEM_END		(SUNXI_S_UART_MEM_START + SUNXI_S_UART_MEM_RANGE - 1)
+#define SUNXI_S_UART_IRQ	    	SUNXI_IRQ_RUART
 #endif
 
 /* About the number of IO */
@@ -246,7 +246,7 @@ static int gs_uart_io_num[SUNXI_UART_NUM] = {2};
 
 #endif
 
-struct platform_device * sw_uart_get_pdev (int uart_id);
+struct platform_device *sw_uart_get_pdev(int uart_id);
 
 #endif /* end of _SUNXI_UART_H_ */
 

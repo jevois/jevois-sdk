@@ -13,13 +13,13 @@
 #include <linux/export.h>
 #include "base.h"
 
-struct kobject * hypervisor_kobj;
-EXPORT_SYMBOL_GPL (hypervisor_kobj);
+struct kobject *hypervisor_kobj;
+EXPORT_SYMBOL_GPL(hypervisor_kobj);
 
-int __init hypervisor_init (void)
+int __init hypervisor_init(void)
 {
-  hypervisor_kobj = kobject_create_and_add ("hypervisor", NULL);
-  if (!hypervisor_kobj)
-  { return -ENOMEM; }
-  return 0;
+	hypervisor_kobj = kobject_create_and_add("hypervisor", NULL);
+	if (!hypervisor_kobj)
+		return -ENOMEM;
+	return 0;
 }

@@ -1,5 +1,5 @@
 /* ----------------------------------------------------------------------- *
- *
+ *   
  *   Copyright 2001 H. Peter Anvin - All Rights Reserved
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -16,6 +16,6 @@
 
 #ifdef CONFIG_ZISOFS
 extern const struct address_space_operations zisofs_aops;
-extern int __init zisofs_init (void);
-extern void zisofs_cleanup (void);
+extern int __init zisofs_init(void);
+extern void zisofs_cleanup(void);
 #endif

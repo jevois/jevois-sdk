@@ -7,26 +7,26 @@
 struct page;
 
 struct arm_vmregion_head {
-  spinlock_t    vm_lock;
-  struct list_head  vm_list;
-  unsigned long   vm_start;
-  unsigned long   vm_end;
+	spinlock_t		vm_lock;
+	struct list_head	vm_list;
+	unsigned long		vm_start;
+	unsigned long		vm_end;
 };
 
 struct arm_vmregion {
-  struct list_head  vm_list;
-  unsigned long   vm_start;
-  unsigned long   vm_end;
-  void   *   priv;
-  int     vm_active;
-  const void  *  caller;
+	struct list_head	vm_list;
+	unsigned long		vm_start;
+	unsigned long		vm_end;
+	void			*priv;
+	int			vm_active;
+	const void		*caller;
 };
 
-struct arm_vmregion * arm_vmregion_alloc (struct arm_vmregion_head *, size_t, size_t, gfp_t, const void *);
-struct arm_vmregion * arm_vmregion_find (struct arm_vmregion_head *, unsigned long);
-struct arm_vmregion * arm_vmregion_find_remove (struct arm_vmregion_head *, unsigned long);
-void arm_vmregion_free (struct arm_vmregion_head *, struct arm_vmregion *);
+struct arm_vmregion *arm_vmregion_alloc(struct arm_vmregion_head *, size_t, size_t, gfp_t, const void *);
+struct arm_vmregion *arm_vmregion_find(struct arm_vmregion_head *, unsigned long);
+struct arm_vmregion *arm_vmregion_find_remove(struct arm_vmregion_head *, unsigned long);
+void arm_vmregion_free(struct arm_vmregion_head *, struct arm_vmregion *);
 
-int arm_vmregion_create_proc (const char *, struct arm_vmregion_head *);
+int arm_vmregion_create_proc(const char *, struct arm_vmregion_head *);
 
 #endif

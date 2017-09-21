@@ -37,80 +37,80 @@
  */
 
 static const struct squashfs_decompressor squashfs_lzma_unsupported_comp_ops = {
-  NULL, NULL, NULL, LZMA_COMPRESSION, "lzma", 0
+	NULL, NULL, NULL, LZMA_COMPRESSION, "lzma", 0
 };
 
 #ifndef CONFIG_SQUASHFS_LZO
 static const struct squashfs_decompressor squashfs_lzo_comp_ops = {
-  NULL, NULL, NULL, LZO_COMPRESSION, "lzo", 0
+	NULL, NULL, NULL, LZO_COMPRESSION, "lzo", 0
 };
 #endif
 
 #ifndef CONFIG_SQUASHFS_XZ
 static const struct squashfs_decompressor squashfs_xz_comp_ops = {
-  NULL, NULL, NULL, XZ_COMPRESSION, "xz", 0
+	NULL, NULL, NULL, XZ_COMPRESSION, "xz", 0
 };
 #endif
 
 #ifndef CONFIG_SQUASHFS_ZLIB
 static const struct squashfs_decompressor squashfs_zlib_comp_ops = {
-  NULL, NULL, NULL, ZLIB_COMPRESSION, "zlib", 0
+	NULL, NULL, NULL, ZLIB_COMPRESSION, "zlib", 0
 };
 #endif
 
 static const struct squashfs_decompressor squashfs_unknown_comp_ops = {
-  NULL, NULL, NULL, 0, "unknown", 0
+	NULL, NULL, NULL, 0, "unknown", 0
 };
 
-static const struct squashfs_decompressor * decompressor[] = {
-  &squashfs_zlib_comp_ops,
-  &squashfs_lzo_comp_ops,
-  &squashfs_xz_comp_ops,
-  &squashfs_lzma_unsupported_comp_ops,
-  &squashfs_unknown_comp_ops
+static const struct squashfs_decompressor *decompressor[] = {
+	&squashfs_zlib_comp_ops,
+	&squashfs_lzo_comp_ops,
+	&squashfs_xz_comp_ops,
+	&squashfs_lzma_unsupported_comp_ops,
+	&squashfs_unknown_comp_ops
 };
 
 
-const struct squashfs_decompressor * squashfs_lookup_decompressor (int id)
+const struct squashfs_decompressor *squashfs_lookup_decompressor(int id)
 {
-  int i;
-  
-  for (i = 0; decompressor[i]->id; i++)
-    if (id == decompressor[i]->id)
-    { break; }
-    
-  return decompressor[i];
+	int i;
+
+	for (i = 0; decompressor[i]->id; i++)
+		if (id == decompressor[i]->id)
+			break;
+
+	return decompressor[i];
 }
 
 
-void * squashfs_decompressor_init (struct super_block * sb, unsigned short flags)
+void *squashfs_decompressor_init(struct super_block *sb, unsigned short flags)
 {
-  struct squashfs_sb_info * msblk = sb->s_fs_info;
-  void * strm, *buffer = NULL;
-  int length = 0;
-  
-  /*
-   * Read decompressor specific options from file system if present
-   */
-  if (SQUASHFS_COMP_OPTS (flags) ) {
-    buffer = kmalloc (PAGE_CACHE_SIZE, GFP_KERNEL);
-    if (buffer == NULL)
-    { return ERR_PTR (-ENOMEM); }
-    
-    length = squashfs_read_data (sb, &buffer,
-                                 sizeof (struct squashfs_super_block), 0, NULL,
-                                 PAGE_CACHE_SIZE, 1);
-                                 
-    if (length < 0) {
-      strm = ERR_PTR (length);
-      goto finished;
-    }
-  }
-  
-  strm = msblk->decompressor->init (msblk, buffer, length);
-  
+	struct squashfs_sb_info *msblk = sb->s_fs_info;
+	void *strm, *buffer = NULL;
+	int length = 0;
+
+	/*
+	 * Read decompressor specific options from file system if present
+	 */
+	if (SQUASHFS_COMP_OPTS(flags)) {
+		buffer = kmalloc(PAGE_CACHE_SIZE, GFP_KERNEL);
+		if (buffer == NULL)
+			return ERR_PTR(-ENOMEM);
+
+		length = squashfs_read_data(sb, &buffer,
+			sizeof(struct squashfs_super_block), 0, NULL,
+			PAGE_CACHE_SIZE, 1);
+
+		if (length < 0) {
+			strm = ERR_PTR(length);
+			goto finished;
+		}
+	}
+
+	strm = msblk->decompressor->init(msblk, buffer, length);
+
 finished:
-  kfree (buffer);
-  
-  return strm;
+	kfree(buffer);
+
+	return strm;
 }

@@ -21,12 +21,12 @@
  * Default implementation of macro that returns current
  * instruction pointer ("program counter").
  */
-#define current_text_addr()     \
-  ({            \
-    void *__pc;       \
-    asm("mvc .S2 pce1,%0\n" : "=b"(__pc));  \
-    __pc;         \
-  })
+#define current_text_addr()			\
+({						\
+	void *__pc;				\
+	asm("mvc .S2 pce1,%0\n" : "=b"(__pc));	\
+	__pc;					\
+})
 
 /*
  * User space process size. This is mostly meaningless for NOMMU
@@ -43,62 +43,62 @@
  * use the last 4K page on systems with RAM extending all the way
  * to the end of the 32-bit address space.
  */
-#define TASK_SIZE 0xFFFFF000
+#define TASK_SIZE	0xFFFFF000
 
 /*
  * This decides where the kernel will search for a free chunk of vm
  * space during mmap's. We won't be using it
  */
-#define TASK_UNMAPPED_BASE  0
+#define TASK_UNMAPPED_BASE	0
 
 struct thread_struct {
-  unsigned long long b15_14;
-  unsigned long long a15_14;
-  unsigned long long b13_12;
-  unsigned long long a13_12;
-  unsigned long long b11_10;
-  unsigned long long a11_10;
-  unsigned long long ricl_icl;
-  unsigned long  usp;   /* user stack pointer */
-  unsigned long  pc;    /* kernel pc */
-  unsigned long  wchan;
+	unsigned long long b15_14;
+	unsigned long long a15_14;
+	unsigned long long b13_12;
+	unsigned long long a13_12;
+	unsigned long long b11_10;
+	unsigned long long a11_10;
+	unsigned long long ricl_icl;
+	unsigned long  usp;		/* user stack pointer */
+	unsigned long  pc;		/* kernel pc */
+	unsigned long  wchan;
 };
 
-#define INIT_THREAD         \
-  {             \
-    .usp = 0,         \
-           .wchan = 0,         \
-  }
+#define INIT_THREAD					\
+{							\
+	.usp = 0,					\
+	.wchan = 0,					\
+}
 
 #define INIT_MMAP { \
-    &init_mm, 0, 0, NULL, PAGE_SHARED, VM_READ | VM_WRITE | VM_EXEC, 1, \
-    NULL, NULL }
+	&init_mm, 0, 0, NULL, PAGE_SHARED, VM_READ | VM_WRITE | VM_EXEC, 1, \
+	NULL, NULL }
 
 #define task_pt_regs(task) \
-  ((struct pt_regs *)(THREAD_START_SP + task_stack_page(task)) - 1)
+	((struct pt_regs *)(THREAD_START_SP + task_stack_page(task)) - 1)
 
-#define alloc_kernel_stack()  __get_free_page(GFP_KERNEL)
+#define alloc_kernel_stack()	__get_free_page(GFP_KERNEL)
 #define free_kernel_stack(page) free_page((page))
 
 
 /* Forward declaration, a strange C thing */
 struct task_struct;
 
-extern void start_thread (struct pt_regs * regs, unsigned int pc,
-                          unsigned long usp);
+extern void start_thread(struct pt_regs *regs, unsigned int pc,
+			 unsigned long usp);
 
 /* Free all resources held by a thread. */
-static inline void release_thread (struct task_struct * dead_task)
+static inline void release_thread(struct task_struct *dead_task)
 {
 }
 
 /* Prepare to copy thread state - unlazy all lazy status */
-#define prepare_to_copy(tsk)  do { } while (0)
+#define prepare_to_copy(tsk)	do { } while (0)
 
-extern int kernel_thread (int (*fn) (void *), void * arg, unsigned long flags);
+extern int kernel_thread(int (*fn)(void *), void * arg, unsigned long flags);
 
-#define copy_segments(tsk, mm)    do { } while (0)
-#define release_segments(mm)    do { } while (0)
+#define copy_segments(tsk, mm)		do { } while (0)
+#define release_segments(mm)		do { } while (0)
 
 /*
  * saved PC of a blocked thread.
@@ -110,22 +110,22 @@ extern int kernel_thread (int (*fn) (void *), void * arg, unsigned long flags);
  */
 #ifdef _BIG_ENDIAN
 #define thread_saved_ksp(tsk) \
-  (*(unsigned long *)&(tsk)->thread.b15_14)
+	(*(unsigned long *)&(tsk)->thread.b15_14)
 #define thread_saved_dp(tsk) \
-  (*(((unsigned long *)&(tsk)->thread.b15_14) + 1))
+	(*(((unsigned long *)&(tsk)->thread.b15_14) + 1))
 #else
 #define thread_saved_ksp(tsk) \
-  (*(((unsigned long *)&(tsk)->thread.b15_14) + 1))
+	(*(((unsigned long *)&(tsk)->thread.b15_14) + 1))
 #define thread_saved_dp(tsk) \
-  (*(unsigned long *)&(tsk)->thread.b15_14)
+	(*(unsigned long *)&(tsk)->thread.b15_14)
 #endif
 
-extern unsigned long get_wchan (struct task_struct * p);
+extern unsigned long get_wchan(struct task_struct *p);
 
-#define KSTK_EIP(task)  (task_pt_regs(task)->pc)
-#define KSTK_ESP(task)  (task_pt_regs(task)->sp)
+#define KSTK_EIP(task)	(task_pt_regs(task)->pc)
+#define KSTK_ESP(task)	(task_pt_regs(task)->sp)
 
-#define cpu_relax()   do { } while (0)
+#define cpu_relax()		do { } while (0)
 
 extern const struct seq_operations cpuinfo_op;
 
@@ -135,7 +135,7 @@ extern const struct seq_operations cpuinfo_op;
 extern unsigned int c6x_core_freq;
 
 
-extern void (*c6x_restart) (void);
-extern void (*c6x_halt) (void);
+extern void (*c6x_restart)(void);
+extern void (*c6x_halt)(void);
 
 #endif /* ASM_C6X_PROCESSOR_H */

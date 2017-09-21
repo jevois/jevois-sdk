@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2012-2014 ARM Limited. All rights reserved.
- *
+ * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- *
+ * 
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -15,15 +15,15 @@
 #include "mali_gp_job.h"
 #include "mali_group.h"
 
-_mali_osk_errcode_t mali_gp_scheduler_initialize (void);
-void mali_gp_scheduler_terminate (void);
+_mali_osk_errcode_t mali_gp_scheduler_initialize(void);
+void mali_gp_scheduler_terminate(void);
 
-void mali_gp_scheduler_job_done (struct mali_group * group, struct mali_gp_job * job, mali_bool success);
-void mali_gp_scheduler_oom (struct mali_group * group, struct mali_gp_job * job);
-u32 mali_gp_scheduler_dump_state (char * buf, u32 size);
+void mali_gp_scheduler_job_done(struct mali_group *group, struct mali_gp_job *job, mali_bool success);
+void mali_gp_scheduler_oom(struct mali_group *group, struct mali_gp_job *job);
+u32 mali_gp_scheduler_dump_state(char *buf, u32 size);
 
-void mali_gp_scheduler_suspend (void);
-void mali_gp_scheduler_resume (void);
+void mali_gp_scheduler_suspend(void);
+void mali_gp_scheduler_resume(void);
 
 /**
  * @brief Abort all running and queued GP jobs from session.
@@ -33,7 +33,7 @@ void mali_gp_scheduler_resume (void);
  *
  * @param session Session that is aborting.
  */
-void mali_gp_scheduler_abort_session (struct mali_session_data * session);
+void mali_gp_scheduler_abort_session(struct mali_session_data *session);
 
 /**
  * @brief Reset all groups
@@ -41,14 +41,14 @@ void mali_gp_scheduler_abort_session (struct mali_session_data * session);
  * This function resets all groups known by the GP scheuduler. This must be
  * called after the Mali HW has been powered on in order to reset the HW.
  */
-void mali_gp_scheduler_reset_all_groups (void);
+void mali_gp_scheduler_reset_all_groups(void);
 
 /**
  * @brief Zap TLB on all groups with \a session active
  *
  * The scheculer will zap the session on all groups it owns.
  */
-void mali_gp_scheduler_zap_all_active (struct mali_session_data * session);
+void mali_gp_scheduler_zap_all_active(struct mali_session_data *session);
 
 /**
  * @brief Re-enable a group that has been disabled with mali_gp_scheduler_disable_group
@@ -58,7 +58,7 @@ void mali_gp_scheduler_zap_all_active (struct mali_session_data * session);
  *
  * @param group Pointer to the group to enable
  */
-void mali_gp_scheduler_enable_group (struct mali_group * group);
+void mali_gp_scheduler_enable_group(struct mali_group *group);
 
 /**
  * @brief Disable a group
@@ -68,7 +68,7 @@ void mali_gp_scheduler_enable_group (struct mali_group * group);
  *
  * @param group Pointer to the group to disable
  */
-void mali_gp_scheduler_disable_group (struct mali_group * group);
+void mali_gp_scheduler_disable_group(struct mali_group *group);
 
 /**
  * @brief Used by the Timeline system to queue a GP job.
@@ -80,12 +80,12 @@ void mali_gp_scheduler_disable_group (struct mali_group * group);
  * @return A scheduling bitmask that can be used to decide if scheduling is necessary after this
  * call.
  */
-mali_scheduler_mask mali_gp_scheduler_activate_job (struct mali_gp_job * job);
+mali_scheduler_mask mali_gp_scheduler_activate_job(struct mali_gp_job *job);
 
 /**
  * @brief Schedule queued jobs on idle cores.
  */
-void mali_gp_scheduler_schedule (void);
+void mali_gp_scheduler_schedule(void);
 
 /**
  * @brief Submit a GP job to the GP scheduler.
@@ -96,6 +96,6 @@ void mali_gp_scheduler_schedule (void);
  * @param job GP job that will be submitted
  * @return Point on GP timeline for job.
  */
-mali_timeline_point mali_gp_scheduler_submit_job (struct mali_session_data * session, struct mali_gp_job * job);
+mali_timeline_point mali_gp_scheduler_submit_job(struct mali_session_data *session, struct mali_gp_job *job);
 
 #endif /* __MALI_GP_SCHEDULER_H__ */

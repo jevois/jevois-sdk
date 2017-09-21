@@ -19,7 +19,7 @@
     /* may be output signal */    ((!!(_out)) << 13) | \
     /* available on A0 */    ((!!(_78100_A0)) << 14))
 
-/*   num sel  i  o  78100_A0  */
+                /*   num sel  i  o  78100_A0  */
 
 #define MPP_78100_A0_MASK    MPP(0, 0x0, 0, 0, 1)
 
@@ -336,6 +336,6 @@
 
 #define MPP_MAX            49
 
-void mv78xx0_mpp_conf (unsigned int * mpp_list);
+void mv78xx0_mpp_conf(unsigned int *mpp_list);
 
 #endif

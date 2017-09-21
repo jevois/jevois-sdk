@@ -11,19 +11,19 @@
  * them together into ntohl etc.
  */
 
-static inline __attribute_const__ __u32 __arch_swab32 (__u32 x)
+static inline __attribute_const__ __u32 __arch_swab32(__u32 x)
 {
-  __asm__ ("swapwb %0" : "=r" (x) : "0" (x) );
-  
-  return (x);
+	__asm__ ("swapwb %0" : "=r" (x) : "0" (x));
+
+	return(x);
 }
 #define __arch_swab32 __arch_swab32
 
-static inline __attribute_const__ __u16 __arch_swab16 (__u16 x)
+static inline __attribute_const__ __u16 __arch_swab16(__u16 x)
 {
-  __asm__ ("swapb %0" : "=r" (x) : "0" (x) );
-  
-  return (x);
+	__asm__ ("swapb %0" : "=r" (x) : "0" (x));
+
+	return(x);
 }
 #define __arch_swab16 __arch_swab16
 

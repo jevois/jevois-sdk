@@ -22,7 +22,7 @@
  * shut up after that.
  */
 int debug_locks = 1;
-EXPORT_SYMBOL_GPL (debug_locks);
+EXPORT_SYMBOL_GPL(debug_locks);
 
 /*
  * The locking-testsuite uses <debug_locks_silent> to get a
@@ -34,13 +34,13 @@ int debug_locks_silent;
 /*
  * Generic 'turn off all lock debugging' function:
  */
-int debug_locks_off (void)
+int debug_locks_off(void)
 {
-  if (__debug_locks_off() ) {
-    if (!debug_locks_silent) {
-      console_verbose();
-      return 1;
-    }
-  }
-  return 0;
+	if (__debug_locks_off()) {
+		if (!debug_locks_silent) {
+			console_verbose();
+			return 1;
+		}
+	}
+	return 0;
 }

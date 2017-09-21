@@ -43,22 +43,22 @@ DECLARE_GLOBAL_DATA_PTR;
  * The Innokom board has GPIO70 connected to SCLK which can be toggled
  * until all chips think that their current cycles are finished.
  */
-int i2c_init_board (void)
+int i2c_init_board(void)
 {
-  int i;
-  
-  /* set gpio pin low _before_ we change direction to output          */
-  writel (GPIO_bit (70), GPCR (70) );
-  
-  /* now toggle between output=low and high-impedance                 */
-  for (i = 0; i < 20; i++) {
-    writel (readl (GPDR (70) ) | GPIO_bit (70), GPDR (70) ); /* output */
-    udelay (10);
-    writel (readl (GPDR (70) ) & ~GPIO_bit (70), GPDR (70) ); /* input  */
-    udelay (10);
-  }
-  
-  return 0;
+	int i;
+
+	/* set gpio pin low _before_ we change direction to output          */
+	writel(GPIO_bit(70), GPCR(70));
+
+	/* now toggle between output=low and high-impedance                 */
+	for (i = 0; i < 20; i++) {
+		writel(readl(GPDR(70)) | GPIO_bit(70), GPDR(70));  /* output */
+		udelay(10);
+		writel(readl(GPDR(70)) & ~GPIO_bit(70), GPDR(70)); /* input  */
+		udelay(10);
+	}
+
+	return 0;
 }
 
 
@@ -66,23 +66,22 @@ int i2c_init_board (void)
  * misc_init_r: - misc initialisation routines
  */
 
-int misc_init_r (void)
+int misc_init_r(void)
 {
-  char * str;
-  
-  /* determine if the software update key is pressed during startup   */
-  if (readl (GPLR0) & 0x00000800) {
-    printf ("using bootcmd_normal (sw-update button not pressed)\n");
-    str = getenv ("bootcmd_normal");
-  }
-  else {
-    printf ("using bootcmd_update (sw-update button pressed)\n");
-    str = getenv ("bootcmd_update");
-  }
-  
-  setenv ("bootcmd", str);
-  
-  return 0;
+	char *str;
+
+	/* determine if the software update key is pressed during startup   */
+	if (readl(GPLR0) & 0x00000800) {
+		printf("using bootcmd_normal (sw-update button not pressed)\n");
+		str = getenv("bootcmd_normal");
+	} else {
+		printf("using bootcmd_update (sw-update button pressed)\n");
+		str = getenv("bootcmd_update");
+	}
+
+	setenv("bootcmd",str);
+
+	return 0;
 }
 
 
@@ -94,29 +93,29 @@ int misc_init_r (void)
 
 int board_init (void)
 {
-  /* We have RAM, disable cache */
-  dcache_disable();
-  icache_disable();
-  
-  gd->bd->bi_arch_number = MACH_TYPE_INNOKOM;
-  gd->bd->bi_boot_params = 0xa0000100;
-  gd->bd->bi_baudrate = CONFIG_BAUDRATE;
-  
-  return 0;
+	/* We have RAM, disable cache */
+	dcache_disable();
+	icache_disable();
+
+	gd->bd->bi_arch_number = MACH_TYPE_INNOKOM;
+	gd->bd->bi_boot_params = 0xa0000100;
+	gd->bd->bi_baudrate = CONFIG_BAUDRATE;
+
+	return 0;
 }
 
-extern void pxa_dram_init (void);
-int dram_init (void)
+extern void pxa_dram_init(void);
+int dram_init(void)
 {
-  pxa_dram_init();
-  gd->ram_size = PHYS_SDRAM_1_SIZE;
-  return 0;
+	pxa_dram_init();
+	gd->ram_size = PHYS_SDRAM_1_SIZE;
+	return 0;
 }
 
-void dram_init_banksize (void)
+void dram_init_banksize(void)
 {
-  gd->bd->bi_dram[0].start = PHYS_SDRAM_1;
-  gd->bd->bi_dram[0].size = PHYS_SDRAM_1_SIZE;
+	gd->bd->bi_dram[0].start = PHYS_SDRAM_1;
+	gd->bd->bi_dram[0].size = PHYS_SDRAM_1_SIZE;
 }
 
 /**
@@ -126,34 +125,34 @@ void dram_init_banksize (void)
  * @param state: switch on (1) or off (0)
  */
 
-void innokom_set_led (int led, int state)
+void innokom_set_led(int led, int state)
 {
-  switch (led) {
-    /*
-        case 0: if (state==1) {
-            GPCR0 |= CSB226_USER_LED0;
-          } else if (state==0) {
-            GPSR0 |= CSB226_USER_LED0;
-          }
-          break;
-    
-        case 1: if (state==1) {
-            GPCR0 |= CSB226_USER_LED1;
-          } else if (state==0) {
-            GPSR0 |= CSB226_USER_LED1;
-          }
-          break;
-    
-        case 2: if (state==1) {
-            GPCR0 |= CSB226_USER_LED2;
-          } else if (state==0) {
-            GPSR0 |= CSB226_USER_LED2;
-          }
-          break;
-    */
-  }
-  
-  return;
+	switch(led) {
+/*
+		case 0: if (state==1) {
+				GPCR0 |= CSB226_USER_LED0;
+			} else if (state==0) {
+				GPSR0 |= CSB226_USER_LED0;
+			}
+			break;
+
+		case 1: if (state==1) {
+				GPCR0 |= CSB226_USER_LED1;
+			} else if (state==0) {
+				GPSR0 |= CSB226_USER_LED1;
+			}
+			break;
+
+		case 2: if (state==1) {
+				GPCR0 |= CSB226_USER_LED2;
+			} else if (state==0) {
+				GPSR0 |= CSB226_USER_LED2;
+			}
+			break;
+*/
+	}
+
+	return;
 }
 
 
@@ -168,24 +167,24 @@ void innokom_set_led (int led, int state)
 
 void show_boot_progress (int status)
 {
-  switch (status) {
-    /*
-        case  1: csb226_set_led(0,1); break;
-        case  5: csb226_set_led(1,1); break;
-        case 15: csb226_set_led(2,1); break;
-    */
-  }
-  
-  return;
+	switch(status) {
+/*
+		case  1: csb226_set_led(0,1); break;
+		case  5: csb226_set_led(1,1); break;
+		case 15: csb226_set_led(2,1); break;
+*/
+	}
+
+	return;
 }
 
 #ifdef CONFIG_CMD_NET
-int board_eth_init (bd_t * bis)
+int board_eth_init(bd_t *bis)
 {
-  int rc = 0;
-  #ifdef CONFIG_SMC91111
-  rc = smc91111_initialize (0, CONFIG_SMC91111_BASE);
-  #endif
-  return rc;
+	int rc = 0;
+#ifdef CONFIG_SMC91111
+	rc = smc91111_initialize(0, CONFIG_SMC91111_BASE);
+#endif
+	return rc;
 }
 #endif

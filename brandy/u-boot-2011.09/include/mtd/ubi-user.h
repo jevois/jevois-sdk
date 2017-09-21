@@ -140,9 +140,9 @@
  * eraseblocks.
  */
 enum {
-  UBI_LONGTERM  = 1,
-  UBI_SHORTTERM = 2,
-  UBI_UNKNOWN   = 3,
+	UBI_LONGTERM  = 1,
+	UBI_SHORTTERM = 2,
+	UBI_UNKNOWN   = 3,
 };
 
 /*
@@ -152,8 +152,8 @@ enum {
  * @UBI_STATIC_VOLUME:  static volume
  */
 enum {
-  UBI_DYNAMIC_VOLUME = 3,
-  UBI_STATIC_VOLUME  = 4,
+	UBI_DYNAMIC_VOLUME = 3,
+	UBI_STATIC_VOLUME  = 4,
 };
 
 /**
@@ -186,10 +186,10 @@ enum {
  * of the first page and add needed padding.
  */
 struct ubi_attach_req {
-  int32_t ubi_num;
-  int32_t mtd_num;
-  int32_t vid_hdr_offset;
-  uint8_t padding[12];
+	int32_t ubi_num;
+	int32_t mtd_num;
+	int32_t vid_hdr_offset;
+	uint8_t padding[12];
 };
 
 /**
@@ -210,7 +210,7 @@ struct ubi_attach_req {
  * The @alignment field specifies the required alignment of the volume logical
  * eraseblock. This means, that the size of logical eraseblocks will be aligned
  * to this number, i.e.,
- *  (UBI device logical eraseblock size) mod (@alignment) = 0.
+ *	(UBI device logical eraseblock size) mod (@alignment) = 0.
  *
  * To put it differently, the logical eraseblock of this volume may be slightly
  * shortened in order to make it properly aligned. The alignment has to be
@@ -224,15 +224,15 @@ struct ubi_attach_req {
  * BLOBs, without caring about how to properly align them.
  */
 struct ubi_mkvol_req {
-  int32_t vol_id;
-  int32_t alignment;
-  int64_t bytes;
-  int8_t vol_type;
-  int8_t padding1;
-  int16_t name_len;
-  int8_t padding2[4];
-  char name[UBI_MAX_VOLUME_NAME + 1];
-} __attribute__ ( (packed) );
+	int32_t vol_id;
+	int32_t alignment;
+	int64_t bytes;
+	int8_t vol_type;
+	int8_t padding1;
+	int16_t name_len;
+	int8_t padding2[4];
+	char name[UBI_MAX_VOLUME_NAME + 1];
+} __attribute__ ((packed));
 
 /**
  * struct ubi_rsvol_req - a data structure used in volume re-size requests.
@@ -246,9 +246,9 @@ struct ubi_mkvol_req {
  * zero number of bytes).
  */
 struct ubi_rsvol_req {
-  int64_t bytes;
-  int32_t vol_id;
-} __attribute__ ( (packed) );
+	int64_t bytes;
+	int32_t vol_id;
+} __attribute__ ((packed));
 
 /**
  * struct ubi_leb_change_req - a data structure used in atomic logical
@@ -259,10 +259,10 @@ struct ubi_rsvol_req {
  * @padding: reserved for future, not used, has to be zeroed
  */
 struct ubi_leb_change_req {
-  int32_t lnum;
-  int32_t bytes;
-  uint8_t dtype;
-  uint8_t padding[7];
-} __attribute__ ( (packed) );
+	int32_t lnum;
+	int32_t bytes;
+	uint8_t dtype;
+	uint8_t padding[7];
+} __attribute__ ((packed));
 
 #endif /* __UBI_USER_H__ */

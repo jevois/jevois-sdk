@@ -63,69 +63,69 @@
 #define  __LOCLL_H__
 
 struct asn1_pctx_st
-{
-  unsigned long flags;
-  unsigned long nm_flags;
-  unsigned long cert_flags;
-  unsigned long oid_flags;
-  unsigned long str_flags;
-} /* ASN1_PCTX */;
+	{
+	unsigned long flags;
+	unsigned long nm_flags;
+	unsigned long cert_flags;
+	unsigned long oid_flags;
+	unsigned long str_flags;
+	} /* ASN1_PCTX */;
 
 /* ASN1 public key method structure */
 
 struct evp_pkey_asn1_method_st
-{
-  int pkey_id;
-  int pkey_base_id;
-  unsigned long pkey_flags;
-  
-  char * pem_str;
-  char * info;
-  
-  int (*pub_decode) (int * pk, int * pub);
-  int (*pub_encode) (int * pub, const int * pk);
-  int (*pub_cmp) (const int * a, const int * b);
-  int (*pub_print) (BIO * out, const int * pkey, int indent,
-                    int * pctx);
-                    
-  int (*priv_decode) (int * pk, int * p8inf);
-  int (*priv_encode) (int * p8, const int * pk);
-  int (*priv_print) (BIO * out, const int * pkey, int indent,
-                     int * pctx);
-                     
-  int (*pkey_size) (const int * pk);
-  int (*pkey_bits) (const int * pk);
-  
-  int (*param_decode) (int * pkey,
-                       const unsigned char ** pder, int derlen);
-  int (*param_encode) (const int * pkey, unsigned char ** pder);
-  int (*param_missing) (const int * pk);
-  int (*param_copy) (int * to, const int * from);
-  int (*param_cmp) (const int * a, const int * b);
-  int (*param_print) (BIO * out, const int * pkey, int indent,
-                      int * pctx);
-  int (*sig_print) (BIO * out,
-                    const int * sigalg, const int * sig,
-                    int indent, int * pctx);
-                    
-                    
-  void (*pkey_free) (int * pkey);
-  int (*pkey_ctrl) (int * pkey, int op, long arg1, void * arg2);
-  
-  /* Legacy functions for old PEM */
-  
-  int (*old_priv_decode) (int * pkey,
-                          const unsigned char ** pder, int derlen);
-  int (*old_priv_encode) (const int * pkey, unsigned char ** pder);
-  /* Custom ASN1 signature verification */
-  int (*item_verify) (int * ctx, const int * it, void * asn,
-                      int * a, int * sig,
-                      int * pkey);
-  int (*item_sign) (int * ctx, const int * it, void * asn,
-                    int * alg1, int * alg2,
-                    int * sig);
-                    
-} /* EVP_PKEY_ASN1_METHOD */;
+	{
+	int pkey_id;
+	int pkey_base_id;
+	unsigned long pkey_flags;
+
+	char *pem_str;
+	char *info;
+
+	int (*pub_decode)(int *pk, int *pub);
+	int (*pub_encode)(int *pub, const int *pk);
+	int (*pub_cmp)(const int *a, const int *b);
+	int (*pub_print)(BIO *out, const int *pkey, int indent,
+							int *pctx);
+
+	int (*priv_decode)(int *pk, int *p8inf);
+	int (*priv_encode)(int *p8, const int *pk);
+	int (*priv_print)(BIO *out, const int *pkey, int indent,
+							int *pctx);
+
+	int (*pkey_size)(const int *pk);
+	int (*pkey_bits)(const int *pk);
+
+	int (*param_decode)(int *pkey,
+				const unsigned char **pder, int derlen);
+	int (*param_encode)(const int *pkey, unsigned char **pder);
+	int (*param_missing)(const int *pk);
+	int (*param_copy)(int *to, const int *from);
+	int (*param_cmp)(const int *a, const int *b);
+	int (*param_print)(BIO *out, const int *pkey, int indent,
+							int *pctx);
+	int (*sig_print)(BIO *out,
+			 const int *sigalg, const int *sig,
+					 int indent, int *pctx);
+
+
+	void (*pkey_free)(int *pkey);
+	int (*pkey_ctrl)(int *pkey, int op, long arg1, void *arg2);
+
+	/* Legacy functions for old PEM */
+
+	int (*old_priv_decode)(int *pkey,
+				const unsigned char **pder, int derlen);
+	int (*old_priv_encode)(const int *pkey, unsigned char **pder);
+	/* Custom ASN1 signature verification */
+	int (*item_verify)(int *ctx, const int *it, void *asn,
+				int *a, int *sig,
+				int *pkey);
+	int (*item_sign)(int *ctx, const int *it, void *asn,
+				int *alg1, int *alg2,
+				int *sig);
+
+	} /* EVP_PKEY_ASN1_METHOD */;
 
 /* Method to handle CRL access.
  * In general a CRL could be very large (several Mb) and can consume large
@@ -134,7 +134,7 @@ struct evp_pkey_asn1_method_st
  * efficient callbacks: for example a CRL entry database.
  */
 
-#define X509_CRL_METHOD_DYNAMIC   1
+#define X509_CRL_METHOD_DYNAMIC		1
 
 
 #endif

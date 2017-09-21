@@ -16,15 +16,15 @@
 
 typedef struct arisc_para
 {
-  unsigned int machine;
-  unsigned int oz_scale_delay;
-  unsigned int oz_onoff_delay;
-  unsigned int message_pool_phys;
-  unsigned int message_pool_size;
-  unsigned int uart_pin_used;
-  unsigned int services_used;
-  unsigned int power_regu_tree[VCC_MAX_INDEX];
-  unsigned int reseved[10];
+	unsigned int machine;
+	unsigned int oz_scale_delay;
+	unsigned int oz_onoff_delay;
+	unsigned int message_pool_phys;
+	unsigned int message_pool_size;
+	unsigned int uart_pin_used;
+	unsigned int services_used;
+	unsigned int power_regu_tree[VCC_MAX_INDEX];
+	unsigned int reseved[10];
 } arisc_para_t;
 
 #define ARISC_PARA_SIZE (sizeof(struct arisc_para))

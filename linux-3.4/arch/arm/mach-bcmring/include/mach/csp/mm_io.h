@@ -50,7 +50,7 @@
 #define MM_IO_PHYS_TO_VIRT(phys)       (0xF0000000 | (((phys) >> 4) & 0x0F000000) | ((phys) & 0xFFFFFF))
 #else
 #define MM_IO_PHYS_TO_VIRT(phys)       (((phys) == MM_ADDR_IO_VPM_EXTMEM_RSVD) ? 0xF0000000 : \
-                                        (0xF0000000 | (((phys) >> 4) & 0x0F000000) | ((phys) & 0xFFFFFF)))
+			(0xF0000000 | (((phys) >> 4) & 0x0F000000) | ((phys) & 0xFFFFFF)))
 #endif
 #endif
 
@@ -61,7 +61,7 @@
 #define MM_IO_VIRT_TO_PHYS(virt)       ((((virt) & 0x0F000000) << 4) | ((virt) & 0xFFFFFF))
 #else
 #define MM_IO_VIRT_TO_PHYS(virt)       (((virt) == 0xF0000000) ? MM_ADDR_IO_VPM_EXTMEM_RSVD : \
-                                        ((((virt) & 0x0F000000) << 4) | ((virt) & 0xFFFFFF)))
+			((((virt) & 0x0F000000) << 4) | ((virt) & 0xFFFFFF)))
 #endif
 #endif
 
@@ -82,8 +82,8 @@
 #define MM_IO_BASE_NAND                MM_IO_PHYS_TO_VIRT(MM_ADDR_IO_NAND)
 #define MM_IO_BASE_UMI                 MM_IO_PHYS_TO_VIRT(MM_ADDR_IO_UMI)
 
-#define MM_IO_START MM_ADDR_IO_FLASHC /* Physical beginning of IO mapped memory */
-#define MM_IO_BASE  MM_IO_BASE_FLASHC /* Virtual beginning of IO mapped memory */
+#define MM_IO_START MM_ADDR_IO_FLASHC	/* Physical beginning of IO mapped memory */
+#define MM_IO_BASE  MM_IO_BASE_FLASHC	/* Virtual beginning of IO mapped memory */
 
 #define MM_IO_BASE_BROM                MM_IO_PHYS_TO_VIRT(MM_ADDR_IO_BROM)
 #define MM_IO_BASE_ARAM                MM_IO_PHYS_TO_VIRT(MM_ADDR_IO_ARAM)

@@ -13,7 +13,7 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.   See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
@@ -41,28 +41,27 @@
 ************************************************************************************************************
 */
 #if 0
-__s32 boot_key_get_status (void)
+__s32 boot_key_get_status(void)
 {
-  __u32 reg_val;
-  
-  struct sunxi_lradc * sunxi_key_base = (struct sunxi_lradc *) SUNXI_LRADC_BASE;
-  reg_val = sunxi_key_base->ints;
-  if (reg_val & (1 << 1) )   //判断是否是第一次按下
-  {
-    if (reg_val & (1 << 0) ) //是，则判断按下是否足够
+    __u32 reg_val;
+
+    struct sunxi_lradc *sunxi_key_base = (struct sunxi_lradc *)SUNXI_LRADC_BASE;
+    reg_val = sunxi_key_base->ints;
+    if(reg_val & (1 << 1))     //判断是否是第一次按下
     {
-      sunxi_key_base->ints |= (reg_val & 0x1f);//按下时间足够长，则认为按键合法
-      return 1;
+        if(reg_val & (1 << 0))  //是，则判断按下是否足够
+        {
+            sunxi_key_base->ints |= (reg_val & 0x1f);//按下时间足够长，则认为按键合法
+            return 1;
+        }
     }
-  }
-  else
-    if (reg_val & (1 << 0) ) //表示不是第一次按下，直接清除掉pengding，不处理这个按键
+    else if(reg_val & (1 << 0))//表示不是第一次按下，直接清除掉pengding，不处理这个按键
     {
-      sunxi_key_base->ints |= (1 << 0);
-      
-      return 0;              //代表重复键
+        sunxi_key_base->ints |= (1 << 0);
+
+        return 0;              //代表重复键
     }
-  return -1;
+    return -1;
 }
 /*
 ************************************************************************************************************
@@ -80,31 +79,30 @@ __s32 boot_key_get_status (void)
 *
 ************************************************************************************************************
 */
-__s32 boot_key_get_value (void)
+__s32 boot_key_get_value(void)
 {
-  __u32 reg_val;
-  __u32 key_val;
-  
-  struct sunxi_lradc * sunxi_key_base = (struct sunxi_lradc *) SUNXI_LRADC_BASE;
-  reg_val = sunxi_key_base->ints;
-  if (reg_val & (1 << 1) )   //判断是否是第一次按下
-  {
-    if (reg_val & (1 << 0) ) //是，则判断按下是否足够
+    __u32 reg_val;
+    __u32 key_val;
+
+    struct sunxi_lradc *sunxi_key_base = (struct sunxi_lradc *)SUNXI_LRADC_BASE;
+    reg_val = sunxi_key_base->ints;
+    if(reg_val & (1 << 1))     //判断是否是第一次按下
     {
-      sunxi_key_base->ints |= (reg_val & 0x1f);//按下时间足够长，则认为按键合法
-      key_val = sunxi_key_base->data0 & 0x3f;
-      return key_val;
+        if(reg_val & (1 << 0))  //是，则判断按下是否足够
+        {
+            sunxi_key_base->ints |= (reg_val & 0x1f);//按下时间足够长，则认为按键合法
+            key_val = sunxi_key_base->data0 & 0x3f;
+            return key_val;
+        }
     }
-  }
-  else
-    if (reg_val & (1 << 0) ) //表示不是第一次按下，直接清除掉pengding，不处理这个按键
+    else if(reg_val & (1 << 0))//表示不是第一次按下，直接清除掉pengding，不处理这个按键
     {
-      sunxi_key_base->ints |= (1 << 0);
-      key_val = sunxi_key_base->data0 & 0x3f;
-      
-      return key_val;              //代表重复键
+        sunxi_key_base->ints |= (1 << 0);
+        key_val = sunxi_key_base->data0 & 0x3f;
+
+        return key_val;              //代表重复键
     }
-  return -1;
+    return -1;
 }
 
 

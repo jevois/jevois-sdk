@@ -26,19 +26,19 @@
  * @default_state: the default state for the handle, if found
  */
 struct dev_pin_info {
-  struct pinctrl * p;
-  struct pinctrl_state * default_state;
+	struct pinctrl *p;
+	struct pinctrl_state *default_state;
 };
 
-extern int pinctrl_bind_pins (struct device * dev);
+extern int pinctrl_bind_pins(struct device *dev);
 
 #else
 
 /* Stubs if we're not using pinctrl */
 
-static inline int pinctrl_bind_pins (struct device * dev)
+static inline int pinctrl_bind_pins(struct device *dev)
 {
-  return 0;
+	return 0;
 }
 
 #endif /* CONFIG_PINCTRL */

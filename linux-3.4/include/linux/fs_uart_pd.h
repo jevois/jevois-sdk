@@ -15,57 +15,57 @@
 #include <asm/types.h>
 
 enum fs_uart_id {
-  fsid_smc1_uart,
-  fsid_smc2_uart,
-  fsid_scc1_uart,
-  fsid_scc2_uart,
-  fsid_scc3_uart,
-  fsid_scc4_uart,
-  fs_uart_nr,
+	fsid_smc1_uart,
+	fsid_smc2_uart,
+	fsid_scc1_uart,
+	fsid_scc2_uart,
+	fsid_scc3_uart,
+	fsid_scc4_uart,
+	fs_uart_nr,
 };
 
-static inline int fs_uart_id_scc2fsid (int id)
+static inline int fs_uart_id_scc2fsid(int id)
 {
-  return fsid_scc1_uart + id - 1;
+    return fsid_scc1_uart + id - 1;
 }
 
-static inline int fs_uart_id_fsid2scc (int id)
+static inline int fs_uart_id_fsid2scc(int id)
 {
-  return id - fsid_scc1_uart + 1;
+    return id - fsid_scc1_uart + 1;
 }
 
-static inline int fs_uart_id_smc2fsid (int id)
+static inline int fs_uart_id_smc2fsid(int id)
 {
-  return fsid_smc1_uart + id - 1;
+    return fsid_smc1_uart + id - 1;
 }
 
-static inline int fs_uart_id_fsid2smc (int id)
+static inline int fs_uart_id_fsid2smc(int id)
 {
-  return id - fsid_smc1_uart + 1;
+    return id - fsid_smc1_uart + 1;
 }
 
 struct fs_uart_platform_info {
-  void (*init_ioports) (struct fs_uart_platform_info *);
-  /* device specific information */
-  int fs_no;    /* controller index */
-  char fs_type[4];        /* controller type  */
-  u32 uart_clk;
-  u8 tx_num_fifo;
-  u8 tx_buf_size;
-  u8 rx_num_fifo;
-  u8 rx_buf_size;
-  u8 brg;
-  u8 clk_rx;
-  u8 clk_tx;
+        void(*init_ioports)(struct fs_uart_platform_info *);
+	/* device specific information */
+	int fs_no;		/* controller index */
+	char fs_type[4];        /* controller type  */
+	u32 uart_clk;
+	u8 tx_num_fifo;
+	u8 tx_buf_size;
+	u8 rx_num_fifo;
+	u8 rx_buf_size;
+	u8 brg;
+	u8 clk_rx;
+	u8 clk_tx;
 };
 
-static inline int fs_uart_get_id (struct fs_uart_platform_info * fpi)
+static inline int fs_uart_get_id(struct fs_uart_platform_info *fpi)
 {
-  if (strstr (fpi->fs_type, "SMC") )
-  { return fs_uart_id_smc2fsid (fpi->fs_no); }
-  if (strstr (fpi->fs_type, "SCC") )
-  { return fs_uart_id_scc2fsid (fpi->fs_no); }
-  return fpi->fs_no;
+        if(strstr(fpi->fs_type, "SMC"))
+                return fs_uart_id_smc2fsid(fpi->fs_no);
+        if(strstr(fpi->fs_type, "SCC"))
+                return fs_uart_id_scc2fsid(fpi->fs_no);
+        return fpi->fs_no;
 }
 
 #endif

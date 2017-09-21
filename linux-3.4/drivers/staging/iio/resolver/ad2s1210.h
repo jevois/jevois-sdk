@@ -10,8 +10,8 @@
  */
 
 struct ad2s1210_platform_data {
-  unsigned sample;
-  unsigned a[2];
-  unsigned res[2];
-  bool gpioin;
+	unsigned sample;
+	unsigned a[2];
+	unsigned res[2];
+	bool gpioin;
 };

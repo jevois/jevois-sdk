@@ -6,16 +6,16 @@
  *
  * @brief   This file contains the internal functions for dispatcher
  *
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,7 +28,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -41,7 +41,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
 */
@@ -59,25 +59,25 @@
  */
 typedef struct
 {
-  unsigned callbackCnt;       /* Call count of callback                    */
-  unsigned priorityChangeCnt; /* Priority change count                     */
-  unsigned intNoCallbackCnt;  /* Interrupt fired but no callback set count */
-  unsigned intLostCallbackCnt;  /* Interrupt lost and detected ;  SCR541   */
-  BOOL notificationEnabled;    /* Interrupt enabled for this queue         */
-  IxQMgrSourceId srcSel;       /* interrupt source                         */
-  unsigned enableCount;        /* num times notif enabled by LLP           */
-  unsigned disableCount;       /* num of times notif disabled by LLP       */
+    unsigned callbackCnt;       /* Call count of callback                    */
+    unsigned priorityChangeCnt; /* Priority change count                     */
+    unsigned intNoCallbackCnt;  /* Interrupt fired but no callback set count */
+    unsigned intLostCallbackCnt;  /* Interrupt lost and detected ;  SCR541   */
+    BOOL notificationEnabled;    /* Interrupt enabled for this queue         */
+    IxQMgrSourceId srcSel;       /* interrupt source                         */
+    unsigned enableCount;        /* num times notif enabled by LLP           */
+    unsigned disableCount;       /* num of times notif disabled by LLP       */
 } IxQMgrDispatcherQStats;
 
 /*
  * This structure defines statistic data for the disatcher
  */
 typedef struct
-{
-  unsigned loopRunCnt;       /* ixQMgrDispatcherLoopRun count */
-  
-  IxQMgrDispatcherQStats queueStats[IX_QMGR_MAX_NUM_QUEUES];
-  
+ {
+    unsigned loopRunCnt;       /* ixQMgrDispatcherLoopRun count */
+
+    IxQMgrDispatcherQStats queueStats[IX_QMGR_MAX_NUM_QUEUES];
+
 } IxQMgrDispatcherStats;
 
 /*
@@ -89,17 +89,17 @@ ixQMgrDispatcherInit (void);
 /*
  * Get the dispatcher statistics
  */
-IxQMgrDispatcherStats *
+IxQMgrDispatcherStats*
 ixQMgrDispatcherStatsGet (void);
 
 /**
- * Retrieve the number of leading zero bits starting from the MSB
- * This function is implemented as an (extremely fast) asm routine
- * for XSCALE processor (see clz instruction) and as a (slower) C
+ * Retrieve the number of leading zero bits starting from the MSB 
+ * This function is implemented as an (extremely fast) asm routine 
+ * for XSCALE processor (see clz instruction) and as a (slower) C 
  * function for other systems.
  */
 unsigned int
-ixQMgrCountLeadingZeros (unsigned int value);
+ixQMgrCountLeadingZeros(unsigned int value);
 
 #endif/*IXQMGRDISPATCHER_P_H*/
 

@@ -25,10 +25,10 @@ struct i2c_board_info;
  * the corresponding chip is not present
  */
 struct s5p_hdmi_platform_data {
-  int hdmiphy_bus;
-  struct i2c_board_info * hdmiphy_info;
-  int mhl_bus;
-  struct i2c_board_info * mhl_info;
+	int hdmiphy_bus;
+	struct i2c_board_info *hdmiphy_info;
+	int mhl_bus;
+	struct i2c_board_info *mhl_info;
 };
 
 #endif /* S5P_HDMI_H */

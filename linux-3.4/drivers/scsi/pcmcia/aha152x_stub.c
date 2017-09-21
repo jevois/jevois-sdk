@@ -4,7 +4,7 @@
 
     This driver supports the Adaptec AHA-1460, the New Media Bus
     Toaster, and the New Media Toast & Jam.
-
+    
     aha152x_cs.c 1.54 2000/06/12 21:27:25
 
     The contents of this file are subject to the Mozilla Public
@@ -31,7 +31,7 @@
     and other provisions required by the GPL.  If you do not delete
     the provisions above, a recipient may use your version of this
     file under either the MPL or the GPL.
-
+    
 ======================================================================*/
 
 #include <linux/module.h>
@@ -65,171 +65,171 @@ static int synchronous = 1;
 static int reset_delay = 100;
 static int ext_trans = 0;
 
-module_param (host_id, int, 0);
-module_param (reconnect, int, 0);
-module_param (parity, int, 0);
-module_param (synchronous, int, 0);
-module_param (reset_delay, int, 0);
-module_param (ext_trans, int, 0);
+module_param(host_id, int, 0);
+module_param(reconnect, int, 0);
+module_param(parity, int, 0);
+module_param(synchronous, int, 0);
+module_param(reset_delay, int, 0);
+module_param(ext_trans, int, 0);
 
-MODULE_LICENSE ("Dual MPL/GPL");
+MODULE_LICENSE("Dual MPL/GPL");
 
 /*====================================================================*/
 
 typedef struct scsi_info_t {
-  struct pcmcia_device * p_dev;
-  struct Scsi_Host * host;
+	struct pcmcia_device	*p_dev;
+    struct Scsi_Host	*host;
 } scsi_info_t;
 
-static void aha152x_release_cs (struct pcmcia_device * link);
-static void aha152x_detach (struct pcmcia_device * p_dev);
-static int aha152x_config_cs (struct pcmcia_device * link);
+static void aha152x_release_cs(struct pcmcia_device *link);
+static void aha152x_detach(struct pcmcia_device *p_dev);
+static int aha152x_config_cs(struct pcmcia_device *link);
 
-static int aha152x_probe (struct pcmcia_device * link)
+static int aha152x_probe(struct pcmcia_device *link)
 {
-  scsi_info_t * info;
-  
-  dev_dbg (&link->dev, "aha152x_attach()\n");
-  
-  /* Create new SCSI device */
-  info = kzalloc (sizeof (*info), GFP_KERNEL);
-  if (!info) { return -ENOMEM; }
-  info->p_dev = link;
-  link->priv = info;
-  
-  link->config_flags |= CONF_ENABLE_IRQ | CONF_AUTO_SET_IO;
-  link->config_regs = PRESENT_OPTION;
-  
-  return aha152x_config_cs (link);
+    scsi_info_t *info;
+
+    dev_dbg(&link->dev, "aha152x_attach()\n");
+
+    /* Create new SCSI device */
+    info = kzalloc(sizeof(*info), GFP_KERNEL);
+    if (!info) return -ENOMEM;
+    info->p_dev = link;
+    link->priv = info;
+
+    link->config_flags |= CONF_ENABLE_IRQ | CONF_AUTO_SET_IO;
+    link->config_regs = PRESENT_OPTION;
+
+    return aha152x_config_cs(link);
 } /* aha152x_attach */
 
 /*====================================================================*/
 
-static void aha152x_detach (struct pcmcia_device * link)
+static void aha152x_detach(struct pcmcia_device *link)
 {
-  dev_dbg (&link->dev, "aha152x_detach\n");
-  
-  aha152x_release_cs (link);
-  
-  /* Unlink device structure, free bits */
-  kfree (link->priv);
+    dev_dbg(&link->dev, "aha152x_detach\n");
+
+    aha152x_release_cs(link);
+
+    /* Unlink device structure, free bits */
+    kfree(link->priv);
 } /* aha152x_detach */
 
 /*====================================================================*/
 
-static int aha152x_config_check (struct pcmcia_device * p_dev, void * priv_data)
+static int aha152x_config_check(struct pcmcia_device *p_dev, void *priv_data)
 {
-  p_dev->io_lines = 10;
-  
-  /* For New Media T&J, look for a SCSI window */
-  if ( (p_dev->resource[0]->end < 0x20) &&
-       (p_dev->resource[1]->end >= 0x20) )
-  { p_dev->resource[0]->start = p_dev->resource[1]->start; }
-  
-  if (p_dev->resource[0]->start >= 0xffff)
-  { return -EINVAL; }
-  
-  p_dev->resource[1]->start = p_dev->resource[1]->end = 0;
-  p_dev->resource[0]->end = 0x20;
-  p_dev->resource[0]->flags &= ~IO_DATA_PATH_WIDTH;
-  p_dev->resource[0]->flags |= IO_DATA_PATH_WIDTH_AUTO;
-  
-  return pcmcia_request_io (p_dev);
+	p_dev->io_lines = 10;
+
+	/* For New Media T&J, look for a SCSI window */
+	if ((p_dev->resource[0]->end < 0x20) &&
+		(p_dev->resource[1]->end >= 0x20))
+		p_dev->resource[0]->start = p_dev->resource[1]->start;
+
+	if (p_dev->resource[0]->start >= 0xffff)
+		return -EINVAL;
+
+	p_dev->resource[1]->start = p_dev->resource[1]->end = 0;
+	p_dev->resource[0]->end = 0x20;
+	p_dev->resource[0]->flags &= ~IO_DATA_PATH_WIDTH;
+	p_dev->resource[0]->flags |= IO_DATA_PATH_WIDTH_AUTO;
+
+	return pcmcia_request_io(p_dev);
 }
 
-static int aha152x_config_cs (struct pcmcia_device * link)
+static int aha152x_config_cs(struct pcmcia_device *link)
 {
-  scsi_info_t * info = link->priv;
-  struct aha152x_setup s;
-  int ret;
-  struct Scsi_Host * host;
-  
-  dev_dbg (&link->dev, "aha152x_config\n");
-  
-  ret = pcmcia_loop_config (link, aha152x_config_check, NULL);
-  if (ret)
-  { goto failed; }
-  
-  if (!link->irq)
-  { goto failed; }
-  
-  ret = pcmcia_enable_device (link);
-  if (ret)
-  { goto failed; }
-  
-  /* Set configuration options for the aha152x driver */
-  memset (&s, 0, sizeof (s) );
-  s.conf        = "PCMCIA setup";
-  s.io_port     = link->resource[0]->start;
-  s.irq         = link->irq;
-  s.scsiid      = host_id;
-  s.reconnect   = reconnect;
-  s.parity      = parity;
-  s.synchronous = synchronous;
-  s.delay       = reset_delay;
-  if (ext_trans)
-  { s.ext_trans = ext_trans; }
-  
-  host = aha152x_probe_one (&s);
-  if (host == NULL) {
-    printk (KERN_INFO "aha152x_cs: no SCSI devices found\n");
-    goto failed;
-  }
-  
-  info->host = host;
-  
-  return 0;
-  
+    scsi_info_t *info = link->priv;
+    struct aha152x_setup s;
+    int ret;
+    struct Scsi_Host *host;
+
+    dev_dbg(&link->dev, "aha152x_config\n");
+
+    ret = pcmcia_loop_config(link, aha152x_config_check, NULL);
+    if (ret)
+	    goto failed;
+
+    if (!link->irq)
+	    goto failed;
+
+    ret = pcmcia_enable_device(link);
+    if (ret)
+	    goto failed;
+    
+    /* Set configuration options for the aha152x driver */
+    memset(&s, 0, sizeof(s));
+    s.conf        = "PCMCIA setup";
+    s.io_port     = link->resource[0]->start;
+    s.irq         = link->irq;
+    s.scsiid      = host_id;
+    s.reconnect   = reconnect;
+    s.parity      = parity;
+    s.synchronous = synchronous;
+    s.delay       = reset_delay;
+    if (ext_trans)
+        s.ext_trans = ext_trans;
+
+    host = aha152x_probe_one(&s);
+    if (host == NULL) {
+	printk(KERN_INFO "aha152x_cs: no SCSI devices found\n");
+	goto failed;
+    }
+
+    info->host = host;
+
+    return 0;
+
 failed:
-  aha152x_release_cs (link);
-  return -ENODEV;
+    aha152x_release_cs(link);
+    return -ENODEV;
 }
 
-static void aha152x_release_cs (struct pcmcia_device * link)
+static void aha152x_release_cs(struct pcmcia_device *link)
 {
-  scsi_info_t * info = link->priv;
-  
-  aha152x_release (info->host);
-  pcmcia_disable_device (link);
+	scsi_info_t *info = link->priv;
+
+	aha152x_release(info->host);
+	pcmcia_disable_device(link);
 }
 
-static int aha152x_resume (struct pcmcia_device * link)
+static int aha152x_resume(struct pcmcia_device *link)
 {
-  scsi_info_t * info = link->priv;
-  
-  aha152x_host_reset_host (info->host);
-  
-  return 0;
+	scsi_info_t *info = link->priv;
+
+	aha152x_host_reset_host(info->host);
+
+	return 0;
 }
 
 static const struct pcmcia_device_id aha152x_ids[] = {
-  PCMCIA_DEVICE_PROD_ID123 ("New Media", "SCSI", "Bus Toaster", 0xcdf7e4cc, 0x35f26476, 0xa8851d6e),
-  PCMCIA_DEVICE_PROD_ID123 ("NOTEWORTHY", "SCSI", "Bus Toaster", 0xad89c6e8, 0x35f26476, 0xa8851d6e),
-  PCMCIA_DEVICE_PROD_ID12 ("Adaptec, Inc.", "APA-1460 SCSI Host Adapter", 0x24ba9738, 0x3a3c3d20),
-  PCMCIA_DEVICE_PROD_ID12 ("New Media Corporation", "Multimedia Sound/SCSI", 0x085a850b, 0x80a6535c),
-  PCMCIA_DEVICE_PROD_ID12 ("NOTEWORTHY", "NWCOMB02 SCSI/AUDIO COMBO CARD", 0xad89c6e8, 0x5f9a615b),
-  PCMCIA_DEVICE_NULL,
+	PCMCIA_DEVICE_PROD_ID123("New Media", "SCSI", "Bus Toaster", 0xcdf7e4cc, 0x35f26476, 0xa8851d6e),
+	PCMCIA_DEVICE_PROD_ID123("NOTEWORTHY", "SCSI", "Bus Toaster", 0xad89c6e8, 0x35f26476, 0xa8851d6e),
+	PCMCIA_DEVICE_PROD_ID12("Adaptec, Inc.", "APA-1460 SCSI Host Adapter", 0x24ba9738, 0x3a3c3d20),
+	PCMCIA_DEVICE_PROD_ID12("New Media Corporation", "Multimedia Sound/SCSI", 0x085a850b, 0x80a6535c),
+	PCMCIA_DEVICE_PROD_ID12("NOTEWORTHY", "NWCOMB02 SCSI/AUDIO COMBO CARD", 0xad89c6e8, 0x5f9a615b),
+	PCMCIA_DEVICE_NULL,
 };
-MODULE_DEVICE_TABLE (pcmcia, aha152x_ids);
+MODULE_DEVICE_TABLE(pcmcia, aha152x_ids);
 
 static struct pcmcia_driver aha152x_cs_driver = {
-  .owner    = THIS_MODULE,
-  .name   = "aha152x_cs",
-  .probe    = aha152x_probe,
-  .remove   = aha152x_detach,
-  .id_table       = aha152x_ids,
-  .resume   = aha152x_resume,
+	.owner		= THIS_MODULE,
+	.name		= "aha152x_cs",
+	.probe		= aha152x_probe,
+	.remove		= aha152x_detach,
+	.id_table       = aha152x_ids,
+	.resume		= aha152x_resume,
 };
 
-static int __init init_aha152x_cs (void)
+static int __init init_aha152x_cs(void)
 {
-  return pcmcia_register_driver (&aha152x_cs_driver);
+	return pcmcia_register_driver(&aha152x_cs_driver);
 }
 
-static void __exit exit_aha152x_cs (void)
+static void __exit exit_aha152x_cs(void)
 {
-  pcmcia_unregister_driver (&aha152x_cs_driver);
+	pcmcia_unregister_driver(&aha152x_cs_driver);
 }
 
-module_init (init_aha152x_cs);
-module_exit (exit_aha152x_cs);
+module_init(init_aha152x_cs);
+module_exit(exit_aha152x_cs);

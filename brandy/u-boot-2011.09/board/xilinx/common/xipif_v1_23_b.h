@@ -1,22 +1,22 @@
 /* $Id: xipif_v1_23_b.h,v 1.1 2002/03/18 23:24:52 linnj Exp $ */
 /******************************************************************************
 *
-* XILINX IS PROVIDING THIS DESIGN, CODE, OR INFORMATION "AS IS"
-* AS A COURTESY TO YOU, SOLELY FOR USE IN DEVELOPING PROGRAMS AND
-* SOLUTIONS FOR XILINX DEVICES.  BY PROVIDING THIS DESIGN, CODE,
-* OR INFORMATION AS ONE POSSIBLE IMPLEMENTATION OF THIS FEATURE,
-* APPLICATION OR STANDARD, XILINX IS MAKING NO REPRESENTATION
-* THAT THIS IMPLEMENTATION IS FREE FROM ANY CLAIMS OF INFRINGEMENT,
-* AND YOU ARE RESPONSIBLE FOR OBTAINING ANY RIGHTS YOU MAY REQUIRE
-* FOR YOUR IMPLEMENTATION.  XILINX EXPRESSLY DISCLAIMS ANY
-* WARRANTY WHATSOEVER WITH RESPECT TO THE ADEQUACY OF THE
-* IMPLEMENTATION, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OR
-* REPRESENTATIONS THAT THIS IMPLEMENTATION IS FREE FROM CLAIMS OF
-* INFRINGEMENT, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-* FOR A PARTICULAR PURPOSE.
+*	XILINX IS PROVIDING THIS DESIGN, CODE, OR INFORMATION "AS IS"
+*	AS A COURTESY TO YOU, SOLELY FOR USE IN DEVELOPING PROGRAMS AND
+*	SOLUTIONS FOR XILINX DEVICES.  BY PROVIDING THIS DESIGN, CODE,
+*	OR INFORMATION AS ONE POSSIBLE IMPLEMENTATION OF THIS FEATURE,
+*	APPLICATION OR STANDARD, XILINX IS MAKING NO REPRESENTATION
+*	THAT THIS IMPLEMENTATION IS FREE FROM ANY CLAIMS OF INFRINGEMENT,
+*	AND YOU ARE RESPONSIBLE FOR OBTAINING ANY RIGHTS YOU MAY REQUIRE
+*	FOR YOUR IMPLEMENTATION.  XILINX EXPRESSLY DISCLAIMS ANY
+*	WARRANTY WHATSOEVER WITH RESPECT TO THE ADEQUACY OF THE
+*	IMPLEMENTATION, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OR
+*	REPRESENTATIONS THAT THIS IMPLEMENTATION IS FREE FROM CLAIMS OF
+*	INFRINGEMENT, IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+*	FOR A PARTICULAR PURPOSE.
 *
-* (c) Copyright 2002 Xilinx Inc.
-* All rights reserved.
+*	(c) Copyright 2002 Xilinx Inc.
+*	All rights reserved.
 *
 ******************************************************************************/
 /******************************************************************************
@@ -30,7 +30,7 @@
 * The XIpIf component encapsulates the IPIF, which is the standard interface
 * that IP must adhere to when connecting to a bus.  The purpose of this
 * component is to encapsulate the IPIF processing such that maintainability
-* is increased.  This component does not provide a lot of abstraction from
+* is increased.	 This component does not provide a lot of abstraction from
 * from the details of the IPIF as it is considered a building block for
 * device drivers.  A device driver designer must be familiar with the
 * details of the IPIF hardware to use this component.
@@ -41,13 +41,13 @@
 * are also common to many devices.  These blocks are implemented as separate
 * hardware blocks and instantiated within the IPIF.  The primary hardware of
 * the IPIF which is implemented by this software component is the interrupt
-* architecture.  Since there are many blocks of a device which may generate
+* architecture.	 Since there are many blocks of a device which may generate
 * interrupts, all the interrupt processing is contained in the common part
 * of the device, the IPIF.  This interrupt processing is for the device level
 * only and does not include any processing for the interrupt controller.
 *
 * A device is a mechanism such as an Ethernet MAC.  The device is made
-* up of several parts which include an IPIF and the IP.  The IPIF contains most
+* up of several parts which include an IPIF and the IP.	 The IPIF contains most
 * of the device infrastructure which is common to all devices, such as
 * interrupt processing, DMA channels, and FIFOs.  The infrastructure may also
 * be referred to as IPIF internal blocks since they are part of the IPIF and
@@ -58,7 +58,7 @@
 * In general, there are two levels of registers within the IPIF.  The first
 * level, referred to as the device level, contains registers which are for the
 * entire device.  The second level, referred to as the IP level, contains
-* registers which are specific to the IP of the device.  The two levels of
+* registers which are specific to the IP of the device.	 The two levels of
 * registers are designed to be hierarchical such that the device level is
 * is a more general register set above the more specific registers of the IP.
 * The IP level of registers provides functionality which is typically common
@@ -70,7 +70,7 @@
 * It is the responsibility of the device driver designer to use critical
 * sections as necessary when calling functions of the IPIF.  This component
 * does not use critical sections and it does access registers using
-* read-modify-write operations.  Calls to IPIF functions from a main thread
+* read-modify-write operations.	 Calls to IPIF functions from a main thread
 * and from an interrupt context could produce unpredictable behavior such that
 * the caller must provide the appropriate critical sections.
 *
@@ -86,14 +86,14 @@
 *
 * MODIFICATION HISTORY:
 *
-* Ver Who  Date     Changes
+* Ver	Who  Date     Changes
 * ----- ---- -------- -----------------------------------------------
 * 1.23b jhl  02/27/01 Repartioned to minimize size
 *
 ******************************************************************************/
 
-#ifndef XIPIF_H     /* prevent circular inclusions */
-#define XIPIF_H     /* by using protection macros */
+#ifndef XIPIF_H			/* prevent circular inclusions */
+#define XIPIF_H			/* by using protection macros */
 
 /***************************** Include Files *********************************/
 #include "xbasic_types.h"
@@ -107,35 +107,35 @@
  * other registers to be added and still match the memory map of the interrupt
  * controller registers
  */
-#define XIIF_V123B_DISR_OFFSET     0UL  /* device interrupt status register */
-#define XIIF_V123B_DIPR_OFFSET     4UL  /* device interrupt pending register */
-#define XIIF_V123B_DIER_OFFSET     8UL  /* device interrupt enable register */
-#define XIIF_V123B_DIIR_OFFSET     24UL /* device interrupt ID register */
-#define XIIF_V123B_DGIER_OFFSET    28UL /* device global interrupt enable reg */
-#define XIIF_V123B_IISR_OFFSET     32UL /* IP interrupt status register */
-#define XIIF_V123B_IIER_OFFSET     40UL /* IP interrupt enable register */
+#define XIIF_V123B_DISR_OFFSET	   0UL	/* device interrupt status register */
+#define XIIF_V123B_DIPR_OFFSET	   4UL	/* device interrupt pending register */
+#define XIIF_V123B_DIER_OFFSET	   8UL	/* device interrupt enable register */
+#define XIIF_V123B_DIIR_OFFSET	   24UL /* device interrupt ID register */
+#define XIIF_V123B_DGIER_OFFSET	   28UL /* device global interrupt enable reg */
+#define XIIF_V123B_IISR_OFFSET	   32UL /* IP interrupt status register */
+#define XIIF_V123B_IIER_OFFSET	   40UL /* IP interrupt enable register */
 #define XIIF_V123B_RESETR_OFFSET   64UL /* reset register */
 
-#define XIIF_V123B_RESET_MASK     0xAUL
+#define XIIF_V123B_RESET_MASK		  0xAUL
 
 /* the following constant is used for the device global interrupt enable
  * register, to enable all interrupts for the device, this is the only bit
  * in the register
  */
-#define XIIF_V123B_GINTR_ENABLE_MASK    0x80000000UL
+#define XIIF_V123B_GINTR_ENABLE_MASK	  0x80000000UL
 
 /* the following constants contain the masks to identify each internal IPIF
  * condition in the device registers of the IPIF, interrupts are assigned
  * in the register from LSB to the MSB
  */
-#define XIIF_V123B_ERROR_MASK     1UL /* LSB of the register */
+#define XIIF_V123B_ERROR_MASK		  1UL	/* LSB of the register */
 
 /* The following constants contain interrupt IDs which identify each internal
  * IPIF condition, this value must correlate with the mask constant for the
  * error
  */
-#define XIIF_V123B_ERROR_INTERRUPT_ID   0 /* interrupt bit #, (LSB = 0) */
-#define XIIF_V123B_NO_INTERRUPT_ID    128 /* no interrupts are pending */
+#define XIIF_V123B_ERROR_INTERRUPT_ID	  0	/* interrupt bit #, (LSB = 0) */
+#define XIIF_V123B_NO_INTERRUPT_ID	  128	/* no interrupts are pending */
 
 /**************************** Type Definitions *******************************/
 
@@ -173,7 +173,7 @@
  * reset
  */
 #define XIIF_V123B_RESET(RegBaseAddress) \
-  XIo_Out32(RegBaseAddress + XIIF_V123B_RESETR_OFFSET, XIIF_V123B_RESET_MASK)
+    XIo_Out32(RegBaseAddress + XIIF_V123B_RESETR_OFFSET, XIIF_V123B_RESET_MASK)
 
 /******************************************************************************
 *
@@ -200,7 +200,7 @@
 * interrupt enable register and the device interrupt enable register must be set
 * appropriately to allow an interrupt to be passed out of the device. The
 * interrupt is cleared by writing to this register with the bits to be
-* cleared set to a one and all others to zero.  This register implements a
+* cleared set to a one and all others to zero.	This register implements a
 * toggle on write functionality meaning any bits which are set in the value
 * written cause the bits in the register to change to the opposite state.
 *
@@ -215,7 +215,7 @@
 *
 * Status contains the value to be written to the interrupt status register of
 * the device.  The only bits which can be written are the latched bits which
-* contain the internal IPIF conditions.  The following values may be used to
+* contain the internal IPIF conditions.	 The following values may be used to
 * set the status register or clear an interrupt condition.
 *
 *   XIIF_V123B_ERROR_MASK     Indicates a device error in the IPIF
@@ -230,7 +230,7 @@
 *
 ******************************************************************************/
 #define XIIF_V123B_WRITE_DISR(RegBaseAddress, Status) \
-  XIo_Out32((RegBaseAddress) + XIIF_V123B_DISR_OFFSET, (Status))
+    XIo_Out32((RegBaseAddress) + XIIF_V123B_DISR_OFFSET, (Status))
 
 /******************************************************************************
 *
@@ -272,7 +272,7 @@
 *
 ******************************************************************************/
 #define XIIF_V123B_READ_DISR(RegBaseAddress) \
-  XIo_In32((RegBaseAddress) + XIIF_V123B_DISR_OFFSET)
+    XIo_In32((RegBaseAddress) + XIIF_V123B_DISR_OFFSET)
 
 /******************************************************************************
 *
@@ -318,11 +318,11 @@
 * NOTES:
 *
 * Signature: u32 XIIF_V123B_WRITE_DIER(u32 RegBaseAddress,
-*           u32 Enable)
+*					  u32 Enable)
 *
 ******************************************************************************/
 #define XIIF_V123B_WRITE_DIER(RegBaseAddress, Enable) \
-  XIo_Out32((RegBaseAddress) + XIIF_V123B_DIER_OFFSET, (Enable))
+    XIo_Out32((RegBaseAddress) + XIIF_V123B_DIER_OFFSET, (Enable))
 
 /******************************************************************************
 *
@@ -334,7 +334,7 @@
 *
 * This function gets the device interrupt enable register contents.
 * This register controls which interrupt sources of the device
-* are allowed to generate an interrupt.  The device global interrupt enable
+* are allowed to generate an interrupt.	 The device global interrupt enable
 * register and the device interrupt enable register must also be set
 * appropriately for an interrupt to be passed out of the device.
 *
@@ -363,7 +363,7 @@
 *
 ******************************************************************************/
 #define XIIF_V123B_READ_DIER(RegBaseAddress) \
-  XIo_In32((RegBaseAddress) + XIIF_V123B_DIER_OFFSET)
+    XIo_In32((RegBaseAddress) + XIIF_V123B_DIER_OFFSET)
 
 /******************************************************************************
 *
@@ -410,7 +410,7 @@
 *
 ******************************************************************************/
 #define XIIF_V123B_READ_DIPR(RegBaseAddress) \
-  XIo_In32((RegBaseAddress) + XIIF_V123B_DIPR_OFFSET)
+    XIo_In32((RegBaseAddress) + XIIF_V123B_DIPR_OFFSET)
 
 /******************************************************************************
 *
@@ -432,7 +432,7 @@
 * interrupt pending register with bit 0 being the highest priority. The
 * interrupt ID is the priority of the interrupt, 0 - 31, with 0 being the
 * highest priority. The interrupt ID register is live rather than latched such
-* that multiple calls to this function may not yield the same results.  A
+* that multiple calls to this function may not yield the same results.	A
 * special value, outside of the interrupt priority range of 0 - 31, is
 * contained in the register which indicates that no interrupt is pending.  This
 * may be useful for allowing software to continue processing interrupts in a
@@ -469,7 +469,7 @@
 *
 ******************************************************************************/
 #define XIIF_V123B_READ_DIIR(RegBaseAddress) \
-  XIo_In32((RegBaseAddress) + XIIF_V123B_DIIR_OFFSET)
+    XIo_In32((RegBaseAddress) + XIIF_V123B_DIIR_OFFSET)
 
 /******************************************************************************
 *
@@ -484,7 +484,7 @@
 * interrupts without any modifications to the interrupt enable register such
 * that it is minimal effort to restore the interrupts to the previous enabled
 * state.  The corresponding function, XIpIf_GlobalIntrEnable, is provided to
-* restore the interrupts to the previous enabled state.  This function is
+* restore the interrupts to the previous enabled state.	 This function is
 * designed to be used in critical sections of device drivers such that it is
 * not necessary to disable other device interrupts.
 *
@@ -502,7 +502,7 @@
 *
 ******************************************************************************/
 #define XIIF_V123B_GINTR_DISABLE(RegBaseAddress) \
-  XIo_Out32((RegBaseAddress) + XIIF_V123B_DGIER_OFFSET, 0)
+    XIo_Out32((RegBaseAddress) + XIIF_V123B_DGIER_OFFSET, 0)
 
 /******************************************************************************
 *
@@ -534,9 +534,9 @@
 * None.
 *
 ******************************************************************************/
-#define XIIF_V123B_GINTR_ENABLE(RegBaseAddress)     \
-  XIo_Out32((RegBaseAddress) + XIIF_V123B_DGIER_OFFSET, \
-            XIIF_V123B_GINTR_ENABLE_MASK)
+#define XIIF_V123B_GINTR_ENABLE(RegBaseAddress)		  \
+    XIo_Out32((RegBaseAddress) + XIIF_V123B_DGIER_OFFSET, \
+	       XIIF_V123B_GINTR_ENABLE_MASK)
 
 /******************************************************************************
 *
@@ -565,9 +565,9 @@
 * None.
 *
 ******************************************************************************/
-#define XIIF_V123B_IS_GINTR_ENABLED(RegBaseAddress)   \
-  (XIo_In32((RegBaseAddress) + XIIF_V123B_DGIER_OFFSET) ==  \
-   XIIF_V123B_GINTR_ENABLE_MASK)
+#define XIIF_V123B_IS_GINTR_ENABLED(RegBaseAddress)		\
+    (XIo_In32((RegBaseAddress) + XIIF_V123B_DGIER_OFFSET) ==	\
+	      XIIF_V123B_GINTR_ENABLE_MASK)
 
 /******************************************************************************
 *
@@ -580,7 +580,7 @@
 * This function sets the IP interrupt status register to the specified value.
 * This register indicates the status of interrupt sources for the IP of the
 * device.  The IP is defined as the part of the device that connects to the
-* IPIF.  The status is independent of whether interrupts are enabled such that
+* IPIF.	 The status is independent of whether interrupts are enabled such that
 * the status register may also be polled when interrupts are not enabled.
 *
 * Each bit of the register correlates to a specific interrupt source within the
@@ -589,7 +589,7 @@
 * interrupt enable register and the device interrupt enable register must be set
 * appropriately to allow an interrupt to be passed out of the device. The
 * interrupt is cleared by writing to this register with the bits to be
-* cleared set to a one and all others to zero.  This register implements a
+* cleared set to a one and all others to zero.	This register implements a
 * toggle on write functionality meaning any bits which are set in the value
 * written cause the bits in the register to change to the opposite state.
 *
@@ -615,7 +615,7 @@
 *
 ******************************************************************************/
 #define XIIF_V123B_WRITE_IISR(RegBaseAddress, Status) \
-  XIo_Out32((RegBaseAddress) + XIIF_V123B_IISR_OFFSET, (Status))
+    XIo_Out32((RegBaseAddress) + XIIF_V123B_IISR_OFFSET, (Status))
 
 /******************************************************************************
 *
@@ -654,7 +654,7 @@
 *
 ******************************************************************************/
 #define XIIF_V123B_READ_IISR(RegBaseAddress) \
-  XIo_In32((RegBaseAddress) + XIIF_V123B_IISR_OFFSET)
+    XIo_In32((RegBaseAddress) + XIIF_V123B_IISR_OFFSET)
 
 /******************************************************************************
 *
@@ -664,7 +664,7 @@
 *
 * DESCRIPTION:
 *
-* This function sets the IP interrupt enable register contents.  This register
+* This function sets the IP interrupt enable register contents.	 This register
 * controls which interrupt sources of the IP are allowed to generate an
 * interrupt.  The global interrupt enable register and the device interrupt
 * enable register must also be set appropriately for an interrupt to be
@@ -672,7 +672,7 @@
 *
 * Each bit of the register correlates to a specific interrupt source within the
 * IP.  Setting a bit in this register enables the interrupt source to generate
-* an interrupt.  Clearing a bit in this register disables interrupt generation
+* an interrupt.	 Clearing a bit in this register disables interrupt generation
 * for that interrupt source.
 *
 * This function writes only the specified value to the register such that
@@ -697,7 +697,7 @@
 *
 ******************************************************************************/
 #define XIIF_V123B_WRITE_IIER(RegBaseAddress, Enable) \
-  XIo_Out32((RegBaseAddress) + XIIF_V123B_IIER_OFFSET, (Enable))
+    XIo_Out32((RegBaseAddress) + XIIF_V123B_IIER_OFFSET, (Enable))
 
 /******************************************************************************
 *
@@ -708,7 +708,7 @@
 * DESCRIPTION:
 *
 *
-* This function gets the IP interrupt enable register contents.  This register
+* This function gets the IP interrupt enable register contents.	 This register
 * controls which interrupt sources of the IP are allowed to generate an
 * interrupt.  The global interrupt enable register and the device interrupt
 * enable register must also be set appropriately for an interrupt to be
@@ -716,7 +716,7 @@
 *
 * Each bit of the register correlates to a specific interrupt source within the
 * IP.  Setting a bit in this register enables the interrupt source to generate
-* an interrupt.  Clearing a bit in this register disables interrupt generation
+* an interrupt.	 Clearing a bit in this register disables interrupt generation
 * for that interrupt source.
 *
 * ARGUMENTS:
@@ -734,13 +734,13 @@
 *
 ******************************************************************************/
 #define XIIF_V123B_READ_IIER(RegBaseAddress) \
-  XIo_In32((RegBaseAddress) + XIIF_V123B_IIER_OFFSET)
+    XIo_In32((RegBaseAddress) + XIIF_V123B_IIER_OFFSET)
 
 /************************** Function Prototypes ******************************/
 
 /*
  * Initialization Functions
  */
-XStatus XIpIfV123b_SelfTest (u32 RegBaseAddress, u8 IpRegistersWidth);
+XStatus XIpIfV123b_SelfTest(u32 RegBaseAddress, u8 IpRegistersWidth);
 
-#endif        /* end of protection macro */
+#endif				/* end of protection macro */

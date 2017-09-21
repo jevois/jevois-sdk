@@ -31,7 +31,7 @@
 #define PCI_DEVICE_ID_BT849     0x351
 #endif
 #ifndef PCI_DEVICE_ID_FUSION879
-#define PCI_DEVICE_ID_FUSION879 0x36c
+#define PCI_DEVICE_ID_FUSION879	0x36c
 #endif
 
 #ifndef PCI_DEVICE_ID_BT878
@@ -294,7 +294,7 @@
 #define BT878_I2C_NOSTART      (1<<4)
 #define BT848_I2C_DIV          (0xf<<4)
 #define BT848_I2C_SYNC         (1<<3)
-#define BT848_I2C_W3B        (1<<2)
+#define BT848_I2C_W3B	       (1<<2)
 #define BT848_I2C_SCL          (1<<1)
 #define BT848_I2C_SDA          (1<<0)
 

@@ -28,11 +28,11 @@ struct vm_area_struct;
 extern pgd_t swapper_pg_dir[1024];
 extern pgd_t initial_page_table[1024];
 
-static inline void pgtable_cache_init (void) { }
-static inline void check_pgt_cache (void) { }
-void paging_init (void);
+static inline void pgtable_cache_init(void) { }
+static inline void check_pgt_cache(void) { }
+void paging_init(void);
 
-extern void set_pmd_pfn (unsigned long, unsigned long, pgprot_t);
+extern void set_pmd_pfn(unsigned long, unsigned long, pgprot_t);
 
 
 /*
@@ -49,22 +49,22 @@ extern void set_pmd_pfn (unsigned long, unsigned long, pgprot_t);
 #endif
 
 #if defined(CONFIG_HIGHPTE)
-#define pte_offset_map(dir, address)          \
-  ((pte_t *)kmap_atomic(pmd_page(*(dir))) +   \
-   pte_index((address)))
+#define pte_offset_map(dir, address)					\
+	((pte_t *)kmap_atomic(pmd_page(*(dir))) +		\
+	 pte_index((address)))
 #define pte_unmap(pte) kunmap_atomic((pte))
 #else
-#define pte_offset_map(dir, address)          \
-  ((pte_t *)page_address(pmd_page(*(dir))) + pte_index((address)))
+#define pte_offset_map(dir, address)					\
+	((pte_t *)page_address(pmd_page(*(dir))) + pte_index((address)))
 #define pte_unmap(pte) do { } while (0)
 #endif
 
 /* Clear a kernel PTE and flush it from the TLB */
-#define kpte_clear_flush(ptep, vaddr)   \
-  do {            \
-    pte_clear(&init_mm, (vaddr), (ptep)); \
-    __flush_tlb_one((vaddr));   \
-  } while (0)
+#define kpte_clear_flush(ptep, vaddr)		\
+do {						\
+	pte_clear(&init_mm, (vaddr), (ptep));	\
+	__flush_tlb_one((vaddr));		\
+} while (0)
 
 /*
  * The i386 doesn't have any external MMU info: the kernel page
@@ -79,9 +79,9 @@ extern void set_pmd_pfn (unsigned long, unsigned long, pgprot_t);
  * SPARSEMEM and DISCONTIGMEM
  */
 #ifdef CONFIG_FLATMEM
-#define kern_addr_valid(addr) (1)
+#define kern_addr_valid(addr)	(1)
 #else
-#define kern_addr_valid(kaddr)  (0)
+#define kern_addr_valid(kaddr)	(0)
 #endif
 
 #endif /* _ASM_X86_PGTABLE_32_H */

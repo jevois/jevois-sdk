@@ -25,19 +25,19 @@
 #define _COMMON_UTIL_H_
 
 typedef struct {
-  char signature[4];
-  char serial_name[17]; /* "MIP405_1000xxxxx" */
-  char eth_addr[21];  /* "00:60:C2:0a:00:00" */
+	char signature[4];
+	char serial_name[17];	/* "MIP405_1000xxxxx" */
+	char eth_addr[21];	/* "00:60:C2:0a:00:00" */
 } backup_t;
 
-void get_backup_values (backup_t * buf);
+void get_backup_values(backup_t *buf);
 
 #if defined(CONFIG_PIP405) || defined(CONFIG_MIP405)
-#define BOOT_MPS  0x01
-#define BOOT_PCI  0x02
+#define BOOT_MPS	0x01
+#define BOOT_PCI	0x02
 #endif
 
-void check_env (void);
+void check_env(void);
 #if defined(CONFIG_CMD_DOC)
 void doc_init (void);
 #endif

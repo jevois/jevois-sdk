@@ -20,43 +20,43 @@
 #define B110            28409
 #define BDEFAULT        B115200
 
-/* this stuff is important to initialize
-the DUART channels */
+				/* this stuff is important to initialize
+				the DUART channels */
 
-#define Scale   0x01L   /* distance between port addresses */
-#define COM1    0x000003f8    /* Keyboard */
-#define COM2    0x000002f8    /* Host */
+#define	Scale		0x01L		/* distance between port addresses */
+#define	COM1		0x000003f8		/* Keyboard */
+#define COM2		0x000002f8		/* Host */
 
 
 /* Port Definitions relative to base COM port addresses */
-#define DataIn  (0x00*Scale)  /* data input port */
-#define DataOut (0x00*Scale)  /* data output port */
-#define BaudLsb (0x00*Scale)  /* baud rate divisor least significant byte */
-#define BaudMsb (0x01*Scale)  /* baud rate divisor most significant byte */
-#define Ier (0x01*Scale)  /* interrupt enable register */
-#define Iir (0x02*Scale)  /* interrupt identification register */
-#define Lcr (0x03*Scale)  /* line control register */
-#define Mcr (0x04*Scale)  /* modem control register */
-#define Lsr (0x05*Scale)  /* line status register */
-#define Msr (0x06*Scale)  /* modem status register */
+#define DataIn	(0x00*Scale)	/* data input port */
+#define DataOut	(0x00*Scale)	/* data output port */
+#define BaudLsb	(0x00*Scale)	/* baud rate divisor least significant byte */
+#define BaudMsb	(0x01*Scale)	/* baud rate divisor most significant byte */
+#define	Ier	(0x01*Scale)	/* interrupt enable register */
+#define	Iir	(0x02*Scale)	/* interrupt identification register */
+#define	Lcr	(0x03*Scale)	/* line control register */
+#define	Mcr	(0x04*Scale)	/* modem control register */
+#define	Lsr	(0x05*Scale)	/* line status register */
+#define	Msr	(0x06*Scale)	/* modem status register */
 
 /* Bit Definitions for above ports */
-#define LcrDlab 0x80  /* b7:   enable baud rate divisor registers */
-#define LcrDflt 0x03  /* b6-0: no parity, 1 stop, 8 data */
+#define LcrDlab	0x80	/* b7:	 enable baud rate divisor registers */
+#define	LcrDflt	0x03	/* b6-0: no parity, 1 stop, 8 data */
 
-#define McrRts  0x02  /* b1:  request to send (I am ready to xmit) */
-#define McrDtr  0x01  /* b0:  data terminal ready (I am alive ready to rcv) */
-#define McrDflt (McrRts|McrDtr)
+#define	McrRts	0x02	/* b1:	request to send (I am ready to xmit) */
+#define	McrDtr	0x01	/* b0:	data terminal ready (I am alive ready to rcv) */
+#define	McrDflt	(McrRts|McrDtr)
 
-#define LsrTxD  0x6000  /* b5: transmit holding register empty (i.e. xmit OK!)*/
-/* b6: transmitter empty */
-#define LsrRxD  0x0100  /* b0: received data ready (i.e. got a byte!) */
+#define LsrTxD	0x6000	/* b5: transmit holding register empty (i.e. xmit OK!)*/
+			/* b6: transmitter empty */
+#define LsrRxD	0x0100	/* b0: received data ready (i.e. got a byte!) */
 
-#define MsrRi 0x0040  /* b6: ring indicator (other guy is ready to rcv) */
-#define MsrDsr  0x0020  /* b5: data set ready (other guy is alive ready to rcv */
-#define MsrCts  0x0010  /* b4: clear to send (other guy is ready to rcv) */
+#define	MsrRi	0x0040	/* b6: ring indicator (other guy is ready to rcv) */
+#define	MsrDsr	0x0020	/* b5: data set ready (other guy is alive ready to rcv */
+#define	MsrCts	0x0010	/* b4: clear to send (other guy is ready to rcv) */
 
-#define IerRda  0xf /* b0: Enable received data available interrupt */
+#define IerRda	0xf	/* b0: Enable received data available interrupt */
 
 #endif
 

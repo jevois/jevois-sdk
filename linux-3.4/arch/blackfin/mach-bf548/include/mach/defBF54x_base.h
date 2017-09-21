@@ -1497,16 +1497,16 @@
 /* ********************************************************** */
 
 /* SIC_IMASK Masks */
-#define SIC_UNMASK_ALL         0x00000000 /* Unmask all peripheral interrupts */
-#define SIC_MASK_ALL           0xFFFFFFFF /* Mask all peripheral interrupts */
-#define SIC_MASK(x)        (1 << (x)) /* Mask Peripheral #x interrupt */
-#define SIC_UNMASK(x) (0xFFFFFFFF ^ (1 << (x))) /* Unmask Peripheral #x interrupt */
+#define SIC_UNMASK_ALL         0x00000000	/* Unmask all peripheral interrupts */
+#define SIC_MASK_ALL           0xFFFFFFFF	/* Mask all peripheral interrupts */
+#define SIC_MASK(x)	       (1 << (x))	/* Mask Peripheral #x interrupt */
+#define SIC_UNMASK(x) (0xFFFFFFFF ^ (1 << (x)))	/* Unmask Peripheral #x interrupt */
 
 /* SIC_IWR Masks */
-#define IWR_DISABLE_ALL        0x00000000 /* Wakeup Disable all peripherals */
-#define IWR_ENABLE_ALL         0xFFFFFFFF /* Wakeup Enable all peripherals */
-#define IWR_ENABLE(x)        (1 << (x)) /* Wakeup Enable Peripheral #x */
-#define IWR_DISABLE(x) (0xFFFFFFFF ^ (1 << (x)))  /* Wakeup Disable Peripheral #x */
+#define IWR_DISABLE_ALL        0x00000000	/* Wakeup Disable all peripherals */
+#define IWR_ENABLE_ALL         0xFFFFFFFF	/* Wakeup Enable all peripherals */
+#define IWR_ENABLE(x)	       (1 << (x))	/* Wakeup Enable Peripheral #x */
+#define IWR_DISABLE(x) (0xFFFFFFFF ^ (1 << (x)))	/* Wakeup Disable Peripheral #x */
 
 /* Bit masks for SIC_IAR0 */
 
@@ -1634,13 +1634,13 @@
 #define                   PMUXSDH  0x1        /* Peripheral Select for DMA22 channel */
 
 /* *********************  ASYNCHRONOUS MEMORY CONTROLLER MASKS  *************************/
-/* EBIU_AMGCTL Masks                                  */
-#define AMCKEN      0x0001    /* Enable CLKOUT                  */
-#define AMBEN_NONE    0x0000    /* All Banks Disabled               */
-#define AMBEN_B0    0x0002    /* Enable Async Memory Bank 0 only          */
-#define AMBEN_B0_B1   0x0004    /* Enable Async Memory Banks 0 & 1 only       */
-#define AMBEN_B0_B1_B2  0x0006    /* Enable Async Memory Banks 0, 1, and 2      */
-#define AMBEN_ALL   0x0008    /* Enable Async Memory Banks (all) 0, 1, 2, and 3 */
+/* EBIU_AMGCTL Masks																	*/
+#define AMCKEN			0x0001		/* Enable CLKOUT									*/
+#define	AMBEN_NONE		0x0000		/* All Banks Disabled								*/
+#define AMBEN_B0		0x0002		/* Enable Async Memory Bank 0 only					*/
+#define AMBEN_B0_B1		0x0004		/* Enable Async Memory Banks 0 & 1 only				*/
+#define AMBEN_B0_B1_B2	0x0006		/* Enable Async Memory Banks 0, 1, and 2			*/
+#define AMBEN_ALL		0x0008		/* Enable Async Memory Banks (all) 0, 1, 2, and 3	*/
 
 
 /* Bit masks for EBIU_AMBCTL0 */
@@ -1711,11 +1711,11 @@
 #define                       TRP  0x3c0000   /* Pre charge-to-active command period */
 #define                      TRAS  0x3c00000  /* Min Active-to-pre charge time */
 #define                       TRC  0x3c000000 /* Active-to-active time */
-#define DDR_TRAS(x)   ((x<<22)&TRAS)  /* DDR tRAS = (1~15) cycles */
-#define DDR_TRP(x)    ((x<<18)&TRP) /* DDR tRP = (1~15) cycles */
-#define DDR_TRC(x)    ((x<<26)&TRC) /* DDR tRC = (1~15) cycles */
-#define DDR_TRFC(x)   ((x<<14)&TRFC)  /* DDR tRFC = (1~15) cycles */
-#define DDR_TREFI(x)    (x&TREFI) /* DDR tRFC = (1~15) cycles */
+#define DDR_TRAS(x)		((x<<22)&TRAS)	/* DDR tRAS = (1~15) cycles */
+#define DDR_TRP(x)		((x<<18)&TRP)	/* DDR tRP = (1~15) cycles */
+#define DDR_TRC(x)		((x<<26)&TRC)	/* DDR tRC = (1~15) cycles */
+#define DDR_TRFC(x)		((x<<14)&TRFC)	/* DDR tRFC = (1~15) cycles */
+#define DDR_TREFI(x)		(x&TREFI)	/* DDR tRFC = (1~15) cycles */
 
 /* Bit masks for EBIU_DDRCTL1 */
 
@@ -1727,20 +1727,20 @@
 #define               DDRDEVWIDTH  0x30000    /* DDR device width */
 #define                DDRDEVSIZE  0xc0000    /* DDR device size */
 #define                      TWTR  0xf0000000 /* Write-to-read delay */
-#define DDR_TWTR(x)   ((x<<28)&TWTR)  /* DDR tWTR = (1~15) cycles */
-#define DDR_TMRD(x)   ((x<<4)&TMRD) /* DDR tMRD = (1~15) cycles */
-#define DDR_TWR(x)    ((x<<8)&TWR)  /* DDR tWR = (1~15) cycles */
-#define DDR_TRCD(x)   (x&TRCD)  /* DDR tRCD = (1~15) cycles */
-#define DDR_DATWIDTH    0x2000    /* DDR data width */
-#define EXTBANK_1   0   /* 1 external bank */
-#define EXTBANK_2   0x4000    /* 2 external banks */
-#define DEVSZ_64    0x40000   /* DDR External Bank Size = 64MB */
-#define DEVSZ_128   0x80000   /* DDR External Bank Size = 128MB */
-#define DEVSZ_256   0xc0000   /* DDR External Bank Size = 256MB */
-#define DEVSZ_512   0   /* DDR External Bank Size = 512MB */
-#define DEVWD_4     0   /* DDR Device Width = 4 Bits    */
-#define DEVWD_8     0x10000   /* DDR Device Width = 8 Bits    */
-#define DEVWD_16    0x20000   /* DDR Device Width = 16 Bits    */
+#define DDR_TWTR(x)		((x<<28)&TWTR)	/* DDR tWTR = (1~15) cycles */
+#define DDR_TMRD(x)		((x<<4)&TMRD)	/* DDR tMRD = (1~15) cycles */
+#define DDR_TWR(x)		((x<<8)&TWR)	/* DDR tWR = (1~15) cycles */
+#define DDR_TRCD(x)		(x&TRCD)	/* DDR tRCD = (1~15) cycles */
+#define DDR_DATWIDTH		0x2000		/* DDR data width */
+#define EXTBANK_1		0		/* 1 external bank */
+#define EXTBANK_2		0x4000		/* 2 external banks */
+#define DEVSZ_64		0x40000		/* DDR External Bank Size = 64MB */
+#define DEVSZ_128		0x80000		/* DDR External Bank Size = 128MB */
+#define DEVSZ_256		0xc0000		/* DDR External Bank Size = 256MB */
+#define DEVSZ_512		0		/* DDR External Bank Size = 512MB */
+#define DEVWD_4			0		/* DDR Device Width = 4 Bits    */
+#define DEVWD_8			0x10000		/* DDR Device Width = 8 Bits    */
+#define DEVWD_16		0x20000		/* DDR Device Width = 16 Bits    */
 
 /* Bit masks for EBIU_DDRCTL2 */
 
@@ -1748,10 +1748,10 @@
 #define                CASLATENCY  0x70       /* CAS latency */
 #define                  DLLRESET  0x100      /* DLL Reset */
 #define                      REGE  0x1000     /* Register mode enable */
-#define CL_1_5      0x50    /* DDR CAS Latency = 1.5 cycles */
-#define CL_2      0x20    /* DDR CAS Latency = 2 cycles */
-#define CL_2_5      0x60    /* DDR CAS Latency = 2.5 cycles */
-#define CL_3      0x30    /* DDR CAS Latency = 3 cycles */
+#define CL_1_5			0x50		/* DDR CAS Latency = 1.5 cycles */
+#define CL_2			0x20		/* DDR CAS Latency = 2 cycles */
+#define CL_2_5			0x60		/* DDR CAS Latency = 2.5 cycles */
+#define CL_3			0x30		/* DDR CAS Latency = 3 cycles */
 
 /* Bit masks for EBIU_DDRCTL3 */
 
@@ -2034,13 +2034,13 @@
 #define                  FIFO_RWM  0x18000000 /* FIFO Regular Watermarks */
 #define                  FIFO_UWM  0x60000000 /* FIFO Urgent Watermarks */
 
-#define DLEN_8    (0 << 15) /* 000 - 8 bits */
-#define DLEN_10   (1 << 15) /* 001 - 10 bits */
-#define DLEN_12   (2 << 15) /* 010 - 12 bits */
-#define DLEN_14   (3 << 15) /* 011 - 14 bits */
-#define DLEN_16   (4 << 15) /* 100 - 16 bits */
-#define DLEN_18   (5 << 15) /* 101 - 18 bits */
-#define DLEN_24   (6 << 15) /* 110 - 24 bits */
+#define DLEN_8		(0 << 15) /* 000 - 8 bits */
+#define DLEN_10		(1 << 15) /* 001 - 10 bits */
+#define DLEN_12		(2 << 15) /* 010 - 12 bits */
+#define DLEN_14		(3 << 15) /* 011 - 14 bits */
+#define DLEN_16		(4 << 15) /* 100 - 16 bits */
+#define DLEN_18		(5 << 15) /* 101 - 18 bits */
+#define DLEN_24		(6 << 15) /* 110 - 24 bits */
 
 
 /* Bit masks for EPPIx_FS2W_LVB */
@@ -2330,22 +2330,22 @@
 #define MUX15_3 0xC0000000
 
 #define MUX(b15,b14,b13,b12,b11,b10,b9,b8,b7,b6,b5,b4,b3,b2,b1,b0) \
-  ((((b15)&3) << 30) | \
-   (((b14)&3) << 28) | \
-   (((b13)&3) << 26) | \
-   (((b12)&3) << 24) | \
-   (((b11)&3) << 22) | \
-   (((b10)&3) << 20) | \
-   (((b9) &3) << 18) | \
-   (((b8) &3) << 16) | \
-   (((b7) &3) << 14) | \
-   (((b6) &3) << 12) | \
-   (((b5) &3) << 10) | \
-   (((b4) &3) << 8)  | \
-   (((b3) &3) << 6)  | \
-   (((b2) &3) << 4)  | \
-   (((b1) &3) << 2)  | \
-   (((b0) &3)))
+    ((((b15)&3) << 30) | \
+     (((b14)&3) << 28) | \
+     (((b13)&3) << 26) | \
+     (((b12)&3) << 24) | \
+     (((b11)&3) << 22) | \
+     (((b10)&3) << 20) | \
+     (((b9) &3) << 18) | \
+     (((b8) &3) << 16) | \
+     (((b7) &3) << 14) | \
+     (((b6) &3) << 12) | \
+     (((b5) &3) << 10) | \
+     (((b4) &3) << 8)  | \
+     (((b3) &3) << 6)  | \
+     (((b2) &3) << 4)  | \
+     (((b1) &3) << 2)  | \
+     (((b0) &3)))
 
 /* Bit fields for PINT0_ASSIGN and PINT1_ASSIGN registers */
 

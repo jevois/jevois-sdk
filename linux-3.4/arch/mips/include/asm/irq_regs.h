@@ -13,9 +13,9 @@
 
 #include <linux/thread_info.h>
 
-static inline struct pt_regs * get_irq_regs (void)
+static inline struct pt_regs *get_irq_regs(void)
 {
-  return current_thread_info()->regs;
+	return current_thread_info()->regs;
 }
 
 #endif /* __ASM_IRQ_REGS_H */

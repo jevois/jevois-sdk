@@ -19,25 +19,25 @@
  * This should be a per-architecture thing, to allow different
  * error and pointer decisions.
  */
-#define MAX_ERRNO 4095
+#define MAX_ERRNO	4095
 
 #ifndef __ASSEMBLY__
 
 #define IS_ERR_VALUE(x) unlikely((x) >= (unsigned long)-MAX_ERRNO)
 
-static inline void * ERR_PTR (long error)
+static inline void *ERR_PTR(long error)
 {
-  return (void *) error;
+	return (void *) error;
 }
 
-static inline long PTR_ERR (const void * ptr)
+static inline long PTR_ERR(const void *ptr)
 {
-  return (long) ptr;
+	return (long) ptr;
 }
 
-static inline long IS_ERR (const void * ptr)
+static inline long IS_ERR(const void *ptr)
 {
-  return IS_ERR_VALUE ( (unsigned long) ptr);
+	return IS_ERR_VALUE((unsigned long)ptr);
 }
 
 #endif

@@ -69,8 +69,8 @@
 
 /* exports */
 
-int i8042_kbd_init (void);
-int i8042_tstc (void);
-int i8042_getc (void);
+int i8042_kbd_init(void);
+int i8042_tstc(void);
+int i8042_getc(void);
 
 #endif /* _I8042_H_ */

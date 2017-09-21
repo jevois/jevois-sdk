@@ -49,11 +49,11 @@ typedef u16 WORD;
 typedef u32 DWORD;
 
 typedef union tagUQuadWord {
-  struct {
-    u32 dwLowDword;
-    u32 dwHighDword;
-  } u;
-  double      DoNotUseThisField;
+    struct {
+	u32 dwLowDword;
+	u32 dwHighDword;
+    } u;
+    double      DoNotUseThisField;
 } UQuadWord;
 typedef UQuadWord       QWORD;         
 
@@ -63,12 +63,12 @@ typedef u32 ULONG_PTR;
 typedef u32 DWORD_PTR;
 
 
-typedef BYTE      *      PBYTE;
+typedef BYTE *           PBYTE;
 
-typedef WORD      *      PWORD;
+typedef WORD *           PWORD;
 
-typedef DWORD      *     PDWORD;
+typedef DWORD *          PDWORD;
 
-typedef QWORD      *     PQWORD;
+typedef QWORD *          PQWORD;
 
 #endif /* __TTYPE_H__ */

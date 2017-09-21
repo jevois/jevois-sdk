@@ -47,36 +47,36 @@
 
 
 bool
-PSbConsiderPowerDown (
-  void * hDeviceContext,
-  bool bCheckRxDMA,
-  bool bCheckCountToWakeUp
-);
+PSbConsiderPowerDown(
+    void *hDeviceContext,
+    bool bCheckRxDMA,
+    bool bCheckCountToWakeUp
+    );
 
 void
-PSvDisablePowerSaving (
-  void * hDeviceContext
-);
+PSvDisablePowerSaving(
+    void *hDeviceContext
+    );
 
 void
-PSvEnablePowerSaving (
-  void * hDeviceContext,
-  unsigned short wListenInterval
-);
+PSvEnablePowerSaving(
+    void *hDeviceContext,
+    unsigned short wListenInterval
+    );
 
 void
-PSvSendPSPOLL (
-  void * hDeviceContext
-);
+PSvSendPSPOLL(
+    void *hDeviceContext
+    );
 
 bool
-PSbSendNullPacket (
-  void * hDeviceContext
-);
+PSbSendNullPacket(
+    void *hDeviceContext
+    );
 
 bool
-PSbIsNextTBTTWakeUp (
-  void * hDeviceContext
-);
+PSbIsNextTBTTWakeUp(
+    void *hDeviceContext
+    );
 
 #endif

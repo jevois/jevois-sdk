@@ -13,12 +13,12 @@
 
 #include <linux/linkage.h>
 
-asmlinkage int __raw_uncached_fetch_asm (const volatile int * ptr);
-asmlinkage int __raw_atomic_update_asm (volatile int * ptr, int value);
-asmlinkage int __raw_atomic_clear_asm (volatile int * ptr, int value);
-asmlinkage int __raw_atomic_set_asm (volatile int * ptr, int value);
-asmlinkage int __raw_atomic_xor_asm (volatile int * ptr, int value);
-asmlinkage int __raw_atomic_test_asm (const volatile int * ptr, int value);
+asmlinkage int __raw_uncached_fetch_asm(const volatile int *ptr);
+asmlinkage int __raw_atomic_update_asm(volatile int *ptr, int value);
+asmlinkage int __raw_atomic_clear_asm(volatile int *ptr, int value);
+asmlinkage int __raw_atomic_set_asm(volatile int *ptr, int value);
+asmlinkage int __raw_atomic_xor_asm(volatile int *ptr, int value);
+asmlinkage int __raw_atomic_test_asm(const volatile int *ptr, int value);
 
 #define atomic_read(v) __raw_uncached_fetch_asm(&(v)->counter)
 

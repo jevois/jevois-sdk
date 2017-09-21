@@ -2,9 +2,9 @@
 #define __ACPI_REBOOT_H
 
 #ifdef CONFIG_ACPI
-extern void acpi_reboot (void);
+extern void acpi_reboot(void);
 #else
-static inline void acpi_reboot (void) { }
+static inline void acpi_reboot(void) { }
 #endif
 
 #endif

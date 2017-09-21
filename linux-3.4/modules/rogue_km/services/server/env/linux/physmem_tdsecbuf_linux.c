@@ -84,291 +84,291 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    standard osmem PMR factory to supply dummy functionality. Most things here will
    change in a real implementation.
 
-   Your starting point for re-implementing this module should be by inspecting the
+   Your starting point for re-implementing this module should be by inspecting the 
    sTDSecureBufPMRFuncTab structure below and determining which callbacks you need
    to implement for your system.
 */
 
 typedef struct {
-  IMG_VOID * token;
-  IMG_UINT32 ui32Log2PageSizeBytes;
-  struct page ** apsPageArray;
-  IMG_UINT64 ui64NumPages;
-  
-  PHYS_HEAP * psTDSecureBufPhysHeap;
-  IMG_HANDLE hPDumpAllocInfo;
+	IMG_VOID *token;
+	IMG_UINT32 ui32Log2PageSizeBytes;
+	struct page **apsPageArray;
+	IMG_UINT64 ui64NumPages;
+
+	PHYS_HEAP *psTDSecureBufPhysHeap;
+    IMG_HANDLE hPDumpAllocInfo;
 } sTDSecureBufPageList;
 
 static IMG_VOID
-_FreeTDSecureBufPageContainer (IMG_VOID * pvPagecontainer)
+_FreeTDSecureBufPageContainer(IMG_VOID *pvPagecontainer)
 {
-  sTDSecureBufPageList * psPageContainer = (sTDSecureBufPageList *) pvPagecontainer;
-  
-  if (! psPageContainer)
-  {
-    return;
-  }
-  
-  if (psPageContainer->apsPageArray)
-  {
-    IMG_UINT64 i;
-    for (i = 0; i < psPageContainer->ui64NumPages; i++)
-    {
-      if (psPageContainer->apsPageArray[i])
-      {
-        __free_page (psPageContainer->apsPageArray[i]);
-      }
-    }
-    kfree (psPageContainer->apsPageArray);
-  }
-  
-  PhysHeapRelease (psPageContainer->psTDSecureBufPhysHeap);
-  
-  PDumpPMRFree (psPageContainer->hPDumpAllocInfo);
-  
-  kfree (psPageContainer);
+	sTDSecureBufPageList *psPageContainer = (sTDSecureBufPageList *) pvPagecontainer;
+
+	if(! psPageContainer)
+	{
+		return;
+	}
+
+	if(psPageContainer->apsPageArray)
+	{
+		IMG_UINT64 i;
+		for(i = 0; i < psPageContainer->ui64NumPages; i++)
+		{
+			if(psPageContainer->apsPageArray[i])
+			{
+				__free_page(psPageContainer->apsPageArray[i]);
+			}
+		}
+		kfree(psPageContainer->apsPageArray);
+	}
+
+	PhysHeapRelease(psPageContainer->psTDSecureBufPhysHeap);
+
+    PDumpPMRFree(psPageContainer->hPDumpAllocInfo);
+
+	kfree(psPageContainer);
 }
 
 static PVRSRV_ERROR
-PMRSysPhysAddrTDSecureBuf (PMR_IMPL_PRIVDATA pvPriv,
-                           IMG_DEVMEM_OFFSET_T uiOffset,
-                           IMG_DEV_PHYADDR * psDevPAddr)
-{
-  sTDSecureBufPageList * psPageContainer = (sTDSecureBufPageList *) pvPriv;
-  IMG_UINT64 ui64PageNum = uiOffset >> psPageContainer->ui32Log2PageSizeBytes;
-  IMG_UINT32 ui32PageOffset = uiOffset - (ui64PageNum << psPageContainer->ui32Log2PageSizeBytes);
-  
-  PVR_ASSERT (ui64PageNum < psPageContainer->ui64NumPages);
-  psDevPAddr->uiAddr = page_to_phys (psPageContainer->apsPageArray[ui64PageNum]) + ui32PageOffset;
-  return PVRSRV_OK;
-}
-
-
-static PVRSRV_ERROR
-PMRFinalizeTDSecureBuf (PMR_IMPL_PRIVDATA pvPriv)
-{
-  _FreeTDSecureBufPageContainer ( (IMG_VOID *) pvPriv);
-  return PVRSRV_OK;
-}
-
-static PVRSRV_ERROR
-PMRReadBytesTDSecureBuf (PMR_IMPL_PRIVDATA pvPriv,
+PMRSysPhysAddrTDSecureBuf(PMR_IMPL_PRIVDATA pvPriv,
                          IMG_DEVMEM_OFFSET_T uiOffset,
-                         IMG_UINT8 * pcBuffer,
-                         IMG_SIZE_T uiBufSz,
-                         IMG_SIZE_T * puiNumBytes)
+                         IMG_DEV_PHYADDR *psDevPAddr)
 {
-  sTDSecureBufPageList * psPageContainer = (sTDSecureBufPageList *) pvPriv;
-  IMG_UINT8 * pvMapping;
-  IMG_UINT32 uiPageSize = 1 << psPageContainer->ui32Log2PageSizeBytes;
-  IMG_UINT32 uiPageIndex;
-  IMG_UINT32 uiReadOffset;
-  IMG_UINT32 uiReadBytes;
-  
-  *puiNumBytes = 0;
-  
-  while (uiBufSz)
-  {
-    uiPageIndex = uiOffset >> psPageContainer->ui32Log2PageSizeBytes;
-    uiReadOffset = uiOffset - uiPageIndex * uiPageSize;
-    uiReadBytes = uiPageSize - uiReadOffset;
-    
-    if (uiReadBytes > uiBufSz)
-    {
-      uiReadBytes = uiBufSz;
-    }
-    
-    pvMapping = kmap (psPageContainer->apsPageArray[uiPageIndex]);
-    PVR_ASSERT (pvMapping);
-    memcpy (pcBuffer, pvMapping + uiReadOffset, uiReadBytes);
-    kunmap (psPageContainer->apsPageArray[uiPageIndex]);
-    
-    uiBufSz -= uiReadBytes;
-    pcBuffer += uiReadBytes;
-    *puiNumBytes += uiReadBytes;
-    
-    uiOffset += uiReadBytes;
-  }
-  return PVRSRV_OK;
+	sTDSecureBufPageList *psPageContainer = (sTDSecureBufPageList *) pvPriv;
+	IMG_UINT64 ui64PageNum = uiOffset >> psPageContainer->ui32Log2PageSizeBytes;
+	IMG_UINT32 ui32PageOffset = uiOffset - (ui64PageNum << psPageContainer->ui32Log2PageSizeBytes);
+	
+	PVR_ASSERT(ui64PageNum < psPageContainer->ui64NumPages);
+	psDevPAddr->uiAddr = page_to_phys(psPageContainer->apsPageArray[ui64PageNum]) + ui32PageOffset;
+	return PVRSRV_OK;
+}
+
+
+static PVRSRV_ERROR
+PMRFinalizeTDSecureBuf(PMR_IMPL_PRIVDATA pvPriv)
+{
+	_FreeTDSecureBufPageContainer((IMG_VOID *) pvPriv);
+	return PVRSRV_OK;
 }
 
 static PVRSRV_ERROR
-PMRKernelMapTDSecureBuf (PMR_IMPL_PRIVDATA pvPriv,
-                         IMG_SIZE_T uiOffset,
-                         IMG_SIZE_T uiSize,
-                         IMG_VOID ** ppvKernelAddressOut,
-                         IMG_HANDLE * phHandleOut,
-                         PMR_FLAGS_T ulFlags)
+PMRReadBytesTDSecureBuf(PMR_IMPL_PRIVDATA pvPriv,
+                       IMG_DEVMEM_OFFSET_T uiOffset,
+                       IMG_UINT8 *pcBuffer,
+                       IMG_SIZE_T uiBufSz,
+                       IMG_SIZE_T *puiNumBytes)
 {
-  sTDSecureBufPageList * psPageContainer;
-  IMG_VOID * pvAddress;
-  
-  psPageContainer = pvPriv;
-  
-  pvAddress = vm_map_ram (psPageContainer->apsPageArray,
-                          psPageContainer->ui64NumPages,
-                          -1,
-                          PAGE_KERNEL);
-                          
-  if (! pvAddress)
-  {
-    return PVRSRV_ERROR_MAP_TDSECUREBUF_PAGES_FAIL;
-  }
-  
-  *ppvKernelAddressOut = pvAddress + uiOffset;
-  *phHandleOut = pvAddress;
-  
-  return PVRSRV_OK;
+	sTDSecureBufPageList *psPageContainer = (sTDSecureBufPageList *) pvPriv;
+    IMG_UINT8 *pvMapping;
+	IMG_UINT32 uiPageSize = 1 << psPageContainer->ui32Log2PageSizeBytes;
+   	IMG_UINT32 uiPageIndex;
+	IMG_UINT32 uiReadOffset;
+	IMG_UINT32 uiReadBytes;
+
+	*puiNumBytes = 0;
+	
+	while(uiBufSz)
+	{
+    	uiPageIndex = uiOffset >> psPageContainer->ui32Log2PageSizeBytes;
+		uiReadOffset = uiOffset - uiPageIndex * uiPageSize;
+		uiReadBytes = uiPageSize - uiReadOffset;
+
+		if(uiReadBytes > uiBufSz)
+		{
+			uiReadBytes = uiBufSz;
+		}
+		
+        pvMapping = kmap(psPageContainer->apsPageArray[uiPageIndex]);
+        PVR_ASSERT(pvMapping);
+        memcpy(pcBuffer, pvMapping + uiReadOffset, uiReadBytes);
+        kunmap(psPageContainer->apsPageArray[uiPageIndex]);
+		
+		uiBufSz -= uiReadBytes;
+		pcBuffer += uiReadBytes;
+		*puiNumBytes += uiReadBytes;
+
+		uiOffset += uiReadBytes;
+	}
+    return PVRSRV_OK;
+}
+
+static PVRSRV_ERROR
+PMRKernelMapTDSecureBuf(PMR_IMPL_PRIVDATA pvPriv,
+                       IMG_SIZE_T uiOffset,
+                       IMG_SIZE_T uiSize,
+                       IMG_VOID **ppvKernelAddressOut,
+                       IMG_HANDLE *phHandleOut,
+                       PMR_FLAGS_T ulFlags)
+{
+    sTDSecureBufPageList *psPageContainer;
+    IMG_VOID *pvAddress;
+
+    psPageContainer = pvPriv;
+
+	pvAddress = vm_map_ram(psPageContainer->apsPageArray,
+						   psPageContainer->ui64NumPages,
+						   -1,
+						   PAGE_KERNEL);
+
+	if(! pvAddress)
+	{
+		return PVRSRV_ERROR_MAP_TDSECUREBUF_PAGES_FAIL;
+	}
+
+    *ppvKernelAddressOut = pvAddress + uiOffset;
+    *phHandleOut = pvAddress;
+
+    return PVRSRV_OK;
 }
 
 static IMG_VOID
-PMRKernelUnmapTDSecureBuf (PMR_IMPL_PRIVDATA pvPriv,
-                           IMG_HANDLE hHandle)
+PMRKernelUnmapTDSecureBuf(PMR_IMPL_PRIVDATA pvPriv,
+                         IMG_HANDLE hHandle)
 {
-  sTDSecureBufPageList * psPageContainer;
-  psPageContainer = pvPriv;
-  vm_unmap_ram (hHandle, psPageContainer->ui64NumPages);
+    sTDSecureBufPageList *psPageContainer;
+    psPageContainer = pvPriv;
+    vm_unmap_ram(hHandle, psPageContainer->ui64NumPages);
 }
 
 static PMR_IMPL_FUNCTAB sTDSecureBufPMRFuncTab = {
-  .pfnLockPhysAddresses = IMG_NULL,           /* pages are always available in these PMRs */
-  .pfnUnlockPhysAddresses = IMG_NULL,         /* as above */
-  .pfnDevPhysAddr = PMRSysPhysAddrTDSecureBuf,
-  .pfnPDumpSymbolicAddr = IMG_NULL,           /* nothing special needed */
-  .pfnAcquireKernelMappingData = PMRKernelMapTDSecureBuf,
-  .pfnReleaseKernelMappingData = PMRKernelUnmapTDSecureBuf,
-  .pfnReadBytes = PMRReadBytesTDSecureBuf,
-  .pfnFinalize = PMRFinalizeTDSecureBuf
+	.pfnLockPhysAddresses = IMG_NULL,           /* pages are always available in these PMRs */
+	.pfnUnlockPhysAddresses = IMG_NULL,         /* as above */
+	.pfnDevPhysAddr = PMRSysPhysAddrTDSecureBuf,
+	.pfnPDumpSymbolicAddr = IMG_NULL,           /* nothing special needed */
+	.pfnAcquireKernelMappingData = PMRKernelMapTDSecureBuf,
+	.pfnReleaseKernelMappingData = PMRKernelUnmapTDSecureBuf,
+	.pfnReadBytes = PMRReadBytesTDSecureBuf,
+	.pfnFinalize = PMRFinalizeTDSecureBuf
 };
 
 
 static PVRSRV_ERROR
-_AllocTDSecureBufPageContainer (IMG_UINT64 ui64NumPages,
-                                IMG_UINT32 uiLog2PageSize,
-                                PHYS_HEAP * psTDSecureBufPhysHeap,
-                                IMG_VOID ** ppvPageContainer)
+_AllocTDSecureBufPageContainer(IMG_UINT64 ui64NumPages,
+                              IMG_UINT32 uiLog2PageSize,
+                              PHYS_HEAP *psTDSecureBufPhysHeap,
+                              IMG_VOID **ppvPageContainer)
 {
-  IMG_UINT64 i;
-  PVRSRV_ERROR eStatus = PVRSRV_OK;
-  sTDSecureBufPageList * psPageContainer;
-  
-  psPageContainer = kmalloc (sizeof (sTDSecureBufPageList), GFP_KERNEL);
-  if (!psPageContainer)
-  {
-    eStatus = PVRSRV_ERROR_OUT_OF_MEMORY;
-    goto fail;
-  }
-  psPageContainer->ui32Log2PageSizeBytes = uiLog2PageSize;
-  psPageContainer->ui64NumPages = ui64NumPages;
-  psPageContainer->psTDSecureBufPhysHeap = psTDSecureBufPhysHeap;
-  psPageContainer->apsPageArray = kmalloc (ui64NumPages * sizeof (psPageContainer->apsPageArray[0]),
-                                  GFP_KERNEL);
-  if (!psPageContainer->apsPageArray)
-  {
-    eStatus = PVRSRV_ERROR_OUT_OF_MEMORY;
-    goto fail;
-  }
-  for (i = 0; i < ui64NumPages; i++)
-  {
-    psPageContainer->apsPageArray[i] = IMG_NULL;
-  }
-  
-  for (i = 0; i < ui64NumPages; i++)
-  {
-    psPageContainer->apsPageArray[i] = alloc_page (GFP_KERNEL);
-    if (! psPageContainer->apsPageArray[i])
-    {
-      eStatus = PVRSRV_ERROR_REQUEST_TDSECUREBUF_PAGES_FAIL;
-      goto fail;
-    }
-  }
-  
-  *ppvPageContainer = psPageContainer;
-  return eStatus;
-  
+	IMG_UINT64 i;
+	PVRSRV_ERROR eStatus = PVRSRV_OK;
+	sTDSecureBufPageList *psPageContainer;
+
+	psPageContainer = kmalloc(sizeof(sTDSecureBufPageList), GFP_KERNEL);
+	if(!psPageContainer)
+	{
+		eStatus = PVRSRV_ERROR_OUT_OF_MEMORY;
+		goto fail;
+	}
+	psPageContainer->ui32Log2PageSizeBytes = uiLog2PageSize;
+	psPageContainer->ui64NumPages = ui64NumPages;
+	psPageContainer->psTDSecureBufPhysHeap = psTDSecureBufPhysHeap;
+	psPageContainer->apsPageArray = kmalloc(ui64NumPages * sizeof(psPageContainer->apsPageArray[0]),
+	                                        GFP_KERNEL);
+	if(!psPageContainer->apsPageArray)
+	{
+		eStatus = PVRSRV_ERROR_OUT_OF_MEMORY;
+		goto fail;
+	}
+	for(i = 0; i < ui64NumPages; i++)
+	{
+		psPageContainer->apsPageArray[i] = IMG_NULL;
+	}
+
+	for(i = 0; i < ui64NumPages; i++)
+	{
+		psPageContainer->apsPageArray[i] = alloc_page(GFP_KERNEL);
+		if(! psPageContainer->apsPageArray[i])
+		{
+			eStatus = PVRSRV_ERROR_REQUEST_TDSECUREBUF_PAGES_FAIL;
+			goto fail;
+		}
+	}
+
+	*ppvPageContainer = psPageContainer;
+	return eStatus;
+
 fail:
-  _FreeTDSecureBufPageContainer ( (IMG_VOID *) psPageContainer);
-  *ppvPageContainer = IMG_NULL;
-  return eStatus;
+	_FreeTDSecureBufPageContainer((IMG_VOID *) psPageContainer);
+	*ppvPageContainer = IMG_NULL;
+	return eStatus;
 }
 
 PVRSRV_ERROR
-PhysmemNewTDSecureBufPMR (PVRSRV_DEVICE_NODE * psDevNode,
-                          IMG_DEVMEM_SIZE_T uiSize,
-                          IMG_UINT32 uiLog2PageSize,
-                          PVRSRV_MEMALLOCFLAGS_T uiFlags,
-                          PMR ** ppsPMRPtr)
+PhysmemNewTDSecureBufPMR(PVRSRV_DEVICE_NODE *psDevNode,
+                        IMG_DEVMEM_SIZE_T uiSize,
+                        IMG_UINT32 uiLog2PageSize,
+                        PVRSRV_MEMALLOCFLAGS_T uiFlags,
+                        PMR **ppsPMRPtr)
 {
-  sTDSecureBufPageList * psPageContainer = IMG_NULL;
-  IMG_UINT32 uiPageSize = 1 << uiLog2PageSize;
-  IMG_UINT64 ui64NumPages = (uiSize >> uiLog2PageSize) + ( (uiSize & (uiPageSize - 1) ) != 0);
-  PVRSRV_ERROR eStatus;
-  PHYS_HEAP * psTDSecureBufPhysHeap;
-  IMG_BOOL bMappingTable = IMG_TRUE;
-  IMG_HANDLE hPDumpAllocInfo = IMG_NULL;
-  RGX_DATA * psRGXData;
-  
-  IMG_UINT32 uiPMRFlags = (PMR_FLAGS_T) (uiFlags & PVRSRV_MEMALLOCFLAGS_PMRFLAGSMASK);
-  /* check no significant bits were lost in cast due to different
-     bit widths for flags */
-  PVR_ASSERT (uiPMRFlags == (uiFlags & PVRSRV_MEMALLOCFLAGS_PMRFLAGSMASK) );
-  
-  /* get the physical heap for TD secure buffers */
-  psRGXData = (RGX_DATA *) (psDevNode->psDevConfig->hDevData);
-  if (! psRGXData->bHasTDSecureBufPhysHeap)
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "Failed allocation from non-existent Trusted Device physical heap!") );
-    eStatus = PVRSRV_ERROR_REQUEST_TDSECUREBUF_PAGES_FAIL;
-    goto fail;
-  }
-  eStatus = PhysHeapAcquire (psRGXData->uiTDSecureBufPhysHeapID,
-                             &psTDSecureBufPhysHeap);
-  if (eStatus)
-  {
-    goto fail;
-  }
-  
-  /* allocate and initialize the page container structure */
-  eStatus = _AllocTDSecureBufPageContainer (ui64NumPages,
-            uiLog2PageSize,
-            psTDSecureBufPhysHeap,
-            (IMG_VOID *) &psPageContainer);
-  if (eStatus)
-  {
-    goto fail;
-  }
-  
-  /* wrap the container in a PMR */
-  eStatus = PMRCreatePMR (psTDSecureBufPhysHeap,
-                          ui64NumPages * uiPageSize,
-                          ui64NumPages * uiPageSize,
-                          1,
-                          1,
-                          &bMappingTable,
-                          uiLog2PageSize,
-                          uiPMRFlags,
-                          "PMRTDSECUREBUF",
-                          &sTDSecureBufPMRFuncTab,
-                          (IMG_VOID *) psPageContainer,
-                          ppsPMRPtr,
-                          &hPDumpAllocInfo,
-                          IMG_FALSE);
-                          
-  #if defined(PVR_RI_DEBUG)
-  {
-    RIWritePMREntryKM (*ppsPMRPtr,
-                       "TD Secure Buffer",
-                       (ui64NumPages * uiPageSize) );
-  }
-  #endif
-  
-  /* this is needed when the allocation is finalized and we need to free it. */
-  psPageContainer->hPDumpAllocInfo = hPDumpAllocInfo;
-  
-  return eStatus;
-  
-  /* error cleanup */
-  
+	sTDSecureBufPageList *psPageContainer = IMG_NULL;
+	IMG_UINT32 uiPageSize = 1 << uiLog2PageSize;
+	IMG_UINT64 ui64NumPages = (uiSize >> uiLog2PageSize) + ((uiSize & (uiPageSize-1)) != 0);
+	PVRSRV_ERROR eStatus;
+	PHYS_HEAP *psTDSecureBufPhysHeap;
+	IMG_BOOL bMappingTable = IMG_TRUE;
+	IMG_HANDLE hPDumpAllocInfo = IMG_NULL;
+	RGX_DATA *psRGXData;
+
+    IMG_UINT32 uiPMRFlags = (PMR_FLAGS_T)(uiFlags & PVRSRV_MEMALLOCFLAGS_PMRFLAGSMASK);
+    /* check no significant bits were lost in cast due to different
+       bit widths for flags */
+    PVR_ASSERT(uiPMRFlags == (uiFlags & PVRSRV_MEMALLOCFLAGS_PMRFLAGSMASK));
+	
+	/* get the physical heap for TD secure buffers */
+	psRGXData = (RGX_DATA *)(psDevNode->psDevConfig->hDevData);
+	if(! psRGXData->bHasTDSecureBufPhysHeap)
+	{
+		PVR_DPF((PVR_DBG_ERROR,"Failed allocation from non-existent Trusted Device physical heap!"));
+		eStatus = PVRSRV_ERROR_REQUEST_TDSECUREBUF_PAGES_FAIL;
+		goto fail;
+	}
+	eStatus = PhysHeapAcquire(psRGXData->uiTDSecureBufPhysHeapID,
+	                          &psTDSecureBufPhysHeap);
+	if(eStatus)
+	{
+		goto fail;
+	}
+
+	/* allocate and initialize the page container structure */
+	eStatus = _AllocTDSecureBufPageContainer(ui64NumPages,
+	                                        uiLog2PageSize,
+	                                        psTDSecureBufPhysHeap,
+	                                        (IMG_VOID *)&psPageContainer);
+	if(eStatus)
+	{
+		goto fail;
+	}
+
+	/* wrap the container in a PMR */
+    eStatus = PMRCreatePMR(psTDSecureBufPhysHeap,
+                           ui64NumPages * uiPageSize,
+                           ui64NumPages * uiPageSize,
+                           1,
+                           1,
+                           &bMappingTable,
+                           uiLog2PageSize,
+                           uiPMRFlags,
+                           "PMRTDSECUREBUF",
+                           &sTDSecureBufPMRFuncTab,
+                           (IMG_VOID *)psPageContainer,
+                           ppsPMRPtr,
+                           &hPDumpAllocInfo,
+                           IMG_FALSE);
+	
+#if defined(PVR_RI_DEBUG)
+	{
+		RIWritePMREntryKM (*ppsPMRPtr,
+						   "TD Secure Buffer",
+						   (ui64NumPages * uiPageSize));
+	}
+#endif
+
+	/* this is needed when the allocation is finalized and we need to free it. */
+	psPageContainer->hPDumpAllocInfo = hPDumpAllocInfo;
+
+	return eStatus;
+
+	/* error cleanup */
+
 fail:
-  return eStatus;
+	return eStatus;
 }

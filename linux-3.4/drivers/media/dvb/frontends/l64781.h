@@ -2,7 +2,7 @@
     driver for LSI L64781 COFDM demodulator
 
     Copyright (C) 2001 Holger Waechtler for Convergence Integrated Media GmbH
-           Marko Kohtala <marko.kohtala@luukku.com>
+		       Marko Kohtala <marko.kohtala@luukku.com>
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -27,19 +27,19 @@
 
 struct l64781_config
 {
-  /* the demodulator's i2c address */
-  u8 demod_address;
+	/* the demodulator's i2c address */
+	u8 demod_address;
 };
 
 #if defined(CONFIG_DVB_L64781) || (defined(CONFIG_DVB_L64781_MODULE) && defined(MODULE))
-extern struct dvb_frontend * l64781_attach (const struct l64781_config * config,
-    struct i2c_adapter * i2c);
+extern struct dvb_frontend* l64781_attach(const struct l64781_config* config,
+					  struct i2c_adapter* i2c);
 #else
-static inline struct dvb_frontend * l64781_attach (const struct l64781_config * config,
-    struct i2c_adapter * i2c)
+static inline struct dvb_frontend* l64781_attach(const struct l64781_config* config,
+					  struct i2c_adapter* i2c)
 {
-  printk (KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
-  return NULL;
+	printk(KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
+	return NULL;
 }
 #endif
 

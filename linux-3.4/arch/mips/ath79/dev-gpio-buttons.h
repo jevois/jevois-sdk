@@ -15,9 +15,9 @@
 #include <linux/input.h>
 #include <linux/gpio_keys.h>
 
-void ath79_register_gpio_keys_polled (int id,
-                                      unsigned poll_interval,
-                                      unsigned nbuttons,
-                                      struct gpio_keys_button * buttons);
+void ath79_register_gpio_keys_polled(int id,
+				     unsigned poll_interval,
+				     unsigned nbuttons,
+				     struct gpio_keys_button *buttons);
 
 #endif /* _ATH79_DEV_GPIO_BUTTONS_H */

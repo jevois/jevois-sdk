@@ -7,14 +7,14 @@
 #define __SYSDEP_X86_SKAS_PTRACE_H
 
 struct ptrace_faultinfo {
-  int is_write;
-  unsigned long addr;
+        int is_write;
+        unsigned long addr;
 };
 
 struct ptrace_ldt {
-  int func;
-  void * ptr;
-  unsigned long bytecount;
+        int func;
+        void *ptr;
+        unsigned long bytecount;
 };
 
 #define PTRACE_LDT 54

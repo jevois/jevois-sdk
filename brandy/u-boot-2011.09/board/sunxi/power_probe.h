@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -26,15 +26,15 @@
 
 
 
-extern int usb_detect_enter (void);
+extern int usb_detect_enter(void);
 
-extern int usb_detect_exit (void);
+extern int usb_detect_exit(void);
 
-extern void usb_detect_for_charge (int detect_time);
+extern void usb_detect_for_charge(int detect_time);
 
-extern void power_limit_detect_enter (void);
+extern void power_limit_detect_enter(void);
 
-extern void power_limit_detect_exit (void);
+extern void power_limit_detect_exit(void);
 
 
 #endif  

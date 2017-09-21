@@ -21,19 +21,19 @@
 #include "yaffs_guts.h"
 
 struct yaffs_packed_tags1 {
-  unsigned chunk_id: 20;
-  unsigned serial_number: 2;
-  unsigned n_bytes: 10;
-  unsigned obj_id: 18;
-  unsigned ecc: 12;
-  unsigned deleted: 1;
-  unsigned unused_stuff: 1;
-  unsigned should_be_ff;
-  
+	unsigned chunk_id:20;
+	unsigned serial_number:2;
+	unsigned n_bytes:10;
+	unsigned obj_id:18;
+	unsigned ecc:12;
+	unsigned deleted:1;
+	unsigned unused_stuff:1;
+	unsigned should_be_ff;
+
 };
 
-void yaffs_pack_tags1 (struct yaffs_packed_tags1 * pt,
-                       const struct yaffs_ext_tags * t);
-void yaffs_unpack_tags1 (struct yaffs_ext_tags * t,
-                         const struct yaffs_packed_tags1 * pt);
+void yaffs_pack_tags1(struct yaffs_packed_tags1 *pt,
+		      const struct yaffs_ext_tags *t);
+void yaffs_unpack_tags1(struct yaffs_ext_tags *t,
+			const struct yaffs_packed_tags1 *pt);
 #endif

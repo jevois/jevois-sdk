@@ -30,48 +30,48 @@
 # define DMA_UNCACHED_REGION (0)
 #endif
 
-extern void bfin_setup_caches (unsigned int cpu);
-extern void bfin_setup_cpudata (unsigned int cpu);
+extern void bfin_setup_caches(unsigned int cpu);
+extern void bfin_setup_cpudata(unsigned int cpu);
 
-extern unsigned long get_cclk (void);
-extern unsigned long get_sclk (void);
-extern unsigned long sclk_to_usecs (unsigned long sclk);
-extern unsigned long usecs_to_sclk (unsigned long usecs);
+extern unsigned long get_cclk(void);
+extern unsigned long get_sclk(void);
+extern unsigned long sclk_to_usecs(unsigned long sclk);
+extern unsigned long usecs_to_sclk(unsigned long usecs);
 
 struct pt_regs;
 #if defined(CONFIG_DEBUG_VERBOSE)
-extern void dump_bfin_process (struct pt_regs * regs);
-extern void dump_bfin_mem (struct pt_regs * regs);
-extern void dump_bfin_trace_buffer (void);
+extern void dump_bfin_process(struct pt_regs *regs);
+extern void dump_bfin_mem(struct pt_regs *regs);
+extern void dump_bfin_trace_buffer(void);
 #else
 #define dump_bfin_process(regs)
 #define dump_bfin_mem(regs)
 #define dump_bfin_trace_buffer()
 #endif
 
-extern void * l1_data_A_sram_alloc (size_t);
-extern void * l1_data_B_sram_alloc (size_t);
-extern void * l1_inst_sram_alloc (size_t);
-extern void * l1_data_sram_alloc (size_t);
-extern void * l1_data_sram_zalloc (size_t);
-extern void * l2_sram_alloc (size_t);
-extern void * l2_sram_zalloc (size_t);
-extern int l1_data_A_sram_free (const void *);
-extern int l1_data_B_sram_free (const void *);
-extern int l1_inst_sram_free (const void *);
-extern int l1_data_sram_free (const void *);
-extern int l2_sram_free (const void *);
-extern int sram_free (const void *);
+extern void *l1_data_A_sram_alloc(size_t);
+extern void *l1_data_B_sram_alloc(size_t);
+extern void *l1_inst_sram_alloc(size_t);
+extern void *l1_data_sram_alloc(size_t);
+extern void *l1_data_sram_zalloc(size_t);
+extern void *l2_sram_alloc(size_t);
+extern void *l2_sram_zalloc(size_t);
+extern int l1_data_A_sram_free(const void*);
+extern int l1_data_B_sram_free(const void*);
+extern int l1_inst_sram_free(const void*);
+extern int l1_data_sram_free(const void*);
+extern int l2_sram_free(const void *);
+extern int sram_free(const void*);
 
-#define L1_INST_SRAM    0x00000001
-#define L1_DATA_A_SRAM    0x00000002
-#define L1_DATA_B_SRAM    0x00000004
-#define L1_DATA_SRAM    0x00000006
-#define L2_SRAM     0x00000008
-extern void * sram_alloc_with_lsl (size_t, unsigned long);
-extern int sram_free_with_lsl (const void *);
+#define L1_INST_SRAM		0x00000001
+#define L1_DATA_A_SRAM		0x00000002
+#define L1_DATA_B_SRAM		0x00000004
+#define L1_DATA_SRAM		0x00000006
+#define L2_SRAM			0x00000008
+extern void *sram_alloc_with_lsl(size_t, unsigned long);
+extern int sram_free_with_lsl(const void*);
 
-extern void * isram_memcpy (void * dest, const void * src, size_t n);
+extern void *isram_memcpy(void *dest, const void *src, size_t n);
 
 extern const char bfin_board_name[];
 
@@ -81,4 +81,4 @@ extern u16 _bfin_swrst; /* shadow for Software Reset Register (SWRST) */
 
 #endif
 
-#endif        /* _BLACKFIN_H_ */
+#endif				/* _BLACKFIN_H_ */

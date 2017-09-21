@@ -15,12 +15,12 @@
 
 /* target info */
 struct xt_DSCP_info {
-  __u8 dscp;
+	__u8 dscp;
 };
 
 struct xt_tos_target_info {
-  __u8 tos_value;
-  __u8 tos_mask;
+	__u8 tos_value;
+	__u8 tos_mask;
 };
 
 #endif /* _XT_DSCP_TARGET_H */

@@ -19,73 +19,73 @@
 #include <linux/types.h>
 
 struct pt_regs {
-  unsigned long u_regs[16]; /* globals and ins */
-  unsigned long tstate;
-  unsigned long tpc;
-  unsigned long tnpc;
-  unsigned int y;
-  
-  /* We encode a magic number, PT_REGS_MAGIC, along
-   * with the %tt (trap type) register value at trap
-   * entry time.  The magic number allows us to identify
-   * accurately a trap stack frame in the stack
-   * unwinder, and the %tt value allows us to test
-   * things like "in a system call" etc. for an arbitray
-   * process.
-   *
-   * The PT_REGS_MAGIC is chosen such that it can be
-   * loaded completely using just a sethi instruction.
-   */
-  unsigned int magic;
+	unsigned long u_regs[16]; /* globals and ins */
+	unsigned long tstate;
+	unsigned long tpc;
+	unsigned long tnpc;
+	unsigned int y;
+
+	/* We encode a magic number, PT_REGS_MAGIC, along
+	 * with the %tt (trap type) register value at trap
+	 * entry time.  The magic number allows us to identify
+	 * accurately a trap stack frame in the stack
+	 * unwinder, and the %tt value allows us to test
+	 * things like "in a system call" etc. for an arbitray
+	 * process.
+	 *
+	 * The PT_REGS_MAGIC is chosen such that it can be
+	 * loaded completely using just a sethi instruction.
+	 */
+	unsigned int magic;
 };
 
 struct pt_regs32 {
-  unsigned int psr;
-  unsigned int pc;
-  unsigned int npc;
-  unsigned int y;
-  unsigned int u_regs[16]; /* globals and ins */
+	unsigned int psr;
+	unsigned int pc;
+	unsigned int npc;
+	unsigned int y;
+	unsigned int u_regs[16]; /* globals and ins */
 };
 
 /* A V9 register window */
 struct reg_window {
-  unsigned long locals[8];
-  unsigned long ins[8];
+	unsigned long locals[8];
+	unsigned long ins[8];
 };
 
 /* A 32-bit register window. */
 struct reg_window32 {
-  unsigned int locals[8];
-  unsigned int ins[8];
+	unsigned int locals[8];
+	unsigned int ins[8];
 };
 
 /* A V9 Sparc stack frame */
 struct sparc_stackf {
-  unsigned long locals[8];
-  unsigned long ins[6];
-  struct sparc_stackf * fp;
-  unsigned long callers_pc;
-  char * structptr;
-  unsigned long xargs[6];
-  unsigned long xxargs[1];
+	unsigned long locals[8];
+        unsigned long ins[6];
+	struct sparc_stackf *fp;
+	unsigned long callers_pc;
+	char *structptr;
+	unsigned long xargs[6];
+	unsigned long xxargs[1];
 };
 
 /* A 32-bit Sparc stack frame */
 struct sparc_stackf32 {
-  unsigned int locals[8];
-  unsigned int ins[6];
-  unsigned int fp;
-  unsigned int callers_pc;
-  unsigned int structptr;
-  unsigned int xargs[6];
-  unsigned int xxargs[1];
+	unsigned int locals[8];
+        unsigned int ins[6];
+	unsigned int fp;
+	unsigned int callers_pc;
+	unsigned int structptr;
+	unsigned int xargs[6];
+	unsigned int xxargs[1];
 };
 
 struct sparc_trapf {
-  unsigned long locals[8];
-  unsigned long ins[8];
-  unsigned long _unused;
-  struct pt_regs * regs;
+	unsigned long locals[8];
+	unsigned long ins[8];
+	unsigned long _unused;
+	struct pt_regs *regs;
 };
 #endif /* (!__ASSEMBLY__) */
 #else
@@ -101,28 +101,28 @@ struct sparc_trapf {
 #include <linux/types.h>
 
 struct pt_regs {
-  unsigned long psr;
-  unsigned long pc;
-  unsigned long npc;
-  unsigned long y;
-  unsigned long u_regs[16]; /* globals and ins */
+	unsigned long psr;
+	unsigned long pc;
+	unsigned long npc;
+	unsigned long y;
+	unsigned long u_regs[16]; /* globals and ins */
 };
 
 /* A 32-bit register window. */
 struct reg_window32 {
-  unsigned long locals[8];
-  unsigned long ins[8];
+	unsigned long locals[8];
+	unsigned long ins[8];
 };
 
 /* A Sparc stack frame */
 struct sparc_stackf {
-  unsigned long locals[8];
-  unsigned long ins[6];
-  struct sparc_stackf * fp;
-  unsigned long callers_pc;
-  char * structptr;
-  unsigned long xargs[6];
-  unsigned long xxargs[1];
+	unsigned long locals[8];
+        unsigned long ins[6];
+	struct sparc_stackf *fp;
+	unsigned long callers_pc;
+	char *structptr;
+	unsigned long xargs[6];
+	unsigned long xxargs[1];
 };
 #endif /* (!__ASSEMBLY__) */
 
@@ -130,11 +130,11 @@ struct sparc_stackf {
 
 #ifndef __ASSEMBLY__
 
-#define TRACEREG_SZ sizeof(struct pt_regs)
-#define STACKFRAME_SZ sizeof(struct sparc_stackf)
+#define TRACEREG_SZ	sizeof(struct pt_regs)
+#define STACKFRAME_SZ	sizeof(struct sparc_stackf)
 
-#define TRACEREG32_SZ sizeof(struct pt_regs32)
-#define STACKFRAME32_SZ sizeof(struct sparc_stackf32)
+#define TRACEREG32_SZ	sizeof(struct pt_regs32)
+#define STACKFRAME32_SZ	sizeof(struct sparc_stackf32)
 
 #endif /* (!__ASSEMBLY__) */
 
@@ -167,59 +167,59 @@ struct sparc_stackf {
 #include <linux/threads.h>
 #include <asm/switch_to.h>
 
-static inline int pt_regs_trap_type (struct pt_regs * regs)
+static inline int pt_regs_trap_type(struct pt_regs *regs)
 {
-  return regs->magic & 0x1ff;
+	return regs->magic & 0x1ff;
 }
 
-static inline bool pt_regs_is_syscall (struct pt_regs * regs)
+static inline bool pt_regs_is_syscall(struct pt_regs *regs)
 {
-  return (regs->tstate & TSTATE_SYSCALL);
+	return (regs->tstate & TSTATE_SYSCALL);
 }
 
-static inline bool pt_regs_clear_syscall (struct pt_regs * regs)
+static inline bool pt_regs_clear_syscall(struct pt_regs *regs)
 {
-  return (regs->tstate &= ~TSTATE_SYSCALL);
+	return (regs->tstate &= ~TSTATE_SYSCALL);
 }
 
 #define arch_ptrace_stop_needed(exit_code, info) \
-  ({  flush_user_windows(); \
-    get_thread_wsaved() != 0; \
-  })
+({	flush_user_windows(); \
+	get_thread_wsaved() != 0; \
+})
 
 #define arch_ptrace_stop(exit_code, info) \
-  synchronize_user_stack()
+	synchronize_user_stack()
 
 struct global_reg_snapshot {
-  unsigned long   tstate;
-  unsigned long   tpc;
-  unsigned long   tnpc;
-  unsigned long   o7;
-  unsigned long   i7;
-  unsigned long   rpc;
-  struct thread_info * thread;
-  unsigned long   pad1;
+	unsigned long		tstate;
+	unsigned long		tpc;
+	unsigned long		tnpc;
+	unsigned long		o7;
+	unsigned long		i7;
+	unsigned long		rpc;
+	struct thread_info	*thread;
+	unsigned long		pad1;
 };
 extern struct global_reg_snapshot global_reg_snapshot[NR_CPUS];
 
-#define force_successful_syscall_return()     \
-  do {  current_thread_info()->syscall_noerror = 1; \
-  } while (0)
+#define force_successful_syscall_return()	    \
+do {	current_thread_info()->syscall_noerror = 1; \
+} while (0)
 #define user_mode(regs) (!((regs)->tstate & TSTATE_PRIV))
 #define instruction_pointer(regs) ((regs)->tpc)
 #define instruction_pointer_set(regs, val) ((regs)->tpc = (val))
 #define user_stack_pointer(regs) ((regs)->u_regs[UREG_FP])
-static inline int is_syscall_success (struct pt_regs * regs)
+static inline int is_syscall_success(struct pt_regs *regs)
 {
-  return ! (regs->tstate & (TSTATE_XCARRY | TSTATE_ICARRY) );
+	return !(regs->tstate & (TSTATE_XCARRY | TSTATE_ICARRY));
 }
 
-static inline long regs_return_value (struct pt_regs * regs)
+static inline long regs_return_value(struct pt_regs *regs)
 {
-  return regs->u_regs[UREG_I0];
+	return regs->u_regs[UREG_I0];
 }
 #ifdef CONFIG_SMP
-extern unsigned long profile_pc (struct pt_regs *);
+extern unsigned long profile_pc(struct pt_regs *);
 #else
 #define profile_pc(regs) instruction_pointer(regs)
 #endif
@@ -227,11 +227,11 @@ extern unsigned long profile_pc (struct pt_regs *);
 
 #else /* __ASSEMBLY__ */
 /* For assembly code. */
-#define TRACEREG_SZ   0xa0
-#define STACKFRAME_SZ   0xc0
+#define TRACEREG_SZ		0xa0
+#define STACKFRAME_SZ		0xc0
 
-#define TRACEREG32_SZ   0x50
-#define STACKFRAME32_SZ   0x60
+#define TRACEREG32_SZ		0x50
+#define STACKFRAME32_SZ		0x60
 #endif /* __ASSEMBLY__ */
 
 #else /* (defined(__sparc__) && defined(__arch64__)) */
@@ -243,28 +243,28 @@ extern unsigned long profile_pc (struct pt_regs *);
 #ifdef __KERNEL__
 #include <asm/switch_to.h>
 
-static inline bool pt_regs_is_syscall (struct pt_regs * regs)
+static inline bool pt_regs_is_syscall(struct pt_regs *regs)
 {
-  return (regs->psr & PSR_SYSCALL);
+	return (regs->psr & PSR_SYSCALL);
 }
 
-static inline bool pt_regs_clear_syscall (struct pt_regs * regs)
+static inline bool pt_regs_clear_syscall(struct pt_regs *regs)
 {
-  return (regs->psr &= ~PSR_SYSCALL);
+	return (regs->psr &= ~PSR_SYSCALL);
 }
 
 #define arch_ptrace_stop_needed(exit_code, info) \
-  ({  flush_user_windows(); \
-    current_thread_info()->w_saved != 0;  \
-  })
+({	flush_user_windows(); \
+	current_thread_info()->w_saved != 0;	\
+})
 
 #define arch_ptrace_stop(exit_code, info) \
-  synchronize_user_stack()
+	synchronize_user_stack()
 
 #define user_mode(regs) (!((regs)->psr & PSR_PS))
 #define instruction_pointer(regs) ((regs)->pc)
 #define user_stack_pointer(regs) ((regs)->u_regs[UREG_FP])
-unsigned long profile_pc (struct pt_regs *);
+unsigned long profile_pc(struct pt_regs *);
 #endif /* (__KERNEL__) */
 
 #else /* (!__ASSEMBLY__) */
@@ -276,7 +276,7 @@ unsigned long profile_pc (struct pt_regs *);
 #endif /* (defined(__sparc__) && defined(__arch64__)) */
 
 #ifdef __KERNEL__
-#define STACK_BIAS    2047
+#define STACK_BIAS		2047
 #endif
 
 /* These are for pt_regs. */
@@ -302,9 +302,9 @@ unsigned long profile_pc (struct pt_regs *);
 #define PT_V9_TNPC   0x90
 #define PT_V9_Y      0x98
 #define PT_V9_MAGIC  0x9c
-#define PT_TSTATE PT_V9_TSTATE
-#define PT_TPC    PT_V9_TPC
-#define PT_TNPC   PT_V9_TNPC
+#define PT_TSTATE	PT_V9_TSTATE
+#define PT_TPC		PT_V9_TPC
+#define PT_TNPC		PT_V9_TNPC
 
 /* These for pt_regs32. */
 #define PT_PSR    0x0
@@ -419,14 +419,14 @@ unsigned long profile_pc (struct pt_regs *);
 #ifdef __KERNEL__
 
 /* global_reg_snapshot offsets */
-#define GR_SNAP_TSTATE  0x00
-#define GR_SNAP_TPC 0x08
-#define GR_SNAP_TNPC  0x10
-#define GR_SNAP_O7  0x18
-#define GR_SNAP_I7  0x20
-#define GR_SNAP_RPC 0x28
-#define GR_SNAP_THREAD  0x30
-#define GR_SNAP_PAD1  0x38
+#define GR_SNAP_TSTATE	0x00
+#define GR_SNAP_TPC	0x08
+#define GR_SNAP_TNPC	0x10
+#define GR_SNAP_O7	0x18
+#define GR_SNAP_I7	0x20
+#define GR_SNAP_RPC	0x28
+#define GR_SNAP_THREAD	0x30
+#define GR_SNAP_PAD1	0x38
 
 #endif  /*  __KERNEL__  */
 
@@ -447,10 +447,10 @@ unsigned long profile_pc (struct pt_regs *);
  * parent.  Thus their complements are for debugging 32-bit processes only.
  */
 
-#define PTRACE_GETREGS64    22
-#define PTRACE_SETREGS64    23
+#define PTRACE_GETREGS64	  22
+#define PTRACE_SETREGS64	  23
 /* PTRACE_SYSCALL is 24 */
-#define PTRACE_GETFPREGS64    25
-#define PTRACE_SETFPREGS64    26
+#define PTRACE_GETFPREGS64	  25
+#define PTRACE_SETFPREGS64	  26
 
 #endif /* !(__SPARC_PTRACE_H) */

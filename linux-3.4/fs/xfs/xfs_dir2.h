@@ -24,37 +24,37 @@ struct xfs_inode;
 struct xfs_mount;
 struct xfs_trans;
 
-extern struct xfs_name  xfs_name_dotdot;
+extern struct xfs_name	xfs_name_dotdot;
 
 /*
  * Generic directory interface routines
  */
-extern void xfs_dir_startup (void);
-extern void xfs_dir_mount (struct xfs_mount * mp);
-extern int xfs_dir_isempty (struct xfs_inode * dp);
-extern int xfs_dir_init (struct xfs_trans * tp, struct xfs_inode * dp,
-                         struct xfs_inode * pdp);
-extern int xfs_dir_createname (struct xfs_trans * tp, struct xfs_inode * dp,
-                               struct xfs_name * name, xfs_ino_t inum,
-                               xfs_fsblock_t * first,
-                               struct xfs_bmap_free * flist, xfs_extlen_t tot);
-extern int xfs_dir_lookup (struct xfs_trans * tp, struct xfs_inode * dp,
-                           struct xfs_name * name, xfs_ino_t * inum,
-                           struct xfs_name * ci_name);
-extern int xfs_dir_removename (struct xfs_trans * tp, struct xfs_inode * dp,
-                               struct xfs_name * name, xfs_ino_t ino,
-                               xfs_fsblock_t * first,
-                               struct xfs_bmap_free * flist, xfs_extlen_t tot);
-extern int xfs_dir_replace (struct xfs_trans * tp, struct xfs_inode * dp,
-                            struct xfs_name * name, xfs_ino_t inum,
-                            xfs_fsblock_t * first,
-                            struct xfs_bmap_free * flist, xfs_extlen_t tot);
-extern int xfs_dir_canenter (struct xfs_trans * tp, struct xfs_inode * dp,
-                             struct xfs_name * name, uint resblks);
+extern void xfs_dir_startup(void);
+extern void xfs_dir_mount(struct xfs_mount *mp);
+extern int xfs_dir_isempty(struct xfs_inode *dp);
+extern int xfs_dir_init(struct xfs_trans *tp, struct xfs_inode *dp,
+				struct xfs_inode *pdp);
+extern int xfs_dir_createname(struct xfs_trans *tp, struct xfs_inode *dp,
+				struct xfs_name *name, xfs_ino_t inum,
+				xfs_fsblock_t *first,
+				struct xfs_bmap_free *flist, xfs_extlen_t tot);
+extern int xfs_dir_lookup(struct xfs_trans *tp, struct xfs_inode *dp,
+				struct xfs_name *name, xfs_ino_t *inum,
+				struct xfs_name *ci_name);
+extern int xfs_dir_removename(struct xfs_trans *tp, struct xfs_inode *dp,
+				struct xfs_name *name, xfs_ino_t ino,
+				xfs_fsblock_t *first,
+				struct xfs_bmap_free *flist, xfs_extlen_t tot);
+extern int xfs_dir_replace(struct xfs_trans *tp, struct xfs_inode *dp,
+				struct xfs_name *name, xfs_ino_t inum,
+				xfs_fsblock_t *first,
+				struct xfs_bmap_free *flist, xfs_extlen_t tot);
+extern int xfs_dir_canenter(struct xfs_trans *tp, struct xfs_inode *dp,
+				struct xfs_name *name, uint resblks);
 
 /*
  * Direct call from the bmap code, bypassing the generic directory layer.
  */
-extern int xfs_dir2_sf_to_block (struct xfs_da_args * args);
+extern int xfs_dir2_sf_to_block(struct xfs_da_args *args);
 
-#endif  /* __XFS_DIR2_H__ */
+#endif	/* __XFS_DIR2_H__ */

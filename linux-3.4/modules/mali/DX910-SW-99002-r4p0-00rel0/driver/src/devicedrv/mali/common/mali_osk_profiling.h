@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2010-2013 ARM Limited. All rights reserved.
- *
+ * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- *
+ * 
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -28,12 +28,12 @@
  * Initialize the profiling module.
  * @return _MALI_OSK_ERR_OK on success, otherwise failure.
  */
-_mali_osk_errcode_t _mali_osk_profiling_init (mali_bool auto_start);
+_mali_osk_errcode_t _mali_osk_profiling_init(mali_bool auto_start);
 
 /*
  * Terminate the profiling module.
  */
-void _mali_osk_profiling_term (void);
+void _mali_osk_profiling_term(void);
 
 /**
  * Start recording profiling data
@@ -44,7 +44,7 @@ void _mali_osk_profiling_term (void);
  * @param limit The desired maximum number of events to record on input, the actual maximum on output.
  * @return _MALI_OSK_ERR_OK on success, otherwise failure.
  */
-_mali_osk_errcode_t _mali_osk_profiling_start (u32 * limit);
+_mali_osk_errcode_t _mali_osk_profiling_start(u32 * limit);
 
 /**
  * Add an profiling event
@@ -75,7 +75,7 @@ _mali_osk_errcode_t _mali_osk_profiling_start (u32 * limit);
  *
  * @param counters array of counter values
  */
-void _mali_osk_profiling_report_sw_counters (u32 * counters);
+void _mali_osk_profiling_report_sw_counters(u32 *counters);
 
 /**
  * Stop recording profiling data
@@ -83,14 +83,14 @@ void _mali_osk_profiling_report_sw_counters (u32 * counters);
  * @param count Returns the number of recorded events.
  * @return _MALI_OSK_ERR_OK on success, otherwise failure.
  */
-_mali_osk_errcode_t _mali_osk_profiling_stop (u32 * count);
+_mali_osk_errcode_t _mali_osk_profiling_stop(u32 * count);
 
 /**
  * Retrieves the number of events that can be retrieved
  *
  * @return The number of recorded events that can be retrieved.
  */
-u32 _mali_osk_profiling_get_count (void);
+u32 _mali_osk_profiling_get_count(void);
 
 /**
  * Retrieve an event
@@ -101,7 +101,7 @@ u32 _mali_osk_profiling_get_count (void);
  * @param data The 5 data values for the retrieved event will be stored here.
  * @return _MALI_OSK_ERR_OK on success, otherwise failure.
  */
-_mali_osk_errcode_t _mali_osk_profiling_get_event (u32 index, u64 * timestamp, u32 * event_id, u32 data[5]);
+_mali_osk_errcode_t _mali_osk_profiling_get_event(u32 index, u64* timestamp, u32* event_id, u32 data[5]);
 
 /**
  * Clear the recorded buffer.
@@ -110,21 +110,21 @@ _mali_osk_errcode_t _mali_osk_profiling_get_event (u32 index, u64 * timestamp, u
  *
  * @return _MALI_OSK_ERR_OK on success, otherwise failure.
  */
-_mali_osk_errcode_t _mali_osk_profiling_clear (void);
+_mali_osk_errcode_t _mali_osk_profiling_clear(void);
 
 /**
  * Checks if a recording of profiling data is in progress
  *
  * @return MALI_TRUE if recording of profiling data is in progress, MALI_FALSE if not
  */
-mali_bool _mali_osk_profiling_is_recording (void);
+mali_bool _mali_osk_profiling_is_recording(void);
 
 /**
  * Checks if profiling data is available for retrival
  *
  * @return MALI_TRUE if profiling data is avaiable, MALI_FALSE if not
  */
-mali_bool _mali_osk_profiling_have_recording (void);
+mali_bool _mali_osk_profiling_have_recording(void);
 
 /** @} */ /* end group _mali_osk_profiling */
 

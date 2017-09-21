@@ -83,9 +83,9 @@
 #define MSM_UART3_PHYS        0xA9C00000
 #define MSM_UART3_SIZE        SZ_4K
 
-#define MSM_MDC_BASE        IOMEM(0xE0200000)
-#define MSM_MDC_PHYS        0xAA500000
-#define MSM_MDC_SIZE        SZ_1M
+#define MSM_MDC_BASE	      IOMEM(0xE0200000)
+#define MSM_MDC_PHYS	      0xAA500000
+#define MSM_MDC_SIZE	      SZ_1M
 
 #define MSM_AD5_BASE          IOMEM(0xE0300000)
 #define MSM_AD5_PHYS          0xAC000000
@@ -123,7 +123,7 @@
 #define MSM_SDC4_SIZE          SZ_4K
 
 #ifndef __ASSEMBLY__
-extern void msm_map_qsd8x50_io (void);
+extern void msm_map_qsd8x50_io(void);
 #endif
 
 #endif

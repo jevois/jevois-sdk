@@ -33,41 +33,41 @@
  * sets of descriptors need to be marshaled.
  */
 int
-usb_descriptor_fillbuf (void * buf, unsigned buflen,
-                        const struct usb_descriptor_header ** src)
+usb_descriptor_fillbuf(void *buf, unsigned buflen,
+		const struct usb_descriptor_header **src)
 {
-  u8 * dest = buf;
-  
-  if (!src)
-  { return -EINVAL; }
-  
-  /* fill buffer from src[] until null descriptor ptr */
-  for (; NULL != *src; src++) {
-    unsigned    len = (*src)->bLength;
-    
-    if (len > buflen)
-    {
-      printk ("Warning: usb_descriptor_fillbuf() failed because buffer is too small, "
-              "increase USB_BUFSIZ in composite.c\n");
-      return -EINVAL;
-    }
-    memcpy (dest, *src, len);
-    buflen -= len;
-    dest += len;
-  }
-  return dest - (u8 *) buf;
+	u8	*dest = buf;
+
+	if (!src)
+		return -EINVAL;
+
+	/* fill buffer from src[] until null descriptor ptr */
+	for (; NULL != *src; src++) {
+		unsigned		len = (*src)->bLength;
+
+		if (len > buflen)
+        {
+          printk("Warning: usb_descriptor_fillbuf() failed because buffer is too small, "
+                 "increase USB_BUFSIZ in composite.c\n");
+          return -EINVAL;
+        }
+		memcpy(dest, *src, len);
+		buflen -= len;
+		dest += len;
+	}
+	return dest - (u8 *)buf;
 }
 
 
 /**
  * usb_gadget_config_buf - builts a complete configuration descriptor
  * @config: Header for the descriptor, including characteristics such
- *  as power requirements and number of interfaces.
+ *	as power requirements and number of interfaces.
  * @desc: Null-terminated vector of pointers to the descriptors (interface,
- *  endpoint, etc) defining all functions in this device configuration.
+ *	endpoint, etc) defining all functions in this device configuration.
  * @buf: Buffer for the resulting configuration descriptor.
  * @length: Length of buffer.  If this is not big enough to hold the
- *  entire configuration descriptor, an error code will be returned.
+ *	entire configuration descriptor, an error code will be returned.
  *
  * This copies descriptors into the response buffer, building a descriptor
  * for that configuration.  It returns the buffer length or a negative
@@ -79,36 +79,36 @@ usb_descriptor_fillbuf (void * buf, unsigned buflen,
  * in response to USB_REQ_GET_DESCRIPTOR.  They will need to patch the
  * resulting bDescriptorType value if USB_DT_OTHER_SPEED_CONFIG is needed.
  */
-int usb_gadget_config_buf (
-  const struct usb_config_descriptor * config,
-  void     *     buf,
-  unsigned        length,
-  const struct usb_descriptor_header ** desc
+int usb_gadget_config_buf(
+	const struct usb_config_descriptor	*config,
+	void					*buf,
+	unsigned				length,
+	const struct usb_descriptor_header	**desc
 )
 {
-  struct usb_config_descriptor  *  cp = buf;
-  int         len;
-  
-  /* config descriptor first */
-  if (length < USB_DT_CONFIG_SIZE || !desc)
-  { return -EINVAL; }
-  *cp = *config;
-  
-  /* then interface/endpoint/class/vendor/... */
-  len = usb_descriptor_fillbuf (USB_DT_CONFIG_SIZE + (u8 *) buf,
-                                length - USB_DT_CONFIG_SIZE, desc);
-  if (len < 0)
-  { return len; }
-  len += USB_DT_CONFIG_SIZE;
-  if (len > 0xffff)
-  { return -EINVAL; }
-  
-  /* patch up the config descriptor */
-  cp->bLength = USB_DT_CONFIG_SIZE;
-  cp->bDescriptorType = USB_DT_CONFIG;
-  cp->wTotalLength = cpu_to_le16 (len);
-  cp->bmAttributes |= USB_CONFIG_ATT_ONE;
-  return len;
+	struct usb_config_descriptor		*cp = buf;
+	int					len;
+
+	/* config descriptor first */
+	if (length < USB_DT_CONFIG_SIZE || !desc)
+		return -EINVAL;
+	*cp = *config;
+
+	/* then interface/endpoint/class/vendor/... */
+	len = usb_descriptor_fillbuf(USB_DT_CONFIG_SIZE + (u8*)buf,
+			length - USB_DT_CONFIG_SIZE, desc);
+	if (len < 0)
+		return len;
+	len += USB_DT_CONFIG_SIZE;
+	if (len > 0xffff)
+		return -EINVAL;
+
+	/* patch up the config descriptor */
+	cp->bLength = USB_DT_CONFIG_SIZE;
+	cp->bDescriptorType = USB_DT_CONFIG;
+	cp->wTotalLength = cpu_to_le16(len);
+	cp->bmAttributes |= USB_CONFIG_ATT_ONE;
+	return len;
 }
 
 /**
@@ -124,39 +124,39 @@ int usb_gadget_config_buf (
  * as needed by a given function instance.
  */
 struct usb_descriptor_header **
-usb_copy_descriptors (struct usb_descriptor_header ** src)
+usb_copy_descriptors(struct usb_descriptor_header **src)
 {
-  struct usb_descriptor_header ** tmp;
-  unsigned bytes;
-  unsigned n_desc;
-  void * mem;
-  struct usb_descriptor_header ** ret;
-  
-  /* count descriptors and their sizes; then add vector size */
-  for (bytes = 0, n_desc = 0, tmp = src; *tmp; tmp++, n_desc++)
-  { bytes += (*tmp)->bLength; }
-  bytes += (n_desc + 1) * sizeof (*tmp);
-  
-  mem = kmalloc (bytes, GFP_KERNEL);
-  if (!mem)
-  { return NULL; }
-  
-  /* fill in pointers starting at "tmp",
-   * to descriptors copied starting at "mem";
-   * and return "ret"
-   */
-  tmp = mem;
-  ret = mem;
-  mem += (n_desc + 1) * sizeof (*tmp);
-  while (*src) {
-    memcpy (mem, *src, (*src)->bLength);
-    *tmp = mem;
-    tmp++;
-    mem += (*src)->bLength;
-    src++;
-  }
-  *tmp = NULL;
-  
-  return ret;
+	struct usb_descriptor_header **tmp;
+	unsigned bytes;
+	unsigned n_desc;
+	void *mem;
+	struct usb_descriptor_header **ret;
+
+	/* count descriptors and their sizes; then add vector size */
+	for (bytes = 0, n_desc = 0, tmp = src; *tmp; tmp++, n_desc++)
+		bytes += (*tmp)->bLength;
+	bytes += (n_desc + 1) * sizeof(*tmp);
+
+	mem = kmalloc(bytes, GFP_KERNEL);
+	if (!mem)
+		return NULL;
+
+	/* fill in pointers starting at "tmp",
+	 * to descriptors copied starting at "mem";
+	 * and return "ret"
+	 */
+	tmp = mem;
+	ret = mem;
+	mem += (n_desc + 1) * sizeof(*tmp);
+	while (*src) {
+		memcpy(mem, *src, (*src)->bLength);
+		*tmp = mem;
+		tmp++;
+		mem += (*src)->bLength;
+		src++;
+	}
+	*tmp = NULL;
+
+	return ret;
 }
 

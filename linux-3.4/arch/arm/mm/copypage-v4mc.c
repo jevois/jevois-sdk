@@ -24,9 +24,9 @@
 #include "mm.h"
 
 #define minicache_pgprot __pgprot(L_PTE_PRESENT | L_PTE_YOUNG | \
-                                  L_PTE_MT_MINICACHE)
+				  L_PTE_MT_MINICACHE)
 
-static DEFINE_RAW_SPINLOCK (minicache_lock);
+static DEFINE_RAW_SPINLOCK(minicache_lock);
 
 /*
  * ARMv4 mini-dcache optimised copy_user_highpage
@@ -41,10 +41,10 @@ static DEFINE_RAW_SPINLOCK (minicache_lock);
  * own copy_user_highpage that does the right thing.
  */
 static void __naked
-mc_copy_user_page (void * from, void * to)
+mc_copy_user_page(void *from, void *to)
 {
-  asm volatile (
-    "stmfd	sp!, {r4, lr}			@ 2\n\
+	asm volatile(
+	"stmfd	sp!, {r4, lr}			@ 2\n\
 	mov	r4, %2				@ 1\n\
 	ldmia	%0!, {r2, r3, ip, lr}		@ 4\n\
 1:	mcr	p15, 0, %1, c7, c6, 1		@ 1   invalidate D line\n\
@@ -60,36 +60,36 @@ mc_copy_user_page (void * from, void * to)
 	ldmneia	%0!, {r2, r3, ip, lr}		@ 4\n\
 	bne	1b				@ 1\n\
 	ldmfd	sp!, {r4, pc}			@ 3"
-    :
-    : "r" (from), "r" (to), "I" (PAGE_SIZE / 64) );
+	:
+	: "r" (from), "r" (to), "I" (PAGE_SIZE / 64));
 }
 
-void v4_mc_copy_user_highpage (struct page * to, struct page * from,
-                               unsigned long vaddr, struct vm_area_struct * vma)
+void v4_mc_copy_user_highpage(struct page *to, struct page *from,
+	unsigned long vaddr, struct vm_area_struct *vma)
 {
-  void * kto = kmap_atomic (to);
-  
-  if (!test_and_set_bit (PG_dcache_clean, &from->flags) )
-  { __flush_dcache_page (page_mapping (from), from); }
-  
-  raw_spin_lock (&minicache_lock);
-  
-  set_top_pte (COPYPAGE_MINICACHE, mk_pte (from, minicache_pgprot) );
-  
-  mc_copy_user_page ( (void *) COPYPAGE_MINICACHE, kto);
-  
-  raw_spin_unlock (&minicache_lock);
-  
-  kunmap_atomic (kto);
+	void *kto = kmap_atomic(to);
+
+	if (!test_and_set_bit(PG_dcache_clean, &from->flags))
+		__flush_dcache_page(page_mapping(from), from);
+
+	raw_spin_lock(&minicache_lock);
+
+	set_top_pte(COPYPAGE_MINICACHE, mk_pte(from, minicache_pgprot));
+
+	mc_copy_user_page((void *)COPYPAGE_MINICACHE, kto);
+
+	raw_spin_unlock(&minicache_lock);
+
+	kunmap_atomic(kto);
 }
 
 /*
  * ARMv4 optimised clear_user_page
  */
-void v4_mc_clear_user_highpage (struct page * page, unsigned long vaddr)
+void v4_mc_clear_user_highpage(struct page *page, unsigned long vaddr)
 {
-  void * ptr, *kaddr = kmap_atomic (page);
-  asm volatile ("\
+	void *ptr, *kaddr = kmap_atomic(page);
+	asm volatile("\
 	mov	r1, %2				@ 1\n\
 	mov	r2, #0				@ 1\n\
 	mov	r3, #0				@ 1\n\
@@ -103,13 +103,13 @@ void v4_mc_clear_user_highpage (struct page * page, unsigned long vaddr)
 	stmia	%0!, {r2, r3, ip, lr}		@ 4\n\
 	subs	r1, r1, #1			@ 1\n\
 	bne	1b				@ 1"
-                : "=r" (ptr)
-                : "0" (kaddr), "I" (PAGE_SIZE / 64)
-                : "r1", "r2", "r3", "ip", "lr");
-  kunmap_atomic (kaddr);
+	: "=r" (ptr)
+	: "0" (kaddr), "I" (PAGE_SIZE / 64)
+	: "r1", "r2", "r3", "ip", "lr");
+	kunmap_atomic(kaddr);
 }
 
 struct cpu_user_fns v4_mc_user_fns __initdata = {
-  .cpu_clear_user_highpage = v4_mc_clear_user_highpage,
-  .cpu_copy_user_highpage = v4_mc_copy_user_highpage,
+	.cpu_clear_user_highpage = v4_mc_clear_user_highpage,
+	.cpu_copy_user_highpage	= v4_mc_copy_user_highpage,
 };

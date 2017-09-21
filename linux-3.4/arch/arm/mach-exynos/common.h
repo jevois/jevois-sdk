@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2011 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com
+ *		http://www.samsung.com
  *
  * Common Header for EXYNOS machines
  *
@@ -14,15 +14,15 @@
 
 extern struct sys_timer exynos4_timer;
 
-void exynos_init_io (struct map_desc * mach_desc, int size);
-void exynos4_init_irq (void);
-void exynos5_init_irq (void);
-void exynos4_restart (char mode, const char * cmd);
-void exynos5_restart (char mode, const char * cmd);
+void exynos_init_io(struct map_desc *mach_desc, int size);
+void exynos4_init_irq(void);
+void exynos5_init_irq(void);
+void exynos4_restart(char mode, const char *cmd);
+void exynos5_restart(char mode, const char *cmd);
 
 #ifdef CONFIG_ARCH_EXYNOS4
-void exynos4_register_clocks (void);
-void exynos4_setup_clocks (void);
+void exynos4_register_clocks(void);
+void exynos4_setup_clocks(void);
 
 #else
 #define exynos4_register_clocks()
@@ -30,8 +30,8 @@ void exynos4_setup_clocks (void);
 #endif
 
 #ifdef CONFIG_ARCH_EXYNOS5
-void exynos5_register_clocks (void);
-void exynos5_setup_clocks (void);
+void exynos5_register_clocks(void);
+void exynos5_setup_clocks(void);
 
 #else
 #define exynos5_register_clocks()
@@ -39,14 +39,14 @@ void exynos5_setup_clocks (void);
 #endif
 
 #ifdef CONFIG_CPU_EXYNOS4210
-void exynos4210_register_clocks (void);
+void exynos4210_register_clocks(void);
 
 #else
 #define exynos4210_register_clocks()
 #endif
 
 #ifdef CONFIG_SOC_EXYNOS4212
-void exynos4212_register_clocks (void);
+void exynos4212_register_clocks(void);
 
 #else
 #define exynos4212_register_clocks()

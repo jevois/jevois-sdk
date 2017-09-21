@@ -8,4 +8,4 @@
  * warranty of any kind, whether express or implied.
  */
 
-extern void __init tauros2_init (void);
+extern void __init tauros2_init(void);

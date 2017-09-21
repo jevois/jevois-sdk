@@ -26,8 +26,8 @@
 
 
 /* xusb hcd debug print */
-#if 0
-#define DMSG_DBG_HCD          DMSG_PRINT
+#if	0
+#define DMSG_DBG_HCD     			DMSG_PRINT
 #else
 #define DMSG_DBG_HCD(...)
 #endif

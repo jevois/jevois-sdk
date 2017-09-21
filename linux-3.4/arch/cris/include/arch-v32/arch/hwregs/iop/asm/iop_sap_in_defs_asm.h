@@ -47,10 +47,10 @@
 
 #ifndef REG_ADDR_VECT
 #define REG_ADDR_VECT( scope, inst, reg, index ) \
-  REG_ADDR_VECT_X_(inst, reg_##scope##_##reg##_offset, index, \
-                   STRIDE_##scope##_##reg )
+         REG_ADDR_VECT_X_(inst, reg_##scope##_##reg##_offset, index, \
+			 STRIDE_##scope##_##reg )
 #define REG_ADDR_VECT_X_( inst, offs, index, stride ) \
-  ((inst) + offs + (index) * stride)
+                          ((inst) + offs + (index) * stride)
 #endif
 
 /* Register rw_bus0_sync, scope iop_sap_in, type rw */

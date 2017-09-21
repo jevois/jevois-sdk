@@ -34,36 +34,36 @@
 #include <prom.h>
 
 #if defined(CONFIG_MIPS_DB1000) || \
-defined(CONFIG_MIPS_PB1100) || \
-defined(CONFIG_MIPS_PB1500)
-#define ALCHEMY_BOARD_DEFAULT_MEMSIZE 0x04000000
+    defined(CONFIG_MIPS_PB1100) || \
+    defined(CONFIG_MIPS_PB1500)
+#define ALCHEMY_BOARD_DEFAULT_MEMSIZE	0x04000000
 
-#else /* Au1550/Au1200-based develboards */
-#define ALCHEMY_BOARD_DEFAULT_MEMSIZE 0x08000000
+#else	/* Au1550/Au1200-based develboards */
+#define ALCHEMY_BOARD_DEFAULT_MEMSIZE	0x08000000
 #endif
 
-void __init prom_init (void)
+void __init prom_init(void)
 {
-  unsigned char * memsize_str;
-  unsigned long memsize;
-  
-  prom_argc = (int) fw_arg0;
-  prom_argv = (char **) fw_arg1;
-  prom_envp = (char **) fw_arg2;
-  
-  prom_init_cmdline();
-  memsize_str = prom_getenv ("memsize");
-  if (!memsize_str || strict_strtoul (memsize_str, 0, &memsize) )
-  { memsize = ALCHEMY_BOARD_DEFAULT_MEMSIZE; }
-  
-  add_memory_region (0, memsize, BOOT_MEM_RAM);
+	unsigned char *memsize_str;
+	unsigned long memsize;
+
+	prom_argc = (int)fw_arg0;
+	prom_argv = (char **)fw_arg1;
+	prom_envp = (char **)fw_arg2;
+
+	prom_init_cmdline();
+	memsize_str = prom_getenv("memsize");
+	if (!memsize_str || strict_strtoul(memsize_str, 0, &memsize))
+		memsize = ALCHEMY_BOARD_DEFAULT_MEMSIZE;
+
+	add_memory_region(0, memsize, BOOT_MEM_RAM);
 }
 
-void prom_putchar (unsigned char c)
+void prom_putchar(unsigned char c)
 {
-  #ifdef CONFIG_MIPS_DB1300
-  alchemy_uart_putchar (AU1300_UART2_PHYS_ADDR, c);
-  #else
-  alchemy_uart_putchar (AU1000_UART0_PHYS_ADDR, c);
-  #endif
+#ifdef CONFIG_MIPS_DB1300
+	alchemy_uart_putchar(AU1300_UART2_PHYS_ADDR, c);
+#else
+	alchemy_uart_putchar(AU1000_UART0_PHYS_ADDR, c);
+#endif
 }

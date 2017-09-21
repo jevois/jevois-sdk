@@ -53,9 +53,9 @@
 #define VERIFY_WRITE    1
 
 #define __access_ok(addr, size) \
-  ((get_fs().seg == KERNEL_DS.seg) || \
-   (((unsigned long)addr < get_fs().seg) && \
-    (unsigned long)size < (get_fs().seg - (unsigned long)addr)))
+	((get_fs().seg == KERNEL_DS.seg) || \
+	(((unsigned long)addr < get_fs().seg) && \
+	  (unsigned long)size < (get_fs().seg - (unsigned long)addr)))
 
 /*
  * When a kernel-mode page fault is taken, the faulting instruction
@@ -67,10 +67,10 @@
  */
 
 /*  Assembly somewhat optimized copy routines  */
-unsigned long __copy_from_user_hexagon (void * to, const void __user * from,
-                                        unsigned long n);
-unsigned long __copy_to_user_hexagon (void __user * to, const void * from,
-                                      unsigned long n);
+unsigned long __copy_from_user_hexagon(void *to, const void __user *from,
+				     unsigned long n);
+unsigned long __copy_to_user_hexagon(void __user *to, const void *from,
+				   unsigned long n);
 
 #define __copy_from_user(to, from, n) __copy_from_user_hexagon(to, from, n)
 #define __copy_to_user(to, from, n) __copy_to_user_hexagon(to, from, n)
@@ -81,7 +81,7 @@ unsigned long __copy_to_user_hexagon (void __user * to, const void * from,
  * like __copy_to/from_user, but performs slightly less checking.
  */
 
-__kernel_size_t __clear_user_hexagon (void __user * dest, unsigned long count);
+__kernel_size_t __clear_user_hexagon(void __user *dest, unsigned long count);
 #define __clear_user(a, s) __clear_user_hexagon((a), (s))
 
 #define __strncpy_from_user(dst, src, n) hexagon_strncpy_from_user(dst, src, n)
@@ -89,29 +89,28 @@ __kernel_size_t __clear_user_hexagon (void __user * dest, unsigned long count);
 /*  get around the ifndef in asm-generic/uaccess.h  */
 #define __strnlen_user __strnlen_user
 
-extern long __strnlen_user (const char __user * src, long n);
+extern long __strnlen_user(const char __user *src, long n);
 
-static inline long hexagon_strncpy_from_user (char * dst, const char __user * src,
-    long n);
+static inline long hexagon_strncpy_from_user(char *dst, const char __user *src,
+					     long n);
 
 #include <asm-generic/uaccess.h>
 
 /*  Todo:  an actual accelerated version of this.  */
-static inline long hexagon_strncpy_from_user (char * dst, const char __user * src,
-    long n)
+static inline long hexagon_strncpy_from_user(char *dst, const char __user *src,
+					     long n)
 {
-  long res = __strnlen_user (src, n);
-  
-  /* return from strnlen can't be zero -- that would be rubbish. */
-  
-  if (res > n) {
-    copy_from_user (dst, src, n);
-    return n;
-  }
-  else {
-    copy_from_user (dst, src, res);
-    return res - 1;
-  }
+	long res = __strnlen_user(src, n);
+
+	/* return from strnlen can't be zero -- that would be rubbish. */
+
+	if (res > n) {
+		copy_from_user(dst, src, n);
+		return n;
+	} else {
+		copy_from_user(dst, src, res);
+		return res-1;
+	}
 }
 
 #endif

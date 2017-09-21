@@ -20,16 +20,16 @@
 #ifndef __RTL8188E_DM_H__
 #define __RTL8188E_DM_H__
 
-void rtl8188e_init_dm_priv (IN PADAPTER Adapter);
-void rtl8188e_deinit_dm_priv (IN PADAPTER Adapter);
-void rtl8188e_InitHalDm (IN PADAPTER Adapter);
-void rtl8188e_HalDmWatchDog (IN PADAPTER Adapter);
+void rtl8188e_init_dm_priv(IN PADAPTER Adapter);
+void rtl8188e_deinit_dm_priv(IN PADAPTER Adapter);
+void rtl8188e_InitHalDm(IN PADAPTER Adapter);
+void rtl8188e_HalDmWatchDog(IN PADAPTER Adapter);
 
 
 
 #ifdef CONFIG_ANTENNA_DIVERSITY
-void  AntDivCompare8188E (PADAPTER Adapter, WLAN_BSSID_EX * dst, WLAN_BSSID_EX * src);
-u8 AntDivBeforeLink8188E (PADAPTER Adapter );
+void	AntDivCompare8188E(PADAPTER Adapter, WLAN_BSSID_EX *dst, WLAN_BSSID_EX *src);
+u8 AntDivBeforeLink8188E(PADAPTER Adapter );
 #endif
 #endif
 

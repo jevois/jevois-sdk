@@ -25,17 +25,17 @@
  * right place.
  */
 #define DECLARE_VVAR(offset, type, name) \
-  EMIT_VVAR(name, offset)
+	EMIT_VVAR(name, offset)
 
 #else
 
-#define DECLARE_VVAR(offset, type, name)        \
-  static type const * const vvaraddr_ ## name =     \
-      (void *)(VVAR_ADDRESS + (offset));
+#define DECLARE_VVAR(offset, type, name)				\
+	static type const * const vvaraddr_ ## name =			\
+		(void *)(VVAR_ADDRESS + (offset));
 
-#define DEFINE_VVAR(type, name)           \
-  type name             \
-  __attribute__((section(".vvar_" #name), aligned(16)))
+#define DEFINE_VVAR(type, name)						\
+	type name							\
+	__attribute__((section(".vvar_" #name), aligned(16)))
 
 #define VVAR(name) (*vvaraddr_ ## name)
 
@@ -43,8 +43,8 @@
 
 /* DECLARE_VVAR(offset, type, name) */
 
-DECLARE_VVAR (0, volatile unsigned long, jiffies)
-DECLARE_VVAR (16, int, vgetcpu_mode)
-DECLARE_VVAR (128, struct vsyscall_gtod_data, vsyscall_gtod_data)
+DECLARE_VVAR(0, volatile unsigned long, jiffies)
+DECLARE_VVAR(16, int, vgetcpu_mode)
+DECLARE_VVAR(128, struct vsyscall_gtod_data, vsyscall_gtod_data)
 
 #undef DECLARE_VVAR

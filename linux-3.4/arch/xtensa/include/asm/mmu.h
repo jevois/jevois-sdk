@@ -19,4 +19,4 @@
 typedef unsigned long mm_context_t;
 
 #endif /* CONFIG_MMU */
-#endif  /* _XTENSA_MMU_H */
+#endif	/* _XTENSA_MMU_H */

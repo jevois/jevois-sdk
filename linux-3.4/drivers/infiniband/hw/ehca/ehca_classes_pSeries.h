@@ -47,111 +47,111 @@
 
 
 struct ehca_pfqp {
-  struct ipz_qpt sqpt;
-  struct ipz_qpt rqpt;
+	struct ipz_qpt sqpt;
+	struct ipz_qpt rqpt;
 };
 
 struct ehca_pfcq {
-  struct ipz_qpt qpt;
-  u32 cqnr;
+	struct ipz_qpt qpt;
+	u32 cqnr;
 };
 
 struct ehca_pfeq {
-  struct ipz_qpt qpt;
-  struct h_galpa galpa;
-  u32 eqnr;
+	struct ipz_qpt qpt;
+	struct h_galpa galpa;
+	u32 eqnr;
 };
 
 struct ipz_adapter_handle {
-  u64 handle;
+	u64 handle;
 };
 
 struct ipz_cq_handle {
-  u64 handle;
+	u64 handle;
 };
 
 struct ipz_eq_handle {
-  u64 handle;
+	u64 handle;
 };
 
 struct ipz_qp_handle {
-  u64 handle;
+	u64 handle;
 };
 struct ipz_mrmw_handle {
-  u64 handle;
+	u64 handle;
 };
 
 struct ipz_pd {
-  u32 value;
+	u32 value;
 };
 
 struct hcp_modify_qp_control_block {
-  u32 qkey;                      /* 00 */
-  u32 rdd;                       /* reliable datagram domain */
-  u32 send_psn;                  /* 02 */
-  u32 receive_psn;               /* 03 */
-  u32 prim_phys_port;            /* 04 */
-  u32 alt_phys_port;             /* 05 */
-  u32 prim_p_key_idx;            /* 06 */
-  u32 alt_p_key_idx;             /* 07 */
-  u32 rdma_atomic_ctrl;          /* 08 */
-  u32 qp_state;                  /* 09 */
-  u32 reserved_10;               /* 10 */
-  u32 rdma_nr_atomic_resp_res;   /* 11 */
-  u32 path_migration_state;      /* 12 */
-  u32 rdma_atomic_outst_dest_qp; /* 13 */
-  u32 dest_qp_nr;                /* 14 */
-  u32 min_rnr_nak_timer_field;   /* 15 */
-  u32 service_level;             /* 16 */
-  u32 send_grh_flag;             /* 17 */
-  u32 retry_count;               /* 18 */
-  u32 timeout;                   /* 19 */
-  u32 path_mtu;                  /* 20 */
-  u32 max_static_rate;           /* 21 */
-  u32 dlid;                      /* 22 */
-  u32 rnr_retry_count;           /* 23 */
-  u32 source_path_bits;          /* 24 */
-  u32 traffic_class;             /* 25 */
-  u32 hop_limit;                 /* 26 */
-  u32 source_gid_idx;            /* 27 */
-  u32 flow_label;                /* 28 */
-  u32 reserved_29;               /* 29 */
-  union {                        /* 30 */
-    u64 dw[2];
-    u8 byte[16];
-  } dest_gid;
-  u32 service_level_al;          /* 34 */
-  u32 send_grh_flag_al;          /* 35 */
-  u32 retry_count_al;            /* 36 */
-  u32 timeout_al;                /* 37 */
-  u32 max_static_rate_al;        /* 38 */
-  u32 dlid_al;                   /* 39 */
-  u32 rnr_retry_count_al;        /* 40 */
-  u32 source_path_bits_al;       /* 41 */
-  u32 traffic_class_al;          /* 42 */
-  u32 hop_limit_al;              /* 43 */
-  u32 source_gid_idx_al;         /* 44 */
-  u32 flow_label_al;             /* 45 */
-  u32 reserved_46;               /* 46 */
-  u32 reserved_47;               /* 47 */
-  union {                        /* 48 */
-    u64 dw[2];
-    u8 byte[16];
-  } dest_gid_al;
-  u32 max_nr_outst_send_wr;      /* 52 */
-  u32 max_nr_outst_recv_wr;      /* 53 */
-  u32 disable_ete_credit_check;  /* 54 */
-  u32 qp_number;                 /* 55 */
-  u64 send_queue_handle;         /* 56 */
-  u64 recv_queue_handle;         /* 58 */
-  u32 actual_nr_sges_in_sq_wqe;  /* 60 */
-  u32 actual_nr_sges_in_rq_wqe;  /* 61 */
-  u32 qp_enable;                 /* 62 */
-  u32 curr_srq_limit;            /* 63 */
-  u64 qp_aff_asyn_ev_log_reg;    /* 64 */
-  u64 shared_rq_hndl;            /* 66 */
-  u64 trigg_doorbell_qp_hndl;    /* 68 */
-  u32 reserved_70_127[58];       /* 70 */
+	u32 qkey;                      /* 00 */
+	u32 rdd;                       /* reliable datagram domain */
+	u32 send_psn;                  /* 02 */
+	u32 receive_psn;               /* 03 */
+	u32 prim_phys_port;            /* 04 */
+	u32 alt_phys_port;             /* 05 */
+	u32 prim_p_key_idx;            /* 06 */
+	u32 alt_p_key_idx;             /* 07 */
+	u32 rdma_atomic_ctrl;          /* 08 */
+	u32 qp_state;                  /* 09 */
+	u32 reserved_10;               /* 10 */
+	u32 rdma_nr_atomic_resp_res;   /* 11 */
+	u32 path_migration_state;      /* 12 */
+	u32 rdma_atomic_outst_dest_qp; /* 13 */
+	u32 dest_qp_nr;                /* 14 */
+	u32 min_rnr_nak_timer_field;   /* 15 */
+	u32 service_level;             /* 16 */
+	u32 send_grh_flag;             /* 17 */
+	u32 retry_count;               /* 18 */
+	u32 timeout;                   /* 19 */
+	u32 path_mtu;                  /* 20 */
+	u32 max_static_rate;           /* 21 */
+	u32 dlid;                      /* 22 */
+	u32 rnr_retry_count;           /* 23 */
+	u32 source_path_bits;          /* 24 */
+	u32 traffic_class;             /* 25 */
+	u32 hop_limit;                 /* 26 */
+	u32 source_gid_idx;            /* 27 */
+	u32 flow_label;                /* 28 */
+	u32 reserved_29;               /* 29 */
+	union {                        /* 30 */
+		u64 dw[2];
+		u8 byte[16];
+	} dest_gid;
+	u32 service_level_al;          /* 34 */
+	u32 send_grh_flag_al;          /* 35 */
+	u32 retry_count_al;            /* 36 */
+	u32 timeout_al;                /* 37 */
+	u32 max_static_rate_al;        /* 38 */
+	u32 dlid_al;                   /* 39 */
+	u32 rnr_retry_count_al;        /* 40 */
+	u32 source_path_bits_al;       /* 41 */
+	u32 traffic_class_al;          /* 42 */
+	u32 hop_limit_al;              /* 43 */
+	u32 source_gid_idx_al;         /* 44 */
+	u32 flow_label_al;             /* 45 */
+	u32 reserved_46;               /* 46 */
+	u32 reserved_47;               /* 47 */
+	union {                        /* 48 */
+		u64 dw[2];
+		u8 byte[16];
+	} dest_gid_al;
+	u32 max_nr_outst_send_wr;      /* 52 */
+	u32 max_nr_outst_recv_wr;      /* 53 */
+	u32 disable_ete_credit_check;  /* 54 */
+	u32 qp_number;                 /* 55 */
+	u64 send_queue_handle;         /* 56 */
+	u64 recv_queue_handle;         /* 58 */
+	u32 actual_nr_sges_in_sq_wqe;  /* 60 */
+	u32 actual_nr_sges_in_rq_wqe;  /* 61 */
+	u32 qp_enable;                 /* 62 */
+	u32 curr_srq_limit;            /* 63 */
+	u64 qp_aff_asyn_ev_log_reg;    /* 64 */
+	u64 shared_rq_hndl;            /* 66 */
+	u64 trigg_doorbell_qp_hndl;    /* 68 */
+	u32 reserved_70_127[58];       /* 70 */
 };
 
 #define MQPCB_MASK_QKEY                         EHCA_BMASK_IBM( 0,  0)

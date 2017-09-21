@@ -44,7 +44,7 @@
 
 /* RTC defines */
 
-#define Q40_RTC_BASE      (0xff021ffc)
+#define Q40_RTC_BASE	    (0xff021ffc)
 
 #define Q40_RTC_YEAR        (*(volatile unsigned char *)(Q40_RTC_BASE+0))
 #define Q40_RTC_MNTH        (*(volatile unsigned char *)(Q40_RTC_BASE-4))

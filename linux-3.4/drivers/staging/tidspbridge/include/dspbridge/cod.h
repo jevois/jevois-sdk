@@ -26,7 +26,7 @@
 #define COD_MAXPATHLENGTH       255
 #define COD_TRACEBEG            "SYS_PUTCBEG"
 #define COD_TRACEEND            "SYS_PUTCEND"
-#define COD_TRACECURPOS "BRIDGE_SYS_PUTC_current"
+#define COD_TRACECURPOS	"BRIDGE_SYS_PUTC_current"
 
 #define COD_NOLOAD              DBLL_NOLOAD
 #define COD_SYMB                DBLL_SYMB
@@ -41,8 +41,8 @@ struct cod_libraryobj;
  *  Function prototypes for writing memory to a DSP system, allocating
  *  and freeing DSP memory.
  */
-typedef u32 (*cod_writefxn) (void * priv_ref, u32 dsp_add,
-                             void * pbuf, u32 ul_num_bytes, u32 mem_space);
+typedef u32(*cod_writefxn) (void *priv_ref, u32 dsp_add,
+			    void *pbuf, u32 ul_num_bytes, u32 mem_space);
 
 /*
  *  ======== cod_close ========
@@ -58,7 +58,7 @@ typedef u32 (*cod_writefxn) (void * priv_ref, u32 dsp_add,
  *  Ensures:
  *
  */
-extern void cod_close (struct cod_libraryobj * lib);
+extern void cod_close(struct cod_libraryobj *lib);
 
 /*
  *  ======== cod_create ========
@@ -81,8 +81,8 @@ extern void cod_close (struct cod_libraryobj * lib);
  *      str_zl_file != NULL
  *  Ensures:
  */
-extern int cod_create (struct cod_manager ** mgr,
-                       char * str_zl_file);
+extern int cod_create(struct cod_manager **mgr,
+			     char *str_zl_file);
 
 /*
  *  ======== cod_delete ========
@@ -97,7 +97,7 @@ extern int cod_create (struct cod_manager ** mgr,
  *      valid cod_mgr_obj.
  *  Ensures:
  */
-extern void cod_delete (struct cod_manager * cod_mgr_obj);
+extern void cod_delete(struct cod_manager *cod_mgr_obj);
 
 /*
  *  ======== cod_get_base_lib ========
@@ -114,8 +114,8 @@ extern void cod_delete (struct cod_manager * cod_mgr_obj);
  *      plib != NULL.
  *  Ensures:
  */
-extern int cod_get_base_lib (struct cod_manager * cod_mgr_obj,
-                             struct dbll_library_obj ** plib);
+extern int cod_get_base_lib(struct cod_manager *cod_mgr_obj,
+				   struct dbll_library_obj **plib);
 
 /*
  *  ======== cod_get_base_name ========
@@ -134,8 +134,8 @@ extern int cod_get_base_lib (struct cod_manager * cod_mgr_obj,
  *      sz_name != NULL.
  *  Ensures:
  */
-extern int cod_get_base_name (struct cod_manager * cod_mgr_obj,
-                              char * sz_name, u32 usize);
+extern int cod_get_base_name(struct cod_manager *cod_mgr_obj,
+				    char *sz_name, u32 usize);
 
 /*
  *  ======== cod_get_entry ========
@@ -152,8 +152,8 @@ extern int cod_get_base_name (struct cod_manager * cod_mgr_obj,
  *      entry_pt != NULL.
  *  Ensures:
  */
-extern int cod_get_entry (struct cod_manager * cod_mgr_obj,
-                          u32 * entry_pt);
+extern int cod_get_entry(struct cod_manager *cod_mgr_obj,
+				u32 *entry_pt);
 
 /*
  *  ======== cod_get_loader ========
@@ -170,8 +170,8 @@ extern int cod_get_entry (struct cod_manager * cod_mgr_obj,
  *      loader != NULL.
  *  Ensures:
  */
-extern int cod_get_loader (struct cod_manager * cod_mgr_obj,
-                           struct dbll_tar_obj ** loader);
+extern int cod_get_loader(struct cod_manager *cod_mgr_obj,
+				 struct dbll_tar_obj **loader);
 
 /*
  *  ======== cod_get_section ========
@@ -199,9 +199,9 @@ extern int cod_get_loader (struct cod_manager * cod_mgr_obj,
  *      else:  *addr == 0 and *len == 0;
  *
  */
-extern int cod_get_section (struct cod_libraryobj * lib,
-                            char * str_sect,
-                            u32 * addr, u32 * len);
+extern int cod_get_section(struct cod_libraryobj *lib,
+				  char *str_sect,
+				  u32 *addr, u32 *len);
 
 /*
  *  ======== cod_get_sym_value ========
@@ -224,8 +224,8 @@ extern int cod_get_section (struct cod_libraryobj * lib,
  *      pul_value != NULL.
  *  Ensures:
  */
-extern int cod_get_sym_value (struct cod_manager * cod_mgr_obj,
-                              char * str_sym, u32 * pul_value);
+extern int cod_get_sym_value(struct cod_manager *cod_mgr_obj,
+				    char *str_sym, u32 * pul_value);
 
 /*
  *  ======== cod_load_base ========
@@ -253,10 +253,10 @@ extern int cod_get_sym_value (struct cod_manager * cod_mgr_obj,
  *      pfn_write != NULL.
  *  Ensures:
  */
-extern int cod_load_base (struct cod_manager * cod_mgr_obj,
-                          u32 num_argc, char * args[],
-                          cod_writefxn pfn_write, void * arb,
-                          char * envp[]);
+extern int cod_load_base(struct cod_manager *cod_mgr_obj,
+				u32 num_argc, char *args[],
+				cod_writefxn pfn_write, void *arb,
+				char *envp[]);
 
 /*
  *  ======== cod_open ========
@@ -279,9 +279,9 @@ extern int cod_load_base (struct cod_manager * cod_mgr_obj,
  *      sz_coff_path != NULL.
  *  Ensures:
  */
-extern int cod_open (struct cod_manager * hmgr,
-                     char * sz_coff_path,
-                     u32 flags, struct cod_libraryobj ** lib_obj);
+extern int cod_open(struct cod_manager *hmgr,
+			   char *sz_coff_path,
+			   u32 flags, struct cod_libraryobj **lib_obj);
 
 /*
  *  ======== cod_open_base ========
@@ -300,8 +300,8 @@ extern int cod_open (struct cod_manager * hmgr,
  *      sz_coff_path != NULL.
  *  Ensures:
  */
-extern int cod_open_base (struct cod_manager * hmgr, char * sz_coff_path,
-                          dbll_flags flags);
+extern int cod_open_base(struct cod_manager *hmgr, char *sz_coff_path,
+				dbll_flags flags);
 
 /*
  *  ======== cod_read_section ========
@@ -322,8 +322,8 @@ extern int cod_open_base (struct cod_manager * hmgr, char * sz_coff_path,
  *  Ensures:
  *      0:  *str_content stores the content of the named section.
  */
-extern int cod_read_section (struct cod_libraryobj * lib,
-                             char * str_sect,
-                             char * str_content, u32 content_size);
+extern int cod_read_section(struct cod_libraryobj *lib,
+				   char *str_sect,
+				   char *str_content, u32 content_size);
 
 #endif /* COD_ */

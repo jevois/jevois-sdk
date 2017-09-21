@@ -21,21 +21,21 @@
 #include <linux/notifier.h>
 #include <linux/export.h>
 
-static ATOMIC_NOTIFIER_HEAD (dcbevent_notif_chain);
+static ATOMIC_NOTIFIER_HEAD(dcbevent_notif_chain);
 
-int register_dcbevent_notifier (struct notifier_block * nb)
+int register_dcbevent_notifier(struct notifier_block *nb)
 {
-  return atomic_notifier_chain_register (&dcbevent_notif_chain, nb);
+	return atomic_notifier_chain_register(&dcbevent_notif_chain, nb);
 }
-EXPORT_SYMBOL (register_dcbevent_notifier);
+EXPORT_SYMBOL(register_dcbevent_notifier);
 
-int unregister_dcbevent_notifier (struct notifier_block * nb)
+int unregister_dcbevent_notifier(struct notifier_block *nb)
 {
-  return atomic_notifier_chain_unregister (&dcbevent_notif_chain, nb);
+	return atomic_notifier_chain_unregister(&dcbevent_notif_chain, nb);
 }
-EXPORT_SYMBOL (unregister_dcbevent_notifier);
+EXPORT_SYMBOL(unregister_dcbevent_notifier);
 
-int call_dcbevent_notifiers (unsigned long val, void * v)
+int call_dcbevent_notifiers(unsigned long val, void *v)
 {
-  return atomic_notifier_call_chain (&dcbevent_notif_chain, val, v);
+	return atomic_notifier_call_chain(&dcbevent_notif_chain, val, v);
 }

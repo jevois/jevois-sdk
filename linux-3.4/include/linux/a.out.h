@@ -13,30 +13,30 @@
 
 /* these go in the N_MACHTYPE field */
 enum machine_type {
-  #if defined (M_OLDSUN2)
+#if defined (M_OLDSUN2)
   M__OLDSUN2 = M_OLDSUN2,
-  #else
+#else
   M_OLDSUN2 = 0,
-  #endif
-  #if defined (M_68010)
+#endif
+#if defined (M_68010)
   M__68010 = M_68010,
-  #else
+#else
   M_68010 = 1,
-  #endif
-  #if defined (M_68020)
+#endif
+#if defined (M_68020)
   M__68020 = M_68020,
-  #else
+#else
   M_68020 = 2,
-  #endif
-  #if defined (M_SPARC)
+#endif
+#if defined (M_SPARC)
   M__SPARC = M_SPARC,
-  #else
+#else
   M_SPARC = 3,
-  #endif
+#endif
   /* skip a bunch so we don't run into any of sun's numbers */
   M_386 = 100,
-  M_MIPS1 = 151,  /* MIPS R3000/R3000 binary */
-  M_MIPS2 = 152   /* MIPS R6000/R4000 binary */
+  M_MIPS1 = 151,	/* MIPS R3000/R3000 binary */
+  M_MIPS2 = 152		/* MIPS R6000/R4000 binary */
 };
 
 #if !defined (N_MAGIC)
@@ -45,19 +45,19 @@ enum machine_type {
 #define N_MACHTYPE(exec) ((enum machine_type)(((exec).a_info >> 16) & 0xff))
 #define N_FLAGS(exec) (((exec).a_info >> 24) & 0xff)
 #define N_SET_INFO(exec, magic, type, flags) \
-  ((exec).a_info = ((magic) & 0xffff) \
-                   | (((int)(type) & 0xff) << 16) \
-                   | (((flags) & 0xff) << 24))
+	((exec).a_info = ((magic) & 0xffff) \
+	 | (((int)(type) & 0xff) << 16) \
+	 | (((flags) & 0xff) << 24))
 #define N_SET_MAGIC(exec, magic) \
-  ((exec).a_info = (((exec).a_info & 0xffff0000) | ((magic) & 0xffff)))
+	((exec).a_info = (((exec).a_info & 0xffff0000) | ((magic) & 0xffff)))
 
 #define N_SET_MACHTYPE(exec, machtype) \
-  ((exec).a_info = \
-                   ((exec).a_info&0xff00ffff) | ((((int)(machtype))&0xff) << 16))
+	((exec).a_info = \
+	 ((exec).a_info&0xff00ffff) | ((((int)(machtype))&0xff) << 16))
 
 #define N_SET_FLAGS(exec, flags) \
-  ((exec).a_info = \
-                   ((exec).a_info&0x00ffffff) | (((flags) & 0xff) << 24))
+	((exec).a_info = \
+	 ((exec).a_info&0x00ffffff) | (((flags) & 0xff) << 24))
 
 /* Code indicating object file or impure executable.  */
 #define OMAGIC 0407
@@ -65,7 +65,7 @@ enum machine_type {
 #define NMAGIC 0410
 /* Code indicating demand-paged executable.  */
 #define ZMAGIC 0413
-/* This indicates a demand-paged executable with the header in the text.
+/* This indicates a demand-paged executable with the header in the text. 
    The first page is unmapped to help trap NULL pointer references */
 #define QMAGIC 0314
 
@@ -73,18 +73,18 @@ enum machine_type {
 #define CMAGIC 0421
 
 #if !defined (N_BADMAG)
-#define N_BADMAG(x)   (N_MAGIC(x) != OMAGIC   \
-                       && N_MAGIC(x) != NMAGIC   \
-                       && N_MAGIC(x) != ZMAGIC \
-                       && N_MAGIC(x) != QMAGIC)
+#define N_BADMAG(x)	  (N_MAGIC(x) != OMAGIC		\
+			&& N_MAGIC(x) != NMAGIC		\
+  			&& N_MAGIC(x) != ZMAGIC \
+		        && N_MAGIC(x) != QMAGIC)
 #endif
 
 #define _N_HDROFF(x) (1024 - sizeof (struct exec))
 
 #if !defined (N_TXTOFF)
 #define N_TXTOFF(x) \
-  (N_MAGIC(x) == ZMAGIC ? _N_HDROFF((x)) + sizeof (struct exec) : \
-   (N_MAGIC(x) == QMAGIC ? 0 : sizeof (struct exec)))
+ (N_MAGIC(x) == ZMAGIC ? _N_HDROFF((x)) + sizeof (struct exec) : \
+  (N_MAGIC(x) == QMAGIC ? 0 : sizeof (struct exec)))
 #endif
 
 #if !defined (N_DATOFF)
@@ -118,9 +118,9 @@ enum machine_type {
 #if defined(vax) || defined(hp300) || defined(pyr)
 #define SEGMENT_SIZE page_size
 #endif
-#ifdef  sony
-#define SEGMENT_SIZE  0x2000
-#endif  /* Sony.  */
+#ifdef	sony
+#define	SEGMENT_SIZE	0x2000
+#endif	/* Sony.  */
 #ifdef is68k
 #define SEGMENT_SIZE 0x20000
 #endif
@@ -136,11 +136,11 @@ enum machine_type {
 #include <unistd.h>
 #endif
 #if defined(__i386__) || defined(__mc68000__)
-#define SEGMENT_SIZE  1024
+#define SEGMENT_SIZE	1024
 #else
 #ifndef SEGMENT_SIZE
 #ifdef __KERNEL__
-#define SEGMENT_SIZE  PAGE_SIZE
+#define SEGMENT_SIZE	PAGE_SIZE
 #else
 #define SEGMENT_SIZE   getpagesize()
 #endif
@@ -154,8 +154,8 @@ enum machine_type {
 
 #ifndef N_DATADDR
 #define N_DATADDR(x) \
-  (N_MAGIC(x)==OMAGIC? (_N_TXTENDADDR(x)) \
-   : (_N_SEGMENT_ROUND (_N_TXTENDADDR(x))))
+    (N_MAGIC(x)==OMAGIC? (_N_TXTENDADDR(x)) \
+     : (_N_SEGMENT_ROUND (_N_TXTENDADDR(x))))
 #endif
 
 /* Address of bss segment in memory after it is loaded.  */
@@ -166,8 +166,8 @@ enum machine_type {
 #if !defined (N_NLIST_DECLARED)
 struct nlist {
   union {
-    char * n_name;
-    struct nlist * n_next;
+    char *n_name;
+    struct nlist *n_next;
     long n_strx;
   } n_un;
   unsigned char n_type;
@@ -228,13 +228,13 @@ struct nlist {
    in that it can satisfy undefined external references.  */
 
 /* These appear as input to LD, in a .o file.  */
-#define N_SETA  0x14    /* Absolute set element symbol */
-#define N_SETT  0x16    /* Text set element symbol */
-#define N_SETD  0x18    /* Data set element symbol */
-#define N_SETB  0x1A    /* Bss set element symbol */
+#define	N_SETA	0x14		/* Absolute set element symbol */
+#define	N_SETT	0x16		/* Text set element symbol */
+#define	N_SETD	0x18		/* Data set element symbol */
+#define	N_SETB	0x1A		/* Bss set element symbol */
 
 /* This is output from LD.  */
-#define N_SETV  0x1C    /* Pointer to set vector in data area.  */
+#define N_SETV	0x1C		/* Pointer to set vector in data area.  */
 
 #if !defined (N_RELOCATION_INFO_DECLARED)
 /* This structure describes a single relocation to be performed.
@@ -247,30 +247,30 @@ struct relocation_info
   /* Address (within segment) to be relocated.  */
   int r_address;
   /* The meaning of r_symbolnum depends on r_extern.  */
-  unsigned int r_symbolnum: 24;
+  unsigned int r_symbolnum:24;
   /* Nonzero means value is a pc-relative offset
      and it should be relocated for changes in its own address
      as well as for changes in the symbol or section specified.  */
-  unsigned int r_pcrel: 1;
+  unsigned int r_pcrel:1;
   /* Length (as exponent of 2) of the field to be relocated.
      Thus, a value of 2 indicates 1<<2 bytes.  */
-  unsigned int r_length: 2;
+  unsigned int r_length:2;
   /* 1 => relocate with value of symbol.
           r_symbolnum is the index of the symbol
-    in file's the symbol table.
+	  in file's the symbol table.
      0 => relocate with the address of a segment.
           r_symbolnum is N_TEXT, N_DATA, N_BSS or N_ABS
-    (the N_EXT bit may be set also, but signifies nothing).  */
-  unsigned int r_extern: 1;
+	  (the N_EXT bit may be set also, but signifies nothing).  */
+  unsigned int r_extern:1;
   /* Four bits that aren't used, but when writing an object file
      it is desirable to clear them.  */
-  #ifdef NS32K
-  unsigned r_bsr: 1;
-  unsigned r_disp: 1;
-  unsigned r_pad: 2;
-  #else
-  unsigned int r_pad: 4;
-  #endif
+#ifdef NS32K
+  unsigned r_bsr:1;
+  unsigned r_disp:1;
+  unsigned r_pad:2;
+#else
+  unsigned int r_pad:4;
+#endif
 };
 #endif /* no N_RELOCATION_INFO_DECLARED.  */
 

@@ -75,13 +75,13 @@
 #define PLL_AUDIOPAT        0x0284
 #define PLL_VIDEOPAT        0x0288
 #define PLL_VEPAT           0x028c
-#define PLL_DDR0PAT     0X0290
+#define PLL_DDR0PAT  		0X0290
 #define PLL_GPUPAT          0x029c
 #define PLL_MIPIPAT         0x02A0
 #define PLL_HSICPAT         0x02A4
 #define PLL_DEPAT           0x02A8
-#define PLL_DDR1PAT0    0X02AC
-#define PLL_DDR1PAT1    0X02B0
+#define	PLL_DDR1PAT0		0X02AC
+#define	PLL_DDR1PAT1		0X02B0
 
 #define BUS_RST0           0x02C0
 #define BUS_RST1           0x02C4
@@ -93,20 +93,20 @@
 #define LOSC_OUT_GATE       0x01F00060
 
 
-#define CPUS_APB0_GATE    0x28
-#define CPUS_APB0_RST   0xB0
-#define KEYPAD_CFG      0x34
+#define CPUS_APB0_GATE		0x28
+#define CPUS_APB0_RST		0xB0
+#define KEYPAD_CFG			0x34		
 
 #define F_N8X7_M0X4(nv,mv) FACTOR_ALL(nv,8,7,0,0,0,mv,0,4,0,0,0,0,0,0,0,0,0)
 #define F_N8X5_K4X2(nv,kv) FACTOR_ALL(nv,8,5,kv,4,2,0,0,0,0,0,0,0,0,0,0,0,0)
 #define F_N8X6(nv) FACTOR_ALL(nv,8,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
 #define F_N8X5_K4X2_M0X2(nv,kv,mv) FACTOR_ALL(nv,8,5,kv,4,2,mv,0,2,0,0,0,0,0,0,0,0,0)
 #define F_N8X5_K4X2_M0X2_P16x2(nv,kv,mv,pv) \
-  FACTOR_ALL(nv,8,5, \
-             kv,4,2, \
-             mv,0,2, \
-             pv,16,2, \
-             0,0,0,0,0,0)
+               FACTOR_ALL(nv,8,5, \
+                          kv,4,2, \
+                          mv,0,2, \
+                          pv,16,2, \
+                          0,0,0,0,0,0)
 #define F_N8X7_M0X2(nv , mv) FACTOR_ALL(nv,8,7,0,0,0,mv,0,2,0,0,0,0,0,0,0,0,0)
 #define F_N8X7_M0X2_P16x2(nv,mv, pv)   FACTOR_ALL(nv,8,7,0,0,0,mv,0,2,pv,16,2,0,0,0,0,0,0)
 

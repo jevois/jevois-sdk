@@ -16,35 +16,35 @@
 #include <linux/can.h>
 
 struct rtcanmsg {
-  __u8  can_family;
-  __u8  gwtype;
-  __u16 flags;
+	__u8  can_family;
+	__u8  gwtype;
+	__u16 flags;
 };
 
 /* CAN gateway types */
 enum {
-  CGW_TYPE_UNSPEC,
-  CGW_TYPE_CAN_CAN, /* CAN->CAN routing */
-  __CGW_TYPE_MAX
+	CGW_TYPE_UNSPEC,
+	CGW_TYPE_CAN_CAN,	/* CAN->CAN routing */
+	__CGW_TYPE_MAX
 };
 
 #define CGW_TYPE_MAX (__CGW_TYPE_MAX - 1)
 
 /* CAN rtnetlink attribute definitions */
 enum {
-  CGW_UNSPEC,
-  CGW_MOD_AND,  /* CAN frame modification binary AND */
-  CGW_MOD_OR, /* CAN frame modification binary OR */
-  CGW_MOD_XOR,  /* CAN frame modification binary XOR */
-  CGW_MOD_SET,  /* CAN frame modification set alternate values */
-  CGW_CS_XOR, /* set data[] XOR checksum into data[index] */
-  CGW_CS_CRC8,  /* set data[] CRC8 checksum into data[index] */
-  CGW_HANDLED,  /* number of handled CAN frames */
-  CGW_DROPPED,  /* number of dropped CAN frames */
-  CGW_SRC_IF, /* ifindex of source network interface */
-  CGW_DST_IF, /* ifindex of destination network interface */
-  CGW_FILTER, /* specify struct can_filter on source CAN device */
-  __CGW_MAX
+	CGW_UNSPEC,
+	CGW_MOD_AND,	/* CAN frame modification binary AND */
+	CGW_MOD_OR,	/* CAN frame modification binary OR */
+	CGW_MOD_XOR,	/* CAN frame modification binary XOR */
+	CGW_MOD_SET,	/* CAN frame modification set alternate values */
+	CGW_CS_XOR,	/* set data[] XOR checksum into data[index] */
+	CGW_CS_CRC8,	/* set data[] CRC8 checksum into data[index] */
+	CGW_HANDLED,	/* number of handled CAN frames */
+	CGW_DROPPED,	/* number of dropped CAN frames */
+	CGW_SRC_IF,	/* ifindex of source network interface */
+	CGW_DST_IF,	/* ifindex of destination network interface */
+	CGW_FILTER,	/* specify struct can_filter on source CAN device */
+	__CGW_MAX
 };
 
 #define CGW_MAX (__CGW_MAX - 1)
@@ -55,38 +55,38 @@ enum {
 #define CGW_MOD_FUNCS 4 /* AND OR XOR SET */
 
 /* CAN frame elements that are affected by curr. 3 CAN frame modifications */
-#define CGW_MOD_ID  0x01
-#define CGW_MOD_DLC 0x02
-#define CGW_MOD_DATA  0x04
+#define CGW_MOD_ID	0x01
+#define CGW_MOD_DLC	0x02
+#define CGW_MOD_DATA	0x04
 
 #define CGW_FRAME_MODS 3 /* ID DLC DATA */
 
 #define MAX_MODFUNCTIONS (CGW_MOD_FUNCS * CGW_FRAME_MODS)
 
 struct cgw_frame_mod {
-  struct can_frame cf;
-  __u8 modtype;
-} __attribute__ ( (packed) );
+	struct can_frame cf;
+	__u8 modtype;
+} __attribute__((packed));
 
 #define CGW_MODATTR_LEN sizeof(struct cgw_frame_mod)
 
 struct cgw_csum_xor {
-  __s8 from_idx;
-  __s8 to_idx;
-  __s8 result_idx;
-  __u8 init_xor_val;
-} __attribute__ ( (packed) );
+	__s8 from_idx;
+	__s8 to_idx;
+	__s8 result_idx;
+	__u8 init_xor_val;
+} __attribute__((packed));
 
 struct cgw_csum_crc8 {
-  __s8 from_idx;
-  __s8 to_idx;
-  __s8 result_idx;
-  __u8 init_crc_val;
-  __u8 final_xor_val;
-  __u8 crctab[256];
-  __u8 profile;
-  __u8 profile_data[20];
-} __attribute__ ( (packed) );
+	__s8 from_idx;
+	__s8 to_idx;
+	__s8 result_idx;
+	__u8 init_crc_val;
+	__u8 final_xor_val;
+	__u8 crctab[256];
+	__u8 profile;
+	__u8 profile_data[20];
+} __attribute__((packed));
 
 /* length of checksum operation parameters. idx = index in CAN frame data[] */
 #define CGW_CS_XOR_LEN  sizeof(struct cgw_csum_xor)
@@ -94,11 +94,11 @@ struct cgw_csum_crc8 {
 
 /* CRC8 profiles (compute CRC for additional data elements - see below) */
 enum {
-  CGW_CRC8PRF_UNSPEC,
-  CGW_CRC8PRF_1U8,  /* compute one additional u8 value */
-  CGW_CRC8PRF_16U8, /* u8 value table indexed by data[1] & 0xF */
-  CGW_CRC8PRF_SFFID_XOR,  /* (can_id & 0xFF) ^ (can_id >> 8 & 0xFF) */
-  __CGW_CRC8PRF_MAX
+	CGW_CRC8PRF_UNSPEC,
+	CGW_CRC8PRF_1U8,	/* compute one additional u8 value */
+	CGW_CRC8PRF_16U8,	/* u8 value table indexed by data[1] & 0xF */
+	CGW_CRC8PRF_SFFID_XOR,	/* (can_id & 0xFF) ^ (can_id >> 8 & 0xFF) */
+	__CGW_CRC8PRF_MAX
 };
 
 #define CGW_CRC8PRF_MAX (__CGW_CRC8PRF_MAX - 1)

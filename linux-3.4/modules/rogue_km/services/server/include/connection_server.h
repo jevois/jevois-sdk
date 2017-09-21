@@ -55,40 +55,40 @@ extern "C" {
 
 typedef struct _CONNECTION_DATA_
 {
-  PRESMAN_CONTEXT   hResManContext;
-  PVRSRV_HANDLE_BASE * psHandleBase;
-  struct _SYNC_CONNECTION_DATA_ * psSyncConnectionData;
-  struct _PDUMP_CONNECTION_DATA_ * psPDumpConnectionData;
-  
-  /* True if the process is the initialisation server. */
-  IMG_BOOL    bInitProcess;
-  
-  /*
-   * OS specific data can be stored via this handle.
-   * See osconnection_server.h for a generic mechanism
-   * for initialising this field.
-   */
-  IMG_HANDLE    hOsPrivateData;
-  
-  IMG_PVOID   hSecureData;
-  
-  IMG_HANDLE      hProcessStats;
+	PRESMAN_CONTEXT 	hResManContext;
+	PVRSRV_HANDLE_BASE 	*psHandleBase;
+	struct _SYNC_CONNECTION_DATA_ *psSyncConnectionData;
+	struct _PDUMP_CONNECTION_DATA_ *psPDumpConnectionData;
+
+	/* True if the process is the initialisation server. */
+	IMG_BOOL		bInitProcess;
+
+	/*
+	 * OS specific data can be stored via this handle.
+	 * See osconnection_server.h for a generic mechanism
+	 * for initialising this field.
+	 */
+	IMG_HANDLE		hOsPrivateData;
+
+	IMG_PVOID		hSecureData;
+
+	IMG_HANDLE      hProcessStats;
 } CONNECTION_DATA;
 
-PVRSRV_ERROR PVRSRVConnectionConnect (IMG_PVOID * ppvPrivData, IMG_PVOID pvOSData);
-IMG_VOID PVRSRVConnectionDisconnect (IMG_PVOID pvPrivData);
+PVRSRV_ERROR PVRSRVConnectionConnect(IMG_PVOID *ppvPrivData, IMG_PVOID pvOSData);
+IMG_VOID PVRSRVConnectionDisconnect(IMG_PVOID pvPrivData);
 
-PVRSRV_ERROR PVRSRVConnectionInit (IMG_VOID);
-PVRSRV_ERROR PVRSRVConnectionDeInit (IMG_VOID);
+PVRSRV_ERROR PVRSRVConnectionInit(IMG_VOID);
+PVRSRV_ERROR PVRSRVConnectionDeInit(IMG_VOID);
 
 
 #ifdef INLINE_IS_PRAGMA
 #pragma inline(PVRSRVConnectionPrivateData)
 #endif
 static INLINE
-IMG_HANDLE PVRSRVConnectionPrivateData (CONNECTION_DATA * psConnection)
+IMG_HANDLE PVRSRVConnectionPrivateData(CONNECTION_DATA *psConnection)
 {
-  return (psConnection != IMG_NULL) ? psConnection->hOsPrivateData : IMG_NULL;
+	return (psConnection != IMG_NULL) ? psConnection->hOsPrivateData : IMG_NULL;
 }
 
 #if defined (__cplusplus)

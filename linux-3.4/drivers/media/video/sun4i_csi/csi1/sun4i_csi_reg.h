@@ -11,7 +11,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -29,13 +29,13 @@
 
 #define  W(addr, val)   writel(val, addr)
 #define  R(addr)        readl(addr)
-#define  S(addr,bit)  writel(readl(addr)|bit,addr)
-#define  C(addr,bit)  writel(readl(addr)&(~bit),addr)
+#define  S(addr,bit)	writel(readl(addr)|bit,addr)
+#define  C(addr,bit)	writel(readl(addr)&(~bit),addr)
 
 #define CSI0_REGS_BASE        0x01c09000
 #define CSI1_REGS_BASE        0X01c1D000
-#define CSI0_REG_SIZE         0x1000
-#define CSI1_REG_SIZE         0x1000
+#define CSI0_REG_SIZE 				0x1000
+#define CSI1_REG_SIZE 				0x1000
 
 #define CSI_REG_EN           (0x00)
 #define CSI_REG_CONF         (0x04)

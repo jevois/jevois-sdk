@@ -47,163 +47,163 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #if !defined(__SYSCCONFIG_H__)
 #define __SYSCCONFIG_H__
 
-#define EMU_RGX_CLOCK_FREQ    (400000000)
-#define RESERVE_DC_MEM_SIZE   (16 * 1024 * 1024)
+#define EMU_RGX_CLOCK_FREQ		(400000000)
+#define RESERVE_DC_MEM_SIZE		(16 * 1024 * 1024)
 
 #define SYS_RGX_ACTIVE_POWER_LATENCY_MS (500)
 
-static IMG_UINT32 EmuRGXClockFreq (IMG_HANDLE hSysData);
+static IMG_UINT32 EmuRGXClockFreq(IMG_HANDLE hSysData);
 
-static IMG_VOID EmuCpuPAddrToDevPAddr (IMG_HANDLE hPrivData,
-                                       IMG_DEV_PHYADDR * psDevPAddr,
-                                       IMG_CPU_PHYADDR * psCpuPAddr);
+static IMG_VOID EmuCpuPAddrToDevPAddr(IMG_HANDLE hPrivData,
+										IMG_DEV_PHYADDR *psDevPAddr,
+										IMG_CPU_PHYADDR *psCpuPAddr);
 
-static IMG_VOID EmuDevPAddrToCpuPAddr (IMG_HANDLE hPrivData,
-                                       IMG_CPU_PHYADDR * psCpuPAddr,
-                                       IMG_DEV_PHYADDR * psDevPAddr);
+static IMG_VOID EmuDevPAddrToCpuPAddr(IMG_HANDLE hPrivData,
+										IMG_CPU_PHYADDR *psCpuPAddr,
+										IMG_DEV_PHYADDR *psDevPAddr);
 
 static RGX_TIMING_INFORMATION sRGXTimingInfo = { 0, IMG_FALSE, IMG_FALSE, SYS_RGX_ACTIVE_POWER_LATENCY_MS};
 
 static RGX_DATA sRGXData = { &sRGXTimingInfo };
 
 static PVRSRV_DEVICE_CONFIG sDevices[] = {
-  /* RGX device */
-  {
-    /* uiFlags */
-    0,
-    /* pszName */
-    "RGX",
-    /* eDeviceType */
-    PVRSRV_DEVICE_TYPE_RGX,
-    /* sRegsCpuPBase */
-    { 0 },
-    /* ui32RegsSize */
-    0,
-    /* ui32IRQ */
-    0,
-    /* bIRQIsShared */
-    IMG_TRUE,
-    /* hDevData */
-    &sRGXData,
-    /* hSysData */
-    IMG_NULL,
-    /* ui32PhysHeapID */
-    { 0, 0 }, /* Use physical heap 0 only */
-    /* No power management on no HW system */
-    /* pfnPrePowerState */
-    IMG_NULL,
-    /* pfnPostPowerState */
-    IMG_NULL,
-    /* pfnClockFreqGet */
-    EmuRGXClockFreq,
-    /* pfnInterruptHandled */
-    IMG_NULL,
-    /* pfnCheckMemAllocSize */
-    SysCheckMemAllocSize,
-    /* eBPDM */
-    RGXFWIF_DM_TA, /* initialised to a valid DM but no breakpoint is set yet */
-    /* bBPSet */
-    IMG_FALSE,
-  }
+	/* RGX device */
+	{
+		/* uiFlags */
+		0,
+		/* pszName */
+		"RGX",
+		/* eDeviceType */
+		PVRSRV_DEVICE_TYPE_RGX,
+		/* sRegsCpuPBase */
+		{ 0 },
+		/* ui32RegsSize */
+		0,
+		/* ui32IRQ */
+		0,
+		/* bIRQIsShared */
+		IMG_TRUE,
+		/* hDevData */
+		&sRGXData,
+		/* hSysData */
+		IMG_NULL,
+		/* ui32PhysHeapID */
+		{ 0, 0 }, /* Use physical heap 0 only */
+		/* No power management on no HW system */
+		/* pfnPrePowerState */
+		IMG_NULL,
+		/* pfnPostPowerState */
+		IMG_NULL,
+		/* pfnClockFreqGet */
+		EmuRGXClockFreq,
+		/* pfnInterruptHandled */
+		IMG_NULL,
+		/* pfnCheckMemAllocSize */
+		SysCheckMemAllocSize,
+		/* eBPDM */
+		RGXFWIF_DM_TA, /* initialised to a valid DM but no breakpoint is set yet */
+		/* bBPSet */
+		IMG_FALSE,
+	}
 };
 
 static PHYS_HEAP_FUNCTIONS gsPhysHeapFuncs = { EmuCpuPAddrToDevPAddr, EmuDevPAddrToCpuPAddr };
 
 #if defined(LMA)
-static PHYS_HEAP_CONFIG gsPhysHeapConfig[] = {
-  { /* Heap 0 is used for RGX */
-    /* ui32PhysHeapID */
-    0,
-    /* eType */
-    PHYS_HEAP_TYPE_LMA,
-    /* sStartAddr */
-    { 0 },
-    /* uiSize */
-    0,
-    /* pszPDumpMemspaceName */
-    "LMA",
-    /* psMemFuncs */
-    &gsPhysHeapFuncs,
-    /* hPrivData */
-    IMG_NULL,
-  },
-  { /* Heap 1 is used for DC memory */
-    /* ui32PhysHeapID */
-    1,
-    /* eType */
-    PHYS_HEAP_TYPE_LMA,
-    /* sStartAddr */
-    { 0 },
-    /* uiSize */
-    0,
-    /* pszPDumpMemspaceName */
-    "LMA",
-    /* psMemFuncs */
-    &gsPhysHeapFuncs,
-    /* hPrivData */
-    IMG_NULL,
-  }
+static PHYS_HEAP_CONFIG	gsPhysHeapConfig[] = {
+	{	/* Heap 0 is used for RGX */
+		/* ui32PhysHeapID */
+		0,
+		/* eType */
+		PHYS_HEAP_TYPE_LMA,
+		/* sStartAddr */
+		{ 0 },
+		/* uiSize */
+		0,
+		/* pszPDumpMemspaceName	*/
+		"LMA",
+		/* psMemFuncs */
+		&gsPhysHeapFuncs,
+		/* hPrivData */
+		IMG_NULL,
+	},
+	{	/* Heap 1 is used for DC memory */
+		/* ui32PhysHeapID */
+		1,
+		/* eType */
+		PHYS_HEAP_TYPE_LMA,
+		/* sStartAddr */
+		{ 0 },
+		/* uiSize */
+		0,
+		/* pszPDumpMemspaceName	*/
+		"LMA",
+		/* psMemFuncs */
+		&gsPhysHeapFuncs,
+		/* hPrivData */
+		IMG_NULL,
+	}
 };
 #else
-static PHYS_HEAP_CONFIG gsPhysHeapConfig = {
-  /* ui32PhysHeapID */
-  0,
-  /* eType */
-  PHYS_HEAP_TYPE_UMA,
-  /* sStartAddr */
-  { 0 },
-  /* uiSize */
-  0,
-  /* pszPDumpMemspaceName */
-  "SYSMEM",
-  /* psMemFuncs */
-  &gsPhysHeapFuncs,
-  /* hPrivData */
-  IMG_NULL,
+static PHYS_HEAP_CONFIG	gsPhysHeapConfig = {
+	/* ui32PhysHeapID */
+	0,
+	/* eType */
+	PHYS_HEAP_TYPE_UMA,
+	/* sStartAddr */
+	{ 0 },
+	/* uiSize */
+	0,
+	/* pszPDumpMemspaceName	*/
+	"SYSMEM",
+	/* psMemFuncs */
+	&gsPhysHeapFuncs,
+	/* hPrivData */
+	IMG_NULL,
 };
 #endif
 
 /* default BIF tiling heap x-stride configurations. */
 static IMG_UINT32 gauiBIFTilingHeapXStrides[RGXFWIF_NUM_BIF_TILING_CONFIGS] =
 {
-  0, /* BIF tiling heap 1 x-stride */
-  1, /* BIF tiling heap 2 x-stride */
-  2, /* BIF tiling heap 3 x-stride */
-  3  /* BIF tiling heap 4 x-stride */
+	0, /* BIF tiling heap 1 x-stride */
+	1, /* BIF tiling heap 2 x-stride */
+	2, /* BIF tiling heap 3 x-stride */
+	3  /* BIF tiling heap 4 x-stride */
 };
 
 static PVRSRV_SYSTEM_CONFIG sSysConfig = {
-  /* uiSysFlags */
-  0,
-  /* pszSystemName */
-  "Emu with Rogue",
-  /* uiDeviceCount */
-  sizeof (sDevices) / sizeof (PVRSRV_DEVICE_CONFIG),
-  /* pasDevices */
-  &sDevices[0],
-  /* pfnSysPrePowerState */
-  IMG_NULL,
-  /* pfnSysPostPowerState */
-  IMG_NULL,
-  /* eCacheSnoopingMode */
-  PVRSRV_SYSTEM_SNOOP_NONE,
-  #if defined(LMA)
-  /* pasPhysHeaps */
-  &gsPhysHeapConfig[0],
-  #else
-  & gsPhysHeapConfig,
-  #endif
-  /* Physcial memory heaps */
-  /* ui32PhysHeapCount */
-  sizeof (gsPhysHeapConfig) / sizeof (PHYS_HEAP_CONFIG),
-  
-  /* BIF tiling heap config */
-  gauiBIFTilingHeapXStrides,
-  IMG_ARR_NUM_ELEMS (gauiBIFTilingHeapXStrides),
+	/* uiSysFlags */
+	0,
+	/* pszSystemName */
+	"Emu with Rogue",
+	/* uiDeviceCount */
+	sizeof(sDevices)/sizeof(PVRSRV_DEVICE_CONFIG),
+	/* pasDevices */
+	&sDevices[0],
+	/* pfnSysPrePowerState */
+	IMG_NULL,
+	/* pfnSysPostPowerState */
+	IMG_NULL,
+	/* eCacheSnoopingMode */
+	PVRSRV_SYSTEM_SNOOP_NONE,
+#if defined(LMA)
+	/* pasPhysHeaps */
+	&gsPhysHeapConfig[0],
+#else
+	&gsPhysHeapConfig,
+#endif
+	/* Physcial memory heaps */
+	/* ui32PhysHeapCount */
+	sizeof(gsPhysHeapConfig) / sizeof(PHYS_HEAP_CONFIG),
+
+	/* BIF tiling heap config */
+	gauiBIFTilingHeapXStrides,
+	IMG_ARR_NUM_ELEMS(gauiBIFTilingHeapXStrides),
 };
 
 /*****************************************************************************
  * system specific data structures
  *****************************************************************************/
-
-#endif  /* __SYSCCONFIG_H__ */
+ 
+#endif	/* __SYSCCONFIG_H__ */

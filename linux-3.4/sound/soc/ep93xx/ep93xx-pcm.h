@@ -13,8 +13,8 @@
 #define _EP93XX_SND_SOC_PCM_H
 
 struct ep93xx_pcm_dma_params {
-  char * name;
-  int dma_port;
+	char	*name;
+	int	dma_port;
 };
 
 #endif /* _EP93XX_SND_SOC_PCM_H */

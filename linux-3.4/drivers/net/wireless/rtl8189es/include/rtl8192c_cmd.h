@@ -1,7 +1,7 @@
 /******************************************************************************
  *
  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
- *
+ *                                        
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of version 2 of the GNU General Public License as
  * published by the Free Software Foundation.
@@ -22,94 +22,94 @@
 
 
 enum cmd_msg_element_id
-{
-  NONE_CMDMSG_EID,
-  AP_OFFLOAD_EID = 0,
-  SET_PWRMODE_EID = 1,
-  JOINBSS_RPT_EID = 2,
-  RSVD_PAGE_EID = 3,
-  RSSI_4_EID = 4,
-  RSSI_SETTING_EID = 5,
-  MACID_CONFIG_EID = 6,
-  MACID_PS_MODE_EID = 7,
-  P2P_PS_OFFLOAD_EID = 8,
-  SELECTIVE_SUSPEND_ROF_CMD = 9,
-  P2P_PS_CTW_CMD_EID = 32,
-  H2C_92C_IO_OFFLOAD = 44,
-  H2C_92C_TSF_SYNC = 67,
-  H2C_92C_DISABLE_BCN_FUNC = 68,
-  H2C_92C_RESET_TSF = 75,
-  H2C_92C_CMD_MAX
+{	
+	NONE_CMDMSG_EID,
+	AP_OFFLOAD_EID=0,
+	SET_PWRMODE_EID=1,
+	JOINBSS_RPT_EID=2,
+	RSVD_PAGE_EID=3,
+	RSSI_4_EID = 4,
+	RSSI_SETTING_EID=5,
+	MACID_CONFIG_EID=6,
+	MACID_PS_MODE_EID=7,
+	P2P_PS_OFFLOAD_EID=8,
+	SELECTIVE_SUSPEND_ROF_CMD=9,
+	P2P_PS_CTW_CMD_EID=32,
+	H2C_92C_IO_OFFLOAD=44,
+	H2C_92C_TSF_SYNC=67,
+	H2C_92C_DISABLE_BCN_FUNC=68,
+	H2C_92C_RESET_TSF = 75,
+	H2C_92C_CMD_MAX
 };
 
 struct cmd_msg_parm {
-  u8 eid;
-  u8 sz;
-  u8 buf[6];
+	u8 eid;
+	u8 sz;
+	u8 buf[6];
 };
 
-typedef struct _SETPWRMODE_PARM {
-  u8  Mode;
-  u8  SmartPS;
-  u8  BcnPassTime; 
-} SETPWRMODE_PARM, *PSETPWRMODE_PARM;
+typedef struct _SETPWRMODE_PARM{
+	u8 	Mode;
+	u8 	SmartPS;
+	u8	BcnPassTime;
+}SETPWRMODE_PARM, *PSETPWRMODE_PARM;
 
-struct H2C_SS_RFOFF_PARAM {
-  u8  ROFOn;
-  u16 gpio_period;
-} __attribute__ ( (packed) );
+struct H2C_SS_RFOFF_PARAM{
+	u8 	ROFOn;
+	u16	gpio_period;
+}__attribute__ ((packed));
 
 
-typedef struct JOINBSSRPT_PARM {
-  u8  OpMode;
-} JOINBSSRPT_PARM, *PJOINBSSRPT_PARM;
+typedef struct JOINBSSRPT_PARM{
+	u8	OpMode;
+}JOINBSSRPT_PARM, *PJOINBSSRPT_PARM;
 
-typedef struct _RSVDPAGE_LOC {
-  u8  LocProbeRsp;
-  u8  LocPsPoll;
-  u8  LocNullData;
-} RSVDPAGE_LOC, *PRSVDPAGE_LOC;
+typedef struct _RSVDPAGE_LOC{
+	u8 	LocProbeRsp;
+	u8 	LocPsPoll;
+	u8	LocNullData;
+}RSVDPAGE_LOC, *PRSVDPAGE_LOC;
 
 struct P2P_PS_Offload_t {
-  unsigned char Offload_En: 1;
-  unsigned char role: 1;
-  unsigned char CTWindow_En: 1;
-  unsigned char NoA0_En: 1;
-  unsigned char NoA1_En: 1;
-  unsigned char AllStaSleep: 1;
-  unsigned char discovery: 1;
-  unsigned char rsvd: 1;
+ unsigned char Offload_En:1;
+ unsigned char role:1;
+ unsigned char CTWindow_En:1;
+ unsigned char NoA0_En:1;
+ unsigned char NoA1_En:1;
+ unsigned char AllStaSleep:1;
+ unsigned char discovery:1;
+ unsigned char rsvd:1;
 };
 
 struct P2P_PS_CTWPeriod_t {
-  unsigned char CTWPeriod; 
+    unsigned char CTWPeriod;
 };
 
-void  rtl8192c_set_FwPwrMode_cmd (_adapter * padapter, u8 Mode);
-void  rtl8192c_set_FwJoinBssReport_cmd (_adapter * padapter, u8 mstatus);
-u8  rtl8192c_set_rssi_cmd (_adapter * padapter, u8 * param);
-u8  rtl8192c_set_raid_cmd (_adapter * padapter, u32 mask, u8 arg);
-void  rtl8192c_Add_RateATid (PADAPTER pAdapter, u32 bitmap, u8 arg, u8 rssi_level);
-u8  rtl8192c_set_FwSelectSuspend_cmd (_adapter * padapter, u8 bfwpoll, u16 period);
+void	rtl8192c_set_FwPwrMode_cmd(_adapter*padapter, u8 Mode);
+void	rtl8192c_set_FwJoinBssReport_cmd(_adapter* padapter, u8 mstatus);
+u8	rtl8192c_set_rssi_cmd(_adapter*padapter, u8 *param);
+u8	rtl8192c_set_raid_cmd(_adapter*padapter, u32 mask, u8 arg);
+void	rtl8192c_Add_RateATid(PADAPTER pAdapter, u32 bitmap, u8 arg, u8 rssi_level);
+u8	rtl8192c_set_FwSelectSuspend_cmd(_adapter*padapter,u8 bfwpoll, u16 period);
 #ifdef CONFIG_P2P
-void  rtl8192c_set_p2p_ps_offload_cmd (_adapter * padapter, u8 p2p_ps_state);
+void	rtl8192c_set_p2p_ps_offload_cmd(_adapter* padapter, u8 p2p_ps_state);
 #endif
 
 #ifdef CONFIG_IOL
-typedef struct _IO_OFFLOAD_LOC {
-  u8  LocCmd;
-} IO_OFFLOAD_LOC, *PIO_OFFLOAD_LOC;
-int rtl8192c_IOL_exec_cmds_sync (ADAPTER * adapter, struct xmit_frame * xmit_frame, u32 max_wating_ms, u32 bndy_cnt);
+typedef struct _IO_OFFLOAD_LOC{
+	u8 	LocCmd;
+}IO_OFFLOAD_LOC, *PIO_OFFLOAD_LOC;
+int rtl8192c_IOL_exec_cmds_sync(ADAPTER *adapter, struct xmit_frame *xmit_frame, u32 max_wating_ms, u32 bndy_cnt);
 #endif
 
 #ifdef CONFIG_BEACON_DISABLE_OFFLOAD
-u8 rtl8192c_dis_beacon_fun_cmd (_adapter * padapter);
+u8 rtl8192c_dis_beacon_fun_cmd(_adapter* padapter);
 #endif 
 
 
 #ifdef CONFIG_TSF_RESET_OFFLOAD
-u8 rtl8192c_reset_tsf (_adapter * padapter, u8 reset_port);
-#endif 
+u8 rtl8192c_reset_tsf(_adapter *padapter, u8 reset_port);
+#endif
 
-#endif 
+#endif
 

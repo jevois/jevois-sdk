@@ -55,7 +55,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "pvr_debug.h"
 
 /*#define DEBUG_BRIDGE_LOCK_CALLS 1 */
-#undef DEBUG_BRIDGE_LOCK_CALLS
+#undef DEBUG_BRIDGE_LOCK_CALLS 
 
 #if defined(DEBUG_BRIDGE_LOCK_CALLS)
 extern PVRSRV_LINUX_MUTEX gPVRSRVLock;
@@ -63,102 +63,102 @@ extern PVRSRV_LINUX_MUTEX gPVRSRVLock;
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,15))
 
-IMG_VOID LinuxInitMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex)
+IMG_VOID LinuxInitMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex)
 {
-  mutex_init (&psPVRSRVMutex->sMutex);
-  psPVRSRVMutex->hHeldBy = 0;
-  
-  #if defined(LINUX_DEBUG_MUTEX_CALLS)
-  if (&gPVRSRVLock == psPVRSRVMutex)
-  {
-    PVR_TRACE ( ("LinuxInitMutex %p: %d", psPVRSRVMutex, psPVRSRVMutex->hHeldBy) );
-  }
-  #endif
+    mutex_init(&psPVRSRVMutex->sMutex);
+    psPVRSRVMutex->hHeldBy = 0;
+
+#if defined(LINUX_DEBUG_MUTEX_CALLS)
+    if (&gPVRSRVLock == psPVRSRVMutex)
+    {
+        PVR_TRACE(("LinuxInitMutex %p: %d", psPVRSRVMutex, psPVRSRVMutex->hHeldBy));
+     }
+#endif
 }
 
-IMG_VOID LinuxLockMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex)
+IMG_VOID LinuxLockMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex)
 {
-  #if defined(LINUX_DEBUG_MUTEX_CALLS)
-  if (&gPVRSRVLock == psPVRSRVMutex)
-  {
-    PVR_TRACE ( ("LinuxLockMutex %p: %d (current:%d)", psPVRSRVMutex, psPVRSRVMutex->hHeldBy, current->pid) );
-  }
-  #endif
-  
-  mutex_lock (&psPVRSRVMutex->sMutex);
-  psPVRSRVMutex->hHeldBy = current->pid;
-}
+#if defined(LINUX_DEBUG_MUTEX_CALLS)
+    if (&gPVRSRVLock == psPVRSRVMutex)
+    {
+    	PVR_TRACE(("LinuxLockMutex %p: %d (current:%d)", psPVRSRVMutex, psPVRSRVMutex->hHeldBy, current->pid));
+    }
+#endif
 
-PVRSRV_ERROR LinuxLockMutexInterruptible (PVRSRV_LINUX_MUTEX * psPVRSRVMutex)
-{
-  #if defined(LINUX_DEBUG_MUTEX_CALLS)
-  if (&gPVRSRVLock == psPVRSRVMutex)
-  {
-    PVR_TRACE ( ("LinuxLockMutexInterruptible %p: %d (current:%d)", psPVRSRVMutex, psPVRSRVMutex->hHeldBy, current->pid) );
-  }
-  #endif
-  
-  if (mutex_lock_interruptible (&psPVRSRVMutex->sMutex) == -EINTR)
-  {
-    return PVRSRV_ERROR_MUTEX_INTERRUPTIBLE_ERROR;
-  }
-  else
-  {
+    mutex_lock(&psPVRSRVMutex->sMutex);
     psPVRSRVMutex->hHeldBy = current->pid;
-    return PVRSRV_OK;
-  }
 }
 
-IMG_INT32 LinuxTryLockMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex)
+PVRSRV_ERROR LinuxLockMutexInterruptible(PVRSRV_LINUX_MUTEX *psPVRSRVMutex)
 {
-  #if defined(LINUX_DEBUG_MUTEX_CALLS)
-  if (&gPVRSRVLock == psPVRSRVMutex)
-  {
-    PVR_TRACE ( ("LinuxTryLockMutex %p: %d (current:%d)", psPVRSRVMutex, psPVRSRVMutex->hHeldBy, current->pid) );
-  }
-  #endif
-  
-  if (mutex_trylock (&psPVRSRVMutex->sMutex) == 1)
-  {
-    psPVRSRVMutex->hHeldBy = current->pid;
-    return 1;
-  }
-  else
-  {
-    return 0;
-  }
+#if defined(LINUX_DEBUG_MUTEX_CALLS)
+    if (&gPVRSRVLock == psPVRSRVMutex)
+    {
+    	PVR_TRACE(("LinuxLockMutexInterruptible %p: %d (current:%d)", psPVRSRVMutex, psPVRSRVMutex->hHeldBy, current->pid));
+    }
+#endif
+
+    if(mutex_lock_interruptible(&psPVRSRVMutex->sMutex) == -EINTR)
+    {
+        return PVRSRV_ERROR_MUTEX_INTERRUPTIBLE_ERROR;
+    }
+    else
+    {
+    	psPVRSRVMutex->hHeldBy = current->pid;
+        return PVRSRV_OK;
+    }
 }
 
-IMG_VOID LinuxUnLockMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex)
+IMG_INT32 LinuxTryLockMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex)
 {
-  #if defined(LINUX_DEBUG_MUTEX_CALLS)
-  if (&gPVRSRVLock == psPVRSRVMutex)
-  {
-    PVR_TRACE ( ("LinuxUnLockMutex %p: %d (current:%d)", psPVRSRVMutex, psPVRSRVMutex->hHeldBy, current->pid) );
-  }
-  #endif
-  
-  psPVRSRVMutex->hHeldBy = 0;
-  mutex_unlock (&psPVRSRVMutex->sMutex);
-  
-  #if defined(LINUX_DEBUG_MUTEX_CALLS)
-  if (psPVRSRVMutex->sMutex.count.counter >= 2)
-  {
-    PVR_TRACE ( ("ASSERT Mutex counter %p: %d >= 2", psPVRSRVMutex, psPVRSRVMutex->sMutex.count.counter) );
-  }
-  #endif
-  
-  PVR_ASSERT (psPVRSRVMutex->sMutex.count.counter < 2);
+#if defined(LINUX_DEBUG_MUTEX_CALLS)
+    if (&gPVRSRVLock == psPVRSRVMutex)
+    {
+    	PVR_TRACE(("LinuxTryLockMutex %p: %d (current:%d)", psPVRSRVMutex, psPVRSRVMutex->hHeldBy, current->pid));
+    }
+#endif
+
+	if (mutex_trylock(&psPVRSRVMutex->sMutex) == 1)
+	{
+    	psPVRSRVMutex->hHeldBy = current->pid;
+        return 1;
+	}
+	else
+	{
+        return 0;
+	}
 }
 
-IMG_BOOL LinuxIsLockedMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex)
+IMG_VOID LinuxUnLockMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex)
 {
-  return (psPVRSRVMutex->hHeldBy != 0);
+#if defined(LINUX_DEBUG_MUTEX_CALLS)
+   if (&gPVRSRVLock == psPVRSRVMutex)
+   {
+    	PVR_TRACE(("LinuxUnLockMutex %p: %d (current:%d)", psPVRSRVMutex, psPVRSRVMutex->hHeldBy, current->pid));
+   }
+#endif
+
+	psPVRSRVMutex->hHeldBy = 0;
+    mutex_unlock(&psPVRSRVMutex->sMutex);
+
+#if defined(LINUX_DEBUG_MUTEX_CALLS)
+    if (psPVRSRVMutex->sMutex.count.counter >= 2)
+    {
+        PVR_TRACE(("ASSERT Mutex counter %p: %d >= 2", psPVRSRVMutex, psPVRSRVMutex->sMutex.count.counter));
+    }
+#endif
+
+    PVR_ASSERT(psPVRSRVMutex->sMutex.count.counter < 2);
 }
 
-IMG_BOOL LinuxIsLockedByMeMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex)
+IMG_BOOL LinuxIsLockedMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex)
 {
-  return (psPVRSRVMutex->hHeldBy == current->pid);
+    return (psPVRSRVMutex->hHeldBy != 0);
+}
+
+IMG_BOOL LinuxIsLockedByMeMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex)
+{
+    return (psPVRSRVMutex->hHeldBy == current->pid);
 }
 
 
@@ -166,57 +166,56 @@ IMG_BOOL LinuxIsLockedByMeMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex)
 #else /* (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,15)) */
 
 
-IMG_VOID LinuxInitMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex)
+IMG_VOID LinuxInitMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex)
 {
-  init_MUTEX (&psPVRSRVMutex->sSemaphore);
-  atomic_set (&psPVRSRVMutex->Count, 0);
+    init_MUTEX(&psPVRSRVMutex->sSemaphore);
+    atomic_set(&psPVRSRVMutex->Count, 0);
 }
 
-IMG_VOID LinuxLockMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex)
+IMG_VOID LinuxLockMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex)
 {
-  down (&psPVRSRVMutex->sSemaphore);
-  atomic_dec (&psPVRSRVMutex->Count);
+    down(&psPVRSRVMutex->sSemaphore);
+    atomic_dec(&psPVRSRVMutex->Count);
 }
 
-PVRSRV_ERROR LinuxLockMutexInterruptible (PVRSRV_LINUX_MUTEX * psPVRSRVMutex)
+PVRSRV_ERROR LinuxLockMutexInterruptible(PVRSRV_LINUX_MUTEX *psPVRSRVMutex)
 {
-  if (down_interruptible (&psPVRSRVMutex->sSemaphore) == -EINTR)
-  {
-    /* The process was sent a signal while waiting for the semaphore
-     * (e.g. a kill signal from userspace)
-     */
-    return PVRSRV_ERROR_MUTEX_INTERRUPTIBLE_ERROR;
-  }
-  else {
-    atomic_dec (&psPVRSRVMutex->Count);
-    return PVRSRV_OK;
-  }
+    if(down_interruptible(&psPVRSRVMutex->sSemaphore) == -EINTR)
+    {
+        /* The process was sent a signal while waiting for the semaphore
+         * (e.g. a kill signal from userspace)
+         */
+        return PVRSRV_ERROR_MUTEX_INTERRUPTIBLE_ERROR;
+    }else{
+        atomic_dec(&psPVRSRVMutex->Count);
+        return PVRSRV_OK;
+    }
 }
 
-IMG_INT32 LinuxTryLockMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex)
+IMG_INT32 LinuxTryLockMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex)
 {
-  IMG_INT32 Status = down_trylock (&psPVRSRVMutex->sSemaphore);
-  if (Status == 0)
-  {
-    atomic_dec (&psPVRSRVMutex->Count);
-  }
+    IMG_INT32 Status = down_trylock(&psPVRSRVMutex->sSemaphore);
+    if(Status == 0)
+    {
+        atomic_dec(&psPVRSRVMutex->Count);
+    }
 
-  return Status;
+    return Status;
 }
 
-IMG_VOID LinuxUnLockMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex)
+IMG_VOID LinuxUnLockMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex)
 {
-  atomic_inc (&psPVRSRVMutex->Count);
-  up (&psPVRSRVMutex->sSemaphore);
+    atomic_inc(&psPVRSRVMutex->Count);
+    up(&psPVRSRVMutex->sSemaphore);
 }
 
-IMG_BOOL LinuxIsLockedMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex)
+IMG_BOOL LinuxIsLockedMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex)
 {
-  IMG_INT32 iCount;
+    IMG_INT32 iCount;
+    
+    iCount = atomic_read(&psPVRSRVMutex->Count);
 
-  iCount = atomic_read (&psPVRSRVMutex->Count);
-
-  return (IMG_BOOL) iCount;
+    return (IMG_BOOL)iCount;
 }
 
 #endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,15)) */

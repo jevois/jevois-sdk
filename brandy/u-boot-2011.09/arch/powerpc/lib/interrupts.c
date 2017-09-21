@@ -32,11 +32,11 @@
 #endif
 
 #ifdef CONFIG_SHOW_ACTIVITY
-void board_show_activity (ulong) __attribute__ ( (weak, alias ("__board_show_activity") ) );
+void board_show_activity (ulong) __attribute__((weak, alias("__board_show_activity")));
 
 void __board_show_activity (ulong dummy)
 {
-  return;
+	return;
 }
 #endif /* CONFIG_SHOW_ACTIVITY */
 
@@ -51,93 +51,93 @@ static unsigned decrementer_count; /* count value for 1e6/HZ microseconds */
 
 static __inline__ unsigned long get_msr (void)
 {
-  unsigned long msr;
-  
-  asm volatile ("mfmsr %0":"=r" (msr) :);
-  
-  return msr;
+	unsigned long msr;
+
+	asm volatile ("mfmsr %0":"=r" (msr):);
+
+	return msr;
 }
 
 static __inline__ void set_msr (unsigned long msr)
 {
-  asm volatile ("mtmsr %0"::"r" (msr) );
+	asm volatile ("mtmsr %0"::"r" (msr));
 }
 
 static __inline__ unsigned long get_dec (void)
 {
-  unsigned long val;
-  
-  asm volatile ("mfdec %0":"=r" (val) :);
-  
-  return val;
+	unsigned long val;
+
+	asm volatile ("mfdec %0":"=r" (val):);
+
+	return val;
 }
 
 
 static __inline__ void set_dec (unsigned long val)
 {
-  if (val)
-  { asm volatile ("mtdec %0"::"r" (val) ); }
+	if (val)
+		asm volatile ("mtdec %0"::"r" (val));
 }
 
 
 void enable_interrupts (void)
 {
-  set_msr (get_msr () | MSR_EE);
+	set_msr (get_msr () | MSR_EE);
 }
 
 /* returns flag if MSR_EE was set before */
 int disable_interrupts (void)
 {
-  ulong msr = get_msr ();
-  
-  set_msr (msr & ~MSR_EE);
-  return ( (msr & MSR_EE) != 0);
+	ulong msr = get_msr ();
+
+	set_msr (msr & ~MSR_EE);
+	return ((msr & MSR_EE) != 0);
 }
 
 int interrupt_init (void)
 {
-  int ret;
-  
-  /* call cpu specific function from $(CPU)/interrupts.c */
-  ret = interrupt_init_cpu (&decrementer_count);
-  
-  if (ret)
-  { return ret; }
-  
-  set_dec (decrementer_count);
-  
-  set_msr (get_msr () | MSR_EE);
-  
-  return (0);
+	int ret;
+
+	/* call cpu specific function from $(CPU)/interrupts.c */
+	ret = interrupt_init_cpu (&decrementer_count);
+
+	if (ret)
+		return ret;
+
+	set_dec (decrementer_count);
+
+	set_msr (get_msr () | MSR_EE);
+
+	return (0);
 }
 
 static volatile ulong timestamp = 0;
 
-void timer_interrupt (struct pt_regs * regs)
+void timer_interrupt (struct pt_regs *regs)
 {
-  /* call cpu specific function from $(CPU)/interrupts.c */
-  timer_interrupt_cpu (regs);
-  
-  /* Restore Decrementer Count */
-  set_dec (decrementer_count);
-  
-  timestamp++;
-  
-  #if defined(CONFIG_WATCHDOG) || defined (CONFIG_HW_WATCHDOG)
-  if ( (timestamp % (CONFIG_SYS_WATCHDOG_FREQ) ) == 0)
-  { WATCHDOG_RESET (); }
-  #endif    /* CONFIG_WATCHDOG || CONFIG_HW_WATCHDOG */
-  
-  #ifdef CONFIG_STATUS_LED
-  status_led_tick (timestamp);
-  #endif /* CONFIG_STATUS_LED */
-  
-  #ifdef CONFIG_SHOW_ACTIVITY
-  board_show_activity (timestamp);
-  #endif /* CONFIG_SHOW_ACTIVITY */
+	/* call cpu specific function from $(CPU)/interrupts.c */
+	timer_interrupt_cpu (regs);
+
+	/* Restore Decrementer Count */
+	set_dec (decrementer_count);
+
+	timestamp++;
+
+#if defined(CONFIG_WATCHDOG) || defined (CONFIG_HW_WATCHDOG)
+	if ((timestamp % (CONFIG_SYS_WATCHDOG_FREQ)) == 0)
+		WATCHDOG_RESET ();
+#endif    /* CONFIG_WATCHDOG || CONFIG_HW_WATCHDOG */
+
+#ifdef CONFIG_STATUS_LED
+	status_led_tick (timestamp);
+#endif /* CONFIG_STATUS_LED */
+
+#ifdef CONFIG_SHOW_ACTIVITY
+	board_show_activity (timestamp);
+#endif /* CONFIG_SHOW_ACTIVITY */
 }
 
 ulong get_timer (ulong base)
 {
-  return (timestamp - base);
+	return (timestamp - base);
 }

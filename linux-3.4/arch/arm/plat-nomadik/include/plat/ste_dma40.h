@@ -24,21 +24,21 @@
 
 /* dev types for memcpy */
 #define STEDMA40_DEV_DST_MEMORY (-1)
-#define STEDMA40_DEV_SRC_MEMORY (-1)
+#define	STEDMA40_DEV_SRC_MEMORY (-1)
 
 enum stedma40_mode {
-  STEDMA40_MODE_LOGICAL = 0,
-  STEDMA40_MODE_PHYSICAL,
-  STEDMA40_MODE_OPERATION,
+	STEDMA40_MODE_LOGICAL = 0,
+	STEDMA40_MODE_PHYSICAL,
+	STEDMA40_MODE_OPERATION,
 };
 
 enum stedma40_mode_opt {
-  STEDMA40_PCHAN_BASIC_MODE = 0,
-  STEDMA40_LCHAN_SRC_LOG_DST_LOG = 0,
-  STEDMA40_PCHAN_MODULO_MODE,
-  STEDMA40_PCHAN_DOUBLE_DST_MODE,
-  STEDMA40_LCHAN_SRC_PHY_DST_LOG,
-  STEDMA40_LCHAN_SRC_LOG_DST_PHY,
+	STEDMA40_PCHAN_BASIC_MODE = 0,
+	STEDMA40_LCHAN_SRC_LOG_DST_LOG = 0,
+	STEDMA40_PCHAN_MODULO_MODE,
+	STEDMA40_PCHAN_DOUBLE_DST_MODE,
+	STEDMA40_LCHAN_SRC_PHY_DST_LOG,
+	STEDMA40_LCHAN_SRC_LOG_DST_PHY,
 };
 
 #define STEDMA40_ESIZE_8_BIT  0x0
@@ -66,22 +66,22 @@ enum stedma40_mode_opt {
 #define STEDMA40_MAX_PHYS 32
 
 enum stedma40_flow_ctrl {
-  STEDMA40_NO_FLOW_CTRL,
-  STEDMA40_FLOW_CTRL,
+	STEDMA40_NO_FLOW_CTRL,
+	STEDMA40_FLOW_CTRL,
 };
 
 enum stedma40_periph_data_width {
-  STEDMA40_BYTE_WIDTH = STEDMA40_ESIZE_8_BIT,
-  STEDMA40_HALFWORD_WIDTH = STEDMA40_ESIZE_16_BIT,
-  STEDMA40_WORD_WIDTH = STEDMA40_ESIZE_32_BIT,
-  STEDMA40_DOUBLEWORD_WIDTH = STEDMA40_ESIZE_64_BIT
+	STEDMA40_BYTE_WIDTH = STEDMA40_ESIZE_8_BIT,
+	STEDMA40_HALFWORD_WIDTH = STEDMA40_ESIZE_16_BIT,
+	STEDMA40_WORD_WIDTH = STEDMA40_ESIZE_32_BIT,
+	STEDMA40_DOUBLEWORD_WIDTH = STEDMA40_ESIZE_64_BIT
 };
 
 enum stedma40_xfer_dir {
-  STEDMA40_MEM_TO_MEM = 1,
-  STEDMA40_MEM_TO_PERIPH,
-  STEDMA40_PERIPH_TO_MEM,
-  STEDMA40_PERIPH_TO_PERIPH
+	STEDMA40_MEM_TO_MEM = 1,
+	STEDMA40_MEM_TO_PERIPH,
+	STEDMA40_PERIPH_TO_MEM,
+	STEDMA40_PERIPH_TO_PERIPH
 };
 
 
@@ -94,10 +94,10 @@ enum stedma40_xfer_dir {
  * @flow_ctrl: Flow control on/off.
  */
 struct stedma40_half_channel_info {
-  bool big_endian;
-  enum stedma40_periph_data_width data_width;
-  int psize;
-  enum stedma40_flow_ctrl flow_ctrl;
+	bool big_endian;
+	enum stedma40_periph_data_width data_width;
+	int psize;
+	enum stedma40_flow_ctrl flow_ctrl;
 };
 
 /**
@@ -121,18 +121,18 @@ struct stedma40_half_channel_info {
  *
  */
 struct stedma40_chan_cfg {
-  enum stedma40_xfer_dir       dir;
-  bool           high_priority;
-  bool           realtime;
-  enum stedma40_mode       mode;
-  enum stedma40_mode_opt       mode_opt;
-  int          src_dev_type;
-  int          dst_dev_type;
-  struct stedma40_half_channel_info  src_info;
-  struct stedma40_half_channel_info  dst_info;
-  
-  bool           use_fixed_channel;
-  int          phy_channel;
+	enum stedma40_xfer_dir			 dir;
+	bool					 high_priority;
+	bool					 realtime;
+	enum stedma40_mode			 mode;
+	enum stedma40_mode_opt			 mode_opt;
+	int					 src_dev_type;
+	int					 dst_dev_type;
+	struct stedma40_half_channel_info	 src_info;
+	struct stedma40_half_channel_info	 dst_info;
+
+	bool					 use_fixed_channel;
+	int					 phy_channel;
 };
 
 /**
@@ -149,15 +149,15 @@ struct stedma40_chan_cfg {
  * that are for different reasons not available for the driver.
  */
 struct stedma40_platform_data {
-  u32        dev_len;
-  const dma_addr_t  *  dev_tx;
-  const dma_addr_t  *  dev_rx;
-  int    *   memcpy;
-  u32        memcpy_len;
-  struct stedma40_chan_cfg * memcpy_conf_phy;
-  struct stedma40_chan_cfg * memcpy_conf_log;
-  int        disabled_channels[STEDMA40_MAX_PHYS];
-  bool         use_esram_lcla;
+	u32				 dev_len;
+	const dma_addr_t		*dev_tx;
+	const dma_addr_t		*dev_rx;
+	int				*memcpy;
+	u32				 memcpy_len;
+	struct stedma40_chan_cfg	*memcpy_conf_phy;
+	struct stedma40_chan_cfg	*memcpy_conf_log;
+	int				 disabled_channels[STEDMA40_MAX_PHYS];
+	bool				 use_esram_lcla;
 };
 
 #ifdef CONFIG_STE_DMA40
@@ -175,7 +175,7 @@ struct stedma40_platform_data {
  *
  */
 
-bool stedma40_filter (struct dma_chan * chan, void * data);
+bool stedma40_filter(struct dma_chan *chan, void *data);
 
 /**
  * stedma40_slave_mem() - Transfers a raw data buffer to or from a slave
@@ -189,34 +189,34 @@ bool stedma40_filter (struct dma_chan * chan, void * data);
  */
 
 static inline struct
-dma_async_tx_descriptor * stedma40_slave_mem (struct dma_chan * chan,
-    dma_addr_t addr,
-    unsigned int size,
-    enum dma_transfer_direction direction,
-    unsigned long flags)
+dma_async_tx_descriptor *stedma40_slave_mem(struct dma_chan *chan,
+					    dma_addr_t addr,
+					    unsigned int size,
+					    enum dma_transfer_direction direction,
+					    unsigned long flags)
 {
-  struct scatterlist sg;
-  sg_init_table (&sg, 1);
-  sg.dma_address = addr;
-  sg.length = size;
-  
-  return dmaengine_prep_slave_sg (chan, &sg, 1, direction, flags);
+	struct scatterlist sg;
+	sg_init_table(&sg, 1);
+	sg.dma_address = addr;
+	sg.length = size;
+
+	return dmaengine_prep_slave_sg(chan, &sg, 1, direction, flags);
 }
 
 #else
-static inline bool stedma40_filter (struct dma_chan * chan, void * data)
+static inline bool stedma40_filter(struct dma_chan *chan, void *data)
 {
-  return false;
+	return false;
 }
 
 static inline struct
-dma_async_tx_descriptor * stedma40_slave_mem (struct dma_chan * chan,
-    dma_addr_t addr,
-    unsigned int size,
-    enum dma_transfer_direction direction,
-    unsigned long flags)
+dma_async_tx_descriptor *stedma40_slave_mem(struct dma_chan *chan,
+					    dma_addr_t addr,
+					    unsigned int size,
+					    enum dma_transfer_direction direction,
+					    unsigned long flags)
 {
-  return NULL;
+	return NULL;
 }
 #endif
 

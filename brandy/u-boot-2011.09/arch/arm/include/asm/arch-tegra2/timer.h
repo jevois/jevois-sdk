@@ -25,6 +25,6 @@
 #define _TEGRA2_TIMER_H
 
 /* returns the current monotonic timer value in microseconds */
-unsigned long timer_get_us (void);
+unsigned long timer_get_us(void);
 
 #endif

@@ -28,17 +28,17 @@
 #define _NTERR_H
 
 struct nt_err_code_struct {
-  char * nt_errstr;
-  __u32 nt_errcode;
+	char *nt_errstr;
+	__u32 nt_errcode;
 };
 
 extern const struct nt_err_code_struct nt_errs[];
 
 /* Win32 Status codes. */
 #define STATUS_MORE_ENTRIES               0x0105
-#define ERROR_INVALID_PARAMETER     0x0057
-#define ERROR_INSUFFICIENT_BUFFER   0x007a
-#define STATUS_1804                   0x070c
+#define ERROR_INVALID_PARAMETER		  0x0057
+#define ERROR_INSUFFICIENT_BUFFER	  0x007a
+#define STATUS_1804	                  0x070c
 #define STATUS_NOTIFY_ENUM_DIR            0x010c
 
 /* Win32 Error codes extracted using a loop in smbclient then printing a
@@ -556,6 +556,6 @@ extern const struct nt_err_code_struct nt_errs[];
 #define NT_STATUS_TOO_MANY_LINKS 0xC0000000 | 0x0265
 #define NT_STATUS_QUOTA_LIST_INCONSISTENT 0xC0000000 | 0x0266
 #define NT_STATUS_FILE_IS_OFFLINE 0xC0000000 | 0x0267
-#define NT_STATUS_NO_SUCH_JOB 0xC0000000 | 0xEDE  /* scheduler */
+#define NT_STATUS_NO_SUCH_JOB 0xC0000000 | 0xEDE	/* scheduler */
 
-#endif        /* _NTERR_H */
+#endif				/* _NTERR_H */

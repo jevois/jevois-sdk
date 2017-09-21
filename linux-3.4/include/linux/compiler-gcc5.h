@@ -2,9 +2,9 @@
 #error "Please don't include <linux/compiler-gcc5.h> directly, include <linux/compiler.h> instead."
 #endif
 
-#define __used        __attribute__((__used__))
-#define __must_check      __attribute__((warn_unused_result))
-#define __compiler_offsetof(a, b) __builtin_offsetof(a, b)
+#define __used				__attribute__((__used__))
+#define __must_check			__attribute__((warn_unused_result))
+#define __compiler_offsetof(a, b)	__builtin_offsetof(a, b)
 
 /* Mark functions as cold. gcc will assume any path leading to a call
    to them will be unlikely.  This means a lot of manual unlikely()s
@@ -19,7 +19,7 @@
    gcc also has a __attribute__((__hot__)) to move hot functions into
    a special section, but I don't see any sense in this right now in
    the kernel context */
-#define __cold      __attribute__((__cold__))
+#define __cold			__attribute__((__cold__))
 
 #define __UNIQUE_ID(prefix) __PASTE(__PASTE(__UNIQUE_ID_, prefix), __COUNTER__)
 
@@ -40,7 +40,7 @@
 #define unreachable() __builtin_unreachable()
 
 /* Mark a function definition as prohibited from being cloned. */
-#define __noclone __attribute__((__noclone__))
+#define __noclone	__attribute__((__noclone__))
 
 /*
  * Tell the optimizer that something else uses this function or variable.
@@ -57,7 +57,7 @@
  *
  * (asm goto is automatically volatile - the naming reflects this.)
  */
-#define asm_volatile_goto(x...) do { asm goto(x); asm (""); } while (0)
+#define asm_volatile_goto(x...)	do { asm goto(x); asm (""); } while (0)
 
 #ifdef CONFIG_ARCH_USE_BUILTIN_BSWAP
 #define __HAVE_BUILTIN_BSWAP32__

@@ -38,68 +38,68 @@
 #include "devices.h"
 
 static struct resource smc91x_resources[] = {
-  [0] = {
-    .start  = 0x9C004300,
-    .end  = 0x9C004400,
-    .flags  = IORESOURCE_MEM,
-  },
-  [1] = {
-    .start  = MSM_GPIO_TO_INT (49),
-    .end  = MSM_GPIO_TO_INT (49),
-    .flags  = IORESOURCE_IRQ,
-  },
+	[0] = {
+		.start	= 0x9C004300,
+		.end	= 0x9C004400,
+		.flags	= IORESOURCE_MEM,
+	},
+	[1] = {
+		.start	= MSM_GPIO_TO_INT(49),
+		.end	= MSM_GPIO_TO_INT(49),
+		.flags	= IORESOURCE_IRQ,
+	},
 };
 
 static struct platform_device smc91x_device = {
-  .name   = "smc91x",
-  .id   = 0,
-  .num_resources  = ARRAY_SIZE (smc91x_resources),
-  .resource = smc91x_resources,
+	.name		= "smc91x",
+	.id		= 0,
+	.num_resources	= ARRAY_SIZE(smc91x_resources),
+	.resource	= smc91x_resources,
 };
 
-static struct platform_device * devices[] __initdata = {
-  &msm_device_uart3,
-  &msm_device_smd,
-  &msm_device_nand,
-  &msm_device_hsusb,
-  &msm_device_i2c,
-  &smc91x_device,
+static struct platform_device *devices[] __initdata = {
+	&msm_device_uart3,
+	&msm_device_smd,
+	&msm_device_nand,
+	&msm_device_hsusb,
+	&msm_device_i2c,
+	&smc91x_device,
 };
 
 extern struct sys_timer msm_timer;
 
-static void __init halibut_init_early (void)
+static void __init halibut_init_early(void)
 {
-  arch_ioremap_caller = __msm_ioremap_caller;
+	arch_ioremap_caller = __msm_ioremap_caller;
 }
 
-static void __init halibut_init_irq (void)
+static void __init halibut_init_irq(void)
 {
-  msm_init_irq();
+	msm_init_irq();
 }
 
-static void __init halibut_init (void)
+static void __init halibut_init(void)
 {
-  platform_add_devices (devices, ARRAY_SIZE (devices) );
+	platform_add_devices(devices, ARRAY_SIZE(devices));
 }
 
-static void __init halibut_fixup (struct tag * tags, char ** cmdline,
-                                  struct meminfo * mi)
+static void __init halibut_fixup(struct tag *tags, char **cmdline,
+				 struct meminfo *mi)
 {
 }
 
-static void __init halibut_map_io (void)
+static void __init halibut_map_io(void)
 {
-  msm_map_common_io();
-  msm_clock_init (msm_clocks_7x01a, msm_num_clocks_7x01a);
+	msm_map_common_io();
+	msm_clock_init(msm_clocks_7x01a, msm_num_clocks_7x01a);
 }
 
-MACHINE_START (HALIBUT, "Halibut Board (QCT SURF7200A)")
-.atag_offset  = 0x100,
- .fixup    = halibut_fixup,
-  .map_io   = halibut_map_io,
-   .init_early = halibut_init_early,
-    .init_irq = halibut_init_irq,
-     .init_machine = halibut_init,
-      .timer    = &msm_timer,
-       MACHINE_END
+MACHINE_START(HALIBUT, "Halibut Board (QCT SURF7200A)")
+	.atag_offset	= 0x100,
+	.fixup		= halibut_fixup,
+	.map_io		= halibut_map_io,
+	.init_early	= halibut_init_early,
+	.init_irq	= halibut_init_irq,
+	.init_machine	= halibut_init,
+	.timer		= &msm_timer,
+MACHINE_END

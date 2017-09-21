@@ -29,11 +29,11 @@
 
 #ifdef CONFIG_SMP
 #define LOCK_PREFIX_HERE \
-  ".section .smp_locks,\"a\"\n" \
-  ".balign 4\n"     \
-  ".long 671f - .\n" /* offset */ \
-  ".previous\n"     \
-  "671:"
+		".section .smp_locks,\"a\"\n"	\
+		".balign 4\n"			\
+		".long 671f - .\n" /* offset */	\
+		".previous\n"			\
+		"671:"
 
 #define LOCK_PREFIX LOCK_PREFIX_HERE "\n\tlock; "
 
@@ -43,55 +43,55 @@
 #endif
 
 struct alt_instr {
-  s32 instr_offset; /* original instruction */
-  s32 repl_offset;  /* offset to replacement instruction */
-  u16 cpuid;    /* cpuid bit set for replacement */
-  u8  instrlen;   /* length of original instruction */
-  u8  replacementlen; /* length of new instruction, <= instrlen */
+	s32 instr_offset;	/* original instruction */
+	s32 repl_offset;	/* offset to replacement instruction */
+	u16 cpuid;		/* cpuid bit set for replacement */
+	u8  instrlen;		/* length of original instruction */
+	u8  replacementlen;	/* length of new instruction, <= instrlen */
 };
 
-extern void alternative_instructions (void);
-extern void apply_alternatives (struct alt_instr * start, struct alt_instr * end);
+extern void alternative_instructions(void);
+extern void apply_alternatives(struct alt_instr *start, struct alt_instr *end);
 
 struct module;
 
 #ifdef CONFIG_SMP
-extern void alternatives_smp_module_add (struct module * mod, char * name,
-    void * locks, void * locks_end,
-    void * text, void * text_end);
-extern void alternatives_smp_module_del (struct module * mod);
-extern void alternatives_smp_switch (int smp);
-extern int alternatives_text_reserved (void * start, void * end);
+extern void alternatives_smp_module_add(struct module *mod, char *name,
+					void *locks, void *locks_end,
+					void *text, void *text_end);
+extern void alternatives_smp_module_del(struct module *mod);
+extern void alternatives_smp_switch(int smp);
+extern int alternatives_text_reserved(void *start, void *end);
 extern bool skip_smp_alternatives;
 #else
-static inline void alternatives_smp_module_add (struct module * mod, char * name,
-    void * locks, void * locks_end,
-    void * text, void * text_end) {}
-static inline void alternatives_smp_module_del (struct module * mod) {}
-static inline void alternatives_smp_switch (int smp) {}
-static inline int alternatives_text_reserved (void * start, void * end)
+static inline void alternatives_smp_module_add(struct module *mod, char *name,
+					       void *locks, void *locks_end,
+					       void *text, void *text_end) {}
+static inline void alternatives_smp_module_del(struct module *mod) {}
+static inline void alternatives_smp_switch(int smp) {}
+static inline int alternatives_text_reserved(void *start, void *end)
 {
-  return 0;
+	return 0;
 }
-#endif  /* CONFIG_SMP */
+#endif	/* CONFIG_SMP */
 
 /* alternative assembly primitive: */
-#define ALTERNATIVE(oldinstr, newinstr, feature)      \
-  \
-  "661:\n\t" oldinstr "\n662:\n"          \
-  ".section .altinstructions,\"a\"\n"       \
-  "	 .long 661b - .\n"      /* label           */ \
-  "	 .long 663f - .\n"      /* new instruction */ \
-  "	 .word " __stringify(feature) "\n"  /* feature bit     */ \
-  "	 .byte 662b-661b\n"     /* sourcelen       */ \
-  "	 .byte 664f-663f\n"     /* replacementlen  */ \
-  ".previous\n"             \
-  ".section .discard,\"aw\",@progbits\n"        \
-  "	 .byte 0xff + (664f-663f) - (662b-661b)\n" /* rlen <= slen */ \
-  ".previous\n"             \
-  ".section .altinstr_replacement, \"ax\"\n"      \
-  "663:\n\t" newinstr "\n664:\n"    /* replacement     */ \
-  ".previous"
+#define ALTERNATIVE(oldinstr, newinstr, feature)			\
+									\
+      "661:\n\t" oldinstr "\n662:\n"					\
+      ".section .altinstructions,\"a\"\n"				\
+      "	 .long 661b - .\n"			/* label           */	\
+      "	 .long 663f - .\n"			/* new instruction */	\
+      "	 .word " __stringify(feature) "\n"	/* feature bit     */	\
+      "	 .byte 662b-661b\n"			/* sourcelen       */	\
+      "	 .byte 664f-663f\n"			/* replacementlen  */	\
+      ".previous\n"							\
+      ".section .discard,\"aw\",@progbits\n"				\
+      "	 .byte 0xff + (664f-663f) - (662b-661b)\n" /* rlen <= slen */	\
+      ".previous\n"							\
+      ".section .altinstr_replacement, \"ax\"\n"			\
+      "663:\n\t" newinstr "\n664:\n"		/* replacement     */	\
+      ".previous"
 
 /*
  * This must be included *after* the definition of ALTERNATIVE due to
@@ -111,8 +111,8 @@ static inline int alternatives_text_reserved (void * start, void * end)
  * For non barrier like inlines please define new variants
  * without volatile and memory clobber.
  */
-#define alternative(oldinstr, newinstr, feature)      \
-  asm volatile (ALTERNATIVE(oldinstr, newinstr, feature) : : : "memory")
+#define alternative(oldinstr, newinstr, feature)			\
+	asm volatile (ALTERNATIVE(oldinstr, newinstr, feature) : : : "memory")
 
 /*
  * Alternative inline assembly with input.
@@ -125,19 +125,19 @@ static inline int alternatives_text_reserved (void * start, void * end)
  * replacement make sure to pad to the worst case length.
  * Leaving an unused argument 0 to keep API compatibility.
  */
-#define alternative_input(oldinstr, newinstr, feature, input...)  \
-  asm volatile (ALTERNATIVE(oldinstr, newinstr, feature)    \
-                : : "i" (0), ## input)
+#define alternative_input(oldinstr, newinstr, feature, input...)	\
+	asm volatile (ALTERNATIVE(oldinstr, newinstr, feature)		\
+		: : "i" (0), ## input)
 
 /* Like alternative_input, but with a single output argument */
-#define alternative_io(oldinstr, newinstr, feature, output, input...) \
-  asm volatile (ALTERNATIVE(oldinstr, newinstr, feature)    \
-                : output : "i" (0), ## input)
+#define alternative_io(oldinstr, newinstr, feature, output, input...)	\
+	asm volatile (ALTERNATIVE(oldinstr, newinstr, feature)		\
+		: output : "i" (0), ## input)
 
 /* Like alternative_io, but for replacing a direct call with another one. */
-#define alternative_call(oldfunc, newfunc, feature, output, input...) \
-  asm volatile (ALTERNATIVE("call %P[old]", "call %P[new]", feature) \
-                : output : [old] "i" (oldfunc), [new] "i" (newfunc), ## input)
+#define alternative_call(oldfunc, newfunc, feature, output, input...)	\
+	asm volatile (ALTERNATIVE("call %P[old]", "call %P[new]", feature) \
+		: output : [old] "i" (oldfunc), [new] "i" (newfunc), ## input)
 
 /*
  * use this macro(s) if you need more than one output parameter
@@ -153,17 +153,17 @@ static inline int alternatives_text_reserved (void * start, void * end)
 
 struct paravirt_patch_site;
 #ifdef CONFIG_PARAVIRT
-void apply_paravirt (struct paravirt_patch_site * start,
-                     struct paravirt_patch_site * end);
+void apply_paravirt(struct paravirt_patch_site *start,
+		    struct paravirt_patch_site *end);
 #else
-static inline void apply_paravirt (struct paravirt_patch_site * start,
-                                   struct paravirt_patch_site * end)
+static inline void apply_paravirt(struct paravirt_patch_site *start,
+				  struct paravirt_patch_site *end)
 {}
-#define __parainstructions  NULL
-#define __parainstructions_end  NULL
+#define __parainstructions	NULL
+#define __parainstructions_end	NULL
 #endif
 
-extern void * text_poke_early (void * addr, const void * opcode, size_t len);
+extern void *text_poke_early(void *addr, const void *opcode, size_t len);
 
 /*
  * Clear and restore the kernel write-protection flag on the local CPU.
@@ -183,13 +183,13 @@ extern void * text_poke_early (void * addr, const void * opcode, size_t len);
  * inconsistent instruction while you patch.
  */
 struct text_poke_param {
-  void * addr;
-  const void * opcode;
-  size_t len;
+	void *addr;
+	const void *opcode;
+	size_t len;
 };
 
-extern void * text_poke (void * addr, const void * opcode, size_t len);
-extern void * text_poke_smp (void * addr, const void * opcode, size_t len);
-extern void text_poke_smp_batch (struct text_poke_param * params, int n);
+extern void *text_poke(void *addr, const void *opcode, size_t len);
+extern void *text_poke_smp(void *addr, const void *opcode, size_t len);
+extern void text_poke_smp_batch(struct text_poke_param *params, int n);
 
 #endif /* _ASM_X86_ALTERNATIVE_H */

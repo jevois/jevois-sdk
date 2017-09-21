@@ -2,16 +2,16 @@
  *
  * @brief this file contains the public API of @ref IxEthDB component
  *
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,7 +24,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -37,12 +37,12 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  *
  */
-
+ 
 #ifndef IxEthDB_H
 #define IxEthDB_H
 
@@ -113,7 +113,7 @@ typedef enum /* IxEthDBStatus */
   IX_ETH_DB_INVALID_KEY,            /**< Invalid search key */
   IX_ETH_DB_INVALID_RECORD_TYPE     /**< Invalid record type */
 } IxEthDBStatus;
-
+    
 /** @brief VLAN ID type, valid range is 0..4094, 0 signifying no VLAN membership */
 typedef UINT32 IxEthDBVlanId;
 
@@ -140,8 +140,8 @@ typedef UINT8 IxEthDBVlanSet[512];
  *
  * This macro is used to change the VLAN ID in a 802.1Q tag.
  *
- * Example:
- *
+ * Example: 
+ * 
  *  tag = IX_ETH_DB_SET_VLAN_ID(tag, 32)
  *
  * inserts the VLAN ID "32" in the given tag.
@@ -163,14 +163,14 @@ typedef UINT8 IxEthDBVlanSet[512];
 #define IX_ETH_DB_CHECK_VLAN_ID(vlanId) { if (vlanId > IX_ETH_DB_802_1Q_MAX_VLAN_ID) return IX_ETH_DB_INVALID_VLAN; }
 
 #define IX_IEEE802_1Q_VLAN_TPID (0x8100)
-
+    
 typedef enum
 {
   IX_ETH_DB_UNTAGGED_FRAMES        = 0x1, /**< Accepts untagged frames */
   IX_ETH_DB_VLAN_TAGGED_FRAMES     = 0x2, /**< Accepts tagged frames */
   IX_ETH_DB_PRIORITY_TAGGED_FRAMES = 0x4, /**< Accepts tagged frames with VLAN ID set to 0 (no VLAN membership) */
-  IX_ETH_DB_ACCEPT_ALL_FRAMES      =
-    IX_ETH_DB_UNTAGGED_FRAMES | IX_ETH_DB_VLAN_TAGGED_FRAMES /**< Accepts all the frames */
+  IX_ETH_DB_ACCEPT_ALL_FRAMES      = 
+      IX_ETH_DB_UNTAGGED_FRAMES | IX_ETH_DB_VLAN_TAGGED_FRAMES /**< Accepts all the frames */
 } IxEthDBFrameFilter;
 
 typedef enum
@@ -185,23 +185,23 @@ typedef enum
   IX_ETH_DB_FIREWALL_WHITE_LIST = 0x1,  /**< Firewall operates in white-list mode (MAC address based admission) */
   IX_ETH_DB_FIREWALL_BLACK_LIST = 0x2   /**< Firewall operates in black-list mode (MAC address based blocking) */
 } IxEthDBFirewallMode;
-
+  
 typedef enum
 {
-  IX_ETH_DB_FILTERING_RECORD        = 0x01, /**< <table><caption> Filtering record </caption>
-                                             *      <tr><td> MAC address <td> static/dynamic type <td> age
-                                             *   </table>
+  IX_ETH_DB_FILTERING_RECORD        = 0x01, /**< <table><caption> Filtering record </caption> 
+                                             *      <tr><td> MAC address <td> static/dynamic type <td> age 
+                                             *   </table> 
                                              */
   IX_ETH_DB_FILTERING_VLAN_RECORD   = 0x02, /**< <table><caption> VLAN-enabled filtering record </caption>
-                                             *      <tr><td> MAC address <td> static/dynamic type <td> age <td> 802.1Q tag
-                                             *   </table>
+                                             *      <tr><td> MAC address <td> static/dynamic type <td> age <td> 802.1Q tag 
+                                             *   </table> 
                                              */
   IX_ETH_DB_WIFI_RECORD             = 0x04, /**< <table><caption> WiFi header conversion record </caption>
-                                             *      <tr><td> MAC address <td> optional gateway MAC address <td>
+                                             *      <tr><td> MAC address <td> optional gateway MAC address <td> 
                                              *   </table>
                                              */
   IX_ETH_DB_FIREWALL_RECORD         = 0x08, /**< <table><caption> Firewall record </caption>
-                                             *      <tr><td> MAC address
+                                             *      <tr><td> MAC address 
                                              *   </table>
                                              */
   IX_ETH_DB_GATEWAY_RECORD          = 0x10, /**< <i>For internal use only</i> */
@@ -209,9 +209,9 @@ typedef enum
   IX_ETH_DB_NO_RECORD_TYPE          = 0,    /**< None of the registered record types */
   IX_ETH_DB_ALL_FILTERING_RECORDS   = IX_ETH_DB_FILTERING_RECORD | IX_ETH_DB_FILTERING_VLAN_RECORD, /**< All the filtering records */
   IX_ETH_DB_ALL_RECORD_TYPES        = IX_ETH_DB_FILTERING_RECORD | IX_ETH_DB_FILTERING_VLAN_RECORD |
-                                      IX_ETH_DB_WIFI_RECORD | IX_ETH_DB_FIREWALL_RECORD /**< All the record types registered within EthDB */
+      IX_ETH_DB_WIFI_RECORD | IX_ETH_DB_FIREWALL_RECORD /**< All the record types registered within EthDB */    
 } IxEthDBRecordType;
-
+  
 typedef enum
 {
   IX_ETH_DB_LEARNING                = 0x01, /**< Learning feature; enables EthDB to learn MAC address (filtering) records, including 802.1Q enabled records */
@@ -221,7 +221,7 @@ typedef enum
   IX_ETH_DB_SPANNING_TREE_PROTOCOL  = 0x10, /**< Spanning tree protocol feature; enables EthDB to configure the NPEs as STP nodes */
   IX_ETH_DB_WIFI_HEADER_CONVERSION  = 0x20  /**< WiFi 802.3 to 802.11 header conversion feature; enables EthDB to handle WiFi conversion data */
 } IxEthDBFeature;
-
+  
 typedef UINT32 IxEthDBProperty;  /**< Property ID type */
 
 typedef enum
@@ -245,18 +245,18 @@ typedef enum
 
 /* private property used by EthAcc to indicate queue configuration complete */
 #define IX_ETH_DB_QOS_QUEUE_CONFIGURATION_COMPLETE (0x18)
-
+      
 /**
  *
  * @brief The IEEE 802.3 Ethernet MAC address structure.
- *
- * The data should be packed with bytes xx:xx:xx:xx:xx:xx
+ * 
+ * The data should be packed with bytes xx:xx:xx:xx:xx:xx 
  *
  * @note The data must be packed in network byte order.
  */
-typedef struct
+typedef struct  
 {
-  UINT8 macAddress[IX_IEEE803_MAC_ADDRESS_SIZE];
+   UINT8 macAddress[IX_IEEE803_MAC_ADDRESS_SIZE];
 } IxEthDBMacAddr;
 
 /**
@@ -272,7 +272,7 @@ typedef UINT32 IxEthDBPortId;
  * @brief Port dependency map definition
  */
 typedef UINT8 IxEthDBPortMap[32];
-
+    
 /**
  * @ingroup IxEthDB
  *
@@ -286,9 +286,9 @@ typedef UINT8 IxEthDBPortMap[32];
  * @retval IX_ETH_DB_SUCCESS initialization was successful
  * @retval IX_ETH_DB_FAIL initialization failed (OS error)
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBInit (void);
-
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBInit(void);
+ 
 /**
  * @ingroup IxEthDB
  *
@@ -301,7 +301,7 @@ IxEthDBStatus ixEthDBInit (void);
  * @retval IX_ETH_DB_FAIL de-initialization failed (OS error)
  */
 IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBUnload (void);
+IxEthDBStatus ixEthDBUnload(void);
 
 /**
  * @ingroup IxEthDB
@@ -313,7 +313,7 @@ IxEthDBStatus ixEthDBUnload (void);
  * This function is called automatically by the Ethernet Access
  * ixEthAccPortInit() routine for Ethernet NPE ports and should be manually
  * called for any user-defined port (any port that is not one of
- * the two Ethernet NPEs).
+ * the two Ethernet NPEs). 
  *
  * @param portID @ref IxEthDBPortId [in] - ID of the port to be initialized
  *
@@ -322,8 +322,8 @@ IxEthDBStatus ixEthDBUnload (void);
  * @note calling this function multiple times does not constitute an error;
  * redundant calls will be ignored
  */
-IX_ETH_DB_PUBLIC
-void ixEthDBPortInit (IxEthDBPortId portID);
+IX_ETH_DB_PUBLIC 
+void ixEthDBPortInit(IxEthDBPortId portID);
 
 /**
  * @ingroup IxEthDB
@@ -335,7 +335,7 @@ void ixEthDBPortInit (IxEthDBPortId portID);
  * This function is called automatically from the Ethernet Access component
  * ixEthAccPortEnable() routine for Ethernet NPE ports and should be manually
  * called for any user-defined port (any port that is not one of
- * the Ethernet NPEs).
+ * the Ethernet NPEs). 
  *
  * @param portID @ref IxEthDBPortId [in] - ID of the port to enable processing on
  *
@@ -356,8 +356,8 @@ void ixEthDBPortInit (IxEthDBPortId portID);
  * @note calling this function multiple times does not constitute an error;
  * redundant calls will be ignored
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPortEnable (IxEthDBPortId portID);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPortEnable(IxEthDBPortId portID);
 
 /**
  * @ingroup IxEthDB
@@ -374,7 +374,7 @@ IxEthDBStatus ixEthDBPortEnable (IxEthDBPortId portID);
  * @note Calling ixEthAccPortDisable() will disable the respective Ethernet NPE.
  * After Ethernet NPEs are disabled they are stopped therefore
  * when re-enabled they need to be reset, downloaded with microcode and started.
- * For learning to restart working the user needs to call again
+ * For learning to restart working the user needs to call again 
  * ixEthAccPortUnicastMacAddressSet or ixEthDBUnicastAddressSet
  * with the respective port MAC address.
  * Residual MAC addresses learnt before the port was disabled are deleted as soon
@@ -391,8 +391,8 @@ IxEthDBStatus ixEthDBPortEnable (IxEthDBPortId portID);
  * @note calling this function multiple times after the first time completed successfully
  * does not constitute an error; redundant calls will be ignored and return IX_ETH_DB_SUCCESS
 */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPortDisable (IxEthDBPortId portID);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPortDisable(IxEthDBPortId portID);
 
 /**
  * @ingroup IxEthDB
@@ -414,8 +414,8 @@ IxEthDBStatus ixEthDBPortDisable (IxEthDBPortId portID);
  *
  * @see IxEthDBPortDefs.h for port definitions
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPortAddressSet (IxEthDBPortId portID, IxEthDBMacAddr * macAddr);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPortAddressSet(IxEthDBPortId portID, IxEthDBMacAddr *macAddr);
 
 /**
  * @ingroup IxEthDB
@@ -424,8 +424,8 @@ IxEthDBStatus ixEthDBPortAddressSet (IxEthDBPortId portID, IxEthDBMacAddr * macA
  *
  * @brief Set the maximum frame size supported on the given port ID
  *
- * This functions set the maximum frame size supported on a specific port ID
- *
+ * This functions set the maximum frame size supported on a specific port ID 
+ * 
  * - Reentrant    - yes
  * - ISR Callable - no
  *
@@ -445,8 +445,8 @@ IxEthDBStatus ixEthDBPortAddressSet (IxEthDBPortId portID, IxEthDBMacAddr * macA
  * The mximum value that can be set for a NPE port is 16320.
  * (IX_ETHNPE_ACC_FRAME_LENGTH_MAX)
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFilteringPortMaximumFrameSizeSet (IxEthDBPortId portID, UINT32 maximumFrameSize);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFilteringPortMaximumFrameSizeSet(IxEthDBPortId portID, UINT32 maximumFrameSize);
 
 /**
  * @ingroup IxEthDB
@@ -461,10 +461,10 @@ IxEthDBStatus ixEthDBFilteringPortMaximumFrameSizeSet (IxEthDBPortId portID, UIN
  *
  * - Reentrant    - yes
  * - ISR Callable - yes
- *
+ * 
  * @param portID @ref IxEthDBPortId [in] - port ID to add the static address to
  * @param macAddr @ref IxEthDBMacAddr [in] - static MAC address to add
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS the add was successful
  * @retval IX_ETH_DB_FAIL failed to populate the database entry
  * @retval IX_ETH_DB_BUSY failed due to a temporary busy condition (i.e. lack of CPU cycles), try again later
@@ -473,8 +473,8 @@ IxEthDBStatus ixEthDBFilteringPortMaximumFrameSizeSet (IxEthDBPortId portID, UIN
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>macAddr</i> pointer argument
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE learning feature is disabled
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFilteringStaticEntryProvision (IxEthDBPortId portID, IxEthDBMacAddr * macAddr);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFilteringStaticEntryProvision(IxEthDBPortId portID, IxEthDBMacAddr *macAddr);
 
 /**
  * @ingroup IxEthDB
@@ -483,7 +483,7 @@ IxEthDBStatus ixEthDBFilteringStaticEntryProvision (IxEthDBPortId portID, IxEthD
  *
  * @brief Populate the Ethernet learning/filtering database with a dynamic MAC address
  *
- * Populates the Ethernet learning/filtering database with a dynamic MAC address. This entry will be subject to normal
+ * Populates the Ethernet learning/filtering database with a dynamic MAC address. This entry will be subject to normal 
  * aging function, if aging is enabled on its port.
  * If there is an entry (static or dynamic) with the same MAC address on any port this entry will take precedence.
  * Any other entry with the same MAC address will be removed.
@@ -502,8 +502,8 @@ IxEthDBStatus ixEthDBFilteringStaticEntryProvision (IxEthDBPortId portID, IxEthD
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>macAddr</i> pointer argument
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE learning feature is disabled
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFilteringDynamicEntryProvision (IxEthDBPortId portID, IxEthDBMacAddr * macAddr);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFilteringDynamicEntryProvision(IxEthDBPortId portID, IxEthDBMacAddr *macAddr);
 
 /**
  * @ingroup IxEthDB
@@ -522,8 +522,8 @@ IxEthDBStatus ixEthDBFilteringDynamicEntryProvision (IxEthDBPortId portID, IxEth
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>macAddr</i> pointer argument
  * @retval IX_ETH_DB_BUSY failed due to a temporary busy condition (i.e. lack of CPU cycles), try again later
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFilteringEntryDelete (IxEthDBMacAddr * macAddr);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFilteringEntryDelete(IxEthDBMacAddr *macAddr);
 
 /**
  * @ingroup IxEthDB
@@ -548,8 +548,8 @@ IxEthDBStatus ixEthDBFilteringEntryDelete (IxEthDBMacAddr * macAddr);
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port ID is not initialized
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE learning feature is disabled
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFilteringPortSearch (IxEthDBPortId portID, IxEthDBMacAddr * macAddr);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFilteringPortSearch(IxEthDBPortId portID, IxEthDBMacAddr *macAddr);
 
 /**
  * @ingroup IxEthDB
@@ -558,8 +558,8 @@ IxEthDBStatus ixEthDBFilteringPortSearch (IxEthDBPortId portID, IxEthDBMacAddr *
  *
  * @brief Search the Ethernet learning/filtering database for a MAC address and return the port ID
  *
- * Searches the database for a MAC address. The function returns the portID for the
- * MAC address record, if found. If no match is found the function returns IX_ETH_DB_NO_SUCH_ADDR.
+ * Searches the database for a MAC address. The function returns the portID for the 
+ * MAC address record, if found. If no match is found the function returns IX_ETH_DB_NO_SUCH_ADDR. 
  * The portID is only valid if the function finds a match.
  *
  * - Reentrant    - yes
@@ -572,8 +572,8 @@ IxEthDBStatus ixEthDBFilteringPortSearch (IxEthDBPortId portID, IxEthDBMacAddr *
  * @retval IX_ETH_DB_NO_SUCH_ADDR the record was not found in the database
  * @retval IX_ETH_DB_INVALID_ARG invalid macAddr or portID pointer argument(s)
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFilteringDatabaseSearch (IxEthDBPortId * portID, IxEthDBMacAddr * macAddr);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFilteringDatabaseSearch(IxEthDBPortId *portID, IxEthDBMacAddr *macAddr);
 
 /**
  * @ingroup IxEthDB
@@ -582,9 +582,9 @@ IxEthDBStatus ixEthDBFilteringDatabaseSearch (IxEthDBPortId * portID, IxEthDBMac
  *
  * @brief Search the filtering database for a MAC address, return the port ID and reset the record age
  *
- * Searches the database for a MAC address. The function returns the portID for the
- * MAC address record and resets the entry age to 0, if found.
- * If no match is found the function returns IX_ETH_DB_NO_SUCH_ADDR.
+ * Searches the database for a MAC address. The function returns the portID for the 
+ * MAC address record and resets the entry age to 0, if found. 
+ * If no match is found the function returns IX_ETH_DB_NO_SUCH_ADDR. 
  * The portID is only valid if the function finds a match.
  *
  * - Reentrant      - yes
@@ -594,15 +594,15 @@ IxEthDBStatus ixEthDBFilteringDatabaseSearch (IxEthDBPortId * portID, IxEthDBMac
  * @retval IX_ETH_DB_NO_SUCH_ADDR the MAC address was not found
  * @retval IX_ETH_DB_INVALID_ARG invalid macAddr or portID pointer argument(s)
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFilteringPortUpdatingSearch (IxEthDBPortId * portID, IxEthDBMacAddr * macAddr);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFilteringPortUpdatingSearch(IxEthDBPortId *portID, IxEthDBMacAddr *macAddr);
 
 /**
  * @ingroup IxEthDB
  *
  * @def IX_ETH_DB_MAINTENANCE_TIME
  *
- * @brief The @ref ixEthDBDatabaseMaintenance must be called by the user at a frequency of
+ * @brief The @ref ixEthDBDatabaseMaintenance must be called by the user at a frequency of 
  * IX_ETH_DB_MAINTENANCE_TIME
  *
  */
@@ -636,8 +636,8 @@ IxEthDBStatus ixEthDBFilteringPortUpdatingSearch (IxEthDBPortId * portID, IxEthD
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port ID is not initialized
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE learning feature is disabled
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPortAgingDisable (IxEthDBPortId portID);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPortAgingDisable(IxEthDBPortId portID);
 
 /**
  * @ingroup IxEthDB
@@ -645,10 +645,10 @@ IxEthDBStatus ixEthDBPortAgingDisable (IxEthDBPortId portID);
  * @fn IxEthDBStatus ixEthDBPortAgingEnable(IxEthDBPortId portID)
  *
  * @brief Enable the aging function for a specific port
- *
+ * 
  * Enables the aging of dynamic MAC address entries stored in the learning/filtering database
- *
- * @note The aging function relies on the @ref ixEthDBDatabaseMaintenance being called with a period of
+ * 
+ * @note The aging function relies on the @ref ixEthDBDatabaseMaintenance being called with a period of 
  * @ref IX_ETH_DB_MAINTENANCE_TIME seconds.
  *
  * - Reentrant    - yes
@@ -661,8 +661,8 @@ IxEthDBStatus ixEthDBPortAgingDisable (IxEthDBPortId portID);
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port ID is not initialized
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE learning feature is disabled
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPortAgingEnable (IxEthDBPortId portID);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPortAgingEnable(IxEthDBPortId portID);
 
 /**
  * @ingroup IxEthDB
@@ -670,18 +670,18 @@ IxEthDBStatus ixEthDBPortAgingEnable (IxEthDBPortId portID);
  * @fn void ixEthDBDatabaseMaintenance(void)
  *
  * @brief Performs a maintenance operation on the Ethernet learning/filtering database
- *
+ * 
  * In order to perform a database maintenance this function must be called every
  * @ref IX_ETH_DB_MAINTENANCE_TIME seconds. It should be called regardless of whether learning is
  * enabled or not.
  *
  * - Reentrant    - no
  * - ISR Callable - no
- *
+ * 
  * @note this function call will be ignored if the learning feature is disabled
  */
-IX_ETH_DB_PUBLIC
-void ixEthDBDatabaseMaintenance (void);
+IX_ETH_DB_PUBLIC 
+void ixEthDBDatabaseMaintenance(void);
 
 /**
  * @ingroup IxEthDB
@@ -690,7 +690,7 @@ void ixEthDBDatabaseMaintenance (void);
  *
  * @brief This function displays the Mac Ethernet MAC address filtering tables.
  *
- * It displays the MAC address, port ID, entry type (dynamic/static),and age for
+ * It displays the MAC address, port ID, entry type (dynamic/static),and age for 
  * the given port ID.
  *
  * - Reentrant    - no
@@ -704,13 +704,13 @@ void ixEthDBDatabaseMaintenance (void);
  * @retval IX_ETH_DB_FAIL record browser failed due to an internal busy or lock condition
  *
  * @note this function is deprecated and kept for compatibility reasons; use @ref ixEthDBFilteringDatabaseShowRecords instead
- *
+ * 
  * @see ixEthDBFilteringDatabaseShowRecords
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFilteringDatabaseShow (IxEthDBPortId portID);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFilteringDatabaseShow(IxEthDBPortId portID);
 
-/**
+/** 
  * @ingroup IxEthDB
  *
  * @fn void ixEthDBFilteringDatabaseShowAll(void)
@@ -724,11 +724,11 @@ IxEthDBStatus ixEthDBFilteringDatabaseShow (IxEthDBPortId portID);
  * @retval void
  *
  * @note this function is deprecated and kept for compatibility reasons; use @ref ixEthDBFilteringDatabaseShowRecords instead
- *
+ * 
  * @see ixEthDBFilteringDatabaseShowRecords
  */
-IX_ETH_DB_PUBLIC
-void ixEthDBFilteringDatabaseShowAll (void);
+IX_ETH_DB_PUBLIC 
+void ixEthDBFilteringDatabaseShowAll(void);
 
 /**
  * @ingroup IxEthDB
@@ -738,7 +738,7 @@ void ixEthDBFilteringDatabaseShowAll (void);
  * @brief This function displays per port database records, given a record type filter
  *
  * The supported record type filters are:
- *
+ * 
  * - IX_ETH_DB_FILTERING_RECORD - displays the non-VLAN filtering records (MAC address, age, static/dynamic)
  * - IX_ETH_DB_FILTERING_VLAN_RECORD - displays the VLAN filtering records (MAC address, age, static/dynamic, VLAN ID, CFI, QoS class)
  * - IX_ETH_DB_FILTERING_RECORD | IX_ETH_DB_FILTERING_VLAN_RECORD - displays the previous two types of records
@@ -746,8 +746,8 @@ void ixEthDBFilteringDatabaseShowAll (void);
  * - IX_ETH_DB_FIREWALL_RECORD - displays the firewall MAC address table and firewall operating mode (white list/black list)
  * - IX_ETH_DB_ALL_RECORD_TYPES - displays all the record types
  * - IX_ETH_DB_NO_RECORD_TYPE - displays only the port status (no records are displayed)
- *
- * Additionally, the status of each port will be displayed, containg the following information: type, capabilities, enabled status,
+ * 
+ * Additionally, the status of each port will be displayed, containg the following information: type, capabilities, enabled status, 
  * aging enabled status, group membership and maximum frame size.
  *
  * The port ID can either be an actual port or IX_ETH_DB_ALL_PORTS, in which case the requested information
@@ -763,8 +763,8 @@ void ixEthDBFilteringDatabaseShowAll (void);
  * @retval IX_ETH_DB_INVALID_PORT portID is invalid
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port ID is not initialized
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFilteringDatabaseShowRecords (IxEthDBPortId portID, IxEthDBRecordType recordFilter);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFilteringDatabaseShowRecords(IxEthDBPortId portID, IxEthDBRecordType recordFilter);
 
 /**
  * @ingroup IxEthDB
@@ -794,13 +794,13 @@ IxEthDBStatus ixEthDBFilteringDatabaseShowRecords (IxEthDBPortId portID, IxEthDB
  * Note that the last bit (offset 255) is reserved and should never be set (it will be automatically
  * cleared by the function).
  *
- * By default, each port has a dependency port map consisting only of itself, i.e.
+ * By default, each port has a dependency port map consisting only of itself, i.e. 
  *
  * @verbatim
     IxEthDBPortMap portMap;
-
-    memset(portMap, 0, sizeof (portMap));
-
+    
+    memset(portMap, 0, sizeof (portMap)); 
+    
     portMap[portID / 8] = 1 << (portID % 8);
    @endverbatim
  *
@@ -810,9 +810,9 @@ IxEthDBStatus ixEthDBFilteringDatabaseShowRecords (IxEthDBPortId portID, IxEthDB
  * @note Setting dependency maps is useful for NPE ports, which benefit from automatic updates
  * of filtering information. Setting dependency maps for user-defined ports is not an error
  * but will have no actual effect.
- *
+ * 
  * @note Including a port in its own dependency map is not compulsory, however note that
- * in this case updating the port will not trigger an update on the port itself, which
+ * in this case updating the port will not trigger an update on the port itself, which 
  * might not be the intended behavior
  *
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
@@ -822,7 +822,7 @@ IxEthDBStatus ixEthDBFilteringDatabaseShowRecords (IxEthDBPortId portID, IxEthDB
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE Filtering is not available or not enabled for the port
  */
 IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPortDependencyMapSet (IxEthDBPortId portID, IxEthDBPortMap dependencyPortMap);
+IxEthDBStatus ixEthDBPortDependencyMapSet(IxEthDBPortId portID, IxEthDBPortMap dependencyPortMap);
 
 /**
  * @ingroup IxEthDB
@@ -846,7 +846,7 @@ IxEthDBStatus ixEthDBPortDependencyMapSet (IxEthDBPortId portID, IxEthDBPortMap 
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE Filtering is not available or not enabled for the port
  */
 IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPortDependencyMapGet (IxEthDBPortId portID, IxEthDBPortMap dependencyPortMap);
+IxEthDBStatus ixEthDBPortDependencyMapGet(IxEthDBPortId portID, IxEthDBPortMap dependencyPortMap);
 
 /**
  * @ingroup IxEthDB
@@ -867,18 +867,18 @@ IxEthDBStatus ixEthDBPortDependencyMapGet (IxEthDBPortId portID, IxEthDBPortMap 
  *    <tr> <td> user priority <td>  CFI  <td>   VID
  * </table>
  *
- * User Priority : Defines user priority, giving eight (2^3) priority levels. IEEE 802.1P defines
+ * User Priority : Defines user priority, giving eight (2^3) priority levels. IEEE 802.1P defines 
  * the operation for these 3 user priority bits
+ * 
+ * CFI : Canonical Format Indicator is always set to zero for Ethernet switches. CFI is used for 
+ * compatibility reason between Ethernet type network and Token Ring type network. If a frame received 
+ * at an Ethernet port has a CFI set to 1, then that frame should not be forwarded as it is to an untagged port. 
  *
- * CFI : Canonical Format Indicator is always set to zero for Ethernet switches. CFI is used for
- * compatibility reason between Ethernet type network and Token Ring type network. If a frame received
- * at an Ethernet port has a CFI set to 1, then that frame should not be forwarded as it is to an untagged port.
- *
- * VID : VLAN ID is the identification of the VLAN, which is basically used by the standard 802.1Q.
- * It has 12 bits and allow the id entification of 4096 (2^12) VLANs. Of the 4096 possible VIDs, a VID of 0
- * is used to identify priority frames and value 4095 (FFF) is reserved, so the maximum possible VLAN
+ * VID : VLAN ID is the identification of the VLAN, which is basically used by the standard 802.1Q. 
+ * It has 12 bits and allow the id entification of 4096 (2^12) VLANs. Of the 4096 possible VIDs, a VID of 0 
+ * is used to identify priority frames and value 4095 (FFF) is reserved, so the maximum possible VLAN 
  * configurations are 4,094.
- *
+ * 
  * - Reentrant    - no
  * - ISR Callable - no
  *
@@ -889,11 +889,11 @@ IxEthDBStatus ixEthDBPortDependencyMapGet (IxEthDBPortId portID, IxEthDBPortMap 
  * @retval IX_ETH_DB_INVALID_VLAN <i>vlanTag</i> argument does not parse to a valid 802.1Q VLAN tag
  *
  * @note a VLAN ID value of 0 indicates that the port is not part of any VLAN
- * @note the value of the cannonical frame indicator (CFI) field is ignored, the
+ * @note the value of the cannonical frame indicator (CFI) field is ignored, the 
  * field being used only in frame tagging operations
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPortVlanTagSet (IxEthDBPortId portID, IxEthDBVlanTag vlanTag);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPortVlanTagSet(IxEthDBPortId portID, IxEthDBVlanTag vlanTag);
 
 /**
  * @ingroup IxEthDB
@@ -914,8 +914,8 @@ IxEthDBStatus ixEthDBPortVlanTagSet (IxEthDBPortId portID, IxEthDBVlanTag vlanTa
  * @retval IX_ETH_DB_INVALID_ARG invalid vlanTag pointer
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE VLAN/QoS feature is not available or not enabled for the port
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPortVlanTagGet (IxEthDBPortId portID, IxEthDBVlanTag * vlanTag);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPortVlanTagGet(IxEthDBPortId portID, IxEthDBVlanTag *vlanTag);
 
 /**
  * @ingroup IxEthDB
@@ -929,7 +929,7 @@ IxEthDBStatus ixEthDBPortVlanTagGet (IxEthDBPortId portID, IxEthDBVlanTag * vlan
  *
  * This function is used together with @ref ixEthDBVlanTagGet to provide MAC-based VLAN classification support.
  * Please note that the bridging application must contain specific code to make use of this feature (see below).
- *
+ * 
  * VLAN tags can be set only in IX_ETH_DB_FILTERING_RECORD or IX_ETH_DB_FILTERING_VLAN_RECORD type records.
  * If to an IX_ETH_DB_FILTERING_RECORD type record is added a VLAN tag the record type is automatically
  * changed to IX_ETH_DB_FILTERING_VLAN_RECORD. Once this has occurred the record type will never
@@ -940,26 +940,26 @@ IxEthDBStatus ixEthDBPortVlanTagGet (IxEthDBPortId portID, IxEthDBVlanTag * vlan
  *
  * After using this function to associate a VLAN ID with a MAC address the VLAN ID can be extracted knowing the
  * MAC address using @ref ixEthDBVlanTagGet. This mechanism can be used to implement MAC-based VLAN classification
- * if a bridging application searches for the VLAN tag when receiving a frame based on the source MAC address
+ * if a bridging application searches for the VLAN tag when receiving a frame based on the source MAC address 
  * (contained in the <i>ixp_ne_src_mac</i> field of the buffer header).
  * If found in the database, the application can instruct the NPE to tag the frame by writing the VLAN tag
  * in the <i>ixp_ne_vlan_tci</i> field of the buffer header. This way the NPE will inspect the Egress tagging
  * rule associated with the given VLAN ID on the Tx port and tag the frame if Egress tagging on the VLAN is
- * allowed. Additionally, Egress tagging can be forced by setting the <i>ixp_ne_tx_flags.tag_over</i> and
+ * allowed. Additionally, Egress tagging can be forced by setting the <i>ixp_ne_tx_flags.tag_over</i> and 
  * <i>ixp_ne_tx_flags.tag_mode</i> flags in the buffer header.
  *
  * - Reentrant    - no
  * - ISR Callable - no
  *
  * @note this function will <b>not</b> add a filtering record, it can only be used to update an existing one
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>macAddr</i> pointer
  * @retval IX_ETH_DB_NO_SUCH_ADDR a filtering record with the specified MAC address was not found
  * @retval IX_ETH_DB_INVALID_VLAN <i>vlanTag</i> argument does not parse to a valid 802.1Q VLAN tag
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBVlanTagSet (IxEthDBMacAddr * macAddr, IxEthDBVlanTag vlanTag);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBVlanTagSet(IxEthDBMacAddr *macAddr, IxEthDBVlanTag vlanTag);
 
 /**
  * @ingroup IxEthDB
@@ -972,7 +972,7 @@ IxEthDBStatus ixEthDBVlanTagSet (IxEthDBMacAddr * macAddr, IxEthDBVlanTag vlanTa
  * @param vlanTag location to write the record 802.1Q VLAN tag to
  *
  * @note VLAN tags can be retrieved only from IX_ETH_DB_FILTERING_VLAN_RECORD type records
- *
+ * 
  * This function is used together with ixEthDBVlanTagSet to provide MAC-based VLAN classification support.
  * Please note that the bridging application must contain specific code to make use of this feature (see @ref ixEthDBVlanTagSet).
  *
@@ -983,8 +983,8 @@ IxEthDBStatus ixEthDBVlanTagSet (IxEthDBMacAddr * macAddr, IxEthDBVlanTag vlanTa
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>macAddr</i> or <i>vlanTag</i> pointer
  * @retval IX_ETH_DB_NO_SUCH_ADDR a filtering record with the specified MAC address was not found
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBVlanTagGet (IxEthDBMacAddr * macAddr, IxEthDBVlanTag * vlanTag);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBVlanTagGet(IxEthDBMacAddr *macAddr, IxEthDBVlanTag *vlanTag);
 
 /**
  * @ingroup IxEthDB
@@ -993,9 +993,9 @@ IxEthDBStatus ixEthDBVlanTagGet (IxEthDBMacAddr * macAddr, IxEthDBVlanTag * vlan
  *
  * @brief Adds a VLAN ID to a port's VLAN membership table
  *
- * Adding a VLAN ID to a port's VLAN membership table will cause frames tagged with the specified
+ * Adding a VLAN ID to a port's VLAN membership table will cause frames tagged with the specified 
  * VLAN ID to be accepted by the frame filter, if Ingress VLAN membership filtering is enabled.
- *
+ * 
  * - Reentrant    - no
  * - ISR Callable - no
  *
@@ -1013,8 +1013,8 @@ IxEthDBStatus ixEthDBVlanTagGet (IxEthDBMacAddr * macAddr, IxEthDBVlanTag * vlan
  * is no need to explicitly add it using this function (although it is not an error
  * to do so)
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPortVlanMembershipAdd (IxEthDBPortId portID, IxEthDBVlanId vlanID);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPortVlanMembershipAdd(IxEthDBPortId portID, IxEthDBVlanId vlanID);
 
 /**
  * @ingroup IxEthDB
@@ -1048,8 +1048,8 @@ IxEthDBStatus ixEthDBPortVlanMembershipAdd (IxEthDBPortId portID, IxEthDBVlanId 
  * @note A port's default VLAN ID is always in its own membership table, hence there is no need
  * to explicitly add it using this function (although it is not an error to do so)
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPortVlanMembershipRangeAdd (IxEthDBPortId portID, IxEthDBVlanId vlanIDMin, IxEthDBVlanId vlanIDMax);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPortVlanMembershipRangeAdd(IxEthDBPortId portID, IxEthDBVlanId vlanIDMin, IxEthDBVlanId vlanIDMax);
 
 /**
  * @ingroup IxEthDB
@@ -1078,8 +1078,8 @@ IxEthDBStatus ixEthDBPortVlanMembershipRangeAdd (IxEthDBPortId portID, IxEthDBVl
  * @note A port's default VLAN ID cannot be removed from the port's membership
  * table; attempting it will return IX_ETH_DB_NO_PERMISSION
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPortVlanMembershipRemove (IxEthDBPortId portID, IxEthDBVlanId vlanID);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPortVlanMembershipRemove(IxEthDBPortId portID, IxEthDBVlanId vlanID);
 
 /**
  * @ingroup IxEthDB
@@ -1113,17 +1113,17 @@ IxEthDBStatus ixEthDBPortVlanMembershipRemove (IxEthDBPortId portID, IxEthDBVlan
  * function will behave as @ref ixEthDBPortVlanMembershipRemove
  *
  * @note If the given range overlaps the default port VLAN ID this function
- * will remove all the VLAN IDs in the range except for the port VLAN ID from its
+ * will remove all the VLAN IDs in the range except for the port VLAN ID from its 
  * own membership table. This situation will be silently dealt with (no error message
- * will be returned) as long as the range contains more than one value (i.e. at least
- * one other value, apart from the default port VLAN ID). If the function is called
- * with the vlanIDMin and vlanIDMax parameters both set to the port default VLAN ID, the
- * function will infer that an attempt was specifically made to remove the default port
- * VLAN ID from the port membership table, in which case the return value will be
+ * will be returned) as long as the range contains more than one value (i.e. at least 
+ * one other value, apart from the default port VLAN ID). If the function is called 
+ * with the vlanIDMin and vlanIDMax parameters both set to the port default VLAN ID, the 
+ * function will infer that an attempt was specifically made to remove the default port 
+ * VLAN ID from the port membership table, in which case the return value will be 
  * IX_ETH_DB_NO_PERMISSION.
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPortVlanMembershipRangeRemove (IxEthDBPortId portID, IxEthDBVlanId vlanIDMin, IxEthDBVlanId vlanIDMax);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPortVlanMembershipRangeRemove(IxEthDBPortId portID, IxEthDBVlanId vlanIDMin, IxEthDBVlanId vlanIDMax);
 
 /**
  * @ingroup IxEthDB
@@ -1142,7 +1142,7 @@ IxEthDBStatus ixEthDBPortVlanMembershipRangeRemove (IxEthDBPortId portID, IxEthD
  *
  * The bit at index 4095 is reserved and should never be set (it will be ignored if set).
  *
- * The bit referencing the same VLAN ID as the default port VLAN ID should always be set, as
+ * The bit referencing the same VLAN ID as the default port VLAN ID should always be set, as 
  * the membership list must contain at least the default port VLAN ID.
  *
  * - Reentrant    - no
@@ -1150,7 +1150,7 @@ IxEthDBStatus ixEthDBPortVlanMembershipRangeRemove (IxEthDBPortId portID, IxEthD
  *
  * @param portID @ref IxEthDBPortId [in] - port ID to set the VLAN membership table to
  * @param vlanSet @ref IxEthDBVlanSet [in] - pointer to the VLAN membership table
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port is not initialized
@@ -1158,8 +1158,8 @@ IxEthDBStatus ixEthDBPortVlanMembershipRangeRemove (IxEthDBPortId portID, IxEthD
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE VLAN/QoS feature is not available or not enabled for the port
  * @retval IX_FAIL unknown OS or NPE communication error
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPortVlanMembershipSet (IxEthDBPortId portID, IxEthDBVlanSet vlanSet);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPortVlanMembershipSet(IxEthDBPortId portID, IxEthDBVlanSet vlanSet);
 
 /**
  * @ingroup IxEthDB
@@ -1178,7 +1178,7 @@ IxEthDBStatus ixEthDBPortVlanMembershipSet (IxEthDBPortId portID, IxEthDBVlanSet
  *
  * The bit at index 4095 is reserved and will not be set (it will be ignored if set).
  *
- * The bit referencing the same VLAN ID as the default port VLAN ID will always be set, as
+ * The bit referencing the same VLAN ID as the default port VLAN ID will always be set, as 
  * the membership list must contain at least the default port VLAN ID.
  *
  * - Reentrant    - no
@@ -1186,16 +1186,16 @@ IxEthDBStatus ixEthDBPortVlanMembershipSet (IxEthDBPortId portID, IxEthDBVlanSet
  *
  * @param portID @ref IxEthDBPortId [in] - port ID to retrieve the VLAN membership table from
  * @param vlanSet @ref IxEthDBVlanSet [out] - pointer a location where the VLAN membership table will be
- *                written to
- *
+ *                written to 
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port is not initialized
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>vlanSet</i> pointer
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE VLAN/QoS feature is not available or not enabled for the port
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPortVlanMembershipGet (IxEthDBPortId portID, IxEthDBVlanSet vlanSet);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPortVlanMembershipGet(IxEthDBPortId portID, IxEthDBVlanSet vlanSet);
 
 /**
  * @ingroup IxEthDB
@@ -1231,7 +1231,7 @@ IxEthDBStatus ixEthDBPortVlanMembershipGet (IxEthDBPortId portID, IxEthDBVlanSet
  *
  * @param portID @ref IxEthDBPortId [in] - port ID to set the acceptable frame type filter to
  * @param frameFilter @ref IxEthDBFrameFilter [in] - acceptable frame type filter
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port is not initialized
@@ -1239,15 +1239,15 @@ IxEthDBStatus ixEthDBPortVlanMembershipGet (IxEthDBPortId portID, IxEthDBVlanSet
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE VLAN/QoS feature is not available or not enabled for the port
  * @retval IX_FAIL unknown OS or NPE communication error
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBAcceptableFrameTypeSet (IxEthDBPortId portID, IxEthDBFrameFilter frameFilter);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBAcceptableFrameTypeSet(IxEthDBPortId portID, IxEthDBFrameFilter frameFilter);
 
 /**
  * @ingroup IxEthDB
  *
  * @fn IxEthDBStatus ixEthDBAcceptableFrameTypeGet(IxEthDBPortId portID, IxEthDBFrameFilter *frameFilter)
  *
- * @brief Retrieves a port's acceptable frame type filter
+ * @brief Retrieves a port's acceptable frame type filter 
  *
  * For a description of the acceptable frame types see @ref ixEthDBAcceptableFrameTypeSet
  *
@@ -1256,15 +1256,15 @@ IxEthDBStatus ixEthDBAcceptableFrameTypeSet (IxEthDBPortId portID, IxEthDBFrameF
  *
  * @param portID @ref IxEthDBPortId [in] - port ID to retrieve the acceptable frame type filter from
  * @param frameFilter @ref IxEthDBFrameFilter [out] - location to store the acceptable frame type filter
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port is not initialized
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>frameFilter</i> pointer argument
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE VLAN/QoS feature is not available or not enabled for the port
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBAcceptableFrameTypeGet (IxEthDBPortId portID, IxEthDBFrameFilter * frameFilter);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBAcceptableFrameTypeGet(IxEthDBPortId portID, IxEthDBFrameFilter *frameFilter);
 
 /**
  * @ingroup IxEthDB
@@ -1278,7 +1278,7 @@ IxEthDBStatus ixEthDBAcceptableFrameTypeGet (IxEthDBPortId portID, IxEthDBFrameF
  * mapped into one of the 4 available traffic classes (0..3, 0 being the lowest).
  * If a custom priority mapping table is not specified using this function the following
  * default priority table will be used (as per IEEE 802.1Q and IEEE 802.1D):
- *
+ * 
  * <table border="1"> <caption> QoS traffic classes  </caption>
  *    <tr> <td> <b> QoS priority <td> <b> Default traffic class <td> <b> Traffic type </b>
  *    <tr> <td>      0       <td>           1           <td> Best effort, default class for unexpedited traffic
@@ -1297,7 +1297,7 @@ IxEthDBStatus ixEthDBAcceptableFrameTypeGet (IxEthDBPortId portID, IxEthDBFrameF
  * @param portID @ref IxEthDBPortId [in] - port ID of the port to set the priority mapping table to
  * @param priorityTable @ref IxEthDBPriorityTable [in] - location of the user priority table
  *
- * @note The provided table will be copied into internal data structures in EthDB and
+ * @note The provided table will be copied into internal data structures in EthDB and 
  * can be deallocated by the called after this function has completed its execution, if
  * so desired
  *
@@ -1306,7 +1306,7 @@ IxEthDBStatus ixEthDBAcceptableFrameTypeGet (IxEthDBPortId portID, IxEthDBFrameF
  * traffic classes. Note that specifiying a traffic class in the priority map which exceeds
  * the system availability will produce an IX_ETH_DB_INVALID_PRIORITY return error code and no
  * priority will be remapped.
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port is not initialized
@@ -1316,8 +1316,8 @@ IxEthDBStatus ixEthDBAcceptableFrameTypeGet (IxEthDBPortId portID, IxEthDBFrameF
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE VLAN/QoS feature is not available or not enabled for the port
  * @retval IX_FAIL unknown OS or NPE communication error
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPriorityMappingTableSet (IxEthDBPortId portID, IxEthDBPriorityTable priorityTable);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPriorityMappingTableSet(IxEthDBPortId portID, IxEthDBPriorityTable priorityTable);
 
 /**
  * @ingroup IxEthDB
@@ -1341,8 +1341,8 @@ IxEthDBStatus ixEthDBPriorityMappingTableSet (IxEthDBPortId portID, IxEthDBPrior
  * @retval IX_ETH_DB_INVALID_ARG invalid priorityTable pointer
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE VLAN/QoS feature is not available or not enabled for the port
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPriorityMappingTableGet (IxEthDBPortId portID, IxEthDBPriorityTable priorityTable);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPriorityMappingTableGet(IxEthDBPortId portID, IxEthDBPriorityTable priorityTable);
 
 /**
  * @ingroup IxEthDB
@@ -1370,8 +1370,8 @@ IxEthDBStatus ixEthDBPriorityMappingTableGet (IxEthDBPortId portID, IxEthDBPrior
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE VLAN/QoS feature is not available or not enabled for the port
  * @retval IX_FAIL unknown OS or NPE communication error
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPriorityMappingClassSet (IxEthDBPortId portID, IxEthDBPriority userPriority, IxEthDBPriority trafficClass);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPriorityMappingClassSet(IxEthDBPortId portID, IxEthDBPriority userPriority, IxEthDBPriority trafficClass);
 
 /**
  * @ingroup IxEthDB
@@ -1381,7 +1381,7 @@ IxEthDBStatus ixEthDBPriorityMappingClassSet (IxEthDBPortId portID, IxEthDBPrior
  * @brief Retrieves one QoS/user priority => traffic class mapping in a port's priority mapping table
  *
  * This function retrieves the internal traffic class associated with a QoS (user) priority from a given
- * port's priority mapping table. Use this function when not all the QoS priority mappings are
+ * port's priority mapping table. Use this function when not all the QoS priority mappings are 
  * required (see also @ref ixEthDBPriorityMappingTableGet)
  *
  * - Reentrant    - no
@@ -1398,8 +1398,8 @@ IxEthDBStatus ixEthDBPriorityMappingClassSet (IxEthDBPortId portID, IxEthDBPrior
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE VLAN/QoS feature is not available or not enabled for the port
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>trafficClass</i> pointer argument
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBPriorityMappingClassGet (IxEthDBPortId portID, IxEthDBPriority userPriority, IxEthDBPriority * trafficClass);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBPriorityMappingClassGet(IxEthDBPortId portID, IxEthDBPriority userPriority, IxEthDBPriority *trafficClass);
 
 /**
  * @ingroup IxEthDB
@@ -1435,8 +1435,8 @@ IxEthDBStatus ixEthDBPriorityMappingClassGet (IxEthDBPortId portID, IxEthDBPrior
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE VLAN/QoS feature is not available or not enabled for the port
  * @retval IX_FAIL unknown OS or NPE communication error
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBEgressVlanEntryTaggingEnabledSet (IxEthDBPortId portID, IxEthDBVlanId vlanID, BOOL enabled);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBEgressVlanEntryTaggingEnabledSet(IxEthDBPortId portID, IxEthDBVlanId vlanID, BOOL enabled);
 
 /**
  * @ingroup IxEthDB
@@ -1448,8 +1448,8 @@ IxEthDBStatus ixEthDBEgressVlanEntryTaggingEnabledSet (IxEthDBPortId portID, IxE
  * @param portID [in] - ID of the port to extract the Egress VLAN ID tagging status from
  * @param vlanID VLAN [in] - ID whose tagging status is to be extracted
  * @param enabled [in] - user-specifed location where the status is copied to; following
- * the successfull execution of this function the value will be TRUE if Egress VLAN
- * tagging is enabled for the given port and VLAN ID, and FALSE otherwise
+ * the successfull execution of this function the value will be TRUE if Egress VLAN 
+ * tagging is enabled for the given port and VLAN ID, and FALSE otherwise                                                 
  *
  * - Reentrant    - no
  * - ISR Callable - no
@@ -1463,8 +1463,8 @@ IxEthDBStatus ixEthDBEgressVlanEntryTaggingEnabledSet (IxEthDBPortId portID, IxE
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>enabled</i> argument pointer
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE VLAN/QoS feature is not available or not enabled for the port
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBEgressVlanEntryTaggingEnabledGet (IxEthDBPortId portID, IxEthDBVlanId vlanID, BOOL * enabled);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBEgressVlanEntryTaggingEnabledGet(IxEthDBPortId portID, IxEthDBVlanId vlanID, BOOL *enabled);
 
 /**
  * @ingroup IxEthDB
@@ -1475,7 +1475,7 @@ IxEthDBStatus ixEthDBEgressVlanEntryTaggingEnabledGet (IxEthDBPortId portID, IxE
  *
  * This function is very similar to @ref ixEthDBEgressVlanEntryTaggingEnabledSet with the
  * difference that it can manipulate the Egress tagging status on multiple VLAN IDs,
- * defined by a contiguous range. Note that both limits in the range are explicitly
+ * defined by a contiguous range. Note that both limits in the range are explicitly 
  * included in the execution of this function.
  *
  * - Reentrant    - no
@@ -1486,7 +1486,7 @@ IxEthDBStatus ixEthDBEgressVlanEntryTaggingEnabledGet (IxEthDBPortId portID, IxE
  * @param vlanIDMax @ref IxEthDBVlanId [in] - end of the VLAN range to be matched against outgoing frames
  * @param enabled BOOL [in] - TRUE to enable Egress VLAN tagging on the port and given VLAN range,
  *                and FALSE to disable Egress VLAN tagging
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port is not initialized
@@ -1497,11 +1497,11 @@ IxEthDBStatus ixEthDBEgressVlanEntryTaggingEnabledGet (IxEthDBPortId portID, IxE
  *
  * @note Specifically removing the default port VLAN ID from the Egress tagging table by setting both vlanIDMin and vlanIDMax
  * to the VLAN ID portion of the PVID is not allowed by this function and will return IX_ETH_DB_NO_PERMISSION.
- * However, this can be circumvented, should the user specifically desire this, by either using a
+ * However, this can be circumvented, should the user specifically desire this, by either using a 
  * larger range (vlanIDMin < vlanIDMax) or by using ixEthDBEgressVlanEntryTaggingEnabledSet.
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBEgressVlanRangeTaggingEnabledSet (IxEthDBPortId portID, IxEthDBVlanId vlanIDMin, IxEthDBVlanId vlanIDMax, BOOL enabled);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBEgressVlanRangeTaggingEnabledSet(IxEthDBPortId portID, IxEthDBVlanId vlanIDMin, IxEthDBVlanId vlanIDMax, BOOL enabled);
 
 /**
  * @ingroup IxEthDB
@@ -1525,7 +1525,7 @@ IxEthDBStatus ixEthDBEgressVlanRangeTaggingEnabledSet (IxEthDBPortId portID, IxE
  * - ISR Callable - no
  *
  * @param portID @ref IxEthDBPortId [in] - ID of the port whose Egress VLAN tagging behavior is set
- * @param vlanSet @ref IxEthDBVlanSet [in] - 4096 bit array controlling per-VLAN tagging and untagging
+ * @param vlanSet @ref IxEthDBVlanSet [in] - 4096 bit array controlling per-VLAN tagging and untagging 
  *
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
@@ -1538,8 +1538,8 @@ IxEthDBStatus ixEthDBEgressVlanRangeTaggingEnabledSet (IxEthDBPortId portID, IxE
  * every time it is called. The user should manually call ixEthDBEgressVlanEntryTaggingEnabledSet to
  * prevent tagging on the default port VLAN ID if the default behavior is not intended.
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBEgressVlanTaggingEnabledSet (IxEthDBPortId portID, IxEthDBVlanSet vlanSet);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBEgressVlanTaggingEnabledSet(IxEthDBPortId portID, IxEthDBVlanSet vlanSet);
 
 /**
  * @ingroup IxEthDB
@@ -1550,7 +1550,7 @@ IxEthDBStatus ixEthDBEgressVlanTaggingEnabledSet (IxEthDBPortId portID, IxEthDBV
  *
  * This function copies the 4096 bit table controlling the Egress VLAN tagging into a user specified
  * area. Each bit in the array indicates whether tagging for the corresponding VLAN (the bit position
- * in the array) is enabled (the bit is set) or not (the bit is unset).
+ * in the array) is enabled (the bit is set) or not (the bit is unset). 
  *
  * Bit 4095 is reserved and should not be set (it will be ignored if set).
  *
@@ -1559,15 +1559,15 @@ IxEthDBStatus ixEthDBEgressVlanTaggingEnabledSet (IxEthDBPortId portID, IxEthDBV
  * @param portID @ref IxEthDBPortId [in] - ID of the port whose Egress VLAN tagging behavior is retrieved
  * @param vlanSet @ref IxEthDBVlanSet [out] - user location to copy the Egress tagging table into; should have
  * room to store 4096 bits (512 bytes)
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port is not initialized
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>vlanSet</i> pointer
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE VLAN/QoS feature is not available or not enabled for the port
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBEgressVlanTaggingEnabledGet (IxEthDBPortId portID, IxEthDBVlanSet vlanSet);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBEgressVlanTaggingEnabledGet(IxEthDBPortId portID, IxEthDBVlanSet vlanSet);
 
 /**
  * @ingroup IxEthDB
@@ -1578,14 +1578,14 @@ IxEthDBStatus ixEthDBEgressVlanTaggingEnabledGet (IxEthDBPortId portID, IxEthDBV
  *
  * A port's Ingress tagging behavior is controlled by the taggingAction parameter,
  * which can take one of the following values:
- *
+ * 
  * - IX_ETH_DB_PASS_THROUGH - leaves the frame unchanged (does not add or remove the VLAN tag)
  * - IX_ETH_DB_ADD_TAG - adds the VLAN tag if not present, using the default port VID
  * - IX_ETH_DB_REMOVE_TAG - removes the VLAN tag if present
- *
+ * 
  * @param portID @ref IxEthDBPortId [in] - ID of the port whose Ingress VLAN tagging behavior is set
  * @param taggingAction @ref IxEthDBTaggingAction [in] - tagging behavior for the port
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port is not initialized
@@ -1593,8 +1593,8 @@ IxEthDBStatus ixEthDBEgressVlanTaggingEnabledGet (IxEthDBPortId portID, IxEthDBV
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE VLAN/QoS feature is not available or not enabled for the port
  * @retval IX_FAIL unknown OS or NPE communication error
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBIngressVlanTaggingEnabledSet (IxEthDBPortId portID, IxEthDBTaggingAction taggingAction);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBIngressVlanTaggingEnabledSet(IxEthDBPortId portID, IxEthDBTaggingAction taggingAction);
 
 /**
  * @ingroup IxEthDB
@@ -1605,15 +1605,15 @@ IxEthDBStatus ixEthDBIngressVlanTaggingEnabledSet (IxEthDBPortId portID, IxEthDB
  *
  * @param portID @ref IxEthDBPortId [in] - ID of the port whose Ingress VLAN tagging behavior is set
  * @param taggingAction @ref IxEthDBTaggingAction [out] - location where the tagging behavior for the port is written to
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port is not initialized
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>taggingAction</i> pointer argument
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE VLAN/QoS feature is not available or not enabled for the port
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBIngressVlanTaggingEnabledGet (IxEthDBPortId portID, IxEthDBTaggingAction * taggingAction);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBIngressVlanTaggingEnabledGet(IxEthDBPortId portID, IxEthDBTaggingAction *taggingAction);
 
 /**
  * @ingroup IxEthDB
@@ -1622,32 +1622,32 @@ IxEthDBStatus ixEthDBIngressVlanTaggingEnabledGet (IxEthDBPortId portID, IxEthDB
  *
  * @brief Enables or disables port ID extraction
  *
- * This feature can be used in the situation when a multi-port device (e.g. a switch)
- * is connected to an IXP4xx port and the device can provide incoming frame port
+ * This feature can be used in the situation when a multi-port device (e.g. a switch) 
+ * is connected to an IXP4xx port and the device can provide incoming frame port 
  * identification by tagging the TPID field in the Ethernet frame. Enabling
- * port extraction will instruct the NPE to copy the TPID field from the frame and
+ * port extraction will instruct the NPE to copy the TPID field from the frame and 
  * place it in the <i>ixp_ne_src_port</i> of the <i>ixp_buf</i> header. In addition,
  * the NPE restores the TPID field to 0.
  *
- * If the frame is not tagged the NPE will fill the <i>ixp_ne_src_port</i> with the
+ * If the frame is not tagged the NPE will fill the <i>ixp_ne_src_port</i> with the 
  * port ID of the MII interface the frame was received from.
  *
- * The TPID field is the least significant byte of the type/length field, which is
+ * The TPID field is the least significant byte of the type/length field, which is 
  * normally set to 0x8100 for 802.1Q-tagged frames.
  *
  * This feature is disabled by default.
  *
  * @param portID ID of the port to configure port ID extraction on
  * @param enable TRUE to enable port ID extraction and FALSE to disable it
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port is not initialized
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE VLAN/QoS feature is not available or not enabled for the port
  * @retval IX_FAIL unknown OS or NPE communication error
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBVlanPortExtractionEnable (IxEthDBPortId portID, BOOL enable);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBVlanPortExtractionEnable(IxEthDBPortId portID, BOOL enable);
 
 /**
  * @ingroup IxEthDB
@@ -1656,7 +1656,7 @@ IxEthDBStatus ixEthDBVlanPortExtractionEnable (IxEthDBPortId portID, BOOL enable
  *
  * @brief Retrieves the feature capability set for a port
  *
- * This function retrieves the feature capability set for a port or the common capabilities shared between all
+ * This function retrieves the feature capability set for a port or the common capabilities shared between all 
  * the ports, writing the feature capability set in a user specified location.
  *
  * The feature capability set will consist of a set formed by OR-ing one or more of the following values:
@@ -1668,18 +1668,18 @@ IxEthDBStatus ixEthDBVlanPortExtractionEnable (IxEthDBPortId portID, BOOL enable
  * - IX_ETH_DB_WIFI_HEADER_CONVERSION - WiFi 802.3 to 802.11 header conversion feature; enables EthDB to handle WiFi conversion data
  *
  * Note that EthDB provides only the LEARNING feature for non-NPE ports.
- *
- * @param portID @ref IxEthDBPortId [in] - ID of the port to retrieve the capability set for
+ * 
+ * @param portID @ref IxEthDBPortId [in] - ID of the port to retrieve the capability set for 
  * (use IX_ETH_DB_ALL_PORTS to retrieve the common capabilities shared between all the ports)
  * @param featureSet @ref IxEthDBFeature [out] - location where the capability set will be written to
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port is not initialized
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>featureSet</i> pointer
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFeatureCapabilityGet (IxEthDBPortId portID, IxEthDBFeature * featureSet);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFeatureCapabilityGet(IxEthDBPortId portID, IxEthDBFeature *featureSet);
 
 /**
  * @ingroup IxEthDB
@@ -1694,14 +1694,14 @@ IxEthDBStatus ixEthDBFeatureCapabilityGet (IxEthDBPortId portID, IxEthDBFeature 
  * Note that some features are mutually incompatible:
  * - IX_ETH_DB_FILTERING is incompatible with IX_ETH_DB_WIFI_HEADER_CONVERSION
  *
- * Also note that some features require other features to be enabled:
+ * Also note that some features require other features to be enabled: 
  * - IX_ETH_DB_FILTERING requires IX_ETH_DB_LEARNING
  *
  * This function will either enable the entire selected feature set for the selected port (or all the ports),
  * in which case it will return IX_ETH_DB_SUCCESS, or in case of error it will not enable any feature at all
  * and return an appropriate error message.
  *
- * The following features are enabled by default (for ports with the respective capability),
+ * The following features are enabled by default (for ports with the respective capability), 
  * for compatibility reasons with previous versions of CSR:
  * - IX_ETH_DB_LEARNING
  * - IX_ETH_DB_FILTERING
@@ -1712,8 +1712,8 @@ IxEthDBStatus ixEthDBFeatureCapabilityGet (IxEthDBPortId portID, IxEthDBFeature 
  *
  * <i>VLAN</i>
  *
- * When the VLAN/QoS feature is enabled for a port for the first time the default VLAN behavior
- * of the port is set to be as <b>permissive</b> (it will accept all the frames) and
+ * When the VLAN/QoS feature is enabled for a port for the first time the default VLAN behavior 
+ * of the port is set to be as <b>permissive</b> (it will accept all the frames) and 
  * <b>non-interferential</b> (it will not change any frames) as possible:
  * - the port VLAN ID (VID) is set to 0
  * - the Ingress acceptable frame filter is set to accept all frames
@@ -1727,7 +1727,7 @@ IxEthDBStatus ixEthDBFeatureCapabilityGet (IxEthDBPortId portID, IxEthDBFeature 
  * <i>QoS</i>
  *
  * The following default priority mapping table will be used (as per IEEE 802.1Q and IEEE 802.1D):
- *
+ * 
  * <table border="1"> <caption> QoS traffic classes  </caption>
  *    <tr> <td> <b> QoS priority <td> <b> Default traffic class <td> <b> Traffic type </b>
  *    <tr> <td>      0       <td>           1           <td> Best effort, default class for unexpedited traffic
@@ -1741,7 +1741,7 @@ IxEthDBStatus ixEthDBFeatureCapabilityGet (IxEthDBPortId portID, IxEthDBFeature 
  * </table>
  *
  * <i> Firewall </i>
- *
+ *  
  * The port firewall is configured by default in <b>black-list mode</b>, and the firewall address table is empty.
  * This means the firewall will not filter any frames until the feature is configured and the firewall table is
  * downloaded to the NPE.
@@ -1758,7 +1758,7 @@ IxEthDBStatus ixEthDBFeatureCapabilityGet (IxEthDBPortId portID, IxEthDBFeature 
  * @param portID @ref IxEthDBPortId [in] - ID of the port to enable or disable the features on (use IX_ETH_DB_ALL_PORTS for all the ports)
  * @param feature @ref IxEthDBFeature [in] - feature or feature set to enable or disable
  * @param enabled BOOL [in] - TRUE to enable the feature and FALSE to disable it
- *
+ * 
  * @note Certain features, from a functional point of view, cannot be disabled as such at NPE level;
  * when such features are set to <i>disabled</i> using the EthDB API they will be configured in such
  * a way to determine a behavior equivalent to the feature being disabled. As well as this, disabled
@@ -1767,13 +1767,13 @@ IxEthDBStatus ixEthDBFeatureCapabilityGet (IxEthDBPortId portID, IxEthDBFeature 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port is not initialized
- * @retval IX_ETH_DB_NO_PERMISSION attempted to enable mutually exclusive features,
+ * @retval IX_ETH_DB_NO_PERMISSION attempted to enable mutually exclusive features, 
  * or a feature that depends on another feature which is not present or enabled
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE at least one of the features selected is unavailable
  * @retval IX_FAIL unknown OS or NPE communication error
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFeatureEnable (IxEthDBPortId portID, IxEthDBFeature feature, BOOL enabled);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFeatureEnable(IxEthDBPortId portID, IxEthDBFeature feature, BOOL enabled);
 
 /**
  * @ingroup IxEthDB
@@ -1784,21 +1784,21 @@ IxEthDBStatus ixEthDBFeatureEnable (IxEthDBPortId portID, IxEthDBFeature feature
  *
  * This function returns the availability and status for a feature set.
  * Note that if more than one feature is selected (e.g. IX_ETH_DB_LEARNING | IX_ETH_DB_FILTERING)
- * the "present" and "enabled" return values will be set to TRUE only if all the features in the
- * feature set are present and enabled (not only some).
- *
- * @param portID @ref IxEthDBPortId [in] - ID of the port
+ * the "present" and "enabled" return values will be set to TRUE only if all the features in the 
+ * feature set are present and enabled (not only some). 
+ * 
+ * @param portID @ref IxEthDBPortId [in] - ID of the port 
  * @param feature @ref IxEthDBFeature [in] - identifier of the feature to retrieve the status for
  * @param present BOOL [out] - location where a boolean flag indicating whether this feature is present will be written to
  * @param enabled BOOL [out] - location where a boolean flag indicating whether this feature is enabled will be written to
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port is not initialized
  * @retval IX_ETH_DB_INVALID_ARG either <i>present</i> or <i>enabled</i> pointer argument is invalid
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFeatureStatusGet (IxEthDBPortId portID, IxEthDBFeature feature, BOOL * present, BOOL * enabled);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFeatureStatusGet(IxEthDBPortId portID, IxEthDBFeature feature, BOOL *present, BOOL *enabled);
 
 /**
  * @ingroup IxEthDB
@@ -1809,7 +1809,7 @@ IxEthDBStatus ixEthDBFeatureStatusGet (IxEthDBPortId portID, IxEthDBFeature feat
  *
  * The EthDB features usually contain feature-specific properties describing or
  * controlling how the feature operates. While essential properties (e.g. the
- * firewall operating mode) have their own API, secondary properties can be
+ * firewall operating mode) have their own API, secondary properties can be 
  * retrieved using this function.
  *
  * Properties can be read-only or read-write. ixEthDBFeaturePropertyGet operates with
@@ -1832,22 +1832,22 @@ IxEthDBStatus ixEthDBFeatureStatusGet (IxEthDBPortId portID, IxEthDBFeature feat
  *    <tr> <td> IX_ETH_DB_QOS_TRAFFIC_CLASS_6_RX_QUEUE_PROPERTY <td> IX_ETH_DB_INTEGER_PROPERTY <td> queue assignment for traffic class 6 <td> Yes
  *    <tr> <td> IX_ETH_DB_QOS_TRAFFIC_CLASS_7_RX_QUEUE_PROPERTY <td> IX_ETH_DB_INTEGER_PROPERTY <td> queue assignment for traffic class 7 <td> Yes
  * </table>
- *
+ * 
  * @see ixEthDBFeaturePropertySet
  *
- * @param portID @ref IxEthDBPortId [in] - ID of the port
+ * @param portID @ref IxEthDBPortId [in] - ID of the port 
  * @param feature @ref IxEthDBFeature [in] - EthDB feature for which the property is retrieved
  * @param property @ref IxEthDBProperty [in] - property identifier
  * @param type @ref IxEthDBPropertyType [out] - location where the property type will be stored
  * @param value void [out] - location where the property value will be stored
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_INVALID_ARG invalid property identifier, <i>type</i> or <i>value</i> pointer arguments
  * @retval IX_ETH_DB_FAIL incorrect property value or unknown error
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFeaturePropertyGet (IxEthDBPortId portID, IxEthDBFeature feature, IxEthDBProperty property, IxEthDBPropertyType * type, void * value);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFeaturePropertyGet(IxEthDBPortId portID, IxEthDBFeature feature, IxEthDBProperty property, IxEthDBPropertyType *type, void *value);
 
 /**
  * @ingroup IxEthDB
@@ -1863,7 +1863,7 @@ IxEthDBStatus ixEthDBFeaturePropertyGet (IxEthDBPortId portID, IxEthDBFeature fe
  *   - IX_ETH_DB_QOS_QUEUE_CONFIGURATION_COMPLETE (for IX_ETH_DB_VLAN_QOS): freezes the availability of traffic classes
  *     to the number of traffic classes currently in use
  *
- * Note that this function creates deep copies of the property values; once the function is invoked the client
+ * Note that this function creates deep copies of the property values; once the function is invoked the client 
  * can free or reuse the memory area containing the original property value.
  *
  * Copy behavior for different property types is defined as follows:
@@ -1875,20 +1875,20 @@ IxEthDBStatus ixEthDBFeaturePropertyGet (IxEthDBPortId portID, IxEthDBFeature fe
  *
  * @see ixEthDBFeaturePropertySet
  *
- * @warning IX_ETH_DB_QOS_QUEUE_CONFIGURATION_COMPLETE is provided for EthAcc internal use;
+ * @warning IX_ETH_DB_QOS_QUEUE_CONFIGURATION_COMPLETE is provided for EthAcc internal use; 
  * do not attempt to set this property directly
  *
- * @param portID @ref IxEthDBPortId [in] - ID of the port
+ * @param portID @ref IxEthDBPortId [in] - ID of the port 
  * @param feature @ref IxEthDBFeature [in] - EthDB feature for which the property is set
  * @param property @ref IxEthDBProperty [in] - property identifier
  * @param value void [in] - location where the property value is to be copied from
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_INVALID_ARG invalid property identifier, <i>value</i> pointer, or invalid property value
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFeaturePropertySet (IxEthDBPortId portID, IxEthDBFeature feature, IxEthDBProperty property, void * value);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFeaturePropertySet(IxEthDBPortId portID, IxEthDBFeature feature, IxEthDBProperty property, void *value);
 
 /**
  * @ingroup IxEthDB
@@ -1906,11 +1906,11 @@ IxEthDBStatus ixEthDBFeaturePropertySet (IxEthDBPortId portID, IxEthDBFeature fe
  * <caption> Record types </caption>
  *    - IX_ETH_DB_FILTERING_RECORD      <table><caption> Filtering record </caption>
  *                                               <tr><td> MAC address <td> static/dynamic type <td> age </tr>
- *                                             </table>
+ *                                             </table> 
  *
  *    - IX_ETH_DB_FILTERING_VLAN_RECORD <table><caption> VLAN-enabled filtering record </caption>
  *                                               <tr><td> MAC address <td> static/dynamic type <td> age <td> 802.1Q tag </tr>
- *                                             </table>
+ *                                             </table> 
  *
  *    - IX_ETH_DB_WIFI_RECORD           <table><caption> WiFi header conversion record </caption>
  *                                                <tr><td> MAC address <td> optional gateway MAC address <td> </tr>
@@ -1920,10 +1920,10 @@ IxEthDBStatus ixEthDBFeaturePropertySet (IxEthDBPortId portID, IxEthDBFeature fe
  *                                                <tr><td> MAC address </tr>
  *                                             </table>
  *    - IX_ETH_DB_ALL_RECORD_TYPES
+ * 
+ * Any combination of the above types is valid e.g. 
  *
- * Any combination of the above types is valid e.g.
- *
- *    (IX_ETH_DB_FILTERING_RECORD | IX_ETH_DB_FILTERING_VLAN_RECORD | IX_ETH_DB_FIREWALL_RECORD),
+ *    (IX_ETH_DB_FILTERING_RECORD | IX_ETH_DB_FILTERING_VLAN_RECORD | IX_ETH_DB_FIREWALL_RECORD), 
  *
  * although some might be redundant (it is not an error to do so) e.g.
  *
@@ -1931,28 +1931,28 @@ IxEthDBStatus ixEthDBFeaturePropertySet (IxEthDBPortId portID, IxEthDBFeature fe
  *
  * @param portID @ref IxEthDBPortId [in] - ID of the port
  * @param recordType @ref IxEthDBRecordType [in] - record type filter
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>recordType</i> filter
  *
- * @note If the record type filter contains any unrecognized value (hence the
+ * @note If the record type filter contains any unrecognized value (hence the 
  * IX_ETH_DB_INVALID_ARG error value is returned) no actual records will be deleted.
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBDatabaseClear (IxEthDBPortId portID, IxEthDBRecordType recordType);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBDatabaseClear(IxEthDBPortId portID, IxEthDBRecordType recordType);
 
 /**
  * @ingroup IxEthDB
  *
  * @fn IxEthDBStatus ixEthDBWiFiStationEntryAdd(IxEthDBPortId portID, IxEthDBMacAddr *macAddr)
  *
- * @brief Adds an "Access Point to Station" record to the database, for 802.3 => 802.11 frame
+ * @brief Adds an "Access Point to Station" record to the database, for 802.3 => 802.11 frame 
  * header conversion
  *
  * Frame header conversion is controlled by the set of MAC addresses
  * added using @ref ixEthDBWiFiStationEntryAdd and @ref ixEthDBWiFiAccessPointEntryAdd.
- * Conversion arguments are added using @ref ixEthDBWiFiFrameControlSet,
+ * Conversion arguments are added using @ref ixEthDBWiFiFrameControlSet, 
  * @ref ixEthDBWiFiDurationIDSet and @ref ixEthDBWiFiBBSIDSet.
  *
  * Note that adding the same MAC address twice will not return an error
@@ -1960,19 +1960,19 @@ IxEthDBStatus ixEthDBDatabaseClear (IxEthDBPortId portID, IxEthDBRecordType reco
  * as an "Access Point to Access Point" will migrate the record to the "Access Point
  * to Station" type.
  *
- * @param portID @ref IxEthDBPortId [in] - ID of the port
+ * @param portID @ref IxEthDBPortId [in] - ID of the port 
  * @param macAddr @ref IxEthDBMacAddr [in] - MAC address to add
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_INVALID_ARG macAddr is an invalid pointer
- * @retval IX_ETH_DB_FEATURE_UNAVAILABLE WiFi feature not enabled
+ * @retval IX_ETH_DB_FEATURE_UNAVAILABLE WiFi feature not enabled 
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>macAddr</i> pointer argument
  * @retval IX_ETH_DB_NOMEM maximum number of records reached
  * @retval IX_ETH_DB_BUSY lock condition or transaction in progress, try again later
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBWiFiStationEntryAdd (IxEthDBPortId portID, IxEthDBMacAddr * macAddr);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBWiFiStationEntryAdd(IxEthDBPortId portID, IxEthDBMacAddr *macAddr);
 
 /**
  * @ingroup IxEthDB
@@ -1987,25 +1987,25 @@ IxEthDBStatus ixEthDBWiFiStationEntryAdd (IxEthDBPortId portID, IxEthDBMacAddr *
  * defined gateway MAC address value in the same record, if the record was previously of the
  * "Access Point to Access Point" type.
  *
- * Re-adding a MAC address as "Access Point to Access Point", which was previously added as
+ * Re-adding a MAC address as "Access Point to Access Point", which was previously added as 
  * "Access Point to Station" will migrate the record type to "Access Point to Access Point" and
  * record the gateway MAC address.
  *
- * @param portID @ref IxEthDBPortId [in] - ID of the port
+ * @param portID @ref IxEthDBPortId [in] - ID of the port 
  * @param macAddr @ref IxEthDBMacAddr [in] - MAC address to add
  * @param gatewayMacAddr @ref IxEthDBMacAddr [in] - MAC address of the gateway Access Point
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port is not initialized
  * @retval IX_ETH_DB_INVALID_ARG macAddr is an invalid pointer
- * @retval IX_ETH_DB_FEATURE_UNAVAILABLE WiFi feature not enabled
+ * @retval IX_ETH_DB_FEATURE_UNAVAILABLE WiFi feature not enabled 
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>macAddr</i> or <i>gatewayMacAddr</i> pointer argument
  * @retval IX_ETH_DB_NOMEM maximum number of records reached
  * @retval IX_ETH_DB_BUSY lock condition or transaction in progress, try again later
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBWiFiAccessPointEntryAdd (IxEthDBPortId portID, IxEthDBMacAddr * macAddr, IxEthDBMacAddr * gatewayMacAddr);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBWiFiAccessPointEntryAdd(IxEthDBPortId portID, IxEthDBMacAddr *macAddr, IxEthDBMacAddr *gatewayMacAddr);
 
 /**
  * @ingroup IxEthDB
@@ -2016,20 +2016,20 @@ IxEthDBStatus ixEthDBWiFiAccessPointEntryAdd (IxEthDBPortId portID, IxEthDBMacAd
  *
  * This function removes both types of WiFi records ("Access Point to Station" and
  * "Access Point to Access Point").
- *
- * @param portID @ref IxEthDBPortId [in] - ID of the port
+ * 
+ * @param portID @ref IxEthDBPortId [in] - ID of the port 
  * @param macAddr @ref IxEthDBMacAddr [in] - MAC address to remove
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port is not initialized
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>macAddr</i> pointer argument
  * @retval IX_ETH_DB_NO_SUCH_ADDR specified address was not found in the database
- * @retval IX_ETH_DB_FEATURE_UNAVAILABLE WiFi feature not enabled
+ * @retval IX_ETH_DB_FEATURE_UNAVAILABLE WiFi feature not enabled 
  * @retval IX_ETH_DB_BUSY lock condition or transaction in progress, try again later
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBWiFiEntryRemove (IxEthDBPortId portID, IxEthDBMacAddr * macAddr);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBWiFiEntryRemove(IxEthDBPortId portID, IxEthDBMacAddr *macAddr);
 
 /**
  * @ingroup IxEthDB
@@ -2043,16 +2043,16 @@ IxEthDBStatus ixEthDBWiFiEntryRemove (IxEthDBPortId portID, IxEthDBMacAddr * mac
  * to each NPE for which the frame header conversion feature is enabled (i.e. it
  * is not possible to specify IX_ETH_DB_ALL_PORTS).
  *
- * @param portID @ref IxEthDBPortId [in] - ID of the port
- *
+ * @param portID @ref IxEthDBPortId [in] - ID of the port 
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port not initialized
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE WiFi feature not enabled
  * @retval IX_ETH_DB_FAIL unknown OS or NPE communication error
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBWiFiConversionTableDownload (IxEthDBPortId portID);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBWiFiConversionTableDownload(IxEthDBPortId portID);
 
 /**
  * @ingroup IxEthDB
@@ -2063,18 +2063,18 @@ IxEthDBStatus ixEthDBWiFiConversionTableDownload (IxEthDBPortId portID);
  *
  * The GlobalFrameControl field is a 2-byte value inserted in the <i>Frame Control</i>
  * field for all 802.3 to 802.11 frame header conversions
- *
+ * 
  * @param portID @ref IxEthDBPortId [in] - ID of the port
  * @param frameControl UINT16 [in] - GlobalFrameControl value
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port not initialized
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE WiFi feature not enabled
  * @retval IX_ETH_DB_FAIL unknown OS or NPE communication error
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBWiFiFrameControlSet (IxEthDBPortId portID, UINT16 frameControl);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBWiFiFrameControlSet(IxEthDBPortId portID, UINT16 frameControl);
 
 /**
  * @ingroup IxEthDB
@@ -2086,17 +2086,17 @@ IxEthDBStatus ixEthDBWiFiFrameControlSet (IxEthDBPortId portID, UINT16 frameCont
  * The GlobalDurationID field is a 2-byte value inserted in the <i>Duration/ID</i>
  * field for all 802.3 to 802.11 frame header conversions
  *
- * @param portID @ref IxEthDBPortId [in] - ID of the port
+ * @param portID @ref IxEthDBPortId [in] - ID of the port 
  * @param durationID UINT16 [in] - GlobalDurationID field
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port not initialized
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE WiFi feature not enabled
  * @retval IX_ETH_DB_FAIL unknown OS or NPE communication error
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBWiFiDurationIDSet (IxEthDBPortId portID, UINT16 durationID);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBWiFiDurationIDSet(IxEthDBPortId portID, UINT16 durationID);
 
 /**
  * @ingroup IxEthDB
@@ -2106,14 +2106,14 @@ IxEthDBStatus ixEthDBWiFiDurationIDSet (IxEthDBPortId portID, UINT16 durationID)
  * @brief Sets the BBSID field
  *
  * The BBSID field is a 6-byte value which
- * identifies the infrastructure of the service set managed
+ * identifies the infrastructure of the service set managed 
  * by the Access Point having the IXP400 as its processor. The value
  * is written in the <i>BBSID</i> field of the 802.11 frame header.
  * The BBSID value is the MAC address of the Access Point.
  *
- * @param portID @ref IxEthDBPortId [in] - ID of the port
+ * @param portID @ref IxEthDBPortId [in] - ID of the port 
  * @param bbsid @ref IxEthDBMacAddr [in] - pointer to 6 bytes containing the BSSID
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port not initialized
@@ -2121,8 +2121,8 @@ IxEthDBStatus ixEthDBWiFiDurationIDSet (IxEthDBPortId portID, UINT16 durationID)
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE WiFi feature not enabled
  * @retval IX_ETH_DB_FAIL unknown OS or NPE communication error
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBWiFiBBSIDSet (IxEthDBPortId portID, IxEthDBMacAddr * bbsid);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBWiFiBBSIDSet(IxEthDBPortId portID, IxEthDBMacAddr *bbsid);
 
 /**
  * @ingroup IxEthDB
@@ -2131,17 +2131,17 @@ IxEthDBStatus ixEthDBWiFiBBSIDSet (IxEthDBPortId portID, IxEthDBMacAddr * bbsid)
  *
  * @brief Sets the STP blocked/unblocked state for a port
  *
- * @param portID @ref IxEthDBPortId [in] - ID of the port
+ * @param portID @ref IxEthDBPortId [in] - ID of the port 
  * @param blocked BOOL [in] - TRUE to set the port as STP blocked, FALSE to set it as unblocked
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port not initialized
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE Spanning Tree Protocol feature not enabled
  * @retval IX_ETH_DB_FAIL unknown OS or NPE communication error
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBSpanningTreeBlockingStateSet (IxEthDBPortId portID, BOOL blocked);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBSpanningTreeBlockingStateSet(IxEthDBPortId portID, BOOL blocked);
 
 /**
  * @ingroup IxEthDB
@@ -2150,17 +2150,17 @@ IxEthDBStatus ixEthDBSpanningTreeBlockingStateSet (IxEthDBPortId portID, BOOL bl
  *
  * @brief Retrieves the STP blocked/unblocked state for a port
  *
- * @param portID @ref IxEthDBPortId [in] - ID of the port
+ * @param portID @ref IxEthDBPortId [in] - ID of the port 
  * @param blocked BOOL * [in] - set to TRUE if the port is STP blocked, FALSE otherwise
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port not initialized
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>blocked</i> pointer argument
  * @retval IX_ETH_DB_FEATURE_UNAVAILABLE Spanning Tree Protocol feature not enabled
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBSpanningTreeBlockingStateGet (IxEthDBPortId portID, BOOL * blocked);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBSpanningTreeBlockingStateGet(IxEthDBPortId portID, BOOL *blocked);
 
 /**
  * @ingroup IxEthDB
@@ -2171,30 +2171,30 @@ IxEthDBStatus ixEthDBSpanningTreeBlockingStateGet (IxEthDBPortId portID, BOOL * 
  *
  * When enabled, the NPE MAC address based firewall support operates in two modes:
  *
- * - white-list mode (MAC address based admission)
+ * - white-list mode (MAC address based admission) 
  *    - <i>mode</i> set to IX_ETH_DB_FIREWALL_WHITE_LIST
  *    - only packets originating from MAC addresses contained in the firewall address list
  *      are allowed on the Rx path
- * - black-list mode (MAC address based blocking)
+ * - black-list mode (MAC address based blocking)  
  *    - <i>mode</i> set to IX_ETH_DB_FIREWALL_BLACK_LIST
  *    - packets originating from MAC addresses contained in the firewall address list
  *      are discarded
  *
- * @param portID @ref IxEthDBPortId [in] - ID of the port
+ * @param portID @ref IxEthDBPortId [in] - ID of the port 
  * @param mode @ref IxEthDBFirewallMode [in] - firewall mode (IX_ETH_DB_FIREWALL_WHITE_LIST or IX_ETH_DB_FIREWALL_BLACK_LIST)
  *
  * @note by default the firewall operates in black-list mode with an empty address
  * list, hence it doesn't filter any packets
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port not initialized
- * @retval IX_ETH_DB_FEATURE_UNAVAILABLE Firewall feature not enabled
+ * @retval IX_ETH_DB_FEATURE_UNAVAILABLE Firewall feature not enabled 
  * @retval IX_ETH_DB_INVALID_ARGUMENT <i>mode</i> argument is not a valid firewall configuration mode
  * @retval IX_ETH_DB_FAIL unknown OS or NPE communication error
 */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFirewallModeSet (IxEthDBPortId portID, IxEthDBFirewallMode mode);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFirewallModeSet(IxEthDBPortId portID, IxEthDBFirewallMode mode);
 
 /**
  * @ingroup IxEthDB
@@ -2211,17 +2211,17 @@ IxEthDBStatus ixEthDBFirewallModeSet (IxEthDBPortId portID, IxEthDBFirewallMode 
  * By default this service is enabled, if the firewall feature is supported by the
  * NPE image.
  *
- * @param portID ID of the port
+ * @param portID ID of the port 
  * @param enable TRUE to enable invalid MAC address filtering and FALSE to disable it
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port not initialized
- * @retval IX_ETH_DB_FEATURE_UNAVAILABLE Firewall feature not enabled
+ * @retval IX_ETH_DB_FEATURE_UNAVAILABLE Firewall feature not enabled 
  * @retval IX_ETH_DB_FAIL unknown OS or NPE communication error
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFirewallInvalidAddressFilterEnable (IxEthDBPortId portID, BOOL enable);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFirewallInvalidAddressFilterEnable(IxEthDBPortId portID, BOOL enable);
 
 /**
  * @ingroup IxEthDB
@@ -2237,19 +2237,19 @@ IxEthDBStatus ixEthDBFirewallInvalidAddressFilterEnable (IxEthDBPortId portID, B
  * the maximum number of entries has been reached this function will failed
  * to add more addresses, returning IX_ETH_DB_NOMEM.
  *
- * @param portID @ref IxEthDBPortId [in] - ID of the port
+ * @param portID @ref IxEthDBPortId [in] - ID of the port 
  * @param macAddr @ref IxEthDBMacAddr [in] - MAC address to be added
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port not initialized
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>macAddr</i> pointer argument
  * @retval IX_ETH_DB_NOMEM maximum number of records reached
  * @retval IX_ETH_DB_BUSY lock condition or transaction in progress, try again later
- * @retval IX_ETH_DB_FEATURE_UNAVAILABLE Firewall feature not enabled
+ * @retval IX_ETH_DB_FEATURE_UNAVAILABLE Firewall feature not enabled 
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFirewallEntryAdd (IxEthDBPortId portID, IxEthDBMacAddr * macAddr);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFirewallEntryAdd(IxEthDBPortId portID, IxEthDBMacAddr *macAddr);
 
 /**
  * @ingroup IxEthDB
@@ -2258,18 +2258,18 @@ IxEthDBStatus ixEthDBFirewallEntryAdd (IxEthDBPortId portID, IxEthDBMacAddr * ma
  *
  * @brief Removes a MAC address from the firewall address list
  *
- * @param portID @ref IxEthDBPortId [in] - ID of the port
+ * @param portID @ref IxEthDBPortId [in] - ID of the port 
  * @param macAddr @ref IxEthDBMacAddr [in] - MAC address to be removed
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port not initialized
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>macAddr</i> pointer argument
  * @retval IX_ETH_DB_NO_SUCH_ADDR address not found
- * @retval IX_ETH_DB_FEATURE_UNAVAILABLE Firewall feature not enabled
+ * @retval IX_ETH_DB_FEATURE_UNAVAILABLE Firewall feature not enabled 
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFirewallEntryRemove (IxEthDBPortId portID, IxEthDBMacAddr * macAddr);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFirewallEntryRemove(IxEthDBPortId portID, IxEthDBMacAddr *macAddr);
 
 /**
  * @ingroup IxEthDB
@@ -2278,16 +2278,16 @@ IxEthDBStatus ixEthDBFirewallEntryRemove (IxEthDBPortId portID, IxEthDBMacAddr *
  *
  * @brief Downloads the MAC firewall table to a port
  *
- * @param portID ID of the port
- *
+ * @param portID ID of the port 
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID is not a valid port identifier
  * @retval IX_ETH_DB_PORT_UNINITIALIZED port not initialized
- * @retval IX_ETH_DB_FEATURE_UNAVAILABLE Firewall feature not enabled
+ * @retval IX_ETH_DB_FEATURE_UNAVAILABLE Firewall feature not enabled 
  * @retval IX_ETH_DB_FAIL unknown OS or NPE communication error
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBFirewallTableDownload (IxEthDBPortId portID);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBFirewallTableDownload(IxEthDBPortId portID);
 
 /**
  * @ingroup IxEthDB
@@ -2314,20 +2314,20 @@ IxEthDBStatus ixEthDBFirewallTableDownload (IxEthDBPortId portID);
  * Please note that if a parameter is not required it is completely ignored (it does not undergo parameter checking).
  * The user-defined field can be cleared using a <b>NULL</b> <i>field</i> parameter.
  *
- * @param recordType @ref IxEthDBRecordType [in] - type of record (can be IX_ETH_DB_FILTERING_RECORD,
+ * @param recordType @ref IxEthDBRecordType [in] - type of record (can be IX_ETH_DB_FILTERING_RECORD, 
  * IX_ETH_DB_FILTERING_VLAN_RECORD, IX_ETH_DB_WIFI_RECORD or IX_ETH_DB_FIREWALL_RECORD)
- * @param portID @ref IxEthDBPortId [in] - ID of the port (required only for WIFI and FIREWALL records)
+ * @param portID @ref IxEthDBPortId [in] - ID of the port (required only for WIFI and FIREWALL records) 
  * @param macAddr @ref IxEthDBMacAddr * [in] - MAC address of the record
  * @param vlanID @ref IxEthDBVlanId [in] - VLAN ID of the record (required only for FILTERING_VLAN records)
  * @param field void * [in] - user defined field
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID was required but it is not a valid port identifier
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>macAddr</i> pointer argument
  * @retval IX_ETH_DB_NO_SUCH_ADDR record not found
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBUserFieldSet (IxEthDBRecordType recordType, IxEthDBMacAddr * macAddr, IxEthDBPortId portID, IxEthDBVlanId vlanID, void * field);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBUserFieldSet(IxEthDBRecordType recordType, IxEthDBMacAddr *macAddr, IxEthDBPortId portID, IxEthDBVlanId vlanID, void *field);
 
 /**
  * @ingroup IxEthDB
@@ -2349,20 +2349,20 @@ IxEthDBStatus ixEthDBUserFieldSet (IxEthDBRecordType recordType, IxEthDBMacAddr 
  * If no user-defined field was registered with the specified record then <b>NULL</b> will be written
  * at the location specified by <i>field</i>.
  *
- * @param recordType type of record (can be IX_ETH_DB_FILTERING_RECORD, IX_ETH_DB_FILTERING_VLAN_RECORD, IX_ETH_DB_WIFI_RECORD
+ * @param recordType type of record (can be IX_ETH_DB_FILTERING_RECORD, IX_ETH_DB_FILTERING_VLAN_RECORD, IX_ETH_DB_WIFI_RECORD 
  * or IX_ETH_DB_FIREWALL_RECORD)
- * @param portID ID of the port (required only for WIFI and FIREWALL records)
+ * @param portID ID of the port (required only for WIFI and FIREWALL records) 
  * @param macAddr MAC address of the record
  * @param vlanID VLAN ID of the record (required only for FILTERING_VLAN records)
  * @param field location to write the user defined field into
- *
+ * 
  * @retval IX_ETH_DB_SUCCESS operation completed successfully
  * @retval IX_ETH_DB_INVALID_PORT portID was required but it is not a valid port identifier
  * @retval IX_ETH_DB_INVALID_ARG invalid <i>macAddr</i> or <i>field</i> pointer arguments
  * @retval IX_ETH_DB_NO_SUCH_ADDR record not found
  */
-IX_ETH_DB_PUBLIC
-IxEthDBStatus ixEthDBUserFieldGet (IxEthDBRecordType recordType, IxEthDBMacAddr * macAddr, IxEthDBPortId portId, IxEthDBVlanId vlanID, void ** field);
+IX_ETH_DB_PUBLIC 
+IxEthDBStatus ixEthDBUserFieldGet(IxEthDBRecordType recordType, IxEthDBMacAddr *macAddr, IxEthDBPortId portId, IxEthDBVlanId vlanID, void **field);
 
 /**
  * @}

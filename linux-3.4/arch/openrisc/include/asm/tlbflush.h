@@ -34,22 +34,22 @@
  *  - flush_tlb_range(mm, start, end) flushes a range of pages
  */
 
-void flush_tlb_all (void);
-void flush_tlb_mm (struct mm_struct * mm);
-void flush_tlb_page (struct vm_area_struct * vma, unsigned long addr);
-void flush_tlb_range (struct vm_area_struct * vma,
-                      unsigned long start,
-                      unsigned long end);
+void flush_tlb_all(void);
+void flush_tlb_mm(struct mm_struct *mm);
+void flush_tlb_page(struct vm_area_struct *vma, unsigned long addr);
+void flush_tlb_range(struct vm_area_struct *vma,
+		     unsigned long start,
+		     unsigned long end);
 
-static inline void flush_tlb (void)
+static inline void flush_tlb(void)
 {
-  flush_tlb_mm (current->mm);
+	flush_tlb_mm(current->mm);
 }
 
-static inline void flush_tlb_kernel_range (unsigned long start,
-    unsigned long end)
+static inline void flush_tlb_kernel_range(unsigned long start,
+					  unsigned long end)
 {
-  flush_tlb_range (NULL, start, end);
+	flush_tlb_range(NULL, start, end);
 }
 
 #endif /* __ASM_OPENRISC_TLBFLUSH_H */

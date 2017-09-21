@@ -1,4 +1,4 @@
-/*  BSDI osd_defs.h,v 1.4 1998/06/03 19:14:58 karels Exp  */
+/*	BSDI osd_defs.h,v 1.4 1998/06/03 19:14:58 karels Exp	*/
 /*
  * Copyright (c) 1996-1999 Distributed Processing Technology Corporation
  * All rights reserved.
@@ -21,25 +21,25 @@
  *
  */
 
-#ifndef   _OSD_DEFS_H
-#define   _OSD_DEFS_H
+#ifndef		_OSD_DEFS_H
+#define		_OSD_DEFS_H
 
 /*File - OSD_DEFS.H
  ****************************************************************************
  *
  *Description:
  *
- *  This file contains the OS dependent defines.  This file is included
+ *	This file contains the OS dependent defines.  This file is included
  *in osd_util.h and provides the OS specific defines for that file.
  *
  *Copyright Distributed Processing Technology, Corp.
- *    140 Candace Dr.
- *    Maitland, Fl. 32751   USA
- *    Phone: (407) 830-5522  Fax: (407) 260-5366
- *    All Rights Reserved
+ *	  140 Candace Dr.
+ *	  Maitland, Fl.	32751   USA
+ *	  Phone: (407) 830-5522  Fax: (407) 260-5366
+ *	  All Rights Reserved
  *
- *Author: Doug Anderson
- *Date:   1/31/94
+ *Author:	Doug Anderson
+ *Date:		1/31/94
  *
  *Editors:
  *
@@ -51,7 +51,7 @@
 
 /*Definitions - Defines & Constants ----------------------------------------- */
 
-/* Define the operating system */
+  /* Define the operating system */
 #if (defined(__linux__))
 # define _DPT_LINUX
 #elif (defined(__bsdi__))
@@ -63,17 +63,17 @@
 #endif
 
 #if defined (ZIL_CURSES)
-#define   _DPT_CURSES
+#define		_DPT_CURSES
 #else
 #define         _DPT_MOTIF
 #endif
 
-/* Redefine 'far' to nothing - no far pointer type required in UNIX */
-#define   far
+  /* Redefine 'far' to nothing - no far pointer type required in UNIX */
+#define		far
 
-/* Define the mutually exclusive semaphore type */
-#define   SEMAPHORE_T unsigned int *
-/* Define a handle to a DLL */
-#define   DLL_HANDLE_T  unsigned int *
+  /* Define the mutually exclusive semaphore type */
+#define		SEMAPHORE_T	unsigned int *
+  /* Define a handle to a DLL */
+#define		DLL_HANDLE_T	unsigned int *
 
 #endif

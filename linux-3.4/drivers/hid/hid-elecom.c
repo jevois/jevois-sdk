@@ -20,38 +20,38 @@
 
 #include "hid-ids.h"
 
-static __u8 * elecom_report_fixup (struct hid_device * hdev, __u8 * rdesc,
-                                   unsigned int * rsize)
+static __u8 *elecom_report_fixup(struct hid_device *hdev, __u8 *rdesc,
+		unsigned int *rsize)
 {
-  if (*rsize >= 48 && rdesc[46] == 0x05 && rdesc[47] == 0x0c) {
-    hid_info (hdev, "Fixing up Elecom BM084 report descriptor\n");
-    rdesc[47] = 0x00;
-  }
-  return rdesc;
+	if (*rsize >= 48 && rdesc[46] == 0x05 && rdesc[47] == 0x0c) {
+		hid_info(hdev, "Fixing up Elecom BM084 report descriptor\n");
+		rdesc[47] = 0x00;
+	}
+    return rdesc;
 }
 
 static const struct hid_device_id elecom_devices[] = {
-  { HID_BLUETOOTH_DEVICE (USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_BM084) },
-  { }
+	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_BM084)},
+	{ }
 };
-MODULE_DEVICE_TABLE (hid, elecom_devices);
+MODULE_DEVICE_TABLE(hid, elecom_devices);
 
 static struct hid_driver elecom_driver = {
-  .name = "elecom",
-  .id_table = elecom_devices,
-  .report_fixup = elecom_report_fixup
+	.name = "elecom",
+	.id_table = elecom_devices,
+	.report_fixup = elecom_report_fixup
 };
 
-static int __init elecom_init (void)
+static int __init elecom_init(void)
 {
-  return hid_register_driver (&elecom_driver);
+	return hid_register_driver(&elecom_driver);
 }
 
-static void __exit elecom_exit (void)
+static void __exit elecom_exit(void)
 {
-  hid_unregister_driver (&elecom_driver);
+	hid_unregister_driver(&elecom_driver);
 }
 
-module_init (elecom_init);
-module_exit (elecom_exit);
-MODULE_LICENSE ("GPL");
+module_init(elecom_init);
+module_exit(elecom_exit);
+MODULE_LICENSE("GPL");

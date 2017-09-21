@@ -33,65 +33,65 @@
 extern unsigned int oob_irq;
 #endif
 
-int rtw_wifi_gpio_init (void)
+int rtw_wifi_gpio_init(void)
 {
-  #ifdef CONFIG_GSPI_HCI
-  if (GPIO_WIFI_IRQ > 0) {
-    gpio_request (GPIO_WIFI_IRQ, "oob_irq");
-    gpio_direction_input (GPIO_WIFI_IRQ);
-    
-    oob_irq = gpio_to_irq (GPIO_WIFI_IRQ);
-    
-    DBG_8192C ("%s oob_irq:%d\n", __func__, oob_irq);
-  }
-  #endif
-  
-  if (GPIO_WIFI_RESET > 0)
-  { gpio_request (GPIO_WIFI_RESET , "wifi_rst"); }
-  
-  return 0;
+#ifdef CONFIG_GSPI_HCI
+	if (GPIO_WIFI_IRQ > 0) {
+		gpio_request(GPIO_WIFI_IRQ, "oob_irq");
+		gpio_direction_input(GPIO_WIFI_IRQ);
+
+		oob_irq = gpio_to_irq(GPIO_WIFI_IRQ);
+
+		DBG_8192C("%s oob_irq:%d\n", __func__, oob_irq);
+	}
+#endif
+
+	if (GPIO_WIFI_RESET > 0)
+		gpio_request(GPIO_WIFI_RESET , "wifi_rst");
+
+	return 0;
 }
 
-int rtw_wifi_gpio_deinit (void)
+int rtw_wifi_gpio_deinit(void)
 {
-  #ifdef CONFIG_GSPI_HCI
-  if (GPIO_WIFI_IRQ > 0) {
-    gpio_free (GPIO_WIFI_IRQ);
-  #endif
-    if (GPIO_WIFI_RESET > 0)
-    { gpio_free (GPIO_WIFI_RESET ); }
-    
-    return 0;
-  }
-  
-  /* Customer function to control hw specific wlan gpios */
-  void rtw_wifi_gpio_wlan_ctrl (int onoff)
-  {
-    switch (onoff) {
-    case WLAN_PWDN_OFF:
-      DBG_8192C ("%s: call customer specific GPIO to set wifi power down pin to 0\n",
-                 __FUNCTION__);
-      if (GPIO_WIFI_RESET > 0)
-      { gpio_direction_output (GPIO_WIFI_RESET , 0); }
-      break;
-      
-    case WLAN_PWDN_ON:
-      DBG_8192C ("%s: callc customer specific GPIO to set wifi power down pin to 1\n",
-                 __FUNCTION__);
-      if (GPIO_WIFI_RESET > 0)
-      { gpio_direction_output (GPIO_WIFI_RESET , 1); }
-      break;
-      
-    case WLAN_POWER_OFF:
-      DBG_8192C ("%s: call customer specific GPIO to turn off wifi power\n",
-                 __FUNCTION__);
-      break;
-    case WLAN_POWER_ON:
-      DBG_8192C ("%s: call customer specific GPIO to turn on wifi power\n",
-                 __FUNCTION__);
-      break;
-    }
-  }
+#ifdef CONFIG_GSPI_HCI
+	if (GPIO_WIFI_IRQ > 0) {
+		gpio_free(GPIO_WIFI_IRQ);
+#endif
+	if (GPIO_WIFI_RESET > 0)
+		gpio_free(GPIO_WIFI_RESET );
+
+	return 0;
+}
+
+/* Customer function to control hw specific wlan gpios */
+void rtw_wifi_gpio_wlan_ctrl(int onoff)
+{
+	switch (onoff) {
+		case WLAN_PWDN_OFF:
+			DBG_8192C("%s: call customer specific GPIO to set wifi power down pin to 0\n",
+				__FUNCTION__);
+			if (GPIO_WIFI_RESET > 0)
+				gpio_direction_output(GPIO_WIFI_RESET , 0);
+		break;
+
+		case WLAN_PWDN_ON:
+			DBG_8192C("%s: callc customer specific GPIO to set wifi power down pin to 1\n",
+				__FUNCTION__);
+			if (GPIO_WIFI_RESET > 0)
+				gpio_direction_output(GPIO_WIFI_RESET , 1);
+		break;
+
+		case WLAN_POWER_OFF:
+			DBG_8192C("%s: call customer specific GPIO to turn off wifi power\n",
+				__FUNCTION__);
+		break;
+		case WLAN_POWER_ON:
+			DBG_8192C("%s: call customer specific GPIO to turn on wifi power\n",
+				__FUNCTION__);
+		break;
+	}
+}
 #else
 #include <mach/gpio.h>//0915
 #include <mach/board.h>
@@ -102,85 +102,84 @@ extern int sprd_3rdparty_gpio_wifi_pwd;
 #ifdef CONFIG_RTL8723A
 extern int sprd_3rdparty_gpio_bt_reset;
 #endif
-  
-int rtw_wifi_gpio_init (void)
+
+int rtw_wifi_gpio_init(void)
 {
-  #ifdef CONFIG_RTL8723A
-  if (sprd_3rdparty_gpio_bt_reset > 0)
-  { gpio_direction_output (sprd_3rdparty_gpio_bt_reset, 1); }
-  #endif
-  
-  return 0;
+#ifdef CONFIG_RTL8723A
+	if (sprd_3rdparty_gpio_bt_reset > 0)
+		gpio_direction_output(sprd_3rdparty_gpio_bt_reset, 1);
+#endif
+
+	return 0;
 }
-  
-int rtw_wifi_gpio_deinit (void)
+
+int rtw_wifi_gpio_deinit(void)
 {
-  return 0;
+	return 0;
 }
-  
+
 /* Customer function to control hw specific wlan gpios */
-void rtw_wifi_gpio_wlan_ctrl (int onoff)
+void rtw_wifi_gpio_wlan_ctrl(int onoff)
 {
-  switch (onoff) {
-  case WLAN_PWDN_OFF:
-    DBG_8192C ("%s: call customer specific GPIO to set wifi power down pin to 0\n",
-               __FUNCTION__);
-    if (sprd_3rdparty_gpio_wifi_pwd > 0)
-    { gpio_set_value (sprd_3rdparty_gpio_wifi_pwd, 0); }
-    break;
-  
-  case WLAN_PWDN_ON:
-    DBG_8192C ("%s: callc customer specific GPIO to set wifi power down pin to 1\n",
-               __FUNCTION__);
-    if (sprd_3rdparty_gpio_wifi_pwd > 0)
-    { gpio_set_value (sprd_3rdparty_gpio_wifi_pwd, 1); }
-    break;
-  
-  case WLAN_POWER_OFF:
-    DBG_8192C ("%s: call customer specific GPIO to turn off wifi power\n",
-               __FUNCTION__);
-    #ifdef CONFIG_RTL8188E
-    if (sprd_3rdparty_gpio_wifi_power > 0)
-    { gpio_set_value (sprd_3rdparty_gpio_wifi_power, 0); }
-    #endif
-    break;
-  case WLAN_POWER_ON:
-    DBG_8192C ("%s: call customer specific GPIO to turn on wifi power\n",
-               __FUNCTION__);
-    #ifdef CONFIG_RTL8188E
-    if (sprd_3rdparty_gpio_wifi_power > 0)
-    { gpio_set_value (sprd_3rdparty_gpio_wifi_power, 1); }
-    #endif
-  
-  case WLAN_BT_PWDN_OFF:
-    DBG_8192C ("%s: call customer specific GPIO to set bt power down pin to 0\n",
-               __FUNCTION__);
-    #ifdef CONFIG_RTL8723A
-    if (sprd_3rdparty_gpio_bt_reset > 0)
-    { gpio_set_value (sprd_3rdparty_gpio_bt_reset, 0); }
-    #endif
-    break;
-  
-  case WLAN_BT_PWDN_ON:
-    DBG_8192C ("%s: callc customer specific GPIO to set bt power down pin to 1\n",
-               __FUNCTION__);
-    #ifdef CONFIG_RTL8723A
-    if (sprd_3rdparty_gpio_bt_reset > 0)
-    { gpio_set_value (sprd_3rdparty_gpio_bt_reset, 1); }
-    #endif
-    break;
-    break;
-  }
+	switch (onoff) {
+		case WLAN_PWDN_OFF:
+			DBG_8192C("%s: call customer specific GPIO to set wifi power down pin to 0\n",
+				__FUNCTION__);
+			if (sprd_3rdparty_gpio_wifi_pwd > 0)
+				gpio_set_value(sprd_3rdparty_gpio_wifi_pwd, 0);
+		break;
+
+		case WLAN_PWDN_ON:
+			DBG_8192C("%s: callc customer specific GPIO to set wifi power down pin to 1\n",
+				__FUNCTION__);
+			if (sprd_3rdparty_gpio_wifi_pwd > 0)
+				gpio_set_value(sprd_3rdparty_gpio_wifi_pwd, 1);
+		break;
+
+		case WLAN_POWER_OFF:
+			DBG_8192C("%s: call customer specific GPIO to turn off wifi power\n",
+				__FUNCTION__);
+#ifdef CONFIG_RTL8188E
+			if (sprd_3rdparty_gpio_wifi_power > 0)
+				gpio_set_value(sprd_3rdparty_gpio_wifi_power, 0);
+#endif
+		break;
+		case WLAN_POWER_ON:
+			DBG_8192C("%s: call customer specific GPIO to turn on wifi power\n",
+				__FUNCTION__);
+#ifdef CONFIG_RTL8188E
+			if (sprd_3rdparty_gpio_wifi_power > 0)
+				gpio_set_value(sprd_3rdparty_gpio_wifi_power, 1);
+#endif
+
+		case WLAN_BT_PWDN_OFF:
+			DBG_8192C("%s: call customer specific GPIO to set bt power down pin to 0\n",
+				__FUNCTION__);
+#ifdef CONFIG_RTL8723A
+			if (sprd_3rdparty_gpio_bt_reset > 0)
+				gpio_set_value(sprd_3rdparty_gpio_bt_reset, 0);
+#endif
+		break;
+
+		case WLAN_BT_PWDN_ON:
+			DBG_8192C("%s: callc customer specific GPIO to set bt power down pin to 1\n",
+				__FUNCTION__);
+#ifdef CONFIG_RTL8723A
+			if (sprd_3rdparty_gpio_bt_reset > 0)
+				gpio_set_value(sprd_3rdparty_gpio_bt_reset, 1);
+#endif
+		break;
+		break;
+	}
 }
 #endif
 #else
-int rtw_wifi_gpio_init (void)
+int rtw_wifi_gpio_init(void)
 {
-  return 0;
+	return 0;
 }
-  
-void rtw_wifi_gpio_wlan_ctrl (int onoff)
+
+void rtw_wifi_gpio_wlan_ctrl(int onoff)
 {
 }
 #endif
-  

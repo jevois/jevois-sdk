@@ -22,7 +22,7 @@
 #ifndef __PNX8550_CM_H
 #define __PNX8550_CM_H
 
-#define PNX8550_CM_BASE 0xBBE47000
+#define PNX8550_CM_BASE	0xBBE47000
 
 #define PNX8550_CM_PLL0_CTL    *(volatile unsigned long *)(PNX8550_CM_BASE + 0x000)
 #define PNX8550_CM_PLL1_CTL    *(volatile unsigned long *)(PNX8550_CM_BASE + 0x004)

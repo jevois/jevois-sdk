@@ -14,17 +14,17 @@
  *
  */
 
-#ifndef   _LINUX_GOODIX_TOUCH_H
-#define   _LINUX_GOODIX_TOUCH_H
+#ifndef 	_LINUX_GOODIX_TOUCH_H
+#define		_LINUX_GOODIX_TOUCH_H
 
 #define GOODIX_I2C_NAME "Goodix-TS"
 #define GUITAR_GT80X
-#define TOUCH_MAX_HEIGHT  7680
-#define TOUCH_MAX_WIDTH   5120
+#define TOUCH_MAX_HEIGHT 	7680	
+#define TOUCH_MAX_WIDTH	 	5120
 
 #define GTP_HAVE_TOUCH_KEY    0
 #if GTP_HAVE_TOUCH_KEY
-#define GTP_MAX_KEY_NUM       3
+#define GTP_MAX_KEY_NUM	      3
 #endif
 
 #define SHUTDOWN_PORT                ()
@@ -32,65 +32,65 @@
 
 #define GOODIX_MULTI_TOUCH
 #ifndef GOODIX_MULTI_TOUCH
-#define MAX_FINGER_NUM 5
+	#define MAX_FINGER_NUM 5
 #else
-#define MAX_FINGER_NUM 5       
+	#define MAX_FINGER_NUM 5			
 #endif
 #if defined(INT_PORT)
-#if MAX_FINGER_NUM <= 3
-#define READ_BYTES_NUM 1+2+MAX_FINGER_NUM*5
-#elif MAX_FINGER_NUM == 4
-#define READ_BYTES_NUM 1+28
-#elif MAX_FINGER_NUM == 5
-#define READ_BYTES_NUM 1+34
-#endif
-#else
-#define READ_BYTES_NUM 1+34
+	#if MAX_FINGER_NUM <= 3
+	#define READ_BYTES_NUM 1+2+MAX_FINGER_NUM*5
+	#elif MAX_FINGER_NUM == 4
+	#define READ_BYTES_NUM 1+28
+	#elif MAX_FINGER_NUM == 5
+	#define READ_BYTES_NUM 1+34
+	#endif
+#else	
+	#define READ_BYTES_NUM 1+34
 #endif
 
 
 enum finger_state {
 #define FLAG_MASK 0x01
-  FLAG_UP = 0,
-  FLAG_DOWN = 1,
-  FLAG_INVALID = 2,
+	FLAG_UP = 0,
+	FLAG_DOWN = 1,
+	FLAG_INVALID = 2,
 };
 
 
 struct point_node
 {
-  uint8_t id;
-  enum finger_state state;
-  uint8_t pressure;
-  unsigned int x;
-  unsigned int y;
+	uint8_t id;
+	enum finger_state state;
+	uint8_t pressure;
+	unsigned int x;
+	unsigned int y;
 };
 struct ts_event {
-  u16 x1;
-  u16 y1;
-  u16 x2;
-  u16 y2;
-  u16 x3;
-  u16 y3;
-  u16 x4;
-  u16 y4;
-  u16 x5;
-  u16 y5;
-  u16 pressure;
-  u8  touch_point;
+	u16	x1;
+	u16	y1;
+	u16	x2;
+	u16	y2;
+	u16	x3;
+	u16	y3;
+	u16	x4;
+	u16	y4;
+	u16	x5;
+	u16	y5;
+	u16	pressure;
+    u8  touch_point;
 };
 
 /* Notice: This definition used by platform_data.
  * It should be move this struct info to platform head file such as plat/ts.h.
- * If not used in client, it will be NULL in function of goodix_ts_probe.
- */
+ * If not used in client, it will be NULL in function of goodix_ts_probe. 
+ */ 
 struct goodix_i2c_platform_data {
-  uint32_t gpio_irq;     
-  uint32_t irq_cfg;    
-  uint32_t gpio_shutdown;          
-  uint32_t shutdown_cfg;           
-  uint32_t screen_width;           
-  uint32_t screen_height;          
-};
+	uint32_t gpio_irq;		
+	uint32_t irq_cfg;		
+	uint32_t gpio_shutdown;		       
+	uint32_t shutdown_cfg;		       
+	uint32_t screen_width;		       
+	uint32_t screen_height;		       
+}; 
 
 #endif /* _LINUX_GOODIX_TOUCH_H */

@@ -37,64 +37,64 @@
 #include <asm/cache.h>
 #include <asm/armv7.h>
 
-void save_boot_params_default (u32 r0, u32 r1, u32 r2, u32 r3)
+void save_boot_params_default(u32 r0, u32 r1, u32 r2, u32 r3)
 {
 }
 
-void save_boot_params (u32 r0, u32 r1, u32 r2, u32 r3)
-__attribute__ ( (weak, alias ("save_boot_params_default") ) );
+void save_boot_params(u32 r0, u32 r1, u32 r2, u32 r3)
+	__attribute__((weak, alias("save_boot_params_default")));
 
-int cleanup_before_linux (void)
+int cleanup_before_linux(void)
 {
-  /*
-   * this function is called just before we call linux
-   * it prepares the processor for linux
-   *
-   * we turn off caches etc ...
-   */
-  disable_interrupts();
-  
-  /*
-   * Turn off I-cache and invalidate it
-   */
-  icache_disable();
-  invalidate_icache_all();
-  
-  /*
-   * turn off D-cache
-   * dcache_disable() in turn flushes the d-cache and disables MMU
-   */
-  dcache_disable();
-  
-  /*
-   * After D-cache is flushed and before it is disabled there may
-   * be some new valid entries brought into the cache. We are sure
-   * that these lines are not dirty and will not affect our execution.
-   * (because unwinding the call-stack and setting a bit in CP15 SCTRL
-   * is all we did during this. We have not pushed anything on to the
-   * stack. Neither have we affected any static data)
-   * So just invalidate the entire d-cache again to avoid coherency
-   * problems for kernel
-   */
-  invalidate_dcache_all();
-  
-  return 0;
+	/*
+	 * this function is called just before we call linux
+	 * it prepares the processor for linux
+	 *
+	 * we turn off caches etc ...
+	 */
+	disable_interrupts();
+
+	/*
+	 * Turn off I-cache and invalidate it
+	 */
+	icache_disable();
+	invalidate_icache_all();
+
+	/*
+	 * turn off D-cache
+	 * dcache_disable() in turn flushes the d-cache and disables MMU
+	 */
+	dcache_disable();
+
+	/*
+	 * After D-cache is flushed and before it is disabled there may
+	 * be some new valid entries brought into the cache. We are sure
+	 * that these lines are not dirty and will not affect our execution.
+	 * (because unwinding the call-stack and setting a bit in CP15 SCTRL
+	 * is all we did during this. We have not pushed anything on to the
+	 * stack. Neither have we affected any static data)
+	 * So just invalidate the entire d-cache again to avoid coherency
+	 * problems for kernel
+	 */
+	invalidate_dcache_all();
+
+	return 0;
 }
 
-void __cpu0_set_detected_paras (void)
+void __cpu0_set_detected_paras(void)
 {
 }
 
-void cpu0_set_detected_paras (void)
-__attribute__ ( (weak, alias ("__cpu0_set_detected_paras") ) );
+void cpu0_set_detected_paras(void)
+	__attribute__((weak, alias("__cpu0_set_detected_paras")));
 
 
 int arch_cpu_init (void)
 {
-  cpu0_set_detected_paras();   
-  
-  icache_enable();
-  
-  return 0;
+	cpu0_set_detected_paras();	
+
+	icache_enable();
+
+	return 0;
 }
 

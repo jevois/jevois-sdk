@@ -29,8 +29,8 @@
 #include <sparse_format.h>
 
 u8
-do_unsparse (unsigned char * source,
-             u32 sector,
-             u32 section_size,
-             char * slot_no);
+do_unsparse(unsigned char *source,
+                u32 sector,
+                u32 section_size,
+                char *slot_no);
 #endif /* __SPARSE_H */

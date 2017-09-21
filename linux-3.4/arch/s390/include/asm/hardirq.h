@@ -20,6 +20,6 @@
 #define __ARCH_HAS_DO_SOFTIRQ
 #define __ARCH_IRQ_EXIT_IRQS_DISABLED
 
-#define HARDIRQ_BITS  8
+#define HARDIRQ_BITS	8
 
 #endif /* __ASM_HARDIRQ_H */

@@ -94,14 +94,14 @@
 /*---------------------  Export Macros ------------------------------*/
 
 #define BBvClearFOE(dwIoBase)                               \
-  {                                                           \
+{                                                           \
     BBbWriteEmbeded(dwIoBase, 0xB1, 0);                     \
-  }
+}
 
 #define BBvSetFOE(dwIoBase)                                 \
-  {                                                           \
+{                                                           \
     BBbWriteEmbeded(dwIoBase, 0xB1, 0x0C);                  \
-  }
+}
 
 
 /*---------------------  Export Classes  ----------------------------*/
@@ -111,56 +111,56 @@
 /*---------------------  Export Functions  --------------------------*/
 
 unsigned int
-BBuGetFrameTime (
-  unsigned char byPreambleType,
-  unsigned char byPktType,
-  unsigned int cbFrameLength,
-  unsigned short wRate
-);
+BBuGetFrameTime(
+    unsigned char byPreambleType,
+    unsigned char byPktType,
+    unsigned int cbFrameLength,
+    unsigned short wRate
+    );
 
 void
 BBvCaculateParameter (
-  PSDevice pDevice,
-  unsigned int cbFrameLength,
-  unsigned short wRate,
-  unsigned char byPacketType,
-  unsigned short * pwPhyLen,
-  unsigned char * pbyPhySrv,
-  unsigned char * pbyPhySgn
-);
+    PSDevice pDevice,
+    unsigned int cbFrameLength,
+    unsigned short wRate,
+    unsigned char byPacketType,
+    unsigned short *pwPhyLen,
+    unsigned char *pbyPhySrv,
+    unsigned char *pbyPhySgn
+    );
 
-bool BBbReadEmbeded (unsigned long dwIoBase, unsigned char byBBAddr, unsigned char * pbyData);
-bool BBbWriteEmbeded (unsigned long dwIoBase, unsigned char byBBAddr, unsigned char byData);
+bool BBbReadEmbeded(unsigned long dwIoBase, unsigned char byBBAddr, unsigned char *pbyData);
+bool BBbWriteEmbeded(unsigned long dwIoBase, unsigned char byBBAddr, unsigned char byData);
 
-void BBvReadAllRegs (unsigned long dwIoBase, unsigned char * pbyBBRegs);
-void BBvLoopbackOn (PSDevice pDevice);
-void BBvLoopbackOff (PSDevice pDevice);
-void BBvSetShortSlotTime (PSDevice pDevice);
-bool BBbIsRegBitsOn (unsigned long dwIoBase, unsigned char byBBAddr, unsigned char byTestBits);
-bool BBbIsRegBitsOff (unsigned long dwIoBase, unsigned char byBBAddr, unsigned char byTestBits);
-void BBvSetVGAGainOffset (PSDevice pDevice, unsigned char byData);
+void BBvReadAllRegs(unsigned long dwIoBase, unsigned char *pbyBBRegs);
+void BBvLoopbackOn(PSDevice pDevice);
+void BBvLoopbackOff(PSDevice pDevice);
+void BBvSetShortSlotTime(PSDevice pDevice);
+bool BBbIsRegBitsOn(unsigned long dwIoBase, unsigned char byBBAddr, unsigned char byTestBits);
+bool BBbIsRegBitsOff(unsigned long dwIoBase, unsigned char byBBAddr, unsigned char byTestBits);
+void BBvSetVGAGainOffset(PSDevice pDevice, unsigned char byData);
 
-bool BBbVT3253Init (PSDevice pDevice);
-void BBvSoftwareReset (unsigned long dwIoBase);
-void BBvPowerSaveModeON (unsigned long dwIoBase);
-void BBvPowerSaveModeOFF (unsigned long dwIoBase);
-void BBvSetTxAntennaMode (unsigned long dwIoBase, unsigned char byAntennaMode);
-void BBvSetRxAntennaMode (unsigned long dwIoBase, unsigned char byAntennaMode);
-void BBvSetDeepSleep (unsigned long dwIoBase, unsigned char byLocalID);
-void BBvExitDeepSleep (unsigned long dwIoBase, unsigned char byLocalID);
+bool BBbVT3253Init(PSDevice pDevice);
+void BBvSoftwareReset(unsigned long dwIoBase);
+void BBvPowerSaveModeON(unsigned long dwIoBase);
+void BBvPowerSaveModeOFF(unsigned long dwIoBase);
+void BBvSetTxAntennaMode(unsigned long dwIoBase, unsigned char byAntennaMode);
+void BBvSetRxAntennaMode(unsigned long dwIoBase, unsigned char byAntennaMode);
+void BBvSetDeepSleep(unsigned long dwIoBase, unsigned char byLocalID);
+void BBvExitDeepSleep(unsigned long dwIoBase, unsigned char byLocalID);
 
 
 void
 TimerSQ3CallBack (
-  void * hDeviceContext
-);
+    void *hDeviceContext
+    );
 
 void
-TimerState1CallBack (
-  void * hDeviceContext
-);
+TimerState1CallBack(
+    void *hDeviceContext
+    );
 
-void BBvAntennaDiversity (PSDevice pDevice, unsigned char byRxRate, unsigned char bySQ3);
+void BBvAntennaDiversity(PSDevice pDevice, unsigned char byRxRate, unsigned char bySQ3);
 void
 BBvClearAntDivSQ3Value (PSDevice pDevice);
 

@@ -1,5 +1,5 @@
 /* -*- linux-c -*- ------------------------------------------------------- *
- *
+ *   
  * linux/include/linux/auto_fs.h
  *
  *   Copyright 1997 Transmeta Corporation - All Rights Reserved
@@ -24,11 +24,11 @@
 #endif /* __KERNEL__ */
 
 /* This file describes autofs v3 */
-#define AUTOFS_PROTO_VERSION  3
+#define AUTOFS_PROTO_VERSION	3
 
 /* Range of protocol versions defined */
-#define AUTOFS_MAX_PROTO_VERSION  AUTOFS_PROTO_VERSION
-#define AUTOFS_MIN_PROTO_VERSION  AUTOFS_PROTO_VERSION
+#define AUTOFS_MAX_PROTO_VERSION	AUTOFS_PROTO_VERSION
+#define AUTOFS_MIN_PROTO_VERSION	AUTOFS_PROTO_VERSION
 
 /*
  * The wait_queue_token (autofs_wqt_t) is part of a structure which is passed
@@ -44,26 +44,26 @@ typedef unsigned int autofs_wqt_t;
 #endif
 
 /* Packet types */
-#define autofs_ptype_missing  0 /* Missing entry (mount request) */
-#define autofs_ptype_expire 1 /* Expire entry (umount request) */
+#define autofs_ptype_missing	0	/* Missing entry (mount request) */
+#define autofs_ptype_expire	1	/* Expire entry (umount request) */
 
 struct autofs_packet_hdr {
-  int proto_version;    /* Protocol version */
-  int type;     /* Type of packet */
+	int proto_version;		/* Protocol version */
+	int type;			/* Type of packet */
 };
 
 struct autofs_packet_missing {
-  struct autofs_packet_hdr hdr;
-  autofs_wqt_t wait_queue_token;
-  int len;
-  char name[NAME_MAX + 1];
-};
+	struct autofs_packet_hdr hdr;
+        autofs_wqt_t wait_queue_token;
+	int len;
+	char name[NAME_MAX+1];
+};	
 
 /* v3 expire (via ioctl) */
 struct autofs_packet_expire {
-  struct autofs_packet_hdr hdr;
-  int len;
-  char name[NAME_MAX + 1];
+	struct autofs_packet_hdr hdr;
+	int len;
+	char name[NAME_MAX+1];
 };
 
 #define AUTOFS_IOC_READY      _IO(0x93,0x60)

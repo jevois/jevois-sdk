@@ -24,17 +24,17 @@
 #include <asm/ps3.h>
 
 struct ps3_vuart_stats {
-  unsigned long bytes_written;
-  unsigned long bytes_read;
-  unsigned long tx_interrupts;
-  unsigned long rx_interrupts;
-  unsigned long disconnect_interrupts;
+	unsigned long bytes_written;
+	unsigned long bytes_read;
+	unsigned long tx_interrupts;
+	unsigned long rx_interrupts;
+	unsigned long disconnect_interrupts;
 };
 
 struct ps3_vuart_work {
-  struct work_struct work;
-  unsigned long trigger;
-  struct ps3_system_bus_device * dev; /* to convert work to device */
+	struct work_struct work;
+	unsigned long trigger;
+	struct ps3_system_bus_device *dev; /* to convert work to device */
 };
 
 /**
@@ -42,44 +42,44 @@ struct ps3_vuart_work {
  */
 
 struct ps3_vuart_port_driver {
-  struct ps3_system_bus_driver core;
-  int (*probe) (struct ps3_system_bus_device *);
-  int (*remove) (struct ps3_system_bus_device *);
-  void (*shutdown) (struct ps3_system_bus_device *);
-  void (*work) (struct ps3_system_bus_device *);
-  /* int (*tx_event)(struct ps3_system_bus_device *dev); */
-  /* int (*rx_event)(struct ps3_system_bus_device *dev); */
-  /* int (*disconnect_event)(struct ps3_system_bus_device *dev); */
-  /* int (*suspend)(struct ps3_system_bus_device *, pm_message_t); */
-  /* int (*resume)(struct ps3_system_bus_device *); */
+	struct ps3_system_bus_driver core;
+	int (*probe)(struct ps3_system_bus_device *);
+	int (*remove)(struct ps3_system_bus_device *);
+	void (*shutdown)(struct ps3_system_bus_device *);
+	void (*work)(struct ps3_system_bus_device *);
+	/* int (*tx_event)(struct ps3_system_bus_device *dev); */
+	/* int (*rx_event)(struct ps3_system_bus_device *dev); */
+	/* int (*disconnect_event)(struct ps3_system_bus_device *dev); */
+	/* int (*suspend)(struct ps3_system_bus_device *, pm_message_t); */
+	/* int (*resume)(struct ps3_system_bus_device *); */
 };
 
-int ps3_vuart_port_driver_register (struct ps3_vuart_port_driver * drv);
-void ps3_vuart_port_driver_unregister (struct ps3_vuart_port_driver * drv);
+int ps3_vuart_port_driver_register(struct ps3_vuart_port_driver *drv);
+void ps3_vuart_port_driver_unregister(struct ps3_vuart_port_driver *drv);
 
 static inline struct ps3_vuart_port_driver *
-ps3_system_bus_dev_to_vuart_drv (struct ps3_system_bus_device * _dev)
+	ps3_system_bus_dev_to_vuart_drv(struct ps3_system_bus_device *_dev)
 {
-  struct ps3_system_bus_driver * sbd =
-    ps3_system_bus_dev_to_system_bus_drv (_dev);
-  BUG_ON (!sbd);
-  return container_of (sbd, struct ps3_vuart_port_driver, core);
+	struct ps3_system_bus_driver *sbd =
+		ps3_system_bus_dev_to_system_bus_drv(_dev);
+	BUG_ON(!sbd);
+	return container_of(sbd, struct ps3_vuart_port_driver, core);
 }
-static inline struct ps3_system_bus_device * ps3_vuart_work_to_system_bus_dev (
-  struct work_struct * _work)
+static inline struct ps3_system_bus_device *ps3_vuart_work_to_system_bus_dev(
+	struct work_struct *_work)
 {
-  struct ps3_vuart_work * vw = container_of (_work, struct ps3_vuart_work,
-                               work);
-  return vw->dev;
+	struct ps3_vuart_work *vw = container_of(_work, struct ps3_vuart_work,
+		work);
+	return vw->dev;
 }
 
-int ps3_vuart_write (struct ps3_system_bus_device * dev, const void * buf,
-                     unsigned int bytes);
-int ps3_vuart_read (struct ps3_system_bus_device * dev, void * buf,
-                    unsigned int bytes);
-int ps3_vuart_read_async (struct ps3_system_bus_device * dev, unsigned int bytes);
-void ps3_vuart_cancel_async (struct ps3_system_bus_device * dev);
-void ps3_vuart_clear_rx_bytes (struct ps3_system_bus_device * dev,
-                               unsigned int bytes);
+int ps3_vuart_write(struct ps3_system_bus_device *dev, const void *buf,
+	unsigned int bytes);
+int ps3_vuart_read(struct ps3_system_bus_device *dev, void *buf,
+	unsigned int bytes);
+int ps3_vuart_read_async(struct ps3_system_bus_device *dev, unsigned int bytes);
+void ps3_vuart_cancel_async(struct ps3_system_bus_device *dev);
+void ps3_vuart_clear_rx_bytes(struct ps3_system_bus_device *dev,
+	unsigned int bytes);
 
 #endif

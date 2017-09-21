@@ -10,7 +10,7 @@
  *   This program is distributed in the hope that it will be useful, but
  *   WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE, GOOD TITLE or
- *   NON INFRINGEMENT.  See the GNU General Public License for
+ *   NON INFRINGEMENT.	See the GNU General Public License for
  *   more details.
  */
 #if !defined(_ASM_C6X_UNISTD_H) || defined(__SYSCALL)
@@ -20,7 +20,7 @@
 #include <asm-generic/unistd.h>
 
 /* C6X-specific syscalls. */
-#define __NR_cache_sync (__NR_arch_specific_syscall + 0)
-__SYSCALL (__NR_cache_sync, sys_cache_sync)
+#define __NR_cache_sync	(__NR_arch_specific_syscall + 0)
+__SYSCALL(__NR_cache_sync, sys_cache_sync)
 
 #endif /* _ASM_C6X_UNISTD_H */

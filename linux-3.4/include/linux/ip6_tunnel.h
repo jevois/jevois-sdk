@@ -20,15 +20,15 @@
 #define IP6_TNL_F_USE_ORIG_FWMARK 0x20
 
 struct ip6_tnl_parm {
-  char name[IFNAMSIZ];  /* name of tunnel device */
-  int link;   /* ifindex of underlying L2 interface */
-  __u8 proto;   /* tunnel protocol */
-  __u8 encap_limit; /* encapsulation limit for tunnel */
-  __u8 hop_limit;   /* hop limit for tunnel */
-  __be32 flowinfo;  /* traffic class and flowlabel for tunnel */
-  __u32 flags;    /* tunnel flags */
-  struct in6_addr laddr;  /* local tunnel end-point address */
-  struct in6_addr raddr;  /* remote tunnel end-point address */
+	char name[IFNAMSIZ];	/* name of tunnel device */
+	int link;		/* ifindex of underlying L2 interface */
+	__u8 proto;		/* tunnel protocol */
+	__u8 encap_limit;	/* encapsulation limit for tunnel */
+	__u8 hop_limit;		/* hop limit for tunnel */
+	__be32 flowinfo;	/* traffic class and flowlabel for tunnel */
+	__u32 flags;		/* tunnel flags */
+	struct in6_addr laddr;	/* local tunnel end-point address */
+	struct in6_addr raddr;	/* remote tunnel end-point address */
 };
 
 #endif

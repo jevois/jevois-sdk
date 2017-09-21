@@ -12,18 +12,18 @@
  * Note: list_empty on the range of entries does not return true after this,
  * the entries is in an undefined state.
  */
-static inline void list_del_range (struct list_head * begin,
-                                   struct list_head * end)
+static inline void list_del_range(struct list_head *begin,
+				  struct list_head *end)
 {
-  begin->prev->next = end->next;
-  end->next->prev = begin->prev;
+	begin->prev->next = end->next;
+	end->next->prev = begin->prev;
 }
 
 /**
- * list_for_each_from - iterate over a list from one of its nodes
+ * list_for_each_from	-	iterate over a list from one of its nodes
  * @pos:  the &struct list_head to use as a loop cursor, from where to start
  * @head: the head for your list.
  */
 #define list_for_each_from(pos, head) \
-  for (; pos != (head); pos = pos->next)
+	for (; pos != (head); pos = pos->next)
 #endif

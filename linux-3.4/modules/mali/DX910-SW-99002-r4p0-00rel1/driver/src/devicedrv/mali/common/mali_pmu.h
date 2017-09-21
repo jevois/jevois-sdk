@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2010-2014 ARM Limited. All rights reserved.
- *
+ * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- *
+ * 
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -36,23 +36,23 @@
 /* Record the domain config from the customer or default config */
 extern u16 mali_pmu_global_domain_config[];
 
-static inline u16 mali_pmu_get_domain_mask (u32 index)
+static inline u16 mali_pmu_get_domain_mask(u32 index)
 {
-  MALI_DEBUG_ASSERT (MALI_MAX_NUMBER_OF_DOMAINS > index);
-  
-  return mali_pmu_global_domain_config[index];
+	MALI_DEBUG_ASSERT(MALI_MAX_NUMBER_OF_DOMAINS > index);
+
+	return mali_pmu_global_domain_config[index];
 }
 
-static inline void mali_pmu_set_domain_mask (u32 index, u16 value)
+static inline void mali_pmu_set_domain_mask(u32 index, u16 value)
 {
-  MALI_DEBUG_ASSERT (MALI_MAX_NUMBER_OF_DOMAINS > index);
-  
-  mali_pmu_global_domain_config[index] = value;
+	MALI_DEBUG_ASSERT(MALI_MAX_NUMBER_OF_DOMAINS > index);
+
+	mali_pmu_global_domain_config[index] = value;
 }
 
-static inline void mali_pmu_copy_domain_mask (void * src, u32 len)
+static inline void mali_pmu_copy_domain_mask(void *src, u32 len)
 {
-  _mali_osk_memcpy (mali_pmu_global_domain_config, src, len);
+	_mali_osk_memcpy(mali_pmu_global_domain_config, src, len);
 }
 
 struct mali_pmu_core;
@@ -66,7 +66,7 @@ struct mali_pmu_core;
  * @param number_of_l2_caches Number of found L2 cache resources in configuration
  * @return The created PMU object, or NULL in case of failure.
  */
-struct mali_pmu_core * mali_pmu_create (_mali_osk_resource_t * resource);
+struct mali_pmu_core *mali_pmu_create(_mali_osk_resource_t *resource);
 
 /** @brief It deallocates the PMU resource
  *
@@ -74,14 +74,14 @@ struct mali_pmu_core * mali_pmu_create (_mali_osk_resource_t * resource);
  *
  * @param pmu Pointer to PMU core object to delete
  */
-void mali_pmu_delete (struct mali_pmu_core * pmu);
+void mali_pmu_delete(struct mali_pmu_core *pmu);
 
 /** @brief Reset PMU core
  *
  * @param pmu Pointer to PMU core object to reset
  * @return _MALI_OSK_ERR_OK on success, otherwise failure.
  */
-_mali_osk_errcode_t mali_pmu_reset (struct mali_pmu_core * pmu);
+_mali_osk_errcode_t mali_pmu_reset(struct mali_pmu_core *pmu);
 
 /** @brief MALI GPU power down using MALI in-built PMU
  *
@@ -93,7 +93,7 @@ _mali_osk_errcode_t mali_pmu_reset (struct mali_pmu_core * pmu);
  * @param mask Mask specifying which power domains to power down
  * @return _MALI_OSK_ERR_OK on success otherwise, a suitable _mali_osk_errcode_t error.
  */
-_mali_osk_errcode_t mali_pmu_power_down (struct mali_pmu_core * pmu, u32 mask);
+_mali_osk_errcode_t mali_pmu_power_down(struct mali_pmu_core *pmu, u32 mask);
 
 /** @brief MALI GPU power up using MALI in-built PMU
  *
@@ -105,7 +105,7 @@ _mali_osk_errcode_t mali_pmu_power_down (struct mali_pmu_core * pmu, u32 mask);
  * @param mask Mask specifying which power domains to power up
  * @return _MALI_OSK_ERR_OK on success otherwise, a suitable _mali_osk_errcode_t error.
  */
-_mali_osk_errcode_t mali_pmu_power_up (struct mali_pmu_core * pmu, u32 mask);
+_mali_osk_errcode_t mali_pmu_power_up(struct mali_pmu_core *pmu, u32 mask);
 
 /** @brief MALI GPU power down using MALI in-built PMU
  *
@@ -114,7 +114,7 @@ _mali_osk_errcode_t mali_pmu_power_up (struct mali_pmu_core * pmu, u32 mask);
  * @param pmu Pointer to PMU core object to power down
  * @return _MALI_OSK_ERR_OK on success otherwise, a suitable _mali_osk_errcode_t error.
  */
-_mali_osk_errcode_t mali_pmu_power_down_all (struct mali_pmu_core * pmu);
+_mali_osk_errcode_t mali_pmu_power_down_all(struct mali_pmu_core *pmu);
 
 /** @brief MALI GPU power up using MALI in-built PMU
  *
@@ -123,12 +123,12 @@ _mali_osk_errcode_t mali_pmu_power_down_all (struct mali_pmu_core * pmu);
  * @param pmu Pointer to PMU core object to power up
  * @return _MALI_OSK_ERR_OK on success otherwise, a suitable _mali_osk_errcode_t error.
  */
-_mali_osk_errcode_t mali_pmu_power_up_all (struct mali_pmu_core * pmu);
+_mali_osk_errcode_t mali_pmu_power_up_all(struct mali_pmu_core *pmu);
 
 /** @brief Retrieves the Mali PMU core object (if any)
  *
  * @return The Mali PMU object, or NULL if no PMU exists.
  */
-struct mali_pmu_core * mali_pmu_get_global_pmu_core (void);
+struct mali_pmu_core *mali_pmu_get_global_pmu_core(void);
 
 #endif /* __MALI_PMU_H__ */

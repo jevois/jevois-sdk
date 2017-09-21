@@ -22,10 +22,10 @@ struct task_struct;
  * switch_to(n) should switch tasks to task nr n, first
  * checking that n isn't the current task, in which case it does nothing.
  */
-extern asmlinkage void * resume (void * last, void * next, void * next_ti);
+extern asmlinkage void *resume(void *last, void *next, void *next_ti);
 
 extern unsigned int ll_bit;
-extern struct task_struct * ll_task;
+extern struct task_struct *ll_task;
 
 #ifdef CONFIG_MIPS_MT_FPAFF
 
@@ -41,45 +41,45 @@ extern struct task_struct * ll_task;
  * different thread.
  */
 
-#define __mips_mt_fpaff_switch_to(prev)         \
-  do {                  \
-    struct thread_info *__prev_ti = task_thread_info(prev);   \
-    \
-    if (cpu_has_fpu &&            \
-        test_ti_thread_flag(__prev_ti, TIF_FPUBOUND) &&   \
-        (!(KSTK_STATUS(prev) & ST0_CU1))) {       \
-      clear_ti_thread_flag(__prev_ti, TIF_FPUBOUND);    \
-      prev->cpus_allowed = prev->thread.user_cpus_allowed;  \
-    }               \
-    next->thread.emulated_fp = 0;         \
-  } while(0)
+#define __mips_mt_fpaff_switch_to(prev)					\
+do {									\
+	struct thread_info *__prev_ti = task_thread_info(prev);		\
+									\
+	if (cpu_has_fpu &&						\
+	    test_ti_thread_flag(__prev_ti, TIF_FPUBOUND) &&		\
+	    (!(KSTK_STATUS(prev) & ST0_CU1))) {				\
+		clear_ti_thread_flag(__prev_ti, TIF_FPUBOUND);		\
+		prev->cpus_allowed = prev->thread.user_cpus_allowed;	\
+	}								\
+	next->thread.emulated_fp = 0;					\
+} while(0)
 
 #else
 #define __mips_mt_fpaff_switch_to(prev) do { (void) (prev); } while (0)
 #endif
 
-#define __clear_software_ll_bit()         \
-  do {                  \
-    if (!__builtin_constant_p(cpu_has_llsc) || !cpu_has_llsc) \
-      ll_bit = 0;           \
-  } while (0)
+#define __clear_software_ll_bit()					\
+do {									\
+	if (!__builtin_constant_p(cpu_has_llsc) || !cpu_has_llsc)	\
+		ll_bit = 0;						\
+} while (0)
 
-#define switch_to(prev, next, last)         \
-  do {                  \
-    __mips_mt_fpaff_switch_to(prev);        \
-    if (cpu_has_dsp)            \
-      __save_dsp(prev);         \
-    __clear_software_ll_bit();          \
-    (last) = resume(prev, next, task_thread_info(next));    \
-  } while (0)
+#define switch_to(prev, next, last)					\
+do {									\
+	__mips_mt_fpaff_switch_to(prev);				\
+	if (cpu_has_dsp)						\
+		__save_dsp(prev);					\
+	__clear_software_ll_bit();					\
+	(last) = resume(prev, next, task_thread_info(next));		\
+} while (0)
 
-#define finish_arch_switch(prev)          \
-  do {                  \
-    if (cpu_has_dsp)            \
-      __restore_dsp(current);         \
-    if (cpu_has_userlocal)            \
-      write_c0_userlocal(current_thread_info()->tp_value);  \
-    __restore_watch();            \
-  } while (0)
+#define finish_arch_switch(prev)					\
+do {									\
+	if (cpu_has_dsp)						\
+		__restore_dsp(current);					\
+	if (cpu_has_userlocal)						\
+		write_c0_userlocal(current_thread_info()->tp_value);	\
+	__restore_watch();						\
+} while (0)
 
 #endif /* _ASM_SWITCH_TO_H */

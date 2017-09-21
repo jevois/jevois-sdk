@@ -19,5 +19,5 @@
 #define CREATE_TRACE_POINTS
 #include <trace/events/gpu.h>
 
-EXPORT_TRACEPOINT_SYMBOL (gpu_sched_switch);
-EXPORT_TRACEPOINT_SYMBOL (gpu_job_enqueue);
+EXPORT_TRACEPOINT_SYMBOL(gpu_sched_switch);
+EXPORT_TRACEPOINT_SYMBOL(gpu_job_enqueue);

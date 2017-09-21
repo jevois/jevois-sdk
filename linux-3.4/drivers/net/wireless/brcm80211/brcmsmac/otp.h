@@ -14,23 +14,23 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#ifndef _BRCM_OTP_H_
-#define _BRCM_OTP_H_
+#ifndef	_BRCM_OTP_H_
+#define	_BRCM_OTP_H_
 
 #include "types.h"
 
 /* OTP regions */
-#define OTP_HW_RGN  1
-#define OTP_SW_RGN  2
-#define OTP_CI_RGN  4
-#define OTP_FUSE_RGN  8
+#define OTP_HW_RGN	1
+#define OTP_SW_RGN	2
+#define OTP_CI_RGN	4
+#define OTP_FUSE_RGN	8
 /* From h/w region to end of OTP including checksum */
-#define OTP_ALL_RGN 0xf
+#define OTP_ALL_RGN	0xf
 
 /* OTP Size */
-#define OTP_SZ_MAX    (6144/8)  /* maximum bytes in one CIS */
+#define OTP_SZ_MAX		(6144/8)	/* maximum bytes in one CIS */
 
-extern int otp_read_region (struct si_pub * sih, int region, u16 * data,
-                            uint * wlen);
+extern int otp_read_region(struct si_pub *sih, int region, u16 *data,
+			   uint *wlen);
 
-#endif        /* _BRCM_OTP_H_ */
+#endif				/* _BRCM_OTP_H_ */

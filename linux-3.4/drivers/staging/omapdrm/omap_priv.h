@@ -32,24 +32,24 @@
  * might be times when you wish to do something different.
  */
 struct omap_kms_platform_data {
-  /* overlays to use as CRTCs: */
-  int ovl_cnt;
-  const int * ovl_ids;
-  
-  /* overlays to use as video planes: */
-  int pln_cnt;
-  const int * pln_ids;
-  
-  int mgr_cnt;
-  const int * mgr_ids;
-  
-  int dev_cnt;
-  const char ** dev_names;
+	/* overlays to use as CRTCs: */
+	int ovl_cnt;
+	const int *ovl_ids;
+
+	/* overlays to use as video planes: */
+	int pln_cnt;
+	const int *pln_ids;
+
+	int mgr_cnt;
+	const int *mgr_ids;
+
+	int dev_cnt;
+	const char **dev_names;
 };
 
 struct omap_drm_platform_data {
-  struct omap_kms_platform_data * kms_pdata;
-  struct omap_dmm_platform_data * dmm_pdata;
+	struct omap_kms_platform_data *kms_pdata;
+	struct omap_dmm_platform_data *dmm_pdata;
 };
 
 #endif /* __OMAP_DRM_H__ */

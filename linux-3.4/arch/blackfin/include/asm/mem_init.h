@@ -8,12 +8,12 @@
 
 #if defined(EBIU_SDGCTL)
 #if defined(CONFIG_MEM_MT48LC16M16A2TG_75) || \
-defined(CONFIG_MEM_MT48LC64M4A2FB_7E) || \
-defined(CONFIG_MEM_MT48LC16M8A2TG_75) || \
-defined(CONFIG_MEM_MT48LC32M8A2_75) || \
-defined(CONFIG_MEM_MT48LC8M32B2B5_7) || \
-defined(CONFIG_MEM_MT48LC32M16A2TG_75) || \
-defined(CONFIG_MEM_MT48LC32M8A2_75)
+    defined(CONFIG_MEM_MT48LC64M4A2FB_7E) || \
+    defined(CONFIG_MEM_MT48LC16M8A2TG_75) || \
+    defined(CONFIG_MEM_MT48LC32M8A2_75) || \
+    defined(CONFIG_MEM_MT48LC8M32B2B5_7) || \
+    defined(CONFIG_MEM_MT48LC32M16A2TG_75) || \
+    defined(CONFIG_MEM_MT48LC32M8A2_75)
 #if (CONFIG_SCLK_HZ > 119402985)
 #define SDRAM_tRP       TRP_2
 #define SDRAM_tRP_num   2
@@ -168,28 +168,28 @@ defined(CONFIG_MEM_MT48LC32M8A2_75)
 #endif
 
 #if defined(CONFIG_MEM_MT48LC16M8A2TG_75) || \
-defined(CONFIG_MEM_MT48LC8M32B2B5_7)
-/*SDRAM INFORMATION: */
-#define SDRAM_Tref  64    /* Refresh period in milliseconds   */
-#define SDRAM_NRA   4096  /* Number of row addresses in SDRAM */
+    defined(CONFIG_MEM_MT48LC8M32B2B5_7)
+  /*SDRAM INFORMATION: */
+#define SDRAM_Tref  64		/* Refresh period in milliseconds   */
+#define SDRAM_NRA   4096	/* Number of row addresses in SDRAM */
 #define SDRAM_CL    CL_3
 #endif
 
 #if defined(CONFIG_MEM_MT48LC32M8A2_75) || \
-defined(CONFIG_MEM_MT48LC64M4A2FB_7E) || \
-defined(CONFIG_MEM_MT48LC32M16A2TG_75) || \
-defined(CONFIG_MEM_MT48LC16M16A2TG_75) || \
-defined(CONFIG_MEM_MT48LC32M8A2_75)
-/*SDRAM INFORMATION: */
-#define SDRAM_Tref  64    /* Refresh period in milliseconds   */
-#define SDRAM_NRA   8192  /* Number of row addresses in SDRAM */
+    defined(CONFIG_MEM_MT48LC64M4A2FB_7E) || \
+    defined(CONFIG_MEM_MT48LC32M16A2TG_75) || \
+    defined(CONFIG_MEM_MT48LC16M16A2TG_75) || \
+    defined(CONFIG_MEM_MT48LC32M8A2_75)
+  /*SDRAM INFORMATION: */
+#define SDRAM_Tref  64		/* Refresh period in milliseconds   */
+#define SDRAM_NRA   8192	/* Number of row addresses in SDRAM */
 #define SDRAM_CL    CL_3
 #endif
 
 #if defined(CONFIG_MEM_MT48H32M16LFCJ_75)
-/*SDRAM INFORMATION: */
-#define SDRAM_Tref  64    /* Refresh period in milliseconds   */
-#define SDRAM_NRA   8192  /* Number of row addresses in SDRAM */
+  /*SDRAM INFORMATION: */
+#define SDRAM_Tref  64		/* Refresh period in milliseconds   */
+#define SDRAM_NRA   8192	/* Number of row addresses in SDRAM */
 #define SDRAM_CL    CL_2
 #endif
 
@@ -201,68 +201,68 @@ defined(CONFIG_MEM_MT48LC32M8A2_75)
 /* Enable SCLK Out */
 #define mem_SDGCTL        (SCTLE | SDRAM_CL | SDRAM_tRAS | SDRAM_tRP | SDRAM_tRCD | SDRAM_tWR | PSS)
 #else
-#define mem_SDRRC   CONFIG_MEM_SDRRC
-#define mem_SDGCTL  CONFIG_MEM_SDGCTL
+#define mem_SDRRC 	CONFIG_MEM_SDRRC
+#define mem_SDGCTL	CONFIG_MEM_SDGCTL
 #endif
 #endif
 
 
 #if defined(EBIU_DDRCTL0)
-#define MIN_DDR_SCLK(x) (x*(CONFIG_SCLK_HZ/1000/1000)/1000 + 1)
-#define MAX_DDR_SCLK(x) (x*(CONFIG_SCLK_HZ/1000/1000)/1000)
-#define DDR_CLK_HZ(x) (1000*1000*1000/x)
+#define MIN_DDR_SCLK(x)	(x*(CONFIG_SCLK_HZ/1000/1000)/1000 + 1)
+#define MAX_DDR_SCLK(x)	(x*(CONFIG_SCLK_HZ/1000/1000)/1000)
+#define DDR_CLK_HZ(x)	(1000*1000*1000/x)
 
 #if defined(CONFIG_MEM_MT46V32M16_6T)
-#define DDR_SIZE  DEVSZ_512
-#define DDR_WIDTH DEVWD_16
-#define DDR_MAX_tCK 13
+#define DDR_SIZE	DEVSZ_512
+#define DDR_WIDTH	DEVWD_16
+#define DDR_MAX_tCK	13
 
-#define DDR_tRC   DDR_TRC(MIN_DDR_SCLK(60))
-#define DDR_tRAS  DDR_TRAS(MIN_DDR_SCLK(42))
-#define DDR_tRP   DDR_TRP(MIN_DDR_SCLK(15))
-#define DDR_tRFC  DDR_TRFC(MIN_DDR_SCLK(72))
-#define DDR_tREFI DDR_TREFI(MAX_DDR_SCLK(7800))
+#define DDR_tRC		DDR_TRC(MIN_DDR_SCLK(60))
+#define DDR_tRAS	DDR_TRAS(MIN_DDR_SCLK(42))
+#define DDR_tRP		DDR_TRP(MIN_DDR_SCLK(15))
+#define DDR_tRFC	DDR_TRFC(MIN_DDR_SCLK(72))
+#define DDR_tREFI	DDR_TREFI(MAX_DDR_SCLK(7800))
 
-#define DDR_tRCD  DDR_TRCD(MIN_DDR_SCLK(15))
-#define DDR_tWTR  DDR_TWTR(1)
-#define DDR_tMRD  DDR_TMRD(MIN_DDR_SCLK(12))
-#define DDR_tWR   DDR_TWR(MIN_DDR_SCLK(15))
+#define DDR_tRCD	DDR_TRCD(MIN_DDR_SCLK(15))
+#define DDR_tWTR	DDR_TWTR(1)
+#define DDR_tMRD	DDR_TMRD(MIN_DDR_SCLK(12))
+#define DDR_tWR		DDR_TWR(MIN_DDR_SCLK(15))
 #endif
 
 #if defined(CONFIG_MEM_MT46V32M16_5B)
-#define DDR_SIZE  DEVSZ_512
-#define DDR_WIDTH DEVWD_16
-#define DDR_MAX_tCK 13
+#define DDR_SIZE	DEVSZ_512
+#define DDR_WIDTH	DEVWD_16
+#define DDR_MAX_tCK	13
 
-#define DDR_tRC   DDR_TRC(MIN_DDR_SCLK(55))
-#define DDR_tRAS  DDR_TRAS(MIN_DDR_SCLK(40))
-#define DDR_tRP   DDR_TRP(MIN_DDR_SCLK(15))
-#define DDR_tRFC  DDR_TRFC(MIN_DDR_SCLK(70))
-#define DDR_tREFI DDR_TREFI(MAX_DDR_SCLK(7800))
+#define DDR_tRC		DDR_TRC(MIN_DDR_SCLK(55))
+#define DDR_tRAS	DDR_TRAS(MIN_DDR_SCLK(40))
+#define DDR_tRP		DDR_TRP(MIN_DDR_SCLK(15))
+#define DDR_tRFC	DDR_TRFC(MIN_DDR_SCLK(70))
+#define DDR_tREFI	DDR_TREFI(MAX_DDR_SCLK(7800))
 
-#define DDR_tRCD  DDR_TRCD(MIN_DDR_SCLK(15))
-#define DDR_tWTR  DDR_TWTR(2)
-#define DDR_tMRD  DDR_TMRD(MIN_DDR_SCLK(10))
-#define DDR_tWR   DDR_TWR(MIN_DDR_SCLK(15))
+#define DDR_tRCD	DDR_TRCD(MIN_DDR_SCLK(15))
+#define DDR_tWTR	DDR_TWTR(2)
+#define DDR_tMRD	DDR_TMRD(MIN_DDR_SCLK(10))
+#define DDR_tWR		DDR_TWR(MIN_DDR_SCLK(15))
 #endif
 
 #if (CONFIG_SCLK_HZ < DDR_CLK_HZ(DDR_MAX_tCK))
 # error "CONFIG_SCLK_HZ is too small (<DDR_CLK_HZ(DDR_MAX_tCK) Hz)."
 #elif(CONFIG_SCLK_HZ <= 133333333)
-# define  DDR_CL    CL_2
+# define	DDR_CL		CL_2
 #else
 # error "CONFIG_SCLK_HZ is too large (>133333333 Hz)."
 #endif
 
 #ifdef CONFIG_BFIN_KERNEL_CLOCK_MEMINIT_CALC
-#define mem_DDRCTL0 (DDR_tRP | DDR_tRAS | DDR_tRC | DDR_tRFC | DDR_tREFI)
-#define mem_DDRCTL1 (DDR_DATWIDTH | EXTBANK_1 | DDR_SIZE | DDR_WIDTH | DDR_tWTR \
-                     | DDR_tMRD | DDR_tWR | DDR_tRCD)
-#define mem_DDRCTL2 DDR_CL
+#define mem_DDRCTL0	(DDR_tRP | DDR_tRAS | DDR_tRC | DDR_tRFC | DDR_tREFI)
+#define mem_DDRCTL1	(DDR_DATWIDTH | EXTBANK_1 | DDR_SIZE | DDR_WIDTH | DDR_tWTR \
+			| DDR_tMRD | DDR_tWR | DDR_tRCD)
+#define mem_DDRCTL2	DDR_CL
 #else
-#define mem_DDRCTL0 CONFIG_MEM_DDRCTL0
-#define mem_DDRCTL1 CONFIG_MEM_DDRCTL1
-#define mem_DDRCTL2 CONFIG_MEM_DDRCTL2
+#define mem_DDRCTL0	CONFIG_MEM_DDRCTL0
+#define mem_DDRCTL1	CONFIG_MEM_DDRCTL1
+#define mem_DDRCTL2	CONFIG_MEM_DDRCTL2
 #endif
 #endif
 

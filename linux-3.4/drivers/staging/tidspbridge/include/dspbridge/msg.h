@@ -39,9 +39,9 @@
  *      msg_callback != NULL.
  *  Ensures:
  */
-extern int msg_create (struct msg_mgr ** msg_man,
-                       struct dev_object * hdev_obj,
-                       msg_onexit msg_callback);
+extern int msg_create(struct msg_mgr **msg_man,
+			     struct dev_object *hdev_obj,
+			     msg_onexit msg_callback);
 
 /*
  *  ======== msg_delete ========
@@ -54,6 +54,6 @@ extern int msg_create (struct msg_mgr ** msg_man,
  *      Valid hmsg_mgr.
  *  Ensures:
  */
-extern void msg_delete (struct msg_mgr * hmsg_mgr);
+extern void msg_delete(struct msg_mgr *hmsg_mgr);
 
 #endif /* MSG_ */

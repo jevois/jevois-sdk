@@ -11,26 +11,26 @@ echo "#################### JeVois microSD card builder. Copyright (C) 2017 by La
 echo
 
 if [ ! -d /var/lib/jevois-microsd ]; then
-    echo "Directory /var/lib/jevois-microsd/ is missing -- run ./rebuild-platform.sh in jevois -- ABORT"
+    echo "Directory /var/lib/jevois-microsd/ is missing -- run [./rebuild-platform.sh] in jevois -- ABORT"
     exit 1
 fi
 
 if [ ! -d /var/lib/jevois-microsd/modules ]; then
-    echo "Directory /var/lib/jevois-microsd/modules/ is missing -- run ./rebuild-platform.sh in jevoisbase -- ABORT"
+    echo "Directory /var/lib/jevois-microsd/modules/ is missing -- run [./rebuild-platform.sh --staging] in jevoisbase -- ABORT"
     exit 2
 fi
 
 if [ ! -d /var/lib/jevois-build ]; then
-    echo "Directory /var/lib/jevois-build/ is missing -- run ./rebuild-platform.sh in jevois -- ABORT"
+    echo "Directory /var/lib/jevois-build/ is missing -- run [./rebuild-platform.sh] in jevois -- ABORT"
     exit 3
 fi
 
 if [ ! -d /var/lib/jevois-build/boot ]; then
-    echo "Directory /var/lib/jevois-build/boot is missing -- run ./jevois-build.sh in jevois-sdk -- ABORT"
+    echo "Directory /var/lib/jevois-build/boot is missing -- run [./jevois-build.sh] in jevois-sdk -- ABORT"
     exit 4
 fi
 if [ ! -d /var/lib/jevois-build/usr ]; then
-    echo "Directory /var/lib/jevois-build/usr is missing -- run ./rebuild-platform.sh in jevois -- ABORT"
+    echo "Directory /var/lib/jevois-build/usr is missing -- run [./rebuild-platform.sh] in jevois -- ABORT"
     exit 5
 fi
 
@@ -69,8 +69,8 @@ if [ "x$card" = "x" ]; then echo "Cannot write to empty card device -- ABORT"; e
 if [ ! -b "$card" ]; then echo "Specified card device [$card] not a block device -- ABORT"; exit 8; fi
 
 # Block device may exist if card reader is present but no card is inserted; also check for card:
-sudo dd if="$card" of=/dev/null count=1 status=none
-if [ $? -ne 0 ]; then "Device [$card] not readable -- insert microSD card -- ABORT"; exit 9; fi
+dd if="$card" of=/dev/null count=1 status=none
+if [ $? -ne 0 ]; then "Device [$card] not readable -- insert microSD card and run as sudo -- ABORT"; exit 9; fi
 
 echo
 echo "=============================== Contents of $card:"
@@ -78,7 +78,19 @@ echo abort | sfdisk --no-reread --force ${card} | grep -v Checking | grep -v Lea
 echo "=================================================="
 echo
 echo
-if [ $usedef -ne 1 ]; then
+
+sectors=`echo abort | sfdisk --no-reread --force ${card} | grep -v '=' | grep bytes | grep sectors | awk '{ print $7 }'`
+mbytes=`expr ${sectors} / 2048`
+
+# NOTE: here we reject automatic formatting of any disk larger than 64GB to avoid accidental destruction of real hard
+# drives. You may need to adjust the line below if attempting to use a very large microSD card:
+maxmbytes=65700
+
+if [[ ${mbytes} -gt ${maxmbytes} ]]; then
+    echo "$card is larger than 64GB. Please confirm that this you want to ERASE ALL DATA on $card."
+    read -p "Type 'sure' to ERASE ALL DATA on $card: "
+    if [ "X$REPLY" != "Xsure" ]; then echo "Operation aborted by user."; exit 12; fi
+elif [ $usedef -ne 1 ]; then
     read -p "Ok to ERASE ALL DATA on $card? [y/N] "
     if [ "X$REPLY" != "Xy" ]; then echo "Operation aborted by user."; exit 10; fi
 fi
@@ -156,14 +168,16 @@ sync
 # For future reference, because we run kernel 3.4 on the platform, we need to make sure we do not here create the fs
 # with unsupported features. These features are ok, disable any extra ones:
 #
-# sudo tune2fs -l /dev/sdb2
+# on platform: [sudo tune2fs -l /dev/sdb2] returns:
 # Filesystem features: has_journal ext_attr resize_inode dir_index filetype needs_recovery extent flex_bg sparse_super
 # large_file huge_file uninit_bg dir_nlink extra_isize
 
-if [ `cat /etc/issue | grep 15 | wc -l ` -eq 1 ]; then
+if [ `cat /etc/issue | grep 15 | wc -l` -eq 1 ]; then
     mkfs.ext4 -L LINUX ${card}${p}2 # no extra options needed on ubuntu 15.x
+elif [ `cat /etc/issue | grep 16.04 | wc -l` -eq 1 ]; then
+    mkfs.ext4 -L LINUX -O ^64bit,uninit_bg ${card}${p}2 # need to disable some new features on 16.x
 else
-    mkfs.ext4 -L LINUX -O ^64bit,uninit_bg,^metadata_csum ${card}${p}2 # need to disable some new features on 16.x
+    mkfs.ext4 -L LINUX -O ^64bit,uninit_bg,^metadata_csum ${card}${p}2 # need to disable some new features on 17.x
 fi
 
 sync
@@ -180,7 +194,7 @@ mount ${card}${p}2 sdcard
 mkdir sdcard/boot sdcard/jevois
 mount ${card}${p}1 sdcard/boot
 mount ${card}${p}3 sdcard/jevois
-mkdir sdcard/jevois/data sdcard/jevois/lib sdcard/jevois/modules sdcard/jevois/packages
+mkdir sdcard/jevois/data sdcard/jevois/lib sdcard/jevois/modules sdcard/jevois/packages sdcard/jevois/share
 
 echo "#################### Populating boot partition ${card}${p}1 from /var/lib/jevois-build/boot/ ..."
 cp boot/uImage boot/script.bin boot/uEnv.txt sdcard/boot/
@@ -230,11 +244,11 @@ echo "#################### Populating JeVois core in ${card}${p}2 from /var/lib/
 cp -ar usr sdcard/
 
 # fixup opencv python if needed:
-if [ ! -f sdcard/usr/lib/python3.5/site-packages/cv2.so ]; then
+if [ ! -f sdcard/usr/lib/python3.6/site-packages/cv2.so ]; then
     # There is a flaw in the buildroot building of opencv, where the library file name still shows up as compiled for
     # whatever the host architecture was, even though it has been correctly cross-compiled for the JeVois ARM
     # processor. Here we fix that and also move the library to the python site-packages:
-    mv sdcard/usr/python/3.5/cv2.cpython-35m-x86_64-linux-gnu.so sdcard/usr/lib/python3.5/site-packages/cv2.so
+    mv sdcard/usr/python/3.6/cv2.cpython-36m-x86_64-linux-gnu.so sdcard/usr/lib/python3.6/site-packages/cv2.so
 fi
     
 # Do not activate a console on ttyS0 by default in inittab, we do it in rcS above if needed, or in jevois.sh:

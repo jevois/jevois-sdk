@@ -19,70 +19,70 @@
 #include <asm/bootinfo.h>
 
 VOID
-ArcHalt (VOID)
+ArcHalt(VOID)
 {
-  bc_disable();
-  local_irq_disable();
-  ARC_CALL0 (halt);
-never:  goto never;
+	bc_disable();
+	local_irq_disable();
+	ARC_CALL0(halt);
+never:	goto never;
 }
 
 VOID
-ArcPowerDown (VOID)
+ArcPowerDown(VOID)
 {
-  bc_disable();
-  local_irq_disable();
-  ARC_CALL0 (pdown);
-never:  goto never;
+	bc_disable();
+	local_irq_disable();
+	ARC_CALL0(pdown);
+never:	goto never;
 }
 
 /* XXX is this a soft reset basically? XXX */
 VOID
-ArcRestart (VOID)
+ArcRestart(VOID)
 {
-  bc_disable();
-  local_irq_disable();
-  ARC_CALL0 (restart);
-never:  goto never;
+	bc_disable();
+	local_irq_disable();
+	ARC_CALL0(restart);
+never:	goto never;
 }
 
 VOID
-ArcReboot (VOID)
+ArcReboot(VOID)
 {
-  bc_disable();
-  local_irq_disable();
-  ARC_CALL0 (reboot);
-never:  goto never;
+	bc_disable();
+	local_irq_disable();
+	ARC_CALL0(reboot);
+never:	goto never;
 }
 
 VOID
-ArcEnterInteractiveMode (VOID)
+ArcEnterInteractiveMode(VOID)
 {
-  bc_disable();
-  local_irq_disable();
-  ARC_CALL0 (imode);
-never:  goto never;
+	bc_disable();
+	local_irq_disable();
+	ARC_CALL0(imode);
+never:	goto never;
 }
 
 LONG
-ArcSaveConfiguration (VOID)
+ArcSaveConfiguration(VOID)
 {
-  return ARC_CALL0 (cfg_save);
+	return ARC_CALL0(cfg_save);
 }
 
 struct linux_sysid *
-ArcGetSystemId (VOID)
+ArcGetSystemId(VOID)
 {
-  return (struct linux_sysid *) ARC_CALL0 (get_sysid);
+	return (struct linux_sysid *) ARC_CALL0(get_sysid);
 }
 
 VOID __init
-ArcFlushAllCaches (VOID)
+ArcFlushAllCaches(VOID)
 {
-  ARC_CALL0 (cache_flush);
+	ARC_CALL0(cache_flush);
 }
 
-DISPLAY_STATUS * __init ArcGetDisplayStatus (ULONG FileID)
+DISPLAY_STATUS * __init ArcGetDisplayStatus(ULONG FileID)
 {
-  return (DISPLAY_STATUS *) ARC_CALL1 (GetDisplayStatus, FileID);
+	return (DISPLAY_STATUS *) ARC_CALL1(GetDisplayStatus, FileID);
 }

@@ -27,44 +27,44 @@
 
 /* types */
 enum pstore_type_id {
-  PSTORE_TYPE_DMESG = 0,
-  PSTORE_TYPE_MCE   = 1,
-  PSTORE_TYPE_UNKNOWN = 255
+	PSTORE_TYPE_DMESG	= 0,
+	PSTORE_TYPE_MCE		= 1,
+	PSTORE_TYPE_UNKNOWN	= 255
 };
 
 struct pstore_info {
-  struct module * owner;
-  char  *  name;
-  spinlock_t  buf_lock; /* serialize access to 'buf' */
-  char  *  buf;
-  size_t    bufsize;
-  struct mutex  read_mutex; /* serialize open/read/close */
-  int   (*open) (struct pstore_info * psi);
-  int   (*close) (struct pstore_info * psi);
-  ssize_t   (*read) (u64 * id, enum pstore_type_id * type,
-                     struct timespec * time, char ** buf,
-                     struct pstore_info * psi);
-  int   (*write) (enum pstore_type_id type,
-                  enum kmsg_dump_reason reason, u64 * id,
-                  unsigned int part, size_t size, struct pstore_info * psi);
-  int   (*erase) (enum pstore_type_id type, u64 id,
-                  struct pstore_info * psi);
-  void  *  data;
+	struct module	*owner;
+	char		*name;
+	spinlock_t	buf_lock;	/* serialize access to 'buf' */
+	char		*buf;
+	size_t		bufsize;
+	struct mutex	read_mutex;	/* serialize open/read/close */
+	int		(*open)(struct pstore_info *psi);
+	int		(*close)(struct pstore_info *psi);
+	ssize_t		(*read)(u64 *id, enum pstore_type_id *type,
+			struct timespec *time, char **buf,
+			struct pstore_info *psi);
+	int		(*write)(enum pstore_type_id type,
+			enum kmsg_dump_reason reason, u64 *id,
+			unsigned int part, size_t size, struct pstore_info *psi);
+	int		(*erase)(enum pstore_type_id type, u64 id,
+			struct pstore_info *psi);
+	void		*data;
 };
 
 #ifdef CONFIG_PSTORE
-extern int pstore_register (struct pstore_info *);
-extern bool pstore_cannot_block_path (enum kmsg_dump_reason reason);
+extern int pstore_register(struct pstore_info *);
+extern bool pstore_cannot_block_path(enum kmsg_dump_reason reason);
 #else
 static inline int
-pstore_register (struct pstore_info * psi)
+pstore_register(struct pstore_info *psi)
 {
-  return -ENODEV;
+	return -ENODEV;
 }
 static inline bool
-pstore_cannot_block_path (enum kmsg_dump_reason reason)
+pstore_cannot_block_path(enum kmsg_dump_reason reason)
 {
-  return false;
+	return false;
 }
 #endif
 

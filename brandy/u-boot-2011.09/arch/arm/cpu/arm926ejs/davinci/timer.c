@@ -28,7 +28,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -43,81 +43,81 @@
 DECLARE_GLOBAL_DATA_PTR;
 
 struct davinci_timer {
-  u_int32_t pid12;
-  u_int32_t emumgt;
-  u_int32_t na1;
-  u_int32_t na2;
-  u_int32_t tim12;
-  u_int32_t tim34;
-  u_int32_t prd12;
-  u_int32_t prd34;
-  u_int32_t tcr;
-  u_int32_t tgcr;
-  u_int32_t wdtcr;
+	u_int32_t	pid12;
+	u_int32_t	emumgt;
+	u_int32_t	na1;
+	u_int32_t	na2;
+	u_int32_t	tim12;
+	u_int32_t	tim34;
+	u_int32_t	prd12;
+	u_int32_t	prd34;
+	u_int32_t	tcr;
+	u_int32_t	tgcr;
+	u_int32_t	wdtcr;
 };
 
 static struct davinci_timer * const timer =
-  (struct davinci_timer *) CONFIG_SYS_TIMERBASE;
+	(struct davinci_timer *)CONFIG_SYS_TIMERBASE;
 
-#define TIMER_LOAD_VAL  0xffffffff
+#define TIMER_LOAD_VAL	0xffffffff
 
-#define TIM_CLK_DIV 16
+#define TIM_CLK_DIV	16
 
-int timer_init (void)
+int timer_init(void)
 {
-  /* We are using timer34 in unchained 32-bit mode, full speed */
-  writel (0x0, &timer->tcr);
-  writel (0x0, &timer->tgcr);
-  writel (0x06 | ( (TIM_CLK_DIV - 1) << 8), &timer->tgcr);
-  writel (0x0, &timer->tim34);
-  writel (TIMER_LOAD_VAL, &timer->prd34);
-  writel (2 << 22, &timer->tcr);
-  gd->timer_rate_hz = CONFIG_SYS_HZ_CLOCK / TIM_CLK_DIV;
-  gd->timer_reset_value = 0;
-  
-  return (0);
+	/* We are using timer34 in unchained 32-bit mode, full speed */
+	writel(0x0, &timer->tcr);
+	writel(0x0, &timer->tgcr);
+	writel(0x06 | ((TIM_CLK_DIV - 1) << 8), &timer->tgcr);
+	writel(0x0, &timer->tim34);
+	writel(TIMER_LOAD_VAL, &timer->prd34);
+	writel(2 << 22, &timer->tcr);
+	gd->timer_rate_hz = CONFIG_SYS_HZ_CLOCK / TIM_CLK_DIV;
+	gd->timer_reset_value = 0;
+
+	return(0);
 }
 
 /*
  * Get the current 64 bit timer tick count
  */
-unsigned long long get_ticks (void)
+unsigned long long get_ticks(void)
 {
-  unsigned long now = readl (&timer->tim34);
-  
-  /* increment tbu if tbl has rolled over */
-  if (now < gd->tbl)
-  { gd->tbu++; }
-  gd->tbl = now;
-  
-  return ( ( (unsigned long long) gd->tbu) << 32) | gd->tbl;
+	unsigned long now = readl(&timer->tim34);
+
+	/* increment tbu if tbl has rolled over */
+	if (now < gd->tbl)
+		gd->tbu++;
+	gd->tbl = now;
+
+	return (((unsigned long long)gd->tbu) << 32) | gd->tbl;
 }
 
-ulong get_timer (ulong base)
+ulong get_timer(ulong base)
 {
-  unsigned long long timer_diff;
-  
-  timer_diff = get_ticks() - gd->timer_reset_value;
-  
-  return (timer_diff / (gd->timer_rate_hz / CONFIG_SYS_HZ) ) - base;
+	unsigned long long timer_diff;
+
+	timer_diff = get_ticks() - gd->timer_reset_value;
+
+	return (timer_diff / (gd->timer_rate_hz / CONFIG_SYS_HZ)) - base;
 }
 
-void __udelay (unsigned long usec)
+void __udelay(unsigned long usec)
 {
-  unsigned long long endtime;
-  
-  endtime = ( (unsigned long long) usec * gd->timer_rate_hz) / 1000000UL;
-  endtime += get_ticks();
-  
-  while (get_ticks() < endtime)
-    ;
+	unsigned long long endtime;
+
+	endtime = ((unsigned long long)usec * gd->timer_rate_hz) / 1000000UL;
+	endtime += get_ticks();
+
+	while (get_ticks() < endtime)
+		;
 }
 
 /*
  * This function is derived from PowerPC code (timebase clock frequency).
  * On ARM it returns the number of timer ticks per second.
  */
-ulong get_tbclk (void)
+ulong get_tbclk(void)
 {
-  return CONFIG_SYS_HZ;
+	return CONFIG_SYS_HZ;
 }

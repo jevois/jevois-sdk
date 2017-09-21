@@ -21,9 +21,9 @@
  */
 
 /*
- * File:    cpu.c
+ * File:		cpu.c
  *
- * Discription:   Some cpu specific function for watchdog,
+ * Discription:		Some cpu specific function for watchdog,
  *                      cpu version test, clock setting ...
  *
  */
@@ -37,24 +37,23 @@
 DECLARE_GLOBAL_DATA_PTR;
 
 #if (defined(CONFIG_MPC555))
-#  define ID_STR  "MPC555/556"
+#  define	ID_STR	"MPC555/556"
 
 /*
  * Check version of cpu with Processor Version Register (PVR)
  */
 static int check_cpu_version (long clock, uint pvr, uint immr)
 {
-  char buf[32];
-  /* The highest 16 bits should be 0x0002 for a MPC555/556 */
-  if ( (pvr >> 16) == 0x0002) {
-    printf (" " ID_STR " Version %x", (pvr >> 16) );
-    printf (" at %s MHz:", strmhz (buf, clock) );
-  }
-  else {
-    printf ("Not supported cpu version");
-    return -1;
-  }
-  return 0;
+    char buf[32];
+	/* The highest 16 bits should be 0x0002 for a MPC555/556 */
+	if ((pvr >> 16) == 0x0002) {
+		printf (" " ID_STR " Version %x", (pvr >> 16));
+		printf (" at %s MHz:", strmhz (buf, clock));
+	} else {
+		printf ("Not supported cpu version");
+		return -1;
+	}
+	return 0;
 }
 #endif /* CONFIG_MPC555 */
 
@@ -64,13 +63,13 @@ static int check_cpu_version (long clock, uint pvr, uint immr)
  */
 int checkcpu (void)
 {
-  ulong clock = gd->cpu_clk;
-  uint immr = get_immr (0); /* Return full IMMR contents */
-  uint pvr = get_pvr ();    /* Retrieve PVR register */
-  
-  puts ("CPU:   ");
-  
-  return check_cpu_version (clock, pvr, immr);
+	ulong clock = gd->cpu_clk;
+	uint immr = get_immr (0);	/* Return full IMMR contents */
+	uint pvr = get_pvr ();		/* Retrieve PVR register */
+
+	puts ("CPU:   ");
+
+	return check_cpu_version (clock, pvr, immr);
 }
 
 /*
@@ -79,11 +78,11 @@ int checkcpu (void)
 #if defined(CONFIG_WATCHDOG)
 void watchdog_reset (void)
 {
-  int re_enable = disable_interrupts ();
-  
-  reset_5xx_watchdog ( (immap_t *) CONFIG_SYS_IMMR);
-  if (re_enable)
-  { enable_interrupts (); }
+	int re_enable = disable_interrupts ();
+
+	reset_5xx_watchdog ((immap_t *) CONFIG_SYS_IMMR);
+	if (re_enable)
+		enable_interrupts ();
 }
 
 /*
@@ -91,9 +90,9 @@ void watchdog_reset (void)
  */
 void reset_5xx_watchdog (volatile immap_t * immr)
 {
-  /* Use the MPC5xx Internal Watchdog */
-  immr->im_siu_conf.sc_swsr = 0x556c; /* Prevent SW time-out */
-  immr->im_siu_conf.sc_swsr = 0xaa39;
+	/* Use the MPC5xx Internal Watchdog */
+	immr->im_siu_conf.sc_swsr = 0x556c;	/* Prevent SW time-out */
+	immr->im_siu_conf.sc_swsr = 0xaa39;
 }
 
 #endif /* CONFIG_WATCHDOG */
@@ -104,36 +103,36 @@ void reset_5xx_watchdog (volatile immap_t * immr)
  */
 unsigned long get_tbclk (void)
 {
-  volatile immap_t * immr = (volatile immap_t *) CONFIG_SYS_IMMR;
-  ulong oscclk, factor;
-  
-  if (immr->im_clkrst.car_sccr & SCCR_TBS) {
-    return (gd->cpu_clk / 16);
-  }
-  
-  factor = ( ( (CONFIG_SYS_PLPRCR) & PLPRCR_MF_MSK) >> PLPRCR_MF_SHIFT) + 1;
-  
-  oscclk = gd->cpu_clk / factor;
-  
-  if ( (immr->im_clkrst.car_sccr & SCCR_RTSEL) == 0 || factor > 2) {
-    return (oscclk / 4);
-  }
-  return (oscclk / 16);
+	volatile immap_t *immr = (volatile immap_t *) CONFIG_SYS_IMMR;
+	ulong oscclk, factor;
+
+	if (immr->im_clkrst.car_sccr & SCCR_TBS) {
+		return (gd->cpu_clk / 16);
+	}
+
+	factor = (((CONFIG_SYS_PLPRCR) & PLPRCR_MF_MSK) >> PLPRCR_MF_SHIFT) + 1;
+
+	oscclk = gd->cpu_clk / factor;
+
+	if ((immr->im_clkrst.car_sccr & SCCR_RTSEL) == 0 || factor > 2) {
+		return (oscclk / 4);
+	}
+	return (oscclk / 16);
 }
 
 void dcache_enable (void)
 {
-  return;
+	return;
 }
 
 void dcache_disable (void)
 {
-  return;
+	return;
 }
 
 int dcache_status (void)
 {
-  return 0; /* always off */
+	return 0;	/* always off */
 }
 
 /*
@@ -141,32 +140,32 @@ int dcache_status (void)
  */
 int do_reset (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
 {
-  #if defined(CONFIG_PATI)
-  volatile ulong * addr = (ulong *) CONFIG_SYS_RESET_ADDRESS;
-  *addr = 1;
-  #else
-  ulong addr;
-  
-  /* Interrupts off, enable reset */
-  __asm__ volatile  ("  mtspr	81, %r0		\n\t"
-                     "  mfmsr	%r3		\n\t"
-                     "  rlwinm	%r31,%r3,0,25,23\n\t"
-                     "  mtmsr	%r31		\n\t");
-  /*
-   * Trying to execute the next instruction at a non-existing address
-   * should cause a machine check, resulting in reset
-   */
-  #ifdef CONFIG_SYS_RESET_ADDRESS
-  addr = CONFIG_SYS_RESET_ADDRESS;
-  #else
-  /*
-   * note: when CONFIG_SYS_MONITOR_BASE points to a RAM address, CONFIG_SYS_MONITOR_BASE         * - sizeof (ulong) is usually a valid address. Better pick an address
-   * known to be invalid on your system and assign it to CONFIG_SYS_RESET_ADDRESS.
-   * "(ulong)-1" used to be a good choice for many systems...
-   */
-  addr = CONFIG_SYS_MONITOR_BASE - sizeof (ulong);
-  #endif
-  ( (void (*) (void) ) addr) ();
-  #endif  /* #if defined(CONFIG_PATI) */
-  return 1;
+#if defined(CONFIG_PATI)
+	volatile ulong *addr = (ulong *) CONFIG_SYS_RESET_ADDRESS;
+	*addr = 1;
+#else
+	ulong addr;
+
+	/* Interrupts off, enable reset */
+	__asm__ volatile	("  mtspr	81, %r0		\n\t"
+				 "  mfmsr	%r3		\n\t"
+				 "  rlwinm	%r31,%r3,0,25,23\n\t"
+				 "  mtmsr	%r31		\n\t");
+	/*
+	 * Trying to execute the next instruction at a non-existing address
+	 * should cause a machine check, resulting in reset
+	 */
+#ifdef CONFIG_SYS_RESET_ADDRESS
+	addr = CONFIG_SYS_RESET_ADDRESS;
+#else
+	/*
+	 * note: when CONFIG_SYS_MONITOR_BASE points to a RAM address, CONFIG_SYS_MONITOR_BASE         * - sizeof (ulong) is usually a valid address. Better pick an address
+	 * known to be invalid on your system and assign it to CONFIG_SYS_RESET_ADDRESS.
+	 * "(ulong)-1" used to be a good choice for many systems...
+	 */
+	addr = CONFIG_SYS_MONITOR_BASE - sizeof (ulong);
+#endif
+	((void (*) (void)) addr) ();
+#endif  /* #if defined(CONFIG_PATI) */
+	return 1;
 }

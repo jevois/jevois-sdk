@@ -67,23 +67,23 @@
 /**
  * enum iwl_ucode_tlv_flag - ucode API flags
  * @IWL_UCODE_TLV_FLAGS_PAN: This is PAN capable microcode; this previously
- *  was a separate TLV but moved here to save space.
+ *	was a separate TLV but moved here to save space.
  * @IWL_UCODE_TLV_FLAGS_NEWSCAN: new uCode scan behaviour on hidden SSID,
- *  treats good CRC threshold as a boolean
+ *	treats good CRC threshold as a boolean
  * @IWL_UCODE_TLV_FLAGS_MFP: This uCode image supports MFP (802.11w).
  * @IWL_UCODE_TLV_FLAGS_P2P: This uCode image supports P2P.
  */
 enum iwl_ucode_tlv_flag {
-  IWL_UCODE_TLV_FLAGS_PAN   = BIT (0),
-  IWL_UCODE_TLV_FLAGS_NEWSCAN = BIT (1),
-  IWL_UCODE_TLV_FLAGS_MFP   = BIT (2),
-  IWL_UCODE_TLV_FLAGS_P2P   = BIT (3),
+	IWL_UCODE_TLV_FLAGS_PAN		= BIT(0),
+	IWL_UCODE_TLV_FLAGS_NEWSCAN	= BIT(1),
+	IWL_UCODE_TLV_FLAGS_MFP		= BIT(2),
+	IWL_UCODE_TLV_FLAGS_P2P		= BIT(3),
 };
 
 /* The default calibrate table size if not specified by firmware file */
-#define IWL_DEFAULT_STANDARD_PHY_CALIBRATE_TBL_SIZE 18
-#define IWL_MAX_STANDARD_PHY_CALIBRATE_TBL_SIZE   19
-#define IWL_MAX_PHY_CALIBRATE_TBL_SIZE      253
+#define IWL_DEFAULT_STANDARD_PHY_CALIBRATE_TBL_SIZE	18
+#define IWL_MAX_STANDARD_PHY_CALIBRATE_TBL_SIZE		19
+#define IWL_MAX_PHY_CALIBRATE_TBL_SIZE			253
 
 /**
  * enum iwl_ucode_type
@@ -95,10 +95,10 @@ enum iwl_ucode_tlv_flag {
  * @IWL_UCODE_WOWLAN: Wake on Wireless enabled ucode
  */
 enum iwl_ucode_type {
-  IWL_UCODE_REGULAR,
-  IWL_UCODE_INIT,
-  IWL_UCODE_WOWLAN,
-  IWL_UCODE_TYPE_MAX,
+	IWL_UCODE_REGULAR,
+	IWL_UCODE_INIT,
+	IWL_UCODE_WOWLAN,
+	IWL_UCODE_TYPE_MAX,
 };
 
 /*
@@ -106,8 +106,8 @@ enum iwl_ucode_type {
  * This enumeration is used for legacy tlv style (before 16.0 uCode).
  */
 enum iwl_ucode_sec {
-  IWL_UCODE_SECTION_INST,
-  IWL_UCODE_SECTION_DATA,
+	IWL_UCODE_SECTION_INST,
+	IWL_UCODE_SECTION_DATA,
 };
 /*
  * For 16.0 uCode and above, there is no differentiation between sections,
@@ -116,28 +116,28 @@ enum iwl_ucode_sec {
 #define IWL_UCODE_SECTION_MAX 4
 
 struct iwl_ucode_capabilities {
-  u32 max_probe_length;
-  u32 standard_phy_calibration_size;
-  u32 flags;
+	u32 max_probe_length;
+	u32 standard_phy_calibration_size;
+	u32 flags;
 };
 
 /* one for each uCode image (inst/data, init/runtime/wowlan) */
 struct fw_desc {
-  dma_addr_t p_addr;  /* hardware address */
-  void * v_addr;  /* software address */
-  u32 len;    /* size in bytes */
-  u32 offset;   /* offset in the device */
+	dma_addr_t p_addr;	/* hardware address */
+	void *v_addr;		/* software address */
+	u32 len;		/* size in bytes */
+	u32 offset;		/* offset in the device */
 };
 
 struct fw_img {
-  struct fw_desc sec[IWL_UCODE_SECTION_MAX];
+	struct fw_desc sec[IWL_UCODE_SECTION_MAX];
 };
 
 /* uCode version contains 4 values: Major/Minor/API/Serial */
-#define IWL_UCODE_MAJOR(ver)  (((ver) & 0xFF000000) >> 24)
-#define IWL_UCODE_MINOR(ver)  (((ver) & 0x00FF0000) >> 16)
-#define IWL_UCODE_API(ver)  (((ver) & 0x0000FF00) >> 8)
-#define IWL_UCODE_SERIAL(ver) ((ver) & 0x000000FF)
+#define IWL_UCODE_MAJOR(ver)	(((ver) & 0xFF000000) >> 24)
+#define IWL_UCODE_MINOR(ver)	(((ver) & 0x00FF0000) >> 16)
+#define IWL_UCODE_API(ver)	(((ver) & 0x0000FF00) >> 8)
+#define IWL_UCODE_SERIAL(ver)	((ver) & 0x000000FF)
 
 /**
  * struct iwl_fw - variables associated with the firmware
@@ -155,23 +155,23 @@ struct fw_img {
  * @inst_errlog_ptr: error log offfset for runtime ucode.
  */
 struct iwl_fw {
-  u32 ucode_ver;
-  
-  char fw_version[ETHTOOL_BUSINFO_LEN];
-  
-  /* ucode images */
-  struct fw_img img[IWL_UCODE_TYPE_MAX];
-  
-  struct iwl_ucode_capabilities ucode_capa;
-  bool enhance_sensitivity_table;
-  
-  u32 init_evtlog_ptr, init_evtlog_size, init_errlog_ptr;
-  u32 inst_evtlog_ptr, inst_evtlog_size, inst_errlog_ptr;
-  
-  u64 default_calib[IWL_UCODE_TYPE_MAX];
-  u32 phy_config;
-  
-  bool mvm_fw;
+	u32 ucode_ver;
+
+	char fw_version[ETHTOOL_BUSINFO_LEN];
+
+	/* ucode images */
+	struct fw_img img[IWL_UCODE_TYPE_MAX];
+
+	struct iwl_ucode_capabilities ucode_capa;
+	bool enhance_sensitivity_table;
+
+	u32 init_evtlog_ptr, init_evtlog_size, init_errlog_ptr;
+	u32 inst_evtlog_ptr, inst_evtlog_size, inst_errlog_ptr;
+
+	u64 default_calib[IWL_UCODE_TYPE_MAX];
+	u32 phy_config;
+
+	bool mvm_fw;
 };
 
 #endif  /* __iwl_fw_h__ */

@@ -22,9 +22,9 @@ typedef unsigned long elf_fpregset_t;
 /*
  * These are used to set parameters in the core dumps.
  */
-#define ELF_CLASS ELFCLASS32
-#define ELF_DATA  ELFDATA2MSB
-#define ELF_ARCH  EM_H8_300
+#define ELF_CLASS	ELFCLASS32
+#define ELF_DATA	ELFDATA2MSB
+#define ELF_ARCH	EM_H8_300
 #if defined(__H8300H__)
 #define ELF_CORE_EFLAGS 0x810000
 #endif
@@ -32,9 +32,9 @@ typedef unsigned long elf_fpregset_t;
 #define ELF_CORE_EFLAGS 0x820000
 #endif
 
-#define ELF_PLAT_INIT(_r) _r->er1 = 0
+#define ELF_PLAT_INIT(_r)	_r->er1 = 0
 
-#define ELF_EXEC_PAGESIZE 4096
+#define ELF_EXEC_PAGESIZE	4096
 
 /* This is the location that an ET_DYN program is loaded if exec'ed.  Typical
    use of this is to invoke "./ld.so someprog" to test out a new version of
@@ -46,7 +46,7 @@ typedef unsigned long elf_fpregset_t;
 /* This yields a mask that user programs can use to figure out what
    instruction set this cpu supports.  */
 
-#define ELF_HWCAP (0)
+#define ELF_HWCAP	(0)
 
 /* This yields a string that ld.so will use to load implementation
    specific libraries for optimization.  This is more specific in

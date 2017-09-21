@@ -36,7 +36,7 @@
  */
 #define INTEGRATOR_BOOT_ROM_LO          0x00000000
 #define INTEGRATOR_BOOT_ROM_HI          0x20000000
-#define INTEGRATOR_BOOT_ROM_BASE        INTEGRATOR_BOOT_ROM_HI   /*  Normal position */
+#define INTEGRATOR_BOOT_ROM_BASE        INTEGRATOR_BOOT_ROM_HI	 /*  Normal position */
 #define INTEGRATOR_BOOT_ROM_SIZE        SZ_512K
 
 /*
@@ -93,7 +93,7 @@
 #define INTEGRATOR_HDR_STAT_OFFSET      0x10
 #define INTEGRATOR_HDR_LOCK_OFFSET      0x14
 #define INTEGRATOR_HDR_SDRAM_OFFSET     0x20
-#define INTEGRATOR_HDR_INIT_OFFSET      0x24   /*  CM9x6 */
+#define INTEGRATOR_HDR_INIT_OFFSET      0x24	 /*  CM9x6 */
 #define INTEGRATOR_HDR_IC_OFFSET        0x40
 #define INTEGRATOR_HDR_SPDBASE_OFFSET   0x100
 #define INTEGRATOR_HDR_SPDTOP_OFFSET    0x200
@@ -263,13 +263,13 @@
 #define INTEGRATOR_EBI_WS_17            0xF0
 
 
-#define INTEGRATOR_CT_BASE              0x13000000   /*  Counter/Timers */
-#define INTEGRATOR_IC_BASE              0x14000000   /*  Interrupt Controller */
-#define INTEGRATOR_RTC_BASE             0x15000000   /*  Real Time Clock */
-#define INTEGRATOR_UART0_BASE           0x16000000   /*  UART 0 */
-#define INTEGRATOR_UART1_BASE           0x17000000   /*  UART 1 */
-#define INTEGRATOR_KBD_BASE             0x18000000   /*  Keyboard */
-#define INTEGRATOR_MOUSE_BASE           0x19000000   /*  Mouse */
+#define INTEGRATOR_CT_BASE              0x13000000	 /*  Counter/Timers */
+#define INTEGRATOR_IC_BASE              0x14000000	 /*  Interrupt Controller */
+#define INTEGRATOR_RTC_BASE             0x15000000	 /*  Real Time Clock */
+#define INTEGRATOR_UART0_BASE           0x16000000	 /*  UART 0 */
+#define INTEGRATOR_UART1_BASE           0x17000000	 /*  UART 1 */
+#define INTEGRATOR_KBD_BASE             0x18000000	 /*  Keyboard */
+#define INTEGRATOR_MOUSE_BASE           0x19000000	 /*  Mouse */
 
 /*
  *  LED's & Switches
@@ -284,14 +284,14 @@
 #define INTEGRATOR_DBG_LEDS             (INTEGRATOR_DBG_BASE + INTEGRATOR_DBG_LEDS_OFFSET)
 #define INTEGRATOR_DBG_SWITCH           (INTEGRATOR_DBG_BASE + INTEGRATOR_DBG_SWITCH_OFFSET)
 
-#define INTEGRATOR_AP_GPIO_BASE   0x1B000000  /* GPIO */
+#define INTEGRATOR_AP_GPIO_BASE		0x1B000000	/* GPIO */
 
-#define INTEGRATOR_CP_MMC_BASE    0x1C000000  /* MMC */
-#define INTEGRATOR_CP_AACI_BASE   0x1D000000  /* AACI */
-#define INTEGRATOR_CP_ETH_BASE    0xC8000000  /* Ethernet */
-#define INTEGRATOR_CP_GPIO_BASE   0xC9000000  /* GPIO */
-#define INTEGRATOR_CP_SIC_BASE    0xCA000000  /* SIC */
-#define INTEGRATOR_CP_CTL_BASE    0xCB000000  /* CP system control */
+#define INTEGRATOR_CP_MMC_BASE		0x1C000000	/* MMC */
+#define INTEGRATOR_CP_AACI_BASE		0x1D000000	/* AACI */
+#define INTEGRATOR_CP_ETH_BASE		0xC8000000	/* Ethernet */
+#define INTEGRATOR_CP_GPIO_BASE		0xC9000000	/* GPIO */
+#define INTEGRATOR_CP_SIC_BASE		0xCA000000	/* SIC */
+#define INTEGRATOR_CP_CTL_BASE		0xCB000000	/* CP system control */
 
 /* ------------------------------------------------------------------------
  *  KMI keyboard/mouse definitions
@@ -332,11 +332,11 @@
  *
  *  System Controller interrupt controller base is
  *
- *  INTEGRATOR_IC_BASE + (header_number << 6)
+ * 	INTEGRATOR_IC_BASE + (header_number << 6)
  *
  *  Core Module interrupt controller base is
  *
- *  INTEGRATOR_HDR_IC
+ * 	INTEGRATOR_HDR_IC
  *
  */
 #define IRQ_STATUS                      0

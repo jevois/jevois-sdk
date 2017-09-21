@@ -9,6 +9,6 @@
  * 2 of the License, or (at your option) any later version.
  */
 
-static inline void check_bugs (void)
+static inline void check_bugs(void)
 {
 }

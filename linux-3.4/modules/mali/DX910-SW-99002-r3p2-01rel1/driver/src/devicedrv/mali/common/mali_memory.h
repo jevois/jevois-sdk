@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2010-2013 ARM Limited. All rights reserved.
- *
+ * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- *
+ * 
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -21,13 +21,13 @@
  *
  * @return On success _MALI_OSK_ERR_OK, othervise some error code describing the error.
  */
-_mali_osk_errcode_t mali_memory_initialize (void);
+_mali_osk_errcode_t mali_memory_initialize(void);
 
 /** @brief Terminate Mali memory system
  *
  * Clean up and release internal data structures.
  */
-void mali_memory_terminate (void);
+void mali_memory_terminate(void);
 
 /** @brief Start new Mali memory session
  *
@@ -36,7 +36,7 @@ void mali_memory_terminate (void);
  *
  * @param mali_session_data pointer to the session data structure
  */
-_mali_osk_errcode_t mali_memory_session_begin (struct mali_session_data * mali_session_data);
+_mali_osk_errcode_t mali_memory_session_begin(struct mali_session_data *mali_session_data);
 
 /** @brief Close a Mali memory session
  *
@@ -44,7 +44,7 @@ _mali_osk_errcode_t mali_memory_session_begin (struct mali_session_data * mali_s
  *
  * @param mali_session_data pointer to the session data structure
  */
-void mali_memory_session_end (struct mali_session_data * mali_session_data);
+void mali_memory_session_end(struct mali_session_data *mali_session_data);
 
 /** @brief Allocate a page table page
  *
@@ -55,7 +55,7 @@ void mali_memory_session_end (struct mali_session_data * mali_session_data);
  * @param table_page GPU pointer to the allocated page
  * @param mapping CPU pointer to the mapping of the allocated page
  */
-_mali_osk_errcode_t mali_mmu_get_table_page (u32 * table_page, mali_io_address * mapping);
+_mali_osk_errcode_t mali_mmu_get_table_page(u32 *table_page, mali_io_address *mapping);
 
 /** @brief Release a page table page
  *
@@ -63,7 +63,7 @@ _mali_osk_errcode_t mali_mmu_get_table_page (u32 * table_page, mali_io_address *
  *
  * @param pa the GPU address of the page to release
  */
-void mali_mmu_release_table_page (u32 pa);
+void mali_mmu_release_table_page(u32 pa);
 
 
 /** @brief Parse resource and prepare the OS memory allocator
@@ -71,7 +71,7 @@ void mali_mmu_release_table_page (u32 pa);
  * @param size Maximum size to allocate for Mali GPU.
  * @return _MALI_OSK_ERR_OK on success, otherwise failure.
  */
-_mali_osk_errcode_t mali_memory_core_resource_os_memory (u32 size);
+_mali_osk_errcode_t mali_memory_core_resource_os_memory(u32 size);
 
 /** @brief Parse resource and prepare the dedicated memory allocator
  *
@@ -79,8 +79,8 @@ _mali_osk_errcode_t mali_memory_core_resource_os_memory (u32 size);
  * @param size Size of dedicated Mali GPU memory.
  * @return _MALI_OSK_ERR_OK on success, otherwise failure.
  */
-_mali_osk_errcode_t mali_memory_core_resource_dedicated_memory (u32 start, u32 size);
+_mali_osk_errcode_t mali_memory_core_resource_dedicated_memory(u32 start, u32 size);
 
-mali_allocation_engine mali_mem_get_memory_engine (void);
+mali_allocation_engine mali_mem_get_memory_engine(void);
 
 #endif /* __MALI_MEMORY_H__ */

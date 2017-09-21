@@ -34,12 +34,12 @@
  * Exception offsets (PowerPC standard)
  */
 #define EXC_OFF_SYS_RESET        0x0100      /* default system reset offset */
-#define _START_OFFSET   EXC_OFF_SYS_RESET
+#define _START_OFFSET		EXC_OFF_SYS_RESET
 
 /*----------------------------------------------------------------
  * l2cr values
  */
-#define l2cr     1017
+#define l2cr		 1017
 
 #define L2CR_L2E         0x80000000 /* bit 0 - enable */
 #define L2CR_L2PE        0x40000000 /* bit 1 - data parity */
@@ -69,59 +69,58 @@
 #ifndef __ASSEMBLY__
 /* cpu ids we detect */
 typedef enum __cpu_t {
-  CPU_740, CPU_750,
-  CPU_740P, CPU_750P,
-  CPU_745, CPU_755,
-  CPU_750CX, CPU_750FX, CPU_750GX,
-  CPU_7400,
-  CPU_7410,
-  CPU_7447A, CPU_7448,
-  CPU_7450, CPU_7455, CPU_7457,
-  CPU_UNKNOWN
-} cpu_t;
+	CPU_740, CPU_750,
+	CPU_740P, CPU_750P,
+	CPU_745, CPU_755,
+	CPU_750CX, CPU_750FX, CPU_750GX,
+	CPU_7400,
+	CPU_7410,
+	CPU_7447A, CPU_7448,
+	CPU_7450, CPU_7455, CPU_7457,
+	CPU_UNKNOWN} cpu_t;
 
-extern cpu_t get_cpu_type (void);
+extern cpu_t get_cpu_type(void);
 
-#define l1icache_enable icache_enable
+#define l1icache_enable	icache_enable
 
-void l2cache_enable (void);
-void l1dcache_enable (void);
+void l2cache_enable(void);
+void l1dcache_enable(void);
 
 static __inline__ unsigned long get_msr (void)
 {
-  unsigned long msr;
-  asm volatile ("mfmsr %0" : "=r" (msr) :);
-  return msr;
+	unsigned long msr;
+	asm volatile("mfmsr %0" : "=r" (msr) :);
+	return msr;
 }
 
 static __inline__ void set_msr (unsigned long msr)
 {
-  asm volatile ("mtmsr %0" : : "r" (msr) );
+	asm volatile("mtmsr %0" : : "r" (msr));
 }
 
 static __inline__ unsigned long get_hid0 (void)
 {
-  unsigned long hid0;
-  asm volatile ("mfspr %0, 1008" : "=r" (hid0) :);
-  return hid0;
+	unsigned long hid0;
+	asm volatile("mfspr %0, 1008" : "=r" (hid0) :);
+	return hid0;
 }
 
 static __inline__ unsigned long get_hid1 (void)
 {
-  unsigned long hid1;
-  asm volatile ("mfspr %0, 1009" : "=r" (hid1) :);
-  return hid1;
+	unsigned long hid1;
+	asm volatile("mfspr %0, 1009" : "=r" (hid1) :);
+	return hid1;
 }
 
 static __inline__ void set_hid0 (unsigned long hid0)
 {
-  asm volatile ("mtspr 1008, %0" : : "r" (hid0) );
+	asm volatile("mtspr 1008, %0" : : "r" (hid0));
 }
 
 static __inline__ void set_hid1 (unsigned long hid1)
 {
-  asm volatile ("mtspr 1009, %0" : : "r" (hid1) );
+	asm volatile("mtspr 1009, %0" : : "r" (hid1));
 }
 
-#endif  /* __ASSEMBLY__ */
+#endif	/* __ASSEMBLY__ */
 #endif  /* __MPC74XX_H__ */

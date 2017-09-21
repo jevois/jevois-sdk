@@ -17,8 +17,8 @@
  * which is included by this file.
  */
 
-#define SERIAL2_VIRT    (IO_VIRT + 0x50100)
-#define SERIAL3_VIRT    (IO_VIRT + 0x50200)
+#define SERIAL2_VIRT 		(IO_VIRT + 0x50100)
+#define SERIAL3_VIRT 		(IO_VIRT + 0x50200)
 
 /*
  * PCMCIA
@@ -48,20 +48,20 @@
 #define PRIME3C_START           0x10000000
 
 /* VGA Controller */
-#define VGA_RAMBASE     0x50
-#define VGA_TIMING0     0x60
-#define VGA_TIMING1     0x64
-#define VGA_TIMING2     0x68
-#define VGA_TIMING3     0x6c
+#define VGA_RAMBASE 		0x50
+#define VGA_TIMING0 		0x60
+#define VGA_TIMING1 		0x64
+#define VGA_TIMING2 		0x68
+#define VGA_TIMING3 		0x6c
 
-#define LCD_CTRL_VGA_ENABLE     0x00000100
-#define LCD_CTRL_VGA_BPP_MASK   0x00000600
-#define LCD_CTRL_VGA_4BPP     0x00000000
-#define LCD_CTRL_VGA_8BPP     0x00000200
-#define LCD_CTRL_VGA_16BPP    0x00000300
-#define LCD_CTRL_SHARE_DMA      0x00000800
-#define LCD_CTRL_VDE            0x00100000
-#define LCD_CTRL_LPE            0x00400000  /* LCD Power enable */
-#define LCD_CTRL_BLE            0x00800000  /* LCD backlight enable */
+#define LCD_CTRL_VGA_ENABLE   	0x00000100
+#define LCD_CTRL_VGA_BPP_MASK 	0x00000600
+#define LCD_CTRL_VGA_4BPP    	0x00000000
+#define LCD_CTRL_VGA_8BPP    	0x00000200
+#define LCD_CTRL_VGA_16BPP   	0x00000300
+#define LCD_CTRL_SHARE_DMA    	0x00000800
+#define LCD_CTRL_VDE          	0x00100000
+#define LCD_CTRL_LPE          	0x00400000	/* LCD Power enable */
+#define LCD_CTRL_BLE          	0x00800000	/* LCD backlight enable */
 
-#define VGA_PALETTE_BASE  (IO_VIRT + 0x10800)
+#define VGA_PALETTE_BASE	(IO_VIRT + 0x10800)

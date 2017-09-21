@@ -8,9 +8,9 @@
 
 #include <common.h>
 
-int checkboard (void)
+int checkboard(void)
 {
-  printf ("Board: bf525-ucr2\n");
-  printf ("Support: http://www.ucrobotics.com/\n");
-  return 0;
+	printf("Board: bf525-ucr2\n");
+	printf("Support: http://www.ucrobotics.com/\n");
+	return 0;
 }

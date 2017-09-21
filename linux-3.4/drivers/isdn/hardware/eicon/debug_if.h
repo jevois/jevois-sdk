@@ -22,44 +22,44 @@
  */
 #ifndef __DIVA_DEBUG_IF_H__
 #define __DIVA_DEBUG_IF_H__
-#define MSG_TYPE_DRV_ID   0x0001
-#define MSG_TYPE_FLAGS    0x0002
-#define MSG_TYPE_STRING   0x0003
-#define MSG_TYPE_BINARY   0x0004
+#define MSG_TYPE_DRV_ID		0x0001
+#define MSG_TYPE_FLAGS		0x0002
+#define MSG_TYPE_STRING		0x0003
+#define MSG_TYPE_BINARY		0x0004
 #define MSG_TYPE_MLOG     0x0005
 
 #define MSG_FRAME_MAX_SIZE 2150
 
 typedef struct _diva_dbg_entry_head {
-  dword sequence;
-  dword time_sec;
-  dword time_usec;
-  dword facility;
-  dword dli;
-  dword drv_id;
-  dword di_cpu;
-  dword data_length;
+	dword sequence;
+	dword time_sec;
+	dword time_usec;
+	dword facility;
+	dword dli;
+	dword drv_id;
+	dword di_cpu;
+	dword data_length;
 } diva_dbg_entry_head_t;
 
-int diva_maint_init (byte * base, unsigned long length, int do_init);
-void * diva_maint_finit (void);
-dword diva_dbg_q_length (void);
-diva_dbg_entry_head_t * diva_maint_get_message (word * size,
-    diva_os_spin_lock_magic_t * old_irql);
-void diva_maint_ack_message (int do_release,
-                             diva_os_spin_lock_magic_t * old_irql);
-void diva_maint_prtComp (char * format, ...);
-void diva_maint_wakeup_read (void);
-int diva_get_driver_info (dword id, byte * data, int data_length);
-int diva_get_driver_dbg_mask (dword id, byte * data);
-int diva_set_driver_dbg_mask (dword id, dword mask);
-void diva_mnt_remove_xdi_adapter (const DESCRIPTOR * d);
-void diva_mnt_add_xdi_adapter (const DESCRIPTOR * d);
-int diva_mnt_shutdown_xdi_adapters (void);
+int diva_maint_init(byte *base, unsigned long length, int do_init);
+void *diva_maint_finit(void);
+dword diva_dbg_q_length(void);
+diva_dbg_entry_head_t *diva_maint_get_message(word *size,
+					      diva_os_spin_lock_magic_t *old_irql);
+void diva_maint_ack_message(int do_release,
+			    diva_os_spin_lock_magic_t *old_irql);
+void diva_maint_prtComp(char *format, ...);
+void diva_maint_wakeup_read(void);
+int diva_get_driver_info(dword id, byte *data, int data_length);
+int diva_get_driver_dbg_mask(dword id, byte *data);
+int diva_set_driver_dbg_mask(dword id, dword mask);
+void diva_mnt_remove_xdi_adapter(const DESCRIPTOR *d);
+void diva_mnt_add_xdi_adapter(const DESCRIPTOR *d);
+int diva_mnt_shutdown_xdi_adapters(void);
 
 #define DIVA_MAX_SELECTIVE_FILTER_LENGTH 127
-int diva_set_trace_filter (int filter_length, const char * filter);
-int diva_get_trace_filter (int max_length, char * filter);
+int diva_set_trace_filter(int filter_length, const char *filter);
+int diva_get_trace_filter(int max_length, char *filter);
 
 
 #define DITRACE_CMD_GET_DRIVER_INFO   1

@@ -30,19 +30,19 @@
  * IOMUX register (base) addresses
  */
 enum iomux_reg_addr {
-  IOMUXGPR = IOMUXC_BASE_ADDR,      /* General purpose */
-  IOMUXSW_MUX_CTL = IOMUXC_BASE_ADDR + 4,   /* MUX control */
-  IOMUXSW_MUX_END = IOMUXC_BASE_ADDR + 0x324, /* last MUX control */
-  IOMUXSW_PAD_CTL = IOMUXC_BASE_ADDR + 0x328, /* Pad control */
-  IOMUXSW_PAD_END = IOMUXC_BASE_ADDR + 0x794, /* last Pad control */
-  IOMUXSW_INPUT_CTL = IOMUXC_BASE_ADDR + 0x7AC, /* input select */
-  IOMUXSW_INPUT_END = IOMUXC_BASE_ADDR + 0x9F4, /* last input select */
+	IOMUXGPR = IOMUXC_BASE_ADDR,			/* General purpose */
+	IOMUXSW_MUX_CTL = IOMUXC_BASE_ADDR + 4,		/* MUX control */
+	IOMUXSW_MUX_END = IOMUXC_BASE_ADDR + 0x324,	/* last MUX control */
+	IOMUXSW_PAD_CTL = IOMUXC_BASE_ADDR + 0x328,	/* Pad control */
+	IOMUXSW_PAD_END = IOMUXC_BASE_ADDR + 0x794,	/* last Pad control */
+	IOMUXSW_INPUT_CTL = IOMUXC_BASE_ADDR + 0x7AC,	/* input select */
+	IOMUXSW_INPUT_END = IOMUXC_BASE_ADDR + 0x9F4,	/* last input select */
 };
 
-#define MUX_PIN_NUM_MAX   \
-  (((IOMUXSW_PAD_END - IOMUXSW_PAD_CTL) >> 2) + 1)
-#define MUX_INPUT_NUM_MUX \
-  (((IOMUXSW_INPUT_END - IOMUXSW_INPUT_CTL) >> 2) + 1)
+#define MUX_PIN_NUM_MAX		\
+		(((IOMUXSW_PAD_END - IOMUXSW_PAD_CTL) >> 2) + 1)
+#define MUX_INPUT_NUM_MUX	\
+		(((IOMUXSW_INPUT_END - IOMUXSW_INPUT_CTL) >> 2) + 1)
 
 #define PIN_TO_IOMUX_INDEX(pin) ((PIN_TO_IOMUX_PAD(pin) - 0x328) >> 2)
 
@@ -50,20 +50,20 @@ enum iomux_reg_addr {
  * Request ownership for an IO pin. This function has to be the first one
  * being called before that pin is used.
  */
-void mxc_request_iomux (iomux_pin_name_t pin, iomux_pin_cfg_t cfg)
+void mxc_request_iomux(iomux_pin_name_t pin, iomux_pin_cfg_t cfg)
 {
-  u32 mux_reg = PIN_TO_IOMUX_MUX (pin);
-  
-  if (mux_reg != NON_MUX_I) {
-    mux_reg += IOMUXGPR;
-    writel (cfg, mux_reg);
-  }
+	u32 mux_reg = PIN_TO_IOMUX_MUX(pin);
+
+	if (mux_reg != NON_MUX_I) {
+		mux_reg += IOMUXGPR;
+		writel(cfg, mux_reg);
+	}
 }
 
 /*
  * Release ownership for an IO pin
  */
-void mxc_free_iomux (iomux_pin_name_t pin, iomux_pin_cfg_t cfg)
+void mxc_free_iomux(iomux_pin_name_t pin, iomux_pin_cfg_t cfg)
 {
 }
 
@@ -73,11 +73,11 @@ void mxc_free_iomux (iomux_pin_name_t pin, iomux_pin_cfg_t cfg)
  * @param  pin     a pin number as defined in iomux_pin_name_t
  * @param  config  the ORed value of elements defined in iomux_pad_config_t
  */
-void mxc_iomux_set_pad (iomux_pin_name_t pin, u32 config)
+void mxc_iomux_set_pad(iomux_pin_name_t pin, u32 config)
 {
-  u32 pad_reg = IOMUXGPR + PIN_TO_IOMUX_PAD (pin);
-  
-  writel (config, pad_reg);
+	u32 pad_reg = IOMUXGPR + PIN_TO_IOMUX_PAD(pin);
+
+	writel(config, pad_reg);
 }
 
 /*
@@ -87,30 +87,30 @@ void mxc_iomux_set_pad (iomux_pin_name_t pin, u32 config)
  * @param  gp   one signal as defined in iomux_gp_func_t
  * @param  en   enable/disable
  */
-void mxc_iomux_set_gpr (iomux_gp_func_t gp, int en)
+void mxc_iomux_set_gpr(iomux_gp_func_t gp, int en)
 {
-  u32 l;
-  
-  l = readl (IOMUXGPR);
-  if (en)
-  { l |= gp; }
-  else
-  { l &= ~gp; }
-  
-  writel (l, IOMUXGPR);
+	u32 l;
+
+	l = readl(IOMUXGPR);
+	if (en)
+		l |= gp;
+	else
+		l &= ~gp;
+
+	writel(l, IOMUXGPR);
 }
 
 /*
  * This function configures input path.
  *
  * @param input index of input select register as defined in
- *      iomux_input_select_t
+ *			iomux_input_select_t
  * @param config the binary value of elements defined in
- *      iomux_input_config_t
+ *			iomux_input_config_t
  */
-void mxc_iomux_set_input (iomux_input_select_t input, u32 config)
+void mxc_iomux_set_input(iomux_input_select_t input, u32 config)
 {
-  u32 reg = IOMUXSW_INPUT_CTL + (input << 2);
-  
-  writel (config, reg);
+	u32 reg = IOMUXSW_INPUT_CTL + (input << 2);
+
+	writel(config, reg);
 }

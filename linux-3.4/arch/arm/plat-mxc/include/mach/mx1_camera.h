@@ -16,20 +16,20 @@
 #ifndef __ASM_ARCH_CAMERA_H_
 #define __ASM_ARCH_CAMERA_H_
 
-#define MX1_CAMERA_DATA_HIGH  1
-#define MX1_CAMERA_PCLK_RISING  2
-#define MX1_CAMERA_VSYNC_HIGH 4
+#define MX1_CAMERA_DATA_HIGH	1
+#define MX1_CAMERA_PCLK_RISING	2
+#define MX1_CAMERA_VSYNC_HIGH	4
 
 extern unsigned char mx1_camera_sof_fiq_start, mx1_camera_sof_fiq_end;
 
 /**
  * struct mx1_camera_pdata - i.MX1/i.MXL camera platform data
- * @mclk_10khz: master clock frequency in 10kHz units
- * @flags:  MX1 camera platform flags
+ * @mclk_10khz:	master clock frequency in 10kHz units
+ * @flags:	MX1 camera platform flags
  */
 struct mx1_camera_pdata {
-  unsigned long mclk_10khz;
-  unsigned long flags;
+	unsigned long mclk_10khz;
+	unsigned long flags;
 };
 
 #endif /* __ASM_ARCH_CAMERA_H_ */

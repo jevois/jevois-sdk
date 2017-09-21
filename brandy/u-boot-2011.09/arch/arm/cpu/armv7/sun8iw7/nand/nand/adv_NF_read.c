@@ -4,7 +4,7 @@
 *                                         the Embedded GO-ON Bootloader System
 *
 *                             Copyright(C), 2006-2008, SoftWinners Microelectronic Co., Ltd.
-*                            All Rights Reserved
+*											       All Rights Reserved
 *
 * File Name : adv_NF_read.c
 *
@@ -48,34 +48,33 @@
 *备    注: 1. 本函数不检验当前块的好坏；块的好坏必须在调用本函数前检验
 *          2. 各个备份应该从当前块的起始地址处依次、紧密排放。
 *******************************************************************************/
-__s32 load_and_check_in_one_blk ( __u32 blk_num, void * buf, __u32 size, __u32 blk_size)
+__s32 load_and_check_in_one_blk( __u32 blk_num, void *buf, __u32 size, __u32 blk_size)
 {
-  __u32 copy_base;
-  __u32 copy_end;
-  __u32 blk_end;
-  __u32 blk_base = blk_num * blk_size;
-  __s32  status;
-  
-  
-  for ( copy_base = blk_base, copy_end = copy_base + size, blk_end = blk_base + blk_size;
-        copy_end <= blk_end;
-        copy_base += size, copy_end = copy_base + size )
-  {
-    status = NF_read ( copy_base >> NF_SCT_SZ_WIDTH, (void *) buf, size >> NF_SCT_SZ_WIDTH ); // 读入一个备份
-    if ( status == NF_OVERTIME_ERR )
-    { return ADV_NF_OVERTIME_ERR; }
-    else
-      if ( status == NF_ECC_ERR )
-      { continue; }
-      
-    /* 校验备份是否完好，如果完好，则程序返回OK */
-    if ( verify_addsum ( (__u32 *) buf, size ) == 0 )
+	__u32 copy_base;
+	__u32 copy_end;
+	__u32 blk_end;
+	__u32 blk_base = blk_num * blk_size;
+	__s32  status;
+
+
+	for( copy_base = blk_base, copy_end = copy_base + size, blk_end = blk_base + blk_size;
+         copy_end <= blk_end;
+         copy_base += size, copy_end = copy_base + size )
     {
-      return ADV_NF_OK;
-    }
-  }
-  
-  return ADV_NF_ERROR;                              // 当前块中不存在完好的备份
+        status = NF_read( copy_base >> NF_SCT_SZ_WIDTH, (void *)buf, size >> NF_SCT_SZ_WIDTH ); // 读入一个备份
+        if( status == NF_OVERTIME_ERR )
+            return ADV_NF_OVERTIME_ERR;
+        else if( status == NF_ECC_ERR )
+        	continue;
+
+        /* 校验备份是否完好，如果完好，则程序返回OK */
+        if( verify_addsum( (__u32 *)buf, size ) == 0 )
+        {
+			return ADV_NF_OK;
+		}
+	}
+
+	return ADV_NF_ERROR;                              // 当前块中不存在完好的备份
 }
 
 
@@ -83,7 +82,7 @@ __s32 load_and_check_in_one_blk ( __u32 blk_num, void * buf, __u32 size, __u32 b
 /*******************************************************************************
 *函数名称: load_in_many_blks
 *函数原型：int32 load_in_many_blks( __u32 start_blk, __u32 last_blk_num, void *buf,
-*                       __u32 size, __u32 blk_size, __u32 *blks )
+*						            __u32 size, __u32 blk_size, __u32 *blks )
 *函数功能: 从nand flash的某一块start_blk开始，载入file_length长度的内容到内存中。
 *入口参数: start_blk         待访问的nand flash起始块号
 *          last_blk_num      最后一个块的块号，用来限制访问范围
@@ -96,53 +95,53 @@ __s32 load_and_check_in_one_blk ( __u32 blk_num, void * buf, __u32 size, __u32 b
 *          ADV_NF_LACK_BLKS      块数不足
 *备    注: 1. 本函数只载入，不校验
 *******************************************************************************/
-__s32 load_in_many_blks ( __u32 start_blk, __u32 last_blk_num, void * buf,
-                          __u32 size, __u32 blk_size, __u32 * blks )
+__s32 load_in_many_blks( __u32 start_blk, __u32 last_blk_num, void *buf,
+						 __u32 size, __u32 blk_size, __u32 *blks )
 {
-  __u32 buf_base;
-  __u32 buf_off;
-  __u32 size_loaded;
-  __u32 cur_blk_base;
-  __u32 rest_size;
-  __u32 blk_num;
-  __u32 blk_size_load;
-  __u32 lsb_page_type;
-  
-  lsb_page_type = NAND_Getlsbpage_type();
-  if (lsb_page_type != 0)
-  { blk_size_load = NAND_GetLsbblksize(); }
-  else
-  { blk_size_load = blk_size; }
-  
-  for ( blk_num = start_blk, buf_base = (__u32) buf, buf_off = 0;
-        blk_num <= last_blk_num && buf_off < size;
-        blk_num++ )
-  {
-    printf ("current block is %d and last block is %d.\n", blk_num, last_blk_num);
-    if ( NF_read_status ( blk_num ) == NF_BAD_BLOCK ) // 如果当前块是坏块，则进入下一块
-    { continue; }
-    
-    cur_blk_base = blk_num * blk_size;
-    rest_size = size - buf_off ;                        // 未载入部分的尺寸
-    size_loaded = ( rest_size < blk_size_load ) ?  rest_size : blk_size_load ;  // 确定此次待载入的尺寸
-    
-    if ( NF_read ( cur_blk_base >> NF_SCT_SZ_WIDTH, (void *) buf_base, size_loaded >> NF_SCT_SZ_WIDTH )
-         == NF_OVERTIME_ERR )
-    { return ADV_NF_OVERTIME_ERR; }
-    
-    buf_base += size_loaded;
-    buf_off  += size_loaded;
-  }
-  
-  
-  *blks = blk_num - start_blk;                            // 总共涉及的块数
-  if ( buf_off == size )
-  { return ADV_NF_OK; }                                          // 成功，返回OK
-  else
-  {
-    printf ("lack blocks with start block %d and buf size %x.\n", start_blk, size);
-    return ADV_NF_LACK_BLKS;                                // 失败，块数不足
-  }
+	__u32 buf_base;
+	__u32 buf_off;
+    __u32 size_loaded;
+    __u32 cur_blk_base;
+    __u32 rest_size;
+    __u32 blk_num;
+	__u32 blk_size_load;
+	__u32 lsb_page_type;
+
+	lsb_page_type = NAND_Getlsbpage_type();
+	if(lsb_page_type!=0)
+		blk_size_load = NAND_GetLsbblksize();
+	else
+		blk_size_load = blk_size;
+
+	for( blk_num = start_blk, buf_base = (__u32)buf, buf_off = 0;
+         blk_num <= last_blk_num && buf_off < size;
+         blk_num++ )
+    {
+    	printf("current block is %d and last block is %d.\n", blk_num, last_blk_num);
+    	if( NF_read_status( blk_num ) == NF_BAD_BLOCK )		// 如果当前块是坏块，则进入下一块
+    		continue;
+
+    	cur_blk_base = blk_num * blk_size;
+    	rest_size = size - buf_off ;                        // 未载入部分的尺寸
+    	size_loaded = ( rest_size < blk_size_load ) ?  rest_size : blk_size_load ;  // 确定此次待载入的尺寸
+
+    	if( NF_read( cur_blk_base >> NF_SCT_SZ_WIDTH, (void *)buf_base, size_loaded >> NF_SCT_SZ_WIDTH )
+    		== NF_OVERTIME_ERR )
+       		return ADV_NF_OVERTIME_ERR;
+
+    	buf_base += size_loaded;
+    	buf_off  += size_loaded;
+    }
+
+
+    *blks = blk_num - start_blk;                            // 总共涉及的块数
+    if( buf_off == size )
+		return ADV_NF_OK;                                          // 成功，返回OK
+	else
+	{
+		printf("lack blocks with start block %d and buf size %x.\n", start_blk, size);
+		return ADV_NF_LACK_BLKS;                                // 失败，块数不足
+	}
 }
 
 

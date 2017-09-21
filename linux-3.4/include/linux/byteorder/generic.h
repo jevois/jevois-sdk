@@ -6,7 +6,7 @@
  * Generic Byte-reordering support
  *
  * The "... p" macros, like le64_to_cpup, can be used with pointers
- * to unaligned data, but there will be a performance penalty on
+ * to unaligned data, but there will be a performance penalty on 
  * some architectures.  Use get_unaligned for unaligned data.
  *
  * Francois-Rene Rideau <fare@tunes.org> 19970707
@@ -46,10 +46,10 @@
  * The following macros are to be defined by <asm/byteorder.h>:
  *
  * Conversion of long and short int between network and host format
- *  ntohl(__u32 x)
- *  ntohs(__u16 x)
- *  htonl(__u32 x)
- *  htons(__u16 x)
+ *	ntohl(__u32 x)
+ *	ntohs(__u16 x)
+ *	htonl(__u32 x)
+ *	htons(__u16 x)
  * It seems that some programs (which? where? or perhaps a standard? POSIX?)
  * might like the above to be functions, not macros (why?).
  * if that's true, then detect them, and take measures.
@@ -58,24 +58,24 @@
  * unsigned long inline ntohl(x){return ___ntohl(x);}
  *
  * The same for constant arguments
- *  __constant_ntohl(__u32 x)
- *  __constant_ntohs(__u16 x)
- *  __constant_htonl(__u32 x)
- *  __constant_htons(__u16 x)
+ *	__constant_ntohl(__u32 x)
+ *	__constant_ntohs(__u16 x)
+ *	__constant_htonl(__u32 x)
+ *	__constant_htons(__u16 x)
  *
  * Conversion of XX-bit integers (16- 32- or 64-)
  * between native CPU format and little/big endian format
  * 64-bit stuff only defined for proper architectures
- *  cpu_to_[bl]eXX(__uXX x)
- *  [bl]eXX_to_cpu(__uXX x)
+ *	cpu_to_[bl]eXX(__uXX x)
+ *	[bl]eXX_to_cpu(__uXX x)
  *
  * The same, but takes a pointer to the value to convert
- *  cpu_to_[bl]eXXp(__uXX x)
- *  [bl]eXX_to_cpup(__uXX x)
+ *	cpu_to_[bl]eXXp(__uXX x)
+ *	[bl]eXX_to_cpup(__uXX x)
  *
  * The same, but change in situ
- *  cpu_to_[bl]eXXs(__uXX x)
- *  [bl]eXX_to_cpus(__uXX x)
+ *	cpu_to_[bl]eXXs(__uXX x)
+ *	[bl]eXX_to_cpus(__uXX x)
  *
  * See asm-foo/byteorder.h for examples of how to provide
  * architecture-optimized versions
@@ -140,34 +140,34 @@
 #define htons(x) ___htons(x)
 #define ntohs(x) ___ntohs(x)
 
-static inline void le16_add_cpu (__le16 * var, u16 val)
+static inline void le16_add_cpu(__le16 *var, u16 val)
 {
-  *var = cpu_to_le16 (le16_to_cpu (*var) + val);
+	*var = cpu_to_le16(le16_to_cpu(*var) + val);
 }
 
-static inline void le32_add_cpu (__le32 * var, u32 val)
+static inline void le32_add_cpu(__le32 *var, u32 val)
 {
-  *var = cpu_to_le32 (le32_to_cpu (*var) + val);
+	*var = cpu_to_le32(le32_to_cpu(*var) + val);
 }
 
-static inline void le64_add_cpu (__le64 * var, u64 val)
+static inline void le64_add_cpu(__le64 *var, u64 val)
 {
-  *var = cpu_to_le64 (le64_to_cpu (*var) + val);
+	*var = cpu_to_le64(le64_to_cpu(*var) + val);
 }
 
-static inline void be16_add_cpu (__be16 * var, u16 val)
+static inline void be16_add_cpu(__be16 *var, u16 val)
 {
-  *var = cpu_to_be16 (be16_to_cpu (*var) + val);
+	*var = cpu_to_be16(be16_to_cpu(*var) + val);
 }
 
-static inline void be32_add_cpu (__be32 * var, u32 val)
+static inline void be32_add_cpu(__be32 *var, u32 val)
 {
-  *var = cpu_to_be32 (be32_to_cpu (*var) + val);
+	*var = cpu_to_be32(be32_to_cpu(*var) + val);
 }
 
-static inline void be64_add_cpu (__be64 * var, u64 val)
+static inline void be64_add_cpu(__be64 *var, u64 val)
 {
-  *var = cpu_to_be64 (be64_to_cpu (*var) + val);
+	*var = cpu_to_be64(be64_to_cpu(*var) + val);
 }
 
 #endif /* _LINUX_BYTEORDER_GENERIC_H */

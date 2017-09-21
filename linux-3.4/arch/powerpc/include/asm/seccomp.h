@@ -13,4 +13,4 @@
 #define __NR_seccomp_exit_32 __NR_exit
 #define __NR_seccomp_sigreturn_32 __NR_sigreturn
 
-#endif  /* _ASM_POWERPC_SECCOMP_H */
+#endif	/* _ASM_POWERPC_SECCOMP_H */

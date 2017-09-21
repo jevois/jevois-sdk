@@ -12,9 +12,9 @@
 
 #include <linux/dw_dmac.h>
 
-#define AC97C_CAPTURE 0x01
-#define AC97C_PLAYBACK  0x02
-#define AC97C_BOTH  (AC97C_CAPTURE | AC97C_PLAYBACK)
+#define AC97C_CAPTURE	0x01
+#define AC97C_PLAYBACK	0x02
+#define AC97C_BOTH	(AC97C_CAPTURE | AC97C_PLAYBACK)
 
 /**
  * struct atmel_ac97c_pdata - board specific AC97C configuration
@@ -31,10 +31,10 @@
  * the sound streams.
  */
 struct ac97c_platform_data {
-  struct dw_dma_slave rx_dws;
-  struct dw_dma_slave tx_dws;
-  unsigned int    flags;
-  int     reset_pin;
+	struct dw_dma_slave	rx_dws;
+	struct dw_dma_slave	tx_dws;
+	unsigned int 		flags;
+	int			reset_pin;
 };
 
 #endif /* __INCLUDE_SOUND_ATMEL_AC97C_H */

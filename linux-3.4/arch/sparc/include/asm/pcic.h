@@ -16,29 +16,29 @@
 #include <asm/pbm.h>
 
 struct linux_pcic {
-  void __iomem      *      pcic_regs;
-  unsigned long           pcic_io;
-  void __iomem      *      pcic_config_space_addr;
-  void __iomem      *      pcic_config_space_data;
-  struct resource   pcic_res_regs;
-  struct resource   pcic_res_io;
-  struct resource   pcic_res_cfg_addr;
-  struct resource   pcic_res_cfg_data;
-  struct linux_pbm_info   pbm;
-  struct pcic_ca2irq * pcic_imap;
-  int     pcic_imdim;
+        void __iomem            *pcic_regs;
+        unsigned long           pcic_io;
+        void __iomem            *pcic_config_space_addr;
+        void __iomem            *pcic_config_space_data;
+	struct resource		pcic_res_regs;
+	struct resource		pcic_res_io;
+	struct resource		pcic_res_cfg_addr;
+	struct resource		pcic_res_cfg_data;
+        struct linux_pbm_info   pbm;
+	struct pcic_ca2irq	*pcic_imap;
+	int			pcic_imdim;
 };
 
 #ifdef CONFIG_PCIC_PCI
-extern int pcic_present (void);
-extern int pcic_probe (void);
-extern void pci_time_init (void);
-extern void sun4m_pci_init_IRQ (void);
+extern int pcic_present(void);
+extern int pcic_probe(void);
+extern void pci_time_init(void);
+extern void sun4m_pci_init_IRQ(void);
 #else
-static inline int pcic_present (void) { return 0; }
-static inline int pcic_probe (void) { return 0; }
-static inline void pci_time_init (void) {}
-static inline void sun4m_pci_init_IRQ (void) {}
+static inline int pcic_present(void) { return 0; }
+static inline int pcic_probe(void) { return 0; }
+static inline void pci_time_init(void) {}
+static inline void sun4m_pci_init_IRQ(void) {}
 #endif
 #endif
 
@@ -65,18 +65,18 @@ static inline void sun4m_pci_init_IRQ (void) {}
 #define PCI_SOFTWARE_INT_CLEAR          0x6a    /* 16 bits */
 #define PCI_SOFTWARE_INT_SET            0x6e    /* 16 bits */
 #define PCI_SYS_INT_PENDING             0x70    /* 32 bits */
-#define  PCI_SYS_INT_PENDING_PIO    0x40000000
-#define  PCI_SYS_INT_PENDING_DMA    0x20000000
-#define  PCI_SYS_INT_PENDING_PCI    0x10000000
-#define  PCI_SYS_INT_PENDING_APSR   0x08000000
+#define  PCI_SYS_INT_PENDING_PIO		0x40000000
+#define  PCI_SYS_INT_PENDING_DMA		0x20000000
+#define  PCI_SYS_INT_PENDING_PCI		0x10000000
+#define  PCI_SYS_INT_PENDING_APSR		0x08000000
 #define PCI_SYS_INT_TARGET_MASK         0x74    /* 32 bits */
 #define PCI_SYS_INT_TARGET_MASK_CLEAR   0x78    /* 32 bits */
 #define PCI_SYS_INT_TARGET_MASK_SET     0x7c    /* 32 bits */
 #define PCI_SYS_INT_PENDING_CLEAR       0x83    /* 8  bits */
-#define  PCI_SYS_INT_PENDING_CLEAR_ALL    0x80
-#define  PCI_SYS_INT_PENDING_CLEAR_PIO    0x40
-#define  PCI_SYS_INT_PENDING_CLEAR_DMA    0x20
-#define  PCI_SYS_INT_PENDING_CLEAR_PCI    0x10
+#define  PCI_SYS_INT_PENDING_CLEAR_ALL		0x80
+#define  PCI_SYS_INT_PENDING_CLEAR_PIO		0x40
+#define  PCI_SYS_INT_PENDING_CLEAR_DMA		0x20
+#define  PCI_SYS_INT_PENDING_CLEAR_PCI		0x10
 #define PCI_IOTLB_CONTROL               0x84    /* 8  bits */
 #define PCI_INT_SELECT_LO               0x88    /* 16 bits */
 #define PCI_ARBITRATION_SELECT          0x8a    /* 16 bits */
@@ -112,7 +112,7 @@ static inline void sun4m_pci_init_IRQ (void) {}
 #define PCI_USER_TIMER_CONFIG           0xc5    /* 8  bits */
 #define PCI_COUNTER_IRQ                 0xc6    /* 8  bits */
 #define  PCI_COUNTER_IRQ_SET(sys_irq, cpu_irq)  ((((sys_irq) & 0xf) << 4) | \
-    ((cpu_irq) & 0xf))
+                                                  ((cpu_irq) & 0xf))
 #define  PCI_COUNTER_IRQ_SYS(v)                 (((v) >> 4) & 0xf)
 #define  PCI_COUNTER_IRQ_CPU(v)                 ((v) & 0xf)
 #define PCI_PIO_ERROR_COMMAND           0xc7    /* 8  bits */

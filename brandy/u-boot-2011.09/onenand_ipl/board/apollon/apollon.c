@@ -24,17 +24,17 @@
 #include <asm/arch/mux.h>
 
 #define write_config_reg(reg, value)                                    \
-  do {                                                                    \
-    writeb(value, reg);                                             \
-  } while (0)
+do {                                                                    \
+	writeb(value, reg);                                             \
+} while (0)
 
 /*****************************************
  * Routine: board_init
  * Description: Early hardware init.
  *****************************************/
-int board_init (void)
+int board_init(void)
 {
-  return 0;
+	return 0;
 }
 
 #ifdef CONFIG_SYS_PRINTF
@@ -43,16 +43,16 @@ int board_init (void)
  * Routine: muxSetupUART1  (ostboot)
  * Description: Set up uart1 muxing
  *****************************************/
-static void muxSetupUART1 (void)
+static void muxSetupUART1(void)
 {
-  /* UART1_CTS pin configuration, PIN = D21 */
-  write_config_reg (CONTROL_PADCONF_UART1_CTS, 0);
-  /* UART1_RTS pin configuration, PIN = H21 */
-  write_config_reg (CONTROL_PADCONF_UART1_RTS, 0);
-  /* UART1_TX pin configuration, PIN = L20 */
-  write_config_reg (CONTROL_PADCONF_UART1_TX, 0);
-  /* UART1_RX pin configuration, PIN = T21 */
-  write_config_reg (CONTROL_PADCONF_UART1_RX, 0);
+	/* UART1_CTS pin configuration, PIN = D21 */
+	write_config_reg(CONTROL_PADCONF_UART1_CTS, 0);
+	/* UART1_RTS pin configuration, PIN = H21 */
+	write_config_reg(CONTROL_PADCONF_UART1_RTS, 0);
+	/* UART1_TX pin configuration, PIN = L20 */
+	write_config_reg(CONTROL_PADCONF_UART1_TX, 0);
+	/* UART1_RX pin configuration, PIN = T21 */
+	write_config_reg(CONTROL_PADCONF_UART1_RX, 0);
 }
 #endif
 
@@ -61,10 +61,10 @@ static void muxSetupUART1 (void)
  * Description: Does early system init of muxing and clocks.
  * - Called at time when only stack is available.
  **********************************************************/
-int s_init (int skip)
+int s_init(int skip)
 {
-  #ifdef CONFIG_SYS_PRINTF
-  muxSetupUART1();
-  #endif
-  return 0;
+#ifdef CONFIG_SYS_PRINTF
+	muxSetupUART1();
+#endif
+	return 0;
 }

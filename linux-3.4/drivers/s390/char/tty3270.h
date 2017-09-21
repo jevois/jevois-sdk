@@ -11,6 +11,6 @@
 #include <linux/tty.h>
 #include <linux/tty_driver.h>
 
-extern struct tty_driver * tty3270_driver;
+extern struct tty_driver *tty3270_driver;
 
 #endif /* __DRIVERS_S390_CHAR_TTY3270_H */

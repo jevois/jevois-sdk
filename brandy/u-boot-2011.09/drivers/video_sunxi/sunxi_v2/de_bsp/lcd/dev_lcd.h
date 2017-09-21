@@ -2,7 +2,7 @@
 #define __DEV_LCD_H__
 
 #include "lcd_panel_cfg.h"
-extern int sunxi_disp_get_source_ops (struct sunxi_disp_source_ops * src_ops);
+extern int sunxi_disp_get_source_ops(struct sunxi_disp_source_ops *src_ops);
 
 extern struct sunxi_lcd_drv g_lcd_drv;
 
@@ -27,6 +27,6 @@ struct sunxi_lcd_drv
   struct sunxi_disp_source_ops      src_ops;
 };
 
-int lcd_init (void);
+int lcd_init(void);
 
 #endif

@@ -1,7 +1,7 @@
 /*  *********************************************************************
     *  BCM1280/BCM1480 Board Support Package
     *
-    *  Interrupt Mapper definitions   File: bcm1480_int.h
+    *  Interrupt Mapper definitions		File: bcm1480_int.h
     *
     *  This module contains constants for manipulating the
     *  BCM1255/BCM1280/BCM1455/BCM1480's interrupt mapper and
@@ -255,14 +255,14 @@
  * Interrupt mappings (Table 18)
  */
 
-#define K_BCM1480_INT_MAP_I0    0   /* interrupt pins on processor */
+#define K_BCM1480_INT_MAP_I0    0		/* interrupt pins on processor */
 #define K_BCM1480_INT_MAP_I1    1
 #define K_BCM1480_INT_MAP_I2    2
 #define K_BCM1480_INT_MAP_I3    3
 #define K_BCM1480_INT_MAP_I4    4
 #define K_BCM1480_INT_MAP_I5    5
-#define K_BCM1480_INT_MAP_NMI   6   /* nonmaskable */
-#define K_BCM1480_INT_MAP_DINT  7   /* debug interrupt */
+#define K_BCM1480_INT_MAP_NMI   6		/* nonmaskable */
+#define K_BCM1480_INT_MAP_DINT  7		/* debug interrupt */
 
 /*
  * Interrupt LDT Set Register (Table 19)

@@ -10,8 +10,8 @@
  * (at your option) any later version.
  */
 
-#ifndef __DAVINCI_GPIO_H
-#define __DAVINCI_GPIO_H
+#ifndef	__DAVINCI_GPIO_H
+#define	__DAVINCI_GPIO_H
 
 #include <asm-generic/gpio.h>
 
@@ -30,25 +30,25 @@
  * Otherwise, calls with variable parameters or referencing external
  * GPIOs (e.g. on GPIO expander chips) use outlined functions.
  */
-static inline void gpio_set_value (unsigned gpio, int value)
+static inline void gpio_set_value(unsigned gpio, int value)
 {
-  if (__builtin_constant_p (value) && gpio < davinci_soc_info.gpio_num) {
-    struct davinci_gpio_controller * ctlr;
-    u32       mask;
-    
-    ctlr = __gpio_to_controller (gpio);
-    
-    if (ctlr->set_data != ctlr->clr_data) {
-      mask = __gpio_mask (gpio);
-      if (value)
-      { __raw_writel (mask, ctlr->set_data); }
-      else
-      { __raw_writel (mask, ctlr->clr_data); }
-      return;
-    }
-  }
-  
-  __gpio_set_value (gpio, value);
+	if (__builtin_constant_p(value) && gpio < davinci_soc_info.gpio_num) {
+		struct davinci_gpio_controller *ctlr;
+		u32				mask;
+
+		ctlr = __gpio_to_controller(gpio);
+
+		if (ctlr->set_data != ctlr->clr_data) {
+			mask = __gpio_mask(gpio);
+			if (value)
+				__raw_writel(mask, ctlr->set_data);
+			else
+				__raw_writel(mask, ctlr->clr_data);
+			return;
+		}
+	}
+
+	__gpio_set_value(gpio, value);
 }
 
 /* Returns zero or nonzero; works for gpios configured as inputs OR
@@ -60,29 +60,29 @@ static inline void gpio_set_value (unsigned gpio, int value)
  * return the old value until the GPIO clock ticks and the new value gets
  * latched.
  */
-static inline int gpio_get_value (unsigned gpio)
+static inline int gpio_get_value(unsigned gpio)
 {
-  struct davinci_gpio_controller * ctlr;
-  
-  if (!__builtin_constant_p (gpio) || gpio >= davinci_soc_info.gpio_num)
-  { return __gpio_get_value (gpio); }
-  
-  ctlr = __gpio_to_controller (gpio);
-  return __gpio_mask (gpio) & __raw_readl (ctlr->in_data);
+	struct davinci_gpio_controller *ctlr;
+
+	if (!__builtin_constant_p(gpio) || gpio >= davinci_soc_info.gpio_num)
+		return __gpio_get_value(gpio);
+
+	ctlr = __gpio_to_controller(gpio);
+	return __gpio_mask(gpio) & __raw_readl(ctlr->in_data);
 }
 
-static inline int gpio_cansleep (unsigned gpio)
+static inline int gpio_cansleep(unsigned gpio)
 {
-  if (__builtin_constant_p (gpio) && gpio < davinci_soc_info.gpio_num)
-  { return 0; }
-  else
-  { return __gpio_cansleep (gpio); }
+	if (__builtin_constant_p(gpio) && gpio < davinci_soc_info.gpio_num)
+		return 0;
+	else
+		return __gpio_cansleep(gpio);
 }
 
-static inline int irq_to_gpio (unsigned irq)
+static inline int irq_to_gpio(unsigned irq)
 {
-  /* don't support the reverse mapping */
-  return -ENOSYS;
+	/* don't support the reverse mapping */
+	return -ENOSYS;
 }
 
-#endif        /* __DAVINCI_GPIO_H */
+#endif				/* __DAVINCI_GPIO_H */

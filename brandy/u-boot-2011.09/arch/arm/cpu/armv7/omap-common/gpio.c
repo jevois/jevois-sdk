@@ -40,137 +40,137 @@
 #include <asm/io.h>
 #include <asm/errno.h>
 
-static inline const struct gpio_bank * get_gpio_bank (int gpio)
+static inline const struct gpio_bank *get_gpio_bank(int gpio)
 {
-  return &omap_gpio_bank[gpio >> 5];
+	return &omap_gpio_bank[gpio >> 5];
 }
 
-static inline int get_gpio_index (int gpio)
+static inline int get_gpio_index(int gpio)
 {
-  return gpio & 0x1f;
+	return gpio & 0x1f;
 }
 
-static inline int gpio_valid (int gpio)
+static inline int gpio_valid(int gpio)
 {
-  if (gpio < 0)
-  { return -1; }
-  if (gpio < 192)
-  { return 0; }
-  return -1;
+	if (gpio < 0)
+		return -1;
+	if (gpio < 192)
+		return 0;
+	return -1;
 }
 
-static int check_gpio (int gpio)
+static int check_gpio(int gpio)
 {
-  if (gpio_valid (gpio) < 0) {
-    printf ("ERROR : check_gpio: invalid GPIO %d\n", gpio);
-    return -1;
-  }
-  return 0;
+	if (gpio_valid(gpio) < 0) {
+		printf("ERROR : check_gpio: invalid GPIO %d\n", gpio);
+		return -1;
+	}
+	return 0;
 }
 
-static void _set_gpio_direction (const struct gpio_bank * bank, int gpio,
-                                 int is_input)
+static void _set_gpio_direction(const struct gpio_bank *bank, int gpio,
+				int is_input)
 {
-  void * reg = bank->base;
-  u32 l;
-  
-  switch (bank->method) {
-  case METHOD_GPIO_24XX:
-    reg += OMAP_GPIO_OE;
-    break;
-  default:
-    return;
-  }
-  l = __raw_readl (reg);
-  if (is_input)
-  { l |= 1 << gpio; }
-  else
-  { l &= ~ (1 << gpio); }
-  __raw_writel (l, reg);
+	void *reg = bank->base;
+	u32 l;
+
+	switch (bank->method) {
+	case METHOD_GPIO_24XX:
+		reg += OMAP_GPIO_OE;
+		break;
+	default:
+		return;
+	}
+	l = __raw_readl(reg);
+	if (is_input)
+		l |= 1 << gpio;
+	else
+		l &= ~(1 << gpio);
+	__raw_writel(l, reg);
 }
 
-void omap_set_gpio_direction (int gpio, int is_input)
+void omap_set_gpio_direction(int gpio, int is_input)
 {
-  const struct gpio_bank * bank;
-  
-  if (check_gpio (gpio) < 0)
-  { return; }
-  bank = get_gpio_bank (gpio);
-  _set_gpio_direction (bank, get_gpio_index (gpio), is_input);
+	const struct gpio_bank *bank;
+
+	if (check_gpio(gpio) < 0)
+		return;
+	bank = get_gpio_bank(gpio);
+	_set_gpio_direction(bank, get_gpio_index(gpio), is_input);
 }
 
-static void _set_gpio_dataout (const struct gpio_bank * bank, int gpio,
-                               int enable)
+static void _set_gpio_dataout(const struct gpio_bank *bank, int gpio,
+				int enable)
 {
-  void * reg = bank->base;
-  u32 l = 0;
-  
-  switch (bank->method) {
-  case METHOD_GPIO_24XX:
-    if (enable)
-    { reg += OMAP_GPIO_SETDATAOUT; }
-    else
-    { reg += OMAP_GPIO_CLEARDATAOUT; }
-    l = 1 << gpio;
-    break;
-  default:
-    printf ("omap3-gpio unknown bank method %s %d\n",
-            __FILE__, __LINE__);
-    return;
-  }
-  __raw_writel (l, reg);
+	void *reg = bank->base;
+	u32 l = 0;
+
+	switch (bank->method) {
+	case METHOD_GPIO_24XX:
+		if (enable)
+			reg += OMAP_GPIO_SETDATAOUT;
+		else
+			reg += OMAP_GPIO_CLEARDATAOUT;
+		l = 1 << gpio;
+		break;
+	default:
+		printf("omap3-gpio unknown bank method %s %d\n",
+		       __FILE__, __LINE__);
+		return;
+	}
+	__raw_writel(l, reg);
 }
 
-void omap_set_gpio_dataout (int gpio, int enable)
+void omap_set_gpio_dataout(int gpio, int enable)
 {
-  const struct gpio_bank * bank;
-  
-  if (check_gpio (gpio) < 0)
-  { return; }
-  bank = get_gpio_bank (gpio);
-  _set_gpio_dataout (bank, get_gpio_index (gpio), enable);
+	const struct gpio_bank *bank;
+
+	if (check_gpio(gpio) < 0)
+		return;
+	bank = get_gpio_bank(gpio);
+	_set_gpio_dataout(bank, get_gpio_index(gpio), enable);
 }
 
-int omap_get_gpio_datain (int gpio)
+int omap_get_gpio_datain(int gpio)
 {
-  const struct gpio_bank * bank;
-  void * reg;
-  
-  if (check_gpio (gpio) < 0)
-  { return -EINVAL; }
-  bank = get_gpio_bank (gpio);
-  reg = bank->base;
-  switch (bank->method) {
-  case METHOD_GPIO_24XX:
-    reg += OMAP_GPIO_DATAIN;
-    break;
-  default:
-    return -EINVAL;
-  }
-  return (__raw_readl (reg)
-          & (1 << get_gpio_index (gpio) ) ) != 0;
+	const struct gpio_bank *bank;
+	void *reg;
+
+	if (check_gpio(gpio) < 0)
+		return -EINVAL;
+	bank = get_gpio_bank(gpio);
+	reg = bank->base;
+	switch (bank->method) {
+	case METHOD_GPIO_24XX:
+		reg += OMAP_GPIO_DATAIN;
+		break;
+	default:
+		return -EINVAL;
+	}
+	return (__raw_readl(reg)
+			& (1 << get_gpio_index(gpio))) != 0;
 }
 
-static void _reset_gpio (const struct gpio_bank * bank, int gpio)
+static void _reset_gpio(const struct gpio_bank *bank, int gpio)
 {
-  _set_gpio_direction (bank, get_gpio_index (gpio), 1);
+	_set_gpio_direction(bank, get_gpio_index(gpio), 1);
 }
 
-int omap_request_gpio (int gpio)
+int omap_request_gpio(int gpio)
 {
-  if (check_gpio (gpio) < 0)
-  { return -EINVAL; }
-  
-  return 0;
+	if (check_gpio(gpio) < 0)
+		return -EINVAL;
+
+	return 0;
 }
 
-void omap_free_gpio (int gpio)
+void omap_free_gpio(int gpio)
 {
-  const struct gpio_bank * bank;
-  
-  if (check_gpio (gpio) < 0)
-  { return; }
-  bank = get_gpio_bank (gpio);
-  
-  _reset_gpio (bank, gpio);
+	const struct gpio_bank *bank;
+
+	if (check_gpio(gpio) < 0)
+		return;
+	bank = get_gpio_bank(gpio);
+
+	_reset_gpio(bank, gpio);
 }

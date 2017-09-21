@@ -1,6 +1,6 @@
 /**
  * aops.h - Defines for NTFS kernel address space operations and page cache
- *      handling.  Part of the Linux-NTFS project.
+ *	    handling.  Part of the Linux-NTFS project.
  *
  * Copyright (c) 2001-2004 Anton Altaparmakov
  * Copyright (c) 2002 Richard Russon
@@ -33,20 +33,20 @@
 
 /**
  * ntfs_unmap_page - release a page that was mapped using ntfs_map_page()
- * @page: the page to release
+ * @page:	the page to release
  *
  * Unpin, unmap and release a page that was obtained from ntfs_map_page().
  */
-static inline void ntfs_unmap_page (struct page * page)
+static inline void ntfs_unmap_page(struct page *page)
 {
-  kunmap (page);
-  page_cache_release (page);
+	kunmap(page);
+	page_cache_release(page);
 }
 
 /**
  * ntfs_map_page - map a page into accessible memory, reading it if necessary
- * @mapping:  address space for which to obtain the page
- * @index:  index into the page cache for @mapping of the page to map
+ * @mapping:	address space for which to obtain the page
+ * @index:	index into the page cache for @mapping of the page to map
  *
  * Read a page from the page cache of the address space @mapping at position
  * @index, where @index is in units of PAGE_CACHE_SIZE, and not in bytes.
@@ -83,24 +83,24 @@ static inline void ntfs_unmap_page (struct page * page)
  * return value. If that evaluates to 'true', the negative error code can be
  * obtained using PTR_ERR() on the return value of ntfs_map_page().
  */
-static inline struct page * ntfs_map_page (struct address_space * mapping,
-    unsigned long index)
+static inline struct page *ntfs_map_page(struct address_space *mapping,
+		unsigned long index)
 {
-  struct page * page = read_mapping_page (mapping, index, NULL);
-  
-  if (!IS_ERR (page) ) {
-    kmap (page);
-    if (!PageError (page) )
-    { return page; }
-    ntfs_unmap_page (page);
-    return ERR_PTR (-EIO);
-  }
-  return page;
+	struct page *page = read_mapping_page(mapping, index, NULL);
+
+	if (!IS_ERR(page)) {
+		kmap(page);
+		if (!PageError(page))
+			return page;
+		ntfs_unmap_page(page);
+		return ERR_PTR(-EIO);
+	}
+	return page;
 }
 
 #ifdef NTFS_RW
 
-extern void mark_ntfs_record_dirty (struct page * page, const unsigned int ofs);
+extern void mark_ntfs_record_dirty(struct page *page, const unsigned int ofs);
 
 #endif /* NTFS_RW */
 

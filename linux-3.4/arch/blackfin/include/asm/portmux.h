@@ -9,19 +9,19 @@
 #ifndef _PORTMUX_H_
 #define _PORTMUX_H_
 
-#define P_IDENT(x)  ((x) & 0x1FF)
-#define P_FUNCT(x)  (((x) & 0x3) << 9)
-#define P_FUNCT2MUX(x)  (((x) >> 9) & 0x3)
-#define P_DEFINED 0x8000
-#define P_UNDEF   0x4000
-#define P_MAYSHARE  0x2000
-#define P_DONTCARE  0x1000
+#define P_IDENT(x)	((x) & 0x1FF)
+#define P_FUNCT(x)	(((x) & 0x3) << 9)
+#define P_FUNCT2MUX(x)	(((x) >> 9) & 0x3)
+#define P_DEFINED	0x8000
+#define P_UNDEF		0x4000
+#define P_MAYSHARE	0x2000
+#define P_DONTCARE	0x1000
 
 
-int peripheral_request (unsigned short per, const char * label);
-void peripheral_free (unsigned short per);
-int peripheral_request_list (const unsigned short per[], const char * label);
-void peripheral_free_list (const unsigned short per[]);
+int peripheral_request(unsigned short per, const char *label);
+void peripheral_free(unsigned short per);
+int peripheral_request_list(const unsigned short per[], const char *label);
+void peripheral_free_list(const unsigned short per[]);
 
 #include <asm/gpio.h>
 #include <mach/portmux.h>
@@ -1188,4 +1188,4 @@ void peripheral_free_list (const unsigned short per[]);
 #define P_MDIO P_UNDEF
 #endif
 
-#endif        /* _PORTMUX_H_ */
+#endif				/* _PORTMUX_H_ */

@@ -20,19 +20,19 @@
 #define __LPC32XX_CLOCK_H
 
 struct clk {
-  struct list_head node;
-  struct clk * parent;
-  u32 rate;
-  u32 usecount;
-  
-  int (*set_rate) (struct clk *, unsigned long);
-  unsigned long (*round_rate) (struct clk *, unsigned long);
-  unsigned long (*get_rate) (struct clk * clk);
-  int (*enable) (struct clk *, int);
-  
-  /* Register address and bit mask for simple clocks */
-  void __iomem * enable_reg;
-  u32 enable_mask;
+	struct list_head node;
+	struct clk *parent;
+	u32 rate;
+	u32 usecount;
+
+	int (*set_rate) (struct clk *, unsigned long);
+	unsigned long (*round_rate) (struct clk *, unsigned long);
+	unsigned long (*get_rate) (struct clk *clk);
+	int (*enable) (struct clk *, int);
+
+	/* Register address and bit mask for simple clocks */
+	void __iomem *enable_reg;
+	u32 enable_mask;
 };
 
 #endif

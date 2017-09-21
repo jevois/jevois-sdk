@@ -19,17 +19,17 @@
 #include <plat/fb.h>
 #include <plat/gpio-cfg.h>
 
-#define DISR_OFFSET 0x7008
+#define DISR_OFFSET	0x7008
 
-static void s5pc100_fb_setgpios (unsigned int base, unsigned int nr)
+static void s5pc100_fb_setgpios(unsigned int base, unsigned int nr)
 {
-  s3c_gpio_cfgrange_nopull (base, nr, S3C_GPIO_SFN (2) );
+	s3c_gpio_cfgrange_nopull(base, nr, S3C_GPIO_SFN(2));
 }
 
-void s5pc100_fb_gpio_setup_24bpp (void)
+void s5pc100_fb_gpio_setup_24bpp(void)
 {
-  s5pc100_fb_setgpios (S5PC100_GPF0 (0), 8);
-  s5pc100_fb_setgpios (S5PC100_GPF1 (0), 8);
-  s5pc100_fb_setgpios (S5PC100_GPF2 (0), 8);
-  s5pc100_fb_setgpios (S5PC100_GPF3 (0), 4);
+	s5pc100_fb_setgpios(S5PC100_GPF0(0), 8);
+	s5pc100_fb_setgpios(S5PC100_GPF1(0), 8);
+	s5pc100_fb_setgpios(S5PC100_GPF2(0), 8);
+	s5pc100_fb_setgpios(S5PC100_GPF3(0), 4);
 }

@@ -29,35 +29,35 @@
 #include <plat/common.h>
 
 #if defined(CONFIG_ARCH_OMAP730) || defined(CONFIG_ARCH_OMAP850)
-void omap7xx_map_io (void);
+void omap7xx_map_io(void);
 #else
-static inline void omap7xx_map_io (void)
+static inline void omap7xx_map_io(void)
 {
 }
 #endif
 
 #ifdef CONFIG_ARCH_OMAP15XX
-void omap15xx_map_io (void);
+void omap15xx_map_io(void);
 #else
-static inline void omap15xx_map_io (void)
+static inline void omap15xx_map_io(void)
 {
 }
 #endif
 
 #ifdef CONFIG_ARCH_OMAP16XX
-void omap16xx_map_io (void);
+void omap16xx_map_io(void);
 #else
-static inline void omap16xx_map_io (void)
+static inline void omap16xx_map_io(void)
 {
 }
 #endif
 
-void omap1_init_early (void);
-void omap1_init_irq (void);
-void omap1_restart (char, const char *);
+void omap1_init_early(void);
+void omap1_init_irq(void);
+void omap1_restart(char, const char *);
 
 extern struct sys_timer omap1_timer;
-extern bool omap_32k_timer_init (void);
-extern void __init omap_init_consistent_dma_size (void);
+extern bool omap_32k_timer_init(void);
+extern void __init omap_init_consistent_dma_size(void);
 
 #endif /* __ARCH_ARM_MACH_OMAP1_COMMON_H */

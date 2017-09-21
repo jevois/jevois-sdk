@@ -26,75 +26,75 @@
 
 
 void
-SwLedOn_8723BS (
-  _adapter   *   padapter,
-  PLED_SDIO   pLed
+SwLedOn_8723BS(
+	_adapter			*padapter,
+	PLED_SDIO		pLed
 )
 {
-  u8  LedCfg;
-  HAL_DATA_TYPE * pHalData = GET_HAL_DATA (padapter);
-  
-  if ( (padapter->bSurpriseRemoved == _TRUE) || ( padapter->bDriverStopped == _TRUE) )
-  {
-    return;
-  }
-  
-  pLed->bLedOn = _TRUE;
-  
+	u8	LedCfg;
+	HAL_DATA_TYPE	*pHalData = GET_HAL_DATA(padapter);
+
+	if( (padapter->bSurpriseRemoved == _TRUE) || ( padapter->bDriverStopped == _TRUE))
+	{
+		return;
+	}
+
+	pLed->bLedOn = _TRUE;
+
 }
 
 
 void
-SwLedOff_8723BS (
-  _adapter   *   padapter,
-  PLED_SDIO   pLed
+SwLedOff_8723BS(
+	_adapter			*padapter,
+	PLED_SDIO		pLed
 )
 {
-  u8  LedCfg;
-  HAL_DATA_TYPE * pHalData = GET_HAL_DATA (padapter);
-  
-  if ( (padapter->bSurpriseRemoved == _TRUE) || ( padapter->bDriverStopped == _TRUE) )
-  {
-    goto exit;
-  }
-  
+	u8	LedCfg;
+	HAL_DATA_TYPE	*pHalData = GET_HAL_DATA(padapter);
+
+	if((padapter->bSurpriseRemoved == _TRUE) || ( padapter->bDriverStopped == _TRUE))
+	{
+		goto exit;
+	}
+
 exit:
-  pLed->bLedOn = _FALSE;
-  
+	pLed->bLedOn = _FALSE;
+
 }
 
 
 
 void
-rtl8723bs_InitSwLeds (
-  _adapter * padapter
-)
+rtl8723bs_InitSwLeds(
+	_adapter	*padapter
+	)
 {
-  #if 0
-  struct led_priv * pledpriv = & (padapter->ledpriv);
-  
-  pledpriv->LedControlHandler = LedControlSDIO;
-  
-  pledpriv->SwLedOn = SwLedOn_8723BS;
-  pledpriv->SwLedOff = SwLedOff_8723BS;
-  
-  InitLed871x (padapter, & (pledpriv->SwLed0), LED_PIN_LED0);
-  
-  InitLed871x (padapter, & (pledpriv->SwLed1), LED_PIN_LED1);
-  #endif
+#if 0
+	struct led_priv *pledpriv = &(padapter->ledpriv);
+
+	pledpriv->LedControlHandler = LedControlSDIO;
+
+	pledpriv->SwLedOn = SwLedOn_8723BS;
+	pledpriv->SwLedOff = SwLedOff_8723BS;
+	
+	InitLed871x(padapter, &(pledpriv->SwLed0), LED_PIN_LED0);
+
+	InitLed871x(padapter,&(pledpriv->SwLed1), LED_PIN_LED1);
+#endif
 }
 
 
 void
-rtl8723bs_DeInitSwLeds (
-  _adapter * padapter
-)
+rtl8723bs_DeInitSwLeds(
+	_adapter	*padapter
+	)
 {
-  #if 0
-  struct led_priv * ledpriv = & (padapter->ledpriv);
-  
-  DeInitLed871x ( & (ledpriv->SwLed0) );
-  DeInitLed871x ( & (ledpriv->SwLed1) );
-  #endif
+#if 0
+	struct led_priv	*ledpriv = &(padapter->ledpriv);
+
+	DeInitLed871x( &(ledpriv->SwLed0) );
+	DeInitLed871x( &(ledpriv->SwLed1) );
+#endif
 }
 

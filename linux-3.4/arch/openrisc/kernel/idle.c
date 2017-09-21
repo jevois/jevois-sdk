@@ -39,40 +39,40 @@
 
 void (*powersave) (void) = NULL;
 
-static inline void pm_idle (void)
+static inline void pm_idle(void)
 {
-  barrier();
+	barrier();
 }
 
-void cpu_idle (void)
+void cpu_idle(void)
 {
-  set_thread_flag (TIF_POLLING_NRFLAG);
-  
-  /* endless idle loop with no priority at all */
-  while (1) {
-    tick_nohz_idle_enter();
-    rcu_idle_enter();
-    
-    while (!need_resched() ) {
-      check_pgt_cache();
-      rmb();
-      
-      clear_thread_flag (TIF_POLLING_NRFLAG);
-      
-      local_irq_disable();
-      /* Don't trace irqs off for idle */
-      stop_critical_timings();
-      if (!need_resched() && powersave != NULL)
-      { powersave(); }
-      start_critical_timings();
-      local_irq_enable();
-      set_thread_flag (TIF_POLLING_NRFLAG);
-    }
-    
-    rcu_idle_exit();
-    tick_nohz_idle_exit();
-    preempt_enable_no_resched();
-    schedule();
-    preempt_disable();
-  }
+	set_thread_flag(TIF_POLLING_NRFLAG);
+
+	/* endless idle loop with no priority at all */
+	while (1) {
+		tick_nohz_idle_enter();
+		rcu_idle_enter();
+
+		while (!need_resched()) {
+			check_pgt_cache();
+			rmb();
+
+			clear_thread_flag(TIF_POLLING_NRFLAG);
+
+			local_irq_disable();
+			/* Don't trace irqs off for idle */
+			stop_critical_timings();
+			if (!need_resched() && powersave != NULL)
+				powersave();
+			start_critical_timings();
+			local_irq_enable();
+			set_thread_flag(TIF_POLLING_NRFLAG);
+		}
+
+		rcu_idle_exit();
+		tick_nohz_idle_exit();
+		preempt_enable_no_resched();
+		schedule();
+		preempt_disable();
+	}
 }

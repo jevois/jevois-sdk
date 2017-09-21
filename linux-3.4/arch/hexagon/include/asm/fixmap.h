@@ -31,10 +31,10 @@
  * these may not be needed if all we're after is an area for
  * highmem kernel mappings.
  */
-#define __fix_to_virt(x)  (FIXADDR_TOP - ((x) << PAGE_SHIFT))
-#define __virt_to_fix(x)  ((FIXADDR_TOP - ((x)&PAGE_MASK)) >> PAGE_SHIFT)
+#define	__fix_to_virt(x)	(FIXADDR_TOP - ((x) << PAGE_SHIFT))
+#define	__virt_to_fix(x)	((FIXADDR_TOP - ((x)&PAGE_MASK)) >> PAGE_SHIFT)
 
-extern void __this_fixmap_does_not_exist (void);
+extern void __this_fixmap_does_not_exist(void);
 
 /**
  * fix_to_virt -- "index to address" translation.
@@ -43,31 +43,31 @@ extern void __this_fixmap_does_not_exist (void);
  * we catch the bug with a NULL-deference kernel oops. Illegal
  * ranges of incoming indices are caught too.
  */
-static inline unsigned long fix_to_virt (const unsigned int idx)
+static inline unsigned long fix_to_virt(const unsigned int idx)
 {
-  /*
-   * This branch gets completely eliminated after inlining,
-   * except when someone tries to use fixaddr indices in an
-   * illegal way. (such as mixing up address types or using
-   * out-of-range indices).
-   *
-   * If it doesn't get removed, the linker will complain
-   * loudly with a reasonably clear error message..
-   */
-  if (idx >= __end_of_fixed_addresses)
-  { __this_fixmap_does_not_exist(); }
-  
-  return __fix_to_virt (idx);
+	/*
+	 * This branch gets completely eliminated after inlining,
+	 * except when someone tries to use fixaddr indices in an
+	 * illegal way. (such as mixing up address types or using
+	 * out-of-range indices).
+	 *
+	 * If it doesn't get removed, the linker will complain
+	 * loudly with a reasonably clear error message..
+	 */
+	if (idx >= __end_of_fixed_addresses)
+		__this_fixmap_does_not_exist();
+
+	return __fix_to_virt(idx);
 }
 
-static inline unsigned long virt_to_fix (const unsigned long vaddr)
+static inline unsigned long virt_to_fix(const unsigned long vaddr)
 {
-  BUG_ON (vaddr >= FIXADDR_TOP || vaddr < FIXADDR_START);
-  return __virt_to_fix (vaddr);
+	BUG_ON(vaddr >= FIXADDR_TOP || vaddr < FIXADDR_START);
+	return __virt_to_fix(vaddr);
 }
 
 #define kmap_get_fixmap_pte(vaddr) \
-  pte_offset_kernel(pmd_offset(pud_offset(pgd_offset_k(vaddr), \
-                                          (vaddr)), (vaddr)), (vaddr))
+	pte_offset_kernel(pmd_offset(pud_offset(pgd_offset_k(vaddr), \
+				(vaddr)), (vaddr)), (vaddr))
 
 #endif

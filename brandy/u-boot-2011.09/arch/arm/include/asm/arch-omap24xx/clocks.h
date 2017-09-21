@@ -35,18 +35,18 @@
 ; PRCM Scheme II
 ;
 ; Enable clocks and DPLL for:
-;  DPLL=300,  DPLLout=600 M=1,N=50   CM_CLKSEL1_PLL[21:8]  12/2*50
-;  Core=600 (core domain)   DPLLx2     CM_CLKSEL2_PLL[1:0]
-;  MPUF=300 (mpu domain)    2          CM_CLKSEL_MPU[4:0]
+;  DPLL=300,	DPLLout=600	M=1,N=50   CM_CLKSEL1_PLL[21:8]  12/2*50
+;  Core=600	(core domain)   DPLLx2     CM_CLKSEL2_PLL[1:0]
+;  MPUF=300	(mpu domain)    2          CM_CLKSEL_MPU[4:0]
 ;  DSPF=200    (dsp domain)    3          CM_CLKSEL_DSP[4:0]
 ;  DSPI=100                    6          CM_CLKSEL_DSP[6:5]
-;  DSP_S          bypass                 CM_CLKSEL_DSP[7]
+;  DSP_S          bypass	               CM_CLKSEL_DSP[7]
 ;  IVAF=200    (dsp domain)    3          CM_CLKSEL_DSP[12:8]
 ;  IVAF=100        auto
 ;  IVAI            auto
 ;  IVA_MPU         auto
 ;  IVA_S          bypass                  CM_CLKSEL_DSP[13]
-;  GFXF=50      (gfx domain)  12         CM_CLKSEL_FGX[2:0]
+;  GFXF=50      (gfx domain)	12         CM_CLKSEL_FGX[2:0]
 ;  SSI_SSRF=200                 3         CM_CLKSEL1_CORE[24:20]
 ;  SSI_SSTF=100     auto
 ;  L3=100Mhz (sdram)            6         CM_CLKSEL1_CORE[4:0]
@@ -64,18 +64,18 @@
 ; PRCM Scheme III
 ;
 ; Enable clocks and DPLL for:
-;  DPLL=266,  DPLLout=532 M=5+1,N=133 CM_CLKSEL1_PLL[21:8]  12/6*133=266
-;  Core=532 (core domain)   DPLLx2      CM_CLKSEL2_PLL[1:0]
-;  MPUF=266 (mpu domain)    /2          CM_CLKSEL_MPU[4:0]
+;  DPLL=266,	DPLLout=532	M=5+1,N=133 CM_CLKSEL1_PLL[21:8]  12/6*133=266
+;  Core=532	(core domain)   DPLLx2      CM_CLKSEL2_PLL[1:0]
+;  MPUF=266	(mpu domain)    /2          CM_CLKSEL_MPU[4:0]
 ;  DSPF=177.3     (dsp domain)  /3          CM_CLKSEL_DSP[4:0]
 ;  DSPI=88.67                   /6          CM_CLKSEL_DSP[6:5]
-;  DSP_S         ACTIVATED              CM_CLKSEL_DSP[7]
+;  DSP_S         ACTIVATED	            CM_CLKSEL_DSP[7]
 ;  IVAF=88.67    (dsp domain)   /3          CM_CLKSEL_DSP[12:8]
 ;  IVAF=88.67        auto
 ;  IVAI            auto
 ;  IVA_MPU         auto
 ;  IVA_S         ACTIVATED                  CM_CLKSEL_DSP[13]
-;  GFXF=66.5      (gfx domain)  /8          CM_CLKSEL_FGX[2:0]:
+;  GFXF=66.5      (gfx domain)	/8          CM_CLKSEL_FGX[2:0]:
 ;  SSI_SSRF=177.3               /3          CM_CLKSEL1_CORE[24:20]
 ;  SSI_SSTF=88.67     auto
 ;  L3=133Mhz (sdram)            /4          CM_CLKSEL1_CORE[4:0]

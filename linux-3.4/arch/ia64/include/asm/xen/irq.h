@@ -33,12 +33,12 @@
  *     are bound using the provided bind/unbind functions.
  */
 
-#define XEN_PIRQ_BASE   0
-#define XEN_NR_PIRQS    256
+#define XEN_PIRQ_BASE		0
+#define XEN_NR_PIRQS		256
 
-#define XEN_DYNIRQ_BASE   (XEN_PIRQ_BASE + XEN_NR_PIRQS)
-#define XEN_NR_DYNIRQS    (NR_CPUS * 8)
+#define XEN_DYNIRQ_BASE		(XEN_PIRQ_BASE + XEN_NR_PIRQS)
+#define XEN_NR_DYNIRQS		(NR_CPUS * 8)
 
-#define XEN_NR_IRQS   (XEN_NR_PIRQS + XEN_NR_DYNIRQS)
+#define XEN_NR_IRQS		(XEN_NR_PIRQS + XEN_NR_DYNIRQS)
 
 #endif /* _ASM_IA64_XEN_IRQ_H */

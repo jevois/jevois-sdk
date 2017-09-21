@@ -1,23 +1,23 @@
 #ifndef _VME_USER_H_
 #define _VME_USER_H_
 
-#define VME_USER_BUS_MAX  1
+#define VME_USER_BUS_MAX	1
 
 /*
  * VMEbus Master Window Configuration Structure
  */
 struct vme_master {
-  int enable;     /* State of Window */
-  unsigned long long vme_addr;  /* Starting Address on the VMEbus */
-  unsigned long long size;  /* Window Size */
-  u32 aspace;     /* Address Space */
-  u32 cycle;    /* Cycle properties */
-  u32 dwidth;   /* Maximum Data Width */
-  #if 0
-  char prefetchEnable;    /* Prefetch Read Enable State */
-  int prefetchSize;   /* Prefetch Read Size (Cache Lines) */
-  char wrPostEnable;    /* Write Post State */
-  #endif
+	int enable;			/* State of Window */
+	unsigned long long vme_addr;	/* Starting Address on the VMEbus */
+	unsigned long long size;	/* Window Size */
+	u32 aspace;			/* Address Space */
+	u32 cycle;		/* Cycle properties */
+	u32 dwidth;		/* Maximum Data Width */
+#if 0
+	char prefetchEnable;		/* Prefetch Read Enable State */
+	int prefetchSize;		/* Prefetch Read Size (Cache Lines) */
+	char wrPostEnable;		/* Write Post State */
+#endif
 };
 
 
@@ -31,21 +31,21 @@ struct vme_master {
 
 /* VMEbus Slave Window Configuration Structure */
 struct vme_slave {
-  int enable;     /* State of Window */
-  unsigned long long vme_addr;  /* Starting Address on the VMEbus */
-  unsigned long long size;  /* Window Size */
-  u32 aspace;     /* Address Space */
-  u32 cycle;    /* Cycle properties */
-  #if 0
-  char wrPostEnable;    /* Write Post State */
-  char rmwLock;     /* Lock PCI during RMW Cycles */
-  char data64BitCapable;    /* non-VMEbus capable of 64-bit Data */
-  #endif
+	int enable;			/* State of Window */
+	unsigned long long vme_addr;	/* Starting Address on the VMEbus */
+	unsigned long long size;	/* Window Size */
+	u32 aspace;			/* Address Space */
+	u32 cycle;		/* Cycle properties */
+#if 0
+	char wrPostEnable;		/* Write Post State */
+	char rmwLock;			/* Lock PCI during RMW Cycles */
+	char data64BitCapable;		/* non-VMEbus capable of 64-bit Data */
+#endif
 };
 
 struct vme_irq_id {
-  __u8 level;
-  __u8 statid;
+	__u8 level;
+	__u8 statid;
 };
 
 #define VME_GET_SLAVE _IOR(VME_IOC_MAGIC, 1, struct vme_slave)

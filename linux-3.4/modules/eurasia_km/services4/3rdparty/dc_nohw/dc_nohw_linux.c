@@ -101,20 +101,20 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif
 
 #if defined(DC_USE_SET_MEMORY)
-#undef  DC_USE_SET_MEMORY
+	#undef	DC_USE_SET_MEMORY
 #endif
 
 #if !defined(DC_NOHW_DISCONTIG_BUFFERS)
-#if defined(__i386__) && (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,26)) && defined(SUPPORT_LINUX_X86_PAT) && defined(SUPPORT_LINUX_X86_WRITECOMBINE)
-#include <asm/cacheflush.h>
-#define DC_USE_SET_MEMORY
-#endif
-#endif  /* defined(DC_NOHW_DISCONTIG_BUFFERS) */
+	#if defined(__i386__) && (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,26)) && defined(SUPPORT_LINUX_X86_PAT) && defined(SUPPORT_LINUX_X86_WRITECOMBINE)
+		#include <asm/cacheflush.h>
+		#define	DC_USE_SET_MEMORY
+	#endif
+#endif	/* defined(DC_NOHW_DISCONTIG_BUFFERS) */
 
 #define DRVNAME "dcnohw"
 
 #if !defined(SUPPORT_DRI_DRM)
-MODULE_SUPPORTED_DEVICE (DRVNAME);
+MODULE_SUPPORTED_DEVICE(DRVNAME);
 #endif
 
 #define unref__ __attribute__ ((unused))
@@ -124,244 +124,244 @@ static unsigned long width = DC_NOHW_BUFFER_WIDTH;
 static unsigned long height = DC_NOHW_BUFFER_HEIGHT;
 static unsigned long depth = DC_NOHW_BUFFER_BIT_DEPTH;
 
-module_param (width, ulong, S_IRUGO);
-module_param (height, ulong, S_IRUGO);
-module_param (depth, ulong, S_IRUGO);
+module_param(width, ulong, S_IRUGO);
+module_param(height, ulong, S_IRUGO);
+module_param(depth, ulong, S_IRUGO);
 
-IMG_BOOL GetBufferDimensions (IMG_UINT32 * pui32Width, IMG_UINT32 * pui32Height, PVRSRV_PIXEL_FORMAT * pePixelFormat, IMG_UINT32 * pui32Stride)
+IMG_BOOL GetBufferDimensions(IMG_UINT32 *pui32Width, IMG_UINT32 *pui32Height, PVRSRV_PIXEL_FORMAT *pePixelFormat, IMG_UINT32 *pui32Stride)
 {
-  if (width == 0 || height == 0 || depth == 0 ||
-      depth != dc_nohw_roundup_bit_depth (depth) )
-  {
-    printk (KERN_WARNING DRVNAME ": Illegal module parameters (width %lu, height %lu, depth %lu)\n", width, height, depth);
-    return IMG_FALSE;
-  }
-  
-  *pui32Width = (IMG_UINT32) width;
-  *pui32Height = (IMG_UINT32) height;
-  
-  switch (depth)
-  {
-  case 32:
-    *pePixelFormat = PVRSRV_PIXEL_FORMAT_ARGB8888;
-    break;
-  case 16:
-    *pePixelFormat = PVRSRV_PIXEL_FORMAT_RGB565;
-    break;
-  default:
-    printk (KERN_WARNING DRVNAME ": Display depth %lu not supported\n", depth);
-    *pePixelFormat = PVRSRV_PIXEL_FORMAT_UNKNOWN;
-    return IMG_FALSE;
-  }
-  
-  *pui32Stride = dc_nohw_byte_stride (width, depth);
-  
-  #if defined(DEBUG)
-  printk (KERN_INFO DRVNAME " Width: %lu\n", (unsigned long) *pui32Width);
-  printk (KERN_INFO DRVNAME " Height: %lu\n", (unsigned long) *pui32Height);
-  printk (KERN_INFO DRVNAME " Depth: %lu bits\n", depth);
-  printk (KERN_INFO DRVNAME " Stride: %lu bytes\n", (unsigned long) *pui32Stride);
-  #endif  /* defined(DEBUG) */
-  
-  return IMG_TRUE;
+	if (width == 0 || height == 0 || depth == 0 ||
+		depth != dc_nohw_roundup_bit_depth(depth))
+	{
+		printk(KERN_WARNING DRVNAME ": Illegal module parameters (width %lu, height %lu, depth %lu)\n", width, height, depth);
+		return IMG_FALSE;
+	}
+
+	*pui32Width = (IMG_UINT32)width;
+	*pui32Height = (IMG_UINT32)height;
+
+	switch(depth)
+	{
+		case 32:
+			*pePixelFormat = PVRSRV_PIXEL_FORMAT_ARGB8888;
+			break;
+		case 16:
+			*pePixelFormat = PVRSRV_PIXEL_FORMAT_RGB565;
+			break;
+		default:
+			printk(KERN_WARNING DRVNAME ": Display depth %lu not supported\n", depth);
+			*pePixelFormat = PVRSRV_PIXEL_FORMAT_UNKNOWN;
+			return IMG_FALSE;
+	}
+			
+	*pui32Stride = dc_nohw_byte_stride(width, depth);
+
+#if defined(DEBUG)
+	printk(KERN_INFO DRVNAME " Width: %lu\n", (unsigned long)*pui32Width);
+	printk(KERN_INFO DRVNAME " Height: %lu\n", (unsigned long)*pui32Height);
+	printk(KERN_INFO DRVNAME " Depth: %lu bits\n", depth);
+	printk(KERN_INFO DRVNAME " Stride: %lu bytes\n", (unsigned long)*pui32Stride);
+#endif	/* defined(DEBUG) */
+
+	return IMG_TRUE;
 }
-#endif  /* defined(DC_NOHW_GET_BUFFER_DIMENSIONS) */
+#endif	/* defined(DC_NOHW_GET_BUFFER_DIMENSIONS) */
 
 /*****************************************************************************
- Function Name: DC_NOHW_Init
- Description  : Insert the driver into the kernel.
+ Function Name:	DC_NOHW_Init
+ Description  :	Insert the driver into the kernel.
 
-        __init places the function in a special memory section that
-        the kernel frees once the function has been run.  Refer also
-        to module_init() macro call below.
+				__init places the function in a special memory section that
+				the kernel frees once the function has been run.  Refer also
+				to module_init() macro call below.
 
 *****************************************************************************/
 #if defined(SUPPORT_DRI_DRM)
-int PVR_DRM_MAKENAME (DISPLAY_CONTROLLER, _Init) (struct drm_device unref__ *dev)
+int PVR_DRM_MAKENAME(DISPLAY_CONTROLLER, _Init)(struct drm_device unref__ *dev)
 #else
-static int __init DC_NOHW_Init (void)
+static int __init DC_NOHW_Init(void)
 #endif
 {
-  if (Init() != DC_OK)
-  {
-    return -ENODEV;
-  }
-  
-  return 0;
+	if(Init() != DC_OK)
+	{
+		return -ENODEV;
+	}
+
+	return 0;
 } /*DC_NOHW_Init*/
 
 /*****************************************************************************
- Function Name: DC_NOHW_Cleanup
- Description  : Remove the driver from the kernel.
+ Function Name:	DC_NOHW_Cleanup
+ Description  :	Remove the driver from the kernel.
 
-        __exit places the function in a special memory section that
-        the kernel frees once the function has been run.  Refer also
-        to module_exit() macro call below.
+				__exit places the function in a special memory section that
+				the kernel frees once the function has been run.  Refer also
+				to module_exit() macro call below.
 
 *****************************************************************************/
 #if defined(SUPPORT_DRI_DRM)
-void PVR_DRM_MAKENAME (DISPLAY_CONTROLLER, _Cleanup) (struct drm_device unref__ *dev)
+void PVR_DRM_MAKENAME(DISPLAY_CONTROLLER, _Cleanup)(struct drm_device unref__ *dev)
 #else
-static void __exit DC_NOHW_Cleanup (void)
+static void __exit DC_NOHW_Cleanup(void)
 #endif
 {
-  if (Deinit() != DC_OK)
-  {
-    printk (KERN_INFO DRVNAME ": DC_NOHW_Cleanup: can't deinit device\n");
-  }
+	if(Deinit() != DC_OK)
+	{
+		printk (KERN_INFO DRVNAME ": DC_NOHW_Cleanup: can't deinit device\n");
+	}
 } /*DC_NOHW_Cleanup*/
 
 
-void * AllocKernelMem (unsigned long ulSize)
+void *AllocKernelMem(unsigned long ulSize)
 {
-  return kmalloc (ulSize, GFP_KERNEL);
+	return kmalloc(ulSize, GFP_KERNEL);
 }
 
-void FreeKernelMem (void * pvMem)
+void FreeKernelMem(void *pvMem)
 {
-  kfree (pvMem);
+	kfree(pvMem);
 }
 
 #if defined(DC_NOHW_DISCONTIG_BUFFERS)
 
 #define RANGE_TO_PAGES(range) (((range) + (PAGE_SIZE - 1)) >> PAGE_SHIFT)
-#define VMALLOC_TO_PAGE_PHYS(vAddr) page_to_phys(vmalloc_to_page(vAddr))
+#define	VMALLOC_TO_PAGE_PHYS(vAddr) page_to_phys(vmalloc_to_page(vAddr))
 
-DC_ERROR AllocDiscontigMemory (unsigned long ulSize,
-                               DC_HANDLE unref__ *phMemHandle,
-                               IMG_CPU_VIRTADDR * pLinAddr,
-                               IMG_SYS_PHYADDR ** ppPhysAddr)
+DC_ERROR AllocDiscontigMemory(unsigned long ulSize,
+                              DC_HANDLE unref__ *phMemHandle,
+                              IMG_CPU_VIRTADDR *pLinAddr,
+                              IMG_SYS_PHYADDR **ppPhysAddr)
 {
-  unsigned long ulPages = RANGE_TO_PAGES (ulSize);
-  IMG_SYS_PHYADDR * pPhysAddr;
-  unsigned long ulPage;
-  IMG_CPU_VIRTADDR LinAddr;
-  
-  LinAddr = __vmalloc (ulSize, GFP_KERNEL | __GFP_HIGHMEM, pgprot_noncached (PAGE_KERNEL) );
-  if (!LinAddr)
-  {
-    return DC_ERROR_OUT_OF_MEMORY;
-  }
-  
-  pPhysAddr = kmalloc (ulPages * sizeof (IMG_SYS_PHYADDR), GFP_KERNEL);
-  if (!pPhysAddr)
-  {
-    vfree (LinAddr);
-    return DC_ERROR_OUT_OF_MEMORY;
-  }
-  
-  *pLinAddr = LinAddr;
-  
-  for (ulPage = 0; ulPage < ulPages; ulPage++)
-  {
-    pPhysAddr[ulPage].uiAddr = VMALLOC_TO_PAGE_PHYS (LinAddr);
-    
-    LinAddr += PAGE_SIZE;
-  }
-  
-  *ppPhysAddr = pPhysAddr;
-  
-  return DC_OK;
+	unsigned long ulPages = RANGE_TO_PAGES(ulSize);
+	IMG_SYS_PHYADDR *pPhysAddr;
+	unsigned long ulPage;
+	IMG_CPU_VIRTADDR LinAddr;
+
+	LinAddr = __vmalloc(ulSize, GFP_KERNEL | __GFP_HIGHMEM, pgprot_noncached(PAGE_KERNEL));
+	if (!LinAddr)
+	{
+		return DC_ERROR_OUT_OF_MEMORY;
+	}
+
+	pPhysAddr = kmalloc(ulPages * sizeof(IMG_SYS_PHYADDR), GFP_KERNEL);
+	if (!pPhysAddr)
+	{
+		vfree(LinAddr);
+		return DC_ERROR_OUT_OF_MEMORY;
+	}
+
+	*pLinAddr = LinAddr;
+
+	for (ulPage = 0; ulPage < ulPages; ulPage++)
+	{
+		pPhysAddr[ulPage].uiAddr = VMALLOC_TO_PAGE_PHYS(LinAddr);
+
+		LinAddr += PAGE_SIZE;
+	}
+
+	*ppPhysAddr = pPhysAddr;
+
+	return DC_OK;
 }
 
-void FreeDiscontigMemory (unsigned long ulSize,
-                          DC_HANDLE unref__ hMemHandle,
-                          IMG_CPU_VIRTADDR LinAddr,
-                          IMG_SYS_PHYADDR * pPhysAddr)
+void FreeDiscontigMemory(unsigned long ulSize,
+                         DC_HANDLE unref__ hMemHandle,
+                         IMG_CPU_VIRTADDR LinAddr,
+                         IMG_SYS_PHYADDR *pPhysAddr)
 {
-  kfree (pPhysAddr);
-  
-  vfree (LinAddr);
+	kfree(pPhysAddr);
+
+	vfree(LinAddr);
 }
-#else /* defined(DC_NOHW_DISCONTIG_BUFFERS) */
-DC_ERROR AllocContigMemory (unsigned long ulSize,
-                            DC_HANDLE unref__ *phMemHandle,
-                            IMG_CPU_VIRTADDR * pLinAddr,
-                            IMG_CPU_PHYADDR * pPhysAddr)
+#else	/* defined(DC_NOHW_DISCONTIG_BUFFERS) */
+DC_ERROR AllocContigMemory(unsigned long ulSize,
+                           DC_HANDLE unref__ *phMemHandle,
+                           IMG_CPU_VIRTADDR *pLinAddr,
+                           IMG_CPU_PHYADDR *pPhysAddr)
 {
-  #if defined(DC_USE_SET_MEMORY)
-  void * pvLinAddr;
-  unsigned long ulAlignedSize = PAGE_ALIGN (ulSize);
-  int iPages = (int) (ulAlignedSize >> PAGE_SHIFT);
-  int iError;
+#if defined(DC_USE_SET_MEMORY)
+	void *pvLinAddr;
+	unsigned long ulAlignedSize = PAGE_ALIGN(ulSize);
+	int iPages = (int)(ulAlignedSize >> PAGE_SHIFT);
+	int iError;
 
-  pvLinAddr = kmalloc (ulAlignedSize, GFP_KERNEL);
-  iError = set_memory_wc ( (unsigned long) pvLinAddr, iPages);
-  if (iError != 0)
-  {
-    printk (KERN_ERR DRVNAME ": AllocContigMemory:  set_memory_wc failed (%d)\n", iError);
+	pvLinAddr = kmalloc(ulAlignedSize, GFP_KERNEL);
+	iError = set_memory_wc((unsigned long)pvLinAddr, iPages);
+	if (iError != 0)
+	{
+		printk(KERN_ERR DRVNAME ": AllocContigMemory:  set_memory_wc failed (%d)\n", iError);
 
-    return DC_ERROR_OUT_OF_MEMORY;
-  }
+		return DC_ERROR_OUT_OF_MEMORY;
+	}
 
-  pPhysAddr->uiAddr = virt_to_phys (pvLinAddr);
-  *pLinAddr = pvLinAddr;
+	pPhysAddr->uiAddr = virt_to_phys(pvLinAddr);
+	*pLinAddr = pvLinAddr;
 
-  return DC_OK;
-  #else /* DC_USE_SET_MEMORY */
-  dma_addr_t dma;
-  IMG_VOID * pvLinAddr;
+	return DC_OK;
+#else	/* DC_USE_SET_MEMORY */
+	dma_addr_t dma;
+	IMG_VOID *pvLinAddr;
 
-  pvLinAddr = dma_alloc_coherent (NULL, ulSize, &dma, GFP_KERNEL);
+	pvLinAddr = dma_alloc_coherent(NULL, ulSize, &dma, GFP_KERNEL);
 
-  if (pvLinAddr == NULL)
-  {
-    return DC_ERROR_OUT_OF_MEMORY;
-  }
+	if (pvLinAddr == NULL)
+	{
+		return DC_ERROR_OUT_OF_MEMORY;
+	}
 
-  pPhysAddr->uiAddr = dma;
-  *pLinAddr = pvLinAddr;
+	pPhysAddr->uiAddr = dma;
+	*pLinAddr = pvLinAddr;
 
-  return DC_OK;
-  #endif  /* DC_USE_SET_MEMORY */
+	return DC_OK;
+#endif	/* DC_USE_SET_MEMORY */
 }
 
-void FreeContigMemory (unsigned long ulSize,
-                       DC_HANDLE unref__ hMemHandle,
-                       IMG_CPU_VIRTADDR LinAddr,
-                       IMG_CPU_PHYADDR PhysAddr)
+void FreeContigMemory(unsigned long ulSize,
+                      DC_HANDLE unref__ hMemHandle,
+                      IMG_CPU_VIRTADDR LinAddr,
+                      IMG_CPU_PHYADDR PhysAddr)
 {
-  #if defined(DC_USE_SET_MEMORY)
-  unsigned long ulAlignedSize = PAGE_ALIGN (ulSize);
-  int iError;
-  int iPages = (int) (ulAlignedSize >> PAGE_SHIFT);
+#if defined(DC_USE_SET_MEMORY)
+	unsigned long ulAlignedSize = PAGE_ALIGN(ulSize);
+	int iError;
+	int iPages = (int)(ulAlignedSize >> PAGE_SHIFT);
 
-  iError = set_memory_wb ( (unsigned long) LinAddr, iPages);
-  if (iError != 0)
-  {
-    printk (KERN_ERR DRVNAME ": FreeContigMemory:  set_memory_wb failed (%d)\n", iError);
-  }
-  kfree (LinAddr);
-  #else /* DC_USE_SET_MEMORY */
-  dma_free_coherent (NULL, ulSize, LinAddr, (dma_addr_t) PhysAddr.uiAddr);
-  #endif  /* DC_USE_SET_MEMORY */
+	iError = set_memory_wb((unsigned long)LinAddr, iPages);
+	if (iError != 0)
+	{
+		printk(KERN_ERR DRVNAME ": FreeContigMemory:  set_memory_wb failed (%d)\n", iError);
+	}
+	kfree(LinAddr);
+#else	/* DC_USE_SET_MEMORY */
+	dma_free_coherent(NULL, ulSize, LinAddr, (dma_addr_t)PhysAddr.uiAddr);
+#endif	/* DC_USE_SET_MEMORY */
 }
-#endif  /* defined(DC_NOHW_DISCONTIG_BUFFERS) */
+#endif	/* defined(DC_NOHW_DISCONTIG_BUFFERS) */
 
-DC_ERROR OpenPVRServices (DC_HANDLE * phPVRServices)
+DC_ERROR OpenPVRServices (DC_HANDLE *phPVRServices)
 {
-  /* Nothing to do - we have already checked services module insertion */
-  *phPVRServices = 0;
-  return DC_OK;
+	/* Nothing to do - we have already checked services module insertion */
+	*phPVRServices = 0;
+	return DC_OK;
 }
 
 DC_ERROR ClosePVRServices (DC_HANDLE unref__ hPVRServices)
 {
-  /* Nothing to do */
-  return DC_OK;
+	/* Nothing to do */
+	return DC_OK;
 }
 
-DC_ERROR GetLibFuncAddr (DC_HANDLE unref__ hExtDrv, char * szFunctionName, PFN_DC_GET_PVRJTABLE * ppfnFuncTable)
+DC_ERROR GetLibFuncAddr (DC_HANDLE unref__ hExtDrv, char *szFunctionName, PFN_DC_GET_PVRJTABLE *ppfnFuncTable)
 {
-  if (strcmp ("PVRGetDisplayClassJTable", szFunctionName) != 0)
-  {
-    return DC_ERROR_INVALID_PARAMS;
-  }
-  
-  /* Nothing to do - should be exported from pvrsrv.ko */
-  *ppfnFuncTable = PVRGetDisplayClassJTable;
-  
-  return DC_OK;
+	if(strcmp("PVRGetDisplayClassJTable", szFunctionName) != 0)
+	{
+		return DC_ERROR_INVALID_PARAMS;
+	}
+
+	/* Nothing to do - should be exported from pvrsrv.ko */
+	*ppfnFuncTable = PVRGetDisplayClassJTable;
+
+	return DC_OK;
 }
 
 #if !defined(SUPPORT_DRI_DRM)
@@ -371,6 +371,6 @@ DC_ERROR GetLibFuncAddr (DC_HANDLE unref__ hExtDrv, char * szFunctionName, PFN_D
  statically as well; in both cases they define the function the kernel will
  run to start/stop the driver.
 */
-module_init (DC_NOHW_Init);
-module_exit (DC_NOHW_Cleanup);
+module_init(DC_NOHW_Init);
+module_exit(DC_NOHW_Cleanup);
 #endif

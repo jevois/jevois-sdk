@@ -12,6 +12,6 @@
 #ifndef __UNICORE_MMU_H__
 #define __UNICORE_MMU_H__
 
-typedef unsigned long mm_context_t;
+typedef	unsigned long mm_context_t;
 
 #endif

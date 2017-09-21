@@ -13,17 +13,17 @@
 #ifdef __ASSEMBLY__
 
 #define ENTRY(name) \
-  .export name !\
-  ALIGN !\
-  name:
+	.export name !\
+	ALIGN !\
+name:
 
 #ifdef CONFIG_64BIT
 #define ENDPROC(name) \
-  END(name)
+	END(name)
 #else
 #define ENDPROC(name) \
-  .type name, @function !\
-  END(name)
+	.type name, @function !\
+	END(name)
 #endif
 
 #endif /* __ASSEMBLY__ */

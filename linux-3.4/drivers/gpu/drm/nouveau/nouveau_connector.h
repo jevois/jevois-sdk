@@ -31,58 +31,58 @@
 #include "nouveau_i2c.h"
 
 enum nouveau_underscan_type {
-  UNDERSCAN_OFF,
-  UNDERSCAN_ON,
-  UNDERSCAN_AUTO,
+	UNDERSCAN_OFF,
+	UNDERSCAN_ON,
+	UNDERSCAN_AUTO,
 };
 
 /* the enum values specifically defined here match nv50/nvd0 hw values, and
  * the code relies on this
  */
 enum nouveau_dithering_mode {
-  DITHERING_MODE_OFF = 0x00,
-  DITHERING_MODE_ON = 0x01,
-  DITHERING_MODE_DYNAMIC2X2 = 0x10 | DITHERING_MODE_ON,
-  DITHERING_MODE_STATIC2X2 = 0x18 | DITHERING_MODE_ON,
-  DITHERING_MODE_TEMPORAL = 0x20 | DITHERING_MODE_ON,
-  DITHERING_MODE_AUTO
+	DITHERING_MODE_OFF = 0x00,
+	DITHERING_MODE_ON = 0x01,
+	DITHERING_MODE_DYNAMIC2X2 = 0x10 | DITHERING_MODE_ON,
+	DITHERING_MODE_STATIC2X2 = 0x18 | DITHERING_MODE_ON,
+	DITHERING_MODE_TEMPORAL = 0x20 | DITHERING_MODE_ON,
+	DITHERING_MODE_AUTO
 };
 
 enum nouveau_dithering_depth {
-  DITHERING_DEPTH_6BPC = 0x00,
-  DITHERING_DEPTH_8BPC = 0x02,
-  DITHERING_DEPTH_AUTO
+	DITHERING_DEPTH_6BPC = 0x00,
+	DITHERING_DEPTH_8BPC = 0x02,
+	DITHERING_DEPTH_AUTO
 };
 
 struct nouveau_connector {
-  struct drm_connector base;
-  enum dcb_connector_type type;
-  u8 index;
-  u8 * dcb;
-  u8 hpd;
-  
-  int dithering_mode;
-  int dithering_depth;
-  int scaling_mode;
-  enum nouveau_underscan_type underscan;
-  u32 underscan_hborder;
-  u32 underscan_vborder;
-  
-  struct nouveau_encoder * detected_encoder;
-  struct edid * edid;
-  struct drm_display_mode * native_mode;
+	struct drm_connector base;
+	enum dcb_connector_type type;
+	u8 index;
+	u8 *dcb;
+	u8 hpd;
+
+	int dithering_mode;
+	int dithering_depth;
+	int scaling_mode;
+	enum nouveau_underscan_type underscan;
+	u32 underscan_hborder;
+	u32 underscan_vborder;
+
+	struct nouveau_encoder *detected_encoder;
+	struct edid *edid;
+	struct drm_display_mode *native_mode;
 };
 
-static inline struct nouveau_connector * nouveau_connector (
-  struct drm_connector * con)
+static inline struct nouveau_connector *nouveau_connector(
+						struct drm_connector *con)
 {
-  return container_of (con, struct nouveau_connector, base);
+	return container_of(con, struct nouveau_connector, base);
 }
 
 struct drm_connector *
-nouveau_connector_create (struct drm_device *, int index);
+nouveau_connector_create(struct drm_device *, int index);
 
 int
-nouveau_connector_bpp (struct drm_connector *);
+nouveau_connector_bpp(struct drm_connector *);
 
 #endif /* __NOUVEAU_CONNECTOR_H__ */

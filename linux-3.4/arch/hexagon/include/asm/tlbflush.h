@@ -34,13 +34,13 @@
  * VM vs. native implementation and code size, we simply declare
  * the function prototypes here.
  */
-extern void tlb_flush_all (void);
-extern void flush_tlb_mm (struct mm_struct * mm);
-extern void flush_tlb_page (struct vm_area_struct * vma, unsigned long addr);
-extern void flush_tlb_range (struct vm_area_struct * vma,
-                             unsigned long start, unsigned long end);
-extern void flush_tlb_kernel_range (unsigned long start, unsigned long end);
-extern void flush_tlb_one (unsigned long);
+extern void tlb_flush_all(void);
+extern void flush_tlb_mm(struct mm_struct *mm);
+extern void flush_tlb_page(struct vm_area_struct *vma, unsigned long addr);
+extern void flush_tlb_range(struct vm_area_struct *vma,
+				unsigned long start, unsigned long end);
+extern void flush_tlb_kernel_range(unsigned long start, unsigned long end);
+extern void flush_tlb_one(unsigned long);
 
 /*
  * "This is called in munmap when we have freed up some page-table pages.

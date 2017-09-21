@@ -29,36 +29,36 @@
 /* buffer definition                                                */
 /*------------------------------------------------------------------*/
 typedef struct {
-  word length;          /* length of data/parameter field           */
-  byte P[270];          /* data/parameter field                     */
+	word length;          /* length of data/parameter field           */
+	byte P[270];          /* data/parameter field                     */
 } PBUFFER;
 /*------------------------------------------------------------------*/
 /* dual port ram structure                                          */
 /*------------------------------------------------------------------*/
 struct dual
 {
-  byte Req;             /* request register                         */
-  byte ReqId;           /* request task/entity identification       */
-  byte Rc;              /* return code register                     */
-  byte RcId;            /* return code task/entity identification   */
-  byte Ind;             /* Indication register                      */
-  byte IndId;           /* Indication task/entity identification    */
-  byte IMask;           /* Interrupt Mask Flag                      */
-  byte RNR;             /* Receiver Not Ready (set by PC)           */
-  byte XLock;           /* XBuffer locked Flag                      */
-  byte Int;             /* ISDN-S interrupt                         */
-  byte ReqCh;           /* Channel field for layer-3 Requests       */
-  byte RcCh;            /* Channel field for layer-3 Returncodes    */
-  byte IndCh;           /* Channel field for layer-3 Indications    */
-  byte MInd;            /* more data indication field               */
-  word MLength;         /* more data total packet length            */
-  byte ReadyInt;        /* request field for ready interrupt        */
-  byte SWReg;           /* Software register for special purposes   */
-  byte Reserved[11];    /* reserved space                           */
-  byte InterfaceType;   /* interface type 1=16K interface           */
-  word Signature;       /* ISDN-S adapter Signature (GD)            */
-  PBUFFER XBuffer;      /* Transmit Buffer                          */
-  PBUFFER RBuffer;      /* Receive Buffer                           */
+	byte Req;             /* request register                         */
+	byte ReqId;           /* request task/entity identification       */
+	byte Rc;              /* return code register                     */
+	byte RcId;            /* return code task/entity identification   */
+	byte Ind;             /* Indication register                      */
+	byte IndId;           /* Indication task/entity identification    */
+	byte IMask;           /* Interrupt Mask Flag                      */
+	byte RNR;             /* Receiver Not Ready (set by PC)           */
+	byte XLock;           /* XBuffer locked Flag                      */
+	byte Int;             /* ISDN-S interrupt                         */
+	byte ReqCh;           /* Channel field for layer-3 Requests       */
+	byte RcCh;            /* Channel field for layer-3 Returncodes    */
+	byte IndCh;           /* Channel field for layer-3 Indications    */
+	byte MInd;            /* more data indication field               */
+	word MLength;         /* more data total packet length            */
+	byte ReadyInt;        /* request field for ready interrupt        */
+	byte SWReg;           /* Software register for special purposes   */
+	byte Reserved[11];    /* reserved space                           */
+	byte InterfaceType;   /* interface type 1=16K interface           */
+	word Signature;       /* ISDN-S adapter Signature (GD)            */
+	PBUFFER XBuffer;      /* Transmit Buffer                          */
+	PBUFFER RBuffer;      /* Receive Buffer                           */
 };
 /*------------------------------------------------------------------*/
 /* SWReg Values (0 means no command)                                */

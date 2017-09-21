@@ -113,11 +113,11 @@
 
 /* mask to determine if packets should be dropped due to frame errors */
 #define E1000_RXD_ERR_FRAME_ERR_MASK ( \
-                                       E1000_RXD_ERR_CE  |                \
-                                       E1000_RXD_ERR_SE  |                \
-                                       E1000_RXD_ERR_SEQ |                \
-                                       E1000_RXD_ERR_CXE |                \
-                                       E1000_RXD_ERR_RXE)
+    E1000_RXD_ERR_CE  |                \
+    E1000_RXD_ERR_SE  |                \
+    E1000_RXD_ERR_SEQ |                \
+    E1000_RXD_ERR_CXE |                \
+    E1000_RXD_ERR_RXE)
 
 /* Same mask, but for extended and packet split descriptors */
 #define E1000_RXDEXT_ERR_FRAME_ERR_MASK ( \
@@ -274,10 +274,10 @@
 
 /* 1000/H is not supported, nor spec-compliant. */
 #define E1000_ALL_SPEED_DUPLEX ( ADVERTISE_10_HALF |   ADVERTISE_10_FULL | \
-                                 ADVERTISE_100_HALF |  ADVERTISE_100_FULL | \
-                                 ADVERTISE_1000_FULL)
+				ADVERTISE_100_HALF |  ADVERTISE_100_FULL | \
+						     ADVERTISE_1000_FULL)
 #define E1000_ALL_NOT_GIG      ( ADVERTISE_10_HALF |   ADVERTISE_10_FULL | \
-                                 ADVERTISE_100_HALF |  ADVERTISE_100_FULL)
+				ADVERTISE_100_HALF |  ADVERTISE_100_FULL)
 #define E1000_ALL_100_SPEED    (ADVERTISE_100_HALF |  ADVERTISE_100_FULL)
 #define E1000_ALL_10_SPEED      (ADVERTISE_10_HALF |   ADVERTISE_10_FULL)
 #define E1000_ALL_HALF_DUPLEX   (ADVERTISE_10_HALF |  ADVERTISE_100_HALF)
@@ -432,11 +432,11 @@
  *   o LSC    = Link Status Change
  */
 #define IMS_ENABLE_MASK ( \
-                          E1000_IMS_RXT0   |    \
-                          E1000_IMS_TXDW   |    \
-                          E1000_IMS_RXDMT0 |    \
-                          E1000_IMS_RXSEQ  |    \
-                          E1000_IMS_LSC)
+    E1000_IMS_RXT0   |    \
+    E1000_IMS_TXDW   |    \
+    E1000_IMS_RXDMT0 |    \
+    E1000_IMS_RXSEQ  |    \
+    E1000_IMS_LSC)
 
 /* Interrupt Mask Set */
 #define E1000_IMS_TXDW      E1000_ICR_TXDW      /* Transmit desc written back */
@@ -544,11 +544,11 @@
 #define E1000_GCR_TXDSCR_NO_SNOOP       0x00000020
 
 #define PCIE_NO_SNOOP_ALL (E1000_GCR_RXD_NO_SNOOP         | \
-                           E1000_GCR_RXDSCW_NO_SNOOP      | \
-                           E1000_GCR_RXDSCR_NO_SNOOP      | \
-                           E1000_GCR_TXD_NO_SNOOP         | \
-                           E1000_GCR_TXDSCW_NO_SNOOP      | \
-                           E1000_GCR_TXDSCR_NO_SNOOP)
+			   E1000_GCR_RXDSCW_NO_SNOOP      | \
+			   E1000_GCR_RXDSCR_NO_SNOOP      | \
+			   E1000_GCR_TXD_NO_SNOOP         | \
+			   E1000_GCR_TXDSCW_NO_SNOOP      | \
+			   E1000_GCR_TXDSCR_NO_SNOOP)
 
 /* PHY Control Register */
 #define MII_CR_FULL_DUPLEX      0x0100  /* FDX =1, half duplex =0 */
@@ -583,11 +583,11 @@
 /* 1000BASE-T Control Register */
 #define CR_1000T_HD_CAPS         0x0100 /* Advertise 1000T HD capability */
 #define CR_1000T_FD_CAPS         0x0200 /* Advertise 1000T FD capability  */
-/* 0=DTE device */
+					/* 0=DTE device */
 #define CR_1000T_MS_VALUE        0x0800 /* 1=Configure PHY as Master */
-/* 0=Configure PHY as Slave */
+					/* 0=Configure PHY as Slave */
 #define CR_1000T_MS_ENABLE       0x1000 /* 1=Master/Slave manual config value */
-/* 0=Automatic Master/Slave config */
+					/* 0=Automatic Master/Slave config */
 
 /* 1000BASE-T Status Register */
 #define SR_1000T_REMOTE_RX_STATUS 0x1000 /* Remote receiver OK */
@@ -691,9 +691,9 @@
 #define ID_LED_RESERVED_0000 0x0000
 #define ID_LED_RESERVED_FFFF 0xFFFF
 #define ID_LED_DEFAULT       ((ID_LED_OFF1_ON2  << 12) | \
-                              (ID_LED_OFF1_OFF2 <<  8) | \
-                              (ID_LED_DEF1_DEF2 <<  4) | \
-                              (ID_LED_DEF1_DEF2))
+			      (ID_LED_OFF1_OFF2 <<  8) | \
+			      (ID_LED_DEF1_DEF2 <<  4) | \
+			      (ID_LED_DEF1_DEF2))
 #define ID_LED_DEF1_DEF2     0x1
 #define ID_LED_DEF1_ON2      0x2
 #define ID_LED_DEF1_OFF2     0x3
@@ -752,7 +752,7 @@
 /* M88E1000 PHY Specific Control Register */
 #define M88E1000_PSCR_POLARITY_REVERSAL 0x0002 /* 1=Polarity Reversal enabled */
 #define M88E1000_PSCR_MDI_MANUAL_MODE  0x0000  /* MDI Crossover Mode bits 6:5 */
-/* Manual MDI configuration */
+					       /* Manual MDI configuration */
 #define M88E1000_PSCR_MDIX_MANUAL_MODE 0x0020  /* Manual MDIX configuration */
 /* 1000BASE-T: Auto crossover, 100BASE-TX/10BASE-T: MDI Mode */
 #define M88E1000_PSCR_AUTO_X_1000T     0x0040
@@ -802,7 +802,7 @@
 
 #define PHY_PAGE_SHIFT 5
 #define PHY_REG(page, reg) (((page) << PHY_PAGE_SHIFT) | \
-                            ((reg) & MAX_PHY_REG_ADDRESS))
+                           ((reg) & MAX_PHY_REG_ADDRESS))
 
 /*
  * Bits...
@@ -811,34 +811,34 @@
  */
 #define GG82563_PAGE_SHIFT        5
 #define GG82563_REG(page, reg)    \
-  (((page) << GG82563_PAGE_SHIFT) | ((reg) & MAX_PHY_REG_ADDRESS))
+	(((page) << GG82563_PAGE_SHIFT) | ((reg) & MAX_PHY_REG_ADDRESS))
 #define GG82563_MIN_ALT_REG       30
 
 /* GG82563 Specific Registers */
 #define GG82563_PHY_SPEC_CTRL           \
-  GG82563_REG(0, 16) /* PHY Specific Control */
+	GG82563_REG(0, 16) /* PHY Specific Control */
 #define GG82563_PHY_PAGE_SELECT         \
-  GG82563_REG(0, 22) /* Page Select */
+	GG82563_REG(0, 22) /* Page Select */
 #define GG82563_PHY_SPEC_CTRL_2         \
-  GG82563_REG(0, 26) /* PHY Specific Control 2 */
+	GG82563_REG(0, 26) /* PHY Specific Control 2 */
 #define GG82563_PHY_PAGE_SELECT_ALT     \
-  GG82563_REG(0, 29) /* Alternate Page Select */
+	GG82563_REG(0, 29) /* Alternate Page Select */
 
 #define GG82563_PHY_MAC_SPEC_CTRL       \
-  GG82563_REG(2, 21) /* MAC Specific Control Register */
+	GG82563_REG(2, 21) /* MAC Specific Control Register */
 
 #define GG82563_PHY_DSP_DISTANCE    \
-  GG82563_REG(5, 26) /* DSP Distance */
+	GG82563_REG(5, 26) /* DSP Distance */
 
 /* Page 193 - Port Control Registers */
 #define GG82563_PHY_KMRN_MODE_CTRL   \
-  GG82563_REG(193, 16) /* Kumeran Mode Control */
+	GG82563_REG(193, 16) /* Kumeran Mode Control */
 #define GG82563_PHY_PWR_MGMT_CTRL       \
-  GG82563_REG(193, 20) /* Power Management Control */
+	GG82563_REG(193, 20) /* Power Management Control */
 
 /* Page 194 - KMRN Registers */
 #define GG82563_PHY_INBAND_CTRL         \
-  GG82563_REG(194, 18) /* Inband Control */
+	GG82563_REG(194, 18) /* Inband Control */
 
 /* MDI Control */
 #define E1000_MDIC_REG_SHIFT 16

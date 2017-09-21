@@ -1,7 +1,7 @@
 /******************************************************************************
  *
  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
- *
+ *                                        
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of version 2 of the GNU General Public License as
  * published by the Free Software Foundation.
@@ -17,20 +17,20 @@
  *
  *
  ******************************************************************************/
-#ifndef __RTL8192D_DM_H__
+#ifndef	__RTL8192D_DM_H__
 #define __RTL8192D_DM_H__
 
 /*------------------------Export global variable----------------------------*/
 /*------------------------Export global variable----------------------------*/
 /*------------------------Export Marco Definition---------------------------*/
-#define Rx_index_mapping_NUM  15
-#define index_mapping_NUM   13
+#define Rx_index_mapping_NUM	15
+#define index_mapping_NUM		13
 
-void rtl8192d_init_dm_priv (IN PADAPTER Adapter);
-void rtl8192d_deinit_dm_priv (IN PADAPTER Adapter);
+void rtl8192d_init_dm_priv(IN PADAPTER Adapter);
+void rtl8192d_deinit_dm_priv(IN PADAPTER Adapter);
 
-void  rtl8192d_InitHalDm (IN PADAPTER Adapter);
-void  rtl8192d_HalDmWatchDog (IN PADAPTER Adapter);
+void	rtl8192d_InitHalDm(IN PADAPTER Adapter);
+void	rtl8192d_HalDmWatchDog(IN PADAPTER Adapter);
 
-#endif 
+#endif
 

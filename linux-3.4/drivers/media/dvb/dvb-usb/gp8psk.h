@@ -8,9 +8,9 @@
  *
  * This module is based off the vp7045 and vp702x modules
  *
- *  This program is free software; you can redistribute it and/or modify it
- *  under the terms of the GNU General Public License as published by the Free
- *  Software Foundation, version 2.
+ *	This program is free software; you can redistribute it and/or modify it
+ *	under the terms of the GNU General Public License as published by the Free
+ *	Software Foundation, version 2.
  *
  * see Documentation/dvb/README.dvb-usb for more information
  */
@@ -34,8 +34,8 @@ extern int dvb_usb_gp8psk_debug;
 
 #define GET_8PSK_CONFIG                 0x80    /* in */
 #define SET_8PSK_CONFIG                 0x81
-#define I2C_WRITE     0x83
-#define I2C_READ      0x84
+#define I2C_WRITE			0x83
+#define I2C_READ			0x84
 #define ARM_TRANSFER                    0x85
 #define TUNE_8PSK                       0x86
 #define GET_SIGNAL_STRENGTH             0x87    /* in */
@@ -48,11 +48,11 @@ extern int dvb_usb_gp8psk_debug;
 #define SET_DVB_MODE                    0x8E
 #define SET_DN_SWITCH                   0x8F
 #define GET_SIGNAL_LOCK                 0x90    /* in */
-#define GET_FW_VERS     0x92
+#define GET_FW_VERS			0x92
 #define GET_SERIAL_NUMBER               0x93    /* in */
 #define USE_EXTRA_VOLT                  0x94
-#define GET_FPGA_VERS     0x95
-#define CW3K_INIT     0x9d
+#define GET_FPGA_VERS			0x95
+#define CW3K_INIT			0x9d
 
 /* PSK_configuration bits */
 #define bm8pskStarted                   0x01
@@ -87,14 +87,14 @@ extern int dvb_usb_gp8psk_debug;
 #define FW_BCD_VERSION_READ               0x14
 
 /* firmware revision id's */
-#define GP8PSK_FW_REV1      0x020604
-#define GP8PSK_FW_REV2      0x020704
-#define GP8PSK_FW_VERS(_fw_vers)  ((_fw_vers)[2]<<0x10 | (_fw_vers)[1]<<0x08 | (_fw_vers)[0])
+#define GP8PSK_FW_REV1			0x020604
+#define GP8PSK_FW_REV2			0x020704
+#define GP8PSK_FW_VERS(_fw_vers)	((_fw_vers)[2]<<0x10 | (_fw_vers)[1]<<0x08 | (_fw_vers)[0])
 
-extern struct dvb_frontend * gp8psk_fe_attach (struct dvb_usb_device * d);
-extern int gp8psk_usb_in_op (struct dvb_usb_device * d, u8 req, u16 value, u16 index, u8 * b, int blen);
-extern int gp8psk_usb_out_op (struct dvb_usb_device * d, u8 req, u16 value,
-                              u16 index, u8 * b, int blen);
-extern int gp8psk_bcm4500_reload (struct dvb_usb_device * d);
+extern struct dvb_frontend * gp8psk_fe_attach(struct dvb_usb_device *d);
+extern int gp8psk_usb_in_op(struct dvb_usb_device *d, u8 req, u16 value, u16 index, u8 *b, int blen);
+extern int gp8psk_usb_out_op(struct dvb_usb_device *d, u8 req, u16 value,
+			     u16 index, u8 *b, int blen);
+extern int gp8psk_bcm4500_reload(struct dvb_usb_device *d);
 
 #endif

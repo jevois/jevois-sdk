@@ -21,45 +21,45 @@
 #include "io.h"
 
 struct sunxi_otgc;
-#define to_sunxi_ep(ep)   (container_of(ep, struct sunxi_otgc_ep, endpoint))
-#define gadget_to_otgc(g) (container_of(g, struct sunxi_otgc, gadget))
+#define to_sunxi_ep(ep)		(container_of(ep, struct sunxi_otgc_ep, endpoint))
+#define gadget_to_otgc(g)	(container_of(g, struct sunxi_otgc, gadget))
 
 struct sunxi_otgc_gadget_ep_cmd_params {
-  u32 param2;
-  u32 param1;
-  u32 param0;
+	u32	param2;
+	u32	param1;
+	u32	param0;
 };
 
 /* -------------------------------------------------------------------------- */
 
-#define to_sunxi_request(r) (container_of(r, struct sunxi_otgc_request, request))
+#define to_sunxi_request(r)	(container_of(r, struct sunxi_otgc_request, request))
 
-static inline struct sunxi_otgc_request * next_request (struct list_head * list)
+static inline struct sunxi_otgc_request *next_request(struct list_head *list)
 {
-  if (list_empty (list) )
-  { return NULL; }
-  
-  return list_first_entry (list, struct sunxi_otgc_request, list);
+	if (list_empty(list))
+		return NULL;
+
+	return list_first_entry(list, struct sunxi_otgc_request, list);
 }
 
-static inline void sunxi_gadget_move_request_queued (struct sunxi_otgc_request * req)
+static inline void sunxi_gadget_move_request_queued(struct sunxi_otgc_request *req)
 {
-  struct sunxi_otgc_ep  *  dep = req->dep;
-  
-  req->queued = true;
-  list_move_tail (&req->list, &dep->req_queued);
+	struct sunxi_otgc_ep		*dep = req->dep;
+
+	req->queued = true;
+	list_move_tail(&req->list, &dep->req_queued);
 }
 
-void sunxi_gadget_giveback (struct sunxi_otgc_ep * dep, struct sunxi_otgc_request * req,
-                            int status);
-void sunxi_ep0_interrupt (struct sunxi_otgc * otgc,
-                          const struct sunxi_otgc_event_depevt * event);
-void sunxi_ep0_out_start (struct sunxi_otgc * otgc);
-int sunxi_gadget_ep0_queue (struct usb_ep * ep, struct usb_request * request,
-                            gfp_t gfp_flags);
-int __sunxi_gadget_ep_set_halt (struct sunxi_otgc_ep * dep, int value);
-int sunxi_send_gadget_ep_cmd (struct sunxi_otgc * otgc, unsigned ep,
-                              unsigned cmd, struct sunxi_otgc_gadget_ep_cmd_params * params);
+void sunxi_gadget_giveback(struct sunxi_otgc_ep *dep, struct sunxi_otgc_request *req,
+		int status);
+void sunxi_ep0_interrupt(struct sunxi_otgc *otgc,
+		const struct sunxi_otgc_event_depevt *event);
+void sunxi_ep0_out_start(struct sunxi_otgc *otgc);
+int sunxi_gadget_ep0_queue(struct usb_ep *ep, struct usb_request *request,
+		gfp_t gfp_flags);
+int __sunxi_gadget_ep_set_halt(struct sunxi_otgc_ep *dep, int value);
+int sunxi_send_gadget_ep_cmd(struct sunxi_otgc *otgc, unsigned ep,
+		unsigned cmd, struct sunxi_otgc_gadget_ep_cmd_params *params);
 
 
 #endif /* __DRIVERS_USB_SUNXI_GADGET_H */

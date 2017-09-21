@@ -18,22 +18,22 @@
 #include <asm/l1layout.h>
 #include <asm/mem_map.h>
 
-asmlinkage struct task_struct * resume (struct task_struct * prev, struct task_struct * next);
+asmlinkage struct task_struct *resume(struct task_struct *prev, struct task_struct *next);
 
 #ifndef CONFIG_SMP
 #define switch_to(prev,next,last) \
-  do {    \
-    memcpy (&task_thread_info(prev)->l1_task_info, L1_SCRATCH_TASK_INFO, \
-            sizeof *L1_SCRATCH_TASK_INFO); \
-    memcpy (L1_SCRATCH_TASK_INFO, &task_thread_info(next)->l1_task_info, \
-            sizeof *L1_SCRATCH_TASK_INFO); \
-    (last) = resume (prev, next);   \
-  } while (0)
+do {    \
+	memcpy (&task_thread_info(prev)->l1_task_info, L1_SCRATCH_TASK_INFO, \
+		sizeof *L1_SCRATCH_TASK_INFO); \
+	memcpy (L1_SCRATCH_TASK_INFO, &task_thread_info(next)->l1_task_info, \
+		sizeof *L1_SCRATCH_TASK_INFO); \
+	(last) = resume (prev, next);   \
+} while (0)
 #else
 #define switch_to(prev, next, last) \
-  do {    \
-    (last) = resume(prev, next);   \
-  } while (0)
+do {    \
+	(last) = resume(prev, next);   \
+} while (0)
 #endif
 
 #endif /* _BLACKFIN_SWITCH_TO_H */

@@ -2,7 +2,7 @@
  * arch/arm/plat-samsung/include/plat/fb-core.h
  *
  * Copyright 2010 Samsung Electronics Co., Ltd.
- *  Pawel Osciak <p.osciak@samsung.com>
+ *	Pawel Osciak <p.osciak@samsung.com>
  *
  * Samsung framebuffer driver core functions
  *
@@ -19,26 +19,26 @@
  */
 
 /* Re-define device name depending on support. */
-static inline void s3c_fb_setname (char * name)
+static inline void s3c_fb_setname(char *name)
 {
-  #ifdef CONFIG_S3C_DEV_FB
-  s3c_device_fb.name = name;
-  #endif
+#ifdef CONFIG_S3C_DEV_FB
+	s3c_device_fb.name = name;
+#endif
 }
 
 /* Re-define device name depending on support. */
-static inline void s5p_fb_setname (int id, char * name)
+static inline void s5p_fb_setname(int id, char *name)
 {
-  switch (id) {
-    #ifdef CONFIG_S5P_DEV_FIMD0
-  case 0:
-    s5p_device_fimd0.name = name;
-    break;
-    #endif
-  default:
-    printk (KERN_ERR "%s: invalid device id(%d)\n", __func__, id);
-    break;
-  }
+	switch (id) {
+#ifdef CONFIG_S5P_DEV_FIMD0
+	case 0:
+		s5p_device_fimd0.name = name;
+	break;
+#endif
+	default:
+		printk(KERN_ERR "%s: invalid device id(%d)\n", __func__, id);
+	break;
+	}
 }
 
 #endif /* __ASM_PLAT_FB_CORE_H */

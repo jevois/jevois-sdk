@@ -33,88 +33,88 @@
 #include "internal.h"
 
 
-static int crypto_pcomp_init (struct crypto_tfm * tfm, u32 type, u32 mask)
+static int crypto_pcomp_init(struct crypto_tfm *tfm, u32 type, u32 mask)
 {
-  return 0;
+	return 0;
 }
 
-static unsigned int crypto_pcomp_extsize (struct crypto_alg * alg)
+static unsigned int crypto_pcomp_extsize(struct crypto_alg *alg)
 {
-  return alg->cra_ctxsize;
+	return alg->cra_ctxsize;
 }
 
-static int crypto_pcomp_init_tfm (struct crypto_tfm * tfm)
+static int crypto_pcomp_init_tfm(struct crypto_tfm *tfm)
 {
-  return 0;
+	return 0;
 }
 
 #ifdef CONFIG_NET
-static int crypto_pcomp_report (struct sk_buff * skb, struct crypto_alg * alg)
+static int crypto_pcomp_report(struct sk_buff *skb, struct crypto_alg *alg)
 {
-  struct crypto_report_comp rpcomp;
-  
-  strncpy (rpcomp.type, "pcomp", sizeof (rpcomp.type) );
-  NLA_PUT (skb, CRYPTOCFGA_REPORT_COMPRESS,
-           sizeof (struct crypto_report_comp), &rpcomp);
-           
-  return 0;
-  
+	struct crypto_report_comp rpcomp;
+
+	strncpy(rpcomp.type, "pcomp", sizeof(rpcomp.type));
+	NLA_PUT(skb, CRYPTOCFGA_REPORT_COMPRESS,
+		sizeof(struct crypto_report_comp), &rpcomp);
+
+	return 0;
+
 nla_put_failure:
-  return -EMSGSIZE;
+	return -EMSGSIZE;
 }
 #else
-static int crypto_pcomp_report (struct sk_buff * skb, struct crypto_alg * alg)
+static int crypto_pcomp_report(struct sk_buff *skb, struct crypto_alg *alg)
 {
-  return -ENOSYS;
+	return -ENOSYS;
 }
 #endif
 
-static void crypto_pcomp_show (struct seq_file * m, struct crypto_alg * alg)
-__attribute__ ( (unused) );
-static void crypto_pcomp_show (struct seq_file * m, struct crypto_alg * alg)
+static void crypto_pcomp_show(struct seq_file *m, struct crypto_alg *alg)
+	__attribute__ ((unused));
+static void crypto_pcomp_show(struct seq_file *m, struct crypto_alg *alg)
 {
-  seq_printf (m, "type         : pcomp\n");
+	seq_printf(m, "type         : pcomp\n");
 }
 
 static const struct crypto_type crypto_pcomp_type = {
-  .extsize  = crypto_pcomp_extsize,
-  .init   = crypto_pcomp_init,
-  .init_tfm = crypto_pcomp_init_tfm,
-  #ifdef CONFIG_PROC_FS
-  .show   = crypto_pcomp_show,
-  #endif
-  .report   = crypto_pcomp_report,
-  .maskclear  = ~CRYPTO_ALG_TYPE_MASK,
-  .maskset  = CRYPTO_ALG_TYPE_MASK,
-  .type   = CRYPTO_ALG_TYPE_PCOMPRESS,
-  .tfmsize  = offsetof (struct crypto_pcomp, base),
+	.extsize	= crypto_pcomp_extsize,
+	.init		= crypto_pcomp_init,
+	.init_tfm	= crypto_pcomp_init_tfm,
+#ifdef CONFIG_PROC_FS
+	.show		= crypto_pcomp_show,
+#endif
+	.report		= crypto_pcomp_report,
+	.maskclear	= ~CRYPTO_ALG_TYPE_MASK,
+	.maskset	= CRYPTO_ALG_TYPE_MASK,
+	.type		= CRYPTO_ALG_TYPE_PCOMPRESS,
+	.tfmsize	= offsetof(struct crypto_pcomp, base),
 };
 
-struct crypto_pcomp * crypto_alloc_pcomp (const char * alg_name, u32 type,
-    u32 mask)
+struct crypto_pcomp *crypto_alloc_pcomp(const char *alg_name, u32 type,
+					u32 mask)
 {
-  return crypto_alloc_tfm (alg_name, &crypto_pcomp_type, type, mask);
+	return crypto_alloc_tfm(alg_name, &crypto_pcomp_type, type, mask);
 }
-EXPORT_SYMBOL_GPL (crypto_alloc_pcomp);
+EXPORT_SYMBOL_GPL(crypto_alloc_pcomp);
 
-int crypto_register_pcomp (struct pcomp_alg * alg)
+int crypto_register_pcomp(struct pcomp_alg *alg)
 {
-  struct crypto_alg * base = &alg->base;
-  
-  base->cra_type = &crypto_pcomp_type;
-  base->cra_flags &= ~CRYPTO_ALG_TYPE_MASK;
-  base->cra_flags |= CRYPTO_ALG_TYPE_PCOMPRESS;
-  
-  return crypto_register_alg (base);
-}
-EXPORT_SYMBOL_GPL (crypto_register_pcomp);
+	struct crypto_alg *base = &alg->base;
 
-int crypto_unregister_pcomp (struct pcomp_alg * alg)
+	base->cra_type = &crypto_pcomp_type;
+	base->cra_flags &= ~CRYPTO_ALG_TYPE_MASK;
+	base->cra_flags |= CRYPTO_ALG_TYPE_PCOMPRESS;
+
+	return crypto_register_alg(base);
+}
+EXPORT_SYMBOL_GPL(crypto_register_pcomp);
+
+int crypto_unregister_pcomp(struct pcomp_alg *alg)
 {
-  return crypto_unregister_alg (&alg->base);
+	return crypto_unregister_alg(&alg->base);
 }
-EXPORT_SYMBOL_GPL (crypto_unregister_pcomp);
+EXPORT_SYMBOL_GPL(crypto_unregister_pcomp);
 
-MODULE_LICENSE ("GPL");
-MODULE_DESCRIPTION ("Partial (de)compression type");
-MODULE_AUTHOR ("Sony Corporation");
+MODULE_LICENSE("GPL");
+MODULE_DESCRIPTION("Partial (de)compression type");
+MODULE_AUTHOR("Sony Corporation");

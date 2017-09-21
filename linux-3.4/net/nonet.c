@@ -14,13 +14,13 @@
 #include <linux/init.h>
 #include <linux/kernel.h>
 
-static int sock_no_open (struct inode * irrelevant, struct file * dontcare)
+static int sock_no_open(struct inode *irrelevant, struct file *dontcare)
 {
-  return -ENXIO;
+	return -ENXIO;
 }
 
 const struct file_operations bad_sock_fops = {
-  .owner = THIS_MODULE,
-  .open = sock_no_open,
-  .llseek = noop_llseek,
+	.owner = THIS_MODULE,
+	.open = sock_no_open,
+	.llseek = noop_llseek,
 };

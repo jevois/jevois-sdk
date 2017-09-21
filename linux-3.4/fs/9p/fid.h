@@ -39,12 +39,12 @@
  * Design and Implementation of the Linux 9P File System documentation
  */
 struct v9fs_dentry {
-  spinlock_t lock; /* protect fidlist */
-  struct list_head fidlist;
+	spinlock_t lock; /* protect fidlist */
+	struct list_head fidlist;
 };
 
-struct p9_fid * v9fs_fid_lookup (struct dentry * dentry);
-struct p9_fid * v9fs_fid_clone (struct dentry * dentry);
-int v9fs_fid_add (struct dentry * dentry, struct p9_fid * fid);
-struct p9_fid * v9fs_writeback_fid (struct dentry * dentry);
+struct p9_fid *v9fs_fid_lookup(struct dentry *dentry);
+struct p9_fid *v9fs_fid_clone(struct dentry *dentry);
+int v9fs_fid_add(struct dentry *dentry, struct p9_fid *fid);
+struct p9_fid *v9fs_writeback_fid(struct dentry *dentry);
 #endif

@@ -26,8 +26,8 @@
 typedef void (*secHw_FUNC_t) (void);
 
 typedef enum {
-  secHw_MODE_SECURE = 0x0,  /* Switches processor into secure mode */
-  secHw_MODE_NONSECURE = 0x1  /* Switches processor into non-secure mode */
+	secHw_MODE_SECURE = 0x0,	/* Switches processor into secure mode */
+	secHw_MODE_NONSECURE = 0x1	/* Switches processor into non-secure mode */
 } secHw_MODE;
 
 /****************************************************************************/
@@ -38,8 +38,8 @@ typedef enum {
 *
 */
 /****************************************************************************/
-void secHw_RunSecure (secHw_FUNC_t /* Function to run in secure mode */
-                     );
+void secHw_RunSecure(secHw_FUNC_t	/* Function to run in secure mode */
+    );
 
 /****************************************************************************/
 /**
@@ -49,8 +49,8 @@ void secHw_RunSecure (secHw_FUNC_t /* Function to run in secure mode */
 *
 */
 /****************************************************************************/
-void secHw_SetMode (secHw_MODE /* Processor mode */
-                   );
+void secHw_SetMode(secHw_MODE	/* Processor mode */
+    );
 
 /****************************************************************************/
 /**
@@ -60,6 +60,6 @@ void secHw_SetMode (secHw_MODE /* Processor mode */
 *
 */
 /****************************************************************************/
-void secHw_GetMode (secHw_MODE *);
+void secHw_GetMode(secHw_MODE *);
 
 #endif /* SECHW_H */

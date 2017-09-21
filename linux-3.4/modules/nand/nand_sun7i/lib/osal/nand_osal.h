@@ -28,51 +28,51 @@ typedef unsigned long long __u64;
 #define __OS_SUPPORT_RB_INT__
 
 
-#define NAND_IO_BASE_ADDR   (0xf1c03000)
+#define NAND_IO_BASE_ADDR		(0xf1c03000)
 
 
 
-extern void * NAND_IORemap (unsigned int base_addr, unsigned int size);
+extern void *NAND_IORemap(unsigned int base_addr, unsigned int size);
 
-extern int NAND_ClkRequest (void);
-extern void NAND_ClkRelease (void);
-extern int NAND_AHBEnable (void);
-extern void NAND_AHBDisable (void);
-extern int NAND_ClkEnable (void);
-extern void NAND_ClkDisable (void);
-extern int NAND_SetClk (unsigned int nand_clk);
-extern int NAND_GetClk (void);
+extern int NAND_ClkRequest(void);
+extern void NAND_ClkRelease(void);
+extern int NAND_AHBEnable(void);
+extern void NAND_AHBDisable(void);
+extern int NAND_ClkEnable(void);
+extern void NAND_ClkDisable(void);
+extern int NAND_SetClk(unsigned int nand_clk);
+extern int NAND_GetClk(void);
 
-extern void * NAND_RequestDMA (void);
-extern int NAND_ReleaseDMA (void);
-extern void NAND_DMAConfigStart (int rw, unsigned int buff_addr, int len);
-extern int NAND_QueryDmaStat (void);
-extern int NAND_WaitDmaFinish (void);
+extern void* NAND_RequestDMA(void);
+extern int NAND_ReleaseDMA(void);
+extern void NAND_DMAConfigStart(int rw, unsigned int buff_addr, int len);
+extern int NAND_QueryDmaStat(void);
+extern int NAND_WaitDmaFinish(void);
 
-extern void NAND_PIORequest (void);
-extern void NAND_PIORelease (void);
+extern void NAND_PIORequest(void);
+extern void NAND_PIORelease(void);
 
-extern void NAND_EnRbInt (void);
-extern void NAND_ClearRbInt (void);
-extern int NAND_WaitRbReady (void);
-extern void NAND_RbInterrupt (void);
+extern void NAND_EnRbInt(void);
+extern void NAND_ClearRbInt(void);
+extern int NAND_WaitRbReady(void);
+extern void NAND_RbInterrupt(void);
 
-extern int NAND_get_storagetype (void);
+extern int NAND_get_storagetype(void);
 
 
-extern void * NAND_Malloc (unsigned int Size);
-extern void NAND_Free (void * pAddr, unsigned int Size);
-extern int NAND_Print (const char * str, ...);
+extern void* NAND_Malloc(unsigned int Size);
+extern void NAND_Free(void *pAddr, unsigned int Size);
+extern int NAND_Print(const char * str, ...);
 
-#define MEMSET(x,y,z)                 NAND_Memset((x),(y),(z))
+#define MEMSET(x,y,z)            			NAND_Memset((x),(y),(z))
 
-#define MEMCPY(x,y,z)                     NAND_Memcpy((x),(y),(z))
+#define MEMCPY(x,y,z)                   	NAND_Memcpy((x),(y),(z))
 
-#define MALLOC(x)                         NAND_Malloc((x))
+#define MALLOC(x)                       	NAND_Malloc((x))
 
-#define FREE(x,size)                      NAND_Free((x),(size))
+#define FREE(x,size)                    	NAND_Free((x),(size))
 
-#define PRINT(...)              NAND_Print(__VA_ARGS__)
+#define PRINT(...)							NAND_Print(__VA_ARGS__)
 
 #define DBUG_MSG(...)
 

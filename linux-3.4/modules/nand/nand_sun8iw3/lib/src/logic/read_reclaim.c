@@ -33,35 +33,35 @@ extern struct __NandDriverGlobal_t     NandDriverInfo;
 *             read out and write to another physical blcok.
 ************************************************************************************************************************
 */
-__s32 LML_ReadReclaim (__u32 nPage)
+__s32 LML_ReadReclaim(__u32 nPage)
 {
-  __s32   result;
-  
-  #if CFG_SUPPORT_READ_RECLAIM
-  
-  LOGICCTL_ERR ("[LOGICCTL_ERR] read reclaim go\n");
-  
-  result = LML_FlushPageCache();
-  if (result < 0)
-  {
-    LOGICCTL_ERR ("[LOGICCTL_ERR] Flush page cache failed when do read reclaim! Error:0x%x\n", result);
-    return -1;
-  }
-  
-  result = LML_PageRead (nPage, FULL_BITMAP_OF_LOGIC_PAGE, LML_WRITE_PAGE_CACHE);
-  if (result < 0)
-  {
-    return -1;
-  }
-  
-  result = LML_PageWrite (nPage, FULL_BITMAP_OF_LOGIC_PAGE, LML_WRITE_PAGE_CACHE);
-  if (result < 0)
-  {
-    return -1;
-  }
-  
-  #endif
-  return 0;
+    __s32   result;
+
+    #if CFG_SUPPORT_READ_RECLAIM
+
+	LOGICCTL_ERR("[LOGICCTL_ERR] read reclaim go\n");
+
+    result = LML_FlushPageCache();
+    if(result < 0)
+    {
+        LOGICCTL_ERR("[LOGICCTL_ERR] Flush page cache failed when do read reclaim! Error:0x%x\n", result);
+        return -1;
+    }
+
+    result = LML_PageRead(nPage, FULL_BITMAP_OF_LOGIC_PAGE, LML_WRITE_PAGE_CACHE);
+    if(result < 0)
+    {
+        return -1;
+    }
+
+    result = LML_PageWrite(nPage, FULL_BITMAP_OF_LOGIC_PAGE, LML_WRITE_PAGE_CACHE);
+    if(result < 0)
+    {
+        return -1;
+    }
+
+    #endif
+    return 0;
 }
 
 

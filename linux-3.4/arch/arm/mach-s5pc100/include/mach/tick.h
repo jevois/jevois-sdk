@@ -1,7 +1,7 @@
 /* linux/arch/arm/mach-s5pc100/include/mach/tick.h
  *
  * Copyright 2009 Samsung Electronics Co.
- *  Byungho Min <bhmin@samsung.com>
+ *	Byungho Min <bhmin@samsung.com>
  *
  * S3C64XX - Timer tick support definitions
  *
@@ -18,12 +18,12 @@
 /* note, the timer interrutps turn up in 2 places, the vic and then
  * the timer block. We take the VIC as the base at the moment.
  */
-static inline u32 s3c24xx_ostimer_pending (void)
+static inline u32 s3c24xx_ostimer_pending(void)
 {
-  u32 pend = __raw_readl (VA_VIC0 + VIC_RAW_STATUS);
-  return pend & (1 << (IRQ_TIMER4_VIC - S5P_IRQ_VIC0 (0) ) );
+	u32 pend = __raw_readl(VA_VIC0 + VIC_RAW_STATUS);
+	return pend & (1 << (IRQ_TIMER4_VIC - S5P_IRQ_VIC0(0)));
 }
 
-#define TICK_MAX  (0xffffffff)
+#define TICK_MAX	(0xffffffff)
 
 #endif /* __ASM_ARCH_TICK_H */

@@ -26,7 +26,7 @@
 #define __SUNXI_DEBUG_H__
 
 
-void sunxi_dump (void * buf, unsigned int size);
+void sunxi_dump(void *buf, unsigned int size);
 
 
 #endif  /* __SUNXI_DEBUG_H__ */

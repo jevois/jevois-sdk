@@ -40,54 +40,54 @@
 #include <asm/mach/arch.h>
 #include <asm/mach/pci.h>
 
-static int __init espresso_pci_init (void)
+static int __init espresso_pci_init(void)
 {
-  if (machine_is_espresso() )
-  { ixp23xx_pci_slave_init(); }
-  
-  return 0;
+	if (machine_is_espresso())
+		ixp23xx_pci_slave_init();
+
+	return 0;
 };
-subsys_initcall (espresso_pci_init);
+subsys_initcall(espresso_pci_init);
 
 static struct physmap_flash_data espresso_flash_data = {
-  .width    = 2,
+	.width		= 2,
 };
 
 static struct resource espresso_flash_resource = {
-  .start    = 0x90000000,
-  .end    = 0x91ffffff,
-  .flags    = IORESOURCE_MEM,
+	.start		= 0x90000000,
+	.end		= 0x91ffffff,
+	.flags		= IORESOURCE_MEM,
 };
 
 static struct platform_device espresso_flash = {
-  .name   = "physmap-flash",
-  .id   = 0,
-  .dev    = {
-    .platform_data  = &espresso_flash_data,
-  },
-  .num_resources  = 1,
-  .resource = &espresso_flash_resource,
+	.name		= "physmap-flash",
+	.id		= 0,
+	.dev		= {
+		.platform_data	= &espresso_flash_data,
+	},
+	.num_resources	= 1,
+	.resource	= &espresso_flash_resource,
 };
 
-static void __init espresso_init (void)
+static void __init espresso_init(void)
 {
-  platform_device_register (&espresso_flash);
-  
-  /*
-   * Mark flash as writeable.
-   */
-  IXP23XX_EXP_CS0[0] |= IXP23XX_FLASH_WRITABLE;
-  IXP23XX_EXP_CS0[1] |= IXP23XX_FLASH_WRITABLE;
-  
-  ixp23xx_sys_init();
+	platform_device_register(&espresso_flash);
+
+	/*
+	 * Mark flash as writeable.
+	 */
+	IXP23XX_EXP_CS0[0] |= IXP23XX_FLASH_WRITABLE;
+	IXP23XX_EXP_CS0[1] |= IXP23XX_FLASH_WRITABLE;
+
+	ixp23xx_sys_init();
 }
 
-MACHINE_START (ESPRESSO, "IP Fabrics Double Espresso")
-/* Maintainer: Lennert Buytenhek */
-.map_io   = ixp23xx_map_io,
- .init_irq = ixp23xx_init_irq,
-  .timer    = &ixp23xx_timer,
-   .atag_offset  = 0x100,
-    .init_machine = espresso_init,
-     .restart  = ixp23xx_restart,
-      MACHINE_END
+MACHINE_START(ESPRESSO, "IP Fabrics Double Espresso")
+	/* Maintainer: Lennert Buytenhek */
+	.map_io		= ixp23xx_map_io,
+	.init_irq	= ixp23xx_init_irq,
+	.timer		= &ixp23xx_timer,
+	.atag_offset	= 0x100,
+	.init_machine	= espresso_init,
+	.restart	= ixp23xx_restart,
+MACHINE_END

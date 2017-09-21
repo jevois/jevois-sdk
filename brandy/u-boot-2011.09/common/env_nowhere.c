@@ -15,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -31,17 +31,17 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-env_t * env_ptr = NULL;
+env_t *env_ptr = NULL;
 
 extern uchar default_environment[];
 
-void env_relocate_spec (void)
+void env_relocate_spec(void)
 {
 }
 
-uchar env_get_char_spec (int index)
+uchar env_get_char_spec(int index)
 {
-  return ( * ( (uchar *) (gd->env_addr + index) ) );
+	return ( *((uchar *)(gd->env_addr + index)) );
 }
 
 /*
@@ -49,10 +49,10 @@ uchar env_get_char_spec (int index)
  *
  * We are still running from ROM, so data use is limited
  */
-int env_init (void)
+int env_init(void)
 {
-  gd->env_addr  = (ulong) &default_environment[0];
-  gd->env_valid = 0;
-  
-  return (0);
+	gd->env_addr  = (ulong)&default_environment[0];
+	gd->env_valid = 0;
+
+	return (0);
 }

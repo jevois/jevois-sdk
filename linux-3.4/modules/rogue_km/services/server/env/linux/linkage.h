@@ -47,14 +47,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __LINKAGE_H__
 
 #if !defined(SUPPORT_DRM)
-long PVRSRV_BridgeDispatchKM (struct file * file, unsigned int cmd, unsigned long arg);
+long PVRSRV_BridgeDispatchKM(struct file *file, unsigned int cmd, unsigned long arg);
 #endif
 
-IMG_VOID PVRDPFInit (IMG_VOID);
-PVRSRV_ERROR PVROSFuncInit (IMG_VOID);
-IMG_VOID PVROSFuncDeInit (IMG_VOID);
+IMG_VOID PVRDPFInit(IMG_VOID);
+PVRSRV_ERROR PVROSFuncInit(IMG_VOID);
+IMG_VOID PVROSFuncDeInit(IMG_VOID);
 
-int PVRDebugCreateDebugFSEntries (void);
-void PVRDebugRemoveDebugFSEntries (void);
+int PVRDebugCreateDebugFSEntries(void);
+void PVRDebugRemoveDebugFSEntries(void);
 
 #endif /* !defined(__LINKAGE_H__) */

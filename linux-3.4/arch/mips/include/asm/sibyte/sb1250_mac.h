@@ -1,7 +1,7 @@
 /*  *********************************************************************
     *  SB1250 Board Support Package
     *
-    *  MAC constants and macros     File: sb1250_mac.h
+    *  MAC constants and macros			File: sb1250_mac.h
     *
     *  This module contains constants and macros for the SB1250's
     *  ethernet controllers.
@@ -81,7 +81,7 @@
 #define M_MAC_AP_STAT_EN            _SB_MAKEMASK1(17)
 
 #if SIBYTE_HDR_FEATURE_CHIP(1480)
-#define M_MAC_TIMESTAMP       _SB_MAKEMASK1(18)
+#define M_MAC_TIMESTAMP		    _SB_MAKEMASK1(18)
 #endif
 #define M_MAC_DRP_ERRPKT_EN         _SB_MAKEMASK1(19)
 #define M_MAC_DRP_FCSERRPKT_EN      _SB_MAKEMASK1(20)
@@ -98,8 +98,8 @@
 
 #define S_MAC_SPEED_SEL             _SB_MAKE64(34)
 #define M_MAC_SPEED_SEL             _SB_MAKEMASK(2, S_MAC_SPEED_SEL)
-#define V_MAC_SPEED_SEL(x)      _SB_MAKEVALUE(x, S_MAC_SPEED_SEL)
-#define G_MAC_SPEED_SEL(x)      _SB_GETVALUE(x, S_MAC_SPEED_SEL, M_MAC_SPEED_SEL)
+#define V_MAC_SPEED_SEL(x)	    _SB_MAKEVALUE(x, S_MAC_SPEED_SEL)
+#define G_MAC_SPEED_SEL(x)	    _SB_GETVALUE(x, S_MAC_SPEED_SEL, M_MAC_SPEED_SEL)
 
 #define K_MAC_SPEED_SEL_10MBPS      0
 #define K_MAC_SPEED_SEL_100MBPS     1
@@ -116,31 +116,31 @@
 #define M_MAC_FAST_SYNC             _SB_MAKEMASK1(38)
 #define M_MAC_SS_EN                 _SB_MAKEMASK1(39)
 
-#define S_MAC_BYPASS_CFG      _SB_MAKE64(40)
+#define S_MAC_BYPASS_CFG	    _SB_MAKE64(40)
 #define M_MAC_BYPASS_CFG            _SB_MAKEMASK(2, S_MAC_BYPASS_CFG)
 #define V_MAC_BYPASS_CFG(x)         _SB_MAKEVALUE(x, S_MAC_BYPASS_CFG)
 #define G_MAC_BYPASS_CFG(x)         _SB_GETVALUE(x, S_MAC_BYPASS_CFG, M_MAC_BYPASS_CFG)
 
-#define K_MAC_BYPASS_GMII     0
+#define K_MAC_BYPASS_GMII	    0
 #define K_MAC_BYPASS_ENCODED        1
 #define K_MAC_BYPASS_SOP            2
 #define K_MAC_BYPASS_EOP            3
 
 #define M_MAC_BYPASS_16             _SB_MAKEMASK1(42)
-#define M_MAC_BYPASS_FCS_CHK      _SB_MAKEMASK1(43)
+#define M_MAC_BYPASS_FCS_CHK	    _SB_MAKEMASK1(43)
 
 #if SIBYTE_HDR_FEATURE(1250, PASS2) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
-#define M_MAC_RX_CH_SEL_MSB     _SB_MAKEMASK1(44)
+#define M_MAC_RX_CH_SEL_MSB	    _SB_MAKEMASK1(44)
 #endif /* 1250 PASS2 || 112x PASS1 || 1480*/
 
 #if SIBYTE_HDR_FEATURE(1250, PASS3) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
-#define M_MAC_SPLIT_CH_SEL      _SB_MAKEMASK1(45)
+#define M_MAC_SPLIT_CH_SEL	    _SB_MAKEMASK1(45)
 #endif /* 1250 PASS3 || 112x PASS1 || 1480 */
 
 #define S_MAC_BYPASS_IFG            _SB_MAKE64(46)
 #define M_MAC_BYPASS_IFG            _SB_MAKEMASK(8, S_MAC_BYPASS_IFG)
-#define V_MAC_BYPASS_IFG(x)     _SB_MAKEVALUE(x, S_MAC_BYPASS_IFG)
-#define G_MAC_BYPASS_IFG(x)     _SB_GETVALUE(x, S_MAC_BYPASS_IFG, M_MAC_BYPASS_IFG)
+#define V_MAC_BYPASS_IFG(x)	    _SB_MAKEVALUE(x, S_MAC_BYPASS_IFG)
+#define G_MAC_BYPASS_IFG(x)	    _SB_GETVALUE(x, S_MAC_BYPASS_IFG, M_MAC_BYPASS_IFG)
 
 #define K_MAC_FC_CMD_DISABLED       0
 #define K_MAC_FC_CMD_ENABLED        1
@@ -154,8 +154,8 @@
 
 #define S_MAC_FC_CMD                _SB_MAKE64(55)
 #define M_MAC_FC_CMD                _SB_MAKEMASK(2, S_MAC_FC_CMD)
-#define V_MAC_FC_CMD(x)             _SB_MAKEVALUE(x, S_MAC_FC_CMD)
-#define G_MAC_FC_CMD(x)             _SB_GETVALUE(x, S_MAC_FC_CMD, M_MAC_FC_CMD)
+#define V_MAC_FC_CMD(x)	            _SB_MAKEVALUE(x, S_MAC_FC_CMD)
+#define G_MAC_FC_CMD(x)	            _SB_GETVALUE(x, S_MAC_FC_CMD, M_MAC_FC_CMD)
 
 #define S_MAC_RX_CH_SEL             _SB_MAKE64(57)
 #define M_MAC_RX_CH_SEL             _SB_MAKEMASK(7, S_MAC_RX_CH_SEL)
@@ -170,10 +170,10 @@
  * Register: MAC_ENABLE_2
  */
 
-#define M_MAC_RXDMA_EN0             _SB_MAKEMASK1(0)
-#define M_MAC_RXDMA_EN1             _SB_MAKEMASK1(1)
-#define M_MAC_TXDMA_EN0             _SB_MAKEMASK1(4)
-#define M_MAC_TXDMA_EN1             _SB_MAKEMASK1(5)
+#define M_MAC_RXDMA_EN0	            _SB_MAKEMASK1(0)
+#define M_MAC_RXDMA_EN1	            _SB_MAKEMASK1(1)
+#define M_MAC_TXDMA_EN0	            _SB_MAKEMASK1(4)
+#define M_MAC_TXDMA_EN1	            _SB_MAKEMASK1(5)
 
 #define M_MAC_PORT_RESET            _SB_MAKEMASK1(8)
 
@@ -188,10 +188,10 @@
  * MAC reset information register (1280/1255)
  */
 #if SIBYTE_HDR_FEATURE_CHIP(1480)
-#define M_MAC_RX_CH0_PAUSE_ON _SB_MAKEMASK1(8)
-#define M_MAC_RX_CH1_PAUSE_ON _SB_MAKEMASK1(16)
-#define M_MAC_TX_CH0_PAUSE_ON _SB_MAKEMASK1(24)
-#define M_MAC_TX_CH1_PAUSE_ON _SB_MAKEMASK1(32)
+#define M_MAC_RX_CH0_PAUSE_ON	_SB_MAKEMASK1(8)
+#define M_MAC_RX_CH1_PAUSE_ON	_SB_MAKEMASK1(16)
+#define M_MAC_TX_CH0_PAUSE_ON	_SB_MAKEMASK1(24)
+#define M_MAC_TX_CH1_PAUSE_ON	_SB_MAKEMASK1(32)
 #endif
 
 /*
@@ -201,13 +201,13 @@
  * Register: MAC_TXD_CTL_2
  */
 
-#define S_MAC_TXD_WEIGHT0     _SB_MAKE64(0)
-#define M_MAC_TXD_WEIGHT0     _SB_MAKEMASK(4, S_MAC_TXD_WEIGHT0)
+#define S_MAC_TXD_WEIGHT0	    _SB_MAKE64(0)
+#define M_MAC_TXD_WEIGHT0	    _SB_MAKEMASK(4, S_MAC_TXD_WEIGHT0)
 #define V_MAC_TXD_WEIGHT0(x)        _SB_MAKEVALUE(x, S_MAC_TXD_WEIGHT0)
 #define G_MAC_TXD_WEIGHT0(x)        _SB_GETVALUE(x, S_MAC_TXD_WEIGHT0, M_MAC_TXD_WEIGHT0)
 
-#define S_MAC_TXD_WEIGHT1     _SB_MAKE64(4)
-#define M_MAC_TXD_WEIGHT1     _SB_MAKEMASK(4, S_MAC_TXD_WEIGHT1)
+#define S_MAC_TXD_WEIGHT1	    _SB_MAKE64(4)
+#define M_MAC_TXD_WEIGHT1	    _SB_MAKEMASK(4, S_MAC_TXD_WEIGHT1)
 #define V_MAC_TXD_WEIGHT1(x)        _SB_MAKEVALUE(x, S_MAC_TXD_WEIGHT1)
 #define G_MAC_TXD_WEIGHT1(x)        _SB_GETVALUE(x, S_MAC_TXD_WEIGHT1, M_MAC_TXD_WEIGHT1)
 
@@ -327,7 +327,7 @@
  * Configuration Register.
  */
 
-#define K_MAC_IFG_RX_10             _SB_MAKE64(0) /* See table 176, not used */
+#define K_MAC_IFG_RX_10             _SB_MAKE64(0)	/* See table 176, not used */
 #define K_MAC_IFG_RX_100            _SB_MAKE64(0)
 #define K_MAC_IFG_RX_1000           _SB_MAKE64(0)
 
@@ -417,8 +417,8 @@
 #define S_MAC_TX_CH0                _SB_MAKE64(16)
 #define S_MAC_TX_CH1                _SB_MAKE64(24)
 
-#define S_MAC_TXCHANNELS      _SB_MAKE64(16)  /* this is 1st TX chan */
-#define S_MAC_CHANWIDTH             _SB_MAKE64(8) /* bits between channels */
+#define S_MAC_TXCHANNELS	    _SB_MAKE64(16)	/* this is 1st TX chan */
+#define S_MAC_CHANWIDTH             _SB_MAKE64(8)	/* bits between channels */
 
 /*
  *  These are the same as RX channel 0.  The idea here
@@ -433,8 +433,8 @@
 #define M_MAC_INT_LWM               _SB_MAKEMASK1(4)
 #define M_MAC_INT_DSCR              _SB_MAKEMASK1(5)
 #define M_MAC_INT_ERR               _SB_MAKEMASK1(6)
-#define M_MAC_INT_DZERO             _SB_MAKEMASK1(7)  /* only for TX channels */
-#define M_MAC_INT_DROP              _SB_MAKEMASK1(7)  /* only for RX channels */
+#define M_MAC_INT_DZERO             _SB_MAKEMASK1(7)	/* only for TX channels */
+#define M_MAC_INT_DROP              _SB_MAKEMASK1(7)	/* only for RX channels */
 
 /*
  * In the following definitions we use ch (0/1) and txrx (TX=1, RX=0, see
@@ -463,7 +463,7 @@
 #define M_MAC_EXCOL_ERR             _SB_MAKEMASK1(45)
 #define M_MAC_CNTR_OVRFL_ERR        _SB_MAKEMASK1(46)
 #if SIBYTE_HDR_FEATURE(1250, PASS2) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
-#define M_MAC_SPLIT_EN        _SB_MAKEMASK1(47)   /* interrupt mask only */
+#define M_MAC_SPLIT_EN		    _SB_MAKEMASK1(47) 	/* interrupt mask only */
 #endif /* 1250 PASS2 || 112x PASS1 || 1480 */
 
 #define S_MAC_COUNTER_ADDR          _SB_MAKE64(47)
@@ -472,7 +472,7 @@
 #define G_MAC_COUNTER_ADDR(x)       _SB_GETVALUE(x, S_MAC_COUNTER_ADDR, M_MAC_COUNTER_ADDR)
 
 #if SIBYTE_HDR_FEATURE(1250, PASS3) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
-#define M_MAC_TX_PAUSE_ON     _SB_MAKEMASK1(52)
+#define M_MAC_TX_PAUSE_ON	    _SB_MAKEMASK1(52)
 #endif /* 1250 PASS3 || 112x PASS1 || 1480 */
 
 /*
@@ -564,22 +564,22 @@
 
 #define S_TYPECFG_TYPESIZE      _SB_MAKE64(16)
 
-#define S_TYPECFG_TYPE0   _SB_MAKE64(0)
+#define S_TYPECFG_TYPE0		_SB_MAKE64(0)
 #define M_TYPECFG_TYPE0         _SB_MAKEMASK(16, S_TYPECFG_TYPE0)
 #define V_TYPECFG_TYPE0(x)      _SB_MAKEVALUE(x, S_TYPECFG_TYPE0)
 #define G_TYPECFG_TYPE0(x)      _SB_GETVALUE(x, S_TYPECFG_TYPE0, M_TYPECFG_TYPE0)
 
-#define S_TYPECFG_TYPE1   _SB_MAKE64(0)
+#define S_TYPECFG_TYPE1		_SB_MAKE64(0)
 #define M_TYPECFG_TYPE1         _SB_MAKEMASK(16, S_TYPECFG_TYPE1)
 #define V_TYPECFG_TYPE1(x)      _SB_MAKEVALUE(x, S_TYPECFG_TYPE1)
 #define G_TYPECFG_TYPE1(x)      _SB_GETVALUE(x, S_TYPECFG_TYPE1, M_TYPECFG_TYPE1)
 
-#define S_TYPECFG_TYPE2   _SB_MAKE64(0)
+#define S_TYPECFG_TYPE2		_SB_MAKE64(0)
 #define M_TYPECFG_TYPE2         _SB_MAKEMASK(16, S_TYPECFG_TYPE2)
 #define V_TYPECFG_TYPE2(x)      _SB_MAKEVALUE(x, S_TYPECFG_TYPE2)
 #define G_TYPECFG_TYPE2(x)      _SB_GETVALUE(x, S_TYPECFG_TYPE2, M_TYPECFG_TYPE2)
 
-#define S_TYPECFG_TYPE3   _SB_MAKE64(0)
+#define S_TYPECFG_TYPE3		_SB_MAKE64(0)
 #define M_TYPECFG_TYPE3         _SB_MAKEMASK(16, S_TYPECFG_TYPE3)
 #define V_TYPECFG_TYPE3(x)      _SB_MAKEVALUE(x, S_TYPECFG_TYPE3)
 #define G_TYPECFG_TYPE3(x)      _SB_GETVALUE(x, S_TYPECFG_TYPE3, M_TYPECFG_TYPE3)
@@ -591,7 +591,7 @@
  * Register: MAC_ADFILTER_CFG_2
  */
 
-#define M_MAC_ALLPKT_EN         _SB_MAKEMASK1(0)
+#define M_MAC_ALLPKT_EN	        _SB_MAKEMASK1(0)
 #define M_MAC_UCAST_EN          _SB_MAKEMASK1(1)
 #define M_MAC_UCAST_INV         _SB_MAKEMASK1(2)
 #define M_MAC_MCAST_EN          _SB_MAKEMASK1(3)
@@ -599,32 +599,32 @@
 #define M_MAC_BCAST_EN          _SB_MAKEMASK1(5)
 #define M_MAC_DIRECT_INV        _SB_MAKEMASK1(6)
 #if SIBYTE_HDR_FEATURE(1250, PASS2) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
-#define M_MAC_ALLMCAST_EN _SB_MAKEMASK1(7)
+#define M_MAC_ALLMCAST_EN	_SB_MAKEMASK1(7)
 #endif /* 1250 PASS2 || 112x PASS1 || 1480 */
 
 #define S_MAC_IPHDR_OFFSET      _SB_MAKE64(8)
 #define M_MAC_IPHDR_OFFSET      _SB_MAKEMASK(8, S_MAC_IPHDR_OFFSET)
-#define V_MAC_IPHDR_OFFSET(x) _SB_MAKEVALUE(x, S_MAC_IPHDR_OFFSET)
-#define G_MAC_IPHDR_OFFSET(x) _SB_GETVALUE(x, S_MAC_IPHDR_OFFSET, M_MAC_IPHDR_OFFSET)
+#define V_MAC_IPHDR_OFFSET(x)	_SB_MAKEVALUE(x, S_MAC_IPHDR_OFFSET)
+#define G_MAC_IPHDR_OFFSET(x)	_SB_GETVALUE(x, S_MAC_IPHDR_OFFSET, M_MAC_IPHDR_OFFSET)
 
 #if SIBYTE_HDR_FEATURE(1250, PASS3) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
 #define S_MAC_RX_CRC_OFFSET     _SB_MAKE64(16)
 #define M_MAC_RX_CRC_OFFSET     _SB_MAKEMASK(8, S_MAC_RX_CRC_OFFSET)
-#define V_MAC_RX_CRC_OFFSET(x)  _SB_MAKEVALUE(x, S_MAC_RX_CRC_OFFSET)
-#define G_MAC_RX_CRC_OFFSET(x)  _SB_GETVALUE(x, S_MAC_RX_CRC_OFFSET, M_MAC_RX_CRC_OFFSET)
+#define V_MAC_RX_CRC_OFFSET(x)	_SB_MAKEVALUE(x, S_MAC_RX_CRC_OFFSET)
+#define G_MAC_RX_CRC_OFFSET(x)	_SB_GETVALUE(x, S_MAC_RX_CRC_OFFSET, M_MAC_RX_CRC_OFFSET)
 
 #define S_MAC_RX_PKT_OFFSET     _SB_MAKE64(24)
 #define M_MAC_RX_PKT_OFFSET     _SB_MAKEMASK(8, S_MAC_RX_PKT_OFFSET)
-#define V_MAC_RX_PKT_OFFSET(x)  _SB_MAKEVALUE(x, S_MAC_RX_PKT_OFFSET)
-#define G_MAC_RX_PKT_OFFSET(x)  _SB_GETVALUE(x, S_MAC_RX_PKT_OFFSET, M_MAC_RX_PKT_OFFSET)
+#define V_MAC_RX_PKT_OFFSET(x)	_SB_MAKEVALUE(x, S_MAC_RX_PKT_OFFSET)
+#define G_MAC_RX_PKT_OFFSET(x)	_SB_GETVALUE(x, S_MAC_RX_PKT_OFFSET, M_MAC_RX_PKT_OFFSET)
 
-#define M_MAC_FWDPAUSE_EN _SB_MAKEMASK1(32)
-#define M_MAC_VLAN_DET_EN _SB_MAKEMASK1(33)
+#define M_MAC_FWDPAUSE_EN	_SB_MAKEMASK1(32)
+#define M_MAC_VLAN_DET_EN	_SB_MAKEMASK1(33)
 
 #define S_MAC_RX_CH_MSN_SEL     _SB_MAKE64(34)
 #define M_MAC_RX_CH_MSN_SEL     _SB_MAKEMASK(8, S_MAC_RX_CH_MSN_SEL)
-#define V_MAC_RX_CH_MSN_SEL(x)  _SB_MAKEVALUE(x, S_MAC_RX_CH_MSN_SEL)
-#define G_MAC_RX_CH_MSN_SEL(x)  _SB_GETVALUE(x, S_MAC_RX_CH_MSN_SEL, M_MAC_RX_CH_MSN_SEL)
+#define V_MAC_RX_CH_MSN_SEL(x)	_SB_MAKEVALUE(x, S_MAC_RX_CH_MSN_SEL)
+#define G_MAC_RX_CH_MSN_SEL(x)	_SB_GETVALUE(x, S_MAC_RX_CH_MSN_SEL, M_MAC_RX_CH_MSN_SEL)
 #endif /* 1250 PASS3 || 112x PASS1 || 1480 */
 
 /*
@@ -640,17 +640,17 @@
  * Register: MAC_MDIO_2
  */
 
-#define S_MAC_MDC   0
-#define S_MAC_MDIO_DIR    1
-#define S_MAC_MDIO_OUT    2
-#define S_MAC_GENC    3
-#define S_MAC_MDIO_IN   4
+#define S_MAC_MDC		0
+#define S_MAC_MDIO_DIR		1
+#define S_MAC_MDIO_OUT		2
+#define S_MAC_GENC		3
+#define S_MAC_MDIO_IN		4
 
-#define M_MAC_MDC   _SB_MAKEMASK1(S_MAC_MDC)
-#define M_MAC_MDIO_DIR    _SB_MAKEMASK1(S_MAC_MDIO_DIR)
-#define M_MAC_MDIO_DIR_INPUT  _SB_MAKEMASK1(S_MAC_MDIO_DIR)
-#define M_MAC_MDIO_OUT    _SB_MAKEMASK1(S_MAC_MDIO_OUT)
-#define M_MAC_GENC    _SB_MAKEMASK1(S_MAC_GENC)
-#define M_MAC_MDIO_IN   _SB_MAKEMASK1(S_MAC_MDIO_IN)
+#define M_MAC_MDC		_SB_MAKEMASK1(S_MAC_MDC)
+#define M_MAC_MDIO_DIR		_SB_MAKEMASK1(S_MAC_MDIO_DIR)
+#define M_MAC_MDIO_DIR_INPUT	_SB_MAKEMASK1(S_MAC_MDIO_DIR)
+#define M_MAC_MDIO_OUT		_SB_MAKEMASK1(S_MAC_MDIO_OUT)
+#define M_MAC_GENC		_SB_MAKEMASK1(S_MAC_GENC)
+#define M_MAC_MDIO_IN		_SB_MAKEMASK1(S_MAC_MDIO_IN)
 
 #endif

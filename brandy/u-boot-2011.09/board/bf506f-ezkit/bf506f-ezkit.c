@@ -9,19 +9,19 @@
 #include <common.h>
 #include <asm/blackfin.h>
 
-int checkboard (void)
+int checkboard(void)
 {
-  printf ("Board: ADI BF506F EZ-Kit board\n");
-  printf ("       Support: http://blackfin.uclinux.org/\n");
-  return 0;
+	printf("Board: ADI BF506F EZ-Kit board\n");
+	printf("       Support: http://blackfin.uclinux.org/\n");
+	return 0;
 }
 
-int board_early_init_f (void)
+int board_early_init_f(void)
 {
-  bfin_write_EBIU_MODE (1);
-  SSYNC();
-  bfin_write_FLASH_CONTROL_CLEAR (1);
-  udelay (1);
-  bfin_write_FLASH_CONTROL_SET (1);
-  return 0;
+	bfin_write_EBIU_MODE(1);
+	SSYNC();
+	bfin_write_FLASH_CONTROL_CLEAR(1);
+	udelay(1);
+	bfin_write_FLASH_CONTROL_SET(1);
+	return 0;
 }

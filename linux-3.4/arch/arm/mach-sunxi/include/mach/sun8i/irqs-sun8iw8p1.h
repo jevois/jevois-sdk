@@ -16,8 +16,8 @@
 #define __IRQS_SUN8I_W8P1_H
 
 #if  defined(CONFIG_FPGA_V4_PLATFORM) \
-|| defined(CONFIG_FPGA_V7_PLATFORM) \
-|| defined(CONFIG_EVB_PLATFORM)
+	|| defined(CONFIG_FPGA_V7_PLATFORM) \
+	|| defined(CONFIG_EVB_PLATFORM)
 
 #define SUNXI_IRQ_UART0                (SUNXI_GIC_START + 0)   /* 32 Uart0     */
 #define SUNXI_IRQ_UART1                (SUNXI_GIC_START + 1)   /* 33 Uart1     */
@@ -76,9 +76,9 @@
 #define SUNXI_IRQ_PMU                   SUNXI_IRQ_PMU0
 #define SUNXI_IRQ_AXI_ERROR            (SUNXI_GIC_START + 124) /* AXI_ERROR   */
 
-#define SUNXI_IRQ_RALARM0   SUNXI_IRQ_ALARM0
-#define SUNXI_IRQ_RALARM1   SUNXI_IRQ_ALARM1
-#define SUNXI_IRQ_TCON      SUNXI_IRQ_LCD0
+#define SUNXI_IRQ_RALARM0		SUNXI_IRQ_ALARM0
+#define SUNXI_IRQ_RALARM1		SUNXI_IRQ_ALARM1
+#define SUNXI_IRQ_TCON			SUNXI_IRQ_LCD0
 
 #else
 

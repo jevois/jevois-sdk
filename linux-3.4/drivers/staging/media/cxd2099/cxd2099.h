@@ -28,23 +28,23 @@
 #include <dvb_ca_en50221.h>
 
 struct cxd2099_cfg {
-  u32 bitrate;
-  u8  adr;
-  u8  polarity: 1;
-  u8  clock_mode: 1;
+	u32 bitrate;
+	u8  adr;
+	u8  polarity:1;
+	u8  clock_mode:1;
 };
 
 #if defined(CONFIG_DVB_CXD2099) || \
-(defined(CONFIG_DVB_CXD2099_MODULE) && defined(MODULE))
-struct dvb_ca_en50221 * cxd2099_attach (struct cxd2099_cfg * cfg,
-                                        void * priv, struct i2c_adapter * i2c);
+	(defined(CONFIG_DVB_CXD2099_MODULE) && defined(MODULE))
+struct dvb_ca_en50221 *cxd2099_attach(struct cxd2099_cfg *cfg,
+				      void *priv, struct i2c_adapter *i2c);
 #else
 
-static inline struct dvb_ca_en50221 * cxd2099_attach (struct cxd2099_cfg * cfg,
-    void * priv, struct i2c_adapter * i2c)
+static inline struct dvb_ca_en50221 *cxd2099_attach(struct cxd2099_cfg *cfg,
+					void *priv, struct i2c_adapter *i2c)
 {
-  printk (KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
-  return NULL;
+	printk(KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
+	return NULL;
 }
 #endif
 

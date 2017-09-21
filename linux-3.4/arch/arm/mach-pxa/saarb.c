@@ -27,89 +27,89 @@
 
 #include "generic.h"
 
-#define SAARB_NR_IRQS (IRQ_BOARD_START + 40)
+#define SAARB_NR_IRQS	(IRQ_BOARD_START + 40)
 
 static struct pm860x_touch_pdata saarb_touch = {
-  .gpadc_prebias  = 1,
-  .slot_cycle = 1,
-  .tsi_prebias  = 6,
-  .pen_prebias  = 16,
-  .pen_prechg = 2,
-  .res_x    = 300,
+	.gpadc_prebias	= 1,
+	.slot_cycle	= 1,
+	.tsi_prebias	= 6,
+	.pen_prebias	= 16,
+	.pen_prechg	= 2,
+	.res_x		= 300,
 };
 
 static struct pm860x_backlight_pdata saarb_backlight[] = {
-  {
-    .id = PM8606_ID_BACKLIGHT,
-    .iset = PM8606_WLED_CURRENT (24),
-    .flags  = PM8606_BACKLIGHT1,
-  },
-  {},
+	{
+		.id	= PM8606_ID_BACKLIGHT,
+		.iset	= PM8606_WLED_CURRENT(24),
+		.flags	= PM8606_BACKLIGHT1,
+	},
+	{},
 };
 
 static struct pm860x_led_pdata saarb_led[] = {
-  {
-    .id = PM8606_ID_LED,
-    .iset = PM8606_LED_CURRENT (12),
-    .flags  = PM8606_LED1_RED,
-  }, {
-    .id = PM8606_ID_LED,
-    .iset = PM8606_LED_CURRENT (12),
-    .flags  = PM8606_LED1_GREEN,
-  }, {
-    .id = PM8606_ID_LED,
-    .iset = PM8606_LED_CURRENT (12),
-    .flags  = PM8606_LED1_BLUE,
-  }, {
-    .id = PM8606_ID_LED,
-    .iset = PM8606_LED_CURRENT (12),
-    .flags  = PM8606_LED2_RED,
-  }, {
-    .id = PM8606_ID_LED,
-    .iset = PM8606_LED_CURRENT (12),
-    .flags  = PM8606_LED2_GREEN,
-  }, {
-    .id = PM8606_ID_LED,
-    .iset = PM8606_LED_CURRENT (12),
-    .flags  = PM8606_LED2_BLUE,
-  },
+	{
+		.id	= PM8606_ID_LED,
+		.iset	= PM8606_LED_CURRENT(12),
+		.flags	= PM8606_LED1_RED,
+	}, {
+		.id	= PM8606_ID_LED,
+		.iset	= PM8606_LED_CURRENT(12),
+		.flags	= PM8606_LED1_GREEN,
+	}, {
+		.id	= PM8606_ID_LED,
+		.iset	= PM8606_LED_CURRENT(12),
+		.flags	= PM8606_LED1_BLUE,
+	}, {
+		.id	= PM8606_ID_LED,
+		.iset	= PM8606_LED_CURRENT(12),
+		.flags	= PM8606_LED2_RED,
+	}, {
+		.id	= PM8606_ID_LED,
+		.iset	= PM8606_LED_CURRENT(12),
+		.flags	= PM8606_LED2_GREEN,
+	}, {
+		.id	= PM8606_ID_LED,
+		.iset	= PM8606_LED_CURRENT(12),
+		.flags	= PM8606_LED2_BLUE,
+	},
 };
 
 static struct pm860x_platform_data saarb_pm8607_info = {
-  .touch    = &saarb_touch,
-  .backlight  = &saarb_backlight[0],
-  .led    = &saarb_led[0],
-  .companion_addr = 0x10,
-  .irq_mode = 0,
-  .irq_base = IRQ_BOARD_START,
-  
-  .i2c_port = GI2C_PORT,
+	.touch		= &saarb_touch,
+	.backlight	= &saarb_backlight[0],
+	.led		= &saarb_led[0],
+	.companion_addr	= 0x10,
+	.irq_mode	= 0,
+	.irq_base	= IRQ_BOARD_START,
+
+	.i2c_port	= GI2C_PORT,
 };
 
 static struct i2c_board_info saarb_i2c_info[] = {
-  {
-    .type   = "88PM860x",
-    .addr   = 0x34,
-    .platform_data  = &saarb_pm8607_info,
-    .irq    = PXA_GPIO_TO_IRQ (mfp_to_gpio (MFP_PIN_GPIO83) ),
-  },
+	{
+		.type		= "88PM860x",
+		.addr		= 0x34,
+		.platform_data	= &saarb_pm8607_info,
+		.irq		= PXA_GPIO_TO_IRQ(mfp_to_gpio(MFP_PIN_GPIO83)),
+	},
 };
 
-static void __init saarb_init (void)
+static void __init saarb_init(void)
 {
-  pxa_set_ffuart_info (NULL);
-  pxa_set_i2c_info (NULL);
-  i2c_register_board_info (0, ARRAY_AND_SIZE (saarb_i2c_info) );
+	pxa_set_ffuart_info(NULL);
+	pxa_set_i2c_info(NULL);
+	i2c_register_board_info(0, ARRAY_AND_SIZE(saarb_i2c_info));
 }
 
-MACHINE_START (SAARB, "PXA955 Handheld Platform (aka SAARB)")
-.atag_offset    = 0x100,
- .map_io         = pxa3xx_map_io,
-  .nr_irqs  = SAARB_NR_IRQS,
-   .init_irq       = pxa95x_init_irq,
-    .handle_irq = pxa3xx_handle_irq,
-     .timer          = &pxa_timer,
-      .init_machine   = saarb_init,
-       .restart  = pxa_restart,
-        MACHINE_END
+MACHINE_START(SAARB, "PXA955 Handheld Platform (aka SAARB)")
+	.atag_offset    = 0x100,
+	.map_io         = pxa3xx_map_io,
+	.nr_irqs	= SAARB_NR_IRQS,
+	.init_irq       = pxa95x_init_irq,
+	.handle_irq	= pxa3xx_handle_irq,
+	.timer          = &pxa_timer,
+	.init_machine   = saarb_init,
+	.restart	= pxa_restart,
+MACHINE_END
 

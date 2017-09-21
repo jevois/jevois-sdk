@@ -32,7 +32,7 @@
 #define PT32_DIR_PSE36_SIZE 4
 #define PT32_DIR_PSE36_SHIFT 13
 #define PT32_DIR_PSE36_MASK \
-  (((1ULL << PT32_DIR_PSE36_SIZE) - 1) << PT32_DIR_PSE36_SHIFT)
+	(((1ULL << PT32_DIR_PSE36_SIZE) - 1) << PT32_DIR_PSE36_SHIFT)
 
 #define PT64_ROOT_LEVEL 4
 #define PT32_ROOT_LEVEL 2
@@ -48,57 +48,57 @@
 #define PFERR_RSVD_MASK (1U << 3)
 #define PFERR_FETCH_MASK (1U << 4)
 
-int kvm_mmu_get_spte_hierarchy (struct kvm_vcpu * vcpu, u64 addr, u64 sptes[4]);
-void kvm_mmu_set_mmio_spte_mask (u64 mmio_mask);
-int handle_mmio_page_fault_common (struct kvm_vcpu * vcpu, u64 addr, bool direct);
-int kvm_init_shadow_mmu (struct kvm_vcpu * vcpu, struct kvm_mmu * context);
+int kvm_mmu_get_spte_hierarchy(struct kvm_vcpu *vcpu, u64 addr, u64 sptes[4]);
+void kvm_mmu_set_mmio_spte_mask(u64 mmio_mask);
+int handle_mmio_page_fault_common(struct kvm_vcpu *vcpu, u64 addr, bool direct);
+int kvm_init_shadow_mmu(struct kvm_vcpu *vcpu, struct kvm_mmu *context);
 
-static inline unsigned int kvm_mmu_available_pages (struct kvm * kvm)
+static inline unsigned int kvm_mmu_available_pages(struct kvm *kvm)
 {
-  return kvm->arch.n_max_mmu_pages -
-         kvm->arch.n_used_mmu_pages;
+	return kvm->arch.n_max_mmu_pages -
+		kvm->arch.n_used_mmu_pages;
 }
 
-static inline void kvm_mmu_free_some_pages (struct kvm_vcpu * vcpu)
+static inline void kvm_mmu_free_some_pages(struct kvm_vcpu *vcpu)
 {
-  if (unlikely (kvm_mmu_available_pages (vcpu->kvm) < KVM_MIN_FREE_MMU_PAGES) )
-  { __kvm_mmu_free_some_pages (vcpu); }
+	if (unlikely(kvm_mmu_available_pages(vcpu->kvm)< KVM_MIN_FREE_MMU_PAGES))
+		__kvm_mmu_free_some_pages(vcpu);
 }
 
-static inline int kvm_mmu_reload (struct kvm_vcpu * vcpu)
+static inline int kvm_mmu_reload(struct kvm_vcpu *vcpu)
 {
-  if (likely (vcpu->arch.mmu.root_hpa != INVALID_PAGE) )
-  { return 0; }
-  
-  return kvm_mmu_load (vcpu);
+	if (likely(vcpu->arch.mmu.root_hpa != INVALID_PAGE))
+		return 0;
+
+	return kvm_mmu_load(vcpu);
 }
 
-static inline int is_present_gpte (unsigned long pte)
+static inline int is_present_gpte(unsigned long pte)
 {
-  return pte & PT_PRESENT_MASK;
+	return pte & PT_PRESENT_MASK;
 }
 
-static inline int is_writable_pte (unsigned long pte)
+static inline int is_writable_pte(unsigned long pte)
 {
-  return pte & PT_WRITABLE_MASK;
+	return pte & PT_WRITABLE_MASK;
 }
 
-static inline bool is_write_protection (struct kvm_vcpu * vcpu)
+static inline bool is_write_protection(struct kvm_vcpu *vcpu)
 {
-  return kvm_read_cr0_bits (vcpu, X86_CR0_WP);
+	return kvm_read_cr0_bits(vcpu, X86_CR0_WP);
 }
 
-static inline bool check_write_user_access (struct kvm_vcpu * vcpu,
-    bool write_fault, bool user_fault,
-    unsigned long pte)
+static inline bool check_write_user_access(struct kvm_vcpu *vcpu,
+					   bool write_fault, bool user_fault,
+					   unsigned long pte)
 {
-  if (unlikely (write_fault && !is_writable_pte (pte)
-                && (user_fault || is_write_protection (vcpu) ) ) )
-  { return false; }
-  
-  if (unlikely (user_fault && ! (pte & PT_USER_MASK) ) )
-  { return false; }
-  
-  return true;
+	if (unlikely(write_fault && !is_writable_pte(pte)
+	      && (user_fault || is_write_protection(vcpu))))
+		return false;
+
+	if (unlikely(user_fault && !(pte & PT_USER_MASK)))
+		return false;
+
+	return true;
 }
 #endif

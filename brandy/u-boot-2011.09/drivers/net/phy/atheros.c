@@ -22,27 +22,27 @@
  */
 #include <phy.h>
 
-static int ar8021_config (struct phy_device * phydev)
+static int ar8021_config(struct phy_device *phydev)
 {
-  phy_write (phydev, MDIO_DEVAD_NONE, 0x1d, 0x05);
-  phy_write (phydev, MDIO_DEVAD_NONE, 0x1e, 0x3D47);
-  
-  return 0;
+	phy_write(phydev, MDIO_DEVAD_NONE, 0x1d, 0x05);
+	phy_write(phydev, MDIO_DEVAD_NONE, 0x1e, 0x3D47);
+
+	return 0;
 }
 
 struct phy_driver AR8021_driver =  {
-  .name = "AR8021",
-  .uid = 0x4dd040,
-  .mask = 0xfffff0,
-  .features = PHY_GBIT_FEATURES,
-  .config = ar8021_config,
-  .startup = genphy_startup,
-  .shutdown = genphy_shutdown,
+	.name = "AR8021",
+	.uid = 0x4dd040,
+	.mask = 0xfffff0,
+	.features = PHY_GBIT_FEATURES,
+	.config = ar8021_config,
+	.startup = genphy_startup,
+	.shutdown = genphy_shutdown,
 };
 
-int phy_atheros_init (void)
+int phy_atheros_init(void)
 {
-  phy_register (&AR8021_driver);
-  
-  return 0;
+	phy_register(&AR8021_driver);
+
+	return 0;
 }

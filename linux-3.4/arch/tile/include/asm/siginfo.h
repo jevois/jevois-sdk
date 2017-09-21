@@ -18,7 +18,7 @@
 #define __ARCH_SI_TRAPNO
 
 #ifdef __LP64__
-# define __ARCH_SI_PREAMBLE_SIZE  (4 * sizeof(int))
+# define __ARCH_SI_PREAMBLE_SIZE	(4 * sizeof(int))
 #endif
 
 #include <asm-generic/siginfo.h>
@@ -26,9 +26,9 @@
 /*
  * Additional Tile-specific SIGILL si_codes
  */
-#define ILL_DBLFLT  (__SI_FAULT|9)  /* double fault */
-#define ILL_HARDWALL  (__SI_FAULT|10) /* user networks hardwall violation */
+#define ILL_DBLFLT	(__SI_FAULT|9)	/* double fault */
+#define ILL_HARDWALL	(__SI_FAULT|10)	/* user networks hardwall violation */
 #undef NSIGILL
-#define NSIGILL   10
+#define NSIGILL		10
 
 #endif /* _ASM_TILE_SIGINFO_H */

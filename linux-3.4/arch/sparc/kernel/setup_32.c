@@ -50,15 +50,15 @@
 #include "kernel.h"
 
 struct screen_info screen_info = {
-  0, 0,     /* orig-x, orig-y */
-  0,      /* unused */
-  0,      /* orig-video-page */
-  0,      /* orig-video-mode */
-  128,      /* orig-video-cols */
-  0, 0, 0,    /* ega_ax, ega_bx, ega_cx */
-  54,     /* orig-video-lines */
-  0,                      /* orig-video-isVGA */
-  16                      /* orig-video-points */
+	0, 0,			/* orig-x, orig-y */
+	0,			/* unused */
+	0,			/* orig-video-page */
+	0,			/* orig-video-mode */
+	128,			/* orig-video-cols */
+	0,0,0,			/* ega_ax, ega_bx, ega_cx */
+	54,			/* orig-video-lines */
+	0,                      /* orig-video-isVGA */
+	16                      /* orig-video-points */
 };
 
 /* Typing sync at the prom prompt calls the function pointed to by
@@ -70,32 +70,32 @@ struct screen_info screen_info = {
 extern unsigned long trapbase;
 
 /* Pretty sick eh? */
-static void prom_sync_me (void)
+static void prom_sync_me(void)
 {
-  unsigned long prom_tbr, flags;
-  
-  /* XXX Badly broken. FIX! - Anton */
-  local_irq_save (flags);
-  __asm__ __volatile__ ("rd %%tbr, %0\n\t" : "=r" (prom_tbr) );
-  __asm__ __volatile__ ("wr %0, 0x0, %%tbr\n\t"
-                        "nop\n\t"
-                        "nop\n\t"
-                        "nop\n\t" : : "r" (&trapbase) );
-                        
-  prom_printf ("PROM SYNC COMMAND...\n");
-  show_free_areas (0);
-  if (!is_idle_task (current) ) {
-    local_irq_enable();
-    sys_sync();
-    local_irq_disable();
-  }
-  prom_printf ("Returning to prom\n");
-  
-  __asm__ __volatile__ ("wr %0, 0x0, %%tbr\n\t"
-                        "nop\n\t"
-                        "nop\n\t"
-                        "nop\n\t" : : "r" (prom_tbr) );
-  local_irq_restore (flags);
+	unsigned long prom_tbr, flags;
+
+	/* XXX Badly broken. FIX! - Anton */
+	local_irq_save(flags);
+	__asm__ __volatile__("rd %%tbr, %0\n\t" : "=r" (prom_tbr));
+	__asm__ __volatile__("wr %0, 0x0, %%tbr\n\t"
+			     "nop\n\t"
+			     "nop\n\t"
+			     "nop\n\t" : : "r" (&trapbase));
+
+	prom_printf("PROM SYNC COMMAND...\n");
+	show_free_areas(0);
+	if (!is_idle_task(current)) {
+		local_irq_enable();
+		sys_sync();
+		local_irq_disable();
+	}
+	prom_printf("Returning to prom\n");
+
+	__asm__ __volatile__("wr %0, 0x0, %%tbr\n\t"
+			     "nop\n\t"
+			     "nop\n\t"
+			     "nop\n\t" : : "r" (prom_tbr));
+	local_irq_restore(flags);
 }
 
 static unsigned int boot_flags __initdata = 0;
@@ -109,79 +109,77 @@ unsigned char boot_cpu_id = 0xff; /* 0xff will make it into DATA section... */
 unsigned char boot_cpu_id4; /* boot_cpu_id << 2 */
 
 static void
-prom_console_write (struct console * con, const char * s, unsigned n)
+prom_console_write(struct console *con, const char *s, unsigned n)
 {
-  prom_write (s, n);
+	prom_write(s, n);
 }
 
 static struct console prom_early_console = {
-  .name =   "earlyprom",
-  .write =  prom_console_write,
-  .flags =  CON_PRINTBUFFER | CON_BOOT,
-  .index =  -1,
+	.name =		"earlyprom",
+	.write =	prom_console_write,
+	.flags =	CON_PRINTBUFFER | CON_BOOT,
+	.index =	-1,
 };
 
-/*
+/* 
  * Process kernel command line switches that are specific to the
  * SPARC or that require special low-level processing.
  */
-static void __init process_switch (char c)
+static void __init process_switch(char c)
 {
-  switch (c) {
-  case 'd':
-    boot_flags |= BOOTME_DEBUG;
-    break;
-  case 's':
-    break;
-  case 'h':
-    prom_printf ("boot_flags_init: Halt!\n");
-    prom_halt();
-    break;
-  case 'p':
-    prom_early_console.flags &= ~CON_BOOT;
-    break;
-  default:
-    printk ("Unknown boot switch (-%c)\n", c);
-    break;
-  }
+	switch (c) {
+	case 'd':
+		boot_flags |= BOOTME_DEBUG;
+		break;
+	case 's':
+		break;
+	case 'h':
+		prom_printf("boot_flags_init: Halt!\n");
+		prom_halt();
+		break;
+	case 'p':
+		prom_early_console.flags &= ~CON_BOOT;
+		break;
+	default:
+		printk("Unknown boot switch (-%c)\n", c);
+		break;
+	}
 }
 
-static void __init boot_flags_init (char * commands)
+static void __init boot_flags_init(char *commands)
 {
-  while (*commands) {
-    /* Move to the start of the next "argument". */
-    while (*commands && *commands == ' ')
-    { commands++; }
-    
-    /* Process any command switches, otherwise skip it. */
-    if (*commands == '\0')
-    { break; }
-    if (*commands == '-') {
-      commands++;
-      while (*commands && *commands != ' ')
-      { process_switch (*commands++); }
-      continue;
-    }
-    if (!strncmp (commands, "mem=", 4) ) {
-      /*
-       * "mem=XXX[kKmM] overrides the PROM-reported
-       * memory size.
-       */
-      cmdline_memory_size = simple_strtoul (commands + 4,
-                                            &commands, 0);
-      if (*commands == 'K' || *commands == 'k') {
-        cmdline_memory_size <<= 10;
-        commands++;
-      }
-      else
-        if (*commands == 'M' || *commands == 'm') {
-          cmdline_memory_size <<= 20;
-          commands++;
-        }
-    }
-    while (*commands && *commands != ' ')
-    { commands++; }
-  }
+	while (*commands) {
+		/* Move to the start of the next "argument". */
+		while (*commands && *commands == ' ')
+			commands++;
+
+		/* Process any command switches, otherwise skip it. */
+		if (*commands == '\0')
+			break;
+		if (*commands == '-') {
+			commands++;
+			while (*commands && *commands != ' ')
+				process_switch(*commands++);
+			continue;
+		}
+		if (!strncmp(commands, "mem=", 4)) {
+			/*
+			 * "mem=XXX[kKmM] overrides the PROM-reported
+			 * memory size.
+			 */
+			cmdline_memory_size = simple_strtoul(commands + 4,
+						     &commands, 0);
+			if (*commands == 'K' || *commands == 'k') {
+				cmdline_memory_size <<= 10;
+				commands++;
+			} else if (*commands=='M' || *commands=='m') {
+				cmdline_memory_size <<= 20;
+				commands++;
+			}
+		}
+		while (*commands && *commands != ' ')
+			commands++;
+	}
 }
 
 /* This routine will in the future do all the nasty prom stuff
@@ -189,176 +187,176 @@ static void __init boot_flags_init (char * commands)
  * also be where SMP things happen.
  */
 
-extern void sun4c_probe_vac (void);
+extern void sun4c_probe_vac(void);
 
 extern unsigned short root_flags;
 extern unsigned short root_dev;
 extern unsigned short ram_flags;
-#define RAMDISK_IMAGE_START_MASK  0x07FF
-#define RAMDISK_PROMPT_FLAG   0x8000
-#define RAMDISK_LOAD_FLAG   0x4000
+#define RAMDISK_IMAGE_START_MASK	0x07FF
+#define RAMDISK_PROMPT_FLAG		0x8000
+#define RAMDISK_LOAD_FLAG		0x4000
 
 extern int root_mountflags;
 
 char reboot_command[COMMAND_LINE_SIZE];
 
 enum sparc_cpu sparc_cpu_model;
-EXPORT_SYMBOL (sparc_cpu_model);
+EXPORT_SYMBOL(sparc_cpu_model);
 
-struct tt_entry * sparc_ttable;
+struct tt_entry *sparc_ttable;
 
 struct pt_regs fake_swapper_regs;
 
-void __init setup_arch (char ** cmdline_p)
+void __init setup_arch(char **cmdline_p)
 {
-  int i;
-  unsigned long highest_paddr;
-  
-  sparc_ttable = (struct tt_entry *) &trapbase;
-  
-  /* Initialize PROM console and command line. */
-  *cmdline_p = prom_getbootargs();
-  strcpy (boot_command_line, *cmdline_p);
-  parse_early_param();
-  
-  boot_flags_init (*cmdline_p);
-  
-  register_console (&prom_early_console);
-  
-  /* Set sparc_cpu_model */
-  sparc_cpu_model = sun_unknown;
-  if (!strcmp (&cputypval[0], "sun4 ") )
-  { sparc_cpu_model = sun4; }
-  if (!strcmp (&cputypval[0], "sun4c") )
-  { sparc_cpu_model = sun4c; }
-  if (!strcmp (&cputypval[0], "sun4m") )
-  { sparc_cpu_model = sun4m; }
-  if (!strcmp (&cputypval[0], "sun4s") )
-  { sparc_cpu_model = sun4m; } /* CP-1200 with PROM 2.30 -E */
-  if (!strcmp (&cputypval[0], "sun4d") )
-  { sparc_cpu_model = sun4d; }
-  if (!strcmp (&cputypval[0], "sun4e") )
-  { sparc_cpu_model = sun4e; }
-  if (!strcmp (&cputypval[0], "sun4u") )
-  { sparc_cpu_model = sun4u; }
-  if (!strncmp (&cputypval[0], "leon" , 4) )
-  { sparc_cpu_model = sparc_leon; }
-  
-  printk ("ARCH: ");
-  switch (sparc_cpu_model) {
-  case sun4:
-    printk ("SUN4\n");
-    break;
-  case sun4c:
-    printk ("SUN4C\n");
-    break;
-  case sun4m:
-    printk ("SUN4M\n");
-    break;
-  case sun4d:
-    printk ("SUN4D\n");
-    break;
-  case sun4e:
-    printk ("SUN4E\n");
-    break;
-  case sun4u:
-    printk ("SUN4U\n");
-    break;
-  case sparc_leon:
-    printk ("LEON\n");
-    break;
-  default:
-    printk ("UNKNOWN!\n");
-    break;
-  }
-  
-  #ifdef CONFIG_DUMMY_CONSOLE
-  conswitchp = &dummy_con;
-  #endif
-  
-  idprom_init();
-  if (ARCH_SUN4C)
-  { sun4c_probe_vac(); }
-  load_mmu();
-  
-  phys_base = 0xffffffffUL;
-  highest_paddr = 0UL;
-  for (i = 0; sp_banks[i].num_bytes != 0; i++) {
-    unsigned long top;
-    
-    if (sp_banks[i].base_addr < phys_base)
-    { phys_base = sp_banks[i].base_addr; }
-    top = sp_banks[i].base_addr +
-          sp_banks[i].num_bytes;
-    if (highest_paddr < top)
-    { highest_paddr = top; }
-  }
-  pfn_base = phys_base >> PAGE_SHIFT;
-  
-  if (!root_flags)
-  { root_mountflags &= ~MS_RDONLY; }
-  ROOT_DEV = old_decode_dev (root_dev);
-  #ifdef CONFIG_BLK_DEV_RAM
-  rd_image_start = ram_flags & RAMDISK_IMAGE_START_MASK;
-  rd_prompt = ( (ram_flags & RAMDISK_PROMPT_FLAG) != 0);
-  rd_doload = ( (ram_flags & RAMDISK_LOAD_FLAG) != 0);
-  #endif
-  
-  prom_setsync (prom_sync_me);
-  
-  if ( (boot_flags & BOOTME_DEBUG) && (linux_dbvec != 0) &&
-       ( (* (short *) linux_dbvec) != -1) ) {
-    printk ("Booted under KADB. Syncing trap table.\n");
-    (* (linux_dbvec->teach_debugger) ) ();
-  }
-  
-  init_mm.context = (unsigned long) NO_CONTEXT;
-  init_task.thread.kregs = &fake_swapper_regs;
-  
-  paging_init();
-  
-  smp_setup_cpu_possible_map();
+	int i;
+	unsigned long highest_paddr;
+
+	sparc_ttable = (struct tt_entry *) &trapbase;
+
+	/* Initialize PROM console and command line. */
+	*cmdline_p = prom_getbootargs();
+	strcpy(boot_command_line, *cmdline_p);
+	parse_early_param();
+
+	boot_flags_init(*cmdline_p);
+
+	register_console(&prom_early_console);
+
+	/* Set sparc_cpu_model */
+	sparc_cpu_model = sun_unknown;
+	if (!strcmp(&cputypval[0], "sun4 "))
+		sparc_cpu_model = sun4;
+	if (!strcmp(&cputypval[0], "sun4c"))
+		sparc_cpu_model = sun4c;
+	if (!strcmp(&cputypval[0], "sun4m"))
+		sparc_cpu_model = sun4m;
+	if (!strcmp(&cputypval[0], "sun4s"))
+		sparc_cpu_model = sun4m; /* CP-1200 with PROM 2.30 -E */
+	if (!strcmp(&cputypval[0], "sun4d"))
+		sparc_cpu_model = sun4d;
+	if (!strcmp(&cputypval[0], "sun4e"))
+		sparc_cpu_model = sun4e;
+	if (!strcmp(&cputypval[0], "sun4u"))
+		sparc_cpu_model = sun4u;
+	if (!strncmp(&cputypval[0], "leon" , 4))
+		sparc_cpu_model = sparc_leon;
+
+	printk("ARCH: ");
+	switch(sparc_cpu_model) {
+	case sun4:
+		printk("SUN4\n");
+		break;
+	case sun4c:
+		printk("SUN4C\n");
+		break;
+	case sun4m:
+		printk("SUN4M\n");
+		break;
+	case sun4d:
+		printk("SUN4D\n");
+		break;
+	case sun4e:
+		printk("SUN4E\n");
+		break;
+	case sun4u:
+		printk("SUN4U\n");
+		break;
+	case sparc_leon:
+		printk("LEON\n");
+		break;
+	default:
+		printk("UNKNOWN!\n");
+		break;
+	}
+
+#ifdef CONFIG_DUMMY_CONSOLE
+	conswitchp = &dummy_con;
+#endif
+
+	idprom_init();
+	if (ARCH_SUN4C)
+		sun4c_probe_vac();
+	load_mmu();
+
+	phys_base = 0xffffffffUL;
+	highest_paddr = 0UL;
+	for (i = 0; sp_banks[i].num_bytes != 0; i++) {
+		unsigned long top;
+
+		if (sp_banks[i].base_addr < phys_base)
+			phys_base = sp_banks[i].base_addr;
+		top = sp_banks[i].base_addr +
+			sp_banks[i].num_bytes;
+		if (highest_paddr < top)
+			highest_paddr = top;
+	}
+	pfn_base = phys_base >> PAGE_SHIFT;
+
+	if (!root_flags)
+		root_mountflags &= ~MS_RDONLY;
+	ROOT_DEV = old_decode_dev(root_dev);
+#ifdef CONFIG_BLK_DEV_RAM
+	rd_image_start = ram_flags & RAMDISK_IMAGE_START_MASK;
+	rd_prompt = ((ram_flags & RAMDISK_PROMPT_FLAG) != 0);
+	rd_doload = ((ram_flags & RAMDISK_LOAD_FLAG) != 0);	
+#endif
+
+	prom_setsync(prom_sync_me);
+
+	if((boot_flags&BOOTME_DEBUG) && (linux_dbvec!=0) && 
+	   ((*(short *)linux_dbvec) != -1)) {
+		printk("Booted under KADB. Syncing trap table.\n");
+		(*(linux_dbvec->teach_debugger))();
+	}
+
+	init_mm.context = (unsigned long) NO_CONTEXT;
+	init_task.thread.kregs = &fake_swapper_regs;
+
+	paging_init();
+
+	smp_setup_cpu_possible_map();
 }
 
 extern int stop_a_enabled;
 
-void sun_do_break (void)
+void sun_do_break(void)
 {
-  if (!stop_a_enabled)
-  { return; }
-  
-  printk ("\n");
-  flush_user_windows();
-  
-  prom_cmdline();
+	if (!stop_a_enabled)
+		return;
+
+	printk("\n");
+	flush_user_windows();
+
+	prom_cmdline();
 }
-EXPORT_SYMBOL (sun_do_break);
+EXPORT_SYMBOL(sun_do_break);
 
 int stop_a_enabled = 1;
 
-static int __init topology_init (void)
+static int __init topology_init(void)
 {
-  int i, ncpus, err;
-  
-  /* Count the number of physically present processors in
-   * the machine, even on uniprocessor, so that /proc/cpuinfo
-   * output is consistent with 2.4.x
-   */
-  ncpus = 0;
-  while (!cpu_find_by_instance (ncpus, NULL, NULL) )
-  { ncpus++; }
-  ncpus_probed = ncpus;
-  
-  err = 0;
-  for_each_online_cpu (i) {
-    struct cpu * p = kzalloc (sizeof (*p), GFP_KERNEL);
-    if (!p)
-    { err = -ENOMEM; }
-    else
-    { register_cpu (p, i); }
-  }
-  
-  return err;
+	int i, ncpus, err;
+
+	/* Count the number of physically present processors in
+	 * the machine, even on uniprocessor, so that /proc/cpuinfo
+	 * output is consistent with 2.4.x
+	 */
+	ncpus = 0;
+	while (!cpu_find_by_instance(ncpus, NULL, NULL))
+		ncpus++;
+	ncpus_probed = ncpus;
+
+	err = 0;
+	for_each_online_cpu(i) {
+		struct cpu *p = kzalloc(sizeof(*p), GFP_KERNEL);
+		if (!p)
+			err = -ENOMEM;
+		else
+			register_cpu(p, i);
+	}
+
+	return err;
 }
 
-subsys_initcall (topology_init);
+subsys_initcall(topology_init);

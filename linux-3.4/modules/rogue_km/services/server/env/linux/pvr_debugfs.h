@@ -48,36 +48,36 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "img_types.h"
 
-typedef ssize_t (PVRSRV_ENTRY_WRITE_FUNC) (const char __user * pszBuffer,
-    size_t uiCount,
-    loff_t uiPosition,
-    void * pvData);
+typedef ssize_t (PVRSRV_ENTRY_WRITE_FUNC)(const char __user *pszBuffer,
+					  size_t uiCount,
+					  loff_t uiPosition,
+					  void *pvData);
 
-typedef IMG_BOOL (PVRSRV_GET_NEXT_STAT_FUNC) (void * pvStatPtr,
-    IMG_UINT32 uiStatNumber,
-    IMG_INT32 * piStatData,
-    IMG_CHAR ** ppszStatFmtText);
+typedef IMG_BOOL (PVRSRV_GET_NEXT_STAT_FUNC)(void *pvStatPtr,
+					     IMG_UINT32 uiStatNumber,
+					     IMG_INT32 *piStatData,
+					     IMG_CHAR **ppszStatFmtText);
 
-int PVRDebugFSInit (void);
-void PVRDebugFSDeInit (void);
+int PVRDebugFSInit(void);
+void PVRDebugFSDeInit(void);
 
-int PVRDebugFSCreateEntryDir (IMG_CHAR * pszName,
-                              struct dentry * psParentDir,
-                              struct dentry ** ppsDir);
-void PVRDebugFSRemoveEntryDir (struct dentry * psDir);
+int PVRDebugFSCreateEntryDir(IMG_CHAR *pszName,
+			     struct dentry *psParentDir,
+			     struct dentry **ppsDir);
+void PVRDebugFSRemoveEntryDir(struct dentry *psDir);
 
-int PVRDebugFSCreateEntry (const char * pszName,
-                           void * pvDir,
-                           struct seq_operations * psReadOps,
-                           PVRSRV_ENTRY_WRITE_FUNC * pfnWrite,
-                           void * pvData,
-                           struct dentry ** ppsEntry);
-void PVRDebugFSRemoveEntry (struct dentry * psEntry);
+int PVRDebugFSCreateEntry(const char *pszName,
+			  void *pvDir,
+			  struct seq_operations *psReadOps,
+			  PVRSRV_ENTRY_WRITE_FUNC *pfnWrite,
+			  void *pvData,
+			  struct dentry **ppsEntry);
+void PVRDebugFSRemoveEntry(struct dentry *psEntry);
 
-void * PVRDebugFSCreateStatisticEntry (const char * pszName,
-                                       void * pvDir,
-                                       PVRSRV_GET_NEXT_STAT_FUNC * pfnGetNextStat,
-                                       void * pvData);
-void PVRDebugFSRemoveStatisticEntry (void * pvStatEntry);
+void *PVRDebugFSCreateStatisticEntry(const char *pszName,
+				     void *pvDir,
+				     PVRSRV_GET_NEXT_STAT_FUNC *pfnGetNextStat,
+				     void *pvData);
+void PVRDebugFSRemoveStatisticEntry(void *pvStatEntry);
 
 #endif /* !defined(__PVR_DEBUGFS_H__) */

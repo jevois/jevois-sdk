@@ -25,13 +25,13 @@
  * The obscure number 1193182 is the same as used by the original i8254
  * time in legacy PC hardware; the chip is never found in AVR32 systems.
  */
-#define CLOCK_TICK_RATE   500000  /* Underlying HZ */
+#define CLOCK_TICK_RATE		500000	/* Underlying HZ */
 
 typedef unsigned long cycles_t;
 
 static inline cycles_t get_cycles (void)
 {
-  return 0;
+	return 0;
 }
 
 #define ARCH_HAS_READ_CURRENT_TIMER

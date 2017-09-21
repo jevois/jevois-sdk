@@ -18,20 +18,20 @@
 
 /* for KVM_GET_REGS and KVM_SET_REGS */
 struct kvm_regs {
-  /* general purpose regs for s390 */
-  __u64 gprs[16];
+	/* general purpose regs for s390 */
+	__u64 gprs[16];
 };
 
 /* for KVM_GET_SREGS and KVM_SET_SREGS */
 struct kvm_sregs {
-  __u32 acrs[16];
-  __u64 crs[16];
+	__u32 acrs[16];
+	__u64 crs[16];
 };
 
 /* for KVM_GET_FPU and KVM_SET_FPU */
 struct kvm_fpu {
-  __u32 fpc;
-  __u64 fprs[16];
+	__u32 fpc;
+	__u64 fprs[16];
 };
 
 struct kvm_debug_exit_arch {
@@ -47,9 +47,9 @@ struct kvm_guest_debug_arch {
 #define KVM_SYNC_CRS    (1UL << 3)
 /* definition of registers in kvm_run */
 struct kvm_sync_regs {
-  __u64 prefix; /* prefix register */
-  __u64 gprs[16]; /* general purpose registers */
-  __u32 acrs[16]; /* access registers */
-  __u64 crs[16];  /* control registers */
+	__u64 prefix;	/* prefix register */
+	__u64 gprs[16];	/* general purpose registers */
+	__u32 acrs[16];	/* access registers */
+	__u64 crs[16];	/* control registers */
 };
 #endif

@@ -13,9 +13,9 @@
 
 
 /* --------------------- PROM Features -----------------------------*/
-extern int sn_prom_feature_available (int id);
+extern int sn_prom_feature_available(int id);
 
-#define MAX_PROM_FEATURE_SETS     2
+#define MAX_PROM_FEATURE_SETS			2
 
 /*
  * The following defines features that may or may not be supported by the
@@ -24,14 +24,14 @@ extern int sn_prom_feature_available (int id);
  * "false" for new features.
  *
  * Use:
- *    if (sn_prom_feature_available(PRF_XXX))
- *      ...
+ * 		if (sn_prom_feature_available(PRF_XXX))
+ * 			...
  */
 
-#define PRF_PAL_CACHE_FLUSH_SAFE  0
-#define PRF_DEVICE_FLUSH_LIST   1
-#define PRF_HOTPLUG_SUPPORT   2
-#define PRF_CPU_DISABLE_SUPPORT   3
+#define PRF_PAL_CACHE_FLUSH_SAFE	0
+#define PRF_DEVICE_FLUSH_LIST		1
+#define PRF_HOTPLUG_SUPPORT		2
+#define PRF_CPU_DISABLE_SUPPORT		3
 
 /* --------------------- OS Features -------------------------------*/
 
@@ -40,7 +40,7 @@ extern int sn_prom_feature_available (int id);
  * the operating system.
  * During boot, PROM is notified of these features via a series of calls:
  *
- *    ia64_sn_set_os_feature(feature1);
+ * 		ia64_sn_set_os_feature(feature1);
  *
  * Once enabled, a feature cannot be disabled.
  *
@@ -49,10 +49,10 @@ extern int sn_prom_feature_available (int id);
  * These defines must be kept in sync with the corresponding
  * PROM definitions in feature_sets.h.
  */
-#define  OSF_MCA_SLV_TO_OS_INIT_SLV 0
-#define  OSF_FEAT_LOG_SBES    1
-#define  OSF_ACPI_ENABLE    2
-#define  OSF_PCISEGMENT_ENABLE    3
+#define  OSF_MCA_SLV_TO_OS_INIT_SLV	0
+#define  OSF_FEAT_LOG_SBES		1
+#define  OSF_ACPI_ENABLE		2
+#define  OSF_PCISEGMENT_ENABLE		3
 
 
 #endif /* _ASM_IA64_SN_FEATURE_SETS_H */

@@ -32,7 +32,7 @@
 #define MSG_SHARED_BUFFER_LIMIT_SYM     "_MSG_END"
 
 #ifndef _CHNL_WORDSIZE
-#define _CHNL_WORDSIZE 4  /* default _CHNL_WORDSIZE is 2 bytes/word */
+#define _CHNL_WORDSIZE 4	/* default _CHNL_WORDSIZE is 2 bytes/word */
 #endif
 
 /*
@@ -66,10 +66,10 @@
  *  size -          Number of messages to be read by the GPP.
  */
 struct msg_ctrl {
-  u32 buf_empty;    /* to/from DSP buffer is empty */
-  u32 post_swi;   /* Set to "1" to post msg_ctrl SWI */
-  u32 size;   /* Number of messages to/from the DSP */
-  u32 resvd;
+	u32 buf_empty;		/* to/from DSP buffer is empty */
+	u32 post_swi;		/* Set to "1" to post msg_ctrl SWI */
+	u32 size;		/* Number of messages to/from the DSP */
+	u32 resvd;
 };
 
 /*
@@ -80,21 +80,21 @@ struct msg_ctrl {
  *  ready to go to the DSP.
  */
 struct msg_mgr {
-  /* The first field must match that in msgobj.h */
-  
-  /* Function interface to Bridge driver */
-  struct bridge_drv_interface * intf_fxns;
-  
-  struct io_mgr * iomgr;  /* IO manager */
-  struct list_head queue_list;  /* List of MSG_QUEUEs */
-  spinlock_t msg_mgr_lock;  /* For critical sections */
-  /* Signalled when MsgFrame is available */
-  struct sync_object * sync_event;
-  struct list_head msg_free_list; /* Free MsgFrames ready to be filled */
-  struct list_head msg_used_list; /* MsgFrames ready to go to DSP */
-  u32 msgs_pending; /* # of queued messages to go to DSP */
-  u32 max_msgs;   /* Max # of msgs that fit in buffer */
-  msg_onexit on_exit; /* called when RMS_EXIT is received */
+	/* The first field must match that in msgobj.h */
+
+	/* Function interface to Bridge driver */
+	struct bridge_drv_interface *intf_fxns;
+
+	struct io_mgr *iomgr;		/* IO manager */
+	struct list_head queue_list;	/* List of MSG_QUEUEs */
+	spinlock_t msg_mgr_lock;	/* For critical sections */
+	/* Signalled when MsgFrame is available */
+	struct sync_object *sync_event;
+	struct list_head msg_free_list;	/* Free MsgFrames ready to be filled */
+	struct list_head msg_used_list;	/* MsgFrames ready to go to DSP */
+	u32 msgs_pending;	/* # of queued messages to go to DSP */
+	u32 max_msgs;		/* Max # of msgs that fit in buffer */
+	msg_onexit on_exit;	/* called when RMS_EXIT is received */
 };
 
 /*
@@ -107,36 +107,36 @@ struct msg_mgr {
  *  The msg_queue's hSynEvent gets posted when a message is ready.
  */
 struct msg_queue {
-  struct list_head list_elem;
-  struct msg_mgr * msg_mgr;
-  u32 max_msgs;   /* Node message depth */
-  u32 msgq_id;    /* Node environment pointer */
-  struct list_head msg_free_list; /* Free MsgFrames ready to be filled */
-  /* Filled MsgFramess waiting to be read */
-  struct list_head msg_used_list;
-  void * arg;   /* Handle passed to mgr on_exit callback */
-  struct sync_object * sync_event; /* Signalled when message is ready */
-  struct sync_object * sync_done; /* For synchronizing cleanup */
-  struct sync_object * sync_done_ack; /* For synchronizing cleanup */
-  struct ntfy_object * ntfy_obj; /* For notification of message ready */
-  bool done;    /* TRUE <==> deleting the object */
-  u32 io_msg_pend;  /* Number of pending MSG_get/put calls */
+	struct list_head list_elem;
+	struct msg_mgr *msg_mgr;
+	u32 max_msgs;		/* Node message depth */
+	u32 msgq_id;		/* Node environment pointer */
+	struct list_head msg_free_list;	/* Free MsgFrames ready to be filled */
+	/* Filled MsgFramess waiting to be read */
+	struct list_head msg_used_list;
+	void *arg;		/* Handle passed to mgr on_exit callback */
+	struct sync_object *sync_event;	/* Signalled when message is ready */
+	struct sync_object *sync_done;	/* For synchronizing cleanup */
+	struct sync_object *sync_done_ack;	/* For synchronizing cleanup */
+	struct ntfy_object *ntfy_obj;	/* For notification of message ready */
+	bool done;		/* TRUE <==> deleting the object */
+	u32 io_msg_pend;	/* Number of pending MSG_get/put calls */
 };
 
 /*
  *  ======== msg_dspmsg ========
  */
 struct msg_dspmsg {
-  struct dsp_msg msg;
-  u32 msgq_id;    /* Identifies the node the message goes to */
+	struct dsp_msg msg;
+	u32 msgq_id;		/* Identifies the node the message goes to */
 };
 
 /*
  *  ======== msg_frame ========
  */
 struct msg_frame {
-  struct list_head list_elem;
-  struct msg_dspmsg msg_data;
+	struct list_head list_elem;
+	struct msg_dspmsg msg_data;
 };
 
 #endif /* _MSG_SM_ */

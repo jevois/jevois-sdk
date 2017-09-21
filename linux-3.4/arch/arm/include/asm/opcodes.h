@@ -10,7 +10,7 @@
 #define __ASM_ARM_OPCODES_H
 
 #ifndef __ASSEMBLY__
-extern asmlinkage unsigned int arm_check_condition (u32 opcode, u32 psr);
+extern asmlinkage unsigned int arm_check_condition(u32 opcode, u32 psr);
 #endif
 
 #define ARM_OPCODE_CONDTEST_FAIL   0
@@ -30,9 +30,9 @@ extern asmlinkage unsigned int arm_check_condition (u32 opcode, u32 psr);
  *
  * Canonical instruction representation:
  *
- *  ARM:    0xKKLLMMNN
- *  Thumb 16-bit: 0x0000KKLL, where KK < 0xE8
- *  Thumb 32-bit: 0xKKLLMMNN, where KK >= 0xE8
+ *	ARM:		0xKKLLMMNN
+ *	Thumb 16-bit:	0x0000KKLL, where KK < 0xE8
+ *	Thumb 32-bit:	0xKKLLMMNN, where KK >= 0xE8
  *
  * There is no way to distinguish an ARM instruction in canonical representation
  * from a Thumb instruction (just as these cannot be distinguished in memory).
@@ -72,7 +72,7 @@ extern asmlinkage unsigned int arm_check_condition (u32 opcode, u32 psr);
 #define __opcode_thumb32_first(x) ((u16)((x) >> 16))
 #define __opcode_thumb32_second(x) ((u16)(x))
 #define __opcode_thumb32_compose(first, second) \
-  (((u32)(u16)(first) << 16) | (u32)(u16)(second))
+	(((u32)(u16)(first) << 16) | (u32)(u16)(second))
 
 #endif /* __ASSEMBLY__ */
 

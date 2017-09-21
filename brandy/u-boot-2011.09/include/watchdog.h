@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -35,35 +35,35 @@
  * Hardware watchdog
  */
 #ifdef CONFIG_HW_WATCHDOG
-#if defined(__ASSEMBLY__)
-#define WATCHDOG_RESET bl hw_watchdog_reset
-#else
-extern void hw_watchdog_reset (void);
+	#if defined(__ASSEMBLY__)
+		#define WATCHDOG_RESET bl hw_watchdog_reset
+	#else
+		extern void hw_watchdog_reset(void);
 
-#define WATCHDOG_RESET hw_watchdog_reset
-#endif /* __ASSEMBLY__ */
+		#define WATCHDOG_RESET hw_watchdog_reset
+	#endif /* __ASSEMBLY__ */
 #else
-/*
- * Maybe a software watchdog?
- */
-#if defined(CONFIG_WATCHDOG)
-#if defined(__ASSEMBLY__)
-#define WATCHDOG_RESET bl watchdog_reset
-#else
-extern void watchdog_reset (void);
+	/*
+	 * Maybe a software watchdog?
+	 */
+	#if defined(CONFIG_WATCHDOG)
+		#if defined(__ASSEMBLY__)
+			#define WATCHDOG_RESET bl watchdog_reset
+		#else
+			extern void watchdog_reset(void);
 
-#define WATCHDOG_RESET watchdog_reset
-#endif
-#else
-/*
- * No hardware or software watchdog.
- */
-#if defined(__ASSEMBLY__)
-#define WATCHDOG_RESET /*XXX DO_NOT_DEL_THIS_COMMENT*/
-#else
-#define WATCHDOG_RESET() {}
-#endif /* __ASSEMBLY__ */
-#endif /* CONFIG_WATCHDOG && !__ASSEMBLY__ */
+			#define WATCHDOG_RESET watchdog_reset
+		#endif
+	#else
+		/*
+		 * No hardware or software watchdog.
+		 */
+		#if defined(__ASSEMBLY__)
+			#define WATCHDOG_RESET /*XXX DO_NOT_DEL_THIS_COMMENT*/
+		#else
+			#define WATCHDOG_RESET() {}
+		#endif /* __ASSEMBLY__ */
+	#endif /* CONFIG_WATCHDOG && !__ASSEMBLY__ */
 #endif /* CONFIG_HW_WATCHDOG */
 
 /*
@@ -72,22 +72,22 @@ extern void watchdog_reset (void);
 
 /* MPC 8xx */
 #if (defined(CONFIG_8xx) || defined(CONFIG_MPC860)) && !defined(__ASSEMBLY__)
-void reset_8xx_watchdog (volatile immap_t * immr);
+	void reset_8xx_watchdog(volatile immap_t *immr);
 #endif
 
 /* MPC 5xx */
 #if defined(CONFIG_5xx) && !defined(__ASSEMBLY__)
-void reset_5xx_watchdog (volatile immap_t * immr);
+	void reset_5xx_watchdog(volatile immap_t *immr);
 #endif
 
 /* MPC 5xxx */
 #if defined(CONFIG_MPC5xxx) && !defined(__ASSEMBLY__)
-void reset_5xxx_watchdog (void);
+	void reset_5xxx_watchdog(void);
 #endif
 
 /* AMCC 4xx */
 #if defined(CONFIG_4xx) && !defined(__ASSEMBLY__)
-void reset_4xx_watchdog (void);
+	void reset_4xx_watchdog(void);
 #endif
 
 #endif /* _WATCHDOG_H_ */

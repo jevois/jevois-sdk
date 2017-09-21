@@ -54,16 +54,16 @@
 #define SUN9IW1P1_REV_A SUNXI_CHIP_REV(SUNXI_CHIP_SUN9IW1P1, 0)
 #define SUN9IW1P1_REV_B SUNXI_CHIP_REV(SUNXI_CHIP_SUN9IW1P1, 1)
 
-extern unsigned int sunxi_get_soc_ver (void);
-extern int sunxi_get_soc_chipid (u8 * chipid);
-extern int sunxi_get_soc_chipid_str (char * chipid);
-extern int sunxi_get_pmu_chipid (u8 * chipid);
-extern int sunxi_get_serial (u8 * serial);
-extern unsigned int sunxi_get_soc_bin (void);
-extern int sunxi_soc_is_secure (void);
+extern unsigned int sunxi_get_soc_ver(void);
+extern int sunxi_get_soc_chipid(u8 *chipid);
+extern int sunxi_get_soc_chipid_str(char *chipid);
+extern int sunxi_get_pmu_chipid(u8 *chipid);
+extern int sunxi_get_serial(u8 *serial);
+extern unsigned int sunxi_get_soc_bin(void);
+extern int sunxi_soc_is_secure(void);
 
 /* sunxi platform init functions */
-void __init sunxi_soc_ver_init (void);
-void __init sunxi_chip_id_init (void);
+void __init sunxi_soc_ver_init(void);
+void __init sunxi_chip_id_init(void);
 
 #endif  /* __SUNXI_MACH_SUNXI_CHIP_H */

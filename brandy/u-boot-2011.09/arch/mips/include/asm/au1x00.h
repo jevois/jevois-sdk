@@ -1,11 +1,11 @@
 /*
  *
  * BRIEF MODULE DESCRIPTION
- *  Include file for Alchemy Semiconductor's Au1k CPU.
+ *	Include file for Alchemy Semiconductor's Au1k CPU.
  *
  * Copyright 2000,2001 MontaVista Software Inc.
  * Author: MontaVista Software, Inc.
- *     ppopov@mvista.com or source@mvista.com
+ *	   ppopov@mvista.com or source@mvista.com
  *
  *  This program is free software; you can redistribute  it and/or modify it
  *  under  the terms of  the GNU General  Public License as published by the
@@ -28,54 +28,54 @@
  *  675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/*
- * some definitions add by takuzo@sm.sony.co.jp and sato@sm.sony.co.jp
- */
+ /*
+  * some definitions add by takuzo@sm.sony.co.jp and sato@sm.sony.co.jp
+  */
 
 #ifndef _AU1X00_H_
 #define _AU1X00_H_
 
 #ifndef __ASSEMBLY__
 /* cpu pipeline flush */
-void static inline au_sync (void)
+void static inline au_sync(void)
 {
-  __asm__ volatile ("sync");
+	__asm__ volatile ("sync");
 }
 
-void static inline au_sync_udelay (int us)
+void static inline au_sync_udelay(int us)
 {
-  __asm__ volatile ("sync");
-  udelay (us);
+	__asm__ volatile ("sync");
+	udelay(us);
 }
 
-void static inline au_writeb (u8 val, int reg)
+void static inline au_writeb(u8 val, int reg)
 {
-  * (volatile u8 *) (reg) = val;
+	*(volatile u8 *)(reg) = val;
 }
 
-void static inline au_writew (u16 val, int reg)
+void static inline au_writew(u16 val, int reg)
 {
-  * (volatile u16 *) (reg) = val;
+	*(volatile u16 *)(reg) = val;
 }
 
-void static inline au_writel (u32 val, int reg)
+void static inline au_writel(u32 val, int reg)
 {
-  * (volatile u32 *) (reg) = val;
+	*(volatile u32 *)(reg) = val;
 }
 
-static inline u8 au_readb (unsigned long port)
+static inline u8 au_readb(unsigned long port)
 {
-  return (* (volatile u8 *) port);
+	return (*(volatile u8 *)port);
 }
 
-static inline u16 au_readw (unsigned long port)
+static inline u16 au_readw(unsigned long port)
 {
-  return (* (volatile u16 *) port);
+	return (*(volatile u16 *)port);
 }
 
-static inline u32 au_readl (unsigned long port)
+static inline u32 au_readl(unsigned long port)
 {
-  return (* (volatile u32 *) port);
+	return (*(volatile u32 *)port);
 }
 
 /* These next three functions should be a generic part of the MIPS
@@ -84,29 +84,29 @@ static inline u32 au_readl (unsigned long port)
  * Taken from PPC tree.  -- Dan
  */
 /* Return the bit position of the most significant 1 bit in a word */
-static __inline__ int __ilog2 (unsigned int x)
+static __inline__ int __ilog2(unsigned int x)
 {
-  int lz;
-  
-  asm volatile (
-    ".set\tnoreorder\n\t"
-    ".set\tnoat\n\t"
-    ".set\tmips32\n\t"
-    "clz\t%0,%1\n\t"
-    ".set\tmips0\n\t"
-    ".set\tat\n\t"
-    ".set\treorder"
-    : "=r" (lz)
-    : "r" (x) );
-    
-  return 31 - lz;
+	int lz;
+
+	asm volatile (
+		".set\tnoreorder\n\t"
+		".set\tnoat\n\t"
+		".set\tmips32\n\t"
+		"clz\t%0,%1\n\t"
+		".set\tmips0\n\t"
+		".set\tat\n\t"
+		".set\treorder"
+		: "=r" (lz)
+		: "r" (x));
+
+	return 31 - lz;
 }
 
-static __inline__ int au_ffz (unsigned int x)
+static __inline__ int au_ffz(unsigned int x)
 {
-  if ( (x = ~x) == 0)
-  { return 32; }
-  return __ilog2 (x & -x);
+	if ((x = ~x) == 0)
+		return 32;
+	return __ilog2(x & -x);
 }
 
 /*
@@ -114,9 +114,9 @@ static __inline__ int au_ffz (unsigned int x)
  * the libc and compiler builtin ffs routines, therefore
  * differs in spirit from the above ffz (man ffs).
  */
-static __inline__ int au_ffs (int x)
+static __inline__ int au_ffs(int x)
 {
-  return __ilog2 (x & -x) + 1;
+	return __ilog2(x & -x) + 1;
 }
 
 #define gpio_set(Value)      outl(Value, SYS_OUTPUTSET)
@@ -133,8 +133,8 @@ static __inline__ int au_ffs (int x)
 #define ALLINTS (IE_IRQ0 | IE_IRQ1 | IE_IRQ2 | IE_IRQ3 | IE_IRQ4 | IE_IRQ5)
 #endif
 
-#define CP0_IWATCHLO    $18,1
-#define CP0_DEBUG   $23
+#define CP0_IWATCHLO		$18,1
+#define CP0_DEBUG		$23
 
 /* SDRAM Controller */
 #ifdef CONFIG_SOC_AU1550
@@ -374,8 +374,8 @@ static __inline__ int au_ffs (int x)
 
 #define AU1X00_MAX_INTR           63
 
-#define AU1100_SD   2
-#define AU1100_GPIO_208_215 29
+#define AU1100_SD		2
+#define	AU1100_GPIO_208_215	29
 /* REDEFINE SECONDARY GPIO BLOCK INTO IC1 CONTROLLER HERE */
 
 /* Programmable Counters 0 and 1 */
@@ -499,11 +499,11 @@ static __inline__ int au_ffs (int x)
 /* Ethernet Controllers  */
 #define AU1000_ETH0_BASE          0xB0500000
 #define AU1000_ETH1_BASE          0xB0510000
-#define AU1500_ETH0_BASE    0xB1500000
-#define AU1500_ETH1_BASE    0xB1510000
-#define AU1100_ETH0_BASE    0xB0500000
-#define AU1550_ETH0_BASE    0xB0500000
-#define AU1550_ETH1_BASE    0xB0510000
+#define AU1500_ETH0_BASE	  0xB1500000
+#define AU1500_ETH1_BASE	  0xB1510000
+#define AU1100_ETH0_BASE	  0xB0500000
+#define AU1550_ETH0_BASE	  0xB0500000
+#define AU1550_ETH1_BASE	  0xB0510000
 
 /* 4 byte offsets from AU1000_ETH_BASE */
 #define MAC_CONTROL                     0x0
@@ -622,8 +622,8 @@ static __inline__ int au_ffs (int x)
 #define RX_MISSED_FRAME            (1<<31)
 
 #define RX_ERROR (RX_WDOG_TIMER | RX_RUNT | RX_OVERLEN |  \
-                  RX_COLL | RX_MII_ERROR | RX_CRC_ERROR | \
-                  RX_LEN_ERROR | RX_U_CNTRL_FRAME | RX_MISSED_FRAME)
+		    RX_COLL | RX_MII_ERROR | RX_CRC_ERROR | \
+		    RX_LEN_ERROR | RX_U_CNTRL_FRAME | RX_MISSED_FRAME)
 #define MAC_RX_BUFF0_ADDR                0x4
 #define RX_DMA_ENABLE               (1<<0)
 #define RX_T_DONE                   (1<<1)
@@ -645,98 +645,98 @@ static __inline__ int au_ffs (int x)
 #define UART_BASE                 UART0_ADDR
 #define UART_DEBUG_BASE           UART2_ADDR
 
-#define UART_RX   0 /* Receive buffer */
-#define UART_TX   4 /* Transmit buffer */
-#define UART_IER  8 /* Interrupt Enable Register */
-#define UART_IIR  0xC /* Interrupt ID Register */
-#define UART_FCR  0x10  /* FIFO Control Register */
-#define UART_LCR  0x14  /* Line Control Register */
-#define UART_MCR  0x18  /* Modem Control Register */
-#define UART_LSR  0x1C  /* Line Status Register */
-#define UART_MSR  0x20  /* Modem Status Register */
-#define UART_CLK  0x28  /* Baud Rate Clock Divider */
-#define UART_ENABLE 0x100 /* Uart enable */
+#define UART_RX		0	/* Receive buffer */
+#define UART_TX		4	/* Transmit buffer */
+#define UART_IER	8	/* Interrupt Enable Register */
+#define UART_IIR	0xC	/* Interrupt ID Register */
+#define UART_FCR	0x10	/* FIFO Control Register */
+#define UART_LCR	0x14	/* Line Control Register */
+#define UART_MCR	0x18	/* Modem Control Register */
+#define UART_LSR	0x1C	/* Line Status Register */
+#define UART_MSR	0x20	/* Modem Status Register */
+#define UART_CLK	0x28	/* Baud Rate Clock Divider */
+#define UART_ENABLE	0x100	/* Uart enable */
 
 #define UART_EN_CE      1       /* Clock enable */
 #define UART_EN_E       2       /* Enable */
 
-#define UART_FCR_ENABLE_FIFO  0x01 /* Enable the FIFO */
-#define UART_FCR_CLEAR_RCVR 0x02 /* Clear the RCVR FIFO */
-#define UART_FCR_CLEAR_XMIT 0x04 /* Clear the XMIT FIFO */
-#define UART_FCR_DMA_SELECT 0x08 /* For DMA applications */
-#define UART_FCR_TRIGGER_MASK 0xF0 /* Mask for the FIFO trigger range */
-#define UART_FCR_R_TRIGGER_1  0x00 /* Mask for receive trigger set at 1 */
-#define UART_FCR_R_TRIGGER_4  0x40 /* Mask for receive trigger set at 4 */
-#define UART_FCR_R_TRIGGER_8  0x80 /* Mask for receive trigger set at 8 */
+#define UART_FCR_ENABLE_FIFO	0x01 /* Enable the FIFO */
+#define UART_FCR_CLEAR_RCVR	0x02 /* Clear the RCVR FIFO */
+#define UART_FCR_CLEAR_XMIT	0x04 /* Clear the XMIT FIFO */
+#define UART_FCR_DMA_SELECT	0x08 /* For DMA applications */
+#define UART_FCR_TRIGGER_MASK	0xF0 /* Mask for the FIFO trigger range */
+#define UART_FCR_R_TRIGGER_1	0x00 /* Mask for receive trigger set at 1 */
+#define UART_FCR_R_TRIGGER_4	0x40 /* Mask for receive trigger set at 4 */
+#define UART_FCR_R_TRIGGER_8	0x80 /* Mask for receive trigger set at 8 */
 #define UART_FCR_R_TRIGGER_14   0xA0 /* Mask for receive trigger set at 14 */
-#define UART_FCR_T_TRIGGER_0  0x00 /* Mask for transmit trigger set at 0 */
-#define UART_FCR_T_TRIGGER_4  0x10 /* Mask for transmit trigger set at 4 */
+#define UART_FCR_T_TRIGGER_0	0x00 /* Mask for transmit trigger set at 0 */
+#define UART_FCR_T_TRIGGER_4	0x10 /* Mask for transmit trigger set at 4 */
 #define UART_FCR_T_TRIGGER_8    0x20 /* Mask for transmit trigger set at 8 */
-#define UART_FCR_T_TRIGGER_12 0x30 /* Mask for transmit trigger set at 12 */
+#define UART_FCR_T_TRIGGER_12	0x30 /* Mask for transmit trigger set at 12 */
 
 /*
  * These are the definitions for the Line Control Register
  */
-#define UART_LCR_SBC  0x40  /* Set break control */
-#define UART_LCR_SPAR 0x20  /* Stick parity (?) */
-#define UART_LCR_EPAR 0x10  /* Even parity select */
-#define UART_LCR_PARITY 0x08  /* Parity Enable */
-#define UART_LCR_STOP 0x04  /* Stop bits: 0=1 stop bit, 1= 2 stop bits */
-#define UART_LCR_WLEN5  0x00  /* Wordlength: 5 bits */
-#define UART_LCR_WLEN6  0x01  /* Wordlength: 6 bits */
-#define UART_LCR_WLEN7  0x02  /* Wordlength: 7 bits */
-#define UART_LCR_WLEN8  0x03  /* Wordlength: 8 bits */
+#define UART_LCR_SBC	0x40	/* Set break control */
+#define UART_LCR_SPAR	0x20	/* Stick parity (?) */
+#define UART_LCR_EPAR	0x10	/* Even parity select */
+#define UART_LCR_PARITY	0x08	/* Parity Enable */
+#define UART_LCR_STOP	0x04	/* Stop bits: 0=1 stop bit, 1= 2 stop bits */
+#define UART_LCR_WLEN5  0x00	/* Wordlength: 5 bits */
+#define UART_LCR_WLEN6  0x01	/* Wordlength: 6 bits */
+#define UART_LCR_WLEN7  0x02	/* Wordlength: 7 bits */
+#define UART_LCR_WLEN8  0x03	/* Wordlength: 8 bits */
 
 /*
  * These are the definitions for the Line Status Register
  */
-#define UART_LSR_TEMT 0x40  /* Transmitter empty */
-#define UART_LSR_THRE 0x20  /* Transmit-hold-register empty */
-#define UART_LSR_BI 0x10  /* Break interrupt indicator */
-#define UART_LSR_FE 0x08  /* Frame error indicator */
-#define UART_LSR_PE 0x04  /* Parity error indicator */
-#define UART_LSR_OE 0x02  /* Overrun error indicator */
-#define UART_LSR_DR 0x01  /* Receiver data ready */
+#define UART_LSR_TEMT	0x40	/* Transmitter empty */
+#define UART_LSR_THRE	0x20	/* Transmit-hold-register empty */
+#define UART_LSR_BI	0x10	/* Break interrupt indicator */
+#define UART_LSR_FE	0x08	/* Frame error indicator */
+#define UART_LSR_PE	0x04	/* Parity error indicator */
+#define UART_LSR_OE	0x02	/* Overrun error indicator */
+#define UART_LSR_DR	0x01	/* Receiver data ready */
 
 /*
  * These are the definitions for the Interrupt Identification Register
  */
-#define UART_IIR_NO_INT 0x01  /* No interrupts pending */
-#define UART_IIR_ID 0x06  /* Mask for the interrupt ID */
-#define UART_IIR_MSI  0x00  /* Modem status interrupt */
-#define UART_IIR_THRI 0x02  /* Transmitter holding register empty */
-#define UART_IIR_RDI  0x04  /* Receiver data interrupt */
-#define UART_IIR_RLSI 0x06  /* Receiver line status interrupt */
+#define UART_IIR_NO_INT	0x01	/* No interrupts pending */
+#define UART_IIR_ID	0x06	/* Mask for the interrupt ID */
+#define UART_IIR_MSI	0x00	/* Modem status interrupt */
+#define UART_IIR_THRI	0x02	/* Transmitter holding register empty */
+#define UART_IIR_RDI	0x04	/* Receiver data interrupt */
+#define UART_IIR_RLSI	0x06	/* Receiver line status interrupt */
 
 /*
  * These are the definitions for the Interrupt Enable Register
  */
-#define UART_IER_MSI  0x08  /* Enable Modem status interrupt */
-#define UART_IER_RLSI 0x04  /* Enable receiver line status interrupt */
-#define UART_IER_THRI 0x02  /* Enable Transmitter holding register int. */
-#define UART_IER_RDI  0x01  /* Enable receiver data interrupt */
+#define UART_IER_MSI	0x08	/* Enable Modem status interrupt */
+#define UART_IER_RLSI	0x04	/* Enable receiver line status interrupt */
+#define UART_IER_THRI	0x02	/* Enable Transmitter holding register int. */
+#define UART_IER_RDI	0x01	/* Enable receiver data interrupt */
 
 /*
  * These are the definitions for the Modem Control Register
  */
-#define UART_MCR_LOOP 0x10  /* Enable loopback test mode */
-#define UART_MCR_OUT2 0x08  /* Out2 complement */
-#define UART_MCR_OUT1 0x04  /* Out1 complement */
-#define UART_MCR_RTS  0x02  /* RTS complement */
-#define UART_MCR_DTR  0x01  /* DTR complement */
+#define UART_MCR_LOOP	0x10	/* Enable loopback test mode */
+#define UART_MCR_OUT2	0x08	/* Out2 complement */
+#define UART_MCR_OUT1	0x04	/* Out1 complement */
+#define UART_MCR_RTS	0x02	/* RTS complement */
+#define UART_MCR_DTR	0x01	/* DTR complement */
 
 /*
  * These are the definitions for the Modem Status Register
  */
-#define UART_MSR_DCD  0x80  /* Data Carrier Detect */
-#define UART_MSR_RI 0x40  /* Ring Indicator */
-#define UART_MSR_DSR  0x20  /* Data Set Ready */
-#define UART_MSR_CTS  0x10  /* Clear to Send */
-#define UART_MSR_DDCD 0x08  /* Delta DCD */
-#define UART_MSR_TERI 0x04  /* Trailing edge ring indicator */
-#define UART_MSR_DDSR 0x02  /* Delta DSR */
-#define UART_MSR_DCTS 0x01  /* Delta CTS */
-#define UART_MSR_ANY_DELTA 0x0F /* Any of the delta bits! */
+#define UART_MSR_DCD	0x80	/* Data Carrier Detect */
+#define UART_MSR_RI	0x40	/* Ring Indicator */
+#define UART_MSR_DSR	0x20	/* Data Set Ready */
+#define UART_MSR_CTS	0x10	/* Clear to Send */
+#define UART_MSR_DDCD	0x08	/* Delta DCD */
+#define UART_MSR_TERI	0x04	/* Trailing edge ring indicator */
+#define UART_MSR_DDSR	0x02	/* Delta DSR */
+#define UART_MSR_DCTS	0x01	/* Delta CTS */
+#define UART_MSR_ANY_DELTA 0x0F	/* Any of the delta bits! */
 
 
 /* SSIO */
@@ -792,46 +792,46 @@ static __inline__ int au_ffs (int x)
 /*
  * Register content definitions
  */
-#define SSI_STATUS_BF       (1<<4)
-#define SSI_STATUS_OF       (1<<3)
-#define SSI_STATUS_UF       (1<<2)
-#define SSI_STATUS_D        (1<<1)
-#define SSI_STATUS_B        (1<<0)
+#define SSI_STATUS_BF				(1<<4)
+#define SSI_STATUS_OF				(1<<3)
+#define SSI_STATUS_UF				(1<<2)
+#define SSI_STATUS_D				(1<<1)
+#define SSI_STATUS_B				(1<<0)
 
 /* SSI_INT */
-#define SSI_INT_OI          (1<<3)
-#define SSI_INT_UI          (1<<2)
-#define SSI_INT_DI          (1<<1)
+#define SSI_INT_OI					(1<<3)
+#define SSI_INT_UI					(1<<2)
+#define SSI_INT_DI					(1<<1)
 
 /* SSI_INTEN */
-#define SSI_INTEN_OIE       (1<<3)
-#define SSI_INTEN_UIE       (1<<2)
-#define SSI_INTEN_DIE       (1<<1)
+#define SSI_INTEN_OIE				(1<<3)
+#define SSI_INTEN_UIE				(1<<2)
+#define SSI_INTEN_DIE				(1<<1)
 
-#define SSI_CONFIG_AO       (1<<24)
-#define SSI_CONFIG_DO       (1<<23)
-#define SSI_CONFIG_ALEN       (7<<20)
-#define SSI_CONFIG_DLEN       (15<<16)
-#define SSI_CONFIG_DD       (1<<11)
-#define SSI_CONFIG_AD       (1<<10)
-#define SSI_CONFIG_BM       (3<<8)
-#define SSI_CONFIG_CE       (1<<7)
-#define SSI_CONFIG_DP       (1<<6)
-#define SSI_CONFIG_DL       (1<<5)
-#define SSI_CONFIG_EP       (1<<4)
-#define SSI_CONFIG_ALEN_N(N)    ((N-1)<<20)
-#define SSI_CONFIG_DLEN_N(N)    ((N-1)<<16)
-#define SSI_CONFIG_BM_HI      (0<<8)
-#define SSI_CONFIG_BM_LO      (1<<8)
-#define SSI_CONFIG_BM_CY      (2<<8)
+#define SSI_CONFIG_AO				(1<<24)
+#define SSI_CONFIG_DO				(1<<23)
+#define SSI_CONFIG_ALEN				(7<<20)
+#define SSI_CONFIG_DLEN				(15<<16)
+#define SSI_CONFIG_DD				(1<<11)
+#define SSI_CONFIG_AD				(1<<10)
+#define SSI_CONFIG_BM				(3<<8)
+#define SSI_CONFIG_CE				(1<<7)
+#define SSI_CONFIG_DP				(1<<6)
+#define SSI_CONFIG_DL				(1<<5)
+#define SSI_CONFIG_EP				(1<<4)
+#define SSI_CONFIG_ALEN_N(N)		((N-1)<<20)
+#define SSI_CONFIG_DLEN_N(N)		((N-1)<<16)
+#define SSI_CONFIG_BM_HI			(0<<8)
+#define SSI_CONFIG_BM_LO			(1<<8)
+#define SSI_CONFIG_BM_CY			(2<<8)
 
-#define SSI_ADATA_D         (1<<24)
-#define SSI_ADATA_ADDR        (0xFF<<16)
-#define SSI_ADATA_DATA        (0x0FFF)
-#define SSI_ADATA_ADDR_N(N)     (N<<16)
+#define SSI_ADATA_D					(1<<24)
+#define SSI_ADATA_ADDR				(0xFF<<16)
+#define SSI_ADATA_DATA				(0x0FFF)
+#define SSI_ADATA_ADDR_N(N)			(N<<16)
 
-#define SSI_ENABLE_CD       (1<<1)
-#define SSI_ENABLE_E        (1<<0)
+#define SSI_ENABLE_CD				(1<<1)
+#define SSI_ENABLE_E				(1<<0)
 
 
 /* IrDA Controller */
@@ -858,8 +858,8 @@ static __inline__ int au_ffs (int x)
 #define IR_RX_ENABLE            (1<<11)
 #define IR_TX_ENABLE            (1<<12)
 #define IR_LOOPBACK             (1<<14)
-#define IR_SIR_MODE           (IR_SIR | IR_DMA_ENABLE | \
-                               IR_RX_ALL | IR_RX_ENABLE | IR_SF | IR_16CRC)
+#define IR_SIR_MODE	          (IR_SIR | IR_DMA_ENABLE | \
+				   IR_RX_ALL | IR_RX_ENABLE | IR_SF | IR_16CRC)
 #define IR_SIR_FLAGS              (IRDA_BASE+0x24)
 #define IR_ENABLE                 (IRDA_BASE+0x28)
 #define IR_RX_STATUS            (1<<9)
@@ -875,22 +875,22 @@ static __inline__ int au_ffs (int x)
 
 /* GPIO */
 #define SYS_PINFUNC               0xB190002C
-#define SYS_PF_USB      (1<<15) /* 2nd USB device/host */
-#define SYS_PF_U3     (1<<14) /* GPIO23/U3TXD */
-#define SYS_PF_U2     (1<<13) /* GPIO22/U2TXD */
-#define SYS_PF_U1     (1<<12) /* GPIO21/U1TXD */
-#define SYS_PF_SRC      (1<<11) /* GPIO6/SROMCKE */
-#define SYS_PF_CK5      (1<<10) /* GPIO3/CLK5 */
-#define SYS_PF_CK4      (1<<9)  /* GPIO2/CLK4 */
-#define SYS_PF_IRF      (1<<8)  /* GPIO15/IRFIRSEL */
-#define SYS_PF_UR3      (1<<7)  /* GPIO[14:9]/UART3 */
-#define SYS_PF_I2D      (1<<6)  /* GPIO8/I2SDI */
-#define SYS_PF_I2S      (1<<5)  /* I2S/GPIO[29:31] */
-#define SYS_PF_NI2      (1<<4)  /* NI2/GPIO[24:28] */
-#define SYS_PF_U0     (1<<3)  /* U0TXD/GPIO20 */
-#define SYS_PF_RD     (1<<2)  /* IRTXD/GPIO19 */
-#define SYS_PF_A97      (1<<1)  /* AC97/SSL1 */
-#define SYS_PF_S0     (1<<0)  /* SSI_0/GPIO[16:18] */
+#define SYS_PF_USB			(1<<15)	/* 2nd USB device/host */
+#define SYS_PF_U3			(1<<14)	/* GPIO23/U3TXD */
+#define SYS_PF_U2			(1<<13) /* GPIO22/U2TXD */
+#define SYS_PF_U1			(1<<12) /* GPIO21/U1TXD */
+#define SYS_PF_SRC			(1<<11)	/* GPIO6/SROMCKE */
+#define SYS_PF_CK5			(1<<10)	/* GPIO3/CLK5 */
+#define SYS_PF_CK4			(1<<9)	/* GPIO2/CLK4 */
+#define SYS_PF_IRF			(1<<8)	/* GPIO15/IRFIRSEL */
+#define SYS_PF_UR3			(1<<7)	/* GPIO[14:9]/UART3 */
+#define SYS_PF_I2D			(1<<6)	/* GPIO8/I2SDI */
+#define SYS_PF_I2S			(1<<5)	/* I2S/GPIO[29:31] */
+#define SYS_PF_NI2			(1<<4)	/* NI2/GPIO[24:28] */
+#define SYS_PF_U0			(1<<3)	/* U0TXD/GPIO20 */
+#define SYS_PF_RD			(1<<2)	/* IRTXD/GPIO19 */
+#define SYS_PF_A97			(1<<1)	/* AC97/SSL1 */
+#define SYS_PF_S0			(1<<0)	/* SSI_0/GPIO[16:18] */
 #define SYS_TRIOUTRD              0xB1900100
 #define SYS_TRIOUTCLR             0xB1900100
 #define SYS_OUTPUTRD              0xB1900108

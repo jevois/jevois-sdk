@@ -55,7 +55,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <linux/hardirq.h>
 #include <linux/module.h>
 #include <linux/spinlock.h>
-#include <linux/string.h>    
+#include <linux/string.h>		
 #include <stdarg.h>
 #include <linux/seq_file.h>
 #include "img_types.h"
@@ -67,7 +67,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "pvr_uaccess.h"
 
 #if !defined(CONFIG_PREEMPT)
-#define PVR_DEBUG_ALWAYS_USE_SPINLOCK
+#define	PVR_DEBUG_ALWAYS_USE_SPINLOCK
 #endif
 
 #if defined(PVRSRV_NEED_PVR_DPF)
@@ -82,18 +82,18 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #if defined(PVRSRV_DEBUG_CCB_MAX)
 
-#define PVRSRV_DEBUG_CCB_MESG_MAX PVR_MAX_DEBUG_MESSAGE_LEN
+#define PVRSRV_DEBUG_CCB_MESG_MAX	PVR_MAX_DEBUG_MESSAGE_LEN
 
 #include <linux/syscalls.h>
 #include <linux/time.h>
 
 typedef struct
 {
-  const IMG_CHAR * pszFile;
-  IMG_INT iLine;
-  IMG_UINT32 ui32TID;
-  IMG_CHAR pcMesg[PVRSRV_DEBUG_CCB_MESG_MAX];
-  struct timeval sTimeVal;
+	const IMG_CHAR *pszFile;
+	IMG_INT iLine;
+	IMG_UINT32 ui32TID;
+	IMG_CHAR pcMesg[PVRSRV_DEBUG_CCB_MESG_MAX];
+	struct timeval sTimeVal;
 }
 PVRSRV_DEBUG_CCB;
 
@@ -104,84 +104,84 @@ static IMG_UINT giOffset = 0;
 static PVRSRV_LINUX_MUTEX gsDebugCCBMutex;
 
 static void
-AddToBufferCCB (const IMG_CHAR * pszFileName, IMG_UINT32 ui32Line,
-                const IMG_CHAR * szBuffer)
+AddToBufferCCB(const IMG_CHAR *pszFileName, IMG_UINT32 ui32Line,
+			   const IMG_CHAR *szBuffer)
 {
-  LinuxLockMutex (&gsDebugCCBMutex);
-  
-  gsDebugCCB[giOffset].pszFile = pszFileName;
-  gsDebugCCB[giOffset].iLine   = ui32Line;
-  gsDebugCCB[giOffset].ui32TID = current->tgid;
-  
-  do_gettimeofday (&gsDebugCCB[giOffset].sTimeVal);
-  
-  strncpy (gsDebugCCB[giOffset].pcMesg, szBuffer, PVRSRV_DEBUG_CCB_MESG_MAX - 1);
-  gsDebugCCB[giOffset].pcMesg[PVRSRV_DEBUG_CCB_MESG_MAX - 1] = 0;
-  
-  giOffset = (giOffset + 1) % PVRSRV_DEBUG_CCB_MAX;
-  
-  LinuxUnLockMutex (&gsDebugCCBMutex);
+	LinuxLockMutex(&gsDebugCCBMutex);
+
+	gsDebugCCB[giOffset].pszFile = pszFileName;
+	gsDebugCCB[giOffset].iLine   = ui32Line;
+	gsDebugCCB[giOffset].ui32TID = current->tgid;
+
+	do_gettimeofday(&gsDebugCCB[giOffset].sTimeVal);
+
+	strncpy(gsDebugCCB[giOffset].pcMesg, szBuffer, PVRSRV_DEBUG_CCB_MESG_MAX - 1);
+	gsDebugCCB[giOffset].pcMesg[PVRSRV_DEBUG_CCB_MESG_MAX - 1] = 0;
+
+	giOffset = (giOffset + 1) % PVRSRV_DEBUG_CCB_MAX;
+
+	LinuxUnLockMutex(&gsDebugCCBMutex);
 }
 
-IMG_EXPORT IMG_VOID PVRSRVDebugPrintfDumpCCB (void)
+IMG_EXPORT IMG_VOID PVRSRVDebugPrintfDumpCCB(void)
 {
-  int i;
-  
-  LinuxLockMutex (&gsDebugCCBMutex);
-  
-  for (i = 0; i < PVRSRV_DEBUG_CCB_MAX; i++)
-  {
-    PVRSRV_DEBUG_CCB * psDebugCCBEntry =
-      &gsDebugCCB[ (giOffset + i) % PVRSRV_DEBUG_CCB_MAX];
-      
-    /* Early on, we won't have PVRSRV_DEBUG_CCB_MAX messages */
-    if (!psDebugCCBEntry->pszFile)
-    { continue; }
-    
-    printk ("%s:%d:\t[%5ld.%6ld] %s\n",
-            psDebugCCBEntry->pszFile,
-            psDebugCCBEntry->iLine,
-            (long) psDebugCCBEntry->sTimeVal.tv_sec,
-            (long) psDebugCCBEntry->sTimeVal.tv_usec,
-            psDebugCCBEntry->pcMesg);
-  }
-  
-  LinuxUnLockMutex (&gsDebugCCBMutex);
+	int i;
+
+	LinuxLockMutex(&gsDebugCCBMutex);
+	
+	for(i = 0; i < PVRSRV_DEBUG_CCB_MAX; i++)
+	{
+		PVRSRV_DEBUG_CCB *psDebugCCBEntry =
+			&gsDebugCCB[(giOffset + i) % PVRSRV_DEBUG_CCB_MAX];
+
+		/* Early on, we won't have PVRSRV_DEBUG_CCB_MAX messages */
+		if(!psDebugCCBEntry->pszFile)
+			continue;
+
+		printk("%s:%d:\t[%5ld.%6ld] %s\n",
+			   psDebugCCBEntry->pszFile,
+			   psDebugCCBEntry->iLine,
+			   (long)psDebugCCBEntry->sTimeVal.tv_sec,
+			   (long)psDebugCCBEntry->sTimeVal.tv_usec,
+			   psDebugCCBEntry->pcMesg);
+	}
+
+	LinuxUnLockMutex(&gsDebugCCBMutex);
 }
 
 #else /* defined(PVRSRV_DEBUG_CCB_MAX) */
 static INLINE void
-AddToBufferCCB (const IMG_CHAR * pszFileName, IMG_UINT32 ui32Line,
-                const IMG_CHAR * szBuffer)
+AddToBufferCCB(const IMG_CHAR *pszFileName, IMG_UINT32 ui32Line,
+               const IMG_CHAR *szBuffer)
 {
-  (void) pszFileName;
-  (void) szBuffer;
-  (void) ui32Line;
+	(void)pszFileName;
+	(void)szBuffer;
+	(void)ui32Line;
 }
 
-IMG_EXPORT IMG_VOID PVRSRVDebugPrintfDumpCCB (void)
+IMG_EXPORT IMG_VOID PVRSRVDebugPrintfDumpCCB(void)
 {
-  /* Not available */
+	/* Not available */
 }
 
 #endif /* defined(PVRSRV_DEBUG_CCB_MAX) */
 
 #endif /* defined(PVRSRV_NEED_PVR_DPF) */
 
-static IMG_BOOL VBAppend (IMG_CHAR * pszBuf, IMG_UINT32 ui32BufSiz,
-                          const IMG_CHAR * pszFormat, va_list VArgs)
-IMG_FORMAT_PRINTF (3, 0);
+static IMG_BOOL VBAppend(IMG_CHAR *pszBuf, IMG_UINT32 ui32BufSiz,
+						 const IMG_CHAR* pszFormat, va_list VArgs)
+						 IMG_FORMAT_PRINTF(3, 0);
 
 
 #if defined(PVRSRV_NEED_PVR_DPF)
 
 /* NOTE: Must NOT be static! Used in module.c.. */
 IMG_UINT32 gPVRDebugLevel =
-  (DBGPRIV_FATAL | DBGPRIV_ERROR | DBGPRIV_WARNING | DBGPRIV_BUFFERED);
+	(DBGPRIV_FATAL | DBGPRIV_ERROR | DBGPRIV_WARNING | DBGPRIV_BUFFERED);
 
 #endif /* defined(PVRSRV_NEED_PVR_DPF) || defined(PVRSRV_NEED_PVR_TRACE) */
 
-#define PVR_MAX_MSG_LEN PVR_MAX_DEBUG_MESSAGE_LEN
+#define	PVR_MAX_MSG_LEN PVR_MAX_DEBUG_MESSAGE_LEN
 
 #if !defined(PVR_DEBUG_ALWAYS_USE_SPINLOCK)
 /* Message buffer for non-IRQ messages */
@@ -201,63 +201,63 @@ static PVRSRV_LINUX_MUTEX gsDebugMutexNonIRQ;
 /* PRQA S 0671,0685 1 */ /* ignore warnings about C99 style initialisation */
 static spinlock_t gsDebugLockIRQ = SPIN_LOCK_UNLOCKED;
 #else
-static DEFINE_SPINLOCK (gsDebugLockIRQ);
+static DEFINE_SPINLOCK(gsDebugLockIRQ);
 #endif
 
 #if !defined(PVR_DEBUG_ALWAYS_USE_SPINLOCK)
-#if !defined (USE_SPIN_LOCK) /* to keep QAC happy */
-#define USE_SPIN_LOCK (in_interrupt() || !preemptible())
+#if !defined (USE_SPIN_LOCK) /* to keep QAC happy */ 
+#define	USE_SPIN_LOCK (in_interrupt() || !preemptible())
 #endif
 #endif
 
-static inline void GetBufferLock (unsigned long * pulLockFlags)
+static inline void GetBufferLock(unsigned long *pulLockFlags)
 {
-  #if !defined(PVR_DEBUG_ALWAYS_USE_SPINLOCK)
-  if (USE_SPIN_LOCK)
-  #endif
-  {
-    spin_lock_irqsave (&gsDebugLockIRQ, *pulLockFlags);
-  }
-  #if !defined(PVR_DEBUG_ALWAYS_USE_SPINLOCK)
-  else
-  {
-    LinuxLockMutexNested (&gsDebugMutexNonIRQ, PVRSRV_LOCK_CLASS_PVR_DEBUG);
-  }
-  #endif
+#if !defined(PVR_DEBUG_ALWAYS_USE_SPINLOCK)
+	if (USE_SPIN_LOCK)
+#endif
+	{
+		spin_lock_irqsave(&gsDebugLockIRQ, *pulLockFlags);
+	}
+#if !defined(PVR_DEBUG_ALWAYS_USE_SPINLOCK)
+	else
+	{
+		LinuxLockMutexNested(&gsDebugMutexNonIRQ, PVRSRV_LOCK_CLASS_PVR_DEBUG);
+	}
+#endif
 }
 
-static inline void ReleaseBufferLock (unsigned long ulLockFlags)
+static inline void ReleaseBufferLock(unsigned long ulLockFlags)
 {
-  #if !defined(PVR_DEBUG_ALWAYS_USE_SPINLOCK)
-  if (USE_SPIN_LOCK)
-  #endif
-  {
-    spin_unlock_irqrestore (&gsDebugLockIRQ, ulLockFlags);
-  }
-  #if !defined(PVR_DEBUG_ALWAYS_USE_SPINLOCK)
-  else
-  {
-    LinuxUnLockMutex (&gsDebugMutexNonIRQ);
-  }
-  #endif
+#if !defined(PVR_DEBUG_ALWAYS_USE_SPINLOCK)
+	if (USE_SPIN_LOCK)
+#endif
+	{
+		spin_unlock_irqrestore(&gsDebugLockIRQ, ulLockFlags);
+	}
+#if !defined(PVR_DEBUG_ALWAYS_USE_SPINLOCK)
+	else
+	{
+		LinuxUnLockMutex(&gsDebugMutexNonIRQ);
+	}
+#endif
 }
 
-static inline void SelectBuffer (IMG_CHAR ** ppszBuf, IMG_UINT32 * pui32BufSiz)
+static inline void SelectBuffer(IMG_CHAR **ppszBuf, IMG_UINT32 *pui32BufSiz)
 {
-  #if !defined(PVR_DEBUG_ALWAYS_USE_SPINLOCK)
-  if (USE_SPIN_LOCK)
-  #endif
-  {
-    *ppszBuf = gszBufferIRQ;
-    *pui32BufSiz = sizeof (gszBufferIRQ);
-  }
-  #if !defined(PVR_DEBUG_ALWAYS_USE_SPINLOCK)
-  else
-  {
-    *ppszBuf = gszBufferNonIRQ;
-    *pui32BufSiz = sizeof (gszBufferNonIRQ);
-  }
-  #endif
+#if !defined(PVR_DEBUG_ALWAYS_USE_SPINLOCK)
+	if (USE_SPIN_LOCK)
+#endif
+	{
+		*ppszBuf = gszBufferIRQ;
+		*pui32BufSiz = sizeof(gszBufferIRQ);
+	}
+#if !defined(PVR_DEBUG_ALWAYS_USE_SPINLOCK)
+	else
+	{
+		*ppszBuf = gszBufferNonIRQ;
+		*pui32BufSiz = sizeof(gszBufferNonIRQ);
+	}
+#endif
 }
 
 /*
@@ -265,107 +265,107 @@ static inline void SelectBuffer (IMG_CHAR ** ppszBuf, IMG_UINT32 * pui32BufSiz)
  * The function takes a variable number of arguments, pointed
  * to by the var args list.
  */
-static IMG_BOOL VBAppend (IMG_CHAR * pszBuf, IMG_UINT32 ui32BufSiz, const IMG_CHAR * pszFormat, va_list VArgs)
+static IMG_BOOL VBAppend(IMG_CHAR *pszBuf, IMG_UINT32 ui32BufSiz, const IMG_CHAR* pszFormat, va_list VArgs)
 {
-  IMG_UINT32 ui32Used;
-  IMG_UINT32 ui32Space;
-  IMG_INT32 i32Len;
-  
-  ui32Used = strlen (pszBuf);
-  BUG_ON (ui32Used >= ui32BufSiz);
-  ui32Space = ui32BufSiz - ui32Used;
-  
-  i32Len = vsnprintf (&pszBuf[ui32Used], ui32Space, pszFormat, VArgs);
-  pszBuf[ui32BufSiz - 1] = 0;
-  
-  /* Return true if string was truncated */
-  return (i32Len < 0 || i32Len >= (IMG_INT32) ui32Space) ? IMG_TRUE : IMG_FALSE;
+	IMG_UINT32 ui32Used;
+	IMG_UINT32 ui32Space;
+	IMG_INT32 i32Len;
+
+	ui32Used = strlen(pszBuf);
+	BUG_ON(ui32Used >= ui32BufSiz);
+	ui32Space = ui32BufSiz - ui32Used;
+
+	i32Len = vsnprintf(&pszBuf[ui32Used], ui32Space, pszFormat, VArgs);
+	pszBuf[ui32BufSiz - 1] = 0;
+
+	/* Return true if string was truncated */
+	return (i32Len < 0 || i32Len >= (IMG_INT32)ui32Space) ? IMG_TRUE : IMG_FALSE;
 }
 
 /* Actually required for ReleasePrintf too */
 
-IMG_VOID PVRDPFInit (IMG_VOID)
+IMG_VOID PVRDPFInit(IMG_VOID)
 {
-  #if !defined(PVR_DEBUG_ALWAYS_USE_SPINLOCK)
-  LinuxInitMutex (&gsDebugMutexNonIRQ);
-  #endif
-  #if defined(PVRSRV_DEBUG_CCB_MAX)
-  LinuxInitMutex (&gsDebugCCBMutex);
-  #endif
+#if !defined(PVR_DEBUG_ALWAYS_USE_SPINLOCK)
+	LinuxInitMutex(&gsDebugMutexNonIRQ);
+#endif
+#if defined(PVRSRV_DEBUG_CCB_MAX)
+	LinuxInitMutex(&gsDebugCCBMutex);
+#endif
 }
 
 /*!
 ******************************************************************************
-  @Function    PVRSRVReleasePrintf
-  @Description To output an important message to the user in release builds
-  @Input       pszFormat - The message format string
-  @Input       ... - Zero or more arguments for use by the format string
-  @Return      None
+	@Function    PVRSRVReleasePrintf
+	@Description To output an important message to the user in release builds
+	@Input       pszFormat - The message format string
+	@Input       ... - Zero or more arguments for use by the format string
+	@Return      None
  ******************************************************************************/
-IMG_VOID PVRSRVReleasePrintf (const IMG_CHAR * pszFormat, ...)
+IMG_VOID PVRSRVReleasePrintf(const IMG_CHAR *pszFormat, ...)
 {
-  va_list vaArgs;
-  unsigned long ulLockFlags = 0;
-  IMG_CHAR * pszBuf;
-  IMG_UINT32 ui32BufSiz;
-  
-  SelectBuffer (&pszBuf, &ui32BufSiz);
-  
-  va_start (vaArgs, pszFormat);
-  
-  GetBufferLock (&ulLockFlags);
-  strncpy (pszBuf, "PVR_K: ", (ui32BufSiz - 1) );
-  
-  if (VBAppend (pszBuf, ui32BufSiz, pszFormat, vaArgs) )
-  {
-    printk (KERN_INFO "PVR_K:(Message Truncated): %s\n", pszBuf);
-  }
-  else
-  {
-    printk (KERN_INFO "%s\n", pszBuf);
-  }
-  
-  ReleaseBufferLock (ulLockFlags);
-  va_end (vaArgs);
+	va_list vaArgs;
+	unsigned long ulLockFlags = 0;
+	IMG_CHAR *pszBuf;
+	IMG_UINT32 ui32BufSiz;
+
+	SelectBuffer(&pszBuf, &ui32BufSiz);
+
+	va_start(vaArgs, pszFormat);
+
+	GetBufferLock(&ulLockFlags);
+	strncpy (pszBuf, "PVR_K: ", (ui32BufSiz -1));
+
+	if (VBAppend(pszBuf, ui32BufSiz, pszFormat, vaArgs))
+	{
+		printk(KERN_INFO "PVR_K:(Message Truncated): %s\n", pszBuf);
+	}
+	else
+	{
+		printk(KERN_INFO "%s\n", pszBuf);
+	}
+
+	ReleaseBufferLock(ulLockFlags);
+	va_end(vaArgs);
 }
 
 #if defined(PVRSRV_NEED_PVR_TRACE)
 
 /*!
 ******************************************************************************
-  @Function    PVRTrace
-  @Description To output a debug message to the user
-  @Input       pszFormat - The message format string
-  @Input       ... - Zero or more arguments for use by the format string
-  @Return      None
+	@Function    PVRTrace
+	@Description To output a debug message to the user
+	@Input       pszFormat - The message format string
+	@Input       ... - Zero or more arguments for use by the format string
+	@Return      None
  ******************************************************************************/
-IMG_VOID PVRSRVTrace (const IMG_CHAR * pszFormat, ...)
+IMG_VOID PVRSRVTrace(const IMG_CHAR* pszFormat, ...)
 {
-  va_list VArgs;
-  unsigned long ulLockFlags = 0;
-  IMG_CHAR * pszBuf;
-  IMG_UINT32 ui32BufSiz;
-  
-  SelectBuffer (&pszBuf, &ui32BufSiz);
-  
-  va_start (VArgs, pszFormat);
-  
-  GetBufferLock (&ulLockFlags);
-  
-  strncpy (pszBuf, "PVR: ", (ui32BufSiz - 1) );
-  
-  if (VBAppend (pszBuf, ui32BufSiz, pszFormat, VArgs) )
-  {
-    printk (KERN_INFO "PVR_K:(Message Truncated): %s\n", pszBuf);
-  }
-  else
-  {
-    printk (KERN_INFO "%s\n", pszBuf);
-  }
-  
-  ReleaseBufferLock (ulLockFlags);
-  
-  va_end (VArgs);
+	va_list VArgs;
+	unsigned long ulLockFlags = 0;
+	IMG_CHAR *pszBuf;
+	IMG_UINT32 ui32BufSiz;
+
+	SelectBuffer(&pszBuf, &ui32BufSiz);
+
+	va_start(VArgs, pszFormat);
+
+	GetBufferLock(&ulLockFlags);
+
+	strncpy(pszBuf, "PVR: ", (ui32BufSiz -1));
+
+	if (VBAppend(pszBuf, ui32BufSiz, pszFormat, VArgs))
+	{
+		printk(KERN_INFO "PVR_K:(Message Truncated): %s\n", pszBuf);
+	}
+	else
+	{
+		printk(KERN_INFO "%s\n", pszBuf);
+	}
+
+	ReleaseBufferLock(ulLockFlags);
+
+	va_end(VArgs);
 }
 
 #endif /* defined(PVRSRV_NEED_PVR_TRACE) */
@@ -374,149 +374,149 @@ IMG_VOID PVRSRVTrace (const IMG_CHAR * pszFormat, ...)
 
 /*!
 ******************************************************************************
-  @Function    PVRSRVDebugPrintf
-  @Description To output a debug message to the user
-  @Input       uDebugLevel - The current debug level
-  @Input       pszFile - The source file generating the message
-  @Input       uLine - The line of the source file
-  @Input       pszFormat - The message format string
-  @Input       ... - Zero or more arguments for use by the format string
-  @Return      None
+	@Function    PVRSRVDebugPrintf
+	@Description To output a debug message to the user
+	@Input       uDebugLevel - The current debug level
+	@Input       pszFile - The source file generating the message
+	@Input       uLine - The line of the source file
+	@Input       pszFormat - The message format string
+	@Input       ... - Zero or more arguments for use by the format string
+	@Return      None
  ******************************************************************************/
-IMG_VOID PVRSRVDebugPrintf  (
-  IMG_UINT32  ui32DebugLevel,
-  const IMG_CHAR * pszFullFileName,
-  IMG_UINT32  ui32Line,
-  const IMG_CHAR * pszFormat,
-  ...
-)
+IMG_VOID PVRSRVDebugPrintf	(
+						IMG_UINT32	ui32DebugLevel,
+						const IMG_CHAR*	pszFullFileName,
+						IMG_UINT32	ui32Line,
+						const IMG_CHAR*	pszFormat,
+						...
+					)
 {
-  IMG_BOOL bTrace;
-  const IMG_CHAR * pszFileName = pszFullFileName;
-  
-  bTrace = (IMG_BOOL) (ui32DebugLevel & DBGPRIV_CALLTRACE) ? IMG_TRUE : IMG_FALSE;
-  
-  if (gPVRDebugLevel & ui32DebugLevel)
-  {
-    va_list vaArgs;
-    unsigned long ulLockFlags = 0;
-    IMG_CHAR * pszBuf;
-    IMG_UINT32 ui32BufSiz;
-    
-    SelectBuffer (&pszBuf, &ui32BufSiz);
-    
-    va_start (vaArgs, pszFormat);
-    
-    GetBufferLock (&ulLockFlags);
-    
-    /* Add in the level of warning */
-    if (bTrace == IMG_FALSE)
-    {
-      switch (ui32DebugLevel)
-      {
-      case DBGPRIV_FATAL:
-        {
-          strncpy (pszBuf, "PVR_K:(Fatal): ", (ui32BufSiz - 1) );
-          break;
-        }
-      case DBGPRIV_ERROR:
-        {
-          strncpy (pszBuf, "PVR_K:(Error): ", (ui32BufSiz - 1) );
-          break;
-        }
-      case DBGPRIV_WARNING:
-        {
-          strncpy (pszBuf, "PVR_K:(Warning): ", (ui32BufSiz - 1) );
-          break;
-        }
-      case DBGPRIV_MESSAGE:
-        {
-          strncpy (pszBuf, "PVR_K:(Message): ", (ui32BufSiz - 1) );
-          break;
-        }
-      case DBGPRIV_VERBOSE:
-        {
-          strncpy (pszBuf, "PVR_K:(Verbose): ", (ui32BufSiz - 1) );
-          break;
-        }
-      case DBGPRIV_BUFFERED:
-        {
-          strncpy (pszBuf, "PVR_K: ", (ui32BufSiz - 1) );
-          break;
-        }
-      default:
-        {
-          strncpy (pszBuf, "PVR_K:(Unknown message level): ", (ui32BufSiz - 1) );
-          break;
-        }
-      }
-    }
-    else
-    {
-      strncpy (pszBuf, "PVR_K: ", (ui32BufSiz - 1) );
-    }
-    
-    if (VBAppend (pszBuf, ui32BufSiz, pszFormat, vaArgs) )
-    {
-      printk (KERN_INFO "PVR_K:(Message Truncated): %s\n", pszBuf);
-    }
-    else
-    {
-      if (ui32DebugLevel & DBGPRIV_BUFFERED)
-      {
-        /* We don't need the full path here */
-        const IMG_CHAR * pszShortName = strrchr (pszFileName, '/') + 1;
-        if (pszShortName)
-        { pszFileName = pszShortName; }
-        
-        AddToBufferCCB (pszFileName, ui32Line, pszBuf);
-      }
-      else
-      {
-        printk (KERN_INFO "%s\n", pszBuf);
-      }
-    }
-    
-    ReleaseBufferLock (ulLockFlags);
-    
-    va_end (vaArgs);
-  }
+	IMG_BOOL bTrace;
+	const IMG_CHAR *pszFileName = pszFullFileName;
+
+	bTrace = (IMG_BOOL)(ui32DebugLevel & DBGPRIV_CALLTRACE) ? IMG_TRUE : IMG_FALSE;
+
+	if (gPVRDebugLevel & ui32DebugLevel)
+	{
+		va_list vaArgs;
+		unsigned long ulLockFlags = 0;
+		IMG_CHAR *pszBuf;
+		IMG_UINT32 ui32BufSiz;
+
+		SelectBuffer(&pszBuf, &ui32BufSiz);
+
+		va_start(vaArgs, pszFormat);
+
+		GetBufferLock(&ulLockFlags);
+
+		/* Add in the level of warning */
+		if (bTrace == IMG_FALSE)
+		{
+			switch(ui32DebugLevel)
+			{
+				case DBGPRIV_FATAL:
+				{
+					strncpy (pszBuf, "PVR_K:(Fatal): ", (ui32BufSiz -1));
+					break;
+				}
+				case DBGPRIV_ERROR:
+				{
+					strncpy (pszBuf, "PVR_K:(Error): ", (ui32BufSiz -1));
+					break;
+				}
+				case DBGPRIV_WARNING:
+				{
+					strncpy (pszBuf, "PVR_K:(Warning): ", (ui32BufSiz -1));
+					break;
+				}
+				case DBGPRIV_MESSAGE:
+				{
+					strncpy (pszBuf, "PVR_K:(Message): ", (ui32BufSiz -1));
+					break;
+				}
+				case DBGPRIV_VERBOSE:
+				{
+					strncpy (pszBuf, "PVR_K:(Verbose): ", (ui32BufSiz -1));
+					break;
+				}
+				case DBGPRIV_BUFFERED:
+				{
+					strncpy (pszBuf, "PVR_K: ", (ui32BufSiz -1));
+					break;
+				}
+				default:
+				{
+					strncpy (pszBuf, "PVR_K:(Unknown message level): ", (ui32BufSiz -1));
+					break;
+				}
+			}
+		}
+		else
+		{
+			strncpy (pszBuf, "PVR_K: ", (ui32BufSiz -1));
+		}
+
+		if (VBAppend(pszBuf, ui32BufSiz, pszFormat, vaArgs))
+		{
+			printk(KERN_INFO "PVR_K:(Message Truncated): %s\n", pszBuf);
+		}
+		else
+		{
+			if (ui32DebugLevel & DBGPRIV_BUFFERED)
+			{
+				/* We don't need the full path here */
+				const IMG_CHAR *pszShortName = strrchr(pszFileName, '/') + 1;
+				if(pszShortName)
+					pszFileName = pszShortName;
+
+				AddToBufferCCB(pszFileName, ui32Line, pszBuf);
+			}
+			else
+			{
+				printk(KERN_INFO "%s\n", pszBuf);
+			}
+		}
+
+		ReleaseBufferLock(ulLockFlags);
+
+		va_end (vaArgs);
+	}
 }
 
 #endif /* PVRSRV_NEED_PVR_DPF */
 
 #if defined(DEBUG)
 
-IMG_INT PVRDebugProcSetLevel (struct file * file, const IMG_CHAR * buffer, IMG_UINT32 count, IMG_VOID * data)
+IMG_INT PVRDebugProcSetLevel(struct file *file, const IMG_CHAR *buffer, IMG_UINT32 count, IMG_VOID *data)
 {
-#define _PROC_SET_BUFFER_SZ   6
-  IMG_CHAR data_buffer[_PROC_SET_BUFFER_SZ];
-  
-  PVR_UNREFERENCED_PARAMETER (file);
-  PVR_UNREFERENCED_PARAMETER (data);
-  
-  if (count > _PROC_SET_BUFFER_SZ)
-  {
-    return -EINVAL;
-  }
-  else
-  {
-    if (pvr_copy_from_user (data_buffer, buffer, count) )
-    { return -EINVAL; }
-    if (data_buffer[count - 1] != '\n')
-    { return -EINVAL; }
-    if (sscanf (data_buffer, "%i", &gPVRDebugLevel) == 0)
-    { return -EINVAL; }
-    gPVRDebugLevel &= (1 << DBGPRIV_DBGLEVEL_COUNT) - 1;
-  }
-  return (count);
+#define	_PROC_SET_BUFFER_SZ		6
+	IMG_CHAR data_buffer[_PROC_SET_BUFFER_SZ];
+
+	PVR_UNREFERENCED_PARAMETER(file);
+	PVR_UNREFERENCED_PARAMETER(data);
+
+	if (count > _PROC_SET_BUFFER_SZ)
+	{
+		return -EINVAL;
+	}
+	else
+	{
+		if (pvr_copy_from_user(data_buffer, buffer, count))
+			return -EINVAL;
+		if (data_buffer[count - 1] != '\n')
+			return -EINVAL;
+		if (sscanf(data_buffer, "%i", &gPVRDebugLevel) == 0)
+			return -EINVAL;
+		gPVRDebugLevel &= (1 << DBGPRIV_DBGLEVEL_COUNT) - 1;
+	}
+	return (count);
 }
 
-void ProcSeqShowDebugLevel (struct seq_file * sfile, void * el)
+void ProcSeqShowDebugLevel(struct seq_file *sfile, void* el)
 {
-  PVR_UNREFERENCED_PARAMETER (el);
-  
-  seq_printf (sfile, "%u\n", gPVRDebugLevel);
+	PVR_UNREFERENCED_PARAMETER(el);
+
+	seq_printf(sfile, "%u\n", gPVRDebugLevel);
 }
 
 #endif /* defined(DEBUG) */

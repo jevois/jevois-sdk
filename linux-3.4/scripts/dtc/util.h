@@ -20,37 +20,37 @@
  *                                                                   USA
  */
 
-static inline void __attribute__ ( (noreturn) ) die (char * str, ...)
+static inline void __attribute__((noreturn)) die(char * str, ...)
 {
-  va_list ap;
-  
-  va_start (ap, str);
-  fprintf (stderr, "FATAL ERROR: ");
-  vfprintf (stderr, str, ap);
-  exit (1);
+	va_list ap;
+
+	va_start(ap, str);
+	fprintf(stderr, "FATAL ERROR: ");
+	vfprintf(stderr, str, ap);
+	exit(1);
 }
 
-static inline void * xmalloc (size_t len)
+static inline void *xmalloc(size_t len)
 {
-  void * new = malloc (len);
-  
-  if (!new)
-  { die ("malloc() failed\n"); }
-  
-  return new;
+	void *new = malloc(len);
+
+	if (!new)
+		die("malloc() failed\n");
+
+	return new;
 }
 
-static inline void * xrealloc (void * p, size_t len)
+static inline void *xrealloc(void *p, size_t len)
 {
-  void * new = realloc (p, len);
-  
-  if (!new)
-  { die ("realloc() failed (len=%d)\n", len); }
-  
-  return new;
+	void *new = realloc(p, len);
+
+	if (!new)
+		die("realloc() failed (len=%d)\n", len);
+
+	return new;
 }
 
-extern char * xstrdup (const char * s);
-extern char * join_path (const char * path, const char * name);
+extern char *xstrdup(const char *s);
+extern char *join_path(const char *path, const char *name);
 
 #endif /* _UTIL_H */

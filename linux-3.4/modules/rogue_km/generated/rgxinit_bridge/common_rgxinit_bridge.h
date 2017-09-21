@@ -54,121 +54,121 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "pvr_bridge.h"
 
-#define PVRSRV_BRIDGE_RGXINIT_CMD_FIRST     (PVRSRV_BRIDGE_RGXINIT_START)
-#define PVRSRV_BRIDGE_RGXINIT_RGXINITALLOCFWIMGMEM      PVRSRV_IOWR(PVRSRV_BRIDGE_RGXINIT_CMD_FIRST+0)
-#define PVRSRV_BRIDGE_RGXINIT_RGXINITFIRMWARE     PVRSRV_IOWR(PVRSRV_BRIDGE_RGXINIT_CMD_FIRST+1)
-#define PVRSRV_BRIDGE_RGXINIT_RGXINITLOADFWIMAGE      PVRSRV_IOWR(PVRSRV_BRIDGE_RGXINIT_CMD_FIRST+2)
-#define PVRSRV_BRIDGE_RGXINIT_RGXINITDEVPART2     PVRSRV_IOWR(PVRSRV_BRIDGE_RGXINIT_CMD_FIRST+3)
-#define PVRSRV_BRIDGE_RGXINIT_CMD_LAST      (PVRSRV_BRIDGE_RGXINIT_CMD_FIRST+3)
+#define PVRSRV_BRIDGE_RGXINIT_CMD_FIRST			(PVRSRV_BRIDGE_RGXINIT_START)
+#define PVRSRV_BRIDGE_RGXINIT_RGXINITALLOCFWIMGMEM			PVRSRV_IOWR(PVRSRV_BRIDGE_RGXINIT_CMD_FIRST+0)
+#define PVRSRV_BRIDGE_RGXINIT_RGXINITFIRMWARE			PVRSRV_IOWR(PVRSRV_BRIDGE_RGXINIT_CMD_FIRST+1)
+#define PVRSRV_BRIDGE_RGXINIT_RGXINITLOADFWIMAGE			PVRSRV_IOWR(PVRSRV_BRIDGE_RGXINIT_CMD_FIRST+2)
+#define PVRSRV_BRIDGE_RGXINIT_RGXINITDEVPART2			PVRSRV_IOWR(PVRSRV_BRIDGE_RGXINIT_CMD_FIRST+3)
+#define PVRSRV_BRIDGE_RGXINIT_CMD_LAST			(PVRSRV_BRIDGE_RGXINIT_CMD_FIRST+3)
 
 
 /*******************************************
-            RGXInitAllocFWImgMem
+            RGXInitAllocFWImgMem          
  *******************************************/
 
 /* Bridge in structure for RGXInitAllocFWImgMem */
 typedef struct PVRSRV_BRIDGE_IN_RGXINITALLOCFWIMGMEM_TAG
 {
-  IMG_HANDLE hDevNode;
-  IMG_DEVMEM_SIZE_T uiFWCodeLen;
-  IMG_DEVMEM_SIZE_T uiFWDataLen;
-  IMG_DEVMEM_SIZE_T uiFWCoremem;
+	IMG_HANDLE hDevNode;
+	IMG_DEVMEM_SIZE_T uiFWCodeLen;
+	IMG_DEVMEM_SIZE_T uiFWDataLen;
+	IMG_DEVMEM_SIZE_T uiFWCoremem;
 } PVRSRV_BRIDGE_IN_RGXINITALLOCFWIMGMEM;
 
 
 /* Bridge out structure for RGXInitAllocFWImgMem */
 typedef struct PVRSRV_BRIDGE_OUT_RGXINITALLOCFWIMGMEM_TAG
 {
-  DEVMEM_SERVER_EXPORTCOOKIE hFWCodeAllocServerExportCookie;
-  IMG_DEV_VIRTADDR sFWCodeDevVAddrBase;
-  DEVMEM_SERVER_EXPORTCOOKIE hFWDataAllocServerExportCookie;
-  IMG_DEV_VIRTADDR sFWDataDevVAddrBase;
-  DEVMEM_SERVER_EXPORTCOOKIE hFWCorememAllocServerExportCookie;
-  IMG_DEV_VIRTADDR sFWCorememDevVAddrBase;
-  RGXFWIF_DEV_VIRTADDR sFWCorememMetaVAddrBase;
-  PVRSRV_ERROR eError;
+	DEVMEM_SERVER_EXPORTCOOKIE hFWCodeAllocServerExportCookie;
+	IMG_DEV_VIRTADDR sFWCodeDevVAddrBase;
+	DEVMEM_SERVER_EXPORTCOOKIE hFWDataAllocServerExportCookie;
+	IMG_DEV_VIRTADDR sFWDataDevVAddrBase;
+	DEVMEM_SERVER_EXPORTCOOKIE hFWCorememAllocServerExportCookie;
+	IMG_DEV_VIRTADDR sFWCorememDevVAddrBase;
+	RGXFWIF_DEV_VIRTADDR sFWCorememMetaVAddrBase;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_RGXINITALLOCFWIMGMEM;
 
 /*******************************************
-            RGXInitFirmware
+            RGXInitFirmware          
  *******************************************/
 
 /* Bridge in structure for RGXInitFirmware */
 typedef struct PVRSRV_BRIDGE_IN_RGXINITFIRMWARE_TAG
 {
-  IMG_HANDLE hDevNode;
-  IMG_BOOL bEnableSignatureChecks;
-  IMG_UINT32 ui32SignatureChecksBufSize;
-  IMG_UINT32 ui32HWPerfFWBufSizeKB;
-  IMG_UINT64 ui64HWPerfFilter;
-  IMG_UINT32 ui32RGXFWAlignChecksSize;
-  IMG_UINT32 * pui32RGXFWAlignChecks;
-  IMG_UINT32 ui32ConfigFlags;
-  IMG_UINT32 ui32LogType;
-  IMG_UINT32 ui32FilterFlags;
-  RGXFWIF_COMPCHECKS_BVNC sClientBVNC;
+	IMG_HANDLE hDevNode;
+	IMG_BOOL bEnableSignatureChecks;
+	IMG_UINT32 ui32SignatureChecksBufSize;
+	IMG_UINT32 ui32HWPerfFWBufSizeKB;
+	IMG_UINT64 ui64HWPerfFilter;
+	IMG_UINT32 ui32RGXFWAlignChecksSize;
+	IMG_UINT32 * pui32RGXFWAlignChecks;
+	IMG_UINT32 ui32ConfigFlags;
+	IMG_UINT32 ui32LogType;
+	IMG_UINT32 ui32FilterFlags;
+	RGXFWIF_COMPCHECKS_BVNC sClientBVNC;
 } PVRSRV_BRIDGE_IN_RGXINITFIRMWARE;
 
 
 /* Bridge out structure for RGXInitFirmware */
 typedef struct PVRSRV_BRIDGE_OUT_RGXINITFIRMWARE_TAG
 {
-  RGXFWIF_DEV_VIRTADDR spsRGXFwInit;
-  PVRSRV_ERROR eError;
+	RGXFWIF_DEV_VIRTADDR spsRGXFwInit;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_RGXINITFIRMWARE;
 
 /*******************************************
-            RGXInitLoadFWImage
+            RGXInitLoadFWImage          
  *******************************************/
 
 /* Bridge in structure for RGXInitLoadFWImage */
 typedef struct PVRSRV_BRIDGE_IN_RGXINITLOADFWIMAGE_TAG
 {
-  IMG_HANDLE hImgDestImport;
-  IMG_HANDLE hImgSrcImport;
-  IMG_UINT64 ui64ImgLen;
-  IMG_HANDLE hSigImport;
-  IMG_UINT64 ui64SigLen;
+	IMG_HANDLE hImgDestImport;
+	IMG_HANDLE hImgSrcImport;
+	IMG_UINT64 ui64ImgLen;
+	IMG_HANDLE hSigImport;
+	IMG_UINT64 ui64SigLen;
 } PVRSRV_BRIDGE_IN_RGXINITLOADFWIMAGE;
 
 
 /* Bridge out structure for RGXInitLoadFWImage */
 typedef struct PVRSRV_BRIDGE_OUT_RGXINITLOADFWIMAGE_TAG
 {
-  PVRSRV_ERROR eError;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_RGXINITLOADFWIMAGE;
 
 /*******************************************
-            RGXInitDevPart2
+            RGXInitDevPart2          
  *******************************************/
 
 /* Bridge in structure for RGXInitDevPart2 */
 typedef struct PVRSRV_BRIDGE_IN_RGXINITDEVPART2_TAG
 {
-  IMG_HANDLE hDevNode;
-  RGX_INIT_COMMAND * psInitScript;
-  RGX_INIT_COMMAND * psDbgScript;
-  RGX_INIT_COMMAND * psDbgBusScript;
-  RGX_INIT_COMMAND * psDeinitScript;
-  IMG_UINT32 ui32ui32KernelCatBaseIdReg;
-  IMG_UINT32 ui32KernelCatBaseId;
-  IMG_UINT32 ui32KernelCatBaseReg;
-  IMG_UINT32 ui32KernelCatBaseWordSize;
-  IMG_UINT32 ui32KernelCatBaseAlignShift;
-  IMG_UINT32 ui32KernelCatBaseShift;
-  IMG_UINT64 ui64KernelCatBaseMask;
-  IMG_UINT32 ui32DeviceFlags;
-  IMG_UINT32 ui32RGXActivePMConf;
-  DEVMEM_SERVER_EXPORTCOOKIE hFWCodeAllocServerExportCookie;
-  DEVMEM_SERVER_EXPORTCOOKIE hFWDataAllocServerExportCookie;
-  DEVMEM_SERVER_EXPORTCOOKIE hFWCorememAllocServerExportCookie;
+	IMG_HANDLE hDevNode;
+	RGX_INIT_COMMAND * psInitScript;
+	RGX_INIT_COMMAND * psDbgScript;
+	RGX_INIT_COMMAND * psDbgBusScript;
+	RGX_INIT_COMMAND * psDeinitScript;
+	IMG_UINT32 ui32ui32KernelCatBaseIdReg;
+	IMG_UINT32 ui32KernelCatBaseId;
+	IMG_UINT32 ui32KernelCatBaseReg;
+	IMG_UINT32 ui32KernelCatBaseWordSize;
+	IMG_UINT32 ui32KernelCatBaseAlignShift;
+	IMG_UINT32 ui32KernelCatBaseShift;
+	IMG_UINT64 ui64KernelCatBaseMask;
+	IMG_UINT32 ui32DeviceFlags;
+	IMG_UINT32 ui32RGXActivePMConf;
+	DEVMEM_SERVER_EXPORTCOOKIE hFWCodeAllocServerExportCookie;
+	DEVMEM_SERVER_EXPORTCOOKIE hFWDataAllocServerExportCookie;
+	DEVMEM_SERVER_EXPORTCOOKIE hFWCorememAllocServerExportCookie;
 } PVRSRV_BRIDGE_IN_RGXINITDEVPART2;
 
 
 /* Bridge out structure for RGXInitDevPart2 */
 typedef struct PVRSRV_BRIDGE_OUT_RGXINITDEVPART2_TAG
 {
-  PVRSRV_ERROR eError;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_RGXINITDEVPART2;
 
 #endif /* COMMON_RGXINIT_BRIDGE_H */

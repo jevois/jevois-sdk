@@ -41,16 +41,16 @@
  */
 void reset_cpu (ulong ignored)
 {
-  struct wdog_regs * regs = (struct wdog_regs *) IMX_WDT_BASE;
-  /* Disable watchdog and set Time-Out field to 0 */
-  writew (0, &regs->wcr);
-  
-  /* Write Service Sequence */
-  writew (WSR_UNLOCK1, &regs->wsr);
-  writew (WSR_UNLOCK2, &regs->wsr);
-  
-  /* Enable watchdog */
-  writew (WCR_WDE, &regs->wcr);
-  
-  while (1) ;
+	struct wdog_regs *regs = (struct wdog_regs *)IMX_WDT_BASE;
+	/* Disable watchdog and set Time-Out field to 0 */
+	writew(0, &regs->wcr);
+
+	/* Write Service Sequence */
+	writew(WSR_UNLOCK1, &regs->wsr);
+	writew(WSR_UNLOCK2, &regs->wsr);
+
+	/* Enable watchdog */
+	writew(WCR_WDE, &regs->wcr);
+
+	while (1) ;
 }

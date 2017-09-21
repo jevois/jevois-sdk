@@ -41,23 +41,23 @@
 #include "tuner-simple.h"
 
 struct dvb_bt8xx_card {
-  struct mutex lock;
-  int nfeeds;
-  char card_name[32];
-  struct dvb_adapter dvb_adapter;
-  struct bt878 * bt;
-  unsigned int bttv_nr;
-  struct dvb_demux demux;
-  struct dmxdev dmxdev;
-  struct dmx_frontend fe_hw;
-  struct dmx_frontend fe_mem;
-  u32 gpio_mode;
-  u32 op_sync_orin;
-  u32 irq_err_ignore;
-  struct i2c_adapter * i2c_adapter;
-  struct dvb_net dvbnet;
-  
-  struct dvb_frontend * fe;
+	struct mutex lock;
+	int nfeeds;
+	char card_name[32];
+	struct dvb_adapter dvb_adapter;
+	struct bt878 *bt;
+	unsigned int bttv_nr;
+	struct dvb_demux demux;
+	struct dmxdev dmxdev;
+	struct dmx_frontend fe_hw;
+	struct dmx_frontend fe_mem;
+	u32 gpio_mode;
+	u32 op_sync_orin;
+	u32 irq_err_ignore;
+	struct i2c_adapter *i2c_adapter;
+	struct dvb_net dvbnet;
+
+	struct dvb_frontend* fe;
 };
 
 #endif /* DVB_BT8XX_H */

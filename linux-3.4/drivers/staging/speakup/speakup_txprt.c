@@ -30,118 +30,118 @@
 #define PROCSPEECH '\r' /* process speech char */
 
 static struct var_t vars[] = {
-  { CAPS_START, .u.s = {"\x05P8" } },
-  { CAPS_STOP, .u.s = {"\x05P5" } },
-  { RATE, .u.n = {"\x05R%d", 5, 0, 9, 0, 0, NULL } },
-  { PITCH, .u.n = {"\x05P%d", 5, 0, 9, 0, 0, NULL } },
-  { VOL, .u.n = {"\x05V%d", 5, 0, 9, 0, 0, NULL } },
-  { TONE, .u.n = {"\x05T%c", 12, 0, 25, 61, 0, NULL } },
-  { DIRECT, .u.n = {NULL, 0, 0, 1, 0, 0, NULL } },
-  V_LAST_VAR
-};
+	{ CAPS_START, .u.s = {"\x05P8" } },
+	{ CAPS_STOP, .u.s = {"\x05P5" } },
+	{ RATE, .u.n = {"\x05R%d", 5, 0, 9, 0, 0, NULL } },
+	{ PITCH, .u.n = {"\x05P%d", 5, 0, 9, 0, 0, NULL } },
+	{ VOL, .u.n = {"\x05V%d", 5, 0, 9, 0, 0, NULL } },
+	{ TONE, .u.n = {"\x05T%c", 12, 0, 25, 61, 0, NULL } },
+	{ DIRECT, .u.n = {NULL, 0, 0, 1, 0, 0, NULL } },
+	V_LAST_VAR
+	 };
 
 /*
  * These attributes will appear in /sys/accessibility/speakup/txprt.
  */
 static struct kobj_attribute caps_start_attribute =
-  __ATTR (caps_start, USER_RW, spk_var_show, spk_var_store);
+	__ATTR(caps_start, USER_RW, spk_var_show, spk_var_store);
 static struct kobj_attribute caps_stop_attribute =
-  __ATTR (caps_stop, USER_RW, spk_var_show, spk_var_store);
+	__ATTR(caps_stop, USER_RW, spk_var_show, spk_var_store);
 static struct kobj_attribute pitch_attribute =
-  __ATTR (pitch, USER_RW, spk_var_show, spk_var_store);
+	__ATTR(pitch, USER_RW, spk_var_show, spk_var_store);
 static struct kobj_attribute rate_attribute =
-  __ATTR (rate, USER_RW, spk_var_show, spk_var_store);
+	__ATTR(rate, USER_RW, spk_var_show, spk_var_store);
 static struct kobj_attribute tone_attribute =
-  __ATTR (tone, USER_RW, spk_var_show, spk_var_store);
+	__ATTR(tone, USER_RW, spk_var_show, spk_var_store);
 static struct kobj_attribute vol_attribute =
-  __ATTR (vol, USER_RW, spk_var_show, spk_var_store);
+	__ATTR(vol, USER_RW, spk_var_show, spk_var_store);
 
 static struct kobj_attribute delay_time_attribute =
-  __ATTR (delay_time, ROOT_W, spk_var_show, spk_var_store);
+	__ATTR(delay_time, ROOT_W, spk_var_show, spk_var_store);
 static struct kobj_attribute direct_attribute =
-  __ATTR (direct, USER_RW, spk_var_show, spk_var_store);
+	__ATTR(direct, USER_RW, spk_var_show, spk_var_store);
 static struct kobj_attribute full_time_attribute =
-  __ATTR (full_time, ROOT_W, spk_var_show, spk_var_store);
+	__ATTR(full_time, ROOT_W, spk_var_show, spk_var_store);
 static struct kobj_attribute jiffy_delta_attribute =
-  __ATTR (jiffy_delta, ROOT_W, spk_var_show, spk_var_store);
+	__ATTR(jiffy_delta, ROOT_W, spk_var_show, spk_var_store);
 static struct kobj_attribute trigger_time_attribute =
-  __ATTR (trigger_time, ROOT_W, spk_var_show, spk_var_store);
+	__ATTR(trigger_time, ROOT_W, spk_var_show, spk_var_store);
 
 /*
  * Create a group of attributes so that we can create and destroy them all
  * at once.
  */
-static struct attribute * synth_attrs[] = {
-  &caps_start_attribute.attr,
-  &caps_stop_attribute.attr,
-  &pitch_attribute.attr,
-  &rate_attribute.attr,
-  &tone_attribute.attr,
-  &vol_attribute.attr,
-  &delay_time_attribute.attr,
-  &direct_attribute.attr,
-  &full_time_attribute.attr,
-  &jiffy_delta_attribute.attr,
-  &trigger_time_attribute.attr,
-  NULL, /* need to NULL terminate the list of attributes */
+static struct attribute *synth_attrs[] = {
+	&caps_start_attribute.attr,
+	&caps_stop_attribute.attr,
+	&pitch_attribute.attr,
+	&rate_attribute.attr,
+	&tone_attribute.attr,
+	&vol_attribute.attr,
+	&delay_time_attribute.attr,
+	&direct_attribute.attr,
+	&full_time_attribute.attr,
+	&jiffy_delta_attribute.attr,
+	&trigger_time_attribute.attr,
+	NULL,	/* need to NULL terminate the list of attributes */
 };
 
 static struct spk_synth synth_txprt = {
-  .name = "txprt",
-  .version = DRV_VERSION,
-  .long_name = "Transport",
-  .init = "\x05N1",
-  .procspeech = PROCSPEECH,
-  .clear = SYNTH_CLEAR,
-  .delay = 500,
-  .trigger = 50,
-  .jiffies = 50,
-  .full = 40000,
-  .startup = SYNTH_START,
-  .checkval = SYNTH_CHECK,
-  .vars = vars,
-  .probe = serial_synth_probe,
-  .release = spk_serial_release,
-  .synth_immediate = spk_synth_immediate,
-  .catch_up = spk_do_catch_up,
-  .flush = spk_synth_flush,
-  .is_alive = spk_synth_is_alive_restart,
-  .synth_adjust = NULL,
-  .read_buff_add = NULL,
-  .get_index = NULL,
-  .indexing = {
-    .command = NULL,
-    .lowindex = 0,
-    .highindex = 0,
-    .currindex = 0,
-  },
-  .attributes = {
-    .attrs = synth_attrs,
-    .name = "txprt",
-  },
+	.name = "txprt",
+	.version = DRV_VERSION,
+	.long_name = "Transport",
+	.init = "\x05N1",
+	.procspeech = PROCSPEECH,
+	.clear = SYNTH_CLEAR,
+	.delay = 500,
+	.trigger = 50,
+	.jiffies = 50,
+	.full = 40000,
+	.startup = SYNTH_START,
+	.checkval = SYNTH_CHECK,
+	.vars = vars,
+	.probe = serial_synth_probe,
+	.release = spk_serial_release,
+	.synth_immediate = spk_synth_immediate,
+	.catch_up = spk_do_catch_up,
+	.flush = spk_synth_flush,
+	.is_alive = spk_synth_is_alive_restart,
+	.synth_adjust = NULL,
+	.read_buff_add = NULL,
+	.get_index = NULL,
+	.indexing = {
+		.command = NULL,
+		.lowindex = 0,
+		.highindex = 0,
+		.currindex = 0,
+	},
+	.attributes = {
+		.attrs = synth_attrs,
+		.name = "txprt",
+	},
 };
 
-module_param_named (ser, synth_txprt.ser, int, S_IRUGO);
-module_param_named (start, synth_txprt.startup, short, S_IRUGO);
+module_param_named(ser, synth_txprt.ser, int, S_IRUGO);
+module_param_named(start, synth_txprt.startup, short, S_IRUGO);
 
-MODULE_PARM_DESC (ser, "Set the serial port for the synthesizer (0-based).");
-MODULE_PARM_DESC (start, "Start the synthesizer once it is loaded.");
+MODULE_PARM_DESC(ser, "Set the serial port for the synthesizer (0-based).");
+MODULE_PARM_DESC(start, "Start the synthesizer once it is loaded.");
 
-static int __init txprt_init (void)
+static int __init txprt_init(void)
 {
-  return synth_add (&synth_txprt);
+	return synth_add(&synth_txprt);
 }
 
-static void __exit txprt_exit (void)
+static void __exit txprt_exit(void)
 {
-  synth_remove (&synth_txprt);
+	synth_remove(&synth_txprt);
 }
 
-module_init (txprt_init);
-module_exit (txprt_exit);
-MODULE_AUTHOR ("Kirk Reiser <kirk@braille.uwo.ca>");
-MODULE_AUTHOR ("David Borowski");
-MODULE_DESCRIPTION ("Speakup support for Transport synthesizers");
-MODULE_LICENSE ("GPL");
-MODULE_VERSION (DRV_VERSION);
+module_init(txprt_init);
+module_exit(txprt_exit);
+MODULE_AUTHOR("Kirk Reiser <kirk@braille.uwo.ca>");
+MODULE_AUTHOR("David Borowski");
+MODULE_DESCRIPTION("Speakup support for Transport synthesizers");
+MODULE_LICENSE("GPL");
+MODULE_VERSION(DRV_VERSION);
 

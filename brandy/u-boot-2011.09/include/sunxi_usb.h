@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -25,9 +25,9 @@
 #ifndef __SUNXI_USB_SYS_H
 #define __SUNXI_USB_SYS_H
 
-extern int sunxi_usb_dev_register (uint dev_name);
+extern int sunxi_usb_dev_register(uint dev_name);
 
-extern void sunxi_usb_main_loop (int delaytime);
+extern void sunxi_usb_main_loop(int delaytime);
 
 
 #endif /* __SUNXI_USB_SYS_H */

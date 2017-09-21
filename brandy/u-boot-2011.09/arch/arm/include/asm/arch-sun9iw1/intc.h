@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -29,10 +29,10 @@
 
 #ifndef CONFIG_A39_FPGA
 
-#define GIC_SRC_SPI(_n)   (32 + (_n))
+#define GIC_SRC_SPI(_n)		(32 + (_n))
 
-#define AW_IRQ_UART0     GIC_SRC_SPI(0)  
-#define AW_IRQ_UART1     GIC_SRC_SPI(1)  
+#define AW_IRQ_UART0	   GIC_SRC_SPI(0)  
+#define AW_IRQ_UART1	   GIC_SRC_SPI(1)  
 #define AW_IRQ_UART2       GIC_SRC_SPI(2)  
 #define AW_IRQ_UART3       GIC_SRC_SPI(3)  
 #define AW_IRQ_UART4       GIC_SRC_SPI(4)  
@@ -45,8 +45,8 @@
 
 #define AW_IRQ_PAEINT      GIC_SRC_SPI(11 )
 #define AW_IRQ_SPDIF       GIC_SRC_SPI(12 )
-#define AW_IRQ_IIS0        GIC_SRC_SPI(13 )
-#define AW_IRQ_IIS1      GIC_SRC_SPI(14 )
+#define AW_IRQ_IIS0	       GIC_SRC_SPI(13 )
+#define AW_IRQ_IIS1		   GIC_SRC_SPI(14 )
 #define AW_IRQ_PBEINT      GIC_SRC_SPI(15 )
 #define AW_IRQ_PEEINT      GIC_SRC_SPI(16 )
 #define AW_IRQ_PGEINT      GIC_SRC_SPI(17 )
@@ -63,20 +63,20 @@
 #define AW_IRQ_NMI         GIC_SRC_SPI(32 )
 #define AW_IRQ_RTIMER0     GIC_SRC_SPI(33 )
 #define AW_IRQ_RTIMER1     GIC_SRC_SPI(34 )
-#define AW_IRQ_RDMA        GIC_SRC_SPI(35 )
+#define AW_IRQ_RDMA	       GIC_SRC_SPI(35 )
 #define AW_IRQ_RWATCHDOG   GIC_SRC_SPI(36 )
 #define AW_IRQ_RCIR        GIC_SRC_SPI(37 )
 #define AW_IRQ_RUART       GIC_SRC_SPI(38 )
 #define AW_IRQ_RRSB        GIC_SRC_SPI(39 )
-#define AW_IRQ_RPS2_0     GIC_SRC_SPI(40 )
-#define AW_IRQ_RPS2_1       GIC_SRC_SPI(41 )
+#define AW_IRQ_RPS2_0    	GIC_SRC_SPI(40 )
+#define AW_IRQ_RPS2_1     	GIC_SRC_SPI(41 )
 #define AW_IRQ_RI2S0       GIC_SRC_SPI(42 )
 #define AW_IRQ_1WIRE       GIC_SRC_SPI(43 )
 #define AW_IRQ_RTWI0       GIC_SRC_SPI(44 )
 #define AW_IRQ_RPLEINT     GIC_SRC_SPI(45 )
 #define AW_IRQ_RPMEINT     GIC_SRC_SPI(46 )
-#define AW_IRQ_RTWI1      GIC_SRC_SPI(47 )
-#define AW_IRQ_TWD      GIC_SRC_SPI(48 )
+#define AW_IRQ_RTWI1	    GIC_SRC_SPI(47 )
+#define AW_IRQ_TWD			GIC_SRC_SPI(48 )
 #define AW_IRQ_MBOX        GIC_SRC_SPI(49 )
 #define AW_IRQ_DMA         GIC_SRC_SPI(50 )
 #define AW_IRQ_HSTMR0      GIC_SRC_SPI(51 )
@@ -124,7 +124,7 @@
 #define AW_IRQ_DEBE0       GIC_SRC_SPI(95 )
 #define AW_IRQ_DEBE1       GIC_SRC_SPI(96 )
 #define AW_IRQ_GPU         GIC_SRC_SPI(97 )
-#define AW_IRQ_GPUPWR    GIC_SRC_SPI(98 )
+#define AW_IRQ_GPUPWR	   GIC_SRC_SPI(98 )
 
 #define AW_IRQ_FD          GIC_SRC_SPI(108)
 #define AW_IRQ_GPADC       GIC_SRC_SPI(109)
@@ -133,18 +133,18 @@
 #define AW_IRQ_AC97        GIC_SRC_SPI(112)
 #define AW_IRQ_CIR_TX      GIC_SRC_SPI(113)
 #define AW_IRQ_PNEINT      GIC_SRC_SPI(114)
-#define AW_IRQ_THS       GIC_SRC_SPI(115)
+#define AW_IRQ_THS		   GIC_SRC_SPI(115)
 #define AW_IRQ_DEBE2       GIC_SRC_SPI(116)
 #define AW_IRQ_DEFE2       GIC_SRC_SPI(117)
-#define AW_IRQ_EDP         GIC_SRC_SPI(118)
+#define AW_IRQ_EDP     	   GIC_SRC_SPI(118)
 #define AW_IRQ_PHEINT      GIC_SRC_SPI(120)
 #define AW_IRQ_CSI0CCI     GIC_SRC_SPI(122)
 #define AW_IRQ_CSI1CCI     GIC_SRC_SPI(123)
 
-#define GIC_IRQ_NUM     (AW_IRQ_CSI1CCI + 1)
+#define GIC_IRQ_NUM			(AW_IRQ_CSI1CCI + 1)
 
 #else
-#define GIC_SRC_SPI(_n)   (32 + (_n))
+#define GIC_SRC_SPI(_n)		(32 + (_n))
 
 #define AW_IRQ_NMI         GIC_SRC_SPI(0)  
 
@@ -164,18 +164,18 @@
 #define AW_IRQ_MIPICSI     GIC_SRC_SPI(4) 
 #define AW_IRQ_MIPIDSI     GIC_SRC_SPI(5) 
 #define AW_IRQ_GPU         GIC_SRC_SPI(6) 
-#define AW_IRQ_VE          GIC_SRC_SPI(7) 
-#define AW_IRQ_FD          GIC_SRC_SPI(8) 
+#define AW_IRQ_VE      	   GIC_SRC_SPI(7) 
+#define AW_IRQ_FD      	   GIC_SRC_SPI(8) 
 #define AW_IRQ_NAND0       GIC_SRC_SPI(9) 
 #define AW_IRQ_NAND1       GIC_SRC_SPI(10)
 #define AW_IRQ_MMC0        GIC_SRC_SPI(11)
 #define AW_IRQ_MMC1        GIC_SRC_SPI(11)
-#define AW_IRQ_MMC2        GIC_SRC_SPI(11)
-#define AW_IRQ_MMC3        GIC_SRC_SPI(11)
+#define AW_IRQ_MMC2   	   GIC_SRC_SPI(11)
+#define AW_IRQ_MMC3   	   GIC_SRC_SPI(11)
 #define AW_IRQ_USB_OTG     GIC_SRC_SPI(12)
 #define AW_IRQ_USBEHCI0    GIC_SRC_SPI(13)
 #define AW_IRQ_USBOHCI0    GIC_SRC_SPI(14)
-#define AW_IRQ_HSI         GIC_SRC_SPI(15)
+#define AW_IRQ_HSI    	   GIC_SRC_SPI(15)
 #define AW_IRQ_TSC         GIC_SRC_SPI(15)
 #define AW_IRQ_TWI0        GIC_SRC_SPI(16)
 #define AW_IRQ_TWI1        GIC_SRC_SPI(16)
@@ -189,8 +189,8 @@
 #define AW_IRQ_IIS0        GIC_SRC_SPI(18)
 #define AW_IRQ_IIS1        GIC_SRC_SPI(18)
 #define AW_IRQ_SPDIF       GIC_SRC_SPI(18)
-#define AW_IRQ_AC97        GIC_SRC_SPI(18)
-#define AW_IRQ_SS        GIC_SRC_SPI(19)
+#define AW_IRQ_AC97    	   GIC_SRC_SPI(18)
+#define AW_IRQ_SS    	   GIC_SRC_SPI(19)
 #define AW_IRQ_CIR_TX      GIC_SRC_SPI(19)
 #define AW_IRQ_RRSB        GIC_SRC_SPI(20)
 #define AW_IRQ_RTWI0       GIC_SRC_SPI(21)
@@ -222,28 +222,28 @@
 #define AW_IRQ_TZASC       GIC_SRC_SPI(30)
 #define AW_IRQ_GPUPWR      GIC_SRC_SPI(31)
 
-#define GIC_IRQ_NUM     (120)
+#define GIC_IRQ_NUM			(120)
 
-#endif 
+#endif
 
 /* processer target */
-#define GIC_CPU_TARGET(_n)  (1 << (_n))
-#define GIC_CPU_TARGET0   GIC_CPU_TARGET(0)
-#define GIC_CPU_TARGET1   GIC_CPU_TARGET(1)
-#define GIC_CPU_TARGET2   GIC_CPU_TARGET(2)
-#define GIC_CPU_TARGET3   GIC_CPU_TARGET(3)
-#define GIC_CPU_TARGET4   GIC_CPU_TARGET(4)
-#define GIC_CPU_TARGET5   GIC_CPU_TARGET(5)
-#define GIC_CPU_TARGET6   GIC_CPU_TARGET(6)
-#define GIC_CPU_TARGET7   GIC_CPU_TARGET(7)
+#define GIC_CPU_TARGET(_n)	(1 << (_n))
+#define GIC_CPU_TARGET0		GIC_CPU_TARGET(0)
+#define GIC_CPU_TARGET1		GIC_CPU_TARGET(1)
+#define GIC_CPU_TARGET2		GIC_CPU_TARGET(2)
+#define GIC_CPU_TARGET3		GIC_CPU_TARGET(3)
+#define GIC_CPU_TARGET4		GIC_CPU_TARGET(4)
+#define GIC_CPU_TARGET5		GIC_CPU_TARGET(5)
+#define GIC_CPU_TARGET6		GIC_CPU_TARGET(6)
+#define GIC_CPU_TARGET7		GIC_CPU_TARGET(7)
 /* trigger mode */
-#define GIC_SPI_LEVEL_TRIGGER (0)
-#define GIC_SPI_EDGE_TRIGGER  (2)
+#define GIC_SPI_LEVEL_TRIGGER	(0)
+#define GIC_SPI_EDGE_TRIGGER	(2)
 
-extern void irq_install_handler (int irq, interrupt_handler_t handle_irq, void * data);
-extern void irq_free_handler (int irq);
-extern int irq_enable (int irq_no);
-extern int irq_disable (int irq_no);
+extern void irq_install_handler (int irq, interrupt_handler_t handle_irq, void *data);
+extern void irq_free_handler(int irq);
+extern int irq_enable(int irq_no);
+extern int irq_disable(int irq_no);
 
 int arch_interrupt_init (void);
 

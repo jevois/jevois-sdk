@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -43,36 +43,36 @@
 *
 *******************************************************************************
 */
-int usb_open_clock (void)
+int usb_open_clock(void)
 {
-  u32 reg_value = 0;
-  
-  reg_value = readl (SUNXI_CCM_BASE + 0xcc);
-  reg_value |= (1 << 0) | (1 << 8);
-  writel (reg_value, (SUNXI_CCM_BASE + 0xcc) );
-  __msdelay (10);
-  
-  reg_value = readl (SUNXI_CCM_BASE + 0x60);
-  reg_value |= (1 << 23);
-  writel (reg_value, (SUNXI_CCM_BASE + 0x60) );
-  
-  __msdelay (10);
-  
-  reg_value = readl (SUNXI_CCM_BASE + 0x2C0);
-  reg_value |= (1 << 23);
-  writel (reg_value, (SUNXI_CCM_BASE + 0x2C0) );
-  __msdelay (10);
-  
-  reg_value = readl (SUNXI_USBOTG_BASE + 0x420);
-  reg_value |= (0x01 << 0);
-  writel (reg_value, (SUNXI_USBOTG_BASE + 0x420) );
-  __msdelay (10);
-  
-  reg_value = readl (SUNXI_USBOTG_BASE + 0x410);
-  reg_value &= ~ (0x01 << 1);
-  writel (reg_value, (SUNXI_USBOTG_BASE + 0x410) );
-  __msdelay (10);
-  return 0;
+    u32 reg_value = 0;
+
+	reg_value = readl(SUNXI_CCM_BASE + 0xcc);
+	reg_value |= (1 << 0) | (1 << 8);
+	writel(reg_value, (SUNXI_CCM_BASE + 0xcc));
+	__msdelay(10);
+
+	reg_value = readl(SUNXI_CCM_BASE + 0x60);
+	reg_value |= (1 << 23);
+	writel(reg_value, (SUNXI_CCM_BASE + 0x60));
+
+	__msdelay(10);
+
+    reg_value = readl(SUNXI_CCM_BASE + 0x2C0);
+    reg_value |= (1 << 23);
+    writel(reg_value, (SUNXI_CCM_BASE + 0x2C0));
+    __msdelay(10);
+
+    reg_value = readl(SUNXI_USBOTG_BASE + 0x420);
+    reg_value |= (0x01 << 0);
+    writel(reg_value, (SUNXI_USBOTG_BASE + 0x420));
+    __msdelay(10);
+
+    reg_value = readl(SUNXI_USBOTG_BASE + 0x410);
+    reg_value &= ~(0x01 << 1);
+    writel(reg_value, (SUNXI_USBOTG_BASE + 0x410));
+    __msdelay(10);
+    return 0;
 }
 /*
 *******************************************************************************
@@ -92,27 +92,27 @@ int usb_open_clock (void)
 *
 *******************************************************************************
 */
-int usb_close_clock (void)
+int usb_close_clock(void)
 {
-  u32 reg_value = 0;
-  
-  /* AHB reset */
-  reg_value = readl (SUNXI_CCM_BASE + 0x2C0);
-  reg_value &= ~ (1 << 23);
-  writel (reg_value, (SUNXI_CCM_BASE + 0x2C0) );
-  __msdelay (10);
-  
-  reg_value = readl (SUNXI_CCM_BASE + 0x60);
-  reg_value &= ~ (1 << 23);
-  writel (reg_value, (SUNXI_CCM_BASE + 0x60) );
-  __msdelay (10);
-  
-  reg_value = readl (SUNXI_CCM_BASE + 0xcc);
-  reg_value &= ~ ( (1 << 0) | (1 << 8) );
-  writel (reg_value, (SUNXI_CCM_BASE + 0xcc) );
-  __msdelay (10);
-  
-  return 0;
+    u32 reg_value = 0;
+
+    /* AHB reset */
+    reg_value = readl(SUNXI_CCM_BASE + 0x2C0);
+    reg_value &= ~(1 << 23);
+    writel(reg_value, (SUNXI_CCM_BASE + 0x2C0));
+    __msdelay(10);
+
+	reg_value = readl(SUNXI_CCM_BASE + 0x60);
+	reg_value &= ~(1 << 23);
+	writel(reg_value, (SUNXI_CCM_BASE + 0x60));
+	__msdelay(10);
+
+	reg_value = readl(SUNXI_CCM_BASE + 0xcc);
+	reg_value &= ~((1 << 0) | (1 << 8));
+	writel(reg_value, (SUNXI_CCM_BASE + 0xcc));
+	__msdelay(10);
+
+	return 0;
 }
 /*
 *******************************************************************************
@@ -132,40 +132,40 @@ int usb_close_clock (void)
 *
 *******************************************************************************
 */
-int usb_probe_vbus_type (void)
+int usb_probe_vbus_type(void)
 {
-  __u32 base_reg_val;
-  __u32 reg_val = 0;
-  __u32 dp, dm = 0;
-  __u32 dpdm_det[6];
-  __u32 dpdm_ret = 0;
-  int   i = 0 ;
-  
-  reg_val = readl (SUNXI_USBOTG_BASE + USBC_REG_o_ISCR);
-  base_reg_val = reg_val;
-  reg_val |= (1 << 16) | (1 << 17);
-  writel (reg_val, SUNXI_USBOTG_BASE + USBC_REG_o_ISCR);
-  
-  __msdelay (10);
-  for (i = 0; i < 6; i++)
-  {
-    reg_val = readl (SUNXI_USBOTG_BASE + USBC_REG_o_ISCR);
-    dp = (reg_val >> 26) & 0x01;
-    dm = (reg_val >> 27) & 0x01;
-    
-    dpdm_det[i] = (dp << 1) | dm;
-    dpdm_ret += dpdm_det[i];
-    
-    __msdelay (10);
-  }
-  writel (base_reg_val, SUNXI_USBOTG_BASE + USBC_REG_o_ISCR);
-  
-  if (dpdm_ret > 12)
-  {
-    return 1;    
-  }
-  else
-  {
-    return 0;    
-  }
+	__u32 base_reg_val;
+	__u32 reg_val = 0;
+	__u32 dp, dm = 0;
+	__u32 dpdm_det[6];
+	__u32 dpdm_ret = 0;
+	int   i =0 ;
+
+	reg_val = readl(SUNXI_USBOTG_BASE + USBC_REG_o_ISCR);
+	base_reg_val = reg_val;
+	reg_val |= (1 << 16) | (1 << 17);
+	writel(reg_val, SUNXI_USBOTG_BASE + USBC_REG_o_ISCR);
+
+ 	__msdelay(10);
+	for(i=0;i<6;i++)
+	{
+		reg_val = readl(SUNXI_USBOTG_BASE + USBC_REG_o_ISCR);
+ 	 	dp = (reg_val >> 26) & 0x01;
+ 	 	dm = (reg_val >> 27) & 0x01;
+
+ 	 	dpdm_det[i] = (dp << 1) | dm;
+ 	 	dpdm_ret += dpdm_det[i];
+
+ 	 	__msdelay(10);
+	}
+	writel(base_reg_val, SUNXI_USBOTG_BASE + USBC_REG_o_ISCR);
+
+  	if(dpdm_ret > 12)
+  	{
+  		return 1;		
+  	}
+  	else
+  	{
+  		return 0;		
+  	}
 }

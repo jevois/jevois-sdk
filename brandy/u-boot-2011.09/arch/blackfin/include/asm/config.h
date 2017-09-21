@@ -68,7 +68,7 @@
 
 /* If we are using KGDB, make sure we defer exceptions */
 #ifdef CONFIG_CMD_KGDB
-# define CONFIG_EXCEPTION_DEFER 1
+# define CONFIG_EXCEPTION_DEFER	1
 #endif
 
 /* Using L1 scratch pad makes sense for everyone by default. */
@@ -127,7 +127,7 @@
 
 /* Check to make sure everything fits in external RAM */
 #if CONFIG_SYS_MAX_RAM_SIZE && \
-((CONFIG_SYS_MONITOR_BASE + CONFIG_SYS_MONITOR_LEN) > CONFIG_SYS_MAX_RAM_SIZE)
+    ((CONFIG_SYS_MONITOR_BASE + CONFIG_SYS_MONITOR_LEN) > CONFIG_SYS_MAX_RAM_SIZE)
 # error Memory Map does not fit into configuration
 #endif
 

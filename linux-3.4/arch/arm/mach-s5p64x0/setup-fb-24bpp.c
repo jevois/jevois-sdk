@@ -17,15 +17,13 @@
 #include <plat/fb.h>
 #include <plat/gpio-cfg.h>
 
-void s5p64x0_fb_gpio_setup_24bpp (void)
+void s5p64x0_fb_gpio_setup_24bpp(void)
 {
-  if (soc_is_s5p6440() ) {
-    s3c_gpio_cfgrange_nopull (S5P6440_GPI (0), 16, S3C_GPIO_SFN (2) );
-    s3c_gpio_cfgrange_nopull (S5P6440_GPJ (0), 12, S3C_GPIO_SFN (2) );
-  }
-  else
-    if (soc_is_s5p6450() ) {
-      s3c_gpio_cfgrange_nopull (S5P6450_GPI (0), 16, S3C_GPIO_SFN (2) );
-      s3c_gpio_cfgrange_nopull (S5P6450_GPJ (0), 12, S3C_GPIO_SFN (2) );
-    }
+	if (soc_is_s5p6440()) {
+		s3c_gpio_cfgrange_nopull(S5P6440_GPI(0), 16, S3C_GPIO_SFN(2));
+		s3c_gpio_cfgrange_nopull(S5P6440_GPJ(0), 12, S3C_GPIO_SFN(2));
+	} else if (soc_is_s5p6450()) {
+		s3c_gpio_cfgrange_nopull(S5P6450_GPI(0), 16, S3C_GPIO_SFN(2));
+		s3c_gpio_cfgrange_nopull(S5P6450_GPJ(0), 12, S3C_GPIO_SFN(2));
+	}
 }

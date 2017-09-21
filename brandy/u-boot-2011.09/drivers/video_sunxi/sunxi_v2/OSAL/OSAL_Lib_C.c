@@ -1,21 +1,21 @@
 /*
 *************************************************************************************
-*                               eBsp
-*            Operation System Adapter Layer
+*                         			eBsp
+*					   Operation System Adapter Layer
 *
-*       (c) Copyright 2006-2010, All winners Co,Ld.
-*             All Rights Reserved
+*				(c) Copyright 2006-2010, All winners Co,Ld.
+*							All	Rights Reserved
 *
-* File Name   : OSAL_Lib_C.h
+* File Name 	: OSAL_Lib_C.h
 *
-* Author    : javen
+* Author 		: javen
 *
-* Description   : C库函数
+* Description 	: C库函数
 *
-* History     :
-*      <author>       <time>        <version >        <desc>
-*       javen          2010-09-07          1.0          create this word
-*   holi       2010-12-03      1.1      增加了OSAL_io_remap
+* History 		:
+*      <author>    		<time>       	<version >    		<desc>
+*       javen     	   2010-09-07          1.0         	create this word
+*		holi		   2010-12-03		   1.1			增加了OSAL_io_remap
 *************************************************************************************
 */
 
@@ -24,91 +24,91 @@
 extern int kdb_trap_printk;
 
 /* 普通内存分配 */
-void * OSAL_malloc (__u32 Size)
+void * OSAL_malloc(__u32 Size)
 {
-  void * addr;
-  
-  addr = malloc (Size);
-  if (addr)
-  { memset (addr, 0, Size); }
-  return addr;
+    void * addr;
+
+    addr = malloc(Size);
+    if(addr)
+    	memset(addr,0,Size);
+	return addr;
 }
 
-void OSAL_free (void * pAddr)
+void OSAL_free(void *pAddr)
 {
-  free (pAddr);
-  
-  return;
+    free(pAddr);
+
+    return;
 }
 
 /* 连续的物理内存分配 */
-void * OSAL_PhyAlloc (__u32 Size)
+void * OSAL_PhyAlloc(__u32 Size)
 {
-  void * addr;
-  
-  addr = malloc (Size);
-  return addr;
+    void * addr;
+
+    addr = malloc(Size);
+	return addr;
 }
 
-void OSAL_PhyFree (void * pAddr, __u32 Size)
+void OSAL_PhyFree(void *pAddr, __u32 Size)
 {
-  free (pAddr);
-  
-  return;
+   free(pAddr);
+
+   return;
 }
 
 
 /* 虚拟内存和物理内存之间的转化 */
-unsigned int OSAL_VAtoPA (void * va)
+unsigned int OSAL_VAtoPA(void *va)
 {
-  
-  return (unsigned int) va;
+
+	return (unsigned int)va;
 }
 
-void * OSAL_PAtoVA (unsigned int pa)
+void *OSAL_PAtoVA(unsigned int pa)
 {
-  return (void *) pa;
+	return (void *)pa;
 }
 
 
 
 
 
-int OSAL_putchar (int value)
+int OSAL_putchar(int value)
 {
-  return 0;
+	return 0;
 }
-int OSAL_puts (const char * value)
+int OSAL_puts(const char * value)
 {
-  return 0;
+	return 0;
 }
-int OSAL_getchar (void)
+int OSAL_getchar(void)
 {
-  return 0;
+	return 0;
 }
-char * OSAL_gets (char * value)
+char * OSAL_gets(char *value)
 {
-  return NULL;
+	return NULL;
 }
 
 /* 字符串转长整形 */
-long OSAL_strtol (const char * str, const char ** err, int base)
+long OSAL_strtol (const char *str, const char **err, int base)
 {
-  return 0;
+	return 0;
 }
 
 /* 有符号十进制整形转字符串*/
-void OSAL_int2str_dec (int input, char * str)
+void OSAL_int2str_dec(int input, char * str)
 {
 }
 
 /* 十六进制整形转字符串*/
-void OSAL_int2str_hex (int input, char * str, int hex_flag)
+void OSAL_int2str_hex(int input, char * str, int hex_flag)
 {
 }
 
 /* 无符号十进制整形转字符串*/
-void OSAL_uint2str_dec (unsigned int input, char * str)
+void OSAL_uint2str_dec(unsigned int input, char * str)
 {
 }
 

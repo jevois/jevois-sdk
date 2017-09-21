@@ -1,10 +1,10 @@
 /*
 **********************************************************************************************************************
 *
-*                      the Embedded Secure Bootloader System
+*						           the Embedded Secure Bootloader System
 *
 *
-*                  Copyright(C), 2006-2014, Allwinnertech Co., Ltd.
+*						       Copyright(C), 2006-2014, Allwinnertech Co., Ltd.
 *                                           All Rights Reserved
 *
 * File    :
@@ -13,7 +13,7 @@
 *
 * Version : V2.00
 *
-* Date    :
+* Date	  :
 *
 * Descript:
 **********************************************************************************************************************
@@ -54,7 +54,7 @@
 #define SMC_REGIN_ATTRIBUTE_REG(x)    (SMC_BASE + 0x108 + 0x10*(x))
 
 
-int sunxi_smc_config (uint dram_size, uint secure_region_size);
-int sunxi_drm_config (u32 drm_start, u32 dram_size);
+int sunxi_smc_config(uint dram_size, uint secure_region_size);
+int sunxi_drm_config(u32 drm_start, u32 dram_size);
 
 #endif    /*  #ifndef _TZASC_SMC_H_  */

@@ -39,10 +39,10 @@
  * An enumeration of the osd display layers.
  */
 enum osd_layer {
-  WIN_OSD0,
-  WIN_VID0,
-  WIN_OSD1,
-  WIN_VID1,
+	WIN_OSD0,
+	WIN_VID0,
+	WIN_OSD1,
+	WIN_VID1,
 };
 
 /**
@@ -54,8 +54,8 @@ enum osd_layer {
  * An enumeration of the OSD Window layers.
  */
 enum osd_win_layer {
-  OSDWIN_OSD0,
-  OSDWIN_OSD1,
+	OSDWIN_OSD0,
+	OSDWIN_OSD1,
 };
 
 /**
@@ -75,16 +75,16 @@ enum osd_win_layer {
  * An enumeration of the DaVinci pixel formats.
  */
 enum osd_pix_format {
-  PIXFMT_1BPP = 0,
-  PIXFMT_2BPP,
-  PIXFMT_4BPP,
-  PIXFMT_8BPP,
-  PIXFMT_RGB565,
-  PIXFMT_YCbCrI,
-  PIXFMT_RGB888,
-  PIXFMT_YCrCbI,
-  PIXFMT_NV12,
-  PIXFMT_OSD_ATTR,
+	PIXFMT_1BPP = 0,
+	PIXFMT_2BPP,
+	PIXFMT_4BPP,
+	PIXFMT_8BPP,
+	PIXFMT_RGB565,
+	PIXFMT_YCbCrI,
+	PIXFMT_RGB888,
+	PIXFMT_YCrCbI,
+	PIXFMT_NV12,
+	PIXFMT_OSD_ATTR,
 };
 
 /**
@@ -97,9 +97,9 @@ enum osd_pix_format {
  * An enumeration of the available horizontal expansion ratios.
  */
 enum osd_h_exp_ratio {
-  H_EXP_OFF,
-  H_EXP_9_OVER_8,
-  H_EXP_3_OVER_2,
+	H_EXP_OFF,
+	H_EXP_9_OVER_8,
+	H_EXP_3_OVER_2,
 };
 
 /**
@@ -111,8 +111,8 @@ enum osd_h_exp_ratio {
  * An enumeration of the available vertical expansion ratios.
  */
 enum osd_v_exp_ratio {
-  V_EXP_OFF,
-  V_EXP_6_OVER_5,
+	V_EXP_OFF,
+	V_EXP_6_OVER_5,
 };
 
 /**
@@ -125,9 +125,9 @@ enum osd_v_exp_ratio {
  * An enumeration of the available zoom factors.
  */
 enum osd_zoom_factor {
-  ZOOM_X1,
-  ZOOM_X2,
-  ZOOM_X4,
+	ZOOM_X1,
+	ZOOM_X2,
+	ZOOM_X4,
 };
 
 /**
@@ -139,8 +139,8 @@ enum osd_zoom_factor {
  * An enumeration of the available Color Lookup Tables (CLUTs).
  */
 enum osd_clut {
-  ROM_CLUT,
-  RAM_CLUT,
+	ROM_CLUT,
+	RAM_CLUT,
 };
 
 /**
@@ -152,8 +152,8 @@ enum osd_clut {
  * An enumeration of the ROM Color Lookup Table (CLUT) options.
  */
 enum osd_rom_clut {
-  ROM_CLUT0,
-  ROM_CLUT1,
+	ROM_CLUT0,
+	ROM_CLUT1,
 };
 
 /**
@@ -171,14 +171,14 @@ enum osd_rom_clut {
  * An enumeration of the DaVinci pixel blending factor options.
  */
 enum osd_blending_factor {
-  OSD_0_VID_8,
-  OSD_1_VID_7,
-  OSD_2_VID_6,
-  OSD_3_VID_5,
-  OSD_4_VID_4,
-  OSD_5_VID_3,
-  OSD_6_VID_2,
-  OSD_8_VID_0,
+	OSD_0_VID_8,
+	OSD_1_VID_7,
+	OSD_2_VID_6,
+	OSD_3_VID_5,
+	OSD_4_VID_4,
+	OSD_5_VID_3,
+	OSD_6_VID_2,
+	OSD_8_VID_0,
 };
 
 /**
@@ -192,10 +192,10 @@ enum osd_blending_factor {
  * An enumeration of the DaVinci pixel blinking interval options.
  */
 enum osd_blink_interval {
-  BLINK_X1,
-  BLINK_X2,
-  BLINK_X3,
-  BLINK_X4,
+	BLINK_X1,
+	BLINK_X2,
+	BLINK_X3,
+	BLINK_X4,
 };
 
 /**
@@ -210,14 +210,14 @@ enum osd_blink_interval {
  * @H_WIDTH_28: horizontal line width is 28 pixels
  */
 enum osd_cursor_h_width {
-  H_WIDTH_1,
-  H_WIDTH_4,
-  H_WIDTH_8,
-  H_WIDTH_12,
-  H_WIDTH_16,
-  H_WIDTH_20,
-  H_WIDTH_24,
-  H_WIDTH_28,
+	H_WIDTH_1,
+	H_WIDTH_4,
+	H_WIDTH_8,
+	H_WIDTH_12,
+	H_WIDTH_16,
+	H_WIDTH_20,
+	H_WIDTH_24,
+	H_WIDTH_28,
 };
 
 /**
@@ -232,14 +232,14 @@ enum osd_cursor_h_width {
  * @V_WIDTH_14: vertical line width is 14 lines
  */
 enum osd_cursor_v_width {
-  V_WIDTH_1,
-  V_WIDTH_2,
-  V_WIDTH_4,
-  V_WIDTH_6,
-  V_WIDTH_8,
-  V_WIDTH_10,
-  V_WIDTH_12,
-  V_WIDTH_14,
+	V_WIDTH_1,
+	V_WIDTH_2,
+	V_WIDTH_4,
+	V_WIDTH_6,
+	V_WIDTH_8,
+	V_WIDTH_10,
+	V_WIDTH_12,
+	V_WIDTH_14,
 };
 
 /**
@@ -259,15 +259,15 @@ enum osd_cursor_v_width {
  * rectangular cursor.
  */
 struct osd_cursor_config {
-  unsigned xsize;
-  unsigned ysize;
-  unsigned xpos;
-  unsigned ypos;
-  int interlaced;
-  enum osd_cursor_h_width h_width;
-  enum osd_cursor_v_width v_width;
-  enum osd_clut clut;
-  unsigned char clut_index;
+	unsigned xsize;
+	unsigned ysize;
+	unsigned xpos;
+	unsigned ypos;
+	int interlaced;
+	enum osd_cursor_h_width h_width;
+	enum osd_cursor_v_width v_width;
+	enum osd_clut clut;
+	unsigned char clut_index;
 };
 
 /**
@@ -286,109 +286,109 @@ struct osd_cursor_config {
  * @line_length must be a multiple of the cache line size (32 bytes).
  */
 struct osd_layer_config {
-  enum osd_pix_format pixfmt;
-  unsigned line_length;
-  unsigned xsize;
-  unsigned ysize;
-  unsigned xpos;
-  unsigned ypos;
-  int interlaced;
+	enum osd_pix_format pixfmt;
+	unsigned line_length;
+	unsigned xsize;
+	unsigned ysize;
+	unsigned xpos;
+	unsigned ypos;
+	int interlaced;
 };
 
 /* parameters that apply on a per-window (OSD or video) basis */
 struct osd_window_state {
-  int is_allocated;
-  int is_enabled;
-  unsigned long fb_base_phys;
-  enum osd_zoom_factor h_zoom;
-  enum osd_zoom_factor v_zoom;
-  struct osd_layer_config lconfig;
+	int is_allocated;
+	int is_enabled;
+	unsigned long fb_base_phys;
+	enum osd_zoom_factor h_zoom;
+	enum osd_zoom_factor v_zoom;
+	struct osd_layer_config lconfig;
 };
 
 /* parameters that apply on a per-OSD-window basis */
 struct osd_osdwin_state {
-  enum osd_clut clut;
-  enum osd_blending_factor blend;
-  int colorkey_blending;
-  unsigned colorkey;
-  int rec601_attenuation;
-  /* index is pixel value */
-  unsigned char palette_map[16];
+	enum osd_clut clut;
+	enum osd_blending_factor blend;
+	int colorkey_blending;
+	unsigned colorkey;
+	int rec601_attenuation;
+	/* index is pixel value */
+	unsigned char palette_map[16];
 };
 
 /* hardware rectangular cursor parameters */
 struct osd_cursor_state {
-  int is_enabled;
-  struct osd_cursor_config config;
+	int is_enabled;
+	struct osd_cursor_config config;
 };
 
 struct osd_state;
 
 struct vpbe_osd_ops {
-  int (*initialize) (struct osd_state * sd);
-  int (*request_layer) (struct osd_state * sd, enum osd_layer layer);
-  void (*release_layer) (struct osd_state * sd, enum osd_layer layer);
-  int (*enable_layer) (struct osd_state * sd, enum osd_layer layer,
-                       int otherwin);
-  void (*disable_layer) (struct osd_state * sd, enum osd_layer layer);
-  int (*set_layer_config) (struct osd_state * sd, enum osd_layer layer,
-                           struct osd_layer_config * lconfig);
-  void (*get_layer_config) (struct osd_state * sd, enum osd_layer layer,
-                            struct osd_layer_config * lconfig);
-  void (*start_layer) (struct osd_state * sd, enum osd_layer layer,
-                       unsigned long fb_base_phys,
-                       unsigned long cbcr_ofst);
-  void (*set_left_margin) (struct osd_state * sd, u32 val);
-  void (*set_top_margin) (struct osd_state * sd, u32 val);
-  void (*set_interpolation_filter) (struct osd_state * sd, int filter);
-  int (*set_vid_expansion) (struct osd_state * sd,
-                            enum osd_h_exp_ratio h_exp,
-                            enum osd_v_exp_ratio v_exp);
-  void (*get_vid_expansion) (struct osd_state * sd,
-                             enum osd_h_exp_ratio * h_exp,
-                             enum osd_v_exp_ratio * v_exp);
-  void (*set_zoom) (struct osd_state * sd, enum osd_layer layer,
-                    enum osd_zoom_factor h_zoom,
-                    enum osd_zoom_factor v_zoom);
+	int (*initialize)(struct osd_state *sd);
+	int (*request_layer)(struct osd_state *sd, enum osd_layer layer);
+	void (*release_layer)(struct osd_state *sd, enum osd_layer layer);
+	int (*enable_layer)(struct osd_state *sd, enum osd_layer layer,
+			    int otherwin);
+	void (*disable_layer)(struct osd_state *sd, enum osd_layer layer);
+	int (*set_layer_config)(struct osd_state *sd, enum osd_layer layer,
+				struct osd_layer_config *lconfig);
+	void (*get_layer_config)(struct osd_state *sd, enum osd_layer layer,
+				 struct osd_layer_config *lconfig);
+	void (*start_layer)(struct osd_state *sd, enum osd_layer layer,
+			    unsigned long fb_base_phys,
+			    unsigned long cbcr_ofst);
+	void (*set_left_margin)(struct osd_state *sd, u32 val);
+	void (*set_top_margin)(struct osd_state *sd, u32 val);
+	void (*set_interpolation_filter)(struct osd_state *sd, int filter);
+	int (*set_vid_expansion)(struct osd_state *sd,
+					enum osd_h_exp_ratio h_exp,
+					enum osd_v_exp_ratio v_exp);
+	void (*get_vid_expansion)(struct osd_state *sd,
+					enum osd_h_exp_ratio *h_exp,
+					enum osd_v_exp_ratio *v_exp);
+	void (*set_zoom)(struct osd_state *sd, enum osd_layer layer,
+				enum osd_zoom_factor h_zoom,
+				enum osd_zoom_factor v_zoom);
 };
 
 struct osd_state {
-  enum vpbe_version vpbe_type;
-  spinlock_t lock;
-  struct device * dev;
-  dma_addr_t osd_base_phys;
-  unsigned long osd_base;
-  unsigned long osd_size;
-  /* 1-->the isr will toggle the VID0 ping-pong buffer */
-  int pingpong;
-  int interpolation_filter;
-  int field_inversion;
-  enum osd_h_exp_ratio osd_h_exp;
-  enum osd_v_exp_ratio osd_v_exp;
-  enum osd_h_exp_ratio vid_h_exp;
-  enum osd_v_exp_ratio vid_v_exp;
-  enum osd_clut backg_clut;
-  unsigned backg_clut_index;
-  enum osd_rom_clut rom_clut;
-  int is_blinking;
-  /* attribute window blinking enabled */
-  enum osd_blink_interval blink;
-  /* YCbCrI or YCrCbI */
-  enum osd_pix_format yc_pixfmt;
-  /* columns are Y, Cb, Cr */
-  unsigned char clut_ram[256][3];
-  struct osd_cursor_state cursor;
-  /* OSD0, VID0, OSD1, VID1 */
-  struct osd_window_state win[4];
-  /* OSD0, OSD1 */
-  struct osd_osdwin_state osdwin[2];
-  /* OSD device Operations */
-  struct vpbe_osd_ops ops;
+	enum vpbe_version vpbe_type;
+	spinlock_t lock;
+	struct device *dev;
+	dma_addr_t osd_base_phys;
+	unsigned long osd_base;
+	unsigned long osd_size;
+	/* 1-->the isr will toggle the VID0 ping-pong buffer */
+	int pingpong;
+	int interpolation_filter;
+	int field_inversion;
+	enum osd_h_exp_ratio osd_h_exp;
+	enum osd_v_exp_ratio osd_v_exp;
+	enum osd_h_exp_ratio vid_h_exp;
+	enum osd_v_exp_ratio vid_v_exp;
+	enum osd_clut backg_clut;
+	unsigned backg_clut_index;
+	enum osd_rom_clut rom_clut;
+	int is_blinking;
+	/* attribute window blinking enabled */
+	enum osd_blink_interval blink;
+	/* YCbCrI or YCrCbI */
+	enum osd_pix_format yc_pixfmt;
+	/* columns are Y, Cb, Cr */
+	unsigned char clut_ram[256][3];
+	struct osd_cursor_state cursor;
+	/* OSD0, VID0, OSD1, VID1 */
+	struct osd_window_state win[4];
+	/* OSD0, OSD1 */
+	struct osd_osdwin_state osdwin[2];
+	/* OSD device Operations */
+	struct vpbe_osd_ops ops;
 };
 
 struct osd_platform_data {
-  enum vpbe_version vpbe_type;
-  int  field_inv_wa_enable;
+	enum vpbe_version vpbe_type;
+	int  field_inv_wa_enable;
 };
 
 #endif

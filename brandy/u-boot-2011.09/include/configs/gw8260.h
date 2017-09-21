@@ -50,7 +50,7 @@
 #ifndef __CONFIG_H
 #define __CONFIG_H
 
-#define CONFIG_SYS_TEXT_BASE  0x40000000
+#define	CONFIG_SYS_TEXT_BASE	0x40000000
 
 /* Enable debug prints */
 #undef DEBUG_BOOTP_EXT        /* Debug received vendor fields */
@@ -215,19 +215,19 @@
  */
 #define MDIO_PORT   2       /* Port C */
 
-#define MDIO_DECLARE  volatile ioport_t *iop = ioport_addr ( \
-    (immap_t *) CONFIG_SYS_IMMR, MDIO_PORT )
-#define MDC_DECLARE MDIO_DECLARE
+#define MDIO_DECLARE	volatile ioport_t *iop = ioport_addr ( \
+				(immap_t *) CONFIG_SYS_IMMR, MDIO_PORT )
+#define MDC_DECLARE	MDIO_DECLARE
 
 #define MDIO_ACTIVE    (iop->pdir |=  0x00400000)
 #define MDIO_TRISTATE  (iop->pdir &= ~0x00400000)
 #define MDIO_READ     ((iop->pdat &  0x00400000) != 0)
 
 #define MDIO(bit)   if(bit) iop->pdat |=  0x00400000; \
-  else            iop->pdat &= ~0x00400000
+	    else            iop->pdat &= ~0x00400000
 
 #define MDC(bit)    if(bit) iop->pdat |=  0x00200000; \
-  else    iop->pdat &= ~0x00200000
+	    else    iop->pdat &= ~0x00200000
 
 #define MIIDELAY    udelay(1)
 #endif  /* CONFIG_ETHER_ON_FCC */
@@ -240,10 +240,10 @@
  * - Select bus for bd/buffers (see 28-13)
  * - Enable Full Duplex in FSMR
  */
-# define CONFIG_SYS_CMXFCR_MASK (CMXFCR_FC2|CMXFCR_RF2CS_MSK|CMXFCR_TF2CS_MSK)
-# define CONFIG_SYS_CMXFCR_VALUE  (CMXFCR_RF2CS_CLK13|CMXFCR_TF2CS_CLK14)
-# define CONFIG_SYS_CPMFCR_RAMTYPE  0
-# define CONFIG_SYS_FCC_PSMR    (FCC_PSMR_FDE | FCC_PSMR_LPB)
+# define CONFIG_SYS_CMXFCR_MASK	(CMXFCR_FC2|CMXFCR_RF2CS_MSK|CMXFCR_TF2CS_MSK)
+# define CONFIG_SYS_CMXFCR_VALUE	(CMXFCR_RF2CS_CLK13|CMXFCR_TF2CS_CLK14)
+# define CONFIG_SYS_CPMFCR_RAMTYPE	0
+# define CONFIG_SYS_FCC_PSMR		(FCC_PSMR_FDE | FCC_PSMR_LPB)
 
 #elif defined(CONFIG_ETHER_ON_FCC) && (CONFIG_ETHER_INDEX == 3)
 
@@ -253,10 +253,10 @@
  * - Select bus for bd/buffers (see 28-13)
  * - Enable Full Duplex in FSMR
  */
-# define CONFIG_SYS_CMXFCR_MASK (CMXFCR_FC3|CMXFCR_RF3CS_MSK|CMXFCR_TF3CS_MSK)
-# define CONFIG_SYS_CMXFCR_VALUE  (CMXFCR_RF3CS_CLK15|CMXFCR_TF3CS_CLK16)
-# define CONFIG_SYS_CPMFCR_RAMTYPE  0
-# define CONFIG_SYS_FCC_PSMR    (FCC_PSMR_FDE | FCC_PSMR_LPB)
+# define CONFIG_SYS_CMXFCR_MASK	(CMXFCR_FC3|CMXFCR_RF3CS_MSK|CMXFCR_TF3CS_MSK)
+# define CONFIG_SYS_CMXFCR_VALUE	(CMXFCR_RF3CS_CLK15|CMXFCR_TF3CS_CLK16)
+# define CONFIG_SYS_CPMFCR_RAMTYPE	0
+# define CONFIG_SYS_FCC_PSMR		(FCC_PSMR_FDE | FCC_PSMR_LPB)
 
 #endif /* CONFIG_ETHER_ON_FCC, CONFIG_ETHER_INDEX */
 
@@ -286,8 +286,8 @@
  *     To stop  use: " "
  */
 #define CONFIG_AUTOBOOT_KEYED
-#define CONFIG_AUTOBOOT_PROMPT  \
-  "Autobooting in %d seconds, press \" \" to stop\n", bootdelay
+#define CONFIG_AUTOBOOT_PROMPT	\
+	"Autobooting in %d seconds, press \" \" to stop\n", bootdelay
 #define CONFIG_AUTOBOOT_STOP_STR    " "
 #undef  CONFIG_AUTOBOOT_DELAY_STR
 #define DEBUG_BOOTKEYS      0
@@ -345,7 +345,7 @@
 
 #define CONFIG_MPC8260      1   /* This is an MPC8260 CPU   */
 #define CONFIG_GW8260       1   /* on an GW8260 Board  */
-#define CONFIG_CPM2   1 /* Has a CPM2 */
+#define CONFIG_CPM2		1	/* Has a CPM2 */
 
 /*
  * Miscellaneous configurable options
@@ -380,12 +380,12 @@
 #define CONFIG_SYS_STACK_USAGE     0x10000 /* Reserve 64k for the stack usage */
 
 #define CONFIG_SYS_MEM_END_USAGE   ( CONFIG_SYS_MONITOR_LEN \
-                                     + CONFIG_SYS_MALLOC_LEN \
-                                     + CONFIG_ENV_SECT_SIZE \
-                                     + CONFIG_SYS_STACK_USAGE )
+			    + CONFIG_SYS_MALLOC_LEN \
+			    + CONFIG_ENV_SECT_SIZE \
+			    + CONFIG_SYS_STACK_USAGE )
 
 #define CONFIG_SYS_MEMTEST_END     ( CONFIG_SYS_SDRAM_SIZE * 1024 * 1024 \
-                                     - CONFIG_SYS_MEM_END_USAGE )
+			    - CONFIG_SYS_MEM_END_USAGE )
 
 /* valid baudrates */
 #define CONFIG_SYS_BAUDRATE_TABLE  { 9600, 19200, 38400, 57600, 115200 }
@@ -412,18 +412,18 @@
 
 /* get the HRCW ISB field from CONFIG_SYS_IMMR */
 #define CONFIG_SYS_SBC_HRCW_IMMR   ( ((CONFIG_SYS_IMMR & 0x10000000) >> 10) | \
-                                     ((CONFIG_SYS_IMMR & 0x01000000) >>  7) | \
-                                     ((CONFIG_SYS_IMMR & 0x00100000) >>  4) )
+		  ((CONFIG_SYS_IMMR & 0x01000000) >>  7) | \
+		  ((CONFIG_SYS_IMMR & 0x00100000) >>  4) )
 
 #define CONFIG_SYS_HRCW_MASTER     ( HRCW_BPS11                | \
-                                     HRCW_DPPC11               | \
-                                     CONFIG_SYS_SBC_HRCW_IMMR         | \
-                                     HRCW_MMR00                | \
-                                     HRCW_LBPC11               | \
-                                     HRCW_APPC10               | \
-                                     HRCW_CS10PC00             | \
-                                     (CONFIG_SYS_SBC_MODCK_H & HRCW_MODCK_H1111)  | \
-                                     CONFIG_SYS_SBC_HRCW_BOOT_FLAGS )
+		  HRCW_DPPC11               | \
+		  CONFIG_SYS_SBC_HRCW_IMMR         | \
+		  HRCW_MMR00                | \
+		  HRCW_LBPC11               | \
+		  HRCW_APPC10               | \
+		  HRCW_CS10PC00             | \
+		  (CONFIG_SYS_SBC_MODCK_H & HRCW_MODCK_H1111)  | \
+		  CONFIG_SYS_SBC_HRCW_BOOT_FLAGS )
 
 /* no slaves */
 #define CONFIG_SYS_HRCW_SLAVE1     0
@@ -500,16 +500,16 @@
  * HID1 has only read-only information - nothing to set.
  */
 #define CONFIG_SYS_HID0_INIT   (HID0_ICE  |\
-                                HID0_DCE  |\
-                                HID0_ICFI |\
-                                HID0_DCI  |\
-                                HID0_IFEM |\
-                                HID0_ABE)
+			 HID0_DCE  |\
+			 HID0_ICFI |\
+			 HID0_DCI  |\
+			 HID0_IFEM |\
+			 HID0_ABE)
 
 #define CONFIG_SYS_HID0_FINAL  (HID0_ICE  |\
-                                HID0_IFEM |\
-                                HID0_ABE  |\
-                                HID0_EMCP)
+			 HID0_IFEM |\
+			 HID0_ABE  |\
+			 HID0_EMCP)
 #define CONFIG_SYS_HID2    0
 
 /*-----------------------------------------------------------------------
@@ -529,9 +529,9 @@
  *-----------------------------------------------------------------------
  */
 #define CONFIG_SYS_SIUMCR  (SIUMCR_DPPC11  |\
-                            SIUMCR_L2CPC00 |\
-                            SIUMCR_APPC10  |\
-                            SIUMCR_MMR00)
+		     SIUMCR_L2CPC00 |\
+		     SIUMCR_APPC10  |\
+		     SIUMCR_MMR00)
 
 
 /*-----------------------------------------------------------------------
@@ -541,11 +541,11 @@
  * Watchdog & Bus Monitor Timer max, 60x Bus Monitor enable
  */
 #define CONFIG_SYS_SYPCR   (SYPCR_SWTC |\
-                            SYPCR_BMT  |\
-                            SYPCR_PBME |\
-                            SYPCR_LBME |\
-                            SYPCR_SWRI |\
-                            SYPCR_SWP)
+		     SYPCR_BMT  |\
+		     SYPCR_PBME |\
+		     SYPCR_LBME |\
+		     SYPCR_SWRI |\
+		     SYPCR_SWP)
 
 /*-----------------------------------------------------------------------
  * TMCNTSC - Time Counter Status and Control             4-40
@@ -554,9 +554,9 @@
  * and enable Time Counter
  */
 #define CONFIG_SYS_TMCNTSC (TMCNTSC_SEC |\
-                            TMCNTSC_ALR |\
-                            TMCNTSC_TCF |\
-                            TMCNTSC_TCE)
+		     TMCNTSC_ALR |\
+		     TMCNTSC_TCF |\
+		     TMCNTSC_TCE)
 
 /*-----------------------------------------------------------------------
  * PISCR - Periodic Interrupt Status and Control         4-42
@@ -565,8 +565,8 @@
  * Periodic timer
  */
 #define CONFIG_SYS_PISCR   (PISCR_PS  |\
-                            PISCR_PTF |\
-                            PISCR_PTE)
+		     PISCR_PTF |\
+		     PISCR_PTE)
 
 /*-----------------------------------------------------------------------
  * SCCR - System Clock Control                           9-8
@@ -625,9 +625,9 @@
  *     - Valid
  */
 #define CONFIG_SYS_BR0_PRELIM  ((CONFIG_SYS_FLASH0_BASE & BRx_BA_MSK) |\
-                                BRx_PS_32                     |\
-                                BRx_MS_GPCM_P                 |\
-                                BRx_V)
+			  BRx_PS_32                     |\
+			  BRx_MS_GPCM_P                 |\
+			  BRx_V)
 
 /* OR0 is configured as follows:
  *
@@ -644,11 +644,11 @@
  *       current bank and the next access.
  */
 #define CONFIG_SYS_OR0_PRELIM  (MEG_TO_AM(CONFIG_SYS_FLASH0_SIZE) |\
-                                ORxG_CSNT          |\
-                                ORxG_ACS_DIV1      |\
-                                ORxG_SCY_5_CLK     |\
-                                ORxG_TRLX          |\
-                                ORxG_EHTR)
+			 ORxG_CSNT          |\
+			 ORxG_ACS_DIV1      |\
+			 ORxG_SCY_5_CLK     |\
+			 ORxG_TRLX          |\
+			 ORxG_EHTR)
 
 /*-----------------------------------------------------------------------
  * BR2 - Base Register
@@ -680,9 +680,9 @@
  *     - Valid
  */
 #define CONFIG_SYS_BR2_PRELIM  ((CONFIG_SYS_SDRAM0_BASE & BRx_BA_MSK) |\
-                                BRx_PS_64          |\
-                                BRx_MS_SDRAM_P     |\
-                                BRx_V)
+			  BRx_PS_64          |\
+			  BRx_MS_SDRAM_P     |\
+			  BRx_V)
 
 /* With a 16 MB DIMM, the OR2 is configured as follows:
  *
@@ -695,9 +695,9 @@
  */
 #if (CONFIG_SYS_SDRAM0_SIZE == 16)
 #define CONFIG_SYS_OR2_PRELIM  (MEG_TO_AM(CONFIG_SYS_SDRAM0_SIZE) |\
-                                ORxS_BPD_2         |\
-                                ORxS_ROWST_PBI0_A9 |\
-                                ORxS_NUMR_11)
+			 ORxS_BPD_2         |\
+			 ORxS_ROWST_PBI0_A9 |\
+			 ORxS_NUMR_11)
 
 /* With a 16 MB DIMM, the PSDMR is configured as follows:
  *
@@ -723,15 +723,15 @@
  *-----------------------------------------------------------------------
  */
 #define CONFIG_SYS_PSDMR   (PSDMR_RFEN       |\
-                            PSDMR_SDAM_A14_IS_A5 |\
-                            PSDMR_BSMA_A16_A18   |\
-                            PSDMR_SDA10_PBI0_A9  |\
-                            PSDMR_RFRC_7_CLK     |\
-                            PSDMR_PRETOACT_3W    |\
-                            PSDMR_ACTTORW_2W     |\
-                            PSDMR_LDOTOPRE_1C    |\
-                            PSDMR_WRC_1C         |\
-                            PSDMR_CL_2)
+		     PSDMR_SDAM_A14_IS_A5 |\
+		     PSDMR_BSMA_A16_A18   |\
+		     PSDMR_SDA10_PBI0_A9  |\
+		     PSDMR_RFRC_7_CLK     |\
+		     PSDMR_PRETOACT_3W    |\
+		     PSDMR_ACTTORW_2W     |\
+		     PSDMR_LDOTOPRE_1C    |\
+		     PSDMR_WRC_1C         |\
+		     PSDMR_CL_2)
 #endif /* (CONFIG_SYS_SDRAM0_SIZE == 16) */
 
 /* With a 64 MB DIMM, the OR2 is configured as follows:
@@ -745,9 +745,9 @@
  */
 #if (CONFIG_SYS_SDRAM0_SIZE == 64)
 #define CONFIG_SYS_OR2_PRELIM  (MEG_TO_AM(CONFIG_SYS_SDRAM0_SIZE) |\
-                                ORxS_BPD_4         |\
-                                ORxS_ROWST_PBI0_A8     |\
-                                ORxS_NUMR_12)
+	     ORxS_BPD_4         |\
+	     ORxS_ROWST_PBI0_A8     |\
+	     ORxS_NUMR_12)
 
 /* With a 64 MB DIMM, the PSDMR is configured as follows:
  *
@@ -773,15 +773,15 @@
  *-----------------------------------------------------------------------
  */
 #define CONFIG_SYS_PSDMR   (PSDMR_RFEN       |\
-                            PSDMR_SDAM_A14_IS_A5 |\
-                            PSDMR_BSMA_A14_A16   |\
-                            PSDMR_SDA10_PBI0_A9  |\
-                            PSDMR_RFRC_7_CLK     |\
-                            PSDMR_PRETOACT_3W    |\
-                            PSDMR_ACTTORW_2W     |\
-                            PSDMR_LDOTOPRE_1C    |\
-                            PSDMR_WRC_1C         |\
-                            PSDMR_CL_2)
+		     PSDMR_SDAM_A14_IS_A5 |\
+		     PSDMR_BSMA_A14_A16   |\
+		     PSDMR_SDA10_PBI0_A9  |\
+		     PSDMR_RFRC_7_CLK     |\
+		     PSDMR_PRETOACT_3W    |\
+		     PSDMR_ACTTORW_2W     |\
+		     PSDMR_LDOTOPRE_1C    |\
+		     PSDMR_WRC_1C         |\
+		     PSDMR_CL_2)
 #endif  /* (CONFIG_SYS_SDRAM0_SIZE == 64) */
 
 #define CONFIG_SYS_PSRT    0x0e
@@ -812,12 +812,12 @@
 
 #ifdef CONFIG_SYS_IO_BASE
 #  define CONFIG_SYS_BR4_PRELIM  ((CONFIG_SYS_IO_BASE & BRx_BA_MSK)  |\
-                                  BRx_PS_8                   |\
-                                  BRx_MS_GPCM_L              |\
-                                  BRx_V)
+			    BRx_PS_8                   |\
+			    BRx_MS_GPCM_L              |\
+			    BRx_V)
 
 #  define CONFIG_SYS_OR4_PRELIM   (ORxG_AM_MSK                |\
-                                   ORxG_SCY_11_CLK            |\
-                                   ORxG_EHTR)
+			    ORxG_SCY_11_CLK            |\
+			    ORxG_EHTR)
 #endif /* CONFIG_SYS_IO_BASE */
 #endif  /* __CONFIG_H */

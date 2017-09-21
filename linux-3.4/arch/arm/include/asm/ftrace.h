@@ -2,28 +2,28 @@
 #define _ASM_ARM_FTRACE
 
 #ifdef CONFIG_FUNCTION_TRACER
-#define MCOUNT_ADDR   ((unsigned long)(__gnu_mcount_nc))
-#define MCOUNT_INSN_SIZE  4 /* sizeof mcount call */
+#define MCOUNT_ADDR		((unsigned long)(__gnu_mcount_nc))
+#define MCOUNT_INSN_SIZE	4 /* sizeof mcount call */
 
 #ifndef __ASSEMBLY__
-extern void mcount (void);
-extern void __gnu_mcount_nc (void);
+extern void mcount(void);
+extern void __gnu_mcount_nc(void);
 
 #ifdef CONFIG_DYNAMIC_FTRACE
 struct dyn_arch_ftrace {
-  #ifdef CONFIG_OLD_MCOUNT
-  bool  old_mcount;
-  #endif
+#ifdef CONFIG_OLD_MCOUNT
+	bool	old_mcount;
+#endif
 };
 
-static inline unsigned long ftrace_call_adjust (unsigned long addr)
+static inline unsigned long ftrace_call_adjust(unsigned long addr)
 {
-  /* With Thumb-2, the recorded addresses have the lsb set */
-  return addr & ~1;
+	/* With Thumb-2, the recorded addresses have the lsb set */
+	return addr & ~1;
 }
 
-extern void ftrace_caller_old (void);
-extern void ftrace_call_old (void);
+extern void ftrace_caller_old(void);
+extern void ftrace_call_old(void);
 #endif
 
 #endif
@@ -41,13 +41,13 @@ extern void ftrace_call_old (void);
  * !CONFIG_ARM_UNWIND.
  */
 
-void * return_address (unsigned int);
+void *return_address(unsigned int);
 
 #else
 
-static inline void * return_address (unsigned int level)
+static inline void *return_address(unsigned int level)
 {
-  return NULL;
+	return NULL;
 }
 
 #endif

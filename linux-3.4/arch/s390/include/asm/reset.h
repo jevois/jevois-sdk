@@ -11,11 +11,11 @@
 #include <linux/list.h>
 
 struct reset_call {
-  struct list_head list;
-  void (*fn) (void);
+	struct list_head list;
+	void (*fn)(void);
 };
 
-extern void register_reset_call (struct reset_call * reset);
-extern void unregister_reset_call (struct reset_call * reset);
-extern void s390_reset_system (void (*func) (void *), void * data);
+extern void register_reset_call(struct reset_call *reset);
+extern void unregister_reset_call(struct reset_call *reset);
+extern void s390_reset_system(void (*func)(void *), void *data);
 #endif /* _ASM_S390_RESET_H */

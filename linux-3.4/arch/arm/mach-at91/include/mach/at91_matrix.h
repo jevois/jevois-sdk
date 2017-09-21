@@ -8,13 +8,13 @@
 #define __MACH_AT91_MATRIX_H__
 
 #ifndef __ASSEMBLY__
-extern void __iomem * at91_matrix_base;
+extern void __iomem *at91_matrix_base;
 
 #define at91_matrix_read(field) \
-  __raw_readl(at91_matrix_base + field)
+	__raw_readl(at91_matrix_base + field)
 
 #define at91_matrix_write(field, value) \
-  __raw_writel(value, at91_matrix_base + field);
+	__raw_writel(value, at91_matrix_base + field);
 
 #else
 .extern at91_matrix_base

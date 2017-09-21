@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -26,22 +26,22 @@
 
 #include <common.h>
 
-extern int usb_dma_init (uint husb);
+extern int usb_dma_init(uint husb);
 
-extern uint usb_dma_request (void);
+extern uint usb_dma_request(void);
 
-extern int usb_dma_release (uint dma_index);
+extern int usb_dma_release(uint dma_index);
 
-extern int usb_dma_setting (uint dma_index, uint trans_dir, uint ep);
+extern int usb_dma_setting(uint dma_index, uint trans_dir, uint ep);
 
-extern int usb_dma_set_pktlen (uint dma_index, uint pkt_len);
+extern int usb_dma_set_pktlen(uint dma_index, uint pkt_len);
 
-extern int usb_dma_start (uint dma_index, uint addr, uint bytes);
+extern int usb_dma_start(uint dma_index, uint addr, uint bytes);
 
-extern int usb_dma_stop (uint dma_index);
+extern int usb_dma_stop(uint dma_index);
 
-extern int usb_dma_int_query (void);
+extern int usb_dma_int_query(void);
 
-extern int usb_dma_int_clear (void);
+extern int usb_dma_int_clear(void);
 
 #endif

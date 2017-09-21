@@ -6,34 +6,34 @@
 
 #include <linux/tracepoint.h>
 
-#define show_arm_ipi_name(val)        \
-  __print_symbolic(val,       \
-                   { 0, "IPI_WAKEUP" },   \
-                   { 1, "IPI_TIMER" },    \
-                   { 2, "IPI_RESCHEDULE" },   \
-                   { 3, "IPI_CALL_FUNC" },    \
-                   { 4, "IPI_CALL_FUNC_SINGLE" },   \
-                   { 5, "IPI_CPU_STOP" }, \
-                   { 6, "IPI_COMPLETION" },   \
-                   { 7, "IPI_CPU_BACKTRACE" })
+#define show_arm_ipi_name(val)				\
+	__print_symbolic(val,				\
+			 { 0, "IPI_WAKEUP" },		\
+			 { 1, "IPI_TIMER" },		\
+			 { 2, "IPI_RESCHEDULE" },		\
+			 { 3, "IPI_CALL_FUNC" },		\
+			 { 4, "IPI_CALL_FUNC_SINGLE" },		\
+			 { 5, "IPI_CPU_STOP" },	\
+			 { 6, "IPI_COMPLETION" },		\
+			 { 7, "IPI_CPU_BACKTRACE" })
 
-DECLARE_EVENT_CLASS (arm_ipi,
+DECLARE_EVENT_CLASS(arm_ipi,
 
-                     TP_PROTO (unsigned int ipi_nr),
+	TP_PROTO(unsigned int ipi_nr),
 
-                     TP_ARGS (ipi_nr),
+	TP_ARGS(ipi_nr),
 
-                     TP_STRUCT__entry (
-                       __field (  unsigned int, ipi )
-                     ),
+	TP_STRUCT__entry(
+		__field(	unsigned int,	ipi	)
+	),
 
-                     TP_fast_assign (
-                       __entry->ipi = ipi_nr;
-                     ),
+	TP_fast_assign(
+		__entry->ipi = ipi_nr;
+	),
 
-                     TP_printk ("ipi=%u [action=%s]", __entry->ipi,
-                                show_arm_ipi_name (__entry->ipi) )
-                    );
+	TP_printk("ipi=%u [action=%s]", __entry->ipi,
+		show_arm_ipi_name(__entry->ipi))
+);
 
 /**
  * arm_ipi_entry - called in the arm-generic ipi handler immediately before
@@ -43,12 +43,12 @@ DECLARE_EVENT_CLASS (arm_ipi,
  * When used in combination with the arm_ipi_exit tracepoint
  * we can determine the ipi handler runtine.
  */
-DEFINE_EVENT (arm_ipi, arm_ipi_entry,
+DEFINE_EVENT(arm_ipi, arm_ipi_entry,
 
-              TP_PROTO (unsigned int ipi_nr),
+	TP_PROTO(unsigned int ipi_nr),
 
-              TP_ARGS (ipi_nr)
-             );
+	TP_ARGS(ipi_nr)
+);
 
 /**
  * arm_ipi_exit - called in the arm-generic ipi handler immediately
@@ -58,12 +58,12 @@ DEFINE_EVENT (arm_ipi, arm_ipi_entry,
  * When used in combination with the arm_ipi_entry tracepoint
  * we can determine the ipi handler runtine.
  */
-DEFINE_EVENT (arm_ipi, arm_ipi_exit,
+DEFINE_EVENT(arm_ipi, arm_ipi_exit,
 
-              TP_PROTO (unsigned int ipi_nr),
+	TP_PROTO(unsigned int ipi_nr),
 
-              TP_ARGS (ipi_nr)
-             );
+	TP_ARGS(ipi_nr)
+);
 
 /**
  * arm_ipi_send - called as the ipi target mask is built, immediately
@@ -74,25 +74,25 @@ DEFINE_EVENT (arm_ipi, arm_ipi_exit,
  * When used in combination with the arm_ipi_entry tracepoint
  * we can determine the ipi raise to run latency.
  */
-TRACE_EVENT (arm_ipi_send,
+TRACE_EVENT(arm_ipi_send,
 
-             TP_PROTO (unsigned int ipi_nr, int dest),
+	TP_PROTO(unsigned int ipi_nr, int dest),
 
-             TP_ARGS (ipi_nr, dest),
+	TP_ARGS(ipi_nr, dest),
 
-             TP_STRUCT__entry (
-               __field (  unsigned int, ipi )
-               __field (  int     , dest )
-             ),
+	TP_STRUCT__entry(
+		__field(	unsigned int,	ipi	)
+		__field(	int			,	dest )
+	),
 
-             TP_fast_assign (
-               __entry->ipi = ipi_nr;
-               __entry->dest = dest;
-             ),
+	TP_fast_assign(
+		__entry->ipi = ipi_nr;
+		__entry->dest = dest;
+	),
 
-             TP_printk ("dest=%d ipi=%u [action=%s]", __entry->dest,
-                        __entry->ipi, show_arm_ipi_name (__entry->ipi) )
-            );
+	TP_printk("dest=%d ipi=%u [action=%s]", __entry->dest,
+			__entry->ipi, show_arm_ipi_name(__entry->ipi))
+);
 
 #endif /*  _TRACE_ARM_IPI_H */
 

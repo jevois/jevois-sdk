@@ -29,31 +29,31 @@
 
 #define to_clk_divider(_hw) container_of(_hw, struct clk_divider, hw)
 
-#define div_mask(d) ((1 << (d->width)) - 1)
+#define div_mask(d)	((1 << (d->width)) - 1)
 
-static unsigned int _get_val (struct clk_divider * divider, u8 div)
+static unsigned int _get_val(struct clk_divider *divider, u8 div)
 {
-  if (divider->flags & CLK_DIVIDER_ONE_BASED)
-  { return div; }
-  if (divider->flags & CLK_DIVIDER_POWER_OF_TWO)
-  { return __ffs (div); }
-  return div - 1;
+	if (divider->flags & CLK_DIVIDER_ONE_BASED)
+		return div;
+	if (divider->flags & CLK_DIVIDER_POWER_OF_TWO)
+		return __ffs(div);
+	return div - 1;
 }
-static unsigned long clk_divider_recalc_rate (struct clk_hw * hw,
-    unsigned long parent_rate)
+static unsigned long clk_divider_recalc_rate(struct clk_hw *hw,
+		unsigned long parent_rate)
 {
-  struct clk_divider * divider = to_clk_divider (hw);
-  unsigned int div;
-  
-  div = readl (divider->reg) >> divider->shift;
-  div &= div_mask (divider);
-  
-  if (! (divider->flags & CLK_DIVIDER_ONE_BASED) )
-  { div++; }
-  
-  return parent_rate / div;
+	struct clk_divider *divider = to_clk_divider(hw);
+	unsigned int div;
+
+	div = readl(divider->reg) >> divider->shift;
+	div &= div_mask(divider);
+
+	if (!(divider->flags & CLK_DIVIDER_ONE_BASED))
+		div++;
+
+	return parent_rate / div;
 }
-EXPORT_SYMBOL_GPL (clk_divider_recalc_rate);
+EXPORT_SYMBOL_GPL(clk_divider_recalc_rate);
 
 /*
  * The reverse of DIV_ROUND_UP: The maximum number which
@@ -61,147 +61,147 @@ EXPORT_SYMBOL_GPL (clk_divider_recalc_rate);
  */
 #define MULT_ROUND_UP(r, m) ((r) * (m) + (m) - 1)
 
-static int clk_divider_bestdiv (struct clk_hw * hw, unsigned long rate,
-                                unsigned long * best_parent_rate)
+static int clk_divider_bestdiv(struct clk_hw *hw, unsigned long rate,
+		unsigned long *best_parent_rate)
 {
-  struct clk_divider * divider = to_clk_divider (hw);
-  int i, bestdiv = 0;
-  unsigned long parent_rate, best = 0, now, maxdiv;
-  
-  if (!rate)
-  { rate = 1; }
-  
-  maxdiv = (1 << divider->width);
-  
-  if (divider->flags & CLK_DIVIDER_ONE_BASED)
-  { maxdiv--; }
-  
-  if (!best_parent_rate) {
-    parent_rate = __clk_get_rate (__clk_get_parent (hw->clk) );
-    bestdiv = DIV_ROUND_UP (parent_rate, rate);
-    bestdiv = bestdiv == 0 ? 1 : bestdiv;
-    bestdiv = bestdiv > maxdiv ? maxdiv : bestdiv;
-    return bestdiv;
-  }
-  
-  /*
-   * The maximum divider we can use without overflowing
-   * unsigned long in rate * i below
-   */
-  maxdiv = min (ULONG_MAX / rate, maxdiv);
-  
-  for (i = 1; i <= maxdiv; i++) {
-    parent_rate = __clk_round_rate (__clk_get_parent (hw->clk),
-                                    MULT_ROUND_UP (rate, i) );
-    now = parent_rate / i;
-    if (now <= rate && now > best) {
-      bestdiv = i;
-      best = now;
-      *best_parent_rate = parent_rate;
-    }
-  }
-  
-  if (!bestdiv) {
-    bestdiv = (1 << divider->width);
-    if (divider->flags & CLK_DIVIDER_ONE_BASED)
-    { bestdiv--; }
-    *best_parent_rate = __clk_round_rate (__clk_get_parent (hw->clk), 1);
-  }
-  
-  return bestdiv;
+	struct clk_divider *divider = to_clk_divider(hw);
+	int i, bestdiv = 0;
+	unsigned long parent_rate, best = 0, now, maxdiv;
+
+	if (!rate)
+		rate = 1;
+
+	maxdiv = (1 << divider->width);
+
+	if (divider->flags & CLK_DIVIDER_ONE_BASED)
+		maxdiv--;
+
+	if (!best_parent_rate) {
+		parent_rate = __clk_get_rate(__clk_get_parent(hw->clk));
+		bestdiv = DIV_ROUND_UP(parent_rate, rate);
+		bestdiv = bestdiv == 0 ? 1 : bestdiv;
+		bestdiv = bestdiv > maxdiv ? maxdiv : bestdiv;
+		return bestdiv;
+	}
+
+	/*
+	 * The maximum divider we can use without overflowing
+	 * unsigned long in rate * i below
+	 */
+	maxdiv = min(ULONG_MAX / rate, maxdiv);
+
+	for (i = 1; i <= maxdiv; i++) {
+		parent_rate = __clk_round_rate(__clk_get_parent(hw->clk),
+				MULT_ROUND_UP(rate, i));
+		now = parent_rate / i;
+		if (now <= rate && now > best) {
+			bestdiv = i;
+			best = now;
+			*best_parent_rate = parent_rate;
+		}
+	}
+
+	if (!bestdiv) {
+		bestdiv = (1 << divider->width);
+		if (divider->flags & CLK_DIVIDER_ONE_BASED)
+			bestdiv--;
+		*best_parent_rate = __clk_round_rate(__clk_get_parent(hw->clk), 1);
+	}
+
+	return bestdiv;
 }
 
-static long clk_divider_round_rate (struct clk_hw * hw, unsigned long rate,
-                                    unsigned long * prate)
+static long clk_divider_round_rate(struct clk_hw *hw, unsigned long rate,
+				unsigned long *prate)
 {
-  int div;
-  div = clk_divider_bestdiv (hw, rate, prate);
-  
-  if (prate)
-  { return *prate / div; }
-  else {
-    unsigned long r;
-    r = __clk_get_rate (__clk_get_parent (hw->clk) );
-    return r / div;
-  }
-}
-EXPORT_SYMBOL_GPL (clk_divider_round_rate);
+	int div;
+	div = clk_divider_bestdiv(hw, rate, prate);
 
-static int clk_divider_set_rate (struct clk_hw * hw, unsigned long rate,
-                                 unsigned long parent_rate)
-{
-  struct clk_divider * divider = to_clk_divider (hw);
-  unsigned int div, value;
-  unsigned long flags = 0;
-  u32 val;
-  
-  div = parent_rate / rate;
-  value = _get_val (divider, div);
-  
-  if (value > div_mask (divider) )
-  { value = div_mask (divider); }
-  
-  if (divider->lock)
-  { spin_lock_irqsave (divider->lock, flags); }
-  
-  val = readl (divider->reg);
-  val &= ~ (div_mask (divider) << divider->shift);
-  val |= value << divider->shift;
-  writel (val, divider->reg);
-  
-  if (divider->lock)
-  { spin_unlock_irqrestore (divider->lock, flags); }
-  
-  return 0;
+	if (prate)
+		return *prate / div;
+	else {
+		unsigned long r;
+		r = __clk_get_rate(__clk_get_parent(hw->clk));
+		return r / div;
+	}
 }
-EXPORT_SYMBOL_GPL (clk_divider_set_rate);
+EXPORT_SYMBOL_GPL(clk_divider_round_rate);
+
+static int clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
+				unsigned long parent_rate)
+{
+	struct clk_divider *divider = to_clk_divider(hw);
+	unsigned int div, value;
+	unsigned long flags = 0;
+	u32 val;
+
+	div = parent_rate / rate;
+	value = _get_val(divider, div);
+
+	if (value > div_mask(divider))
+		value = div_mask(divider);
+
+	if (divider->lock)
+		spin_lock_irqsave(divider->lock, flags);
+
+	val = readl(divider->reg);
+	val &= ~(div_mask(divider) << divider->shift);
+	val |= value << divider->shift;
+	writel(val, divider->reg);
+
+	if (divider->lock)
+		spin_unlock_irqrestore(divider->lock, flags);
+
+	return 0;
+}
+EXPORT_SYMBOL_GPL(clk_divider_set_rate);
 
 struct clk_ops clk_divider_ops = {
-  .recalc_rate = clk_divider_recalc_rate,
-  .round_rate = clk_divider_round_rate,
-  .set_rate = clk_divider_set_rate,
+	.recalc_rate = clk_divider_recalc_rate,
+	.round_rate = clk_divider_round_rate,
+	.set_rate = clk_divider_set_rate,
 };
-EXPORT_SYMBOL_GPL (clk_divider_ops);
+EXPORT_SYMBOL_GPL(clk_divider_ops);
 
-struct clk * clk_register_divider (struct device * dev, const char * name,
-                                   const char * parent_name, unsigned long flags,
-                                   void __iomem * reg, u8 shift, u8 width,
-                                   u8 clk_divider_flags, spinlock_t * lock)
+struct clk *clk_register_divider(struct device *dev, const char *name,
+		const char *parent_name, unsigned long flags,
+		void __iomem *reg, u8 shift, u8 width,
+		u8 clk_divider_flags, spinlock_t *lock)
 {
-  struct clk_divider * div;
-  struct clk * clk;
-  struct clk_init_data init;
-  
-  /* allocate the divider */
-  div = kzalloc (sizeof (struct clk_divider), GFP_KERNEL);
-  
-  if (!div) {
-    pr_err ("%s: could not allocate divider clk\n", __func__);
-    return ERR_PTR (-ENOMEM);
-  }
-  
-  init.name = name;
-  init.ops = &clk_divider_ops;
-  init.flags = flags | CLK_IS_BASIC;
-  init.parent_names = (parent_name ? &parent_name : NULL);
-  init.num_parents = (parent_name ? 1 : 0);
-  /* struct clk_divider assignments */
-  div->reg = reg;
-  div->shift = shift;
-  div->width = width;
-  div->flags = clk_divider_flags;
-  div->lock = lock;
-  div->hw.init = &init;
-  
-  
-  
-  /* register the clock */
-  clk = clk_register (dev, &div->hw);
-  
-  if (IS_ERR (clk) )
-  { kfree (div); }
-  
-  return clk;
-  
-  
+	struct clk_divider *div;
+	struct clk *clk;
+	struct clk_init_data init;
+
+	/* allocate the divider */
+	div = kzalloc(sizeof(struct clk_divider), GFP_KERNEL);
+
+	if (!div) {
+		pr_err("%s: could not allocate divider clk\n", __func__);
+		return ERR_PTR(-ENOMEM);
+	}
+
+	init.name = name;
+	init.ops = &clk_divider_ops;
+	init.flags = flags | CLK_IS_BASIC;
+	init.parent_names = (parent_name ? &parent_name: NULL);
+	init.num_parents = (parent_name ? 1 : 0);
+	/* struct clk_divider assignments */
+	div->reg = reg;
+	div->shift = shift;
+	div->width = width;
+	div->flags = clk_divider_flags;
+	div->lock = lock;
+	div->hw.init = &init;
+
+
+
+	/* register the clock */
+	clk = clk_register(dev, &div->hw);
+
+	if (IS_ERR(clk))
+		kfree(div);
+
+	return clk;
+
+
 }

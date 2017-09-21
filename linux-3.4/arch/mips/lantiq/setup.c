@@ -18,49 +18,49 @@
 #include "devices.h"
 #include "prom.h"
 
-void __init plat_mem_setup (void)
+void __init plat_mem_setup(void)
 {
-  /* assume 16M as default incase uboot fails to pass proper ramsize */
-  unsigned long memsize = 16;
-  char ** envp = (char **) KSEG1ADDR (fw_arg2);
-  
-  ioport_resource.start = IOPORT_RESOURCE_START;
-  ioport_resource.end = IOPORT_RESOURCE_END;
-  iomem_resource.start = IOMEM_RESOURCE_START;
-  iomem_resource.end = IOMEM_RESOURCE_END;
-  
-  set_io_port_base ( (unsigned long) KSEG1);
-  
-  while (*envp) {
-    char * e = (char *) KSEG1ADDR (*envp);
-    if (!strncmp (e, "memsize=", 8) ) {
-      e += 8;
-      if (strict_strtoul (e, 0, &memsize) )
-      { pr_warn ("bad memsize specified\n"); }
-    }
-    envp++;
-  }
-  memsize *= 1024 * 1024;
-  add_memory_region (0x00000000, memsize, BOOT_MEM_RAM);
+	/* assume 16M as default incase uboot fails to pass proper ramsize */
+	unsigned long memsize = 16;
+	char **envp = (char **) KSEG1ADDR(fw_arg2);
+
+	ioport_resource.start = IOPORT_RESOURCE_START;
+	ioport_resource.end = IOPORT_RESOURCE_END;
+	iomem_resource.start = IOMEM_RESOURCE_START;
+	iomem_resource.end = IOMEM_RESOURCE_END;
+
+	set_io_port_base((unsigned long) KSEG1);
+
+	while (*envp) {
+		char *e = (char *)KSEG1ADDR(*envp);
+		if (!strncmp(e, "memsize=", 8)) {
+			e += 8;
+			if (strict_strtoul(e, 0, &memsize))
+				pr_warn("bad memsize specified\n");
+		}
+		envp++;
+	}
+	memsize *= 1024 * 1024;
+	add_memory_region(0x00000000, memsize, BOOT_MEM_RAM);
 }
 
 static int __init
-lantiq_setup (void)
+lantiq_setup(void)
 {
-  ltq_soc_setup();
-  mips_machine_setup();
-  return 0;
+	ltq_soc_setup();
+	mips_machine_setup();
+	return 0;
 }
 
-arch_initcall (lantiq_setup);
+arch_initcall(lantiq_setup);
 
 static void __init
-lantiq_generic_init (void)
+lantiq_generic_init(void)
 {
-  /* Nothing to do */
+	/* Nothing to do */
 }
 
-MIPS_MACHINE (LTQ_MACH_GENERIC,
-              "Generic",
-              "Generic Lantiq based board",
-              lantiq_generic_init);
+MIPS_MACHINE(LTQ_MACH_GENERIC,
+	     "Generic",
+	     "Generic Lantiq based board",
+	     lantiq_generic_init);

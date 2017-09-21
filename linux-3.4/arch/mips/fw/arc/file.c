@@ -14,62 +14,62 @@
 #include <asm/sgialib.h>
 
 LONG
-ArcGetDirectoryEntry (ULONG FileID, struct linux_vdirent * Buffer,
-                      ULONG N, ULONG * Count)
+ArcGetDirectoryEntry(ULONG FileID, struct linux_vdirent *Buffer,
+                     ULONG N, ULONG *Count)
 {
-  return ARC_CALL4 (get_vdirent, FileID, Buffer, N, Count);
+	return ARC_CALL4(get_vdirent, FileID, Buffer, N, Count);
 }
 
 LONG
-ArcOpen (CHAR * Path, enum linux_omode OpenMode, ULONG * FileID)
+ArcOpen(CHAR *Path, enum linux_omode OpenMode, ULONG *FileID)
 {
-  return ARC_CALL3 (open, Path, OpenMode, FileID);
+	return ARC_CALL3(open, Path, OpenMode, FileID);
 }
 
 LONG
-ArcClose (ULONG FileID)
+ArcClose(ULONG FileID)
 {
-  return ARC_CALL1 (close, FileID);
+	return ARC_CALL1(close, FileID);
 }
 
 LONG
-ArcRead (ULONG FileID, VOID * Buffer, ULONG N, ULONG * Count)
+ArcRead(ULONG FileID, VOID *Buffer, ULONG N, ULONG *Count)
 {
-  return ARC_CALL4 (read, FileID, Buffer, N, Count);
+	return ARC_CALL4(read, FileID, Buffer, N, Count);
 }
 
 LONG
-ArcGetReadStatus (ULONG FileID)
+ArcGetReadStatus(ULONG FileID)
 {
-  return ARC_CALL1 (get_rstatus, FileID);
+	return ARC_CALL1(get_rstatus, FileID);
 }
 
 LONG
-ArcWrite (ULONG FileID, PVOID Buffer, ULONG N, PULONG Count)
+ArcWrite(ULONG FileID, PVOID Buffer, ULONG N, PULONG Count)
 {
-  return ARC_CALL4 (write, FileID, Buffer, N, Count);
+	return ARC_CALL4(write, FileID, Buffer, N, Count);
 }
 
 LONG
-ArcSeek (ULONG FileID, struct linux_bigint * Position, enum linux_seekmode SeekMode)
+ArcSeek(ULONG FileID, struct linux_bigint *Position, enum linux_seekmode SeekMode)
 {
-  return ARC_CALL3 (seek, FileID, Position, SeekMode);
+	return ARC_CALL3(seek, FileID, Position, SeekMode);
 }
 
 LONG
-ArcMount (char * name, enum linux_mountops op)
+ArcMount(char *name, enum linux_mountops op)
 {
-  return ARC_CALL2 (mount, name, op);
+	return ARC_CALL2(mount, name, op);
 }
 
 LONG
-ArcGetFileInformation (ULONG FileID, struct linux_finfo * Information)
+ArcGetFileInformation(ULONG FileID, struct linux_finfo *Information)
 {
-  return ARC_CALL2 (get_finfo, FileID, Information);
+	return ARC_CALL2(get_finfo, FileID, Information);
 }
 
-LONG ArcSetFileInformation (ULONG FileID, ULONG AttributeFlags,
-                            ULONG AttributeMask)
+LONG ArcSetFileInformation(ULONG FileID, ULONG AttributeFlags,
+                           ULONG AttributeMask)
 {
-  return ARC_CALL3 (set_finfo, FileID, AttributeFlags, AttributeMask);
+	return ARC_CALL3(set_finfo, FileID, AttributeFlags, AttributeMask);
 }

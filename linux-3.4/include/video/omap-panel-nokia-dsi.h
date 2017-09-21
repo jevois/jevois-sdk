@@ -13,17 +13,17 @@ struct omap_dss_device;
  * @use_dsi_backlight: true if panel uses DSI command to control backlight
  */
 struct nokia_dsi_panel_data {
-  const char * name;
-  
-  int reset_gpio;
-  
-  bool use_ext_te;
-  int ext_te_gpio;
-  
-  unsigned esd_interval;
-  unsigned ulps_timeout;
-  
-  bool use_dsi_backlight;
+	const char *name;
+
+	int reset_gpio;
+
+	bool use_ext_te;
+	int ext_te_gpio;
+
+	unsigned esd_interval;
+	unsigned ulps_timeout;
+
+	bool use_dsi_backlight;
 };
 
 #endif /* __OMAP_NOKIA_DSI_PANEL_H */

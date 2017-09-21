@@ -9,10 +9,10 @@
 #include "linux/interrupt.h"
 #include "asm/ptrace.h"
 
-extern int um_request_irq (unsigned int irq, int fd, int type,
-                           irq_handler_t handler,
-                           unsigned long irqflags,  const char * devname,
-                           void * dev_id);
+extern int um_request_irq(unsigned int irq, int fd, int type,
+			  irq_handler_t handler,
+			  unsigned long irqflags,  const char * devname,
+			  void *dev_id);
 
 #endif
 

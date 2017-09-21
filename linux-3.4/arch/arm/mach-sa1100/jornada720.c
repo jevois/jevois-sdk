@@ -43,313 +43,313 @@
  */
 
 /* line 110 of HP's doc */
-#define TUCR_VAL  0x20000400
+#define TUCR_VAL	0x20000400
 
 /* memory space (line 52 of HP's doc) */
-#define SA1111REGSTART  0x40000000
-#define SA1111REGLEN  0x00002000
-#define EPSONREGSTART 0x48000000
-#define EPSONREGLEN 0x00100000
-#define EPSONFBSTART  0x48200000
+#define SA1111REGSTART	0x40000000
+#define SA1111REGLEN	0x00002000
+#define EPSONREGSTART	0x48000000
+#define EPSONREGLEN	0x00100000
+#define EPSONFBSTART	0x48200000
 /* 512kB framebuffer */
-#define EPSONFBLEN  512*1024
+#define EPSONFBLEN	512*1024
 
 static struct s1d13xxxfb_regval s1d13xxxfb_initregs[] = {
-  /* line 344 of HP's doc */
-  {0x0001, 0x00},
-  {0x01FC, 0x00},
-  {0x0004, 0x00},
-  {0x0005, 0x00},
-  {0x0008, 0x00},
-  {0x0009, 0x00},
-  {0x0010, 0x01},
-  {0x0014, 0x11},
-  {0x0018, 0x01},
-  {0x001C, 0x01},
-  {0x001E, 0x01},
-  {0x0020, 0x00},
-  {0x0021, 0x45},
-  {0x002A, 0x01},
-  {0x002B, 0x03},
-  {0x0030, 0x1c},
-  {0x0031, 0x00},
-  {0x0032, 0x4F},
-  {0x0034, 0x07},
-  {0x0035, 0x01},
-  {0x0036, 0x0B},
-  {0x0038, 0xEF},
-  {0x0039, 0x00},
-  {0x003A, 0x13},
-  {0x003B, 0x0B},
-  {0x003C, 0x01},
-  {0x0040, 0x05},
-  {0x0041, 0x00},
-  {0x0042, 0x00},
-  {0x0043, 0x00},
-  {0x0044, 0x00},
-  {0x0046, 0x80},
-  {0x0047, 0x02},
-  {0x0048, 0x00},
-  {0x004A, 0x00},
-  {0x004B, 0x00},
-  {0x0050, 0x4F},
-  {0x0052, 0x13},
-  {0x0053, 0x01},
-  {0x0054, 0x0B},
-  {0x0056, 0xDF},
-  {0x0057, 0x01},
-  {0x0058, 0x2B},
-  {0x0059, 0x09},
-  {0x005A, 0x01},
-  {0x005B, 0x10},
-  {0x0060, 0x03},
-  {0x0062, 0x00},
-  {0x0063, 0x00},
-  {0x0064, 0x00},
-  {0x0066, 0x40},
-  {0x0067, 0x01},
-  {0x0068, 0x00},
-  {0x006A, 0x00},
-  {0x006B, 0x00},
-  {0x0070, 0x00},
-  {0x0071, 0x01},
-  {0x0072, 0x00},
-  {0x0073, 0x00},
-  {0x0074, 0x00},
-  {0x0075, 0x00},
-  {0x0076, 0x00},
-  {0x0077, 0x00},
-  {0x0078, 0x00},
-  {0x007A, 0x1F},
-  {0x007B, 0x3F},
-  {0x007C, 0x1F},
-  {0x007E, 0x00},
-  {0x0080, 0x00},
-  {0x0081, 0x01},
-  {0x0082, 0x00},
-  {0x0083, 0x00},
-  {0x0084, 0x00},
-  {0x0085, 0x00},
-  {0x0086, 0x00},
-  {0x0087, 0x00},
-  {0x0088, 0x00},
-  {0x008A, 0x1F},
-  {0x008B, 0x3F},
-  {0x008C, 0x1F},
-  {0x008E, 0x00},
-  {0x0100, 0x00},
-  {0x0101, 0x00},
-  {0x0102, 0x00},
-  {0x0103, 0x00},
-  {0x0104, 0x00},
-  {0x0105, 0x00},
-  {0x0106, 0x00},
-  {0x0108, 0x00},
-  {0x0109, 0x00},
-  {0x010A, 0x00},
-  {0x010C, 0x00},
-  {0x010D, 0x00},
-  {0x0110, 0x00},
-  {0x0111, 0x00},
-  {0x0112, 0x00},
-  {0x0113, 0x00},
-  {0x0114, 0x00},
-  {0x0115, 0x00},
-  {0x0118, 0x00},
-  {0x0119, 0x00},
-  {0x01E0, 0x00},
-  {0x01E2, 0x00},
-  /* not sure, wouldn't like to mess with the driver */
-  {0x01E4, 0x00},
-  /* jornada doc says 0x00, but I trust the driver */
-  {0x01F0, 0x10},
-  {0x01F1, 0x00},
-  {0x01F4, 0x00},
-  {0x01FC, 0x01},
+	/* line 344 of HP's doc */
+	{0x0001,0x00},
+	{0x01FC,0x00},
+	{0x0004,0x00},
+	{0x0005,0x00},
+	{0x0008,0x00},
+	{0x0009,0x00},
+	{0x0010,0x01},
+	{0x0014,0x11},
+	{0x0018,0x01},
+	{0x001C,0x01},
+	{0x001E,0x01},
+	{0x0020,0x00},
+	{0x0021,0x45},
+	{0x002A,0x01},
+	{0x002B,0x03},
+	{0x0030,0x1c},
+	{0x0031,0x00},
+	{0x0032,0x4F},
+	{0x0034,0x07},
+	{0x0035,0x01},
+	{0x0036,0x0B},
+	{0x0038,0xEF},
+	{0x0039,0x00},
+	{0x003A,0x13},
+	{0x003B,0x0B},
+	{0x003C,0x01},
+	{0x0040,0x05},
+	{0x0041,0x00},
+	{0x0042,0x00},
+	{0x0043,0x00},
+	{0x0044,0x00},
+	{0x0046,0x80},
+	{0x0047,0x02},
+	{0x0048,0x00},
+	{0x004A,0x00},
+	{0x004B,0x00},
+	{0x0050,0x4F},
+	{0x0052,0x13},
+	{0x0053,0x01},
+	{0x0054,0x0B},
+	{0x0056,0xDF},
+	{0x0057,0x01},
+	{0x0058,0x2B},
+	{0x0059,0x09},
+	{0x005A,0x01},
+	{0x005B,0x10},
+	{0x0060,0x03},
+	{0x0062,0x00},
+	{0x0063,0x00},
+	{0x0064,0x00},
+	{0x0066,0x40},
+	{0x0067,0x01},
+	{0x0068,0x00},
+	{0x006A,0x00},
+	{0x006B,0x00},
+	{0x0070,0x00},
+	{0x0071,0x01},
+	{0x0072,0x00},
+	{0x0073,0x00},
+	{0x0074,0x00},
+	{0x0075,0x00},
+	{0x0076,0x00},
+	{0x0077,0x00},
+	{0x0078,0x00},
+	{0x007A,0x1F},
+	{0x007B,0x3F},
+	{0x007C,0x1F},
+	{0x007E,0x00},
+	{0x0080,0x00},
+	{0x0081,0x01},
+	{0x0082,0x00},
+	{0x0083,0x00},
+	{0x0084,0x00},
+	{0x0085,0x00},
+	{0x0086,0x00},
+	{0x0087,0x00},
+	{0x0088,0x00},
+	{0x008A,0x1F},
+	{0x008B,0x3F},
+	{0x008C,0x1F},
+	{0x008E,0x00},
+	{0x0100,0x00},
+	{0x0101,0x00},
+	{0x0102,0x00},
+	{0x0103,0x00},
+	{0x0104,0x00},
+	{0x0105,0x00},
+	{0x0106,0x00},
+	{0x0108,0x00},
+	{0x0109,0x00},
+	{0x010A,0x00},
+	{0x010C,0x00},
+	{0x010D,0x00},
+	{0x0110,0x00},
+	{0x0111,0x00},
+	{0x0112,0x00},
+	{0x0113,0x00},
+	{0x0114,0x00},
+	{0x0115,0x00},
+	{0x0118,0x00},
+	{0x0119,0x00},
+	{0x01E0,0x00},
+	{0x01E2,0x00},
+	/* not sure, wouldn't like to mess with the driver */
+	{0x01E4,0x00},
+	/* jornada doc says 0x00, but I trust the driver */
+	{0x01F0,0x10},
+	{0x01F1,0x00},
+	{0x01F4,0x00},
+	{0x01FC,0x01},
 };
 
 static struct s1d13xxxfb_pdata s1d13xxxfb_data = {
-  .initregs   = s1d13xxxfb_initregs,
-  .initregssize   = ARRAY_SIZE (s1d13xxxfb_initregs),
-  .platform_init_video  = NULL
+	.initregs		= s1d13xxxfb_initregs,
+	.initregssize		= ARRAY_SIZE(s1d13xxxfb_initregs),
+	.platform_init_video	= NULL
 };
 
 static struct resource s1d13xxxfb_resources[] = {
-  [0] = DEFINE_RES_MEM (EPSONFBSTART, EPSONFBLEN),
-  [1] = DEFINE_RES_MEM (EPSONREGSTART, EPSONREGLEN),
+	[0] = DEFINE_RES_MEM(EPSONFBSTART, EPSONFBLEN),
+	[1] = DEFINE_RES_MEM(EPSONREGSTART, EPSONREGLEN),
 };
 
 static struct platform_device s1d13xxxfb_device = {
-  .name   = S1D_DEVICENAME,
-  .id   = 0,
-  .dev    = {
-    .platform_data  = &s1d13xxxfb_data,
-  },
-  .num_resources  = ARRAY_SIZE (s1d13xxxfb_resources),
-  .resource = s1d13xxxfb_resources,
+	.name		= S1D_DEVICENAME,
+	.id		= 0,
+	.dev		= {
+		.platform_data	= &s1d13xxxfb_data,
+	},
+	.num_resources	= ARRAY_SIZE(s1d13xxxfb_resources),
+	.resource	= s1d13xxxfb_resources,
 };
 
 static struct resource sa1111_resources[] = {
-  [0] = DEFINE_RES_MEM (SA1111REGSTART, SA1111REGLEN),
-  [1] = DEFINE_RES_IRQ (IRQ_GPIO1),
+	[0] = DEFINE_RES_MEM(SA1111REGSTART, SA1111REGLEN),
+	[1] = DEFINE_RES_IRQ(IRQ_GPIO1),
 };
 
 static struct sa1111_platform_data sa1111_info = {
-  .disable_devs = SA1111_DEVID_PS2_MSE,
+	.disable_devs	= SA1111_DEVID_PS2_MSE,
 };
 
 static u64 sa1111_dmamask = 0xffffffffUL;
 
 static struct platform_device sa1111_device = {
-  .name   = "sa1111",
-  .id   = 0,
-  .dev    = {
-    .dma_mask = &sa1111_dmamask,
-    .coherent_dma_mask = 0xffffffff,
-    .platform_data = &sa1111_info,
-  },
-  .num_resources  = ARRAY_SIZE (sa1111_resources),
-  .resource = sa1111_resources,
+	.name		= "sa1111",
+	.id		= 0,
+	.dev		= {
+		.dma_mask = &sa1111_dmamask,
+		.coherent_dma_mask = 0xffffffff,
+		.platform_data = &sa1111_info,
+	},
+	.num_resources	= ARRAY_SIZE(sa1111_resources),
+	.resource	= sa1111_resources,
 };
 
 static struct platform_device jornada_ssp_device = {
-  .name           = "jornada_ssp",
-  .id             = -1,
+	.name           = "jornada_ssp",
+	.id             = -1,
 };
 
 static struct platform_device jornada_kbd_device = {
-  .name   = "jornada720_kbd",
-  .id   = -1,
+	.name		= "jornada720_kbd",
+	.id		= -1,
 };
 
 static struct platform_device jornada_ts_device = {
-  .name   = "jornada_ts",
-  .id   = -1,
+	.name		= "jornada_ts",
+	.id		= -1,
 };
 
-static struct platform_device * devices[] __initdata = {
-  &sa1111_device,
-  &jornada_ssp_device,
-  &s1d13xxxfb_device,
-  &jornada_kbd_device,
-  &jornada_ts_device,
+static struct platform_device *devices[] __initdata = {
+	&sa1111_device,
+	&jornada_ssp_device,
+	&s1d13xxxfb_device,
+	&jornada_kbd_device,
+	&jornada_ts_device,
 };
 
-static int __init jornada720_init (void)
+static int __init jornada720_init(void)
 {
-  int ret = -ENODEV;
-  
-  if (machine_is_jornada720() ) {
-    /* we want to use gpio20 as input to drive the clock of our uart 3 */
-    GPDR |= GPIO_GPIO20;  /* Clear gpio20 pin as input */
-    TUCR = TUCR_VAL;
-    GPSR = GPIO_GPIO20; /* start gpio20 pin */
-    udelay (1);
-    GPCR = GPIO_GPIO20; /* stop gpio20 */
-    udelay (1);
-    GPSR = GPIO_GPIO20; /* restart gpio20 */
-    udelay (20);  /* give it some time to restart */
-    
-    ret = platform_add_devices (devices, ARRAY_SIZE (devices) );
-  }
-  
-  return ret;
+	int ret = -ENODEV;
+
+	if (machine_is_jornada720()) {
+		/* we want to use gpio20 as input to drive the clock of our uart 3 */
+		GPDR |= GPIO_GPIO20;	/* Clear gpio20 pin as input */
+		TUCR = TUCR_VAL;
+		GPSR = GPIO_GPIO20;	/* start gpio20 pin */
+		udelay(1);
+		GPCR = GPIO_GPIO20;	/* stop gpio20 */
+		udelay(1);
+		GPSR = GPIO_GPIO20;	/* restart gpio20 */
+		udelay(20);		/* give it some time to restart */
+
+		ret = platform_add_devices(devices, ARRAY_SIZE(devices));
+	}
+
+	return ret;
 }
 
-arch_initcall (jornada720_init);
+arch_initcall(jornada720_init);
 
 static struct map_desc jornada720_io_desc[] __initdata = {
-  { /* Epson registers */
-    .virtual  = 0xf0000000,
-    .pfn    = __phys_to_pfn (EPSONREGSTART),
-    .length   = EPSONREGLEN,
-    .type   = MT_DEVICE
-  }, {  /* Epson frame buffer */
-    .virtual  = 0xf1000000,
-    .pfn    = __phys_to_pfn (EPSONFBSTART),
-    .length   = EPSONFBLEN,
-    .type   = MT_DEVICE
-  }
+	{	/* Epson registers */
+		.virtual	= 0xf0000000,
+		.pfn		= __phys_to_pfn(EPSONREGSTART),
+		.length		= EPSONREGLEN,
+		.type		= MT_DEVICE
+	}, {	/* Epson frame buffer */
+		.virtual	= 0xf1000000,
+		.pfn		= __phys_to_pfn(EPSONFBSTART),
+		.length		= EPSONFBLEN,
+		.type		= MT_DEVICE
+	}
 };
 
-static void __init jornada720_map_io (void)
+static void __init jornada720_map_io(void)
 {
-  sa1100_map_io();
-  iotable_init (jornada720_io_desc, ARRAY_SIZE (jornada720_io_desc) );
-  
-  sa1100_register_uart (0, 3);
-  sa1100_register_uart (1, 1);
+	sa1100_map_io();
+	iotable_init(jornada720_io_desc, ARRAY_SIZE(jornada720_io_desc));
+
+	sa1100_register_uart(0, 3);
+	sa1100_register_uart(1, 1);
 }
 
 static struct mtd_partition jornada720_partitions[] = {
-  {
-    .name   = "JORNADA720 boot firmware",
-    .size   = 0x00040000,
-    .offset   = 0,
-    .mask_flags = MTD_WRITEABLE, /* force read-only */
-  }, {
-    .name   = "JORNADA720 kernel",
-    .size   = 0x000c0000,
-    .offset   = 0x00040000,
-  }, {
-    .name   = "JORNADA720 params",
-    .size   = 0x00040000,
-    .offset   = 0x00100000,
-  }, {
-    .name   = "JORNADA720 initrd",
-    .size   = 0x00100000,
-    .offset   = 0x00140000,
-  }, {
-    .name   = "JORNADA720 root cramfs",
-    .size   = 0x00300000,
-    .offset   = 0x00240000,
-  }, {
-    .name   = "JORNADA720 usr cramfs",
-    .size   = 0x00800000,
-    .offset   = 0x00540000,
-  }, {
-    .name   = "JORNADA720 usr local",
-    .size   = 0, /* will expand to the end of the flash */
-    .offset   = 0x00d00000,
-  }
+	{
+		.name		= "JORNADA720 boot firmware",
+		.size		= 0x00040000,
+		.offset		= 0,
+		.mask_flags	= MTD_WRITEABLE, /* force read-only */
+	}, {
+		.name		= "JORNADA720 kernel",
+		.size		= 0x000c0000,
+		.offset		= 0x00040000,
+	}, {
+		.name		= "JORNADA720 params",
+		.size		= 0x00040000,
+		.offset		= 0x00100000,
+	}, {
+		.name		= "JORNADA720 initrd",
+		.size		= 0x00100000,
+		.offset		= 0x00140000,
+	}, {
+		.name		= "JORNADA720 root cramfs",
+		.size		= 0x00300000,
+		.offset		= 0x00240000,
+	}, {
+		.name		= "JORNADA720 usr cramfs",
+		.size		= 0x00800000,
+		.offset		= 0x00540000,
+	}, {
+		.name		= "JORNADA720 usr local",
+		.size		= 0, /* will expand to the end of the flash */
+		.offset		= 0x00d00000,
+	}
 };
 
-static void jornada720_set_vpp (int vpp)
+static void jornada720_set_vpp(int vpp)
 {
-  if (vpp)
-    /* enabling flash write (line 470 of HP's doc) */
-  { PPSR |= PPC_LDD7; }
-  else
-    /* disabling flash write (line 470 of HP's doc) */
-  { PPSR &= ~PPC_LDD7; }
-  PPDR |= PPC_LDD7;
+	if (vpp)
+		/* enabling flash write (line 470 of HP's doc) */
+		PPSR |= PPC_LDD7;
+	else
+		/* disabling flash write (line 470 of HP's doc) */
+		PPSR &= ~PPC_LDD7;
+	PPDR |= PPC_LDD7;
 }
 
 static struct flash_platform_data jornada720_flash_data = {
-  .map_name = "cfi_probe",
-  .set_vpp  = jornada720_set_vpp,
-  .parts    = jornada720_partitions,
-  .nr_parts = ARRAY_SIZE (jornada720_partitions),
+	.map_name	= "cfi_probe",
+	.set_vpp	= jornada720_set_vpp,
+	.parts		= jornada720_partitions,
+	.nr_parts	= ARRAY_SIZE(jornada720_partitions),
 };
 
 static struct resource jornada720_flash_resource =
-  DEFINE_RES_MEM (SA1100_CS0_PHYS, SZ_32M);
+	DEFINE_RES_MEM(SA1100_CS0_PHYS, SZ_32M);
 
-static void __init jornada720_mach_init (void)
+static void __init jornada720_mach_init(void)
 {
-  sa11x0_register_mtd (&jornada720_flash_data, &jornada720_flash_resource, 1);
+	sa11x0_register_mtd(&jornada720_flash_data, &jornada720_flash_resource, 1);
 }
 
-MACHINE_START (JORNADA720, "HP Jornada 720")
-/* Maintainer: Kristoffer Ericson <Kristoffer.Ericson@gmail.com> */
-.atag_offset  = 0x100,
- .map_io   = jornada720_map_io,
-  .nr_irqs  = SA1100_NR_IRQS,
-   .init_irq = sa1100_init_irq,
-    .timer    = &sa1100_timer,
-     .init_machine = jornada720_mach_init,
-      #ifdef CONFIG_SA1111
-      .dma_zone_size  = SZ_1M,
-      #endif
-       .restart  = sa11x0_restart,
-        MACHINE_END
+MACHINE_START(JORNADA720, "HP Jornada 720")
+	/* Maintainer: Kristoffer Ericson <Kristoffer.Ericson@gmail.com> */
+	.atag_offset	= 0x100,
+	.map_io		= jornada720_map_io,
+	.nr_irqs	= SA1100_NR_IRQS,
+	.init_irq	= sa1100_init_irq,
+	.timer		= &sa1100_timer,
+	.init_machine	= jornada720_mach_init,
+#ifdef CONFIG_SA1111
+	.dma_zone_size	= SZ_1M,
+#endif
+	.restart	= sa11x0_restart,
+MACHINE_END

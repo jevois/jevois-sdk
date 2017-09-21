@@ -32,56 +32,56 @@
 
 
 /* LXT971 */
-static int lxt971_parse_status (struct phy_device * phydev)
+static int lxt971_parse_status(struct phy_device *phydev)
 {
-  int mii_reg;
-  int speed;
-  
-  mii_reg = phy_read (phydev, MDIO_DEVAD_NONE, MIIM_LXT971_SR2);
-  speed = mii_reg & MIIM_LXT971_SR2_SPEED_MASK;
-  
-  switch (speed) {
-  case MIIM_LXT971_SR2_10HDX:
-    phydev->speed = SPEED_10;
-    phydev->duplex = DUPLEX_HALF;
-    break;
-  case MIIM_LXT971_SR2_10FDX:
-    phydev->speed = SPEED_10;
-    phydev->duplex = DUPLEX_FULL;
-    break;
-  case MIIM_LXT971_SR2_100HDX:
-    phydev->speed = SPEED_100;
-    phydev->duplex = DUPLEX_HALF;
-    break;
-  default:
-    phydev->speed = SPEED_100;
-    phydev->duplex = DUPLEX_FULL;
-  }
-  
-  return 0;
+	int mii_reg;
+	int speed;
+
+	mii_reg = phy_read(phydev, MDIO_DEVAD_NONE, MIIM_LXT971_SR2);
+	speed = mii_reg & MIIM_LXT971_SR2_SPEED_MASK;
+
+	switch (speed) {
+	case MIIM_LXT971_SR2_10HDX:
+		phydev->speed = SPEED_10;
+		phydev->duplex = DUPLEX_HALF;
+		break;
+	case MIIM_LXT971_SR2_10FDX:
+		phydev->speed = SPEED_10;
+		phydev->duplex = DUPLEX_FULL;
+		break;
+	case MIIM_LXT971_SR2_100HDX:
+		phydev->speed = SPEED_100;
+		phydev->duplex = DUPLEX_HALF;
+		break;
+	default:
+		phydev->speed = SPEED_100;
+		phydev->duplex = DUPLEX_FULL;
+	}
+
+	return 0;
 }
 
-static int lxt971_startup (struct phy_device * phydev)
+static int lxt971_startup(struct phy_device *phydev)
 {
-  genphy_update_link (phydev);
-  lxt971_parse_status (phydev);
-  
-  return 0;
+	genphy_update_link(phydev);
+	lxt971_parse_status(phydev);
+
+	return 0;
 }
 
 static struct phy_driver LXT971_driver = {
-  .name = "LXT971",
-  .uid = 0x1378e0,
-  .mask = 0xfffff0,
-  .features = PHY_BASIC_FEATURES,
-  .config = &genphy_config_aneg,
-  .startup = &lxt971_startup,
-  .shutdown = &genphy_shutdown,
+	.name = "LXT971",
+	.uid = 0x1378e0,
+	.mask = 0xfffff0,
+	.features = PHY_BASIC_FEATURES,
+	.config = &genphy_config_aneg,
+	.startup = &lxt971_startup,
+	.shutdown = &genphy_shutdown,
 };
 
-int phy_lxt_init (void)
+int phy_lxt_init(void)
 {
-  phy_register (&LXT971_driver);
-  
-  return 0;
+	phy_register(&LXT971_driver);
+
+	return 0;
 }

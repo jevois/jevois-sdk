@@ -52,63 +52,63 @@
 
 typedef struct
 {
-  U8                      CDB[20];                    /* 0x00 */
-  U32                     PrimaryReferenceTag;        /* 0x14 */
-  U16                     PrimaryApplicationTag;      /* 0x18 */
-  U16                     PrimaryApplicationTagMask;  /* 0x1A */
-  U32                     TransferLength;             /* 0x1C */
+    U8                      CDB[20];                    /* 0x00 */
+    U32                     PrimaryReferenceTag;        /* 0x14 */
+    U16                     PrimaryApplicationTag;      /* 0x18 */
+    U16                     PrimaryApplicationTagMask;  /* 0x1A */
+    U32                     TransferLength;             /* 0x1C */
 } MPI2_SCSI_IO_CDB_EEDP32, MPI2_POINTER PTR_MPI2_SCSI_IO_CDB_EEDP32,
-Mpi2ScsiIoCdbEedp32_t, MPI2_POINTER pMpi2ScsiIoCdbEedp32_t;
+  Mpi2ScsiIoCdbEedp32_t, MPI2_POINTER pMpi2ScsiIoCdbEedp32_t;
 
 typedef union
 {
-  U8                      CDB32[32];
-  MPI2_SCSI_IO_CDB_EEDP32 EEDP32;
-  MPI2_SGE_SIMPLE_UNION   SGE;
+    U8                      CDB32[32];
+    MPI2_SCSI_IO_CDB_EEDP32 EEDP32;
+    MPI2_SGE_SIMPLE_UNION   SGE;
 } MPI2_SCSI_IO_CDB_UNION, MPI2_POINTER PTR_MPI2_SCSI_IO_CDB_UNION,
-Mpi2ScsiIoCdb_t, MPI2_POINTER pMpi2ScsiIoCdb_t;
+  Mpi2ScsiIoCdb_t, MPI2_POINTER pMpi2ScsiIoCdb_t;
 
 /* SCSI IO Request Message */
 typedef struct _MPI2_SCSI_IO_REQUEST
 {
-  U16                     DevHandle;                      /* 0x00 */
-  U8                      ChainOffset;                    /* 0x02 */
-  U8                      Function;                       /* 0x03 */
-  U16                     Reserved1;                      /* 0x04 */
-  U8                      Reserved2;                      /* 0x06 */
-  U8                      MsgFlags;                       /* 0x07 */
-  U8                      VP_ID;                          /* 0x08 */
-  U8                      VF_ID;                          /* 0x09 */
-  U16                     Reserved3;                      /* 0x0A */
-  U32                     SenseBufferLowAddress;          /* 0x0C */
-  U16                     SGLFlags;                       /* 0x10 */
-  U8                      SenseBufferLength;              /* 0x12 */
-  U8                      Reserved4;                      /* 0x13 */
-  U8                      SGLOffset0;                     /* 0x14 */
-  U8                      SGLOffset1;                     /* 0x15 */
-  U8                      SGLOffset2;                     /* 0x16 */
-  U8                      SGLOffset3;                     /* 0x17 */
-  U32                     SkipCount;                      /* 0x18 */
-  U32                     DataLength;                     /* 0x1C */
-  U32                     BidirectionalDataLength;        /* 0x20 */
-  U16                     IoFlags;                        /* 0x24 */
-  U16                     EEDPFlags;                      /* 0x26 */
-  U32                     EEDPBlockSize;                  /* 0x28 */
-  U32                     SecondaryReferenceTag;          /* 0x2C */
-  U16                     SecondaryApplicationTag;        /* 0x30 */
-  U16                     ApplicationTagTranslationMask;  /* 0x32 */
-  U8                      LUN[8];                         /* 0x34 */
-  U32                     Control;                        /* 0x3C */
-  MPI2_SCSI_IO_CDB_UNION  CDB;                            /* 0x40 */
-  
-  #ifdef MPI2_SCSI_IO_VENDOR_UNIQUE_REGION /* typically this is left undefined */
-  MPI2_SCSI_IO_VENDOR_UNIQUE VendorRegion;
-  #endif
-  
-  MPI2_SGE_IO_UNION       SGL;                            /* 0x60 */
-  
+    U16                     DevHandle;                      /* 0x00 */
+    U8                      ChainOffset;                    /* 0x02 */
+    U8                      Function;                       /* 0x03 */
+    U16                     Reserved1;                      /* 0x04 */
+    U8                      Reserved2;                      /* 0x06 */
+    U8                      MsgFlags;                       /* 0x07 */
+    U8                      VP_ID;                          /* 0x08 */
+    U8                      VF_ID;                          /* 0x09 */
+    U16                     Reserved3;                      /* 0x0A */
+    U32                     SenseBufferLowAddress;          /* 0x0C */
+    U16                     SGLFlags;                       /* 0x10 */
+    U8                      SenseBufferLength;              /* 0x12 */
+    U8                      Reserved4;                      /* 0x13 */
+    U8                      SGLOffset0;                     /* 0x14 */
+    U8                      SGLOffset1;                     /* 0x15 */
+    U8                      SGLOffset2;                     /* 0x16 */
+    U8                      SGLOffset3;                     /* 0x17 */
+    U32                     SkipCount;                      /* 0x18 */
+    U32                     DataLength;                     /* 0x1C */
+    U32                     BidirectionalDataLength;        /* 0x20 */
+    U16                     IoFlags;                        /* 0x24 */
+    U16                     EEDPFlags;                      /* 0x26 */
+    U32                     EEDPBlockSize;                  /* 0x28 */
+    U32                     SecondaryReferenceTag;          /* 0x2C */
+    U16                     SecondaryApplicationTag;        /* 0x30 */
+    U16                     ApplicationTagTranslationMask;  /* 0x32 */
+    U8                      LUN[8];                         /* 0x34 */
+    U32                     Control;                        /* 0x3C */
+    MPI2_SCSI_IO_CDB_UNION  CDB;                            /* 0x40 */
+
+#ifdef MPI2_SCSI_IO_VENDOR_UNIQUE_REGION /* typically this is left undefined */
+	MPI2_SCSI_IO_VENDOR_UNIQUE VendorRegion;
+#endif
+
+    MPI2_SGE_IO_UNION       SGL;                            /* 0x60 */
+
 } MPI2_SCSI_IO_REQUEST, MPI2_POINTER PTR_MPI2_SCSI_IO_REQUEST,
-Mpi2SCSIIORequest_t, MPI2_POINTER pMpi2SCSIIORequest_t;
+  Mpi2SCSIIORequest_t, MPI2_POINTER pMpi2SCSIIORequest_t;
 
 /* SCSI IO MsgFlags bits */
 
@@ -210,29 +210,29 @@ Mpi2SCSIIORequest_t, MPI2_POINTER pMpi2SCSIIORequest_t;
 /* SCSI IO Error Reply Message */
 typedef struct _MPI2_SCSI_IO_REPLY
 {
-  U16                     DevHandle;                      /* 0x00 */
-  U8                      MsgLength;                      /* 0x02 */
-  U8                      Function;                       /* 0x03 */
-  U16                     Reserved1;                      /* 0x04 */
-  U8                      Reserved2;                      /* 0x06 */
-  U8                      MsgFlags;                       /* 0x07 */
-  U8                      VP_ID;                          /* 0x08 */
-  U8                      VF_ID;                          /* 0x09 */
-  U16                     Reserved3;                      /* 0x0A */
-  U8                      SCSIStatus;                     /* 0x0C */
-  U8                      SCSIState;                      /* 0x0D */
-  U16                     IOCStatus;                      /* 0x0E */
-  U32                     IOCLogInfo;                     /* 0x10 */
-  U32                     TransferCount;                  /* 0x14 */
-  U32                     SenseCount;                     /* 0x18 */
-  U32                     ResponseInfo;                   /* 0x1C */
-  U16                     TaskTag;                        /* 0x20 */
-  U16                     Reserved4;                      /* 0x22 */
-  U32                     BidirectionalTransferCount;     /* 0x24 */
-  U32                     Reserved5;                      /* 0x28 */
-  U32                     Reserved6;                      /* 0x2C */
+    U16                     DevHandle;                      /* 0x00 */
+    U8                      MsgLength;                      /* 0x02 */
+    U8                      Function;                       /* 0x03 */
+    U16                     Reserved1;                      /* 0x04 */
+    U8                      Reserved2;                      /* 0x06 */
+    U8                      MsgFlags;                       /* 0x07 */
+    U8                      VP_ID;                          /* 0x08 */
+    U8                      VF_ID;                          /* 0x09 */
+    U16                     Reserved3;                      /* 0x0A */
+    U8                      SCSIStatus;                     /* 0x0C */
+    U8                      SCSIState;                      /* 0x0D */
+    U16                     IOCStatus;                      /* 0x0E */
+    U32                     IOCLogInfo;                     /* 0x10 */
+    U32                     TransferCount;                  /* 0x14 */
+    U32                     SenseCount;                     /* 0x18 */
+    U32                     ResponseInfo;                   /* 0x1C */
+    U16                     TaskTag;                        /* 0x20 */
+    U16                     Reserved4;                      /* 0x22 */
+    U32                     BidirectionalTransferCount;     /* 0x24 */
+    U32                     Reserved5;                      /* 0x28 */
+    U32                     Reserved6;                      /* 0x2C */
 } MPI2_SCSI_IO_REPLY, MPI2_POINTER PTR_MPI2_SCSI_IO_REPLY,
-Mpi2SCSIIOReply_t, MPI2_POINTER pMpi2SCSIIOReply_t;
+  Mpi2SCSIIOReply_t, MPI2_POINTER pMpi2SCSIIOReply_t;
 
 /* SCSI IO Reply SCSIStatus values (SAM-4 status codes) */
 
@@ -271,24 +271,24 @@ Mpi2SCSIIOReply_t, MPI2_POINTER pMpi2SCSIIOReply_t;
 /* SCSI Task Management Request Message */
 typedef struct _MPI2_SCSI_TASK_MANAGE_REQUEST
 {
-  U16                     DevHandle;                      /* 0x00 */
-  U8                      ChainOffset;                    /* 0x02 */
-  U8                      Function;                       /* 0x03 */
-  U8                      Reserved1;                      /* 0x04 */
-  U8                      TaskType;                       /* 0x05 */
-  U8                      Reserved2;                      /* 0x06 */
-  U8                      MsgFlags;                       /* 0x07 */
-  U8                      VP_ID;                          /* 0x08 */
-  U8                      VF_ID;                          /* 0x09 */
-  U16                     Reserved3;                      /* 0x0A */
-  U8                      LUN[8];                         /* 0x0C */
-  U32                     Reserved4[7];                   /* 0x14 */
-  U16                     TaskMID;                        /* 0x30 */
-  U16                     Reserved5;                      /* 0x32 */
+    U16                     DevHandle;                      /* 0x00 */
+    U8                      ChainOffset;                    /* 0x02 */
+    U8                      Function;                       /* 0x03 */
+    U8                      Reserved1;                      /* 0x04 */
+    U8                      TaskType;                       /* 0x05 */
+    U8                      Reserved2;                      /* 0x06 */
+    U8                      MsgFlags;                       /* 0x07 */
+    U8                      VP_ID;                          /* 0x08 */
+    U8                      VF_ID;                          /* 0x09 */
+    U16                     Reserved3;                      /* 0x0A */
+    U8                      LUN[8];                         /* 0x0C */
+    U32                     Reserved4[7];                   /* 0x14 */
+    U16                     TaskMID;                        /* 0x30 */
+    U16                     Reserved5;                      /* 0x32 */
 } MPI2_SCSI_TASK_MANAGE_REQUEST,
-MPI2_POINTER PTR_MPI2_SCSI_TASK_MANAGE_REQUEST,
-Mpi2SCSITaskManagementRequest_t,
-MPI2_POINTER pMpi2SCSITaskManagementRequest_t;
+  MPI2_POINTER PTR_MPI2_SCSI_TASK_MANAGE_REQUEST,
+  Mpi2SCSITaskManagementRequest_t,
+  MPI2_POINTER pMpi2SCSITaskManagementRequest_t;
 
 /* TaskType values */
 
@@ -303,8 +303,8 @@ MPI2_POINTER pMpi2SCSITaskManagementRequest_t;
 #define MPI2_SCSITASKMGMT_TASKTYPE_QRY_ASYNC_EVENT      (0x0A)
 
 /* obsolete TaskType name */
-#define MPI2_SCSITASKMGMT_TASKTYPE_QRY_UNIT_ATTENTION \
-  (MPI2_SCSITASKMGMT_TASKTYPE_QRY_ASYNC_EVENT)
+#define MPI2_SCSITASKMGMT_TASKTYPE_QRY_UNIT_ATTENTION	\
+	(MPI2_SCSITASKMGMT_TASKTYPE_QRY_ASYNC_EVENT)
 
 /* MsgFlags bits */
 
@@ -320,24 +320,24 @@ MPI2_POINTER pMpi2SCSITaskManagementRequest_t;
 /* SCSI Task Management Reply Message */
 typedef struct _MPI2_SCSI_TASK_MANAGE_REPLY
 {
-  U16                     DevHandle;                      /* 0x00 */
-  U8                      MsgLength;                      /* 0x02 */
-  U8                      Function;                       /* 0x03 */
-  U8                      ResponseCode;                   /* 0x04 */
-  U8                      TaskType;                       /* 0x05 */
-  U8                      Reserved1;                      /* 0x06 */
-  U8                      MsgFlags;                       /* 0x07 */
-  U8                      VP_ID;                          /* 0x08 */
-  U8                      VF_ID;                          /* 0x09 */
-  U16                     Reserved2;                      /* 0x0A */
-  U16                     Reserved3;                      /* 0x0C */
-  U16                     IOCStatus;                      /* 0x0E */
-  U32                     IOCLogInfo;                     /* 0x10 */
-  U32                     TerminationCount;               /* 0x14 */
-  U32                     ResponseInfo;                   /* 0x18 */
+    U16                     DevHandle;                      /* 0x00 */
+    U8                      MsgLength;                      /* 0x02 */
+    U8                      Function;                       /* 0x03 */
+    U8                      ResponseCode;                   /* 0x04 */
+    U8                      TaskType;                       /* 0x05 */
+    U8                      Reserved1;                      /* 0x06 */
+    U8                      MsgFlags;                       /* 0x07 */
+    U8                      VP_ID;                          /* 0x08 */
+    U8                      VF_ID;                          /* 0x09 */
+    U16                     Reserved2;                      /* 0x0A */
+    U16                     Reserved3;                      /* 0x0C */
+    U16                     IOCStatus;                      /* 0x0E */
+    U32                     IOCLogInfo;                     /* 0x10 */
+    U32                     TerminationCount;               /* 0x14 */
+    U32                     ResponseInfo;                   /* 0x18 */
 } MPI2_SCSI_TASK_MANAGE_REPLY,
-MPI2_POINTER PTR_MPI2_SCSI_TASK_MANAGE_REPLY,
-Mpi2SCSITaskManagementReply_t, MPI2_POINTER pMpi2SCSIManagementReply_t;
+  MPI2_POINTER PTR_MPI2_SCSI_TASK_MANAGE_REPLY,
+  Mpi2SCSITaskManagementReply_t, MPI2_POINTER pMpi2SCSIManagementReply_t;
 
 /* ResponseCode values */
 
@@ -369,24 +369,24 @@ Mpi2SCSITaskManagementReply_t, MPI2_POINTER pMpi2SCSIManagementReply_t;
 /* SCSI Enclosure Processor Request Message */
 typedef struct _MPI2_SEP_REQUEST
 {
-  U16                     DevHandle;          /* 0x00 */
-  U8                      ChainOffset;        /* 0x02 */
-  U8                      Function;           /* 0x03 */
-  U8                      Action;             /* 0x04 */
-  U8                      Flags;              /* 0x05 */
-  U8                      Reserved1;          /* 0x06 */
-  U8                      MsgFlags;           /* 0x07 */
-  U8                      VP_ID;              /* 0x08 */
-  U8                      VF_ID;              /* 0x09 */
-  U16                     Reserved2;          /* 0x0A */
-  U32                     SlotStatus;         /* 0x0C */
-  U32                     Reserved3;          /* 0x10 */
-  U32                     Reserved4;          /* 0x14 */
-  U32                     Reserved5;          /* 0x18 */
-  U16                     Slot;               /* 0x1C */
-  U16                     EnclosureHandle;    /* 0x1E */
+    U16                     DevHandle;          /* 0x00 */
+    U8                      ChainOffset;        /* 0x02 */
+    U8                      Function;           /* 0x03 */
+    U8                      Action;             /* 0x04 */
+    U8                      Flags;              /* 0x05 */
+    U8                      Reserved1;          /* 0x06 */
+    U8                      MsgFlags;           /* 0x07 */
+    U8                      VP_ID;              /* 0x08 */
+    U8                      VF_ID;              /* 0x09 */
+    U16                     Reserved2;          /* 0x0A */
+    U32                     SlotStatus;         /* 0x0C */
+    U32                     Reserved3;          /* 0x10 */
+    U32                     Reserved4;          /* 0x14 */
+    U32                     Reserved5;          /* 0x18 */
+    U16                     Slot;               /* 0x1C */
+    U16                     EnclosureHandle;    /* 0x1E */
 } MPI2_SEP_REQUEST, MPI2_POINTER PTR_MPI2_SEP_REQUEST,
-Mpi2SepRequest_t, MPI2_POINTER pMpi2SepRequest_t;
+  Mpi2SepRequest_t, MPI2_POINTER pMpi2SepRequest_t;
 
 /* Action defines */
 #define MPI2_SEP_REQ_ACTION_WRITE_STATUS                (0x00)
@@ -413,25 +413,25 @@ Mpi2SepRequest_t, MPI2_POINTER pMpi2SepRequest_t;
 /* SCSI Enclosure Processor Reply Message */
 typedef struct _MPI2_SEP_REPLY
 {
-  U16                     DevHandle;          /* 0x00 */
-  U8                      MsgLength;          /* 0x02 */
-  U8                      Function;           /* 0x03 */
-  U8                      Action;             /* 0x04 */
-  U8                      Flags;              /* 0x05 */
-  U8                      Reserved1;          /* 0x06 */
-  U8                      MsgFlags;           /* 0x07 */
-  U8                      VP_ID;              /* 0x08 */
-  U8                      VF_ID;              /* 0x09 */
-  U16                     Reserved2;          /* 0x0A */
-  U16                     Reserved3;          /* 0x0C */
-  U16                     IOCStatus;          /* 0x0E */
-  U32                     IOCLogInfo;         /* 0x10 */
-  U32                     SlotStatus;         /* 0x14 */
-  U32                     Reserved4;          /* 0x18 */
-  U16                     Slot;               /* 0x1C */
-  U16                     EnclosureHandle;    /* 0x1E */
+    U16                     DevHandle;          /* 0x00 */
+    U8                      MsgLength;          /* 0x02 */
+    U8                      Function;           /* 0x03 */
+    U8                      Action;             /* 0x04 */
+    U8                      Flags;              /* 0x05 */
+    U8                      Reserved1;          /* 0x06 */
+    U8                      MsgFlags;           /* 0x07 */
+    U8                      VP_ID;              /* 0x08 */
+    U8                      VF_ID;              /* 0x09 */
+    U16                     Reserved2;          /* 0x0A */
+    U16                     Reserved3;          /* 0x0C */
+    U16                     IOCStatus;          /* 0x0E */
+    U32                     IOCLogInfo;         /* 0x10 */
+    U32                     SlotStatus;         /* 0x14 */
+    U32                     Reserved4;          /* 0x18 */
+    U16                     Slot;               /* 0x1C */
+    U16                     EnclosureHandle;    /* 0x1E */
 } MPI2_SEP_REPLY, MPI2_POINTER PTR_MPI2_SEP_REPLY,
-Mpi2SepReply_t, MPI2_POINTER pMpi2SepReply_t;
+  Mpi2SepReply_t, MPI2_POINTER pMpi2SepReply_t;
 
 /* SlotStatus defines */
 #define MPI2_SEP_REPLY_SLOTSTATUS_REMOVE_READY          (0x00040000)

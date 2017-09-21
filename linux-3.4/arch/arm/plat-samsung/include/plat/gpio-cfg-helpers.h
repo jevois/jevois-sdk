@@ -2,8 +2,8 @@
  *
  * Copyright 2008 Openmoko, Inc.
  * Copyright 2008 Simtec Electronics
- *  http://armlinux.simtec.co.uk/
- *  Ben Dooks <ben@simtec.co.uk>
+ *	http://armlinux.simtec.co.uk/
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * Samsung Platform - GPIO pin configuration helper definitions
  *
@@ -24,28 +24,28 @@
  * by disabling interrupts.
 */
 
-static inline int samsung_gpio_do_setcfg (struct samsung_gpio_chip * chip,
-    unsigned int off, unsigned int config)
+static inline int samsung_gpio_do_setcfg(struct samsung_gpio_chip *chip,
+					 unsigned int off, unsigned int config)
 {
-  return (chip->config->set_config) (chip, off, config);
+	return (chip->config->set_config)(chip, off, config);
 }
 
-static inline unsigned samsung_gpio_do_getcfg (struct samsung_gpio_chip * chip,
-    unsigned int off)
+static inline unsigned samsung_gpio_do_getcfg(struct samsung_gpio_chip *chip,
+					      unsigned int off)
 {
-  return (chip->config->get_config) (chip, off);
+	return (chip->config->get_config)(chip, off);
 }
 
-static inline int samsung_gpio_do_setpull (struct samsung_gpio_chip * chip,
-    unsigned int off, samsung_gpio_pull_t pull)
+static inline int samsung_gpio_do_setpull(struct samsung_gpio_chip *chip,
+					  unsigned int off, samsung_gpio_pull_t pull)
 {
-  return (chip->config->set_pull) (chip, off, pull);
+	return (chip->config->set_pull)(chip, off, pull);
 }
 
-static inline samsung_gpio_pull_t samsung_gpio_do_getpull (struct samsung_gpio_chip * chip,
-    unsigned int off)
+static inline samsung_gpio_pull_t samsung_gpio_do_getpull(struct samsung_gpio_chip *chip,
+							  unsigned int off)
 {
-  return chip->config->get_pull (chip, off);
+	return chip->config->get_pull(chip, off);
 }
 
 /* Pull-{up,down} resistor controls.
@@ -65,8 +65,8 @@ static inline samsung_gpio_pull_t samsung_gpio_do_getpull (struct samsung_gpio_c
  * This is a helper function for the case where we have GPIOs with one
  * bit configuring the presence of a pull-up resistor.
  */
-extern int s3c24xx_gpio_setpull_1up (struct samsung_gpio_chip * chip,
-                                     unsigned int off, samsung_gpio_pull_t pull);
+extern int s3c24xx_gpio_setpull_1up(struct samsung_gpio_chip *chip,
+				    unsigned int off, samsung_gpio_pull_t pull);
 
 /**
  * s3c24xx_gpio_setpull_1down() - Pull configuration for choice of down or none
@@ -77,8 +77,8 @@ extern int s3c24xx_gpio_setpull_1up (struct samsung_gpio_chip * chip,
  * This is a helper function for the case where we have GPIOs with one
  * bit configuring the presence of a pull-down resistor.
  */
-extern int s3c24xx_gpio_setpull_1down (struct samsung_gpio_chip * chip,
-                                       unsigned int off, samsung_gpio_pull_t pull);
+extern int s3c24xx_gpio_setpull_1down(struct samsung_gpio_chip *chip,
+				      unsigned int off, samsung_gpio_pull_t pull);
 
 /**
  * samsung_gpio_setpull_upown() - Pull configuration for choice of up,
@@ -91,12 +91,12 @@ extern int s3c24xx_gpio_setpull_1down (struct samsung_gpio_chip * chip,
  * This is a helper function for the case where we have GPIOs with two
  * bits configuring the presence of a pull resistor, in the following
  * order:
- *  00 = No pull resistor connected
- *  01 = Pull-up resistor connected
- *  10 = Pull-down resistor connected
+ *	00 = No pull resistor connected
+ *	01 = Pull-up resistor connected
+ *	10 = Pull-down resistor connected
  */
-extern int samsung_gpio_setpull_updown (struct samsung_gpio_chip * chip,
-                                        unsigned int off, samsung_gpio_pull_t pull);
+extern int samsung_gpio_setpull_updown(struct samsung_gpio_chip *chip,
+				       unsigned int off, samsung_gpio_pull_t pull);
 
 /**
  * samsung_gpio_getpull_updown() - Get configuration for choice of up,
@@ -108,8 +108,8 @@ extern int samsung_gpio_setpull_updown (struct samsung_gpio_chip * chip,
  * This helper function reads the state of the pull-{up,down} resistor
  * for the given GPIO in the same case as samsung_gpio_setpull_upown.
 */
-extern samsung_gpio_pull_t samsung_gpio_getpull_updown (struct samsung_gpio_chip * chip,
-    unsigned int off);
+extern samsung_gpio_pull_t samsung_gpio_getpull_updown(struct samsung_gpio_chip *chip,
+						       unsigned int off);
 
 /**
  * s3c24xx_gpio_getpull_1up() - Get configuration for choice of up or none
@@ -119,8 +119,8 @@ extern samsung_gpio_pull_t samsung_gpio_getpull_updown (struct samsung_gpio_chip
  * This helper function reads the state of the pull-up resistor for the
  * given GPIO in the same case as s3c24xx_gpio_setpull_1up.
 */
-extern samsung_gpio_pull_t s3c24xx_gpio_getpull_1up (struct samsung_gpio_chip * chip,
-    unsigned int off);
+extern samsung_gpio_pull_t s3c24xx_gpio_getpull_1up(struct samsung_gpio_chip *chip,
+						    unsigned int off);
 
 /**
  * s3c24xx_gpio_getpull_1down() - Get configuration for choice of down or none
@@ -130,8 +130,8 @@ extern samsung_gpio_pull_t s3c24xx_gpio_getpull_1up (struct samsung_gpio_chip * 
  * This helper function reads the state of the pull-down resistor for the
  * given GPIO in the same case as s3c24xx_gpio_setpull_1down.
 */
-extern samsung_gpio_pull_t s3c24xx_gpio_getpull_1down (struct samsung_gpio_chip * chip,
-    unsigned int off);
+extern samsung_gpio_pull_t s3c24xx_gpio_getpull_1down(struct samsung_gpio_chip *chip,
+						      unsigned int off);
 
 /**
  * s3c2443_gpio_setpull() - Pull configuration for s3c2443.
@@ -142,12 +142,12 @@ extern samsung_gpio_pull_t s3c24xx_gpio_getpull_1down (struct samsung_gpio_chip 
  * This is a helper function for the case where we have GPIOs with two
  * bits configuring the presence of a pull resistor, in the following
  * order:
- *  00 = Pull-up resistor connected
- *  10 = Pull-down resistor connected
- *  x1 = No pull up resistor
+ *	00 = Pull-up resistor connected
+ *	10 = Pull-down resistor connected
+ *	x1 = No pull up resistor
  */
-extern int s3c2443_gpio_setpull (struct samsung_gpio_chip * chip,
-                                 unsigned int off, samsung_gpio_pull_t pull);
+extern int s3c2443_gpio_setpull(struct samsung_gpio_chip *chip,
+				unsigned int off, samsung_gpio_pull_t pull);
 
 /**
  * s3c2443_gpio_getpull() - Get configuration for s3c2443 pull resistors
@@ -157,7 +157,7 @@ extern int s3c2443_gpio_setpull (struct samsung_gpio_chip * chip,
  * This helper function reads the state of the pull-{up,down} resistor for the
  * given GPIO in the same case as samsung_gpio_setpull_upown.
 */
-extern samsung_gpio_pull_t s3c2443_gpio_getpull (struct samsung_gpio_chip * chip,
-    unsigned int off);
+extern samsung_gpio_pull_t s3c2443_gpio_getpull(struct samsung_gpio_chip *chip,
+						unsigned int off);
 
 #endif /* __PLAT_GPIO_CFG_HELPERS_H */

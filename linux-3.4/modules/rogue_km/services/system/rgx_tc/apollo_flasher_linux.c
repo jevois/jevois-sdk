@@ -47,209 +47,206 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 typedef struct _FLASH_DATA_
 {
-  IMG_UINT32      ui32ReadEntry;
-  IMG_BOOL      bEnteredResetMode;
-  
-  struct dentry   *  debugFSEntry;
-  PFN_APOLLO_FLASH_INIT   pfnFlashInit;
-  PFN_APOLLO_FLASH_WRITE    pfnFlashWrite;
-  PFN_APOLLO_FLASH_GET_STATUS pfnFlashGetStatus;
-  
-  IMG_VOID   *   pvSysData;
+	IMG_UINT32			ui32ReadEntry;
+	IMG_BOOL			bEnteredResetMode;
+
+	struct dentry			*debugFSEntry;
+	PFN_APOLLO_FLASH_INIT		pfnFlashInit;
+	PFN_APOLLO_FLASH_WRITE		pfnFlashWrite;
+	PFN_APOLLO_FLASH_GET_STATUS	pfnFlashGetStatus;
+
+	IMG_VOID			*pvSysData;
 } FLASH_DATA;
 
-static ssize_t ApolloFlashWrite (const IMG_CHAR * pszData, size_t uiLength, loff_t uiOffset, IMG_VOID * pvData)
+static ssize_t ApolloFlashWrite(const IMG_CHAR *pszData, size_t uiLength, loff_t uiOffset, IMG_VOID *pvData)
 {
-  FLASH_DATA * psFlashData = (FLASH_DATA *) pvData;
-  IMG_UINT32 ui32FifoWriteSpace;
-  FLASH_STATUS eProgramStatus;
-  
-  PVR_UNREFERENCED_PARAMETER (uiOffset);
-  
-  if (uiLength > 4)
-  {
-    return -EFBIG;
-  }
-  
-  if (psFlashData->pfnFlashGetStatus (psFlashData->pvSysData, &ui32FifoWriteSpace, &eProgramStatus) != PVRSRV_OK)
-  {
-    return -EIO;
-  }
-  
-  if (eProgramStatus == FLASH_STATUS_FAILED)
-  {
-    return -EIO;
-  }
-  
-  if (!psFlashData->bEnteredResetMode)
-  {
-    if (eProgramStatus != FLASH_STATUS_WAITING)
-    {
-      return -EINVAL;
-    }
-    
-    if (psFlashData->pfnFlashInit (psFlashData->pvSysData) != PVRSRV_OK)
-    {
-      return -EIO;
-    }
-    
-    psFlashData->bEnteredResetMode = IMG_TRUE;
-  }
-  
-  if (ui32FifoWriteSpace < 2)
-  {
-    return -ENOSPC;
-  }
-  else
-  {
-    if (psFlashData->pfnFlashWrite (psFlashData->pvSysData, (IMG_UINT32 *) pszData) != PVRSRV_OK)
-    {
-      return -EIO;
-    }
-  }
-  
-  return uiLength;
+	FLASH_DATA *psFlashData = (FLASH_DATA *) pvData;
+	IMG_UINT32 ui32FifoWriteSpace;
+	FLASH_STATUS eProgramStatus;
+
+	PVR_UNREFERENCED_PARAMETER(uiOffset);
+
+	if (uiLength > 4)
+	{
+		return -EFBIG;
+	}
+
+	if (psFlashData->pfnFlashGetStatus(psFlashData->pvSysData, &ui32FifoWriteSpace, &eProgramStatus) != PVRSRV_OK)
+	{
+		return -EIO;
+	}
+
+	if (eProgramStatus == FLASH_STATUS_FAILED)
+	{
+		return -EIO;
+	}
+
+	if (!psFlashData->bEnteredResetMode)
+	{
+		if (eProgramStatus != FLASH_STATUS_WAITING)
+		{
+			return -EINVAL;
+		}
+
+		if (psFlashData->pfnFlashInit(psFlashData->pvSysData) != PVRSRV_OK)
+		{
+			return -EIO;
+		}
+
+		psFlashData->bEnteredResetMode = IMG_TRUE;
+	}
+
+	if (ui32FifoWriteSpace < 2)
+	{
+		return -ENOSPC;
+	}
+	else
+	{
+		if (psFlashData->pfnFlashWrite(psFlashData->pvSysData, (IMG_UINT32 *)pszData) != PVRSRV_OK)
+		{
+			return -EIO;
+		}
+	}
+
+	return uiLength;
 }
 
-static const IMG_CHAR * ApolloFlashGetStatusString (FLASH_STATUS eFlashStatus)
+static const IMG_CHAR *ApolloFlashGetStatusString(FLASH_STATUS eFlashStatus)
 {
-  if (eFlashStatus == FLASH_STATUS_WAITING)
-  {
-    return "Waiting to flash!";
-  }
-  else
-    if (eFlashStatus == FLASH_STATUS_IN_PROGRESS)
-    {
-      return "Flashing currently in progress!";
-    }
-    else
-      if (eFlashStatus == FLASH_STATUS_FINISHED)
-      {
-        return "Flashing completed successfully!";
-      }
-      else
-        if (eFlashStatus == FLASH_STATUS_FAILED)
-        {
-          return "Flashing failed!";
-        }
-        
-  return "Error with the in kernel Apollo flashing module!";
+	if (eFlashStatus == FLASH_STATUS_WAITING)
+	{
+		return "Waiting to flash!";
+	}
+	else if (eFlashStatus == FLASH_STATUS_IN_PROGRESS)
+	{
+		return "Flashing currently in progress!";
+	}
+	else if (eFlashStatus == FLASH_STATUS_FINISHED)
+	{
+		return "Flashing completed successfully!";
+	}
+	else if (eFlashStatus == FLASH_STATUS_FAILED)
+	{
+		return "Flashing failed!";
+	}
+
+	return "Error with the in kernel Apollo flashing module!";
 }
 
-static IMG_VOID * ApolloFlashReadStart (struct seq_file * psSeqFile, loff_t * puiPosition)
+static IMG_VOID *ApolloFlashReadStart(struct seq_file *psSeqFile, loff_t *puiPosition)
 {
-  FLASH_DATA * psFlashData = (FLASH_DATA *) psSeqFile->private;
-  
-  PVR_UNREFERENCED_PARAMETER (puiPosition);
-  
-  if (psFlashData->ui32ReadEntry == 1)
-  {
-    psFlashData->ui32ReadEntry = 0;
-    return NULL;
-  }
-  
-  return psSeqFile->private;
+	FLASH_DATA *psFlashData = (FLASH_DATA *)psSeqFile->private;
+
+	PVR_UNREFERENCED_PARAMETER(puiPosition);
+
+	if (psFlashData->ui32ReadEntry == 1)
+	{
+		psFlashData->ui32ReadEntry = 0;
+		return NULL;
+	}
+
+	return psSeqFile->private;
 }
 
-static IMG_VOID ApolloFlashReadStop (struct seq_file * psSeqFile, IMG_VOID * pvData)
+static IMG_VOID ApolloFlashReadStop(struct seq_file *psSeqFile, IMG_VOID *pvData)
 {
-  PVR_UNREFERENCED_PARAMETER (psSeqFile);
-  PVR_UNREFERENCED_PARAMETER (pvData);
+	PVR_UNREFERENCED_PARAMETER(psSeqFile);
+	PVR_UNREFERENCED_PARAMETER(pvData);
 }
 
-static IMG_VOID * ApolloFlashReadNext (struct seq_file * psSeqFile,
-                                       IMG_VOID * pvData,
-                                       loff_t * puiPosition)
+static IMG_VOID *ApolloFlashReadNext(struct seq_file *psSeqFile,
+				     IMG_VOID *pvData,
+				     loff_t *puiPosition)
 {
-  PVR_UNREFERENCED_PARAMETER (psSeqFile);
-  PVR_UNREFERENCED_PARAMETER (pvData);
-  PVR_UNREFERENCED_PARAMETER (puiPosition);
-  
-  return NULL;
+	PVR_UNREFERENCED_PARAMETER(psSeqFile);
+	PVR_UNREFERENCED_PARAMETER(pvData);
+	PVR_UNREFERENCED_PARAMETER(puiPosition);
+
+	return NULL;
 }
 
-static int ApolloFlashReadShow (struct seq_file * psSeqFile, IMG_VOID * pvData)
+static int ApolloFlashReadShow(struct seq_file *psSeqFile, IMG_VOID *pvData)
 {
-  FLASH_DATA * psFlashData = (FLASH_DATA *) pvData;
-  IMG_UINT32 ui32FifoStatus;
-  IMG_UINT32 ui32ProgramStatus;
-  
-  if (psFlashData->pfnFlashGetStatus (psFlashData->pvSysData, &ui32FifoStatus, &ui32ProgramStatus) != PVRSRV_OK)
-  {
-    return -EIO;
-  }
-  
-  psFlashData->ui32ReadEntry = 1;
-  return seq_printf (psSeqFile, "%s\n", ApolloFlashGetStatusString (ui32ProgramStatus) );
+	FLASH_DATA *psFlashData = (FLASH_DATA *)pvData;
+	IMG_UINT32 ui32FifoStatus;
+	IMG_UINT32 ui32ProgramStatus;
+
+	if (psFlashData->pfnFlashGetStatus(psFlashData->pvSysData, &ui32FifoStatus, &ui32ProgramStatus) != PVRSRV_OK)
+	{
+		return -EIO;
+	}
+
+	psFlashData->ui32ReadEntry = 1;
+	return seq_printf(psSeqFile, "%s\n", ApolloFlashGetStatusString(ui32ProgramStatus));
 }
 
 static struct seq_operations gsFlasherReadOps =
 {
-  .start = ApolloFlashReadStart,
-  .stop = ApolloFlashReadStop,
-  .next = ApolloFlashReadNext,
-  .show = ApolloFlashReadShow,
+	.start = ApolloFlashReadStart,
+	.stop = ApolloFlashReadStop,
+	.next = ApolloFlashReadNext,
+	.show = ApolloFlashReadShow,
 };
 
-PVRSRV_ERROR ApolloFlasherSetup (IMG_HANDLE * phFlasher,
-                                 PFN_APOLLO_FLASH_INIT pfnFlashInit,
-                                 PFN_APOLLO_FLASH_WRITE pfnFlashWrite,
-                                 PFN_APOLLO_FLASH_GET_STATUS pfnFlashGetStatus,
-                                 IMG_VOID * pvData)
+PVRSRV_ERROR ApolloFlasherSetup(IMG_HANDLE *phFlasher,
+				PFN_APOLLO_FLASH_INIT pfnFlashInit,
+				PFN_APOLLO_FLASH_WRITE pfnFlashWrite,
+				PFN_APOLLO_FLASH_GET_STATUS pfnFlashGetStatus,
+				IMG_VOID *pvData)
 {
-  FLASH_DATA * psApolloFlashData;
-  
-  if (phFlasher == IMG_NULL ||
-      pfnFlashInit == IMG_NULL ||
-      pfnFlashWrite == IMG_NULL ||
-      pfnFlashGetStatus == IMG_NULL)
-  {
-    return PVRSRV_ERROR_INVALID_PARAMS;
-  }
-  
-  psApolloFlashData = OSAllocMem (sizeof * psApolloFlashData);
-  if (psApolloFlashData == IMG_NULL)
-  {
-    return PVRSRV_ERROR_OUT_OF_MEMORY;
-  }
-  
-  psApolloFlashData->bEnteredResetMode = IMG_FALSE;
-  psApolloFlashData->pfnFlashInit = pfnFlashInit;
-  psApolloFlashData->pfnFlashWrite = pfnFlashWrite;
-  psApolloFlashData->pfnFlashGetStatus = pfnFlashGetStatus;
-  psApolloFlashData->pvSysData = pvData;
-  
-  if (PVRDebugFSCreateEntry ("apollo_flash",
-                             IMG_NULL,
-                             &gsFlasherReadOps,
-                             (PVRSRV_ENTRY_WRITE_FUNC *) ApolloFlashWrite,
-                             (IMG_VOID *) psApolloFlashData,
-                             &psApolloFlashData->debugFSEntry) < 0)
-  {
-    OSFreeMem (psApolloFlashData);
-    
-    return PVRSRV_ERROR_INIT_FAILURE;
-  }
-  
-  *phFlasher = (IMG_HANDLE) psApolloFlashData;
-  
-  return PVRSRV_OK;
+	FLASH_DATA *psApolloFlashData;
+
+	if (phFlasher == IMG_NULL ||
+	    pfnFlashInit == IMG_NULL ||
+	    pfnFlashWrite == IMG_NULL ||
+	    pfnFlashGetStatus == IMG_NULL)
+	{
+		return PVRSRV_ERROR_INVALID_PARAMS;
+	}
+
+	psApolloFlashData = OSAllocMem(sizeof *psApolloFlashData);
+	if (psApolloFlashData == IMG_NULL)
+	{
+		return PVRSRV_ERROR_OUT_OF_MEMORY;
+	}
+
+	psApolloFlashData->bEnteredResetMode = IMG_FALSE;
+	psApolloFlashData->pfnFlashInit = pfnFlashInit;
+	psApolloFlashData->pfnFlashWrite = pfnFlashWrite;
+	psApolloFlashData->pfnFlashGetStatus = pfnFlashGetStatus;
+	psApolloFlashData->pvSysData = pvData;
+
+	if (PVRDebugFSCreateEntry("apollo_flash",
+				  IMG_NULL,
+				  &gsFlasherReadOps,
+				  (PVRSRV_ENTRY_WRITE_FUNC *)ApolloFlashWrite,
+				  (IMG_VOID *)psApolloFlashData,
+				  &psApolloFlashData->debugFSEntry) < 0)
+	{
+		OSFreeMem(psApolloFlashData);
+
+		return PVRSRV_ERROR_INIT_FAILURE;
+	}
+
+	*phFlasher = (IMG_HANDLE)psApolloFlashData;
+
+	return PVRSRV_OK;
 }
 
-PVRSRV_ERROR ApolloFlasherCleanup (IMG_HANDLE hFlasher)
+PVRSRV_ERROR ApolloFlasherCleanup(IMG_HANDLE hFlasher)
 {
-  FLASH_DATA * psFlashData = (FLASH_DATA *) hFlasher;
-  
-  if (psFlashData != IMG_NULL)
-  {
-    if (psFlashData->debugFSEntry != NULL)
-    {
-      PVRDebugFSRemoveEntry (psFlashData->debugFSEntry);
-    }
-    
-    OSFreeMem (hFlasher);
-  }
-  
-  return PVRSRV_OK;
+	FLASH_DATA *psFlashData = (FLASH_DATA *) hFlasher;
+
+	if (psFlashData != IMG_NULL)
+	{
+		if (psFlashData->debugFSEntry != NULL)
+		{
+			PVRDebugFSRemoveEntry(psFlashData->debugFSEntry);
+		}
+
+		OSFreeMem(hFlasher);
+	}
+
+	return PVRSRV_OK;
 }
 

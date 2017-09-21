@@ -5,7 +5,7 @@
  * Based on <asm-i386/statfs.h>.
  *
  * Modified 1998, 1999, 2003
- *  David Mosberger-Tang <davidm@hpl.hp.com>, Hewlett-Packard Co
+ *	David Mosberger-Tang <davidm@hpl.hp.com>, Hewlett-Packard Co
  */
 
 /*

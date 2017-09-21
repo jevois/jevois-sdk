@@ -24,116 +24,116 @@
  * suspend asm codes will access this address to make system deepsleep
  * after DRAM becomes self-refresh
  */
-void __iomem * sirfsoc_rtciobrg_base;
-static DEFINE_SPINLOCK (rtciobrg_lock);
+void __iomem *sirfsoc_rtciobrg_base;
+static DEFINE_SPINLOCK(rtciobrg_lock);
 
 /*
  * symbols without lock are only used by suspend asm codes
  * and these symbols are not exported too
  */
-void sirfsoc_rtc_iobrg_wait_sync (void)
+void sirfsoc_rtc_iobrg_wait_sync(void)
 {
-  while (readl_relaxed (sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_CTRL) )
-  { cpu_relax(); }
+	while (readl_relaxed(sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_CTRL))
+		cpu_relax();
 }
 
-void sirfsoc_rtc_iobrg_besyncing (void)
+void sirfsoc_rtc_iobrg_besyncing(void)
 {
-  unsigned long flags;
-  
-  spin_lock_irqsave (&rtciobrg_lock, flags);
-  
-  sirfsoc_rtc_iobrg_wait_sync();
-  
-  spin_unlock_irqrestore (&rtciobrg_lock, flags);
-}
-EXPORT_SYMBOL_GPL (sirfsoc_rtc_iobrg_besyncing);
+	unsigned long flags;
 
-u32 __sirfsoc_rtc_iobrg_readl (u32 addr)
-{
-  sirfsoc_rtc_iobrg_wait_sync();
-  
-  writel_relaxed (0x00, sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_WRBE);
-  writel_relaxed (addr, sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_ADDR);
-  writel_relaxed (0x01, sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_CTRL);
-  
-  sirfsoc_rtc_iobrg_wait_sync();
-  
-  return readl_relaxed (sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_DATA);
-}
+	spin_lock_irqsave(&rtciobrg_lock, flags);
 
-u32 sirfsoc_rtc_iobrg_readl (u32 addr)
-{
-  unsigned long flags, val;
-  
-  spin_lock_irqsave (&rtciobrg_lock, flags);
-  
-  val = __sirfsoc_rtc_iobrg_readl (addr);
-  
-  spin_unlock_irqrestore (&rtciobrg_lock, flags);
-  
-  return val;
-}
-EXPORT_SYMBOL_GPL (sirfsoc_rtc_iobrg_readl);
+	sirfsoc_rtc_iobrg_wait_sync();
 
-void sirfsoc_rtc_iobrg_pre_writel (u32 val, u32 addr)
+	spin_unlock_irqrestore(&rtciobrg_lock, flags);
+}
+EXPORT_SYMBOL_GPL(sirfsoc_rtc_iobrg_besyncing);
+
+u32 __sirfsoc_rtc_iobrg_readl(u32 addr)
 {
-  sirfsoc_rtc_iobrg_wait_sync();
-  
-  writel_relaxed (0xf1, sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_WRBE);
-  writel_relaxed (addr, sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_ADDR);
-  
-  writel_relaxed (val, sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_DATA);
+	sirfsoc_rtc_iobrg_wait_sync();
+
+	writel_relaxed(0x00, sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_WRBE);
+	writel_relaxed(addr, sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_ADDR);
+	writel_relaxed(0x01, sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_CTRL);
+
+	sirfsoc_rtc_iobrg_wait_sync();
+
+	return readl_relaxed(sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_DATA);
 }
 
-void sirfsoc_rtc_iobrg_writel (u32 val, u32 addr)
+u32 sirfsoc_rtc_iobrg_readl(u32 addr)
 {
-  unsigned long flags;
-  
-  spin_lock_irqsave (&rtciobrg_lock, flags);
-  
-  sirfsoc_rtc_iobrg_pre_writel (val, addr);
-  
-  writel_relaxed (0x01, sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_CTRL);
-  
-  sirfsoc_rtc_iobrg_wait_sync();
-  
-  spin_unlock_irqrestore (&rtciobrg_lock, flags);
+	unsigned long flags, val;
+
+	spin_lock_irqsave(&rtciobrg_lock, flags);
+
+	val = __sirfsoc_rtc_iobrg_readl(addr);
+
+	spin_unlock_irqrestore(&rtciobrg_lock, flags);
+
+	return val;
 }
-EXPORT_SYMBOL_GPL (sirfsoc_rtc_iobrg_writel);
+EXPORT_SYMBOL_GPL(sirfsoc_rtc_iobrg_readl);
+
+void sirfsoc_rtc_iobrg_pre_writel(u32 val, u32 addr)
+{
+	sirfsoc_rtc_iobrg_wait_sync();
+
+	writel_relaxed(0xf1, sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_WRBE);
+	writel_relaxed(addr, sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_ADDR);
+
+	writel_relaxed(val, sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_DATA);
+}
+
+void sirfsoc_rtc_iobrg_writel(u32 val, u32 addr)
+{
+	unsigned long flags;
+
+	spin_lock_irqsave(&rtciobrg_lock, flags);
+
+	sirfsoc_rtc_iobrg_pre_writel(val, addr);
+
+	writel_relaxed(0x01, sirfsoc_rtciobrg_base + SIRFSOC_CPUIOBRG_CTRL);
+
+	sirfsoc_rtc_iobrg_wait_sync();
+
+	spin_unlock_irqrestore(&rtciobrg_lock, flags);
+}
+EXPORT_SYMBOL_GPL(sirfsoc_rtc_iobrg_writel);
 
 static const struct of_device_id rtciobrg_ids[] = {
-  { .compatible = "sirf,prima2-rtciobg" },
-  {}
+	{ .compatible = "sirf,prima2-rtciobg" },
+	{}
 };
 
-static int __devinit sirfsoc_rtciobrg_probe (struct platform_device * op)
+static int __devinit sirfsoc_rtciobrg_probe(struct platform_device *op)
 {
-  struct device_node * np = op->dev.of_node;
-  
-  sirfsoc_rtciobrg_base = of_iomap (np, 0);
-  if (!sirfsoc_rtciobrg_base)
-  { panic ("unable to map rtc iobrg registers\n"); }
-  
-  return 0;
+	struct device_node *np = op->dev.of_node;
+
+	sirfsoc_rtciobrg_base = of_iomap(np, 0);
+	if (!sirfsoc_rtciobrg_base)
+		panic("unable to map rtc iobrg registers\n");
+
+	return 0;
 }
 
 static struct platform_driver sirfsoc_rtciobrg_driver = {
-  .probe    = sirfsoc_rtciobrg_probe,
-  .driver = {
-    .name = "sirfsoc-rtciobrg",
-    .owner = THIS_MODULE,
-    .of_match_table = rtciobrg_ids,
-  },
+	.probe		= sirfsoc_rtciobrg_probe,
+	.driver = {
+		.name = "sirfsoc-rtciobrg",
+		.owner = THIS_MODULE,
+		.of_match_table	= rtciobrg_ids,
+	},
 };
 
-static int __init sirfsoc_rtciobrg_init (void)
+static int __init sirfsoc_rtciobrg_init(void)
 {
-  return platform_driver_register (&sirfsoc_rtciobrg_driver);
+	return platform_driver_register(&sirfsoc_rtciobrg_driver);
 }
-postcore_initcall (sirfsoc_rtciobrg_init);
+postcore_initcall(sirfsoc_rtciobrg_init);
 
-MODULE_AUTHOR ("Zhiwu Song <zhiwu.song@csr.com>, "
-               "Barry Song <baohua.song@csr.com>");
-MODULE_DESCRIPTION ("CSR SiRFprimaII rtc io bridge");
-MODULE_LICENSE ("GPL");
+MODULE_AUTHOR("Zhiwu Song <zhiwu.song@csr.com>, "
+		"Barry Song <baohua.song@csr.com>");
+MODULE_DESCRIPTION("CSR SiRFprimaII rtc io bridge");
+MODULE_LICENSE("GPL");

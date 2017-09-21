@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -31,43 +31,42 @@
 DECLARE_GLOBAL_DATA_PTR;
 
 
-static int boot_early_standby_mode (void);
+static int boot_early_standby_mode(void);
 
 
 #if 0
-#define STANDBY_DEBUG(c)  standby_serial_putc(c)
+	#define STANDBY_DEBUG(c)  standby_serial_putc(c)
 #else
-#define STANDBY_DEBUG(c)
+	#define STANDBY_DEBUG(c)
 #endif
 
-void standby_serial_putc (char c)
+void standby_serial_putc(char c)
 {
-  __u32 reg_val;
-  
-  do
-  {
-    reg_val = * (volatile unsigned int *) (0x01c2807C);
-  }
-  while (! (reg_val & 0x02) );
-  
-  * (volatile unsigned int *) (0x01c28000) = c;
+	__u32 reg_val;
+
+	do
+	{
+		reg_val = *(volatile unsigned int *)(0x01c2807C);
+	}	while (!(reg_val & 0x02));
+
+	*(volatile unsigned int *)(0x01c28000) = c;
 }
 
-int boot_standby_mode (void)
+int boot_standby_mode(void)
 {
-  int status;
-  
-  boot_store_sp();
-  boot_set_sp();
-  
-  STANDBY_DEBUG ('A');
-  status = boot_early_standby_mode();
-  STANDBY_DEBUG ('[');
-  
-  boot_restore_sp();
-  STANDBY_DEBUG ('{');
-  
-  return status;
+	int status;
+
+	boot_store_sp();
+	boot_set_sp();
+
+	STANDBY_DEBUG('A');
+	status = boot_early_standby_mode();
+	STANDBY_DEBUG('[');
+
+	boot_restore_sp();
+	STANDBY_DEBUG('{');
+
+	return status;
 }
 /*
 ************************************************************************************************************
@@ -85,11 +84,11 @@ int boot_standby_mode (void)
 *
 ************************************************************************************************************
 */
-static int boot_early_standby_mode (void)
+static int boot_early_standby_mode(void)
 {
 
-  return 0;
-  
+   return 0;
+
 }
 
 

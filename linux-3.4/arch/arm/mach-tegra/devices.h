@@ -2,8 +2,8 @@
  * Copyright (C) 2010,2011 Google, Inc.
  *
  * Author:
- *  Colin Cross <ccross@android.com>
- *  Erik Gilling <ccross@android.com>
+ *	Colin Cross <ccross@android.com>
+ *	Erik Gilling <ccross@android.com>
  *
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and

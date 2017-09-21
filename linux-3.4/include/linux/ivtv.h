@@ -47,22 +47,22 @@
    but for now we have to do it this way. */
 
 struct ivtv_dma_frame {
-  enum v4l2_buf_type type; /* V4L2_BUF_TYPE_VIDEO_OUTPUT */
-  __u32 pixelformat;   /* 0 == same as destination */
-  void __user * y_source;   /* if NULL and type == V4L2_BUF_TYPE_VIDEO_OUTPUT,
-            then just switch to user DMA YUV output mode */
-  void __user * uv_source; /* Unused for RGB pixelformats */
-  struct v4l2_rect src;
-  struct v4l2_rect dst;
-  __u32 src_width;
-  __u32 src_height;
+	enum v4l2_buf_type type; /* V4L2_BUF_TYPE_VIDEO_OUTPUT */
+	__u32 pixelformat;	 /* 0 == same as destination */
+	void __user *y_source;   /* if NULL and type == V4L2_BUF_TYPE_VIDEO_OUTPUT,
+				    then just switch to user DMA YUV output mode */
+	void __user *uv_source;  /* Unused for RGB pixelformats */
+	struct v4l2_rect src;
+	struct v4l2_rect dst;
+	__u32 src_width;
+	__u32 src_height;
 };
 
-#define IVTV_IOC_DMA_FRAME    _IOW ('V', BASE_VIDIOC_PRIVATE+0, struct ivtv_dma_frame)
+#define IVTV_IOC_DMA_FRAME		_IOW ('V', BASE_VIDIOC_PRIVATE+0, struct ivtv_dma_frame)
 
 /* Select the passthrough mode (if the argument is non-zero). In the passthrough
    mode the output of the encoder is passed immediately into the decoder. */
-#define IVTV_IOC_PASSTHROUGH_MODE _IOW ('V', BASE_VIDIOC_PRIVATE+1, int)
+#define IVTV_IOC_PASSTHROUGH_MODE	_IOW ('V', BASE_VIDIOC_PRIVATE+1, int)
 
 /* Deprecated defines: applications should use the defines from videodev2.h */
 #define IVTV_SLICED_TYPE_TELETEXT_B     V4L2_MPEG_VBI_IVTV_TELETEXT_B

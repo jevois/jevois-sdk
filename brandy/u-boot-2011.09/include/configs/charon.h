@@ -18,7 +18,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -31,9 +31,9 @@
 #define __CONFIG_CHARON_H
 
 #define CONFIG_CHARON
-#define CONFIG_HOSTNAME   charon
+#define CONFIG_HOSTNAME		charon
 
-#define CONFIG_SYS_GPS_PORT_CONFIG  0x81550414
+#define CONFIG_SYS_GPS_PORT_CONFIG	0x81550414
 
 /* include common defines/options for TQM52xx boards */
 #include "TQM5200.h"
@@ -43,12 +43,12 @@
 #undef CONFIG_CMD_DATE
 
 #undef CUSTOM_ENV_SETTINGS
-#define CUSTOM_ENV_SETTINGS         \
-  "bootfile=/tftpboot/charon/uImage\0"      \
-  "fdt_file=/tftpboot/charon/charon.dtb\0"    \
-  "u-boot=/tftpboot/charon/u-boot.bin\0"      \
-  "mtdparts=" MTDPARTS_DEFAULT "\0"     \
-  "addmtd=setenv bootargs ${bootargs} ${mtdparts}\0"
+#define CUSTOM_ENV_SETTINGS					\
+	"bootfile=/tftpboot/charon/uImage\0"			\
+	"fdt_file=/tftpboot/charon/charon.dtb\0"		\
+	"u-boot=/tftpboot/charon/u-boot.bin\0"			\
+	"mtdparts=" MTDPARTS_DEFAULT "\0"			\
+	"addmtd=setenv bootargs ${bootargs} ${mtdparts}\0"
 
 
 /* additional features on charon board */
@@ -59,23 +59,23 @@
  */
 #define CONFIG_I2C_MULTI_BUS
 
-#define CONFIG_SYS_TFP410_ADDR  0x38
-#define CONFIG_SYS_TFP410_BUS 0
+#define CONFIG_SYS_TFP410_ADDR	0x38
+#define CONFIG_SYS_TFP410_BUS	0
 
 /*
  * FPGA configuration
  */
-#define CONFIG_SYS_CS3_START    0xE8000000
-#define CONFIG_SYS_CS3_SIZE   0x80000 /* 512 KByte */
+#define CONFIG_SYS_CS3_START		0xE8000000
+#define CONFIG_SYS_CS3_SIZE		0x80000	/* 512 KByte */
 
 /*
  * CS3 Config Register Init:
- *  CS3 Enabled
- *  AddrBus: 8bits
- *    DataBus: 4bytes
- *    Multiplexed: Yes
- *    MuxBank: 00
+ * 	CS3 Enabled
+ * 	AddrBus: 8bits
+ *  	DataBus: 4bytes
+ *  	Multiplexed: Yes
+ *  	MuxBank: 00
  */
-#define CONFIG_SYS_CS3_CFG    0x00009310
+#define CONFIG_SYS_CS3_CFG		0x00009310
 
 #endif /* __CONFIG_CHARON_H */

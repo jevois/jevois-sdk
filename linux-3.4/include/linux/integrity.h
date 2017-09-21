@@ -13,27 +13,27 @@
 #include <linux/fs.h>
 
 enum integrity_status {
-  INTEGRITY_PASS = 0,
-  INTEGRITY_FAIL,
-  INTEGRITY_NOLABEL,
-  INTEGRITY_NOXATTRS,
-  INTEGRITY_UNKNOWN,
+	INTEGRITY_PASS = 0,
+	INTEGRITY_FAIL,
+	INTEGRITY_NOLABEL,
+	INTEGRITY_NOXATTRS,
+	INTEGRITY_UNKNOWN,
 };
 
 /* List of EVM protected security xattrs */
 #ifdef CONFIG_INTEGRITY
-extern int integrity_inode_alloc (struct inode * inode);
-extern void integrity_inode_free (struct inode * inode);
+extern int integrity_inode_alloc(struct inode *inode);
+extern void integrity_inode_free(struct inode *inode);
 
 #else
-static inline int integrity_inode_alloc (struct inode * inode)
+static inline int integrity_inode_alloc(struct inode *inode)
 {
-  return 0;
+	return 0;
 }
 
-static inline void integrity_inode_free (struct inode * inode)
+static inline void integrity_inode_free(struct inode *inode)
 {
-  return;
+	return;
 }
 #endif /* CONFIG_INTEGRITY_H */
 #endif /* _LINUX_INTEGRITY_H */

@@ -13,17 +13,17 @@
 #define S5P_FIMC_H_
 
 enum cam_bus_type {
-  FIMC_ITU_601 = 1,
-  FIMC_ITU_656,
-  FIMC_MIPI_CSI2,
-  FIMC_LCD_WB, /* FIFO link from LCD mixer */
+	FIMC_ITU_601 = 1,
+	FIMC_ITU_656,
+	FIMC_MIPI_CSI2,
+	FIMC_LCD_WB, /* FIFO link from LCD mixer */
 };
 
 struct i2c_board_info;
 
 /**
  * struct s5p_fimc_isp_info - image sensor information required for host
- *            interace configuration.
+ *			      interace configuration.
  *
  * @board_info: pointer to I2C subdevice's board info
  * @clk_frequency: frequency of the clock the host interface provides to sensor
@@ -35,14 +35,14 @@ struct i2c_board_info;
  * @flags: the parallel bus flags defining signals polarity (V4L2_MBUS_*)
  */
 struct s5p_fimc_isp_info {
-  struct i2c_board_info * board_info;
-  unsigned long clk_frequency;
-  enum cam_bus_type bus_type;
-  u16 csi_data_align;
-  u16 i2c_bus_num;
-  u16 mux_id;
-  u16 flags;
-  u8 clk_id;
+	struct i2c_board_info *board_info;
+	unsigned long clk_frequency;
+	enum cam_bus_type bus_type;
+	u16 csi_data_align;
+	u16 i2c_bus_num;
+	u16 mux_id;
+	u16 flags;
+	u8 clk_id;
 };
 
 /**
@@ -52,8 +52,8 @@ struct s5p_fimc_isp_info {
  * @num_clients: the number of attached image sensors
  */
 struct s5p_platform_fimc {
-  struct s5p_fimc_isp_info * isp_info;
-  int num_clients;
+	struct s5p_fimc_isp_info *isp_info;
+	int num_clients;
 };
 
 /*

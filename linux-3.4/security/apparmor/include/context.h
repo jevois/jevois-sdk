@@ -29,7 +29,7 @@
  * cxt struct will expand in the future so we keep the struct.
  */
 struct aa_file_cxt {
-  u16 allow;
+	u16 allow;
 };
 
 /**
@@ -38,19 +38,19 @@ struct aa_file_cxt {
  *
  * Returns: file_cxt or NULL on failure
  */
-static inline struct aa_file_cxt * aa_alloc_file_context (gfp_t gfp)
+static inline struct aa_file_cxt *aa_alloc_file_context(gfp_t gfp)
 {
-  return kzalloc (sizeof (struct aa_file_cxt), gfp);
+	return kzalloc(sizeof(struct aa_file_cxt), gfp);
 }
 
 /**
  * aa_free_file_context - free a file_cxt
  * @cxt: file_cxt to free  (MAYBE_NULL)
  */
-static inline void aa_free_file_context (struct aa_file_cxt * cxt)
+static inline void aa_free_file_context(struct aa_file_cxt *cxt)
 {
-  if (cxt)
-  { kzfree (cxt); }
+	if (cxt)
+		kzfree(cxt);
 }
 
 /**
@@ -66,20 +66,20 @@ static inline void aa_free_file_context (struct aa_file_cxt * cxt)
  * TODO: make so a task can be confined by a stack of contexts
  */
 struct aa_task_cxt {
-  struct aa_profile * profile;
-  struct aa_profile * onexec;
-  struct aa_profile * previous;
-  u64 token;
+	struct aa_profile *profile;
+	struct aa_profile *onexec;
+	struct aa_profile *previous;
+	u64 token;
 };
 
-struct aa_task_cxt * aa_alloc_task_context (gfp_t flags);
-void aa_free_task_context (struct aa_task_cxt * cxt);
-void aa_dup_task_context (struct aa_task_cxt * new,
-                          const struct aa_task_cxt * old);
-int aa_replace_current_profile (struct aa_profile * profile);
-int aa_set_current_onexec (struct aa_profile * profile);
-int aa_set_current_hat (struct aa_profile * profile, u64 token);
-int aa_restore_previous_profile (u64 cookie);
+struct aa_task_cxt *aa_alloc_task_context(gfp_t flags);
+void aa_free_task_context(struct aa_task_cxt *cxt);
+void aa_dup_task_context(struct aa_task_cxt *new,
+			 const struct aa_task_cxt *old);
+int aa_replace_current_profile(struct aa_profile *profile);
+int aa_set_current_onexec(struct aa_profile *profile);
+int aa_set_current_hat(struct aa_profile *profile, u64 token);
+int aa_restore_previous_profile(u64 cookie);
 
 /**
  * __aa_task_is_confined - determine if @task has any confinement
@@ -87,15 +87,15 @@ int aa_restore_previous_profile (u64 cookie);
  *
  * If @task != current needs to be called in RCU safe critical section
  */
-static inline bool __aa_task_is_confined (struct task_struct * task)
+static inline bool __aa_task_is_confined(struct task_struct *task)
 {
-  struct aa_task_cxt * cxt = __task_cred (task)->security;
-  
-  BUG_ON (!cxt || !cxt->profile);
-  if (unconfined (aa_newest_version (cxt->profile) ) )
-  { return 0; }
-  
-  return 1;
+	struct aa_task_cxt *cxt = __task_cred(task)->security;
+
+	BUG_ON(!cxt || !cxt->profile);
+	if (unconfined(aa_newest_version(cxt->profile)))
+		return 0;
+
+	return 1;
 }
 
 /**
@@ -106,11 +106,11 @@ static inline bool __aa_task_is_confined (struct task_struct * task)
  *
  * does NOT increment reference count
  */
-static inline struct aa_profile * aa_cred_profile (const struct cred * cred)
+static inline struct aa_profile *aa_cred_profile(const struct cred *cred)
 {
-  struct aa_task_cxt * cxt = cred->security;
-  BUG_ON (!cxt || !cxt->profile);
-  return aa_newest_version (cxt->profile);
+	struct aa_task_cxt *cxt = cred->security;
+	BUG_ON(!cxt || !cxt->profile);
+	return aa_newest_version(cxt->profile);
 }
 
 /**
@@ -121,9 +121,9 @@ static inline struct aa_profile * aa_cred_profile (const struct cred * cred)
  * This fn will not update the tasks cred to the most up to date version
  * of the profile so it is safe to call when inside of locks.
  */
-static inline struct aa_profile * __aa_current_profile (void)
+static inline struct aa_profile *__aa_current_profile(void)
 {
-  return aa_cred_profile (current_cred() );
+	return aa_cred_profile(current_cred());
 }
 
 /**
@@ -134,21 +134,21 @@ static inline struct aa_profile * __aa_current_profile (void)
  * This fn will update the tasks cred structure if the profile has been
  * replaced.  Not safe to call inside locks
  */
-static inline struct aa_profile * aa_current_profile (void)
+static inline struct aa_profile *aa_current_profile(void)
 {
-  const struct aa_task_cxt * cxt = current_cred()->security;
-  struct aa_profile * profile;
-  BUG_ON (!cxt || !cxt->profile);
-  
-  profile = aa_newest_version (cxt->profile);
-  /*
-   * Whether or not replacement succeeds, use newest profile so
-   * there is no need to update it after replacement.
-   */
-  if (unlikely ( (cxt->profile != profile) ) )
-  { aa_replace_current_profile (profile); }
-  
-  return profile;
+	const struct aa_task_cxt *cxt = current_cred()->security;
+	struct aa_profile *profile;
+	BUG_ON(!cxt || !cxt->profile);
+
+	profile = aa_newest_version(cxt->profile);
+	/*
+	 * Whether or not replacement succeeds, use newest profile so
+	 * there is no need to update it after replacement.
+	 */
+	if (unlikely((cxt->profile != profile)))
+		aa_replace_current_profile(profile);
+
+	return profile;
 }
 
 #endif /* __AA_CONTEXT_H */

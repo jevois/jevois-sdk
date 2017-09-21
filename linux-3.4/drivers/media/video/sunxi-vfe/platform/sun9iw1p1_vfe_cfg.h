@@ -1,17 +1,17 @@
 
-/*
+/* 
  ***************************************************************************************
- *
+ * 
  * sun9iw1p1_vfe_cfg.h
- *
+ * 
  * Hawkview ISP - sun9iw1p1_vfe_cfg.h module
- *
+ * 
  * Copyright (c) 2014 by Allwinnertech Co., Ltd.  http://www.allwinnertech.com
- *
- * Version      Author         Date       Description
- *
- *   2.0      Yang Feng     2014/07/24        Second Version
- *
+ * 
+ * Version		  Author         Date		    Description
+ * 
+ *   2.0		  Yang Feng   	2014/07/24	      Second Version
+ * 
  ****************************************************************************************
  */
 
@@ -22,30 +22,30 @@
 
 
 
-#define VFE_ISP_REGULATOR       ""
-#define VFE_CSI_REGULATOR       ""
+#define VFE_ISP_REGULATOR				""
+#define VFE_CSI_REGULATOR				""
 #define USE_SPECIFIC_CCI
-#define CSI0_REGS_BASE                  0x03800000
-#define CSI0_CCI_REG_BASE       0x03803000
-#define CSI1_REGS_BASE                  0x03900000
-#define CSI1_CCI_REG_BASE       0x03903000
-#define ISP_REGS_BASE                   0x03808000
-#define GPIO_REGS_VBASE         0xf6000800
-#define CPU_DRAM_PADDR_ORG      0x20000000
-#define HW_DMA_OFFSET         0x20000000
-#define MAX_VFE_INPUT             2    
-#define VFE_CORE_CLK            CSI_ISP_CLK
-#define VFE_CORE_CLK_SRC        VFE_CLK_NOT_EXIST
-#define VFE_MASTER_CLK0         CSI0_MCLK_CLK
-#define VFE_MASTER_CLK1         CSI1_MCLK_CLK
-#define VFE_MASTER_CLK_24M_SRC    HOSC_CLK
-#define VFE_MASTER_CLK_PLL_SRC    PLL7_CLK
-#define VFE_MIPI_DPHY_CLK       VFE_CLK_NOT_EXIST
-#define VFE_MIPI_DPHY_CLK_SRC     VFE_CLK_NOT_EXIST
-#define VFE_MIPI_CSI_CLK          MIPI_CSI_CLK
-#define VFE_MIPI_CSI_CLK_SRC      VFE_CLK_NOT_EXIST
-#define VFE_VPU_CLK           CPURVDDVE_CLK
-#define VFE_MISC_CLK            CSI_MISC_CLK
+#define CSI0_REGS_BASE          				0x03800000
+#define CSI0_CCI_REG_BASE				0x03803000
+#define CSI1_REGS_BASE          				0x03900000
+#define CSI1_CCI_REG_BASE				0x03903000
+#define ISP_REGS_BASE           				0x03808000
+#define GPIO_REGS_VBASE					0xf6000800
+#define CPU_DRAM_PADDR_ORG 			0x20000000
+#define HW_DMA_OFFSET					0x20000000
+#define MAX_VFE_INPUT   					2    
+#define VFE_CORE_CLK						CSI_ISP_CLK
+#define VFE_CORE_CLK_SRC				VFE_CLK_NOT_EXIST
+#define VFE_MASTER_CLK0					CSI0_MCLK_CLK
+#define VFE_MASTER_CLK1					CSI1_MCLK_CLK
+#define VFE_MASTER_CLK_24M_SRC		HOSC_CLK
+#define VFE_MASTER_CLK_PLL_SRC		PLL7_CLK
+#define VFE_MIPI_DPHY_CLK				VFE_CLK_NOT_EXIST
+#define VFE_MIPI_DPHY_CLK_SRC			VFE_CLK_NOT_EXIST
+#define VFE_MIPI_CSI_CLK 					MIPI_CSI_CLK
+#define VFE_MIPI_CSI_CLK_SRC			VFE_CLK_NOT_EXIST
+#define VFE_VPU_CLK						CPURVDDVE_CLK
+#define VFE_MISC_CLK						CSI_MISC_CLK
 
 
 #define CORE_CLK_RATE_FOR_2M (108*1000*1000)

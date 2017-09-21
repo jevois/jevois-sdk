@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -48,14 +48,14 @@ static __u32 sprite_led_hd;
 *
 ************************************************************************************************************
 */
-static void sprite_timer_func (void * p)
+static void sprite_timer_func(void *p)
 {
-  gpio_write_one_pin_value (sprite_led_hd, sprite_led_status, "sprite_gpio0");
-  sprite_led_status = (~sprite_led_status) & 0x01;
-  
-  del_timer (&TIMER0);
-  add_timer (&TIMER0);
-  return;
+	gpio_write_one_pin_value(sprite_led_hd, sprite_led_status, "sprite_gpio0");
+	sprite_led_status = (~sprite_led_status) & 0x01;
+	
+	del_timer(&TIMER0);
+	add_timer(&TIMER0);
+	return;
 }
 
 /*
@@ -74,44 +74,44 @@ static void sprite_timer_func (void * p)
 *
 ************************************************************************************************************
 */
-int sprite_led_init (void)
+int sprite_led_init(void)
 {
-  user_gpio_set_t gpio_init;
-  int ret;
-  int delay;
-  
-  sprite_led_status = 1;
-  
-  ret = script_parser_fetch ("card_boot", "sprite_work_delay", (void *) &delay, 1);
-  if ( (ret) || (!delay) )
-  {
-    delay = 500;
-  }
-  
-  printf ("try sprite_led_gpio config\n");
-  memset (&gpio_init, 0, sizeof (user_gpio_set_t) );
-  ret = script_parser_fetch ("card_boot", "sprite_gpio0", (void *) &gpio_init, sizeof (user_gpio_set_t) >> 2);
-  if (!ret)
-  {
-    if (gpio_init.port)
-    {
-      sprite_led_hd = gpio_request (&gpio_init, 1);
-      if (!sprite_led_hd)
-      {
-        printf ("reuqest gpio for led failed\n");
-        return 1;
-      }
-      
-      TIMER0.data = (unsigned long) &TIMER0;
-      TIMER0.expires = delay;
-      TIMER0.function = sprite_timer_func;
-      add_timer (&TIMER0);
-      
-      printf ("sprite_led_gpio start\n");
-      return 0;
-    }
-  }
-  return 0;
+	user_gpio_set_t	gpio_init;
+	int	ret;
+	int	delay;	
+	
+	sprite_led_status = 1;
+	
+	ret = script_parser_fetch("card_boot", "sprite_work_delay", (void *)&delay, 1);
+	if((ret) || (!delay))
+	{
+		delay = 500;
+	}
+	
+	printf("try sprite_led_gpio config\n");
+	memset(&gpio_init, 0, sizeof(user_gpio_set_t));
+	ret = script_parser_fetch("card_boot", "sprite_gpio0", (void *)&gpio_init, sizeof(user_gpio_set_t)>>2);
+	if(!ret)
+	{
+		if(gpio_init.port)
+		{
+			sprite_led_hd = gpio_request(&gpio_init, 1);
+			if(!sprite_led_hd)
+			{
+				printf("reuqest gpio for led failed\n");
+				return 1;
+			}
+			
+			TIMER0.data = (unsigned long)&TIMER0;
+			TIMER0.expires = delay;
+			TIMER0.function = sprite_timer_func;
+			add_timer(&TIMER0);
+			
+			printf("sprite_led_gpio start\n");
+			return 0;
+		}
+	}
+	return 0;
 }
 
 /*
@@ -130,26 +130,26 @@ int sprite_led_init (void)
 *
 ************************************************************************************************************
 */
-int sprite_led_exit (int status)
+int sprite_led_exit(int status)
 {
-  int ret;
-  int delay;
-  
-  del_timer (&TIMER0);
-  
-  if (status < 0)
-  {
-    ret = script_parser_fetch ("card_boot", "sprite_err_delay", (void *) &delay, 1);
-    if ( (ret) || (!delay) )
-    {
-      delay = 100;
-    }
-    del_timer (&TIMER0);
-    TIMER0.data = (unsigned long) &TIMER0;
-    TIMER0.expires = delay;
-    TIMER0.function = sprite_timer_func;
-    add_timer (&TIMER0);
-  }
-  
-  return 0;
+	int ret;
+	int delay;
+
+	del_timer(&TIMER0);
+	
+	if(status < 0)
+	{
+		ret = script_parser_fetch("card_boot", "sprite_err_delay", (void *)&delay, 1);
+		if((ret) || (!delay))
+		{
+			delay = 100;
+		}
+		del_timer(&TIMER0);
+		TIMER0.data = (unsigned long)&TIMER0;
+		TIMER0.expires = delay;
+		TIMER0.function = sprite_timer_func;
+		add_timer(&TIMER0);
+	}
+
+	return 0;
 }

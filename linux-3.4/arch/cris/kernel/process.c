@@ -35,8 +35,8 @@
  * setup.
  */
 
-static struct signal_struct init_signals = INIT_SIGNALS (init_signals);
-static struct sighand_struct init_sighand = INIT_SIGHAND (init_sighand);
+static struct signal_struct init_signals = INIT_SIGNALS(init_signals);
+static struct sighand_struct init_sighand = INIT_SIGHAND(init_sighand);
 /*
  * Initial thread structure.
  *
@@ -45,16 +45,16 @@ static struct sighand_struct init_sighand = INIT_SIGHAND (init_sighand);
  * "init_task" linker map entry..
  */
 union thread_union init_thread_union __init_task_data =
-{ INIT_THREAD_INFO (init_task) };
+	{ INIT_THREAD_INFO(init_task) };
 
 /*
  * Initial task structure.
  *
  * All other task structs will be allocated on slabs in fork.c
  */
-struct task_struct init_task = INIT_TASK (init_task);
+struct task_struct init_task = INIT_TASK(init_task);
 
-EXPORT_SYMBOL (init_task);
+EXPORT_SYMBOL(init_task);
 
 /*
  * The hlt_counter, disable_hlt and enable_hlt is just here as a hook if
@@ -65,31 +65,31 @@ EXPORT_SYMBOL (init_task);
  * region by enable_hlt/disable_hlt.
  */
 
-int cris_hlt_counter = 0;
+int cris_hlt_counter=0;
 
-void disable_hlt (void)
+void disable_hlt(void)
 {
-  cris_hlt_counter++;
+	cris_hlt_counter++;
 }
 
-EXPORT_SYMBOL (disable_hlt);
+EXPORT_SYMBOL(disable_hlt);
 
-void enable_hlt (void)
+void enable_hlt(void)
 {
-  cris_hlt_counter--;
+	cris_hlt_counter--;
 }
 
-EXPORT_SYMBOL (enable_hlt);
-
+EXPORT_SYMBOL(enable_hlt);
+ 
 /*
  * The following aren't currently used.
  */
-void (*pm_idle) (void);
+void (*pm_idle)(void);
 
-extern void default_idle (void);
+extern void default_idle(void);
 
-void (*pm_power_off) (void);
-EXPORT_SYMBOL (pm_power_off);
+void (*pm_power_off)(void);
+EXPORT_SYMBOL(pm_power_off);
 
 /*
  * The idle thread. There's no useful work to be
@@ -100,31 +100,31 @@ EXPORT_SYMBOL (pm_power_off);
 
 void cpu_idle (void)
 {
-  /* endless idle loop with no priority at all */
-  while (1) {
-    rcu_idle_enter();
-    while (!need_resched() ) {
-      void (*idle) (void);
-      /*
-       * Mark this as an RCU critical section so that
-       * synchronize_kernel() in the unload path waits
-       * for our completion.
-       */
-      idle = pm_idle;
-      if (!idle)
-      { idle = default_idle; }
-      idle();
-    }
-    rcu_idle_exit();
-    schedule_preempt_disabled();
-  }
+	/* endless idle loop with no priority at all */
+	while (1) {
+		rcu_idle_enter();
+		while (!need_resched()) {
+			void (*idle)(void);
+			/*
+			 * Mark this as an RCU critical section so that
+			 * synchronize_kernel() in the unload path waits
+			 * for our completion.
+			 */
+			idle = pm_idle;
+			if (!idle)
+				idle = default_idle;
+			idle();
+		}
+		rcu_idle_exit();
+		schedule_preempt_disabled();
+	}
 }
 
 void hard_reset_now (void);
 
-void machine_restart (char * cmd)
+void machine_restart(char *cmd)
 {
-  hard_reset_now();
+	hard_reset_now();
 }
 
 /*
@@ -133,13 +133,13 @@ void machine_restart (char * cmd)
  * possible.  This halt has nothing to do with the idle halt.
  */
 
-void machine_halt (void)
+void machine_halt(void)
 {
 }
 
 /* If or when software power-off is implemented, add code here.  */
 
-void machine_power_off (void)
+void machine_power_off(void)
 {
 }
 
@@ -149,12 +149,12 @@ void machine_power_off (void)
  * Currently we don't have any such state to reset, so this is empty.
  */
 
-void flush_thread (void)
+void flush_thread(void)
 {
 }
 
 /* Fill in the fpu structure for a core dump. */
-int dump_fpu (struct pt_regs * regs, elf_fpregset_t * fpu)
+int dump_fpu(struct pt_regs *regs, elf_fpregset_t *fpu)
 {
-  return 0;
+        return 0;
 }

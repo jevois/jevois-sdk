@@ -23,13 +23,13 @@ struct kern_ipc_perm;
 /**
  * selinux_is_enabled - is SELinux enabled?
  */
-bool selinux_is_enabled (void);
+bool selinux_is_enabled(void);
 #else
 
-static inline bool selinux_is_enabled (void)
+static inline bool selinux_is_enabled(void)
 {
-  return false;
+	return false;
 }
-#endif  /* CONFIG_SECURITY_SELINUX */
+#endif	/* CONFIG_SECURITY_SELINUX */
 
 #endif /* _LINUX_SELINUX_H */

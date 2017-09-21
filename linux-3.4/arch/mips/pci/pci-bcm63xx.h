@@ -11,7 +11,7 @@
  * reserved for it.  If you have a standard PCI device at this id, you
  * need to change the following definition.
  */
-#define CARDBUS_PCI_IDSEL 0x8
+#define CARDBUS_PCI_IDSEL	0x8
 
 /*
  * defined in ops-bcm63xx.c
@@ -22,6 +22,6 @@ extern struct pci_ops bcm63xx_cb_ops;
 /*
  * defined in pci-bcm63xx.c
  */
-extern void __iomem * pci_iospace_start;
+extern void __iomem *pci_iospace_start;
 
 #endif /* ! PCI_BCM63XX_H_ */

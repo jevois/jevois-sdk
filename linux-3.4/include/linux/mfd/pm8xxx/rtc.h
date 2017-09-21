@@ -19,7 +19,7 @@
  * @rtc_write_enable: variable stating RTC write capability
  */
 struct pm8xxx_rtc_platform_data {
-  bool rtc_write_enable;
+	bool rtc_write_enable;
 };
 
 #endif /* __RTC_PM8XXX_H__ */

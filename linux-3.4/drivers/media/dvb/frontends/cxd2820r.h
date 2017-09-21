@@ -37,56 +37,56 @@
 #define CXD2820R_TS_PARALLEL_MSB  0x70
 
 struct cxd2820r_config {
-  /* Demodulator I2C address.
-   * Driver determines DVB-C slave I2C address automatically from master
-   * address.
-   * Default: none, must set
-   * Values: 0x6c, 0x6d
-   */
-  u8 i2c_address;
-  
-  /* TS output mode.
-   * Default: none, must set.
-   * Values:
-   */
-  u8 ts_mode;
-  
-  /* IF AGC polarity.
-   * Default: 0
-   * Values: 0, 1
-   */
-  bool if_agc_polarity;
-  
-  /* Spectrum inversion.
-   * Default: 0
-   * Values: 0, 1
-   */
-  bool spec_inv;
-  
-  /* GPIOs for all used modes.
-   * Default: none, disabled
-   * Values: <see above>
-   */
-  u8 gpio_dvbt[3];
-  u8 gpio_dvbt2[3];
-  u8 gpio_dvbc[3];
+	/* Demodulator I2C address.
+	 * Driver determines DVB-C slave I2C address automatically from master
+	 * address.
+	 * Default: none, must set
+	 * Values: 0x6c, 0x6d
+	 */
+	u8 i2c_address;
+
+	/* TS output mode.
+	 * Default: none, must set.
+	 * Values:
+	 */
+	u8 ts_mode;
+
+	/* IF AGC polarity.
+	 * Default: 0
+	 * Values: 0, 1
+	 */
+	bool if_agc_polarity;
+
+	/* Spectrum inversion.
+	 * Default: 0
+	 * Values: 0, 1
+	 */
+	bool spec_inv;
+
+	/* GPIOs for all used modes.
+	 * Default: none, disabled
+	 * Values: <see above>
+	 */
+	u8 gpio_dvbt[3];
+	u8 gpio_dvbt2[3];
+	u8 gpio_dvbc[3];
 };
 
 
 #if defined(CONFIG_DVB_CXD2820R) || \
-(defined(CONFIG_DVB_CXD2820R_MODULE) && defined(MODULE))
-extern struct dvb_frontend * cxd2820r_attach (
-  const struct cxd2820r_config * config,
-  struct i2c_adapter * i2c
+	(defined(CONFIG_DVB_CXD2820R_MODULE) && defined(MODULE))
+extern struct dvb_frontend *cxd2820r_attach(
+	const struct cxd2820r_config *config,
+	struct i2c_adapter *i2c
 );
 #else
-static inline struct dvb_frontend * cxd2820r_attach (
-  const struct cxd2820r_config * config,
-  struct i2c_adapter * i2c
+static inline struct dvb_frontend *cxd2820r_attach(
+	const struct cxd2820r_config *config,
+	struct i2c_adapter *i2c
 )
 {
-  printk (KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
-  return NULL;
+	printk(KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
+	return NULL;
 }
 
 #endif

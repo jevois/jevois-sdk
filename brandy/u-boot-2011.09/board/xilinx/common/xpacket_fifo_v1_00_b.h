@@ -73,8 +73,8 @@
 * </pre>
 *
 *****************************************************************************/
-#ifndef XPACKET_FIFO_H    /* prevent circular inclusions */
-#define XPACKET_FIFO_H    /* by using protection macros */
+#ifndef XPACKET_FIFO_H		/* prevent circular inclusions */
+#define XPACKET_FIFO_H		/* by using protection macros */
 
 /***************************** Include Files *********************************/
 
@@ -86,8 +86,8 @@
 /*
  * These constants specify the FIFO type and are mutually exclusive
  */
-#define XPF_READ_FIFO_TYPE      0 /* a read FIFO */
-#define XPF_WRITE_FIFO_TYPE     1 /* a write FIFO */
+#define XPF_READ_FIFO_TYPE      0	/* a read FIFO */
+#define XPF_WRITE_FIFO_TYPE     1	/* a write FIFO */
 
 /*
  * These constants define the offsets to each of the registers from the
@@ -118,9 +118,9 @@
  * variable of this type for every packet FIFO in the device.
  */
 typedef struct {
-  u32 RegBaseAddress; /* Base address of registers */
-  u32 IsReady;    /* Device is initialized and ready */
-  u32 DataBaseAddress;  /* Base address of data for FIFOs */
+	u32 RegBaseAddress;	/* Base address of registers */
+	u32 IsReady;		/* Device is initialized and ready */
+	u32 DataBaseAddress;	/* Base address of data for FIFOs */
 } XPacketFifoV100b;
 
 /***************** Macros (Inline Functions) Definitions *********************/
@@ -143,7 +143,7 @@ typedef struct {
 *
 ******************************************************************************/
 #define XPF_V100B_RESET(InstancePtr) \
-  XIo_Out32((InstancePtr)->RegBaseAddress + XPF_RESET_REG_OFFSET, XPF_RESET_FIFO_MASK);
+    XIo_Out32((InstancePtr)->RegBaseAddress + XPF_RESET_REG_OFFSET, XPF_RESET_FIFO_MASK);
 
 /*****************************************************************************/
 /*
@@ -165,8 +165,8 @@ typedef struct {
 *
 ******************************************************************************/
 #define XPF_V100B_GET_COUNT(InstancePtr) \
-  (XIo_In32((InstancePtr)->RegBaseAddress + XPF_COUNT_STATUS_REG_OFFSET) & \
-   XPF_COUNT_MASK)
+    (XIo_In32((InstancePtr)->RegBaseAddress + XPF_COUNT_STATUS_REG_OFFSET) & \
+    XPF_COUNT_MASK)
 
 /*****************************************************************************/
 /*
@@ -186,8 +186,8 @@ typedef struct {
 *
 ******************************************************************************/
 #define XPF_V100B_IS_ALMOST_EMPTY(InstancePtr) \
-  (XIo_In32((InstancePtr)->RegBaseAddress + XPF_COUNT_STATUS_REG_OFFSET) & \
-   XPF_ALMOST_EMPTY_FULL_MASK)
+    (XIo_In32((InstancePtr)->RegBaseAddress + XPF_COUNT_STATUS_REG_OFFSET) & \
+    XPF_ALMOST_EMPTY_FULL_MASK)
 
 /*****************************************************************************/
 /*
@@ -208,8 +208,8 @@ typedef struct {
 *
 ******************************************************************************/
 #define XPF_V100B_IS_ALMOST_FULL(InstancePtr) \
-  (XIo_In32((InstancePtr)->RegBaseAddress + XPF_COUNT_STATUS_REG_OFFSET) & \
-   XPF_ALMOST_EMPTY_FULL_MASK)
+    (XIo_In32((InstancePtr)->RegBaseAddress + XPF_COUNT_STATUS_REG_OFFSET) & \
+    XPF_ALMOST_EMPTY_FULL_MASK)
 
 /*****************************************************************************/
 /*
@@ -229,8 +229,8 @@ typedef struct {
 *
 ******************************************************************************/
 #define XPF_V100B_IS_EMPTY(InstancePtr) \
-  (XIo_In32((InstancePtr)->RegBaseAddress + XPF_COUNT_STATUS_REG_OFFSET) & \
-   XPF_EMPTY_FULL_MASK)
+    (XIo_In32((InstancePtr)->RegBaseAddress + XPF_COUNT_STATUS_REG_OFFSET) & \
+    XPF_EMPTY_FULL_MASK)
 
 /*****************************************************************************/
 /*
@@ -250,8 +250,8 @@ typedef struct {
 *
 ******************************************************************************/
 #define XPF_V100B_IS_FULL(InstancePtr) \
-  (XIo_In32((InstancePtr)->RegBaseAddress + XPF_COUNT_STATUS_REG_OFFSET) & \
-   XPF_EMPTY_FULL_MASK)
+    (XIo_In32((InstancePtr)->RegBaseAddress + XPF_COUNT_STATUS_REG_OFFSET) & \
+    XPF_EMPTY_FULL_MASK)
 
 /*****************************************************************************/
 /*
@@ -285,22 +285,22 @@ typedef struct {
 *
 ******************************************************************************/
 #define XPF_V100B_IS_DEADLOCKED(InstancePtr) \
-  (XIo_In32((InstancePtr)->RegBaseAddress + XPF_COUNT_STATUS_REG_OFFSET) & \
-   XPF_DEADLOCK_MASK)
+    (XIo_In32((InstancePtr)->RegBaseAddress + XPF_COUNT_STATUS_REG_OFFSET) & \
+    XPF_DEADLOCK_MASK)
 
 /************************** Function Prototypes ******************************/
 
 /* Standard functions */
 
-XStatus XPacketFifoV100b_Initialize (XPacketFifoV100b * InstancePtr,
-                                     u32 RegBaseAddress, u32 DataBaseAddress);
-XStatus XPacketFifoV100b_SelfTest (XPacketFifoV100b * InstancePtr, u32 FifoType);
+XStatus XPacketFifoV100b_Initialize(XPacketFifoV100b * InstancePtr,
+				    u32 RegBaseAddress, u32 DataBaseAddress);
+XStatus XPacketFifoV100b_SelfTest(XPacketFifoV100b * InstancePtr, u32 FifoType);
 
 /* Data functions */
 
-XStatus XPacketFifoV100b_Read (XPacketFifoV100b * InstancePtr,
-                               u8 * ReadBufferPtr, u32 ByteCount);
-XStatus XPacketFifoV100b_Write (XPacketFifoV100b * InstancePtr,
-                                u8 * WriteBufferPtr, u32 ByteCount);
+XStatus XPacketFifoV100b_Read(XPacketFifoV100b * InstancePtr,
+			      u8 * ReadBufferPtr, u32 ByteCount);
+XStatus XPacketFifoV100b_Write(XPacketFifoV100b * InstancePtr,
+			       u8 * WriteBufferPtr, u32 ByteCount);
 
-#endif        /* end of protection macro */
+#endif				/* end of protection macro */

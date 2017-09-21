@@ -24,7 +24,7 @@
  * to override it.
  */
 #ifndef gpio_to_irq
-#define gpio_to_irq __gpio_to_irq
+#define gpio_to_irq	__gpio_to_irq
 #endif
 
 #endif /* _ARCH_ARM_GPIO_H */

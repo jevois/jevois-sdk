@@ -1,6 +1,6 @@
 /**-
  * Copyright (c) 1988, 1993
- *  The Regents of the University of California.  All rights reserved.
+ *	The Regents of the University of California.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,16 +26,16 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  *
- *  @(#)limits.h  8.2 (Berkeley) 1/4/94
+ *	@(#)limits.h	8.2 (Berkeley) 1/4/94
  * $FreeBSD$
  */
 
 #ifndef _LIMITS_H_
-#define _LIMITS_H_
+#define	_LIMITS_H_
 
 
 #ifndef LONG_MAX
-#define LONG_MAX  (0x7ffffffffL)
+#define LONG_MAX	(0x7ffffffffL)
 #endif
 
 #ifndef ULONG_MAX

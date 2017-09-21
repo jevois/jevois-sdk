@@ -38,47 +38,47 @@ DECLARE_GLOBAL_DATA_PTR;
  * Routine: board_init
  * Description: Early hardware init.
  */
-int board_init (void)
+int board_init(void)
 {
-  gpmc_init(); /* in SRAM or SDRAM, finish GPMC */
-  /* board id for Linux */
-  gd->bd->bi_arch_number = MACH_TYPE_CRANEBOARD;
-  /* boot param addr */
-  gd->bd->bi_boot_params = (OMAP34XX_SDRC_CS0 + 0x100);
-  
-  return 0;
+	gpmc_init(); /* in SRAM or SDRAM, finish GPMC */
+	/* board id for Linux */
+	gd->bd->bi_arch_number = MACH_TYPE_CRANEBOARD;
+	/* boot param addr */
+	gd->bd->bi_boot_params = (OMAP34XX_SDRC_CS0 + 0x100);
+
+	return 0;
 }
 
 /*
  * Routine: misc_init_r
  * Description: Init i2c, ethernet, etc... (done here so udelay works)
  */
-int misc_init_r (void)
+int misc_init_r(void)
 {
-  #ifdef CONFIG_DRIVER_OMAP34XX_I2C
-  i2c_init (CONFIG_SYS_I2C_SPEED, CONFIG_SYS_I2C_SLAVE);
-  #endif
-  
-  dieid_num_r();
-  
-  return 0;
+#ifdef CONFIG_DRIVER_OMAP34XX_I2C
+	i2c_init(CONFIG_SYS_I2C_SPEED, CONFIG_SYS_I2C_SLAVE);
+#endif
+
+	dieid_num_r();
+
+	return 0;
 }
 
 /*
  * Routine: set_muxconf_regs
  * Description: Setting up the configuration Mux registers specific to the
- *    hardware. Many pins need to be moved from protect to primary
- *    mode.
+ *		hardware. Many pins need to be moved from protect to primary
+ *		mode.
  */
-void set_muxconf_regs (void)
+void set_muxconf_regs(void)
 {
-  MUX_AM3517CRANE();
+	MUX_AM3517CRANE();
 }
 
 #ifdef CONFIG_GENERIC_MMC
-int board_mmc_init (bd_t * bis)
+int board_mmc_init(bd_t *bis)
 {
-  omap_mmc_init (0);
-  return 0;
+	omap_mmc_init(0);
+	return 0;
 }
 #endif

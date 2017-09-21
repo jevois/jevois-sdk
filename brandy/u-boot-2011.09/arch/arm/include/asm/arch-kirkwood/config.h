@@ -39,11 +39,11 @@
 #error "SOC Name not defined"
 #endif /* CONFIG_KW88F6281 */
 
-#define CONFIG_ARM926EJS  1 /* Basic Architecture */
+#define CONFIG_ARM926EJS	1	/* Basic Architecture */
 
-#define CONFIG_MD5  /* get_random_hex on krikwood needs MD5 support */
-#define CONFIG_KIRKWOOD_EGIGA_INIT  /* Enable GbePort0/1 for kernel */
-#define CONFIG_KIRKWOOD_RGMII_PAD_1V8 /* Set RGMII Pad voltage to 1.8V */
+#define CONFIG_MD5	/* get_random_hex on krikwood needs MD5 support */
+#define CONFIG_KIRKWOOD_EGIGA_INIT	/* Enable GbePort0/1 for kernel */
+#define CONFIG_KIRKWOOD_RGMII_PAD_1V8	/* Set RGMII Pad voltage to 1.8V */
 #define CONFIG_KIRKWOOD_PCIE_INIT       /* Enable PCIE Port0 for kernel */
 
 /*
@@ -52,37 +52,37 @@
  * CONFIG_SYS_KWD_CONFIG should be defined in board specific header file
  */
 #ifndef CONFIG_SYS_KWD_CONFIG
-#define CONFIG_SYS_KWD_CONFIG $(SRCTREE)/$(CONFIG_BOARDDIR)/kwbimage.cfg
+#define	CONFIG_SYS_KWD_CONFIG	$(SRCTREE)/$(CONFIG_BOARDDIR)/kwbimage.cfg
 #endif /* CONFIG_SYS_KWD_CONFIG */
 
 /* Kirkwood has 2k of Security SRAM, use it for SP */
-#define CONFIG_SYS_INIT_SP_ADDR   0xC8012000
-#define CONFIG_NR_DRAM_BANKS_MAX  2
+#define CONFIG_SYS_INIT_SP_ADDR		0xC8012000
+#define CONFIG_NR_DRAM_BANKS_MAX	2
 
-#define CONFIG_I2C_MVTWSI_BASE  KW_TWSI_BASE
-#define MV_UART_CONSOLE_BASE  KW_UART0_BASE
-#define MV_SATA_BASE    KW_SATA_BASE
-#define MV_SATA_PORT0_OFFSET  KW_SATA_PORT0_OFFSET
-#define MV_SATA_PORT1_OFFSET  KW_SATA_PORT1_OFFSET
+#define CONFIG_I2C_MVTWSI_BASE	KW_TWSI_BASE
+#define MV_UART_CONSOLE_BASE	KW_UART0_BASE
+#define MV_SATA_BASE		KW_SATA_BASE
+#define MV_SATA_PORT0_OFFSET	KW_SATA_PORT0_OFFSET
+#define MV_SATA_PORT1_OFFSET	KW_SATA_PORT1_OFFSET
 
 /*
  * NAND configuration
  */
 #ifdef CONFIG_CMD_NAND
 #define CONFIG_NAND_KIRKWOOD
-#define CONFIG_SYS_NAND_BASE    0xD8000000  /* MV_DEFADR_NANDF */
-#define NAND_ALLOW_ERASE_ALL    1
+#define CONFIG_SYS_NAND_BASE		0xD8000000	/* MV_DEFADR_NANDF */
+#define NAND_ALLOW_ERASE_ALL		1
 #endif
 
 /*
  * SPI Flash configuration
  */
 #ifdef CONFIG_CMD_SF
-#define CONFIG_HARD_SPI     1
-#define CONFIG_KIRKWOOD_SPI   1
-#define CONFIG_ENV_SPI_BUS    0
-#define CONFIG_ENV_SPI_CS   0
-#define CONFIG_ENV_SPI_MAX_HZ   50000000  /*50Mhz */
+#define CONFIG_HARD_SPI			1
+#define CONFIG_KIRKWOOD_SPI		1
+#define CONFIG_ENV_SPI_BUS		0
+#define CONFIG_ENV_SPI_CS		0
+#define CONFIG_ENV_SPI_MAX_HZ		50000000	/*50Mhz */
 #endif
 
 /*
@@ -90,13 +90,13 @@
  */
 #ifdef CONFIG_CMD_NET
 #define CONFIG_CMD_MII
-#define CONFIG_NETCONSOLE /* include NetConsole support   */
-#define CONFIG_NET_MULTI  /* specify more that one ports available */
-#define CONFIG_MII    /* expose smi ove miiphy interface */
-#define CONFIG_MVGBE    /* Enable Marvell Gbe Controller Driver */
-#define CONFIG_SYS_FAULT_ECHO_LINK_DOWN /* detect link using phy */
-#define CONFIG_ENV_OVERWRITE  /* ethaddr can be reprogrammed */
-#define CONFIG_RESET_PHY_R  /* use reset_phy() to init mv8831116 PHY */
+#define CONFIG_NETCONSOLE	/* include NetConsole support   */
+#define CONFIG_NET_MULTI	/* specify more that one ports available */
+#define CONFIG_MII		/* expose smi ove miiphy interface */
+#define CONFIG_MVGBE		/* Enable Marvell Gbe Controller Driver */
+#define CONFIG_SYS_FAULT_ECHO_LINK_DOWN	/* detect link using phy */
+#define CONFIG_ENV_OVERWRITE	/* ethaddr can be reprogrammed */
+#define CONFIG_RESET_PHY_R	/* use reset_phy() to init mv8831116 PHY */
 #endif /* CONFIG_CMD_NET */
 
 /*
@@ -119,18 +119,18 @@
 /* Needs byte-swapping for ATA data register */
 #define CONFIG_IDE_SWAP_IO
 /* Data, registers and alternate blocks are at the same offset */
-#define CONFIG_SYS_ATA_DATA_OFFSET  (0x0100)
-#define CONFIG_SYS_ATA_REG_OFFSET (0x0100)
-#define CONFIG_SYS_ATA_ALT_OFFSET (0x0100)
+#define CONFIG_SYS_ATA_DATA_OFFSET	(0x0100)
+#define CONFIG_SYS_ATA_REG_OFFSET	(0x0100)
+#define CONFIG_SYS_ATA_ALT_OFFSET	(0x0100)
 /* Each 8-bit ATA register is aligned to a 4-bytes address */
-#define CONFIG_SYS_ATA_STRIDE   4
+#define CONFIG_SYS_ATA_STRIDE		4
 /* Controller supports 48-bits LBA addressing */
 #define CONFIG_LBA48
 /* CONFIG_CMD_IDE requires some #defines for ATA registers */
-#define CONFIG_SYS_IDE_MAXBUS   2
-#define CONFIG_SYS_IDE_MAXDEVICE  2
+#define CONFIG_SYS_IDE_MAXBUS		2
+#define CONFIG_SYS_IDE_MAXDEVICE	2
 /* ATA registers base is at SATA controller base */
-#define CONFIG_SYS_ATA_BASE_ADDR  MV_SATA_BASE
+#define CONFIG_SYS_ATA_BASE_ADDR	MV_SATA_BASE
 #endif /* CONFIG_CMD_IDE */
 
 /*
@@ -140,8 +140,8 @@
 #ifndef CONFIG_SOFT_I2C
 #define CONFIG_I2C_MVTWSI
 #endif
-#define CONFIG_SYS_I2C_SLAVE    0x0
-#define CONFIG_SYS_I2C_SPEED    100000
+#define CONFIG_SYS_I2C_SLAVE		0x0
+#define CONFIG_SYS_I2C_SPEED		100000
 #endif
 
 #endif /* _KW_CONFIG_H */

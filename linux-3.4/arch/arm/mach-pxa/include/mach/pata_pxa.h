@@ -18,16 +18,16 @@
  *  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-#ifndef __MACH_PATA_PXA_H__
-#define __MACH_PATA_PXA_H__
+#ifndef	__MACH_PATA_PXA_H__
+#define	__MACH_PATA_PXA_H__
 
 struct pata_pxa_pdata {
-  /* PXA DMA DREQ<0:2> pin */
-  uint32_t  dma_dreq;
-  /* Register shift */
-  uint32_t  reg_shift;
-  /* IRQ flags */
-  uint32_t  irq_flags;
+	/* PXA DMA DREQ<0:2> pin */
+	uint32_t	dma_dreq;
+	/* Register shift */
+	uint32_t	reg_shift;
+	/* IRQ flags */
+	uint32_t	irq_flags;
 };
 
-#endif  /* __MACH_PATA_PXA_H__ */
+#endif	/* __MACH_PATA_PXA_H__ */

@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -79,9 +79,9 @@
 #define  AW_IRQ_LCD0             44
 #define  AW_IRQ_LCD1             45
 #define  AW_IRQ_MP               46
-#define  AW_IRQ_DEBE0     47
+#define  AW_IRQ_DEBE0			47
 #define  AW_IRQ_DEFE0           47
-#define  AW_IRQ_DEBE1     48
+#define  AW_IRQ_DEBE1			48
 #define  AW_IRQ_DEFE1           48
 #define  AW_IRQ_PMU              49
 
@@ -162,10 +162,10 @@
 #define  INTC_REG_PRIO4            ( SUNXI_INTC_BASE + 0x90)
 
 
-extern void irq_install_handler (int irq, interrupt_handler_t handle_irq, void * data);
-extern void irq_free_handler (int irq);
-extern int irq_enable (int irq_no);
-extern int irq_disable (int irq_no);
+extern void irq_install_handler (int irq, interrupt_handler_t handle_irq, void *data);
+extern void irq_free_handler(int irq);
+extern int irq_enable(int irq_no);
+extern int irq_disable(int irq_no);
 
 int arch_interrupt_init (void);
 

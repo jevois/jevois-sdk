@@ -13,11 +13,11 @@
 #define BF_MAX_KEY_SIZE 56
 
 struct bf_ctx {
-  u32 p[18];
-  u32 s[1024];
+	u32 p[18];
+	u32 s[1024];
 };
 
-int blowfish_setkey (struct crypto_tfm * tfm, const u8 * key,
-                     unsigned int key_len);
+int blowfish_setkey(struct crypto_tfm *tfm, const u8 *key,
+		    unsigned int key_len);
 
 #endif

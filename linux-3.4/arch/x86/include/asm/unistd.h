@@ -2,7 +2,7 @@
 #define _ASM_X86_UNISTD_H 1
 
 /* x32 syscall flag bit */
-#define __X32_SYSCALL_BIT 0x40000000
+#define __X32_SYSCALL_BIT	0x40000000
 
 #ifdef __KERNEL__
 

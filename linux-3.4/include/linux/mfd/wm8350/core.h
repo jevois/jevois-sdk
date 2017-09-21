@@ -30,7 +30,7 @@
  */
 #define WM8350_RESET_ID                         0x00
 #define WM8350_ID                               0x01
-#define WM8350_REVISION       0x02
+#define WM8350_REVISION				0x02
 #define WM8350_SYSTEM_CONTROL_1                 0x03
 #define WM8350_SYSTEM_CONTROL_2                 0x04
 #define WM8350_SYSTEM_HIBERNATE                 0x05
@@ -59,10 +59,10 @@
 #define WM8350_OVER_CURRENT_INT_STATUS_MASK     0x25
 #define WM8350_GPIO_INT_STATUS_MASK             0x26
 #define WM8350_COMPARATOR_INT_STATUS_MASK       0x27
-#define WM8350_CHARGER_OVERRIDES    0xE2
-#define WM8350_MISC_OVERRIDES     0xE3
-#define WM8350_COMPARATOR_OVERRIDES   0xE7
-#define WM8350_STATE_MACHINE_STATUS   0xE9
+#define WM8350_CHARGER_OVERRIDES		0xE2
+#define WM8350_MISC_OVERRIDES			0xE3
+#define WM8350_COMPARATOR_OVERRIDES		0xE7
+#define WM8350_STATE_MACHINE_STATUS		0xE9
 
 #define WM8350_MAX_REGISTER                     0xFF
 
@@ -85,7 +85,7 @@
 /*
  * R2 (0x02) - Revision
  */
-#define WM8350_MASK_REV_MASK      0x00FF
+#define WM8350_MASK_REV_MASK			0x00FF
 
 /*
  * R3 (0x03) - System Control 1
@@ -537,55 +537,55 @@
 /*
  * R226 (0xE2) - Charger status
  */
-#define WM8350_CHG_BATT_HOT_OVRDE   0x8000
-#define WM8350_CHG_BATT_COLD_OVRDE    0x4000
+#define WM8350_CHG_BATT_HOT_OVRDE		0x8000
+#define WM8350_CHG_BATT_COLD_OVRDE		0x4000
 
 /*
  * R227 (0xE3) - Misc Overrides
  */
-#define WM8350_USB_LIMIT_OVRDE      0x0400
+#define WM8350_USB_LIMIT_OVRDE			0x0400
 
 /*
  * R227 (0xE7) - Comparator Overrides
  */
-#define WM8350_USB_FB_OVRDE     0x8000
-#define WM8350_WALL_FB_OVRDE      0x4000
-#define WM8350_BATT_FB_OVRDE      0x2000
+#define WM8350_USB_FB_OVRDE			0x8000
+#define WM8350_WALL_FB_OVRDE			0x4000
+#define WM8350_BATT_FB_OVRDE			0x2000
 
 
 /*
  * R233 (0xE9) - State Machinine Status
  */
-#define WM8350_USB_SM_MASK      0x0700
-#define WM8350_USB_SM_SHIFT     8
+#define WM8350_USB_SM_MASK			0x0700
+#define WM8350_USB_SM_SHIFT			8
 
 #define WM8350_USB_SM_100_SLV   1
 #define WM8350_USB_SM_500_SLV   5
 #define WM8350_USB_SM_STDBY_SLV 7
 
 /* WM8350 wake up conditions */
-#define WM8350_IRQ_WKUP_OFF_STATE   43
-#define WM8350_IRQ_WKUP_HIB_STATE   44
-#define WM8350_IRQ_WKUP_CONV_FAULT    45
-#define WM8350_IRQ_WKUP_WDOG_RST    46
-#define WM8350_IRQ_WKUP_GP_PWR_ON   47
-#define WM8350_IRQ_WKUP_ONKEY     48
-#define WM8350_IRQ_WKUP_GP_WAKEUP   49
+#define WM8350_IRQ_WKUP_OFF_STATE		43
+#define WM8350_IRQ_WKUP_HIB_STATE		44
+#define WM8350_IRQ_WKUP_CONV_FAULT		45
+#define WM8350_IRQ_WKUP_WDOG_RST		46
+#define WM8350_IRQ_WKUP_GP_PWR_ON		47
+#define WM8350_IRQ_WKUP_ONKEY			48
+#define WM8350_IRQ_WKUP_GP_WAKEUP		49
 
 /* wm8350 chip revisions */
-#define WM8350_REV_E        0x4
-#define WM8350_REV_F        0x5
-#define WM8350_REV_G        0x6
-#define WM8350_REV_H        0x7
+#define WM8350_REV_E				0x4
+#define WM8350_REV_F				0x5
+#define WM8350_REV_G				0x6
+#define WM8350_REV_H				0x7
 
-#define WM8350_NUM_IRQ        63
+#define WM8350_NUM_IRQ				63
 
 #define WM8350_NUM_IRQ_REGS 7
 
 struct wm8350_reg_access {
-  u16 readable;   /* Mask of readable bits */
-  u16 writable;   /* Mask of writable bits */
-  u16 vol;    /* Mask of volatile bits */
+	u16 readable;		/* Mask of readable bits */
+	u16 writable;		/* Mask of writable bits */
+	u16 vol;		/* Mask of volatile bits */
 };
 extern const struct wm8350_reg_access wm8350_reg_io_map[];
 extern const u16 wm8350_mode0_defaults[];
@@ -604,40 +604,40 @@ extern const u16 wm8352_mode3_defaults[];
 struct wm8350;
 
 struct wm8350_hwmon {
-  struct platform_device * pdev;
-  struct device * classdev;
+	struct platform_device *pdev;
+	struct device *classdev;
 };
 
 struct wm8350 {
-  struct device * dev;
-  
-  /* device IO */
-  union {
-    struct i2c_client * i2c_client;
-    struct spi_device * spi_device;
-  };
-  int (*read_dev) (struct wm8350 * wm8350, char reg, int size, void * dest);
-  int (*write_dev) (struct wm8350 * wm8350, char reg, int size,
-                    void * src);
-  u16 * reg_cache;
-  
-  struct mutex auxadc_mutex;
-  struct completion auxadc_done;
-  
-  /* Interrupt handling */
-  struct mutex irq_lock;
-  int chip_irq;
-  int irq_base;
-  u16 irq_masks[WM8350_NUM_IRQ_REGS];
-  
-  /* Client devices */
-  struct wm8350_codec codec;
-  struct wm8350_gpio gpio;
-  struct wm8350_hwmon hwmon;
-  struct wm8350_pmic pmic;
-  struct wm8350_power power;
-  struct wm8350_rtc rtc;
-  struct wm8350_wdt wdt;
+	struct device *dev;
+
+	/* device IO */
+	union {
+		struct i2c_client *i2c_client;
+		struct spi_device *spi_device;
+	};
+	int (*read_dev)(struct wm8350 *wm8350, char reg, int size, void *dest);
+	int (*write_dev)(struct wm8350 *wm8350, char reg, int size,
+			 void *src);
+	u16 *reg_cache;
+
+	struct mutex auxadc_mutex;
+	struct completion auxadc_done;
+
+	/* Interrupt handling */
+	struct mutex irq_lock;
+	int chip_irq;
+	int irq_base;
+	u16 irq_masks[WM8350_NUM_IRQ_REGS];
+
+	/* Client devices */
+	struct wm8350_codec codec;
+	struct wm8350_gpio gpio;
+	struct wm8350_hwmon hwmon;
+	struct wm8350_pmic pmic;
+	struct wm8350_power power;
+	struct wm8350_rtc rtc;
+	struct wm8350_wdt wdt;
 };
 
 /**
@@ -650,64 +650,64 @@ struct wm8350 {
  * @gpio_base: Base for gpiolib.
  */
 struct wm8350_platform_data {
-  int (*init) (struct wm8350 * wm8350);
-  int irq_high;
-  int irq_base;
-  int gpio_base;
+	int (*init)(struct wm8350 *wm8350);
+	int irq_high;
+	int irq_base;
+	int gpio_base;
 };
 
 
 /*
  * WM8350 device initialisation and exit.
  */
-int wm8350_device_init (struct wm8350 * wm8350, int irq,
-                        struct wm8350_platform_data * pdata);
-void wm8350_device_exit (struct wm8350 * wm8350);
+int wm8350_device_init(struct wm8350 *wm8350, int irq,
+		       struct wm8350_platform_data *pdata);
+void wm8350_device_exit(struct wm8350 *wm8350);
 
 /*
  * WM8350 device IO
  */
-int wm8350_clear_bits (struct wm8350 * wm8350, u16 reg, u16 mask);
-int wm8350_set_bits (struct wm8350 * wm8350, u16 reg, u16 mask);
-u16 wm8350_reg_read (struct wm8350 * wm8350, int reg);
-int wm8350_reg_write (struct wm8350 * wm8350, int reg, u16 val);
-int wm8350_reg_lock (struct wm8350 * wm8350);
-int wm8350_reg_unlock (struct wm8350 * wm8350);
-int wm8350_block_read (struct wm8350 * wm8350, int reg, int size, u16 * dest);
-int wm8350_block_write (struct wm8350 * wm8350, int reg, int size, u16 * src);
+int wm8350_clear_bits(struct wm8350 *wm8350, u16 reg, u16 mask);
+int wm8350_set_bits(struct wm8350 *wm8350, u16 reg, u16 mask);
+u16 wm8350_reg_read(struct wm8350 *wm8350, int reg);
+int wm8350_reg_write(struct wm8350 *wm8350, int reg, u16 val);
+int wm8350_reg_lock(struct wm8350 *wm8350);
+int wm8350_reg_unlock(struct wm8350 *wm8350);
+int wm8350_block_read(struct wm8350 *wm8350, int reg, int size, u16 *dest);
+int wm8350_block_write(struct wm8350 *wm8350, int reg, int size, u16 *src);
 
 /*
  * WM8350 internal interrupts
  */
-static inline int wm8350_register_irq (struct wm8350 * wm8350, int irq,
-                                       irq_handler_t handler,
-                                       unsigned long flags,
-                                       const char * name, void * data)
+static inline int wm8350_register_irq(struct wm8350 *wm8350, int irq,
+				      irq_handler_t handler,
+				      unsigned long flags,
+				      const char *name, void *data)
 {
-  if (!wm8350->irq_base)
-  { return -ENODEV; }
-  
-  return request_threaded_irq (irq + wm8350->irq_base, NULL,
-                               handler, flags, name, data);
+	if (!wm8350->irq_base)
+		return -ENODEV;
+
+	return request_threaded_irq(irq + wm8350->irq_base, NULL,
+				    handler, flags, name, data);
 }
 
-static inline void wm8350_free_irq (struct wm8350 * wm8350, int irq, void * data)
+static inline void wm8350_free_irq(struct wm8350 *wm8350, int irq, void *data)
 {
-  free_irq (irq + wm8350->irq_base, data);
+	free_irq(irq + wm8350->irq_base, data);
 }
 
-static inline void wm8350_mask_irq (struct wm8350 * wm8350, int irq)
+static inline void wm8350_mask_irq(struct wm8350 *wm8350, int irq)
 {
-  disable_irq (irq + wm8350->irq_base);
+	disable_irq(irq + wm8350->irq_base);
 }
 
-static inline void wm8350_unmask_irq (struct wm8350 * wm8350, int irq)
+static inline void wm8350_unmask_irq(struct wm8350 *wm8350, int irq)
 {
-  enable_irq (irq + wm8350->irq_base);
+	enable_irq(irq + wm8350->irq_base);
 }
 
-int wm8350_irq_init (struct wm8350 * wm8350, int irq,
-                     struct wm8350_platform_data * pdata);
-int wm8350_irq_exit (struct wm8350 * wm8350);
+int wm8350_irq_init(struct wm8350 *wm8350, int irq,
+		    struct wm8350_platform_data *pdata);
+int wm8350_irq_exit(struct wm8350 *wm8350);
 
 #endif

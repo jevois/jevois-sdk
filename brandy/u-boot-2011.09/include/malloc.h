@@ -6,8 +6,8 @@
 * VERSION 2.6.6  Sun Mar  5 19:10:03 2000  Doug Lea  (dl at gee)
 
    Note: There may be an updated version of this malloc obtainable at
-     ftp://g.oswego.edu/pub/misc/malloc.c
-   Check before installing!
+	   ftp://g.oswego.edu/pub/misc/malloc.c
+	 Check before installing!
 
 * Why use this malloc?
 
@@ -84,7 +84,7 @@
        and status information.
 
   Minimum allocated size: 4-byte ptrs:  16 bytes    (including 4 overhead)
-        8-byte ptrs:  24/32 bytes (including, 4/8 overhead)
+			  8-byte ptrs:  24/32 bytes (including, 4/8 overhead)
 
        When a chunk is freed, 12 (for 4byte ptrs) or 20 (for 8 byte
        ptrs but 4 byte size) or 24 (for 8/8) additional bytes are
@@ -96,7 +96,7 @@
        pointer to something of the minimum allocatable size.
 
   Maximum allocated size: 4-byte size_t: 2^31 -  8 bytes
-        8-byte size_t: 2^63 - 16 bytes
+			  8-byte size_t: 2^63 - 16 bytes
 
        It is assumed that (possibly signed) size_t bit values suffice to
        represent chunk sizes. `Possibly signed' is due to the fact
@@ -112,11 +112,11 @@
        make the normal worst-case wastage 15 bytes (i.e., up to 15
        more bytes will be allocated than were requested in malloc), with
        two exceptions:
-   1. Because requests for zero bytes allocate non-zero space,
-      the worst case wastage for a request of zero bytes is 24 bytes.
-   2. For requests >= mmap_threshold that are serviced via
-      mmap(), the worst case wastage is 8 bytes plus the remainder
-      from a system page (the minimal mmap unit); typically 4096 bytes.
+	 1. Because requests for zero bytes allocate non-zero space,
+	    the worst case wastage for a request of zero bytes is 24 bytes.
+	 2. For requests >= mmap_threshold that are serviced via
+	    mmap(), the worst case wastage is 8 bytes plus the remainder
+	    from a system page (the minimal mmap unit); typically 4096 bytes.
 
 * Limitations
 
@@ -242,17 +242,17 @@
 #endif /*Void_t*/
 
 #if __STD_C
-#include <linux/stddef.h> /* for size_t */
+#include <linux/stddef.h>	/* for size_t */
 #else
 #include <sys/types.h>
-#endif  /* __STD_C */
+#endif	/* __STD_C */
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#if 0 /* not for U-Boot */
-#include <stdio.h>  /* needed for malloc_stats */
+#if 0	/* not for U-Boot */
+#include <stdio.h>	/* needed for malloc_stats */
 #endif
 
 
@@ -361,15 +361,15 @@ extern "C" {
 #if (__STD_C || defined(HAVE_MEMCPY))
 
 #if __STD_C
-void * memset (void *, int, size_t);
-void * memcpy (void *, const void *, size_t);
+void* memset(void*, int, size_t);
+void* memcpy(void*, const void*, size_t);
 #else
 #ifdef WIN32
 /* On Win32 platforms, 'memset()' and 'memcpy()' are already declared in */
 /* 'windows.h' */
 #else
-Void_t * memset();
-Void_t * memcpy();
+Void_t* memset();
+Void_t* memcpy();
 #endif
 #endif
 #endif
@@ -381,78 +381,78 @@ Void_t * memcpy();
    for fast inline execution when n is small. */
 
 #define MALLOC_ZERO(charp, nbytes)                                            \
-  do {                                                                          \
-    INTERNAL_SIZE_T mzsz = (nbytes);                                            \
-    if(mzsz <= 9*sizeof(mzsz)) {                                                \
-      INTERNAL_SIZE_T* mz = (INTERNAL_SIZE_T*) (charp);                         \
-      if(mzsz >= 5*sizeof(mzsz)) {     *mz++ = 0;                               \
-        *mz++ = 0;                               \
-        if(mzsz >= 7*sizeof(mzsz)) {   *mz++ = 0;                               \
-          *mz++ = 0;                               \
-          if(mzsz >= 9*sizeof(mzsz)) { *mz++ = 0;                               \
-            *mz++ = 0; }}}                           \
-      *mz++ = 0;                               \
-      *mz++ = 0;                               \
-      *mz   = 0;                               \
-    } else memset((charp), 0, mzsz);                                            \
-  } while(0)
+do {                                                                          \
+  INTERNAL_SIZE_T mzsz = (nbytes);                                            \
+  if(mzsz <= 9*sizeof(mzsz)) {                                                \
+    INTERNAL_SIZE_T* mz = (INTERNAL_SIZE_T*) (charp);                         \
+    if(mzsz >= 5*sizeof(mzsz)) {     *mz++ = 0;                               \
+				     *mz++ = 0;                               \
+      if(mzsz >= 7*sizeof(mzsz)) {   *mz++ = 0;                               \
+				     *mz++ = 0;                               \
+	if(mzsz >= 9*sizeof(mzsz)) { *mz++ = 0;                               \
+				     *mz++ = 0; }}}                           \
+				     *mz++ = 0;                               \
+				     *mz++ = 0;                               \
+				     *mz   = 0;                               \
+  } else memset((charp), 0, mzsz);                                            \
+} while(0)
 
 #define MALLOC_COPY(dest,src,nbytes)                                          \
-  do {                                                                          \
-    INTERNAL_SIZE_T mcsz = (nbytes);                                            \
-    if(mcsz <= 9*sizeof(mcsz)) {                                                \
-      INTERNAL_SIZE_T* mcsrc = (INTERNAL_SIZE_T*) (src);                        \
-      INTERNAL_SIZE_T* mcdst = (INTERNAL_SIZE_T*) (dest);                       \
-      if(mcsz >= 5*sizeof(mcsz)) {     *mcdst++ = *mcsrc++;                     \
-        *mcdst++ = *mcsrc++;                     \
-        if(mcsz >= 7*sizeof(mcsz)) {   *mcdst++ = *mcsrc++;                     \
-          *mcdst++ = *mcsrc++;                     \
-          if(mcsz >= 9*sizeof(mcsz)) { *mcdst++ = *mcsrc++;                     \
-            *mcdst++ = *mcsrc++; }}}                 \
-      *mcdst++ = *mcsrc++;                     \
-      *mcdst++ = *mcsrc++;                     \
-      *mcdst   = *mcsrc  ;                     \
-    } else memcpy(dest, src, mcsz);                                             \
-  } while(0)
+do {                                                                          \
+  INTERNAL_SIZE_T mcsz = (nbytes);                                            \
+  if(mcsz <= 9*sizeof(mcsz)) {                                                \
+    INTERNAL_SIZE_T* mcsrc = (INTERNAL_SIZE_T*) (src);                        \
+    INTERNAL_SIZE_T* mcdst = (INTERNAL_SIZE_T*) (dest);                       \
+    if(mcsz >= 5*sizeof(mcsz)) {     *mcdst++ = *mcsrc++;                     \
+				     *mcdst++ = *mcsrc++;                     \
+      if(mcsz >= 7*sizeof(mcsz)) {   *mcdst++ = *mcsrc++;                     \
+				     *mcdst++ = *mcsrc++;                     \
+	if(mcsz >= 9*sizeof(mcsz)) { *mcdst++ = *mcsrc++;                     \
+				     *mcdst++ = *mcsrc++; }}}                 \
+				     *mcdst++ = *mcsrc++;                     \
+				     *mcdst++ = *mcsrc++;                     \
+				     *mcdst   = *mcsrc  ;                     \
+  } else memcpy(dest, src, mcsz);                                             \
+} while(0)
 
 #else /* !USE_MEMCPY */
 
 /* Use Duff's device for good zeroing/copying performance. */
 
 #define MALLOC_ZERO(charp, nbytes)                                            \
-  do {                                                                          \
-    INTERNAL_SIZE_T* mzp = (INTERNAL_SIZE_T*)(charp);                           \
-    long mctmp = (nbytes)/sizeof(INTERNAL_SIZE_T), mcn;                         \
-    if (mctmp < 8) mcn = 0; else { mcn = (mctmp-1)/8; mctmp %= 8; }             \
-    switch (mctmp) {                                                            \
+do {                                                                          \
+  INTERNAL_SIZE_T* mzp = (INTERNAL_SIZE_T*)(charp);                           \
+  long mctmp = (nbytes)/sizeof(INTERNAL_SIZE_T), mcn;                         \
+  if (mctmp < 8) mcn = 0; else { mcn = (mctmp-1)/8; mctmp %= 8; }             \
+  switch (mctmp) {                                                            \
     case 0: for(;;) { *mzp++ = 0;                                             \
-      case 7:           *mzp++ = 0;                                             \
-      case 6:           *mzp++ = 0;                                             \
-      case 5:           *mzp++ = 0;                                             \
-      case 4:           *mzp++ = 0;                                             \
-      case 3:           *mzp++ = 0;                                             \
-      case 2:           *mzp++ = 0;                                             \
-      case 1:           *mzp++ = 0; if(mcn <= 0) break; mcn--; }                \
-    }                                                                           \
-  } while(0)
+    case 7:           *mzp++ = 0;                                             \
+    case 6:           *mzp++ = 0;                                             \
+    case 5:           *mzp++ = 0;                                             \
+    case 4:           *mzp++ = 0;                                             \
+    case 3:           *mzp++ = 0;                                             \
+    case 2:           *mzp++ = 0;                                             \
+    case 1:           *mzp++ = 0; if(mcn <= 0) break; mcn--; }                \
+  }                                                                           \
+} while(0)
 
 #define MALLOC_COPY(dest,src,nbytes)                                          \
-  do {                                                                          \
-    INTERNAL_SIZE_T* mcsrc = (INTERNAL_SIZE_T*) src;                            \
-    INTERNAL_SIZE_T* mcdst = (INTERNAL_SIZE_T*) dest;                           \
-    long mctmp = (nbytes)/sizeof(INTERNAL_SIZE_T), mcn;                         \
-    if (mctmp < 8) mcn = 0; else { mcn = (mctmp-1)/8; mctmp %= 8; }             \
-    switch (mctmp) {                                                            \
+do {                                                                          \
+  INTERNAL_SIZE_T* mcsrc = (INTERNAL_SIZE_T*) src;                            \
+  INTERNAL_SIZE_T* mcdst = (INTERNAL_SIZE_T*) dest;                           \
+  long mctmp = (nbytes)/sizeof(INTERNAL_SIZE_T), mcn;                         \
+  if (mctmp < 8) mcn = 0; else { mcn = (mctmp-1)/8; mctmp %= 8; }             \
+  switch (mctmp) {                                                            \
     case 0: for(;;) { *mcdst++ = *mcsrc++;                                    \
-      case 7:           *mcdst++ = *mcsrc++;                                    \
-      case 6:           *mcdst++ = *mcsrc++;                                    \
-      case 5:           *mcdst++ = *mcsrc++;                                    \
-      case 4:           *mcdst++ = *mcsrc++;                                    \
-      case 3:           *mcdst++ = *mcsrc++;                                    \
-      case 2:           *mcdst++ = *mcsrc++;                                    \
-      case 1:           *mcdst++ = *mcsrc++; if(mcn <= 0) break; mcn--; }       \
-    }                                                                           \
-  } while(0)
+    case 7:           *mcdst++ = *mcsrc++;                                    \
+    case 6:           *mcdst++ = *mcsrc++;                                    \
+    case 5:           *mcdst++ = *mcsrc++;                                    \
+    case 4:           *mcdst++ = *mcsrc++;                                    \
+    case 3:           *mcdst++ = *mcsrc++;                                    \
+    case 2:           *mcdst++ = *mcsrc++;                                    \
+    case 1:           *mcdst++ = *mcsrc++; if(mcn <= 0) break; mcn--; }       \
+  }                                                                           \
+} while(0)
 
 #endif
 
@@ -468,7 +468,7 @@ Void_t * memcpy();
 #define HAVE_MMAP 1
 #endif
 ***/
-#undef  HAVE_MMAP /* Not available for U-Boot */
+#undef	HAVE_MMAP	/* Not available for U-Boot */
 
 /*
   Define HAVE_MREMAP to make realloc() use mremap() to re-allocate
@@ -485,7 +485,7 @@ Void_t * memcpy();
 #endif
 #endif
 ***/
-#undef  HAVE_MREMAP /* Not available for U-Boot */
+#undef	HAVE_MREMAP	/* Not available for U-Boot */
 
 #if HAVE_MMAP
 
@@ -507,8 +507,8 @@ Void_t * memcpy();
   bsd/gnu getpagesize.h
 */
 
-#define LACKS_UNISTD_H  /* Shortcut for U-Boot */
-#define malloc_getpagesize  4096
+#define	LACKS_UNISTD_H	/* Shortcut for U-Boot */
+#define	malloc_getpagesize	4096
 
 #ifndef LACKS_UNISTD_H
 #  include <unistd.h>
@@ -524,7 +524,7 @@ Void_t * memcpy();
 #    define malloc_getpagesize sysconf(_SC_PAGE_SIZE)
 #  else
 #    if defined(BSD) || defined(DGUX) || defined(HAVE_GETPAGESIZE)
-extern size_t getpagesize();
+       extern size_t getpagesize();
 #      define malloc_getpagesize getpagesize()
 #    else
 #      ifdef WIN32
@@ -686,11 +686,11 @@ struct mallinfo {
       retain whenever sbrk is called. It is used in two ways internally:
 
       * When sbrk is called to extend the top of the arena to satisfy
-  a new malloc request, this much padding is added to the sbrk
-  request.
+	a new malloc request, this much padding is added to the sbrk
+	request.
 
       * When malloc_trim is called automatically from free(),
-  it is used as the `pad' argument.
+	it is used as the `pad' argument.
 
       In both cases, the actual amount of padding is rounded
       so that the end of the arena is always a system page boundary.
@@ -736,15 +736,15 @@ struct mallinfo {
 
       However, it has the disadvantages that:
 
-   1. The space cannot be reclaimed, consolidated, and then
-      used to service later requests, as happens with normal chunks.
-   2. It can lead to more wastage because of mmap page alignment
-      requirements
-   3. It causes malloc performance to be more dependent on host
-      system memory management support routines which may vary in
-      implementation quality and may impose arbitrary
-      limitations. Generally, servicing a request via normal
-      malloc steps is faster than going through a system's mmap.
+	 1. The space cannot be reclaimed, consolidated, and then
+	    used to service later requests, as happens with normal chunks.
+	 2. It can lead to more wastage because of mmap page alignment
+	    requirements
+	 3. It causes malloc performance to be more dependent on host
+	    system memory management support routines which may vary in
+	    implementation quality and may impose arbitrary
+	    limitations. Generally, servicing a request via normal
+	    malloc steps is faster than going through a system's mmap.
 
       All together, these considerations should lead you to use mmap
       only for relatively large requests.
@@ -765,15 +765,15 @@ struct mallinfo {
     M_MMAP_MAX is the maximum number of requests to simultaneously
       service using mmap. This parameter exists because:
 
-   1. Some systems have a limited number of internal tables for
-      use by mmap.
-   2. In most systems, overreliance on mmap can degrade overall
-      performance.
-   3. If a program allocates many large regions, it is probably
-      better off using normal sbrk-based allocation routines that
-      can reclaim and reallocate normal heap memory. Using a
-      small value allows transition into this mode after the
-      first few allocations.
+	 1. Some systems have a limited number of internal tables for
+	    use by mmap.
+	 2. In most systems, overreliance on mmap can degrade overall
+	    performance.
+	 3. If a program allocates many large regions, it is probably
+	    better off using normal sbrk-based allocation routines that
+	    can reclaim and reallocate normal heap memory. Using a
+	    small value allows transition into this mode after the
+	    first few allocations.
 
       Setting to 0 disables all use of mmap.  If HAVE_MMAP is not set,
       the default value is 0, and attempts to set it to non-zero values
@@ -812,12 +812,12 @@ struct mallinfo {
 #if __STD_C
 
 Void_t * __default_morecore_init (ptrdiff_t);
-Void_t * (*__morecore) (ptrdiff_t) = __default_morecore_init;
+Void_t *(*__morecore)(ptrdiff_t) = __default_morecore_init;
 
 #else
 
 Void_t * __default_morecore_init ();
-Void_t * (*__morecore) () = __default_morecore_init;
+Void_t *(*__morecore)() = __default_morecore_init;
 
 #endif
 
@@ -828,9 +828,9 @@ Void_t * (*__morecore) () = __default_morecore_init;
 #else /* INTERNAL_LINUX_C_LIB */
 
 #if __STD_C
-extern Void_t   *  sbrk (ptrdiff_t);
+extern Void_t*     sbrk(ptrdiff_t);
 #else
-extern Void_t   *  sbrk();
+extern Void_t*     sbrk();
 #endif
 
 #ifndef MORECORE
@@ -849,15 +849,15 @@ extern Void_t   *  sbrk();
 
 #if defined(INTERNAL_LINUX_C_LIB) && defined(__ELF__)
 
-#define cALLOc    __libc_calloc
-#define fREe    __libc_free
-#define mALLOc    __libc_malloc
-#define mEMALIGn  __libc_memalign
-#define rEALLOc   __libc_realloc
-#define vALLOc    __libc_valloc
-#define pvALLOc   __libc_pvalloc
-#define mALLINFo  __libc_mallinfo
-#define mALLOPt   __libc_mallopt
+#define cALLOc		__libc_calloc
+#define fREe		__libc_free
+#define mALLOc		__libc_malloc
+#define mEMALIGn	__libc_memalign
+#define rEALLOc		__libc_realloc
+#define vALLOc		__libc_valloc
+#define pvALLOc		__libc_pvalloc
+#define mALLINFo	__libc_mallinfo
+#define mALLOPt		__libc_mallopt
 
 #pragma weak calloc = __libc_calloc
 #pragma weak free = __libc_free
@@ -873,25 +873,25 @@ extern Void_t   *  sbrk();
 #else
 
 #ifdef USE_DL_PREFIX
-#define cALLOc    dlcalloc
-#define fREe    dlfree
-#define mALLOc    dlmalloc
-#define mEMALIGn  dlmemalign
-#define rEALLOc   dlrealloc
-#define vALLOc    dlvalloc
-#define pvALLOc   dlpvalloc
-#define mALLINFo  dlmallinfo
-#define mALLOPt   dlmallopt
+#define cALLOc		dlcalloc
+#define fREe		dlfree
+#define mALLOc		dlmalloc
+#define mEMALIGn	dlmemalign
+#define rEALLOc		dlrealloc
+#define vALLOc		dlvalloc
+#define pvALLOc		dlpvalloc
+#define mALLINFo	dlmallinfo
+#define mALLOPt		dlmallopt
 #else /* USE_DL_PREFIX */
-#define cALLOc    calloc
-#define fREe    free
-#define mALLOc    malloc
-#define mEMALIGn  memalign
-#define rEALLOc   realloc
-#define vALLOc    valloc
-#define pvALLOc   pvalloc
-#define mALLINFo  mallinfo
-#define mALLOPt   mallopt
+#define cALLOc		calloc
+#define fREe		free
+#define mALLOc		malloc
+#define mEMALIGn	memalign
+#define rEALLOc		realloc
+#define vALLOc		valloc
+#define pvALLOc		pvalloc
+#define mALLINFo	mallinfo
+#define mALLOPt		mallopt
 #endif /* USE_DL_PREFIX */
 
 #endif
@@ -900,27 +900,27 @@ extern Void_t   *  sbrk();
 
 #if __STD_C
 
-Void_t * mALLOc (size_t);
-void    fREe (Void_t *);
-Void_t * rEALLOc (Void_t *, size_t);
-Void_t * mEMALIGn (size_t, size_t);
-Void_t * vALLOc (size_t);
-Void_t * pvALLOc (size_t);
-Void_t * cALLOc (size_t, size_t);
-void    cfree (Void_t *);
-int     malloc_trim (size_t);
-size_t  malloc_usable_size (Void_t *);
-void    malloc_stats (void);
-int     mALLOPt (int, int);
-struct mallinfo mALLINFo (void);
+Void_t* mALLOc(size_t);
+void    fREe(Void_t*);
+Void_t* rEALLOc(Void_t*, size_t);
+Void_t* mEMALIGn(size_t, size_t);
+Void_t* vALLOc(size_t);
+Void_t* pvALLOc(size_t);
+Void_t* cALLOc(size_t, size_t);
+void    cfree(Void_t*);
+int     malloc_trim(size_t);
+size_t  malloc_usable_size(Void_t*);
+void    malloc_stats(void);
+int     mALLOPt(int, int);
+struct mallinfo mALLINFo(void);
 #else
-Void_t * mALLOc();
+Void_t* mALLOc();
 void    fREe();
-Void_t * rEALLOc();
-Void_t * mEMALIGn();
-Void_t * vALLOc();
-Void_t * pvALLOc();
-Void_t * cALLOc();
+Void_t* rEALLOc();
+Void_t* mEMALIGn();
+Void_t* vALLOc();
+Void_t* pvALLOc();
+Void_t* cALLOc();
 void    cfree();
 int     malloc_trim();
 size_t  malloc_usable_size();
@@ -936,11 +936,11 @@ extern ulong mem_malloc_start;
 extern ulong mem_malloc_end;
 extern ulong mem_malloc_brk;
 
-void mem_malloc_init (ulong start, ulong size);
+void mem_malloc_init(ulong start, ulong size);
 
-void  mem_noncache_malloc_init (uint noncache_start, uint noncache_size);
-void * malloc_noncache (uint num_bytes);
-void  free_noncache (void * p);
+void  mem_noncache_malloc_init(uint noncache_start, uint noncache_size);
+void *malloc_noncache(uint num_bytes);
+void  free_noncache(void *p);
 
 
 #ifdef __cplusplus

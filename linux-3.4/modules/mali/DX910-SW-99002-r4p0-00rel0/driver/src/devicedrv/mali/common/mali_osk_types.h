@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2010-2013 ARM Limited. All rights reserved.
- *
+ * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- *
+ * 
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -78,16 +78,16 @@ typedef unsigned long mali_bool;
  * _mali_osk_errcode_t codes to native OS error codes.
  */
 typedef enum {
-  _MALI_OSK_ERR_OK = 0, /**< Success. */
-  _MALI_OSK_ERR_FAULT = -1, /**< General non-success */
-  _MALI_OSK_ERR_INVALID_FUNC = -2, /**< Invalid function requested through User/Kernel interface (e.g. bad IOCTL number) */
-  _MALI_OSK_ERR_INVALID_ARGS = -3, /**< Invalid arguments passed through User/Kernel interface */
-  _MALI_OSK_ERR_NOMEM = -4, /**< Insufficient memory */
-  _MALI_OSK_ERR_TIMEOUT = -5, /**< Timeout occurred */
-  _MALI_OSK_ERR_RESTARTSYSCALL = -6, /**< Special: On certain OSs, must report when an interruptable mutex is interrupted. Ignore otherwise. */
-  _MALI_OSK_ERR_ITEM_NOT_FOUND = -7, /**< Table Lookup failed */
-  _MALI_OSK_ERR_BUSY = -8, /**< Device/operation is busy. Try again later */
-  _MALI_OSK_ERR_UNSUPPORTED = -9, /**< Optional part of the interface used, and is unsupported */
+	_MALI_OSK_ERR_OK = 0, /**< Success. */
+	_MALI_OSK_ERR_FAULT = -1, /**< General non-success */
+	_MALI_OSK_ERR_INVALID_FUNC = -2, /**< Invalid function requested through User/Kernel interface (e.g. bad IOCTL number) */
+	_MALI_OSK_ERR_INVALID_ARGS = -3, /**< Invalid arguments passed through User/Kernel interface */
+	_MALI_OSK_ERR_NOMEM = -4, /**< Insufficient memory */
+	_MALI_OSK_ERR_TIMEOUT = -5, /**< Timeout occurred */
+	_MALI_OSK_ERR_RESTARTSYSCALL = -6, /**< Special: On certain OSs, must report when an interruptable mutex is interrupted. Ignore otherwise. */
+	_MALI_OSK_ERR_ITEM_NOT_FOUND = -7, /**< Table Lookup failed */
+	_MALI_OSK_ERR_BUSY = -8, /**< Device/operation is busy. Try again later */
+	_MALI_OSK_ERR_UNSUPPORTED = -9, /**< Optional part of the interface used, and is unsupported */
 } _mali_osk_errcode_t;
 
 /** @} */ /* end group _mali_osk_miscellaneous */
@@ -109,7 +109,7 @@ typedef struct _mali_osk_wq_delayed_work_s _mali_osk_wq_delayed_work_t;
  *
  * @param arg resource-specific data
  */
-typedef void (*_mali_osk_wq_work_handler_t) ( void * arg );
+typedef void (*_mali_osk_wq_work_handler_t)( void * arg );
 
 /* @} */ /* end group _mali_osk_wq */
 
@@ -123,14 +123,14 @@ typedef struct _mali_osk_irq_t_struct _mali_osk_irq_t;
  *
  * This function is implemented by the common layer to allow probing of a resource's IRQ.
  * @param arg resource-specific data */
-typedef void  (*_mali_osk_irq_trigger_t) ( void * arg );
+typedef void  (*_mali_osk_irq_trigger_t)( void * arg );
 
 /** @brief Optional function to acknowledge an irq from a resource
  *
  * This function is implemented by the common layer to allow probing of a resource's IRQ.
  * @param arg resource-specific data
  * @return _MALI_OSK_ERR_OK if the IRQ was successful, or a suitable _mali_osk_errcode_t on failure. */
-typedef _mali_osk_errcode_t (*_mali_osk_irq_ack_t) ( void * arg );
+typedef _mali_osk_errcode_t (*_mali_osk_irq_ack_t)( void * arg );
 
 /** @brief IRQ 'upper-half' handler callback.
  *
@@ -154,7 +154,7 @@ typedef _mali_osk_errcode_t (*_mali_osk_irq_ack_t) ( void * arg );
  * @return _MALI_OSK_ERR_OK if the IRQ was correctly handled, or a suitable
  * _mali_osk_errcode_t otherwise.
  */
-typedef _mali_osk_errcode_t  (*_mali_osk_irq_uhandler_t) ( void * arg );
+typedef _mali_osk_errcode_t  (*_mali_osk_irq_uhandler_t)( void * arg );
 
 
 /** @} */ /* end group _mali_osk_irq */
@@ -173,10 +173,10 @@ typedef _mali_osk_errcode_t  (*_mali_osk_irq_uhandler_t) ( void * arg );
  * Do not access u.val or u.obj directly.
  */
 typedef struct {
-  union {
-    u32 val;
-    void * obj;
-  } u;
+	union {
+		u32 val;
+		void *obj;
+	} u;
 } _mali_osk_atomic_t;
 /** @} */ /* end group _mali_osk_atomic */
 
@@ -197,36 +197,36 @@ typedef struct {
  *
  */
 typedef enum {
-  /*  ||    Locks    ||  */
-  /*  ||   must be   ||  */
-  /* _||_  taken in _||_ */
-  /* \  /    this   \  / */
-  /*  \/    order!   \/  */
-  
-  _MALI_OSK_LOCK_ORDER_FIRST = 0,
-  
-  _MALI_OSK_LOCK_ORDER_SESSIONS,
-  _MALI_OSK_LOCK_ORDER_MEM_SESSION,
-  _MALI_OSK_LOCK_ORDER_MEM_INFO,
-  _MALI_OSK_LOCK_ORDER_MEM_PT_CACHE,
-  _MALI_OSK_LOCK_ORDER_DESCRIPTOR_MAP,
-  _MALI_OSK_LOCK_ORDER_GROUP_VIRTUAL,
-  _MALI_OSK_LOCK_ORDER_GROUP,
-  _MALI_OSK_LOCK_ORDER_TIMELINE_SYSTEM,
-  _MALI_OSK_LOCK_ORDER_SCHEDULER,
-  _MALI_OSK_LOCK_ORDER_SCHEDULER_DEFERRED,
-  _MALI_OSK_LOCK_ORDER_PM_CORE_STATE,
-  _MALI_OSK_LOCK_ORDER_L2_COMMAND,
-  _MALI_OSK_LOCK_ORDER_DMA_COMMAND,
-  _MALI_OSK_LOCK_ORDER_PROFILING,
-  _MALI_OSK_LOCK_ORDER_L2_COUNTER,
-  _MALI_OSK_LOCK_ORDER_UTILIZATION,
-  _MALI_OSK_LOCK_ORDER_PM_EXECUTE,
-  _MALI_OSK_LOCK_ORDER_SESSION_PENDING_JOBS,
-  _MALI_OSK_LOCK_ORDER_PM_DOMAIN,
-  _MALI_OSK_LOCK_ORDER_PMU,
-  
-  _MALI_OSK_LOCK_ORDER_LAST,
+	/*  ||    Locks    ||  */
+	/*  ||   must be   ||  */
+	/* _||_  taken in _||_ */
+	/* \  /    this   \  / */
+	/*  \/    order!   \/  */
+
+	_MALI_OSK_LOCK_ORDER_FIRST = 0,
+
+	_MALI_OSK_LOCK_ORDER_SESSIONS,
+	_MALI_OSK_LOCK_ORDER_MEM_SESSION,
+	_MALI_OSK_LOCK_ORDER_MEM_INFO,
+	_MALI_OSK_LOCK_ORDER_MEM_PT_CACHE,
+	_MALI_OSK_LOCK_ORDER_DESCRIPTOR_MAP,
+	_MALI_OSK_LOCK_ORDER_GROUP_VIRTUAL,
+	_MALI_OSK_LOCK_ORDER_GROUP,
+	_MALI_OSK_LOCK_ORDER_TIMELINE_SYSTEM,
+	_MALI_OSK_LOCK_ORDER_SCHEDULER,
+	_MALI_OSK_LOCK_ORDER_SCHEDULER_DEFERRED,
+	_MALI_OSK_LOCK_ORDER_PM_CORE_STATE,
+	_MALI_OSK_LOCK_ORDER_L2_COMMAND,
+	_MALI_OSK_LOCK_ORDER_DMA_COMMAND,
+	_MALI_OSK_LOCK_ORDER_PROFILING,
+	_MALI_OSK_LOCK_ORDER_L2_COUNTER,
+	_MALI_OSK_LOCK_ORDER_UTILIZATION,
+	_MALI_OSK_LOCK_ORDER_PM_EXECUTE,
+	_MALI_OSK_LOCK_ORDER_SESSION_PENDING_JOBS,
+	_MALI_OSK_LOCK_ORDER_PM_DOMAIN,
+	_MALI_OSK_LOCK_ORDER_PMU,
+
+	_MALI_OSK_LOCK_ORDER_LAST,
 } _mali_osk_lock_order_t;
 
 
@@ -235,12 +235,12 @@ typedef enum {
  * - Any lock can use the order parameter.
  */
 typedef enum {
-  _MALI_OSK_LOCKFLAG_UNORDERED        = 0x1, /**< Indicate that the order of this lock should not be checked */
-  _MALI_OSK_LOCKFLAG_ORDERED          = 0x2,
-  /** @enum _mali_osk_lock_flags_t
-   *
-   * Flags from 0x10000--0x80000000 are RESERVED for User-mode */
-  
+	_MALI_OSK_LOCKFLAG_UNORDERED        = 0x1, /**< Indicate that the order of this lock should not be checked */
+	_MALI_OSK_LOCKFLAG_ORDERED          = 0x2,
+	/** @enum _mali_osk_lock_flags_t
+	 *
+	 * Flags from 0x10000--0x80000000 are RESERVED for User-mode */
+
 } _mali_osk_lock_flags_t;
 
 /** @brief Mutual Exclusion Lock Mode Optimization hint
@@ -259,12 +259,12 @@ typedef enum {
  *
  */
 typedef enum {
-  _MALI_OSK_LOCKMODE_UNDEF = -1,  /**< Undefined lock mode. For internal use only */
-  _MALI_OSK_LOCKMODE_RW    = 0x0, /**< Read-write mode, default. All readers and writers are mutually-exclusive */
-  _MALI_OSK_LOCKMODE_RO,          /**< Read-only mode, to support multiple concurrent readers, but mutual exclusion in the presence of writers. */
-  /** @enum _mali_osk_lock_mode_t
-   *
-   * Lock modes 0x40--0x7F are RESERVED for User-mode */
+	_MALI_OSK_LOCKMODE_UNDEF = -1,  /**< Undefined lock mode. For internal use only */
+	_MALI_OSK_LOCKMODE_RW    = 0x0, /**< Read-write mode, default. All readers and writers are mutually-exclusive */
+	_MALI_OSK_LOCKMODE_RO,          /**< Read-only mode, to support multiple concurrent readers, but mutual exclusion in the presence of writers. */
+	/** @enum _mali_osk_lock_mode_t
+	 *
+	 * Lock modes 0x40--0x7F are RESERVED for User-mode */
 } _mali_osk_lock_mode_t;
 
 /** @brief Private types for Mutual Exclusion lock objects */
@@ -357,7 +357,7 @@ typedef struct _mali_io_address * mali_io_address;
  * the type after OR'ing.
  */
 typedef enum {
-  _MALI_OSK_MEM_MAPREGION_FLAG_OS_ALLOCATED_PHYSADDR = 0x1, /**< Physical address is OS Allocated */
+	_MALI_OSK_MEM_MAPREGION_FLAG_OS_ALLOCATED_PHYSADDR = 0x1, /**< Physical address is OS Allocated */
 } _mali_osk_mem_mapregion_flags_t;
 /** @} */ /* end group _mali_osk_low_level_memory */
 
@@ -369,9 +369,9 @@ typedef struct _mali_osk_notification_queue_t_struct _mali_osk_notification_queu
 
 /** @brief Public notification data object type */
 typedef struct _mali_osk_notification_t_struct {
-  u32 notification_type;   /**< The notification type */
-  u32 result_buffer_size; /**< Size of the result buffer to copy to user space */
-  void * result_buffer;   /**< Buffer containing any type specific data */
+	u32 notification_type;   /**< The notification type */
+	u32 result_buffer_size; /**< Size of the result buffer to copy to user space */
+	void * result_buffer;   /**< Buffer containing any type specific data */
 } _mali_osk_notification_t;
 
 /** @} */ /* end group _mali_osk_notification */
@@ -396,7 +396,7 @@ typedef struct _mali_osk_notification_t_struct {
  * by any callers of _mali_osk_timer_del(). Otherwise, a deadlock may occur.
  *
  * @param arg Function-specific data */
-typedef void (*_mali_osk_timer_callback_t) (void * arg);
+typedef void (*_mali_osk_timer_callback_t)(void * arg);
 
 /** @brief Private type for Timer Callback Objects */
 typedef struct _mali_osk_timer_t_struct _mali_osk_timer_t;
@@ -419,8 +419,8 @@ typedef struct _mali_osk_timer_t_struct _mali_osk_timer_t;
  * lost by the compiler.
  */
 typedef struct _mali_osk_list_s {
-  struct _mali_osk_list_s * next;
-  struct _mali_osk_list_s * prev;
+	struct _mali_osk_list_s *next;
+	struct _mali_osk_list_s *prev;
 } _mali_osk_list_t;
 /** @} */ /* end group _mali_osk_list */
 
@@ -432,9 +432,9 @@ typedef struct _mali_osk_list_s {
  * Platform independent representation of a Mali HW resource
  */
 typedef struct _mali_osk_resource {
-  const char * description;       /**< short description of the resource */
-  u32 base;                       /**< Physical base address of the resource, as seen by Mali resources. */
-  u32 irq;                        /**< IRQ number delivered to the CPU, or -1 to tell the driver to probe for it (if possible) */
+	const char * description;       /**< short description of the resource */
+	u32 base;                       /**< Physical base address of the resource, as seen by Mali resources. */
+	u32 irq;                        /**< IRQ number delivered to the CPU, or -1 to tell the driver to probe for it (if possible) */
 } _mali_osk_resource_t;
 /** @} */ /* end group _mali_osk_miscellaneous */
 

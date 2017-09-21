@@ -5,9 +5,9 @@
 
 typedef struct
 {
-  char name[32];
-  __lcd_panel_fun_t func;
-} __lcd_panel_t;
+	char name[32];
+	__lcd_panel_fun_t func;
+}__lcd_panel_t;
 
 extern __lcd_panel_t * panel_array[];
 

@@ -13,8 +13,8 @@
  *    set, then the DPLL's lock frequency is multiplied by 4 (OMAP4430 TRM
  *    vV Section 3.6.3.3.1 "DPLLs Output Clocks Parameters")
  */
-#define OMAP4430_REGM4XEN_MULT  4
+#define OMAP4430_REGM4XEN_MULT	4
 
-int omap4xxx_clk_init (void);
+int omap4xxx_clk_init(void);
 
 #endif

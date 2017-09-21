@@ -13,30 +13,30 @@
 #include <linux/module.h>
 
 static struct rc_map_table lirc[] = {
-  { },
+	{ },
 };
 
 static struct rc_map_list lirc_map = {
-  .map = {
-    .scan    = lirc,
-    .size    = ARRAY_SIZE (lirc),
-    .rc_type = RC_TYPE_LIRC,
-    .name    = RC_MAP_LIRC,
-  }
+	.map = {
+		.scan    = lirc,
+		.size    = ARRAY_SIZE(lirc),
+		.rc_type = RC_TYPE_LIRC,
+		.name    = RC_MAP_LIRC,
+	}
 };
 
-static int __init init_rc_map_lirc (void)
+static int __init init_rc_map_lirc(void)
 {
-  return rc_map_register (&lirc_map);
+	return rc_map_register(&lirc_map);
 }
 
-static void __exit exit_rc_map_lirc (void)
+static void __exit exit_rc_map_lirc(void)
 {
-  rc_map_unregister (&lirc_map);
+	rc_map_unregister(&lirc_map);
 }
 
-module_init (init_rc_map_lirc)
-module_exit (exit_rc_map_lirc)
+module_init(init_rc_map_lirc)
+module_exit(exit_rc_map_lirc)
 
-MODULE_LICENSE ("GPL");
-MODULE_AUTHOR ("Jarod Wilson <jarod@redhat.com>");
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Jarod Wilson <jarod@redhat.com>");

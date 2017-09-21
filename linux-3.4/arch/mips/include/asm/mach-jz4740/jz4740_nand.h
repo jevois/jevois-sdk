@@ -2,9 +2,9 @@
  *  Copyright (C) 2009-2010, Lars-Peter Clausen <lars@metafoo.de>
  *  JZ4740 SoC NAND controller driver
  *
- *  This program is free software; you can redistribute  it and/or modify it
- *  under  the terms of  the GNU General  Public License as published by the
- *  Free Software Foundation;  either version 2 of the  License, or (at your
+ *  This program is free software; you can redistribute	 it and/or modify it
+ *  under  the terms of	 the GNU General  Public License as published by the
+ *  Free Software Foundation;  either version 2 of the	License, or (at your
  *  option) any later version.
  *
  *  You should have received a copy of the  GNU General Public License along
@@ -20,15 +20,15 @@
 #include <linux/mtd/partitions.h>
 
 struct jz_nand_platform_data {
-  int     num_partitions;
-  struct mtd_partition * partitions;
-  
-  struct nand_ecclayout * ecc_layout;
-  
-  unsigned int busy_gpio;
-  
-  void (*ident_callback) (struct platform_device *, struct nand_chip *,
-                          struct mtd_partition **, int * num_partitions);
+	int			num_partitions;
+	struct mtd_partition	*partitions;
+
+	struct nand_ecclayout	*ecc_layout;
+
+	unsigned int busy_gpio;
+
+	void (*ident_callback)(struct platform_device *, struct nand_chip *,
+				struct mtd_partition **, int *num_partitions);
 };
 
 #endif

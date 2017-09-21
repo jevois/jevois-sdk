@@ -27,11 +27,11 @@
 /*------------------------------------------------------------------------
  * Control registers -- use with wrctl() & rdctl()
  *----------------------------------------------------------------------*/
-#define CTL_STATUS  0   /* Processor status reg   */
-#define CTL_ESTATUS 1   /* Exception status reg   */
-#define CTL_BSTATUS 2   /* Break status reg   */
-#define CTL_IENABLE 3   /* Interrut enable reg    */
-#define CTL_IPENDING  4   /* Interrut pending reg   */
+#define CTL_STATUS	0		/* Processor status reg		*/
+#define CTL_ESTATUS	1		/* Exception status reg		*/
+#define CTL_BSTATUS	2		/* Break status reg		*/
+#define CTL_IENABLE	3		/* Interrut enable reg		*/
+#define CTL_IPENDING	4		/* Interrut pending reg		*/
 
 /*------------------------------------------------------------------------
  * Access to control regs
@@ -39,19 +39,19 @@
 #define _str_(x) #x
 
 #define rdctl(reg)\
-  ({unsigned int val;\
-    asm volatile( "rdctl %0, ctl" _str_(reg)\
-                  : "=r" (val) ); val;})
+	({unsigned int val;\
+	asm volatile( "rdctl %0, ctl" _str_(reg)\
+		: "=r" (val) ); val;})
 
 #define wrctl(reg,val)\
-  asm volatile( "wrctl ctl" _str_(reg) ",%0"\
-                : : "r" (val))
+	asm volatile( "wrctl ctl" _str_(reg) ",%0"\
+		: : "r" (val))
 
 /*------------------------------------------------------------------------
  * Control reg bit masks
  *----------------------------------------------------------------------*/
-#define STATUS_IE (1<<0)    /* Interrupt enable   */
-#define STATUS_U  (1<<1)    /* User-mode      */
+#define STATUS_IE	(1<<0)		/* Interrupt enable		*/
+#define STATUS_U	(1<<1)		/* User-mode			*/
 
 /*------------------------------------------------------------------------
  * Bit-31 Cache bypass -- only valid for data access. When data cache

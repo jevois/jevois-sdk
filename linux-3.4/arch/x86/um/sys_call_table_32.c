@@ -39,17 +39,17 @@
 #undef __SYSCALL_I386
 #define __SYSCALL_I386(nr, sym, compat) [ nr ] = sym,
 
-typedef void (*sys_call_ptr_t) (void);
+typedef void (*sys_call_ptr_t)(void);
 
-extern void sys_ni_syscall (void);
+extern void sys_ni_syscall(void);
 
 const sys_call_ptr_t sys_call_table[] __cacheline_aligned = {
-  /*
-   * Smells like a compiler bug -- it doesn't work
-   * when the & below is removed.
-   */
-  [0 ... __NR_syscall_max] = &sys_ni_syscall,
+	/*
+	 * Smells like a compiler bug -- it doesn't work
+	 * when the & below is removed.
+	 */
+	[0 ... __NR_syscall_max] = &sys_ni_syscall,
 #include <asm/syscalls_32.h>
 };
 
-int syscall_table_size = sizeof (sys_call_table);
+int syscall_table_size = sizeof(sys_call_table);

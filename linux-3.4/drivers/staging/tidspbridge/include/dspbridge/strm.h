@@ -43,11 +43,11 @@
  *      ap_buffer != NULL.
  *  Ensures:
  */
-extern int strm_allocate_buffer (struct strm_res_object * strmres,
-                                 u32 usize,
-                                 u8 ** ap_buffer,
-                                 u32 num_bufs,
-                                 struct process_context * pr_ctxt);
+extern int strm_allocate_buffer(struct strm_res_object *strmres,
+				       u32 usize,
+				       u8 **ap_buffer,
+				       u32 num_bufs,
+				       struct process_context *pr_ctxt);
 
 /*
  *  ======== strm_close ========
@@ -64,8 +64,8 @@ extern int strm_allocate_buffer (struct strm_res_object * strmres,
  *  Requires:
  *  Ensures:
  */
-extern int strm_close (struct strm_res_object * strmres,
-                       struct process_context * pr_ctxt);
+extern int strm_close(struct strm_res_object *strmres,
+			     struct process_context *pr_ctxt);
 
 /*
  *  ======== strm_create ========
@@ -87,8 +87,8 @@ extern int strm_close (struct strm_res_object * strmres,
  *      0:        Valid *strm_man.
  *      error:          *strm_man == NULL.
  */
-extern int strm_create (struct strm_mgr ** strm_man,
-                        struct dev_object * dev_obj);
+extern int strm_create(struct strm_mgr **strm_man,
+			      struct dev_object *dev_obj);
 
 /*
  *  ======== strm_delete ========
@@ -102,7 +102,7 @@ extern int strm_create (struct strm_mgr ** strm_man,
  *  Ensures:
  *      strm_mgr_obj is not valid.
  */
-extern void strm_delete (struct strm_mgr * strm_mgr_obj);
+extern void strm_delete(struct strm_mgr *strm_mgr_obj);
 
 /*
  *  ======== strm_free_buffer ========
@@ -120,9 +120,9 @@ extern void strm_delete (struct strm_mgr * strm_mgr_obj);
  *      ap_buffer != NULL.
  *  Ensures:
  */
-extern int strm_free_buffer (struct strm_res_object * strmres,
-                             u8 ** ap_buffer, u32 num_bufs,
-                             struct process_context * pr_ctxt);
+extern int strm_free_buffer(struct strm_res_object *strmres,
+				   u8 **ap_buffer, u32 num_bufs,
+				   struct process_context *pr_ctxt);
 
 /*
  *  ======== strm_get_info ========
@@ -142,9 +142,9 @@ extern int strm_free_buffer (struct strm_res_object * strmres,
  *      stream_info != NULL.
  *  Ensures:
  */
-extern int strm_get_info (struct strm_object * stream_obj,
-                          struct stream_info * stream_info,
-                          u32 stream_info_size);
+extern int strm_get_info(struct strm_object *stream_obj,
+				struct stream_info *stream_info,
+				u32 stream_info_size);
 
 /*
  *  ======== strm_idle ========
@@ -168,7 +168,7 @@ extern int strm_get_info (struct strm_object * stream_obj,
  *  Requires:
  *  Ensures:
  */
-extern int strm_idle (struct strm_object * stream_obj, bool flush_data);
+extern int strm_idle(struct strm_object *stream_obj, bool flush_data);
 
 /*
  *  ======== strm_issue ========
@@ -189,8 +189,8 @@ extern int strm_idle (struct strm_object * stream_obj, bool flush_data);
 *      pbuf != NULL.
  *  Ensures:
  */
-extern int strm_issue (struct strm_object * stream_obj, u8 * pbuf,
-                       u32 ul_bytes, u32 ul_buf_size, u32 dw_arg);
+extern int strm_issue(struct strm_object *stream_obj, u8 * pbuf,
+			     u32 ul_bytes, u32 ul_buf_size, u32 dw_arg);
 
 /*
  *  ======== strm_open ========
@@ -218,10 +218,10 @@ extern int strm_issue (struct strm_object * stream_obj, u8 * pbuf,
  *      0:        *strmres is valid.
  *      error:          *strmres == NULL.
  */
-extern int strm_open (struct node_object * hnode, u32 dir,
-                      u32 index, struct strm_attr * pattr,
-                      struct strm_res_object ** strmres,
-                      struct process_context * pr_ctxt);
+extern int strm_open(struct node_object *hnode, u32 dir,
+			    u32 index, struct strm_attr *pattr,
+			    struct strm_res_object **strmres,
+			    struct process_context *pr_ctxt);
 
 /*
  *  ======== strm_reclaim ========
@@ -247,9 +247,9 @@ extern int strm_open (struct node_object * hnode, u32 dir,
  *      pdw_arg != NULL.
  *  Ensures:
  */
-extern int strm_reclaim (struct strm_object * stream_obj,
-                         u8 ** buf_ptr, u32 * nbytes,
-                         u32 * buff_size, u32 * pdw_arg);
+extern int strm_reclaim(struct strm_object *stream_obj,
+			       u8 **buf_ptr, u32 * nbytes,
+			       u32 *buff_size, u32 *pdw_arg);
 
 /*
  *  ======== strm_register_notify ========
@@ -271,10 +271,10 @@ extern int strm_reclaim (struct strm_object * stream_obj,
  *      hnotification != NULL.
  *  Ensures:
  */
-extern int strm_register_notify (struct strm_object * stream_obj,
-                                 u32 event_mask, u32 notify_type,
-                                 struct dsp_notification
-                                 *hnotification);
+extern int strm_register_notify(struct strm_object *stream_obj,
+				       u32 event_mask, u32 notify_type,
+				       struct dsp_notification
+				       *hnotification);
 
 /*
  *  ======== strm_select ========
@@ -300,7 +300,7 @@ extern int strm_register_notify (struct strm_object * stream_obj,
  *      0:        *pmask != 0 || utimeout == 0.
  *      Error:          *pmask == 0.
  */
-extern int strm_select (struct strm_object ** strm_tab,
-                        u32 strms, u32 * pmask, u32 utimeout);
+extern int strm_select(struct strm_object **strm_tab,
+			      u32 strms, u32 *pmask, u32 utimeout);
 
 #endif /* STRM_ */

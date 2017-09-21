@@ -1,8 +1,8 @@
 /**************************************************************************/ /*!
 @File
-@Title    PMR implementation of OS derived physical memory
+@Title		PMR implementation of OS derived physical memory
 @Copyright      Copyright (c) Imagination Technologies Ltd. All Rights Reserved
-@Description  Part of the memory management.  This module is
+@Description	Part of the memory management.  This module is
                 responsible for the an implementation of the "PMR"
                 abstraction.  This interface is for the
                 PhysmemNewOSRamBackedPMR() "PMR Factory" which is
@@ -74,15 +74,15 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * PVRSRV_ERROR_NOT_SUPPORTED should be returned)
  */
 extern PVRSRV_ERROR
-PhysmemNewOSRamBackedPMR (PVRSRV_DEVICE_NODE * psDevNode,
-                          IMG_DEVMEM_SIZE_T uiSize,
-                          IMG_DEVMEM_SIZE_T uiChunkSize,
-                          IMG_UINT32 ui32NumPhysChunks,
-                          IMG_UINT32 ui32NumVirtChunks,
-                          IMG_BOOL * pabMappingTable,
-                          IMG_UINT32 uiLog2PageSize,
-                          PVRSRV_MEMALLOCFLAGS_T uiFlags,
-                          PMR ** ppsPMROut);
+PhysmemNewOSRamBackedPMR(PVRSRV_DEVICE_NODE *psDevNode,
+                         IMG_DEVMEM_SIZE_T uiSize,
+						 IMG_DEVMEM_SIZE_T uiChunkSize,
+						 IMG_UINT32 ui32NumPhysChunks,
+						 IMG_UINT32 ui32NumVirtChunks,
+						 IMG_BOOL *pabMappingTable,
+                         IMG_UINT32 uiLog2PageSize,
+                         PVRSRV_MEMALLOCFLAGS_T uiFlags,
+                         PMR **ppsPMROut);
 
 /*
  * PhysmemNewTDMetaCodePMR
@@ -97,18 +97,18 @@ PhysmemNewOSRamBackedPMR (PVRSRV_DEVICE_NODE * psDevNode,
  * memory that is secured that way.
  */
 PVRSRV_ERROR
-PhysmemNewTDMetaCodePMR (PVRSRV_DEVICE_NODE * psDevNode,
+PhysmemNewTDMetaCodePMR(PVRSRV_DEVICE_NODE *psDevNode,
+                        IMG_DEVMEM_SIZE_T uiSize,
+                        IMG_UINT32 uiLog2PageSize,
+                        PVRSRV_MEMALLOCFLAGS_T uiFlags,
+                        PMR **ppsPMRPtr);
+
+PVRSRV_ERROR
+PhysmemNewTDSecureBufPMR(PVRSRV_DEVICE_NODE *psDevNode,
                          IMG_DEVMEM_SIZE_T uiSize,
                          IMG_UINT32 uiLog2PageSize,
                          PVRSRV_MEMALLOCFLAGS_T uiFlags,
-                         PMR ** ppsPMRPtr);
-
-PVRSRV_ERROR
-PhysmemNewTDSecureBufPMR (PVRSRV_DEVICE_NODE * psDevNode,
-                          IMG_DEVMEM_SIZE_T uiSize,
-                          IMG_UINT32 uiLog2PageSize,
-                          PVRSRV_MEMALLOCFLAGS_T uiFlags,
-                          PMR ** ppsPMRPtr);
+                         PMR **ppsPMRPtr);
 
 
 #endif /* #ifndef _SRVSRV_PHYSMEM_OSMEM_H_ */

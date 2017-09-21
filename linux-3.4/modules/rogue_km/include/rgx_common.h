@@ -2,7 +2,7 @@
 @File
 @Title          RGX Common Types and Defines Header
 @Copyright      Copyright (c) Imagination Technologies Ltd. All Rights Reserved
-@Description  Common types and definitions for RGX software
+@Description	Common types and definitions for RGX software
 @License        Dual MIT/GPLv2
 
 The contents of this file are subject to the MIT license as set out below.
@@ -58,12 +58,12 @@ extern "C" {
 #define RGX_FW_ALIGNMENT_LSB (7)
 
 /*! Macro to test structure size alignment */
-#define RGX_FW_STRUCT_SIZE_ASSERT(_a) \
-  BLD_ASSERT((sizeof(_a)&RGX_FW_ALIGNMENT_LSB)==0, _a##struct_size)
+#define RGX_FW_STRUCT_SIZE_ASSERT(_a)	\
+	BLD_ASSERT((sizeof(_a)&RGX_FW_ALIGNMENT_LSB)==0, _a##struct_size)
 
 /*! Macro to test structure member alignment */
-#define RGX_FW_STRUCT_OFFSET_ASSERT(_a, _b) \
-  BLD_ASSERT((offsetof(_a, _b)&RGX_FW_ALIGNMENT_LSB)==0, _a##struct_offset)
+#define RGX_FW_STRUCT_OFFSET_ASSERT(_a, _b)	\
+	BLD_ASSERT((offsetof(_a, _b)&RGX_FW_ALIGNMENT_LSB)==0, _a##struct_offset)
 
 
 /*! The number of performance counters in each layout block */
@@ -80,18 +80,18 @@ extern "C" {
  * The DM in a V1 HWPerf packet uses this definition. */
 typedef enum _RGXFWIF_DM_
 {
-  RGXFWIF_DM_GP     = 0,
-  RGXFWIF_DM_2D     = 1,
-  RGXFWIF_DM_TA     = 2,
-  RGXFWIF_DM_3D     = 3,
-  RGXFWIF_DM_CDM      = 4,
-  #if defined(RGX_FEATURE_RAY_TRACING)
-  RGXFWIF_DM_RTU      = 5,
-  RGXFWIF_DM_SHG      = 6,
-  #endif
-  RGXFWIF_DM_LAST,
-  
-  RGXFWIF_DM_FORCE_I32  = 0x7fffffff   /*!< Force enum to be at least 32-bits wide */
+	RGXFWIF_DM_GP			= 0,
+	RGXFWIF_DM_2D			= 1,
+	RGXFWIF_DM_TA			= 2,
+	RGXFWIF_DM_3D			= 3,
+	RGXFWIF_DM_CDM			= 4,
+#if defined(RGX_FEATURE_RAY_TRACING)
+	RGXFWIF_DM_RTU			= 5,
+	RGXFWIF_DM_SHG			= 6,
+#endif
+	RGXFWIF_DM_LAST,
+
+	RGXFWIF_DM_FORCE_I32  = 0x7fffffff   /*!< Force enum to be at least 32-bits wide */
 } RGXFWIF_DM;
 
 #if defined(RGX_FEATURE_RAY_TRACING)
@@ -102,18 +102,18 @@ typedef enum _RGXFWIF_DM_
 
 #if defined(RGX_FEATURE_RAY_TRACING)
 /* Maximum number of DM in use: GP, 2D, TA, 3D, CDM, SHG, RTU */
-#define RGXFWIF_DM_MAX      (7)
+#define RGXFWIF_DM_MAX			(7)
 #else
-#define RGXFWIF_DM_MAX      (5)
+#define RGXFWIF_DM_MAX			(5)
 #endif
 
 /* Min/Max number of HW DMs (all but GP) */
 #if defined(RGX_FEATURE_TLA)
-#define RGXFWIF_HWDM_MIN    (1)
+#define RGXFWIF_HWDM_MIN		(1)
 #else
-#define RGXFWIF_HWDM_MIN    (2)
+#define RGXFWIF_HWDM_MIN		(2)
 #endif
-#define RGXFWIF_HWDM_MAX    (RGXFWIF_DM_MAX)
+#define RGXFWIF_HWDM_MAX		(RGXFWIF_DM_MAX)
 
 
 

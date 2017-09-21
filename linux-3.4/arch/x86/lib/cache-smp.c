@@ -1,19 +1,19 @@
 #include <linux/smp.h>
 #include <linux/module.h>
 
-static void __wbinvd (void * dummy)
+static void __wbinvd(void *dummy)
 {
-  wbinvd();
+	wbinvd();
 }
 
-void wbinvd_on_cpu (int cpu)
+void wbinvd_on_cpu(int cpu)
 {
-  smp_call_function_single (cpu, __wbinvd, NULL, 1);
+	smp_call_function_single(cpu, __wbinvd, NULL, 1);
 }
-EXPORT_SYMBOL (wbinvd_on_cpu);
+EXPORT_SYMBOL(wbinvd_on_cpu);
 
-int wbinvd_on_all_cpus (void)
+int wbinvd_on_all_cpus(void)
 {
-  return on_each_cpu (__wbinvd, NULL, 1);
+	return on_each_cpu(__wbinvd, NULL, 1);
 }
-EXPORT_SYMBOL (wbinvd_on_all_cpus);
+EXPORT_SYMBOL(wbinvd_on_all_cpus);

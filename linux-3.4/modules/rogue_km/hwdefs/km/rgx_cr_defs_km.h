@@ -58,14 +58,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #if !defined(RGX_FEATURE_ROGUE3)
 /*
 
-  Core Module Clock Control Modes.
+	Core Module Clock Control Modes.
 
 
-  Allows individual domain clocks to be forced off, forced on or operate under automatic pipeline activity based clock gating. This register is generally controlled by the GPU firmware and should be set to AUTO. Clock gating reduces the power consumed by the device.
+	Allows individual domain clocks to be forced off, forced on or operate under automatic pipeline activity based clock gating. This register is generally controlled by the GPU firmware and should be set to AUTO. Clock gating reduces the power consumed by the device.
 
 */
 /*
-  Register RGX_CR_CLK_CTRL
+	Register RGX_CR_CLK_CTRL
 */
 #define RGX_CR_CLK_CTRL                                   (0x0000U)
 #define RGX_CR_CLK_CTRL_MASKFULL                          (IMG_UINT64_C(0xFFFFFF003F3FFFFF))
@@ -234,14 +234,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #if !defined(RGX_FEATURE_ROGUE3)
 /*
 
-  Reports the current module clock status
+	Reports the current module clock status
 
 
-  Clock gating state reflects the condition of the clock for each module
+	Clock gating state reflects the condition of the clock for each module
 
 */
 /*
-  Register RGX_CR_CLK_STATUS
+	Register RGX_CR_CLK_STATUS
 */
 #define RGX_CR_CLK_STATUS                                 (0x0008U)
 #define RGX_CR_CLK_STATUS_MASKFULL                        (IMG_UINT64_C(0x00000001FFF077FF))
@@ -388,24 +388,24 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /*
 
-  Reports the core ID
+	Reports the core ID
 
 
-  Core ID Register
+	Core ID Register
 
 */
 /*
-  Register RGX_CR_CORE_ID
+	Register RGX_CR_CORE_ID
 */
 #define RGX_CR_CORE_ID                                    (0x0018U)
 #define RGX_CR_CORE_ID_MASKFULL                           (IMG_UINT64_C(0x00000000FFFFFFFF))
 /* ID
- Core ID
+ Core ID 
 */
 #define RGX_CR_CORE_ID_ID_SHIFT                           (16U)
 #define RGX_CR_CORE_ID_ID_CLRMSK                          (0X0000FFFFU)
 /* CONFIG
- Core Configuration
+ Core Configuration 
 */
 #define RGX_CR_CORE_ID_CONFIG_SHIFT                       (0U)
 #define RGX_CR_CORE_ID_CONFIG_CLRMSK                      (0XFFFF0000U)
@@ -413,35 +413,35 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /*
 
-  Reports the core revision
+	Reports the core revision
 
 
-  Core Revision Register identifies the specific core revision.
-  This is updated to reflect the formal release status of the core.
+	Core Revision Register identifies the specific core revision.
+	This is updated to reflect the formal release status of the core.
 
 */
 /*
-  Register RGX_CR_CORE_REVISION
+	Register RGX_CR_CORE_REVISION
 */
 #define RGX_CR_CORE_REVISION                              (0x0020U)
 #define RGX_CR_CORE_REVISION_MASKFULL                     (IMG_UINT64_C(0x00000000FFFFFFFF))
 /* DESIGNER
- Designer Field
+ Designer Field 
 */
 #define RGX_CR_CORE_REVISION_DESIGNER_SHIFT               (24U)
 #define RGX_CR_CORE_REVISION_DESIGNER_CLRMSK              (0X00FFFFFFU)
 /* MAJOR default: 0x00000001
- Major Revision
+ Major Revision 
 */
 #define RGX_CR_CORE_REVISION_MAJOR_SHIFT                  (16U)
 #define RGX_CR_CORE_REVISION_MAJOR_CLRMSK                 (0XFF00FFFFU)
 /* MINOR
- Minor Revision
+ Minor Revision 
 */
 #define RGX_CR_CORE_REVISION_MINOR_SHIFT                  (8U)
 #define RGX_CR_CORE_REVISION_MINOR_CLRMSK                 (0XFFFF00FFU)
 /* MAINTENANCE
- Maintenance Revision
+ Maintenance Revision 
 */
 #define RGX_CR_CORE_REVISION_MAINTENANCE_SHIFT            (0U)
 #define RGX_CR_CORE_REVISION_MAINTENANCE_CLRMSK           (0XFFFFFF00U)
@@ -449,20 +449,20 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /*
 
-  SOC Specific reporting register.
+	SOC Specific reporting register.
 
 
-  Designer Revision Field
-  The SOC designer can use this register for their own revision control
+	Designer Revision Field
+	The SOC designer can use this register for their own revision control
 
 */
 /*
-  Register RGX_CR_DESIGNER_REV_FIELD1
+	Register RGX_CR_DESIGNER_REV_FIELD1
 */
 #define RGX_CR_DESIGNER_REV_FIELD1                        (0x0028U)
 #define RGX_CR_DESIGNER_REV_FIELD1_MASKFULL               (IMG_UINT64_C(0x00000000FFFFFFFF))
 /* DESIGNER_REV_FIELD1
- Designer field
+ Designer field 
 */
 #define RGX_CR_DESIGNER_REV_FIELD1_DESIGNER_REV_FIELD1_SHIFT (0U)
 #define RGX_CR_DESIGNER_REV_FIELD1_DESIGNER_REV_FIELD1_CLRMSK (00000000U)
@@ -470,20 +470,20 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /*
 
-  SOC Specific reporting register.
+	SOC Specific reporting register.
 
 
-  Designer Revision Field
-  The SOC designer can use this register for their own revision control is required
+	Designer Revision Field
+	The SOC designer can use this register for their own revision control is required
 
 */
 /*
-  Register RGX_CR_DESIGNER_REV_FIELD2
+	Register RGX_CR_DESIGNER_REV_FIELD2
 */
 #define RGX_CR_DESIGNER_REV_FIELD2                        (0x0030U)
 #define RGX_CR_DESIGNER_REV_FIELD2_MASKFULL               (IMG_UINT64_C(0x00000000FFFFFFFF))
 /* DESIGNER_REV_FIELD2
- Designer field
+ Designer field 
 */
 #define RGX_CR_DESIGNER_REV_FIELD2_DESIGNER_REV_FIELD2_SHIFT (0U)
 #define RGX_CR_DESIGNER_REV_FIELD2_DESIGNER_REV_FIELD2_CLRMSK (00000000U)
@@ -494,12 +494,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   Core soft reset control register.
 
 
-  Write a '1' to reset and a '0' to clear
-  See the soft reset section in the TRM to understand how to use the soft reset register.
+	Write a '1' to reset and a '0' to clear
+	See the soft reset section in the TRM to understand how to use the soft reset register.
 
 */
 /*
-  Register RGX_CR_SOFT_RESET
+	Register RGX_CR_SOFT_RESET
 */
 #define RGX_CR_SOFT_RESET                                 (0x0100U)
 #define RGX_CR_SOFT_RESET_MASKFULL                        (IMG_UINT64_C(0x1FE7FFFFFFFFFC1D))
@@ -733,84 +733,84 @@ Bifpmcache BIF
 
 /*
 
-  The event status register indicate the source of an interrupt generated by PowerVR RGX
-  These events only schedule an interrupt context thread to run on META when the appropriate enables are set in RGX_CR_DMn_INTERRUPT_ENABLE
+	The event status register indicate the source of an interrupt generated by PowerVR RGX
+	These events only schedule an interrupt context thread to run on META when the appropriate enables are set in RGX_CR_DMn_INTERRUPT_ENABLE
 
 */
 /*
-  Register RGX_CR_EVENT_STATUS
+	Register RGX_CR_EVENT_STATUS
 */
 #define RGX_CR_EVENT_STATUS                               (0x0130U)
 #define RGX_CR_EVENT_STATUS_MASKFULL                      (IMG_UINT64_C(0x000000001FFEFFFF))
 #if defined(RGX_FEATURE_RAY_TRACING)
 /* DPX_OUT_OF_MEMORY
- The Doppler overflow FIFO in memory is full
+ The Doppler overflow FIFO in memory is full 
 */
 #define RGX_CR_EVENT_STATUS_DPX_OUT_OF_MEMORY_SHIFT       (28U)
 #define RGX_CR_EVENT_STATUS_DPX_OUT_OF_MEMORY_CLRMSK      (0XEFFFFFFFU)
 #define RGX_CR_EVENT_STATUS_DPX_OUT_OF_MEMORY_EN          (0X10000000U)
 /* DPX_MMU_PAGE_FAULT
- A Doppler MMU page fault has occurred
+ A Doppler MMU page fault has occurred 
 */
 #define RGX_CR_EVENT_STATUS_DPX_MMU_PAGE_FAULT_SHIFT      (27U)
 #define RGX_CR_EVENT_STATUS_DPX_MMU_PAGE_FAULT_CLRMSK     (0XF7FFFFFFU)
 #define RGX_CR_EVENT_STATUS_DPX_MMU_PAGE_FAULT_EN         (0X08000000U)
 /* RPM_OUT_OF_MEMORY
- The Ray Page Manager has run out of free pages
+ The Ray Page Manager has run out of free pages 
 */
 #define RGX_CR_EVENT_STATUS_RPM_OUT_OF_MEMORY_SHIFT       (26U)
 #define RGX_CR_EVENT_STATUS_RPM_OUT_OF_MEMORY_CLRMSK      (0XFBFFFFFFU)
 #define RGX_CR_EVENT_STATUS_RPM_OUT_OF_MEMORY_EN          (0X04000000U)
 /* FBA_FC3_FINISHED
- All records for every attachment point of frame context 3 have been written out to memory
+ All records for every attachment point of frame context 3 have been written out to memory 
 */
 #define RGX_CR_EVENT_STATUS_FBA_FC3_FINISHED_SHIFT        (25U)
 #define RGX_CR_EVENT_STATUS_FBA_FC3_FINISHED_CLRMSK       (0XFDFFFFFFU)
 #define RGX_CR_EVENT_STATUS_FBA_FC3_FINISHED_EN           (0X02000000U)
 /* FBA_FC2_FINISHED
- All records for every attachment point of frame context 2 have been written out to memory
+ All records for every attachment point of frame context 2 have been written out to memory 
 */
 #define RGX_CR_EVENT_STATUS_FBA_FC2_FINISHED_SHIFT        (24U)
 #define RGX_CR_EVENT_STATUS_FBA_FC2_FINISHED_CLRMSK       (0XFEFFFFFFU)
 #define RGX_CR_EVENT_STATUS_FBA_FC2_FINISHED_EN           (0X01000000U)
 /* FBA_FC1_FINISHED
- All records for every attachment point of frame context 1 have been written out to memory
+ All records for every attachment point of frame context 1 have been written out to memory 
 */
 #define RGX_CR_EVENT_STATUS_FBA_FC1_FINISHED_SHIFT        (23U)
 #define RGX_CR_EVENT_STATUS_FBA_FC1_FINISHED_CLRMSK       (0XFF7FFFFFU)
 #define RGX_CR_EVENT_STATUS_FBA_FC1_FINISHED_EN           (0X00800000U)
 /* FBA_FC0_FINISHED
- All records for every attachment point of frame context 0 have been written out to memory
+ All records for every attachment point of frame context 0 have been written out to memory 
 */
 #define RGX_CR_EVENT_STATUS_FBA_FC0_FINISHED_SHIFT        (22U)
 #define RGX_CR_EVENT_STATUS_FBA_FC0_FINISHED_CLRMSK       (0XFFBFFFFFU)
 #define RGX_CR_EVENT_STATUS_FBA_FC0_FINISHED_EN           (0X00400000U)
 /* RDM_FC3_FINISHED
- All rays in frame context 3 have finished i.e RDM has encountered an interrupt command in the RT control stream
+ All rays in frame context 3 have finished i.e RDM has encountered an interrupt command in the RT control stream 
 */
 #define RGX_CR_EVENT_STATUS_RDM_FC3_FINISHED_SHIFT        (21U)
 #define RGX_CR_EVENT_STATUS_RDM_FC3_FINISHED_CLRMSK       (0XFFDFFFFFU)
 #define RGX_CR_EVENT_STATUS_RDM_FC3_FINISHED_EN           (0X00200000U)
 /* RDM_FC2_FINISHED
- All rays in frame context 2 have finished i.e RDM has encountered an interrupt command in the RT control stream
+ All rays in frame context 2 have finished i.e RDM has encountered an interrupt command in the RT control stream 
 */
 #define RGX_CR_EVENT_STATUS_RDM_FC2_FINISHED_SHIFT        (20U)
 #define RGX_CR_EVENT_STATUS_RDM_FC2_FINISHED_CLRMSK       (0XFFEFFFFFU)
 #define RGX_CR_EVENT_STATUS_RDM_FC2_FINISHED_EN           (0X00100000U)
 /* RDM_FC1_FINISHED
- All rays in frame context 1 have finished i.e RDM has encountered an interrupt command in the RT control stream
+ All rays in frame context 1 have finished i.e RDM has encountered an interrupt command in the RT control stream 
 */
 #define RGX_CR_EVENT_STATUS_RDM_FC1_FINISHED_SHIFT        (19U)
 #define RGX_CR_EVENT_STATUS_RDM_FC1_FINISHED_CLRMSK       (0XFFF7FFFFU)
 #define RGX_CR_EVENT_STATUS_RDM_FC1_FINISHED_EN           (0X00080000U)
 /* RDM_FC0_FINISHED
- All rays in frame context 0 have finished i.e RDM has encountered an interrupt command in the RT control stream
+ All rays in frame context 0 have finished i.e RDM has encountered an interrupt command in the RT control stream 
 */
 #define RGX_CR_EVENT_STATUS_RDM_FC0_FINISHED_SHIFT        (18U)
 #define RGX_CR_EVENT_STATUS_RDM_FC0_FINISHED_CLRMSK       (0XFFFBFFFFU)
 #define RGX_CR_EVENT_STATUS_RDM_FC0_FINISHED_EN           (0X00040000U)
 /* SHG_FINISHED
- SHG has completed the hierarchical voxelisation process and memory has been written
+ SHG has completed the hierarchical voxelisation process and memory has been written 
 */
 #define RGX_CR_EVENT_STATUS_SHG_FINISHED_SHIFT            (17U)
 #define RGX_CR_EVENT_STATUS_SHG_FINISHED_CLRMSK           (0XFFFDFFFFU)
@@ -818,25 +818,25 @@ Bifpmcache BIF
 #endif /* RGX_FEATURE_RAY_TRACING */
 
 /* USC_TRIGGER
- One or more USC has executed a nop.trigger instruction
+ One or more USC has executed a nop.trigger instruction 
 */
 #define RGX_CR_EVENT_STATUS_USC_TRIGGER_SHIFT             (15U)
 #define RGX_CR_EVENT_STATUS_USC_TRIGGER_CLRMSK            (0XFFFF7FFFU)
 #define RGX_CR_EVENT_STATUS_USC_TRIGGER_EN                (0X00008000U)
 /* ZLS_FINISHED
- ZLS has finished all tiles in a Render
+ ZLS has finished all tiles in a Render 
 */
 #define RGX_CR_EVENT_STATUS_ZLS_FINISHED_SHIFT            (14U)
 #define RGX_CR_EVENT_STATUS_ZLS_FINISHED_CLRMSK           (0XFFFFBFFFU)
 #define RGX_CR_EVENT_STATUS_ZLS_FINISHED_EN               (0X00004000U)
 /* GPIO_ACK
- General Purpose ouput acknowledgement
+ General Purpose ouput acknowledgement 
 */
 #define RGX_CR_EVENT_STATUS_GPIO_ACK_SHIFT                (13U)
 #define RGX_CR_EVENT_STATUS_GPIO_ACK_CLRMSK               (0XFFFFDFFFU)
 #define RGX_CR_EVENT_STATUS_GPIO_ACK_EN                   (0X00002000U)
 /* GPIO_REQ
- General Purpose input request
+ General Purpose input request 
 */
 #define RGX_CR_EVENT_STATUS_GPIO_REQ_SHIFT                (12U)
 #define RGX_CR_EVENT_STATUS_GPIO_REQ_CLRMSK               (0XFFFFEFFFU)
@@ -848,67 +848,67 @@ Bifpmcache BIF
 #define RGX_CR_EVENT_STATUS_POWER_ABORT_CLRMSK            (0XFFFFF7FFU)
 #define RGX_CR_EVENT_STATUS_POWER_ABORT_EN                (0X00000800U)
 /* POWER_COMPLETE
- The requested power operation has completed
+ The requested power operation has completed 
 */
 #define RGX_CR_EVENT_STATUS_POWER_COMPLETE_SHIFT          (10U)
 #define RGX_CR_EVENT_STATUS_POWER_COMPLETE_CLRMSK         (0XFFFFFBFFU)
 #define RGX_CR_EVENT_STATUS_POWER_COMPLETE_EN             (0X00000400U)
 /* MMU_PAGE_FAULT
- An MMU page fault has occurred
+ An MMU page fault has occurred 
 */
 #define RGX_CR_EVENT_STATUS_MMU_PAGE_FAULT_SHIFT          (9U)
 #define RGX_CR_EVENT_STATUS_MMU_PAGE_FAULT_CLRMSK         (0XFFFFFDFFU)
 #define RGX_CR_EVENT_STATUS_MMU_PAGE_FAULT_EN             (0X00000200U)
 /* PM_3D_MEM_FREE
- PM memory allocation completed for the current render
+ PM memory allocation completed for the current render 
 */
 #define RGX_CR_EVENT_STATUS_PM_3D_MEM_FREE_SHIFT          (8U)
 #define RGX_CR_EVENT_STATUS_PM_3D_MEM_FREE_CLRMSK         (0XFFFFFEFFU)
 #define RGX_CR_EVENT_STATUS_PM_3D_MEM_FREE_EN             (0X00000100U)
 /* PM_OUT_OF_MEMORY
- PM memory allocation failed for a macro-tile
+ PM memory allocation failed for a macro-tile 
 */
 #define RGX_CR_EVENT_STATUS_PM_OUT_OF_MEMORY_SHIFT        (7U)
 #define RGX_CR_EVENT_STATUS_PM_OUT_OF_MEMORY_CLRMSK       (0XFFFFFF7FU)
 #define RGX_CR_EVENT_STATUS_PM_OUT_OF_MEMORY_EN           (0X00000080U)
 /* TA_TERMINATE
- The TE has aborted a macro tile after a failted PM allocation request
+ The TE has aborted a macro tile after a failted PM allocation request 
 */
 #define RGX_CR_EVENT_STATUS_TA_TERMINATE_SHIFT            (6U)
 #define RGX_CR_EVENT_STATUS_TA_TERMINATE_CLRMSK           (0XFFFFFFBFU)
 #define RGX_CR_EVENT_STATUS_TA_TERMINATE_EN               (0X00000040U)
 /* TA_FINISHED
- The TA phase has completed
+ The TA phase has completed 
 */
 #define RGX_CR_EVENT_STATUS_TA_FINISHED_SHIFT             (5U)
 #define RGX_CR_EVENT_STATUS_TA_FINISHED_CLRMSK            (0XFFFFFFDFU)
 #define RGX_CR_EVENT_STATUS_TA_FINISHED_EN                (0X00000020U)
 /* ISP_END_MACROTILE
- ISP End-of-Macrotile
+ ISP End-of-Macrotile 
 */
 #define RGX_CR_EVENT_STATUS_ISP_END_MACROTILE_SHIFT       (4U)
 #define RGX_CR_EVENT_STATUS_ISP_END_MACROTILE_CLRMSK      (0XFFFFFFEFU)
 #define RGX_CR_EVENT_STATUS_ISP_END_MACROTILE_EN          (0X00000010U)
 /* PIXELBE_END_RENDER
- The 3D phase has completed
+ The 3D phase has completed 
 */
 #define RGX_CR_EVENT_STATUS_PIXELBE_END_RENDER_SHIFT      (3U)
 #define RGX_CR_EVENT_STATUS_PIXELBE_END_RENDER_CLRMSK     (0XFFFFFFF7U)
 #define RGX_CR_EVENT_STATUS_PIXELBE_END_RENDER_EN         (0X00000008U)
 /* COMPUTE_FINISHED
- The compute phase has completed
+ The compute phase has completed 
 */
 #define RGX_CR_EVENT_STATUS_COMPUTE_FINISHED_SHIFT        (2U)
 #define RGX_CR_EVENT_STATUS_COMPUTE_FINISHED_CLRMSK       (0XFFFFFFFBU)
 #define RGX_CR_EVENT_STATUS_COMPUTE_FINISHED_EN           (0X00000004U)
 /* KERNEL_FINISHED
- A compute kernel has completed and updated the associated event object in external memory
+ A compute kernel has completed and updated the associated event object in external memory 
 */
 #define RGX_CR_EVENT_STATUS_KERNEL_FINISHED_SHIFT         (1U)
 #define RGX_CR_EVENT_STATUS_KERNEL_FINISHED_CLRMSK        (0XFFFFFFFDU)
 #define RGX_CR_EVENT_STATUS_KERNEL_FINISHED_EN            (0X00000002U)
 /* TLA_COMPLETE
- The 2D core has completed writing out all data to memory and it has received a complete signal from the memory interface
+ The 2D core has completed writing out all data to memory and it has received a complete signal from the memory interface 
 */
 #define RGX_CR_EVENT_STATUS_TLA_COMPLETE_SHIFT            (0U)
 #define RGX_CR_EVENT_STATUS_TLA_COMPLETE_CLRMSK           (0XFFFFFFFEU)
@@ -917,19 +917,19 @@ Bifpmcache BIF
 
 /*
 
-  This register contains the value of a 48-bit internal timer.
-  The timer runs continuously, and wraps at the top end.
-  It counts 256 cycles at the core clock frequency.
+	This register contains the value of a 48-bit internal timer.
+	The timer runs continuously, and wraps at the top end.
+	It counts 256 cycles at the core clock frequency.
 
 
-  This means that at 100 MHz:
-  1 count value = 1/100MHz = 256 * 10 * 10^-9 seconds = 2.56 us
+	This means that at 100 MHz:
+	1 count value = 1/100MHz = 256 * 10 * 10^-9 seconds = 2.56 us
 
-  In order to avoid having to issue three 32-bit reads to detect the lower 32-bits wrapping, the MSB of the low 32-bit word is duplicated in the MSB of the high 32-bit word.
+	In order to avoid having to issue three 32-bit reads to detect the lower 32-bits wrapping, the MSB of the low 32-bit word is duplicated in the MSB of the high 32-bit word.
 
 */
 /*
-  Register RGX_CR_TIMER
+	Register RGX_CR_TIMER
 */
 #define RGX_CR_TIMER                                      (0x0160U)
 #define RGX_CR_TIMER_MASKFULL                             (IMG_UINT64_C(0x8000FFFFFFFFFFFF))
@@ -943,7 +943,7 @@ Bifpmcache BIF
 
 
 /*
-  Register RGX_CR_META_SP_MSLVDATAX
+	Register RGX_CR_META_SP_MSLVDATAX
 */
 #define RGX_CR_META_SP_MSLVDATAX                          (0x0A00U)
 #define RGX_CR_META_SP_MSLVDATAX_MASKFULL                 (IMG_UINT64_C(0x00000000FFFFFFFF))
@@ -955,7 +955,7 @@ This register holds the last data value read or written by the slave port
 
 
 /*
-  Register RGX_CR_META_SP_MSLVDATAT
+	Register RGX_CR_META_SP_MSLVDATAT
 */
 #define RGX_CR_META_SP_MSLVDATAT                          (0x0A08U)
 #define RGX_CR_META_SP_MSLVDATAT_MASKFULL                 (IMG_UINT64_C(0x00000000FFFFFFFF))
@@ -967,7 +967,7 @@ This register updates or returns the same value as MSLVDATAX. However each read/
 
 
 /*
-  Register RGX_CR_META_SP_MSLVCTRL0
+	Register RGX_CR_META_SP_MSLVCTRL0
 */
 #define RGX_CR_META_SP_MSLVCTRL0                          (0x0A10U)
 #define RGX_CR_META_SP_MSLVCTRL0_MASKFULL                 (IMG_UINT64_C(0x00000000FFFFFFFF))
@@ -991,7 +991,7 @@ If written with the value 1 a read to the address specified (see below) will be 
 
 
 /*
-  Register RGX_CR_META_SP_MSLVCTRL1
+	Register RGX_CR_META_SP_MSLVCTRL1
 */
 #define RGX_CR_META_SP_MSLVCTRL1                          (0x0A18U)
 #define RGX_CR_META_SP_MSLVCTRL1_MASKFULL                 (IMG_UINT64_C(0x00000000F7F4003F))
@@ -1065,7 +1065,7 @@ Byte routing/shift to be applied to data transfers performed on the MSLVDATAX an
 
 
 /*
-  Register RGX_CR_META_SP_MSLVHANDSHKE
+	Register RGX_CR_META_SP_MSLVHANDSHKE
 */
 #define RGX_CR_META_SP_MSLVHANDSHKE                       (0x0A50U)
 #define RGX_CR_META_SP_MSLVHANDSHKE_MASKFULL              (IMG_UINT64_C(0x000000000000000F))
@@ -1082,7 +1082,7 @@ JTAG GPIO Output. Used for S/W handshake with the JTAG port.
 
 
 /*
-  Register RGX_CR_META_SP_MSLVT0KICK
+	Register RGX_CR_META_SP_MSLVT0KICK
 */
 #define RGX_CR_META_SP_MSLVT0KICK                         (0x0A80U)
 #define RGX_CR_META_SP_MSLVT0KICK_MASKFULL                (IMG_UINT64_C(0x000000000000FFFF))
@@ -1094,7 +1094,7 @@ Writing the unsigned integer value n to the bottom 16-bits of this register will
 
 
 /*
-  Register RGX_CR_META_SP_MSLVT0KICKI
+	Register RGX_CR_META_SP_MSLVT0KICKI
 */
 #define RGX_CR_META_SP_MSLVT0KICKI                        (0x0A88U)
 #define RGX_CR_META_SP_MSLVT0KICKI_MASKFULL               (IMG_UINT64_C(0x000000000000FFFF))
@@ -1106,7 +1106,7 @@ Writing the unsigned integer value n to the bottom 16-bits of this register will
 
 
 /*
-  Register RGX_CR_META_SP_MSLVT1KICK
+	Register RGX_CR_META_SP_MSLVT1KICK
 */
 #define RGX_CR_META_SP_MSLVT1KICK                         (0x0A90U)
 #define RGX_CR_META_SP_MSLVT1KICK_MASKFULL                (IMG_UINT64_C(0x000000000000FFFF))
@@ -1118,7 +1118,7 @@ same behavior as MSLVT0KICK, but for thread1
 
 
 /*
-  Register RGX_CR_META_SP_MSLVT1KICKI
+	Register RGX_CR_META_SP_MSLVT1KICKI
 */
 #define RGX_CR_META_SP_MSLVT1KICKI                        (0x0A98U)
 #define RGX_CR_META_SP_MSLVT1KICKI_MASKFULL               (IMG_UINT64_C(0x000000000000FFFF))
@@ -1130,7 +1130,7 @@ same behavior as MSLVT0KICKI, but for thread1
 
 
 /*
-  Register RGX_CR_META_SP_MSLVT2KICK
+	Register RGX_CR_META_SP_MSLVT2KICK
 */
 #define RGX_CR_META_SP_MSLVT2KICK                         (0x0AA0U)
 #define RGX_CR_META_SP_MSLVT2KICK_MASKFULL                (IMG_UINT64_C(0x000000000000FFFF))
@@ -1142,7 +1142,7 @@ same behavior as MSLVT0KICK, but for thread2
 
 
 /*
-  Register RGX_CR_META_SP_MSLVT2KICKI
+	Register RGX_CR_META_SP_MSLVT2KICKI
 */
 #define RGX_CR_META_SP_MSLVT2KICKI                        (0x0AA8U)
 #define RGX_CR_META_SP_MSLVT2KICKI_MASKFULL               (IMG_UINT64_C(0x000000000000FFFF))
@@ -1154,7 +1154,7 @@ same behavior as MSLVT0KICKI, but for thread2
 
 
 /*
-  Register RGX_CR_META_SP_MSLVT3KICK
+	Register RGX_CR_META_SP_MSLVT3KICK
 */
 #define RGX_CR_META_SP_MSLVT3KICK                         (0x0AB0U)
 #define RGX_CR_META_SP_MSLVT3KICK_MASKFULL                (IMG_UINT64_C(0x000000000000FFFF))
@@ -1166,7 +1166,7 @@ same behavior as MSLVT0KICK, but for thread3
 
 
 /*
-  Register RGX_CR_META_SP_MSLVT3KICKI
+	Register RGX_CR_META_SP_MSLVT3KICKI
 */
 #define RGX_CR_META_SP_MSLVT3KICKI                        (0x0AB8U)
 #define RGX_CR_META_SP_MSLVT3KICKI_MASKFULL               (IMG_UINT64_C(0x000000000000FFFF))
@@ -1178,7 +1178,7 @@ same behavior as MSLVT0KICKI, but for thread3
 
 
 /*
-  Register RGX_CR_META_SP_MSLVRST
+	Register RGX_CR_META_SP_MSLVRST
 */
 #define RGX_CR_META_SP_MSLVRST                            (0x0AC0U)
 #define RGX_CR_META_SP_MSLVRST_MASKFULL                   (IMG_UINT64_C(0x0000000000000001))
@@ -1191,7 +1191,7 @@ This write only bit may be used to soft reset the core.  If a value of '1' is wr
 
 
 /*
-  Register RGX_CR_META_SP_MSLVIRQSTATUS
+	Register RGX_CR_META_SP_MSLVIRQSTATUS
 */
 #define RGX_CR_META_SP_MSLVIRQSTATUS                      (0x0AC8U)
 #define RGX_CR_META_SP_MSLVIRQSTATUS_MASKFULL             (IMG_UINT64_C(0x000000000000000C))
@@ -1210,7 +1210,7 @@ IRQ event occurred due to vectoring to an event inside META core to the host (se
 
 
 /*
-  Register RGX_CR_META_SP_MSLVIRQENABLE
+	Register RGX_CR_META_SP_MSLVIRQENABLE
 */
 #define RGX_CR_META_SP_MSLVIRQENABLE                      (0x0AD0U)
 #define RGX_CR_META_SP_MSLVIRQENABLE_MASKFULL             (IMG_UINT64_C(0x000000000000000C))
@@ -1229,7 +1229,7 @@ Enable Slave interrupt event 0 to raise an output interrupt.
 
 
 /*
-  Register RGX_CR_META_SP_MSLVIRQLEVEL
+	Register RGX_CR_META_SP_MSLVIRQLEVEL
 */
 #define RGX_CR_META_SP_MSLVIRQLEVEL                       (0x0AD8U)
 #define RGX_CR_META_SP_MSLVIRQLEVEL_MASKFULL              (IMG_UINT64_C(0x0000000000000001))
@@ -1247,7 +1247,7 @@ Level or edge mode for the META core output triggers.
 
 */
 /*
-  Register RGX_CR_MTS_SCHEDULE
+	Register RGX_CR_MTS_SCHEDULE
 */
 #define RGX_CR_MTS_SCHEDULE                               (0x0B00U)
 #define RGX_CR_MTS_SCHEDULE_MASKFULL                      (IMG_UINT64_C(0x00000000000001FF))
@@ -1299,7 +1299,7 @@ DataMaster Type
 
 */
 /*
-  Register RGX_CR_MTS_GARTEN_WRAPPER_CONFIG
+	Register RGX_CR_MTS_GARTEN_WRAPPER_CONFIG
 */
 #define RGX_CR_MTS_GARTEN_WRAPPER_CONFIG                  (0x0B50U)
 #define RGX_CR_MTS_GARTEN_WRAPPER_CONFIG_MASKFULL         (IMG_UINT64_C(0x0000FFFFFFFFF001))
@@ -1326,7 +1326,7 @@ Data master value to be used for fence requests
 
 
 /*
-  Register RGX_CR_META_BOOT
+	Register RGX_CR_META_BOOT
 */
 #define RGX_CR_META_BOOT                                  (0x0BF8U)
 #define RGX_CR_META_BOOT_MASKFULL                         (IMG_UINT64_C(0x0000000000000001))
@@ -1339,10 +1339,10 @@ Data master value to be used for fence requests
 
 
 /*
- Index registers per data master. Byte aligned fields to allow byte-masked access
+ Index registers per data master. Byte aligned fields to allow byte-masked access 
 */
 /*
-  Register RGX_CR_BIF_CAT_BASE_INDEX
+	Register RGX_CR_BIF_CAT_BASE_INDEX
 */
 #define RGX_CR_BIF_CAT_BASE_INDEX                         (0x1240U)
 #define RGX_CR_BIF_CAT_BASE_INDEX_MASKFULL                (IMG_UINT64_C(0x0007070707070707))
@@ -1392,7 +1392,7 @@ Indicates a fault has occurred on bank 0 and provides details of fault
 
 */
 /*
-  Register RGX_CR_BIF_FAULT_BANK0_MMU_STATUS
+	Register RGX_CR_BIF_FAULT_BANK0_MMU_STATUS
 */
 #define RGX_CR_BIF_FAULT_BANK0_MMU_STATUS                 (0x12B0U)
 #define RGX_CR_BIF_FAULT_BANK0_MMU_STATUS_MASKFULL        (IMG_UINT64_C(0x000000000000F775))
@@ -1437,7 +1437,7 @@ Provides details of the request that faulted on bank 0
 
 */
 /*
-  Register RGX_CR_BIF_FAULT_BANK0_REQ_STATUS
+	Register RGX_CR_BIF_FAULT_BANK0_REQ_STATUS
 */
 #define RGX_CR_BIF_FAULT_BANK0_REQ_STATUS                 (0x12B8U)
 #define RGX_CR_BIF_FAULT_BANK0_REQ_STATUS_MASKFULL        (IMG_UINT64_C(0x0007FFFFFFFFFFF0))
@@ -1464,7 +1464,7 @@ Indicates a fault has occurred on bank 1 and provides details of fault
 
 */
 /*
-  Register RGX_CR_BIF_FAULT_BANK1_MMU_STATUS
+	Register RGX_CR_BIF_FAULT_BANK1_MMU_STATUS
 */
 #define RGX_CR_BIF_FAULT_BANK1_MMU_STATUS                 (0x12C0U)
 #define RGX_CR_BIF_FAULT_BANK1_MMU_STATUS_MASKFULL        (IMG_UINT64_C(0x000000000000F775))
@@ -1509,7 +1509,7 @@ Provides details of the request that faulted on bank 1
 
 */
 /*
-  Register RGX_CR_BIF_FAULT_BANK1_REQ_STATUS
+	Register RGX_CR_BIF_FAULT_BANK1_REQ_STATUS
 */
 #define RGX_CR_BIF_FAULT_BANK1_REQ_STATUS                 (0x12C8U)
 #define RGX_CR_BIF_FAULT_BANK1_REQ_STATUS_MASKFULL        (IMG_UINT64_C(0x0007FFFFFFFFFFF0))
@@ -1536,7 +1536,7 @@ Specifies physical address to read from in the event of a faulting read request 
 
 */
 /*
-  Register RGX_CR_BIF_FAULT_READ
+	Register RGX_CR_BIF_FAULT_READ
 */
 #define RGX_CR_BIF_FAULT_READ                             (0x13E0U)
 #define RGX_CR_BIF_FAULT_READ_MASKFULL                    (IMG_UINT64_C(0x000000FFFFFFFFF0))
@@ -1553,7 +1553,7 @@ Indicates a fault has occurred on bank 0 and provides details of fault
 
 */
 /*
-  Register RGX_CR_TEXAS_BIF_FAULT_BANK0_MMU_STATUS
+	Register RGX_CR_TEXAS_BIF_FAULT_BANK0_MMU_STATUS
 */
 #define RGX_CR_TEXAS_BIF_FAULT_BANK0_MMU_STATUS           (0x1430U)
 #define RGX_CR_TEXAS_BIF_FAULT_BANK0_MMU_STATUS_MASKFULL  (IMG_UINT64_C(0x000000000000F775))
@@ -1598,7 +1598,7 @@ Provides details of the request that faulted on bank 0
 
 */
 /*
-  Register RGX_CR_TEXAS_BIF_FAULT_BANK0_REQ_STATUS
+	Register RGX_CR_TEXAS_BIF_FAULT_BANK0_REQ_STATUS
 */
 #define RGX_CR_TEXAS_BIF_FAULT_BANK0_REQ_STATUS           (0x1438U)
 #define RGX_CR_TEXAS_BIF_FAULT_BANK0_REQ_STATUS_MASKFULL  (IMG_UINT64_C(0x0007FFFFFFFFFFF0))
@@ -1621,16 +1621,16 @@ Provides details of the request that faulted on bank 0
 
 /*
 
-  SLC control registers
+	SLC control registers
 
 */
 /*
-  Register RGX_CR_SLC_CTRL_MISC
+	Register RGX_CR_SLC_CTRL_MISC
 */
 #define RGX_CR_SLC_CTRL_MISC                              (0x3800U)
 #define RGX_CR_SLC_CTRL_MISC_MASKFULL                     (IMG_UINT64_C(0xFFFFFFFF00FF0105))
 /* SCRAMBLE_BITS
- Pattern of bits used to determine the Cache Bank in Address Decode mode 0x21. The actual Cache Bank to use is determined by indexing into the 32 Scramble Bits using the 5 LSB's of the Hash result and then XORing this with Bit 6 of the incoming address to give a single bit result
+ Pattern of bits used to determine the Cache Bank in Address Decode mode 0x21. The actual Cache Bank to use is determined by indexing into the 32 Scramble Bits using the 5 LSB's of the Hash result and then XORing this with Bit 6 of the incoming address to give a single bit result 
 */
 #define RGX_CR_SLC_CTRL_MISC_SCRAMBLE_BITS_SHIFT          (32U)
 #define RGX_CR_SLC_CTRL_MISC_SCRAMBLE_BITS_CLRMSK         (IMG_UINT64_C(0X00000000FFFFFFFF))
@@ -1646,19 +1646,19 @@ Provides details of the request that faulted on bank 0
 #define RGX_CR_SLC_CTRL_MISC_ADDR_DECODE_MODE_PVR_HASH1   (IMG_UINT64_C(0x0000000000200000))
 #define RGX_CR_SLC_CTRL_MISC_ADDR_DECODE_MODE_PVR_HASH2_SCRAMBLE (IMG_UINT64_C(0x0000000000210000))
 /* PAUSE
- Pause the SLC
+ Pause the SLC 
 */
 #define RGX_CR_SLC_CTRL_MISC_PAUSE_SHIFT                  (8U)
 #define RGX_CR_SLC_CTRL_MISC_PAUSE_CLRMSK                 (IMG_UINT64_C(0XFFFFFFFFFFFFFEFF))
 #define RGX_CR_SLC_CTRL_MISC_PAUSE_EN                     (IMG_UINT64_C(0X0000000000000100))
 /* ENABLE_LINE_USE_LIMIT
- Enable the use of cache line limits
+ Enable the use of cache line limits 
 */
 #define RGX_CR_SLC_CTRL_MISC_ENABLE_LINE_USE_LIMIT_SHIFT  (2U)
 #define RGX_CR_SLC_CTRL_MISC_ENABLE_LINE_USE_LIMIT_CLRMSK (IMG_UINT64_C(0XFFFFFFFFFFFFFFFB))
 #define RGX_CR_SLC_CTRL_MISC_ENABLE_LINE_USE_LIMIT_EN     (IMG_UINT64_C(0X0000000000000004))
 /* BYPASS_BURST_COMBINER default: 0x00000001
- Disable the burst combiner on the external memory interface
+ Disable the burst combiner on the external memory interface 
 */
 #define RGX_CR_SLC_CTRL_MISC_BYPASS_BURST_COMBINER_SHIFT  (0U)
 #define RGX_CR_SLC_CTRL_MISC_BYPASS_BURST_COMBINER_CLRMSK (IMG_UINT64_C(0XFFFFFFFFFFFFFFFE))
@@ -1667,12 +1667,12 @@ Provides details of the request that faulted on bank 0
 
 /*
 
-  SLC Flush & Invalidate control.
-  Note that per Data Master operations will flush any cache lines that have been made dirty by any writes from the specified Data Master. Combined Invalidate operation then only invalidates entries that have been referenced solely by the specified Data Master, any cache lines referenced by multiple Data Masters will not be affected by a per Data Master invalidate operation and will remain valid.
+	SLC Flush & Invalidate control.
+	Note that per Data Master operations will flush any cache lines that have been made dirty by any writes from the specified Data Master.	Combined Invalidate operation then only invalidates entries that have been referenced solely by the specified Data Master, any cache lines referenced by multiple Data Masters will not be affected by a per Data Master invalidate operation and will remain valid.
 
 */
 /*
-  Register RGX_CR_SLC_CTRL_FLUSH_INVAL
+	Register RGX_CR_SLC_CTRL_FLUSH_INVAL
 */
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL                       (0x3818U)
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_MASKFULL              (IMG_UINT64_C(0x00000000800007FF))
@@ -1716,37 +1716,37 @@ Provides details of the request that faulted on bank 0
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_VXD_CLRMSK         (0XFFFFFFBFU)
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_VXD_EN             (0X00000040U)
 /* DM_HOST_META
- When set, flush all SLC entries made dirty by the HOST or META, then invalidate all SLC entries referenced solely by the HOST or META
+ When set, flush all SLC entries made dirty by the HOST or META, then invalidate all SLC entries referenced solely by the HOST or META 
 */
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_HOST_META_SHIFT    (5U)
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_HOST_META_CLRMSK   (0XFFFFFFDFU)
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_HOST_META_EN       (0X00000020U)
 /* DM_MMU
- When set, flush all SLC entries made dirty by the MMU, then invalidate all SLC entries referenced solely by the MMU
+ When set, flush all SLC entries made dirty by the MMU, then invalidate all SLC entries referenced solely by the MMU 
 */
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_MMU_SHIFT          (4U)
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_MMU_CLRMSK         (0XFFFFFFEFU)
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_MMU_EN             (0X00000010U)
 /* DM_COMPUTE
- When set, flush all SLC entries made dirty by the COMPUTE data master, then invalidate all SLC entries referenced solely by the COMPUTE data master
+ When set, flush all SLC entries made dirty by the COMPUTE data master, then invalidate all SLC entries referenced solely by the COMPUTE data master 
 */
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_COMPUTE_SHIFT      (3U)
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_COMPUTE_CLRMSK     (0XFFFFFFF7U)
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_COMPUTE_EN         (0X00000008U)
 /* DM_PIXEL
- When set, flush all SLC entries made dirty by the PIXEL data master, then invalidate all SLC entries referenced solely by the PIXEL data master
+ When set, flush all SLC entries made dirty by the PIXEL data master, then invalidate all SLC entries referenced solely by the PIXEL data master 
 */
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_PIXEL_SHIFT        (2U)
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_PIXEL_CLRMSK       (0XFFFFFFFBU)
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_PIXEL_EN           (0X00000004U)
 /* DM_TA
- When set, flush all SLC entries made dirty by the TA group which includes VERTEX, TESSELLATOR & STREAM_OUT data masters, then invalidate all SLC entries referenced solely by the TA group which includes VERTEX, TESSELLATOR & STREAM_OUT data masters
+ When set, flush all SLC entries made dirty by the TA group which includes VERTEX, TESSELLATOR & STREAM_OUT data masters, then invalidate all SLC entries referenced solely by the TA group which includes VERTEX, TESSELLATOR & STREAM_OUT data masters 
 */
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_TA_SHIFT           (1U)
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_TA_CLRMSK          (0XFFFFFFFDU)
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_DM_TA_EN              (0X00000002U)
 /* ALL
- When set, flush all SLC entries, then invalidate all SLC entries
+ When set, flush all SLC entries, then invalidate all SLC entries 
 */
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_ALL_SHIFT             (0U)
 #define RGX_CR_SLC_CTRL_FLUSH_INVAL_ALL_CLRMSK            (0XFFFFFFFEU)
@@ -1755,11 +1755,11 @@ Provides details of the request that faulted on bank 0
 
 /*
 
-  Current status of Flush / Invalidate operations within the SLC
+	Current status of Flush / Invalidate operations within the SLC
 
 */
 /*
-  Register RGX_CR_SLC_STATUS0
+	Register RGX_CR_SLC_STATUS0
 */
 #define RGX_CR_SLC_STATUS0                                (0x3820U)
 #define RGX_CR_SLC_STATUS0_MASKFULL                       (IMG_UINT64_C(0x0000000000000007))
@@ -1785,23 +1785,23 @@ Provides details of the request that faulted on bank 0
 
 /*
 
-  SLC Bypass control
+	SLC Bypass control
 
 */
 /*
-  Register RGX_CR_SLC_CTRL_BYPASS
+	Register RGX_CR_SLC_CTRL_BYPASS
 */
 #define RGX_CR_SLC_CTRL_BYPASS                            (0x3828U)
 #define RGX_CR_SLC_CTRL_BYPASS_MASKFULL                   (IMG_UINT64_C(0x000000000FFFFFFF))
 #if defined(RGX_FEATURE_RAY_TRACING)
 /* DM_RAY_VERTEX
- Bypass SLC for ray tracing VERTEX_RAY (CPF) requestor
+ Bypass SLC for ray tracing VERTEX_RAY (CPF) requestor 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_DM_RAY_VERTEX_SHIFT        (27U)
 #define RGX_CR_SLC_CTRL_BYPASS_DM_RAY_VERTEX_CLRMSK       (0XF7FFFFFFU)
 #define RGX_CR_SLC_CTRL_BYPASS_DM_RAY_VERTEX_EN           (0X08000000U)
 /* DM_RAY
- Bypass SLC for ray tracing RAY requestor
+ Bypass SLC for ray tracing RAY requestor 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_DM_RAY_SHIFT               (26U)
 #define RGX_CR_SLC_CTRL_BYPASS_DM_RAY_CLRMSK              (0XFBFFFFFFU)
@@ -1809,103 +1809,103 @@ Provides details of the request that faulted on bank 0
 #endif /* RGX_FEATURE_RAY_TRACING */
 
 /* REQ_IPF_CPF
- Bypass SLC for IPF (CPF) requestor
+ Bypass SLC for IPF (CPF) requestor 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_IPF_CPF_SHIFT          (25U)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_IPF_CPF_CLRMSK         (0XFDFFFFFFU)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_IPF_CPF_EN             (0X02000000U)
 /* REQ_TPU
- Bypass SLC for TPU requests coming from the MCU requestor
+ Bypass SLC for TPU requests coming from the MCU requestor 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_TPU_SHIFT              (24U)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_TPU_CLRMSK             (0XFEFFFFFFU)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_TPU_EN                 (0X01000000U)
 /* REQ_FBDC
- Bypass SLC for the FBDC requestor
+ Bypass SLC for the FBDC requestor 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_FBDC_SHIFT             (23U)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_FBDC_CLRMSK            (0XFF7FFFFFU)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_FBDC_EN                (0X00800000U)
 /* REQ_TLA
- Bypass SLC for the TLA requestor
+ Bypass SLC for the TLA requestor 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_TLA_SHIFT              (22U)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_TLA_CLRMSK             (0XFFBFFFFFU)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_TLA_EN                 (0X00400000U)
 /* BYP_CC_N
- Bypass SLC when Cache Coherency bit is not set
+ Bypass SLC when Cache Coherency bit is not set 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_BYP_CC_N_SHIFT             (21U)
 #define RGX_CR_SLC_CTRL_BYPASS_BYP_CC_N_CLRMSK            (0XFFDFFFFFU)
 #define RGX_CR_SLC_CTRL_BYPASS_BYP_CC_N_EN                (0X00200000U)
 /* BYP_CC
- Bypass SLC when Cache Coherency bit is set
+ Bypass SLC when Cache Coherency bit is set 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_BYP_CC_SHIFT               (20U)
 #define RGX_CR_SLC_CTRL_BYPASS_BYP_CC_CLRMSK              (0XFFEFFFFFU)
 #define RGX_CR_SLC_CTRL_BYPASS_BYP_CC_EN                  (0X00100000U)
 /* REQ_MCU
- Bypass SLC for the MCU requestor
+ Bypass SLC for the MCU requestor 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_MCU_SHIFT              (19U)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_MCU_CLRMSK             (0XFFF7FFFFU)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_MCU_EN                 (0X00080000U)
 /* REQ_PDS
- Bypass SLC for the PDS requestor
+ Bypass SLC for the PDS requestor 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_PDS_SHIFT              (18U)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_PDS_CLRMSK             (0XFFFBFFFFU)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_PDS_EN                 (0X00040000U)
 /* REQ_TPF
- Bypass SLC for the TPF requestor
+ Bypass SLC for the TPF requestor 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_TPF_SHIFT              (17U)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_TPF_CLRMSK             (0XFFFDFFFFU)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_TPF_EN                 (0X00020000U)
 /* REQ_TA_TPC
- Bypass SLC for the TA (Tail Pointer Cache data) requestor
+ Bypass SLC for the TA (Tail Pointer Cache data) requestor 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_TA_TPC_SHIFT           (16U)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_TA_TPC_CLRMSK          (0XFFFEFFFFU)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_TA_TPC_EN              (0X00010000U)
 /* REQ_IPF_OBJ
- Bypass SLC for the IPF (Object data) requestor
+ Bypass SLC for the IPF (Object data) requestor 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_IPF_OBJ_SHIFT          (15U)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_IPF_OBJ_CLRMSK         (0XFFFF7FFFU)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_IPF_OBJ_EN             (0X00008000U)
 /* REQ_USC
- Bypass SLC for the USC requestor
+ Bypass SLC for the USC requestor 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_USC_SHIFT              (14U)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_USC_CLRMSK             (0XFFFFBFFFU)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_USC_EN                 (0X00004000U)
 /* REQ_META
- Bypass SLC for the META requestor
+ Bypass SLC for the META requestor 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_META_SHIFT             (13U)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_META_CLRMSK            (0XFFFFDFFFU)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_META_EN                (0X00002000U)
 /* REQ_HOST
- Bypass SLC for the Host requestor
+ Bypass SLC for the Host requestor 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_HOST_SHIFT             (12U)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_HOST_CLRMSK            (0XFFFFEFFFU)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_HOST_EN                (0X00001000U)
 /* REQ_MMU_PT
- Bypass SLC for the MMU requestor (Page Table data)
+ Bypass SLC for the MMU requestor (Page Table data) 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_MMU_PT_SHIFT           (11U)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_MMU_PT_CLRMSK          (0XFFFFF7FFU)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_MMU_PT_EN              (0X00000800U)
 /* REQ_MMU_PD
- Bypass SLC for the MMU requestor (Page Directory data)
+ Bypass SLC for the MMU requestor (Page Directory data) 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_MMU_PD_SHIFT           (10U)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_MMU_PD_CLRMSK          (0XFFFFFBFFU)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_MMU_PD_EN              (0X00000400U)
 /* REQ_MMU_PC
- Bypass SLC for the MMU requestor (Page Catalogue data)
+ Bypass SLC for the MMU requestor (Page Catalogue data) 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_MMU_PC_SHIFT           (9U)
 #define RGX_CR_SLC_CTRL_BYPASS_REQ_MMU_PC_CLRMSK          (0XFFFFFDFFU)
@@ -1929,37 +1929,37 @@ Provides details of the request that faulted on bank 0
 #define RGX_CR_SLC_CTRL_BYPASS_DM_VXD_CLRMSK              (0XFFFFFFBFU)
 #define RGX_CR_SLC_CTRL_BYPASS_DM_VXD_EN                  (0X00000040U)
 /* DM_HOST_META
- Bypass SLC the HOST/META data master
+ Bypass SLC the HOST/META data master 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_DM_HOST_META_SHIFT         (5U)
 #define RGX_CR_SLC_CTRL_BYPASS_DM_HOST_META_CLRMSK        (0XFFFFFFDFU)
 #define RGX_CR_SLC_CTRL_BYPASS_DM_HOST_META_EN            (0X00000020U)
 /* DM_MMU
- Bypass SLC the MMU data master
+ Bypass SLC the MMU data master 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_DM_MMU_SHIFT               (4U)
 #define RGX_CR_SLC_CTRL_BYPASS_DM_MMU_CLRMSK              (0XFFFFFFEFU)
 #define RGX_CR_SLC_CTRL_BYPASS_DM_MMU_EN                  (0X00000010U)
 /* DM_COMPUTE
- Bypass SLC the COMPUTE data master
+ Bypass SLC the COMPUTE data master 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_DM_COMPUTE_SHIFT           (3U)
 #define RGX_CR_SLC_CTRL_BYPASS_DM_COMPUTE_CLRMSK          (0XFFFFFFF7U)
 #define RGX_CR_SLC_CTRL_BYPASS_DM_COMPUTE_EN              (0X00000008U)
 /* DM_PIXEL
- Bypass SLC for the PIXEL data master
+ Bypass SLC for the PIXEL data master 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_DM_PIXEL_SHIFT             (2U)
 #define RGX_CR_SLC_CTRL_BYPASS_DM_PIXEL_CLRMSK            (0XFFFFFFFBU)
 #define RGX_CR_SLC_CTRL_BYPASS_DM_PIXEL_EN                (0X00000004U)
 /* DM_TA
- Bypass SLC for the TA group which includes VERTEX, TESSELLATOR & STREAM_OUT data masters
+ Bypass SLC for the TA group which includes VERTEX, TESSELLATOR & STREAM_OUT data masters 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_DM_TA_SHIFT                (1U)
 #define RGX_CR_SLC_CTRL_BYPASS_DM_TA_CLRMSK               (0XFFFFFFFDU)
 #define RGX_CR_SLC_CTRL_BYPASS_DM_TA_EN                   (0X00000002U)
 /* ALL
- Bypass SLC for all requesters
+ Bypass SLC for all requesters 
 */
 #define RGX_CR_SLC_CTRL_BYPASS_ALL_SHIFT                  (0U)
 #define RGX_CR_SLC_CTRL_BYPASS_ALL_CLRMSK                 (0XFFFFFFFEU)
@@ -1968,11 +1968,11 @@ Provides details of the request that faulted on bank 0
 
 /*
 
-  AXI ACE-LITE configuration registers
+	AXI ACE-LITE configuration registers
 
 */
 /*
-  Register RGX_CR_AXI_ACE_LITE_CONFIGURATION
+	Register RGX_CR_AXI_ACE_LITE_CONFIGURATION
 */
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION                 (0x38C0U)
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION_MASKFULL        (IMG_UINT64_C(0x0000001FFFFFFFFF))
@@ -2011,55 +2011,55 @@ Write cache policy for coherent transactions - bit[1] should be set to 1
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION_AWCACHE_COHERENT_CLRMSK (IMG_UINT64_C(0XFFFFFFFFFC3FFFFF))
 /* ARDOMAIN_BARRIER
 Read shareability domain for barrier transactions
-                      00 = Non-Shareable
-                      01 = Inner Shareable
-                      10 = Outer Shareable
-                      11 = System
+								      00 = Non-Shareable
+								      01 = Inner Shareable
+								      10 = Outer Shareable
+								      11 = System
 */
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION_ARDOMAIN_BARRIER_SHIFT (20U)
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION_ARDOMAIN_BARRIER_CLRMSK (IMG_UINT64_C(0XFFFFFFFFFFCFFFFF))
 /* AWDOMAIN_BARRIER
 Write shareability domain for barrier transactions
-                      00 = Non-Shareable
-                      01 = Inner Shareable
-                      10 = Outer Shareable
-                      11 = System
+								      00 = Non-Shareable
+								      01 = Inner Shareable
+								      10 = Outer Shareable
+								      11 = System
 */
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION_AWDOMAIN_BARRIER_SHIFT (18U)
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION_AWDOMAIN_BARRIER_CLRMSK (IMG_UINT64_C(0XFFFFFFFFFFF3FFFF))
 /* ARDOMAIN_CACHE_MAINTENANCE
 Read shareability domain for cache maintenance transactions
-                    00 = Non-Shareable
-                    01 = Inner Shareable
-                    10 = Outer Shareable
+										00 = Non-Shareable
+										01 = Inner Shareable
+										10 = Outer Shareable
 */
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION_ARDOMAIN_CACHE_MAINTENANCE_SHIFT (16U)
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION_ARDOMAIN_CACHE_MAINTENANCE_CLRMSK (IMG_UINT64_C(0XFFFFFFFFFFFCFFFF))
 /* AWDOMAIN_COHERENT default: 0x00000001
 Write shareability domain for coherant transactions
-                       01 = Inner Shareable
-                       10 = Outer Shareable
+								       01 = Inner Shareable
+								       10 = Outer Shareable
 */
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION_AWDOMAIN_COHERENT_SHIFT (14U)
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION_AWDOMAIN_COHERENT_CLRMSK (IMG_UINT64_C(0XFFFFFFFFFFFF3FFF))
 /* ARDOMAIN_COHERENT default: 0x00000001
 Read shareability domain for coherant transactions
-                       01 = Inner Shareable
-                       10 = Outer Shareable
+								       01 = Inner Shareable
+								       10 = Outer Shareable
 */
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION_ARDOMAIN_COHERENT_SHIFT (12U)
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION_ARDOMAIN_COHERENT_CLRMSK (IMG_UINT64_C(0XFFFFFFFFFFFFCFFF))
 /* ARDOMAIN_NON_SNOOPING
 Read shareability domain for non-snooping transactions
-                    00 = Non-Shareable
-                    11 = System
+									  00 = Non-Shareable
+									  11 = System
 */
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION_ARDOMAIN_NON_SNOOPING_SHIFT (10U)
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION_ARDOMAIN_NON_SNOOPING_CLRMSK (IMG_UINT64_C(0XFFFFFFFFFFFFF3FF))
 /* AWDOMAIN_NON_SNOOPING
 Write shareability domain for non-snooping transactions
-                   00 = Non-Shareable
-                   11 = System
+									 00 = Non-Shareable
+									 11 = System
 */
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION_AWDOMAIN_NON_SNOOPING_SHIFT (8U)
 #define RGX_CR_AXI_ACE_LITE_CONFIGURATION_AWDOMAIN_NON_SNOOPING_CLRMSK (IMG_UINT64_C(0XFFFFFFFFFFFFFCFF))
@@ -2077,29 +2077,29 @@ Write cache policy for non-snooping transactions
 
 /*
 
-  SLC control registers
+	SLC control registers
 
 */
 /*
-  Register RGX_CR_SLC_CTRL_MISC2
+	Register RGX_CR_SLC_CTRL_MISC2
 */
 #define RGX_CR_SLC_CTRL_MISC2                             (0x3930U)
 #define RGX_CR_SLC_CTRL_MISC2_MASKFULL                    (IMG_UINT64_C(0x00000000FFFFFFFF))
 /* SCRAMBLE_BITS
- Pattern of bits used to determine the MSB of the Cache Bank in 4 Bank configurations in Address Decode mode 0x21. The actual Cache Bank to use is determined by indexing into the 32 Scramble Bits using the 5 LSB's of the Hash result and then XORing this with Bit 6 of the incoming address to give a single bit result
+ Pattern of bits used to determine the MSB of the Cache Bank in 4 Bank configurations in Address Decode mode 0x21. The actual Cache Bank to use is determined by indexing into the 32 Scramble Bits using the 5 LSB's of the Hash result and then XORing this with Bit 6 of the incoming address to give a single bit result 
 */
 #define RGX_CR_SLC_CTRL_MISC2_SCRAMBLE_BITS_SHIFT         (0U)
 #define RGX_CR_SLC_CTRL_MISC2_SCRAMBLE_BITS_CLRMSK        (00000000U)
 
 
 /*
-  Register RGX_CR_SLC_CROSSBAR_LOAD_BALANCE
+	Register RGX_CR_SLC_CROSSBAR_LOAD_BALANCE
 */
 #define RGX_CR_SLC_CROSSBAR_LOAD_BALANCE                  (0x3938U)
 #define RGX_CR_SLC_CROSSBAR_LOAD_BALANCE_MASKFULL         (IMG_UINT64_C(0x0000000000000001))
 /* BYPASS
  control register bit to bypass load balancing in SLC crossbar. In this case, the requests from
- img-memif0 will go directly to ocp-memif0 and so on
+ img-memif0 will go directly to ocp-memif0 and so on 
 */
 #define RGX_CR_SLC_CROSSBAR_LOAD_BALANCE_BYPASS_SHIFT     (0U)
 #define RGX_CR_SLC_CROSSBAR_LOAD_BALANCE_BYPASS_CLRMSK    (0XFFFFFFFEU)
@@ -2107,7 +2107,7 @@ Write cache policy for non-snooping transactions
 
 
 /*
-  Register RGX_CR_PERF_TA_PHASE
+	Register RGX_CR_PERF_TA_PHASE
 */
 #define RGX_CR_PERF_TA_PHASE                              (0x6008U)
 #define RGX_CR_PERF_TA_PHASE_MASKFULL                     (IMG_UINT64_C(0x00000000FFFFFFFF))
@@ -2119,7 +2119,7 @@ The number of TA phases completed
 
 
 /*
-  Register RGX_CR_PERF_3D_PHASE
+	Register RGX_CR_PERF_3D_PHASE
 */
 #define RGX_CR_PERF_3D_PHASE                              (0x6010U)
 #define RGX_CR_PERF_3D_PHASE_MASKFULL                     (IMG_UINT64_C(0x00000000FFFFFFFF))
@@ -2131,7 +2131,7 @@ The number of 3D phases completed
 
 
 /*
-  Register RGX_CR_PERF_COMPUTE_PHASE
+	Register RGX_CR_PERF_COMPUTE_PHASE
 */
 #define RGX_CR_PERF_COMPUTE_PHASE                         (0x6018U)
 #define RGX_CR_PERF_COMPUTE_PHASE_MASKFULL                (IMG_UINT64_C(0x00000000FFFFFFFF))
@@ -2143,7 +2143,7 @@ The number of Compute phases completed
 
 
 /*
-  Register RGX_CR_PERF_TA_CYCLE
+	Register RGX_CR_PERF_TA_CYCLE
 */
 #define RGX_CR_PERF_TA_CYCLE                              (0x6020U)
 #define RGX_CR_PERF_TA_CYCLE_MASKFULL                     (IMG_UINT64_C(0x00000000FFFFFFFF))
@@ -2155,7 +2155,7 @@ The number of cycles spent in TA phases
 
 
 /*
-  Register RGX_CR_PERF_3D_CYCLE
+	Register RGX_CR_PERF_3D_CYCLE
 */
 #define RGX_CR_PERF_3D_CYCLE                              (0x6028U)
 #define RGX_CR_PERF_3D_CYCLE_MASKFULL                     (IMG_UINT64_C(0x00000000FFFFFFFF))
@@ -2167,7 +2167,7 @@ The number of cycles spent in 3D phases
 
 
 /*
-  Register RGX_CR_PERF_COMPUTE_CYCLE
+	Register RGX_CR_PERF_COMPUTE_CYCLE
 */
 #define RGX_CR_PERF_COMPUTE_CYCLE                         (0x6030U)
 #define RGX_CR_PERF_COMPUTE_CYCLE_MASKFULL                (IMG_UINT64_C(0x00000000FFFFFFFF))
@@ -2179,7 +2179,7 @@ The number of cycles spent in Compute phases
 
 
 /*
-  Register RGX_CR_PERF_3D_SPINUP
+	Register RGX_CR_PERF_3D_SPINUP
 */
 #define RGX_CR_PERF_3D_SPINUP                             (0x6220U)
 #define RGX_CR_PERF_3D_SPINUP_MASKFULL                    (IMG_UINT64_C(0x00000000FFFFFFFF))
@@ -2196,7 +2196,7 @@ The number of cycles it takes the 3D pipeline to spin-up
 
 */
 /*
-  Register RGX_CR_OCP_REVINFO
+	Register RGX_CR_OCP_REVINFO
 */
 #define RGX_CR_OCP_REVINFO                                (0x9000U)
 #define RGX_CR_OCP_REVINFO_MASKFULL                       (IMG_UINT64_C(0x00000007FFFFFFFF))
@@ -2224,7 +2224,7 @@ Core revision
 
 */
 /*
-  Register RGX_CR_OCP_SYSCONFIG
+	Register RGX_CR_OCP_SYSCONFIG
 */
 #define RGX_CR_OCP_SYSCONFIG                              (0x9010U)
 #define RGX_CR_OCP_SYSCONFIG_MASKFULL                     (IMG_UINT64_C(0x0000000000000FFF))
@@ -2261,7 +2261,7 @@ Idle Mode for OCP slaves, 0: Force-Idle, 1: No-Idle, 2: Smart-Idle
 
 
 /*
-  Register RGX_CR_OCP_IRQSTATUS_RAW_0
+	Register RGX_CR_OCP_IRQSTATUS_RAW_0
 */
 #define RGX_CR_OCP_IRQSTATUS_RAW_0                        (0x9020U)
 #define RGX_CR_OCP_IRQSTATUS_RAW_0_MASKFULL               (IMG_UINT64_C(0x0000000000000001))
@@ -2274,7 +2274,7 @@ Interrupt raw event for OCP Master Interfaces, W 0 : No action, W 1 - Set event,
 
 
 /*
-  Register RGX_CR_OCP_IRQSTATUS_RAW_1
+	Register RGX_CR_OCP_IRQSTATUS_RAW_1
 */
 #define RGX_CR_OCP_IRQSTATUS_RAW_1                        (0x9028U)
 #define RGX_CR_OCP_IRQSTATUS_RAW_1_MASKFULL               (IMG_UINT64_C(0x0000000000000001))
@@ -2287,7 +2287,7 @@ Interrupt raw event for OCP Slave Interfaces, W 0 : No action, W 1 - Set event, 
 
 
 /*
-  Register RGX_CR_OCP_IRQSTATUS_RAW_2
+	Register RGX_CR_OCP_IRQSTATUS_RAW_2
 */
 #define RGX_CR_OCP_IRQSTATUS_RAW_2                        (0x9030U)
 #define RGX_CR_OCP_IRQSTATUS_RAW_2_MASKFULL               (IMG_UINT64_C(0x0000000000000001))
@@ -2300,7 +2300,7 @@ Interrupt raw event for core, W 0 : No action, W 1 - Set event, R 0 - No event p
 
 
 /*
-  Register RGX_CR_OCP_IRQSTATUS_0
+	Register RGX_CR_OCP_IRQSTATUS_0
 */
 #define RGX_CR_OCP_IRQSTATUS_0                            (0x9038U)
 #define RGX_CR_OCP_IRQSTATUS_0_MASKFULL                   (IMG_UINT64_C(0x0000000000000001))
@@ -2313,7 +2313,7 @@ Interrupt status event for OCP Master Interfaces, W 0 : No action, W 1 - Clear e
 
 
 /*
-  Register RGX_CR_OCP_IRQSTATUS_1
+	Register RGX_CR_OCP_IRQSTATUS_1
 */
 #define RGX_CR_OCP_IRQSTATUS_1                            (0x9040U)
 #define RGX_CR_OCP_IRQSTATUS_1_MASKFULL                   (IMG_UINT64_C(0x0000000000000001))
@@ -2326,7 +2326,7 @@ Interrupt status event for OCP Slave Interfaces, W 0 : No action, W 1 - Clear ev
 
 
 /*
-  Register RGX_CR_OCP_IRQSTATUS_2
+	Register RGX_CR_OCP_IRQSTATUS_2
 */
 #define RGX_CR_OCP_IRQSTATUS_2                            (0x9048U)
 #define RGX_CR_OCP_IRQSTATUS_2_MASKFULL                   (IMG_UINT64_C(0x0000000000000001))
@@ -2339,7 +2339,7 @@ Interrupt status event for core, W 0 : No action, W 1 - Clear event, R 0 - No ev
 
 
 /*
-  Register RGX_CR_OCP_IRQENABLE_SET_0
+	Register RGX_CR_OCP_IRQENABLE_SET_0
 */
 #define RGX_CR_OCP_IRQENABLE_SET_0                        (0x9050U)
 #define RGX_CR_OCP_IRQENABLE_SET_0_MASKFULL               (IMG_UINT64_C(0x0000000000000001))
@@ -2352,7 +2352,7 @@ Interrupt enable for OCP Master Interfaces, W 0 : No action, W 1 - Enable Interr
 
 
 /*
-  Register RGX_CR_OCP_IRQENABLE_SET_1
+	Register RGX_CR_OCP_IRQENABLE_SET_1
 */
 #define RGX_CR_OCP_IRQENABLE_SET_1                        (0x9058U)
 #define RGX_CR_OCP_IRQENABLE_SET_1_MASKFULL               (IMG_UINT64_C(0x0000000000000001))
@@ -2365,7 +2365,7 @@ Interrupt enable for OCP Slave Interfaces, W 0 : No action, W 1 - Enable Interru
 
 
 /*
-  Register RGX_CR_OCP_IRQENABLE_SET_2
+	Register RGX_CR_OCP_IRQENABLE_SET_2
 */
 #define RGX_CR_OCP_IRQENABLE_SET_2                        (0x9060U)
 #define RGX_CR_OCP_IRQENABLE_SET_2_MASKFULL               (IMG_UINT64_C(0x0000000000000001))
@@ -2378,7 +2378,7 @@ Interrupt enable for core, W 0 : No action, W 1 - Enable Interrupt, R 0 - Interr
 
 
 /*
-  Register RGX_CR_OCP_IRQENABLE_CLR_0
+	Register RGX_CR_OCP_IRQENABLE_CLR_0
 */
 #define RGX_CR_OCP_IRQENABLE_CLR_0                        (0x9068U)
 #define RGX_CR_OCP_IRQENABLE_CLR_0_MASKFULL               (IMG_UINT64_C(0x0000000000000001))
@@ -2391,7 +2391,7 @@ Interrupt disable for OCP Master Interfaces, W 0 : No action, W 1 - Disable Inte
 
 
 /*
-  Register RGX_CR_OCP_IRQENABLE_CLR_1
+	Register RGX_CR_OCP_IRQENABLE_CLR_1
 */
 #define RGX_CR_OCP_IRQENABLE_CLR_1                        (0x9070U)
 #define RGX_CR_OCP_IRQENABLE_CLR_1_MASKFULL               (IMG_UINT64_C(0x0000000000000001))
@@ -2404,7 +2404,7 @@ Interrupt disable for OCP Slave Interfaces, W 0 : No action, W 1 - Disable Inter
 
 
 /*
-  Register RGX_CR_OCP_IRQENABLE_CLR_2
+	Register RGX_CR_OCP_IRQENABLE_CLR_2
 */
 #define RGX_CR_OCP_IRQENABLE_CLR_2                        (0x9078U)
 #define RGX_CR_OCP_IRQENABLE_CLR_2_MASKFULL               (IMG_UINT64_C(0x0000000000000001))
@@ -2422,7 +2422,7 @@ Interrupt disable for core, W 0 : No action, W 1 - Disable Interrupt, R 0 - Inte
 
 */
 /*
-  Register RGX_CR_OCP_IRQ_EVENT
+	Register RGX_CR_OCP_IRQ_EVENT
 */
 #define RGX_CR_OCP_IRQ_EVENT                              (0x9080U)
 #define RGX_CR_OCP_IRQ_EVENT_MASKFULL                     (IMG_UINT64_C(0x00000000000FFFFF))
@@ -2549,7 +2549,7 @@ interrupt events from Init0 - return data fifo overfill
 
 
 /*
-  Register RGX_CR_OCP_DEBUG_CONFIG
+	Register RGX_CR_OCP_DEBUG_CONFIG
 */
 #define RGX_CR_OCP_DEBUG_CONFIG                           (0x9088U)
 #define RGX_CR_OCP_DEBUG_CONFIG_MASKFULL                  (IMG_UINT64_C(0x0000000000000001))
@@ -2567,7 +2567,7 @@ bypass rgx_irq from OCP wrapper and do not use OCP specific irq enable/disable
 
 */
 /*
-  Register RGX_CR_OCP_DEBUG_STATUS
+	Register RGX_CR_OCP_DEBUG_STATUS
 */
 #define RGX_CR_OCP_DEBUG_STATUS                           (0x9090U)
 #define RGX_CR_OCP_DEBUG_STATUS_MASKFULL                  (IMG_UINT64_C(0x001F1F77FFFFFFFF))
@@ -2811,7 +2811,7 @@ debug status from init0 - initiator mconnect state
 
 
 /*
- Define Requestors/Data Masters which are Trusted/Untrusted and enable/disbale the Memory Bus Security feature within the Core
+ Define Requestors/Data Masters which are Trusted/Untrusted and enable/disbale the Memory Bus Security feature within the Core 
 
   When enabled the GPU modifies the top 2 bits of the external memory address to indicate:
   - Address[39] Trusted DM Access (according to the DM Trusted setup)
@@ -2821,7 +2821,7 @@ debug status from init0 - initiator mconnect state
 
 */
 /*
-  Register RGX_CR_BIF_TRUST
+	Register RGX_CR_BIF_TRUST
 */
 #define RGX_CR_BIF_TRUST                                  (0xA000U)
 #define RGX_CR_BIF_TRUST_MASKFULL                         (IMG_UINT64_C(0x000000000001FFFF))
@@ -2893,7 +2893,7 @@ Defines whether PBE accesses with the Vertex DM are trusted: 0x1 = Trusted, 0x0 
 
 
 /*
-  Register RGX_CR_SYS_BUS_SECURE
+	Register RGX_CR_SYS_BUS_SECURE
 */
 #define RGX_CR_SYS_BUS_SECURE                             (0xA100U)
 #define RGX_CR_SYS_BUS_SECURE_MASKFULL                    (IMG_UINT64_C(0x0000000000000001))
@@ -2907,14 +2907,14 @@ Defines whether PBE accesses with the Vertex DM are trusted: 0x1 = Trusted, 0x0 
 
 /*
 
-  Core Module Clock Control Modes.
+	Core Module Clock Control Modes.
 
 
-  Allows individual domain clocks to be forced off, forced on or operate under automatic pipeline activity based clock gating. This register is generally controlled by the GPU firmware and should be set to AUTO. Clock gating reduces the power consumed by the device.
+	Allows individual domain clocks to be forced off, forced on or operate under automatic pipeline activity based clock gating. This register is generally controlled by the GPU firmware and should be set to AUTO. Clock gating reduces the power consumed by the device.
 
 */
 /*
-  Register RGX_CR_CLK_CTRL2
+	Register RGX_CR_CLK_CTRL2
 */
 #define RGX_CR_CLK_CTRL2                                  (0xD200U)
 #define RGX_CR_CLK_CTRL2_MASKFULL                         (IMG_UINT64_C(0x0000000000000F33))
@@ -2949,14 +2949,14 @@ Defines whether PBE accesses with the Vertex DM are trusted: 0x1 = Trusted, 0x0 
 
 /*
 
-  Reports the current module clock status
+	Reports the current module clock status
 
 
-  Clock gating state reflects the condition of the clock for each module
+	Clock gating state reflects the condition of the clock for each module
 
 */
 /*
-  Register RGX_CR_CLK_STATUS2
+	Register RGX_CR_CLK_STATUS2
 */
 #define RGX_CR_CLK_STATUS2                                (0xD208U)
 #define RGX_CR_CLK_STATUS2_MASKFULL                       (IMG_UINT64_C(0x0000000000000015))
@@ -2982,11 +2982,11 @@ Defines whether PBE accesses with the Vertex DM are trusted: 0x1 = Trusted, 0x0 
 
 /*
 
-  SLC Control registers
+	SLC Control registers
 
 */
 /*
-  Register RGX_CR_SLC3_CTRL_MISC
+	Register RGX_CR_SLC3_CTRL_MISC
 */
 #define RGX_CR_SLC3_CTRL_MISC                             (0xE200U)
 #define RGX_CR_SLC3_CTRL_MISC_MASKFULL                    (IMG_UINT64_C(0x0000000000000003))
@@ -3003,16 +3003,16 @@ Defines whether PBE accesses with the Vertex DM are trusted: 0x1 = Trusted, 0x0 
 
 /*
 
-  SLC Control registers
+	SLC Control registers
 
 */
 /*
-  Register RGX_CR_SLC3_SCRAMBLE
+	Register RGX_CR_SLC3_SCRAMBLE
 */
 #define RGX_CR_SLC3_SCRAMBLE                              (0xE208U)
 #define RGX_CR_SLC3_SCRAMBLE_MASKFULL                     (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
 /* BITS
- Pattern of bits used to determine the Cache Bank in Address Decode mode 0x3. The actual Cache Bank to use is determined by indexing into the Scramble Bits, see the SLC HW specification for more details
+ Pattern of bits used to determine the Cache Bank in Address Decode mode 0x3. The actual Cache Bank to use is determined by indexing into the Scramble Bits, see the SLC HW specification for more details 
 */
 #define RGX_CR_SLC3_SCRAMBLE_BITS_SHIFT                   (0U)
 #define RGX_CR_SLC3_SCRAMBLE_BITS_CLRMSK                  (IMG_UINT64_C(0000000000000000))
@@ -3020,16 +3020,16 @@ Defines whether PBE accesses with the Vertex DM are trusted: 0x1 = Trusted, 0x0 
 
 /*
 
-  SLC Control registers
+	SLC Control registers
 
 */
 /*
-  Register RGX_CR_SLC3_SCRAMBLE2
+	Register RGX_CR_SLC3_SCRAMBLE2
 */
 #define RGX_CR_SLC3_SCRAMBLE2                             (0xE210U)
 #define RGX_CR_SLC3_SCRAMBLE2_MASKFULL                    (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
 /* BITS
- Pattern of bits used to determine the Cache Bank in Address Decode mode 0x3. The actual Cache Bank to use is determined by indexing into the Scramble Bits, see the SLC HW specification for more details
+ Pattern of bits used to determine the Cache Bank in Address Decode mode 0x3. The actual Cache Bank to use is determined by indexing into the Scramble Bits, see the SLC HW specification for more details 
 */
 #define RGX_CR_SLC3_SCRAMBLE2_BITS_SHIFT                  (0U)
 #define RGX_CR_SLC3_SCRAMBLE2_BITS_CLRMSK                 (IMG_UINT64_C(0000000000000000))

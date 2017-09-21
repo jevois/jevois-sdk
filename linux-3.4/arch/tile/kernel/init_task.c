@@ -20,8 +20,8 @@
 #include <linux/start_kernel.h>
 #include <linux/uaccess.h>
 
-static struct signal_struct init_signals = INIT_SIGNALS (init_signals);
-static struct sighand_struct init_sighand = INIT_SIGHAND (init_sighand);
+static struct signal_struct init_signals = INIT_SIGNALS(init_signals);
+static struct sighand_struct init_sighand = INIT_SIGHAND(init_sighand);
 
 /*
  * Initial thread structure.
@@ -31,7 +31,7 @@ static struct sighand_struct init_sighand = INIT_SIGHAND (init_sighand);
  * "init_task" linker map entry..
  */
 union thread_union init_thread_union __init_task_data = {
-  INIT_THREAD_INFO (init_task)
+	INIT_THREAD_INFO(init_task)
 };
 
 /*
@@ -39,21 +39,21 @@ union thread_union init_thread_union __init_task_data = {
  *
  * All other task structs will be allocated on slabs in fork.c
  */
-struct task_struct init_task = INIT_TASK (init_task);
-EXPORT_SYMBOL (init_task);
+struct task_struct init_task = INIT_TASK(init_task);
+EXPORT_SYMBOL(init_task);
 
 /*
  * per-CPU stack and boot info.
  */
-DEFINE_PER_CPU (unsigned long, boot_sp) =
-  (unsigned long) init_stack + THREAD_SIZE;
+DEFINE_PER_CPU(unsigned long, boot_sp) =
+	(unsigned long)init_stack + THREAD_SIZE;
 
 #ifdef CONFIG_SMP
-DEFINE_PER_CPU (unsigned long, boot_pc) = (unsigned long) start_kernel;
+DEFINE_PER_CPU(unsigned long, boot_pc) = (unsigned long)start_kernel;
 #else
 /*
  * The variable must be __initdata since it references __init code.
  * With CONFIG_SMP it is per-cpu data, which is exempt from validation.
  */
-unsigned long __initdata boot_pc = (unsigned long) start_kernel;
+unsigned long __initdata boot_pc = (unsigned long)start_kernel;
 #endif

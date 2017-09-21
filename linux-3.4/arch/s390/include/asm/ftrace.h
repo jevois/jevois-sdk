@@ -3,7 +3,7 @@
 
 #ifndef __ASSEMBLY__
 
-extern void _mcount (void);
+extern void _mcount(void);
 
 struct dyn_arch_ftrace { };
 
@@ -15,9 +15,9 @@ struct dyn_arch_ftrace { };
 #define MCOUNT_INSN_SIZE  20
 #endif
 
-static inline unsigned long ftrace_call_adjust (unsigned long addr)
+static inline unsigned long ftrace_call_adjust(unsigned long addr)
 {
-  return addr;
+	return addr;
 }
 
 #endif /* __ASSEMBLY__ */

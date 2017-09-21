@@ -14,19 +14,19 @@
 #elif defined(CONFIG_ATARI) || defined(CONFIG_MAC)
 #define NR_IRQS 72
 #elif defined(CONFIG_Q40)
-#define NR_IRQS 43
+#define NR_IRQS	43
 #elif defined(CONFIG_AMIGA) || !defined(CONFIG_MMU)
-#define NR_IRQS 32
+#define NR_IRQS	32
 #elif defined(CONFIG_APOLLO)
-#define NR_IRQS 24
+#define NR_IRQS	24
 #elif defined(CONFIG_HP300)
-#define NR_IRQS 8
+#define NR_IRQS	8
 #else
-#define NR_IRQS 0
+#define NR_IRQS	0
 #endif
 
 #if defined(CONFIG_M68020) || defined(CONFIG_M68030) || \
-defined(CONFIG_M68040) || defined(CONFIG_M68060)
+    defined(CONFIG_M68040) || defined(CONFIG_M68060)
 
 /*
  * Interrupt source definitions
@@ -38,39 +38,39 @@ defined(CONFIG_M68040) || defined(CONFIG_M68060)
  * that routine requires service.
  */
 
-#define IRQ_SPURIOUS  0
+#define IRQ_SPURIOUS	0
 
-#define IRQ_AUTO_1  1 /* level 1 interrupt */
-#define IRQ_AUTO_2  2 /* level 2 interrupt */
-#define IRQ_AUTO_3  3 /* level 3 interrupt */
-#define IRQ_AUTO_4  4 /* level 4 interrupt */
-#define IRQ_AUTO_5  5 /* level 5 interrupt */
-#define IRQ_AUTO_6  6 /* level 6 interrupt */
-#define IRQ_AUTO_7  7 /* level 7 interrupt (non-maskable) */
+#define IRQ_AUTO_1	1	/* level 1 interrupt */
+#define IRQ_AUTO_2	2	/* level 2 interrupt */
+#define IRQ_AUTO_3	3	/* level 3 interrupt */
+#define IRQ_AUTO_4	4	/* level 4 interrupt */
+#define IRQ_AUTO_5	5	/* level 5 interrupt */
+#define IRQ_AUTO_6	6	/* level 6 interrupt */
+#define IRQ_AUTO_7	7	/* level 7 interrupt (non-maskable) */
 
-#define IRQ_USER  8
+#define IRQ_USER	8
 
 struct irq_data;
 struct irq_chip;
 struct irq_desc;
-extern unsigned int m68k_irq_startup (struct irq_data * data);
-extern unsigned int m68k_irq_startup_irq (unsigned int irq);
-extern void m68k_irq_shutdown (struct irq_data * data);
-extern void m68k_setup_auto_interrupt (void (*handler) (unsigned int,
-                                       struct pt_regs *) );
-extern void m68k_setup_user_interrupt (unsigned int vec, unsigned int cnt);
-extern void m68k_setup_irq_controller (struct irq_chip *,
-                                       void (*handle) (unsigned int irq,
-                                           struct irq_desc * desc),
-                                       unsigned int irq, unsigned int cnt);
+extern unsigned int m68k_irq_startup(struct irq_data *data);
+extern unsigned int m68k_irq_startup_irq(unsigned int irq);
+extern void m68k_irq_shutdown(struct irq_data *data);
+extern void m68k_setup_auto_interrupt(void (*handler)(unsigned int,
+						      struct pt_regs *));
+extern void m68k_setup_user_interrupt(unsigned int vec, unsigned int cnt);
+extern void m68k_setup_irq_controller(struct irq_chip *,
+				      void (*handle)(unsigned int irq,
+						     struct irq_desc *desc),
+				      unsigned int irq, unsigned int cnt);
 
-extern unsigned int irq_canonicalize (unsigned int irq);
+extern unsigned int irq_canonicalize(unsigned int irq);
 
 #else
 #define irq_canonicalize(irq)  (irq)
 #endif /* !(CONFIG_M68020 || CONFIG_M68030 || CONFIG_M68040 || CONFIG_M68060) */
 
-asmlinkage void do_IRQ (int irq, struct pt_regs * regs);
+asmlinkage void do_IRQ(int irq, struct pt_regs *regs);
 extern atomic_t irq_err_count;
 
 #endif /* _M68K_IRQ_H_ */

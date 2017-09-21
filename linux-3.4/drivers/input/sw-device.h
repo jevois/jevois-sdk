@@ -31,14 +31,14 @@
 #include<linux/string.h>
 #include<asm/uaccess.h>
 
-enum {
-  DEBUG_INIT              = 1U << 0,
-  DEBUG_SUSPEND           = 1U << 1,
-  DEBUG_INT_INFO          = 1U << 2,
-  DEBUG_X_Y_INFO          = 1U << 3,
-  DEBUG_KEY_INFO          = 1U << 4,
-  DEBUG_WAKEUP_INFO       = 1U << 5,
-  DEBUG_OTHERS_INFO       = 1U << 6,
+enum{
+        DEBUG_INIT              = 1U << 0,
+        DEBUG_SUSPEND           = 1U << 1,
+        DEBUG_INT_INFO          = 1U << 2,
+        DEBUG_X_Y_INFO          = 1U << 3,
+        DEBUG_KEY_INFO          = 1U << 4,
+        DEBUG_WAKEUP_INFO       = 1U << 5,
+        DEBUG_OTHERS_INFO       = 1U << 6,
 };
 
 #define NOTE_INFO1              ";Behind the equals sign said detected equipment corresponding to the name of the driver\n"
@@ -64,9 +64,9 @@ enum {
 * @str_info:    Record contents.
 * @str_id:      Record the line Numbers.
 */
-struct sw_write_info {
-  char str_info[STRING_LENGTH];
-  int str_id;
+struct sw_write_info{
+        char str_info[STRING_LENGTH];
+        int str_id;
 };
 
 /*
@@ -82,14 +82,14 @@ struct sw_write_info {
 * and when a device is the same as the address of the device, the device has the chip id,
 * then same_flag should set to 1 without chip id of the device.
 */
-struct sw_device_info {
-  char name[NAME_LENGTH];
-  
-  unsigned short i2c_address[ADDRESS_NUMBER];
-  unsigned short chip_id_reg;
-  unsigned short id_value[REG_VALUE_NUMBER];
-  
-  int same_flag;
+struct sw_device_info{
+	char name[NAME_LENGTH];
+
+	unsigned short i2c_address[ADDRESS_NUMBER];
+	unsigned short chip_id_reg;
+	unsigned short id_value[REG_VALUE_NUMBER];
+
+	int same_flag;
 };
 
 /*
@@ -105,13 +105,13 @@ struct sw_device_info {
 * @write_key_name:      Device.info file Identifies the device driver keyword
 *                       format:xxx_module_name,For example:ctp_module_name
 */
-struct para_name {
-  char * used_keyname;
-  char * used_subname;
-  char * detect_keyname;
-  char * detect_subname;
-  char * twi_id_name;
-  char * write_key_name;
+struct para_name{
+        char* used_keyname;
+        char* used_subname;
+        char* detect_keyname;
+        char* detect_subname;
+        char* twi_id_name;
+        char* write_key_name;
 };
 
 /*
@@ -133,26 +133,26 @@ struct para_name {
 * @twi_id:      Twi id of the device
 * @response_addr: The address of the communication success.
 */
-struct sw_device {
-  struct sw_device_info  * info;
-  struct i2c_client    *   temp_client;
-  struct file       *      filp;
-  struct para_name    *    name;
-  struct sw_write_info write_info[NAME_LENGTH];
-  
-  char    device_name[NAME_LENGTH];
-  char    check_addr[NAME_LENGTH];
-  
-  int     support_number;
-  int     current_number;
-  int     detect_used;
-  int     write_flag;
-  int     total_raw;
-  int     write_id;
-  
-  __u32   twi_id;
-  
-  unsigned short response_addr;
+struct sw_device{
+        struct sw_device_info   *info;
+        struct i2c_client       *temp_client;
+        struct file             *filp;
+        struct para_name        *name;
+        struct sw_write_info write_info[NAME_LENGTH];
+
+        char    device_name[NAME_LENGTH];
+        char    check_addr[NAME_LENGTH];
+
+        int     support_number;
+        int     current_number;
+        int     detect_used;
+        int     write_flag;
+        int     total_raw;
+        int     write_id;
+
+        __u32   twi_id; 
+
+        unsigned short response_addr;
 };
 
 /*
@@ -165,16 +165,16 @@ struct sw_device {
 * @c_addr: ctp device address.
 */
 
-struct sw_device_name {
-  char g_name[NAME_LENGTH];
-  char c_name[NAME_LENGTH];
-  char gy_name[NAME_LENGTH];
-  char ls_name[NAME_LENGTH];
-  
-  unsigned short g_addr;
-  unsigned short c_addr;
-  unsigned short gy_addr;
-  unsigned short ls_addr;
+struct sw_device_name{
+        char g_name[NAME_LENGTH];
+        char c_name[NAME_LENGTH];
+        char gy_name[NAME_LENGTH];
+        char ls_name[NAME_LENGTH];
+
+        unsigned short g_addr;
+        unsigned short c_addr;
+        unsigned short gy_addr;
+        unsigned short ls_addr;
 };
 
 #endif

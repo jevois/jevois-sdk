@@ -100,9 +100,9 @@
 
 #define MIN_QUEUE_SIZE     2
 
-#define NUM_RX_POOLS     4
+#define NUM_RX_POOLS	   4
 
-#define MIN_RX_BUFFERS     1
+#define MIN_RX_BUFFERS	   1
 
 #define MIN_PCI_LATENCY   64
 
@@ -111,109 +111,109 @@
 #define NUM_VCS         1024
 
 /* The status field bits defined so far. */
-#define RX_ERR    0x8000
-#define CRC_ERR   0x4000
-#define LEN_ERR   0x2000
-#define ABORT_ERR 0x1000
-#define UNUSED_ERR  0x0800
+#define RX_ERR		0x8000
+#define CRC_ERR		0x4000
+#define LEN_ERR		0x2000
+#define ABORT_ERR	0x1000
+#define UNUSED_ERR	0x0800
 
 
-#define SRB_OPEN_VC   0
+#define SRB_OPEN_VC		0
 /* par_0: dwordswap(VC_number) */
-/* par_1: dwordswap(flags<<16) or wordswap(flags)*/
-/* flags:   */
+/* par_1: dwordswap(flags<<16) or wordswap(flags)*/ 
+/* flags:		*/
 
-/* LANE:  0x0004    */
-/* NOT_UBR: 0x0008    */
-/* ABR:   0x0010    */
+/* LANE:	0x0004		*/
+/* NOT_UBR:	0x0008		*/
+/* ABR:		0x0010		*/
 
-/* RxPool0: 0x0000    */
-/* RxPool1: 0x0020    */
-/* RxPool2: 0x0040    */
-/* RxPool3: 0x0060    */
+/* RxPool0:	0x0000		*/
+/* RxPool1:	0x0020		*/
+/* RxPool2:	0x0040		*/
+/* RxPool3:	0x0060		*/
 
 /* par_2: dwordswap(fp_rate<<16) or wordswap(fp_rate) */
 
-#define SRB_CLOSE_VC    1
+#define	SRB_CLOSE_VC		1
 /* par_0: dwordswap(VC_number) */
 
-#define SRB_GET_BIA   2
-/* returns    */
+#define	SRB_GET_BIA		2
+/* returns 		*/
 /* par_0: dwordswap(half BIA) */
 /* par_1: dwordswap(half BIA) */
 
-#define SRB_GET_SUNI_STATS  3
+#define	SRB_GET_SUNI_STATS	3
 /* par_0: dwordswap(physical_host_address) */
 
-#define SRB_SET_BITS_8    4
-#define SRB_SET_BITS_16   5
-#define SRB_SET_BITS_32   6
-#define SRB_CLEAR_BITS_8  7
-#define SRB_CLEAR_BITS_16 8
-#define SRB_CLEAR_BITS_32 9
-/* par_0: dwordswap(ATMizer address)  */
+#define	SRB_SET_BITS_8		4
+#define	SRB_SET_BITS_16		5
+#define	SRB_SET_BITS_32		6
+#define	SRB_CLEAR_BITS_8	7
+#define	SRB_CLEAR_BITS_16	8
+#define	SRB_CLEAR_BITS_32	9
+/* par_0: dwordswap(ATMizer address)	*/
 /* par_1: dwordswap(mask) */
 
-#define SRB_SET_8   10
-#define SRB_SET_16    11
-#define SRB_SET_32    12
-/* par_0: dwordswap(ATMizer address)  */
+#define	SRB_SET_8		10
+#define	SRB_SET_16		11
+#define	SRB_SET_32		12
+/* par_0: dwordswap(ATMizer address)	*/
 /* par_1: dwordswap(data) */
 
-#define SRB_GET_32    13
-/* par_0: dwordswap(ATMizer address)  */
-/* returns      */
+#define	SRB_GET_32		13
+/* par_0: dwordswap(ATMizer address)	*/
+/* returns			*/
 /* par_1: dwordswap(ATMizer data) */
 
-#define SRB_GET_VERSION   14
-/* returns    */
+#define SRB_GET_VERSION		14
+/* returns 		*/
 /* par_0: dwordswap(Major Version) */
 /* par_1: dwordswap(Minor Version) */
 
-#define SRB_FLUSH_BUFFER_Q  15
+#define SRB_FLUSH_BUFFER_Q	15
 /* Only flags to define which buffer pool; all others must be zero */
-/* par_0: dwordswap(flags<<16) or wordswap(flags)*/
+/* par_0: dwordswap(flags<<16) or wordswap(flags)*/ 
 
-#define SRB_GET_DMA_SPEEDS  16
-/* returns    */
+#define	SRB_GET_DMA_SPEEDS	16
+/* returns 		*/
 /* par_0: dwordswap(Read speed (bytes/sec)) */
 /* par_1: dwordswap(Write speed (bytes/sec)) */
 
-#define SRB_MODIFY_VC_RATE  17
+#define SRB_MODIFY_VC_RATE	17
 /* par_0: dwordswap(VC_number) */
 /* par_1: dwordswap(fp_rate<<16) or wordswap(fp_rate) */
 
-#define SRB_MODIFY_VC_FLAGS 18
+#define SRB_MODIFY_VC_FLAGS	18
 /* par_0: dwordswap(VC_number) */
-/* par_1: dwordswap(flags<<16) or wordswap(flags)*/
+/* par_1: dwordswap(flags<<16) or wordswap(flags)*/ 
 
-/* flags:   */
+/* flags:		*/
 
-/* LANE:  0x0004    */
-/* NOT_UBR: 0x0008    */
-/* ABR:   0x0010    */
+/* LANE:	0x0004		*/
+/* NOT_UBR:	0x0008		*/
+/* ABR:		0x0010		*/
 
-/* RxPool0: 0x0000    */
-/* RxPool1: 0x0020    */
-/* RxPool2: 0x0040    */
-/* RxPool3: 0x0060    */
+/* RxPool0:	0x0000		*/
+/* RxPool1:	0x0020		*/
+/* RxPool2:	0x0040		*/
+/* RxPool3:	0x0060		*/
 
 #define SRB_RATE_SHIFT          16
 #define SRB_POOL_SHIFT          (SRB_FLAGS_SHIFT+5)
 #define SRB_FLAGS_SHIFT         16
 
-#define SRB_STOP_TASKING  19
-#define SRB_START_TASKING 20
-#define SRB_SHUT_DOWN   21
-#define MAX_SRB     21
+#define	SRB_STOP_TASKING	19
+#define	SRB_START_TASKING	20
+#define SRB_SHUT_DOWN		21
+#define MAX_SRB			21
 
-#define SRB_COMPLETE    0xffffffff
+#define SRB_COMPLETE		0xffffffff
 
-#define TX_FRAME            0x80000000
+#define TX_FRAME          	0x80000000
 
-#define NUM_OF_SRB  32
+#define NUM_OF_SRB	32
 
-#define MAX_RATE_BITS 6
+#define MAX_RATE_BITS	6
 
 #define TX_UBR          0x0000
 #define TX_UBR_CAPPED   0x0008
@@ -221,8 +221,8 @@
 #define TX_FRAME_NOTCAP 0x0000
 #define TX_FRAME_CAPPED 0x8000
 
-#define FP_155_RATE 0x24b1
-#define FP_25_RATE  0x1f9d
+#define FP_155_RATE	0x24b1
+#define FP_25_RATE	0x1f9d
 
 /* #define VERSION_NUMBER 0x01000000
 /* #define VERSION_NUMBER 0x01010000
@@ -243,8 +243,8 @@
 #define DMA_VALID 0xb728e149 /* completely random */
 
 #define FLASH_BASE 0xa0c00000
-#define FLASH_SIZE 0x00020000     /* 128K */
-#define BIA_BASE (FLASH_BASE+0x0001c000)  /* Flash Sector 7 */
+#define FLASH_SIZE 0x00020000			/* 128K */
+#define BIA_BASE (FLASH_BASE+0x0001c000)	/* Flash Sector 7 */
 #define BIA_ADDRESS ((void *)0xa0c1c000)
 #define PLX_BASE 0xe0000000
 
@@ -272,12 +272,12 @@ typedef enum {
 #define COMMAND_WRITE_BAD_ADDRESS       7
 #define COMMAND_WRITE_FLASH_FAILURE     8
 #define COMMAND_COMPLETE                9
-#define COMMAND_FLASH_ERASE_FAILURE 10
-#define COMMAND_WRITE_BAD_DATA    11
+#define COMMAND_FLASH_ERASE_FAILURE	10
+#define COMMAND_WRITE_BAD_DATA		11
 
 /* bit fields for mailbox[0] return values */
 
-#define GPINT_TST_FAILURE               0x00000001
+#define GPINT_TST_FAILURE               0x00000001      
 #define SUNI_DATA_PATTERN_FAILURE       0x00000002
 #define SUNI_DATA_BITS_FAILURE          0x00000004
 #define SUNI_UTOPIA_FAILURE             0x00000008
@@ -319,7 +319,7 @@ typedef struct {
 } amb_mem;
 
 /* RESET bit, IRQ (card to host) and doorbell (host to card) enable bits */
-#define AMB_RESET_BITS     0x40000000
+#define AMB_RESET_BITS	   0x40000000
 #define AMB_INTERRUPT_BITS 0x00000300
 #define AMB_DOORBELL_BITS  0x00030000
 
@@ -350,7 +350,7 @@ typedef struct {
 
 /* Again all data are BIG ENDIAN */
 
-typedef struct {
+typedef	struct {
   union {
     struct {
       __be32 vc;
@@ -412,15 +412,15 @@ typedef struct {
    and should be set to zero */
 
 typedef struct {
-  u32 handle;
-  u16 vc;
-  u16 next_descriptor_length;
-  u32 next_descriptor;
-  #ifdef AMB_NEW_MICROCODE
+  u32	handle;
+  u16	vc;
+  u16	next_descriptor_length;
+  u32	next_descriptor;
+#ifdef AMB_NEW_MICROCODE
   u8    cpcs_uu;
   u8    cpi;
   u16   pad;
-  #endif
+#endif
 } tx_frag_end;
 
 typedef struct {
@@ -431,22 +431,22 @@ typedef struct {
 
 #if 0
 typedef union {
-  tx_frag fragment;
-  tx_frag_end end_of_list;
+  tx_frag	fragment;
+  tx_frag_end	end_of_list;
 } tx_descr;
 #endif
 
 /* this "points" to the sequence of fragments and trailer */
 
-typedef struct {
-  __be16  vc;
-  __be16  tx_descr_length;
-  __be32  tx_descr_addr;
+typedef	struct {
+  __be16	vc;
+  __be16	tx_descr_length;
+  __be32	tx_descr_addr;
 } tx_in;
 
 /* handle is the handle from tx_in */
 
-typedef struct {
+typedef	struct {
   u32 handle;
 } tx_out;
 
@@ -466,7 +466,7 @@ typedef struct {
 
 /* buffer supply structure */
 
-typedef struct {
+typedef	struct {
   u32 handle;
   __be32 host_address;
 } rx_in;
@@ -477,48 +477,48 @@ typedef struct {
    adapter the address of this block by sending a doorbell interrupt
    to the adapter after downloading the code and setting it going. The
    addresses have the top 10 bits set to 1010000010b -- really?
-
+   
    The host must initialise these before handing the block to the
    adapter. */
 
 typedef struct {
-  __be32 command_start;   /* SRB commands completions */
-  __be32 command_end;   /* SRB commands completions */
+  __be32 command_start;		/* SRB commands completions */
+  __be32 command_end;		/* SRB commands completions */
   __be32 tx_start;
   __be32 tx_end;
-  __be32 txcom_start;   /* tx completions */
-  __be32 txcom_end;   /* tx completions */
+  __be32 txcom_start;		/* tx completions */
+  __be32 txcom_end;		/* tx completions */
   struct {
     __be32 buffer_start;
     __be32 buffer_end;
     u32 buffer_q_get;
     u32 buffer_q_end;
     u32 buffer_aptr;
-    __be32 rx_start;    /* rx completions */
+    __be32 rx_start;		/* rx completions */
     __be32 rx_end;
     u32 rx_ptr;
-    __be32 buffer_size;   /* size of host buffer */
+    __be32 buffer_size;		/* size of host buffer */
   } rec_struct[NUM_RX_POOLS];
-  #ifdef AMB_NEW_MICROCODE
+#ifdef AMB_NEW_MICROCODE
   u16 init_flags;
   u16 talk_block_spare;
-  #endif
+#endif
 } adap_talk_block;
 
 /* This structure must be kept in line with the vcr image in sarmain.h
-
+   
    This is the structure in the host filled in by the adapter by
    GET_SUNI_STATS */
 
 typedef struct {
-  u8  racp_chcs;
-  u8  racp_uhcs;
-  u16 spare;
-  u32 racp_rcell;
-  u32 tacp_tcell;
-  u32 flags;
-  u32 dropped_cells;
-  u32 dropped_frames;
+  u8	racp_chcs;
+  u8	racp_uhcs;
+  u16	spare;
+  u32	racp_rcell;
+  u32	tacp_tcell;
+  u32	flags;
+  u32	dropped_cells;
+  u32	dropped_frames;
 } suni_stats;
 
 typedef enum {
@@ -526,7 +526,7 @@ typedef enum {
 } amb_flags;
 
 #define NEXTQ(current,start,limit) \
-  ( (current)+1 < (limit) ? (current)+1 : (start) )
+  ( (current)+1 < (limit) ? (current)+1 : (start) ) 
 
 typedef struct {
   command * start;
@@ -596,8 +596,8 @@ typedef struct {
 
 
 typedef struct {
-  u8               tx_vc_bits: 7;
-  u8               tx_present: 1;
+  u8               tx_vc_bits:7;
+  u8               tx_present:1;
 } amb_tx_info;
 
 typedef struct {
@@ -613,10 +613,10 @@ typedef struct {
 
 struct amb_dev {
   u8               irq;
-  unsigned long    flags;
+  unsigned long	   flags;
   u32              iobase;
-  u32       *      membase;
-  
+  u32 *            membase;
+
   amb_cq           cq;
   amb_txq          txq;
   amb_rxq          rxq[NUM_RX_POOLS];

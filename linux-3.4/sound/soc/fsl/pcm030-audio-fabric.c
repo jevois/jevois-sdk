@@ -32,60 +32,60 @@
 #define DRV_NAME "pcm030-audio-fabric"
 
 static struct snd_soc_dai_link pcm030_fabric_dai[] = {
-  {
-    .name = "AC97",
-    .stream_name = "AC97 Analog",
-    .codec_dai_name = "wm9712-hifi",
-    .cpu_dai_name = "mpc5200-psc-ac97.0",
-    .platform_name = "mpc5200-pcm-audio",
-    .codec_name = "wm9712-codec",
-  },
-  {
-    .name = "AC97",
-    .stream_name = "AC97 IEC958",
-    .codec_dai_name = "wm9712-aux",
-    .cpu_dai_name = "mpc5200-psc-ac97.1",
-    .platform_name = "mpc5200-pcm-audio",
-    .codec_name = "wm9712-codec",
-  },
+{
+	.name = "AC97",
+	.stream_name = "AC97 Analog",
+	.codec_dai_name = "wm9712-hifi",
+	.cpu_dai_name = "mpc5200-psc-ac97.0",
+	.platform_name = "mpc5200-pcm-audio",
+	.codec_name = "wm9712-codec",
+},
+{
+	.name = "AC97",
+	.stream_name = "AC97 IEC958",
+	.codec_dai_name = "wm9712-aux",
+	.cpu_dai_name = "mpc5200-psc-ac97.1",
+	.platform_name = "mpc5200-pcm-audio",
+	.codec_name = "wm9712-codec",
+},
 };
 
 static struct snd_soc_card card = {
-  .name = "pcm030",
-  .owner = THIS_MODULE,
-  .dai_link = pcm030_fabric_dai,
-  .num_links = ARRAY_SIZE (pcm030_fabric_dai),
+	.name = "pcm030",
+	.owner = THIS_MODULE,
+	.dai_link = pcm030_fabric_dai,
+	.num_links = ARRAY_SIZE(pcm030_fabric_dai),
 };
 
-static __init int pcm030_fabric_init (void)
+static __init int pcm030_fabric_init(void)
 {
-  struct platform_device * pdev;
-  int rc;
-  
-  if (!of_machine_is_compatible ("phytec,pcm030") )
-  { return -ENODEV; }
-  
-  pdev = platform_device_alloc ("soc-audio", 1);
-  if (!pdev) {
-    pr_err ("pcm030_fabric_init: platform_device_alloc() failed\n");
-    return -ENODEV;
-  }
-  
-  platform_set_drvdata (pdev, &card);
-  
-  rc = platform_device_add (pdev);
-  if (rc) {
-    pr_err ("pcm030_fabric_init: platform_device_add() failed\n");
-    platform_device_put (pdev);
-    return -ENODEV;
-  }
-  return 0;
+	struct platform_device *pdev;
+	int rc;
+
+	if (!of_machine_is_compatible("phytec,pcm030"))
+		return -ENODEV;
+
+	pdev = platform_device_alloc("soc-audio", 1);
+	if (!pdev) {
+		pr_err("pcm030_fabric_init: platform_device_alloc() failed\n");
+		return -ENODEV;
+	}
+
+	platform_set_drvdata(pdev, &card);
+
+	rc = platform_device_add(pdev);
+	if (rc) {
+		pr_err("pcm030_fabric_init: platform_device_add() failed\n");
+		platform_device_put(pdev);
+		return -ENODEV;
+	}
+	return 0;
 }
 
-module_init (pcm030_fabric_init);
+module_init(pcm030_fabric_init);
 
 
-MODULE_AUTHOR ("Jon Smirl <jonsmirl@gmail.com>");
-MODULE_DESCRIPTION (DRV_NAME ": mpc5200 pcm030 fabric driver");
-MODULE_LICENSE ("GPL");
+MODULE_AUTHOR("Jon Smirl <jonsmirl@gmail.com>");
+MODULE_DESCRIPTION(DRV_NAME ": mpc5200 pcm030 fabric driver");
+MODULE_LICENSE("GPL");
 

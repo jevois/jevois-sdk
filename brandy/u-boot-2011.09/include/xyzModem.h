@@ -89,15 +89,15 @@ extern getc_io_funcs_t xyzModem_io;
 #define CYGACC_CALL_IF_DELAY_US(x) udelay(x)
 
 typedef struct {
-  char * filename;
-  int   mode;
-  int   chan;
-  #ifdef CYGPKG_REDBOOT_NETWORKING
-  struct sockaddr_in * server;
-  #endif
+    char *filename;
+    int   mode;
+    int   chan;
+#ifdef CYGPKG_REDBOOT_NETWORKING
+    struct sockaddr_in *server;
+#endif
 } connection_info_t;
 
-#ifndef BOOL_WAS_DEFINED
+#ifndef	BOOL_WAS_DEFINED
 #define BOOL_WAS_DEFINED
 typedef unsigned int bool;
 #endif
@@ -108,10 +108,10 @@ typedef unsigned int bool;
 #endif
 
 
-int   xyzModem_stream_open (connection_info_t * info, int * err);
-void  xyzModem_stream_close (int * err);
-void  xyzModem_stream_terminate (bool method, int (*getc) (void) );
-int   xyzModem_stream_read (char * buf, int size, int * err);
-char * xyzModem_error (int err);
+int   xyzModem_stream_open(connection_info_t *info, int *err);
+void  xyzModem_stream_close(int *err);
+void  xyzModem_stream_terminate(bool method, int (*getc)(void));
+int   xyzModem_stream_read(char *buf, int size, int *err);
+char *xyzModem_error(int err);
 
 #endif /* _XYZMODEM_H_ */

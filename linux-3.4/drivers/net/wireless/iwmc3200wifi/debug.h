@@ -31,19 +31,19 @@
 
 #ifdef CONFIG_IWM_DEBUG
 
-#define IWM_DEBUG_MODULE(i, level, module, f, a...)          \
-  do {                       \
-    if (unlikely(i->dbg.dbg_module[IWM_DM_##module] >= (IWM_DL_##level)))\
-      dev_printk(KERN_INFO, (iwm_to_dev(i)),               \
-                 "%s " f, __func__ , ## a);          \
-  } while (0)
+#define IWM_DEBUG_MODULE(i, level, module, f, a...)			     \
+do {									     \
+	if (unlikely(i->dbg.dbg_module[IWM_DM_##module] >= (IWM_DL_##level)))\
+		dev_printk(KERN_INFO, (iwm_to_dev(i)),	             \
+			   "%s " f, __func__ , ## a);			     \
+} while (0)
 
-#define IWM_HEXDUMP(i, level, module, pref, buf, len)                \
-  do {                       \
-    if (unlikely(i->dbg.dbg_module[IWM_DM_##module] >= (IWM_DL_##level)))\
-      print_hex_dump(KERN_INFO, pref, DUMP_PREFIX_OFFSET,      \
-                     16, 1, buf, len, 1);          \
-  } while (0)
+#define IWM_HEXDUMP(i, level, module, pref, buf, len)		             \
+do {									     \
+	if (unlikely(i->dbg.dbg_module[IWM_DM_##module] >= (IWM_DL_##level)))\
+		print_hex_dump(KERN_INFO, pref, DUMP_PREFIX_OFFSET,	     \
+			       16, 1, buf, len, 1);			     \
+} while (0)
 
 #else
 
@@ -54,16 +54,16 @@
 
 /* Debug modules */
 enum iwm_debug_module_id {
-  IWM_DM_BOOT = 0,
-  IWM_DM_FW,
-  IWM_DM_SDIO,
-  IWM_DM_NTF,
-  IWM_DM_RX,
-  IWM_DM_TX,
-  IWM_DM_MLME,
-  IWM_DM_CMD,
-  IWM_DM_WEXT,
-  __IWM_DM_NR,
+	IWM_DM_BOOT = 0,
+	IWM_DM_FW,
+	IWM_DM_SDIO,
+	IWM_DM_NTF,
+	IWM_DM_RX,
+	IWM_DM_TX,
+	IWM_DM_MLME,
+	IWM_DM_CMD,
+	IWM_DM_WEXT,
+	__IWM_DM_NR,
 };
 #define IWM_DM_DEFAULT 0
 
@@ -79,45 +79,45 @@ enum iwm_debug_module_id {
 
 /* Debug levels */
 enum iwm_debug_level {
-  IWM_DL_NONE = 0,
-  IWM_DL_ERR,
-  IWM_DL_WARN,
-  IWM_DL_INFO,
-  IWM_DL_DBG,
+	IWM_DL_NONE = 0,
+	IWM_DL_ERR,
+	IWM_DL_WARN,
+	IWM_DL_INFO,
+	IWM_DL_DBG,
 };
 #define IWM_DL_DEFAULT IWM_DL_ERR
 
 struct iwm_debugfs {
-  struct iwm_priv * iwm;
-  struct dentry * rootdir;
-  struct dentry * devdir;
-  struct dentry * dbgdir;
-  struct dentry * txdir;
-  struct dentry * rxdir;
-  struct dentry * busdir;
-  
-  u32 dbg_level;
-  struct dentry * dbg_level_dentry;
-  
-  unsigned long dbg_modules;
-  struct dentry * dbg_modules_dentry;
-  
-  u8 dbg_module[__IWM_DM_NR];
-  struct dentry * dbg_module_dentries[__IWM_DM_NR];
-  
-  struct dentry * txq_dentry;
-  struct dentry * tx_credit_dentry;
-  struct dentry * rx_ticket_dentry;
-  
-  struct dentry * fw_err_dentry;
+	struct iwm_priv *iwm;
+	struct dentry *rootdir;
+	struct dentry *devdir;
+	struct dentry *dbgdir;
+	struct dentry *txdir;
+	struct dentry *rxdir;
+	struct dentry *busdir;
+
+	u32 dbg_level;
+	struct dentry *dbg_level_dentry;
+
+	unsigned long dbg_modules;
+	struct dentry *dbg_modules_dentry;
+
+	u8 dbg_module[__IWM_DM_NR];
+	struct dentry *dbg_module_dentries[__IWM_DM_NR];
+
+	struct dentry *txq_dentry;
+	struct dentry *tx_credit_dentry;
+	struct dentry *rx_ticket_dentry;
+
+	struct dentry *fw_err_dentry;
 };
 
 #ifdef CONFIG_IWM_DEBUG
-void iwm_debugfs_init (struct iwm_priv * iwm);
-void iwm_debugfs_exit (struct iwm_priv * iwm);
+void iwm_debugfs_init(struct iwm_priv *iwm);
+void iwm_debugfs_exit(struct iwm_priv *iwm);
 #else
-static inline void iwm_debugfs_init (struct iwm_priv * iwm) {}
-static inline void iwm_debugfs_exit (struct iwm_priv * iwm) {}
+static inline void iwm_debugfs_init(struct iwm_priv *iwm) {}
+static inline void iwm_debugfs_exit(struct iwm_priv *iwm) {}
 #endif
 
 #endif

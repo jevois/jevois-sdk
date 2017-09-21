@@ -1,12 +1,12 @@
 /* linux/arch/arm/mach-s5p64x0/include/mach/tick.h
  *
  * Copyright (c) 2009-2010 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com
+ *		http://www.samsung.com
  *
  * Copyright 2008 Openmoko, Inc.
  * Copyright 2008 Simtec Electronics
- *  http://armlinux.simtec.co.uk/
- *  Ben Dooks <ben@simtec.co.uk>
+ *	http://armlinux.simtec.co.uk/
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * S5P64X0 - Timer tick support definitions
  *
@@ -18,12 +18,12 @@
 #ifndef __ASM_ARCH_TICK_H
 #define __ASM_ARCH_TICK_H __FILE__
 
-static inline u32 s3c24xx_ostimer_pending (void)
+static inline u32 s3c24xx_ostimer_pending(void)
 {
-  u32 pend = __raw_readl (VA_VIC0 + VIC_RAW_STATUS);
-  return pend & (1 << (IRQ_TIMER4_VIC - S5P_IRQ_VIC0 (0) ) );
+	u32 pend = __raw_readl(VA_VIC0 + VIC_RAW_STATUS);
+	return pend & (1 << (IRQ_TIMER4_VIC - S5P_IRQ_VIC0(0)));
 }
 
-#define TICK_MAX  (0xffffffff)
+#define TICK_MAX	(0xffffffff)
 
 #endif /* __ASM_ARCH_TICK_H */

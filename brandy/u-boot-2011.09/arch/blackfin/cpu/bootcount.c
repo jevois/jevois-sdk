@@ -18,17 +18,17 @@
 #define MAGIC_MASK 0xffff0000
 #define COUNT_MASK 0x0000ffff
 
-void bootcount_store (ulong cnt)
+void bootcount_store(ulong cnt)
 {
-  ulong magic = (BOOTCOUNT_MAGIC & MAGIC_MASK) | (cnt & COUNT_MASK);
-  bfin_write32 (CONFIG_SYS_BOOTCOUNT_ADDR, magic);
+	ulong magic = (BOOTCOUNT_MAGIC & MAGIC_MASK) | (cnt & COUNT_MASK);
+	bfin_write32(CONFIG_SYS_BOOTCOUNT_ADDR, magic);
 }
 
-ulong bootcount_load (void)
+ulong bootcount_load(void)
 {
-  ulong magic = bfin_read32 (CONFIG_SYS_BOOTCOUNT_ADDR);
-  if ( (magic & MAGIC_MASK) == (BOOTCOUNT_MAGIC & MAGIC_MASK) )
-  { return magic & COUNT_MASK; }
-  else
-  { return 0; }
+	ulong magic = bfin_read32(CONFIG_SYS_BOOTCOUNT_ADDR);
+	if ((magic & MAGIC_MASK) == (BOOTCOUNT_MAGIC & MAGIC_MASK))
+		return magic & COUNT_MASK;
+	else
+		return 0;
 }

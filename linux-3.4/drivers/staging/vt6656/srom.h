@@ -74,34 +74,34 @@
 /*---------------------  Export Types  ------------------------------*/
 
 typedef struct tagSSromReg {
-  BYTE    abyPAR[6];                 
-  
-  WORD    wSUB_VID;                  
-  WORD    wSUB_SID;
-  
-  BYTE    byBCFG0;                   
-  BYTE    byBCFG1;
-  
-  BYTE    byFCR0;                    
-  BYTE    byFCR1;
-  BYTE    byPMC0;                    
-  BYTE    byPMC1;
-  BYTE    byMAXLAT;                  
-  BYTE    byMINGNT;
-  BYTE    byCFG0;                    
-  BYTE    byCFG1;
-  WORD    wCISPTR;                   
-  WORD    wRsv0;                     
-  WORD    wRsv1;                     
-  BYTE    byBBPAIR;                  
-  BYTE    byRFTYPE;
-  BYTE    byMinChannel;              
-  BYTE    byMaxChannel;
-  BYTE    bySignature;               
-  BYTE    byCheckSum;
-  
-  BYTE    abyReserved0[96];          
-  BYTE    abyCIS[128];               
+    BYTE    abyPAR[6];                 
+
+    WORD    wSUB_VID;                  
+    WORD    wSUB_SID;
+
+    BYTE    byBCFG0;                   
+    BYTE    byBCFG1;
+
+    BYTE    byFCR0;                    
+    BYTE    byFCR1;
+    BYTE    byPMC0;                    
+    BYTE    byPMC1;
+    BYTE    byMAXLAT;                  
+    BYTE    byMINGNT;
+    BYTE    byCFG0;                    
+    BYTE    byCFG1;
+    WORD    wCISPTR;                   
+    WORD    wRsv0;                     
+    WORD    wRsv1;                     
+    BYTE    byBBPAIR;                  
+    BYTE    byRFTYPE;
+    BYTE    byMinChannel;              
+    BYTE    byMaxChannel;
+    BYTE    bySignature;               
+    BYTE    byCheckSum;
+
+    BYTE    abyReserved0[96];          
+    BYTE    abyCIS[128];               
 } SSromReg, *PSSromReg;
 
 /*---------------------  Export Macros ------------------------------*/

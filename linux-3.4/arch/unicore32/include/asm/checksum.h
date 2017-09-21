@@ -20,21 +20,21 @@
  */
 
 static inline __wsum
-csum_tcpudp_nofold (__be32 saddr, __be32 daddr, unsigned short len,
-                    unsigned short proto, __wsum sum)
+csum_tcpudp_nofold(__be32 saddr, __be32 daddr, unsigned short len,
+		   unsigned short proto, __wsum sum)
 {
-  __asm__ (
-    "add.a	%0, %1, %2\n"
-    "addc.a	%0, %0, %3\n"
-    "addc.a	%0, %0, %4 << #8\n"
-    "addc.a	%0, %0, %5\n"
-    "addc	%0, %0, #0\n"
-    : "=&r" (sum)
-    : "r" (sum), "r" (daddr), "r" (saddr), "r" (len), "Ir" (htons (proto) )
-    : "cc");
-  return sum;
+	__asm__(
+	"add.a	%0, %1, %2\n"
+	"addc.a	%0, %0, %3\n"
+	"addc.a	%0, %0, %4 << #8\n"
+	"addc.a	%0, %0, %5\n"
+	"addc	%0, %0, #0\n"
+	: "=&r"(sum)
+	: "r" (sum), "r" (daddr), "r" (saddr), "r" (len), "Ir" (htons(proto))
+	: "cc");
+	return sum;
 }
-#define csum_tcpudp_nofold  csum_tcpudp_nofold
+#define csum_tcpudp_nofold	csum_tcpudp_nofold
 
 #include <asm-generic/checksum.h>
 

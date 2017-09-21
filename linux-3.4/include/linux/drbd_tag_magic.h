@@ -13,21 +13,21 @@ enum packet_types {
 #define NL_BIT(pn, pr, member)
 #define NL_STRING(pn, pr, member, len)
 #include "drbd_nl.h"
-  P_nl_after_last_packet,
+	P_nl_after_last_packet,
 };
 
 /* These struct are used to deduce the size of the tag lists: */
-#define NL_PACKET(name, number, fields) \
-  struct name ## _tag_len_struct { fields };
-#define NL_INTEGER(pn, pr, member)    \
-  int member; int tag_and_len ## member;
-#define NL_INT64(pn, pr, member)    \
-  __u64 member; int tag_and_len ## member;
-#define NL_BIT(pn, pr, member)    \
-  unsigned char member:1; int tag_and_len ## member;
-#define NL_STRING(pn, pr, member, len)  \
-  unsigned char member[len]; int member ## _len; \
-  int tag_and_len ## member;
+#define NL_PACKET(name, number, fields)	\
+	struct name ## _tag_len_struct { fields };
+#define NL_INTEGER(pn, pr, member)		\
+	int member; int tag_and_len ## member;
+#define NL_INT64(pn, pr, member)		\
+	__u64 member; int tag_and_len ## member;
+#define NL_BIT(pn, pr, member)		\
+	unsigned char member:1; int tag_and_len ## member;
+#define NL_STRING(pn, pr, member, len)	\
+	unsigned char member[len]; int member ## _len; \
+	int tag_and_len ## member;
 #include <linux/drbd_nl.h>
 
 /* declare tag-list-sizes */
@@ -66,9 +66,9 @@ enum drbd_tags {
 };
 
 struct tag {
-  const char * name;
-  int type_n_flags;
-  int max_len;
+	const char *name;
+	int type_n_flags;
+	int max_len;
 };
 
 /* declare tag names */

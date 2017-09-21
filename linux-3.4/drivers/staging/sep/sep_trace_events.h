@@ -85,62 +85,62 @@
  * to the data structure in the ring buffer, and is defined by the
  * TP_STRUCT__entry.
  */
-TRACE_EVENT (sep_func_start,
+TRACE_EVENT(sep_func_start,
 
-             TP_PROTO (const char * name, int branch),
+	TP_PROTO(const char *name, int branch),
 
-             TP_ARGS (name, branch),
+	TP_ARGS(name, branch),
 
-             TP_STRUCT__entry (
-               __array (char, name,    20)
-               __field (int,  branch)
-             ),
+	TP_STRUCT__entry(
+		__array(char,	name,    20)
+		__field(int,	branch)
+	),
 
-             TP_fast_assign (
-               strncpy (__entry->name, name, 20);
-               __entry->branch = branch;
-             ),
+	TP_fast_assign(
+		strncpy(__entry->name, name, 20);
+		__entry->branch	= branch;
+	),
 
-             TP_printk ("func_start %s %d", __entry->name, __entry->branch)
-            );
+	TP_printk("func_start %s %d", __entry->name, __entry->branch)
+);
 
-TRACE_EVENT (sep_func_end,
+TRACE_EVENT(sep_func_end,
 
-             TP_PROTO (const char * name, int branch),
+	TP_PROTO(const char *name, int branch),
 
-             TP_ARGS (name, branch),
+	TP_ARGS(name, branch),
 
-             TP_STRUCT__entry (
-               __array (char, name,    20)
-               __field (int,  branch)
-             ),
+	TP_STRUCT__entry(
+		__array(char,	name,    20)
+		__field(int,	branch)
+	),
 
-             TP_fast_assign (
-               strncpy (__entry->name, name, 20);
-               __entry->branch = branch;
-             ),
+	TP_fast_assign(
+		strncpy(__entry->name, name, 20);
+		__entry->branch	= branch;
+	),
 
-             TP_printk ("func_end %s %d", __entry->name, __entry->branch)
-            );
+	TP_printk("func_end %s %d", __entry->name, __entry->branch)
+);
 
-TRACE_EVENT (sep_misc_event,
+TRACE_EVENT(sep_misc_event,
 
-             TP_PROTO (const char * name, int branch),
+	TP_PROTO(const char *name, int branch),
 
-             TP_ARGS (name, branch),
+	TP_ARGS(name, branch),
 
-             TP_STRUCT__entry (
-               __array (char, name,    20)
-               __field (int,  branch)
-             ),
+	TP_STRUCT__entry(
+		__array(char,	name,    20)
+		__field(int,	branch)
+	),
 
-             TP_fast_assign (
-               strncpy (__entry->name, name, 20);
-               __entry->branch = branch;
-             ),
+	TP_fast_assign(
+		strncpy(__entry->name, name, 20);
+		__entry->branch	= branch;
+	),
 
-             TP_printk ("misc_event %s %d", __entry->name, __entry->branch)
-            );
+	TP_printk("misc_event %s %d", __entry->name, __entry->branch)
+);
 
 
 #endif

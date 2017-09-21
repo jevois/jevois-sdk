@@ -32,14 +32,14 @@ extern const void __nosave_begin, __nosave_end;
  * The size of the keys array is (PAGE_SIZE - sizeof(long))
  */
 struct page_key_data {
-  struct page_key_data * next;
-  unsigned char data[];
+	struct page_key_data *next;
+	unsigned char data[];
 };
 
-#define PAGE_KEY_DATA_SIZE  (PAGE_SIZE - sizeof(struct page_key_data *))
+#define PAGE_KEY_DATA_SIZE	(PAGE_SIZE - sizeof(struct page_key_data *))
 
-static struct page_key_data * page_key_data;
-static struct page_key_data * page_key_rp, *page_key_wp;
+static struct page_key_data *page_key_data;
+static struct page_key_data *page_key_rp, *page_key_wp;
 static unsigned long page_key_rx, page_key_wx;
 
 /*
@@ -49,72 +49,72 @@ static unsigned long page_key_rx, page_key_wx;
  * keys need to be memorized until the page data has been restored.
  * Only then can the storage keys be set to their old state.
  */
-unsigned long page_key_additional_pages (unsigned long pages)
+unsigned long page_key_additional_pages(unsigned long pages)
 {
-  return DIV_ROUND_UP (pages, PAGE_KEY_DATA_SIZE);
+	return DIV_ROUND_UP(pages, PAGE_KEY_DATA_SIZE);
 }
 
 /*
  * Free page_key_data list of arrays.
  */
-void page_key_free (void)
+void page_key_free(void)
 {
-  struct page_key_data * pkd;
-  
-  while (page_key_data) {
-    pkd = page_key_data;
-    page_key_data = pkd->next;
-    free_page ( (unsigned long) pkd);
-  }
+	struct page_key_data *pkd;
+
+	while (page_key_data) {
+		pkd = page_key_data;
+		page_key_data = pkd->next;
+		free_page((unsigned long) pkd);
+	}
 }
 
 /*
  * Allocate page_key_data list of arrays with enough room to store
  * one byte for each page in the hibernation image.
  */
-int page_key_alloc (unsigned long pages)
+int page_key_alloc(unsigned long pages)
 {
-  struct page_key_data * pk;
-  unsigned long size;
-  
-  size = DIV_ROUND_UP (pages, PAGE_KEY_DATA_SIZE);
-  while (size--) {
-    pk = (struct page_key_data *) get_zeroed_page (GFP_KERNEL);
-    if (!pk) {
-      page_key_free();
-      return -ENOMEM;
-    }
-    pk->next = page_key_data;
-    page_key_data = pk;
-  }
-  page_key_rp = page_key_wp = page_key_data;
-  page_key_rx = page_key_wx = 0;
-  return 0;
+	struct page_key_data *pk;
+	unsigned long size;
+
+	size = DIV_ROUND_UP(pages, PAGE_KEY_DATA_SIZE);
+	while (size--) {
+		pk = (struct page_key_data *) get_zeroed_page(GFP_KERNEL);
+		if (!pk) {
+			page_key_free();
+			return -ENOMEM;
+		}
+		pk->next = page_key_data;
+		page_key_data = pk;
+	}
+	page_key_rp = page_key_wp = page_key_data;
+	page_key_rx = page_key_wx = 0;
+	return 0;
 }
 
 /*
  * Save the storage key into the upper 8 bits of the page frame number.
  */
-void page_key_read (unsigned long * pfn)
+void page_key_read(unsigned long *pfn)
 {
-  unsigned long addr;
-  
-  addr = (unsigned long) page_address (pfn_to_page (*pfn) );
-  * (unsigned char *) pfn = (unsigned char) page_get_storage_key (addr);
+	unsigned long addr;
+
+	addr = (unsigned long) page_address(pfn_to_page(*pfn));
+	*(unsigned char *) pfn = (unsigned char) page_get_storage_key(addr);
 }
 
 /*
  * Extract the storage key from the upper 8 bits of the page frame number
  * and store it in the page_key_data list of arrays.
  */
-void page_key_memorize (unsigned long * pfn)
+void page_key_memorize(unsigned long *pfn)
 {
-  page_key_wp->data[page_key_wx] = * (unsigned char *) pfn;
-  * (unsigned char *) pfn = 0;
-  if (++page_key_wx < PAGE_KEY_DATA_SIZE)
-  { return; }
-  page_key_wp = page_key_wp->next;
-  page_key_wx = 0;
+	page_key_wp->data[page_key_wx] = *(unsigned char *) pfn;
+	*(unsigned char *) pfn = 0;
+	if (++page_key_wx < PAGE_KEY_DATA_SIZE)
+		return;
+	page_key_wp = page_key_wp->next;
+	page_key_wx = 0;
 }
 
 /*
@@ -123,60 +123,60 @@ void page_key_memorize (unsigned long * pfn)
  * a "safe" page the swsusp_arch_resume code will transfer the storage
  * key from the buffer page to the original page.
  */
-void page_key_write (void * address)
+void page_key_write(void *address)
 {
-  page_set_storage_key ( (unsigned long) address,
-                         page_key_rp->data[page_key_rx], 0);
-  if (++page_key_rx >= PAGE_KEY_DATA_SIZE)
-  { return; }
-  page_key_rp = page_key_rp->next;
-  page_key_rx = 0;
+	page_set_storage_key((unsigned long) address,
+			     page_key_rp->data[page_key_rx], 0);
+	if (++page_key_rx >= PAGE_KEY_DATA_SIZE)
+		return;
+	page_key_rp = page_key_rp->next;
+	page_key_rx = 0;
 }
 
-int pfn_is_nosave (unsigned long pfn)
+int pfn_is_nosave(unsigned long pfn)
 {
-  unsigned long nosave_begin_pfn = PFN_DOWN (__pa (&__nosave_begin) );
-  unsigned long nosave_end_pfn = PFN_DOWN (__pa (&__nosave_end) );
-  
-  /* Always save lowcore pages (LC protection might be enabled). */
-  if (pfn <= LC_PAGES)
-  { return 0; }
-  if (pfn >= nosave_begin_pfn && pfn < nosave_end_pfn)
-  { return 1; }
-  /* Skip memory holes and read-only pages (NSS, DCSS, ...). */
-  if (tprot (PFN_PHYS (pfn) ) )
-  { return 1; }
-  return 0;
+	unsigned long nosave_begin_pfn = PFN_DOWN(__pa(&__nosave_begin));
+	unsigned long nosave_end_pfn = PFN_DOWN(__pa(&__nosave_end));
+
+	/* Always save lowcore pages (LC protection might be enabled). */
+	if (pfn <= LC_PAGES)
+		return 0;
+	if (pfn >= nosave_begin_pfn && pfn < nosave_end_pfn)
+		return 1;
+	/* Skip memory holes and read-only pages (NSS, DCSS, ...). */
+	if (tprot(PFN_PHYS(pfn)))
+		return 1;
+	return 0;
 }
 
-void save_processor_state (void)
+void save_processor_state(void)
 {
-  /* swsusp_arch_suspend() actually saves all cpu register contents.
-   * Machine checks must be disabled since swsusp_arch_suspend() stores
-   * register contents to their lowcore save areas. That's the same
-   * place where register contents on machine checks would be saved.
-   * To avoid register corruption disable machine checks.
-   * We must also disable machine checks in the new psw mask for
-   * program checks, since swsusp_arch_suspend() may generate program
-   * checks. Disabling machine checks for all other new psw masks is
-   * just paranoia.
-   */
-  local_mcck_disable();
-  /* Disable lowcore protection */
-  __ctl_clear_bit (0, 28);
-  S390_lowcore.external_new_psw.mask &= ~PSW_MASK_MCHECK;
-  S390_lowcore.svc_new_psw.mask &= ~PSW_MASK_MCHECK;
-  S390_lowcore.io_new_psw.mask &= ~PSW_MASK_MCHECK;
-  S390_lowcore.program_new_psw.mask &= ~PSW_MASK_MCHECK;
+	/* swsusp_arch_suspend() actually saves all cpu register contents.
+	 * Machine checks must be disabled since swsusp_arch_suspend() stores
+	 * register contents to their lowcore save areas. That's the same
+	 * place where register contents on machine checks would be saved.
+	 * To avoid register corruption disable machine checks.
+	 * We must also disable machine checks in the new psw mask for
+	 * program checks, since swsusp_arch_suspend() may generate program
+	 * checks. Disabling machine checks for all other new psw masks is
+	 * just paranoia.
+	 */
+	local_mcck_disable();
+	/* Disable lowcore protection */
+	__ctl_clear_bit(0,28);
+	S390_lowcore.external_new_psw.mask &= ~PSW_MASK_MCHECK;
+	S390_lowcore.svc_new_psw.mask &= ~PSW_MASK_MCHECK;
+	S390_lowcore.io_new_psw.mask &= ~PSW_MASK_MCHECK;
+	S390_lowcore.program_new_psw.mask &= ~PSW_MASK_MCHECK;
 }
 
-void restore_processor_state (void)
+void restore_processor_state(void)
 {
-  S390_lowcore.external_new_psw.mask |= PSW_MASK_MCHECK;
-  S390_lowcore.svc_new_psw.mask |= PSW_MASK_MCHECK;
-  S390_lowcore.io_new_psw.mask |= PSW_MASK_MCHECK;
-  S390_lowcore.program_new_psw.mask |= PSW_MASK_MCHECK;
-  /* Enable lowcore protection */
-  __ctl_set_bit (0, 28);
-  local_mcck_enable();
+	S390_lowcore.external_new_psw.mask |= PSW_MASK_MCHECK;
+	S390_lowcore.svc_new_psw.mask |= PSW_MASK_MCHECK;
+	S390_lowcore.io_new_psw.mask |= PSW_MASK_MCHECK;
+	S390_lowcore.program_new_psw.mask |= PSW_MASK_MCHECK;
+	/* Enable lowcore protection */
+	__ctl_set_bit(0,28);
+	local_mcck_enable();
 }

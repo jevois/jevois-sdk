@@ -1,11 +1,11 @@
 /*************************************************************************
  *
  * tape390.h
- *     enables user programs to display messages and control encryption
- *     on s390 tape devices
+ *	   enables user programs to display messages and control encryption
+ *	   on s390 tape devices
  *
- *     Copyright IBM Corp. 2001,2006
- *     Author(s): Michael Holzheu <holzheu@de.ibm.com>
+ *	   Copyright IBM Corp. 2001,2006
+ *	   Author(s): Michael Holzheu <holzheu@de.ibm.com>
  *
  *************************************************************************/
 
@@ -31,9 +31,9 @@
  */
 
 typedef struct display_struct {
-  char cntrl;
-  char message1[8];
-  char message2[8];
+        char cntrl;
+        char message1[8];
+        char message2[8];
 } display_struct;
 
 /*
@@ -41,16 +41,16 @@ typedef struct display_struct {
  */
 
 struct tape390_crypt_info {
-  char capability;
-  char status;
-  char medium_status;
-} __attribute__ ( (packed) );
+	char capability;
+	char status;
+	char medium_status;
+} __attribute__ ((packed));
 
 
 /* Macros for "capable" field */
 #define TAPE390_CRYPT_SUPPORTED_MASK 0x01
 #define TAPE390_CRYPT_SUPPORTED(x) \
-  ((x.capability & TAPE390_CRYPT_SUPPORTED_MASK))
+	((x.capability & TAPE390_CRYPT_SUPPORTED_MASK))
 
 /* Macros for "status" field */
 #define TAPE390_CRYPT_ON_MASK 0x01
@@ -60,9 +60,9 @@ struct tape390_crypt_info {
 #define TAPE390_MEDIUM_LOADED_MASK 0x01
 #define TAPE390_MEDIUM_ENCRYPTED_MASK 0x02
 #define TAPE390_MEDIUM_ENCRYPTED(x) \
-  (((x.medium_status) & TAPE390_MEDIUM_ENCRYPTED_MASK))
+	(((x.medium_status) & TAPE390_MEDIUM_ENCRYPTED_MASK))
 #define TAPE390_MEDIUM_LOADED(x) \
-  (((x.medium_status) & TAPE390_MEDIUM_LOADED_MASK))
+	(((x.medium_status) & TAPE390_MEDIUM_LOADED_MASK))
 
 /*
  * The TAPE390_CRYPT_SET ioctl is used to switch on/off encryption.
@@ -81,14 +81,14 @@ struct tape390_crypt_info {
 #define TAPE390_KEKL_TYPE_HASH 2
 
 struct tape390_kekl {
-  unsigned char type;
-  unsigned char type_on_tape;
-  char label[65];
-} __attribute__ ( (packed) );
+	unsigned char type;
+	unsigned char type_on_tape;
+	char label[65];
+} __attribute__ ((packed));
 
 struct tape390_kekl_pair {
-  struct tape390_kekl kekl[2];
-} __attribute__ ( (packed) );
+	struct tape390_kekl kekl[2];
+} __attribute__ ((packed));
 
 /*
  * The TAPE390_KEKL_SET ioctl is used to set Key Encrypting Key labels.
@@ -100,4 +100,4 @@ struct tape390_kekl_pair {
  */
 #define TAPE390_KEKL_QUERY _IOR('d', 5, struct tape390_kekl_pair)
 
-#endif
+#endif 

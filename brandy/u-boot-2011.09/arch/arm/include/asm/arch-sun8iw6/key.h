@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -28,11 +28,11 @@
 #include "asm/arch/cpu.h"
 
 struct sunxi_lradc {
-  volatile u32 ctrl;         /* lradc control */
-  volatile u32 intc;         /* interrupt control */
-  volatile u32 ints;         /* interrupt status */
-  volatile u32 data0;        /* lradc 0 data */
-  volatile u32 data1;        /* lradc 1 data */
+	volatile u32 ctrl;         /* lradc control */
+	volatile u32 intc;         /* interrupt control */
+	volatile u32 ints;         /* interrupt status */
+	volatile u32 data0;        /* lradc 0 data */
+	volatile u32 data1;        /* lradc 1 data */
 };
 
 #define SUNXI_KEY_ADC_CRTL        (SUNXI_LRADC_BASE + 0x00)
@@ -54,12 +54,12 @@ struct sunxi_lradc {
 #define ADC0_KEYUP_PENDING        (1 << 4)    /* key up */
 
 
-extern int sunxi_key_init (void);
+extern int sunxi_key_init(void);
 
-extern int sunxi_key_exit (void);
+extern int sunxi_key_exit(void);
 
-extern int sunxi_key_read (void);
+extern int sunxi_key_read(void);
 
-extern int sunxi_key_probe (void);
+extern int sunxi_key_probe(void);
 
 #endif

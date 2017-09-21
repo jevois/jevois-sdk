@@ -5,22 +5,22 @@
 /* Unified sub device IDs for AXP */
 /* LDO0 For RTCLDO ,LDO1-3 for ALDO,LDO*/
 enum {///qin
-  AXP20_ID_DCDC2,
-  AXP20_ID_DCDC3,
-  
-  AXP20_ID_LDO1,
-  AXP20_ID_LDO2,
-  AXP20_ID_LDO3,
-  AXP20_ID_LDO4,
-  
-  AXP20_ID_LDOIO0,
-  
-  AXP20_ID_SUPPLY,
-  
-  AXP20_ID_GPIO,
+	AXP20_ID_DCDC2,
+	AXP20_ID_DCDC3,
+	
+	AXP20_ID_LDO1,
+	AXP20_ID_LDO2,
+	AXP20_ID_LDO3,
+	AXP20_ID_LDO4,
+
+	AXP20_ID_LDOIO0,
+
+	AXP20_ID_SUPPLY,
+
+	AXP20_ID_GPIO,
 };
 
-/*For AXP20*/
+/*For AXP20*/ 
 #define AXP20                       20
 #define POWER20_STATUS              (0x00)
 #define POWER20_MODE_CHGSTATUS      (0x01)
@@ -116,23 +116,23 @@ enum {///qin
 #define POWER20_BAT_POWERL8             (0x72)
 
 /*  AXP20  */
-#define AXP20_IRQ_USBLO   ( 1 <<  1)
-#define AXP20_IRQ_USBRE   ( 1 <<  2)
-#define AXP20_IRQ_USBIN   ( 1 <<  3)
-#define AXP20_IRQ_USBOV     ( 1 <<  4)
-#define AXP20_IRQ_ACRE     ( 1 <<  5)
-#define AXP20_IRQ_ACIN     ( 1 <<  6)
-#define AXP20_IRQ_ACOV     ( 1 <<  7)
-#define AXP20_IRQ_TEMLO      ( 1 <<  8)
-#define AXP20_IRQ_TEMOV      ( 1 <<  9)
-#define AXP20_IRQ_CHAOV   ( 1 << 10)
-#define AXP20_IRQ_CHAST       ( 1 << 11)
-#define AXP20_IRQ_BATATOU    ( 1 << 12)
-#define AXP20_IRQ_BATATIN   ( 1 << 13)
-#define AXP20_IRQ_BATRE   ( 1 << 14)
-#define AXP20_IRQ_BATIN   ( 1 << 15)
-#define AXP20_IRQ_PEKLO   ( 1 << 16)
-#define AXP20_IRQ_PEKSH     ( 1 << 17)
+#define	AXP20_IRQ_USBLO		( 1 <<  1)
+#define	AXP20_IRQ_USBRE		( 1 <<  2)
+#define	AXP20_IRQ_USBIN		( 1 <<  3)
+#define	AXP20_IRQ_USBOV     ( 1 <<  4)
+#define	AXP20_IRQ_ACRE     ( 1 <<  5)
+#define	AXP20_IRQ_ACIN     ( 1 <<  6)
+#define	AXP20_IRQ_ACOV     ( 1 <<  7)
+#define	AXP20_IRQ_TEMLO      ( 1 <<  8)
+#define	AXP20_IRQ_TEMOV      ( 1 <<  9)
+#define	AXP20_IRQ_CHAOV		( 1 << 10)
+#define	AXP20_IRQ_CHAST 	    ( 1 << 11)
+#define	AXP20_IRQ_BATATOU    ( 1 << 12)
+#define	AXP20_IRQ_BATATIN  	( 1 << 13)
+#define AXP20_IRQ_BATRE		( 1 << 14)
+#define AXP20_IRQ_BATIN		( 1 << 15)
+#define	AXP20_IRQ_PEKLO		( 1 << 16)
+#define	AXP20_IRQ_PEKSH	    ( 1 << 17)
 
 #define AXP20_IRQ_DCDC3LO    ( 1 << 19)
 #define AXP20_IRQ_DCDC2LO    ( 1 << 20)
@@ -163,8 +163,8 @@ enum {///qin
 #define AXP20_STATUS_USBLAVHO ( 1 <<  3)
 #define AXP20_STATUS_USBVA    ( 1 <<  4)
 #define AXP20_STATUS_USBEN    ( 1 <<  5)
-#define AXP20_STATUS_ACVA     ( 1 <<  6)
-#define AXP20_STATUS_ACEN     ( 1 <<  7)
+#define AXP20_STATUS_ACVA	    ( 1 <<  6)
+#define AXP20_STATUS_ACEN	    ( 1 <<  7)
 
 
 #define AXP20_STATUS_CHACURLOEXP (1 << 10)

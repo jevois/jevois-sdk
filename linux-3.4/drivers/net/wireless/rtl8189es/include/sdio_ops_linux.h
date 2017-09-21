@@ -1,7 +1,7 @@
 /******************************************************************************
  *
  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
- *
+ *                                        
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of version 2 of the GNU General Public License as
  * published by the Free Software Foundation.
@@ -20,7 +20,7 @@
 #ifndef __SDIO_OPS_LINUX_H__
 #define __SDIO_OPS_LINUX_H__
 
-void rtw_sdio_set_irq_thd (struct dvobj_priv * dvobj, _thread_hdl_ thd_hdl);
+void rtw_sdio_set_irq_thd(struct dvobj_priv *dvobj, _thread_hdl_ thd_hdl);
 
 #endif
 

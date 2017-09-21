@@ -2,16 +2,16 @@
 
 /**
  * @file IxEthNpe.h
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,7 +24,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -37,7 +37,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
 */
@@ -46,8 +46,8 @@
  * @defgroup IxEthNpe IXP400 Ethernet NPE (IxEthNpe) API
  *
  * @brief Contains the API for Ethernet NPE.
- *
- * All messages given to NPE, get back an acknowledgment. The acknowledgment
+ * 
+ * All messages given to NPE, get back an acknowledgment. The acknowledgment 
  * is identical to the message sent to the NPE (except for NPE_GETSTATUS message).
  *
  * @{
@@ -64,7 +64,7 @@
  * @brief Request from the XScale client for the NPE to return the firmware
  * version of the currently executing image.
  *
- * Acknowledgment message id is same as the request message id.
+ * Acknowledgment message id is same as the request message id. 
  * NPE returns the firmware version ID to XScale.
  */
 #define IX_ETHNPE_NPE_GETSTATUS                 0x00
@@ -72,16 +72,16 @@
 /**
  * @def IX_ETHNPE_EDB_SETPORTADDRESS
  *
- * @brief Request from the XScale client for the NPE to set the Ethernet
- * port's port ID and MAC address.
+ * @brief Request from the XScale client for the NPE to set the Ethernet 
+ * port's port ID and MAC address. 
  */
 #define IX_ETHNPE_EDB_SETPORTADDRESS            0x01
 
 /**
  * @def IX_ETHNPE_EDB_GETMACADDRESSDATABASE
  *
- * @brief Request from XScale client to the NPE requesting upload of
- * Ethernet Filtering Database or Header Conversion Database from NPE's
+ * @brief Request from XScale client to the NPE requesting upload of 
+ * Ethernet Filtering Database or Header Conversion Database from NPE's 
  * data memory to XScale accessible SDRAM.
  */
 #define IX_ETHNPE_EDB_GETMACADDRESSDATABASE     0x02
@@ -89,7 +89,7 @@
 /**
  * @def IX_ETHNPE_EDB_SETMACADDRESSSDATABASE
  *
- * @brief Request from XScale client to the NPE requesting download of
+ * @brief Request from XScale client to the NPE requesting download of 
  * Ethernet Filtering Database or Header Conversion Database from SDRAM
  * to the NPE's datamemory.
  */
@@ -98,7 +98,7 @@
 /**
  * @def IX_ETHNPE_GETSTATS
  *
- * @brief Request from the XScale client for the current MAC port statistics
+ * @brief Request from the XScale client for the current MAC port statistics 
  * data to be written to the (empty) statistics structure and the specified
  * location in externa memory.
  */
@@ -107,11 +107,11 @@
 /**
  * @def IX_ETHNPE_RESETSTATS
  *
- * @brief Request from the XScale client to the NPE to reset all of its internal
- * MAC port statistics state variables.
+ * @brief Request from the XScale client to the NPE to reset all of its internal 
+ * MAC port statistics state variables. 
  *
  * As a side effect, this message entails an implicit request that the NPE
- *  write the current MAC port statistics into the MAC statistics structure
+ *  write the current MAC port statistics into the MAC statistics structure 
  * at the specified location in external memory.
  */
 #define IX_ETHNPE_RESETSTATS                    0x05
@@ -135,7 +135,7 @@
 /**
  * @def IX_ETHNPE_VLAN_SETDEFAULTRXVID
  *
- * @brief Request from the XScale client to the NPE to set receiver's default
+ * @brief Request from the XScale client to the NPE to set receiver's default 
  * VLAN tag (PVID)and internal traffic class.
  */
 #define IX_ETHNPE_VLAN_SETDEFAULTRXVID          0x08
@@ -143,7 +143,7 @@
 /**
  * @def IX_ETHNPE_VLAN_SETPORTVLANTABLEENTRY
  *
- * @brief Request from the XScale client to the NPE to configure VLAN Port
+ * @brief Request from the XScale client to the NPE to configure VLAN Port 
  * membership and Tx tagging for 8 consecutive VLANID's.
  */
 #define IX_ETHNPE_VLAN_SETPORTVLANTABLEENTRY    0x09
@@ -190,7 +190,7 @@
 #define IX_ETHNPE_FW_SETFIREWALLMODE            0x0E
 
 /**
- * @def IX_ETHNPE_PC_SETFRAMECONTROLDURATIONID
+ * @def IX_ETHNPE_PC_SETFRAMECONTROLDURATIONID 
  *
  * @brief Request from the XScale client to the NPE to set global frame control
  * and duration/ID field for the 802.3 to 802.11 protocol header conversion
@@ -202,7 +202,7 @@
  * @def IX_ETHNPE_PC_SETBBSID
  *
  * @brief Request from the XScale client to the NPE to set global BBSID field
- * value for the 802.3 to 802.11 protocol header conversion service.
+ * value for the 802.3 to 802.11 protocol header conversion service. 
  */
 #define IX_ETHNPE_PC_SETBBSID                   0x10
 
@@ -228,7 +228,7 @@
 /**
  * @def IX_ETHNPE_NPE_GETSTATUS_ACK
  *
- * @brief Acknowledgment to IX_ETHNPE_NPE_GETSTATUS message. NPE firmware version
+ * @brief Acknowledgment to IX_ETHNPE_NPE_GETSTATUS message. NPE firmware version 
  * id is returned in the message.
  */
 #define IX_ETHNPE_NPE_GETSTATUS_ACK                 0x00
@@ -327,7 +327,7 @@
 /**
  * @def IX_ETHNPE_FW_SETFIREWALLMODE_ACK
  *
- * @brief Acknowledgment to IX_ETHNPE_FW_SETFIREWALLMODE message.
+ * @brief Acknowledgment to IX_ETHNPE_FW_SETFIREWALLMODE message. 
  */
 #define IX_ETHNPE_FW_SETFIREWALLMODE_ACK            0x0E
 
@@ -437,7 +437,7 @@
 #define IX_ETHNPE_QM_Q_FIELD_PRIOR_R            0
 
 /**
- * @def IX_ETHNPE_QM_Q_FIELD_ADDR_L
+ * @def IX_ETHNPE_QM_Q_FIELD_ADDR_L 
  *
  * @brief QMgr Queue Address field left boundary
  */
@@ -455,31 +455,31 @@
  *------------------------------------------------------------------------*/
 
 /**
- * @def IX_ETHNPE_QM_Q_FREEENET_ADDR_MASK
+ * @def IX_ETHNPE_QM_Q_FREEENET_ADDR_MASK 
  *
  * @brief Macro to mask the Address field of the FreeEnet Queue Manager Entry
  */
 #define IX_ETHNPE_QM_Q_FREEENET_ADDR_MASK \
-  MASK (IX_ETHNPE_QM_Q_FIELD_ADDR_L, \
-        IX_ETHNPE_QM_Q_FIELD_ADDR_R)
+            MASK (IX_ETHNPE_QM_Q_FIELD_ADDR_L, \
+                  IX_ETHNPE_QM_Q_FIELD_ADDR_R)
 
 /**
- * @def IX_ETHNPE_QM_Q_RXENET_NPEID_MASK
+ * @def IX_ETHNPE_QM_Q_RXENET_NPEID_MASK  
  *
  * @brief Macro to mask the NPE ID field of the RxEnet Queue Manager Entry
  */
 #define IX_ETHNPE_QM_Q_RXENET_NPEID_MASK \
-  MASK (IX_ETHNPE_QM_Q_FIELD_NPEID_L, \
-        IX_ETHNPE_QM_Q_FIELD_NPEID_R)
+            MASK (IX_ETHNPE_QM_Q_FIELD_NPEID_L, \
+                  IX_ETHNPE_QM_Q_FIELD_NPEID_R)
 
 /**
- * @def IX_ETHNPE_QM_Q_RXENET_ADDR_MASK
+ * @def IX_ETHNPE_QM_Q_RXENET_ADDR_MASK 
  *
  * @brief Macro to mask the Mbuf Address field of the RxEnet Queue Manager Entry
  */
 #define IX_ETHNPE_QM_Q_RXENET_ADDR_MASK \
-  MASK (IX_ETHNPE_QM_Q_FIELD_ADDR_L, \
-        IX_ETHNPE_QM_Q_FIELD_ADDR_R)
+            MASK (IX_ETHNPE_QM_Q_FIELD_ADDR_L, \
+                  IX_ETHNPE_QM_Q_FIELD_ADDR_R)
 
 /**
  * @def IX_ETHNPE_QM_Q_TXENET_PRIOR_MASK
@@ -487,36 +487,36 @@
  * @brief Macro to mask the Priority field of the TxEnet Queue Manager Entry
  */
 #define IX_ETHNPE_QM_Q_TXENET_PRIOR_MASK \
-  MASK (IX_ETHNPE_QM_Q_FIELD_PRIOR_L, \
-        IX_ETHNPE_QM_Q_FIELD_PRIOR_R)
+            MASK (IX_ETHNPE_QM_Q_FIELD_PRIOR_L, \
+                  IX_ETHNPE_QM_Q_FIELD_PRIOR_R)
 
 /**
- * @def IX_ETHNPE_QM_Q_TXENET_ADDR_MASK
+ * @def IX_ETHNPE_QM_Q_TXENET_ADDR_MASK 
  *
  * @brief Macro to mask the Mbuf Address field of the TxEnet Queue Manager Entry
  */
 #define IX_ETHNPE_QM_Q_TXENET_ADDR_MASK \
-  MASK (IX_ETHNPE_QM_Q_FIELD_ADDR_L, \
-        IX_ETHNPE_QM_Q_FIELD_ADDR_R)
+            MASK (IX_ETHNPE_QM_Q_FIELD_ADDR_L, \
+                  IX_ETHNPE_QM_Q_FIELD_ADDR_R)
 
 /**
- * @def IX_ETHNPE_QM_Q_TXENETDONE_NPEID_MASK
+ * @def IX_ETHNPE_QM_Q_TXENETDONE_NPEID_MASK 
  *
  * @brief Macro to mask the NPE ID field of the TxEnetDone Queue Manager Entry
  */
 #define IX_ETHNPE_QM_Q_TXENETDONE_NPEID_MASK \
-  MASK (IX_ETHNPE_QM_Q_FIELD_NPEID_L, \
-        IX_ETHNPE_QM_Q_FIELD_NPEID_R)
+            MASK (IX_ETHNPE_QM_Q_FIELD_NPEID_L, \
+                  IX_ETHNPE_QM_Q_FIELD_NPEID_R)
 
 /**
- * @def IX_ETHNPE_QM_Q_TXENETDONE_ADDR_MASK
- *
- * @brief Macro to mask the Mbuf Address field of the TxEnetDone Queue Manager
+ * @def IX_ETHNPE_QM_Q_TXENETDONE_ADDR_MASK 
+ * 
+ * @brief Macro to mask the Mbuf Address field of the TxEnetDone Queue Manager 
  * Entry
  */
 #define IX_ETHNPE_QM_Q_TXENETDONE_ADDR_MASK \
-  MASK (IX_ETHNPE_QM_Q_FIELD_ADDR_L, \
-        IX_ETHNPE_QM_Q_FIELD_ADDR_R)
+            MASK (IX_ETHNPE_QM_Q_FIELD_ADDR_L, \
+                  IX_ETHNPE_QM_Q_FIELD_ADDR_R)
 
 /*--------------------------------------------------------------------------
  * Queue Manager Queue entry bit field value extraction macros
@@ -525,38 +525,38 @@
 /**
  * @def IX_ETHNPE_QM_Q_FREEENET_ADDR_VAL(x)
  *
- * @brief Extraction macro for Address field of FreeNet Queue Manager Entry
+ * @brief Extraction macro for Address field of FreeNet Queue Manager Entry 
  *
  * Pointer to an mbuf buffer descriptor
  */
 #define IX_ETHNPE_QM_Q_FREEENET_ADDR_VAL(x) \
-  ((x) & IX_ETHNPE_QM_Q_FREEENET_ADDR_MASK)
+            ((x) & IX_ETHNPE_QM_Q_FREEENET_ADDR_MASK)
 
 /**
  * @def IX_ETHNPE_QM_Q_RXENET_NPEID_VAL(x)
  *
- * @brief Extraction macro for NPE ID field of RxEnet Queue Manager Entry
+ * @brief Extraction macro for NPE ID field of RxEnet Queue Manager Entry 
  *
- * Set to 0 for entries originating from the Eth0 NPE;
+ * Set to 0 for entries originating from the Eth0 NPE; 
  * Set to 1 for entries originating from the Eth1 NPE.
  */
 #define IX_ETHNPE_QM_Q_RXENET_NPEID_VAL(x) \
-  BITS (x, IX_ETHNPE_QM_Q_FIELD_NPEID_L, \
-        IX_ETHNPE_QM_Q_FIELD_NPEID_R)
+            BITS (x, IX_ETHNPE_QM_Q_FIELD_NPEID_L, \
+                     IX_ETHNPE_QM_Q_FIELD_NPEID_R)
 
 /**
  * @def IX_ETHNPE_QM_Q_RXENET_PORTID_VAL(x)
  *
- * @brief Extraction macro for Port ID field of RxEnet Queue Manager Entry
+ * @brief Extraction macro for Port ID field of RxEnet Queue Manager Entry 
  *
  * 0-5: Assignable (by the XScale client) to any of the physical ports.
  * 6: It is reserved
- * 7: Indication that the NPE did not find the associated frame's destination MAC address within
+ * 7: Indication that the NPE did not find the associated frame's destination MAC address within 
  * its internal filtering database.
  */
 #define IX_ETHNPE_QM_Q_RXENET_PORTID_VAL(x) \
-  BITS (x, IX_ETHNPE_QM_Q_FIELD_PORTID_L, \
-        IX_ETHNPE_QM_Q_Field_PortID_R)
+            BITS (x, IX_ETHNPE_QM_Q_FIELD_PORTID_L, \
+                     IX_ETHNPE_QM_Q_Field_PortID_R)
 
 /**
  * @def IX_ETHNPE_QM_Q_RXENET_ADDR_VAL(x)
@@ -566,7 +566,7 @@
  * Pointer to an mbuf buffer descriptor
  */
 #define IX_ETHNPE_QM_Q_RXENET_ADDR_VAL(x) \
-  ((x) & IX_ETHNPE_QM_Q_RXENET_ADDR_MASK)
+            ((x) & IX_ETHNPE_QM_Q_RXENET_ADDR_MASK)
 
 /**
  * @def IX_ETHNPE_QM_Q_TXENET_PRIOR_VAL(x)
@@ -577,31 +577,31 @@
  * cleared upon return from the Ethernet NPE to the TxEnetDone queue.
  */
 #define IX_ETHNPE_QM_Q_TXENET_PRIOR_VAL(x) \
-  BITS (x, IX_ETHNPE_QM_Q_FIELD_PRIOR_L, \
-        IX_ETHNPE_QM_Q_FIELD_PRIOR_R)
+            BITS (x, IX_ETHNPE_QM_Q_FIELD_PRIOR_L, \
+                     IX_ETHNPE_QM_Q_FIELD_PRIOR_R)
 
 /**
  * @def IX_ETHNPE_QM_Q_TXENET_ADDR_VAL(x)
  *
- * @brief Extraction macro for Address field of Queue Manager TxEnet Queue
+ * @brief Extraction macro for Address field of Queue Manager TxEnet Queue 
  * Manager Entry
  *
  * Pointer to an mbuf buffer descriptor
  */
 #define IX_ETHNPE_QM_Q_TXENET_ADDR_VAL(x) \
-  ((x) & IX_ETHNPE_QM_Q_TXENET_ADDR_MASK)
+            ((x) & IX_ETHNPE_QM_Q_TXENET_ADDR_MASK)
 
 /**
  * @def IX_ETHNPE_QM_Q_TXENETDONE_NPEID_VAL(x)
  *
  * @brief Extraction macro for NPE ID field of TxEnetDone Queue Manager Entry
  *
- * Set to 0 for entries originating from the Eth0 NPE; set to 1 for en-tries
+ * Set to 0 for entries originating from the Eth0 NPE; set to 1 for en-tries 
  * originating from the Eth1 NPE.
  */
 #define IX_ETHNPE_QM_Q_TXENETDONE_NPEID_VAL(x) \
-  BITS (x, IX_ETHNPE_QM_Q_FIELD_NPEID_L, \
-        IX_ETHNPE_QM_Q_FIELD_NPEID_R)
+            BITS (x, IX_ETHNPE_QM_Q_FIELD_NPEID_L, \
+                     IX_ETHNPE_QM_Q_FIELD_NPEID_R)
 
 /**
  * @def IX_ETHNPE_QM_Q_TXENETDONE_ADDR_VAL(x)
@@ -611,7 +611,7 @@
  * Pointer to an mbuf buffer descriptor
  */
 #define IX_ETHNPE_QM_Q_TXENETDONE_ADDR_VAL(x) \
-  ((x) & IX_ETHNPE_QM_Q_TXENETDONE_ADDR_MASK)
+            ((x) & IX_ETHNPE_QM_Q_TXENETDONE_ADDR_MASK)
 
 
 /*--------------------------------------------------------------------------
@@ -620,24 +620,24 @@
 
 /**
  * @def IX_ETHNPE_ACC_RXFREE_BUFFER_LENGTH_MIN
- *
+ * 
  * @brief Macro to check the minimum length of a rx free buffer
  */
 #define IX_ETHNPE_ACC_RXFREE_BUFFER_LENGTH_MIN (64)
 
 /**
  * @def IX_ETHNPE_ACC_RXFREE_BUFFER_LENGTH_MASK
- *
+ * 
  * @brief Mask to apply to the mbuf length before submitting it to the NPE
  * (the NPE handles only rx free mbufs which are multiple of 64)
- *
+ * 
  * @sa IX_ETHNPE_ACC_RXFREE_BUFFER_LENGTH_MASK
  */
 #define IX_ETHNPE_ACC_RXFREE_BUFFER_LENGTH_MASK (~63)
 
 /**
  * @def IX_ETHNPE_ACC_RXFREE_BUFFER_ROUND_UP(size)
- *
+ * 
  * @brief  Round up to get the size necessary to receive without chaining
  * the frames which are (size) bytes (the NPE operates by multiple of 64)
  * e.g. To receive 1514 bytes frames, the size of the buffers in replenish
@@ -657,18 +657,18 @@
 
 /**
  * @def IX_ETHNPE_ACC_FRAME_LENGTH_MAX
- *
+ * 
  * @brief maximum mbuf length supported by the NPE
- *
+ * 
  * @sa IX_ETHNPE_ACC_FRAME_LENGTH_MAX
  */
 #define IX_ETHNPE_ACC_FRAME_LENGTH_MAX (16320)
 
 /**
  * @def IX_ETHNPE_ACC_FRAME_LENGTH_DEFAULT
- *
+ * 
  * @brief default mbuf length supported by the NPE
- *
+ * 
  * @sa IX_ETHNPE_ACC_FRAME_LENGTH_DEFAULT
  */
 #define IX_ETHNPE_ACC_FRAME_LENGTH_DEFAULT (1522)

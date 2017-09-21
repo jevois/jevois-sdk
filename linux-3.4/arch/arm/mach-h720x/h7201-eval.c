@@ -27,12 +27,12 @@
 #include <mach/hardware.h>
 #include "common.h"
 
-MACHINE_START (H7201, "Hynix GMS30C7201")
-/* Maintainer: Robert Schwebel, Pengutronix */
-.atag_offset  = 0x1000,
- .map_io   = h720x_map_io,
-  .init_irq = h720x_init_irq,
-   .timer    = &h7201_timer,
-    .dma_zone_size  = SZ_256M,
-     .restart  = h720x_restart,
-      MACHINE_END
+MACHINE_START(H7201, "Hynix GMS30C7201")
+	/* Maintainer: Robert Schwebel, Pengutronix */
+	.atag_offset	= 0x1000,
+	.map_io		= h720x_map_io,
+	.init_irq	= h720x_init_irq,
+	.timer		= &h7201_timer,
+	.dma_zone_size	= SZ_256M,
+	.restart	= h720x_restart,
+MACHINE_END

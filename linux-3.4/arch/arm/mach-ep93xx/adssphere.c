@@ -23,23 +23,23 @@
 #include "soc.h"
 
 static struct ep93xx_eth_data __initdata adssphere_eth_data = {
-  .phy_id   = 1,
+	.phy_id		= 1,
 };
 
-static void __init adssphere_init_machine (void)
+static void __init adssphere_init_machine(void)
 {
-  ep93xx_init_devices();
-  ep93xx_register_flash (4, EP93XX_CS6_PHYS_BASE, SZ_32M);
-  ep93xx_register_eth (&adssphere_eth_data, 1);
+	ep93xx_init_devices();
+	ep93xx_register_flash(4, EP93XX_CS6_PHYS_BASE, SZ_32M);
+	ep93xx_register_eth(&adssphere_eth_data, 1);
 }
 
-MACHINE_START (ADSSPHERE, "ADS Sphere board")
-/* Maintainer: Lennert Buytenhek <buytenh@wantstofly.org> */
-.atag_offset  = 0x100,
- .map_io   = ep93xx_map_io,
-  .init_irq = ep93xx_init_irq,
-   .handle_irq = vic_handle_irq,
-    .timer    = &ep93xx_timer,
-     .init_machine = adssphere_init_machine,
-      .restart  = ep93xx_restart,
-       MACHINE_END
+MACHINE_START(ADSSPHERE, "ADS Sphere board")
+	/* Maintainer: Lennert Buytenhek <buytenh@wantstofly.org> */
+	.atag_offset	= 0x100,
+	.map_io		= ep93xx_map_io,
+	.init_irq	= ep93xx_init_irq,
+	.handle_irq	= vic_handle_irq,
+	.timer		= &ep93xx_timer,
+	.init_machine	= adssphere_init_machine,
+	.restart	= ep93xx_restart,
+MACHINE_END

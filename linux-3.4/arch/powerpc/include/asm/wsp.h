@@ -9,6 +9,6 @@
 #ifndef __ASM_POWERPC_WSP_H
 #define __ASM_POWERPC_WSP_H
 
-extern int wsp_get_chip_id (struct device_node * dn);
+extern int wsp_get_chip_id(struct device_node *dn);
 
 #endif /* __ASM_POWERPC_WSP_H */

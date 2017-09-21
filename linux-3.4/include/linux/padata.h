@@ -43,12 +43,12 @@
  * @serial: Serial complete function.
  */
 struct padata_priv {
-  struct list_head  list;
-  struct parallel_data * pd;
-  int     cb_cpu;
-  int     info;
-  void                    (*parallel) (struct padata_priv * padata);
-  void                    (*serial) (struct padata_priv * padata);
+	struct list_head	list;
+	struct parallel_data	*pd;
+	int			cb_cpu;
+	int			info;
+	void                    (*parallel)(struct padata_priv *padata);
+	void                    (*serial)(struct padata_priv *padata);
 };
 
 /**
@@ -58,8 +58,8 @@ struct padata_priv {
  * @lock: List lock.
  */
 struct padata_list {
-  struct list_head        list;
-  spinlock_t              lock;
+	struct list_head        list;
+	spinlock_t              lock;
 };
 
 /**
@@ -70,9 +70,9 @@ struct padata_list {
 * @pd: Backpointer to the internal control structure.
 */
 struct padata_serial_queue {
-  struct padata_list    serial;
-  struct work_struct    work;
-  struct parallel_data * pd;
+       struct padata_list    serial;
+       struct work_struct    work;
+       struct parallel_data *pd;
 };
 
 /**
@@ -89,12 +89,12 @@ struct padata_serial_queue {
  * @cpu_index: Index of the cpu.
  */
 struct padata_parallel_queue {
-  struct padata_list    parallel;
-  struct padata_list    reorder;
-  struct parallel_data * pd;
-  struct work_struct    work;
-  atomic_t              num_obj;
-  int                   cpu_index;
+       struct padata_list    parallel;
+       struct padata_list    reorder;
+       struct parallel_data *pd;
+       struct work_struct    work;
+       atomic_t              num_obj;
+       int                   cpu_index;
 };
 
 /**
@@ -104,8 +104,8 @@ struct padata_parallel_queue {
  * @cbcpu: cpumask for the serial (callback) workers.
  */
 struct padata_cpumask {
-  cpumask_var_t pcpu;
-  cpumask_var_t cbcpu;
+	cpumask_var_t	pcpu;
+	cpumask_var_t	cbcpu;
 };
 
 /**
@@ -124,17 +124,17 @@ struct padata_cpumask {
  * @timer: Reorder timer.
  */
 struct parallel_data {
-  struct padata_instance  *  pinst;
-  struct padata_parallel_queue  __percpu * pqueue;
-  struct padata_serial_queue  __percpu * squeue;
-  atomic_t      reorder_objects;
-  atomic_t      refcnt;
-  struct padata_cpumask   cpumask;
-  spinlock_t                      lock ____cacheline_aligned;
-  spinlock_t                      seq_lock;
-  unsigned int      seq_nr;
-  unsigned int      processed;
-  struct timer_list   timer;
+	struct padata_instance		*pinst;
+	struct padata_parallel_queue	__percpu *pqueue;
+	struct padata_serial_queue	__percpu *squeue;
+	atomic_t			reorder_objects;
+	atomic_t			refcnt;
+	struct padata_cpumask		cpumask;
+	spinlock_t                      lock ____cacheline_aligned;
+	spinlock_t                      seq_lock;
+	unsigned int			seq_nr;
+	unsigned int			processed;
+	struct timer_list		timer;
 };
 
 /**
@@ -152,39 +152,39 @@ struct parallel_data {
  * @flags: padata flags.
  */
 struct padata_instance {
-  struct notifier_block    cpu_notifier;
-  struct workqueue_struct  * wq;
-  struct parallel_data  *  pd;
-  struct padata_cpumask   cpumask;
-  struct blocking_notifier_head  cpumask_change_notifier;
-  struct kobject                   kobj;
-  struct mutex       lock;
-  u8         flags;
-#define PADATA_INIT 1
-#define PADATA_RESET  2
-#define PADATA_INVALID  4
+	struct notifier_block		 cpu_notifier;
+	struct workqueue_struct		*wq;
+	struct parallel_data		*pd;
+	struct padata_cpumask		cpumask;
+	struct blocking_notifier_head	 cpumask_change_notifier;
+	struct kobject                   kobj;
+	struct mutex			 lock;
+	u8				 flags;
+#define	PADATA_INIT	1
+#define	PADATA_RESET	2
+#define	PADATA_INVALID	4
 };
 
-extern struct padata_instance * padata_alloc_possible (
-  struct workqueue_struct * wq);
-extern struct padata_instance * padata_alloc (struct workqueue_struct * wq,
-    const struct cpumask * pcpumask,
-    const struct cpumask * cbcpumask);
-extern void padata_free (struct padata_instance * pinst);
-extern int padata_do_parallel (struct padata_instance * pinst,
-                               struct padata_priv * padata, int cb_cpu);
-extern void padata_do_serial (struct padata_priv * padata);
-extern int padata_set_cpumask (struct padata_instance * pinst, int cpumask_type,
-                               cpumask_var_t cpumask);
-extern int padata_set_cpumasks (struct padata_instance * pinst,
-                                cpumask_var_t pcpumask,
-                                cpumask_var_t cbcpumask);
-extern int padata_add_cpu (struct padata_instance * pinst, int cpu, int mask);
-extern int padata_remove_cpu (struct padata_instance * pinst, int cpu, int mask);
-extern int padata_start (struct padata_instance * pinst);
-extern void padata_stop (struct padata_instance * pinst);
-extern int padata_register_cpumask_notifier (struct padata_instance * pinst,
-    struct notifier_block * nblock);
-extern int padata_unregister_cpumask_notifier (struct padata_instance * pinst,
-    struct notifier_block * nblock);
+extern struct padata_instance *padata_alloc_possible(
+					struct workqueue_struct *wq);
+extern struct padata_instance *padata_alloc(struct workqueue_struct *wq,
+					    const struct cpumask *pcpumask,
+					    const struct cpumask *cbcpumask);
+extern void padata_free(struct padata_instance *pinst);
+extern int padata_do_parallel(struct padata_instance *pinst,
+			      struct padata_priv *padata, int cb_cpu);
+extern void padata_do_serial(struct padata_priv *padata);
+extern int padata_set_cpumask(struct padata_instance *pinst, int cpumask_type,
+			      cpumask_var_t cpumask);
+extern int padata_set_cpumasks(struct padata_instance *pinst,
+			       cpumask_var_t pcpumask,
+			       cpumask_var_t cbcpumask);
+extern int padata_add_cpu(struct padata_instance *pinst, int cpu, int mask);
+extern int padata_remove_cpu(struct padata_instance *pinst, int cpu, int mask);
+extern int padata_start(struct padata_instance *pinst);
+extern void padata_stop(struct padata_instance *pinst);
+extern int padata_register_cpumask_notifier(struct padata_instance *pinst,
+					    struct notifier_block *nblock);
+extern int padata_unregister_cpumask_notifier(struct padata_instance *pinst,
+					      struct notifier_block *nblock);
 #endif

@@ -49,26 +49,26 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 typedef struct _DC_FBC_CREATE_INFO_
 {
-  IMG_UINT32    ui32FBCWidth; /*!< Pixel width that the FBC module is working on */
-  IMG_UINT32    ui32FBCHeight;  /*!< Pixel height that the FBC module is working on */
-  IMG_UINT32    ui32FBCStride;  /*!< Pixel stride that the FBC module is working on */
-  IMG_UINT32    ui32Size;   /*!< Size of the buffer to create */
+	IMG_UINT32		ui32FBCWidth;	/*!< Pixel width that the FBC module is working on */
+	IMG_UINT32		ui32FBCHeight;	/*!< Pixel height that the FBC module is working on */
+	IMG_UINT32		ui32FBCStride;	/*!< Pixel stride that the FBC module is working on */
+	IMG_UINT32		ui32Size;		/*!< Size of the buffer to create */
 } DC_FBC_CREATE_INFO;
 
 typedef struct _DC_CREATE_INFO_
 {
-  union {
-    DC_FBC_CREATE_INFO sFBC;
-  } u;
+	union {
+		DC_FBC_CREATE_INFO sFBC;
+	} u;
 } DC_CREATE_INFO;
 
 typedef struct _DC_BUFFER_CREATE_INFO_
 {
-  PVRSRV_SURFACE_INFO     sSurface; /*!< Surface properies, specificed by user */
-  IMG_UINT32              ui32BPP;  /*!< Bits per pixel */
-  union {
-    DC_FBC_CREATE_INFO  sFBC;   /*!< Frame buffer compressed specific data */
-  } u;
+	PVRSRV_SURFACE_INFO   	sSurface;	/*!< Surface properies, specificed by user */
+	IMG_UINT32            	ui32BPP;	/*!< Bits per pixel */
+	union {
+		DC_FBC_CREATE_INFO 	sFBC;		/*!< Frame buffer compressed specific data */
+	} u;
 } DC_BUFFER_CREATE_INFO;
 
 #endif /* _DC_COMMON_H_ */

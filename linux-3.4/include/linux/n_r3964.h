@@ -100,12 +100,12 @@
  */
 #ifdef __KERNEL__
 
-enum { R3964_IDLE,
-       R3964_TX_REQUEST, R3964_TRANSMITTING,
-       R3964_WAIT_ZVZ_BEFORE_TX_RETRY, R3964_WAIT_FOR_TX_ACK,
-       R3964_WAIT_FOR_RX_BUF,
-       R3964_RECEIVING, R3964_WAIT_FOR_BCC, R3964_WAIT_FOR_RX_REPEAT
-     };
+enum { R3964_IDLE, 
+	   R3964_TX_REQUEST, R3964_TRANSMITTING, 
+	   R3964_WAIT_ZVZ_BEFORE_TX_RETRY, R3964_WAIT_FOR_TX_ACK,
+	   R3964_WAIT_FOR_RX_BUF,
+	   R3964_RECEIVING, R3964_WAIT_FOR_BCC, R3964_WAIT_FOR_RX_REPEAT
+	   };
 
 /*
  * All open file-handles are 'clients' and are stored in a linked list:
@@ -114,23 +114,23 @@ enum { R3964_IDLE,
 struct r3964_message;
 
 struct r3964_client_info {
-  spinlock_t     lock;
-  struct pid  *  pid;
-  unsigned int   sig_flags;
-  
-  struct r3964_client_info * next;
-  
-  struct r3964_message * first_msg;
-  struct r3964_message * last_msg;
-  struct r3964_block_header * next_block_to_read;
-  int            msg_count;
+	spinlock_t     lock;
+	struct pid    *pid;
+	unsigned int   sig_flags;
+
+	struct r3964_client_info *next;
+
+	struct r3964_message *first_msg;
+	struct r3964_message *last_msg;
+	struct r3964_block_header *next_block_to_read;
+	int            msg_count;
 };
 
 
 #endif
 
 /* types for msg_id: */
-enum {R3964_MSG_ACK = 1, R3964_MSG_DATA };
+enum {R3964_MSG_ACK=1, R3964_MSG_DATA };
 
 #define R3964_MAX_MSG_COUNT 32
 
@@ -141,9 +141,9 @@ enum {R3964_MSG_ACK = 1, R3964_MSG_DATA };
 
 /* the client gets this struct when calling read(fd,...): */
 struct r3964_client_message {
-  int     msg_id;
-  int     arg;
-  int     error_code;
+	  int     msg_id;
+	  int     arg;
+	  int     error_code;
 };
 
 #define R3964_MTU      256
@@ -155,26 +155,26 @@ struct r3964_block_header;
 
 /* internal version of client_message: */
 struct r3964_message {
-  int     msg_id;
-  int     arg;
-  int     error_code;
-  struct r3964_block_header * block;
-  struct r3964_message * next;
+	  int     msg_id;
+	  int     arg;
+	  int     error_code;
+	  struct r3964_block_header *block;
+	  struct r3964_message *next;
 };
 
 /*
  * Header of received block in rx_buf/tx_buf:
  */
 
-struct r3964_block_header
+struct r3964_block_header 
 {
-  unsigned int length;             /* length in chars without header */
-  unsigned char * data;             /* usually data is located
+	unsigned int length;             /* length in chars without header */
+	unsigned char *data;             /* usually data is located 
                                         immediately behind this struct */
-  unsigned int locks;              /* only used in rx_buffer */
-  
-  struct r3964_block_header * next;
-  struct r3964_client_info * owner; /* =NULL in rx_buffer */
+	unsigned int locks;              /* only used in rx_buffer */
+	  
+    struct r3964_block_header *next;
+	struct r3964_client_info *owner;  /* =NULL in rx_buffer */
 };
 
 /*
@@ -198,33 +198,33 @@ struct r3964_block_header
 
 
 struct r3964_info {
-  spinlock_t     lock;
-  struct tty_struct * tty;
-  unsigned char priority;
-  unsigned char * rx_buf;           /* ring buffer */
-  unsigned char * tx_buf;
-  
-  wait_queue_head_t read_wait;
-  
-  struct r3964_block_header * rx_first;
-  struct r3964_block_header * rx_last;
-  struct r3964_block_header * tx_first;
-  struct r3964_block_header * tx_last;
-  unsigned int tx_position;
-  unsigned int rx_position;
-  unsigned char last_rx;
-  unsigned char bcc;
-  unsigned int  blocks_in_rx_queue;
-  
-  
-  struct r3964_client_info * firstClient;
-  unsigned int state;
-  unsigned int flags;
-  
-  struct timer_list tmr;
-  int nRetry;
+	spinlock_t     lock;
+	struct tty_struct *tty;
+	unsigned char priority;
+	unsigned char *rx_buf;            /* ring buffer */
+	unsigned char *tx_buf;
+
+	wait_queue_head_t read_wait;
+
+	struct r3964_block_header *rx_first;
+	struct r3964_block_header *rx_last;
+	struct r3964_block_header *tx_first;
+	struct r3964_block_header *tx_last;
+	unsigned int tx_position;
+        unsigned int rx_position;
+	unsigned char last_rx;
+	unsigned char bcc;
+        unsigned int  blocks_in_rx_queue;
+	  
+	
+	struct r3964_client_info *firstClient;
+	unsigned int state;
+	unsigned int flags;
+
+	struct timer_list tmr;
+	int nRetry;
 };
 
-#endif
+#endif	
 
 #endif

@@ -29,7 +29,7 @@
 #define CPU_CFG             0x0050
 #define AHB1_CFG            0x0054
 #define APB2_CFG            0x0058
-#define AHB2_CFG      0x005c
+#define AHB2_CFG			0x005c
 #define BUS_GATE0           0x0060
 #define BUS_GATE1           0x0064
 #define BUS_GATE2           0x0068
@@ -58,14 +58,14 @@
 #define MBUS_CFG            0x015C
 #define MIPI_CSI            0x016c
 
-#define PLL_CPUPAT      0x0280
-#define PLL_AUDIOPAT    0x0284
-#define PLL_VIDEOPAT    0x0288
-#define PLL_VEPAT     0x028c
-#define PLL_DRR0PAT     0x0290
-#define PLL_ISPPAT      0x0298
-#define PLL_PERI1PAT    0x02a4
-#define PLL_DDR1PAT     0x02ac
+#define PLL_CPUPAT			0x0280
+#define PLL_AUDIOPAT		0x0284
+#define PLL_VIDEOPAT		0x0288
+#define PLL_VEPAT			0x028c
+#define PLL_DRR0PAT			0x0290
+#define PLL_ISPPAT			0x0298
+#define PLL_PERI1PAT		0x02a4
+#define PLL_DDR1PAT			0x02ac
 
 #define BUS_RST0           0x02C0
 #define BUS_RST1           0x02C4
@@ -80,11 +80,11 @@
 #define F_N8X6_M0X2(nv,mv) FACTOR_ALL(nv,8,6,0,0,0,mv,0,2,0,0,0,0,0,0,0,0,0)
 #define F_N8X5_K4X2_M0X2(nv,kv,mv) FACTOR_ALL(nv,8,5,kv,4,2,mv,0,2,0,0,0,0,0,0,0,0,0)
 #define F_N8X5_K4X2_M0X2_P16x2(nv,kv,mv,pv) \
-  FACTOR_ALL(nv,8,5, \
-             kv,4,2, \
-             mv,0,2, \
-             pv,16,2, \
-             0,0,0,0,0,0)
+               FACTOR_ALL(nv,8,5, \
+                          kv,4,2, \
+                          mv,0,2, \
+                          pv,16,2, \
+                          0,0,0,0,0,0)
 #define PLLCPU(n,k,m,p,freq)  {F_N8X5_K4X2_M0X2_P16x2(n, k, m, p),  freq}
 #define PLLVIDEO(n,m,freq)  {F_N8X7_M0X4( n, m),  freq}
 #define PLLVE(n,m,freq)  {F_N8X7_M0X4( n, m),  freq}

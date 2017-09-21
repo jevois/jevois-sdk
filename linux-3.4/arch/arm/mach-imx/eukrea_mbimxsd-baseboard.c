@@ -41,75 +41,75 @@
 #include "devices-imx51.h"
 
 static iomux_v3_cfg_t eukrea_mbimxsd_pads[] = {
-  /* LED */
-  MX51_PAD_NANDF_D10__GPIO3_30,
-  /* SWITCH */
-  NEW_PAD_CTRL (MX51_PAD_NANDF_D9__GPIO3_31, PAD_CTL_PUS_22K_UP |
-  PAD_CTL_PKE | PAD_CTL_SRE_FAST |
-  PAD_CTL_DSE_HIGH | PAD_CTL_PUE | PAD_CTL_HYS),
-  /* UART2 */
-  MX51_PAD_UART2_RXD__UART2_RXD,
-  MX51_PAD_UART2_TXD__UART2_TXD,
-  /* UART 3 */
-  MX51_PAD_UART3_RXD__UART3_RXD,
-  MX51_PAD_UART3_TXD__UART3_TXD,
-  MX51_PAD_KEY_COL4__UART3_RTS,
-  MX51_PAD_KEY_COL5__UART3_CTS,
-  /* SD */
-  MX51_PAD_SD1_CMD__SD1_CMD,
-  MX51_PAD_SD1_CLK__SD1_CLK,
-  MX51_PAD_SD1_DATA0__SD1_DATA0,
-  MX51_PAD_SD1_DATA1__SD1_DATA1,
-  MX51_PAD_SD1_DATA2__SD1_DATA2,
-  MX51_PAD_SD1_DATA3__SD1_DATA3,
-  /* SD1 CD */
-  NEW_PAD_CTRL (MX51_PAD_GPIO1_0__SD1_CD, PAD_CTL_PUS_22K_UP |
-  PAD_CTL_PKE | PAD_CTL_SRE_FAST |
-  PAD_CTL_DSE_HIGH | PAD_CTL_PUE | PAD_CTL_HYS),
+	/* LED */
+	MX51_PAD_NANDF_D10__GPIO3_30,
+	/* SWITCH */
+	NEW_PAD_CTRL(MX51_PAD_NANDF_D9__GPIO3_31, PAD_CTL_PUS_22K_UP |
+			PAD_CTL_PKE | PAD_CTL_SRE_FAST |
+			PAD_CTL_DSE_HIGH | PAD_CTL_PUE | PAD_CTL_HYS),
+	/* UART2 */
+	MX51_PAD_UART2_RXD__UART2_RXD,
+	MX51_PAD_UART2_TXD__UART2_TXD,
+	/* UART 3 */
+	MX51_PAD_UART3_RXD__UART3_RXD,
+	MX51_PAD_UART3_TXD__UART3_TXD,
+	MX51_PAD_KEY_COL4__UART3_RTS,
+	MX51_PAD_KEY_COL5__UART3_CTS,
+	/* SD */
+	MX51_PAD_SD1_CMD__SD1_CMD,
+	MX51_PAD_SD1_CLK__SD1_CLK,
+	MX51_PAD_SD1_DATA0__SD1_DATA0,
+	MX51_PAD_SD1_DATA1__SD1_DATA1,
+	MX51_PAD_SD1_DATA2__SD1_DATA2,
+	MX51_PAD_SD1_DATA3__SD1_DATA3,
+	/* SD1 CD */
+	NEW_PAD_CTRL(MX51_PAD_GPIO1_0__SD1_CD, PAD_CTL_PUS_22K_UP |
+			PAD_CTL_PKE | PAD_CTL_SRE_FAST |
+			PAD_CTL_DSE_HIGH | PAD_CTL_PUE | PAD_CTL_HYS),
 };
 
-#define GPIO_LED1 IMX_GPIO_NR(3, 30)
-#define GPIO_SWITCH1  IMX_GPIO_NR(3, 31)
+#define GPIO_LED1	IMX_GPIO_NR(3, 30)
+#define GPIO_SWITCH1	IMX_GPIO_NR(3, 31)
 
 static const struct gpio_led eukrea_mbimxsd_leds[] __initconst = {
-  {
-    .name     = "led1",
-    .default_trigger  = "heartbeat",
-    .active_low   = 1,
-    .gpio     = GPIO_LED1,
-  },
+	{
+		.name			= "led1",
+		.default_trigger	= "heartbeat",
+		.active_low		= 1,
+		.gpio			= GPIO_LED1,
+	},
 };
 
 static const struct gpio_led_platform_data
-    eukrea_mbimxsd_led_info __initconst = {
-  .leds   = eukrea_mbimxsd_leds,
-  .num_leds = ARRAY_SIZE (eukrea_mbimxsd_leds),
+		eukrea_mbimxsd_led_info __initconst = {
+	.leds		= eukrea_mbimxsd_leds,
+	.num_leds	= ARRAY_SIZE(eukrea_mbimxsd_leds),
 };
 
 static struct gpio_keys_button eukrea_mbimxsd_gpio_buttons[] = {
-  {
-    .gpio   = GPIO_SWITCH1,
-    .code   = BTN_0,
-    .desc   = "BP1",
-    .active_low = 1,
-    .wakeup   = 1,
-  },
+	{
+		.gpio		= GPIO_SWITCH1,
+		.code		= BTN_0,
+		.desc		= "BP1",
+		.active_low	= 1,
+		.wakeup		= 1,
+	},
 };
 
 static const struct gpio_keys_platform_data
-    eukrea_mbimxsd_button_data __initconst = {
-  .buttons  = eukrea_mbimxsd_gpio_buttons,
-  .nbuttons = ARRAY_SIZE (eukrea_mbimxsd_gpio_buttons),
+		eukrea_mbimxsd_button_data __initconst = {
+	.buttons	= eukrea_mbimxsd_gpio_buttons,
+	.nbuttons	= ARRAY_SIZE(eukrea_mbimxsd_gpio_buttons),
 };
 
 static const struct imxuart_platform_data uart_pdata __initconst = {
-  .flags = IMXUART_HAVE_RTSCTS,
+	.flags = IMXUART_HAVE_RTSCTS,
 };
 
 static struct i2c_board_info eukrea_mbimxsd_i2c_devices[] = {
-  {
-    I2C_BOARD_INFO ("tlv320aic23", 0x1a),
-  },
+	{
+		I2C_BOARD_INFO("tlv320aic23", 0x1a),
+	},
 };
 
 /*
@@ -118,28 +118,28 @@ static struct i2c_board_info eukrea_mbimxsd_i2c_devices[] = {
  * Add platform devices present on this baseboard and init
  * them from CPU side as far as required to use them later on
  */
-void __init eukrea_mbimxsd51_baseboard_init (void)
+void __init eukrea_mbimxsd51_baseboard_init(void)
 {
-  if (mxc_iomux_v3_setup_multiple_pads (eukrea_mbimxsd_pads,
-                                        ARRAY_SIZE (eukrea_mbimxsd_pads) ) )
-  { printk (KERN_ERR "error setting mbimxsd pads !\n"); }
-  
-  imx51_add_imx_uart (1, NULL);
-  imx51_add_imx_uart (2, &uart_pdata);
-  
-  imx51_add_sdhci_esdhc_imx (0, NULL);
-  
-  gpio_request (GPIO_LED1, "LED1");
-  gpio_direction_output (GPIO_LED1, 1);
-  gpio_free (GPIO_LED1);
-  
-  gpio_request (GPIO_SWITCH1, "SWITCH1");
-  gpio_direction_input (GPIO_SWITCH1);
-  gpio_free (GPIO_SWITCH1);
-  
-  i2c_register_board_info (0, eukrea_mbimxsd_i2c_devices,
-                           ARRAY_SIZE (eukrea_mbimxsd_i2c_devices) );
-                           
-  gpio_led_register_device (-1, &eukrea_mbimxsd_led_info);
-  imx_add_gpio_keys (&eukrea_mbimxsd_button_data);
+	if (mxc_iomux_v3_setup_multiple_pads(eukrea_mbimxsd_pads,
+			ARRAY_SIZE(eukrea_mbimxsd_pads)))
+		printk(KERN_ERR "error setting mbimxsd pads !\n");
+
+	imx51_add_imx_uart(1, NULL);
+	imx51_add_imx_uart(2, &uart_pdata);
+
+	imx51_add_sdhci_esdhc_imx(0, NULL);
+
+	gpio_request(GPIO_LED1, "LED1");
+	gpio_direction_output(GPIO_LED1, 1);
+	gpio_free(GPIO_LED1);
+
+	gpio_request(GPIO_SWITCH1, "SWITCH1");
+	gpio_direction_input(GPIO_SWITCH1);
+	gpio_free(GPIO_SWITCH1);
+
+	i2c_register_board_info(0, eukrea_mbimxsd_i2c_devices,
+				ARRAY_SIZE(eukrea_mbimxsd_i2c_devices));
+
+	gpio_led_register_device(-1, &eukrea_mbimxsd_led_info);
+	imx_add_gpio_keys(&eukrea_mbimxsd_button_data);
 }

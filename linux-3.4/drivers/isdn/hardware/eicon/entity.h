@@ -10,18 +10,18 @@
 #define DIVA_UM_IDI_ASSIGN_PENDING  0x00000010
 
 typedef struct _divas_um_idi_entity {
-  struct list_head          link;
-  diva_um_idi_adapter_t * adapter; /* Back to adapter */
-  ENTITY e;
-  void * os_ref;
-  dword status;
-  void * os_context;
-  int rc_count;
-  diva_um_idi_data_queue_t  data; /* definad by user 1 ... MAX */
-  diva_um_idi_data_queue_t  rc;   /* two entries */
-  BUFFERS                   XData;
-  BUFFERS                   RData;
-  byte                      buffer[2048 + 512];
+	struct list_head          link;
+	diva_um_idi_adapter_t *adapter; /* Back to adapter */
+	ENTITY e;
+	void *os_ref;
+	dword status;
+	void *os_context;
+	int rc_count;
+	diva_um_idi_data_queue_t  data; /* definad by user 1 ... MAX */
+	diva_um_idi_data_queue_t  rc;   /* two entries */
+	BUFFERS                   XData;
+	BUFFERS                   RData;
+	byte                      buffer[2048 + 512];
 } divas_um_idi_entity_t;
 
 

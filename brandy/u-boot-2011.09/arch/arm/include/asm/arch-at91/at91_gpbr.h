@@ -37,7 +37,7 @@
 #ifndef __ASSEMBLY__
 
 typedef struct at91_gpbr {
-  u32 reg[4];
+	u32 reg[4];
 } at91_gpbr_t;
 
 #endif /* __ASSEMBLY__ */

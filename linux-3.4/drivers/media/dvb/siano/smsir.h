@@ -5,9 +5,9 @@ MDTV receiver kernel modules.
 Copyright (C) 2006-2009, Uri Shkolnik
 
  Copyright (c) 2010 - Mauro Carvalho Chehab
-  - Ported the driver to use rc-core
-  - IR raw event decoding is now done at rc-core
-  - Code almost re-written
+	- Ported the driver to use rc-core
+	- IR raw event decoding is now done at rc-core
+	- Code almost re-written
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -30,26 +30,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <linux/input.h>
 #include <media/rc-core.h>
 
-#define IR_DEFAULT_TIMEOUT    100
+#define IR_DEFAULT_TIMEOUT		100
 
 struct smscore_device_t;
 
 struct ir_t {
-  struct rc_dev * dev;
-  char name[40];
-  char phys[32];
-  
-  char * rc_codes;
-  u64 protocol;
-  
-  u32 timeout;
-  u32 controller;
+	struct rc_dev *dev;
+	char name[40];
+	char phys[32];
+
+	char *rc_codes;
+	u64 protocol;
+
+	u32 timeout;
+	u32 controller;
 };
 
-int sms_ir_init (struct smscore_device_t * coredev);
-void sms_ir_exit (struct smscore_device_t * coredev);
-void sms_ir_event (struct smscore_device_t * coredev,
-                   const char * buf, int len);
+int sms_ir_init(struct smscore_device_t *coredev);
+void sms_ir_exit(struct smscore_device_t *coredev);
+void sms_ir_event(struct smscore_device_t *coredev,
+			const char *buf, int len);
 
 #endif /* __SMS_IR_H__ */
 

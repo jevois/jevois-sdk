@@ -29,7 +29,7 @@
  *
  * returns:  OK if initialize succeeded, others if failed.
  */
-int arisc_message_manager_init (void * addr, u32 size);
+int arisc_message_manager_init(void *addr, u32 size);
 
 /**
  * exit message manager.
@@ -37,7 +37,7 @@ int arisc_message_manager_init (void * addr, u32 size);
  *
  * returns:  OK if exit succeeded, others if failed.
  */
-int arisc_message_manager_exit (void);
+int arisc_message_manager_exit(void);
 
 /**
  * allocate one message frame. mainly use for send message by message-box,
@@ -46,7 +46,7 @@ int arisc_message_manager_exit (void);
  *
  * returns:  the pointer of allocated message frame, NULL if failed;
  */
-struct arisc_message * arisc_message_allocate (unsigned int msg_attr);
+struct arisc_message *arisc_message_allocate(unsigned int msg_attr);
 
 /**
  * free one message frame. mainly use for process message finished,
@@ -55,7 +55,7 @@ struct arisc_message * arisc_message_allocate (unsigned int msg_attr);
  *
  * returns:  none.
  */
-void arisc_message_free (struct arisc_message * pmessage);
+void arisc_message_free(struct arisc_message *pmessage);
 
 /**
  * notify system that one message coming.
@@ -63,12 +63,12 @@ void arisc_message_free (struct arisc_message * pmessage);
  *
  * returns:  OK if notify succeeded, other if failed.
  */
-int arisc_message_coming_notify (struct arisc_message * pmessage);
+int arisc_message_coming_notify(struct arisc_message *pmessage);
 
-int arisc_semaphore_used_num_query (void);
+int arisc_semaphore_used_num_query(void);
 
-struct arisc_message * arisc_message_map_to_cpux (u32 addr);
-u32 arisc_message_map_to_cpus (struct arisc_message * message);
-int arisc_message_valid (struct arisc_message * pmessage);
+struct arisc_message *arisc_message_map_to_cpux(u32 addr);
+u32 arisc_message_map_to_cpus(struct arisc_message *message);
+int arisc_message_valid(struct arisc_message *pmessage);
 
 #endif  /* __MESSAGE_MANAGER_H */

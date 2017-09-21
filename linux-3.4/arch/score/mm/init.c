@@ -39,107 +39,107 @@
 #include <asm/tlb.h>
 
 unsigned long empty_zero_page;
-EXPORT_SYMBOL_GPL (empty_zero_page);
+EXPORT_SYMBOL_GPL(empty_zero_page);
 
 static struct kcore_list kcore_mem, kcore_vmalloc;
 
-static unsigned long setup_zero_page (void)
+static unsigned long setup_zero_page(void)
 {
-  struct page * page;
-  
-  empty_zero_page = __get_free_pages (GFP_KERNEL | __GFP_ZERO, 0);
-  if (!empty_zero_page)
-  { panic ("Oh boy, that early out of memory?"); }
-  
-  page = virt_to_page ( (void *) empty_zero_page);
-  SetPageReserved (page);
-  
-  return 1UL;
+	struct page *page;
+
+	empty_zero_page = __get_free_pages(GFP_KERNEL | __GFP_ZERO, 0);
+	if (!empty_zero_page)
+		panic("Oh boy, that early out of memory?");
+
+	page = virt_to_page((void *) empty_zero_page);
+	SetPageReserved(page);
+
+	return 1UL;
 }
 
 #ifndef CONFIG_NEED_MULTIPLE_NODES
-int page_is_ram (unsigned long pagenr)
+int page_is_ram(unsigned long pagenr)
 {
-  if (pagenr >= min_low_pfn && pagenr < max_low_pfn)
-  { return 1; }
-  else
-  { return 0; }
+	if (pagenr >= min_low_pfn && pagenr < max_low_pfn)
+		return 1;
+	else
+		return 0;
 }
 
-void __init paging_init (void)
+void __init paging_init(void)
 {
-  unsigned long max_zone_pfns[MAX_NR_ZONES];
-  unsigned long lastpfn;
-  
-  pagetable_init();
-  max_zone_pfns[ZONE_NORMAL] = max_low_pfn;
-  lastpfn = max_low_pfn;
-  free_area_init_nodes (max_zone_pfns);
+	unsigned long max_zone_pfns[MAX_NR_ZONES];
+	unsigned long lastpfn;
+
+	pagetable_init();
+	max_zone_pfns[ZONE_NORMAL] = max_low_pfn;
+	lastpfn = max_low_pfn;
+	free_area_init_nodes(max_zone_pfns);
 }
 
-void __init mem_init (void)
+void __init mem_init(void)
 {
-  unsigned long codesize, reservedpages, datasize, initsize;
-  unsigned long tmp, ram = 0;
-  
-  high_memory = (void *) __va (max_low_pfn << PAGE_SHIFT);
-  totalram_pages += free_all_bootmem();
-  totalram_pages -= setup_zero_page();  /* Setup zeroed pages. */
-  reservedpages = 0;
-  
-  for (tmp = 0; tmp < max_low_pfn; tmp++)
-    if (page_is_ram (tmp) ) {
-      ram++;
-      if (PageReserved (pfn_to_page (tmp) ) )
-      { reservedpages++; }
-    }
-    
-  num_physpages = ram;
-  codesize = (unsigned long) &_etext - (unsigned long) &_text;
-  datasize = (unsigned long) &_edata - (unsigned long) &_etext;
-  initsize = (unsigned long) &__init_end - (unsigned long) &__init_begin;
-  
-  printk (KERN_INFO "Memory: %luk/%luk available (%ldk kernel code, "
-          "%ldk reserved, %ldk data, %ldk init, %ldk highmem)\n",
-          (unsigned long) nr_free_pages() << (PAGE_SHIFT - 10),
-          ram << (PAGE_SHIFT - 10), codesize >> 10,
-          reservedpages << (PAGE_SHIFT - 10), datasize >> 10,
-          initsize >> 10,
-          totalhigh_pages << (PAGE_SHIFT - 10) );
+	unsigned long codesize, reservedpages, datasize, initsize;
+	unsigned long tmp, ram = 0;
+
+	high_memory = (void *) __va(max_low_pfn << PAGE_SHIFT);
+	totalram_pages += free_all_bootmem();
+	totalram_pages -= setup_zero_page();	/* Setup zeroed pages. */
+	reservedpages = 0;
+
+	for (tmp = 0; tmp < max_low_pfn; tmp++)
+		if (page_is_ram(tmp)) {
+			ram++;
+			if (PageReserved(pfn_to_page(tmp)))
+				reservedpages++;
+		}
+
+	num_physpages = ram;
+	codesize = (unsigned long) &_etext - (unsigned long) &_text;
+	datasize = (unsigned long) &_edata - (unsigned long) &_etext;
+	initsize = (unsigned long) &__init_end - (unsigned long) &__init_begin;
+
+	printk(KERN_INFO "Memory: %luk/%luk available (%ldk kernel code, "
+			"%ldk reserved, %ldk data, %ldk init, %ldk highmem)\n",
+			(unsigned long) nr_free_pages() << (PAGE_SHIFT-10),
+			ram << (PAGE_SHIFT-10), codesize >> 10,
+			reservedpages << (PAGE_SHIFT-10), datasize >> 10,
+			initsize >> 10,
+			totalhigh_pages << (PAGE_SHIFT-10));
 }
 #endif /* !CONFIG_NEED_MULTIPLE_NODES */
 
-static void free_init_pages (const char * what, unsigned long begin, unsigned long end)
+static void free_init_pages(const char *what, unsigned long begin, unsigned long end)
 {
-  unsigned long pfn;
-  
-  for (pfn = PFN_UP (begin); pfn < PFN_DOWN (end); pfn++) {
-    struct page * page = pfn_to_page (pfn);
-    void * addr = phys_to_virt (PFN_PHYS (pfn) );
-    
-    ClearPageReserved (page);
-    init_page_count (page);
-    memset (addr, POISON_FREE_INITMEM, PAGE_SIZE);
-    __free_page (page);
-    totalram_pages++;
-  }
-  printk (KERN_INFO "Freeing %s: %ldk freed\n", what, (end - begin) >> 10);
+	unsigned long pfn;
+
+	for (pfn = PFN_UP(begin); pfn < PFN_DOWN(end); pfn++) {
+		struct page *page = pfn_to_page(pfn);
+		void *addr = phys_to_virt(PFN_PHYS(pfn));
+
+		ClearPageReserved(page);
+		init_page_count(page);
+		memset(addr, POISON_FREE_INITMEM, PAGE_SIZE);
+		__free_page(page);
+		totalram_pages++;
+	}
+	printk(KERN_INFO "Freeing %s: %ldk freed\n", what, (end - begin) >> 10);
 }
 
 #ifdef CONFIG_BLK_DEV_INITRD
-void free_initrd_mem (unsigned long start, unsigned long end)
+void free_initrd_mem(unsigned long start, unsigned long end)
 {
-  free_init_pages ("initrd memory",
-                   virt_to_phys ( (void *) start),
-                   virt_to_phys ( (void *) end) );
+	free_init_pages("initrd memory",
+		virt_to_phys((void *) start),
+		virt_to_phys((void *) end));
 }
 #endif
 
-void __init_refok free_initmem (void)
+void __init_refok free_initmem(void)
 {
-  free_init_pages ("unused kernel memory",
-                   __pa (&__init_begin),
-                   __pa (&__init_end) );
+	free_init_pages("unused kernel memory",
+	__pa(&__init_begin),
+	__pa(&__init_end));
 }
 
 unsigned long pgd_current;
@@ -151,5 +151,5 @@ unsigned long pgd_current;
  * are constants.  So we use the variants from asm-offset.h until that gcc
  * will officially be retired.
  */
-pgd_t swapper_pg_dir[PTRS_PER_PGD] __page_aligned (PTE_ORDER);
-pte_t invalid_pte_table[PTRS_PER_PTE] __page_aligned (PTE_ORDER);
+pgd_t swapper_pg_dir[PTRS_PER_PGD] __page_aligned(PTE_ORDER);
+pte_t invalid_pte_table[PTRS_PER_PTE] __page_aligned(PTE_ORDER);

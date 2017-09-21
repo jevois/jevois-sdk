@@ -19,30 +19,30 @@
 #include <mach/msm_iomap.h>
 
 struct msm_dmov_errdata {
-  uint32_t flush[6];
+	uint32_t flush[6];
 };
 
 struct msm_dmov_cmd {
-  struct list_head list;
-  unsigned int cmdptr;
-  void (*complete_func) (struct msm_dmov_cmd * cmd,
-                         unsigned int result,
-                         struct msm_dmov_errdata * err);
-  void (*execute_func) (struct msm_dmov_cmd * cmd);
-  void * data;
+	struct list_head list;
+	unsigned int cmdptr;
+	void (*complete_func)(struct msm_dmov_cmd *cmd,
+			      unsigned int result,
+			      struct msm_dmov_errdata *err);
+	void (*execute_func)(struct msm_dmov_cmd *cmd);
+	void *data;
 };
 
 #ifndef CONFIG_ARCH_MSM8X60
-void msm_dmov_enqueue_cmd (unsigned id, struct msm_dmov_cmd * cmd);
-void msm_dmov_stop_cmd (unsigned id, struct msm_dmov_cmd * cmd, int graceful);
-int msm_dmov_exec_cmd (unsigned id, unsigned int cmdptr);
+void msm_dmov_enqueue_cmd(unsigned id, struct msm_dmov_cmd *cmd);
+void msm_dmov_stop_cmd(unsigned id, struct msm_dmov_cmd *cmd, int graceful);
+int msm_dmov_exec_cmd(unsigned id, unsigned int cmdptr);
 #else
 static inline
-void msm_dmov_enqueue_cmd (unsigned id, struct msm_dmov_cmd * cmd) { }
+void msm_dmov_enqueue_cmd(unsigned id, struct msm_dmov_cmd *cmd) { }
 static inline
-void msm_dmov_stop_cmd (unsigned id, struct msm_dmov_cmd * cmd, int graceful) { }
+void msm_dmov_stop_cmd(unsigned id, struct msm_dmov_cmd *cmd, int graceful) { }
 static inline
-int msm_dmov_exec_cmd (unsigned id, unsigned int cmdptr) { return -EIO; }
+int msm_dmov_exec_cmd(unsigned id, unsigned int cmdptr) { return -EIO; }
 #endif
 
 
@@ -85,7 +85,7 @@ int msm_dmov_exec_cmd (unsigned id, unsigned int cmdptr) { return -EIO; }
 #define DMOV_STATUS_CMD_PTR_RDY      (1 << 0)
 
 #define DMOV_ISR              DMOV_SD_AARM(0x380, 0)
-
+  
 #define DMOV_CONFIG(ch)       DMOV_SD_AARM(0x300, ch)
 #define DMOV_CONFIG_FORCE_TOP_PTR_RSLT (1 << 2)
 #define DMOV_CONFIG_FORCE_FLUSH_RSLT   (1 << 1)
@@ -124,28 +124,28 @@ int msm_dmov_exec_cmd (unsigned id, unsigned int cmdptr) { return -EIO; }
 
 /* Single Item Mode */
 typedef struct {
-  unsigned cmd;
-  unsigned src;
-  unsigned dst;
-  unsigned len;
+	unsigned cmd;
+	unsigned src;
+	unsigned dst;
+	unsigned len;
 } dmov_s;
 
 /* Scatter/Gather Mode */
 typedef struct {
-  unsigned cmd;
-  unsigned src_dscr;
-  unsigned dst_dscr;
-  unsigned _reserved;
+	unsigned cmd;
+	unsigned src_dscr;
+	unsigned dst_dscr;
+	unsigned _reserved;
 } dmov_sg;
 
 /* Box mode */
 typedef struct {
-  uint32_t cmd;
-  uint32_t src_row_addr;
-  uint32_t dst_row_addr;
-  uint32_t src_dst_len;
-  uint32_t num_rows;
-  uint32_t row_offset;
+	uint32_t cmd;
+	uint32_t src_row_addr;
+	uint32_t dst_row_addr;
+	uint32_t src_dst_len;
+	uint32_t num_rows;
+	uint32_t row_offset;
 } dmov_box;
 
 /* bits for the cmd field of the above structures */

@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -40,20 +40,20 @@
 *
 ************************************************************************************************************
 */
-void standby_timer_delay (unsigned int msec)
+void standby_timer_delay(unsigned int msec)
 {
-  u32 t1, t2;
-  struct sunxi_timer_reg * timer_reg = (struct sunxi_timer_reg *) SUNXI_TIMER_BASE;
-  
-  t1 = timer_reg->avs.cnt0;
-  t2 = t1 + msec;
-  do
-  {
-    t1 = timer_reg->avs.cnt0;
-  }
-  while (t2 >= t1);
-  
-  return ;
+	u32 t1, t2;
+	struct sunxi_timer_reg *timer_reg = (struct sunxi_timer_reg *)SUNXI_TIMER_BASE;
+
+	t1 = timer_reg->avs.cnt0;
+	t2 = t1 + msec;
+	do
+	{
+		t1 = timer_reg->avs.cnt0;
+	}
+	while(t2 >= t1);
+
+	return ;
 }
 
 

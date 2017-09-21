@@ -1,9 +1,9 @@
 /***************************************************************************/
 
 /*
- *  clk.c -- general ColdFire CPU kernel clk handling
+ *	clk.c -- general ColdFire CPU kernel clk handling
  *
- *  Copyright (C) 2009, Greg Ungerer (gerg@snapgear.com)
+ *	Copyright (C) 2009, Greg Ungerer (gerg@snapgear.com)
  */
 
 /***************************************************************************/
@@ -15,31 +15,31 @@
 
 /***************************************************************************/
 
-struct clk * clk_get (struct device * dev, const char * id)
+struct clk *clk_get(struct device *dev, const char *id)
 {
-  return NULL;
+	return NULL;
 }
-EXPORT_SYMBOL (clk_get);
+EXPORT_SYMBOL(clk_get);
 
-int clk_enable (struct clk * clk)
+int clk_enable(struct clk *clk)
 {
-  return 0;
+	return 0;
 }
-EXPORT_SYMBOL (clk_enable);
+EXPORT_SYMBOL(clk_enable);
 
-void clk_disable (struct clk * clk)
+void clk_disable(struct clk *clk)
 {
 }
-EXPORT_SYMBOL (clk_disable);
+EXPORT_SYMBOL(clk_disable);
 
-void clk_put (struct clk * clk)
+void clk_put(struct clk *clk)
 {
 }
-EXPORT_SYMBOL (clk_put);
+EXPORT_SYMBOL(clk_put);
 
-unsigned long clk_get_rate (struct clk * clk)
+unsigned long clk_get_rate(struct clk *clk)
 {
-  return MCF_CLK;
+	return MCF_CLK;
 }
-EXPORT_SYMBOL (clk_get_rate);
+EXPORT_SYMBOL(clk_get_rate);
 /***************************************************************************/

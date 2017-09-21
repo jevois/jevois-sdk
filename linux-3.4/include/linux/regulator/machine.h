@@ -34,11 +34,11 @@ struct regulator;
  * DRMS:     Dynamic Regulator Mode Switching is enabled for this regulator.
  */
 
-#define REGULATOR_CHANGE_VOLTAGE  0x1
-#define REGULATOR_CHANGE_CURRENT  0x2
-#define REGULATOR_CHANGE_MODE   0x4
-#define REGULATOR_CHANGE_STATUS   0x8
-#define REGULATOR_CHANGE_DRMS   0x10
+#define REGULATOR_CHANGE_VOLTAGE	0x1
+#define REGULATOR_CHANGE_CURRENT	0x2
+#define REGULATOR_CHANGE_MODE		0x4
+#define REGULATOR_CHANGE_STATUS		0x8
+#define REGULATOR_CHANGE_DRMS		0x10
 
 /**
  * struct regulator_state - regulator state during low power system states
@@ -53,10 +53,10 @@ struct regulator;
  * @disabled: Disabled during suspend.
  */
 struct regulator_state {
-  int uV; /* suspend voltage */
-  unsigned int mode; /* suspend regulator operating mode */
-  int enabled; /* is regulator enabled in this suspend state */
-  int disabled; /* is the regulator disbled in this suspend state */
+	int uV;	/* suspend voltage */
+	unsigned int mode; /* suspend regulator operating mode */
+	int enabled; /* is regulator enabled in this suspend state */
+	int disabled; /* is the regulator disbled in this suspend state */
 };
 
 /**
@@ -95,40 +95,40 @@ struct regulator_state {
  */
 struct regulation_constraints {
 
-  const char * name;
-  
-  /* voltage output range (inclusive) - for voltage control */
-  int min_uV;
-  int max_uV;
-  
-  int uV_offset;
-  
-  /* current output range (inclusive) - for current control */
-  int min_uA;
-  int max_uA;
-  
-  /* valid regulator operating modes for this machine */
-  unsigned int valid_modes_mask;
-  
-  /* valid operations for regulator on this machine */
-  unsigned int valid_ops_mask;
-  
-  /* regulator input voltage - only if supply is another regulator */
-  int input_uV;
-  
-  /* regulator suspend states for global PMIC STANDBY/HIBERNATE */
-  struct regulator_state state_disk;
-  struct regulator_state state_mem;
-  struct regulator_state state_standby;
-  suspend_state_t initial_state; /* suspend state to set at init */
-  
-  /* mode to set on startup */
-  unsigned int initial_mode;
-  
-  /* constraint flags */
-  unsigned always_on: 1; /* regulator never off when system is on */
-  unsigned boot_on: 1; /* bootloader/firmware enabled regulator */
-  unsigned apply_uV: 1; /* apply uV constraint if min == max */
+	const char *name;
+
+	/* voltage output range (inclusive) - for voltage control */
+	int min_uV;
+	int max_uV;
+
+	int uV_offset;
+
+	/* current output range (inclusive) - for current control */
+	int min_uA;
+	int max_uA;
+
+	/* valid regulator operating modes for this machine */
+	unsigned int valid_modes_mask;
+
+	/* valid operations for regulator on this machine */
+	unsigned int valid_ops_mask;
+
+	/* regulator input voltage - only if supply is another regulator */
+	int input_uV;
+
+	/* regulator suspend states for global PMIC STANDBY/HIBERNATE */
+	struct regulator_state state_disk;
+	struct regulator_state state_mem;
+	struct regulator_state state_standby;
+	suspend_state_t initial_state; /* suspend state to set at init */
+
+	/* mode to set on startup */
+	unsigned int initial_mode;
+
+	/* constraint flags */
+	unsigned always_on:1;	/* regulator never off when system is on */
+	unsigned boot_on:1;	/* bootloader/firmware enabled regulator */
+	unsigned apply_uV:1;	/* apply uV constraint if min == max */
 };
 
 /**
@@ -141,16 +141,16 @@ struct regulation_constraints {
  * @supply: Name for the supply.
  */
 struct regulator_consumer_supply {
-  const char * dev_name;  /* dev_name() for consumer */
-  const char * supply; /* consumer supply - e.g. "vcc" */
+	const char *dev_name;   /* dev_name() for consumer */
+	const char *supply;	/* consumer supply - e.g. "vcc" */
 };
 
 /* Initialize struct regulator_consumer_supply */
-#define REGULATOR_SUPPLY(_name, _dev_name)      \
-  {               \
-    .supply   = _name,        \
-                .dev_name = _dev_name,        \
-  }
+#define REGULATOR_SUPPLY(_name, _dev_name)			\
+{								\
+	.supply		= _name,				\
+	.dev_name	= _dev_name,				\
+}
 
 /**
  * struct regulator_init_data - regulator platform initialisation data.
@@ -170,30 +170,30 @@ struct regulator_consumer_supply {
  * @driver_data: Data passed to regulator_init.
  */
 struct regulator_init_data {
-  const char * supply_regulator;       /* or NULL for system supply */
-  
-  struct regulation_constraints constraints;
-  
-  int num_consumer_supplies;
-  struct regulator_consumer_supply * consumer_supplies;
-  
-  /* optional regulator machine specific init */
-  int (*regulator_init) (void * driver_data);
-  void * driver_data; /* core does not touch this */
+	const char *supply_regulator;        /* or NULL for system supply */
+
+	struct regulation_constraints constraints;
+
+	int num_consumer_supplies;
+	struct regulator_consumer_supply *consumer_supplies;
+
+	/* optional regulator machine specific init */
+	int (*regulator_init)(void *driver_data);
+	void *driver_data;	/* core does not touch this */
 };
 
-int regulator_suspend_prepare (suspend_state_t state);
-int regulator_suspend_finish (void);
+int regulator_suspend_prepare(suspend_state_t state);
+int regulator_suspend_finish(void);
 
 #ifdef CONFIG_REGULATOR
-void regulator_has_full_constraints (void);
-void regulator_use_dummy_regulator (void);
+void regulator_has_full_constraints(void);
+void regulator_use_dummy_regulator(void);
 #else
-static inline void regulator_has_full_constraints (void)
+static inline void regulator_has_full_constraints(void)
 {
 }
 
-static inline void regulator_use_dummy_regulator (void)
+static inline void regulator_use_dummy_regulator(void)
 {
 }
 #endif

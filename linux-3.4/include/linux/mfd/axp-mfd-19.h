@@ -4,16 +4,16 @@
 /* Unified sub device IDs for AXP */
 /* LDO0 For RTCLDO ,LDO1-3 for ALDO,LDO*/
 enum {
-  AXP19_ID_LDO1,  
-  AXP19_ID_LDO2,  
-  AXP19_ID_LDO3,  
-  AXP19_ID_LDO4,  
-  AXP19_ID_LDO5,  
-  AXP19_ID_LDOIO0 = 30,
-  AXP19_ID_DCDC1 = 40,
-  AXP19_ID_DCDC2,
-  AXP19_ID_DCDC3,
-  AXP19_ID_SUPPLY,
+	AXP19_ID_LDO1,  
+	AXP19_ID_LDO2,  
+	AXP19_ID_LDO3,  
+	AXP19_ID_LDO4,  
+	AXP19_ID_LDO5,  
+	AXP19_ID_LDOIO0 = 30,
+	AXP19_ID_DCDC1 = 40,
+	AXP19_ID_DCDC2,
+	AXP19_ID_DCDC3,
+	AXP19_ID_SUPPLY,
 };
 
 /*For AXP19*/
@@ -114,23 +114,23 @@ enum {
 #define POWER19_BAT_POWERL8             (0x72)
 
 /*  AXP19  */
-#define AXP19_IRQ_USBLO         ( 1 <<  1)
-#define AXP19_IRQ_USBRE         ( 1 <<  2)
-#define AXP19_IRQ_USBIN         ( 1 <<  3)
-#define AXP19_IRQ_USBOV         ( 1 <<  4)
-#define AXP19_IRQ_ACRE          ( 1 <<  5)
-#define AXP19_IRQ_ACIN          ( 1 <<  6)
-#define AXP19_IRQ_ACOV          ( 1 <<  7)
-#define AXP19_IRQ_TEMLO         ( 1 <<  8)
-#define AXP19_IRQ_TEMOV         ( 1 <<  9)
-#define AXP19_IRQ_CHAOV         ( 1 << 10)
-#define AXP19_IRQ_CHAST         ( 1 << 11)
-#define AXP19_IRQ_BATATOU       ( 1 << 12)
-#define AXP19_IRQ_BATATIN       ( 1 << 13)
+#define	AXP19_IRQ_USBLO         ( 1 <<  1)
+#define	AXP19_IRQ_USBRE         ( 1 <<  2)
+#define	AXP19_IRQ_USBIN         ( 1 <<  3)
+#define	AXP19_IRQ_USBOV         ( 1 <<  4)
+#define	AXP19_IRQ_ACRE          ( 1 <<  5)
+#define	AXP19_IRQ_ACIN          ( 1 <<  6)
+#define	AXP19_IRQ_ACOV          ( 1 <<  7)
+#define	AXP19_IRQ_TEMLO         ( 1 <<  8)
+#define	AXP19_IRQ_TEMOV         ( 1 <<  9)
+#define	AXP19_IRQ_CHAOV         ( 1 << 10)
+#define	AXP19_IRQ_CHAST         ( 1 << 11)
+#define	AXP19_IRQ_BATATOU       ( 1 << 12)
+#define	AXP19_IRQ_BATATIN       ( 1 << 13)
 #define AXP19_IRQ_BATRE         ( 1 << 14)
 #define AXP19_IRQ_BATIN         ( 1 << 15)
-#define AXP19_IRQ_PEKLO         ( 1 << 16)
-#define AXP19_IRQ_PEKSH         ( 1 << 17)
+#define	AXP19_IRQ_PEKLO         ( 1 << 16)
+#define	AXP19_IRQ_PEKSH         ( 1 << 17)
 #define AXP19_IRQ_LDO3LO        ( 1 << 18)
 #define AXP19_IRQ_DCDC3LO       ( 1 << 19)
 #define AXP19_IRQ_DCDC2LO       ( 1 << 20)

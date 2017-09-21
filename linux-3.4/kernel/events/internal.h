@@ -5,51 +5,51 @@
 
 /* Buffer handling */
 
-#define RING_BUFFER_WRITABLE    0x01
+#define RING_BUFFER_WRITABLE		0x01
 
 struct ring_buffer {
-  atomic_t      refcount;
-  struct rcu_head     rcu_head;
-  #ifdef CONFIG_PERF_USE_VMALLOC
-  struct work_struct    work;
-  int       page_order; /* allocation order  */
-  #endif
-  int       nr_pages; /* nr of data pages  */
-  int       writable; /* are we writable   */
-  
-  atomic_t      poll;   /* POLL_ for wakeups */
-  
-  local_t       head;   /* write position    */
-  local_t       nest;   /* nested writers    */
-  local_t       events;   /* event limit       */
-  local_t       wakeup;   /* wakeup stamp      */
-  local_t       lost;   /* nr records lost   */
-  
-  long        watermark;  /* wakeup watermark  */
-  /* poll crap */
-  spinlock_t      event_lock;
-  struct list_head    event_list;
-  
-  struct perf_event_mmap_page * user_page;
-  void    *    data_pages[0];
+	atomic_t			refcount;
+	struct rcu_head			rcu_head;
+#ifdef CONFIG_PERF_USE_VMALLOC
+	struct work_struct		work;
+	int				page_order;	/* allocation order  */
+#endif
+	int				nr_pages;	/* nr of data pages  */
+	int				writable;	/* are we writable   */
+
+	atomic_t			poll;		/* POLL_ for wakeups */
+
+	local_t				head;		/* write position    */
+	local_t				nest;		/* nested writers    */
+	local_t				events;		/* event limit       */
+	local_t				wakeup;		/* wakeup stamp      */
+	local_t				lost;		/* nr records lost   */
+
+	long				watermark;	/* wakeup watermark  */
+	/* poll crap */
+	spinlock_t			event_lock;
+	struct list_head		event_list;
+
+	struct perf_event_mmap_page	*user_page;
+	void				*data_pages[0];
 };
 
-extern void rb_free (struct ring_buffer * rb);
+extern void rb_free(struct ring_buffer *rb);
 extern struct ring_buffer *
-rb_alloc (int nr_pages, long watermark, int cpu, int flags);
-extern void perf_event_wakeup (struct perf_event * event);
+rb_alloc(int nr_pages, long watermark, int cpu, int flags);
+extern void perf_event_wakeup(struct perf_event *event);
 
 extern void
-perf_event_header__init_id (struct perf_event_header * header,
-                            struct perf_sample_data * data,
-                            struct perf_event * event);
+perf_event_header__init_id(struct perf_event_header *header,
+			   struct perf_sample_data *data,
+			   struct perf_event *event);
 extern void
-perf_event__output_id_sample (struct perf_event * event,
-                              struct perf_output_handle * handle,
-                              struct perf_sample_data * sample);
+perf_event__output_id_sample(struct perf_event *event,
+			     struct perf_output_handle *handle,
+			     struct perf_sample_data *sample);
 
 extern struct page *
-perf_mmap_to_page (struct ring_buffer * rb, unsigned long pgoff);
+perf_mmap_to_page(struct ring_buffer *rb, unsigned long pgoff);
 
 #ifdef CONFIG_PERF_USE_VMALLOC
 /*
@@ -58,82 +58,79 @@ perf_mmap_to_page (struct ring_buffer * rb, unsigned long pgoff);
  * Required for architectures that have d-cache aliasing issues.
  */
 
-static inline int page_order (struct ring_buffer * rb)
+static inline int page_order(struct ring_buffer *rb)
 {
-  return rb->page_order;
+	return rb->page_order;
 }
 
 #else
 
-static inline int page_order (struct ring_buffer * rb)
+static inline int page_order(struct ring_buffer *rb)
 {
-  return 0;
+	return 0;
 }
 #endif
 
-static inline unsigned long perf_data_size (struct ring_buffer * rb)
+static inline unsigned long perf_data_size(struct ring_buffer *rb)
 {
-  return rb->nr_pages << (PAGE_SHIFT + page_order (rb) );
+	return rb->nr_pages << (PAGE_SHIFT + page_order(rb));
 }
 
 static inline void
-__output_copy (struct perf_output_handle * handle,
-               const void * buf, unsigned int len)
+__output_copy(struct perf_output_handle *handle,
+		   const void *buf, unsigned int len)
 {
-  do {
-    unsigned long size = min_t (unsigned long, handle->size, len);
-    
-    memcpy (handle->addr, buf, size);
-    
-    len -= size;
-    handle->addr += size;
-    buf += size;
-    handle->size -= size;
-    if (!handle->size) {
-      struct ring_buffer * rb = handle->rb;
-      
-      handle->page++;
-      handle->page &= rb->nr_pages - 1;
-      handle->addr = rb->data_pages[handle->page];
-      handle->size = PAGE_SIZE << page_order (rb);
-    }
-  }
-  while (len);
+	do {
+		unsigned long size = min_t(unsigned long, handle->size, len);
+
+		memcpy(handle->addr, buf, size);
+
+		len -= size;
+		handle->addr += size;
+		buf += size;
+		handle->size -= size;
+		if (!handle->size) {
+			struct ring_buffer *rb = handle->rb;
+
+			handle->page++;
+			handle->page &= rb->nr_pages - 1;
+			handle->addr = rb->data_pages[handle->page];
+			handle->size = PAGE_SIZE << page_order(rb);
+		}
+	} while (len);
 }
 
 /* Callchain handling */
-extern struct perf_callchain_entry * perf_callchain (struct pt_regs * regs);
-extern int get_callchain_buffers (void);
-extern void put_callchain_buffers (void);
+extern struct perf_callchain_entry *perf_callchain(struct pt_regs *regs);
+extern int get_callchain_buffers(void);
+extern void put_callchain_buffers(void);
 
-static inline int get_recursion_context (int * recursion)
+static inline int get_recursion_context(int *recursion)
 {
-  int rctx;
-  
-  if (in_nmi() )
-  { rctx = 3; }
-  else
-    if (in_irq() )
-    { rctx = 2; }
-    else
-      if (in_softirq() )
-      { rctx = 1; }
-      else
-      { rctx = 0; }
-      
-  if (recursion[rctx])
-  { return -1; }
-  
-  recursion[rctx]++;
-  barrier();
-  
-  return rctx;
+	int rctx;
+
+	if (in_nmi())
+		rctx = 3;
+	else if (in_irq())
+		rctx = 2;
+	else if (in_softirq())
+		rctx = 1;
+	else
+		rctx = 0;
+
+	if (recursion[rctx])
+		return -1;
+
+	recursion[rctx]++;
+	barrier();
+
+	return rctx;
 }
 
-static inline void put_recursion_context (int * recursion, int rctx)
+static inline void put_recursion_context(int *recursion, int rctx)
 {
-  barrier();
-  recursion[rctx]--;
+	barrier();
+	recursion[rctx]--;
 }
 
 #endif /* _KERNEL_EVENTS_INTERNAL_H */

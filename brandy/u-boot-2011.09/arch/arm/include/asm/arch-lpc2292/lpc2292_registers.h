@@ -13,10 +13,10 @@
 
 /* External Memory Controller */
 
-#define BCFG0 0xFFE00000  /* 32-bits */
-#define BCFG1 0xFFE00004  /* 32-bits */
-#define BCFG2 0xFFE00008  /* 32-bits */
-#define BCFG3 0xFFE0000c  /* 32-bits */
+#define BCFG0 0xFFE00000	/* 32-bits */
+#define BCFG1 0xFFE00004	/* 32-bits */
+#define BCFG2 0xFFE00008	/* 32-bits */
+#define BCFG3 0xFFE0000c	/* 32-bits */
 
 /* System Control Block */
 
@@ -68,27 +68,27 @@
 #define VICVectAddr14   0xFFFFF138
 #define VICVectAddr15   0xFFFFF13C
 #define VICVectCntl0    0xFFFFF200
-#define VICVectCntl1  0xFFFFF204
-#define VICVectCntl2  0xFFFFF208
-#define VICVectCntl3  0xFFFFF20C
-#define VICVectCntl4  0xFFFFF210
-#define VICVectCntl5  0xFFFFF214
-#define VICVectCntl6  0xFFFFF218
-#define VICVectCntl7  0xFFFFF21C
-#define VICVectCntl8  0xFFFFF220
-#define VICVectCntl9  0xFFFFF224
-#define VICVectCntl10 0xFFFFF228
-#define VICVectCntl11 0xFFFFF22C
-#define VICVectCntl12 0xFFFFF230
-#define VICVectCntl13 0xFFFFF234
-#define VICVectCntl14 0xFFFFF238
-#define VICVectCntl15 0xFFFFF23C
+#define VICVectCntl1	0xFFFFF204
+#define VICVectCntl2	0xFFFFF208
+#define VICVectCntl3	0xFFFFF20C
+#define VICVectCntl4	0xFFFFF210
+#define VICVectCntl5	0xFFFFF214
+#define VICVectCntl6	0xFFFFF218
+#define VICVectCntl7	0xFFFFF21C
+#define VICVectCntl8	0xFFFFF220
+#define VICVectCntl9	0xFFFFF224
+#define VICVectCntl10	0xFFFFF228
+#define VICVectCntl11	0xFFFFF22C
+#define VICVectCntl12	0xFFFFF230
+#define VICVectCntl13	0xFFFFF234
+#define VICVectCntl14	0xFFFFF238
+#define VICVectCntl15	0xFFFFF23C
 
 /* Pin connect block */
 
-#define PINSEL0 0xE002C000  /* 32 bits */
-#define PINSEL1 0xE002C004  /* 32 bits */
-#define PINSEL2 0xE002C014  /* 32 bits */
+#define PINSEL0 0xE002C000	/* 32 bits */
+#define PINSEL1 0xE002C004	/* 32 bits */
+#define PINSEL2 0xE002C014	/* 32 bits */
 
 /* GPIO */
 

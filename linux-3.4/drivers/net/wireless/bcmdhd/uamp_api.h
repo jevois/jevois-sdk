@@ -23,9 +23,9 @@
 #define BT_API
 
 /* Types. */
-typedef bool  BOOLEAN;
-typedef uint8 UINT8;
-typedef uint16  UINT16;
+typedef bool	BOOLEAN;
+typedef uint8	UINT8;
+typedef uint16	UINT16;
 
 
 /* UAMP identifiers */
@@ -48,7 +48,7 @@ typedef UINT8 tUAMP_CH;
 
 /* tUAMP_EVT_DATA: union for event-specific data, used by UAMP_CBACK */
 typedef union {
-  tUAMP_CH channel;       /* UAMP_EVT_RX_READY: channel for which rx occured */
+    tUAMP_CH channel;       /* UAMP_EVT_RX_READY: channel for which rx occured */
 } tUAMP_EVT_DATA;
 
 
@@ -64,7 +64,7 @@ typedef union {
 **
 ******************************************************************************
 */
-typedef void (*tUAMP_CBACK) (tUAMP_ID amp_id, tUAMP_EVT amp_evt, tUAMP_EVT_DATA * p_amp_evt_data);
+typedef void (*tUAMP_CBACK)(tUAMP_ID amp_id, tUAMP_EVT amp_evt, tUAMP_EVT_DATA *p_amp_evt_data);
 
 /*****************************************************************************
 **  external function declarations
@@ -85,7 +85,7 @@ extern "C"
 **
 ******************************************************************************
 */
-BT_API BOOLEAN UAMP_Init (tUAMP_CBACK p_cback);
+BT_API BOOLEAN UAMP_Init(tUAMP_CBACK p_cback);
 
 
 /*****************************************************************************
@@ -100,7 +100,7 @@ BT_API BOOLEAN UAMP_Init (tUAMP_CBACK p_cback);
 **
 ******************************************************************************
 */
-BT_API BOOLEAN UAMP_Open (tUAMP_ID amp_id);
+BT_API BOOLEAN UAMP_Open(tUAMP_ID amp_id);
 
 /*****************************************************************************
 **
@@ -112,7 +112,7 @@ BT_API BOOLEAN UAMP_Open (tUAMP_ID amp_id);
 **
 ******************************************************************************
 */
-BT_API void UAMP_Close (tUAMP_ID amp_id);
+BT_API void UAMP_Close(tUAMP_ID amp_id);
 
 
 /*****************************************************************************
@@ -131,7 +131,7 @@ BT_API void UAMP_Close (tUAMP_ID amp_id);
 **
 ******************************************************************************
 */
-BT_API UINT16 UAMP_Write (tUAMP_ID amp_id, UINT8 * p_buf, UINT16 num_bytes, tUAMP_CH channel);
+BT_API UINT16 UAMP_Write(tUAMP_ID amp_id, UINT8 *p_buf, UINT16 num_bytes, tUAMP_CH channel);
 
 /*****************************************************************************
 **
@@ -149,7 +149,7 @@ BT_API UINT16 UAMP_Write (tUAMP_ID amp_id, UINT8 * p_buf, UINT16 num_bytes, tUAM
 **
 ******************************************************************************
 */
-BT_API UINT16 UAMP_Read (tUAMP_ID amp_id, UINT8 * p_buf, UINT16 buf_size, tUAMP_CH channel);
+BT_API UINT16 UAMP_Read(tUAMP_ID amp_id, UINT8 *p_buf, UINT16 buf_size, tUAMP_CH channel);
 
 #ifdef __cplusplus
 }

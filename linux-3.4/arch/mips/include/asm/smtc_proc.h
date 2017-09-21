@@ -10,8 +10,8 @@
  */
 
 struct smtc_cpu_proc {
-  unsigned long timerints;
-  unsigned long selfipis;
+	unsigned long timerints;
+	unsigned long selfipis;
 };
 
 extern struct smtc_cpu_proc smtc_cpu_stats[NR_CPUS];

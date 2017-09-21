@@ -20,16 +20,16 @@
 #define BRDDEFS_
 
 /* platform status values */
-#define BRD_STOPPED     0x0 /* No Monitor Loaded, Not running. */
-#define BRD_IDLE        0x1 /* Monitor Loaded, but suspended. */
-#define BRD_RUNNING     0x2 /* Monitor loaded, and executing. */
-#define BRD_UNKNOWN     0x3 /* Board state is indeterminate. */
+#define BRD_STOPPED     0x0	/* No Monitor Loaded, Not running. */
+#define BRD_IDLE        0x1	/* Monitor Loaded, but suspended. */
+#define BRD_RUNNING     0x2	/* Monitor loaded, and executing. */
+#define BRD_UNKNOWN     0x3	/* Board state is indeterminate. */
 #define BRD_LOADED      0x5
-#define BRD_SLEEP_TRANSITION 0x6  /* Sleep transition in progress */
-#define BRD_HIBERNATION 0x7 /* MPU initiated hibernation */
-#define BRD_RETENTION     0x8 /* Retention mode */
-#define BRD_DSP_HIBERNATION     0x9 /* DSP initiated hibernation */
-#define BRD_ERROR   0xA /* Board state is Error */
+#define BRD_SLEEP_TRANSITION 0x6	/* Sleep transition in progress */
+#define BRD_HIBERNATION 0x7	/* MPU initiated hibernation */
+#define BRD_RETENTION     0x8	/* Retention mode */
+#define BRD_DSP_HIBERNATION     0x9	/* DSP initiated hibernation */
+#define BRD_ERROR		0xA	/* Board state is Error */
 
 /* BRD Object */
 struct brd_object;

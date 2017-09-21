@@ -26,76 +26,76 @@
 
 #define __reg16(ADDR) (*(volatile unsigned short *)(__region_CS2 + (ADDR)))
 
-#define __get_IMR() ({ __reg16(0x0a); })
-#define __set_IMR(M)  do { __reg16(0x0a) = (M);  wmb(); } while(0)
-#define __get_IFR() ({ __reg16(0x02); })
-#define __clr_IFR(M)  do { __reg16(0x02) = ~(M); wmb(); } while(0)
+#define __get_IMR()	({ __reg16(0x0a); })
+#define __set_IMR(M)	do { __reg16(0x0a) = (M);  wmb(); } while(0)
+#define __get_IFR()	({ __reg16(0x02); })
+#define __clr_IFR(M)	do { __reg16(0x02) = ~(M); wmb(); } while(0)
 
 /*
  * off-CPU FPGA PIC operations
  */
-static void frv_fpga_mask (struct irq_data * d)
+static void frv_fpga_mask(struct irq_data *d)
 {
-  uint16_t imr = __get_IMR();
-  
-  imr |= 1 << (d->irq - IRQ_BASE_FPGA);
-  __set_IMR (imr);
+	uint16_t imr = __get_IMR();
+
+	imr |= 1 << (d->irq - IRQ_BASE_FPGA);
+	__set_IMR(imr);
 }
 
-static void frv_fpga_ack (struct irq_data * d)
+static void frv_fpga_ack(struct irq_data *d)
 {
-  __clr_IFR (1 << (d->irq - IRQ_BASE_FPGA) );
+	__clr_IFR(1 << (d->irq - IRQ_BASE_FPGA));
 }
 
-static void frv_fpga_mask_ack (struct irq_data * d)
+static void frv_fpga_mask_ack(struct irq_data *d)
 {
-  uint16_t imr = __get_IMR();
-  
-  imr |= 1 << (d->irq - IRQ_BASE_FPGA);
-  __set_IMR (imr);
-  
-  __clr_IFR (1 << (d->irq - IRQ_BASE_FPGA) );
+	uint16_t imr = __get_IMR();
+
+	imr |= 1 << (d->irq - IRQ_BASE_FPGA);
+	__set_IMR(imr);
+
+	__clr_IFR(1 << (d->irq - IRQ_BASE_FPGA));
 }
 
-static void frv_fpga_unmask (struct irq_data * d)
+static void frv_fpga_unmask(struct irq_data *d)
 {
-  uint16_t imr = __get_IMR();
-  
-  imr &= ~ (1 << (d->irq - IRQ_BASE_FPGA) );
-  
-  __set_IMR (imr);
+	uint16_t imr = __get_IMR();
+
+	imr &= ~(1 << (d->irq - IRQ_BASE_FPGA));
+
+	__set_IMR(imr);
 }
 
 static struct irq_chip frv_fpga_pic = {
-  .name   = "mb93093",
-  .irq_ack  = frv_fpga_ack,
-  .irq_mask = frv_fpga_mask,
-  .irq_mask_ack = frv_fpga_mask_ack,
-  .irq_unmask = frv_fpga_unmask,
+	.name		= "mb93093",
+	.irq_ack	= frv_fpga_ack,
+	.irq_mask	= frv_fpga_mask,
+	.irq_mask_ack	= frv_fpga_mask_ack,
+	.irq_unmask	= frv_fpga_unmask,
 };
 
 /*
  * FPGA PIC interrupt handler
  */
-static irqreturn_t fpga_interrupt (int irq, void * _mask)
+static irqreturn_t fpga_interrupt(int irq, void *_mask)
 {
-  uint16_t imr, mask = (unsigned long) _mask;
-  
-  imr = __get_IMR();
-  mask = mask & ~imr & __get_IFR();
-  
-  /* poll all the triggered IRQs */
-  while (mask) {
-    int irq;
-    
-    asm ("scan %1,gr0,%0" : "=r" (irq) : "r" (mask) );
-    irq = 31 - irq;
-    mask &= ~ (1 << irq);
-    
-    generic_handle_irq (IRQ_BASE_FPGA + irq);
-  }
-  
-  return IRQ_HANDLED;
+	uint16_t imr, mask = (unsigned long) _mask;
+
+	imr = __get_IMR();
+	mask = mask & ~imr & __get_IFR();
+
+	/* poll all the triggered IRQs */
+	while (mask) {
+		int irq;
+
+		asm("scan %1,gr0,%0" : "=r"(irq) : "r"(mask));
+		irq = 31 - irq;
+		mask &= ~(1 << irq);
+
+		generic_handle_irq(IRQ_BASE_FPGA + irq);
+	}
+
+	return IRQ_HANDLED;
 }
 
 /*
@@ -103,28 +103,28 @@ static irqreturn_t fpga_interrupt (int irq, void * _mask)
  * - use dev_id to indicate the FPGA PIC input to output mappings
  */
 static struct irqaction fpga_irq[1]  = {
-  [0] = {
-    .handler  = fpga_interrupt,
-    .flags    = IRQF_DISABLED,
-    .name   = "fpga.0",
-    .dev_id   = (void *) 0x0700UL,
-  }
+	[0] = {
+		.handler	= fpga_interrupt,
+		.flags		= IRQF_DISABLED,
+		.name		= "fpga.0",
+		.dev_id		= (void *) 0x0700UL,
+	}
 };
 
 /*
  * initialise the motherboard FPGA's PIC
  */
-void __init fpga_init (void)
+void __init fpga_init(void)
 {
-  int irq;
-  
-  /* all PIC inputs are all set to be edge triggered */
-  __set_IMR (0x0700);
-  __clr_IFR (0x0000);
-  
-  for (irq = IRQ_BASE_FPGA + 8; irq <= IRQ_BASE_FPGA + 10; irq++)
-  { irq_set_chip_and_handler (irq, &frv_fpga_pic, handle_edge_irq); }
-  
-  /* the FPGA drives external IRQ input #2 on the CPU PIC */
-  setup_irq (IRQ_CPU_EXTERNAL2, &fpga_irq[0]);
+	int irq;
+
+	/* all PIC inputs are all set to be edge triggered */
+	__set_IMR(0x0700);
+	__clr_IFR(0x0000);
+
+	for (irq = IRQ_BASE_FPGA + 8; irq <= IRQ_BASE_FPGA + 10; irq++)
+		irq_set_chip_and_handler(irq, &frv_fpga_pic, handle_edge_irq);
+
+	/* the FPGA drives external IRQ input #2 on the CPU PIC */
+	setup_irq(IRQ_CPU_EXTERNAL2, &fpga_irq[0]);
 }

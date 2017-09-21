@@ -14,13 +14,13 @@
 #include <asm/glue.h>
 
 /*
- *  Prefetch Abort Model
- *  ================
+ *	Prefetch Abort Model
+ *	================
  *
- *  We have the following to choose from:
- *    legacy  - no IFSR, no IFAR
- *    v6    - ARMv6: IFSR, no IFAR
- *    v7    - ARMv7: IFSR and IFAR
+ *	We have the following to choose from:
+ *	  legacy	- no IFSR, no IFAR
+ *	  v6		- ARMv6: IFSR, no IFAR
+ *	  v7		- ARMv7: IFSR and IFAR
  */
 
 #undef CPU_PABORT_HANDLER

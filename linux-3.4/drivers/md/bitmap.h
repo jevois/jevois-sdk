@@ -11,7 +11,7 @@
  * with version 3, it is host-endian which is non-portable
  */
 #define BITMAP_MAJOR_HI 4
-#define BITMAP_MAJOR_HOSTENDIAN 3
+#define	BITMAP_MAJOR_HOSTENDIAN 3
 
 /*
  * in-memory bitmap:
@@ -70,7 +70,7 @@
  *
  *     hijacked page pointer (32-bit)
  *
- *     [      ][      ] (no page memory allocated)
+ *     [		  ][		  ] (no page memory allocated)
  *      counter #1 (16-bit) counter #2 (16-bit)
  *
  */
@@ -111,25 +111,25 @@ typedef __u16 bitmap_counter_t;
 
 /* use these for bitmap->flags and bitmap->sb->state bit-fields */
 enum bitmap_state {
-  BITMAP_STALE  = 0x002,  /* the bitmap file is out of date or had -EIO */
-  BITMAP_WRITE_ERROR = 0x004, /* A write error has occurred */
-  BITMAP_HOSTENDIAN = 0x8000,
+	BITMAP_STALE  = 0x002,  /* the bitmap file is out of date or had -EIO */
+	BITMAP_WRITE_ERROR = 0x004, /* A write error has occurred */
+	BITMAP_HOSTENDIAN = 0x8000,
 };
 
 /* the superblock at the front of the bitmap file -- little endian */
 typedef struct bitmap_super_s {
-  __le32 magic;        /*  0  BITMAP_MAGIC */
-  __le32 version;      /*  4  the bitmap major for now, could change... */
-  __u8  uuid[16];      /*  8  128 bit uuid - must match md device uuid */
-  __le64 events;       /* 24  event counter for the bitmap (1)*/
-  __le64 events_cleared;/*32  event counter when last bit cleared (2) */
-  __le64 sync_size;    /* 40  the size of the md device's sync range(3) */
-  __le32 state;        /* 48  bitmap state information */
-  __le32 chunksize;    /* 52  the bitmap chunk size in bytes */
-  __le32 daemon_sleep; /* 56  seconds between disk flushes */
-  __le32 write_behind; /* 60  number of outstanding write-behind writes */
-  
-  __u8  pad[256 - 64]; /* set to zero */
+	__le32 magic;        /*  0  BITMAP_MAGIC */
+	__le32 version;      /*  4  the bitmap major for now, could change... */
+	__u8  uuid[16];      /*  8  128 bit uuid - must match md device uuid */
+	__le64 events;       /* 24  event counter for the bitmap (1)*/
+	__le64 events_cleared;/*32  event counter when last bit cleared (2) */
+	__le64 sync_size;    /* 40  the size of the md device's sync range(3) */
+	__le32 state;        /* 48  bitmap state information */
+	__le32 chunksize;    /* 52  the bitmap chunk size in bytes */
+	__le32 daemon_sleep; /* 56  seconds between disk flushes */
+	__le32 write_behind; /* 60  number of outstanding write-behind writes */
+
+	__u8  pad[256 - 64]; /* set to zero */
 } bitmap_super_t;
 
 /* notes:
@@ -150,98 +150,98 @@ typedef struct bitmap_super_s {
 
 /* the in-memory bitmap is represented by bitmap_pages */
 struct bitmap_page {
-  /*
-   * map points to the actual memory page
-   */
-  char * map;
-  /*
-   * in emergencies (when map cannot be alloced), hijack the map
-   * pointer and use it as two counters itself
-   */
-  unsigned int hijacked: 1;
-  /*
-   * count of dirty bits on the page
-   */
-  unsigned int  count: 31;
+	/*
+	 * map points to the actual memory page
+	 */
+	char *map;
+	/*
+	 * in emergencies (when map cannot be alloced), hijack the map
+	 * pointer and use it as two counters itself
+	 */
+	unsigned int hijacked:1;
+	/*
+	 * count of dirty bits on the page
+	 */
+	unsigned int  count:31;
 };
 
 /* the main bitmap structure - one per mddev */
 struct bitmap {
-  struct bitmap_page * bp;
-  unsigned long pages; /* total number of pages in the bitmap */
-  unsigned long missing_pages; /* number of pages not yet allocated */
-  
-  struct mddev * mddev; /* the md device that the bitmap is for */
-  
-  /* bitmap chunksize -- how much data does each bit represent? */
-  unsigned long chunkshift; /* chunksize = 2^(chunkshift+9) (for bitops) */
-  unsigned long chunks; /* total number of data chunks for the array */
-  
-  __u64 events_cleared;
-  int need_sync;
-  
-  /* bitmap spinlock */
-  spinlock_t lock;
-  
-  struct file * file; /* backing disk file */
-  struct page * sb_page; /* cached copy of the bitmap file superblock */
-  struct page ** filemap; /* list of cache pages for the file */
-  unsigned long * filemap_attr; /* attributes associated w/ filemap pages */
-  unsigned long file_pages; /* number of pages in the file */
-  int last_page_size; /* bytes in the last page */
-  
-  unsigned long flags;
-  
-  int allclean;
-  
-  atomic_t behind_writes;
-  unsigned long behind_writes_used; /* highest actual value at runtime */
-  
-  /*
-   * the bitmap daemon - periodically wakes up and sweeps the bitmap
-   * file, cleaning up bits and flushing out pages to disk as necessary
-   */
-  unsigned long daemon_lastrun; /* jiffies of last run */
-  unsigned long last_end_sync; /* when we lasted called end_sync to
-              * update bitmap with resync progress */
+	struct bitmap_page *bp;
+	unsigned long pages; /* total number of pages in the bitmap */
+	unsigned long missing_pages; /* number of pages not yet allocated */
 
-  atomic_t pending_writes; /* pending writes to the bitmap file */
-  wait_queue_head_t write_wait;
-  wait_queue_head_t overflow_wait;
-  wait_queue_head_t behind_wait;
-  
-  struct sysfs_dirent * sysfs_can_clear;
+	struct mddev *mddev; /* the md device that the bitmap is for */
+
+	/* bitmap chunksize -- how much data does each bit represent? */
+	unsigned long chunkshift; /* chunksize = 2^(chunkshift+9) (for bitops) */
+	unsigned long chunks; /* total number of data chunks for the array */
+
+	__u64	events_cleared;
+	int need_sync;
+
+	/* bitmap spinlock */
+	spinlock_t lock;
+
+	struct file *file; /* backing disk file */
+	struct page *sb_page; /* cached copy of the bitmap file superblock */
+	struct page **filemap; /* list of cache pages for the file */
+	unsigned long *filemap_attr; /* attributes associated w/ filemap pages */
+	unsigned long file_pages; /* number of pages in the file */
+	int last_page_size; /* bytes in the last page */
+
+	unsigned long flags;
+
+	int allclean;
+
+	atomic_t behind_writes;
+	unsigned long behind_writes_used; /* highest actual value at runtime */
+
+	/*
+	 * the bitmap daemon - periodically wakes up and sweeps the bitmap
+	 * file, cleaning up bits and flushing out pages to disk as necessary
+	 */
+	unsigned long daemon_lastrun; /* jiffies of last run */
+	unsigned long last_end_sync; /* when we lasted called end_sync to
+				      * update bitmap with resync progress */
+
+	atomic_t pending_writes; /* pending writes to the bitmap file */
+	wait_queue_head_t write_wait;
+	wait_queue_head_t overflow_wait;
+	wait_queue_head_t behind_wait;
+
+	struct sysfs_dirent *sysfs_can_clear;
 };
 
 /* the bitmap API */
 
 /* these are used only by md/bitmap */
-int  bitmap_create (struct mddev * mddev);
-int bitmap_load (struct mddev * mddev);
-void bitmap_flush (struct mddev * mddev);
-void bitmap_destroy (struct mddev * mddev);
+int  bitmap_create(struct mddev *mddev);
+int bitmap_load(struct mddev *mddev);
+void bitmap_flush(struct mddev *mddev);
+void bitmap_destroy(struct mddev *mddev);
 
-void bitmap_print_sb (struct bitmap * bitmap);
-void bitmap_update_sb (struct bitmap * bitmap);
-void bitmap_status (struct seq_file * seq, struct bitmap * bitmap);
+void bitmap_print_sb(struct bitmap *bitmap);
+void bitmap_update_sb(struct bitmap *bitmap);
+void bitmap_status(struct seq_file *seq, struct bitmap *bitmap);
 
-int  bitmap_setallbits (struct bitmap * bitmap);
-void bitmap_write_all (struct bitmap * bitmap);
+int  bitmap_setallbits(struct bitmap *bitmap);
+void bitmap_write_all(struct bitmap *bitmap);
 
-void bitmap_dirty_bits (struct bitmap * bitmap, unsigned long s, unsigned long e);
+void bitmap_dirty_bits(struct bitmap *bitmap, unsigned long s, unsigned long e);
 
 /* these are exported */
-int bitmap_startwrite (struct bitmap * bitmap, sector_t offset,
-                       unsigned long sectors, int behind);
-void bitmap_endwrite (struct bitmap * bitmap, sector_t offset,
-                      unsigned long sectors, int success, int behind);
-int bitmap_start_sync (struct bitmap * bitmap, sector_t offset, sector_t * blocks, int degraded);
-void bitmap_end_sync (struct bitmap * bitmap, sector_t offset, sector_t * blocks, int aborted);
-void bitmap_close_sync (struct bitmap * bitmap);
-void bitmap_cond_end_sync (struct bitmap * bitmap, sector_t sector);
+int bitmap_startwrite(struct bitmap *bitmap, sector_t offset,
+			unsigned long sectors, int behind);
+void bitmap_endwrite(struct bitmap *bitmap, sector_t offset,
+			unsigned long sectors, int success, int behind);
+int bitmap_start_sync(struct bitmap *bitmap, sector_t offset, sector_t *blocks, int degraded);
+void bitmap_end_sync(struct bitmap *bitmap, sector_t offset, sector_t *blocks, int aborted);
+void bitmap_close_sync(struct bitmap *bitmap);
+void bitmap_cond_end_sync(struct bitmap *bitmap, sector_t sector);
 
-void bitmap_unplug (struct bitmap * bitmap);
-void bitmap_daemon_work (struct mddev * mddev);
+void bitmap_unplug(struct bitmap *bitmap);
+void bitmap_daemon_work(struct mddev *mddev);
 #endif
 
 #endif

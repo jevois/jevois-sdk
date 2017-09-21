@@ -6,9 +6,9 @@
 
 /* This handles the memory map.. */
 #ifdef CONFIG_CRIS_LOW_MAP
-#define PAGE_OFFSET   KSEG_6   /* kseg_6 is mapped to physical ram */
+#define PAGE_OFFSET		KSEG_6   /* kseg_6 is mapped to physical ram */
 #else
-#define PAGE_OFFSET   KSEG_C   /* kseg_c is mapped to physical ram */
+#define PAGE_OFFSET		KSEG_C   /* kseg_c is mapped to physical ram */
 #endif
 
 /* macros to convert between really physical and virtual addresses

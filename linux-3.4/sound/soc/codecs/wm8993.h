@@ -31,7 +31,7 @@
 #define WM8993_GPIO_CTRL_1                      0x12
 #define WM8993_GPIO1                            0x13
 #define WM8993_IRQ_DEBOUNCE                     0x14
-#define WM8993_INPUTS_CLAMP_REG     0x15
+#define WM8993_INPUTS_CLAMP_REG			0x15
 #define WM8993_GPIOCTRL_2                       0x16
 #define WM8993_GPIO_POL                         0x17
 #define WM8993_LEFT_LINE_INPUT_1_2_VOLUME       0x18

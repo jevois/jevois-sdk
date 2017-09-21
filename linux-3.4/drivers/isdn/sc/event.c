@@ -21,49 +21,48 @@
 #include "card.h"
 
 #ifdef DEBUG
-static char * events[] = { "ISDN_STAT_STAVAIL",
-                           "ISDN_STAT_ICALL",
-                           "ISDN_STAT_RUN",
-                           "ISDN_STAT_STOP",
-                           "ISDN_STAT_DCONN",
-                           "ISDN_STAT_BCONN",
-                           "ISDN_STAT_DHUP",
-                           "ISDN_STAT_BHUP",
-                           "ISDN_STAT_CINF",
-                           "ISDN_STAT_LOAD",
-                           "ISDN_STAT_UNLOAD",
-                           "ISDN_STAT_BSENT",
-                           "ISDN_STAT_NODCH",
-                           "ISDN_STAT_ADDCH",
-                           "ISDN_STAT_CAUSE"
-                         };
+static char *events[] = { "ISDN_STAT_STAVAIL",
+			  "ISDN_STAT_ICALL",
+			  "ISDN_STAT_RUN",
+			  "ISDN_STAT_STOP",
+			  "ISDN_STAT_DCONN",
+			  "ISDN_STAT_BCONN",
+			  "ISDN_STAT_DHUP",
+			  "ISDN_STAT_BHUP",
+			  "ISDN_STAT_CINF",
+			  "ISDN_STAT_LOAD",
+			  "ISDN_STAT_UNLOAD",
+			  "ISDN_STAT_BSENT",
+			  "ISDN_STAT_NODCH",
+			  "ISDN_STAT_ADDCH",
+			  "ISDN_STAT_CAUSE" };
 #endif
 
-int indicate_status (int card, int event, ulong Channel, char * Data)
+int indicate_status(int card, int event, ulong Channel, char *Data)
 {
-  isdn_ctrl cmd;
-  
-  #ifdef DEBUG
-  pr_debug ("%s: Indicating event %s on Channel %d\n",
-            sc_adapter[card]->devicename, events[event - 256], Channel);
-  #endif
-  if (Data != NULL) {
-    pr_debug ("%s: Event data: %s\n", sc_adapter[card]->devicename,
-              Data);
-    switch (event) {
-    case ISDN_STAT_BSENT:
-      memcpy (&cmd.parm.length, Data, sizeof (cmd.parm.length) );
-      break;
-    case ISDN_STAT_ICALL:
-      memcpy (&cmd.parm.setup, Data, sizeof (cmd.parm.setup) );
-      break;
-    default:
-      strcpy (cmd.parm.num, Data);
-    }
-  }
-  
-  cmd.command = event;
-  cmd.driver = sc_adapter[card]->driverId;
-  cmd.arg = Channel;
-  return sc_adapter[card]->card->statcallb (&cmd);
+	isdn_ctrl cmd;
+
+#ifdef DEBUG
+	pr_debug("%s: Indicating event %s on Channel %d\n",
+		 sc_adapter[card]->devicename, events[event - 256], Channel);
+#endif
+	if (Data != NULL) {
+		pr_debug("%s: Event data: %s\n", sc_adapter[card]->devicename,
+			 Data);
+		switch (event) {
+		case ISDN_STAT_BSENT:
+			memcpy(&cmd.parm.length, Data, sizeof(cmd.parm.length));
+			break;
+		case ISDN_STAT_ICALL:
+			memcpy(&cmd.parm.setup, Data, sizeof(cmd.parm.setup));
+			break;
+		default:
+			strcpy(cmd.parm.num, Data);
+		}
+	}
+
+	cmd.command = event;
+	cmd.driver = sc_adapter[card]->driverId;
+	cmd.arg = Channel;
+	return sc_adapter[card]->card->statcallb(&cmd);
 }

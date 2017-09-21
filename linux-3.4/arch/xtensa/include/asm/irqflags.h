@@ -13,46 +13,46 @@
 
 #include <linux/types.h>
 
-static inline unsigned long arch_local_save_flags (void)
+static inline unsigned long arch_local_save_flags(void)
 {
-  unsigned long flags;
-  asm volatile ("rsr %0,"__stringify (PS) : "=a" (flags) );
-  return flags;
+	unsigned long flags;
+	asm volatile("rsr %0,"__stringify(PS) : "=a" (flags));
+	return flags;
 }
 
-static inline unsigned long arch_local_irq_save (void)
+static inline unsigned long arch_local_irq_save(void)
 {
-  unsigned long flags;
-  asm volatile ("rsil %0, "__stringify (LOCKLEVEL)
-                : "=a" (flags) :: "memory");
-  return flags;
+	unsigned long flags;
+	asm volatile("rsil %0, "__stringify(LOCKLEVEL)
+		     : "=a" (flags) :: "memory");
+	return flags;
 }
 
-static inline void arch_local_irq_disable (void)
+static inline void arch_local_irq_disable(void)
 {
-  arch_local_irq_save();
+	arch_local_irq_save();
 }
 
-static inline void arch_local_irq_enable (void)
+static inline void arch_local_irq_enable(void)
 {
-  unsigned long flags;
-  asm volatile ("rsil %0, 0" : "=a" (flags) :: "memory");
+	unsigned long flags;
+	asm volatile("rsil %0, 0" : "=a" (flags) :: "memory");
 }
 
-static inline void arch_local_irq_restore (unsigned long flags)
+static inline void arch_local_irq_restore(unsigned long flags)
 {
-  asm volatile ("wsr %0, "__stringify (PS) " ; rsync"
-                :: "a" (flags) : "memory");
+	asm volatile("wsr %0, "__stringify(PS)" ; rsync"
+		     :: "a" (flags) : "memory");
 }
 
-static inline bool arch_irqs_disabled_flags (unsigned long flags)
+static inline bool arch_irqs_disabled_flags(unsigned long flags)
 {
-  return (flags & 0xf) != 0;
+	return (flags & 0xf) != 0;
 }
 
-static inline bool arch_irqs_disabled (void)
+static inline bool arch_irqs_disabled(void)
 {
-  return arch_irqs_disabled_flags (arch_local_save_flags() );
+	return arch_irqs_disabled_flags(arch_local_save_flags());
 }
 
 #endif /* _XTENSA_IRQFLAGS_H */

@@ -1,6 +1,6 @@
 /* include/asm-generic/tlb.h
  *
- *  Generic TLB shootdown code
+ *	Generic TLB shootdown code
  *
  * Copyright 2001 Red Hat, Inc.
  * Based on code from mm/memory.c Copyright Linus Torvalds and others.
@@ -49,16 +49,16 @@
  *
  */
 struct mmu_table_batch {
-  struct rcu_head   rcu;
-  unsigned int    nr;
-  void   *   tables[0];
+	struct rcu_head		rcu;
+	unsigned int		nr;
+	void			*tables[0];
 };
 
-#define MAX_TABLE_BATCH   \
-  ((PAGE_SIZE - sizeof(struct mmu_table_batch)) / sizeof(void *))
+#define MAX_TABLE_BATCH		\
+	((PAGE_SIZE - sizeof(struct mmu_table_batch)) / sizeof(void *))
 
-extern void tlb_table_flush (struct mmu_gather * tlb);
-extern void tlb_remove_table (struct mmu_gather * tlb, void * table);
+extern void tlb_table_flush(struct mmu_gather *tlb);
+extern void tlb_remove_table(struct mmu_gather *tlb, void *table);
 
 #endif
 
@@ -66,17 +66,17 @@ extern void tlb_remove_table (struct mmu_gather * tlb, void * table);
  * If we can't allocate a page to make a big batch of page pointers
  * to work on, then just handle a few from the on-stack structure.
  */
-#define MMU_GATHER_BUNDLE 8
+#define MMU_GATHER_BUNDLE	8
 
 struct mmu_gather_batch {
-  struct mmu_gather_batch * next;
-  unsigned int    nr;
-  unsigned int    max;
-  struct page  * pages[0];
+	struct mmu_gather_batch	*next;
+	unsigned int		nr;
+	unsigned int		max;
+	struct page		*pages[0];
 };
 
-#define MAX_GATHER_BATCH  \
-  ((PAGE_SIZE - sizeof(struct mmu_gather_batch)) / sizeof(void *))
+#define MAX_GATHER_BATCH	\
+	((PAGE_SIZE - sizeof(struct mmu_gather_batch)) / sizeof(void *))
 
 /*
  * Limit the maximum number of mmu_gather batches to reduce a risk of soft
@@ -84,55 +84,55 @@ struct mmu_gather_batch {
  * is zapped during unmapping.
  * 10K pages freed at once should be safe even without a preemption point.
  */
-#define MAX_GATHER_BATCH_COUNT  (10000UL/MAX_GATHER_BATCH)
+#define MAX_GATHER_BATCH_COUNT	(10000UL/MAX_GATHER_BATCH)
 
 /* struct mmu_gather is an opaque type used by the mm code for passing around
  * any data needed by arch specific code for tlb_remove_page.
  */
 struct mmu_gather {
-  struct mm_struct * mm;
-  #ifdef CONFIG_HAVE_RCU_TABLE_FREE
-  struct mmu_table_batch * batch;
-  #endif
-  unsigned int    need_flush : 1, /* Did free PTEs */
-           fast_mode  : 1; /* No batching   */
-           
-  unsigned int    fullmm;
-  
-  struct mmu_gather_batch * active;
-  struct mmu_gather_batch local;
-  struct page  * __pages[MMU_GATHER_BUNDLE];
-  unsigned int    batch_count;
+	struct mm_struct	*mm;
+#ifdef CONFIG_HAVE_RCU_TABLE_FREE
+	struct mmu_table_batch	*batch;
+#endif
+	unsigned int		need_flush : 1,	/* Did free PTEs */
+				fast_mode  : 1; /* No batching   */
+
+	unsigned int		fullmm;
+
+	struct mmu_gather_batch *active;
+	struct mmu_gather_batch	local;
+	struct page		*__pages[MMU_GATHER_BUNDLE];
+	unsigned int		batch_count;
 };
 
 #define HAVE_GENERIC_MMU_GATHER
 
-static inline int tlb_fast_mode (struct mmu_gather * tlb)
+static inline int tlb_fast_mode(struct mmu_gather *tlb)
 {
-  #ifdef CONFIG_SMP
-  return tlb->fast_mode;
-  #else
-  /*
-   * For UP we don't need to worry about TLB flush
-   * and page free order so much..
-   */
-  return 1;
-  #endif
+#ifdef CONFIG_SMP
+	return tlb->fast_mode;
+#else
+	/*
+	 * For UP we don't need to worry about TLB flush
+	 * and page free order so much..
+	 */
+	return 1;
+#endif
 }
 
-void tlb_gather_mmu (struct mmu_gather * tlb, struct mm_struct * mm, bool fullmm);
-void tlb_flush_mmu (struct mmu_gather * tlb);
-void tlb_finish_mmu (struct mmu_gather * tlb, unsigned long start, unsigned long end);
-int __tlb_remove_page (struct mmu_gather * tlb, struct page * page);
+void tlb_gather_mmu(struct mmu_gather *tlb, struct mm_struct *mm, bool fullmm);
+void tlb_flush_mmu(struct mmu_gather *tlb);
+void tlb_finish_mmu(struct mmu_gather *tlb, unsigned long start, unsigned long end);
+int __tlb_remove_page(struct mmu_gather *tlb, struct page *page);
 
 /* tlb_remove_page
- *  Similar to __tlb_remove_page but will call tlb_flush_mmu() itself when
- *  required.
+ *	Similar to __tlb_remove_page but will call tlb_flush_mmu() itself when
+ *	required.
  */
-static inline void tlb_remove_page (struct mmu_gather * tlb, struct page * page)
+static inline void tlb_remove_page(struct mmu_gather *tlb, struct page *page)
 {
-  if (!__tlb_remove_page (tlb, page) )
-  { tlb_flush_mmu (tlb); }
+	if (!__tlb_remove_page(tlb, page))
+		tlb_flush_mmu(tlb);
 }
 
 /**
@@ -142,11 +142,11 @@ static inline void tlb_remove_page (struct mmu_gather * tlb, struct page * page)
  * later optimise away the tlb invalidate.   This helps when userspace is
  * unmapping already-unmapped pages, which happens quite a lot.
  */
-#define tlb_remove_tlb_entry(tlb, ptep, address)    \
-  do {              \
-    tlb->need_flush = 1;        \
-    __tlb_remove_tlb_entry(tlb, ptep, address); \
-  } while (0)
+#define tlb_remove_tlb_entry(tlb, ptep, address)		\
+	do {							\
+		tlb->need_flush = 1;				\
+		__tlb_remove_tlb_entry(tlb, ptep, address);	\
+	} while (0)
 
 /**
  * tlb_remove_pmd_tlb_entry - remember a pmd mapping for later tlb invalidation
@@ -156,31 +156,31 @@ static inline void tlb_remove_page (struct mmu_gather * tlb, struct page * page)
 #define __tlb_remove_pmd_tlb_entry(tlb, pmdp, address) do {} while (0)
 #endif
 
-#define tlb_remove_pmd_tlb_entry(tlb, pmdp, address)    \
-  do {              \
-    tlb->need_flush = 1;        \
-    __tlb_remove_pmd_tlb_entry(tlb, pmdp, address); \
-  } while (0)
+#define tlb_remove_pmd_tlb_entry(tlb, pmdp, address)		\
+	do {							\
+		tlb->need_flush = 1;				\
+		__tlb_remove_pmd_tlb_entry(tlb, pmdp, address);	\
+	} while (0)
 
-#define pte_free_tlb(tlb, ptep, address)      \
-  do {              \
-    tlb->need_flush = 1;        \
-    __pte_free_tlb(tlb, ptep, address);   \
-  } while (0)
+#define pte_free_tlb(tlb, ptep, address)			\
+	do {							\
+		tlb->need_flush = 1;				\
+		__pte_free_tlb(tlb, ptep, address);		\
+	} while (0)
 
 #ifndef __ARCH_HAS_4LEVEL_HACK
-#define pud_free_tlb(tlb, pudp, address)      \
-  do {              \
-    tlb->need_flush = 1;        \
-    __pud_free_tlb(tlb, pudp, address);   \
-  } while (0)
+#define pud_free_tlb(tlb, pudp, address)			\
+	do {							\
+		tlb->need_flush = 1;				\
+		__pud_free_tlb(tlb, pudp, address);		\
+	} while (0)
 #endif
 
-#define pmd_free_tlb(tlb, pmdp, address)      \
-  do {              \
-    tlb->need_flush = 1;        \
-    __pmd_free_tlb(tlb, pmdp, address);   \
-  } while (0)
+#define pmd_free_tlb(tlb, pmdp, address)			\
+	do {							\
+		tlb->need_flush = 1;				\
+		__pmd_free_tlb(tlb, pmdp, address);		\
+	} while (0)
 
 #define tlb_migrate_finish(mm) do {} while (0)
 

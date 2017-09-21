@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -40,9 +40,9 @@
 *
 ************************************************************************************************************
 */
-int axpnull_set_supply_status (int vol_name, int vol_value, int onoff)
+int axpnull_set_supply_status(int vol_name, int vol_value, int onoff)
 {
-  return -1;
+	return -1;
 }
 /*
 ************************************************************************************************************
@@ -60,9 +60,9 @@ int axpnull_set_supply_status (int vol_name, int vol_value, int onoff)
 *
 ************************************************************************************************************
 */
-int axpnull_set_supply_status_byname (char * vol_name, int vol_value, int onoff)
+int axpnull_set_supply_status_byname(char *vol_name, int vol_value, int onoff)
 {
-  return -1;
+	return -1;
 }
 /*
 ************************************************************************************************************
@@ -80,9 +80,9 @@ int axpnull_set_supply_status_byname (char * vol_name, int vol_value, int onoff)
 *
 ************************************************************************************************************
 */
-int axpnull_probe_supply_status (int vol_name, int vol_value, int onoff)
+int axpnull_probe_supply_status(int vol_name, int vol_value, int onoff)
 {
-  return -1;
+	return -1;
 }
 /*
 ************************************************************************************************************
@@ -100,8 +100,8 @@ int axpnull_probe_supply_status (int vol_name, int vol_value, int onoff)
 *
 ************************************************************************************************************
 */
-int axpnull_probe_supply_status_byname (char * vol_name)
+int axpnull_probe_supply_status_byname(char *vol_name)
 {
-  return -1;
+	return -1;
 }
 

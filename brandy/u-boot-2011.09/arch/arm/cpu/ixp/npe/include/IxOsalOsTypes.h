@@ -29,12 +29,12 @@ typedef u32 BOOL;
 #define IX_OSAL_OS_DEFAULT_THREAD_PRIORITY    (90)
 
 /* Thread maximum priority (0 - 255). 0 - highest priority */
-#define IX_OSAL_OS_MAX_THREAD_PRIORITY        (255)
+#define IX_OSAL_OS_MAX_THREAD_PRIORITY	      (255)
 
 #endif /* FIXME */
 
 #define IX_OSAL_OS_WAIT_FOREVER (-1L)
-#define IX_OSAL_OS_WAIT_NONE  0
+#define IX_OSAL_OS_WAIT_NONE	0
 
 
 /* Thread handle is eventually an int type */

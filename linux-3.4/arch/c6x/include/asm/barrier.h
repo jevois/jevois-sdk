@@ -19,9 +19,9 @@
 #define set_mb(var, value)       do { var = value;  mb(); } while (0)
 #define set_wmb(var, value)      do { var = value; wmb(); } while (0)
 
-#define smp_mb()           barrier()
-#define smp_rmb()          barrier()
-#define smp_wmb()          barrier()
-#define smp_read_barrier_depends()  do { } while (0)
+#define smp_mb()	         barrier()
+#define smp_rmb()	         barrier()
+#define smp_wmb()	         barrier()
+#define smp_read_barrier_depends()	do { } while (0)
 
 #endif /* _ASM_C6X_BARRIER_H */

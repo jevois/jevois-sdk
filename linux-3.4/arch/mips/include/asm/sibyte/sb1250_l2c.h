@@ -1,7 +1,7 @@
 /*  *********************************************************************
     *  SB1250 Board Support Package
     *
-    *  L2 Cache constants and macros    File: sb1250_l2c.h
+    *  L2 Cache constants and macros		File: sb1250_l2c.h
     *
     *  This module contains constants useful for manipulating the
     *  level 2 cache.
@@ -79,8 +79,8 @@
 #define V_L2C_MGMT_QUADRANT(x)      _SB_MAKEVALUE(x, S_L2C_MGMT_QUADRANT)
 #define G_L2C_MGMT_QUADRANT(x)      _SB_GETVALUE(x, S_L2C_MGMT_QUADRANT, M_L2C_MGMT_QUADRANT)
 
-#define S_L2C_MGMT_HALF       16
-#define M_L2C_MGMT_HALF             _SB_MAKEMASK(1, S_L2C_MGMT_HALF)
+#define S_L2C_MGMT_HALF		    16
+#define M_L2C_MGMT_HALF	            _SB_MAKEMASK(1, S_L2C_MGMT_HALF)
 
 #define S_L2C_MGMT_WAY              17
 #define M_L2C_MGMT_WAY              _SB_MAKEMASK(2, S_L2C_MGMT_WAY)
@@ -110,21 +110,21 @@
 /*
  * L2 Read Misc. register (A_L2_READ_MISC)
  */
-#define S_L2C_MISC_NO_WAY   10
-#define M_L2C_MISC_NO_WAY   _SB_MAKEMASK(4, S_L2C_MISC_NO_WAY)
-#define V_L2C_MISC_NO_WAY(x)    _SB_MAKEVALUE(x, S_L2C_MISC_NO_WAY)
-#define G_L2C_MISC_NO_WAY(x)    _SB_GETVALUE(x, S_L2C_MISC_NO_WAY, M_L2C_MISC_NO_WAY)
+#define S_L2C_MISC_NO_WAY		10
+#define M_L2C_MISC_NO_WAY		_SB_MAKEMASK(4, S_L2C_MISC_NO_WAY)
+#define V_L2C_MISC_NO_WAY(x)		_SB_MAKEVALUE(x, S_L2C_MISC_NO_WAY)
+#define G_L2C_MISC_NO_WAY(x)		_SB_GETVALUE(x, S_L2C_MISC_NO_WAY, M_L2C_MISC_NO_WAY)
 
-#define M_L2C_MISC_ECC_CLEANUP_DIS  _SB_MAKEMASK1(9)
-#define M_L2C_MISC_MC_PRIO_LOW    _SB_MAKEMASK1(8)
-#define M_L2C_MISC_SOFT_DISABLE_T _SB_MAKEMASK1(7)
-#define M_L2C_MISC_SOFT_DISABLE_B _SB_MAKEMASK1(6)
-#define M_L2C_MISC_SOFT_DISABLE_R _SB_MAKEMASK1(5)
-#define M_L2C_MISC_SOFT_DISABLE_L _SB_MAKEMASK1(4)
-#define M_L2C_MISC_SCACHE_DISABLE_T _SB_MAKEMASK1(3)
-#define M_L2C_MISC_SCACHE_DISABLE_B _SB_MAKEMASK1(2)
-#define M_L2C_MISC_SCACHE_DISABLE_R _SB_MAKEMASK1(1)
-#define M_L2C_MISC_SCACHE_DISABLE_L _SB_MAKEMASK1(0)
+#define M_L2C_MISC_ECC_CLEANUP_DIS	_SB_MAKEMASK1(9)
+#define M_L2C_MISC_MC_PRIO_LOW		_SB_MAKEMASK1(8)
+#define M_L2C_MISC_SOFT_DISABLE_T	_SB_MAKEMASK1(7)
+#define M_L2C_MISC_SOFT_DISABLE_B	_SB_MAKEMASK1(6)
+#define M_L2C_MISC_SOFT_DISABLE_R	_SB_MAKEMASK1(5)
+#define M_L2C_MISC_SOFT_DISABLE_L	_SB_MAKEMASK1(4)
+#define M_L2C_MISC_SCACHE_DISABLE_T	_SB_MAKEMASK1(3)
+#define M_L2C_MISC_SCACHE_DISABLE_B	_SB_MAKEMASK1(2)
+#define M_L2C_MISC_SCACHE_DISABLE_R	_SB_MAKEMASK1(1)
+#define M_L2C_MISC_SCACHE_DISABLE_L	_SB_MAKEMASK1(0)
 #endif /* 1250 PASS3 || 112x PASS1 */
 
 

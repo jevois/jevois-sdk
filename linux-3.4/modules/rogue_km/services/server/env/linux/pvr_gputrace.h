@@ -54,8 +54,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   The device layer of the KM driver defines these two APIs to allow a
   platform module to set and retrieve the feature's on/off state.
 */
-extern IMG_VOID PVRGpuTraceEnabledSet (IMG_BOOL bNewValue);
-extern IMG_BOOL PVRGpuTraceEnabled (IMG_VOID);
+extern IMG_VOID PVRGpuTraceEnabledSet(IMG_BOOL bNewValue);
+extern IMG_BOOL PVRGpuTraceEnabled(IMG_VOID);
 
 
 /******************************************************************************
@@ -63,34 +63,34 @@ extern IMG_BOOL PVRGpuTraceEnabled (IMG_VOID);
 ******************************************************************************/
 
 typedef enum {
-  PVR_GPUTRACE_SWITCH_TYPE_UNDEF = 0,
-  
-  PVR_GPUTRACE_SWITCH_TYPE_BEGIN = 1,
-  PVR_GPUTRACE_SWITCH_TYPE_END = 2
-  
+	PVR_GPUTRACE_SWITCH_TYPE_UNDEF = 0,
+
+	PVR_GPUTRACE_SWITCH_TYPE_BEGIN = 1,
+	PVR_GPUTRACE_SWITCH_TYPE_END = 2
+
 } PVR_GPUTRACE_SWITCH_TYPE;
 
 
-IMG_VOID PVRGpuTraceClientWork (
-  const IMG_UINT32 ui32Pid,
-  const IMG_UINT32 ui32FrameNo,
-  const IMG_UINT32 ui32RTDataID,
-  const IMG_CHAR * pszKickType);
+IMG_VOID PVRGpuTraceClientWork(
+		const IMG_UINT32 ui32Pid,
+		const IMG_UINT32 ui32FrameNo,
+		const IMG_UINT32 ui32RTDataID,
+		const IMG_CHAR* pszKickType);
 
 
-IMG_VOID PVRGpuTraceWorkSwitch (
-  IMG_UINT64 ui64OSTimestamp,
-  const IMG_UINT32 ui32Pid,
-  const IMG_UINT32 ui32FrameNo,
-  const IMG_UINT32 ui32RTDataID,
-  const IMG_CHAR * pszWorkType,
-  PVR_GPUTRACE_SWITCH_TYPE eSwType);
+IMG_VOID PVRGpuTraceWorkSwitch(
+		IMG_UINT64 ui64OSTimestamp,
+		const IMG_UINT32 ui32Pid,
+		const IMG_UINT32 ui32FrameNo,
+		const IMG_UINT32 ui32RTDataID,
+		const IMG_CHAR* pszWorkType,
+		PVR_GPUTRACE_SWITCH_TYPE eSwType);
 
 
-PVRSRV_ERROR PVRGpuTraceInit (IMG_VOID);
+PVRSRV_ERROR PVRGpuTraceInit(IMG_VOID);
 
 
-IMG_VOID PVRGpuTraceDeInit (IMG_VOID);
+IMG_VOID PVRGpuTraceDeInit(IMG_VOID);
 
 
 #endif /* PVR_GPUTRACE_H_ */

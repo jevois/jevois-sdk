@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -32,19 +32,19 @@
  * Date    : 2011-06-01
  * Descript: dram  for AW1623 chipset
  * Update  : date          auther      ver     notes
- *     2011-06-01           Berg        1.0     create file
- *    2011-07-29      Berg        1.1   change dram_power_save_process() and dram_power_up_process()
- *    2011-08-05      Berg        1.2     add retraining method in power up process when failed
+ *     2011-06-01      			Berg        1.0     create file
+ *	  2011-07-29		  Berg        1.1	  change dram_power_save_process() and dram_power_up_process()
+ *	  2011-08-05		  Berg        1.2     add retraining method in power up process when failed
  *********************************************************************************************************
  */
 
-void standby_delay (int ms)
+void standby_delay(int ms)
 {
-  int i;
-  
-  for (i = ms; i > 0; i--);
-  
-  return ;
+    int i;
+
+    for(i=ms;i>0;i--);
+
+    return ;
 }
 /*
  *********************************************************************************************************
@@ -73,38 +73,38 @@ void mctl_precharge_all(void)
     standby_delay(0x100);
 }
 */
-void DRAMC_enter_selfrefresh (void)
+void DRAMC_enter_selfrefresh(void)
 {
-  __u32 reg_val;
-  
-  /*
-  reg_val = mctl_read_w(SDR_DRR);
-  reg_val |= 0x1U<<31;
-  mctl_write_w(SDR_DRR, reg_val);
-  */
-  
-  reg_val = mctl_read_w (SDR_DRR);
-  reg_val |= 0x1U << 31;
-  mctl_write_w (SDR_DRR, reg_val);
-  
-  
-  reg_val = mctl_read_w (SDR_DCR);
-  reg_val &= ~ (0x1fU << 27);
-  reg_val |= 0x12U << 27;
-  mctl_write_w (SDR_DCR, reg_val);
-  while ( mctl_read_w (SDR_DCR) & (0x1U << 31) );
-  standby_delay (0x100);
-  
-  reg_val = mctl_read_w (SDR_CR);
-  reg_val &= ~ (0x3 << 28);
-  reg_val |= 0x2 << 28;
-  mctl_write_w (SDR_CR, reg_val);
-  
-  mctl_write_w (SDR_DPCR, 0x16510001);
-  
-  while (! (mctl_read_w (SDR_DPCR) & 0x1) );
-  standby_delay (0x100);
-  
+    __u32 reg_val;
+
+    /*
+    reg_val = mctl_read_w(SDR_DRR);
+    reg_val |= 0x1U<<31;
+    mctl_write_w(SDR_DRR, reg_val);
+    */
+
+    reg_val = mctl_read_w(SDR_DRR);
+    reg_val |= 0x1U<<31;
+    mctl_write_w(SDR_DRR, reg_val);
+
+
+    reg_val = mctl_read_w(SDR_DCR);
+    reg_val &= ~(0x1fU<<27);
+    reg_val |= 0x12U<<27;
+    mctl_write_w(SDR_DCR, reg_val);
+    while( mctl_read_w(SDR_DCR)& (0x1U<<31) );
+    standby_delay(0x100);
+
+    reg_val = mctl_read_w(SDR_CR);
+    reg_val &= ~(0x3<<28);
+    reg_val |= 0x2<<28;
+    mctl_write_w(SDR_CR, reg_val);
+
+    mctl_write_w(SDR_DPCR, 0x16510001);
+
+    while(!(mctl_read_w(SDR_DPCR) & 0x1));
+    standby_delay(0x100);
+
 }
 /*
 void mctl_mode_exit(void)
@@ -186,8 +186,8 @@ void DRAMC_exit_power_down(void)
  *
  * Description: dram host port enable/ disable
  *
- * Arguments  : __u32 port_idx    host port index   (0,1,...31)
- *        __u32 on    enable or disable (0: diable, 1: enable)
+ * Arguments  : __u32 port_idx		host port index   (0,1,...31)
+ *				__u32 on		enable or disable (0: diable, 1: enable)
  *
  * Returns    :
  *
@@ -196,19 +196,19 @@ void DRAMC_exit_power_down(void)
  **********************************************************************************************************************
  */
 
-void DRAMC_hostport_on_off (__u32 port_idx, __u32 on)
+void DRAMC_hostport_on_off(__u32 port_idx, __u32 on)
 {
-  __u32   reg_val;
-  
-  if (port_idx <= 31)
-  {
-    reg_val = mctl_read_w (SDR_HPCR + (port_idx << 2) );
-    if (on)
-    { reg_val |= 0x1; }
-    else
-    { reg_val &= ~ (0x1); }
-    mctl_write_w (SDR_HPCR + (port_idx << 2), reg_val);
-  }
+    __u32   reg_val;
+
+    if(port_idx<=31)
+    {
+        reg_val = mctl_read_w(SDR_HPCR + (port_idx<<2));
+        if(on)
+            reg_val |= 0x1;
+        else
+            reg_val &= ~(0x1);
+        mctl_write_w(SDR_HPCR + (port_idx<<2), reg_val);
+    }
 }
 /*
  **********************************************************************************************************************
@@ -216,9 +216,9 @@ void DRAMC_hostport_on_off (__u32 port_idx, __u32 on)
  *
  * Description: dram get AHB FIFO status
  *
- * Arguments  : __u32 port_idx    host port index     (0,1,...31)
+ * Arguments  : __u32 port_idx		host port index   	(0,1,...31)
  *
- * Returns    : __u32 ret_val   AHB FIFO status   (0: FIFO not empty ,1: FIFO empty)
+ * Returns    : __u32 ret_val		AHB FIFO status 	(0: FIFO not empty ,1: FIFO empty)
  *
  * Notes      :
  *
@@ -246,8 +246,8 @@ __u32 DRAMC_hostport_check_ahb_fifo_status(__u32 port_idx)
  *
  * Description: dram get AHB FIFO status
  *
- * Arguments  :   __u32 port_idx        host port index     (0,1,...31)
- *        __u32 port_pri_level    priority level    (0,1,2,3)
+ * Arguments  : 	__u32 port_idx				host port index   	(0,1,...31)
+ *				__u32 port_pri_level		priority level		(0,1,2,3)
  *
  * Returns    :
  *
@@ -392,89 +392,88 @@ if(ret_val == 0)
 #define SAVE_SDR_ZQSR_TO_RTC
 
 
-static __s32 backup_dram_cal_val (int standby_mode)
+static __s32 backup_dram_cal_val(int standby_mode)
 {
-  #ifdef SAVE_SDR_ZQSR_TO_RTC
-  __u32 reg_val;
-  reg_val = mctl_read_w (SDR_ZQSR) & 0xfffff;
-  if (standby_mode != 0)
-  {
-    reg_val |= 0x1 << 20;          
-  }
-  mctl_write_w (SDR_GP_REG0, reg_val);
-  reg_val = mctl_read_w (SDR_RSLR0);
-  mctl_write_w (SDR_GP_REG1, reg_val);
-  
-  reg_val = mctl_read_w (SDR_RDQSGR);
-  mctl_write_w (SDR_GP_REG2, reg_val);
-  return 0;
-  
-  #elif defined(SAVE_SDR_ZQSR_TO_AXP)
-  
-  __u32 value;
-  __u8 reg_addr_1st = 0x0a;
-  __u8 reg_addr_2nd = 0x0b;
-  __u8 reg_addr_3rd = 0x0c;
-  __u8 reg_val;
-  
-  
-  value = mctl_read_w (SDR_ZQSR) & 0xfffff;
-  
-  reg_val = value & 0xff;
-  if (twi_byte_rw (TWI_OP_WR, AXP_ADDR, reg_addr_1st, &reg_val) ) {
-    return -1;
-  }
-  
-  reg_val = (value >> 8) & 0xff;
-  if (twi_byte_rw (TWI_OP_WR, AXP_ADDR, reg_addr_2nd, &reg_val) ) {
-    return -1;
-  }
-  
-  reg_val = (value >> 16) & 0x0f;
-  if (twi_byte_rw (TWI_OP_WR, AXP_ADDR, reg_addr_3rd, &reg_val) ) {
-    return -1;
-  }
-  
-  return 0;
-  #else
+#ifdef SAVE_SDR_ZQSR_TO_RTC
+    __u32 reg_val;
+    reg_val = mctl_read_w(SDR_ZQSR)&0xfffff;
+    if (standby_mode != 0)
+    {
+        reg_val |= 0x1<<20;            
+    }
+    mctl_write_w(SDR_GP_REG0, reg_val);
+    reg_val = mctl_read_w(SDR_RSLR0);
+    mctl_write_w(SDR_GP_REG1, reg_val);
+
+    reg_val = mctl_read_w(SDR_RDQSGR);
+    mctl_write_w(SDR_GP_REG2, reg_val);
+    return 0;
+
+#elif defined(SAVE_SDR_ZQSR_TO_AXP)
+
+    __u32 value;
+    __u8 reg_addr_1st = 0x0a;
+    __u8 reg_addr_2nd = 0x0b;
+    __u8 reg_addr_3rd = 0x0c;
+    __u8 reg_val;
+
+
+    value = mctl_read_w(SDR_ZQSR) & 0xfffff;
+
+    reg_val = value&0xff;
+    if(twi_byte_rw(TWI_OP_WR, AXP_ADDR,reg_addr_1st, &reg_val)){
+        return -1;
+    }
+
+    reg_val = (value>>8)&0xff;
+    if(twi_byte_rw(TWI_OP_WR, AXP_ADDR,reg_addr_2nd, &reg_val)){
+        return -1;
+    }
+
+    reg_val = (value>>16)&0x0f;
+    if(twi_byte_rw(TWI_OP_WR, AXP_ADDR,reg_addr_3rd, &reg_val)){
+        return -1;
+    }
+
+    return 0;
+#else 
 #error "super standby has not save SDR_ZQSR"
-  #endif
+#endif
 }
-__s32 dram_power_save_process (boot_dram_para_t * standby_dram_para)
+__s32 dram_power_save_process(boot_dram_para_t* standby_dram_para)
 {
-  /*__u32 i;  */
-  __u32 reg_val;
-  
+    /*__u32 i;	*/
+    __u32 reg_val;
+
 #define MAX_RETRY_TIMES (5)
-  
-  __s32 retry = MAX_RETRY_TIMES;
-  
-  while ( (-1 == backup_dram_cal_val (0) ) && --retry) {
-    ;
-  }
-  if (0 == retry) {
-    return -1;
-  }
-  else {
-    retry = MAX_RETRY_TIMES;
-  }
-  
-  DRAMC_enter_selfrefresh();
-  
-  
-  reg_val = mctl_read_w (DRAM_CCM_AHB_GATE_REG);
-  reg_val &= ~ (0x3 << 14);
-  mctl_write_w (DRAM_CCM_AHB_GATE_REG, reg_val);
-  
-  return 0;
-  
+
+    __s32 retry = MAX_RETRY_TIMES;
+
+    while((-1 == backup_dram_cal_val(0)) && --retry){
+        ;
+    }
+    if(0 == retry){
+        return -1;
+    }else{
+        retry = MAX_RETRY_TIMES;
+    }	
+
+    DRAMC_enter_selfrefresh();
+
+
+    reg_val = mctl_read_w(DRAM_CCM_AHB_GATE_REG);
+    reg_val &= ~(0x3<<14);
+    mctl_write_w(DRAM_CCM_AHB_GATE_REG, reg_val);
+
+    return 0;
+
 }
 
 
-extern __s32 init_DRAM (boot_dram_para_t * boot0_para);
-__u32 dram_power_up_process (boot_dram_para_t * standby_dram_para)
+extern __s32 init_DRAM(boot_dram_para_t *boot0_para);
+__u32 dram_power_up_process(boot_dram_para_t* standby_dram_para)
 {
-  return init_DRAM (standby_dram_para);
+    return init_DRAM(standby_dram_para);
 }
 
 /*

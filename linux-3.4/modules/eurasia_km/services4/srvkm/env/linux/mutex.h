@@ -61,39 +61,39 @@ typedef struct mutex PVRSRV_LINUX_MUTEX;
 
 
 typedef struct {
-  struct semaphore sSemaphore;
-  /* since Linux's struct semaphore is intended to be
-   * opaque we don't poke inside for the count and
-   * instead we track it outselves. (So we can implement
-   * LinuxIsLockedMutex)
-   */
-  atomic_t Count;
-} PVRSRV_LINUX_MUTEX;
+    struct semaphore sSemaphore;
+    /* since Linux's struct semaphore is intended to be
+     * opaque we don't poke inside for the count and
+     * instead we track it outselves. (So we can implement
+     * LinuxIsLockedMutex)
+     */
+    atomic_t Count;
+}PVRSRV_LINUX_MUTEX;
 
 #endif
 
 enum PVRSRV_MUTEX_LOCK_CLASS
 {
-  PVRSRV_LOCK_CLASS_POWER,
-  PVRSRV_LOCK_CLASS_BRIDGE,
-  PVRSRV_LOCK_CLASS_MMAP,
-  PVRSRV_LOCK_CLASS_MM_DEBUG,
-  PVRSRV_LOCK_CLASS_PVR_DEBUG,
+	PVRSRV_LOCK_CLASS_POWER,
+	PVRSRV_LOCK_CLASS_BRIDGE,
+	PVRSRV_LOCK_CLASS_MMAP,
+	PVRSRV_LOCK_CLASS_MM_DEBUG,
+	PVRSRV_LOCK_CLASS_PVR_DEBUG,
 };
 
-extern IMG_VOID LinuxInitMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex);
+extern IMG_VOID LinuxInitMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex);
 
-extern IMG_VOID LinuxLockMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex);
+extern IMG_VOID LinuxLockMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex);
 
-extern IMG_VOID LinuxLockMutexNested (PVRSRV_LINUX_MUTEX * psPVRSRVMutex, unsigned int uiLockClass);
+extern IMG_VOID LinuxLockMutexNested(PVRSRV_LINUX_MUTEX *psPVRSRVMutex, unsigned int uiLockClass);
 
-extern PVRSRV_ERROR LinuxLockMutexInterruptible (PVRSRV_LINUX_MUTEX * psPVRSRVMutex);
+extern PVRSRV_ERROR LinuxLockMutexInterruptible(PVRSRV_LINUX_MUTEX *psPVRSRVMutex);
 
-extern IMG_INT32 LinuxTryLockMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex);
+extern IMG_INT32 LinuxTryLockMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex);
 
-extern IMG_VOID LinuxUnLockMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex);
+extern IMG_VOID LinuxUnLockMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex);
 
-extern IMG_BOOL LinuxIsLockedMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex);
+extern IMG_BOOL LinuxIsLockedMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex);
 
 
 #endif /* __INCLUDED_LINUX_MUTEX_H_ */

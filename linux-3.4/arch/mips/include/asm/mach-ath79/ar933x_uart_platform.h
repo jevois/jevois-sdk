@@ -12,7 +12,7 @@
 #define _AR933X_UART_PLATFORM_H
 
 struct ar933x_uart_platform_data {
-  unsigned  uartclk;
+	unsigned	uartclk;
 };
 
 #endif /* _AR933X_UART_PLATFORM_H */

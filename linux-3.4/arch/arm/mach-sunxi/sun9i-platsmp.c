@@ -30,14 +30,14 @@
 #include <asm/hardware/gic.h>
 
 
-bool __init sun9i_smp_init_ops (void)
+bool __init sun9i_smp_init_ops(void)
 {
-  #ifdef CONFIG_MCPM
-  /* the mcpm smp ops just use for MCPM platform */
-  mcpm_smp_set_ops();
-  return true;
-  #else
-  /* default use machine_desc->smp ops */
-  return false;
-  #endif
+#ifdef CONFIG_MCPM
+	/* the mcpm smp ops just use for MCPM platform */
+	mcpm_smp_set_ops();
+	return true;
+#else
+	/* default use machine_desc->smp ops */
+	return false;
+#endif
 }

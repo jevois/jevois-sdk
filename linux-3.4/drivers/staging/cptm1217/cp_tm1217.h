@@ -3,7 +3,7 @@
 
 struct cp_tm1217_platform_data
 {
-  int gpio;   /* If not set uses the IRQ resource 0 */
+	int gpio;		/* If not set uses the IRQ resource 0 */
 };
 
 #endif

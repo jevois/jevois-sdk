@@ -14,7 +14,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -27,23 +27,23 @@
 #define _OMAPIMAGE_H_
 
 struct ch_toc {
-  uint32_t section_offset;
-  uint32_t section_size;
-  uint8_t unused[12];
-  uint8_t section_name[12];
+	uint32_t section_offset;
+	uint32_t section_size;
+	uint8_t unused[12];
+	uint8_t section_name[12];
 };
 
 struct ch_settings {
-  uint32_t section_key;
-  uint8_t valid;
-  uint8_t version;
-  uint16_t reserved;
-  uint32_t flags;
+	uint32_t section_key;
+	uint8_t valid;
+	uint8_t version;
+	uint16_t reserved;
+	uint32_t flags;
 };
 
 struct gp_header {
-  uint32_t size;
-  uint32_t load_addr;
+	uint32_t size;
+	uint32_t load_addr;
 };
 
 #define KEY_CHSETTINGS 0xC0C0C0C1

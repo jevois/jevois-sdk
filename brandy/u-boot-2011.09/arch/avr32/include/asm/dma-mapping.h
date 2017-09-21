@@ -26,37 +26,37 @@
 #include <asm/arch/cacheflush.h>
 
 enum dma_data_direction {
-  DMA_BIDIRECTIONAL = 0,
-  DMA_TO_DEVICE   = 1,
-  DMA_FROM_DEVICE   = 2,
+	DMA_BIDIRECTIONAL	= 0,
+	DMA_TO_DEVICE		= 1,
+	DMA_FROM_DEVICE		= 2,
 };
-extern void * dma_alloc_coherent (size_t len, unsigned long * handle);
+extern void *dma_alloc_coherent(size_t len, unsigned long *handle);
 
-static inline unsigned long dma_map_single (volatile void * vaddr, size_t len,
-    enum dma_data_direction dir)
+static inline unsigned long dma_map_single(volatile void *vaddr, size_t len,
+					   enum dma_data_direction dir)
 {
-  extern void __bad_dma_data_direction (void);
-  
-  switch (dir) {
-  case DMA_BIDIRECTIONAL:
-    dcache_flush_range (vaddr, len);
-    break;
-  case DMA_TO_DEVICE:
-    dcache_clean_range (vaddr, len);
-    break;
-  case DMA_FROM_DEVICE:
-    dcache_invalidate_range (vaddr, len);
-    break;
-  default:
-    /* This will cause a linker error */
-    __bad_dma_data_direction();
-  }
-  
-  return virt_to_phys (vaddr);
+	extern void __bad_dma_data_direction(void);
+
+	switch (dir) {
+	case DMA_BIDIRECTIONAL:
+		dcache_flush_range(vaddr, len);
+		break;
+	case DMA_TO_DEVICE:
+		dcache_clean_range(vaddr, len);
+		break;
+	case DMA_FROM_DEVICE:
+		dcache_invalidate_range(vaddr, len);
+		break;
+	default:
+		/* This will cause a linker error */
+		__bad_dma_data_direction();
+	}
+
+	return virt_to_phys(vaddr);
 }
 
-static inline void dma_unmap_single (volatile void * vaddr, size_t len,
-                                     unsigned long paddr)
+static inline void dma_unmap_single(volatile void *vaddr, size_t len,
+				    unsigned long paddr)
 {
 
 }

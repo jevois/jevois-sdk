@@ -49,22 +49,22 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 typedef enum _FLASH_STATUS_
 {
-  FLASH_STATUS_NOT_STARTED = 0,
-  FLASH_STATUS_WAITING,
-  FLASH_STATUS_IN_PROGRESS,
-  FLASH_STATUS_FINISHED,
-  FLASH_STATUS_FAILED,
+	FLASH_STATUS_NOT_STARTED = 0,
+	FLASH_STATUS_WAITING,
+	FLASH_STATUS_IN_PROGRESS,
+	FLASH_STATUS_FINISHED,
+	FLASH_STATUS_FAILED,
 } FLASH_STATUS;
 
-typedef PVRSRV_ERROR (*PFN_APOLLO_FLASH_INIT) (IMG_VOID * pvData);
-typedef PVRSRV_ERROR (*PFN_APOLLO_FLASH_WRITE) (IMG_VOID * pvData, const IMG_UINT32 * uiWord);
-typedef PVRSRV_ERROR (*PFN_APOLLO_FLASH_GET_STATUS) (IMG_VOID * pvData, IMG_UINT32 * puiWriteSpace, FLASH_STATUS * peFlashStatus);
+typedef PVRSRV_ERROR (*PFN_APOLLO_FLASH_INIT)(IMG_VOID *pvData);
+typedef PVRSRV_ERROR (*PFN_APOLLO_FLASH_WRITE)(IMG_VOID *pvData, const IMG_UINT32 *uiWord);
+typedef PVRSRV_ERROR (*PFN_APOLLO_FLASH_GET_STATUS)(IMG_VOID *pvData, IMG_UINT32 *puiWriteSpace, FLASH_STATUS *peFlashStatus);
 
-PVRSRV_ERROR ApolloFlasherSetup (IMG_HANDLE * phFlasher,
-                                 PFN_APOLLO_FLASH_INIT pfnFlashInit,
-                                 PFN_APOLLO_FLASH_WRITE pfnFlashWrite,
-                                 PFN_APOLLO_FLASH_GET_STATUS pfnFlashGetStatus,
-                                 IMG_VOID * pvData);
-PVRSRV_ERROR ApolloFlasherCleanup (IMG_HANDLE hFlasher);
+PVRSRV_ERROR ApolloFlasherSetup(IMG_HANDLE *phFlasher,
+				PFN_APOLLO_FLASH_INIT pfnFlashInit,
+				PFN_APOLLO_FLASH_WRITE pfnFlashWrite,
+				PFN_APOLLO_FLASH_GET_STATUS pfnFlashGetStatus,
+				IMG_VOID *pvData);
+PVRSRV_ERROR ApolloFlasherCleanup(IMG_HANDLE hFlasher);
 
 #endif /* !defined(__APOLLO_FLASHER_H_C__) */

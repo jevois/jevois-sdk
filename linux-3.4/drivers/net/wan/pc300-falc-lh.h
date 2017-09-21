@@ -1,14 +1,14 @@
 /*
- * falc.h Description of the Siemens FALC T1/E1 framer.
+ * falc.h	Description of the Siemens FALC T1/E1 framer.
  *
- * Author:  Ivan Passos <ivan@cyclades.com>
+ * Author:	Ivan Passos <ivan@cyclades.com>
  *
- * Copyright: (c) 2000-2001 Cyclades Corp.
+ * Copyright:	(c) 2000-2001 Cyclades Corp.
  *
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU General Public License
- *  as published by the Free Software Foundation; either version
- *  2 of the License, or (at your option) any later version.
+ *	This program is free software; you can redistribute it and/or
+ *	modify it under the terms of the GNU General Public License
+ *	as published by the Free Software Foundation; either version
+ *	2 of the License, or (at your option) any later version.
  *
  * $Log: falc-lh.h,v $
  * Revision 3.1  2001/06/15 12:41:10  regina
@@ -28,36 +28,36 @@
 #ifndef _FALC_LH_H
 #define _FALC_LH_H
 
-#define NUM_OF_T1_CHANNELS  24
-#define NUM_OF_E1_CHANNELS  32
+#define NUM_OF_T1_CHANNELS	24
+#define NUM_OF_E1_CHANNELS	32
 
 /*>>>>>>>>>>>>>>>>>  FALC Register Bits (Transmit Mode)  <<<<<<<<<<<<<<<<<<< */
 
 /* CMDR (Command Register)
    ---------------- E1 & T1 ------------------------------ */
-#define CMDR_RMC  0x80
-#define CMDR_RRES 0x40
-#define CMDR_XREP 0x20
-#define CMDR_XRES 0x10
-#define CMDR_XHF  0x08
-#define CMDR_XTF  0x04
-#define CMDR_XME  0x02
-#define CMDR_SRES 0x01
+#define CMDR_RMC	0x80
+#define CMDR_RRES	0x40
+#define CMDR_XREP	0x20
+#define CMDR_XRES	0x10
+#define CMDR_XHF	0x08
+#define CMDR_XTF	0x04
+#define CMDR_XME	0x02
+#define CMDR_SRES	0x01
 
 /* MODE (Mode Register)
    ----------------- E1 & T1 ----------------------------- */
-#define MODE_MDS2 0x80
-#define MODE_MDS1 0x40
-#define MODE_MDS0 0x20
-#define MODE_BRAC 0x10
-#define MODE_HRAC 0x08
+#define MODE_MDS2	0x80
+#define MODE_MDS1	0x40
+#define MODE_MDS0	0x20
+#define MODE_BRAC	0x10
+#define MODE_HRAC	0x08
 
 /* IPC (Interrupt Port Configuration)
    ----------------- E1 & T1 ----------------------------- */
-#define IPC_VIS   0x80
-#define IPC_SCI   0x04
-#define IPC_IC1   0x02
-#define IPC_IC0   0x01
+#define IPC_VIS		0x80
+#define IPC_SCI		0x04
+#define IPC_IC1		0x02
+#define IPC_IC0		0x01
 
 /* CCR1 (Common Configuration Register 1)
    ----------------- E1 & T1 ----------------------------- */
@@ -176,7 +176,7 @@
 #define IMR0_RSC        0x08
 #define IMR0_CRC6       0x04
 #define IMR0_CRC4       0x04
-#define IMR0_PDEN 0x02
+#define IMR0_PDEN	0x02
 #define IMR0_RPF        0x01
 
 #define IMR1_CASE       0x80
@@ -186,7 +186,7 @@
 #define IMR1_XMB        0x08
 #define IMR1_XLSC       0x02
 #define IMR1_XPR        0x01
-#define IMR1_LLBSC  0x80
+#define IMR1_LLBSC	0x80
 
 #define IMR2_FAR        0x80
 #define IMR2_LFA        0x40
@@ -249,7 +249,7 @@
 
 #define FMR2_RFS1       0x80
 #define FMR2_RFS0       0x40
-#define FMR2_MCSP 0x40
+#define FMR2_MCSP	0x40
 #define FMR2_RTM        0x20
 #define FMR2_SSP        0x20
 #define FMR2_DAIS       0x10
@@ -259,14 +259,14 @@
 #define FMR2_ALMF       0x01
 #define FMR2_EXZE       0x01
 
-#define LOOP_RTM  0x40
-#define LOOP_SFM  0x40
-#define LOOP_ECLB 0x20
-#define LOOP_CLA  0x1f
+#define LOOP_RTM	0x40
+#define LOOP_SFM	0x40
+#define LOOP_ECLB	0x20
+#define LOOP_CLA	0x1f
 
 /*--------------------- E1 ----------------------------*/
-#define FMR3_XLD  0x20
-#define FMR3_XLU  0x10
+#define FMR3_XLD	0x20
+#define FMR3_XLU	0x10
 
 /*--------------------- T1 ----------------------------*/
 #define FMR4_AIS3       0x80
@@ -511,71 +511,71 @@
 /* ICB1-4 (Idle Channel Register 1-4)
    ------------------ E1 ---------------------------- */
 
-#define E1_ICB1_IC0 0x80
-#define E1_ICB1_IC1 0x40
-#define E1_ICB1_IC2 0x20
-#define E1_ICB1_IC3 0x10
-#define E1_ICB1_IC4 0x08
-#define E1_ICB1_IC5 0x04
-#define E1_ICB1_IC6 0x02
-#define E1_ICB1_IC7 0x01
+#define E1_ICB1_IC0	0x80
+#define E1_ICB1_IC1	0x40
+#define E1_ICB1_IC2	0x20
+#define E1_ICB1_IC3	0x10
+#define E1_ICB1_IC4	0x08
+#define E1_ICB1_IC5	0x04
+#define E1_ICB1_IC6	0x02
+#define E1_ICB1_IC7	0x01
 
-#define E1_ICB2_IC8 0x80
-#define E1_ICB2_IC9 0x40
-#define E1_ICB2_IC10  0x20
-#define E1_ICB2_IC11  0x10
-#define E1_ICB2_IC12  0x08
-#define E1_ICB2_IC13  0x04
-#define E1_ICB2_IC14  0x02
-#define E1_ICB2_IC15  0x01
+#define E1_ICB2_IC8	0x80
+#define E1_ICB2_IC9	0x40
+#define E1_ICB2_IC10	0x20
+#define E1_ICB2_IC11	0x10
+#define E1_ICB2_IC12	0x08
+#define E1_ICB2_IC13	0x04
+#define E1_ICB2_IC14	0x02
+#define E1_ICB2_IC15	0x01
 
-#define E1_ICB3_IC16  0x80
-#define E1_ICB3_IC17  0x40
-#define E1_ICB3_IC18  0x20
-#define E1_ICB3_IC19  0x10
-#define E1_ICB3_IC20  0x08
-#define E1_ICB3_IC21  0x04
-#define E1_ICB3_IC22  0x02
-#define E1_ICB3_IC23  0x01
+#define E1_ICB3_IC16	0x80
+#define E1_ICB3_IC17	0x40
+#define E1_ICB3_IC18	0x20
+#define E1_ICB3_IC19	0x10
+#define E1_ICB3_IC20	0x08
+#define E1_ICB3_IC21	0x04
+#define E1_ICB3_IC22	0x02
+#define E1_ICB3_IC23	0x01
 
-#define E1_ICB4_IC24  0x80
-#define E1_ICB4_IC25  0x40
-#define E1_ICB4_IC26  0x20
-#define E1_ICB4_IC27  0x10
-#define E1_ICB4_IC28  0x08
-#define E1_ICB4_IC29  0x04
-#define E1_ICB4_IC30  0x02
-#define E1_ICB4_IC31  0x01
+#define E1_ICB4_IC24	0x80
+#define E1_ICB4_IC25	0x40
+#define E1_ICB4_IC26	0x20
+#define E1_ICB4_IC27	0x10
+#define E1_ICB4_IC28	0x08
+#define E1_ICB4_IC29	0x04
+#define E1_ICB4_IC30	0x02
+#define E1_ICB4_IC31	0x01
 
 /* ICB1-4 (Idle Channel Register 1-4)
    ------------------ T1 ---------------------------- */
 
-#define T1_ICB1_IC1 0x80
-#define T1_ICB1_IC2 0x40
-#define T1_ICB1_IC3 0x20
-#define T1_ICB1_IC4 0x10
-#define T1_ICB1_IC5 0x08
-#define T1_ICB1_IC6 0x04
-#define T1_ICB1_IC7 0x02
-#define T1_ICB1_IC8 0x01
+#define T1_ICB1_IC1	0x80
+#define T1_ICB1_IC2	0x40
+#define T1_ICB1_IC3	0x20
+#define T1_ICB1_IC4	0x10
+#define T1_ICB1_IC5	0x08
+#define T1_ICB1_IC6	0x04
+#define T1_ICB1_IC7	0x02
+#define T1_ICB1_IC8	0x01
 
-#define T1_ICB2_IC9 0x80
-#define T1_ICB2_IC10  0x40
-#define T1_ICB2_IC11  0x20
-#define T1_ICB2_IC12  0x10
-#define T1_ICB2_IC13  0x08
-#define T1_ICB2_IC14  0x04
-#define T1_ICB2_IC15  0x02
-#define T1_ICB2_IC16  0x01
+#define T1_ICB2_IC9	0x80
+#define T1_ICB2_IC10	0x40
+#define T1_ICB2_IC11	0x20
+#define T1_ICB2_IC12	0x10
+#define T1_ICB2_IC13	0x08
+#define T1_ICB2_IC14	0x04
+#define T1_ICB2_IC15	0x02
+#define T1_ICB2_IC16	0x01
 
-#define T1_ICB3_IC17  0x80
-#define T1_ICB3_IC18  0x40
-#define T1_ICB3_IC19  0x20
-#define T1_ICB3_IC20  0x10
-#define T1_ICB3_IC21  0x08
-#define T1_ICB3_IC22  0x04
-#define T1_ICB3_IC23  0x02
-#define T1_ICB3_IC24  0x01
+#define T1_ICB3_IC17	0x80
+#define T1_ICB3_IC18	0x40
+#define T1_ICB3_IC19	0x20
+#define T1_ICB3_IC20	0x10
+#define T1_ICB3_IC21	0x08
+#define T1_ICB3_IC22	0x04
+#define T1_ICB3_IC23	0x02
+#define T1_ICB3_IC24	0x01
 
 /* FMR3 (Framer Mode Register 3)
    --------------------E1------------------------ */
@@ -643,46 +643,46 @@
 /* PCDR (Pulse Count Detection Register(Read/Write))
    ------------------ E1 & T1 ------------------------- */
 
-#define PCDR_PCD7 0x80
-#define PCDR_PCD6 0x40
-#define PCDR_PCD5 0x20
-#define PCDR_PCD4 0x10
-#define PCDR_PCD3 0x08
-#define PCDR_PCD2 0x04
-#define PCDR_PCD1 0x02
-#define PCDR_PCD0 0x01
+#define PCDR_PCD7	0x80
+#define PCDR_PCD6	0x40
+#define PCDR_PCD5	0x20
+#define PCDR_PCD4	0x10
+#define PCDR_PCD3	0x08
+#define PCDR_PCD2	0x04
+#define PCDR_PCD1	0x02
+#define PCDR_PCD0	0x01
 
-#define PCRR_PCR7 0x80
-#define PCRR_PCR6 0x40
-#define PCRR_PCR5 0x20
-#define PCRR_PCR4 0x10
-#define PCRR_PCR3 0x08
-#define PCRR_PCR2 0x04
-#define PCRR_PCR1 0x02
-#define PCRR_PCR0 0x01
+#define PCRR_PCR7	0x80
+#define PCRR_PCR6	0x40
+#define PCRR_PCR5	0x20
+#define PCRR_PCR4	0x10
+#define PCRR_PCR3	0x08
+#define PCRR_PCR2	0x04
+#define PCRR_PCR1	0x02
+#define PCRR_PCR0	0x01
 
 
 /* LIM2 (Line Interface Mode 2)
 
    ------------------ E1 & T1 ---------------------------- */
 
-#define LIM2_DJA2 0x20
-#define LIM2_DJA1 0x10
-#define LIM2_LOS2 0x02
-#define LIM2_LOS1 0x01
+#define LIM2_DJA2	0x20
+#define LIM2_DJA1	0x10
+#define LIM2_LOS2	0x02
+#define LIM2_LOS1	0x01
 
 /* LCR1 (Loop Code Register 1) */
 
-#define LCR1_EPRM 0x80
-#define LCR1_XPRBS  0x40
+#define LCR1_EPRM	0x80
+#define	LCR1_XPRBS	0x40
 
 /* SIC1 (System Interface Control 1) */
-#define SIC1_SRSC 0x80
-#define SIC1_RBS1 0x20
-#define SIC1_RBS0 0x10
-#define SIC1_SXSC 0x08
-#define SIC1_XBS1 0x02
-#define SIC1_XBS0 0x01
+#define SIC1_SRSC	0x80
+#define SIC1_RBS1	0x20
+#define SIC1_RBS0	0x10
+#define SIC1_SXSC	0x08
+#define SIC1_XBS1	0x02
+#define SIC1_XBS0	0x01
 
 /* DEC (Disable Error Counter)
    ------------------ E1 & T1 ---------------------------- */
@@ -721,7 +721,7 @@
 #define FRS1_LLBAD      0x08
 #define FRS1_XLS        0x02
 #define FRS1_XLO        0x01
-#define FRS1_PDEN 0x40
+#define FRS1_PDEN	0x40
 
 /* FRS2/3 (Framer Receive Status Register 2/3)
    ----------------- T1 ---------------------------------- */
@@ -755,8 +755,8 @@
 
 #define RSP_SI1         0x80
 #define RSP_SI2         0x40
-#define RSP_LLBDD 0x10
-#define RSP_LLBAD 0x08
+#define RSP_LLBDD	0x10
+#define RSP_LLBAD	0x08
 #define RSP_RSIF        0x04
 #define RSP_RS13        0x02
 #define RSP_RS15        0x01
@@ -1048,191 +1048,191 @@
 
    ------------------ E1 & T1 ------------------------------ */
 
-#define  FISR0_RME  0x80
-#define  FISR0_RFS  0x40
-#define  FISR0_T8MS 0x20
-#define  FISR0_ISF  0x20
-#define  FISR0_RMB  0x10
-#define  FISR0_CASC 0x08
-#define  FISR0_RSC  0x08
-#define  FISR0_CRC6 0x04
-#define  FISR0_CRC4 0x04
-#define  FISR0_PDEN 0x02
-#define  FISR0_RPF  0x01
+#define  FISR0_RME	0x80
+#define  FISR0_RFS	0x40
+#define  FISR0_T8MS	0x20
+#define  FISR0_ISF	0x20
+#define  FISR0_RMB	0x10
+#define  FISR0_CASC	0x08
+#define  FISR0_RSC	0x08
+#define  FISR0_CRC6	0x04
+#define  FISR0_CRC4	0x04
+#define  FISR0_PDEN	0x02
+#define  FISR0_RPF	0x01
 
-#define  FISR1_CASE 0x80
-#define  FISR1_LLBSC  0x80
-#define  FISR1_RDO  0x40
-#define  FISR1_ALLS 0x20
-#define  FISR1_XDU  0x10
-#define  FISR1_XMB  0x08
-#define  FISR1_XLSC 0x02
-#define  FISR1_XPR  0x01
+#define  FISR1_CASE	0x80
+#define  FISR1_LLBSC	0x80
+#define  FISR1_RDO	0x40
+#define  FISR1_ALLS	0x20
+#define  FISR1_XDU	0x10
+#define  FISR1_XMB	0x08
+#define  FISR1_XLSC	0x02
+#define  FISR1_XPR	0x01
 
-#define  FISR2_FAR  0x80
-#define  FISR2_LFA  0x40
-#define  FISR2_MFAR 0x20
-#define  FISR2_T400MS 0x10
-#define  FISR2_LMFA 0x10
-#define  FISR2_AIS  0x08
-#define  FISR2_LOS  0x04
-#define  FISR2_RAR  0x02
-#define  FISR2_RA 0x01
+#define  FISR2_FAR	0x80
+#define  FISR2_LFA	0x40
+#define  FISR2_MFAR	0x20
+#define  FISR2_T400MS	0x10
+#define  FISR2_LMFA	0x10
+#define  FISR2_AIS	0x08
+#define  FISR2_LOS	0x04
+#define  FISR2_RAR	0x02
+#define  FISR2_RA	0x01
 
-#define  FISR3_ES 0x80
-#define  FISR3_SEC  0x40
-#define  FISR3_LMFA16 0x20
-#define  FISR3_AIS16  0x10
-#define  FISR3_RA16 0x08
-#define  FISR3_API  0x04
-#define  FISR3_XSLP 0x20
-#define  FISR3_XSLN 0x10
-#define  FISR3_LLBSC  0x08
-#define  FISR3_XRS  0x04
-#define  FISR3_SLN  0x02
-#define  FISR3_SLP  0x01
+#define  FISR3_ES	0x80
+#define  FISR3_SEC	0x40
+#define  FISR3_LMFA16	0x20
+#define  FISR3_AIS16	0x10
+#define  FISR3_RA16	0x08
+#define  FISR3_API	0x04
+#define  FISR3_XSLP	0x20
+#define  FISR3_XSLN	0x10
+#define  FISR3_LLBSC	0x08
+#define  FISR3_XRS	0x04
+#define  FISR3_SLN	0x02
+#define  FISR3_SLP	0x01
 
 
 /* GIS  (Global Interrupt Status Register)
 
    --------------------- E1 & T1 --------------------- */
 
-#define  GIS_ISR3 0x08
-#define  GIS_ISR2 0x04
-#define  GIS_ISR1 0x02
-#define  GIS_ISR0 0x01
+#define  GIS_ISR3	0x08
+#define  GIS_ISR2	0x04
+#define  GIS_ISR1	0x02
+#define  GIS_ISR0	0x01
 
 
 /* VSTR  (Version Status Register)
 
    --------------------- E1 & T1 --------------------- */
 
-#define  VSTR_VN3 0x08
-#define  VSTR_VN2 0x04
-#define  VSTR_VN1 0x02
-#define  VSTR_VN0 0x01
+#define  VSTR_VN3	0x08
+#define  VSTR_VN2	0x04
+#define  VSTR_VN1	0x02
+#define  VSTR_VN0	0x01
 
 
 /*>>>>>>>>>>>>>>>>>>>>>  Local Control Structures  <<<<<<<<<<<<<<<<<<<<<<<<< */
 
 /* Write-only Registers (E1/T1 control mode write registers) */
-#define XFIFOH  0x00    /* Tx FIFO High Byte */
-#define XFIFOL  0x01    /* Tx FIFO Low Byte */
-#define CMDR  0x02    /* Command Reg */
-#define DEC 0x60    /* Disable Error Counter */
-#define TEST2 0x62    /* Manuf. Test Reg 2 */
-#define XS(nbr) (0x70 + (nbr))  /* Tx CAS Reg (0 to 15) */
+#define XFIFOH	0x00		/* Tx FIFO High Byte */
+#define XFIFOL	0x01		/* Tx FIFO Low Byte */
+#define CMDR	0x02		/* Command Reg */
+#define DEC	0x60		/* Disable Error Counter */
+#define TEST2	0x62		/* Manuf. Test Reg 2 */
+#define XS(nbr)	(0x70 + (nbr))	/* Tx CAS Reg (0 to 15) */
 
 /* Read-write Registers (E1/T1 status mode read registers) */
-#define MODE  0x03  /* Mode Reg */
-#define RAH1  0x04  /* Receive Address High 1 */
-#define RAH2  0x05  /* Receive Address High 2 */
-#define RAL1  0x06  /* Receive Address Low 1 */
-#define RAL2  0x07  /* Receive Address Low 2 */
-#define IPC 0x08  /* Interrupt Port Configuration */
-#define CCR1  0x09  /* Common Configuration Reg 1 */
-#define CCR3  0x0A  /* Common Configuration Reg 3 */
-#define PRE 0x0B  /* Preamble Reg */
-#define RTR1  0x0C  /* Receive Timeslot Reg 1 */
-#define RTR2  0x0D  /* Receive Timeslot Reg 2 */
-#define RTR3  0x0E  /* Receive Timeslot Reg 3 */
-#define RTR4  0x0F  /* Receive Timeslot Reg 4 */
-#define TTR1  0x10  /* Transmit Timeslot Reg 1 */
-#define TTR2  0x11  /* Transmit Timeslot Reg 2 */
-#define TTR3  0x12  /* Transmit Timeslot Reg 3 */
-#define TTR4  0x13  /* Transmit Timeslot Reg 4 */
-#define IMR0  0x14  /* Interrupt Mask Reg 0 */
-#define IMR1  0x15  /* Interrupt Mask Reg 1 */
-#define IMR2  0x16  /* Interrupt Mask Reg 2 */
-#define IMR3  0x17  /* Interrupt Mask Reg 3 */
-#define IMR4  0x18  /* Interrupt Mask Reg 4 */
-#define IMR5  0x19  /* Interrupt Mask Reg 5 */
-#define FMR0  0x1A  /* Framer Mode Reigster 0 */
-#define FMR1  0x1B  /* Framer Mode Reigster 1 */
-#define FMR2  0x1C  /* Framer Mode Reigster 2 */
-#define LOOP  0x1D  /* Channel Loop Back */
-#define XSW 0x1E  /* Transmit Service Word */
-#define FMR4  0x1E  /* Framer Mode Reg 4 */
-#define XSP 0x1F  /* Transmit Spare Bits */
-#define FMR5  0x1F  /* Framer Mode Reg 5 */
-#define XC0 0x20  /* Transmit Control 0 */
-#define XC1 0x21  /* Transmit Control 1 */
-#define RC0 0x22  /* Receive Control 0 */
-#define RC1 0x23  /* Receive Control 1 */
-#define XPM0  0x24  /* Transmit Pulse Mask 0 */
-#define XPM1  0x25  /* Transmit Pulse Mask 1 */
-#define XPM2  0x26  /* Transmit Pulse Mask 2 */
-#define TSWM  0x27  /* Transparent Service Word Mask */
-#define TEST1 0x28  /* Manuf. Test Reg 1 */
-#define IDLE  0x29  /* Idle Channel Code */
-#define XSA4    0x2A  /* Transmit SA4 Bit Reg */
-#define XDL1  0x2A  /* Transmit DL-Bit Reg 2 */
-#define XSA5    0x2B  /* Transmit SA4 Bit Reg */
-#define XDL2  0x2B  /* Transmit DL-Bit Reg 2 */
-#define XSA6    0x2C  /* Transmit SA4 Bit Reg */
-#define XDL3  0x2C  /* Transmit DL-Bit Reg 2 */
-#define XSA7    0x2D  /* Transmit SA4 Bit Reg */
-#define CCB1  0x2D  /* Clear Channel Reg 1 */
-#define XSA8    0x2E  /* Transmit SA4 Bit Reg */
-#define CCB2  0x2E  /* Clear Channel Reg 2 */
-#define FMR3  0x2F  /* Framer Mode Reg. 3 */
-#define CCB3  0x2F  /* Clear Channel Reg 3 */
-#define ICB1  0x30  /* Idle Channel Reg 1 */
-#define ICB2  0x31  /* Idle Channel Reg 2 */
-#define ICB3  0x32  /* Idle Channel Reg 3 */
-#define ICB4  0x33  /* Idle Channel Reg 4 */
-#define LIM0  0x34  /* Line Interface Mode 0 */
-#define LIM1  0x35  /* Line Interface Mode 1 */
-#define PCDR  0x36  /* Pulse Count Detection */
-#define PCRR  0x37  /* Pulse Count Recovery */
-#define LIM2  0x38  /* Line Interface Mode Reg 2 */
-#define LCR1  0x39  /* Loop Code Reg 1 */
-#define LCR2  0x3A  /* Loop Code Reg 2 */
-#define LCR3  0x3B  /* Loop Code Reg 3 */
-#define SIC1  0x3C  /* System Interface Control 1 */
+#define MODE	0x03	/* Mode Reg */
+#define RAH1	0x04	/* Receive Address High 1 */
+#define RAH2	0x05	/* Receive Address High 2 */
+#define RAL1	0x06	/* Receive Address Low 1 */
+#define RAL2	0x07	/* Receive Address Low 2 */
+#define IPC	0x08	/* Interrupt Port Configuration */
+#define CCR1	0x09	/* Common Configuration Reg 1 */
+#define CCR3	0x0A	/* Common Configuration Reg 3 */
+#define PRE	0x0B	/* Preamble Reg */
+#define RTR1	0x0C	/* Receive Timeslot Reg 1 */
+#define RTR2	0x0D	/* Receive Timeslot Reg 2 */
+#define RTR3	0x0E	/* Receive Timeslot Reg 3 */
+#define RTR4	0x0F	/* Receive Timeslot Reg 4 */
+#define TTR1	0x10	/* Transmit Timeslot Reg 1 */
+#define TTR2	0x11	/* Transmit Timeslot Reg 2 */
+#define TTR3	0x12	/* Transmit Timeslot Reg 3 */
+#define TTR4	0x13	/* Transmit Timeslot Reg 4 */
+#define IMR0	0x14	/* Interrupt Mask Reg 0 */
+#define IMR1	0x15	/* Interrupt Mask Reg 1 */
+#define IMR2	0x16	/* Interrupt Mask Reg 2 */
+#define IMR3	0x17	/* Interrupt Mask Reg 3 */
+#define IMR4	0x18	/* Interrupt Mask Reg 4 */
+#define IMR5	0x19	/* Interrupt Mask Reg 5 */
+#define FMR0	0x1A	/* Framer Mode Reigster 0 */
+#define FMR1	0x1B	/* Framer Mode Reigster 1 */
+#define FMR2	0x1C	/* Framer Mode Reigster 2 */
+#define LOOP	0x1D	/* Channel Loop Back */
+#define XSW	0x1E	/* Transmit Service Word */
+#define FMR4	0x1E	/* Framer Mode Reg 4 */
+#define XSP	0x1F	/* Transmit Spare Bits */
+#define FMR5	0x1F	/* Framer Mode Reg 5 */
+#define XC0	0x20	/* Transmit Control 0 */
+#define XC1	0x21	/* Transmit Control 1 */
+#define RC0	0x22	/* Receive Control 0 */
+#define RC1	0x23	/* Receive Control 1 */
+#define XPM0	0x24	/* Transmit Pulse Mask 0 */
+#define XPM1	0x25	/* Transmit Pulse Mask 1 */
+#define XPM2	0x26	/* Transmit Pulse Mask 2 */
+#define TSWM	0x27	/* Transparent Service Word Mask */
+#define TEST1	0x28	/* Manuf. Test Reg 1 */
+#define IDLE	0x29	/* Idle Channel Code */
+#define XSA4    0x2A	/* Transmit SA4 Bit Reg */
+#define XDL1	0x2A	/* Transmit DL-Bit Reg 2 */
+#define XSA5    0x2B	/* Transmit SA4 Bit Reg */
+#define XDL2	0x2B	/* Transmit DL-Bit Reg 2 */
+#define XSA6    0x2C	/* Transmit SA4 Bit Reg */
+#define XDL3	0x2C	/* Transmit DL-Bit Reg 2 */
+#define XSA7    0x2D	/* Transmit SA4 Bit Reg */
+#define CCB1	0x2D	/* Clear Channel Reg 1 */
+#define XSA8    0x2E	/* Transmit SA4 Bit Reg */
+#define CCB2	0x2E	/* Clear Channel Reg 2 */
+#define FMR3	0x2F	/* Framer Mode Reg. 3 */
+#define CCB3	0x2F	/* Clear Channel Reg 3 */
+#define ICB1	0x30	/* Idle Channel Reg 1 */
+#define ICB2	0x31	/* Idle Channel Reg 2 */
+#define ICB3	0x32	/* Idle Channel Reg 3 */
+#define ICB4	0x33	/* Idle Channel Reg 4 */
+#define LIM0	0x34	/* Line Interface Mode 0 */
+#define LIM1	0x35	/* Line Interface Mode 1 */
+#define PCDR	0x36	/* Pulse Count Detection */
+#define PCRR	0x37	/* Pulse Count Recovery */
+#define LIM2	0x38	/* Line Interface Mode Reg 2 */
+#define LCR1	0x39	/* Loop Code Reg 1 */
+#define LCR2	0x3A	/* Loop Code Reg 2 */
+#define LCR3	0x3B	/* Loop Code Reg 3 */
+#define SIC1	0x3C	/* System Interface Control 1 */
 
 /* Read-only Registers (E1/T1 control mode read registers) */
-#define RFIFOH  0x00    /* Receive FIFO */
-#define RFIFOL  0x01    /* Receive FIFO */
-#define FRS0  0x4C    /* Framer Receive Status 0 */
-#define FRS1  0x4D    /* Framer Receive Status 1 */
-#define RSW 0x4E    /* Receive Service Word */
-#define FRS2  0x4E    /* Framer Receive Status 2 */
-#define RSP 0x4F    /* Receive Spare Bits */
-#define FRS3  0x4F    /* Framer Receive Status 3 */
-#define FECL  0x50    /* Framing Error Counter */
-#define FECH  0x51    /* Framing Error Counter */
-#define CVCL  0x52    /* Code Violation Counter */
-#define CVCH  0x53    /* Code Violation Counter */
-#define CECL  0x54    /* CRC Error Counter 1 */
-#define CECH  0x55    /* CRC Error Counter 1 */
-#define EBCL  0x56    /* E-Bit Error Counter */
-#define EBCH  0x57    /* E-Bit Error Counter */
-#define BECL  0x58    /* Bit Error Counter Low */
-#define BECH  0x59    /* Bit Error Counter Low */
-#define CEC3  0x5A    /* CRC Error Counter 3 (16-bit) */
-#define RSA4  0x5C    /* Receive SA4 Bit Reg */
-#define RDL1  0x5C    /* Receive DL-Bit Reg 1 */
-#define RSA5  0x5D    /* Receive SA5 Bit Reg */
-#define RDL2  0x5D    /* Receive DL-Bit Reg 2 */
-#define RSA6  0x5E    /* Receive SA6 Bit Reg */
-#define RDL3  0x5E    /* Receive DL-Bit Reg 3 */
-#define RSA7  0x5F    /* Receive SA7 Bit Reg */
-#define RSA8  0x60    /* Receive SA8 Bit Reg */
-#define RSA6S 0x61    /* Receive SA6 Bit Status Reg */
-#define TSR0  0x62    /* Manuf. Test Reg 0 */
-#define TSR1  0x63    /* Manuf. Test Reg 1 */
-#define SIS 0x64    /* Signaling Status Reg */
-#define RSIS  0x65    /* Receive Signaling Status Reg */
-#define RBCL  0x66    /* Receive Byte Control */
-#define RBCH  0x67    /* Receive Byte Control */
-#define FISR0 0x68    /* Interrupt Status Reg 0 */
-#define FISR1 0x69    /* Interrupt Status Reg 1 */
-#define FISR2 0x6A    /* Interrupt Status Reg 2 */
-#define FISR3 0x6B    /* Interrupt Status Reg 3 */
-#define GIS 0x6E    /* Global Interrupt Status */
-#define VSTR  0x6F    /* Version Status */
-#define RS(nbr) (0x70 + (nbr))  /* Rx CAS Reg (0 to 15) */
+#define RFIFOH	0x00		/* Receive FIFO */
+#define RFIFOL	0x01		/* Receive FIFO */
+#define FRS0	0x4C		/* Framer Receive Status 0 */
+#define FRS1	0x4D		/* Framer Receive Status 1 */
+#define RSW	0x4E		/* Receive Service Word */
+#define FRS2	0x4E		/* Framer Receive Status 2 */
+#define RSP	0x4F		/* Receive Spare Bits */
+#define FRS3	0x4F		/* Framer Receive Status 3 */
+#define FECL	0x50		/* Framing Error Counter */
+#define FECH	0x51		/* Framing Error Counter */
+#define CVCL	0x52		/* Code Violation Counter */
+#define CVCH	0x53		/* Code Violation Counter */
+#define CECL	0x54		/* CRC Error Counter 1 */
+#define CECH	0x55		/* CRC Error Counter 1 */
+#define EBCL	0x56		/* E-Bit Error Counter */
+#define EBCH	0x57		/* E-Bit Error Counter */
+#define BECL	0x58		/* Bit Error Counter Low */
+#define BECH	0x59		/* Bit Error Counter Low */
+#define CEC3	0x5A		/* CRC Error Counter 3 (16-bit) */
+#define RSA4	0x5C		/* Receive SA4 Bit Reg */
+#define RDL1	0x5C		/* Receive DL-Bit Reg 1 */
+#define RSA5	0x5D		/* Receive SA5 Bit Reg */
+#define RDL2	0x5D		/* Receive DL-Bit Reg 2 */
+#define RSA6	0x5E		/* Receive SA6 Bit Reg */
+#define RDL3	0x5E		/* Receive DL-Bit Reg 3 */
+#define RSA7	0x5F		/* Receive SA7 Bit Reg */
+#define RSA8	0x60		/* Receive SA8 Bit Reg */
+#define RSA6S	0x61		/* Receive SA6 Bit Status Reg */
+#define TSR0	0x62		/* Manuf. Test Reg 0 */
+#define TSR1	0x63		/* Manuf. Test Reg 1 */
+#define SIS	0x64		/* Signaling Status Reg */
+#define RSIS	0x65		/* Receive Signaling Status Reg */
+#define RBCL	0x66		/* Receive Byte Control */
+#define RBCH	0x67		/* Receive Byte Control */
+#define FISR0	0x68		/* Interrupt Status Reg 0 */
+#define FISR1	0x69		/* Interrupt Status Reg 1 */
+#define FISR2	0x6A		/* Interrupt Status Reg 2 */
+#define FISR3	0x6B		/* Interrupt Status Reg 3 */
+#define GIS	0x6E		/* Global Interrupt Status */
+#define VSTR	0x6F		/* Version Status */
+#define RS(nbr)	(0x70 + (nbr))	/* Rx CAS Reg (0 to 15) */
 
-#endif  /* _FALC_LH_H */
+#endif	/* _FALC_LH_H */
 

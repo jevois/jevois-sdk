@@ -16,8 +16,8 @@
 #ifndef  __USB_HCD_SERVERS_H__
 #define  __USB_HCD_SERVERS_H__
 
-int sunxi_usb_disable_hcd (__u32 usbc_no);
-int sunxi_usb_enable_hcd (__u32 usbc_no);
+int sunxi_usb_disable_hcd(__u32 usbc_no);
+int sunxi_usb_enable_hcd(__u32 usbc_no);
 
 #endif 
 

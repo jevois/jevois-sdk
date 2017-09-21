@@ -15,9 +15,9 @@
 #include <linux/serial_reg.h>
 #include <asm/irc-regs.h>
 
-#define SERIAL_ICLK 33333333  /* the target serial input clock */
-#define UART0_BASE  0xfeff9c00
-#define UART1_BASE  0xfeff9c40
+#define SERIAL_ICLK	33333333	/* the target serial input clock */
+#define UART0_BASE	0xfeff9c00
+#define UART1_BASE	0xfeff9c40
 
 #define __get_UART0(R) ({ __reg(UART0_BASE + (R) * 8) >> 24; })
 #define __get_UART1(R) ({ __reg(UART1_BASE + (R) * 8) >> 24; })
@@ -31,14 +31,14 @@
 #define __set_UART1_IER(V) __set_UART1(UART_IER,(V))
 
 /* serial prescaler select register */
-#define __get_UCPSR() ({ *(volatile unsigned long *)(0xfeff9c90); })
-#define __set_UCPSR(V)  do { *(volatile unsigned long *)(0xfeff9c90) = (V); } while(0)
-#define UCPSR_SELECT0 0x07000000
-#define UCPSR_SELECT1 0x38000000
+#define __get_UCPSR()	({ *(volatile unsigned long *)(0xfeff9c90); })
+#define __set_UCPSR(V)	do { *(volatile unsigned long *)(0xfeff9c90) = (V); } while(0)
+#define UCPSR_SELECT0	0x07000000
+#define UCPSR_SELECT1	0x38000000
 
 /* serial prescaler base value register */
-#define __get_UCPVR() ({ *(volatile unsigned long *)(0xfeff9c98); mb(); })
-#define __set_UCPVR(V)  do { *(volatile unsigned long *)(0xfeff9c98) = (V) << 24; mb(); } while(0)
+#define __get_UCPVR()	({ *(volatile unsigned long *)(0xfeff9c98); mb(); })
+#define __set_UCPVR(V)	do { *(volatile unsigned long *)(0xfeff9c98) = (V) << 24; mb(); } while(0)
 
 
 #endif /* _ASM_SERIAL_REGS_H */

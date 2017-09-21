@@ -53,6 +53,6 @@
 */
 #define SYSLOG_PRI_MAX_LENGTH 5
 
-int do_syslog (int type, char __user * buf, int count, bool from_file);
+int do_syslog(int type, char __user *buf, int count, bool from_file);
 
 #endif /* _LINUX_SYSLOG_H */

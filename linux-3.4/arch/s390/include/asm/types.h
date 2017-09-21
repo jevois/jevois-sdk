@@ -14,9 +14,9 @@
 #ifndef __ASSEMBLY__
 
 /* A address type so that arithmetic can be done on it & it can be upgraded to
-   64 bit when necessary
+   64 bit when necessary 
 */
-typedef unsigned long addr_t;
+typedef unsigned long addr_t; 
 typedef __signed__ long saddr_t;
 
 #endif /* __ASSEMBLY__ */
@@ -30,11 +30,11 @@ typedef __signed__ long saddr_t;
 
 #ifndef __s390x__
 typedef union {
-  unsigned long long pair;
-  struct {
-    unsigned long even;
-    unsigned long odd;
-  } subreg;
+	unsigned long long pair;
+	struct {
+		unsigned long even;
+		unsigned long odd;
+	} subreg;
 } register_pair;
 
 #endif /* ! __s390x__   */

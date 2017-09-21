@@ -32,12 +32,12 @@
 
 /**********************************************************************/
 /*
- *  Global functions and variables.
+ *	Global functions and variables.
  */
 
-extern int  RarpTry;
+extern int	RarpTry;
 
-extern void RarpRequest (void); /* Send a RARP request */
+extern void RarpRequest (void);	/* Send a RARP request */
 
 /**********************************************************************/
 

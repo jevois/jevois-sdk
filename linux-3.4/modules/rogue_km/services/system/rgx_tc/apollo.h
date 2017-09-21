@@ -1,5 +1,5 @@
 /*************************************************************************/ /*!
-@File
+@File		
 @Title          System Description Header
 @Copyright      Copyright (c) Imagination Technologies Ltd. All Rights Reserved
 @Description    This header provides system-specific declarations and macros
@@ -44,79 +44,79 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #if !defined(__APOLLO_H__)
 #define __APOLLO_H__
 
-#define TC_SYSTEM_NAME      "Rogue Test Chip"
+#define TC_SYSTEM_NAME			"Rogue Test Chip"
 
 /* Valid values for the TC_MEMORY_CONFIG configuration option */
-#define TC_MEMORY_LOCAL     (1)
-#define TC_MEMORY_HOST      (2)
-#define TC_MEMORY_HYBRID    (3)
-#define TC_MEMORY_DIRECT_MAPPED   (4)
+#define TC_MEMORY_LOCAL			(1)
+#define TC_MEMORY_HOST			(2)
+#define TC_MEMORY_HYBRID		(3)
+#define TC_MEMORY_DIRECT_MAPPED		(4)
 
 #if defined(TC_APOLLO_ES2)
-/* TC ES2 */
-#define RGX_TC_CORE_CLOCK_SPEED    (90000000)
-#define RGX_TC_MEM_CLOCK_SPEED     (104000000)
-#define TCF_TEMP_SENSOR_SPI_OFFSET   0xe
-#define TCF_TEMP_SENSOR_TO_C(raw)    (((raw) * 248 / 4096) - 54)
+ /* TC ES2 */
+ #define RGX_TC_CORE_CLOCK_SPEED		(90000000)
+ #define RGX_TC_MEM_CLOCK_SPEED			(104000000)
+ #define TCF_TEMP_SENSOR_SPI_OFFSET 	0xe
+ #define TCF_TEMP_SENSOR_TO_C(raw) 		(((raw) * 248 / 4096) - 54)
 #else
-/* TC ES1 */
-#define RGX_TC_CORE_CLOCK_SPEED    (90000000)
-#define RGX_TC_MEM_CLOCK_SPEED     (65000000)
+ /* TC ES1 */
+ #define RGX_TC_CORE_CLOCK_SPEED		(90000000)
+ #define RGX_TC_MEM_CLOCK_SPEED			(65000000)
 #endif
 
 #if defined(SUPPORT_DISPLAY_CLASS) || defined(SUPPORT_DRM_DC_MODULE)
 /* Memory reserved for use by the PDP DC. */
-#define RGX_TC_RESERVE_DC_MEM_SIZE  (32 * 1024 * 1024)
+#define RGX_TC_RESERVE_DC_MEM_SIZE	(32 * 1024 * 1024)
 #endif
 
 #if defined(SUPPORT_ION)
 /* Memory reserved for use by ion. */
-#define RGX_TC_RESERVE_ION_MEM_SIZE (384 * 1024 * 1024)
+#define RGX_TC_RESERVE_ION_MEM_SIZE	(384 * 1024 * 1024)
 #endif
 
 
 /* Apollo reg on base register 0 */
-#define SYS_APOLLO_REG_PCI_BASENUM  (0)
-#define SYS_APOLLO_REG_REGION_SIZE  (0x00010000)
+#define SYS_APOLLO_REG_PCI_BASENUM	(0)
+#define SYS_APOLLO_REG_REGION_SIZE	(0x00010000)
 
-#define SYS_APOLLO_REG_SYS_OFFSET (0x0000)
-#define SYS_APOLLO_REG_SYS_SIZE   (0x0400)
+#define SYS_APOLLO_REG_SYS_OFFSET	(0x0000)
+#define SYS_APOLLO_REG_SYS_SIZE		(0x0400)
 
-#define SYS_APOLLO_REG_PLL_OFFSET (0x1000)
-#define SYS_APOLLO_REG_PLL_SIZE   (0x0400)
+#define SYS_APOLLO_REG_PLL_OFFSET	(0x1000)
+#define SYS_APOLLO_REG_PLL_SIZE		(0x0400)
 
-#define SYS_APOLLO_REG_HOST_OFFSET  (0x4050)
-#define SYS_APOLLO_REG_HOST_SIZE  (0x0014)
+#define SYS_APOLLO_REG_HOST_OFFSET	(0x4050)
+#define SYS_APOLLO_REG_HOST_SIZE	(0x0014)
 
-#define SYS_APOLLO_REG_PDP_OFFSET (0xC000)
-#define SYS_APOLLO_REG_PDP_SIZE   (0x0400)
+#define SYS_APOLLO_REG_PDP_OFFSET	(0xC000)
+#define SYS_APOLLO_REG_PDP_SIZE		(0x0400)
 
 /* Offsets for flashing Apollo PROMs from base 0 */
-#define APOLLO_FLASH_STAT_OFFSET  (0x4058)
-#define APOLLO_FLASH_DATA_WRITE_OFFSET  (0x4050)
-#define APOLLO_FLASH_RESET_OFFSET (0x4060)
+#define APOLLO_FLASH_STAT_OFFSET	(0x4058)
+#define APOLLO_FLASH_DATA_WRITE_OFFSET	(0x4050)
+#define APOLLO_FLASH_RESET_OFFSET	(0x4060)
 
-#define APOLLO_FLASH_FIFO_STATUS_MASK    (0xF)
-#define APOLLO_FLASH_FIFO_STATUS_SHIFT   (0)
+#define APOLLO_FLASH_FIFO_STATUS_MASK 	 (0xF)
+#define APOLLO_FLASH_FIFO_STATUS_SHIFT 	 (0)
 #define APOLLO_FLASH_PROGRAM_STATUS_MASK (0xF)
 #define APOLLO_FLASH_PROGAM_STATUS_SHIFT (16)
 
-#define APOLLO_FLASH_PROG_COMPLETE_BIT  (0x1)
-#define APOLLO_FLASH_PROG_PROGRESS_BIT  (0x2)
-#define APOLLO_FLASH_PROG_FAILED_BIT  (0x4)
-#define APOLLO_FLASH_INV_FILETYPE_BIT (0x8)
+#define APOLLO_FLASH_PROG_COMPLETE_BIT	(0x1)
+#define APOLLO_FLASH_PROG_PROGRESS_BIT	(0x2)
+#define APOLLO_FLASH_PROG_FAILED_BIT	(0x4)
+#define APOLLO_FLASH_INV_FILETYPE_BIT	(0x8)
 
-#define APOLLO_FLASH_FIFO_SIZE    (8)
+#define APOLLO_FLASH_FIFO_SIZE		(8)
 
 /* RGX reg on base register 1 */
-#define SYS_RGX_REG_PCI_BASENUM   (1)
-#define SYS_RGX_REG_REGION_SIZE   (0x00004000)
+#define SYS_RGX_REG_PCI_BASENUM		(1)
+#define SYS_RGX_REG_REGION_SIZE		(0x00004000)
 
 /* Device memory (including HP mapping) on base register 2 */
-#define SYS_DEV_MEM_PCI_BASENUM   (2)
+#define SYS_DEV_MEM_PCI_BASENUM		(2)
 /* number of bytes that are broken */
-#define SYS_DEV_MEM_BROKEN_BYTES  (1024 * 1024)
-#define SYS_DEV_MEM_REGION_SIZE   (0x40000000 - SYS_DEV_MEM_BROKEN_BYTES)
+#define SYS_DEV_MEM_BROKEN_BYTES	(1024 * 1024)
+#define SYS_DEV_MEM_REGION_SIZE		(0x40000000 - SYS_DEV_MEM_BROKEN_BYTES)
 
 #endif /* if !defined(__APOLLO_H__) */
 

@@ -3,19 +3,19 @@
 
 
 struct us122l {
-  struct usb_device * dev;
-  int     card_index;
-  int     stride;
-  struct usb_stream_kernel sk;
-  
-  struct mutex    mutex;
-  struct file  * first;
-  unsigned    second_periods_polled;
-  struct file  * master;
-  struct file  * slave;
-  struct list_head  midi_list;
-  
-  atomic_t    mmap_count;
+	struct usb_device	*dev;
+	int			card_index;
+	int			stride;
+	struct usb_stream_kernel sk;
+
+	struct mutex		mutex;
+	struct file		*first;
+	unsigned		second_periods_polled;
+	struct file		*master;
+	struct file		*slave;
+	struct list_head	midi_list;
+
+	atomic_t		mmap_count;
 };
 
 

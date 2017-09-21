@@ -12,27 +12,27 @@
 #define MAXREPLYQS              256
 
 /* Unit Attentions ASC's as defined for the MSA2012sa */
-#define POWER_OR_RESET      0x29
-#define STATE_CHANGED     0x2a
-#define UNIT_ATTENTION_CLEARED    0x2f
-#define LUN_FAILED      0x3e
-#define REPORT_LUNS_CHANGED   0x3f
+#define POWER_OR_RESET			0x29
+#define STATE_CHANGED			0x2a
+#define UNIT_ATTENTION_CLEARED		0x2f
+#define LUN_FAILED			0x3e
+#define REPORT_LUNS_CHANGED		0x3f
 
 /* Unit Attentions ASCQ's as defined for the MSA2012sa */
 
-/* These ASCQ's defined for ASC = POWER_OR_RESET */
-#define POWER_ON_RESET      0x00
-#define POWER_ON_REBOOT     0x01
-#define SCSI_BUS_RESET      0x02
-#define MSA_TARGET_RESET    0x03
-#define CONTROLLER_FAILOVER   0x04
-#define TRANSCEIVER_SE      0x05
-#define TRANSCEIVER_LVD     0x06
+	/* These ASCQ's defined for ASC = POWER_OR_RESET */
+#define POWER_ON_RESET			0x00
+#define POWER_ON_REBOOT			0x01
+#define SCSI_BUS_RESET			0x02
+#define MSA_TARGET_RESET		0x03
+#define CONTROLLER_FAILOVER		0x04
+#define TRANSCEIVER_SE			0x05
+#define TRANSCEIVER_LVD			0x06
 
-/* These ASCQ's defined for ASC = STATE_CHANGED */
-#define RESERVATION_PREEMPTED   0x03
-#define ASYM_ACCESS_CHANGED   0x06
-#define LUN_CAPACITY_CHANGED    0x09
+	/* These ASCQ's defined for ASC = STATE_CHANGED */
+#define RESERVATION_PREEMPTED		0x03
+#define ASYM_ACCESS_CHANGED		0x06
+#define LUN_CAPACITY_CHANGED		0x09
 
 /* config space register offsets */
 #define CFG_VENDORID            0x00
@@ -47,7 +47,7 @@
 #define I2O_INT_MASK            0x34
 #define I2O_IBPOST_Q            0x40
 #define I2O_OBPOST_Q            0x44
-#define I2O_DMA1_CFG    0x214
+#define I2O_DMA1_CFG		0x214
 
 /* Configuration Table */
 #define CFGTBL_ChangeReq        0x00000001l
@@ -65,24 +65,24 @@
 #define CFGTBL_BusType_Fibre2G  0x00000200l
 typedef struct _vals32
 {
-  __u32   lower;
-  __u32   upper;
+        __u32   lower;
+        __u32   upper;
 } vals32;
 
 typedef union _u64bit
 {
-  vals32 val32;
-  __u64  val;
+   vals32	val32;
+   __u64	val;
 } u64bit;
 
 /* Type defs used in the following structs */
-#define QWORD vals32
+#define QWORD vals32 
 
 /* STRUCTURES */
-#define CISS_MAX_PHYS_LUN 1024
+#define CISS_MAX_PHYS_LUN	1024
 /* SCSI-3 Cmmands */
 
-#pragma pack(1)
+#pragma pack(1)	
 
 #define CISS_INQUIRY 0x12
 /* Date returned */
@@ -101,11 +101,11 @@ typedef struct _ReportLUNdata_struct
   BYTE LUN[CISS_MAX_LUN][8];
 } ReportLunData_struct;
 
-#define CCISS_READ_CAPACITY 0x25 /* Read Capacity */
+#define CCISS_READ_CAPACITY 0x25 /* Read Capacity */ 
 typedef struct _ReadCapdata_struct
 {
-  BYTE total_size[4]; /* Total size in blocks */
-  BYTE block_size[4]; /* Size of blocks in bytes */
+  BYTE total_size[4];	/* Total size in blocks */
+  BYTE block_size[4];	/* Size of blocks in bytes */
 } ReadCapdata_struct;
 
 #define CCISS_READ_CAPACITY_16 0x9e /* Read Capacity 16 */
@@ -117,12 +117,12 @@ typedef struct _ReadCapdata_struct
 
 typedef struct _ReadCapdata_struct_16
 {
-  BYTE total_size[8];   /* Total size in blocks */
-  BYTE block_size[4];   /* Size of blocks in bytes */
-  BYTE prot_en: 1;      /* protection enable bit */
-  BYTE rto_en: 1;       /* reference tag own enable bit */
-  BYTE reserved: 6;     /* reserved bits */
-  BYTE reserved2[18];   /* reserved bytes per spec */
+	BYTE total_size[8];   /* Total size in blocks */
+	BYTE block_size[4];   /* Size of blocks in bytes */
+	BYTE prot_en:1;       /* protection enable bit */
+	BYTE rto_en:1;        /* reference tag own enable bit */
+	BYTE reserved:6;      /* reserved bits */
+	BYTE reserved2[18];   /* reserved bytes per spec */
 } ReadCapdata_struct_16;
 
 /* Define the supported read/write commands for cciss based controllers */
@@ -134,14 +134,14 @@ typedef struct _ReadCapdata_struct_16
 
 /* Define the CDB lengths supported by cciss based controllers */
 
-#define CDB_LEN10 10
-#define CDB_LEN16 16
+#define CDB_LEN10	10
+#define CDB_LEN16	16
 
 /* BMIC commands */
 #define BMIC_READ 0x26
 #define BMIC_WRITE 0x27
 #define BMIC_CACHE_FLUSH 0xc2
-#define CCISS_CACHE_FLUSH 0x01  /* C2 was already being used by CCISS */
+#define CCISS_CACHE_FLUSH 0x01	/* C2 was already being used by CCISS */
 
 #define CCISS_ABORT_MSG 0x00
 #define CCISS_RESET_MSG 0x01
@@ -174,10 +174,10 @@ typedef struct _SGDescriptor_struct {
 /* Command types */
 #define CMD_RWREQ       0x00
 #define CMD_IOCTL_PEND  0x01
-#define CMD_SCSI  0x03
-#define CMD_MSG_DONE  0x04
+#define CMD_SCSI	0x03
+#define CMD_MSG_DONE	0x04
 #define CMD_MSG_TIMEOUT 0x05
-#define CMD_MSG_STALE 0xff
+#define CMD_MSG_STALE	0xff
 
 /* This structure needs to be divisible by COMMANDLIST_ALIGNMENT
  * because low bits of the address are used to to indicate that
@@ -199,16 +199,16 @@ typedef struct _CommandList_struct {
   RequestBlock_struct      Request;
   ErrDescriptor_struct     ErrDesc;
   SGDescriptor_struct      SG[MAXSGENTRIES];
-  /* information associated with the command */
-  __u32        busaddr; /* physical address of this record */
-  ErrorInfo_struct   *   err_info; /* pointer to the allocated mem */
-  int        ctlr;
-  int        cmd_type;
-  long         cmdindex;
+	/* information associated with the command */ 
+  __u32			   busaddr; /* physical address of this record */
+  ErrorInfo_struct * 	   err_info; /* pointer to the allocated mem */ 
+  int			   ctlr;
+  int			   cmd_type; 
+  long			   cmdindex;
   struct list_head list;
-  struct request   *   rq;
-  struct completion * waiting;
-  int  retry_count;
+  struct request *	   rq;
+  struct completion *waiting;
+  int	 retry_count;
   void * scsi_cmd;
   char pad[PADSIZE];
 } CommandList_struct;
@@ -224,9 +224,9 @@ typedef struct _HostWrite_struct {
 typedef struct _CfgTable_struct {
   BYTE             Signature[4];
   DWORD            SpecValence;
-#define SIMPLE_MODE 0x02
-#define PERFORMANT_MODE 0x04
-#define MEMQ_MODE 0x08
+#define SIMPLE_MODE	0x02
+#define PERFORMANT_MODE	0x04
+#define MEMQ_MODE	0x08
   DWORD            TransportSupport;
   DWORD            TransportActive;
   HostWrite_struct HostWrite;
@@ -241,11 +241,11 @@ typedef struct _CfgTable_struct {
   DWORD            MaxPhysicalDrives;
   DWORD            MaxPhysicalDrivesPerLogicalUnit;
   DWORD            MaxPerformantModeCommands;
-  u8       reserved[0x78 - 0x58];
-  u32      misc_fw_support; /* offset 0x78 */
+  u8		   reserved[0x78 - 0x58];
+  u32		   misc_fw_support; /* offset 0x78 */
 #define MISC_FW_DOORBELL_RESET (0x02)
 #define MISC_FW_DOORBELL_RESET2 (0x10)
-  u8     driver_version[32];
+	u8	   driver_version[32];
 } CfgTable_struct;
 
 struct TransTable_struct {
@@ -265,5 +265,5 @@ struct TransTable_struct {
   u32 RepQAddr0High32;
 };
 
-#pragma pack()
+#pragma pack()	 
 #endif /* CCISS_CMD_H */

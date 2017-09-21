@@ -13,12 +13,12 @@
 #define __MACH_PUV3_BITFIELD_H__
 
 #ifndef __ASSEMBLY__
-#define UData(Data) ((unsigned long) (Data))
+#define UData(Data)	((unsigned long) (Data))
 #else
-#define UData(Data) (Data)
+#define UData(Data)	(Data)
 #endif
 
-#define FIELD(val, vmask, vshift) (((val) & ((UData(1) << (vmask)) - 1)) << (vshift))
-#define FMASK(vmask, vshift)    (((UData(1) << (vmask)) - 1) << (vshift))
+#define FIELD(val, vmask, vshift)	(((val) & ((UData(1) << (vmask)) - 1)) << (vshift))
+#define FMASK(vmask, vshift)		(((UData(1) << (vmask)) - 1) << (vshift))
 
 #endif /* __MACH_PUV3_BITFIELD_H__ */

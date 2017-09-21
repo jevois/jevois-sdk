@@ -14,7 +14,7 @@
 
 #define bfin_read_RSI_PWR_CTL()        bfin_read16(RSI_PWR_CONTROL)
 #define bfin_write_RSI_PWR_CTL(val)    bfin_write16(RSI_PWR_CONTROL, val)
-#define bfin_read_RSI_CLK_CTL()        bfin_read16(RSI_CLK_CONTROL)
+#define bfin_read_RSI_CLK_CTL()	       bfin_read16(RSI_CLK_CONTROL)
 #define bfin_write_RSI_CLK_CTL(val)    bfin_write16(RSI_CLK_CONTROL, val)
 #define bfin_read_RSI_ARGUMENT()       bfin_read32(RSI_ARGUMENT)
 #define bfin_write_RSI_ARGUMENT(val)   bfin_write32(RSI_ARGUMENT, val)

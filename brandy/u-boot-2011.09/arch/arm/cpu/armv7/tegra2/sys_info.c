@@ -25,11 +25,11 @@
 
 #ifdef CONFIG_DISPLAY_CPUINFO
 /* Print CPU information */
-int print_cpuinfo (void)
+int print_cpuinfo(void)
 {
-  puts ("TEGRA2\n");
-  
-  /* TBD: Add printf of major/minor rev info, stepping, etc. */
-  return 0;
+	puts("TEGRA2\n");
+
+	/* TBD: Add printf of major/minor rev info, stepping, etc. */
+	return 0;
 }
-#endif  /* CONFIG_DISPLAY_CPUINFO */
+#endif	/* CONFIG_DISPLAY_CPUINFO */

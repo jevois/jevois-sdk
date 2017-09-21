@@ -49,21 +49,21 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "lock_types.h"
 
 IMG_INTERNAL
-PVRSRV_ERROR OSLockCreate (POS_LOCK * phLock, LOCK_TYPE eLockType);
+PVRSRV_ERROR OSLockCreate(POS_LOCK *phLock, LOCK_TYPE eLockType);
 
 IMG_INTERNAL
-IMG_VOID OSLockDestroy (POS_LOCK hLock);
+IMG_VOID OSLockDestroy(POS_LOCK hLock);
 
 IMG_INTERNAL
-IMG_VOID OSLockAcquire (POS_LOCK hLock);
+IMG_VOID OSLockAcquire(POS_LOCK hLock);
 
 IMG_INTERNAL
-IMG_VOID OSLockRelease (POS_LOCK hLock);
+IMG_VOID OSLockRelease(POS_LOCK hLock);
 
 IMG_INTERNAL
-IMG_BOOL OSLockIsLocked (POS_LOCK hLock);
+IMG_BOOL OSLockIsLocked(POS_LOCK hLock);
 
 IMG_INTERNAL
-IMG_BOOL OSLockIsLockedByMe (POS_LOCK hLock);
+IMG_BOOL OSLockIsLockedByMe(POS_LOCK hLock);
 
-#endif  /* _LOCK_H_ */
+#endif	/* _LOCK_H_ */

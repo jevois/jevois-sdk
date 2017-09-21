@@ -3,8 +3,8 @@
 #include <asm/types.h>
 
 #ifndef __ASSEMBLY__
-extern u16 iop13xx_dev_id (void);
-extern void iop13xx_set_atu_mmr_bases (void);
+extern u16 iop13xx_dev_id(void);
+extern void iop13xx_set_atu_mmr_bases(void);
 #endif
 
 /*

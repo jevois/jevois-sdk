@@ -13,7 +13,7 @@
 
 struct physid_mask
 {
-  unsigned long mask[PHYSID_ARRAY_SIZE];
+	unsigned long mask[PHYSID_ARRAY_SIZE];
 };
 
 typedef struct physid_mask physid_mask_t;
@@ -34,19 +34,19 @@ typedef struct physid_mask physid_mask_t;
 #define physids_shift_left(d, s, n)             bitmap_shift_left((d).mask, (s).mask, n, MAX_APICS)
 #define physids_coerce(map)                     ((map).mask[0])
 
-#define physids_promote(physids)          \
-  ({                \
-    physid_mask_t __physid_mask = PHYSID_MASK_NONE;   \
-    __physid_mask.mask[0] = physids;      \
-    __physid_mask;            \
-  })
+#define physids_promote(physids)					\
+	({								\
+		physid_mask_t __physid_mask = PHYSID_MASK_NONE;		\
+		__physid_mask.mask[0] = physids;			\
+		__physid_mask;						\
+	})
 
-#define physid_mask_of_physid(physid)         \
-  ({                \
-    physid_mask_t __physid_mask = PHYSID_MASK_NONE;   \
-    physid_set(physid, __physid_mask);      \
-    __physid_mask;            \
-  })
+#define physid_mask_of_physid(physid)					\
+	({								\
+		physid_mask_t __physid_mask = PHYSID_MASK_NONE;		\
+		physid_set(physid, __physid_mask);			\
+		__physid_mask;						\
+	})
 
 #define PHYSID_MASK_ALL         { {[0 ... PHYSID_ARRAY_SIZE-1] = ~0UL} }
 #define PHYSID_MASK_NONE        { {[0 ... PHYSID_ARRAY_SIZE-1] = 0UL} }
@@ -58,60 +58,60 @@ extern physid_mask_t phys_cpu_present_map;
  * the real CPU ID <-> CPU # mapping.
  */
 extern volatile int cpu_2_physid[NR_CPUS];
-#define cpu_to_physid(cpu_id) cpu_2_physid[cpu_id]
+#define cpu_to_physid(cpu_id)	cpu_2_physid[cpu_id]
 
-#define raw_smp_processor_id()  (current_thread_info()->cpu)
+#define raw_smp_processor_id()	(current_thread_info()->cpu)
 
 extern cpumask_t cpu_callout_map;
 
-static __inline__ int hard_smp_processor_id (void)
+static __inline__ int hard_smp_processor_id(void)
 {
-  return (int) * (volatile long *) M32R_CPUID_PORTL;
+	return (int)*(volatile long *)M32R_CPUID_PORTL;
 }
 
-static __inline__ int cpu_logical_map (int cpu)
+static __inline__ int cpu_logical_map(int cpu)
 {
-  return cpu;
+	return cpu;
 }
 
-static __inline__ int cpu_number_map (int cpu)
+static __inline__ int cpu_number_map(int cpu)
 {
-  return cpu;
+	return cpu;
 }
 
-static __inline__ unsigned int num_booting_cpus (void)
+static __inline__ unsigned int num_booting_cpus(void)
 {
-  return cpumask_weight (&cpu_callout_map);
+	return cpumask_weight(&cpu_callout_map);
 }
 
-extern void smp_send_timer (void);
-extern unsigned long send_IPI_mask_phys (const cpumask_t *, int, int);
+extern void smp_send_timer(void);
+extern unsigned long send_IPI_mask_phys(const cpumask_t*, int, int);
 
-extern void arch_send_call_function_single_ipi (int cpu);
-extern void arch_send_call_function_ipi_mask (const struct cpumask * mask);
+extern void arch_send_call_function_single_ipi(int cpu);
+extern void arch_send_call_function_ipi_mask(const struct cpumask *mask);
 
-#endif  /* not __ASSEMBLY__ */
+#endif	/* not __ASSEMBLY__ */
 
-#define NO_PROC_ID (0xff) /* No processor magic marker */
+#define NO_PROC_ID (0xff)	/* No processor magic marker */
 
 /*
  * M32R-mp IPI
  */
-#define RESCHEDULE_IPI    (M32R_IRQ_IPI0-M32R_IRQ_IPI0)
-#define INVALIDATE_TLB_IPI  (M32R_IRQ_IPI1-M32R_IRQ_IPI0)
-#define CALL_FUNCTION_IPI (M32R_IRQ_IPI2-M32R_IRQ_IPI0)
-#define LOCAL_TIMER_IPI   (M32R_IRQ_IPI3-M32R_IRQ_IPI0)
-#define INVALIDATE_CACHE_IPI  (M32R_IRQ_IPI4-M32R_IRQ_IPI0)
-#define CPU_BOOT_IPI    (M32R_IRQ_IPI5-M32R_IRQ_IPI0)
-#define CALL_FUNC_SINGLE_IPI  (M32R_IRQ_IPI6-M32R_IRQ_IPI0)
+#define RESCHEDULE_IPI		(M32R_IRQ_IPI0-M32R_IRQ_IPI0)
+#define INVALIDATE_TLB_IPI	(M32R_IRQ_IPI1-M32R_IRQ_IPI0)
+#define CALL_FUNCTION_IPI	(M32R_IRQ_IPI2-M32R_IRQ_IPI0)
+#define LOCAL_TIMER_IPI		(M32R_IRQ_IPI3-M32R_IRQ_IPI0)
+#define INVALIDATE_CACHE_IPI	(M32R_IRQ_IPI4-M32R_IRQ_IPI0)
+#define CPU_BOOT_IPI		(M32R_IRQ_IPI5-M32R_IRQ_IPI0)
+#define CALL_FUNC_SINGLE_IPI	(M32R_IRQ_IPI6-M32R_IRQ_IPI0)
 
-#define IPI_SHIFT (0)
-#define NR_IPIS   (8)
+#define IPI_SHIFT	(0)
+#define NR_IPIS		(8)
 
-#else /* CONFIG_SMP */
+#else	/* CONFIG_SMP */
 
-#define hard_smp_processor_id()   0
+#define hard_smp_processor_id()		0
 
 #endif /* CONFIG_SMP */
 
-#endif  /* _ASM_M32R_SMP_H */
+#endif	/* _ASM_M32R_SMP_H */

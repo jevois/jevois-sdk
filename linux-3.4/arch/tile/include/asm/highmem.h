@@ -29,20 +29,20 @@
 /* declarations for highmem.c */
 extern unsigned long highstart_pfn, highend_pfn;
 
-extern pte_t * pkmap_page_table;
+extern pte_t *pkmap_page_table;
 
 /*
  * Ordering is:
  *
  * FIXADDR_TOP
- *      fixed_addresses
+ *			fixed_addresses
  * FIXADDR_START
- *      temp fixed addresses
+ *			temp fixed addresses
  * FIXADDR_BOOT_START
- *      Persistent kmap area
+ *			Persistent kmap area
  * PKMAP_BASE
  * VMALLOC_END
- *      Vmalloc area
+ *			Vmalloc area
  * VMALLOC_START
  * high_memory
  */
@@ -50,23 +50,23 @@ extern pte_t * pkmap_page_table;
 #define PKMAP_NR(virt)  ((virt-PKMAP_BASE) >> PAGE_SHIFT)
 #define PKMAP_ADDR(nr)  (PKMAP_BASE + ((nr) << PAGE_SHIFT))
 
-void * kmap_high (struct page * page);
-void kunmap_high (struct page * page);
-void * kmap (struct page * page);
-void kunmap (struct page * page);
-void * kmap_fix_kpte (struct page * page, int finished);
+void *kmap_high(struct page *page);
+void kunmap_high(struct page *page);
+void *kmap(struct page *page);
+void kunmap(struct page *page);
+void *kmap_fix_kpte(struct page *page, int finished);
 
 /* This macro is used only in map_new_virtual() to map "page". */
 #define kmap_prot page_to_kpgprot(page)
 
-void * kmap_atomic (struct page * page);
-void __kunmap_atomic (void * kvaddr);
-void * kmap_atomic_pfn (unsigned long pfn);
-void * kmap_atomic_prot_pfn (unsigned long pfn, pgprot_t prot);
-struct page * kmap_atomic_to_page (void * ptr);
-void * kmap_atomic_prot (struct page * page, pgprot_t prot);
-void kmap_atomic_fix_kpte (struct page * page, int finished);
+void *kmap_atomic(struct page *page);
+void __kunmap_atomic(void *kvaddr);
+void *kmap_atomic_pfn(unsigned long pfn);
+void *kmap_atomic_prot_pfn(unsigned long pfn, pgprot_t prot);
+struct page *kmap_atomic_to_page(void *ptr);
+void *kmap_atomic_prot(struct page *page, pgprot_t prot);
+void kmap_atomic_fix_kpte(struct page *page, int finished);
 
-#define flush_cache_kmaps() do { } while (0)
+#define flush_cache_kmaps()	do { } while (0)
 
 #endif /* _ASM_TILE_HIGHMEM_H */

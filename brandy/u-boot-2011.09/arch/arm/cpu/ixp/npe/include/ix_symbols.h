@@ -1,16 +1,16 @@
 /**
  * ============================================================================
  * = COPYRIGHT
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +23,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -36,7 +36,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  * = PRODUCT
@@ -46,14 +46,14 @@
  *      ix_symbols.h
  *
  * = DESCRIPTION
- *      This file declares all the global preprocessor symbols required by
+ *      This file declares all the global preprocessor symbols required by 
  *      the IXA SDK Framework API.
  *
  * = AUTHOR
  *      Intel Corporation
  *
  * = CHANGE HISTORY
- *      4/23/2002 10:41:13 AM - creation time
+ *      4/23/2002 10:41:13 AM - creation time 
  * ============================================================================
  */
 
@@ -78,7 +78,7 @@ extern "C"
 #    elif defined(_IX_LIB_INTERFACE_IMPORT_DLL_)
 #        define IX_EXPORT_FUNCTION __declspec( dllimport )
 #    else
-#        define IX_EXPORT_FUNCTION extern
+#        define IX_EXPORT_FUNCTION extern 
 #    endif
 #elif (_IX_OS_TYPE_ == _IX_OS_WINCE_)
 #    define IX_EXPORT_FUNCTION __declspec(dllexport)
@@ -91,7 +91,7 @@ extern "C"
  * This symbols should be defined when we want to build for a multithreaded environment
  */
 #define _IX_MULTI_THREADED_     1
-
+    
 
 /**
  * This symbol should be defined in the case we to buils for a multithreaded environment

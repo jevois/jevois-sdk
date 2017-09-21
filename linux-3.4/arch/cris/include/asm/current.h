@@ -5,11 +5,11 @@
 
 struct task_struct;
 
-static inline struct task_struct * get_current (void)
+static inline struct task_struct * get_current(void)
 {
-  return current_thread_info()->task;
+        return current_thread_info()->task;
 }
-
+ 
 #define current get_current()
 
 #endif /* !(_CRIS_CURRENT_H) */

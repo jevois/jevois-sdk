@@ -22,11 +22,11 @@
 #include "include/ipc.h"
 
 /* call back to audit ptrace fields */
-static void audit_cb (struct audit_buffer * ab, void * va)
+static void audit_cb(struct audit_buffer *ab, void *va)
 {
-  struct common_audit_data * sa = va;
-  audit_log_format (ab, " target=");
-  audit_log_untrustedstring (ab, sa->aad->target);
+	struct common_audit_data *sa = va;
+	audit_log_format(ab, " target=");
+	audit_log_untrustedstring(ab, sa->aad->target);
 }
 
 /**
@@ -37,19 +37,19 @@ static void audit_cb (struct audit_buffer * ab, void * va)
  *
  * Returns: %0 or error code
  */
-static int aa_audit_ptrace (struct aa_profile * profile,
-                            struct aa_profile * target, int error)
+static int aa_audit_ptrace(struct aa_profile *profile,
+			   struct aa_profile *target, int error)
 {
-  struct common_audit_data sa;
-  struct apparmor_audit_data aad = {0,};
-  COMMON_AUDIT_DATA_INIT (&sa, NONE);
-  sa.aad = &aad;
-  aad.op = OP_PTRACE;
-  aad.target = target;
-  aad.error = error;
-  
-  return aa_audit (AUDIT_APPARMOR_AUTO, profile, GFP_ATOMIC, &sa,
-                   audit_cb);
+	struct common_audit_data sa;
+	struct apparmor_audit_data aad = {0,};
+	COMMON_AUDIT_DATA_INIT(&sa, NONE);
+	sa.aad = &aad;
+	aad.op = OP_PTRACE;
+	aad.target = target;
+	aad.error = error;
+
+	return aa_audit(AUDIT_APPARMOR_AUTO, profile, GFP_ATOMIC, &sa,
+			audit_cb);
 }
 
 /**
@@ -61,18 +61,18 @@ static int aa_audit_ptrace (struct aa_profile * profile,
  *
  * Returns: %0 else error code if permission denied or error
  */
-int aa_may_ptrace (struct task_struct * tracer_task, struct aa_profile * tracer,
-                   struct aa_profile * tracee, unsigned int mode)
+int aa_may_ptrace(struct task_struct *tracer_task, struct aa_profile *tracer,
+		  struct aa_profile *tracee, unsigned int mode)
 {
-  /* TODO: currently only based on capability, not extended ptrace
-   *       rules,
-   *       Test mode for PTRACE_MODE_READ || PTRACE_MODE_ATTACH
-   */
-  
-  if (unconfined (tracer) || tracer == tracee)
-  { return 0; }
-  /* log this capability request */
-  return aa_capable (tracer_task, tracer, CAP_SYS_PTRACE, 1);
+	/* TODO: currently only based on capability, not extended ptrace
+	 *       rules,
+	 *       Test mode for PTRACE_MODE_READ || PTRACE_MODE_ATTACH
+	 */
+
+	if (unconfined(tracer) || tracer == tracee)
+		return 0;
+	/* log this capability request */
+	return aa_capable(tracer_task, tracer, CAP_SYS_PTRACE, 1);
 }
 
 /**
@@ -83,35 +83,35 @@ int aa_may_ptrace (struct task_struct * tracer_task, struct aa_profile * tracer,
  *
  * Returns: %0 else error code if permission denied or error
  */
-int aa_ptrace (struct task_struct * tracer, struct task_struct * tracee,
-               unsigned int mode)
+int aa_ptrace(struct task_struct *tracer, struct task_struct *tracee,
+	      unsigned int mode)
 {
-  /*
-   * tracer can ptrace tracee when
-   * - tracer is unconfined ||
-   *   - tracer is in complain mode
-   *   - tracer has rules allowing it to trace tracee currently this is:
-   *       - confined by the same profile ||
-   *       - tracer profile has CAP_SYS_PTRACE
-   */
-  
-  struct aa_profile * tracer_p;
-  /* cred released below */
-  const struct cred * cred = get_task_cred (tracer);
-  int error = 0;
-  tracer_p = aa_cred_profile (cred);
-  
-  if (!unconfined (tracer_p) ) {
-    /* lcred released below */
-    const struct cred * lcred = get_task_cred (tracee);
-    struct aa_profile * tracee_p = aa_cred_profile (lcred);
-    
-    error = aa_may_ptrace (tracer, tracer_p, tracee_p, mode);
-    error = aa_audit_ptrace (tracer_p, tracee_p, error);
-    
-    put_cred (lcred);
-  }
-  put_cred (cred);
-  
-  return error;
+	/*
+	 * tracer can ptrace tracee when
+	 * - tracer is unconfined ||
+	 *   - tracer is in complain mode
+	 *   - tracer has rules allowing it to trace tracee currently this is:
+	 *       - confined by the same profile ||
+	 *       - tracer profile has CAP_SYS_PTRACE
+	 */
+
+	struct aa_profile *tracer_p;
+	/* cred released below */
+	const struct cred *cred = get_task_cred(tracer);
+	int error = 0;
+	tracer_p = aa_cred_profile(cred);
+
+	if (!unconfined(tracer_p)) {
+		/* lcred released below */
+		const struct cred *lcred = get_task_cred(tracee);
+		struct aa_profile *tracee_p = aa_cred_profile(lcred);
+
+		error = aa_may_ptrace(tracer, tracer_p, tracee_p, mode);
+		error = aa_audit_ptrace(tracer_p, tracee_p, error);
+
+		put_cred(lcred);
+	}
+	put_cred(cred);
+
+	return error;
 }

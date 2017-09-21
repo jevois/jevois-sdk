@@ -19,7 +19,7 @@
 
 #ifdef CONFIG_SCSI_OSD_DEBUG
 #define OSD_DEBUG(fmt, a...) \
-  printk(KERN_NOTICE "osd @%s:%d: " fmt, __func__, __LINE__, ##a)
+	printk(KERN_NOTICE "osd @%s:%d: " fmt, __func__, __LINE__, ##a)
 #else
 #define OSD_DEBUG(fmt, a...) do {} while (0)
 #endif

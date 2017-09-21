@@ -1,13 +1,13 @@
 /*
  * Copyright (C) 2004,2005  ADDI-DATA GmbH for the source code of this module.
  *
- *  ADDI-DATA GmbH
- *  Dieselstrasse 3
- *  D-77833 Ottersweier
- *  Tel: +19(0)7223/9493-0
- *  Fax: +49(0)7223/9493-92
- *  http://www.addi-data.com
- *  info@addi-data.com
+ *	ADDI-DATA GmbH
+ *	Dieselstrasse 3
+ *	D-77833 Ottersweier
+ *	Tel: +19(0)7223/9493-0
+ *	Fax: +49(0)7223/9493-92
+ *	http://www.addi-data.com
+ *	info@addi-data.com
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -28,8 +28,8 @@
 #define APCI1564_DIGITAL_IP_IRQ                 16
 
 /* Output defines */
-#define APCI1564_DIGITAL_OP                   0x18
-#define APCI1564_DIGITAL_OP_RW                0
+#define APCI1564_DIGITAL_OP                 	0x18
+#define APCI1564_DIGITAL_OP_RW               	0
 #define APCI1564_DIGITAL_OP_INTERRUPT           4
 #define APCI1564_DIGITAL_OP_IRQ                 12
 
@@ -83,39 +83,39 @@
 /*
 * DI for di read
 */
-int i_APCI1564_ConfigDigitalInput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                   struct comedi_insn * insn, unsigned int * data);
-int i_APCI1564_Read1DigitalInput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                  struct comedi_insn * insn, unsigned int * data);
-int i_APCI1564_ReadMoreDigitalInput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                     struct comedi_insn * insn, unsigned int * data);
+int i_APCI1564_ConfigDigitalInput(struct comedi_device *dev, struct comedi_subdevice *s,
+				  struct comedi_insn *insn, unsigned int *data);
+int i_APCI1564_Read1DigitalInput(struct comedi_device *dev, struct comedi_subdevice *s,
+				 struct comedi_insn *insn, unsigned int *data);
+int i_APCI1564_ReadMoreDigitalInput(struct comedi_device *dev, struct comedi_subdevice *s,
+				    struct comedi_insn *insn, unsigned int *data);
 
 /* DO */
-int i_APCI1564_ConfigDigitalOutput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                    struct comedi_insn * insn, unsigned int * data);
-int i_APCI1564_WriteDigitalOutput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                   struct comedi_insn * insn, unsigned int * data);
-int i_APCI1564_ReadDigitalOutput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                  struct comedi_insn * insn, unsigned int * data);
-int i_APCI1564_ReadInterruptStatus (struct comedi_device * dev, struct comedi_subdevice * s,
-                                    struct comedi_insn * insn, unsigned int * data);
+int i_APCI1564_ConfigDigitalOutput(struct comedi_device *dev, struct comedi_subdevice *s,
+				   struct comedi_insn *insn, unsigned int *data);
+int i_APCI1564_WriteDigitalOutput(struct comedi_device *dev, struct comedi_subdevice *s,
+				  struct comedi_insn *insn, unsigned int *data);
+int i_APCI1564_ReadDigitalOutput(struct comedi_device *dev, struct comedi_subdevice *s,
+				 struct comedi_insn *insn, unsigned int *data);
+int i_APCI1564_ReadInterruptStatus(struct comedi_device *dev, struct comedi_subdevice *s,
+				   struct comedi_insn *insn, unsigned int *data);
 
 /*
 * TIMER timer value is passed as u seconds
 */
-int i_APCI1564_ConfigTimerCounterWatchdog (struct comedi_device * dev,
-    struct comedi_subdevice * s,
-    struct comedi_insn * insn, unsigned int * data);
-int i_APCI1564_StartStopWriteTimerCounterWatchdog (struct comedi_device * dev,
-    struct comedi_subdevice * s,
-    struct comedi_insn * insn,
-    unsigned int * data);
-int i_APCI1564_ReadTimerCounterWatchdog (struct comedi_device * dev,
-    struct comedi_subdevice * s,
-    struct comedi_insn * insn, unsigned int * data);
+int i_APCI1564_ConfigTimerCounterWatchdog(struct comedi_device *dev,
+					  struct comedi_subdevice *s,
+					  struct comedi_insn *insn, unsigned int *data);
+int i_APCI1564_StartStopWriteTimerCounterWatchdog(struct comedi_device *dev,
+						  struct comedi_subdevice *s,
+						  struct comedi_insn *insn,
+						  unsigned int *data);
+int i_APCI1564_ReadTimerCounterWatchdog(struct comedi_device *dev,
+					struct comedi_subdevice *s,
+					struct comedi_insn *insn, unsigned int *data);
 
 /* intERRUPT */
-static void v_APCI1564_Interrupt (int irq, void * d);
+static void v_APCI1564_Interrupt(int irq, void *d);
 
 /* RESET */
-int i_APCI1564_Reset (struct comedi_device * dev);
+int i_APCI1564_Reset(struct comedi_device *dev);

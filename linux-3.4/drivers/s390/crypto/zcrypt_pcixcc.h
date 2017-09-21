@@ -5,7 +5,7 @@
  *
  *  Copyright (C)  2001, 2006 IBM Corporation
  *  Author(s): Robert Burroughs
- *         Eric Rossman (edrossma@us.ibm.com)
+ *	       Eric Rossman (edrossma@us.ibm.com)
  *
  *  Hotplug & misc device support: Jochen Roehrig (roehrig@de.ibm.com)
  *  Major cleanup & driver split: Martin Schwidefsky <schwidefsky@de.ibm.com>
@@ -28,7 +28,7 @@
 #ifndef _ZCRYPT_PCIXCC_H_
 #define _ZCRYPT_PCIXCC_H_
 
-int zcrypt_pcixcc_init (void);
-void zcrypt_pcixcc_exit (void);
+int zcrypt_pcixcc_init(void);
+void zcrypt_pcixcc_exit(void);
 
 #endif /* _ZCRYPT_PCIXCC_H_ */

@@ -11,7 +11,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -29,9 +29,9 @@
  */
 typedef enum tag_CSI_SUBDEV_CMD
 {
-  CSI_SUBDEV_CMD_GET_INFO = 0x01,
-  CSI_SUBDEV_CMD_SET_INFO = 0x02,
-} __csi_subdev_cmd_t;
+	CSI_SUBDEV_CMD_GET_INFO = 0x01,
+	CSI_SUBDEV_CMD_SET_INFO = 0x02,
+}__csi_subdev_cmd_t;
 
 /*
  * control id
@@ -39,14 +39,14 @@ typedef enum tag_CSI_SUBDEV_CMD
 
 typedef enum tag_CSI_SUBDEV_CTL_ID
 {
-  CSI_SUBDEV_INIT_FULL = 0x01,
-  CSI_SUBDEV_INIT_SIMP = 0x02,
-  CSI_SUBDEV_RST_ON = 0x03,
-  CSI_SUBDEV_RST_OFF = 0x04,
-  CSI_SUBDEV_RST_PUL = 0x05,
-  CSI_SUBDEV_STBY_ON = 0x06,
-  CSI_SUBDEV_STBY_OFF = 0x07,
-  CSI_SUBDEV_PWR_ON = 0x08,
-  CSI_SUBDEV_PWR_OFF = 0x09,
-} __csi_subdev_ctl_id_t;
+	CSI_SUBDEV_INIT_FULL = 0x01,
+	CSI_SUBDEV_INIT_SIMP = 0x02,
+	CSI_SUBDEV_RST_ON = 0x03,
+	CSI_SUBDEV_RST_OFF = 0x04,
+	CSI_SUBDEV_RST_PUL = 0x05,
+	CSI_SUBDEV_STBY_ON = 0x06,
+	CSI_SUBDEV_STBY_OFF = 0x07,
+	CSI_SUBDEV_PWR_ON = 0x08,
+	CSI_SUBDEV_PWR_OFF = 0x09,
+}__csi_subdev_ctl_id_t;
 #endif

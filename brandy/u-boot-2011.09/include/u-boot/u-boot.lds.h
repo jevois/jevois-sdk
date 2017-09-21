@@ -11,7 +11,7 @@
 
 /* See if the linker version is at least the specified version */
 #define LD_AT_LEAST(major, minor) \
-  ((major > LD_MAJOR) || (major == LD_MAJOR && minor <= LD_MINOR))
+	((major > LD_MAJOR) || (major == LD_MAJOR && minor <= LD_MINOR))
 
 /*
  * Linker versions prior to 2.16 don't understand the builtin

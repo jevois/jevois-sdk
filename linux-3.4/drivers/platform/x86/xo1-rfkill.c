@@ -15,60 +15,60 @@
 
 #include <asm/olpc.h>
 
-static int rfkill_set_block (void * data, bool blocked)
+static int rfkill_set_block(void *data, bool blocked)
 {
-  unsigned char cmd;
-  if (blocked)
-  { cmd = EC_WLAN_ENTER_RESET; }
-  else
-  { cmd = EC_WLAN_LEAVE_RESET; }
-  
-  return olpc_ec_cmd (cmd, NULL, 0, NULL, 0);
+	unsigned char cmd;
+	if (blocked)
+		cmd = EC_WLAN_ENTER_RESET;
+	else
+		cmd = EC_WLAN_LEAVE_RESET;
+
+	return olpc_ec_cmd(cmd, NULL, 0, NULL, 0);
 }
 
 static const struct rfkill_ops rfkill_ops = {
-  .set_block = rfkill_set_block,
+	.set_block = rfkill_set_block,
 };
 
-static int __devinit xo1_rfkill_probe (struct platform_device * pdev)
+static int __devinit xo1_rfkill_probe(struct platform_device *pdev)
 {
-  struct rfkill * rfk;
-  int r;
-  
-  rfk = rfkill_alloc (pdev->name, &pdev->dev, RFKILL_TYPE_WLAN,
-                      &rfkill_ops, NULL);
-  if (!rfk)
-  { return -ENOMEM; }
-  
-  r = rfkill_register (rfk);
-  if (r) {
-    rfkill_destroy (rfk);
-    return r;
-  }
-  
-  platform_set_drvdata (pdev, rfk);
-  return 0;
+	struct rfkill *rfk;
+	int r;
+
+	rfk = rfkill_alloc(pdev->name, &pdev->dev, RFKILL_TYPE_WLAN,
+			   &rfkill_ops, NULL);
+	if (!rfk)
+		return -ENOMEM;
+
+	r = rfkill_register(rfk);
+	if (r) {
+		rfkill_destroy(rfk);
+		return r;
+	}
+
+	platform_set_drvdata(pdev, rfk);
+	return 0;
 }
 
-static int __devexit xo1_rfkill_remove (struct platform_device * pdev)
+static int __devexit xo1_rfkill_remove(struct platform_device *pdev)
 {
-  struct rfkill * rfk = platform_get_drvdata (pdev);
-  rfkill_unregister (rfk);
-  rfkill_destroy (rfk);
-  return 0;
+	struct rfkill *rfk = platform_get_drvdata(pdev);
+	rfkill_unregister(rfk);
+	rfkill_destroy(rfk);
+	return 0;
 }
 
 static struct platform_driver xo1_rfkill_driver = {
-  .driver = {
-    .name = "xo1-rfkill",
-    .owner = THIS_MODULE,
-  },
-  .probe    = xo1_rfkill_probe,
-  .remove   = __devexit_p (xo1_rfkill_remove),
+	.driver = {
+		.name = "xo1-rfkill",
+		.owner = THIS_MODULE,
+	},
+	.probe		= xo1_rfkill_probe,
+	.remove		= __devexit_p(xo1_rfkill_remove),
 };
 
-module_platform_driver (xo1_rfkill_driver);
+module_platform_driver(xo1_rfkill_driver);
 
-MODULE_AUTHOR ("Daniel Drake <dsd@laptop.org>");
-MODULE_LICENSE ("GPL");
-MODULE_ALIAS ("platform:xo1-rfkill");
+MODULE_AUTHOR("Daniel Drake <dsd@laptop.org>");
+MODULE_LICENSE("GPL");
+MODULE_ALIAS("platform:xo1-rfkill");

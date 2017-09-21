@@ -18,9 +18,9 @@
 #include <linux/cpufreq.h>
 
 struct davinci_cpufreq_config {
-  struct cpufreq_frequency_table * freq_table;
-  int (*set_voltage) (unsigned int index);
-  int (*init) (void);
+	struct cpufreq_frequency_table *freq_table;
+	int (*set_voltage) (unsigned int index);
+	int (*init) (void);
 };
 
 #endif

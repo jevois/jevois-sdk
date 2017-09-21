@@ -47,134 +47,134 @@
 /*
  * Interrupt mapping
  */
-#define INTA    IRQ_ROADRUNNER_PCI_INTA
-#define INTB    IRQ_ROADRUNNER_PCI_INTB
-#define INTC    IRQ_ROADRUNNER_PCI_INTC
-#define INTD    IRQ_ROADRUNNER_PCI_INTD
+#define INTA		IRQ_ROADRUNNER_PCI_INTA
+#define INTB		IRQ_ROADRUNNER_PCI_INTB
+#define INTC		IRQ_ROADRUNNER_PCI_INTC
+#define INTD		IRQ_ROADRUNNER_PCI_INTD
 
-#define INTC_PIN  IXP23XX_GPIO_PIN_11
-#define INTD_PIN  IXP23XX_GPIO_PIN_12
+#define INTC_PIN	IXP23XX_GPIO_PIN_11
+#define INTD_PIN	IXP23XX_GPIO_PIN_12
 
-static int __init roadrunner_map_irq (const struct pci_dev * dev, u8 idsel,
-                                      u8 pin)
+static int __init roadrunner_map_irq(const struct pci_dev *dev, u8 idsel,
+	u8 pin)
 {
-  static int pci_card_slot_irq[] = {INTB, INTC, INTD, INTA};
-  static int pmc_card_slot_irq[] = {INTA, INTB, INTC, INTD};
-  static int usb_irq[] = {INTB, INTC, INTD, -1};
-  static int mini_pci_1_irq[] = {INTB, INTC, -1, -1};
-  static int mini_pci_2_irq[] = {INTC, INTD, -1, -1};
-  
-  switch (dev->bus->number) {
-  case 0:
-    switch (dev->devfn) {
-    case 0x0:
-      break;
-    case 0x8:
-      return pci_card_slot_irq[pin - 1];
-    case 0x10:
-      return pmc_card_slot_irq[pin - 1];
-    case 0x18:
-      break;
-    case 0x20:
-      break;
-    default:
-      return NO_IRQ;
-    }
-    break;
-    
-  case 1:
-    switch (dev->devfn) {
-    case 0x0:
-      return (pin == 1) ? INTC : -1;
-    case 0x8:
-    case 0x9:
-    case 0xa:
-      return usb_irq[pin - 1];
-    case 0x10:
-      return mini_pci_1_irq[pin - 1];
-    case 0x18:
-      return mini_pci_2_irq[pin - 1];
-    case 0x20:
-      return (pin == 1) ? INTA : -1;
-    default:
-      return NO_IRQ;
-    }
-    break;
-    
-  default:
-    return NO_IRQ;
-  }
-  
-  return NO_IRQ;
+	static int pci_card_slot_irq[] = {INTB, INTC, INTD, INTA};
+	static int pmc_card_slot_irq[] = {INTA, INTB, INTC, INTD};
+	static int usb_irq[] = {INTB, INTC, INTD, -1};
+	static int mini_pci_1_irq[] = {INTB, INTC, -1, -1};
+	static int mini_pci_2_irq[] = {INTC, INTD, -1, -1};
+
+	switch(dev->bus->number) {
+		case 0:
+			switch(dev->devfn) {
+			case 0x0:
+				break;
+			case 0x8:
+				return pci_card_slot_irq[pin - 1];
+			case 0x10:
+				return pmc_card_slot_irq[pin - 1];
+			case 0x18:
+				break;
+			case 0x20:
+				break;
+			default:
+				return NO_IRQ;
+			}
+			break;
+
+		case 1:
+			switch(dev->devfn) {
+			case 0x0:
+				return (pin == 1) ? INTC : -1;
+			case 0x8:
+			case 0x9:
+			case 0xa:
+				return usb_irq[pin - 1];
+			case 0x10:
+				return mini_pci_1_irq[pin-1];
+			case 0x18:
+				return mini_pci_2_irq[pin-1];
+			case 0x20:
+				return (pin == 1) ? INTA : -1;
+			default:
+				return NO_IRQ;
+			}
+			break;
+
+		default:
+			return NO_IRQ;
+	}
+
+	return NO_IRQ;
 }
 
-static void __init roadrunner_pci_preinit (void)
+static void __init roadrunner_pci_preinit(void)
 {
-  irq_set_irq_type (IRQ_ROADRUNNER_PCI_INTC, IRQ_TYPE_LEVEL_LOW);
-  irq_set_irq_type (IRQ_ROADRUNNER_PCI_INTD, IRQ_TYPE_LEVEL_LOW);
-  
-  ixp23xx_pci_preinit();
+	irq_set_irq_type(IRQ_ROADRUNNER_PCI_INTC, IRQ_TYPE_LEVEL_LOW);
+	irq_set_irq_type(IRQ_ROADRUNNER_PCI_INTD, IRQ_TYPE_LEVEL_LOW);
+
+	ixp23xx_pci_preinit();
 }
 
 static struct hw_pci roadrunner_pci __initdata = {
-  .nr_controllers = 1,
-  .preinit  = roadrunner_pci_preinit,
-  .setup    = ixp23xx_pci_setup,
-  .scan   = ixp23xx_pci_scan_bus,
-  .map_irq  = roadrunner_map_irq,
+	.nr_controllers	= 1,
+	.preinit	= roadrunner_pci_preinit,
+	.setup		= ixp23xx_pci_setup,
+	.scan		= ixp23xx_pci_scan_bus,
+	.map_irq	= roadrunner_map_irq,
 };
 
-static int __init roadrunner_pci_init (void)
+static int __init roadrunner_pci_init(void)
 {
-  if (machine_is_roadrunner() )
-  { pci_common_init (&roadrunner_pci); }
-  
-  return 0;
+	if (machine_is_roadrunner())
+		pci_common_init(&roadrunner_pci);
+
+	return 0;
 };
 
-subsys_initcall (roadrunner_pci_init);
+subsys_initcall(roadrunner_pci_init);
 
 static struct physmap_flash_data roadrunner_flash_data = {
-  .width    = 2,
+	.width		= 2,
 };
 
 static struct resource roadrunner_flash_resource = {
-  .start    = 0x90000000,
-  .end    = 0x93ffffff,
-  .flags    = IORESOURCE_MEM,
+	.start		= 0x90000000,
+	.end		= 0x93ffffff,
+	.flags		= IORESOURCE_MEM,
 };
 
 static struct platform_device roadrunner_flash = {
-  .name   = "physmap-flash",
-  .id   = 0,
-  .dev    = {
-    .platform_data  = &roadrunner_flash_data,
-  },
-  .num_resources  = 1,
-  .resource = &roadrunner_flash_resource,
+	.name		= "physmap-flash",
+	.id		= 0,
+	.dev		= {
+		.platform_data	= &roadrunner_flash_data,
+	},
+	.num_resources	= 1,
+	.resource	= &roadrunner_flash_resource,
 };
 
-static void __init roadrunner_init (void)
+static void __init roadrunner_init(void)
 {
-  platform_device_register (&roadrunner_flash);
-  
-  /*
-   * Mark flash as writeable
-   */
-  IXP23XX_EXP_CS0[0] |= IXP23XX_FLASH_WRITABLE;
-  IXP23XX_EXP_CS0[1] |= IXP23XX_FLASH_WRITABLE;
-  IXP23XX_EXP_CS0[2] |= IXP23XX_FLASH_WRITABLE;
-  IXP23XX_EXP_CS0[3] |= IXP23XX_FLASH_WRITABLE;
-  
-  ixp23xx_sys_init();
+	platform_device_register(&roadrunner_flash);
+
+	/*
+	 * Mark flash as writeable
+	 */
+	IXP23XX_EXP_CS0[0] |= IXP23XX_FLASH_WRITABLE;
+	IXP23XX_EXP_CS0[1] |= IXP23XX_FLASH_WRITABLE;
+	IXP23XX_EXP_CS0[2] |= IXP23XX_FLASH_WRITABLE;
+	IXP23XX_EXP_CS0[3] |= IXP23XX_FLASH_WRITABLE;
+
+	ixp23xx_sys_init();
 }
 
-MACHINE_START (ROADRUNNER, "ADI Engineering RoadRunner Development Platform")
-/* Maintainer: Deepak Saxena */
-.map_io   = ixp23xx_map_io,
- .init_irq = ixp23xx_init_irq,
-  .timer    = &ixp23xx_timer,
-   .atag_offset  = 0x100,
-    .init_machine = roadrunner_init,
-     .restart  = ixp23xx_restart,
-      MACHINE_END
+MACHINE_START(ROADRUNNER, "ADI Engineering RoadRunner Development Platform")
+	/* Maintainer: Deepak Saxena */
+	.map_io		= ixp23xx_map_io,
+	.init_irq	= ixp23xx_init_irq,
+	.timer		= &ixp23xx_timer,
+	.atag_offset	= 0x100,
+	.init_machine	= roadrunner_init,
+	.restart	= ixp23xx_restart,
+MACHINE_END

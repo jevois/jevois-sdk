@@ -39,20 +39,20 @@
 
 /* driver related defines */
 
-int mpsc_init (int baud);
-void mpsc_sdma_init (void);
-void mpsc_init2 (void);
-int galbrg_set_baudrate (int channel, int rate);
+int mpsc_init(int baud);
+void mpsc_sdma_init(void);
+void mpsc_init2(void);
+int galbrg_set_baudrate(int channel, int rate);
 
-int mpsc_putchar_early (char ch);
-char mpsc_getchar_debug (void);
-int mpsc_test_char_debug (void);
+int mpsc_putchar_early(char ch);
+char mpsc_getchar_debug(void);
+int mpsc_test_char_debug(void);
 
-int mpsc_test_char_sdma (void);
+int mpsc_test_char_sdma(void);
 
-extern int (*mpsc_putchar) (char ch);
-extern char (*mpsc_getchar) (void);
-extern int (*mpsc_test_char) (void);
+extern int (*mpsc_putchar)(char ch);
+extern char (*mpsc_getchar)(void);
+extern int (*mpsc_test_char)(void);
 
 #define CHANNEL CONFIG_MPSC_PORT
 
@@ -67,9 +67,9 @@ extern int (*mpsc_test_char) (void);
 #define TX_STOP     0x00010000
 #define RX_ENABLE   0x00000080
 
-#define SDMA_RX_ABORT     (1 << 15)
-#define SDMA_TX_ABORT     (1 << 31)
-#define MPSC_TX_ABORT     (1 << 7)
+#define SDMA_RX_ABORT		  (1 << 15)
+#define SDMA_TX_ABORT		  (1 << 31)
+#define MPSC_TX_ABORT		  (1 << 7)
 #define MPSC_RX_ABORT             (1 << 23)
 #define MPSC_ENTER_HUNT           (1 << 31)
 

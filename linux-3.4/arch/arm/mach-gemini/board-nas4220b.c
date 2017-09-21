@@ -32,79 +32,79 @@
 #include "common.h"
 
 static struct sys_timer ib4220b_timer = {
-  .init = gemini_timer_init,
+	.init	= gemini_timer_init,
 };
 
 static struct gpio_led ib4220b_leds[] = {
-  {
-    .name     = "nas4220b:orange:hdd",
-    .default_trigger  = "none",
-    .gpio     = 60,
-  },
-  {
-    .name     = "nas4220b:green:os",
-    .default_trigger  = "heartbeat",
-    .gpio     = 62,
-  },
+	{
+		.name			= "nas4220b:orange:hdd",
+		.default_trigger	= "none",
+		.gpio			= 60,
+	},
+	{
+		.name			= "nas4220b:green:os",
+		.default_trigger	= "heartbeat",
+		.gpio			= 62,
+	},
 };
 
 static struct gpio_led_platform_data ib4220b_leds_data = {
-  .num_leds = ARRAY_SIZE (ib4220b_leds),
-  .leds   = ib4220b_leds,
+	.num_leds	= ARRAY_SIZE(ib4220b_leds),
+	.leds		= ib4220b_leds,
 };
 
 static struct platform_device ib4220b_led_device = {
-  .name = "leds-gpio",
-  .id = -1,
-  .dev  = {
-    .platform_data = &ib4220b_leds_data,
-  },
+	.name	= "leds-gpio",
+	.id	= -1,
+	.dev	= {
+		.platform_data = &ib4220b_leds_data,
+	},
 };
 
 static struct gpio_keys_button ib4220b_keys[] = {
-  {
-    .code   = KEY_SETUP,
-    .gpio   = 61,
-    .active_low = 1,
-    .desc   = "Backup Button",
-    .type   = EV_KEY,
-  },
-  {
-    .code   = KEY_RESTART,
-    .gpio   = 63,
-    .active_low = 1,
-    .desc   = "Softreset Button",
-    .type   = EV_KEY,
-  },
+	{
+		.code		= KEY_SETUP,
+		.gpio		= 61,
+		.active_low	= 1,
+		.desc		= "Backup Button",
+		.type		= EV_KEY,
+	},
+	{
+		.code		= KEY_RESTART,
+		.gpio		= 63,
+		.active_low	= 1,
+		.desc		= "Softreset Button",
+		.type		= EV_KEY,
+	},
 };
 
 static struct gpio_keys_platform_data ib4220b_keys_data = {
-  .buttons  = ib4220b_keys,
-  .nbuttons = ARRAY_SIZE (ib4220b_keys),
+	.buttons	= ib4220b_keys,
+	.nbuttons	= ARRAY_SIZE(ib4220b_keys),
 };
 
 static struct platform_device ib4220b_key_device = {
-  .name = "gpio-keys",
-  .id = -1,
-  .dev  = {
-    .platform_data = &ib4220b_keys_data,
-  },
+	.name	= "gpio-keys",
+	.id	= -1,
+	.dev	= {
+		.platform_data = &ib4220b_keys_data,
+	},
 };
 
-static void __init ib4220b_init (void)
+static void __init ib4220b_init(void)
 {
-  gemini_gpio_init();
-  platform_register_uart();
-  platform_register_pflash (SZ_16M, NULL, 0);
-  platform_device_register (&ib4220b_led_device);
-  platform_device_register (&ib4220b_key_device);
-  platform_register_rtc();
+	gemini_gpio_init();
+	platform_register_uart();
+	platform_register_pflash(SZ_16M, NULL, 0);
+	platform_device_register(&ib4220b_led_device);
+	platform_device_register(&ib4220b_key_device);
+	platform_register_rtc();
 }
 
-MACHINE_START (NAS4220B, "Raidsonic NAS IB-4220-B")
-.atag_offset  = 0x100,
- .map_io   = gemini_map_io,
-  .init_irq = gemini_init_irq,
-   .timer    = &ib4220b_timer,
-    .init_machine = ib4220b_init,
-     MACHINE_END
+MACHINE_START(NAS4220B, "Raidsonic NAS IB-4220-B")
+	.atag_offset	= 0x100,
+	.map_io		= gemini_map_io,
+	.init_irq	= gemini_init_irq,
+	.timer		= &ib4220b_timer,
+	.init_machine	= ib4220b_init,
+MACHINE_END

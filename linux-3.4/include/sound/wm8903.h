@@ -248,19 +248,19 @@
 #define WM8903_NUM_GPIO 5
 
 struct wm8903_platform_data {
-  bool irq_active_low;   /* Set if IRQ active low, default high */
-  
-  /* Default register value for R6 (Mic bias), used to configure
-  * microphone detection.  In conjunction with gpio_cfg this
-  * can be used to route the microphone status signals out onto
-  * the GPIOs for use with snd_soc_jack_add_gpios().
-  */
-  u16 micdet_cfg;
-  
-  int micdet_delay;      /* Delay after microphone detection (ms) */
-  
-  int gpio_base;
-  u32 gpio_cfg[WM8903_NUM_GPIO]; /* Default register values for GPIO pin mux */
+	bool irq_active_low;   /* Set if IRQ active low, default high */
+
+        /* Default register value for R6 (Mic bias), used to configure
+	 * microphone detection.  In conjunction with gpio_cfg this
+	 * can be used to route the microphone status signals out onto
+	 * the GPIOs for use with snd_soc_jack_add_gpios().
+	 */
+	u16 micdet_cfg;
+
+	int micdet_delay;      /* Delay after microphone detection (ms) */
+
+	int gpio_base;
+	u32 gpio_cfg[WM8903_NUM_GPIO]; /* Default register values for GPIO pin mux */
 };
 
 #endif

@@ -345,8 +345,8 @@ typedef union
     unsigned int reg_tmsc            :  2 ;   
     unsigned int reg_ckdv            :  5 ;   
     unsigned int res0                :  3 ;   
-    unsigned int reg_dmplvd          :  4 ;   
-    unsigned int reg_dmplvc          :  1 ;   
+    unsigned int reg_dmplvd					 :	4 ;		
+    unsigned int reg_dmplvc					 :	1 ;		
     unsigned int res1                :  7 ;   
   } bits;
 } DPHY_ANA4_REG_t;

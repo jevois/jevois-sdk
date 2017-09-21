@@ -10,8 +10,8 @@
  * (at your option) any later version.
  */
 
-#ifndef __DAVINCI_DAVINCI_GPIO_H
-#define __DAVINCI_DAVINCI_GPIO_H
+#ifndef	__DAVINCI_DAVINCI_GPIO_H
+#define	__DAVINCI_DAVINCI_GPIO_H
 
 #include <linux/io.h>
 #include <linux/spinlock.h>
@@ -24,8 +24,8 @@
 #define DAVINCI_GPIO_BASE 0x01C67000
 
 enum davinci_gpio_type {
-  GPIO_TYPE_DAVINCI = 0,
-  GPIO_TYPE_TNETV107X,
+	GPIO_TYPE_DAVINCI = 0,
+	GPIO_TYPE_TNETV107X,
 };
 
 /*
@@ -47,19 +47,19 @@ enum davinci_gpio_type {
  * GPIOs can also be on external chips, numbered after the ones built-in
  * to the DaVinci chip.  For now, they won't be usable as IRQ sources.
  */
-#define GPIO(X)   (X)   /* 0 <= X <= (DAVINCI_N_GPIO - 1) */
+#define	GPIO(X)		(X)		/* 0 <= X <= (DAVINCI_N_GPIO - 1) */
 
 /* Convert GPIO signal to GPIO pin number */
-#define GPIO_TO_PIN(bank, gpio) (16 * (bank) + (gpio))
+#define GPIO_TO_PIN(bank, gpio)	(16 * (bank) + (gpio))
 
 struct davinci_gpio_controller {
-  struct gpio_chip  chip;
-  int     irq_base;
-  spinlock_t    lock;
-  void __iomem  *  regs;
-  void __iomem  *  set_data;
-  void __iomem  *  clr_data;
-  void __iomem  *  in_data;
+	struct gpio_chip	chip;
+	int			irq_base;
+	spinlock_t		lock;
+	void __iomem		*regs;
+	void __iomem		*set_data;
+	void __iomem		*clr_data;
+	void __iomem		*in_data;
 };
 
 /* The __gpio_to_controller() and __gpio_mask() functions inline to constants
@@ -72,20 +72,20 @@ struct davinci_gpio_controller {
  * These are NOT part of the cross-platform GPIO interface
  */
 static inline struct davinci_gpio_controller *
-__gpio_to_controller (unsigned gpio)
+__gpio_to_controller(unsigned gpio)
 {
-  struct davinci_gpio_controller * ctlrs = davinci_soc_info.gpio_ctlrs;
-  int index = gpio / 32;
-  
-  if (!ctlrs || index >= davinci_soc_info.gpio_ctlrs_num)
-  { return NULL; }
-  
-  return ctlrs + index;
+	struct davinci_gpio_controller *ctlrs = davinci_soc_info.gpio_ctlrs;
+	int index = gpio / 32;
+
+	if (!ctlrs || index >= davinci_soc_info.gpio_ctlrs_num)
+		return NULL;
+
+	return ctlrs + index;
 }
 
-static inline u32 __gpio_mask (unsigned gpio)
+static inline u32 __gpio_mask(unsigned gpio)
 {
-  return 1 << (gpio % 32);
+	return 1 << (gpio % 32);
 }
 
-#endif  /* __DAVINCI_DAVINCI_GPIO_H */
+#endif	/* __DAVINCI_DAVINCI_GPIO_H */

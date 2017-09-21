@@ -12,13 +12,13 @@
 #include <mach/titan.h>
 #include <asm/io.h>
 
-static void __init init_titan_irq (void)
+static void __init init_titan_irq(void)
 {
-  /* enable individual interrupt mode for externals */
-  plat_irq_setup_pins (IRQ_MODE_IRQ);
+	/* enable individual interrupt mode for externals */
+	plat_irq_setup_pins(IRQ_MODE_IRQ);
 }
 
 static struct sh_machine_vector mv_titan __initmv = {
-  .mv_name  = "Titan",
-  .mv_init_irq  = init_titan_irq,
+	.mv_name	= "Titan",
+	.mv_init_irq	= init_titan_irq,
 };

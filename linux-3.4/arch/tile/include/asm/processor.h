@@ -32,27 +32,27 @@ struct task_struct;
 struct thread_struct;
 
 typedef struct {
-  unsigned long seg;
+	unsigned long seg;
 } mm_segment_t;
 
 /*
  * Default implementation of macro that returns current
  * instruction pointer ("program counter").
  */
-void * current_text_addr (void);
+void *current_text_addr(void);
 
 #if CHIP_HAS_TILE_DMA()
 /* Capture the state of a suspended DMA. */
 struct tile_dma_state {
-  int enabled;
-  unsigned long src;
-  unsigned long dest;
-  unsigned long strides;
-  unsigned long chunk_size;
-  unsigned long src_chunk;
-  unsigned long dest_chunk;
-  unsigned long byte;
-  unsigned long status;
+	int enabled;
+	unsigned long src;
+	unsigned long dest;
+	unsigned long strides;
+	unsigned long chunk_size;
+	unsigned long src_chunk;
+	unsigned long dest_chunk;
+	unsigned long byte;
+	unsigned long status;
 };
 
 /*
@@ -68,10 +68,10 @@ struct tile_dma_state {
  * that occur while we are in kernel mode from DMA or the SN processor.
  */
 struct async_tlb {
-  short fault_num;         /* original fault number; 0 if none */
-  char is_fault;           /* was it a fault (vs an access violation) */
-  char is_write;           /* for fault: was it caused by a write? */
-  unsigned long address;   /* what address faulted? */
+	short fault_num;         /* original fault number; 0 if none */
+	char is_fault;           /* was it a fault (vs an access violation) */
+	char is_write;           /* for fault: was it caused by a write? */
+	unsigned long address;   /* what address faulted? */
 };
 
 #ifdef CONFIG_HARDWALL
@@ -79,58 +79,58 @@ struct hardwall_info;
 #endif
 
 struct thread_struct {
-  /* kernel stack pointer */
-  unsigned long  ksp;
-  /* kernel PC */
-  unsigned long  pc;
-  /* starting user stack pointer (for page migration) */
-  unsigned long  usp0;
-  /* pid of process that created this one */
-  pid_t creator_pid;
-  #if CHIP_HAS_TILE_DMA()
-  /* DMA info for suspended threads (byte == 0 means no DMA state) */
-  struct tile_dma_state tile_dma_state;
-  #endif
-  /* User EX_CONTEXT registers */
-  unsigned long ex_context[2];
-  /* User SYSTEM_SAVE registers */
-  unsigned long system_save[4];
-  /* User interrupt mask */
-  unsigned long long interrupt_mask;
-  /* User interrupt-control 0 state */
-  unsigned long intctrl_0;
-  #if CHIP_HAS_PROC_STATUS_SPR()
-  /* Any other miscellaneous processor state bits */
-  unsigned long proc_status;
-  #endif
-  #if !CHIP_HAS_FIXED_INTVEC_BASE()
-  /* Interrupt base for PL0 interrupts */
-  unsigned long interrupt_vector_base;
-  #endif
-  #if CHIP_HAS_TILE_RTF_HWM()
-  /* Tile cache retry fifo high-water mark */
-  unsigned long tile_rtf_hwm;
-  #endif
-  #if CHIP_HAS_DSTREAM_PF()
-  /* Data stream prefetch control */
-  unsigned long dstream_pf;
-  #endif
-  #ifdef CONFIG_HARDWALL
-  /* Is this task tied to an activated hardwall? */
-  struct hardwall_info * hardwall;
-  /* Chains this task into the list at hardwall->list. */
-  struct list_head hardwall_list;
-  #endif
-  #if CHIP_HAS_TILE_DMA()
-  /* Async DMA TLB fault information */
-  struct async_tlb dma_async_tlb;
-  #endif
-  #if CHIP_HAS_SN_PROC()
-  /* Was static network processor when we were switched out? */
-  int sn_proc_running;
-  /* Async SNI TLB fault information */
-  struct async_tlb sn_async_tlb;
-  #endif
+	/* kernel stack pointer */
+	unsigned long  ksp;
+	/* kernel PC */
+	unsigned long  pc;
+	/* starting user stack pointer (for page migration) */
+	unsigned long  usp0;
+	/* pid of process that created this one */
+	pid_t creator_pid;
+#if CHIP_HAS_TILE_DMA()
+	/* DMA info for suspended threads (byte == 0 means no DMA state) */
+	struct tile_dma_state tile_dma_state;
+#endif
+	/* User EX_CONTEXT registers */
+	unsigned long ex_context[2];
+	/* User SYSTEM_SAVE registers */
+	unsigned long system_save[4];
+	/* User interrupt mask */
+	unsigned long long interrupt_mask;
+	/* User interrupt-control 0 state */
+	unsigned long intctrl_0;
+#if CHIP_HAS_PROC_STATUS_SPR()
+	/* Any other miscellaneous processor state bits */
+	unsigned long proc_status;
+#endif
+#if !CHIP_HAS_FIXED_INTVEC_BASE()
+	/* Interrupt base for PL0 interrupts */
+	unsigned long interrupt_vector_base;
+#endif
+#if CHIP_HAS_TILE_RTF_HWM()
+	/* Tile cache retry fifo high-water mark */
+	unsigned long tile_rtf_hwm;
+#endif
+#if CHIP_HAS_DSTREAM_PF()
+	/* Data stream prefetch control */
+	unsigned long dstream_pf;
+#endif
+#ifdef CONFIG_HARDWALL
+	/* Is this task tied to an activated hardwall? */
+	struct hardwall_info *hardwall;
+	/* Chains this task into the list at hardwall->list. */
+	struct list_head hardwall_list;
+#endif
+#if CHIP_HAS_TILE_DMA()
+	/* Async DMA TLB fault information */
+	struct async_tlb dma_async_tlb;
+#endif
+#if CHIP_HAS_SN_PROC()
+	/* Was static network processor when we were switched out? */
+	int sn_proc_running;
+	/* Async SNI TLB fault information */
+	struct async_tlb sn_async_tlb;
+#endif
 };
 
 #endif /* !__ASSEMBLY__ */
@@ -155,67 +155,67 @@ struct thread_struct {
 #ifndef __ASSEMBLY__
 
 #ifdef __tilegx__
-#define TASK_SIZE_MAX   (MEM_LOW_END + 1)
+#define TASK_SIZE_MAX		(MEM_LOW_END + 1)
 #else
-#define TASK_SIZE_MAX   PAGE_OFFSET
+#define TASK_SIZE_MAX		PAGE_OFFSET
 #endif
 
 /* TASK_SIZE and related variables are always checked in "current" context. */
 #ifdef CONFIG_COMPAT
-#define COMPAT_TASK_SIZE  (1UL << 31)
-#define TASK_SIZE   ((current_thread_info()->status & TS_COMPAT) ?\
-                     COMPAT_TASK_SIZE : TASK_SIZE_MAX)
+#define COMPAT_TASK_SIZE	(1UL << 31)
+#define TASK_SIZE		((current_thread_info()->status & TS_COMPAT) ?\
+				 COMPAT_TASK_SIZE : TASK_SIZE_MAX)
 #else
-#define TASK_SIZE   TASK_SIZE_MAX
+#define TASK_SIZE		TASK_SIZE_MAX
 #endif
 
 /* We provide a minimal "vdso" a la x86; just the sigreturn code for now. */
-#define VDSO_BASE   (TASK_SIZE - PAGE_SIZE)
+#define VDSO_BASE		(TASK_SIZE - PAGE_SIZE)
 
-#define STACK_TOP   VDSO_BASE
+#define STACK_TOP		VDSO_BASE
 
 /* STACK_TOP_MAX is used temporarily in execve and should not check COMPAT. */
-#define STACK_TOP_MAX   TASK_SIZE_MAX
+#define STACK_TOP_MAX		TASK_SIZE_MAX
 
 /*
  * This decides where the kernel will search for a free chunk of vm
  * space during mmap's, if it is using bottom-up mapping.
  */
-#define TASK_UNMAPPED_BASE  (PAGE_ALIGN(TASK_SIZE / 3))
+#define TASK_UNMAPPED_BASE	(PAGE_ALIGN(TASK_SIZE / 3))
 
 #define HAVE_ARCH_PICK_MMAP_LAYOUT
 
 #define INIT_THREAD {                                                   \
-    .ksp = (unsigned long)init_stack + THREAD_SIZE - STACK_TOP_DELTA, \
-           .interrupt_mask = -1ULL                                         \
-  }
+	.ksp = (unsigned long)init_stack + THREAD_SIZE - STACK_TOP_DELTA, \
+	.interrupt_mask = -1ULL                                         \
+}
 
 /* Kernel stack top for the task that first boots on this cpu. */
-DECLARE_PER_CPU (unsigned long, boot_sp);
+DECLARE_PER_CPU(unsigned long, boot_sp);
 
 /* PC to boot from on this cpu. */
-DECLARE_PER_CPU (unsigned long, boot_pc);
+DECLARE_PER_CPU(unsigned long, boot_pc);
 
 /* Do necessary setup to start up a newly executed thread. */
-static inline void start_thread (struct pt_regs * regs,
-                                 unsigned long pc, unsigned long usp)
+static inline void start_thread(struct pt_regs *regs,
+				unsigned long pc, unsigned long usp)
 {
-  regs->pc = pc;
-  regs->sp = usp;
+	regs->pc = pc;
+	regs->sp = usp;
 }
 
 /* Free all resources held by a thread. */
-static inline void release_thread (struct task_struct * dead_task)
+static inline void release_thread(struct task_struct *dead_task)
 {
-  /* Nothing for now */
+	/* Nothing for now */
 }
 
 /* Prepare to copy thread state - unlazy all lazy status. */
-#define prepare_to_copy(tsk)  do { } while (0)
+#define prepare_to_copy(tsk)	do { } while (0)
 
-extern int kernel_thread (int (*fn) (void *), void * arg, unsigned long flags);
+extern int kernel_thread(int (*fn)(void *), void *arg, unsigned long flags);
 
-extern int do_work_pending (struct pt_regs * regs, u32 flags);
+extern int do_work_pending(struct pt_regs *regs, u32 flags);
 
 
 /*
@@ -224,20 +224,20 @@ extern int do_work_pending (struct pt_regs * regs, u32 flags);
  */
 #define thread_saved_pc(t)   ((t)->thread.pc)
 
-unsigned long get_wchan (struct task_struct * p);
+unsigned long get_wchan(struct task_struct *p);
 
 /* Return initial ksp value for given task. */
 #define task_ksp0(task) ((unsigned long)(task)->stack + THREAD_SIZE)
 
 /* Return some info about the user process TASK. */
-#define KSTK_TOP(task)  (task_ksp0(task) - STACK_TOP_DELTA)
+#define KSTK_TOP(task)	(task_ksp0(task) - STACK_TOP_DELTA)
 #define task_pt_regs(task) \
   ((struct pt_regs *)(task_ksp0(task) - KSTK_PTREGS_GAP) - 1)
-#define task_sp(task) (task_pt_regs(task)->sp)
-#define task_pc(task) (task_pt_regs(task)->pc)
+#define task_sp(task)	(task_pt_regs(task)->sp)
+#define task_pc(task)	(task_pt_regs(task)->pc)
 /* Aliases for pc and sp (used in fs/proc/array.c) */
-#define KSTK_EIP(task)  task_pc(task)
-#define KSTK_ESP(task)  task_sp(task)
+#define KSTK_EIP(task)	task_pc(task)
+#define KSTK_ESP(task)	task_sp(task)
 
 /* Standard format for printing registers and other word-size data. */
 #ifdef __tilegx__
@@ -251,10 +251,10 @@ unsigned long get_wchan (struct task_struct * p);
  * Note that this must also have compiler-barrier semantics since
  * it may be used in a busy loop reading memory.
  */
-static inline void cpu_relax (void)
+static inline void cpu_relax(void)
 {
-  __insn_mfspr (SPR_PASS);
-  barrier();
+	__insn_mfspr(SPR_PASS);
+	barrier();
 }
 
 /* Info on this processor (see fs/proc/cpuinfo.c) */
@@ -312,9 +312,9 @@ extern int kdata_huge;
 
 /* We sometimes use these macros for EX_CONTEXT_0_1 as well. */
 #if SPR_EX_CONTEXT_1_1__PL_SHIFT != SPR_EX_CONTEXT_0_1__PL_SHIFT || \
-SPR_EX_CONTEXT_1_1__PL_RMASK != SPR_EX_CONTEXT_0_1__PL_RMASK || \
-SPR_EX_CONTEXT_1_1__ICS_SHIFT != SPR_EX_CONTEXT_0_1__ICS_SHIFT || \
-SPR_EX_CONTEXT_1_1__ICS_RMASK != SPR_EX_CONTEXT_0_1__ICS_RMASK
+    SPR_EX_CONTEXT_1_1__PL_RMASK != SPR_EX_CONTEXT_0_1__PL_RMASK || \
+    SPR_EX_CONTEXT_1_1__ICS_SHIFT != SPR_EX_CONTEXT_0_1__ICS_SHIFT || \
+    SPR_EX_CONTEXT_1_1__ICS_RMASK != SPR_EX_CONTEXT_0_1__ICS_RMASK
 # error Fix assumptions that EX1 macros work for both PL0 and PL1
 #endif
 
@@ -344,14 +344,14 @@ SPR_EX_CONTEXT_1_1__ICS_RMASK != SPR_EX_CONTEXT_0_1__ICS_RMASK
 # error Too many cpus!
 #endif
 #define raw_smp_processor_id() \
-  ((int)__insn_mfspr(SPR_SYSTEM_SAVE_K_0) & CPU_MASK_VALUE)
+	((int)__insn_mfspr(SPR_SYSTEM_SAVE_K_0) & CPU_MASK_VALUE)
 #define get_current_ksp0() \
-  (__insn_mfspr(SPR_SYSTEM_SAVE_K_0) & ~CPU_MASK_VALUE)
+	(__insn_mfspr(SPR_SYSTEM_SAVE_K_0) & ~CPU_MASK_VALUE)
 #define next_current_ksp0(task) ({ \
-    unsigned long __ksp0 = task_ksp0(task); \
-    int __cpu = raw_smp_processor_id(); \
-    BUG_ON(__ksp0 & CPU_MASK_VALUE); \
-    __ksp0 | __cpu; \
-  })
+	unsigned long __ksp0 = task_ksp0(task); \
+	int __cpu = raw_smp_processor_id(); \
+	BUG_ON(__ksp0 & CPU_MASK_VALUE); \
+	__ksp0 | __cpu; \
+})
 
 #endif /* _ASM_TILE_PROCESSOR_H */

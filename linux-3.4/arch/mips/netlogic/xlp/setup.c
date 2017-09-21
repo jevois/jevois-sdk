@@ -55,51 +55,51 @@ unsigned long nlm_common_ebase = 0x0;
 uint32_t nlm_coremask = 1, nlm_cpumask  = 1;
 int  nlm_threads_per_core = 1;
 
-static void nlm_linux_exit (void)
+static void nlm_linux_exit(void)
 {
-  nlm_write_sys_reg (nlm_sys_base, SYS_CHIP_RESET, 1);
-  for ( ; ; )
-  { cpu_wait(); }
+	nlm_write_sys_reg(nlm_sys_base, SYS_CHIP_RESET, 1);
+	for ( ; ; )
+		cpu_wait();
 }
 
-void __init plat_mem_setup (void)
+void __init plat_mem_setup(void)
 {
-  panic_timeout = 5;
-  _machine_restart = (void (*) (char *) ) nlm_linux_exit;
-  _machine_halt = nlm_linux_exit;
-  pm_power_off  = nlm_linux_exit;
+	panic_timeout	= 5;
+	_machine_restart = (void (*)(char *))nlm_linux_exit;
+	_machine_halt	= nlm_linux_exit;
+	pm_power_off	= nlm_linux_exit;
 }
 
-const char * get_system_type (void)
+const char *get_system_type(void)
 {
-  return "Netlogic XLP Series";
+	return "Netlogic XLP Series";
 }
 
-void __init prom_free_prom_memory (void)
+void __init prom_free_prom_memory(void)
 {
-  /* Nothing yet */
+	/* Nothing yet */
 }
 
-void xlp_mmu_init (void)
+void xlp_mmu_init(void)
 {
-  write_c0_config6 (read_c0_config6() | 0x24);
-  current_cpu_data.tlbsize = ( (read_c0_config6() >> 16) & 0xffff) + 1;
-  write_c0_config7 (PM_DEFAULT_MASK >>
-                    (13 + (ffz (PM_DEFAULT_MASK >> 13) / 2) ) );
+	write_c0_config6(read_c0_config6() | 0x24);
+	current_cpu_data.tlbsize = ((read_c0_config6() >> 16) & 0xffff) + 1;
+	write_c0_config7(PM_DEFAULT_MASK >>
+		(13 + (ffz(PM_DEFAULT_MASK >> 13) / 2)));
 }
 
-void __init prom_init (void)
+void __init prom_init(void)
 {
-  void * fdtp;
-  
-  fdtp = (void *) (long) fw_arg0;
-  xlp_mmu_init();
-  nlm_hal_init();
-  early_init_devtree (fdtp);
-  
-  nlm_common_ebase = read_c0_ebase() & (~ ( (1 << 12) - 1) );
-  #ifdef CONFIG_SMP
-  nlm_wakeup_secondary_cpus (0xffffffff);
-  register_smp_ops (&nlm_smp_ops);
-  #endif
+	void *fdtp;
+
+	fdtp = (void *)(long)fw_arg0;
+	xlp_mmu_init();
+	nlm_hal_init();
+	early_init_devtree(fdtp);
+
+	nlm_common_ebase = read_c0_ebase() & (~((1 << 12) - 1));
+#ifdef CONFIG_SMP
+	nlm_wakeup_secondary_cpus(0xffffffff);
+	register_smp_ops(&nlm_smp_ops);
+#endif
 }

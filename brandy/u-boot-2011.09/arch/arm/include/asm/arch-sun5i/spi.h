@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -63,9 +63,9 @@
 #define SPI_MCLK        36         
 #define SPI_SCLK        18         
 
-int   spic_init (unsigned int spi_no);
-int   spic_exit (unsigned int spi_no);
-int   spic_rw  (unsigned int tcnt, void * txbuf, unsigned int rcnt, void * rxbuf);
+int   spic_init(unsigned int spi_no);
+int   spic_exit(unsigned int spi_no);
+int   spic_rw  (unsigned int tcnt, void* txbuf, unsigned int rcnt, void* rxbuf);
 
 
 #endif

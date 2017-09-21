@@ -4,25 +4,25 @@
 #ifndef __ASSEMBLY__
 
 #ifdef __CHECKER__
-# define __user   __attribute__((noderef, address_space(1)))
-# define __kernel __attribute__((address_space(0)))
-# define __safe   __attribute__((safe))
-# define __force  __attribute__((force))
-# define __nocast __attribute__((nocast))
-# define __iomem  __attribute__((noderef, address_space(2)))
-# define __acquires(x)  __attribute__((context(x,0,1)))
-# define __releases(x)  __attribute__((context(x,1,0)))
-# define __acquire(x) __context__(x,1)
-# define __release(x) __context__(x,-1)
-# define __cond_lock(x,c) ((c) ? ({ __acquire(x); 1; }) : 0)
-# define __percpu __attribute__((noderef, address_space(3)))
+# define __user		__attribute__((noderef, address_space(1)))
+# define __kernel	__attribute__((address_space(0)))
+# define __safe		__attribute__((safe))
+# define __force	__attribute__((force))
+# define __nocast	__attribute__((nocast))
+# define __iomem	__attribute__((noderef, address_space(2)))
+# define __acquires(x)	__attribute__((context(x,0,1)))
+# define __releases(x)	__attribute__((context(x,1,0)))
+# define __acquire(x)	__context__(x,1)
+# define __release(x)	__context__(x,-1)
+# define __cond_lock(x,c)	((c) ? ({ __acquire(x); 1; }) : 0)
+# define __percpu	__attribute__((noderef, address_space(3)))
 #ifdef CONFIG_SPARSE_RCU_POINTER
-# define __rcu    __attribute__((noderef, address_space(4)))
+# define __rcu		__attribute__((noderef, address_space(4)))
 #else
 # define __rcu
 #endif
-extern void __chk_user_ptr (const volatile void __user *);
-extern void __chk_io_ptr (const volatile void __iomem *);
+extern void __chk_user_ptr(const volatile void __user *);
+extern void __chk_io_ptr(const volatile void __iomem *);
 #else
 # define __user
 # define __kernel
@@ -64,20 +64,20 @@ extern void __chk_io_ptr (const volatile void __iomem *);
  */
 
 struct ftrace_branch_data {
-  const char * func;
-  const char * file;
-  unsigned line;
-  union {
-    struct {
-      unsigned long correct;
-      unsigned long incorrect;
-    };
-    struct {
-      unsigned long miss;
-      unsigned long hit;
-    };
-    unsigned long miss_hit[2];
-  };
+	const char *func;
+	const char *file;
+	unsigned line;
+	union {
+		struct {
+			unsigned long correct;
+			unsigned long incorrect;
+		};
+		struct {
+			unsigned long miss;
+			unsigned long hit;
+		};
+		unsigned long miss_hit[2];
+	};
 };
 
 /*
@@ -85,26 +85,26 @@ struct ftrace_branch_data {
  * to disable branch tracing on a per file basis.
  */
 #if defined(CONFIG_TRACE_BRANCH_PROFILING) \
-&& !defined(DISABLE_BRANCH_PROFILING) && !defined(__CHECKER__)
-void ftrace_likely_update (struct ftrace_branch_data * f, int val, int expect);
+    && !defined(DISABLE_BRANCH_PROFILING) && !defined(__CHECKER__)
+void ftrace_likely_update(struct ftrace_branch_data *f, int val, int expect);
 
-#define likely_notrace(x) __builtin_expect(!!(x), 1)
-#define unlikely_notrace(x) __builtin_expect(!!(x), 0)
+#define likely_notrace(x)	__builtin_expect(!!(x), 1)
+#define unlikely_notrace(x)	__builtin_expect(!!(x), 0)
 
-#define __branch_check__(x, expect) ({          \
-    int ______r;          \
-    static struct ftrace_branch_data    \
-    __attribute__((__aligned__(4)))   \
-    __attribute__((section("_ftrace_annotated_branch"))) \
-    ______f = {       \
-                      .func = __func__,     \
-                      .file = __FILE__,     \
-                      .line = __LINE__,     \
-              };            \
-    ______r = likely_notrace(x);      \
-    ftrace_likely_update(&______f, ______r, expect); \
-    ______r;          \
-  })
+#define __branch_check__(x, expect) ({					\
+			int ______r;					\
+			static struct ftrace_branch_data		\
+				__attribute__((__aligned__(4)))		\
+				__attribute__((section("_ftrace_annotated_branch"))) \
+				______f = {				\
+				.func = __func__,			\
+				.file = __FILE__,			\
+				.line = __LINE__,			\
+			};						\
+			______r = likely_notrace(x);			\
+			ftrace_likely_update(&______f, ______r, expect); \
+			______r;					\
+		})
 
 /*
  * Using __builtin_constant_p(x) to ignore cases where the return
@@ -112,10 +112,10 @@ void ftrace_likely_update (struct ftrace_branch_data * f, int val, int expect);
  * written by Daniel Walker.
  */
 # ifndef likely
-#  define likely(x) (__builtin_constant_p(x) ? !!(x) : __branch_check__(x, 1))
+#  define likely(x)	(__builtin_constant_p(x) ? !!(x) : __branch_check__(x, 1))
 # endif
 # ifndef unlikely
-#  define unlikely(x) (__builtin_constant_p(x) ? !!(x) : __branch_check__(x, 0))
+#  define unlikely(x)	(__builtin_constant_p(x) ? !!(x) : __branch_check__(x, 0))
 # endif
 
 #ifdef CONFIG_PROFILE_ALL_BRANCHES
@@ -125,26 +125,26 @@ void ftrace_likely_update (struct ftrace_branch_data * f, int val, int expect);
  */
 #define if(cond, ...) __trace_if( (cond , ## __VA_ARGS__) )
 #define __trace_if(cond) \
-  if (__builtin_constant_p((cond)) ? !!(cond) :     \
-  ({                \
-  int ______r;            \
-  static struct ftrace_branch_data      \
-  __attribute__((__aligned__(4)))     \
-    __attribute__((section("_ftrace_branch")))  \
-    ______f = {         \
-                        .func = __func__,     \
-                        .file = __FILE__,     \
-                        .line = __LINE__,     \
-              };            \
-    ______r = !!(cond);         \
-    ______f.miss_hit[______r]++;          \
-    ______r;            \
-  }))
+	if (__builtin_constant_p((cond)) ? !!(cond) :			\
+	({								\
+		int ______r;						\
+		static struct ftrace_branch_data			\
+			__attribute__((__aligned__(4)))			\
+			__attribute__((section("_ftrace_branch")))	\
+			______f = {					\
+				.func = __func__,			\
+				.file = __FILE__,			\
+				.line = __LINE__,			\
+			};						\
+		______r = !!(cond);					\
+		______f.miss_hit[______r]++;					\
+		______r;						\
+	}))
 #endif /* CONFIG_PROFILE_ALL_BRANCHES */
 
 #else
-# define likely(x)  __builtin_expect(!!(x), 1)
-# define unlikely(x)  __builtin_expect(!!(x), 0)
+# define likely(x)	__builtin_expect(!!(x), 1)
+# define unlikely(x)	__builtin_expect(!!(x), 0)
 #endif
 
 /* Optimization barrier */
@@ -158,9 +158,9 @@ void ftrace_likely_update (struct ftrace_branch_data * f, int val, int expect);
 #endif
 
 #ifndef RELOC_HIDE
-# define RELOC_HIDE(ptr, off)         \
-  ({ unsigned long __ptr;         \
-    __ptr = (unsigned long) (ptr);       \
+# define RELOC_HIDE(ptr, off)					\
+  ({ unsigned long __ptr;					\
+     __ptr = (unsigned long) (ptr);				\
     (typeof(ptr)) (__ptr + (off)); })
 #endif
 
@@ -173,10 +173,10 @@ void ftrace_likely_update (struct ftrace_branch_data * f, int val, int expect);
  * Allow us to mark functions as 'deprecated' and have gcc emit a nice
  * warning for each use, in hopes of speeding the functions removal.
  * Usage is:
- *    int __deprecated foo(void)
+ * 		int __deprecated foo(void)
  */
 #ifndef __deprecated
-# define __deprecated   /* unimplemented */
+# define __deprecated		/* unimplemented */
 #endif
 
 #ifdef MODULE
@@ -219,15 +219,15 @@ void ftrace_likely_update (struct ftrace_branch_data * f, int val, int expect);
  * the code is emitted even though it appears to be unreferenced.
  */
 #ifndef __used
-# define __used     /* unimplemented */
+# define __used			/* unimplemented */
 #endif
 
 #ifndef __maybe_unused
-# define __maybe_unused   /* unimplemented */
+# define __maybe_unused		/* unimplemented */
 #endif
 
 #ifndef __always_unused
-# define __always_unused  /* unimplemented */
+# define __always_unused	/* unimplemented */
 #endif
 
 #ifndef noinline
@@ -261,7 +261,7 @@ void ftrace_likely_update (struct ftrace_branch_data * f, int val, int expect);
  * `void'.
  */
 #ifndef __attribute_const__
-# define __attribute_const__  /* unimplemented */
+# define __attribute_const__	/* unimplemented */
 #endif
 
 /*

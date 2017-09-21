@@ -19,8 +19,8 @@
  * to the end of the structure.
  */
 struct sigcontext {
-  struct user_context sc_context;
-  unsigned long   sc_oldmask;   /* old sigmask */
-} __attribute__ ( (aligned (8) ) );
+	struct user_context	sc_context;
+	unsigned long		sc_oldmask; 	/* old sigmask */
+} __attribute__((aligned(8)));
 
 #endif

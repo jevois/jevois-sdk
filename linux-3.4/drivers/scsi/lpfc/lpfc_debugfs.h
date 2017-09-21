@@ -156,9 +156,9 @@
 #define LPFC_BSG_DMP_MBX_WR_MBX 0x00000004
 #define LPFC_BSG_DMP_MBX_WR_BUF 0x00000008
 #define LPFC_BSG_DMP_MBX_ALL (LPFC_BSG_DMP_MBX_RD_MBX | \
-                              LPFC_BSG_DMP_MBX_RD_BUF | \
-                              LPFC_BSG_DMP_MBX_WR_MBX | \
-                              LPFC_BSG_DMP_MBX_WR_BUF)
+			      LPFC_BSG_DMP_MBX_RD_BUF | \
+			      LPFC_BSG_DMP_MBX_WR_MBX | \
+			      LPFC_BSG_DMP_MBX_WR_BUF)
 
 #define LPFC_MBX_DMP_ALL 0xffff
 #define LPFC_MBX_ALL_CMD 0xff
@@ -176,8 +176,8 @@
 #define LPFC_EXT_ACC_ALLOC 0x2
 #define LPFC_EXT_ACC_DRIVR 0x4
 #define LPFC_EXT_ACC_ALL   (LPFC_EXT_ACC_DRIVR | \
-                            LPFC_EXT_ACC_AVAIL | \
-                            LPFC_EXT_ACC_ALLOC)
+			    LPFC_EXT_ACC_AVAIL | \
+			    LPFC_EXT_ACC_ALLOC)
 
 #define IDIAG_EXTACC_EXMAP_INDX 0
 
@@ -186,84 +186,84 @@
 #define SIZE_U32 sizeof(uint32_t)
 
 struct lpfc_debug {
-  char * i_private;
-  char op;
+	char *i_private;
+	char op;
 #define LPFC_IDIAG_OP_RD 1
 #define LPFC_IDIAG_OP_WR 2
-  char * buffer;
-  int  len;
+	char *buffer;
+	int  len;
 };
 
 struct lpfc_debugfs_trc {
-  char * fmt;
-  uint32_t data1;
-  uint32_t data2;
-  uint32_t data3;
-  uint32_t seq_cnt;
-  unsigned long jif;
+	char *fmt;
+	uint32_t data1;
+	uint32_t data2;
+	uint32_t data3;
+	uint32_t seq_cnt;
+	unsigned long jif;
 };
 
 struct lpfc_idiag_offset {
-  uint32_t last_rd;
+	uint32_t last_rd;
 };
 
 #define LPFC_IDIAG_CMD_DATA_SIZE 8
 struct lpfc_idiag_cmd {
-  uint32_t opcode;
+	uint32_t opcode;
 #define LPFC_IDIAG_CMD_PCICFG_RD 0x00000001
 #define LPFC_IDIAG_CMD_PCICFG_WR 0x00000002
 #define LPFC_IDIAG_CMD_PCICFG_ST 0x00000003
 #define LPFC_IDIAG_CMD_PCICFG_CL 0x00000004
-  
+
 #define LPFC_IDIAG_CMD_BARACC_RD 0x00000008
 #define LPFC_IDIAG_CMD_BARACC_WR 0x00000009
 #define LPFC_IDIAG_CMD_BARACC_ST 0x0000000a
 #define LPFC_IDIAG_CMD_BARACC_CL 0x0000000b
-  
+
 #define LPFC_IDIAG_CMD_QUEACC_RD 0x00000011
 #define LPFC_IDIAG_CMD_QUEACC_WR 0x00000012
 #define LPFC_IDIAG_CMD_QUEACC_ST 0x00000013
 #define LPFC_IDIAG_CMD_QUEACC_CL 0x00000014
-  
+
 #define LPFC_IDIAG_CMD_DRBACC_RD 0x00000021
 #define LPFC_IDIAG_CMD_DRBACC_WR 0x00000022
 #define LPFC_IDIAG_CMD_DRBACC_ST 0x00000023
 #define LPFC_IDIAG_CMD_DRBACC_CL 0x00000024
-  
+
 #define LPFC_IDIAG_CMD_CTLACC_RD 0x00000031
 #define LPFC_IDIAG_CMD_CTLACC_WR 0x00000032
 #define LPFC_IDIAG_CMD_CTLACC_ST 0x00000033
 #define LPFC_IDIAG_CMD_CTLACC_CL 0x00000034
-  
+
 #define LPFC_IDIAG_CMD_MBXACC_DP 0x00000041
 #define LPFC_IDIAG_BSG_MBXACC_DP 0x00000042
-  
+
 #define LPFC_IDIAG_CMD_EXTACC_RD 0x00000051
-  
-  uint32_t data[LPFC_IDIAG_CMD_DATA_SIZE];
+
+	uint32_t data[LPFC_IDIAG_CMD_DATA_SIZE];
 };
 
 struct lpfc_idiag {
-  uint32_t active;
-  struct lpfc_idiag_cmd cmd;
-  struct lpfc_idiag_offset offset;
-  void * ptr_private;
+	uint32_t active;
+	struct lpfc_idiag_cmd cmd;
+	struct lpfc_idiag_offset offset;
+	void *ptr_private;
 };
 #endif
 
 /* Mask for discovery_trace */
-#define LPFC_DISC_TRC_ELS_CMD   0x1 /* Trace ELS commands */
-#define LPFC_DISC_TRC_ELS_RSP   0x2 /* Trace ELS response */
-#define LPFC_DISC_TRC_ELS_UNSOL   0x4 /* Trace ELS rcv'ed   */
-#define LPFC_DISC_TRC_ELS_ALL   0x7 /* Trace ELS */
-#define LPFC_DISC_TRC_MBOX_VPORT  0x8 /* Trace vport MBOXs */
-#define LPFC_DISC_TRC_MBOX    0x10  /* Trace other MBOXs */
-#define LPFC_DISC_TRC_MBOX_ALL    0x18  /* Trace all MBOXs */
-#define LPFC_DISC_TRC_CT    0x20  /* Trace disc CT requests */
-#define LPFC_DISC_TRC_DSM   0x40    /* Trace DSM events */
-#define LPFC_DISC_TRC_RPORT   0x80    /* Trace rport events */
-#define LPFC_DISC_TRC_NODE    0x100   /* Trace ndlp state changes */
+#define LPFC_DISC_TRC_ELS_CMD		0x1	/* Trace ELS commands */
+#define LPFC_DISC_TRC_ELS_RSP		0x2	/* Trace ELS response */
+#define LPFC_DISC_TRC_ELS_UNSOL		0x4	/* Trace ELS rcv'ed   */
+#define LPFC_DISC_TRC_ELS_ALL		0x7	/* Trace ELS */
+#define LPFC_DISC_TRC_MBOX_VPORT	0x8	/* Trace vport MBOXs */
+#define LPFC_DISC_TRC_MBOX		0x10	/* Trace other MBOXs */
+#define LPFC_DISC_TRC_MBOX_ALL		0x18	/* Trace all MBOXs */
+#define LPFC_DISC_TRC_CT		0x20	/* Trace disc CT requests */
+#define LPFC_DISC_TRC_DSM		0x40    /* Trace DSM events */
+#define LPFC_DISC_TRC_RPORT		0x80    /* Trace rport events */
+#define LPFC_DISC_TRC_NODE		0x100   /* Trace ndlp state changes */
 
-#define LPFC_DISC_TRC_DISCOVERY   0xef    /* common mask for general
-             * discovery */
+#define LPFC_DISC_TRC_DISCOVERY		0xef    /* common mask for general
+						 * discovery */
 #endif /* H_LPFC_DEBUG_FS */

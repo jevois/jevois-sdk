@@ -45,7 +45,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "services.h"
 #include "syscommon.h"
 
-PVRSRV_ERROR AllocateDeviceID (SYS_DATA * psSysData, IMG_UINT32 * pui32DevID);
-PVRSRV_ERROR FreeDeviceID (SYS_DATA * psSysData, IMG_UINT32 ui32DevID);
+PVRSRV_ERROR AllocateDeviceID(SYS_DATA *psSysData, IMG_UINT32 *pui32DevID);
+PVRSRV_ERROR FreeDeviceID(SYS_DATA *psSysData, IMG_UINT32 ui32DevID);
 
 #endif /* __DEVICEID_H__ */

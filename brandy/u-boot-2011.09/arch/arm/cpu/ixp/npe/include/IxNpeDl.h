@@ -6,16 +6,16 @@
  * @brief This file contains the public API of the IXP400 NPE Downloader
  *        component.
  *
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,7 +28,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -41,7 +41,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
 */
@@ -105,7 +105,7 @@
  * @brief NpeDl function return value when image being downloaded
  *        is not meant for the device in use
  */
-#define IX_NPEDL_DEVICE_ERR 6
+#define IX_NPEDL_DEVICE_ERR 6 
 
 /**
  * @defgroup NPEImageID IXP400 NPE Image ID Definition
@@ -262,52 +262,52 @@
  */
 #define ixNpeDlAvailableVersionsListGet(x,y) ixNpeDlAvailableImagesListGet(x,y)
 
-/**
-* @def ixNpeDlLoadedVersionGet
-*
-* @brief  Map old terminology that uses term "version" to new term
-*        "image"
-*
-* @warning <b>THIS #define HAS BEEN DEPRECATED AND SHOULD NOT BE USED.</b>
-*       It will be removed in a future release.
-*       See @ref ixNpeDlNpeInitAndStart for more information.
-*/
+ /**
+ * @def ixNpeDlLoadedVersionGet
+ *
+ * @brief  Map old terminology that uses term "version" to new term
+ *        "image"
+ *
+ * @warning <b>THIS #define HAS BEEN DEPRECATED AND SHOULD NOT BE USED.</b>
+ *       It will be removed in a future release.
+ *       See @ref ixNpeDlNpeInitAndStart for more information.
+ */
 #define ixNpeDlLoadedVersionGet(x,y) ixNpeDlLoadedImageGet(x,y)
 
-/**
-* @def clientImage
-*
-* @brief  Map old terminology that uses term "image" to new term
-*        "image library"
-*
-* @warning <b>THIS #define HAS BEEN DEPRECATED AND SHOULD NOT BE USED.</b>
-*       It will be removed in a future release.
-*       See @ref ixNpeDlNpeInitAndStart for more information.
-*/
+ /**
+ * @def clientImage
+ *
+ * @brief  Map old terminology that uses term "image" to new term
+ *        "image library"
+ *
+ * @warning <b>THIS #define HAS BEEN DEPRECATED AND SHOULD NOT BE USED.</b>
+ *       It will be removed in a future release.
+ *       See @ref ixNpeDlNpeInitAndStart for more information.
+ */
 #define clientImage clientImageLibrary
 
-/**
-* @def versionIdPtr
-*
-* @brief  Map old terminology that uses term "version" to new term
-*        "image"
-*
-* @warning <b>THIS #define HAS BEEN DEPRECATED AND SHOULD NOT BE USED.</b>
-*       It will be removed in a future release.
-*       See @ref ixNpeDlNpeInitAndStart for more information.
-*/
+ /**
+ * @def versionIdPtr
+ *
+ * @brief  Map old terminology that uses term "version" to new term
+ *        "image"
+ *
+ * @warning <b>THIS #define HAS BEEN DEPRECATED AND SHOULD NOT BE USED.</b>
+ *       It will be removed in a future release.
+ *       See @ref ixNpeDlNpeInitAndStart for more information.
+ */
 #define versionIdPtr imageIdPtr
 
-/**
-* @def numVersionsPtr
-*
-* @brief  Map old terminology that uses term "version" to new term
-*        "image"
-*
-* @warning <b>THIS #define HAS BEEN DEPRECATED AND SHOULD NOT BE USED.</b>
-*       It will be removed in a future release.
-*       See @ref ixNpeDlNpeInitAndStart for more information.
-*/
+ /**
+ * @def numVersionsPtr
+ *
+ * @brief  Map old terminology that uses term "version" to new term
+ *        "image"
+ *
+ * @warning <b>THIS #define HAS BEEN DEPRECATED AND SHOULD NOT BE USED.</b>
+ *       It will be removed in a future release.
+ *       See @ref ixNpeDlNpeInitAndStart for more information.
+ */
 #define numVersionsPtr numImagesPtr
 
 /**
@@ -425,10 +425,10 @@ typedef enum
  */
 typedef struct
 {
-  IxNpeDlNpeId   npeId;   /**< NPE ID */
-  IxNpeDlFunctionalityId functionalityId; /**< Build ID indicates functionality of image */
-  IxNpeDlMajor   major;   /**< Major Release Number */
-  IxNpeDlMinor   minor;   /**< Minor Revision Number */
+    IxNpeDlNpeId   npeId;   /**< NPE ID */
+    IxNpeDlFunctionalityId functionalityId; /**< Build ID indicates functionality of image */
+    IxNpeDlMajor   major;   /**< Major Release Number */
+    IxNpeDlMinor   minor;   /**< Minor Revision Number */
 } IxNpeDlImageId;
 
 /*
@@ -481,7 +481,7 @@ typedef struct
  *           download
  *         - IX_NPEDL_CRITICAL_MICROCODE_ERR if a critical microcode error
  *           occured during download
- *         - IX_NPEDL_DEVICE_ERR if the image being loaded is not meant for
+ *         - IX_NPEDL_DEVICE_ERR if the image being loaded is not meant for 
  *           the device currently running.
  *         - IX_FAIL if NPE is not available or image is failed to be located.
  *           A warning is issued if the NPE is not present.
@@ -544,14 +544,14 @@ ixNpeDlNpeInitAndStart (UINT32 npeImageId);
  *           download
  *         - IX_NPEDL_CRITICAL_MICROCODE_ERR if a critical microcode error
  *           occured during download
- *         - IX_NPEDL_DEVICE_ERR if the image being loaded is not meant for
+ *         - IX_NPEDL_DEVICE_ERR if the image being loaded is not meant for 
  *           the device currently running.
  *         - IX_FAIL if NPE is not available or image is failed to be located.
  *           A warning is issued if the NPE is not present.
  */
 PUBLIC IX_STATUS
-ixNpeDlCustomImageNpeInitAndStart (UINT32 * imageLibrary,
-                                   UINT32 npeImageId);
+ixNpeDlCustomImageNpeInitAndStart (UINT32 *imageLibrary,
+                    UINT32 npeImageId);
 
 
 /**
@@ -586,7 +586,7 @@ ixNpeDlCustomImageNpeInitAndStart (UINT32 * imageLibrary,
  */
 PUBLIC IX_STATUS
 ixNpeDlLoadedImageFunctionalityGet (IxNpeDlNpeId npeId,
-                                    UINT8 * functionalityId);
+                                    UINT8 *functionalityId);
 
 
 /**
@@ -624,7 +624,7 @@ ixNpeDlLoadedImageFunctionalityGet (IxNpeDlNpeId npeId,
  *      - IX_FAIL if the client-supplied image library did not contain a valid signature
  */
 PUBLIC IX_STATUS
-ixNpeDlMicrocodeImageLibraryOverride (UINT32 * clientImageLibrary);
+ixNpeDlMicrocodeImageLibraryOverride (UINT32 *clientImageLibrary);
 
 /**
  * @ingroup IxNpeDl
@@ -669,8 +669,8 @@ ixNpeDlMicrocodeImageLibraryOverride (UINT32 * clientImageLibrary);
  *           A warning is issued if the NPE is not present.
  */
 PUBLIC IX_STATUS
-ixNpeDlImageDownload (IxNpeDlImageId * imageIdPtr,
-                      BOOL verify);
+ixNpeDlImageDownload (IxNpeDlImageId *imageIdPtr,
+            BOOL verify);
 
 /**
  * @ingroup IxNpeDl
@@ -700,7 +700,7 @@ ixNpeDlImageDownload (IxNpeDlImageId * imageIdPtr,
  *     - IX_FAIL otherwise
  */
 PUBLIC IX_STATUS
-ixNpeDlAvailableImagesCountGet (UINT32 * numImagesPtr);
+ixNpeDlAvailableImagesCountGet (UINT32 *numImagesPtr);
 
 /**
  * @ingroup IxNpeDl
@@ -741,8 +741,8 @@ ixNpeDlAvailableImagesCountGet (UINT32 * numImagesPtr);
  *     - IX_FAIL otherwise
  */
 PUBLIC IX_STATUS
-ixNpeDlAvailableImagesListGet (IxNpeDlImageId * imageIdListPtr,
-                               UINT32 * listSizePtr);
+ixNpeDlAvailableImagesListGet (IxNpeDlImageId *imageIdListPtr,
+                 UINT32 *listSizePtr);
 
 /**
  * @ingroup IxNpeDl
@@ -772,7 +772,7 @@ ixNpeDlAvailableImagesListGet (IxNpeDlImageId * imageIdListPtr,
  */
 PUBLIC IX_STATUS
 ixNpeDlLoadedImageGet (IxNpeDlNpeId npeId,
-                       IxNpeDlImageId * imageIdPtr);
+             IxNpeDlImageId *imageIdPtr);
 
 /**
  * @fn PUBLIC IX_STATUS ixNpeDlLatestImageGet (IxNpeDlNpeId npeId, IxNpeDlFunctionalityId
@@ -803,8 +803,8 @@ ixNpeDlLoadedImageGet (IxNpeDlNpeId npeId,
  */
 PUBLIC IX_STATUS
 ixNpeDlLatestImageGet (IxNpeDlNpeId npeId,
-                       IxNpeDlFunctionalityId functionalityId,
-                       IxNpeDlImageId * imageIdPtr);
+             IxNpeDlFunctionalityId functionalityId,
+                    IxNpeDlImageId *imageIdPtr);
 
 /**
  * @ingroup IxNpeDl
@@ -837,7 +837,7 @@ ixNpeDlLatestImageGet (IxNpeDlNpeId npeId,
  *      - IX_SUCCESS if the operation was successful
  *      - IX_NPEDL_PARAM_ERR if a parameter error occured
  *      - IX_FAIL otherwise
- *      - IX_NPEDL_CRITICAL_NPE_ERR failed to reset NPE due to timeout error.
+ *      - IX_NPEDL_CRITICAL_NPE_ERR failed to reset NPE due to timeout error. 
  *        Timeout error could happen if NPE hang
  */
 PUBLIC IX_STATUS
@@ -943,7 +943,7 @@ ixNpeDlNpeExecutionStop (IxNpeDlNpeId npeId);
  *      - IX_FAIL otherwise
  */
 
-PUBLIC IX_STATUS
+PUBLIC IX_STATUS 
 ixNpeDlUnload (void);
 
 /**

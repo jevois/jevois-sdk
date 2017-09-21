@@ -222,19 +222,19 @@
 
 /* OSS interface to the ac97s.. */
 #define AC97_STEREO_MASK (SOUND_MASK_VOLUME|SOUND_MASK_PCM|\
-                          SOUND_MASK_LINE|SOUND_MASK_CD|\
-                          SOUND_MASK_ALTPCM|SOUND_MASK_IGAIN|\
-                          SOUND_MASK_LINE1|SOUND_MASK_VIDEO)
+	SOUND_MASK_LINE|SOUND_MASK_CD|\
+	SOUND_MASK_ALTPCM|SOUND_MASK_IGAIN|\
+	SOUND_MASK_LINE1|SOUND_MASK_VIDEO)
 
 #define AC97_SUPPORTED_MASK (AC97_STEREO_MASK | \
-                             SOUND_MASK_BASS|SOUND_MASK_TREBLE|\
-                             SOUND_MASK_SPEAKER|SOUND_MASK_MIC|\
-                             SOUND_MASK_PHONEIN|SOUND_MASK_PHONEOUT)
+	SOUND_MASK_BASS|SOUND_MASK_TREBLE|\
+	SOUND_MASK_SPEAKER|SOUND_MASK_MIC|\
+	SOUND_MASK_PHONEIN|SOUND_MASK_PHONEOUT)
 
 #define AC97_RECORD_MASK (SOUND_MASK_MIC|\
-                          SOUND_MASK_CD|SOUND_MASK_IGAIN|SOUND_MASK_VIDEO|\
-                          SOUND_MASK_LINE1| SOUND_MASK_LINE|\
-                          SOUND_MASK_PHONEIN)
+	SOUND_MASK_CD|SOUND_MASK_IGAIN|SOUND_MASK_VIDEO|\
+	SOUND_MASK_LINE1| SOUND_MASK_LINE|\
+	SOUND_MASK_PHONEIN)
 
 /* original check is not good enough in case FOO is greater than
  * SOUND_MIXER_NRDEVICES because the supported_mixers has exactly
@@ -247,116 +247,116 @@
                                     (CODEC)->supported_mixers & (1<<FOO) )
 
 struct ac97_codec {
-  /* Linked list of codecs */
-  struct list_head list;
-  
-  /* AC97 controller connected with */
-  void * private_data;
-  
-  char * name;
-  int id;
-  int dev_mixer;
-  int type;
-  u32 model;
-  
-  unsigned int modem: 1;
-  
-  struct ac97_ops * codec_ops;
-  
-  /* controller specific lower leverl ac97 accessing routines.
-     must be re-entrant safe */
-  u16  (*codec_read)  (struct ac97_codec * codec, u8 reg);
-  void (*codec_write) (struct ac97_codec * codec, u8 reg, u16 val);
-  
-  /* Wait for codec-ready.  Ok to sleep here.  */
-  void  (*codec_wait)  (struct ac97_codec * codec);
-  
-  /* callback used by helper drivers for interesting ac97 setups */
-  void  (*codec_unregister) (struct ac97_codec * codec);
-  
-  struct ac97_driver * driver;
-  void * driver_private; /* Private data for the driver */
-  
-  spinlock_t lock;
-  
-  /* OSS mixer masks */
-  int modcnt;
-  int supported_mixers;
-  int stereo_mixers;
-  int record_sources;
-  
-  /* Property flags */
-  int flags;
-  
-  int bit_resolution;
-  
-  /* OSS mixer interface */
-  int  (*read_mixer) (struct ac97_codec * codec, int oss_channel);
-  void (*write_mixer) (struct ac97_codec * codec, int oss_channel,
-                       unsigned int left, unsigned int right);
-  int  (*recmask_io) (struct ac97_codec * codec, int rw, int mask);
-  int  (*mixer_ioctl) (struct ac97_codec * codec, unsigned int cmd, unsigned long arg);
-  
-  /* saved OSS mixer states */
-  unsigned int mixer_state[SOUND_MIXER_NRDEVICES];
-  
-  /* Software Modem interface */
-  int  (*modem_ioctl) (struct ac97_codec * codec, unsigned int cmd, unsigned long arg);
+	/* Linked list of codecs */
+	struct list_head list;
+
+	/* AC97 controller connected with */
+	void *private_data;
+
+	char *name;
+	int id;
+	int dev_mixer; 
+	int type;
+	u32 model;
+
+	unsigned int modem:1;
+
+	struct ac97_ops *codec_ops;
+
+	/* controller specific lower leverl ac97 accessing routines.
+	   must be re-entrant safe */
+	u16  (*codec_read)  (struct ac97_codec *codec, u8 reg);
+	void (*codec_write) (struct ac97_codec *codec, u8 reg, u16 val);
+
+	/* Wait for codec-ready.  Ok to sleep here.  */
+	void  (*codec_wait)  (struct ac97_codec *codec);
+
+	/* callback used by helper drivers for interesting ac97 setups */
+	void  (*codec_unregister) (struct ac97_codec *codec);
+	
+	struct ac97_driver *driver;
+	void *driver_private;	/* Private data for the driver */
+	
+	spinlock_t lock;
+	
+	/* OSS mixer masks */
+	int modcnt;
+	int supported_mixers;
+	int stereo_mixers;
+	int record_sources;
+
+	/* Property flags */
+	int flags;
+
+	int bit_resolution;
+
+	/* OSS mixer interface */
+	int  (*read_mixer) (struct ac97_codec *codec, int oss_channel);
+	void (*write_mixer)(struct ac97_codec *codec, int oss_channel,
+			    unsigned int left, unsigned int right);
+	int  (*recmask_io) (struct ac97_codec *codec, int rw, int mask);
+	int  (*mixer_ioctl)(struct ac97_codec *codec, unsigned int cmd, unsigned long arg);
+
+	/* saved OSS mixer states */
+	unsigned int mixer_state[SOUND_MIXER_NRDEVICES];
+
+	/* Software Modem interface */
+	int  (*modem_ioctl)(struct ac97_codec *codec, unsigned int cmd, unsigned long arg);
 };
 
 /*
- *  Operation structures for each known AC97 chip
+ *	Operation structures for each known AC97 chip
  */
-
+ 
 struct ac97_ops
 {
-  /* Initialise */
-  int (*init) (struct ac97_codec * c);
-  /* Amplifier control */
-  int (*amplifier) (struct ac97_codec * codec, int on);
-  /* Digital mode control */
-  int (*digital) (struct ac97_codec * codec, int slots, int rate, int mode);
-#define AUDIO_DIGITAL   0x8000
-#define AUDIO_PRO   0x4000
-#define AUDIO_DRS   0x2000
-#define AUDIO_CCMASK    0x003F
-  
-#define AC97_DELUDED_MODEM  1 /* Audio codec reports its a modem */
-#define AC97_NO_PCM_VOLUME  2 /* Volume control is missing     */
+	/* Initialise */
+	int (*init)(struct ac97_codec *c);
+	/* Amplifier control */
+	int (*amplifier)(struct ac97_codec *codec, int on);
+	/* Digital mode control */
+	int (*digital)(struct ac97_codec *codec, int slots, int rate, int mode);
+#define AUDIO_DIGITAL		0x8000
+#define AUDIO_PRO		0x4000
+#define AUDIO_DRS		0x2000
+#define AUDIO_CCMASK		0x003F
+	
+#define AC97_DELUDED_MODEM	1	/* Audio codec reports its a modem */
+#define AC97_NO_PCM_VOLUME	2	/* Volume control is missing 	   */
 #define AC97_DEFAULT_POWER_OFF 4 /* Needs warm reset to power up */
 };
 
-extern int ac97_probe_codec (struct ac97_codec *);
+extern int ac97_probe_codec(struct ac97_codec *);
 
-extern struct ac97_codec * ac97_alloc_codec (void);
-extern void ac97_release_codec (struct ac97_codec * codec);
+extern struct ac97_codec *ac97_alloc_codec(void);
+extern void ac97_release_codec(struct ac97_codec *codec);
 
 struct ac97_driver {
-  struct list_head list;
-  char * name;
-  u32 codec_id;
-  u32 codec_mask;
-  int (*probe) (struct ac97_codec * codec, struct ac97_driver * driver);
-  void (*remove) (struct ac97_codec * codec, struct ac97_driver * driver);
+	struct list_head list;
+	char *name;
+	u32 codec_id;
+	u32 codec_mask;
+	int (*probe) (struct ac97_codec *codec, struct ac97_driver *driver);
+	void (*remove) (struct ac97_codec *codec, struct ac97_driver *driver);
 };
 
 /* quirk types */
 enum {
-  AC97_TUNE_DEFAULT = -1, /* use default from quirk list (not valid in list) */
-  AC97_TUNE_NONE = 0,     /* nothing extra to do */
-  AC97_TUNE_HP_ONLY,      /* headphone (true line-out) control as master only */
-  AC97_TUNE_SWAP_HP,      /* swap headphone and master controls */
-  AC97_TUNE_SWAP_SURROUND, /* swap master and surround controls */
-  AC97_TUNE_AD_SHARING,   /* for AD1985, turn on OMS bit and use headphone */
-  AC97_TUNE_ALC_JACK,     /* for Realtek, enable JACK detection */
+	AC97_TUNE_DEFAULT = -1, /* use default from quirk list (not valid in list) */
+	AC97_TUNE_NONE = 0,     /* nothing extra to do */
+	AC97_TUNE_HP_ONLY,      /* headphone (true line-out) control as master only */
+	AC97_TUNE_SWAP_HP,      /* swap headphone and master controls */
+	AC97_TUNE_SWAP_SURROUND, /* swap master and surround controls */
+	AC97_TUNE_AD_SHARING,   /* for AD1985, turn on OMS bit and use headphone */
+	AC97_TUNE_ALC_JACK,     /* for Realtek, enable JACK detection */
 };
 
 struct ac97_quirk {
-  unsigned short vendor;  /* PCI vendor id */
-  unsigned short device;  /* PCI device id */
-  unsigned short mask;    /* device id bit mask, 0 = accept all */
-  const char * name;      /* name shown as info */
-  int type;               /* quirk type above */
+	unsigned short vendor;  /* PCI vendor id */
+	unsigned short device;  /* PCI device id */
+	unsigned short mask;    /* device id bit mask, 0 = accept all */
+	const char *name;       /* name shown as info */
+	int type;               /* quirk type above */
 };
 
 #endif /* _AC97_CODEC_H_ */

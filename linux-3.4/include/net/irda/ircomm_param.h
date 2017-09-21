@@ -1,5 +1,5 @@
 /*********************************************************************
- *
+ *                
  * Filename:      ircomm_param.h
  * Version:       1.0
  * Description:   Parameter handling for the IrCOMM protocol
@@ -8,24 +8,24 @@
  * Created at:    Mon Jun  7 08:47:28 1999
  * Modified at:   Wed Aug 25 13:46:33 1999
  * Modified by:   Dag Brattli <dagb@cs.uit.no>
- *
+ * 
  *     Copyright (c) 1999 Dag Brattli, All Rights Reserved.
- *
- *     This program is free software; you can redistribute it and/or
- *     modify it under the terms of the GNU General Public License as
- *     published by the Free Software Foundation; either version 2 of
+ *     
+ *     This program is free software; you can redistribute it and/or 
+ *     modify it under the terms of the GNU General Public License as 
+ *     published by the Free Software Foundation; either version 2 of 
  *     the License, or (at your option) any later version.
- *
+ * 
  *     This program is distributed in the hope that it will be useful,
  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *     GNU General Public License for more details.
- *
- *     You should have received a copy of the GNU General Public License
- *     along with this program; if not, write to the Free Software
- *     Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+ * 
+ *     You should have received a copy of the GNU General Public License 
+ *     along with this program; if not, write to the Free Software 
+ *     Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
  *     MA 02111-1307 USA
- *
+ *     
  ********************************************************************/
 
 #ifndef IRCOMM_PARAMS_H
@@ -115,33 +115,33 @@
  * Parameter state
  */
 struct ircomm_params {
-  /* General control params */
-  __u8  service_type;
-  __u8  port_type;
-  char  port_name[32];
-  
-  /* Control params for 3- and 9-wire service type */
-  __u32 data_rate;         /* Data rate in bps */
-  __u8  data_format;
-  __u8  flow_control;
-  char  xonxoff[2];
-  char  enqack[2];
-  __u8  line_status;
-  __u8  _break;
-  
-  __u8  null_modem;
-  
-  /* Control params for 9-wire service type */
-  __u8 dte;
-  __u8 dce;
-  __u8 poll;
-  
-  /* Control params for Centronics service type */
+	/* General control params */
+	__u8  service_type;
+	__u8  port_type;
+	char  port_name[32];
+
+	/* Control params for 3- and 9-wire service type */
+	__u32 data_rate;         /* Data rate in bps */
+	__u8  data_format;
+	__u8  flow_control;
+	char  xonxoff[2];
+	char  enqack[2];
+	__u8  line_status;
+	__u8  _break;
+
+	__u8  null_modem;
+
+	/* Control params for 9-wire service type */
+	__u8 dte;
+	__u8 dce;
+	__u8 poll;
+
+	/* Control params for Centronics service type */
 };
 
 struct ircomm_tty_cb; /* Forward decl. */
 
-int ircomm_param_request (struct ircomm_tty_cb * self, __u8 pi, int flush);
+int ircomm_param_request(struct ircomm_tty_cb *self, __u8 pi, int flush);
 
 extern pi_param_info_t ircomm_param_info;
 

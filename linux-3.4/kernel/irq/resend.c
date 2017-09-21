@@ -23,28 +23,28 @@
 #ifdef CONFIG_HARDIRQS_SW_RESEND
 
 /* Bitmap to handle software resend of interrupts: */
-static DECLARE_BITMAP (irqs_resend, IRQ_BITMAP_BITS);
+static DECLARE_BITMAP(irqs_resend, IRQ_BITMAP_BITS);
 
 /*
  * Run software resends of IRQ's
  */
-static void resend_irqs (unsigned long arg)
+static void resend_irqs(unsigned long arg)
 {
-  struct irq_desc * desc;
-  int irq;
-  
-  while (!bitmap_empty (irqs_resend, nr_irqs) ) {
-    irq = find_first_bit (irqs_resend, nr_irqs);
-    clear_bit (irq, irqs_resend);
-    desc = irq_to_desc (irq);
-    local_irq_disable();
-    desc->handle_irq (irq, desc);
-    local_irq_enable();
-  }
+	struct irq_desc *desc;
+	int irq;
+
+	while (!bitmap_empty(irqs_resend, nr_irqs)) {
+		irq = find_first_bit(irqs_resend, nr_irqs);
+		clear_bit(irq, irqs_resend);
+		desc = irq_to_desc(irq);
+		local_irq_disable();
+		desc->handle_irq(irq, desc);
+		local_irq_enable();
+	}
 }
 
 /* Tasklet to handle resend: */
-static DECLARE_TASKLET (resend_tasklet, resend_irqs, 0);
+static DECLARE_TASKLET(resend_tasklet, resend_irqs, 0);
 
 #endif
 
@@ -53,28 +53,28 @@ static DECLARE_TASKLET (resend_tasklet, resend_irqs, 0);
  *
  * Is called with interrupts disabled and desc->lock held.
  */
-void check_irq_resend (struct irq_desc * desc, unsigned int irq)
+void check_irq_resend(struct irq_desc *desc, unsigned int irq)
 {
-  /*
-   * We do not resend level type interrupts. Level type
-   * interrupts are resent by hardware when they are still
-   * active.
-   */
-  if (irq_settings_is_level (desc) )
-  { return; }
-  if (desc->istate & IRQS_REPLAY)
-  { return; }
-  if (desc->istate & IRQS_PENDING) {
-    desc->istate &= ~IRQS_PENDING;
-    desc->istate |= IRQS_REPLAY;
-    
-    if (!desc->irq_data.chip->irq_retrigger ||
-        !desc->irq_data.chip->irq_retrigger (&desc->irq_data) ) {
-      #ifdef CONFIG_HARDIRQS_SW_RESEND
-      /* Set it pending and activate the softirq: */
-      set_bit (irq, irqs_resend);
-      tasklet_schedule (&resend_tasklet);
-      #endif
-    }
-  }
+	/*
+	 * We do not resend level type interrupts. Level type
+	 * interrupts are resent by hardware when they are still
+	 * active.
+	 */
+	if (irq_settings_is_level(desc))
+		return;
+	if (desc->istate & IRQS_REPLAY)
+		return;
+	if (desc->istate & IRQS_PENDING) {
+		desc->istate &= ~IRQS_PENDING;
+		desc->istate |= IRQS_REPLAY;
+
+		if (!desc->irq_data.chip->irq_retrigger ||
+		    !desc->irq_data.chip->irq_retrigger(&desc->irq_data)) {
+#ifdef CONFIG_HARDIRQS_SW_RESEND
+			/* Set it pending and activate the softirq: */
+			set_bit(irq, irqs_resend);
+			tasklet_schedule(&resend_tasklet);
+#endif
+		}
+	}
 }

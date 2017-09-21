@@ -34,27 +34,27 @@
 #include <linux/types.h>
 
 struct sd_direct_cmnd {
-  u8 cmnd[12];
-  void * buf;
-  int buf_len;
+	u8 cmnd[12];
+	void *buf;
+	int buf_len;
 };
 
 struct sd_rsp {
-  void * rsp;
-  int rsp_len;
+	void *rsp;
+	int rsp_len;
 };
 
-int rts51x_open (struct inode * inode, struct file * filp);
-int rts51x_release (struct inode * inode, struct file * filp);
-ssize_t rts51x_read (struct file * filp, char __user * buf, size_t count,
-                     loff_t * f_pos);
-ssize_t rts51x_write (struct file * filp, const char __user * buf, size_t count,
-                      loff_t * f_pos);
+int rts51x_open(struct inode *inode, struct file *filp);
+int rts51x_release(struct inode *inode, struct file *filp);
+ssize_t rts51x_read(struct file *filp, char __user *buf, size_t count,
+		    loff_t *f_pos);
+ssize_t rts51x_write(struct file *filp, const char __user *buf, size_t count,
+		     loff_t *f_pos);
 #if 0 /* LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 36) */
-int rts51x_ioctl (struct inode * inode, struct file * filp, unsigned int cmd,
-                  unsigned long arg);
+int rts51x_ioctl(struct inode *inode, struct file *filp, unsigned int cmd,
+		 unsigned long arg);
 #else
-long rts51x_ioctl (struct file * filp, unsigned int cmd, unsigned long arg);
+long rts51x_ioctl(struct file *filp, unsigned int cmd, unsigned long arg);
 #endif
 
 #endif

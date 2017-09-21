@@ -23,8 +23,8 @@
  * of the 32-bit virtual address (the "effective segment ID") in order
  * to spread out the entries in the MMU hash table.
  */
-# define CTX_TO_VSID(ctx, va) (((ctx) * (897 * 16) + ((va) >> 28) * 0x111) \
-                               & 0xffffff)
+# define CTX_TO_VSID(ctx, va)	(((ctx) * (897 * 16) + ((va) >> 28) * 0x111) \
+				 & 0xffffff)
 
 /*
    MicroBlaze has 256 contexts, so we can just rotate through these
@@ -33,13 +33,13 @@
    to represent all kernel pages as shared among all contexts.
  */
 
-static inline void enter_lazy_tlb (struct mm_struct * mm, struct task_struct * tsk)
+static inline void enter_lazy_tlb(struct mm_struct *mm, struct task_struct *tsk)
 {
 }
 
-# define NO_CONTEXT 256
-# define LAST_CONTEXT 255
-# define FIRST_CONTEXT  1
+# define NO_CONTEXT	256
+# define LAST_CONTEXT	255
+# define FIRST_CONTEXT	1
 
 /*
  * Set the current MMU context.
@@ -51,7 +51,7 @@ static inline void enter_lazy_tlb (struct mm_struct * mm, struct task_struct * t
  * can be used for debugging on all processors (if you happen to have
  * an Abatron).
  */
-extern void set_context (mm_context_t context, pgd_t * pgd);
+extern void set_context(mm_context_t context, pgd_t *pgd);
 
 /*
  * Bitmap of contexts in use.
@@ -72,69 +72,69 @@ extern mm_context_t next_mmu_context;
  * These variables support that.
  */
 extern atomic_t nr_free_contexts;
-extern struct mm_struct * context_mm[LAST_CONTEXT + 1];
-extern void steal_context (void);
+extern struct mm_struct *context_mm[LAST_CONTEXT+1];
+extern void steal_context(void);
 
 /*
  * Get a new mmu context for the address space described by `mm'.
  */
-static inline void get_mmu_context (struct mm_struct * mm)
+static inline void get_mmu_context(struct mm_struct *mm)
 {
-  mm_context_t ctx;
-  
-  if (mm->context != NO_CONTEXT)
-  { return; }
-  while (atomic_dec_if_positive (&nr_free_contexts) < 0)
-  { steal_context(); }
-  ctx = next_mmu_context;
-  while (test_and_set_bit (ctx, context_map) ) {
-    ctx = find_next_zero_bit (context_map, LAST_CONTEXT + 1, ctx);
-    if (ctx > LAST_CONTEXT)
-    { ctx = 0; }
-  }
-  next_mmu_context = (ctx + 1) & LAST_CONTEXT;
-  mm->context = ctx;
-  context_mm[ctx] = mm;
+	mm_context_t ctx;
+
+	if (mm->context != NO_CONTEXT)
+		return;
+	while (atomic_dec_if_positive(&nr_free_contexts) < 0)
+		steal_context();
+	ctx = next_mmu_context;
+	while (test_and_set_bit(ctx, context_map)) {
+		ctx = find_next_zero_bit(context_map, LAST_CONTEXT+1, ctx);
+		if (ctx > LAST_CONTEXT)
+			ctx = 0;
+	}
+	next_mmu_context = (ctx + 1) & LAST_CONTEXT;
+	mm->context = ctx;
+	context_mm[ctx] = mm;
 }
 
 /*
  * Set up the context for a new address space.
  */
-# define init_new_context(tsk, mm)  (((mm)->context = NO_CONTEXT), 0)
+# define init_new_context(tsk, mm)	(((mm)->context = NO_CONTEXT), 0)
 
 /*
  * We're finished using the context for an address space.
  */
-static inline void destroy_context (struct mm_struct * mm)
+static inline void destroy_context(struct mm_struct *mm)
 {
-  if (mm->context != NO_CONTEXT) {
-    clear_bit (mm->context, context_map);
-    mm->context = NO_CONTEXT;
-    atomic_inc (&nr_free_contexts);
-  }
+	if (mm->context != NO_CONTEXT) {
+		clear_bit(mm->context, context_map);
+		mm->context = NO_CONTEXT;
+		atomic_inc(&nr_free_contexts);
+	}
 }
 
-static inline void switch_mm (struct mm_struct * prev, struct mm_struct * next,
-                              struct task_struct * tsk)
+static inline void switch_mm(struct mm_struct *prev, struct mm_struct *next,
+			     struct task_struct *tsk)
 {
-  tsk->thread.pgdir = next->pgd;
-  get_mmu_context (next);
-  set_context (next->context, next->pgd);
+	tsk->thread.pgdir = next->pgd;
+	get_mmu_context(next);
+	set_context(next->context, next->pgd);
 }
 
 /*
  * After we have set current->mm to a new value, this activates
  * the context for the new mm so we see the new mappings.
  */
-static inline void activate_mm (struct mm_struct * active_mm,
-                                struct mm_struct * mm)
+static inline void activate_mm(struct mm_struct *active_mm,
+			struct mm_struct *mm)
 {
-  current->thread.pgdir = mm->pgd;
-  get_mmu_context (mm);
-  set_context (mm->context, mm->pgd);
+	current->thread.pgdir = mm->pgd;
+	get_mmu_context(mm);
+	set_context(mm->context, mm->pgd);
 }
 
-extern void mmu_context_init (void);
+extern void mmu_context_init(void);
 
 # endif /* __KERNEL__ */
 #endif /* _ASM_MICROBLAZE_MMU_CONTEXT_H */

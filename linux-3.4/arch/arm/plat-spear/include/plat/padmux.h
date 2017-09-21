@@ -23,8 +23,8 @@
  * mask: mask of mode reg
  */
 struct pmx_reg {
-  u32 offset;
-  u32 mask;
+	u32 offset;
+	u32 mask;
 };
 
 /*
@@ -34,8 +34,8 @@ struct pmx_reg {
  * mask: mask for supported mode
  */
 struct pmx_dev_mode {
-  u32 ids;
-  u32 mask;
+	u32 ids;
+	u32 mask;
 };
 
 /*
@@ -45,9 +45,9 @@ struct pmx_dev_mode {
  * mask: mode mask
  */
 struct pmx_mode {
-  char * name;
-  u32 id;
-  u32 mask;
+	char *name;
+	u32 id;
+	u32 mask;
 };
 
 /*
@@ -60,11 +60,11 @@ struct pmx_mode {
  * enb_on_reset: if 1, mask bits to be cleared in reg otherwise to be set in reg
  */
 struct pmx_dev {
-  char * name;
-  struct pmx_dev_mode * modes;
-  u8 mode_count;
-  bool is_active;
-  bool enb_on_reset;
+	char *name;
+	struct pmx_dev_mode *modes;
+	u8 mode_count;
+	bool is_active;
+	bool enb_on_reset;
 };
 
 /*
@@ -78,15 +78,15 @@ struct pmx_dev {
  * mux_reg: structure of device mux config register
  */
 struct pmx_driver {
-  struct pmx_mode * mode;
-  struct pmx_dev ** devs;
-  u8 devs_count;
-  u32 * base;
-  struct pmx_reg mode_reg;
-  struct pmx_reg mux_reg;
+	struct pmx_mode *mode;
+	struct pmx_dev **devs;
+	u8 devs_count;
+	u32 *base;
+	struct pmx_reg mode_reg;
+	struct pmx_reg mux_reg;
 };
 
 /* pmx functions */
-int pmx_register (struct pmx_driver * driver);
+int pmx_register(struct pmx_driver *driver);
 
 #endif /* __PLAT_PADMUX_H */

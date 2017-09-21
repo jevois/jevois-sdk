@@ -1,26 +1,26 @@
 /******************************************************************************
  * gntdev.h
- *
+ * 
  * Interface to /dev/xen/gntdev.
- *
+ * 
  * Copyright (c) 2007, D G Murray
- *
+ * 
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation; or, when distributed
  * separately from the Linux kernel or incorporated into other
  * software packages, subject to the following license:
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this source file (the "Software"), to deal in the Software without
  * restriction, including without limitation the rights to use, copy, modify,
  * merge, publish, distribute, sublicense, and/or sell copies of the Software,
  * and to permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,10 +34,10 @@
 #define __LINUX_PUBLIC_GNTDEV_H__
 
 struct ioctl_gntdev_grant_ref {
-  /* The domain ID of the grant to be mapped. */
-  uint32_t domid;
-  /* The grant reference of the grant to be mapped. */
-  uint32_t ref;
+	/* The domain ID of the grant to be mapped. */
+	uint32_t domid;
+	/* The grant reference of the grant to be mapped. */
+	uint32_t ref;
 };
 
 /*
@@ -46,18 +46,18 @@ struct ioctl_gntdev_grant_ref {
  * until mmap() is called with @index as the offset.
  */
 #define IOCTL_GNTDEV_MAP_GRANT_REF \
-  _IOC(_IOC_NONE, 'G', 0, sizeof(struct ioctl_gntdev_map_grant_ref))
+_IOC(_IOC_NONE, 'G', 0, sizeof(struct ioctl_gntdev_map_grant_ref))
 struct ioctl_gntdev_map_grant_ref {
-  /* IN parameters */
-  /* The number of grants to be mapped. */
-  uint32_t count;
-  uint32_t pad;
-  /* OUT parameters */
-  /* The offset to be used on a subsequent call to mmap(). */
-  uint64_t index;
-  /* Variable IN parameter. */
-  /* Array of grant references, of size @count. */
-  struct ioctl_gntdev_grant_ref refs[1];
+	/* IN parameters */
+	/* The number of grants to be mapped. */
+	uint32_t count;
+	uint32_t pad;
+	/* OUT parameters */
+	/* The offset to be used on a subsequent call to mmap(). */
+	uint64_t index;
+	/* Variable IN parameter. */
+	/* Array of grant references, of size @count. */
+	struct ioctl_gntdev_grant_ref refs[1];
 };
 
 /*
@@ -66,14 +66,14 @@ struct ioctl_gntdev_map_grant_ref {
  * before this ioctl is called, or an error will result.
  */
 #define IOCTL_GNTDEV_UNMAP_GRANT_REF \
-  _IOC(_IOC_NONE, 'G', 1, sizeof(struct ioctl_gntdev_unmap_grant_ref))
+_IOC(_IOC_NONE, 'G', 1, sizeof(struct ioctl_gntdev_unmap_grant_ref))
 struct ioctl_gntdev_unmap_grant_ref {
-  /* IN parameters */
-  /* The offset was returned by the corresponding map operation. */
-  uint64_t index;
-  /* The number of pages to be unmapped. */
-  uint32_t count;
-  uint32_t pad;
+	/* IN parameters */
+	/* The offset was returned by the corresponding map operation. */
+	uint64_t index;
+	/* The number of pages to be unmapped. */
+	uint32_t count;
+	uint32_t pad;
 };
 
 /*
@@ -89,17 +89,17 @@ struct ioctl_gntdev_unmap_grant_ref {
  *      contiguously-allocated range at once, and not any subrange thereof.
  */
 #define IOCTL_GNTDEV_GET_OFFSET_FOR_VADDR \
-  _IOC(_IOC_NONE, 'G', 2, sizeof(struct ioctl_gntdev_get_offset_for_vaddr))
+_IOC(_IOC_NONE, 'G', 2, sizeof(struct ioctl_gntdev_get_offset_for_vaddr))
 struct ioctl_gntdev_get_offset_for_vaddr {
-  /* IN parameters */
-  /* The virtual address of the first mapped page in a range. */
-  uint64_t vaddr;
-  /* OUT parameters */
-  /* The offset that was used in the initial mmap() operation. */
-  uint64_t offset;
-  /* The number of pages mapped in the VM area that begins at @vaddr. */
-  uint32_t count;
-  uint32_t pad;
+	/* IN parameters */
+	/* The virtual address of the first mapped page in a range. */
+	uint64_t vaddr;
+	/* OUT parameters */
+	/* The offset that was used in the initial mmap() operation. */
+	uint64_t offset;
+	/* The number of pages mapped in the VM area that begins at @vaddr. */
+	uint32_t count;
+	uint32_t pad;
 };
 
 /*
@@ -109,11 +109,11 @@ struct ioctl_gntdev_get_offset_for_vaddr {
  * N.B. This must be called before any other ioctl is performed on the device.
  */
 #define IOCTL_GNTDEV_SET_MAX_GRANTS \
-  _IOC(_IOC_NONE, 'G', 3, sizeof(struct ioctl_gntdev_set_max_grants))
+_IOC(_IOC_NONE, 'G', 3, sizeof(struct ioctl_gntdev_set_max_grants))
 struct ioctl_gntdev_set_max_grants {
-  /* IN parameter */
-  /* The maximum number of grants that may be mapped at once. */
-  uint32_t count;
+	/* IN parameter */
+	/* The maximum number of grants that may be mapped at once. */
+	uint32_t count;
 };
 
 /*
@@ -127,19 +127,19 @@ struct ioctl_gntdev_set_max_grants {
  * to occur.
  */
 #define IOCTL_GNTDEV_SET_UNMAP_NOTIFY \
-  _IOC(_IOC_NONE, 'G', 7, sizeof(struct ioctl_gntdev_unmap_notify))
+_IOC(_IOC_NONE, 'G', 7, sizeof(struct ioctl_gntdev_unmap_notify))
 struct ioctl_gntdev_unmap_notify {
-  /* IN parameters */
-  /* Offset in the file descriptor for a byte within the page (same as
-   * used in mmap). If using UNMAP_NOTIFY_CLEAR_BYTE, this is the byte to
-   * be cleared. Otherwise, it can be any byte in the page whose
-   * notification we are adjusting.
-   */
-  uint64_t index;
-  /* Action(s) to take on unmap */
-  uint32_t action;
-  /* Event channel to notify */
-  uint32_t event_channel_port;
+	/* IN parameters */
+	/* Offset in the file descriptor for a byte within the page (same as
+	 * used in mmap). If using UNMAP_NOTIFY_CLEAR_BYTE, this is the byte to
+	 * be cleared. Otherwise, it can be any byte in the page whose
+	 * notification we are adjusting.
+	 */
+	uint64_t index;
+	/* Action(s) to take on unmap */
+	uint32_t action;
+	/* Event channel to notify */
+	uint32_t event_channel_port;
 };
 
 /* Clear (set to zero) the byte specified by index */

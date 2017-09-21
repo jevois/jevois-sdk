@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -26,11 +26,11 @@
 
 
 
-extern  void  boot_store_sp (void);
-extern  void  boot_restore_sp (void);
-extern  void  boot_set_sp (void);
-extern  void  boot_halt (void);
-extern  int   boot_standby_mode (void);
+extern  void  boot_store_sp(void);
+extern  void  boot_restore_sp(void);
+extern  void  boot_set_sp(void);
+extern  void  boot_halt(void);
+extern  int   boot_standby_mode(void);
 
 
 

@@ -62,36 +62,36 @@ typedef struct _RGX_SERVER_TQ_CONTEXT_ RGX_SERVER_TQ_CONTEXT;
 /*!
 *******************************************************************************
 
- @Function  PVRSRVRGXCreateTransferContextKM
+ @Function	PVRSRVRGXCreateTransferContextKM
 
  @Description
-  Server-side implementation of RGXCreateTransferContext
+	Server-side implementation of RGXCreateTransferContext
 
  @Input pvDeviceNode - device node
-
+ 
 FIXME fill this in
 
  @Return   PVRSRV_ERROR
 
 ******************************************************************************/
 IMG_EXPORT
-PVRSRV_ERROR PVRSRVRGXCreateTransferContextKM (CONNECTION_DATA   *  psConnection,
-    PVRSRV_DEVICE_NODE  * psDeviceNode,
-    IMG_UINT32       ui32Priority,
-    IMG_DEV_VIRTADDR     sMCUFenceAddr,
-    IMG_UINT32       ui32FrameworkCommandSize,
-    IMG_PBYTE        pabyFrameworkCommand,
-    IMG_HANDLE       hMemCtxPrivData,
-    RGX_SERVER_TQ_CONTEXT ** ppsTransferContext);
-    
-    
+PVRSRV_ERROR PVRSRVRGXCreateTransferContextKM(CONNECTION_DATA			*psConnection,
+										   PVRSRV_DEVICE_NODE		*psDeviceNode,
+										   IMG_UINT32				ui32Priority,
+										   IMG_DEV_VIRTADDR			sMCUFenceAddr,
+										   IMG_UINT32				ui32FrameworkCommandSize,
+										   IMG_PBYTE				pabyFrameworkCommand,
+										   IMG_HANDLE				hMemCtxPrivData,
+										   RGX_SERVER_TQ_CONTEXT	**ppsTransferContext);
+
+
 /*!
 *******************************************************************************
 
- @Function  PVRSRVRGXDestroyTransferContextKM
+ @Function	PVRSRVRGXDestroyTransferContextKM
 
  @Description
-  Server-side implementation of RGXDestroyTransferContext
+	Server-side implementation of RGXDestroyTransferContext
 
  @Input psTransferContext - Transfer context
 
@@ -99,44 +99,44 @@ PVRSRV_ERROR PVRSRVRGXCreateTransferContextKM (CONNECTION_DATA   *  psConnection
 
 ******************************************************************************/
 IMG_EXPORT
-PVRSRV_ERROR PVRSRVRGXDestroyTransferContextKM (RGX_SERVER_TQ_CONTEXT * psTransferContext);
+PVRSRV_ERROR PVRSRVRGXDestroyTransferContextKM(RGX_SERVER_TQ_CONTEXT *psTransferContext);
 
 /*!
 *******************************************************************************
 
- @Function  PVRSRVSubmitTransferKM
+ @Function	PVRSRVSubmitTransferKM
 
  @Description
-  Schedules one or more 2D or 3D HW commands on the firmware
+	Schedules one or more 2D or 3D HW commands on the firmware
 
 
  @Return   PVRSRV_ERROR
 
 ******************************************************************************/
 IMG_EXPORT
-PVRSRV_ERROR PVRSRVRGXSubmitTransferKM (RGX_SERVER_TQ_CONTEXT * psTransferContext,
-                                        IMG_UINT32        ui32PrepareCount,
-                                        IMG_UINT32    *    paui32ClientFenceCount,
-                                        PRGXFWIF_UFO_ADDR  ** papauiClientFenceUFOAddress,
-                                        IMG_UINT32    **    papaui32ClientFenceValue,
-                                        IMG_UINT32    *    paui32ClientUpdateCount,
-                                        PRGXFWIF_UFO_ADDR  ** papauiClientUpdateUFOAddress,
-                                        IMG_UINT32    **    papaui32ClientUpdateValue,
-                                        IMG_UINT32    *    paui32ServerSyncCount,
-                                        IMG_UINT32    **    papaui32ServerSyncFlags,
-                                        SERVER_SYNC_PRIMITIVE ** *papapsServerSyncs,
-                                        IMG_UINT32        ui32NumFenceFDs,
-                                        IMG_INT32    *   paui32FenceFDs,
-                                        IMG_UINT32    *    paui32FWCommandSize,
-                                        IMG_UINT8    **   papaui8FWCommand,
-                                        IMG_UINT32    *    pui32TQPrepareFlags);
-                                        
+PVRSRV_ERROR PVRSRVRGXSubmitTransferKM(RGX_SERVER_TQ_CONTEXT	*psTransferContext,
+									IMG_UINT32				ui32PrepareCount,
+									IMG_UINT32				*paui32ClientFenceCount,
+									PRGXFWIF_UFO_ADDR		**papauiClientFenceUFOAddress,
+									IMG_UINT32				**papaui32ClientFenceValue,
+									IMG_UINT32				*paui32ClientUpdateCount,
+									PRGXFWIF_UFO_ADDR		**papauiClientUpdateUFOAddress,
+									IMG_UINT32				**papaui32ClientUpdateValue,
+									IMG_UINT32				*paui32ServerSyncCount,
+									IMG_UINT32				**papaui32ServerSyncFlags,
+									SERVER_SYNC_PRIMITIVE	***papapsServerSyncs,
+									IMG_UINT32				ui32NumFenceFDs,
+									IMG_INT32				*paui32FenceFDs,
+									IMG_UINT32				*paui32FWCommandSize,
+									IMG_UINT8				**papaui8FWCommand,
+									IMG_UINT32				*pui32TQPrepareFlags);
+
 IMG_EXPORT
-PVRSRV_ERROR PVRSRVRGXSetTransferContextPriorityKM (CONNECTION_DATA * psConnection,
-    RGX_SERVER_TQ_CONTEXT * psTransferContext,
-    IMG_UINT32 ui32Priority);
-    
+PVRSRV_ERROR PVRSRVRGXSetTransferContextPriorityKM(CONNECTION_DATA *psConnection,
+												   RGX_SERVER_TQ_CONTEXT *psTransferContext,
+												   IMG_UINT32 ui32Priority);
+
 /* Debug - check if transfer context is waiting on a fence */
-IMG_VOID CheckForStalledTransferCtxt (PVRSRV_RGXDEV_INFO * psDevInfo);
+IMG_VOID CheckForStalledTransferCtxt(PVRSRV_RGXDEV_INFO *psDevInfo);
 
 #endif /* __RGXTRANSFER_H__ */

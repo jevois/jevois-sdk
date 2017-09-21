@@ -8,12 +8,12 @@
  * published by the Free Software Foundation.
  *
  *  Changelog:
- *   15-10-1996 RMK Created
+ *   15-10-1996	RMK	Created
  */
 
 #ifndef __ASM_SERIAL_H
 #define __ASM_SERIAL_H
 
-#define BASE_BAUD (1843200 / 16)
+#define BASE_BAUD	(1843200 / 16)
 
 #endif

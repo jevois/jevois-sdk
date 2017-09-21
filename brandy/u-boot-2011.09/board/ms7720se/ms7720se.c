@@ -32,28 +32,28 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-#define LED_BASE  0xB0800000
+#define LED_BASE	0xB0800000
 
-int checkboard (void)
+int checkboard(void)
 {
-  puts ("BOARD: Hitachi UL MS7720SE\n");
-  return 0;
+	puts("BOARD: Hitachi UL MS7720SE\n");
+	return 0;
 }
 
-int board_init (void)
+int board_init(void)
 {
-  return 0;
+	return 0;
 }
 
-int dram_init (void)
+int dram_init(void)
 {
-  gd->bd->bi_memstart = CONFIG_SYS_SDRAM_BASE;
-  gd->bd->bi_memsize = CONFIG_SYS_SDRAM_SIZE;
-  printf ("DRAM:  %dMB\n", CONFIG_SYS_SDRAM_SIZE / (1024 * 1024) );
-  return 0;
+	gd->bd->bi_memstart = CONFIG_SYS_SDRAM_BASE;
+	gd->bd->bi_memsize = CONFIG_SYS_SDRAM_SIZE;
+	printf("DRAM:  %dMB\n", CONFIG_SYS_SDRAM_SIZE / (1024 * 1024));
+	return 0;
 }
 
-void led_set_state (unsigned short value)
+void led_set_state(unsigned short value)
 {
-  outw (value & 0xFF, LED_BASE);
+	outw(value & 0xFF, LED_BASE);
 }

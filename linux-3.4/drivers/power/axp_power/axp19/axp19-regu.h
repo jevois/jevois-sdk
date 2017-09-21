@@ -23,8 +23,8 @@
 #define AXP19_DCDC_MODESET      POWER19_DCDC_MODESET
 #define AXP19_DCDC_FREQSET      POWER19_DCDC_FREQSET
 
-extern struct axp_funcdev_info (* axp19_regu_init (void) ) [8];
-extern void axp19_regu_exit (void);
+extern struct axp_funcdev_info (* axp19_regu_init(void))[8];
+extern void axp19_regu_exit(void);
 
 #endif
 

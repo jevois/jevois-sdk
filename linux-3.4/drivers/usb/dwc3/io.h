@@ -4,7 +4,7 @@
  * Copyright (C) 2010-2011 Texas Instruments Incorporated - http://www.ti.com
  *
  * Authors: Felipe Balbi <balbi@ti.com>,
- *      Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+ *	    Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -41,14 +41,14 @@
 
 #include <linux/io.h>
 
-static inline u32 dwc3_readl (void __iomem * base, u32 offset)
+static inline u32 dwc3_readl(void __iomem *base, u32 offset)
 {
-  return readl (base + offset);
+	return readl(base + offset);
 }
 
-static inline void dwc3_writel (void __iomem * base, u32 offset, u32 value)
+static inline void dwc3_writel(void __iomem *base, u32 offset, u32 value)
 {
-  writel (value, base + offset);
+	writel(value, base + offset);
 }
 
 #endif /* __DRIVERS_USB_DWC3_IO_H */

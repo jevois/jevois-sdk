@@ -16,20 +16,20 @@
 #include <linux/kernel.h>
 #include <mach/gpio.h>
 
-#define AXP_PINCTRL_GPIO0 PINCTRL_PIN(0, "GPIO0")     /* axp22x GPIO0 */
-#define AXP_PINCTRL_GPIO1 PINCTRL_PIN(1, "GPIO1")     /* axp22x GPIO1 */
-#define AXP_PINCTRL_GPIO2 PINCTRL_PIN(2, "GPIO2")     /* axp22x DC1SW : power supply for LCD   OUTPUT */
-#define AXP_PINCTRL_GPIO3 PINCTRL_PIN(3, "GPIO3")     /* axp22x CHGLED : power supply for moto OUTPUT */
-#define AXP_PINCTRL_GPIO4 PINCTRL_PIN(4, "GPIO4")     /* axp22x N_VBUSEN : OUTPUT */
-#define AXP_PINCTRL_GPIO5 PINCTRL_PIN(5, "GPIO5")     /* axp15x WAKEUP PIN*/
-#define AXP_PINCTRL_GPIO6 PINCTRL_PIN(6, "GPIO6")     /*  */
-#define AXP_PINCTRL_GPIO7 PINCTRL_PIN(7, "GPIO7")     /*  */
+#define AXP_PINCTRL_GPIO0	PINCTRL_PIN(0, "GPIO0")     /* axp22x GPIO0 */
+#define AXP_PINCTRL_GPIO1	PINCTRL_PIN(1, "GPIO1")     /* axp22x GPIO1 */
+#define AXP_PINCTRL_GPIO2	PINCTRL_PIN(2, "GPIO2")     /* axp22x DC1SW : power supply for LCD   OUTPUT */
+#define AXP_PINCTRL_GPIO3	PINCTRL_PIN(3, "GPIO3")     /* axp22x CHGLED : power supply for moto OUTPUT */
+#define AXP_PINCTRL_GPIO4	PINCTRL_PIN(4, "GPIO4")     /* axp22x N_VBUSEN : OUTPUT */
+#define AXP_PINCTRL_GPIO5	PINCTRL_PIN(5, "GPIO5")     /* axp15x WAKEUP PIN*/
+#define AXP_PINCTRL_GPIO6	PINCTRL_PIN(6, "GPIO6")     /*  */
+#define AXP_PINCTRL_GPIO7	PINCTRL_PIN(7, "GPIO7")     /*  */
 
 /*
  * GPIO Registers.
  */
 
-/*    AXP22
+/*    AXP22   
 * GPIO0<-->GPIO0/LDO(PIN 37)
 * GPIO1<-->GPIO1/LDO(PIN 31)
 * GPIO2<-->DC1SW(PIN 22)
@@ -89,57 +89,57 @@
 #define AXP_GPIO6_CFG                   (0)//0x11
 #endif
 
-#define AXP_PIN_NAME_MAX_LEN  8
+#define AXP_PIN_NAME_MAX_LEN	8
 
 struct axp_desc_function {
-  const char * name;
-  u8         muxval;
+	const char *name;
+	u8         muxval;
 };
 
 struct axp_desc_pin {
-  struct pinctrl_pin_desc  pin;
-  struct axp_desc_function * functions;
+	struct pinctrl_pin_desc	 pin;
+	struct axp_desc_function *functions;
 };
 
 struct axp_pinctrl_desc {
-  const struct axp_desc_pin * pins;
-  int       npins;
+	const struct axp_desc_pin *pins;
+	int			  npins;
 };
 
 struct axp_pinctrl_function {
-  const char * name;
-  const char ** groups;
-  unsigned  ngroups;
+	const char	*name;
+	const char	**groups;
+	unsigned	ngroups;
 };
 
 struct axp_pinctrl_group {
-  const char * name;
-  unsigned long config;
-  unsigned  pin;
+	const char	*name;
+	unsigned long	config;
+	unsigned	pin;
 };
 
 struct axp_pinctrl {
-  struct device        *        dev;
-  struct pinctrl_dev      *     pctl_dev;
-  struct gpio_chip       *      gpio_chip;
-  struct axp_pinctrl_desc   *   desc;
-  struct axp_pinctrl_function * functions;
-  unsigned                     nfunctions;
-  struct axp_pinctrl_group   *  groups;
-  unsigned                     ngroups;
+	struct device                *dev;
+	struct pinctrl_dev           *pctl_dev;
+	struct gpio_chip             *gpio_chip;
+	struct axp_pinctrl_desc	     *desc;
+	struct axp_pinctrl_function  *functions;
+	unsigned                     nfunctions;
+	struct axp_pinctrl_group     *groups;
+	unsigned                     ngroups;
 };
 
-#define AXP_PIN_DESC(_pin, ...)         \
-  {             \
-    .pin = _pin,          \
-    .functions = (struct axp_desc_function[]){  \
-      __VA_ARGS__, { } },     \
-  }
+#define AXP_PIN_DESC(_pin, ...)					\
+	{							\
+		.pin = _pin,					\
+		.functions = (struct axp_desc_function[]){	\
+			__VA_ARGS__, { } },			\
+	}
 
-#define AXP_FUNCTION(_val, _name)       \
-  {             \
-    .name = _name,          \
-            .muxval = _val,         \
-  }
+#define AXP_FUNCTION(_val, _name)				\
+	{							\
+		.name = _name,					\
+		.muxval = _val,					\
+	}
 
 #endif /* __PINCTRL_AXP_H */

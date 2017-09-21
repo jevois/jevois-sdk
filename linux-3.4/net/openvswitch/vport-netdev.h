@@ -23,20 +23,20 @@
 
 #include "vport.h"
 
-struct vport * ovs_netdev_get_vport (struct net_device * dev);
+struct vport *ovs_netdev_get_vport(struct net_device *dev);
 
 struct netdev_vport {
-  struct net_device * dev;
+	struct net_device *dev;
 };
 
 static inline struct netdev_vport *
-netdev_vport_priv (const struct vport * vport)
+netdev_vport_priv(const struct vport *vport)
 {
-  return vport_priv (vport);
+	return vport_priv(vport);
 }
 
-const char * ovs_netdev_get_name (const struct vport *);
-const char * ovs_netdev_get_config (const struct vport *);
-int ovs_netdev_get_ifindex (const struct vport *);
+const char *ovs_netdev_get_name(const struct vport *);
+const char *ovs_netdev_get_config(const struct vport *);
+int ovs_netdev_get_ifindex(const struct vport *);
 
 #endif /* vport_netdev.h */

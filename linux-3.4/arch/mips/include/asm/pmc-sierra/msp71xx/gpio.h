@@ -17,30 +17,30 @@
 /* new generic GPIO API - see Documentation/gpio.txt */
 #include <asm-generic/gpio.h>
 
-#define gpio_get_value  __gpio_get_value
-#define gpio_set_value  __gpio_set_value
-#define gpio_cansleep __gpio_cansleep
+#define gpio_get_value	__gpio_get_value
+#define gpio_set_value	__gpio_set_value
+#define gpio_cansleep	__gpio_cansleep
 
 /* Setup calls for the gpio and gpio extended */
-extern void msp71xx_init_gpio (void);
-extern void msp71xx_init_gpio_extended (void);
-extern int msp71xx_set_output_drive (unsigned gpio, int value);
+extern void msp71xx_init_gpio(void);
+extern void msp71xx_init_gpio_extended(void);
+extern int msp71xx_set_output_drive(unsigned gpio, int value);
 
 /* Custom output drive functionss */
-static inline int gpio_set_output_drive (unsigned gpio, int value)
+static inline int gpio_set_output_drive(unsigned gpio, int value)
 {
-  return msp71xx_set_output_drive (gpio, value);
+	return msp71xx_set_output_drive(gpio, value);
 }
 
 /* IRQ's are not supported for gpio lines */
-static inline int gpio_to_irq (unsigned gpio)
+static inline int gpio_to_irq(unsigned gpio)
 {
-  return -EINVAL;
+	return -EINVAL;
 }
 
-static inline int irq_to_gpio (unsigned irq)
+static inline int irq_to_gpio(unsigned irq)
 {
-  return -EINVAL;
+	return -EINVAL;
 }
 
 #endif /* __PMC_MSP71XX_GPIO_H */

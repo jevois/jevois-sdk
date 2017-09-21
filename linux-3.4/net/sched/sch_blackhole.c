@@ -1,12 +1,12 @@
 /*
- * net/sched/sch_blackhole.c  Black hole queue
+ * net/sched/sch_blackhole.c	Black hole queue
  *
- *    This program is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU General Public License
- *    as published by the Free Software Foundation; either version
- *    2 of the License, or (at your option) any later version.
+ *		This program is free software; you can redistribute it and/or
+ *		modify it under the terms of the GNU General Public License
+ *		as published by the Free Software Foundation; either version
+ *		2 of the License, or (at your option) any later version.
  *
- * Authors: Thomas Graf <tgraf@suug.ch>
+ * Authors:	Thomas Graf <tgraf@suug.ch>
  *
  * Note: Quantum tunneling is not supported.
  */
@@ -17,37 +17,37 @@
 #include <linux/skbuff.h>
 #include <net/pkt_sched.h>
 
-static int blackhole_enqueue (struct sk_buff * skb, struct Qdisc * sch)
+static int blackhole_enqueue(struct sk_buff *skb, struct Qdisc *sch)
 {
-  qdisc_drop (skb, sch);
-  return NET_XMIT_SUCCESS;
+	qdisc_drop(skb, sch);
+	return NET_XMIT_SUCCESS;
 }
 
-static struct sk_buff * blackhole_dequeue (struct Qdisc * sch)
+static struct sk_buff *blackhole_dequeue(struct Qdisc *sch)
 {
-  return NULL;
+	return NULL;
 }
 
 static struct Qdisc_ops blackhole_qdisc_ops __read_mostly = {
-  .id   = "blackhole",
-  .priv_size  = 0,
-  .enqueue  = blackhole_enqueue,
-  .dequeue  = blackhole_dequeue,
-  .peek   = blackhole_dequeue,
-  .owner    = THIS_MODULE,
+	.id		= "blackhole",
+	.priv_size	= 0,
+	.enqueue	= blackhole_enqueue,
+	.dequeue	= blackhole_dequeue,
+	.peek		= blackhole_dequeue,
+	.owner		= THIS_MODULE,
 };
 
-static int __init blackhole_module_init (void)
+static int __init blackhole_module_init(void)
 {
-  return register_qdisc (&blackhole_qdisc_ops);
+	return register_qdisc(&blackhole_qdisc_ops);
 }
 
-static void __exit blackhole_module_exit (void)
+static void __exit blackhole_module_exit(void)
 {
-  unregister_qdisc (&blackhole_qdisc_ops);
+	unregister_qdisc(&blackhole_qdisc_ops);
 }
 
-module_init (blackhole_module_init)
-module_exit (blackhole_module_exit)
+module_init(blackhole_module_init)
+module_exit(blackhole_module_exit)
 
-MODULE_LICENSE ("GPL");
+MODULE_LICENSE("GPL");

@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -43,34 +43,34 @@
 
 struct dma_irq_handler
 {
-  void        *        m_data;
-  void (*m_func) ( void * data);
+	void                *m_data;
+	void (*m_func)( void * data);
 };
 
 
 typedef struct
 {
-  unsigned int irq_en0;
-  unsigned int irq_en1;
-  unsigned int reserved0[2];
-  unsigned int irq_pending0;
-  unsigned int irq_pending1;
-  unsigned int reserved1[2];
-  unsigned int reserved2[4];
-  unsigned int status;
+	unsigned int irq_en0;
+	unsigned int irq_en1;
+	unsigned int reserved0[2];
+	unsigned int irq_pending0;
+	unsigned int irq_pending1;
+	unsigned int reserved1[2];
+	unsigned int reserved2[4];
+	unsigned int status;
 }
 sunxi_dma_int_set;
 
 typedef struct sunxi_dma_channal_set_t
 {
-  volatile unsigned int enable;
-  volatile unsigned int pause;
-  volatile unsigned int start_addr;   //起始地址
-  volatile unsigned int config;
-  volatile unsigned int cur_src_addr;   //当前传输地址
-  volatile unsigned int cur_dst_addr;
-  volatile unsigned int left_bytes;   //剩余未传字节数
-  volatile unsigned int parameters;   //参数
+	volatile unsigned int enable;
+	volatile unsigned int pause;
+	volatile unsigned int start_addr;		//起始地址
+	volatile unsigned int config;
+	volatile unsigned int cur_src_addr;		//当前传输地址
+	volatile unsigned int cur_dst_addr;
+	volatile unsigned int left_bytes;		//剩余未传字节数
+	volatile unsigned int parameters;		//参数
 }
 sunxi_dma_channal_set;
 
@@ -78,12 +78,12 @@ sunxi_dma_channal_set;
 
 typedef struct sunxi_dma_source_t
 {
-  unsigned int          used;
-  unsigned int            channal_count;
-  sunxi_dma_channal_set * channal;
-  unsigned int      reserved;
-  sunxi_dma_start_t    *   config;
-  struct dma_irq_handler  dma_func;
+	unsigned int      		used;
+	unsigned int            channal_count;
+	sunxi_dma_channal_set	*channal;
+	unsigned int			reserved;
+	sunxi_dma_start_t       *config;
+	struct dma_irq_handler  dma_func;
 }
 sunxi_dma_source;
 
@@ -109,38 +109,38 @@ static sunxi_dma_source   dma_channal_source[SUNXI_DMA_MAX];
 *
 ************************************************************************************************************
 */
-static void sunxi_dma_int_func (void * p)
+static void sunxi_dma_int_func(void *p)
 {
-  int i;
-  uint pending;
-  sunxi_dma_int_set * dma_int = (sunxi_dma_int_set *) SUNXI_DMA_BASE;
-  
-  for (i = 0; i < 8; i++)
-  {
-    if (dma_channal_source[i].dma_func.m_func)
-    {
-      pending = (DMA_PKG_END_INT << (i * 4) );
-      if (dma_int->irq_pending0 & pending)
-      {
-        dma_int->irq_pending0 = pending;
-        
-        dma_channal_source[i].dma_func.m_func (dma_channal_source[i].dma_func.m_data);
-      }
-    }
-  }
-  for (i = 8; i < 15; i++)
-  {
-    if (dma_channal_source[i].dma_func.m_func)
-    {
-      pending = (DMA_PKG_END_INT << (i * 4) );
-      if (dma_int->irq_pending1 & pending)
-      {
-        dma_int->irq_pending1 = pending;
-        
-        dma_channal_source[i].dma_func.m_func (dma_channal_source[i].dma_func.m_data);
-      }
-    }
-  }
+	int i;
+	uint pending;
+	sunxi_dma_int_set *dma_int = (sunxi_dma_int_set *)SUNXI_DMA_BASE;
+
+	for(i=0; i<8; i++)
+	{
+		if(dma_channal_source[i].dma_func.m_func)
+		{
+			pending = (DMA_PKG_END_INT << (i * 4));
+			if(dma_int->irq_pending0 & pending)
+			{
+				dma_int->irq_pending0 = pending;
+
+				dma_channal_source[i].dma_func.m_func(dma_channal_source[i].dma_func.m_data);
+			}
+		}
+	}
+	for(i=8;i<15;i++)
+	{
+		if(dma_channal_source[i].dma_func.m_func)
+		{
+			pending = (DMA_PKG_END_INT << (i * 4));
+			if(dma_int->irq_pending1 & pending)
+			{
+				dma_int->irq_pending1 = pending;
+
+				dma_channal_source[i].dma_func.m_func(dma_channal_source[i].dma_func.m_data);
+			}
+		}
+	}
 }
 /*
 ************************************************************************************************************
@@ -158,40 +158,40 @@ static void sunxi_dma_int_func (void * p)
 *
 ************************************************************************************************************
 */
-void sunxi_dma_init (void)
+void sunxi_dma_init(void)
 {
-  int i;
-  sunxi_dma_int_set * dma_int = (sunxi_dma_int_set *) SUNXI_DMA_BASE;
-  
-  dma_int->irq_en0 = 0;
-  dma_int->irq_en1 = 0;
-  
-  dma_int->irq_pending0 = 0xffffffff;
-  dma_int->irq_pending1 = 0xffffffff;
-  
-  memset ( (void *) dma_channal_source, 0, SUNXI_DMA_MAX * sizeof (struct sunxi_dma_source_t) );
-  
-  for (i = 0; i < SUNXI_DMA_MAX; i++)
-  {
-    dma_channal_source[i].used = 0;
-    dma_channal_source[i].channal = (struct sunxi_dma_channal_set_t *) (SUNXI_DMA_BASE + i * SUNXI_DMA_CHANANL_SIZE + 0x100);
-    dma_channal_source[i].config  = (sunxi_dma_start_t *) malloc_noncache (sizeof (sunxi_dma_start_t) );
-  }
-  
-  dma_int_count = 0;
-  irq_install_handler (AW_IRQ_DMA, sunxi_dma_int_func, 0);
-  
-  #if defined(CONFIG_ARCH_SUN8IW3P1)||defined(CONFIG_ARCH_SUN8IW5P1)||defined(CONFIG_ARCH_SUN8IW6P1)||defined(CONFIG_ARCH_SUN8IW8P1)
-  {
-    u32 reg_val;
-    
-    reg_val = * (volatile unsigned int *) (SUNXI_DMA_BASE + 0x20);
-    reg_val &= ~7;
-    reg_val |= 4;
-    * (volatile unsigned int *) (SUNXI_DMA_BASE + 0x20) = reg_val;
-  }
-  #endif
-  return ;
+    int i;
+    sunxi_dma_int_set *dma_int = (sunxi_dma_int_set *)SUNXI_DMA_BASE;
+
+	dma_int->irq_en0 = 0;
+	dma_int->irq_en1 = 0;
+
+	dma_int->irq_pending0 = 0xffffffff;
+	dma_int->irq_pending1 = 0xffffffff;
+
+	memset((void *)dma_channal_source, 0, SUNXI_DMA_MAX * sizeof(struct sunxi_dma_source_t));
+
+	for(i=0;i<SUNXI_DMA_MAX;i++)
+	{
+		dma_channal_source[i].used = 0;
+		dma_channal_source[i].channal = (struct sunxi_dma_channal_set_t *)(SUNXI_DMA_BASE + i * SUNXI_DMA_CHANANL_SIZE + 0x100);
+		dma_channal_source[i].config  = (sunxi_dma_start_t *)malloc_noncache(sizeof(sunxi_dma_start_t));
+	}
+
+	dma_int_count = 0;
+	irq_install_handler(AW_IRQ_DMA, sunxi_dma_int_func, 0);
+
+#if defined(CONFIG_ARCH_SUN8IW3P1)||defined(CONFIG_ARCH_SUN8IW5P1)||defined(CONFIG_ARCH_SUN8IW6P1)||defined(CONFIG_ARCH_SUN8IW8P1)
+	{
+		u32 reg_val;
+
+        reg_val = *(volatile unsigned int *)(SUNXI_DMA_BASE + 0x20);
+        reg_val &= ~7;
+        reg_val |= 4;
+        *(volatile unsigned int *)(SUNXI_DMA_BASE + 0x20) = reg_val;
+	}
+#endif
+	return ;
 }
 /*
 ************************************************************************************************************
@@ -209,39 +209,39 @@ void sunxi_dma_init (void)
 *
 ************************************************************************************************************
 */
-void __sunxi_disable_dma_clock (void)
+void __sunxi_disable_dma_clock(void)
 {
-  return ;
+	return ;
 }
 
-void sunxi_disable_dma_clock (void)
-__attribute__ ( (weak, alias ("__sunxi_disable_dma_clock") ) );
-void sunxi_dma_exit (void)
+void sunxi_disable_dma_clock(void)
+	__attribute__((weak, alias("__sunxi_disable_dma_clock")));
+void sunxi_dma_exit(void)
 {
-  int i;
-  uint hdma;
-  sunxi_dma_int_set * dma_int = (sunxi_dma_int_set *) SUNXI_DMA_BASE;
-  
-  for (i = 0; i < SUNXI_DMA_MAX; i++)
-  {
-    if (dma_channal_source[i].used == 1)
+    int i;
+    uint hdma;
+    sunxi_dma_int_set *dma_int = (sunxi_dma_int_set *)SUNXI_DMA_BASE;
+
+    for(i=0;i<SUNXI_DMA_MAX;i++)
     {
-      hdma = (uint) &dma_channal_source[i];
-      sunxi_dma_disable_int (hdma);
-      sunxi_dma_free_int (hdma);
-      dma_channal_source[i].channal->enable = 0;
-      dma_channal_source[i].used   = 0;
+        if(dma_channal_source[i].used == 1)
+        {
+            hdma = (uint)&dma_channal_source[i];
+            sunxi_dma_disable_int(hdma);
+            sunxi_dma_free_int(hdma);
+            dma_channal_source[i].channal->enable = 0;
+            dma_channal_source[i].used   = 0;
+        }
     }
-  }
-  dma_int->irq_en0 = 0;
-  dma_int->irq_en1 = 0;
-  
-  dma_int->irq_pending0 = 0xffffffff;
-  dma_int->irq_pending1 = 0xffffffff;
-  
-  
-  irq_free_handler (AW_IRQ_DMA);
-  sunxi_disable_dma_clock();
+	dma_int->irq_en0 = 0;
+	dma_int->irq_en1 = 0;
+
+	dma_int->irq_pending0 = 0xffffffff;
+	dma_int->irq_pending1 = 0xffffffff;
+
+
+	irq_free_handler(AW_IRQ_DMA);
+   sunxi_disable_dma_clock();
 }
 /*
 ****************************************************************************************************
@@ -252,29 +252,29 @@ void sunxi_dma_exit (void)
 *       request dma
 *
 *  Parameters:
-*   type  0: normal timer
-*       1: special timer
+*		type	0: normal timer
+*				1: special timer
 *  Return value:
-*   dma handler
-*   if 0, fail
+*		dma handler
+*		if 0, fail
 ****************************************************************************************************
 */
-uint sunxi_dma_request (uint dmatype)
+uint sunxi_dma_request(uint dmatype)
 {
-  int   i;
-  
-  for (i = 0; i < SUNXI_DMA_MAX; i++)
-  {
-    if (dma_channal_source[i].used == 0)
+    int   i;
+
+	for(i=0;i<SUNXI_DMA_MAX;i++)
     {
-      dma_channal_source[i].used = 1;
-      dma_channal_source[i].channal_count = i;
-      
-      return (uint) &dma_channal_source[i];
+        if(dma_channal_source[i].used == 0)
+        {
+            dma_channal_source[i].used = 1;
+            dma_channal_source[i].channal_count = i;
+
+            return (uint)&dma_channal_source[i];
+        }
     }
-  }
-  
-  return 0;
+
+    return 0;
 }
 /*
 ****************************************************************************************************
@@ -285,28 +285,28 @@ uint sunxi_dma_request (uint dmatype)
 *       release dma
 *
 *  Parameters:
-*       hDma  dma handler
+*       hDma	dma handler
 *
 *  Return value:
-*   EPDK_OK/FAIL
+*		EPDK_OK/FAIL
 ****************************************************************************************************
 */
-int sunxi_dma_release (uint hdma)
+int sunxi_dma_release(uint hdma)
 {
-  struct sunxi_dma_source_t * dma_channal = (struct sunxi_dma_source_t *) hdma;
-  
-  if (!dma_channal->used)
-  {
-    return -1;
-  }
-  
-  sunxi_dma_disable_int (hdma);
-  sunxi_dma_free_int (hdma);
-  
-  dma_channal->channal->enable = 0;
-  dma_channal->used   = 0;
-  
-  return 0;
+	struct sunxi_dma_source_t  *dma_channal = (struct sunxi_dma_source_t *)hdma;
+
+	if(!dma_channal->used)
+	{
+		return -1;
+	}
+
+	sunxi_dma_disable_int(hdma);
+	sunxi_dma_free_int(hdma);
+
+	dma_channal->channal->enable = 0;
+	dma_channal->used   = 0;
+
+    return 0;
 }
 /*
 ****************************************************************************************************
@@ -328,34 +328,34 @@ int sunxi_dma_release (uint hdma)
 *
 **********************************************************************************************************************
 */
-int sunxi_dma_setting (uint hdma, sunxi_dma_setting_t * cfg)
+int sunxi_dma_setting(uint hdma, sunxi_dma_setting_t *cfg)
 {
-  uint  * config_addr;
-  uint   commit_para;
-  sunxi_dma_setting_t    *   dma_set     = cfg;
-  struct sunxi_dma_source_t  * dma_channal = (struct sunxi_dma_source_t *) hdma;
-  
-  if (!dma_channal->used)
-  {
-    return -1;
-  }
-  
-  config_addr = (uint *) & (dma_set->cfg);
-  if (dma_set->loop_mode)
-  {
-    dma_channal->config->link = (uint ) (dma_channal->config);
-  }
-  else
-  {
-    dma_channal->config->link = SUNXI_DMA_LINK_NULL;
-  }
-  
-  commit_para  = (dma_set->wait_cyc & 0xff);
-  commit_para |= (dma_set->data_block_size & 0xff ) << 8;
-  dma_channal->config->commit_para = commit_para;
-  dma_channal->config->config = *config_addr;
-  
-  return 0;
+	uint   *config_addr;
+	uint   commit_para;
+	sunxi_dma_setting_t   		*dma_set     = cfg;
+	struct sunxi_dma_source_t  	*dma_channal = (struct sunxi_dma_source_t *)hdma;
+
+	if(!dma_channal->used)
+	{
+		return -1;
+	}
+
+	config_addr = (uint *)&(dma_set->cfg);
+	if(dma_set->loop_mode)
+	{
+		dma_channal->config->link = (uint )(dma_channal->config);
+ 	}
+	else
+	{
+		dma_channal->config->link = SUNXI_DMA_LINK_NULL;
+	}
+
+	commit_para  = (dma_set->wait_cyc & 0xff);
+	commit_para |= (dma_set->data_block_size & 0xff ) << 8;
+	dma_channal->config->commit_para = commit_para;
+	dma_channal->config->config = *config_addr;
+
+    return 0;
 }
 
 /*
@@ -374,26 +374,26 @@ int sunxi_dma_setting (uint hdma, sunxi_dma_setting_t * cfg)
 *
 ****************************************************************************************************
 */
-int sunxi_dma_start (uint hdma, uint saddr, uint daddr, uint bytes)
+int sunxi_dma_start(uint hdma, uint saddr, uint daddr, uint bytes)
 {
-  struct sunxi_dma_source_t  * dma_channal = (struct sunxi_dma_source_t *) hdma;
-  
-  if (!dma_channal->used)
-  {
-    return -1;
-  }
-  
-  dma_channal->config->source_addr = saddr;
-  dma_channal->config->dest_addr   = daddr;
-  dma_channal->config->byte_count  = bytes;
-  
-  dma_channal->channal->start_addr = (uint) (dma_channal->config);
-  
-  asm volatile ("dmb");
-  
-  dma_channal->channal->enable = 1;
-  
-  return 0;
+	struct sunxi_dma_source_t  	*dma_channal = (struct sunxi_dma_source_t *)hdma;
+
+	if(!dma_channal->used)
+	{
+		return -1;
+	}
+
+ 	dma_channal->config->source_addr = saddr;
+ 	dma_channal->config->dest_addr   = daddr;
+ 	dma_channal->config->byte_count  = bytes;
+
+	dma_channal->channal->start_addr = (uint)(dma_channal->config);
+
+	asm volatile("dmb");
+
+	dma_channal->channal->enable = 1;
+
+    return 0;
 }
 /*
 **********************************************************************************************************************
@@ -411,18 +411,18 @@ int sunxi_dma_start (uint hdma, uint saddr, uint daddr, uint bytes)
 *
 **********************************************************************************************************************
 */
-int sunxi_dma_stop (uint hdma)
+int sunxi_dma_stop(uint hdma)
 {
-  struct sunxi_dma_source_t  * dma_channal = (struct sunxi_dma_source_t *) hdma;
-  
-  if (!dma_channal->used)
-  {
-    return -1;
-  }
-  
-  dma_channal->channal->enable = 0;
-  
-  return 0;
+	struct sunxi_dma_source_t  	*dma_channal = (struct sunxi_dma_source_t *)hdma;
+
+	if(!dma_channal->used)
+	{
+		return -1;
+	}
+
+	dma_channal->channal->enable = 0;
+
+    return 0;
 }
 /*
 **********************************************************************************************************************
@@ -440,19 +440,19 @@ int sunxi_dma_stop (uint hdma)
 *
 **********************************************************************************************************************
 */
-int sunxi_dma_querystatus (uint hdma)
+int sunxi_dma_querystatus(uint hdma)
 {
-  uint  channal_count;
-  struct sunxi_dma_source_t  * dma_channal = (struct sunxi_dma_source_t *) hdma;
-  sunxi_dma_int_set    *   dma_int   = (sunxi_dma_int_set *) SUNXI_DMA_BASE;
-  
-  if (!dma_channal->used)
-  {
-    return -1;
-  }
-  channal_count = dma_channal->channal_count;
-  
-  return (dma_int->status >> channal_count) & 0x01;
+	uint  channal_count;
+	struct sunxi_dma_source_t  	*dma_channal = (struct sunxi_dma_source_t *)hdma;
+	sunxi_dma_int_set    		*dma_int 	 = (sunxi_dma_int_set *)SUNXI_DMA_BASE;
+
+	if(!dma_channal->used)
+	{
+		return -1;
+	}
+	channal_count = dma_channal->channal_count;
+
+	return (dma_int->status >> channal_count) & 0x01;
 }
 /*
 ************************************************************************************************************
@@ -470,40 +470,40 @@ int sunxi_dma_querystatus (uint hdma)
 *
 ************************************************************************************************************
 */
-int sunxi_dma_install_int (uint hdma, interrupt_handler_t dma_int_func, void * p)
+int sunxi_dma_install_int(uint hdma, interrupt_handler_t dma_int_func, void *p)
 {
-  sunxi_dma_source   *  dma_channal = (sunxi_dma_source *) hdma;
-  sunxi_dma_int_set  *  dma_status  = (sunxi_dma_int_set *) SUNXI_DMA_BASE;
-  uint  channal_count;
-  
-  if (!dma_channal->used)
-  {
-    return -1;
-  }
-  channal_count = dma_channal->channal_count;
-  
-  if (channal_count < 8)
-  {
-    dma_status->irq_pending0 = (7 << channal_count * 4);
-  }
-  else
-  {
-    dma_status->irq_pending1 = (7 << (channal_count - 8) * 4);
-  }
-  
-  if (!dma_channal->dma_func.m_func)
-  {
-    dma_channal->dma_func.m_func = dma_int_func;
-    dma_channal->dma_func.m_data = p;
-  }
-  else
-  {
-    printf ("dma 0x%x int is used already, you have to free it first\n", hdma);
-    
-    return -1;
-  }
-  
-  return 0;
+	sunxi_dma_source     *dma_channal = (sunxi_dma_source  *)hdma;
+	sunxi_dma_int_set    *dma_status  = (sunxi_dma_int_set *)SUNXI_DMA_BASE;
+	uint  channal_count;
+
+	if(!dma_channal->used)
+	{
+		return -1;
+	}
+	channal_count = dma_channal->channal_count;
+
+	if(channal_count < 8)
+	{
+		dma_status->irq_pending0 = (7 << channal_count*4);
+	}
+	else
+	{
+		dma_status->irq_pending1 = (7 << (channal_count - 8)*4);
+	}
+
+	if(!dma_channal->dma_func.m_func)
+	{
+		dma_channal->dma_func.m_func = dma_int_func;
+		dma_channal->dma_func.m_data = p;
+	}
+	else
+	{
+		printf("dma 0x%x int is used already, you have to free it first\n", hdma);
+
+		return -1;
+	}
+
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -521,46 +521,46 @@ int sunxi_dma_install_int (uint hdma, interrupt_handler_t dma_int_func, void * p
 *
 ************************************************************************************************************
 */
-int sunxi_dma_enable_int (uint hdma)
+int sunxi_dma_enable_int(uint hdma)
 {
-  sunxi_dma_source   *  dma_channal = (sunxi_dma_source *) hdma;
-  sunxi_dma_int_set  *  dma_status  = (sunxi_dma_int_set *) SUNXI_DMA_BASE;
-  uint  channal_count;
-  
-  if (!dma_channal->used)
-  {
-    return -1;
-  }
-  
-  channal_count = dma_channal->channal_count;
-  if (channal_count < 8)
-  {
-    if (dma_status->irq_en0 & (DMA_PKG_END_INT << channal_count * 4) )
-    {
-      printf ("dma 0x%x int is avaible already\n", hdma);
-      
-      return 0;
-    }
-    dma_status->irq_en0 |= (DMA_PKG_END_INT << channal_count * 4);
-  }
-  else
-  {
-    if (dma_status->irq_en1 & (DMA_PKG_END_INT << (channal_count - 8) * 4) )
-    {
-      printf ("dma 0x%x int is avaible already\n", hdma);
-      
-      return 0;
-    }
-    dma_status->irq_en1 |= (DMA_PKG_END_INT << (channal_count - 8) * 4);
-  }
-  
-  if (!dma_int_count)
-  {
-    irq_enable (AW_IRQ_DMA);
-  }
-  dma_int_count ++;
-  
-  return 0;
+	sunxi_dma_source     *dma_channal = (sunxi_dma_source *)hdma;
+	sunxi_dma_int_set    *dma_status  = (sunxi_dma_int_set *)SUNXI_DMA_BASE;
+	uint  channal_count;
+
+	if(!dma_channal->used)
+	{
+		return -1;
+	}
+
+	channal_count = dma_channal->channal_count;
+	if(channal_count < 8)
+	{
+	    if(dma_status->irq_en0 & (DMA_PKG_END_INT << channal_count*4))
+	    {
+	    	printf("dma 0x%x int is avaible already\n", hdma);
+
+			return 0;
+		}
+		dma_status->irq_en0 |= (DMA_PKG_END_INT << channal_count*4);
+	}
+	else
+	{
+		if(dma_status->irq_en1 & (DMA_PKG_END_INT << (channal_count - 8)*4))
+	    {
+	    	printf("dma 0x%x int is avaible already\n", hdma);
+
+			return 0;
+		}
+		dma_status->irq_en1 |= (DMA_PKG_END_INT << (channal_count - 8)*4);
+	}
+
+	if(!dma_int_count)
+	{
+		irq_enable(AW_IRQ_DMA);
+	}
+	dma_int_count ++;
+
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -578,49 +578,49 @@ int sunxi_dma_enable_int (uint hdma)
 *
 ************************************************************************************************************
 */
-int sunxi_dma_disable_int (uint hdma)
+int sunxi_dma_disable_int(uint hdma)
 {
-  sunxi_dma_source   *  dma_channal = (sunxi_dma_source *) hdma;
-  sunxi_dma_int_set  *  dma_status  = (sunxi_dma_int_set *) SUNXI_DMA_BASE;
-  uint  channal_count;
-  
-  if (!dma_channal->used)
-  {
-    return -1;
-  }
-  
-  channal_count = dma_channal->channal_count;
-  if (channal_count < 8)
-  {
-    if (! (dma_status->irq_en0 & (DMA_PKG_END_INT << channal_count * 4) ) )
-    {
-      printf ("dma 0x%x int is not used yet\n", hdma);
-      
-      return 0;
-    }
-    dma_status->irq_en0 &= ~ (DMA_PKG_END_INT << channal_count * 4);
-  }
-  else
-  {
-    if (! (dma_status->irq_en1 & (DMA_PKG_END_INT << (channal_count - 8) * 4) ) )
-    {
-      printf ("dma 0x%x int is not used yet\n", hdma);
-      
-      return 0;
-    }
-    dma_status->irq_en1 &= ~ (DMA_PKG_END_INT << (channal_count - 8) * 4);
-  }
-  
-  if (dma_int_count > 0)
-  {
-    dma_int_count --;
-  }
-  if (!dma_int_count)
-  {
-    irq_disable (AW_IRQ_DMA);
-  }
-  
-  return 0;
+	sunxi_dma_source     *dma_channal = (sunxi_dma_source *)hdma;
+	sunxi_dma_int_set    *dma_status  = (sunxi_dma_int_set *)SUNXI_DMA_BASE;
+	uint  channal_count;
+
+	if(!dma_channal->used)
+	{
+		return -1;
+	}
+
+	channal_count = dma_channal->channal_count;
+	if(channal_count < 8)
+	{
+	    if(!(dma_status->irq_en0 & (DMA_PKG_END_INT << channal_count*4)))
+	    {
+	    	printf("dma 0x%x int is not used yet\n", hdma);
+
+			return 0;
+		}
+		dma_status->irq_en0 &= ~(DMA_PKG_END_INT << channal_count*4);
+	}
+	else
+	{
+		if(!(dma_status->irq_en1 & (DMA_PKG_END_INT << (channal_count - 8)*4)))
+	    {
+	    	printf("dma 0x%x int is not used yet\n", hdma);
+
+			return 0;
+		}
+		dma_status->irq_en1 &= ~(DMA_PKG_END_INT << (channal_count - 8)*4);
+	}
+
+	if(dma_int_count > 0)
+	{
+		dma_int_count --;
+	}
+	if(!dma_int_count)
+	{
+		irq_disable(AW_IRQ_DMA);
+	}
+
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -638,38 +638,38 @@ int sunxi_dma_disable_int (uint hdma)
 *
 ************************************************************************************************************
 */
-int sunxi_dma_free_int (uint hdma)
+int sunxi_dma_free_int(uint hdma)
 {
-  sunxi_dma_source   *  dma_channal = (sunxi_dma_source *) hdma;
-  sunxi_dma_int_set  *  dma_status  = (sunxi_dma_int_set *) SUNXI_DMA_BASE;
-  uint  channal_count;
-  
-  if (!dma_channal->used)
-  {
-    return -1;
-  }
-  channal_count = dma_channal->channal_count;
-  if (channal_count < 8)
-  {
-    dma_status->irq_pending0 = (7 << channal_count);
-  }
-  else
-  {
-    dma_status->irq_pending1 = (7 << (channal_count - 8) );
-  }
-  
-  if (dma_channal->dma_func.m_func)
-  {
-    dma_channal->dma_func.m_func = NULL;
-    dma_channal->dma_func.m_data = NULL;
-  }
-  else
-  {
-    printf ("dma 0x%x int is free, you do not need to free it again\n", hdma);
-    
-    return -1;
-  }
-  
-  return 0;
+	sunxi_dma_source     *dma_channal = (sunxi_dma_source *)hdma;
+	sunxi_dma_int_set    *dma_status  = (sunxi_dma_int_set *)SUNXI_DMA_BASE;
+	uint  channal_count;
+
+	if(!dma_channal->used)
+	{
+		return -1;
+	}
+	channal_count = dma_channal->channal_count;
+	if(channal_count < 8)
+	{
+		dma_status->irq_pending0 = (7 << channal_count);
+	}
+	else
+	{
+		dma_status->irq_pending1 = (7 << (channal_count - 8));
+	}
+
+	if(dma_channal->dma_func.m_func)
+	{
+		dma_channal->dma_func.m_func = NULL;
+		dma_channal->dma_func.m_data = NULL;
+	}
+	else
+	{
+		printf("dma 0x%x int is free, you do not need to free it again\n", hdma);
+
+		return -1;
+	}
+
+	return 0;
 }
 

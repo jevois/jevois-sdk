@@ -12,9 +12,9 @@
 
 /**
  * struct ina2xx_platform_data - ina2xx info
- * @shunt_uohms   shunt resistance in microohms
+ * @shunt_uohms		shunt resistance in microohms
  */
 struct ina219_platform_data {
-  long shunt_uohms;
+	long shunt_uohms;
 };
 

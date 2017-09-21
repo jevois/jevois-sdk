@@ -3,6 +3,6 @@
 
 #include "disp_private.h"
 
-s32 disp_init_hdmi (__disp_bsp_init_para * para);
+s32 disp_init_hdmi(__disp_bsp_init_para * para);
 
 #endif

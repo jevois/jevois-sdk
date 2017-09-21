@@ -13,16 +13,16 @@
 /*
  * Traditional 2-level paging structure
  */
-#define PGDIR_SHIFT 22
-#define PTRS_PER_PGD  1024
+#define PGDIR_SHIFT	22
+#define PTRS_PER_PGD	1024
 
-#define PTRS_PER_PTE  1024
+#define PTRS_PER_PTE	1024
 
 #ifndef __ASSEMBLY__
 #define pte_ERROR(e) \
-  printk("%s:%d: bad pte %08lx.\n", __FILE__, __LINE__, pte_val(e))
+	printk("%s:%d: bad pte %08lx.\n", __FILE__, __LINE__, pte_val(e))
 #define pgd_ERROR(e) \
-  printk("%s:%d: bad pgd %08lx.\n", __FILE__, __LINE__, pgd_val(e))
+	printk("%s:%d: bad pgd %08lx.\n", __FILE__, __LINE__, pgd_val(e))
 
 /*
  * Certain architectures need to do special things when PTEs
@@ -38,9 +38,9 @@
  */
 #define set_pmd(pmdptr, pmdval) (*(pmdptr) = pmdval)
 
-#define pte_pfn(x)    ((unsigned long)(((x).pte >> PAGE_SHIFT)))
-#define pfn_pte(pfn, prot)  __pte(((pfn) << PAGE_SHIFT) | pgprot_val(prot))
-#define pfn_pmd(pfn, prot)  __pmd(((pfn) << PAGE_SHIFT) | pgprot_val(prot))
+#define pte_pfn(x)		((unsigned long)(((x).pte >> PAGE_SHIFT)))
+#define pfn_pte(pfn, prot)	__pte(((pfn) << PAGE_SHIFT) | pgprot_val(prot))
+#define pfn_pmd(pfn, prot)	__pmd(((pfn) << PAGE_SHIFT) | pgprot_val(prot))
 
 #endif /* !__ASSEMBLY__ */
 

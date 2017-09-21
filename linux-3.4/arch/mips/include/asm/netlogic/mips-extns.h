@@ -38,39 +38,39 @@
 /*
  * XLR and XLP interrupt request and interrupt mask registers
  */
-#define read_c0_eirr()    __read_64bit_c0_register($9, 6)
-#define read_c0_eimr()    __read_64bit_c0_register($9, 7)
-#define write_c0_eirr(val)  __write_64bit_c0_register($9, 6, val)
+#define read_c0_eirr()		__read_64bit_c0_register($9, 6)
+#define read_c0_eimr()		__read_64bit_c0_register($9, 7)
+#define write_c0_eirr(val)	__write_64bit_c0_register($9, 6, val)
 
 /*
  * Writing EIMR in 32 bit is a special case, the lower 8 bit of the
  * EIMR is shadowed in the status register, so we cannot save and
  * restore status register for split read.
  */
-#define write_c0_eimr(val)            \
-  do {                  \
-    if (sizeof(unsigned long) == 4) {       \
-      unsigned long __flags;          \
-      \
-      local_irq_save(__flags);        \
-      __asm__ __volatile__(         \
-                                    ".set\tmips64\n\t"        \
-                                    "dsll\t%L0, %L0, 32\n\t"      \
-                                    "dsrl\t%L0, %L0, 32\n\t"      \
-                                    "dsll\t%M0, %M0, 32\n\t"      \
-                                    "or\t%L0, %L0, %M0\n\t"       \
-                                    "dmtc0\t%L0, $9, 7\n\t"       \
-                                    ".set\tmips0"         \
-                                    : : "r" (val));         \
-      __flags = (__flags & 0xffff00ff) | (((val) & 0xff) << 8);\
-      local_irq_restore(__flags);       \
-    } else                \
-      __write_64bit_c0_register($9, 7, (val));    \
-  } while (0)
+#define write_c0_eimr(val)						\
+do {									\
+	if (sizeof(unsigned long) == 4)	{				\
+		unsigned long __flags;					\
+									\
+		local_irq_save(__flags);				\
+		__asm__ __volatile__(					\
+			".set\tmips64\n\t"				\
+			"dsll\t%L0, %L0, 32\n\t"			\
+			"dsrl\t%L0, %L0, 32\n\t"			\
+			"dsll\t%M0, %M0, 32\n\t"			\
+			"or\t%L0, %L0, %M0\n\t"				\
+			"dmtc0\t%L0, $9, 7\n\t"				\
+			".set\tmips0"					\
+			: : "r" (val));					\
+		__flags = (__flags & 0xffff00ff) | (((val) & 0xff) << 8);\
+		local_irq_restore(__flags);				\
+	} else								\
+		__write_64bit_c0_register($9, 7, (val));		\
+} while (0)
 
-static inline int hard_smp_processor_id (void)
+static inline int hard_smp_processor_id(void)
 {
-  return __read_32bit_c0_register ($15, 1) & 0x3ff;
+	return __read_32bit_c0_register($15, 1) & 0x3ff;
 }
 
 #endif /*_ASM_NLM_MIPS_EXTS_H */

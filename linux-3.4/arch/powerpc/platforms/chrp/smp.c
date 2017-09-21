@@ -30,25 +30,25 @@
 #include <asm/mpic.h>
 #include <asm/rtas.h>
 
-static int __devinit smp_chrp_kick_cpu (int nr)
+static int __devinit smp_chrp_kick_cpu(int nr)
 {
-  * (unsigned long *) KERNELBASE = nr;
-  asm volatile ("dcbf 0,%0"::"r" (KERNELBASE) :"memory");
-  
-  return 0;
+	*(unsigned long *)KERNELBASE = nr;
+	asm volatile("dcbf 0,%0"::"r"(KERNELBASE):"memory");
+
+	return 0;
 }
 
-static void __devinit smp_chrp_setup_cpu (int cpu_nr)
+static void __devinit smp_chrp_setup_cpu(int cpu_nr)
 {
-  mpic_setup_this_cpu();
+	mpic_setup_this_cpu();
 }
 
 /* CHRP with openpic */
 struct smp_ops_t chrp_smp_ops = {
-  .message_pass = smp_mpic_message_pass,
-  .probe = smp_mpic_probe,
-  .kick_cpu = smp_chrp_kick_cpu,
-  .setup_cpu = smp_chrp_setup_cpu,
-  .give_timebase = rtas_give_timebase,
-  .take_timebase = rtas_take_timebase,
+	.message_pass = smp_mpic_message_pass,
+	.probe = smp_mpic_probe,
+	.kick_cpu = smp_chrp_kick_cpu,
+	.setup_cpu = smp_chrp_setup_cpu,
+	.give_timebase = rtas_give_timebase,
+	.take_timebase = rtas_take_timebase,
 };

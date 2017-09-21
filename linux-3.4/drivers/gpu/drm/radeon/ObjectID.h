@@ -1,5 +1,5 @@
 /*
-* Copyright 2006-2007 Advanced Micro Devices, Inc.
+* Copyright 2006-2007 Advanced Micro Devices, Inc.  
 *
 * Permission is hereby granted, free of charge, to any person obtaining a
 * copy of this software and associated documentation files (the "Software"),
@@ -37,13 +37,13 @@
 #define GRAPH_OBJECT_TYPE_CONNECTOR               0x3
 #define GRAPH_OBJECT_TYPE_ROUTER                  0x4
 /* deleted */
-#define GRAPH_OBJECT_TYPE_DISPLAY_PATH            0x6
+#define GRAPH_OBJECT_TYPE_DISPLAY_PATH            0x6  
 #define GRAPH_OBJECT_TYPE_GENERIC                 0x7
 
 /****************************************************/
 /* Encoder Object ID Definition                     */
 /****************************************************/
-#define ENCODER_OBJECT_ID_NONE                    0x00
+#define ENCODER_OBJECT_ID_NONE                    0x00 
 
 /* Radeon Class Display Hardware */
 #define ENCODER_OBJECT_ID_INTERNAL_LVDS           0x01
@@ -92,7 +92,7 @@
 /****************************************************/
 /* Connector Object ID Definition                   */
 /****************************************************/
-#define CONNECTOR_OBJECT_ID_NONE                  0x00
+#define CONNECTOR_OBJECT_ID_NONE                  0x00 
 #define CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_I     0x01
 #define CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_I       0x02
 #define CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_D     0x03
@@ -121,8 +121,8 @@
 /****************************************************/
 /* Router Object ID Definition                      */
 /****************************************************/
-#define ROUTER_OBJECT_ID_NONE                     0x00
-#define ROUTER_OBJECT_ID_I2C_EXTENDER_CNTL        0x01
+#define ROUTER_OBJECT_ID_NONE											0x00
+#define ROUTER_OBJECT_ID_I2C_EXTENDER_CNTL				0x01
 
 /****************************************************/
 /* Generic Object ID Definition                     */
@@ -152,7 +152,7 @@
 #define RESERVED1_ID_MASK                         0x0800
 #define OBJECT_TYPE_MASK                          0x7000
 #define RESERVED2_ID_MASK                         0x8000
-
+                                                  
 #define OBJECT_ID_SHIFT                           0x00
 #define ENUM_ID_SHIFT                             0x08
 #define OBJECT_TYPE_SHIFT                         0x0C
@@ -162,25 +162,25 @@
 /* Graphics Object family definition                */
 /****************************************************/
 #define CONSTRUCTOBJECTFAMILYID(GRAPHICS_OBJECT_TYPE, GRAPHICS_OBJECT_ID) (GRAPHICS_OBJECT_TYPE << OBJECT_TYPE_SHIFT | \
-    GRAPHICS_OBJECT_ID   << OBJECT_ID_SHIFT)
+                                                                           GRAPHICS_OBJECT_ID   << OBJECT_ID_SHIFT)
 /****************************************************/
 /* GPU Object ID definition - Shared with BIOS      */
 /****************************************************/
 #define GPU_ENUM_ID1                            ( GRAPH_OBJECT_TYPE_GPU << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT)
 
 /****************************************************/
 /* Encoder Object ID definition - Shared with BIOS  */
 /****************************************************/
 /*
-#define ENCODER_INTERNAL_LVDS_ENUM_ID1        0x2101
+#define ENCODER_INTERNAL_LVDS_ENUM_ID1        0x2101      
 #define ENCODER_INTERNAL_TMDS1_ENUM_ID1       0x2102
 #define ENCODER_INTERNAL_TMDS2_ENUM_ID1       0x2103
 #define ENCODER_INTERNAL_DAC1_ENUM_ID1        0x2104
 #define ENCODER_INTERNAL_DAC2_ENUM_ID1        0x2105
 #define ENCODER_INTERNAL_SDVOA_ENUM_ID1       0x2106
 #define ENCODER_INTERNAL_SDVOB_ENUM_ID1       0x2107
-#define ENCODER_SIL170B_ENUM_ID1              0x2108
+#define ENCODER_SIL170B_ENUM_ID1              0x2108  
 #define ENCODER_CH7303_ENUM_ID1               0x2109
 #define ENCODER_CH7301_ENUM_ID1               0x210A
 #define ENCODER_INTERNAL_DVO1_ENUM_ID1        0x210B
@@ -194,8 +194,8 @@
 #define ENCODER_INTERNAL_KLDSCP_TMDS1_ENUM_ID1   0x2113
 #define ENCODER_INTERNAL_KLDSCP_DVO1_ENUM_ID1    0x2114
 #define ENCODER_INTERNAL_KLDSCP_DAC1_ENUM_ID1    0x2115
-#define ENCODER_INTERNAL_KLDSCP_DAC2_ENUM_ID1    0x2116
-#define ENCODER_SI178_ENUM_ID1                   0x2117
+#define ENCODER_INTERNAL_KLDSCP_DAC2_ENUM_ID1    0x2116  
+#define ENCODER_SI178_ENUM_ID1                   0x2117 
 #define ENCODER_MVPU_FPGA_ENUM_ID1               0x2118
 #define ENCODER_INTERNAL_DDI_ENUM_ID1            0x2119
 #define ENCODER_VT1625_ENUM_ID1                  0x211A
@@ -205,192 +205,192 @@
 #define ENCODER_INTERNAL_UNIPHY_ENUM_ID1         0x211E
 */
 #define ENCODER_INTERNAL_LVDS_ENUM_ID1     ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_LVDS << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_INTERNAL_LVDS << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_TMDS1_ENUM_ID1    ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_TMDS1 << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_INTERNAL_TMDS1 << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_TMDS2_ENUM_ID1    ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_TMDS2 << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_INTERNAL_TMDS2 << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_DAC1_ENUM_ID1     ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_DAC1 << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_INTERNAL_DAC1 << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_DAC2_ENUM_ID1     ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_DAC2 << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_INTERNAL_DAC2 << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_SDVOA_ENUM_ID1    ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_SDVOA << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_INTERNAL_SDVOA << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_SDVOA_ENUM_ID2    ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_SDVOA << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_INTERNAL_SDVOA << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_SDVOB_ENUM_ID1    ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_SDVOB << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_INTERNAL_SDVOB << OBJECT_ID_SHIFT)
 
 #define ENCODER_SIL170B_ENUM_ID1           ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_SI170B << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_SI170B << OBJECT_ID_SHIFT)
 
 #define ENCODER_CH7303_ENUM_ID1            ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_CH7303 << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_CH7303 << OBJECT_ID_SHIFT)
 
 #define ENCODER_CH7301_ENUM_ID1            ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_CH7301 << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_CH7301 << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_DVO1_ENUM_ID1     ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_DVO1 << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_INTERNAL_DVO1 << OBJECT_ID_SHIFT)
 
 #define ENCODER_EXTERNAL_SDVOA_ENUM_ID1    ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_EXTERNAL_SDVOA << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_EXTERNAL_SDVOA << OBJECT_ID_SHIFT)
 
 #define ENCODER_EXTERNAL_SDVOA_ENUM_ID2    ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_EXTERNAL_SDVOA << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_EXTERNAL_SDVOA << OBJECT_ID_SHIFT)
 
 
 #define ENCODER_EXTERNAL_SDVOB_ENUM_ID1    ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_EXTERNAL_SDVOB << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_EXTERNAL_SDVOB << OBJECT_ID_SHIFT)
 
 
 #define ENCODER_TITFP513_ENUM_ID1          ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_TITFP513 << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_TITFP513 << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_LVTM1_ENUM_ID1    ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_LVTM1 << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_INTERNAL_LVTM1 << OBJECT_ID_SHIFT)
 
 #define ENCODER_VT1623_ENUM_ID1            ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_VT1623 << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_VT1623 << OBJECT_ID_SHIFT)
 
 #define ENCODER_HDMI_SI1930_ENUM_ID1       ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_HDMI_SI1930 << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_HDMI_SI1930 << OBJECT_ID_SHIFT)
 
 #define ENCODER_HDMI_INTERNAL_ENUM_ID1     ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_HDMI_INTERNAL << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_HDMI_INTERNAL << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_KLDSCP_TMDS1_ENUM_ID1   ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_KLDSCP_TMDS1 << OBJECT_ID_SHIFT)
+                                                   GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                   ENCODER_OBJECT_ID_INTERNAL_KLDSCP_TMDS1 << OBJECT_ID_SHIFT)
 
 
 #define ENCODER_INTERNAL_KLDSCP_TMDS1_ENUM_ID2   ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_KLDSCP_TMDS1 << OBJECT_ID_SHIFT)
+                                                   GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                   ENCODER_OBJECT_ID_INTERNAL_KLDSCP_TMDS1 << OBJECT_ID_SHIFT)
 
 
 #define ENCODER_INTERNAL_KLDSCP_DVO1_ENUM_ID1    ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_KLDSCP_DVO1 << OBJECT_ID_SHIFT)
+                                                   GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                   ENCODER_OBJECT_ID_INTERNAL_KLDSCP_DVO1 << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_KLDSCP_DAC1_ENUM_ID1    ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_KLDSCP_DAC1 << OBJECT_ID_SHIFT)
+                                                   GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                   ENCODER_OBJECT_ID_INTERNAL_KLDSCP_DAC1 << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_KLDSCP_DAC2_ENUM_ID1    ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_KLDSCP_DAC2 << OBJECT_ID_SHIFT) 
+                                                   GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                   ENCODER_OBJECT_ID_INTERNAL_KLDSCP_DAC2 << OBJECT_ID_SHIFT) 
 
 #define ENCODER_SI178_ENUM_ID1                    ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_SI178 << OBJECT_ID_SHIFT)
+                                                   GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                   ENCODER_OBJECT_ID_SI178 << OBJECT_ID_SHIFT)  
 
 #define ENCODER_MVPU_FPGA_ENUM_ID1                ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_MVPU_FPGA << OBJECT_ID_SHIFT)
+                                                   GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                   ENCODER_OBJECT_ID_MVPU_FPGA << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_DDI_ENUM_ID1     (  GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_DDI << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_INTERNAL_DDI << OBJECT_ID_SHIFT) 
 
 #define ENCODER_VT1625_ENUM_ID1            ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_VT1625 << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_VT1625 << OBJECT_ID_SHIFT)
 
 #define ENCODER_HDMI_SI1932_ENUM_ID1       ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_HDMI_SI1932 << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_HDMI_SI1932 << OBJECT_ID_SHIFT)
 
 #define ENCODER_DP_DP501_ENUM_ID1            ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_DP_DP501 << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_DP_DP501 << OBJECT_ID_SHIFT)
 
 #define ENCODER_DP_AN9801_ENUM_ID1            ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_DP_AN9801 << OBJECT_ID_SHIFT)
+                                             GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                             ENCODER_OBJECT_ID_DP_AN9801 << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_UNIPHY_ENUM_ID1         ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_UNIPHY << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 ENCODER_OBJECT_ID_INTERNAL_UNIPHY << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_UNIPHY_ENUM_ID2         ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_UNIPHY << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 ENCODER_OBJECT_ID_INTERNAL_UNIPHY << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_KLDSCP_LVTMA_ENUM_ID1   ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_KLDSCP_LVTMA << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 ENCODER_OBJECT_ID_INTERNAL_KLDSCP_LVTMA << OBJECT_ID_SHIFT)  
 
 #define ENCODER_INTERNAL_UNIPHY1_ENUM_ID1         ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_UNIPHY1 << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 ENCODER_OBJECT_ID_INTERNAL_UNIPHY1 << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_UNIPHY1_ENUM_ID2         ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_UNIPHY1 << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 ENCODER_OBJECT_ID_INTERNAL_UNIPHY1 << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_UNIPHY2_ENUM_ID1         ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_UNIPHY2 << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 ENCODER_OBJECT_ID_INTERNAL_UNIPHY2 << OBJECT_ID_SHIFT)
 
 #define ENCODER_INTERNAL_UNIPHY2_ENUM_ID2         ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_UNIPHY2 << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 ENCODER_OBJECT_ID_INTERNAL_UNIPHY2 << OBJECT_ID_SHIFT)
 
 #define ENCODER_GENERAL_EXTERNAL_DVO_ENUM_ID1    ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_GENERAL_EXTERNAL_DVO << OBJECT_ID_SHIFT)
+                                                  GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                  ENCODER_OBJECT_ID_GENERAL_EXTERNAL_DVO << OBJECT_ID_SHIFT)
 
 #define ENCODER_ALMOND_ENUM_ID1                  ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_ALMOND << OBJECT_ID_SHIFT)
+                                                  GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                  ENCODER_OBJECT_ID_ALMOND << OBJECT_ID_SHIFT)
 
 #define ENCODER_ALMOND_ENUM_ID2                  ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_ALMOND << OBJECT_ID_SHIFT)
+                                                  GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                  ENCODER_OBJECT_ID_ALMOND << OBJECT_ID_SHIFT)
 
 #define ENCODER_TRAVIS_ENUM_ID1                  ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_TRAVIS << OBJECT_ID_SHIFT)
+                                                  GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                  ENCODER_OBJECT_ID_TRAVIS << OBJECT_ID_SHIFT)
 
 #define ENCODER_TRAVIS_ENUM_ID2                  ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_TRAVIS << OBJECT_ID_SHIFT)
+                                                  GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                  ENCODER_OBJECT_ID_TRAVIS << OBJECT_ID_SHIFT)
 
 #define ENCODER_NUTMEG_ENUM_ID1                  ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_NUTMEG << OBJECT_ID_SHIFT)
+                                                  GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                  ENCODER_OBJECT_ID_NUTMEG << OBJECT_ID_SHIFT)
 
 #define ENCODER_VCE_ENUM_ID1                     ( GRAPH_OBJECT_TYPE_ENCODER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ENCODER_OBJECT_ID_INTERNAL_VCE << OBJECT_ID_SHIFT)
+                                                  GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                  ENCODER_OBJECT_ID_INTERNAL_VCE << OBJECT_ID_SHIFT)
 
 /****************************************************/
 /* Connector Object ID definition - Shared with BIOS */
@@ -414,240 +414,240 @@
 #define CONNECTOR_PCIE_CONNECTOR_ENUM_ID1           0x3110
 */
 #define CONNECTOR_LVDS_ENUM_ID1                ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_LVDS << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_LVDS << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_LVDS_ENUM_ID2                ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_LVDS << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_LVDS << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_eDP_ENUM_ID1                 ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_eDP << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_eDP << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_eDP_ENUM_ID2                 ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_eDP << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_eDP << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_SINGLE_LINK_DVI_I_ENUM_ID1   ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_I << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_I << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_SINGLE_LINK_DVI_I_ENUM_ID2   ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_I << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_I << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_DUAL_LINK_DVI_I_ENUM_ID1     ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_I << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_I << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_DUAL_LINK_DVI_I_ENUM_ID2     ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_I << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_I << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_SINGLE_LINK_DVI_D_ENUM_ID1   ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_D << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_D << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_SINGLE_LINK_DVI_D_ENUM_ID2   ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_D << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_D << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_SINGLE_LINK_DVI_D_ENUM_ID3   ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID3 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_D << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID3 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_D << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_SINGLE_LINK_DVI_D_ENUM_ID4   ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID4 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_D << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID4 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_SINGLE_LINK_DVI_D << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_DUAL_LINK_DVI_D_ENUM_ID1     ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_D << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_D << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_DUAL_LINK_DVI_D_ENUM_ID2     ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_D << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_D << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_DUAL_LINK_DVI_D_ENUM_ID3     ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID3 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_D << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID3 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_DUAL_LINK_DVI_D << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_VGA_ENUM_ID1                 ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_VGA << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_VGA << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_VGA_ENUM_ID2                 ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_VGA << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_VGA << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_COMPOSITE_ENUM_ID1           ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_COMPOSITE << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_COMPOSITE << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_COMPOSITE_ENUM_ID2           ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_COMPOSITE << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_COMPOSITE << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_SVIDEO_ENUM_ID1              ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_SVIDEO << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_SVIDEO << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_SVIDEO_ENUM_ID2              ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_SVIDEO << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_SVIDEO << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_YPbPr_ENUM_ID1               ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_YPbPr << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_YPbPr << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_YPbPr_ENUM_ID2               ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_YPbPr << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_YPbPr << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_D_CONNECTOR_ENUM_ID1         ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_D_CONNECTOR << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_D_CONNECTOR << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_D_CONNECTOR_ENUM_ID2         ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_D_CONNECTOR << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_D_CONNECTOR << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_9PIN_DIN_ENUM_ID1            ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_9PIN_DIN << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_9PIN_DIN << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_9PIN_DIN_ENUM_ID2            ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_9PIN_DIN << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_9PIN_DIN << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_SCART_ENUM_ID1               ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_SCART << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_SCART << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_SCART_ENUM_ID2               ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_SCART << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_SCART << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_HDMI_TYPE_A_ENUM_ID1         ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_HDMI_TYPE_A << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_HDMI_TYPE_A << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_HDMI_TYPE_A_ENUM_ID2         ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_HDMI_TYPE_A << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_HDMI_TYPE_A << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_HDMI_TYPE_A_ENUM_ID3         ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID3 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_HDMI_TYPE_A << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID3 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_HDMI_TYPE_A << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_HDMI_TYPE_B_ENUM_ID1         ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_HDMI_TYPE_B << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_HDMI_TYPE_B << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_HDMI_TYPE_B_ENUM_ID2         ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_HDMI_TYPE_B << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_HDMI_TYPE_B << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_7PIN_DIN_ENUM_ID1            ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_7PIN_DIN << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_7PIN_DIN << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_7PIN_DIN_ENUM_ID2            ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_7PIN_DIN << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_7PIN_DIN << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_PCIE_CONNECTOR_ENUM_ID1      ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_PCIE_CONNECTOR << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_PCIE_CONNECTOR << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_PCIE_CONNECTOR_ENUM_ID2      ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_PCIE_CONNECTOR << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_PCIE_CONNECTOR << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_CROSSFIRE_ENUM_ID1           ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_CROSSFIRE << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_CROSSFIRE << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_CROSSFIRE_ENUM_ID2           ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_CROSSFIRE << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_CROSSFIRE << OBJECT_ID_SHIFT)
 
 
 #define CONNECTOR_HARDCODE_DVI_ENUM_ID1        ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_HARDCODE_DVI << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_HARDCODE_DVI << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_HARDCODE_DVI_ENUM_ID2        ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_HARDCODE_DVI << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_HARDCODE_DVI << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_DISPLAYPORT_ENUM_ID1         ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_DISPLAYPORT << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_DISPLAYPORT << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_DISPLAYPORT_ENUM_ID2         ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_DISPLAYPORT << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_DISPLAYPORT << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_DISPLAYPORT_ENUM_ID3         ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID3 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_DISPLAYPORT << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID3 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_DISPLAYPORT << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_DISPLAYPORT_ENUM_ID4         ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID4 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_DISPLAYPORT << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID4 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_DISPLAYPORT << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_DISPLAYPORT_ENUM_ID5         ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID5 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_DISPLAYPORT << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID5 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_DISPLAYPORT << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_DISPLAYPORT_ENUM_ID6         ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID6 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_DISPLAYPORT << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID6 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_DISPLAYPORT << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_MXM_ENUM_ID1                 ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_MXM << OBJECT_ID_SHIFT)         
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_MXM << OBJECT_ID_SHIFT)         
 
 #define CONNECTOR_MXM_ENUM_ID2                 ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_MXM << OBJECT_ID_SHIFT)         
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_MXM << OBJECT_ID_SHIFT)         
 
 #define CONNECTOR_MXM_ENUM_ID3                 ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID3 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_MXM << OBJECT_ID_SHIFT)         
+                                                 GRAPH_OBJECT_ENUM_ID3 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_MXM << OBJECT_ID_SHIFT)         
 
 #define CONNECTOR_MXM_ENUM_ID4                 ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID4 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_MXM << OBJECT_ID_SHIFT)         
+                                                 GRAPH_OBJECT_ENUM_ID4 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_MXM << OBJECT_ID_SHIFT)         
 
 #define CONNECTOR_MXM_ENUM_ID5                 ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID5 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_MXM << OBJECT_ID_SHIFT)         
+                                                 GRAPH_OBJECT_ENUM_ID5 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_MXM << OBJECT_ID_SHIFT)         
 
 #define CONNECTOR_MXM_ENUM_ID6                 ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID6 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_MXM << OBJECT_ID_SHIFT)         
+                                                 GRAPH_OBJECT_ENUM_ID6 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_MXM << OBJECT_ID_SHIFT)         
 
 #define CONNECTOR_MXM_ENUM_ID7                 ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID7 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_MXM << OBJECT_ID_SHIFT)         
+                                                 GRAPH_OBJECT_ENUM_ID7 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_MXM << OBJECT_ID_SHIFT)         
 
 #define CONNECTOR_LVDS_eDP_ENUM_ID1            ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_LVDS_eDP << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_LVDS_eDP << OBJECT_ID_SHIFT)
 
 #define CONNECTOR_LVDS_eDP_ENUM_ID2            ( GRAPH_OBJECT_TYPE_CONNECTOR << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    CONNECTOR_OBJECT_ID_LVDS_eDP << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 CONNECTOR_OBJECT_ID_LVDS_eDP << OBJECT_ID_SHIFT)
 
 /****************************************************/
 /* Router Object ID definition - Shared with BIOS   */
 /****************************************************/
 #define ROUTER_I2C_EXTENDER_CNTL_ENUM_ID1      ( GRAPH_OBJECT_TYPE_ROUTER << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    ROUTER_OBJECT_ID_I2C_EXTENDER_CNTL << OBJECT_ID_SHIFT)
+                                                GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                ROUTER_OBJECT_ID_I2C_EXTENDER_CNTL << OBJECT_ID_SHIFT)
 
 /* deleted */
 
@@ -655,24 +655,24 @@
 /* Generic Object ID definition - Shared with BIOS  */
 /****************************************************/
 #define GENERICOBJECT_GLSYNC_ENUM_ID1           (GRAPH_OBJECT_TYPE_GENERIC << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    GENERIC_OBJECT_ID_GLSYNC << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 GENERIC_OBJECT_ID_GLSYNC << OBJECT_ID_SHIFT)
 
 #define GENERICOBJECT_PX2_NON_DRIVABLE_ID1       (GRAPH_OBJECT_TYPE_GENERIC << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    GENERIC_OBJECT_ID_PX2_NON_DRIVABLE<< OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 GENERIC_OBJECT_ID_PX2_NON_DRIVABLE<< OBJECT_ID_SHIFT)
 
 #define GENERICOBJECT_PX2_NON_DRIVABLE_ID2       (GRAPH_OBJECT_TYPE_GENERIC << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
-    GENERIC_OBJECT_ID_PX2_NON_DRIVABLE<< OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID2 << ENUM_ID_SHIFT |\
+                                                 GENERIC_OBJECT_ID_PX2_NON_DRIVABLE<< OBJECT_ID_SHIFT)
 
 #define GENERICOBJECT_MXM_OPM_ENUM_ID1           (GRAPH_OBJECT_TYPE_GENERIC << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    GENERIC_OBJECT_ID_MXM_OPM << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 GENERIC_OBJECT_ID_MXM_OPM << OBJECT_ID_SHIFT)
 
 #define GENERICOBJECT_STEREO_PIN_ENUM_ID1        (GRAPH_OBJECT_TYPE_GENERIC << OBJECT_TYPE_SHIFT |\
-    GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
-    GENERIC_OBJECT_ID_STEREO_PIN << OBJECT_ID_SHIFT)
+                                                 GRAPH_OBJECT_ENUM_ID1 << ENUM_ID_SHIFT |\
+                                                 GENERIC_OBJECT_ID_STEREO_PIN << OBJECT_ID_SHIFT)
 
 /****************************************************/
 /* Object Cap definition - Shared with BIOS         */

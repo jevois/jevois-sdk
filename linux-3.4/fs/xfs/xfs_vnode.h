@@ -29,35 +29,35 @@ struct attrlist_cursor_kern;
  * VN_INACTIVE_NOCACHE implies that the file system behavior
  * has disassociated its state and bhv_desc_t from the vnode.
  */
-#define VN_INACTIVE_CACHE 0
-#define VN_INACTIVE_NOCACHE 1
+#define	VN_INACTIVE_CACHE	0
+#define	VN_INACTIVE_NOCACHE	1
 
 /*
  * Flags for read/write calls - same values as IRIX
  */
-#define IO_ISDIRECT 0x00004   /* bypass page cache */
-#define IO_INVIS  0x00020   /* don't update inode timestamps */
+#define IO_ISDIRECT	0x00004		/* bypass page cache */
+#define IO_INVIS	0x00020		/* don't update inode timestamps */
 
 #define XFS_IO_FLAGS \
-  { IO_ISDIRECT,  "DIRECT" }, \
-  { IO_INVIS, "INVIS"}
+	{ IO_ISDIRECT,	"DIRECT" }, \
+	{ IO_INVIS,	"INVIS"}
 
 /*
  * Flush/Invalidate options for vop_toss/flush/flushinval_pages.
  */
-#define FI_NONE     0 /* none */
-#define FI_REMAPF   1 /* Do a remapf prior to the operation */
-#define FI_REMAPF_LOCKED  2 /* Do a remapf prior to the operation.
-             Prevent VM access to the pages until
-             the operation completes. */
+#define FI_NONE			0	/* none */
+#define FI_REMAPF		1	/* Do a remapf prior to the operation */
+#define FI_REMAPF_LOCKED	2	/* Do a remapf prior to the operation.
+					   Prevent VM access to the pages until
+					   the operation completes. */
 
 /*
  * Some useful predicates.
  */
-#define VN_MAPPED(vp) mapping_mapped(vp->i_mapping)
-#define VN_CACHED(vp) (vp->i_mapping->nrpages)
-#define VN_DIRTY(vp)  mapping_tagged(vp->i_mapping, \
-                                     PAGECACHE_TAG_DIRTY)
+#define VN_MAPPED(vp)	mapping_mapped(vp->i_mapping)
+#define VN_CACHED(vp)	(vp->i_mapping->nrpages)
+#define VN_DIRTY(vp)	mapping_tagged(vp->i_mapping, \
+					PAGECACHE_TAG_DIRTY)
 
 
-#endif  /* __XFS_VNODE_H__ */
+#endif	/* __XFS_VNODE_H__ */

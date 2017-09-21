@@ -20,18 +20,18 @@
 #ifndef _MWIFIEX_UTIL_H_
 #define _MWIFIEX_UTIL_H_
 
-static inline struct mwifiex_rxinfo * MWIFIEX_SKB_RXCB (struct sk_buff * skb)
+static inline struct mwifiex_rxinfo *MWIFIEX_SKB_RXCB(struct sk_buff *skb)
 {
-  return (struct mwifiex_rxinfo *) (skb->cb + sizeof (phys_addr_t) );
+	return (struct mwifiex_rxinfo *)(skb->cb + sizeof(phys_addr_t));
 }
 
-static inline struct mwifiex_txinfo * MWIFIEX_SKB_TXCB (struct sk_buff * skb)
+static inline struct mwifiex_txinfo *MWIFIEX_SKB_TXCB(struct sk_buff *skb)
 {
-  return (struct mwifiex_txinfo *) (skb->cb + sizeof (phys_addr_t) );
+	return (struct mwifiex_txinfo *)(skb->cb + sizeof(phys_addr_t));
 }
 
-static inline phys_addr_t * MWIFIEX_SKB_PACB (struct sk_buff * skb)
+static inline phys_addr_t *MWIFIEX_SKB_PACB(struct sk_buff *skb)
 {
-  return (phys_addr_t *) skb->cb;
+	return (phys_addr_t *)skb->cb;
 }
 #endif /* !_MWIFIEX_UTIL_H_ */

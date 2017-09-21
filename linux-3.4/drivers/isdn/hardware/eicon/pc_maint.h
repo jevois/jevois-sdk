@@ -70,91 +70,91 @@
 #define NO_EVENT 1
 struct DSigStruc
 {
-  byte Id;
-  byte u;
-  byte listen;
-  byte active;
-  byte sin[3];
-  byte bc[6];
-  byte llc[6];
-  byte hlc[6];
-  byte oad[20];
+	byte Id;
+	byte u;
+	byte listen;
+	byte active;
+	byte sin[3];
+	byte bc[6];
+	byte llc[6];
+	byte hlc[6];
+	byte oad[20];
 };
 struct BL1Struc {
-  dword cx_b1;
-  dword cx_b2;
-  dword cr_b1;
-  dword cr_b2;
-  dword px_b1;
-  dword px_b2;
-  dword pr_b1;
-  dword pr_b2;
-  word er_b1;
-  word er_b2;
+	dword cx_b1;
+	dword cx_b2;
+	dword cr_b1;
+	dword cr_b2;
+	dword px_b1;
+	dword px_b2;
+	dword pr_b1;
+	dword pr_b2;
+	word er_b1;
+	word er_b2;
 };
 struct L2Struc {
-  dword XTotal;
-  dword RTotal;
-  word XError;
-  word RError;
+	dword XTotal;
+	dword RTotal;
+	word XError;
+	word RError;
 };
 struct OSStruc {
-  dword free_n;
+	dword free_n;
 };
 typedef union
 {
-  struct DSigStruc DSigStats;
-  struct BL1Struc BL1Stats;
-  struct L2Struc L2Stats;
-  struct OSStruc OSStats;
-  byte   b[BUFFER_SZ];
-  word   w[BUFFER_SZ >> 1];
-  word   l[BUFFER_SZ >> 2]; /* word is wrong, do not use! Use 'd' instead. */
-  dword  d[BUFFER_SZ >> 2];
+	struct DSigStruc DSigStats;
+	struct BL1Struc BL1Stats;
+	struct L2Struc L2Stats;
+	struct OSStruc OSStats;
+	byte   b[BUFFER_SZ];
+	word   w[BUFFER_SZ >> 1];
+	word   l[BUFFER_SZ >> 2]; /* word is wrong, do not use! Use 'd' instead. */
+	dword  d[BUFFER_SZ >> 2];
 } BUFFER;
 typedef union
 {
-  struct DSigStruc DSigStats;
-  struct BL1Struc BL1Stats;
-  struct L2Struc L2Stats;
-  struct OSStruc OSStats;
-  byte   b[MIPS_BUFFER_SZ];
-  word   w[MIPS_BUFFER_SZ >> 1];
-  word   l[BUFFER_SZ >> 2]; /* word is wrong, do not use! Use 'd' instead. */
-  dword  d[MIPS_BUFFER_SZ >> 2];
+	struct DSigStruc DSigStats;
+	struct BL1Struc BL1Stats;
+	struct L2Struc L2Stats;
+	struct OSStruc OSStats;
+	byte   b[MIPS_BUFFER_SZ];
+	word   w[MIPS_BUFFER_SZ >> 1];
+	word   l[BUFFER_SZ >> 2]; /* word is wrong, do not use! Use 'd' instead. */
+	dword  d[MIPS_BUFFER_SZ >> 2];
 } MIPS_BUFFER;
 #if !defined(MIPS_SCOM)
 struct pc_maint
 {
-  byte req;
-  byte rc;
-  POINTER_32BIT mem;
-  short length;
-  word port;
-  byte fill[6];
-  BUFFER data;
+	byte req;
+	byte rc;
+	POINTER_32BIT mem;
+	short length;
+	word port;
+	byte fill[6];
+	BUFFER data;
 };
 #else
 struct pc_maint
 {
-  byte req;
-  byte rc;
-  byte reserved[2];     /* R3000 alignment ... */
-  POINTER_32BIT mem;
-  short length;
-  word port;
-  byte fill[4];         /* data at offset 16   */
-  BUFFER data;
+	byte req;
+	byte rc;
+	byte reserved[2];     /* R3000 alignment ... */
+	POINTER_32BIT mem;
+	short length;
+	word port;
+	byte fill[4];         /* data at offset 16   */
+	BUFFER data;
 };
 #endif
 struct mi_pc_maint
 {
-  byte req;
-  byte rc;
-  byte reserved[2];     /* R3000 alignment ... */
-  POINTER_32BIT mem;
-  short length;
-  word port;
-  byte fill[4];         /* data at offset 16   */
-  MIPS_BUFFER data;
+	byte req;
+	byte rc;
+	byte reserved[2];     /* R3000 alignment ... */
+	POINTER_32BIT mem;
+	short length;
+	word port;
+	byte fill[4];         /* data at offset 16   */
+	MIPS_BUFFER data;
 };

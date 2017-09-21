@@ -25,9 +25,9 @@
 /* Tag function inside TCM called from inside TCM  with this */
 #define __tcmlocalfunc __section(.tcm.text)
 
-void * tcm_alloc (size_t len);
-void tcm_free (void * addr, size_t len);
-bool tcm_dtcm_present (void);
-bool tcm_itcm_present (void);
+void *tcm_alloc(size_t len);
+void tcm_free(void *addr, size_t len);
+bool tcm_dtcm_present(void);
+bool tcm_itcm_present(void);
 
 #endif

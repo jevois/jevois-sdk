@@ -50,26 +50,26 @@
  *
  * This does not append a newline
  */
-static void putc (int c)
+static void putc(int c)
 {
-  #ifdef UART_OFFSET
-  void __iomem * sys = (void __iomem *) UART_OFFSET; /* physical address */
-  
-  while (! (__raw_readl (sys + ATMEL_US_CSR) & ATMEL_US_TXRDY) )
-  { barrier(); }
-  __raw_writel (c, sys + ATMEL_US_THR);
-  #endif
+#ifdef UART_OFFSET
+	void __iomem *sys = (void __iomem *) UART_OFFSET;	/* physical address */
+
+	while (!(__raw_readl(sys + ATMEL_US_CSR) & ATMEL_US_TXRDY))
+		barrier();
+	__raw_writel(c, sys + ATMEL_US_THR);
+#endif
 }
 
-static inline void flush (void)
+static inline void flush(void)
 {
-  #ifdef UART_OFFSET
-  void __iomem * sys = (void __iomem *) UART_OFFSET; /* physical address */
-  
-  /* wait for transmission to complete */
-  while (! (__raw_readl (sys + ATMEL_US_CSR) & ATMEL_US_TXEMPTY) )
-  { barrier(); }
-  #endif
+#ifdef UART_OFFSET
+	void __iomem *sys = (void __iomem *) UART_OFFSET;	/* physical address */
+
+	/* wait for transmission to complete */
+	while (!(__raw_readl(sys + ATMEL_US_CSR) & ATMEL_US_TXEMPTY))
+		barrier();
+#endif
 }
 
 #define arch_decomp_setup()

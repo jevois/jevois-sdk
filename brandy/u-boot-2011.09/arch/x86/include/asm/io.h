@@ -22,17 +22,17 @@
  * On the other hand, I'd like to be sure of a non-existent port:
  * I feel a bit unsafe about using 0x80 (should be safe, though)
  *
- *    Linus
+ *		Linus
  */
 
-/*
- *  Bit simplified and optimized by Jan Hubicka
- *  Support of BIGMEM added by Gerhard Wichert, Siemens AG, July 1999.
- *
- *  isa_memset_io, isa_memcpy_fromio, isa_memcpy_toio added,
- *  isa_read[wl] and isa_write[wl] fixed
- *  - Arnaldo Carvalho de Melo <acme@conectiva.com.br>
- */
+ /*
+  *  Bit simplified and optimized by Jan Hubicka
+  *  Support of BIGMEM added by Gerhard Wichert, Siemens AG, July 1999.
+  *
+  *  isa_memset_io, isa_memcpy_fromio, isa_memcpy_toio added,
+  *  isa_read[wl] and isa_write[wl] fixed
+  *  - Arnaldo Carvalho de Melo <acme@conectiva.com.br>
+  */
 
 #define IO_SPACE_LIMIT 0xffff
 
@@ -61,9 +61,9 @@
 #define __raw_writew writew
 #define __raw_writel writel
 
-#define memset_io(a,b,c)  memset((a),(b),(c))
-#define memcpy_fromio(a,b,c)  memcpy((a),(b),(c))
-#define memcpy_toio(a,b,c)  memcpy((a),(b),(c))
+#define memset_io(a,b,c)	memset((a),(b),(c))
+#define memcpy_fromio(a,b,c)	memcpy((a),(b),(c))
+#define memcpy_toio(a,b,c)	memcpy((a),(b),(c))
 
 /*
  * ISA space is 'always mapped' on a typical x86 system, no need to
@@ -79,57 +79,55 @@
 #define isa_writeb(b,a) writeb(b,(a))
 #define isa_writew(w,a) writew(w,(a))
 #define isa_writel(l,a) writel(l,(a))
-#define isa_memset_io(a,b,c)    memset_io((a),(b),(c))
-#define isa_memcpy_fromio(a,b,c)  memcpy_fromio((a),(b),(c))
-#define isa_memcpy_toio(a,b,c)    memcpy_toio((a),(b),(c))
+#define isa_memset_io(a,b,c)		memset_io((a),(b),(c))
+#define isa_memcpy_fromio(a,b,c)	memcpy_fromio((a),(b),(c))
+#define isa_memcpy_toio(a,b,c)		memcpy_toio((a),(b),(c))
 
 
-static inline int check_signature (unsigned long io_addr,
-                                   const unsigned char * signature, int length)
+static inline int check_signature(unsigned long io_addr,
+	const unsigned char *signature, int length)
 {
-  int retval = 0;
-  do {
-    if (readb (io_addr) != *signature)
-    { goto out; }
-    io_addr++;
-    signature++;
-    length--;
-  }
-  while (length);
-  retval = 1;
+	int retval = 0;
+	do {
+		if (readb(io_addr) != *signature)
+			goto out;
+		io_addr++;
+		signature++;
+		length--;
+	} while (length);
+	retval = 1;
 out:
-  return retval;
+	return retval;
 }
 
 /**
- *  isa_check_signature   - find BIOS signatures
- *  @io_addr: mmio address to check
- *  @signature:  signature block
- *  @length: length of signature
+ *	isa_check_signature		-	find BIOS signatures
+ *	@io_addr: mmio address to check
+ *	@signature:  signature block
+ *	@length: length of signature
  *
- *  Perform a signature comparison with the ISA mmio address io_addr.
- *  Returns 1 on a match.
+ *	Perform a signature comparison with the ISA mmio address io_addr.
+ *	Returns 1 on a match.
  *
- *  This function is deprecated. New drivers should use ioremap and
- *  check_signature.
+ *	This function is deprecated. New drivers should use ioremap and
+ *	check_signature.
  */
 
 
-static inline int isa_check_signature (unsigned long io_addr,
-                                       const unsigned char * signature, int length)
+static inline int isa_check_signature(unsigned long io_addr,
+	const unsigned char *signature, int length)
 {
-  int retval = 0;
-  do {
-    if (isa_readb (io_addr) != *signature)
-    { goto out; }
-    io_addr++;
-    signature++;
-    length--;
-  }
-  while (length);
-  retval = 1;
+	int retval = 0;
+	do {
+		if (isa_readb(io_addr) != *signature)
+			goto out;
+		io_addr++;
+		signature++;
+		length--;
+	} while (length);
+	retval = 1;
 out:
-  return retval;
+	return retval;
 }
 
 #endif /* __KERNEL__ */
@@ -151,59 +149,59 @@ out:
  * Talk about misusing macros..
  */
 #define __OUT1(s,x) \
-  static inline void out##s(unsigned x value, unsigned short port) {
+static inline void out##s(unsigned x value, unsigned short port) {
 
 #define __OUT2(s,s1,s2) \
-  __asm__ __volatile__ ("out" #s " %" s1 "0,%" s2 "1"
+__asm__ __volatile__ ("out" #s " %" s1 "0,%" s2 "1"
 
 
 #define __OUT(s,s1,x) \
-  __OUT1(s,x) __OUT2(s,s1,"w") : : "a" (value), "Nd" (port)); } \
-  __OUT1(s##_p,x) __OUT2(s,s1,"w") __FULL_SLOW_DOWN_IO : : "a" (value), "Nd" (port));}
+__OUT1(s,x) __OUT2(s,s1,"w") : : "a" (value), "Nd" (port)); } \
+__OUT1(s##_p,x) __OUT2(s,s1,"w") __FULL_SLOW_DOWN_IO : : "a" (value), "Nd" (port));}
 
 #define __IN1(s) \
-  static inline RETURN_TYPE in##s(unsigned short port) { RETURN_TYPE _v;
+static inline RETURN_TYPE in##s(unsigned short port) { RETURN_TYPE _v;
 
 #define __IN2(s,s1,s2) \
-  __asm__ __volatile__ ("in" #s " %" s2 "1,%" s1 "0"
+__asm__ __volatile__ ("in" #s " %" s2 "1,%" s1 "0"
 
 #define __IN(s,s1,i...) \
-  __IN1(s) __IN2(s,s1,"w") : "=a" (_v) : "Nd" (port) ,##i ); return _v; } \
-  __IN1(s##_p) __IN2(s,s1,"w") __FULL_SLOW_DOWN_IO : "=a" (_v) : "Nd" (port) ,##i ); return _v; }
+__IN1(s) __IN2(s,s1,"w") : "=a" (_v) : "Nd" (port) ,##i ); return _v; } \
+__IN1(s##_p) __IN2(s,s1,"w") __FULL_SLOW_DOWN_IO : "=a" (_v) : "Nd" (port) ,##i ); return _v; }
 
 #define __INS(s) \
-  static inline void ins##s(unsigned short port, void * addr, unsigned long count) \
-  { __asm__ __volatile__ ("rep ; ins" #s \
-                          : "=D" (addr), "=c" (count) : "d" (port),"0" (addr),"1" (count)); }
+static inline void ins##s(unsigned short port, void * addr, unsigned long count) \
+{ __asm__ __volatile__ ("rep ; ins" #s \
+: "=D" (addr), "=c" (count) : "d" (port),"0" (addr),"1" (count)); }
 
 #define __OUTS(s) \
-  static inline void outs##s(unsigned short port, const void * addr, unsigned long count) \
-  { __asm__ __volatile__ ("rep ; outs" #s \
-                          : "=S" (addr), "=c" (count) : "d" (port),"0" (addr),"1" (count)); }
+static inline void outs##s(unsigned short port, const void * addr, unsigned long count) \
+{ __asm__ __volatile__ ("rep ; outs" #s \
+: "=S" (addr), "=c" (count) : "d" (port),"0" (addr),"1" (count)); }
 
 #define RETURN_TYPE unsigned char
-__IN (b, "")
+__IN(b,"")
 #undef RETURN_TYPE
 #define RETURN_TYPE unsigned short
-__IN (w, "")
+__IN(w,"")
 #undef RETURN_TYPE
 #define RETURN_TYPE unsigned int
-__IN (l, "")
+__IN(l,"")
 #undef RETURN_TYPE
 
-__OUT (b, "b", char)
-__OUT (w, "w", short)
-__OUT (l, , int)
+__OUT(b,"b",char)
+__OUT(w,"w",short)
+__OUT(l,,int)
 
-__INS (b)
-__INS (w)
-__INS (l)
+__INS(b)
+__INS(w)
+__INS(l)
 
-__OUTS (b)
-__OUTS (w)
-__OUTS (l)
+__OUTS(b)
+__OUTS(w)
+__OUTS(l)
 
-static inline void sync (void)
+static inline void sync(void)
 {
 }
 
@@ -212,28 +210,28 @@ static inline void sync (void)
  * that can be used to access the memory range with the caching
  * properties specified by "flags".
  */
-#define MAP_NOCACHE (0)
-#define MAP_WRCOMBINE (0)
-#define MAP_WRBACK  (0)
-#define MAP_WRTHROUGH (0)
+#define MAP_NOCACHE	(0)
+#define MAP_WRCOMBINE	(0)
+#define MAP_WRBACK	(0)
+#define MAP_WRTHROUGH	(0)
 
 static inline void *
-map_physmem (phys_addr_t paddr, unsigned long len, unsigned long flags)
+map_physmem(phys_addr_t paddr, unsigned long len, unsigned long flags)
 {
-  return (void *) paddr;
+	return (void *)paddr;
 }
 
 /*
  * Take down a mapping set up by map_physmem().
  */
-static inline void unmap_physmem (void * vaddr, unsigned long flags)
+static inline void unmap_physmem(void *vaddr, unsigned long flags)
 {
 
 }
 
-static inline phys_addr_t virt_to_phys (void * vaddr)
+static inline phys_addr_t virt_to_phys(void * vaddr)
 {
-  return (phys_addr_t) (vaddr);
+	return (phys_addr_t)(vaddr);
 }
 
 #endif

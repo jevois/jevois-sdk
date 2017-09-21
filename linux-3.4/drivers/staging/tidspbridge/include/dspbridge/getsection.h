@@ -45,9 +45,9 @@
  *  NULL if an error is encountered, otherwise a module handle for use
  * in subsequent operations.
  */
-extern void * dload_module_open (struct dynamic_loader_stream
-                                 *module, struct dynamic_loader_sym
-                                 *syms);
+extern void *dload_module_open(struct dynamic_loader_stream
+					   *module, struct dynamic_loader_sym
+					   *syms);
 
 /*
  * Procedure dload_get_section_info
@@ -64,10 +64,10 @@ extern void * dload_module_open (struct dynamic_loader_stream
  * Returns:
  *  TRUE for success, FALSE for section not found
  */
-extern int dload_get_section_info (void * minfo,
-                                   const char * section_name,
-                                   const struct ldr_section_info
-                                   ** const section_info);
+extern int dload_get_section_info(void *minfo,
+				  const char *section_name,
+				  const struct ldr_section_info
+				  **const section_info);
 
 /*
  * Procedure dload_get_section
@@ -84,9 +84,9 @@ extern int dload_get_section_info (void * minfo,
  * Returns:
  *  TRUE for success, FALSE for section not found
  */
-extern int dload_get_section (void * minfo,
-                              const struct ldr_section_info * section_info,
-                              void * section_data);
+extern int dload_get_section(void *minfo,
+			     const struct ldr_section_info *section_info,
+			     void *section_data);
 
 /*
  * Procedure dload_module_close
@@ -103,6 +103,6 @@ extern int dload_get_section (void * minfo,
  * Individual errors are reported using syms->error_report(), where syms was
  * an argument to dload_module_open
  */
-extern void dload_module_close (void * minfo);
+extern void dload_module_close(void *minfo);
 
 #endif /* _GETSECTION_H_ */

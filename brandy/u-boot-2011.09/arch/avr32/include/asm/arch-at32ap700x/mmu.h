@@ -13,18 +13,18 @@
 
 #include <asm/sysreg.h>
 
-#define PAGE_SHIFT  20
-#define PAGE_SIZE (1UL << PAGE_SHIFT)
-#define PAGE_ADDR_MASK  (~(PAGE_SIZE - 1))
+#define PAGE_SHIFT	20
+#define PAGE_SIZE	(1UL << PAGE_SHIFT)
+#define PAGE_ADDR_MASK	(~(PAGE_SIZE - 1))
 
-#define MMU_VMR_CACHE_NONE            \
-  (SYSREG_BF(AP, 3) | SYSREG_BF(SZ, 3) | SYSREG_BIT(TLBELO_D))
-#define MMU_VMR_CACHE_WBUF            \
-  (MMU_VMR_CACHE_NONE | SYSREG_BIT(B))
-#define MMU_VMR_CACHE_WRTHRU            \
-  (MMU_VMR_CACHE_NONE | SYSREG_BIT(TLBELO_C) | SYSREG_BIT(W))
-#define MMU_VMR_CACHE_WRBACK            \
-  (MMU_VMR_CACHE_WBUF | SYSREG_BIT(TLBELO_C))
+#define MMU_VMR_CACHE_NONE						\
+	(SYSREG_BF(AP, 3) | SYSREG_BF(SZ, 3) | SYSREG_BIT(TLBELO_D))
+#define MMU_VMR_CACHE_WBUF						\
+	(MMU_VMR_CACHE_NONE | SYSREG_BIT(B))
+#define MMU_VMR_CACHE_WRTHRU						\
+	(MMU_VMR_CACHE_NONE | SYSREG_BIT(TLBELO_C) | SYSREG_BIT(W))
+#define MMU_VMR_CACHE_WRBACK						\
+	(MMU_VMR_CACHE_WBUF | SYSREG_BIT(TLBELO_C))
 
 /*
  * This structure is used in our "page table". Instead of the usual
@@ -39,9 +39,9 @@
  * that need to be written to TLBELO in phys_pgno.
  */
 struct mmu_vm_range {
-  uint16_t  virt_pgno;
-  uint16_t  nr_pages;
-  uint32_t  phys;
+	uint16_t	virt_pgno;
+	uint16_t	nr_pages;
+	uint32_t	phys;
 };
 
 /*
@@ -55,12 +55,12 @@ extern struct mmu_vm_range mmu_vmr_table[];
  * Initialize the MMU. This will set up a fixed TLB entry for the static
  * u-boot image at dest_addr and enable paging.
  */
-void mmu_init_r (unsigned long dest_addr);
+void mmu_init_r(unsigned long dest_addr);
 
 /*
  * Handle a TLB miss exception. This function is called directly from
  * the exception vector table written in assembly.
  */
-int mmu_handle_tlb_miss (void);
+int mmu_handle_tlb_miss(void);
 
 #endif /* __ASM_ARCH_MMU_H */

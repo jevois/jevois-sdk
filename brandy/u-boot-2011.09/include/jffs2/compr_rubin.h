@@ -7,5 +7,5 @@
 #define UPPER_BIT_RUBIN    (((long) 1)<<(RUBIN_REG_SIZE-1))
 #define LOWER_BITS_RUBIN   ((((long) 1)<<(RUBIN_REG_SIZE-1))-1)
 
-void dynrubin_decompress (unsigned char * data_in, unsigned char * cpage_out,
-                          unsigned long sourcelen, unsigned long dstlen);
+void dynrubin_decompress(unsigned char *data_in, unsigned char *cpage_out,
+		   unsigned long sourcelen, unsigned long dstlen);

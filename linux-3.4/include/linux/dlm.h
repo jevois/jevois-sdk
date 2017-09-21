@@ -54,29 +54,29 @@ typedef void dlm_lockspace_t;
  * -ETIMEDOUT if the lock request was canceled due to a timeout
  */
 
-#define DLM_SBF_DEMOTED   0x01
-#define DLM_SBF_VALNOTVALID 0x02
-#define DLM_SBF_ALTMODE   0x04
+#define DLM_SBF_DEMOTED		0x01
+#define DLM_SBF_VALNOTVALID	0x02
+#define DLM_SBF_ALTMODE		0x04
 
 struct dlm_lksb {
-  int    sb_status;
-  __u32  sb_lkid;
-  char   sb_flags;
-  char  *  sb_lvbptr;
+	int 	 sb_status;
+	__u32	 sb_lkid;
+	char 	 sb_flags;
+	char *	 sb_lvbptr;
 };
 
 /* dlm_new_lockspace() flags */
 
-#define DLM_LSFL_NODIR    0x00000001
-#define DLM_LSFL_TIMEWARN 0x00000002
-#define DLM_LSFL_FS       0x00000004
-#define DLM_LSFL_NEWEXCL      0x00000008
+#define DLM_LSFL_NODIR		0x00000001
+#define DLM_LSFL_TIMEWARN	0x00000002
+#define DLM_LSFL_FS     	0x00000004
+#define DLM_LSFL_NEWEXCL     	0x00000008
 
 #ifdef __KERNEL__
 
 struct dlm_slot {
-  int nodeid; /* 1 to MAX_INT */
-  int slot;   /* 1 to MAX_INT */
+	int nodeid; /* 1 to MAX_INT */
+	int slot;   /* 1 to MAX_INT */
 };
 
 /*
@@ -89,10 +89,10 @@ struct dlm_slot {
  */
 
 struct dlm_lockspace_ops {
-  void (*recover_prep) (void * ops_arg);
-  void (*recover_slot) (void * ops_arg, struct dlm_slot * slot);
-  void (*recover_done) (void * ops_arg, struct dlm_slot * slots,
-                        int num_slots, int our_slot, uint32_t generation);
+	void (*recover_prep) (void *ops_arg);
+	void (*recover_slot) (void *ops_arg, struct dlm_slot *slot);
+	void (*recover_done) (void *ops_arg, struct dlm_slot *slots,
+			      int num_slots, int our_slot, uint32_t generation);
 };
 
 /*
@@ -140,10 +140,10 @@ struct dlm_lockspace_ops {
  * lockspace: handle for dlm functions
  */
 
-int dlm_new_lockspace (const char * name, const char * cluster,
-                       uint32_t flags, int lvblen,
-                       const struct dlm_lockspace_ops * ops, void * ops_arg,
-                       int * ops_result, dlm_lockspace_t ** lockspace);
+int dlm_new_lockspace(const char *name, const char *cluster,
+		      uint32_t flags, int lvblen,
+		      const struct dlm_lockspace_ops *ops, void *ops_arg,
+		      int *ops_result, dlm_lockspace_t **lockspace);
 
 /*
  * dlm_release_lockspace
@@ -151,7 +151,7 @@ int dlm_new_lockspace (const char * name, const char * cluster,
  * Stop a lockspace.
  */
 
-int dlm_release_lockspace (dlm_lockspace_t * lockspace, int force);
+int dlm_release_lockspace(dlm_lockspace_t *lockspace, int force);
 
 /*
  * dlm_lock
@@ -190,16 +190,16 @@ int dlm_release_lockspace (dlm_lockspace_t * lockspace, int force);
  * any locking calls they please.
  */
 
-int dlm_lock (dlm_lockspace_t * lockspace,
-              int mode,
-              struct dlm_lksb * lksb,
-              uint32_t flags,
-              void * name,
-              unsigned int namelen,
-              uint32_t parent_lkid,
-              void (*lockast) (void * astarg),
-              void * astarg,
-              void (*bast) (void * astarg, int mode) );
+int dlm_lock(dlm_lockspace_t *lockspace,
+	     int mode,
+	     struct dlm_lksb *lksb,
+	     uint32_t flags,
+	     void *name,
+	     unsigned int namelen,
+	     uint32_t parent_lkid,
+	     void (*lockast) (void *astarg),
+	     void *astarg,
+	     void (*bast) (void *astarg, int mode));
 
 /*
  * dlm_unlock
@@ -221,13 +221,13 @@ int dlm_lock (dlm_lockspace_t * lockspace,
  * -ENOTCONN if there is a communication error
  */
 
-int dlm_unlock (dlm_lockspace_t * lockspace,
-                uint32_t lkid,
-                uint32_t flags,
-                struct dlm_lksb * lksb,
-                void * astarg);
+int dlm_unlock(dlm_lockspace_t *lockspace,
+	       uint32_t lkid,
+	       uint32_t flags,
+	       struct dlm_lksb *lksb,
+	       void *astarg);
 
-#endif        /* __KERNEL__ */
+#endif				/* __KERNEL__ */
 
-#endif        /* __DLM_DOT_H__ */
+#endif				/* __DLM_DOT_H__ */
 

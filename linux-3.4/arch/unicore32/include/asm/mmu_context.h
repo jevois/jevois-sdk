@@ -19,9 +19,9 @@
 #include <asm/cacheflush.h>
 #include <asm/cpu-single.h>
 
-#define init_new_context(tsk, mm) 0
+#define init_new_context(tsk, mm)	0
 
-#define destroy_context(mm)   do { } while (0)
+#define destroy_context(mm)		do { } while (0)
 
 /*
  * This is called when "tsk" is about to enter lazy TLB mode.
@@ -33,7 +33,7 @@
  * tsk->mm will be NULL
  */
 static inline void
-enter_lazy_tlb (struct mm_struct * mm, struct task_struct * tsk)
+enter_lazy_tlb(struct mm_struct *mm, struct task_struct *tsk)
 {
 }
 
@@ -44,17 +44,17 @@ enter_lazy_tlb (struct mm_struct * mm, struct task_struct * tsk)
  * actually changed.
  */
 static inline void
-switch_mm (struct mm_struct * prev, struct mm_struct * next,
-           struct task_struct * tsk)
+switch_mm(struct mm_struct *prev, struct mm_struct *next,
+	  struct task_struct *tsk)
 {
-  unsigned int cpu = smp_processor_id();
-  
-  if (!cpumask_test_and_set_cpu (cpu, mm_cpumask (next) ) || prev != next)
-  { cpu_switch_mm (next->pgd, next); }
+	unsigned int cpu = smp_processor_id();
+
+	if (!cpumask_test_and_set_cpu(cpu, mm_cpumask(next)) || prev != next)
+		cpu_switch_mm(next->pgd, next);
 }
 
-#define deactivate_mm(tsk, mm)  do { } while (0)
-#define activate_mm(prev, next) switch_mm(prev, next, NULL)
+#define deactivate_mm(tsk, mm)	do { } while (0)
+#define activate_mm(prev, next)	switch_mm(prev, next, NULL)
 
 /*
  * We are inserting a "fake" vma for the user-accessible vector page so
@@ -64,23 +64,23 @@ switch_mm (struct mm_struct * prev, struct mm_struct * next,
  * (the macro is used as remove_vma() is static to mm/mmap.c)
  */
 #define arch_exit_mmap(mm) \
-  do { \
-    struct vm_area_struct *high_vma = find_vma(mm, 0xffff0000); \
-    if (high_vma) { \
-      BUG_ON(high_vma->vm_next);  /* it should be last */ \
-      if (high_vma->vm_prev) \
-        high_vma->vm_prev->vm_next = NULL; \
-      else \
-        mm->mmap = NULL; \
-      rb_erase(&high_vma->vm_rb, &mm->mm_rb); \
-      mm->mmap_cache = NULL; \
-      mm->map_count--; \
-      remove_vma(high_vma); \
-    } \
-  } while (0)
+do { \
+	struct vm_area_struct *high_vma = find_vma(mm, 0xffff0000); \
+	if (high_vma) { \
+		BUG_ON(high_vma->vm_next);  /* it should be last */ \
+		if (high_vma->vm_prev) \
+			high_vma->vm_prev->vm_next = NULL; \
+		else \
+			mm->mmap = NULL; \
+		rb_erase(&high_vma->vm_rb, &mm->mm_rb); \
+		mm->mmap_cache = NULL; \
+		mm->map_count--; \
+		remove_vma(high_vma); \
+	} \
+} while (0)
 
-static inline void arch_dup_mmap (struct mm_struct * oldmm,
-                                  struct mm_struct * mm)
+static inline void arch_dup_mmap(struct mm_struct *oldmm,
+				 struct mm_struct *mm)
 {
 }
 

@@ -4,26 +4,26 @@
  * Srikanth Srinivasan (srikanth.srinivasan@freescale.com)
  */
 
-#ifndef __MPC86xx_H__
+#ifndef	__MPC86xx_H__
 #define __MPC86xx_H__
 
 #include <asm/fsl_lbc.h>
 
-#define EXC_OFF_SYS_RESET 0x0100  /* System reset offset */
-#define _START_OFFSET   EXC_OFF_SYS_RESET
+#define EXC_OFF_SYS_RESET	0x0100	/* System reset	offset */
+#define _START_OFFSET		EXC_OFF_SYS_RESET
 
 /*
  * platform register addresses
  */
 
-#define GUTS_SVR  (CONFIG_SYS_CCSRBAR + 0xE00A4)
-#define MCM_ABCR  (CONFIG_SYS_CCSRBAR + 0x01000)
-#define MCM_DBCR  (CONFIG_SYS_CCSRBAR + 0x01008)
+#define GUTS_SVR	(CONFIG_SYS_CCSRBAR + 0xE00A4)
+#define MCM_ABCR	(CONFIG_SYS_CCSRBAR + 0x01000)
+#define MCM_DBCR	(CONFIG_SYS_CCSRBAR + 0x01008)
 
 /*
  * l2cr values.  Look in config_<BOARD>.h for the actual setup
  */
-#define l2cr     1017
+#define l2cr		 1017
 
 #define L2CR_L2E         0x80000000 /* bit 0 - enable */
 #define L2CR_L2PE        0x40000000 /* bit 1 - data parity */
@@ -41,49 +41,49 @@
 #ifndef __ASSEMBLY__
 
 typedef struct {
-  unsigned long freqProcessor;
-  unsigned long freqSystemBus;
-  unsigned long freqLocalBus;
+	unsigned long freqProcessor;
+	unsigned long freqSystemBus;
+	unsigned long freqLocalBus;
 } MPC86xx_SYS_INFO;
 
-#define l1icache_enable icache_enable
+#define l1icache_enable	icache_enable
 
-void l2cache_enable (void);
-void l1dcache_enable (void);
+void l2cache_enable(void);
+void l1dcache_enable(void);
 
 static __inline__ unsigned long get_hid0 (void)
 {
-  unsigned long hid0;
-  asm volatile ("mfspr %0, 1008" : "=r" (hid0) :);
-  return hid0;
+	unsigned long hid0;
+	asm volatile("mfspr %0, 1008" : "=r" (hid0) :);
+	return hid0;
 }
 
 static __inline__ unsigned long get_hid1 (void)
 {
-  unsigned long hid1;
-  asm volatile ("mfspr %0, 1009" : "=r" (hid1) :);
-  return hid1;
+	unsigned long hid1;
+	asm volatile("mfspr %0, 1009" : "=r" (hid1) :);
+	return hid1;
 }
 
 static __inline__ void set_hid0 (unsigned long hid0)
 {
-  asm volatile ("mtspr 1008, %0" : : "r" (hid0) );
+	asm volatile("mtspr 1008, %0" : : "r" (hid0));
 }
 
 static __inline__ void set_hid1 (unsigned long hid1)
 {
-  asm volatile ("mtspr 1009, %0" : : "r" (hid1) );
+	asm volatile("mtspr 1009, %0" : : "r" (hid1));
 }
 
 
 static __inline__ unsigned long get_l2cr (void)
 {
-  unsigned long l2cr_val;
-  asm volatile ("mfspr %0, 1017" : "=r" (l2cr_val) :);
-  return l2cr_val;
+   unsigned long l2cr_val;
+   asm volatile("mfspr %0, 1017" : "=r" (l2cr_val) :);
+   return l2cr_val;
 }
 
-void setup_ddr_bat (phys_addr_t dram_size);
+void setup_ddr_bat(phys_addr_t dram_size);
 
 #endif  /* _ASMLANGUAGE */
-#endif  /* __MPC86xx_H__ */
+#endif	/* __MPC86xx_H__ */

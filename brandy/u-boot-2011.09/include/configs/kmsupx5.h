@@ -29,11 +29,11 @@
 /*
  * High Level Configuration Options
  */
-#define CONFIG_KMSUPX5    1 /* Keymile PBEC8321 board specific */
-#define CONFIG_HOSTNAME   supx5
-#define CONFIG_KM_BOARD_NAME  "supx5"
+#define CONFIG_KMSUPX5		1 /* Keymile PBEC8321 board specific */
+#define CONFIG_HOSTNAME		supx5
+#define CONFIG_KM_BOARD_NAME	"supx5"
 
-#define CONFIG_SYS_TEXT_BASE  0xF0000000
+#define	CONFIG_SYS_TEXT_BASE	0xF0000000
 
 /* include common defines/options for all 8321 Keymile boards */
 #include "km/km8321-common.h"
@@ -43,7 +43,7 @@
  *
  * Bank Bus     Machine PortSz  Size  Device
  * ---- ---     ------- ------  -----  ------
- *  2   Local   GPCM    8 bit  256MB  LPXF
+ *  2   Local   GPCM    8 bit  256MB	LPXF
  *  3   Local   not used
  *
  */
@@ -54,33 +54,33 @@
  * Window size: 256 MB
  */
 
-#define CONFIG_SYS_LPXF_BASE    0xA0000000    /* LPXF */
-#define CONFIG_SYS_LPXF_SIZE    256 /* Megabytes */
+#define	CONFIG_SYS_LPXF_BASE		0xA0000000    /* LPXF */
+#define	CONFIG_SYS_LPXF_SIZE		256 /* Megabytes */
 
-#define CONFIG_SYS_LBLAWBAR2_PRELIM CONFIG_SYS_LPXF_BASE
-#define CONFIG_SYS_LBLAWAR2_PRELIM  (LBLAWAR_EN | LBLAWAR_256MB)
+#define CONFIG_SYS_LBLAWBAR2_PRELIM	CONFIG_SYS_LPXF_BASE
+#define CONFIG_SYS_LBLAWAR2_PRELIM	(LBLAWAR_EN | LBLAWAR_256MB)
 
-#define CONFIG_SYS_BR2_PRELIM (CONFIG_SYS_LPXF_BASE | \
-                               BR_PS_8 | \
-                               BR_MS_GPCM | \
-                               BR_V)
+#define CONFIG_SYS_BR2_PRELIM	(CONFIG_SYS_LPXF_BASE | \
+				 BR_PS_8 | \
+				 BR_MS_GPCM | \
+				 BR_V)
 
-#define CONFIG_SYS_OR2_PRELIM (MEG_TO_AM(CONFIG_SYS_LPXF_SIZE) | \
-                               OR_GPCM_CSNT | \
-                               OR_GPCM_ACS_DIV4 | \
-                               OR_GPCM_SCY_2 | \
-                               (OR_GPCM_TRLX & \
-                                (~OR_GPCM_EHTR)) |  /* EHTR = 0 */ \
-                               OR_GPCM_EAD)
+#define CONFIG_SYS_OR2_PRELIM	(MEG_TO_AM(CONFIG_SYS_LPXF_SIZE) | \
+				 OR_GPCM_CSNT | \
+				 OR_GPCM_ACS_DIV4 | \
+				 OR_GPCM_SCY_2 | \
+				 (OR_GPCM_TRLX & \
+				 (~OR_GPCM_EHTR)) |  /* EHTR = 0 */ \
+				 OR_GPCM_EAD)
 
 /* LPXF:  icache cacheable, but dcache-inhibit and guarded */
-#define CONFIG_SYS_IBAT5L (CONFIG_SYS_LPXF_BASE | BATL_PP_10 | \
-                           BATL_MEMCOHERENCE)
-#define CONFIG_SYS_IBAT5U (CONFIG_SYS_LPXF_BASE | BATU_BL_256M | \
-                           BATU_VS | BATU_VP)
-#define CONFIG_SYS_DBAT5L (CONFIG_SYS_LPXF_BASE | BATL_PP_10 | \
-                           BATL_CACHEINHIBIT | BATL_GUARDEDSTORAGE)
-#define CONFIG_SYS_DBAT5U CONFIG_SYS_IBAT5U
+#define CONFIG_SYS_IBAT5L	(CONFIG_SYS_LPXF_BASE | BATL_PP_10 | \
+				 BATL_MEMCOHERENCE)
+#define CONFIG_SYS_IBAT5U	(CONFIG_SYS_LPXF_BASE | BATU_BL_256M | \
+				 BATU_VS | BATU_VP)
+#define CONFIG_SYS_DBAT5L	(CONFIG_SYS_LPXF_BASE | BATL_PP_10 | \
+				 BATL_CACHEINHIBIT | BATL_GUARDEDSTORAGE)
+#define CONFIG_SYS_DBAT5U	CONFIG_SYS_IBAT5U
 
 /* Bank 3 not used */
 #define CONFIG_SYS_IBAT6L       (0)

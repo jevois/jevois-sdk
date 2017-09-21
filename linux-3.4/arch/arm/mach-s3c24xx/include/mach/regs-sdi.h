@@ -1,7 +1,7 @@
 /* arch/arm/mach-s3c2410/include/mach/regs-sdi.h
  *
  * Copyright (c) 2004 Simtec Electronics <linux@simtec.co.uk>
- *          http://www.simtec.co.uk/products/SWLINUX/
+ *		      http://www.simtec.co.uk/products/SWLINUX/
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -70,7 +70,7 @@
 #define S3C2410_SDIDCON_DMAEN         (1<<15)
 #define S3C2410_SDIDCON_STOP          (1<<14)
 #define S3C2440_SDIDCON_DATSTART      (1<<14)
-#define S3C2410_SDIDCON_DATMODE       (3<<12)
+#define S3C2410_SDIDCON_DATMODE	      (3<<12)
 #define S3C2410_SDIDCON_BLKNUM        (0x7ff)
 
 /* constants for S3C2410_SDIDCON_DATMODE */
@@ -84,13 +84,13 @@
 
 #define S3C2410_SDIDSTA_RDYWAITREQ    (1<<10)
 #define S3C2410_SDIDSTA_SDIOIRQDETECT (1<<9)
-#define S3C2410_SDIDSTA_FIFOFAIL      (1<<8)  /* reserved on 2440 */
+#define S3C2410_SDIDSTA_FIFOFAIL      (1<<8)	/* reserved on 2440 */
 #define S3C2410_SDIDSTA_CRCFAIL       (1<<7)
 #define S3C2410_SDIDSTA_RXCRCFAIL     (1<<6)
 #define S3C2410_SDIDSTA_DATATIMEOUT   (1<<5)
 #define S3C2410_SDIDSTA_XFERFINISH    (1<<4)
 #define S3C2410_SDIDSTA_BUSYFINISH    (1<<3)
-#define S3C2410_SDIDSTA_SBITERR       (1<<2)  /* reserved on 2410a/2440 */
+#define S3C2410_SDIDSTA_SBITERR       (1<<2)	/* reserved on 2410a/2440 */
 #define S3C2410_SDIDSTA_TXDATAON      (1<<1)
 #define S3C2410_SDIDSTA_RXDATAON      (1<<0)
 
@@ -117,7 +117,7 @@
 #define S3C2410_SDIIMSK_DATATIMEOUT    (1<<8)
 #define S3C2410_SDIIMSK_DATAFINISH     (1<<7)
 #define S3C2410_SDIIMSK_BUSYFINISH     (1<<6)
-#define S3C2410_SDIIMSK_SBITERR        (1<<5) /* reserved 2440/2410a */
+#define S3C2410_SDIIMSK_SBITERR        (1<<5)	/* reserved 2440/2410a */
 #define S3C2410_SDIIMSK_TXFIFOHALF     (1<<4)
 #define S3C2410_SDIIMSK_TXFIFOEMPTY    (1<<3)
 #define S3C2410_SDIIMSK_RXFIFOLAST     (1<<2)

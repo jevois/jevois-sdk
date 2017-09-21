@@ -7,16 +7,16 @@
 #include <linux/percpu.h>
 
 struct ia64_cpu {
-  struct cpu cpu;
+	struct cpu cpu;
 };
 
-DECLARE_PER_CPU (struct ia64_cpu, cpu_devices);
+DECLARE_PER_CPU(struct ia64_cpu, cpu_devices);
 
-DECLARE_PER_CPU (int, cpu_state);
+DECLARE_PER_CPU(int, cpu_state);
 
 #ifdef CONFIG_HOTPLUG_CPU
-extern int arch_register_cpu (int num);
-extern void arch_unregister_cpu (int);
+extern int arch_register_cpu(int num);
+extern void arch_unregister_cpu(int);
 #endif
 
 #endif /* _ASM_IA64_CPU_H_ */

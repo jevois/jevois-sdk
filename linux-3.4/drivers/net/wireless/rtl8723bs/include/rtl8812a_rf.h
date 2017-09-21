@@ -21,14 +21,14 @@
 #define __RTL8812A_RF_H__
 
 VOID
-PHY_RF6052SetBandwidth8812 (
-  IN  PADAPTER        Adapter,
-  IN  CHANNEL_WIDTH   Bandwidth);
+PHY_RF6052SetBandwidth8812(
+	IN	PADAPTER				Adapter,
+	IN	CHANNEL_WIDTH		Bandwidth);
 
 
 int
-PHY_RF6052_Config_8812 (
-  IN  PADAPTER  Adapter );
+PHY_RF6052_Config_8812(
+	IN	PADAPTER	Adapter	);
 
 #endif//__RTL8188E_RF_H__
 

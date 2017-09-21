@@ -32,29 +32,29 @@
 #include "hwspinlock_internal.h"
 
 /* Spinlock register offsets */
-#define SYSSTATUS_OFFSET    0x0014
-#define LOCK_BASE_OFFSET    0x0800
+#define SYSSTATUS_OFFSET		0x0014
+#define LOCK_BASE_OFFSET		0x0800
 
-#define SPINLOCK_NUMLOCKS_BIT_OFFSET  (24)
+#define SPINLOCK_NUMLOCKS_BIT_OFFSET	(24)
 
 /* Possible values of SPINLOCK_LOCK_REG */
-#define SPINLOCK_NOTTAKEN   (0) /* free */
-#define SPINLOCK_TAKEN      (1) /* locked */
+#define SPINLOCK_NOTTAKEN		(0)	/* free */
+#define SPINLOCK_TAKEN			(1)	/* locked */
 
-static int omap_hwspinlock_trylock (struct hwspinlock * lock)
+static int omap_hwspinlock_trylock(struct hwspinlock *lock)
 {
-  void __iomem * lock_addr = lock->priv;
-  
-  /* attempt to acquire the lock by reading its value */
-  return (SPINLOCK_NOTTAKEN == readl (lock_addr) );
+	void __iomem *lock_addr = lock->priv;
+
+	/* attempt to acquire the lock by reading its value */
+	return (SPINLOCK_NOTTAKEN == readl(lock_addr));
 }
 
-static void omap_hwspinlock_unlock (struct hwspinlock * lock)
+static void omap_hwspinlock_unlock(struct hwspinlock *lock)
 {
-  void __iomem * lock_addr = lock->priv;
-  
-  /* release the lock by writing 0 to it */
-  writel (SPINLOCK_NOTTAKEN, lock_addr);
+	void __iomem *lock_addr = lock->priv;
+
+	/* release the lock by writing 0 to it */
+	writel(SPINLOCK_NOTTAKEN, lock_addr);
 }
 
 /*
@@ -67,124 +67,124 @@ static void omap_hwspinlock_unlock (struct hwspinlock * lock)
  * The number below is taken from an hardware specs example,
  * obviously it is somewhat arbitrary.
  */
-static void omap_hwspinlock_relax (struct hwspinlock * lock)
+static void omap_hwspinlock_relax(struct hwspinlock *lock)
 {
-  ndelay (50);
+	ndelay(50);
 }
 
 static const struct hwspinlock_ops omap_hwspinlock_ops = {
-  .trylock = omap_hwspinlock_trylock,
-  .unlock = omap_hwspinlock_unlock,
-  .relax = omap_hwspinlock_relax,
+	.trylock = omap_hwspinlock_trylock,
+	.unlock = omap_hwspinlock_unlock,
+	.relax = omap_hwspinlock_relax,
 };
 
-static int __devinit omap_hwspinlock_probe (struct platform_device * pdev)
+static int __devinit omap_hwspinlock_probe(struct platform_device *pdev)
 {
-  struct hwspinlock_pdata * pdata = pdev->dev.platform_data;
-  struct hwspinlock_device * bank;
-  struct hwspinlock * hwlock;
-  struct resource * res;
-  void __iomem * io_base;
-  int num_locks, i, ret;
-  
-  if (!pdata)
-  { return -ENODEV; }
-  
-  res = platform_get_resource (pdev, IORESOURCE_MEM, 0);
-  if (!res)
-  { return -ENODEV; }
-  
-  io_base = ioremap (res->start, resource_size (res) );
-  if (!io_base)
-  { return -ENOMEM; }
-  
-  /* Determine number of locks */
-  i = readl (io_base + SYSSTATUS_OFFSET);
-  i >>= SPINLOCK_NUMLOCKS_BIT_OFFSET;
-  
-  /* one of the four lsb's must be set, and nothing else */
-  if (hweight_long (i & 0xf) != 1 || i > 8) {
-    ret = -EINVAL;
-    goto iounmap_base;
-  }
-  
-  num_locks = i * 32; /* actual number of locks in this device */
-  
-  bank = kzalloc (sizeof (*bank) + num_locks * sizeof (*hwlock), GFP_KERNEL);
-  if (!bank) {
-    ret = -ENOMEM;
-    goto iounmap_base;
-  }
-  
-  platform_set_drvdata (pdev, bank);
-  
-  for (i = 0, hwlock = &bank->lock[0]; i < num_locks; i++, hwlock++)
-  { hwlock->priv = io_base + LOCK_BASE_OFFSET + sizeof (u32) * i; }
-  
-  /*
-   * runtime PM will make sure the clock of this module is
-   * enabled iff at least one lock is requested
-   */
-  pm_runtime_enable (&pdev->dev);
-  
-  ret = hwspin_lock_register (bank, &pdev->dev, &omap_hwspinlock_ops,
-                              pdata->base_id, num_locks);
-  if (ret)
-  { goto reg_fail; }
-  
-  return 0;
-  
+	struct hwspinlock_pdata *pdata = pdev->dev.platform_data;
+	struct hwspinlock_device *bank;
+	struct hwspinlock *hwlock;
+	struct resource *res;
+	void __iomem *io_base;
+	int num_locks, i, ret;
+
+	if (!pdata)
+		return -ENODEV;
+
+	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+	if (!res)
+		return -ENODEV;
+
+	io_base = ioremap(res->start, resource_size(res));
+	if (!io_base)
+		return -ENOMEM;
+
+	/* Determine number of locks */
+	i = readl(io_base + SYSSTATUS_OFFSET);
+	i >>= SPINLOCK_NUMLOCKS_BIT_OFFSET;
+
+	/* one of the four lsb's must be set, and nothing else */
+	if (hweight_long(i & 0xf) != 1 || i > 8) {
+		ret = -EINVAL;
+		goto iounmap_base;
+	}
+
+	num_locks = i * 32; /* actual number of locks in this device */
+
+	bank = kzalloc(sizeof(*bank) + num_locks * sizeof(*hwlock), GFP_KERNEL);
+	if (!bank) {
+		ret = -ENOMEM;
+		goto iounmap_base;
+	}
+
+	platform_set_drvdata(pdev, bank);
+
+	for (i = 0, hwlock = &bank->lock[0]; i < num_locks; i++, hwlock++)
+		hwlock->priv = io_base + LOCK_BASE_OFFSET + sizeof(u32) * i;
+
+	/*
+	 * runtime PM will make sure the clock of this module is
+	 * enabled iff at least one lock is requested
+	 */
+	pm_runtime_enable(&pdev->dev);
+
+	ret = hwspin_lock_register(bank, &pdev->dev, &omap_hwspinlock_ops,
+						pdata->base_id, num_locks);
+	if (ret)
+		goto reg_fail;
+
+	return 0;
+
 reg_fail:
-  pm_runtime_disable (&pdev->dev);
-  kfree (bank);
+	pm_runtime_disable(&pdev->dev);
+	kfree(bank);
 iounmap_base:
-  iounmap (io_base);
-  return ret;
+	iounmap(io_base);
+	return ret;
 }
 
-static int __devexit omap_hwspinlock_remove (struct platform_device * pdev)
+static int __devexit omap_hwspinlock_remove(struct platform_device *pdev)
 {
-  struct hwspinlock_device * bank = platform_get_drvdata (pdev);
-  void __iomem * io_base = bank->lock[0].priv - LOCK_BASE_OFFSET;
-  int ret;
-  
-  ret = hwspin_lock_unregister (bank);
-  if (ret) {
-    dev_err (&pdev->dev, "%s failed: %d\n", __func__, ret);
-    return ret;
-  }
-  
-  pm_runtime_disable (&pdev->dev);
-  iounmap (io_base);
-  kfree (bank);
-  
-  return 0;
+	struct hwspinlock_device *bank = platform_get_drvdata(pdev);
+	void __iomem *io_base = bank->lock[0].priv - LOCK_BASE_OFFSET;
+	int ret;
+
+	ret = hwspin_lock_unregister(bank);
+	if (ret) {
+		dev_err(&pdev->dev, "%s failed: %d\n", __func__, ret);
+		return ret;
+	}
+
+	pm_runtime_disable(&pdev->dev);
+	iounmap(io_base);
+	kfree(bank);
+
+	return 0;
 }
 
 static struct platform_driver omap_hwspinlock_driver = {
-  .probe    = omap_hwspinlock_probe,
-  .remove   = __devexit_p (omap_hwspinlock_remove),
-  .driver   = {
-    .name = "omap_hwspinlock",
-    .owner  = THIS_MODULE,
-  },
+	.probe		= omap_hwspinlock_probe,
+	.remove		= __devexit_p(omap_hwspinlock_remove),
+	.driver		= {
+		.name	= "omap_hwspinlock",
+		.owner	= THIS_MODULE,
+	},
 };
 
-static int __init omap_hwspinlock_init (void)
+static int __init omap_hwspinlock_init(void)
 {
-  return platform_driver_register (&omap_hwspinlock_driver);
+	return platform_driver_register(&omap_hwspinlock_driver);
 }
 /* board init code might need to reserve hwspinlocks for predefined purposes */
-postcore_initcall (omap_hwspinlock_init);
+postcore_initcall(omap_hwspinlock_init);
 
-static void __exit omap_hwspinlock_exit (void)
+static void __exit omap_hwspinlock_exit(void)
 {
-  platform_driver_unregister (&omap_hwspinlock_driver);
+	platform_driver_unregister(&omap_hwspinlock_driver);
 }
-module_exit (omap_hwspinlock_exit);
+module_exit(omap_hwspinlock_exit);
 
-MODULE_LICENSE ("GPL v2");
-MODULE_DESCRIPTION ("Hardware spinlock driver for OMAP");
-MODULE_AUTHOR ("Simon Que <sque@ti.com>");
-MODULE_AUTHOR ("Hari Kanigeri <h-kanigeri2@ti.com>");
-MODULE_AUTHOR ("Ohad Ben-Cohen <ohad@wizery.com>");
+MODULE_LICENSE("GPL v2");
+MODULE_DESCRIPTION("Hardware spinlock driver for OMAP");
+MODULE_AUTHOR("Simon Que <sque@ti.com>");
+MODULE_AUTHOR("Hari Kanigeri <h-kanigeri2@ti.com>");
+MODULE_AUTHOR("Ohad Ben-Cohen <ohad@wizery.com>");

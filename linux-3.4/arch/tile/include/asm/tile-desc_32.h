@@ -454,31 +454,31 @@ struct tilepro_operand
 {
   /* Is this operand a register, immediate or address? */
   tilepro_operand_type type;
-  
+
   /* The default relocation type for this operand.  */
   signed int default_reloc : 16;
-  
+
   /* How many bits is this value? (used for range checking) */
   unsigned int num_bits : 5;
-  
+
   /* Is the value signed? (used for range checking) */
   unsigned int is_signed : 1;
-  
+
   /* Is this operand a source register? */
   unsigned int is_src_reg : 1;
-  
+
   /* Is this operand written? (i.e. is it a destination register) */
   unsigned int is_dest_reg : 1;
-  
+
   /* Is this operand PC-relative? */
   unsigned int is_pc_relative : 1;
-  
+
   /* By how many bits do we right shift the value before inserting? */
   unsigned int rightshift : 2;
-  
+
   /* Return the bits for this operand to be ORed into an existing bundle. */
   tilepro_bundle_bits (*insert) (int op);
-  
+
   /* Extract this operand and return it. */
   unsigned int (*extract) (tilepro_bundle_bits bundle);
 };
@@ -494,11 +494,11 @@ tilepro_bundle_decoder_fsms[TILEPRO_NUM_PIPELINE_ENCODINGS];
 struct tilepro_opcode
 {
   /* The opcode mnemonic, e.g. "add" */
-  const char * name;
-  
+  const char *name;
+
   /* The enum value for this mnemonic. */
   tilepro_mnemonic mnemonic;
-  
+
   /* A bit mask of which of the five pipes this instruction
      is compatible with:
      X0  0x01
@@ -507,20 +507,20 @@ struct tilepro_opcode
      Y1  0x08
      Y2  0x10 */
   unsigned char pipes;
-  
+
   /* How many operands are there? */
   unsigned char num_operands;
-  
+
   /* Which register does this write implicitly, or TREG_ZERO if none? */
   unsigned char implicitly_written_register;
-  
+
   /* Can this be bundled with other instructions (almost always true). */
   unsigned char can_bundle;
-  
+
   /* The description of the operands. Each of these is an
    * index into the tilepro_operands[] table. */
   unsigned char operands[TILEPRO_NUM_PIPELINE_ENCODINGS][TILEPRO_MAX_OPERANDS];
-  
+
 };
 
 extern const struct tilepro_opcode tilepro_opcodes[];
@@ -529,24 +529,24 @@ extern const struct tilepro_opcode tilepro_opcodes[];
 /* Used for non-textual disassembly into structs. */
 struct tilepro_decoded_instruction
 {
-  const struct tilepro_opcode * opcode;
-  const struct tilepro_operand * operands[TILEPRO_MAX_OPERANDS];
+  const struct tilepro_opcode *opcode;
+  const struct tilepro_operand *operands[TILEPRO_MAX_OPERANDS];
   int operand_values[TILEPRO_MAX_OPERANDS];
 };
 
 
 /* Disassemble a bundle into a struct for machine processing. */
-extern int parse_insn_tilepro (tilepro_bundle_bits bits,
-                               unsigned int pc,
-                               struct tilepro_decoded_instruction
-                               decoded[TILEPRO_MAX_INSTRUCTIONS_PER_BUNDLE]);
+extern int parse_insn_tilepro(tilepro_bundle_bits bits,
+                              unsigned int pc,
+                              struct tilepro_decoded_instruction
+                              decoded[TILEPRO_MAX_INSTRUCTIONS_PER_BUNDLE]);
 
 
 /* Given a set of bundle bits and a specific pipe, returns which
  * instruction the bundle contains in that pipe.
  */
 extern const struct tilepro_opcode *
-find_opcode (tilepro_bundle_bits bits, tilepro_pipeline pipe);
+find_opcode(tilepro_bundle_bits bits, tilepro_pipeline pipe);
 
 
 

@@ -29,17 +29,17 @@
 
 
 typedef struct {
-  const char * prefix;
-  struct yaffs_DeviceStruct * dev;
+	const char *prefix;
+	struct yaffs_DeviceStruct *dev;
 } yaffsfs_DeviceConfiguration;
 
 
-void yaffsfs_Lock (void);
-void yaffsfs_Unlock (void);
+void yaffsfs_Lock(void);
+void yaffsfs_Unlock(void);
 
-__u32 yaffsfs_CurrentTime (void);
+__u32 yaffsfs_CurrentTime(void);
 
-void yaffsfs_SetError (int err);
-int yaffsfs_GetError (void);
+void yaffsfs_SetError(int err);
+int yaffsfs_GetError(void);
 
 #endif

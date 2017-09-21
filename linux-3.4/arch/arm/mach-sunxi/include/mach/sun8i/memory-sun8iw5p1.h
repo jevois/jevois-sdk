@@ -35,6 +35,6 @@
 #define RC_MEM_SIZE              (SZ_64K)
 #endif
 
-#define SRAM_DDRFREQ_OFFSET 0xf0000000
+#define SRAM_DDRFREQ_OFFSET	0xf0000000
 
 #endif /* __MEMORY_SUN8I_W5P1_H */

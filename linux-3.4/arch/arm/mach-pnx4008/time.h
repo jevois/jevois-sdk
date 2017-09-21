@@ -16,7 +16,7 @@
 #include <linux/io.h>
 #include <mach/hardware.h>
 
-#define TICKS2USECS(x)  (x)
+#define TICKS2USECS(x)	(x)
 
 /* MilliSecond Timer - Chapter 21 Page 202 */
 

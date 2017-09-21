@@ -61,31 +61,31 @@
  * file. Useful because they make it more difficult to inadvertently type in
  * the wrong signature.
  */
-#define ACPI_SIG_ASF            "ASF!"  /* Alert Standard Format table */
-#define ACPI_SIG_BOOT           "BOOT"  /* Simple Boot Flag Table */
-#define ACPI_SIG_DBGP           "DBGP"  /* Debug Port table */
-#define ACPI_SIG_DMAR           "DMAR"  /* DMA Remapping table */
-#define ACPI_SIG_HPET           "HPET"  /* High Precision Event Timer table */
-#define ACPI_SIG_IBFT           "IBFT"  /* i_sCSI Boot Firmware Table */
-#define ACPI_SIG_IVRS           "IVRS"  /* I/O Virtualization Reporting Structure */
-#define ACPI_SIG_MCFG           "MCFG"  /* PCI Memory Mapped Configuration table */
-#define ACPI_SIG_MCHI           "MCHI"  /* Management Controller Host Interface table */
-#define ACPI_SIG_SLIC           "SLIC"  /* Software Licensing Description Table */
-#define ACPI_SIG_SPCR           "SPCR"  /* Serial Port Console Redirection table */
-#define ACPI_SIG_SPMI           "SPMI"  /* Server Platform Management Interface table */
-#define ACPI_SIG_TCPA           "TCPA"  /* Trusted Computing Platform Alliance table */
-#define ACPI_SIG_UEFI           "UEFI"  /* Uefi Boot Optimization Table */
-#define ACPI_SIG_WAET           "WAET"  /* Windows ACPI Emulated devices Table */
-#define ACPI_SIG_WDAT           "WDAT"  /* Watchdog Action Table */
-#define ACPI_SIG_WDDT           "WDDT"  /* Watchdog Timer Description Table */
-#define ACPI_SIG_WDRT           "WDRT"  /* Watchdog Resource Table */
+#define ACPI_SIG_ASF            "ASF!"	/* Alert Standard Format table */
+#define ACPI_SIG_BOOT           "BOOT"	/* Simple Boot Flag Table */
+#define ACPI_SIG_DBGP           "DBGP"	/* Debug Port table */
+#define ACPI_SIG_DMAR           "DMAR"	/* DMA Remapping table */
+#define ACPI_SIG_HPET           "HPET"	/* High Precision Event Timer table */
+#define ACPI_SIG_IBFT           "IBFT"	/* i_sCSI Boot Firmware Table */
+#define ACPI_SIG_IVRS           "IVRS"	/* I/O Virtualization Reporting Structure */
+#define ACPI_SIG_MCFG           "MCFG"	/* PCI Memory Mapped Configuration table */
+#define ACPI_SIG_MCHI           "MCHI"	/* Management Controller Host Interface table */
+#define ACPI_SIG_SLIC           "SLIC"	/* Software Licensing Description Table */
+#define ACPI_SIG_SPCR           "SPCR"	/* Serial Port Console Redirection table */
+#define ACPI_SIG_SPMI           "SPMI"	/* Server Platform Management Interface table */
+#define ACPI_SIG_TCPA           "TCPA"	/* Trusted Computing Platform Alliance table */
+#define ACPI_SIG_UEFI           "UEFI"	/* Uefi Boot Optimization Table */
+#define ACPI_SIG_WAET           "WAET"	/* Windows ACPI Emulated devices Table */
+#define ACPI_SIG_WDAT           "WDAT"	/* Watchdog Action Table */
+#define ACPI_SIG_WDDT           "WDDT"	/* Watchdog Timer Description Table */
+#define ACPI_SIG_WDRT           "WDRT"	/* Watchdog Resource Table */
 
 #ifdef ACPI_UNDEFINED_TABLES
 /*
  * These tables have been seen in the field, but no definition has been found
  */
 #define ACPI_SIG_ATKG           "ATKG"
-#define ACPI_SIG_GSCI           "GSCI"  /* GMCH SCI table */
+#define ACPI_SIG_GSCI           "GSCI"	/* GMCH SCI table */
 #define ACPI_SIG_IEIT           "IEIT"
 #endif
 
@@ -111,26 +111,26 @@
  ******************************************************************************/
 
 struct acpi_table_asf {
-  struct acpi_table_header header;  /* Common ACPI table header */
+	struct acpi_table_header header;	/* Common ACPI table header */
 };
 
 /* ASF subtable header */
 
 struct acpi_asf_header {
-  u8 type;
-  u8 reserved;
-  u16 length;
+	u8 type;
+	u8 reserved;
+	u16 length;
 };
 
 /* Values for Type field above */
 
 enum acpi_asf_type {
-  ACPI_ASF_TYPE_INFO = 0,
-  ACPI_ASF_TYPE_ALERT = 1,
-  ACPI_ASF_TYPE_CONTROL = 2,
-  ACPI_ASF_TYPE_BOOT = 3,
-  ACPI_ASF_TYPE_ADDRESS = 4,
-  ACPI_ASF_TYPE_RESERVED = 5
+	ACPI_ASF_TYPE_INFO = 0,
+	ACPI_ASF_TYPE_ALERT = 1,
+	ACPI_ASF_TYPE_CONTROL = 2,
+	ACPI_ASF_TYPE_BOOT = 3,
+	ACPI_ASF_TYPE_ADDRESS = 4,
+	ACPI_ASF_TYPE_RESERVED = 5
 };
 
 /*
@@ -140,13 +140,13 @@ enum acpi_asf_type {
 /* 0: ASF Information */
 
 struct acpi_asf_info {
-  struct acpi_asf_header header;
-  u8 min_reset_value;
-  u8 min_poll_interval;
-  u16 system_id;
-  u32 mfg_id;
-  u8 flags;
-  u8 reserved2[3];
+	struct acpi_asf_header header;
+	u8 min_reset_value;
+	u8 min_poll_interval;
+	u16 system_id;
+	u32 mfg_id;
+	u8 flags;
+	u8 reserved2[3];
 };
 
 /* Masks for Flags field above */
@@ -156,63 +156,63 @@ struct acpi_asf_info {
 /* 1: ASF Alerts */
 
 struct acpi_asf_alert {
-  struct acpi_asf_header header;
-  u8 assert_mask;
-  u8 deassert_mask;
-  u8 alerts;
-  u8 data_length;
+	struct acpi_asf_header header;
+	u8 assert_mask;
+	u8 deassert_mask;
+	u8 alerts;
+	u8 data_length;
 };
 
 struct acpi_asf_alert_data {
-  u8 address;
-  u8 command;
-  u8 mask;
-  u8 value;
-  u8 sensor_type;
-  u8 type;
-  u8 offset;
-  u8 source_type;
-  u8 severity;
-  u8 sensor_number;
-  u8 entity;
-  u8 instance;
+	u8 address;
+	u8 command;
+	u8 mask;
+	u8 value;
+	u8 sensor_type;
+	u8 type;
+	u8 offset;
+	u8 source_type;
+	u8 severity;
+	u8 sensor_number;
+	u8 entity;
+	u8 instance;
 };
 
 /* 2: ASF Remote Control */
 
 struct acpi_asf_remote {
-  struct acpi_asf_header header;
-  u8 controls;
-  u8 data_length;
-  u16 reserved2;
+	struct acpi_asf_header header;
+	u8 controls;
+	u8 data_length;
+	u16 reserved2;
 };
 
 struct acpi_asf_control_data {
-  u8 function;
-  u8 address;
-  u8 command;
-  u8 value;
+	u8 function;
+	u8 address;
+	u8 command;
+	u8 value;
 };
 
 /* 3: ASF RMCP Boot Options */
 
 struct acpi_asf_rmcp {
-  struct acpi_asf_header header;
-  u8 capabilities[7];
-  u8 completion_code;
-  u32 enterprise_id;
-  u8 command;
-  u16 parameter;
-  u16 boot_options;
-  u16 oem_parameters;
+	struct acpi_asf_header header;
+	u8 capabilities[7];
+	u8 completion_code;
+	u32 enterprise_id;
+	u8 command;
+	u16 parameter;
+	u16 boot_options;
+	u16 oem_parameters;
 };
 
 /* 4: ASF Address */
 
 struct acpi_asf_address {
-  struct acpi_asf_header header;
-  u8 eprom_address;
-  u8 devices;
+	struct acpi_asf_header header;
+	u8 eprom_address;
+	u8 devices;
 };
 
 /*******************************************************************************
@@ -225,9 +225,9 @@ struct acpi_asf_address {
  ******************************************************************************/
 
 struct acpi_table_boot {
-  struct acpi_table_header header;  /* Common ACPI table header */
-  u8 cmos_index;    /* Index in CMOS RAM for the boot register */
-  u8 reserved[3];
+	struct acpi_table_header header;	/* Common ACPI table header */
+	u8 cmos_index;		/* Index in CMOS RAM for the boot register */
+	u8 reserved[3];
 };
 
 /*******************************************************************************
@@ -240,10 +240,10 @@ struct acpi_table_boot {
  ******************************************************************************/
 
 struct acpi_table_dbgp {
-  struct acpi_table_header header;  /* Common ACPI table header */
-  u8 type;    /* 0=full 16550, 1=subset of 16550 */
-  u8 reserved[3];
-  struct acpi_generic_address debug_port;
+	struct acpi_table_header header;	/* Common ACPI table header */
+	u8 type;		/* 0=full 16550, 1=subset of 16550 */
+	u8 reserved[3];
+	struct acpi_generic_address debug_port;
 };
 
 /*******************************************************************************
@@ -257,10 +257,10 @@ struct acpi_table_dbgp {
  ******************************************************************************/
 
 struct acpi_table_dmar {
-  struct acpi_table_header header;  /* Common ACPI table header */
-  u8 width;   /* Host Address Width */
-  u8 flags;
-  u8 reserved[10];
+	struct acpi_table_header header;	/* Common ACPI table header */
+	u8 width;		/* Host Address Width */
+	u8 flags;
+	u8 reserved[10];
 };
 
 /* Masks for Flags field above */
@@ -270,44 +270,44 @@ struct acpi_table_dmar {
 /* DMAR subtable header */
 
 struct acpi_dmar_header {
-  u16 type;
-  u16 length;
+	u16 type;
+	u16 length;
 };
 
 /* Values for subtable type in struct acpi_dmar_header */
 
 enum acpi_dmar_type {
-  ACPI_DMAR_TYPE_HARDWARE_UNIT = 0,
-  ACPI_DMAR_TYPE_RESERVED_MEMORY = 1,
-  ACPI_DMAR_TYPE_ATSR = 2,
-  ACPI_DMAR_HARDWARE_AFFINITY = 3,
-  ACPI_DMAR_TYPE_RESERVED = 4 /* 4 and greater are reserved */
+	ACPI_DMAR_TYPE_HARDWARE_UNIT = 0,
+	ACPI_DMAR_TYPE_RESERVED_MEMORY = 1,
+	ACPI_DMAR_TYPE_ATSR = 2,
+	ACPI_DMAR_HARDWARE_AFFINITY = 3,
+	ACPI_DMAR_TYPE_RESERVED = 4	/* 4 and greater are reserved */
 };
 
 /* DMAR Device Scope structure */
 
 struct acpi_dmar_device_scope {
-  u8 entry_type;
-  u8 length;
-  u16 reserved;
-  u8 enumeration_id;
-  u8 bus;
+	u8 entry_type;
+	u8 length;
+	u16 reserved;
+	u8 enumeration_id;
+	u8 bus;
 };
 
 /* Values for entry_type in struct acpi_dmar_device_scope */
 
 enum acpi_dmar_scope_type {
-  ACPI_DMAR_SCOPE_TYPE_NOT_USED = 0,
-  ACPI_DMAR_SCOPE_TYPE_ENDPOINT = 1,
-  ACPI_DMAR_SCOPE_TYPE_BRIDGE = 2,
-  ACPI_DMAR_SCOPE_TYPE_IOAPIC = 3,
-  ACPI_DMAR_SCOPE_TYPE_HPET = 4,
-  ACPI_DMAR_SCOPE_TYPE_RESERVED = 5 /* 5 and greater are reserved */
+	ACPI_DMAR_SCOPE_TYPE_NOT_USED = 0,
+	ACPI_DMAR_SCOPE_TYPE_ENDPOINT = 1,
+	ACPI_DMAR_SCOPE_TYPE_BRIDGE = 2,
+	ACPI_DMAR_SCOPE_TYPE_IOAPIC = 3,
+	ACPI_DMAR_SCOPE_TYPE_HPET = 4,
+	ACPI_DMAR_SCOPE_TYPE_RESERVED = 5	/* 5 and greater are reserved */
 };
 
 struct acpi_dmar_pci_path {
-  u8 dev;
-  u8 fn;
+	u8 dev;
+	u8 fn;
 };
 
 /*
@@ -317,11 +317,11 @@ struct acpi_dmar_pci_path {
 /* 0: Hardware Unit Definition */
 
 struct acpi_dmar_hardware_unit {
-  struct acpi_dmar_header header;
-  u8 flags;
-  u8 reserved;
-  u16 segment;
-  u64 address;    /* Register Base Address */
+	struct acpi_dmar_header header;
+	u8 flags;
+	u8 reserved;
+	u16 segment;
+	u64 address;		/* Register Base Address */
 };
 
 /* Masks for Flags field above */
@@ -331,11 +331,11 @@ struct acpi_dmar_hardware_unit {
 /* 1: Reserved Memory Defininition */
 
 struct acpi_dmar_reserved_memory {
-  struct acpi_dmar_header header;
-  u16 reserved;
-  u16 segment;
-  u64 base_address; /* 4_k aligned base address */
-  u64 end_address;  /* 4_k aligned limit address */
+	struct acpi_dmar_header header;
+	u16 reserved;
+	u16 segment;
+	u64 base_address;	/* 4_k aligned base address */
+	u64 end_address;	/* 4_k aligned limit address */
 };
 
 /* Masks for Flags field above */
@@ -345,10 +345,10 @@ struct acpi_dmar_reserved_memory {
 /* 2: Root Port ATS Capability Reporting Structure */
 
 struct acpi_dmar_atsr {
-  struct acpi_dmar_header header;
-  u8 flags;
-  u8 reserved;
-  u16 segment;
+	struct acpi_dmar_header header;
+	u8 flags;
+	u8 reserved;
+	u16 segment;
 };
 
 /* Masks for Flags field above */
@@ -358,10 +358,10 @@ struct acpi_dmar_atsr {
 /* 3: Remapping Hardware Static Affinity Structure */
 
 struct acpi_dmar_rhsa {
-  struct acpi_dmar_header header;
-  u32 reserved;
-  u64 base_address;
-  u32 proximity_domain;
+	struct acpi_dmar_header header;
+	u32 reserved;
+	u64 base_address;
+	u32 proximity_domain;
 };
 
 /*******************************************************************************
@@ -375,12 +375,12 @@ struct acpi_dmar_rhsa {
  ******************************************************************************/
 
 struct acpi_table_hpet {
-  struct acpi_table_header header;  /* Common ACPI table header */
-  u32 id;     /* Hardware ID of event timer block */
-  struct acpi_generic_address address;  /* Address of event timer block */
-  u8 sequence;    /* HPET sequence number */
-  u16 minimum_tick; /* Main counter min tick, periodic mode */
-  u8 flags;
+	struct acpi_table_header header;	/* Common ACPI table header */
+	u32 id;			/* Hardware ID of event timer block */
+	struct acpi_generic_address address;	/* Address of event timer block */
+	u8 sequence;		/* HPET sequence number */
+	u16 minimum_tick;	/* Main counter min tick, periodic mode */
+	u8 flags;
 };
 
 /* Masks for Flags field above */
@@ -390,9 +390,9 @@ struct acpi_table_hpet {
 /* Values for Page Protect flags */
 
 enum acpi_hpet_page_protect {
-  ACPI_HPET_NO_PAGE_PROTECT = 0,
-  ACPI_HPET_PAGE_PROTECT4 = 1,
-  ACPI_HPET_PAGE_PROTECT64 = 2
+	ACPI_HPET_NO_PAGE_PROTECT = 0,
+	ACPI_HPET_PAGE_PROTECT4 = 1,
+	ACPI_HPET_PAGE_PROTECT64 = 2
 };
 
 /*******************************************************************************
@@ -409,87 +409,87 @@ enum acpi_hpet_page_protect {
  ******************************************************************************/
 
 struct acpi_table_ibft {
-  struct acpi_table_header header;  /* Common ACPI table header */
-  u8 reserved[12];
+	struct acpi_table_header header;	/* Common ACPI table header */
+	u8 reserved[12];
 };
 
 /* IBFT common subtable header */
 
 struct acpi_ibft_header {
-  u8 type;
-  u8 version;
-  u16 length;
-  u8 index;
-  u8 flags;
+	u8 type;
+	u8 version;
+	u16 length;
+	u8 index;
+	u8 flags;
 };
 
 /* Values for Type field above */
 
 enum acpi_ibft_type {
-  ACPI_IBFT_TYPE_NOT_USED = 0,
-  ACPI_IBFT_TYPE_CONTROL = 1,
-  ACPI_IBFT_TYPE_INITIATOR = 2,
-  ACPI_IBFT_TYPE_NIC = 3,
-  ACPI_IBFT_TYPE_TARGET = 4,
-  ACPI_IBFT_TYPE_EXTENSIONS = 5,
-  ACPI_IBFT_TYPE_RESERVED = 6 /* 6 and greater are reserved */
+	ACPI_IBFT_TYPE_NOT_USED = 0,
+	ACPI_IBFT_TYPE_CONTROL = 1,
+	ACPI_IBFT_TYPE_INITIATOR = 2,
+	ACPI_IBFT_TYPE_NIC = 3,
+	ACPI_IBFT_TYPE_TARGET = 4,
+	ACPI_IBFT_TYPE_EXTENSIONS = 5,
+	ACPI_IBFT_TYPE_RESERVED = 6	/* 6 and greater are reserved */
 };
 
 /* IBFT subtables */
 
 struct acpi_ibft_control {
-  struct acpi_ibft_header header;
-  u16 extensions;
-  u16 initiator_offset;
-  u16 nic0_offset;
-  u16 target0_offset;
-  u16 nic1_offset;
-  u16 target1_offset;
+	struct acpi_ibft_header header;
+	u16 extensions;
+	u16 initiator_offset;
+	u16 nic0_offset;
+	u16 target0_offset;
+	u16 nic1_offset;
+	u16 target1_offset;
 };
 
 struct acpi_ibft_initiator {
-  struct acpi_ibft_header header;
-  u8 sns_server[16];
-  u8 slp_server[16];
-  u8 primary_server[16];
-  u8 secondary_server[16];
-  u16 name_length;
-  u16 name_offset;
+	struct acpi_ibft_header header;
+	u8 sns_server[16];
+	u8 slp_server[16];
+	u8 primary_server[16];
+	u8 secondary_server[16];
+	u16 name_length;
+	u16 name_offset;
 };
 
 struct acpi_ibft_nic {
-  struct acpi_ibft_header header;
-  u8 ip_address[16];
-  u8 subnet_mask_prefix;
-  u8 origin;
-  u8 gateway[16];
-  u8 primary_dns[16];
-  u8 secondary_dns[16];
-  u8 dhcp[16];
-  u16 vlan;
-  u8 mac_address[6];
-  u16 pci_address;
-  u16 name_length;
-  u16 name_offset;
+	struct acpi_ibft_header header;
+	u8 ip_address[16];
+	u8 subnet_mask_prefix;
+	u8 origin;
+	u8 gateway[16];
+	u8 primary_dns[16];
+	u8 secondary_dns[16];
+	u8 dhcp[16];
+	u16 vlan;
+	u8 mac_address[6];
+	u16 pci_address;
+	u16 name_length;
+	u16 name_offset;
 };
 
 struct acpi_ibft_target {
-  struct acpi_ibft_header header;
-  u8 target_ip_address[16];
-  u16 target_ip_socket;
-  u8 target_boot_lun[8];
-  u8 chap_type;
-  u8 nic_association;
-  u16 target_name_length;
-  u16 target_name_offset;
-  u16 chap_name_length;
-  u16 chap_name_offset;
-  u16 chap_secret_length;
-  u16 chap_secret_offset;
-  u16 reverse_chap_name_length;
-  u16 reverse_chap_name_offset;
-  u16 reverse_chap_secret_length;
-  u16 reverse_chap_secret_offset;
+	struct acpi_ibft_header header;
+	u8 target_ip_address[16];
+	u16 target_ip_socket;
+	u8 target_boot_lun[8];
+	u8 chap_type;
+	u8 nic_association;
+	u16 target_name_length;
+	u16 target_name_offset;
+	u16 chap_name_length;
+	u16 chap_name_offset;
+	u16 chap_secret_length;
+	u16 chap_secret_offset;
+	u16 reverse_chap_name_length;
+	u16 reverse_chap_name_offset;
+	u16 reverse_chap_secret_length;
+	u16 reverse_chap_secret_offset;
 };
 
 /*******************************************************************************
@@ -503,33 +503,33 @@ struct acpi_ibft_target {
  ******************************************************************************/
 
 struct acpi_table_ivrs {
-  struct acpi_table_header header;  /* Common ACPI table header */
-  u32 info;   /* Common virtualization info */
-  u64 reserved;
+	struct acpi_table_header header;	/* Common ACPI table header */
+	u32 info;		/* Common virtualization info */
+	u64 reserved;
 };
 
 /* Values for Info field above */
 
-#define ACPI_IVRS_PHYSICAL_SIZE     0x00007F00  /* 7 bits, physical address size */
-#define ACPI_IVRS_VIRTUAL_SIZE      0x003F8000  /* 7 bits, virtual address size */
-#define ACPI_IVRS_ATS_RESERVED      0x00400000  /* ATS address translation range reserved */
+#define ACPI_IVRS_PHYSICAL_SIZE     0x00007F00	/* 7 bits, physical address size */
+#define ACPI_IVRS_VIRTUAL_SIZE      0x003F8000	/* 7 bits, virtual address size */
+#define ACPI_IVRS_ATS_RESERVED      0x00400000	/* ATS address translation range reserved */
 
 /* IVRS subtable header */
 
 struct acpi_ivrs_header {
-  u8 type;    /* Subtable type */
-  u8 flags;
-  u16 length;   /* Subtable length */
-  u16 device_id;    /* ID of IOMMU */
+	u8 type;		/* Subtable type */
+	u8 flags;
+	u16 length;		/* Subtable length */
+	u16 device_id;		/* ID of IOMMU */
 };
 
 /* Values for subtable Type above */
 
 enum acpi_ivrs_type {
-  ACPI_IVRS_TYPE_HARDWARE = 0x10,
-  ACPI_IVRS_TYPE_MEMORY1 = 0x20,
-  ACPI_IVRS_TYPE_MEMORY2 = 0x21,
-  ACPI_IVRS_TYPE_MEMORY3 = 0x22
+	ACPI_IVRS_TYPE_HARDWARE = 0x10,
+	ACPI_IVRS_TYPE_MEMORY1 = 0x20,
+	ACPI_IVRS_TYPE_MEMORY2 = 0x21,
+	ACPI_IVRS_TYPE_MEMORY3 = 0x22
 };
 
 /* Masks for Flags field above for IVHD subtable */
@@ -554,18 +554,18 @@ enum acpi_ivrs_type {
 /* 0x10: I/O Virtualization Hardware Definition Block (IVHD) */
 
 struct acpi_ivrs_hardware {
-  struct acpi_ivrs_header header;
-  u16 capability_offset;  /* Offset for IOMMU control fields */
-  u64 base_address; /* IOMMU control registers */
-  u16 pci_segment_group;
-  u16 info;   /* MSI number and unit ID */
-  u32 reserved;
+	struct acpi_ivrs_header header;
+	u16 capability_offset;	/* Offset for IOMMU control fields */
+	u64 base_address;	/* IOMMU control registers */
+	u16 pci_segment_group;
+	u16 info;		/* MSI number and unit ID */
+	u32 reserved;
 };
 
 /* Masks for Info field above */
 
-#define ACPI_IVHD_MSI_NUMBER_MASK   0x001F  /* 5 bits, MSI message number */
-#define ACPI_IVHD_UNIT_ID_MASK      0x1F00  /* 5 bits, unit_iD */
+#define ACPI_IVHD_MSI_NUMBER_MASK   0x001F	/* 5 bits, MSI message number */
+#define ACPI_IVHD_UNIT_ID_MASK      0x1F00	/* 5 bits, unit_iD */
 
 /*
  * Device Entries for IVHD subtable, appear after struct acpi_ivrs_hardware structure.
@@ -574,9 +574,9 @@ struct acpi_ivrs_hardware {
  * are reserved for future use but not defined.
  */
 struct acpi_ivrs_de_header {
-  u8 type;
-  u16 id;
-  u8 data_setting;
+	u8 type;
+	u16 id;
+	u8 data_setting;
 };
 
 /* Length of device entry is in the top two bits of Type field above */
@@ -586,23 +586,23 @@ struct acpi_ivrs_de_header {
 /* Values for device entry Type field above */
 
 enum acpi_ivrs_device_entry_type {
-  /* 4-byte device entries, all use struct acpi_ivrs_device4 */
-  
-  ACPI_IVRS_TYPE_PAD4 = 0,
-  ACPI_IVRS_TYPE_ALL = 1,
-  ACPI_IVRS_TYPE_SELECT = 2,
-  ACPI_IVRS_TYPE_START = 3,
-  ACPI_IVRS_TYPE_END = 4,
-  
-  /* 8-byte device entries */
-  
-  ACPI_IVRS_TYPE_PAD8 = 64,
-  ACPI_IVRS_TYPE_NOT_USED = 65,
-  ACPI_IVRS_TYPE_ALIAS_SELECT = 66, /* Uses struct acpi_ivrs_device8a */
-  ACPI_IVRS_TYPE_ALIAS_START = 67,  /* Uses struct acpi_ivrs_device8a */
-  ACPI_IVRS_TYPE_EXT_SELECT = 70, /* Uses struct acpi_ivrs_device8b */
-  ACPI_IVRS_TYPE_EXT_START = 71,  /* Uses struct acpi_ivrs_device8b */
-  ACPI_IVRS_TYPE_SPECIAL = 72 /* Uses struct acpi_ivrs_device8c */
+	/* 4-byte device entries, all use struct acpi_ivrs_device4 */
+
+	ACPI_IVRS_TYPE_PAD4 = 0,
+	ACPI_IVRS_TYPE_ALL = 1,
+	ACPI_IVRS_TYPE_SELECT = 2,
+	ACPI_IVRS_TYPE_START = 3,
+	ACPI_IVRS_TYPE_END = 4,
+
+	/* 8-byte device entries */
+
+	ACPI_IVRS_TYPE_PAD8 = 64,
+	ACPI_IVRS_TYPE_NOT_USED = 65,
+	ACPI_IVRS_TYPE_ALIAS_SELECT = 66,	/* Uses struct acpi_ivrs_device8a */
+	ACPI_IVRS_TYPE_ALIAS_START = 67,	/* Uses struct acpi_ivrs_device8a */
+	ACPI_IVRS_TYPE_EXT_SELECT = 70,	/* Uses struct acpi_ivrs_device8b */
+	ACPI_IVRS_TYPE_EXT_START = 71,	/* Uses struct acpi_ivrs_device8b */
+	ACPI_IVRS_TYPE_SPECIAL = 72	/* Uses struct acpi_ivrs_device8c */
 };
 
 /* Values for Data field above */
@@ -617,23 +617,23 @@ enum acpi_ivrs_device_entry_type {
 /* Types 0-4: 4-byte device entry */
 
 struct acpi_ivrs_device4 {
-  struct acpi_ivrs_de_header header;
+	struct acpi_ivrs_de_header header;
 };
 
 /* Types 66-67: 8-byte device entry */
 
 struct acpi_ivrs_device8a {
-  struct acpi_ivrs_de_header header;
-  u8 reserved1;
-  u16 used_id;
-  u8 reserved2;
+	struct acpi_ivrs_de_header header;
+	u8 reserved1;
+	u16 used_id;
+	u8 reserved2;
 };
 
 /* Types 70-71: 8-byte device entry */
 
 struct acpi_ivrs_device8b {
-  struct acpi_ivrs_de_header header;
-  u32 extended_data;
+	struct acpi_ivrs_de_header header;
+	u32 extended_data;
 };
 
 /* Values for extended_data above */
@@ -643,10 +643,10 @@ struct acpi_ivrs_device8b {
 /* Type 72: 8-byte device entry */
 
 struct acpi_ivrs_device8c {
-  struct acpi_ivrs_de_header header;
-  u8 handle;
-  u16 used_id;
-  u8 variety;
+	struct acpi_ivrs_de_header header;
+	u8 handle;
+	u16 used_id;
+	u8 variety;
 };
 
 /* Values for Variety field above */
@@ -657,11 +657,11 @@ struct acpi_ivrs_device8c {
 /* 0x20, 0x21, 0x22: I/O Virtualization Memory Definition Block (IVMD) */
 
 struct acpi_ivrs_memory {
-  struct acpi_ivrs_header header;
-  u16 aux_data;
-  u64 reserved;
-  u64 start_address;
-  u64 memory_length;
+	struct acpi_ivrs_header header;
+	u16 aux_data;
+	u64 reserved;
+	u64 start_address;
+	u64 memory_length;
 };
 
 /*******************************************************************************
@@ -674,18 +674,18 @@ struct acpi_ivrs_memory {
  ******************************************************************************/
 
 struct acpi_table_mcfg {
-  struct acpi_table_header header;  /* Common ACPI table header */
-  u8 reserved[8];
+	struct acpi_table_header header;	/* Common ACPI table header */
+	u8 reserved[8];
 };
 
 /* Subtable */
 
 struct acpi_mcfg_allocation {
-  u64 address;    /* Base address, processor-relative */
-  u16 pci_segment;  /* PCI segment group number */
-  u8 start_bus_number;  /* Starting PCI Bus number */
-  u8 end_bus_number;  /* Final PCI Bus number */
-  u32 reserved;
+	u64 address;		/* Base address, processor-relative */
+	u16 pci_segment;	/* PCI segment group number */
+	u8 start_bus_number;	/* Starting PCI Bus number */
+	u8 end_bus_number;	/* Final PCI Bus number */
+	u32 reserved;
 };
 
 /*******************************************************************************
@@ -699,19 +699,19 @@ struct acpi_mcfg_allocation {
  ******************************************************************************/
 
 struct acpi_table_mchi {
-  struct acpi_table_header header;  /* Common ACPI table header */
-  u8 interface_type;
-  u8 protocol;
-  u64 protocol_data;
-  u8 interrupt_type;
-  u8 gpe;
-  u8 pci_device_flag;
-  u32 global_interrupt;
-  struct acpi_generic_address control_register;
-  u8 pci_segment;
-  u8 pci_bus;
-  u8 pci_device;
-  u8 pci_function;
+	struct acpi_table_header header;	/* Common ACPI table header */
+	u8 interface_type;
+	u8 protocol;
+	u64 protocol_data;
+	u8 interrupt_type;
+	u8 gpe;
+	u8 pci_device_flag;
+	u32 global_interrupt;
+	struct acpi_generic_address control_register;
+	u8 pci_segment;
+	u8 pci_bus;
+	u8 pci_device;
+	u8 pci_function;
 };
 
 /*******************************************************************************
@@ -727,22 +727,22 @@ struct acpi_table_mchi {
 /* Basic SLIC table is only the common ACPI header */
 
 struct acpi_table_slic {
-  struct acpi_table_header header;  /* Common ACPI table header */
+	struct acpi_table_header header;	/* Common ACPI table header */
 };
 
 /* Common SLIC subtable header */
 
 struct acpi_slic_header {
-  u32 type;
-  u32 length;
+	u32 type;
+	u32 length;
 };
 
 /* Values for Type field above */
 
 enum acpi_slic_type {
-  ACPI_SLIC_TYPE_PUBLIC_KEY = 0,
-  ACPI_SLIC_TYPE_WINDOWS_MARKER = 1,
-  ACPI_SLIC_TYPE_RESERVED = 2 /* 2 and greater are reserved */
+	ACPI_SLIC_TYPE_PUBLIC_KEY = 0,
+	ACPI_SLIC_TYPE_WINDOWS_MARKER = 1,
+	ACPI_SLIC_TYPE_RESERVED = 2	/* 2 and greater are reserved */
 };
 
 /*
@@ -752,28 +752,28 @@ enum acpi_slic_type {
 /* 0: Public Key Structure */
 
 struct acpi_slic_key {
-  struct acpi_slic_header header;
-  u8 key_type;
-  u8 version;
-  u16 reserved;
-  u32 algorithm;
-  char magic[4];
-  u32 bit_length;
-  u32 exponent;
-  u8 modulus[128];
+	struct acpi_slic_header header;
+	u8 key_type;
+	u8 version;
+	u16 reserved;
+	u32 algorithm;
+	char magic[4];
+	u32 bit_length;
+	u32 exponent;
+	u8 modulus[128];
 };
 
 /* 1: Windows Marker Structure */
 
 struct acpi_slic_marker {
-  struct acpi_slic_header header;
-  u32 version;
-  char oem_id[ACPI_OEM_ID_SIZE];  /* ASCII OEM identification */
-  char oem_table_id[ACPI_OEM_TABLE_ID_SIZE];  /* ASCII OEM table identification */
-  char windows_flag[8];
-  u32 slic_version;
-  u8 reserved[16];
-  u8 signature[128];
+	struct acpi_slic_header header;
+	u32 version;
+	char oem_id[ACPI_OEM_ID_SIZE];	/* ASCII OEM identification */
+	char oem_table_id[ACPI_OEM_TABLE_ID_SIZE];	/* ASCII OEM table identification */
+	char windows_flag[8];
+	u32 slic_version;
+	u8 reserved[16];
+	u8 signature[128];
 };
 
 /*******************************************************************************
@@ -787,27 +787,27 @@ struct acpi_slic_marker {
  ******************************************************************************/
 
 struct acpi_table_spcr {
-  struct acpi_table_header header;  /* Common ACPI table header */
-  u8 interface_type;  /* 0=full 16550, 1=subset of 16550 */
-  u8 reserved[3];
-  struct acpi_generic_address serial_port;
-  u8 interrupt_type;
-  u8 pc_interrupt;
-  u32 interrupt;
-  u8 baud_rate;
-  u8 parity;
-  u8 stop_bits;
-  u8 flow_control;
-  u8 terminal_type;
-  u8 reserved1;
-  u16 pci_device_id;
-  u16 pci_vendor_id;
-  u8 pci_bus;
-  u8 pci_device;
-  u8 pci_function;
-  u32 pci_flags;
-  u8 pci_segment;
-  u32 reserved2;
+	struct acpi_table_header header;	/* Common ACPI table header */
+	u8 interface_type;	/* 0=full 16550, 1=subset of 16550 */
+	u8 reserved[3];
+	struct acpi_generic_address serial_port;
+	u8 interrupt_type;
+	u8 pc_interrupt;
+	u32 interrupt;
+	u8 baud_rate;
+	u8 parity;
+	u8 stop_bits;
+	u8 flow_control;
+	u8 terminal_type;
+	u8 reserved1;
+	u16 pci_device_id;
+	u16 pci_vendor_id;
+	u8 pci_bus;
+	u8 pci_device;
+	u8 pci_function;
+	u32 pci_flags;
+	u8 pci_segment;
+	u32 reserved2;
 };
 
 /* Masks for pci_flags field above */
@@ -826,32 +826,32 @@ struct acpi_table_spcr {
  ******************************************************************************/
 
 struct acpi_table_spmi {
-  struct acpi_table_header header;  /* Common ACPI table header */
-  u8 interface_type;
-  u8 reserved;    /* Must be 1 */
-  u16 spec_revision;  /* Version of IPMI */
-  u8 interrupt_type;
-  u8 gpe_number;    /* GPE assigned */
-  u8 reserved1;
-  u8 pci_device_flag;
-  u32 interrupt;
-  struct acpi_generic_address ipmi_register;
-  u8 pci_segment;
-  u8 pci_bus;
-  u8 pci_device;
-  u8 pci_function;
-  u8 reserved2;
+	struct acpi_table_header header;	/* Common ACPI table header */
+	u8 interface_type;
+	u8 reserved;		/* Must be 1 */
+	u16 spec_revision;	/* Version of IPMI */
+	u8 interrupt_type;
+	u8 gpe_number;		/* GPE assigned */
+	u8 reserved1;
+	u8 pci_device_flag;
+	u32 interrupt;
+	struct acpi_generic_address ipmi_register;
+	u8 pci_segment;
+	u8 pci_bus;
+	u8 pci_device;
+	u8 pci_function;
+	u8 reserved2;
 };
 
 /* Values for interface_type above */
 
 enum acpi_spmi_interface_types {
-  ACPI_SPMI_NOT_USED = 0,
-  ACPI_SPMI_KEYBOARD = 1,
-  ACPI_SPMI_SMI = 2,
-  ACPI_SPMI_BLOCK_TRANSFER = 3,
-  ACPI_SPMI_SMBUS = 4,
-  ACPI_SPMI_RESERVED = 5  /* 5 and above are reserved */
+	ACPI_SPMI_NOT_USED = 0,
+	ACPI_SPMI_KEYBOARD = 1,
+	ACPI_SPMI_SMI = 2,
+	ACPI_SPMI_BLOCK_TRANSFER = 3,
+	ACPI_SPMI_SMBUS = 4,
+	ACPI_SPMI_RESERVED = 5	/* 5 and above are reserved */
 };
 
 /*******************************************************************************
@@ -865,10 +865,10 @@ enum acpi_spmi_interface_types {
  ******************************************************************************/
 
 struct acpi_table_tcpa {
-  struct acpi_table_header header;  /* Common ACPI table header */
-  u16 reserved;
-  u32 max_log_length; /* Maximum length for the event log area */
-  u64 log_address;  /* Address of the event log area */
+	struct acpi_table_header header;	/* Common ACPI table header */
+	u16 reserved;
+	u32 max_log_length;	/* Maximum length for the event log area */
+	u64 log_address;	/* Address of the event log area */
 };
 
 /*******************************************************************************
@@ -882,9 +882,9 @@ struct acpi_table_tcpa {
  ******************************************************************************/
 
 struct acpi_table_uefi {
-  struct acpi_table_header header;  /* Common ACPI table header */
-  u8 identifier[16];  /* UUID identifier */
-  u16 data_offset;  /* Offset of remaining data in table */
+	struct acpi_table_header header;	/* Common ACPI table header */
+	u8 identifier[16];	/* UUID identifier */
+	u16 data_offset;	/* Offset of remaining data in table */
 };
 
 /*******************************************************************************
@@ -897,14 +897,14 @@ struct acpi_table_uefi {
  ******************************************************************************/
 
 struct acpi_table_waet {
-  struct acpi_table_header header;  /* Common ACPI table header */
-  u32 flags;
+	struct acpi_table_header header;	/* Common ACPI table header */
+	u32 flags;
 };
 
 /* Masks for Flags field above */
 
-#define ACPI_WAET_RTC_NO_ACK        (1) /* RTC requires no int acknowledge */
-#define ACPI_WAET_TIMER_ONE_READ    (1<<1)  /* PM timer requires only one read */
+#define ACPI_WAET_RTC_NO_ACK        (1)	/* RTC requires no int acknowledge */
+#define ACPI_WAET_TIMER_ONE_READ    (1<<1)	/* PM timer requires only one read */
 
 /*******************************************************************************
  *
@@ -917,19 +917,19 @@ struct acpi_table_waet {
  ******************************************************************************/
 
 struct acpi_table_wdat {
-  struct acpi_table_header header;  /* Common ACPI table header */
-  u32 header_length;  /* Watchdog Header Length */
-  u16 pci_segment;  /* PCI Segment number */
-  u8 pci_bus;   /* PCI Bus number */
-  u8 pci_device;    /* PCI Device number */
-  u8 pci_function;  /* PCI Function number */
-  u8 reserved[3];
-  u32 timer_period; /* Period of one timer count (msec) */
-  u32 max_count;    /* Maximum counter value supported */
-  u32 min_count;    /* Minimum counter value */
-  u8 flags;
-  u8 reserved2[3];
-  u32 entries;    /* Number of watchdog entries that follow */
+	struct acpi_table_header header;	/* Common ACPI table header */
+	u32 header_length;	/* Watchdog Header Length */
+	u16 pci_segment;	/* PCI Segment number */
+	u8 pci_bus;		/* PCI Bus number */
+	u8 pci_device;		/* PCI Device number */
+	u8 pci_function;	/* PCI Function number */
+	u8 reserved[3];
+	u32 timer_period;	/* Period of one timer count (msec) */
+	u32 max_count;		/* Maximum counter value supported */
+	u32 min_count;		/* Minimum counter value */
+	u8 flags;
+	u8 reserved2[3];
+	u32 entries;		/* Number of watchdog entries that follow */
 };
 
 /* Masks for Flags field above */
@@ -940,43 +940,43 @@ struct acpi_table_wdat {
 /* WDAT Instruction Entries (actions) */
 
 struct acpi_wdat_entry {
-  u8 action;
-  u8 instruction;
-  u16 reserved;
-  struct acpi_generic_address register_region;
-  u32 value;    /* Value used with Read/Write register */
-  u32 mask;   /* Bitmask required for this register instruction */
+	u8 action;
+	u8 instruction;
+	u16 reserved;
+	struct acpi_generic_address register_region;
+	u32 value;		/* Value used with Read/Write register */
+	u32 mask;		/* Bitmask required for this register instruction */
 };
 
 /* Values for Action field above */
 
 enum acpi_wdat_actions {
-  ACPI_WDAT_RESET = 1,
-  ACPI_WDAT_GET_CURRENT_COUNTDOWN = 4,
-  ACPI_WDAT_GET_COUNTDOWN = 5,
-  ACPI_WDAT_SET_COUNTDOWN = 6,
-  ACPI_WDAT_GET_RUNNING_STATE = 8,
-  ACPI_WDAT_SET_RUNNING_STATE = 9,
-  ACPI_WDAT_GET_STOPPED_STATE = 10,
-  ACPI_WDAT_SET_STOPPED_STATE = 11,
-  ACPI_WDAT_GET_REBOOT = 16,
-  ACPI_WDAT_SET_REBOOT = 17,
-  ACPI_WDAT_GET_SHUTDOWN = 18,
-  ACPI_WDAT_SET_SHUTDOWN = 19,
-  ACPI_WDAT_GET_STATUS = 32,
-  ACPI_WDAT_SET_STATUS = 33,
-  ACPI_WDAT_ACTION_RESERVED = 34  /* 34 and greater are reserved */
+	ACPI_WDAT_RESET = 1,
+	ACPI_WDAT_GET_CURRENT_COUNTDOWN = 4,
+	ACPI_WDAT_GET_COUNTDOWN = 5,
+	ACPI_WDAT_SET_COUNTDOWN = 6,
+	ACPI_WDAT_GET_RUNNING_STATE = 8,
+	ACPI_WDAT_SET_RUNNING_STATE = 9,
+	ACPI_WDAT_GET_STOPPED_STATE = 10,
+	ACPI_WDAT_SET_STOPPED_STATE = 11,
+	ACPI_WDAT_GET_REBOOT = 16,
+	ACPI_WDAT_SET_REBOOT = 17,
+	ACPI_WDAT_GET_SHUTDOWN = 18,
+	ACPI_WDAT_SET_SHUTDOWN = 19,
+	ACPI_WDAT_GET_STATUS = 32,
+	ACPI_WDAT_SET_STATUS = 33,
+	ACPI_WDAT_ACTION_RESERVED = 34	/* 34 and greater are reserved */
 };
 
 /* Values for Instruction field above */
 
 enum acpi_wdat_instructions {
-  ACPI_WDAT_READ_VALUE = 0,
-  ACPI_WDAT_READ_COUNTDOWN = 1,
-  ACPI_WDAT_WRITE_VALUE = 2,
-  ACPI_WDAT_WRITE_COUNTDOWN = 3,
-  ACPI_WDAT_INSTRUCTION_RESERVED = 4, /* 4 and greater are reserved */
-  ACPI_WDAT_PRESERVE_REGISTER = 0x80  /* Except for this value */
+	ACPI_WDAT_READ_VALUE = 0,
+	ACPI_WDAT_READ_COUNTDOWN = 1,
+	ACPI_WDAT_WRITE_VALUE = 2,
+	ACPI_WDAT_WRITE_COUNTDOWN = 3,
+	ACPI_WDAT_INSTRUCTION_RESERVED = 4,	/* 4 and greater are reserved */
+	ACPI_WDAT_PRESERVE_REGISTER = 0x80	/* Except for this value */
 };
 
 /*******************************************************************************
@@ -990,16 +990,16 @@ enum acpi_wdat_instructions {
  ******************************************************************************/
 
 struct acpi_table_wddt {
-  struct acpi_table_header header;  /* Common ACPI table header */
-  u16 spec_version;
-  u16 table_version;
-  u16 pci_vendor_id;
-  struct acpi_generic_address address;
-  u16 max_count;    /* Maximum counter value supported */
-  u16 min_count;    /* Minimum counter value supported */
-  u16 period;
-  u16 status;
-  u16 capability;
+	struct acpi_table_header header;	/* Common ACPI table header */
+	u16 spec_version;
+	u16 table_version;
+	u16 pci_vendor_id;
+	struct acpi_generic_address address;
+	u16 max_count;		/* Maximum counter value supported */
+	u16 min_count;		/* Minimum counter value supported */
+	u16 period;
+	u16 status;
+	u16 capability;
 };
 
 /* Flags for Status field above */
@@ -1028,21 +1028,21 @@ struct acpi_table_wddt {
  ******************************************************************************/
 
 struct acpi_table_wdrt {
-  struct acpi_table_header header;  /* Common ACPI table header */
-  struct acpi_generic_address control_register;
-  struct acpi_generic_address count_register;
-  u16 pci_device_id;
-  u16 pci_vendor_id;
-  u8 pci_bus;   /* PCI Bus number */
-  u8 pci_device;    /* PCI Device number */
-  u8 pci_function;  /* PCI Function number */
-  u8 pci_segment;   /* PCI Segment number */
-  u16 max_count;    /* Maximum counter value supported */
-  u8 units;
+	struct acpi_table_header header;	/* Common ACPI table header */
+	struct acpi_generic_address control_register;
+	struct acpi_generic_address count_register;
+	u16 pci_device_id;
+	u16 pci_vendor_id;
+	u8 pci_bus;		/* PCI Bus number */
+	u8 pci_device;		/* PCI Device number */
+	u8 pci_function;	/* PCI Function number */
+	u8 pci_segment;		/* PCI Segment number */
+	u16 max_count;		/* Maximum counter value supported */
+	u8 units;
 };
 
 /* Reset to default packing */
 
 #pragma pack()
 
-#endif        /* __ACTBL2_H__ */
+#endif				/* __ACTBL2_H__ */

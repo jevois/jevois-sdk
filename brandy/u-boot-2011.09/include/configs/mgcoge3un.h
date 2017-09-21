@@ -19,7 +19,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -40,12 +40,12 @@
 /*
  * Version number information
  */
-#define CONFIG_IDENT_STRING "\nKeymile MGCOGE3UN"
-#define CONFIG_HOSTNAME   mgcoge3un
+#define CONFIG_IDENT_STRING	"\nKeymile MGCOGE3UN"
+#define CONFIG_HOSTNAME		mgcoge3un
 #define CONFIG_MGCOGE3UN
 
-#define KM_IVM_BUS  "pca9547:70:9" /* I2C2 (Mux-Port 1)*/
-#define KM_ENV_BUS  "pca9547:70:d" /* I2C2 (Mux-Port 5)*/
+#define KM_IVM_BUS	"pca9547:70:9" /* I2C2 (Mux-Port 1)*/
+#define KM_ENV_BUS	"pca9547:70:d" /* I2C2 (Mux-Port 5)*/
 
 /* we use a new RAM type on mgcoge3un board */
 #undef CONFIG_SYS_KWD_CONFIG
@@ -56,25 +56,25 @@
  * with 100MB full duplex and autoneg off, for this
  * reason we have to change the default settings
  */
-#define PORT_SERIAL_CONTROL_VALUE   ( \
-                                      MVGBE_FORCE_LINK_PASS     | \
-                                      MVGBE_DIS_AUTO_NEG_FOR_DUPLX    | \
-                                      MVGBE_DIS_AUTO_NEG_FOR_FLOW_CTRL  | \
-                                      MVGBE_ADV_NO_FLOW_CTRL      | \
-                                      MVGBE_FORCE_FC_MODE_NO_PAUSE_DIS_TX | \
-                                      MVGBE_FORCE_BP_MODE_NO_JAM    | \
-                                      (1 << 9) /* Reserved bit has to be 1 */ | \
-                                      MVGBE_DO_NOT_FORCE_LINK_FAIL    | \
-                                      MVGBE_DIS_AUTO_NEG_SPEED_GMII   | \
-                                      MVGBE_DTE_ADV_0       | \
-                                      MVGBE_MIIPHY_MAC_MODE     | \
-                                      MVGBE_AUTO_NEG_NO_CHANGE    | \
-                                      MVGBE_MAX_RX_PACKET_1552BYTE    | \
-                                      MVGBE_CLR_EXT_LOOPBACK      | \
-                                      MVGBE_SET_FULL_DUPLEX_MODE    | \
-                                      MVGBE_DIS_FLOW_CTRL_TX_RX_IN_FULL_DUPLEX  |\
-                                      MVGBE_SET_GMII_SPEED_TO_10_100  |\
-                                      MVGBE_SET_MII_SPEED_TO_100)
+#define PORT_SERIAL_CONTROL_VALUE		( \
+	MVGBE_FORCE_LINK_PASS			| \
+	MVGBE_DIS_AUTO_NEG_FOR_DUPLX		| \
+	MVGBE_DIS_AUTO_NEG_FOR_FLOW_CTRL	| \
+	MVGBE_ADV_NO_FLOW_CTRL			| \
+	MVGBE_FORCE_FC_MODE_NO_PAUSE_DIS_TX	| \
+	MVGBE_FORCE_BP_MODE_NO_JAM		| \
+	(1 << 9) /* Reserved bit has to be 1 */	| \
+	MVGBE_DO_NOT_FORCE_LINK_FAIL		| \
+	MVGBE_DIS_AUTO_NEG_SPEED_GMII		| \
+	MVGBE_DTE_ADV_0				| \
+	MVGBE_MIIPHY_MAC_MODE			| \
+	MVGBE_AUTO_NEG_NO_CHANGE		| \
+	MVGBE_MAX_RX_PACKET_1552BYTE		| \
+	MVGBE_CLR_EXT_LOOPBACK			| \
+	MVGBE_SET_FULL_DUPLEX_MODE		| \
+	MVGBE_DIS_FLOW_CTRL_TX_RX_IN_FULL_DUPLEX	|\
+	MVGBE_SET_GMII_SPEED_TO_10_100	|\
+	MVGBE_SET_MII_SPEED_TO_100)
 
 /*
  * PCIe port not used on mgcoge3un

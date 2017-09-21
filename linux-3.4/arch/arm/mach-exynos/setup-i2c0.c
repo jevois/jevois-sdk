@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2009-2012 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com/
+ *		http://www.samsung.com/
  *
  * I2C0 GPIO configuration.
  *
@@ -18,12 +18,12 @@ struct platform_device; /* don't need the contents */
 #include <plat/gpio-cfg.h>
 #include <plat/cpu.h>
 
-void s3c_i2c0_cfg_gpio (struct platform_device * dev)
+void s3c_i2c0_cfg_gpio(struct platform_device *dev)
 {
-  if (soc_is_exynos5250() )
-    /* will be implemented with gpio function */
-  { return; }
-  
-  s3c_gpio_cfgall_range (EXYNOS4_GPD1 (0), 2,
-                         S3C_GPIO_SFN (2), S3C_GPIO_PULL_UP);
+	if (soc_is_exynos5250())
+		/* will be implemented with gpio function */
+		return;
+
+	s3c_gpio_cfgall_range(EXYNOS4_GPD1(0), 2,
+			      S3C_GPIO_SFN(2), S3C_GPIO_PULL_UP);
 }

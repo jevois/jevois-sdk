@@ -28,9 +28,9 @@
  *
  * returns:  0 if initialize hwspinlock succeeded, others if failed.
  */
-int arisc_hwspinlock_init (void)
+int arisc_hwspinlock_init(void)
 {
-  return 0;
+	return 0;
 }
 
 /**
@@ -39,9 +39,9 @@ int arisc_hwspinlock_init (void)
  *
  * returns:  0 if exit hwspinlock succeeded, others if failed.
  */
-int arisc_hwspinlock_exit (void)
+int arisc_hwspinlock_exit(void)
 {
-  return 0;
+	return 0;
 }
 
 /**
@@ -51,42 +51,42 @@ int arisc_hwspinlock_exit (void)
  *
  * returns:  0 if lock hwspinlock succeeded, other if failed.
  */
-int arisc_hwspin_lock_timeout (int hwid, unsigned int timeout, \
-                               spinlock_t * lock, unsigned long * flags)
+int arisc_hwspin_lock_timeout(int hwid, unsigned int timeout, \
+                              spinlock_t *lock, unsigned long *flags)
 {
-  unsigned long expire;
-  
-  expire = msecs_to_jiffies (timeout) + jiffies;
-  
-  if (hwid >= ARISC_HW_SPINLOCK_NUM) {
-    ARISC_ERR ("invalid hwspinlock id [%d] for trylock\n", hwid);
-    return -EINVAL;
-  }
-  
-  /* is lock already taken by another context on the local cpu ? */
-  while (! (spin_trylock_irqsave (lock, *flags) ) ) {
-    if (time_is_before_eq_jiffies (expire) ) {
-      ARISC_ERR ("try to take spinlock fail\n");
-      return -EBUSY;
-    }
-  }
-  
-  /* try to take spinlock */
-  while (readl (IO_ADDRESS (AW_SPINLOCK_LOCK_REG (hwid) ) ) == AW_SPINLOCK_TAKEN) {
-    /*
-     * The lock is already taken, let's check if the user wants
-     * us to try again
-     */
-    if (time_is_before_eq_jiffies (expire) ) {
-      ARISC_ERR ("try to take hwspinlock timeout\n");
-      spin_unlock_irqrestore (lock, *flags);
-      return -ETIMEDOUT;
-    }
-  }
-  
-  return 0;
+	unsigned long expire;
+
+	expire = msecs_to_jiffies(timeout) + jiffies;
+
+	if (hwid >= ARISC_HW_SPINLOCK_NUM) {
+		ARISC_ERR("invalid hwspinlock id [%d] for trylock\n", hwid);
+		return -EINVAL;
+	}
+
+	/* is lock already taken by another context on the local cpu ? */
+	while (!(spin_trylock_irqsave(lock, *flags))) {
+		if (time_is_before_eq_jiffies(expire)) {
+			ARISC_ERR("try to take spinlock fail\n");
+			return -EBUSY;
+		}
+	}
+
+	/* try to take spinlock */
+	while (readl(IO_ADDRESS(AW_SPINLOCK_LOCK_REG(hwid))) == AW_SPINLOCK_TAKEN) {
+		/*
+		 * The lock is already taken, let's check if the user wants
+		 * us to try again
+		 */
+		if (time_is_before_eq_jiffies(expire)) {
+			ARISC_ERR("try to take hwspinlock timeout\n");
+			spin_unlock_irqrestore(lock, *flags);
+			return -ETIMEDOUT;
+		}
+	}
+
+	return 0;
 }
-EXPORT_SYMBOL (arisc_hwspin_lock_timeout);
+EXPORT_SYMBOL(arisc_hwspin_lock_timeout);
 
 /**
  * unlock a specific hwspinlock.
@@ -94,28 +94,28 @@ EXPORT_SYMBOL (arisc_hwspin_lock_timeout);
  *
  * returns:  0 if unlock hwspinlock succeeded, other if failed.
  */
-int arisc_hwspin_unlock (int hwid, spinlock_t * lock, unsigned long * flags)
+int arisc_hwspin_unlock(int hwid, spinlock_t *lock, unsigned long *flags)
 {
-  if (hwid >= ARISC_HW_SPINLOCK_NUM) {
-    ARISC_ERR ("invalid hwspinlock id [%d] for unlock\n", hwid);
-    return -EINVAL;
-  }
-  
-  /* untaken the spinlock */
-  writel (0x0, IO_ADDRESS (AW_SPINLOCK_LOCK_REG (hwid) ) );
-  
-  spin_unlock_irqrestore (lock, *flags);
-  
-  return 0;
-}
-EXPORT_SYMBOL (arisc_hwspin_unlock);
+	if (hwid >= ARISC_HW_SPINLOCK_NUM) {
+		ARISC_ERR("invalid hwspinlock id [%d] for unlock\n", hwid);
+		return -EINVAL;
+	}
 
-int arisc_hwspinlock_standby_suspend (void)
+	/* untaken the spinlock */
+	writel(0x0, IO_ADDRESS(AW_SPINLOCK_LOCK_REG(hwid)));
+
+	spin_unlock_irqrestore(lock, *flags);
+
+	return 0;
+}
+EXPORT_SYMBOL(arisc_hwspin_unlock);
+
+int arisc_hwspinlock_standby_suspend(void)
 {
-  return 0;
+	return 0;
 }
 
-int arisc_hwspinlock_standby_resume (void)
+int arisc_hwspinlock_standby_resume(void)
 {
-  return 0;
+	return 0;
 }

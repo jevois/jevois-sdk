@@ -9,7 +9,7 @@
  * published by the Free Software Foundation.
  */
 struct clk {
-  unsigned long   rate;
+	unsigned long		rate;
 };
 
-int __init clk_init (void);
+int __init clk_init(void);

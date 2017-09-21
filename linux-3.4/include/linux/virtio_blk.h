@@ -30,46 +30,46 @@
 #include <linux/virtio_config.h>
 
 /* Feature bits */
-#define VIRTIO_BLK_F_BARRIER  0 /* Does host support barriers? */
-#define VIRTIO_BLK_F_SIZE_MAX 1 /* Indicates maximum segment size */
-#define VIRTIO_BLK_F_SEG_MAX  2 /* Indicates maximum # of segments */
-#define VIRTIO_BLK_F_GEOMETRY 4 /* Legacy geometry available  */
-#define VIRTIO_BLK_F_RO   5 /* Disk is read-only */
-#define VIRTIO_BLK_F_BLK_SIZE 6 /* Block size of disk is available*/
-#define VIRTIO_BLK_F_SCSI 7 /* Supports scsi command passthru */
-#define VIRTIO_BLK_F_FLUSH  9 /* Cache flush command support */
-#define VIRTIO_BLK_F_TOPOLOGY 10  /* Topology information is available */
+#define VIRTIO_BLK_F_BARRIER	0	/* Does host support barriers? */
+#define VIRTIO_BLK_F_SIZE_MAX	1	/* Indicates maximum segment size */
+#define VIRTIO_BLK_F_SEG_MAX	2	/* Indicates maximum # of segments */
+#define VIRTIO_BLK_F_GEOMETRY	4	/* Legacy geometry available  */
+#define VIRTIO_BLK_F_RO		5	/* Disk is read-only */
+#define VIRTIO_BLK_F_BLK_SIZE	6	/* Block size of disk is available*/
+#define VIRTIO_BLK_F_SCSI	7	/* Supports scsi command passthru */
+#define VIRTIO_BLK_F_FLUSH	9	/* Cache flush command support */
+#define VIRTIO_BLK_F_TOPOLOGY	10	/* Topology information is available */
 
-#define VIRTIO_BLK_ID_BYTES 20  /* ID string length */
+#define VIRTIO_BLK_ID_BYTES	20	/* ID string length */
 
 struct virtio_blk_config {
-  /* The capacity (in 512-byte sectors). */
-  __u64 capacity;
-  /* The maximum segment size (if VIRTIO_BLK_F_SIZE_MAX) */
-  __u32 size_max;
-  /* The maximum number of segments (if VIRTIO_BLK_F_SEG_MAX) */
-  __u32 seg_max;
-  /* geometry the device (if VIRTIO_BLK_F_GEOMETRY) */
-  struct virtio_blk_geometry {
-    __u16 cylinders;
-    __u8 heads;
-    __u8 sectors;
-  } geometry;
-  
-  /* block size of device (if VIRTIO_BLK_F_BLK_SIZE) */
-  __u32 blk_size;
-  
-  /* the next 4 entries are guarded by VIRTIO_BLK_F_TOPOLOGY  */
-  /* exponent for physical block per logical block. */
-  __u8 physical_block_exp;
-  /* alignment offset in logical blocks. */
-  __u8 alignment_offset;
-  /* minimum I/O size without performance penalty in logical blocks. */
-  __u16 min_io_size;
-  /* optimal sustained I/O size in logical blocks. */
-  __u32 opt_io_size;
-  
-} __attribute__ ( (packed) );
+	/* The capacity (in 512-byte sectors). */
+	__u64 capacity;
+	/* The maximum segment size (if VIRTIO_BLK_F_SIZE_MAX) */
+	__u32 size_max;
+	/* The maximum number of segments (if VIRTIO_BLK_F_SEG_MAX) */
+	__u32 seg_max;
+	/* geometry the device (if VIRTIO_BLK_F_GEOMETRY) */
+	struct virtio_blk_geometry {
+		__u16 cylinders;
+		__u8 heads;
+		__u8 sectors;
+	} geometry;
+
+	/* block size of device (if VIRTIO_BLK_F_BLK_SIZE) */
+	__u32 blk_size;
+
+	/* the next 4 entries are guarded by VIRTIO_BLK_F_TOPOLOGY  */
+	/* exponent for physical block per logical block. */
+	__u8 physical_block_exp;
+	/* alignment offset in logical blocks. */
+	__u8 alignment_offset;
+	/* minimum I/O size without performance penalty in logical blocks. */
+	__u16 min_io_size;
+	/* optimal sustained I/O size in logical blocks. */
+	__u32 opt_io_size;
+
+} __attribute__((packed));
 
 /*
  * Command types
@@ -83,40 +83,40 @@ struct virtio_blk_config {
  */
 
 /* These two define direction. */
-#define VIRTIO_BLK_T_IN   0
-#define VIRTIO_BLK_T_OUT  1
+#define VIRTIO_BLK_T_IN		0
+#define VIRTIO_BLK_T_OUT	1
 
 /* This bit says it's a scsi command, not an actual read or write. */
-#define VIRTIO_BLK_T_SCSI_CMD 2
+#define VIRTIO_BLK_T_SCSI_CMD	2
 
 /* Cache flush command */
-#define VIRTIO_BLK_T_FLUSH  4
+#define VIRTIO_BLK_T_FLUSH	4
 
 /* Get device ID command */
 #define VIRTIO_BLK_T_GET_ID    8
 
 /* Barrier before this op. */
-#define VIRTIO_BLK_T_BARRIER  0x80000000
+#define VIRTIO_BLK_T_BARRIER	0x80000000
 
 /* This is the first element of the read scatter-gather list. */
 struct virtio_blk_outhdr {
-  /* VIRTIO_BLK_T* */
-  __u32 type;
-  /* io priority. */
-  __u32 ioprio;
-  /* Sector (ie. 512 byte offset) */
-  __u64 sector;
+	/* VIRTIO_BLK_T* */
+	__u32 type;
+	/* io priority. */
+	__u32 ioprio;
+	/* Sector (ie. 512 byte offset) */
+	__u64 sector;
 };
 
 struct virtio_scsi_inhdr {
-  __u32 errors;
-  __u32 data_len;
-  __u32 sense_len;
-  __u32 residual;
+	__u32 errors;
+	__u32 data_len;
+	__u32 sense_len;
+	__u32 residual;
 };
 
 /* And this is the final byte of the write scatter-gather list. */
-#define VIRTIO_BLK_S_OK   0
-#define VIRTIO_BLK_S_IOERR  1
-#define VIRTIO_BLK_S_UNSUPP 2
+#define VIRTIO_BLK_S_OK		0
+#define VIRTIO_BLK_S_IOERR	1
+#define VIRTIO_BLK_S_UNSUPP	2
 #endif /* _LINUX_VIRTIO_BLK_H */

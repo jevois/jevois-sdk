@@ -5,7 +5,7 @@
  * are not addressable by direct kernel virtual addresses.
  *
  * Copyright (C) 1999 Gerhard Wichert, Siemens AG
- *          Gerhard.Wichert@pdb.siemens.de
+ *		      Gerhard.Wichert@pdb.siemens.de
  *
  *
  * Redesigned the x86 32-bit VM architecture to deal with
@@ -24,9 +24,9 @@
 #include <linux/uaccess.h>
 #include <asm/fixmap.h>
 
-extern pte_t * kmap_pte;
+extern pte_t *kmap_pte;
 extern pgprot_t kmap_prot;
-extern pte_t * pkmap_page_table;
+extern pte_t *pkmap_page_table;
 
 /*
  * Right now we initialize only a single pte table. It can be extended
@@ -40,56 +40,56 @@ extern pte_t * pkmap_page_table;
  * in case of 16K/64K/256K page sizes.
  */
 
-#define PKMAP_ORDER PTE_SHIFT
-#define LAST_PKMAP  (1 << PKMAP_ORDER)
+#define PKMAP_ORDER	PTE_SHIFT
+#define LAST_PKMAP	(1 << PKMAP_ORDER)
 
-#define PKMAP_BASE  ((FIXADDR_START - PAGE_SIZE * (LAST_PKMAP + 1)) \
-                     & PMD_MASK)
+#define PKMAP_BASE	((FIXADDR_START - PAGE_SIZE * (LAST_PKMAP + 1)) \
+								& PMD_MASK)
 
-#define LAST_PKMAP_MASK (LAST_PKMAP - 1)
+#define LAST_PKMAP_MASK	(LAST_PKMAP - 1)
 #define PKMAP_NR(virt)  ((virt - PKMAP_BASE) >> PAGE_SHIFT)
 #define PKMAP_ADDR(nr)  (PKMAP_BASE + ((nr) << PAGE_SHIFT))
 
-extern void * kmap_high (struct page * page);
-extern void kunmap_high (struct page * page);
-extern void * kmap_atomic_prot (struct page * page, pgprot_t prot);
-extern void __kunmap_atomic (void * kvaddr);
+extern void *kmap_high(struct page *page);
+extern void kunmap_high(struct page *page);
+extern void *kmap_atomic_prot(struct page *page, pgprot_t prot);
+extern void __kunmap_atomic(void *kvaddr);
 
-static inline void * kmap (struct page * page)
+static inline void *kmap(struct page *page)
 {
-  might_sleep();
-  if (!PageHighMem (page) )
-  { return page_address (page); }
-  return kmap_high (page);
+	might_sleep();
+	if (!PageHighMem(page))
+		return page_address(page);
+	return kmap_high(page);
 }
 
-static inline void kunmap (struct page * page)
+static inline void kunmap(struct page *page)
 {
-  BUG_ON (in_interrupt() );
-  if (!PageHighMem (page) )
-  { return; }
-  kunmap_high (page);
+	BUG_ON(in_interrupt());
+	if (!PageHighMem(page))
+		return;
+	kunmap_high(page);
 }
 
-static inline void * __kmap_atomic (struct page * page)
+static inline void *__kmap_atomic(struct page *page)
 {
-  return kmap_atomic_prot (page, kmap_prot);
+	return kmap_atomic_prot(page, kmap_prot);
 }
 
-static inline struct page * kmap_atomic_to_page (void * ptr)
+static inline struct page *kmap_atomic_to_page(void *ptr)
 {
-  unsigned long idx, vaddr = (unsigned long) ptr;
-  pte_t * pte;
-  
-  if (vaddr < FIXADDR_START)
-  { return virt_to_page (ptr); }
-  
-  idx = virt_to_fix (vaddr);
-  pte = kmap_pte - (idx - FIX_KMAP_BEGIN);
-  return pte_page (*pte);
+	unsigned long idx, vaddr = (unsigned long) ptr;
+	pte_t *pte;
+
+	if (vaddr < FIXADDR_START)
+		return virt_to_page(ptr);
+
+	idx = virt_to_fix(vaddr);
+	pte = kmap_pte - (idx - FIX_KMAP_BEGIN);
+	return pte_page(*pte);
 }
 
-#define flush_cache_kmaps() { flush_icache(); flush_dcache(); }
+#define flush_cache_kmaps()	{ flush_icache(); flush_dcache(); }
 
 #endif /* __KERNEL__ */
 

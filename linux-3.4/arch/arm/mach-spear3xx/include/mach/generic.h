@@ -26,9 +26,9 @@
  * Each GPT has 2 timer channels
  * Following GPT channels will be used as clock source and clockevent
  */
-#define SPEAR_GPT0_BASE   SPEAR3XX_ML1_TMR_BASE
-#define SPEAR_GPT0_CHAN0_IRQ  SPEAR3XX_IRQ_CPU_GPT1_1
-#define SPEAR_GPT0_CHAN1_IRQ  SPEAR3XX_IRQ_CPU_GPT1_2
+#define SPEAR_GPT0_BASE		SPEAR3XX_ML1_TMR_BASE
+#define SPEAR_GPT0_CHAN0_IRQ	SPEAR3XX_IRQ_CPU_GPT1_1
+#define SPEAR_GPT0_CHAN1_IRQ	SPEAR3XX_IRQ_CPU_GPT1_2
 
 /* Add spear3xx family device structure declarations here */
 extern struct amba_device spear3xx_gpio_device;
@@ -36,30 +36,30 @@ extern struct amba_device spear3xx_uart_device;
 extern struct sys_timer spear3xx_timer;
 
 /* Add spear3xx family function declarations here */
-void __init spear3xx_clk_init (void);
-void __init spear_setup_timer (void);
-void __init spear3xx_map_io (void);
-void __init spear3xx_init_irq (void);
-void __init spear3xx_init (void);
+void __init spear3xx_clk_init(void);
+void __init spear_setup_timer(void);
+void __init spear3xx_map_io(void);
+void __init spear3xx_init_irq(void);
+void __init spear3xx_init(void);
 
-void spear_restart (char, const char *);
+void spear_restart(char, const char *);
 
 /* pad mux declarations */
-#define PMX_FIRDA_MASK    (1 << 14)
-#define PMX_I2C_MASK    (1 << 13)
-#define PMX_SSP_CS_MASK   (1 << 12)
-#define PMX_SSP_MASK    (1 << 11)
-#define PMX_MII_MASK    (1 << 10)
-#define PMX_GPIO_PIN0_MASK  (1 << 9)
-#define PMX_GPIO_PIN1_MASK  (1 << 8)
-#define PMX_GPIO_PIN2_MASK  (1 << 7)
-#define PMX_GPIO_PIN3_MASK  (1 << 6)
-#define PMX_GPIO_PIN4_MASK  (1 << 5)
-#define PMX_GPIO_PIN5_MASK  (1 << 4)
-#define PMX_UART0_MODEM_MASK  (1 << 3)
-#define PMX_UART0_MASK    (1 << 2)
-#define PMX_TIMER_3_4_MASK  (1 << 1)
-#define PMX_TIMER_1_2_MASK  (1 << 0)
+#define PMX_FIRDA_MASK		(1 << 14)
+#define PMX_I2C_MASK		(1 << 13)
+#define PMX_SSP_CS_MASK		(1 << 12)
+#define PMX_SSP_MASK		(1 << 11)
+#define PMX_MII_MASK		(1 << 10)
+#define PMX_GPIO_PIN0_MASK	(1 << 9)
+#define PMX_GPIO_PIN1_MASK	(1 << 8)
+#define PMX_GPIO_PIN2_MASK	(1 << 7)
+#define PMX_GPIO_PIN3_MASK	(1 << 6)
+#define PMX_GPIO_PIN4_MASK	(1 << 5)
+#define PMX_GPIO_PIN5_MASK	(1 << 4)
+#define PMX_UART0_MODEM_MASK	(1 << 3)
+#define PMX_UART0_MASK		(1 << 2)
+#define PMX_TIMER_3_4_MASK	(1 << 1)
+#define PMX_TIMER_1_2_MASK	(1 << 0)
 
 /* pad mux devices */
 extern struct pmx_dev spear3xx_pmx_firda;
@@ -134,8 +134,8 @@ extern struct pmx_dev spear300_pmx_telecom_sdhci_8bit;
 extern struct pmx_dev spear300_pmx_gpio1;
 
 /* Add spear300 machine function declarations here */
-void __init spear300_init (struct pmx_mode * pmx_mode, struct pmx_dev ** pmx_devs,
-                           u8 pmx_dev_count);
+void __init spear300_init(struct pmx_mode *pmx_mode, struct pmx_dev **pmx_devs,
+		u8 pmx_dev_count);
 
 #endif /* CONFIG_MACH_SPEAR300 */
 
@@ -154,8 +154,8 @@ extern struct pmx_dev spear310_pmx_rs485_0_1;
 extern struct pmx_dev spear310_pmx_tdm0;
 
 /* Add spear310 machine function declarations here */
-void __init spear310_init (struct pmx_mode * pmx_mode, struct pmx_dev ** pmx_devs,
-                           u8 pmx_dev_count);
+void __init spear310_init(struct pmx_mode *pmx_mode, struct pmx_dev **pmx_devs,
+		u8 pmx_dev_count);
 
 #endif /* CONFIG_MACH_SPEAR310 */
 
@@ -194,8 +194,8 @@ extern struct pmx_dev spear320_pmx_smii1;
 extern struct pmx_dev spear320_pmx_i2c1;
 
 /* Add spear320 machine function declarations here */
-void __init spear320_init (struct pmx_mode * pmx_mode, struct pmx_dev ** pmx_devs,
-                           u8 pmx_dev_count);
+void __init spear320_init(struct pmx_mode *pmx_mode, struct pmx_dev **pmx_devs,
+		u8 pmx_dev_count);
 
 #endif /* CONFIG_MACH_SPEAR320 */
 

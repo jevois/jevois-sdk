@@ -1,15 +1,15 @@
 /****************************************************************************/
 
 /*
- *  mcfsim.h -- ColdFire System Integration Module support.
+ *	mcfsim.h -- ColdFire System Integration Module support.
  *
- *  (C) Copyright 1999-2003, Greg Ungerer (gerg@snapgear.com)
- *  (C) Copyright 2000, Lineo Inc. (www.lineo.com)
+ *	(C) Copyright 1999-2003, Greg Ungerer (gerg@snapgear.com)
+ * 	(C) Copyright 2000, Lineo Inc. (www.lineo.com)
  */
 
 /****************************************************************************/
-#ifndef mcfsim_h
-#define mcfsim_h
+#ifndef	mcfsim_h
+#define	mcfsim_h
 /****************************************************************************/
 
 /*
@@ -46,4 +46,4 @@
 #endif
 
 /****************************************************************************/
-#endif  /* mcfsim_h */
+#endif	/* mcfsim_h */

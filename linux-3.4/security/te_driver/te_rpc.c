@@ -33,57 +33,56 @@
 #include "te_shmem.h"
 
 
-unsigned int (*rpc_handle) (unsigned int, unsigned int , unsigned int) = NULL;
+unsigned int (*rpc_handle)(unsigned int, unsigned int , unsigned int) = NULL;
 
-unsigned int sst_rpc_handle (
-  unsigned int cmd,
-  unsigned int args,
-  unsigned int len)
+unsigned int sst_rpc_handle(
+				unsigned int cmd,
+				unsigned int args, 
+				unsigned int len)
 {
-  if (rpc_handle) {
-    return (*rpc_handle) (cmd, args, len);
-    
-  }
-  else
-  { return -1 ; }
+	if(rpc_handle){
+		return (*rpc_handle)(cmd, args, len);
+
+	}else
+		return -1 ;
+}
+			
+int te_rpc_handle(struct smc_param *param)
+{
+	int ret ;
+	struct timespec ts;
+	switch (TEE_SMC_RPC_FUNC(param->a0)) {
+	case TEE_SMC_RPC_GET_TIME:
+		getnstimeofday(&ts);
+		param->a1 = ts.tv_sec;             /* seconds */
+		param->a2 = ts.tv_nsec / 1000000;  /* milliseconds */
+		break;
+	case TEE_SMC_RPC_SST_COMMAND:
+		ret = sst_rpc_handle(param->a0, param->a1, param->a2);
+		param->a0 = ret ;
+		break;
+	default:
+		pr_warn("%s: invalid RPC func 0x%x\n", 
+		         __func__, TEE_SMC_RPC_FUNC(param->a0));
+		break;
+	}
+	return 0;
 }
 
-int te_rpc_handle (struct smc_param * param)
+int sst_rpc_register(void *handle)
 {
-  int ret ;
-  struct timespec ts;
-  switch (TEE_SMC_RPC_FUNC (param->a0) ) {
-  case TEE_SMC_RPC_GET_TIME:
-    getnstimeofday (&ts);
-    param->a1 = ts.tv_sec;             /* seconds */
-    param->a2 = ts.tv_nsec / 1000000;  /* milliseconds */
-    break;
-  case TEE_SMC_RPC_SST_COMMAND:
-    ret = sst_rpc_handle (param->a0, param->a1, param->a2);
-    param->a0 = ret ;
-    break;
-  default:
-    pr_warn ("%s: invalid RPC func 0x%x\n",
-             __func__, TEE_SMC_RPC_FUNC (param->a0) );
-    break;
-  }
-  return 0;
+	if(handle)
+		rpc_handle = handle ;	
+	return 0 ;
 }
 
-int sst_rpc_register (void * handle)
+EXPORT_SYMBOL(sst_rpc_register);
+
+int sst_rpc_unregister(void)
 {
-  if (handle)
-  { rpc_handle = handle ; }
-  return 0 ;
-}
+	rpc_handle = NULL ;	
+	return 0 ;
+} 
 
-EXPORT_SYMBOL (sst_rpc_register);
-
-int sst_rpc_unregister (void)
-{
-  rpc_handle = NULL ;
-  return 0 ;
-}
-
-EXPORT_SYMBOL (sst_rpc_unregister);
+EXPORT_SYMBOL(sst_rpc_unregister);
 

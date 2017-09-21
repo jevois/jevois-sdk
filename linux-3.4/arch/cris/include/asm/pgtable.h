@@ -26,7 +26,7 @@
  * the CRIS page table tree.
  */
 #ifndef __ASSEMBLY__
-extern void paging_init (void);
+extern void paging_init(void);
 #endif
 
 /* Certain architectures need to do special things when pte's
@@ -48,18 +48,18 @@ extern void paging_init (void);
  * a PMD page. A PTE is 4-bytes in CRIS. Hence the following number.
  */
 
-#define PGDIR_SHIFT (PAGE_SHIFT + (PAGE_SHIFT-2))
-#define PGDIR_SIZE  (1UL << PGDIR_SHIFT)
-#define PGDIR_MASK  (~(PGDIR_SIZE-1))
+#define PGDIR_SHIFT	(PAGE_SHIFT + (PAGE_SHIFT-2))
+#define PGDIR_SIZE	(1UL << PGDIR_SHIFT)
+#define PGDIR_MASK	(~(PGDIR_SIZE-1))
 
 /*
  * entries per page directory level: we use a two-level, so
  * we don't really have any PMD directory physically.
- * pointers are 4 bytes so we can use the page size and
+ * pointers are 4 bytes so we can use the page size and 
  * divide it by 4 (shift by 2).
  */
-#define PTRS_PER_PTE  (1UL << (PAGE_SHIFT-2))
-#define PTRS_PER_PGD  (1UL << (PAGE_SHIFT-2))
+#define PTRS_PER_PTE	(1UL << (PAGE_SHIFT-2))
+#define PTRS_PER_PGD	(1UL << (PAGE_SHIFT-2))
 
 /* calculate how many PGD entries a user-level program can use
  * the first mappable virtual address is 0
@@ -76,33 +76,33 @@ extern unsigned long empty_zero_page;
 #endif
 
 /* number of bits that fit into a memory pointer */
-#define BITS_PER_PTR      (8*sizeof(unsigned long))
+#define BITS_PER_PTR			(8*sizeof(unsigned long))
 
 /* to align the pointer to a pointer address */
-#define PTR_MASK      (~(sizeof(void*)-1))
+#define PTR_MASK			(~(sizeof(void*)-1))
 
 /* sizeof(void*)==1<<SIZEOF_PTR_LOG2 */
 /* 64-bit machines, beware!  SRB. */
-#define SIZEOF_PTR_LOG2     2
+#define SIZEOF_PTR_LOG2			2
 
 /* to find an entry in a page-table */
 #define PAGE_PTR(address) \
-  ((unsigned long)(address)>>(PAGE_SHIFT-SIZEOF_PTR_LOG2)&PTR_MASK&~PAGE_MASK)
+((unsigned long)(address)>>(PAGE_SHIFT-SIZEOF_PTR_LOG2)&PTR_MASK&~PAGE_MASK)
 
 /* to set the page-dir */
 #define SET_PAGE_DIR(tsk,pgdir)
 
-#define pte_none(x) (!pte_val(x))
-#define pte_present(x)  (pte_val(x) & _PAGE_PRESENT)
-#define pte_clear(mm,addr,xp) do { pte_val(*(xp)) = 0; } while (0)
+#define pte_none(x)	(!pte_val(x))
+#define pte_present(x)	(pte_val(x) & _PAGE_PRESENT)
+#define pte_clear(mm,addr,xp)	do { pte_val(*(xp)) = 0; } while (0)
 
 #define pmd_none(x)     (!pmd_val(x))
 /* by removing the _PAGE_KERNEL bit from the comparison, the same pmd_bad
  * works for both _PAGE_TABLE and _KERNPG_TABLE pmd entries.
  */
-#define pmd_bad(x)  ((pmd_val(x) & (~PAGE_MASK & ~_PAGE_KERNEL)) != _PAGE_TABLE)
-#define pmd_present(x)  (pmd_val(x) & _PAGE_PRESENT)
-#define pmd_clear(xp) do { pmd_val(*(xp)) = 0; } while (0)
+#define	pmd_bad(x)	((pmd_val(x) & (~PAGE_MASK & ~_PAGE_KERNEL)) != _PAGE_TABLE)
+#define pmd_present(x)	(pmd_val(x) & _PAGE_PRESENT)
+#define pmd_clear(xp)	do { pmd_val(*(xp)) = 0; } while (0)
 
 #ifndef __ASSEMBLY__
 
@@ -111,59 +111,59 @@ extern unsigned long empty_zero_page;
  * Undefined behaviour if not..
  */
 
-static inline int pte_write (pte_t pte)          { return pte_val (pte) & _PAGE_WRITE; }
-static inline int pte_dirty (pte_t pte)          { return pte_val (pte) & _PAGE_MODIFIED; }
-static inline int pte_young (pte_t pte)          { return pte_val (pte) & _PAGE_ACCESSED; }
-static inline int pte_file (pte_t pte)           { return pte_val (pte) & _PAGE_FILE; }
-static inline int pte_special (pte_t pte)  { return 0; }
+static inline int pte_write(pte_t pte)          { return pte_val(pte) & _PAGE_WRITE; }
+static inline int pte_dirty(pte_t pte)          { return pte_val(pte) & _PAGE_MODIFIED; }
+static inline int pte_young(pte_t pte)          { return pte_val(pte) & _PAGE_ACCESSED; }
+static inline int pte_file(pte_t pte)           { return pte_val(pte) & _PAGE_FILE; }
+static inline int pte_special(pte_t pte)	{ return 0; }
 
-static inline pte_t pte_wrprotect (pte_t pte)
+static inline pte_t pte_wrprotect(pte_t pte)
 {
-  pte_val (pte) &= ~ (_PAGE_WRITE | _PAGE_SILENT_WRITE);
-  return pte;
+        pte_val(pte) &= ~(_PAGE_WRITE | _PAGE_SILENT_WRITE);
+        return pte;
 }
 
-static inline pte_t pte_mkclean (pte_t pte)
+static inline pte_t pte_mkclean(pte_t pte)
 {
-  pte_val (pte) &= ~ (_PAGE_MODIFIED | _PAGE_SILENT_WRITE);
-  return pte;
+	pte_val(pte) &= ~(_PAGE_MODIFIED | _PAGE_SILENT_WRITE); 
+	return pte; 
 }
 
-static inline pte_t pte_mkold (pte_t pte)
+static inline pte_t pte_mkold(pte_t pte)
 {
-  pte_val (pte) &= ~ (_PAGE_ACCESSED | _PAGE_SILENT_READ);
-  return pte;
+	pte_val(pte) &= ~(_PAGE_ACCESSED | _PAGE_SILENT_READ);
+	return pte;
 }
 
-static inline pte_t pte_mkwrite (pte_t pte)
+static inline pte_t pte_mkwrite(pte_t pte)
 {
-  pte_val (pte) |= _PAGE_WRITE;
-  if (pte_val (pte) & _PAGE_MODIFIED)
-  { pte_val (pte) |= _PAGE_SILENT_WRITE; }
-  return pte;
+        pte_val(pte) |= _PAGE_WRITE;
+        if (pte_val(pte) & _PAGE_MODIFIED)
+                pte_val(pte) |= _PAGE_SILENT_WRITE;
+        return pte;
 }
 
-static inline pte_t pte_mkdirty (pte_t pte)
+static inline pte_t pte_mkdirty(pte_t pte)
 {
-  pte_val (pte) |= _PAGE_MODIFIED;
-  if (pte_val (pte) & _PAGE_WRITE)
-  { pte_val (pte) |= _PAGE_SILENT_WRITE; }
-  return pte;
+        pte_val(pte) |= _PAGE_MODIFIED;
+        if (pte_val(pte) & _PAGE_WRITE)
+                pte_val(pte) |= _PAGE_SILENT_WRITE;
+        return pte;
 }
 
-static inline pte_t pte_mkyoung (pte_t pte)
+static inline pte_t pte_mkyoung(pte_t pte)
 {
-  pte_val (pte) |= _PAGE_ACCESSED;
-  if (pte_val (pte) & _PAGE_READ)
-  {
-    pte_val (pte) |= _PAGE_SILENT_READ;
-    if ( (pte_val (pte) & (_PAGE_WRITE | _PAGE_MODIFIED) ) ==
-         (_PAGE_WRITE | _PAGE_MODIFIED) )
-    { pte_val (pte) |= _PAGE_SILENT_WRITE; }
-  }
-  return pte;
+        pte_val(pte) |= _PAGE_ACCESSED;
+        if (pte_val(pte) & _PAGE_READ)
+        {
+                pte_val(pte) |= _PAGE_SILENT_READ;
+                if ((pte_val(pte) & (_PAGE_WRITE | _PAGE_MODIFIED)) ==
+		    (_PAGE_WRITE | _PAGE_MODIFIED))
+                        pte_val(pte) |= _PAGE_SILENT_WRITE;
+        }
+        return pte;
 }
-static inline pte_t pte_mkspecial (pte_t pte)  { return pte; }
+static inline pte_t pte_mkspecial(pte_t pte)	{ return pte; }
 
 /*
  * Conversion functions: convert a page and protection to a page entry,
@@ -176,26 +176,26 @@ static inline pte_t pte_mkspecial (pte_t pte)  { return pte; }
  * addresses (the 0xc0xxxxxx's) goes as void *'s.
  */
 
-static inline pte_t __mk_pte (void * page, pgprot_t pgprot)
+static inline pte_t __mk_pte(void * page, pgprot_t pgprot)
 {
-  pte_t pte;
-  /* the PTE needs a physical address */
-  pte_val (pte) = __pa (page) | pgprot_val (pgprot);
-  return pte;
+	pte_t pte;
+	/* the PTE needs a physical address */
+	pte_val(pte) = __pa(page) | pgprot_val(pgprot);
+	return pte;
 }
 
 #define mk_pte(page, pgprot) __mk_pte(page_address(page), (pgprot))
 
 #define mk_pte_phys(physpage, pgprot) \
-  ({                                                                      \
-    pte_t __pte;                                                    \
-    \
-    pte_val(__pte) = (physpage) + pgprot_val(pgprot);               \
-    __pte;                                                          \
-  })
+({                                                                      \
+        pte_t __pte;                                                    \
+                                                                        \
+        pte_val(__pte) = (physpage) + pgprot_val(pgprot);               \
+        __pte;                                                          \
+})
 
-static inline pte_t pte_modify (pte_t pte, pgprot_t newprot)
-{ pte_val (pte) = (pte_val (pte) & _PAGE_CHG_MASK) | pgprot_val (newprot); return pte; }
+static inline pte_t pte_modify(pte_t pte, pgprot_t newprot)
+{ pte_val(pte) = (pte_val(pte) & _PAGE_CHG_MASK) | pgprot_val(newprot); return pte; }
 
 #define pgprot_noncached(prot) __pgprot((pgprot_val(prot) | _PAGE_NO_CACHE))
 
@@ -205,10 +205,10 @@ static inline pte_t pte_modify (pte_t pte, pgprot_t newprot)
  * pte_pagenr refers to the page-number counted starting from the virtual DRAM start
  */
 
-static inline unsigned long __pte_page (pte_t pte)
+static inline unsigned long __pte_page(pte_t pte)
 {
-  /* the PTE contains a physical address */
-  return (unsigned long) __va (pte_val (pte) & PAGE_MASK);
+	/* the PTE contains a physical address */
+	return (unsigned long)__va(pte_val(pte) & PAGE_MASK);
 }
 
 #define pte_pagenr(pte)         ((__pte_page(pte) - PAGE_OFFSET) >> PAGE_SHIFT)
@@ -223,19 +223,19 @@ static inline unsigned long __pte_page (pte_t pte)
  * don't need the __pa and __va transformations.
  */
 
-static inline void pmd_set (pmd_t * pmdp, pte_t * ptep)
-{ pmd_val (*pmdp) = _PAGE_TABLE | (unsigned long) ptep; }
+static inline void pmd_set(pmd_t * pmdp, pte_t * ptep)
+{ pmd_val(*pmdp) = _PAGE_TABLE | (unsigned long) ptep; }
 
-#define pmd_page(pmd)   (pfn_to_page(pmd_val(pmd) >> PAGE_SHIFT))
-#define pmd_page_vaddr(pmd) ((unsigned long) __va(pmd_val(pmd) & PAGE_MASK))
+#define pmd_page(pmd)		(pfn_to_page(pmd_val(pmd) >> PAGE_SHIFT))
+#define pmd_page_vaddr(pmd)	((unsigned long) __va(pmd_val(pmd) & PAGE_MASK))
 
 /* to find an entry in a page-table-directory. */
 #define pgd_index(address) (((address) >> PGDIR_SHIFT) & (PTRS_PER_PGD-1))
 
 /* to find an entry in a page-table-directory */
-static inline pgd_t * pgd_offset (const struct mm_struct * mm, unsigned long address)
+static inline pgd_t * pgd_offset(const struct mm_struct *mm, unsigned long address)
 {
-  return mm->pgd + pgd_index (address);
+	return mm->pgd + pgd_index(address);
 }
 
 /* to find an entry in a kernel page-table-directory */
@@ -243,23 +243,23 @@ static inline pgd_t * pgd_offset (const struct mm_struct * mm, unsigned long add
 
 /* Find an entry in the third-level page table.. */
 #define __pte_offset(address) \
-  (((address) >> PAGE_SHIFT) & (PTRS_PER_PTE - 1))
+	(((address) >> PAGE_SHIFT) & (PTRS_PER_PTE - 1))
 #define pte_offset_kernel(dir, address) \
-  ((pte_t *) pmd_page_vaddr(*(dir)) +  __pte_offset(address))
+	((pte_t *) pmd_page_vaddr(*(dir)) +  __pte_offset(address))
 #define pte_offset_map(dir, address) \
-  ((pte_t *)page_address(pmd_page(*(dir))) + __pte_offset(address))
+	((pte_t *)page_address(pmd_page(*(dir))) + __pte_offset(address))
 
 #define pte_unmap(pte) do { } while (0)
-#define pte_pfn(x)    ((unsigned long)(__va((x).pte)) >> PAGE_SHIFT)
-#define pfn_pte(pfn, prot)  __pte(((pfn) << PAGE_SHIFT) | pgprot_val(prot))
+#define pte_pfn(x)		((unsigned long)(__va((x).pte)) >> PAGE_SHIFT)
+#define pfn_pte(pfn, prot)	__pte(((pfn) << PAGE_SHIFT) | pgprot_val(prot))
 
 #define pte_ERROR(e) \
-  printk("%s:%d: bad pte %p(%08lx).\n", __FILE__, __LINE__, &(e), pte_val(e))
+        printk("%s:%d: bad pte %p(%08lx).\n", __FILE__, __LINE__, &(e), pte_val(e))
 #define pgd_ERROR(e) \
-  printk("%s:%d: bad pgd %p(%08lx).\n", __FILE__, __LINE__, &(e), pgd_val(e))
+        printk("%s:%d: bad pgd %p(%08lx).\n", __FILE__, __LINE__, &(e), pgd_val(e))
 
 #define io_remap_pfn_range(vma, vaddr, pfn, size, prot)         \
-  remap_pfn_range(vma, vaddr, pfn, size, prot)
+		remap_pfn_range(vma, vaddr, pfn, size, prot)
 
 
 extern pgd_t swapper_pg_dir[PTRS_PER_PGD]; /* defined in head.S */
@@ -267,22 +267,22 @@ extern pgd_t swapper_pg_dir[PTRS_PER_PGD]; /* defined in head.S */
 /*
  * CRIS doesn't have any external MMU info: the kernel page
  * tables contain all the necessary information.
- *
+ * 
  * Actually I am not sure on what this could be used for.
  */
-static inline void update_mmu_cache (struct vm_area_struct * vma,
-                                     unsigned long address, pte_t * ptep)
+static inline void update_mmu_cache(struct vm_area_struct * vma,
+	unsigned long address, pte_t *ptep)
 {
 }
 
 /* Encode and de-code a swap entry (must be !pte_none(e) && !pte_present(e)) */
 /* Since the PAGE_PRESENT bit is bit 4, we can use the bits above */
 
-#define __swp_type(x)     (((x).val >> 5) & 0x7f)
-#define __swp_offset(x)     ((x).val >> 12)
-#define __swp_entry(type, offset) ((swp_entry_t) { ((type) << 5) | ((offset) << 12) })
-#define __pte_to_swp_entry(pte)   ((swp_entry_t) { pte_val(pte) })
-#define __swp_entry_to_pte(x)   ((pte_t) { (x).val })
+#define __swp_type(x)			(((x).val >> 5) & 0x7f)
+#define __swp_offset(x)			((x).val >> 12)
+#define __swp_entry(type, offset)	((swp_entry_t) { ((type) << 5) | ((offset) << 12) })
+#define __pte_to_swp_entry(pte)		((swp_entry_t) { pte_val(pte) })
+#define __swp_entry_to_pte(x)		((pte_t) { (x).val })
 
 #define kern_addr_valid(addr)   (1)
 
@@ -293,10 +293,10 @@ static inline void update_mmu_cache (struct vm_area_struct * vma,
  */
 #define pgtable_cache_init()   do { } while (0)
 
-#define pte_to_pgoff(x) (pte_val(x) >> 6)
-#define pgoff_to_pte(x) __pte(((x) << 6) | _PAGE_FILE)
+#define pte_to_pgoff(x)	(pte_val(x) >> 6)
+#define pgoff_to_pte(x)	__pte(((x) << 6) | _PAGE_FILE)
 
-typedef pte_t * pte_addr_t;
+typedef pte_t *pte_addr_t;
 
 #endif /* __ASSEMBLY__ */
 #endif /* _CRIS_PGTABLE_H */

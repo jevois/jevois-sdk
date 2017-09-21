@@ -19,52 +19,52 @@
 #include "glock.h"
 #include "util.h"
 
-struct kmem_cache * gfs2_glock_cachep __read_mostly;
-struct kmem_cache * gfs2_glock_aspace_cachep __read_mostly;
-struct kmem_cache * gfs2_inode_cachep __read_mostly;
-struct kmem_cache * gfs2_bufdata_cachep __read_mostly;
-struct kmem_cache * gfs2_rgrpd_cachep __read_mostly;
-struct kmem_cache * gfs2_quotad_cachep __read_mostly;
-mempool_t * gfs2_bh_pool __read_mostly;
+struct kmem_cache *gfs2_glock_cachep __read_mostly;
+struct kmem_cache *gfs2_glock_aspace_cachep __read_mostly;
+struct kmem_cache *gfs2_inode_cachep __read_mostly;
+struct kmem_cache *gfs2_bufdata_cachep __read_mostly;
+struct kmem_cache *gfs2_rgrpd_cachep __read_mostly;
+struct kmem_cache *gfs2_quotad_cachep __read_mostly;
+mempool_t *gfs2_bh_pool __read_mostly;
 
-void gfs2_assert_i (struct gfs2_sbd * sdp)
+void gfs2_assert_i(struct gfs2_sbd *sdp)
 {
-  printk (KERN_EMERG "GFS2: fsid=%s: fatal assertion failed\n",
-          sdp->sd_fsname);
+	printk(KERN_EMERG "GFS2: fsid=%s: fatal assertion failed\n",
+	       sdp->sd_fsname);
 }
 
-int gfs2_lm_withdraw (struct gfs2_sbd * sdp, char * fmt, ...)
+int gfs2_lm_withdraw(struct gfs2_sbd *sdp, char *fmt, ...)
 {
-  struct lm_lockstruct * ls = &sdp->sd_lockstruct;
-  const struct lm_lockops * lm = ls->ls_ops;
-  va_list args;
-  
-  if (sdp->sd_args.ar_errors == GFS2_ERRORS_WITHDRAW &&
-      test_and_set_bit (SDF_SHUTDOWN, &sdp->sd_flags) )
-  { return 0; }
-  
-  va_start (args, fmt);
-  vprintk (fmt, args);
-  va_end (args);
-  
-  if (sdp->sd_args.ar_errors == GFS2_ERRORS_WITHDRAW) {
-    fs_err (sdp, "about to withdraw this file system\n");
-    BUG_ON (sdp->sd_args.ar_debug);
-    
-    kobject_uevent (&sdp->sd_kobj, KOBJ_OFFLINE);
-    
-    if (lm->lm_unmount) {
-      fs_err (sdp, "telling LM to unmount\n");
-      lm->lm_unmount (sdp);
-    }
-    fs_err (sdp, "withdrawn\n");
-    dump_stack();
-  }
-  
-  if (sdp->sd_args.ar_errors == GFS2_ERRORS_PANIC)
-  { panic ("GFS2: fsid=%s: panic requested.\n", sdp->sd_fsname); }
-  
-  return -1;
+	struct lm_lockstruct *ls = &sdp->sd_lockstruct;
+	const struct lm_lockops *lm = ls->ls_ops;
+	va_list args;
+
+	if (sdp->sd_args.ar_errors == GFS2_ERRORS_WITHDRAW &&
+	    test_and_set_bit(SDF_SHUTDOWN, &sdp->sd_flags))
+		return 0;
+
+	va_start(args, fmt);
+	vprintk(fmt, args);
+	va_end(args);
+
+	if (sdp->sd_args.ar_errors == GFS2_ERRORS_WITHDRAW) {
+		fs_err(sdp, "about to withdraw this file system\n");
+		BUG_ON(sdp->sd_args.ar_debug);
+
+		kobject_uevent(&sdp->sd_kobj, KOBJ_OFFLINE);
+
+		if (lm->lm_unmount) {
+			fs_err(sdp, "telling LM to unmount\n");
+			lm->lm_unmount(sdp);
+		}
+		fs_err(sdp, "withdrawn\n");
+		dump_stack();
+	}
+
+	if (sdp->sd_args.ar_errors == GFS2_ERRORS_PANIC)
+		panic("GFS2: fsid=%s: panic requested.\n", sdp->sd_fsname);
+
+	return -1;
 }
 
 /**
@@ -73,17 +73,17 @@ int gfs2_lm_withdraw (struct gfs2_sbd * sdp, char * fmt, ...)
  *          -2 if it was already withdrawn
  */
 
-int gfs2_assert_withdraw_i (struct gfs2_sbd * sdp, char * assertion,
-                            const char * function, char * file, unsigned int line)
+int gfs2_assert_withdraw_i(struct gfs2_sbd *sdp, char *assertion,
+			   const char *function, char *file, unsigned int line)
 {
-  int me;
-  me = gfs2_lm_withdraw (sdp,
-                         "GFS2: fsid=%s: fatal: assertion \"%s\" failed\n"
-                         "GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
-                         sdp->sd_fsname, assertion,
-                         sdp->sd_fsname, function, file, line);
-  dump_stack();
-  return (me) ? -1 : -2;
+	int me;
+	me = gfs2_lm_withdraw(sdp,
+		"GFS2: fsid=%s: fatal: assertion \"%s\" failed\n"
+		"GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
+		sdp->sd_fsname, assertion,
+		sdp->sd_fsname, function, file, line);
+	dump_stack();
+	return (me) ? -1 : -2;
 }
 
 /**
@@ -92,35 +92,35 @@ int gfs2_assert_withdraw_i (struct gfs2_sbd * sdp, char * assertion,
  *          -2 if we didn't
  */
 
-int gfs2_assert_warn_i (struct gfs2_sbd * sdp, char * assertion,
-                        const char * function, char * file, unsigned int line)
+int gfs2_assert_warn_i(struct gfs2_sbd *sdp, char *assertion,
+		       const char *function, char *file, unsigned int line)
 {
-  if (time_before (jiffies,
-                   sdp->sd_last_warning +
-                   gfs2_tune_get (sdp, gt_complain_secs) * HZ) )
-  { return -2; }
-  
-  if (sdp->sd_args.ar_errors == GFS2_ERRORS_WITHDRAW)
-    printk (KERN_WARNING
-            "GFS2: fsid=%s: warning: assertion \"%s\" failed\n"
-            "GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
-            sdp->sd_fsname, assertion,
-            sdp->sd_fsname, function, file, line);
-            
-  if (sdp->sd_args.ar_debug)
-  { BUG(); }
-  else
-  { dump_stack(); }
-  
-  if (sdp->sd_args.ar_errors == GFS2_ERRORS_PANIC)
-    panic ("GFS2: fsid=%s: warning: assertion \"%s\" failed\n"
-           "GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
-           sdp->sd_fsname, assertion,
-           sdp->sd_fsname, function, file, line);
-           
-  sdp->sd_last_warning = jiffies;
-  
-  return -1;
+	if (time_before(jiffies,
+			sdp->sd_last_warning +
+			gfs2_tune_get(sdp, gt_complain_secs) * HZ))
+		return -2;
+
+	if (sdp->sd_args.ar_errors == GFS2_ERRORS_WITHDRAW)
+		printk(KERN_WARNING
+		       "GFS2: fsid=%s: warning: assertion \"%s\" failed\n"
+		       "GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
+		       sdp->sd_fsname, assertion,
+		       sdp->sd_fsname, function, file, line);
+
+	if (sdp->sd_args.ar_debug)
+		BUG();
+	else
+		dump_stack();
+
+	if (sdp->sd_args.ar_errors == GFS2_ERRORS_PANIC)
+		panic("GFS2: fsid=%s: warning: assertion \"%s\" failed\n"
+		      "GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
+		      sdp->sd_fsname, assertion,
+		      sdp->sd_fsname, function, file, line);
+
+	sdp->sd_last_warning = jiffies;
+
+	return -1;
 }
 
 /**
@@ -129,16 +129,16 @@ int gfs2_assert_warn_i (struct gfs2_sbd * sdp, char * assertion,
  *          0 if it was already withdrawn
  */
 
-int gfs2_consist_i (struct gfs2_sbd * sdp, int cluster_wide, const char * function,
-                    char * file, unsigned int line)
+int gfs2_consist_i(struct gfs2_sbd *sdp, int cluster_wide, const char *function,
+		   char *file, unsigned int line)
 {
-  int rv;
-  rv = gfs2_lm_withdraw (sdp,
-                         "GFS2: fsid=%s: fatal: filesystem consistency error\n"
-                         "GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
-                         sdp->sd_fsname,
-                         sdp->sd_fsname, function, file, line);
-  return rv;
+	int rv;
+	rv = gfs2_lm_withdraw(sdp,
+		"GFS2: fsid=%s: fatal: filesystem consistency error\n"
+		"GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
+		sdp->sd_fsname,
+		sdp->sd_fsname, function, file, line);
+	return rv;
 }
 
 /**
@@ -147,20 +147,20 @@ int gfs2_consist_i (struct gfs2_sbd * sdp, int cluster_wide, const char * functi
  *          0 if it was already withdrawn
  */
 
-int gfs2_consist_inode_i (struct gfs2_inode * ip, int cluster_wide,
-                          const char * function, char * file, unsigned int line)
+int gfs2_consist_inode_i(struct gfs2_inode *ip, int cluster_wide,
+			 const char *function, char *file, unsigned int line)
 {
-  struct gfs2_sbd * sdp = GFS2_SB (&ip->i_inode);
-  int rv;
-  rv = gfs2_lm_withdraw (sdp,
-                         "GFS2: fsid=%s: fatal: filesystem consistency error\n"
-                         "GFS2: fsid=%s:   inode = %llu %llu\n"
-                         "GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
-                         sdp->sd_fsname,
-                         sdp->sd_fsname, (unsigned long long) ip->i_no_formal_ino,
-                         (unsigned long long) ip->i_no_addr,
-                         sdp->sd_fsname, function, file, line);
-  return rv;
+	struct gfs2_sbd *sdp = GFS2_SB(&ip->i_inode);
+	int rv;
+	rv = gfs2_lm_withdraw(sdp,
+		"GFS2: fsid=%s: fatal: filesystem consistency error\n"
+		"GFS2: fsid=%s:   inode = %llu %llu\n"
+		"GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
+		sdp->sd_fsname,
+		sdp->sd_fsname, (unsigned long long)ip->i_no_formal_ino,
+		(unsigned long long)ip->i_no_addr,
+		sdp->sd_fsname, function, file, line);
+	return rv;
 }
 
 /**
@@ -169,19 +169,19 @@ int gfs2_consist_inode_i (struct gfs2_inode * ip, int cluster_wide,
  *          0 if it was already withdrawn
  */
 
-int gfs2_consist_rgrpd_i (struct gfs2_rgrpd * rgd, int cluster_wide,
-                          const char * function, char * file, unsigned int line)
+int gfs2_consist_rgrpd_i(struct gfs2_rgrpd *rgd, int cluster_wide,
+			 const char *function, char *file, unsigned int line)
 {
-  struct gfs2_sbd * sdp = rgd->rd_sbd;
-  int rv;
-  rv = gfs2_lm_withdraw (sdp,
-                         "GFS2: fsid=%s: fatal: filesystem consistency error\n"
-                         "GFS2: fsid=%s:   RG = %llu\n"
-                         "GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
-                         sdp->sd_fsname,
-                         sdp->sd_fsname, (unsigned long long) rgd->rd_addr,
-                         sdp->sd_fsname, function, file, line);
-  return rv;
+	struct gfs2_sbd *sdp = rgd->rd_sbd;
+	int rv;
+	rv = gfs2_lm_withdraw(sdp,
+		"GFS2: fsid=%s: fatal: filesystem consistency error\n"
+		"GFS2: fsid=%s:   RG = %llu\n"
+		"GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
+		sdp->sd_fsname,
+		sdp->sd_fsname, (unsigned long long)rgd->rd_addr,
+		sdp->sd_fsname, function, file, line);
+	return rv;
 }
 
 /**
@@ -190,19 +190,19 @@ int gfs2_consist_rgrpd_i (struct gfs2_rgrpd * rgd, int cluster_wide,
  *          -2 if it was already withdrawn
  */
 
-int gfs2_meta_check_ii (struct gfs2_sbd * sdp, struct buffer_head * bh,
-                        const char * type, const char * function, char * file,
-                        unsigned int line)
+int gfs2_meta_check_ii(struct gfs2_sbd *sdp, struct buffer_head *bh,
+		       const char *type, const char *function, char *file,
+		       unsigned int line)
 {
-  int me;
-  me = gfs2_lm_withdraw (sdp,
-                         "GFS2: fsid=%s: fatal: invalid metadata block\n"
-                         "GFS2: fsid=%s:   bh = %llu (%s)\n"
-                         "GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
-                         sdp->sd_fsname,
-                         sdp->sd_fsname, (unsigned long long) bh->b_blocknr, type,
-                         sdp->sd_fsname, function, file, line);
-  return (me) ? -1 : -2;
+	int me;
+	me = gfs2_lm_withdraw(sdp,
+		"GFS2: fsid=%s: fatal: invalid metadata block\n"
+		"GFS2: fsid=%s:   bh = %llu (%s)\n"
+		"GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
+		sdp->sd_fsname,
+		sdp->sd_fsname, (unsigned long long)bh->b_blocknr, type,
+		sdp->sd_fsname, function, file, line);
+	return (me) ? -1 : -2;
 }
 
 /**
@@ -211,19 +211,19 @@ int gfs2_meta_check_ii (struct gfs2_sbd * sdp, struct buffer_head * bh,
  *          -2 if it was already withdrawn
  */
 
-int gfs2_metatype_check_ii (struct gfs2_sbd * sdp, struct buffer_head * bh,
-                            u16 type, u16 t, const char * function,
-                            char * file, unsigned int line)
+int gfs2_metatype_check_ii(struct gfs2_sbd *sdp, struct buffer_head *bh,
+			   u16 type, u16 t, const char *function,
+			   char *file, unsigned int line)
 {
-  int me;
-  me = gfs2_lm_withdraw (sdp,
-                         "GFS2: fsid=%s: fatal: invalid metadata block\n"
-                         "GFS2: fsid=%s:   bh = %llu (type: exp=%u, found=%u)\n"
-                         "GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
-                         sdp->sd_fsname,
-                         sdp->sd_fsname, (unsigned long long) bh->b_blocknr, type, t,
-                         sdp->sd_fsname, function, file, line);
-  return (me) ? -1 : -2;
+	int me;
+	me = gfs2_lm_withdraw(sdp,
+		"GFS2: fsid=%s: fatal: invalid metadata block\n"
+		"GFS2: fsid=%s:   bh = %llu (type: exp=%u, found=%u)\n"
+		"GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
+		sdp->sd_fsname,
+		sdp->sd_fsname, (unsigned long long)bh->b_blocknr, type, t,
+		sdp->sd_fsname, function, file, line);
+	return (me) ? -1 : -2;
 }
 
 /**
@@ -232,16 +232,16 @@ int gfs2_metatype_check_ii (struct gfs2_sbd * sdp, struct buffer_head * bh,
  *          0 if it was already withdrawn
  */
 
-int gfs2_io_error_i (struct gfs2_sbd * sdp, const char * function, char * file,
-                     unsigned int line)
+int gfs2_io_error_i(struct gfs2_sbd *sdp, const char *function, char *file,
+		    unsigned int line)
 {
-  int rv;
-  rv = gfs2_lm_withdraw (sdp,
-                         "GFS2: fsid=%s: fatal: I/O error\n"
-                         "GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
-                         sdp->sd_fsname,
-                         sdp->sd_fsname, function, file, line);
-  return rv;
+	int rv;
+	rv = gfs2_lm_withdraw(sdp,
+		"GFS2: fsid=%s: fatal: I/O error\n"
+		"GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
+		sdp->sd_fsname,
+		sdp->sd_fsname, function, file, line);
+	return rv;
 }
 
 /**
@@ -250,37 +250,37 @@ int gfs2_io_error_i (struct gfs2_sbd * sdp, const char * function, char * file,
  *          0 if it was already withdrawn
  */
 
-int gfs2_io_error_bh_i (struct gfs2_sbd * sdp, struct buffer_head * bh,
-                        const char * function, char * file, unsigned int line)
+int gfs2_io_error_bh_i(struct gfs2_sbd *sdp, struct buffer_head *bh,
+		       const char *function, char *file, unsigned int line)
 {
-  int rv;
-  rv = gfs2_lm_withdraw (sdp,
-                         "GFS2: fsid=%s: fatal: I/O error\n"
-                         "GFS2: fsid=%s:   block = %llu\n"
-                         "GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
-                         sdp->sd_fsname,
-                         sdp->sd_fsname, (unsigned long long) bh->b_blocknr,
-                         sdp->sd_fsname, function, file, line);
-  return rv;
+	int rv;
+	rv = gfs2_lm_withdraw(sdp,
+		"GFS2: fsid=%s: fatal: I/O error\n"
+		"GFS2: fsid=%s:   block = %llu\n"
+		"GFS2: fsid=%s:   function = %s, file = %s, line = %u\n",
+		sdp->sd_fsname,
+		sdp->sd_fsname, (unsigned long long)bh->b_blocknr,
+		sdp->sd_fsname, function, file, line);
+	return rv;
 }
 
-void gfs2_icbit_munge (struct gfs2_sbd * sdp, unsigned char ** bitmap,
-                       unsigned int bit, int new_value)
+void gfs2_icbit_munge(struct gfs2_sbd *sdp, unsigned char **bitmap,
+		      unsigned int bit, int new_value)
 {
-  unsigned int c, o, b = bit;
-  int old_value;
-  
-  c = b / (8 * PAGE_SIZE);
-  b %= 8 * PAGE_SIZE;
-  o = b / 8;
-  b %= 8;
-  
-  old_value = (bitmap[c][o] & (1 << b) );
-  gfs2_assert_withdraw (sdp, !old_value != !new_value);
-  
-  if (new_value)
-  { bitmap[c][o] |= 1 << b; }
-  else
-  { bitmap[c][o] &= ~ (1 << b); }
+	unsigned int c, o, b = bit;
+	int old_value;
+
+	c = b / (8 * PAGE_SIZE);
+	b %= 8 * PAGE_SIZE;
+	o = b / 8;
+	b %= 8;
+
+	old_value = (bitmap[c][o] & (1 << b));
+	gfs2_assert_withdraw(sdp, !old_value != !new_value);
+
+	if (new_value)
+		bitmap[c][o] |= 1 << b;
+	else
+		bitmap[c][o] &= ~(1 << b);
 }
 

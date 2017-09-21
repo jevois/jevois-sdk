@@ -26,35 +26,35 @@
 
 u32 ux500_uart_base;
 
-static void putc (const char c)
+static void putc(const char c)
 {
-  /* Do nothing if the UART is not enabled. */
-  if (! (__raw_readb (ux500_uart_base + UART011_CR) & 0x1) )
-  { return; }
-  
-  if (c == '\n')
-  { putc ('\r'); }
-  
-  while (__raw_readb (ux500_uart_base + UART01x_FR) & (1 << 5) )
-  { barrier(); }
-  __raw_writeb (c, ux500_uart_base + UART01x_DR);
+	/* Do nothing if the UART is not enabled. */
+	if (!(__raw_readb(ux500_uart_base + UART011_CR) & 0x1))
+		return;
+
+	if (c == '\n')
+		putc('\r');
+
+	while (__raw_readb(ux500_uart_base + UART01x_FR) & (1 << 5))
+		barrier();
+	__raw_writeb(c, ux500_uart_base + UART01x_DR);
 }
 
-static void flush (void)
+static void flush(void)
 {
-  if (! (__raw_readb (ux500_uart_base + UART011_CR) & 0x1) )
-  { return; }
-  while (__raw_readb (ux500_uart_base + UART01x_FR) & (1 << 3) )
-  { barrier(); }
+	if (!(__raw_readb(ux500_uart_base + UART011_CR) & 0x1))
+		return;
+	while (__raw_readb(ux500_uart_base + UART01x_FR) & (1 << 3))
+		barrier();
 }
 
-static inline void arch_decomp_setup (void)
+static inline void arch_decomp_setup(void)
 {
-  /* Check in run time if we run on an U8500 or U5500 */
-  if (machine_is_u5500() )
-  { ux500_uart_base = U5500_UART0_BASE; }
-  else
-  { ux500_uart_base = U8500_UART2_BASE; }
+	/* Check in run time if we run on an U8500 or U5500 */
+	if (machine_is_u5500())
+		ux500_uart_base = U5500_UART0_BASE;
+	else
+		ux500_uart_base = U8500_UART2_BASE;
 }
 
 #define arch_decomp_wdog() /* nothing to do here */

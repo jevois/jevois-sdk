@@ -16,6 +16,6 @@
 #include <linux/signal.h>
 
 /* mm/cache.c */
-asmlinkage int sys_cacheflush (int, void __user *, size_t);
+asmlinkage int sys_cacheflush(int, void __user *, size_t);
 
 #endif /* _ASM_AVR32_SYSCALLS_H */

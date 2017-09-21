@@ -71,27 +71,27 @@
   ------------------------------------------
   Setting a bit in this register masks the
   corresponding interrupt to the host.
-  0 - RX0   - Rx first dubble buffer Data Interrupt
-  1 - TXD   - Tx Data Interrupt
-  2 - TXXFR   - Tx Transfer Interrupt
-  3 - RX1   - Rx second dubble buffer Data Interrupt
-  4 - RXXFR   - Rx Transfer Interrupt
-  5 - EVENT_A - Event Mailbox interrupt
-  6 - EVENT_B - Event Mailbox interrupt
-  7 - WNONHST - Wake On Host Interrupt
-  8 - TRACE_A - Debug Trace interrupt
-  9 - TRACE_B - Debug Trace interrupt
- 10 - CDCMP   - Command Complete Interrupt
+  0 - RX0		- Rx first dubble buffer Data Interrupt
+  1 - TXD		- Tx Data Interrupt
+  2 - TXXFR		- Tx Transfer Interrupt
+  3 - RX1		- Rx second dubble buffer Data Interrupt
+  4 - RXXFR		- Rx Transfer Interrupt
+  5 - EVENT_A	- Event Mailbox interrupt
+  6 - EVENT_B	- Event Mailbox interrupt
+  7 - WNONHST	- Wake On Host Interrupt
+  8 - TRACE_A	- Debug Trace interrupt
+  9 - TRACE_B	- Debug Trace interrupt
+ 10 - CDCMP		- Command Complete Interrupt
  11 -
  12 -
  13 -
- 14 - ICOMP   - Initialization Complete Interrupt
- 16 - SG SE   - Soft Gemini - Sense enable interrupt
- 17 - SG SD   - Soft Gemini - Sense disable interrupt
- 18 -     -
- 19 -     -
- 20 -     -
- 21-      -
+ 14 - ICOMP		- Initialization Complete Interrupt
+ 16 - SG SE		- Soft Gemini - Sense enable interrupt
+ 17 - SG SD		- Soft Gemini - Sense disable interrupt
+ 18 -			-
+ 19 -			-
+ 20 -			-
+ 21-			-
  Default: 0x0001
 *==============================================*/
 #define ACX_REG_INTERRUPT_MASK         (REGISTERS_BASE + 0x04DC)
@@ -279,7 +279,7 @@
  the host receives the Init Complete interrupt from
  the Wlan hardware.
  ===============================================*/
-#define REG_COMMAND_MAILBOX_PTR       (SCR_PAD0)
+#define REG_COMMAND_MAILBOX_PTR				(SCR_PAD0)
 
 /*===============================================
   Information Mailbox Pointer - 32bit RW
@@ -294,7 +294,7 @@
  until after the host receives the Init Complete interrupt from
  the Wlan hardware.
  ===============================================*/
-#define REG_EVENT_MAILBOX_PTR       (SCR_PAD1)
+#define REG_EVENT_MAILBOX_PTR				(SCR_PAD1)
 
 /*===============================================
  EEPROM Read/Write Request 32bit RW
@@ -380,10 +380,10 @@
 #define HI_CFG_UART_TX_OUT_GPIO_7   0x00000400
 
 #define HI_CFG_DEF_VAL              \
-  (HI_CFG_UART_ENABLE |        \
-   HI_CFG_RST232_ENABLE |      \
-   HI_CFG_CLOCK_REQ_SELECT |   \
-   HI_CFG_HOST_INT_ENABLE)
+	(HI_CFG_UART_ENABLE |        \
+	HI_CFG_RST232_ENABLE |      \
+	HI_CFG_CLOCK_REQ_SELECT |   \
+	HI_CFG_HOST_INT_ENABLE)
 
 #define REF_FREQ_19_2                       0
 #define REF_FREQ_26_0                       1
@@ -408,12 +408,12 @@
 
 
 /* Firmware image load chunk size */
-#define CHUNK_SIZE  16384
+#define CHUNK_SIZE	16384
 
 /* Firmware image header size */
 #define FW_HDR_SIZE 8
 
-#define ECPU_CONTROL_HALT         0x00000101
+#define ECPU_CONTROL_HALT					0x00000101
 
 
 /******************************************************************************
@@ -424,12 +424,12 @@
 
 
 enum {
-  RADIO_BAND_2_4GHZ = 0,  /* 2.4 Ghz band */
-  RADIO_BAND_5GHZ = 1,    /* 5 Ghz band */
-  RADIO_BAND_JAPAN_4_9_GHZ = 2,
-  DEFAULT_BAND = RADIO_BAND_2_4GHZ,
-  INVALID_BAND = 0xFE,
-  MAX_RADIO_BANDS = 0xFF
+	RADIO_BAND_2_4GHZ = 0,  /* 2.4 Ghz band */
+	RADIO_BAND_5GHZ = 1,    /* 5 Ghz band */
+	RADIO_BAND_JAPAN_4_9_GHZ = 2,
+	DEFAULT_BAND = RADIO_BAND_2_4GHZ,
+	INVALID_BAND = 0xFE,
+	MAX_RADIO_BANDS = 0xFF
 };
 
 #define SHORT_PREAMBLE_BIT   BIT(0) /* CCK or Barker depending on the rate */
@@ -437,11 +437,11 @@ enum {
 #define PBCC_RATE_BIT        BIT(7)
 
 enum {
-  CCK_LONG = 0,
-  CCK_SHORT = SHORT_PREAMBLE_BIT,
-  PBCC_LONG = PBCC_RATE_BIT,
-  PBCC_SHORT = PBCC_RATE_BIT | SHORT_PREAMBLE_BIT,
-  OFDM = OFDM_RATE_BIT
+	CCK_LONG = 0,
+	CCK_SHORT = SHORT_PREAMBLE_BIT,
+	PBCC_LONG = PBCC_RATE_BIT,
+	PBCC_SHORT = PBCC_RATE_BIT | SHORT_PREAMBLE_BIT,
+	OFDM = OFDM_RATE_BIT
 };
 
 /******************************************************************************
@@ -453,13 +453,13 @@ Rate & Modulation info into a single 16-bit field.
 
 TxdRateSet_t:
 b15   - Indicates Preamble type (1=SHORT, 0=LONG).
-  Notes:
-  Must be LONG (0) for 1Mbps rate.
-  Does not apply (set to 0) for RevG-OFDM rates.
+	Notes:
+	Must be LONG (0) for 1Mbps rate.
+	Does not apply (set to 0) for RevG-OFDM rates.
 b14   - Indicates PBCC encoding (1=PBCC, 0=not).
-  Notes:
-  Does not apply (set to 0) for rates 1 and 2 Mbps.
-  Does not apply (set to 0) for RevG-OFDM rates.
+	Notes:
+	Does not apply (set to 0) for rates 1 and 2 Mbps.
+	Does not apply (set to 0) for RevG-OFDM rates.
 b13    - Unused (set to 0).
 b12-b0 - Supported Rate indicator bits as defined below.
 
@@ -525,31 +525,31 @@ b12-b0 - Supported Rate indicator bits as defined below.
  */
 #define INTR_TRIG_TX_PROC1 BIT(18)
 
-#define WL127X_REG_FUSE_DATA_2_1  0x050a
-#define WL128X_REG_FUSE_DATA_2_1  0x2152
-#define PG_VER_MASK     0x3c
-#define PG_VER_OFFSET     2
+#define WL127X_REG_FUSE_DATA_2_1	0x050a
+#define WL128X_REG_FUSE_DATA_2_1	0x2152
+#define PG_VER_MASK			0x3c
+#define PG_VER_OFFSET			2
 
-#define WL127X_PG_MAJOR_VER_MASK  0x3
-#define WL127X_PG_MAJOR_VER_OFFSET  0x0
-#define WL127X_PG_MINOR_VER_MASK  0xc
-#define WL127X_PG_MINOR_VER_OFFSET  0x2
+#define WL127X_PG_MAJOR_VER_MASK	0x3
+#define WL127X_PG_MAJOR_VER_OFFSET	0x0
+#define WL127X_PG_MINOR_VER_MASK	0xc
+#define WL127X_PG_MINOR_VER_OFFSET	0x2
 
-#define WL128X_PG_MAJOR_VER_MASK  0xc
-#define WL128X_PG_MAJOR_VER_OFFSET  0x2
-#define WL128X_PG_MINOR_VER_MASK  0x3
-#define WL128X_PG_MINOR_VER_OFFSET  0x0
+#define WL128X_PG_MAJOR_VER_MASK	0xc
+#define WL128X_PG_MAJOR_VER_OFFSET	0x2
+#define WL128X_PG_MINOR_VER_MASK	0x3
+#define WL128X_PG_MINOR_VER_OFFSET	0x0
 
 #define WL127X_PG_GET_MAJOR(pg_ver) ((pg_ver & WL127X_PG_MAJOR_VER_MASK) >> \
-                                     WL127X_PG_MAJOR_VER_OFFSET)
+				     WL127X_PG_MAJOR_VER_OFFSET)
 #define WL127X_PG_GET_MINOR(pg_ver) ((pg_ver & WL127X_PG_MINOR_VER_MASK) >> \
-                                     WL127X_PG_MINOR_VER_OFFSET)
+				     WL127X_PG_MINOR_VER_OFFSET)
 #define WL128X_PG_GET_MAJOR(pg_ver) ((pg_ver & WL128X_PG_MAJOR_VER_MASK) >> \
-                                     WL128X_PG_MAJOR_VER_OFFSET)
+				     WL128X_PG_MAJOR_VER_OFFSET)
 #define WL128X_PG_GET_MINOR(pg_ver) ((pg_ver & WL128X_PG_MINOR_VER_MASK) >> \
-                                     WL128X_PG_MINOR_VER_OFFSET)
+				     WL128X_PG_MINOR_VER_OFFSET)
 
-#define WL12XX_REG_FUSE_BD_ADDR_1 0x00310eb4
-#define WL12XX_REG_FUSE_BD_ADDR_2 0x00310eb8
+#define WL12XX_REG_FUSE_BD_ADDR_1	0x00310eb4
+#define WL12XX_REG_FUSE_BD_ADDR_2	0x00310eb8
 
 #endif

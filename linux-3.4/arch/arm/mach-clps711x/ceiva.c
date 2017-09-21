@@ -37,28 +37,28 @@
 #include "common.h"
 
 static struct map_desc ceiva_io_desc[] __initdata = {
-  /* SED1355 controlled video RAM & registers */
-  {
-    .virtual  = CEIVA_VIRT_SED1355,
-    .pfn    = __phys_to_pfn (CEIVA_PHYS_SED1355),
-    .length   = SZ_2M,
-    .type   = MT_DEVICE
-  }
+ 	/* SED1355 controlled video RAM & registers */
+ 	{
+		.virtual	= CEIVA_VIRT_SED1355,
+		.pfn		= __phys_to_pfn(CEIVA_PHYS_SED1355),
+		.length		= SZ_2M,
+		.type		= MT_DEVICE
+	}
 };
 
 
-static void __init ceiva_map_io (void)
+static void __init ceiva_map_io(void)
 {
-  clps711x_map_io();
-  iotable_init (ceiva_io_desc, ARRAY_SIZE (ceiva_io_desc) );
+        clps711x_map_io();
+        iotable_init(ceiva_io_desc, ARRAY_SIZE(ceiva_io_desc));
 }
 
 
-MACHINE_START (CEIVA, "CEIVA/Polaroid Photo MAX Digital Picture Frame")
-/* Maintainer: Rob Scott */
-.atag_offset  = 0x100,
- .map_io   = ceiva_map_io,
-  .init_irq = clps711x_init_irq,
-   .timer    = &clps711x_timer,
-    .restart  = clps711x_restart,
-     MACHINE_END
+MACHINE_START(CEIVA, "CEIVA/Polaroid Photo MAX Digital Picture Frame")
+	/* Maintainer: Rob Scott */
+	.atag_offset	= 0x100,
+	.map_io		= ceiva_map_io,
+	.init_irq	= clps711x_init_irq,
+	.timer		= &clps711x_timer,
+	.restart	= clps711x_restart,
+MACHINE_END

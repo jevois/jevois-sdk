@@ -156,18 +156,18 @@ typedef u32 ixgbe_link_speed;
 #define IXGBE_RXDADV_SPH                0x8000
 
 #define IXGBE_RXD_ERR_FRAME_ERR_MASK ( \
-                                       IXGBE_RXD_ERR_CE |  \
-                                       IXGBE_RXD_ERR_LE |  \
-                                       IXGBE_RXD_ERR_PE |  \
-                                       IXGBE_RXD_ERR_OSE | \
-                                       IXGBE_RXD_ERR_USE)
+				      IXGBE_RXD_ERR_CE |  \
+				      IXGBE_RXD_ERR_LE |  \
+				      IXGBE_RXD_ERR_PE |  \
+				      IXGBE_RXD_ERR_OSE | \
+				      IXGBE_RXD_ERR_USE)
 
 #define IXGBE_RXDADV_ERR_FRAME_ERR_MASK ( \
-    IXGBE_RXDADV_ERR_CE |  \
-    IXGBE_RXDADV_ERR_LE |  \
-    IXGBE_RXDADV_ERR_PE |  \
-    IXGBE_RXDADV_ERR_OSE | \
-    IXGBE_RXDADV_ERR_USE)
+					 IXGBE_RXDADV_ERR_CE |  \
+					 IXGBE_RXDADV_ERR_LE |  \
+					 IXGBE_RXDADV_ERR_PE |  \
+					 IXGBE_RXDADV_ERR_OSE | \
+					 IXGBE_RXDADV_ERR_USE)
 
 #define IXGBE_TXD_POPTS_IXSM 0x01       /* Insert IP checksum */
 #define IXGBE_TXD_POPTS_TXSM 0x02       /* Insert TCP/UDP checksum */
@@ -181,55 +181,55 @@ typedef u32 ixgbe_link_speed;
 
 /* Transmit Descriptor - Advanced */
 union ixgbe_adv_tx_desc {
-  struct {
-    __le64 buffer_addr;      /* Address of descriptor's data buf */
-    __le32 cmd_type_len;
-    __le32 olinfo_status;
-  } read;
-  struct {
-    __le64 rsvd;       /* Reserved */
-    __le32 nxtseq_seed;
-    __le32 status;
-  } wb;
+	struct {
+		__le64 buffer_addr;      /* Address of descriptor's data buf */
+		__le32 cmd_type_len;
+		__le32 olinfo_status;
+	} read;
+	struct {
+		__le64 rsvd;       /* Reserved */
+		__le32 nxtseq_seed;
+		__le32 status;
+	} wb;
 };
 
 /* Receive Descriptor - Advanced */
 union ixgbe_adv_rx_desc {
-  struct {
-    __le64 pkt_addr; /* Packet buffer address */
-    __le64 hdr_addr; /* Header buffer address */
-  } read;
-  struct {
-    struct {
-      union {
-        __le32 data;
-        struct {
-          __le16 pkt_info; /* RSS, Pkt type */
-          __le16 hdr_info; /* Splithdr, hdrlen */
-        } hs_rss;
-      } lo_dword;
-      union {
-        __le32 rss; /* RSS Hash */
-        struct {
-          __le16 ip_id; /* IP id */
-          __le16 csum; /* Packet Checksum */
-        } csum_ip;
-      } hi_dword;
-    } lower;
-    struct {
-      __le32 status_error; /* ext status/error */
-      __le16 length; /* Packet length */
-      __le16 vlan; /* VLAN tag */
-    } upper;
-  } wb;  /* writeback */
+	struct {
+		__le64 pkt_addr; /* Packet buffer address */
+		__le64 hdr_addr; /* Header buffer address */
+	} read;
+	struct {
+		struct {
+			union {
+				__le32 data;
+				struct {
+					__le16 pkt_info; /* RSS, Pkt type */
+					__le16 hdr_info; /* Splithdr, hdrlen */
+				} hs_rss;
+			} lo_dword;
+			union {
+				__le32 rss; /* RSS Hash */
+				struct {
+					__le16 ip_id; /* IP id */
+					__le16 csum; /* Packet Checksum */
+				} csum_ip;
+			} hi_dword;
+		} lower;
+		struct {
+			__le32 status_error; /* ext status/error */
+			__le16 length; /* Packet length */
+			__le16 vlan; /* VLAN tag */
+		} upper;
+	} wb;  /* writeback */
 };
 
 /* Context descriptors */
 struct ixgbe_adv_tx_context_desc {
-  __le32 vlan_macip_lens;
-  __le32 seqnum_seed;
-  __le32 type_tucmd_mlhl;
-  __le32 mss_l4len_idx;
+	__le32 vlan_macip_lens;
+	__le32 seqnum_seed;
+	__le32 type_tucmd_mlhl;
+	__le32 mss_l4len_idx;
 };
 
 /* Adv Transmit Descriptor Config Masks */
@@ -251,9 +251,9 @@ struct ixgbe_adv_tx_context_desc {
 #define IXGBE_ADVTXD_IDX_SHIFT  4 /* Adv desc Index shift */
 #define IXGBE_ADVTXD_POPTS_SHIFT      8  /* Adv desc POPTS shift */
 #define IXGBE_ADVTXD_POPTS_IXSM (IXGBE_TXD_POPTS_IXSM << \
-                                 IXGBE_ADVTXD_POPTS_SHIFT)
+				 IXGBE_ADVTXD_POPTS_SHIFT)
 #define IXGBE_ADVTXD_POPTS_TXSM (IXGBE_TXD_POPTS_TXSM << \
-                                 IXGBE_ADVTXD_POPTS_SHIFT)
+				 IXGBE_ADVTXD_POPTS_SHIFT)
 #define IXGBE_ADVTXD_PAYLEN_SHIFT    14 /* Adv desc PAYLEN shift */
 #define IXGBE_ADVTXD_MACLEN_SHIFT    9  /* Adv ctxt desc mac len shift */
 #define IXGBE_ADVTXD_VLAN_SHIFT      16  /* Adv ctxt vlan tag shift */
@@ -283,9 +283,9 @@ struct ixgbe_adv_tx_context_desc {
 #define IXGBE_EIMC_OTHER        IXGBE_EICR_OTHER     /* INT Cause Active */
 
 #define IXGBE_EIMS_ENABLE_MASK ( \
-                                 IXGBE_EIMS_RTX_QUEUE       | \
-                                 IXGBE_EIMS_MAILBOX         | \
-                                 IXGBE_EIMS_OTHER)
+				IXGBE_EIMS_RTX_QUEUE       | \
+				IXGBE_EIMS_MAILBOX         | \
+				IXGBE_EIMS_OTHER)
 
 #define IXGBE_EITR_CNT_WDIS     0x80000000
 

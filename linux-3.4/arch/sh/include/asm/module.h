@@ -2,10 +2,10 @@
 #define _ASM_SH_MODULE_H
 
 struct mod_arch_specific {
-  #ifdef CONFIG_DWARF_UNWINDER
-  struct list_head fde_list;
-  struct list_head cie_list;
-  #endif
+#ifdef CONFIG_DWARF_UNWINDER
+	struct list_head fde_list;
+	struct list_head cie_list;
+#endif
 };
 
 #ifdef CONFIG_64BIT

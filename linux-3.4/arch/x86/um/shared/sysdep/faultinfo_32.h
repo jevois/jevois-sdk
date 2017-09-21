@@ -16,19 +16,19 @@
  * contents without knowledge about the structure elements.
  */
 struct faultinfo {
-  int error_code; /* in ptrace_faultinfo misleadingly called is_write */
-  unsigned long cr2; /* in ptrace_faultinfo called addr */
-  int trap_no; /* missing in ptrace_faultinfo */
+        int error_code; /* in ptrace_faultinfo misleadingly called is_write */
+        unsigned long cr2; /* in ptrace_faultinfo called addr */
+        int trap_no; /* missing in ptrace_faultinfo */
 };
 
 #define FAULT_WRITE(fi) ((fi).error_code & 2)
 #define FAULT_ADDRESS(fi) ((fi).cr2)
 
 /* This is Page Fault */
-#define SEGV_IS_FIXABLE(fi) ((fi)->trap_no == 14)
+#define SEGV_IS_FIXABLE(fi)	((fi)->trap_no == 14)
 
 /* SKAS3 has no trap_no on i386, but get_skas_faultinfo() sets it to 0. */
-#define SEGV_MAYBE_FIXABLE(fi)  ((fi)->trap_no == 0 && ptrace_faultinfo)
+#define SEGV_MAYBE_FIXABLE(fi)	((fi)->trap_no == 0 && ptrace_faultinfo)
 
 #define PTRACE_FULL_FAULTINFO 0
 

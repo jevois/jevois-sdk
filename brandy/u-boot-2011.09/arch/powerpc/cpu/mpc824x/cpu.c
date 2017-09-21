@@ -30,46 +30,45 @@ DECLARE_GLOBAL_DATA_PTR;
 
 int checkcpu (void)
 {
-  unsigned int pvr = get_pvr ();
-  unsigned int version = pvr >> 16;
-  unsigned char revision;
-  ulong clock = gd->cpu_clk;
-  char buf[32];
-  
-  puts ("CPU:   ");
-  
-  switch (version) {
-  case CPU_TYPE_8240:
-    puts ("MPC8240");
-    break;
-    
-  case CPU_TYPE_8245:
-    puts ("MPC8245");
-    break;
-    
-  default:
-    return -1;    /*not valid for this source */
-  }
-  
-  CONFIG_READ_BYTE (REVID, revision);
-  
-  if (revision) {
-    printf (" Revision %d.%d",
-            (revision & 0xf0) >> 4,
-            (revision & 0x0f) );
-  }
-  else {
-    return -1;    /* no valid CPU revision info */
-  }
-  
-  printf (" at %s MHz:", strmhz (buf, clock) );
-  
-  printf (" %u kB I-Cache", checkicache () >> 10);
-  printf (" %u kB D-Cache", checkdcache () >> 10);
-  
-  puts ("\n");
-  
-  return 0;
+	unsigned int pvr = get_pvr ();
+	unsigned int version = pvr >> 16;
+	unsigned char revision;
+	ulong clock = gd->cpu_clk;
+	char buf[32];
+
+	puts ("CPU:   ");
+
+	switch (version) {
+	case CPU_TYPE_8240:
+		puts ("MPC8240");
+		break;
+
+	case CPU_TYPE_8245:
+		puts ("MPC8245");
+		break;
+
+	default:
+		return -1;		/*not valid for this source */
+	}
+
+	CONFIG_READ_BYTE (REVID, revision);
+
+	if (revision) {
+		printf (" Revision %d.%d",
+			(revision & 0xf0) >> 4,
+			(revision & 0x0f));
+	} else {
+		return -1;		/* no valid CPU revision info */
+	}
+
+	printf (" at %s MHz:", strmhz (buf, clock));
+
+	printf (" %u kB I-Cache", checkicache () >> 10);
+	printf (" %u kB D-Cache", checkdcache () >> 10);
+
+	puts ("\n");
+
+	return 0;
 }
 
 /* ------------------------------------------------------------------------- */
@@ -77,8 +76,8 @@ int checkcpu (void)
 
 int checkicache (void)
 {
-  /*TODO*/
-  return 128 * 4 * 32;
+	 /*TODO*/
+	 return 128 * 4 * 32;
 };
 
 /* ------------------------------------------------------------------------- */
@@ -86,45 +85,45 @@ int checkicache (void)
 
 int checkdcache (void)
 {
-  /*TODO*/
-  return 128 * 4 * 32;
-  
+	 /*TODO*/
+	 return 128 * 4 * 32;
+
 };
 
 /*------------------------------------------------------------------- */
 
-int do_reset (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
+int do_reset (cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
-  ulong msr, addr;
-  
-  /* Interrupts and MMU off */
-  __asm__ ("mtspr    81, 0");
-  
-  /* Interrupts and MMU off */
-  __asm__ __volatile__ ("mfmsr    %0":"=r" (msr) :);
-  
-  msr &= ~0x1030;
-  __asm__ __volatile__ ("mtmsr    %0"::"r" (msr) );
-  
-  /*
-   * Trying to execute the next instruction at a non-existing address
-   * should cause a machine check, resulting in reset
-   */
-  #ifdef CONFIG_SYS_RESET_ADDRESS
-  addr = CONFIG_SYS_RESET_ADDRESS;
-  #else
-  /*
-   * note: when CONFIG_SYS_MONITOR_BASE points to a RAM address,
-   * CONFIG_SYS_MONITOR_BASE - sizeof (ulong) is usually a valid
-   * address. Better pick an address known to be invalid on
-   * your system and assign it to CONFIG_SYS_RESET_ADDRESS.
-   * "(ulong)-1" used to be a good choice for many systems...
-   */
-  addr = CONFIG_SYS_MONITOR_BASE - sizeof (ulong);
-  #endif
-  ( (void (*) (void) ) addr) ();
-  return 1;
-  
+	ulong msr, addr;
+
+	/* Interrupts and MMU off */
+	__asm__ ("mtspr    81, 0");
+
+	/* Interrupts and MMU off */
+	__asm__ __volatile__ ("mfmsr    %0":"=r" (msr):);
+
+	msr &= ~0x1030;
+	__asm__ __volatile__ ("mtmsr    %0"::"r" (msr));
+
+	/*
+	 * Trying to execute the next instruction at a non-existing address
+	 * should cause a machine check, resulting in reset
+	 */
+#ifdef CONFIG_SYS_RESET_ADDRESS
+	addr = CONFIG_SYS_RESET_ADDRESS;
+#else
+	/*
+	 * note: when CONFIG_SYS_MONITOR_BASE points to a RAM address,
+	 * CONFIG_SYS_MONITOR_BASE - sizeof (ulong) is usually a valid
+	 * address. Better pick an address known to be invalid on
+	 * your system and assign it to CONFIG_SYS_RESET_ADDRESS.
+	 * "(ulong)-1" used to be a good choice for many systems...
+	 */
+	addr = CONFIG_SYS_MONITOR_BASE - sizeof (ulong);
+#endif
+	((void (*)(void)) addr) ();
+	return 1;
+
 }
 
 /* ------------------------------------------------------------------------- */
@@ -135,7 +134,7 @@ int do_reset (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
  */
 unsigned long get_tbclk (void)
 {
-  return ( (get_bus_freq (0) + 2L) / 4L);
+	return ((get_bus_freq (0) + 2L) / 4L);
 }
 
 /* ------------------------------------------------------------------------- */
@@ -154,12 +153,12 @@ unsigned long get_tbclk (void)
  */
 unsigned int mpc824x_mpc107_getreg (unsigned int regNum)
 {
-  unsigned int temp;
-  
-  /* swap the addr. to little endian */
-  * (volatile unsigned int *) CHRP_REG_ADDR = PCISWAP (regNum);
-  temp = * (volatile unsigned int *) CHRP_REG_DATA;
-  return PCISWAP (temp);    /* swap the data upon return */
+	unsigned int temp;
+
+	/* swap the addr. to little endian */
+	*(volatile unsigned int *) CHRP_REG_ADDR = PCISWAP (regNum);
+	temp = *(volatile unsigned int *) CHRP_REG_DATA;
+	return PCISWAP (temp);		/* swap the data upon return */
 }
 
 /*
@@ -169,10 +168,10 @@ unsigned int mpc824x_mpc107_getreg (unsigned int regNum)
 
 void mpc824x_mpc107_setreg (unsigned int regNum, unsigned int regVal)
 {
-  /* swap the addr. to little endian */
-  * (volatile unsigned int *) CHRP_REG_ADDR = PCISWAP (regNum);
-  * (volatile unsigned int *) CHRP_REG_DATA = PCISWAP (regVal);
-  return;
+	/* swap the addr. to little endian */
+	*(volatile unsigned int *) CHRP_REG_ADDR = PCISWAP (regNum);
+	*(volatile unsigned int *) CHRP_REG_DATA = PCISWAP (regVal);
+	return;
 }
 
 
@@ -181,8 +180,8 @@ void mpc824x_mpc107_setreg (unsigned int regNum, unsigned int regVal)
  */
 void mpc824x_mpc107_write8 (unsigned int addr, unsigned char data)
 {
-  * (unsigned char *) addr = data;
-  __asm__ ("sync");
+	*(unsigned char *) addr = data;
+	__asm__ ("sync");
 }
 
 /*
@@ -192,8 +191,8 @@ void mpc824x_mpc107_write8 (unsigned int addr, unsigned char data)
 
 void mpc824x_mpc107_write16 (unsigned int address, unsigned short data)
 {
-  * (volatile unsigned short *) address = BYTE_SWAP_16_BIT (data);
-  __asm__ ("sync");
+	*(volatile unsigned short *) address = BYTE_SWAP_16_BIT (data);
+	__asm__ ("sync");
 }
 
 /*
@@ -203,8 +202,8 @@ void mpc824x_mpc107_write16 (unsigned int address, unsigned short data)
 
 void mpc824x_mpc107_write32 (unsigned int address, unsigned int data)
 {
-  * (volatile unsigned int *) address = LONGSWAP (data);
-  __asm__ ("sync");
+	*(volatile unsigned int *) address = LONGSWAP (data);
+	__asm__ ("sync");
 }
 
 /*
@@ -212,7 +211,7 @@ void mpc824x_mpc107_write32 (unsigned int address, unsigned int data)
  */
 unsigned char mpc824x_mpc107_read8 (unsigned int addr)
 {
-  return * (volatile unsigned char *) addr;
+	return *(volatile unsigned char *) addr;
 }
 
 
@@ -222,10 +221,10 @@ unsigned char mpc824x_mpc107_read8 (unsigned int addr)
  */
 unsigned short mpc824x_mpc107_read16 (unsigned int address)
 {
-  unsigned short retVal;
-  
-  retVal = BYTE_SWAP_16_BIT (* (unsigned short *) address);
-  return retVal;
+	unsigned short retVal;
+
+	retVal = BYTE_SWAP_16_BIT (*(unsigned short *) address);
+	return retVal;
 }
 
 
@@ -235,10 +234,10 @@ unsigned short mpc824x_mpc107_read16 (unsigned int address)
  */
 unsigned int mpc824x_mpc107_read32 (unsigned int address)
 {
-  unsigned int retVal;
-  
-  retVal = LONGSWAP (* (unsigned int *) address);
-  return (retVal);
+	unsigned int retVal;
+
+	retVal = LONGSWAP (*(unsigned int *) address);
+	return (retVal);
 }
 
 
@@ -247,18 +246,18 @@ unsigned int mpc824x_mpc107_read32 (unsigned int address)
  *  space.
  *  Input: regNum - register number + utility base address.  Example,
  *         the base address of EPIC is 0x40000, the register number
- *     being passed is 0x40000+the address of the target register.
- *     (See epic.h for register addresses).
+ *	   being passed is 0x40000+the address of the target register.
+ *	   (See epic.h for register addresses).
  *  Output:  The 32 bit little endian value of the register.
  */
 
 unsigned int mpc824x_eummbar_read (unsigned int regNum)
 {
-  unsigned int temp;
-  
-  temp = * (volatile unsigned int *) (EUMBBAR_VAL + regNum);
-  temp = PCISWAP (temp);
-  return temp;
+	unsigned int temp;
+
+	temp = *(volatile unsigned int *) (EUMBBAR_VAL + regNum);
+	temp = PCISWAP (temp);
+	return temp;
 }
 
 
@@ -267,15 +266,15 @@ unsigned int mpc824x_eummbar_read (unsigned int regNum)
  *  Block address space.
  *  Input: regNum - register number + utility base address.  Example,
  *                  the base address of EPIC is 0x40000, the register
- *              number is 0x40000+the address of the target register.
- *              (See epic.h for register addresses).
+ *	            number is 0x40000+the address of the target register.
+ *	            (See epic.h for register addresses).
  *         regVal - value to be written to the register.
  */
 
 void mpc824x_eummbar_write (unsigned int regNum, unsigned int regVal)
 {
-  * (volatile unsigned int *) (EUMBBAR_VAL + regNum) = PCISWAP (regVal);
-  return;
+	*(volatile unsigned int *) (EUMBBAR_VAL + regNum) = PCISWAP (regVal);
+	return;
 }
 
 /* ------------------------------------------------------------------------- */

@@ -26,43 +26,43 @@
 #define SYSCTRL_PLLSTAT     0x00000800    /* read/write PLL_STAT register */
 
 typedef struct ADI_SYSCTRL_VALUES {
-  uint16_t uwVrCtl;
-  uint16_t uwPllCtl;
-  uint16_t uwPllDiv;
-  uint16_t uwPllLockCnt;
-  uint16_t uwPllStat;
+	uint16_t uwVrCtl;
+	uint16_t uwPllCtl;
+	uint16_t uwPllDiv;
+	uint16_t uwPllLockCnt;
+	uint16_t uwPllStat;
 } ADI_SYSCTRL_VALUES;
 
-static uint32_t (* const bfrom_SysControl) (uint32_t action_flags, ADI_SYSCTRL_VALUES * power_settings, void * reserved) = (void *) 0xEF000038;
+static uint32_t (* const bfrom_SysControl)(uint32_t action_flags, ADI_SYSCTRL_VALUES *power_settings, void *reserved) = (void *)0xEF000038;
 
 /* We need a dedicated function since we need to screw with the stack pointer
  * when resetting.  The on-chip ROM will save/restore registers on the stack
  * when doing a system reset, so the stack cannot be outside of the chip.
  */
-__attribute__ ( (__noreturn__) )
-static inline void bfrom_SoftReset (void * new_stack)
+__attribute__((__noreturn__))
+static inline void bfrom_SoftReset(void *new_stack)
 {
-  while (1)
-    /*
-     * We don't declare the SP as clobbered on purpose, since
-     * it confuses the heck out of the compiler, and this function
-     * never returns
-     */
-    __asm__ __volatile__ (
-      "sp = %[stack];"
-      "jump (%[bfrom_syscontrol]);"
-      : : [bfrom_syscontrol] "p" (bfrom_SysControl),
-      "q0" (SYSCTRL_SOFTRESET),
-      "q1" (0),
-      "q2" (NULL),
-      [stack] "p" (new_stack)
-    );
+	while (1)
+		/*
+		 * We don't declare the SP as clobbered on purpose, since
+		 * it confuses the heck out of the compiler, and this function
+		 * never returns
+		 */
+		__asm__ __volatile__(
+			"sp = %[stack];"
+			"jump (%[bfrom_syscontrol]);"
+			: : [bfrom_syscontrol] "p"(bfrom_SysControl),
+				"q0"(SYSCTRL_SOFTRESET),
+				"q1"(0),
+				"q2"(NULL),
+				[stack] "p"(new_stack)
+		);
 }
 
 /* OTP Functions */
-static uint32_t (* const bfrom_OtpCommand) (uint32_t command, uint32_t value) = (void *) 0xEF000018;
-static uint32_t (* const bfrom_OtpRead) (uint32_t page, uint32_t flags, uint64_t * page_content) = (void *) 0xEF00001A;
-static uint32_t (* const bfrom_OtpWrite) (uint32_t page, uint32_t flags, uint64_t * page_content) = (void *) 0xEF00001C;
+static uint32_t (* const bfrom_OtpCommand)(uint32_t command, uint32_t value) = (void *)0xEF000018;
+static uint32_t (* const bfrom_OtpRead)(uint32_t page, uint32_t flags, uint64_t *page_content) = (void *)0xEF00001A;
+static uint32_t (* const bfrom_OtpWrite)(uint32_t page, uint32_t flags, uint64_t *page_content) = (void *)0xEF00001C;
 
 /* otp command: defines for "command" */
 #define OTP_INIT                 0x00000001

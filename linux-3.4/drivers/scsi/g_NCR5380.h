@@ -2,17 +2,17 @@
  * Generic Generic NCR5380 driver defines
  *
  * Copyright 1993, Drew Eckhardt
- *  Visionary Computing
- *  (Unix and Linux consulting and custom programming)
- *  drew@colorado.edu
+ *	Visionary Computing
+ *	(Unix and Linux consulting and custom programming)
+ *	drew@colorado.edu
  *      +1 (303) 440-4894
  *
  * NCR53C400 extensions (c) 1994,1995,1996, Kevin Lentin
  *    K.Lentin@cs.monash.edu.au
  *
- * ALPHA RELEASE 1.
+ * ALPHA RELEASE 1. 
  *
- * For more information, please consult
+ * For more information, please consult 
  *
  * NCR 5380 Family
  * SCSI Protocol Controller
@@ -43,12 +43,12 @@
 #endif
 
 #ifndef ASM
-static int generic_NCR5380_abort (Scsi_Cmnd *);
-static int generic_NCR5380_detect (struct scsi_host_template *);
-static int generic_NCR5380_release_resources (struct Scsi_Host *);
-static int generic_NCR5380_queue_command (struct Scsi_Host *, struct scsi_cmnd *);
-static int generic_NCR5380_bus_reset (Scsi_Cmnd *);
-static const char * generic_NCR5380_info (struct Scsi_Host *);
+static int generic_NCR5380_abort(Scsi_Cmnd *);
+static int generic_NCR5380_detect(struct scsi_host_template *);
+static int generic_NCR5380_release_resources(struct Scsi_Host *);
+static int generic_NCR5380_queue_command(struct Scsi_Host *, struct scsi_cmnd *);
+static int generic_NCR5380_bus_reset(Scsi_Cmnd *);
+static const char* generic_NCR5380_info(struct Scsi_Host *);
 
 #ifndef CMD_PER_LUN
 #define CMD_PER_LUN 2
@@ -82,15 +82,15 @@ static const char * generic_NCR5380_info (struct Scsi_Host *);
 #define NCR5380_write(reg, value) (outb((value), (NCR5380_map_name + (reg))))
 
 #define NCR5380_implementation_fields \
-  NCR5380_map_type NCR5380_map_name
+    NCR5380_map_type NCR5380_map_name
 
 #define NCR5380_local_declare() \
-  register NCR5380_implementation_fields
+    register NCR5380_implementation_fields
 
 #define NCR5380_setup(instance) \
-  NCR5380_map_name = (NCR5380_map_type)((instance)->NCR5380_instance_name)
+    NCR5380_map_name = (NCR5380_map_type)((instance)->NCR5380_instance_name)
 
-#else
+#else 
 /* therefore SCSI_G_NCR5380_MEM */
 
 #define NCR5380_map_config memory
@@ -107,14 +107,14 @@ static const char * generic_NCR5380_info (struct Scsi_Host *);
 #define NCR5380_write(reg, value) writeb(value, iomem + NCR53C400_mem_base + (reg))
 
 #define NCR5380_implementation_fields \
-  NCR5380_map_type NCR5380_map_name; \
-  void __iomem *iomem;
+    NCR5380_map_type NCR5380_map_name; \
+    void __iomem *iomem;
 
 #define NCR5380_local_declare() \
-  register void __iomem *iomem
+    register void __iomem *iomem
 
 #define NCR5380_setup(instance) \
-  iomem = (((struct NCR5380_hostdata *)(instance)->hostdata)->iomem)
+    iomem = (((struct NCR5380_hostdata *)(instance)->hostdata)->iomem)
 
 #endif
 
@@ -126,10 +126,10 @@ static const char * generic_NCR5380_info (struct Scsi_Host *);
 #define NCR5380_pwrite generic_NCR5380_pwrite
 #define NCR5380_proc_info notyet_generic_proc_info
 
-#define BOARD_NCR5380 0
-#define BOARD_NCR53C400 1
+#define BOARD_NCR5380	0
+#define BOARD_NCR53C400	1
 #define BOARD_NCR53C400A 2
-#define BOARD_DTC3181E  3
+#define BOARD_DTC3181E	3
 
 #endif /* else def HOSTS_C */
 #endif /* ndef ASM */

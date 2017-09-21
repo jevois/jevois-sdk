@@ -27,61 +27,61 @@
  * Returns 0 if successful, -EACCES if access is denied based on the
  * permissions bits or the LSM check.
  */
-int key_task_permission (const key_ref_t key_ref, const struct cred * cred,
-                         key_perm_t perm)
+int key_task_permission(const key_ref_t key_ref, const struct cred *cred,
+			key_perm_t perm)
 {
-  struct key * key;
-  key_perm_t kperm;
-  int ret;
-  
-  key = key_ref_to_ptr (key_ref);
-  
-  if (key->user->user_ns != cred->user->user_ns)
-  { goto use_other_perms; }
-  
-  /* use the second 8-bits of permissions for keys the caller owns */
-  if (key->uid == cred->fsuid) {
-    kperm = key->perm >> 16;
-    goto use_these_perms;
-  }
-  
-  /* use the third 8-bits of permissions for keys the caller has a group
-   * membership in common with */
-  if (key->gid != -1 && key->perm & KEY_GRP_ALL) {
-    if (key->gid == cred->fsgid) {
-      kperm = key->perm >> 8;
-      goto use_these_perms;
-    }
-    
-    ret = groups_search (cred->group_info, key->gid);
-    if (ret) {
-      kperm = key->perm >> 8;
-      goto use_these_perms;
-    }
-  }
-  
+	struct key *key;
+	key_perm_t kperm;
+	int ret;
+
+	key = key_ref_to_ptr(key_ref);
+
+	if (key->user->user_ns != cred->user->user_ns)
+		goto use_other_perms;
+
+	/* use the second 8-bits of permissions for keys the caller owns */
+	if (key->uid == cred->fsuid) {
+		kperm = key->perm >> 16;
+		goto use_these_perms;
+	}
+
+	/* use the third 8-bits of permissions for keys the caller has a group
+	 * membership in common with */
+	if (key->gid != -1 && key->perm & KEY_GRP_ALL) {
+		if (key->gid == cred->fsgid) {
+			kperm = key->perm >> 8;
+			goto use_these_perms;
+		}
+
+		ret = groups_search(cred->group_info, key->gid);
+		if (ret) {
+			kperm = key->perm >> 8;
+			goto use_these_perms;
+		}
+	}
+
 use_other_perms:
 
-  /* otherwise use the least-significant 8-bits */
-  kperm = key->perm;
-  
+	/* otherwise use the least-significant 8-bits */
+	kperm = key->perm;
+
 use_these_perms:
 
-  /* use the top 8-bits of permissions for keys the caller possesses
-   * - possessor permissions are additive with other permissions
-   */
-  if (is_key_possessed (key_ref) )
-  { kperm |= key->perm >> 24; }
-  
-  kperm = kperm & perm & KEY_ALL;
-  
-  if (kperm != perm)
-  { return -EACCES; }
-  
-  /* let LSM be the final arbiter */
-  return security_key_permission (key_ref, cred, perm);
+	/* use the top 8-bits of permissions for keys the caller possesses
+	 * - possessor permissions are additive with other permissions
+	 */
+	if (is_key_possessed(key_ref))
+		kperm |= key->perm >> 24;
+
+	kperm = kperm & perm & KEY_ALL;
+
+	if (kperm != perm)
+		return -EACCES;
+
+	/* let LSM be the final arbiter */
+	return security_key_permission(key_ref, cred, perm);
 }
-EXPORT_SYMBOL (key_task_permission);
+EXPORT_SYMBOL(key_task_permission);
 
 /**
  * key_validate - Validate a key.
@@ -91,28 +91,28 @@ EXPORT_SYMBOL (key_task_permission);
  * the key's type has been removed or if the key has been revoked or
  * -EKEYEXPIRED if the key has expired.
  */
-int key_validate (struct key * key)
+int key_validate(struct key *key)
 {
-  struct timespec now;
-  int ret = 0;
-  
-  if (key) {
-    /* check it's still accessible */
-    ret = -EKEYREVOKED;
-    if (test_bit (KEY_FLAG_REVOKED, &key->flags) ||
-        test_bit (KEY_FLAG_DEAD, &key->flags) )
-    { goto error; }
-    
-    /* check it hasn't expired */
-    ret = 0;
-    if (key->expiry) {
-      now = current_kernel_time();
-      if (now.tv_sec >= key->expiry)
-      { ret = -EKEYEXPIRED; }
-    }
-  }
-  
+	struct timespec now;
+	int ret = 0;
+
+	if (key) {
+		/* check it's still accessible */
+		ret = -EKEYREVOKED;
+		if (test_bit(KEY_FLAG_REVOKED, &key->flags) ||
+		    test_bit(KEY_FLAG_DEAD, &key->flags))
+			goto error;
+
+		/* check it hasn't expired */
+		ret = 0;
+		if (key->expiry) {
+			now = current_kernel_time();
+			if (now.tv_sec >= key->expiry)
+				ret = -EKEYEXPIRED;
+		}
+	}
+
 error:
-  return ret;
+	return ret;
 }
-EXPORT_SYMBOL (key_validate);
+EXPORT_SYMBOL(key_validate);

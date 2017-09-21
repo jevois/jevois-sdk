@@ -34,21 +34,21 @@
  */
 #define NR_PRIORITY_IRQS 16
 
-#define NR_IRQS_LEGACY  NR_PRIORITY_IRQS
+#define NR_IRQS_LEGACY	NR_PRIORITY_IRQS
 
 /* Total number of virq in the platform */
-#define NR_IRQS   256
+#define NR_IRQS		256
 
 /* This number is used when no interrupt has been assigned */
-#define NO_IRQ    0
+#define NO_IRQ		0
 
-extern void __init init_pic_c64xplus (void);
+extern void __init init_pic_c64xplus(void);
 
-extern void init_IRQ (void);
+extern void init_IRQ(void);
 
 struct pt_regs;
 
-extern asmlinkage void c6x_do_IRQ (unsigned int prio, struct pt_regs * regs);
+extern asmlinkage void c6x_do_IRQ(unsigned int prio, struct pt_regs *regs);
 
 extern unsigned long irq_err_count;
 

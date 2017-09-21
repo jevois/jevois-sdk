@@ -37,10 +37,10 @@
  */
 
 
-DEFINE_SPINLOCK (dma_spin_lock);
+DEFINE_SPINLOCK(dma_spin_lock);
 
 /*
- *  If our port doesn't define this it has no PC like DMA
+ *	If our port doesn't define this it has no PC like DMA
  */
 
 #ifdef MAX_DMA_CHANNELS
@@ -52,12 +52,12 @@ DEFINE_SPINLOCK (dma_spin_lock);
  */
 
 struct dma_chan {
-  int  lock;
-  const char * device_id;
+	int  lock;
+	const char *device_id;
 };
 
 static struct dma_chan dma_chan_busy[MAX_DMA_CHANNELS] = {
-  [4] = { 1, "cascade" },
+	[4] = { 1, "cascade" },
 };
 
 
@@ -66,46 +66,46 @@ static struct dma_chan dma_chan_busy[MAX_DMA_CHANNELS] = {
  * @dmanr: DMA channel number
  * @device_id: reserving device ID string, used in /proc/dma
  */
-int request_dma (unsigned int dmanr, const char * device_id)
+int request_dma(unsigned int dmanr, const char * device_id)
 {
-  if (dmanr >= MAX_DMA_CHANNELS)
-  { return -EINVAL; }
-  
-  if (xchg (&dma_chan_busy[dmanr].lock, 1) != 0)
-  { return -EBUSY; }
-  
-  dma_chan_busy[dmanr].device_id = device_id;
-  
-  /* old flag was 0, now contains 1 to indicate busy */
-  return 0;
+	if (dmanr >= MAX_DMA_CHANNELS)
+		return -EINVAL;
+
+	if (xchg(&dma_chan_busy[dmanr].lock, 1) != 0)
+		return -EBUSY;
+
+	dma_chan_busy[dmanr].device_id = device_id;
+
+	/* old flag was 0, now contains 1 to indicate busy */
+	return 0;
 } /* request_dma */
 
 /**
  * free_dma - free a reserved system DMA channel
  * @dmanr: DMA channel number
  */
-void free_dma (unsigned int dmanr)
+void free_dma(unsigned int dmanr)
 {
-  if (dmanr >= MAX_DMA_CHANNELS) {
-    printk (KERN_WARNING "Trying to free DMA%d\n", dmanr);
-    return;
-  }
-  
-  if (xchg (&dma_chan_busy[dmanr].lock, 0) == 0) {
-    printk (KERN_WARNING "Trying to free free DMA%d\n", dmanr);
-    return;
-  }
-  
+	if (dmanr >= MAX_DMA_CHANNELS) {
+		printk(KERN_WARNING "Trying to free DMA%d\n", dmanr);
+		return;
+	}
+
+	if (xchg(&dma_chan_busy[dmanr].lock, 0) == 0) {
+		printk(KERN_WARNING "Trying to free free DMA%d\n", dmanr);
+		return;
+	}
+
 } /* free_dma */
 
 #else
 
-int request_dma (unsigned int dmanr, const char * device_id)
+int request_dma(unsigned int dmanr, const char *device_id)
 {
-  return -EINVAL;
+	return -EINVAL;
 }
 
-void free_dma (unsigned int dmanr)
+void free_dma(unsigned int dmanr)
 {
 }
 
@@ -114,47 +114,47 @@ void free_dma (unsigned int dmanr)
 #ifdef CONFIG_PROC_FS
 
 #ifdef MAX_DMA_CHANNELS
-static int proc_dma_show (struct seq_file * m, void * v)
+static int proc_dma_show(struct seq_file *m, void *v)
 {
-  int i;
-  
-  for (i = 0 ; i < MAX_DMA_CHANNELS ; i++) {
-    if (dma_chan_busy[i].lock) {
-      seq_printf (m, "%2d: %s\n", i,
-                  dma_chan_busy[i].device_id);
-    }
-  }
-  return 0;
+	int i;
+
+	for (i = 0 ; i < MAX_DMA_CHANNELS ; i++) {
+		if (dma_chan_busy[i].lock) {
+			seq_printf(m, "%2d: %s\n", i,
+				   dma_chan_busy[i].device_id);
+		}
+	}
+	return 0;
 }
 #else
-static int proc_dma_show (struct seq_file * m, void * v)
+static int proc_dma_show(struct seq_file *m, void *v)
 {
-  seq_puts (m, "No DMA\n");
-  return 0;
+	seq_puts(m, "No DMA\n");
+	return 0;
 }
 #endif /* MAX_DMA_CHANNELS */
 
-static int proc_dma_open (struct inode * inode, struct file * file)
+static int proc_dma_open(struct inode *inode, struct file *file)
 {
-  return single_open (file, proc_dma_show, NULL);
+	return single_open(file, proc_dma_show, NULL);
 }
 
 static const struct file_operations proc_dma_operations = {
-  .open   = proc_dma_open,
-  .read   = seq_read,
-  .llseek   = seq_lseek,
-  .release  = single_release,
+	.open		= proc_dma_open,
+	.read		= seq_read,
+	.llseek		= seq_lseek,
+	.release	= single_release,
 };
 
-static int __init proc_dma_init (void)
+static int __init proc_dma_init(void)
 {
-  proc_create ("dma", 0, NULL, &proc_dma_operations);
-  return 0;
+	proc_create("dma", 0, NULL, &proc_dma_operations);
+	return 0;
 }
 
-__initcall (proc_dma_init);
+__initcall(proc_dma_init);
 #endif
 
-EXPORT_SYMBOL (request_dma);
-EXPORT_SYMBOL (free_dma);
-EXPORT_SYMBOL (dma_spin_lock);
+EXPORT_SYMBOL(request_dma);
+EXPORT_SYMBOL(free_dma);
+EXPORT_SYMBOL(dma_spin_lock);

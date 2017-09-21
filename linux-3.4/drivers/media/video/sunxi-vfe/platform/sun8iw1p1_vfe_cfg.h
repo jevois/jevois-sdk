@@ -1,17 +1,17 @@
 
-/*
+/* 
  ***************************************************************************************
- *
+ * 
  * sun8iw1p1_vfe_cfg.h
- *
+ * 
  * Hawkview ISP - sun8iw1p1_vfe_cfg.h module
- *
+ * 
  * Copyright (c) 2014 by Allwinnertech Co., Ltd.  http://www.allwinnertech.com
- *
- * Version      Author         Date       Description
- *
- *   2.0      Yang Feng     2014/07/24        Second Version
- *
+ * 
+ * Version		  Author         Date		    Description
+ * 
+ *   2.0		  Yang Feng   	2014/07/24	      Second Version
+ * 
  ****************************************************************************************
  */
 
@@ -20,27 +20,27 @@
 #define _SUN8IW1P1_VFE_CFG_H_
 
 
-#define VFE_ISP_REGULATOR       ""
-#define VFE_CSI_REGULATOR       ""
+#define VFE_ISP_REGULATOR				""
+#define VFE_CSI_REGULATOR				""
 
-#define CSI0_REGS_BASE                  0x01cb0000
-#define CSI1_REGS_BASE                  0x01cb3000
-#define ISP_REGS_BASE                   0x01cb8000
-#define GPIO_REGS_VBASE         0xf1c20800
-#define CPU_DRAM_PADDR_ORG      0x40000000
-#define HW_DMA_OFFSET         0x00000000
-#define MAX_VFE_INPUT             2    
-#define VFE_CORE_CLK            CSI0_S_CLK
-#define VFE_CORE_CLK_SRC        PLL10_CLK
-#define VFE_MASTER_CLK0         CSI0_M_CLK
-#define VFE_MASTER_CLK1         CSI1_M_CLK
-#define VFE_MASTER_CLK_24M_SRC    HOSC_CLK
-#define VFE_MASTER_CLK_PLL_SRC    PLL7_CLK
-#define VFE_MIPI_DPHY_CLK       MIPICSI_CLK
-#define VFE_MIPI_DPHY_CLK_SRC     PLL7_CLK
-#define VFE_MIPI_CSI_CLK          VFE_CLK_NOT_EXIST
-#define VFE_MIPI_CSI_CLK_SRC      VFE_CLK_NOT_EXIST
-#define VFE_VPU_CLK           VFE_CLK_NOT_EXIST
+#define CSI0_REGS_BASE          				0x01cb0000
+#define CSI1_REGS_BASE          				0x01cb3000
+#define ISP_REGS_BASE           				0x01cb8000
+#define GPIO_REGS_VBASE					0xf1c20800
+#define CPU_DRAM_PADDR_ORG 			0x40000000
+#define HW_DMA_OFFSET					0x00000000
+#define MAX_VFE_INPUT   					2    
+#define VFE_CORE_CLK						CSI0_S_CLK
+#define VFE_CORE_CLK_SRC				PLL10_CLK
+#define VFE_MASTER_CLK0					CSI0_M_CLK
+#define VFE_MASTER_CLK1					CSI1_M_CLK
+#define VFE_MASTER_CLK_24M_SRC		HOSC_CLK
+#define VFE_MASTER_CLK_PLL_SRC		PLL7_CLK
+#define VFE_MIPI_DPHY_CLK				MIPICSI_CLK
+#define VFE_MIPI_DPHY_CLK_SRC			PLL7_CLK
+#define VFE_MIPI_CSI_CLK					VFE_CLK_NOT_EXIST
+#define VFE_MIPI_CSI_CLK_SRC			VFE_CLK_NOT_EXIST
+#define VFE_VPU_CLK						VFE_CLK_NOT_EXIST
 
 #define CORE_CLK_RATE_FOR_2M (108*1000*1000)
 #define CORE_CLK_RATE_FOR_3M (216*1000*1000)

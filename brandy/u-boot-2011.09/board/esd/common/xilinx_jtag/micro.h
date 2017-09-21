@@ -59,6 +59,6 @@
  * Parameters:   none.
  * Returns:      int - For error codes see above.
  *****************************************************************************/
-int xsvfExecute (void);
+int xsvfExecute(void);
 
 #endif  /* XSVF_MICRO_H */

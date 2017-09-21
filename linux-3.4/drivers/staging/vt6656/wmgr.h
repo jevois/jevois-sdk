@@ -82,89 +82,89 @@
 /*---------------------  Export Types  ------------------------------*/
 #define timer_expire(timer, next_tick) mod_timer(&timer, RUN_AT(next_tick))
 
-typedef void (*TimerFunction) (unsigned long);
+typedef void (*TimerFunction)(unsigned long);
 
 
 
 typedef unsigned char NDIS_802_11_MAC_ADDRESS[ETH_ALEN];
 typedef struct _NDIS_802_11_AI_REQFI
 {
-  unsigned short Capabilities;
-  unsigned short ListenInterval;
-  NDIS_802_11_MAC_ADDRESS  CurrentAPAddress;
+    unsigned short Capabilities;
+    unsigned short ListenInterval;
+    NDIS_802_11_MAC_ADDRESS  CurrentAPAddress;
 } NDIS_802_11_AI_REQFI, *PNDIS_802_11_AI_REQFI;
 
 typedef struct _NDIS_802_11_AI_RESFI
 {
-  unsigned short Capabilities;
-  unsigned short StatusCode;
-  unsigned short AssociationId;
+    unsigned short Capabilities;
+    unsigned short StatusCode;
+    unsigned short AssociationId;
 } NDIS_802_11_AI_RESFI, *PNDIS_802_11_AI_RESFI;
 
 typedef struct _NDIS_802_11_ASSOCIATION_INFORMATION
 {
-  unsigned long                   Length;
-  unsigned short                  AvailableRequestFixedIEs;
-  NDIS_802_11_AI_REQFI    RequestFixedIEs;
-  unsigned long                   RequestIELength;
-  unsigned long                   OffsetRequestIEs;
-  unsigned short                  AvailableResponseFixedIEs;
-  NDIS_802_11_AI_RESFI    ResponseFixedIEs;
-  unsigned long                   ResponseIELength;
-  unsigned long                   OffsetResponseIEs;
+    unsigned long                   Length;
+    unsigned short                  AvailableRequestFixedIEs;
+    NDIS_802_11_AI_REQFI    RequestFixedIEs;
+    unsigned long                   RequestIELength;
+    unsigned long                   OffsetRequestIEs;
+    unsigned short                  AvailableResponseFixedIEs;
+    NDIS_802_11_AI_RESFI    ResponseFixedIEs;
+    unsigned long                   ResponseIELength;
+    unsigned long                   OffsetResponseIEs;
 } NDIS_802_11_ASSOCIATION_INFORMATION, *PNDIS_802_11_ASSOCIATION_INFORMATION;
 
 
 
 typedef struct tagSAssocInfo {
-  NDIS_802_11_ASSOCIATION_INFORMATION     AssocInfo;
-  BYTE                                    abyIEs[WLAN_BEACON_FR_MAXLEN + WLAN_BEACON_FR_MAXLEN];
-  unsigned long                                   RequestIELength;
-  BYTE                                    abyReqIEs[WLAN_BEACON_FR_MAXLEN];
+    NDIS_802_11_ASSOCIATION_INFORMATION     AssocInfo;
+    BYTE                                    abyIEs[WLAN_BEACON_FR_MAXLEN+WLAN_BEACON_FR_MAXLEN];
+    unsigned long                                   RequestIELength;
+    BYTE                                    abyReqIEs[WLAN_BEACON_FR_MAXLEN];
 } SAssocInfo, *PSAssocInfo;
 
 
 
 typedef enum tagWMAC_AUTHENTICATION_MODE {
 
-  WMAC_AUTH_OPEN,
-  WMAC_AUTH_SHAREKEY,
-  WMAC_AUTH_AUTO,
-  WMAC_AUTH_WPA,
-  WMAC_AUTH_WPAPSK,
-  WMAC_AUTH_WPANONE,
-  WMAC_AUTH_WPA2,
-  WMAC_AUTH_WPA2PSK,
-  WMAC_AUTH_MAX      
+    WMAC_AUTH_OPEN,
+    WMAC_AUTH_SHAREKEY,
+    WMAC_AUTH_AUTO,
+    WMAC_AUTH_WPA,
+    WMAC_AUTH_WPAPSK,
+    WMAC_AUTH_WPANONE,
+    WMAC_AUTH_WPA2,
+    WMAC_AUTH_WPA2PSK,
+    WMAC_AUTH_MAX      
 } WMAC_AUTHENTICATION_MODE, *PWMAC_AUTHENTICATION_MODE;
 
 
 
 
 typedef enum tagWMAC_CONFIG_MODE {
-  WMAC_CONFIG_ESS_STA,
-  WMAC_CONFIG_IBSS_STA,
-  WMAC_CONFIG_AUTO,
-  WMAC_CONFIG_AP
-  
+    WMAC_CONFIG_ESS_STA,
+    WMAC_CONFIG_IBSS_STA,
+    WMAC_CONFIG_AUTO,
+    WMAC_CONFIG_AP
+
 } WMAC_CONFIG_MODE, *PWMAC_CONFIG_MODE;
 
 
 typedef enum tagWMAC_SCAN_TYPE {
 
-  WMAC_SCAN_ACTIVE,
-  WMAC_SCAN_PASSIVE,
-  WMAC_SCAN_HYBRID
-  
+    WMAC_SCAN_ACTIVE,
+    WMAC_SCAN_PASSIVE,
+    WMAC_SCAN_HYBRID
+
 } WMAC_SCAN_TYPE, *PWMAC_SCAN_TYPE;
 
 
 typedef enum tagWMAC_SCAN_STATE {
 
-  WMAC_NO_SCANNING,
-  WMAC_IS_SCANNING,
-  WMAC_IS_PROBEPENDING
-  
+    WMAC_NO_SCANNING,
+    WMAC_IS_SCANNING,
+    WMAC_IS_PROBEPENDING
+
 } WMAC_SCAN_STATE, *PWMAC_SCAN_STATE;
 
 
@@ -172,218 +172,218 @@ typedef enum tagWMAC_SCAN_STATE {
 
 typedef enum tagWMAC_BSS_STATE {
 
-  WMAC_STATE_IDLE,
-  WMAC_STATE_STARTED,
-  WMAC_STATE_JOINTED,
-  WMAC_STATE_AUTHPENDING,
-  WMAC_STATE_AUTH,
-  WMAC_STATE_ASSOCPENDING,
-  WMAC_STATE_ASSOC
-  
+    WMAC_STATE_IDLE,
+    WMAC_STATE_STARTED,
+    WMAC_STATE_JOINTED,
+    WMAC_STATE_AUTHPENDING,
+    WMAC_STATE_AUTH,
+    WMAC_STATE_ASSOCPENDING,
+    WMAC_STATE_ASSOC
+
 } WMAC_BSS_STATE, *PWMAC_BSS_STATE;
 
 typedef enum tagWMAC_CURRENT_MODE {
 
-  WMAC_MODE_STANDBY,
-  WMAC_MODE_ESS_STA,
-  WMAC_MODE_IBSS_STA,
-  WMAC_MODE_ESS_AP
-  
+    WMAC_MODE_STANDBY,
+    WMAC_MODE_ESS_STA,
+    WMAC_MODE_IBSS_STA,
+    WMAC_MODE_ESS_AP
+
 } WMAC_CURRENT_MODE, *PWMAC_CURRENT_MODE;
 
 
 typedef enum tagWMAC_POWER_MODE {
 
-  WMAC_POWER_CAM,
-  WMAC_POWER_FAST,
-  WMAC_POWER_MAX
-  
+    WMAC_POWER_CAM,
+    WMAC_POWER_FAST,
+    WMAC_POWER_MAX
+
 } WMAC_POWER_MODE, *PWMAC_POWER_MODE;
 
 
 
 typedef struct tagSTxMgmtPacket {
 
-  PUWLAN_80211HDR     p80211Header;
-  unsigned int                cbMPDULen;
-  unsigned int                cbPayloadLen;
-  
+    PUWLAN_80211HDR     p80211Header;
+    unsigned int                cbMPDULen;
+    unsigned int                cbPayloadLen;
+
 } STxMgmtPacket, *PSTxMgmtPacket;
 
 
 typedef struct tagSRxMgmtPacket {
 
-  PUWLAN_80211HDR     p80211Header;
-  QWORD               qwLocalTSF;
-  unsigned int                cbMPDULen;
-  unsigned int                cbPayloadLen;
-  unsigned int                uRSSI;
-  BYTE                bySQ;
-  BYTE                byRxRate;
-  BYTE                byRxChannel;
-  
+    PUWLAN_80211HDR     p80211Header;
+    QWORD               qwLocalTSF;
+    unsigned int                cbMPDULen;
+    unsigned int                cbPayloadLen;
+    unsigned int                uRSSI;
+    BYTE                bySQ;
+    BYTE                byRxRate;
+    BYTE                byRxChannel;
+
 } SRxMgmtPacket, *PSRxMgmtPacket;
 
 
 
 typedef struct tagSMgmtObject
 {
-  void * pAdapter;
-  BYTE                    abyMACAddr[WLAN_ADDR_LEN];
-  
-  WMAC_CONFIG_MODE        eConfigMode;
-  
-  CARD_PHY_TYPE           eCurrentPHYMode;
-  
-  
-  WMAC_CURRENT_MODE       eCurrMode;  
-  WMAC_BSS_STATE          eCurrState; 
-  WMAC_BSS_STATE          eLastState; 
-  
-  PKnownBSS               pCurrBSS;
-  BYTE                    byCSSGK;
-  BYTE                    byCSSPK;
-  
-  BOOL                    bCurrBSSIDFilterOn;
-  
-  unsigned int                    uCurrChannel;
-  BYTE                    abyCurrSuppRates[WLAN_IEHDR_LEN + WLAN_RATES_MAXLEN + 1];
-  BYTE                    abyCurrExtSuppRates[WLAN_IEHDR_LEN + WLAN_RATES_MAXLEN + 1];
-  BYTE                    abyCurrSSID[WLAN_IEHDR_LEN + WLAN_SSID_MAXLEN + 1];
-  BYTE                    abyCurrBSSID[WLAN_BSSID_LEN];
-  WORD                    wCurrCapInfo;
-  WORD                    wCurrAID;
-  unsigned int                    uRSSITrigger;
-  WORD                    wCurrATIMWindow;
-  WORD                    wCurrBeaconPeriod;
-  BOOL                    bIsDS;
-  BYTE                    byERPContext;
-  
-  CMD_STATE               eCommandState;
-  unsigned int                    uScanChannel;
-  
-  BYTE                    abyDesireSSID[WLAN_IEHDR_LEN + WLAN_SSID_MAXLEN + 1];
-  BYTE                    abyDesireBSSID[WLAN_BSSID_LEN];
-  
-  BYTE                    abyAdHocSSID[WLAN_IEHDR_LEN + WLAN_SSID_MAXLEN + 1];
-  
-  WORD                    wIBSSBeaconPeriod;
-  WORD                    wIBSSATIMWindow;
-  unsigned int                    uIBSSChannel;
-  BYTE                    abyIBSSSuppRates[WLAN_IEHDR_LEN + WLAN_RATES_MAXLEN + 1];
-  BYTE                    byAPBBType;
-  BYTE                    abyWPAIE[MAX_WPA_IE_LEN];
-  WORD                    wWPAIELen;
-  
-  unsigned int                    uAssocCount;
-  BOOL                    bMoreData;
-  
-  WMAC_SCAN_STATE         eScanState;
-  WMAC_SCAN_TYPE          eScanType;
-  unsigned int                    uScanStartCh;
-  unsigned int                    uScanEndCh;
-  WORD                    wScanSteps;
-  unsigned int                    uScanBSSType;
-  BYTE                    abyScanSSID[WLAN_IEHDR_LEN + WLAN_SSID_MAXLEN + 1];
-  BYTE                    abyScanBSSID[WLAN_BSSID_LEN];
-  
-  WMAC_AUTHENTICATION_MODE eAuthenMode;
-  BOOL                    bShareKeyAlgorithm;
-  BYTE                    abyChallenge[WLAN_CHALLENGE_LEN];
-  BOOL                    bPrivacyInvoked;
-  
-  BOOL                    bInTIM;
-  BOOL                    bMulticastTIM;
-  BYTE                    byDTIMCount;
-  BYTE                    byDTIMPeriod;
-  
-  WMAC_POWER_MODE         ePSMode;
-  WORD                    wListenInterval;
-  WORD                    wCountToWakeUp;
-  BOOL                    bInTIMWake;
-  PBYTE                   pbyPSPacketPool;
-  BYTE                    byPSPacketPool[sizeof (STxMgmtPacket) + WLAN_NULLDATA_FR_MAXLEN];
-  BOOL                    bRxBeaconInTBTTWake;
-  BYTE                    abyPSTxMap[MAX_NODE_NUM + 1];
-  
-  unsigned int                    uCmdBusy;
-  unsigned int                    uCmdHostAPBusy;
-  
-  PBYTE                   pbyMgmtPacketPool;
-  BYTE                    byMgmtPacketPool[sizeof (STxMgmtPacket) + WLAN_A3FR_MAXLEN];
-  
-  
-  struct timer_list     sTimerSecondCallback;
-  
-  SRxMgmtPacket           sRxPacket;
-  
-  KnownBSS                sBSSList[MAX_BSS_NUM];
-  /* link list of same bss's */
-  KnownBSS        pSameBSS[6] ;
-  BOOL          Cisco_cckm ;
-  BYTE          Roam_dbm;
-  
-  KnownNodeDB             sNodeDBTable[MAX_NODE_NUM + 1];
-  
-  
-  
-  SPMKIDCache             gsPMKIDCache;
-  BOOL                    bRoaming;
-  
-  
-  
-  
-  SAssocInfo              sAssocInfo;
-  
-  
-  BOOL                    b11hEnable;
-  BOOL                    bSwitchChannel;
-  BYTE                    byNewChannel;
-  PWLAN_IE_MEASURE_REP    pCurrMeasureEIDRep;
-  unsigned int                    uLengthOfRepEIDs;
-  BYTE                    abyCurrentMSRReq[sizeof (STxMgmtPacket) + WLAN_A3FR_MAXLEN];
-  BYTE                    abyCurrentMSRRep[sizeof (STxMgmtPacket) + WLAN_A3FR_MAXLEN];
-  BYTE                    abyIECountry[WLAN_A3FR_MAXLEN];
-  BYTE                    abyIBSSDFSOwner[6];
-  BYTE                    byIBSSDFSRecovery;
-  
-  struct sk_buff  skb;
-  
+	void *pAdapter;
+    BYTE                    abyMACAddr[WLAN_ADDR_LEN];
+
+    WMAC_CONFIG_MODE        eConfigMode;
+
+    CARD_PHY_TYPE           eCurrentPHYMode;
+
+
+    WMAC_CURRENT_MODE       eCurrMode;  
+    WMAC_BSS_STATE          eCurrState; 
+    WMAC_BSS_STATE          eLastState; 
+
+    PKnownBSS               pCurrBSS;
+    BYTE                    byCSSGK;
+    BYTE                    byCSSPK;
+
+    BOOL                    bCurrBSSIDFilterOn;
+
+    unsigned int                    uCurrChannel;
+    BYTE                    abyCurrSuppRates[WLAN_IEHDR_LEN + WLAN_RATES_MAXLEN + 1];
+    BYTE                    abyCurrExtSuppRates[WLAN_IEHDR_LEN + WLAN_RATES_MAXLEN + 1];
+    BYTE                    abyCurrSSID[WLAN_IEHDR_LEN + WLAN_SSID_MAXLEN + 1];
+    BYTE                    abyCurrBSSID[WLAN_BSSID_LEN];
+    WORD                    wCurrCapInfo;
+    WORD                    wCurrAID;
+    unsigned int                    uRSSITrigger;
+    WORD                    wCurrATIMWindow;
+    WORD                    wCurrBeaconPeriod;
+    BOOL                    bIsDS;
+    BYTE                    byERPContext;
+
+    CMD_STATE               eCommandState;
+    unsigned int                    uScanChannel;
+
+    BYTE                    abyDesireSSID[WLAN_IEHDR_LEN + WLAN_SSID_MAXLEN + 1];
+    BYTE                    abyDesireBSSID[WLAN_BSSID_LEN];
+
+     BYTE                    abyAdHocSSID[WLAN_IEHDR_LEN + WLAN_SSID_MAXLEN + 1];
+
+    WORD                    wIBSSBeaconPeriod;
+    WORD                    wIBSSATIMWindow;
+    unsigned int                    uIBSSChannel;
+    BYTE                    abyIBSSSuppRates[WLAN_IEHDR_LEN + WLAN_RATES_MAXLEN + 1];
+    BYTE                    byAPBBType;
+    BYTE                    abyWPAIE[MAX_WPA_IE_LEN];
+    WORD                    wWPAIELen;
+
+    unsigned int                    uAssocCount;
+    BOOL                    bMoreData;
+
+    WMAC_SCAN_STATE         eScanState;
+    WMAC_SCAN_TYPE          eScanType;
+    unsigned int                    uScanStartCh;
+    unsigned int                    uScanEndCh;
+    WORD                    wScanSteps;
+    unsigned int                    uScanBSSType;
+    BYTE                    abyScanSSID[WLAN_IEHDR_LEN + WLAN_SSID_MAXLEN + 1];
+    BYTE                    abyScanBSSID[WLAN_BSSID_LEN];
+
+    WMAC_AUTHENTICATION_MODE eAuthenMode;
+    BOOL                    bShareKeyAlgorithm;
+    BYTE                    abyChallenge[WLAN_CHALLENGE_LEN];
+    BOOL                    bPrivacyInvoked;
+
+    BOOL                    bInTIM;
+    BOOL                    bMulticastTIM;
+    BYTE                    byDTIMCount;
+    BYTE                    byDTIMPeriod;
+
+    WMAC_POWER_MODE         ePSMode;
+    WORD                    wListenInterval;
+    WORD                    wCountToWakeUp;
+    BOOL                    bInTIMWake;
+    PBYTE                   pbyPSPacketPool;
+    BYTE                    byPSPacketPool[sizeof(STxMgmtPacket) + WLAN_NULLDATA_FR_MAXLEN];
+    BOOL                    bRxBeaconInTBTTWake;
+    BYTE                    abyPSTxMap[MAX_NODE_NUM + 1];
+
+    unsigned int                    uCmdBusy;
+    unsigned int                    uCmdHostAPBusy;
+
+    PBYTE                   pbyMgmtPacketPool;
+    BYTE                    byMgmtPacketPool[sizeof(STxMgmtPacket) + WLAN_A3FR_MAXLEN];
+
+
+	struct timer_list	    sTimerSecondCallback;
+
+    SRxMgmtPacket           sRxPacket;
+
+    KnownBSS                sBSSList[MAX_BSS_NUM];
+	/* link list of same bss's */
+    KnownBSS				pSameBSS[6] ;
+    BOOL          Cisco_cckm ;
+    BYTE          Roam_dbm;
+
+    KnownNodeDB             sNodeDBTable[MAX_NODE_NUM + 1];
+
+
+
+    SPMKIDCache             gsPMKIDCache;
+    BOOL                    bRoaming;
+
+
+
+
+    SAssocInfo              sAssocInfo;
+
+
+    BOOL                    b11hEnable;
+    BOOL                    bSwitchChannel;
+    BYTE                    byNewChannel;
+    PWLAN_IE_MEASURE_REP    pCurrMeasureEIDRep;
+    unsigned int                    uLengthOfRepEIDs;
+    BYTE                    abyCurrentMSRReq[sizeof(STxMgmtPacket) + WLAN_A3FR_MAXLEN];
+    BYTE                    abyCurrentMSRRep[sizeof(STxMgmtPacket) + WLAN_A3FR_MAXLEN];
+    BYTE                    abyIECountry[WLAN_A3FR_MAXLEN];
+    BYTE                    abyIBSSDFSOwner[6];
+    BYTE                    byIBSSDFSRecovery;
+
+    struct sk_buff  skb;
+
 } SMgmtObject, *PSMgmtObject;
 
 /*---------------------  Export Macros ------------------------------*/
 
 /*---------------------  Export Functions  --------------------------*/
 
-void vMgrObjectInit (void * hDeviceContext);
+void vMgrObjectInit(void *hDeviceContext);
 
-void vMgrAssocBeginSta (void * hDeviceContext,
-                        PSMgmtObject pMgmt,
-                        PCMD_STATUS pStatus);
+void vMgrAssocBeginSta(void *hDeviceContext,
+		       PSMgmtObject pMgmt,
+		       PCMD_STATUS pStatus);
 
-void vMgrReAssocBeginSta (void * hDeviceContext,
-                          PSMgmtObject pMgmt,
-                          PCMD_STATUS pStatus);
+void vMgrReAssocBeginSta(void *hDeviceContext,
+			 PSMgmtObject pMgmt,
+			 PCMD_STATUS pStatus);
 
-void vMgrDisassocBeginSta (void * hDeviceContext,
-                           PSMgmtObject pMgmt,
-                           PBYTE abyDestAddress,
-                           WORD wReason,
-                           PCMD_STATUS pStatus);
+void vMgrDisassocBeginSta(void *hDeviceContext,
+			  PSMgmtObject pMgmt,
+			  PBYTE abyDestAddress,
+			  WORD wReason,
+			  PCMD_STATUS pStatus);
 
-void vMgrAuthenBeginSta (void * hDeviceContext,
-                         PSMgmtObject pMgmt,
-                         PCMD_STATUS pStatus);
+void vMgrAuthenBeginSta(void *hDeviceContext,
+			PSMgmtObject pMgmt,
+			PCMD_STATUS pStatus);
 
-void vMgrCreateOwnIBSS (void * hDeviceContext,
-                        PCMD_STATUS pStatus);
+void vMgrCreateOwnIBSS(void *hDeviceContext,
+		       PCMD_STATUS pStatus);
 
-void vMgrJoinBSSBegin (void * hDeviceContext,
-                       PCMD_STATUS pStatus);
+void vMgrJoinBSSBegin(void *hDeviceContext,
+		      PCMD_STATUS pStatus);
 
-void vMgrRxManagePacket (void * hDeviceContext,
-                         PSMgmtObject pMgmt,
-                         PSRxMgmtPacket pRxPacket);
+void vMgrRxManagePacket(void *hDeviceContext,
+			PSMgmtObject pMgmt,
+			PSRxMgmtPacket pRxPacket);
 
 /*
 void
@@ -393,19 +393,19 @@ vMgrScanBegin(
     );
 */
 
-void vMgrDeAuthenBeginSta (void * hDeviceContext,
-                           PSMgmtObject pMgmt,
-                           PBYTE abyDestAddress,
-                           WORD wReason,
-                           PCMD_STATUS pStatus);
+void vMgrDeAuthenBeginSta(void *hDeviceContext,
+			  PSMgmtObject pMgmt,
+			  PBYTE abyDestAddress,
+			  WORD wReason,
+			  PCMD_STATUS pStatus);
 
-BOOL bMgrPrepareBeaconToSend (void * hDeviceContext,
-                              PSMgmtObject pMgmt);
+BOOL bMgrPrepareBeaconToSend(void *hDeviceContext,
+			     PSMgmtObject pMgmt);
 
-BOOL bAdd_PMKID_Candidate (void * hDeviceContext,
-                           PBYTE pbyBSSID,
-                           PSRSNCapObject psRSNCapObj);
+BOOL bAdd_PMKID_Candidate(void *hDeviceContext,
+			  PBYTE pbyBSSID,
+			  PSRSNCapObject psRSNCapObj);
 
-void vFlush_PMKID_Candidate (void * hDeviceContext);
+void vFlush_PMKID_Candidate(void *hDeviceContext);
 
 #endif /* __WMGR_H__ */

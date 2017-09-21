@@ -15,19 +15,18 @@
 #include <linux/console.h>
 
 
-void __attribute__ ( (weak) ) bust_spinlocks (int yes)
+void __attribute__((weak)) bust_spinlocks(int yes)
 {
-  if (yes) {
-    ++oops_in_progress;
-  }
-  else {
-    #ifdef CONFIG_VT
-    unblank_screen();
-    #endif
-    console_unblank();
-    if (--oops_in_progress == 0)
-    { wake_up_klogd(); }
-  }
+	if (yes) {
+		++oops_in_progress;
+	} else {
+#ifdef CONFIG_VT
+		unblank_screen();
+#endif
+		console_unblank();
+		if (--oops_in_progress == 0)
+			wake_up_klogd();
+	}
 }
 
 

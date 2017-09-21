@@ -30,7 +30,7 @@
  * you want to access.
  */
 
-#define EP7211_PHYS_BASE  (0x80000000)
+#define EP7211_PHYS_BASE	(0x80000000)
 
 /*
  * XXX miket@bluemug.com: need to introduce EP7211 registers (those not

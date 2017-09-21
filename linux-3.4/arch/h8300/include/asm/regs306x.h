@@ -2,7 +2,7 @@
 /* CPU: H8/306x                                 */
 
 #if !defined(__REGS_H8306x__)
-#define __REGS_H8306x__
+#define __REGS_H8306x__ 
 
 #if defined(__KERNEL__)
 

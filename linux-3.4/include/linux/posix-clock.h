@@ -55,48 +55,48 @@ struct posix_clock;
  * @poll:           Optional character device poll method
  */
 struct posix_clock_operations {
-  struct module * owner;
-  
-  int  (*clock_adjtime) (struct posix_clock * pc, struct timex * tx);
-  
-  int  (*clock_gettime) (struct posix_clock * pc, struct timespec * ts);
-  
-  int  (*clock_getres) (struct posix_clock * pc, struct timespec * ts);
-  
-  int  (*clock_settime) (struct posix_clock * pc,
-                         const struct timespec * ts);
-                         
-  int  (*timer_create) (struct posix_clock * pc, struct k_itimer * kit);
-  
-  int  (*timer_delete) (struct posix_clock * pc, struct k_itimer * kit);
-  
-  void (*timer_gettime) (struct posix_clock * pc,
-                         struct k_itimer * kit, struct itimerspec * tsp);
-                         
-  int  (*timer_settime) (struct posix_clock * pc,
-                         struct k_itimer * kit, int flags,
-                         struct itimerspec * tsp, struct itimerspec * old);
-  /*
-   * Optional character device methods:
-   */
-  int     (*fasync)  (struct posix_clock * pc,
-                      int fd, struct file * file, int on);
-                      
-  long    (*ioctl)   (struct posix_clock * pc,
-                      unsigned int cmd, unsigned long arg);
-                      
-  int     (*mmap)    (struct posix_clock * pc,
-                      struct vm_area_struct * vma);
-                      
-  int     (*open)    (struct posix_clock * pc, fmode_t f_mode);
-  
-  uint    (*poll)    (struct posix_clock * pc,
-                      struct file * file, poll_table * wait);
-                      
-  int     (*release) (struct posix_clock * pc);
-  
-  ssize_t (*read)    (struct posix_clock * pc,
-                      uint flags, char __user * buf, size_t cnt);
+	struct module *owner;
+
+	int  (*clock_adjtime)(struct posix_clock *pc, struct timex *tx);
+
+	int  (*clock_gettime)(struct posix_clock *pc, struct timespec *ts);
+
+	int  (*clock_getres) (struct posix_clock *pc, struct timespec *ts);
+
+	int  (*clock_settime)(struct posix_clock *pc,
+			      const struct timespec *ts);
+
+	int  (*timer_create) (struct posix_clock *pc, struct k_itimer *kit);
+
+	int  (*timer_delete) (struct posix_clock *pc, struct k_itimer *kit);
+
+	void (*timer_gettime)(struct posix_clock *pc,
+			      struct k_itimer *kit, struct itimerspec *tsp);
+
+	int  (*timer_settime)(struct posix_clock *pc,
+			      struct k_itimer *kit, int flags,
+			      struct itimerspec *tsp, struct itimerspec *old);
+	/*
+	 * Optional character device methods:
+	 */
+	int     (*fasync)  (struct posix_clock *pc,
+			    int fd, struct file *file, int on);
+
+	long    (*ioctl)   (struct posix_clock *pc,
+			    unsigned int cmd, unsigned long arg);
+
+	int     (*mmap)    (struct posix_clock *pc,
+			    struct vm_area_struct *vma);
+
+	int     (*open)    (struct posix_clock *pc, fmode_t f_mode);
+
+	uint    (*poll)    (struct posix_clock *pc,
+			    struct file *file, poll_table *wait);
+
+	int     (*release) (struct posix_clock *pc);
+
+	ssize_t (*read)    (struct posix_clock *pc,
+			    uint flags, char __user *buf, size_t cnt);
 };
 
 /**
@@ -115,12 +115,12 @@ struct posix_clock_operations {
  * container_of().
  */
 struct posix_clock {
-  struct posix_clock_operations ops;
-  struct cdev cdev;
-  struct kref kref;
-  struct rw_semaphore rwsem;
-  bool zombie;
-  void (*release) (struct posix_clock * clk);
+	struct posix_clock_operations ops;
+	struct cdev cdev;
+	struct kref kref;
+	struct rw_semaphore rwsem;
+	bool zombie;
+	void (*release)(struct posix_clock *clk);
 };
 
 /**
@@ -135,7 +135,7 @@ struct posix_clock {
  *
  * Returns zero on success, non-zero otherwise.
  */
-int posix_clock_register (struct posix_clock * clk, dev_t devid);
+int posix_clock_register(struct posix_clock *clk, dev_t devid);
 
 /**
  * posix_clock_unregister() - unregister a clock
@@ -146,6 +146,6 @@ int posix_clock_register (struct posix_clock * clk, dev_t devid);
  * inactive state) until its reference count drops to zero, at which
  * point it will be deallocated with its 'release' method.
  */
-void posix_clock_unregister (struct posix_clock * clk);
+void posix_clock_unregister(struct posix_clock *clk);
 
 #endif

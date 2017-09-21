@@ -1,7 +1,7 @@
 /* arch/arm/mach-s3c2410/include/mach/bast-cpld.h
  *
  * Copyright (c) 2003-2004 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * BAST - CPLD control constants
  *
@@ -15,11 +15,11 @@
 
 /* CTRL1 - Audio LR routing */
 
-#define BAST_CPLD_CTRL1_LRCOFF      (0x00)
-#define BAST_CPLD_CTRL1_LRCADC      (0x01)
-#define BAST_CPLD_CTRL1_LRCDAC      (0x02)
-#define BAST_CPLD_CTRL1_LRCARM      (0x03)
-#define BAST_CPLD_CTRL1_LRMASK      (0x03)
+#define BAST_CPLD_CTRL1_LRCOFF	    (0x00)
+#define BAST_CPLD_CTRL1_LRCADC	    (0x01)
+#define BAST_CPLD_CTRL1_LRCDAC	    (0x02)
+#define BAST_CPLD_CTRL1_LRCARM	    (0x03)
+#define BAST_CPLD_CTRL1_LRMASK	    (0x03)
 
 /* CTRL2 - NAND WP control, IDE Reset assert/check */
 
@@ -33,10 +33,10 @@
 
 /* CTRL4 - 8bit LCD interface control/status */
 
-#define BAST_CPLD_CTRL4_LLAT      (0x01)
-#define BAST_CPLD_CTRL4_LCDRW     (0x02)
-#define BAST_CPLD_CTRL4_LCDCMD      (0x04)
-#define BAST_CPLD_CTRL4_LCDE2     (0x01)
+#define BAST_CPLD_CTRL4_LLAT	    (0x01)
+#define BAST_CPLD_CTRL4_LCDRW	    (0x02)
+#define BAST_CPLD_CTRL4_LCDCMD	    (0x04)
+#define BAST_CPLD_CTRL4_LCDE2	    (0x01)
 
 /* CTRL5 - DMA routing */
 

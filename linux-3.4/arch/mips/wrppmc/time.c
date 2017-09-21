@@ -25,15 +25,15 @@
  * NOTE: We disable all GT64120 timers, and use MIPS processor internal
  * timer as the source of kernel clock tick.
  */
-void __init plat_time_init (void)
+void __init plat_time_init(void)
 {
-  /* Disable GT64120 timers */
-  GT_WRITE (GT_TC_CONTROL_OFS, 0x00);
-  GT_WRITE (GT_TC0_OFS, 0x00);
-  GT_WRITE (GT_TC1_OFS, 0x00);
-  GT_WRITE (GT_TC2_OFS, 0x00);
-  GT_WRITE (GT_TC3_OFS, 0x00);
-  
-  /* Use MIPS compare/count internal timer */
-  mips_hpt_frequency = WRPPMC_CPU_CLK_FREQ;
+	/* Disable GT64120 timers */
+	GT_WRITE(GT_TC_CONTROL_OFS, 0x00);
+	GT_WRITE(GT_TC0_OFS, 0x00);
+	GT_WRITE(GT_TC1_OFS, 0x00);
+	GT_WRITE(GT_TC2_OFS, 0x00);
+	GT_WRITE(GT_TC3_OFS, 0x00);
+
+	/* Use MIPS compare/count internal timer */
+	mips_hpt_frequency = WRPPMC_CPU_CLK_FREQ;
 }

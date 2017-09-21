@@ -67,14 +67,14 @@
  */
 
 struct ttm_lock {
-  struct ttm_base_object base;
-  wait_queue_head_t queue;
-  spinlock_t lock;
-  int32_t rw;
-  uint32_t flags;
-  bool kill_takers;
-  int signal;
-  struct ttm_object_file * vt_holder;
+	struct ttm_base_object base;
+	wait_queue_head_t queue;
+	spinlock_t lock;
+	int32_t rw;
+	uint32_t flags;
+	bool kill_takers;
+	int signal;
+	struct ttm_object_file *vt_holder;
 };
 
 
@@ -84,7 +84,7 @@ struct ttm_lock {
  * @lock: Pointer to a struct ttm_lock
  * Initializes the lock.
  */
-extern void ttm_lock_init (struct ttm_lock * lock);
+extern void ttm_lock_init(struct ttm_lock *lock);
 
 /**
  * ttm_read_unlock
@@ -93,7 +93,7 @@ extern void ttm_lock_init (struct ttm_lock * lock);
  *
  * Releases a read lock.
  */
-extern void ttm_read_unlock (struct ttm_lock * lock);
+extern void ttm_read_unlock(struct ttm_lock *lock);
 
 /**
  * ttm_read_lock
@@ -105,7 +105,7 @@ extern void ttm_read_unlock (struct ttm_lock * lock);
  * Returns:
  * -ERESTARTSYS If interrupted by a signal and interruptible is true.
  */
-extern int ttm_read_lock (struct ttm_lock * lock, bool interruptible);
+extern int ttm_read_lock(struct ttm_lock *lock, bool interruptible);
 
 /**
  * ttm_read_trylock
@@ -122,7 +122,7 @@ extern int ttm_read_lock (struct ttm_lock * lock, bool interruptible);
  * -EBUSY The lock was already held in write mode.
  * -ERESTARTSYS If interrupted by a signal and interruptible is true.
  */
-extern int ttm_read_trylock (struct ttm_lock * lock, bool interruptible);
+extern int ttm_read_trylock(struct ttm_lock *lock, bool interruptible);
 
 /**
  * ttm_write_unlock
@@ -131,7 +131,7 @@ extern int ttm_read_trylock (struct ttm_lock * lock, bool interruptible);
  *
  * Releases a write lock.
  */
-extern void ttm_write_unlock (struct ttm_lock * lock);
+extern void ttm_write_unlock(struct ttm_lock *lock);
 
 /**
  * ttm_write_lock
@@ -143,7 +143,7 @@ extern void ttm_write_unlock (struct ttm_lock * lock);
  * Returns:
  * -ERESTARTSYS If interrupted by a signal and interruptible is true.
  */
-extern int ttm_write_lock (struct ttm_lock * lock, bool interruptible);
+extern int ttm_write_lock(struct ttm_lock *lock, bool interruptible);
 
 /**
  * ttm_lock_downgrade
@@ -152,7 +152,7 @@ extern int ttm_write_lock (struct ttm_lock * lock, bool interruptible);
  *
  * Downgrades a write lock to a read lock.
  */
-extern void ttm_lock_downgrade (struct ttm_lock * lock);
+extern void ttm_lock_downgrade(struct ttm_lock *lock);
 
 /**
  * ttm_suspend_lock
@@ -161,7 +161,7 @@ extern void ttm_lock_downgrade (struct ttm_lock * lock);
  *
  * Takes the lock in suspend mode. Excludes read and write mode.
  */
-extern void ttm_suspend_lock (struct ttm_lock * lock);
+extern void ttm_suspend_lock(struct ttm_lock *lock);
 
 /**
  * ttm_suspend_unlock
@@ -170,7 +170,7 @@ extern void ttm_suspend_lock (struct ttm_lock * lock);
  *
  * Releases a suspend lock
  */
-extern void ttm_suspend_unlock (struct ttm_lock * lock);
+extern void ttm_suspend_unlock(struct ttm_lock *lock);
 
 /**
  * ttm_vt_lock
@@ -184,8 +184,8 @@ extern void ttm_suspend_unlock (struct ttm_lock * lock);
  * -ERESTARTSYS If interrupted by a signal and interruptible is true.
  * -ENOMEM: Out of memory when locking.
  */
-extern int ttm_vt_lock (struct ttm_lock * lock, bool interruptible,
-                        struct ttm_object_file * tfile);
+extern int ttm_vt_lock(struct ttm_lock *lock, bool interruptible,
+		       struct ttm_object_file *tfile);
 
 /**
  * ttm_vt_unlock
@@ -196,7 +196,7 @@ extern int ttm_vt_lock (struct ttm_lock * lock, bool interruptible,
  * Returns:
  * -EINVAL If the lock was not held.
  */
-extern int ttm_vt_unlock (struct ttm_lock * lock);
+extern int ttm_vt_unlock(struct ttm_lock *lock);
 
 /**
  * ttm_write_unlock
@@ -205,7 +205,7 @@ extern int ttm_vt_unlock (struct ttm_lock * lock);
  *
  * Releases a write lock.
  */
-extern void ttm_write_unlock (struct ttm_lock * lock);
+extern void ttm_write_unlock(struct ttm_lock *lock);
 
 /**
  * ttm_write_lock
@@ -217,7 +217,7 @@ extern void ttm_write_unlock (struct ttm_lock * lock);
  * Returns:
  * -ERESTARTSYS If interrupted by a signal and interruptible is true.
  */
-extern int ttm_write_lock (struct ttm_lock * lock, bool interruptible);
+extern int ttm_write_lock(struct ttm_lock *lock, bool interruptible);
 
 /**
  * ttm_lock_set_kill
@@ -236,12 +236,12 @@ extern int ttm_write_lock (struct ttm_lock * lock, bool interruptible);
  * - Another dri client wants to render, takes the lock and is killed.
  *
  */
-static inline void ttm_lock_set_kill (struct ttm_lock * lock, bool val,
-                                      int signal)
+static inline void ttm_lock_set_kill(struct ttm_lock *lock, bool val,
+				     int signal)
 {
-  lock->kill_takers = val;
-  if (val)
-  { lock->signal = signal; }
+	lock->kill_takers = val;
+	if (val)
+		lock->signal = signal;
 }
 
 #endif

@@ -21,8 +21,8 @@
  * MA 02111-1307 USA
  */
 
-#ifndef _FEC_H_
-#define _FEC_H_
+#ifndef	_FEC_H_
+#define	_FEC_H_
 
 
-#endif  /* _FEC_H_ */
+#endif	/* _FEC_H_ */

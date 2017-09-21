@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -28,25 +28,25 @@ DECLARE_GLOBAL_DATA_PTR;
 
 #ifdef CONFIG_SUNXI_SECURE_SYSTEM
 
-static __inline uint smc_readl_normal (uint addr);
-static __inline void smc_writel_normal (uint value, uint addr);
+static __inline uint smc_readl_normal(uint addr);
+static __inline void smc_writel_normal(uint value, uint addr);
 
-uint (* smc_readl_pt) (uint addr) = smc_readl_normal;
-void (* smc_writel_pt) (uint value, uint addr) = smc_writel_normal;
+uint (* smc_readl_pt)(uint addr) = smc_readl_normal;
+void (* smc_writel_pt)(uint value, uint addr) = smc_writel_normal;
 
-extern void tee_irq_handler (void);
+extern void tee_irq_handler(void);
 
-static __inline uint smc_readl_secos (uint addr);
-static __inline void smc_writel_secos (uint value, uint addr);
+static __inline uint smc_readl_secos(uint addr);
+static __inline void smc_writel_secos(uint value, uint addr);
 /* TEE SMC command type */
-#define TEE_SMC_INIT_CALL   0x0FFFFFF1
-#define TEE_SMC_PLAFORM_OPERATION 0x0FFFFFF2
-#define TEE_SMC_OPEN_SESSION    0x0FFFFFF3
-#define TEE_SMC_CLOSE_SESSION   0x0FFFFFF4
-#define TEE_SMC_INVOKE_COMMAND          0x0FFFFFF5
-#define TEE_SMC_REGISTER_IRQ_HANDLER  0x0FFFFFF6
-#define TEE_SMC_NS_IRQ_DONE   0x0FFFFFF7
-#define TEE_SMC_NS_KERNEL_CALL    0x0FFFFFF8
+#define TEE_SMC_INIT_CALL		0x0FFFFFF1
+#define TEE_SMC_PLAFORM_OPERATION	0x0FFFFFF2
+#define TEE_SMC_OPEN_SESSION		0x0FFFFFF3
+#define TEE_SMC_CLOSE_SESSION		0x0FFFFFF4
+#define TEE_SMC_INVOKE_COMMAND	        0x0FFFFFF5
+#define TEE_SMC_REGISTER_IRQ_HANDLER	0x0FFFFFF6
+#define TEE_SMC_NS_IRQ_DONE		0x0FFFFFF7
+#define TEE_SMC_NS_KERNEL_CALL		0x0FFFFFF8
 
 #define TEE_SMC_PLATFORM_REGRW      0x0FFFFFFC
 
@@ -58,10 +58,10 @@ static __inline void smc_writel_secos (uint value, uint addr);
 #define TEE_SMC_CLUSTER_POWERUP     (0xFFFF0004)
 #define TEE_SMC_CLUSTER_POWERDOWN   (0xFFFF0005)
 
-#define TEE_SMC_EFUSE_WRITE_REG     (0xFFFF000A)
-#define TEE_SMC_EFUSE_READ_REG      (0xFFFF000B)
-#define TEE_SMC_AES_BSSK_EN_TO_DRAM   (0xFFFF000C)
-#define TEE_SMC_AES_BSSK_DE_TO_KEYSRAM  (0xFFFF000D)
+#define TEE_SMC_EFUSE_WRITE_REG			(0xFFFF000A)
+#define TEE_SMC_EFUSE_READ_REG			(0xFFFF000B)
+#define TEE_SMC_AES_BSSK_EN_TO_DRAM		(0xFFFF000C)
+#define TEE_SMC_AES_BSSK_DE_TO_KEYSRAM	(0xFFFF000D)
 #define TEE_SMC_CREATE_HUK          (0xFFFF000E)
 /*
 ************************************************************************************************************
@@ -79,10 +79,10 @@ static __inline void smc_writel_secos (uint value, uint addr);
 *
 ************************************************************************************************************
 */
-u32 sunxi_smc_call (u32 arg0, u32 arg1, u32 arg2, u32 arg3);
-static u32 do_smc (u32 arg0, u32 arg1, u32 arg2, u32 arg3)
+u32 sunxi_smc_call(u32 arg0, u32 arg1, u32 arg2, u32 arg3);
+static u32 do_smc(u32 arg0, u32 arg1, u32 arg2, u32 arg3)
 {
-  return sunxi_smc_call (arg0, arg1, arg2, arg3);
+	return sunxi_smc_call(arg0, arg1, arg2, arg3);
 }
 /*
 ************************************************************************************************************
@@ -100,16 +100,16 @@ static u32 do_smc (u32 arg0, u32 arg1, u32 arg2, u32 arg3)
 *
 ************************************************************************************************************
 */
-static int tee_main_entry (void)
+static int tee_main_entry(void)
 {
-  int ret;
-  
-  printf ("semelis initialize\n");
-  ret = do_smc (TEE_SMC_INIT_CALL, 0, 0, 0);
-  if (ret == 0) {
-    printf ("semelis init succeeded\n");
-  }
-  return 0;
+	int ret;
+
+	printf("semelis initialize\n");
+	ret = do_smc(TEE_SMC_INIT_CALL, 0, 0, 0);
+	if (ret == 0) {
+		printf("semelis init succeeded\n");
+	}
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -127,9 +127,9 @@ static int tee_main_entry (void)
 *
 ************************************************************************************************************
 */
-static __inline uint smc_readl_secos (uint addr)
+static __inline uint smc_readl_secos(uint addr)
 {
-  return do_smc (TEE_SMC_PLATFORM_REGRW, TEE_SMC_READ_REG, addr, 0);
+	return do_smc(TEE_SMC_PLATFORM_REGRW, TEE_SMC_READ_REG, addr, 0);
 }
 /*
 ************************************************************************************************************
@@ -147,9 +147,9 @@ static __inline uint smc_readl_secos (uint addr)
 *
 ************************************************************************************************************
 */
-static __inline void smc_writel_secos (uint value, uint addr)
+static __inline void smc_writel_secos(uint value, uint addr)
 {
-  do_smc (TEE_SMC_PLATFORM_REGRW, TEE_SMC_WRITE_REG, addr, value);
+	do_smc(TEE_SMC_PLATFORM_REGRW, TEE_SMC_WRITE_REG, addr, value);
 }
 /*
 ************************************************************************************************************
@@ -167,25 +167,24 @@ static __inline void smc_writel_secos (uint value, uint addr)
 *
 ************************************************************************************************************
 */
-int smc_init (void)
+int smc_init(void)
 {
-  if (gd->securemode == SUNXI_SECURE_MODE_WITH_SECUREOS)
-  {
-    smc_readl_pt = smc_readl_secos;
-    smc_writel_pt = smc_writel_secos;
-    
-    return tee_main_entry();
-  }
-  else
-    if (gd->securemode == SUNXI_SECURE_MODE_NO_SECUREOS )
-    {
-      printf ("semelis initialize skip when non-boot mode\n");
-    }
-    else
-    {
-      printf ("normal mode\n");
-    }
-  return 0;
+	if(gd->securemode == SUNXI_SECURE_MODE_WITH_SECUREOS)
+	{
+		smc_readl_pt = smc_readl_secos;
+		smc_writel_pt = smc_writel_secos;
+
+		return tee_main_entry();
+	}
+	else if(gd->securemode == SUNXI_SECURE_MODE_NO_SECUREOS )
+	{
+		printf("semelis initialize skip when non-boot mode\n");
+	}
+	else
+	{
+		printf("normal mode\n");
+	}
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -203,9 +202,9 @@ int smc_init (void)
 *
 ************************************************************************************************************
 */
-uint smc_readl (uint addr)
+uint smc_readl(uint addr)
 {
-  return smc_readl_pt (addr);
+	return smc_readl_pt(addr);
 }
 /*
 ************************************************************************************************************
@@ -223,9 +222,9 @@ uint smc_readl (uint addr)
 *
 ************************************************************************************************************
 */
-void smc_writel (uint value, uint addr)
+void smc_writel(uint value, uint addr)
 {
-  smc_writel_pt (value, addr);
+	smc_writel_pt(value, addr);
 }
 /*
 ************************************************************************************************************
@@ -243,9 +242,9 @@ void smc_writel (uint value, uint addr)
 *
 ************************************************************************************************************
 */
-int smc_efuse_writel (void * key_buf)
+int smc_efuse_writel(void *key_buf)
 {
-  return do_smc (TEE_SMC_PLAFORM_OPERATION, TEE_SMC_EFUSE_WRITE_REG, (uint) key_buf, 0);
+	return do_smc(TEE_SMC_PLAFORM_OPERATION, TEE_SMC_EFUSE_WRITE_REG, (uint)key_buf, 0);
 }
 
 /*
@@ -264,9 +263,9 @@ int smc_efuse_writel (void * key_buf)
 *
 ************************************************************************************************************
 */
-int smc_efuse_readl (void * key_buf, void * read_buf)
+int smc_efuse_readl(void *key_buf, void *read_buf)
 {
-  return do_smc (TEE_SMC_PLAFORM_OPERATION, TEE_SMC_EFUSE_READ_REG, (uint) key_buf, (uint) read_buf);
+	return do_smc(TEE_SMC_PLAFORM_OPERATION, TEE_SMC_EFUSE_READ_REG, (uint)key_buf, (uint)read_buf);
 }
 
 /*
@@ -287,34 +286,34 @@ int smc_efuse_readl (void * key_buf, void * read_buf)
 */
 typedef struct
 {
-  uint srcbuf;
-  uint srclen;
-  uint dstbuf;
-  uint dstlen;
+	uint srcbuf;
+	uint srclen;
+	uint dstbuf;
+	uint dstlen;
 }
 smc_ss_en_de_config;
 
 
-int smc_aes_bssk_encrypt_to_dram (void * srcdata, int srclen, void * dstbuffer, int * dst_len)
+int smc_aes_bssk_encrypt_to_dram(void *srcdata, int srclen, void *dstbuffer, int *dst_len)
 {
-  smc_ss_en_de_config  ss_en_config;
-  
-  ss_en_config.srcbuf = (uint) srcdata;
-  ss_en_config.srclen = (uint) srclen;
-  ss_en_config.dstbuf = (uint) dstbuffer;
-  ss_en_config.dstlen = (uint) dst_len;
-  
-  return do_smc (TEE_SMC_PLAFORM_OPERATION, TEE_SMC_AES_BSSK_EN_TO_DRAM, (uint) &ss_en_config, 0);
+	smc_ss_en_de_config  ss_en_config;
+
+	ss_en_config.srcbuf = (uint)srcdata;
+	ss_en_config.srclen = (uint)srclen;
+	ss_en_config.dstbuf = (uint)dstbuffer;
+	ss_en_config.dstlen = (uint)dst_len;
+
+	return do_smc(TEE_SMC_PLAFORM_OPERATION, TEE_SMC_AES_BSSK_EN_TO_DRAM, (uint)&ss_en_config, 0);
 }
 
-int smc_aes_bssk_decrypt_to_keysram (void * srcdata, int srclen)
+int smc_aes_bssk_decrypt_to_keysram(void *srcdata, int srclen)
 {
-  return do_smc (TEE_SMC_PLAFORM_OPERATION, TEE_SMC_AES_BSSK_DE_TO_KEYSRAM, (uint) srcdata, srclen);
+	return do_smc(TEE_SMC_PLAFORM_OPERATION, TEE_SMC_AES_BSSK_DE_TO_KEYSRAM, (uint)srcdata, srclen);
 }
 
-int smc_create_huk (void * huk_data, int len)
+int smc_create_huk(void *huk_data, int len)
 {
-  return do_smc (TEE_SMC_PLAFORM_OPERATION, TEE_SMC_CREATE_HUK, (uint) huk_data, len);
+	return do_smc(TEE_SMC_PLAFORM_OPERATION, TEE_SMC_CREATE_HUK, (uint)huk_data, len);
 }
 /*
 ************************************************************************************************************
@@ -332,9 +331,9 @@ int smc_create_huk (void * huk_data, int len)
 *
 ************************************************************************************************************
 */
-static __inline uint smc_readl_normal (uint addr)
+static __inline uint smc_readl_normal(uint addr)
 {
-  return readl (addr);
+	return readl(addr);
 }
 /*
 ************************************************************************************************************
@@ -352,9 +351,9 @@ static __inline uint smc_readl_normal (uint addr)
 *
 ************************************************************************************************************
 */
-static __inline void smc_writel_normal (uint value, uint addr)
+static __inline void smc_writel_normal(uint value, uint addr)
 {
-  writel (value, addr);
+	writel(value, addr);
 }
 #else
 /*
@@ -373,8 +372,8 @@ static __inline void smc_writel_normal (uint value, uint addr)
 *
 ************************************************************************************************************
 */
-int smc_init (void)
+int smc_init(void)
 {
-  return 0;
+	return 0;
 }
 #endif

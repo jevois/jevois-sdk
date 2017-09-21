@@ -28,18 +28,18 @@
  * Where in virtual memory the IO devices (timers, system controllers
  * and so on)
  */
-#define IO_BASE     0xF0000000                
-#define IO_SIZE     0x0B000000                
-#define IO_START    INTEGRATOR_HDR_BASE       
+#define IO_BASE			0xF0000000                
+#define IO_SIZE			0x0B000000                
+#define IO_START		INTEGRATOR_HDR_BASE       
 
 /* macro to get at IO space when running virtually */
 #ifdef CONFIG_MMU
-#define IO_ADDRESS(x) (((x) & 0x000fffff) | (((x) >> 4) & 0x0ff00000) | IO_BASE)
+#define IO_ADDRESS(x)	(((x) & 0x000fffff) | (((x) >> 4) & 0x0ff00000) | IO_BASE)
 #else
-#define IO_ADDRESS(x) (x)
+#define IO_ADDRESS(x)	(x)
 #endif
 
-#define __io_address(n)   ((void __iomem *)IO_ADDRESS(n))
+#define __io_address(n)		((void __iomem *)IO_ADDRESS(n))
 
 #endif
 

@@ -35,10 +35,10 @@ extern char __start_atomic_asm_code[], __end_atomic_asm_code[];
 #endif
 
 /* Handle the discontiguity between _sdata and _stext. */
-static inline int arch_is_kernel_data (unsigned long addr)
+static inline int arch_is_kernel_data(unsigned long addr)
 {
-  return addr >= (unsigned long) _sdata &&
-         addr < (unsigned long) _end;
+	return addr >= (unsigned long)_sdata &&
+		addr < (unsigned long)_end;
 }
 
 #endif /* _ASM_TILE_SECTIONS_H */

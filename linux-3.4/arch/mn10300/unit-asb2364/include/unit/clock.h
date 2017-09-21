@@ -5,7 +5,7 @@
  *
  * Modified by Matsushita Electric Industrial Co., Ltd.
  * Modifications:
- *  23-Feb-2007 MEI Add define for watchdog timer.
+ *	23-Feb-2007 MEI Add define for watchdog timer.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,12 +18,12 @@
 
 #ifndef __ASSEMBLY__
 
-#define MN10300_IOCLK   100000000UL   /* for DDR800 */
-/*#define MN10300_IOCLK   83333333UL */   /* for DDR667 */
-#define MN10300_IOBCLK    MN10300_IOCLK   /* IOBCLK is equal to IOCLK */
+#define MN10300_IOCLK		100000000UL		/* for DDR800 */
+/*#define MN10300_IOCLK		83333333UL */		/* for DDR667 */
+#define MN10300_IOBCLK		MN10300_IOCLK		/* IOBCLK is equal to IOCLK */
 
 #endif /* !__ASSEMBLY__ */
 
-#define MN10300_WDCLK   27000000UL
+#define MN10300_WDCLK		27000000UL
 
 #endif /* _ASM_UNIT_CLOCK_H */

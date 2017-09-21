@@ -19,11 +19,11 @@
  * to the end of the structure.
  */
 struct sigcontext {
-  unsigned long trap_no;
-  unsigned long error_code;
-  unsigned long oldmask;
-  unsigned long fault_address;
-  struct pt_regs regs;
+	unsigned long trap_no;
+	unsigned long error_code;
+	unsigned long oldmask;
+	unsigned long fault_address;
+	struct pt_regs regs;
 };
 
 #endif

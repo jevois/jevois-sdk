@@ -27,12 +27,12 @@
  * Generic GPIO API
  */
 
-int gpio_request (int gp, const char * label);
-void gpio_free (int gp);
-void gpio_toggle_value (int gp);
-int gpio_direction_input (int gp);
-int gpio_direction_output (int gp, int value);
-int gpio_get_value (int gp);
-void gpio_set_value (int gp, int value);
+int gpio_request(int gp, const char *label);
+void gpio_free(int gp);
+void gpio_toggle_value(int gp);
+int gpio_direction_input(int gp);
+int gpio_direction_output(int gp, int value);
+int gpio_get_value(int gp);
+void gpio_set_value(int gp, int value);
 
-#endif  /* _GPIO_H_ */
+#endif	/* _GPIO_H_ */

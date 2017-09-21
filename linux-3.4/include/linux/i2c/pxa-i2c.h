@@ -46,7 +46,7 @@
 *  0.  START    0 (Do not send a START)
 *
 */
-#define I2C_ICR_INIT  (ICR_BEIE | ICR_IRFIE | ICR_ITEIE | ICR_GCD | ICR_SCLE)
+#define I2C_ICR_INIT	(ICR_BEIE | ICR_IRFIE | ICR_ITEIE | ICR_GCD | ICR_SCLE)
 
 /* I2C status register init values
  *
@@ -57,26 +57,26 @@
  * 5.  ALD      1 (Clear Arbitration Loss Detected)
  * 4.  SSD      1 (Clear Slave Stop Detected)
  */
-#define I2C_ISR_INIT  0x7FF  /* status register init */
+#define I2C_ISR_INIT	0x7FF  /* status register init */
 
 struct i2c_slave_client;
 
 struct i2c_pxa_platform_data {
-  unsigned int    slave_addr;
-  struct i2c_slave_client * slave;
-  unsigned int    class;
-  unsigned int    use_pio : 1;
-  unsigned int    fast_mode : 1;
+	unsigned int		slave_addr;
+	struct i2c_slave_client	*slave;
+	unsigned int		class;
+	unsigned int		use_pio :1;
+	unsigned int		fast_mode :1;
 };
 
-extern void pxa_set_i2c_info (struct i2c_pxa_platform_data * info);
+extern void pxa_set_i2c_info(struct i2c_pxa_platform_data *info);
 
 #ifdef CONFIG_PXA27x
-extern void pxa27x_set_i2c_power_info (struct i2c_pxa_platform_data * info);
+extern void pxa27x_set_i2c_power_info(struct i2c_pxa_platform_data *info);
 #endif
 
 #ifdef CONFIG_PXA3xx
-extern void pxa3xx_set_i2c_power_info (struct i2c_pxa_platform_data * info);
+extern void pxa3xx_set_i2c_power_info(struct i2c_pxa_platform_data *info);
 #endif
 
 #endif

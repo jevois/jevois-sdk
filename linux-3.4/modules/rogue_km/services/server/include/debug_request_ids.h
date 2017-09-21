@@ -3,7 +3,7 @@
 @Title          Debug requester ID's
 @Copyright      Copyright (c) Imagination Technologies Ltd. All Rights Reserved
 @Description    This header contains the defines for the debug ID's for all the
-        services components
+				services components
 @License        Dual MIT/GPLv2
 
 The contents of this file are subject to the MIT license as set out below.
@@ -41,14 +41,14 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */ /**************************************************************************/
-
+ 
 #ifndef __DEBUG_REQUEST_IDS__
 #define __DEBUG_REQUEST_IDS__
 
 /* Services controlled devices should be 1st */
-#define DEBUG_REQUEST_RGX     (0)
-#define DEBUG_REQUEST_DC      (1)
-#define DEBUG_REQUEST_SERVERSYNC  (2)
+#define DEBUG_REQUEST_RGX			(0)
+#define DEBUG_REQUEST_DC			(1)
+#define DEBUG_REQUEST_SERVERSYNC	(2)
 #define DEBUG_REQUEST_SYS           (3)
 
 #endif /* __DEBUG_REQUEST_IDS__ */

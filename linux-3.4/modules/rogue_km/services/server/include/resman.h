@@ -51,141 +51,141 @@ extern "C" {
 #include "servicesext.h"
 
 /******************************************************************************
- * resman definitions
+ * resman definitions 
  *****************************************************************************/
 
 enum {
-  /* SGX: */
-  RESMAN_TYPE_SHARED_PB_DESC = 1,         /*!< Parameter buffer kernel stubs */
-  RESMAN_TYPE_SHARED_PB_DESC_CREATE_LOCK,     /*!< Shared parameter buffer creation lock */
-  
-  /* MSVDX: TBD */
-  
-  /* DISPLAY CLASS: */
-  RESMAN_TYPE_DISPLAYCLASS_SWAPCHAIN_REF,     /*!< Display Class Swapchain Reference Resource */
-  RESMAN_TYPE_DISPLAYCLASS_DEVICE,        /*!< Display Class Device Resource */
-  
-  /* BUFFER CLASS: */
-  RESMAN_TYPE_BUFFERCLASS_DEVICE,         /*!< Buffer Class Device Resource */
-  
-  /* OS specific User mode Mappings: */
-  RESMAN_TYPE_OS_USERMODE_MAPPING,        /*!< OS specific User mode mappings */
-  
-  /* COMMON: */
-  RESMAN_TYPE_DC_DEVICE,
-  RESMAN_TYPE_DC_DISPLAY_CONTEXT,
-  RESMAN_TYPE_DC_PIN_HANDLE,
-  RESMAN_TYPE_DC_BUFFER,
-  RESMAN_TYPE_DEVMEM_MEM_EXPORT,
-  RESMAN_TYPE_PMR,
-  RESMAN_TYPE_PMR_EXPORT,
-  RESMAN_TYPE_PMR_PAGELIST,           /*!< Device Memory page list Resource */
-  RESMAN_TYPE_DEVICEMEM2_CONTEXT,         /*!< Device Memory Context Resource */
-  RESMAN_TYPE_DEVICEMEM2_CONTEXT_EXPORT,      /*!< Device Memory Context export Resource */
-  RESMAN_TYPE_DEVICEMEM2_HEAP,          /*!< Device Memory Heap Resource */
-  RESMAN_TYPE_DEVICEMEM2_RESERVATION,             /*!< Device Memory Reservation Resource */
-  RESMAN_TYPE_DEVICEMEM2_MAPPING,                 /*!< Device Memory Mapping Resource */
-  RESMAN_TYPE_DEVICEMEM_CONTEXT,          /*!< Device Memory Context Resource */
-  RESMAN_TYPE_DEVICECLASSMEM_MAPPING,       /*!< Device Memory Mapping Resource */
-  RESMAN_TYPE_DEVICEMEM_MAPPING,          /*!< Device Memory Mapping Resource */
-  RESMAN_TYPE_DEVICEMEM_WRAP,           /*!< Device Memory Wrap Resource */
-  RESMAN_TYPE_DEVICEMEM_ALLOCATION,       /*!< Device Memory Allocation Resource */
-  RESMAN_TYPE_EVENT_OBJECT,           /*!< Event Object */
-  RESMAN_TYPE_SHARED_MEM_INFO,                    /*!< Shared system memory meminfo */
-  RESMAN_TYPE_MODIFY_SYNC_OPS,          /*!< Syncobject synchronisation Resource*/
-  RESMAN_TYPE_SYNC_INFO,                  /*!< Syncobject Resource*/
-  PVRSRV_HANDLE_TYPE_DEV_PRIV_DATA,       /*!< Private Data Resource*/
-  RESMAN_TYPE_SYNC_PRIMITIVE,           /*!< Sync primitive resource */
-  RESMAN_TYPE_SYNC_PRIMITIVE_BLOCK,       /*!< Sync primitive block resource */
-  RESMAN_TYPE_SERVER_SYNC_PRIMITIVE,        /*!< Server sync primitive resource */
-  RESMAN_TYPE_SERVER_SYNC_EXPORT,         /*!< Server sync export resource */
-  RESMAN_TYPE_SERVER_OP_COOKIE,         /*!< Server  operation cookie resource */
-  RESMAN_TYPE_SHARED_EVENT_OBJECT,        /*!< Shared event object resource */
-  
-  /* RGX: */
-  RESMAN_TYPE_RGX_SERVER_RENDER_CONTEXT,      /*!< RGX Render Context Resource */
-  RESMAN_TYPE_RGX_SERVER_TQ_CONTEXT,        /*!< RGX Transfer Queue Context Resource */
-  RESMAN_TYPE_RGX_SERVER_COMPUTE_CONTEXT,     /*!< RGX Compute Context Resource */
-  RESMAN_TYPE_RGX_SERVER_RAY_CONTEXT,       /*!< RGX Ray Context Resource */
-  RESMAN_TYPE_RGX_MEMORY_BLOCK,         /*!< RGX Freelist Memory Block Resource */
-  RESMAN_TYPE_RGX_FWIF_HWRTDATA,          /*! < FW HWRTDATA structure */
-  RESMAN_TYPE_RGX_FWIF_RENDERTARGET,          /*! < FW RENDER_TARGET structure */
-  RESMAN_TYPE_RGX_FWIF_ZSBUFFER,          /*!< FW ZS-Buffer structure */
-  RESMAN_TYPE_RGX_POPULATION,           /*!< ZS-Buffer population structure */
-  RESMAN_TYPE_RGX_FWIF_FREELIST,          /*! < FW FREELIST structure */
-  
-  /* KERNEL: */
-  RESMAN_TYPE_KERNEL_DEVICEMEM_ALLOCATION,    /*!< Device Memory Allocation Resource */
-  
-  /* TRANSPORT LAYER: */
-  RESMAN_TYPE_TL_STREAM_DESC,           /*!< Transport Layer stream descriptor resource */
-  
-  /* RI: */
-  RESMAN_TYPE_RI_HANDLE             /*!< RI resource */
+	/* SGX: */
+	RESMAN_TYPE_SHARED_PB_DESC = 1,					/*!< Parameter buffer kernel stubs */
+	RESMAN_TYPE_SHARED_PB_DESC_CREATE_LOCK,			/*!< Shared parameter buffer creation lock */
+
+	/* MSVDX: TBD */
+	
+	/* DISPLAY CLASS: */
+	RESMAN_TYPE_DISPLAYCLASS_SWAPCHAIN_REF,			/*!< Display Class Swapchain Reference Resource */
+	RESMAN_TYPE_DISPLAYCLASS_DEVICE,				/*!< Display Class Device Resource */
+
+	/* BUFFER CLASS: */
+	RESMAN_TYPE_BUFFERCLASS_DEVICE,					/*!< Buffer Class Device Resource */
+	
+	/* OS specific User mode Mappings: */
+	RESMAN_TYPE_OS_USERMODE_MAPPING,				/*!< OS specific User mode mappings */
+	
+	/* COMMON: */
+	RESMAN_TYPE_DC_DEVICE,
+	RESMAN_TYPE_DC_DISPLAY_CONTEXT,
+	RESMAN_TYPE_DC_PIN_HANDLE,
+	RESMAN_TYPE_DC_BUFFER,
+	RESMAN_TYPE_DEVMEM_MEM_EXPORT,
+    RESMAN_TYPE_PMR,
+    RESMAN_TYPE_PMR_EXPORT,
+	RESMAN_TYPE_PMR_PAGELIST,						/*!< Device Memory page list Resource */
+	RESMAN_TYPE_DEVICEMEM2_CONTEXT,					/*!< Device Memory Context Resource */
+	RESMAN_TYPE_DEVICEMEM2_CONTEXT_EXPORT,			/*!< Device Memory Context export Resource */
+	RESMAN_TYPE_DEVICEMEM2_HEAP,					/*!< Device Memory Heap Resource */
+    RESMAN_TYPE_DEVICEMEM2_RESERVATION,             /*!< Device Memory Reservation Resource */
+    RESMAN_TYPE_DEVICEMEM2_MAPPING,                 /*!< Device Memory Mapping Resource */
+	RESMAN_TYPE_DEVICEMEM_CONTEXT,					/*!< Device Memory Context Resource */
+	RESMAN_TYPE_DEVICECLASSMEM_MAPPING,				/*!< Device Memory Mapping Resource */
+	RESMAN_TYPE_DEVICEMEM_MAPPING,					/*!< Device Memory Mapping Resource */
+	RESMAN_TYPE_DEVICEMEM_WRAP,						/*!< Device Memory Wrap Resource */
+	RESMAN_TYPE_DEVICEMEM_ALLOCATION,				/*!< Device Memory Allocation Resource */
+	RESMAN_TYPE_EVENT_OBJECT,						/*!< Event Object */
+    RESMAN_TYPE_SHARED_MEM_INFO,                    /*!< Shared system memory meminfo */
+    RESMAN_TYPE_MODIFY_SYNC_OPS,					/*!< Syncobject synchronisation Resource*/
+    RESMAN_TYPE_SYNC_INFO,					        /*!< Syncobject Resource*/
+	PVRSRV_HANDLE_TYPE_DEV_PRIV_DATA,				/*!< Private Data Resource*/
+	RESMAN_TYPE_SYNC_PRIMITIVE,						/*!< Sync primitive resource */
+	RESMAN_TYPE_SYNC_PRIMITIVE_BLOCK,				/*!< Sync primitive block resource */
+	RESMAN_TYPE_SERVER_SYNC_PRIMITIVE,				/*!< Server sync primitive resource */
+	RESMAN_TYPE_SERVER_SYNC_EXPORT,					/*!< Server sync export resource */
+	RESMAN_TYPE_SERVER_OP_COOKIE,					/*!< Server  operation cookie resource */
+	RESMAN_TYPE_SHARED_EVENT_OBJECT,				/*!< Shared event object resource */
+
+	/* RGX: */
+	RESMAN_TYPE_RGX_SERVER_RENDER_CONTEXT,			/*!< RGX Render Context Resource */
+	RESMAN_TYPE_RGX_SERVER_TQ_CONTEXT,				/*!< RGX Transfer Queue Context Resource */
+	RESMAN_TYPE_RGX_SERVER_COMPUTE_CONTEXT,			/*!< RGX Compute Context Resource */
+	RESMAN_TYPE_RGX_SERVER_RAY_CONTEXT,				/*!< RGX Ray Context Resource */
+	RESMAN_TYPE_RGX_MEMORY_BLOCK,					/*!< RGX Freelist Memory Block Resource */
+	RESMAN_TYPE_RGX_FWIF_HWRTDATA,					/*! < FW HWRTDATA structure */
+	RESMAN_TYPE_RGX_FWIF_RENDERTARGET,					/*! < FW RENDER_TARGET structure */
+	RESMAN_TYPE_RGX_FWIF_ZSBUFFER,					/*!< FW ZS-Buffer structure */
+	RESMAN_TYPE_RGX_POPULATION,						/*!< ZS-Buffer population structure */
+	RESMAN_TYPE_RGX_FWIF_FREELIST,					/*! < FW FREELIST structure */
+
+	/* KERNEL: */
+	RESMAN_TYPE_KERNEL_DEVICEMEM_ALLOCATION,		/*!< Device Memory Allocation Resource */
+
+	/* TRANSPORT LAYER: */
+	RESMAN_TYPE_TL_STREAM_DESC,						/*!< Transport Layer stream descriptor resource */
+
+	/* RI: */
+	RESMAN_TYPE_RI_HANDLE							/*!< RI resource */
 };
 
-#define RESMAN_CRITERIA_ALL       0x00000000  /*!< match by criteria all */
-#define RESMAN_CRITERIA_RESTYPE     0x00000001  /*!< match by criteria type */
-#define RESMAN_CRITERIA_PVOID_PARAM   0x00000002  /*!< match by criteria param1 */
+#define RESMAN_CRITERIA_ALL				0x00000000	/*!< match by criteria all */
+#define RESMAN_CRITERIA_RESTYPE			0x00000001	/*!< match by criteria type */
+#define RESMAN_CRITERIA_PVOID_PARAM		0x00000002	/*!< match by criteria param1 */
 
-typedef PVRSRV_ERROR (*RESMAN_FREE_FN) (IMG_PVOID pvParam);
+typedef PVRSRV_ERROR (*RESMAN_FREE_FN)(IMG_PVOID pvParam); 
 
-typedef struct _RESMAN_ITEM_ * PRESMAN_ITEM;
-typedef struct _RESMAN_CONTEXT_ * PRESMAN_CONTEXT;
-typedef struct _RESMAN_DEFER_CONTEXT_ * PRESMAN_DEFER_CONTEXT;
+typedef struct _RESMAN_ITEM_ *PRESMAN_ITEM;
+typedef struct _RESMAN_CONTEXT_ *PRESMAN_CONTEXT;
+typedef struct _RESMAN_DEFER_CONTEXT_ *PRESMAN_DEFER_CONTEXT;
 
 /******************************************************************************
- * resman functions
+ * resman functions 
  *****************************************************************************/
 
-PVRSRV_ERROR ResManInit (IMG_VOID);
-IMG_VOID ResManDeInit (IMG_VOID);
+PVRSRV_ERROR ResManInit(IMG_VOID);
+IMG_VOID ResManDeInit(IMG_VOID);
 
-PRESMAN_ITEM ResManRegisterRes (PRESMAN_CONTEXT  hResManContext,
-                                IMG_UINT32   ui32ResType,
-                                IMG_PVOID    pvParam,
-                                RESMAN_FREE_FN pfnFreeResource);
-                                
-PVRSRV_ERROR ResManFreeResByPtr (PRESMAN_ITEM  psResItem);
+PRESMAN_ITEM ResManRegisterRes(PRESMAN_CONTEXT	hResManContext,
+							   IMG_UINT32		ui32ResType, 
+							   IMG_PVOID		pvParam, 
+							   RESMAN_FREE_FN	pfnFreeResource);
+
+PVRSRV_ERROR ResManFreeResByPtr(PRESMAN_ITEM	psResItem);
 
 /*!
 ******************************************************************************
- @Function    ResManFindPrivateDataByPtr
+ @Function	 	ResManFindPrivateDataByPtr
 
  @Description   finds the private date for a resource by matching on pointer type
 
  @inputs        psResItem - pointer to resource item
 
- @Return      PVRSRV_ERROR
+ @Return   		PVRSRV_ERROR
 **************************************************************************/
 extern PVRSRV_ERROR
-ResManFindPrivateDataByPtr (
-  PRESMAN_ITEM psResItem,
-  IMG_PVOID * ppvParam1
-);
+ResManFindPrivateDataByPtr(
+                           PRESMAN_ITEM psResItem,
+                           IMG_PVOID *ppvParam1
+                           );
 
-PVRSRV_ERROR ResManFreeResByCriteria (PRESMAN_CONTEXT  hResManContext,
-                                      IMG_UINT32     ui32SearchCriteria,
-                                      IMG_UINT32     ui32ResType,
-                                      IMG_PVOID      pvParam);
-                                      
-PVRSRV_ERROR ResManDissociateRes (PRESMAN_ITEM   psResItem,
-                                  PRESMAN_CONTEXT  psNewResManContext);
-                                  
-PVRSRV_ERROR ResManFindResourceByPtr (PRESMAN_CONTEXT  hResManContext,
-                                      PRESMAN_ITEM   psItem);
-                                      
-PVRSRV_ERROR PVRSRVResManConnect (PRESMAN_DEFER_CONTEXT hDeferContext,
-                                  PRESMAN_CONTEXT * phResManContext);
-                                  
-IMG_VOID PVRSRVResManDisconnect (PRESMAN_CONTEXT hResManContext);
+PVRSRV_ERROR ResManFreeResByCriteria(PRESMAN_CONTEXT	hResManContext,
+									 IMG_UINT32			ui32SearchCriteria, 
+									 IMG_UINT32			ui32ResType, 
+									 IMG_PVOID			pvParam);
 
-PVRSRV_ERROR PVRSRVResManCreateDeferContext (IMG_HANDLE hEventObj,
-    PRESMAN_DEFER_CONTEXT * phDeferContext);
-    
-IMG_BOOL PVRSRVResManFlushDeferContext (PRESMAN_DEFER_CONTEXT hDeferContext);
+PVRSRV_ERROR ResManDissociateRes(PRESMAN_ITEM		psResItem,
+							 PRESMAN_CONTEXT	psNewResManContext);
 
-IMG_VOID PVRSRVResManDestroyDeferContext (PRESMAN_DEFER_CONTEXT hDeferContext);
+PVRSRV_ERROR ResManFindResourceByPtr(PRESMAN_CONTEXT	hResManContext,
+									 PRESMAN_ITEM		psItem);
+
+PVRSRV_ERROR PVRSRVResManConnect(PRESMAN_DEFER_CONTEXT hDeferContext,
+								 PRESMAN_CONTEXT *phResManContext);
+
+IMG_VOID PVRSRVResManDisconnect(PRESMAN_CONTEXT hResManContext);
+
+PVRSRV_ERROR PVRSRVResManCreateDeferContext(IMG_HANDLE hEventObj,
+										    PRESMAN_DEFER_CONTEXT *phDeferContext);
+
+IMG_BOOL PVRSRVResManFlushDeferContext(PRESMAN_DEFER_CONTEXT hDeferContext);
+
+IMG_VOID PVRSRVResManDestroyDeferContext(PRESMAN_DEFER_CONTEXT hDeferContext);
 
 #if defined (__cplusplus)
 }

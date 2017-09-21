@@ -4,7 +4,7 @@
  * manual.
  *
  * Copyright (C) 1998-2003 Hewlett-Packard Co
- *  David Mosberger-Tang <davidm@hpl.hp.com>
+ *	David Mosberger-Tang <davidm@hpl.hp.com>
  * Copyright (C) 1999 Asit Mallick <asit.k.mallick@intel.com>
  * Copyright (C) 1999 Don Dugger <don.dugger@intel.com>
  */
@@ -25,38 +25,38 @@ struct task_struct;
  * newly created thread returns directly to
  * ia64_ret_from_syscall_clear_r8.
  */
-extern struct task_struct * ia64_switch_to (void * next_task);
+extern struct task_struct *ia64_switch_to (void *next_task);
 
-extern void ia64_save_extra (struct task_struct * task);
-extern void ia64_load_extra (struct task_struct * task);
+extern void ia64_save_extra (struct task_struct *task);
+extern void ia64_load_extra (struct task_struct *task);
 
 #ifdef CONFIG_VIRT_CPU_ACCOUNTING
-extern void ia64_account_on_switch (struct task_struct * prev, struct task_struct * next);
+extern void ia64_account_on_switch (struct task_struct *prev, struct task_struct *next);
 # define IA64_ACCOUNT_ON_SWITCH(p,n) ia64_account_on_switch(p,n)
 #else
 # define IA64_ACCOUNT_ON_SWITCH(p,n)
 #endif
 
 #ifdef CONFIG_PERFMON
-DECLARE_PER_CPU (unsigned long, pfm_syst_info);
+  DECLARE_PER_CPU(unsigned long, pfm_syst_info);
 # define PERFMON_IS_SYSWIDE() (__get_cpu_var(pfm_syst_info) & 0x1)
 #else
 # define PERFMON_IS_SYSWIDE() (0)
 #endif
 
-#define IA64_HAS_EXTRA_STATE(t)             \
-  ((t)->thread.flags & (IA64_THREAD_DBG_VALID|IA64_THREAD_PM_VALID) \
-   || PERFMON_IS_SYSWIDE())
+#define IA64_HAS_EXTRA_STATE(t)							\
+	((t)->thread.flags & (IA64_THREAD_DBG_VALID|IA64_THREAD_PM_VALID)	\
+	 || PERFMON_IS_SYSWIDE())
 
-#define __switch_to(prev,next,last) do {               \
-    IA64_ACCOUNT_ON_SWITCH(prev, next);              \
-    if (IA64_HAS_EXTRA_STATE(prev))                \
-      ia64_save_extra(prev);                 \
-    if (IA64_HAS_EXTRA_STATE(next))                \
-      ia64_load_extra(next);                 \
-    ia64_psr(task_pt_regs(next))->dfh = !ia64_is_local_fpu_owner(next);      \
-    (last) = ia64_switch_to((next));               \
-  } while (0)
+#define __switch_to(prev,next,last) do {							 \
+	IA64_ACCOUNT_ON_SWITCH(prev, next);							 \
+	if (IA64_HAS_EXTRA_STATE(prev))								 \
+		ia64_save_extra(prev);								 \
+	if (IA64_HAS_EXTRA_STATE(next))								 \
+		ia64_load_extra(next);								 \
+	ia64_psr(task_pt_regs(next))->dfh = !ia64_is_local_fpu_owner(next);			 \
+	(last) = ia64_switch_to((next));							 \
+} while (0)
 
 #ifdef CONFIG_SMP
 /*
@@ -65,23 +65,23 @@ DECLARE_PER_CPU (unsigned long, pfm_syst_info);
  * pick up the state from task->thread.fph, avoiding the complication of having to fetch
  * the latest fph state from another CPU.  In other words: eager save, lazy restore.
  */
-# define switch_to(prev,next,last) do {           \
-    if (ia64_psr(task_pt_regs(prev))->mfh && ia64_is_local_fpu_owner(prev)) {       \
-      ia64_psr(task_pt_regs(prev))->mfh = 0;      \
-      (prev)->thread.flags |= IA64_THREAD_FPH_VALID;      \
-      __ia64_save_fpu((prev)->thread.fph);        \
-    }                 \
-    __switch_to(prev, next, last);            \
-    /* "next" in old context is "current" in new context */     \
-    if (unlikely((current->thread.flags & IA64_THREAD_MIGRATION) &&        \
-                 (task_cpu(current) !=               \
-                  task_thread_info(current)->last_cpu))) { \
-      platform_migrate(current);               \
-      task_thread_info(current)->last_cpu = task_cpu(current);       \
-    }                      \
-  } while (0)
+# define switch_to(prev,next,last) do {						\
+	if (ia64_psr(task_pt_regs(prev))->mfh && ia64_is_local_fpu_owner(prev)) {				\
+		ia64_psr(task_pt_regs(prev))->mfh = 0;			\
+		(prev)->thread.flags |= IA64_THREAD_FPH_VALID;			\
+		__ia64_save_fpu((prev)->thread.fph);				\
+	}									\
+	__switch_to(prev, next, last);						\
+	/* "next" in old context is "current" in new context */			\
+	if (unlikely((current->thread.flags & IA64_THREAD_MIGRATION) &&	       \
+		     (task_cpu(current) !=				       \
+		      		      task_thread_info(current)->last_cpu))) { \
+		platform_migrate(current);				       \
+		task_thread_info(current)->last_cpu = task_cpu(current);       \
+	}								       \
+} while (0)
 #else
-# define switch_to(prev,next,last)  __switch_to(prev, next, last)
+# define switch_to(prev,next,last)	__switch_to(prev, next, last)
 #endif
 
 #endif /* _ASM_IA64_SWITCH_TO_H */

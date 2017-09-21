@@ -74,53 +74,53 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /* ***************************************************************************
  * Server-side bridge entry points
  */
-
+ 
 static IMG_INT
-PVRSRVBridgeCacheOpQueue (IMG_UINT32 ui32BridgeID,
-                          PVRSRV_BRIDGE_IN_CACHEOPQUEUE * psCacheOpQueueIN,
-                          PVRSRV_BRIDGE_OUT_CACHEOPQUEUE * psCacheOpQueueOUT,
-                          CONNECTION_DATA * psConnection)
+PVRSRVBridgeCacheOpQueue(IMG_UINT32 ui32BridgeID,
+					 PVRSRV_BRIDGE_IN_CACHEOPQUEUE *psCacheOpQueueIN,
+					 PVRSRV_BRIDGE_OUT_CACHEOPQUEUE *psCacheOpQueueOUT,
+					 CONNECTION_DATA *psConnection)
 {
 
-  PVRSRV_BRIDGE_ASSERT_CMD (ui32BridgeID, PVRSRV_BRIDGE_CACHEGENERIC_CACHEOPQUEUE);
-  
-  PVR_UNREFERENCED_PARAMETER (psConnection);
-  
-  
-  
-  
-  psCacheOpQueueOUT->eError =
-    CacheOpQueue (
-      psCacheOpQueueIN->iuCacheOp);
-      
-      
-      
-      
-  return 0;
+	PVRSRV_BRIDGE_ASSERT_CMD(ui32BridgeID, PVRSRV_BRIDGE_CACHEGENERIC_CACHEOPQUEUE);
+
+	PVR_UNREFERENCED_PARAMETER(psConnection);
+
+
+
+
+	psCacheOpQueueOUT->eError =
+		CacheOpQueue(
+					psCacheOpQueueIN->iuCacheOp);
+
+
+
+
+	return 0;
 }
 
 
 
-/* ***************************************************************************
- * Server bridge dispatch related glue
+/* *************************************************************************** 
+ * Server bridge dispatch related glue 
  */
-
-PVRSRV_ERROR RegisterCACHEGENERICFunctions (IMG_VOID);
-IMG_VOID UnregisterCACHEGENERICFunctions (IMG_VOID);
+ 
+PVRSRV_ERROR RegisterCACHEGENERICFunctions(IMG_VOID);
+IMG_VOID UnregisterCACHEGENERICFunctions(IMG_VOID);
 
 /*
  * Register all CACHEGENERIC functions with services
  */
-PVRSRV_ERROR RegisterCACHEGENERICFunctions (IMG_VOID)
+PVRSRV_ERROR RegisterCACHEGENERICFunctions(IMG_VOID)
 {
-  SetDispatchTableEntry (PVRSRV_BRIDGE_CACHEGENERIC_CACHEOPQUEUE, PVRSRVBridgeCacheOpQueue);
-  
-  return PVRSRV_OK;
+	SetDispatchTableEntry(PVRSRV_BRIDGE_CACHEGENERIC_CACHEOPQUEUE, PVRSRVBridgeCacheOpQueue);
+
+	return PVRSRV_OK;
 }
 
 /*
  * Unregister all cachegeneric functions with services
  */
-IMG_VOID UnregisterCACHEGENERICFunctions (IMG_VOID)
+IMG_VOID UnregisterCACHEGENERICFunctions(IMG_VOID)
 {
 }

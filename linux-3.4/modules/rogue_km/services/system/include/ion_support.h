@@ -41,6 +41,6 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */ /**************************************************************************/
 
-PVRSRV_ERROR IonInit (void * pvPrivateData);
+PVRSRV_ERROR IonInit(void *pvPrivateData);
 
-IMG_VOID IonDeinit (IMG_VOID);
+IMG_VOID IonDeinit(IMG_VOID);

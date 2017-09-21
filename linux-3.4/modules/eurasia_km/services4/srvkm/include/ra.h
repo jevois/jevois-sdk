@@ -49,52 +49,52 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /** Resource arena.
  *  struct _RA_ARENA_ deliberately opaque
  */
-typedef struct _RA_ARENA_ RA_ARENA;    
+typedef struct _RA_ARENA_ RA_ARENA;		
 typedef struct _BM_MAPPING_ BM_MAPPING;
 
 
 
 /** Enable support for arena statistics. */
-#define RA_STATS
+#define RA_STATS 
 
 
 /** Resource arena statistics. */
 struct _RA_STATISTICS_
 {
-  /** total number of segments add to the arena */
-  IMG_SIZE_T uSpanCount;
-  
-  /** number of current live segments within the arena */
-  IMG_SIZE_T uLiveSegmentCount;
-  
-  /** number of current free segments within the arena */
-  IMG_SIZE_T uFreeSegmentCount;
-  
-  /** total number of resource within the arena */
-  IMG_SIZE_T uTotalResourceCount;
-  
-  /** number of free resource within the arena */
-  IMG_SIZE_T uFreeResourceCount;
-  
-  /** total number of resources allocated from the arena */
-  IMG_SIZE_T uCumulativeAllocs;
-  
-  /** total number of resources returned to the arena */
-  IMG_SIZE_T uCumulativeFrees;
-  
-  /** total number of spans allocated by the callback mechanism */
-  IMG_SIZE_T uImportCount;
-  
-  /** total number of spans deallocated by the callback mechanism */
-  IMG_SIZE_T uExportCount;
+    /** total number of segments add to the arena */
+    IMG_SIZE_T uSpanCount;
+
+    /** number of current live segments within the arena */
+    IMG_SIZE_T uLiveSegmentCount;
+
+    /** number of current free segments within the arena */
+    IMG_SIZE_T uFreeSegmentCount;
+
+    /** total number of resource within the arena */
+    IMG_SIZE_T uTotalResourceCount;
+    
+    /** number of free resource within the arena */
+    IMG_SIZE_T uFreeResourceCount;
+
+    /** total number of resources allocated from the arena */
+    IMG_SIZE_T uCumulativeAllocs;
+
+    /** total number of resources returned to the arena */
+    IMG_SIZE_T uCumulativeFrees;
+
+    /** total number of spans allocated by the callback mechanism */
+    IMG_SIZE_T uImportCount;
+
+    /** total number of spans deallocated by the callback mechanism */
+    IMG_SIZE_T uExportCount;
 };
 typedef struct _RA_STATISTICS_ RA_STATISTICS;
 
 struct _RA_SEGMENT_DETAILS_
 {
-  IMG_SIZE_T      uiSize;
-  IMG_CPU_PHYADDR sCpuPhyAddr;
-  IMG_HANDLE      hSegment;
+	IMG_SIZE_T      uiSize;
+	IMG_CPU_PHYADDR sCpuPhyAddr;
+	IMG_HANDLE      hSegment;
 };
 typedef struct _RA_SEGMENT_DETAILS_ RA_SEGMENT_DETAILS;
 
@@ -116,27 +116,27 @@ typedef struct _RA_SEGMENT_DETAILS_ RA_SEGMENT_DETAILS;
  *  @Return arena handle, or IMG_NULL.
  */
 RA_ARENA *
-RA_Create (IMG_CHAR * name,
+RA_Create (IMG_CHAR *name,
            IMG_UINTPTR_T base,
            IMG_SIZE_T uSize,
-           BM_MAPPING * psMapping,
-           IMG_SIZE_T uQuantum,
-           IMG_BOOL (*imp_alloc) (IMG_VOID * _h,
-                                  IMG_SIZE_T uSize,
-                                  IMG_SIZE_T * pActualSize,
-                                  BM_MAPPING ** ppsMapping,
-                                  IMG_UINT32 uFlags,
-                                  IMG_PVOID pvPrivData,
-                                  IMG_UINT32 ui32PrivDataLength,
-                                  IMG_UINTPTR_T * pBase),
+           BM_MAPPING *psMapping,
+           IMG_SIZE_T uQuantum, 
+           IMG_BOOL (*imp_alloc)(IMG_VOID *_h,
+                                IMG_SIZE_T uSize,
+                                IMG_SIZE_T *pActualSize,
+                                BM_MAPPING **ppsMapping,
+                                IMG_UINT32 uFlags,
+								IMG_PVOID pvPrivData,
+								IMG_UINT32 ui32PrivDataLength,
+                                IMG_UINTPTR_T *pBase),
            IMG_VOID (*imp_free) (IMG_VOID *,
-                                 IMG_UINTPTR_T,
-                                 BM_MAPPING *),
+                                IMG_UINTPTR_T,
+                                BM_MAPPING *),
            IMG_VOID (*backingstore_free) (IMG_VOID *,
-               IMG_SIZE_T,
-               IMG_SIZE_T,
-               IMG_HANDLE),
-           IMG_VOID * import_handle);
+                                          IMG_SIZE_T,
+                                          IMG_SIZE_T,
+                                          IMG_HANDLE),
+           IMG_VOID *import_handle);
 
 /**
  *  @Function   RA_Delete
@@ -145,12 +145,12 @@ RA_Create (IMG_CHAR * name,
  *
  *  To delete a resource arena. All resources allocated from the arena
  *  must be freed before deleting the arena.
- *
+ *                  
  *  @Input  pArena - the arena to delete.
  *  @Return None
  */
 IMG_VOID
-RA_Delete (RA_ARENA * pArena);
+RA_Delete (RA_ARENA *pArena);
 
 /**
  *  @Function   RA_TestDelete
@@ -158,13 +158,13 @@ RA_Delete (RA_ARENA * pArena);
  *  @Description
  *
  *  To test whether it is safe to delete a resource arena. If any allocations
- *  have not been freed, the RA must not be deleted.
- *
+ *	have not been freed, the RA must not be deleted.
+ *                  
  *  @Input  pArena - the arena to test.
  *  @Return IMG_BOOL - IMG_TRUE if is safe to go on and call RA_Delete.
  */
 IMG_BOOL
-RA_TestDelete (RA_ARENA * pArena);
+RA_TestDelete (RA_ARENA *pArena);
 
 /**
  *  @Function   RA_Add
@@ -180,7 +180,7 @@ RA_TestDelete (RA_ARENA * pArena);
  *  @Return IMG_TRUE - success, IMG_FALSE - failure
  */
 IMG_BOOL
-RA_Add (RA_ARENA * pArena, IMG_UINTPTR_T base, IMG_SIZE_T uSize);
+RA_Add (RA_ARENA *pArena, IMG_UINTPTR_T base, IMG_SIZE_T uSize);
 
 /**
  *  @Function   RA_Alloc
@@ -198,7 +198,7 @@ RA_Add (RA_ARENA * pArena, IMG_UINTPTR_T base, IMG_SIZE_T uSize);
  *  @Input  uFlags - flags influencing allocation policy.
  *  @Input  uAlignment - the alignment constraint required for the
  *          allocated segment, use 0 if alignment not required.
- *  @Input  uAlignmentOffset - the required alignment offset
+ *	@Input  uAlignmentOffset - the required alignment offset
  *  @Input  pvPrivData - private data passed to OS allocator
  *  @Input  ui32PrivData - length of private data
  *
@@ -206,83 +206,83 @@ RA_Add (RA_ARENA * pArena, IMG_UINTPTR_T base, IMG_SIZE_T uSize);
  *  @Return IMG_TRUE - success, IMG_FALSE - failure
  */
 IMG_BOOL
-RA_Alloc (RA_ARENA * pArena,
+RA_Alloc (RA_ARENA *pArena, 
           IMG_SIZE_T uSize,
-          IMG_SIZE_T * pActualSize,
-          BM_MAPPING ** ppsMapping,
+          IMG_SIZE_T *pActualSize,
+          BM_MAPPING **ppsMapping, 
           IMG_UINT32 uFlags,
           IMG_UINT32 uAlignment,
-          IMG_UINT32 uAlignmentOffset,
-          IMG_PVOID pvPrivData,
-          IMG_UINT32 ui32PrivDataLength,
-          IMG_UINTPTR_T * pBase);
+		  IMG_UINT32 uAlignmentOffset,
+		  IMG_PVOID pvPrivData,
+		  IMG_UINT32 ui32PrivDataLength,
+          IMG_UINTPTR_T *pBase);
 
 /**
  *  @Function   RA_Free
  *
  *  @Description    To free a resource segment.
- *
+ *  
  *  @Input  pArena - the arena the segment was originally allocated from.
  *  @Input  base - the base of the resource span to free.
- *  @Input  bFreeBackingStore - Should backing store memory be freed?
+ *	@Input	bFreeBackingStore - Should backing store memory be freed?
  *
  *  @Return None
  */
-IMG_VOID
-RA_Free (RA_ARENA * pArena, IMG_UINTPTR_T base, IMG_BOOL bFreeBackingStore);
+IMG_VOID 
+RA_Free (RA_ARENA *pArena, IMG_UINTPTR_T base, IMG_BOOL bFreeBackingStore);
 
 
 #ifdef RA_STATS
 
-#define CHECK_SPACE(total)          \
-  {                     \
-    if((total)<100)               \
-      return PVRSRV_ERROR_INVALID_PARAMS; \
-  }
+#define CHECK_SPACE(total)					\
+{											\
+	if((total)<100) 							\
+		return PVRSRV_ERROR_INVALID_PARAMS;	\
+}
 
-#define UPDATE_SPACE(str, count, total)   \
-  {                     \
-    if((count) == -1)             \
-      return PVRSRV_ERROR_INVALID_PARAMS; \
-    else                  \
-    {                   \
-      (str) += (count);           \
-      (total) -= (count);           \
-    }                   \
-  }
+#define UPDATE_SPACE(str, count, total)		\
+{											\
+	if((count) == -1)					 		\
+		return PVRSRV_ERROR_INVALID_PARAMS;	\
+	else									\
+	{										\
+		(str) += (count);						\
+		(total) -= (count);						\
+	}										\
+}
 
 
 /**
  * @Function    RA_GetNextLiveSegment
- *
+ * 
  * @Description Returns details of the next live resource segments
- *
+ * 
  * @Input       pArena - the arena the segment was originally allocated from.
  * @Output      psSegDetails - rtn details of segments
- *
+ * 
  * @Return      IMG_TRUE if operation succeeded
  */
-IMG_BOOL RA_GetNextLiveSegment (IMG_HANDLE hArena, RA_SEGMENT_DETAILS * psSegDetails);
+IMG_BOOL RA_GetNextLiveSegment(IMG_HANDLE hArena, RA_SEGMENT_DETAILS *psSegDetails);
 
 
 /**
  *  @Function   RA_GetStats
  *
  *  @Description    gets stats on a given arena
- *
+ *  
  *  @Input  pArena - the arena the segment was originally allocated from.
- *  @Input  ppszStr - string to write stats to
- *  @Input  pui32StrLen - length of string
+ *  @Input  ppszStr - string to write stats to 
+ *	@Input	pui32StrLen - length of string
  *
  *  @Return PVRSRV_ERROR
  */
-PVRSRV_ERROR RA_GetStats (RA_ARENA * pArena,
-                          IMG_CHAR ** ppszStr,
-                          IMG_UINT32 * pui32StrLen);
+PVRSRV_ERROR RA_GetStats(RA_ARENA *pArena,
+							IMG_CHAR **ppszStr, 
+							IMG_UINT32 *pui32StrLen);
 
-PVRSRV_ERROR RA_GetStatsFreeMem (RA_ARENA * pArena,
-                                 IMG_CHAR ** ppszStr,
-                                 IMG_UINT32 * pui32StrLen);
+PVRSRV_ERROR RA_GetStatsFreeMem(RA_ARENA *pArena,
+								IMG_CHAR **ppszStr, 
+								IMG_UINT32 *pui32StrLen);
 
 #endif /* #ifdef RA_STATS */
 

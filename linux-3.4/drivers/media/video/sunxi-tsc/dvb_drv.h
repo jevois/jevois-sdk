@@ -24,10 +24,10 @@
 
 /*****************************************************************************/
 struct intrstatus {
-  unsigned int port0chan;
-  unsigned int port0pcr;
-  unsigned int port1chan;
-  unsigned int port1pcr;
+    unsigned int port0chan;
+    unsigned int port0pcr;
+    unsigned int port1chan;
+    unsigned int port1pcr;
 };
 
 /*
@@ -35,9 +35,9 @@ struct intrstatus {
  */
 #define CLK_NAME_LEN (32)
 struct clk_para {
-  char            clk_name[CLK_NAME_LEN];
-  unsigned int    handle;
-  int             clk_rate;
+    char            clk_name[CLK_NAME_LEN];
+    unsigned int    handle;
+    int             clk_rate;
 };
 #define REGS_BASE   (0x01C06000)
 #define REGS_SIZE   (0x1000)

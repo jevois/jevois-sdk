@@ -47,30 +47,30 @@ extern "C" {
 /* -------------------------------------------------------------------- */
 /* -------------------------------------------------------------------- */
 
-typedef struct {
-  uint32_t memcStatus;
-  uint32_t memcCmd;
-  uint32_t directCmd;
-  uint32_t memoryCfg;
-  uint32_t refreshPrd;
-  uint32_t casLatency;
-  uint32_t writeLatency;
-  uint32_t tMrd;
-  uint32_t tRas;
-  uint32_t tRc;
-  uint32_t tRcd;
-  uint32_t tRfc;
-  uint32_t tRp;
-  uint32_t tRrd;
-  uint32_t tWr;
-  uint32_t tWtr;
-  uint32_t tXp;
-  uint32_t tXsr;
-  uint32_t tEsr;
-  uint32_t memoryCfg2;
-  uint32_t memoryCfg3;
-  uint32_t tFaw;
-} ddrcReg_CTLR_MEMC_REG_t;
+	typedef struct {
+		uint32_t memcStatus;
+		uint32_t memcCmd;
+		uint32_t directCmd;
+		uint32_t memoryCfg;
+		uint32_t refreshPrd;
+		uint32_t casLatency;
+		uint32_t writeLatency;
+		uint32_t tMrd;
+		uint32_t tRas;
+		uint32_t tRc;
+		uint32_t tRcd;
+		uint32_t tRfc;
+		uint32_t tRp;
+		uint32_t tRrd;
+		uint32_t tWr;
+		uint32_t tWtr;
+		uint32_t tXp;
+		uint32_t tXsr;
+		uint32_t tEsr;
+		uint32_t memoryCfg2;
+		uint32_t memoryCfg3;
+		uint32_t tFaw;
+	} ddrcReg_CTLR_MEMC_REG_t;
 
 #define ddrcReg_CTLR_MEMC_REG_OFFSET                    0x0000
 #define ddrcReg_CTLR_MEMC_REGP                          ((volatile ddrcReg_CTLR_MEMC_REG_t *)  (MM_IO_BASE_DDRC + ddrcReg_CTLR_MEMC_REG_OFFSET))
@@ -154,7 +154,7 @@ typedef struct {
 
 #define ddrcReg_CTLR_MEMORY_CFG_BURST_LEN_MASK          (0x7 << 15)
 #define ddrcReg_CTLR_MEMORY_CFG_BURST_LEN_4             (0x2 << 15)
-#define ddrcReg_CTLR_MEMORY_CFG_BURST_LEN_8             (0x3 << 15) /* @note Not supported in PL341 */
+#define ddrcReg_CTLR_MEMORY_CFG_BURST_LEN_8             (0x3 << 15)	/* @note Not supported in PL341 */
 
 #define ddrcReg_CTLR_MEMORY_CFG_PWRDOWN_ENABLE          (0x1 << 13)
 
@@ -302,9 +302,9 @@ typedef struct {
 #define ddrcReg_CTLR_QOS_CNT                            16
 #define ddrcReg_CTLR_QOS_MAX                            (ddrcReg_CTLR_QOS_CNT - 1)
 
-typedef struct {
-  uint32_t cfg[ddrcReg_CTLR_QOS_CNT];
-} ddrcReg_CTLR_QOS_REG_t;
+	typedef struct {
+		uint32_t cfg[ddrcReg_CTLR_QOS_CNT];
+	} ddrcReg_CTLR_QOS_REG_t;
 
 #define ddrcReg_CTLR_QOS_REG_OFFSET                     0x100
 #define ddrcReg_CTLR_QOS_REGP                           ((volatile ddrcReg_CTLR_QOS_REG_t *) (MM_IO_BASE_DDRC + ddrcReg_CTLR_QOS_REG_OFFSET))
@@ -328,9 +328,9 @@ typedef struct {
 #define ddrcReg_CTLR_CHIP_CNT                           4
 #define ddrcReg_CTLR_CHIP_MAX                           (ddrcReg_CTLR_CHIP_CNT - 1)
 
-typedef struct {
-  uint32_t cfg[ddrcReg_CTLR_CHIP_CNT];
-} ddrcReg_CTLR_CHIP_REG_t;
+	typedef struct {
+		uint32_t cfg[ddrcReg_CTLR_CHIP_CNT];
+	} ddrcReg_CTLR_CHIP_REG_t;
 
 #define ddrcReg_CTLR_CHIP_REG_OFFSET                    0x200
 #define ddrcReg_CTLR_CHIP_REGP                          ((volatile ddrcReg_CTLR_CHIP_REG_t *) (MM_IO_BASE_DDRC + ddrcReg_CTLR_CHIP_REG_OFFSET))
@@ -355,11 +355,11 @@ typedef struct {
 
 #define ddrcReg_CTLR_USER_OUTPUT_CNT                    2
 
-typedef struct {
-  uint32_t input;
-  uint32_t output[ddrcReg_CTLR_USER_OUTPUT_CNT];
-  uint32_t feature;
-} ddrcReg_CTLR_USER_REG_t;
+	typedef struct {
+		uint32_t input;
+		uint32_t output[ddrcReg_CTLR_USER_OUTPUT_CNT];
+		uint32_t feature;
+	} ddrcReg_CTLR_USER_REG_t;
 
 #define ddrcReg_CTLR_USER_REG_OFFSET                    0x300
 #define ddrcReg_CTLR_USER_REGP                          ((volatile ddrcReg_CTLR_USER_REG_t *) (MM_IO_BASE_DDRC + ddrcReg_CTLR_USER_REG_OFFSET))
@@ -395,25 +395,25 @@ typedef struct {
 /* -------------------------------------------------------------------- */
 /* -------------------------------------------------------------------- */
 
-typedef struct {
-  uint32_t revision;
-  uint32_t pmCtl;
-  REG32_RSVD (0x0008, 0x0010);
-  uint32_t pllStatus;
-  uint32_t pllCfg;
-  uint32_t pllPreDiv;
-  uint32_t pllDiv;
-  uint32_t pllCtl1;
-  uint32_t pllCtl2;
-  uint32_t ssCtl;
-  uint32_t ssCfg;
-  uint32_t vdlStatic;
-  uint32_t vdlDynamic;
-  uint32_t padIdle;
-  uint32_t pvtComp;
-  uint32_t padDrive;
-  uint32_t clkRgltrCtl;
-} ddrcReg_PHY_ADDR_CTL_REG_t;
+	typedef struct {
+		uint32_t revision;
+		uint32_t pmCtl;
+		 REG32_RSVD(0x0008, 0x0010);
+		uint32_t pllStatus;
+		uint32_t pllCfg;
+		uint32_t pllPreDiv;
+		uint32_t pllDiv;
+		uint32_t pllCtl1;
+		uint32_t pllCtl2;
+		uint32_t ssCtl;
+		uint32_t ssCfg;
+		uint32_t vdlStatic;
+		uint32_t vdlDynamic;
+		uint32_t padIdle;
+		uint32_t pvtComp;
+		uint32_t padDrive;
+		uint32_t clkRgltrCtl;
+	} ddrcReg_PHY_ADDR_CTL_REG_t;
 
 #define ddrcReg_PHY_ADDR_CTL_REG_OFFSET                 0x0400
 #define ddrcReg_PHY_ADDR_CTL_REGP                       ((volatile ddrcReg_PHY_ADDR_CTL_REG_t *) (MM_IO_BASE_DDRC + ddrcReg_PHY_ADDR_CTL_REG_OFFSET))
@@ -423,7 +423,7 @@ typedef struct {
 #define ddrcReg_PHY_ADDR_SS_CTRL_ENABLE                 0x00000001
 #define ddrcReg_PHY_ADDR_SS_CFG_CYCLE_PER_TICK_MASK     0xFFFF0000
 #define ddrcReg_PHY_ADDR_SS_CFG_CYCLE_PER_TICK_SHIFT    16
-#define ddrcReg_PHY_ADDR_SS_CFG_MIN_CYCLE_PER_TICK      10  /* Higher the value, lower the SS modulation frequency */
+#define ddrcReg_PHY_ADDR_SS_CFG_MIN_CYCLE_PER_TICK      10	/* Higher the value, lower the SS modulation frequency */
 #define ddrcReg_PHY_ADDR_SS_CFG_NDIV_AMPLITUDE_MASK     0x0000FFFF
 #define ddrcReg_PHY_ADDR_SS_CFG_NDIV_AMPLITUDE_SHIFT    0
 
@@ -637,21 +637,21 @@ typedef struct {
 
 #define ddrcReg_PHY_BYTE_LANE_VDL_OVR_CNT               8
 
-typedef struct {
-  uint32_t revision;
-  uint32_t vdlCalibrate;
-  uint32_t vdlStatus;
-  REG32_RSVD (0x000c, 0x0010);
-  uint32_t vdlOverride[ddrcReg_PHY_BYTE_LANE_VDL_OVR_CNT];
-  uint32_t readCtl;
-  uint32_t readStatus;
-  uint32_t readClear;
-  uint32_t padIdleCtl;
-  uint32_t padDriveCtl;
-  uint32_t padClkCtl;
-  uint32_t writeCtl;
-  uint32_t clkRegCtl;
-} ddrcReg_PHY_BYTE_LANE_REG_t;
+	typedef struct {
+		uint32_t revision;
+		uint32_t vdlCalibrate;
+		uint32_t vdlStatus;
+		 REG32_RSVD(0x000c, 0x0010);
+		uint32_t vdlOverride[ddrcReg_PHY_BYTE_LANE_VDL_OVR_CNT];
+		uint32_t readCtl;
+		uint32_t readStatus;
+		uint32_t readClear;
+		uint32_t padIdleCtl;
+		uint32_t padDriveCtl;
+		uint32_t padClkCtl;
+		uint32_t writeCtl;
+		uint32_t clkRegCtl;
+	} ddrcReg_PHY_BYTE_LANE_REG_t;
 
 /* There are 2 instances of the byte Lane registers, one for each byte lane. */
 #define ddrcReg_PHY_BYTE_LANE_1_REG_OFFSET              0x0500
@@ -785,18 +785,18 @@ typedef struct {
 /* ARM PL341 DDRC to Broadcom DDR23 PHY glue register definitions */
 /*********************************************************************/
 
-typedef struct {
-  uint32_t cfg;
-  uint32_t actMonCnt;
-  uint32_t ctl;
-  uint32_t lbistCtl;
-  uint32_t lbistSeed;
-  uint32_t lbistStatus;
-  uint32_t tieOff;
-  uint32_t actMonClear;
-  uint32_t status;
-  uint32_t user;
-} ddrcReg_CTLR_PHY_GLUE_REG_t;
+	typedef struct {
+		uint32_t cfg;
+		uint32_t actMonCnt;
+		uint32_t ctl;
+		uint32_t lbistCtl;
+		uint32_t lbistSeed;
+		uint32_t lbistStatus;
+		uint32_t tieOff;
+		uint32_t actMonClear;
+		uint32_t status;
+		uint32_t user;
+	} ddrcReg_CTLR_PHY_GLUE_REG_t;
 
 #define ddrcReg_CTLR_PHY_GLUE_OFFSET                            0x0700
 #define ddrcReg_CTLR_PHY_GLUE_REGP                              ((volatile ddrcReg_CTLR_PHY_GLUE_REG_t *) (MM_IO_BASE_DDRC + ddrcReg_CTLR_PHY_GLUE_OFFSET))
@@ -867,6 +867,6 @@ typedef struct {
 /* ---- Public Function Prototypes --------------------------------------- */
 
 #ifdef __cplusplus
-}       /* end extern "C" */
+}				/* end extern "C" */
 #endif
-#endif        /* DDRC_REG_H */
+#endif				/* DDRC_REG_H */

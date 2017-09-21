@@ -16,18 +16,18 @@
 /*
  * Tell the user there is some problem.
  */
-#define BUG()             \
-  do {                \
-    asm volatile(           \
-                            "	syscall 15			\n"  \
-                            "0:					\n" \
-                            "	.section __bug_table,\"a\"	\n"  \
-                            "	.long 0b,%0,%1			\n"  \
-                            "	.previous			\n" \
-                            :           \
-                            : "i"(__FILE__), "i"(__LINE__)      \
-                );            \
-  } while (1)
+#define BUG()							\
+do {								\
+	asm volatile(						\
+		"	syscall 15			\n"	\
+		"0:					\n"	\
+		"	.section __bug_table,\"a\"	\n"	\
+		"	.long 0b,%0,%1			\n"	\
+		"	.previous			\n"	\
+		:						\
+		: "i"(__FILE__), "i"(__LINE__)			\
+		);						\
+} while (1)
 
 #define HAVE_ARCH_BUG
 #endif /* CONFIG_BUG */

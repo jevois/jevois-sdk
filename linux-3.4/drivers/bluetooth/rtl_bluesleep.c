@@ -1,6 +1,6 @@
 /*
  *  TI Bluesleep driver
- *  Kernel module responsible for Wake up of Host
+ *	Kernel module responsible for Wake up of Host
  *  Copyright (C) 2009-2010 Texas Instruments
 
 
@@ -45,92 +45,91 @@
 /*
  * Defines
  */
-#define VERSION  "1.1"
-#define PROC_DIR  "bluetooth/sleep"
+#define VERSION	 "1.1"
+#define PROC_DIR	"bluetooth/sleep"
 
 #define POLARITY_LOW 0
 #define POLARITY_HIGH 1
 
-static void bluesleep_stop (void);
-static int bluesleep_start (void);
-static void enter_sleep_mode (void);
+static void bluesleep_stop(void);
+static int bluesleep_start(void);
+static void enter_sleep_mode(void);
 
 struct bluesleep_info {
-  unsigned host_wake_irq;
-  struct uart_port * uport;
-  int irq_polarity;
-  int host_wake;
+	unsigned host_wake_irq;
+	struct uart_port *uport;
+	int irq_polarity;
+	int host_wake;
 };
 
 
 /* state variable names and bit positions */
-#define FLAG_RESET        0x00
-#define BT_ACTIVE   0x02
-#define BT_SUSPEND    0x04
+#define FLAG_RESET      	0x00
+#define BT_ACTIVE		0x02
+#define BT_SUSPEND		0x04
 
 /* variable use indicate lpm modle */
 static bool has_lpm_enabled = false;
 
 /* struct use save platform_device from uart */
-static struct platform_device * bluesleep_uart_dev;
+static struct platform_device *bluesleep_uart_dev;
 
-static struct bluesleep_info * bsi;
+static struct bluesleep_info *bsi;
 
 /* module usage */
-static atomic_t open_count = ATOMIC_INIT (1);
+static atomic_t open_count = ATOMIC_INIT(1);
 
-struct proc_dir_entry * bluetooth_dir, *sleep_dir;
+struct proc_dir_entry *bluetooth_dir, *sleep_dir;
 
-static struct uart_port * bluesleep_get_uart_port (void)
+static struct uart_port *bluesleep_get_uart_port(void)
 {
-  struct uart_port * uport = NULL;
-  BT_INFO ("%s enter.", __FUNCTION__);
-  if (bluesleep_uart_dev) {
-    uport = platform_get_drvdata (bluesleep_uart_dev);
-    BT_INFO ("%s get uart_port from blusleep_uart_dev: %s, port irq: %d\n",
-             __FUNCTION__, bluesleep_uart_dev->name, uport->irq);
-  }
-  
-  return uport;
+	struct uart_port *uport = NULL;
+	BT_INFO("%s enter.", __FUNCTION__);
+	if (bluesleep_uart_dev) {
+		uport = platform_get_drvdata(bluesleep_uart_dev);
+		BT_INFO("%s get uart_port from blusleep_uart_dev: %s, port irq: %d\n", 
+		           __FUNCTION__, bluesleep_uart_dev->name, uport->irq);
+	}
+
+	return uport;
 }
 
-static int bluesleep_read_proc_lpm (char * page, char ** start, off_t offset,
-                                    int count, int * eof, void * data)
+static int bluesleep_read_proc_lpm(char *page, char **start, off_t offset,
+					int count, int *eof, void *data)
 {
-  *eof = 1;
-  return sprintf (page, "unsupported to read\n");
+	*eof = 1;
+	return sprintf(page, "unsupported to read\n");
 }
 
-static int bluesleep_write_proc_lpm (struct file * file, const char * buffer,
-                                     unsigned long count, void * data)
+static int bluesleep_write_proc_lpm(struct file *file, const char *buffer,
+					unsigned long count, void *data)
 {
-  char b;
-  
-  if (count < 1)
-  { return -EINVAL; }
-  
-  if (copy_from_user (&b, buffer, 1) )
-  { return -EFAULT; }
-  
-  if (b == '0') {
-    /* HCI_DEV_UNREG */
-    bluesleep_stop();
-    has_lpm_enabled = false;
-    bsi->uport = NULL;
-  }
-  else {
-    /* HCI_DEV_REG */
-    if (!has_lpm_enabled) {
-      has_lpm_enabled = true;
-      if (bluesleep_uart_dev)
-      { bsi->uport = bluesleep_get_uart_port(); }
-      
-      /* if bluetooth started, start bluesleep*/
-      bluesleep_start();
-    }
-  }
-  
-  return count;
+	char b;
+
+	if (count < 1)
+		return -EINVAL;
+
+	if (copy_from_user(&b, buffer, 1))
+		return -EFAULT;
+
+	if (b == '0') {
+		/* HCI_DEV_UNREG */
+		bluesleep_stop();
+		has_lpm_enabled = false;
+		bsi->uport = NULL;
+	} else {
+		/* HCI_DEV_REG */
+		if (!has_lpm_enabled) {
+			has_lpm_enabled = true;
+			if (bluesleep_uart_dev)
+				bsi->uport = bluesleep_get_uart_port();
+
+			/* if bluetooth started, start bluesleep*/
+			bluesleep_start();
+		}
+	}
+
+	return count;
 }
 
 /*
@@ -145,11 +144,11 @@ static unsigned long flags;
  * @param irq Not used.
  * @param dev_id Not used.
  */
-static irqreturn_t bluesleep_hostwake_isr (int irq, void * dev_id)
+static irqreturn_t bluesleep_hostwake_isr(int irq, void *dev_id)
 {
-  pr_debug ("%s", __func__);
-  
-  return 0;
+	pr_debug("%s", __func__);
+	
+	return 0;
 }
 
 /**
@@ -157,133 +156,132 @@ static irqreturn_t bluesleep_hostwake_isr (int irq, void * dev_id)
  * @return On success, 0. On error, -1, and <code>errno</code> is set
  * appropriately.
  */
-static int bluesleep_start (void)
+static int bluesleep_start(void)
 {
-  int retval;
-  
-  printk ("bluesleep_acquire irq\n");
-  
-  retval = request_irq (bsi->host_wake_irq, bluesleep_hostwake_isr, IRQF_TRIGGER_FALLING, "bluetooth hostwake", NULL);
-  if (retval < 0) {
-    BT_ERR ("Couldn't acquire bt_host_wake IRQ or enable it");
-    goto fail;
-  }
-  
-  disable_irq (bsi->host_wake_irq);
-  
-  return 0;
+	int retval;
+	
+	printk("bluesleep_acquire irq\n");
+	
+	retval = request_irq(bsi->host_wake_irq, bluesleep_hostwake_isr, IRQF_TRIGGER_FALLING,"bluetooth hostwake", NULL);
+	if (retval < 0) {
+		BT_ERR("Couldn't acquire bt_host_wake IRQ or enable it");
+		goto fail;
+	}
+
+  disable_irq(bsi->host_wake_irq);
+
+	return 0;
 fail:
-  atomic_inc (&open_count);
-  return retval;
+	atomic_inc(&open_count);
+	return retval;
 }
 
 /**
  * Stops the Sleep-Mode Protocol on the Host.
  */
-static void bluesleep_stop (void)
+static void bluesleep_stop(void)
 {
-  pr_debug ("%s", __func__);
-  
-  disable_irq (bsi->host_wake_irq);
-  free_irq (bsi->host_wake_irq, NULL);
+	pr_debug("%s", __func__);
+
+  disable_irq(bsi->host_wake_irq);
+  free_irq(bsi->host_wake_irq, NULL);
 }
 
-extern struct platform_device * sw_uart_get_pdev (int uart_id);
-static int bluesleep_probe (struct platform_device * pdev)
+extern struct platform_device *sw_uart_get_pdev(int uart_id);
+static int bluesleep_probe(struct platform_device *pdev)
 {
-  int ret;
+	int ret;
   script_item_u val;
-  script_item_value_type_e type;
-  
-  bsi = kzalloc (sizeof (struct bluesleep_info), GFP_KERNEL);
-  if (!bsi)
-  { return -ENOMEM; }
-  
-  type = script_get_item ("wifi_para", "rtl8723bs_bt_host_wake", &val);
-  if (SCIRPT_ITEM_VALUE_TYPE_PIO != type) {
-    BT_ERR ("get rtl8723bs rtl8723bs_bt_host_wake gpio failed\n");
-    goto free_bsi;
-  }
-  else {
-    bsi->host_wake = val.gpio.gpio;
-  }
-  
-  bsi->host_wake_irq = gpio_to_irq (bsi->host_wake);
-  if (IS_ERR_VALUE (bsi->host_wake_irq) ) {
-    BT_ERR ("map gpio [%d] to virq failed, errno = %d\n", bsi->host_wake, bsi->host_wake_irq);
-    ret = -ENODEV;
-    goto free_bsi;
+	script_item_value_type_e type;
+
+	bsi = kzalloc(sizeof(struct bluesleep_info), GFP_KERNEL);
+	if (!bsi)
+		return -ENOMEM;
+
+	type = script_get_item("wifi_para", "rtl8723bs_bt_host_wake", &val);
+	if (SCIRPT_ITEM_VALUE_TYPE_PIO!=type) {
+		BT_ERR("get rtl8723bs rtl8723bs_bt_host_wake gpio failed\n");
+		goto free_bsi;
+	} else {
+		bsi->host_wake = val.gpio.gpio;
   }
   
-  type = script_get_item ("bt_para", "bt_uart_id", &val);
-  if (SCIRPT_ITEM_VALUE_TYPE_INT != type) {
-    BT_ERR ("failed to fetch bt uart configuration.");
-    return -1;
-  }
-  if (val.val != 0)
-  { bluesleep_uart_dev = sw_uart_get_pdev (val.val); }
-  
-  clear_bit (BT_SUSPEND, &flags);
-  set_bit (BT_ACTIVE, &flags);
-  
-  return 0;
-  
+  bsi->host_wake_irq = gpio_to_irq(bsi->host_wake);
+	if (IS_ERR_VALUE(bsi->host_wake_irq)) {
+		BT_ERR("map gpio [%d] to virq failed, errno = %d\n",bsi->host_wake, bsi->host_wake_irq);
+		ret = -ENODEV;
+		goto free_bsi;
+	}
+
+    type = script_get_item("bt_para", "bt_uart_id", &val);
+    if (SCIRPT_ITEM_VALUE_TYPE_INT != type) {
+        BT_ERR("failed to fetch bt uart configuration.");
+        return -1;
+    }
+    if(val.val != 0)
+        bluesleep_uart_dev = sw_uart_get_pdev(val.val);
+
+	clear_bit(BT_SUSPEND, &flags);
+	set_bit(BT_ACTIVE, &flags);
+
+	return 0;
+
 free_bsi:
-  kfree (bsi);
-  return ret;
+	kfree(bsi);
+	return ret;
 }
 
-static int bluesleep_remove (struct platform_device * pdev)
+static int bluesleep_remove(struct platform_device *pdev)
 {
-  pr_debug ("%s", __func__);
-  kfree (bsi);
-  return 0;
+	pr_debug("%s", __func__);
+	kfree(bsi);
+	return 0;
 }
 
-static int bluesleep_resume (struct platform_device * pdev)
+static int bluesleep_resume(struct platform_device *pdev)
 {
-  printk ("%s", __func__);
-  if (test_bit (BT_SUSPEND, &flags) ) {
-    disable_irq (bsi->host_wake_irq);
+	printk("%s", __func__);
+	if (test_bit(BT_SUSPEND, &flags)) {
+		disable_irq(bsi->host_wake_irq);
     
-    clear_bit (BT_SUSPEND, &flags);
-    set_bit (BT_ACTIVE, &flags);
-  }
-  
-  return 0;
+		clear_bit(BT_SUSPEND, &flags);
+		set_bit(BT_ACTIVE, &flags);
+	}
+
+	return 0;
 }
 
-static int bluesleep_suspend (struct platform_device * pdev, pm_message_t state)
+static int bluesleep_suspend(struct platform_device *pdev, pm_message_t state)
 {
-  printk ("%s", __func__);
-  if (test_bit (BT_ACTIVE, &flags) ) {
-    enable_irq (bsi->host_wake_irq);
-    
-    clear_bit (BT_ACTIVE, &flags);
-    set_bit (BT_SUSPEND, &flags);
-  }
-  
-  return 0;
+	printk("%s", __func__); 
+	if(test_bit(BT_ACTIVE, &flags)) {
+		enable_irq(bsi->host_wake_irq);
+		
+		clear_bit(BT_ACTIVE, &flags);
+	  set_bit(BT_SUSPEND, &flags);
+	}
+	
+	return 0;
 }
 
 static struct platform_device bluesleep_device[] = {
-  [0] = {
-    .name             = "rtl_bluesleep",
-    .id               = 0,
-    .num_resources    = 0,
-    .resource         = NULL,
-  }
+	[0] = {
+		.name           	= "rtl_bluesleep",
+		.id             	= 0,
+		.num_resources		= 0,
+		.resource       	= NULL,
+	}
 };
 
 static struct platform_driver bluesleep_driver = {
-  .probe = bluesleep_probe,
-  .remove = bluesleep_remove,
-  .suspend = bluesleep_suspend,
-  .resume = bluesleep_resume,
-  .driver = {
-    .name = "rtl_bluesleep",
-    .owner = THIS_MODULE,
-  },
+	.probe = bluesleep_probe,
+	.remove = bluesleep_remove,
+	.suspend = bluesleep_suspend,
+	.resume = bluesleep_resume,
+	.driver = {
+		.name = "rtl_bluesleep",
+		.owner = THIS_MODULE,
+	},
 };
 
 /**
@@ -291,73 +289,73 @@ static struct platform_driver bluesleep_driver = {
  * @return On success, 0. On error, -1, and <code>errno</code> is set
  * appropriately.
  */
-static int __init bluesleep_init (void)
+static int __init bluesleep_init(void)
 {
-  int retval;
-  struct proc_dir_entry * ent;
-  
-  BT_INFO ("BlueSleep Mode Driver Ver %s", VERSION);
-  
-  retval = platform_driver_register (&bluesleep_driver);
-  if (retval)
-  { goto fail; }
-  
-  retval = platform_device_register (&bluesleep_device[0]);
-  if (retval) {
-    printk ("%s platform_device_register failed.", __FUNCTION__);
-    goto unreg_drv;
-  }
-  
-  bluetooth_dir = proc_mkdir ("bluetooth", NULL);
-  if (bluetooth_dir == NULL) {
-    BT_ERR ("Unable to create /proc/bluetooth directory");
-    goto unreg_drv;
-  }
-  
-  sleep_dir = proc_mkdir ("sleep", bluetooth_dir);
-  if (sleep_dir == NULL) {
-    BT_ERR ("Unable to create /proc/%s directory", PROC_DIR);
-    goto rm_bt_dir;
-  }
-  
-  /* read/write proc entries */
-  ent = create_proc_entry ("lpm", 0, sleep_dir);
-  if (ent == NULL) {
-    BT_ERR ("Unable to create /proc/%s/lpm entry", PROC_DIR);
-    retval = -ENOMEM;
-    goto rm_sleep_dir;
-  }
-  ent->read_proc = bluesleep_read_proc_lpm;
-  ent->write_proc = bluesleep_write_proc_lpm;
-  
-  return 0;
-  
+	int retval;
+  struct proc_dir_entry *ent;
+
+	BT_INFO("BlueSleep Mode Driver Ver %s", VERSION);
+
+	retval = platform_driver_register(&bluesleep_driver);
+	if (retval)
+		goto fail;
+
+  retval = platform_device_register(&bluesleep_device[0]);
+	if (retval) {
+		printk("%s platform_device_register failed.", __FUNCTION__);
+		goto unreg_drv;
+	}
+
+  bluetooth_dir = proc_mkdir("bluetooth", NULL);
+	if (bluetooth_dir == NULL) {
+		BT_ERR("Unable to create /proc/bluetooth directory");
+		goto unreg_drv;
+	}
+
+	sleep_dir = proc_mkdir("sleep", bluetooth_dir);
+	if (sleep_dir == NULL) {
+		BT_ERR("Unable to create /proc/%s directory", PROC_DIR);
+		goto rm_bt_dir;
+	}
+	
+	/* read/write proc entries */
+	ent = create_proc_entry("lpm", 0, sleep_dir);
+	if (ent == NULL) {
+		BT_ERR("Unable to create /proc/%s/lpm entry", PROC_DIR);
+		retval = -ENOMEM;
+		goto rm_sleep_dir;
+	}
+	ent->read_proc = bluesleep_read_proc_lpm;
+	ent->write_proc = bluesleep_write_proc_lpm;
+
+	return 0;
+
 rm_sleep_dir:
-  remove_proc_entry ("sleep", bluetooth_dir);
+  remove_proc_entry("sleep", bluetooth_dir);
 rm_bt_dir:
-  remove_proc_entry ("bluetooth", 0);
+  remove_proc_entry("bluetooth", 0);
 unreg_drv:
-  platform_driver_unregister (&bluesleep_driver);
+  platform_driver_unregister(&bluesleep_driver);
 fail:
-  return retval;
+	return retval;
 }
 
 /**
  * Cleans up the module.
  */
-static void __exit bluesleep_exit (void)
-{
-  platform_driver_unregister (&bluesleep_driver);
-  
-  remove_proc_entry ("lpm", sleep_dir);
-  remove_proc_entry ("sleep", bluetooth_dir);
-  remove_proc_entry ("bluetooth", 0);
+static void __exit bluesleep_exit(void)
+{ 
+	platform_driver_unregister(&bluesleep_driver);
+	
+	remove_proc_entry("lpm", sleep_dir);
+	remove_proc_entry("sleep", bluetooth_dir);
+	remove_proc_entry("bluetooth", 0);
 }
 
-module_init (bluesleep_init);
-module_exit (bluesleep_exit);
+module_init(bluesleep_init);
+module_exit(bluesleep_exit);
 
-MODULE_DESCRIPTION ("Bluetooth Sleep Mode Driver ver %s " VERSION);
+MODULE_DESCRIPTION("Bluetooth Sleep Mode Driver ver %s " VERSION);
 #ifdef MODULE_LICENSE
-MODULE_LICENSE ("GPL");
+MODULE_LICENSE("GPL");
 #endif

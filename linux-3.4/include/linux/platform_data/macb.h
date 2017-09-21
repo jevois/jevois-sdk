@@ -9,9 +9,9 @@
 #define __MACB_PDATA_H__
 
 struct macb_platform_data {
-  u32   phy_mask;
-  int   phy_irq_pin;  /* PHY IRQ */
-  u8    is_rmii;  /* using RMII interface? */
+	u32		phy_mask;
+	int		phy_irq_pin;	/* PHY IRQ */
+	u8		is_rmii;	/* using RMII interface? */
 };
 
 #endif /* __MACB_PDATA_H__ */

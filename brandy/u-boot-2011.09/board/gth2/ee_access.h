@@ -9,10 +9,10 @@
 #include <asm/types.h>
 #include "ee_dev.h"
 
-int ee_do_cpu_command ( u8 * Tx, int Tx_len, u8 * Rx, int Rx_len, int Send_skip );
-int ee_init_cpu_data (void);
+int ee_do_cpu_command( u8 *Tx, int Tx_len, u8 *Rx, int Rx_len, int Send_skip );
+int ee_init_cpu_data(void);
 
-int ee_crc_ok ( u8 * Buffer, int Len, u8 Crc );
+int ee_crc_ok( u8 *Buffer, int Len, u8 Crc );
 
 /* Defs for altera reg */
 #define EE_WRITE_SHIFT 8 /* bits to shift left */

@@ -34,14 +34,14 @@
  *
  */
 struct pca954x_platform_mode {
-  int   adap_id;
-  unsigned int  deselect_on_exit: 1;
+	int		adap_id;
+	unsigned int	deselect_on_exit:1;
 };
 
 /* Per mux/switch data, used with i2c_register_board_info */
 struct pca954x_platform_data {
-  struct pca954x_platform_mode * modes;
-  int num_modes;
+	struct pca954x_platform_mode *modes;
+	int num_modes;
 };
 
 #endif /* _LINUX_I2C_PCA954X_H */

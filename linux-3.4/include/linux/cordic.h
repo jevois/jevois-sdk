@@ -25,8 +25,8 @@
  * @q: imaginary part of coordinate (quadrature).
  */
 struct cordic_iq {
-  s32 i;
-  s32 q;
+	s32 i;
+	s32 q;
 };
 
 /**
@@ -43,6 +43,6 @@ struct cordic_iq {
  * for -180 degrees to +180 degrees. Passed values outside this range are
  * converted before doing the actual calculation.
  */
-struct cordic_iq cordic_calc_iq (s32 theta);
+struct cordic_iq cordic_calc_iq(s32 theta);
 
 #endif /* __CORDIC_H_ */

@@ -19,23 +19,23 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef __ASM_ARCH_HWMSGBOX_H
-#define __ASM_ARCH_HWMSGBOX_H
+#ifndef	__ASM_ARCH_HWMSGBOX_H
+#define	__ASM_ARCH_HWMSGBOX_H
 
-#define AW_HWMSG_QUEUE_NUMBER (8)
+#define AW_HWMSG_QUEUE_NUMBER	(8)
 
 typedef enum aw_hwmsg_queue_user
 {
-  AW_HWMSG_QUEUE_USER_ARISC, 
-  AW_HWMSG_QUEUE_USER_AC327, 
+	AW_HWMSG_QUEUE_USER_ARISC,
+	AW_HWMSG_QUEUE_USER_AC327,
 } aw_hwmsg_queue_user_e;
 
-#define AW_MSGBOX_CTRL_REG(m)     (SUNXI_MSGBOX_PBASE + 0x0000 + (0x4 * (m>>2)))
-#define AW_MSGBOX_IRQ_EN_REG(u)     (SUNXI_MSGBOX_PBASE + 0x0040 + (0x20* u))
-#define AW_MSGBOX_IRQ_STATUS_REG(u)   (SUNXI_MSGBOX_PBASE + 0x0050 + (0x20* u))
-#define AW_MSGBOX_FIFO_STATUS_REG(m)  (SUNXI_MSGBOX_PBASE + 0x0100 + (0x4 * m))
-#define AW_MSGBOX_MSG_STATUS_REG(m)   (SUNXI_MSGBOX_PBASE + 0x0140 + (0x4 * m))
-#define AW_MSGBOX_MSG_REG(m)      (SUNXI_MSGBOX_PBASE + 0x0180 + (0x4 * m))
-#define AW_MSGBOX_DEBUG_REG       (SUNXI_MSGBOX_PBASE + 0x01c0)
+#define	AW_MSGBOX_CTRL_REG(m)			(SUNXI_MSGBOX_PBASE + 0x0000 + (0x4 * (m>>2)))
+#define AW_MSGBOX_IRQ_EN_REG(u)			(SUNXI_MSGBOX_PBASE + 0x0040 + (0x20* u))
+#define	AW_MSGBOX_IRQ_STATUS_REG(u)		(SUNXI_MSGBOX_PBASE + 0x0050 + (0x20* u))
+#define AW_MSGBOX_FIFO_STATUS_REG(m)	(SUNXI_MSGBOX_PBASE + 0x0100 + (0x4 * m))
+#define AW_MSGBOX_MSG_STATUS_REG(m)		(SUNXI_MSGBOX_PBASE + 0x0140 + (0x4 * m))
+#define AW_MSGBOX_MSG_REG(m)			(SUNXI_MSGBOX_PBASE + 0x0180 + (0x4 * m))
+#define AW_MSGBOX_DEBUG_REG				(SUNXI_MSGBOX_PBASE + 0x01c0)
 
-#endif 
+#endif

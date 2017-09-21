@@ -16,27 +16,27 @@
 #include <linux/suspend.h>
 #include <linux/io.h>
 
-static int mxs_suspend_enter (suspend_state_t state)
+static int mxs_suspend_enter(suspend_state_t state)
 {
-  switch (state) {
-  case PM_SUSPEND_MEM:
-    cpu_do_idle();
-    break;
-    
-  default:
-    return -EINVAL;
-  }
-  return 0;
+	switch (state) {
+	case PM_SUSPEND_MEM:
+		cpu_do_idle();
+		break;
+
+	default:
+		return -EINVAL;
+	}
+	return 0;
 }
 
 static struct platform_suspend_ops mxs_suspend_ops = {
-  .enter = mxs_suspend_enter,
-  .valid = suspend_valid_only_mem,
+	.enter = mxs_suspend_enter,
+	.valid = suspend_valid_only_mem,
 };
 
-static int __init mxs_pm_init (void)
+static int __init mxs_pm_init(void)
 {
-  suspend_set_ops (&mxs_suspend_ops);
-  return 0;
+	suspend_set_ops(&mxs_suspend_ops);
+	return 0;
 }
-device_initcall (mxs_pm_init);
+device_initcall(mxs_pm_init);

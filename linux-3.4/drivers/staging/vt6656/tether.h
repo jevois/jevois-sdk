@@ -98,29 +98,29 @@
 
 /*---------------------  Export Types  ------------------------------*/
 typedef struct tagSEthernetHeader {
-  BYTE    abyDstAddr[ETH_ALEN];
-  BYTE    abySrcAddr[ETH_ALEN];
-  WORD    wType;
-} __attribute__ ( (__packed__) )
+    BYTE    abyDstAddr[ETH_ALEN];
+    BYTE    abySrcAddr[ETH_ALEN];
+    WORD    wType;
+} __attribute__ ((__packed__))
 SEthernetHeader, *PSEthernetHeader;
 
 
 typedef struct tagS802_3Header {
-  BYTE    abyDstAddr[ETH_ALEN];
-  BYTE    abySrcAddr[ETH_ALEN];
-  WORD    wLen;
-} __attribute__ ( (__packed__) )
+    BYTE    abyDstAddr[ETH_ALEN];
+    BYTE    abySrcAddr[ETH_ALEN];
+    WORD    wLen;
+} __attribute__ ((__packed__))
 S802_3Header, *PS802_3Header;
 
 typedef struct tagS802_11Header {
-  WORD    wFrameCtl;
-  WORD    wDurationID;
-  BYTE    abyAddr1[ETH_ALEN];
-  BYTE    abyAddr2[ETH_ALEN];
-  BYTE    abyAddr3[ETH_ALEN];
-  WORD    wSeqCtl;
-  BYTE    abyAddr4[ETH_ALEN];
-} __attribute__ ( (__packed__) )
+    WORD    wFrameCtl;
+    WORD    wDurationID;
+    BYTE    abyAddr1[ETH_ALEN];
+    BYTE    abyAddr2[ETH_ALEN];
+    BYTE    abyAddr3[ETH_ALEN];
+    WORD    wSeqCtl;
+    BYTE    abyAddr4[ETH_ALEN];
+} __attribute__ ((__packed__))
 S802_11Header, *PS802_11Header;
 
 /*---------------------  Export Macros ------------------------------*/
@@ -131,7 +131,7 @@ S802_11Header, *PS802_11Header;
 
 /*---------------------  Export Functions  --------------------------*/
 
-BYTE ETHbyGetHashIndexByCrc32 (PBYTE pbyMultiAddr);
-BOOL ETHbIsBufferCrc32Ok (PBYTE pbyBuffer, unsigned int cbFrameLength);
+BYTE ETHbyGetHashIndexByCrc32(PBYTE pbyMultiAddr);
+BOOL ETHbIsBufferCrc32Ok(PBYTE pbyBuffer, unsigned int cbFrameLength);
 
 #endif /* __TETHER_H__ */

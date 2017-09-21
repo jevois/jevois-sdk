@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -25,25 +25,25 @@
 #ifndef __BSP_NAND_H__
 #define __BSP_NAND_H__
 
-int nand_uboot_init (int boot_mode);
+int nand_uboot_init(int boot_mode);
 
-int nand_uboot_exit (void);
+int nand_uboot_exit(void);
 
-uint nand_uboot_read (uint start, uint sectors, void * buffer);
+uint nand_uboot_read(uint start, uint sectors, void *buffer);
 
-uint nand_uboot_write (uint start, uint sectors, void * buffer);
+uint nand_uboot_write(uint start, uint sectors, void *buffer);
 
-int nand_download_boot0 (uint length, void * buffer);
+int nand_download_boot0(uint length, void *buffer);
 
-int nand_download_uboot (uint length, void * buffer);
+int nand_download_uboot(uint length, void *buffer);
 
-int nand_uboot_erase (int user_erase);
+int nand_uboot_erase(int user_erase);
 
-uint nand_uboot_get_flash_info (void * buffer, uint length);
+uint nand_uboot_get_flash_info(void *buffer, uint length);
 
-uint nand_uboot_set_flash_info (void * buffer, uint length);
+uint nand_uboot_set_flash_info(void *buffer, uint length);
 
-uint nand_uboot_get_flash_size (void);
+uint nand_uboot_get_flash_size(void);
 
 
 #endif 

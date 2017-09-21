@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2012-2014 ARM Limited. All rights reserved.
- *
+ * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- *
+ * 
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -18,13 +18,13 @@
 
 /** Initalize the HW independent parts of the  PP scheduler
  */
-_mali_osk_errcode_t mali_pp_scheduler_initialize (void);
-void mali_pp_scheduler_terminate (void);
+_mali_osk_errcode_t mali_pp_scheduler_initialize(void);
+void mali_pp_scheduler_terminate(void);
 
 /** Poplulate the PP scheduler with groups
  */
-void mali_pp_scheduler_populate (void);
-void mali_pp_scheduler_depopulate (void);
+void mali_pp_scheduler_populate(void);
+void mali_pp_scheduler_depopulate(void);
 
 /**
  * @brief Handle job completion.
@@ -44,10 +44,10 @@ void mali_pp_scheduler_depopulate (void);
  * @param success MALI_TRUE if job completed successfully, MALI_FALSE if not.
  * @param in_upper_half MALI_TRUE if called from upper half, MALI_FALSE if not.
  */
-void mali_pp_scheduler_job_done (struct mali_group * group, struct mali_pp_job * job, u32 sub_job, mali_bool success, mali_bool in_upper_half);
+void mali_pp_scheduler_job_done(struct mali_group *group, struct mali_pp_job *job, u32 sub_job, mali_bool success, mali_bool in_upper_half);
 
-void mali_pp_scheduler_suspend (void);
-void mali_pp_scheduler_resume (void);
+void mali_pp_scheduler_suspend(void);
+void mali_pp_scheduler_resume(void);
 
 /**
  * @brief Abort all running and queued PP jobs from session.
@@ -57,7 +57,7 @@ void mali_pp_scheduler_resume (void);
  *
  * @param session Session that is aborting.
  */
-void mali_pp_scheduler_abort_session (struct mali_session_data * session);
+void mali_pp_scheduler_abort_session(struct mali_session_data *session);
 
 /**
  * @brief Reset all groups
@@ -69,14 +69,14 @@ void mali_pp_scheduler_abort_session (struct mali_session_data * session);
  * No locking is done, which can only be safe if the scheduler is paused and
  * all cores idle. That is always the case on init and power on.
  */
-void mali_pp_scheduler_reset_all_groups (void);
+void mali_pp_scheduler_reset_all_groups(void);
 
 /**
  * @brief Zap TLB on all groups with \a session active
  *
  * The scheculer will zap the session on all groups it owns.
  */
-void mali_pp_scheduler_zap_all_active (struct mali_session_data * session);
+void mali_pp_scheduler_zap_all_active(struct mali_session_data *session);
 
 /**
  * @brief Get the virtual PP core
@@ -87,12 +87,12 @@ void mali_pp_scheduler_zap_all_active (struct mali_session_data * session);
  *
  * @return Pointer to the virtual PP core, NULL if this doesn't exist
  */
-struct mali_pp_core * mali_pp_scheduler_get_virtual_pp (void);
+struct mali_pp_core *mali_pp_scheduler_get_virtual_pp(void);
 
-u32 mali_pp_scheduler_dump_state (char * buf, u32 size);
+u32 mali_pp_scheduler_dump_state(char *buf, u32 size);
 
-void mali_pp_scheduler_enable_group (struct mali_group * group);
-void mali_pp_scheduler_disable_group (struct mali_group * group);
+void mali_pp_scheduler_enable_group(struct mali_group *group);
+void mali_pp_scheduler_disable_group(struct mali_group *group);
 
 /**
  * @brief Used by the Timeline system to queue a PP job.
@@ -104,27 +104,27 @@ void mali_pp_scheduler_disable_group (struct mali_group * group);
  * @return A scheduling bitmask that can be used to decide if scheduling is necessary after this
  * call.
  */
-mali_scheduler_mask mali_pp_scheduler_activate_job (struct mali_pp_job * job);
+mali_scheduler_mask mali_pp_scheduler_activate_job(struct mali_pp_job *job);
 
 /**
  * @brief Schedule queued jobs on idle cores.
  */
-void mali_pp_scheduler_schedule (void);
+void mali_pp_scheduler_schedule(void);
 
-int mali_pp_scheduler_set_perf_level (u32 cores, mali_bool override);
+int mali_pp_scheduler_set_perf_level(u32 cores, mali_bool override);
 
-void mali_pp_scheduler_core_scaling_enable (void);
-void mali_pp_scheduler_core_scaling_disable (void);
-mali_bool mali_pp_scheduler_core_scaling_is_enabled (void);
+void mali_pp_scheduler_core_scaling_enable(void);
+void mali_pp_scheduler_core_scaling_disable(void);
+mali_bool mali_pp_scheduler_core_scaling_is_enabled(void);
 
-u32 mali_pp_scheduler_get_num_cores_total (void);
-u32 mali_pp_scheduler_get_num_cores_enabled (void);
+u32 mali_pp_scheduler_get_num_cores_total(void);
+u32 mali_pp_scheduler_get_num_cores_enabled(void);
 
 /**
  * @brief Returns the number of Pixel Processors in the system irrespective of the context
  *
  * @return number of physical Pixel Processor cores in the system
  */
-u32 mali_pp_scheduler_get_num_cores_total (void);
+u32 mali_pp_scheduler_get_num_cores_total(void);
 
 #endif /* __MALI_PP_SCHEDULER_H__ */

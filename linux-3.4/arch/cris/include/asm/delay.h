@@ -15,9 +15,9 @@ extern unsigned long loops_per_usec; /* arch/cris/mm/init.c */
 
 /* May be defined by arch/delay.h. */
 #ifndef udelay
-static inline void udelay (unsigned long usecs)
+static inline void udelay(unsigned long usecs)
 {
-  __delay (usecs * loops_per_usec);
+	__delay(usecs * loops_per_usec);
 }
 #endif
 

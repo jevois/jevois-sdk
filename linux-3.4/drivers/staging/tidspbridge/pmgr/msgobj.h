@@ -29,10 +29,10 @@
  *  specific fields follow this structure in memory.
  */
 struct msg_mgr_ {
-  /* The first field must match that in _msg_sm.h */
-  
-  /* Function interface to Bridge driver. */
-  struct bridge_drv_interface * intf_fxns;
+	/* The first field must match that in _msg_sm.h */
+
+	/* Function interface to Bridge driver. */
+	struct bridge_drv_interface *intf_fxns;
 };
 
 #endif /* MSGOBJ_ */

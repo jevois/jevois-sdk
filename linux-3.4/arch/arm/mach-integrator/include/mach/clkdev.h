@@ -5,22 +5,22 @@
 #include <plat/clock.h>
 
 struct clk {
-  unsigned long   rate;
-  const struct clk_ops * ops;
-  struct module  * owner;
-  const struct icst_params * params;
-  void __iomem  *  vcoreg;
-  void   *   data;
+	unsigned long		rate;
+	const struct clk_ops	*ops;
+	struct module		*owner;
+	const struct icst_params *params;
+	void __iomem		*vcoreg;
+	void			*data;
 };
 
-static inline int __clk_get (struct clk * clk)
+static inline int __clk_get(struct clk *clk)
 {
-  return try_module_get (clk->owner);
+	return try_module_get(clk->owner);
 }
 
-static inline void __clk_put (struct clk * clk)
+static inline void __clk_put(struct clk *clk)
 {
-  module_put (clk->owner);
+	module_put(clk->owner);
 }
 
 #endif

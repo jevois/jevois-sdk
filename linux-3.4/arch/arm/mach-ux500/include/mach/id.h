@@ -15,110 +15,110 @@
  * @revision: version code in the series
  */
 struct dbx500_asic_id {
-  u16 partnumber;
-  u8  revision;
-  u8  process;
+	u16	partnumber;
+	u8	revision;
+	u8	process;
 };
 
 extern struct dbx500_asic_id dbx500_id;
 
-static inline unsigned int __attribute_const__ dbx500_partnumber (void)
+static inline unsigned int __attribute_const__ dbx500_partnumber(void)
 {
-  return dbx500_id.partnumber;
+	return dbx500_id.partnumber;
 }
 
-static inline unsigned int __attribute_const__ dbx500_revision (void)
+static inline unsigned int __attribute_const__ dbx500_revision(void)
 {
-  return dbx500_id.revision;
+	return dbx500_id.revision;
 }
 
 /*
  * SOCs
  */
 
-static inline bool __attribute_const__ cpu_is_u8500 (void)
+static inline bool __attribute_const__ cpu_is_u8500(void)
 {
-  return dbx500_partnumber() == 0x8500;
+	return dbx500_partnumber() == 0x8500;
 }
 
-static inline bool __attribute_const__ cpu_is_u5500 (void)
+static inline bool __attribute_const__ cpu_is_u5500(void)
 {
-  return dbx500_partnumber() == 0x5500;
+	return dbx500_partnumber() == 0x5500;
 }
 
 /*
  * 5500 revisions
  */
 
-static inline bool __attribute_const__ cpu_is_u5500v1 (void)
+static inline bool __attribute_const__ cpu_is_u5500v1(void)
 {
-  return cpu_is_u5500() && (dbx500_revision() & 0xf0) == 0xA0;
+	return cpu_is_u5500() && (dbx500_revision() & 0xf0) == 0xA0;
 }
 
-static inline bool __attribute_const__ cpu_is_u5500v2 (void)
+static inline bool __attribute_const__ cpu_is_u5500v2(void)
 {
-  return (dbx500_id.revision & 0xf0) == 0xB0;
+	return (dbx500_id.revision & 0xf0) == 0xB0;
 }
 
-static inline bool __attribute_const__ cpu_is_u5500v20 (void)
+static inline bool __attribute_const__ cpu_is_u5500v20(void)
 {
-  return cpu_is_u5500() && ( (dbx500_revision() & 0xf0) == 0xB0);
+	return cpu_is_u5500() && ((dbx500_revision() & 0xf0) == 0xB0);
 }
 
-static inline bool __attribute_const__ cpu_is_u5500v21 (void)
+static inline bool __attribute_const__ cpu_is_u5500v21(void)
 {
-  return cpu_is_u5500() && (dbx500_revision() == 0xB1);
+	return cpu_is_u5500() && (dbx500_revision() == 0xB1);
 }
 
 /*
  * 8500 revisions
  */
 
-static inline bool __attribute_const__ cpu_is_u8500ed (void)
+static inline bool __attribute_const__ cpu_is_u8500ed(void)
 {
-  return cpu_is_u8500() && dbx500_revision() == 0x00;
+	return cpu_is_u8500() && dbx500_revision() == 0x00;
 }
 
-static inline bool __attribute_const__ cpu_is_u8500v1 (void)
+static inline bool __attribute_const__ cpu_is_u8500v1(void)
 {
-  return cpu_is_u8500() && (dbx500_revision() & 0xf0) == 0xA0;
+	return cpu_is_u8500() && (dbx500_revision() & 0xf0) == 0xA0;
 }
 
-static inline bool __attribute_const__ cpu_is_u8500v10 (void)
+static inline bool __attribute_const__ cpu_is_u8500v10(void)
 {
-  return cpu_is_u8500() && dbx500_revision() == 0xA0;
+	return cpu_is_u8500() && dbx500_revision() == 0xA0;
 }
 
-static inline bool __attribute_const__ cpu_is_u8500v11 (void)
+static inline bool __attribute_const__ cpu_is_u8500v11(void)
 {
-  return cpu_is_u8500() && dbx500_revision() == 0xA1;
+	return cpu_is_u8500() && dbx500_revision() == 0xA1;
 }
 
-static inline bool __attribute_const__ cpu_is_u8500v2 (void)
+static inline bool __attribute_const__ cpu_is_u8500v2(void)
 {
-  return cpu_is_u8500() && ( (dbx500_revision() & 0xf0) == 0xB0);
+	return cpu_is_u8500() && ((dbx500_revision() & 0xf0) == 0xB0);
 }
 
-static inline bool cpu_is_u8500v20 (void)
+static inline bool cpu_is_u8500v20(void)
 {
-  return cpu_is_u8500() && (dbx500_revision() == 0xB0);
+	return cpu_is_u8500() && (dbx500_revision() == 0xB0);
 }
 
-static inline bool cpu_is_u8500v21 (void)
+static inline bool cpu_is_u8500v21(void)
 {
-  return cpu_is_u8500() && (dbx500_revision() == 0xB1);
+	return cpu_is_u8500() && (dbx500_revision() == 0xB1);
 }
 
-static inline bool cpu_is_u8500v20_or_later (void)
+static inline bool cpu_is_u8500v20_or_later(void)
 {
-  return cpu_is_u8500() && !cpu_is_u8500v10() && !cpu_is_u8500v11();
+	return cpu_is_u8500() && !cpu_is_u8500v10() && !cpu_is_u8500v11();
 }
 
-static inline bool ux500_is_svp (void)
+static inline bool ux500_is_svp(void)
 {
-  return false;
+	return false;
 }
 
-#define ux500_unknown_soc() BUG()
+#define ux500_unknown_soc()	BUG()
 
 #endif

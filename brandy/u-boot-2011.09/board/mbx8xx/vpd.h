@@ -54,15 +54,15 @@
 #define VPD_EYE_SIZE 8 /* eyecatcher size */
 typedef struct vpd_header
 {
-  uchar eyecatcher[VPD_EYE_SIZE]; /* eyecatcher - "MOTOROLA" */
-  ushort size; /* size of EEPROM */
+	uchar eyecatcher[VPD_EYE_SIZE]; /* eyecatcher - "MOTOROLA" */
+	ushort size; /* size of EEPROM */
 } vpd_header_t;
 
 #define VPD_DATA_SIZE (VPD_EEPROM_SIZE-sizeof(vpd_header_t))
 typedef struct vpd
 {
-  vpd_header_t header; /* header */
-  uchar packets[VPD_DATA_SIZE]; /* data */
+	vpd_header_t header; /* header */
+	uchar packets[VPD_DATA_SIZE]; /* data */
 } vpd_t;
 
 /*
@@ -70,9 +70,9 @@ typedef struct vpd
  */
 typedef struct vpd_packet
 {
-  uchar identifier; /* identifier (PIDs above) */
-  uchar size;       /* size of the following data area */
-  uchar data[1];    /* data (size is dependent upon PID) */
+    uchar identifier; /* identifier (PIDs above) */
+    uchar size;       /* size of the following data area */
+    uchar data[1];    /* data (size is dependent upon PID) */
 } vpd_packet_t;
 
 /*
@@ -102,18 +102,18 @@ typedef struct vpd_packet
  */
 typedef struct vpd_fmc
 {
-  ushort mid; /* manufacturer's idenitfier */
-  ushort did; /* manufacturer's device idenitfier */
-  uchar ddw;  /* device data width (e.g., 8-bits, 16-bits) */
-  uchar nod;  /* number of devices present */
-  uchar noc;  /* number of columns */
-  uchar cw;   /* column width in bits */
-  uchar wedw; /* write/erase data width */
+    ushort mid; /* manufacturer's idenitfier */
+    ushort did; /* manufacturer's device idenitfier */
+    uchar ddw;  /* device data width (e.g., 8-bits, 16-bits) */
+    uchar nod;  /* number of devices present */
+    uchar noc;  /* number of columns */
+    uchar cw;   /* column width in bits */
+    uchar wedw; /* write/erase data width */
 } vpd_fmc_t;
 
 /* function prototypes */
-extern void vpd_init (void);
-extern int  vpd_read (uint iic_device, uchar * buf, int count, int offset);
-extern      vpd_packet_t * vpd_find_packet (u_char ident);
+extern void vpd_init(void);
+extern int  vpd_read(uint iic_device, uchar *buf, int count, int offset);
+extern      vpd_packet_t *vpd_find_packet(u_char ident);
 
 #endif /* __vpd_h */

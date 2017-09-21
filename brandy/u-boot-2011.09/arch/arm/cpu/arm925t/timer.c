@@ -26,7 +26,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -40,8 +40,8 @@
 #include <configs/omap1510.h>
 #include <asm/io.h>
 
-#define TIMER_LOAD_VAL  0xffffffff
-#define TIMER_CLOCK (CONFIG_SYS_CLK_FREQ / (2 << CONFIG_SYS_PTV))
+#define TIMER_LOAD_VAL	0xffffffff
+#define TIMER_CLOCK	(CONFIG_SYS_CLK_FREQ / (2 << CONFIG_SYS_PTV))
 
 static uint32_t timestamp;
 static uint32_t lastdec;
@@ -49,18 +49,18 @@ static uint32_t lastdec;
 /* nothing really to do with interrupts, just starts up a counter. */
 int timer_init (void)
 {
-  /* Start the decrementer ticking down from 0xffffffff */
-  __raw_writel (TIMER_LOAD_VAL, CONFIG_SYS_TIMERBASE + LOAD_TIM);
-  __raw_writel (MPUTIM_ST | MPUTIM_AR | MPUTIM_CLOCK_ENABLE |
-                (CONFIG_SYS_PTV << MPUTIM_PTV_BIT),
-                CONFIG_SYS_TIMERBASE + CNTL_TIMER);
-                
-  /* init the timestamp and lastdec value */
-  lastdec = __raw_readl (CONFIG_SYS_TIMERBASE + READ_TIM) /
-            (TIMER_CLOCK / CONFIG_SYS_HZ);
-  timestamp = 0;         /* start "advancing" time stamp from 0 */
-  
-  return 0;
+	/* Start the decrementer ticking down from 0xffffffff */
+	__raw_writel(TIMER_LOAD_VAL, CONFIG_SYS_TIMERBASE + LOAD_TIM);
+	__raw_writel(MPUTIM_ST | MPUTIM_AR | MPUTIM_CLOCK_ENABLE |
+		(CONFIG_SYS_PTV << MPUTIM_PTV_BIT),
+		CONFIG_SYS_TIMERBASE + CNTL_TIMER);
+
+	/* init the timestamp and lastdec value */
+	lastdec = __raw_readl(CONFIG_SYS_TIMERBASE + READ_TIM) /
+			(TIMER_CLOCK / CONFIG_SYS_HZ);
+	timestamp = 0;	       /* start "advancing" time stamp from 0 */
+
+	return 0;
 }
 
 /*
@@ -68,46 +68,46 @@ int timer_init (void)
  */
 ulong get_timer (ulong base)
 {
-  return get_timer_masked () - base;
+	return get_timer_masked () - base;
 }
 
 /* delay x useconds AND preserve advance timestamp value */
 void __udelay (unsigned long usec)
 {
-  int32_t tmo = usec * (TIMER_CLOCK / 1000) / 1000;
-  uint32_t now, last = __raw_readl (CONFIG_SYS_TIMERBASE + READ_TIM);
-  
-  while (tmo > 0) {
-    now = __raw_readl (CONFIG_SYS_TIMERBASE + READ_TIM);
-    if (last < now) /* count down timer underflow */
-    { tmo -= TIMER_LOAD_VAL - now + last; }
-    else
-    { tmo -= last - now; }
-    last = now;
-  }
+	int32_t tmo = usec * (TIMER_CLOCK / 1000) / 1000;
+	uint32_t now, last = __raw_readl(CONFIG_SYS_TIMERBASE + READ_TIM);
+
+	while (tmo > 0) {
+		now = __raw_readl(CONFIG_SYS_TIMERBASE + READ_TIM);
+		if (last < now) /* count down timer underflow */
+			tmo -= TIMER_LOAD_VAL - now + last;
+		else
+			tmo -= last - now;
+		last = now;
+	}
 }
 
 ulong get_timer_masked (void)
 {
-  uint32_t now = __raw_readl (CONFIG_SYS_TIMERBASE + READ_TIM) /
-                 (TIMER_CLOCK / CONFIG_SYS_HZ);
-  if (lastdec < now)  /* count down timer underflow */
-    timestamp += TIMER_LOAD_VAL / (TIMER_CLOCK / CONFIG_SYS_HZ) -
-                 now + lastdec;
-  else
-  { timestamp += lastdec - now; }
-  lastdec = now;
-  
-  return timestamp;
+	uint32_t now = __raw_readl(CONFIG_SYS_TIMERBASE + READ_TIM) /
+			(TIMER_CLOCK / CONFIG_SYS_HZ);
+	if (lastdec < now)	/* count down timer underflow */
+		timestamp += TIMER_LOAD_VAL / (TIMER_CLOCK / CONFIG_SYS_HZ) -
+				now + lastdec;
+	else
+		timestamp += lastdec - now;
+	lastdec = now;
+
+	return timestamp;
 }
 
 /*
  * This function is derived from PowerPC code (read timebase as long long).
  * On ARM it just returns the timer value.
  */
-unsigned long long get_ticks (void)
+unsigned long long get_ticks(void)
 {
-  return get_timer (0);
+	return get_timer(0);
 }
 
 /*
@@ -116,5 +116,5 @@ unsigned long long get_ticks (void)
  */
 ulong get_tbclk (void)
 {
-  return CONFIG_SYS_HZ;
+	return CONFIG_SYS_HZ;
 }

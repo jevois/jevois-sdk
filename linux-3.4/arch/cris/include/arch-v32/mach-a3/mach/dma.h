@@ -3,7 +3,7 @@
 
 /* Defines for using and allocating dma channels. */
 
-#define MAX_DMA_CHANNELS  12 /* 8 and 10 not used. */
+#define MAX_DMA_CHANNELS	12 /* 8 and 10 not used. */
 
 #define NETWORK_ETH_TX_DMA_NBR 0        /* Ethernet 0 out. */
 #define NETWORK_ETH_RX_DMA_NBR 1        /* Ethernet 0 in. */
@@ -33,22 +33,22 @@
 #define dma_eth1 dma_eth
 
 enum dma_owner {
-  dma_eth,
-  dma_ser0,
-  dma_ser1,
-  dma_ser2,
-  dma_ser3,
-  dma_ser4,
-  dma_iop,
-  dma_sser,
-  dma_strp,
-  dma_h264,
-  dma_jpeg
+	dma_eth,
+	dma_ser0,
+	dma_ser1,
+	dma_ser2,
+	dma_ser3,
+	dma_ser4,
+	dma_iop,
+	dma_sser,
+	dma_strp,
+	dma_h264,
+	dma_jpeg
 };
 
-int crisv32_request_dma (unsigned int dmanr, const char * device_id,
-                         unsigned options, unsigned bandwidth, enum dma_owner owner);
-void crisv32_free_dma (unsigned int dmanr);
+int crisv32_request_dma(unsigned int dmanr, const char *device_id,
+	unsigned options, unsigned bandwidth, enum dma_owner owner);
+void crisv32_free_dma(unsigned int dmanr);
 
 /* Masks used by crisv32_request_dma options: */
 #define DMA_VERBOSE_ON_ERROR 1

@@ -25,20 +25,20 @@
 
 /******************************************************************************
  *
- *              Host Properties
+ *							Host Properties
  *
  **************************************************************************** */
 
-#define BITS_PER_BYTE 8   /* bits in the standard PC/SUN byte */
-#define LOG_BITS_PER_BYTE 3 /* log base 2 of same */
+#define BITS_PER_BYTE 8		/* bits in the standard PC/SUN byte */
+#define LOG_BITS_PER_BYTE 3	/* log base 2 of same */
 #define BYTE_MASK ((1U<<BITS_PER_BYTE)-1)
 
 #if defined(__TMS320C55X__) || defined(_TMS320C5XX)
 #define BITS_PER_AU 16
 #define LOG_BITS_PER_AU 4
-/* use this print string in error messages for uint32_t */
+ /* use this print string in error messages for uint32_t */
 #define FMT_UI32 "0x%lx"
-#define FMT8_UI32 "%08lx" /* same but no 0x, fixed width field */
+#define FMT8_UI32 "%08lx"	/* same but no 0x, fixed width field */
 #else
 /* bits in the smallest addressable data storage unit */
 #define BITS_PER_AU 8
@@ -56,7 +56,7 @@
 
 /******************************************************************************
  *
- *              Target Properties
+ *							Target Properties
  *
  **************************************************************************** */
 
@@ -64,18 +64,18 @@
 /* TMS320C6x Target Specific Parameters (byte-addressable) */
 /*-------------------------------------------------------------------------- */
 #if TMS32060
-#define MEMORG          0x0L  /* Size of configured memory */
-#define MEMSIZE         0x0L  /* (full address space) */
+#define MEMORG          0x0L	/* Size of configured memory */
+#define MEMSIZE         0x0L	/* (full address space) */
 
-#define CINIT_ALIGN     8 /* alignment of cinit record in TDATA AUs */
-#define CINIT_COUNT 4 /* width of count field in TDATA AUs */
-#define CINIT_ADDRESS 4 /* width of address field in TDATA AUs */
-#define CINIT_PAGE_BITS 0 /* Number of LSBs of address that
-         * are page number */
+#define CINIT_ALIGN     8	/* alignment of cinit record in TDATA AUs */
+#define CINIT_COUNT	4	/* width of count field in TDATA AUs */
+#define CINIT_ADDRESS	4	/* width of address field in TDATA AUs */
+#define CINIT_PAGE_BITS	0	/* Number of LSBs of address that
+				 * are page number */
 
-#define LENIENT_SIGNED_RELEXPS 0  /* DOES SIGNED ALLOW MAX UNSIGNED */
+#define LENIENT_SIGNED_RELEXPS 0	/* DOES SIGNED ALLOW MAX UNSIGNED */
 
-#undef TARGET_ENDIANNESS  /* may be big or little endian */
+#undef TARGET_ENDIANNESS	/* may be big or little endian */
 
 /* align a target address to a word boundary */
 #define TARGET_WORD_ALIGN(zz) (((zz) + 0x3) & -0x4)
@@ -83,25 +83,25 @@
 
 /*--------------------------------------------------------------------------
  *
- *      DEFAULT SETTINGS and DERIVED PROPERTIES
+ *			DEFAULT SETTINGS and DERIVED PROPERTIES
  *
  * This section establishes defaults for values not specified above
  *-------------------------------------------------------------------------- */
 #ifndef TARGET_AU_BITS
-#define TARGET_AU_BITS 8  /* width of the target addressable unit */
-#define LOG_TARGET_AU_BITS 3  /* log2 of same */
+#define TARGET_AU_BITS 8	/* width of the target addressable unit */
+#define LOG_TARGET_AU_BITS 3	/* log2 of same */
 #endif
 
 #ifndef CINIT_DEFAULT_PAGE
-#define CINIT_DEFAULT_PAGE 0  /* default .cinit page number */
+#define CINIT_DEFAULT_PAGE 0	/* default .cinit page number */
 #endif
 
 #ifndef DATA_RUN2LOAD
-#define DATA_RUN2LOAD(zz) (zz)  /* translate data run address to load address */
+#define DATA_RUN2LOAD(zz) (zz)	/* translate data run address to load address */
 #endif
 
 #ifndef DBG_LIST_PAGE
-#define DBG_LIST_PAGE 0   /* page number for .dllview section */
+#define DBG_LIST_PAGE 0		/* page number for .dllview section */
 #endif
 
 #ifndef TARGET_WORD_ALIGN
@@ -110,10 +110,10 @@
 #endif
 
 #ifndef TDATA_TO_TADDR
-#define TDATA_TO_TADDR(zz) (zz) /* target data address to target AU address */
-#define TADDR_TO_TDATA(zz) (zz) /* target AU address to target data address */
-#define TDATA_AU_BITS TARGET_AU_BITS  /* bits per data AU */
-#define LOG_TDATA_AU_BITS LOG_TARGET_AU_BITS
+#define TDATA_TO_TADDR(zz) (zz)	/* target data address to target AU address */
+#define TADDR_TO_TDATA(zz) (zz)	/* target AU address to target data address */
+#define TDATA_AU_BITS	TARGET_AU_BITS	/* bits per data AU */
+#define LOG_TDATA_AU_BITS	LOG_TARGET_AU_BITS
 #endif
 
 /*
@@ -156,11 +156,11 @@
 #define TDATA_TO_HOST(x) ((x) << (LOG_TDATA_AU_BITS-LOG_BITS_PER_AU))
 #define HOST_TO_TDATA(x) ((x) >> (LOG_TDATA_AU_BITS-LOG_BITS_PER_AU))
 #define HOST_TO_TDATA_ROUND(x) (((x) +\
-                                 (1<<(LOG_TDATA_AU_BITS-LOG_BITS_PER_AU))-1) >>\
-                                (LOG_TDATA_AU_BITS-LOG_BITS_PER_AU))
+				(1<<(LOG_TDATA_AU_BITS-LOG_BITS_PER_AU))-1) >>\
+				(LOG_TDATA_AU_BITS-LOG_BITS_PER_AU))
 #define BYTE_TO_HOST_TDATA_ROUND(x) (BYTE_TO_HOST((x) +\
-                                     (1<<(LOG_TDATA_AU_BITS-LOG_BITS_PER_BYTE))-1) &\
-                                     -(TDATA_AU_BITS/BITS_PER_AU))
+	(1<<(LOG_TDATA_AU_BITS-LOG_BITS_PER_BYTE))-1) &\
+	-(TDATA_AU_BITS/BITS_PER_AU))
 #endif
 
 /*
@@ -175,7 +175,7 @@
 #elif LOG_BITS_PER_AU >= LOG_BITS_PER_BYTE
 #define BYTE_TO_HOST(x) ((x) >> (LOG_BITS_PER_AU - LOG_BITS_PER_BYTE))
 #define BYTE_TO_HOST_ROUND(x) ((x + (BITS_PER_AU/BITS_PER_BYTE-1)) >>\
-                               (LOG_BITS_PER_AU - LOG_BITS_PER_BYTE))
+			      (LOG_BITS_PER_AU - LOG_BITS_PER_BYTE))
 #define HOST_TO_BYTE(x) ((x) << (LOG_BITS_PER_AU - LOG_BITS_PER_BYTE))
 #else
 /* lets not try to deal with sub-8-bit byte machines */

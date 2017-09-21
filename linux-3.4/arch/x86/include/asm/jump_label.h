@@ -11,18 +11,18 @@
 
 #define STATIC_KEY_INITIAL_NOP ".byte 0xe9 \n\t .long 0\n\t"
 
-static __always_inline bool arch_static_branch (struct static_key * key)
+static __always_inline bool arch_static_branch(struct static_key *key)
 {
-  asm goto ("1:"
-            STATIC_KEY_INITIAL_NOP
-            ".pushsection __jump_table,  \"aw\" \n\t"
-            _ASM_ALIGN "\n\t"
-            _ASM_PTR "1b, %l[l_yes], %c0 \n\t"
-            ".popsection \n\t"
-            : :  "i" (key) : : l_yes);
-  return false;
+	asm goto("1:"
+		STATIC_KEY_INITIAL_NOP
+		".pushsection __jump_table,  \"aw\" \n\t"
+		_ASM_ALIGN "\n\t"
+		_ASM_PTR "1b, %l[l_yes], %c0 \n\t"
+		".popsection \n\t"
+		: :  "i" (key) : : l_yes);
+	return false;
 l_yes:
-  return true;
+	return true;
 }
 
 #endif /* __KERNEL__ */
@@ -34,9 +34,9 @@ typedef u32 jump_label_t;
 #endif
 
 struct jump_entry {
-  jump_label_t code;
-  jump_label_t target;
-  jump_label_t key;
+	jump_label_t code;
+	jump_label_t target;
+	jump_label_t key;
 };
 
 #endif

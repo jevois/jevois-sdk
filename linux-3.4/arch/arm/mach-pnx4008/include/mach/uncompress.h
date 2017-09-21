@@ -24,18 +24,18 @@
 #define UART5_DR    (*(volatile unsigned char *) (UART5_BASE))
 #define UART5_FR    (*(volatile unsigned char *) (UART5_BASE + 18))
 
-static __inline__ void putc (char c)
+static __inline__ void putc(char c)
 {
-  while (UART5_FR & (1 << 5) )
-  { barrier(); }
-  
-  UART5_DR = c;
+	while (UART5_FR & (1 << 5))
+		barrier();
+
+	UART5_DR = c;
 }
 
 /*
  * This does not append a newline
  */
-static inline void flush (void)
+static inline void flush(void)
 {
 }
 

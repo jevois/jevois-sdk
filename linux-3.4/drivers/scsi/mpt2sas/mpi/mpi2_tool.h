@@ -54,21 +54,21 @@
 
 typedef struct _MPI2_TOOLBOX_REPLY
 {
-  U8                      Tool;                       /* 0x00 */
-  U8                      Reserved1;                  /* 0x01 */
-  U8                      MsgLength;                  /* 0x02 */
-  U8                      Function;                   /* 0x03 */
-  U16                     Reserved2;                  /* 0x04 */
-  U8                      Reserved3;                  /* 0x06 */
-  U8                      MsgFlags;                   /* 0x07 */
-  U8                      VP_ID;                      /* 0x08 */
-  U8                      VF_ID;                      /* 0x09 */
-  U16                     Reserved4;                  /* 0x0A */
-  U16                     Reserved5;                  /* 0x0C */
-  U16                     IOCStatus;                  /* 0x0E */
-  U32                     IOCLogInfo;                 /* 0x10 */
+    U8                      Tool;                       /* 0x00 */
+    U8                      Reserved1;                  /* 0x01 */
+    U8                      MsgLength;                  /* 0x02 */
+    U8                      Function;                   /* 0x03 */
+    U16                     Reserved2;                  /* 0x04 */
+    U8                      Reserved3;                  /* 0x06 */
+    U8                      MsgFlags;                   /* 0x07 */
+    U8                      VP_ID;                      /* 0x08 */
+    U8                      VF_ID;                      /* 0x09 */
+    U16                     Reserved4;                  /* 0x0A */
+    U16                     Reserved5;                  /* 0x0C */
+    U16                     IOCStatus;                  /* 0x0E */
+    U32                     IOCLogInfo;                 /* 0x10 */
 } MPI2_TOOLBOX_REPLY, MPI2_POINTER PTR_MPI2_TOOLBOX_REPLY,
-Mpi2ToolboxReply_t, MPI2_POINTER pMpi2ToolboxReply_t;
+  Mpi2ToolboxReply_t, MPI2_POINTER pMpi2ToolboxReply_t;
 
 
 /****************************************************************************
@@ -77,19 +77,19 @@ Mpi2ToolboxReply_t, MPI2_POINTER pMpi2ToolboxReply_t;
 
 typedef struct _MPI2_TOOLBOX_CLEAN_REQUEST
 {
-  U8                      Tool;                       /* 0x00 */
-  U8                      Reserved1;                  /* 0x01 */
-  U8                      ChainOffset;                /* 0x02 */
-  U8                      Function;                   /* 0x03 */
-  U16                     Reserved2;                  /* 0x04 */
-  U8                      Reserved3;                  /* 0x06 */
-  U8                      MsgFlags;                   /* 0x07 */
-  U8                      VP_ID;                      /* 0x08 */
-  U8                      VF_ID;                      /* 0x09 */
-  U16                     Reserved4;                  /* 0x0A */
-  U32                     Flags;                      /* 0x0C */
-} MPI2_TOOLBOX_CLEAN_REQUEST, MPI2_POINTER PTR_MPI2_TOOLBOX_CLEAN_REQUEST,
-Mpi2ToolboxCleanRequest_t, MPI2_POINTER pMpi2ToolboxCleanRequest_t;
+    U8                      Tool;                       /* 0x00 */
+    U8                      Reserved1;                  /* 0x01 */
+    U8                      ChainOffset;                /* 0x02 */
+    U8                      Function;                   /* 0x03 */
+    U16                     Reserved2;                  /* 0x04 */
+    U8                      Reserved3;                  /* 0x06 */
+    U8                      MsgFlags;                   /* 0x07 */
+    U8                      VP_ID;                      /* 0x08 */
+    U8                      VF_ID;                      /* 0x09 */
+    U16                     Reserved4;                  /* 0x0A */
+    U32                     Flags;                      /* 0x0C */
+   } MPI2_TOOLBOX_CLEAN_REQUEST, MPI2_POINTER PTR_MPI2_TOOLBOX_CLEAN_REQUEST,
+  Mpi2ToolboxCleanRequest_t, MPI2_POINTER pMpi2ToolboxCleanRequest_t;
 
 /* values for the Flags field */
 #define MPI2_TOOLBOX_CLEAN_BOOT_SERVICES            (0x80000000)
@@ -109,19 +109,19 @@ Mpi2ToolboxCleanRequest_t, MPI2_POINTER pMpi2ToolboxCleanRequest_t;
 ****************************************************************************/
 
 typedef struct _MPI2_TOOLBOX_MEM_MOVE_REQUEST {
-  U8                      Tool;                       /* 0x00 */
-  U8                      Reserved1;                  /* 0x01 */
-  U8                      ChainOffset;                /* 0x02 */
-  U8                      Function;                   /* 0x03 */
-  U16                     Reserved2;                  /* 0x04 */
-  U8                      Reserved3;                  /* 0x06 */
-  U8                      MsgFlags;                   /* 0x07 */
-  U8                      VP_ID;                      /* 0x08 */
-  U8                      VF_ID;                      /* 0x09 */
-  U16                     Reserved4;                  /* 0x0A */
-  MPI2_SGE_SIMPLE_UNION   SGL;                        /* 0x0C */
+    U8                      Tool;                       /* 0x00 */
+    U8                      Reserved1;                  /* 0x01 */
+    U8                      ChainOffset;                /* 0x02 */
+    U8                      Function;                   /* 0x03 */
+    U16                     Reserved2;                  /* 0x04 */
+    U8                      Reserved3;                  /* 0x06 */
+    U8                      MsgFlags;                   /* 0x07 */
+    U8                      VP_ID;                      /* 0x08 */
+    U8                      VF_ID;                      /* 0x09 */
+    U16                     Reserved4;                  /* 0x0A */
+    MPI2_SGE_SIMPLE_UNION   SGL;                        /* 0x0C */
 } MPI2_TOOLBOX_MEM_MOVE_REQUEST, MPI2_POINTER PTR_MPI2_TOOLBOX_MEM_MOVE_REQUEST,
-Mpi2ToolboxMemMoveRequest_t, MPI2_POINTER pMpi2ToolboxMemMoveRequest_t;
+  Mpi2ToolboxMemMoveRequest_t, MPI2_POINTER pMpi2ToolboxMemMoveRequest_t;
 
 
 /****************************************************************************
@@ -129,22 +129,22 @@ Mpi2ToolboxMemMoveRequest_t, MPI2_POINTER pMpi2ToolboxMemMoveRequest_t;
 ****************************************************************************/
 
 typedef struct _MPI2_TOOLBOX_DIAG_DATA_UPLOAD_REQUEST {
-  U8                      Tool;                       /* 0x00 */
-  U8                      Reserved1;                  /* 0x01 */
-  U8                      ChainOffset;                /* 0x02 */
-  U8                      Function;                   /* 0x03 */
-  U16                     Reserved2;                  /* 0x04 */
-  U8                      Reserved3;                  /* 0x06 */
-  U8                      MsgFlags;                   /* 0x07 */
-  U8                      VP_ID;                      /* 0x08 */
-  U8                      VF_ID;                      /* 0x09 */
-  U16                     Reserved4;                  /* 0x0A */
-  U8                      SGLFlags;                   /* 0x0C */
-  U8                      Reserved5;                  /* 0x0D */
-  U16                     Reserved6;                  /* 0x0E */
-  U32                     Flags;                      /* 0x10 */
-  U32                     DataLength;                 /* 0x14 */
-  MPI2_SGE_SIMPLE_UNION   SGL;                        /* 0x18 */
+	U8                      Tool;                       /* 0x00 */
+	U8                      Reserved1;                  /* 0x01 */
+	U8                      ChainOffset;                /* 0x02 */
+	U8                      Function;                   /* 0x03 */
+	U16                     Reserved2;                  /* 0x04 */
+	U8                      Reserved3;                  /* 0x06 */
+	U8                      MsgFlags;                   /* 0x07 */
+	U8                      VP_ID;                      /* 0x08 */
+	U8                      VF_ID;                      /* 0x09 */
+	U16                     Reserved4;                  /* 0x0A */
+	U8                      SGLFlags;                   /* 0x0C */
+	U8                      Reserved5;                  /* 0x0D */
+	U16                     Reserved6;                  /* 0x0E */
+	U32                     Flags;                      /* 0x10 */
+	U32                     DataLength;                 /* 0x14 */
+	MPI2_SGE_SIMPLE_UNION   SGL;                        /* 0x18 */
 } MPI2_TOOLBOX_DIAG_DATA_UPLOAD_REQUEST,
 MPI2_POINTER PTR_MPI2_TOOLBOX_DIAG_DATA_UPLOAD_REQUEST,
 Mpi2ToolboxDiagDataUploadRequest_t,
@@ -154,10 +154,10 @@ MPI2_POINTER pMpi2ToolboxDiagDataUploadRequest_t;
 
 
 typedef struct _MPI2_DIAG_DATA_UPLOAD_HEADER {
-  U32                     DiagDataLength;             /* 00h */
-  U8                      FormatCode;                 /* 04h */
-  U8                      Reserved1;                  /* 05h */
-  U16                     Reserved2;                  /* 06h */
+	U32                     DiagDataLength;             /* 00h */
+	U8                      FormatCode;                 /* 04h */
+	U8                      Reserved1;                  /* 05h */
+	U16                     Reserved2;                  /* 06h */
 } MPI2_DIAG_DATA_UPLOAD_HEADER, MPI2_POINTER PTR_MPI2_DIAG_DATA_UPLOAD_HEADER,
 Mpi2DiagDataUploadHeader_t, MPI2_POINTER pMpi2DiagDataUploadHeader_t;
 
@@ -168,34 +168,34 @@ Mpi2DiagDataUploadHeader_t, MPI2_POINTER pMpi2DiagDataUploadHeader_t;
 
 /* Toolbox ISTWI Read Write Tool request message */
 typedef struct _MPI2_TOOLBOX_ISTWI_READ_WRITE_REQUEST {
-  U8                      Tool;                       /* 0x00 */
-  U8                      Reserved1;                  /* 0x01 */
-  U8                      ChainOffset;                /* 0x02 */
-  U8                      Function;                   /* 0x03 */
-  U16                     Reserved2;                  /* 0x04 */
-  U8                      Reserved3;                  /* 0x06 */
-  U8                      MsgFlags;                   /* 0x07 */
-  U8                      VP_ID;                      /* 0x08 */
-  U8                      VF_ID;                      /* 0x09 */
-  U16                     Reserved4;                  /* 0x0A */
-  U32                     Reserved5;                  /* 0x0C */
-  U32                     Reserved6;                  /* 0x10 */
-  U8                      DevIndex;                   /* 0x14 */
-  U8                      Action;                     /* 0x15 */
-  U8                      SGLFlags;                   /* 0x16 */
-  U8                      Flags;                      /* 0x17 */
-  U16                     TxDataLength;               /* 0x18 */
-  U16                     RxDataLength;               /* 0x1A */
-  U32                     Reserved8;                  /* 0x1C */
-  U32                     Reserved9;                  /* 0x20 */
-  U32                     Reserved10;                 /* 0x24 */
-  U32                     Reserved11;                 /* 0x28 */
-  U32                     Reserved12;                 /* 0x2C */
-  MPI2_SGE_SIMPLE_UNION   SGL;                        /* 0x30 */
+    U8                      Tool;                       /* 0x00 */
+    U8                      Reserved1;                  /* 0x01 */
+    U8                      ChainOffset;                /* 0x02 */
+    U8                      Function;                   /* 0x03 */
+    U16                     Reserved2;                  /* 0x04 */
+    U8                      Reserved3;                  /* 0x06 */
+    U8                      MsgFlags;                   /* 0x07 */
+    U8                      VP_ID;                      /* 0x08 */
+    U8                      VF_ID;                      /* 0x09 */
+    U16                     Reserved4;                  /* 0x0A */
+    U32                     Reserved5;                  /* 0x0C */
+    U32                     Reserved6;                  /* 0x10 */
+    U8                      DevIndex;                   /* 0x14 */
+    U8                      Action;                     /* 0x15 */
+    U8                      SGLFlags;                   /* 0x16 */
+	 U8                      Flags;                      /* 0x17 */
+    U16                     TxDataLength;               /* 0x18 */
+    U16                     RxDataLength;               /* 0x1A */
+    U32                     Reserved8;                  /* 0x1C */
+    U32                     Reserved9;                  /* 0x20 */
+    U32                     Reserved10;                 /* 0x24 */
+    U32                     Reserved11;                 /* 0x28 */
+    U32                     Reserved12;                 /* 0x2C */
+    MPI2_SGE_SIMPLE_UNION   SGL;                        /* 0x30 */
 } MPI2_TOOLBOX_ISTWI_READ_WRITE_REQUEST,
-MPI2_POINTER PTR_MPI2_TOOLBOX_ISTWI_READ_WRITE_REQUEST,
-Mpi2ToolboxIstwiReadWriteRequest_t,
-MPI2_POINTER pMpi2ToolboxIstwiReadWriteRequest_t;
+  MPI2_POINTER PTR_MPI2_TOOLBOX_ISTWI_READ_WRITE_REQUEST,
+  Mpi2ToolboxIstwiReadWriteRequest_t,
+  MPI2_POINTER pMpi2ToolboxIstwiReadWriteRequest_t;
 
 /* values for the Action field */
 #define MPI2_TOOL_ISTWI_ACTION_READ_DATA            (0x01)
@@ -213,27 +213,27 @@ MPI2_POINTER pMpi2ToolboxIstwiReadWriteRequest_t;
 
 /* Toolbox ISTWI Read Write Tool reply message */
 typedef struct _MPI2_TOOLBOX_ISTWI_REPLY {
-  U8                      Tool;                       /* 0x00 */
-  U8                      Reserved1;                  /* 0x01 */
-  U8                      MsgLength;                  /* 0x02 */
-  U8                      Function;                   /* 0x03 */
-  U16                     Reserved2;                  /* 0x04 */
-  U8                      Reserved3;                  /* 0x06 */
-  U8                      MsgFlags;                   /* 0x07 */
-  U8                      VP_ID;                      /* 0x08 */
-  U8                      VF_ID;                      /* 0x09 */
-  U16                     Reserved4;                  /* 0x0A */
-  U16                     Reserved5;                  /* 0x0C */
-  U16                     IOCStatus;                  /* 0x0E */
-  U32                     IOCLogInfo;                 /* 0x10 */
-  U8                      DevIndex;                   /* 0x14 */
-  U8                      Action;                     /* 0x15 */
-  U8                      IstwiStatus;                /* 0x16 */
-  U8                      Reserved6;                  /* 0x17 */
-  U16                     TxDataCount;                /* 0x18 */
-  U16                     RxDataCount;                /* 0x1A */
+    U8                      Tool;                       /* 0x00 */
+    U8                      Reserved1;                  /* 0x01 */
+    U8                      MsgLength;                  /* 0x02 */
+    U8                      Function;                   /* 0x03 */
+    U16                     Reserved2;                  /* 0x04 */
+    U8                      Reserved3;                  /* 0x06 */
+    U8                      MsgFlags;                   /* 0x07 */
+    U8                      VP_ID;                      /* 0x08 */
+    U8                      VF_ID;                      /* 0x09 */
+    U16                     Reserved4;                  /* 0x0A */
+    U16                     Reserved5;                  /* 0x0C */
+    U16                     IOCStatus;                  /* 0x0E */
+    U32                     IOCLogInfo;                 /* 0x10 */
+    U8                      DevIndex;                   /* 0x14 */
+    U8                      Action;                     /* 0x15 */
+    U8                      IstwiStatus;                /* 0x16 */
+    U8                      Reserved6;                  /* 0x17 */
+    U16                     TxDataCount;                /* 0x18 */
+    U16                     RxDataCount;                /* 0x1A */
 } MPI2_TOOLBOX_ISTWI_REPLY, MPI2_POINTER PTR_MPI2_TOOLBOX_ISTWI_REPLY,
-Mpi2ToolboxIstwiReply_t, MPI2_POINTER pMpi2ToolboxIstwiReply_t;
+  Mpi2ToolboxIstwiReply_t, MPI2_POINTER pMpi2ToolboxIstwiReply_t;
 
 
 /****************************************************************************
@@ -242,22 +242,22 @@ Mpi2ToolboxIstwiReply_t, MPI2_POINTER pMpi2ToolboxIstwiReply_t;
 
 typedef struct _MPI2_TOOLBOX_BEACON_REQUEST
 {
-  U8                      Tool;                       /* 0x00 */
-  U8                      Reserved1;                  /* 0x01 */
-  U8                      ChainOffset;                /* 0x02 */
-  U8                      Function;                   /* 0x03 */
-  U16                     Reserved2;                  /* 0x04 */
-  U8                      Reserved3;                  /* 0x06 */
-  U8                      MsgFlags;                   /* 0x07 */
-  U8                      VP_ID;                      /* 0x08 */
-  U8                      VF_ID;                      /* 0x09 */
-  U16                     Reserved4;                  /* 0x0A */
-  U8                      Reserved5;                  /* 0x0C */
-  U8                      PhysicalPort;               /* 0x0D */
-  U8                      Reserved6;                  /* 0x0E */
-  U8                      Flags;                      /* 0x0F */
+    U8                      Tool;                       /* 0x00 */
+    U8                      Reserved1;                  /* 0x01 */
+    U8                      ChainOffset;                /* 0x02 */
+    U8                      Function;                   /* 0x03 */
+    U16                     Reserved2;                  /* 0x04 */
+    U8                      Reserved3;                  /* 0x06 */
+    U8                      MsgFlags;                   /* 0x07 */
+    U8                      VP_ID;                      /* 0x08 */
+    U8                      VF_ID;                      /* 0x09 */
+    U16                     Reserved4;                  /* 0x0A */
+    U8                      Reserved5;                  /* 0x0C */
+    U8                      PhysicalPort;               /* 0x0D */
+    U8                      Reserved6;                  /* 0x0E */
+    U8                      Flags;                      /* 0x0F */
 } MPI2_TOOLBOX_BEACON_REQUEST, MPI2_POINTER PTR_MPI2_TOOLBOX_BEACON_REQUEST,
-Mpi2ToolboxBeaconRequest_t, MPI2_POINTER pMpi2ToolboxBeaconRequest_t;
+  Mpi2ToolboxBeaconRequest_t, MPI2_POINTER pMpi2ToolboxBeaconRequest_t;
 
 /* values for the Flags field */
 #define MPI2_TOOLBOX_FLAGS_BEACONMODE_OFF       (0x00)
@@ -272,51 +272,51 @@ Mpi2ToolboxBeaconRequest_t, MPI2_POINTER pMpi2ToolboxBeaconRequest_t;
 
 /* Toolbox Diagnostic CLI Tool request message */
 typedef struct _MPI2_TOOLBOX_DIAGNOSTIC_CLI_REQUEST {
-  U8                      Tool;                       /* 0x00 */
-  U8                      Reserved1;                  /* 0x01 */
-  U8                      ChainOffset;                /* 0x02 */
-  U8                      Function;                   /* 0x03 */
-  U16                     Reserved2;                  /* 0x04 */
-  U8                      Reserved3;                  /* 0x06 */
-  U8                      MsgFlags;                   /* 0x07 */
-  U8                      VP_ID;                      /* 0x08 */
-  U8                      VF_ID;                      /* 0x09 */
-  U16                     Reserved4;                  /* 0x0A */
-  U8                      SGLFlags;                   /* 0x0C */
-  U8                      Reserved5;                  /* 0x0D */
-  U16                     Reserved6;                  /* 0x0E */
-  U32                     DataLength;                 /* 0x10 */
-  U8                      DiagnosticCliCommand
-  [MPI2_TOOLBOX_DIAG_CLI_CMD_LENGTH];     /* 0x14 */
-  MPI2_SGE_SIMPLE_UNION   SGL;                        /* 0x70 */
+    U8                      Tool;                       /* 0x00 */
+    U8                      Reserved1;                  /* 0x01 */
+    U8                      ChainOffset;                /* 0x02 */
+    U8                      Function;                   /* 0x03 */
+    U16                     Reserved2;                  /* 0x04 */
+    U8                      Reserved3;                  /* 0x06 */
+    U8                      MsgFlags;                   /* 0x07 */
+    U8                      VP_ID;                      /* 0x08 */
+    U8                      VF_ID;                      /* 0x09 */
+    U16                     Reserved4;                  /* 0x0A */
+    U8                      SGLFlags;                   /* 0x0C */
+    U8                      Reserved5;                  /* 0x0D */
+    U16                     Reserved6;                  /* 0x0E */
+    U32                     DataLength;                 /* 0x10 */
+    U8                      DiagnosticCliCommand
+		[MPI2_TOOLBOX_DIAG_CLI_CMD_LENGTH];     /* 0x14 */
+    MPI2_SGE_SIMPLE_UNION   SGL;                        /* 0x70 */
 } MPI2_TOOLBOX_DIAGNOSTIC_CLI_REQUEST,
-MPI2_POINTER PTR_MPI2_TOOLBOX_DIAGNOSTIC_CLI_REQUEST,
-Mpi2ToolboxDiagnosticCliRequest_t,
-MPI2_POINTER pMpi2ToolboxDiagnosticCliRequest_t;
+  MPI2_POINTER PTR_MPI2_TOOLBOX_DIAGNOSTIC_CLI_REQUEST,
+  Mpi2ToolboxDiagnosticCliRequest_t,
+  MPI2_POINTER pMpi2ToolboxDiagnosticCliRequest_t;
 
 /* use MPI2_SGLFLAGS_ defines from mpi2.h for the SGLFlags field */
 
 
 /* Toolbox Diagnostic CLI Tool reply message */
 typedef struct _MPI2_TOOLBOX_DIAGNOSTIC_CLI_REPLY {
-  U8                      Tool;                       /* 0x00 */
-  U8                      Reserved1;                  /* 0x01 */
-  U8                      MsgLength;                  /* 0x02 */
-  U8                      Function;                   /* 0x03 */
-  U16                     Reserved2;                  /* 0x04 */
-  U8                      Reserved3;                  /* 0x06 */
-  U8                      MsgFlags;                   /* 0x07 */
-  U8                      VP_ID;                      /* 0x08 */
-  U8                      VF_ID;                      /* 0x09 */
-  U16                     Reserved4;                  /* 0x0A */
-  U16                     Reserved5;                  /* 0x0C */
-  U16                     IOCStatus;                  /* 0x0E */
-  U32                     IOCLogInfo;                 /* 0x10 */
-  U32                     ReturnedDataLength;         /* 0x14 */
+    U8                      Tool;                       /* 0x00 */
+    U8                      Reserved1;                  /* 0x01 */
+    U8                      MsgLength;                  /* 0x02 */
+    U8                      Function;                   /* 0x03 */
+    U16                     Reserved2;                  /* 0x04 */
+    U8                      Reserved3;                  /* 0x06 */
+    U8                      MsgFlags;                   /* 0x07 */
+    U8                      VP_ID;                      /* 0x08 */
+    U8                      VF_ID;                      /* 0x09 */
+    U16                     Reserved4;                  /* 0x0A */
+    U16                     Reserved5;                  /* 0x0C */
+    U16                     IOCStatus;                  /* 0x0E */
+    U32                     IOCLogInfo;                 /* 0x10 */
+    U32                     ReturnedDataLength;         /* 0x14 */
 } MPI2_TOOLBOX_DIAGNOSTIC_CLI_REPLY,
-MPI2_POINTER PTR_MPI2_TOOLBOX_DIAG_CLI_REPLY,
-Mpi2ToolboxDiagnosticCliReply_t,
-MPI2_POINTER pMpi2ToolboxDiagnosticCliReply_t;
+  MPI2_POINTER PTR_MPI2_TOOLBOX_DIAG_CLI_REPLY,
+  Mpi2ToolboxDiagnosticCliReply_t,
+  MPI2_POINTER pMpi2ToolboxDiagnosticCliReply_t;
 
 
 /*****************************************************************************
@@ -332,24 +332,24 @@ MPI2_POINTER pMpi2ToolboxDiagnosticCliReply_t;
 
 typedef struct _MPI2_DIAG_BUFFER_POST_REQUEST
 {
-  U8                      ExtendedType;               /* 0x00 */
-  U8                      BufferType;                 /* 0x01 */
-  U8                      ChainOffset;                /* 0x02 */
-  U8                      Function;                   /* 0x03 */
-  U16                     Reserved2;                  /* 0x04 */
-  U8                      Reserved3;                  /* 0x06 */
-  U8                      MsgFlags;                   /* 0x07 */
-  U8                      VP_ID;                      /* 0x08 */
-  U8                      VF_ID;                      /* 0x09 */
-  U16                     Reserved4;                  /* 0x0A */
-  U64                     BufferAddress;              /* 0x0C */
-  U32                     BufferLength;               /* 0x14 */
-  U32                     Reserved5;                  /* 0x18 */
-  U32                     Reserved6;                  /* 0x1C */
-  U32                     Flags;                      /* 0x20 */
-  U32                     ProductSpecific[23];        /* 0x24 */
+    U8                      ExtendedType;               /* 0x00 */
+    U8                      BufferType;                 /* 0x01 */
+    U8                      ChainOffset;                /* 0x02 */
+    U8                      Function;                   /* 0x03 */
+    U16                     Reserved2;                  /* 0x04 */
+    U8                      Reserved3;                  /* 0x06 */
+    U8                      MsgFlags;                   /* 0x07 */
+    U8                      VP_ID;                      /* 0x08 */
+    U8                      VF_ID;                      /* 0x09 */
+    U16                     Reserved4;                  /* 0x0A */
+    U64                     BufferAddress;              /* 0x0C */
+    U32                     BufferLength;               /* 0x14 */
+    U32                     Reserved5;                  /* 0x18 */
+    U32                     Reserved6;                  /* 0x1C */
+    U32                     Flags;                      /* 0x20 */
+    U32                     ProductSpecific[23];        /* 0x24 */
 } MPI2_DIAG_BUFFER_POST_REQUEST, MPI2_POINTER PTR_MPI2_DIAG_BUFFER_POST_REQUEST,
-Mpi2DiagBufferPostRequest_t, MPI2_POINTER pMpi2DiagBufferPostRequest_t;
+  Mpi2DiagBufferPostRequest_t, MPI2_POINTER pMpi2DiagBufferPostRequest_t;
 
 /* values for the ExtendedType field */
 #define MPI2_DIAG_EXTENDED_TYPE_UTILIZATION         (0x02)
@@ -372,22 +372,22 @@ Mpi2DiagBufferPostRequest_t, MPI2_POINTER pMpi2DiagBufferPostRequest_t;
 
 typedef struct _MPI2_DIAG_BUFFER_POST_REPLY
 {
-  U8                      ExtendedType;               /* 0x00 */
-  U8                      BufferType;                 /* 0x01 */
-  U8                      MsgLength;                  /* 0x02 */
-  U8                      Function;                   /* 0x03 */
-  U16                     Reserved2;                  /* 0x04 */
-  U8                      Reserved3;                  /* 0x06 */
-  U8                      MsgFlags;                   /* 0x07 */
-  U8                      VP_ID;                      /* 0x08 */
-  U8                      VF_ID;                      /* 0x09 */
-  U16                     Reserved4;                  /* 0x0A */
-  U16                     Reserved5;                  /* 0x0C */
-  U16                     IOCStatus;                  /* 0x0E */
-  U32                     IOCLogInfo;                 /* 0x10 */
-  U32                     TransferLength;             /* 0x14 */
+    U8                      ExtendedType;               /* 0x00 */
+    U8                      BufferType;                 /* 0x01 */
+    U8                      MsgLength;                  /* 0x02 */
+    U8                      Function;                   /* 0x03 */
+    U16                     Reserved2;                  /* 0x04 */
+    U8                      Reserved3;                  /* 0x06 */
+    U8                      MsgFlags;                   /* 0x07 */
+    U8                      VP_ID;                      /* 0x08 */
+    U8                      VF_ID;                      /* 0x09 */
+    U16                     Reserved4;                  /* 0x0A */
+    U16                     Reserved5;                  /* 0x0C */
+    U16                     IOCStatus;                  /* 0x0E */
+    U32                     IOCLogInfo;                 /* 0x10 */
+    U32                     TransferLength;             /* 0x14 */
 } MPI2_DIAG_BUFFER_POST_REPLY, MPI2_POINTER PTR_MPI2_DIAG_BUFFER_POST_REPLY,
-Mpi2DiagBufferPostReply_t, MPI2_POINTER pMpi2DiagBufferPostReply_t;
+  Mpi2DiagBufferPostReply_t, MPI2_POINTER pMpi2DiagBufferPostReply_t;
 
 
 /****************************************************************************
@@ -396,18 +396,18 @@ Mpi2DiagBufferPostReply_t, MPI2_POINTER pMpi2DiagBufferPostReply_t;
 
 typedef struct _MPI2_DIAG_RELEASE_REQUEST
 {
-  U8                      Reserved1;                  /* 0x00 */
-  U8                      BufferType;                 /* 0x01 */
-  U8                      ChainOffset;                /* 0x02 */
-  U8                      Function;                   /* 0x03 */
-  U16                     Reserved2;                  /* 0x04 */
-  U8                      Reserved3;                  /* 0x06 */
-  U8                      MsgFlags;                   /* 0x07 */
-  U8                      VP_ID;                      /* 0x08 */
-  U8                      VF_ID;                      /* 0x09 */
-  U16                     Reserved4;                  /* 0x0A */
+    U8                      Reserved1;                  /* 0x00 */
+    U8                      BufferType;                 /* 0x01 */
+    U8                      ChainOffset;                /* 0x02 */
+    U8                      Function;                   /* 0x03 */
+    U16                     Reserved2;                  /* 0x04 */
+    U8                      Reserved3;                  /* 0x06 */
+    U8                      MsgFlags;                   /* 0x07 */
+    U8                      VP_ID;                      /* 0x08 */
+    U8                      VF_ID;                      /* 0x09 */
+    U16                     Reserved4;                  /* 0x0A */
 } MPI2_DIAG_RELEASE_REQUEST, MPI2_POINTER PTR_MPI2_DIAG_RELEASE_REQUEST,
-Mpi2DiagReleaseRequest_t, MPI2_POINTER pMpi2DiagReleaseRequest_t;
+  Mpi2DiagReleaseRequest_t, MPI2_POINTER pMpi2DiagReleaseRequest_t;
 
 
 /****************************************************************************
@@ -416,21 +416,21 @@ Mpi2DiagReleaseRequest_t, MPI2_POINTER pMpi2DiagReleaseRequest_t;
 
 typedef struct _MPI2_DIAG_RELEASE_REPLY
 {
-  U8                      Reserved1;                  /* 0x00 */
-  U8                      BufferType;                 /* 0x01 */
-  U8                      MsgLength;                  /* 0x02 */
-  U8                      Function;                   /* 0x03 */
-  U16                     Reserved2;                  /* 0x04 */
-  U8                      Reserved3;                  /* 0x06 */
-  U8                      MsgFlags;                   /* 0x07 */
-  U8                      VP_ID;                      /* 0x08 */
-  U8                      VF_ID;                      /* 0x09 */
-  U16                     Reserved4;                  /* 0x0A */
-  U16                     Reserved5;                  /* 0x0C */
-  U16                     IOCStatus;                  /* 0x0E */
-  U32                     IOCLogInfo;                 /* 0x10 */
+    U8                      Reserved1;                  /* 0x00 */
+    U8                      BufferType;                 /* 0x01 */
+    U8                      MsgLength;                  /* 0x02 */
+    U8                      Function;                   /* 0x03 */
+    U16                     Reserved2;                  /* 0x04 */
+    U8                      Reserved3;                  /* 0x06 */
+    U8                      MsgFlags;                   /* 0x07 */
+    U8                      VP_ID;                      /* 0x08 */
+    U8                      VF_ID;                      /* 0x09 */
+    U16                     Reserved4;                  /* 0x0A */
+    U16                     Reserved5;                  /* 0x0C */
+    U16                     IOCStatus;                  /* 0x0E */
+    U32                     IOCLogInfo;                 /* 0x10 */
 } MPI2_DIAG_RELEASE_REPLY, MPI2_POINTER PTR_MPI2_DIAG_RELEASE_REPLY,
-Mpi2DiagReleaseReply_t, MPI2_POINTER pMpi2DiagReleaseReply_t;
+  Mpi2DiagReleaseReply_t, MPI2_POINTER pMpi2DiagReleaseReply_t;
 
 
 #endif

@@ -31,12 +31,12 @@
 #define BRCM_SHIFT(c, r, f)   c##_##r##_##f##_SHIFT
 
 #define GET_FIELD(m, c, r, f) \
-  ((((m) & BRCM_MASK(c, r, f)) >> BRCM_SHIFT(c, r, f)) << BRCM_ALIGN(c, r, f))
+	((((m) & BRCM_MASK(c, r, f)) >> BRCM_SHIFT(c, r, f)) << BRCM_ALIGN(c, r, f))
 
 #define SET_FIELD(m, c, r, f, d) \
-  ((m) = (((m) & ~BRCM_MASK(c, r, f)) | ((((d) >> BRCM_ALIGN(c, r, f)) << \
-                                          BRCM_SHIFT(c, r, f)) & BRCM_MASK(c, r, f))) \
-  )
+	((m) = (((m) & ~BRCM_MASK(c, r, f)) | ((((d) >> BRCM_ALIGN(c, r, f)) << \
+	 BRCM_SHIFT(c, r, f)) & BRCM_MASK(c, r, f))) \
+	)
 
 #define SET_TYPE_FIELD(m, c, r, f, d) SET_FIELD(m, c, r, f, c##_##d)
 #define SET_NAME_FIELD(m, c, r, f, d) SET_FIELD(m, c, r, f, c##_##r##_##f##_##d)

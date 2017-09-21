@@ -31,56 +31,54 @@
 
 int timer_init (void)
 {
-  return 0;
+	return 0;
 }
 
 ulong get_timer (ulong base)
 {
-  return get_timer_masked ();
+	return get_timer_masked ();
 }
 
 void __udelay (unsigned long usec)
 {
-  udelay_masked (usec);
+	udelay_masked (usec);
 }
 
 ulong get_timer_masked (void)
 {
-  return OSCR;
+	return OSCR;
 }
 
 void udelay_masked (unsigned long usec)
 {
-  ulong tmo;
-  ulong endtime;
-  signed long diff;
-  
-  if (usec >= 1000) {
-    tmo = usec / 1000;
-    tmo *= CONFIG_SYS_HZ;
-    tmo /= 1000;
-  }
-  else {
-    tmo = usec * CONFIG_SYS_HZ;
-    tmo /= (1000 * 1000);
-  }
-  
-  endtime = get_timer_masked () + tmo;
-  
-  do {
-    ulong now = get_timer_masked ();
-    diff = endtime - now;
-  }
-  while (diff >= 0);
+	ulong tmo;
+	ulong endtime;
+	signed long diff;
+
+	if (usec >= 1000) {
+		tmo = usec / 1000;
+		tmo *= CONFIG_SYS_HZ;
+		tmo /= 1000;
+	} else {
+		tmo = usec * CONFIG_SYS_HZ;
+		tmo /= (1000*1000);
+	}
+
+	endtime = get_timer_masked () + tmo;
+
+	do {
+		ulong now = get_timer_masked ();
+		diff = endtime - now;
+	} while (diff >= 0);
 }
 
 /*
  * This function is derived from PowerPC code (read timebase as long long).
  * On ARM it just returns the timer value.
  */
-unsigned long long get_ticks (void)
+unsigned long long get_ticks(void)
 {
-  return get_timer (0);
+	return get_timer(0);
 }
 
 /*
@@ -89,8 +87,8 @@ unsigned long long get_ticks (void)
  */
 ulong get_tbclk (void)
 {
-  ulong tbclk;
-  
-  tbclk = CONFIG_SYS_HZ;
-  return tbclk;
+	ulong tbclk;
+
+	tbclk = CONFIG_SYS_HZ;
+	return tbclk;
 }

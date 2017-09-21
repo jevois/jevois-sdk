@@ -38,10 +38,10 @@
  *  Details:
  */
 
-int mgr_wait_for_bridge_events (struct dsp_notification
-                                ** anotifications,
-                                u32 count, u32 * pu_index,
-                                u32 utimeout);
+int mgr_wait_for_bridge_events(struct dsp_notification
+				      **anotifications,
+				      u32 count, u32 *pu_index,
+				      u32 utimeout);
 
 /*
  *  ======== mgr_create ========
@@ -66,8 +66,8 @@ int mgr_wait_for_bridge_events (struct dsp_notification
  *  Details:
  *      DCD Dll is loaded and MGR Object stores the handle of the DLL.
  */
-extern int mgr_create (struct mgr_object ** mgr_obj,
-                       struct cfg_devnode * dev_node_obj);
+extern int mgr_create(struct mgr_object **mgr_obj,
+			     struct cfg_devnode *dev_node_obj);
 
 /*
  *  ======== mgr_destroy ========
@@ -87,7 +87,7 @@ extern int mgr_create (struct mgr_object ** mgr_obj,
  *      0:        MGR Object destroyed and hmgr_obj is Invalid MGR
  *                      Handle.
  */
-extern int mgr_destroy (struct mgr_object * hmgr_obj);
+extern int mgr_destroy(struct mgr_object *hmgr_obj);
 
 /*
  *  ======== mgr_enum_node_info ========
@@ -118,10 +118,10 @@ extern int mgr_destroy (struct mgr_object * hmgr_obj);
  *      DSP_FAILED  && *pu_num_nodes == 0.
  *  Details:
  */
-extern int mgr_enum_node_info (u32 node_id,
-                               struct dsp_ndbprops * pndb_props,
-                               u32 undb_props_size,
-                               u32 * pu_num_nodes);
+extern int mgr_enum_node_info(u32 node_id,
+				     struct dsp_ndbprops *pndb_props,
+				     u32 undb_props_size,
+				     u32 *pu_num_nodes);
 
 /*
  *  ======== mgr_enum_processor_info ========
@@ -149,11 +149,11 @@ extern int mgr_enum_node_info (u32 node_id,
  *      DSP_FAILED && *pu_num_procs == 0.
  *  Details:
  */
-extern int mgr_enum_processor_info (u32 processor_id,
-                                    struct dsp_processorinfo
-                                    *processor_info,
-                                    u32 processor_info_size,
-                                    u8 * pu_num_procs);
+extern int mgr_enum_processor_info(u32 processor_id,
+					  struct dsp_processorinfo
+					  *processor_info,
+					  u32 processor_info_size,
+					  u8 *pu_num_procs);
 /*
  *  ======== mgr_exit ========
  *  Purpose:
@@ -166,7 +166,7 @@ extern int mgr_enum_processor_info (u32 processor_id,
  *  Ensures:
  *      When reference count == 0, MGR's private resources are freed.
  */
-extern void mgr_exit (void);
+extern void mgr_exit(void);
 
 /*
  *  ======== mgr_get_dcd_handle ========
@@ -185,8 +185,8 @@ extern void mgr_exit (void);
  *      0 and *dcd_handle != NULL ||
  *      -EPERM and *dcd_handle == NULL
  */
-extern int mgr_get_dcd_handle (struct mgr_object
-                               *mgr_handle, u32 * dcd_handle);
+extern int mgr_get_dcd_handle(struct mgr_object
+				     *mgr_handle, u32 *dcd_handle);
 
 /*
  *  ======== mgr_init ========
@@ -200,6 +200,6 @@ extern int mgr_get_dcd_handle (struct mgr_object
  *  Ensures:
  *      TRUE: A requirement for the other public MGR functions.
  */
-extern bool mgr_init (void);
+extern bool mgr_init(void);
 
 #endif /* MGR_ */

@@ -41,7 +41,7 @@
  * Increment this value if any changes that break userspace ABI
  * compatibility are made.
  */
-#define IB_USER_MAD_ABI_VERSION 5
+#define IB_USER_MAD_ABI_VERSION	5
 
 /*
  * Make sure that all structs defined in this file remain laid out so
@@ -70,22 +70,22 @@
  * @flow_label - Flow label in GRH
  */
 struct ib_user_mad_hdr_old {
-  __u32 id;
-  __u32 status;
-  __u32 timeout_ms;
-  __u32 retries;
-  __u32 length;
-  __be32  qpn;
-  __be32  qkey;
-  __be16  lid;
-  __u8  sl;
-  __u8  path_bits;
-  __u8  grh_present;
-  __u8  gid_index;
-  __u8  hop_limit;
-  __u8  traffic_class;
-  __u8  gid[16];
-  __be32  flow_label;
+	__u32	id;
+	__u32	status;
+	__u32	timeout_ms;
+	__u32	retries;
+	__u32	length;
+	__be32	qpn;
+	__be32  qkey;
+	__be16	lid;
+	__u8	sl;
+	__u8	path_bits;
+	__u8	grh_present;
+	__u8	gid_index;
+	__u8	hop_limit;
+	__u8	traffic_class;
+	__u8	gid[16];
+	__be32	flow_label;
 };
 
 /**
@@ -114,24 +114,24 @@ struct ib_user_mad_hdr_old {
  * @pkey_index - P_Key index
  */
 struct ib_user_mad_hdr {
-  __u32 id;
-  __u32 status;
-  __u32 timeout_ms;
-  __u32 retries;
-  __u32 length;
-  __be32  qpn;
-  __be32  qkey;
-  __be16  lid;
-  __u8  sl;
-  __u8  path_bits;
-  __u8  grh_present;
-  __u8  gid_index;
-  __u8  hop_limit;
-  __u8  traffic_class;
-  __u8  gid[16];
-  __be32  flow_label;
-  __u16 pkey_index;
-  __u8  reserved[6];
+	__u32	id;
+	__u32	status;
+	__u32	timeout_ms;
+	__u32	retries;
+	__u32	length;
+	__be32	qpn;
+	__be32  qkey;
+	__be16	lid;
+	__u8	sl;
+	__u8	path_bits;
+	__u8	grh_present;
+	__u8	gid_index;
+	__u8	hop_limit;
+	__u8	traffic_class;
+	__u8	gid[16];
+	__be32	flow_label;
+	__u16	pkey_index;
+	__u8	reserved[6];
 };
 
 /**
@@ -141,8 +141,8 @@ struct ib_user_mad_hdr {
  *
  */
 struct ib_user_mad {
-  struct ib_user_mad_hdr hdr;
-  __u64 data[0];
+	struct ib_user_mad_hdr hdr;
+	__u64	data[0];
 };
 
 /*
@@ -162,7 +162,7 @@ struct ib_user_mad {
  * bytes even when long is 64 bits, which forces us into this ugly
  * typedef.
  */
-typedef unsigned long __attribute__ ( (aligned (4) ) ) packed_ulong;
+typedef unsigned long __attribute__((aligned(4))) packed_ulong;
 #define IB_USER_MAD_LONGS_PER_METHOD_MASK (128 / (8 * sizeof (long)))
 
 /**
@@ -182,22 +182,22 @@ typedef unsigned long __attribute__ ( (aligned (4) ) ) packed_ulong;
  *
  */
 struct ib_user_mad_reg_req {
-  __u32 id;
-  packed_ulong method_mask[IB_USER_MAD_LONGS_PER_METHOD_MASK];
-  __u8  qpn;
-  __u8  mgmt_class;
-  __u8  mgmt_class_version;
-  __u8    oui[3];
-  __u8  rmpp_version;
+	__u32	id;
+	packed_ulong method_mask[IB_USER_MAD_LONGS_PER_METHOD_MASK];
+	__u8	qpn;
+	__u8	mgmt_class;
+	__u8	mgmt_class_version;
+	__u8    oui[3];
+	__u8	rmpp_version;
 };
 
-#define IB_IOCTL_MAGIC    0x1b
+#define IB_IOCTL_MAGIC		0x1b
 
-#define IB_USER_MAD_REGISTER_AGENT  _IOWR(IB_IOCTL_MAGIC, 1, \
-    struct ib_user_mad_reg_req)
+#define IB_USER_MAD_REGISTER_AGENT	_IOWR(IB_IOCTL_MAGIC, 1, \
+					      struct ib_user_mad_reg_req)
 
-#define IB_USER_MAD_UNREGISTER_AGENT  _IOW(IB_IOCTL_MAGIC, 2, __u32)
+#define IB_USER_MAD_UNREGISTER_AGENT	_IOW(IB_IOCTL_MAGIC, 2, __u32)
 
-#define IB_USER_MAD_ENABLE_PKEY   _IO(IB_IOCTL_MAGIC, 3)
+#define IB_USER_MAD_ENABLE_PKEY		_IO(IB_IOCTL_MAGIC, 3)
 
 #endif /* IB_USER_MAD_H */

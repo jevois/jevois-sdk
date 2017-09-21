@@ -91,12 +91,12 @@
 #define PART_REV 0x63
 
 struct mt2060_priv {
-  struct mt2060_config * cfg;
-  struct i2c_adapter  * i2c;
-  
-  u32 frequency;
-  u16 if1_freq;
-  u8  fmfreq;
+	struct mt2060_config *cfg;
+	struct i2c_adapter   *i2c;
+
+	u32 frequency;
+	u16 if1_freq;
+	u8  fmfreq;
 };
 
 #endif

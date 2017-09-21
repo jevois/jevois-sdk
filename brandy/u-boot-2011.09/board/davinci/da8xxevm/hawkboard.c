@@ -31,38 +31,38 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-int board_init (void)
+int board_init(void)
 {
-  /* arch number of the board */
-  gd->bd->bi_arch_number = MACH_TYPE_OMAPL138_HAWKBOARD;
-  
-  /* address of boot parameters */
-  gd->bd->bi_boot_params = LINUX_BOOT_PARAM_ADDR;
-  
-  return 0;
+	/* arch number of the board */
+	gd->bd->bi_arch_number = MACH_TYPE_OMAPL138_HAWKBOARD;
+
+	/* address of boot parameters */
+	gd->bd->bi_boot_params = LINUX_BOOT_PARAM_ADDR;
+
+	return 0;
 }
 
-int board_early_init_f (void)
+int board_early_init_f(void)
 {
-  /*
-   * Kick Registers need to be set to allow access to Pin Mux registers
-   */
-  writel (HAWKBOARD_KICK0_UNLOCK, &davinci_syscfg_regs->kick0);
-  writel (HAWKBOARD_KICK1_UNLOCK, &davinci_syscfg_regs->kick1);
-  
-  /* set cfgchip3 to select mii */
-  writel (readl (&davinci_syscfg_regs->cfgchip3) &
-          ~ (1 << 8), &davinci_syscfg_regs->cfgchip3);
-          
-  return 0;
+	/*
+	 * Kick Registers need to be set to allow access to Pin Mux registers
+	 */
+	writel(HAWKBOARD_KICK0_UNLOCK, &davinci_syscfg_regs->kick0);
+	writel(HAWKBOARD_KICK1_UNLOCK, &davinci_syscfg_regs->kick1);
+
+	/* set cfgchip3 to select mii */
+	writel(readl(&davinci_syscfg_regs->cfgchip3) &
+	       ~(1 << 8), &davinci_syscfg_regs->cfgchip3);
+
+	return 0;
 }
 
-int misc_init_r (void)
+int misc_init_r(void)
 {
-  char buf[32];
-  
-  printf ("ARM Clock : %s MHz\n",
-          strmhz (buf, clk_get (DAVINCI_ARM_CLKID) ) );
-          
-  return 0;
+	char buf[32];
+
+	printf("ARM Clock : %s MHz\n",
+	       strmhz(buf, clk_get(DAVINCI_ARM_CLKID)));
+
+	return 0;
 }

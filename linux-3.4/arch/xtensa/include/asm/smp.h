@@ -17,11 +17,11 @@ extern struct xtensa_cpuinfo boot_cpu_data;
 #define current_cpu_data boot_cpu_data
 
 struct xtensa_cpuinfo {
-  unsigned long * pgd_cache;
-  unsigned long * pte_cache;
-  unsigned long pgtable_cache_sz;
+	unsigned long	*pgd_cache;
+	unsigned long	*pte_cache;
+	unsigned long	pgtable_cache_sz;
 };
 
-#define cpu_logical_map(cpu)  (cpu)
+#define cpu_logical_map(cpu)	(cpu)
 
-#endif  /* _XTENSA_SMP_H */
+#endif	/* _XTENSA_SMP_H */

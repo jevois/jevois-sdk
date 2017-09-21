@@ -24,36 +24,36 @@
  * Find the greatest common divisor G of A and B.
  * Return: true if this 1, false in all other cases
  */
-int mpi_gcd (MPI g, const MPI xa, const MPI xb)
+int mpi_gcd(MPI g, const MPI xa, const MPI xb)
 {
-  MPI a = NULL, b = NULL;
-  
-  if (mpi_copy (&a, xa) < 0)
-  { goto nomem; }
-  
-  if (mpi_copy (&b, xb) < 0)
-  { goto nomem; }
-  
-  /* TAOCP Vol II, 4.5.2, Algorithm A */
-  a->sign = 0;
-  b->sign = 0;
-  while (mpi_cmp_ui (b, 0) ) {
-    if (mpi_fdiv_r (g, a, b) < 0) /* g used as temorary variable */
-    { goto nomem; }
-    if (mpi_set (a, b) < 0)
-    { goto nomem; }
-    if (mpi_set (b, g) < 0)
-    { goto nomem; }
-  }
-  if (mpi_set (g, a) < 0)
-  { goto nomem; }
-  
-  mpi_free (a);
-  mpi_free (b);
-  return !mpi_cmp_ui (g, 1);
-  
+	MPI a = NULL, b = NULL;
+
+	if (mpi_copy(&a, xa) < 0)
+		goto nomem;
+
+	if (mpi_copy(&b, xb) < 0)
+		goto nomem;
+
+	/* TAOCP Vol II, 4.5.2, Algorithm A */
+	a->sign = 0;
+	b->sign = 0;
+	while (mpi_cmp_ui(b, 0)) {
+		if (mpi_fdiv_r(g, a, b) < 0)	/* g used as temorary variable */
+			goto nomem;
+		if (mpi_set(a, b) < 0)
+			goto nomem;
+		if (mpi_set(b, g) < 0)
+			goto nomem;
+	}
+	if (mpi_set(g, a) < 0)
+		goto nomem;
+
+	mpi_free(a);
+	mpi_free(b);
+	return !mpi_cmp_ui(g, 1);
+
 nomem:
-  mpi_free (a);
-  mpi_free (b);
-  return -ENOMEM;
+	mpi_free(a);
+	mpi_free(b);
+	return -ENOMEM;
 }

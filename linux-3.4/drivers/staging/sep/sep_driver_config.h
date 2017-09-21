@@ -20,12 +20,12 @@
  *
  *  CONTACTS:
  *
- *  Mark Allyn    mark.a.allyn@intel.com
+ *  Mark Allyn		mark.a.allyn@intel.com
  *  Jayant Mangalampalli jayant.mangalampalli@intel.com
  *
  *  CHANGES:
  *
- *  2010.06.26  Upgrade to Medfield
+ *  2010.06.26	Upgrade to Medfield
  *  2011.02.22  Enable kernel crypto
  *
  */
@@ -39,21 +39,21 @@
   -------------------------------------*/
 
 /* if flag is on , then the driver is running in polling and
-  not interrupt mode */
+	not interrupt mode */
 #define SEP_DRIVER_POLLING_MODE                         0
 
 /* flag which defines if the shared area address should be
-  reconfiged (send to SEP anew) during init of the driver */
+	reconfiged (send to SEP anew) during init of the driver */
 #define SEP_DRIVER_RECONFIG_MESSAGE_AREA                0
 
 /* the mode for running on the ARM1172 Evaluation platform (flag is 1) */
 #define SEP_DRIVER_ARM_DEBUG_MODE                       0
 
 /* Critical message area contents for sanity checking */
-#define SEP_START_MSG_TOKEN       0x02558808
+#define SEP_START_MSG_TOKEN				0x02558808
 /*-------------------------------------------
-  INTERNAL DATA CONFIGURATION
-  -------------------------------------------*/
+	INTERNAL DATA CONFIGURATION
+	-------------------------------------------*/
 
 /* flag for the input array */
 #define SEP_DRIVER_IN_FLAG                              0
@@ -65,7 +65,7 @@
 #define SEP_DRIVER_ENTRIES_PER_TABLE_IN_SEP             31
 
 /* minimum data size of the MLLI table */
-#define SEP_DRIVER_MIN_DATA_SIZE_PER_TABLE    16
+#define SEP_DRIVER_MIN_DATA_SIZE_PER_TABLE		16
 
 /* flag that signifies tah the lock is
 currently held by the proccess (struct file) */
@@ -80,26 +80,26 @@ held by the proccess (struct file) */
 #define SEP_REQUEST_DAEMON_UNMAPPED 0
 
 /*--------------------------------------------------------
-  SHARED AREA  memory total size is 36K
-  it is divided is following:
+	SHARED AREA  memory total size is 36K
+	it is divided is following:
 
-  SHARED_MESSAGE_AREA                     8K         }
-                  }
-  STATIC_POOL_AREA                        4K         } MAPPED AREA ( 24 K)
-                  }
-  DATA_POOL_AREA                          12K        }
+	SHARED_MESSAGE_AREA                     8K         }
+									}
+	STATIC_POOL_AREA                        4K         } MAPPED AREA ( 24 K)
+									}
+	DATA_POOL_AREA                          12K        }
 
-  SYNCHRONIC_DMA_TABLES_AREA              29K
+	SYNCHRONIC_DMA_TABLES_AREA              29K
 
-  placeholder until drver changes
-  FLOW_DMA_TABLES_AREA                    4K
+	placeholder until drver changes
+	FLOW_DMA_TABLES_AREA                    4K
 
-  SYSTEM_MEMORY_AREA                      3k
+	SYSTEM_MEMORY_AREA                      3k
 
-  SYSTEM_MEMORY total size is 3k
-  it is divided as following:
+	SYSTEM_MEMORY total size is 3k
+	it is divided as following:
 
-  TIME_MEMORY_AREA                     8B
+	TIME_MEMORY_AREA                     8B
 -----------------------------------------------------------*/
 
 #define SEP_DEV_NAME "sep_sec_driver"
@@ -108,101 +108,101 @@ held by the proccess (struct file) */
 
 
 /*
-  the minimum length of the message - includes 2 reserved fields
-  at the start, then token, message size and opcode fields. all dwords
+	the minimum length of the message - includes 2 reserved fields
+	at the start, then token, message size and opcode fields. all dwords
 */
-#define SEP_DRIVER_MIN_MESSAGE_SIZE_IN_BYTES      (5*sizeof(u32))
+#define SEP_DRIVER_MIN_MESSAGE_SIZE_IN_BYTES			(5*sizeof(u32))
 
 /*
-  the maximum length of the message - the rest of the message shared
-  area will be dedicated to the dma lli tables
+	the maximum length of the message - the rest of the message shared
+	area will be dedicated to the dma lli tables
 */
-#define SEP_DRIVER_MAX_MESSAGE_SIZE_IN_BYTES      (8 * 1024)
+#define SEP_DRIVER_MAX_MESSAGE_SIZE_IN_BYTES			(8 * 1024)
 
 /* the size of the message shared area in pages */
-#define SEP_DRIVER_MESSAGE_SHARED_AREA_SIZE_IN_BYTES    (8 * 1024)
+#define SEP_DRIVER_MESSAGE_SHARED_AREA_SIZE_IN_BYTES		(8 * 1024)
 
 /* the size of the data pool static area in pages */
-#define SEP_DRIVER_STATIC_AREA_SIZE_IN_BYTES      (4 * 1024)
+#define SEP_DRIVER_STATIC_AREA_SIZE_IN_BYTES			(4 * 1024)
 
 /* the size of the data pool shared area size in pages */
-#define SEP_DRIVER_DATA_POOL_SHARED_AREA_SIZE_IN_BYTES    (16 * 1024)
+#define SEP_DRIVER_DATA_POOL_SHARED_AREA_SIZE_IN_BYTES		(16 * 1024)
 
 /* the size of the message shared area in pages */
-#define SYNCHRONIC_DMA_TABLES_AREA_SIZE_BYTES (1024 * 29)
+#define SYNCHRONIC_DMA_TABLES_AREA_SIZE_BYTES	(1024 * 29)
 
 /* Placeholder until driver changes */
-#define SEP_DRIVER_FLOW_DMA_TABLES_AREA_SIZE_IN_BYTES   (1024 * 4)
+#define SEP_DRIVER_FLOW_DMA_TABLES_AREA_SIZE_IN_BYTES		(1024 * 4)
 
 /* system data (time, caller id etc') pool */
-#define SEP_DRIVER_SYSTEM_DATA_MEMORY_SIZE_IN_BYTES   (1024 * 3)
+#define SEP_DRIVER_SYSTEM_DATA_MEMORY_SIZE_IN_BYTES		(1024 * 3)
 
 /* Offset of the sep printf buffer in the message area */
-#define SEP_DRIVER_PRINTF_OFFSET_IN_BYTES     (5888)
+#define SEP_DRIVER_PRINTF_OFFSET_IN_BYTES			(5888)
 
 /* the size in bytes of the time memory */
-#define SEP_DRIVER_TIME_MEMORY_SIZE_IN_BYTES      8
+#define SEP_DRIVER_TIME_MEMORY_SIZE_IN_BYTES			8
 
 /* the size in bytes of the RAR parameters memory */
-#define SEP_DRIVER_SYSTEM_RAR_MEMORY_SIZE_IN_BYTES    8
+#define SEP_DRIVER_SYSTEM_RAR_MEMORY_SIZE_IN_BYTES		8
 
 /* area size that is mapped  - we map the MESSAGE AREA, STATIC POOL and
-  DATA POOL areas. area must be module 4k */
-#define SEP_DRIVER_MMMAP_AREA_SIZE        (1024 * 28)
+	DATA POOL areas. area must be module 4k */
+#define SEP_DRIVER_MMMAP_AREA_SIZE				(1024 * 28)
 
 /*-----------------------------------------------
-  offsets of the areas starting from the shared area start address
+	offsets of the areas starting from the shared area start address
 */
 
 /* message area offset */
-#define SEP_DRIVER_MESSAGE_AREA_OFFSET_IN_BYTES     0
+#define SEP_DRIVER_MESSAGE_AREA_OFFSET_IN_BYTES			0
 
 /* static pool area offset */
 #define SEP_DRIVER_STATIC_AREA_OFFSET_IN_BYTES \
-  (SEP_DRIVER_MESSAGE_SHARED_AREA_SIZE_IN_BYTES)
+	(SEP_DRIVER_MESSAGE_SHARED_AREA_SIZE_IN_BYTES)
 
 /* data pool area offset */
 #define SEP_DRIVER_DATA_POOL_AREA_OFFSET_IN_BYTES \
-  (SEP_DRIVER_STATIC_AREA_OFFSET_IN_BYTES + \
-   SEP_DRIVER_STATIC_AREA_SIZE_IN_BYTES)
+	(SEP_DRIVER_STATIC_AREA_OFFSET_IN_BYTES + \
+	SEP_DRIVER_STATIC_AREA_SIZE_IN_BYTES)
 
 /* synhronic dma tables area offset */
 #define SYNCHRONIC_DMA_TABLES_AREA_OFFSET_BYTES \
-  (SEP_DRIVER_DATA_POOL_AREA_OFFSET_IN_BYTES + \
-   SEP_DRIVER_DATA_POOL_SHARED_AREA_SIZE_IN_BYTES)
+	(SEP_DRIVER_DATA_POOL_AREA_OFFSET_IN_BYTES + \
+	SEP_DRIVER_DATA_POOL_SHARED_AREA_SIZE_IN_BYTES)
 
 /* system memory offset in bytes */
 #define SEP_DRIVER_SYSTEM_DATA_MEMORY_OFFSET_IN_BYTES \
-  (SYNCHRONIC_DMA_TABLES_AREA_OFFSET_BYTES + \
-   SYNCHRONIC_DMA_TABLES_AREA_SIZE_BYTES)
+	(SYNCHRONIC_DMA_TABLES_AREA_OFFSET_BYTES + \
+	SYNCHRONIC_DMA_TABLES_AREA_SIZE_BYTES)
 
 /* offset of the time area */
 #define SEP_DRIVER_SYSTEM_TIME_MEMORY_OFFSET_IN_BYTES \
-  (SEP_DRIVER_SYSTEM_DATA_MEMORY_OFFSET_IN_BYTES)
+	(SEP_DRIVER_SYSTEM_DATA_MEMORY_OFFSET_IN_BYTES)
 
 /* offset of the RAR area */
 #define SEP_DRIVER_SYSTEM_RAR_MEMORY_OFFSET_IN_BYTES \
-  (SEP_DRIVER_SYSTEM_TIME_MEMORY_OFFSET_IN_BYTES + \
-   SEP_DRIVER_TIME_MEMORY_SIZE_IN_BYTES)
+	(SEP_DRIVER_SYSTEM_TIME_MEMORY_OFFSET_IN_BYTES + \
+	SEP_DRIVER_TIME_MEMORY_SIZE_IN_BYTES)
 
 /* offset of the caller id area */
 #define SEP_CALLER_ID_OFFSET_BYTES \
-  (SEP_DRIVER_SYSTEM_RAR_MEMORY_OFFSET_IN_BYTES + \
-   SEP_DRIVER_SYSTEM_RAR_MEMORY_SIZE_IN_BYTES)
+	(SEP_DRIVER_SYSTEM_RAR_MEMORY_OFFSET_IN_BYTES + \
+	SEP_DRIVER_SYSTEM_RAR_MEMORY_SIZE_IN_BYTES)
 
 /* offset of the DCB area */
 #define SEP_DRIVER_SYSTEM_DCB_MEMORY_OFFSET_IN_BYTES \
-  (SEP_DRIVER_SYSTEM_DATA_MEMORY_OFFSET_IN_BYTES + \
-   0x400)
+	(SEP_DRIVER_SYSTEM_DATA_MEMORY_OFFSET_IN_BYTES + \
+	0x400)
 
 /* offset of the ext cache area */
 #define SEP_DRIVER_SYSTEM_EXT_CACHE_ADDR_OFFSET_IN_BYTES \
-  SEP_DRIVER_SYSTEM_RAR_MEMORY_OFFSET_IN_BYTES
+	SEP_DRIVER_SYSTEM_RAR_MEMORY_OFFSET_IN_BYTES
 
 /* offset of the allocation data pointer area */
 #define SEP_DRIVER_DATA_POOL_ALLOCATION_OFFSET_IN_BYTES \
-  (SEP_CALLER_ID_OFFSET_BYTES + \
-   SEP_CALLER_ID_HASH_SIZE_IN_BYTES)
+	(SEP_CALLER_ID_OFFSET_BYTES + \
+	SEP_CALLER_ID_HASH_SIZE_IN_BYTES)
 
 /* the token that defines the start of time address */
 #define SEP_TIME_VAL_TOKEN                                    0x12345678
@@ -220,8 +220,8 @@ held by the proccess (struct file) */
 #define SEP_CALLER_ID_TABLE_NUM_ENTRIES                       20
 
 /* maximum number of symetric operation (that require DMA resource)
-  per one message */
-#define SEP_MAX_NUM_SYNC_DMA_OPS      16
+	per one message */
+#define SEP_MAX_NUM_SYNC_DMA_OPS			16
 
 /* the token that defines the start of time address */
 #define SEP_RAR_VAL_TOKEN                                     0xABABABAB
@@ -264,29 +264,29 @@ held by the proccess (struct file) */
  */
 
 /* Bit offset which indicates status of sep_write() */
-#define SEP_FASTCALL_WRITE_DONE_OFFSET    0
+#define SEP_FASTCALL_WRITE_DONE_OFFSET		0
 
 /* Bit offset which indicates status of sep_mmap() */
-#define SEP_LEGACY_MMAP_DONE_OFFSET   1
+#define SEP_LEGACY_MMAP_DONE_OFFSET		1
 
 /* Bit offset which indicates status of the SEP_IOCSENDSEPCOMMAND ioctl */
-#define SEP_LEGACY_SENDMSG_DONE_OFFSET    2
+#define SEP_LEGACY_SENDMSG_DONE_OFFSET		2
 
 /* Bit offset which indicates status of sep_poll() */
-#define SEP_LEGACY_POLL_DONE_OFFSET   3
+#define SEP_LEGACY_POLL_DONE_OFFSET		3
 
 /* Bit offset which indicates status of the SEP_IOCENDTRANSACTION ioctl */
-#define SEP_LEGACY_ENDTRANSACTION_DONE_OFFSET 4
+#define SEP_LEGACY_ENDTRANSACTION_DONE_OFFSET	4
 
 /*
  * Used to limit number of concurrent processes
  * allowed to allocte dynamic buffers in fastcall
  * interface.
  */
-#define SEP_DOUBLEBUF_USERS_LIMIT   3
+#define SEP_DOUBLEBUF_USERS_LIMIT		3
 
 /* Identifier for valid fastcall header */
-#define SEP_FC_MAGIC        0xFFAACCAA
+#define SEP_FC_MAGIC				0xFFAACCAA
 
 /*
  * Used for enabling driver runtime power management.

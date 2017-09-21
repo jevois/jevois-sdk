@@ -71,21 +71,21 @@ typedef enum {
 
 enum spu_insns {
 #define APUOP(TAG,MACFORMAT,OPCODE,MNEMONIC,ASMFORMAT,DEP,PIPE) \
-  TAG,
+	TAG,
 #define APUOPFB(TAG,MACFORMAT,OPCODE,FB,MNEMONIC,ASMFORMAT,DEP,PIPE) \
-  TAG,
+	TAG,
 #include "spu-insns.h"
 #undef APUOP
 #undef APUOPFB
-  M_SPU_MAX
+        M_SPU_MAX
 };
 
 struct spu_opcode
 {
-  spu_iformat insn_type;
-  unsigned int opcode;
-  char * mnemonic;
-  int arg[5];
+   spu_iformat insn_type;
+   unsigned int opcode;
+   char *mnemonic;
+   int arg[5];
 };
 
 #define SIGNED_EXTRACT(insn,size,pos) (((int)((insn) << (32-size-pos))) >> (32-size))

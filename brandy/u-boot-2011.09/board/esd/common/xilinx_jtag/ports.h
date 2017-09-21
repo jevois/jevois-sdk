@@ -46,17 +46,17 @@
 #define JTAG_TDO   CONFIG_SYS_FPGA_DONE    /* input */
 
 /* set the port "p" (TCK, TMS, or TDI) to val (0 or 1) */
-void setPort (short p, short val);
+void setPort(short p, short val);
 
 /* read the TDO bit and store it in val */
-unsigned char readTDOBit (void);
+unsigned char readTDOBit(void);
 
 /* make clock go down->up->down*/
-void pulseClock (void);
+void pulseClock(void);
 
 /* read the next byte of data from the xsvf file */
-void readByte (unsigned char * data);
+void readByte(unsigned char *data);
 
-void waitTime (long microsec);
+void waitTime(long microsec);
 
 #endif

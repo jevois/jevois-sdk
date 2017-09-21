@@ -25,7 +25,7 @@
 #define DRM_FIXED_H
 
 typedef union dfixed {
-  u32 full;
+	u32 full;
 } fixed20_12;
 
 
@@ -38,30 +38,30 @@ typedef union dfixed {
 #define dfixed_init_half(A) { .full = dfixed_const_half((A)) }
 #define dfixed_trunc(A) ((A).full >> 12)
 
-static inline u32 dfixed_floor (fixed20_12 A)
+static inline u32 dfixed_floor(fixed20_12 A)
 {
-  u32 non_frac = dfixed_trunc (A);
-  
-  return dfixed_const (non_frac);
+	u32 non_frac = dfixed_trunc(A);
+
+	return dfixed_const(non_frac);
 }
 
-static inline u32 dfixed_ceil (fixed20_12 A)
+static inline u32 dfixed_ceil(fixed20_12 A)
 {
-  u32 non_frac = dfixed_trunc (A);
-  
-  if (A.full > dfixed_const (non_frac) )
-  { return dfixed_const (non_frac + 1); }
-  else
-  { return dfixed_const (non_frac); }
+	u32 non_frac = dfixed_trunc(A);
+
+	if (A.full > dfixed_const(non_frac))
+		return dfixed_const(non_frac + 1);
+	else
+		return dfixed_const(non_frac);
 }
 
-static inline u32 dfixed_div (fixed20_12 A, fixed20_12 B)
+static inline u32 dfixed_div(fixed20_12 A, fixed20_12 B)
 {
-  u64 tmp = ( (u64) A.full << 13);
-  
-  do_div (tmp, B.full);
-  tmp += 1;
-  tmp /= 2;
-  return lower_32_bits (tmp);
+	u64 tmp = ((u64)A.full << 13);
+
+	do_div(tmp, B.full);
+	tmp += 1;
+	tmp /= 2;
+	return lower_32_bits(tmp);
 }
 #endif

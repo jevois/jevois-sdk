@@ -12,7 +12,7 @@
  * 2 of the License, or (at your option) any later version.
  */
 
-#include <linux/of.h> /* linux/of.h gets to determine #include ordering */
+#include <linux/of.h>	/* linux/of.h gets to determine #include ordering */
 
 #ifndef _ASM_MICROBLAZE_PROM_H
 #define _ASM_MICROBLAZE_PROM_H
@@ -27,31 +27,31 @@
 
 /* Other Prototypes */
 enum early_consoles {
-  UARTLITE = 1,
-  UART16550 = 2,
+	UARTLITE = 1,
+	UART16550 = 2,
 };
 
-extern int of_early_console (void * version);
+extern int of_early_console(void *version);
 
 /*
  * OF address retreival & translation
  */
 
 #ifdef CONFIG_PCI
-extern unsigned long pci_address_to_pio (phys_addr_t address);
+extern unsigned long pci_address_to_pio(phys_addr_t address);
 #define pci_address_to_pio pci_address_to_pio
-#endif  /* CONFIG_PCI */
+#endif	/* CONFIG_PCI */
 
 /* Parse the ibm,dma-window property of an OF node into the busno, phys and
  * size parameters.
  */
-void of_parse_dma_window (struct device_node * dn, const void * dma_window_prop,
-                          unsigned long * busno, unsigned long * phys, unsigned long * size);
+void of_parse_dma_window(struct device_node *dn, const void *dma_window_prop,
+		unsigned long *busno, unsigned long *phys, unsigned long *size);
 
-extern void kdump_move_device_tree (void);
+extern void kdump_move_device_tree(void);
 
 /* CPU OF node matching */
-struct device_node * of_get_cpu_node (int cpu, unsigned int * thread);
+struct device_node *of_get_cpu_node(int cpu, unsigned int *thread);
 
 #endif /* __ASSEMBLY__ */
 #endif /* __KERNEL__ */

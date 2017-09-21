@@ -7,16 +7,16 @@
  * @brief This file contains the implementation of the private API for
  * the Unsolicited Callback Manager module.
  *
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -29,7 +29,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -42,7 +42,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
 */
@@ -80,8 +80,8 @@
 
 typedef struct
 {
-  /** array of entries */
-  IxNpeMhCallback entries[IX_NPEMH_MAX_MESSAGE_ID + 1];
+    /** array of entries */
+    IxNpeMhCallback entries[IX_NPEMH_MAX_MESSAGE_ID + 1];
 } IxNpeMhUnsolicitedCallbackTable;
 
 /**
@@ -93,8 +93,8 @@ typedef struct
 
 typedef struct
 {
-  UINT32 saves;      /**< callback table saves */
-  UINT32 overwrites; /**< callback table overwrites */
+    UINT32 saves;      /**< callback table saves */
+    UINT32 overwrites; /**< callback table overwrites */
 } IxNpeMhUnsolicitedCbMgrStats;
 
 /*
@@ -122,30 +122,30 @@ ixNpeMhUnsolicitedCbMgrStats[IX_NPEMH_NUM_NPES];
 
 void ixNpeMhUnsolicitedCbMgrInitialize (void)
 {
-  IxNpeMhNpeId npeId = 0;
-  IxNpeMhUnsolicitedCallbackTable * table = NULL;
-  IxNpeMhMessageId messageId = 0;
-  
-  IX_NPEMH_TRACE0 (IX_NPEMH_FN_ENTRY_EXIT, "Entering "
-                   "ixNpeMhUnsolicitedCbMgrInitialize\n");
-                   
-  /* for each NPE ... */
-  for (npeId = 0; npeId < IX_NPEMH_NUM_NPES; npeId++)
-  {
-    /* initialise a pointer to the table for convenience */
-    table = &ixNpeMhUnsolicitedCallbackTables[npeId];
-    
-    /* for each message ID ... */
-    for (messageId = IX_NPEMH_MIN_MESSAGE_ID;
-         messageId <= IX_NPEMH_MAX_MESSAGE_ID; messageId++)
+    IxNpeMhNpeId npeId = 0;
+    IxNpeMhUnsolicitedCallbackTable *table = NULL;
+    IxNpeMhMessageId messageId = 0;
+
+    IX_NPEMH_TRACE0 (IX_NPEMH_FN_ENTRY_EXIT, "Entering "
+                     "ixNpeMhUnsolicitedCbMgrInitialize\n");
+
+    /* for each NPE ... */
+    for (npeId = 0; npeId < IX_NPEMH_NUM_NPES; npeId++)
     {
-      /* initialise the callback for this message ID to NULL */
-      table->entries[messageId] = NULL;
+        /* initialise a pointer to the table for convenience */
+        table = &ixNpeMhUnsolicitedCallbackTables[npeId];
+
+        /* for each message ID ... */
+        for (messageId = IX_NPEMH_MIN_MESSAGE_ID;
+             messageId <= IX_NPEMH_MAX_MESSAGE_ID; messageId++)
+        {
+            /* initialise the callback for this message ID to NULL */
+            table->entries[messageId] = NULL;
+        }
     }
-  }
-  
-  IX_NPEMH_TRACE0 (IX_NPEMH_FN_ENTRY_EXIT, "Exiting "
-                   "ixNpeMhUnsolicitedCbMgrInitialize\n");
+
+    IX_NPEMH_TRACE0 (IX_NPEMH_FN_ENTRY_EXIT, "Exiting "
+                     "ixNpeMhUnsolicitedCbMgrInitialize\n");
 }
 
 /*
@@ -153,48 +153,48 @@ void ixNpeMhUnsolicitedCbMgrInitialize (void)
  */
 
 void ixNpeMhUnsolicitedCbMgrCallbackSave (
-  IxNpeMhNpeId npeId,
-  IxNpeMhMessageId unsolicitedMessageId,
-  IxNpeMhCallback unsolicitedCallback)
+    IxNpeMhNpeId npeId,
+    IxNpeMhMessageId unsolicitedMessageId,
+    IxNpeMhCallback unsolicitedCallback)
 {
-  IxNpeMhUnsolicitedCallbackTable * table = NULL;
-  
-  /* initialise a pointer to the table for convenience */
-  table = &ixNpeMhUnsolicitedCallbackTables[npeId];
-  
-  IX_NPEMH_TRACE0 (IX_NPEMH_FN_ENTRY_EXIT, "Entering "
-                   "ixNpeMhUnsolicitedCbMgrCallbackSave\n");
-                   
-  /* update statistical info */
-  ixNpeMhUnsolicitedCbMgrStats[npeId].saves++;
-  
-  /* check if there is a callback already registered for this NPE and */
-  /* message ID */
-  if (table->entries[unsolicitedMessageId] != NULL)
-  {
-    /* if we are overwriting an existing callback */
-    if (unsolicitedCallback != NULL)
-    {
-      IX_NPEMH_TRACE2 (IX_NPEMH_DEBUG, "Unsolicited callback "
-                       "overwriting existing callback for NPE ID %d "
-                       "message ID 0x%02X\n", npeId, unsolicitedMessageId);
-    }
-    else /* if we are clearing an existing callback */
-    {
-      IX_NPEMH_TRACE2 (IX_NPEMH_DEBUG, "NULL unsolicited callback "
-                       "clearing existing callback for NPE ID %d "
-                       "message ID 0x%02X\n", npeId, unsolicitedMessageId);
-    }
-    
+    IxNpeMhUnsolicitedCallbackTable *table = NULL;
+
+    /* initialise a pointer to the table for convenience */
+    table = &ixNpeMhUnsolicitedCallbackTables[npeId];
+
+    IX_NPEMH_TRACE0 (IX_NPEMH_FN_ENTRY_EXIT, "Entering "
+                     "ixNpeMhUnsolicitedCbMgrCallbackSave\n");
+
     /* update statistical info */
-    ixNpeMhUnsolicitedCbMgrStats[npeId].overwrites++;
-  }
-  
-  /* save the callback into the table */
-  table->entries[unsolicitedMessageId] = unsolicitedCallback;
-  
-  IX_NPEMH_TRACE0 (IX_NPEMH_FN_ENTRY_EXIT, "Exiting "
-                   "ixNpeMhUnsolicitedCbMgrCallbackSave\n");
+    ixNpeMhUnsolicitedCbMgrStats[npeId].saves++;
+
+    /* check if there is a callback already registered for this NPE and */
+    /* message ID */
+    if (table->entries[unsolicitedMessageId] != NULL)
+    {
+	/* if we are overwriting an existing callback */
+	if (unsolicitedCallback != NULL)
+	{
+	    IX_NPEMH_TRACE2 (IX_NPEMH_DEBUG, "Unsolicited callback "
+			     "overwriting existing callback for NPE ID %d "
+			     "message ID 0x%02X\n", npeId, unsolicitedMessageId);
+	}
+	else /* if we are clearing an existing callback */
+	{
+	    IX_NPEMH_TRACE2 (IX_NPEMH_DEBUG, "NULL unsolicited callback "
+			     "clearing existing callback for NPE ID %d "
+			     "message ID 0x%02X\n", npeId, unsolicitedMessageId);
+	}
+
+        /* update statistical info */
+        ixNpeMhUnsolicitedCbMgrStats[npeId].overwrites++;
+    }
+
+    /* save the callback into the table */
+    table->entries[unsolicitedMessageId] = unsolicitedCallback;
+
+    IX_NPEMH_TRACE0 (IX_NPEMH_FN_ENTRY_EXIT, "Exiting "
+                     "ixNpeMhUnsolicitedCbMgrCallbackSave\n");
 }
 
 /*
@@ -202,17 +202,17 @@ void ixNpeMhUnsolicitedCbMgrCallbackSave (
  */
 
 void ixNpeMhUnsolicitedCbMgrCallbackRetrieve (
-  IxNpeMhNpeId npeId,
-  IxNpeMhMessageId unsolicitedMessageId,
-  IxNpeMhCallback * unsolicitedCallback)
+    IxNpeMhNpeId npeId,
+    IxNpeMhMessageId unsolicitedMessageId,
+    IxNpeMhCallback *unsolicitedCallback)
 {
-  IxNpeMhUnsolicitedCallbackTable * table = NULL;
-  
-  /* initialise a pointer to the table for convenience */
-  table = &ixNpeMhUnsolicitedCallbackTables[npeId];
-  
-  /* retrieve the callback from the table */
-  *unsolicitedCallback = table->entries[unsolicitedMessageId];
+    IxNpeMhUnsolicitedCallbackTable *table = NULL;
+
+    /* initialise a pointer to the table for convenience */
+    table = &ixNpeMhUnsolicitedCallbackTables[npeId];
+
+    /* retrieve the callback from the table */
+    *unsolicitedCallback = table->entries[unsolicitedMessageId];
 }
 
 /*
@@ -220,15 +220,15 @@ void ixNpeMhUnsolicitedCbMgrCallbackRetrieve (
  */
 
 void ixNpeMhUnsolicitedCbMgrShow (
-  IxNpeMhNpeId npeId)
+    IxNpeMhNpeId npeId)
 {
-  /* show the unsolicited callback table save counter */
-  IX_NPEMH_SHOW ("Unsolicited callback table saves",
-                 ixNpeMhUnsolicitedCbMgrStats[npeId].saves);
-                 
-  /* show the unsolicited callback table overwrite counter */
-  IX_NPEMH_SHOW ("Unsolicited callback table overwrites",
-                 ixNpeMhUnsolicitedCbMgrStats[npeId].overwrites);
+    /* show the unsolicited callback table save counter */
+    IX_NPEMH_SHOW ("Unsolicited callback table saves",
+                   ixNpeMhUnsolicitedCbMgrStats[npeId].saves);
+
+    /* show the unsolicited callback table overwrite counter */
+    IX_NPEMH_SHOW ("Unsolicited callback table overwrites",
+                   ixNpeMhUnsolicitedCbMgrStats[npeId].overwrites);
 }
 
 /*
@@ -236,11 +236,11 @@ void ixNpeMhUnsolicitedCbMgrShow (
  */
 
 void ixNpeMhUnsolicitedCbMgrShowReset (
-  IxNpeMhNpeId npeId)
+    IxNpeMhNpeId npeId)
 {
-  /* reset the unsolicited callback table save counter */
-  ixNpeMhUnsolicitedCbMgrStats[npeId].saves = 0;
-  
-  /* reset the unsolicited callback table overwrite counter */
-  ixNpeMhUnsolicitedCbMgrStats[npeId].overwrites = 0;
+    /* reset the unsolicited callback table save counter */
+    ixNpeMhUnsolicitedCbMgrStats[npeId].saves = 0;
+
+    /* reset the unsolicited callback table overwrite counter */
+    ixNpeMhUnsolicitedCbMgrStats[npeId].overwrites = 0;
 }

@@ -82,7 +82,7 @@
 
 #define DRIVER_DESC             SW_DRIVER_NAME
 #define DRIVER_VERSION          "1.0"
-#define DRIVER_AUTHOR     "Javen Xu"
+#define DRIVER_AUTHOR			"Javen Xu"
 
 #define MODEM_NAME              "em66"
 
@@ -90,16 +90,16 @@ static struct sw_modem g_em66;
 static char g_em66_name[] = MODEM_NAME;
 
 
-void em66_reset (struct sw_modem * modem)
+void em66_reset(struct sw_modem *modem)
 {
-  modem_dbg ("reset %s modem\n", modem->name);
-  
-  modem_reset (modem, 1);
-  sw_module_mdelay (100);
-  modem_reset (modem, 0);
-  sw_module_mdelay (10);
-  
-  return;
+    modem_dbg("reset %s modem\n", modem->name);
+
+	modem_reset(modem, 1);
+    sw_module_mdelay(100);
+	modem_reset(modem, 0);
+	sw_module_mdelay(10);
+
+    return;
 }
 
 /*
@@ -110,27 +110,26 @@ void em66_reset (struct sw_modem * modem)
 *
 *******************************************************************************
 */
-static void em66_sleep (struct sw_modem * modem, u32 sleep)
+static void em66_sleep(struct sw_modem *modem, u32 sleep)
 {
-  modem_dbg ("%s modem %s\n", modem->name, (sleep ? "sleep" : "wakeup") );
-  
-  if (sleep) {
-    modem_sleep (modem, 1);
-  }
-  else {
-    modem_sleep (modem, 0);
-  }
-  
-  return;
+    modem_dbg("%s modem %s\n", modem->name, (sleep ? "sleep" : "wakeup"));
+
+    if(sleep){
+        modem_sleep(modem, 1);
+    }else{
+        modem_sleep(modem, 0);
+    }
+
+    return;
 }
 
-static void em66_rf_disable (struct sw_modem * modem, u32 disable)
+static void em66_rf_disable(struct sw_modem *modem, u32 disable)
 {
-  modem_dbg ("set %s modem rf %s\n", modem->name, (disable ? "disable" : "enable") );
-  
-  modem_rf_disable (modem, disable);
-  
-  return;
+    modem_dbg("set %s modem rf %s\n", modem->name, (disable ? "disable" : "enable"));
+
+    modem_rf_disable(modem, disable);
+
+    return;
 }
 
 /*
@@ -149,154 +148,153 @@ static void em66_rf_disable (struct sw_modem * modem, u32 disable)
 *
 *******************************************************************************
 */
-void em66_power (struct sw_modem * modem, u32 on)
+void em66_power(struct sw_modem *modem, u32 on)
 {
-  modem_dbg ("set %s modem power %s\n", modem->name, (on ? "on" : "off") );
-  
-  if (on) {
-    modem_dldo_on_off (modem, 1);
-    
-    /* power off, Prevent abnormalities restart of the PAD. */
-    em66_reset (modem);
-    modem_vbat (modem, 1);
-    /* default */
-    modem_sleep (modem, 1);
-    
-    /* power on */
-    modem_power_on_off (modem, 1);
-    sw_module_mdelay (2000);
-    modem_power_on_off (modem, 0);
-  }
-  else {
-  
-    modem_vbat (modem, 0);
-    
-    modem_dldo_on_off (modem, 0);
-  }
-  return;
-}
+    modem_dbg("set %s modem power %s\n", modem->name, (on ? "on" : "off"));
 
-static int em66_start (struct sw_modem * mdev)
-{
-  int ret = 0;
-  
-  if (!mdev->start) {
-    ret = modem_irq_init (mdev, IRQF_TRIGGER_RISING);
-    if (ret != 0) {
-      modem_err ("err: sw_module_irq_init failed\n");
-      return -1;
+    if(on){
+		modem_dldo_on_off(modem, 1);
+
+        /* power off, Prevent abnormalities restart of the PAD. */
+		em66_reset(modem);
+		modem_vbat(modem, 1);
+        /* default */
+        modem_sleep(modem, 1);
+
+        /* power on */
+        modem_power_on_off(modem, 1);
+        sw_module_mdelay(2000);
+        modem_power_on_off(modem, 0);
+    }else{
+
+		modem_vbat(modem, 0);
+
+		modem_dldo_on_off(modem, 0);
     }
-    
-    em66_power (mdev, 1);
-    mdev->start = 1;
-  }
-  
-  return 0;
+    return;
 }
 
-static int em66_stop (struct sw_modem * mdev)
+static int em66_start(struct sw_modem *mdev)
 {
-  if (mdev->start) {
-    em66_power (mdev, 0);
-    modem_irq_exit (mdev);
-    mdev->start = 0;
-  }
-  
-  return 0;
+    int ret = 0;
+
+    if(!mdev->start){
+        ret = modem_irq_init(mdev, IRQF_TRIGGER_RISING);
+        if(ret != 0){
+           modem_err("err: sw_module_irq_init failed\n");
+           return -1;
+        }
+
+        em66_power(mdev, 1);
+        mdev->start = 1;
+    }
+
+    return 0;
 }
 
-static int em66_suspend (struct sw_modem * mdev)
+static int em66_stop(struct sw_modem *mdev)
 {
-  em66_sleep (mdev, 1);
-  
-  return 0;
+    if(mdev->start){
+        em66_power(mdev, 0);
+        modem_irq_exit(mdev);
+        mdev->start = 0;
+    }
+
+    return 0;
 }
 
-static int em66_resume (struct sw_modem * mdev)
+static int em66_suspend(struct sw_modem *mdev)
 {
-  em66_sleep (mdev, 0);
-  
-  return 0;
+    em66_sleep(mdev, 1);
+
+    return 0;
+}
+
+static int em66_resume(struct sw_modem *mdev)
+{
+    em66_sleep(mdev, 0);
+
+    return 0;
 }
 
 static struct sw_modem_ops em66_ops = {
-  .power          = em66_power,
-  .reset          = em66_reset,
-  .sleep          = em66_sleep,
-  .rf_disable     = em66_rf_disable,
-  
-  .start          = em66_start,
-  .stop           = em66_stop,
-  
-  .early_suspend  = modem_early_suspend,
-  .early_resume   = modem_early_resume,
-  
-  .suspend        = em66_suspend,
-  .resume         = em66_resume,
+	.power          = em66_power,
+	.reset          = em66_reset,
+	.sleep          = em66_sleep,
+	.rf_disable     = em66_rf_disable,
+
+	.start          = em66_start,
+	.stop           = em66_stop,
+
+	.early_suspend  = modem_early_suspend,
+	.early_resume   = modem_early_resume,
+
+	.suspend        = em66_suspend,
+	.resume         = em66_resume,
 };
 
 static struct platform_device em66_device = {
-  .name       = SW_DRIVER_NAME,
-  .id         = -1,
-  
-  .dev = {
-    .platform_data  = &g_em66,
-  },
+	.name				= SW_DRIVER_NAME,
+	.id					= -1,
+
+	.dev = {
+		.platform_data  = &g_em66,
+	},
 };
 
-static int __init em66_init (void)
+static int __init em66_init(void)
 {
-  int ret = 0;
-  
-  memset (&g_em66, 0, sizeof (struct sw_modem) );
-  
-  /* gpio */
-  ret = modem_get_config (&g_em66);
-  if (ret != 0) {
-    modem_err ("err: em66_get_config failed\n");
-    goto get_config_failed;
-  }
-  
-  if (g_em66.used == 0) {
-    modem_err ("em66 is not used\n");
-    goto get_config_failed;
-  }
-  
-  ret = modem_pin_init (&g_em66);
-  if (ret != 0) {
-    modem_err ("err: em66_pin_init failed\n");
-    goto pin_init_failed;
-  }
-  
-  /* 防止脚本的模组名称bb_name和驱动名称不一致，因此只使用驱动名称 */
-  strcpy (g_em66.name, g_em66_name);
-  g_em66.ops = &em66_ops;
-  
-  modem_dbg ("%s modem init\n", g_em66.name);
-  
-  platform_device_register (&em66_device);
-  
-  return 0;
+    int ret = 0;
+
+    memset(&g_em66, 0, sizeof(struct sw_modem));
+
+    /* gpio */
+    ret = modem_get_config(&g_em66);
+    if(ret != 0){
+        modem_err("err: em66_get_config failed\n");
+        goto get_config_failed;
+    }
+
+    if(g_em66.used == 0){
+        modem_err("em66 is not used\n");
+        goto get_config_failed;
+    }
+
+    ret = modem_pin_init(&g_em66);
+    if(ret != 0){
+       modem_err("err: em66_pin_init failed\n");
+       goto pin_init_failed;
+    }
+
+    /* 防止脚本的模组名称bb_name和驱动名称不一致，因此只使用驱动名称 */
+        strcpy(g_em66.name, g_em66_name);
+    g_em66.ops = &em66_ops;
+
+    modem_dbg("%s modem init\n", g_em66.name);
+
+    platform_device_register(&em66_device);
+
+	return 0;
 pin_init_failed:
 
 get_config_failed:
 
-  modem_dbg ("%s modem init failed\n", g_em66.name);
-  
-  return -1;
+    modem_dbg("%s modem init failed\n", g_em66.name);
+
+	return -1;
 }
 
-static void __exit em66_exit (void)
+static void __exit em66_exit(void)
 {
-  platform_device_unregister (&em66_device);
+    platform_device_unregister(&em66_device);
 }
 
-module_init (em66_init);
-module_exit (em66_exit);
+module_init(em66_init);
+module_exit(em66_exit);
 
-MODULE_AUTHOR (DRIVER_AUTHOR);
-MODULE_DESCRIPTION (MODEM_NAME);
-MODULE_VERSION (DRIVER_VERSION);
-MODULE_LICENSE ("GPL");
+MODULE_AUTHOR(DRIVER_AUTHOR);
+MODULE_DESCRIPTION(MODEM_NAME);
+MODULE_VERSION(DRIVER_VERSION);
+MODULE_LICENSE("GPL");
 
 

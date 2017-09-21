@@ -49,35 +49,35 @@
 #include <linux/dma/sunxi-dma.h>
 
 enum dma_test_case_e {
-  DTC_MEMCPY_SINGLE_CHAN,
-  DTC_MEMCPY_MULTI_CHAN,
-  DTC_MAX
+	DTC_MEMCPY_SINGLE_CHAN,
+	DTC_MEMCPY_MULTI_CHAN,
+	DTC_MAX
 };
 
 extern wait_queue_head_t g_dtc_queue[];
 extern atomic_t g_adma_done;
 
-#define BUF_MAX_CNT   8
+#define BUF_MAX_CNT 	8
 #define DMA_MAX_CHAN    6
 
 typedef struct {
-  unsigned int src_va;
-  unsigned int src_pa;
-  unsigned int dst_va;
-  unsigned int dst_pa;
-  unsigned int size;
-} buf_item;
+	unsigned int src_va;
+	unsigned int src_pa;
+	unsigned int dst_va;
+	unsigned int dst_pa;
+	unsigned int size;
+}buf_item;
 
 typedef struct {
-  unsigned int cnt;
-  buf_item item[BUF_MAX_CNT];
-} buf_group;
+	unsigned int cnt;
+	buf_item item[BUF_MAX_CNT];
+}buf_group;
 
 typedef struct {
-  struct dma_chan * chan;     /* dma channel handle */
-  wait_queue_head_t dma_wq;   /* wait dma transfer done */
-  atomic_t  dma_done;   /* dma done flag, used with dma_wq */
-} chan_info;
+	struct dma_chan *chan;      /* dma channel handle */
+	wait_queue_head_t dma_wq;   /* wait dma transfer done */
+	atomic_t	dma_done;   /* dma done flag, used with dma_wq */
+}chan_info;
 
 #endif /* __SUNXI_DMA_TEST_H */
 

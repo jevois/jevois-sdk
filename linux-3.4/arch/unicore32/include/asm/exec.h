@@ -10,6 +10,6 @@
 #ifndef __UNICORE_EXEC_H__
 #define __UNICORE_EXEC_H__
 
-#define arch_align_stack(x)   (x)
+#define arch_align_stack(x)		(x)
 
 #endif /* __UNICORE_EXEC_H__ */

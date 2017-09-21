@@ -11,9 +11,9 @@
 #ifndef _H8300_TRAPS_H
 #define _H8300_TRAPS_H
 
-extern void system_call (void);
-extern void interrupt_entry (void);
-extern void trace_break (void);
+extern void system_call(void);
+extern void interrupt_entry(void);
+extern void trace_break(void);
 
 #define JMP_OP 0x5a000000
 #define JSR_OP 0x5e000000

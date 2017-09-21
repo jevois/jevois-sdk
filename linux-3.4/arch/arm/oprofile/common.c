@@ -23,41 +23,41 @@
 #include <asm/ptrace.h>
 
 #ifdef CONFIG_HW_PERF_EVENTS
-char * op_name_from_perf_id (void)
+char *op_name_from_perf_id(void)
 {
-  enum arm_perf_pmu_ids id = armpmu_get_pmu_id();
-  
-  switch (id) {
-  case ARM_PERF_PMU_ID_XSCALE1:
-    return "arm/xscale1";
-  case ARM_PERF_PMU_ID_XSCALE2:
-    return "arm/xscale2";
-  case ARM_PERF_PMU_ID_V6:
-    return "arm/armv6";
-  case ARM_PERF_PMU_ID_V6MP:
-    return "arm/mpcore";
-  case ARM_PERF_PMU_ID_CA8:
-    return "arm/armv7";
-  case ARM_PERF_PMU_ID_CA9:
-    return "arm/armv7-ca9";
-  case ARM_PERF_PMU_ID_CA7:
-    return "arm/armv7-ca7";
-  default:
-    return NULL;
-  }
+	enum arm_perf_pmu_ids id = armpmu_get_pmu_id();
+
+	switch (id) {
+	case ARM_PERF_PMU_ID_XSCALE1:
+		return "arm/xscale1";
+	case ARM_PERF_PMU_ID_XSCALE2:
+		return "arm/xscale2";
+	case ARM_PERF_PMU_ID_V6:
+		return "arm/armv6";
+	case ARM_PERF_PMU_ID_V6MP:
+		return "arm/mpcore";
+	case ARM_PERF_PMU_ID_CA8:
+		return "arm/armv7";
+	case ARM_PERF_PMU_ID_CA9:
+		return "arm/armv7-ca9";
+	case ARM_PERF_PMU_ID_CA7:
+		return "arm/armv7-ca7";
+	default:
+		return NULL;
+	}
 }
 #endif
 
-static int report_trace (struct stackframe * frame, void * d)
+static int report_trace(struct stackframe *frame, void *d)
 {
-  unsigned int * depth = d;
-  
-  if (*depth) {
-    oprofile_add_trace (frame->pc);
-    (*depth)--;
-  }
-  
-  return *depth == 0;
+	unsigned int *depth = d;
+
+	if (*depth) {
+		oprofile_add_trace(frame->pc);
+		(*depth)--;
+	}
+
+	return *depth == 0;
 }
 
 /*
@@ -67,58 +67,58 @@ static int report_trace (struct stackframe * frame, void * d)
  * (struct frame_tail *)(xxx->fp)-1
  */
 struct frame_tail {
-  struct frame_tail * fp;
-  unsigned long sp;
-  unsigned long lr;
-} __attribute__ ( (packed) );
+	struct frame_tail *fp;
+	unsigned long sp;
+	unsigned long lr;
+} __attribute__((packed));
 
-static struct frame_tail * user_backtrace (struct frame_tail * tail)
+static struct frame_tail* user_backtrace(struct frame_tail *tail)
 {
-  struct frame_tail buftail[2];
-  
-  /* Also check accessibility of one struct frame_tail beyond */
-  if (!access_ok (VERIFY_READ, tail, sizeof (buftail) ) )
-  { return NULL; }
-  if (__copy_from_user_inatomic (buftail, tail, sizeof (buftail) ) )
-  { return NULL; }
-  
-  oprofile_add_trace (buftail[0].lr);
-  
-  /* frame pointers should strictly progress back up the stack
-   * (towards higher addresses) */
-  if (tail + 1 >= buftail[0].fp)
-  { return NULL; }
-  
-  return buftail[0].fp - 1;
+	struct frame_tail buftail[2];
+
+	/* Also check accessibility of one struct frame_tail beyond */
+	if (!access_ok(VERIFY_READ, tail, sizeof(buftail)))
+		return NULL;
+	if (__copy_from_user_inatomic(buftail, tail, sizeof(buftail)))
+		return NULL;
+
+	oprofile_add_trace(buftail[0].lr);
+
+	/* frame pointers should strictly progress back up the stack
+	 * (towards higher addresses) */
+	if (tail + 1 >= buftail[0].fp)
+		return NULL;
+
+	return buftail[0].fp-1;
 }
 
-static void arm_backtrace (struct pt_regs * const regs, unsigned int depth)
+static void arm_backtrace(struct pt_regs * const regs, unsigned int depth)
 {
-  struct frame_tail * tail = ( (struct frame_tail *) regs->ARM_fp) - 1;
-  
-  if (!user_mode (regs) ) {
-    struct stackframe frame;
-    frame.fp = regs->ARM_fp;
-    frame.sp = regs->ARM_sp;
-    frame.lr = regs->ARM_lr;
-    frame.pc = regs->ARM_pc;
-    walk_stackframe (&frame, report_trace, &depth);
-    return;
-  }
-  
-  while (depth-- && tail && ! ( (unsigned long) tail & 3) )
-  { tail = user_backtrace (tail); }
+	struct frame_tail *tail = ((struct frame_tail *) regs->ARM_fp) - 1;
+
+	if (!user_mode(regs)) {
+		struct stackframe frame;
+		frame.fp = regs->ARM_fp;
+		frame.sp = regs->ARM_sp;
+		frame.lr = regs->ARM_lr;
+		frame.pc = regs->ARM_pc;
+		walk_stackframe(&frame, report_trace, &depth);
+		return;
+	}
+
+	while (depth-- && tail && !((unsigned long) tail & 3))
+		tail = user_backtrace(tail);
 }
 
-int __init oprofile_arch_init (struct oprofile_operations * ops)
+int __init oprofile_arch_init(struct oprofile_operations *ops)
 {
-  /* provide backtrace support also in timer mode: */
-  ops->backtrace    = arm_backtrace;
-  
-  return oprofile_perf_init (ops);
+	/* provide backtrace support also in timer mode: */
+	ops->backtrace		= arm_backtrace;
+
+	return oprofile_perf_init(ops);
 }
 
-void oprofile_arch_exit (void)
+void oprofile_arch_exit(void)
 {
-  oprofile_perf_exit();
+	oprofile_perf_exit();
 }

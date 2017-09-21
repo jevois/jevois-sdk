@@ -11,10 +11,10 @@
 #include <asm/system_misc.h>
 #include <mach/hardware.h>
 
-void iop3xx_restart (char mode, const char * cmd)
+void iop3xx_restart(char mode, const char *cmd)
 {
-  *IOP3XX_PCSR = 0x30;
-  
-  /* Jump into ROM at address 0 */
-  soft_restart (0);
+	*IOP3XX_PCSR = 0x30;
+
+	/* Jump into ROM at address 0 */
+	soft_restart(0);
 }

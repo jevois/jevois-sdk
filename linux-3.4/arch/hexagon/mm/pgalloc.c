@@ -18,6 +18,6 @@
 
 #include <linux/init.h>
 
-void __init pgtable_cache_init (void)
+void __init pgtable_cache_init(void)
 {
 }

@@ -13,11 +13,11 @@
  * to devices.
  *
  * This is very similar to the ppc eieio/sync instruction in that is
- * does a checkpoint syncronisation & makes sure that
+ * does a checkpoint syncronisation & makes sure that 
  * all memory ops have completed wrt other CPU's ( see 7-15 POP  DJB ).
  */
 
-#define eieio() asm volatile("bcr 15,0" : : : "memory")
+#define eieio()	asm volatile("bcr 15,0" : : : "memory")
 #define SYNC_OTHER_CORES(x)   eieio()
 #define mb()    eieio()
 #define rmb()   eieio()

@@ -34,10 +34,10 @@
 #define MT2131_FREF             16000
 
 struct mt2131_priv {
-  struct mt2131_config * cfg;
-  struct i2c_adapter  * i2c;
-  
-  u32 frequency;
+	struct mt2131_config *cfg;
+	struct i2c_adapter   *i2c;
+
+	u32 frequency;
 };
 
 #endif /* __MT2131_PRIV_H__ */

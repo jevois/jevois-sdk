@@ -39,74 +39,74 @@
 #define cpu_to_ptr(n) ((void *)((long)(n)+1))
 #define ptr_to_cpu(p) ((long)(p) - 1)
 
-static int show_cpuinfo (struct seq_file * m, void * v)
+static int show_cpuinfo(struct seq_file *m, void *v)
 {
-  int n = ptr_to_cpu (v);
-  
-  if (n == 0) {
-    char buf[NR_CPUS * 5];
-    cpulist_scnprintf (buf, sizeof (buf), cpu_online_mask);
-    seq_printf (m, "cpu count\t: %d\n", num_online_cpus() );
-    seq_printf (m, "cpu list\t: %s\n", buf);
-    seq_printf (m, "model name\t: %s\n", chip_model);
-    seq_printf (m, "flags\t\t:\n"); /* nothing for now */
-    seq_printf (m, "cpu MHz\t\t: %llu.%06llu\n",
-                get_clock_rate() / 1000000,
-                (get_clock_rate() % 1000000) );
-    seq_printf (m, "bogomips\t: %lu.%02lu\n\n",
-                loops_per_jiffy / (500000 / HZ),
-                (loops_per_jiffy / (5000 / HZ) ) % 100);
-  }
-  
-  #ifdef CONFIG_SMP
-  if (!cpu_online (n) )
-  { return 0; }
-  #endif
-  
-  seq_printf (m, "processor\t: %d\n", n);
-  
-  /* Print only num_online_cpus() blank lines total. */
-  if (cpumask_next (n, cpu_online_mask) < nr_cpu_ids)
-  { seq_printf (m, "\n"); }
-  
-  return 0;
+	int n = ptr_to_cpu(v);
+
+	if (n == 0) {
+		char buf[NR_CPUS*5];
+		cpulist_scnprintf(buf, sizeof(buf), cpu_online_mask);
+		seq_printf(m, "cpu count\t: %d\n", num_online_cpus());
+		seq_printf(m, "cpu list\t: %s\n", buf);
+		seq_printf(m, "model name\t: %s\n", chip_model);
+		seq_printf(m, "flags\t\t:\n");  /* nothing for now */
+		seq_printf(m, "cpu MHz\t\t: %llu.%06llu\n",
+			   get_clock_rate() / 1000000,
+			   (get_clock_rate() % 1000000));
+		seq_printf(m, "bogomips\t: %lu.%02lu\n\n",
+			   loops_per_jiffy/(500000/HZ),
+			   (loops_per_jiffy/(5000/HZ)) % 100);
+	}
+
+#ifdef CONFIG_SMP
+	if (!cpu_online(n))
+		return 0;
+#endif
+
+	seq_printf(m, "processor\t: %d\n", n);
+
+	/* Print only num_online_cpus() blank lines total. */
+	if (cpumask_next(n, cpu_online_mask) < nr_cpu_ids)
+		seq_printf(m, "\n");
+
+	return 0;
 }
 
-static void * c_start (struct seq_file * m, loff_t * pos)
+static void *c_start(struct seq_file *m, loff_t *pos)
 {
-  return *pos < nr_cpu_ids ? cpu_to_ptr (*pos) : NULL;
+	return *pos < nr_cpu_ids ? cpu_to_ptr(*pos) : NULL;
 }
-static void * c_next (struct seq_file * m, void * v, loff_t * pos)
+static void *c_next(struct seq_file *m, void *v, loff_t *pos)
 {
-  ++*pos;
-  return c_start (m, pos);
+	++*pos;
+	return c_start(m, pos);
 }
-static void c_stop (struct seq_file * m, void * v)
+static void c_stop(struct seq_file *m, void *v)
 {
 }
 const struct seq_operations cpuinfo_op = {
-  .start  = c_start,
-  .next = c_next,
-  .stop = c_stop,
-  .show = show_cpuinfo,
+	.start	= c_start,
+	.next	= c_next,
+	.stop	= c_stop,
+	.show	= show_cpuinfo,
 };
 
 /*
  * Support /proc/tile directory
  */
 
-static int __init proc_tile_init (void)
+static int __init proc_tile_init(void)
 {
-  struct proc_dir_entry * root = proc_mkdir ("tile", NULL);
-  if (root == NULL)
-  { return 0; }
-  
-  proc_tile_hardwall_init (root);
-  
-  return 0;
+	struct proc_dir_entry *root = proc_mkdir("tile", NULL);
+	if (root == NULL)
+		return 0;
+
+	proc_tile_hardwall_init(root);
+
+	return 0;
 }
 
-arch_initcall (proc_tile_init);
+arch_initcall(proc_tile_init);
 
 /*
  * Support /proc/sys/tile directory
@@ -114,49 +114,49 @@ arch_initcall (proc_tile_init);
 
 #ifndef __tilegx__  /* FIXME: GX: no support for unaligned access yet */
 static ctl_table unaligned_subtable[] = {
-  {
-    .procname = "enabled",
-    .data   = &unaligned_fixup,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = &proc_dointvec
-  },
-  {
-    .procname = "printk",
-    .data   = &unaligned_printk,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = &proc_dointvec
-  },
-  {
-    .procname = "count",
-    .data   = &unaligned_fixup_count,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = &proc_dointvec
-  },
-  {}
+	{
+		.procname	= "enabled",
+		.data		= &unaligned_fixup,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= &proc_dointvec
+	},
+	{
+		.procname	= "printk",
+		.data		= &unaligned_printk,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= &proc_dointvec
+	},
+	{
+		.procname	= "count",
+		.data		= &unaligned_fixup_count,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= &proc_dointvec
+	},
+	{}
 };
 
 static ctl_table unaligned_table[] = {
-  {
-    .procname = "unaligned_fixup",
-    .mode   = 0555,
-    .child    = unaligned_subtable
-  },
-  {}
+	{
+		.procname	= "unaligned_fixup",
+		.mode		= 0555,
+		.child		= unaligned_subtable
+	},
+	{}
 };
 
 static struct ctl_path tile_path[] = {
-  { .procname = "tile" },
-  { }
+	{ .procname = "tile" },
+	{ }
 };
 
-static int __init proc_sys_tile_init (void)
+static int __init proc_sys_tile_init(void)
 {
-  register_sysctl_paths (tile_path, unaligned_table);
-  return 0;
+	register_sysctl_paths(tile_path, unaligned_table);
+	return 0;
 }
 
-arch_initcall (proc_sys_tile_init);
+arch_initcall(proc_sys_tile_init);
 #endif

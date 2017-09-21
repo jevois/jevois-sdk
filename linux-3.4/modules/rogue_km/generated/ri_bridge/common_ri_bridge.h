@@ -50,143 +50,143 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "pvr_bridge.h"
 
-#define PVRSRV_BRIDGE_RI_CMD_FIRST      (PVRSRV_BRIDGE_RI_START)
-#define PVRSRV_BRIDGE_RI_RIWRITEPMRENTRY      PVRSRV_IOWR(PVRSRV_BRIDGE_RI_CMD_FIRST+0)
-#define PVRSRV_BRIDGE_RI_RIWRITEMEMDESCENTRY      PVRSRV_IOWR(PVRSRV_BRIDGE_RI_CMD_FIRST+1)
-#define PVRSRV_BRIDGE_RI_RIUPDATEMEMDESCADDR      PVRSRV_IOWR(PVRSRV_BRIDGE_RI_CMD_FIRST+2)
-#define PVRSRV_BRIDGE_RI_RIDELETEMEMDESCENTRY     PVRSRV_IOWR(PVRSRV_BRIDGE_RI_CMD_FIRST+3)
-#define PVRSRV_BRIDGE_RI_RIDUMPLIST     PVRSRV_IOWR(PVRSRV_BRIDGE_RI_CMD_FIRST+4)
-#define PVRSRV_BRIDGE_RI_RIDUMPALL      PVRSRV_IOWR(PVRSRV_BRIDGE_RI_CMD_FIRST+5)
-#define PVRSRV_BRIDGE_RI_RIDUMPPROCESS      PVRSRV_IOWR(PVRSRV_BRIDGE_RI_CMD_FIRST+6)
-#define PVRSRV_BRIDGE_RI_CMD_LAST     (PVRSRV_BRIDGE_RI_CMD_FIRST+6)
+#define PVRSRV_BRIDGE_RI_CMD_FIRST			(PVRSRV_BRIDGE_RI_START)
+#define PVRSRV_BRIDGE_RI_RIWRITEPMRENTRY			PVRSRV_IOWR(PVRSRV_BRIDGE_RI_CMD_FIRST+0)
+#define PVRSRV_BRIDGE_RI_RIWRITEMEMDESCENTRY			PVRSRV_IOWR(PVRSRV_BRIDGE_RI_CMD_FIRST+1)
+#define PVRSRV_BRIDGE_RI_RIUPDATEMEMDESCADDR			PVRSRV_IOWR(PVRSRV_BRIDGE_RI_CMD_FIRST+2)
+#define PVRSRV_BRIDGE_RI_RIDELETEMEMDESCENTRY			PVRSRV_IOWR(PVRSRV_BRIDGE_RI_CMD_FIRST+3)
+#define PVRSRV_BRIDGE_RI_RIDUMPLIST			PVRSRV_IOWR(PVRSRV_BRIDGE_RI_CMD_FIRST+4)
+#define PVRSRV_BRIDGE_RI_RIDUMPALL			PVRSRV_IOWR(PVRSRV_BRIDGE_RI_CMD_FIRST+5)
+#define PVRSRV_BRIDGE_RI_RIDUMPPROCESS			PVRSRV_IOWR(PVRSRV_BRIDGE_RI_CMD_FIRST+6)
+#define PVRSRV_BRIDGE_RI_CMD_LAST			(PVRSRV_BRIDGE_RI_CMD_FIRST+6)
 
 
 /*******************************************
-            RIWritePMREntry
+            RIWritePMREntry          
  *******************************************/
 
 /* Bridge in structure for RIWritePMREntry */
 typedef struct PVRSRV_BRIDGE_IN_RIWRITEPMRENTRY_TAG
 {
-  IMG_HANDLE hPMRHandle;
-  const IMG_CHAR * puiTextA;
-  IMG_SIZE_T uiLogicalSize;
+	IMG_HANDLE hPMRHandle;
+	const IMG_CHAR * puiTextA;
+	IMG_SIZE_T uiLogicalSize;
 } PVRSRV_BRIDGE_IN_RIWRITEPMRENTRY;
 
 
 /* Bridge out structure for RIWritePMREntry */
 typedef struct PVRSRV_BRIDGE_OUT_RIWRITEPMRENTRY_TAG
 {
-  PVRSRV_ERROR eError;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_RIWRITEPMRENTRY;
 
 /*******************************************
-            RIWriteMEMDESCEntry
+            RIWriteMEMDESCEntry          
  *******************************************/
 
 /* Bridge in structure for RIWriteMEMDESCEntry */
 typedef struct PVRSRV_BRIDGE_IN_RIWRITEMEMDESCENTRY_TAG
 {
-  IMG_HANDLE hPMRHandle;
-  const IMG_CHAR * puiTextB;
-  IMG_SIZE_T uiOffset;
-  IMG_SIZE_T uiSize;
-  IMG_BOOL bIsImport;
-  IMG_BOOL bIsExportable;
+	IMG_HANDLE hPMRHandle;
+	const IMG_CHAR * puiTextB;
+	IMG_SIZE_T uiOffset;
+	IMG_SIZE_T uiSize;
+	IMG_BOOL bIsImport;
+	IMG_BOOL bIsExportable;
 } PVRSRV_BRIDGE_IN_RIWRITEMEMDESCENTRY;
 
 
 /* Bridge out structure for RIWriteMEMDESCEntry */
 typedef struct PVRSRV_BRIDGE_OUT_RIWRITEMEMDESCENTRY_TAG
 {
-  IMG_HANDLE hRIHandle;
-  PVRSRV_ERROR eError;
+	IMG_HANDLE hRIHandle;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_RIWRITEMEMDESCENTRY;
 
 /*******************************************
-            RIUpdateMEMDESCAddr
+            RIUpdateMEMDESCAddr          
  *******************************************/
 
 /* Bridge in structure for RIUpdateMEMDESCAddr */
 typedef struct PVRSRV_BRIDGE_IN_RIUPDATEMEMDESCADDR_TAG
 {
-  IMG_HANDLE hRIHandle;
-  IMG_DEV_VIRTADDR sAddr;
+	IMG_HANDLE hRIHandle;
+	IMG_DEV_VIRTADDR sAddr;
 } PVRSRV_BRIDGE_IN_RIUPDATEMEMDESCADDR;
 
 
 /* Bridge out structure for RIUpdateMEMDESCAddr */
 typedef struct PVRSRV_BRIDGE_OUT_RIUPDATEMEMDESCADDR_TAG
 {
-  PVRSRV_ERROR eError;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_RIUPDATEMEMDESCADDR;
 
 /*******************************************
-            RIDeleteMEMDESCEntry
+            RIDeleteMEMDESCEntry          
  *******************************************/
 
 /* Bridge in structure for RIDeleteMEMDESCEntry */
 typedef struct PVRSRV_BRIDGE_IN_RIDELETEMEMDESCENTRY_TAG
 {
-  IMG_HANDLE hRIHandle;
+	IMG_HANDLE hRIHandle;
 } PVRSRV_BRIDGE_IN_RIDELETEMEMDESCENTRY;
 
 
 /* Bridge out structure for RIDeleteMEMDESCEntry */
 typedef struct PVRSRV_BRIDGE_OUT_RIDELETEMEMDESCENTRY_TAG
 {
-  PVRSRV_ERROR eError;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_RIDELETEMEMDESCENTRY;
 
 /*******************************************
-            RIDumpList
+            RIDumpList          
  *******************************************/
 
 /* Bridge in structure for RIDumpList */
 typedef struct PVRSRV_BRIDGE_IN_RIDUMPLIST_TAG
 {
-  IMG_HANDLE hPMRHandle;
+	IMG_HANDLE hPMRHandle;
 } PVRSRV_BRIDGE_IN_RIDUMPLIST;
 
 
 /* Bridge out structure for RIDumpList */
 typedef struct PVRSRV_BRIDGE_OUT_RIDUMPLIST_TAG
 {
-  PVRSRV_ERROR eError;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_RIDUMPLIST;
 
 /*******************************************
-            RIDumpAll
+            RIDumpAll          
  *******************************************/
 
 /* Bridge in structure for RIDumpAll */
 typedef struct PVRSRV_BRIDGE_IN_RIDUMPALL_TAG
 {
-  IMG_UINT32 ui32EmptyStructPlaceholder;
+	 IMG_UINT32 ui32EmptyStructPlaceholder;
 } PVRSRV_BRIDGE_IN_RIDUMPALL;
 
 
 /* Bridge out structure for RIDumpAll */
 typedef struct PVRSRV_BRIDGE_OUT_RIDUMPALL_TAG
 {
-  PVRSRV_ERROR eError;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_RIDUMPALL;
 
 /*******************************************
-            RIDumpProcess
+            RIDumpProcess          
  *******************************************/
 
 /* Bridge in structure for RIDumpProcess */
 typedef struct PVRSRV_BRIDGE_IN_RIDUMPPROCESS_TAG
 {
-  IMG_PID ui32Pid;
+	IMG_PID ui32Pid;
 } PVRSRV_BRIDGE_IN_RIDUMPPROCESS;
 
 
 /* Bridge out structure for RIDumpProcess */
 typedef struct PVRSRV_BRIDGE_OUT_RIDUMPPROCESS_TAG
 {
-  PVRSRV_ERROR eError;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_RIDUMPPROCESS;
 
 #endif /* COMMON_RI_BRIDGE_H */

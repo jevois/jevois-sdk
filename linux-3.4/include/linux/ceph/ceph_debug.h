@@ -12,18 +12,18 @@
  */
 
 # if defined(DEBUG) || defined(CONFIG_DYNAMIC_DEBUG)
-extern const char * ceph_file_part (const char * s, int len);
-#  define dout(fmt, ...)            \
-  pr_debug("%.*s %12.12s:%-4d : " fmt,        \
-           8 - (int)sizeof(KBUILD_MODNAME), "    ",   \
-           ceph_file_part(__FILE__, sizeof(__FILE__)),    \
-           __LINE__, ##__VA_ARGS__)
+extern const char *ceph_file_part(const char *s, int len);
+#  define dout(fmt, ...)						\
+	pr_debug("%.*s %12.12s:%-4d : " fmt,				\
+		 8 - (int)sizeof(KBUILD_MODNAME), "    ",		\
+		 ceph_file_part(__FILE__, sizeof(__FILE__)),		\
+		 __LINE__, ##__VA_ARGS__)
 # else
 /* faux printk call just to see any compiler warnings. */
-#  define dout(fmt, ...)  do {        \
-    if (0)            \
-      printk(KERN_DEBUG fmt, ##__VA_ARGS__);  \
-  } while (0)
+#  define dout(fmt, ...)	do {				\
+		if (0)						\
+			printk(KERN_DEBUG fmt, ##__VA_ARGS__);	\
+	} while (0)
 # endif
 
 #else
@@ -31,7 +31,7 @@ extern const char * ceph_file_part (const char * s, int len);
 /*
  * or, just wrap pr_debug
  */
-# define dout(fmt, ...) pr_debug(" " fmt, ##__VA_ARGS__)
+# define dout(fmt, ...)	pr_debug(" " fmt, ##__VA_ARGS__)
 
 #endif
 

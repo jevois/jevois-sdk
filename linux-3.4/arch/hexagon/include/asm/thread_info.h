@@ -29,22 +29,22 @@
 #include <asm/page.h>
 #endif
 
-#define THREAD_SHIFT    12
-#define THREAD_SIZE   (1<<THREAD_SHIFT)
+#define THREAD_SHIFT		12
+#define THREAD_SIZE		(1<<THREAD_SHIFT)
 
 #if THREAD_SHIFT >= PAGE_SHIFT
-#define THREAD_SIZE_ORDER (THREAD_SHIFT - PAGE_SHIFT)
+#define THREAD_SIZE_ORDER	(THREAD_SHIFT - PAGE_SHIFT)
 #else  /*  don't use standard allocator  */
 #define __HAVE_ARCH_THREAD_INFO_ALLOCATOR
-extern struct thread_info * alloc_thread_info_node (struct task_struct * tsk, int node);
-extern void free_thread_info (struct thread_info * ti);
+extern struct thread_info *alloc_thread_info_node(struct task_struct *tsk, int node);
+extern void free_thread_info(struct thread_info *ti);
 #endif
 
 
 #ifndef __ASSEMBLY__
 
 typedef struct {
-  unsigned long seg;
+	unsigned long seg;
 } mm_segment_t;
 
 /*
@@ -54,25 +54,25 @@ typedef struct {
  */
 
 struct thread_info {
-  struct task_struct * task;    /* main task structure */
-  struct exec_domain   *   exec_domain;   /* execution domain */
-  unsigned long   flags;          /* low level flags */
-  __u32                   cpu;            /* current cpu */
-  int                     preempt_count;  /* 0=>preemptible,<0=>BUG */
-  mm_segment_t            addr_limit;     /* segmentation sux */
-  /*
-   * used for syscalls somehow;
-   * seems to have a function pointer and four arguments
-   */
-  struct restart_block    restart_block;
-  /* Points to the current pt_regs frame  */
-  struct pt_regs  *  regs;
-  /*
-   * saved kernel sp at switch_to time;
-   * not sure if this is used (it's not in the VM model it seems;
-   * see thread_struct)
-   */
-  unsigned long   sp;
+	struct task_struct	*task;		/* main task structure */
+	struct exec_domain      *exec_domain;   /* execution domain */
+	unsigned long		flags;          /* low level flags */
+	__u32                   cpu;            /* current cpu */
+	int                     preempt_count;  /* 0=>preemptible,<0=>BUG */
+	mm_segment_t            addr_limit;     /* segmentation sux */
+	/*
+	 * used for syscalls somehow;
+	 * seems to have a function pointer and four arguments
+	 */
+	struct restart_block    restart_block;
+	/* Points to the current pt_regs frame  */
+	struct pt_regs		*regs;
+	/*
+	 * saved kernel sp at switch_to time;
+	 * not sure if this is used (it's not in the VM model it seems;
+	 * see thread_struct)
+	 */
+	unsigned long		sp;
 };
 
 #else /* !__ASSEMBLY__ */
@@ -83,34 +83,34 @@ struct thread_info {
 
 /*  looks like "linux/hardirq.h" uses this.  */
 
-#define PREEMPT_ACTIVE    0x10000000
+#define PREEMPT_ACTIVE		0x10000000
 
 #ifndef __ASSEMBLY__
 
 #define INIT_THREAD_INFO(tsk)                   \
-  {                                               \
-    .task           = &tsk,                 \
-                      .exec_domain    = &default_exec_domain, \
-                                        .flags          = 0,                    \
-                                            .cpu            = 0,                    \
-                                                .preempt_count  = 1,                    \
-                                                    .addr_limit     = KERNEL_DS,            \
-                                                        .restart_block = {                      \
-                                                                                                .fn = do_no_restart_syscall,    \
-                                                                         },                                      \
-                                                            .sp = 0,        \
-                                                                .regs = NULL,     \
-  }
+{                                               \
+	.task           = &tsk,                 \
+	.exec_domain    = &default_exec_domain, \
+	.flags          = 0,                    \
+	.cpu            = 0,                    \
+	.preempt_count  = 1,                    \
+	.addr_limit     = KERNEL_DS,            \
+	.restart_block = {                      \
+		.fn = do_no_restart_syscall,    \
+	},                                      \
+	.sp = 0,				\
+	.regs = NULL,			\
+}
 
 #define init_thread_info        (init_thread_union.thread_info)
 #define init_stack              (init_thread_union.stack)
 
 /* Tacky preprocessor trickery */
-#define qqstr(s) qstr(s)
+#define	qqstr(s) qstr(s)
 #define qstr(s) #s
 #define QUOTED_THREADINFO_REG qqstr(THREADINFO_REG)
 
-register struct thread_info * __current_thread_info asm (QUOTED_THREADINFO_REG);
+register struct thread_info *__current_thread_info asm(QUOTED_THREADINFO_REG);
 #define current_thread_info()  __current_thread_info
 
 #endif /* __ASSEMBLY__ */

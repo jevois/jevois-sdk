@@ -12,16 +12,16 @@
  *
  * Note: Ethernet QoS traffic class definitions are managed separately
  * by EthDB in IxEthDBQoS.h.
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -34,7 +34,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -47,7 +47,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  */
@@ -61,13 +61,13 @@
  *  Queue assignments for ATM
  ***************************************************************************/
 
-/**
+/** 
  * @brief Global compiler switch to select between 3 possible NPE Modes
  * Define this macro to enable MPHY mode
  *
  * Default(No Switch) = MultiPHY Utopia2
  * IX_UTOPIAMODE = 1 for single Phy Utopia1
- * IX_MPHYSINGLEPORT = 1 for single Phy Utopia2
+ * IX_MPHYSINGLEPORT = 1 for single Phy Utopia2 
  */
 #define IX_NPE_MPHYMULTIPORT 1
 #if IX_UTOPIAMODE == 1
@@ -402,14 +402,14 @@
 
 /**
 *
-* @def IX_ETH_ACC_RX_FRAME_ETH_Q
+* @def IX_ETH_ACC_RX_FRAME_ETH_Q 
 *
 * @brief  Eth0/Eth1 NPE Frame Receive Q.
 *
 * @note THIS IS NOT USED - the Rx queues are read from EthDB QoS configuration
-*
+* 
 */
-#define IX_ETH_ACC_RX_FRAME_ETH_Q (IX_QMGR_QUEUE_4)
+#define IX_ETH_ACC_RX_FRAME_ETH_Q	(IX_QMGR_QUEUE_4)
 
 /**
 *
@@ -509,8 +509,8 @@
 
 /** Number of queues allocate to WEP NPE services */
 #define IX_CRYPTO_ACC_NUM_OF_WEP_NPE_Q      (2)
-
+                                                      
 /** Number of queues allocate to CryptoAcc component */
-#define IX_CRYPTO_ACC_NUM_OF_Q (IX_CRYPTO_ACC_NUM_OF_CRYPTO_Q + IX_CRYPTO_ACC_NUM_OF_WEP_NPE_Q)
+#define IX_CRYPTO_ACC_NUM_OF_Q (IX_CRYPTO_ACC_NUM_OF_CRYPTO_Q + IX_CRYPTO_ACC_NUM_OF_WEP_NPE_Q)   
 
 #endif /* IxQueueAssignments_H */

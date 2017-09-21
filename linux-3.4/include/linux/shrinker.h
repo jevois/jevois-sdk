@@ -6,10 +6,10 @@
  * We consolidate the values for easier extention later.
  */
 struct shrink_control {
-  gfp_t gfp_mask;
-  
-  /* How many slab objects shrinker() should scan and try to reclaim */
-  unsigned long nr_to_scan;
+	gfp_t gfp_mask;
+
+	/* How many slab objects shrinker() should scan and try to reclaim */
+	unsigned long nr_to_scan;
 };
 
 /*
@@ -29,15 +29,15 @@ struct shrink_control {
  * querying the cache size, so a fastpath for that case is appropriate.
  */
 struct shrinker {
-  int (*shrink) (struct shrinker *, struct shrink_control * sc);
-  int seeks;  /* seeks to recreate an obj */
-  long batch; /* reclaim batch size, 0 = default */
-  
-  /* These are for internal use */
-  struct list_head list;
-  atomic_long_t nr_in_batch; /* objs pending delete */
+	int (*shrink)(struct shrinker *, struct shrink_control *sc);
+	int seeks;	/* seeks to recreate an obj */
+	long batch;	/* reclaim batch size, 0 = default */
+
+	/* These are for internal use */
+	struct list_head list;
+	atomic_long_t nr_in_batch; /* objs pending delete */
 };
 #define DEFAULT_SEEKS 2 /* A good number if you don't know better. */
-extern void register_shrinker (struct shrinker *);
-extern void unregister_shrinker (struct shrinker *);
+extern void register_shrinker(struct shrinker *);
+extern void unregister_shrinker(struct shrinker *);
 #endif

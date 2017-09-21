@@ -12,8 +12,8 @@
 #define __PLAT_SAMSUNG_CAMPORT_H_ __FILE__
 
 enum s5p_camport_id {
-  S5P_CAMPORT_A,
-  S5P_CAMPORT_B,
+	S5P_CAMPORT_A,
+	S5P_CAMPORT_B,
 };
 
 /*
@@ -22,7 +22,7 @@ enum s5p_camport_id {
  * FIMC entities are allowed to be attached to a single port simultaneously.
  * These functions are to be used in the board setup code.
  */
-int s5pv210_fimc_setup_gpio (enum s5p_camport_id id);
-int exynos4_fimc_setup_gpio (enum s5p_camport_id id);
+int s5pv210_fimc_setup_gpio(enum s5p_camport_id id);
+int exynos4_fimc_setup_gpio(enum s5p_camport_id id);
 
 #endif /* __PLAT_SAMSUNG_CAMPORT_H */

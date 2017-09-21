@@ -52,618 +52,613 @@ static bool debug;
 #define ARK_TIMEOUT (1*HZ)
 
 static const struct usb_device_id id_table[] = {
-  { USB_DEVICE (0x6547, 0x0232) },
-  { USB_DEVICE (0x18ec, 0x3118) },  /* USB to IrDA adapter */
-  { },
+	{ USB_DEVICE(0x6547, 0x0232) },
+	{ USB_DEVICE(0x18ec, 0x3118) },		/* USB to IrDA adapter */
+	{ },
 };
-MODULE_DEVICE_TABLE (usb, id_table);
+MODULE_DEVICE_TABLE(usb, id_table);
 
-static int is_irda (struct usb_serial * serial)
+static int is_irda(struct usb_serial *serial)
 {
-  struct usb_device * dev = serial->dev;
-  if (le16_to_cpu (dev->descriptor.idVendor) == 0x18ec &&
-      le16_to_cpu (dev->descriptor.idProduct) == 0x3118)
-  { return 1; }
-  return 0;
+	struct usb_device *dev = serial->dev;
+	if (le16_to_cpu(dev->descriptor.idVendor) == 0x18ec &&
+			le16_to_cpu(dev->descriptor.idProduct) == 0x3118)
+		return 1;
+	return 0;
 }
 
 struct ark3116_private {
-  wait_queue_head_t       delta_msr_wait;
-  struct async_icount icount;
-  int     irda; /* 1 for irda device */
-  
-  /* protects hw register updates */
-  struct mutex    hw_lock;
-  
-  int     quot; /* baudrate divisor */
-  __u32     lcr;  /* line control register value */
-  __u32     hcr;  /* handshake control register (0x8)
-           * value */
-  __u32     mcr;  /* modem contol register value */
-  
-  /* protects the status values below */
-  spinlock_t    status_lock;
-  __u32     msr;  /* modem status register value */
-  __u32     lsr;  /* line status register value */
+	wait_queue_head_t       delta_msr_wait;
+	struct async_icount	icount;
+	int			irda;	/* 1 for irda device */
+
+	/* protects hw register updates */
+	struct mutex		hw_lock;
+
+	int			quot;	/* baudrate divisor */
+	__u32			lcr;	/* line control register value */
+	__u32			hcr;	/* handshake control register (0x8)
+					 * value */
+	__u32			mcr;	/* modem contol register value */
+
+	/* protects the status values below */
+	spinlock_t		status_lock;
+	__u32			msr;	/* modem status register value */
+	__u32			lsr;	/* line status register value */
 };
 
-static int ark3116_write_reg (struct usb_serial * serial,
-                              unsigned reg, __u8 val)
+static int ark3116_write_reg(struct usb_serial *serial,
+			     unsigned reg, __u8 val)
 {
-  int result;
-  /* 0xfe 0x40 are magic values taken from original driver */
-  result = usb_control_msg (serial->dev,
-                            usb_sndctrlpipe (serial->dev, 0),
-                            0xfe, 0x40, val, reg,
-                            NULL, 0, ARK_TIMEOUT);
-  return result;
+	int result;
+	 /* 0xfe 0x40 are magic values taken from original driver */
+	result = usb_control_msg(serial->dev,
+				 usb_sndctrlpipe(serial->dev, 0),
+				 0xfe, 0x40, val, reg,
+				 NULL, 0, ARK_TIMEOUT);
+	return result;
 }
 
-static int ark3116_read_reg (struct usb_serial * serial,
-                             unsigned reg, unsigned char * buf)
+static int ark3116_read_reg(struct usb_serial *serial,
+			    unsigned reg, unsigned char *buf)
 {
-  int result;
-  /* 0xfe 0xc0 are magic values taken from original driver */
-  result = usb_control_msg (serial->dev,
-                            usb_rcvctrlpipe (serial->dev, 0),
-                            0xfe, 0xc0, 0, reg,
-                            buf, 1, ARK_TIMEOUT);
-  if (result < 0)
-  { return result; }
-  else
-  { return buf[0]; }
+	int result;
+	/* 0xfe 0xc0 are magic values taken from original driver */
+	result = usb_control_msg(serial->dev,
+				 usb_rcvctrlpipe(serial->dev, 0),
+				 0xfe, 0xc0, 0, reg,
+				 buf, 1, ARK_TIMEOUT);
+	if (result < 0)
+		return result;
+	else
+		return buf[0];
 }
 
-static inline int calc_divisor (int bps)
+static inline int calc_divisor(int bps)
 {
-  /* Original ark3116 made some exceptions in rounding here
-   * because windows did the same. Assume that is not really
-   * necessary.
-   * Crystal is 12MHz, probably because of USB, but we divide by 4?
-   */
-  return (12000000 + 2 * bps) / (4 * bps);
+	/* Original ark3116 made some exceptions in rounding here
+	 * because windows did the same. Assume that is not really
+	 * necessary.
+	 * Crystal is 12MHz, probably because of USB, but we divide by 4?
+	 */
+	return (12000000 + 2*bps) / (4*bps);
 }
 
-static int ark3116_attach (struct usb_serial * serial)
+static int ark3116_attach(struct usb_serial *serial)
 {
-  struct usb_serial_port * port = serial->port[0];
-  struct ark3116_private * priv;
-  
-  /* make sure we have our end-points */
-  if ( (serial->num_bulk_in == 0) ||
-       (serial->num_bulk_out == 0) ||
-       (serial->num_interrupt_in == 0) ) {
-    dev_err (&serial->dev->dev,
-             "%s - missing endpoint - "
-             "bulk in: %d, bulk out: %d, int in %d\n",
-             KBUILD_MODNAME,
-             serial->num_bulk_in,
-             serial->num_bulk_out,
-             serial->num_interrupt_in);
-    return -EINVAL;
-  }
-  
-  priv = kzalloc (sizeof (struct ark3116_private),
-                  GFP_KERNEL);
-  if (!priv)
-  { return -ENOMEM; }
-  
-  init_waitqueue_head (&priv->delta_msr_wait);
-  mutex_init (&priv->hw_lock);
-  spin_lock_init (&priv->status_lock);
-  
-  priv->irda = is_irda (serial);
-  
-  usb_set_serial_port_data (port, priv);
-  
-  /* setup the hardware */
-  ark3116_write_reg (serial, UART_IER, 0);
-  /* disable DMA */
-  ark3116_write_reg (serial, UART_FCR, 0);
-  /* handshake control */
-  priv->hcr = 0;
-  ark3116_write_reg (serial, 0x8     , 0);
-  /* modem control */
-  priv->mcr = 0;
-  ark3116_write_reg (serial, UART_MCR, 0);
-  
-  if (! (priv->irda) ) {
-    ark3116_write_reg (serial, 0xb , 0);
-  }
-  else {
-    ark3116_write_reg (serial, 0xb , 1);
-    ark3116_write_reg (serial, 0xc , 0);
-    ark3116_write_reg (serial, 0xd , 0x41);
-    ark3116_write_reg (serial, 0xa , 1);
-  }
-  
-  /* setup baudrate */
-  ark3116_write_reg (serial, UART_LCR, UART_LCR_DLAB);
-  
-  /* setup for 9600 8N1 */
-  priv->quot = calc_divisor (9600);
-  ark3116_write_reg (serial, UART_DLL, priv->quot & 0xff);
-  ark3116_write_reg (serial, UART_DLM, (priv->quot >> 8) & 0xff);
-  
-  priv->lcr = UART_LCR_WLEN8;
-  ark3116_write_reg (serial, UART_LCR, UART_LCR_WLEN8);
-  
-  ark3116_write_reg (serial, 0xe, 0);
-  
-  if (priv->irda)
-  { ark3116_write_reg (serial, 0x9, 0); }
-  
-  dev_info (&serial->dev->dev,
-            "%s using %s mode\n",
-            KBUILD_MODNAME,
-            priv->irda ? "IrDA" : "RS232");
-  return 0;
+	struct usb_serial_port *port = serial->port[0];
+	struct ark3116_private *priv;
+
+	/* make sure we have our end-points */
+	if ((serial->num_bulk_in == 0) ||
+	    (serial->num_bulk_out == 0) ||
+	    (serial->num_interrupt_in == 0)) {
+		dev_err(&serial->dev->dev,
+			"%s - missing endpoint - "
+			"bulk in: %d, bulk out: %d, int in %d\n",
+			KBUILD_MODNAME,
+			serial->num_bulk_in,
+			serial->num_bulk_out,
+			serial->num_interrupt_in);
+		return -EINVAL;
+	}
+
+	priv = kzalloc(sizeof(struct ark3116_private),
+		       GFP_KERNEL);
+	if (!priv)
+		return -ENOMEM;
+
+	init_waitqueue_head(&priv->delta_msr_wait);
+	mutex_init(&priv->hw_lock);
+	spin_lock_init(&priv->status_lock);
+
+	priv->irda = is_irda(serial);
+
+	usb_set_serial_port_data(port, priv);
+
+	/* setup the hardware */
+	ark3116_write_reg(serial, UART_IER, 0);
+	/* disable DMA */
+	ark3116_write_reg(serial, UART_FCR, 0);
+	/* handshake control */
+	priv->hcr = 0;
+	ark3116_write_reg(serial, 0x8     , 0);
+	/* modem control */
+	priv->mcr = 0;
+	ark3116_write_reg(serial, UART_MCR, 0);
+
+	if (!(priv->irda)) {
+		ark3116_write_reg(serial, 0xb , 0);
+	} else {
+		ark3116_write_reg(serial, 0xb , 1);
+		ark3116_write_reg(serial, 0xc , 0);
+		ark3116_write_reg(serial, 0xd , 0x41);
+		ark3116_write_reg(serial, 0xa , 1);
+	}
+
+	/* setup baudrate */
+	ark3116_write_reg(serial, UART_LCR, UART_LCR_DLAB);
+
+	/* setup for 9600 8N1 */
+	priv->quot = calc_divisor(9600);
+	ark3116_write_reg(serial, UART_DLL, priv->quot & 0xff);
+	ark3116_write_reg(serial, UART_DLM, (priv->quot>>8) & 0xff);
+
+	priv->lcr = UART_LCR_WLEN8;
+	ark3116_write_reg(serial, UART_LCR, UART_LCR_WLEN8);
+
+	ark3116_write_reg(serial, 0xe, 0);
+
+	if (priv->irda)
+		ark3116_write_reg(serial, 0x9, 0);
+
+	dev_info(&serial->dev->dev,
+		"%s using %s mode\n",
+		KBUILD_MODNAME,
+		priv->irda ? "IrDA" : "RS232");
+	return 0;
 }
 
-static void ark3116_release (struct usb_serial * serial)
+static void ark3116_release(struct usb_serial *serial)
 {
-  struct usb_serial_port * port = serial->port[0];
-  struct ark3116_private * priv = usb_get_serial_port_data (port);
-  
-  /* device is closed, so URBs and DMA should be down */
-  
-  usb_set_serial_port_data (port, NULL);
-  
-  mutex_destroy (&priv->hw_lock);
-  
-  kfree (priv);
+	struct usb_serial_port *port = serial->port[0];
+	struct ark3116_private *priv = usb_get_serial_port_data(port);
+
+	/* device is closed, so URBs and DMA should be down */
+
+	usb_set_serial_port_data(port, NULL);
+
+	mutex_destroy(&priv->hw_lock);
+
+	kfree(priv);
 }
 
-static void ark3116_init_termios (struct tty_struct * tty)
+static void ark3116_init_termios(struct tty_struct *tty)
 {
-  struct ktermios * termios = tty->termios;
-  *termios = tty_std_termios;
-  termios->c_cflag = B9600 | CS8
-                     | CREAD | HUPCL | CLOCAL;
-  termios->c_ispeed = 9600;
-  termios->c_ospeed = 9600;
+	struct ktermios *termios = tty->termios;
+	*termios = tty_std_termios;
+	termios->c_cflag = B9600 | CS8
+				      | CREAD | HUPCL | CLOCAL;
+	termios->c_ispeed = 9600;
+	termios->c_ospeed = 9600;
 }
 
-static void ark3116_set_termios (struct tty_struct * tty,
-                                 struct usb_serial_port * port,
-                                 struct ktermios * old_termios)
+static void ark3116_set_termios(struct tty_struct *tty,
+				struct usb_serial_port *port,
+				struct ktermios *old_termios)
 {
-  struct usb_serial * serial = port->serial;
-  struct ark3116_private * priv = usb_get_serial_port_data (port);
-  struct ktermios * termios = tty->termios;
-  unsigned int cflag = termios->c_cflag;
-  int bps = tty_get_baud_rate (tty);
-  int quot;
-  __u8 lcr, hcr, eval;
-  
-  /* set data bit count */
-  switch (cflag & CSIZE) {
-  case CS5:
-    lcr = UART_LCR_WLEN5;
-    break;
-  case CS6:
-    lcr = UART_LCR_WLEN6;
-    break;
-  case CS7:
-    lcr = UART_LCR_WLEN7;
-    break;
-  default:
-  case CS8:
-    lcr = UART_LCR_WLEN8;
-    break;
-  }
-  if (cflag & CSTOPB)
-  { lcr |= UART_LCR_STOP; }
-  if (cflag & PARENB)
-  { lcr |= UART_LCR_PARITY; }
-  if (! (cflag & PARODD) )
-  { lcr |= UART_LCR_EPAR; }
-  #ifdef CMSPAR
-  if (cflag & CMSPAR)
-  { lcr |= UART_LCR_SPAR; }
-  #endif
-  /* handshake control */
-  hcr = (cflag & CRTSCTS) ? 0x03 : 0x00;
-  
-  /* calc baudrate */
-  dbg ("%s - setting bps to %d", __func__, bps);
-  eval = 0;
-  switch (bps) {
-  case 0:
-    quot = calc_divisor (9600);
-    break;
-  default:
-    if ( (bps < 75) || (bps > 3000000) )
-    { bps = 9600; }
-    quot = calc_divisor (bps);
-    break;
-  case 460800:
-    eval = 1;
-    quot = calc_divisor (bps);
-    break;
-  case 921600:
-    eval = 2;
-    quot = calc_divisor (bps);
-    break;
-  }
-  
-  /* Update state: synchronize */
-  mutex_lock (&priv->hw_lock);
-  
-  /* keep old LCR_SBC bit */
-  lcr |= (priv->lcr & UART_LCR_SBC);
-  
-  dbg ("%s - setting hcr:0x%02x,lcr:0x%02x,quot:%d",
-       __func__, hcr, lcr, quot);
-       
-  /* handshake control */
-  if (priv->hcr != hcr) {
-    priv->hcr = hcr;
-    ark3116_write_reg (serial, 0x8, hcr);
-  }
-  
-  /* baudrate */
-  if (priv->quot != quot) {
-    priv->quot = quot;
-    priv->lcr = lcr; /* need to write lcr anyway */
-    
-    /* disable DMA since transmit/receive is
-     * shadowed by UART_DLL
-     */
-    ark3116_write_reg (serial, UART_FCR, 0);
-    
-    ark3116_write_reg (serial, UART_LCR,
-                       lcr | UART_LCR_DLAB);
-    ark3116_write_reg (serial, UART_DLL, quot & 0xff);
-    ark3116_write_reg (serial, UART_DLM, (quot >> 8) & 0xff);
-    
-    /* restore lcr */
-    ark3116_write_reg (serial, UART_LCR, lcr);
-    /* magic baudrate thingy: not sure what it does,
-     * but windows does this as well.
-     */
-    ark3116_write_reg (serial, 0xe, eval);
-    
-    /* enable DMA */
-    ark3116_write_reg (serial, UART_FCR, UART_FCR_DMA_SELECT);
-  }
-  else
-    if (priv->lcr != lcr) {
-      priv->lcr = lcr;
-      ark3116_write_reg (serial, UART_LCR, lcr);
-    }
-    
-  mutex_unlock (&priv->hw_lock);
-  
-  /* check for software flow control */
-  if (I_IXOFF (tty) || I_IXON (tty) ) {
-    dev_warn (&serial->dev->dev,
-              "%s: don't know how to do software flow control\n",
-              KBUILD_MODNAME);
-  }
-  
-  /* Don't rewrite B0 */
-  if (tty_termios_baud_rate (termios) )
-  { tty_termios_encode_baud_rate (termios, bps, bps); }
+	struct usb_serial *serial = port->serial;
+	struct ark3116_private *priv = usb_get_serial_port_data(port);
+	struct ktermios *termios = tty->termios;
+	unsigned int cflag = termios->c_cflag;
+	int bps = tty_get_baud_rate(tty);
+	int quot;
+	__u8 lcr, hcr, eval;
+
+	/* set data bit count */
+	switch (cflag & CSIZE) {
+	case CS5:
+		lcr = UART_LCR_WLEN5;
+		break;
+	case CS6:
+		lcr = UART_LCR_WLEN6;
+		break;
+	case CS7:
+		lcr = UART_LCR_WLEN7;
+		break;
+	default:
+	case CS8:
+		lcr = UART_LCR_WLEN8;
+		break;
+	}
+	if (cflag & CSTOPB)
+		lcr |= UART_LCR_STOP;
+	if (cflag & PARENB)
+		lcr |= UART_LCR_PARITY;
+	if (!(cflag & PARODD))
+		lcr |= UART_LCR_EPAR;
+#ifdef CMSPAR
+	if (cflag & CMSPAR)
+		lcr |= UART_LCR_SPAR;
+#endif
+	/* handshake control */
+	hcr = (cflag & CRTSCTS) ? 0x03 : 0x00;
+
+	/* calc baudrate */
+	dbg("%s - setting bps to %d", __func__, bps);
+	eval = 0;
+	switch (bps) {
+	case 0:
+		quot = calc_divisor(9600);
+		break;
+	default:
+		if ((bps < 75) || (bps > 3000000))
+			bps = 9600;
+		quot = calc_divisor(bps);
+		break;
+	case 460800:
+		eval = 1;
+		quot = calc_divisor(bps);
+		break;
+	case 921600:
+		eval = 2;
+		quot = calc_divisor(bps);
+		break;
+	}
+
+	/* Update state: synchronize */
+	mutex_lock(&priv->hw_lock);
+
+	/* keep old LCR_SBC bit */
+	lcr |= (priv->lcr & UART_LCR_SBC);
+
+	dbg("%s - setting hcr:0x%02x,lcr:0x%02x,quot:%d",
+	    __func__, hcr, lcr, quot);
+
+	/* handshake control */
+	if (priv->hcr != hcr) {
+		priv->hcr = hcr;
+		ark3116_write_reg(serial, 0x8, hcr);
+	}
+
+	/* baudrate */
+	if (priv->quot != quot) {
+		priv->quot = quot;
+		priv->lcr = lcr; /* need to write lcr anyway */
+
+		/* disable DMA since transmit/receive is
+		 * shadowed by UART_DLL
+		 */
+		ark3116_write_reg(serial, UART_FCR, 0);
+
+		ark3116_write_reg(serial, UART_LCR,
+				  lcr|UART_LCR_DLAB);
+		ark3116_write_reg(serial, UART_DLL, quot & 0xff);
+		ark3116_write_reg(serial, UART_DLM, (quot>>8) & 0xff);
+
+		/* restore lcr */
+		ark3116_write_reg(serial, UART_LCR, lcr);
+		/* magic baudrate thingy: not sure what it does,
+		 * but windows does this as well.
+		 */
+		ark3116_write_reg(serial, 0xe, eval);
+
+		/* enable DMA */
+		ark3116_write_reg(serial, UART_FCR, UART_FCR_DMA_SELECT);
+	} else if (priv->lcr != lcr) {
+		priv->lcr = lcr;
+		ark3116_write_reg(serial, UART_LCR, lcr);
+	}
+
+	mutex_unlock(&priv->hw_lock);
+
+	/* check for software flow control */
+	if (I_IXOFF(tty) || I_IXON(tty)) {
+		dev_warn(&serial->dev->dev,
+			 "%s: don't know how to do software flow control\n",
+			 KBUILD_MODNAME);
+	}
+
+	/* Don't rewrite B0 */
+	if (tty_termios_baud_rate(termios))
+		tty_termios_encode_baud_rate(termios, bps, bps);
 }
 
-static void ark3116_close (struct usb_serial_port * port)
+static void ark3116_close(struct usb_serial_port *port)
 {
-  struct usb_serial * serial = port->serial;
-  
-  if (serial->dev) {
-    /* disable DMA */
-    ark3116_write_reg (serial, UART_FCR, 0);
-    
-    /* deactivate interrupts */
-    ark3116_write_reg (serial, UART_IER, 0);
-    
-    usb_serial_generic_close (port);
-    if (serial->num_interrupt_in)
-    { usb_kill_urb (port->interrupt_in_urb); }
-  }
-  
+	struct usb_serial *serial = port->serial;
+
+	if (serial->dev) {
+		/* disable DMA */
+		ark3116_write_reg(serial, UART_FCR, 0);
+
+		/* deactivate interrupts */
+		ark3116_write_reg(serial, UART_IER, 0);
+
+		usb_serial_generic_close(port);
+		if (serial->num_interrupt_in)
+			usb_kill_urb(port->interrupt_in_urb);
+	}
+
 }
 
-static int ark3116_open (struct tty_struct * tty, struct usb_serial_port * port)
+static int ark3116_open(struct tty_struct *tty, struct usb_serial_port *port)
 {
-  struct ark3116_private * priv = usb_get_serial_port_data (port);
-  struct usb_serial * serial = port->serial;
-  unsigned char * buf;
-  int result;
-  
-  buf = kmalloc (1, GFP_KERNEL);
-  if (buf == NULL)
-  { return -ENOMEM; }
-  
-  result = usb_serial_generic_open (tty, port);
-  if (result) {
-    dbg ("%s - usb_serial_generic_open failed: %d",
-         __func__, result);
-    goto err_out;
-  }
-  
-  /* remove any data still left: also clears error state */
-  ark3116_read_reg (serial, UART_RX, buf);
-  
-  /* read modem status */
-  priv->msr = ark3116_read_reg (serial, UART_MSR, buf);
-  /* read line status */
-  priv->lsr = ark3116_read_reg (serial, UART_LSR, buf);
-  
-  result = usb_submit_urb (port->interrupt_in_urb, GFP_KERNEL);
-  if (result) {
-    dev_err (&port->dev, "submit irq_in urb failed %d\n",
-             result);
-    ark3116_close (port);
-    goto err_out;
-  }
-  
-  /* activate interrupts */
-  ark3116_write_reg (port->serial, UART_IER, UART_IER_MSI | UART_IER_RLSI);
-  
-  /* enable DMA */
-  ark3116_write_reg (port->serial, UART_FCR, UART_FCR_DMA_SELECT);
-  
-  /* setup termios */
-  if (tty)
-  { ark3116_set_termios (tty, port, NULL); }
-  
+	struct ark3116_private *priv = usb_get_serial_port_data(port);
+	struct usb_serial *serial = port->serial;
+	unsigned char *buf;
+	int result;
+
+	buf = kmalloc(1, GFP_KERNEL);
+	if (buf == NULL)
+		return -ENOMEM;
+
+	result = usb_serial_generic_open(tty, port);
+	if (result) {
+		dbg("%s - usb_serial_generic_open failed: %d",
+		    __func__, result);
+		goto err_out;
+	}
+
+	/* remove any data still left: also clears error state */
+	ark3116_read_reg(serial, UART_RX, buf);
+
+	/* read modem status */
+	priv->msr = ark3116_read_reg(serial, UART_MSR, buf);
+	/* read line status */
+	priv->lsr = ark3116_read_reg(serial, UART_LSR, buf);
+
+	result = usb_submit_urb(port->interrupt_in_urb, GFP_KERNEL);
+	if (result) {
+		dev_err(&port->dev, "submit irq_in urb failed %d\n",
+			result);
+		ark3116_close(port);
+		goto err_out;
+	}
+
+	/* activate interrupts */
+	ark3116_write_reg(port->serial, UART_IER, UART_IER_MSI|UART_IER_RLSI);
+
+	/* enable DMA */
+	ark3116_write_reg(port->serial, UART_FCR, UART_FCR_DMA_SELECT);
+
+	/* setup termios */
+	if (tty)
+		ark3116_set_termios(tty, port, NULL);
+
 err_out:
-  kfree (buf);
-  return result;
+	kfree(buf);
+	return result;
 }
 
-static int ark3116_get_icount (struct tty_struct * tty,
-                               struct serial_icounter_struct * icount)
+static int ark3116_get_icount(struct tty_struct *tty,
+					struct serial_icounter_struct *icount)
 {
-  struct usb_serial_port * port = tty->driver_data;
-  struct ark3116_private * priv = usb_get_serial_port_data (port);
-  struct async_icount cnow = priv->icount;
-  icount->cts = cnow.cts;
-  icount->dsr = cnow.dsr;
-  icount->rng = cnow.rng;
-  icount->dcd = cnow.dcd;
-  icount->rx = cnow.rx;
-  icount->tx = cnow.tx;
-  icount->frame = cnow.frame;
-  icount->overrun = cnow.overrun;
-  icount->parity = cnow.parity;
-  icount->brk = cnow.brk;
-  icount->buf_overrun = cnow.buf_overrun;
-  return 0;
+	struct usb_serial_port *port = tty->driver_data;
+	struct ark3116_private *priv = usb_get_serial_port_data(port);
+	struct async_icount cnow = priv->icount;
+	icount->cts = cnow.cts;
+	icount->dsr = cnow.dsr;
+	icount->rng = cnow.rng;
+	icount->dcd = cnow.dcd;
+	icount->rx = cnow.rx;
+	icount->tx = cnow.tx;
+	icount->frame = cnow.frame;
+	icount->overrun = cnow.overrun;
+	icount->parity = cnow.parity;
+	icount->brk = cnow.brk;
+	icount->buf_overrun = cnow.buf_overrun;
+	return 0;
 }
 
-static int ark3116_ioctl (struct tty_struct * tty,
-                          unsigned int cmd, unsigned long arg)
+static int ark3116_ioctl(struct tty_struct *tty,
+			 unsigned int cmd, unsigned long arg)
 {
-  struct usb_serial_port * port = tty->driver_data;
-  struct ark3116_private * priv = usb_get_serial_port_data (port);
-  struct serial_struct serstruct;
-  void __user * user_arg = (void __user *) arg;
-  
-  switch (cmd) {
-  case TIOCGSERIAL:
-    /* XXX: Some of these values are probably wrong. */
-    memset (&serstruct, 0, sizeof (serstruct) );
-    serstruct.type = PORT_16654;
-    serstruct.line = port->serial->minor;
-    serstruct.port = port->number;
-    serstruct.custom_divisor = 0;
-    serstruct.baud_base = 460800;
-    
-    if (copy_to_user (user_arg, &serstruct, sizeof (serstruct) ) )
-    { return -EFAULT; }
-    
-    return 0;
-  case TIOCSSERIAL:
-    if (copy_from_user (&serstruct, user_arg, sizeof (serstruct) ) )
-    { return -EFAULT; }
-    return 0;
-  case TIOCMIWAIT:
-    for (;;) {
-      struct async_icount prev = priv->icount;
-      interruptible_sleep_on (&priv->delta_msr_wait);
-      /* see if a signal did it */
-      if (signal_pending (current) )
-      { return -ERESTARTSYS; }
-      if ( (prev.rng == priv->icount.rng) &&
-           (prev.dsr == priv->icount.dsr) &&
-           (prev.dcd == priv->icount.dcd) &&
-           (prev.cts == priv->icount.cts) )
-      { return -EIO; }
-      if ( (arg & TIOCM_RNG &&
-            (prev.rng != priv->icount.rng) ) ||
-           (arg & TIOCM_DSR &&
-            (prev.dsr != priv->icount.dsr) ) ||
-           (arg & TIOCM_CD  &&
-            (prev.dcd != priv->icount.dcd) ) ||
-           (arg & TIOCM_CTS &&
-            (prev.cts != priv->icount.cts) ) )
-      { return 0; }
-    }
-    break;
-  }
-  
-  return -ENOIOCTLCMD;
+	struct usb_serial_port *port = tty->driver_data;
+	struct ark3116_private *priv = usb_get_serial_port_data(port);
+	struct serial_struct serstruct;
+	void __user *user_arg = (void __user *)arg;
+
+	switch (cmd) {
+	case TIOCGSERIAL:
+		/* XXX: Some of these values are probably wrong. */
+		memset(&serstruct, 0, sizeof(serstruct));
+		serstruct.type = PORT_16654;
+		serstruct.line = port->serial->minor;
+		serstruct.port = port->number;
+		serstruct.custom_divisor = 0;
+		serstruct.baud_base = 460800;
+
+		if (copy_to_user(user_arg, &serstruct, sizeof(serstruct)))
+			return -EFAULT;
+
+		return 0;
+	case TIOCSSERIAL:
+		if (copy_from_user(&serstruct, user_arg, sizeof(serstruct)))
+			return -EFAULT;
+		return 0;
+	case TIOCMIWAIT:
+		for (;;) {
+			struct async_icount prev = priv->icount;
+			interruptible_sleep_on(&priv->delta_msr_wait);
+			/* see if a signal did it */
+			if (signal_pending(current))
+				return -ERESTARTSYS;
+			if ((prev.rng == priv->icount.rng) &&
+			    (prev.dsr == priv->icount.dsr) &&
+			    (prev.dcd == priv->icount.dcd) &&
+			    (prev.cts == priv->icount.cts))
+				return -EIO;
+			if ((arg & TIOCM_RNG &&
+			     (prev.rng != priv->icount.rng)) ||
+			    (arg & TIOCM_DSR &&
+			     (prev.dsr != priv->icount.dsr)) ||
+			    (arg & TIOCM_CD  &&
+			     (prev.dcd != priv->icount.dcd)) ||
+			    (arg & TIOCM_CTS &&
+			     (prev.cts != priv->icount.cts)))
+				return 0;
+		}
+		break;
+	}
+
+	return -ENOIOCTLCMD;
 }
 
-static int ark3116_tiocmget (struct tty_struct * tty)
+static int ark3116_tiocmget(struct tty_struct *tty)
 {
-  struct usb_serial_port * port = tty->driver_data;
-  struct ark3116_private * priv = usb_get_serial_port_data (port);
-  __u32 status;
-  __u32 ctrl;
-  unsigned long flags;
-  
-  mutex_lock (&priv->hw_lock);
-  ctrl = priv->mcr;
-  mutex_unlock (&priv->hw_lock);
-  
-  spin_lock_irqsave (&priv->status_lock, flags);
-  status = priv->msr;
-  spin_unlock_irqrestore (&priv->status_lock, flags);
-  
-  return  (status & UART_MSR_DSR  ? TIOCM_DSR  : 0) |
-          (status & UART_MSR_CTS  ? TIOCM_CTS  : 0) |
-          (status & UART_MSR_RI   ? TIOCM_RI   : 0) |
-          (status & UART_MSR_DCD  ? TIOCM_CD   : 0) |
-          (ctrl   & UART_MCR_DTR  ? TIOCM_DTR  : 0) |
-          (ctrl   & UART_MCR_RTS  ? TIOCM_RTS  : 0) |
-          (ctrl   & UART_MCR_OUT1 ? TIOCM_OUT1 : 0) |
-          (ctrl   & UART_MCR_OUT2 ? TIOCM_OUT2 : 0);
+	struct usb_serial_port *port = tty->driver_data;
+	struct ark3116_private *priv = usb_get_serial_port_data(port);
+	__u32 status;
+	__u32 ctrl;
+	unsigned long flags;
+
+	mutex_lock(&priv->hw_lock);
+	ctrl = priv->mcr;
+	mutex_unlock(&priv->hw_lock);
+
+	spin_lock_irqsave(&priv->status_lock, flags);
+	status = priv->msr;
+	spin_unlock_irqrestore(&priv->status_lock, flags);
+
+	return  (status & UART_MSR_DSR  ? TIOCM_DSR  : 0) |
+		(status & UART_MSR_CTS  ? TIOCM_CTS  : 0) |
+		(status & UART_MSR_RI   ? TIOCM_RI   : 0) |
+		(status & UART_MSR_DCD  ? TIOCM_CD   : 0) |
+		(ctrl   & UART_MCR_DTR  ? TIOCM_DTR  : 0) |
+		(ctrl   & UART_MCR_RTS  ? TIOCM_RTS  : 0) |
+		(ctrl   & UART_MCR_OUT1 ? TIOCM_OUT1 : 0) |
+		(ctrl   & UART_MCR_OUT2 ? TIOCM_OUT2 : 0);
 }
 
-static int ark3116_tiocmset (struct tty_struct * tty,
-                             unsigned set, unsigned clr)
+static int ark3116_tiocmset(struct tty_struct *tty,
+			unsigned set, unsigned clr)
 {
-  struct usb_serial_port * port = tty->driver_data;
-  struct ark3116_private * priv = usb_get_serial_port_data (port);
-  
-  /* we need to take the mutex here, to make sure that the value
-   * in priv->mcr is actually the one that is in the hardware
-   */
-  
-  mutex_lock (&priv->hw_lock);
-  
-  if (set & TIOCM_RTS)
-  { priv->mcr |= UART_MCR_RTS; }
-  if (set & TIOCM_DTR)
-  { priv->mcr |= UART_MCR_DTR; }
-  if (set & TIOCM_OUT1)
-  { priv->mcr |= UART_MCR_OUT1; }
-  if (set & TIOCM_OUT2)
-  { priv->mcr |= UART_MCR_OUT2; }
-  if (clr & TIOCM_RTS)
-  { priv->mcr &= ~UART_MCR_RTS; }
-  if (clr & TIOCM_DTR)
-  { priv->mcr &= ~UART_MCR_DTR; }
-  if (clr & TIOCM_OUT1)
-  { priv->mcr &= ~UART_MCR_OUT1; }
-  if (clr & TIOCM_OUT2)
-  { priv->mcr &= ~UART_MCR_OUT2; }
-  
-  ark3116_write_reg (port->serial, UART_MCR, priv->mcr);
-  
-  mutex_unlock (&priv->hw_lock);
-  
-  return 0;
+	struct usb_serial_port *port = tty->driver_data;
+	struct ark3116_private *priv = usb_get_serial_port_data(port);
+
+	/* we need to take the mutex here, to make sure that the value
+	 * in priv->mcr is actually the one that is in the hardware
+	 */
+
+	mutex_lock(&priv->hw_lock);
+
+	if (set & TIOCM_RTS)
+		priv->mcr |= UART_MCR_RTS;
+	if (set & TIOCM_DTR)
+		priv->mcr |= UART_MCR_DTR;
+	if (set & TIOCM_OUT1)
+		priv->mcr |= UART_MCR_OUT1;
+	if (set & TIOCM_OUT2)
+		priv->mcr |= UART_MCR_OUT2;
+	if (clr & TIOCM_RTS)
+		priv->mcr &= ~UART_MCR_RTS;
+	if (clr & TIOCM_DTR)
+		priv->mcr &= ~UART_MCR_DTR;
+	if (clr & TIOCM_OUT1)
+		priv->mcr &= ~UART_MCR_OUT1;
+	if (clr & TIOCM_OUT2)
+		priv->mcr &= ~UART_MCR_OUT2;
+
+	ark3116_write_reg(port->serial, UART_MCR, priv->mcr);
+
+	mutex_unlock(&priv->hw_lock);
+
+	return 0;
 }
 
-static void ark3116_break_ctl (struct tty_struct * tty, int break_state)
+static void ark3116_break_ctl(struct tty_struct *tty, int break_state)
 {
-  struct usb_serial_port * port = tty->driver_data;
-  struct ark3116_private * priv = usb_get_serial_port_data (port);
-  
-  /* LCR is also used for other things: protect access */
-  mutex_lock (&priv->hw_lock);
-  
-  if (break_state)
-  { priv->lcr |= UART_LCR_SBC; }
-  else
-  { priv->lcr &= ~UART_LCR_SBC; }
-  
-  ark3116_write_reg (port->serial, UART_LCR, priv->lcr);
-  
-  mutex_unlock (&priv->hw_lock);
+	struct usb_serial_port *port = tty->driver_data;
+	struct ark3116_private *priv = usb_get_serial_port_data(port);
+
+	/* LCR is also used for other things: protect access */
+	mutex_lock(&priv->hw_lock);
+
+	if (break_state)
+		priv->lcr |= UART_LCR_SBC;
+	else
+		priv->lcr &= ~UART_LCR_SBC;
+
+	ark3116_write_reg(port->serial, UART_LCR, priv->lcr);
+
+	mutex_unlock(&priv->hw_lock);
 }
 
-static void ark3116_update_msr (struct usb_serial_port * port, __u8 msr)
+static void ark3116_update_msr(struct usb_serial_port *port, __u8 msr)
 {
-  struct ark3116_private * priv = usb_get_serial_port_data (port);
-  unsigned long flags;
-  
-  spin_lock_irqsave (&priv->status_lock, flags);
-  priv->msr = msr;
-  spin_unlock_irqrestore (&priv->status_lock, flags);
-  
-  if (msr & UART_MSR_ANY_DELTA) {
-    /* update input line counters */
-    if (msr & UART_MSR_DCTS)
-    { priv->icount.cts++; }
-    if (msr & UART_MSR_DDSR)
-    { priv->icount.dsr++; }
-    if (msr & UART_MSR_DDCD)
-    { priv->icount.dcd++; }
-    if (msr & UART_MSR_TERI)
-    { priv->icount.rng++; }
-    wake_up_interruptible (&priv->delta_msr_wait);
-  }
+	struct ark3116_private *priv = usb_get_serial_port_data(port);
+	unsigned long flags;
+
+	spin_lock_irqsave(&priv->status_lock, flags);
+	priv->msr = msr;
+	spin_unlock_irqrestore(&priv->status_lock, flags);
+
+	if (msr & UART_MSR_ANY_DELTA) {
+		/* update input line counters */
+		if (msr & UART_MSR_DCTS)
+			priv->icount.cts++;
+		if (msr & UART_MSR_DDSR)
+			priv->icount.dsr++;
+		if (msr & UART_MSR_DDCD)
+			priv->icount.dcd++;
+		if (msr & UART_MSR_TERI)
+			priv->icount.rng++;
+		wake_up_interruptible(&priv->delta_msr_wait);
+	}
 }
 
-static void ark3116_update_lsr (struct usb_serial_port * port, __u8 lsr)
+static void ark3116_update_lsr(struct usb_serial_port *port, __u8 lsr)
 {
-  struct ark3116_private * priv = usb_get_serial_port_data (port);
-  unsigned long flags;
-  
-  spin_lock_irqsave (&priv->status_lock, flags);
-  /* combine bits */
-  priv->lsr |= lsr;
-  spin_unlock_irqrestore (&priv->status_lock, flags);
-  
-  if (lsr & UART_LSR_BRK_ERROR_BITS) {
-    if (lsr & UART_LSR_BI)
-    { priv->icount.brk++; }
-    if (lsr & UART_LSR_FE)
-    { priv->icount.frame++; }
-    if (lsr & UART_LSR_PE)
-    { priv->icount.parity++; }
-    if (lsr & UART_LSR_OE)
-    { priv->icount.overrun++; }
-  }
+	struct ark3116_private *priv = usb_get_serial_port_data(port);
+	unsigned long flags;
+
+	spin_lock_irqsave(&priv->status_lock, flags);
+	/* combine bits */
+	priv->lsr |= lsr;
+	spin_unlock_irqrestore(&priv->status_lock, flags);
+
+	if (lsr&UART_LSR_BRK_ERROR_BITS) {
+		if (lsr & UART_LSR_BI)
+			priv->icount.brk++;
+		if (lsr & UART_LSR_FE)
+			priv->icount.frame++;
+		if (lsr & UART_LSR_PE)
+			priv->icount.parity++;
+		if (lsr & UART_LSR_OE)
+			priv->icount.overrun++;
+	}
 }
 
-static void ark3116_read_int_callback (struct urb * urb)
+static void ark3116_read_int_callback(struct urb *urb)
 {
-  struct usb_serial_port * port = urb->context;
-  int status = urb->status;
-  const __u8 * data = urb->transfer_buffer;
-  int result;
-  
-  switch (status) {
-  case -ECONNRESET:
-  case -ENOENT:
-  case -ESHUTDOWN:
-    /* this urb is terminated, clean up */
-    dbg ("%s - urb shutting down with status: %d",
-         __func__, status);
-    return;
-  default:
-    dbg ("%s - nonzero urb status received: %d",
-         __func__, status);
-    break;
-  case 0: /* success */
-    /* discovered this by trail and error... */
-    if ( (urb->actual_length == 4) && (data[0] == 0xe8) ) {
-      const __u8 id = data[1] & UART_IIR_ID;
-      dbg ("%s: iir=%02x", __func__, data[1]);
-      if (id == UART_IIR_MSI) {
-        dbg ("%s: msr=%02x", __func__, data[3]);
-        ark3116_update_msr (port, data[3]);
-        break;
-      }
-      else
-        if (id == UART_IIR_RLSI) {
-          dbg ("%s: lsr=%02x", __func__, data[2]);
-          ark3116_update_lsr (port, data[2]);
-          break;
-        }
-    }
-    /*
-     * Not sure what this data meant...
-     */
-    usb_serial_debug_data (debug, &port->dev,
-                           __func__,
-                           urb->actual_length,
-                           urb->transfer_buffer);
-    break;
-  }
-  
-  result = usb_submit_urb (urb, GFP_ATOMIC);
-  if (result)
-    dev_err (&urb->dev->dev,
-             "%s - Error %d submitting interrupt urb\n",
-             __func__, result);
+	struct usb_serial_port *port = urb->context;
+	int status = urb->status;
+	const __u8 *data = urb->transfer_buffer;
+	int result;
+
+	switch (status) {
+	case -ECONNRESET:
+	case -ENOENT:
+	case -ESHUTDOWN:
+		/* this urb is terminated, clean up */
+		dbg("%s - urb shutting down with status: %d",
+		    __func__, status);
+		return;
+	default:
+		dbg("%s - nonzero urb status received: %d",
+		    __func__, status);
+		break;
+	case 0: /* success */
+		/* discovered this by trail and error... */
+		if ((urb->actual_length == 4) && (data[0] == 0xe8)) {
+			const __u8 id = data[1]&UART_IIR_ID;
+			dbg("%s: iir=%02x", __func__, data[1]);
+			if (id == UART_IIR_MSI) {
+				dbg("%s: msr=%02x", __func__, data[3]);
+				ark3116_update_msr(port, data[3]);
+				break;
+			} else if (id == UART_IIR_RLSI) {
+				dbg("%s: lsr=%02x", __func__, data[2]);
+				ark3116_update_lsr(port, data[2]);
+				break;
+			}
+		}
+		/*
+		 * Not sure what this data meant...
+		 */
+		usb_serial_debug_data(debug, &port->dev,
+				      __func__,
+				      urb->actual_length,
+				      urb->transfer_buffer);
+		break;
+	}
+
+	result = usb_submit_urb(urb, GFP_ATOMIC);
+	if (result)
+		dev_err(&urb->dev->dev,
+			"%s - Error %d submitting interrupt urb\n",
+			__func__, result);
 }
 
 
@@ -678,91 +673,89 @@ static void ark3116_read_int_callback (struct urb * urb)
  * error for the next block of data as well...
  * For now, let's pretend this can't happen.
  */
-static void ark3116_process_read_urb (struct urb * urb)
+static void ark3116_process_read_urb(struct urb *urb)
 {
-  struct usb_serial_port * port = urb->context;
-  struct ark3116_private * priv = usb_get_serial_port_data (port);
-  struct tty_struct * tty;
-  unsigned char * data = urb->transfer_buffer;
-  char tty_flag = TTY_NORMAL;
-  unsigned long flags;
-  __u32 lsr;
-  
-  /* update line status */
-  spin_lock_irqsave (&priv->status_lock, flags);
-  lsr = priv->lsr;
-  priv->lsr &= ~UART_LSR_BRK_ERROR_BITS;
-  spin_unlock_irqrestore (&priv->status_lock, flags);
-  
-  if (!urb->actual_length)
-  { return; }
-  
-  tty = tty_port_tty_get (&port->port);
-  if (!tty)
-  { return; }
-  
-  if (lsr & UART_LSR_BRK_ERROR_BITS) {
-    if (lsr & UART_LSR_BI)
-    { tty_flag = TTY_BREAK; }
-    else
-      if (lsr & UART_LSR_PE)
-      { tty_flag = TTY_PARITY; }
-      else
-        if (lsr & UART_LSR_FE)
-        { tty_flag = TTY_FRAME; }
-        
-    /* overrun is special, not associated with a char */
-    if (lsr & UART_LSR_OE)
-    { tty_insert_flip_char (tty, 0, TTY_OVERRUN); }
-  }
-  tty_insert_flip_string_fixed_flag (tty, data, tty_flag,
-                                     urb->actual_length);
-  tty_flip_buffer_push (tty);
-  tty_kref_put (tty);
+	struct usb_serial_port *port = urb->context;
+	struct ark3116_private *priv = usb_get_serial_port_data(port);
+	struct tty_struct *tty;
+	unsigned char *data = urb->transfer_buffer;
+	char tty_flag = TTY_NORMAL;
+	unsigned long flags;
+	__u32 lsr;
+
+	/* update line status */
+	spin_lock_irqsave(&priv->status_lock, flags);
+	lsr = priv->lsr;
+	priv->lsr &= ~UART_LSR_BRK_ERROR_BITS;
+	spin_unlock_irqrestore(&priv->status_lock, flags);
+
+	if (!urb->actual_length)
+		return;
+
+	tty = tty_port_tty_get(&port->port);
+	if (!tty)
+		return;
+
+	if (lsr & UART_LSR_BRK_ERROR_BITS) {
+		if (lsr & UART_LSR_BI)
+			tty_flag = TTY_BREAK;
+		else if (lsr & UART_LSR_PE)
+			tty_flag = TTY_PARITY;
+		else if (lsr & UART_LSR_FE)
+			tty_flag = TTY_FRAME;
+
+		/* overrun is special, not associated with a char */
+		if (lsr & UART_LSR_OE)
+			tty_insert_flip_char(tty, 0, TTY_OVERRUN);
+	}
+	tty_insert_flip_string_fixed_flag(tty, data, tty_flag,
+							urb->actual_length);
+	tty_flip_buffer_push(tty);
+	tty_kref_put(tty);
 }
 
 static struct usb_driver ark3116_driver = {
-  .name =   "ark3116",
-  .probe =  usb_serial_probe,
-  .disconnect = usb_serial_disconnect,
-  .id_table = id_table,
+	.name =		"ark3116",
+	.probe =	usb_serial_probe,
+	.disconnect =	usb_serial_disconnect,
+	.id_table =	id_table,
 };
 
 static struct usb_serial_driver ark3116_device = {
-  .driver = {
-    .owner =  THIS_MODULE,
-    .name =   "ark3116",
-  },
-  .id_table =   id_table,
-  .num_ports =    1,
-  .attach =   ark3116_attach,
-  .release =    ark3116_release,
-  .set_termios =    ark3116_set_termios,
-  .init_termios =   ark3116_init_termios,
-  .ioctl =    ark3116_ioctl,
-  .tiocmget =   ark3116_tiocmget,
-  .tiocmset =   ark3116_tiocmset,
-  .get_icount =   ark3116_get_icount,
-  .open =     ark3116_open,
-  .close =    ark3116_close,
-  .break_ctl =    ark3116_break_ctl,
-  .read_int_callback =  ark3116_read_int_callback,
-  .process_read_urb = ark3116_process_read_urb,
+	.driver = {
+		.owner =	THIS_MODULE,
+		.name =		"ark3116",
+	},
+	.id_table =		id_table,
+	.num_ports =		1,
+	.attach =		ark3116_attach,
+	.release =		ark3116_release,
+	.set_termios =		ark3116_set_termios,
+	.init_termios =		ark3116_init_termios,
+	.ioctl =		ark3116_ioctl,
+	.tiocmget =		ark3116_tiocmget,
+	.tiocmset =		ark3116_tiocmset,
+	.get_icount =		ark3116_get_icount,
+	.open =			ark3116_open,
+	.close =		ark3116_close,
+	.break_ctl = 		ark3116_break_ctl,
+	.read_int_callback = 	ark3116_read_int_callback,
+	.process_read_urb =	ark3116_process_read_urb,
 };
 
 static struct usb_serial_driver * const serial_drivers[] = {
-  &ark3116_device, NULL
+	&ark3116_device, NULL
 };
 
-module_usb_serial_driver (ark3116_driver, serial_drivers);
+module_usb_serial_driver(ark3116_driver, serial_drivers);
 
-MODULE_LICENSE ("GPL");
+MODULE_LICENSE("GPL");
 
-MODULE_AUTHOR (DRIVER_AUTHOR);
-MODULE_DESCRIPTION (DRIVER_DESC);
+MODULE_AUTHOR(DRIVER_AUTHOR);
+MODULE_DESCRIPTION(DRIVER_DESC);
 
-module_param (debug, bool, S_IRUGO | S_IWUSR);
-MODULE_PARM_DESC (debug, "Enable debug");
+module_param(debug, bool, S_IRUGO | S_IWUSR);
+MODULE_PARM_DESC(debug, "Enable debug");
 
 /*
  * The following describes what I learned from studying the old

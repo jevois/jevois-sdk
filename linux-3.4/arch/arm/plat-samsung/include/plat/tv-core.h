@@ -2,7 +2,7 @@
  * arch/arm/plat-samsung/include/plat/tv.h
  *
  * Copyright 2011 Samsung Electronics Co., Ltd.
- *  Tomasz Stanislawski <t.stanislaws@samsung.com>
+ *	Tomasz Stanislawski <t.stanislaws@samsung.com>
  *
  * Samsung TV driver core functions
  *
@@ -20,25 +20,25 @@
  */
 
 /* Re-define device name to differentiate the subsystem in various SoCs. */
-static inline void s5p_hdmi_setname (char * name)
+static inline void s5p_hdmi_setname(char *name)
 {
-  #ifdef CONFIG_S5P_DEV_TV
-  s5p_device_hdmi.name = name;
-  #endif
+#ifdef CONFIG_S5P_DEV_TV
+	s5p_device_hdmi.name = name;
+#endif
 }
 
-static inline void s5p_mixer_setname (char * name)
+static inline void s5p_mixer_setname(char *name)
 {
-  #ifdef CONFIG_S5P_DEV_TV
-  s5p_device_mixer.name = name;
-  #endif
+#ifdef CONFIG_S5P_DEV_TV
+	s5p_device_mixer.name = name;
+#endif
 }
 
-static inline void s5p_sdo_setname (char * name)
+static inline void s5p_sdo_setname(char *name)
 {
-  #ifdef CONFIG_S5P_DEV_TV
-  s5p_device_sdo.name = name;
-  #endif
+#ifdef CONFIG_S5P_DEV_TV
+	s5p_device_sdo.name = name;
+#endif
 }
 
 #endif /* __SAMSUNG_PLAT_TV_H */

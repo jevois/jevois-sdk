@@ -30,21 +30,21 @@
 #include <asm/8xx_immap.h>
 #include <asm/mpc8xx.h>
 
-extern immap_t __iomem * mpc8xx_immr;
+extern immap_t __iomem *mpc8xx_immr;
 
 #define immr_map(member) (&mpc8xx_immr->member)
 #define immr_map_size(member, size) (&mpc8xx_immr->member)
 #define immr_unmap(addr) do {} while (0)
 #endif
 
-static inline int uart_baudrate (void)
+static inline int uart_baudrate(void)
 {
-  return get_baudrate();
+        return get_baudrate();
 }
 
-static inline int uart_clock (void)
+static inline int uart_clock(void)
 {
-  return ppc_proc_freq;
+        return ppc_proc_freq;
 }
 
 #endif

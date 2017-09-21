@@ -20,11 +20,11 @@
 #include <linux/mmc/host.h>
 
 struct tegra_sdhci_platform_data {
-  int cd_gpio;
-  int wp_gpio;
-  int power_gpio;
-  int is_8bit;
-  int pm_flags;
+	int cd_gpio;
+	int wp_gpio;
+	int power_gpio;
+	int is_8bit;
+	int pm_flags;
 };
 
 #endif

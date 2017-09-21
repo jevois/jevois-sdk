@@ -1,20 +1,20 @@
 /*
 *************************************************************************************
-*                               eBsp
-*            Operation System Adapter Layer
+*                         			eBsp
+*					   Operation System Adapter Layer
 *
-*       (c) Copyright 2006-2010, All winners Co,Ld.
-*             All Rights Reserved
+*				(c) Copyright 2006-2010, All winners Co,Ld.
+*							All	Rights Reserved
 *
-* File Name   : OSAL_time.h
+* File Name 	: OSAL_time.h
 *
-* Author    : javen
+* Author 		: javen
 *
-* Description   : Time操作
+* Description 	: Time操作
 *
-* History     :
-*      <author>       <time>        <version >        <desc>
-*       javen          2010-09-07          1.0         create this word
+* History 		:
+*      <author>    		<time>       	<version >    		<desc>
+*       javen     	   2010-09-07          1.0         create this word
 *
 *************************************************************************************
 */
@@ -41,9 +41,9 @@
 *
 *******************************************************************************
 */
-__hdle OSAL_CreateTimer (u32 Period, u32 EventType, TIMECALLBACK CallBack, void * pArg)
+__hdle OSAL_CreateTimer(u32 Period, u32 EventType, TIMECALLBACK CallBack, void *pArg)
 {
-  return 0;
+    return 0;
 }
 
 /*
@@ -64,9 +64,9 @@ __hdle OSAL_CreateTimer (u32 Period, u32 EventType, TIMECALLBACK CallBack, void 
 *
 *******************************************************************************
 */
-s32 OSAL_DelTimer (__hdle HTimer)
+s32 OSAL_DelTimer(__hdle HTimer)
 {
-  return 0;
+    return 0;
 }
 
 /*
@@ -87,13 +87,13 @@ s32 OSAL_DelTimer (__hdle HTimer)
 *
 *******************************************************************************
 */
-s32 OSAL_StartTimer (__hdle HTimer)
+s32 OSAL_StartTimer(__hdle HTimer)
 {
-  return 0;
+	return 0;
 }
 
 /* 睡眠 *//* 单位：毫秒 */
-void OSAL_Sleep (u32 Milliseconds)
+void OSAL_Sleep(u32 Milliseconds)
 {
 
 }

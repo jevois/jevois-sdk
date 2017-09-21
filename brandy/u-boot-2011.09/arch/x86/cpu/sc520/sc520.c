@@ -31,37 +31,36 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-sc520_mmcr_t * sc520_mmcr = (sc520_mmcr_t *) SC520_MMCR_BASE;
+sc520_mmcr_t *sc520_mmcr = (sc520_mmcr_t *)SC520_MMCR_BASE;
 
-int cpu_init_f (void)
+int cpu_init_f(void)
 {
-  if (CONFIG_SYS_SC520_HIGH_SPEED) {
-    /* set it to 133 MHz and write back */
-    writeb (0x02, &sc520_mmcr->cpuctl);
-    gd->cpu_clk = 133000000;
-  }
-  else {
-    /* set it to 100 MHz and write back */
-    writeb (0x01, &sc520_mmcr->cpuctl);
-    gd->cpu_clk = 100000000;
-  }
-  
-  /* wait at least one millisecond */
-  asm ("movl	$0x2000, %%ecx\n"
-       "0:		pushl %%ecx\n"
-       "popl	%%ecx\n"
-       "loop 0b\n": : : "ecx");
-       
-  return x86_cpu_init_f();
+	if (CONFIG_SYS_SC520_HIGH_SPEED) {
+		/* set it to 133 MHz and write back */
+		writeb(0x02, &sc520_mmcr->cpuctl);
+		gd->cpu_clk = 133000000;
+	} else {
+		/* set it to 100 MHz and write back */
+		writeb(0x01, &sc520_mmcr->cpuctl);
+		gd->cpu_clk = 100000000;
+	}
+
+	/* wait at least one millisecond */
+	asm("movl	$0x2000, %%ecx\n"
+	    "0:		pushl %%ecx\n"
+	    "popl	%%ecx\n"
+	    "loop 0b\n": : : "ecx");
+
+	return x86_cpu_init_f();
 }
 
-int cpu_init_r (void)
+int cpu_init_r(void)
 {
-  /* Disable the PAR used for CAR */
-  writel (0x0000000, &sc520_mmcr->par[2]);
-  
-  /* turn on the SDRAM write buffer */
-  writeb (0x11, &sc520_mmcr->dbctl);
-  
-  return x86_cpu_init_r();
+	/* Disable the PAR used for CAR */
+	writel(0x0000000, &sc520_mmcr->par[2]);
+
+	/* turn on the SDRAM write buffer */
+	writeb(0x11, &sc520_mmcr->dbctl);
+
+	return x86_cpu_init_r();
 }

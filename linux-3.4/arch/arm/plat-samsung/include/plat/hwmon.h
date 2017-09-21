@@ -1,8 +1,8 @@
 /* linux/arch/arm/plat-s3c/include/plat/hwmon.h
  *
  * Copyright 2005 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
- *  http://armlinux.simtec.co.uk/
+ *	Ben Dooks <ben@simtec.co.uk>
+ *	http://armlinux.simtec.co.uk/
  *
  * S3C - HWMon interface for ADC
  *
@@ -24,9 +24,9 @@
  * hwmon expects (mV) by result = (value_read * @mult) / @div.
  */
 struct s3c_hwmon_chcfg {
-  const char * name;
-  unsigned int  mult;
-  unsigned int  div;
+	const char	*name;
+	unsigned int	mult;
+	unsigned int	div;
 };
 
 /**
@@ -34,7 +34,7 @@ struct s3c_hwmon_chcfg {
  * @in: One configuration for each possible channel used.
  */
 struct s3c_hwmon_pdata {
-  struct s3c_hwmon_chcfg * in[8];
+	struct s3c_hwmon_chcfg	*in[8];
 };
 
 /**
@@ -45,7 +45,7 @@ struct s3c_hwmon_pdata {
  * The call will copy the platform data, so the board definitions can
  * make the structure itself __initdata.
  */
-extern void __init s3c_hwmon_set_platdata (struct s3c_hwmon_pdata * pd);
+extern void __init s3c_hwmon_set_platdata(struct s3c_hwmon_pdata *pd);
 
 #endif /* __ASM_ARCH_ADC_HWMON_H */
 

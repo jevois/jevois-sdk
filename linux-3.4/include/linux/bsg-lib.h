@@ -31,43 +31,43 @@ struct scatterlist;
 struct request_queue;
 
 struct bsg_buffer {
-  unsigned int payload_len;
-  int sg_cnt;
-  struct scatterlist * sg_list;
+	unsigned int payload_len;
+	int sg_cnt;
+	struct scatterlist *sg_list;
 };
 
 struct bsg_job {
-  struct device * dev;
-  struct request * req;
-  
-  /* Transport/driver specific request/reply structs */
-  void * request;
-  void * reply;
-  
-  unsigned int request_len;
-  unsigned int reply_len;
-  /*
-   * On entry : reply_len indicates the buffer size allocated for
-   * the reply.
-   *
-   * Upon completion : the message handler must set reply_len
-   *  to indicates the size of the reply to be returned to the
-   *  caller.
-   */
-  
-  /* DMA payloads for the request/response */
-  struct bsg_buffer request_payload;
-  struct bsg_buffer reply_payload;
-  
-  void * dd_data;   /* Used for driver-specific storage */
+	struct device *dev;
+	struct request *req;
+
+	/* Transport/driver specific request/reply structs */
+	void *request;
+	void *reply;
+
+	unsigned int request_len;
+	unsigned int reply_len;
+	/*
+	 * On entry : reply_len indicates the buffer size allocated for
+	 * the reply.
+	 *
+	 * Upon completion : the message handler must set reply_len
+	 *  to indicates the size of the reply to be returned to the
+	 *  caller.
+	 */
+
+	/* DMA payloads for the request/response */
+	struct bsg_buffer request_payload;
+	struct bsg_buffer reply_payload;
+
+	void *dd_data;		/* Used for driver-specific storage */
 };
 
-void bsg_job_done (struct bsg_job * job, int result,
-                   unsigned int reply_payload_rcv_len);
-int bsg_setup_queue (struct device * dev, struct request_queue * q, char * name,
-                     bsg_job_fn * job_fn, int dd_job_size);
-void bsg_request_fn (struct request_queue * q);
-void bsg_remove_queue (struct request_queue * q);
-void bsg_goose_queue (struct request_queue * q);
+void bsg_job_done(struct bsg_job *job, int result,
+		  unsigned int reply_payload_rcv_len);
+int bsg_setup_queue(struct device *dev, struct request_queue *q, char *name,
+		    bsg_job_fn *job_fn, int dd_job_size);
+void bsg_request_fn(struct request_queue *q);
+void bsg_remove_queue(struct request_queue *q);
+void bsg_goose_queue(struct request_queue *q);
 
 #endif

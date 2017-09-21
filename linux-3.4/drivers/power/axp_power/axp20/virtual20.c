@@ -19,137 +19,137 @@
 #include <linux/module.h>
 #include "../virtual.h"
 
-static int regulator_virtual_consumer_probe (struct platform_device * pdev)
+static int regulator_virtual_consumer_probe(struct platform_device *pdev)
 {
-  char * reg_id = pdev->dev.platform_data;
-  struct virtual_consumer_data * drvdata;
-  int ret, i;
-  
-  drvdata = kzalloc (sizeof (struct virtual_consumer_data), GFP_KERNEL);
-  if (drvdata == NULL) {
-    ret = -ENOMEM;
-    goto err;
-  }
-  
-  mutex_init (&drvdata->lock);
-  
-  drvdata->regulator = regulator_get (NULL, reg_id);
-  if (IS_ERR (drvdata->regulator) ) {
-    ret = PTR_ERR (drvdata->regulator);
-    goto err;
-  }
-  
-  for (i = 0; i < ARRAY_SIZE (attributes_virtual); i++) {
-    ret = device_create_file (&pdev->dev, attributes_virtual[i]);
-    if (ret != 0)
-    { goto err; }
-  }
-  
-  drvdata->mode = regulator_get_mode (drvdata->regulator);
-  
-  platform_set_drvdata (pdev, drvdata);
-  
-  return 0;
-  
+	char *reg_id = pdev->dev.platform_data;
+	struct virtual_consumer_data *drvdata;
+	int ret, i;
+
+	drvdata = kzalloc(sizeof(struct virtual_consumer_data), GFP_KERNEL);
+	if (drvdata == NULL) {
+		ret = -ENOMEM;
+		goto err;
+	}
+
+	mutex_init(&drvdata->lock);
+
+	drvdata->regulator = regulator_get(NULL, reg_id);
+	if (IS_ERR(drvdata->regulator)) {
+		ret = PTR_ERR(drvdata->regulator);
+		goto err;
+	}
+
+	for (i = 0; i < ARRAY_SIZE(attributes_virtual); i++) {
+		ret = device_create_file(&pdev->dev, attributes_virtual[i]);
+		if (ret != 0)
+			goto err;
+	}
+
+	drvdata->mode = regulator_get_mode(drvdata->regulator);
+
+	platform_set_drvdata(pdev, drvdata);
+
+	return 0;
+
 err:
-  for (i = 0; i < ARRAY_SIZE (attributes_virtual); i++)
-  { device_remove_file (&pdev->dev, attributes_virtual[i]); }
-  kfree (drvdata);
-  return ret;
+	for (i = 0; i < ARRAY_SIZE(attributes_virtual); i++)
+		device_remove_file(&pdev->dev, attributes_virtual[i]);
+	kfree(drvdata);
+	return ret;
 }
 
-static int regulator_virtual_consumer_remove (struct platform_device * pdev)
+static int regulator_virtual_consumer_remove(struct platform_device *pdev)
 {
-  struct virtual_consumer_data * drvdata = platform_get_drvdata (pdev);
-  int i;
-  
-  for (i = 0; i < ARRAY_SIZE (attributes_virtual); i++)
-  { device_remove_file (&pdev->dev, attributes_virtual[i]); }
-  if (drvdata->enabled)
-  { regulator_disable (drvdata->regulator); }
-  regulator_put (drvdata->regulator);
-  
-  kfree (drvdata);
-  
-  return 0;
+	struct virtual_consumer_data *drvdata = platform_get_drvdata(pdev);
+	int i;
+
+	for (i = 0; i < ARRAY_SIZE(attributes_virtual); i++)
+		device_remove_file(&pdev->dev, attributes_virtual[i]);
+	if (drvdata->enabled)
+		regulator_disable(drvdata->regulator);
+	regulator_put(drvdata->regulator);
+
+	kfree(drvdata);
+
+	return 0;
 }
 
 static struct platform_driver regulator_virtual_consumer_driver[] = {
-  {
-    .probe    = regulator_virtual_consumer_probe,
-    .remove   = regulator_virtual_consumer_remove,
-    .driver   = {
-      .name   = "reg-20-cs-dcdc2",
-    },
-  }, {
-    .probe    = regulator_virtual_consumer_probe,
-    .remove   = regulator_virtual_consumer_remove,
-    .driver   = {
-      .name   = "reg-20-cs-dcdc3",
-    },
-  }, {
-    .probe    = regulator_virtual_consumer_probe,
-    .remove   = regulator_virtual_consumer_remove,
-    .driver   = {
-      .name   = "reg-20-cs-ldo1",
-    },
-  }, {
-    .probe    = regulator_virtual_consumer_probe,
-    .remove   = regulator_virtual_consumer_remove,
-    .driver   = {
-      .name   = "reg-20-cs-ldo2",
-    },
-  }, {
-    .probe    = regulator_virtual_consumer_probe,
-    .remove   = regulator_virtual_consumer_remove,
-    .driver   = {
-      .name   = "reg-20-cs-ldo3",
-    },
-  }, {
-    .probe    = regulator_virtual_consumer_probe,
-    .remove   = regulator_virtual_consumer_remove,
-    .driver   = {
-      .name   = "reg-20-cs-ldo4",
-    },
-  }, {
-    .probe    = regulator_virtual_consumer_probe,
-    .remove   = regulator_virtual_consumer_remove,
-    .driver   = {
-      .name   = "reg-20-cs-ldoio0",
-    },
-  },
+	{
+		.probe		= regulator_virtual_consumer_probe,
+		.remove		= regulator_virtual_consumer_remove,
+		.driver		= {
+			.name		= "reg-20-cs-dcdc2",
+		},
+	},{
+		.probe		= regulator_virtual_consumer_probe,
+		.remove		= regulator_virtual_consumer_remove,
+		.driver		= {
+			.name		= "reg-20-cs-dcdc3",
+		},
+	},{
+		.probe		= regulator_virtual_consumer_probe,
+		.remove		= regulator_virtual_consumer_remove,
+		.driver		= {
+			.name		= "reg-20-cs-ldo1",
+		},
+	},{
+		.probe		= regulator_virtual_consumer_probe,
+		.remove		= regulator_virtual_consumer_remove,
+		.driver		= {
+			.name		= "reg-20-cs-ldo2",
+		},
+	},{
+		.probe		= regulator_virtual_consumer_probe,
+		.remove		= regulator_virtual_consumer_remove,
+		.driver		= {
+			.name		= "reg-20-cs-ldo3",
+		},
+	},{
+		.probe		= regulator_virtual_consumer_probe,
+		.remove		= regulator_virtual_consumer_remove,
+		.driver		= {
+			.name		= "reg-20-cs-ldo4",
+		},
+	},{
+		.probe		= regulator_virtual_consumer_probe,
+		.remove		= regulator_virtual_consumer_remove,
+		.driver		= {
+			.name		= "reg-20-cs-ldoio0",
+		},
+	},
 };
 
 
-static int __init regulator_virtual_consumer_init (void)
+static int __init regulator_virtual_consumer_init(void)
 {
-  int j, ret;
-  
-  for (j = 0; j < ARRAY_SIZE (regulator_virtual_consumer_driver); j++) {
-    ret =  platform_driver_register (&regulator_virtual_consumer_driver[j]);
-    if (ret)
-    { goto creat_drivers_failed; }
-  }
-  return ret;
-  
+	int j,ret;
+
+	for (j = 0; j < ARRAY_SIZE(regulator_virtual_consumer_driver); j++){
+		ret =  platform_driver_register(&regulator_virtual_consumer_driver[j]);
+		if (ret)
+			goto creat_drivers_failed;
+	}
+	return ret;
+
 creat_drivers_failed:
-  while (j--)
-  { platform_driver_unregister (&regulator_virtual_consumer_driver[j]); }
-  return ret;
+	while (j--)
+		platform_driver_unregister(&regulator_virtual_consumer_driver[j]);
+	return ret;
 }
-module_init (regulator_virtual_consumer_init);
+module_init(regulator_virtual_consumer_init);
 
-static void __exit regulator_virtual_consumer_exit (void)
+static void __exit regulator_virtual_consumer_exit(void)
 {
-  int j;
-  
-  for (j = ARRAY_SIZE (regulator_virtual_consumer_driver) - 1; j >= 0; j--) {
-    platform_driver_unregister (&regulator_virtual_consumer_driver[j]);
-  }
-}
-module_exit (regulator_virtual_consumer_exit);
+	int j;
 
-MODULE_AUTHOR ("Weijin Zhong X-POWERS");
-MODULE_DESCRIPTION ("Virtual regulator consumer");
-MODULE_LICENSE ("GPL");
+	for (j = ARRAY_SIZE(regulator_virtual_consumer_driver) - 1; j >= 0; j--){
+			platform_driver_unregister(&regulator_virtual_consumer_driver[j]);
+	}
+}
+module_exit(regulator_virtual_consumer_exit);
+
+MODULE_AUTHOR("Weijin Zhong X-POWERS");
+MODULE_DESCRIPTION("Virtual regulator consumer");
+MODULE_LICENSE("GPL");
 

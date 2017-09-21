@@ -24,34 +24,34 @@ const unsigned long clear = 0x20202020;
 
 #define LED_BASE 0xb1400038
 
-void markeins_led_clear (void)
+void markeins_led_clear(void)
 {
-  emma2rh_out32 (LED_BASE, clear);
-  emma2rh_out32 (LED_BASE + 4, clear);
+	emma2rh_out32(LED_BASE, clear);
+	emma2rh_out32(LED_BASE + 4, clear);
 }
 
-void markeins_led (const char * str)
+void markeins_led(const char *str)
 {
-  int i;
-  int len = strlen (str);
-  
-  markeins_led_clear();
-  if (len > 8)
-  { len = 8; }
-  
-  if (emma2rh_in32 (0xb0000800) & (0x1 << 18) )
-    for (i = 0; i < len; i++)
-    { emma2rh_out8 (LED_BASE + i, str[i]); }
-  else
-    for (i = 0; i < len; i++)
-      emma2rh_out8 (LED_BASE + (i & 4) + (3 - (i & 3) ),
-                    str[i]);
+	int i;
+	int len = strlen(str);
+
+	markeins_led_clear();
+	if (len > 8)
+		len = 8;
+
+	if (emma2rh_in32(0xb0000800) & (0x1 << 18))
+		for (i = 0; i < len; i++)
+			emma2rh_out8(LED_BASE + i, str[i]);
+	else
+		for (i = 0; i < len; i++)
+			emma2rh_out8(LED_BASE + (i & 4) + (3 - (i & 3)),
+				     str[i]);
 }
 
-void markeins_led_hex (u32 val)
+void markeins_led_hex(u32 val)
 {
-  char str[10];
-  
-  sprintf (str, "%08x", val);
-  markeins_led (str);
+	char str[10];
+
+	sprintf(str, "%08x", val);
+	markeins_led(str);
 }

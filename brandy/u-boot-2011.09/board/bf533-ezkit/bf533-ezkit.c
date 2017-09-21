@@ -32,29 +32,29 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-int checkboard (void)
+int checkboard(void)
 {
-  printf ("Board: ADI BF533 EZ-Kit Lite board\n");
-  printf ("       Support: http://blackfin.uclinux.org/\n");
-  return 0;
+	printf("Board: ADI BF533 EZ-Kit Lite board\n");
+	printf("       Support: http://blackfin.uclinux.org/\n");
+	return 0;
 }
 
 /* miscellaneous platform dependent initialisations */
-int misc_init_r (void)
+int misc_init_r(void)
 {
-  /* Set direction bits for Video en/decoder reset as output      */
-  * (volatile unsigned char *) (CONFIG_SYS_FLASH1_BASE + PSD_PORTA_DIR) =
-    PSDA_VDEC_RST | PSDA_VENC_RST;
-  /* Deactivate Video en/decoder reset lines                      */
-  * (volatile unsigned char *) (CONFIG_SYS_FLASH1_BASE + PSD_PORTA_DOUT) =
-    PSDA_VDEC_RST | PSDA_VENC_RST;
-    
-  return 0;
+	/* Set direction bits for Video en/decoder reset as output      */
+	*(volatile unsigned char *)(CONFIG_SYS_FLASH1_BASE + PSD_PORTA_DIR) =
+	    PSDA_VDEC_RST | PSDA_VENC_RST;
+	/* Deactivate Video en/decoder reset lines                      */
+	*(volatile unsigned char *)(CONFIG_SYS_FLASH1_BASE + PSD_PORTA_DOUT) =
+	    PSDA_VDEC_RST | PSDA_VENC_RST;
+
+	return 0;
 }
 
 #ifdef CONFIG_SMC91111
-int board_eth_init (bd_t * bis)
+int board_eth_init(bd_t *bis)
 {
-  return smc91111_initialize (0, CONFIG_SMC91111_BASE);
+	return smc91111_initialize(0, CONFIG_SMC91111_BASE);
 }
 #endif

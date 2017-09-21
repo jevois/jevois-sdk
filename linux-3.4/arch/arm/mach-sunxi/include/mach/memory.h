@@ -45,38 +45,38 @@
 #error "please select a platform\n"
 #endif
 
-#define __sram  __section(.sram.text)
+#define __sram	__section(.sram.text)
 #define __sramdata __section(.sram.data)
 
 /* For assembly routines */
-#define __SRAM    .section  ".sram.text","ax"
-#define __SRAMDATA  .section  ".sram.text","aw"
+#define __SRAM		.section	".sram.text","ax"
+#define __SRAMDATA	.section	".sram.text","aw"
 
 #ifndef SRAM_DDRFREQ_OFFSET
 #define SRAM_DDRFREQ_OFFSET 0xF0000000
 #endif
 
-#define SUNXI_DDRFREQ_SRAM_SECTION(OFFSET, align)     \
-  . = ALIGN(align);         \
-  __sram_start = .;         \
-  .sram.text OFFSET : AT(__sram_start) {      \
-    __sram_text_start = .;        \
-    . = ALIGN(align);       \
-    *(.sram.text)         \
-    __sram_text_end = .;        \
-  }             \
-  .sram.data OFFSET + SIZEOF(.sram.text) :    \
-    AT(__sram_start + SIZEOF(.sram.text)) {   \
-    __sram_data_start = .;        \
-    . = ALIGN(align);       \
-    *(.sram.data)         \
-    __sram_data_end = .;        \
-  }             \
-  . = __sram_start + SIZEOF(.sram.text) +     \
-      SIZEOF(.sram.data);     \
-  __sram_end = .;
+#define SUNXI_DDRFREQ_SRAM_SECTION(OFFSET, align) 		\
+	. = ALIGN(align);					\
+	__sram_start = .;					\
+	.sram.text OFFSET : AT(__sram_start) {			\
+		__sram_text_start = .;				\
+		. = ALIGN(align);				\
+		*(.sram.text)					\
+		__sram_text_end = .;				\
+	}							\
+	.sram.data OFFSET + SIZEOF(.sram.text) :		\
+		AT(__sram_start + SIZEOF(.sram.text)) {		\
+		__sram_data_start = .;				\
+		. = ALIGN(align);				\
+		*(.sram.data)					\
+		__sram_data_end = .;				\
+	}							\
+	. = __sram_start + SIZEOF(.sram.text) +			\
+			SIZEOF(.sram.data);			\
+	__sram_end = .;
 
-#define SUNXI_SRAM_SECTION  \
-  SUNXI_DDRFREQ_SRAM_SECTION(SRAM_DDRFREQ_OFFSET, 4)
+#define SUNXI_SRAM_SECTION	\
+	SUNXI_DDRFREQ_SRAM_SECTION(SRAM_DDRFREQ_OFFSET, 4)
 
 #endif /* __SUNXI_MEMORY_H */

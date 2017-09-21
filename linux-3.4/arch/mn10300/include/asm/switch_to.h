@@ -18,32 +18,32 @@ struct thread_struct;
 
 #if !defined(CONFIG_LAZY_SAVE_FPU)
 struct fpu_state_struct;
-extern asmlinkage void fpu_save (struct fpu_state_struct *);
-#define switch_fpu(prev, next)            \
-  do {                \
-    if ((prev)->thread.fpu_flags & THREAD_HAS_FPU) {  \
-      (prev)->thread.fpu_flags &= ~THREAD_HAS_FPU;  \
-      (prev)->thread.uregs->epsw &= ~EPSW_FE;   \
-      fpu_save(&(prev)->thread.fpu_state);    \
-    }             \
-  } while (0)
+extern asmlinkage void fpu_save(struct fpu_state_struct *);
+#define switch_fpu(prev, next)						\
+	do {								\
+		if ((prev)->thread.fpu_flags & THREAD_HAS_FPU) {	\
+			(prev)->thread.fpu_flags &= ~THREAD_HAS_FPU;	\
+			(prev)->thread.uregs->epsw &= ~EPSW_FE;		\
+			fpu_save(&(prev)->thread.fpu_state);		\
+		}							\
+	} while (0)
 #else
 #define switch_fpu(prev, next) do {} while (0)
 #endif
 
 /* context switching is now performed out-of-line in switch_to.S */
 extern asmlinkage
-struct task_struct * __switch_to (struct thread_struct * prev,
-                                  struct thread_struct * next,
-                                  struct task_struct * prev_task);
+struct task_struct *__switch_to(struct thread_struct *prev,
+				struct thread_struct *next,
+				struct task_struct *prev_task);
 
-#define switch_to(prev, next, last)         \
-  do {                  \
-    switch_fpu(prev, next);           \
-    current->thread.wchan = (u_long) __builtin_return_address(0); \
-    (last) = __switch_to(&(prev)->thread, &(next)->thread, (prev)); \
-    mb();               \
-    current->thread.wchan = 0;          \
-  } while (0)
+#define switch_to(prev, next, last)					\
+do {									\
+	switch_fpu(prev, next);						\
+	current->thread.wchan = (u_long) __builtin_return_address(0);	\
+	(last) = __switch_to(&(prev)->thread, &(next)->thread, (prev));	\
+	mb();								\
+	current->thread.wchan = 0;					\
+} while (0)
 
 #endif /* _ASM_SWITCH_TO_H */

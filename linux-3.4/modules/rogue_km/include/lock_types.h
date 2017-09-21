@@ -44,18 +44,18 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef _LOCK_TYPES_H_
 #define _LOCK_TYPES_H_
 
-typedef struct _OS_LOCK_ * POS_LOCK;
+typedef struct _OS_LOCK_ *POS_LOCK;
 
 typedef enum
 {
-  LOCK_TYPE_NONE      = 0x00,
-  
-  LOCK_TYPE_MASK      = 0x0F,
-  LOCK_TYPE_PASSIVE   = 0x01,   /* Passive level lock e.g. mutex, system may promote to dispatch */
-  LOCK_TYPE_DISPATCH    = 0x02,   /* Dispatch level lock e.g. spin lock, may be used in ISR/MISR */
-  
-  LOCK_TYPE_INSIST_FLAG = 0x80,   /* When set caller can guarantee lock not used in ISR/MISR */
-  LOCK_TYPE_PASSIVE_ONLY  = LOCK_TYPE_INSIST_FLAG | LOCK_TYPE_PASSIVE
-  
+	LOCK_TYPE_NONE 			= 0x00,
+
+	LOCK_TYPE_MASK			= 0x0F,
+	LOCK_TYPE_PASSIVE		= 0x01,		/* Passive level lock e.g. mutex, system may promote to dispatch */
+	LOCK_TYPE_DISPATCH		= 0x02,		/* Dispatch level lock e.g. spin lock, may be used in ISR/MISR */
+
+	LOCK_TYPE_INSIST_FLAG	= 0x80,		/* When set caller can guarantee lock not used in ISR/MISR */
+	LOCK_TYPE_PASSIVE_ONLY	= LOCK_TYPE_INSIST_FLAG | LOCK_TYPE_PASSIVE
+
 } LOCK_TYPE;
-#endif  /* _LOCK_TYPES_H_ */
+#endif	/* _LOCK_TYPES_H_ */

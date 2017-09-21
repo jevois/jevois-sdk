@@ -28,8 +28,8 @@
 struct mgr_object;
 
 struct mgr_tlbentry {
-  u32 dsp_virt; /* DSP virtual address */
-  u32 gpp_phys; /* GPP physical address */
+	u32 dsp_virt;	/* DSP virtual address */
+	u32 gpp_phys;	/* GPP physical address */
 };
 
 /*
@@ -37,9 +37,9 @@ struct mgr_tlbentry {
  *  capabilities of a DSP processor not exposed to user.
  */
 struct mgr_processorextinfo {
-  struct dsp_processorinfo ty_basic;  /* user processor info */
-  /* private dsp mmu entries */
-  struct mgr_tlbentry ty_tlb[MGR_MAXTLBENTRIES];
+	struct dsp_processorinfo ty_basic;	/* user processor info */
+	/* private dsp mmu entries */
+	struct mgr_tlbentry ty_tlb[MGR_MAXTLBENTRIES];
 };
 
 #endif /* MGRPRIV_ */

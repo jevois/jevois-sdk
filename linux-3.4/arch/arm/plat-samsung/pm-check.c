@@ -2,8 +2,8 @@
  *  originally in linux/arch/arm/plat-s3c24xx/pm.c
  *
  * Copyright (c) 2004-2008 Simtec Electronics
- *  http://armlinux.simtec.co.uk
- *  Ben Dooks <ben@simtec.co.uk>
+ *	http://armlinux.simtec.co.uk
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * S3C Power Mangament - suspend/resume memory corruptiuon check.
  *
@@ -37,51 +37,51 @@
 
 #define CHECK_CHUNKSIZE (CONFIG_SAMSUNG_PM_CHECK_CHUNKSIZE * 1024)
 
-static u32 crc_size;  /* size needed for the crc block */
-static u32 * crcs; /* allocated over suspend/resume */
+static u32 crc_size;	/* size needed for the crc block */
+static u32 *crcs;	/* allocated over suspend/resume */
 
-typedef u32 * (run_fn_t) (struct resource * ptr, u32 * arg);
+typedef u32 *(run_fn_t)(struct resource *ptr, u32 *arg);
 
 /* s3c_pm_run_res
  *
  * go through the given resource list, and look for system ram
 */
 
-static void s3c_pm_run_res (struct resource * ptr, run_fn_t fn, u32 * arg)
+static void s3c_pm_run_res(struct resource *ptr, run_fn_t fn, u32 *arg)
 {
-  while (ptr != NULL) {
-    if (ptr->child != NULL)
-    { s3c_pm_run_res (ptr->child, fn, arg); }
-    
-    if ( (ptr->flags & IORESOURCE_MEM) &&
-         strcmp (ptr->name, "System RAM") == 0) {
-      S3C_PMDBG ("Found system RAM at %08lx..%08lx\n",
-                 (unsigned long) ptr->start,
-                 (unsigned long) ptr->end);
-      arg = (fn) (ptr, arg);
-    }
-    
-    ptr = ptr->sibling;
-  }
+	while (ptr != NULL) {
+		if (ptr->child != NULL)
+			s3c_pm_run_res(ptr->child, fn, arg);
+
+		if ((ptr->flags & IORESOURCE_MEM) &&
+		    strcmp(ptr->name, "System RAM") == 0) {
+			S3C_PMDBG("Found system RAM at %08lx..%08lx\n",
+				  (unsigned long)ptr->start,
+				  (unsigned long)ptr->end);
+			arg = (fn)(ptr, arg);
+		}
+
+		ptr = ptr->sibling;
+	}
 }
 
-static void s3c_pm_run_sysram (run_fn_t fn, u32 * arg)
+static void s3c_pm_run_sysram(run_fn_t fn, u32 *arg)
 {
-  s3c_pm_run_res (&iomem_resource, fn, arg);
+	s3c_pm_run_res(&iomem_resource, fn, arg);
 }
 
-static u32 * s3c_pm_countram (struct resource * res, u32 * val)
+static u32 *s3c_pm_countram(struct resource *res, u32 *val)
 {
-  u32 size = (u32) resource_size (res);
-  
-  size += CHECK_CHUNKSIZE - 1;
-  size /= CHECK_CHUNKSIZE;
-  
-  S3C_PMDBG ("Area %08lx..%08lx, %d blocks\n",
-             (unsigned long) res->start, (unsigned long) res->end, size);
-             
-  *val += size * sizeof (u32);
-  return val;
+	u32 size = (u32)resource_size(res);
+
+	size += CHECK_CHUNKSIZE-1;
+	size /= CHECK_CHUNKSIZE;
+
+	S3C_PMDBG("Area %08lx..%08lx, %d blocks\n",
+		  (unsigned long)res->start, (unsigned long)res->end, size);
+
+	*val += size * sizeof(u32);
+	return val;
 }
 
 /* s3c_pm_prepare_check
@@ -92,35 +92,35 @@ static u32 * s3c_pm_countram (struct resource * res, u32 * val)
  * know about.
 */
 
-void s3c_pm_check_prepare (void)
+void s3c_pm_check_prepare(void)
 {
-  crc_size = 0;
-  
-  s3c_pm_run_sysram (s3c_pm_countram, &crc_size);
-  
-  S3C_PMDBG ("s3c_pm_prepare_check: %u checks needed\n", crc_size);
-  
-  crcs = kmalloc (crc_size + 4, GFP_KERNEL);
-  if (crcs == NULL)
-  { printk (KERN_ERR "Cannot allocated CRC save area\n"); }
+	crc_size = 0;
+
+	s3c_pm_run_sysram(s3c_pm_countram, &crc_size);
+
+	S3C_PMDBG("s3c_pm_prepare_check: %u checks needed\n", crc_size);
+
+	crcs = kmalloc(crc_size+4, GFP_KERNEL);
+	if (crcs == NULL)
+		printk(KERN_ERR "Cannot allocated CRC save area\n");
 }
 
-static u32 * s3c_pm_makecheck (struct resource * res, u32 * val)
+static u32 *s3c_pm_makecheck(struct resource *res, u32 *val)
 {
-  unsigned long addr, left;
-  
-  for (addr = res->start; addr < res->end;
-       addr += CHECK_CHUNKSIZE) {
-    left = res->end - addr;
-    
-    if (left > CHECK_CHUNKSIZE)
-    { left = CHECK_CHUNKSIZE; }
-    
-    *val = crc32_le (~0, phys_to_virt (addr), left);
-    val++;
-  }
-  
-  return val;
+	unsigned long addr, left;
+
+	for (addr = res->start; addr < res->end;
+	     addr += CHECK_CHUNKSIZE) {
+		left = res->end - addr;
+
+		if (left > CHECK_CHUNKSIZE)
+			left = CHECK_CHUNKSIZE;
+
+		*val = crc32_le(~0, phys_to_virt(addr), left);
+		val++;
+	}
+
+	return val;
 }
 
 /* s3c_pm_check_store
@@ -129,10 +129,10 @@ static u32 * s3c_pm_makecheck (struct resource * res, u32 * val)
  * sleep.
 */
 
-void s3c_pm_check_store (void)
+void s3c_pm_check_store(void)
 {
-  if (crcs != NULL)
-  { s3c_pm_run_sysram (s3c_pm_makecheck, crcs); }
+	if (crcs != NULL)
+		s3c_pm_run_sysram(s3c_pm_makecheck, crcs);
 }
 
 /* in_region
@@ -141,15 +141,15 @@ void s3c_pm_check_store (void)
  * what..what+whatsz
 */
 
-static inline int in_region (void * ptr, int size, void * what, size_t whatsz)
+static inline int in_region(void *ptr, int size, void *what, size_t whatsz)
 {
-  if ( (what + whatsz) < ptr)
-  { return 0; }
-  
-  if (what > (ptr + size) )
-  { return 0; }
-  
-  return 1;
+	if ((what+whatsz) < ptr)
+		return 0;
+
+	if (what > (ptr+size))
+		return 0;
+
+	return 1;
 }
 
 /**
@@ -162,51 +162,51 @@ static inline int in_region (void * ptr, int size, void * what, size_t whatsz)
  * CRC to ensure that memory is restored. The function tries to skip as
  * many of the areas used during the suspend process.
  */
-static u32 * s3c_pm_runcheck (struct resource * res, u32 * val)
+static u32 *s3c_pm_runcheck(struct resource *res, u32 *val)
 {
-  unsigned long addr;
-  unsigned long left;
-  void * stkpage;
-  void * ptr;
-  u32 calc;
-  
-  stkpage = (void *) ( (u32) &calc & ~PAGE_MASK);
-  
-  for (addr = res->start; addr < res->end;
-       addr += CHECK_CHUNKSIZE) {
-    left = res->end - addr;
-    
-    if (left > CHECK_CHUNKSIZE)
-    { left = CHECK_CHUNKSIZE; }
-    
-    ptr = phys_to_virt (addr);
-    
-    if (in_region (ptr, left, stkpage, 4096) ) {
-      S3C_PMDBG ("skipping %08lx, has stack in\n", addr);
-      goto skip_check;
-    }
-    
-    if (in_region (ptr, left, crcs, crc_size) ) {
-      S3C_PMDBG ("skipping %08lx, has crc block in\n", addr);
-      goto skip_check;
-    }
-    
-    /* calculate and check the checksum */
-    
-    calc = crc32_le (~0, ptr, left);
-    if (calc != *val) {
-      printk (KERN_ERR "Restore CRC error at "
-              "%08lx (%08x vs %08x)\n", addr, calc, *val);
-              
-      S3C_PMDBG ("Restore CRC error at %08lx (%08x vs %08x)\n",
-                 addr, calc, *val);
-    }
-    
-skip_check:
-    val++;
-  }
-  
-  return val;
+	unsigned long addr;
+	unsigned long left;
+	void *stkpage;
+	void *ptr;
+	u32 calc;
+
+	stkpage = (void *)((u32)&calc & ~PAGE_MASK);
+
+	for (addr = res->start; addr < res->end;
+	     addr += CHECK_CHUNKSIZE) {
+		left = res->end - addr;
+
+		if (left > CHECK_CHUNKSIZE)
+			left = CHECK_CHUNKSIZE;
+
+		ptr = phys_to_virt(addr);
+
+		if (in_region(ptr, left, stkpage, 4096)) {
+			S3C_PMDBG("skipping %08lx, has stack in\n", addr);
+			goto skip_check;
+		}
+
+		if (in_region(ptr, left, crcs, crc_size)) {
+			S3C_PMDBG("skipping %08lx, has crc block in\n", addr);
+			goto skip_check;
+		}
+
+		/* calculate and check the checksum */
+
+		calc = crc32_le(~0, ptr, left);
+		if (calc != *val) {
+			printk(KERN_ERR "Restore CRC error at "
+			       "%08lx (%08x vs %08x)\n", addr, calc, *val);
+
+			S3C_PMDBG("Restore CRC error at %08lx (%08x vs %08x)\n",
+			    addr, calc, *val);
+		}
+
+	skip_check:
+		val++;
+	}
+
+	return val;
 }
 
 /**
@@ -215,10 +215,10 @@ skip_check:
  * check the CRCs after the restore event and free the memory used
  * to hold them
 */
-void s3c_pm_check_restore (void)
+void s3c_pm_check_restore(void)
 {
-  if (crcs != NULL)
-  { s3c_pm_run_sysram (s3c_pm_runcheck, crcs); }
+	if (crcs != NULL)
+		s3c_pm_run_sysram(s3c_pm_runcheck, crcs);
 }
 
 /**
@@ -229,9 +229,9 @@ void s3c_pm_check_restore (void)
  * s3c_pm_check_restore() function as we cannot call any
  * functions that might sleep during that resume.
  */
-void s3c_pm_check_cleanup (void)
+void s3c_pm_check_cleanup(void)
 {
-  kfree (crcs);
-  crcs = NULL;
+	kfree(crcs);
+	crcs = NULL;
 }
 

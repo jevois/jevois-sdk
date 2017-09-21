@@ -126,216 +126,216 @@
 *  RETURNS:
 *     CAP_PRESENT or CAP_NOT_PRESENT
 ****************************************************************************/
-static inline CAP_RC_T cap_isPresent (CAP_CAPABILITY_T capability, int index)
+static inline CAP_RC_T cap_isPresent(CAP_CAPABILITY_T capability, int index)
 {
-  CAP_RC_T returnVal = CAP_NOT_PRESENT;
-  
-  switch (capability) {
-  case CAP_VPM:
-    {
-      if (! (capConfig0 & CAP_CONFIG0_VPM_DIS) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_ETH_PHY:
-    {
-      if ( (index == 0)
-           && (! (capConfig0 & CAP_CONFIG0_ETH_PHY0_DIS) ) ) {
-        returnVal = CAP_PRESENT;
-      }
-      if ( (index == 1)
-           && (! (capConfig0 & CAP_CONFIG0_ETH_PHY1_DIS) ) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_ETH_GMII:
-    {
-      if ( (index == 0)
-           && (! (capConfig0 & CAP_CONFIG0_ETH_GMII0_DIS) ) ) {
-        returnVal = CAP_PRESENT;
-      }
-      if ( (index == 1)
-           && (! (capConfig0 & CAP_CONFIG0_ETH_GMII1_DIS) ) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_ETH_SGMII:
-    {
-      if ( (index == 0)
-           && (! (capConfig0 & CAP_CONFIG0_ETH_SGMII0_DIS) ) ) {
-        returnVal = CAP_PRESENT;
-      }
-      if ( (index == 1)
-           && (! (capConfig0 & CAP_CONFIG0_ETH_SGMII1_DIS) ) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_USB:
-    {
-      if ( (index == 0)
-           && (! (capConfig0 & CAP_CONFIG0_USB0_DIS) ) ) {
-        returnVal = CAP_PRESENT;
-      }
-      if ( (index == 1)
-           && (! (capConfig0 & CAP_CONFIG0_USB1_DIS) ) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_TSC:
-    {
-      if (! (capConfig0 & CAP_CONFIG0_TSC_DIS) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_EHSS:
-    {
-      if ( (index == 0)
-           && (! (capConfig0 & CAP_CONFIG0_EHSS0_DIS) ) ) {
-        returnVal = CAP_PRESENT;
-      }
-      if ( (index == 1)
-           && (! (capConfig0 & CAP_CONFIG0_EHSS1_DIS) ) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_SDIO:
-    {
-      if ( (index == 0)
-           && (! (capConfig0 & CAP_CONFIG0_SDIO0_DIS) ) ) {
-        returnVal = CAP_PRESENT;
-      }
-      if ( (index == 1)
-           && (! (capConfig0 & CAP_CONFIG0_SDIO1_DIS) ) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_UARTB:
-    {
-      if (! (capConfig0 & CAP_CONFIG0_UARTB_DIS) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_KEYPAD:
-    {
-      if (! (capConfig0 & CAP_CONFIG0_KEYPAD_DIS) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_CLCD:
-    {
-      if (! (capConfig0 & CAP_CONFIG0_CLCD_DIS) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_GE:
-    {
-      if (! (capConfig0 & CAP_CONFIG0_GE_DIS) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_LEDM:
-    {
-      if (! (capConfig0 & CAP_CONFIG0_LEDM_DIS) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_BBL:
-    {
-      if (! (capConfig0 & CAP_CONFIG0_BBL_DIS) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_VDEC:
-    {
-      if (! (capConfig0 & CAP_CONFIG0_VDEC_DIS) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_PIF:
-    {
-      if (! (capConfig0 & CAP_CONFIG0_PIF_DIS) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_APM:
-    {
-      if ( (index == 0)
-           && (! (capConfig1 & CAP_CONFIG1_APMA_DIS) ) ) {
-        returnVal = CAP_PRESENT;
-      }
-      if ( (index == 1)
-           && (! (capConfig1 & CAP_CONFIG1_APMB_DIS) ) ) {
-        returnVal = CAP_PRESENT;
-      }
-      if ( (index == 2)
-           && (! (capConfig1 & CAP_CONFIG1_APMC_DIS) ) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_SPU:
-    {
-      if (! (capConfig2 & CAP_CONFIG2_SPU_DIS) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_PKA:
-    {
-      if (! (capConfig2 & CAP_CONFIG2_PKA_DIS) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  case CAP_RNG:
-    {
-      if (! (capConfig2 & CAP_CONFIG2_RNG_DIS) ) {
-        returnVal = CAP_PRESENT;
-      }
-    }
-    break;
-    
-  default:
-    {
-    }
-    break;
-  }
-  return returnVal;
+	CAP_RC_T returnVal = CAP_NOT_PRESENT;
+
+	switch (capability) {
+	case CAP_VPM:
+		{
+			if (!(capConfig0 & CAP_CONFIG0_VPM_DIS)) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_ETH_PHY:
+		{
+			if ((index == 0)
+			    && (!(capConfig0 & CAP_CONFIG0_ETH_PHY0_DIS))) {
+				returnVal = CAP_PRESENT;
+			}
+			if ((index == 1)
+			    && (!(capConfig0 & CAP_CONFIG0_ETH_PHY1_DIS))) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_ETH_GMII:
+		{
+			if ((index == 0)
+			    && (!(capConfig0 & CAP_CONFIG0_ETH_GMII0_DIS))) {
+				returnVal = CAP_PRESENT;
+			}
+			if ((index == 1)
+			    && (!(capConfig0 & CAP_CONFIG0_ETH_GMII1_DIS))) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_ETH_SGMII:
+		{
+			if ((index == 0)
+			    && (!(capConfig0 & CAP_CONFIG0_ETH_SGMII0_DIS))) {
+				returnVal = CAP_PRESENT;
+			}
+			if ((index == 1)
+			    && (!(capConfig0 & CAP_CONFIG0_ETH_SGMII1_DIS))) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_USB:
+		{
+			if ((index == 0)
+			    && (!(capConfig0 & CAP_CONFIG0_USB0_DIS))) {
+				returnVal = CAP_PRESENT;
+			}
+			if ((index == 1)
+			    && (!(capConfig0 & CAP_CONFIG0_USB1_DIS))) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_TSC:
+		{
+			if (!(capConfig0 & CAP_CONFIG0_TSC_DIS)) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_EHSS:
+		{
+			if ((index == 0)
+			    && (!(capConfig0 & CAP_CONFIG0_EHSS0_DIS))) {
+				returnVal = CAP_PRESENT;
+			}
+			if ((index == 1)
+			    && (!(capConfig0 & CAP_CONFIG0_EHSS1_DIS))) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_SDIO:
+		{
+			if ((index == 0)
+			    && (!(capConfig0 & CAP_CONFIG0_SDIO0_DIS))) {
+				returnVal = CAP_PRESENT;
+			}
+			if ((index == 1)
+			    && (!(capConfig0 & CAP_CONFIG0_SDIO1_DIS))) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_UARTB:
+		{
+			if (!(capConfig0 & CAP_CONFIG0_UARTB_DIS)) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_KEYPAD:
+		{
+			if (!(capConfig0 & CAP_CONFIG0_KEYPAD_DIS)) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_CLCD:
+		{
+			if (!(capConfig0 & CAP_CONFIG0_CLCD_DIS)) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_GE:
+		{
+			if (!(capConfig0 & CAP_CONFIG0_GE_DIS)) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_LEDM:
+		{
+			if (!(capConfig0 & CAP_CONFIG0_LEDM_DIS)) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_BBL:
+		{
+			if (!(capConfig0 & CAP_CONFIG0_BBL_DIS)) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_VDEC:
+		{
+			if (!(capConfig0 & CAP_CONFIG0_VDEC_DIS)) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_PIF:
+		{
+			if (!(capConfig0 & CAP_CONFIG0_PIF_DIS)) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_APM:
+		{
+			if ((index == 0)
+			    && (!(capConfig1 & CAP_CONFIG1_APMA_DIS))) {
+				returnVal = CAP_PRESENT;
+			}
+			if ((index == 1)
+			    && (!(capConfig1 & CAP_CONFIG1_APMB_DIS))) {
+				returnVal = CAP_PRESENT;
+			}
+			if ((index == 2)
+			    && (!(capConfig1 & CAP_CONFIG1_APMC_DIS))) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_SPU:
+		{
+			if (!(capConfig2 & CAP_CONFIG2_SPU_DIS)) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_PKA:
+		{
+			if (!(capConfig2 & CAP_CONFIG2_PKA_DIS)) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	case CAP_RNG:
+		{
+			if (!(capConfig2 & CAP_CONFIG2_RNG_DIS)) {
+				returnVal = CAP_PRESENT;
+			}
+		}
+		break;
+
+	default:
+		{
+		}
+		break;
+	}
+	return returnVal;
 }
 
 /****************************************************************************
@@ -350,17 +350,17 @@ static inline CAP_RC_T cap_isPresent (CAP_CAPABILITY_T capability, int index)
 *  RETURNS:
 *     clock speed in Hz that the ARM processor is able to run at
 ****************************************************************************/
-static inline uint32_t cap_getMaxArmSpeedHz (void)
+static inline uint32_t cap_getMaxArmSpeedHz(void)
 {
-  #if   ((CFG_GLOBAL_CHIP == BCM11107) || (CFG_GLOBAL_CHIP == FPGA11107))
-  return 500000000;
-  #elif ((CFG_GLOBAL_CHIP == BCM11109) || (CFG_GLOBAL_CHIP == BCM11170) || (CFG_GLOBAL_CHIP == BCM11110))
-  return 300000000;
-  #elif (CFG_GLOBAL_CHIP == BCM11211)
-  return 666666666;
-  #else
+#if   ((CFG_GLOBAL_CHIP == BCM11107) || (CFG_GLOBAL_CHIP == FPGA11107))
+	return 500000000;
+#elif ((CFG_GLOBAL_CHIP == BCM11109) || (CFG_GLOBAL_CHIP == BCM11170) || (CFG_GLOBAL_CHIP == BCM11110))
+	return 300000000;
+#elif (CFG_GLOBAL_CHIP == BCM11211)
+	return 666666666;
+#else
 #error CFG_GLOBAL_CHIP type capabilities not defined
-  #endif
+#endif
 }
 
 /****************************************************************************
@@ -375,15 +375,15 @@ static inline uint32_t cap_getMaxArmSpeedHz (void)
 *  RETURNS:
 *     clock speed in Hz that the VPM is able to run at
 ****************************************************************************/
-static inline uint32_t cap_getMaxVpmSpeedHz (void)
+static inline uint32_t cap_getMaxVpmSpeedHz(void)
 {
-  #if ((CFG_GLOBAL_CHIP == BCM11107) || (CFG_GLOBAL_CHIP == BCM11211) || (CFG_GLOBAL_CHIP == FPGA11107))
-  return 333333333;
-  #elif ((CFG_GLOBAL_CHIP == BCM11109) || (CFG_GLOBAL_CHIP == BCM11170) || (CFG_GLOBAL_CHIP == BCM11110))
-  return 200000000;
-  #else
+#if ((CFG_GLOBAL_CHIP == BCM11107) || (CFG_GLOBAL_CHIP == BCM11211) || (CFG_GLOBAL_CHIP == FPGA11107))
+	return 333333333;
+#elif ((CFG_GLOBAL_CHIP == BCM11109) || (CFG_GLOBAL_CHIP == BCM11170) || (CFG_GLOBAL_CHIP == BCM11110))
+	return 200000000;
+#else
 #error CFG_GLOBAL_CHIP type capabilities not defined
-  #endif
+#endif
 }
 
 /****************************************************************************
@@ -399,11 +399,11 @@ static inline uint32_t cap_getMaxVpmSpeedHz (void)
 *   CAP_LCD_WVGA, CAP_LCD_VGA, CAP_LCD_WQVGA or CAP_LCD_QVGA
 *
 ****************************************************************************/
-static inline CAP_LCD_RES_T cap_getMaxLcdRes (void)
+static inline CAP_LCD_RES_T cap_getMaxLcdRes(void)
 {
-  return (CAP_LCD_RES_T)
-         ( (capConfig1 & CAP_CONFIG1_CLCD_RES_MASK) >>
-           CAP_CONFIG1_CLCD_RES_SHIFT);
+	return (CAP_LCD_RES_T)
+		((capConfig1 & CAP_CONFIG1_CLCD_RES_MASK) >>
+		 CAP_CONFIG1_CLCD_RES_SHIFT);
 }
 
 #endif

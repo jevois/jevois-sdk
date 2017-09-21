@@ -17,18 +17,18 @@
    Boston, MA 02111-1307, USA.  */
 
 typedef struct {
-  long    quot;
-  long    rem;
+	long    quot;
+	long    rem;
 } ldiv_t;
 /* Return the `ldiv_t' representation of NUMER over DENOM.  */
 ldiv_t
 ldiv (long int numer, long int denom)
 {
   ldiv_t result;
-  
+
   result.quot = numer / denom;
   result.rem = numer % denom;
-  
+
   /* The ANSI standard says that |QUOT| <= |NUMER / DENOM|, where
      NUMER / DENOM is to be computed in infinite precision.  In
      other words, we should always truncate the quotient towards
@@ -44,12 +44,12 @@ ldiv (long int numer, long int denom)
      NUMER >= 0, but REM < 0, we got the wrong answer.  In that
      case, to get the right answer, add 1 to QUOT and subtract
      DENOM from REM.  */
-  
+
   if (numer >= 0 && result.rem < 0)
-  {
-    ++result.quot;
-    result.rem -= denom;
-  }
-  
+    {
+      ++result.quot;
+      result.rem -= denom;
+    }
+
   return result;
 }

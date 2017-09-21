@@ -29,19 +29,19 @@
 #define __R500_REG_H__
 
 /* pipe config regs */
-#define R300_GA_POLY_MODE       0x4288
+#define R300_GA_POLY_MODE				0x4288
 #       define R300_FRONT_PTYPE_POINT                   (0 << 4)
 #       define R300_FRONT_PTYPE_LINE                    (1 << 4)
 #       define R300_FRONT_PTYPE_TRIANGE                 (2 << 4)
 #       define R300_BACK_PTYPE_POINT                    (0 << 7)
 #       define R300_BACK_PTYPE_LINE                     (1 << 7)
 #       define R300_BACK_PTYPE_TRIANGE                  (2 << 7)
-#define R300_GA_ROUND_MODE        0x428c
+#define R300_GA_ROUND_MODE				0x428c
 #       define R300_GEOMETRY_ROUND_TRUNC                (0 << 0)
 #       define R300_GEOMETRY_ROUND_NEAREST              (1 << 0)
 #       define R300_COLOR_ROUND_TRUNC                   (0 << 2)
 #       define R300_COLOR_ROUND_NEAREST                 (1 << 2)
-#define R300_GB_MSPOS0                0x4010
+#define R300_GB_MSPOS0				        0x4010
 #       define R300_MS_X0_SHIFT                         0
 #       define R300_MS_Y0_SHIFT                         4
 #       define R300_MS_X1_SHIFT                         8
@@ -50,7 +50,7 @@
 #       define R300_MS_Y2_SHIFT                         20
 #       define R300_MSBD0_Y_SHIFT                       24
 #       define R300_MSBD0_X_SHIFT                       28
-#define R300_GB_MSPOS1                0x4014
+#define R300_GB_MSPOS1				        0x4014
 #       define R300_MS_X3_SHIFT                         0
 #       define R300_MS_Y3_SHIFT                         4
 #       define R300_MS_X4_SHIFT                         8
@@ -59,14 +59,14 @@
 #       define R300_MS_Y5_SHIFT                         20
 #       define R300_MSBD1_SHIFT                         24
 
-#define R300_GA_ENHANCE               0x4274
+#define R300_GA_ENHANCE				        0x4274
 #       define R300_GA_DEADLOCK_CNTL                    (1 << 0)
 #       define R300_GA_FASTSYNC_CNTL                    (1 << 1)
 #define R300_RB3D_DSTCACHE_CTLSTAT              0x4e4c
-# define R300_RB3D_DC_FLUSH   (2 << 0)
-# define R300_RB3D_DC_FREE    (2 << 2)
-# define R300_RB3D_DC_FINISH    (1 << 4)
-#define R300_RB3D_ZCACHE_CTLSTAT      0x4f18
+#	define R300_RB3D_DC_FLUSH		(2 << 0)
+#	define R300_RB3D_DC_FREE		(2 << 2)
+#	define R300_RB3D_DC_FINISH		(1 << 4)
+#define R300_RB3D_ZCACHE_CTLSTAT			0x4f18
 #       define R300_ZC_FLUSH                            (1 << 0)
 #       define R300_ZC_FREE                             (1 << 1)
 #       define R300_ZC_FLUSH_ALL                        0x3
@@ -90,80 +90,80 @@
 #       define R300_DC_AUTOFLUSH_ENABLE (1 << 8)
 #       define R300_DC_DC_DISABLE_IGNORE_PE (1 << 17)
 
-#define RADEON_CP_STAT    0x7C0
-#define RADEON_RBBM_CMDFIFO_ADDR  0xE70
-#define RADEON_RBBM_CMDFIFO_DATA  0xE74
-#define RADEON_ISYNC_CNTL   0x1724
-# define RADEON_ISYNC_ANY2D_IDLE3D  (1 << 0)
-# define RADEON_ISYNC_ANY3D_IDLE2D  (1 << 1)
-# define RADEON_ISYNC_TRIG2D_IDLE3D (1 << 2)
-# define RADEON_ISYNC_TRIG3D_IDLE2D (1 << 3)
-# define RADEON_ISYNC_WAIT_IDLEGUI  (1 << 4)
-# define RADEON_ISYNC_CPSCRATCH_IDLEGUI (1 << 5)
+#define RADEON_CP_STAT		0x7C0
+#define RADEON_RBBM_CMDFIFO_ADDR	0xE70
+#define RADEON_RBBM_CMDFIFO_DATA	0xE74
+#define RADEON_ISYNC_CNTL		0x1724
+#	define RADEON_ISYNC_ANY2D_IDLE3D	(1 << 0)
+#	define RADEON_ISYNC_ANY3D_IDLE2D	(1 << 1)
+#	define RADEON_ISYNC_TRIG2D_IDLE3D	(1 << 2)
+#	define RADEON_ISYNC_TRIG3D_IDLE2D	(1 << 3)
+#	define RADEON_ISYNC_WAIT_IDLEGUI	(1 << 4)
+#	define RADEON_ISYNC_CPSCRATCH_IDLEGUI	(1 << 5)
 
 #define RS480_NB_MC_INDEX               0x168
-# define RS480_NB_MC_IND_WR_EN  (1 << 8)
+#	define RS480_NB_MC_IND_WR_EN	(1 << 8)
 #define RS480_NB_MC_DATA                0x16c
 
 /*
  * RS690
  */
-#define RS690_MCCFG_FB_LOCATION   0x100
-#define   RS690_MC_FB_START_MASK    0x0000FFFF
-#define   RS690_MC_FB_START_SHIFT   0
-#define   RS690_MC_FB_TOP_MASK    0xFFFF0000
-#define   RS690_MC_FB_TOP_SHIFT   16
-#define RS690_MCCFG_AGP_LOCATION  0x101
-#define   RS690_MC_AGP_START_MASK   0x0000FFFF
-#define   RS690_MC_AGP_START_SHIFT  0
-#define   RS690_MC_AGP_TOP_MASK   0xFFFF0000
-#define   RS690_MC_AGP_TOP_SHIFT    16
-#define RS690_MCCFG_AGP_BASE    0x102
-#define RS690_MCCFG_AGP_BASE_2    0x103
+#define RS690_MCCFG_FB_LOCATION		0x100
+#define		RS690_MC_FB_START_MASK		0x0000FFFF
+#define		RS690_MC_FB_START_SHIFT		0
+#define		RS690_MC_FB_TOP_MASK		0xFFFF0000
+#define		RS690_MC_FB_TOP_SHIFT		16
+#define RS690_MCCFG_AGP_LOCATION	0x101
+#define		RS690_MC_AGP_START_MASK		0x0000FFFF
+#define		RS690_MC_AGP_START_SHIFT	0
+#define		RS690_MC_AGP_TOP_MASK		0xFFFF0000
+#define		RS690_MC_AGP_TOP_SHIFT		16
+#define RS690_MCCFG_AGP_BASE		0x102
+#define RS690_MCCFG_AGP_BASE_2		0x103
 #define RS690_MC_INIT_MISC_LAT_TIMER            0x104
-#define RS690_HDP_FB_LOCATION   0x0134
-#define RS690_MC_INDEX        0x78
-# define RS690_MC_INDEX_MASK    0x1ff
-# define RS690_MC_INDEX_WR_EN   (1 << 9)
-# define RS690_MC_INDEX_WR_ACK    0x7f
-#define RS690_MC_DATA       0x7c
+#define RS690_HDP_FB_LOCATION		0x0134
+#define RS690_MC_INDEX				0x78
+#	define RS690_MC_INDEX_MASK		0x1ff
+#	define RS690_MC_INDEX_WR_EN		(1 << 9)
+#	define RS690_MC_INDEX_WR_ACK		0x7f
+#define RS690_MC_DATA				0x7c
 #define RS690_MC_STATUS                         0x90
 #define RS690_MC_STATUS_IDLE                    (1 << 0)
-#define RS480_AGP_BASE_2    0x0164
+#define RS480_AGP_BASE_2		0x0164
 #define RS480_MC_MISC_CNTL              0x18
-# define RS480_DISABLE_GTW  (1 << 1)
-# define RS480_GART_INDEX_REG_EN  (1 << 12)
-# define RS690_BLOCK_GFX_D3_EN  (1 << 14)
+#	define RS480_DISABLE_GTW	(1 << 1)
+#	define RS480_GART_INDEX_REG_EN	(1 << 12)
+#	define RS690_BLOCK_GFX_D3_EN	(1 << 14)
 #define RS480_GART_FEATURE_ID           0x2b
-# define RS480_HANG_EN          (1 << 11)
-# define RS480_TLB_ENABLE         (1 << 18)
-# define RS480_P2P_ENABLE         (1 << 19)
-# define RS480_GTW_LAC_EN         (1 << 25)
-# define RS480_2LEVEL_GART  (0 << 30)
-# define RS480_1LEVEL_GART  (1 << 30)
-# define RS480_PDC_EN         (1 << 31)
+#	define RS480_HANG_EN	        (1 << 11)
+#	define RS480_TLB_ENABLE	        (1 << 18)
+#	define RS480_P2P_ENABLE	        (1 << 19)
+#	define RS480_GTW_LAC_EN	        (1 << 25)
+#	define RS480_2LEVEL_GART	(0 << 30)
+#	define RS480_1LEVEL_GART	(1 << 30)
+#	define RS480_PDC_EN	        (1 << 31)
 #define RS480_GART_BASE                 0x2c
 #define RS480_GART_CACHE_CNTRL          0x2e
-# define RS480_GART_CACHE_INVALIDATE (1 << 0) /* wait for it to clear */
+#	define RS480_GART_CACHE_INVALIDATE (1 << 0) /* wait for it to clear */
 #define RS480_AGP_ADDRESS_SPACE_SIZE    0x38
-# define RS480_GART_EN          (1 << 0)
-# define RS480_VA_SIZE_32MB (0 << 1)
-# define RS480_VA_SIZE_64MB (1 << 1)
-# define RS480_VA_SIZE_128MB  (2 << 1)
-# define RS480_VA_SIZE_256MB  (3 << 1)
-# define RS480_VA_SIZE_512MB  (4 << 1)
-# define RS480_VA_SIZE_1GB  (5 << 1)
-# define RS480_VA_SIZE_2GB  (6 << 1)
+#	define RS480_GART_EN	        (1 << 0)
+#	define RS480_VA_SIZE_32MB	(0 << 1)
+#	define RS480_VA_SIZE_64MB	(1 << 1)
+#	define RS480_VA_SIZE_128MB	(2 << 1)
+#	define RS480_VA_SIZE_256MB	(3 << 1)
+#	define RS480_VA_SIZE_512MB	(4 << 1)
+#	define RS480_VA_SIZE_1GB	(5 << 1)
+#	define RS480_VA_SIZE_2GB	(6 << 1)
 #define RS480_AGP_MODE_CNTL             0x39
-# define RS480_POST_GART_Q_SIZE (1 << 18)
-# define RS480_NONGART_SNOOP  (1 << 19)
-# define RS480_AGP_RD_BUF_SIZE  (1 << 20)
-# define RS480_REQ_TYPE_SNOOP_SHIFT 22
-# define RS480_REQ_TYPE_SNOOP_MASK  0x3
-# define RS480_REQ_TYPE_SNOOP_DIS (1 << 24)
+#	define RS480_POST_GART_Q_SIZE	(1 << 18)
+#	define RS480_NONGART_SNOOP	(1 << 19)
+#	define RS480_AGP_RD_BUF_SIZE	(1 << 20)
+#	define RS480_REQ_TYPE_SNOOP_SHIFT 22
+#	define RS480_REQ_TYPE_SNOOP_MASK  0x3
+#	define RS480_REQ_TYPE_SNOOP_DIS	(1 << 24)
 
-#define RS690_AIC_CTRL_SCRATCH    0x3A
-# define RS690_DIS_OUT_OF_PCI_GART_ACCESS (1 << 1)
+#define RS690_AIC_CTRL_SCRATCH		0x3A
+#	define RS690_DIS_OUT_OF_PCI_GART_ACCESS	(1 << 1)
 
 /*
  * RS600
@@ -184,15 +184,15 @@
 #define RS600_MC_STATUS                         0x0
 #       define RS600_MC_IDLE                    (1 << 1)
 #define RS600_MC_FB_LOCATION                    0x4
-#define   RS600_MC_FB_START_MASK    0x0000FFFF
-#define   RS600_MC_FB_START_SHIFT   0
-#define   RS600_MC_FB_TOP_MASK    0xFFFF0000
-#define   RS600_MC_FB_TOP_SHIFT   16
+#define		RS600_MC_FB_START_MASK		0x0000FFFF
+#define		RS600_MC_FB_START_SHIFT		0
+#define		RS600_MC_FB_TOP_MASK		0xFFFF0000
+#define		RS600_MC_FB_TOP_SHIFT		16
 #define RS600_MC_AGP_LOCATION                   0x5
-#define   RS600_MC_AGP_START_MASK   0x0000FFFF
-#define   RS600_MC_AGP_START_SHIFT  0
-#define   RS600_MC_AGP_TOP_MASK   0xFFFF0000
-#define   RS600_MC_AGP_TOP_SHIFT    16
+#define		RS600_MC_AGP_START_MASK		0x0000FFFF
+#define		RS600_MC_AGP_START_SHIFT	0
+#define		RS600_MC_AGP_TOP_MASK		0xFFFF0000
+#define		RS600_MC_AGP_TOP_SHIFT		16
 #define RS600_MC_AGP_BASE                          0x6
 #define RS600_MC_AGP_BASE_2                        0x7
 #define RS600_MC_CNTL1                          0x9
@@ -227,57 +227,57 @@
 #       define RS600_EFFECTIVE_L1_QUEUE_SIZE(x) ((x) << 15)
 #       define RS600_INVALIDATE_L1_TLB          (1 << 20)
 /* rs600/rs690/rs740 */
-# define RS600_BUS_MASTER_DIS   (1 << 14)
-# define RS600_MSI_REARM            (1 << 20)
+#	define RS600_BUS_MASTER_DIS		(1 << 14)
+#	define RS600_MSI_REARM		        (1 << 20)
 /* see RS400_MSI_REARM in AIC_CNTL for rs480 */
 
 
 
-#define RV515_MC_FB_LOCATION    0x01
-#define   RV515_MC_FB_START_MASK    0x0000FFFF
-#define   RV515_MC_FB_START_SHIFT   0
-#define   RV515_MC_FB_TOP_MASK    0xFFFF0000
-#define   RV515_MC_FB_TOP_SHIFT   16
-#define RV515_MC_AGP_LOCATION   0x02
-#define   RV515_MC_AGP_START_MASK   0x0000FFFF
-#define   RV515_MC_AGP_START_SHIFT  0
-#define   RV515_MC_AGP_TOP_MASK   0xFFFF0000
-#define   RV515_MC_AGP_TOP_SHIFT    16
-#define RV515_MC_AGP_BASE   0x03
-#define RV515_MC_AGP_BASE_2   0x04
+#define RV515_MC_FB_LOCATION		0x01
+#define		RV515_MC_FB_START_MASK		0x0000FFFF
+#define		RV515_MC_FB_START_SHIFT		0
+#define		RV515_MC_FB_TOP_MASK		0xFFFF0000
+#define		RV515_MC_FB_TOP_SHIFT		16
+#define RV515_MC_AGP_LOCATION		0x02
+#define		RV515_MC_AGP_START_MASK		0x0000FFFF
+#define		RV515_MC_AGP_START_SHIFT	0
+#define		RV515_MC_AGP_TOP_MASK		0xFFFF0000
+#define		RV515_MC_AGP_TOP_SHIFT		16
+#define RV515_MC_AGP_BASE		0x03
+#define RV515_MC_AGP_BASE_2		0x04
 
-#define R520_MC_FB_LOCATION   0x04
-#define   R520_MC_FB_START_MASK   0x0000FFFF
-#define   R520_MC_FB_START_SHIFT    0
-#define   R520_MC_FB_TOP_MASK   0xFFFF0000
-#define   R520_MC_FB_TOP_SHIFT    16
-#define R520_MC_AGP_LOCATION    0x05
-#define   R520_MC_AGP_START_MASK    0x0000FFFF
-#define   R520_MC_AGP_START_SHIFT   0
-#define   R520_MC_AGP_TOP_MASK    0xFFFF0000
-#define   R520_MC_AGP_TOP_SHIFT   16
-#define R520_MC_AGP_BASE    0x06
-#define R520_MC_AGP_BASE_2    0x07
+#define R520_MC_FB_LOCATION		0x04
+#define		R520_MC_FB_START_MASK		0x0000FFFF
+#define		R520_MC_FB_START_SHIFT		0
+#define		R520_MC_FB_TOP_MASK		0xFFFF0000
+#define		R520_MC_FB_TOP_SHIFT		16
+#define R520_MC_AGP_LOCATION		0x05
+#define		R520_MC_AGP_START_MASK		0x0000FFFF
+#define		R520_MC_AGP_START_SHIFT		0
+#define		R520_MC_AGP_TOP_MASK		0xFFFF0000
+#define		R520_MC_AGP_TOP_SHIFT		16
+#define R520_MC_AGP_BASE		0x06
+#define R520_MC_AGP_BASE_2		0x07
 
 
-#define AVIVO_MC_INDEX            0x0070
+#define AVIVO_MC_INDEX						0x0070
 #define R520_MC_STATUS 0x00
 #define R520_MC_STATUS_IDLE (1<<1)
 #define RV515_MC_STATUS 0x08
 #define RV515_MC_STATUS_IDLE (1<<4)
 #define RV515_MC_INIT_MISC_LAT_TIMER            0x09
-#define AVIVO_MC_DATA           0x0074
+#define AVIVO_MC_DATA						0x0074
 
 #define R520_MC_IND_INDEX 0x70
 #define R520_MC_IND_WR_EN (1 << 24)
 #define R520_MC_IND_DATA  0x74
 
 #define RV515_MC_CNTL          0x5
-# define RV515_MEM_NUM_CHANNELS_MASK  0x3
+#	define RV515_MEM_NUM_CHANNELS_MASK  0x3
 #define R520_MC_CNTL0          0x8
-# define R520_MEM_NUM_CHANNELS_MASK  (0x3 << 24)
-# define R520_MEM_NUM_CHANNELS_SHIFT  24
-# define R520_MC_CHANNEL_SIZE  (1 << 23)
+#	define R520_MEM_NUM_CHANNELS_MASK  (0x3 << 24)
+#	define R520_MEM_NUM_CHANNELS_SHIFT  24
+#	define R520_MC_CHANNEL_SIZE  (1 << 23)
 
 #define AVIVO_CP_DYN_CNTL                              0x000f /* PLL */
 #       define AVIVO_CP_FORCEON                        (1 << 0)
@@ -288,16 +288,16 @@
 
 #define AVIVO_HDP_FB_LOCATION 0x134
 
-#define AVIVO_VGA_RENDER_CONTROL        0x0300
+#define AVIVO_VGA_RENDER_CONTROL				0x0300
 #       define AVIVO_VGA_VSTATUS_CNTL_MASK                      (3 << 16)
-#define AVIVO_D1VGA_CONTROL         0x0330
+#define AVIVO_D1VGA_CONTROL					0x0330
 #       define AVIVO_DVGA_CONTROL_MODE_ENABLE (1<<0)
 #       define AVIVO_DVGA_CONTROL_TIMING_SELECT (1<<8)
 #       define AVIVO_DVGA_CONTROL_SYNC_POLARITY_SELECT (1<<9)
 #       define AVIVO_DVGA_CONTROL_OVERSCAN_TIMING_SELECT (1<<10)
 #       define AVIVO_DVGA_CONTROL_OVERSCAN_COLOR_EN (1<<16)
 #       define AVIVO_DVGA_CONTROL_ROTATE (1<<24)
-#define AVIVO_D2VGA_CONTROL         0x0338
+#define AVIVO_D2VGA_CONTROL					0x0338
 
 #define AVIVO_EXT1_PPLL_REF_DIV_SRC                             0x400
 #define AVIVO_EXT1_PPLL_REF_DIV                                 0x404
@@ -331,14 +331,14 @@
 #define AVIVO_PCLK_CRTC1_CNTL                                   0x480
 #define AVIVO_PCLK_CRTC2_CNTL                                   0x484
 
-#define AVIVO_D1CRTC_H_TOTAL          0x6000
+#define AVIVO_D1CRTC_H_TOTAL					0x6000
 #define AVIVO_D1CRTC_H_BLANK_START_END                          0x6004
 #define AVIVO_D1CRTC_H_SYNC_A                                   0x6008
 #define AVIVO_D1CRTC_H_SYNC_A_CNTL                              0x600c
 #define AVIVO_D1CRTC_H_SYNC_B                                   0x6010
 #define AVIVO_D1CRTC_H_SYNC_B_CNTL                              0x6014
 
-#define AVIVO_D1CRTC_V_TOTAL          0x6020
+#define AVIVO_D1CRTC_V_TOTAL					0x6020
 #define AVIVO_D1CRTC_V_BLANK_START_END                          0x6024
 #define AVIVO_D1CRTC_V_SYNC_A                                   0x6028
 #define AVIVO_D1CRTC_V_SYNC_A_CNTL                              0x602c
@@ -478,19 +478,19 @@
 #define AVIVO_D1MODE_EXT_OVERSCAN_TOP_BOTTOM    0x658c
 
 #define AVIVO_D1SCL_SCALER_ENABLE               0x6590
-#define AVIVO_D1SCL_SCALER_TAP_CONTROL    0x6594
+#define AVIVO_D1SCL_SCALER_TAP_CONTROL		0x6594
 #define AVIVO_D1SCL_UPDATE                      0x65cc
 #       define AVIVO_D1SCL_UPDATE_LOCK          (1 << 16)
 
 /* second crtc */
-#define AVIVO_D2CRTC_H_TOTAL          0x6800
+#define AVIVO_D2CRTC_H_TOTAL					0x6800
 #define AVIVO_D2CRTC_H_BLANK_START_END                          0x6804
 #define AVIVO_D2CRTC_H_SYNC_A                                   0x6808
 #define AVIVO_D2CRTC_H_SYNC_A_CNTL                              0x680c
 #define AVIVO_D2CRTC_H_SYNC_B                                   0x6810
 #define AVIVO_D2CRTC_H_SYNC_B_CNTL                              0x6814
 
-#define AVIVO_D2CRTC_V_TOTAL          0x6820
+#define AVIVO_D2CRTC_V_TOTAL					0x6820
 #define AVIVO_D2CRTC_V_BLANK_START_END                          0x6824
 #define AVIVO_D2CRTC_V_SYNC_A                                   0x6828
 #define AVIVO_D2CRTC_V_SYNC_A_CNTL                              0x682c
@@ -534,40 +534,40 @@
 #define AVIVO_D2MODE_EXT_OVERSCAN_TOP_BOTTOM    0x6d8c
 
 #define AVIVO_D2SCL_SCALER_ENABLE               0x6d90
-#define AVIVO_D2SCL_SCALER_TAP_CONTROL    0x6d94
+#define AVIVO_D2SCL_SCALER_TAP_CONTROL		0x6d94
 
-#define AVIVO_DDIA_BIT_DEPTH_CONTROL        0x7214
+#define AVIVO_DDIA_BIT_DEPTH_CONTROL				0x7214
 
-#define AVIVO_DACA_ENABLE         0x7800
-# define AVIVO_DAC_ENABLE       (1 << 0)
-#define AVIVO_DACA_SOURCE_SELECT        0x7804
+#define AVIVO_DACA_ENABLE					0x7800
+#	define AVIVO_DAC_ENABLE				(1 << 0)
+#define AVIVO_DACA_SOURCE_SELECT				0x7804
 #       define AVIVO_DAC_SOURCE_CRTC1                   (0 << 0)
 #       define AVIVO_DAC_SOURCE_CRTC2                   (1 << 0)
 #       define AVIVO_DAC_SOURCE_TV                      (2 << 0)
 
-#define AVIVO_DACA_FORCE_OUTPUT_CNTL        0x783c
+#define AVIVO_DACA_FORCE_OUTPUT_CNTL				0x783c
 # define AVIVO_DACA_FORCE_OUTPUT_CNTL_FORCE_DATA_EN             (1 << 0)
 # define AVIVO_DACA_FORCE_OUTPUT_CNTL_DATA_SEL_SHIFT            (8)
 # define AVIVO_DACA_FORCE_OUTPUT_CNTL_DATA_SEL_BLUE             (1 << 0)
 # define AVIVO_DACA_FORCE_OUTPUT_CNTL_DATA_SEL_GREEN            (1 << 1)
 # define AVIVO_DACA_FORCE_OUTPUT_CNTL_DATA_SEL_RED              (1 << 2)
 # define AVIVO_DACA_FORCE_OUTPUT_CNTL_DATA_ON_BLANKB_ONLY       (1 << 24)
-#define AVIVO_DACA_POWERDOWN          0x7850
+#define AVIVO_DACA_POWERDOWN					0x7850
 # define AVIVO_DACA_POWERDOWN_POWERDOWN                         (1 << 0)
 # define AVIVO_DACA_POWERDOWN_BLUE                              (1 << 8)
 # define AVIVO_DACA_POWERDOWN_GREEN                             (1 << 16)
 # define AVIVO_DACA_POWERDOWN_RED                               (1 << 24)
 
-#define AVIVO_DACB_ENABLE         0x7a00
-#define AVIVO_DACB_SOURCE_SELECT        0x7a04
-#define AVIVO_DACB_FORCE_OUTPUT_CNTL        0x7a3c
+#define AVIVO_DACB_ENABLE					0x7a00
+#define AVIVO_DACB_SOURCE_SELECT				0x7a04
+#define AVIVO_DACB_FORCE_OUTPUT_CNTL				0x7a3c
 # define AVIVO_DACB_FORCE_OUTPUT_CNTL_FORCE_DATA_EN             (1 << 0)
 # define AVIVO_DACB_FORCE_OUTPUT_CNTL_DATA_SEL_SHIFT            (8)
 # define AVIVO_DACB_FORCE_OUTPUT_CNTL_DATA_SEL_BLUE             (1 << 0)
 # define AVIVO_DACB_FORCE_OUTPUT_CNTL_DATA_SEL_GREEN            (1 << 1)
 # define AVIVO_DACB_FORCE_OUTPUT_CNTL_DATA_SEL_RED              (1 << 2)
 # define AVIVO_DACB_FORCE_OUTPUT_CNTL_DATA_ON_BLANKB_ONLY       (1 << 24)
-#define AVIVO_DACB_POWERDOWN          0x7a50
+#define AVIVO_DACB_POWERDOWN					0x7a50
 # define AVIVO_DACB_POWERDOWN_POWERDOWN                         (1 << 0)
 # define AVIVO_DACB_POWERDOWN_BLUE                              (1 << 8)
 # define AVIVO_DACB_POWERDOWN_GREEN                             (1 << 16)
@@ -582,11 +582,11 @@
 #   define AVIVO_TMDSA_CNTL_PIXEL_ENCODING       (1 << 16)
 #   define AVIVO_TMDSA_CNTL_DUAL_LINK_ENABLE     (1 << 24)
 #   define AVIVO_TMDSA_CNTL_SWAP                 (1 << 28)
-#define AVIVO_TMDSA_SOURCE_SELECT       0x7884
+#define AVIVO_TMDSA_SOURCE_SELECT				0x7884
 /* 78a8 appears to be some kind of (reasonably tolerant) clock?
  * 78d0 definitely hits the transmitter, definitely clock. */
 /* MYSTERY1 This appears to control dithering? */
-#define AVIVO_TMDSA_BIT_DEPTH_CONTROL   0x7894
+#define AVIVO_TMDSA_BIT_DEPTH_CONTROL		0x7894
 #   define AVIVO_TMDS_BIT_DEPTH_CONTROL_TRUNCATE_EN           (1 << 0)
 #   define AVIVO_TMDS_BIT_DEPTH_CONTROL_TRUNCATE_DEPTH        (1 << 4)
 #   define AVIVO_TMDS_BIT_DEPTH_CONTROL_SPATIAL_DITHER_EN     (1 << 8)
@@ -618,23 +618,23 @@
 #   define AVIVO_TMDSA_TRANSMITTER_ENABLE_LNKCEN_HPD_MASK     (1 << 17)
 #   define AVIVO_TMDSA_TRANSMITTER_ENABLE_LNKDEN_HPD_MASK     (1 << 18)
 
-#define AVIVO_TMDSA_TRANSMITTER_CONTROL       0x7910
-# define AVIVO_TMDSA_TRANSMITTER_CONTROL_PLL_ENABLE (1 << 0)
-# define AVIVO_TMDSA_TRANSMITTER_CONTROL_PLL_RESET  (1 << 1)
-# define AVIVO_TMDSA_TRANSMITTER_CONTROL_PLL_HPD_MASK_SHIFT (2)
-# define AVIVO_TMDSA_TRANSMITTER_CONTROL_IDSCKSEL         (1 << 4)
+#define AVIVO_TMDSA_TRANSMITTER_CONTROL				0x7910
+#	define AVIVO_TMDSA_TRANSMITTER_CONTROL_PLL_ENABLE	(1 << 0)
+#	define AVIVO_TMDSA_TRANSMITTER_CONTROL_PLL_RESET	(1 << 1)
+#	define AVIVO_TMDSA_TRANSMITTER_CONTROL_PLL_HPD_MASK_SHIFT	(2)
+#	define AVIVO_TMDSA_TRANSMITTER_CONTROL_IDSCKSEL	        (1 << 4)
 #       define AVIVO_TMDSA_TRANSMITTER_CONTROL_BGSLEEP          (1 << 5)
-# define AVIVO_TMDSA_TRANSMITTER_CONTROL_PLL_PWRUP_SEQ_EN (1 << 6)
-# define AVIVO_TMDSA_TRANSMITTER_CONTROL_TMCLK          (1 << 8)
-# define AVIVO_TMDSA_TRANSMITTER_CONTROL_TMCLK_FROM_PADS  (1 << 13)
-# define AVIVO_TMDSA_TRANSMITTER_CONTROL_TDCLK          (1 << 14)
-# define AVIVO_TMDSA_TRANSMITTER_CONTROL_TDCLK_FROM_PADS  (1 << 15)
+#	define AVIVO_TMDSA_TRANSMITTER_CONTROL_PLL_PWRUP_SEQ_EN	(1 << 6)
+#	define AVIVO_TMDSA_TRANSMITTER_CONTROL_TMCLK	        (1 << 8)
+#	define AVIVO_TMDSA_TRANSMITTER_CONTROL_TMCLK_FROM_PADS	(1 << 13)
+#	define AVIVO_TMDSA_TRANSMITTER_CONTROL_TDCLK	        (1 << 14)
+#	define AVIVO_TMDSA_TRANSMITTER_CONTROL_TDCLK_FROM_PADS	(1 << 15)
 #       define AVIVO_TMDSA_TRANSMITTER_CONTROL_CLK_PATTERN_SHIFT (16)
-# define AVIVO_TMDSA_TRANSMITTER_CONTROL_BYPASS_PLL (1 << 28)
+#	define AVIVO_TMDSA_TRANSMITTER_CONTROL_BYPASS_PLL	(1 << 28)
 #       define AVIVO_TMDSA_TRANSMITTER_CONTROL_USE_CLK_DATA     (1 << 29)
-# define AVIVO_TMDSA_TRANSMITTER_CONTROL_INPUT_TEST_CLK_SEL (1 << 31)
+#	define AVIVO_TMDSA_TRANSMITTER_CONTROL_INPUT_TEST_CLK_SEL	(1 << 31)
 
-#define AVIVO_LVTMA_CNTL          0x7a80
+#define AVIVO_LVTMA_CNTL					0x7a80
 #   define AVIVO_LVTMA_CNTL_ENABLE               (1 << 0)
 #   define AVIVO_LVTMA_CNTL_HDMI_EN              (1 << 2)
 #   define AVIVO_LVTMA_CNTL_HPD_MASK             (1 << 4)
@@ -666,8 +666,8 @@
 #define AVIVO_LVTMA_DATA_SYNCHRONIZATION                0x78d8
 #   define AVIVO_LVTMA_DATA_SYNCHRONIZATION_DSYNSEL           (1 << 0)
 #   define AVIVO_LVTMA_DATA_SYNCHRONIZATION_PFREQCHG          (1 << 8)
-#define R500_LVTMA_CLOCK_ENABLE     0x7b00
-#define R600_LVTMA_CLOCK_ENABLE     0x7b04
+#define R500_LVTMA_CLOCK_ENABLE			0x7b00
+#define R600_LVTMA_CLOCK_ENABLE			0x7b04
 
 #define R500_LVTMA_TRANSMITTER_ENABLE              0x7b04
 #define R600_LVTMA_TRANSMITTER_ENABLE              0x7b08
@@ -683,38 +683,38 @@
 #   define AVIVO_LVTMA_TRANSMITTER_ENABLE_LNKCEN_HPD_MASK     (1 << 17)
 #   define AVIVO_LVTMA_TRANSMITTER_ENABLE_LNKDEN_HPD_MASK     (1 << 18)
 
-#define R500_LVTMA_TRANSMITTER_CONTROL              0x7b10
-#define R600_LVTMA_TRANSMITTER_CONTROL              0x7b14
-# define AVIVO_LVTMA_TRANSMITTER_CONTROL_PLL_ENABLE   (1 << 0)
-# define AVIVO_LVTMA_TRANSMITTER_CONTROL_PLL_RESET    (1 << 1)
-# define AVIVO_LVTMA_TRANSMITTER_CONTROL_PLL_HPD_MASK_SHIFT (2)
-# define AVIVO_LVTMA_TRANSMITTER_CONTROL_IDSCKSEL           (1 << 4)
+#define R500_LVTMA_TRANSMITTER_CONTROL			        0x7b10
+#define R600_LVTMA_TRANSMITTER_CONTROL			        0x7b14
+#	define AVIVO_LVTMA_TRANSMITTER_CONTROL_PLL_ENABLE	  (1 << 0)
+#	define AVIVO_LVTMA_TRANSMITTER_CONTROL_PLL_RESET	  (1 << 1)
+#	define AVIVO_LVTMA_TRANSMITTER_CONTROL_PLL_HPD_MASK_SHIFT (2)
+#	define AVIVO_LVTMA_TRANSMITTER_CONTROL_IDSCKSEL	          (1 << 4)
 #       define AVIVO_LVTMA_TRANSMITTER_CONTROL_BGSLEEP            (1 << 5)
-# define AVIVO_LVTMA_TRANSMITTER_CONTROL_PLL_PWRUP_SEQ_EN   (1 << 6)
-# define AVIVO_LVTMA_TRANSMITTER_CONTROL_TMCLK            (1 << 8)
-# define AVIVO_LVTMA_TRANSMITTER_CONTROL_TMCLK_FROM_PADS    (1 << 13)
-# define AVIVO_LVTMA_TRANSMITTER_CONTROL_TDCLK            (1 << 14)
-# define AVIVO_LVTMA_TRANSMITTER_CONTROL_TDCLK_FROM_PADS    (1 << 15)
+#	define AVIVO_LVTMA_TRANSMITTER_CONTROL_PLL_PWRUP_SEQ_EN	  (1 << 6)
+#	define AVIVO_LVTMA_TRANSMITTER_CONTROL_TMCLK	          (1 << 8)
+#	define AVIVO_LVTMA_TRANSMITTER_CONTROL_TMCLK_FROM_PADS	  (1 << 13)
+#	define AVIVO_LVTMA_TRANSMITTER_CONTROL_TDCLK	          (1 << 14)
+#	define AVIVO_LVTMA_TRANSMITTER_CONTROL_TDCLK_FROM_PADS	  (1 << 15)
 #       define AVIVO_LVTMA_TRANSMITTER_CONTROL_CLK_PATTERN_SHIFT  (16)
-# define AVIVO_LVTMA_TRANSMITTER_CONTROL_BYPASS_PLL   (1 << 28)
+#	define AVIVO_LVTMA_TRANSMITTER_CONTROL_BYPASS_PLL	  (1 << 28)
 #       define AVIVO_LVTMA_TRANSMITTER_CONTROL_USE_CLK_DATA       (1 << 29)
-# define AVIVO_LVTMA_TRANSMITTER_CONTROL_INPUT_TEST_CLK_SEL (1 << 31)
+#	define AVIVO_LVTMA_TRANSMITTER_CONTROL_INPUT_TEST_CLK_SEL (1 << 31)
 
-#define R500_LVTMA_PWRSEQ_CNTL            0x7af0
-#define R600_LVTMA_PWRSEQ_CNTL            0x7af4
-# define AVIVO_LVTMA_PWRSEQ_EN              (1 << 0)
-# define AVIVO_LVTMA_PWRSEQ_PLL_ENABLE_MASK         (1 << 2)
-# define AVIVO_LVTMA_PWRSEQ_PLL_RESET_MASK          (1 << 3)
-# define AVIVO_LVTMA_PWRSEQ_TARGET_STATE            (1 << 4)
-# define AVIVO_LVTMA_SYNCEN             (1 << 8)
-# define AVIVO_LVTMA_SYNCEN_OVRD              (1 << 9)
-# define AVIVO_LVTMA_SYNCEN_POL             (1 << 10)
-# define AVIVO_LVTMA_DIGON              (1 << 16)
-# define AVIVO_LVTMA_DIGON_OVRD             (1 << 17)
-# define AVIVO_LVTMA_DIGON_POL              (1 << 18)
-# define AVIVO_LVTMA_BLON               (1 << 24)
-# define AVIVO_LVTMA_BLON_OVRD              (1 << 25)
-# define AVIVO_LVTMA_BLON_POL             (1 << 26)
+#define R500_LVTMA_PWRSEQ_CNTL						0x7af0
+#define R600_LVTMA_PWRSEQ_CNTL						0x7af4
+#	define AVIVO_LVTMA_PWRSEQ_EN					    (1 << 0)
+#	define AVIVO_LVTMA_PWRSEQ_PLL_ENABLE_MASK			    (1 << 2)
+#	define AVIVO_LVTMA_PWRSEQ_PLL_RESET_MASK			    (1 << 3)
+#	define AVIVO_LVTMA_PWRSEQ_TARGET_STATE				    (1 << 4)
+#	define AVIVO_LVTMA_SYNCEN					    (1 << 8)
+#	define AVIVO_LVTMA_SYNCEN_OVRD					    (1 << 9)
+#	define AVIVO_LVTMA_SYNCEN_POL					    (1 << 10)
+#	define AVIVO_LVTMA_DIGON					    (1 << 16)
+#	define AVIVO_LVTMA_DIGON_OVRD					    (1 << 17)
+#	define AVIVO_LVTMA_DIGON_POL					    (1 << 18)
+#	define AVIVO_LVTMA_BLON						    (1 << 24)
+#	define AVIVO_LVTMA_BLON_OVRD					    (1 << 25)
+#	define AVIVO_LVTMA_BLON_POL					    (1 << 26)
 
 #define R500_LVTMA_PWRSEQ_STATE                        0x7af4
 #define R600_LVTMA_PWRSEQ_STATE                        0x7af8
@@ -725,70 +725,70 @@
 #       define AVIVO_LVTMA_PWRSEQ_STATE_DONE                    (1 << 4)
 #       define AVIVO_LVTMA_PWRSEQ_STATE_STATUS_SHIFT            (8)
 
-#define AVIVO_LVDS_BACKLIGHT_CNTL     0x7af8
-# define AVIVO_LVDS_BACKLIGHT_CNTL_EN     (1 << 0)
-# define AVIVO_LVDS_BACKLIGHT_LEVEL_MASK    0x0000ff00
-# define AVIVO_LVDS_BACKLIGHT_LEVEL_SHIFT   8
+#define AVIVO_LVDS_BACKLIGHT_CNTL			0x7af8
+#	define AVIVO_LVDS_BACKLIGHT_CNTL_EN			(1 << 0)
+#	define AVIVO_LVDS_BACKLIGHT_LEVEL_MASK		0x0000ff00
+#	define AVIVO_LVDS_BACKLIGHT_LEVEL_SHIFT		8
 
-#define AVIVO_DVOA_BIT_DEPTH_CONTROL      0x7988
+#define AVIVO_DVOA_BIT_DEPTH_CONTROL			0x7988
 
 #define AVIVO_DC_GPIO_HPD_A                 0x7e94
 #define AVIVO_DC_GPIO_HPD_Y                 0x7e9c
 
-#define AVIVO_DC_I2C_STATUS1        0x7d30
-# define AVIVO_DC_I2C_DONE      (1 << 0)
-# define AVIVO_DC_I2C_NACK      (1 << 1)
-# define AVIVO_DC_I2C_HALT      (1 << 2)
-# define AVIVO_DC_I2C_GO              (1 << 3)
-#define AVIVO_DC_I2C_RESET        0x7d34
-# define AVIVO_DC_I2C_SOFT_RESET      (1 << 0)
-# define AVIVO_DC_I2C_ABORT     (1 << 8)
-#define AVIVO_DC_I2C_CONTROL1         0x7d38
-# define AVIVO_DC_I2C_START     (1 << 0)
-# define AVIVO_DC_I2C_STOP      (1 << 1)
-# define AVIVO_DC_I2C_RECEIVE     (1 << 2)
-# define AVIVO_DC_I2C_EN              (1 << 8)
-# define AVIVO_DC_I2C_PIN_SELECT(x)   ((x) << 16)
-# define AVIVO_SEL_DDC1             0
-# define AVIVO_SEL_DDC2             1
-# define AVIVO_SEL_DDC3             2
-#define AVIVO_DC_I2C_CONTROL2         0x7d3c
-# define AVIVO_DC_I2C_ADDR_COUNT(x)   ((x) << 0)
-# define AVIVO_DC_I2C_DATA_COUNT(x)   ((x) << 8)
-#define AVIVO_DC_I2C_CONTROL3         0x7d40
-# define AVIVO_DC_I2C_DATA_DRIVE_EN   (1 << 0)
-# define AVIVO_DC_I2C_DATA_DRIVE_SEL    (1 << 1)
-# define AVIVO_DC_I2C_CLK_DRIVE_EN    (1 << 7)
-# define AVIVO_DC_I2C_RD_INTRA_BYTE_DELAY(x)      ((x) << 8)
-# define AVIVO_DC_I2C_WR_INTRA_BYTE_DELAY(x)  ((x) << 16)
-# define AVIVO_DC_I2C_TIME_LIMIT(x)   ((x) << 24)
-#define AVIVO_DC_I2C_DATA         0x7d44
-#define AVIVO_DC_I2C_INTERRUPT_CONTROL      0x7d48
-# define AVIVO_DC_I2C_INTERRUPT_STATUS    (1 << 0)
-# define AVIVO_DC_I2C_INTERRUPT_AK    (1 << 8)
-# define AVIVO_DC_I2C_INTERRUPT_ENABLE    (1 << 16)
-#define AVIVO_DC_I2C_ARBITRATION      0x7d50
-# define AVIVO_DC_I2C_SW_WANTS_TO_USE_I2C   (1 << 0)
-# define AVIVO_DC_I2C_SW_CAN_USE_I2C    (1 << 1)
-# define AVIVO_DC_I2C_SW_DONE_USING_I2C   (1 << 8)
-# define AVIVO_DC_I2C_HW_NEEDS_I2C    (1 << 9)
-# define AVIVO_DC_I2C_ABORT_HDCP_I2C    (1 << 16)
-# define AVIVO_DC_I2C_HW_USING_I2C    (1 << 17)
+#define AVIVO_DC_I2C_STATUS1				0x7d30
+#	define AVIVO_DC_I2C_DONE			(1 << 0)
+#	define AVIVO_DC_I2C_NACK			(1 << 1)
+#	define AVIVO_DC_I2C_HALT			(1 << 2)
+#	define AVIVO_DC_I2C_GO			        (1 << 3)
+#define AVIVO_DC_I2C_RESET 				0x7d34
+#	define AVIVO_DC_I2C_SOFT_RESET			(1 << 0)
+#	define AVIVO_DC_I2C_ABORT			(1 << 8)
+#define AVIVO_DC_I2C_CONTROL1 				0x7d38
+#	define AVIVO_DC_I2C_START			(1 << 0)
+#	define AVIVO_DC_I2C_STOP			(1 << 1)
+#	define AVIVO_DC_I2C_RECEIVE			(1 << 2)
+#	define AVIVO_DC_I2C_EN			        (1 << 8)
+#	define AVIVO_DC_I2C_PIN_SELECT(x)		((x) << 16)
+#	define AVIVO_SEL_DDC1			        0
+#	define AVIVO_SEL_DDC2			        1
+#	define AVIVO_SEL_DDC3			        2
+#define AVIVO_DC_I2C_CONTROL2 				0x7d3c
+#	define AVIVO_DC_I2C_ADDR_COUNT(x)		((x) << 0)
+#	define AVIVO_DC_I2C_DATA_COUNT(x)		((x) << 8)
+#define AVIVO_DC_I2C_CONTROL3 				0x7d40
+#	define AVIVO_DC_I2C_DATA_DRIVE_EN		(1 << 0)
+#	define AVIVO_DC_I2C_DATA_DRIVE_SEL		(1 << 1)
+#	define AVIVO_DC_I2C_CLK_DRIVE_EN		(1 << 7)
+#	define AVIVO_DC_I2C_RD_INTRA_BYTE_DELAY(x)      ((x) << 8)
+#	define AVIVO_DC_I2C_WR_INTRA_BYTE_DELAY(x)	((x) << 16)
+#	define AVIVO_DC_I2C_TIME_LIMIT(x)		((x) << 24)
+#define AVIVO_DC_I2C_DATA 				0x7d44
+#define AVIVO_DC_I2C_INTERRUPT_CONTROL 			0x7d48
+#	define AVIVO_DC_I2C_INTERRUPT_STATUS		(1 << 0)
+#	define AVIVO_DC_I2C_INTERRUPT_AK		(1 << 8)
+#	define AVIVO_DC_I2C_INTERRUPT_ENABLE		(1 << 16)
+#define AVIVO_DC_I2C_ARBITRATION 			0x7d50
+#	define AVIVO_DC_I2C_SW_WANTS_TO_USE_I2C		(1 << 0)
+#	define AVIVO_DC_I2C_SW_CAN_USE_I2C		(1 << 1)
+#	define AVIVO_DC_I2C_SW_DONE_USING_I2C		(1 << 8)
+#	define AVIVO_DC_I2C_HW_NEEDS_I2C		(1 << 9)
+#	define AVIVO_DC_I2C_ABORT_HDCP_I2C		(1 << 16)
+#	define AVIVO_DC_I2C_HW_USING_I2C		(1 << 17)
 
-#define AVIVO_DC_GPIO_DDC1_MASK             0x7e40
-#define AVIVO_DC_GPIO_DDC1_A                    0x7e44
-#define AVIVO_DC_GPIO_DDC1_EN                     0x7e48
-#define AVIVO_DC_GPIO_DDC1_Y                    0x7e4c
+#define AVIVO_DC_GPIO_DDC1_MASK 		        0x7e40
+#define AVIVO_DC_GPIO_DDC1_A 		                0x7e44
+#define AVIVO_DC_GPIO_DDC1_EN 		                0x7e48
+#define AVIVO_DC_GPIO_DDC1_Y 		                0x7e4c
 
-#define AVIVO_DC_GPIO_DDC2_MASK             0x7e50
-#define AVIVO_DC_GPIO_DDC2_A                    0x7e54
-#define AVIVO_DC_GPIO_DDC2_EN                     0x7e58
-#define AVIVO_DC_GPIO_DDC2_Y                    0x7e5c
+#define AVIVO_DC_GPIO_DDC2_MASK 		        0x7e50
+#define AVIVO_DC_GPIO_DDC2_A 		                0x7e54
+#define AVIVO_DC_GPIO_DDC2_EN 		                0x7e58
+#define AVIVO_DC_GPIO_DDC2_Y 		                0x7e5c
 
-#define AVIVO_DC_GPIO_DDC3_MASK             0x7e60
-#define AVIVO_DC_GPIO_DDC3_A                    0x7e64
-#define AVIVO_DC_GPIO_DDC3_EN                     0x7e68
-#define AVIVO_DC_GPIO_DDC3_Y                    0x7e6c
+#define AVIVO_DC_GPIO_DDC3_MASK 		        0x7e60
+#define AVIVO_DC_GPIO_DDC3_A 		                0x7e64
+#define AVIVO_DC_GPIO_DDC3_EN 		                0x7e68
+#define AVIVO_DC_GPIO_DDC3_Y 		                0x7e6c
 
 #define AVIVO_DISP_INTERRUPT_STATUS                             0x7edc
 #       define AVIVO_D1_VBLANK_INTERRUPT                        (1 << 4)

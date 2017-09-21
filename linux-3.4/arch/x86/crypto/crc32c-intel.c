@@ -33,10 +33,10 @@
 #include <asm/cpufeature.h>
 #include <asm/cpu_device_id.h>
 
-#define CHKSUM_BLOCK_SIZE 1
-#define CHKSUM_DIGEST_SIZE  4
+#define CHKSUM_BLOCK_SIZE	1
+#define CHKSUM_DIGEST_SIZE	4
 
-#define SCALE_F sizeof(unsigned long)
+#define SCALE_F	sizeof(unsigned long)
 
 #ifdef CONFIG_X86_64
 #define REX_PRE "0x48, "
@@ -44,40 +44,40 @@
 #define REX_PRE
 #endif
 
-static u32 crc32c_intel_le_hw_byte (u32 crc, unsigned char const * data, size_t length)
+static u32 crc32c_intel_le_hw_byte(u32 crc, unsigned char const *data, size_t length)
 {
-  while (length--) {
-    __asm__ __volatile__ (
-      ".byte 0xf2, 0xf, 0x38, 0xf0, 0xf1"
-      :"=S" (crc)
-      :"0" (crc), "c" (*data)
-    );
-    data++;
-  }
-  
-  return crc;
+	while (length--) {
+		__asm__ __volatile__(
+			".byte 0xf2, 0xf, 0x38, 0xf0, 0xf1"
+			:"=S"(crc)
+			:"0"(crc), "c"(*data)
+		);
+		data++;
+	}
+
+	return crc;
 }
 
-static u32 __pure crc32c_intel_le_hw (u32 crc, unsigned char const * p, size_t len)
+static u32 __pure crc32c_intel_le_hw(u32 crc, unsigned char const *p, size_t len)
 {
-  unsigned int iquotient = len / SCALE_F;
-  unsigned int iremainder = len % SCALE_F;
-  unsigned long * ptmp = (unsigned long *) p;
-  
-  while (iquotient--) {
-    __asm__ __volatile__ (
-      ".byte 0xf2, " REX_PRE "0xf, 0x38, 0xf1, 0xf1;"
-      :"=S" (crc)
-      :"0" (crc), "c" (*ptmp)
-    );
-    ptmp++;
-  }
-  
-  if (iremainder)
-    crc = crc32c_intel_le_hw_byte (crc, (unsigned char *) ptmp,
-                                   iremainder);
-                                   
-  return crc;
+	unsigned int iquotient = len / SCALE_F;
+	unsigned int iremainder = len % SCALE_F;
+	unsigned long *ptmp = (unsigned long *)p;
+
+	while (iquotient--) {
+		__asm__ __volatile__(
+			".byte 0xf2, " REX_PRE "0xf, 0x38, 0xf1, 0xf1;"
+			:"=S"(crc)
+			:"0"(crc), "c"(*ptmp)
+		);
+		ptmp++;
+	}
+
+	if (iremainder)
+		crc = crc32c_intel_le_hw_byte(crc, (unsigned char *)ptmp,
+				 iremainder);
+
+	return crc;
 }
 
 /*
@@ -85,119 +85,119 @@ static u32 __pure crc32c_intel_le_hw (u32 crc, unsigned char const * p, size_t l
  * If your algorithm starts with ~0, then XOR with ~0 before you set
  * the seed.
  */
-static int crc32c_intel_setkey (struct crypto_shash * hash, const u8 * key,
-                                unsigned int keylen)
+static int crc32c_intel_setkey(struct crypto_shash *hash, const u8 *key,
+			unsigned int keylen)
 {
-  u32 * mctx = crypto_shash_ctx (hash);
-  
-  if (keylen != sizeof (u32) ) {
-    crypto_shash_set_flags (hash, CRYPTO_TFM_RES_BAD_KEY_LEN);
-    return -EINVAL;
-  }
-  *mctx = le32_to_cpup ( (__le32 *) key);
-  return 0;
+	u32 *mctx = crypto_shash_ctx(hash);
+
+	if (keylen != sizeof(u32)) {
+		crypto_shash_set_flags(hash, CRYPTO_TFM_RES_BAD_KEY_LEN);
+		return -EINVAL;
+	}
+	*mctx = le32_to_cpup((__le32 *)key);
+	return 0;
 }
 
-static int crc32c_intel_init (struct shash_desc * desc)
+static int crc32c_intel_init(struct shash_desc *desc)
 {
-  u32 * mctx = crypto_shash_ctx (desc->tfm);
-  u32 * crcp = shash_desc_ctx (desc);
-  
-  *crcp = *mctx;
-  
-  return 0;
+	u32 *mctx = crypto_shash_ctx(desc->tfm);
+	u32 *crcp = shash_desc_ctx(desc);
+
+	*crcp = *mctx;
+
+	return 0;
 }
 
-static int crc32c_intel_update (struct shash_desc * desc, const u8 * data,
-                                unsigned int len)
+static int crc32c_intel_update(struct shash_desc *desc, const u8 *data,
+			       unsigned int len)
 {
-  u32 * crcp = shash_desc_ctx (desc);
-  
-  *crcp = crc32c_intel_le_hw (*crcp, data, len);
-  return 0;
+	u32 *crcp = shash_desc_ctx(desc);
+
+	*crcp = crc32c_intel_le_hw(*crcp, data, len);
+	return 0;
 }
 
-static int __crc32c_intel_finup (u32 * crcp, const u8 * data, unsigned int len,
-                                 u8 * out)
+static int __crc32c_intel_finup(u32 *crcp, const u8 *data, unsigned int len,
+				u8 *out)
 {
-  * (__le32 *) out = ~cpu_to_le32 (crc32c_intel_le_hw (*crcp, data, len) );
-  return 0;
+	*(__le32 *)out = ~cpu_to_le32(crc32c_intel_le_hw(*crcp, data, len));
+	return 0;
 }
 
-static int crc32c_intel_finup (struct shash_desc * desc, const u8 * data,
-                               unsigned int len, u8 * out)
+static int crc32c_intel_finup(struct shash_desc *desc, const u8 *data,
+			      unsigned int len, u8 *out)
 {
-  return __crc32c_intel_finup (shash_desc_ctx (desc), data, len, out);
+	return __crc32c_intel_finup(shash_desc_ctx(desc), data, len, out);
 }
 
-static int crc32c_intel_final (struct shash_desc * desc, u8 * out)
+static int crc32c_intel_final(struct shash_desc *desc, u8 *out)
 {
-  u32 * crcp = shash_desc_ctx (desc);
-  
-  * (__le32 *) out = ~cpu_to_le32p (crcp);
-  return 0;
+	u32 *crcp = shash_desc_ctx(desc);
+
+	*(__le32 *)out = ~cpu_to_le32p(crcp);
+	return 0;
 }
 
-static int crc32c_intel_digest (struct shash_desc * desc, const u8 * data,
-                                unsigned int len, u8 * out)
+static int crc32c_intel_digest(struct shash_desc *desc, const u8 *data,
+			       unsigned int len, u8 *out)
 {
-  return __crc32c_intel_finup (crypto_shash_ctx (desc->tfm), data, len,
-                               out);
+	return __crc32c_intel_finup(crypto_shash_ctx(desc->tfm), data, len,
+				    out);
 }
 
-static int crc32c_intel_cra_init (struct crypto_tfm * tfm)
+static int crc32c_intel_cra_init(struct crypto_tfm *tfm)
 {
-  u32 * key = crypto_tfm_ctx (tfm);
-  
-  *key = ~0;
-  
-  return 0;
+	u32 *key = crypto_tfm_ctx(tfm);
+
+	*key = ~0;
+
+	return 0;
 }
 
 static struct shash_alg alg = {
-  .setkey     = crc32c_intel_setkey,
-  .init     = crc32c_intel_init,
-  .update     = crc32c_intel_update,
-  .final      = crc32c_intel_final,
-  .finup      = crc32c_intel_finup,
-  .digest     = crc32c_intel_digest,
-  .descsize   = sizeof (u32),
-  .digestsize   = CHKSUM_DIGEST_SIZE,
-  .base     = {
-    .cra_name   = "crc32c",
-    .cra_driver_name  = "crc32c-intel",
-    .cra_priority   = 200,
-    .cra_blocksize    = CHKSUM_BLOCK_SIZE,
-    .cra_ctxsize    = sizeof (u32),
-    .cra_module   = THIS_MODULE,
-    .cra_init   = crc32c_intel_cra_init,
-  }
+	.setkey			=	crc32c_intel_setkey,
+	.init			=	crc32c_intel_init,
+	.update			=	crc32c_intel_update,
+	.final			=	crc32c_intel_final,
+	.finup			=	crc32c_intel_finup,
+	.digest			=	crc32c_intel_digest,
+	.descsize		=	sizeof(u32),
+	.digestsize		=	CHKSUM_DIGEST_SIZE,
+	.base			=	{
+		.cra_name		=	"crc32c",
+		.cra_driver_name	=	"crc32c-intel",
+		.cra_priority		=	200,
+		.cra_blocksize		=	CHKSUM_BLOCK_SIZE,
+		.cra_ctxsize		=	sizeof(u32),
+		.cra_module		=	THIS_MODULE,
+		.cra_init		=	crc32c_intel_cra_init,
+	}
 };
 
 static const struct x86_cpu_id crc32c_cpu_id[] = {
-  X86_FEATURE_MATCH (X86_FEATURE_XMM4_2),
-  {}
+	X86_FEATURE_MATCH(X86_FEATURE_XMM4_2),
+	{}
 };
-MODULE_DEVICE_TABLE (x86cpu, crc32c_cpu_id);
+MODULE_DEVICE_TABLE(x86cpu, crc32c_cpu_id);
 
-static int __init crc32c_intel_mod_init (void)
+static int __init crc32c_intel_mod_init(void)
 {
-  if (!x86_match_cpu (crc32c_cpu_id) )
-  { return -ENODEV; }
-  return crypto_register_shash (&alg);
+	if (!x86_match_cpu(crc32c_cpu_id))
+		return -ENODEV;
+	return crypto_register_shash(&alg);
 }
 
-static void __exit crc32c_intel_mod_fini (void)
+static void __exit crc32c_intel_mod_fini(void)
 {
-  crypto_unregister_shash (&alg);
+	crypto_unregister_shash(&alg);
 }
 
-module_init (crc32c_intel_mod_init);
-module_exit (crc32c_intel_mod_fini);
+module_init(crc32c_intel_mod_init);
+module_exit(crc32c_intel_mod_fini);
 
-MODULE_AUTHOR ("Austin Zhang <austin.zhang@intel.com>, Kent Liu <kent.liu@intel.com>");
-MODULE_DESCRIPTION ("CRC32c (Castagnoli) optimization using Intel Hardware.");
-MODULE_LICENSE ("GPL");
+MODULE_AUTHOR("Austin Zhang <austin.zhang@intel.com>, Kent Liu <kent.liu@intel.com>");
+MODULE_DESCRIPTION("CRC32c (Castagnoli) optimization using Intel Hardware.");
+MODULE_LICENSE("GPL");
 
-MODULE_ALIAS ("crc32c");
-MODULE_ALIAS ("crc32c-intel");
+MODULE_ALIAS("crc32c");
+MODULE_ALIAS("crc32c-intel");

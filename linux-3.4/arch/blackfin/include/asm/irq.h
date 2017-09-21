@@ -13,7 +13,7 @@
 #include <linux/irqflags.h>
 
 /* IRQs that may be used by external irq_chip controllers */
-#define NR_SPARE_IRQS 32
+#define NR_SPARE_IRQS	32
 
 #include <mach/anomaly.h>
 
@@ -27,15 +27,15 @@
 #endif
 
 #define idle_with_irq_disabled() \
-  __asm__ __volatile__( \
-                        NOP_PAD_ANOMALY_05000244 \
-                        ".align 8;" \
-                        "sti %0;" \
-                        "idle;" \
-                        : \
-                        : "d" (bfin_irq_flags) \
-                      )
+	__asm__ __volatile__( \
+		NOP_PAD_ANOMALY_05000244 \
+		".align 8;" \
+		"sti %0;" \
+		"idle;" \
+		: \
+		: "d" (bfin_irq_flags) \
+	)
 
 #include <asm-generic/irq.h>
 
-#endif        /* _BFIN_IRQ_H_ */
+#endif				/* _BFIN_IRQ_H_ */

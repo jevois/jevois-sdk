@@ -19,165 +19,165 @@
 #include "fp_trig.h"
 
 struct fp_ext *
-fp_fsin (struct fp_ext * dest, struct fp_ext * src)
+fp_fsin(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("fsin\n");
-  
-  fp_monadic_check (dest, src);
-  
-  return dest;
+	uprint("fsin\n");
+
+	fp_monadic_check(dest, src);
+
+	return dest;
 }
 
 struct fp_ext *
-fp_fcos (struct fp_ext * dest, struct fp_ext * src)
+fp_fcos(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("fcos\n");
-  
-  fp_monadic_check (dest, src);
-  
-  return dest;
+	uprint("fcos\n");
+
+	fp_monadic_check(dest, src);
+
+	return dest;
 }
 
 struct fp_ext *
-fp_ftan (struct fp_ext * dest, struct fp_ext * src)
+fp_ftan(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("ftan\n");
-  
-  fp_monadic_check (dest, src);
-  
-  return dest;
+	uprint("ftan\n");
+
+	fp_monadic_check(dest, src);
+
+	return dest;
 }
 
 struct fp_ext *
-fp_fasin (struct fp_ext * dest, struct fp_ext * src)
+fp_fasin(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("fasin\n");
-  
-  fp_monadic_check (dest, src);
-  
-  return dest;
+	uprint("fasin\n");
+
+	fp_monadic_check(dest, src);
+
+	return dest;
 }
 
 struct fp_ext *
-fp_facos (struct fp_ext * dest, struct fp_ext * src)
+fp_facos(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("facos\n");
-  
-  fp_monadic_check (dest, src);
-  
-  return dest;
+	uprint("facos\n");
+
+	fp_monadic_check(dest, src);
+
+	return dest;
 }
 
 struct fp_ext *
-fp_fatan (struct fp_ext * dest, struct fp_ext * src)
+fp_fatan(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("fatan\n");
-  
-  fp_monadic_check (dest, src);
-  
-  return dest;
+	uprint("fatan\n");
+
+	fp_monadic_check(dest, src);
+
+	return dest;
 }
 
 struct fp_ext *
-fp_fsinh (struct fp_ext * dest, struct fp_ext * src)
+fp_fsinh(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("fsinh\n");
-  
-  fp_monadic_check (dest, src);
-  
-  return dest;
+	uprint("fsinh\n");
+
+	fp_monadic_check(dest, src);
+
+	return dest;
 }
 
 struct fp_ext *
-fp_fcosh (struct fp_ext * dest, struct fp_ext * src)
+fp_fcosh(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("fcosh\n");
-  
-  fp_monadic_check (dest, src);
-  
-  return dest;
+	uprint("fcosh\n");
+
+	fp_monadic_check(dest, src);
+
+	return dest;
 }
 
 struct fp_ext *
-fp_ftanh (struct fp_ext * dest, struct fp_ext * src)
+fp_ftanh(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("ftanh\n");
-  
-  fp_monadic_check (dest, src);
-  
-  return dest;
+	uprint("ftanh\n");
+
+	fp_monadic_check(dest, src);
+
+	return dest;
 }
 
 struct fp_ext *
-fp_fatanh (struct fp_ext * dest, struct fp_ext * src)
+fp_fatanh(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("fatanh\n");
-  
-  fp_monadic_check (dest, src);
-  
-  return dest;
+	uprint("fatanh\n");
+
+	fp_monadic_check(dest, src);
+
+	return dest;
 }
 
 struct fp_ext *
-fp_fsincos0 (struct fp_ext * dest, struct fp_ext * src)
+fp_fsincos0(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("fsincos0\n");
-  
-  return dest;
+	uprint("fsincos0\n");
+
+	return dest;
 }
 
 struct fp_ext *
-fp_fsincos1 (struct fp_ext * dest, struct fp_ext * src)
+fp_fsincos1(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("fsincos1\n");
-  
-  return dest;
+	uprint("fsincos1\n");
+
+	return dest;
 }
 
 struct fp_ext *
-fp_fsincos2 (struct fp_ext * dest, struct fp_ext * src)
+fp_fsincos2(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("fsincos2\n");
-  
-  return dest;
+	uprint("fsincos2\n");
+
+	return dest;
 }
 
 struct fp_ext *
-fp_fsincos3 (struct fp_ext * dest, struct fp_ext * src)
+fp_fsincos3(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("fsincos3\n");
-  
-  return dest;
+	uprint("fsincos3\n");
+
+	return dest;
 }
 
 struct fp_ext *
-fp_fsincos4 (struct fp_ext * dest, struct fp_ext * src)
+fp_fsincos4(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("fsincos4\n");
-  
-  return dest;
+	uprint("fsincos4\n");
+
+	return dest;
 }
 
 struct fp_ext *
-fp_fsincos5 (struct fp_ext * dest, struct fp_ext * src)
+fp_fsincos5(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("fsincos5\n");
-  
-  return dest;
+	uprint("fsincos5\n");
+
+	return dest;
 }
 
 struct fp_ext *
-fp_fsincos6 (struct fp_ext * dest, struct fp_ext * src)
+fp_fsincos6(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("fsincos6\n");
-  
-  return dest;
+	uprint("fsincos6\n");
+
+	return dest;
 }
 
 struct fp_ext *
-fp_fsincos7 (struct fp_ext * dest, struct fp_ext * src)
+fp_fsincos7(struct fp_ext *dest, struct fp_ext *src)
 {
-  uprint ("fsincos7\n");
-  
-  return dest;
+	uprint("fsincos7\n");
+
+	return dest;
 }

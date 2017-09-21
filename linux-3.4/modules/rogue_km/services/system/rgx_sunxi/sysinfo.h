@@ -59,13 +59,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    - one heap for allocations holding META code memory
    - one heap for allocations holding secured DRM data
 */
-#define SYS_PHYS_HEAP_COUNT   3
+#define SYS_PHYS_HEAP_COUNT		3
 #else
-#define SYS_PHYS_HEAP_COUNT   1
+#define SYS_PHYS_HEAP_COUNT		1
 #endif
 
 #if defined(__linux__)
 #define SYS_RGX_DEV_NAME    "rgxsunxi"
 #endif
 
-#endif  /* !defined(__SYSINFO_H__) */
+#endif	/* !defined(__SYSINFO_H__) */

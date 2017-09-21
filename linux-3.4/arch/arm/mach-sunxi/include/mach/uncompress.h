@@ -2,7 +2,7 @@
  *  arch/arm/mach-sun6i/include/mach/uncompress.h
  *
  * Copyright (c) Allwinner.  All rights reserved.
- * Benn Huang (benn@allwinnertech.com)
+ * Benn Huang (benn@allwinnertech.com) 
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,22 +27,22 @@
 #include <mach/platform.h>
 #include <linux/bitops.h>
 
-#define UART_TF   (*(volatile unsigned long*)(SUNXI_UART0_PBASE + 0x00))
-#define UART_SR   (*(volatile unsigned long*)(SUNXI_UART0_PBASE + 0x7C))
-#define TX_BUSY   BIT(1)
+#define UART_TF		(*(volatile unsigned long*)(SUNXI_UART0_PBASE + 0x00))
+#define UART_SR		(*(volatile unsigned long*)(SUNXI_UART0_PBASE + 0x7C))
+#define TX_BUSY		BIT(1)
 /*
  * put the character through uart
  */
-static inline void putc (int c)
+static inline void putc(int c)
 {
-  #if 0
-  while (! (UART_SR & TX_BUSY) )
-  { cpu_relax(); }
-  UART_TF = c;
-  #endif
+#if 0
+	while(!(UART_SR & TX_BUSY))
+		cpu_relax();
+	UART_TF = c;
+#endif
 }
-static inline void flush (void) {}
-static inline void arch_decomp_setup (void) {}
+static inline void flush(void) {}
+static inline void arch_decomp_setup(void) {}
 
 #define arch_decomp_setup()
 #define arch_decomp_wdog()

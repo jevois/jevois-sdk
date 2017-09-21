@@ -3,8 +3,8 @@
  * Stefan Roese, DENX Software Engineering, sr@denx.de.
  *
  * based on a the Linux rtc-x1207.c driver which is:
- *  Copyright 2004 Karen Spearel
- *  Copyright 2005 Alessandro Zummo
+ *	Copyright 2004 Karen Spearel
+ *	Copyright 2005 Alessandro Zummo
  *
  * Information and datasheet:
  * http://www.intersil.com/cda/deviceinfo/0,1477,X1205,00.html
@@ -32,7 +32,7 @@
  * Date & Time support for Xicor/Intersil X1205 RTC
  */
 
-/* #define  DEBUG */
+/* #define	DEBUG	*/
 
 #include <common.h>
 #include <command.h>
@@ -45,33 +45,33 @@
  * rtc_time -- month 0-11, hour 0-23, yr = calendar year-epoch
  * Epoch is initialized as 2000. Time is set to UTC.
  */
-int rtc_get (struct rtc_time * tm)
+int rtc_get(struct rtc_time *tm)
 {
-  return 0;
+	return 0;
 }
 
-int rtc_set (struct rtc_time * tm)
+int rtc_set(struct rtc_time *tm)
 {
-  return 0;
+	return 0;
 }
 
-void rtc_reset (void)
+void rtc_reset(void)
 {
-  /*
-   * Nothing to do
-   */
+	/*
+	 * Nothing to do
+	 */
 }
 
-void rtc_disable (void)
+void rtc_disable(void)
 {
-  #ifndef CONFIG_ARCH_SUN9IW1P1
-  struct sunxi_rtc_regs * rtc = (struct sunxi_rtc_regs *) SUNXI_RTC_BASE;
-  
-  rtc->alarm0_irq_enable = 0;
-  rtc->alarm0_irq_status = 1;
-  
-  rtc->alarm1_irq_enable = 0;
-  rtc->alarm1_irq_status = 1;
-  #endif
-  return ;
+#ifndef CONFIG_ARCH_SUN9IW1P1
+    struct sunxi_rtc_regs *rtc = (struct sunxi_rtc_regs *)SUNXI_RTC_BASE;
+
+	rtc->alarm0_irq_enable = 0;
+	rtc->alarm0_irq_status = 1;
+
+	rtc->alarm1_irq_enable = 0;
+	rtc->alarm1_irq_status = 1;
+#endif
+	return ;
 }

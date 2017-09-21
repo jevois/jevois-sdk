@@ -25,21 +25,21 @@
 #define __ASM_ARCH_CLOCK_H
 
 enum mxc_clock {
-  MXC_ARM_CLK,
-  MXC_IPG_CLK,
-  MXC_IPG_PERCLK,
-  MXC_CSPI_CLK,
-  MXC_UART_CLK,
+	MXC_ARM_CLK,
+	MXC_IPG_CLK,
+	MXC_IPG_PERCLK,
+	MXC_CSPI_CLK,
+	MXC_UART_CLK,
 };
 
-unsigned int mxc_get_clock (enum mxc_clock clk);
-extern u32 imx_get_uartclk (void);
-extern void mx31_gpio_mux (unsigned long mode);
-extern void mx31_set_pad (enum iomux_pins pin, u32 config);
+unsigned int mxc_get_clock(enum mxc_clock clk);
+extern u32 imx_get_uartclk(void);
+extern void mx31_gpio_mux(unsigned long mode);
+extern void mx31_set_pad(enum iomux_pins pin, u32 config);
 
-void mx31_uart1_hw_init (void);
-void mx31_spi2_hw_init (void);
-void mxc_hw_watchdog_enable (void);
-void mxc_hw_watchdog_reset (void);
+void mx31_uart1_hw_init(void);
+void mx31_spi2_hw_init(void);
+void mxc_hw_watchdog_enable(void);
+void mxc_hw_watchdog_reset(void);
 
 #endif /* __ASM_ARCH_CLOCK_H */

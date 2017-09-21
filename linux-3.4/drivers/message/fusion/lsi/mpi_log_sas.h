@@ -12,8 +12,8 @@
 #ifndef IOPI_IOCLOGINFO_H_INCLUDED
 #define IOPI_IOCLOGINFO_H_INCLUDED
 
-#define SAS_LOGINFO_NEXUS_LOSS    0x31170000
-#define SAS_LOGINFO_MASK    0xFFFF0000
+#define SAS_LOGINFO_NEXUS_LOSS		0x31170000
+#define SAS_LOGINFO_MASK		0xFFFF0000
 
 /****************************************************************************/
 /*  IOC LOGINFO defines, 0x00000000 - 0x0FFFFFFF                            */

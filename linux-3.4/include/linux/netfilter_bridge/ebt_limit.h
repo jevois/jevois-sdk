@@ -12,13 +12,13 @@
    seconds, or one every 59 hours. */
 
 struct ebt_limit_info {
-  __u32 avg;    /* Average secs between packets * scale */
-  __u32 burst;  /* Period multiplier for upper limit. */
-  
-  /* Used internally by the kernel */
-  unsigned long prev;
-  __u32 credit;
-  __u32 credit_cap, cost;
+	__u32 avg;    /* Average secs between packets * scale */
+	__u32 burst;  /* Period multiplier for upper limit. */
+
+	/* Used internally by the kernel */
+	unsigned long prev;
+	__u32 credit;
+	__u32 credit_cap, cost;
 };
 
 #endif

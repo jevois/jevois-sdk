@@ -10,24 +10,24 @@
 
 #define STATUS_PHS_COMPRESSED       0xa1
 #define STATUS_PHS_NOCOMPRESSION    0xa2
-#define APPLY_PHS         1
-#define MAX_NO_BIT          7
-#define ZERO_PHSI         0
-#define VERIFY            0
+#define APPLY_PHS					1
+#define MAX_NO_BIT					7
+#define ZERO_PHSI					0
+#define VERIFY						0
 #define SIZE_MULTIPLE_32             4
-#define UNCOMPRESSED_PACKET      0
-#define DYNAMIC                0
-#define SUPPRESS           0x80
-#define NO_CLASSIFIER_MATCH      0
-#define SEND_PACKET_UNCOMPRESSED   0
-#define PHSI_IS_ZERO         0
-#define PHSI_LEN           1
-#define ERROR_LEN          0
-#define PHS_BUFFER_SIZE        1532
+#define UNCOMPRESSED_PACKET			 0
+#define DYNAMIC         			 0
+#define SUPPRESS					 0x80
+#define NO_CLASSIFIER_MATCH			 0
+#define SEND_PACKET_UNCOMPRESSED	 0
+#define PHSI_IS_ZERO				 0
+#define PHSI_LEN					 1
+#define ERROR_LEN					 0
+#define PHS_BUFFER_SIZE				 1532
 
 
 #define MAX_PHSRULE_PER_SF       20
-#define MAX_SERVICEFLOWS       17
+#define MAX_SERVICEFLOWS			 17
 
 #define PHS_SUCCESS                       0
 #define ERR_PHS_INVALID_DEVICE_EXETENSION  0x800
@@ -43,73 +43,73 @@
 
 typedef struct _S_PHS_RULE
 {
-  B_UINT8                         u8PHSI;
-  B_UINT8                         u8PHSFLength;
-  B_UINT8                         u8PHSF[MAX_PHS_LENGTHS];
-  B_UINT8                         u8PHSMLength;
-  B_UINT8                         u8PHSM[MAX_PHS_LENGTHS];
-  B_UINT8                         u8PHSS;
-  B_UINT8                         u8PHSV;
-  B_UINT8                         u8RefCnt;
-  B_UINT8             bUnclassifiedPHSRule;
-  
-  B_UINT8             u8Reserved[3];
-  
-  LONG              PHSModifiedBytes;
-  ULONG               PHSModifiedNumPackets;
-  ULONG                 PHSErrorNumPackets;
-} S_PHS_RULE;
+    B_UINT8                         u8PHSI;
+    B_UINT8                         u8PHSFLength;
+    B_UINT8                         u8PHSF[MAX_PHS_LENGTHS];
+    B_UINT8                         u8PHSMLength;
+    B_UINT8                         u8PHSM[MAX_PHS_LENGTHS];
+    B_UINT8                         u8PHSS;
+    B_UINT8                         u8PHSV;
+    B_UINT8                         u8RefCnt;
+    B_UINT8							bUnclassifiedPHSRule;
+
+	B_UINT8							u8Reserved[3];
+
+  	LONG							PHSModifiedBytes;
+	ULONG       				PHSModifiedNumPackets;
+	ULONG           			PHSErrorNumPackets;
+}S_PHS_RULE;
 
 
 typedef enum _E_CLASSIFIER_ENTRY_CONTEXT
 {
-  eActiveClassifierRuleContext,
-  eOldClassifierRuleContext
-} E_CLASSIFIER_ENTRY_CONTEXT;
+	eActiveClassifierRuleContext,
+	eOldClassifierRuleContext
+}E_CLASSIFIER_ENTRY_CONTEXT;
 
 typedef struct _S_CLASSIFIER_ENTRY
 {
-  B_UINT8  bUsed;
-  B_UINT16 uiClassifierRuleId;
-  B_UINT8  u8PHSI;
-  S_PHS_RULE * pstPhsRule;
-  B_UINT8 bUnclassifiedPHSRule;
-  
-} S_CLASSIFIER_ENTRY;
+	B_UINT8  bUsed;
+	B_UINT16 uiClassifierRuleId;
+	B_UINT8  u8PHSI;
+	S_PHS_RULE *pstPhsRule;
+	B_UINT8	bUnclassifiedPHSRule;
+
+}S_CLASSIFIER_ENTRY;
 
 
 typedef struct _S_CLASSIFIER_TABLE
 {
-  B_UINT16 uiTotalClassifiers;
-  S_CLASSIFIER_ENTRY stActivePhsRulesList[MAX_PHSRULE_PER_SF];
-  S_CLASSIFIER_ENTRY stOldPhsRulesList[MAX_PHSRULE_PER_SF];
-  B_UINT16    uiOldestPhsRuleIndex;
-  
-} S_CLASSIFIER_TABLE;
+	B_UINT16 uiTotalClassifiers;
+	S_CLASSIFIER_ENTRY stActivePhsRulesList[MAX_PHSRULE_PER_SF];
+	S_CLASSIFIER_ENTRY stOldPhsRulesList[MAX_PHSRULE_PER_SF];
+	B_UINT16    uiOldestPhsRuleIndex;
+
+}S_CLASSIFIER_TABLE;
 
 
 typedef struct _S_SERVICEFLOW_ENTRY
 {
-  B_UINT8   bUsed;
-  B_UINT16    uiVcid;
-  S_CLASSIFIER_TABLE * pstClassifierTable;
-} S_SERVICEFLOW_ENTRY;
+	B_UINT8		bUsed;
+	B_UINT16    uiVcid;
+	S_CLASSIFIER_TABLE  *pstClassifierTable;
+}S_SERVICEFLOW_ENTRY;
 
 typedef struct _S_SERVICEFLOW_TABLE
 {
-  B_UINT16 uiTotalServiceFlows;
-  S_SERVICEFLOW_ENTRY stSFList[MAX_SERVICEFLOWS];
-  
-} S_SERVICEFLOW_TABLE;
+	B_UINT16 uiTotalServiceFlows;
+	S_SERVICEFLOW_ENTRY stSFList[MAX_SERVICEFLOWS];
+
+}S_SERVICEFLOW_TABLE;
 
 
 typedef struct _PHS_DEVICE_EXTENSION
 {
-  /* PHS Specific data*/
-  S_SERVICEFLOW_TABLE * pstServiceFlowPhsRulesTable;
-  void  * CompressedTxBuffer;
-  void  * UnCompressedRxBuffer;
-} PHS_DEVICE_EXTENSION, *PPHS_DEVICE_EXTENSION;
+	/* PHS Specific data*/
+	S_SERVICEFLOW_TABLE *pstServiceFlowPhsRulesTable;
+	void   *CompressedTxBuffer;
+	void   *UnCompressedRxBuffer;
+}PHS_DEVICE_EXTENSION,*PPHS_DEVICE_EXTENSION;
 
 
 #endif

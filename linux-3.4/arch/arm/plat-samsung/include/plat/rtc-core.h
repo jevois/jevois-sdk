@@ -17,11 +17,11 @@
  */
 
 /* re-define device name depending on support. */
-static inline void s3c_rtc_setname (char * name)
+static inline void s3c_rtc_setname(char *name)
 {
-  #if defined(CONFIG_SAMSUNG_DEV_RTC) || defined(CONFIG_PLAT_S3C24XX)
-  s3c_device_rtc.name = name;
-  #endif
+#if defined(CONFIG_SAMSUNG_DEV_RTC) || defined(CONFIG_PLAT_S3C24XX)
+	s3c_device_rtc.name = name;
+#endif
 }
 
 #endif /* __ASM_PLAT_RTC_CORE_H */

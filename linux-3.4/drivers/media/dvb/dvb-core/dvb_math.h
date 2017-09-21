@@ -37,7 +37,7 @@
  * @param value The value (must be != 0)
  * @return log2(value) * 2^24
  */
-extern unsigned int intlog2 (u32 value);
+extern unsigned int intlog2(u32 value);
 
 /**
  * computes log10 of a value; the result is shifted left by 24 bits
@@ -53,6 +53,6 @@ extern unsigned int intlog2 (u32 value);
  * @param value The value (must be != 0)
  * @return log10(value) * 2^24
  */
-extern unsigned int intlog10 (u32 value);
+extern unsigned int intlog10(u32 value);
 
 #endif

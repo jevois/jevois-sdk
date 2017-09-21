@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -24,17 +24,17 @@
 #ifndef __P3P440_H__
 #define __P3P440_H__
 
-#define CONFIG_SYS_GPIO_RDY (0x80000000 >> 11)
-#define CONFIG_SYS_MONARCH_IO (0x80000000 >> 18)
-#define CONFIG_SYS_EREADY_IO  (0x80000000 >> 20)
-#define CONFIG_SYS_LED_GREEN  (0x80000000 >> 21)
-#define CONFIG_SYS_LED_RED  (0x80000000 >> 22)
+#define CONFIG_SYS_GPIO_RDY	(0x80000000 >> 11)
+#define CONFIG_SYS_MONARCH_IO	(0x80000000 >> 18)
+#define CONFIG_SYS_EREADY_IO	(0x80000000 >> 20)
+#define CONFIG_SYS_LED_GREEN	(0x80000000 >> 21)
+#define CONFIG_SYS_LED_RED	(0x80000000 >> 22)
 
-#define LED_OFF   1
-#define LED_GREEN 2
-#define LED_RED   3
-#define LED_ORANGE  4
+#define LED_OFF		1
+#define LED_GREEN	2
+#define LED_RED		3
+#define LED_ORANGE	4
 
-long int fixed_sdram (void);
+long int fixed_sdram(void);
 
 #endif /* __P3P440_H__ */

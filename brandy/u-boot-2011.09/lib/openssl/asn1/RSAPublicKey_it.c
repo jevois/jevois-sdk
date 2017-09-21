@@ -7,27 +7,25 @@
 #include"myfunction.h"
 
 
-static int rsa_cb (int operation, ASN1_VALUE ** pval, const ASN1_ITEM * it)
+static int rsa_cb(int operation, ASN1_VALUE **pval, const ASN1_ITEM *it)
 {
-  if (operation == ASN1_OP_NEW_PRE) {
-    *pval = (ASN1_VALUE *) RSA_new();
-    if (*pval) { return 2; }
-    return 0;
-  }
-  else
-    if (operation == ASN1_OP_FREE_PRE) {
-      *pval = NULL;
-      return 2;
-    }
-  return 1;
+	if(operation == ASN1_OP_NEW_PRE) {
+		*pval = (ASN1_VALUE *)RSA_new();
+		if(*pval) return 2;
+		return 0;
+	} else if(operation == ASN1_OP_FREE_PRE) {
+		*pval = NULL;
+		return 2;
+	}
+	return 1;
 }
 
 
 
-ASN1_SEQUENCE_cb (RSAPublicKey, rsa_cb) = {
-  ASN1_SIMPLE (RSA, n, BIGNUM),
-  ASN1_SIMPLE (RSA, e, BIGNUM),
-} ASN1_SEQUENCE_END_cb (RSA, RSAPublicKey)
+ASN1_SEQUENCE_cb(RSAPublicKey, rsa_cb) = {
+	ASN1_SIMPLE(RSA, n, BIGNUM),
+	ASN1_SIMPLE(RSA, e, BIGNUM),
+} ASN1_SEQUENCE_END_cb(RSA, RSAPublicKey)
 
-IMPLEMENT_ASN1_ENCODE_FUNCTIONS_const_fname (RSA, RSAPublicKey, RSAPublicKey)
+IMPLEMENT_ASN1_ENCODE_FUNCTIONS_const_fname(RSA, RSAPublicKey, RSAPublicKey)
 

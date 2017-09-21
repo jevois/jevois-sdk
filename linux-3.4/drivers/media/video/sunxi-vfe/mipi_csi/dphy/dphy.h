@@ -28,7 +28,7 @@ enum dphy_int
   RX_ALG_ERR_D0        ,
   RX_ALG_ERR_D1        ,
   RX_ALG_ERR_D2        ,
-  RX_ALG_ERR_D3        ,
+  RX_ALG_ERR_D3        ,     
   CD_LP0_ERR_CLK       ,
   CD_LP1_ERR_CLK       ,
   CD_LP0_ERR_D0        ,
@@ -48,7 +48,7 @@ enum dphy_int
   ULPS_WP_D2           ,
   ULPS_WP_D3           ,
   ULPS_CLK             ,
-  ULPS_WP_CLK          ,
+  ULPS_WP_CLK          , 
   LPDT_D0              ,
   RX_TRND_D0           ,
   TX_TRND_ERR_D0       ,
@@ -73,12 +73,12 @@ enum dphy_int
 
 enum dphy_lane_state
 {
-  LP00,
+  LP00, 
   LP01,
   LP10,
   LP11,
   TRND,
-  HS  ,
+  HS  , 
   LPDT,
   ESCP,
   ULPS,

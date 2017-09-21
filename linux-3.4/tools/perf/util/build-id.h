@@ -5,6 +5,6 @@
 
 extern struct perf_tool build_id__mark_dso_hit_ops;
 
-char * dso__build_id_filename (struct dso * self, char * bf, size_t size);
+char *dso__build_id_filename(struct dso *self, char *bf, size_t size);
 
 #endif

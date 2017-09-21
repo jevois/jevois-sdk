@@ -21,35 +21,35 @@
 #include "dvb_frontend.h"
 
 struct tda829x_config {
-  unsigned int lna_cfg;
-  
-  unsigned int probe_tuner: 1;
+	unsigned int lna_cfg;
+
+	unsigned int probe_tuner:1;
 #define TDA829X_PROBE_TUNER 0
 #define TDA829X_DONT_PROBE  1
 };
 
 #if defined(CONFIG_MEDIA_TUNER_TDA8290) || (defined(CONFIG_MEDIA_TUNER_TDA8290_MODULE) && defined(MODULE))
-extern int tda829x_probe (struct i2c_adapter * i2c_adap, u8 i2c_addr);
+extern int tda829x_probe(struct i2c_adapter *i2c_adap, u8 i2c_addr);
 
-extern struct dvb_frontend * tda829x_attach (struct dvb_frontend * fe,
-    struct i2c_adapter * i2c_adap,
-    u8 i2c_addr,
-    struct tda829x_config * cfg);
+extern struct dvb_frontend *tda829x_attach(struct dvb_frontend *fe,
+					   struct i2c_adapter *i2c_adap,
+					   u8 i2c_addr,
+					   struct tda829x_config *cfg);
 #else
-static inline int tda829x_probe (struct i2c_adapter * i2c_adap, u8 i2c_addr)
+static inline int tda829x_probe(struct i2c_adapter *i2c_adap, u8 i2c_addr)
 {
-  printk (KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
-  return -EINVAL;
+	printk(KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
+	return -EINVAL;
 }
 
-static inline struct dvb_frontend * tda829x_attach (struct dvb_frontend * fe,
-    struct i2c_adapter * i2c_adap,
-    u8 i2c_addr,
-    struct tda829x_config * cfg)
+static inline struct dvb_frontend *tda829x_attach(struct dvb_frontend *fe,
+						  struct i2c_adapter *i2c_adap,
+						  u8 i2c_addr,
+						  struct tda829x_config *cfg)
 {
-  printk (KERN_INFO "%s: not probed - driver disabled by Kconfig\n",
-          __func__);
-  return NULL;
+	printk(KERN_INFO "%s: not probed - driver disabled by Kconfig\n",
+	       __func__);
+	return NULL;
 }
 #endif
 

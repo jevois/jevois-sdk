@@ -14,6 +14,6 @@
 #if !defined(GATOR_EVENTS_MALI_400_H)
 #define GATOR_EVENTS_MALI_400_H
 
-extern void gator_events_mali_log_dvfs_event (unsigned int d0, unsigned int d1);
+extern void gator_events_mali_log_dvfs_event(unsigned int d0, unsigned int d1);
 
 #endif /* GATOR_EVENTS_MALI_400_H */

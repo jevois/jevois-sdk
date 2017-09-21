@@ -49,11 +49,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /*!
 ******************************************************************************
 
- @Function  RGXIsDevicePowered
+ @Function	RGXIsDevicePowered
 
  @Description
 
-  Whether the device is powered, for the purposes of lockup detection.
+	Whether the device is powered, for the purposes of lockup detection.
 
  @Input psDeviceNode - pointer to device node
 
@@ -61,26 +61,26 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************************/
 IMG_IMPORT
-IMG_BOOL RGXIsDevicePowered (PVRSRV_DEVICE_NODE * psDeviceNode);
+IMG_BOOL RGXIsDevicePowered(PVRSRV_DEVICE_NODE *psDeviceNode);
 
 
 /*!
 ******************************************************************************
 
- @Function  RGXRunScript
+ @Function	RGXRunScript
 
  @Description Execute the commands in the script
 
- @Input
+ @Input 
 
  @Return   PVRSRV_ERROR
 
 ******************************************************************************/
-PVRSRV_ERROR RGXRunScript (PVRSRV_RGXDEV_INFO * psDevInfo,
-                           RGX_INIT_COMMAND * psScript,
-                           IMG_UINT32     ui32NumCommands,
-                           IMG_UINT32       ui32PdumpFlags,
-                           DUMPDEBUG_PRINTF_FUNC * pfnDumpDebugPrintf);
+PVRSRV_ERROR RGXRunScript(PVRSRV_RGXDEV_INFO	*psDevInfo,
+						 RGX_INIT_COMMAND	*psScript,
+						 IMG_UINT32			ui32NumCommands,
+						 IMG_UINT32				ui32PdumpFlags,
+						 DUMPDEBUG_PRINTF_FUNC  *pfnDumpDebugPrintf);
 
 /******************************************************************************
  End of file (rgxutils.h)

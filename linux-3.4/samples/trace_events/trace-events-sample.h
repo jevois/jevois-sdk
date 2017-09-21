@@ -74,24 +74,24 @@
  * to the data structure in the ring buffer, and is defined by the
  * TP_STRUCT__entry.
  */
-TRACE_EVENT (foo_bar,
+TRACE_EVENT(foo_bar,
 
-             TP_PROTO (char * foo, int bar),
+	TP_PROTO(char *foo, int bar),
 
-             TP_ARGS (foo, bar),
+	TP_ARGS(foo, bar),
 
-             TP_STRUCT__entry (
-               __array (  char, foo,    10    )
-               __field (  int,  bar     )
-             ),
+	TP_STRUCT__entry(
+		__array(	char,	foo,    10		)
+		__field(	int,	bar			)
+	),
 
-             TP_fast_assign (
-               strncpy (__entry->foo, foo, 10);
-               __entry->bar  = bar;
-             ),
+	TP_fast_assign(
+		strncpy(__entry->foo, foo, 10);
+		__entry->bar	= bar;
+	),
 
-             TP_printk ("foo %s %d", __entry->foo, __entry->bar)
-            );
+	TP_printk("foo %s %d", __entry->foo, __entry->bar)
+);
 #endif
 
 /***** NOTICE! The #if protection ends here. *****/

@@ -13,36 +13,36 @@
 extern int host_has_cmov;
 
 struct uml_tls_struct {
-  struct user_desc tls;
-  unsigned flushed: 1;
-  unsigned present: 1;
+	struct user_desc tls;
+	unsigned flushed:1;
+	unsigned present:1;
 };
 
 struct arch_thread {
-  struct uml_tls_struct tls_array[GDT_ENTRY_TLS_ENTRIES];
-  unsigned long debugregs[8];
-  int debugregs_seq;
-  struct faultinfo faultinfo;
+	struct uml_tls_struct tls_array[GDT_ENTRY_TLS_ENTRIES];
+	unsigned long debugregs[8];
+	int debugregs_seq;
+	struct faultinfo faultinfo;
 };
 
 #define INIT_ARCH_THREAD { \
-    .tls_array      = { [ 0 ... GDT_ENTRY_TLS_ENTRIES - 1 ] = \
-                        { .present = 0, .flushed = 0 } }, \
-                      .debugregs      = { [ 0 ... 7 ] = 0 }, \
-                                        .debugregs_seq    = 0, \
-                                            .faultinfo    = { 0, 0, 0 } \
-  }
-
-static inline void arch_flush_thread (struct arch_thread * thread)
-{
-  /* Clear any TLS still hanging */
-  memset (&thread->tls_array, 0, sizeof (thread->tls_array) );
+	.tls_array  		= { [ 0 ... GDT_ENTRY_TLS_ENTRIES - 1 ] = \
+				    { .present = 0, .flushed = 0 } }, \
+	.debugregs  		= { [ 0 ... 7 ] = 0 }, \
+	.debugregs_seq		= 0, \
+	.faultinfo		= { 0, 0, 0 } \
 }
 
-static inline void arch_copy_thread (struct arch_thread * from,
-                                     struct arch_thread * to)
+static inline void arch_flush_thread(struct arch_thread *thread)
 {
-  memcpy (&to->tls_array, &from->tls_array, sizeof (from->tls_array) );
+	/* Clear any TLS still hanging */
+	memset(&thread->tls_array, 0, sizeof(thread->tls_array));
+}
+
+static inline void arch_copy_thread(struct arch_thread *from,
+                                    struct arch_thread *to)
+{
+        memcpy(&to->tls_array, &from->tls_array, sizeof(from->tls_array));
 }
 
 /*
@@ -51,6 +51,6 @@ static inline void arch_copy_thread (struct arch_thread * from,
  * from asm-i386/processor.h
  */
 #define current_text_addr() \
-  ({ void *pc; __asm__("movl $1f,%0\n1:":"=g" (pc)); pc; })
+	({ void *pc; __asm__("movl $1f,%0\n1:":"=g" (pc)); pc; })
 
 #endif

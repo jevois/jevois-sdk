@@ -25,12 +25,12 @@
 
 enum
 {
-  C4_DEL_CHAN = 0,
-  C4_RESET_STATS,
-  C4_LOOP_PORT,
-  C4_RW_FRMR,
-  C4_RW_MSYC,
-  C4_RW_PLD
+    C4_DEL_CHAN = 0,
+    C4_RESET_STATS,
+    C4_LOOP_PORT,
+    C4_RW_FRMR,
+    C4_RW_MSYC,
+    C4_RW_PLD
 };
 
 #define C4_GET_PORT          SBE_IOC_PORT_GET
@@ -44,8 +44,8 @@ enum
 
 struct c4_chan_stats_wrap
 {
-  int         channum;
-  struct sbecom_chan_stats stats;
+    int         channum;
+    struct sbecom_chan_stats stats;
 };
 
 #endif   /* _INC_PMCC4_IOCTLS_H_ */

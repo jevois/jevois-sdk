@@ -27,28 +27,28 @@
  * @frames:    array of CAN frames.
  */
 struct bcm_msg_head {
-  __u32 opcode;
-  __u32 flags;
-  __u32 count;
-  struct timeval ival1, ival2;
-  canid_t can_id;
-  __u32 nframes;
-  struct can_frame frames[0];
+	__u32 opcode;
+	__u32 flags;
+	__u32 count;
+	struct timeval ival1, ival2;
+	canid_t can_id;
+	__u32 nframes;
+	struct can_frame frames[0];
 };
 
 enum {
-  TX_SETUP = 1, /* create (cyclic) transmission task */
-  TX_DELETE,  /* remove (cyclic) transmission task */
-  TX_READ,  /* read properties of (cyclic) transmission task */
-  TX_SEND,  /* send one CAN frame */
-  RX_SETUP, /* create RX content filter subscription */
-  RX_DELETE,  /* remove RX content filter subscription */
-  RX_READ,  /* read properties of RX content filter subscription */
-  TX_STATUS,  /* reply to TX_READ request */
-  TX_EXPIRED, /* notification on performed transmissions (count=0) */
-  RX_STATUS,  /* reply to RX_READ request */
-  RX_TIMEOUT, /* cyclic message is absent */
-  RX_CHANGED  /* updated CAN frame (detected content change) */
+	TX_SETUP = 1,	/* create (cyclic) transmission task */
+	TX_DELETE,	/* remove (cyclic) transmission task */
+	TX_READ,	/* read properties of (cyclic) transmission task */
+	TX_SEND,	/* send one CAN frame */
+	RX_SETUP,	/* create RX content filter subscription */
+	RX_DELETE,	/* remove RX content filter subscription */
+	RX_READ,	/* read properties of RX content filter subscription */
+	TX_STATUS,	/* reply to TX_READ request */
+	TX_EXPIRED,	/* notification on performed transmissions (count=0) */
+	RX_STATUS,	/* reply to RX_READ request */
+	RX_TIMEOUT,	/* cyclic message is absent */
+	RX_CHANGED	/* updated CAN frame (detected content change) */
 };
 
 #define SETTIMER            0x0001

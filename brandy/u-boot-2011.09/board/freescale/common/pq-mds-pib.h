@@ -6,4 +6,4 @@
  * published by the Free Software Foundation;
  */
 
-extern int pib_init (void);
+extern int pib_init(void);

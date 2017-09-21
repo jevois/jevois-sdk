@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -29,23 +29,23 @@
 
 #include "hardware.h"
 
-#define FPGA(r, p)  (pcippc2_fpga0_phys + HW_FPGA0_##r##_##p)
-#define UART(r)   (pcippc2_fpga0_phys + HW_FPGA0_UART1 + NS16550_##r * 4)
-#define RTC(r)    (pcippc2_fpga1_phys + HW_FPGA1_RTC + r)
+#define FPGA(r, p)	(pcippc2_fpga0_phys + HW_FPGA0_##r##_##p)
+#define UART(r)		(pcippc2_fpga0_phys + HW_FPGA0_UART1 + NS16550_##r * 4)
+#define RTC(r)		(pcippc2_fpga1_phys + HW_FPGA1_RTC + r)
 
-extern u32    pcippc2_fpga0_phys;
-extern u32    pcippc2_fpga1_phys;
+extern u32		pcippc2_fpga0_phys;
+extern u32		pcippc2_fpga1_phys;
 
-extern u32  pcippc2_sdram_size    (void);
+extern u32	pcippc2_sdram_size		(void);
 
-extern void pcippc2_fpga_init   (void);
+extern void	pcippc2_fpga_init		(void);
 
-extern void pcippc2_cpci3264_init (void);
+extern void	pcippc2_cpci3264_init	(void);
 
-extern void cpc710_pci_init     (void);
-extern void cpc710_pci_enable_timeout (void);
+extern void	cpc710_pci_init			(void);
+extern void	cpc710_pci_enable_timeout	(void);
 
 extern unsigned long
-cpc710_ram_init     (void);
+		cpc710_ram_init			(void);
 
 #endif

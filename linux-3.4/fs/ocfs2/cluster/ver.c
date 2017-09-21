@@ -32,11 +32,11 @@
 
 #define VERSION_STR "OCFS2 Node Manager " CLUSTER_BUILD_VERSION
 
-void cluster_print_version (void)
+void cluster_print_version(void)
 {
-  printk (KERN_INFO "%s\n", VERSION_STR);
+	printk(KERN_INFO "%s\n", VERSION_STR);
 }
 
-MODULE_DESCRIPTION (VERSION_STR);
+MODULE_DESCRIPTION(VERSION_STR);
 
-MODULE_VERSION (CLUSTER_BUILD_VERSION);
+MODULE_VERSION(CLUSTER_BUILD_VERSION);

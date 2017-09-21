@@ -60,54 +60,54 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif
 
 #if defined(SUPPORT_ION)
-#define ION_CLIENT_NAME_SIZE  50
+#define ION_CLIENT_NAME_SIZE	50
 
 typedef struct _ENV_ION_CONNECTION_DATA_
 {
-  IMG_CHAR azIonClientName[ION_CLIENT_NAME_SIZE];
-  struct ion_device * psIonDev;
-  struct ion_client * psIonClient;
-  IMG_UINT32 ui32IonClientRefCount;
+	IMG_CHAR azIonClientName[ION_CLIENT_NAME_SIZE];
+	struct ion_device *psIonDev;
+	struct ion_client *psIonClient;
+	IMG_UINT32 ui32IonClientRefCount;
 } ENV_ION_CONNECTION_DATA;
 #endif
 
 typedef struct _ENV_CONNECTION_DATA_
 {
-  #if defined(SUPPORT_DRM)
-  struct drm_file * psFile;
-  #else
-  struct file * psFile;
-  #endif
-  #if defined(SUPPORT_ION)
-  ENV_ION_CONNECTION_DATA * psIonData;
-  #endif
-  #if defined(SUPPORT_DRM)
-  IMG_BOOL bAuthenticated;
-  #endif
+#if defined(SUPPORT_DRM)
+	struct drm_file *psFile;
+#else
+	struct file *psFile;
+#endif
+#if defined(SUPPORT_ION)
+	ENV_ION_CONNECTION_DATA *psIonData;
+#endif
+#if defined(SUPPORT_DRM)
+	IMG_BOOL bAuthenticated;
+#endif
 } ENV_CONNECTION_DATA;
 
 #if defined(SUPPORT_ION)
-static inline struct ion_client * EnvDataIonClientAcquire (ENV_CONNECTION_DATA * psEnvData)
+static inline struct ion_client *EnvDataIonClientAcquire(ENV_CONNECTION_DATA *psEnvData)
 {
-  PVR_ASSERT (psEnvData->psIonData != IMG_NULL);
-  PVR_ASSERT (psEnvData->psIonData->psIonClient != IMG_NULL);
-  PVR_ASSERT (psEnvData->psIonData->ui32IonClientRefCount > 0);
-  psEnvData->psIonData->ui32IonClientRefCount++;
-  return psEnvData->psIonData->psIonClient;
+	PVR_ASSERT(psEnvData->psIonData != IMG_NULL);
+	PVR_ASSERT(psEnvData->psIonData->psIonClient != IMG_NULL);
+	PVR_ASSERT(psEnvData->psIonData->ui32IonClientRefCount > 0);
+	psEnvData->psIonData->ui32IonClientRefCount++;
+	return psEnvData->psIonData->psIonClient;
 }
 
-static inline IMG_VOID EnvDataIonClientRelease (ENV_ION_CONNECTION_DATA * psIonData)
+static inline IMG_VOID EnvDataIonClientRelease(ENV_ION_CONNECTION_DATA *psIonData)
 {
-  PVR_ASSERT (psIonData != IMG_NULL);
-  PVR_ASSERT (psIonData->psIonClient != IMG_NULL);
-  PVR_ASSERT (psIonData->ui32IonClientRefCount > 0);
-  if (--psIonData->ui32IonClientRefCount == 0)
-  {
-    ion_client_destroy (psIonData->psIonClient);
-    IonDevRelease (psIonData->psIonDev);
-    OSFreeMem (psIonData);
-    psIonData = IMG_NULL;
-  }
+	PVR_ASSERT(psIonData != IMG_NULL);
+	PVR_ASSERT(psIonData->psIonClient != IMG_NULL);
+	PVR_ASSERT(psIonData->ui32IonClientRefCount > 0);
+	if (--psIonData->ui32IonClientRefCount == 0)
+	{
+		ion_client_destroy(psIonData->psIonClient);
+		IonDevRelease(psIonData->psIonDev);
+		OSFreeMem(psIonData);
+		psIonData = IMG_NULL;
+	}
 }
 #endif /* defined(SUPPORT_ION) */
 

@@ -1,7 +1,7 @@
 /* arch/arm/mach-s5pc100/include/mach/uncompress.h
  *
  * Copyright 2009 Samsung Electronics Co.
- *  Byungho Min <bhmin@samsung.com>
+ *	Byungho Min <bhmin@samsung.com>
  *
  * S5PC100 - uncompress code
  *
@@ -18,11 +18,11 @@
 #include <mach/map.h>
 #include <plat/uncompress.h>
 
-static void arch_detect_cpu (void)
+static void arch_detect_cpu(void)
 {
-  /* we do not need to do any cpu detection here at the moment. */
-  fifo_mask = S3C2440_UFSTAT_TXMASK;
-  fifo_max = 63 << S3C2440_UFSTAT_TXSHIFT;
+	/* we do not need to do any cpu detection here at the moment. */
+	fifo_mask = S3C2440_UFSTAT_TXMASK;
+	fifo_max = 63 << S3C2440_UFSTAT_TXSHIFT;
 }
 
 #endif /* __ASM_ARCH_UNCOMPRESS_H */

@@ -44,25 +44,25 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __SOCCONFIG_H__
 
 #if defined(VS_PRODUCT_VERSION) && VS_PRODUCT_VERSION == 5
-#define VS_PRODUCT_NAME "OMAP5"
+#define VS_PRODUCT_NAME	"OMAP5"
 #else
-#define VS_PRODUCT_NAME "OMAP4"
+#define VS_PRODUCT_NAME	"OMAP4"
 #endif
 
 
-#define SYS_SGX_HWRECOVERY_TIMEOUT_FREQ   (100)
-#define SYS_SGX_PDS_TIMER_FREQ        (1000) 
+#define SYS_SGX_HWRECOVERY_TIMEOUT_FREQ		(100)
+#define SYS_SGX_PDS_TIMER_FREQ				(1000)
 
 /* Allow the AP latency to be overridden in the build config */
 #if !defined(SYS_SGX_ACTIVE_POWER_LATENCY_MS)
-#define SYS_SGX_ACTIVE_POWER_LATENCY_MS   (2)
+#define SYS_SGX_ACTIVE_POWER_LATENCY_MS		(2)
 #endif
 
 
 #define SYS_OMAP_SGX_REGS_SYS_PHYS_BASE  0x56000000
 #define SYS_OMAP_SGX_REGS_SIZE           0xFFFF
 
-#define SYS_OMAP_SGX_IRQ         53 /* OMAP4 IRQ's are offset by 32 */
+#define SYS_OMAP_SGX_IRQ				 53 /* OMAP4 IRQ's are offset by 32 */
 
 #define SYS_OMAP_DSS_REGS_SYS_PHYS_BASE  0x58000000
 #define SYS_OMAP_DSS_REGS_SIZE           0x7000
@@ -80,14 +80,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define SYS_OMAP_DSS_LCD_INTERRUPT_VSYNC_STATUS_MASK 0x40002
 
 
-#define SYS_OMAP_GP11TIMER_ENABLE_SYS_PHYS_BASE 0x48088038
-#define SYS_OMAP_GP11TIMER_REGS_SYS_PHYS_BASE 0x4808803C
-#define SYS_OMAP_GP11TIMER_TSICR_SYS_PHYS_BASE  0x48088054
+#define SYS_OMAP_GP11TIMER_ENABLE_SYS_PHYS_BASE	0x48088038
+#define SYS_OMAP_GP11TIMER_REGS_SYS_PHYS_BASE	0x4808803C
+#define SYS_OMAP_GP11TIMER_TSICR_SYS_PHYS_BASE	0x48088054
 
 /* Interrupt bits */
-#define DEVICE_SGX_INTERRUPT    (1<<0)
-#define DEVICE_MSVDX_INTERRUPT    (1<<1)
-#define DEVICE_DISP_INTERRUPT   (1<<2)
+#define DEVICE_SGX_INTERRUPT		(1<<0)
+#define DEVICE_MSVDX_INTERRUPT		(1<<1)
+#define DEVICE_DISP_INTERRUPT		(1<<2)
 
 #if defined(__linux__)
 /*
@@ -96,14 +96,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * in sysutils_linux.c, in order for SGX to be powered on.
  */
 #if defined(PVR_LDM_PLATFORM_PRE_REGISTERED_DEV)
-#define SYS_SGX_DEV_NAME  PVR_LDM_PLATFORM_PRE_REGISTERED_DEV
+#define	SYS_SGX_DEV_NAME	PVR_LDM_PLATFORM_PRE_REGISTERED_DEV
 #else
-#define SYS_SGX_DEV_NAME  "omap_gpu"
-#endif  /* defined(PVR_LDM_PLATFORM_PRE_REGISTERED_DEV) */
-#endif  /* defined(__linux__) */
+#define	SYS_SGX_DEV_NAME	"omap_gpu"
+#endif	/* defined(PVR_LDM_PLATFORM_PRE_REGISTERED_DEV) */
+#endif	/* defined(__linux__) */
 
 /*****************************************************************************
  * system specific data structures
  *****************************************************************************/
-
-#endif  /* __SYSCONFIG_H__ */
+ 
+#endif	/* __SYSCONFIG_H__ */

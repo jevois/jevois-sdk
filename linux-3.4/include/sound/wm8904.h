@@ -132,8 +132,8 @@
  * for details.
  */
 struct wm8904_drc_cfg {
-  const char * name;
-  u16 regs[WM8904_DRC_REGS];
+	const char *name;
+	u16 regs[WM8904_DRC_REGS];
 };
 
 /**
@@ -144,20 +144,20 @@ struct wm8904_drc_cfg {
  * control panel in WISCE - see http://www.wolfsonmicro.com/wisce/
  */
 struct wm8904_retune_mobile_cfg {
-  const char * name;
-  unsigned int rate;
-  u16 regs[WM8904_EQ_REGS];
+	const char *name;
+	unsigned int rate;
+	u16 regs[WM8904_EQ_REGS];
 };
 
 struct wm8904_pdata {
-  int num_drc_cfgs;
-  struct wm8904_drc_cfg * drc_cfgs;
-  
-  int num_retune_mobile_cfgs;
-  struct wm8904_retune_mobile_cfg * retune_mobile_cfgs;
-  
-  u32 gpio_cfg[WM8904_GPIO_REGS];
-  u32 mic_cfg[WM8904_MIC_REGS];
+	int num_drc_cfgs;
+	struct wm8904_drc_cfg *drc_cfgs;
+
+	int num_retune_mobile_cfgs;
+	struct wm8904_retune_mobile_cfg *retune_mobile_cfgs;
+
+	u32 gpio_cfg[WM8904_GPIO_REGS];
+	u32 mic_cfg[WM8904_MIC_REGS];
 };
 
 #endif

@@ -52,108 +52,108 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 typedef struct LISR_DATA_TAG
 {
-  IMG_UINT32  ui32IRQ;
-  PFN_SYS_LISR  pfnLISR;
-  IMG_VOID * pvData;
+	IMG_UINT32	ui32IRQ;
+	PFN_SYS_LISR	pfnLISR;
+	IMG_VOID	*pvData;
 } LISR_DATA;
 
 
-static irqreturn_t SystemISRWrapper (int irq, void * dev_id)
+static irqreturn_t SystemISRWrapper(int irq, void *dev_id)
 {
-  LISR_DATA * psLISRData = (LISR_DATA *) dev_id;
-  
-  PVR_UNREFERENCED_PARAMETER (irq);
-  
-  if (psLISRData)
-  {
-    if (psLISRData->pfnLISR (psLISRData->pvData) )
-    {
-      return IRQ_HANDLED;
-    }
-  }
-  else
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "%s: Missing interrupt data", __FUNCTION__) );
-  }
-  
-  return IRQ_NONE;
+	LISR_DATA *psLISRData = (LISR_DATA *)dev_id;
+
+	PVR_UNREFERENCED_PARAMETER(irq);
+
+	if (psLISRData)
+	{
+		if (psLISRData->pfnLISR(psLISRData->pvData))
+		{
+			return IRQ_HANDLED;
+		}
+	}
+	else
+	{
+		PVR_DPF((PVR_DBG_ERROR, "%s: Missing interrupt data", __FUNCTION__));
+	}
+
+	return IRQ_NONE;
 }
 
 /*************************************************************************/ /*!
 @Function       OSInstallSystemLISR
 @Description    Install a system interrupt handler
-@Output         phLISR                  On return, contains a handle to the
+@Output         phLISR                  On return, contains a handle to the 
                                         installed LISR
-@Input          ui32IRQ                 The IRQ number for which the
+@Input          ui32IRQ                 The IRQ number for which the 
                                         interrupt handler should be installed
-@Input          psPrivData              A pointer to OS specific private data.
-                                        It is the responsibility of the caller
-                                        to free this data once it is no longer
-                                        in use. This will typically be after
+@Input          psPrivData              A pointer to OS specific private data. 
+                                        It is the responsibility of the caller 
+                                        to free this data once it is no longer 
+                                        in use. This will typically be after 
                                         calling OSUninstallSystemLISR()
-@Input          pfnLISR                 A pointer to an interrupt handler
+@Input          pfnLISR                 A pointer to an interrupt handler 
                                         function
-@Input          pvData                  A pointer to data that should be passed
+@Input          pvData                  A pointer to data that should be passed 
                                         to pfnLISR when it is called
-@Return   PVRSRV_ERROR
+@Return		PVRSRV_ERROR
 */ /**************************************************************************/
-PVRSRV_ERROR OSInstallSystemLISR (IMG_HANDLE * phLISR,
-                                  IMG_UINT32 ui32IRQ,
-                                  PVR_IRQ_PRIV_DATA * psPrivData,
-                                  PFN_SYS_LISR pfnLISR,
-                                  IMG_VOID * pvData)
+PVRSRV_ERROR OSInstallSystemLISR(IMG_HANDLE *phLISR, 
+				 IMG_UINT32 ui32IRQ, 
+				 PVR_IRQ_PRIV_DATA *psPrivData, 
+				 PFN_SYS_LISR pfnLISR, 
+				 IMG_VOID *pvData)
 {
-  LISR_DATA * psLISRData;
-  
-  PVR_UNREFERENCED_PARAMETER (psPrivData);
-  
-  if (pfnLISR == IMG_NULL || pvData == IMG_NULL)
-  {
-    return PVRSRV_ERROR_INVALID_PARAMS;
-  }
-  
-  psLISRData = OSAllocMem (sizeof * psLISRData);
-  if (psLISRData == IMG_NULL)
-  {
-    return PVRSRV_ERROR_OUT_OF_MEMORY;
-  }
-  
-  psLISRData->ui32IRQ = ui32IRQ;
-  psLISRData->pfnLISR = pfnLISR;
-  psLISRData->pvData = pvData;
-  
-  if (request_irq (ui32IRQ, SystemISRWrapper, IRQF_SHARED, PVRSRV_MODNAME, psLISRData) )
-  {
-    OSFreeMem (psLISRData);
-    
-    return PVRSRV_ERROR_UNABLE_TO_REGISTER_ISR_HANDLER;
-  }
-  
-  *phLISR = (IMG_HANDLE) psLISRData;
-  
-  return PVRSRV_OK;
+	LISR_DATA *psLISRData;
+
+	PVR_UNREFERENCED_PARAMETER(psPrivData);
+
+	if (pfnLISR == IMG_NULL || pvData == IMG_NULL)
+	{
+		return PVRSRV_ERROR_INVALID_PARAMS;
+	}
+
+	psLISRData = OSAllocMem(sizeof *psLISRData);
+	if (psLISRData == IMG_NULL)
+	{
+		return PVRSRV_ERROR_OUT_OF_MEMORY;
+	}
+
+	psLISRData->ui32IRQ = ui32IRQ;
+	psLISRData->pfnLISR = pfnLISR;
+	psLISRData->pvData = pvData;
+
+	if (request_irq(ui32IRQ, SystemISRWrapper, IRQF_SHARED, PVRSRV_MODNAME, psLISRData))
+	{
+		OSFreeMem(psLISRData);
+
+		return PVRSRV_ERROR_UNABLE_TO_REGISTER_ISR_HANDLER;
+	}
+
+	*phLISR = (IMG_HANDLE)psLISRData;
+
+	return PVRSRV_OK;
 }
 
 /*************************************************************************/ /*!
 @Function       OSUninstallSystemLISR
 @Description    Uninstall a system interrupt handler
-@Input          hLISR                   Handle to the LISR that should be
+@Input          hLISR                   Handle to the LISR that should be 
                                         uninstalled
-@Return   PVRSRV_ERROR
+@Return		PVRSRV_ERROR
 */ /**************************************************************************/
-PVRSRV_ERROR OSUninstallSystemLISR (IMG_HANDLE hLISR)
+PVRSRV_ERROR OSUninstallSystemLISR(IMG_HANDLE hLISR)
 {
-  LISR_DATA * psLISRData = (LISR_DATA *) hLISR;
-  
-  if (psLISRData == IMG_NULL)
-  {
-    return PVRSRV_ERROR_INVALID_PARAMS;
-  }
-  
-  free_irq (psLISRData->ui32IRQ, psLISRData);
-  
-  OSFreeMem (psLISRData);
-  
-  return PVRSRV_OK;
+	LISR_DATA *psLISRData = (LISR_DATA *)hLISR;
+
+	if (psLISRData == IMG_NULL)
+	{
+		return PVRSRV_ERROR_INVALID_PARAMS;
+	}
+
+	free_irq(psLISRData->ui32IRQ, psLISRData);
+
+	OSFreeMem(psLISRData);
+
+	return PVRSRV_OK;
 }
 

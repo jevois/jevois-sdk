@@ -26,7 +26,7 @@
 /*
  * Virtex2 FPGA configuration support for the QUANTUM computer
  */
-int fpga_boot (unsigned char * fpgadata, int size);
+int fpga_boot(unsigned char *fpgadata, int size);
 
 #define ERROR_FPGA_PRG_INIT_LOW  -1        /* Timeout after PRG* asserted   */
 #define ERROR_FPGA_PRG_INIT_HIGH -2        /* Timeout after PRG* deasserted */

@@ -47,10 +47,10 @@
  * ib_get_cached_gid() fetches the specified GID table entry stored in
  * the local software cache.
  */
-int ib_get_cached_gid (struct ib_device  *  device,
-                       u8                   port_num,
-                       int                  index,
-                       union ib_gid    *    gid);
+int ib_get_cached_gid(struct ib_device    *device,
+		      u8                   port_num,
+		      int                  index,
+		      union ib_gid        *gid);
 
 /**
  * ib_find_cached_gid - Returns the port number and GID table index where
@@ -64,10 +64,10 @@ int ib_get_cached_gid (struct ib_device  *  device,
  * ib_find_cached_gid() searches for the specified GID value in
  * the local software cache.
  */
-int ib_find_cached_gid (struct ib_device * device,
-                        union ib_gid * gid,
-                        u8        *       port_num,
-                        u16       *       index);
+int ib_find_cached_gid(struct ib_device *device,
+		       union ib_gid	*gid,
+		       u8               *port_num,
+		       u16              *index);
 
 /**
  * ib_get_cached_pkey - Returns a cached PKey table entry
@@ -79,10 +79,10 @@ int ib_find_cached_gid (struct ib_device * device,
  * ib_get_cached_pkey() fetches the specified PKey table entry stored in
  * the local software cache.
  */
-int ib_get_cached_pkey (struct ib_device  *  device_handle,
-                        u8                   port_num,
-                        int                  index,
-                        u16         *        pkey);
+int ib_get_cached_pkey(struct ib_device    *device_handle,
+		       u8                   port_num,
+		       int                  index,
+		       u16                 *pkey);
 
 /**
  * ib_find_cached_pkey - Returns the PKey table index where a specified
@@ -95,10 +95,10 @@ int ib_get_cached_pkey (struct ib_device  *  device_handle,
  * ib_find_cached_pkey() searches the specified PKey table in
  * the local software cache.
  */
-int ib_find_cached_pkey (struct ib_device  *  device,
-                         u8                   port_num,
-                         u16                  pkey,
-                         u16         *        index);
+int ib_find_cached_pkey(struct ib_device    *device,
+			u8                   port_num,
+			u16                  pkey,
+			u16                 *index);
 
 /**
  * ib_get_cached_lmc - Returns a cached lmc table entry
@@ -109,8 +109,8 @@ int ib_find_cached_pkey (struct ib_device  *  device,
  * ib_get_cached_lmc() fetches the specified lmc table entry stored in
  * the local software cache.
  */
-int ib_get_cached_lmc (struct ib_device * device,
-                       u8                port_num,
-                       u8        *        lmc);
+int ib_get_cached_lmc(struct ib_device *device,
+		      u8                port_num,
+		      u8                *lmc);
 
 #endif /* _IB_CACHE_H */

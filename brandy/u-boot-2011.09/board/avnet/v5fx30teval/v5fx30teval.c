@@ -21,8 +21,8 @@
 #include <asm/processor.h>
 
 
-int checkboard (void)
+int checkboard(void)
 {
-  puts ("Avnet Virtex 5 FX30 Evaluation Board\n");
-  return 0;
+	puts("Avnet Virtex 5 FX30 Evaluation Board\n");
+	return 0;
 }

@@ -17,26 +17,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-#define AMBA_UART_DR  (*(volatile unsigned char *)0x101F1000)
-#define AMBA_UART_LCRH  (*(volatile unsigned char *)0x101F102C)
-#define AMBA_UART_CR  (*(volatile unsigned char *)0x101F1030)
-#define AMBA_UART_FR  (*(volatile unsigned char *)0x101F1018)
+#define AMBA_UART_DR	(*(volatile unsigned char *)0x101F1000)
+#define AMBA_UART_LCRH	(*(volatile unsigned char *)0x101F102C)
+#define AMBA_UART_CR	(*(volatile unsigned char *)0x101F1030)
+#define AMBA_UART_FR	(*(volatile unsigned char *)0x101F1018)
 
 /*
  * This does not append a newline
  */
-static inline void putc (int c)
+static inline void putc(int c)
 {
-  while (AMBA_UART_FR & (1 << 5) )
-  { barrier(); }
-  
-  AMBA_UART_DR = c;
+	while (AMBA_UART_FR & (1 << 5))
+		barrier();
+
+	AMBA_UART_DR = c;
 }
 
-static inline void flush (void)
+static inline void flush(void)
 {
-  while (AMBA_UART_FR & (1 << 3) )
-  { barrier(); }
+	while (AMBA_UART_FR & (1 << 3))
+		barrier();
 }
 
 /*

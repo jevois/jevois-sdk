@@ -58,10 +58,10 @@
  */
 
 enum ttm_ref_type {
-  TTM_REF_USAGE,
-  TTM_REF_SYNCCPU_READ,
-  TTM_REF_SYNCCPU_WRITE,
-  TTM_REF_NUM
+	TTM_REF_USAGE,
+	TTM_REF_SYNCCPU_READ,
+	TTM_REF_SYNCCPU_WRITE,
+	TTM_REF_NUM
 };
 
 /**
@@ -73,15 +73,15 @@ enum ttm_ref_type {
  */
 
 enum ttm_object_type {
-  ttm_fence_type,
-  ttm_buffer_type,
-  ttm_lock_type,
-  ttm_driver_type0 = 256,
-  ttm_driver_type1,
-  ttm_driver_type2,
-  ttm_driver_type3,
-  ttm_driver_type4,
-  ttm_driver_type5
+	ttm_fence_type,
+	ttm_buffer_type,
+	ttm_lock_type,
+	ttm_driver_type0 = 256,
+	ttm_driver_type1,
+	ttm_driver_type2,
+	ttm_driver_type3,
+	ttm_driver_type4,
+	ttm_driver_type5
 };
 
 struct ttm_object_file;
@@ -120,14 +120,14 @@ struct ttm_object_device;
  */
 
 struct ttm_base_object {
-  struct drm_hash_item hash;
-  enum ttm_object_type object_type;
-  bool shareable;
-  struct ttm_object_file * tfile;
-  struct kref refcount;
-  void (*refcount_release) (struct ttm_base_object ** base);
-  void (*ref_obj_release) (struct ttm_base_object * base,
-                           enum ttm_ref_type ref_type);
+	struct drm_hash_item hash;
+	enum ttm_object_type object_type;
+	bool shareable;
+	struct ttm_object_file *tfile;
+	struct kref refcount;
+	void (*refcount_release) (struct ttm_base_object **base);
+	void (*ref_obj_release) (struct ttm_base_object *base,
+				 enum ttm_ref_type ref_type);
 };
 
 /**
@@ -144,16 +144,16 @@ struct ttm_base_object {
  * Initializes a struct ttm_base_object.
  */
 
-extern int ttm_base_object_init (struct ttm_object_file * tfile,
-                                 struct ttm_base_object * base,
-                                 bool shareable,
-                                 enum ttm_object_type type,
-                                 void (*refcount_release) (struct ttm_base_object
-                                     **),
-                                 void (*ref_obj_release) (struct ttm_base_object
-                                     *,
-                                     enum ttm_ref_type
-                                     ref_type) );
+extern int ttm_base_object_init(struct ttm_object_file *tfile,
+				struct ttm_base_object *base,
+				bool shareable,
+				enum ttm_object_type type,
+				void (*refcount_release) (struct ttm_base_object
+							  **),
+				void (*ref_obj_release) (struct ttm_base_object
+							 *,
+							 enum ttm_ref_type
+							 ref_type));
 
 /**
  * ttm_base_object_lookup
@@ -166,8 +166,8 @@ extern int ttm_base_object_init (struct ttm_object_file * tfile,
  * comparing the @tfile argument and checking the object shareable flag.
  */
 
-extern struct ttm_base_object * ttm_base_object_lookup (struct ttm_object_file
-    *tfile, uint32_t key);
+extern struct ttm_base_object *ttm_base_object_lookup(struct ttm_object_file
+						      *tfile, uint32_t key);
 
 /**
  * ttm_base_object_unref
@@ -178,7 +178,7 @@ extern struct ttm_base_object * ttm_base_object_lookup (struct ttm_object_file
  * p_base.
  */
 
-extern void ttm_base_object_unref (struct ttm_base_object ** p_base);
+extern void ttm_base_object_unref(struct ttm_base_object **p_base);
 
 /**
  * ttm_ref_object_add.
@@ -199,9 +199,9 @@ extern void ttm_base_object_unref (struct ttm_base_object ** p_base);
  * make sure the lock is released if the application dies. A ref object
  * will hold a single reference on a base object.
  */
-extern int ttm_ref_object_add (struct ttm_object_file * tfile,
-                               struct ttm_base_object * base,
-                               enum ttm_ref_type ref_type, bool * existed);
+extern int ttm_ref_object_add(struct ttm_object_file *tfile,
+			      struct ttm_base_object *base,
+			      enum ttm_ref_type ref_type, bool *existed);
 /**
  * ttm_ref_object_base_unref
  *
@@ -213,9 +213,9 @@ extern int ttm_ref_object_add (struct ttm_object_file * tfile,
  * references, the ref object will be destroyed and the base object
  * will be unreferenced.
  */
-extern int ttm_ref_object_base_unref (struct ttm_object_file * tfile,
-                                      unsigned long key,
-                                      enum ttm_ref_type ref_type);
+extern int ttm_ref_object_base_unref(struct ttm_object_file *tfile,
+				     unsigned long key,
+				     enum ttm_ref_type ref_type);
 
 /**
  * ttm_object_file_init - initialize a struct ttm_object file
@@ -226,9 +226,9 @@ extern int ttm_ref_object_base_unref (struct ttm_object_file * tfile,
  * This is typically called by the file_ops::open function.
  */
 
-extern struct ttm_object_file * ttm_object_file_init (struct ttm_object_device
-    *tdev,
-    unsigned int hash_order);
+extern struct ttm_object_file *ttm_object_file_init(struct ttm_object_device
+						    *tdev,
+						    unsigned int hash_order);
 
 /**
  * ttm_object_file_release - release data held by a ttm_object_file
@@ -241,7 +241,7 @@ extern struct ttm_object_file * ttm_object_file_init (struct ttm_object_device
  * ensure that there are no concurrent users of tfile.
  */
 
-extern void ttm_object_file_release (struct ttm_object_file ** p_tfile);
+extern void ttm_object_file_release(struct ttm_object_file **p_tfile);
 
 /**
  * ttm_object device init - initialize a struct ttm_object_device
@@ -252,8 +252,8 @@ extern void ttm_object_file_release (struct ttm_object_file ** p_tfile);
  * data structures needed for ttm base and ref objects.
  */
 
-extern struct ttm_object_device * ttm_object_device_init
-(struct ttm_mem_global * mem_glob, unsigned int hash_order);
+extern struct ttm_object_device *ttm_object_device_init
+    (struct ttm_mem_global *mem_glob, unsigned int hash_order);
 
 /**
  * ttm_object_device_release - release data held by a ttm_object_device
@@ -266,6 +266,6 @@ extern struct ttm_object_device * ttm_object_device_init
  * device private data structure.
  */
 
-extern void ttm_object_device_release (struct ttm_object_device ** p_tdev);
+extern void ttm_object_device_release(struct ttm_object_device **p_tdev);
 
 #endif

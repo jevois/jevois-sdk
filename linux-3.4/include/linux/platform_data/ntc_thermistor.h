@@ -22,32 +22,32 @@
 #define _LINUX_NTC_H
 
 enum ntc_thermistor_type {
-  TYPE_NCPXXWB473,
-  TYPE_NCPXXWL333,
+	TYPE_NCPXXWB473,
+	TYPE_NCPXXWL333,
 };
 
 struct ntc_thermistor_platform_data {
-  /*
-   * One (not both) of read_uV and read_ohm should be provided and only
-   * one of the two should be provided.
-   * Both functions should return negative value for an error case.
-   *
-   * pullup_uV, pullup_ohm, pulldown_ohm, and connect are required to use
-   * read_uV()
-   *
-   * How to setup pullup_ohm, pulldown_ohm, and connect is
-   * described at Documentation/hwmon/ntc_thermistor
-   *
-   * pullup/down_ohm: 0 for infinite / not-connected
-   */
-  int (*read_uV) (void);
-  unsigned int pullup_uV;
-  
-  unsigned int pullup_ohm;
-  unsigned int pulldown_ohm;
-  enum { NTC_CONNECTED_POSITIVE, NTC_CONNECTED_GROUND } connect;
-  
-  int (*read_ohm) (void);
+	/*
+	 * One (not both) of read_uV and read_ohm should be provided and only
+	 * one of the two should be provided.
+	 * Both functions should return negative value for an error case.
+	 *
+	 * pullup_uV, pullup_ohm, pulldown_ohm, and connect are required to use
+	 * read_uV()
+	 *
+	 * How to setup pullup_ohm, pulldown_ohm, and connect is
+	 * described at Documentation/hwmon/ntc_thermistor
+	 *
+	 * pullup/down_ohm: 0 for infinite / not-connected
+	 */
+	int (*read_uV)(void);
+	unsigned int pullup_uV;
+
+	unsigned int pullup_ohm;
+	unsigned int pulldown_ohm;
+	enum { NTC_CONNECTED_POSITIVE, NTC_CONNECTED_GROUND } connect;
+
+	int (*read_ohm)(void);
 };
 
 #endif /* _LINUX_NTC_H */

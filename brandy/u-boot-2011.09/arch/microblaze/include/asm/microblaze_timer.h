@@ -35,7 +35,7 @@
 #define TIMER_CAPTURE_MODE  0x001 /* MDT0 */
 
 typedef volatile struct microblaze_timer_t {
-  int control; /* control/statuc register TCSR */
-  int loadreg; /* load register TLR */
-  int counter; /* timer/counter register */
+	int control; /* control/statuc register TCSR */
+	int loadreg; /* load register TLR */
+	int counter; /* timer/counter register */
 } microblaze_timer_t;

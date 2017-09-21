@@ -12,19 +12,19 @@
 #define OS_LOG_MAGIC_ADDR  ((unsigned long *)0x4f0)
 #define OS_LOG_PTR_ADDR    ((char **)0x4f4)
 
-bool bfin_os_log_check (void)
+bool bfin_os_log_check(void)
 {
-  if (*OS_LOG_MAGIC_ADDR != OS_LOG_MAGIC)
-  { return false; }
-  *OS_LOG_MAGIC_ADDR = 0;
-  return true;
+	if (*OS_LOG_MAGIC_ADDR != OS_LOG_MAGIC)
+		return false;
+	*OS_LOG_MAGIC_ADDR = 0;
+	return true;
 }
 
-void bfin_os_log_dump (void)
+void bfin_os_log_dump(void)
 {
-  char * log = *OS_LOG_PTR_ADDR;
-  while (*log) {
-    puts (log);
-    log += strlen (log) + 1;
-  }
+	char *log = *OS_LOG_PTR_ADDR;
+	while (*log) {
+		puts(log);
+		log += strlen(log) + 1;
+	}
 }

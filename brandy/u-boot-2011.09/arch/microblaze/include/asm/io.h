@@ -38,29 +38,29 @@
 #define memcpy_fromio(a,b,c)    memcpy((a),(void *)(b),(c))
 #define memcpy_toio(a,b,c)      memcpy((void *)(a),(b),(c))
 
-#define inb(addr) readb (addr)
-#define inw(addr) readw (addr)
-#define inl(addr) readl (addr)
-#define outb(x, addr) ((void) writeb (x, addr))
-#define outw(x, addr) ((void) writew (x, addr))
-#define outl(x, addr) ((void) writel (x, addr))
+#define inb(addr)	readb (addr)
+#define inw(addr)	readw (addr)
+#define inl(addr)	readl (addr)
+#define outb(x, addr)	((void) writeb (x, addr))
+#define outw(x, addr)	((void) writew (x, addr))
+#define outl(x, addr)	((void) writel (x, addr))
 
 /* Some #definitions to keep strange Xilinx code happy */
-#define in_8(addr)  readb (addr)
-#define in_be16(addr) readw (addr)
-#define in_be32(addr) readl (addr)
+#define in_8(addr)	readb (addr)
+#define in_be16(addr)	readw (addr)
+#define in_be32(addr)	readl (addr)
 
-#define out_8(addr,x )  outb (x,addr)
-#define out_be16(addr,x ) outw (x,addr)
-#define out_be32(addr,x ) outl (x,addr)
+#define out_8(addr,x )	outb (x,addr)
+#define out_be16(addr,x )	outw (x,addr)
+#define out_be32(addr,x )	outl (x,addr)
 
 
-#define inb_p(port)   inb((port))
-#define outb_p(val, port) outb((val), (port))
-#define inw_p(port)   inw((port))
-#define outw_p(val, port) outw((val), (port))
-#define inl_p(port)   inl((port))
-#define outl_p(val, port) outl((val), (port))
+#define inb_p(port)		inb((port))
+#define outb_p(val, port)	outb((val), (port))
+#define inw_p(port)		inw((port))
+#define outw_p(val, port)	outw((val), (port))
+#define inl_p(port)		inl((port))
+#define outl_p(val, port)	outl((val), (port))
 
 /* Some defines to keep the MTD flash drivers happy */
 
@@ -71,45 +71,45 @@
 #define __raw_writew writew
 #define __raw_writel writel
 
-static inline void io_insb (unsigned long port, void * dst, unsigned long count)
+static inline void io_insb (unsigned long port, void *dst, unsigned long count)
 {
-  unsigned char * p = dst;
-  while (count--)
-  { *p++ = inb (port); }
+	unsigned char *p = dst;
+	while (count--)
+		*p++ = inb (port);
 }
-static inline void io_insw (unsigned long port, void * dst, unsigned long count)
+static inline void io_insw (unsigned long port, void *dst, unsigned long count)
 {
-  unsigned short * p = dst;
-  while (count--)
-  { *p++ = inw (port); }
+	unsigned short *p = dst;
+	while (count--)
+		*p++ = inw (port);
 }
-static inline void io_insl (unsigned long port, void * dst, unsigned long count)
+static inline void io_insl (unsigned long port, void *dst, unsigned long count)
 {
-  unsigned long * p = dst;
-  while (count--)
-  { *p++ = inl (port); }
+	unsigned long *p = dst;
+	while (count--)
+		*p++ = inl (port);
 }
 
 static inline void
-io_outsb (unsigned long port, const void * src, unsigned long count)
+io_outsb (unsigned long port, const void *src, unsigned long count)
 {
-  const unsigned char * p = src;
-  while (count--)
-  { outb (*p++, port); }
+	const unsigned char *p = src;
+	while (count--)
+		outb (*p++, port);
 }
 static inline void
-io_outsw (unsigned long port, const void * src, unsigned long count)
+io_outsw (unsigned long port, const void *src, unsigned long count)
 {
-  const unsigned short * p = src;
-  while (count--)
-  { outw (*p++, port); }
+	const unsigned short *p = src;
+	while (count--)
+		outw (*p++, port);
 }
 static inline void
-io_outsl (unsigned long port, const void * src, unsigned long count)
+io_outsl (unsigned long port, const void *src, unsigned long count)
 {
-  const unsigned long * p = src;
-  while (count--)
-  { outl (*p++, port); }
+	const unsigned long *p = src;
+	while (count--)
+		outl (*p++, port);
 }
 
 #define outsb(a,b,l) io_outsb(a,b,l)
@@ -121,13 +121,13 @@ io_outsl (unsigned long port, const void * src, unsigned long count)
 #define insl(a,b,l) io_insl(a,b,l)
 
 
-#define iounmap(addr)       ((void)0)
-#define ioremap(physaddr, size)     (physaddr)
-#define ioremap_nocache(physaddr, size)   (physaddr)
-#define ioremap_writethrough(physaddr, size)  (physaddr)
-#define ioremap_fullcache(physaddr, size) (physaddr)
+#define iounmap(addr)				((void)0)
+#define ioremap(physaddr, size)			(physaddr)
+#define ioremap_nocache(physaddr, size)		(physaddr)
+#define ioremap_writethrough(physaddr, size)	(physaddr)
+#define ioremap_fullcache(physaddr, size)	(physaddr)
 
-static inline void sync (void)
+static inline void sync(void)
 {
 }
 
@@ -136,28 +136,28 @@ static inline void sync (void)
  * that can be used to access the memory range with the caching
  * properties specified by "flags".
  */
-#define MAP_NOCACHE (0)
-#define MAP_WRCOMBINE (0)
-#define MAP_WRBACK  (0)
-#define MAP_WRTHROUGH (0)
+#define MAP_NOCACHE	(0)
+#define MAP_WRCOMBINE	(0)
+#define MAP_WRBACK	(0)
+#define MAP_WRTHROUGH	(0)
 
 static inline void *
-map_physmem (phys_addr_t paddr, unsigned long len, unsigned long flags)
+map_physmem(phys_addr_t paddr, unsigned long len, unsigned long flags)
 {
-  return (void *) paddr;
+	return (void *)paddr;
 }
 
 /*
  * Take down a mapping set up by map_physmem().
  */
-static inline void unmap_physmem (void * vaddr, unsigned long flags)
+static inline void unmap_physmem(void *vaddr, unsigned long flags)
 {
 
 }
 
-static inline phys_addr_t virt_to_phys (void * vaddr)
+static inline phys_addr_t virt_to_phys(void * vaddr)
 {
-  return (phys_addr_t) (vaddr);
+	return (phys_addr_t)(vaddr);
 }
 
 #endif /* __MICROBLAZE_IO_H__ */

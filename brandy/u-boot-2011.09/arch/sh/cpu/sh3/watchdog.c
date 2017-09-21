@@ -25,16 +25,16 @@
 #include <asm/processor.h>
 #include <asm/system.h>
 
-int watchdog_init (void)
+int watchdog_init(void)
 {
-  return 0;
+	return 0;
 }
 
-void reset_cpu (unsigned long ignored)
+void reset_cpu(unsigned long ignored)
 {
-  /* Address error with SR.BL=1 first. */
-  trigger_address_error();
-  
-  while (1)
-    ;
+	/* Address error with SR.BL=1 first. */
+	trigger_address_error();
+
+	while (1)
+		;
 }

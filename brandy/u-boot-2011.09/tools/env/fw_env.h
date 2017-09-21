@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -37,20 +37,20 @@
 #define DEVICE2_OFFSET    0x0000
 #define ENV2_SIZE         0x4000
 
-#define CONFIG_BAUDRATE   115200
-#define CONFIG_BOOTDELAY  5 /* autoboot after 5 seconds */
-#define CONFIG_BOOTCOMMAND              \
-  "bootp; "               \
-  "setenv bootargs root=/dev/nfs nfsroot=${serverip}:${rootpath} "  \
-  "ip=${ipaddr}:${serverip}:${gatewayip}:${netmask}:${hostname}::off; " \
-  "bootm"
+#define CONFIG_BAUDRATE		115200
+#define CONFIG_BOOTDELAY	5	/* autoboot after 5 seconds	*/
+#define CONFIG_BOOTCOMMAND							\
+	"bootp; "								\
+	"setenv bootargs root=/dev/nfs nfsroot=${serverip}:${rootpath} "	\
+	"ip=${ipaddr}:${serverip}:${gatewayip}:${netmask}:${hostname}::off; "	\
+	"bootm"
 
-extern int   fw_printenv (int argc, char * argv[]);
-extern char * fw_getenv  (char * name);
-extern int fw_setenv  (int argc, char * argv[]);
-extern int fw_parse_script (char * fname);
-extern int fw_env_open (void);
-extern int fw_env_write (char * name, char * value);
-extern int fw_env_close (void);
+extern int   fw_printenv(int argc, char *argv[]);
+extern char *fw_getenv  (char *name);
+extern int fw_setenv  (int argc, char *argv[]);
+extern int fw_parse_script(char *fname);
+extern int fw_env_open(void);
+extern int fw_env_write(char *name, char *value);
+extern int fw_env_close(void);
 
-extern unsigned long  crc32  (unsigned long, const unsigned char *, unsigned);
+extern unsigned	long  crc32	 (unsigned long, const unsigned char *, unsigned);

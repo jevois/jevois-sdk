@@ -16,10 +16,10 @@
  * @gt: comparison operator, which should implement "greater than"
  */
 struct ptr_heap {
-  void ** ptrs;
-  int max;
-  int size;
-  int (*gt) (void *, void *);
+	void **ptrs;
+	int max;
+	int size;
+	int (*gt)(void *, void *);
 };
 
 /**
@@ -29,14 +29,14 @@ struct ptr_heap {
  * @gfp_mask: mask to pass to kmalloc()
  * @gt: comparison operator, which should implement "greater than"
  */
-extern int heap_init (struct ptr_heap * heap, size_t size, gfp_t gfp_mask,
-                      int (*gt) (void *, void *) );
+extern int heap_init(struct ptr_heap *heap, size_t size, gfp_t gfp_mask,
+		     int (*gt)(void *, void *));
 
 /**
  * heap_free - release a heap's storage
  * @heap: the heap structure whose data should be released
  */
-void heap_free (struct ptr_heap * heap);
+void heap_free(struct ptr_heap *heap);
 
 /**
  * heap_insert - insert a value into the heap and return any overflowed value
@@ -51,7 +51,7 @@ void heap_free (struct ptr_heap * heap);
  * (i.e. no change to the heap) if the new element is greater than all
  * elements currently in the heap.
  */
-extern void * heap_insert (struct ptr_heap * heap, void * p);
+extern void *heap_insert(struct ptr_heap *heap, void *p);
 
 
 

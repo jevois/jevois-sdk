@@ -9,13 +9,13 @@
 
 #ifdef __KERNEL__
 
-int   init_socket_xprt (void);
-void    cleanup_socket_xprt (void);
+int		init_socket_xprt(void);
+void		cleanup_socket_xprt(void);
 
-#define RPC_MIN_RESVPORT  (1U)
-#define RPC_MAX_RESVPORT  (65535U)
-#define RPC_DEF_MIN_RESVPORT  (665U)
-#define RPC_DEF_MAX_RESVPORT  (1023U)
+#define RPC_MIN_RESVPORT	(1U)
+#define RPC_MAX_RESVPORT	(65535U)
+#define RPC_DEF_MIN_RESVPORT	(665U)
+#define RPC_DEF_MAX_RESVPORT	(1023U)
 
 #endif /* __KERNEL__ */
 

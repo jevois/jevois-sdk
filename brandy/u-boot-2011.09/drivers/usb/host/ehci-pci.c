@@ -27,11 +27,11 @@
 
 #ifdef CONFIG_PCI_EHCI_DEVICE
 static struct pci_device_id ehci_pci_ids[] = {
-  /* Please add supported PCI EHCI controller ids here */
-  {0x1033, 0x00E0}, /* NEC */
-  {0x10B9, 0x5239}, /* ULI1575 PCI EHCI module ids */
-  {0x12D8, 0x400F}, /* Pericom */
-  {0, 0}
+	/* Please add supported PCI EHCI controller ids here */
+	{0x1033, 0x00E0},	/* NEC */
+	{0x10B9, 0x5239},	/* ULI1575 PCI EHCI module ids */
+	{0x12D8, 0x400F},	/* Pericom */
+	{0, 0}
 };
 #endif
 
@@ -39,33 +39,33 @@ static struct pci_device_id ehci_pci_ids[] = {
  * Create the appropriate control structures to manage
  * a new EHCI host controller.
  */
-int ehci_hcd_init (void)
+int ehci_hcd_init(void)
 {
-  pci_dev_t pdev;
-  
-  pdev = pci_find_devices (ehci_pci_ids, CONFIG_PCI_EHCI_DEVICE);
-  if (pdev == -1) {
-    printf ("EHCI host controller not found\n");
-    return -1;
-  }
-  
-  hccr = (struct ehci_hccr *) pci_map_bar (pdev,
-         PCI_BASE_ADDRESS_0, PCI_REGION_MEM);
-  hcor = (struct ehci_hcor *) ( (uint32_t) hccr +
-                                HC_LENGTH (ehci_readl (&hccr->cr_capbase) ) );
-                                
-  debug ("EHCI-PCI init hccr 0x%x and hcor 0x%x hc_length %d\n",
-         (uint32_t) hccr, (uint32_t) hcor,
-         (uint32_t) HC_LENGTH (ehci_readl (&hccr->cr_capbase) ) );
-         
-  return 0;
+	pci_dev_t pdev;
+
+	pdev = pci_find_devices(ehci_pci_ids, CONFIG_PCI_EHCI_DEVICE);
+	if (pdev == -1) {
+		printf("EHCI host controller not found\n");
+		return -1;
+	}
+
+	hccr = (struct ehci_hccr *)pci_map_bar(pdev,
+			PCI_BASE_ADDRESS_0, PCI_REGION_MEM);
+	hcor = (struct ehci_hcor *)((uint32_t) hccr +
+			HC_LENGTH(ehci_readl(&hccr->cr_capbase)));
+
+	debug("EHCI-PCI init hccr 0x%x and hcor 0x%x hc_length %d\n",
+			(uint32_t)hccr, (uint32_t)hcor,
+			(uint32_t)HC_LENGTH(ehci_readl(&hccr->cr_capbase)));
+
+	return 0;
 }
 
 /*
  * Destroy the appropriate control structures corresponding
  * the the EHCI host controller.
  */
-int ehci_hcd_stop (void)
+int ehci_hcd_stop(void)
 {
-  return 0;
+	return 0;
 }

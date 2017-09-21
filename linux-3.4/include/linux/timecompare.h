@@ -71,13 +71,13 @@
  * @last_update:     last source time stamp when time offset was measured
  */
 struct timecompare {
-  struct timecounter * source;
-  ktime_t (*target) (void);
-  int num_samples;
-  
-  s64 offset;
-  s64 skew;
-  u64 last_update;
+	struct timecounter *source;
+	ktime_t (*target)(void);
+	int num_samples;
+
+	s64 offset;
+	s64 skew;
+	u64 last_update;
 };
 
 /**
@@ -86,8 +86,8 @@ struct timecompare {
  * @source_tstamp:   the result of timecounter_read() or
  *                   timecounter_cyc2time()
  */
-extern ktime_t timecompare_transform (struct timecompare * sync,
-                                      u64 source_tstamp);
+extern ktime_t timecompare_transform(struct timecompare *sync,
+				     u64 source_tstamp);
 
 /**
  * timecompare_offset - measure current (target time - source time) offset
@@ -99,12 +99,12 @@ extern ktime_t timecompare_transform (struct timecompare * sync,
  * unlikely case that target time was monotonically decreasing for all
  * samples (= broken).
  */
-extern int timecompare_offset (struct timecompare * sync,
-                               s64 * offset,
-                               u64 * source_tstamp);
+extern int timecompare_offset(struct timecompare *sync,
+			      s64 *offset,
+			      u64 *source_tstamp);
 
-extern void __timecompare_update (struct timecompare * sync,
-                                  u64 source_tstamp);
+extern void __timecompare_update(struct timecompare *sync,
+				 u64 source_tstamp);
 
 /**
  * timecompare_update - update offset and skew by measuring current offset
@@ -114,12 +114,12 @@ extern void __timecompare_update (struct timecompare * sync,
  *
  * Updates are only done at most once per second.
  */
-static inline void timecompare_update (struct timecompare * sync,
-                                       u64 source_tstamp)
+static inline void timecompare_update(struct timecompare *sync,
+				      u64 source_tstamp)
 {
-  if (!source_tstamp ||
-      (s64) (source_tstamp - sync->last_update) >= NSEC_PER_SEC)
-  { __timecompare_update (sync, source_tstamp); }
+	if (!source_tstamp ||
+	    (s64)(source_tstamp - sync->last_update) >= NSEC_PER_SEC)
+		__timecompare_update(sync, source_tstamp);
 }
 
 #endif /* _LINUX_TIMECOMPARE_H */

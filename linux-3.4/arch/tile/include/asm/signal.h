@@ -26,13 +26,13 @@
 #if defined(__KERNEL__)
 #if !defined(__ASSEMBLY__)
 struct pt_regs;
-int restore_sigcontext (struct pt_regs *, struct sigcontext __user *);
-int setup_sigcontext (struct sigcontext __user *, struct pt_regs *);
-void do_signal (struct pt_regs * regs);
-void signal_fault (const char * type, struct pt_regs *,
-                   void __user * frame, int sig);
-void trace_unhandled_signal (const char * type, struct pt_regs * regs,
-                             unsigned long address, int signo);
+int restore_sigcontext(struct pt_regs *, struct sigcontext __user *);
+int setup_sigcontext(struct sigcontext __user *, struct pt_regs *);
+void do_signal(struct pt_regs *regs);
+void signal_fault(const char *type, struct pt_regs *,
+		  void __user *frame, int sig);
+void trace_unhandled_signal(const char *type, struct pt_regs *regs,
+			    unsigned long address, int signo);
 #endif
 #endif
 

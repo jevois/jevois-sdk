@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -36,16 +36,16 @@
 
 struct sunxi_twi_reg
 {
-  volatile unsigned int addr;        /* slave address     */
-  volatile unsigned int xaddr;       /* extend address    */
-  volatile unsigned int data;        /* data              */
-  volatile unsigned int ctl;         /* control           */
-  volatile unsigned int status;      /* status            */
-  volatile unsigned int clk;         /* clock             */
-  volatile unsigned int srst;        /* soft reset        */
-  volatile unsigned int eft;         /* enhanced future   */
-  volatile unsigned int lcr;         /* line control      */
-  volatile unsigned int dvfs;        /* dvfs control      */
+    volatile unsigned int addr;        /* slave address     */
+    volatile unsigned int xaddr;       /* extend address    */
+	volatile unsigned int data;        /* data              */
+    volatile unsigned int ctl;         /* control           */
+    volatile unsigned int status;      /* status            */
+    volatile unsigned int clk;         /* clock             */
+    volatile unsigned int srst;        /* soft reset        */
+    volatile unsigned int eft;         /* enhanced future   */
+    volatile unsigned int lcr;         /* line control      */
+    volatile unsigned int dvfs;        /* dvfs control      */
 };
 
 

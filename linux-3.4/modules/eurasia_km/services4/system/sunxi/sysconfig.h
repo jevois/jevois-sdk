@@ -41,42 +41,42 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #if !defined(__SOCCONFIG_H__)
 #define __SOCCONFIG_H__
 #include <mach/irqs.h>
-#define VS_PRODUCT_NAME "sunxi"
+#define VS_PRODUCT_NAME	"sunxi"
 
-#define SYS_SGX_CLOCK_SPEED    300000000
+#define SYS_SGX_CLOCK_SPEED		 300000000
 #define SYS_SGX_CORE_CLOCK_SPEED 300000000
 #define SYS_SGX_HYD_CLOCK_SPEED  330000000
 
-#define SYS_SGX_HWRECOVERY_TIMEOUT_FREQ   (100)
-#define SYS_SGX_PDS_TIMER_FREQ        (1000) 
+#define SYS_SGX_HWRECOVERY_TIMEOUT_FREQ		(100)
+#define SYS_SGX_PDS_TIMER_FREQ				(1000)
 
 /* Allow the AP latency to be overridden in the build config */
 #if !defined(SYS_SGX_ACTIVE_POWER_LATENCY_MS)
-#define SYS_SGX_ACTIVE_POWER_LATENCY_MS   (2)
+#define SYS_SGX_ACTIVE_POWER_LATENCY_MS		(2)
 #endif
 
 
 #define SYS_SUNXI_SGX_REGS_SYS_PHYS_BASE  0x01C40000
 #define SYS_SUNXI_SGX_REGS_SIZE           0xFFFF
 
-#define SYS_SUNXI_SGX_IRQ        SUNXI_IRQ_GPU  /* IC 129, FPGA 58 SUNXI IRQ's aren't offset by 32 */
+#define SYS_SUNXI_SGX_IRQ				 SUNXI_IRQ_GPU  /* IC 129, FPGA 58 SUNXI IRQ's aren't offset by 32 */
 
 /* Interrupt bits */
-#define DEVICE_SGX_INTERRUPT    (1<<0)
-#define DEVICE_MSVDX_INTERRUPT    (1<<1)
-#define DEVICE_DISP_INTERRUPT   (1<<2)
+#define DEVICE_SGX_INTERRUPT		(1<<0)
+#define DEVICE_MSVDX_INTERRUPT		(1<<1)
+#define DEVICE_DISP_INTERRUPT		(1<<2)
 
 #if defined(__linux__)
 
 #if defined(PVR_LDM_PLATFORM_PRE_REGISTERED_DEV)
-#define SYS_SGX_DEV_NAME  PVR_LDM_PLATFORM_PRE_REGISTERED_DEV
+#define	SYS_SGX_DEV_NAME	PVR_LDM_PLATFORM_PRE_REGISTERED_DEV
 #else
-#define SYS_SGX_DEV_NAME  "sunxi_gpu"
-#endif  /* defined(PVR_LDM_PLATFORM_PRE_REGISTERED_DEV) */
-#endif  /* defined(__linux__) */
+#define	SYS_SGX_DEV_NAME	"sunxi_gpu"
+#endif	/* defined(PVR_LDM_PLATFORM_PRE_REGISTERED_DEV) */
+#endif	/* defined(__linux__) */
 
 /*****************************************************************************
  * system specific data structures
  *****************************************************************************/
-
-#endif  /* __SYSCONFIG_H__ */
+ 
+#endif	/* __SYSCONFIG_H__ */

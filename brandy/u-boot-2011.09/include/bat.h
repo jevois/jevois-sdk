@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -33,14 +33,14 @@
 
 typedef struct
 {
-  int x;
-  int y;
-  int bit;
-  void * buffer;
+	int x;
+	int y;
+	int bit;
+	void *buffer;
 }
 sunxi_bmp_store_t;
 
-extern int sunxi_bmp_decode (unsigned long addr, sunxi_bmp_store_t * bmp_info);
+extern int sunxi_bmp_decode(unsigned long addr, sunxi_bmp_store_t *bmp_info);
 
 #endif  /* __SUNXI_BAT_H__ */
 

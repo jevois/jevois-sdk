@@ -40,15 +40,15 @@
  * This function returns %1 if the buffer is empty (contains all 0xff) otherwise
  * %0 is returned.
  */
-static int is_empty (void * buf, int len)
+static int is_empty(void *buf, int len)
 {
-  uint8_t * p = buf;
-  int i;
-  
-  for (i = 0; i < len; i++)
-    if (*p++ != 0xff)
-    { return 0; }
-  return 1;
+	uint8_t *p = buf;
+	int i;
+
+	for (i = 0; i < len; i++)
+		if (*p++ != 0xff)
+			return 0;
+	return 1;
 }
 
 /**
@@ -68,92 +68,92 @@ static int is_empty (void * buf, int len)
  *
  * This function returns %0 on success and a negative error code on failure.
  */
-static int get_master_node (const struct ubifs_info * c, int lnum, void ** pbuf,
-                            struct ubifs_mst_node ** mst, void ** cor)
+static int get_master_node(const struct ubifs_info *c, int lnum, void **pbuf,
+			   struct ubifs_mst_node **mst, void **cor)
 {
-  const int sz = c->mst_node_alsz;
-  int err, offs, len;
-  void * sbuf, *buf;
-  
-  sbuf = vmalloc (c->leb_size);
-  if (!sbuf)
-  { return -ENOMEM; }
-  
-  err = ubi_read (c->ubi, lnum, sbuf, 0, c->leb_size);
-  if (err && err != -EBADMSG)
-  { goto out_free; }
-  
-  /* Find the first position that is definitely not a node */
-  offs = 0;
-  buf = sbuf;
-  len = c->leb_size;
-  while (offs + UBIFS_MST_NODE_SZ <= c->leb_size) {
-    struct ubifs_ch * ch = buf;
-    
-    if (le32_to_cpu (ch->magic) != UBIFS_NODE_MAGIC)
-    { break; }
-    offs += sz;
-    buf  += sz;
-    len  -= sz;
-  }
-  /* See if there was a valid master node before that */
-  if (offs) {
-    int ret;
-    
-    offs -= sz;
-    buf  -= sz;
-    len  += sz;
-    ret = ubifs_scan_a_node (c, buf, len, lnum, offs, 1);
-    if (ret != SCANNED_A_NODE && offs) {
-      /* Could have been corruption so check one place back */
-      offs -= sz;
-      buf  -= sz;
-      len  += sz;
-      ret = ubifs_scan_a_node (c, buf, len, lnum, offs, 1);
-      if (ret != SCANNED_A_NODE)
-        /*
-         * We accept only one area of corruption because
-         * we are assuming that it was caused while
-         * trying to write a master node.
-         */
-      { goto out_err; }
-    }
-    if (ret == SCANNED_A_NODE) {
-      struct ubifs_ch * ch = buf;
-      
-      if (ch->node_type != UBIFS_MST_NODE)
-      { goto out_err; }
-      dbg_rcvry ("found a master node at %d:%d", lnum, offs);
-      *mst = buf;
-      offs += sz;
-      buf  += sz;
-      len  -= sz;
-    }
-  }
-  /* Check for corruption */
-  if (offs < c->leb_size) {
-    if (!is_empty (buf, min_t (int, len, sz) ) ) {
-      *cor = buf;
-      dbg_rcvry ("found corruption at %d:%d", lnum, offs);
-    }
-    offs += sz;
-    buf  += sz;
-    len  -= sz;
-  }
-  /* Check remaining empty space */
-  if (offs < c->leb_size)
-    if (!is_empty (buf, len) )
-    { goto out_err; }
-  *pbuf = sbuf;
-  return 0;
-  
+	const int sz = c->mst_node_alsz;
+	int err, offs, len;
+	void *sbuf, *buf;
+
+	sbuf = vmalloc(c->leb_size);
+	if (!sbuf)
+		return -ENOMEM;
+
+	err = ubi_read(c->ubi, lnum, sbuf, 0, c->leb_size);
+	if (err && err != -EBADMSG)
+		goto out_free;
+
+	/* Find the first position that is definitely not a node */
+	offs = 0;
+	buf = sbuf;
+	len = c->leb_size;
+	while (offs + UBIFS_MST_NODE_SZ <= c->leb_size) {
+		struct ubifs_ch *ch = buf;
+
+		if (le32_to_cpu(ch->magic) != UBIFS_NODE_MAGIC)
+			break;
+		offs += sz;
+		buf  += sz;
+		len  -= sz;
+	}
+	/* See if there was a valid master node before that */
+	if (offs) {
+		int ret;
+
+		offs -= sz;
+		buf  -= sz;
+		len  += sz;
+		ret = ubifs_scan_a_node(c, buf, len, lnum, offs, 1);
+		if (ret != SCANNED_A_NODE && offs) {
+			/* Could have been corruption so check one place back */
+			offs -= sz;
+			buf  -= sz;
+			len  += sz;
+			ret = ubifs_scan_a_node(c, buf, len, lnum, offs, 1);
+			if (ret != SCANNED_A_NODE)
+				/*
+				 * We accept only one area of corruption because
+				 * we are assuming that it was caused while
+				 * trying to write a master node.
+				 */
+				goto out_err;
+		}
+		if (ret == SCANNED_A_NODE) {
+			struct ubifs_ch *ch = buf;
+
+			if (ch->node_type != UBIFS_MST_NODE)
+				goto out_err;
+			dbg_rcvry("found a master node at %d:%d", lnum, offs);
+			*mst = buf;
+			offs += sz;
+			buf  += sz;
+			len  -= sz;
+		}
+	}
+	/* Check for corruption */
+	if (offs < c->leb_size) {
+		if (!is_empty(buf, min_t(int, len, sz))) {
+			*cor = buf;
+			dbg_rcvry("found corruption at %d:%d", lnum, offs);
+		}
+		offs += sz;
+		buf  += sz;
+		len  -= sz;
+	}
+	/* Check remaining empty space */
+	if (offs < c->leb_size)
+		if (!is_empty(buf, len))
+			goto out_err;
+	*pbuf = sbuf;
+	return 0;
+
 out_err:
-  err = -EINVAL;
+	err = -EINVAL;
 out_free:
-  vfree (sbuf);
-  *mst = NULL;
-  *cor = NULL;
-  return err;
+	vfree(sbuf);
+	*mst = NULL;
+	*cor = NULL;
+	return err;
 }
 
 /**
@@ -163,27 +163,27 @@ out_free:
  *
  * This function returns %0 on success and a negative error code on failure.
  */
-static int write_rcvrd_mst_node (struct ubifs_info * c,
-                                 struct ubifs_mst_node * mst)
+static int write_rcvrd_mst_node(struct ubifs_info *c,
+				struct ubifs_mst_node *mst)
 {
-  int err = 0, lnum = UBIFS_MST_LNUM, sz = c->mst_node_alsz;
-  __le32 save_flags;
-  
-  dbg_rcvry ("recovery");
-  
-  save_flags = mst->flags;
-  mst->flags |= cpu_to_le32 (UBIFS_MST_RCVRY);
-  
-  ubifs_prepare_node (c, mst, UBIFS_MST_NODE_SZ, 1);
-  err = ubi_leb_change (c->ubi, lnum, mst, sz, UBI_SHORTTERM);
-  if (err)
-  { goto out; }
-  err = ubi_leb_change (c->ubi, lnum + 1, mst, sz, UBI_SHORTTERM);
-  if (err)
-  { goto out; }
+	int err = 0, lnum = UBIFS_MST_LNUM, sz = c->mst_node_alsz;
+	__le32 save_flags;
+
+	dbg_rcvry("recovery");
+
+	save_flags = mst->flags;
+	mst->flags |= cpu_to_le32(UBIFS_MST_RCVRY);
+
+	ubifs_prepare_node(c, mst, UBIFS_MST_NODE_SZ, 1);
+	err = ubi_leb_change(c->ubi, lnum, mst, sz, UBI_SHORTTERM);
+	if (err)
+		goto out;
+	err = ubi_leb_change(c->ubi, lnum + 1, mst, sz, UBI_SHORTTERM);
+	if (err)
+		goto out;
 out:
-  mst->flags = save_flags;
-  return err;
+	mst->flags = save_flags;
+	return err;
 }
 
 /**
@@ -195,121 +195,112 @@ out:
  *
  * This function returns %0 on success and a negative error code on failure.
  */
-int ubifs_recover_master_node (struct ubifs_info * c)
+int ubifs_recover_master_node(struct ubifs_info *c)
 {
-  void * buf1 = NULL, *buf2 = NULL, *cor1 = NULL, *cor2 = NULL;
-  struct ubifs_mst_node * mst1 = NULL, *mst2 = NULL, *mst;
-  const int sz = c->mst_node_alsz;
-  int err, offs1, offs2;
-  
-  dbg_rcvry ("recovery");
-  
-  err = get_master_node (c, UBIFS_MST_LNUM, &buf1, &mst1, &cor1);
-  if (err)
-  { goto out_free; }
-  
-  err = get_master_node (c, UBIFS_MST_LNUM + 1, &buf2, &mst2, &cor2);
-  if (err)
-  { goto out_free; }
-  
-  if (mst1) {
-    offs1 = (void *) mst1 - buf1;
-    if ( (le32_to_cpu (mst1->flags) & UBIFS_MST_RCVRY) &&
-         (offs1 == 0 && !cor1) ) {
-      /*
-       * mst1 was written by recovery at offset 0 with no
-       * corruption.
-       */
-      dbg_rcvry ("recovery recovery");
-      mst = mst1;
-    }
-    else
-      if (mst2) {
-        offs2 = (void *) mst2 - buf2;
-        if (offs1 == offs2) {
-          /* Same offset, so must be the same */
-          if (memcmp ( (void *) mst1 + UBIFS_CH_SZ,
-                       (void *) mst2 + UBIFS_CH_SZ,
-                       UBIFS_MST_NODE_SZ - UBIFS_CH_SZ) )
-          { goto out_err; }
-          mst = mst1;
-        }
-        else
-          if (offs2 + sz == offs1) {
-            /* 1st LEB was written, 2nd was not */
-            if (cor1)
-            { goto out_err; }
-            mst = mst1;
-          }
-          else
-            if (offs1 == 0 && offs2 + sz >= c->leb_size) {
-              /* 1st LEB was unmapped and written, 2nd not */
-              if (cor1)
-              { goto out_err; }
-              mst = mst1;
-            }
-            else
-            { goto out_err; }
-      }
-      else {
-        /*
-         * 2nd LEB was unmapped and about to be written, so
-         * there must be only one master node in the first LEB
-         * and no corruption.
-         */
-        if (offs1 != 0 || cor1)
-        { goto out_err; }
-        mst = mst1;
-      }
-  }
-  else {
-    if (!mst2)
-    { goto out_err; }
-    /*
-     * 1st LEB was unmapped and about to be written, so there must
-     * be no room left in 2nd LEB.
-     */
-    offs2 = (void *) mst2 - buf2;
-    if (offs2 + sz + sz <= c->leb_size)
-    { goto out_err; }
-    mst = mst2;
-  }
-  
-  dbg_rcvry ("recovered master node from LEB %d",
-             (mst == mst1 ? UBIFS_MST_LNUM : UBIFS_MST_LNUM + 1) );
-             
-  memcpy (c->mst_node, mst, UBIFS_MST_NODE_SZ);
-  
-  if ( (c->vfs_sb->s_flags & MS_RDONLY) ) {
-    /* Read-only mode. Keep a copy for switching to rw mode */
-    c->rcvrd_mst_node = kmalloc (sz, GFP_KERNEL);
-    if (!c->rcvrd_mst_node) {
-      err = -ENOMEM;
-      goto out_free;
-    }
-    memcpy (c->rcvrd_mst_node, c->mst_node, UBIFS_MST_NODE_SZ);
-  }
-  
-  vfree (buf2);
-  vfree (buf1);
-  
-  return 0;
-  
+	void *buf1 = NULL, *buf2 = NULL, *cor1 = NULL, *cor2 = NULL;
+	struct ubifs_mst_node *mst1 = NULL, *mst2 = NULL, *mst;
+	const int sz = c->mst_node_alsz;
+	int err, offs1, offs2;
+
+	dbg_rcvry("recovery");
+
+	err = get_master_node(c, UBIFS_MST_LNUM, &buf1, &mst1, &cor1);
+	if (err)
+		goto out_free;
+
+	err = get_master_node(c, UBIFS_MST_LNUM + 1, &buf2, &mst2, &cor2);
+	if (err)
+		goto out_free;
+
+	if (mst1) {
+		offs1 = (void *)mst1 - buf1;
+		if ((le32_to_cpu(mst1->flags) & UBIFS_MST_RCVRY) &&
+		    (offs1 == 0 && !cor1)) {
+			/*
+			 * mst1 was written by recovery at offset 0 with no
+			 * corruption.
+			 */
+			dbg_rcvry("recovery recovery");
+			mst = mst1;
+		} else if (mst2) {
+			offs2 = (void *)mst2 - buf2;
+			if (offs1 == offs2) {
+				/* Same offset, so must be the same */
+				if (memcmp((void *)mst1 + UBIFS_CH_SZ,
+					   (void *)mst2 + UBIFS_CH_SZ,
+					   UBIFS_MST_NODE_SZ - UBIFS_CH_SZ))
+					goto out_err;
+				mst = mst1;
+			} else if (offs2 + sz == offs1) {
+				/* 1st LEB was written, 2nd was not */
+				if (cor1)
+					goto out_err;
+				mst = mst1;
+			} else if (offs1 == 0 && offs2 + sz >= c->leb_size) {
+				/* 1st LEB was unmapped and written, 2nd not */
+				if (cor1)
+					goto out_err;
+				mst = mst1;
+			} else
+				goto out_err;
+		} else {
+			/*
+			 * 2nd LEB was unmapped and about to be written, so
+			 * there must be only one master node in the first LEB
+			 * and no corruption.
+			 */
+			if (offs1 != 0 || cor1)
+				goto out_err;
+			mst = mst1;
+		}
+	} else {
+		if (!mst2)
+			goto out_err;
+		/*
+		 * 1st LEB was unmapped and about to be written, so there must
+		 * be no room left in 2nd LEB.
+		 */
+		offs2 = (void *)mst2 - buf2;
+		if (offs2 + sz + sz <= c->leb_size)
+			goto out_err;
+		mst = mst2;
+	}
+
+	dbg_rcvry("recovered master node from LEB %d",
+		  (mst == mst1 ? UBIFS_MST_LNUM : UBIFS_MST_LNUM + 1));
+
+	memcpy(c->mst_node, mst, UBIFS_MST_NODE_SZ);
+
+	if ((c->vfs_sb->s_flags & MS_RDONLY)) {
+		/* Read-only mode. Keep a copy for switching to rw mode */
+		c->rcvrd_mst_node = kmalloc(sz, GFP_KERNEL);
+		if (!c->rcvrd_mst_node) {
+			err = -ENOMEM;
+			goto out_free;
+		}
+		memcpy(c->rcvrd_mst_node, c->mst_node, UBIFS_MST_NODE_SZ);
+	}
+
+	vfree(buf2);
+	vfree(buf1);
+
+	return 0;
+
 out_err:
-  err = -EINVAL;
+	err = -EINVAL;
 out_free:
-  ubifs_err ("failed to recover master node");
-  if (mst1) {
-    dbg_err ("dumping first master node");
-    dbg_dump_node (c, mst1);
-  }
-  if (mst2) {
-    dbg_err ("dumping second master node");
-    dbg_dump_node (c, mst2);
-  }
-  vfree (buf2);
-  vfree (buf1);
-  return err;
+	ubifs_err("failed to recover master node");
+	if (mst1) {
+		dbg_err("dumping first master node");
+		dbg_dump_node(c, mst1);
+	}
+	if (mst2) {
+		dbg_err("dumping second master node");
+		dbg_dump_node(c, mst2);
+	}
+	vfree(buf2);
+	vfree(buf1);
+	return err;
 }
 
 /**
@@ -321,20 +312,20 @@ out_free:
  *
  * This function returns %0 on success and a negative error code on failure.
  */
-int ubifs_write_rcvrd_mst_node (struct ubifs_info * c)
+int ubifs_write_rcvrd_mst_node(struct ubifs_info *c)
 {
-  int err;
-  
-  if (!c->rcvrd_mst_node)
-  { return 0; }
-  c->rcvrd_mst_node->flags |= cpu_to_le32 (UBIFS_MST_DIRTY);
-  c->mst_node->flags |= cpu_to_le32 (UBIFS_MST_DIRTY);
-  err = write_rcvrd_mst_node (c, c->rcvrd_mst_node);
-  if (err)
-  { return err; }
-  kfree (c->rcvrd_mst_node);
-  c->rcvrd_mst_node = NULL;
-  return 0;
+	int err;
+
+	if (!c->rcvrd_mst_node)
+		return 0;
+	c->rcvrd_mst_node->flags |= cpu_to_le32(UBIFS_MST_DIRTY);
+	c->mst_node->flags |= cpu_to_le32(UBIFS_MST_DIRTY);
+	err = write_rcvrd_mst_node(c, c->rcvrd_mst_node);
+	if (err)
+		return err;
+	kfree(c->rcvrd_mst_node);
+	c->rcvrd_mst_node = NULL;
+	return 0;
 }
 
 /**
@@ -348,40 +339,40 @@ int ubifs_write_rcvrd_mst_node (struct ubifs_info * c)
  * for subsequent empty space starting from the next min_io_size boundary (or a
  * bit less than the common header size if min_io_size is one).
  */
-static int is_last_write (const struct ubifs_info * c, void * buf, int offs)
+static int is_last_write(const struct ubifs_info *c, void *buf, int offs)
 {
-  int empty_offs;
-  int check_len;
-  uint8_t * p;
-  
-  if (c->min_io_size == 1) {
-    check_len = c->leb_size - offs;
-    p = buf + check_len;
-    for (; check_len > 0; check_len--)
-      if (*--p != 0xff)
-      { break; }
-    /*
-     * 'check_len' is the size of the corruption which cannot be
-     * more than the size of 1 node if it was caused by an unclean
-     * unmount.
-     */
-    if (check_len > UBIFS_MAX_NODE_SZ)
-    { return 0; }
-    return 1;
-  }
-  
-  /*
-   * Round up to the next c->min_io_size boundary i.e. 'offs' is in the
-   * last wbuf written. After that should be empty space.
-   */
-  empty_offs = ALIGN (offs + 1, c->min_io_size);
-  check_len = c->leb_size - empty_offs;
-  p = buf + empty_offs - offs;
-  
-  for (; check_len > 0; check_len--)
-    if (*p++ != 0xff)
-    { return 0; }
-  return 1;
+	int empty_offs;
+	int check_len;
+	uint8_t *p;
+
+	if (c->min_io_size == 1) {
+		check_len = c->leb_size - offs;
+		p = buf + check_len;
+		for (; check_len > 0; check_len--)
+			if (*--p != 0xff)
+				break;
+		/*
+		 * 'check_len' is the size of the corruption which cannot be
+		 * more than the size of 1 node if it was caused by an unclean
+		 * unmount.
+		 */
+		if (check_len > UBIFS_MAX_NODE_SZ)
+			return 0;
+		return 1;
+	}
+
+	/*
+	 * Round up to the next c->min_io_size boundary i.e. 'offs' is in the
+	 * last wbuf written. After that should be empty space.
+	 */
+	empty_offs = ALIGN(offs + 1, c->min_io_size);
+	check_len = c->leb_size - empty_offs;
+	p = buf + empty_offs - offs;
+
+	for (; check_len > 0; check_len--)
+		if (*p++ != 0xff)
+			return 0;
+	return 1;
 }
 
 /**
@@ -396,27 +387,27 @@ static int is_last_write (const struct ubifs_info * c, void * buf, int offs)
  * sets empty space to all 0xff. @buf, @offs and @len are updated to the next
  * min_io_size boundary (if there is one).
  */
-static void clean_buf (const struct ubifs_info * c, void ** buf, int lnum,
-                       int * offs, int * len)
+static void clean_buf(const struct ubifs_info *c, void **buf, int lnum,
+		      int *offs, int *len)
 {
-  int empty_offs, pad_len;
-  
-  lnum = lnum;
-  dbg_rcvry ("cleaning corruption at %d:%d", lnum, *offs);
-  
-  if (c->min_io_size == 1) {
-    memset (*buf, 0xff, c->leb_size - *offs);
-    return;
-  }
-  
-  ubifs_assert (! (*offs & 7) );
-  empty_offs = ALIGN (*offs, c->min_io_size);
-  pad_len = empty_offs - *offs;
-  ubifs_pad (c, *buf, pad_len);
-  *offs += pad_len;
-  *buf += pad_len;
-  *len -= pad_len;
-  memset (*buf, 0xff, c->leb_size - empty_offs);
+	int empty_offs, pad_len;
+
+	lnum = lnum;
+	dbg_rcvry("cleaning corruption at %d:%d", lnum, *offs);
+
+	if (c->min_io_size == 1) {
+		memset(*buf, 0xff, c->leb_size - *offs);
+		return;
+	}
+
+	ubifs_assert(!(*offs & 7));
+	empty_offs = ALIGN(*offs, c->min_io_size);
+	pad_len = empty_offs - *offs;
+	ubifs_pad(c, *buf, pad_len);
+	*offs += pad_len;
+	*buf += pad_len;
+	*len -= pad_len;
+	memset(*buf, 0xff, c->leb_size - empty_offs);
 }
 
 /**
@@ -431,31 +422,31 @@ static void clean_buf (const struct ubifs_info * c, void ** buf, int lnum,
  * written to a LEB. This function returns %1 if more data is not found and
  * %0 if more data is found.
  */
-static int no_more_nodes (const struct ubifs_info * c, void * buf, int len,
-                          int lnum, int offs)
+static int no_more_nodes(const struct ubifs_info *c, void *buf, int len,
+			int lnum, int offs)
 {
-  struct ubifs_ch * ch = buf;
-  int skip, dlen = le32_to_cpu (ch->len);
-  
-  /* Check for empty space after the corrupt node's common header */
-  skip = ALIGN (offs + UBIFS_CH_SZ, c->min_io_size) - offs;
-  if (is_empty (buf + skip, len - skip) )
-  { return 1; }
-  /*
-   * The area after the common header size is not empty, so the common
-   * header must be intact. Check it.
-   */
-  if (ubifs_check_node (c, buf, lnum, offs, 1, 0) != -EUCLEAN) {
-    dbg_rcvry ("unexpected bad common header at %d:%d", lnum, offs);
-    return 0;
-  }
-  /* Now we know the corrupt node's length we can skip over it */
-  skip = ALIGN (offs + dlen, c->min_io_size) - offs;
-  /* After which there should be empty space */
-  if (is_empty (buf + skip, len - skip) )
-  { return 1; }
-  dbg_rcvry ("unexpected data at %d:%d", lnum, offs + skip);
-  return 0;
+	struct ubifs_ch *ch = buf;
+	int skip, dlen = le32_to_cpu(ch->len);
+
+	/* Check for empty space after the corrupt node's common header */
+	skip = ALIGN(offs + UBIFS_CH_SZ, c->min_io_size) - offs;
+	if (is_empty(buf + skip, len - skip))
+		return 1;
+	/*
+	 * The area after the common header size is not empty, so the common
+	 * header must be intact. Check it.
+	 */
+	if (ubifs_check_node(c, buf, lnum, offs, 1, 0) != -EUCLEAN) {
+		dbg_rcvry("unexpected bad common header at %d:%d", lnum, offs);
+		return 0;
+	}
+	/* Now we know the corrupt node's length we can skip over it */
+	skip = ALIGN(offs + dlen, c->min_io_size) - offs;
+	/* After which there should be empty space */
+	if (is_empty(buf + skip, len - skip))
+		return 1;
+	dbg_rcvry("unexpected data at %d:%d", lnum, offs + skip);
+	return 0;
 }
 
 /**
@@ -464,34 +455,34 @@ static int no_more_nodes (const struct ubifs_info * c, void * buf, int len,
  * @sleb: scanned LEB information
  * @start: offset where scan started
  */
-static int fix_unclean_leb (struct ubifs_info * c, struct ubifs_scan_leb * sleb,
-                            int start)
+static int fix_unclean_leb(struct ubifs_info *c, struct ubifs_scan_leb *sleb,
+			   int start)
 {
-  int lnum = sleb->lnum, endpt = start;
-  
-  /* Get the end offset of the last node we are keeping */
-  if (!list_empty (&sleb->nodes) ) {
-    struct ubifs_scan_node * snod;
-    
-    snod = list_entry (sleb->nodes.prev,
-                       struct ubifs_scan_node, list);
-    endpt = snod->offs + snod->len;
-  }
-  
-  if ( (c->vfs_sb->s_flags & MS_RDONLY) && !c->remounting_rw) {
-    /* Add to recovery list */
-    struct ubifs_unclean_leb * ucleb;
-    
-    dbg_rcvry ("need to fix LEB %d start %d endpt %d",
-               lnum, start, sleb->endpt);
-    ucleb = kzalloc (sizeof (struct ubifs_unclean_leb), GFP_NOFS);
-    if (!ucleb)
-    { return -ENOMEM; }
-    ucleb->lnum = lnum;
-    ucleb->endpt = endpt;
-    list_add_tail (&ucleb->list, &c->unclean_leb_list);
-  }
-  return 0;
+	int lnum = sleb->lnum, endpt = start;
+
+	/* Get the end offset of the last node we are keeping */
+	if (!list_empty(&sleb->nodes)) {
+		struct ubifs_scan_node *snod;
+
+		snod = list_entry(sleb->nodes.prev,
+				  struct ubifs_scan_node, list);
+		endpt = snod->offs + snod->len;
+	}
+
+	if ((c->vfs_sb->s_flags & MS_RDONLY) && !c->remounting_rw) {
+		/* Add to recovery list */
+		struct ubifs_unclean_leb *ucleb;
+
+		dbg_rcvry("need to fix LEB %d start %d endpt %d",
+			  lnum, start, sleb->endpt);
+		ucleb = kzalloc(sizeof(struct ubifs_unclean_leb), GFP_NOFS);
+		if (!ucleb)
+			return -ENOMEM;
+		ucleb->lnum = lnum;
+		ucleb->endpt = endpt;
+		list_add_tail(&ucleb->list, &c->unclean_leb_list);
+	}
+	return 0;
 }
 
 /**
@@ -501,27 +492,27 @@ static int fix_unclean_leb (struct ubifs_info * c, struct ubifs_scan_leb * sleb,
  *
  * This function returns %1 if nodes are dropped and %0 otherwise.
  */
-static int drop_incomplete_group (struct ubifs_scan_leb * sleb, int * offs)
+static int drop_incomplete_group(struct ubifs_scan_leb *sleb, int *offs)
 {
-  int dropped = 0;
-  
-  while (!list_empty (&sleb->nodes) ) {
-    struct ubifs_scan_node * snod;
-    struct ubifs_ch * ch;
-    
-    snod = list_entry (sleb->nodes.prev, struct ubifs_scan_node,
-                       list);
-    ch = snod->node;
-    if (ch->group_type != UBIFS_IN_NODE_GROUP)
-    { return dropped; }
-    dbg_rcvry ("dropping node at %d:%d", sleb->lnum, snod->offs);
-    *offs = snod->offs;
-    list_del (&snod->list);
-    kfree (snod);
-    sleb->nodes_cnt -= 1;
-    dropped = 1;
-  }
-  return dropped;
+	int dropped = 0;
+
+	while (!list_empty(&sleb->nodes)) {
+		struct ubifs_scan_node *snod;
+		struct ubifs_ch *ch;
+
+		snod = list_entry(sleb->nodes.prev, struct ubifs_scan_node,
+				  list);
+		ch = snod->node;
+		if (ch->group_type != UBIFS_IN_NODE_GROUP)
+			return dropped;
+		dbg_rcvry("dropping node at %d:%d", sleb->lnum, snod->offs);
+		*offs = snod->offs;
+		list_del(&snod->list);
+		kfree(snod);
+		sleb->nodes_cnt -= 1;
+		dropped = 1;
+	}
+	return dropped;
 }
 
 /**
@@ -537,149 +528,148 @@ static int drop_incomplete_group (struct ubifs_scan_leb * sleb, int * offs)
  *
  * This function returns %0 on success and a negative error code on failure.
  */
-struct ubifs_scan_leb * ubifs_recover_leb (struct ubifs_info * c, int lnum,
-    int offs, void * sbuf, int grouped)
+struct ubifs_scan_leb *ubifs_recover_leb(struct ubifs_info *c, int lnum,
+					 int offs, void *sbuf, int grouped)
 {
-  int err, len = c->leb_size - offs, need_clean = 0, quiet = 1;
-  int empty_chkd = 0, start = offs;
-  struct ubifs_scan_leb * sleb;
-  void * buf = sbuf + offs;
-  
-  dbg_rcvry ("%d:%d", lnum, offs);
-  
-  sleb = ubifs_start_scan (c, lnum, offs, sbuf);
-  if (IS_ERR (sleb) )
-  { return sleb; }
-  
-  if (sleb->ecc)
-  { need_clean = 1; }
-  
-  while (len >= 8) {
-    int ret;
-    
-    dbg_scan ("look at LEB %d:%d (%d bytes left)",
-              lnum, offs, len);
-              
-    cond_resched();
-    
-    /*
-     * Scan quietly until there is an error from which we cannot
-     * recover
-     */
-    ret = ubifs_scan_a_node (c, buf, len, lnum, offs, quiet);
-    
-    if (ret == SCANNED_A_NODE) {
-      /* A valid node, and not a padding node */
-      struct ubifs_ch * ch = buf;
-      int node_len;
-      
-      err = ubifs_add_snod (c, sleb, buf, offs);
-      if (err)
-      { goto error; }
-      node_len = ALIGN (le32_to_cpu (ch->len), 8);
-      offs += node_len;
-      buf += node_len;
-      len -= node_len;
-      continue;
-    }
-    
-    if (ret > 0) {
-      /* Padding bytes or a valid padding node */
-      offs += ret;
-      buf += ret;
-      len -= ret;
-      continue;
-    }
-    
-    if (ret == SCANNED_EMPTY_SPACE) {
-      if (!is_empty (buf, len) ) {
-        if (!is_last_write (c, buf, offs) )
-        { break; }
-        clean_buf (c, &buf, lnum, &offs, &len);
-        need_clean = 1;
-      }
-      empty_chkd = 1;
-      break;
-    }
-    
-    if (ret == SCANNED_GARBAGE || ret == SCANNED_A_BAD_PAD_NODE)
-      if (is_last_write (c, buf, offs) ) {
-        clean_buf (c, &buf, lnum, &offs, &len);
-        need_clean = 1;
-        empty_chkd = 1;
-        break;
-      }
-      
-    if (ret == SCANNED_A_CORRUPT_NODE)
-      if (no_more_nodes (c, buf, len, lnum, offs) ) {
-        clean_buf (c, &buf, lnum, &offs, &len);
-        need_clean = 1;
-        empty_chkd = 1;
-        break;
-      }
-      
-    if (quiet) {
-      /* Redo the last scan but noisily */
-      quiet = 0;
-      continue;
-    }
-    
-    switch (ret) {
-    case SCANNED_GARBAGE:
-      dbg_err ("garbage");
-      goto corrupted;
-    case SCANNED_A_CORRUPT_NODE:
-    case SCANNED_A_BAD_PAD_NODE:
-      dbg_err ("bad node");
-      goto corrupted;
-    default:
-      dbg_err ("unknown");
-      goto corrupted;
-    }
-  }
-  
-  if (!empty_chkd && !is_empty (buf, len) ) {
-    if (is_last_write (c, buf, offs) ) {
-      clean_buf (c, &buf, lnum, &offs, &len);
-      need_clean = 1;
-    }
-    else {
-      ubifs_err ("corrupt empty space at LEB %d:%d",
-                 lnum, offs);
-      goto corrupted;
-    }
-  }
-  
-  /* Drop nodes from incomplete group */
-  if (grouped && drop_incomplete_group (sleb, &offs) ) {
-    buf = sbuf + offs;
-    len = c->leb_size - offs;
-    clean_buf (c, &buf, lnum, &offs, &len);
-    need_clean = 1;
-  }
-  
-  if (offs % c->min_io_size) {
-    clean_buf (c, &buf, lnum, &offs, &len);
-    need_clean = 1;
-  }
-  
-  ubifs_end_scan (c, sleb, lnum, offs);
-  
-  if (need_clean) {
-    err = fix_unclean_leb (c, sleb, start);
-    if (err)
-    { goto error; }
-  }
-  
-  return sleb;
-  
+	int err, len = c->leb_size - offs, need_clean = 0, quiet = 1;
+	int empty_chkd = 0, start = offs;
+	struct ubifs_scan_leb *sleb;
+	void *buf = sbuf + offs;
+
+	dbg_rcvry("%d:%d", lnum, offs);
+
+	sleb = ubifs_start_scan(c, lnum, offs, sbuf);
+	if (IS_ERR(sleb))
+		return sleb;
+
+	if (sleb->ecc)
+		need_clean = 1;
+
+	while (len >= 8) {
+		int ret;
+
+		dbg_scan("look at LEB %d:%d (%d bytes left)",
+			 lnum, offs, len);
+
+		cond_resched();
+
+		/*
+		 * Scan quietly until there is an error from which we cannot
+		 * recover
+		 */
+		ret = ubifs_scan_a_node(c, buf, len, lnum, offs, quiet);
+
+		if (ret == SCANNED_A_NODE) {
+			/* A valid node, and not a padding node */
+			struct ubifs_ch *ch = buf;
+			int node_len;
+
+			err = ubifs_add_snod(c, sleb, buf, offs);
+			if (err)
+				goto error;
+			node_len = ALIGN(le32_to_cpu(ch->len), 8);
+			offs += node_len;
+			buf += node_len;
+			len -= node_len;
+			continue;
+		}
+
+		if (ret > 0) {
+			/* Padding bytes or a valid padding node */
+			offs += ret;
+			buf += ret;
+			len -= ret;
+			continue;
+		}
+
+		if (ret == SCANNED_EMPTY_SPACE) {
+			if (!is_empty(buf, len)) {
+				if (!is_last_write(c, buf, offs))
+					break;
+				clean_buf(c, &buf, lnum, &offs, &len);
+				need_clean = 1;
+			}
+			empty_chkd = 1;
+			break;
+		}
+
+		if (ret == SCANNED_GARBAGE || ret == SCANNED_A_BAD_PAD_NODE)
+			if (is_last_write(c, buf, offs)) {
+				clean_buf(c, &buf, lnum, &offs, &len);
+				need_clean = 1;
+				empty_chkd = 1;
+				break;
+			}
+
+		if (ret == SCANNED_A_CORRUPT_NODE)
+			if (no_more_nodes(c, buf, len, lnum, offs)) {
+				clean_buf(c, &buf, lnum, &offs, &len);
+				need_clean = 1;
+				empty_chkd = 1;
+				break;
+			}
+
+		if (quiet) {
+			/* Redo the last scan but noisily */
+			quiet = 0;
+			continue;
+		}
+
+		switch (ret) {
+		case SCANNED_GARBAGE:
+			dbg_err("garbage");
+			goto corrupted;
+		case SCANNED_A_CORRUPT_NODE:
+		case SCANNED_A_BAD_PAD_NODE:
+			dbg_err("bad node");
+			goto corrupted;
+		default:
+			dbg_err("unknown");
+			goto corrupted;
+		}
+	}
+
+	if (!empty_chkd && !is_empty(buf, len)) {
+		if (is_last_write(c, buf, offs)) {
+			clean_buf(c, &buf, lnum, &offs, &len);
+			need_clean = 1;
+		} else {
+			ubifs_err("corrupt empty space at LEB %d:%d",
+				  lnum, offs);
+			goto corrupted;
+		}
+	}
+
+	/* Drop nodes from incomplete group */
+	if (grouped && drop_incomplete_group(sleb, &offs)) {
+		buf = sbuf + offs;
+		len = c->leb_size - offs;
+		clean_buf(c, &buf, lnum, &offs, &len);
+		need_clean = 1;
+	}
+
+	if (offs % c->min_io_size) {
+		clean_buf(c, &buf, lnum, &offs, &len);
+		need_clean = 1;
+	}
+
+	ubifs_end_scan(c, sleb, lnum, offs);
+
+	if (need_clean) {
+		err = fix_unclean_leb(c, sleb, start);
+		if (err)
+			goto error;
+	}
+
+	return sleb;
+
 corrupted:
-  ubifs_scanned_corruption (c, lnum, offs, buf);
-  err = -EUCLEAN;
+	ubifs_scanned_corruption(c, lnum, offs, buf);
+	err = -EUCLEAN;
 error:
-  ubifs_err ("LEB %d scanning failed", lnum);
-  ubifs_scan_destroy (sleb);
-  return ERR_PTR (err);
+	ubifs_err("LEB %d scanning failed", lnum);
+	ubifs_scan_destroy(sleb);
+	return ERR_PTR(err);
 }
 
 /**
@@ -691,47 +681,47 @@ error:
  *
  * This function returns %0 on success and a negative error code on failure.
  */
-static int get_cs_sqnum (struct ubifs_info * c, int lnum, int offs,
-                         unsigned long long * cs_sqnum)
+static int get_cs_sqnum(struct ubifs_info *c, int lnum, int offs,
+			unsigned long long *cs_sqnum)
 {
-  struct ubifs_cs_node * cs_node = NULL;
-  int err, ret;
-  
-  dbg_rcvry ("at %d:%d", lnum, offs);
-  cs_node = kmalloc (UBIFS_CS_NODE_SZ, GFP_KERNEL);
-  if (!cs_node)
-  { return -ENOMEM; }
-  if (c->leb_size - offs < UBIFS_CS_NODE_SZ)
-  { goto out_err; }
-  err = ubi_read (c->ubi, lnum, (void *) cs_node, offs, UBIFS_CS_NODE_SZ);
-  if (err && err != -EBADMSG)
-  { goto out_free; }
-  ret = ubifs_scan_a_node (c, cs_node, UBIFS_CS_NODE_SZ, lnum, offs, 0);
-  if (ret != SCANNED_A_NODE) {
-    dbg_err ("Not a valid node");
-    goto out_err;
-  }
-  if (cs_node->ch.node_type != UBIFS_CS_NODE) {
-    dbg_err ("Node a CS node, type is %d", cs_node->ch.node_type);
-    goto out_err;
-  }
-  if (le64_to_cpu (cs_node->cmt_no) != c->cmt_no) {
-    dbg_err ("CS node cmt_no %llu != current cmt_no %llu",
-             (unsigned long long) le64_to_cpu (cs_node->cmt_no),
-             c->cmt_no);
-    goto out_err;
-  }
-  *cs_sqnum = le64_to_cpu (cs_node->ch.sqnum);
-  dbg_rcvry ("commit start sqnum %llu", *cs_sqnum);
-  kfree (cs_node);
-  return 0;
-  
+	struct ubifs_cs_node *cs_node = NULL;
+	int err, ret;
+
+	dbg_rcvry("at %d:%d", lnum, offs);
+	cs_node = kmalloc(UBIFS_CS_NODE_SZ, GFP_KERNEL);
+	if (!cs_node)
+		return -ENOMEM;
+	if (c->leb_size - offs < UBIFS_CS_NODE_SZ)
+		goto out_err;
+	err = ubi_read(c->ubi, lnum, (void *)cs_node, offs, UBIFS_CS_NODE_SZ);
+	if (err && err != -EBADMSG)
+		goto out_free;
+	ret = ubifs_scan_a_node(c, cs_node, UBIFS_CS_NODE_SZ, lnum, offs, 0);
+	if (ret != SCANNED_A_NODE) {
+		dbg_err("Not a valid node");
+		goto out_err;
+	}
+	if (cs_node->ch.node_type != UBIFS_CS_NODE) {
+		dbg_err("Node a CS node, type is %d", cs_node->ch.node_type);
+		goto out_err;
+	}
+	if (le64_to_cpu(cs_node->cmt_no) != c->cmt_no) {
+		dbg_err("CS node cmt_no %llu != current cmt_no %llu",
+			(unsigned long long)le64_to_cpu(cs_node->cmt_no),
+			c->cmt_no);
+		goto out_err;
+	}
+	*cs_sqnum = le64_to_cpu(cs_node->ch.sqnum);
+	dbg_rcvry("commit start sqnum %llu", *cs_sqnum);
+	kfree(cs_node);
+	return 0;
+
 out_err:
-  err = -EINVAL;
+	err = -EINVAL;
 out_free:
-  ubifs_err ("failed to get CS sqnum");
-  kfree (cs_node);
-  return err;
+	ubifs_err("failed to get CS sqnum");
+	kfree(cs_node);
+	return err;
 }
 
 /**
@@ -746,49 +736,49 @@ out_free:
  *
  * This function returns %0 on success and a negative error code on failure.
  */
-struct ubifs_scan_leb * ubifs_recover_log_leb (struct ubifs_info * c, int lnum,
-    int offs, void * sbuf)
+struct ubifs_scan_leb *ubifs_recover_log_leb(struct ubifs_info *c, int lnum,
+					     int offs, void *sbuf)
 {
-  struct ubifs_scan_leb * sleb;
-  int next_lnum;
-  
-  dbg_rcvry ("LEB %d", lnum);
-  next_lnum = lnum + 1;
-  if (next_lnum >= UBIFS_LOG_LNUM + c->log_lebs)
-  { next_lnum = UBIFS_LOG_LNUM; }
-  if (next_lnum != c->ltail_lnum) {
-    /*
-     * We can only recover at the end of the log, so check that the
-     * next log LEB is empty or out of date.
-     */
-    sleb = ubifs_scan (c, next_lnum, 0, sbuf);
-    if (IS_ERR (sleb) )
-    { return sleb; }
-    if (sleb->nodes_cnt) {
-      struct ubifs_scan_node * snod;
-      unsigned long long cs_sqnum = c->cs_sqnum;
-      
-      snod = list_entry (sleb->nodes.next,
-                         struct ubifs_scan_node, list);
-      if (cs_sqnum == 0) {
-        int err;
-        
-        err = get_cs_sqnum (c, lnum, offs, &cs_sqnum);
-        if (err) {
-          ubifs_scan_destroy (sleb);
-          return ERR_PTR (err);
-        }
-      }
-      if (snod->sqnum > cs_sqnum) {
-        ubifs_err ("unrecoverable log corruption "
-                   "in LEB %d", lnum);
-        ubifs_scan_destroy (sleb);
-        return ERR_PTR (-EUCLEAN);
-      }
-    }
-    ubifs_scan_destroy (sleb);
-  }
-  return ubifs_recover_leb (c, lnum, offs, sbuf, 0);
+	struct ubifs_scan_leb *sleb;
+	int next_lnum;
+
+	dbg_rcvry("LEB %d", lnum);
+	next_lnum = lnum + 1;
+	if (next_lnum >= UBIFS_LOG_LNUM + c->log_lebs)
+		next_lnum = UBIFS_LOG_LNUM;
+	if (next_lnum != c->ltail_lnum) {
+		/*
+		 * We can only recover at the end of the log, so check that the
+		 * next log LEB is empty or out of date.
+		 */
+		sleb = ubifs_scan(c, next_lnum, 0, sbuf);
+		if (IS_ERR(sleb))
+			return sleb;
+		if (sleb->nodes_cnt) {
+			struct ubifs_scan_node *snod;
+			unsigned long long cs_sqnum = c->cs_sqnum;
+
+			snod = list_entry(sleb->nodes.next,
+					  struct ubifs_scan_node, list);
+			if (cs_sqnum == 0) {
+				int err;
+
+				err = get_cs_sqnum(c, lnum, offs, &cs_sqnum);
+				if (err) {
+					ubifs_scan_destroy(sleb);
+					return ERR_PTR(err);
+				}
+			}
+			if (snod->sqnum > cs_sqnum) {
+				ubifs_err("unrecoverable log corruption "
+					  "in LEB %d", lnum);
+				ubifs_scan_destroy(sleb);
+				return ERR_PTR(-EUCLEAN);
+			}
+		}
+		ubifs_scan_destroy(sleb);
+	}
+	return ubifs_recover_leb(c, lnum, offs, sbuf, 0);
 }
 
 /**
@@ -802,46 +792,46 @@ struct ubifs_scan_leb * ubifs_recover_log_leb (struct ubifs_info * c, int lnum,
  *
  * This function returns %0 on success and a negative error code on failure.
  */
-static int recover_head (const struct ubifs_info * c, int lnum, int offs,
-                         void * sbuf)
+static int recover_head(const struct ubifs_info *c, int lnum, int offs,
+			void *sbuf)
 {
-  int len, err, need_clean = 0;
-  
-  if (c->min_io_size > 1)
-  { len = c->min_io_size; }
-  else
-  { len = 512; }
-  if (offs + len > c->leb_size)
-  { len = c->leb_size - offs; }
-  
-  if (!len)
-  { return 0; }
-  
-  /* Read at the head location and check it is empty flash */
-  err = ubi_read (c->ubi, lnum, sbuf, offs, len);
-  if (err)
-  { need_clean = 1; }
-  else {
-    uint8_t * p = sbuf;
-    
-    while (len--)
-      if (*p++ != 0xff) {
-        need_clean = 1;
-        break;
-      }
-  }
-  
-  if (need_clean) {
-    dbg_rcvry ("cleaning head at %d:%d", lnum, offs);
-    if (offs == 0)
-    { return ubifs_leb_unmap (c, lnum); }
-    err = ubi_read (c->ubi, lnum, sbuf, 0, offs);
-    if (err)
-    { return err; }
-    return ubi_leb_change (c->ubi, lnum, sbuf, offs, UBI_UNKNOWN);
-  }
-  
-  return 0;
+	int len, err, need_clean = 0;
+
+	if (c->min_io_size > 1)
+		len = c->min_io_size;
+	else
+		len = 512;
+	if (offs + len > c->leb_size)
+		len = c->leb_size - offs;
+
+	if (!len)
+		return 0;
+
+	/* Read at the head location and check it is empty flash */
+	err = ubi_read(c->ubi, lnum, sbuf, offs, len);
+	if (err)
+		need_clean = 1;
+	else {
+		uint8_t *p = sbuf;
+
+		while (len--)
+			if (*p++ != 0xff) {
+				need_clean = 1;
+				break;
+			}
+	}
+
+	if (need_clean) {
+		dbg_rcvry("cleaning head at %d:%d", lnum, offs);
+		if (offs == 0)
+			return ubifs_leb_unmap(c, lnum);
+		err = ubi_read(c->ubi, lnum, sbuf, 0, offs);
+		if (err)
+			return err;
+		return ubi_leb_change(c->ubi, lnum, sbuf, offs, UBI_UNKNOWN);
+	}
+
+	return 0;
 }
 
 /**
@@ -861,23 +851,23 @@ static int recover_head (const struct ubifs_info * c, int lnum, int offs,
  *
  * This function returns %0 on success and a negative error code on failure.
  */
-int ubifs_recover_inl_heads (const struct ubifs_info * c, void * sbuf)
+int ubifs_recover_inl_heads(const struct ubifs_info *c, void *sbuf)
 {
-  int err;
-  
-  ubifs_assert (! (c->vfs_sb->s_flags & MS_RDONLY) || c->remounting_rw);
-  
-  dbg_rcvry ("checking index head at %d:%d", c->ihead_lnum, c->ihead_offs);
-  err = recover_head (c, c->ihead_lnum, c->ihead_offs, sbuf);
-  if (err)
-  { return err; }
-  
-  dbg_rcvry ("checking LPT head at %d:%d", c->nhead_lnum, c->nhead_offs);
-  err = recover_head (c, c->nhead_lnum, c->nhead_offs, sbuf);
-  if (err)
-  { return err; }
-  
-  return 0;
+	int err;
+
+	ubifs_assert(!(c->vfs_sb->s_flags & MS_RDONLY) || c->remounting_rw);
+
+	dbg_rcvry("checking index head at %d:%d", c->ihead_lnum, c->ihead_offs);
+	err = recover_head(c, c->ihead_lnum, c->ihead_offs, sbuf);
+	if (err)
+		return err;
+
+	dbg_rcvry("checking LPT head at %d:%d", c->nhead_lnum, c->nhead_offs);
+	err = recover_head(c, c->nhead_lnum, c->nhead_offs, sbuf);
+	if (err)
+		return err;
+
+	return 0;
 }
 
 /**
@@ -892,89 +882,89 @@ int ubifs_recover_inl_heads (const struct ubifs_info * c, void * sbuf)
  *
  * This function returns %0 on success and a negative error code on failure.
  */
-static int clean_an_unclean_leb (const struct ubifs_info * c,
-                                 struct ubifs_unclean_leb * ucleb, void * sbuf)
+static int clean_an_unclean_leb(const struct ubifs_info *c,
+				struct ubifs_unclean_leb *ucleb, void *sbuf)
 {
-  int err, lnum = ucleb->lnum, offs = 0, len = ucleb->endpt, quiet = 1;
-  void * buf = sbuf;
-  
-  dbg_rcvry ("LEB %d len %d", lnum, len);
-  
-  if (len == 0) {
-    /* Nothing to read, just unmap it */
-    err = ubifs_leb_unmap (c, lnum);
-    if (err)
-    { return err; }
-    return 0;
-  }
-  
-  err = ubi_read (c->ubi, lnum, buf, offs, len);
-  if (err && err != -EBADMSG)
-  { return err; }
-  
-  while (len >= 8) {
-    int ret;
-    
-    cond_resched();
-    
-    /* Scan quietly until there is an error */
-    ret = ubifs_scan_a_node (c, buf, len, lnum, offs, quiet);
-    
-    if (ret == SCANNED_A_NODE) {
-      /* A valid node, and not a padding node */
-      struct ubifs_ch * ch = buf;
-      int node_len;
-      
-      node_len = ALIGN (le32_to_cpu (ch->len), 8);
-      offs += node_len;
-      buf += node_len;
-      len -= node_len;
-      continue;
-    }
-    
-    if (ret > 0) {
-      /* Padding bytes or a valid padding node */
-      offs += ret;
-      buf += ret;
-      len -= ret;
-      continue;
-    }
-    
-    if (ret == SCANNED_EMPTY_SPACE) {
-      ubifs_err ("unexpected empty space at %d:%d",
-                 lnum, offs);
-      return -EUCLEAN;
-    }
-    
-    if (quiet) {
-      /* Redo the last scan but noisily */
-      quiet = 0;
-      continue;
-    }
-    
-    ubifs_scanned_corruption (c, lnum, offs, buf);
-    return -EUCLEAN;
-  }
-  
-  /* Pad to min_io_size */
-  len = ALIGN (ucleb->endpt, c->min_io_size);
-  if (len > ucleb->endpt) {
-    int pad_len = len - ALIGN (ucleb->endpt, 8);
-    
-    if (pad_len > 0) {
-      buf = c->sbuf + len - pad_len;
-      ubifs_pad (c, buf, pad_len);
-    }
-  }
-  
-  /* Write back the LEB atomically */
-  err = ubi_leb_change (c->ubi, lnum, sbuf, len, UBI_UNKNOWN);
-  if (err)
-  { return err; }
-  
-  dbg_rcvry ("cleaned LEB %d", lnum);
-  
-  return 0;
+	int err, lnum = ucleb->lnum, offs = 0, len = ucleb->endpt, quiet = 1;
+	void *buf = sbuf;
+
+	dbg_rcvry("LEB %d len %d", lnum, len);
+
+	if (len == 0) {
+		/* Nothing to read, just unmap it */
+		err = ubifs_leb_unmap(c, lnum);
+		if (err)
+			return err;
+		return 0;
+	}
+
+	err = ubi_read(c->ubi, lnum, buf, offs, len);
+	if (err && err != -EBADMSG)
+		return err;
+
+	while (len >= 8) {
+		int ret;
+
+		cond_resched();
+
+		/* Scan quietly until there is an error */
+		ret = ubifs_scan_a_node(c, buf, len, lnum, offs, quiet);
+
+		if (ret == SCANNED_A_NODE) {
+			/* A valid node, and not a padding node */
+			struct ubifs_ch *ch = buf;
+			int node_len;
+
+			node_len = ALIGN(le32_to_cpu(ch->len), 8);
+			offs += node_len;
+			buf += node_len;
+			len -= node_len;
+			continue;
+		}
+
+		if (ret > 0) {
+			/* Padding bytes or a valid padding node */
+			offs += ret;
+			buf += ret;
+			len -= ret;
+			continue;
+		}
+
+		if (ret == SCANNED_EMPTY_SPACE) {
+			ubifs_err("unexpected empty space at %d:%d",
+				  lnum, offs);
+			return -EUCLEAN;
+		}
+
+		if (quiet) {
+			/* Redo the last scan but noisily */
+			quiet = 0;
+			continue;
+		}
+
+		ubifs_scanned_corruption(c, lnum, offs, buf);
+		return -EUCLEAN;
+	}
+
+	/* Pad to min_io_size */
+	len = ALIGN(ucleb->endpt, c->min_io_size);
+	if (len > ucleb->endpt) {
+		int pad_len = len - ALIGN(ucleb->endpt, 8);
+
+		if (pad_len > 0) {
+			buf = c->sbuf + len - pad_len;
+			ubifs_pad(c, buf, pad_len);
+		}
+	}
+
+	/* Write back the LEB atomically */
+	err = ubi_leb_change(c->ubi, lnum, sbuf, len, UBI_UNKNOWN);
+	if (err)
+		return err;
+
+	dbg_rcvry("cleaned LEB %d", lnum);
+
+	return 0;
 }
 
 /**
@@ -988,22 +978,22 @@ static int clean_an_unclean_leb (const struct ubifs_info * c,
  *
  * This function returns %0 on success and a negative error code on failure.
  */
-int ubifs_clean_lebs (const struct ubifs_info * c, void * sbuf)
+int ubifs_clean_lebs(const struct ubifs_info *c, void *sbuf)
 {
-  dbg_rcvry ("recovery");
-  while (!list_empty (&c->unclean_leb_list) ) {
-    struct ubifs_unclean_leb * ucleb;
-    int err;
-    
-    ucleb = list_entry (c->unclean_leb_list.next,
-                        struct ubifs_unclean_leb, list);
-    err = clean_an_unclean_leb (c, ucleb, sbuf);
-    if (err)
-    { return err; }
-    list_del (&ucleb->list);
-    kfree (ucleb);
-  }
-  return 0;
+	dbg_rcvry("recovery");
+	while (!list_empty(&c->unclean_leb_list)) {
+		struct ubifs_unclean_leb *ucleb;
+		int err;
+
+		ucleb = list_entry(c->unclean_leb_list.next,
+				   struct ubifs_unclean_leb, list);
+		err = clean_an_unclean_leb(c, ucleb, sbuf);
+		if (err)
+			return err;
+		list_del(&ucleb->list);
+		kfree(ucleb);
+	}
+	return 0;
 }
 
 /**
@@ -1016,12 +1006,12 @@ int ubifs_clean_lebs (const struct ubifs_info * c, void * sbuf)
  * @inode: inode if pinned in memory awaiting rw mode to fix it
  */
 struct size_entry {
-  struct rb_node rb;
-  ino_t inum;
-  loff_t i_size;
-  loff_t d_size;
-  int exists;
-  struct inode * inode;
+	struct rb_node rb;
+	ino_t inum;
+	loff_t i_size;
+	loff_t d_size;
+	int exists;
+	struct inode *inode;
 };
 
 /**
@@ -1032,34 +1022,34 @@ struct size_entry {
  * @d_size: maximum size based on data nodes
  * @exists: indicates whether the inode exists
  */
-static int add_ino (struct ubifs_info * c, ino_t inum, loff_t i_size,
-                    loff_t d_size, int exists)
+static int add_ino(struct ubifs_info *c, ino_t inum, loff_t i_size,
+		   loff_t d_size, int exists)
 {
-  struct rb_node ** p = &c->size_tree.rb_node, *parent = NULL;
-  struct size_entry * e;
-  
-  while (*p) {
-    parent = *p;
-    e = rb_entry (parent, struct size_entry, rb);
-    if (inum < e->inum)
-    { p = & (*p)->rb_left; }
-    else
-    { p = & (*p)->rb_right; }
-  }
-  
-  e = kzalloc (sizeof (struct size_entry), GFP_KERNEL);
-  if (!e)
-  { return -ENOMEM; }
-  
-  e->inum = inum;
-  e->i_size = i_size;
-  e->d_size = d_size;
-  e->exists = exists;
-  
-  rb_link_node (&e->rb, parent, p);
-  rb_insert_color (&e->rb, &c->size_tree);
-  
-  return 0;
+	struct rb_node **p = &c->size_tree.rb_node, *parent = NULL;
+	struct size_entry *e;
+
+	while (*p) {
+		parent = *p;
+		e = rb_entry(parent, struct size_entry, rb);
+		if (inum < e->inum)
+			p = &(*p)->rb_left;
+		else
+			p = &(*p)->rb_right;
+	}
+
+	e = kzalloc(sizeof(struct size_entry), GFP_KERNEL);
+	if (!e)
+		return -ENOMEM;
+
+	e->inum = inum;
+	e->i_size = i_size;
+	e->d_size = d_size;
+	e->exists = exists;
+
+	rb_link_node(&e->rb, parent, p);
+	rb_insert_color(&e->rb, &c->size_tree);
+
+	return 0;
 }
 
 /**
@@ -1067,22 +1057,21 @@ static int add_ino (struct ubifs_info * c, ino_t inum, loff_t i_size,
  * @c: UBIFS file-system description object
  * @inum: inode number
  */
-static struct size_entry * find_ino (struct ubifs_info * c, ino_t inum)
+static struct size_entry *find_ino(struct ubifs_info *c, ino_t inum)
 {
-  struct rb_node * p = c->size_tree.rb_node;
-  struct size_entry * e;
-  
-  while (p) {
-    e = rb_entry (p, struct size_entry, rb);
-    if (inum < e->inum)
-    { p = p->rb_left; }
-    else
-      if (inum > e->inum)
-      { p = p->rb_right; }
-      else
-      { return e; }
-  }
-  return NULL;
+	struct rb_node *p = c->size_tree.rb_node;
+	struct size_entry *e;
+
+	while (p) {
+		e = rb_entry(p, struct size_entry, rb);
+		if (inum < e->inum)
+			p = p->rb_left;
+		else if (inum > e->inum)
+			p = p->rb_right;
+		else
+			return e;
+	}
+	return NULL;
 }
 
 /**
@@ -1090,14 +1079,14 @@ static struct size_entry * find_ino (struct ubifs_info * c, ino_t inum)
  * @c: UBIFS file-system description object
  * @inum: inode number
  */
-static void remove_ino (struct ubifs_info * c, ino_t inum)
+static void remove_ino(struct ubifs_info *c, ino_t inum)
 {
-  struct size_entry * e = find_ino (c, inum);
-  
-  if (!e)
-  { return; }
-  rb_erase (&e->rb, &c->size_tree);
-  kfree (e);
+	struct size_entry *e = find_ino(c, inum);
+
+	if (!e)
+		return;
+	rb_erase(&e->rb, &c->size_tree);
+	kfree(e);
 }
 
 /**
@@ -1125,49 +1114,47 @@ static void remove_ino (struct ubifs_info * c, ino_t inum)
  *
  * This functions returns %0 on success and a negative error code on failure.
  */
-int ubifs_recover_size_accum (struct ubifs_info * c, union ubifs_key * key,
-                              int deletion, loff_t new_size)
+int ubifs_recover_size_accum(struct ubifs_info *c, union ubifs_key *key,
+			     int deletion, loff_t new_size)
 {
-  ino_t inum = key_inum (c, key);
-  struct size_entry * e;
-  int err;
-  
-  switch (key_type (c, key) ) {
-  case UBIFS_INO_KEY:
-    if (deletion)
-    { remove_ino (c, inum); }
-    else {
-      e = find_ino (c, inum);
-      if (e) {
-        e->i_size = new_size;
-        e->exists = 1;
-      }
-      else {
-        err = add_ino (c, inum, new_size, 0, 1);
-        if (err)
-        { return err; }
-      }
-    }
-    break;
-  case UBIFS_DATA_KEY:
-    e = find_ino (c, inum);
-    if (e) {
-      if (new_size > e->d_size)
-      { e->d_size = new_size; }
-    }
-    else {
-      err = add_ino (c, inum, 0, new_size, 0);
-      if (err)
-      { return err; }
-    }
-    break;
-  case UBIFS_TRUN_KEY:
-    e = find_ino (c, inum);
-    if (e)
-    { e->d_size = new_size; }
-    break;
-  }
-  return 0;
+	ino_t inum = key_inum(c, key);
+	struct size_entry *e;
+	int err;
+
+	switch (key_type(c, key)) {
+	case UBIFS_INO_KEY:
+		if (deletion)
+			remove_ino(c, inum);
+		else {
+			e = find_ino(c, inum);
+			if (e) {
+				e->i_size = new_size;
+				e->exists = 1;
+			} else {
+				err = add_ino(c, inum, new_size, 0, 1);
+				if (err)
+					return err;
+			}
+		}
+		break;
+	case UBIFS_DATA_KEY:
+		e = find_ino(c, inum);
+		if (e) {
+			if (new_size > e->d_size)
+				e->d_size = new_size;
+		} else {
+			err = add_ino(c, inum, 0, new_size, 0);
+			if (err)
+				return err;
+		}
+		break;
+	case UBIFS_TRUN_KEY:
+		e = find_ino(c, inum);
+		if (e)
+			e->d_size = new_size;
+		break;
+	}
+	return 0;
 }
 
 /**
@@ -1179,61 +1166,60 @@ int ubifs_recover_size_accum (struct ubifs_info * c, union ubifs_key * key,
  *
  * This functions returns %0 on success and a negative error code on failure.
  */
-int ubifs_recover_size (struct ubifs_info * c)
+int ubifs_recover_size(struct ubifs_info *c)
 {
-  struct rb_node * this = rb_first (&c->size_tree);
-  
-  while (this) {
-    struct size_entry * e;
-    int err;
-    
-    e = rb_entry (this, struct size_entry, rb);
-    if (!e->exists) {
-      union ubifs_key key;
-      
-      ino_key_init (c, &key, e->inum);
-      err = ubifs_tnc_lookup (c, &key, c->sbuf);
-      if (err && err != -ENOENT)
-      { return err; }
-      if (err == -ENOENT) {
-        /* Remove data nodes that have no inode */
-        dbg_rcvry ("removing ino %lu",
-                   (unsigned long) e->inum);
-        err = ubifs_tnc_remove_ino (c, e->inum);
-        if (err)
-        { return err; }
-      }
-      else {
-        struct ubifs_ino_node * ino = c->sbuf;
-        
-        e->exists = 1;
-        e->i_size = le64_to_cpu (ino->size);
-      }
-    }
-    if (e->exists && e->i_size < e->d_size) {
-      if (!e->inode && (c->vfs_sb->s_flags & MS_RDONLY) ) {
-        /* Fix the inode size and pin it in memory */
-        struct inode * inode;
-        
-        inode = ubifs_iget (c->vfs_sb, e->inum);
-        if (IS_ERR (inode) )
-        { return PTR_ERR (inode); }
-        if (inode->i_size < e->d_size) {
-          dbg_rcvry ("ino %lu size %lld -> %lld",
-                     (unsigned long) e->inum,
-                     e->d_size, inode->i_size);
-          inode->i_size = e->d_size;
-          ubifs_inode (inode)->ui_size = e->d_size;
-          e->inode = inode;
-          this = rb_next (this);
-          continue;
-        }
-        iput (inode);
-      }
-    }
-    this = rb_next (this);
-    rb_erase (&e->rb, &c->size_tree);
-    kfree (e);
-  }
-  return 0;
+	struct rb_node *this = rb_first(&c->size_tree);
+
+	while (this) {
+		struct size_entry *e;
+		int err;
+
+		e = rb_entry(this, struct size_entry, rb);
+		if (!e->exists) {
+			union ubifs_key key;
+
+			ino_key_init(c, &key, e->inum);
+			err = ubifs_tnc_lookup(c, &key, c->sbuf);
+			if (err && err != -ENOENT)
+				return err;
+			if (err == -ENOENT) {
+				/* Remove data nodes that have no inode */
+				dbg_rcvry("removing ino %lu",
+					  (unsigned long)e->inum);
+				err = ubifs_tnc_remove_ino(c, e->inum);
+				if (err)
+					return err;
+			} else {
+				struct ubifs_ino_node *ino = c->sbuf;
+
+				e->exists = 1;
+				e->i_size = le64_to_cpu(ino->size);
+			}
+		}
+		if (e->exists && e->i_size < e->d_size) {
+			if (!e->inode && (c->vfs_sb->s_flags & MS_RDONLY)) {
+				/* Fix the inode size and pin it in memory */
+				struct inode *inode;
+
+				inode = ubifs_iget(c->vfs_sb, e->inum);
+				if (IS_ERR(inode))
+					return PTR_ERR(inode);
+				if (inode->i_size < e->d_size) {
+					dbg_rcvry("ino %lu size %lld -> %lld",
+						  (unsigned long)e->inum,
+						  e->d_size, inode->i_size);
+					inode->i_size = e->d_size;
+					ubifs_inode(inode)->ui_size = e->d_size;
+					e->inode = inode;
+					this = rb_next(this);
+					continue;
+				}
+				iput(inode);
+			}
+		}
+		this = rb_next(this);
+		rb_erase(&e->rb, &c->size_tree);
+		kfree(e);
+	}
+	return 0;
 }

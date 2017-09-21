@@ -18,85 +18,85 @@
 #include <linux/mii.h>
 #include <linux/phy.h>
 
-#define PHY_ID_AM79C874   0x0022561b
+#define PHY_ID_AM79C874		0x0022561b
 
-#define MII_AM79C_IR    17  /* Interrupt Status/Control Register */
-#define MII_AM79C_IR_EN_LINK  0x0400  /* IR enable Linkstate */
-#define MII_AM79C_IR_EN_ANEG  0x0100  /* IR enable Aneg Complete */
-#define MII_AM79C_IR_IMASK_INIT (MII_AM79C_IR_EN_LINK | MII_AM79C_IR_EN_ANEG)
+#define MII_AM79C_IR		17	/* Interrupt Status/Control Register */
+#define MII_AM79C_IR_EN_LINK	0x0400	/* IR enable Linkstate */
+#define MII_AM79C_IR_EN_ANEG	0x0100	/* IR enable Aneg Complete */
+#define MII_AM79C_IR_IMASK_INIT	(MII_AM79C_IR_EN_LINK | MII_AM79C_IR_EN_ANEG)
 
-MODULE_DESCRIPTION ("AMD PHY driver");
-MODULE_AUTHOR ("Heiko Schocher <hs@denx.de>");
-MODULE_LICENSE ("GPL");
+MODULE_DESCRIPTION("AMD PHY driver");
+MODULE_AUTHOR("Heiko Schocher <hs@denx.de>");
+MODULE_LICENSE("GPL");
 
-static int am79c_ack_interrupt (struct phy_device * phydev)
+static int am79c_ack_interrupt(struct phy_device *phydev)
 {
-  int err;
-  
-  err = phy_read (phydev, MII_BMSR);
-  if (err < 0)
-  { return err; }
-  
-  err = phy_read (phydev, MII_AM79C_IR);
-  if (err < 0)
-  { return err; }
-  
-  return 0;
+	int err;
+
+	err = phy_read(phydev, MII_BMSR);
+	if (err < 0)
+		return err;
+
+	err = phy_read(phydev, MII_AM79C_IR);
+	if (err < 0)
+		return err;
+
+	return 0;
 }
 
-static int am79c_config_init (struct phy_device * phydev)
+static int am79c_config_init(struct phy_device *phydev)
 {
-  return 0;
+	return 0;
 }
 
-static int am79c_config_intr (struct phy_device * phydev)
+static int am79c_config_intr(struct phy_device *phydev)
 {
-  int err;
-  
-  if (phydev->interrupts == PHY_INTERRUPT_ENABLED)
-  { err = phy_write (phydev, MII_AM79C_IR, MII_AM79C_IR_IMASK_INIT); }
-  else
-  { err = phy_write (phydev, MII_AM79C_IR, 0); }
-  
-  return err;
+	int err;
+
+	if (phydev->interrupts == PHY_INTERRUPT_ENABLED)
+		err = phy_write(phydev, MII_AM79C_IR, MII_AM79C_IR_IMASK_INIT);
+	else
+		err = phy_write(phydev, MII_AM79C_IR, 0);
+
+	return err;
 }
 
 static struct phy_driver am79c_driver = {
-  .phy_id   = PHY_ID_AM79C874,
-  .name   = "AM79C874",
-  .phy_id_mask  = 0xfffffff0,
-  .features = PHY_BASIC_FEATURES,
-  .flags    = PHY_HAS_INTERRUPT,
-  .config_init  = am79c_config_init,
-  .config_aneg  = genphy_config_aneg,
-  .read_status  = genphy_read_status,
-  .ack_interrupt  = am79c_ack_interrupt,
-  .config_intr  = am79c_config_intr,
-  .driver   = { .owner = THIS_MODULE,},
+	.phy_id		= PHY_ID_AM79C874,
+	.name		= "AM79C874",
+	.phy_id_mask	= 0xfffffff0,
+	.features	= PHY_BASIC_FEATURES,
+	.flags		= PHY_HAS_INTERRUPT,
+	.config_init	= am79c_config_init,
+	.config_aneg	= genphy_config_aneg,
+	.read_status	= genphy_read_status,
+	.ack_interrupt	= am79c_ack_interrupt,
+	.config_intr	= am79c_config_intr,
+	.driver		= { .owner = THIS_MODULE,},
 };
 
-static int __init am79c_init (void)
+static int __init am79c_init(void)
 {
-  int ret;
-  
-  ret = phy_driver_register (&am79c_driver);
-  if (ret)
-  { return ret; }
-  
-  return 0;
+	int ret;
+
+	ret = phy_driver_register(&am79c_driver);
+	if (ret)
+		return ret;
+
+	return 0;
 }
 
-static void __exit am79c_exit (void)
+static void __exit am79c_exit(void)
 {
-  phy_driver_unregister (&am79c_driver);
+	phy_driver_unregister(&am79c_driver);
 }
 
-module_init (am79c_init);
-module_exit (am79c_exit);
+module_init(am79c_init);
+module_exit(am79c_exit);
 
 static struct mdio_device_id __maybe_unused amd_tbl[] = {
-  { PHY_ID_AM79C874, 0xfffffff0 },
-  { }
+	{ PHY_ID_AM79C874, 0xfffffff0 },
+	{ }
 };
 
-MODULE_DEVICE_TABLE (mdio, amd_tbl);
+MODULE_DEVICE_TABLE(mdio, amd_tbl);

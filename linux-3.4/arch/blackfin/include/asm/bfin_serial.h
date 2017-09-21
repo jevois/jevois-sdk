@@ -15,9 +15,9 @@
 #include <mach/bfin_serial.h>
 
 #if defined(CONFIG_BFIN_UART0_CTSRTS) || \
-defined(CONFIG_BFIN_UART1_CTSRTS) || \
-defined(CONFIG_BFIN_UART2_CTSRTS) || \
-defined(CONFIG_BFIN_UART3_CTSRTS)
+    defined(CONFIG_BFIN_UART1_CTSRTS) || \
+    defined(CONFIG_BFIN_UART2_CTSRTS) || \
+    defined(CONFIG_BFIN_UART3_CTSRTS)
 # ifdef BFIN_UART_BF54X_STYLE
 #  define CONFIG_SERIAL_BFIN_HARD_CTSRTS
 # else
@@ -30,32 +30,32 @@ struct timer_list;
 struct work_struct;
 
 struct bfin_serial_port {
-  struct uart_port port;
-  unsigned int old_status;
-  int tx_irq;
-  int rx_irq;
-  int status_irq;
-  #ifndef BFIN_UART_BF54X_STYLE
-  unsigned int lsr;
-  #endif
-  #ifdef CONFIG_SERIAL_BFIN_DMA
-  int tx_done;
-  int tx_count;
-  struct circ_buf rx_dma_buf;
-  struct timer_list rx_dma_timer;
-  int rx_dma_nrows;
-  spinlock_t rx_lock;
-  unsigned int tx_dma_channel;
-  unsigned int rx_dma_channel;
-  struct work_struct tx_dma_workqueue;
-  #elif ANOMALY_05000363
-  unsigned int anomaly_threshold;
-  #endif
-  #if defined(CONFIG_SERIAL_BFIN_CTSRTS) || \
-  defined(CONFIG_SERIAL_BFIN_HARD_CTSRTS)
-  int cts_pin;
-  int rts_pin;
-  #endif
+	struct uart_port port;
+	unsigned int old_status;
+	int tx_irq;
+	int rx_irq;
+	int status_irq;
+#ifndef BFIN_UART_BF54X_STYLE
+	unsigned int lsr;
+#endif
+#ifdef CONFIG_SERIAL_BFIN_DMA
+	int tx_done;
+	int tx_count;
+	struct circ_buf rx_dma_buf;
+	struct timer_list rx_dma_timer;
+	int rx_dma_nrows;
+	spinlock_t rx_lock;
+	unsigned int tx_dma_channel;
+	unsigned int rx_dma_channel;
+	struct work_struct tx_dma_workqueue;
+#elif ANOMALY_05000363
+	unsigned int anomaly_threshold;
+#endif
+#if defined(CONFIG_SERIAL_BFIN_CTSRTS) || \
+	defined(CONFIG_SERIAL_BFIN_HARD_CTSRTS)
+	int cts_pin;
+	int rts_pin;
+#endif
 };
 
 /* UART_LCR Masks */
@@ -145,40 +145,40 @@ struct bfin_serial_port {
  */
 #define __BFP(m) u16 m; u16 __pad_##m
 struct bfin_uart_regs {
-  #ifdef BFIN_UART_BF54X_STYLE
-  __BFP (dll);
-  __BFP (dlh);
-  __BFP (gctl);
-  __BFP (lcr);
-  __BFP (mcr);
-  __BFP (lsr);
-  __BFP (msr);
-  __BFP (scr);
-  __BFP (ier_set);
-  __BFP (ier_clear);
-  __BFP (thr);
-  __BFP (rbr);
-  #else
-  union {
-    u16 dll;
-    u16 thr;
-    const u16 rbr;
-  };
-  const u16 __pad0;
-  union {
-    u16 dlh;
-    u16 ier;
-  };
-  const u16 __pad1;
-  const __BFP (iir);
-  __BFP (lcr);
-  __BFP (mcr);
-  __BFP (lsr);
-  __BFP (msr);
-  __BFP (scr);
-  const u32 __pad2;
-  __BFP (gctl);
-  #endif
+#ifdef BFIN_UART_BF54X_STYLE
+	__BFP(dll);
+	__BFP(dlh);
+	__BFP(gctl);
+	__BFP(lcr);
+	__BFP(mcr);
+	__BFP(lsr);
+	__BFP(msr);
+	__BFP(scr);
+	__BFP(ier_set);
+	__BFP(ier_clear);
+	__BFP(thr);
+	__BFP(rbr);
+#else
+	union {
+		u16 dll;
+		u16 thr;
+		const u16 rbr;
+	};
+	const u16 __pad0;
+	union {
+		u16 dlh;
+		u16 ier;
+	};
+	const u16 __pad1;
+	const __BFP(iir);
+	__BFP(lcr);
+	__BFP(mcr);
+	__BFP(lsr);
+	__BFP(msr);
+	__BFP(scr);
+	const u32 __pad2;
+	__BFP(gctl);
+#endif
 };
 #undef __BFP
 
@@ -244,20 +244,20 @@ struct bfin_uart_regs {
  * some of the more fun bits in software so they don't get lost
  * when checking the LSR in other code paths (TX).
  */
-static inline void UART_CLEAR_LSR (void * p)
+static inline void UART_CLEAR_LSR(void *p)
 {
-  put_lsr_cache (p, 0);
-  bfin_write16 (port_membase (p) + OFFSET_LSR, -1);
+	put_lsr_cache(p, 0);
+	bfin_write16(port_membase(p) + OFFSET_LSR, -1);
 }
-static inline unsigned int UART_GET_LSR (void * p)
+static inline unsigned int UART_GET_LSR(void *p)
 {
-  unsigned int lsr = bfin_read16 (port_membase (p) + OFFSET_LSR);
-  put_lsr_cache (p, get_lsr_cache (p) | (lsr & (BI | FE | PE | OE) ) );
-  return lsr | get_lsr_cache (p);
+	unsigned int lsr = bfin_read16(port_membase(p) + OFFSET_LSR);
+	put_lsr_cache(p, get_lsr_cache(p) | (lsr & (BI|FE|PE|OE)));
+	return lsr | get_lsr_cache(p);
 }
-static inline void UART_PUT_LSR (void * p, uint16_t val)
+static inline void UART_PUT_LSR(void *p, uint16_t val)
 {
-  put_lsr_cache (p, get_lsr_cache (p) & ~val);
+	put_lsr_cache(p, get_lsr_cache(p) & ~val);
 }
 
 /* This handles soft CTS/RTS */

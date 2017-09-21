@@ -15,84 +15,84 @@
 #include "config.h"
 #include "memory.h"
 
-static struct kmem_cache * lkb_cache;
-static struct kmem_cache * rsb_cache;
+static struct kmem_cache *lkb_cache;
+static struct kmem_cache *rsb_cache;
 
 
-int __init dlm_memory_init (void)
+int __init dlm_memory_init(void)
 {
-  int ret = 0;
-  
-  lkb_cache = kmem_cache_create ("dlm_lkb", sizeof (struct dlm_lkb),
-                                 __alignof__ (struct dlm_lkb), 0, NULL);
-  if (!lkb_cache)
-  { ret = -ENOMEM; }
-  
-  rsb_cache = kmem_cache_create ("dlm_rsb", sizeof (struct dlm_rsb),
-                                 __alignof__ (struct dlm_rsb), 0, NULL);
-  if (!rsb_cache) {
-    kmem_cache_destroy (lkb_cache);
-    ret = -ENOMEM;
-  }
-  
-  return ret;
+	int ret = 0;
+
+	lkb_cache = kmem_cache_create("dlm_lkb", sizeof(struct dlm_lkb),
+				__alignof__(struct dlm_lkb), 0, NULL);
+	if (!lkb_cache)
+		ret = -ENOMEM;
+
+	rsb_cache = kmem_cache_create("dlm_rsb", sizeof(struct dlm_rsb),
+				__alignof__(struct dlm_rsb), 0, NULL);
+	if (!rsb_cache) {
+		kmem_cache_destroy(lkb_cache);
+		ret = -ENOMEM;
+	}
+
+	return ret;
 }
 
-void dlm_memory_exit (void)
+void dlm_memory_exit(void)
 {
-  if (lkb_cache)
-  { kmem_cache_destroy (lkb_cache); }
-  if (rsb_cache)
-  { kmem_cache_destroy (rsb_cache); }
+	if (lkb_cache)
+		kmem_cache_destroy(lkb_cache);
+	if (rsb_cache)
+		kmem_cache_destroy(rsb_cache);
 }
 
-char * dlm_allocate_lvb (struct dlm_ls * ls)
+char *dlm_allocate_lvb(struct dlm_ls *ls)
 {
-  char * p;
-  
-  p = kzalloc (ls->ls_lvblen, GFP_NOFS);
-  return p;
+	char *p;
+
+	p = kzalloc(ls->ls_lvblen, GFP_NOFS);
+	return p;
 }
 
-void dlm_free_lvb (char * p)
+void dlm_free_lvb(char *p)
 {
-  kfree (p);
+	kfree(p);
 }
 
-struct dlm_rsb * dlm_allocate_rsb (struct dlm_ls * ls)
+struct dlm_rsb *dlm_allocate_rsb(struct dlm_ls *ls)
 {
-  struct dlm_rsb * r;
-  
-  r = kmem_cache_zalloc (rsb_cache, GFP_NOFS);
-  return r;
+	struct dlm_rsb *r;
+
+	r = kmem_cache_zalloc(rsb_cache, GFP_NOFS);
+	return r;
 }
 
-void dlm_free_rsb (struct dlm_rsb * r)
+void dlm_free_rsb(struct dlm_rsb *r)
 {
-  if (r->res_lvbptr)
-  { dlm_free_lvb (r->res_lvbptr); }
-  kmem_cache_free (rsb_cache, r);
+	if (r->res_lvbptr)
+		dlm_free_lvb(r->res_lvbptr);
+	kmem_cache_free(rsb_cache, r);
 }
 
-struct dlm_lkb * dlm_allocate_lkb (struct dlm_ls * ls)
+struct dlm_lkb *dlm_allocate_lkb(struct dlm_ls *ls)
 {
-  struct dlm_lkb * lkb;
-  
-  lkb = kmem_cache_zalloc (lkb_cache, GFP_NOFS);
-  return lkb;
+	struct dlm_lkb *lkb;
+
+	lkb = kmem_cache_zalloc(lkb_cache, GFP_NOFS);
+	return lkb;
 }
 
-void dlm_free_lkb (struct dlm_lkb * lkb)
+void dlm_free_lkb(struct dlm_lkb *lkb)
 {
-  if (lkb->lkb_flags & DLM_IFL_USER) {
-    struct dlm_user_args * ua;
-    ua = lkb->lkb_ua;
-    if (ua) {
-      if (ua->lksb.sb_lvbptr)
-      { kfree (ua->lksb.sb_lvbptr); }
-      kfree (ua);
-    }
-  }
-  kmem_cache_free (lkb_cache, lkb);
+	if (lkb->lkb_flags & DLM_IFL_USER) {
+		struct dlm_user_args *ua;
+		ua = lkb->lkb_ua;
+		if (ua) {
+			if (ua->lksb.sb_lvbptr)
+				kfree(ua->lksb.sb_lvbptr);
+			kfree(ua);
+		}
+	}
+	kmem_cache_free(lkb_cache, lkb);
 }
 

@@ -31,8 +31,8 @@
 #define CR_INPUT_ENABLE 0x10
 #define CR_FUNCTION1    0x01
 
-#define SDHI1_BASE  (void __iomem *)0xe6860000
-#define SDHI_BASE SDHI1_BASE
+#define SDHI1_BASE	(void __iomem *)0xe6860000
+#define SDHI_BASE	SDHI1_BASE
 
 /*  SuperH Mobile SDHI loader
  *
@@ -47,49 +47,49 @@
  * to an SD card
  * # dd if=vrl4.out of=/dev/sdx bs=512
  */
-asmlinkage void mmc_loader (unsigned short * buf, unsigned long len)
+asmlinkage void mmc_loader(unsigned short *buf, unsigned long len)
 {
-  int high_capacity;
-  
-  mmc_init_progress();
-  
-  mmc_update_progress (MMC_PROGRESS_ENTER);
-  /* Initialise SDHI1 */
-  /* PORT184CR: GPIO_FN_SDHICMD1 Control */
-  __raw_writeb (CR_FUNCTION1, PORT184CR);
-  /* PORT179CR: GPIO_FN_SDHICLK1 Control */
-  __raw_writeb (CR_INPUT_ENABLE | CR_FUNCTION1, PORT179CR);
-  /* PORT181CR: GPIO_FN_SDHID1_3 Control */
-  __raw_writeb (CR_FUNCTION1, PORT183CR);
-  /* PORT182CR: GPIO_FN_SDHID1_2 Control */
-  __raw_writeb (CR_FUNCTION1, PORT182CR);
-  /* PORT183CR: GPIO_FN_SDHID1_1 Control */
-  __raw_writeb (CR_FUNCTION1, PORT181CR);
-  /* PORT180CR: GPIO_FN_SDHID1_0 Control */
-  __raw_writeb (CR_FUNCTION1, PORT180CR);
-  
-  /* Enable clock to SDHI1 hardware block */
-  __raw_writel (__raw_readl (SMSTPCR3) & ~ (1 << 13), SMSTPCR3);
-  
-  /* setup SDHI hardware */
-  mmc_update_progress (MMC_PROGRESS_INIT);
-  high_capacity = sdhi_boot_init (SDHI_BASE);
-  if (high_capacity < 0)
-  { goto err; }
-  
-  mmc_update_progress (MMC_PROGRESS_LOAD);
-  /* load kernel */
-  if (sdhi_boot_do_read (SDHI_BASE, high_capacity,
-                         0, /* Kernel is at block 1 */
-                         (len + TMIO_BBS - 1) / TMIO_BBS, buf) )
-  { goto err; }
-  
-  /* Disable clock to SDHI1 hardware block */
-  __raw_writel (__raw_readl (SMSTPCR3) | (1 << 13), SMSTPCR3);
-  
-  mmc_update_progress (MMC_PROGRESS_DONE);
-  
-  return;
+	int high_capacity;
+
+	mmc_init_progress();
+
+	mmc_update_progress(MMC_PROGRESS_ENTER);
+        /* Initialise SDHI1 */
+        /* PORT184CR: GPIO_FN_SDHICMD1 Control */
+        __raw_writeb(CR_FUNCTION1, PORT184CR);
+        /* PORT179CR: GPIO_FN_SDHICLK1 Control */
+        __raw_writeb(CR_INPUT_ENABLE|CR_FUNCTION1, PORT179CR);
+        /* PORT181CR: GPIO_FN_SDHID1_3 Control */
+        __raw_writeb(CR_FUNCTION1, PORT183CR);
+        /* PORT182CR: GPIO_FN_SDHID1_2 Control */
+        __raw_writeb(CR_FUNCTION1, PORT182CR);
+        /* PORT183CR: GPIO_FN_SDHID1_1 Control */
+        __raw_writeb(CR_FUNCTION1, PORT181CR);
+        /* PORT180CR: GPIO_FN_SDHID1_0 Control */
+        __raw_writeb(CR_FUNCTION1, PORT180CR);
+
+        /* Enable clock to SDHI1 hardware block */
+        __raw_writel(__raw_readl(SMSTPCR3) & ~(1 << 13), SMSTPCR3);
+
+	/* setup SDHI hardware */
+	mmc_update_progress(MMC_PROGRESS_INIT);
+	high_capacity = sdhi_boot_init(SDHI_BASE);
+	if (high_capacity < 0)
+		goto err;
+
+	mmc_update_progress(MMC_PROGRESS_LOAD);
+	/* load kernel */
+	if (sdhi_boot_do_read(SDHI_BASE, high_capacity,
+			      0, /* Kernel is at block 1 */
+			      (len + TMIO_BBS - 1) / TMIO_BBS, buf))
+		goto err;
+
+        /* Disable clock to SDHI1 hardware block */
+        __raw_writel(__raw_readl(SMSTPCR3) | (1 << 13), SMSTPCR3);
+
+	mmc_update_progress(MMC_PROGRESS_DONE);
+
+	return;
 err:
-  for (;;);
+	for(;;);
 }

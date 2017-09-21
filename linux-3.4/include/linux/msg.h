@@ -13,19 +13,19 @@
 
 /* Obsolete, used only for backwards compatibility and libc5 compiles */
 struct msqid_ds {
-  struct ipc_perm msg_perm;
-  struct msg * msg_first;   /* first message on queue,unused  */
-  struct msg * msg_last;  /* last message in queue,unused */
-  __kernel_time_t msg_stime;  /* last msgsnd time */
-  __kernel_time_t msg_rtime;  /* last msgrcv time */
-  __kernel_time_t msg_ctime;  /* last change time */
-  unsigned long  msg_lcbytes; /* Reuse junk fields for 32 bit */
-  unsigned long  msg_lqbytes; /* ditto */
-  unsigned short msg_cbytes;  /* current number of bytes on queue */
-  unsigned short msg_qnum;  /* number of messages in queue */
-  unsigned short msg_qbytes;  /* max number of bytes on queue */
-  __kernel_ipc_pid_t msg_lspid; /* pid of last msgsnd */
-  __kernel_ipc_pid_t msg_lrpid; /* last receive pid */
+	struct ipc_perm msg_perm;
+	struct msg *msg_first;		/* first message on queue,unused  */
+	struct msg *msg_last;		/* last message in queue,unused */
+	__kernel_time_t msg_stime;	/* last msgsnd time */
+	__kernel_time_t msg_rtime;	/* last msgrcv time */
+	__kernel_time_t msg_ctime;	/* last change time */
+	unsigned long  msg_lcbytes;	/* Reuse junk fields for 32 bit */
+	unsigned long  msg_lqbytes;	/* ditto */
+	unsigned short msg_cbytes;	/* current number of bytes on queue */
+	unsigned short msg_qnum;	/* number of messages in queue */
+	unsigned short msg_qbytes;	/* max number of bytes on queue */
+	__kernel_ipc_pid_t msg_lspid;	/* pid of last msgsnd */
+	__kernel_ipc_pid_t msg_lrpid;	/* last receive pid */
 };
 
 /* Include the definition of msqid64_ds */
@@ -33,20 +33,20 @@ struct msqid_ds {
 
 /* message buffer for msgsnd and msgrcv calls */
 struct msgbuf {
-  long mtype;         /* type of message */
-  char mtext[1];      /* message text */
+	long mtype;         /* type of message */
+	char mtext[1];      /* message text */
 };
 
 /* buffer for msgctl calls IPC_INFO, MSG_INFO */
 struct msginfo {
-  int msgpool;
-  int msgmap;
-  int msgmax;
-  int msgmnb;
-  int msgmni;
-  int msgssz;
-  int msgtql;
-  unsigned short  msgseg;
+	int msgpool;
+	int msgmap; 
+	int msgmax; 
+	int msgmnb; 
+	int msgmni; 
+	int msgssz; 
+	int msgtql; 
+	unsigned short  msgseg; 
 };
 
 /*
@@ -76,36 +76,36 @@ struct msginfo {
 
 /* one msg_msg structure for each message */
 struct msg_msg {
-  struct list_head m_list;
-  long  m_type;
-  int m_ts;           /* message text size */
-  struct msg_msgseg * next;
-  void * security;
-  /* the actual message follows immediately */
+	struct list_head m_list; 
+	long  m_type;          
+	int m_ts;           /* message text size */
+	struct msg_msgseg* next;
+	void *security;
+	/* the actual message follows immediately */
 };
 
 /* one msq_queue structure for each present queue on the system */
 struct msg_queue {
-  struct kern_ipc_perm q_perm;
-  time_t q_stime;     /* last msgsnd time */
-  time_t q_rtime;     /* last msgrcv time */
-  time_t q_ctime;     /* last change time */
-  unsigned long q_cbytes;   /* current number of bytes on queue */
-  unsigned long q_qnum;   /* number of messages in queue */
-  unsigned long q_qbytes;   /* max number of bytes on queue */
-  pid_t q_lspid;      /* pid of last msgsnd */
-  pid_t q_lrpid;      /* last receive pid */
-  
-  struct list_head q_messages;
-  struct list_head q_receivers;
-  struct list_head q_senders;
+	struct kern_ipc_perm q_perm;
+	time_t q_stime;			/* last msgsnd time */
+	time_t q_rtime;			/* last msgrcv time */
+	time_t q_ctime;			/* last change time */
+	unsigned long q_cbytes;		/* current number of bytes on queue */
+	unsigned long q_qnum;		/* number of messages in queue */
+	unsigned long q_qbytes;		/* max number of bytes on queue */
+	pid_t q_lspid;			/* pid of last msgsnd */
+	pid_t q_lrpid;			/* last receive pid */
+
+	struct list_head q_messages;
+	struct list_head q_receivers;
+	struct list_head q_senders;
 };
 
 /* Helper routines for sys_msgsnd and sys_msgrcv */
-extern long do_msgsnd (int msqid, long mtype, void __user * mtext,
-                       size_t msgsz, int msgflg);
-extern long do_msgrcv (int msqid, long * pmtype, void __user * mtext,
-                       size_t msgsz, long msgtyp, int msgflg);
+extern long do_msgsnd(int msqid, long mtype, void __user *mtext,
+			size_t msgsz, int msgflg);
+extern long do_msgrcv(int msqid, long *pmtype, void __user *mtext,
+			size_t msgsz, long msgtyp, int msgflg);
 
 #endif /* __KERNEL__ */
 

@@ -3,25 +3,25 @@
 
 #ifdef __ASSEMBLER__
 
-#define __ALIGN   .align 2
-#define __ALIGN_STR ".align 2"
+#define __ALIGN		.align 2
+#define __ALIGN_STR	".align 2"
 
 #ifndef __DSBT__
-#define ENTRY(name)   \
-  .global name @    \
-  __ALIGN @   \
-  name:
+#define ENTRY(name)		\
+	.global name @		\
+	__ALIGN @		\
+name:
 #else
-#define ENTRY(name)   \
-  .global name @    \
-  .hidden name @    \
-  __ALIGN @   \
-  name:
+#define ENTRY(name)		\
+	.global name @		\
+	.hidden name @		\
+	__ALIGN @		\
+name:
 #endif
 
-#define ENDPROC(name)   \
-  .type name, @function @ \
-  .size name, . - name
+#define ENDPROC(name)		\
+	.type name, @function @	\
+	.size name, . - name
 
 #endif
 

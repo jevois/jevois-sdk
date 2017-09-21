@@ -3,13 +3,13 @@
 
 typedef u8 BOOLEAN;
 typedef u8 BYTE;
-typedef u8 * PBYTE;
+typedef u8 *PBYTE;
 typedef u16 WORD;
-typedef u16 * PWORD;
+typedef u16 *PWORD;
 typedef u32 DWORD;
-typedef u32 * PDWORD;
+typedef u32 *PDWORD;
 
-#define BYTE_MASK 0xff
+#define BYTE_MASK	0xff
 
 #endif
 

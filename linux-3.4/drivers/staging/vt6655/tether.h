@@ -45,7 +45,7 @@
 #define TYPE_PKT_IP         0x0800     
 #define TYPE_PKT_ARP        0x0806     
 #define TYPE_PKT_RARP       0x8035     
-#define TYPE_PKT_IPX      0x8137     
+#define TYPE_PKT_IPX	    0x8137	   
 #define TYPE_PKT_802_1x     0x888e
 #define TYPE_PKT_PreAuth    0x88C7
 
@@ -86,7 +86,7 @@
 #define TYPE_PKT_IP         0x0008     
 #define TYPE_PKT_ARP        0x0608     
 #define TYPE_PKT_RARP       0x3580     
-#define TYPE_PKT_IPX      0x3781     
+#define TYPE_PKT_IPX	    0x3781	   
 
 #define TYPE_PKT_802_1x     0x8e88
 #define TYPE_PKT_PreAuth    0xC788
@@ -130,29 +130,29 @@
 
 /*---------------------  Export Types  ------------------------------*/
 typedef struct tagSEthernetHeader {
-  unsigned char abyDstAddr[ETH_ALEN];
-  unsigned char abySrcAddr[ETH_ALEN];
-  unsigned short wType;
-} __attribute__ ( (__packed__) )
+    unsigned char abyDstAddr[ETH_ALEN];
+    unsigned char abySrcAddr[ETH_ALEN];
+    unsigned short wType;
+}__attribute__ ((__packed__))
 SEthernetHeader, *PSEthernetHeader;
 
 
 typedef struct tagS802_3Header {
-  unsigned char abyDstAddr[ETH_ALEN];
-  unsigned char abySrcAddr[ETH_ALEN];
-  unsigned short wLen;
-} __attribute__ ( (__packed__) )
+    unsigned char abyDstAddr[ETH_ALEN];
+    unsigned char abySrcAddr[ETH_ALEN];
+    unsigned short wLen;
+}__attribute__ ((__packed__))
 S802_3Header, *PS802_3Header;
 
 typedef struct tagS802_11Header {
-  unsigned short wFrameCtl;
-  unsigned short wDurationID;
-  unsigned char abyAddr1[ETH_ALEN];
-  unsigned char abyAddr2[ETH_ALEN];
-  unsigned char abyAddr3[ETH_ALEN];
-  unsigned short wSeqCtl;
-  unsigned char abyAddr4[ETH_ALEN];
-} __attribute__ ( (__packed__) )
+    unsigned short wFrameCtl;
+    unsigned short wDurationID;
+    unsigned char abyAddr1[ETH_ALEN];
+    unsigned char abyAddr2[ETH_ALEN];
+    unsigned char abyAddr3[ETH_ALEN];
+    unsigned short wSeqCtl;
+    unsigned char abyAddr4[ETH_ALEN];
+}__attribute__ ((__packed__))
 S802_11Header, *PS802_11Header;
 
 /*---------------------  Export Macros ------------------------------*/
@@ -163,8 +163,8 @@ S802_11Header, *PS802_11Header;
 
 /*---------------------  Export Functions  --------------------------*/
 
-unsigned char ETHbyGetHashIndexByCrc32 (unsigned char * pbyMultiAddr);
-bool ETHbIsBufferCrc32Ok (unsigned char * pbyBuffer, unsigned int cbFrameLength);
+unsigned char ETHbyGetHashIndexByCrc32(unsigned char *pbyMultiAddr);
+bool ETHbIsBufferCrc32Ok(unsigned char *pbyBuffer, unsigned int cbFrameLength);
 
 #endif
 

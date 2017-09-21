@@ -4,7 +4,7 @@
 
 #ifdef __KERNEL__
 
-#define PAGE_OFFSET KSEG_C  /* kseg_c is mapped to physical ram. */
+#define PAGE_OFFSET KSEG_C	/* kseg_c is mapped to physical ram. */
 
 /*
  * Macros to convert between physical and virtual addresses. By stripping a
@@ -19,8 +19,8 @@
 #define __va(x) ((void *)((unsigned long)(x) | 0xc0000000))
 #endif
 
-#define VM_STACK_DEFAULT_FLAGS  (VM_READ | VM_WRITE | \
-                                 VM_MAYREAD | VM_MAYWRITE)
+#define VM_STACK_DEFAULT_FLAGS	(VM_READ | VM_WRITE | \
+				 VM_MAYREAD | VM_MAYWRITE)
 
 #endif /* __KERNEL__ */
 

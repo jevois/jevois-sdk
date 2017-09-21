@@ -25,8 +25,8 @@
 #ifndef __ASSEMBLY__
 
 enum mx31lilly_boards {
-  MX31LILLY_NOBOARD = 0,
-  MX31LILLY_DB    = 1,
+	MX31LILLY_NOBOARD	= 0,
+	MX31LILLY_DB		= 1,
 };
 
 /*
@@ -34,7 +34,7 @@ enum mx31lilly_boards {
  * its own devices, it calls the baseboard's init function.
  */
 
-extern void mx31lilly_db_init (void);
+extern void mx31lilly_db_init(void);
 
 #endif
 

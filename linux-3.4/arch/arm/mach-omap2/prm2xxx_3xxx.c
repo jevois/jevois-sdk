@@ -29,66 +29,66 @@
 #include "prm-regbits-34xx.h"
 
 static const struct omap_prcm_irq omap3_prcm_irqs[] = {
-  OMAP_PRCM_IRQ ("wkup", 0,  0),
-  OMAP_PRCM_IRQ ("io", 9,  1),
+	OMAP_PRCM_IRQ("wkup",	0,	0),
+	OMAP_PRCM_IRQ("io",	9,	1),
 };
 
 static struct omap_prcm_irq_setup omap3_prcm_irq_setup = {
-  .ack      = OMAP3_PRM_IRQSTATUS_MPU_OFFSET,
-  .mask     = OMAP3_PRM_IRQENABLE_MPU_OFFSET,
-  .nr_regs    = 1,
-  .irqs     = omap3_prcm_irqs,
-  .nr_irqs    = ARRAY_SIZE (omap3_prcm_irqs),
-  .irq      = INT_34XX_PRCM_MPU_IRQ,
-  .read_pending_irqs  = &omap3xxx_prm_read_pending_irqs,
-  .ocp_barrier    = &omap3xxx_prm_ocp_barrier,
-  .save_and_clear_irqen = &omap3xxx_prm_save_and_clear_irqen,
-  .restore_irqen    = &omap3xxx_prm_restore_irqen,
+	.ack			= OMAP3_PRM_IRQSTATUS_MPU_OFFSET,
+	.mask			= OMAP3_PRM_IRQENABLE_MPU_OFFSET,
+	.nr_regs		= 1,
+	.irqs			= omap3_prcm_irqs,
+	.nr_irqs		= ARRAY_SIZE(omap3_prcm_irqs),
+	.irq			= INT_34XX_PRCM_MPU_IRQ,
+	.read_pending_irqs	= &omap3xxx_prm_read_pending_irqs,
+	.ocp_barrier		= &omap3xxx_prm_ocp_barrier,
+	.save_and_clear_irqen	= &omap3xxx_prm_save_and_clear_irqen,
+	.restore_irqen		= &omap3xxx_prm_restore_irqen,
 };
 
-u32 omap2_prm_read_mod_reg (s16 module, u16 idx)
+u32 omap2_prm_read_mod_reg(s16 module, u16 idx)
 {
-  return __raw_readl (prm_base + module + idx);
+	return __raw_readl(prm_base + module + idx);
 }
 
-void omap2_prm_write_mod_reg (u32 val, s16 module, u16 idx)
+void omap2_prm_write_mod_reg(u32 val, s16 module, u16 idx)
 {
-  __raw_writel (val, prm_base + module + idx);
+	__raw_writel(val, prm_base + module + idx);
 }
 
 /* Read-modify-write a register in a PRM module. Caller must lock */
-u32 omap2_prm_rmw_mod_reg_bits (u32 mask, u32 bits, s16 module, s16 idx)
+u32 omap2_prm_rmw_mod_reg_bits(u32 mask, u32 bits, s16 module, s16 idx)
 {
-  u32 v;
-  
-  v = omap2_prm_read_mod_reg (module, idx);
-  v &= ~mask;
-  v |= bits;
-  omap2_prm_write_mod_reg (v, module, idx);
-  
-  return v;
+	u32 v;
+
+	v = omap2_prm_read_mod_reg(module, idx);
+	v &= ~mask;
+	v |= bits;
+	omap2_prm_write_mod_reg(v, module, idx);
+
+	return v;
 }
 
 /* Read a PRM register, AND it, and shift the result down to bit 0 */
-u32 omap2_prm_read_mod_bits_shift (s16 domain, s16 idx, u32 mask)
+u32 omap2_prm_read_mod_bits_shift(s16 domain, s16 idx, u32 mask)
 {
-  u32 v;
-  
-  v = omap2_prm_read_mod_reg (domain, idx);
-  v &= mask;
-  v >>= __ffs (mask);
-  
-  return v;
+	u32 v;
+
+	v = omap2_prm_read_mod_reg(domain, idx);
+	v &= mask;
+	v >>= __ffs(mask);
+
+	return v;
 }
 
-u32 omap2_prm_set_mod_reg_bits (u32 bits, s16 module, s16 idx)
+u32 omap2_prm_set_mod_reg_bits(u32 bits, s16 module, s16 idx)
 {
-  return omap2_prm_rmw_mod_reg_bits (bits, bits, module, idx);
+	return omap2_prm_rmw_mod_reg_bits(bits, bits, module, idx);
 }
 
-u32 omap2_prm_clear_mod_reg_bits (u32 bits, s16 module, s16 idx)
+u32 omap2_prm_clear_mod_reg_bits(u32 bits, s16 module, s16 idx)
 {
-  return omap2_prm_rmw_mod_reg_bits (bits, 0x0, module, idx);
+	return omap2_prm_rmw_mod_reg_bits(bits, 0x0, module, idx);
 }
 
 
@@ -102,13 +102,13 @@ u32 omap2_prm_clear_mod_reg_bits (u32 bits, s16 module, s16 idx)
  * 0 if the (sub)module hardreset line is not currently asserted, or
  * -EINVAL if called while running on a non-OMAP2/3 chip.
  */
-int omap2_prm_is_hardreset_asserted (s16 prm_mod, u8 shift)
+int omap2_prm_is_hardreset_asserted(s16 prm_mod, u8 shift)
 {
-  if (! (cpu_is_omap24xx() || cpu_is_omap34xx() ) )
-  { return -EINVAL; }
-  
-  return omap2_prm_read_mod_bits_shift (prm_mod, OMAP2_RM_RSTCTRL,
-                                        (1 << shift) );
+	if (!(cpu_is_omap24xx() || cpu_is_omap34xx()))
+		return -EINVAL;
+
+	return omap2_prm_read_mod_bits_shift(prm_mod, OMAP2_RM_RSTCTRL,
+				       (1 << shift));
 }
 
 /**
@@ -123,17 +123,17 @@ int omap2_prm_is_hardreset_asserted (s16 prm_mod, u8 shift)
  * place the submodule into reset.  Returns 0 upon success or -EINVAL
  * upon an argument error.
  */
-int omap2_prm_assert_hardreset (s16 prm_mod, u8 shift)
+int omap2_prm_assert_hardreset(s16 prm_mod, u8 shift)
 {
-  u32 mask;
-  
-  if (! (cpu_is_omap24xx() || cpu_is_omap34xx() ) )
-  { return -EINVAL; }
-  
-  mask = 1 << shift;
-  omap2_prm_rmw_mod_reg_bits (mask, mask, prm_mod, OMAP2_RM_RSTCTRL);
-  
-  return 0;
+	u32 mask;
+
+	if (!(cpu_is_omap24xx() || cpu_is_omap34xx()))
+		return -EINVAL;
+
+	mask = 1 << shift;
+	omap2_prm_rmw_mod_reg_bits(mask, mask, prm_mod, OMAP2_RM_RSTCTRL);
+
+	return 0;
 }
 
 /**
@@ -151,31 +151,31 @@ int omap2_prm_assert_hardreset (s16 prm_mod, u8 shift)
  * -EINVAL upon an argument error, -EEXIST if the submodule was already out
  * of reset, or -EBUSY if the submodule did not exit reset promptly.
  */
-int omap2_prm_deassert_hardreset (s16 prm_mod, u8 rst_shift, u8 st_shift)
+int omap2_prm_deassert_hardreset(s16 prm_mod, u8 rst_shift, u8 st_shift)
 {
-  u32 rst, st;
-  int c;
-  
-  if (! (cpu_is_omap24xx() || cpu_is_omap34xx() ) )
-  { return -EINVAL; }
-  
-  rst = 1 << rst_shift;
-  st = 1 << st_shift;
-  
-  /* Check the current status to avoid de-asserting the line twice */
-  if (omap2_prm_read_mod_bits_shift (prm_mod, OMAP2_RM_RSTCTRL, rst) == 0)
-  { return -EEXIST; }
-  
-  /* Clear the reset status by writing 1 to the status bit */
-  omap2_prm_rmw_mod_reg_bits (0xffffffff, st, prm_mod, OMAP2_RM_RSTST);
-  /* de-assert the reset control line */
-  omap2_prm_rmw_mod_reg_bits (rst, 0, prm_mod, OMAP2_RM_RSTCTRL);
-  /* wait the status to be set */
-  omap_test_timeout (omap2_prm_read_mod_bits_shift (prm_mod, OMAP2_RM_RSTST,
-                     st),
-                     MAX_MODULE_HARDRESET_WAIT, c);
-                     
-  return (c == MAX_MODULE_HARDRESET_WAIT) ? -EBUSY : 0;
+	u32 rst, st;
+	int c;
+
+	if (!(cpu_is_omap24xx() || cpu_is_omap34xx()))
+		return -EINVAL;
+
+	rst = 1 << rst_shift;
+	st = 1 << st_shift;
+
+	/* Check the current status to avoid de-asserting the line twice */
+	if (omap2_prm_read_mod_bits_shift(prm_mod, OMAP2_RM_RSTCTRL, rst) == 0)
+		return -EEXIST;
+
+	/* Clear the reset status by writing 1 to the status bit */
+	omap2_prm_rmw_mod_reg_bits(0xffffffff, st, prm_mod, OMAP2_RM_RSTST);
+	/* de-assert the reset control line */
+	omap2_prm_rmw_mod_reg_bits(rst, 0, prm_mod, OMAP2_RM_RSTCTRL);
+	/* wait the status to be set */
+	omap_test_timeout(omap2_prm_read_mod_bits_shift(prm_mod, OMAP2_RM_RSTST,
+						  st),
+			  MAX_MODULE_HARDRESET_WAIT, c);
+
+	return (c == MAX_MODULE_HARDRESET_WAIT) ? -EBUSY : 0;
 }
 
 /* PRM VP */
@@ -185,51 +185,51 @@ int omap2_prm_deassert_hardreset (s16 prm_mod, u8 rst_shift, u8 st_shift)
  * @tranxdone_status: VP_TRANXDONE_ST bitmask in PRM_IRQSTATUS_MPU reg
  */
 struct omap3_vp {
-  u32 tranxdone_status;
+	u32 tranxdone_status;
 };
 
 static struct omap3_vp omap3_vp[] = {
-  [OMAP3_VP_VDD_MPU_ID] = {
-    .tranxdone_status = OMAP3430_VP1_TRANXDONE_ST_MASK,
-  },
-  [OMAP3_VP_VDD_CORE_ID] = {
-    .tranxdone_status = OMAP3430_VP2_TRANXDONE_ST_MASK,
-  },
+	[OMAP3_VP_VDD_MPU_ID] = {
+		.tranxdone_status = OMAP3430_VP1_TRANXDONE_ST_MASK,
+	},
+	[OMAP3_VP_VDD_CORE_ID] = {
+		.tranxdone_status = OMAP3430_VP2_TRANXDONE_ST_MASK,
+	},
 };
 
 #define MAX_VP_ID ARRAY_SIZE(omap3_vp);
 
-u32 omap3_prm_vp_check_txdone (u8 vp_id)
+u32 omap3_prm_vp_check_txdone(u8 vp_id)
 {
-  struct omap3_vp * vp = &omap3_vp[vp_id];
-  u32 irqstatus;
-  
-  irqstatus = omap2_prm_read_mod_reg (OCP_MOD,
-                                      OMAP3_PRM_IRQSTATUS_MPU_OFFSET);
-  return irqstatus & vp->tranxdone_status;
+	struct omap3_vp *vp = &omap3_vp[vp_id];
+	u32 irqstatus;
+
+	irqstatus = omap2_prm_read_mod_reg(OCP_MOD,
+					   OMAP3_PRM_IRQSTATUS_MPU_OFFSET);
+	return irqstatus & vp->tranxdone_status;
 }
 
-void omap3_prm_vp_clear_txdone (u8 vp_id)
+void omap3_prm_vp_clear_txdone(u8 vp_id)
 {
-  struct omap3_vp * vp = &omap3_vp[vp_id];
-  
-  omap2_prm_write_mod_reg (vp->tranxdone_status,
-                           OCP_MOD, OMAP3_PRM_IRQSTATUS_MPU_OFFSET);
+	struct omap3_vp *vp = &omap3_vp[vp_id];
+
+	omap2_prm_write_mod_reg(vp->tranxdone_status,
+				OCP_MOD, OMAP3_PRM_IRQSTATUS_MPU_OFFSET);
 }
 
-u32 omap3_prm_vcvp_read (u8 offset)
+u32 omap3_prm_vcvp_read(u8 offset)
 {
-  return omap2_prm_read_mod_reg (OMAP3430_GR_MOD, offset);
+	return omap2_prm_read_mod_reg(OMAP3430_GR_MOD, offset);
 }
 
-void omap3_prm_vcvp_write (u32 val, u8 offset)
+void omap3_prm_vcvp_write(u32 val, u8 offset)
 {
-  omap2_prm_write_mod_reg (val, OMAP3430_GR_MOD, offset);
+	omap2_prm_write_mod_reg(val, OMAP3430_GR_MOD, offset);
 }
 
-u32 omap3_prm_vcvp_rmw (u32 mask, u32 bits, u8 offset)
+u32 omap3_prm_vcvp_rmw(u32 mask, u32 bits, u8 offset)
 {
-  return omap2_prm_rmw_mod_reg_bits (mask, bits, OMAP3430_GR_MOD, offset);
+	return omap2_prm_rmw_mod_reg_bits(mask, bits, OMAP3430_GR_MOD, offset);
 }
 
 /**
@@ -240,15 +240,15 @@ u32 omap3_prm_vcvp_rmw (u32 mask, u32 bits, u8 offset)
  * MPU IRQs, and store the result into the u32 pointed to by @events.
  * No return value.
  */
-void omap3xxx_prm_read_pending_irqs (unsigned long * events)
+void omap3xxx_prm_read_pending_irqs(unsigned long *events)
 {
-  u32 mask, st;
-  
-  /* XXX Can the mask read be avoided (e.g., can it come from RAM?) */
-  mask = omap2_prm_read_mod_reg (OCP_MOD, OMAP3_PRM_IRQENABLE_MPU_OFFSET);
-  st = omap2_prm_read_mod_reg (OCP_MOD, OMAP3_PRM_IRQSTATUS_MPU_OFFSET);
-  
-  events[0] = mask & st;
+	u32 mask, st;
+
+	/* XXX Can the mask read be avoided (e.g., can it come from RAM?) */
+	mask = omap2_prm_read_mod_reg(OCP_MOD, OMAP3_PRM_IRQENABLE_MPU_OFFSET);
+	st = omap2_prm_read_mod_reg(OCP_MOD, OMAP3_PRM_IRQSTATUS_MPU_OFFSET);
+
+	events[0] = mask & st;
 }
 
 /**
@@ -259,9 +259,9 @@ void omap3xxx_prm_read_pending_irqs (unsigned long * events)
  * block, to avoid race conditions after acknowledging or clearing IRQ
  * bits.  No return value.
  */
-void omap3xxx_prm_ocp_barrier (void)
+void omap3xxx_prm_ocp_barrier(void)
 {
-  omap2_prm_read_mod_reg (OCP_MOD, OMAP3_PRM_REVISION_OFFSET);
+	omap2_prm_read_mod_reg(OCP_MOD, OMAP3_PRM_REVISION_OFFSET);
 }
 
 /**
@@ -275,14 +275,14 @@ void omap3xxx_prm_ocp_barrier (void)
  * returning; otherwise, spurious interrupts might occur.  No return
  * value.
  */
-void omap3xxx_prm_save_and_clear_irqen (u32 * saved_mask)
+void omap3xxx_prm_save_and_clear_irqen(u32 *saved_mask)
 {
-  saved_mask[0] = omap2_prm_read_mod_reg (OCP_MOD,
-                                          OMAP3_PRM_IRQENABLE_MPU_OFFSET);
-  omap2_prm_write_mod_reg (0, OCP_MOD, OMAP3_PRM_IRQENABLE_MPU_OFFSET);
-  
-  /* OCP barrier */
-  omap2_prm_read_mod_reg (OCP_MOD, OMAP3_PRM_REVISION_OFFSET);
+	saved_mask[0] = omap2_prm_read_mod_reg(OCP_MOD,
+					       OMAP3_PRM_IRQENABLE_MPU_OFFSET);
+	omap2_prm_write_mod_reg(0, OCP_MOD, OMAP3_PRM_IRQENABLE_MPU_OFFSET);
+
+	/* OCP barrier */
+	omap2_prm_read_mod_reg(OCP_MOD, OMAP3_PRM_REVISION_OFFSET);
 }
 
 /**
@@ -295,16 +295,16 @@ void omap3xxx_prm_save_and_clear_irqen (u32 * saved_mask)
  * barrier should be needed here; any pending PRM interrupts will fire
  * once the writes reach the PRM.  No return value.
  */
-void omap3xxx_prm_restore_irqen (u32 * saved_mask)
+void omap3xxx_prm_restore_irqen(u32 *saved_mask)
 {
-  omap2_prm_write_mod_reg (saved_mask[0], OCP_MOD,
-                           OMAP3_PRM_IRQENABLE_MPU_OFFSET);
+	omap2_prm_write_mod_reg(saved_mask[0], OCP_MOD,
+				OMAP3_PRM_IRQENABLE_MPU_OFFSET);
 }
 
-static int __init omap3xxx_prcm_init (void)
+static int __init omap3xxx_prcm_init(void)
 {
-  if (cpu_is_omap34xx() )
-  { return omap_prcm_register_chain_handler (&omap3_prcm_irq_setup); }
-  return 0;
+	if (cpu_is_omap34xx())
+		return omap_prcm_register_chain_handler(&omap3_prcm_irq_setup);
+	return 0;
 }
-subsys_initcall (omap3xxx_prcm_init);
+subsys_initcall(omap3xxx_prcm_init);

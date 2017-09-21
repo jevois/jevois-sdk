@@ -1,7 +1,7 @@
 /* arch/arm/mach-s3c2410/include/mach/timex.h
  *
  * Copyright (c) 2003-2005 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * S3C2410 - time parameters
  *

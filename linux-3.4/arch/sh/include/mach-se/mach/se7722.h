@@ -16,22 +16,22 @@
 #include <asm/addrspace.h>
 
 /* Box specific addresses.  */
-#define SE_AREA0_WIDTH  4   /* Area0: 32bit */
-#define PA_ROM    0xa0000000  /* EPROM */
-#define PA_ROM_SIZE 0x00200000  /* EPROM size 2M byte */
-#define PA_FROM   0xa1000000  /* Flash-ROM */
-#define PA_FROM_SIZE  0x01000000  /* Flash-ROM size 16M byte */
-#define PA_EXT1   0xa4000000
-#define PA_EXT1_SIZE  0x04000000
-#define PA_SDRAM  0xaC000000  /* DDR-SDRAM(Area3) 64MB */
-#define PA_SDRAM_SIZE 0x04000000
+#define SE_AREA0_WIDTH	4		/* Area0: 32bit */
+#define PA_ROM		0xa0000000	/* EPROM */
+#define PA_ROM_SIZE	0x00200000	/* EPROM size 2M byte */
+#define PA_FROM		0xa1000000	/* Flash-ROM */
+#define PA_FROM_SIZE	0x01000000	/* Flash-ROM size 16M byte */
+#define PA_EXT1		0xa4000000
+#define PA_EXT1_SIZE	0x04000000
+#define PA_SDRAM	0xaC000000	/* DDR-SDRAM(Area3) 64MB */
+#define PA_SDRAM_SIZE	0x04000000
 
-#define PA_EXT4   0xb0000000
-#define PA_EXT4_SIZE  0x04000000
+#define PA_EXT4		0xb0000000
+#define PA_EXT4_SIZE	0x04000000
 
-#define PA_PERIPHERAL 0xB0000000
+#define PA_PERIPHERAL	0xB0000000
 
-#define PA_PCIC         PA_PERIPHERAL       /* MR-SHPC-01 PCMCIA */
+#define PA_PCIC         PA_PERIPHERAL   		/* MR-SHPC-01 PCMCIA */
 #define PA_MRSHPC       (PA_PERIPHERAL + 0x003fffe0)    /* MR-SHPC-01 PCMCIA controller */
 #define PA_MRSHPC_MW1   (PA_PERIPHERAL + 0x00400000)    /* MR-SHPC-01 memory window base */
 #define PA_MRSHPC_MW2   (PA_PERIPHERAL + 0x00500000)    /* MR-SHPC-01 attribute window base */
@@ -50,10 +50,10 @@
 #define MRSHPC_CDCR     (PA_MRSHPC + 28)
 #define MRSHPC_PCIC_INFO (PA_MRSHPC + 30)
 
-#define PA_LED    (PA_PERIPHERAL + 0x00800000)  /* 8bit LED */
-#define PA_FPGA   (PA_PERIPHERAL + 0x01800000)  /* FPGA base address */
+#define PA_LED		(PA_PERIPHERAL + 0x00800000)	/* 8bit LED */
+#define PA_FPGA		(PA_PERIPHERAL + 0x01800000) 	/* FPGA base address */
 
-#define PA_LAN    (PA_AREA6_IO + 0)   /* SMC LAN91C111 */
+#define PA_LAN		(PA_AREA6_IO + 0)		/* SMC LAN91C111 */
 /* GPIO */
 #define FPGA_IN         0xb1840000UL
 #define FPGA_OUT        0xb1840004UL
@@ -86,20 +86,20 @@
 
 /* Bits in IRQ01_* registers */
 
-#define SE7722_FPGA_IRQ_USB 0 /* IRQ0 */
-#define SE7722_FPGA_IRQ_SMC 1 /* IRQ0 */
-#define SE7722_FPGA_IRQ_MRSHPC0 2 /* IRQ1 */
-#define SE7722_FPGA_IRQ_MRSHPC1 3 /* IRQ1 */
-#define SE7722_FPGA_IRQ_MRSHPC2 4 /* IRQ1 */
-#define SE7722_FPGA_IRQ_MRSHPC3 5 /* IRQ1 */
-#define SE7722_FPGA_IRQ_NR  6
+#define SE7722_FPGA_IRQ_USB	0 /* IRQ0 */
+#define SE7722_FPGA_IRQ_SMC	1 /* IRQ0 */
+#define SE7722_FPGA_IRQ_MRSHPC0	2 /* IRQ1 */
+#define SE7722_FPGA_IRQ_MRSHPC1	3 /* IRQ1 */
+#define SE7722_FPGA_IRQ_MRSHPC2	4 /* IRQ1 */
+#define SE7722_FPGA_IRQ_MRSHPC3	5 /* IRQ1 */
+#define SE7722_FPGA_IRQ_NR	6
 
 /* arch/sh/boards/se/7722/irq.c */
 extern unsigned int se7722_fpga_irq[];
 
-void init_se7722_IRQ (void);
+void init_se7722_IRQ(void);
 
-#define __IO_PREFIX   se7722
+#define __IO_PREFIX		se7722
 #include <asm/io_generic.h>
 
 #endif  /* __ASM_SH_SE7722_H */

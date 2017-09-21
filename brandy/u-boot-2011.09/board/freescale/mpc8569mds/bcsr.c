@@ -11,7 +11,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -27,40 +27,40 @@
 
 void enable_8569mds_flash_write()
 {
-  setbits_8 ( (u8 *) (CONFIG_SYS_BCSR_BASE + 17), BCSR17_FLASH_nWP);
+	setbits_8((u8 *)(CONFIG_SYS_BCSR_BASE + 17), BCSR17_FLASH_nWP);
 }
 
 void disable_8569mds_flash_write()
 {
-  clrbits_8 ( (u8 *) (CONFIG_SYS_BCSR_BASE + 17), BCSR17_FLASH_nWP);
+	clrbits_8((u8 *)(CONFIG_SYS_BCSR_BASE + 17), BCSR17_FLASH_nWP);
 }
 
 void enable_8569mds_qe_uec()
 {
-  #if defined(CONFIG_SYS_UCC_RGMII_MODE)
-  setbits_8 ( (u8 *) (CONFIG_SYS_BCSR_BASE + 7),
-              BCSR7_UCC1_GETH_EN | BCSR7_UCC1_RGMII_EN);
-  setbits_8 ( (u8 *) (CONFIG_SYS_BCSR_BASE + 8),
-              BCSR8_UCC2_GETH_EN | BCSR8_UCC2_RGMII_EN);
-  setbits_8 ( (u8 *) (CONFIG_SYS_BCSR_BASE + 9),
-              BCSR9_UCC3_GETH_EN | BCSR9_UCC3_RGMII_EN);
-  setbits_8 ( (u8 *) (CONFIG_SYS_BCSR_BASE + 10),
-              BCSR10_UCC4_GETH_EN | BCSR10_UCC4_RGMII_EN);
-  #elif defined(CONFIG_SYS_UCC_RMII_MODE)
-  /* Set UCC1-4 working at RMII mode */
-  clrbits_8 ( (u8 *) (CONFIG_SYS_BCSR_BASE + 7),
-              BCSR7_UCC1_GETH_EN | BCSR7_UCC1_RGMII_EN);
-  clrbits_8 ( (u8 *) (CONFIG_SYS_BCSR_BASE + 8),
-              BCSR8_UCC2_GETH_EN | BCSR8_UCC2_RGMII_EN);
-  clrbits_8 ( (u8 *) (CONFIG_SYS_BCSR_BASE + 9),
-              BCSR9_UCC3_GETH_EN | BCSR9_UCC3_RGMII_EN);
-  clrbits_8 ( (u8 *) (CONFIG_SYS_BCSR_BASE + 10),
-              BCSR10_UCC4_GETH_EN | BCSR10_UCC4_RGMII_EN);
-  setbits_8 ( (u8 *) (CONFIG_SYS_BCSR_BASE + 9), BCSR9_UCC3_RMII_EN);
-  #endif
+#if defined(CONFIG_SYS_UCC_RGMII_MODE)
+	setbits_8((u8 *)(CONFIG_SYS_BCSR_BASE + 7),
+			BCSR7_UCC1_GETH_EN | BCSR7_UCC1_RGMII_EN);
+	setbits_8((u8 *)(CONFIG_SYS_BCSR_BASE + 8),
+			BCSR8_UCC2_GETH_EN | BCSR8_UCC2_RGMII_EN);
+	setbits_8((u8 *)(CONFIG_SYS_BCSR_BASE + 9),
+			BCSR9_UCC3_GETH_EN | BCSR9_UCC3_RGMII_EN);
+	setbits_8((u8 *)(CONFIG_SYS_BCSR_BASE + 10),
+			BCSR10_UCC4_GETH_EN | BCSR10_UCC4_RGMII_EN);
+#elif defined(CONFIG_SYS_UCC_RMII_MODE)
+	/* Set UCC1-4 working at RMII mode */
+	clrbits_8((u8 *)(CONFIG_SYS_BCSR_BASE + 7),
+			BCSR7_UCC1_GETH_EN | BCSR7_UCC1_RGMII_EN);
+	clrbits_8((u8 *)(CONFIG_SYS_BCSR_BASE + 8),
+			BCSR8_UCC2_GETH_EN | BCSR8_UCC2_RGMII_EN);
+	clrbits_8((u8 *)(CONFIG_SYS_BCSR_BASE + 9),
+			BCSR9_UCC3_GETH_EN | BCSR9_UCC3_RGMII_EN);
+	clrbits_8((u8 *)(CONFIG_SYS_BCSR_BASE + 10),
+			BCSR10_UCC4_GETH_EN | BCSR10_UCC4_RGMII_EN);
+	setbits_8((u8 *)(CONFIG_SYS_BCSR_BASE + 9), BCSR9_UCC3_RMII_EN);
+#endif
 }
 
 void disable_8569mds_brd_eeprom_write_protect()
 {
-  clrbits_8 ( (u8 *) (CONFIG_SYS_BCSR_BASE + 7), BCSR7_BRD_WRT_PROTECT);
+	clrbits_8((u8 *)(CONFIG_SYS_BCSR_BASE + 7), BCSR7_BRD_WRT_PROTECT);
 }

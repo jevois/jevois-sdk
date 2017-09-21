@@ -25,33 +25,33 @@
 #define FLAG_HIGH                       (1100)
 
 typedef struct {
-  atomic_t di_complete;
-  atomic_t enable;
-  wait_queue_head_t wait;
-  void * in_flag;
-  void * out_flag;
-  u32 mode;
-  unsigned int in_flag_phy;
-  unsigned int out_flag_phy;
-  unsigned int flag_size;
-  #ifdef CONFIG_PM
-  struct dev_pm_domain di_pm_domain;
-  #endif
-} di_struct, *pdi_struct;
+	atomic_t di_complete;
+	atomic_t enable;
+	wait_queue_head_t wait;
+	void * in_flag;
+	void * out_flag;
+	u32 mode;
+	unsigned int in_flag_phy;
+	unsigned int out_flag_phy;
+	unsigned int flag_size;
+#ifdef CONFIG_PM
+	struct dev_pm_domain di_pm_domain;
+#endif
+}di_struct, *pdi_struct;
 
-#define DI_IOC_MAGIC    'D'
-#define DI_IOCSTART   _IOWR(DI_IOC_MAGIC, 0, __di_para_t *)
+#define	DI_IOC_MAGIC		'D'
+#define	DI_IOCSTART		_IOWR(DI_IOC_MAGIC, 0, __di_para_t *)
 
 enum {
-  DEBUG_INIT = 1U << 0,
-  DEBUG_INT = 1U << 1,
-  DEBUG_DATA_INFO = 1U << 2,
-  DEBUG_SUSPEND = 1U << 3,
-  DEBUG_TEST = 1U << 4,
+	DEBUG_INIT = 1U << 0,
+	DEBUG_INT = 1U << 1,
+	DEBUG_DATA_INFO = 1U << 2,
+	DEBUG_SUSPEND = 1U << 3,
+	DEBUG_TEST = 1U << 4,
 };
 
-#define dprintk(level_mask, fmt, arg...)  if (unlikely(debug_mask & level_mask)) \
-    printk(KERN_DEBUG fmt , ## arg)
+#define dprintk(level_mask, fmt, arg...)	if (unlikely(debug_mask & level_mask)) \
+	 printk(KERN_DEBUG fmt , ## arg)
 
 #endif
 

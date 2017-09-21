@@ -11,12 +11,12 @@
 #define OPROFILE_BUFFER_SYNC_H
 
 /* add the necessary profiling hooks */
-int sync_start (void);
+int sync_start(void);
 
 /* remove the hooks */
-void sync_stop (void);
+void sync_stop(void);
 
 /* sync the given CPU's buffer */
-void sync_buffer (int cpu);
+void sync_buffer(int cpu);
 
 #endif /* OPROFILE_BUFFER_SYNC_H */

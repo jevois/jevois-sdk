@@ -35,34 +35,34 @@
  *
  * This function notifies the user space through UEvents.
  */
-static int notify_user_space (struct thermal_zone_device * tz, int trip)
+static int notify_user_space(struct thermal_zone_device *tz, int trip)
 {
-  mutex_lock (&tz->lock);
-  kobject_uevent (&tz->device.kobj, KOBJ_CHANGE);
-  mutex_unlock (&tz->lock);
-  return 0;
+	mutex_lock(&tz->lock);
+	kobject_uevent(&tz->device.kobj, KOBJ_CHANGE);
+	mutex_unlock(&tz->lock);
+	return 0;
 }
 
 static struct thermal_governor thermal_gov_user_space = {
-  .name   = "user_space",
-  .throttle = notify_user_space,
-  .owner    = THIS_MODULE,
+	.name		= "user_space",
+	.throttle	= notify_user_space,
+	.owner		= THIS_MODULE,
 };
 
-static int __init thermal_gov_user_space_init (void)
+static int __init thermal_gov_user_space_init(void)
 {
-  return thermal_register_governor (&thermal_gov_user_space);
+	return thermal_register_governor(&thermal_gov_user_space);
 }
 
-static void __exit thermal_gov_user_space_exit (void)
+static void __exit thermal_gov_user_space_exit(void)
 {
-  thermal_unregister_governor (&thermal_gov_user_space);
+	thermal_unregister_governor(&thermal_gov_user_space);
 }
 
 /* This should load after thermal framework */
-fs_initcall (thermal_gov_user_space_init);
-module_exit (thermal_gov_user_space_exit);
+fs_initcall(thermal_gov_user_space_init);
+module_exit(thermal_gov_user_space_exit);
 
-MODULE_AUTHOR ("Durgadoss R");
-MODULE_DESCRIPTION ("A user space Thermal notifier");
-MODULE_LICENSE ("GPL");
+MODULE_AUTHOR("Durgadoss R");
+MODULE_DESCRIPTION("A user space Thermal notifier");
+MODULE_LICENSE("GPL");

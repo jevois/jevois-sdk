@@ -1,6 +1,6 @@
 /*
  * Copyright (C) ST-Ericsson AB 2010
- * Author:  Sjur Brendeland/sjur.brandeland@stericsson.com
+ * Author:	Sjur Brendeland/sjur.brandeland@stericsson.com
  * License terms: GNU General Public License (GPL) version 2
  */
 
@@ -14,13 +14,13 @@ struct cfpkt;
  * len: Length of packet to be created
  * @return New packet.
  */
-struct cfpkt * cfpkt_create (u16 len);
+struct cfpkt *cfpkt_create(u16 len);
 
 /*
  * Destroy a CAIF Packet.
  * pkt Packet to be destoyed.
  */
-void cfpkt_destroy (struct cfpkt * pkt);
+void cfpkt_destroy(struct cfpkt *pkt);
 
 /*
  * Extract header from packet.
@@ -30,7 +30,7 @@ void cfpkt_destroy (struct cfpkt * pkt);
  * len Length of head data to copy.
  * @return zero on success and error code upon failure
  */
-int cfpkt_extr_head (struct cfpkt * pkt, void * data, u16 len);
+int cfpkt_extr_head(struct cfpkt *pkt, void *data, u16 len);
 
 /*
  * Peek header from packet.
@@ -41,7 +41,7 @@ int cfpkt_extr_head (struct cfpkt * pkt, void * data, u16 len);
  * len Length of head data to copy.
  * @return zero on success and error code upon failure
  */
-int cfpkt_peek_head (struct cfpkt * pkt, void * data, u16 len);
+int cfpkt_peek_head(struct cfpkt *pkt, void *data, u16 len);
 
 /*
  * Extract header from trailer (end of packet).
@@ -51,7 +51,7 @@ int cfpkt_peek_head (struct cfpkt * pkt, void * data, u16 len);
  * len Length of header data to copy.
  * @return zero on success and error code upon failure
  */
-int cfpkt_extr_trail (struct cfpkt * pkt, void * data, u16 len);
+int cfpkt_extr_trail(struct cfpkt *pkt, void *data, u16 len);
 
 /*
  * Add header to packet.
@@ -62,7 +62,7 @@ int cfpkt_extr_trail (struct cfpkt * pkt, void * data, u16 len);
  * len Length of header data to copy.
  * @return zero on success and error code upon failure
  */
-int cfpkt_add_head (struct cfpkt * pkt, const void * data, u16 len);
+int cfpkt_add_head(struct cfpkt *pkt, const void *data, u16 len);
 
 /*
  * Add trailer to packet.
@@ -73,7 +73,7 @@ int cfpkt_add_head (struct cfpkt * pkt, const void * data, u16 len);
  * len Length of trailer data to copy.
  * @return zero on success and error code upon failure
  */
-int cfpkt_add_trail (struct cfpkt * pkt, const void * data, u16 len);
+int cfpkt_add_trail(struct cfpkt *pkt, const void *data, u16 len);
 
 /*
  * Pad trailer on packet.
@@ -83,7 +83,7 @@ int cfpkt_add_trail (struct cfpkt * pkt, const void * data, u16 len);
  * len Length of padding to add.
  * @return zero on success and error code upon failure
  */
-int cfpkt_pad_trail (struct cfpkt * pkt, u16 len);
+int cfpkt_pad_trail(struct cfpkt *pkt, u16 len);
 
 /*
  * Add a single byte to packet body (tail).
@@ -92,7 +92,7 @@ int cfpkt_pad_trail (struct cfpkt * pkt, u16 len);
  * data Byte to add.
  * @return zero on success and error code upon failure
  */
-int cfpkt_addbdy (struct cfpkt * pkt, const u8 data);
+int cfpkt_addbdy(struct cfpkt *pkt, const u8 data);
 
 /*
  * Add a data to packet body (tail).
@@ -102,14 +102,14 @@ int cfpkt_addbdy (struct cfpkt * pkt, const u8 data);
  * len Length of data to add.
  * @return zero on success and error code upon failure
  */
-int cfpkt_add_body (struct cfpkt * pkt, const void * data, u16 len);
+int cfpkt_add_body(struct cfpkt *pkt, const void *data, u16 len);
 
 /*
  * Checks whether there are more data to process in packet.
  * pkt Packet to check.
  * @return true if more data are available in packet false otherwise
  */
-bool cfpkt_more (struct cfpkt * pkt);
+bool cfpkt_more(struct cfpkt *pkt);
 
 /*
  * Checks whether the packet is erroneous,
@@ -118,14 +118,14 @@ bool cfpkt_more (struct cfpkt * pkt);
  * pkt Packet to check.
  * @return true on error false otherwise
  */
-bool cfpkt_erroneous (struct cfpkt * pkt);
+bool cfpkt_erroneous(struct cfpkt *pkt);
 
 /*
  * Get the packet length.
  * pkt Packet to get length from.
  * @return Number of bytes in packet.
  */
-u16 cfpkt_getlen (struct cfpkt * pkt);
+u16 cfpkt_getlen(struct cfpkt *pkt);
 
 /*
  * Set the packet length, by adjusting the trailer pointer according to length.
@@ -133,7 +133,7 @@ u16 cfpkt_getlen (struct cfpkt * pkt);
  * len Packet length.
  * @return Number of bytes in packet.
  */
-int cfpkt_setlen (struct cfpkt * pkt, u16 len);
+int cfpkt_setlen(struct cfpkt *pkt, u16 len);
 
 /*
  * cfpkt_append - Appends a packet's data to another packet.
@@ -146,8 +146,8 @@ int cfpkt_setlen (struct cfpkt * pkt, u16 len);
  * after calling this function.
  * @return    The new appended packet.
  */
-struct cfpkt * cfpkt_append (struct cfpkt * dstpkt, struct cfpkt * addpkt,
-                             u16 expectlen);
+struct cfpkt *cfpkt_append(struct cfpkt *dstpkt, struct cfpkt *addpkt,
+		      u16 expectlen);
 
 /*
  * cfpkt_split - Split a packet into two packets at the specified split point.
@@ -155,7 +155,7 @@ struct cfpkt * cfpkt_append (struct cfpkt * dstpkt, struct cfpkt * addpkt,
  * pos: Position to split packet in two parts.
  * @return The new packet, containing the second part of the data.
  */
-struct cfpkt * cfpkt_split (struct cfpkt * pkt, u16 pos);
+struct cfpkt *cfpkt_split(struct cfpkt *pkt, u16 pos);
 
 /*
  * Iteration function, iterates the packet buffers from start to end.
@@ -171,22 +171,22 @@ struct cfpkt * cfpkt_split (struct cfpkt * pkt, u16 pos);
  * @return    Checksum of buffer.
  */
 
-u16 cfpkt_iterate (struct cfpkt * pkt,
-                   u16 (*iter_func) (u16 chks, void * buf, u16 len),
-                   u16 data);
+u16 cfpkt_iterate(struct cfpkt *pkt,
+		u16 (*iter_func)(u16 chks, void *buf, u16 len),
+		u16 data);
 
 /* Map from a "native" packet (e.g. Linux Socket Buffer) to a CAIF packet.
  *  dir - Direction indicating whether this packet is to be sent or received.
  *  nativepkt  - The native packet to be transformed to a CAIF packet
  *  @return The mapped CAIF Packet CFPKT.
  */
-struct cfpkt * cfpkt_fromnative (enum caif_direction dir, void * nativepkt);
+struct cfpkt *cfpkt_fromnative(enum caif_direction dir, void *nativepkt);
 
 /* Map from a CAIF packet to a "native" packet (e.g. Linux Socket Buffer).
  *  pkt  - The CAIF packet to be transformed into a "native" packet.
  *  @return The native packet transformed from a CAIF packet.
  */
-void * cfpkt_tonative (struct cfpkt * pkt);
+void *cfpkt_tonative(struct cfpkt *pkt);
 
 
 /*
@@ -194,5 +194,5 @@ void * cfpkt_tonative (struct cfpkt * pkt);
  * pkt Packet to get info from;
  * @return Packet information
  */
-struct caif_payload_info * cfpkt_info (struct cfpkt * pkt);
-#endif        /* CFPKT_H_ */
+struct caif_payload_info *cfpkt_info(struct cfpkt *pkt);
+#endif				/* CFPKT_H_ */

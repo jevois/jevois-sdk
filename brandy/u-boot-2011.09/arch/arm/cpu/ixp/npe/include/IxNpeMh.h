@@ -6,16 +6,16 @@
  * @brief This file contains the public API for the IXP400 NPE Message
  * Handler component.
  *
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,7 +28,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -41,7 +41,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
 */
@@ -50,7 +50,7 @@
  * @defgroup IxNpeMh IXP400 NPE Message Handler (IxNpeMh) API
  *
  * @brief The public API for the IXP400 NPE Message Handler component.
- *
+ * 
  * @{
  */
 
@@ -82,19 +82,19 @@
  * @enum IxNpeMhNpeId
  *
  * @brief The ID of a particular NPE.
- * @note In this context, for IXP425 Silicon (B0):<br>
- *      - NPE-A has HDLC, HSS, AAL and UTOPIA Coprocessors.<br>
+ * @note In this context, for IXP425 Silicon (B0):<br> 
+ *      - NPE-A has HDLC, HSS, AAL and UTOPIA Coprocessors.<br> 
  *      - NPE-B has Ethernet Coprocessor.<br>
  *      - NPE-C has Ethernet, AES, DES and HASH Coprocessors.<br>
- *      - IXP400 Product Line have different combinations of coprocessors.
+ *      - IXP400 Product Line have different combinations of coprocessors. 
  */
 
 typedef enum
 {
-  IX_NPEMH_NPEID_NPEA = 0, /**< ID for NPE-A */
-  IX_NPEMH_NPEID_NPEB,     /**< ID for NPE-B */
-  IX_NPEMH_NPEID_NPEC,     /**< ID for NPE-C */
-  IX_NPEMH_NUM_NPES        /**< Number of NPEs */
+    IX_NPEMH_NPEID_NPEA = 0, /**< ID for NPE-A */
+    IX_NPEMH_NPEID_NPEB,     /**< ID for NPE-B */
+    IX_NPEMH_NPEID_NPEC,     /**< ID for NPE-C */
+    IX_NPEMH_NUM_NPES        /**< Number of NPEs */
 } IxNpeMhNpeId;
 
 /**
@@ -106,8 +106,8 @@ typedef enum
 
 typedef enum
 {
-  IX_NPEMH_NPEINTERRUPTS_NO = 0, /**< Don't use NPE interrupts */
-  IX_NPEMH_NPEINTERRUPTS_YES     /**< Do use NPE interrupts */
+    IX_NPEMH_NPEINTERRUPTS_NO = 0, /**< Don't use NPE interrupts */
+    IX_NPEMH_NPEINTERRUPTS_YES     /**< Do use NPE interrupts */
 } IxNpeMhNpeInterrupts;
 
 /**
@@ -117,7 +117,7 @@ typedef enum
 
 typedef struct
 {
-  UINT32 data[2]; /**< the actual data of the message */
+    UINT32 data[2]; /**< the actual data of the message */
 } IxNpeMhMessage;
 
 /** message ID */
@@ -174,7 +174,7 @@ typedef void (*IxNpeMhCallback) (IxNpeMhNpeId, IxNpeMhMessage);
  */
 
 PUBLIC IX_STATUS ixNpeMhInitialize (
-  IxNpeMhNpeInterrupts npeInterrupts);
+    IxNpeMhNpeInterrupts npeInterrupts);
 
 /**
  * @ingroup IxNpeMh
@@ -242,9 +242,9 @@ PUBLIC IX_STATUS ixNpeMhUnload (void);
  */
 
 PUBLIC IX_STATUS ixNpeMhUnsolicitedCallbackRegister (
-  IxNpeMhNpeId npeId,
-  IxNpeMhMessageId messageId,
-  IxNpeMhCallback unsolicitedCallback);
+    IxNpeMhNpeId npeId,
+    IxNpeMhMessageId messageId,
+    IxNpeMhCallback unsolicitedCallback);
 
 /**
  * @ingroup IxNpeMh
@@ -281,10 +281,10 @@ PUBLIC IX_STATUS ixNpeMhUnsolicitedCallbackRegister (
  */
 
 PUBLIC IX_STATUS ixNpeMhUnsolicitedCallbackForRangeRegister (
-  IxNpeMhNpeId npeId,
-  IxNpeMhMessageId minMessageId,
-  IxNpeMhMessageId maxMessageId,
-  IxNpeMhCallback unsolicitedCallback);
+    IxNpeMhNpeId npeId,
+    IxNpeMhMessageId minMessageId,
+    IxNpeMhMessageId maxMessageId,
+    IxNpeMhCallback unsolicitedCallback);
 
 /**
  * @ingroup IxNpeMh
@@ -312,7 +312,7 @@ PUBLIC IX_STATUS ixNpeMhUnsolicitedCallbackForRangeRegister (
  * incoming message queue it will be safe to assume that the NPE will
  * process it.
  * <P>The inFIFO may fill up sometimes if the Xscale is sending messages
- * faster than the NPE can handle them. This forces us to retry attempts
+ * faster than the NPE can handle them. This forces us to retry attempts 
  * to send the message until the NPE services the inFIFO. The client should
  * specify a ceiling value for the number of retries suitable to their
  * needs. IX_NPEMH_SEND_RETRIES_DEFAULT can be used as a default value for
@@ -323,13 +323,13 @@ PUBLIC IX_STATUS ixNpeMhUnsolicitedCallbackForRangeRegister (
  * that do not solicit responses. If the message being sent will solicit a
  * response then the ixNpeMhMessageWithResponseSend() function <B>must</B>
  * be used to ensure that the response is correctly
- * handled. <P> This function will return timeout status if NPE hang / halt
- * while sending message. The timeout error is not related to the
- * <i>maxSendRetries</i> as mentioned above. The timeout error will only occur
- * if the first word of the message has been sent to NPE (not exceeding
+ * handled. <P> This function will return timeout status if NPE hang / halt 
+ * while sending message. The timeout error is not related to the 
+ * <i>maxSendRetries</i> as mentioned above. The timeout error will only occur 
+ * if the first word of the message has been sent to NPE (not exceeding 
  * <i>maxSendRetries</i> when sending 1st message word), but the second word of
- * the message can't be written to NPE's inFIFO due to NPE hang / halt after
- * maximum waiting time (IX_NPE_MH_MAX_NUM_OF_RETRIES).
+ * the message can't be written to NPE's inFIFO due to NPE hang / halt after 
+ * maximum waiting time (IX_NPE_MH_MAX_NUM_OF_RETRIES). 
  * <P><B>Re-entrancy:</B> This function will be callable from any
  * thread at any time.  IxOsal will be used for any necessary
  * resource protection.
@@ -338,9 +338,9 @@ PUBLIC IX_STATUS ixNpeMhUnsolicitedCallbackForRangeRegister (
  */
 
 PUBLIC IX_STATUS ixNpeMhMessageSend (
-  IxNpeMhNpeId npeId,
-  IxNpeMhMessage message,
-  UINT32 maxSendRetries);
+    IxNpeMhNpeId npeId,
+    IxNpeMhMessage message,
+    UINT32 maxSendRetries);
 
 /**
  * @ingroup IxNpeMh
@@ -381,20 +381,20 @@ PUBLIC IX_STATUS ixNpeMhMessageSend (
  * message sent.  Response messages will be handled in the order they are
  * received.<P>
  * <P>The inFIFO may fill up sometimes if the Xscale is sending messages
- * faster than the NPE can handle them. This forces us to retry attempts
+ * faster than the NPE can handle them. This forces us to retry attempts 
  * to send the message until the NPE services the inFIFO. The client should
  * specify a ceiling value for the number of retries suitable to their
  * needs. IX_NPEMH_SEND_RETRIES_DEFAULT can be used as a default value for
  * the <i>maxSendRetries</i> parameter for this function. Each retry
  * exceeding this default number will incur a blocking delay of 1 microsecond,
  * to avoid consuming too much AHB bus bandwidth while performing retries.
- * <P> This function will return timeout status if NPE hang / halt
- * while sending message. The timeout error is not related to the
- * <i>maxSendRetries</i> as mentioned above. The timeout error will only occur
- * if the first word of the message has been sent to NPE (not exceeding
+ * <P> This function will return timeout status if NPE hang / halt 
+ * while sending message. The timeout error is not related to the 
+ * <i>maxSendRetries</i> as mentioned above. The timeout error will only occur 
+ * if the first word of the message has been sent to NPE (not exceeding 
  * <i>maxSendRetries</i> when sending 1st message word), but the second word of
- * the message can't be written to NPE's inFIFO due to NPE hang / halt after
- * maximum waiting time (IX_NPE_MH_MAX_NUM_OF_RETRIES).
+ * the message can't be written to NPE's inFIFO due to NPE hang / halt after 
+ * maximum waiting time (IX_NPE_MH_MAX_NUM_OF_RETRIES). 
  * <P><B>Re-entrancy:</B> This function will be callable from any
  * thread at any time.  IxOsal will be used for any necessary
  * resource protection.
@@ -403,11 +403,11 @@ PUBLIC IX_STATUS ixNpeMhMessageSend (
  */
 
 PUBLIC IX_STATUS ixNpeMhMessageWithResponseSend (
-  IxNpeMhNpeId npeId,
-  IxNpeMhMessage message,
-  IxNpeMhMessageId solicitedMessageId,
-  IxNpeMhCallback solicitedCallback,
-  UINT32 maxSendRetries);
+    IxNpeMhNpeId npeId,
+    IxNpeMhMessage message,
+    IxNpeMhMessageId solicitedMessageId,
+    IxNpeMhCallback solicitedCallback,
+    UINT32 maxSendRetries);
 
 /**
  * @ingroup IxNpeMh
@@ -432,17 +432,17 @@ PUBLIC IX_STATUS ixNpeMhMessageWithResponseSend (
  * will return timeout status if NPE hang / halt while receiving message. The
  * timeout error will only occur if this function has read the first word of
  * the message and can't read second word of the message from NPE's outFIFO
- * after maximum retries (IX_NPE_MH_MAX_NUM_OF_RETRIES).
- * <P>Note this function cannot be called from within
- * an ISR as it will use resource protection mechanisms.<P><B>Re-entrancy:</B>
- * This function will be callable from any thread at any time.  IxOsal will be
+ * after maximum retries (IX_NPE_MH_MAX_NUM_OF_RETRIES). 
+ * <P>Note this function cannot be called from within 
+ * an ISR as it will use resource protection mechanisms.<P><B>Re-entrancy:</B> 
+ * This function will be callable from any thread at any time.  IxOsal will be 
  * used for any necessary resource protection.
  *
  * @return The function returns a status indicating success, failure or timeout.
  */
 
 PUBLIC IX_STATUS ixNpeMhMessagesReceive (
-  IxNpeMhNpeId npeId);
+    IxNpeMhNpeId npeId);
 
 /**
  * @ingroup IxNpeMh
@@ -465,7 +465,7 @@ PUBLIC IX_STATUS ixNpeMhMessagesReceive (
  */
 
 PUBLIC IX_STATUS ixNpeMhShow (
-  IxNpeMhNpeId npeId);
+    IxNpeMhNpeId npeId);
 
 /**
  * @ingroup IxNpeMh
@@ -488,7 +488,7 @@ PUBLIC IX_STATUS ixNpeMhShow (
  */
 
 PUBLIC IX_STATUS ixNpeMhShowReset (
-  IxNpeMhNpeId npeId);
+    IxNpeMhNpeId npeId);
 
 #endif /* IXNPEMH_H */
 

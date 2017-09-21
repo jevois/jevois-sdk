@@ -17,9 +17,9 @@
 #ifndef PHY_H
 #define PHY_H
 
-#define CHANSEL_DIV   15
-#define CHANSEL_2G(_freq) (((_freq) * 0x10000) / CHANSEL_DIV)
-#define CHANSEL_5G(_freq) (((_freq) * 0x8000) / CHANSEL_DIV)
+#define CHANSEL_DIV		15
+#define CHANSEL_2G(_freq)	(((_freq) * 0x10000) / CHANSEL_DIV)
+#define CHANSEL_5G(_freq)	(((_freq) * 0x8000) / CHANSEL_DIV)
 
 #define AR_PHY_BASE     0x9800
 #define AR_PHY(_n)      (AR_PHY_BASE + ((_n)<<2))
@@ -42,8 +42,8 @@
 #define REDUCE_CHAIN_1 0x00000051
 #define AR_PHY_CHIP_ID 0x9818
 
-#define AR_PHY_TIMING11_SPUR_FREQ_SD    0x3FF00000
-#define AR_PHY_TIMING11_SPUR_FREQ_SD_S    20
+#define	AR_PHY_TIMING11_SPUR_FREQ_SD		0x3FF00000
+#define	AR_PHY_TIMING11_SPUR_FREQ_SD_S		20
 
 #define AR_PHY_PLL_CONTROL 0x16180
 #define AR_PHY_PLL_MODE 0x16184

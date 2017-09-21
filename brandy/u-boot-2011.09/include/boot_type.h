@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -29,46 +29,46 @@
 
 extern struct spare_boot_head_t  uboot_spare_head;
 
-extern int  sunxi_sprite_init (int stage);
-extern int  sunxi_sprite_erase (int erase, void * mbr_buffer);
-extern int  sunxi_sprite_exit (int force);
-extern uint sunxi_sprite_size (void);
+extern int  sunxi_sprite_init(int stage);
+extern int  sunxi_sprite_erase(int erase, void *mbr_buffer);
+extern int  sunxi_sprite_exit(int force);
+extern uint sunxi_sprite_size(void);
 
-extern int  sunxi_sprite_read (uint start_block, uint nblock, void * buffer);
-extern int  sunxi_sprite_write (uint start_block, uint nblock, void * buffer);
+extern int  sunxi_sprite_read(uint start_block,uint nblock,void * buffer);
+extern int  sunxi_sprite_write(uint start_block,uint nblock,void * buffer);
 
-extern int  sunxi_flash_read (unsigned int start_block, unsigned int nblock, void * buffer);
-extern int  sunxi_flash_write (unsigned int start_block, unsigned int nblock, void * buffer);
+extern int  sunxi_flash_read (unsigned int start_block, unsigned int nblock, void *buffer);
+extern int  sunxi_flash_write(unsigned int start_block, unsigned int nblock, void *buffer);
 
-extern int  sunxi_flash_flush (void);
-extern int  sunxi_sprite_flush (void);
+extern int  sunxi_flash_flush(void);
+extern int  sunxi_sprite_flush(void);
 
 extern int  sunxi_flash_init (int type);
 extern uint sunxi_flash_size (void);
 extern int  sunxi_flash_exit (int force);
 
-extern int  sunxi_flash_phyread (unsigned int start_block, unsigned int nblock, void * buffer);
-extern int  sunxi_flash_phywrite (unsigned int start_block, unsigned int nblock, void * buffer);
+extern int  sunxi_flash_phyread(unsigned int start_block, unsigned int nblock, void *buffer);
+extern int  sunxi_flash_phywrite(unsigned int start_block, unsigned int nblock, void *buffer);
 
-extern int  sunxi_sprite_phyread (unsigned int start_block, unsigned int nblock, void * buffer);
-extern int  sunxi_sprite_phywrite (unsigned int start_block, unsigned int nblock, void * buffer);
+extern int  sunxi_sprite_phyread(unsigned int start_block, unsigned int nblock, void *buffer);
+extern int  sunxi_sprite_phywrite(unsigned int start_block, unsigned int nblock, void *buffer);
 
-extern int sunxi_sprite_force_erase (void);
+extern int sunxi_sprite_force_erase(void);
 
-extern int  nand_get_mbr (char * buffer, uint len);
-extern int  NAND_build_all_partition (void);
+extern int  nand_get_mbr(char* buffer, uint len);
+extern int  NAND_build_all_partition(void);
 
-extern uint sprite_cartoon_create (void);
-extern int  sprite_cartoon_upgrade (int rate);
-extern int  sprite_cartoon_destroy (void);
+extern uint sprite_cartoon_create(void);
+extern int  sprite_cartoon_upgrade(int rate);
+extern int  sprite_cartoon_destroy(void);
 
-extern int sunxi_sprite_mmc_phywrite (unsigned int start_block, unsigned int nblock, void * buffer);
-extern int sunxi_sprite_mmc_phyerase (unsigned int start_block, unsigned int nblock, void * skip);
-extern int sunxi_sprite_mmc_phywipe (unsigned int start_block, unsigned int nblock, void * skip);
-extern int card_erase (int erase, void * mbr_buffer);
+extern int sunxi_sprite_mmc_phywrite(unsigned int start_block, unsigned int nblock, void *buffer);
+extern int sunxi_sprite_mmc_phyerase(unsigned int start_block, unsigned int nblock, void *skip);
+extern int sunxi_sprite_mmc_phywipe(unsigned int start_block, unsigned int nblock, void *skip);
+extern int card_erase(int erase, void *mbr_buffer);
 
 #ifdef CONFIG_SUNXI_SPINOR
-extern int sunxi_sprite_setdata_finish (void);
+extern int sunxi_sprite_setdata_finish(void);
 #endif
 
 #endif

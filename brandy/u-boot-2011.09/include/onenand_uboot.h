@@ -26,30 +26,30 @@ extern struct mtd_info onenand_mtd;
 extern struct onenand_chip onenand_chip;
 
 /* board */
-extern void onenand_board_init (struct mtd_info *);
+extern void onenand_board_init(struct mtd_info *);
 
 /* Functions */
-extern void onenand_init (void);
-extern int onenand_read (struct mtd_info * mtd, loff_t from, size_t len,
-                         size_t * retlen, u_char * buf);
-extern int onenand_read_oob (struct mtd_info * mtd, loff_t from, struct mtd_oob_ops * ops);
-extern int onenand_write (struct mtd_info * mtd, loff_t from, size_t len,
-                          size_t * retlen, const u_char * buf);
-extern int onenand_erase (struct mtd_info * mtd, struct erase_info * instr);
+extern void onenand_init(void);
+extern int onenand_read(struct mtd_info *mtd, loff_t from, size_t len,
+			size_t * retlen, u_char * buf);
+extern int onenand_read_oob(struct mtd_info *mtd, loff_t from, struct mtd_oob_ops *ops);
+extern int onenand_write(struct mtd_info *mtd, loff_t from, size_t len,
+			 size_t * retlen, const u_char * buf);
+extern int onenand_erase(struct mtd_info *mtd, struct erase_info *instr);
 
-extern char * onenand_print_device_info (int device, int version);
+extern char *onenand_print_device_info(int device, int version);
 
-extern unsigned onenand_block (struct onenand_chip * this, loff_t addr);
+extern unsigned onenand_block(struct onenand_chip *this, loff_t addr);
 
-extern loff_t onenand_addr (struct onenand_chip * this, int block);
+extern loff_t onenand_addr(struct onenand_chip *this, int block);
 
-extern int flexonenand_region (struct mtd_info * mtd, loff_t addr);
+extern int flexonenand_region(struct mtd_info *mtd, loff_t addr);
 
-extern int flexonenand_set_boundary (struct mtd_info * mtd, int die,
-                                     int boundary, int lock);
+extern int flexonenand_set_boundary(struct mtd_info *mtd, int die,
+					int boundary, int lock);
 
 /* S3C64xx */
-extern void s3c64xx_onenand_init (struct mtd_info *);
-extern void s3c64xx_set_width_regs (struct onenand_chip *);
+extern void s3c64xx_onenand_init(struct mtd_info *);
+extern void s3c64xx_set_width_regs(struct onenand_chip *);
 
 #endif /* __UBOOT_ONENAND_H */

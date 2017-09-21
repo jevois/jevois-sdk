@@ -4,7 +4,7 @@
 
 /*************************************************************************************************************
 *
-* FILE    : mmd.h
+* FILE	  : mmd.h
 *
 * DATE    : $Date: 2004/07/19 08:16:14 $   $Revision: 1.2 $
 * Original: 2004/05/17 07:33:14    Revision: 1.18      Tag: hcf7_t20040602_01
@@ -32,7 +32,7 @@
 * software indicates your acceptance of these terms and conditions.  If you do
 * not agree with these terms and conditions, do not use the software.
 *
-* COPYRIGHT © 2001 - 2004  by Agere Systems Inc. All Rights Reserved
+* COPYRIGHT © 2001 - 2004	by Agere Systems Inc.	All Rights Reserved
 * All rights reserved.
 *
 * Redistribution and use in source or binary forms, with or without
@@ -69,9 +69,9 @@
 *
 **************************************************************************************************************/
 #ifndef HCF_H
-#include "hcf.h" 
+#include "hcf.h"
 #endif
 
-EXTERN_C CFG_RANGE_SPEC_STRCT * mmd_check_comp ( CFG_RANGES_STRCT * actp, CFG_SUP_RANGE_STRCT * supp );
+EXTERN_C CFG_RANGE_SPEC_STRCT* mmd_check_comp( CFG_RANGES_STRCT *actp, CFG_SUP_RANGE_STRCT *supp );
 
 #endif

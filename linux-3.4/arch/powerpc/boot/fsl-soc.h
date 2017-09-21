@@ -3,6 +3,6 @@
 
 #include "types.h"
 
-u32 * fsl_get_immr (void);
+u32 *fsl_get_immr(void);
 
 #endif

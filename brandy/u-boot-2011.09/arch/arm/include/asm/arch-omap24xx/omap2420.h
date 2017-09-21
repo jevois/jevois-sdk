@@ -35,7 +35,7 @@
 #define A_REQINFOPERM0        0x68005048
 #define A_READPERM0           0x68005050
 #define A_WRITEPERM0          0x68005058
-/* #define GP_DEVICE  (BIT8|BIT9)  FIXME -- commented out to make compile -- FIXME */
+/* #define GP_DEVICE	(BIT8|BIT9)  FIXME -- commented out to make compile -- FIXME */
 
 /* L3 Firewall */
 #define A_REQINFOPERM0        0x68005048
@@ -47,10 +47,10 @@
 #define CONTROL_STATUS        (OMAP2420_CTRL_BASE + 0x2F8)
 
 /* device type */
-#define TST_DEVICE  0x0
-#define EMU_DEVICE  0x1
-#define HS_DEVICE 0x2
-#define GP_DEVICE 0x3
+#define TST_DEVICE	0x0
+#define EMU_DEVICE	0x1
+#define HS_DEVICE	0x2
+#define GP_DEVICE	0x3
 
 /* TAP information */
 #define OMAP2420_TAP_BASE     (0x48014000)
@@ -69,14 +69,14 @@
 #define GPMC_CONFIG4_0        (OMAP2420_GPMC_BASE+0x6C)
 #define GPMC_CONFIG5_0        (OMAP2420_GPMC_BASE+0x70)
 #define GPMC_CONFIG6_0        (OMAP2420_GPMC_BASE+0x74)
-#define GPMC_CONFIG7_0        (OMAP2420_GPMC_BASE+0x78)
+#define GPMC_CONFIG7_0	      (OMAP2420_GPMC_BASE+0x78)
 #define GPMC_CONFIG1_1        (OMAP2420_GPMC_BASE+0x90)
 #define GPMC_CONFIG2_1        (OMAP2420_GPMC_BASE+0x94)
 #define GPMC_CONFIG3_1        (OMAP2420_GPMC_BASE+0x98)
 #define GPMC_CONFIG4_1        (OMAP2420_GPMC_BASE+0x9C)
 #define GPMC_CONFIG5_1        (OMAP2420_GPMC_BASE+0xA0)
 #define GPMC_CONFIG6_1        (OMAP2420_GPMC_BASE+0xA4)
-#define GPMC_CONFIG7_1        (OMAP2420_GPMC_BASE+0xA8)
+#define GPMC_CONFIG7_1	      (OMAP2420_GPMC_BASE+0xA8)
 #define GPMC_CONFIG1_2        (OMAP2420_GPMC_BASE+0xC0)
 #define GPMC_CONFIG2_2        (OMAP2420_GPMC_BASE+0xC4)
 #define GPMC_CONFIG3_2        (OMAP2420_GPMC_BASE+0xC8)
@@ -90,7 +90,7 @@
 #define GPMC_CONFIG4_3        (OMAP2420_GPMC_BASE+0xFC)
 #define GPMC_CONFIG5_3        (OMAP2420_GPMC_BASE+0x100)
 #define GPMC_CONFIG6_3        (OMAP2420_GPMC_BASE+0x104)
-#define GPMC_CONFIG7_3        (OMAP2420_GPMC_BASE+0x108)
+#define GPMC_CONFIG7_3	      (OMAP2420_GPMC_BASE+0x108)
 
 /* SMS */
 #define OMAP2420_SMS_BASE 0x68008000
@@ -131,8 +131,8 @@
 
 
 /* UART */
-#define OMAP2420_UART1        0x4806A000
-#define OMAP2420_UART2        0x4806C000
+#define OMAP2420_UART1	      0x4806A000
+#define OMAP2420_UART2	      0x4806C000
 #define OMAP2420_UART3        0x4806E000
 
 /* General Purpose Timers */
@@ -229,14 +229,14 @@
 #endif  /* endif CONFIG_2420H4 */
 
 #if defined(CONFIG_APOLLON)
-#define APOLLON_CS0_BASE  0x00000000  /* OneNAND */
-#define APOLLON_CS1_BASE  0x08000000  /* ethernet */
-#define APOLLON_CS2_BASE  0x10000000  /* OneNAND */
-#define APOLLON_CS3_BASE  0x18000000  /* NOR */
+#define APOLLON_CS0_BASE	0x00000000	/* OneNAND */
+#define APOLLON_CS1_BASE	0x08000000	/* ethernet */
+#define APOLLON_CS2_BASE	0x10000000	/* OneNAND */
+#define APOLLON_CS3_BASE	0x18000000	/* NOR */
 
-#define ETH_CONTROL_REG   (APOLLON_CS1_BASE + 0x30b)
-#define LAN_RESET_REGISTER  (APOLLON_CS1_BASE + 0x1c)
-#endif  /* endif CONFIG_APOLLON */
+#define ETH_CONTROL_REG		(APOLLON_CS1_BASE + 0x30b)
+#define LAN_RESET_REGISTER	(APOLLON_CS1_BASE + 0x1c)
+#endif	/* endif CONFIG_APOLLON */
 
 /* Common */
 #define LOW_LEVEL_SRAM_STACK  0x4020FFFC

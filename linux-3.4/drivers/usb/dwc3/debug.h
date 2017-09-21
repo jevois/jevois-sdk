@@ -4,7 +4,7 @@
  * Copyright (C) 2010-2011 Texas Instruments Incorporated - http://www.ti.com
  *
  * Authors: Felipe Balbi <balbi@ti.com>,
- *      Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+ *	    Sebastian Andrzej Siewior <bigeasy@linutronix.de>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -39,12 +39,12 @@
 #include "core.h"
 
 #ifdef CONFIG_DEBUG_FS
-extern int dwc3_debugfs_init (struct dwc3 *);
-extern void dwc3_debugfs_exit (struct dwc3 *);
+extern int dwc3_debugfs_init(struct dwc3 *);
+extern void dwc3_debugfs_exit(struct dwc3 *);
 #else
-static inline int dwc3_debugfs_init (struct dwc3 * d)
+static inline int dwc3_debugfs_init(struct dwc3 *d)
 {  return 0;  }
-static inline void dwc3_debugfs_exit (struct dwc3 * d)
+static inline void dwc3_debugfs_exit(struct dwc3 *d)
 {  }
 #endif
 

@@ -1,5 +1,5 @@
-#ifndef _LINUX_AXP19_SPLY_H_
-#define _LINUX_AXP19_SPLY_H_
+#ifndef	_LINUX_AXP19_SPLY_H_
+#define	_LINUX_AXP19_SPLY_H_
 #include <linux/kernel.h>
 #include <linux/init.h>
 #include <linux/delay.h>
@@ -123,9 +123,9 @@
 #define AXP19_RDC_COUNT                                 (10)
 
 #define END_VOLTAGE_APS         3350
-#define BAT_AVER_VOL            3820 
+#define BAT_AVER_VOL            3820
 
-#define FUELGUAGE_LOW_VOL       3400 
+#define FUELGUAGE_LOW_VOL       3400
 #define FUELGUAGE_VOL1          3500   
 #define FUELGUAGE_VOL2          3600
 #define FUELGUAGE_VOL3          3700
@@ -133,10 +133,10 @@
 #define FUELGUAGE_VOL5          3900
 #define FUELGUAGE_VOL6          4000
 #define FUELGUAGE_VOL7          4100
-#define FUELGUAGE_TOP_VOL       4160 
+#define FUELGUAGE_TOP_VOL       4160
 
-#define FUELGUAGE_LOW_LEVEL     2  
-#define FUELGUAGE_LEVEL1        3  
+#define FUELGUAGE_LOW_LEVEL     2	
+#define FUELGUAGE_LEVEL1        3	
 #define FUELGUAGE_LEVEL2        5
 #define FUELGUAGE_LEVEL3        16
 #define FUELGUAGE_LEVEL4        46
@@ -145,127 +145,127 @@
 #define FUELGUAGE_LEVEL7        93
 #define FUELGUAGE_TOP_LEVEL     100    
 
-#define AXP_CHG_ATTR(_name)         \
-  {               \
-    .attr = { .name = #_name,.mode = 0644 },    \
-            .show =  _name##_show,          \
-                     .store = _name##_store,         \
-  }
+#define AXP_CHG_ATTR(_name)					\
+{								\
+	.attr = { .name = #_name,.mode = 0644 },		\
+	.show =  _name##_show,					\
+	.store = _name##_store,					\
+}
 
 struct axp_adc_res {//struct change
-  uint16_t vbat_res;
-  uint16_t ocvbat_res;
-  uint16_t ibat_res;
-  uint16_t ichar_res;
-  uint16_t idischar_res;
-  uint16_t vac_res;
-  uint16_t iac_res;
-  uint16_t vusb_res;
-  uint16_t iusb_res;
-  uint16_t ts_res;
+	uint16_t vbat_res;
+	uint16_t ocvbat_res;
+	uint16_t ibat_res;
+	uint16_t ichar_res;
+	uint16_t idischar_res;
+	uint16_t vac_res;
+	uint16_t iac_res;
+	uint16_t vusb_res;
+	uint16_t iusb_res;
+	uint16_t ts_res;
 };
 
 struct axp_charger {
-  /*power supply sysfs*/
-  struct power_supply batt;
-  struct power_supply ac;
-  struct power_supply usb;
-  struct power_supply bubatt;
-  
-  /*i2c device*/
-  struct device * master;
-  
-  /* adc */
-  struct axp_adc_res * adc;
-  unsigned int sample_time;
-  
-  /*monitor*/
-  struct delayed_work work;
-  unsigned int interval;
-  
-  /*battery info*/
-  struct power_supply_info * battery_info;
-  
-  /*charger control*/
-  bool chgen;
-  bool limit_on;
-  unsigned int chgcur;
-  unsigned int chgvol;
-  unsigned int chgend;
-  
-  /*charger time */
-  int chgpretime;
-  int chgcsttime;
-  
-  /*external charger*/
-  bool chgexten;
-  int chgextcur;
-  
-  /* charger status */
-  bool bat_det;
-  bool is_on;
-  bool is_finish;
-  bool ac_not_enough;
-  bool ac_det;
-  bool usb_det;
-  bool ac_valid;
-  bool usb_valid;
-  bool ext_valid;
-  bool bat_current_direction;
-  bool in_short;
-  bool batery_active;
-  bool low_charge_current;
-  bool int_over_temp;
-  uint8_t fault;
-  int charge_on;
-  
-  int vbat;
-  int ibat;
-  int pbat;
-  int vac;
-  int iac;
-  int vusb;
-  int iusb;
-  int ocv;
-  
-  int disvbat;
-  int disibat;
-  
-  /*rest time*/
-  int rest_vol;
-  int ocv_rest_vol;
-  int base_restvol;
-  int rest_time;
-  
-  /*ic temperature*/
-  int ic_temp;
-  int bat_temp;
-  
-  /*irq*/
-  struct notifier_block nb;
-  
-  /* platform callbacks for battery low and critical events */
-  void (*battery_low) (void);
-  void (*battery_critical) (void);
-  
-  struct dentry * debug_file;
-  
-  spinlock_t charger_lock;
+	/*power supply sysfs*/
+	struct power_supply batt;
+	struct power_supply	ac;
+	struct power_supply	usb;
+	struct power_supply bubatt;
+
+	/*i2c device*/
+	struct device *master;
+
+	/* adc */
+	struct axp_adc_res *adc;
+	unsigned int sample_time;
+
+	/*monitor*/
+	struct delayed_work work;
+	unsigned int interval;
+
+	/*battery info*/
+	struct power_supply_info *battery_info;
+
+	/*charger control*/
+	bool chgen;
+	bool limit_on;
+	unsigned int chgcur;
+	unsigned int chgvol;
+	unsigned int chgend;
+
+	/*charger time */
+	int chgpretime;
+	int chgcsttime;
+
+	/*external charger*/
+	bool chgexten;
+	int chgextcur;
+
+	/* charger status */
+	bool bat_det;
+	bool is_on;
+	bool is_finish;
+	bool ac_not_enough;
+	bool ac_det;
+	bool usb_det;
+	bool ac_valid;
+	bool usb_valid;
+	bool ext_valid;
+	bool bat_current_direction;
+	bool in_short;
+	bool batery_active;
+	bool low_charge_current;
+	bool int_over_temp;
+	uint8_t fault;
+	int charge_on;
+
+	int vbat;
+	int ibat;
+	int pbat;
+	int vac;
+	int iac;
+	int vusb;
+	int iusb;
+	int ocv;
+
+	int disvbat;
+	int disibat;
+
+	/*rest time*/
+	int rest_vol;
+	int ocv_rest_vol;
+	int base_restvol;
+	int rest_time;
+
+	/*ic temperature*/
+	int ic_temp;
+	int bat_temp;
+
+	/*irq*/
+	struct notifier_block nb;
+
+	/* platform callbacks for battery low and critical events */
+	void (*battery_low)(void);
+	void (*battery_critical)(void);
+
+	struct dentry *debug_file;
+
+	spinlock_t charger_lock;
 };
 
 extern const struct axp_config_info axp19_config;
 extern struct class axppower_class;
-extern struct axp_charger * axp_charger;
+extern struct axp_charger *axp_charger;
 
-extern int axp_charger_create_attrs (struct power_supply * psy);
-extern void axp_charger_update_state (struct axp_charger * charger);
-extern void axp_charger_update (struct axp_charger * charger, const struct axp_config_info * axp_config);
-extern int axp19_init (struct axp_charger * charger);
-extern void axp19_exit (struct axp_charger * charger);
-extern int axp_irq_init (struct axp_charger * charger, struct platform_device * pdev);
-extern void axp_irq_exit (struct axp_charger * charger);
-extern int axp_enable_irq (struct axp_charger * charger);
-extern int axp_disable_irq (struct axp_charger * charger);
+extern int axp_charger_create_attrs(struct power_supply *psy);
+extern void axp_charger_update_state(struct axp_charger *charger);
+extern void axp_charger_update(struct axp_charger *charger, const struct axp_config_info *axp_config);
+extern int axp19_init(struct axp_charger *charger);
+extern void axp19_exit(struct axp_charger *charger);
+extern int axp_irq_init(struct axp_charger *charger, struct platform_device *pdev);
+extern void axp_irq_exit(struct axp_charger *charger);
+extern int axp_enable_irq(struct axp_charger *charger);
+extern int axp_disable_irq(struct axp_charger *charger);
 
 #endif
 

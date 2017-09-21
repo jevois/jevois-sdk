@@ -99,9 +99,9 @@
 /* Killed System MMR Write Completes Erroneously on Next System MMR Access */
 #define ANOMALY_05000315 (__SILICON_REVISION__ < 4)
 /* PFx Glitch on Write to PORTFIO or PORTFIO_TOGGLE */
-#define ANOMALY_05000317 (__SILICON_REVISION__ < 4) /* XXX: Same as 05000318 */
+#define ANOMALY_05000317 (__SILICON_REVISION__ < 4)	/* XXX: Same as 05000318 */
 /* PFx Glitch on Write to FIO_FLAG_D or FIO_FLAG_T */
-#define ANOMALY_05000318 (__SILICON_REVISION__ < 4) /* XXX: Same as 05000317 */
+#define ANOMALY_05000318 (__SILICON_REVISION__ < 4)	/* XXX: Same as 05000317 */
 /* Regulator Programming Blocked when Hibernate Wakeup Source Remains Active */
 #define ANOMALY_05000355 (__SILICON_REVISION__ < 5)
 /* Serial Port (SPORT) Multichannel Transmit Failure when Channel 0 Is Disabled */

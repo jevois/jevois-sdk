@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -26,7 +26,7 @@
 #define __FW_UPDATE_H
 
 /* Default prefix for output messages */
-#define LOG_PREFIX  "CM5200:"
+#define LOG_PREFIX	"CM5200:"
 
 /* Extra debug macro */
 #ifdef CONFIG_FWUPDATE_DEBUG
@@ -36,12 +36,12 @@
 #endif
 
 /* Name of the directory holding firmware images */
-#define FW_DIR    "nx-fw"
-#define RESCUE_IMAGE  "nxrs.img"
-#define LOAD_ADDR 0x400000
-#define RS_BOOTARGS "ramdisk_size=8192K"
+#define FW_DIR		"nx-fw"
+#define RESCUE_IMAGE	"nxrs.img"
+#define LOAD_ADDR	0x400000
+#define RS_BOOTARGS	"ramdisk_size=8192K"
 
 /* Main function for fwupdate */
-void cm5200_fwupdate (void);
+void cm5200_fwupdate(void);
 
 #endif /* __FW_UPDATE_H */

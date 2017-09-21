@@ -29,79 +29,79 @@
 #include "usbgecko_udbg.h"
 
 
-static void gamecube_spin (void)
+static void gamecube_spin(void)
 {
-  /* spin until power button pressed */
-  for (;;)
-  { cpu_relax(); }
+	/* spin until power button pressed */
+	for (;;)
+		cpu_relax();
 }
 
-static void gamecube_restart (char * cmd)
+static void gamecube_restart(char *cmd)
 {
-  local_irq_disable();
-  flipper_platform_reset();
-  gamecube_spin();
+	local_irq_disable();
+	flipper_platform_reset();
+	gamecube_spin();
 }
 
-static void gamecube_power_off (void)
+static void gamecube_power_off(void)
 {
-  local_irq_disable();
-  gamecube_spin();
+	local_irq_disable();
+	gamecube_spin();
 }
 
-static void gamecube_halt (void)
+static void gamecube_halt(void)
 {
-  gamecube_restart (NULL);
+	gamecube_restart(NULL);
 }
 
-static void __init gamecube_init_early (void)
+static void __init gamecube_init_early(void)
 {
-  ug_udbg_init();
+	ug_udbg_init();
 }
 
-static int __init gamecube_probe (void)
+static int __init gamecube_probe(void)
 {
-  unsigned long dt_root;
-  
-  dt_root = of_get_flat_dt_root();
-  if (!of_flat_dt_is_compatible (dt_root, "nintendo,gamecube") )
-  { return 0; }
-  
-  return 1;
+	unsigned long dt_root;
+
+	dt_root = of_get_flat_dt_root();
+	if (!of_flat_dt_is_compatible(dt_root, "nintendo,gamecube"))
+		return 0;
+
+	return 1;
 }
 
-static void gamecube_shutdown (void)
+static void gamecube_shutdown(void)
 {
-  flipper_quiesce();
+	flipper_quiesce();
 }
 
-define_machine (gamecube) {
-  .name     = "gamecube",
-   .probe      = gamecube_probe,
-    .init_early   = gamecube_init_early,
-     .restart    = gamecube_restart,
-      .power_off    = gamecube_power_off,
-       .halt     = gamecube_halt,
-        .init_IRQ   = flipper_pic_probe,
-         .get_irq    = flipper_pic_get_irq,
-          .calibrate_decr   = generic_calibrate_decr,
-           .progress   = udbg_progress,
-            .machine_shutdown = gamecube_shutdown,
+define_machine(gamecube) {
+	.name			= "gamecube",
+	.probe			= gamecube_probe,
+	.init_early		= gamecube_init_early,
+	.restart		= gamecube_restart,
+	.power_off		= gamecube_power_off,
+	.halt			= gamecube_halt,
+	.init_IRQ		= flipper_pic_probe,
+	.get_irq		= flipper_pic_get_irq,
+	.calibrate_decr		= generic_calibrate_decr,
+	.progress		= udbg_progress,
+	.machine_shutdown	= gamecube_shutdown,
 };
 
 
 static struct of_device_id gamecube_of_bus[] = {
-  { .compatible = "nintendo,flipper", },
-  { },
+	{ .compatible = "nintendo,flipper", },
+	{ },
 };
 
-static int __init gamecube_device_probe (void)
+static int __init gamecube_device_probe(void)
 {
-  if (!machine_is (gamecube) )
-  { return 0; }
-  
-  of_platform_bus_probe (NULL, gamecube_of_bus, NULL);
-  return 0;
+	if (!machine_is(gamecube))
+		return 0;
+
+	of_platform_bus_probe(NULL, gamecube_of_bus, NULL);
+	return 0;
 }
-device_initcall (gamecube_device_probe);
+device_initcall(gamecube_device_probe);
 

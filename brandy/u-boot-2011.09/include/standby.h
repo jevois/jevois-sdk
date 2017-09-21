@@ -21,6 +21,6 @@
 #ifndef __BOOT_STANDBY_H_
 #define __BOOT_STANDBY_H_
 
-extern int boot_standby_mode (void);
+extern int boot_standby_mode(void);
 
-#endif  /* __BOOT_STANDBY_H_ */
+#endif	/* __BOOT_STANDBY_H_ */

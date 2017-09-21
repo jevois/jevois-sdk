@@ -12,25 +12,25 @@
 #define __LINUX_GPIO_FAN_H
 
 struct gpio_fan_alarm {
-  unsigned  gpio;
-  unsigned  active_low;
+	unsigned	gpio;
+	unsigned	active_low;
 };
 
 struct gpio_fan_speed {
-  int rpm;
-  int ctrl_val;
+	int rpm;
+	int ctrl_val;
 };
 
 struct gpio_fan_platform_data {
-  int     num_ctrl;
-  unsigned  *  ctrl;  /* fan control GPIOs. */
-  struct gpio_fan_alarm * alarm; /* fan alarm GPIO. */
-  /*
-   * Speed conversion array: rpm from/to GPIO bit field.
-   * This array _must_ be sorted in ascending rpm order.
-   */
-  int     num_speed;
-  struct gpio_fan_speed * speed;
+	int			num_ctrl;
+	unsigned		*ctrl;	/* fan control GPIOs. */
+	struct gpio_fan_alarm	*alarm;	/* fan alarm GPIO. */
+	/*
+	 * Speed conversion array: rpm from/to GPIO bit field.
+	 * This array _must_ be sorted in ascending rpm order.
+	 */
+	int			num_speed;
+	struct gpio_fan_speed	*speed;
 };
 
 #endif /* __LINUX_GPIO_FAN_H */

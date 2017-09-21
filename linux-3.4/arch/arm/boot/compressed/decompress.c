@@ -1,17 +1,17 @@
 #define _LINUX_STRING_H_
 
-#include <linux/compiler.h> /* for inline */
-#include <linux/types.h>  /* for size_t */
-#include <linux/stddef.h> /* for NULL */
+#include <linux/compiler.h>	/* for inline */
+#include <linux/types.h>	/* for size_t */
+#include <linux/stddef.h>	/* for NULL */
 #include <linux/linkage.h>
 #include <asm/string.h>
 
 extern unsigned long free_mem_ptr;
 extern unsigned long free_mem_end_ptr;
-extern void error (char *);
+extern void error(char *);
 
 #define STATIC static
-#define STATIC_RW_DATA  /* non-static please */
+#define STATIC_RW_DATA	/* non-static please */
 
 #define ARCH_HAS_DECOMP_WDOG
 
@@ -50,7 +50,7 @@ extern void error (char *);
 #include "../../../../lib/decompress_unxz.c"
 #endif
 
-int do_decompress (u8 * input, int len, u8 * output, void (*error) (char * x) )
+int do_decompress(u8 *input, int len, u8 *output, void (*error)(char *x))
 {
-  return decompress (input, len, NULL, NULL, output, NULL, error);
+	return decompress(input, len, NULL, NULL, output, NULL, error);
 }

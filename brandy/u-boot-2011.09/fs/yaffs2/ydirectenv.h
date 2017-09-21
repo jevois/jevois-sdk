@@ -44,8 +44,8 @@
 #define yaffs_strcpy(a,b)    strcpy(a,b)
 #define yaffs_strncpy(a,b,c) strncpy(a,b,c)
 #define yaffs_strncmp(a,b,c) strncmp(a,b,c)
-#define yaffs_strlen(s)      strlen(s)
-#define yaffs_sprintf      sprintf
+#define yaffs_strlen(s)	     strlen(s)
+#define yaffs_sprintf	     sprintf
 #define yaffs_toupper(a)     toupper(a)
 
 #ifdef NO_Y_INLINE
@@ -72,16 +72,16 @@
 #define TOUT(p) printf p
 
 
-#define YAFFS_LOSTNFOUND_NAME   "lost+found"
-#define YAFFS_LOSTNFOUND_PREFIX   "obj"
+#define YAFFS_LOSTNFOUND_NAME		"lost+found"
+#define YAFFS_LOSTNFOUND_PREFIX		"obj"
 
 #include "yaffscfg.h"
 
 #define Y_CURRENT_TIME yaffsfs_CurrentTime()
 #define Y_TIME_CONVERT(x) x
 
-#define YAFFS_ROOT_MODE       0666
-#define YAFFS_LOSTNFOUND_MODE   0666
+#define YAFFS_ROOT_MODE				0666
+#define YAFFS_LOSTNFOUND_MODE		0666
 
 #define yaffs_SumCompare(x,y) ((x) == (y))
 #define yaffs_strcmp(a,b) strcmp(a,b)

@@ -1,26 +1,26 @@
 /**
- * @file IxOsalOsIxp400CustomizedMapping.h
+ * @file IxOsalOsIxp400CustomizedMapping.h 
  *
- * @brief Set LE coherency modes for components.
+ * @brief Set LE coherency modes for components. 
  *        The default setting is IX_OSAL_NO_MAPPING for LE.
+ * 
  *
- *
- *      By default IX_OSAL_STATIC_MEMORY_MAP is defined for all the components.
- *      If any component uses a dynamic memory map it must define
- *      IX_OSAL_DYNAMIC_MEMORY_MAP in its corresponding section.
- *
+ *		  By default IX_OSAL_STATIC_MEMORY_MAP is defined for all the components.
+ *		  If any component uses a dynamic memory map it must define
+ *		  IX_OSAL_DYNAMIC_MEMORY_MAP in its corresponding section.
+ *        
  *
  * @par
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -33,7 +33,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -46,7 +46,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  */
@@ -62,10 +62,10 @@
 #error Only include IxOsalOsIxp400CustomizedMapping.h in Little Endian
 #endif
 
-/*
- * Components don't have to be in this list if
- * the default mapping is OK.
- */
+ /*
+  * Components don't have to be in this list if
+  * the default mapping is OK.
+  */
 #define ix_osal                1
 #define ix_dmaAcc              2
 #define ix_atmdAcc             3
@@ -100,7 +100,7 @@
 #define ix_codelets_usb        27
 #define ix_codelets_hssAcc     28
 #define ix_codelets_dmaAcc         40
-#define ix_codelets_cryptoAcc    41
+#define ix_codelets_cryptoAcc	   41
 #define ix_codelets_perfProfAcc    42
 #define ix_codelets_ethAcc         43
 #define ix_codelets_parityENAcc        54

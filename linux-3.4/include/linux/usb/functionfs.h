@@ -9,8 +9,8 @@
 
 
 enum {
-  FUNCTIONFS_DESCRIPTORS_MAGIC = 1,
-  FUNCTIONFS_STRINGS_MAGIC     = 2
+	FUNCTIONFS_DESCRIPTORS_MAGIC = 1,
+	FUNCTIONFS_STRINGS_MAGIC     = 2
 };
 
 
@@ -18,14 +18,14 @@ enum {
 
 /* Descriptor of an non-audio endpoint */
 struct usb_endpoint_descriptor_no_audio {
-  __u8  bLength;
-  __u8  bDescriptorType;
-  
-  __u8  bEndpointAddress;
-  __u8  bmAttributes;
-  __le16 wMaxPacketSize;
-  __u8  bInterval;
-} __attribute__ ( (packed) );
+	__u8  bLength;
+	__u8  bDescriptorType;
+
+	__u8  bEndpointAddress;
+	__u8  bmAttributes;
+	__le16 wMaxPacketSize;
+	__u8  bInterval;
+} __attribute__((packed));
 
 
 /*
@@ -33,11 +33,11 @@ struct usb_endpoint_descriptor_no_audio {
  */
 
 struct usb_functionfs_descs_head {
-  __le32 magic;
-  __le32 length;
-  __le32 fs_count;
-  __le32 hs_count;
-} __attribute__ ( (packed) );
+	__le32 magic;
+	__le32 length;
+	__le32 fs_count;
+	__le32 hs_count;
+} __attribute__((packed));
 
 /*
  * Descriptors format:
@@ -61,11 +61,11 @@ struct usb_functionfs_descs_head {
  */
 
 struct usb_functionfs_strings_head {
-  __le32 magic;
-  __le32 length;
-  __le32 str_count;
-  __le32 lang_count;
-} __attribute__ ( (packed) );
+	__le32 magic;
+	__le32 length;
+	__le32 str_count;
+	__le32 lang_count;
+} __attribute__((packed));
 
 /*
  * Strings format:
@@ -101,53 +101,53 @@ struct usb_functionfs_strings_head {
  */
 
 enum usb_functionfs_event_type {
-  FUNCTIONFS_BIND,
-  FUNCTIONFS_UNBIND,
-  
-  FUNCTIONFS_ENABLE,
-  FUNCTIONFS_DISABLE,
-  
-  FUNCTIONFS_SETUP,
-  
-  FUNCTIONFS_SUSPEND,
-  FUNCTIONFS_RESUME
+	FUNCTIONFS_BIND,
+	FUNCTIONFS_UNBIND,
+
+	FUNCTIONFS_ENABLE,
+	FUNCTIONFS_DISABLE,
+
+	FUNCTIONFS_SETUP,
+
+	FUNCTIONFS_SUSPEND,
+	FUNCTIONFS_RESUME
 };
 
 /* NOTE:  this structure must stay the same size and layout on
  * both 32-bit and 64-bit kernels.
  */
 struct usb_functionfs_event {
-  union {
-    /* SETUP: packet; DATA phase i/o precedes next event
-     *(setup.bmRequestType & USB_DIR_IN) flags direction */
-    struct usb_ctrlrequest  setup;
-  } __attribute__ ( (packed) ) u;
-  
-  /* enum usb_functionfs_event_type */
-  __u8        type;
-  __u8        _pad[3];
-} __attribute__ ( (packed) );
+	union {
+		/* SETUP: packet; DATA phase i/o precedes next event
+		 *(setup.bmRequestType & USB_DIR_IN) flags direction */
+		struct usb_ctrlrequest	setup;
+	} __attribute__((packed)) u;
+
+	/* enum usb_functionfs_event_type */
+	__u8				type;
+	__u8				_pad[3];
+} __attribute__((packed));
 
 
 /* Endpoint ioctls */
 /* The same as in gadgetfs */
 
 /* IN transfers may be reported to the gadget driver as complete
- *  when the fifo is loaded, before the host reads the data;
+ *	when the fifo is loaded, before the host reads the data;
  * OUT transfers may be reported to the host's "client" driver as
- *  complete when they're sitting in the FIFO unread.
+ *	complete when they're sitting in the FIFO unread.
  * THIS returns how many bytes are "unclaimed" in the endpoint fifo
  * (needed for precise fault handling, when the hardware allows it)
  */
-#define FUNCTIONFS_FIFO_STATUS  _IO('g', 1)
+#define	FUNCTIONFS_FIFO_STATUS	_IO('g', 1)
 
 /* discards any unclaimed data in the fifo. */
-#define FUNCTIONFS_FIFO_FLUSH _IO('g', 2)
+#define	FUNCTIONFS_FIFO_FLUSH	_IO('g', 2)
 
 /* resets endpoint halt+toggle; used to implement set_interface.
  * some hardware (like pxa2xx) can't support this.
  */
-#define FUNCTIONFS_CLEAR_HALT _IO('g', 3)
+#define	FUNCTIONFS_CLEAR_HALT	_IO('g', 3)
 
 /* Specific for functionfs */
 
@@ -156,13 +156,13 @@ struct usb_functionfs_event {
  * is no such interface returns -EDOM.  If function is not active
  * returns -ENODEV.
  */
-#define FUNCTIONFS_INTERFACE_REVMAP _IO('g', 128)
+#define	FUNCTIONFS_INTERFACE_REVMAP	_IO('g', 128)
 
 /*
  * Returns real bEndpointAddress of an endpoint.  If function is not
  * active returns -ENODEV.
  */
-#define FUNCTIONFS_ENDPOINT_REVMAP  _IO('g', 129)
+#define	FUNCTIONFS_ENDPOINT_REVMAP	_IO('g', 129)
 
 
 #ifdef __KERNEL__
@@ -172,26 +172,26 @@ struct usb_composite_dev;
 struct usb_configuration;
 
 
-static int  functionfs_init (void) __attribute__ ( (warn_unused_result) );
-static void functionfs_cleanup (void);
+static int  functionfs_init(void) __attribute__((warn_unused_result));
+static void functionfs_cleanup(void);
 
-static int functionfs_bind (struct ffs_data * ffs, struct usb_composite_dev * cdev)
-__attribute__ ( (warn_unused_result, nonnull) );
-static void functionfs_unbind (struct ffs_data * ffs)
-__attribute__ ( (nonnull) );
+static int functionfs_bind(struct ffs_data *ffs, struct usb_composite_dev *cdev)
+	__attribute__((warn_unused_result, nonnull));
+static void functionfs_unbind(struct ffs_data *ffs)
+	__attribute__((nonnull));
 
-static int functionfs_bind_config (struct usb_composite_dev * cdev,
-                                   struct usb_configuration * c,
-                                   struct ffs_data * ffs)
-__attribute__ ( (warn_unused_result, nonnull) );
+static int functionfs_bind_config(struct usb_composite_dev *cdev,
+				  struct usb_configuration *c,
+				  struct ffs_data *ffs)
+	__attribute__((warn_unused_result, nonnull));
 
 
-static int functionfs_ready_callback (struct ffs_data * ffs)
-__attribute__ ( (warn_unused_result, nonnull) );
-static void functionfs_closed_callback (struct ffs_data * ffs)
-__attribute__ ( (nonnull) );
-static int functionfs_check_dev_callback (const char * dev_name)
-__attribute__ ( (warn_unused_result, nonnull) );
+static int functionfs_ready_callback(struct ffs_data *ffs)
+	__attribute__((warn_unused_result, nonnull));
+static void functionfs_closed_callback(struct ffs_data *ffs)
+	__attribute__((nonnull));
+static int functionfs_check_dev_callback(const char *dev_name)
+	__attribute__((warn_unused_result, nonnull));
 
 
 #endif

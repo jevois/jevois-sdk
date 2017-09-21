@@ -17,18 +17,18 @@
  * slave port to AHB/APB bridge, due to its close relationship to those
  * peripherals on APB, let's count it into the ABP mapping area.
  */
-#define APB_PHYS_BASE   0xd4000000
-#define APB_VIRT_BASE   IOMEM(0xfe000000)
-#define APB_PHYS_SIZE   0x00200000
+#define APB_PHYS_BASE		0xd4000000
+#define APB_VIRT_BASE		IOMEM(0xfe000000)
+#define APB_PHYS_SIZE		0x00200000
 
-#define AXI_PHYS_BASE   0xd4200000
-#define AXI_VIRT_BASE   IOMEM(0xfe200000)
-#define AXI_PHYS_SIZE   0x00200000
+#define AXI_PHYS_BASE		0xd4200000
+#define AXI_VIRT_BASE		IOMEM(0xfe200000)
+#define AXI_PHYS_SIZE		0x00200000
 
 /* Static Memory Controller - Chip Select 0 and 1 */
-#define SMC_CS0_PHYS_BASE 0x80000000
-#define SMC_CS0_PHYS_SIZE 0x10000000
-#define SMC_CS1_PHYS_BASE 0x90000000
-#define SMC_CS1_PHYS_SIZE 0x10000000
+#define SMC_CS0_PHYS_BASE	0x80000000
+#define SMC_CS0_PHYS_SIZE	0x10000000
+#define SMC_CS1_PHYS_BASE	0x90000000
+#define SMC_CS1_PHYS_SIZE	0x10000000
 
 #endif /* __ASM_MACH_ADDR_MAP_H */

@@ -16,8 +16,8 @@
 #define SUNXI_SPDMA_H_
 
 struct sunxi_dma_params {
-  char * name;
-  dma_addr_t dma_addr;
+	char *name;
+	dma_addr_t dma_addr;
 };
 
 #endif

@@ -76,38 +76,38 @@
  * Return Value: data read
  *
  */
-unsigned char SROMbyReadEmbedded (unsigned long dwIoBase, unsigned char byContntOffset)
+unsigned char SROMbyReadEmbedded(unsigned long dwIoBase, unsigned char byContntOffset)
 {
-  unsigned short wDelay, wNoACK;
-  unsigned char byWait;
-  unsigned char byData;
-  unsigned char byOrg;
-  
-  byData = 0xFF;
-  VNSvInPortB (dwIoBase + MAC_REG_I2MCFG, &byOrg);
-  /* turn off hardware retry for getting NACK */
-  VNSvOutPortB (dwIoBase + MAC_REG_I2MCFG, (byOrg & (~I2MCFG_NORETRY) ) );
-  for (wNoACK = 0; wNoACK < W_MAX_I2CRETRY; wNoACK++) {
-    VNSvOutPortB (dwIoBase + MAC_REG_I2MTGID, EEP_I2C_DEV_ID);
-    VNSvOutPortB (dwIoBase + MAC_REG_I2MTGAD, byContntOffset);
-    
-    /* issue read command */
-    VNSvOutPortB (dwIoBase + MAC_REG_I2MCSR, I2MCSR_EEMR);
-    /* wait DONE be set */
-    for (wDelay = 0; wDelay < W_MAX_TIMEOUT; wDelay++) {
-      VNSvInPortB (dwIoBase + MAC_REG_I2MCSR, &byWait);
-      if (byWait & (I2MCSR_DONE | I2MCSR_NACK) )
-      { break; }
-      PCAvDelayByIO (CB_DELAY_LOOP_WAIT);
+    unsigned short wDelay, wNoACK;
+    unsigned char byWait;
+    unsigned char byData;
+    unsigned char byOrg;
+
+    byData = 0xFF;
+    VNSvInPortB(dwIoBase + MAC_REG_I2MCFG, &byOrg);
+    /* turn off hardware retry for getting NACK */
+    VNSvOutPortB(dwIoBase + MAC_REG_I2MCFG, (byOrg & (~I2MCFG_NORETRY)));
+    for (wNoACK = 0; wNoACK < W_MAX_I2CRETRY; wNoACK++) {
+        VNSvOutPortB(dwIoBase + MAC_REG_I2MTGID, EEP_I2C_DEV_ID);
+        VNSvOutPortB(dwIoBase + MAC_REG_I2MTGAD, byContntOffset);
+
+        /* issue read command */
+        VNSvOutPortB(dwIoBase + MAC_REG_I2MCSR, I2MCSR_EEMR);
+        /* wait DONE be set */
+        for (wDelay = 0; wDelay < W_MAX_TIMEOUT; wDelay++) {
+            VNSvInPortB(dwIoBase + MAC_REG_I2MCSR, &byWait);
+            if (byWait & (I2MCSR_DONE | I2MCSR_NACK))
+                break;
+            PCAvDelayByIO(CB_DELAY_LOOP_WAIT);
+        }
+        if ((wDelay < W_MAX_TIMEOUT) &&
+             ( !(byWait & I2MCSR_NACK))) {
+            break;
+        }
     }
-    if ( (wDelay < W_MAX_TIMEOUT) &&
-         ( ! (byWait & I2MCSR_NACK) ) ) {
-      break;
-    }
-  }
-  VNSvInPortB (dwIoBase + MAC_REG_I2MDIPT, &byData);
-  VNSvOutPortB (dwIoBase + MAC_REG_I2MCFG, byOrg);
-  return byData;
+    VNSvInPortB(dwIoBase + MAC_REG_I2MDIPT, &byData);
+    VNSvOutPortB(dwIoBase + MAC_REG_I2MCFG, byOrg);
+    return byData;
 }
 
 
@@ -125,42 +125,42 @@ unsigned char SROMbyReadEmbedded (unsigned long dwIoBase, unsigned char byContnt
  * Return Value: true if succeeded; false if failed.
  *
  */
-bool SROMbWriteEmbedded (unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byData)
+bool SROMbWriteEmbedded(unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byData)
 {
-  unsigned short wDelay, wNoACK;
-  unsigned char byWait;
-  
-  unsigned char byOrg;
-  
-  VNSvInPortB (dwIoBase + MAC_REG_I2MCFG, &byOrg);
-  /* turn off hardware retry for getting NACK */
-  VNSvOutPortB (dwIoBase + MAC_REG_I2MCFG, (byOrg & (~I2MCFG_NORETRY) ) );
-  for (wNoACK = 0; wNoACK < W_MAX_I2CRETRY; wNoACK++) {
-    VNSvOutPortB (dwIoBase + MAC_REG_I2MTGID, EEP_I2C_DEV_ID);
-    VNSvOutPortB (dwIoBase + MAC_REG_I2MTGAD, byContntOffset);
-    VNSvOutPortB (dwIoBase + MAC_REG_I2MDOPT, byData);
-    
-    /* issue write command */
-    VNSvOutPortB (dwIoBase + MAC_REG_I2MCSR, I2MCSR_EEMW);
-    /* wait DONE be set */
-    for (wDelay = 0; wDelay < W_MAX_TIMEOUT; wDelay++) {
-      VNSvInPortB (dwIoBase + MAC_REG_I2MCSR, &byWait);
-      if (byWait & (I2MCSR_DONE | I2MCSR_NACK) )
-      { break; }
-      PCAvDelayByIO (CB_DELAY_LOOP_WAIT);
+    unsigned short wDelay, wNoACK;
+    unsigned char byWait;
+
+    unsigned char byOrg;
+
+    VNSvInPortB(dwIoBase + MAC_REG_I2MCFG, &byOrg);
+    /* turn off hardware retry for getting NACK */
+    VNSvOutPortB(dwIoBase + MAC_REG_I2MCFG, (byOrg & (~I2MCFG_NORETRY)));
+    for (wNoACK = 0; wNoACK < W_MAX_I2CRETRY; wNoACK++) {
+        VNSvOutPortB(dwIoBase + MAC_REG_I2MTGID, EEP_I2C_DEV_ID);
+        VNSvOutPortB(dwIoBase + MAC_REG_I2MTGAD, byContntOffset);
+        VNSvOutPortB(dwIoBase + MAC_REG_I2MDOPT, byData);
+
+        /* issue write command */
+        VNSvOutPortB(dwIoBase + MAC_REG_I2MCSR, I2MCSR_EEMW);
+        /* wait DONE be set */
+        for (wDelay = 0; wDelay < W_MAX_TIMEOUT; wDelay++) {
+            VNSvInPortB(dwIoBase + MAC_REG_I2MCSR, &byWait);
+            if (byWait & (I2MCSR_DONE | I2MCSR_NACK))
+                break;
+            PCAvDelayByIO(CB_DELAY_LOOP_WAIT);
+        }
+
+        if ((wDelay < W_MAX_TIMEOUT) &&
+             ( !(byWait & I2MCSR_NACK))) {
+            break;
+        }
     }
-    
-    if ( (wDelay < W_MAX_TIMEOUT) &&
-         ( ! (byWait & I2MCSR_NACK) ) ) {
-      break;
+    if (wNoACK == W_MAX_I2CRETRY) {
+        VNSvOutPortB(dwIoBase + MAC_REG_I2MCFG, byOrg);
+        return false;
     }
-  }
-  if (wNoACK == W_MAX_I2CRETRY) {
-    VNSvOutPortB (dwIoBase + MAC_REG_I2MCFG, byOrg);
-    return false;
-  }
-  VNSvOutPortB (dwIoBase + MAC_REG_I2MCFG, byOrg);
-  return true;
+    VNSvOutPortB(dwIoBase + MAC_REG_I2MCFG, byOrg);
+    return true;
 }
 
 
@@ -178,12 +178,12 @@ bool SROMbWriteEmbedded (unsigned long dwIoBase, unsigned char byContntOffset, u
  * Return Value: none
  *
  */
-void SROMvRegBitsOn (unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byBits)
+void SROMvRegBitsOn(unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byBits)
 {
-  unsigned char byOrgData;
-  
-  byOrgData = SROMbyReadEmbedded (dwIoBase, byContntOffset);
-  SROMbWriteEmbedded (dwIoBase, byContntOffset, (unsigned char) (byOrgData | byBits) );
+    unsigned char byOrgData;
+
+    byOrgData = SROMbyReadEmbedded(dwIoBase, byContntOffset);
+    SROMbWriteEmbedded(dwIoBase, byContntOffset,(unsigned char)(byOrgData | byBits));
 }
 
 
@@ -199,12 +199,12 @@ void SROMvRegBitsOn (unsigned long dwIoBase, unsigned char byContntOffset, unsig
  *      none
  *
  */
-void SROMvRegBitsOff (unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byBits)
+void SROMvRegBitsOff(unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byBits)
 {
-  unsigned char byOrgData;
-  
-  byOrgData = SROMbyReadEmbedded (dwIoBase, byContntOffset);
-  SROMbWriteEmbedded (dwIoBase, byContntOffset, (unsigned char) (byOrgData & (~byBits) ) );
+    unsigned char byOrgData;
+
+    byOrgData = SROMbyReadEmbedded(dwIoBase, byContntOffset);
+    SROMbWriteEmbedded(dwIoBase, byContntOffset,(unsigned char)(byOrgData & (~byBits)));
 }
 
 
@@ -222,12 +222,12 @@ void SROMvRegBitsOff (unsigned long dwIoBase, unsigned char byContntOffset, unsi
  * Return Value: true if all test bits on; otherwise false
  *
  */
-bool SROMbIsRegBitsOn (unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byTestBits)
+bool SROMbIsRegBitsOn(unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byTestBits)
 {
-  unsigned char byOrgData;
-  
-  byOrgData = SROMbyReadEmbedded (dwIoBase, byContntOffset);
-  return (byOrgData & byTestBits) == byTestBits;
+    unsigned char byOrgData;
+
+    byOrgData = SROMbyReadEmbedded(dwIoBase, byContntOffset);
+    return (byOrgData & byTestBits) == byTestBits;
 }
 
 
@@ -245,12 +245,12 @@ bool SROMbIsRegBitsOn (unsigned long dwIoBase, unsigned char byContntOffset, uns
  * Return Value: true if all test bits off; otherwise false
  *
  */
-bool SROMbIsRegBitsOff (unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byTestBits)
+bool SROMbIsRegBitsOff(unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byTestBits)
 {
-  unsigned char byOrgData;
-  
-  byOrgData = SROMbyReadEmbedded (dwIoBase, byContntOffset);
-  return ! (byOrgData & byTestBits);
+    unsigned char byOrgData;
+
+    byOrgData = SROMbyReadEmbedded(dwIoBase, byContntOffset);
+    return !(byOrgData & byTestBits);
 }
 
 
@@ -266,15 +266,15 @@ bool SROMbIsRegBitsOff (unsigned long dwIoBase, unsigned char byContntOffset, un
  * Return Value: none
  *
  */
-void SROMvReadAllContents (unsigned long dwIoBase, unsigned char * pbyEepromRegs)
+void SROMvReadAllContents(unsigned long dwIoBase, unsigned char *pbyEepromRegs)
 {
-  int     ii;
-  
-  /* ii = Rom Address */
-  for (ii = 0; ii < EEP_MAX_CONTEXT_SIZE; ii++) {
-    *pbyEepromRegs = SROMbyReadEmbedded (dwIoBase, (unsigned char) ii);
-    pbyEepromRegs++;
-  }
+    int     ii;
+
+    /* ii = Rom Address */
+    for (ii = 0; ii < EEP_MAX_CONTEXT_SIZE; ii++) {
+        *pbyEepromRegs = SROMbyReadEmbedded(dwIoBase,(unsigned char) ii);
+        pbyEepromRegs++;
+    }
 }
 
 
@@ -291,15 +291,15 @@ void SROMvReadAllContents (unsigned long dwIoBase, unsigned char * pbyEepromRegs
  * Return Value: none
  *
  */
-void SROMvWriteAllContents (unsigned long dwIoBase, unsigned char * pbyEepromRegs)
+void SROMvWriteAllContents(unsigned long dwIoBase, unsigned char *pbyEepromRegs)
 {
-  int     ii;
-  
-  /* ii = Rom Address */
-  for (ii = 0; ii < EEP_MAX_CONTEXT_SIZE; ii++) {
-    SROMbWriteEmbedded (dwIoBase, (unsigned char) ii, *pbyEepromRegs);
-    pbyEepromRegs++;
-  }
+    int     ii;
+
+    /* ii = Rom Address */
+    for (ii = 0; ii < EEP_MAX_CONTEXT_SIZE; ii++) {
+        SROMbWriteEmbedded(dwIoBase,(unsigned char) ii, *pbyEepromRegs);
+        pbyEepromRegs++;
+    }
 }
 
 
@@ -315,15 +315,15 @@ void SROMvWriteAllContents (unsigned long dwIoBase, unsigned char * pbyEepromReg
  * Return Value: none
  *
  */
-void SROMvReadEtherAddress (unsigned long dwIoBase, unsigned char * pbyEtherAddress)
+void SROMvReadEtherAddress(unsigned long dwIoBase, unsigned char *pbyEtherAddress)
 {
-  unsigned char ii;
-  
-  /* ii = Rom Address */
-  for (ii = 0; ii < ETH_ALEN; ii++) {
-    *pbyEtherAddress = SROMbyReadEmbedded (dwIoBase, ii);
-    pbyEtherAddress++;
-  }
+    unsigned char ii;
+
+    /* ii = Rom Address */
+    for (ii = 0; ii < ETH_ALEN; ii++) {
+        *pbyEtherAddress = SROMbyReadEmbedded(dwIoBase, ii);
+        pbyEtherAddress++;
+    }
 }
 
 
@@ -340,15 +340,15 @@ void SROMvReadEtherAddress (unsigned long dwIoBase, unsigned char * pbyEtherAddr
  * Return Value: none
  *
  */
-void SROMvWriteEtherAddress (unsigned long dwIoBase, unsigned char * pbyEtherAddress)
+void SROMvWriteEtherAddress(unsigned long dwIoBase, unsigned char *pbyEtherAddress)
 {
-  unsigned char ii;
-  
-  /* ii = Rom Address */
-  for (ii = 0; ii < ETH_ALEN; ii++) {
-    SROMbWriteEmbedded (dwIoBase, ii, *pbyEtherAddress);
-    pbyEtherAddress++;
-  }
+    unsigned char ii;
+
+    /* ii = Rom Address */
+    for (ii = 0; ii < ETH_ALEN; ii++) {
+        SROMbWriteEmbedded(dwIoBase, ii, *pbyEtherAddress);
+        pbyEtherAddress++;
+    }
 }
 
 
@@ -364,17 +364,17 @@ void SROMvWriteEtherAddress (unsigned long dwIoBase, unsigned char * pbyEtherAdd
  * Return Value: none
  *
  */
-void SROMvReadSubSysVenId (unsigned long dwIoBase, unsigned long * pdwSubSysVenId)
+void SROMvReadSubSysVenId(unsigned long dwIoBase, unsigned long *pdwSubSysVenId)
 {
-  unsigned char * pbyData;
-  
-  pbyData = (unsigned char *) pdwSubSysVenId;
-  /* sub vendor */
-  *pbyData = SROMbyReadEmbedded (dwIoBase, 6);
-  * (pbyData + 1) = SROMbyReadEmbedded (dwIoBase, 7);
-  /* sub system */
-  * (pbyData + 2) = SROMbyReadEmbedded (dwIoBase, 8);
-  * (pbyData + 3) = SROMbyReadEmbedded (dwIoBase, 9);
+    unsigned char *pbyData;
+
+    pbyData = (unsigned char *)pdwSubSysVenId;
+    /* sub vendor */
+    *pbyData = SROMbyReadEmbedded(dwIoBase, 6);
+    *(pbyData+1) = SROMbyReadEmbedded(dwIoBase, 7);
+    /* sub system */
+    *(pbyData+2) = SROMbyReadEmbedded(dwIoBase, 8);
+    *(pbyData+3) = SROMbyReadEmbedded(dwIoBase, 9);
 }
 
 /*
@@ -389,32 +389,32 @@ void SROMvReadSubSysVenId (unsigned long dwIoBase, unsigned long * pdwSubSysVenI
  * Return Value: true if success; otherwise false
  *
  */
-bool SROMbAutoLoad (unsigned long dwIoBase)
+bool SROMbAutoLoad(unsigned long dwIoBase)
 {
-  unsigned char byWait;
-  int     ii;
-  
-  unsigned char byOrg;
-  
-  VNSvInPortB (dwIoBase + MAC_REG_I2MCFG, &byOrg);
-  /* turn on hardware retry */
-  VNSvOutPortB (dwIoBase + MAC_REG_I2MCFG, (byOrg | I2MCFG_NORETRY) );
-  
-  MACvRegBitsOn (dwIoBase, MAC_REG_I2MCSR, I2MCSR_AUTOLD);
-  
-  /* ii = Rom Address */
-  for (ii = 0; ii < EEP_MAX_CONTEXT_SIZE; ii++) {
-    MACvTimer0MicroSDelay (dwIoBase, CB_EEPROM_READBYTE_WAIT);
-    VNSvInPortB (dwIoBase + MAC_REG_I2MCSR, &byWait);
-    if ( ! (byWait & I2MCSR_AUTOLD) )
-    { break; }
-  }
-  
-  VNSvOutPortB (dwIoBase + MAC_REG_I2MCFG, byOrg);
-  
-  if (ii == EEP_MAX_CONTEXT_SIZE)
-  { return false; }
-  return true;
+    unsigned char byWait;
+    int     ii;
+
+    unsigned char byOrg;
+
+    VNSvInPortB(dwIoBase + MAC_REG_I2MCFG, &byOrg);
+    /* turn on hardware retry */
+    VNSvOutPortB(dwIoBase + MAC_REG_I2MCFG, (byOrg | I2MCFG_NORETRY));
+
+    MACvRegBitsOn(dwIoBase, MAC_REG_I2MCSR, I2MCSR_AUTOLD);
+
+    /* ii = Rom Address */
+    for (ii = 0; ii < EEP_MAX_CONTEXT_SIZE; ii++) {
+        MACvTimer0MicroSDelay(dwIoBase, CB_EEPROM_READBYTE_WAIT);
+        VNSvInPortB(dwIoBase + MAC_REG_I2MCSR, &byWait);
+        if ( !(byWait & I2MCSR_AUTOLD))
+            break;
+    }
+
+    VNSvOutPortB(dwIoBase + MAC_REG_I2MCFG, byOrg);
+
+    if (ii == EEP_MAX_CONTEXT_SIZE)
+        return false;
+    return true;
 }
 
 

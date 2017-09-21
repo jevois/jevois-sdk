@@ -16,9 +16,9 @@
 
 #ifdef CONFIG_GPIOLIB
 
-static inline int irq_to_gpio (unsigned int irq)
+static inline int irq_to_gpio(unsigned int irq)
 {
-  return -ENOSYS;
+	return -ENOSYS;
 }
 
 #else

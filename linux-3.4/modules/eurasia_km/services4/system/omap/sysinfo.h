@@ -44,9 +44,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __SYSINFO_H__
 
 #if defined(SGX540) && (SGX_CORE_REV == 120)
-#define SYS_SGX_CLOCK_SPEED   307200000
+#define SYS_SGX_CLOCK_SPEED		307200000
 #else
-#define SYS_SGX_CLOCK_SPEED   304742400
+#define SYS_SGX_CLOCK_SPEED		304742400
 #endif
 
 /*!< System specific poll/timeout details */
@@ -57,14 +57,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * need to wait longer for the hardware if a flush of the swap chain is
  * required.
  */
-#define MAX_HW_TIME_US        (1000000)
-#define WAIT_TRY_COUNT        (20000)
+#define MAX_HW_TIME_US				(1000000)
+#define WAIT_TRY_COUNT				(20000)
 #else
-#define MAX_HW_TIME_US        (500000)
-#define WAIT_TRY_COUNT        (10000)
+#define MAX_HW_TIME_US				(500000)
+#define WAIT_TRY_COUNT				(10000)
 #endif
 
 
 #define SYS_DEVICE_COUNT 15 /* SGX, DISPLAYCLASS (external), BUFFERCLASS (external) */
 
-#endif  /* __SYSINFO_H__ */
+#endif	/* __SYSINFO_H__ */

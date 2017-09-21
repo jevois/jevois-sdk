@@ -37,11 +37,11 @@
 #include "cvmx-helper.h"
 
 typedef enum {
-  set_phy_link_flags_autoneg = 0x1,
-  set_phy_link_flags_flow_control_dont_touch = 0x0 << 1,
-  set_phy_link_flags_flow_control_enable = 0x1 << 1,
-  set_phy_link_flags_flow_control_disable = 0x2 << 1,
-  set_phy_link_flags_flow_control_mask = 0x3 << 1,  /* Mask for 2 bit wide flow control field */
+	set_phy_link_flags_autoneg = 0x1,
+	set_phy_link_flags_flow_control_dont_touch = 0x0 << 1,
+	set_phy_link_flags_flow_control_enable = 0x1 << 1,
+	set_phy_link_flags_flow_control_disable = 0x2 << 1,
+	set_phy_link_flags_flow_control_mask = 0x3 << 1,	/* Mask for 2 bit wide flow control field */
 } cvmx_helper_board_set_phy_link_flags_types_t;
 
 /*
@@ -58,7 +58,7 @@ typedef enum {
  * this pointer to a function before calling any cvmx-helper
  * operations.
  */
-extern cvmx_helper_link_info_t (*cvmx_override_board_link_get) (int ipd_port);
+extern cvmx_helper_link_info_t(*cvmx_override_board_link_get) (int ipd_port);
 
 /**
  * Return the MII PHY address associated with the given IPD
@@ -76,7 +76,7 @@ extern cvmx_helper_link_info_t (*cvmx_override_board_link_get) (int ipd_port);
  *
  * Returns MII PHY address and bus number or -1.
  */
-extern int cvmx_helper_board_get_mii_address (int ipd_port);
+extern int cvmx_helper_board_get_mii_address(int ipd_port);
 
 /**
  * This function as a board specific method of changing the PHY
@@ -93,10 +93,10 @@ extern int cvmx_helper_board_get_mii_address (int ipd_port);
  *
  * Returns Zero on success, negative on failure
  */
-int cvmx_helper_board_link_set_phy (int phy_addr,
-                                    cvmx_helper_board_set_phy_link_flags_types_t
-                                    link_flags,
-                                    cvmx_helper_link_info_t link_info);
+int cvmx_helper_board_link_set_phy(int phy_addr,
+				   cvmx_helper_board_set_phy_link_flags_types_t
+				   link_flags,
+				   cvmx_helper_link_info_t link_info);
 
 /**
  * This function is the board specific method of determining an
@@ -116,7 +116,7 @@ int cvmx_helper_board_link_set_phy (int phy_addr,
  * Returns The ports link status. If the link isn't fully resolved, this must
  *         return zero.
  */
-extern cvmx_helper_link_info_t __cvmx_helper_board_link_get (int ipd_port);
+extern cvmx_helper_link_info_t __cvmx_helper_board_link_get(int ipd_port);
 
 /**
  * This function is called by cvmx_helper_interface_probe() after it
@@ -139,8 +139,8 @@ extern cvmx_helper_link_info_t __cvmx_helper_board_link_get (int ipd_port);
  * Returns Number of ports the actual board supports. Many times this will
  *         simple be "support_ports".
  */
-extern int __cvmx_helper_board_interface_probe (int interface,
-    int supported_ports);
+extern int __cvmx_helper_board_interface_probe(int interface,
+					       int supported_ports);
 
 /**
  * Enable packet input/output from the hardware. This function is
@@ -152,6 +152,6 @@ extern int __cvmx_helper_board_interface_probe (int interface,
  *
  * Returns Zero on success, negative on failure
  */
-extern int __cvmx_helper_board_hardware_enable (int interface);
+extern int __cvmx_helper_board_hardware_enable(int interface);
 
 #endif /* __CVMX_HELPER_BOARD_H__ */

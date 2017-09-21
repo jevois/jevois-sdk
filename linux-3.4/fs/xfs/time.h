@@ -23,14 +23,14 @@
 
 typedef struct timespec timespec_t;
 
-static inline void delay (long ticks)
+static inline void delay(long ticks)
 {
-  schedule_timeout_uninterruptible (ticks);
+	schedule_timeout_uninterruptible(ticks);
 }
 
-static inline void nanotime (struct timespec * tvp)
+static inline void nanotime(struct timespec *tvp)
 {
-  *tvp = CURRENT_TIME;
+	*tvp = CURRENT_TIME;
 }
 
 #endif /* __XFS_SUPPORT_TIME_H__ */

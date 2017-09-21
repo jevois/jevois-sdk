@@ -54,29 +54,29 @@
  *
  * Parameters:
  *  In:
- *    pbyMultiAddr    - Multicast Address
+ *		pbyMultiAddr    - Multicast Address
  *  Out:
  *      none
  *
  * Return Value: Hash value
  *
  */
-unsigned char ETHbyGetHashIndexByCrc32 (unsigned char * pbyMultiAddr)
+unsigned char ETHbyGetHashIndexByCrc32 (unsigned char *pbyMultiAddr)
 {
-  int     ii;
-  unsigned char byTmpHash;
-  unsigned char byHash = 0;
-  
-  byTmpHash = (unsigned char) (CRCdwCrc32 (pbyMultiAddr, ETH_ALEN,
-                               0xFFFFFFFFL) & 0x3F);
-  for (ii = 0; ii < (sizeof (byTmpHash) * 8); ii++) {
-    byHash <<= 1;
-    if (byTmpHash & 0x01)
-    { byHash |= 1; }
-    byTmpHash >>= 1;
-  }
-  
-  return (byHash >> 2);
+    int     ii;
+    unsigned char byTmpHash;
+    unsigned char byHash = 0;
+
+    byTmpHash = (unsigned char)(CRCdwCrc32(pbyMultiAddr, ETH_ALEN,
+            0xFFFFFFFFL) & 0x3F);
+    for (ii = 0; ii < (sizeof(byTmpHash) * 8); ii++) {
+        byHash <<= 1;
+        if (byTmpHash & 0x01)
+            byHash |= 1;
+        byTmpHash >>= 1;
+    }
+
+    return (byHash >> 2);
 }
 
 
@@ -85,22 +85,22 @@ unsigned char ETHbyGetHashIndexByCrc32 (unsigned char * pbyMultiAddr)
  *
  * Parameters:
  *  In:
- *    pbyBuffer     - pointer of buffer (normally is rx buffer)
- *    cbFrameLength - length of buffer, including CRC portion
+ *		pbyBuffer	    - pointer of buffer (normally is rx buffer)
+ *		cbFrameLength	- length of buffer, including CRC portion
  *  Out:
  *      none
  *
  * Return Value: true if ok; false if error.
  *
  */
-bool ETHbIsBufferCrc32Ok (unsigned char * pbyBuffer, unsigned int cbFrameLength)
+bool ETHbIsBufferCrc32Ok (unsigned char *pbyBuffer, unsigned int cbFrameLength)
 {
-  unsigned long dwCRC;
-  
-  dwCRC = CRCdwGetCrc32 (pbyBuffer, cbFrameLength - 4);
-  if (cpu_to_le32 (* ( (unsigned long *) (pbyBuffer + cbFrameLength - 4) ) ) != dwCRC) {
-    return false;
-  }
-  return true;
+    unsigned long dwCRC;
+
+    dwCRC = CRCdwGetCrc32(pbyBuffer, cbFrameLength - 4);
+    if (cpu_to_le32(*((unsigned long *)(pbyBuffer + cbFrameLength - 4))) != dwCRC) {
+        return false;
+    }
+    return true;
 }
 

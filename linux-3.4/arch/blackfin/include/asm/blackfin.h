@@ -14,39 +14,39 @@
 #ifndef __ASSEMBLY__
 
 /* SSYNC implementation for C file */
-static inline void SSYNC (void)
+static inline void SSYNC(void)
 {
-  int _tmp;
-  if (ANOMALY_05000312 || ANOMALY_05000244)
-    __asm__ __volatile__ (
-      "cli %0;"
-      "nop;"
-      "nop;"
-      "nop;"
-      "ssync;"
-      "sti %0;"
-      : "=d" (_tmp)
-    );
-  else
-  { __asm__ __volatile__ ("ssync;"); }
+	int _tmp;
+	if (ANOMALY_05000312 || ANOMALY_05000244)
+		__asm__ __volatile__(
+			"cli %0;"
+			"nop;"
+			"nop;"
+			"nop;"
+			"ssync;"
+			"sti %0;"
+			: "=d" (_tmp)
+		);
+	else
+		__asm__ __volatile__("ssync;");
 }
 
 /* CSYNC implementation for C file */
-static inline void CSYNC (void)
+static inline void CSYNC(void)
 {
-  int _tmp;
-  if (ANOMALY_05000312 || ANOMALY_05000244)
-    __asm__ __volatile__ (
-      "cli %0;"
-      "nop;"
-      "nop;"
-      "nop;"
-      "csync;"
-      "sti %0;"
-      : "=d" (_tmp)
-    );
-  else
-  { __asm__ __volatile__ ("csync;"); }
+	int _tmp;
+	if (ANOMALY_05000312 || ANOMALY_05000244)
+		__asm__ __volatile__(
+			"cli %0;"
+			"nop;"
+			"nop;"
+			"nop;"
+			"csync;"
+			"sti %0;"
+			: "=d" (_tmp)
+		);
+	else
+		__asm__ __volatile__("csync;");
 }
 
 #else  /* __ASSEMBLY__ */
@@ -62,21 +62,21 @@ static inline void CSYNC (void)
 #define csync(x) CSYNC(x)
 
 #if ANOMALY_05000312 || ANOMALY_05000244
-#define SSYNC(scratch)  \
-  do {      \
-    cli scratch;  \
-    nop; nop; nop;  \
-    SSYNC;    \
-    sti scratch;  \
-  } while (0)
+#define SSYNC(scratch)	\
+do {			\
+	cli scratch;	\
+	nop; nop; nop;	\
+	SSYNC;		\
+	sti scratch;	\
+} while (0)
 
-#define CSYNC(scratch)  \
-  do {      \
-    cli scratch;  \
-    nop; nop; nop;  \
-    CSYNC;    \
-    sti scratch;  \
-  } while (0)
+#define CSYNC(scratch)	\
+do {			\
+	cli scratch;	\
+	nop; nop; nop;	\
+	CSYNC;		\
+	sti scratch;	\
+} while (0)
 
 #else
 #define SSYNC(scratch) SSYNC;
@@ -89,4 +89,4 @@ static inline void CSYNC (void)
 #include <mach/blackfin.h>
 #include <asm/bfin-global.h>
 
-#endif        /* _BLACKFIN_H_ */
+#endif				/* _BLACKFIN_H_ */

@@ -28,13 +28,13 @@
 /*
  * Reset the cpu by setting software reset request bit
  */
-void reset_cpu (ulong ignored)
+void reset_cpu(ulong ignored)
 {
-  struct mb86r0x_crg * crg = (struct mb86r0x_crg *)
-                             MB86R0x_CRG_BASE;
-                             
-  writel (MB86R0x_CRSR_SWRSTREQ, &crg->crsr);
-  while (1)
-    /* NOP */;
-  /* Never reached */
+	struct mb86r0x_crg * crg = (struct mb86r0x_crg *)
+					MB86R0x_CRG_BASE;
+
+	writel(MB86R0x_CRSR_SWRSTREQ, &crg->crsr);
+	while (1)
+		/* NOP */;
+	/* Never reached */
 }

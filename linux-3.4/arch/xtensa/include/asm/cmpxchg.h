@@ -20,65 +20,65 @@
  */
 
 static inline unsigned long
-__cmpxchg_u32 (volatile int * p, int old, int new)
+__cmpxchg_u32(volatile int *p, int old, int new)
 {
-  __asm__ __volatile__ ("rsil    a15, "__stringify (LOCKLEVEL) "\n\t"
-                        "l32i    %0, %1, 0              \n\t"
-                        "bne	%0, %2, 1f             \n\t"
-                        "s32i    %3, %1, 0              \n\t"
-                        "1:                             \n\t"
-                        "wsr     a15, "__stringify (PS) " \n\t"
-                        "rsync                          \n\t"
-                        : "=&a" (old)
-                        : "a" (p), "a" (old), "r" (new)
-                        : "a15", "memory");
+  __asm__ __volatile__("rsil    a15, "__stringify(LOCKLEVEL)"\n\t"
+		       "l32i    %0, %1, 0              \n\t"
+		       "bne	%0, %2, 1f             \n\t"
+		       "s32i    %3, %1, 0              \n\t"
+		       "1:                             \n\t"
+		       "wsr     a15, "__stringify(PS)" \n\t"
+		       "rsync                          \n\t"
+		       : "=&a" (old)
+		       : "a" (p), "a" (old), "r" (new)
+		       : "a15", "memory");
   return old;
 }
 /* This function doesn't exist, so you'll get a linker error
  * if something tries to do an invalid cmpxchg(). */
 
-extern void __cmpxchg_called_with_bad_pointer (void);
+extern void __cmpxchg_called_with_bad_pointer(void);
 
 static __inline__ unsigned long
-__cmpxchg (volatile void * ptr, unsigned long old, unsigned long new, int size)
+__cmpxchg(volatile void *ptr, unsigned long old, unsigned long new, int size)
 {
-  switch (size) {
-  case 4:  return __cmpxchg_u32 (ptr, old, new);
-  default: __cmpxchg_called_with_bad_pointer();
-    return old;
-  }
+	switch (size) {
+	case 4:  return __cmpxchg_u32(ptr, old, new);
+	default: __cmpxchg_called_with_bad_pointer();
+		 return old;
+	}
 }
 
-#define cmpxchg(ptr,o,n)                  \
-  ({ __typeof__(*(ptr)) _o_ = (o);              \
-    __typeof__(*(ptr)) _n_ = (n);              \
-    (__typeof__(*(ptr))) __cmpxchg((ptr), (unsigned long)_o_,        \
-                                   (unsigned long)_n_, sizeof (*(ptr))); \
-  })
+#define cmpxchg(ptr,o,n)						      \
+	({ __typeof__(*(ptr)) _o_ = (o);				      \
+	   __typeof__(*(ptr)) _n_ = (n);				      \
+	   (__typeof__(*(ptr))) __cmpxchg((ptr), (unsigned long)_o_,	      \
+	   			        (unsigned long)_n_, sizeof (*(ptr))); \
+	})
 
 #include <asm-generic/cmpxchg-local.h>
 
-static inline unsigned long __cmpxchg_local (volatile void * ptr,
-    unsigned long old,
-    unsigned long new, int size)
+static inline unsigned long __cmpxchg_local(volatile void *ptr,
+				      unsigned long old,
+				      unsigned long new, int size)
 {
-  switch (size) {
-  case 4:
-    return __cmpxchg_u32 (ptr, old, new);
-  default:
-    return __cmpxchg_local_generic (ptr, old, new, size);
-  }
-  
-  return old;
+	switch (size) {
+	case 4:
+		return __cmpxchg_u32(ptr, old, new);
+	default:
+		return __cmpxchg_local_generic(ptr, old, new, size);
+	}
+
+	return old;
 }
 
 /*
  * cmpxchg_local and cmpxchg64_local are atomic wrt current CPU. Always make
  * them available.
  */
-#define cmpxchg_local(ptr, o, n)                   \
-  ((__typeof__(*(ptr)))__cmpxchg_local_generic((ptr), (unsigned long)(o),\
-      (unsigned long)(n), sizeof(*(ptr))))
+#define cmpxchg_local(ptr, o, n)				  	       \
+	((__typeof__(*(ptr)))__cmpxchg_local_generic((ptr), (unsigned long)(o),\
+			(unsigned long)(n), sizeof(*(ptr))))
 #define cmpxchg64_local(ptr, o, n) __cmpxchg64_local_generic((ptr), (o), (n))
 
 /*
@@ -91,17 +91,17 @@ static inline unsigned long __cmpxchg_local (volatile void * ptr,
  * where no register reference will cause an overflow.
  */
 
-static inline unsigned long xchg_u32 (volatile int * m, unsigned long val)
+static inline unsigned long xchg_u32(volatile int * m, unsigned long val)
 {
   unsigned long tmp;
-  __asm__ __volatile__ ("rsil    a15, "__stringify (LOCKLEVEL) "\n\t"
-                        "l32i    %0, %1, 0              \n\t"
-                        "s32i    %2, %1, 0              \n\t"
-                        "wsr     a15, "__stringify (PS) " \n\t"
-                        "rsync                          \n\t"
-                        : "=&a" (tmp)
-                        : "a" (m), "a" (val)
-                        : "a15", "memory");
+  __asm__ __volatile__("rsil    a15, "__stringify(LOCKLEVEL)"\n\t"
+		       "l32i    %0, %1, 0              \n\t"
+		       "s32i    %2, %1, 0              \n\t"
+		       "wsr     a15, "__stringify(PS)" \n\t"
+		       "rsync                          \n\t"
+		       : "=&a" (tmp)
+		       : "a" (m), "a" (val)
+		       : "a15", "memory");
   return tmp;
 }
 
@@ -113,17 +113,17 @@ static inline unsigned long xchg_u32 (volatile int * m, unsigned long val)
  * be dead anyway.
  */
 
-extern void __xchg_called_with_bad_pointer (void);
+extern void __xchg_called_with_bad_pointer(void);
 
 static __inline__ unsigned long
-__xchg (unsigned long x, volatile void * ptr, int size)
+__xchg(unsigned long x, volatile void * ptr, int size)
 {
-  switch (size) {
-  case 4:
-    return xchg_u32 (ptr, x);
-  }
-  __xchg_called_with_bad_pointer();
-  return x;
+	switch (size) {
+		case 4:
+			return xchg_u32(ptr, x);
+	}
+	__xchg_called_with_bad_pointer();
+	return x;
 }
 
 #endif /* __ASSEMBLY__ */

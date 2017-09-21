@@ -39,22 +39,22 @@
 
 /* Struct for adding new cards */
 typedef struct act2000_cdef {
-  int bus;
-  int port;
-  int irq;
-  char id[10];
+	int bus;
+	int port;
+	int irq;
+	char id[10];
 } act2000_cdef;
 
 /* Struct for downloading firmware */
 typedef struct act2000_ddef {
-  int length;             /* Length of code */
-  char __user * buffer;   /* Ptr. to code   */
+	int length;             /* Length of code */
+	char __user *buffer;    /* Ptr. to code   */
 } act2000_ddef;
 
 typedef struct act2000_fwid {
-  char isdn[4];
-  char revlen[2];
-  char revision[504];
+	char isdn[4];
+	char revlen[2];
+	char revision[504];
 } act2000_fwid;
 
 #if defined(__KERNEL__) || defined(__DEBUGVAR__)
@@ -116,87 +116,87 @@ typedef struct act2000_fwid {
 #define ACT2000_LOCK_RX 1
 
 typedef struct act2000_chan {
-  unsigned short callref;          /* Call Reference              */
-  unsigned short fsm_state;        /* Current D-Channel state     */
-  unsigned short eazmask;          /* EAZ-Mask for this Channel   */
-  short queued;                    /* User-Data Bytes in TX queue */
-  unsigned short plci;
-  unsigned short ncci;
-  unsigned char  l2prot;           /* Layer 2 protocol            */
-  unsigned char  l3prot;           /* Layer 3 protocol            */
+	unsigned short callref;          /* Call Reference              */
+	unsigned short fsm_state;        /* Current D-Channel state     */
+	unsigned short eazmask;          /* EAZ-Mask for this Channel   */
+	short queued;                    /* User-Data Bytes in TX queue */
+	unsigned short plci;
+	unsigned short ncci;
+	unsigned char  l2prot;           /* Layer 2 protocol            */
+	unsigned char  l3prot;           /* Layer 3 protocol            */
 } act2000_chan;
 
 typedef struct msn_entry {
-  char eaz;
-  char msn[16];
-  struct msn_entry * next;
+	char eaz;
+	char msn[16];
+	struct msn_entry *next;
 } msn_entry;
 
 typedef struct irq_data_isa {
-  __u8      *     rcvptr;
-  __u16           rcvidx;
-  __u16           rcvlen;
-  struct sk_buff * rcvskb;
-  __u8            rcvignore;
-  __u8            rcvhdr[8];
+	__u8           *rcvptr;
+	__u16           rcvidx;
+	__u16           rcvlen;
+	struct sk_buff *rcvskb;
+	__u8            rcvignore;
+	__u8            rcvhdr[8];
 } irq_data_isa;
 
 typedef union act2000_irq_data {
-  irq_data_isa isa;
+	irq_data_isa isa;
 } act2000_irq_data;
 
 /*
  * Per card driver data
  */
 typedef struct act2000_card {
-  unsigned short port;    /* Base-port-address                */
-  unsigned short irq;   /* Interrupt                        */
-  u_char ptype;     /* Protocol type (1TR6 or Euro)     */
-  u_char bus;     /* Cardtype (ISA, MCA, PCMCIA)      */
-  struct act2000_card * next; /* Pointer to next device struct    */
-  spinlock_t lock;    /* protect critical operations      */
-  int myid;     /* Driver-Nr. assigned by linklevel */
-  unsigned long flags;    /* Statusflags                      */
-  unsigned long ilock;    /* Semaphores for IRQ-Routines      */
-  struct sk_buff_head rcvq; /* Receive-Message queue            */
-  struct sk_buff_head sndq; /* Send-Message queue               */
-  struct sk_buff_head ackq; /* Data-Ack-Message queue           */
-  u_char * ack_msg;   /* Ptr to User Data in User skb     */
-  __u16 need_b3ack;   /* Flag: Need ACK for current skb   */
-  struct sk_buff * sbuf;  /* skb which is currently sent      */
-  struct timer_list ptimer; /* Poll timer                       */
-  struct work_struct snd_tq;  /* Task struct for xmit bh          */
-  struct work_struct rcv_tq;  /* Task struct for rcv bh           */
-  struct work_struct poll_tq; /* Task struct for polled rcv bh    */
-  msn_entry * msn_list;
-  unsigned short msgnum;    /* Message number for sending       */
-  spinlock_t mnlock;    /* lock for msgnum                  */
-  act2000_chan bch[ACT2000_BCH];  /* B-Channel status/control         */
-  char   status_buf[256];   /* Buffer for status messages       */
-  char  * status_buf_read;
-  char  * status_buf_write;
-  char  * status_buf_end;
-  act2000_irq_data idat;    /* Data used for IRQ handler        */
-  isdn_if interface;    /* Interface to upper layer         */
-  char regname[35];   /* Name used for request_region     */
+	unsigned short port;		/* Base-port-address                */
+	unsigned short irq;		/* Interrupt                        */
+	u_char ptype;			/* Protocol type (1TR6 or Euro)     */
+	u_char bus;			/* Cardtype (ISA, MCA, PCMCIA)      */
+	struct act2000_card *next;	/* Pointer to next device struct    */
+	spinlock_t lock;		/* protect critical operations      */
+	int myid;			/* Driver-Nr. assigned by linklevel */
+	unsigned long flags;		/* Statusflags                      */
+	unsigned long ilock;		/* Semaphores for IRQ-Routines      */
+	struct sk_buff_head rcvq;	/* Receive-Message queue            */
+	struct sk_buff_head sndq;	/* Send-Message queue               */
+	struct sk_buff_head ackq;	/* Data-Ack-Message queue           */
+	u_char *ack_msg;		/* Ptr to User Data in User skb     */
+	__u16 need_b3ack;		/* Flag: Need ACK for current skb   */
+	struct sk_buff *sbuf;		/* skb which is currently sent      */
+	struct timer_list ptimer;	/* Poll timer                       */
+	struct work_struct snd_tq;	/* Task struct for xmit bh          */
+	struct work_struct rcv_tq;	/* Task struct for rcv bh           */
+	struct work_struct poll_tq;	/* Task struct for polled rcv bh    */
+	msn_entry *msn_list;
+	unsigned short msgnum;		/* Message number for sending       */
+	spinlock_t mnlock;		/* lock for msgnum                  */
+	act2000_chan bch[ACT2000_BCH];	/* B-Channel status/control         */
+	char   status_buf[256];		/* Buffer for status messages       */
+	char   *status_buf_read;
+	char   *status_buf_write;
+	char   *status_buf_end;
+	act2000_irq_data idat;		/* Data used for IRQ handler        */
+	isdn_if interface;		/* Interface to upper layer         */
+	char regname[35];		/* Name used for request_region     */
 } act2000_card;
 
-static inline void act2000_schedule_tx (act2000_card * card)
+static inline void act2000_schedule_tx(act2000_card *card)
 {
-  schedule_work (&card->snd_tq);
+	schedule_work(&card->snd_tq);
 }
 
-static inline void act2000_schedule_rx (act2000_card * card)
+static inline void act2000_schedule_rx(act2000_card *card)
 {
-  schedule_work (&card->rcv_tq);
+	schedule_work(&card->rcv_tq);
 }
 
-static inline void act2000_schedule_poll (act2000_card * card)
+static inline void act2000_schedule_poll(act2000_card *card)
 {
-  schedule_work (&card->poll_tq);
+	schedule_work(&card->poll_tq);
 }
 
-extern char * act2000_find_eaz (act2000_card *, char);
+extern char *act2000_find_eaz(act2000_card *, char);
 
 #endif                          /* defined(__KERNEL__) || defined(__DEBUGVAR__) */
 #endif                          /* act2000_h */

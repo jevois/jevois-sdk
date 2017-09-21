@@ -28,34 +28,34 @@
 #define JZ4740_EMC_SDRAM_CTRL 0x80
 
 
-static void __init jz4740_detect_mem (void)
+static void __init jz4740_detect_mem(void)
 {
-  void __iomem * jz_emc_base;
-  u32 ctrl, bus, bank, rows, cols;
-  phys_t size;
-  
-  jz_emc_base = ioremap (JZ4740_EMC_BASE_ADDR, 0x100);
-  ctrl = readl (jz_emc_base + JZ4740_EMC_SDRAM_CTRL);
-  bus = 2 - ( (ctrl >> 31) & 1);
-  bank = 1 + ( (ctrl >> 19) & 1);
-  cols = 8 + ( (ctrl >> 26) & 7);
-  rows = 11 + ( (ctrl >> 20) & 3);
-  printk (KERN_DEBUG
-          "SDRAM preconfigured: bus:%u bank:%u rows:%u cols:%u\n",
-          bus, bank, rows, cols);
-  iounmap (jz_emc_base);
-  
-  size = 1 << (bus + bank + cols + rows);
-  add_memory_region (0, size, BOOT_MEM_RAM);
+	void __iomem *jz_emc_base;
+	u32 ctrl, bus, bank, rows, cols;
+	phys_t size;
+
+	jz_emc_base = ioremap(JZ4740_EMC_BASE_ADDR, 0x100);
+	ctrl = readl(jz_emc_base + JZ4740_EMC_SDRAM_CTRL);
+	bus = 2 - ((ctrl >> 31) & 1);
+	bank = 1 + ((ctrl >> 19) & 1);
+	cols = 8 + ((ctrl >> 26) & 7);
+	rows = 11 + ((ctrl >> 20) & 3);
+	printk(KERN_DEBUG
+		"SDRAM preconfigured: bus:%u bank:%u rows:%u cols:%u\n",
+		bus, bank, rows, cols);
+	iounmap(jz_emc_base);
+
+	size = 1 << (bus + bank + cols + rows);
+	add_memory_region(0, size, BOOT_MEM_RAM);
 }
 
-void __init plat_mem_setup (void)
+void __init plat_mem_setup(void)
 {
-  jz4740_reset_init();
-  jz4740_detect_mem();
+	jz4740_reset_init();
+	jz4740_detect_mem();
 }
 
-const char * get_system_type (void)
+const char *get_system_type(void)
 {
-  return "JZ4740";
+	return "JZ4740";
 }

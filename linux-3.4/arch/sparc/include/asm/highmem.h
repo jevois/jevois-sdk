@@ -5,10 +5,10 @@
  * are not addressable by direct kernel virtual addresses.
  *
  * Copyright (C) 1999 Gerhard Wichert, Siemens AG
- *          Gerhard.Wichert@pdb.siemens.de
+ *		      Gerhard.Wichert@pdb.siemens.de
  *
  *
- * Redesigned the x86 32-bit VM architecture to deal with
+ * Redesigned the x86 32-bit VM architecture to deal with 
  * up to 16 Terrabyte physical memory. With current x86 CPUs
  * we now support up to 64 Gigabytes physical RAM.
  *
@@ -29,11 +29,11 @@
 /* declarations for highmem.c */
 extern unsigned long highstart_pfn, highend_pfn;
 
-extern pte_t * kmap_pte;
+extern pte_t *kmap_pte;
 extern pgprot_t kmap_prot;
-extern pte_t * pkmap_page_table;
+extern pte_t *pkmap_page_table;
 
-extern void kmap_init (void) __init;
+extern void kmap_init(void) __init;
 
 /*
  * Right now we initialize only a single pte table. It can be extended
@@ -51,30 +51,30 @@ extern void kmap_init (void) __init;
 
 #define PKMAP_END (PKMAP_ADDR(LAST_PKMAP))
 
-extern void * kmap_high (struct page * page);
-extern void kunmap_high (struct page * page);
+extern void *kmap_high(struct page *page);
+extern void kunmap_high(struct page *page);
 
-static inline void * kmap (struct page * page)
+static inline void *kmap(struct page *page)
 {
-  BUG_ON (in_interrupt() );
-  if (!PageHighMem (page) )
-  { return page_address (page); }
-  return kmap_high (page);
+	BUG_ON(in_interrupt());
+	if (!PageHighMem(page))
+		return page_address(page);
+	return kmap_high(page);
 }
 
-static inline void kunmap (struct page * page)
+static inline void kunmap(struct page *page)
 {
-  BUG_ON (in_interrupt() );
-  if (!PageHighMem (page) )
-  { return; }
-  kunmap_high (page);
+	BUG_ON(in_interrupt());
+	if (!PageHighMem(page))
+		return;
+	kunmap_high(page);
 }
 
-extern void * kmap_atomic (struct page * page);
-extern void __kunmap_atomic (void * kvaddr);
-extern struct page * kmap_atomic_to_page (void * vaddr);
+extern void *kmap_atomic(struct page *page);
+extern void __kunmap_atomic(void *kvaddr);
+extern struct page *kmap_atomic_to_page(void *vaddr);
 
-#define flush_cache_kmaps() flush_cache_all()
+#define flush_cache_kmaps()	flush_cache_all()
 
 #endif /* __KERNEL__ */
 

@@ -14,8 +14,8 @@
 #define asmlinkage CPP_ASMLINKAGE
 #endif
 
-#define __page_aligned_data __section(.data..page_aligned) __aligned(PAGE_SIZE)
-#define __page_aligned_bss  __section(.bss..page_aligned) __aligned(PAGE_SIZE)
+#define __page_aligned_data	__section(.data..page_aligned) __aligned(PAGE_SIZE)
+#define __page_aligned_bss	__section(.bss..page_aligned) __aligned(PAGE_SIZE)
 
 /*
  * For assembly routines.
@@ -23,8 +23,8 @@
  * Note when using these that you must specify the appropriate
  * alignment directives yourself
  */
-#define __PAGE_ALIGNED_DATA .section ".data..page_aligned", "aw"
-#define __PAGE_ALIGNED_BSS  .section ".bss..page_aligned", "aw"
+#define __PAGE_ALIGNED_DATA	.section ".data..page_aligned", "aw"
+#define __PAGE_ALIGNED_BSS	.section ".bss..page_aligned", "aw"
 
 /*
  * This is used by architectures to keep arguments on the stack
@@ -42,13 +42,13 @@
 /* Assembly files may be compiled with -traditional .. */
 #ifndef __ASSEMBLY__
 #ifndef asmlinkage_protect
-# define asmlinkage_protect(n, ret, args...)  do { } while (0)
+# define asmlinkage_protect(n, ret, args...)	do { } while (0)
 #endif
 #endif
 
 #ifndef __ALIGN
-#define __ALIGN   .align 4,0x90
-#define __ALIGN_STR ".align 4,0x90"
+#define __ALIGN		.align 4,0x90
+#define __ALIGN_STR	".align 4,0x90"
 #endif
 
 #ifdef __ASSEMBLY__
@@ -66,9 +66,9 @@
 #endif /* LINKER_SCRIPT */
 
 #ifndef WEAK
-#define WEAK(name)     \
-  .weak name;    \
-  name:
+#define WEAK(name)	   \
+	.weak name;	   \
+	name:
 #endif
 
 #ifndef END

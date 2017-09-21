@@ -2,7 +2,7 @@
  * S3C24XX USB 2.0 High-speed USB controller gadget driver
  *
  * Copyright (c) 2010 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com/
+ *		http://www.samsung.com/
  *
  * The S3C24XX USB 2.0 high-speed USB controller supports upto 9 endpoints.
  * Each endpoint can be configured as either in or out endpoint. Endpoints
@@ -26,9 +26,9 @@
  * controllers.
  */
 struct s3c24xx_hsudc_platdata {
-  unsigned int  epnum;
-  void    (*gpio_init) (void);
-  void    (*gpio_uninit) (void);
+	unsigned int	epnum;
+	void		(*gpio_init)(void);
+	void		(*gpio_uninit)(void);
 };
 
-#endif  /* __LINUX_USB_S3C_HSUDC_H */
+#endif	/* __LINUX_USB_S3C_HSUDC_H */

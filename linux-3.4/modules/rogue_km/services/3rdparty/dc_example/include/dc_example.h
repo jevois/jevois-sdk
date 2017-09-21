@@ -45,9 +45,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "pvrsrv_error.h"
 
 #if defined (LMA)
-#define DRVNAME "dc_example_LMA"
+	#define DRVNAME	"dc_example_LMA"
 #else
-#define DRVNAME "dc_example_UMA"
+	#define DRVNAME	"dc_example_UMA"
 #endif
 
 
@@ -58,29 +58,29 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /* Module parameters */
 typedef struct _DC_EXAMPLE_MODULE_PARAMETERS_
 {
-  IMG_UINT32 ui32Width;
-  IMG_UINT32 ui32Height;
-  IMG_UINT32 ui32Depth;
-  IMG_UINT32 ui32FBCFormat;
-  IMG_UINT32 ui32RefreshRate;
-  IMG_UINT32 ui32XDpi;
-  IMG_UINT32 ui32YDpi;
+	IMG_UINT32 ui32Width; 
+	IMG_UINT32 ui32Height;
+	IMG_UINT32 ui32Depth; 
+	IMG_UINT32 ui32FBCFormat;
+	IMG_UINT32 ui32RefreshRate;
+	IMG_UINT32 ui32XDpi;
+	IMG_UINT32 ui32YDpi;
 } DC_EXAMPLE_MODULE_PARAMETERS;
 
-const DC_EXAMPLE_MODULE_PARAMETERS * DCExampleGetModuleParameters (IMG_VOID);
+const DC_EXAMPLE_MODULE_PARAMETERS *DCExampleGetModuleParameters(IMG_VOID);
 
-IMG_CPU_VIRTADDR DCExampleVirtualAllocUncached (IMG_SIZE_T uiSize);
-IMG_BOOL DCExampleVirtualFree (IMG_PVOID pvAddress, IMG_SIZE_T uiSize);
+IMG_CPU_VIRTADDR DCExampleVirtualAllocUncached(IMG_SIZE_T uiSize);
+IMG_BOOL DCExampleVirtualFree(IMG_PVOID pvAddress, IMG_SIZE_T uiSize);
 
-PVRSRV_ERROR DCExampleLinAddrToDevPAddrs (IMG_CPU_VIRTADDR pvLinAddr,
-    IMG_DEV_PHYADDR * pasDevPAddr,
-    IMG_SIZE_T uiSize);
+PVRSRV_ERROR DCExampleLinAddrToDevPAddrs(IMG_CPU_VIRTADDR pvLinAddr,
+					 IMG_DEV_PHYADDR *pasDevPAddr,
+					 IMG_SIZE_T uiSize);
 
 /*******************************************************************************
  * dc_example functions
  ******************************************************************************/
 
-PVRSRV_ERROR DCExampleInit (IMG_VOID);
-IMG_VOID DCExampleDeinit (IMG_VOID);
+PVRSRV_ERROR DCExampleInit(IMG_VOID);
+IMG_VOID DCExampleDeinit(IMG_VOID);
 
 #endif /* !defined(__DC_EXAMPLE_H__) */

@@ -12,42 +12,42 @@
 #include <linux/types.h>
 
 enum {
-  DLM_STATUS_WAITING = 1,
-  DLM_STATUS_GRANTED = 2,
-  DLM_STATUS_CONVERT = 3,
+	DLM_STATUS_WAITING = 1,
+	DLM_STATUS_GRANTED = 2,
+	DLM_STATUS_CONVERT = 3,
 };
 
 #define DLM_LOCK_DATA_VERSION 1
 
 struct dlm_lock_data {
-  __u16 version;
-  __u32 lockspace_id;
-  int nodeid;
-  int ownpid;
-  __u32 id;
-  __u32 remid;
-  __u64 xid;
-  __s8 status;
-  __s8 grmode;
-  __s8 rqmode;
-  unsigned long timestamp;
-  int resource_namelen;
-  char resource_name[DLM_RESNAME_MAXLEN];
+	__u16 version;
+	__u32 lockspace_id;
+	int nodeid;
+	int ownpid;
+	__u32 id;
+	__u32 remid;
+	__u64 xid;
+	__s8 status;
+	__s8 grmode;
+	__s8 rqmode;
+	unsigned long timestamp;
+	int resource_namelen;
+	char resource_name[DLM_RESNAME_MAXLEN];
 };
 
 enum {
-  DLM_CMD_UNSPEC = 0,
-  DLM_CMD_HELLO,    /* user->kernel */
-  DLM_CMD_TIMEOUT,  /* kernel->user */
-  __DLM_CMD_MAX,
+	DLM_CMD_UNSPEC = 0,
+	DLM_CMD_HELLO,		/* user->kernel */
+	DLM_CMD_TIMEOUT,	/* kernel->user */
+	__DLM_CMD_MAX,
 };
 
 #define DLM_CMD_MAX (__DLM_CMD_MAX - 1)
 
 enum {
-  DLM_TYPE_UNSPEC = 0,
-  DLM_TYPE_LOCK,
-  __DLM_TYPE_MAX,
+	DLM_TYPE_UNSPEC = 0,
+	DLM_TYPE_LOCK,
+	__DLM_TYPE_MAX,
 };
 
 #define DLM_TYPE_MAX (__DLM_TYPE_MAX - 1)

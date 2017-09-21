@@ -46,11 +46,11 @@
  * All MAS are available initially.  The RC will inform use which
  * slots are used for the BP (it may change in size).
  */
-void uwb_drp_avail_init (struct uwb_rc * rc)
+void uwb_drp_avail_init(struct uwb_rc *rc)
 {
-  bitmap_fill (rc->drp_avail.global, UWB_NUM_MAS);
-  bitmap_fill (rc->drp_avail.local, UWB_NUM_MAS);
-  bitmap_fill (rc->drp_avail.pending, UWB_NUM_MAS);
+	bitmap_fill(rc->drp_avail.global, UWB_NUM_MAS);
+	bitmap_fill(rc->drp_avail.local, UWB_NUM_MAS);
+	bitmap_fill(rc->drp_avail.pending, UWB_NUM_MAS);
 }
 
 /*
@@ -58,10 +58,10 @@ void uwb_drp_avail_init (struct uwb_rc * rc)
  *
  * avail = global & local & pending
  */
-void uwb_drp_available (struct uwb_rc * rc, struct uwb_mas_bm * avail)
+void uwb_drp_available(struct uwb_rc *rc, struct uwb_mas_bm *avail)
 {
-  bitmap_and (avail->bm, rc->drp_avail.global, rc->drp_avail.local, UWB_NUM_MAS);
-  bitmap_and (avail->bm, avail->bm, rc->drp_avail.pending, UWB_NUM_MAS);
+	bitmap_and(avail->bm, rc->drp_avail.global, rc->drp_avail.local, UWB_NUM_MAS);
+	bitmap_and(avail->bm, avail->bm, rc->drp_avail.pending, UWB_NUM_MAS);
 }
 
 /**
@@ -71,16 +71,16 @@ void uwb_drp_available (struct uwb_rc * rc, struct uwb_mas_bm * avail)
  *
  * Returns 0 on success, or -EBUSY if the MAS requested aren't available.
  */
-int uwb_drp_avail_reserve_pending (struct uwb_rc * rc, struct uwb_mas_bm * mas)
+int uwb_drp_avail_reserve_pending(struct uwb_rc *rc, struct uwb_mas_bm *mas)
 {
-  struct uwb_mas_bm avail;
-  
-  uwb_drp_available (rc, &avail);
-  if (!bitmap_subset (mas->bm, avail.bm, UWB_NUM_MAS) )
-  { return -EBUSY; }
-  
-  bitmap_andnot (rc->drp_avail.pending, rc->drp_avail.pending, mas->bm, UWB_NUM_MAS);
-  return 0;
+	struct uwb_mas_bm avail;
+
+	uwb_drp_available(rc, &avail);
+	if (!bitmap_subset(mas->bm, avail.bm, UWB_NUM_MAS))
+		return -EBUSY;
+
+	bitmap_andnot(rc->drp_avail.pending, rc->drp_avail.pending, mas->bm, UWB_NUM_MAS);
+	return 0;
 }
 
 /**
@@ -88,11 +88,11 @@ int uwb_drp_avail_reserve_pending (struct uwb_rc * rc, struct uwb_mas_bm * mas)
  * @rc: the radio controller
  * @mas: the MAS to reserve
  */
-void uwb_drp_avail_reserve (struct uwb_rc * rc, struct uwb_mas_bm * mas)
+void uwb_drp_avail_reserve(struct uwb_rc *rc, struct uwb_mas_bm *mas)
 {
-  bitmap_or (rc->drp_avail.pending, rc->drp_avail.pending, mas->bm, UWB_NUM_MAS);
-  bitmap_andnot (rc->drp_avail.local, rc->drp_avail.local, mas->bm, UWB_NUM_MAS);
-  rc->drp_avail.ie_valid = false;
+	bitmap_or(rc->drp_avail.pending, rc->drp_avail.pending, mas->bm, UWB_NUM_MAS);
+	bitmap_andnot(rc->drp_avail.local, rc->drp_avail.local, mas->bm, UWB_NUM_MAS);
+	rc->drp_avail.ie_valid = false;
 }
 
 /**
@@ -100,12 +100,12 @@ void uwb_drp_avail_reserve (struct uwb_rc * rc, struct uwb_mas_bm * mas)
  * @rc: the radio controller
  * @mas: the MAS to release
  */
-void uwb_drp_avail_release (struct uwb_rc * rc, struct uwb_mas_bm * mas)
+void uwb_drp_avail_release(struct uwb_rc *rc, struct uwb_mas_bm *mas)
 {
-  bitmap_or (rc->drp_avail.local, rc->drp_avail.local, mas->bm, UWB_NUM_MAS);
-  bitmap_or (rc->drp_avail.pending, rc->drp_avail.pending, mas->bm, UWB_NUM_MAS);
-  rc->drp_avail.ie_valid = false;
-  uwb_rsv_handle_drp_avail_change (rc);
+	bitmap_or(rc->drp_avail.local, rc->drp_avail.local, mas->bm, UWB_NUM_MAS);
+	bitmap_or(rc->drp_avail.pending, rc->drp_avail.pending, mas->bm, UWB_NUM_MAS);
+	rc->drp_avail.ie_valid = false;
+	uwb_rsv_handle_drp_avail_change(rc);
 }
 
 /**
@@ -114,16 +114,16 @@ void uwb_drp_avail_release (struct uwb_rc * rc, struct uwb_mas_bm * mas)
  *
  * avail = global & local
  */
-void uwb_drp_avail_ie_update (struct uwb_rc * rc)
+void uwb_drp_avail_ie_update(struct uwb_rc *rc)
 {
-  struct uwb_mas_bm avail;
-  
-  bitmap_and (avail.bm, rc->drp_avail.global, rc->drp_avail.local, UWB_NUM_MAS);
-  
-  rc->drp_avail.ie.hdr.element_id = UWB_IE_DRP_AVAILABILITY;
-  rc->drp_avail.ie.hdr.length = UWB_NUM_MAS / 8;
-  uwb_mas_bm_copy_le (rc->drp_avail.ie.bmp, &avail);
-  rc->drp_avail.ie_valid = true;
+	struct uwb_mas_bm avail;
+
+	bitmap_and(avail.bm, rc->drp_avail.global, rc->drp_avail.local, UWB_NUM_MAS);
+
+	rc->drp_avail.ie.hdr.element_id = UWB_IE_DRP_AVAILABILITY;
+	rc->drp_avail.ie.hdr.length = UWB_NUM_MAS / 8;
+	uwb_mas_bm_copy_le(rc->drp_avail.ie.bmp, &avail);
+	rc->drp_avail.ie_valid = true;
 }
 
 /**
@@ -138,20 +138,20 @@ void uwb_drp_avail_ie_update (struct uwb_rc * rc)
  *         space of the result with zeroes.
  */
 static
-unsigned long get_val (u8 * array, size_t itr, size_t len)
+unsigned long get_val(u8 *array, size_t itr, size_t len)
 {
-  unsigned long val = 0;
-  size_t top = itr + len;
-  
-  BUG_ON (len > sizeof (val) );
-  
-  while (itr < top) {
-    val <<= 8;
-    val |= array[top - 1];
-    top--;
-  }
-  val <<= 8 * (sizeof (val) - len); /* padding */
-  return val;
+	unsigned long val = 0;
+	size_t top = itr + len;
+
+	BUG_ON(len > sizeof(val));
+
+	while (itr < top) {
+		val <<= 8;
+		val |= array[top - 1];
+		top--;
+	}
+	val <<= 8 * (sizeof(val) - len); /* padding */
+	return val;
 }
 
 /**
@@ -188,32 +188,32 @@ unsigned long get_val (u8 * array, size_t itr, size_t len)
  * An example of this encoding can be found in ECMA-368 Annex-D [Table D.11]
  *
  * The resulting bitmap will have the following mapping:
- *  bit position 0 == MAS 1
- *  bit position 1 == MAS 2
- *  ...
- *  bit position (UWB_NUM_MAS - 1) == MAS UWB_NUM_MAS
+ *	bit position 0 == MAS 1
+ *	bit position 1 == MAS 2
+ *	...
+ *	bit position (UWB_NUM_MAS - 1) == MAS UWB_NUM_MAS
  *
- * @bmp_itr:  pointer to bitmap (can be declared with DECLARE_BITMAP)
- * @buffer: pointer to buffer containing bitmap data in big endian
+ * @bmp_itr:	pointer to bitmap (can be declared with DECLARE_BITMAP)
+ * @buffer:	pointer to buffer containing bitmap data in big endian
  *              format (MSB first)
  * @buffer_size:number of bytes with which bitmap should be initialized
  */
 static
-void buffer_to_bmp (unsigned long * bmp_itr, void * _buffer,
-                    size_t buffer_size)
+void buffer_to_bmp(unsigned long *bmp_itr, void *_buffer,
+		   size_t buffer_size)
 {
-  u8 * buffer = _buffer;
-  size_t itr, len;
-  unsigned long val;
-  
-  itr = 0;
-  while (itr < buffer_size) {
-    len = buffer_size - itr >= sizeof (val) ?
-          sizeof (val) : buffer_size - itr;
-    val = get_val (buffer, itr, len);
-    bmp_itr[itr / sizeof (val)] = val;
-    itr += sizeof (val);
-  }
+	u8 *buffer = _buffer;
+	size_t itr, len;
+	unsigned long val;
+
+	itr = 0;
+	while (itr < buffer_size) {
+		len = buffer_size - itr >= sizeof(val) ?
+			sizeof(val) : buffer_size - itr;
+		val = get_val(buffer, itr, len);
+		bmp_itr[itr / sizeof(val)] = val;
+		itr += sizeof(val);
+	}
 }
 
 
@@ -224,31 +224,31 @@ void buffer_to_bmp (unsigned long * bmp_itr, void * _buffer,
  * We convert that to our internal representation.
  */
 static
-int uwbd_evt_get_drp_avail (struct uwb_event * evt, unsigned long * bmp)
+int uwbd_evt_get_drp_avail(struct uwb_event *evt, unsigned long *bmp)
 {
-  struct device * dev = &evt->rc->uwb_dev.dev;
-  struct uwb_rc_evt_drp_avail * drp_evt;
-  int result = -EINVAL;
-  
-  /* Is there enough data to decode the event? */
-  if (evt->notif.size < sizeof (*drp_evt) ) {
-    dev_err (dev, "DRP Availability Change: Not enough "
-             "data to decode event [%zu bytes, %zu "
-             "needed]\n", evt->notif.size, sizeof (*drp_evt) );
-    goto error;
-  }
-  drp_evt = container_of (evt->notif.rceb, struct uwb_rc_evt_drp_avail, rceb);
-  buffer_to_bmp (bmp, drp_evt->bmp, UWB_NUM_MAS / 8);
-  result = 0;
+	struct device *dev = &evt->rc->uwb_dev.dev;
+	struct uwb_rc_evt_drp_avail *drp_evt;
+	int result = -EINVAL;
+
+	/* Is there enough data to decode the event? */
+	if (evt->notif.size < sizeof(*drp_evt)) {
+		dev_err(dev, "DRP Availability Change: Not enough "
+			"data to decode event [%zu bytes, %zu "
+			"needed]\n", evt->notif.size, sizeof(*drp_evt));
+		goto error;
+	}
+	drp_evt = container_of(evt->notif.rceb, struct uwb_rc_evt_drp_avail, rceb);
+	buffer_to_bmp(bmp, drp_evt->bmp, UWB_NUM_MAS/8);
+	result = 0;
 error:
-  return result;
+	return result;
 }
 
 
 /**
  * Process an incoming DRP Availability notification.
  *
- * @evt:  Event information (packs the actual event data, which
+ * @evt:	Event information (packs the actual event data, which
  *              radio controller it came to, etc).
  *
  * @returns:    0 on success (so uwbd() frees the event buffer), < 0
@@ -268,23 +268,23 @@ error:
  * The DRP Availability IE that this radio controller emits will need
  * to be updated.
  */
-int uwbd_evt_handle_rc_drp_avail (struct uwb_event * evt)
+int uwbd_evt_handle_rc_drp_avail(struct uwb_event *evt)
 {
-  int result;
-  struct uwb_rc * rc = evt->rc;
-  DECLARE_BITMAP (bmp, UWB_NUM_MAS);
-  
-  result = uwbd_evt_get_drp_avail (evt, bmp);
-  if (result < 0)
-  { return result; }
-  
-  mutex_lock (&rc->rsvs_mutex);
-  bitmap_copy (rc->drp_avail.global, bmp, UWB_NUM_MAS);
-  rc->drp_avail.ie_valid = false;
-  uwb_rsv_handle_drp_avail_change (rc);
-  mutex_unlock (&rc->rsvs_mutex);
-  
-  uwb_rsv_sched_update (rc);
-  
-  return 0;
+	int result;
+	struct uwb_rc *rc = evt->rc;
+	DECLARE_BITMAP(bmp, UWB_NUM_MAS);
+
+	result = uwbd_evt_get_drp_avail(evt, bmp);
+	if (result < 0)
+		return result;
+
+	mutex_lock(&rc->rsvs_mutex);
+	bitmap_copy(rc->drp_avail.global, bmp, UWB_NUM_MAS);
+	rc->drp_avail.ie_valid = false;
+	uwb_rsv_handle_drp_avail_change(rc);
+	mutex_unlock(&rc->rsvs_mutex);
+
+	uwb_rsv_sched_update(rc);
+
+	return 0;
 }

@@ -23,17 +23,17 @@
 #define STATS_OFF       2
 #define STATS_CLEAR     3
 #define STATS_DUMP      4
-#define TRACE_ON    5
+#define TRACE_ON		5
 #define TRACE_OFF       6
 
 
-#define simcfg(code)            \
-  ({             \
-    __asm__  __volatile__( \
-                           "sltiu $0,$0, %0" \
-                           ::"i"(code)         \
-                         ); \
-  })
+#define simcfg(code)						\
+({					   \
+	__asm__  __volatile__( \
+        "sltiu $0,$0, %0" \
+		::"i"(code)					\
+		); \
+})
 
 
 

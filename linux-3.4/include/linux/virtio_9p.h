@@ -35,10 +35,10 @@
 #define VIRTIO_9P_MOUNT_TAG 0
 
 struct virtio_9p_config {
-  /* length of the tag name */
-  __u16 tag_len;
-  /* non-NULL terminated tag name */
-  __u8 tag[0];
-} __attribute__ ( (packed) );
+	/* length of the tag name */
+	__u16 tag_len;
+	/* non-NULL terminated tag name */
+	__u8 tag[0];
+} __attribute__((packed));
 
 #endif /* _LINUX_VIRTIO_9P_H */

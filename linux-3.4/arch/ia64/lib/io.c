@@ -7,47 +7,47 @@
  * Copy data from IO memory space to "real" memory space.
  * This needs to be optimized.
  */
-void memcpy_fromio (void * to, const volatile void __iomem * from, long count)
+void memcpy_fromio(void *to, const volatile void __iomem *from, long count)
 {
-  char * dst = to;
-  
-  while (count) {
-    count--;
-    *dst++ = readb (from++);
-  }
+	char *dst = to;
+
+	while (count) {
+		count--;
+		*dst++ = readb(from++);
+	}
 }
-EXPORT_SYMBOL (memcpy_fromio);
+EXPORT_SYMBOL(memcpy_fromio);
 
 /*
  * Copy data from "real" memory space to IO memory space.
  * This needs to be optimized.
  */
-void memcpy_toio (volatile void __iomem * to, const void * from, long count)
+void memcpy_toio(volatile void __iomem *to, const void *from, long count)
 {
-  const char * src = from;
-  
-  while (count) {
-    count--;
-    writeb (*src++, to++);
-  }
+	const char *src = from;
+
+	while (count) {
+		count--;
+		writeb(*src++, to++);
+	}
 }
-EXPORT_SYMBOL (memcpy_toio);
+EXPORT_SYMBOL(memcpy_toio);
 
 /*
  * "memset" on IO memory space.
  * This needs to be optimized.
  */
-void memset_io (volatile void __iomem * dst, int c, long count)
+void memset_io(volatile void __iomem *dst, int c, long count)
 {
-  unsigned char ch = (char) (c & 0xff);
-  
-  while (count) {
-    count--;
-    writeb (ch, dst);
-    dst++;
-  }
+	unsigned char ch = (char)(c & 0xff);
+
+	while (count) {
+		count--;
+		writeb(ch, dst);
+		dst++;
+	}
 }
-EXPORT_SYMBOL (memset_io);
+EXPORT_SYMBOL(memset_io);
 
 #ifdef CONFIG_IA64_GENERIC
 
@@ -74,91 +74,91 @@ EXPORT_SYMBOL (memset_io);
 unsigned int
 __ia64_inb (unsigned long port)
 {
-  return ___ia64_inb (port);
+	return ___ia64_inb(port);
 }
 
 unsigned int
 __ia64_inw (unsigned long port)
 {
-  return ___ia64_inw (port);
+	return ___ia64_inw(port);
 }
 
 unsigned int
 __ia64_inl (unsigned long port)
 {
-  return ___ia64_inl (port);
+	return ___ia64_inl(port);
 }
 
 void
 __ia64_outb (unsigned char val, unsigned long port)
 {
-  ___ia64_outb (val, port);
+	___ia64_outb(val, port);
 }
 
 void
 __ia64_outw (unsigned short val, unsigned long port)
 {
-  ___ia64_outw (val, port);
+	___ia64_outw(val, port);
 }
 
 void
 __ia64_outl (unsigned int val, unsigned long port)
 {
-  ___ia64_outl (val, port);
+	___ia64_outl(val, port);
 }
 
 unsigned char
-__ia64_readb (void __iomem * addr)
+__ia64_readb (void __iomem *addr)
 {
-  return ___ia64_readb (addr);
+	return ___ia64_readb (addr);
 }
 
 unsigned short
-__ia64_readw (void __iomem * addr)
+__ia64_readw (void __iomem *addr)
 {
-  return ___ia64_readw (addr);
+	return ___ia64_readw (addr);
 }
 
 unsigned int
-__ia64_readl (void __iomem * addr)
+__ia64_readl (void __iomem *addr)
 {
-  return ___ia64_readl (addr);
+	return ___ia64_readl (addr);
 }
 
 unsigned long
-__ia64_readq (void __iomem * addr)
+__ia64_readq (void __iomem *addr)
 {
-  return ___ia64_readq (addr);
+	return ___ia64_readq (addr);
 }
 
 unsigned char
-__ia64_readb_relaxed (void __iomem * addr)
+__ia64_readb_relaxed (void __iomem *addr)
 {
-  return ___ia64_readb (addr);
+	return ___ia64_readb (addr);
 }
 
 unsigned short
-__ia64_readw_relaxed (void __iomem * addr)
+__ia64_readw_relaxed (void __iomem *addr)
 {
-  return ___ia64_readw (addr);
+	return ___ia64_readw (addr);
 }
 
 unsigned int
-__ia64_readl_relaxed (void __iomem * addr)
+__ia64_readl_relaxed (void __iomem *addr)
 {
-  return ___ia64_readl (addr);
+	return ___ia64_readl (addr);
 }
 
 unsigned long
-__ia64_readq_relaxed (void __iomem * addr)
+__ia64_readq_relaxed (void __iomem *addr)
 {
-  return ___ia64_readq (addr);
+	return ___ia64_readq (addr);
 }
 
 void
-__ia64_mmiowb (void)
+__ia64_mmiowb(void)
 {
-  ___ia64_mmiowb();
+	___ia64_mmiowb();
 }
 
 #endif /* CONFIG_IA64_GENERIC */

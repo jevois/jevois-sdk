@@ -12,11 +12,11 @@
 #include <common.h>
 #include <netdev.h>
 
-int checkboard (void)
+int checkboard(void)
 {
-  printf ("Board: BlackVME\n");
-  printf ("Support: http://www.skutek.com/\n");
-  return 0;
+	printf("Board: BlackVME\n");
+	printf("Support: http://www.skutek.com/\n");
+	return 0;
 }
 
 #ifdef CONFIG_DRIVER_AX88180
@@ -24,8 +24,8 @@ int checkboard (void)
  * The ax88180 driver had to be patched to work around a bug
  * in Marvell 88E1111 B2 silicon. E-mail me for explanations.
  */
-int board_eth_init (bd_t * bis)
+int board_eth_init(bd_t *bis)
 {
-  return ax88180_initialize (bis);
+	return ax88180_initialize(bis);
 }
-#endif  /* CONFIG_DRIVER_AX88180 */
+#endif	/* CONFIG_DRIVER_AX88180 */

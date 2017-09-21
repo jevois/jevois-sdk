@@ -3,9 +3,9 @@
 
 #include <asm/system_misc.h>
 
-static inline void arch_reset (char mode, const char * cmd)
+static inline void arch_reset(char mode, const char *cmd)
 {
-  soft_restart (0);
+	soft_restart(0);
 }
 
 #endif

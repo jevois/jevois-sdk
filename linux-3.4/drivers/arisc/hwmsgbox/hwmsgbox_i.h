@@ -26,14 +26,14 @@
 #include "../include/arisc_includes.h"
 
 /* local functions */
-irqreturn_t arisc_hwmsgbox_int_handler (int irq, void * dev);
-int arisc_hwmsgbox_clear_receiver_pending (int queue, int user);
-int arisc_hwmsgbox_query_receiver_pending (int queue, int user);
-int arisc_hwmsgbox_enable_receiver_int (int queue, int user);
-int arisc_hwmsgbox_set_receiver (int queue, int user);
-int arisc_hwmsgbox_set_transmitter (int queue, int user);
-int arisc_hwmsgbox_wait_message_feedback (struct arisc_message * pmessage);
-int arisc_hwmsgbox_message_feedback (struct arisc_message * pmessage);
-int arisc_message_valid (struct arisc_message * pmessage);
+irqreturn_t arisc_hwmsgbox_int_handler(int irq, void *dev);
+int arisc_hwmsgbox_clear_receiver_pending(int queue, int user);
+int arisc_hwmsgbox_query_receiver_pending(int queue, int user);
+int arisc_hwmsgbox_enable_receiver_int(int queue, int user);
+int arisc_hwmsgbox_set_receiver(int queue, int user);
+int arisc_hwmsgbox_set_transmitter(int queue, int user);
+int arisc_hwmsgbox_wait_message_feedback(struct arisc_message *pmessage);
+int arisc_hwmsgbox_message_feedback(struct arisc_message *pmessage);
+int arisc_message_valid(struct arisc_message *pmessage);
 
 #endif  /* __ARISC_HWMSGBOX_I_H */

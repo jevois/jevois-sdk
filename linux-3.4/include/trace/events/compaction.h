@@ -8,64 +8,64 @@
 #include <linux/tracepoint.h>
 #include "gfpflags.h"
 
-DECLARE_EVENT_CLASS (mm_compaction_isolate_template,
+DECLARE_EVENT_CLASS(mm_compaction_isolate_template,
 
-                     TP_PROTO (unsigned long nr_scanned,
-                               unsigned long nr_taken),
+	TP_PROTO(unsigned long nr_scanned,
+		unsigned long nr_taken),
 
-                     TP_ARGS (nr_scanned, nr_taken),
+	TP_ARGS(nr_scanned, nr_taken),
 
-                     TP_STRUCT__entry (
-                       __field (unsigned long, nr_scanned)
-                       __field (unsigned long, nr_taken)
-                     ),
+	TP_STRUCT__entry(
+		__field(unsigned long, nr_scanned)
+		__field(unsigned long, nr_taken)
+	),
 
-                     TP_fast_assign (
-                       __entry->nr_scanned = nr_scanned;
-                       __entry->nr_taken = nr_taken;
-                     ),
+	TP_fast_assign(
+		__entry->nr_scanned = nr_scanned;
+		__entry->nr_taken = nr_taken;
+	),
 
-                     TP_printk ("nr_scanned=%lu nr_taken=%lu",
-                                __entry->nr_scanned,
-                                __entry->nr_taken)
-                    );
+	TP_printk("nr_scanned=%lu nr_taken=%lu",
+		__entry->nr_scanned,
+		__entry->nr_taken)
+);
 
-DEFINE_EVENT (mm_compaction_isolate_template, mm_compaction_isolate_migratepages,
+DEFINE_EVENT(mm_compaction_isolate_template, mm_compaction_isolate_migratepages,
 
-              TP_PROTO (unsigned long nr_scanned,
-                        unsigned long nr_taken),
+	TP_PROTO(unsigned long nr_scanned,
+		unsigned long nr_taken),
 
-              TP_ARGS (nr_scanned, nr_taken)
-             );
+	TP_ARGS(nr_scanned, nr_taken)
+);
 
-DEFINE_EVENT (mm_compaction_isolate_template, mm_compaction_isolate_freepages,
-              TP_PROTO (unsigned long nr_scanned,
-                        unsigned long nr_taken),
+DEFINE_EVENT(mm_compaction_isolate_template, mm_compaction_isolate_freepages,
+	TP_PROTO(unsigned long nr_scanned,
+		unsigned long nr_taken),
 
-              TP_ARGS (nr_scanned, nr_taken)
-             );
+	TP_ARGS(nr_scanned, nr_taken)
+);
 
-TRACE_EVENT (mm_compaction_migratepages,
+TRACE_EVENT(mm_compaction_migratepages,
 
-             TP_PROTO (unsigned long nr_migrated,
-                       unsigned long nr_failed),
+	TP_PROTO(unsigned long nr_migrated,
+		unsigned long nr_failed),
 
-             TP_ARGS (nr_migrated, nr_failed),
+	TP_ARGS(nr_migrated, nr_failed),
 
-             TP_STRUCT__entry (
-               __field (unsigned long, nr_migrated)
-               __field (unsigned long, nr_failed)
-             ),
+	TP_STRUCT__entry(
+		__field(unsigned long, nr_migrated)
+		__field(unsigned long, nr_failed)
+	),
 
-             TP_fast_assign (
-               __entry->nr_migrated = nr_migrated;
-               __entry->nr_failed = nr_failed;
-             ),
+	TP_fast_assign(
+		__entry->nr_migrated = nr_migrated;
+		__entry->nr_failed = nr_failed;
+	),
 
-             TP_printk ("nr_migrated=%lu nr_failed=%lu",
-                        __entry->nr_migrated,
-                        __entry->nr_failed)
-            );
+	TP_printk("nr_migrated=%lu nr_failed=%lu",
+		__entry->nr_migrated,
+		__entry->nr_failed)
+);
 
 
 #endif /* _TRACE_COMPACTION_H */

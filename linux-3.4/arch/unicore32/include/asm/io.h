@@ -17,15 +17,15 @@
 #include <asm/byteorder.h>
 #include <asm/memory.h>
 
-#define PCI_IOBASE  PKUNITY_PCILIO_BASE
+#define PCI_IOBASE	PKUNITY_PCILIO_BASE
 #include <asm-generic/io.h>
 
 /*
  * __uc32_ioremap and __uc32_ioremap_cached takes CPU physical address.
  */
-extern void __iomem * __uc32_ioremap (unsigned long, size_t);
-extern void __iomem * __uc32_ioremap_cached (unsigned long, size_t);
-extern void __uc32_iounmap (volatile void __iomem * addr);
+extern void __iomem *__uc32_ioremap(unsigned long, size_t);
+extern void __iomem *__uc32_ioremap_cached(unsigned long, size_t);
+extern void __uc32_iounmap(volatile void __iomem *addr);
 
 /*
  * ioremap and friends.
@@ -34,15 +34,15 @@ extern void __uc32_iounmap (volatile void __iomem * addr);
  * Documentation/io-mapping.txt.
  *
  */
-#define ioremap(cookie, size)   __uc32_ioremap(cookie, size)
-#define ioremap_cached(cookie, size)  __uc32_ioremap_cached(cookie, size)
-#define ioremap_nocache(cookie, size) __uc32_ioremap(cookie, size)
-#define iounmap(cookie)     __uc32_iounmap(cookie)
+#define ioremap(cookie, size)		__uc32_ioremap(cookie, size)
+#define ioremap_cached(cookie, size)	__uc32_ioremap_cached(cookie, size)
+#define ioremap_nocache(cookie, size)	__uc32_ioremap(cookie, size)
+#define iounmap(cookie)			__uc32_iounmap(cookie)
 
 #define HAVE_ARCH_PIO_SIZE
-#define PIO_OFFSET    (unsigned int)(PCI_IOBASE)
-#define PIO_MASK    (unsigned int)(IO_SPACE_LIMIT)
-#define PIO_RESERVED    (PIO_OFFSET + PIO_MASK + 1)
+#define PIO_OFFSET		(unsigned int)(PCI_IOBASE)
+#define PIO_MASK		(unsigned int)(IO_SPACE_LIMIT)
+#define PIO_RESERVED		(PIO_OFFSET + PIO_MASK + 1)
 
-#endif  /* __KERNEL__ */
-#endif  /* __UNICORE_IO_H__ */
+#endif	/* __KERNEL__ */
+#endif	/* __UNICORE_IO_H__ */

@@ -11,7 +11,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -32,12 +32,12 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-void pci_init_board (void)
+void pci_init_board(void)
 {
-  fsl_pcie_init_board (0);
+	fsl_pcie_init_board(0);
 }
 
-void ft_pci_board_setup (void * blob)
+void ft_pci_board_setup(void *blob)
 {
-  FT_FSL_PCI_SETUP;
+	FT_FSL_PCI_SETUP;
 }

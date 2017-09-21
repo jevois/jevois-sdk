@@ -31,25 +31,25 @@
 #include "iwl-commands.h"
 
 enum iwl_power_level {
-  IWL_POWER_INDEX_1,
-  IWL_POWER_INDEX_2,
-  IWL_POWER_INDEX_3,
-  IWL_POWER_INDEX_4,
-  IWL_POWER_INDEX_5,
-  IWL_POWER_NUM
+	IWL_POWER_INDEX_1,
+	IWL_POWER_INDEX_2,
+	IWL_POWER_INDEX_3,
+	IWL_POWER_INDEX_4,
+	IWL_POWER_INDEX_5,
+	IWL_POWER_NUM
 };
 
 struct iwl_power_mgr {
-  struct iwl_powertable_cmd sleep_cmd;
-  struct iwl_powertable_cmd sleep_cmd_next;
-  int debug_sleep_level_override;
-  bool bus_pm;
+	struct iwl_powertable_cmd sleep_cmd;
+	struct iwl_powertable_cmd sleep_cmd_next;
+	int debug_sleep_level_override;
+	bool bus_pm;
 };
 
-int iwl_power_set_mode (struct iwl_priv * priv, struct iwl_powertable_cmd * cmd,
-                        bool force);
-int iwl_power_update_mode (struct iwl_priv * priv, bool force);
-void iwl_power_initialize (struct iwl_priv * priv);
+int iwl_power_set_mode(struct iwl_priv *priv, struct iwl_powertable_cmd *cmd,
+		       bool force);
+int iwl_power_update_mode(struct iwl_priv *priv, bool force);
+void iwl_power_initialize(struct iwl_priv *priv);
 
 extern bool no_sleep_autoadjust;
 

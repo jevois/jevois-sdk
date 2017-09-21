@@ -7,7 +7,7 @@
 #define MAPLE_DMA_ORDER 14
 #define MAPLE_DMA_SIZE (1 << MAPLE_DMA_ORDER)
 #define MAPLE_DMA_PAGES ((MAPLE_DMA_ORDER > PAGE_SHIFT) ? \
-                         MAPLE_DMA_ORDER - PAGE_SHIFT : 0)
+			  MAPLE_DMA_ORDER - PAGE_SHIFT : 0)
 
 /* Maple Bus registers */
 #define MAPLE_BASE     0xa05f6c00

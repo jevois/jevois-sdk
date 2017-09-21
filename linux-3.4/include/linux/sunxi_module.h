@@ -23,12 +23,12 @@
  */
 typedef struct sunxi_module_info
 {
-  char module[16];
-  char version[16];
-} sunxi_module_info_t;
+	char module[16];
+	char version[16];
+}sunxi_module_info_t;
 
-int sunxi_module_info_register (struct sunxi_module_info * module_info);
-int sunxi_module_info_unregister (struct sunxi_module_info * module_info);
+int sunxi_module_info_register(struct sunxi_module_info *module_info);
+int sunxi_module_info_unregister(struct sunxi_module_info *module_info);
 
 #endif /* __SUNXI_MACH_SUNXI_MODULE_H */
 

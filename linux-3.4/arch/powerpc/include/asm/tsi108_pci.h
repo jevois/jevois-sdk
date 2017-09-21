@@ -9,7 +9,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -37,9 +37,9 @@
 #define TSI108_PCI_PFAB_PFM3 (TSI108_PCI_OFFSET + 0x220)
 #define TSI108_PCI_PFAB_PFM4 (TSI108_PCI_OFFSET + 0x230)
 
-extern int tsi108_setup_pci (struct device_node * dev, u32 cfg_phys, int primary);
-extern void tsi108_pci_int_init (struct device_node * node);
-extern void tsi108_irq_cascade (unsigned int irq, struct irq_desc * desc);
-extern void tsi108_clear_pci_cfg_error (void);
+extern int tsi108_setup_pci(struct device_node *dev, u32 cfg_phys, int primary);
+extern void tsi108_pci_int_init(struct device_node *node);
+extern void tsi108_irq_cascade(unsigned int irq, struct irq_desc *desc);
+extern void tsi108_clear_pci_cfg_error(void);
 
-#endif        /*  _ASM_POWERPC_TSI108_PCI_H */
+#endif				/*  _ASM_POWERPC_TSI108_PCI_H */

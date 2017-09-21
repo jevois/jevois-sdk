@@ -33,5 +33,5 @@
 /*
   Prepare OS dependent part of BRI functions
 */
-void diva_os_prepare_maestra_functions (PISDN_ADAPTER IoAdapter);
+void diva_os_prepare_maestra_functions(PISDN_ADAPTER IoAdapter);
 #endif

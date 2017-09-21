@@ -26,25 +26,25 @@
  * This implementation only contains a compiler barrier.
  */
 
-#define mb()  asm volatile ("": : :"memory")
-#define rmb() mb()
-#define wmb() asm volatile ("": : :"memory")
+#define mb()	asm volatile ("": : :"memory")
+#define rmb()	mb()
+#define wmb()	asm volatile ("": : :"memory")
 
 #ifdef CONFIG_SMP
-#define smp_mb()  mb()
-#define smp_rmb() rmb()
-#define smp_wmb() wmb()
+#define smp_mb()	mb()
+#define smp_rmb()	rmb()
+#define smp_wmb()	wmb()
 #else
-#define smp_mb()  barrier()
-#define smp_rmb() barrier()
-#define smp_wmb() barrier()
+#define smp_mb()	barrier()
+#define smp_rmb()	barrier()
+#define smp_wmb()	barrier()
 #endif
 
 #define set_mb(var, value)  do { var = value;  mb(); } while (0)
 #define set_wmb(var, value) do { var = value; wmb(); } while (0)
 
-#define read_barrier_depends()    do {} while (0)
-#define smp_read_barrier_depends()  do {} while (0)
+#define read_barrier_depends()		do {} while (0)
+#define smp_read_barrier_depends()	do {} while (0)
 
 #endif /* !__ASSEMBLY__ */
 #endif /* __ASM_GENERIC_BARRIER_H */

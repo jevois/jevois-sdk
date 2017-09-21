@@ -149,7 +149,7 @@
 #elif defined(WIN64)
 #include "acwin64.h"
 
-#elif defined(MSDOS)    /* Must appear after WIN32 and WIN64 check */
+#elif defined(MSDOS)		/* Must appear after WIN32 and WIN64 check */
 #include "acdos16.h"
 
 #elif defined(__FreeBSD__) || defined(__FreeBSD_kernel__)
@@ -214,7 +214,7 @@
 #else
 #define DEBUGGER_THREADING          DEBUGGER_MULTI_THREADED
 #endif
-#endif        /* !DEBUGGER_THREADING */
+#endif				/* !DEBUGGER_THREADING */
 
 /******************************************************************************
  *
@@ -238,7 +238,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#endif        /* ACPI_USE_STANDARD_HEADERS */
+#endif				/* ACPI_USE_STANDARD_HEADERS */
 
 /*
  * We will be linking to the standard Clib functions
@@ -274,19 +274,19 @@
  *
  *****************************************************************************/
 
-/*
- * Use local definitions of C library macros and functions
- * NOTE: The function implementations may not be as efficient
- * as an inline or assembly code implementation provided by a
- * native C library.
- */
+ /*
+  * Use local definitions of C library macros and functions
+  * NOTE: The function implementations may not be as efficient
+  * as an inline or assembly code implementation provided by a
+  * native C library.
+  */
 
 #ifndef va_arg
 
 #ifndef _VALIST
 #define _VALIST
-typedef char * va_list;
-#endif        /* _VALIST */
+typedef char *va_list;
+#endif				/* _VALIST */
 
 /*
  * Storage alignment properties
@@ -302,7 +302,7 @@ typedef char * va_list;
 #define va_end(ap)              (void) 0
 #define va_start(ap, A)         (void) ((ap) = (((char *) &(A)) + (_bnd (A,_AUPBND))))
 
-#endif        /* va_arg */
+#endif				/* va_arg */
 
 #define ACPI_STRSTR(s1,s2)      acpi_ut_strstr ((s1), (s2))
 #define ACPI_STRCHR(s1,c)       acpi_ut_strchr ((s1), (c))
@@ -320,7 +320,7 @@ typedef char * va_list;
 #define ACPI_TOUPPER(c)         acpi_ut_to_upper ((int) (c))
 #define ACPI_TOLOWER(c)         acpi_ut_to_lower ((int) (c))
 
-#endif        /* ACPI_USE_SYSTEM_CLIBRARY */
+#endif				/* ACPI_USE_SYSTEM_CLIBRARY */
 
 /******************************************************************************
  *
@@ -361,7 +361,7 @@ typedef char * va_list;
 #define ACPI_ACQUIRE_GLOBAL_LOCK(Glptr, acq)
 #define ACPI_RELEASE_GLOBAL_LOCK(Glptr, acq)
 
-#endif        /* ACPI_ASM_MACROS */
+#endif				/* ACPI_ASM_MACROS */
 
 #ifdef ACPI_APPLICATION
 
@@ -377,4 +377,4 @@ typedef char * va_list;
  * headers.
  *
  *****************************************************************************/
-#endif        /* __ACENV_H__ */
+#endif				/* __ACENV_H__ */

@@ -20,9 +20,9 @@
 /* ---- Include Files ---------------------------------------------------- */
 
 #ifdef __KERNEL__
-#include <linux/string.h>
+   #include <linux/string.h>
 #else
-#include <string.h>
+   #include <string.h>
 #endif
 
 /* ---- Public Constants and Types --------------------------------------- */

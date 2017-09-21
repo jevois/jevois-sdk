@@ -20,4 +20,4 @@
  *  02111-1307  USA
  */
 
-int __init snd_cx18_mixer_create (struct snd_cx18_card * cxsc);
+int __init snd_cx18_mixer_create(struct snd_cx18_card *cxsc);

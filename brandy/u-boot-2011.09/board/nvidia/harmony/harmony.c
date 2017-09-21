@@ -29,6 +29,6 @@
  * Routine: gpio_config_uart
  * Description: Does nothing on Harmony - no conflict w/SPI.
  */
-void gpio_config_uart (void)
+void gpio_config_uart(void)
 {
 }

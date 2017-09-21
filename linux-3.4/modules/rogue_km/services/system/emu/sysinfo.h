@@ -53,10 +53,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define SYS_DEVICE_COUNT 3 /* RGX, DISPLAY (external), BUFFER (external) */
 #define SYS_PHYS_HEAP_COUNT 2
 
-#define SYS_RGX_DEV_VENDOR_ID 0x1010
+#define SYS_RGX_DEV_VENDOR_ID	0x1010
 /* PCI emulator board */
-#define SYS_RGX_DEV_DEVICE_ID 0x1CE0
+#define	SYS_RGX_DEV_DEVICE_ID	0x1CE0
 /* PCI Express emulator board */
-#define SYS_RGX_DEV1_DEVICE_ID  0x1CE3
+#define	SYS_RGX_DEV1_DEVICE_ID	0x1CE3
 
-#endif  /* __SYSINFO_H__ */
+#endif	/* __SYSINFO_H__ */

@@ -24,6 +24,6 @@
 #ifndef _OSD_H_
 #define _OSD_H_
 
-int osd_probe (unsigned screen);
+int osd_probe(unsigned screen);
 
 #endif

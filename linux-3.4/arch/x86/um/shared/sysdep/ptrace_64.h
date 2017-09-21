@@ -81,11 +81,11 @@
 #define REGS_ERR(r) ((r)->fault_type)
 
 struct uml_pt_regs {
-  unsigned long gp[MAX_REG_NR];
-  unsigned long fp[HOST_FP_SIZE];
-  struct faultinfo faultinfo;
-  long syscall;
-  int is_user;
+	unsigned long gp[MAX_REG_NR];
+	unsigned long fp[HOST_FP_SIZE];
+	struct faultinfo faultinfo;
+	long syscall;
+	int is_user;
 };
 
 #define EMPTY_UML_PT_REGS { }
@@ -123,7 +123,7 @@ struct uml_pt_regs {
 #define UPT_SYSCALL_NR(r) ((r)->syscall)
 #define UPT_SYSCALL_RET(r) UPT_RAX(r)
 
-extern int user_context (unsigned long sp);
+extern int user_context(unsigned long sp);
 
 #define UPT_IS_USER(r) ((r)->is_user)
 
@@ -135,22 +135,22 @@ extern int user_context (unsigned long sp);
 #define UPT_SYSCALL_ARG6(r) UPT_R9(r)
 
 struct syscall_args {
-  unsigned long args[6];
+	unsigned long args[6];
 };
 
 #define SYSCALL_ARGS(r) ((struct syscall_args) \
-{ .args = { UPT_SYSCALL_ARG1(r),  \
-            UPT_SYSCALL_ARG2(r),  \
-            UPT_SYSCALL_ARG3(r),  \
-            UPT_SYSCALL_ARG4(r),  \
-            UPT_SYSCALL_ARG5(r),  \
-            UPT_SYSCALL_ARG6(r) } } )
+			 { .args = { UPT_SYSCALL_ARG1(r),	 \
+				     UPT_SYSCALL_ARG2(r),	 \
+				     UPT_SYSCALL_ARG3(r),	 \
+				     UPT_SYSCALL_ARG4(r),	 \
+				     UPT_SYSCALL_ARG5(r),	 \
+				     UPT_SYSCALL_ARG6(r) } } )
 
 #define UPT_RESTART_SYSCALL(r) REGS_RESTART_SYSCALL((r)->gp)
 
 #define UPT_FAULTINFO(r) (&(r)->faultinfo)
 
-static inline void arch_init_registers (int pid)
+static inline void arch_init_registers(int pid)
 {
 }
 

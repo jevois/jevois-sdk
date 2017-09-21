@@ -24,73 +24,73 @@
 #include <linux/dvb/frontend.h>
 
 struct rtl2830_config {
-  /*
-   * Demodulator I2C address.
-   */
-  u8 i2c_addr;
-  
-  /*
-   * Xtal frequency.
-   * Hz
-   * 4000000, 16000000, 25000000, 28800000
-   */
-  u32 xtal;
-  
-  /*
-   * TS output mode.
-   */
-  u8 ts_mode;
-  
-  /*
-   * Spectrum inversion.
-   */
-  bool spec_inv;
-  
-  /*
-   * IFs for all used modes.
-   * Hz
-   * 4570000, 4571429, 36000000, 36125000, 36166667, 44000000
-   */
-  u32 if_dvbt;
-  
-  /*
-   */
-  u8 vtop;
-  
-  /*
-   */
-  u8 krf;
-  
-  /*
-   */
-  u8 agc_targ_val;
+	/*
+	 * Demodulator I2C address.
+	 */
+	u8 i2c_addr;
+
+	/*
+	 * Xtal frequency.
+	 * Hz
+	 * 4000000, 16000000, 25000000, 28800000
+	 */
+	u32 xtal;
+
+	/*
+	 * TS output mode.
+	 */
+	u8 ts_mode;
+
+	/*
+	 * Spectrum inversion.
+	 */
+	bool spec_inv;
+
+	/*
+	 * IFs for all used modes.
+	 * Hz
+	 * 4570000, 4571429, 36000000, 36125000, 36166667, 44000000
+	 */
+	u32 if_dvbt;
+
+	/*
+	 */
+	u8 vtop;
+
+	/*
+	 */
+	u8 krf;
+
+	/*
+	 */
+	u8 agc_targ_val;
 };
 
 #if defined(CONFIG_DVB_RTL2830) || \
-(defined(CONFIG_DVB_RTL2830_MODULE) && defined(MODULE))
-extern struct dvb_frontend * rtl2830_attach (
-  const struct rtl2830_config * config,
-  struct i2c_adapter * i2c
+	(defined(CONFIG_DVB_RTL2830_MODULE) && defined(MODULE))
+extern struct dvb_frontend *rtl2830_attach(
+	const struct rtl2830_config *config,
+	struct i2c_adapter *i2c
 );
 
-extern struct i2c_adapter * rtl2830_get_tuner_i2c_adapter (
-  struct dvb_frontend * fe
+extern struct i2c_adapter *rtl2830_get_tuner_i2c_adapter(
+	struct dvb_frontend *fe
 );
 #else
-static inline struct dvb_frontend * rtl2830_attach (
-  const struct rtl2830_config * config,
-  struct i2c_adapter * i2c
+static inline struct dvb_frontend *rtl2830_attach(
+	const struct rtl2830_config *config,
+	struct i2c_adapter *i2c
 )
 {
-  printk (KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
-  return NULL;
+	printk(KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
+	return NULL;
 }
 
-static inline struct i2c_adapter * rtl2830_get_tuner_i2c_adapter (
-  struct dvb_frontend * fe
+static inline struct i2c_adapter *rtl2830_get_tuner_i2c_adapter(
+	struct dvb_frontend *fe
 )
 {
-  return NULL;
+	return NULL;
 }
 #endif
 

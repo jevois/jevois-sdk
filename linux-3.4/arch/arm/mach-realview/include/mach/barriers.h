@@ -3,6 +3,6 @@
  * controller to work around hardware errata causing the outer_sync()
  * operation to deadlock the system.
  */
-#define mb()    dsb()
-#define rmb()   dsb()
-#define wmb()   mb()
+#define mb()		dsb()
+#define rmb()		dsb()
+#define wmb()		mb()

@@ -81,7 +81,7 @@
 
 #define M_MC_RESERVED1              _SB_MAKEMASK(8, 32)
 
-#define S_MC_QUEUE_SIZE       40
+#define S_MC_QUEUE_SIZE		    40
 #define M_MC_QUEUE_SIZE             _SB_MAKEMASK(4, S_MC_QUEUE_SIZE)
 #define V_MC_QUEUE_SIZE(x)          _SB_MAKEVALUE(x, S_MC_QUEUE_SIZE)
 #define G_MC_QUEUE_SIZE(x)          _SB_GETVALUE(x, S_MC_QUEUE_SIZE, M_MC_QUEUE_SIZE)
@@ -99,7 +99,7 @@
 #define G_MC_WR_LIMIT(x)            _SB_GETVALUE(x, S_MC_WR_LIMIT, M_MC_WR_LIMIT)
 #define V_MC_WR_LIMIT_DEFAULT       V_MC_WR_LIMIT(5)
 
-#define M_MC_IOB1HIGHPRIORITY     _SB_MAKEMASK1(52)
+#define M_MC_IOB1HIGHPRIORITY	    _SB_MAKEMASK1(52)
 
 #define M_MC_RESERVED2              _SB_MAKEMASK(3, 53)
 
@@ -126,9 +126,9 @@
 #define M_MC_DEBUG                  _SB_MAKEMASK1(63)
 
 #define V_MC_CONFIG_DEFAULT     V_MC_WR_LIMIT_DEFAULT | V_MC_AGE_LIMIT_DEFAULT | \
-  V_MC_BANK0_MAP_DEFAULT | V_MC_BANK1_MAP_DEFAULT | \
-  V_MC_BANK2_MAP_DEFAULT | V_MC_BANK3_MAP_DEFAULT | V_MC_CHANNEL_SEL(0) | \
-  M_MC_IOB1HIGHPRIORITY | V_MC_QUEUE_SIZE_DEFAULT
+				V_MC_BANK0_MAP_DEFAULT | V_MC_BANK1_MAP_DEFAULT | \
+				V_MC_BANK2_MAP_DEFAULT | V_MC_BANK3_MAP_DEFAULT | V_MC_CHANNEL_SEL(0) | \
+                                M_MC_IOB1HIGHPRIORITY | V_MC_QUEUE_SIZE_DEFAULT
 
 
 /*
@@ -147,9 +147,9 @@
 #define K_MC_CLK_RATIO_3X           6
 #define K_MC_CLK_RATIO_35X          7
 #define K_MC_CLK_RATIO_4X           8
-#define K_MC_CLK_RATIO_45X      9
+#define K_MC_CLK_RATIO_45X	    9
 
-#define V_MC_CLK_RATIO_2X     V_MC_CLK_RATIO(K_MC_CLK_RATIO_2X)
+#define V_MC_CLK_RATIO_2X	    V_MC_CLK_RATIO(K_MC_CLK_RATIO_2X)
 #define V_MC_CLK_RATIO_25X          V_MC_CLK_RATIO(K_MC_CLK_RATIO_25X)
 #define V_MC_CLK_RATIO_3X           V_MC_CLK_RATIO(K_MC_CLK_RATIO_3X)
 #define V_MC_CLK_RATIO_35X          V_MC_CLK_RATIO(K_MC_CLK_RATIO_35X)
@@ -220,13 +220,13 @@
 #define V_MC_DLL_DEFAULT_DEFAULT     V_MC_DLL_DEFAULT(0x10)
 
 #define V_MC_CLKCONFIG_DEFAULT       V_MC_DLL_DEFAULT_DEFAULT |  \
-  V_MC_ADDR_SKEW_DEFAULT | \
-  V_MC_DQO_SKEW_DEFAULT | \
-  V_MC_DQI_SKEW_DEFAULT | \
-  V_MC_ADDR_DRIVE_DEFAULT | \
-  V_MC_DATA_DRIVE_DEFAULT | \
-  V_MC_CLOCK_DRIVE_DEFAULT | \
-  V_MC_REF_RATE_DEFAULT
+                                     V_MC_ADDR_SKEW_DEFAULT | \
+                                     V_MC_DQO_SKEW_DEFAULT | \
+                                     V_MC_DQI_SKEW_DEFAULT | \
+                                     V_MC_ADDR_DRIVE_DEFAULT | \
+                                     V_MC_DATA_DRIVE_DEFAULT | \
+                                     V_MC_CLOCK_DRIVE_DEFAULT | \
+                                     V_MC_REF_RATE_DEFAULT
 
 
 
@@ -285,13 +285,13 @@
 
 #define K_MC_DRAM_TYPE_JEDEC        0
 #define K_MC_DRAM_TYPE_FCRAM        1
-#define K_MC_DRAM_TYPE_SGRAM      2
+#define K_MC_DRAM_TYPE_SGRAM	    2
 
 #define V_MC_DRAM_TYPE_JEDEC        V_MC_DRAM_TYPE(K_MC_DRAM_TYPE_JEDEC)
 #define V_MC_DRAM_TYPE_FCRAM        V_MC_DRAM_TYPE(K_MC_DRAM_TYPE_FCRAM)
 #define V_MC_DRAM_TYPE_SGRAM        V_MC_DRAM_TYPE(K_MC_DRAM_TYPE_SGRAM)
 
-#define M_MC_EXTERNALDECODE     _SB_MAKEMASK1(35)
+#define M_MC_EXTERNALDECODE	    _SB_MAKEMASK1(35)
 
 #if SIBYTE_HDR_FEATURE(1250, PASS3) || SIBYTE_HDR_FEATURE(112x, PASS1)
 #define M_MC_PRE_ON_A8              _SB_MAKEMASK1(36)
@@ -304,9 +304,9 @@
  * SDRAM Timing Register  (Table 6-15)
  */
 
-#define M_MC_w2rIDLE_TWOCYCLES    _SB_MAKEMASK1(60)
-#define M_MC_r2wIDLE_TWOCYCLES    _SB_MAKEMASK1(61)
-#define M_MC_r2rIDLE_TWOCYCLES    _SB_MAKEMASK1(62)
+#define M_MC_w2rIDLE_TWOCYCLES	  _SB_MAKEMASK1(60)
+#define M_MC_r2wIDLE_TWOCYCLES	  _SB_MAKEMASK1(61)
+#define M_MC_r2rIDLE_TWOCYCLES	  _SB_MAKEMASK1(62)
 
 #define S_MC_tFIFO                56
 #define M_MC_tFIFO                _SB_MAKEMASK(4, S_MC_tFIFO)
@@ -323,7 +323,7 @@
 #define V_MC_tRFC_DEFAULT         V_MC_tRFC(K_MC_tRFC_DEFAULT)
 
 #if SIBYTE_HDR_FEATURE(1250, PASS3)
-#define M_MC_tRFC_PLUS16          _SB_MAKEMASK1(51) /* 1250C3 and later.  */
+#define M_MC_tRFC_PLUS16          _SB_MAKEMASK1(51)	/* 1250C3 and later.  */
 #endif
 
 #define S_MC_tCwCr                40
@@ -369,7 +369,7 @@
 #define V_MC_tCwD_DEFAULT         V_MC_tCwD(K_MC_tCwD_DEFAULT)
 
 #define M_tCrDh                   _SB_MAKEMASK1(7)
-#define M_MC_tCrDh      M_tCrDh
+#define M_MC_tCrDh		  M_tCrDh
 
 #define S_MC_tCrD                 4
 #define M_MC_tCrD                 _SB_MAKEMASK(3, S_MC_tCrD)
@@ -386,16 +386,16 @@
 #define V_MC_tRCD_DEFAULT         V_MC_tRCD(K_MC_tRCD_DEFAULT)
 
 #define V_MC_TIMING_DEFAULT     V_MC_tFIFO(K_MC_tFIFO_DEFAULT) | \
-  V_MC_tRFC(K_MC_tRFC_DEFAULT) | \
-  V_MC_tCwCr(K_MC_tCwCr_DEFAULT) | \
-  V_MC_tRCr(K_MC_tRCr_DEFAULT) | \
-  V_MC_tRCw(K_MC_tRCw_DEFAULT) | \
-  V_MC_tRRD(K_MC_tRRD_DEFAULT) | \
-  V_MC_tRP(K_MC_tRP_DEFAULT) | \
-  V_MC_tCwD(K_MC_tCwD_DEFAULT) | \
-  V_MC_tCrD(K_MC_tCrD_DEFAULT) | \
-  V_MC_tRCD(K_MC_tRCD_DEFAULT) | \
-  M_MC_r2rIDLE_TWOCYCLES
+                                V_MC_tRFC(K_MC_tRFC_DEFAULT) | \
+                                V_MC_tCwCr(K_MC_tCwCr_DEFAULT) | \
+                                V_MC_tRCr(K_MC_tRCr_DEFAULT) | \
+                                V_MC_tRCw(K_MC_tRCw_DEFAULT) | \
+                                V_MC_tRRD(K_MC_tRRD_DEFAULT) | \
+                                V_MC_tRP(K_MC_tRP_DEFAULT) | \
+                                V_MC_tCwD(K_MC_tCwD_DEFAULT) | \
+                                V_MC_tCrD(K_MC_tCrD_DEFAULT) | \
+                                V_MC_tRCD(K_MC_tRCD_DEFAULT) | \
+                                M_MC_r2rIDLE_TWOCYCLES
 
 /*
  * Errata says these are not the default

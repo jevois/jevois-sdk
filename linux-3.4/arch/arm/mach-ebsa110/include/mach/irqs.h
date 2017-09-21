@@ -8,13 +8,13 @@
  * published by the Free Software Foundation.
  */
 
-#define NR_IRQS     8
+#define NR_IRQS			8
 
-#define IRQ_EBSA110_PRINTER 0
-#define IRQ_EBSA110_COM1  1
-#define IRQ_EBSA110_COM2  2
-#define IRQ_EBSA110_ETHERNET  3
-#define IRQ_EBSA110_TIMER0  4
-#define IRQ_EBSA110_TIMER1  5
-#define IRQ_EBSA110_PCMCIA  6
-#define IRQ_EBSA110_IMMEDIATE 7
+#define IRQ_EBSA110_PRINTER	0
+#define IRQ_EBSA110_COM1	1
+#define IRQ_EBSA110_COM2	2
+#define IRQ_EBSA110_ETHERNET	3
+#define IRQ_EBSA110_TIMER0	4
+#define IRQ_EBSA110_TIMER1	5
+#define IRQ_EBSA110_PCMCIA	6
+#define IRQ_EBSA110_IMMEDIATE	7

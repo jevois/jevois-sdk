@@ -29,32 +29,32 @@
 
 struct cx24110_config
 {
-  /* the demodulator's i2c address */
-  u8 demod_address;
+	/* the demodulator's i2c address */
+	u8 demod_address;
 };
 
-static inline int cx24110_pll_write (struct dvb_frontend * fe, u32 val)
+static inline int cx24110_pll_write(struct dvb_frontend *fe, u32 val)
 {
-  u8 buf[] = {
-    (u8) ( (val >> 24) & 0xff),
-    (u8) ( (val >> 16) & 0xff),
-    (u8) ( (val >> 8) & 0xff)
-  };
-  
-  if (fe->ops.write)
-  { return fe->ops.write (fe, buf, 3); }
-  return 0;
+	u8 buf[] = {
+		(u8)((val >> 24) & 0xff),
+		(u8)((val >> 16) & 0xff),
+		(u8)((val >> 8) & 0xff)
+	};
+
+	if (fe->ops.write)
+		return fe->ops.write(fe, buf, 3);
+	return 0;
 }
 
 #if defined(CONFIG_DVB_CX24110) || (defined(CONFIG_DVB_CX24110_MODULE) && defined(MODULE))
-extern struct dvb_frontend * cx24110_attach (const struct cx24110_config * config,
-    struct i2c_adapter * i2c);
+extern struct dvb_frontend* cx24110_attach(const struct cx24110_config* config,
+					   struct i2c_adapter* i2c);
 #else
-static inline struct dvb_frontend * cx24110_attach (const struct cx24110_config * config,
-    struct i2c_adapter * i2c)
+static inline struct dvb_frontend* cx24110_attach(const struct cx24110_config* config,
+						  struct i2c_adapter* i2c)
 {
-  printk (KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
-  return NULL;
+	printk(KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
+	return NULL;
 }
 #endif
 

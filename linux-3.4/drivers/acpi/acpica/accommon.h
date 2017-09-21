@@ -51,12 +51,12 @@
  *
  * Note: The order of these include files is important.
  */
-#include "acmacros.h"   /* C macros */
-#include "aclocal.h"    /* Internal data types */
-#include "acobject.h"   /* ACPI internal object */
-#include "acstruct.h"   /* Common structures */
-#include "acglobal.h"   /* All global variables */
-#include "achware.h"    /* Hardware defines and interfaces */
-#include "acutils.h"    /* Utility interfaces */
+#include "acmacros.h"		/* C macros */
+#include "aclocal.h"		/* Internal data types */
+#include "acobject.h"		/* ACPI internal object */
+#include "acstruct.h"		/* Common structures */
+#include "acglobal.h"		/* All global variables */
+#include "achware.h"		/* Hardware defines and interfaces */
+#include "acutils.h"		/* Utility interfaces */
 
-#endif        /* __ACCOMMON_H__ */
+#endif				/* __ACCOMMON_H__ */

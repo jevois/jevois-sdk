@@ -34,17 +34,17 @@
 struct task_struct;
 
 /*  this is defined in arch/process.c  */
-extern pid_t kernel_thread (int (*fn) (void *), void * arg, unsigned long flags);
-extern unsigned long thread_saved_pc (struct task_struct * tsk);
+extern pid_t kernel_thread(int (*fn)(void *), void * arg, unsigned long flags);
+extern unsigned long thread_saved_pc(struct task_struct *tsk);
 
-extern void start_thread (struct pt_regs *, unsigned long, unsigned long);
+extern void start_thread(struct pt_regs *, unsigned long, unsigned long);
 
 /*
  * thread_struct is supposed to be for context switch data.
  * Specifically, to hold the state necessary to perform switch_to...
  */
 struct thread_struct {
-  void * switch_sp;
+	void *switch_sp;
 };
 
 /*
@@ -54,14 +54,14 @@ struct thread_struct {
  */
 
 #define INIT_THREAD { \
-  }
+}
 
 #define cpu_relax() __vmyield()
 
 /*
  * "Unlazying all lazy status" occurs here.
  */
-static inline void prepare_to_copy (struct task_struct * tsk)
+static inline void prepare_to_copy(struct task_struct *tsk)
 {
 }
 
@@ -78,20 +78,20 @@ static inline void prepare_to_copy (struct task_struct * tsk)
  * If the two requests collide, you get authentic segfaulting action, so
  * you have to kick the "unmapped" base requests higher up.
  */
-#define TASK_UNMAPPED_BASE  (PAGE_ALIGN(TASK_SIZE/3))
+#define TASK_UNMAPPED_BASE	(PAGE_ALIGN(TASK_SIZE/3))
 
 
 #define task_pt_regs(task) \
-  ((struct pt_regs *)(task_stack_page(task) + THREAD_SIZE) - 1)
+	((struct pt_regs *)(task_stack_page(task) + THREAD_SIZE) - 1)
 
 #define KSTK_EIP(tsk) (pt_elr(task_pt_regs(tsk)))
 #define KSTK_ESP(tsk) (pt_psp(task_pt_regs(tsk)))
 
 /*  Free all resources held by a thread; defined in process.c  */
-extern void release_thread (struct task_struct * dead_task);
+extern void release_thread(struct task_struct *dead_task);
 
 /* Get wait channel for task P.  */
-extern unsigned long get_wchan (struct task_struct * p);
+extern unsigned long get_wchan(struct task_struct *p);
 
 /*  The following stuff is pretty HEXAGON specific.  */
 
@@ -108,14 +108,14 @@ extern unsigned long get_wchan (struct task_struct * p);
  */
 
 struct hexagon_switch_stack {
-  unsigned long long  r1716;
-  unsigned long long  r1918;
-  unsigned long long  r2120;
-  unsigned long long  r2322;
-  unsigned long long  r2524;
-  unsigned long long  r2726;
-  unsigned long   fp;
-  unsigned long   lr;
+	unsigned long long	r1716;
+	unsigned long long	r1918;
+	unsigned long long	r2120;
+	unsigned long long	r2322;
+	unsigned long long	r2524;
+	unsigned long long	r2726;
+	unsigned long		fp;
+	unsigned long		lr;
 };
 
 #endif /* !__ASSEMBLY__ */

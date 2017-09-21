@@ -1,20 +1,20 @@
 #ifndef _LMC_IOCTL_H_
 #define _LMC_IOCTL_H_
-/*  $Id: lmc_ioctl.h,v 1.15 2000/04/06 12:16:43 asj Exp $ */
+/*	$Id: lmc_ioctl.h,v 1.15 2000/04/06 12:16:43 asj Exp $	*/
 
-/*
- * Copyright (c) 1997-2000 LAN Media Corporation (LMC)
- * All rights reserved.  www.lanmedia.com
- *
- * This code is written by:
- * Andrew Stanley-Jones (asj@cban.com)
- * Rob Braun (bbraun@vix.com),
- * Michael Graff (explorer@vix.com) and
- * Matt Thomas (matt@3am-software.com).
- *
- * This software may be used and distributed according to the terms
- * of the GNU General Public License version 2, incorporated herein by reference.
- */
+ /*
+  * Copyright (c) 1997-2000 LAN Media Corporation (LMC)
+  * All rights reserved.  www.lanmedia.com
+  *
+  * This code is written by:
+  * Andrew Stanley-Jones (asj@cban.com)
+  * Rob Braun (bbraun@vix.com),
+  * Michael Graff (explorer@vix.com) and
+  * Matt Thomas (matt@3am-software.com).
+  *
+  * This software may be used and distributed according to the terms
+  * of the GNU General Public License version 2, incorporated herein by reference.
+  */
 
 #define LMCIOCGINFO             SIOCDEVPRIVATE+3 /* get current state */
 #define LMCIOCSINFO             SIOCDEVPRIVATE+4 /* set state to user values */
@@ -35,25 +35,25 @@
 #define LMC_CARDTYPE_SSI                3       /* probed card is a SSI card */
 #define LMC_CARDTYPE_T1                 4       /* probed card is a T1 card */
 
-#define LMC_CTL_CARDTYPE_LMC5200  0 /* HSSI */
-#define LMC_CTL_CARDTYPE_LMC5245  1 /* DS3 */
-#define LMC_CTL_CARDTYPE_LMC1000  2 /* SSI, V.35 */
+#define LMC_CTL_CARDTYPE_LMC5200	0	/* HSSI */
+#define LMC_CTL_CARDTYPE_LMC5245	1	/* DS3 */
+#define LMC_CTL_CARDTYPE_LMC1000	2	/* SSI, V.35 */
 #define LMC_CTL_CARDTYPE_LMC1200        3       /* DS1 */
 
-#define LMC_CTL_OFF     0 /* generic OFF value */
-#define LMC_CTL_ON      1 /* generic ON value */
+#define LMC_CTL_OFF			0	/* generic OFF value */
+#define LMC_CTL_ON			1	/* generic ON value */
 
-#define LMC_CTL_CLOCK_SOURCE_EXT  0 /* clock off line */
-#define LMC_CTL_CLOCK_SOURCE_INT  1 /* internal clock */
+#define LMC_CTL_CLOCK_SOURCE_EXT	0	/* clock off line */
+#define LMC_CTL_CLOCK_SOURCE_INT	1	/* internal clock */
 
-#define LMC_CTL_CRC_LENGTH_16   16
-#define LMC_CTL_CRC_LENGTH_32   32
+#define LMC_CTL_CRC_LENGTH_16		16
+#define LMC_CTL_CRC_LENGTH_32		32
 #define LMC_CTL_CRC_BYTESIZE_2          2
 #define LMC_CTL_CRC_BYTESIZE_4          4
 
 
-#define LMC_CTL_CABLE_LENGTH_LT_100FT 0 /* DS3 cable < 100 feet */
-#define LMC_CTL_CABLE_LENGTH_GT_100FT 1 /* DS3 cable >= 100 feet */
+#define LMC_CTL_CABLE_LENGTH_LT_100FT	0	/* DS3 cable < 100 feet */
+#define LMC_CTL_CABLE_LENGTH_GT_100FT	1	/* DS3 cable >= 100 feet */
 
 #define LMC_CTL_CIRCUIT_TYPE_E1 0
 #define LMC_CTL_CIRCUIT_TYPE_T1 1
@@ -71,24 +71,24 @@
 /*
  * assignments for the GPIO register on the DEC chip (common)
  */
-#define LMC_GEP_INIT    0x01 /* 0: */
-#define LMC_GEP_RESET   0x02 /* 1: */
-#define LMC_GEP_MODE    0x10 /* 4: */
-#define LMC_GEP_DP    0x20 /* 5: */
-#define LMC_GEP_DATA    0x40 /* 6: serial out */
-#define LMC_GEP_CLK         0x80 /* 7: serial clock */
+#define LMC_GEP_INIT		0x01 /* 0: */
+#define LMC_GEP_RESET		0x02 /* 1: */
+#define LMC_GEP_MODE		0x10 /* 4: */
+#define LMC_GEP_DP		0x20 /* 5: */
+#define LMC_GEP_DATA		0x40 /* 6: serial out */
+#define LMC_GEP_CLK	        0x80 /* 7: serial clock */
 
 /*
  * HSSI GPIO assignments
  */
-#define LMC_GEP_HSSI_ST   0x04 /* 2: receive timing sense (deprecated) */
-#define LMC_GEP_HSSI_CLOCK  0x08 /* 3: clock source */
+#define LMC_GEP_HSSI_ST		0x04 /* 2: receive timing sense (deprecated) */
+#define LMC_GEP_HSSI_CLOCK	0x08 /* 3: clock source */
 
 /*
  * T1 GPIO assignments
  */
-#define LMC_GEP_SSI_GENERATOR 0x04 /* 2: enable prog freq gen serial i/f */
-#define LMC_GEP_SSI_TXCLOCK 0x08 /* 3: provide clock on TXCLOCK output */
+#define LMC_GEP_SSI_GENERATOR	0x04 /* 2: enable prog freq gen serial i/f */
+#define LMC_GEP_SSI_TXCLOCK	0x08 /* 3: provide clock on TXCLOCK output */
 
 /*
  * Common MII16 bits
@@ -114,15 +114,15 @@
 /*
  * assignments for the MII register 16 (DS3)
  */
-#define LMC_MII16_DS3_ZERO  0x0001
-#define LMC_MII16_DS3_TRLBK 0x0002
-#define LMC_MII16_DS3_LNLBK 0x0004
-#define LMC_MII16_DS3_RAIS  0x0008
-#define LMC_MII16_DS3_TAIS  0x0010
-#define LMC_MII16_DS3_BIST  0x0020
-#define LMC_MII16_DS3_DLOS  0x0040
-#define LMC_MII16_DS3_CRC 0x1000
-#define LMC_MII16_DS3_SCRAM 0x2000
+#define LMC_MII16_DS3_ZERO	0x0001
+#define LMC_MII16_DS3_TRLBK	0x0002
+#define LMC_MII16_DS3_LNLBK	0x0004
+#define LMC_MII16_DS3_RAIS	0x0008
+#define LMC_MII16_DS3_TAIS	0x0010
+#define LMC_MII16_DS3_BIST	0x0020
+#define LMC_MII16_DS3_DLOS	0x0040
+#define LMC_MII16_DS3_CRC	0x1000
+#define LMC_MII16_DS3_SCRAM	0x2000
 #define LMC_MII16_DS3_SCRAM_LARS 0x4000
 
 /* Note: 2 pairs of LEDs where swapped by mistake
@@ -154,30 +154,30 @@
 /*
  * And SSI, LMC1000
  */
-#define LMC_MII16_SSI_DTR 0x0001  /* DTR output RW */
-#define LMC_MII16_SSI_DSR 0x0002  /* DSR input RO */
-#define LMC_MII16_SSI_RTS 0x0004  /* RTS output RW */
-#define LMC_MII16_SSI_CTS 0x0008  /* CTS input RO */
-#define LMC_MII16_SSI_DCD 0x0010  /* DCD input RO */
-#define LMC_MII16_SSI_RI    0x0020  /* RI input RO */
+#define LMC_MII16_SSI_DTR	0x0001	/* DTR output RW */
+#define LMC_MII16_SSI_DSR	0x0002	/* DSR input RO */
+#define LMC_MII16_SSI_RTS	0x0004	/* RTS output RW */
+#define LMC_MII16_SSI_CTS	0x0008	/* CTS input RO */
+#define LMC_MII16_SSI_DCD	0x0010	/* DCD input RO */
+#define LMC_MII16_SSI_RI		0x0020	/* RI input RO */
 #define LMC_MII16_SSI_CRC                0x1000  /* CRC select - RW */
 
 /*
  * bits 0x0080 through 0x0800 are generic, and described
  * above with LMC_MII16_LED[0123] _LED_ALL, and _FIFO_RESET
  */
-#define LMC_MII16_SSI_LL    0x1000  /* LL output RW */
-#define LMC_MII16_SSI_RL    0x2000  /* RL output RW */
-#define LMC_MII16_SSI_TM    0x4000  /* TM input RO */
-#define LMC_MII16_SSI_LOOP  0x8000  /* loopback enable RW */
+#define LMC_MII16_SSI_LL		0x1000	/* LL output RW */
+#define LMC_MII16_SSI_RL		0x2000	/* RL output RW */
+#define LMC_MII16_SSI_TM		0x4000	/* TM input RO */
+#define LMC_MII16_SSI_LOOP	0x8000	/* loopback enable RW */
 
 /*
  * Some of the MII16 bits are mirrored in the MII17 register as well,
  * but let's keep thing separate for now, and get only the cable from
  * the MII17.
  */
-#define LMC_MII17_SSI_CABLE_MASK  0x0038  /* mask to extract the cable type */
-#define LMC_MII17_SSI_CABLE_SHIFT 3 /* shift to extract the cable type */
+#define LMC_MII17_SSI_CABLE_MASK	0x0038	/* mask to extract the cable type */
+#define LMC_MII17_SSI_CABLE_SHIFT 3	/* shift to extract the cable type */
 
 /*
  * And T1, LMC1200
@@ -234,19 +234,19 @@ typedef struct lmc_st1f_control {
   int command;
   int address;
   int value;
-  char __user * data;
+  char __user *data;
 } lmc_t1f_control;
 
 enum lmc_xilinx_c {
-  lmc_xilinx_reset = 1,
-  lmc_xilinx_load_prom = 2,
-  lmc_xilinx_load = 3
+    lmc_xilinx_reset = 1,
+    lmc_xilinx_load_prom = 2,
+    lmc_xilinx_load = 3
 };
 
 struct lmc_xilinx_control {
-  enum lmc_xilinx_c command;
-  int len;
-  char __user * data;
+    enum lmc_xilinx_c command;
+    int len;
+    char __user *data;
 };
 
 /* ------------------ end T1 defs ------------------- */

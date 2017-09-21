@@ -30,42 +30,42 @@
 # error invalid EBIU_DDRQUE value: must not set reserved bits
 #endif
 
-__attribute__ ( (always_inline) ) static inline void
-program_async_controller (ADI_BOOT_DATA * bs)
+__attribute__((always_inline)) static inline void
+program_async_controller(ADI_BOOT_DATA *bs)
 {
-  #ifdef BFIN_IN_INITCODE
-  /*
-   * We really only need to setup the async banks early if we're
-   * booting out of it.  Otherwise, do it later on in cpu_init.
-   */
-  if (CONFIG_BFIN_BOOT_MODE != BFIN_BOOT_BYPASS &&
-      CONFIG_BFIN_BOOT_MODE != BFIN_BOOT_PARA)
-  { return; }
-  #endif
-  
-  serial_putc ('a');
-  
-  /* Program the async banks controller. */
-  bfin_write_EBIU_AMBCTL0 (CONFIG_EBIU_AMBCTL0_VAL);
-  bfin_write_EBIU_AMBCTL1 (CONFIG_EBIU_AMBCTL1_VAL);
-  bfin_write_EBIU_AMGCTL (CONFIG_EBIU_AMGCTL_VAL);
-  
-  serial_putc ('b');
-  
-  /* Not all parts have these additional MMRs. */
-  #ifdef EBIU_MBSCTL
-  bfin_write_EBIU_MBSCTL (CONFIG_EBIU_MBSCTL_VAL);
-  #endif
-  #ifdef EBIU_MODE
-  # ifdef CONFIG_EBIU_MODE_VAL
-  bfin_write_EBIU_MODE (CONFIG_EBIU_MODE_VAL);
-  # endif
-  # ifdef CONFIG_EBIU_FCTL_VAL
-  bfin_write_EBIU_FCTL (CONFIG_EBIU_FCTL_VAL);
-  # endif
-  #endif
-  
-  serial_putc ('c');
+#ifdef BFIN_IN_INITCODE
+	/*
+	 * We really only need to setup the async banks early if we're
+	 * booting out of it.  Otherwise, do it later on in cpu_init.
+	 */
+	if (CONFIG_BFIN_BOOT_MODE != BFIN_BOOT_BYPASS &&
+	    CONFIG_BFIN_BOOT_MODE != BFIN_BOOT_PARA)
+		return;
+#endif
+
+	serial_putc('a');
+
+	/* Program the async banks controller. */
+	bfin_write_EBIU_AMBCTL0(CONFIG_EBIU_AMBCTL0_VAL);
+	bfin_write_EBIU_AMBCTL1(CONFIG_EBIU_AMBCTL1_VAL);
+	bfin_write_EBIU_AMGCTL(CONFIG_EBIU_AMGCTL_VAL);
+
+	serial_putc('b');
+
+	/* Not all parts have these additional MMRs. */
+#ifdef EBIU_MBSCTL
+	bfin_write_EBIU_MBSCTL(CONFIG_EBIU_MBSCTL_VAL);
+#endif
+#ifdef EBIU_MODE
+# ifdef CONFIG_EBIU_MODE_VAL
+	bfin_write_EBIU_MODE(CONFIG_EBIU_MODE_VAL);
+# endif
+# ifdef CONFIG_EBIU_FCTL_VAL
+	bfin_write_EBIU_FCTL(CONFIG_EBIU_FCTL_VAL);
+# endif
+#endif
+
+	serial_putc('c');
 }
 
 #endif

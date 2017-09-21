@@ -32,10 +32,10 @@
 typedef unsigned int __hdle;
 #include <video/drv_display.h>
 
-extern int sunxi_disp_get_source_ops (struct sunxi_disp_source_ops * src_ops);
-extern s32 DRV_DISP_Init (void);
-extern s32 Fb_Init (u32 from);
-extern void LCD_set_panel_funs (void);
+extern int sunxi_disp_get_source_ops(struct sunxi_disp_source_ops *src_ops);
+extern s32 DRV_DISP_Init(void);
+extern s32 Fb_Init(u32 from);
+extern void LCD_set_panel_funs(void);
 
 
 #define OSAL_PRINTF(msg...) {printk(KERN_WARNING "[LCD] ");printk(msg);}
@@ -46,10 +46,10 @@ extern void LCD_set_panel_funs (void);
 
 struct sunxi_lcd_drv
 {
-  struct device           *          dev;
-  struct cdev            *           lcd_cdev;
+  struct device                     *dev;
+  struct cdev                       *lcd_cdev;
   dev_t                             devid;
-  struct class           *           lcd_class;
+  struct class                      *lcd_class;
   struct sunxi_disp_source_ops      src_ops;
 };
 

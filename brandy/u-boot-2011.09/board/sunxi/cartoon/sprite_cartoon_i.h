@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -29,13 +29,13 @@
 
 typedef struct
 {
-  int      screen_width;
-  int      screen_height;
-  int      screen_size;
-  unsigned int color;
-  int        this_x;
-  int        this_y;
-  char   *  screen_buf;
+	int 		 screen_width;
+	int 		 screen_height;
+	int 		 screen_size;
+	unsigned int color;
+	int     	 this_x;
+	int     	 this_y;
+	char 		 *screen_buf;
 }
 sprite_cartoon_source;
 

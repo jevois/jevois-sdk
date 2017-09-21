@@ -13,8 +13,8 @@
 
 struct voltagedomain;
 
-struct voltagedomain * voltdm_lookup (const char * name);
-int voltdm_scale (struct voltagedomain * voltdm, unsigned long target_volt);
-unsigned long voltdm_get_voltage (struct voltagedomain * voltdm);
+struct voltagedomain *voltdm_lookup(const char *name);
+int voltdm_scale(struct voltagedomain *voltdm, unsigned long target_volt);
+unsigned long voltdm_get_voltage(struct voltagedomain *voltdm);
 
 #endif

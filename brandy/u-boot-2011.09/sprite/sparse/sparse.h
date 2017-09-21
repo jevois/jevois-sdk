@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -30,9 +30,9 @@
 #define   ANDROID_FORMAT_DETECT    (1)
 
 
-extern int  unsparse_probe (char * source, unsigned int length, unsigned int flash_start);
-extern int  unsparse_direct_write (void * pbuf, unsigned int length);
-extern unsigned int unsparse_checksum (void);
+extern int  unsparse_probe(char *source, unsigned int length, unsigned int flash_start);
+extern int  unsparse_direct_write(void *pbuf, unsigned int length);
+extern unsigned int unsparse_checksum(void);
 
 
 #endif /* __SUNXI_SPRITE_SPARSE_H__ */

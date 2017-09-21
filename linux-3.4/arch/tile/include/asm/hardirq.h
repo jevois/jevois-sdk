@@ -21,27 +21,27 @@
 #include <asm/irq.h>
 
 typedef struct {
-  unsigned int __softirq_pending;
-  long idle_timestamp;
-  
-  /* Hard interrupt statistics. */
-  unsigned int irq_timer_count;
-  unsigned int irq_syscall_count;
-  unsigned int irq_resched_count;
-  unsigned int irq_hv_flush_count;
-  unsigned int irq_call_count;
-  unsigned int irq_hv_msg_count;
-  unsigned int irq_dev_intr_count;
-  
+	unsigned int __softirq_pending;
+	long idle_timestamp;
+
+	/* Hard interrupt statistics. */
+	unsigned int irq_timer_count;
+	unsigned int irq_syscall_count;
+	unsigned int irq_resched_count;
+	unsigned int irq_hv_flush_count;
+	unsigned int irq_call_count;
+	unsigned int irq_hv_msg_count;
+	unsigned int irq_dev_intr_count;
+
 } ____cacheline_aligned irq_cpustat_t;
 
-DECLARE_PER_CPU (irq_cpustat_t, irq_stat);
+DECLARE_PER_CPU(irq_cpustat_t, irq_stat);
 
 #define __ARCH_IRQ_STAT
 #define __IRQ_STAT(cpu, member) (per_cpu(irq_stat, cpu).member)
 
-#include <linux/irq_cpustat.h>  /* Standard mappings for irq_cpustat_t above */
+#include <linux/irq_cpustat.h>	/* Standard mappings for irq_cpustat_t above */
 
-#define HARDIRQ_BITS  8
+#define HARDIRQ_BITS	8
 
 #endif /* _ASM_TILE_HARDIRQ_H */

@@ -124,8 +124,8 @@
 #define R_BCM1480_MC_DRIVE_CFG              0x0000000520
 
 #if SIBYTE_HDR_FEATURE(1480, PASS2)
-#define R_BCM1480_MC_ODT        0x0000000460
-#define R_BCM1480_MC_ECC_STATUS       0x0000000540
+#define R_BCM1480_MC_ODT		    0x0000000460
+#define R_BCM1480_MC_ECC_STATUS		    0x0000000540
 #endif
 
 /* Global registers (single instance) */
@@ -147,21 +147,21 @@
 #define A_BCM1480_L2_MISC0_VALUE            0x0010040058
 #define A_BCM1480_L2_MISC1_VALUE            0x0010040078
 #define A_BCM1480_L2_MISC2_VALUE            0x0010040098
-#define A_BCM1480_L2_MISC_CONFIG            0x0010040040  /* x040 */
-#define A_BCM1480_L2_CACHE_DISABLE          0x0010040060  /* x060 */
+#define A_BCM1480_L2_MISC_CONFIG            0x0010040040	/* x040 */
+#define A_BCM1480_L2_CACHE_DISABLE          0x0010040060	/* x060 */
 #define A_BCM1480_L2_MAKECACHEDISABLE(x)    (A_BCM1480_L2_CACHE_DISABLE | (((x)&0xF) << 12))
-#define A_BCM1480_L2_WAY_ENABLE_3_0         0x0010040080  /* x080 */
-#define A_BCM1480_L2_WAY_ENABLE_7_4         0x00100400A0  /* x0A0 */
+#define A_BCM1480_L2_WAY_ENABLE_3_0         0x0010040080	/* x080 */
+#define A_BCM1480_L2_WAY_ENABLE_7_4         0x00100400A0	/* x0A0 */
 #define A_BCM1480_L2_MAKE_WAY_ENABLE_LO(x)  (A_BCM1480_L2_WAY_ENABLE_3_0 | (((x)&0xF) << 12))
 #define A_BCM1480_L2_MAKE_WAY_ENABLE_HI(x)  (A_BCM1480_L2_WAY_ENABLE_7_4 | (((x)&0xF) << 12))
 #define A_BCM1480_L2_MAKE_WAY_DISABLE_LO(x)  (A_BCM1480_L2_WAY_ENABLE_3_0 | (((~x)&0xF) << 12))
 #define A_BCM1480_L2_MAKE_WAY_DISABLE_HI(x)  (A_BCM1480_L2_WAY_ENABLE_7_4 | (((~x)&0xF) << 12))
-#define A_BCM1480_L2_WAY_LOCAL_3_0          0x0010040100  /* x100 */
-#define A_BCM1480_L2_WAY_LOCAL_7_4          0x0010040120  /* x120 */
-#define A_BCM1480_L2_WAY_REMOTE_3_0         0x0010040140  /* x140 */
-#define A_BCM1480_L2_WAY_REMOTE_7_4         0x0010040160  /* x160 */
-#define A_BCM1480_L2_WAY_AGENT_3_0          0x00100400C0  /* xxC0 */
-#define A_BCM1480_L2_WAY_AGENT_7_4          0x00100400E0  /* xxE0 */
+#define A_BCM1480_L2_WAY_LOCAL_3_0          0x0010040100	/* x100 */
+#define A_BCM1480_L2_WAY_LOCAL_7_4          0x0010040120	/* x120 */
+#define A_BCM1480_L2_WAY_REMOTE_3_0         0x0010040140	/* x140 */
+#define A_BCM1480_L2_WAY_REMOTE_7_4         0x0010040160	/* x160 */
+#define A_BCM1480_L2_WAY_AGENT_3_0          0x00100400C0	/* xxC0 */
+#define A_BCM1480_L2_WAY_AGENT_7_4          0x00100400E0	/* xxE0 */
 #define A_BCM1480_L2_WAY_ENABLE(A, banks)   (A | (((~(banks))&0x0F) << 8))
 #define A_BCM1480_L2_BANK_BASE              0x00D0300000
 #define A_BCM1480_L2_BANK_ADDRESS(b)        (A_BCM1480_L2_BANK_BASE | (((b)&0x7)<<17))
@@ -220,30 +220,30 @@
 #define A_BCM1480_DUART(chan)               ((((chan)&2) == 0)? A_BCM1480_DUART0 : A_BCM1480_DUART1)
 
 #define BCM1480_DUART_CHANREG_SPACING       0x100
-#define A_BCM1480_DUART_CHANREG(chan, reg)        \
-  (A_BCM1480_DUART(chan) +          \
-   BCM1480_DUART_CHANREG_SPACING * (((chan) & 1) + 1) + (reg))
-#define A_BCM1480_DUART_CTRLREG(chan, reg)        \
-  (A_BCM1480_DUART(chan) +          \
-   BCM1480_DUART_CHANREG_SPACING * 3 + (reg))
+#define A_BCM1480_DUART_CHANREG(chan, reg)				\
+	(A_BCM1480_DUART(chan) +					\
+	 BCM1480_DUART_CHANREG_SPACING * (((chan) & 1) + 1) + (reg))
+#define A_BCM1480_DUART_CTRLREG(chan, reg)				\
+	(A_BCM1480_DUART(chan) +					\
+	 BCM1480_DUART_CHANREG_SPACING * 3 + (reg))
 
-#define DUART_IMRISR_SPACING      0x20
-#define DUART_INCHNG_SPACING      0x10
+#define DUART_IMRISR_SPACING	    0x20
+#define DUART_INCHNG_SPACING	    0x10
 
-#define R_BCM1480_DUART_IMRREG(chan)          \
-  (R_DUART_IMR_A + ((chan) & 1) * DUART_IMRISR_SPACING)
-#define R_BCM1480_DUART_ISRREG(chan)          \
-  (R_DUART_ISR_A + ((chan) & 1) * DUART_IMRISR_SPACING)
-#define R_BCM1480_DUART_INCHREG(chan)         \
-  (R_DUART_IN_CHNG_A + ((chan) & 1) * DUART_INCHNG_SPACING)
+#define R_BCM1480_DUART_IMRREG(chan)					\
+	(R_DUART_IMR_A + ((chan) & 1) * DUART_IMRISR_SPACING)
+#define R_BCM1480_DUART_ISRREG(chan)					\
+	(R_DUART_ISR_A + ((chan) & 1) * DUART_IMRISR_SPACING)
+#define R_BCM1480_DUART_INCHREG(chan)					\
+	(R_DUART_IN_CHNG_A + ((chan) & 1) * DUART_INCHNG_SPACING)
 
-#define A_BCM1480_DUART_IMRREG(chan)          \
-  (A_BCM1480_DUART_CTRLREG((chan), R_BCM1480_DUART_IMRREG(chan)))
-#define A_BCM1480_DUART_ISRREG(chan)          \
-  (A_BCM1480_DUART_CTRLREG((chan), R_BCM1480_DUART_ISRREG(chan)))
+#define A_BCM1480_DUART_IMRREG(chan)					\
+	(A_BCM1480_DUART_CTRLREG((chan), R_BCM1480_DUART_IMRREG(chan)))
+#define A_BCM1480_DUART_ISRREG(chan)					\
+	(A_BCM1480_DUART_CTRLREG((chan), R_BCM1480_DUART_ISRREG(chan)))
 
-#define A_BCM1480_DUART_IN_PORT(chan)         \
-  (A_BCM1480_DUART_CTRLREG((chan), R_DUART_IN_PORT))
+#define A_BCM1480_DUART_IN_PORT(chan)					\
+	(A_BCM1480_DUART_CTRLREG((chan), R_DUART_IN_PORT))
 
 /*
  * These constants are the absolute addresses.
@@ -292,8 +292,8 @@
     * Generic Bus Registers (Section 15) and PCMCIA Registers (Section 16)
     ********************************************************************* */
 
-#define A_BCM1480_IO_PCMCIA_CFG_B 0x0010061A58
-#define A_BCM1480_IO_PCMCIA_STATUS_B  0x0010061A68
+#define A_BCM1480_IO_PCMCIA_CFG_B	0x0010061A58
+#define A_BCM1480_IO_PCMCIA_STATUS_B	0x0010061A68
 
 /*  *********************************************************************
     * GPIO Registers (Section 17)
@@ -304,8 +304,8 @@
 #define A_BCM1480_GPIO_INT_ADD_TYPE         0x0010061A78
 #define R_BCM1480_GPIO_INT_ADD_TYPE         (-8)
 
-#define A_GPIO_INT_ADD_TYPE A_BCM1480_GPIO_INT_ADD_TYPE
-#define R_GPIO_INT_ADD_TYPE R_BCM1480_GPIO_INT_ADD_TYPE
+#define A_GPIO_INT_ADD_TYPE	A_BCM1480_GPIO_INT_ADD_TYPE
+#define R_GPIO_INT_ADD_TYPE	R_BCM1480_GPIO_INT_ADD_TYPE
 
 /*  *********************************************************************
     * SMBus Registers (Section 18)
@@ -339,7 +339,7 @@
 
 /* BCM1480 has two additional compare registers */
 
-#define A_BCM1480_SCD_ZBBUS_CYCLE_COUNT   A_SCD_ZBBUS_CYCLE_COUNT
+#define A_BCM1480_SCD_ZBBUS_CYCLE_COUNT		A_SCD_ZBBUS_CYCLE_COUNT
 #define A_BCM1480_SCD_ZBBUS_CYCLE_CP_BASE       0x0010020C00
 #define A_BCM1480_SCD_ZBBUS_CYCLE_CP0           A_SCD_ZBBUS_CYCLE_CP0
 #define A_BCM1480_SCD_ZBBUS_CYCLE_CP1           A_SCD_ZBBUS_CYCLE_CP1
@@ -352,7 +352,7 @@
 
 /* Scratch register in different place */
 
-#define A_BCM1480_SCD_SCRATCH   0x100200A0
+#define A_BCM1480_SCD_SCRATCH	 	0x100200A0
 
 /*  *********************************************************************
     * System Address Trap Registers (Section 4.9)
@@ -412,11 +412,11 @@
 #define BCM1480_IMR_ALIAS_MAILBOX_SPACING       0100
 
 #define A_BCM1480_IMR_ALIAS_MAILBOX(cpu)     (A_BCM1480_IMR_ALIAS_MAILBOX_CPU0_BASE + \
-    (cpu)*BCM1480_IMR_ALIAS_MAILBOX_SPACING)
+                                        (cpu)*BCM1480_IMR_ALIAS_MAILBOX_SPACING)
 #define A_BCM1480_IMR_ALIAS_MAILBOX_REGISTER(cpu, reg) (A_BCM1480_IMR_ALIAS_MAILBOX(cpu)+(reg))
 
-#define R_BCM1480_IMR_ALIAS_MAILBOX_0           0x0000    /* 0x0x0 */
-#define R_BCM1480_IMR_ALIAS_MAILBOX_0_SET       0x0008    /* 0x0x8 */
+#define R_BCM1480_IMR_ALIAS_MAILBOX_0           0x0000		/* 0x0x0 */
+#define R_BCM1480_IMR_ALIAS_MAILBOX_0_SET       0x0008		/* 0x0x8 */
 
 /*
  * these macros work together to build the address of a mailbox
@@ -428,10 +428,10 @@
 #define R_BCM1480_IMR_MAILBOX_CLR         0x10
 #define R_BCM1480_IMR_MAILBOX_NUM_SPACING 0x20
 #define A_BCM1480_MAILBOX_REGISTER(num, reg, cpu) \
-  (A_BCM1480_IMR_CPU0_BASE + \
-   (num * R_BCM1480_IMR_MAILBOX_NUM_SPACING) + \
-   (cpu * BCM1480_IMR_REGISTER_SPACING) + \
-   (R_BCM1480_IMR_MAILBOX_0_CPU + reg))
+    (A_BCM1480_IMR_CPU0_BASE + \
+     (num * R_BCM1480_IMR_MAILBOX_NUM_SPACING) + \
+     (cpu * BCM1480_IMR_REGISTER_SPACING) + \
+     (R_BCM1480_IMR_MAILBOX_0_CPU + reg))
 
 /*  *********************************************************************
     * System Performance Counter Registers (Section 4.7)
@@ -493,9 +493,9 @@
     * HyperTransport Interface Registers (Section 8)
     ********************************************************************* */
 
-#define BCM1480_HT_NUM_PORTS       3
-#define BCM1480_HT_PORT_SPACING      0x800
-#define A_BCM1480_HT_PORT_HEADER(x)    (A_BCM1480_HT_PORT0_HEADER + ((x)*BCM1480_HT_PORT_SPACING))
+#define BCM1480_HT_NUM_PORTS		   3
+#define BCM1480_HT_PORT_SPACING		   0x800
+#define A_BCM1480_HT_PORT_HEADER(x)	   (A_BCM1480_HT_PORT0_HEADER + ((x)*BCM1480_HT_PORT_SPACING))
 
 #define A_BCM1480_HT_PORT0_HEADER          0x00FE000000
 #define A_BCM1480_HT_PORT1_HEADER          0x00FE000800
@@ -554,7 +554,7 @@
 
 #define R_BCM1480_HR_CFG                    0x0000000000
 
-#define R_BCM1480_HR_MAPPING        0x0000010010
+#define R_BCM1480_HR_MAPPING		    0x0000010010
 
 #define BCM1480_HR_RULE_SPACING             0x0000000010
 #define BCM1480_HR_NUM_RULES                16
@@ -638,7 +638,7 @@
 
 #define R_BCM1480_PM_PMO_MAPPING            0x00000008C8   /* PMO only */
 
-#define A_BCM1480_PM_PMO_MAPPING  (A_BCM1480_PMO_GLB_0 + R_BCM1480_PM_PMO_MAPPING)
+#define A_BCM1480_PM_PMO_MAPPING	(A_BCM1480_PMO_GLB_0 + R_BCM1480_PM_PMO_MAPPING)
 
 /*
  * Interrupt mapping registers
@@ -676,29 +676,29 @@
     *  Switch performance counters
     ********************************************************************* */
 
-#define A_BCM1480_SWPERF_CFG  0xdfb91800
-#define A_BCM1480_SWPERF_CNT0 0xdfb91880
-#define A_BCM1480_SWPERF_CNT1 0xdfb91888
-#define A_BCM1480_SWPERF_CNT2 0xdfb91890
-#define A_BCM1480_SWPERF_CNT3 0xdfb91898
+#define A_BCM1480_SWPERF_CFG	0xdfb91800
+#define A_BCM1480_SWPERF_CNT0	0xdfb91880
+#define A_BCM1480_SWPERF_CNT1	0xdfb91888
+#define A_BCM1480_SWPERF_CNT2	0xdfb91890
+#define A_BCM1480_SWPERF_CNT3	0xdfb91898
 
 
 /*  *********************************************************************
     *  Switch Trace Unit
     ********************************************************************* */
 
-#define A_BCM1480_SWTRC_MATCH_CONTROL_0   0xDFB91000
-#define A_BCM1480_SWTRC_MATCH_DATA_VALUE_0  0xDFB91100
-#define A_BCM1480_SWTRC_MATCH_DATA_MASK_0 0xDFB91108
-#define A_BCM1480_SWTRC_MATCH_TAG_VALUE_0 0xDFB91200
-#define A_BCM1480_SWTRC_MATCH_TAG_MAKS_0  0xDFB91208
-#define A_BCM1480_SWTRC_EVENT_0     0xDFB91300
-#define A_BCM1480_SWTRC_SEQUENCE_0    0xDFB91400
+#define A_BCM1480_SWTRC_MATCH_CONTROL_0		0xDFB91000
+#define A_BCM1480_SWTRC_MATCH_DATA_VALUE_0	0xDFB91100
+#define A_BCM1480_SWTRC_MATCH_DATA_MASK_0	0xDFB91108
+#define A_BCM1480_SWTRC_MATCH_TAG_VALUE_0	0xDFB91200
+#define A_BCM1480_SWTRC_MATCH_TAG_MAKS_0	0xDFB91208
+#define A_BCM1480_SWTRC_EVENT_0			0xDFB91300
+#define A_BCM1480_SWTRC_SEQUENCE_0		0xDFB91400
 
-#define A_BCM1480_SWTRC_CFG     0xDFB91500
-#define A_BCM1480_SWTRC_READ      0xDFB91508
+#define A_BCM1480_SWTRC_CFG			0xDFB91500
+#define A_BCM1480_SWTRC_READ			0xDFB91508
 
-#define A_BCM1480_SWDEBUG_SCHEDSTOP   0xDFB92000
+#define A_BCM1480_SWDEBUG_SCHEDSTOP		0xDFB92000
 
 #define A_BCM1480_SWTRC_MATCH_CONTROL(x) (A_BCM1480_SWTRC_MATCH_CONTROL_0 + ((x)*8))
 #define A_BCM1480_SWTRC_EVENT(x) (A_BCM1480_SWTRC_EVENT_0 + ((x)*8))

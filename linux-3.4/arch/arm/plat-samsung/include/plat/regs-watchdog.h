@@ -1,7 +1,7 @@
 /* arch/arm/mach-s3c2410/include/mach/regs-watchdog.h
  *
  * Copyright (c) 2003 Simtec Electronics <linux@simtec.co.uk>
- *          http://www.simtec.co.uk/products/SWLINUX/
+ *		      http://www.simtec.co.uk/products/SWLINUX/
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -16,9 +16,9 @@
 
 #define S3C_WDOGREG(x) ((x) + S3C_VA_WATCHDOG)
 
-#define S3C2410_WTCON    S3C_WDOGREG(0x00)
-#define S3C2410_WTDAT    S3C_WDOGREG(0x04)
-#define S3C2410_WTCNT    S3C_WDOGREG(0x08)
+#define S3C2410_WTCON	   S3C_WDOGREG(0x00)
+#define S3C2410_WTDAT	   S3C_WDOGREG(0x04)
+#define S3C2410_WTCNT	   S3C_WDOGREG(0x08)
 
 /* the watchdog can either generate a reset pulse, or an
  * interrupt.

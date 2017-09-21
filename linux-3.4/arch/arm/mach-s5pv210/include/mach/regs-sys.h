@@ -1,7 +1,7 @@
 /* arch/arm/mach-s5pv210/include/mach/regs-sys.h
  *
  * Copyright (c) 2010 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com/
+ *		http://www.samsung.com/
  *
  * S5PV210 - System registers definitions
  *
@@ -10,6 +10,6 @@
  * published by the Free Software Foundation.
 */
 
-#define S5PV210_USB_PHY_CON (S3C_VA_SYS + 0xE80C)
-#define S5PV210_USB_PHY0_EN (1 << 0)
-#define S5PV210_USB_PHY1_EN (1 << 1)
+#define S5PV210_USB_PHY_CON	(S3C_VA_SYS + 0xE80C)
+#define S5PV210_USB_PHY0_EN	(1 << 0)
+#define S5PV210_USB_PHY1_EN	(1 << 1)

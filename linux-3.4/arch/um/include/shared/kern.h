@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright (C) 2000 Jeff Dike (jdike@karaya.com)
  * Licensed under the GPL
  */
@@ -13,10 +13,10 @@
  * includes.
  */
 
-extern int printf (const char * fmt, ...);
-extern void * sbrk (int increment);
-extern int pause (void);
-extern void exit (int);
+extern int printf(const char *fmt, ...);
+extern void *sbrk(int increment);
+extern int pause(void);
+extern void exit(int);
 
 #endif
 
