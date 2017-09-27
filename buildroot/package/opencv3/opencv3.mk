@@ -15,7 +15,9 @@ OPENCV3_DEPENDENCIES = opencv_contrib # download the contribs before we configur
 
 # Uses __atomic_fetch_add_4
 ifeq ($(BR2_TOOLCHAIN_HAS_LIBATOMIC),y)
-OPENCV3_CONF_OPTS += -DCMAKE_CXX_FLAGS="$(TARGET_CXXFLAGS) -latomic"
+OPENCV3_CONF_OPTS += -DCMAKE_CXX_FLAGS="$(TARGET_CXXFLAGS) -latomic -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -ftree-vectorize -Ofast -funsafe-math-optimizations -mfp16-format=ieee"
+else
+OPENCV3_CONF_OPTS += -DCMAKE_CXX_FLAGS="$(TARGET_CXXFLAGS) -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -ftree-vectorize -Ofast -funsafe-math-optimizations -mfp16-format=ieee"
 endif
 
 # OpenCV component options
@@ -324,6 +326,10 @@ OPENCV3_DEPENDENCIES += $(if $(BR2_PACKAGE_LIBV4L),libv4l)
 else
 OPENCV3_CONF_OPTS += -DWITH_V4L=OFF -DWITH_LIBV4L=OFF
 endif
+
+# JEVOIS: force detection of tesseract
+OPENCV3_CONF_OPTS += -DOPENCV_FIND_TESSERACT=ON
+
 
 ifeq ($(BR2_PACKAGE_OPENCV3_LIB_PYTHON),y)
 ifeq ($(BR2_PACKAGE_PYTHON),y)

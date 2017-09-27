@@ -1,10 +1,13 @@
 --- a/cmake/OpenCVUtils.cmake
 +++ b/cmake/OpenCVUtils.cmake
-@@ -924,6 +924,9 @@ function(ocv_target_link_libraries target)
+@@ -924,6 +924,12 @@ function(ocv_target_link_libraries target)
      endif()
      set(OPENCV_MODULE_${target}_LINK_DEPS ${OPENCV_MODULE_${target}_LINK_DEPS} ${LINK_DEPS} CACHE INTERNAL "" FORCE)
    else()
 +    if ("${LINK_DEPS}" MATCHES "openblas") ### JEVOIS FIX
++      set(LINK_DEPS "LINK_PRIVATE;${LINK_DEPS}")
++    endif()
++    if ("${LINK_DEPS}" MATCHES "tesseract") ### JEVOIS FIX
 +      set(LINK_DEPS "LINK_PRIVATE;${LINK_DEPS}")
 +    endif()
      target_link_libraries(${target} ${LINK_DEPS})
