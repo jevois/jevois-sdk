@@ -32,23 +32,23 @@ struct platform_device;
  * @device_shutdown: omap-specific handler for shutting down a device
  */
 struct omap_rproc_pdata {
-  const char * name;
-  const char * oh_name;
-  const char * oh_name_opt;
-  const char * firmware;
-  const char * mbox_name;
-  const struct rproc_ops * ops;
-  int (*device_enable) (struct platform_device * pdev);
-  int (*device_shutdown) (struct platform_device * pdev);
+	const char *name;
+	const char *oh_name;
+	const char *oh_name_opt;
+	const char *firmware;
+	const char *mbox_name;
+	const struct rproc_ops *ops;
+	int (*device_enable) (struct platform_device *pdev);
+	int (*device_shutdown) (struct platform_device *pdev);
 };
 
 #if defined(CONFIG_OMAP_REMOTEPROC) || defined(CONFIG_OMAP_REMOTEPROC_MODULE)
 
-void __init omap_rproc_reserve_cma (void);
+void __init omap_rproc_reserve_cma(void);
 
 #else
 
-void __init omap_rproc_reserve_cma (void)
+void __init omap_rproc_reserve_cma(void)
 {
 }
 

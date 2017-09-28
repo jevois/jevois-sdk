@@ -56,36 +56,36 @@ extern int fpu_post_test_math7 (void);
 
 int fpu_post_test (int flags)
 {
-  int fpu = fpu_status ();
-  
-  int ret = 0;
-  
-  WATCHDOG_RESET ();
-  
-  if (!fpu)
-  { fpu_enable (); }
-  
-  if (ret == 0)
-  { ret = fpu_post_test_math1 (); }
-  if (ret == 0)
-  { ret = fpu_post_test_math2 (); }
-  if (ret == 0)
-  { ret = fpu_post_test_math3 (); }
-  if (ret == 0)
-  { ret = fpu_post_test_math4 (); }
-  if (ret == 0)
-  { ret = fpu_post_test_math5 (); }
-  if (ret == 0)
-  { ret = fpu_post_test_math6 (); }
-  if (ret == 0)
-  { ret = fpu_post_test_math7 (); }
-  
-  if (!fpu)
-  { fpu_disable (); }
-  
-  WATCHDOG_RESET ();
-  
-  return ret;
+	int fpu = fpu_status ();
+
+	int ret = 0;
+
+	WATCHDOG_RESET ();
+
+	if (!fpu)
+		fpu_enable ();
+
+	if (ret == 0)
+		ret = fpu_post_test_math1 ();
+	if (ret == 0)
+		ret = fpu_post_test_math2 ();
+	if (ret == 0)
+		ret = fpu_post_test_math3 ();
+	if (ret == 0)
+		ret = fpu_post_test_math4 ();
+	if (ret == 0)
+		ret = fpu_post_test_math5 ();
+	if (ret == 0)
+		ret = fpu_post_test_math6 ();
+	if (ret == 0)
+		ret = fpu_post_test_math7 ();
+
+	if (!fpu)
+		fpu_disable ();
+
+	WATCHDOG_RESET ();
+
+	return ret;
 }
 
 #endif /* CONFIG_POST & CONFIG_SYS_POST_FPU */

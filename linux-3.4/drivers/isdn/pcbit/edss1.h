@@ -68,32 +68,32 @@
 #define CAUSE_NOCHAN          0x22U
 
 struct callb_data {
-  unsigned short type;
-  union {
-    struct ConnInfo {
-      char * CalledPN;
-      char * CallingPN;
-    } setup;
-    unsigned short cause;
-  } data;
+	unsigned short type;
+	union {
+		struct ConnInfo {
+			char *CalledPN;
+			char *CallingPN;
+		} setup;
+		unsigned short cause;
+	} data;
 };
 
 struct fsm_entry {
-  unsigned short init;
-  unsigned short final;
-  unsigned short event;
-  void (*callb) (struct pcbit_dev *, struct pcbit_chan *, struct callb_data *);
+	unsigned short init;
+	unsigned short final;
+	unsigned short event;
+	void (*callb)(struct pcbit_dev *, struct pcbit_chan *, struct callb_data*);
 };
 
 struct fsm_timer_entry {
-  unsigned short init;
-  unsigned long timeout;          /* in seconds */
+	unsigned short init;
+	unsigned long timeout;          /* in seconds */
 };
 
 extern const char * const isdn_state_table[];
 
-void pcbit_fsm_event (struct pcbit_dev *, struct pcbit_chan *,
-                      unsigned short event, struct callb_data *);
-char * strisdnevent (ushort ev);
+void pcbit_fsm_event(struct pcbit_dev *, struct pcbit_chan *,
+		     unsigned short event, struct callb_data *);
+char *strisdnevent(ushort ev);
 
 #endif

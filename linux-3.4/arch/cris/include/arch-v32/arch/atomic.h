@@ -3,9 +3,9 @@
 
 #include <linux/spinlock_types.h>
 
-extern void cris_spin_unlock (void * l, int val);
-extern void cris_spin_lock (void * l);
-extern int cris_spin_trylock (void * l);
+extern void cris_spin_unlock(void *l, int val);
+extern void cris_spin_lock(void *l);
+extern int cris_spin_trylock(void* l);
 
 #ifndef CONFIG_SMP
 #define cris_atomic_save(addr, flags) local_irq_save(flags);
@@ -24,9 +24,9 @@ extern spinlock_t cris_atomic_locks[];
   { \
     spinlock_t *lock = (void*)&cris_atomic_locks[HASH_ADDR(addr)]; \
     __asm__ volatile ("move.d %1,%0" \
-                      : "=m" (lock->raw_lock.slock) \
-                      : "r" (1) \
-                      : "memory"); \
+			: "=m" (lock->raw_lock.slock) \
+			: "r" (1) \
+			: "memory"); \
     local_irq_restore(flags); \
   }
 

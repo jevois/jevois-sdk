@@ -1,7 +1,7 @@
 /* linux/arch/arm/mach-s5p64x0/include/mach/hardware.h
  *
  * Copyright (c) 2009-2010 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com
+ *		http://www.samsung.com
  *
  * S5P64X0 - Hardware support
  *

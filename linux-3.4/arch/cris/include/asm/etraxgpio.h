@@ -126,7 +126,7 @@
  */
 #define IO_CFG_WRITE_MODE 0xF
 #define IO_CFG_WRITE_MODE_VALUE(msb, data_mask, clk_mask) \
-  ( (((msb)&1) << 16) | (((data_mask) &0xFF) << 8) | ((clk_mask) & 0xFF) )
+	( (((msb)&1) << 16) | (((data_mask) &0xFF) << 8) | ((clk_mask) & 0xFF) )
 
 /* The following 4 ioctl's take a pointer as argument and handles
  * 32 bit ports (port G) properly.
@@ -135,24 +135,24 @@
 #define IO_READ_INBITS   0x10 /* *arg is result of reading the input pins */
 #define IO_READ_OUTBITS  0x11 /* *arg is result of reading the output shadow */
 #define IO_SETGET_INPUT  0x12 /* bits set in *arg is set to input, */
-/* *arg updated with current input pins. */
+			      /* *arg updated with current input pins. */
 #define IO_SETGET_OUTPUT 0x13 /* bits set in *arg is set to output, */
-/* *arg updated with current output pins. */
+			      /* *arg updated with current output pins. */
 
 /* The following ioctl's are applicable to the PWM channels only */
 
 #define IO_PWM_SET_MODE     0x20
 
 enum io_pwm_mode {
-  PWM_OFF = 0,    /* disabled, deallocated */
-  PWM_STANDARD = 1, /* 390 kHz, duty cycle 0..255/256 */
-  PWM_FAST = 2,   /* variable freq, w/ 10ns active pulse len */
-  PWM_VARFREQ = 3,  /* individually configurable high/low periods */
-  PWM_SOFT = 4    /* software generated */
+	PWM_OFF = 0,		/* disabled, deallocated */
+	PWM_STANDARD = 1,	/* 390 kHz, duty cycle 0..255/256 */
+	PWM_FAST = 2,		/* variable freq, w/ 10ns active pulse len */
+	PWM_VARFREQ = 3,	/* individually configurable high/low periods */
+	PWM_SOFT = 4		/* software generated */
 };
 
 struct io_pwm_set_mode {
-  enum io_pwm_mode mode;
+	enum io_pwm_mode mode;
 };
 
 /* Only for mode PWM_VARFREQ. Period lo/high set in increments of 10ns
@@ -164,8 +164,8 @@ struct io_pwm_set_mode {
 #define IO_PWM_SET_PERIOD   0x21
 
 struct io_pwm_set_period {
-  unsigned int lo;    /* 0..8191 */
-  unsigned int hi;    /* 0..8191 */
+	unsigned int lo;		/* 0..8191 */
+	unsigned int hi;		/* 0..8191 */
 };
 
 /* Only for modes PWM_STANDARD and PWM_FAST.
@@ -181,7 +181,7 @@ struct io_pwm_set_period {
 #define IO_PWM_SET_DUTY     0x22
 
 struct io_pwm_set_duty {
-  int duty;   /* 0..255 */
+	int duty;		/* 0..255 */
 };
 
 /* Returns information about the latest PWM pulse.
@@ -196,9 +196,9 @@ struct io_pwm_set_duty {
 #define IO_PWM_GET_PERIOD   0x23
 
 struct io_pwm_get_period {
-  unsigned int lo;
-  unsigned int hi;
-  unsigned int cnt;
+	unsigned int lo;
+	unsigned int hi;
+	unsigned int cnt;
 };
 
 /* Sets the input source for the PWM input. For the src value see the
@@ -208,14 +208,14 @@ struct io_pwm_get_period {
  */
 #define IO_PWM_SET_INPUT_SRC   0x24
 struct io_pwm_set_input_src {
-  unsigned int src; /* 0..7 */
+	unsigned int src;	/* 0..7 */
 };
 
 /* Sets the duty cycles in steps of 1/256, 0 = 0%, 255 = 100% duty cycle */
 #define IO_PPWM_SET_DUTY     0x25
 
 struct io_ppwm_set_duty {
-  int duty;   /* 0..255 */
+	int duty;		/* 0..255 */
 };
 
 /* Configuraton struct for the IO_PWMCLK_SET_CONFIG ioctl to configure

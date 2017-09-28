@@ -9,7 +9,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -41,8 +41,8 @@ typedef unsigned long long __u64;
 #endif
 
 typedef struct {
-  __u32 u[4];
-} __attribute__ ( (aligned (16) ) ) vector128;
+	__u32 u[4];
+} __attribute__((aligned(16))) vector128;
 
 #ifdef __KERNEL__
 /*
@@ -68,7 +68,7 @@ typedef u32 dma_addr_t;
 typedef unsigned long phys_addr_t;
 typedef unsigned long phys_size_t;
 
-#endif        /* __KERNEL__ */
-#endif        /* __ASSEMBLY__ */
+#endif				/* __KERNEL__ */
+#endif				/* __ASSEMBLY__ */
 
 #endif

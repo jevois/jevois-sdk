@@ -61,57 +61,57 @@
 #define SR_START_ADDR   0x4400  /* SRP microcode start address */
 
 #define COSA_LOAD_ADDR    0x400  /* SRP microcode load address */
-#define COSA_MAX_FIRMWARE_SIZE  0x10000
+#define COSA_MAX_FIRMWARE_SIZE	0x10000
 
 /* ioctls */
 struct cosa_download {
-  int addr, len;
-  char __user * code;
+	int addr, len;
+	char __user *code;
 };
 
 /* Reset the device */
-#define COSAIORSET  _IO('C',0xf0)
+#define COSAIORSET	_IO('C',0xf0)
 
 /* Start microcode at given address */
-#define COSAIOSTRT  _IOW('C',0xf1, int)
+#define COSAIOSTRT	_IOW('C',0xf1, int)
 
 /* Read the block from the device memory */
-#define COSAIORMEM  _IOWR('C',0xf2, struct cosa_download *)
-/* actually the struct cosa_download itself; this is to keep
- * the ioctl number same as in 2.4 in order to keep the user-space
- * utils compatible. */
+#define COSAIORMEM	_IOWR('C',0xf2, struct cosa_download *)
+	/* actually the struct cosa_download itself; this is to keep
+	 * the ioctl number same as in 2.4 in order to keep the user-space
+	 * utils compatible. */
 
 /* Write the block to the device memory (i.e. download the microcode) */
-#define COSAIODOWNLD  _IOW('C',0xf2, struct cosa_download *)
-/* actually the struct cosa_download itself; this is to keep
- * the ioctl number same as in 2.4 in order to keep the user-space
- * utils compatible. */
+#define COSAIODOWNLD	_IOW('C',0xf2, struct cosa_download *)
+	/* actually the struct cosa_download itself; this is to keep
+	 * the ioctl number same as in 2.4 in order to keep the user-space
+	 * utils compatible. */
 
 /* Read the device type (one of "srp", "cosa", and "cosa8" for now) */
-#define COSAIORTYPE _IOR('C',0xf3, char *)
+#define COSAIORTYPE	_IOR('C',0xf3, char *)
 
 /* Read the device identification string */
-#define COSAIORIDSTR  _IOR('C',0xf4, char *)
+#define COSAIORIDSTR	_IOR('C',0xf4, char *)
 /* Maximum length of the identification string. */
 #define COSA_MAX_ID_STRING 128
 
 /* Increment/decrement the module usage count :-) */
-/* #define COSAIOMINC _IO('C',0xf5) */
-/* #define COSAIOMDEC _IO('C',0xf6) */
+/* #define COSAIOMINC	_IO('C',0xf5) */
+/* #define COSAIOMDEC	_IO('C',0xf6) */
 
 /* Get the total number of cards installed */
-#define COSAIONRCARDS _IO('C',0xf7)
+#define COSAIONRCARDS	_IO('C',0xf7)
 
 /* Get the number of channels on this card */
-#define COSAIONRCHANS _IO('C',0xf8)
+#define COSAIONRCHANS	_IO('C',0xf8)
 
 /* Set the driver for the bus-master operations */
-#define COSAIOBMSET _IOW('C', 0xf9, unsigned short)
+#define COSAIOBMSET	_IOW('C', 0xf9, unsigned short)
 
-#define COSA_BM_OFF 0 /* Bus-mastering off - use ISA DMA (default) */
-#define COSA_BM_ON  1 /* Bus-mastering on - faster but untested */
+#define COSA_BM_OFF	0	/* Bus-mastering off - use ISA DMA (default) */
+#define COSA_BM_ON	1	/* Bus-mastering on - faster but untested */
 
 /* Gets the busmaster status */
-#define COSAIOBMGET _IO('C', 0xfa)
+#define COSAIOBMGET	_IO('C', 0xfa)
 
 #endif /* !COSA_H__ */

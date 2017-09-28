@@ -32,14 +32,14 @@
  *   timer interrupt which may be pending.
  */
 struct sys_timer {
-  void      (*init) (void);
-  void      (*suspend) (void);
-  void      (*resume) (void);
-  #ifdef CONFIG_ARCH_USES_GETTIMEOFFSET
-  unsigned long   (*offset) (void);
-  #endif
+	void			(*init)(void);
+	void			(*suspend)(void);
+	void			(*resume)(void);
+#ifdef CONFIG_ARCH_USES_GETTIMEOFFSET
+	unsigned long		(*offset)(void);
+#endif
 };
 
-extern void timer_tick (void);
+extern void timer_tick(void);
 
 #endif

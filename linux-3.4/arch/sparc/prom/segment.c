@@ -12,17 +12,17 @@
 #include <asm/openprom.h>
 #include <asm/oplib.h>
 
-extern void restore_current (void);
+extern void restore_current(void);
 
 /* Set physical segment 'segment' at virtual address 'vaddr' in
  * context 'ctx'.
  */
 void
-prom_putsegment (int ctx, unsigned long vaddr, int segment)
+prom_putsegment(int ctx, unsigned long vaddr, int segment)
 {
-  unsigned long flags;
-  spin_lock_irqsave (&prom_lock, flags);
-  (* (romvec->pv_setctxt) ) (ctx, (char *) vaddr, segment);
-  restore_current();
-  spin_unlock_irqrestore (&prom_lock, flags);
+	unsigned long flags;
+	spin_lock_irqsave(&prom_lock, flags);
+	(*(romvec->pv_setctxt))(ctx, (char *) vaddr, segment);
+	restore_current();
+	spin_unlock_irqrestore(&prom_lock, flags);
 }

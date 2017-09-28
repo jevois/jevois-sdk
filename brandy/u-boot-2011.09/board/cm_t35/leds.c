@@ -24,22 +24,22 @@
 
 static unsigned int leds[] = { GREEN_LED_GPIO };
 
-void __led_init (led_id_t mask, int state)
+void __led_init(led_id_t mask, int state)
 {
-  if (omap_request_gpio (leds[mask]) != 0) {
-    printf ("%s: failed requesting GPIO%u\n", __func__, leds[mask]);
-    return;
-  }
-  
-  omap_set_gpio_direction (leds[mask], 0);
+	if (omap_request_gpio(leds[mask]) != 0) {
+		printf("%s: failed requesting GPIO%u\n", __func__, leds[mask]);
+		return;
+	}
+
+	omap_set_gpio_direction(leds[mask], 0);
 }
 
-void __led_set (led_id_t mask, int state)
+void __led_set(led_id_t mask, int state)
 {
-  omap_set_gpio_dataout (leds[mask], state == STATUS_LED_ON);
+	omap_set_gpio_dataout(leds[mask], state == STATUS_LED_ON);
 }
 
-void __led_toggle (led_id_t mask)
+void __led_toggle(led_id_t mask)
 {
-  omap_set_gpio_dataout (leds[mask], !omap_get_gpio_datain (leds[mask]) );
+	omap_set_gpio_dataout(leds[mask], !omap_get_gpio_datain(leds[mask]));
 }

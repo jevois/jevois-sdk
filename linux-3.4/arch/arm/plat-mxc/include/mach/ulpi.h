@@ -2,11 +2,11 @@
 #define __MACH_ULPI_H
 
 #ifdef CONFIG_USB_ULPI
-struct usb_phy * imx_otg_ulpi_create (unsigned int flags);
+struct usb_phy *imx_otg_ulpi_create(unsigned int flags);
 #else
-static inline struct usb_phy * imx_otg_ulpi_create (unsigned int flags)
+static inline struct usb_phy *imx_otg_ulpi_create(unsigned int flags)
 {
-  return NULL;
+	return NULL;
 }
 #endif
 

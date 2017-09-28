@@ -34,20 +34,20 @@ struct task_struct;
  * Pause the DMA engine and static network before task switching.
  */
 #define prepare_arch_switch(next) _prepare_arch_switch(next)
-void _prepare_arch_switch (struct task_struct * next);
+void _prepare_arch_switch(struct task_struct *next);
 
 struct task_struct;
 #define switch_to(prev, next, last) ((last) = _switch_to((prev), (next)))
-extern struct task_struct * _switch_to (struct task_struct * prev,
-                                        struct task_struct * next);
+extern struct task_struct *_switch_to(struct task_struct *prev,
+				      struct task_struct *next);
 
 /* Helper function for _switch_to(). */
-extern struct task_struct * __switch_to (struct task_struct * prev,
-    struct task_struct * next,
-    unsigned long new_system_save_k_0);
+extern struct task_struct *__switch_to(struct task_struct *prev,
+				       struct task_struct *next,
+				       unsigned long new_system_save_k_0);
 
 /* Address that switched-away from tasks are at. */
-extern unsigned long get_switch_to_pc (void);
+extern unsigned long get_switch_to_pc(void);
 
 /*
  * Kernel threads can check to see if they need to migrate their
@@ -55,21 +55,21 @@ extern unsigned long get_switch_to_pc (void);
  * threads, we defer until they are returning to user-space.
  */
 #define finish_arch_switch(prev) do {                                     \
-    if (unlikely((prev)->state == TASK_DEAD))                         \
-      __insn_mtspr(SPR_SIM_CONTROL, SIM_CONTROL_OS_EXIT |       \
-                   ((prev)->pid << _SIM_CONTROL_OPERATOR_BITS));     \
-    __insn_mtspr(SPR_SIM_CONTROL, SIM_CONTROL_OS_SWITCH |             \
-                 (current->pid << _SIM_CONTROL_OPERATOR_BITS));            \
-    if (current->mm == NULL && !kstack_hash &&                        \
-        current_thread_info()->homecache_cpu != smp_processor_id())   \
-      homecache_migrate_kthread();                              \
-  } while (0)
+	if (unlikely((prev)->state == TASK_DEAD))                         \
+		__insn_mtspr(SPR_SIM_CONTROL, SIM_CONTROL_OS_EXIT |       \
+			((prev)->pid << _SIM_CONTROL_OPERATOR_BITS));     \
+	__insn_mtspr(SPR_SIM_CONTROL, SIM_CONTROL_OS_SWITCH |             \
+		(current->pid << _SIM_CONTROL_OPERATOR_BITS));            \
+	if (current->mm == NULL && !kstack_hash &&                        \
+	    current_thread_info()->homecache_cpu != smp_processor_id())   \
+		homecache_migrate_kthread();                              \
+} while (0)
 
 /* Support function for forking a new task. */
-void ret_from_fork (void);
+void ret_from_fork(void);
 
 /* Called from ret_from_fork() when a new process starts up. */
-struct task_struct * sim_notify_fork (struct task_struct * prev);
+struct task_struct *sim_notify_fork(struct task_struct *prev);
 
 #endif /* !__ASSEMBLY__ */
 

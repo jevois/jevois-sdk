@@ -1,10 +1,10 @@
 /* linux/arch/arm/mach-s5p64x0/include/mach/timex.h
  *
  * Copyright (c) 2010 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com
+ *		http://www.samsung.com
  *
  * Copyright (c) 2003-2005 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * S5P64X0 - time parameters
  *

@@ -3,7 +3,7 @@
 @Title          Kernel sync driver
 @Copyright      Copyright (c) Imagination Technologies Ltd. All Rights Reserved
 @Description    Version numbers and strings for PVR Consumer services
-        components.
+				components.
 @License        Dual MIT/GPLv2
 
 The contents of this file are subject to the MIT license as set out below.
@@ -59,20 +59,20 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /* services4 internal interface */
 
-int PVRSyncDeviceInit (void);
-void PVRSyncDeviceDeInit (void);
-void PVRSyncUpdateAllSyncs (void);
+int PVRSyncDeviceInit(void);
+void PVRSyncDeviceDeInit(void);
+void PVRSyncUpdateAllSyncs(void);
 PVRSRV_ERROR
-PVRSyncPatchCCBKickSyncInfos (IMG_HANDLE    ahSyncs[SGX_MAX_SRC_SYNCS_TA],
-                              PVRSRV_DEVICE_SYNC_OBJECT asDevSyncs[SGX_MAX_SRC_SYNCS_TA],
-                              IMG_UINT32 * pui32NumSrcSyncs);
+PVRSyncPatchCCBKickSyncInfos(IMG_HANDLE    ahSyncs[SGX_MAX_SRC_SYNCS_TA],
+		      PVRSRV_DEVICE_SYNC_OBJECT asDevSyncs[SGX_MAX_SRC_SYNCS_TA],
+							 IMG_UINT32 *pui32NumSrcSyncs);
 PVRSRV_ERROR
-PVRSyncPatchTransferSyncInfos (IMG_HANDLE    ahSyncs[SGX_MAX_SRC_SYNCS_TA],
-                               PVRSRV_DEVICE_SYNC_OBJECT asDevSyncs[SGX_MAX_SRC_SYNCS_TA],
-                               IMG_UINT32 * pui32NumSrcSyncs);
+PVRSyncPatchTransferSyncInfos(IMG_HANDLE    ahSyncs[SGX_MAX_SRC_SYNCS_TA],
+			  PVRSRV_DEVICE_SYNC_OBJECT asDevSyncs[SGX_MAX_SRC_SYNCS_TA],
+							 IMG_UINT32 *pui32NumSrcSyncs);
 PVRSRV_ERROR
-PVRSyncFencesToSyncInfos (PVRSRV_KERNEL_SYNC_INFO * apsSyncs[],
-                          IMG_UINT32 * pui32NumSyncs,
-                          struct sync_fence * apsFence[SGX_MAX_SRC_SYNCS_TA]);
+PVRSyncFencesToSyncInfos(PVRSRV_KERNEL_SYNC_INFO *apsSyncs[],
+						 IMG_UINT32 *pui32NumSyncs,
+						 struct sync_fence *apsFence[SGX_MAX_SRC_SYNCS_TA]);
 
 #endif /* _PVR_SYNC_H */

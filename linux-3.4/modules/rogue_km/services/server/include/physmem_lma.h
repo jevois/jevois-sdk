@@ -61,14 +61,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * agnostic.
  */
 PVRSRV_ERROR
-PhysmemNewLocalRamBackedPMR (PVRSRV_DEVICE_NODE * psDevNode,
-                             IMG_DEVMEM_SIZE_T uiSize,
-                             IMG_DEVMEM_SIZE_T uiChunkSize,
-                             IMG_UINT32 ui32NumPhysChunks,
-                             IMG_UINT32 ui32NumVirtChunks,
-                             IMG_BOOL * pabMappingTable,
-                             IMG_UINT32 uiLog2PageSize,
-                             PVRSRV_MEMALLOCFLAGS_T uiFlags,
-                             PMR ** ppsPMRPtr);
+PhysmemNewLocalRamBackedPMR(PVRSRV_DEVICE_NODE *psDevNode,
+							IMG_DEVMEM_SIZE_T uiSize,
+							IMG_DEVMEM_SIZE_T uiChunkSize,
+							IMG_UINT32 ui32NumPhysChunks,
+							IMG_UINT32 ui32NumVirtChunks,
+							IMG_BOOL *pabMappingTable,
+							IMG_UINT32 uiLog2PageSize,
+							PVRSRV_MEMALLOCFLAGS_T uiFlags,
+							PMR **ppsPMRPtr);
 
 #endif /* #ifndef _SRVSRV_PHYSMEM_LMA_H_ */

@@ -91,7 +91,7 @@
 #define MPI2_VERSION_MINOR_MASK             (0x00FF)
 #define MPI2_VERSION_MINOR_SHIFT            (0)
 #define MPI2_VERSION ((MPI2_VERSION_MAJOR << MPI2_VERSION_MAJOR_SHIFT) |   \
-                      MPI2_VERSION_MINOR)
+                                      MPI2_VERSION_MINOR)
 
 #define MPI2_VERSION_02_00                  (0x0200)
 
@@ -132,32 +132,32 @@
 
 typedef volatile struct _MPI2_SYSTEM_INTERFACE_REGS
 {
-  U32         Doorbell;                   /* 0x00 */
-  U32         WriteSequence;              /* 0x04 */
-  U32         HostDiagnostic;             /* 0x08 */
-  U32         Reserved1;                  /* 0x0C */
-  U32         DiagRWData;                 /* 0x10 */
-  U32         DiagRWAddressLow;           /* 0x14 */
-  U32         DiagRWAddressHigh;          /* 0x18 */
-  U32         Reserved2[5];               /* 0x1C */
-  U32         HostInterruptStatus;        /* 0x30 */
-  U32         HostInterruptMask;          /* 0x34 */
-  U32         DCRData;                    /* 0x38 */
-  U32         DCRAddress;                 /* 0x3C */
-  U32         Reserved3[2];               /* 0x40 */
-  U32         ReplyFreeHostIndex;         /* 0x48 */
-  U32         Reserved4[8];               /* 0x4C */
-  U32         ReplyPostHostIndex;         /* 0x6C */
-  U32         Reserved5;                  /* 0x70 */
-  U32         HCBSize;                    /* 0x74 */
-  U32         HCBAddressLow;              /* 0x78 */
-  U32         HCBAddressHigh;             /* 0x7C */
-  U32         Reserved6[16];              /* 0x80 */
-  U32         RequestDescriptorPostLow;   /* 0xC0 */
-  U32         RequestDescriptorPostHigh;  /* 0xC4 */
-  U32         Reserved7[14];              /* 0xC8 */
+    U32         Doorbell;                   /* 0x00 */
+    U32         WriteSequence;              /* 0x04 */
+    U32         HostDiagnostic;             /* 0x08 */
+    U32         Reserved1;                  /* 0x0C */
+    U32         DiagRWData;                 /* 0x10 */
+    U32         DiagRWAddressLow;           /* 0x14 */
+    U32         DiagRWAddressHigh;          /* 0x18 */
+    U32         Reserved2[5];               /* 0x1C */
+    U32         HostInterruptStatus;        /* 0x30 */
+    U32         HostInterruptMask;          /* 0x34 */
+    U32         DCRData;                    /* 0x38 */
+    U32         DCRAddress;                 /* 0x3C */
+    U32         Reserved3[2];               /* 0x40 */
+    U32         ReplyFreeHostIndex;         /* 0x48 */
+    U32         Reserved4[8];               /* 0x4C */
+    U32         ReplyPostHostIndex;         /* 0x6C */
+    U32         Reserved5;                  /* 0x70 */
+    U32         HCBSize;                    /* 0x74 */
+    U32         HCBAddressLow;              /* 0x78 */
+    U32         HCBAddressHigh;             /* 0x7C */
+    U32         Reserved6[16];              /* 0x80 */
+    U32         RequestDescriptorPostLow;   /* 0xC0 */
+    U32         RequestDescriptorPostHigh;  /* 0xC4 */
+    U32         Reserved7[14];              /* 0xC8 */
 } MPI2_SYSTEM_INTERFACE_REGS, MPI2_POINTER PTR_MPI2_SYSTEM_INTERFACE_REGS,
-Mpi2SystemInterfaceRegs_t, MPI2_POINTER pMpi2SystemInterfaceRegs_t;
+  Mpi2SystemInterfaceRegs_t, MPI2_POINTER pMpi2SystemInterfaceRegs_t;
 
 /*
  * Defines for working with the Doorbell register.
@@ -285,14 +285,14 @@ Mpi2SystemInterfaceRegs_t, MPI2_POINTER pMpi2SystemInterfaceRegs_t;
 /* Default Request Descriptor */
 typedef struct _MPI2_DEFAULT_REQUEST_DESCRIPTOR
 {
-  U8              RequestFlags;               /* 0x00 */
-  U8              MSIxIndex;                  /* 0x01 */
-  U16             SMID;                       /* 0x02 */
-  U16             LMID;                       /* 0x04 */
-  U16             DescriptorTypeDependent;    /* 0x06 */
+    U8              RequestFlags;               /* 0x00 */
+    U8              MSIxIndex;                  /* 0x01 */
+    U16             SMID;                       /* 0x02 */
+    U16             LMID;                       /* 0x04 */
+    U16             DescriptorTypeDependent;    /* 0x06 */
 } MPI2_DEFAULT_REQUEST_DESCRIPTOR,
-MPI2_POINTER PTR_MPI2_DEFAULT_REQUEST_DESCRIPTOR,
-Mpi2DefaultRequestDescriptor_t, MPI2_POINTER pMpi2DefaultRequestDescriptor_t;
+  MPI2_POINTER PTR_MPI2_DEFAULT_REQUEST_DESCRIPTOR,
+  Mpi2DefaultRequestDescriptor_t, MPI2_POINTER pMpi2DefaultRequestDescriptor_t;
 
 /* defines for the RequestFlags field */
 #define MPI2_REQ_DESCRIPT_FLAGS_TYPE_MASK               (0x0E)
@@ -308,68 +308,68 @@ Mpi2DefaultRequestDescriptor_t, MPI2_POINTER pMpi2DefaultRequestDescriptor_t;
 /* High Priority Request Descriptor */
 typedef struct _MPI2_HIGH_PRIORITY_REQUEST_DESCRIPTOR
 {
-  U8              RequestFlags;               /* 0x00 */
-  U8              MSIxIndex;                  /* 0x01 */
-  U16             SMID;                       /* 0x02 */
-  U16             LMID;                       /* 0x04 */
-  U16             Reserved1;                  /* 0x06 */
+    U8              RequestFlags;               /* 0x00 */
+    U8              MSIxIndex;                  /* 0x01 */
+    U16             SMID;                       /* 0x02 */
+    U16             LMID;                       /* 0x04 */
+    U16             Reserved1;                  /* 0x06 */
 } MPI2_HIGH_PRIORITY_REQUEST_DESCRIPTOR,
-MPI2_POINTER PTR_MPI2_HIGH_PRIORITY_REQUEST_DESCRIPTOR,
-Mpi2HighPriorityRequestDescriptor_t,
-MPI2_POINTER pMpi2HighPriorityRequestDescriptor_t;
+  MPI2_POINTER PTR_MPI2_HIGH_PRIORITY_REQUEST_DESCRIPTOR,
+  Mpi2HighPriorityRequestDescriptor_t,
+  MPI2_POINTER pMpi2HighPriorityRequestDescriptor_t;
 
 
 /* SCSI IO Request Descriptor */
 typedef struct _MPI2_SCSI_IO_REQUEST_DESCRIPTOR
 {
-  U8              RequestFlags;               /* 0x00 */
-  U8              MSIxIndex;                  /* 0x01 */
-  U16             SMID;                       /* 0x02 */
-  U16             LMID;                       /* 0x04 */
-  U16             DevHandle;                  /* 0x06 */
+    U8              RequestFlags;               /* 0x00 */
+    U8              MSIxIndex;                  /* 0x01 */
+    U16             SMID;                       /* 0x02 */
+    U16             LMID;                       /* 0x04 */
+    U16             DevHandle;                  /* 0x06 */
 } MPI2_SCSI_IO_REQUEST_DESCRIPTOR,
-MPI2_POINTER PTR_MPI2_SCSI_IO_REQUEST_DESCRIPTOR,
-Mpi2SCSIIORequestDescriptor_t, MPI2_POINTER pMpi2SCSIIORequestDescriptor_t;
+  MPI2_POINTER PTR_MPI2_SCSI_IO_REQUEST_DESCRIPTOR,
+  Mpi2SCSIIORequestDescriptor_t, MPI2_POINTER pMpi2SCSIIORequestDescriptor_t;
 
 
 /* SCSI Target Request Descriptor */
 typedef struct _MPI2_SCSI_TARGET_REQUEST_DESCRIPTOR
 {
-  U8              RequestFlags;               /* 0x00 */
-  U8              MSIxIndex;                  /* 0x01 */
-  U16             SMID;                       /* 0x02 */
-  U16             LMID;                       /* 0x04 */
-  U16             IoIndex;                    /* 0x06 */
+    U8              RequestFlags;               /* 0x00 */
+    U8              MSIxIndex;                  /* 0x01 */
+    U16             SMID;                       /* 0x02 */
+    U16             LMID;                       /* 0x04 */
+    U16             IoIndex;                    /* 0x06 */
 } MPI2_SCSI_TARGET_REQUEST_DESCRIPTOR,
-MPI2_POINTER PTR_MPI2_SCSI_TARGET_REQUEST_DESCRIPTOR,
-Mpi2SCSITargetRequestDescriptor_t,
-MPI2_POINTER pMpi2SCSITargetRequestDescriptor_t;
+  MPI2_POINTER PTR_MPI2_SCSI_TARGET_REQUEST_DESCRIPTOR,
+  Mpi2SCSITargetRequestDescriptor_t,
+  MPI2_POINTER pMpi2SCSITargetRequestDescriptor_t;
 
 
 /* RAID Accelerator Request Descriptor */
 typedef struct _MPI2_RAID_ACCEL_REQUEST_DESCRIPTOR {
-  U8              RequestFlags;               /* 0x00 */
-  U8              MSIxIndex;                  /* 0x01 */
-  U16             SMID;                       /* 0x02 */
-  U16             LMID;                       /* 0x04 */
-  U16             Reserved;                   /* 0x06 */
+    U8              RequestFlags;               /* 0x00 */
+    U8              MSIxIndex;                  /* 0x01 */
+    U16             SMID;                       /* 0x02 */
+    U16             LMID;                       /* 0x04 */
+    U16             Reserved;                   /* 0x06 */
 } MPI2_RAID_ACCEL_REQUEST_DESCRIPTOR,
-MPI2_POINTER PTR_MPI2_RAID_ACCEL_REQUEST_DESCRIPTOR,
-Mpi2RAIDAcceleratorRequestDescriptor_t,
-MPI2_POINTER pMpi2RAIDAcceleratorRequestDescriptor_t;
+  MPI2_POINTER PTR_MPI2_RAID_ACCEL_REQUEST_DESCRIPTOR,
+  Mpi2RAIDAcceleratorRequestDescriptor_t,
+  MPI2_POINTER pMpi2RAIDAcceleratorRequestDescriptor_t;
 
 
 /* union of Request Descriptors */
 typedef union _MPI2_REQUEST_DESCRIPTOR_UNION
 {
-  MPI2_DEFAULT_REQUEST_DESCRIPTOR             Default;
-  MPI2_HIGH_PRIORITY_REQUEST_DESCRIPTOR       HighPriority;
-  MPI2_SCSI_IO_REQUEST_DESCRIPTOR             SCSIIO;
-  MPI2_SCSI_TARGET_REQUEST_DESCRIPTOR         SCSITarget;
-  MPI2_RAID_ACCEL_REQUEST_DESCRIPTOR          RAIDAccelerator;
-  U64                                         Words;
+    MPI2_DEFAULT_REQUEST_DESCRIPTOR             Default;
+    MPI2_HIGH_PRIORITY_REQUEST_DESCRIPTOR       HighPriority;
+    MPI2_SCSI_IO_REQUEST_DESCRIPTOR             SCSIIO;
+    MPI2_SCSI_TARGET_REQUEST_DESCRIPTOR         SCSITarget;
+    MPI2_RAID_ACCEL_REQUEST_DESCRIPTOR          RAIDAccelerator;
+    U64                                         Words;
 } MPI2_REQUEST_DESCRIPTOR_UNION, MPI2_POINTER PTR_MPI2_REQUEST_DESCRIPTOR_UNION,
-Mpi2RequestDescriptorUnion_t, MPI2_POINTER pMpi2RequestDescriptorUnion_t;
+  Mpi2RequestDescriptorUnion_t, MPI2_POINTER pMpi2RequestDescriptorUnion_t;
 
 
 /* Reply Descriptors */
@@ -377,12 +377,12 @@ Mpi2RequestDescriptorUnion_t, MPI2_POINTER pMpi2RequestDescriptorUnion_t;
 /* Default Reply Descriptor */
 typedef struct _MPI2_DEFAULT_REPLY_DESCRIPTOR
 {
-  U8              ReplyFlags;                 /* 0x00 */
-  U8              MSIxIndex;                  /* 0x01 */
-  U16             DescriptorTypeDependent1;   /* 0x02 */
-  U32             DescriptorTypeDependent2;   /* 0x04 */
+    U8              ReplyFlags;                 /* 0x00 */
+    U8              MSIxIndex;                  /* 0x01 */
+    U16             DescriptorTypeDependent1;   /* 0x02 */
+    U32             DescriptorTypeDependent2;   /* 0x04 */
 } MPI2_DEFAULT_REPLY_DESCRIPTOR, MPI2_POINTER PTR_MPI2_DEFAULT_REPLY_DESCRIPTOR,
-Mpi2DefaultReplyDescriptor_t, MPI2_POINTER pMpi2DefaultReplyDescriptor_t;
+  Mpi2DefaultReplyDescriptor_t, MPI2_POINTER pMpi2DefaultReplyDescriptor_t;
 
 /* defines for the ReplyFlags field */
 #define MPI2_RPY_DESCRIPT_FLAGS_TYPE_MASK                   (0x0F)
@@ -400,12 +400,12 @@ Mpi2DefaultReplyDescriptor_t, MPI2_POINTER pMpi2DefaultReplyDescriptor_t;
 /* Address Reply Descriptor */
 typedef struct _MPI2_ADDRESS_REPLY_DESCRIPTOR
 {
-  U8              ReplyFlags;                 /* 0x00 */
-  U8              MSIxIndex;                  /* 0x01 */
-  U16             SMID;                       /* 0x02 */
-  U32             ReplyFrameAddress;          /* 0x04 */
+    U8              ReplyFlags;                 /* 0x00 */
+    U8              MSIxIndex;                  /* 0x01 */
+    U16             SMID;                       /* 0x02 */
+    U32             ReplyFrameAddress;          /* 0x04 */
 } MPI2_ADDRESS_REPLY_DESCRIPTOR, MPI2_POINTER PTR_MPI2_ADDRESS_REPLY_DESCRIPTOR,
-Mpi2AddressReplyDescriptor_t, MPI2_POINTER pMpi2AddressReplyDescriptor_t;
+  Mpi2AddressReplyDescriptor_t, MPI2_POINTER pMpi2AddressReplyDescriptor_t;
 
 #define MPI2_ADDRESS_REPLY_SMID_INVALID                 (0x00)
 
@@ -413,45 +413,45 @@ Mpi2AddressReplyDescriptor_t, MPI2_POINTER pMpi2AddressReplyDescriptor_t;
 /* SCSI IO Success Reply Descriptor */
 typedef struct _MPI2_SCSI_IO_SUCCESS_REPLY_DESCRIPTOR
 {
-  U8              ReplyFlags;                 /* 0x00 */
-  U8              MSIxIndex;                  /* 0x01 */
-  U16             SMID;                       /* 0x02 */
-  U16             TaskTag;                    /* 0x04 */
-  U16             Reserved1;                  /* 0x06 */
+    U8              ReplyFlags;                 /* 0x00 */
+    U8              MSIxIndex;                  /* 0x01 */
+    U16             SMID;                       /* 0x02 */
+    U16             TaskTag;                    /* 0x04 */
+    U16             Reserved1;                  /* 0x06 */
 } MPI2_SCSI_IO_SUCCESS_REPLY_DESCRIPTOR,
-MPI2_POINTER PTR_MPI2_SCSI_IO_SUCCESS_REPLY_DESCRIPTOR,
-Mpi2SCSIIOSuccessReplyDescriptor_t,
-MPI2_POINTER pMpi2SCSIIOSuccessReplyDescriptor_t;
+  MPI2_POINTER PTR_MPI2_SCSI_IO_SUCCESS_REPLY_DESCRIPTOR,
+  Mpi2SCSIIOSuccessReplyDescriptor_t,
+  MPI2_POINTER pMpi2SCSIIOSuccessReplyDescriptor_t;
 
 
 /* TargetAssist Success Reply Descriptor */
 typedef struct _MPI2_TARGETASSIST_SUCCESS_REPLY_DESCRIPTOR
 {
-  U8              ReplyFlags;                 /* 0x00 */
-  U8              MSIxIndex;                  /* 0x01 */
-  U16             SMID;                       /* 0x02 */
-  U8              SequenceNumber;             /* 0x04 */
-  U8              Reserved1;                  /* 0x05 */
-  U16             IoIndex;                    /* 0x06 */
+    U8              ReplyFlags;                 /* 0x00 */
+    U8              MSIxIndex;                  /* 0x01 */
+    U16             SMID;                       /* 0x02 */
+    U8              SequenceNumber;             /* 0x04 */
+    U8              Reserved1;                  /* 0x05 */
+    U16             IoIndex;                    /* 0x06 */
 } MPI2_TARGETASSIST_SUCCESS_REPLY_DESCRIPTOR,
-MPI2_POINTER PTR_MPI2_TARGETASSIST_SUCCESS_REPLY_DESCRIPTOR,
-Mpi2TargetAssistSuccessReplyDescriptor_t,
-MPI2_POINTER pMpi2TargetAssistSuccessReplyDescriptor_t;
+  MPI2_POINTER PTR_MPI2_TARGETASSIST_SUCCESS_REPLY_DESCRIPTOR,
+  Mpi2TargetAssistSuccessReplyDescriptor_t,
+  MPI2_POINTER pMpi2TargetAssistSuccessReplyDescriptor_t;
 
 
 /* Target Command Buffer Reply Descriptor */
 typedef struct _MPI2_TARGET_COMMAND_BUFFER_REPLY_DESCRIPTOR
 {
-  U8              ReplyFlags;                 /* 0x00 */
-  U8              MSIxIndex;                  /* 0x01 */
-  U8              VP_ID;                      /* 0x02 */
-  U8              Flags;                      /* 0x03 */
-  U16             InitiatorDevHandle;         /* 0x04 */
-  U16             IoIndex;                    /* 0x06 */
+    U8              ReplyFlags;                 /* 0x00 */
+    U8              MSIxIndex;                  /* 0x01 */
+    U8              VP_ID;                      /* 0x02 */
+    U8              Flags;                      /* 0x03 */
+    U16             InitiatorDevHandle;         /* 0x04 */
+    U16             IoIndex;                    /* 0x06 */
 } MPI2_TARGET_COMMAND_BUFFER_REPLY_DESCRIPTOR,
-MPI2_POINTER PTR_MPI2_TARGET_COMMAND_BUFFER_REPLY_DESCRIPTOR,
-Mpi2TargetCommandBufferReplyDescriptor_t,
-MPI2_POINTER pMpi2TargetCommandBufferReplyDescriptor_t;
+  MPI2_POINTER PTR_MPI2_TARGET_COMMAND_BUFFER_REPLY_DESCRIPTOR,
+  Mpi2TargetCommandBufferReplyDescriptor_t,
+  MPI2_POINTER pMpi2TargetCommandBufferReplyDescriptor_t;
 
 /* defines for Flags field */
 #define MPI2_RPY_DESCRIPT_TCB_FLAGS_PHYNUM_MASK     (0x3F)
@@ -459,28 +459,28 @@ MPI2_POINTER pMpi2TargetCommandBufferReplyDescriptor_t;
 
 /* RAID Accelerator Success Reply Descriptor */
 typedef struct _MPI2_RAID_ACCELERATOR_SUCCESS_REPLY_DESCRIPTOR {
-  U8              ReplyFlags;                 /* 0x00 */
-  U8              MSIxIndex;                  /* 0x01 */
-  U16             SMID;                       /* 0x02 */
-  U32             Reserved;                   /* 0x04 */
+    U8              ReplyFlags;                 /* 0x00 */
+    U8              MSIxIndex;                  /* 0x01 */
+    U16             SMID;                       /* 0x02 */
+    U32             Reserved;                   /* 0x04 */
 } MPI2_RAID_ACCELERATOR_SUCCESS_REPLY_DESCRIPTOR,
-MPI2_POINTER PTR_MPI2_RAID_ACCELERATOR_SUCCESS_REPLY_DESCRIPTOR,
-Mpi2RAIDAcceleratorSuccessReplyDescriptor_t,
-MPI2_POINTER pMpi2RAIDAcceleratorSuccessReplyDescriptor_t;
+  MPI2_POINTER PTR_MPI2_RAID_ACCELERATOR_SUCCESS_REPLY_DESCRIPTOR,
+  Mpi2RAIDAcceleratorSuccessReplyDescriptor_t,
+  MPI2_POINTER pMpi2RAIDAcceleratorSuccessReplyDescriptor_t;
 
 
 /* union of Reply Descriptors */
 typedef union _MPI2_REPLY_DESCRIPTORS_UNION
 {
-  MPI2_DEFAULT_REPLY_DESCRIPTOR                   Default;
-  MPI2_ADDRESS_REPLY_DESCRIPTOR                   AddressReply;
-  MPI2_SCSI_IO_SUCCESS_REPLY_DESCRIPTOR           SCSIIOSuccess;
-  MPI2_TARGETASSIST_SUCCESS_REPLY_DESCRIPTOR      TargetAssistSuccess;
-  MPI2_TARGET_COMMAND_BUFFER_REPLY_DESCRIPTOR     TargetCommandBuffer;
-  MPI2_RAID_ACCELERATOR_SUCCESS_REPLY_DESCRIPTOR  RAIDAcceleratorSuccess;
-  U64                                             Words;
+    MPI2_DEFAULT_REPLY_DESCRIPTOR                   Default;
+    MPI2_ADDRESS_REPLY_DESCRIPTOR                   AddressReply;
+    MPI2_SCSI_IO_SUCCESS_REPLY_DESCRIPTOR           SCSIIOSuccess;
+    MPI2_TARGETASSIST_SUCCESS_REPLY_DESCRIPTOR      TargetAssistSuccess;
+    MPI2_TARGET_COMMAND_BUFFER_REPLY_DESCRIPTOR     TargetCommandBuffer;
+    MPI2_RAID_ACCELERATOR_SUCCESS_REPLY_DESCRIPTOR  RAIDAcceleratorSuccess;
+    U64                                             Words;
 } MPI2_REPLY_DESCRIPTORS_UNION, MPI2_POINTER PTR_MPI2_REPLY_DESCRIPTORS_UNION,
-Mpi2ReplyDescriptorsUnion_t, MPI2_POINTER pMpi2ReplyDescriptorsUnion_t;
+  Mpi2ReplyDescriptorsUnion_t, MPI2_POINTER pMpi2ReplyDescriptorsUnion_t;
 
 
 
@@ -661,17 +661,17 @@ Mpi2ReplyDescriptorsUnion_t, MPI2_POINTER pMpi2ReplyDescriptorsUnion_t;
 
 typedef struct _MPI2_REQUEST_HEADER
 {
-  U16             FunctionDependent1;         /* 0x00 */
-  U8              ChainOffset;                /* 0x02 */
-  U8              Function;                   /* 0x03 */
-  U16             FunctionDependent2;         /* 0x04 */
-  U8              FunctionDependent3;         /* 0x06 */
-  U8              MsgFlags;                   /* 0x07 */
-  U8              VP_ID;                      /* 0x08 */
-  U8              VF_ID;                      /* 0x09 */
-  U16             Reserved1;                  /* 0x0A */
+    U16             FunctionDependent1;         /* 0x00 */
+    U8              ChainOffset;                /* 0x02 */
+    U8              Function;                   /* 0x03 */
+    U16             FunctionDependent2;         /* 0x04 */
+    U8              FunctionDependent3;         /* 0x06 */
+    U8              MsgFlags;                   /* 0x07 */
+    U8              VP_ID;                      /* 0x08 */
+    U8              VF_ID;                      /* 0x09 */
+    U16             Reserved1;                  /* 0x0A */
 } MPI2_REQUEST_HEADER, MPI2_POINTER PTR_MPI2_REQUEST_HEADER,
-MPI2RequestHeader_t, MPI2_POINTER pMPI2RequestHeader_t;
+  MPI2RequestHeader_t, MPI2_POINTER pMPI2RequestHeader_t;
 
 
 /****************************************************************************
@@ -680,36 +680,36 @@ MPI2RequestHeader_t, MPI2_POINTER pMPI2RequestHeader_t;
 
 typedef struct _MPI2_DEFAULT_REPLY
 {
-  U16             FunctionDependent1;         /* 0x00 */
-  U8              MsgLength;                  /* 0x02 */
-  U8              Function;                   /* 0x03 */
-  U16             FunctionDependent2;         /* 0x04 */
-  U8              FunctionDependent3;         /* 0x06 */
-  U8              MsgFlags;                   /* 0x07 */
-  U8              VP_ID;                      /* 0x08 */
-  U8              VF_ID;                      /* 0x09 */
-  U16             Reserved1;                  /* 0x0A */
-  U16             FunctionDependent5;         /* 0x0C */
-  U16             IOCStatus;                  /* 0x0E */
-  U32             IOCLogInfo;                 /* 0x10 */
+    U16             FunctionDependent1;         /* 0x00 */
+    U8              MsgLength;                  /* 0x02 */
+    U8              Function;                   /* 0x03 */
+    U16             FunctionDependent2;         /* 0x04 */
+    U8              FunctionDependent3;         /* 0x06 */
+    U8              MsgFlags;                   /* 0x07 */
+    U8              VP_ID;                      /* 0x08 */
+    U8              VF_ID;                      /* 0x09 */
+    U16             Reserved1;                  /* 0x0A */
+    U16             FunctionDependent5;         /* 0x0C */
+    U16             IOCStatus;                  /* 0x0E */
+    U32             IOCLogInfo;                 /* 0x10 */
 } MPI2_DEFAULT_REPLY, MPI2_POINTER PTR_MPI2_DEFAULT_REPLY,
-MPI2DefaultReply_t, MPI2_POINTER pMPI2DefaultReply_t;
+  MPI2DefaultReply_t, MPI2_POINTER pMPI2DefaultReply_t;
 
 
 /* common version structure/union used in messages and configuration pages */
 
 typedef struct _MPI2_VERSION_STRUCT
 {
-  U8                      Dev;                        /* 0x00 */
-  U8                      Unit;                       /* 0x01 */
-  U8                      Minor;                      /* 0x02 */
-  U8                      Major;                      /* 0x03 */
+    U8                      Dev;                        /* 0x00 */
+    U8                      Unit;                       /* 0x01 */
+    U8                      Minor;                      /* 0x02 */
+    U8                      Major;                      /* 0x03 */
 } MPI2_VERSION_STRUCT;
 
 typedef union _MPI2_VERSION_UNION
 {
-  MPI2_VERSION_STRUCT     Struct;
-  U32                     Word;
+    MPI2_VERSION_STRUCT     Struct;
+    U32                     Word;
 } MPI2_VERSION_UNION;
 
 
@@ -734,28 +734,28 @@ typedef union _MPI2_VERSION_UNION
 
 typedef struct _MPI2_SGE_SIMPLE32
 {
-  U32                     FlagsLength;
-  U32                     Address;
+    U32                     FlagsLength;
+    U32                     Address;
 } MPI2_SGE_SIMPLE32, MPI2_POINTER PTR_MPI2_SGE_SIMPLE32,
-Mpi2SGESimple32_t, MPI2_POINTER pMpi2SGESimple32_t;
+  Mpi2SGESimple32_t, MPI2_POINTER pMpi2SGESimple32_t;
 
 typedef struct _MPI2_SGE_SIMPLE64
 {
-  U32                     FlagsLength;
-  U64                     Address;
+    U32                     FlagsLength;
+    U64                     Address;
 } MPI2_SGE_SIMPLE64, MPI2_POINTER PTR_MPI2_SGE_SIMPLE64,
-Mpi2SGESimple64_t, MPI2_POINTER pMpi2SGESimple64_t;
+  Mpi2SGESimple64_t, MPI2_POINTER pMpi2SGESimple64_t;
 
 typedef struct _MPI2_SGE_SIMPLE_UNION
 {
-  U32                     FlagsLength;
-  union
-  {
-    U32                 Address32;
-    U64                 Address64;
-  } u;
+    U32                     FlagsLength;
+    union
+    {
+        U32                 Address32;
+        U64                 Address64;
+    } u;
 } MPI2_SGE_SIMPLE_UNION, MPI2_POINTER PTR_MPI2_SGE_SIMPLE_UNION,
-Mpi2SGESimpleUnion_t, MPI2_POINTER pMpi2SGESimpleUnion_t;
+  Mpi2SGESimpleUnion_t, MPI2_POINTER pMpi2SGESimpleUnion_t;
 
 
 /****************************************************************************
@@ -764,34 +764,34 @@ Mpi2SGESimpleUnion_t, MPI2_POINTER pMpi2SGESimpleUnion_t;
 
 typedef struct _MPI2_SGE_CHAIN32
 {
-  U16                     Length;
-  U8                      NextChainOffset;
-  U8                      Flags;
-  U32                     Address;
+    U16                     Length;
+    U8                      NextChainOffset;
+    U8                      Flags;
+    U32                     Address;
 } MPI2_SGE_CHAIN32, MPI2_POINTER PTR_MPI2_SGE_CHAIN32,
-Mpi2SGEChain32_t, MPI2_POINTER pMpi2SGEChain32_t;
+  Mpi2SGEChain32_t, MPI2_POINTER pMpi2SGEChain32_t;
 
 typedef struct _MPI2_SGE_CHAIN64
 {
-  U16                     Length;
-  U8                      NextChainOffset;
-  U8                      Flags;
-  U64                     Address;
+    U16                     Length;
+    U8                      NextChainOffset;
+    U8                      Flags;
+    U64                     Address;
 } MPI2_SGE_CHAIN64, MPI2_POINTER PTR_MPI2_SGE_CHAIN64,
-Mpi2SGEChain64_t, MPI2_POINTER pMpi2SGEChain64_t;
+  Mpi2SGEChain64_t, MPI2_POINTER pMpi2SGEChain64_t;
 
 typedef struct _MPI2_SGE_CHAIN_UNION
 {
-  U16                     Length;
-  U8                      NextChainOffset;
-  U8                      Flags;
-  union
-  {
-    U32                 Address32;
-    U64                 Address64;
-  } u;
+    U16                     Length;
+    U8                      NextChainOffset;
+    U8                      Flags;
+    union
+    {
+        U32                 Address32;
+        U64                 Address64;
+    } u;
 } MPI2_SGE_CHAIN_UNION, MPI2_POINTER PTR_MPI2_SGE_CHAIN_UNION,
-Mpi2SGEChainUnion_t, MPI2_POINTER pMpi2SGEChainUnion_t;
+  Mpi2SGEChainUnion_t, MPI2_POINTER pMpi2SGEChainUnion_t;
 
 
 /****************************************************************************
@@ -800,64 +800,64 @@ Mpi2SGEChainUnion_t, MPI2_POINTER pMpi2SGEChainUnion_t;
 
 typedef struct _MPI2_SGE_TRANSACTION32
 {
-  U8                      Reserved;
-  U8                      ContextSize;
-  U8                      DetailsLength;
-  U8                      Flags;
-  U32                     TransactionContext[1];
-  U32                     TransactionDetails[1];
+    U8                      Reserved;
+    U8                      ContextSize;
+    U8                      DetailsLength;
+    U8                      Flags;
+    U32                     TransactionContext[1];
+    U32                     TransactionDetails[1];
 } MPI2_SGE_TRANSACTION32, MPI2_POINTER PTR_MPI2_SGE_TRANSACTION32,
-Mpi2SGETransaction32_t, MPI2_POINTER pMpi2SGETransaction32_t;
+  Mpi2SGETransaction32_t, MPI2_POINTER pMpi2SGETransaction32_t;
 
 typedef struct _MPI2_SGE_TRANSACTION64
 {
-  U8                      Reserved;
-  U8                      ContextSize;
-  U8                      DetailsLength;
-  U8                      Flags;
-  U32                     TransactionContext[2];
-  U32                     TransactionDetails[1];
+    U8                      Reserved;
+    U8                      ContextSize;
+    U8                      DetailsLength;
+    U8                      Flags;
+    U32                     TransactionContext[2];
+    U32                     TransactionDetails[1];
 } MPI2_SGE_TRANSACTION64, MPI2_POINTER PTR_MPI2_SGE_TRANSACTION64,
-Mpi2SGETransaction64_t, MPI2_POINTER pMpi2SGETransaction64_t;
+  Mpi2SGETransaction64_t, MPI2_POINTER pMpi2SGETransaction64_t;
 
 typedef struct _MPI2_SGE_TRANSACTION96
 {
-  U8                      Reserved;
-  U8                      ContextSize;
-  U8                      DetailsLength;
-  U8                      Flags;
-  U32                     TransactionContext[3];
-  U32                     TransactionDetails[1];
+    U8                      Reserved;
+    U8                      ContextSize;
+    U8                      DetailsLength;
+    U8                      Flags;
+    U32                     TransactionContext[3];
+    U32                     TransactionDetails[1];
 } MPI2_SGE_TRANSACTION96, MPI2_POINTER PTR_MPI2_SGE_TRANSACTION96,
-Mpi2SGETransaction96_t, MPI2_POINTER pMpi2SGETransaction96_t;
+  Mpi2SGETransaction96_t, MPI2_POINTER pMpi2SGETransaction96_t;
 
 typedef struct _MPI2_SGE_TRANSACTION128
 {
-  U8                      Reserved;
-  U8                      ContextSize;
-  U8                      DetailsLength;
-  U8                      Flags;
-  U32                     TransactionContext[4];
-  U32                     TransactionDetails[1];
+    U8                      Reserved;
+    U8                      ContextSize;
+    U8                      DetailsLength;
+    U8                      Flags;
+    U32                     TransactionContext[4];
+    U32                     TransactionDetails[1];
 } MPI2_SGE_TRANSACTION128, MPI2_POINTER PTR_MPI2_SGE_TRANSACTION128,
-Mpi2SGETransaction_t128, MPI2_POINTER pMpi2SGETransaction_t128;
+  Mpi2SGETransaction_t128, MPI2_POINTER pMpi2SGETransaction_t128;
 
 typedef struct _MPI2_SGE_TRANSACTION_UNION
 {
-  U8                      Reserved;
-  U8                      ContextSize;
-  U8                      DetailsLength;
-  U8                      Flags;
-  union
-  {
-    U32                 TransactionContext32[1];
-    U32                 TransactionContext64[2];
-    U32                 TransactionContext96[3];
-    U32                 TransactionContext128[4];
-  } u;
-  U32                     TransactionDetails[1];
+    U8                      Reserved;
+    U8                      ContextSize;
+    U8                      DetailsLength;
+    U8                      Flags;
+    union
+    {
+        U32                 TransactionContext32[1];
+        U32                 TransactionContext64[2];
+        U32                 TransactionContext96[3];
+        U32                 TransactionContext128[4];
+    } u;
+    U32                     TransactionDetails[1];
 } MPI2_SGE_TRANSACTION_UNION, MPI2_POINTER PTR_MPI2_SGE_TRANSACTION_UNION,
-Mpi2SGETransactionUnion_t, MPI2_POINTER pMpi2SGETransactionUnion_t;
+  Mpi2SGETransactionUnion_t, MPI2_POINTER pMpi2SGETransactionUnion_t;
 
 
 /****************************************************************************
@@ -866,13 +866,13 @@ Mpi2SGETransactionUnion_t, MPI2_POINTER pMpi2SGETransactionUnion_t;
 
 typedef struct _MPI2_MPI_SGE_IO_UNION
 {
-  union
-  {
-    MPI2_SGE_SIMPLE_UNION   Simple;
-    MPI2_SGE_CHAIN_UNION    Chain;
-  } u;
+    union
+    {
+        MPI2_SGE_SIMPLE_UNION   Simple;
+        MPI2_SGE_CHAIN_UNION    Chain;
+    } u;
 } MPI2_MPI_SGE_IO_UNION, MPI2_POINTER PTR_MPI2_MPI_SGE_IO_UNION,
-Mpi2MpiSGEIOUnion_t, MPI2_POINTER pMpi2MpiSGEIOUnion_t;
+  Mpi2MpiSGEIOUnion_t, MPI2_POINTER pMpi2MpiSGEIOUnion_t;
 
 
 /****************************************************************************
@@ -881,13 +881,13 @@ Mpi2MpiSGEIOUnion_t, MPI2_POINTER pMpi2MpiSGEIOUnion_t;
 
 typedef struct _MPI2_SGE_TRANS_SIMPLE_UNION
 {
-  union
-  {
-    MPI2_SGE_SIMPLE_UNION       Simple;
-    MPI2_SGE_TRANSACTION_UNION  Transaction;
-  } u;
+    union
+    {
+        MPI2_SGE_SIMPLE_UNION       Simple;
+        MPI2_SGE_TRANSACTION_UNION  Transaction;
+    } u;
 } MPI2_SGE_TRANS_SIMPLE_UNION, MPI2_POINTER PTR_MPI2_SGE_TRANS_SIMPLE_UNION,
-Mpi2SGETransSimpleUnion_t, MPI2_POINTER pMpi2SGETransSimpleUnion_t;
+  Mpi2SGETransSimpleUnion_t, MPI2_POINTER pMpi2SGETransSimpleUnion_t;
 
 
 /****************************************************************************
@@ -896,14 +896,14 @@ Mpi2SGETransSimpleUnion_t, MPI2_POINTER pMpi2SGETransSimpleUnion_t;
 
 typedef struct _MPI2_MPI_SGE_UNION
 {
-  union
-  {
-    MPI2_SGE_SIMPLE_UNION       Simple;
-    MPI2_SGE_CHAIN_UNION        Chain;
-    MPI2_SGE_TRANSACTION_UNION  Transaction;
-  } u;
+    union
+    {
+        MPI2_SGE_SIMPLE_UNION       Simple;
+        MPI2_SGE_CHAIN_UNION        Chain;
+        MPI2_SGE_TRANSACTION_UNION  Transaction;
+    } u;
 } MPI2_MPI_SGE_UNION, MPI2_POINTER PTR_MPI2_MPI_SGE_UNION,
-Mpi2MpiSgeUnion_t, MPI2_POINTER pMpi2MpiSgeUnion_t;
+  Mpi2MpiSgeUnion_t, MPI2_POINTER pMpi2MpiSgeUnion_t;
 
 
 /****************************************************************************
@@ -994,27 +994,27 @@ Mpi2MpiSgeUnion_t, MPI2_POINTER pMpi2MpiSgeUnion_t;
 
 typedef struct _MPI2_IEEE_SGE_SIMPLE32
 {
-  U32                     Address;
-  U32                     FlagsLength;
+    U32                     Address;
+    U32                     FlagsLength;
 } MPI2_IEEE_SGE_SIMPLE32, MPI2_POINTER PTR_MPI2_IEEE_SGE_SIMPLE32,
-Mpi2IeeeSgeSimple32_t, MPI2_POINTER pMpi2IeeeSgeSimple32_t;
+  Mpi2IeeeSgeSimple32_t, MPI2_POINTER pMpi2IeeeSgeSimple32_t;
 
 typedef struct _MPI2_IEEE_SGE_SIMPLE64
 {
-  U64                     Address;
-  U32                     Length;
-  U16                     Reserved1;
-  U8                      Reserved2;
-  U8                      Flags;
+    U64                     Address;
+    U32                     Length;
+    U16                     Reserved1;
+    U8                      Reserved2;
+    U8                      Flags;
 } MPI2_IEEE_SGE_SIMPLE64, MPI2_POINTER PTR_MPI2_IEEE_SGE_SIMPLE64,
-Mpi2IeeeSgeSimple64_t, MPI2_POINTER pMpi2IeeeSgeSimple64_t;
+  Mpi2IeeeSgeSimple64_t, MPI2_POINTER pMpi2IeeeSgeSimple64_t;
 
 typedef union _MPI2_IEEE_SGE_SIMPLE_UNION
 {
-  MPI2_IEEE_SGE_SIMPLE32  Simple32;
-  MPI2_IEEE_SGE_SIMPLE64  Simple64;
+    MPI2_IEEE_SGE_SIMPLE32  Simple32;
+    MPI2_IEEE_SGE_SIMPLE64  Simple64;
 } MPI2_IEEE_SGE_SIMPLE_UNION, MPI2_POINTER PTR_MPI2_IEEE_SGE_SIMPLE_UNION,
-Mpi2IeeeSgeSimpleUnion_t, MPI2_POINTER pMpi2IeeeSgeSimpleUnion_t;
+  Mpi2IeeeSgeSimpleUnion_t, MPI2_POINTER pMpi2IeeeSgeSimpleUnion_t;
 
 
 /****************************************************************************
@@ -1027,10 +1027,10 @@ typedef MPI2_IEEE_SGE_SIMPLE64  MPI2_IEEE_SGE_CHAIN64;
 
 typedef union _MPI2_IEEE_SGE_CHAIN_UNION
 {
-  MPI2_IEEE_SGE_CHAIN32   Chain32;
-  MPI2_IEEE_SGE_CHAIN64   Chain64;
+    MPI2_IEEE_SGE_CHAIN32   Chain32;
+    MPI2_IEEE_SGE_CHAIN64   Chain64;
 } MPI2_IEEE_SGE_CHAIN_UNION, MPI2_POINTER PTR_MPI2_IEEE_SGE_CHAIN_UNION,
-Mpi2IeeeSgeChainUnion_t, MPI2_POINTER pMpi2IeeeSgeChainUnion_t;
+  Mpi2IeeeSgeChainUnion_t, MPI2_POINTER pMpi2IeeeSgeChainUnion_t;
 
 
 /****************************************************************************
@@ -1039,13 +1039,13 @@ Mpi2IeeeSgeChainUnion_t, MPI2_POINTER pMpi2IeeeSgeChainUnion_t;
 
 typedef struct _MPI2_IEEE_SGE_UNION
 {
-  union
-  {
-    MPI2_IEEE_SGE_SIMPLE_UNION  Simple;
-    MPI2_IEEE_SGE_CHAIN_UNION   Chain;
-  } u;
+    union
+    {
+        MPI2_IEEE_SGE_SIMPLE_UNION  Simple;
+        MPI2_IEEE_SGE_CHAIN_UNION   Chain;
+    } u;
 } MPI2_IEEE_SGE_UNION, MPI2_POINTER PTR_MPI2_IEEE_SGE_UNION,
-Mpi2IeeeSgeUnion_t, MPI2_POINTER pMpi2IeeeSgeUnion_t;
+  Mpi2IeeeSgeUnion_t, MPI2_POINTER pMpi2IeeeSgeUnion_t;
 
 
 /****************************************************************************
@@ -1069,16 +1069,16 @@ Mpi2IeeeSgeUnion_t, MPI2_POINTER pMpi2IeeeSgeUnion_t;
 
 #define MPI2_IEEE_SGE_FLAGS_ADDR_MASK           (0x03)
 #define MPI2_IEEE_SGE_FLAGS_SYSTEM_ADDR         (0x00)
-/* IEEE Simple Element only */
+						/* IEEE Simple Element only */
 #define MPI2_IEEE_SGE_FLAGS_IOCDDR_ADDR         (0x01)
-/* IEEE Simple Element only */
+						/* IEEE Simple Element only */
 #define MPI2_IEEE_SGE_FLAGS_IOCPLB_ADDR         (0x02)
 #define MPI2_IEEE_SGE_FLAGS_IOCPLBNTA_ADDR      (0x03)
-/* IEEE Simple Element only */
+						/* IEEE Simple Element only */
 #define MPI2_IEEE_SGE_FLAGS_SYSTEMPLBPCI_ADDR   (0x03)
-/* IEEE Chain Element only */
+						/* IEEE Chain Element only */
 #define MPI2_IEEE_SGE_FLAGS_SYSTEMPLBCPI_ADDR   \
-  (MPI2_IEEE_SGE_FLAGS_SYSTEMPLBPCI_ADDR) /* typo in name */
+	(MPI2_IEEE_SGE_FLAGS_SYSTEMPLBPCI_ADDR) /* typo in name */
 
 /****************************************************************************
 *  IEEE SGE operation Macros
@@ -1110,20 +1110,20 @@ Mpi2IeeeSgeUnion_t, MPI2_POINTER pMpi2IeeeSgeUnion_t;
 
 typedef union _MPI2_SIMPLE_SGE_UNION
 {
-  MPI2_SGE_SIMPLE_UNION       MpiSimple;
-  MPI2_IEEE_SGE_SIMPLE_UNION  IeeeSimple;
+    MPI2_SGE_SIMPLE_UNION       MpiSimple;
+    MPI2_IEEE_SGE_SIMPLE_UNION  IeeeSimple;
 } MPI2_SIMPLE_SGE_UNION, MPI2_POINTER PTR_MPI2_SIMPLE_SGE_UNION,
-Mpi2SimpleSgeUntion_t, MPI2_POINTER pMpi2SimpleSgeUntion_t;
+  Mpi2SimpleSgeUntion_t, MPI2_POINTER pMpi2SimpleSgeUntion_t;
 
 
 typedef union _MPI2_SGE_IO_UNION
 {
-  MPI2_SGE_SIMPLE_UNION       MpiSimple;
-  MPI2_SGE_CHAIN_UNION        MpiChain;
-  MPI2_IEEE_SGE_SIMPLE_UNION  IeeeSimple;
-  MPI2_IEEE_SGE_CHAIN_UNION   IeeeChain;
+    MPI2_SGE_SIMPLE_UNION       MpiSimple;
+    MPI2_SGE_CHAIN_UNION        MpiChain;
+    MPI2_IEEE_SGE_SIMPLE_UNION  IeeeSimple;
+    MPI2_IEEE_SGE_CHAIN_UNION   IeeeChain;
 } MPI2_SGE_IO_UNION, MPI2_POINTER PTR_MPI2_SGE_IO_UNION,
-Mpi2SGEIOUnion_t, MPI2_POINTER pMpi2SGEIOUnion_t;
+  Mpi2SGEIOUnion_t, MPI2_POINTER pMpi2SGEIOUnion_t;
 
 
 /****************************************************************************

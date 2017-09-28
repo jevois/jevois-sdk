@@ -34,27 +34,27 @@
 #include  "sunxi_udc_board.h"
 #include  "sunxi_udc_debug.h"
 
-void print_list_node (struct sunxi_udc_ep * ep, char * str)
+void print_list_node(struct sunxi_udc_ep *ep, char *str)
 {
-  #ifdef SW_UDC_DEBUG
-  struct sunxi_udc_request * req = NULL;
-  spinlock_t lock;
-  unsigned long flags = 0;
-  
-  spin_lock_init (&lock);
-  spin_lock_irqsave (&lock, flags);
-  
-  DMSG_INFO ("---------------ep%d: %s-------------\n", ep->num, str);
-  list_for_each_entry (req, &ep->queue, queue) {
-    DMSG_INFO ("print_list_node: ep(0x%p, %d), req(0x%p, 0x%p, %d, %d)\n\n",
-               ep, ep->num,
-               req, & (req->req), req->req.length, req->req.actual);
-  }
-  DMSG_INFO ("-------------------------------------\n");
-  
-  spin_unlock_irqrestore (&lock, flags);
-  
-  return;
-  #endif
+#ifdef SW_UDC_DEBUG
+	struct sunxi_udc_request	*req = NULL;
+	spinlock_t lock;
+	unsigned long flags = 0;
+
+	spin_lock_init(&lock);
+	spin_lock_irqsave(&lock, flags);
+
+	DMSG_INFO("---------------ep%d: %s-------------\n", ep->num, str);
+	list_for_each_entry (req, &ep->queue, queue) {
+		DMSG_INFO("print_list_node: ep(0x%p, %d), req(0x%p, 0x%p, %d, %d)\n\n",
+			ep, ep->num,
+					req, &(req->req), req->req.length, req->req.actual);
+	}
+	DMSG_INFO("-------------------------------------\n");
+
+	spin_unlock_irqrestore(&lock, flags);
+
+	return;
+#endif
 }
 

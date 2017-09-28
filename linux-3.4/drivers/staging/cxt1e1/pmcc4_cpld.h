@@ -34,15 +34,15 @@
 #define CPLD_INTR    0x3
 #endif
 
-struct c4_cpld
-{
-  volatile u_int32_t mcsr;/* r/w: Master Clock Source Register */
-  volatile u_int32_t mclk;/* r/w: Master Clock Register */
-  volatile u_int32_t leds;/* r/w: LED Register */
-  volatile u_int32_t intr;/* r: Interrupt Register */
-};
+    struct c4_cpld
+    {
+        volatile u_int32_t mcsr;/* r/w: Master Clock Source Register */
+        volatile u_int32_t mclk;/* r/w: Master Clock Register */
+        volatile u_int32_t leds;/* r/w: LED Register */
+        volatile u_int32_t intr;/* r: Interrupt Register */
+    };
 
-typedef struct c4_cpld c4cpld_t;
+    typedef struct c4_cpld c4cpld_t;
 
 /* mcsr note: sourcing COMET must be initialized to Master Mode */
 #define PMCC4_CPLD_MCSR_IND     0       /* ports used individual BP Clk as

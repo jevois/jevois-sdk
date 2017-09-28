@@ -20,11 +20,11 @@
  * subscribed
  */
 struct keyring_list {
-  struct rcu_head rcu;    /* RCU deletion hook */
-  unsigned short  maxkeys;  /* max keys this list can hold */
-  unsigned short  nkeys;    /* number of keys currently held */
-  unsigned short  delkey;   /* key to be unlinked by RCU */
-  struct key * keys[0];
+	struct rcu_head	rcu;		/* RCU deletion hook */
+	unsigned short	maxkeys;	/* max keys this list can hold */
+	unsigned short	nkeys;		/* number of keys currently held */
+	unsigned short	delkey;		/* key to be unlinked by RCU */
+	struct key	*keys[0];
 };
 
 

@@ -19,26 +19,26 @@
  * So handle all using function pointers to machine specific
  * functions.
  */
-void (*_machine_restart) (char * command);
-void (*_machine_halt) (void);
-void (*pm_power_off) (void);
+void (*_machine_restart)(char *command);
+void (*_machine_halt)(void);
+void (*pm_power_off)(void);
 
-EXPORT_SYMBOL (pm_power_off);
+EXPORT_SYMBOL(pm_power_off);
 
-void machine_restart (char * command)
+void machine_restart(char *command)
 {
-  if (_machine_restart)
-  { _machine_restart (command); }
+	if (_machine_restart)
+		_machine_restart(command);
 }
 
-void machine_halt (void)
+void machine_halt(void)
 {
-  if (_machine_halt)
-  { _machine_halt(); }
+	if (_machine_halt)
+		_machine_halt();
 }
 
-void machine_power_off (void)
+void machine_power_off(void)
 {
-  if (pm_power_off)
-  { pm_power_off(); }
+	if (pm_power_off)
+		pm_power_off();
 }

@@ -19,14 +19,14 @@
 #define SET_IP(regs, val) (GET_IP(regs) = (val))
 #endif
 
-static inline unsigned long instruction_pointer (struct pt_regs * regs)
+static inline unsigned long instruction_pointer(struct pt_regs *regs)
 {
-  return GET_IP (regs);
+	return GET_IP(regs);
 }
-static inline void instruction_pointer_set (struct pt_regs * regs,
-    unsigned long val)
+static inline void instruction_pointer_set(struct pt_regs *regs,
+                                           unsigned long val)
 {
-  SET_IP (regs, val);
+	SET_IP(regs, val);
 }
 
 #ifndef profile_pc
@@ -41,14 +41,14 @@ static inline void instruction_pointer_set (struct pt_regs * regs,
 #define SET_USP(regs, val) (GET_USP(regs) = (val))
 #endif
 
-static inline unsigned long user_stack_pointer (struct pt_regs * regs)
+static inline unsigned long user_stack_pointer(struct pt_regs *regs)
 {
-  return GET_USP (regs);
+	return GET_USP(regs);
 }
-static inline void user_stack_pointer_set (struct pt_regs * regs,
-    unsigned long val)
+static inline void user_stack_pointer_set(struct pt_regs *regs,
+                                          unsigned long val)
 {
-  SET_USP (regs, val);
+	SET_USP(regs, val);
 }
 
 /* Helpers for working with the frame pointer */
@@ -59,14 +59,14 @@ static inline void user_stack_pointer_set (struct pt_regs * regs,
 #define SET_FP(regs, val) (GET_FP(regs) = (val))
 #endif
 
-static inline unsigned long frame_pointer (struct pt_regs * regs)
+static inline unsigned long frame_pointer(struct pt_regs *regs)
 {
-  return GET_FP (regs);
+	return GET_FP(regs);
 }
-static inline void frame_pointer_set (struct pt_regs * regs,
-                                      unsigned long val)
+static inline void frame_pointer_set(struct pt_regs *regs,
+                                     unsigned long val)
 {
-  SET_FP (regs, val);
+	SET_FP(regs, val);
 }
 
 #endif /* __ASSEMBLY__ */

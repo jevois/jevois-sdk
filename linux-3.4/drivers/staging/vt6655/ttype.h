@@ -53,16 +53,16 @@
  */
 
 typedef union tagUQuadWord {
-  struct {
-    unsigned int dwLowDword;
-    unsigned int dwHighDword;
-  } u;
-  double      DoNotUseThisField;
+    struct {
+        unsigned int dwLowDword;
+        unsigned int dwHighDword;
+    } u;
+    double      DoNotUseThisField;
 } UQuadWord;
 typedef UQuadWord       QWORD;         
 
 /****** Common pointer types ***********************************************/
 
-typedef QWORD      *     PQWORD;
+typedef QWORD *          PQWORD;
 
 #endif

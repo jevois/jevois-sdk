@@ -67,9 +67,9 @@
 #include "iwl-trans.h"
 
 struct iwl_notif_wait_data {
-  struct list_head notif_waits;
-  spinlock_t notif_wait_lock;
-  wait_queue_head_t notif_waitq;
+	struct list_head notif_waits;
+	spinlock_t notif_wait_lock;
+	wait_queue_head_t notif_waitq;
 };
 
 /**
@@ -91,39 +91,39 @@ struct iwl_notif_wait_data {
  * the code for them.
  */
 struct iwl_notification_wait {
-  struct list_head list;
-  
-  void (*fn) (struct iwl_notif_wait_data * notif_data,
-              struct iwl_rx_packet * pkt, void * data);
-  void * fn_data;
-  
-  u8 cmd;
-  bool triggered, aborted;
+	struct list_head list;
+
+	void (*fn)(struct iwl_notif_wait_data *notif_data,
+		   struct iwl_rx_packet *pkt, void *data);
+	void *fn_data;
+
+	u8 cmd;
+	bool triggered, aborted;
 };
 
 
 /* caller functions */
-void iwl_notification_wait_init (struct iwl_notif_wait_data * notif_data);
-void iwl_notification_wait_notify (struct iwl_notif_wait_data * notif_data,
-                                   struct iwl_rx_packet * pkt);
-void iwl_abort_notification_waits (struct iwl_notif_wait_data * notif_data);
+void iwl_notification_wait_init(struct iwl_notif_wait_data *notif_data);
+void iwl_notification_wait_notify(struct iwl_notif_wait_data *notif_data,
+				  struct iwl_rx_packet *pkt);
+void iwl_abort_notification_waits(struct iwl_notif_wait_data *notif_data);
 
 /* user functions */
-void __acquires (wait_entry)
-iwl_init_notification_wait (struct iwl_notif_wait_data * notif_data,
-                            struct iwl_notification_wait * wait_entry,
-                            u8 cmd,
-                            void (*fn) (struct iwl_notif_wait_data * notif_data,
-                                        struct iwl_rx_packet * pkt, void * data),
-                            void * fn_data);
+void __acquires(wait_entry)
+iwl_init_notification_wait(struct iwl_notif_wait_data *notif_data,
+			   struct iwl_notification_wait *wait_entry,
+			   u8 cmd,
+			   void (*fn)(struct iwl_notif_wait_data *notif_data,
+				      struct iwl_rx_packet *pkt, void *data),
+			   void *fn_data);
 
-int __must_check __releases (wait_entry)
-iwl_wait_notification (struct iwl_notif_wait_data * notif_data,
-                       struct iwl_notification_wait * wait_entry,
-                       unsigned long timeout);
+int __must_check __releases(wait_entry)
+iwl_wait_notification(struct iwl_notif_wait_data *notif_data,
+		      struct iwl_notification_wait *wait_entry,
+		      unsigned long timeout);
 
-void __releases (wait_entry)
-iwl_remove_notification (struct iwl_notif_wait_data * notif_data,
-                         struct iwl_notification_wait * wait_entry);
+void __releases(wait_entry)
+iwl_remove_notification(struct iwl_notif_wait_data *notif_data,
+			struct iwl_notification_wait *wait_entry);
 
 #endif /* __iwl_notif_wait_h__ */

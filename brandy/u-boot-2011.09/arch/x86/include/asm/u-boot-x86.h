@@ -22,37 +22,37 @@
  */
 
 #ifndef _U_BOOT_I386_H_
-#define _U_BOOT_I386_H_ 1
+#define _U_BOOT_I386_H_	1
 
 /* cpu/.../cpu.c */
-int x86_cpu_init_r (void);
-int cpu_init_r (void);
-int x86_cpu_init_f (void);
-int cpu_init_f (void);
+int x86_cpu_init_r(void);
+int cpu_init_r(void);
+int x86_cpu_init_f(void);
+int cpu_init_f(void);
 
 /* cpu/.../timer.c */
-void timer_isr (void *);
+void timer_isr(void *);
 typedef void (timer_fnc_t) (void);
-int register_timer_isr (timer_fnc_t * isr_func);
+int register_timer_isr (timer_fnc_t *isr_func);
 
 /* Architecture specific - can be in arch/x86/cpu/, arch/x86/lib/, or $(BOARD)/ */
-int dram_init_f (void);
+int dram_init_f(void);
 
 /* cpu/.../interrupts.c */
-int cpu_init_interrupts (void);
+int cpu_init_interrupts(void);
 
 /* board/.../... */
-int board_init (void);
-int dram_init (void);
+int board_init(void);
+int dram_init(void);
 
-void setup_pcat_compatibility (void);
+void setup_pcat_compatibility(void);
 
-void isa_unmap_rom (u32 addr);
-u32 isa_map_rom (u32 bus_addr, int size);
+void isa_unmap_rom(u32 addr);
+u32 isa_map_rom(u32 bus_addr, int size);
 
 /* arch/x86/lib/... */
-int video_bios_init (void);
-int video_init (void);
+int video_bios_init(void);
+int video_init(void);
 
 
-#endif  /* _U_BOOT_I386_H_ */
+#endif	/* _U_BOOT_I386_H_ */

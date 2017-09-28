@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -27,27 +27,27 @@
 
 typedef struct __DRAM_PARA
 {
-  __u32           dram_baseaddr;
-  __u32           dram_clk;
-  __u32           dram_type;
-  __u32           dram_rank_num;
-  __u32           dram_chip_density;
-  __u32           dram_io_width;
-  __u32     dram_bus_width;
-  __u32           dram_cas;
-  __u32           dram_zq;
-  __u32           dram_odt_en;
-  __u32       dram_size;
-  __u32           dram_tpr0;
-  __u32           dram_tpr1;
-  __u32           dram_tpr2;
-  __u32           dram_tpr3;
-  __u32           dram_tpr4;
-  __u32           dram_tpr5;
-  __u32           dram_emr1;
-  __u32           dram_emr2;
-  __u32           dram_emr3;
-} boot_dram_para_t;
+    __u32           dram_baseaddr;
+    __u32           dram_clk;
+    __u32           dram_type;
+    __u32           dram_rank_num;
+    __u32           dram_chip_density;
+    __u32           dram_io_width;
+    __u32	    dram_bus_width;
+    __u32           dram_cas;
+    __u32           dram_zq;
+    __u32           dram_odt_en;
+    __u32 	    dram_size;
+    __u32           dram_tpr0;
+    __u32           dram_tpr1;
+    __u32           dram_tpr2;
+    __u32           dram_tpr3;
+    __u32           dram_tpr4;
+    __u32           dram_tpr5;
+    __u32           dram_emr1;
+    __u32           dram_emr2;
+    __u32           dram_emr3;
+}boot_dram_para_t;
 
 
 #endif

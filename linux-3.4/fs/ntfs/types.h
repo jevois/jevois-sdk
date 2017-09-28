@@ -1,6 +1,6 @@
 /*
  * types.h - Defines for NTFS Linux kernel driver specific types.
- *       Part of the Linux-NTFS project.
+ *	     Part of the Linux-NTFS project.
  *
  * Copyright (c) 2001-2005 Anton Altaparmakov
  *
@@ -62,8 +62,8 @@ typedef s64 USN;
 typedef sle64 leUSN;
 
 typedef enum {
-  CASE_SENSITIVE = 0,
-  IGNORE_CASE = 1,
+	CASE_SENSITIVE = 0,
+	IGNORE_CASE = 1,
 } IGNORE_CASE_BOOL;
 
 #endif /* _LINUX_NTFS_TYPES_H */

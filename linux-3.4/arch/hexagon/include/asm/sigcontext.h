@@ -27,7 +27,7 @@
  * to the end of the structure.
  */
 struct sigcontext {
-  struct user_regs_struct sc_regs;
-} __aligned (8);
+	struct user_regs_struct sc_regs;
+} __aligned(8);
 
 #endif

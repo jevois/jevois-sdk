@@ -17,7 +17,7 @@
 
 #define _IOC_NRBITS      8
 #define _IOC_TYPEBITS    8
-#define _IOC_SIZEBITS   13  /* Actually 14, see below. */
+#define _IOC_SIZEBITS   13	/* Actually 14, see below. */
 #define _IOC_DIRBITS     3
 
 #define _IOC_NRMASK      ((1 << _IOC_NRBITS)-1)
@@ -36,10 +36,10 @@
 #define _IOC_WRITE       4U
 
 #define _IOC(dir,type,nr,size) \
-  (((dir)  << _IOC_DIRSHIFT) | \
-   ((type) << _IOC_TYPESHIFT) | \
-   ((nr)   << _IOC_NRSHIFT) | \
-   ((size) << _IOC_SIZESHIFT))
+        (((dir)  << _IOC_DIRSHIFT) | \
+         ((type) << _IOC_TYPESHIFT) | \
+         ((nr)   << _IOC_NRSHIFT) | \
+         ((size) << _IOC_SIZESHIFT))
 
 #define _IO(type,nr)        _IOC(_IOC_NONE,(type),(nr),0)
 #define _IOR(type,nr,size)  _IOC(_IOC_READ,(type),(nr),sizeof(size))
@@ -48,14 +48,14 @@
 
 /* Used to decode ioctl numbers in drivers despite the leading underscore... */
 #define _IOC_DIR(nr)    \
-  ( (((((nr) >> _IOC_DIRSHIFT) & _IOC_DIRMASK) & (_IOC_WRITE|_IOC_READ)) != 0)?   \
-    (((nr) >> _IOC_DIRSHIFT) & (_IOC_WRITE|_IOC_READ)):  \
-    (((nr) >> _IOC_DIRSHIFT) & _IOC_DIRMASK) )
+ ( (((((nr) >> _IOC_DIRSHIFT) & _IOC_DIRMASK) & (_IOC_WRITE|_IOC_READ)) != 0)?   \
+                            (((nr) >> _IOC_DIRSHIFT) & (_IOC_WRITE|_IOC_READ)):  \
+                            (((nr) >> _IOC_DIRSHIFT) & _IOC_DIRMASK) )
 #define _IOC_TYPE(nr)       (((nr) >> _IOC_TYPESHIFT) & _IOC_TYPEMASK)
 #define _IOC_NR(nr)         (((nr) >> _IOC_NRSHIFT) & _IOC_NRMASK)
 #define _IOC_SIZE(nr)   \
-  ((((((nr) >> _IOC_DIRSHIFT) & _IOC_DIRMASK) & (_IOC_WRITE|_IOC_READ)) == 0)?    \
-   0: (((nr) >> _IOC_SIZESHIFT) & _IOC_XSIZEMASK))
+ ((((((nr) >> _IOC_DIRSHIFT) & _IOC_DIRMASK) & (_IOC_WRITE|_IOC_READ)) == 0)?    \
+                         0: (((nr) >> _IOC_SIZESHIFT) & _IOC_XSIZEMASK))
 
 /* ...and for the PCMCIA and sound. */
 #define IOC_IN          (_IOC_WRITE << _IOC_DIRSHIFT)

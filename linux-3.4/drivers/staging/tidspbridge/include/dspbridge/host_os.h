@@ -52,7 +52,7 @@
 
 #define PRCM_VDD1 1
 
-extern struct platform_device * omap_dspbridge_dev;
-extern struct device * bridge;
+extern struct platform_device *omap_dspbridge_dev;
+extern struct device *bridge;
 
 #endif

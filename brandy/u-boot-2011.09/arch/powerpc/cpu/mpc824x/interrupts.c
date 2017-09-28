@@ -29,23 +29,23 @@
 #include <commproc.h>
 #include "drivers/epic.h"
 
-int interrupt_init_cpu (unsigned * decrementer_count)
+int interrupt_init_cpu (unsigned *decrementer_count)
 {
-  *decrementer_count = (get_bus_freq (0) / 4) / CONFIG_SYS_HZ;
-  
-  /*
-   * It's all broken at the moment and I currently don't need
-   * interrupts. If you want to fix it, have a look at the epic
-   * drivers in dink32 v12. They do everthing and Motorola said
-   * I could use the dink source in this project as long as
-   * copyright notices remain intact.
-   */
-  
-  epicInit (EPIC_DIRECT_IRQ, 0);
-  /* EPIC won't generate INT unless Current Task Pri < 15 */
-  epicCurTaskPrioSet (0);
-  
-  return (0);
+	*decrementer_count = (get_bus_freq (0) / 4) / CONFIG_SYS_HZ;
+
+	/*
+	 * It's all broken at the moment and I currently don't need
+	 * interrupts. If you want to fix it, have a look at the epic
+	 * drivers in dink32 v12. They do everthing and Motorola said
+	 * I could use the dink source in this project as long as
+	 * copyright notices remain intact.
+	 */
+
+	epicInit (EPIC_DIRECT_IRQ, 0);
+	/* EPIC won't generate INT unless Current Task Pri < 15 */
+	epicCurTaskPrioSet(0);
+
+	return (0);
 }
 
 /****************************************************************************/
@@ -53,16 +53,16 @@ int interrupt_init_cpu (unsigned * decrementer_count)
 /*
  * Handle external interrupts
  */
-void external_interrupt (struct pt_regs * regs)
+void external_interrupt (struct pt_regs *regs)
 {
-  register unsigned long temp;
-  
-  pci_readl (CONFIG_SYS_EUMB_ADDR + EPIC_PROC_INT_ACK_REG, temp);
-  sync ();          /* i'm not convinced this is needed, but dink source has it */
-  temp &= 0xff;       /*get vector */
-  
-  /*TODO: handle them -... */
-  epicEOI ();
+	register unsigned long temp;
+
+	pci_readl (CONFIG_SYS_EUMB_ADDR + EPIC_PROC_INT_ACK_REG, temp);
+	sync ();					/* i'm not convinced this is needed, but dink source has it */
+	temp &= 0xff;				/*get vector */
+
+	/*TODO: handle them -... */
+	epicEOI ();
 }
 
 /****************************************************************************/
@@ -72,7 +72,7 @@ void external_interrupt (struct pt_regs * regs)
  */
 
 void
-irq_install_handler (int vec, interrupt_handler_t * handler, void * arg)
+irq_install_handler (int vec, interrupt_handler_t * handler, void *arg)
 {
 }
 
@@ -86,8 +86,8 @@ void irq_free_handler (int vec)
  vga?
  */
 
-void timer_interrupt_cpu (struct pt_regs * regs)
+void timer_interrupt_cpu (struct pt_regs *regs)
 {
-  /* nothing to do here */
-  return;
+	/* nothing to do here */
+	return;
 }

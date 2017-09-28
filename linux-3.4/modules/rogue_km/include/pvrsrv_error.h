@@ -50,12 +50,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *****************************************************************************/
 typedef enum _PVRSRV_ERROR_
 {
-  PVRSRV_OK,
+	PVRSRV_OK,
 #define PVRE(x) x,
 #include "pvrsrv_errors.h"
 #undef PVRE
-  PVRSRV_ERROR_FORCE_I32 = 0x7fffffff
-  
+	PVRSRV_ERROR_FORCE_I32 = 0x7fffffff
+
 } PVRSRV_ERROR;
 
 #endif /* !defined (__PVRSRV_ERROR_H__) */

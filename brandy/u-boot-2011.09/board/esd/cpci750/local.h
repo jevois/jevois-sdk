@@ -77,9 +77,9 @@
 
 /* next two ethernet hwaddrs */
 #define CONFIG_HAS_ETH1
-#define CONFIG_ETH1ADDR   86:06:2d:7e:c6:54
+#define CONFIG_ETH1ADDR		86:06:2d:7e:c6:54
 #define CONFIG_HAS_ETH2
-#define CONFIG_ETH2ADDR   86:06:2d:7e:c6:55
+#define CONFIG_ETH2ADDR		86:06:2d:7e:c6:55
 
 #define CONFIG_ENV_OVERWRITE
-#endif  /* __CONFIG_H */
+#endif	/* __CONFIG_H */

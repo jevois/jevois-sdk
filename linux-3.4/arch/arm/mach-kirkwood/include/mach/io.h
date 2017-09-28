@@ -11,14 +11,14 @@
 
 #include "kirkwood.h"
 
-#define IO_SPACE_LIMIT    0xffffffff
+#define IO_SPACE_LIMIT		0xffffffff
 
-static inline void __iomem * __io (unsigned long addr)
+static inline void __iomem *__io(unsigned long addr)
 {
-  return (void __iomem *) ( (addr - KIRKWOOD_PCIE_IO_BUS_BASE)
-                            + KIRKWOOD_PCIE_IO_VIRT_BASE);
+	return (void __iomem *)((addr - KIRKWOOD_PCIE_IO_BUS_BASE)
+					+ KIRKWOOD_PCIE_IO_VIRT_BASE);
 }
 
-#define __io(a)     __io(a)
+#define __io(a)			__io(a)
 
 #endif

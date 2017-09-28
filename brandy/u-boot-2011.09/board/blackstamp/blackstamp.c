@@ -17,25 +17,25 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-int checkboard (void)
+int checkboard(void)
 {
-  printf ("Board: BlackStamp\n");
-  printf ("Support: http://blackfin.uclinux.org/gf/project/blackstamp/\n");
-  return 0;
+	printf("Board: BlackStamp\n");
+	printf("Support: http://blackfin.uclinux.org/gf/project/blackstamp/\n");
+	return 0;
 }
 
 #ifdef SHARED_RESOURCES
-void swap_to (int device_id)
+void swap_to(int device_id)
 {
-  gpio_request (GPIO_PF0, "eth_flash_swap");
-  gpio_direction_output (GPIO_PF0, device_id == ETHERNET);
-  SSYNC();
+	gpio_request(GPIO_PF0, "eth_flash_swap");
+	gpio_direction_output(GPIO_PF0, device_id == ETHERNET);
+	SSYNC();
 }
 #endif
 
 #ifdef CONFIG_SMC91111
-int board_eth_init (bd_t * bis)
+int board_eth_init(bd_t *bis)
 {
-  return smc91111_initialize (0, CONFIG_SMC91111_BASE);
+	return smc91111_initialize(0, CONFIG_SMC91111_BASE);
 }
 #endif

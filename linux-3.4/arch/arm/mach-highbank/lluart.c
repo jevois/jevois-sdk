@@ -18,17 +18,17 @@
 #include <asm/sizes.h>
 #include <asm/mach/map.h>
 
-#define HB_DEBUG_LL_PHYS_BASE 0xfff36000
-#define HB_DEBUG_LL_VIRT_BASE 0xfee36000
+#define HB_DEBUG_LL_PHYS_BASE	0xfff36000
+#define HB_DEBUG_LL_VIRT_BASE	0xfee36000
 
 static struct map_desc lluart_io_desc __initdata = {
-  .virtual  = HB_DEBUG_LL_VIRT_BASE,
-  .pfn    = __phys_to_pfn (HB_DEBUG_LL_PHYS_BASE),
-  .length   = SZ_4K,
-  .type   = MT_DEVICE,
+	.virtual	= HB_DEBUG_LL_VIRT_BASE,
+	.pfn		= __phys_to_pfn(HB_DEBUG_LL_PHYS_BASE),
+	.length		= SZ_4K,
+	.type		= MT_DEVICE,
 };
 
-void __init highbank_lluart_map_io (void)
+void __init highbank_lluart_map_io(void)
 {
-  iotable_init (&lluart_io_desc, 1);
+	iotable_init(&lluart_io_desc, 1);
 }

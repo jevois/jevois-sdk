@@ -26,17 +26,17 @@
 #define _SAA6588_H
 
 struct saa6588_command {
-  unsigned int  block_count;
-  int           result;
-  unsigned char __user * buffer;
-  struct file  * instance;
-  poll_table  *  event_list;
+	unsigned int  block_count;
+	int           result;
+	unsigned char __user *buffer;
+	struct file   *instance;
+	poll_table    *event_list;
 };
 
 /* These ioctls are internal to the kernel */
-#define SAA6588_CMD_OPEN  _IOW('R', 1, int)
-#define SAA6588_CMD_CLOSE _IOW('R', 2, int)
-#define SAA6588_CMD_READ  _IOR('R', 3, int)
-#define SAA6588_CMD_POLL  _IOR('R', 4, int)
+#define SAA6588_CMD_OPEN	_IOW('R', 1, int)
+#define SAA6588_CMD_CLOSE	_IOW('R', 2, int)
+#define SAA6588_CMD_READ	_IOR('R', 3, int)
+#define SAA6588_CMD_POLL	_IOR('R', 4, int)
 
 #endif

@@ -50,103 +50,103 @@
 #include <plat/watchdog-reset.h>
 
 static struct map_desc s3c244x_iodesc[] __initdata = {
-  IODESC_ENT (CLKPWR),
-  IODESC_ENT (TIMER),
-  IODESC_ENT (WATCHDOG),
+	IODESC_ENT(CLKPWR),
+	IODESC_ENT(TIMER),
+	IODESC_ENT(WATCHDOG),
 };
 
 /* uart initialisation */
 
-void __init s3c244x_init_uarts (struct s3c2410_uartcfg * cfg, int no)
+void __init s3c244x_init_uarts(struct s3c2410_uartcfg *cfg, int no)
 {
-  s3c24xx_init_uartdevs ("s3c2440-uart", s3c2410_uart_resources, cfg, no);
+	s3c24xx_init_uartdevs("s3c2440-uart", s3c2410_uart_resources, cfg, no);
 }
 
-void __init s3c244x_map_io (void)
+void __init s3c244x_map_io(void)
 {
-  /* register our io-tables */
-  
-  iotable_init (s3c244x_iodesc, ARRAY_SIZE (s3c244x_iodesc) );
-  
-  /* rename any peripherals used differing from the s3c2410 */
-  
-  s3c_device_sdi.name  = "s3c2440-sdi";
-  s3c_device_i2c0.name  = "s3c2440-i2c";
-  s3c_nand_setname ("s3c2440-nand");
-  s3c_device_ts.name = "s3c2440-ts";
-  s3c_device_usbgadget.name = "s3c2440-usbgadget";
+	/* register our io-tables */
+
+	iotable_init(s3c244x_iodesc, ARRAY_SIZE(s3c244x_iodesc));
+
+	/* rename any peripherals used differing from the s3c2410 */
+
+	s3c_device_sdi.name  = "s3c2440-sdi";
+	s3c_device_i2c0.name  = "s3c2440-i2c";
+	s3c_nand_setname("s3c2440-nand");
+	s3c_device_ts.name = "s3c2440-ts";
+	s3c_device_usbgadget.name = "s3c2440-usbgadget";
 }
 
-void __init_or_cpufreq s3c244x_setup_clocks (void)
+void __init_or_cpufreq s3c244x_setup_clocks(void)
 {
-  struct clk * xtal_clk;
-  unsigned long clkdiv;
-  unsigned long camdiv;
-  unsigned long xtal;
-  unsigned long hclk, fclk, pclk;
-  int hdiv = 1;
-  
-  xtal_clk = clk_get (NULL, "xtal");
-  xtal = clk_get_rate (xtal_clk);
-  clk_put (xtal_clk);
-  
-  fclk = s3c24xx_get_pll (__raw_readl (S3C2410_MPLLCON), xtal) * 2;
-  
-  clkdiv = __raw_readl (S3C2410_CLKDIVN);
-  camdiv = __raw_readl (S3C2440_CAMDIVN);
-  
-  /* work out clock scalings */
-  
-  switch (clkdiv & S3C2440_CLKDIVN_HDIVN_MASK) {
-  case S3C2440_CLKDIVN_HDIVN_1:
-    hdiv = 1;
-    break;
-    
-  case S3C2440_CLKDIVN_HDIVN_2:
-    hdiv = 2;
-    break;
-    
-  case S3C2440_CLKDIVN_HDIVN_4_8:
-    hdiv = (camdiv & S3C2440_CAMDIVN_HCLK4_HALF) ? 8 : 4;
-    break;
-    
-  case S3C2440_CLKDIVN_HDIVN_3_6:
-    hdiv = (camdiv & S3C2440_CAMDIVN_HCLK3_HALF) ? 6 : 3;
-    break;
-  }
-  
-  hclk = fclk / hdiv;
-  pclk = hclk / ( (clkdiv & S3C2440_CLKDIVN_PDIVN) ? 2 : 1);
-  
-  /* print brief summary of clocks, etc */
-  
-  printk ("S3C244X: core %ld.%03ld MHz, memory %ld.%03ld MHz, peripheral %ld.%03ld MHz\n",
-          print_mhz (fclk), print_mhz (hclk), print_mhz (pclk) );
-          
-  s3c24xx_setup_clocks (fclk, hclk, pclk);
+	struct clk *xtal_clk;
+	unsigned long clkdiv;
+	unsigned long camdiv;
+	unsigned long xtal;
+	unsigned long hclk, fclk, pclk;
+	int hdiv = 1;
+
+	xtal_clk = clk_get(NULL, "xtal");
+	xtal = clk_get_rate(xtal_clk);
+	clk_put(xtal_clk);
+
+	fclk = s3c24xx_get_pll(__raw_readl(S3C2410_MPLLCON), xtal) * 2;
+
+	clkdiv = __raw_readl(S3C2410_CLKDIVN);
+	camdiv = __raw_readl(S3C2440_CAMDIVN);
+
+	/* work out clock scalings */
+
+	switch (clkdiv & S3C2440_CLKDIVN_HDIVN_MASK) {
+	case S3C2440_CLKDIVN_HDIVN_1:
+		hdiv = 1;
+		break;
+
+	case S3C2440_CLKDIVN_HDIVN_2:
+		hdiv = 2;
+		break;
+
+	case S3C2440_CLKDIVN_HDIVN_4_8:
+		hdiv = (camdiv & S3C2440_CAMDIVN_HCLK4_HALF) ? 8 : 4;
+		break;
+
+	case S3C2440_CLKDIVN_HDIVN_3_6:
+		hdiv = (camdiv & S3C2440_CAMDIVN_HCLK3_HALF) ? 6 : 3;
+		break;
+	}
+
+	hclk = fclk / hdiv;
+	pclk = hclk / ((clkdiv & S3C2440_CLKDIVN_PDIVN) ? 2 : 1);
+
+	/* print brief summary of clocks, etc */
+
+	printk("S3C244X: core %ld.%03ld MHz, memory %ld.%03ld MHz, peripheral %ld.%03ld MHz\n",
+	       print_mhz(fclk), print_mhz(hclk), print_mhz(pclk));
+
+	s3c24xx_setup_clocks(fclk, hclk, pclk);
 }
 
-void __init s3c244x_init_clocks (int xtal)
+void __init s3c244x_init_clocks(int xtal)
 {
-  /* initialise the clocks here, to allow other things like the
-   * console to use them, and to add new ones after the initialisation
-   */
-  
-  s3c24xx_register_baseclocks (xtal);
-  s3c244x_setup_clocks();
-  s3c2410_baseclk_add();
+	/* initialise the clocks here, to allow other things like the
+	 * console to use them, and to add new ones after the initialisation
+	 */
+
+	s3c24xx_register_baseclocks(xtal);
+	s3c244x_setup_clocks();
+	s3c2410_baseclk_add();
 }
 
 /* Since the S3C2442 and S3C2440 share items, put both subsystems here */
 
 struct bus_type s3c2440_subsys = {
-  .name   = "s3c2440-core",
-  .dev_name = "s3c2440-core",
+	.name		= "s3c2440-core",
+	.dev_name	= "s3c2440-core",
 };
 
 struct bus_type s3c2442_subsys = {
-  .name   = "s3c2442-core",
-  .dev_name = "s3c2442-core",
+	.name		= "s3c2442-core",
+	.dev_name	= "s3c2442-core",
 };
 
 /* need to register the subsystem before we actually register the device, and
@@ -155,39 +155,39 @@ struct bus_type s3c2442_subsys = {
  * as a driver which may support both 2410 and 2440 may try and use it.
 */
 
-static int __init s3c2440_core_init (void)
+static int __init s3c2440_core_init(void)
 {
-  return subsys_system_register (&s3c2440_subsys, NULL);
+	return subsys_system_register(&s3c2440_subsys, NULL);
 }
 
-core_initcall (s3c2440_core_init);
+core_initcall(s3c2440_core_init);
 
-static int __init s3c2442_core_init (void)
+static int __init s3c2442_core_init(void)
 {
-  return subsys_system_register (&s3c2442_subsys, NULL);
+	return subsys_system_register(&s3c2442_subsys, NULL);
 }
 
-core_initcall (s3c2442_core_init);
+core_initcall(s3c2442_core_init);
 
 
 #ifdef CONFIG_PM
 static struct sleep_save s3c244x_sleep[] = {
-  SAVE_ITEM (S3C2440_DSC0),
-  SAVE_ITEM (S3C2440_DSC1),
-  SAVE_ITEM (S3C2440_GPJDAT),
-  SAVE_ITEM (S3C2440_GPJCON),
-  SAVE_ITEM (S3C2440_GPJUP)
+	SAVE_ITEM(S3C2440_DSC0),
+	SAVE_ITEM(S3C2440_DSC1),
+	SAVE_ITEM(S3C2440_GPJDAT),
+	SAVE_ITEM(S3C2440_GPJCON),
+	SAVE_ITEM(S3C2440_GPJUP)
 };
 
-static int s3c244x_suspend (void)
+static int s3c244x_suspend(void)
 {
-  s3c_pm_do_save (s3c244x_sleep, ARRAY_SIZE (s3c244x_sleep) );
-  return 0;
+	s3c_pm_do_save(s3c244x_sleep, ARRAY_SIZE(s3c244x_sleep));
+	return 0;
 }
 
-static void s3c244x_resume (void)
+static void s3c244x_resume(void)
 {
-  s3c_pm_do_restore (s3c244x_sleep, ARRAY_SIZE (s3c244x_sleep) );
+	s3c_pm_do_restore(s3c244x_sleep, ARRAY_SIZE(s3c244x_sleep));
 }
 #else
 #define s3c244x_suspend NULL
@@ -195,17 +195,17 @@ static void s3c244x_resume (void)
 #endif
 
 struct syscore_ops s3c244x_pm_syscore_ops = {
-  .suspend  = s3c244x_suspend,
-  .resume   = s3c244x_resume,
+	.suspend	= s3c244x_suspend,
+	.resume		= s3c244x_resume,
 };
 
-void s3c244x_restart (char mode, const char * cmd)
+void s3c244x_restart(char mode, const char *cmd)
 {
-  if (mode == 's')
-  { soft_restart (0); }
-  
-  arch_wdt_reset();
-  
-  /* we'll take a jump through zero as a poor second */
-  soft_restart (0);
+	if (mode == 's')
+		soft_restart(0);
+
+	arch_wdt_reset();
+
+	/* we'll take a jump through zero as a poor second */
+	soft_restart(0);
 }

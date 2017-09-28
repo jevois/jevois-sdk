@@ -20,7 +20,7 @@
 #define __MACH_MXS_GPMI_NAND_H__
 
 /* The size of the resources is fixed. */
-#define GPMI_NAND_RES_SIZE  6
+#define GPMI_NAND_RES_SIZE	6
 
 /* Resource names for the GPMI NAND driver. */
 #define GPMI_NAND_GPMI_REGS_ADDR_RES_NAME  "GPMI NAND GPMI Registers"
@@ -53,16 +53,16 @@
  * @partition_count:         The number of elements in the partitions array.
  */
 struct gpmi_nand_platform_data {
-  /* SoC hardware information. */
-  int   (*platform_init) (void);
-  
-  /* NAND Flash information. */
-  unsigned int  min_prop_delay_in_ns;
-  unsigned int  max_prop_delay_in_ns;
-  unsigned int  max_chip_count;
-  
-  /* Medium information. */
-  struct    mtd_partition * partitions;
-  unsigned  partition_count;
+	/* SoC hardware information. */
+	int		(*platform_init)(void);
+
+	/* NAND Flash information. */
+	unsigned int	min_prop_delay_in_ns;
+	unsigned int	max_prop_delay_in_ns;
+	unsigned int	max_chip_count;
+
+	/* Medium information. */
+	struct		mtd_partition *partitions;
+	unsigned	partition_count;
 };
 #endif

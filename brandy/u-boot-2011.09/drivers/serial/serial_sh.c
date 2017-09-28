@@ -24,163 +24,162 @@
 #include "serial_sh.h"
 
 #if defined(CONFIG_CONS_SCIF0)
-# define SCIF_BASE  SCIF0_BASE
+# define SCIF_BASE	SCIF0_BASE
 #elif defined(CONFIG_CONS_SCIF1)
-# define SCIF_BASE  SCIF1_BASE
+# define SCIF_BASE	SCIF1_BASE
 #elif defined(CONFIG_CONS_SCIF2)
-# define SCIF_BASE  SCIF2_BASE
+# define SCIF_BASE	SCIF2_BASE
 #elif defined(CONFIG_CONS_SCIF3)
-# define SCIF_BASE  SCIF3_BASE
+# define SCIF_BASE	SCIF3_BASE
 #elif defined(CONFIG_CONS_SCIF4)
-# define SCIF_BASE  SCIF4_BASE
+# define SCIF_BASE	SCIF4_BASE
 #elif defined(CONFIG_CONS_SCIF5)
-# define SCIF_BASE  SCIF5_BASE
+# define SCIF_BASE	SCIF5_BASE
 #else
 # error "Default SCIF doesn't set....."
 #endif
 
 #if defined(CONFIG_SCIF_A)
-#define SCIF_BASE_PORT  PORT_SCIFA
+	#define SCIF_BASE_PORT	PORT_SCIFA
 #else
-#define SCIF_BASE_PORT  PORT_SCIF
+	#define SCIF_BASE_PORT	PORT_SCIF
 #endif
 
 static struct uart_port sh_sci = {
-  .membase  = (unsigned char *) SCIF_BASE,
-  .mapbase  = SCIF_BASE,
-  .type   = SCIF_BASE_PORT,
+	.membase	= (unsigned char*)SCIF_BASE,
+	.mapbase	= SCIF_BASE,
+	.type		= SCIF_BASE_PORT,
 };
 
-void serial_setbrg (void)
+void serial_setbrg(void)
 {
-  DECLARE_GLOBAL_DATA_PTR;
-  sci_out (&sh_sci, SCBRR, SCBRR_VALUE (gd->baudrate, CONFIG_SYS_CLK_FREQ) );
+	DECLARE_GLOBAL_DATA_PTR;
+	sci_out(&sh_sci, SCBRR, SCBRR_VALUE(gd->baudrate, CONFIG_SYS_CLK_FREQ));
 }
 
-int serial_init (void)
+int serial_init(void)
 {
-  sci_out (&sh_sci, SCSCR , SCSCR_INIT (&sh_sci) );
-  sci_out (&sh_sci, SCSCR , SCSCR_INIT (&sh_sci) );
-  sci_out (&sh_sci, SCSMR, 0);
-  sci_out (&sh_sci, SCSMR, 0);
-  sci_out (&sh_sci, SCFCR, SCFCR_RFRST | SCFCR_TFRST);
-  sci_in (&sh_sci, SCFCR);
-  sci_out (&sh_sci, SCFCR, 0);
-  
-  serial_setbrg();
-  return 0;
+	sci_out(&sh_sci, SCSCR , SCSCR_INIT(&sh_sci));
+	sci_out(&sh_sci, SCSCR , SCSCR_INIT(&sh_sci));
+	sci_out(&sh_sci, SCSMR, 0);
+	sci_out(&sh_sci, SCSMR, 0);
+	sci_out(&sh_sci, SCFCR, SCFCR_RFRST|SCFCR_TFRST);
+	sci_in(&sh_sci, SCFCR);
+	sci_out(&sh_sci, SCFCR, 0);
+
+	serial_setbrg();
+	return 0;
 }
 
 #if defined(CONFIG_CPU_SH7760) || \
-defined(CONFIG_CPU_SH7780) || \
-defined(CONFIG_CPU_SH7785) || \
-defined(CONFIG_CPU_SH7786)
-static int scif_rxfill (struct uart_port * port)
+	defined(CONFIG_CPU_SH7780) || \
+	defined(CONFIG_CPU_SH7785) || \
+	defined(CONFIG_CPU_SH7786)
+static int scif_rxfill(struct uart_port *port)
 {
-  return sci_in (port, SCRFDR) & 0xff;
+	return sci_in(port, SCRFDR) & 0xff;
 }
 #elif defined(CONFIG_CPU_SH7763)
-static int scif_rxfill (struct uart_port * port)
+static int scif_rxfill(struct uart_port *port)
 {
-  if ( (port->mapbase == 0xffe00000) ||
-       (port->mapbase == 0xffe08000) ) {
-    /* SCIF0/1*/
-    return sci_in (port, SCRFDR) & 0xff;
-  }
-  else {
-    /* SCIF2 */
-    return sci_in (port, SCFDR) & SCIF2_RFDC_MASK;
-  }
+	if ((port->mapbase == 0xffe00000) ||
+		(port->mapbase == 0xffe08000)) {
+		/* SCIF0/1*/
+		return sci_in(port, SCRFDR) & 0xff;
+	} else {
+		/* SCIF2 */
+		return sci_in(port, SCFDR) & SCIF2_RFDC_MASK;
+	}
 }
 #elif defined(CONFIG_ARCH_SH7372)
-static int scif_rxfill (struct uart_port * port)
+static int scif_rxfill(struct uart_port *port)
 {
-  if (port->type == PORT_SCIFA)
-  { return sci_in (port, SCFDR) & SCIF_RFDC_MASK; }
-  else
-  { return sci_in (port, SCRFDR); }
+	if (port->type == PORT_SCIFA)
+		return sci_in(port, SCFDR) & SCIF_RFDC_MASK;
+	else
+		return sci_in(port, SCRFDR);
 }
 #else
-static int scif_rxfill (struct uart_port * port)
+static int scif_rxfill(struct uart_port *port)
 {
-  return sci_in (port, SCFDR) & SCIF_RFDC_MASK;
+	return sci_in(port, SCFDR) & SCIF_RFDC_MASK;
 }
 #endif
 
-static int serial_rx_fifo_level (void)
+static int serial_rx_fifo_level(void)
 {
-  return scif_rxfill (&sh_sci);
+	return scif_rxfill(&sh_sci);
 }
 
-void serial_raw_putc (const char c)
+void serial_raw_putc(const char c)
 {
-  while (1) {
-    /* Tx fifo is empty */
-    if (sci_in (&sh_sci, SCxSR) & SCxSR_TEND (&sh_sci) )
-    { break; }
-  }
-  
-  sci_out (&sh_sci, SCxTDR, c);
-  sci_out (&sh_sci, SCxSR, sci_in (&sh_sci, SCxSR) & ~SCxSR_TEND (&sh_sci) );
+	while (1) {
+		/* Tx fifo is empty */
+		if (sci_in(&sh_sci, SCxSR) & SCxSR_TEND(&sh_sci))
+			break;
+	}
+
+	sci_out(&sh_sci, SCxTDR, c);
+	sci_out(&sh_sci, SCxSR, sci_in(&sh_sci, SCxSR) & ~SCxSR_TEND(&sh_sci));
 }
 
-void serial_putc (const char c)
+void serial_putc(const char c)
 {
-  if (c == '\n')
-  { serial_raw_putc ('\r'); }
-  serial_raw_putc (c);
+	if (c == '\n')
+		serial_raw_putc('\r');
+	serial_raw_putc(c);
 }
 
-void serial_puts (const char * s)
+void serial_puts(const char *s)
 {
-  char c;
-  while ( (c = *s++) != 0)
-  { serial_putc (c); }
+	char c;
+	while ((c = *s++) != 0)
+		serial_putc(c);
 }
 
-int serial_tstc (void)
+int serial_tstc(void)
 {
-  return serial_rx_fifo_level() ? 1 : 0;
+	return serial_rx_fifo_level() ? 1 : 0;
 }
 
-void handle_error (void)
+void handle_error(void)
 {
-  sci_in (&sh_sci, SCxSR);
-  sci_out (&sh_sci, SCxSR, SCxSR_ERROR_CLEAR (&sh_sci) );
-  sci_in (&sh_sci, SCLSR);
-  sci_out (&sh_sci, SCLSR, 0x00);
+	sci_in(&sh_sci, SCxSR);
+	sci_out(&sh_sci, SCxSR, SCxSR_ERROR_CLEAR(&sh_sci));
+	sci_in(&sh_sci, SCLSR);
+	sci_out(&sh_sci, SCLSR, 0x00);
 }
 
-int serial_getc_check (void)
+int serial_getc_check(void)
 {
-  unsigned short status;
-  
-  status = sci_in (&sh_sci, SCxSR);
-  
-  if (status & SCIF_ERRORS)
-  { handle_error(); }
-  if (sci_in (&sh_sci, SCLSR) & SCxSR_ORER (&sh_sci) )
-  { handle_error(); }
-  return status & (SCIF_DR | SCxSR_RDxF (&sh_sci) );
+	unsigned short status;
+
+	status = sci_in(&sh_sci, SCxSR);
+
+	if (status & SCIF_ERRORS)
+		handle_error();
+	if (sci_in(&sh_sci, SCLSR) & SCxSR_ORER(&sh_sci))
+		handle_error();
+	return status & (SCIF_DR | SCxSR_RDxF(&sh_sci));
 }
 
-int serial_getc (void)
+int serial_getc(void)
 {
-  unsigned short status;
-  char ch;
-  
-  while (!serial_getc_check() )
-    ;
-    
-  ch = sci_in (&sh_sci, SCxRDR);
-  status = sci_in (&sh_sci, SCxSR);
-  
-  sci_out (&sh_sci, SCxSR, SCxSR_RDxF_CLEAR (&sh_sci) );
-  
-  if (status & SCIF_ERRORS)
-  { handle_error(); }
-  
-  if (sci_in (&sh_sci, SCLSR) & SCxSR_ORER (&sh_sci) )
-  { handle_error(); }
-  return ch;
+	unsigned short status;
+	char ch;
+
+	while (!serial_getc_check())
+		;
+
+	ch = sci_in(&sh_sci, SCxRDR);
+	status = sci_in(&sh_sci, SCxSR);
+
+	sci_out(&sh_sci, SCxSR, SCxSR_RDxF_CLEAR(&sh_sci));
+
+	if (status & SCIF_ERRORS)
+			handle_error();
+
+	if (sci_in(&sh_sci, SCLSR) & SCxSR_ORER(&sh_sci))
+		handle_error();
+	return ch;
 }

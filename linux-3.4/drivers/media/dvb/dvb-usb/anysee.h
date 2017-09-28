@@ -46,25 +46,25 @@
 #define deb_fw(args...)   dprintk(dvb_usb_anysee_debug, 0x20, args)
 
 enum cmd {
-  CMD_I2C_READ            = 0x33,
-  CMD_I2C_WRITE           = 0x31,
-  CMD_REG_READ            = 0xb0,
-  CMD_REG_WRITE           = 0xb1,
-  CMD_STREAMING_CTRL      = 0x12,
-  CMD_LED_AND_IR_CTRL     = 0x16,
-  CMD_GET_IR_CODE         = 0x41,
-  CMD_GET_HW_INFO         = 0x19,
-  CMD_SMARTCARD           = 0x34,
-  CMD_CI                  = 0x37,
+	CMD_I2C_READ            = 0x33,
+	CMD_I2C_WRITE           = 0x31,
+	CMD_REG_READ            = 0xb0,
+	CMD_REG_WRITE           = 0xb1,
+	CMD_STREAMING_CTRL      = 0x12,
+	CMD_LED_AND_IR_CTRL     = 0x16,
+	CMD_GET_IR_CODE         = 0x41,
+	CMD_GET_HW_INFO         = 0x19,
+	CMD_SMARTCARD           = 0x34,
+	CMD_CI                  = 0x37,
 };
 
 struct anysee_state {
-  u8 hw; /* PCB ID */
-  u8 seq;
-  u8 fe_id: 1; /* frondend ID */
-  u8 has_ci: 1;
-  struct dvb_ca_en50221 ci;
-  unsigned long ci_cam_ready; /* jiffies */
+	u8 hw; /* PCB ID */
+	u8 seq;
+	u8 fe_id:1; /* frondend ID */
+	u8 has_ci:1;
+	struct dvb_ca_en50221 ci;
+	unsigned long ci_cam_ready; /* jiffies */
 };
 
 #define ANYSEE_HW_507T    2 /* E30 */

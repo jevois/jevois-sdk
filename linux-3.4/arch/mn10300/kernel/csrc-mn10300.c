@@ -13,22 +13,22 @@
 #include <asm/timex.h>
 #include "internal.h"
 
-static cycle_t mn10300_read (struct clocksource * cs)
+static cycle_t mn10300_read(struct clocksource *cs)
 {
-  return read_timestamp_counter();
+	return read_timestamp_counter();
 }
 
 static struct clocksource clocksource_mn10300 = {
-  .name = "TSC",
-  .rating = 200,
-  .read = mn10300_read,
-  .mask = CLOCKSOURCE_MASK (32),
-  .flags  = CLOCK_SOURCE_IS_CONTINUOUS,
+	.name	= "TSC",
+	.rating	= 200,
+	.read	= mn10300_read,
+	.mask	= CLOCKSOURCE_MASK(32),
+	.flags	= CLOCK_SOURCE_IS_CONTINUOUS,
 };
 
-int __init init_clocksource (void)
+int __init init_clocksource(void)
 {
-  startup_timestamp_counter();
-  clocksource_register_hz (&clocksource_mn10300, MN10300_TSCCLK);
-  return 0;
+	startup_timestamp_counter();
+	clocksource_register_hz(&clocksource_mn10300, MN10300_TSCCLK);
+	return 0;
 }

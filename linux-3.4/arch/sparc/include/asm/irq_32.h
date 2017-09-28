@@ -14,10 +14,10 @@
 
 #include <linux/interrupt.h>
 
-#define irq_canonicalize(irq) (irq)
+#define irq_canonicalize(irq)	(irq)
 
-extern void __init init_IRQ (void);
+extern void __init init_IRQ(void);
 
-#define NO_IRQ    0xffffffff
+#define NO_IRQ		0xffffffff
 
 #endif

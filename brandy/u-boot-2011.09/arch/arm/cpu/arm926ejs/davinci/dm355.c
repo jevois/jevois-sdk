@@ -25,21 +25,21 @@
 #include <asm/arch/hardware.h>
 
 
-void davinci_enable_uart0 (void)
+void davinci_enable_uart0(void)
 {
-  lpsc_on (DAVINCI_LPSC_UART0);
-  
-  /* Bringup UART0 out of reset */
-  REG (UART0_PWREMU_MGMT) = 0x00006001;
+	lpsc_on(DAVINCI_LPSC_UART0);
+
+	/* Bringup UART0 out of reset */
+	REG(UART0_PWREMU_MGMT) = 0x00006001;
 }
 
 
 #ifdef CONFIG_DRIVER_DAVINCI_I2C
-void davinci_enable_i2c (void)
+void davinci_enable_i2c(void)
 {
-  lpsc_on (DAVINCI_LPSC_I2C);
-  
-  /* Enable I2C pin Mux */
-  REG (PINMUX3) |= (1 << 20) | (1 << 19);
+	lpsc_on(DAVINCI_LPSC_I2C);
+
+	/* Enable I2C pin Mux */
+	REG(PINMUX3) |= (1 << 20) | (1 << 19);
 }
 #endif

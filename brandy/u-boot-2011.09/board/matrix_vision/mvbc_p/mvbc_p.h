@@ -21,12 +21,12 @@
 #define FLASH_RBY       MPC5XXX_GPIO_WKUP_7
 
 #define SIMPLE_DDR      (LED_G0 | LED_G1 | LED_Y | LED_R | \
-                         FPGA_DIN | FPGA_CCLK | FPGA_CONFIG | WD_WDI)
+			 FPGA_DIN | FPGA_CCLK | FPGA_CONFIG | WD_WDI)
 #define SIMPLE_DVO      (FPGA_CONFIG)
 #define SIMPLE_ODE      (FPGA_CONFIG | LED_G0 | LED_G1 | LED_Y | LED_R)
 #define SIMPLE_GPIOEN   (LED_G0 | LED_G1 | LED_Y | LED_R | \
-                         FPGA_DIN | FPGA_CCLK | FPGA_CONF_DONE | FPGA_CONFIG |\
-                         WD_WDI | COP_PRESENT)
+			 FPGA_DIN | FPGA_CCLK | FPGA_CONF_DONE | FPGA_CONFIG |\
+			 WD_WDI | COP_PRESENT)
 
 #define SINT_ODE        0
 #define SINT_DDR        0

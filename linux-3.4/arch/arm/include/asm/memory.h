@@ -35,24 +35,24 @@
  * TASK_SIZE - the maximum size of a user space task.
  * TASK_UNMAPPED_BASE - the lower boundary of the mmap VM area
  */
-#define PAGE_OFFSET   UL(CONFIG_PAGE_OFFSET)
-#define TASK_SIZE   (UL(CONFIG_PAGE_OFFSET) - UL(0x01000000))
-#define TASK_UNMAPPED_BASE  (UL(CONFIG_PAGE_OFFSET) / 3)
+#define PAGE_OFFSET		UL(CONFIG_PAGE_OFFSET)
+#define TASK_SIZE		(UL(CONFIG_PAGE_OFFSET) - UL(0x01000000))
+#define TASK_UNMAPPED_BASE	(UL(CONFIG_PAGE_OFFSET) / 3)
 
 /*
  * The maximum size of a 26-bit user space task.
  */
-#define TASK_SIZE_26    UL(0x04000000)
+#define TASK_SIZE_26		UL(0x04000000)
 
 /*
  * The module space lives between the addresses given by TASK_SIZE
  * and PAGE_OFFSET - it must be within 32MB of the kernel text.
  */
 #ifndef CONFIG_THUMB2_KERNEL
-#define MODULES_VADDR   (PAGE_OFFSET - 16*1024*1024)
+#define MODULES_VADDR		(PAGE_OFFSET - 16*1024*1024)
 #else
 /* smaller range for Thumb-2 symbols relocation (2^24)*/
-#define MODULES_VADDR   (PAGE_OFFSET - 8*1024*1024)
+#define MODULES_VADDR		(PAGE_OFFSET - 8*1024*1024)
 #endif
 
 #if TASK_SIZE > MODULES_VADDR
@@ -63,9 +63,9 @@
  * The highmem pkmap virtual space shares the end of the module area.
  */
 #ifdef CONFIG_HIGHMEM
-#define MODULES_END   (PAGE_OFFSET - PMD_SIZE)
+#define MODULES_END		(PAGE_OFFSET - PMD_SIZE)
 #else
-#define MODULES_END   (PAGE_OFFSET)
+#define MODULES_END		(PAGE_OFFSET)
 #endif
 
 /*
@@ -78,9 +78,9 @@
 /*
  * Allow 16MB-aligned ioremap pages
  */
-#define IOREMAP_MAX_ORDER 24
+#define IOREMAP_MAX_ORDER	24
 
-#define CONSISTENT_END    (0xffe00000UL)
+#define CONSISTENT_END		(0xffe00000UL)
 
 #else /* CONFIG_MMU */
 
@@ -91,30 +91,30 @@
  * Fortunately, there is no reference for this in noMMU mode, for now.
  */
 #ifndef TASK_SIZE
-#define TASK_SIZE   (CONFIG_DRAM_SIZE)
+#define TASK_SIZE		(CONFIG_DRAM_SIZE)
 #endif
 
 #ifndef TASK_UNMAPPED_BASE
-#define TASK_UNMAPPED_BASE  UL(0x00000000)
+#define TASK_UNMAPPED_BASE	UL(0x00000000)
 #endif
 
 #ifndef PHYS_OFFSET
-#define PHYS_OFFSET     UL(CONFIG_DRAM_BASE)
+#define PHYS_OFFSET 		UL(CONFIG_DRAM_BASE)
 #endif
 
 #ifndef END_MEM
-#define END_MEM         (UL(CONFIG_DRAM_BASE) + CONFIG_DRAM_SIZE)
+#define END_MEM     		(UL(CONFIG_DRAM_BASE) + CONFIG_DRAM_SIZE)
 #endif
 
 #ifndef PAGE_OFFSET
-#define PAGE_OFFSET   (PHYS_OFFSET)
+#define PAGE_OFFSET		(PHYS_OFFSET)
 #endif
 
 /*
  * The module can be at any place in ram in nommu mode.
  */
-#define MODULES_END   (END_MEM)
-#define MODULES_VADDR   (PHYS_OFFSET)
+#define MODULES_END		(END_MEM)
+#define MODULES_VADDR		(PHYS_OFFSET)
 
 #define XIP_VIRT_ADDR(physaddr)  (physaddr)
 
@@ -125,21 +125,21 @@
  * locations
  */
 #ifdef CONFIG_HAVE_TCM
-#define ITCM_OFFSET UL(0xfffe0000)
-#define DTCM_OFFSET UL(0xfffe8000)
+#define ITCM_OFFSET	UL(0xfffe0000)
+#define DTCM_OFFSET	UL(0xfffe8000)
 #endif
 
 /*
  * Convert a physical address to a Page Frame Number and back
  */
-#define __phys_to_pfn(paddr)  ((unsigned long)((paddr) >> PAGE_SHIFT))
-#define __pfn_to_phys(pfn)  ((phys_addr_t)(pfn) << PAGE_SHIFT)
+#define	__phys_to_pfn(paddr)	((unsigned long)((paddr) >> PAGE_SHIFT))
+#define	__pfn_to_phys(pfn)	((phys_addr_t)(pfn) << PAGE_SHIFT)
 
 /*
  * Convert a page to/from a physical address
  */
-#define page_to_phys(page)  (__pfn_to_phys(page_to_pfn(page)))
-#define phys_to_page(phys)  (pfn_to_page(__phys_to_pfn(phys)))
+#define page_to_phys(page)	(__pfn_to_phys(page_to_pfn(page)))
+#define phys_to_page(phys)	(pfn_to_page(__phys_to_pfn(phys)))
 
 #ifndef __ASSEMBLY__
 
@@ -155,44 +155,44 @@
  * Constants used to force the right instruction encodings and shifts
  * so that all we need to do is modify the 8-bit constant field.
  */
-#define __PV_BITS_31_24 0x81000000
+#define __PV_BITS_31_24	0x81000000
 
 extern unsigned long __pv_phys_offset;
 #define PHYS_OFFSET __pv_phys_offset
 
-#define __pv_stub(from,to,instr,type)     \
-  __asm__("@ __pv_stub\n"       \
-          "1:	" instr "	%0, %1, %2\n"   \
-          "	.pushsection .pv_table,\"a\"\n"   \
-          "	.long	1b\n"       \
-          "	.popsection\n"        \
-          : "=r" (to)         \
-          : "r" (from), "I" (type))
+#define __pv_stub(from,to,instr,type)			\
+	__asm__("@ __pv_stub\n"				\
+	"1:	" instr "	%0, %1, %2\n"		\
+	"	.pushsection .pv_table,\"a\"\n"		\
+	"	.long	1b\n"				\
+	"	.popsection\n"				\
+	: "=r" (to)					\
+	: "r" (from), "I" (type))
 
-static inline unsigned long __virt_to_phys (unsigned long x)
+static inline unsigned long __virt_to_phys(unsigned long x)
 {
-  unsigned long t;
-  __pv_stub (x, t, "add", __PV_BITS_31_24);
-  return t;
+	unsigned long t;
+	__pv_stub(x, t, "add", __PV_BITS_31_24);
+	return t;
 }
 
-static inline unsigned long __phys_to_virt (unsigned long x)
+static inline unsigned long __phys_to_virt(unsigned long x)
 {
-  unsigned long t;
-  __pv_stub (x, t, "sub", __PV_BITS_31_24);
-  return t;
+	unsigned long t;
+	__pv_stub(x, t, "sub", __PV_BITS_31_24);
+	return t;
 }
 #else
-#define __virt_to_phys(x) ((x) - PAGE_OFFSET + PHYS_OFFSET)
-#define __phys_to_virt(x) ((x) - PHYS_OFFSET + PAGE_OFFSET)
+#define __virt_to_phys(x)	((x) - PAGE_OFFSET + PHYS_OFFSET)
+#define __phys_to_virt(x)	((x) - PHYS_OFFSET + PAGE_OFFSET)
 #endif
 #endif
 
 #ifndef PHYS_OFFSET
 #ifdef PLAT_PHYS_OFFSET
-#define PHYS_OFFSET PLAT_PHYS_OFFSET
+#define PHYS_OFFSET	PLAT_PHYS_OFFSET
 #else
-#define PHYS_OFFSET UL(CONFIG_PHYS_OFFSET)
+#define PHYS_OFFSET	UL(CONFIG_PHYS_OFFSET)
 #endif
 #endif
 
@@ -204,7 +204,7 @@ static inline unsigned long __phys_to_virt (unsigned long x)
  * direct-mapped view.  We assume this is the first page
  * of RAM in the mem_map as well.
  */
-#define PHYS_PFN_OFFSET (PHYS_OFFSET >> PAGE_SHIFT)
+#define PHYS_PFN_OFFSET	(PHYS_OFFSET >> PAGE_SHIFT)
 
 /*
  * These are *only* valid on the kernel direct mapped RAM memory.
@@ -212,22 +212,22 @@ static inline unsigned long __phys_to_virt (unsigned long x)
  * translation for translating DMA addresses.  Use the driver
  * DMA support - see dma-mapping.h.
  */
-static inline phys_addr_t virt_to_phys (const volatile void * x)
+static inline phys_addr_t virt_to_phys(const volatile void *x)
 {
-  return __virt_to_phys ( (unsigned long) (x) );
+	return __virt_to_phys((unsigned long)(x));
 }
 
-static inline void * phys_to_virt (phys_addr_t x)
+static inline void *phys_to_virt(phys_addr_t x)
 {
-  return (void *) (__phys_to_virt ( (unsigned long) (x) ) );
+	return (void *)(__phys_to_virt((unsigned long)(x)));
 }
 
 /*
  * Drivers should NOT use these either.
  */
-#define __pa(x)     __virt_to_phys((unsigned long)(x))
-#define __va(x)     ((void *)__phys_to_virt((unsigned long)(x)))
-#define pfn_to_kaddr(pfn) __va((pfn) << PAGE_SHIFT)
+#define __pa(x)			__virt_to_phys((unsigned long)(x))
+#define __va(x)			((void *)__phys_to_virt((unsigned long)(x)))
+#define pfn_to_kaddr(pfn)	__va((pfn) << PAGE_SHIFT)
 
 /*
  * Virtual <-> DMA view memory address translations
@@ -236,20 +236,20 @@ static inline void * phys_to_virt (phys_addr_t x)
  * use the __ prefixed forms instead.)  See dma-mapping.h.
  */
 #ifndef __virt_to_bus
-#define __virt_to_bus __virt_to_phys
-#define __bus_to_virt __phys_to_virt
-#define __pfn_to_bus(x) __pfn_to_phys(x)
-#define __bus_to_pfn(x) __phys_to_pfn(x)
+#define __virt_to_bus	__virt_to_phys
+#define __bus_to_virt	__phys_to_virt
+#define __pfn_to_bus(x)	__pfn_to_phys(x)
+#define __bus_to_pfn(x)	__phys_to_pfn(x)
 #endif
 
-static inline __deprecated unsigned long virt_to_bus (void * x)
+static inline __deprecated unsigned long virt_to_bus(void *x)
 {
-  return __virt_to_bus ( (unsigned long) x);
+	return __virt_to_bus((unsigned long)x);
 }
 
-static inline __deprecated void * bus_to_virt (unsigned long x)
+static inline __deprecated void *bus_to_virt(unsigned long x)
 {
-  return (void *) __bus_to_virt (x);
+	return (void *)__bus_to_virt(x);
 }
 
 /*
@@ -261,23 +261,23 @@ static inline __deprecated void * bus_to_virt (unsigned long x)
  * for any physical address not corresponding to a system
  * RAM address.
  *
- *  page_to_pfn(page) convert a struct page * to a PFN number
- *  pfn_to_page(pfn)  convert a _valid_ PFN number to struct page *
+ *  page_to_pfn(page)	convert a struct page * to a PFN number
+ *  pfn_to_page(pfn)	convert a _valid_ PFN number to struct page *
  *
- *  virt_to_page(k) convert a _valid_ virtual address to struct page *
- *  virt_addr_valid(k)  indicates whether a virtual address is valid
+ *  virt_to_page(k)	convert a _valid_ virtual address to struct page *
+ *  virt_addr_valid(k)	indicates whether a virtual address is valid
  */
-#define ARCH_PFN_OFFSET   PHYS_PFN_OFFSET
+#define ARCH_PFN_OFFSET		PHYS_PFN_OFFSET
 
-#define virt_to_page(kaddr) pfn_to_page(__pa(kaddr) >> PAGE_SHIFT)
-#define virt_addr_valid(kaddr)  ((unsigned long)(kaddr) >= PAGE_OFFSET && (unsigned long)(kaddr) < (unsigned long)high_memory)
+#define virt_to_page(kaddr)	pfn_to_page(__pa(kaddr) >> PAGE_SHIFT)
+#define virt_addr_valid(kaddr)	((unsigned long)(kaddr) >= PAGE_OFFSET && (unsigned long)(kaddr) < (unsigned long)high_memory)
 
 /*
  * Optional coherency support.  Currently used only by selected
  * Intel XSC3-based systems.
  */
 #ifndef arch_is_coherent
-#define arch_is_coherent()    0
+#define arch_is_coherent()		0
 #endif
 
 #endif

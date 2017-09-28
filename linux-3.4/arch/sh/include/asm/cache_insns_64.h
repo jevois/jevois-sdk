@@ -10,14 +10,14 @@
 #ifndef __ASM_SH_CACHE_INSNS_64_H
 #define __ASM_SH_CACHE_INSNS_64_H
 
-#define __icbi(addr)  __asm__ __volatile__ ( "icbi %0, 0\n\t" : : "r" (addr))
-#define __ocbp(addr)  __asm__ __volatile__ ( "ocbp %0, 0\n\t" : : "r" (addr))
-#define __ocbi(addr)  __asm__ __volatile__ ( "ocbi %0, 0\n\t" : : "r" (addr))
-#define __ocbwb(addr) __asm__ __volatile__ ( "ocbwb %0, 0\n\t" : : "r" (addr))
+#define __icbi(addr)	__asm__ __volatile__ ( "icbi %0, 0\n\t" : : "r" (addr))
+#define __ocbp(addr)	__asm__ __volatile__ ( "ocbp %0, 0\n\t" : : "r" (addr))
+#define __ocbi(addr)	__asm__ __volatile__ ( "ocbi %0, 0\n\t" : : "r" (addr))
+#define __ocbwb(addr)	__asm__ __volatile__ ( "ocbwb %0, 0\n\t" : : "r" (addr))
 
-static inline reg_size_t register_align (void * val)
+static inline reg_size_t register_align(void *val)
 {
-  return (unsigned long long) (signed long long) (signed long) val;
+	return (unsigned long long)(signed long long)(signed long)val;
 }
 
 #endif /* __ASM_SH_CACHE_INSNS_64_H */

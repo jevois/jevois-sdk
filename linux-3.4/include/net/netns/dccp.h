@@ -4,8 +4,8 @@
 struct sock;
 
 struct netns_dccp {
-  struct sock * v4_ctl_sk;
-  struct sock * v6_ctl_sk;
+	struct sock *v4_ctl_sk;
+	struct sock *v6_ctl_sk;
 };
 
 #endif

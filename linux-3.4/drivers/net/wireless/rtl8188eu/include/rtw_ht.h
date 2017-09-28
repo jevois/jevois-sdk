@@ -1,7 +1,7 @@
 /******************************************************************************
  *
  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
- *
+ *                                        
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of version 2 of the GNU General Public License as
  * published by the Free Software Foundation.
@@ -26,22 +26,22 @@
 
 struct ht_priv
 {
-  u32 ht_option;
-  u32 ampdu_enable;//for enable Tx A-MPDU
-  u32 tx_amsdu_enable;//for enable Tx A-MSDU
-  u32 tx_amdsu_maxlen;
-  u32 rx_ampdu_maxlen;
-  
-  u8  bwmode;//
-  u8  ch_offset;//PRIME_CHNL_OFFSET
-  u8  sgi;//short GI
-  
-  u8  agg_enable_bitmap;
-  u8  candidate_tid_bitmap;
-  
-  struct rtw_ieee80211_ht_cap ht_cap;
-  
+	u32	ht_option;	
+	u32	ampdu_enable;//for enable Tx A-MPDU
+	u32	tx_amsdu_enable;//for enable Tx A-MSDU
+	u32	tx_amdsu_maxlen;
+	u32	rx_ampdu_maxlen;
+	
+	u8	bwmode;//
+	u8	ch_offset;//PRIME_CHNL_OFFSET
+	u8	sgi;//short GI
+
+	u8	agg_enable_bitmap;
+	u8	candidate_tid_bitmap;
+
+	struct rtw_ieee80211_ht_cap ht_cap;
+	
 };
 
-#endif 
+#endif
 

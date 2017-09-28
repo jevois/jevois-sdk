@@ -36,14 +36,14 @@
 #define PCI_CMD_CONFIG_WRITE            0xb0
 
 #define PCI_IO_TIMEOUT                  1000
-#define PCI_IO_RETRY      5
+#define PCI_IO_RETRY			5
 /* Timeout for IO and CFG accesses.
    This is in 1/1024 th of a jiffie(=10ms)
    i.e. approx 10us */
 #define PCI_IO_JIFFIES_TIMEOUT          40
 #define PCI_IO_JIFFIES_SHIFT            10
 
-#define PCI_BYTE_ENABLE_MASK    0x0000000f
+#define PCI_BYTE_ENABLE_MASK		0x0000000f
 #define PCI_CFG_BUS_SHIFT               16
 #define PCI_CFG_FUNC_SHIFT              8
 #define PCI_CFG_REG_SHIFT               2

@@ -7,17 +7,17 @@
 
 #ifdef CONFIG_BACKLIGHT_APPLE
 
-extern int apple_bl_register (void);
-extern void apple_bl_unregister (void);
+extern int apple_bl_register(void);
+extern void apple_bl_unregister(void);
 
 #else /* !CONFIG_BACKLIGHT_APPLE */
 
-static inline int apple_bl_register (void)
+static inline int apple_bl_register(void)
 {
-  return 0;
+	return 0;
 }
 
-static inline void apple_bl_unregister (void)
+static inline void apple_bl_unregister(void)
 {
 }
 

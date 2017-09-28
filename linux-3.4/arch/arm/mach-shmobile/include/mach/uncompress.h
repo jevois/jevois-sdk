@@ -4,15 +4,15 @@
 /*
  * This does not append a newline
  */
-static void putc (int c)
+static void putc(int c)
 {
 }
 
-static inline void flush (void)
+static inline void flush(void)
 {
 }
 
-static void arch_decomp_setup (void)
+static void arch_decomp_setup(void)
 {
 }
 

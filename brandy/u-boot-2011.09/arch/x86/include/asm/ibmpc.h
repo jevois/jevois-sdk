@@ -27,7 +27,7 @@
 /* misc ports in an ibm compatible pc */
 
 #define MASTER_PIC      0x20
-#define PIT_BASE  0x40
+#define PIT_BASE	0x40
 #define KBDDATA         0x60
 #define SYSCTLB         0x62
 #define KBDCMD          0x64

@@ -4,8 +4,8 @@
  * Copyright (C) 2010 Google, Inc.
  *
  * Author:
- *  Colin Cross <ccross@google.com>
- *  Erik Gilling <konkers@google.com>
+ *	Colin Cross <ccross@google.com>
+ *	Erik Gilling <konkers@google.com>
  *
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
@@ -26,16 +26,16 @@
 #ifndef __ASSEMBLER__
 
 #ifdef CONFIG_TEGRA_PCI
-extern void __iomem * tegra_pcie_io_base;
+extern void __iomem *tegra_pcie_io_base;
 
-static inline void __iomem * __io (unsigned long addr)
+static inline void __iomem *__io(unsigned long addr)
 {
-  return tegra_pcie_io_base + (addr & IO_SPACE_LIMIT);
+	return tegra_pcie_io_base + (addr & IO_SPACE_LIMIT);
 }
 #else
-static inline void __iomem * __io (unsigned long addr)
+static inline void __iomem *__io(unsigned long addr)
 {
-  return (void __iomem *) addr;
+	return (void __iomem *)addr;
 }
 #endif
 

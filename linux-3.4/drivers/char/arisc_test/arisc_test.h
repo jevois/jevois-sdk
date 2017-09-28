@@ -50,15 +50,15 @@
 
 typedef struct arisc_audio_period
 {
-  unsigned int               period_addr;
-  struct arisc_audio_period * next;
-} arisc_audio_period_t;
+	unsigned int               period_addr;
+	struct arisc_audio_period *next;
+}arisc_audio_period_t;
 
 typedef struct arisc_audio_period_queue
 {
-  struct arisc_audio_period * head;  
-  struct arisc_audio_period * tail;  
-  u32           number;          
+	struct arisc_audio_period *head;	
+	struct arisc_audio_period *tail;	
+	u32				    number;		       
 } arisc_audio_period_queue_t;
 
 #endif /* __SUN6I_ARISC_TEST_H */

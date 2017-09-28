@@ -16,8 +16,8 @@
 #include <asm/idprom.h>
 #include <asm/machines.h>  /* Fun with Sun released architectures. */
 
-struct idprom * idprom;
-EXPORT_SYMBOL (idprom);
+struct idprom *idprom;
+EXPORT_SYMBOL(idprom);
 
 static struct idprom idprom_buffer;
 
@@ -26,92 +26,92 @@ static struct idprom idprom_buffer;
  * know about.  See asm-sparc/machines.h for empirical constants.
  */
 static struct Sun_Machine_Models Sun_Machines[NUM_SUN_MACHINES] = {
-  /* First, Sun3's */
-  { .name = "Sun 3/160 Series", .id_machtype = (SM_SUN3 | SM_3_160) },
-  { .name = "Sun 3/50",   .id_machtype = (SM_SUN3 | SM_3_50) },
-  { .name = "Sun 3/260 Series", .id_machtype = (SM_SUN3 | SM_3_260) },
-  { .name = "Sun 3/110 Series", .id_machtype = (SM_SUN3 | SM_3_110) },
-  { .name = "Sun 3/60",   .id_machtype = (SM_SUN3 | SM_3_60) },
-  { .name = "Sun 3/E",    .id_machtype = (SM_SUN3 | SM_3_E) },
-  /* Now, Sun3x's */
-  { .name = "Sun 3/460 Series", .id_machtype = (SM_SUN3X | SM_3_460) },
-  { .name = "Sun 3/80",   .id_machtype = (SM_SUN3X | SM_3_80) },
-  /* Then, Sun4's */
-  /* And now, Sun4c's */
-  /* Finally, early Sun4m's */
-  /* One entry for the OBP arch's which are sun4d, sun4e, and newer sun4m's */
+/* First, Sun3's */
+    { .name = "Sun 3/160 Series",	.id_machtype = (SM_SUN3 | SM_3_160) },
+    { .name = "Sun 3/50",		.id_machtype = (SM_SUN3 | SM_3_50) },
+    { .name = "Sun 3/260 Series",	.id_machtype = (SM_SUN3 | SM_3_260) },
+    { .name = "Sun 3/110 Series",	.id_machtype = (SM_SUN3 | SM_3_110) },
+    { .name = "Sun 3/60",		.id_machtype = (SM_SUN3 | SM_3_60) },
+    { .name = "Sun 3/E",		.id_machtype = (SM_SUN3 | SM_3_E) },
+/* Now, Sun3x's */
+    { .name = "Sun 3/460 Series",	.id_machtype = (SM_SUN3X | SM_3_460) },
+    { .name = "Sun 3/80",		.id_machtype = (SM_SUN3X | SM_3_80) },
+/* Then, Sun4's */
+/* And now, Sun4c's */
+/* Finally, early Sun4m's */
+/* One entry for the OBP arch's which are sun4d, sun4e, and newer sun4m's */
 };
 
-static void __init display_system_type (unsigned char machtype)
+static void __init display_system_type(unsigned char machtype)
 {
-  register int i;
-  
-  for (i = 0; i < NUM_SUN_MACHINES; i++) {
-    if (Sun_Machines[i].id_machtype == machtype) {
-      if (machtype != (SM_SUN4M_OBP | 0x00) )
-      { printk ("TYPE: %s\n", Sun_Machines[i].name); }
-      else {
-        #if 0
-        prom_getproperty (prom_root_node, "banner-name",
-                          sysname, sizeof (sysname) );
-        printk ("TYPE: %s\n", sysname);
-        #endif
-      }
-      return;
-    }
-  }
-  
-  prom_printf ("IDPROM: Bogus id_machtype value, 0x%x\n", machtype);
-  prom_halt();
+	register int i;
+
+	for (i = 0; i < NUM_SUN_MACHINES; i++) {
+		if(Sun_Machines[i].id_machtype == machtype) {
+			if (machtype != (SM_SUN4M_OBP | 0x00))
+				printk("TYPE: %s\n", Sun_Machines[i].name);
+			else {
+#if 0
+				prom_getproperty(prom_root_node, "banner-name",
+						 sysname, sizeof(sysname));
+				printk("TYPE: %s\n", sysname);
+#endif
+			}
+			return;
+		}
+	}
+
+	prom_printf("IDPROM: Bogus id_machtype value, 0x%x\n", machtype);
+	prom_halt();
 }
 
-void sun3_get_model (unsigned char * model)
+void sun3_get_model(unsigned char* model)
 {
-  register int i;
-  
-  for (i = 0; i < NUM_SUN_MACHINES; i++) {
-    if (Sun_Machines[i].id_machtype == idprom->id_machtype) {
-      strcpy (model, Sun_Machines[i].name);
-      return;
-    }
-  }
+	register int i;
+
+	for (i = 0; i < NUM_SUN_MACHINES; i++) {
+		if(Sun_Machines[i].id_machtype == idprom->id_machtype) {
+		        strcpy(model, Sun_Machines[i].name);
+			return;
+		}
+	}
 }
 
 
 
 /* Calculate the IDPROM checksum (xor of the data bytes). */
-static unsigned char __init calc_idprom_cksum (struct idprom * idprom)
+static unsigned char __init calc_idprom_cksum(struct idprom *idprom)
 {
-  unsigned char cksum, i, *ptr = (unsigned char *) idprom;
-  
-  for (i = cksum = 0; i <= 0x0E; i++)
-  { cksum ^= *ptr++; }
-  
-  return cksum;
+	unsigned char cksum, i, *ptr = (unsigned char *)idprom;
+
+	for (i = cksum = 0; i <= 0x0E; i++)
+		cksum ^= *ptr++;
+
+	return cksum;
 }
 
 /* Create a local IDPROM copy, verify integrity, and display information. */
-void __init idprom_init (void)
+void __init idprom_init(void)
 {
-  prom_get_idprom ( (char *) &idprom_buffer, sizeof (idprom_buffer) );
-  
-  idprom = &idprom_buffer;
-  
-  if (idprom->id_format != 0x01)  {
-    prom_printf ("IDPROM: Unknown format type!\n");
-    prom_halt();
-  }
-  
-  if (idprom->id_cksum != calc_idprom_cksum (idprom) ) {
-    prom_printf ("IDPROM: Checksum failure (nvram=%x, calc=%x)!\n",
-                 idprom->id_cksum, calc_idprom_cksum (idprom) );
-    prom_halt();
-  }
-  
-  display_system_type (idprom->id_machtype);
-  
-  printk ("Ethernet address: %x:%x:%x:%x:%x:%x\n",
-          idprom->id_ethaddr[0], idprom->id_ethaddr[1],
-          idprom->id_ethaddr[2], idprom->id_ethaddr[3],
-          idprom->id_ethaddr[4], idprom->id_ethaddr[5]);
+	prom_get_idprom((char *) &idprom_buffer, sizeof(idprom_buffer));
+
+	idprom = &idprom_buffer;
+
+	if (idprom->id_format != 0x01)  {
+		prom_printf("IDPROM: Unknown format type!\n");
+		prom_halt();
+	}
+
+	if (idprom->id_cksum != calc_idprom_cksum(idprom)) {
+		prom_printf("IDPROM: Checksum failure (nvram=%x, calc=%x)!\n",
+			    idprom->id_cksum, calc_idprom_cksum(idprom));
+		prom_halt();
+	}
+
+	display_system_type(idprom->id_machtype);
+
+	printk("Ethernet address: %x:%x:%x:%x:%x:%x\n",
+		    idprom->id_ethaddr[0], idprom->id_ethaddr[1],
+		    idprom->id_ethaddr[2], idprom->id_ethaddr[3],
+		    idprom->id_ethaddr[4], idprom->id_ethaddr[5]);
 }

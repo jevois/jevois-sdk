@@ -29,15 +29,15 @@
  * Map some physical address range into the kernel address space.
  */
 
-void __iomem * __ioremap (unsigned long physaddr, unsigned long size, int cacheflag)
+void __iomem *__ioremap(unsigned long physaddr, unsigned long size, int cacheflag)
 {
-  return (void __iomem *) physaddr;
+	return (void __iomem *)physaddr;
 }
 
 /*
  * Unmap a ioremap()ed region again
  */
-void iounmap (void volatile __iomem * addr)
+void iounmap(void volatile __iomem *addr)
 {
 }
 
@@ -46,6 +46,6 @@ void iounmap (void volatile __iomem * addr)
  * The caller must push data for that range itself, if such data may already
  * be in the cache.
  */
-void kernel_set_cachemode (void * addr, unsigned long size, int cmode)
+void kernel_set_cachemode(void *addr, unsigned long size, int cmode)
 {
 }

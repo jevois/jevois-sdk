@@ -34,19 +34,19 @@
 #include <common.h>
 
 typedef struct eth0_tx_desc_struct {
-  volatile __u32 bytecount_reserved;
-  volatile __u32 command_status;
-  volatile struct eth0_tx_desc_struct * next_desc;
-  /* Note - the following will not work for 64 bit addressing */
-  volatile unsigned char * buff_pointer;
-} __attribute__ ( (packed) ) eth0_tx_desc_single;
+	volatile __u32 bytecount_reserved;
+	volatile __u32 command_status;
+	volatile struct eth0_tx_desc_struct * next_desc;
+	/* Note - the following will not work for 64 bit addressing */
+	volatile unsigned char * buff_pointer;
+} __attribute__ ((packed)) eth0_tx_desc_single;
 
 typedef struct eth0_rx_desc_struct {
   volatile __u32 buff_size_byte_count;
   volatile __u32 command_status;
   volatile struct eth0_rx_desc_struct * next_desc;
   volatile unsigned char * buff_pointer;
-} __attribute__ ( (packed) ) eth0_rx_desc_single;
+} __attribute__ ((packed)) eth0_rx_desc_single;
 
 #define NT 20 /* Number of Transmit buffers */
 #define NR 20 /* Number of Receive buffers */
@@ -61,15 +61,15 @@ unsigned int EVB64260_ETH0_irq;
 
 #define PORT_ETH0 0
 
-extern eth0_tx_desc_single * eth0_tx_desc;
-extern eth0_rx_desc_single * eth0_rx_desc;
-extern char * eth0_tx_buffer;
-extern char * eth0_rx_buffer[NR];
-extern char * eth_data;
+extern eth0_tx_desc_single *eth0_tx_desc;
+extern eth0_rx_desc_single *eth0_rx_desc;
+extern char *eth0_tx_buffer;
+extern char *eth0_rx_buffer[NR];
+extern char *eth_data;
 
-extern int gt6426x_eth_poll (void * v);
-extern int gt6426x_eth_transmit (void * v, volatile char * p, unsigned int s);
-extern void gt6426x_eth_disable (void * v);
-extern int gt6426x_eth_probe (void * v, bd_t * bis);
+extern int gt6426x_eth_poll(void *v);
+extern int gt6426x_eth_transmit(void *v, volatile char *p, unsigned int s);
+extern void gt6426x_eth_disable(void *v);
+extern int gt6426x_eth_probe(void *v, bd_t *bis);
 
 #endif  /* __GT64260x_ETH_H__ */

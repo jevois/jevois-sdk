@@ -4,38 +4,38 @@
 /* Unified sub device IDs for AXP */
 /* LDO0 For RTCLDO ,LDO1-3 for ALDO,LDO*/
 enum {
-  AXP22_ID_DCDC1,
-  AXP22_ID_DCDC2,
-  AXP22_ID_DCDC3,
-  AXP22_ID_DCDC4,
-  AXP22_ID_DCDC5,
-  AXP22_ID_LDO1,  
-  AXP22_ID_LDO2,  
-  AXP22_ID_LDO3,  
-  AXP22_ID_LDO4,  
-  AXP22_ID_LDO5,  
-  AXP22_ID_LDO6,  
-  AXP22_ID_LDO7,  
-  AXP22_ID_LDO8,  
-  AXP22_ID_LDO9,  
-  AXP22_ID_LDO10, 
-  AXP22_ID_LDO11, 
-  AXP22_ID_LDO12, 
-  AXP22_ID_LDOIO0,
-  AXP22_ID_LDOIO1,
-  #ifdef CONFIG_AXP809
-  AXP22_ID_SW0,
-  #endif
-  AXP22_ID_SW1,
-  AXP22_ID_SUPPLY,
-  AXP22_ID_GPIO,
+	AXP22_ID_DCDC1,
+	AXP22_ID_DCDC2,
+	AXP22_ID_DCDC3,
+	AXP22_ID_DCDC4,
+	AXP22_ID_DCDC5,
+	AXP22_ID_LDO1,  
+	AXP22_ID_LDO2,  
+	AXP22_ID_LDO3,  
+	AXP22_ID_LDO4,  
+	AXP22_ID_LDO5,  
+	AXP22_ID_LDO6,  
+	AXP22_ID_LDO7,  
+	AXP22_ID_LDO8,  
+	AXP22_ID_LDO9,  
+	AXP22_ID_LDO10, 
+	AXP22_ID_LDO11, 
+	AXP22_ID_LDO12, 
+	AXP22_ID_LDOIO0,
+	AXP22_ID_LDOIO1,
+#ifdef CONFIG_AXP809
+	AXP22_ID_SW0,
+#endif
+	AXP22_ID_SW1,
+	AXP22_ID_SUPPLY,
+	AXP22_ID_GPIO,	
 };
 
-/*For AXP22*/
+/*For AXP22*/ 
 #define AXP22                     (22)
 #define AXP22_STATUS              (0x00)
 #define AXP22_MODE_CHGSTATUS      (0x01)
-#define AXP22_IC_TYPE     (0x03)
+#define AXP22_IC_TYPE		  (0x03)
 #define AXP22_BUFFER1             (0x04)
 #define AXP22_BUFFER2             (0x05)
 #define AXP22_BUFFER3             (0x06)
@@ -116,68 +116,68 @@ enum {
 
 /* bit definitions for AXP events ,irq event */
 /*  AXP22  */
-#define AXP22_IRQ_USBLO   ( 1 <<  1)
-#define AXP22_IRQ_USBRE   ( 1 <<  2)
-#define AXP22_IRQ_USBIN   ( 1 <<  3)
-#define AXP22_IRQ_USBOV       ( 1 <<  4)
-#define AXP22_IRQ_ACRE    ( 1 <<  5)
-#define AXP22_IRQ_ACIN    ( 1 <<  6)
-#define AXP22_IRQ_ACOV    ( 1 <<  7)
-#define AXP22_IRQ_TEMLO       ( 1 <<  8)
-#define AXP22_IRQ_TEMOV       ( 1 <<  9)
-#define AXP22_IRQ_CHAOV   ( 1 << 10)
-#define AXP22_IRQ_CHAST   ( 1 << 11)
-#define AXP22_IRQ_BATATOU     ( 1 << 12)
-#define AXP22_IRQ_BATATIN ( 1 << 13)
-#define AXP22_IRQ_BATRE   ( 1 << 14)
-#define AXP22_IRQ_BATIN   ( 1 << 15)
+#define	AXP22_IRQ_USBLO		( 1 <<  1)
+#define	AXP22_IRQ_USBRE		( 1 <<  2)
+#define	AXP22_IRQ_USBIN		( 1 <<  3)
+#define	AXP22_IRQ_USBOV     	( 1 <<  4)
+#define	AXP22_IRQ_ACRE		( 1 <<  5)
+#define	AXP22_IRQ_ACIN		( 1 <<  6)
+#define	AXP22_IRQ_ACOV		( 1 <<  7)
+#define	AXP22_IRQ_TEMLO      	( 1 <<  8)
+#define	AXP22_IRQ_TEMOV      	( 1 <<  9)
+#define	AXP22_IRQ_CHAOV		( 1 << 10)
+#define	AXP22_IRQ_CHAST		( 1 << 11)
+#define	AXP22_IRQ_BATATOU    	( 1 << 12)
+#define	AXP22_IRQ_BATATIN	( 1 << 13)
+#define AXP22_IRQ_BATRE		( 1 << 14)
+#define AXP22_IRQ_BATIN		( 1 << 15)
 #ifdef CONFIG_AXP809
-#define AXP22_IRQ_QBATINWORK  ( 1 << 16)
-#define AXP22_IRQ_BATINWORK ( 1 << 17)
-#define AXP22_IRQ_QBATOVWORK  ( 1 << 18)
-#define AXP22_IRQ_BATOVWORK ( 1 << 19)
-#define AXP22_IRQ_QBATINCHG ( 1 << 20)
-#define AXP22_IRQ_BATINCHG  ( 1 << 21)
-#define AXP22_IRQ_QBATOVCHG ( 1 << 22)
-#define AXP22_IRQ_BATOVCHG  ( 1 << 23)
-#define AXP22_IRQ_EXTLOWARN2    ( 1 << 24)
-#define AXP22_IRQ_EXTLOWARN1    ( 1 << 25)
-#define AXP22_IRQ_ICTEMOV     ( 1 << 31)
-#define AXP22_IRQ_GPIO0TG       ((uint64_t)1 << 32)
-#define AXP22_IRQ_GPIO1TG       ((uint64_t)1 << 33)
-#define AXP22_IRQ_POKLO       ((uint64_t)1 << 35)
-#define AXP22_IRQ_POKSH       ((uint64_t)1 << 36)
+#define AXP22_IRQ_QBATINWORK	( 1 << 16)
+#define AXP22_IRQ_BATINWORK	( 1 << 17)
+#define AXP22_IRQ_QBATOVWORK	( 1 << 18)
+#define AXP22_IRQ_BATOVWORK	( 1 << 19)
+#define AXP22_IRQ_QBATINCHG	( 1 << 20)
+#define AXP22_IRQ_BATINCHG	( 1 << 21)
+#define AXP22_IRQ_QBATOVCHG	( 1 << 22)
+#define AXP22_IRQ_BATOVCHG	( 1 << 23)
+#define AXP22_IRQ_EXTLOWARN2  	( 1 << 24)
+#define AXP22_IRQ_EXTLOWARN1  	( 1 << 25)
+#define AXP22_IRQ_ICTEMOV    	( 1 << 31)
+#define AXP22_IRQ_GPIO0TG     	((uint64_t)1 << 32)
+#define AXP22_IRQ_GPIO1TG     	((uint64_t)1 << 33)
+#define AXP22_IRQ_POKLO     	((uint64_t)1 << 35)
+#define AXP22_IRQ_POKSH     	((uint64_t)1 << 36)
 #else
-#define AXP22_IRQ_POKLO   ( 1 << 16)
-#define AXP22_IRQ_POKSH       ( 1 << 17)
-#define AXP22_IRQ_ICTEMOV     ( 1 << 23)
-#define AXP22_IRQ_EXTLOWARN2    ( 1 << 24)
-#define AXP22_IRQ_EXTLOWARN1    ( 1 << 25)
-#define AXP22_IRQ_GPIO0TG       ((uint64_t)1 << 32)
-#define AXP22_IRQ_GPIO1TG       ((uint64_t)1 << 33)
-#define AXP22_IRQ_GPIO2TG       ((uint64_t)1 << 34)
-#define AXP22_IRQ_GPIO3TG       ((uint64_t)1 << 35)
+#define	AXP22_IRQ_POKLO		( 1 << 16)
+#define	AXP22_IRQ_POKSH	    	( 1 << 17)
+#define AXP22_IRQ_ICTEMOV    	( 1 << 23)
+#define AXP22_IRQ_EXTLOWARN2  	( 1 << 24)
+#define AXP22_IRQ_EXTLOWARN1  	( 1 << 25)
+#define AXP22_IRQ_GPIO0TG     	((uint64_t)1 << 32)
+#define AXP22_IRQ_GPIO1TG     	((uint64_t)1 << 33)
+#define AXP22_IRQ_GPIO2TG     	((uint64_t)1 << 34)
+#define AXP22_IRQ_GPIO3TG     	((uint64_t)1 << 35)
 #endif
-#define AXP22_IRQ_PEKFE       ((uint64_t)1 << 37)
-#define AXP22_IRQ_PEKRE       ((uint64_t)1 << 38)
-#define AXP22_IRQ_TIMER       ((uint64_t)1 << 39)
+#define AXP22_IRQ_PEKFE     	((uint64_t)1 << 37)
+#define AXP22_IRQ_PEKRE     	((uint64_t)1 << 38)
+#define AXP22_IRQ_TIMER     	((uint64_t)1 << 39)
 
 /* Status Query Interface */
 /*  AXP22  */
-#define AXP22_STATUS_SOURCE     ( 1 <<  0)
-#define AXP22_STATUS_ACUSBSH  ( 1 <<  1)
-#define AXP22_STATUS_BATCURDIR  ( 1 <<  2)
-#define AXP22_STATUS_USBLAVHO   ( 1 <<  3)
-#define AXP22_STATUS_USBVA      ( 1 <<  4)
-#define AXP22_STATUS_USBEN      ( 1 <<  5)
-#define AXP22_STATUS_ACVA ( 1 <<  6)
-#define AXP22_STATUS_ACEN ( 1 <<  7)
+#define AXP22_STATUS_SOURCE    	( 1 <<  0)
+#define AXP22_STATUS_ACUSBSH 	( 1 <<  1)
+#define AXP22_STATUS_BATCURDIR 	( 1 <<  2)
+#define AXP22_STATUS_USBLAVHO 	( 1 <<  3)
+#define AXP22_STATUS_USBVA    	( 1 <<  4)
+#define AXP22_STATUS_USBEN    	( 1 <<  5)
+#define AXP22_STATUS_ACVA	( 1 <<  6)
+#define AXP22_STATUS_ACEN	( 1 <<  7)
 
-#define AXP22_STATUS_BATINACT   ( 1 << 11)
-
-#define AXP22_STATUS_BATEN      ( 1 << 13)
-#define AXP22_STATUS_INCHAR     ( 1 << 14)
-#define AXP22_STATUS_ICTEMOV    ( 1 << 15)
+#define AXP22_STATUS_BATINACT  	( 1 << 11)
+                               	
+#define AXP22_STATUS_BATEN     	( 1 << 13)
+#define AXP22_STATUS_INCHAR    	( 1 << 14)
+#define AXP22_STATUS_ICTEMOV   	( 1 << 15)
 
 
 #endif /* __LINUX_AXP_MFD_22_H_ */

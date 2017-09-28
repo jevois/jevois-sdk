@@ -22,12 +22,12 @@
 
 #define GET_GLOBAL_REG(reg, base) (readl((base) + (reg)))
 #define GET_CTX_REG(reg, base, ctx) \
-  (readl((base) + (reg) + ((ctx) << CTX_SHIFT)))
+				(readl((base) + (reg) + ((ctx) << CTX_SHIFT)))
 
-#define SET_GLOBAL_REG(reg, base, val)  writel((val), ((base) + (reg)))
+#define SET_GLOBAL_REG(reg, base, val)	writel((val), ((base) + (reg)))
 
 #define SET_CTX_REG(reg, base, ctx, val) \
-  writel((val), ((base) + (reg) + ((ctx) << CTX_SHIFT)))
+			writel((val), ((base) + (reg) + ((ctx) << CTX_SHIFT)))
 
 /* Wrappers for numbered registers */
 #define SET_GLOBAL_REG_N(b, n, r, v) SET_GLOBAL_REG(b, ((r) + (n << 2)), (v))
@@ -35,159 +35,159 @@
 
 /* Field wrappers */
 #define GET_GLOBAL_FIELD(b, r, F)    GET_FIELD(((b) + (r)), F##_MASK, F##_SHIFT)
-#define GET_CONTEXT_FIELD(b, c, r, F) \
-  GET_FIELD(((b) + (r) + ((c) << CTX_SHIFT)), F##_MASK, F##_SHIFT)
+#define GET_CONTEXT_FIELD(b, c, r, F)	\
+	GET_FIELD(((b) + (r) + ((c) << CTX_SHIFT)), F##_MASK, F##_SHIFT)
 
 #define SET_GLOBAL_FIELD(b, r, F, v) \
-  SET_FIELD(((b) + (r)), F##_MASK, F##_SHIFT, (v))
-#define SET_CONTEXT_FIELD(b, c, r, F, v)  \
-  SET_FIELD(((b) + (r) + ((c) << CTX_SHIFT)), F##_MASK, F##_SHIFT, (v))
+	SET_FIELD(((b) + (r)), F##_MASK, F##_SHIFT, (v))
+#define SET_CONTEXT_FIELD(b, c, r, F, v)	\
+	SET_FIELD(((b) + (r) + ((c) << CTX_SHIFT)), F##_MASK, F##_SHIFT, (v))
 
 #define GET_FIELD(addr, mask, shift)  ((readl(addr) >> (shift)) & (mask))
 
 #define SET_FIELD(addr, mask, shift, v) \
-  do { \
-    int t = readl(addr); \
-    writel((t & ~((mask) << (shift))) + (((v) & (mask)) << (shift)), addr);\
-  } while (0)
+do { \
+	int t = readl(addr); \
+	writel((t & ~((mask) << (shift))) + (((v) & (mask)) << (shift)), addr);\
+} while (0)
 
 
-#define NUM_FL_PTE  4096
-#define NUM_SL_PTE  256
-#define NUM_TEX_CLASS 8
+#define NUM_FL_PTE	4096
+#define NUM_SL_PTE	256
+#define NUM_TEX_CLASS	8
 
 /* First-level page table bits */
-#define FL_BASE_MASK    0xFFFFFC00
-#define FL_TYPE_TABLE   (1 << 0)
-#define FL_TYPE_SECT    (2 << 0)
-#define FL_SUPERSECTION   (1 << 18)
-#define FL_AP_WRITE   (1 << 10)
-#define FL_AP_READ    (1 << 11)
-#define FL_SHARED   (1 << 16)
-#define FL_BUFFERABLE   (1 << 2)
-#define FL_CACHEABLE    (1 << 3)
-#define FL_TEX0     (1 << 12)
-#define FL_OFFSET(va)   (((va) & 0xFFF00000) >> 20)
-#define FL_NG     (1 << 17)
+#define FL_BASE_MASK		0xFFFFFC00
+#define FL_TYPE_TABLE		(1 << 0)
+#define FL_TYPE_SECT		(2 << 0)
+#define FL_SUPERSECTION		(1 << 18)
+#define FL_AP_WRITE		(1 << 10)
+#define FL_AP_READ		(1 << 11)
+#define FL_SHARED		(1 << 16)
+#define FL_BUFFERABLE		(1 << 2)
+#define FL_CACHEABLE		(1 << 3)
+#define FL_TEX0			(1 << 12)
+#define FL_OFFSET(va)		(((va) & 0xFFF00000) >> 20)
+#define FL_NG			(1 << 17)
 
 /* Second-level page table bits */
-#define SL_BASE_MASK_LARGE  0xFFFF0000
-#define SL_BASE_MASK_SMALL  0xFFFFF000
-#define SL_TYPE_LARGE   (1 << 0)
-#define SL_TYPE_SMALL   (2 << 0)
-#define SL_AP0      (1 << 4)
-#define SL_AP1      (2 << 4)
-#define SL_SHARED   (1 << 10)
-#define SL_BUFFERABLE   (1 << 2)
-#define SL_CACHEABLE    (1 << 3)
-#define SL_TEX0     (1 << 6)
-#define SL_OFFSET(va)   (((va) & 0xFF000) >> 12)
-#define SL_NG     (1 << 11)
+#define SL_BASE_MASK_LARGE	0xFFFF0000
+#define SL_BASE_MASK_SMALL	0xFFFFF000
+#define SL_TYPE_LARGE		(1 << 0)
+#define SL_TYPE_SMALL		(2 << 0)
+#define SL_AP0			(1 << 4)
+#define SL_AP1			(2 << 4)
+#define SL_SHARED		(1 << 10)
+#define SL_BUFFERABLE		(1 << 2)
+#define SL_CACHEABLE		(1 << 3)
+#define SL_TEX0			(1 << 6)
+#define SL_OFFSET(va)		(((va) & 0xFF000) >> 12)
+#define SL_NG			(1 << 11)
 
 /* Memory type and cache policy attributes */
-#define MT_SO     0
-#define MT_DEV      1
-#define MT_NORMAL   2
-#define CP_NONCACHED    0
-#define CP_WB_WA    1
-#define CP_WT     2
-#define CP_WB_NWA   3
+#define MT_SO			0
+#define MT_DEV			1
+#define MT_NORMAL		2
+#define CP_NONCACHED		0
+#define CP_WB_WA		1
+#define CP_WT			2
+#define CP_WB_NWA		3
 
 /* Global register setters / getters */
-#define SET_M2VCBR_N(b, N, v)  SET_GLOBAL_REG_N(M2VCBR_N, N, (b), (v))
-#define SET_CBACR_N(b, N, v)   SET_GLOBAL_REG_N(CBACR_N, N, (b), (v))
-#define SET_TLBRSW(b, v)   SET_GLOBAL_REG(TLBRSW, (b), (v))
-#define SET_TLBTR0(b, v)   SET_GLOBAL_REG(TLBTR0, (b), (v))
-#define SET_TLBTR1(b, v)   SET_GLOBAL_REG(TLBTR1, (b), (v))
-#define SET_TLBTR2(b, v)   SET_GLOBAL_REG(TLBTR2, (b), (v))
-#define SET_TESTBUSCR(b, v)  SET_GLOBAL_REG(TESTBUSCR, (b), (v))
+#define SET_M2VCBR_N(b, N, v)	 SET_GLOBAL_REG_N(M2VCBR_N, N, (b), (v))
+#define SET_CBACR_N(b, N, v)	 SET_GLOBAL_REG_N(CBACR_N, N, (b), (v))
+#define SET_TLBRSW(b, v)	 SET_GLOBAL_REG(TLBRSW, (b), (v))
+#define SET_TLBTR0(b, v)	 SET_GLOBAL_REG(TLBTR0, (b), (v))
+#define SET_TLBTR1(b, v)	 SET_GLOBAL_REG(TLBTR1, (b), (v))
+#define SET_TLBTR2(b, v)	 SET_GLOBAL_REG(TLBTR2, (b), (v))
+#define SET_TESTBUSCR(b, v)	 SET_GLOBAL_REG(TESTBUSCR, (b), (v))
 #define SET_GLOBAL_TLBIALL(b, v) SET_GLOBAL_REG(GLOBAL_TLBIALL, (b), (v))
-#define SET_TLBIVMID(b, v)   SET_GLOBAL_REG(TLBIVMID, (b), (v))
-#define SET_CR(b, v)     SET_GLOBAL_REG(CR, (b), (v))
-#define SET_EAR(b, v)    SET_GLOBAL_REG(EAR, (b), (v))
-#define SET_ESR(b, v)    SET_GLOBAL_REG(ESR, (b), (v))
-#define SET_ESRRESTORE(b, v)   SET_GLOBAL_REG(ESRRESTORE, (b), (v))
-#define SET_ESYNR0(b, v)   SET_GLOBAL_REG(ESYNR0, (b), (v))
-#define SET_ESYNR1(b, v)   SET_GLOBAL_REG(ESYNR1, (b), (v))
-#define SET_RPU_ACR(b, v)  SET_GLOBAL_REG(RPU_ACR, (b), (v))
+#define SET_TLBIVMID(b, v)	 SET_GLOBAL_REG(TLBIVMID, (b), (v))
+#define SET_CR(b, v)		 SET_GLOBAL_REG(CR, (b), (v))
+#define SET_EAR(b, v)		 SET_GLOBAL_REG(EAR, (b), (v))
+#define SET_ESR(b, v)		 SET_GLOBAL_REG(ESR, (b), (v))
+#define SET_ESRRESTORE(b, v)	 SET_GLOBAL_REG(ESRRESTORE, (b), (v))
+#define SET_ESYNR0(b, v)	 SET_GLOBAL_REG(ESYNR0, (b), (v))
+#define SET_ESYNR1(b, v)	 SET_GLOBAL_REG(ESYNR1, (b), (v))
+#define SET_RPU_ACR(b, v)	 SET_GLOBAL_REG(RPU_ACR, (b), (v))
 
-#define GET_M2VCBR_N(b, N)   GET_GLOBAL_REG_N(M2VCBR_N, N, (b))
-#define GET_CBACR_N(b, N)  GET_GLOBAL_REG_N(CBACR_N, N, (b))
-#define GET_TLBTR0(b)    GET_GLOBAL_REG(TLBTR0, (b))
-#define GET_TLBTR1(b)    GET_GLOBAL_REG(TLBTR1, (b))
-#define GET_TLBTR2(b)    GET_GLOBAL_REG(TLBTR2, (b))
-#define GET_TESTBUSCR(b)   GET_GLOBAL_REG(TESTBUSCR, (b))
-#define GET_GLOBAL_TLBIALL(b)  GET_GLOBAL_REG(GLOBAL_TLBIALL, (b))
-#define GET_TLBIVMID(b)    GET_GLOBAL_REG(TLBIVMID, (b))
-#define GET_CR(b)    GET_GLOBAL_REG(CR, (b))
-#define GET_EAR(b)     GET_GLOBAL_REG(EAR, (b))
-#define GET_ESR(b)     GET_GLOBAL_REG(ESR, (b))
-#define GET_ESRRESTORE(b)  GET_GLOBAL_REG(ESRRESTORE, (b))
-#define GET_ESYNR0(b)    GET_GLOBAL_REG(ESYNR0, (b))
-#define GET_ESYNR1(b)    GET_GLOBAL_REG(ESYNR1, (b))
-#define GET_REV(b)     GET_GLOBAL_REG(REV, (b))
-#define GET_IDR(b)     GET_GLOBAL_REG(IDR, (b))
-#define GET_RPU_ACR(b)     GET_GLOBAL_REG(RPU_ACR, (b))
+#define GET_M2VCBR_N(b, N)	 GET_GLOBAL_REG_N(M2VCBR_N, N, (b))
+#define GET_CBACR_N(b, N)	 GET_GLOBAL_REG_N(CBACR_N, N, (b))
+#define GET_TLBTR0(b)		 GET_GLOBAL_REG(TLBTR0, (b))
+#define GET_TLBTR1(b)		 GET_GLOBAL_REG(TLBTR1, (b))
+#define GET_TLBTR2(b)		 GET_GLOBAL_REG(TLBTR2, (b))
+#define GET_TESTBUSCR(b)	 GET_GLOBAL_REG(TESTBUSCR, (b))
+#define GET_GLOBAL_TLBIALL(b)	 GET_GLOBAL_REG(GLOBAL_TLBIALL, (b))
+#define GET_TLBIVMID(b)		 GET_GLOBAL_REG(TLBIVMID, (b))
+#define GET_CR(b)		 GET_GLOBAL_REG(CR, (b))
+#define GET_EAR(b)		 GET_GLOBAL_REG(EAR, (b))
+#define GET_ESR(b)		 GET_GLOBAL_REG(ESR, (b))
+#define GET_ESRRESTORE(b)	 GET_GLOBAL_REG(ESRRESTORE, (b))
+#define GET_ESYNR0(b)		 GET_GLOBAL_REG(ESYNR0, (b))
+#define GET_ESYNR1(b)		 GET_GLOBAL_REG(ESYNR1, (b))
+#define GET_REV(b)		 GET_GLOBAL_REG(REV, (b))
+#define GET_IDR(b)		 GET_GLOBAL_REG(IDR, (b))
+#define GET_RPU_ACR(b)		 GET_GLOBAL_REG(RPU_ACR, (b))
 
 
 /* Context register setters/getters */
-#define SET_SCTLR(b, c, v)   SET_CTX_REG(SCTLR, (b), (c), (v))
-#define SET_ACTLR(b, c, v)   SET_CTX_REG(ACTLR, (b), (c), (v))
-#define SET_CONTEXTIDR(b, c, v)  SET_CTX_REG(CONTEXTIDR, (b), (c), (v))
-#define SET_TTBR0(b, c, v)   SET_CTX_REG(TTBR0, (b), (c), (v))
-#define SET_TTBR1(b, c, v)   SET_CTX_REG(TTBR1, (b), (c), (v))
-#define SET_TTBCR(b, c, v)   SET_CTX_REG(TTBCR, (b), (c), (v))
-#define SET_PAR(b, c, v)   SET_CTX_REG(PAR, (b), (c), (v))
-#define SET_FSR(b, c, v)   SET_CTX_REG(FSR, (b), (c), (v))
-#define SET_FSRRESTORE(b, c, v)  SET_CTX_REG(FSRRESTORE, (b), (c), (v))
-#define SET_FAR(b, c, v)   SET_CTX_REG(FAR, (b), (c), (v))
-#define SET_FSYNR0(b, c, v)  SET_CTX_REG(FSYNR0, (b), (c), (v))
-#define SET_FSYNR1(b, c, v)  SET_CTX_REG(FSYNR1, (b), (c), (v))
-#define SET_PRRR(b, c, v)  SET_CTX_REG(PRRR, (b), (c), (v))
-#define SET_NMRR(b, c, v)  SET_CTX_REG(NMRR, (b), (c), (v))
-#define SET_TLBLKCR(b, c, v)   SET_CTX_REG(TLBLCKR, (b), (c), (v))
-#define SET_V2PSR(b, c, v)   SET_CTX_REG(V2PSR, (b), (c), (v))
-#define SET_TLBFLPTER(b, c, v)   SET_CTX_REG(TLBFLPTER, (b), (c), (v))
-#define SET_TLBSLPTER(b, c, v)   SET_CTX_REG(TLBSLPTER, (b), (c), (v))
-#define SET_BFBCR(b, c, v)   SET_CTX_REG(BFBCR, (b), (c), (v))
+#define SET_SCTLR(b, c, v)	 SET_CTX_REG(SCTLR, (b), (c), (v))
+#define SET_ACTLR(b, c, v)	 SET_CTX_REG(ACTLR, (b), (c), (v))
+#define SET_CONTEXTIDR(b, c, v)	 SET_CTX_REG(CONTEXTIDR, (b), (c), (v))
+#define SET_TTBR0(b, c, v)	 SET_CTX_REG(TTBR0, (b), (c), (v))
+#define SET_TTBR1(b, c, v)	 SET_CTX_REG(TTBR1, (b), (c), (v))
+#define SET_TTBCR(b, c, v)	 SET_CTX_REG(TTBCR, (b), (c), (v))
+#define SET_PAR(b, c, v)	 SET_CTX_REG(PAR, (b), (c), (v))
+#define SET_FSR(b, c, v)	 SET_CTX_REG(FSR, (b), (c), (v))
+#define SET_FSRRESTORE(b, c, v)	 SET_CTX_REG(FSRRESTORE, (b), (c), (v))
+#define SET_FAR(b, c, v)	 SET_CTX_REG(FAR, (b), (c), (v))
+#define SET_FSYNR0(b, c, v)	 SET_CTX_REG(FSYNR0, (b), (c), (v))
+#define SET_FSYNR1(b, c, v)	 SET_CTX_REG(FSYNR1, (b), (c), (v))
+#define SET_PRRR(b, c, v)	 SET_CTX_REG(PRRR, (b), (c), (v))
+#define SET_NMRR(b, c, v)	 SET_CTX_REG(NMRR, (b), (c), (v))
+#define SET_TLBLKCR(b, c, v)	 SET_CTX_REG(TLBLCKR, (b), (c), (v))
+#define SET_V2PSR(b, c, v)	 SET_CTX_REG(V2PSR, (b), (c), (v))
+#define SET_TLBFLPTER(b, c, v)	 SET_CTX_REG(TLBFLPTER, (b), (c), (v))
+#define SET_TLBSLPTER(b, c, v)	 SET_CTX_REG(TLBSLPTER, (b), (c), (v))
+#define SET_BFBCR(b, c, v)	 SET_CTX_REG(BFBCR, (b), (c), (v))
 #define SET_CTX_TLBIALL(b, c, v) SET_CTX_REG(CTX_TLBIALL, (b), (c), (v))
-#define SET_TLBIASID(b, c, v)  SET_CTX_REG(TLBIASID, (b), (c), (v))
-#define SET_TLBIVA(b, c, v)  SET_CTX_REG(TLBIVA, (b), (c), (v))
-#define SET_TLBIVAA(b, c, v)   SET_CTX_REG(TLBIVAA, (b), (c), (v))
-#define SET_V2PPR(b, c, v)   SET_CTX_REG(V2PPR, (b), (c), (v))
-#define SET_V2PPW(b, c, v)   SET_CTX_REG(V2PPW, (b), (c), (v))
-#define SET_V2PUR(b, c, v)   SET_CTX_REG(V2PUR, (b), (c), (v))
-#define SET_V2PUW(b, c, v)   SET_CTX_REG(V2PUW, (b), (c), (v))
-#define SET_RESUME(b, c, v)  SET_CTX_REG(RESUME, (b), (c), (v))
+#define SET_TLBIASID(b, c, v)	 SET_CTX_REG(TLBIASID, (b), (c), (v))
+#define SET_TLBIVA(b, c, v)	 SET_CTX_REG(TLBIVA, (b), (c), (v))
+#define SET_TLBIVAA(b, c, v)	 SET_CTX_REG(TLBIVAA, (b), (c), (v))
+#define SET_V2PPR(b, c, v)	 SET_CTX_REG(V2PPR, (b), (c), (v))
+#define SET_V2PPW(b, c, v)	 SET_CTX_REG(V2PPW, (b), (c), (v))
+#define SET_V2PUR(b, c, v)	 SET_CTX_REG(V2PUR, (b), (c), (v))
+#define SET_V2PUW(b, c, v)	 SET_CTX_REG(V2PUW, (b), (c), (v))
+#define SET_RESUME(b, c, v)	 SET_CTX_REG(RESUME, (b), (c), (v))
 
-#define GET_SCTLR(b, c)    GET_CTX_REG(SCTLR, (b), (c))
-#define GET_ACTLR(b, c)    GET_CTX_REG(ACTLR, (b), (c))
-#define GET_CONTEXTIDR(b, c)   GET_CTX_REG(CONTEXTIDR, (b), (c))
-#define GET_TTBR0(b, c)    GET_CTX_REG(TTBR0, (b), (c))
-#define GET_TTBR1(b, c)    GET_CTX_REG(TTBR1, (b), (c))
-#define GET_TTBCR(b, c)    GET_CTX_REG(TTBCR, (b), (c))
-#define GET_PAR(b, c)    GET_CTX_REG(PAR, (b), (c))
-#define GET_FSR(b, c)    GET_CTX_REG(FSR, (b), (c))
-#define GET_FSRRESTORE(b, c)   GET_CTX_REG(FSRRESTORE, (b), (c))
-#define GET_FAR(b, c)    GET_CTX_REG(FAR, (b), (c))
-#define GET_FSYNR0(b, c)   GET_CTX_REG(FSYNR0, (b), (c))
-#define GET_FSYNR1(b, c)   GET_CTX_REG(FSYNR1, (b), (c))
-#define GET_PRRR(b, c)     GET_CTX_REG(PRRR, (b), (c))
-#define GET_NMRR(b, c)     GET_CTX_REG(NMRR, (b), (c))
-#define GET_TLBLCKR(b, c)  GET_CTX_REG(TLBLCKR, (b), (c))
-#define GET_V2PSR(b, c)    GET_CTX_REG(V2PSR, (b), (c))
-#define GET_TLBFLPTER(b, c)  GET_CTX_REG(TLBFLPTER, (b), (c))
-#define GET_TLBSLPTER(b, c)  GET_CTX_REG(TLBSLPTER, (b), (c))
-#define GET_BFBCR(b, c)    GET_CTX_REG(BFBCR, (b), (c))
-#define GET_CTX_TLBIALL(b, c)  GET_CTX_REG(CTX_TLBIALL, (b), (c))
-#define GET_TLBIASID(b, c)   GET_CTX_REG(TLBIASID, (b), (c))
-#define GET_TLBIVA(b, c)   GET_CTX_REG(TLBIVA, (b), (c))
-#define GET_TLBIVAA(b, c)  GET_CTX_REG(TLBIVAA, (b), (c))
-#define GET_V2PPR(b, c)    GET_CTX_REG(V2PPR, (b), (c))
-#define GET_V2PPW(b, c)    GET_CTX_REG(V2PPW, (b), (c))
-#define GET_V2PUR(b, c)    GET_CTX_REG(V2PUR, (b), (c))
-#define GET_V2PUW(b, c)    GET_CTX_REG(V2PUW, (b), (c))
-#define GET_RESUME(b, c)   GET_CTX_REG(RESUME, (b), (c))
+#define GET_SCTLR(b, c)		 GET_CTX_REG(SCTLR, (b), (c))
+#define GET_ACTLR(b, c)		 GET_CTX_REG(ACTLR, (b), (c))
+#define GET_CONTEXTIDR(b, c)	 GET_CTX_REG(CONTEXTIDR, (b), (c))
+#define GET_TTBR0(b, c)		 GET_CTX_REG(TTBR0, (b), (c))
+#define GET_TTBR1(b, c)		 GET_CTX_REG(TTBR1, (b), (c))
+#define GET_TTBCR(b, c)		 GET_CTX_REG(TTBCR, (b), (c))
+#define GET_PAR(b, c)		 GET_CTX_REG(PAR, (b), (c))
+#define GET_FSR(b, c)		 GET_CTX_REG(FSR, (b), (c))
+#define GET_FSRRESTORE(b, c)	 GET_CTX_REG(FSRRESTORE, (b), (c))
+#define GET_FAR(b, c)		 GET_CTX_REG(FAR, (b), (c))
+#define GET_FSYNR0(b, c)	 GET_CTX_REG(FSYNR0, (b), (c))
+#define GET_FSYNR1(b, c)	 GET_CTX_REG(FSYNR1, (b), (c))
+#define GET_PRRR(b, c)		 GET_CTX_REG(PRRR, (b), (c))
+#define GET_NMRR(b, c)		 GET_CTX_REG(NMRR, (b), (c))
+#define GET_TLBLCKR(b, c)	 GET_CTX_REG(TLBLCKR, (b), (c))
+#define GET_V2PSR(b, c)		 GET_CTX_REG(V2PSR, (b), (c))
+#define GET_TLBFLPTER(b, c)	 GET_CTX_REG(TLBFLPTER, (b), (c))
+#define GET_TLBSLPTER(b, c)	 GET_CTX_REG(TLBSLPTER, (b), (c))
+#define GET_BFBCR(b, c)		 GET_CTX_REG(BFBCR, (b), (c))
+#define GET_CTX_TLBIALL(b, c)	 GET_CTX_REG(CTX_TLBIALL, (b), (c))
+#define GET_TLBIASID(b, c)	 GET_CTX_REG(TLBIASID, (b), (c))
+#define GET_TLBIVA(b, c)	 GET_CTX_REG(TLBIVA, (b), (c))
+#define GET_TLBIVAA(b, c)	 GET_CTX_REG(TLBIVAA, (b), (c))
+#define GET_V2PPR(b, c)		 GET_CTX_REG(V2PPR, (b), (c))
+#define GET_V2PPW(b, c)		 GET_CTX_REG(V2PPW, (b), (c))
+#define GET_V2PUR(b, c)		 GET_CTX_REG(V2PUR, (b), (c))
+#define GET_V2PUW(b, c)		 GET_CTX_REG(V2PUW, (b), (c))
+#define GET_RESUME(b, c)	 GET_CTX_REG(RESUME, (b), (c))
 
 
 /* Global field setters / getters */
@@ -211,16 +211,16 @@
 #define SET_NSCFG(b, n, v)    SET_GLOBAL_FIELD(b, (n<<2)|(M2VCBR_N), NSCFG, v)
 #define SET_BPMTCFG(b, n, v)  SET_GLOBAL_FIELD(b, (n<<2)|(M2VCBR_N), BPMTCFG, v)
 #define SET_BPMEMTYPE(b, n, v) \
-  SET_GLOBAL_FIELD(b, (n<<2)|(M2VCBR_N), BPMEMTYPE, v)
+	SET_GLOBAL_FIELD(b, (n<<2)|(M2VCBR_N), BPMEMTYPE, v)
 
 
 /* CR */
-#define SET_RPUE(b, v)     SET_GLOBAL_FIELD(b, CR, RPUE, v)
-#define SET_RPUERE(b, v)   SET_GLOBAL_FIELD(b, CR, RPUERE, v)
-#define SET_RPUEIE(b, v)   SET_GLOBAL_FIELD(b, CR, RPUEIE, v)
-#define SET_DCDEE(b, v)    SET_GLOBAL_FIELD(b, CR, DCDEE, v)
+#define SET_RPUE(b, v)		 SET_GLOBAL_FIELD(b, CR, RPUE, v)
+#define SET_RPUERE(b, v)	 SET_GLOBAL_FIELD(b, CR, RPUERE, v)
+#define SET_RPUEIE(b, v)	 SET_GLOBAL_FIELD(b, CR, RPUEIE, v)
+#define SET_DCDEE(b, v)		 SET_GLOBAL_FIELD(b, CR, DCDEE, v)
 #define SET_CLIENTPD(b, v)       SET_GLOBAL_FIELD(b, CR, CLIENTPD, v)
-#define SET_STALLD(b, v)   SET_GLOBAL_FIELD(b, CR, STALLD, v)
+#define SET_STALLD(b, v)	 SET_GLOBAL_FIELD(b, CR, STALLD, v)
 #define SET_TLBLKCRWE(b, v)      SET_GLOBAL_FIELD(b, CR, TLBLKCRWE, v)
 #define SET_CR_TLBIALLCFG(b, v)  SET_GLOBAL_FIELD(b, CR, CR_TLBIALLCFG, v)
 #define SET_TLBIVMIDCFG(b, v)    SET_GLOBAL_FIELD(b, CR, TLBIVMIDCFG, v)
@@ -228,8 +228,8 @@
 
 
 /* ESR */
-#define SET_CFG(b, v)    SET_GLOBAL_FIELD(b, ESR, CFG, v)
-#define SET_BYPASS(b, v)   SET_GLOBAL_FIELD(b, ESR, BYPASS, v)
+#define SET_CFG(b, v)		 SET_GLOBAL_FIELD(b, ESR, CFG, v)
+#define SET_BYPASS(b, v)	 SET_GLOBAL_FIELD(b, ESR, BYPASS, v)
 #define SET_ESR_MULTI(b, v)      SET_GLOBAL_FIELD(b, ESR, ESR_MULTI, v)
 
 
@@ -243,10 +243,10 @@
 
 /* ESYNR1 */
 #define SET_ESYNR1_AMEMTYPE(b, v) \
-  SET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AMEMTYPE, v)
+			SET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AMEMTYPE, v)
 #define SET_ESYNR1_ASHARED(b, v)  SET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_ASHARED, v)
 #define SET_ESYNR1_AINNERSHARED(b, v) \
-  SET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AINNERSHARED, v)
+			SET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AINNERSHARED, v)
 #define SET_ESYNR1_APRIV(b, v)   SET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_APRIV, v)
 #define SET_ESYNR1_APROTNS(b, v) SET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_APROTNS, v)
 #define SET_ESYNR1_AINST(b, v)   SET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AINST, v)
@@ -262,11 +262,11 @@
 
 
 /* TESTBUSCR */
-#define SET_TBE(b, v)    SET_GLOBAL_FIELD(b, TESTBUSCR, TBE, v)
-#define SET_SPDMBE(b, v)   SET_GLOBAL_FIELD(b, TESTBUSCR, SPDMBE, v)
-#define SET_WGSEL(b, v)    SET_GLOBAL_FIELD(b, TESTBUSCR, WGSEL, v)
-#define SET_TBLSEL(b, v)   SET_GLOBAL_FIELD(b, TESTBUSCR, TBLSEL, v)
-#define SET_TBHSEL(b, v)   SET_GLOBAL_FIELD(b, TESTBUSCR, TBHSEL, v)
+#define SET_TBE(b, v)		 SET_GLOBAL_FIELD(b, TESTBUSCR, TBE, v)
+#define SET_SPDMBE(b, v)	 SET_GLOBAL_FIELD(b, TESTBUSCR, SPDMBE, v)
+#define SET_WGSEL(b, v)		 SET_GLOBAL_FIELD(b, TESTBUSCR, WGSEL, v)
+#define SET_TBLSEL(b, v)	 SET_GLOBAL_FIELD(b, TESTBUSCR, TBLSEL, v)
+#define SET_TBHSEL(b, v)	 SET_GLOBAL_FIELD(b, TESTBUSCR, TBHSEL, v)
 #define SET_SPDM0SEL(b, v)       SET_GLOBAL_FIELD(b, TESTBUSCR, SPDM0SEL, v)
 #define SET_SPDM1SEL(b, v)       SET_GLOBAL_FIELD(b, TESTBUSCR, SPDM1SEL, v)
 #define SET_SPDM2SEL(b, v)       SET_GLOBAL_FIELD(b, TESTBUSCR, SPDM2SEL, v)
@@ -279,21 +279,21 @@
 
 /* TLBRSW */
 #define SET_TLBRSW_INDEX(b, v)   SET_GLOBAL_FIELD(b, TLBRSW, TLBRSW_INDEX, v)
-#define SET_TLBBFBS(b, v)  SET_GLOBAL_FIELD(b, TLBRSW, TLBBFBS, v)
+#define SET_TLBBFBS(b, v)	 SET_GLOBAL_FIELD(b, TLBRSW, TLBBFBS, v)
 
 
 /* TLBTR0 */
-#define SET_PR(b, v)     SET_GLOBAL_FIELD(b, TLBTR0, PR, v)
-#define SET_PW(b, v)     SET_GLOBAL_FIELD(b, TLBTR0, PW, v)
-#define SET_UR(b, v)     SET_GLOBAL_FIELD(b, TLBTR0, UR, v)
-#define SET_UW(b, v)     SET_GLOBAL_FIELD(b, TLBTR0, UW, v)
-#define SET_XN(b, v)     SET_GLOBAL_FIELD(b, TLBTR0, XN, v)
-#define SET_NSDESC(b, v)   SET_GLOBAL_FIELD(b, TLBTR0, NSDESC, v)
-#define SET_ISH(b, v)    SET_GLOBAL_FIELD(b, TLBTR0, ISH, v)
-#define SET_SH(b, v)     SET_GLOBAL_FIELD(b, TLBTR0, SH, v)
-#define SET_MT(b, v)     SET_GLOBAL_FIELD(b, TLBTR0, MT, v)
-#define SET_DPSIZR(b, v)   SET_GLOBAL_FIELD(b, TLBTR0, DPSIZR, v)
-#define SET_DPSIZC(b, v)   SET_GLOBAL_FIELD(b, TLBTR0, DPSIZC, v)
+#define SET_PR(b, v)		 SET_GLOBAL_FIELD(b, TLBTR0, PR, v)
+#define SET_PW(b, v)		 SET_GLOBAL_FIELD(b, TLBTR0, PW, v)
+#define SET_UR(b, v)		 SET_GLOBAL_FIELD(b, TLBTR0, UR, v)
+#define SET_UW(b, v)		 SET_GLOBAL_FIELD(b, TLBTR0, UW, v)
+#define SET_XN(b, v)		 SET_GLOBAL_FIELD(b, TLBTR0, XN, v)
+#define SET_NSDESC(b, v)	 SET_GLOBAL_FIELD(b, TLBTR0, NSDESC, v)
+#define SET_ISH(b, v)		 SET_GLOBAL_FIELD(b, TLBTR0, ISH, v)
+#define SET_SH(b, v)		 SET_GLOBAL_FIELD(b, TLBTR0, SH, v)
+#define SET_MT(b, v)		 SET_GLOBAL_FIELD(b, TLBTR0, MT, v)
+#define SET_DPSIZR(b, v)	 SET_GLOBAL_FIELD(b, TLBTR0, DPSIZR, v)
+#define SET_DPSIZC(b, v)	 SET_GLOBAL_FIELD(b, TLBTR0, DPSIZC, v)
 
 
 /* TLBTR1 */
@@ -311,11 +311,11 @@
 
 /* Global Field Getters */
 /* CBACR_N */
-#define GET_RWVMID(b, n)   GET_GLOBAL_FIELD(b, (n<<2)|(CBACR_N), RWVMID)
-#define GET_RWE(b, n)    GET_GLOBAL_FIELD(b, (n<<2)|(CBACR_N), RWE)
-#define GET_RWGE(b, n)     GET_GLOBAL_FIELD(b, (n<<2)|(CBACR_N), RWGE)
-#define GET_CBVMID(b, n)   GET_GLOBAL_FIELD(b, (n<<2)|(CBACR_N), CBVMID)
-#define GET_IRPTNDX(b, n)  GET_GLOBAL_FIELD(b, (n<<2)|(CBACR_N), IRPTNDX)
+#define GET_RWVMID(b, n)	 GET_GLOBAL_FIELD(b, (n<<2)|(CBACR_N), RWVMID)
+#define GET_RWE(b, n)		 GET_GLOBAL_FIELD(b, (n<<2)|(CBACR_N), RWE)
+#define GET_RWGE(b, n)		 GET_GLOBAL_FIELD(b, (n<<2)|(CBACR_N), RWGE)
+#define GET_CBVMID(b, n)	 GET_GLOBAL_FIELD(b, (n<<2)|(CBACR_N), CBVMID)
+#define GET_IRPTNDX(b, n)	 GET_GLOBAL_FIELD(b, (n<<2)|(CBACR_N), IRPTNDX)
 
 
 /* M2VCBR_N */
@@ -332,536 +332,536 @@
 
 
 /* CR */
-#define GET_RPUE(b)    GET_GLOBAL_FIELD(b, CR, RPUE)
-#define GET_RPUERE(b)    GET_GLOBAL_FIELD(b, CR, RPUERE)
-#define GET_RPUEIE(b)    GET_GLOBAL_FIELD(b, CR, RPUEIE)
-#define GET_DCDEE(b)     GET_GLOBAL_FIELD(b, CR, DCDEE)
-#define GET_CLIENTPD(b)    GET_GLOBAL_FIELD(b, CR, CLIENTPD)
-#define GET_STALLD(b)    GET_GLOBAL_FIELD(b, CR, STALLD)
-#define GET_TLBLKCRWE(b)   GET_GLOBAL_FIELD(b, CR, TLBLKCRWE)
-#define GET_CR_TLBIALLCFG(b)   GET_GLOBAL_FIELD(b, CR, CR_TLBIALLCFG)
-#define GET_TLBIVMIDCFG(b)   GET_GLOBAL_FIELD(b, CR, TLBIVMIDCFG)
-#define GET_CR_HUME(b)     GET_GLOBAL_FIELD(b, CR, CR_HUME)
+#define GET_RPUE(b)		 GET_GLOBAL_FIELD(b, CR, RPUE)
+#define GET_RPUERE(b)		 GET_GLOBAL_FIELD(b, CR, RPUERE)
+#define GET_RPUEIE(b)		 GET_GLOBAL_FIELD(b, CR, RPUEIE)
+#define GET_DCDEE(b)		 GET_GLOBAL_FIELD(b, CR, DCDEE)
+#define GET_CLIENTPD(b)		 GET_GLOBAL_FIELD(b, CR, CLIENTPD)
+#define GET_STALLD(b)		 GET_GLOBAL_FIELD(b, CR, STALLD)
+#define GET_TLBLKCRWE(b)	 GET_GLOBAL_FIELD(b, CR, TLBLKCRWE)
+#define GET_CR_TLBIALLCFG(b)	 GET_GLOBAL_FIELD(b, CR, CR_TLBIALLCFG)
+#define GET_TLBIVMIDCFG(b)	 GET_GLOBAL_FIELD(b, CR, TLBIVMIDCFG)
+#define GET_CR_HUME(b)		 GET_GLOBAL_FIELD(b, CR, CR_HUME)
 
 
 /* ESR */
-#define GET_CFG(b)     GET_GLOBAL_FIELD(b, ESR, CFG)
-#define GET_BYPASS(b)    GET_GLOBAL_FIELD(b, ESR, BYPASS)
-#define GET_ESR_MULTI(b)   GET_GLOBAL_FIELD(b, ESR, ESR_MULTI)
+#define GET_CFG(b)		 GET_GLOBAL_FIELD(b, ESR, CFG)
+#define GET_BYPASS(b)		 GET_GLOBAL_FIELD(b, ESR, BYPASS)
+#define GET_ESR_MULTI(b)	 GET_GLOBAL_FIELD(b, ESR, ESR_MULTI)
 
 
 /* ESYNR0 */
-#define GET_ESYNR0_AMID(b)   GET_GLOBAL_FIELD(b, ESYNR0, ESYNR0_AMID)
-#define GET_ESYNR0_APID(b)   GET_GLOBAL_FIELD(b, ESYNR0, ESYNR0_APID)
-#define GET_ESYNR0_ABID(b)   GET_GLOBAL_FIELD(b, ESYNR0, ESYNR0_ABID)
-#define GET_ESYNR0_AVMID(b)  GET_GLOBAL_FIELD(b, ESYNR0, ESYNR0_AVMID)
-#define GET_ESYNR0_ATID(b)   GET_GLOBAL_FIELD(b, ESYNR0, ESYNR0_ATID)
+#define GET_ESYNR0_AMID(b)	 GET_GLOBAL_FIELD(b, ESYNR0, ESYNR0_AMID)
+#define GET_ESYNR0_APID(b)	 GET_GLOBAL_FIELD(b, ESYNR0, ESYNR0_APID)
+#define GET_ESYNR0_ABID(b)	 GET_GLOBAL_FIELD(b, ESYNR0, ESYNR0_ABID)
+#define GET_ESYNR0_AVMID(b)	 GET_GLOBAL_FIELD(b, ESYNR0, ESYNR0_AVMID)
+#define GET_ESYNR0_ATID(b)	 GET_GLOBAL_FIELD(b, ESYNR0, ESYNR0_ATID)
 
 
 /* ESYNR1 */
 #define GET_ESYNR1_AMEMTYPE(b)   GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AMEMTYPE)
 #define GET_ESYNR1_ASHARED(b)    GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_ASHARED)
 #define GET_ESYNR1_AINNERSHARED(b) \
-  GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AINNERSHARED)
+			GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AINNERSHARED)
 #define GET_ESYNR1_APRIV(b)      GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_APRIV)
-#define GET_ESYNR1_APROTNS(b)  GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_APROTNS)
-#define GET_ESYNR1_AINST(b)  GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AINST)
-#define GET_ESYNR1_AWRITE(b)   GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AWRITE)
-#define GET_ESYNR1_ABURST(b)   GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_ABURST)
-#define GET_ESYNR1_ALEN(b)   GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_ALEN)
-#define GET_ESYNR1_ASIZE(b)  GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_ASIZE)
-#define GET_ESYNR1_ALOCK(b)  GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_ALOCK)
-#define GET_ESYNR1_AOOO(b)   GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AOOO)
-#define GET_ESYNR1_AFULL(b)  GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AFULL)
-#define GET_ESYNR1_AC(b)   GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AC)
-#define GET_ESYNR1_DCD(b)  GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_DCD)
+#define GET_ESYNR1_APROTNS(b)	 GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_APROTNS)
+#define GET_ESYNR1_AINST(b)	 GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AINST)
+#define GET_ESYNR1_AWRITE(b)	 GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AWRITE)
+#define GET_ESYNR1_ABURST(b)	 GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_ABURST)
+#define GET_ESYNR1_ALEN(b)	 GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_ALEN)
+#define GET_ESYNR1_ASIZE(b)	 GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_ASIZE)
+#define GET_ESYNR1_ALOCK(b)	 GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_ALOCK)
+#define GET_ESYNR1_AOOO(b)	 GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AOOO)
+#define GET_ESYNR1_AFULL(b)	 GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AFULL)
+#define GET_ESYNR1_AC(b)	 GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_AC)
+#define GET_ESYNR1_DCD(b)	 GET_GLOBAL_FIELD(b, ESYNR1, ESYNR1_DCD)
 
 
 /* IDR */
-#define GET_NM2VCBMT(b)    GET_GLOBAL_FIELD(b, IDR, NM2VCBMT)
-#define GET_HTW(b)     GET_GLOBAL_FIELD(b, IDR, HTW)
-#define GET_HUM(b)     GET_GLOBAL_FIELD(b, IDR, HUM)
-#define GET_TLBSIZE(b)     GET_GLOBAL_FIELD(b, IDR, TLBSIZE)
-#define GET_NCB(b)     GET_GLOBAL_FIELD(b, IDR, NCB)
-#define GET_NIRPT(b)     GET_GLOBAL_FIELD(b, IDR, NIRPT)
+#define GET_NM2VCBMT(b)		 GET_GLOBAL_FIELD(b, IDR, NM2VCBMT)
+#define GET_HTW(b)		 GET_GLOBAL_FIELD(b, IDR, HTW)
+#define GET_HUM(b)		 GET_GLOBAL_FIELD(b, IDR, HUM)
+#define GET_TLBSIZE(b)		 GET_GLOBAL_FIELD(b, IDR, TLBSIZE)
+#define GET_NCB(b)		 GET_GLOBAL_FIELD(b, IDR, NCB)
+#define GET_NIRPT(b)		 GET_GLOBAL_FIELD(b, IDR, NIRPT)
 
 
 /* REV */
-#define GET_MAJOR(b)     GET_GLOBAL_FIELD(b, REV, MAJOR)
-#define GET_MINOR(b)     GET_GLOBAL_FIELD(b, REV, MINOR)
+#define GET_MAJOR(b)		 GET_GLOBAL_FIELD(b, REV, MAJOR)
+#define GET_MINOR(b)		 GET_GLOBAL_FIELD(b, REV, MINOR)
 
 
 /* TESTBUSCR */
-#define GET_TBE(b)     GET_GLOBAL_FIELD(b, TESTBUSCR, TBE)
-#define GET_SPDMBE(b)    GET_GLOBAL_FIELD(b, TESTBUSCR, SPDMBE)
-#define GET_WGSEL(b)     GET_GLOBAL_FIELD(b, TESTBUSCR, WGSEL)
-#define GET_TBLSEL(b)    GET_GLOBAL_FIELD(b, TESTBUSCR, TBLSEL)
-#define GET_TBHSEL(b)    GET_GLOBAL_FIELD(b, TESTBUSCR, TBHSEL)
-#define GET_SPDM0SEL(b)    GET_GLOBAL_FIELD(b, TESTBUSCR, SPDM0SEL)
-#define GET_SPDM1SEL(b)    GET_GLOBAL_FIELD(b, TESTBUSCR, SPDM1SEL)
-#define GET_SPDM2SEL(b)    GET_GLOBAL_FIELD(b, TESTBUSCR, SPDM2SEL)
-#define GET_SPDM3SEL(b)    GET_GLOBAL_FIELD(b, TESTBUSCR, SPDM3SEL)
+#define GET_TBE(b)		 GET_GLOBAL_FIELD(b, TESTBUSCR, TBE)
+#define GET_SPDMBE(b)		 GET_GLOBAL_FIELD(b, TESTBUSCR, SPDMBE)
+#define GET_WGSEL(b)		 GET_GLOBAL_FIELD(b, TESTBUSCR, WGSEL)
+#define GET_TBLSEL(b)		 GET_GLOBAL_FIELD(b, TESTBUSCR, TBLSEL)
+#define GET_TBHSEL(b)		 GET_GLOBAL_FIELD(b, TESTBUSCR, TBHSEL)
+#define GET_SPDM0SEL(b)		 GET_GLOBAL_FIELD(b, TESTBUSCR, SPDM0SEL)
+#define GET_SPDM1SEL(b)		 GET_GLOBAL_FIELD(b, TESTBUSCR, SPDM1SEL)
+#define GET_SPDM2SEL(b)		 GET_GLOBAL_FIELD(b, TESTBUSCR, SPDM2SEL)
+#define GET_SPDM3SEL(b)		 GET_GLOBAL_FIELD(b, TESTBUSCR, SPDM3SEL)
 
 
 /* TLBIVMID */
-#define GET_TLBIVMID_VMID(b)   GET_GLOBAL_FIELD(b, TLBIVMID, TLBIVMID_VMID)
+#define GET_TLBIVMID_VMID(b)	 GET_GLOBAL_FIELD(b, TLBIVMID, TLBIVMID_VMID)
 
 
 /* TLBTR0 */
-#define GET_PR(b)    GET_GLOBAL_FIELD(b, TLBTR0, PR)
-#define GET_PW(b)    GET_GLOBAL_FIELD(b, TLBTR0, PW)
-#define GET_UR(b)    GET_GLOBAL_FIELD(b, TLBTR0, UR)
-#define GET_UW(b)    GET_GLOBAL_FIELD(b, TLBTR0, UW)
-#define GET_XN(b)    GET_GLOBAL_FIELD(b, TLBTR0, XN)
-#define GET_NSDESC(b)    GET_GLOBAL_FIELD(b, TLBTR0, NSDESC)
-#define GET_ISH(b)     GET_GLOBAL_FIELD(b, TLBTR0, ISH)
-#define GET_SH(b)    GET_GLOBAL_FIELD(b, TLBTR0, SH)
-#define GET_MT(b)    GET_GLOBAL_FIELD(b, TLBTR0, MT)
-#define GET_DPSIZR(b)    GET_GLOBAL_FIELD(b, TLBTR0, DPSIZR)
-#define GET_DPSIZC(b)    GET_GLOBAL_FIELD(b, TLBTR0, DPSIZC)
+#define GET_PR(b)		 GET_GLOBAL_FIELD(b, TLBTR0, PR)
+#define GET_PW(b)		 GET_GLOBAL_FIELD(b, TLBTR0, PW)
+#define GET_UR(b)		 GET_GLOBAL_FIELD(b, TLBTR0, UR)
+#define GET_UW(b)		 GET_GLOBAL_FIELD(b, TLBTR0, UW)
+#define GET_XN(b)		 GET_GLOBAL_FIELD(b, TLBTR0, XN)
+#define GET_NSDESC(b)		 GET_GLOBAL_FIELD(b, TLBTR0, NSDESC)
+#define GET_ISH(b)		 GET_GLOBAL_FIELD(b, TLBTR0, ISH)
+#define GET_SH(b)		 GET_GLOBAL_FIELD(b, TLBTR0, SH)
+#define GET_MT(b)		 GET_GLOBAL_FIELD(b, TLBTR0, MT)
+#define GET_DPSIZR(b)		 GET_GLOBAL_FIELD(b, TLBTR0, DPSIZR)
+#define GET_DPSIZC(b)		 GET_GLOBAL_FIELD(b, TLBTR0, DPSIZC)
 
 
 /* TLBTR1 */
-#define GET_TLBTR1_VMID(b)   GET_GLOBAL_FIELD(b, TLBTR1, TLBTR1_VMID)
-#define GET_TLBTR1_PA(b)   GET_GLOBAL_FIELD(b, TLBTR1, TLBTR1_PA)
+#define GET_TLBTR1_VMID(b)	 GET_GLOBAL_FIELD(b, TLBTR1, TLBTR1_VMID)
+#define GET_TLBTR1_PA(b)	 GET_GLOBAL_FIELD(b, TLBTR1, TLBTR1_PA)
 
 
 /* TLBTR2 */
-#define GET_TLBTR2_ASID(b)   GET_GLOBAL_FIELD(b, TLBTR2, TLBTR2_ASID)
-#define GET_TLBTR2_V(b)    GET_GLOBAL_FIELD(b, TLBTR2, TLBTR2_V)
-#define GET_TLBTR2_NSTID(b)  GET_GLOBAL_FIELD(b, TLBTR2, TLBTR2_NSTID)
-#define GET_TLBTR2_NV(b)   GET_GLOBAL_FIELD(b, TLBTR2, TLBTR2_NV)
-#define GET_TLBTR2_VA(b)   GET_GLOBAL_FIELD(b, TLBTR2, TLBTR2_VA)
+#define GET_TLBTR2_ASID(b)	 GET_GLOBAL_FIELD(b, TLBTR2, TLBTR2_ASID)
+#define GET_TLBTR2_V(b)		 GET_GLOBAL_FIELD(b, TLBTR2, TLBTR2_V)
+#define GET_TLBTR2_NSTID(b)	 GET_GLOBAL_FIELD(b, TLBTR2, TLBTR2_NSTID)
+#define GET_TLBTR2_NV(b)	 GET_GLOBAL_FIELD(b, TLBTR2, TLBTR2_NV)
+#define GET_TLBTR2_VA(b)	 GET_GLOBAL_FIELD(b, TLBTR2, TLBTR2_VA)
 
 
 /* Context Register setters / getters */
 /* Context Register setters */
 /* ACTLR */
-#define SET_CFERE(b, c, v)   SET_CONTEXT_FIELD(b, c, ACTLR, CFERE, v)
-#define SET_CFEIE(b, c, v)   SET_CONTEXT_FIELD(b, c, ACTLR, CFEIE, v)
-#define SET_PTSHCFG(b, c, v)   SET_CONTEXT_FIELD(b, c, ACTLR, PTSHCFG, v)
-#define SET_RCOSH(b, c, v)   SET_CONTEXT_FIELD(b, c, ACTLR, RCOSH, v)
-#define SET_RCISH(b, c, v)   SET_CONTEXT_FIELD(b, c, ACTLR, RCISH, v)
-#define SET_RCNSH(b, c, v)   SET_CONTEXT_FIELD(b, c, ACTLR, RCNSH, v)
-#define SET_PRIVCFG(b, c, v)   SET_CONTEXT_FIELD(b, c, ACTLR, PRIVCFG, v)
-#define SET_DNA(b, c, v)   SET_CONTEXT_FIELD(b, c, ACTLR, DNA, v)
-#define SET_DNLV2PA(b, c, v)   SET_CONTEXT_FIELD(b, c, ACTLR, DNLV2PA, v)
-#define SET_TLBMCFG(b, c, v)   SET_CONTEXT_FIELD(b, c, ACTLR, TLBMCFG, v)
-#define SET_CFCFG(b, c, v)   SET_CONTEXT_FIELD(b, c, ACTLR, CFCFG, v)
-#define SET_TIPCF(b, c, v)   SET_CONTEXT_FIELD(b, c, ACTLR, TIPCF, v)
-#define SET_V2PCFG(b, c, v)  SET_CONTEXT_FIELD(b, c, ACTLR, V2PCFG, v)
-#define SET_HUME(b, c, v)  SET_CONTEXT_FIELD(b, c, ACTLR, HUME, v)
-#define SET_PTMTCFG(b, c, v)   SET_CONTEXT_FIELD(b, c, ACTLR, PTMTCFG, v)
-#define SET_PTMEMTYPE(b, c, v)   SET_CONTEXT_FIELD(b, c, ACTLR, PTMEMTYPE, v)
+#define SET_CFERE(b, c, v)	 SET_CONTEXT_FIELD(b, c, ACTLR, CFERE, v)
+#define SET_CFEIE(b, c, v)	 SET_CONTEXT_FIELD(b, c, ACTLR, CFEIE, v)
+#define SET_PTSHCFG(b, c, v)	 SET_CONTEXT_FIELD(b, c, ACTLR, PTSHCFG, v)
+#define SET_RCOSH(b, c, v)	 SET_CONTEXT_FIELD(b, c, ACTLR, RCOSH, v)
+#define SET_RCISH(b, c, v)	 SET_CONTEXT_FIELD(b, c, ACTLR, RCISH, v)
+#define SET_RCNSH(b, c, v)	 SET_CONTEXT_FIELD(b, c, ACTLR, RCNSH, v)
+#define SET_PRIVCFG(b, c, v)	 SET_CONTEXT_FIELD(b, c, ACTLR, PRIVCFG, v)
+#define SET_DNA(b, c, v)	 SET_CONTEXT_FIELD(b, c, ACTLR, DNA, v)
+#define SET_DNLV2PA(b, c, v)	 SET_CONTEXT_FIELD(b, c, ACTLR, DNLV2PA, v)
+#define SET_TLBMCFG(b, c, v)	 SET_CONTEXT_FIELD(b, c, ACTLR, TLBMCFG, v)
+#define SET_CFCFG(b, c, v)	 SET_CONTEXT_FIELD(b, c, ACTLR, CFCFG, v)
+#define SET_TIPCF(b, c, v)	 SET_CONTEXT_FIELD(b, c, ACTLR, TIPCF, v)
+#define SET_V2PCFG(b, c, v)	 SET_CONTEXT_FIELD(b, c, ACTLR, V2PCFG, v)
+#define SET_HUME(b, c, v)	 SET_CONTEXT_FIELD(b, c, ACTLR, HUME, v)
+#define SET_PTMTCFG(b, c, v)	 SET_CONTEXT_FIELD(b, c, ACTLR, PTMTCFG, v)
+#define SET_PTMEMTYPE(b, c, v)	 SET_CONTEXT_FIELD(b, c, ACTLR, PTMEMTYPE, v)
 
 
 /* BFBCR */
-#define SET_BFBDFE(b, c, v)  SET_CONTEXT_FIELD(b, c, BFBCR, BFBDFE, v)
-#define SET_BFBSFE(b, c, v)  SET_CONTEXT_FIELD(b, c, BFBCR, BFBSFE, v)
-#define SET_SFVS(b, c, v)  SET_CONTEXT_FIELD(b, c, BFBCR, SFVS, v)
-#define SET_FLVIC(b, c, v)   SET_CONTEXT_FIELD(b, c, BFBCR, FLVIC, v)
-#define SET_SLVIC(b, c, v)   SET_CONTEXT_FIELD(b, c, BFBCR, SLVIC, v)
+#define SET_BFBDFE(b, c, v)	 SET_CONTEXT_FIELD(b, c, BFBCR, BFBDFE, v)
+#define SET_BFBSFE(b, c, v)	 SET_CONTEXT_FIELD(b, c, BFBCR, BFBSFE, v)
+#define SET_SFVS(b, c, v)	 SET_CONTEXT_FIELD(b, c, BFBCR, SFVS, v)
+#define SET_FLVIC(b, c, v)	 SET_CONTEXT_FIELD(b, c, BFBCR, FLVIC, v)
+#define SET_SLVIC(b, c, v)	 SET_CONTEXT_FIELD(b, c, BFBCR, SLVIC, v)
 
 
 /* CONTEXTIDR */
 #define SET_CONTEXTIDR_ASID(b, c, v)   \
-  SET_CONTEXT_FIELD(b, c, CONTEXTIDR, CONTEXTIDR_ASID, v)
+		SET_CONTEXT_FIELD(b, c, CONTEXTIDR, CONTEXTIDR_ASID, v)
 #define SET_CONTEXTIDR_PROCID(b, c, v) \
-  SET_CONTEXT_FIELD(b, c, CONTEXTIDR, PROCID, v)
+		SET_CONTEXT_FIELD(b, c, CONTEXTIDR, PROCID, v)
 
 
 /* FSR */
-#define SET_TF(b, c, v)    SET_CONTEXT_FIELD(b, c, FSR, TF, v)
-#define SET_AFF(b, c, v)   SET_CONTEXT_FIELD(b, c, FSR, AFF, v)
-#define SET_APF(b, c, v)   SET_CONTEXT_FIELD(b, c, FSR, APF, v)
-#define SET_TLBMF(b, c, v)   SET_CONTEXT_FIELD(b, c, FSR, TLBMF, v)
-#define SET_HTWDEEF(b, c, v)   SET_CONTEXT_FIELD(b, c, FSR, HTWDEEF, v)
-#define SET_HTWSEEF(b, c, v)   SET_CONTEXT_FIELD(b, c, FSR, HTWSEEF, v)
-#define SET_MHF(b, c, v)   SET_CONTEXT_FIELD(b, c, FSR, MHF, v)
-#define SET_SL(b, c, v)    SET_CONTEXT_FIELD(b, c, FSR, SL, v)
-#define SET_SS(b, c, v)    SET_CONTEXT_FIELD(b, c, FSR, SS, v)
-#define SET_MULTI(b, c, v)   SET_CONTEXT_FIELD(b, c, FSR, MULTI, v)
+#define SET_TF(b, c, v)		 SET_CONTEXT_FIELD(b, c, FSR, TF, v)
+#define SET_AFF(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSR, AFF, v)
+#define SET_APF(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSR, APF, v)
+#define SET_TLBMF(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSR, TLBMF, v)
+#define SET_HTWDEEF(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSR, HTWDEEF, v)
+#define SET_HTWSEEF(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSR, HTWSEEF, v)
+#define SET_MHF(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSR, MHF, v)
+#define SET_SL(b, c, v)		 SET_CONTEXT_FIELD(b, c, FSR, SL, v)
+#define SET_SS(b, c, v)		 SET_CONTEXT_FIELD(b, c, FSR, SS, v)
+#define SET_MULTI(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSR, MULTI, v)
 
 
 /* FSYNR0 */
-#define SET_AMID(b, c, v)  SET_CONTEXT_FIELD(b, c, FSYNR0, AMID, v)
-#define SET_APID(b, c, v)  SET_CONTEXT_FIELD(b, c, FSYNR0, APID, v)
-#define SET_ABID(b, c, v)  SET_CONTEXT_FIELD(b, c, FSYNR0, ABID, v)
-#define SET_ATID(b, c, v)  SET_CONTEXT_FIELD(b, c, FSYNR0, ATID, v)
+#define SET_AMID(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSYNR0, AMID, v)
+#define SET_APID(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSYNR0, APID, v)
+#define SET_ABID(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSYNR0, ABID, v)
+#define SET_ATID(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSYNR0, ATID, v)
 
 
 /* FSYNR1 */
-#define SET_AMEMTYPE(b, c, v)  SET_CONTEXT_FIELD(b, c, FSYNR1, AMEMTYPE, v)
-#define SET_ASHARED(b, c, v)   SET_CONTEXT_FIELD(b, c, FSYNR1, ASHARED, v)
+#define SET_AMEMTYPE(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSYNR1, AMEMTYPE, v)
+#define SET_ASHARED(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSYNR1, ASHARED, v)
 #define SET_AINNERSHARED(b, c, v)  \
-  SET_CONTEXT_FIELD(b, c, FSYNR1, AINNERSHARED, v)
-#define SET_APRIV(b, c, v)   SET_CONTEXT_FIELD(b, c, FSYNR1, APRIV, v)
-#define SET_APROTNS(b, c, v)   SET_CONTEXT_FIELD(b, c, FSYNR1, APROTNS, v)
-#define SET_AINST(b, c, v)   SET_CONTEXT_FIELD(b, c, FSYNR1, AINST, v)
-#define SET_AWRITE(b, c, v)  SET_CONTEXT_FIELD(b, c, FSYNR1, AWRITE, v)
-#define SET_ABURST(b, c, v)  SET_CONTEXT_FIELD(b, c, FSYNR1, ABURST, v)
-#define SET_ALEN(b, c, v)  SET_CONTEXT_FIELD(b, c, FSYNR1, ALEN, v)
+				SET_CONTEXT_FIELD(b, c, FSYNR1, AINNERSHARED, v)
+#define SET_APRIV(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSYNR1, APRIV, v)
+#define SET_APROTNS(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSYNR1, APROTNS, v)
+#define SET_AINST(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSYNR1, AINST, v)
+#define SET_AWRITE(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSYNR1, AWRITE, v)
+#define SET_ABURST(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSYNR1, ABURST, v)
+#define SET_ALEN(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSYNR1, ALEN, v)
 #define SET_FSYNR1_ASIZE(b, c, v) \
-  SET_CONTEXT_FIELD(b, c, FSYNR1, FSYNR1_ASIZE, v)
-#define SET_ALOCK(b, c, v)   SET_CONTEXT_FIELD(b, c, FSYNR1, ALOCK, v)
-#define SET_AFULL(b, c, v)   SET_CONTEXT_FIELD(b, c, FSYNR1, AFULL, v)
+				SET_CONTEXT_FIELD(b, c, FSYNR1, FSYNR1_ASIZE, v)
+#define SET_ALOCK(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSYNR1, ALOCK, v)
+#define SET_AFULL(b, c, v)	 SET_CONTEXT_FIELD(b, c, FSYNR1, AFULL, v)
 
 
 /* NMRR */
-#define SET_ICPC0(b, c, v)   SET_CONTEXT_FIELD(b, c, NMRR, ICPC0, v)
-#define SET_ICPC1(b, c, v)   SET_CONTEXT_FIELD(b, c, NMRR, ICPC1, v)
-#define SET_ICPC2(b, c, v)   SET_CONTEXT_FIELD(b, c, NMRR, ICPC2, v)
-#define SET_ICPC3(b, c, v)   SET_CONTEXT_FIELD(b, c, NMRR, ICPC3, v)
-#define SET_ICPC4(b, c, v)   SET_CONTEXT_FIELD(b, c, NMRR, ICPC4, v)
-#define SET_ICPC5(b, c, v)   SET_CONTEXT_FIELD(b, c, NMRR, ICPC5, v)
-#define SET_ICPC6(b, c, v)   SET_CONTEXT_FIELD(b, c, NMRR, ICPC6, v)
-#define SET_ICPC7(b, c, v)   SET_CONTEXT_FIELD(b, c, NMRR, ICPC7, v)
-#define SET_OCPC0(b, c, v)   SET_CONTEXT_FIELD(b, c, NMRR, OCPC0, v)
-#define SET_OCPC1(b, c, v)   SET_CONTEXT_FIELD(b, c, NMRR, OCPC1, v)
-#define SET_OCPC2(b, c, v)   SET_CONTEXT_FIELD(b, c, NMRR, OCPC2, v)
-#define SET_OCPC3(b, c, v)   SET_CONTEXT_FIELD(b, c, NMRR, OCPC3, v)
-#define SET_OCPC4(b, c, v)   SET_CONTEXT_FIELD(b, c, NMRR, OCPC4, v)
-#define SET_OCPC5(b, c, v)   SET_CONTEXT_FIELD(b, c, NMRR, OCPC5, v)
-#define SET_OCPC6(b, c, v)   SET_CONTEXT_FIELD(b, c, NMRR, OCPC6, v)
-#define SET_OCPC7(b, c, v)   SET_CONTEXT_FIELD(b, c, NMRR, OCPC7, v)
+#define SET_ICPC0(b, c, v)	 SET_CONTEXT_FIELD(b, c, NMRR, ICPC0, v)
+#define SET_ICPC1(b, c, v)	 SET_CONTEXT_FIELD(b, c, NMRR, ICPC1, v)
+#define SET_ICPC2(b, c, v)	 SET_CONTEXT_FIELD(b, c, NMRR, ICPC2, v)
+#define SET_ICPC3(b, c, v)	 SET_CONTEXT_FIELD(b, c, NMRR, ICPC3, v)
+#define SET_ICPC4(b, c, v)	 SET_CONTEXT_FIELD(b, c, NMRR, ICPC4, v)
+#define SET_ICPC5(b, c, v)	 SET_CONTEXT_FIELD(b, c, NMRR, ICPC5, v)
+#define SET_ICPC6(b, c, v)	 SET_CONTEXT_FIELD(b, c, NMRR, ICPC6, v)
+#define SET_ICPC7(b, c, v)	 SET_CONTEXT_FIELD(b, c, NMRR, ICPC7, v)
+#define SET_OCPC0(b, c, v)	 SET_CONTEXT_FIELD(b, c, NMRR, OCPC0, v)
+#define SET_OCPC1(b, c, v)	 SET_CONTEXT_FIELD(b, c, NMRR, OCPC1, v)
+#define SET_OCPC2(b, c, v)	 SET_CONTEXT_FIELD(b, c, NMRR, OCPC2, v)
+#define SET_OCPC3(b, c, v)	 SET_CONTEXT_FIELD(b, c, NMRR, OCPC3, v)
+#define SET_OCPC4(b, c, v)	 SET_CONTEXT_FIELD(b, c, NMRR, OCPC4, v)
+#define SET_OCPC5(b, c, v)	 SET_CONTEXT_FIELD(b, c, NMRR, OCPC5, v)
+#define SET_OCPC6(b, c, v)	 SET_CONTEXT_FIELD(b, c, NMRR, OCPC6, v)
+#define SET_OCPC7(b, c, v)	 SET_CONTEXT_FIELD(b, c, NMRR, OCPC7, v)
 
 
 /* PAR */
-#define SET_FAULT(b, c, v)   SET_CONTEXT_FIELD(b, c, PAR, FAULT, v)
+#define SET_FAULT(b, c, v)	 SET_CONTEXT_FIELD(b, c, PAR, FAULT, v)
 
-#define SET_FAULT_TF(b, c, v)  SET_CONTEXT_FIELD(b, c, PAR, FAULT_TF, v)
-#define SET_FAULT_AFF(b, c, v)   SET_CONTEXT_FIELD(b, c, PAR, FAULT_AFF, v)
-#define SET_FAULT_APF(b, c, v)   SET_CONTEXT_FIELD(b, c, PAR, FAULT_APF, v)
+#define SET_FAULT_TF(b, c, v)	 SET_CONTEXT_FIELD(b, c, PAR, FAULT_TF, v)
+#define SET_FAULT_AFF(b, c, v)	 SET_CONTEXT_FIELD(b, c, PAR, FAULT_AFF, v)
+#define SET_FAULT_APF(b, c, v)	 SET_CONTEXT_FIELD(b, c, PAR, FAULT_APF, v)
 #define SET_FAULT_TLBMF(b, c, v) SET_CONTEXT_FIELD(b, c, PAR, FAULT_TLBMF, v)
 #define SET_FAULT_HTWDEEF(b, c, v) \
-  SET_CONTEXT_FIELD(b, c, PAR, FAULT_HTWDEEF, v)
+				SET_CONTEXT_FIELD(b, c, PAR, FAULT_HTWDEEF, v)
 #define SET_FAULT_HTWSEEF(b, c, v) \
-  SET_CONTEXT_FIELD(b, c, PAR, FAULT_HTWSEEF, v)
-#define SET_FAULT_MHF(b, c, v)   SET_CONTEXT_FIELD(b, c, PAR, FAULT_MHF, v)
-#define SET_FAULT_SL(b, c, v)  SET_CONTEXT_FIELD(b, c, PAR, FAULT_SL, v)
-#define SET_FAULT_SS(b, c, v)  SET_CONTEXT_FIELD(b, c, PAR, FAULT_SS, v)
+				SET_CONTEXT_FIELD(b, c, PAR, FAULT_HTWSEEF, v)
+#define SET_FAULT_MHF(b, c, v)	 SET_CONTEXT_FIELD(b, c, PAR, FAULT_MHF, v)
+#define SET_FAULT_SL(b, c, v)	 SET_CONTEXT_FIELD(b, c, PAR, FAULT_SL, v)
+#define SET_FAULT_SS(b, c, v)	 SET_CONTEXT_FIELD(b, c, PAR, FAULT_SS, v)
 
-#define SET_NOFAULT_SS(b, c, v)  SET_CONTEXT_FIELD(b, c, PAR, NOFAULT_SS, v)
-#define SET_NOFAULT_MT(b, c, v)  SET_CONTEXT_FIELD(b, c, PAR, NOFAULT_MT, v)
-#define SET_NOFAULT_SH(b, c, v)  SET_CONTEXT_FIELD(b, c, PAR, NOFAULT_SH, v)
-#define SET_NOFAULT_NS(b, c, v)  SET_CONTEXT_FIELD(b, c, PAR, NOFAULT_NS, v)
+#define SET_NOFAULT_SS(b, c, v)	 SET_CONTEXT_FIELD(b, c, PAR, NOFAULT_SS, v)
+#define SET_NOFAULT_MT(b, c, v)	 SET_CONTEXT_FIELD(b, c, PAR, NOFAULT_MT, v)
+#define SET_NOFAULT_SH(b, c, v)	 SET_CONTEXT_FIELD(b, c, PAR, NOFAULT_SH, v)
+#define SET_NOFAULT_NS(b, c, v)	 SET_CONTEXT_FIELD(b, c, PAR, NOFAULT_NS, v)
 #define SET_NOFAULT_NOS(b, c, v) SET_CONTEXT_FIELD(b, c, PAR, NOFAULT_NOS, v)
-#define SET_NPFAULT_PA(b, c, v)  SET_CONTEXT_FIELD(b, c, PAR, NPFAULT_PA, v)
+#define SET_NPFAULT_PA(b, c, v)	 SET_CONTEXT_FIELD(b, c, PAR, NPFAULT_PA, v)
 
 
 /* PRRR */
-#define SET_MTC0(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, MTC0, v)
-#define SET_MTC1(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, MTC1, v)
-#define SET_MTC2(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, MTC2, v)
-#define SET_MTC3(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, MTC3, v)
-#define SET_MTC4(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, MTC4, v)
-#define SET_MTC5(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, MTC5, v)
-#define SET_MTC6(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, MTC6, v)
-#define SET_MTC7(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, MTC7, v)
-#define SET_SHDSH0(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, SHDSH0, v)
-#define SET_SHDSH1(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, SHDSH1, v)
-#define SET_SHNMSH0(b, c, v)   SET_CONTEXT_FIELD(b, c, PRRR, SHNMSH0, v)
+#define SET_MTC0(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, MTC0, v)
+#define SET_MTC1(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, MTC1, v)
+#define SET_MTC2(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, MTC2, v)
+#define SET_MTC3(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, MTC3, v)
+#define SET_MTC4(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, MTC4, v)
+#define SET_MTC5(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, MTC5, v)
+#define SET_MTC6(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, MTC6, v)
+#define SET_MTC7(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, MTC7, v)
+#define SET_SHDSH0(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, SHDSH0, v)
+#define SET_SHDSH1(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, SHDSH1, v)
+#define SET_SHNMSH0(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, SHNMSH0, v)
 #define SET_SHNMSH1(b, c, v)     SET_CONTEXT_FIELD(b, c, PRRR, SHNMSH1, v)
-#define SET_NOS0(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, NOS0, v)
-#define SET_NOS1(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, NOS1, v)
-#define SET_NOS2(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, NOS2, v)
-#define SET_NOS3(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, NOS3, v)
-#define SET_NOS4(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, NOS4, v)
-#define SET_NOS5(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, NOS5, v)
-#define SET_NOS6(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, NOS6, v)
-#define SET_NOS7(b, c, v)  SET_CONTEXT_FIELD(b, c, PRRR, NOS7, v)
+#define SET_NOS0(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, NOS0, v)
+#define SET_NOS1(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, NOS1, v)
+#define SET_NOS2(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, NOS2, v)
+#define SET_NOS3(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, NOS3, v)
+#define SET_NOS4(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, NOS4, v)
+#define SET_NOS5(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, NOS5, v)
+#define SET_NOS6(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, NOS6, v)
+#define SET_NOS7(b, c, v)	 SET_CONTEXT_FIELD(b, c, PRRR, NOS7, v)
 
 
 /* RESUME */
-#define SET_TNR(b, c, v)   SET_CONTEXT_FIELD(b, c, RESUME, TNR, v)
+#define SET_TNR(b, c, v)	 SET_CONTEXT_FIELD(b, c, RESUME, TNR, v)
 
 
 /* SCTLR */
-#define SET_M(b, c, v)     SET_CONTEXT_FIELD(b, c, SCTLR, M, v)
-#define SET_TRE(b, c, v)   SET_CONTEXT_FIELD(b, c, SCTLR, TRE, v)
-#define SET_AFE(b, c, v)   SET_CONTEXT_FIELD(b, c, SCTLR, AFE, v)
-#define SET_HAF(b, c, v)   SET_CONTEXT_FIELD(b, c, SCTLR, HAF, v)
-#define SET_BE(b, c, v)    SET_CONTEXT_FIELD(b, c, SCTLR, BE, v)
-#define SET_AFFD(b, c, v)  SET_CONTEXT_FIELD(b, c, SCTLR, AFFD, v)
+#define SET_M(b, c, v)		 SET_CONTEXT_FIELD(b, c, SCTLR, M, v)
+#define SET_TRE(b, c, v)	 SET_CONTEXT_FIELD(b, c, SCTLR, TRE, v)
+#define SET_AFE(b, c, v)	 SET_CONTEXT_FIELD(b, c, SCTLR, AFE, v)
+#define SET_HAF(b, c, v)	 SET_CONTEXT_FIELD(b, c, SCTLR, HAF, v)
+#define SET_BE(b, c, v)		 SET_CONTEXT_FIELD(b, c, SCTLR, BE, v)
+#define SET_AFFD(b, c, v)	 SET_CONTEXT_FIELD(b, c, SCTLR, AFFD, v)
 
 
 /* TLBLKCR */
-#define SET_LKE(b, c, v)     SET_CONTEXT_FIELD(b, c, TLBLKCR, LKE, v)
+#define SET_LKE(b, c, v)	   SET_CONTEXT_FIELD(b, c, TLBLKCR, LKE, v)
 #define SET_TLBLKCR_TLBIALLCFG(b, c, v) \
-  SET_CONTEXT_FIELD(b, c, TLBLKCR, TLBLCKR_TLBIALLCFG, v)
+			SET_CONTEXT_FIELD(b, c, TLBLKCR, TLBLCKR_TLBIALLCFG, v)
 #define SET_TLBIASIDCFG(b, c, v) \
-  SET_CONTEXT_FIELD(b, c, TLBLKCR, TLBIASIDCFG, v)
-#define SET_TLBIVAACFG(b, c, v) SET_CONTEXT_FIELD(b, c, TLBLKCR, TLBIVAACFG, v)
-#define SET_FLOOR(b, c, v)  SET_CONTEXT_FIELD(b, c, TLBLKCR, FLOOR, v)
-#define SET_VICTIM(b, c, v) SET_CONTEXT_FIELD(b, c, TLBLKCR, VICTIM, v)
+			SET_CONTEXT_FIELD(b, c, TLBLKCR, TLBIASIDCFG, v)
+#define SET_TLBIVAACFG(b, c, v)	SET_CONTEXT_FIELD(b, c, TLBLKCR, TLBIVAACFG, v)
+#define SET_FLOOR(b, c, v)	SET_CONTEXT_FIELD(b, c, TLBLKCR, FLOOR, v)
+#define SET_VICTIM(b, c, v)	SET_CONTEXT_FIELD(b, c, TLBLKCR, VICTIM, v)
 
 
 /* TTBCR */
-#define SET_N(b, c, v)           SET_CONTEXT_FIELD(b, c, TTBCR, N, v)
-#define SET_PD0(b, c, v)   SET_CONTEXT_FIELD(b, c, TTBCR, PD0, v)
-#define SET_PD1(b, c, v)   SET_CONTEXT_FIELD(b, c, TTBCR, PD1, v)
+#define SET_N(b, c, v)	         SET_CONTEXT_FIELD(b, c, TTBCR, N, v)
+#define SET_PD0(b, c, v)	 SET_CONTEXT_FIELD(b, c, TTBCR, PD0, v)
+#define SET_PD1(b, c, v)	 SET_CONTEXT_FIELD(b, c, TTBCR, PD1, v)
 
 
 /* TTBR0 */
 #define SET_TTBR0_IRGNH(b, c, v) SET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_IRGNH, v)
-#define SET_TTBR0_SH(b, c, v)  SET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_SH, v)
-#define SET_TTBR0_ORGN(b, c, v)  SET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_ORGN, v)
-#define SET_TTBR0_NOS(b, c, v)   SET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_NOS, v)
+#define SET_TTBR0_SH(b, c, v)	 SET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_SH, v)
+#define SET_TTBR0_ORGN(b, c, v)	 SET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_ORGN, v)
+#define SET_TTBR0_NOS(b, c, v)	 SET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_NOS, v)
 #define SET_TTBR0_IRGNL(b, c, v) SET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_IRGNL, v)
-#define SET_TTBR0_PA(b, c, v)  SET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_PA, v)
+#define SET_TTBR0_PA(b, c, v)	 SET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_PA, v)
 
 
 /* TTBR1 */
 #define SET_TTBR1_IRGNH(b, c, v) SET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_IRGNH, v)
-#define SET_TTBR1_SH(b, c, v)  SET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_SH, v)
-#define SET_TTBR1_ORGN(b, c, v)  SET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_ORGN, v)
-#define SET_TTBR1_NOS(b, c, v)   SET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_NOS, v)
+#define SET_TTBR1_SH(b, c, v)	 SET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_SH, v)
+#define SET_TTBR1_ORGN(b, c, v)	 SET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_ORGN, v)
+#define SET_TTBR1_NOS(b, c, v)	 SET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_NOS, v)
 #define SET_TTBR1_IRGNL(b, c, v) SET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_IRGNL, v)
-#define SET_TTBR1_PA(b, c, v)  SET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_PA, v)
+#define SET_TTBR1_PA(b, c, v)	 SET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_PA, v)
 
 
 /* V2PSR */
-#define SET_HIT(b, c, v)   SET_CONTEXT_FIELD(b, c, V2PSR, HIT, v)
-#define SET_INDEX(b, c, v)   SET_CONTEXT_FIELD(b, c, V2PSR, INDEX, v)
+#define SET_HIT(b, c, v)	 SET_CONTEXT_FIELD(b, c, V2PSR, HIT, v)
+#define SET_INDEX(b, c, v)	 SET_CONTEXT_FIELD(b, c, V2PSR, INDEX, v)
 
 
 /* Context Register getters */
 /* ACTLR */
-#define GET_CFERE(b, c)         GET_CONTEXT_FIELD(b, c, ACTLR, CFERE)
-#define GET_CFEIE(b, c)         GET_CONTEXT_FIELD(b, c, ACTLR, CFEIE)
+#define GET_CFERE(b, c)	        GET_CONTEXT_FIELD(b, c, ACTLR, CFERE)
+#define GET_CFEIE(b, c)	        GET_CONTEXT_FIELD(b, c, ACTLR, CFEIE)
 #define GET_PTSHCFG(b, c)       GET_CONTEXT_FIELD(b, c, ACTLR, PTSHCFG)
-#define GET_RCOSH(b, c)         GET_CONTEXT_FIELD(b, c, ACTLR, RCOSH)
-#define GET_RCISH(b, c)         GET_CONTEXT_FIELD(b, c, ACTLR, RCISH)
-#define GET_RCNSH(b, c)         GET_CONTEXT_FIELD(b, c, ACTLR, RCNSH)
+#define GET_RCOSH(b, c)	        GET_CONTEXT_FIELD(b, c, ACTLR, RCOSH)
+#define GET_RCISH(b, c)	        GET_CONTEXT_FIELD(b, c, ACTLR, RCISH)
+#define GET_RCNSH(b, c)	        GET_CONTEXT_FIELD(b, c, ACTLR, RCNSH)
 #define GET_PRIVCFG(b, c)       GET_CONTEXT_FIELD(b, c, ACTLR, PRIVCFG)
-#define GET_DNA(b, c)         GET_CONTEXT_FIELD(b, c, ACTLR, DNA)
+#define GET_DNA(b, c)	        GET_CONTEXT_FIELD(b, c, ACTLR, DNA)
 #define GET_DNLV2PA(b, c)       GET_CONTEXT_FIELD(b, c, ACTLR, DNLV2PA)
 #define GET_TLBMCFG(b, c)       GET_CONTEXT_FIELD(b, c, ACTLR, TLBMCFG)
-#define GET_CFCFG(b, c)         GET_CONTEXT_FIELD(b, c, ACTLR, CFCFG)
-#define GET_TIPCF(b, c)         GET_CONTEXT_FIELD(b, c, ACTLR, TIPCF)
+#define GET_CFCFG(b, c)	        GET_CONTEXT_FIELD(b, c, ACTLR, CFCFG)
+#define GET_TIPCF(b, c)	        GET_CONTEXT_FIELD(b, c, ACTLR, TIPCF)
 #define GET_V2PCFG(b, c)        GET_CONTEXT_FIELD(b, c, ACTLR, V2PCFG)
-#define GET_HUME(b, c)          GET_CONTEXT_FIELD(b, c, ACTLR, HUME)
+#define GET_HUME(b, c)	        GET_CONTEXT_FIELD(b, c, ACTLR, HUME)
 #define GET_PTMTCFG(b, c)       GET_CONTEXT_FIELD(b, c, ACTLR, PTMTCFG)
 #define GET_PTMEMTYPE(b, c)     GET_CONTEXT_FIELD(b, c, ACTLR, PTMEMTYPE)
 
 /* BFBCR */
-#define GET_BFBDFE(b, c)  GET_CONTEXT_FIELD(b, c, BFBCR, BFBDFE)
-#define GET_BFBSFE(b, c)  GET_CONTEXT_FIELD(b, c, BFBCR, BFBSFE)
-#define GET_SFVS(b, c)    GET_CONTEXT_FIELD(b, c, BFBCR, SFVS)
-#define GET_FLVIC(b, c)   GET_CONTEXT_FIELD(b, c, BFBCR, FLVIC)
-#define GET_SLVIC(b, c)   GET_CONTEXT_FIELD(b, c, BFBCR, SLVIC)
+#define GET_BFBDFE(b, c)	GET_CONTEXT_FIELD(b, c, BFBCR, BFBDFE)
+#define GET_BFBSFE(b, c)	GET_CONTEXT_FIELD(b, c, BFBCR, BFBSFE)
+#define GET_SFVS(b, c)		GET_CONTEXT_FIELD(b, c, BFBCR, SFVS)
+#define GET_FLVIC(b, c)		GET_CONTEXT_FIELD(b, c, BFBCR, FLVIC)
+#define GET_SLVIC(b, c)		GET_CONTEXT_FIELD(b, c, BFBCR, SLVIC)
 
 
 /* CONTEXTIDR */
 #define GET_CONTEXTIDR_ASID(b, c) \
-  GET_CONTEXT_FIELD(b, c, CONTEXTIDR, CONTEXTIDR_ASID)
+			GET_CONTEXT_FIELD(b, c, CONTEXTIDR, CONTEXTIDR_ASID)
 #define GET_CONTEXTIDR_PROCID(b, c) GET_CONTEXT_FIELD(b, c, CONTEXTIDR, PROCID)
 
 
 /* FSR */
-#define GET_TF(b, c)    GET_CONTEXT_FIELD(b, c, FSR, TF)
-#define GET_AFF(b, c)   GET_CONTEXT_FIELD(b, c, FSR, AFF)
-#define GET_APF(b, c)   GET_CONTEXT_FIELD(b, c, FSR, APF)
-#define GET_TLBMF(b, c)   GET_CONTEXT_FIELD(b, c, FSR, TLBMF)
-#define GET_HTWDEEF(b, c) GET_CONTEXT_FIELD(b, c, FSR, HTWDEEF)
-#define GET_HTWSEEF(b, c) GET_CONTEXT_FIELD(b, c, FSR, HTWSEEF)
-#define GET_MHF(b, c)   GET_CONTEXT_FIELD(b, c, FSR, MHF)
-#define GET_SL(b, c)    GET_CONTEXT_FIELD(b, c, FSR, SL)
-#define GET_SS(b, c)    GET_CONTEXT_FIELD(b, c, FSR, SS)
-#define GET_MULTI(b, c)   GET_CONTEXT_FIELD(b, c, FSR, MULTI)
+#define GET_TF(b, c)		GET_CONTEXT_FIELD(b, c, FSR, TF)
+#define GET_AFF(b, c)		GET_CONTEXT_FIELD(b, c, FSR, AFF)
+#define GET_APF(b, c)		GET_CONTEXT_FIELD(b, c, FSR, APF)
+#define GET_TLBMF(b, c)		GET_CONTEXT_FIELD(b, c, FSR, TLBMF)
+#define GET_HTWDEEF(b, c)	GET_CONTEXT_FIELD(b, c, FSR, HTWDEEF)
+#define GET_HTWSEEF(b, c)	GET_CONTEXT_FIELD(b, c, FSR, HTWSEEF)
+#define GET_MHF(b, c)		GET_CONTEXT_FIELD(b, c, FSR, MHF)
+#define GET_SL(b, c)		GET_CONTEXT_FIELD(b, c, FSR, SL)
+#define GET_SS(b, c)		GET_CONTEXT_FIELD(b, c, FSR, SS)
+#define GET_MULTI(b, c)		GET_CONTEXT_FIELD(b, c, FSR, MULTI)
 
 
 /* FSYNR0 */
-#define GET_AMID(b, c)    GET_CONTEXT_FIELD(b, c, FSYNR0, AMID)
-#define GET_APID(b, c)    GET_CONTEXT_FIELD(b, c, FSYNR0, APID)
-#define GET_ABID(b, c)    GET_CONTEXT_FIELD(b, c, FSYNR0, ABID)
-#define GET_ATID(b, c)    GET_CONTEXT_FIELD(b, c, FSYNR0, ATID)
+#define GET_AMID(b, c)		GET_CONTEXT_FIELD(b, c, FSYNR0, AMID)
+#define GET_APID(b, c)		GET_CONTEXT_FIELD(b, c, FSYNR0, APID)
+#define GET_ABID(b, c)		GET_CONTEXT_FIELD(b, c, FSYNR0, ABID)
+#define GET_ATID(b, c)		GET_CONTEXT_FIELD(b, c, FSYNR0, ATID)
 
 
 /* FSYNR1 */
-#define GET_AMEMTYPE(b, c)  GET_CONTEXT_FIELD(b, c, FSYNR1, AMEMTYPE)
-#define GET_ASHARED(b, c) GET_CONTEXT_FIELD(b, c, FSYNR1, ASHARED)
+#define GET_AMEMTYPE(b, c)	GET_CONTEXT_FIELD(b, c, FSYNR1, AMEMTYPE)
+#define GET_ASHARED(b, c)	GET_CONTEXT_FIELD(b, c, FSYNR1, ASHARED)
 #define GET_AINNERSHARED(b, c)  GET_CONTEXT_FIELD(b, c, FSYNR1, AINNERSHARED)
-#define GET_APRIV(b, c)   GET_CONTEXT_FIELD(b, c, FSYNR1, APRIV)
-#define GET_APROTNS(b, c) GET_CONTEXT_FIELD(b, c, FSYNR1, APROTNS)
-#define GET_AINST(b, c)   GET_CONTEXT_FIELD(b, c, FSYNR1, AINST)
-#define GET_AWRITE(b, c)  GET_CONTEXT_FIELD(b, c, FSYNR1, AWRITE)
-#define GET_ABURST(b, c)  GET_CONTEXT_FIELD(b, c, FSYNR1, ABURST)
-#define GET_ALEN(b, c)    GET_CONTEXT_FIELD(b, c, FSYNR1, ALEN)
-#define GET_FSYNR1_ASIZE(b, c)  GET_CONTEXT_FIELD(b, c, FSYNR1, FSYNR1_ASIZE)
-#define GET_ALOCK(b, c)   GET_CONTEXT_FIELD(b, c, FSYNR1, ALOCK)
-#define GET_AFULL(b, c)   GET_CONTEXT_FIELD(b, c, FSYNR1, AFULL)
+#define GET_APRIV(b, c)		GET_CONTEXT_FIELD(b, c, FSYNR1, APRIV)
+#define GET_APROTNS(b, c)	GET_CONTEXT_FIELD(b, c, FSYNR1, APROTNS)
+#define GET_AINST(b, c)		GET_CONTEXT_FIELD(b, c, FSYNR1, AINST)
+#define GET_AWRITE(b, c)	GET_CONTEXT_FIELD(b, c, FSYNR1, AWRITE)
+#define GET_ABURST(b, c)	GET_CONTEXT_FIELD(b, c, FSYNR1, ABURST)
+#define GET_ALEN(b, c)		GET_CONTEXT_FIELD(b, c, FSYNR1, ALEN)
+#define GET_FSYNR1_ASIZE(b, c)	GET_CONTEXT_FIELD(b, c, FSYNR1, FSYNR1_ASIZE)
+#define GET_ALOCK(b, c)		GET_CONTEXT_FIELD(b, c, FSYNR1, ALOCK)
+#define GET_AFULL(b, c)		GET_CONTEXT_FIELD(b, c, FSYNR1, AFULL)
 
 
 /* NMRR */
-#define GET_ICPC0(b, c)   GET_CONTEXT_FIELD(b, c, NMRR, ICPC0)
-#define GET_ICPC1(b, c)   GET_CONTEXT_FIELD(b, c, NMRR, ICPC1)
-#define GET_ICPC2(b, c)   GET_CONTEXT_FIELD(b, c, NMRR, ICPC2)
-#define GET_ICPC3(b, c)   GET_CONTEXT_FIELD(b, c, NMRR, ICPC3)
-#define GET_ICPC4(b, c)   GET_CONTEXT_FIELD(b, c, NMRR, ICPC4)
-#define GET_ICPC5(b, c)   GET_CONTEXT_FIELD(b, c, NMRR, ICPC5)
-#define GET_ICPC6(b, c)   GET_CONTEXT_FIELD(b, c, NMRR, ICPC6)
-#define GET_ICPC7(b, c)   GET_CONTEXT_FIELD(b, c, NMRR, ICPC7)
-#define GET_OCPC0(b, c)   GET_CONTEXT_FIELD(b, c, NMRR, OCPC0)
-#define GET_OCPC1(b, c)   GET_CONTEXT_FIELD(b, c, NMRR, OCPC1)
-#define GET_OCPC2(b, c)   GET_CONTEXT_FIELD(b, c, NMRR, OCPC2)
-#define GET_OCPC3(b, c)   GET_CONTEXT_FIELD(b, c, NMRR, OCPC3)
-#define GET_OCPC4(b, c)   GET_CONTEXT_FIELD(b, c, NMRR, OCPC4)
-#define GET_OCPC5(b, c)   GET_CONTEXT_FIELD(b, c, NMRR, OCPC5)
-#define GET_OCPC6(b, c)   GET_CONTEXT_FIELD(b, c, NMRR, OCPC6)
-#define GET_OCPC7(b, c)   GET_CONTEXT_FIELD(b, c, NMRR, OCPC7)
-#define NMRR_ICP(nmrr, n) (((nmrr) & (3 << ((n) * 2))) >> ((n) * 2))
-#define NMRR_OCP(nmrr, n) (((nmrr) & (3 << ((n) * 2 + 16))) >> \
-                           ((n) * 2 + 16))
+#define GET_ICPC0(b, c)		GET_CONTEXT_FIELD(b, c, NMRR, ICPC0)
+#define GET_ICPC1(b, c)		GET_CONTEXT_FIELD(b, c, NMRR, ICPC1)
+#define GET_ICPC2(b, c)		GET_CONTEXT_FIELD(b, c, NMRR, ICPC2)
+#define GET_ICPC3(b, c)		GET_CONTEXT_FIELD(b, c, NMRR, ICPC3)
+#define GET_ICPC4(b, c)		GET_CONTEXT_FIELD(b, c, NMRR, ICPC4)
+#define GET_ICPC5(b, c)		GET_CONTEXT_FIELD(b, c, NMRR, ICPC5)
+#define GET_ICPC6(b, c)		GET_CONTEXT_FIELD(b, c, NMRR, ICPC6)
+#define GET_ICPC7(b, c)		GET_CONTEXT_FIELD(b, c, NMRR, ICPC7)
+#define GET_OCPC0(b, c)		GET_CONTEXT_FIELD(b, c, NMRR, OCPC0)
+#define GET_OCPC1(b, c)		GET_CONTEXT_FIELD(b, c, NMRR, OCPC1)
+#define GET_OCPC2(b, c)		GET_CONTEXT_FIELD(b, c, NMRR, OCPC2)
+#define GET_OCPC3(b, c)		GET_CONTEXT_FIELD(b, c, NMRR, OCPC3)
+#define GET_OCPC4(b, c)		GET_CONTEXT_FIELD(b, c, NMRR, OCPC4)
+#define GET_OCPC5(b, c)		GET_CONTEXT_FIELD(b, c, NMRR, OCPC5)
+#define GET_OCPC6(b, c)		GET_CONTEXT_FIELD(b, c, NMRR, OCPC6)
+#define GET_OCPC7(b, c)		GET_CONTEXT_FIELD(b, c, NMRR, OCPC7)
+#define NMRR_ICP(nmrr, n)	(((nmrr) & (3 << ((n) * 2))) >> ((n) * 2))
+#define NMRR_OCP(nmrr, n)	(((nmrr) & (3 << ((n) * 2 + 16))) >> \
+								((n) * 2 + 16))
 
 /* PAR */
-#define GET_FAULT(b, c)   GET_CONTEXT_FIELD(b, c, PAR, FAULT)
+#define GET_FAULT(b, c)		GET_CONTEXT_FIELD(b, c, PAR, FAULT)
 
-#define GET_FAULT_TF(b, c)  GET_CONTEXT_FIELD(b, c, PAR, FAULT_TF)
-#define GET_FAULT_AFF(b, c) GET_CONTEXT_FIELD(b, c, PAR, FAULT_AFF)
-#define GET_FAULT_APF(b, c) GET_CONTEXT_FIELD(b, c, PAR, FAULT_APF)
+#define GET_FAULT_TF(b, c)	GET_CONTEXT_FIELD(b, c, PAR, FAULT_TF)
+#define GET_FAULT_AFF(b, c)	GET_CONTEXT_FIELD(b, c, PAR, FAULT_AFF)
+#define GET_FAULT_APF(b, c)	GET_CONTEXT_FIELD(b, c, PAR, FAULT_APF)
 #define GET_FAULT_TLBMF(b, c)   GET_CONTEXT_FIELD(b, c, PAR, FAULT_TLBMF)
 #define GET_FAULT_HTWDEEF(b, c) GET_CONTEXT_FIELD(b, c, PAR, FAULT_HTWDEEF)
 #define GET_FAULT_HTWSEEF(b, c) GET_CONTEXT_FIELD(b, c, PAR, FAULT_HTWSEEF)
-#define GET_FAULT_MHF(b, c) GET_CONTEXT_FIELD(b, c, PAR, FAULT_MHF)
-#define GET_FAULT_SL(b, c)  GET_CONTEXT_FIELD(b, c, PAR, FAULT_SL)
-#define GET_FAULT_SS(b, c)  GET_CONTEXT_FIELD(b, c, PAR, FAULT_SS)
+#define GET_FAULT_MHF(b, c)	GET_CONTEXT_FIELD(b, c, PAR, FAULT_MHF)
+#define GET_FAULT_SL(b, c)	GET_CONTEXT_FIELD(b, c, PAR, FAULT_SL)
+#define GET_FAULT_SS(b, c)	GET_CONTEXT_FIELD(b, c, PAR, FAULT_SS)
 
-#define GET_NOFAULT_SS(b, c)  GET_CONTEXT_FIELD(b, c, PAR, PAR_NOFAULT_SS)
-#define GET_NOFAULT_MT(b, c)  GET_CONTEXT_FIELD(b, c, PAR, PAR_NOFAULT_MT)
-#define GET_NOFAULT_SH(b, c)  GET_CONTEXT_FIELD(b, c, PAR, PAR_NOFAULT_SH)
-#define GET_NOFAULT_NS(b, c)  GET_CONTEXT_FIELD(b, c, PAR, PAR_NOFAULT_NS)
+#define GET_NOFAULT_SS(b, c)	GET_CONTEXT_FIELD(b, c, PAR, PAR_NOFAULT_SS)
+#define GET_NOFAULT_MT(b, c)	GET_CONTEXT_FIELD(b, c, PAR, PAR_NOFAULT_MT)
+#define GET_NOFAULT_SH(b, c)	GET_CONTEXT_FIELD(b, c, PAR, PAR_NOFAULT_SH)
+#define GET_NOFAULT_NS(b, c)	GET_CONTEXT_FIELD(b, c, PAR, PAR_NOFAULT_NS)
 #define GET_NOFAULT_NOS(b, c)   GET_CONTEXT_FIELD(b, c, PAR, PAR_NOFAULT_NOS)
-#define GET_NPFAULT_PA(b, c)  GET_CONTEXT_FIELD(b, c, PAR, PAR_NPFAULT_PA)
+#define GET_NPFAULT_PA(b, c)	GET_CONTEXT_FIELD(b, c, PAR, PAR_NPFAULT_PA)
 
 
 /* PRRR */
-#define GET_MTC0(b, c)    GET_CONTEXT_FIELD(b, c, PRRR, MTC0)
-#define GET_MTC1(b, c)    GET_CONTEXT_FIELD(b, c, PRRR, MTC1)
-#define GET_MTC2(b, c)    GET_CONTEXT_FIELD(b, c, PRRR, MTC2)
-#define GET_MTC3(b, c)    GET_CONTEXT_FIELD(b, c, PRRR, MTC3)
-#define GET_MTC4(b, c)    GET_CONTEXT_FIELD(b, c, PRRR, MTC4)
-#define GET_MTC5(b, c)    GET_CONTEXT_FIELD(b, c, PRRR, MTC5)
-#define GET_MTC6(b, c)    GET_CONTEXT_FIELD(b, c, PRRR, MTC6)
-#define GET_MTC7(b, c)    GET_CONTEXT_FIELD(b, c, PRRR, MTC7)
-#define GET_SHDSH0(b, c)  GET_CONTEXT_FIELD(b, c, PRRR, SHDSH0)
-#define GET_SHDSH1(b, c)  GET_CONTEXT_FIELD(b, c, PRRR, SHDSH1)
-#define GET_SHNMSH0(b, c) GET_CONTEXT_FIELD(b, c, PRRR, SHNMSH0)
-#define GET_SHNMSH1(b, c) GET_CONTEXT_FIELD(b, c, PRRR, SHNMSH1)
-#define GET_NOS0(b, c)    GET_CONTEXT_FIELD(b, c, PRRR, NOS0)
-#define GET_NOS1(b, c)    GET_CONTEXT_FIELD(b, c, PRRR, NOS1)
-#define GET_NOS2(b, c)    GET_CONTEXT_FIELD(b, c, PRRR, NOS2)
-#define GET_NOS3(b, c)    GET_CONTEXT_FIELD(b, c, PRRR, NOS3)
-#define GET_NOS4(b, c)    GET_CONTEXT_FIELD(b, c, PRRR, NOS4)
-#define GET_NOS5(b, c)    GET_CONTEXT_FIELD(b, c, PRRR, NOS5)
-#define GET_NOS6(b, c)    GET_CONTEXT_FIELD(b, c, PRRR, NOS6)
-#define GET_NOS7(b, c)    GET_CONTEXT_FIELD(b, c, PRRR, NOS7)
-#define PRRR_NOS(prrr, n)  ((prrr) & (1 << ((n) + 24)) ? 1 : 0)
-#define PRRR_MT(prrr, n)   ((((prrr) & (3 << ((n) * 2))) >> ((n) * 2)))
+#define GET_MTC0(b, c)		GET_CONTEXT_FIELD(b, c, PRRR, MTC0)
+#define GET_MTC1(b, c)		GET_CONTEXT_FIELD(b, c, PRRR, MTC1)
+#define GET_MTC2(b, c)		GET_CONTEXT_FIELD(b, c, PRRR, MTC2)
+#define GET_MTC3(b, c)		GET_CONTEXT_FIELD(b, c, PRRR, MTC3)
+#define GET_MTC4(b, c)		GET_CONTEXT_FIELD(b, c, PRRR, MTC4)
+#define GET_MTC5(b, c)		GET_CONTEXT_FIELD(b, c, PRRR, MTC5)
+#define GET_MTC6(b, c)		GET_CONTEXT_FIELD(b, c, PRRR, MTC6)
+#define GET_MTC7(b, c)		GET_CONTEXT_FIELD(b, c, PRRR, MTC7)
+#define GET_SHDSH0(b, c)	GET_CONTEXT_FIELD(b, c, PRRR, SHDSH0)
+#define GET_SHDSH1(b, c)	GET_CONTEXT_FIELD(b, c, PRRR, SHDSH1)
+#define GET_SHNMSH0(b, c)	GET_CONTEXT_FIELD(b, c, PRRR, SHNMSH0)
+#define GET_SHNMSH1(b, c)	GET_CONTEXT_FIELD(b, c, PRRR, SHNMSH1)
+#define GET_NOS0(b, c)		GET_CONTEXT_FIELD(b, c, PRRR, NOS0)
+#define GET_NOS1(b, c)		GET_CONTEXT_FIELD(b, c, PRRR, NOS1)
+#define GET_NOS2(b, c)		GET_CONTEXT_FIELD(b, c, PRRR, NOS2)
+#define GET_NOS3(b, c)		GET_CONTEXT_FIELD(b, c, PRRR, NOS3)
+#define GET_NOS4(b, c)		GET_CONTEXT_FIELD(b, c, PRRR, NOS4)
+#define GET_NOS5(b, c)		GET_CONTEXT_FIELD(b, c, PRRR, NOS5)
+#define GET_NOS6(b, c)		GET_CONTEXT_FIELD(b, c, PRRR, NOS6)
+#define GET_NOS7(b, c)		GET_CONTEXT_FIELD(b, c, PRRR, NOS7)
+#define PRRR_NOS(prrr, n)	 ((prrr) & (1 << ((n) + 24)) ? 1 : 0)
+#define PRRR_MT(prrr, n)	 ((((prrr) & (3 << ((n) * 2))) >> ((n) * 2)))
 
 
 /* RESUME */
-#define GET_TNR(b, c)   GET_CONTEXT_FIELD(b, c, RESUME, TNR)
+#define GET_TNR(b, c)		GET_CONTEXT_FIELD(b, c, RESUME, TNR)
 
 
 /* SCTLR */
-#define GET_M(b, c)   GET_CONTEXT_FIELD(b, c, SCTLR, M)
-#define GET_TRE(b, c)   GET_CONTEXT_FIELD(b, c, SCTLR, TRE)
-#define GET_AFE(b, c)   GET_CONTEXT_FIELD(b, c, SCTLR, AFE)
-#define GET_HAF(b, c)   GET_CONTEXT_FIELD(b, c, SCTLR, HAF)
-#define GET_BE(b, c)    GET_CONTEXT_FIELD(b, c, SCTLR, BE)
-#define GET_AFFD(b, c)    GET_CONTEXT_FIELD(b, c, SCTLR, AFFD)
+#define GET_M(b, c)		GET_CONTEXT_FIELD(b, c, SCTLR, M)
+#define GET_TRE(b, c)		GET_CONTEXT_FIELD(b, c, SCTLR, TRE)
+#define GET_AFE(b, c)		GET_CONTEXT_FIELD(b, c, SCTLR, AFE)
+#define GET_HAF(b, c)		GET_CONTEXT_FIELD(b, c, SCTLR, HAF)
+#define GET_BE(b, c)		GET_CONTEXT_FIELD(b, c, SCTLR, BE)
+#define GET_AFFD(b, c)		GET_CONTEXT_FIELD(b, c, SCTLR, AFFD)
 
 
 /* TLBLKCR */
-#define GET_LKE(b, c)   GET_CONTEXT_FIELD(b, c, TLBLKCR, LKE)
+#define GET_LKE(b, c)		GET_CONTEXT_FIELD(b, c, TLBLKCR, LKE)
 #define GET_TLBLCKR_TLBIALLCFG(b, c) \
-  GET_CONTEXT_FIELD(b, c, TLBLKCR, TLBLCKR_TLBIALLCFG)
+			GET_CONTEXT_FIELD(b, c, TLBLKCR, TLBLCKR_TLBIALLCFG)
 #define GET_TLBIASIDCFG(b, c)   GET_CONTEXT_FIELD(b, c, TLBLKCR, TLBIASIDCFG)
-#define GET_TLBIVAACFG(b, c)  GET_CONTEXT_FIELD(b, c, TLBLKCR, TLBIVAACFG)
-#define GET_FLOOR(b, c)   GET_CONTEXT_FIELD(b, c, TLBLKCR, FLOOR)
-#define GET_VICTIM(b, c)  GET_CONTEXT_FIELD(b, c, TLBLKCR, VICTIM)
+#define GET_TLBIVAACFG(b, c)	GET_CONTEXT_FIELD(b, c, TLBLKCR, TLBIVAACFG)
+#define GET_FLOOR(b, c)		GET_CONTEXT_FIELD(b, c, TLBLKCR, FLOOR)
+#define GET_VICTIM(b, c)	GET_CONTEXT_FIELD(b, c, TLBLKCR, VICTIM)
 
 
 /* TTBCR */
-#define GET_N(b, c)   GET_CONTEXT_FIELD(b, c, TTBCR, N)
-#define GET_PD0(b, c)   GET_CONTEXT_FIELD(b, c, TTBCR, PD0)
-#define GET_PD1(b, c)   GET_CONTEXT_FIELD(b, c, TTBCR, PD1)
+#define GET_N(b, c)		GET_CONTEXT_FIELD(b, c, TTBCR, N)
+#define GET_PD0(b, c)		GET_CONTEXT_FIELD(b, c, TTBCR, PD0)
+#define GET_PD1(b, c)		GET_CONTEXT_FIELD(b, c, TTBCR, PD1)
 
 
 /* TTBR0 */
-#define GET_TTBR0_IRGNH(b, c) GET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_IRGNH)
-#define GET_TTBR0_SH(b, c)  GET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_SH)
-#define GET_TTBR0_ORGN(b, c)  GET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_ORGN)
-#define GET_TTBR0_NOS(b, c) GET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_NOS)
-#define GET_TTBR0_IRGNL(b, c) GET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_IRGNL)
-#define GET_TTBR0_PA(b, c)  GET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_PA)
+#define GET_TTBR0_IRGNH(b, c)	GET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_IRGNH)
+#define GET_TTBR0_SH(b, c)	GET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_SH)
+#define GET_TTBR0_ORGN(b, c)	GET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_ORGN)
+#define GET_TTBR0_NOS(b, c)	GET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_NOS)
+#define GET_TTBR0_IRGNL(b, c)	GET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_IRGNL)
+#define GET_TTBR0_PA(b, c)	GET_CONTEXT_FIELD(b, c, TTBR0, TTBR0_PA)
 
 
 /* TTBR1 */
-#define GET_TTBR1_IRGNH(b, c) GET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_IRGNH)
-#define GET_TTBR1_SH(b, c)  GET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_SH)
-#define GET_TTBR1_ORGN(b, c)  GET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_ORGN)
-#define GET_TTBR1_NOS(b, c) GET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_NOS)
-#define GET_TTBR1_IRGNL(b, c) GET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_IRGNL)
-#define GET_TTBR1_PA(b, c)  GET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_PA)
+#define GET_TTBR1_IRGNH(b, c)	GET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_IRGNH)
+#define GET_TTBR1_SH(b, c)	GET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_SH)
+#define GET_TTBR1_ORGN(b, c)	GET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_ORGN)
+#define GET_TTBR1_NOS(b, c)	GET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_NOS)
+#define GET_TTBR1_IRGNL(b, c)	GET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_IRGNL)
+#define GET_TTBR1_PA(b, c)	GET_CONTEXT_FIELD(b, c, TTBR1, TTBR1_PA)
 
 
 /* V2PSR */
-#define GET_HIT(b, c)   GET_CONTEXT_FIELD(b, c, V2PSR, HIT)
-#define GET_INDEX(b, c)   GET_CONTEXT_FIELD(b, c, V2PSR, INDEX)
+#define GET_HIT(b, c)		GET_CONTEXT_FIELD(b, c, V2PSR, HIT)
+#define GET_INDEX(b, c)		GET_CONTEXT_FIELD(b, c, V2PSR, INDEX)
 
 
 /* Global Registers */
-#define M2VCBR_N  (0xFF000)
-#define CBACR_N   (0xFF800)
-#define TLBRSW    (0xFFE00)
-#define TLBTR0    (0xFFE80)
-#define TLBTR1    (0xFFE84)
-#define TLBTR2    (0xFFE88)
-#define TESTBUSCR (0xFFE8C)
-#define GLOBAL_TLBIALL  (0xFFF00)
-#define TLBIVMID  (0xFFF04)
-#define CR    (0xFFF80)
-#define EAR   (0xFFF84)
-#define ESR   (0xFFF88)
-#define ESRRESTORE  (0xFFF8C)
-#define ESYNR0    (0xFFF90)
-#define ESYNR1    (0xFFF94)
-#define REV   (0xFFFF4)
-#define IDR   (0xFFFF8)
-#define RPU_ACR   (0xFFFFC)
+#define M2VCBR_N	(0xFF000)
+#define CBACR_N		(0xFF800)
+#define TLBRSW		(0xFFE00)
+#define TLBTR0		(0xFFE80)
+#define TLBTR1		(0xFFE84)
+#define TLBTR2		(0xFFE88)
+#define TESTBUSCR	(0xFFE8C)
+#define GLOBAL_TLBIALL	(0xFFF00)
+#define TLBIVMID	(0xFFF04)
+#define CR		(0xFFF80)
+#define EAR		(0xFFF84)
+#define ESR		(0xFFF88)
+#define ESRRESTORE	(0xFFF8C)
+#define ESYNR0		(0xFFF90)
+#define ESYNR1		(0xFFF94)
+#define REV		(0xFFFF4)
+#define IDR		(0xFFFF8)
+#define RPU_ACR		(0xFFFFC)
 
 
 /* Context Bank Registers */
-#define SCTLR   (0x000)
-#define ACTLR   (0x004)
-#define CONTEXTIDR  (0x008)
-#define TTBR0   (0x010)
-#define TTBR1   (0x014)
-#define TTBCR   (0x018)
-#define PAR   (0x01C)
-#define FSR   (0x020)
-#define FSRRESTORE  (0x024)
-#define FAR   (0x028)
-#define FSYNR0    (0x02C)
-#define FSYNR1    (0x030)
-#define PRRR    (0x034)
-#define NMRR    (0x038)
-#define TLBLCKR   (0x03C)
-#define V2PSR   (0x040)
-#define TLBFLPTER (0x044)
-#define TLBSLPTER (0x048)
-#define BFBCR   (0x04C)
-#define CTX_TLBIALL (0x800)
-#define TLBIASID  (0x804)
-#define TLBIVA    (0x808)
-#define TLBIVAA   (0x80C)
-#define V2PPR   (0x810)
-#define V2PPW   (0x814)
-#define V2PUR   (0x818)
-#define V2PUW   (0x81C)
-#define RESUME    (0x820)
+#define SCTLR		(0x000)
+#define ACTLR		(0x004)
+#define CONTEXTIDR	(0x008)
+#define TTBR0		(0x010)
+#define TTBR1		(0x014)
+#define TTBCR		(0x018)
+#define PAR		(0x01C)
+#define FSR		(0x020)
+#define FSRRESTORE	(0x024)
+#define FAR		(0x028)
+#define FSYNR0		(0x02C)
+#define FSYNR1		(0x030)
+#define PRRR		(0x034)
+#define NMRR		(0x038)
+#define TLBLCKR		(0x03C)
+#define V2PSR		(0x040)
+#define TLBFLPTER	(0x044)
+#define TLBSLPTER	(0x048)
+#define BFBCR		(0x04C)
+#define CTX_TLBIALL	(0x800)
+#define TLBIASID	(0x804)
+#define TLBIVA		(0x808)
+#define TLBIVAA		(0x80C)
+#define V2PPR		(0x810)
+#define V2PPW		(0x814)
+#define V2PUR		(0x818)
+#define V2PUW		(0x81C)
+#define RESUME		(0x820)
 
 
 /* Global Register Fields */
@@ -904,7 +904,7 @@
 #define ESYNR1_AMEMTYPE      (ESYNR1_AMEMTYPE_MASK    << ESYNR1_AMEMTYPE_SHIFT)
 #define ESYNR1_ASHARED       (ESYNR1_ASHARED_MASK     << ESYNR1_ASHARED_SHIFT)
 #define ESYNR1_AINNERSHARED  (ESYNR1_AINNERSHARED_MASK<< \
-                              ESYNR1_AINNERSHARED_SHIFT)
+						ESYNR1_AINNERSHARED_SHIFT)
 #define ESYNR1_APRIV         (ESYNR1_APRIV_MASK       << ESYNR1_APRIV_SHIFT)
 #define ESYNR1_APROTNS       (ESYNR1_APROTNS_MASK     << ESYNR1_APROTNS_SHIFT)
 #define ESYNR1_AINST         (ESYNR1_AINST_MASK       << ESYNR1_AINST_SHIFT)

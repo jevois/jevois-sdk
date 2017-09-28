@@ -1,7 +1,7 @@
 /*
  * arch/arm/mach-sunxi/include/mach/sunxi-smc.h
  *
- * Copyright(c) 2013-2015 Allwinnertech Co., Ltd.
+ * Copyright(c) 2013-2015 Allwinnertech Co., Ltd. 
  *         http://www.allwinnertech.com
  *
  * Author: sunny <sunny@allwinnertech.com>
@@ -31,49 +31,47 @@
 #define TE_SMC_LOAD_ARISC               (0xFFFF0006)
 #define TE_SMC_SET_SMP_BOOTENTRY        (0xFFFF0007)
 #define TE_SMC_GET_DRM_MEM_INFO         (0xFFFF0008)
-#define TE_SMC_SUSPEND_PAREPER    (0xFFFF0009)
+#define TE_SMC_SUSPEND_PAREPER		(0xFFFF0009)
 
-#define TE_SMC_STANDBY_STATUS_CLEAR (0xFFFF0010)
-#define TE_SMC_STANDBY_STATUS_SET (0xFFFF0011)
-#define TE_SMC_STANDBY_STATUS_GET (0xFFFF0012)
+#define TE_SMC_STANDBY_STATUS_CLEAR	(0xFFFF0010)
+#define TE_SMC_STANDBY_STATUS_SET	(0xFFFF0011)
+#define TE_SMC_STANDBY_STATUS_GET	(0xFFFF0012)
 
 struct smc_param {
-  u32 a0;
-  u32 a1;
-  u32 a2;
-  u32 a3;
+	u32 a0;
+	u32 a1;
+	u32 a2;
+	u32 a3;
 };
 
-u32 sunxi_smc_call (struct smc_param * param);
+u32 sunxi_smc_call(struct smc_param *param);
 
 #if  defined(CONFIG_SUNXI_TRUSTZONE)
-static inline u32 sunxi_smc_readl (void __iomem * addr)
+static inline u32 sunxi_smc_readl(void __iomem *addr)
 {
-  if (sunxi_soc_is_secure() ) {
-    return call_firmware_op (read_reg, addr);
-  }
-  else {
-    return readl (addr);
-  }
-  
+	if (sunxi_soc_is_secure()) {
+		return call_firmware_op(read_reg, addr);
+	} else {
+		return readl(addr);
+	}
+	
 }
-static inline void sunxi_smc_writel (u32 val, void __iomem * addr)
+static inline void sunxi_smc_writel(u32 val, void __iomem *addr)
 {
-  if (sunxi_soc_is_secure() ) {
-    call_firmware_op (write_reg, val, addr);
-  }
-  else {
-    writel (val, addr);
-  }
+	if (sunxi_soc_is_secure()) {
+		call_firmware_op(write_reg, val, addr);
+	} else {
+		writel(val, addr);
+	}
 }
 #else
-static inline u32 sunxi_smc_readl (void __iomem * addr)
+static inline u32 sunxi_smc_readl(void __iomem *addr)
 {
-  return readl (addr);
+	return readl(addr);	
 }
-static inline void sunxi_smc_writel (u32 val, void __iomem * addr)
+static inline void sunxi_smc_writel(u32 val, void __iomem *addr)
 {
-  writel (val, addr);
+	writel(val, addr);
 }
 #endif
 

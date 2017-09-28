@@ -36,38 +36,38 @@ struct key_entry;
 struct asus_wmi;
 
 struct quirk_entry {
-  bool hotplug_wireless;
-  bool scalar_panel_brightness;
-  bool store_backlight_power;
-  int wapf;
+	bool hotplug_wireless;
+	bool scalar_panel_brightness;
+	bool store_backlight_power;
+	int wapf;
 };
 
 struct asus_wmi_driver {
-  int     brightness;
-  int     panel_power;
-  
-  const char  *  name;
-  struct module  * owner;
-  
-  const char  *  event_guid;
-  
-  const struct key_entry * keymap;
-  const char  *  input_name;
-  const char  *  input_phys;
-  struct quirk_entry * quirks;
-  /* Returns new code, value, and autorelease values in arguments.
-   * Return ASUS_WMI_KEY_IGNORE in code if event should be ignored. */
-  void (*key_filter) (struct asus_wmi_driver * driver, int * code,
-                      unsigned int * value, bool * autorelease);
-                      
-  int (*probe) (struct platform_device * device);
-  void (*detect_quirks) (struct asus_wmi_driver * driver);
-  
-  struct platform_driver  platform_driver;
-  struct platform_device * platform_device;
+	int			brightness;
+	int			panel_power;
+
+	const char		*name;
+	struct module		*owner;
+
+	const char		*event_guid;
+
+	const struct key_entry	*keymap;
+	const char		*input_name;
+	const char		*input_phys;
+	struct quirk_entry	*quirks;
+	/* Returns new code, value, and autorelease values in arguments.
+	 * Return ASUS_WMI_KEY_IGNORE in code if event should be ignored. */
+	void (*key_filter) (struct asus_wmi_driver *driver, int *code,
+			    unsigned int *value, bool *autorelease);
+
+	int (*probe) (struct platform_device *device);
+	void (*detect_quirks) (struct asus_wmi_driver *driver);
+
+	struct platform_driver	platform_driver;
+	struct platform_device *platform_device;
 };
 
-int asus_wmi_register_driver (struct asus_wmi_driver * driver);
-void asus_wmi_unregister_driver (struct asus_wmi_driver * driver);
+int asus_wmi_register_driver(struct asus_wmi_driver *driver);
+void asus_wmi_unregister_driver(struct asus_wmi_driver *driver);
 
 #endif /* !_ASUS_WMI_H_ */

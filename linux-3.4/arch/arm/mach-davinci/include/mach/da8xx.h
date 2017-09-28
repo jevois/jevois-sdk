@@ -26,8 +26,8 @@
 #include <mach/pm.h>
 #include <mach/spi.h>
 
-extern void __iomem * da8xx_syscfg0_base;
-extern void __iomem * da8xx_syscfg1_base;
+extern void __iomem *da8xx_syscfg0_base;
+extern void __iomem *da8xx_syscfg1_base;
 
 /*
  * If the DA850/OMAP-L138/AM18x SoC on board is of a higher speed grade
@@ -43,55 +43,55 @@ extern unsigned int da850_max_speed;
  * mapped early on when the I/O space is mapped and we'll put it just
  * before the I/O space in the processor's virtual memory space.
  */
-#define DA8XX_CP_INTC_BASE  0xfffee000
-#define DA8XX_CP_INTC_SIZE  SZ_8K
-#define DA8XX_CP_INTC_VIRT  (IO_VIRT - DA8XX_CP_INTC_SIZE - SZ_4K)
+#define DA8XX_CP_INTC_BASE	0xfffee000
+#define DA8XX_CP_INTC_SIZE	SZ_8K
+#define DA8XX_CP_INTC_VIRT	(IO_VIRT - DA8XX_CP_INTC_SIZE - SZ_4K)
 
-#define DA8XX_SYSCFG0_BASE  (IO_PHYS + 0x14000)
-#define DA8XX_SYSCFG0_VIRT(x) (da8xx_syscfg0_base + (x))
-#define DA8XX_JTAG_ID_REG 0x18
-#define DA8XX_CFGCHIP0_REG  0x17c
-#define DA8XX_CFGCHIP2_REG  0x184
-#define DA8XX_CFGCHIP3_REG  0x188
+#define DA8XX_SYSCFG0_BASE	(IO_PHYS + 0x14000)
+#define DA8XX_SYSCFG0_VIRT(x)	(da8xx_syscfg0_base + (x))
+#define DA8XX_JTAG_ID_REG	0x18
+#define DA8XX_CFGCHIP0_REG	0x17c
+#define DA8XX_CFGCHIP2_REG	0x184
+#define DA8XX_CFGCHIP3_REG	0x188
 
-#define DA8XX_SYSCFG1_BASE  (IO_PHYS + 0x22C000)
-#define DA8XX_SYSCFG1_VIRT(x) (da8xx_syscfg1_base + (x))
-#define DA8XX_DEEPSLEEP_REG 0x8
-#define DA8XX_PWRDN_REG   0x18
+#define DA8XX_SYSCFG1_BASE	(IO_PHYS + 0x22C000)
+#define DA8XX_SYSCFG1_VIRT(x)	(da8xx_syscfg1_base + (x))
+#define DA8XX_DEEPSLEEP_REG	0x8
+#define DA8XX_PWRDN_REG		0x18
 
-#define DA8XX_PSC0_BASE   0x01c10000
-#define DA8XX_PLL0_BASE   0x01c11000
-#define DA8XX_TIMER64P0_BASE  0x01c20000
-#define DA8XX_TIMER64P1_BASE  0x01c21000
-#define DA8XX_GPIO_BASE   0x01e26000
-#define DA8XX_PSC1_BASE   0x01e27000
-#define DA8XX_AEMIF_CS2_BASE  0x60000000
-#define DA8XX_AEMIF_CS3_BASE  0x62000000
-#define DA8XX_AEMIF_CTL_BASE  0x68000000
-#define DA8XX_ARM_RAM_BASE  0xffff0000
+#define DA8XX_PSC0_BASE		0x01c10000
+#define DA8XX_PLL0_BASE		0x01c11000
+#define DA8XX_TIMER64P0_BASE	0x01c20000
+#define DA8XX_TIMER64P1_BASE	0x01c21000
+#define DA8XX_GPIO_BASE		0x01e26000
+#define DA8XX_PSC1_BASE		0x01e27000
+#define DA8XX_AEMIF_CS2_BASE	0x60000000
+#define DA8XX_AEMIF_CS3_BASE	0x62000000
+#define DA8XX_AEMIF_CTL_BASE	0x68000000
+#define DA8XX_ARM_RAM_BASE	0xffff0000
 
-void __init da830_init (void);
-void __init da850_init (void);
+void __init da830_init(void);
+void __init da850_init(void);
 
-int da830_register_edma (struct edma_rsv_info * rsv);
-int da850_register_edma (struct edma_rsv_info * rsv[2]);
-int da8xx_register_i2c (int instance, struct davinci_i2c_platform_data * pdata);
-int da8xx_register_spi (int instance, struct spi_board_info * info, unsigned len);
-int da8xx_register_watchdog (void);
-int da8xx_register_usb20 (unsigned mA, unsigned potpgt);
-int da8xx_register_usb11 (struct da8xx_ohci_root_hub * pdata);
-int da8xx_register_emac (void);
-int da8xx_register_lcdc (struct da8xx_lcdc_platform_data * pdata);
-int da8xx_register_mmcsd0 (struct davinci_mmc_config * config);
-int da850_register_mmcsd1 (struct davinci_mmc_config * config);
-void __init da8xx_register_mcasp (int id, struct snd_platform_data * pdata);
-int da8xx_register_rtc (void);
-int da850_register_cpufreq (char * async_clk);
-int da8xx_register_cpuidle (void);
-void __iomem * __init da8xx_get_mem_ctlr (void);
-int da850_register_pm (struct platform_device * pdev);
-int __init da850_register_sata (unsigned long refclkpn);
-void da8xx_restart (char mode, const char * cmd);
+int da830_register_edma(struct edma_rsv_info *rsv);
+int da850_register_edma(struct edma_rsv_info *rsv[2]);
+int da8xx_register_i2c(int instance, struct davinci_i2c_platform_data *pdata);
+int da8xx_register_spi(int instance, struct spi_board_info *info, unsigned len);
+int da8xx_register_watchdog(void);
+int da8xx_register_usb20(unsigned mA, unsigned potpgt);
+int da8xx_register_usb11(struct da8xx_ohci_root_hub *pdata);
+int da8xx_register_emac(void);
+int da8xx_register_lcdc(struct da8xx_lcdc_platform_data *pdata);
+int da8xx_register_mmcsd0(struct davinci_mmc_config *config);
+int da850_register_mmcsd1(struct davinci_mmc_config *config);
+void __init da8xx_register_mcasp(int id, struct snd_platform_data *pdata);
+int da8xx_register_rtc(void);
+int da850_register_cpufreq(char *async_clk);
+int da8xx_register_cpuidle(void);
+void __iomem * __init da8xx_get_mem_ctlr(void);
+int da850_register_pm(struct platform_device *pdev);
+int __init da850_register_sata(unsigned long refclkpn);
+void da8xx_restart(char mode, const char *cmd);
 
 extern struct platform_device da8xx_serial_device;
 extern struct emac_platform_data da8xx_emac_pdata;

@@ -23,17 +23,17 @@
 #include "../ctype.h"
 
 /* misc.c */
-extern struct boot_params * real_mode;  /* Pointer to real-mode data */
-void __putstr (int error, const char * s);
+extern struct boot_params *real_mode;		/* Pointer to real-mode data */
+void __putstr(int error, const char *s);
 #define putstr(__x)  __putstr(0, __x)
 #define puts(__x)  __putstr(0, __x)
 
 /* cmdline.c */
-int cmdline_find_option (const char * option, char * buffer, int bufsize);
-int cmdline_find_option_bool (const char * option);
+int cmdline_find_option(const char *option, char *buffer, int bufsize);
+int cmdline_find_option_bool(const char *option);
 
 /* early_serial_console.c */
 extern int early_serial_base;
-void console_init (void);
+void console_init(void);
 
 #endif

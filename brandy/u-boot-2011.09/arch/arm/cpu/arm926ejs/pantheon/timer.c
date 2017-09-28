@@ -30,33 +30,33 @@
  * Refer 6.2.9 in Datasheet
  */
 struct panthtmr_registers {
-  u32 clk_ctrl; /* Timer clk control reg */
-  u32 match[9]; /* Timer match registers */
-  u32 count[3]; /* Timer count registers */
-  u32 status[3];
-  u32 ie[3];
-  u32 preload[3]; /* Timer preload value */
-  u32 preload_ctrl[3];
-  u32 wdt_match_en;
-  u32 wdt_match_r;
-  u32 wdt_val;
-  u32 wdt_sts;
-  u32 icr[3];
-  u32 wdt_icr;
-  u32 cer;  /* Timer count enable reg */
-  u32 cmr;
-  u32 ilr[3];
-  u32 wcr;
-  u32 wfar;
-  u32 wsar;
-  u32 cvwr[3];
+	u32 clk_ctrl;	/* Timer clk control reg */
+	u32 match[9];	/* Timer match registers */
+	u32 count[3];	/* Timer count registers */
+	u32 status[3];
+	u32 ie[3];
+	u32 preload[3];	/* Timer preload value */
+	u32 preload_ctrl[3];
+	u32 wdt_match_en;
+	u32 wdt_match_r;
+	u32 wdt_val;
+	u32 wdt_sts;
+	u32 icr[3];
+	u32 wdt_icr;
+	u32 cer;	/* Timer count enable reg */
+	u32 cmr;
+	u32 ilr[3];
+	u32 wcr;
+	u32 wfar;
+	u32 wsar;
+	u32 cvwr[3];
 };
 
-#define TIMER     0 /* Use TIMER 0 */
+#define TIMER			0	/* Use TIMER 0 */
 /* Each timer has 3 match registers */
-#define MATCH_CMP(x)    ((3 * TIMER) + x)
-#define TIMER_LOAD_VAL    0xffffffff
-#define COUNT_RD_REQ    0x1
+#define MATCH_CMP(x)		((3 * TIMER) + x)
+#define TIMER_LOAD_VAL 		0xffffffff
+#define	COUNT_RD_REQ		0x1
 
 DECLARE_GLOBAL_DATA_PTR;
 /* Using gd->tbu from timestamp and gd->tbl for lastdec */
@@ -66,94 +66,93 @@ DECLARE_GLOBAL_DATA_PTR;
  * first set read request to register cvwr and then read same
  * register after it captures counter value.
  */
-ulong read_timer (void)
+ulong read_timer(void)
 {
-  struct panthtmr_registers * panthtimers =
-    (struct panthtmr_registers *) PANTHEON_TIMER_BASE;
-  volatile int loop = 100;
-  ulong val;
-  
-  writel (COUNT_RD_REQ, &panthtimers->cvwr);
-  while (loop--)
-  { val = readl (&panthtimers->cvwr); }
-  
-  /*
-   * This stop gcc complain and prevent loop mistake init to 0
-   */
-  val = readl (&panthtimers->cvwr);
-  
-  return val;
+	struct panthtmr_registers *panthtimers =
+		(struct panthtmr_registers *) PANTHEON_TIMER_BASE;
+	volatile int loop=100;
+	ulong val;
+
+	writel(COUNT_RD_REQ, &panthtimers->cvwr);
+	while (loop--)
+		val = readl(&panthtimers->cvwr);
+
+	/*
+	 * This stop gcc complain and prevent loop mistake init to 0
+	 */
+	val = readl(&panthtimers->cvwr);
+
+	return val;
 }
 
-ulong get_timer_masked (void)
+ulong get_timer_masked(void)
 {
-  ulong now = read_timer();
-  
-  if (now >= gd->tbl) {
-    /* normal mode */
-    gd->tbu += now - gd->tbl;
-  }
-  else {
-    /* we have an overflow ... */
-    gd->tbu += now + TIMER_LOAD_VAL - gd->tbl;
-  }
-  gd->tbl = now;
-  
-  return gd->tbu;
+	ulong now = read_timer();
+
+	if (now >= gd->tbl) {
+		/* normal mode */
+		gd->tbu += now - gd->tbl;
+	} else {
+		/* we have an overflow ... */
+		gd->tbu += now + TIMER_LOAD_VAL - gd->tbl;
+	}
+	gd->tbl = now;
+
+	return gd->tbu;
 }
 
-ulong get_timer (ulong base)
+ulong get_timer(ulong base)
 {
-  return ( (get_timer_masked() / (CONFIG_SYS_HZ_CLOCK / 1000) ) -
-           base);
+	return ((get_timer_masked() / (CONFIG_SYS_HZ_CLOCK / 1000)) -
+		base);
 }
 
-void __udelay (unsigned long usec)
+void __udelay(unsigned long usec)
 {
-  ulong delayticks;
-  ulong endtime;
-  
-  delayticks = (usec * (CONFIG_SYS_HZ_CLOCK / 1000000) );
-  endtime = get_timer_masked() + delayticks;
-  
-  while (get_timer_masked() < endtime)
-    ;
+	ulong delayticks;
+	ulong endtime;
+
+	delayticks = (usec * (CONFIG_SYS_HZ_CLOCK / 1000000));
+	endtime = get_timer_masked() + delayticks;
+
+	while (get_timer_masked() < endtime)
+		;
 }
 
 /*
  * init the Timer
  */
-int timer_init (void)
+int timer_init(void)
 {
-  struct panthapb_registers * apb1clkres =
-    (struct panthapb_registers *) PANTHEON_APBC_BASE;
-  struct panthtmr_registers * panthtimers =
-    (struct panthtmr_registers *) PANTHEON_TIMER_BASE;
-    
-  /* Enable Timer clock at 3.25 MHZ */
-  writel (APBC_APBCLK | APBC_FNCLK | APBC_FNCLKSEL (3), &apb1clkres->timers);
-  
-  /* load value into timer */
-  writel (0x0, &panthtimers->clk_ctrl);
-  /* Use Timer 0 Match Resiger 0 */
-  writel (TIMER_LOAD_VAL, &panthtimers->match[MATCH_CMP (0)]);
-  /* Preload value is 0 */
-  writel (0x0, &panthtimers->preload[TIMER]);
-  /* Enable match comparator 0 for Timer 0 */
-  writel (0x1, &panthtimers->preload_ctrl[TIMER]);
-  
-  /* Enable timer 0 */
-  writel (0x1, &panthtimers->cer);
-  /* init the gd->tbu and gd->tbl value */
-  gd->tbl = read_timer();
-  gd->tbu = 0;
-  
-  return 0;
+	struct panthapb_registers *apb1clkres =
+		(struct panthapb_registers *) PANTHEON_APBC_BASE;
+	struct panthtmr_registers *panthtimers =
+		(struct panthtmr_registers *) PANTHEON_TIMER_BASE;
+
+	/* Enable Timer clock at 3.25 MHZ */
+	writel(APBC_APBCLK | APBC_FNCLK | APBC_FNCLKSEL(3), &apb1clkres->timers);
+
+	/* load value into timer */
+	writel(0x0, &panthtimers->clk_ctrl);
+	/* Use Timer 0 Match Resiger 0 */
+	writel(TIMER_LOAD_VAL, &panthtimers->match[MATCH_CMP(0)]);
+	/* Preload value is 0 */
+	writel(0x0, &panthtimers->preload[TIMER]);
+	/* Enable match comparator 0 for Timer 0 */
+	writel(0x1, &panthtimers->preload_ctrl[TIMER]);
+
+	/* Enable timer 0 */
+	writel(0x1, &panthtimers->cer);
+	/* init the gd->tbu and gd->tbl value */
+	gd->tbl = read_timer();
+	gd->tbu = 0;
+
+	return 0;
 }
 
-#define MPMU_APRR_WDTR  (1<<4)
-#define TMR_WFAR  0xbaba  /* WDT Register First key */
-#define TMP_WSAR  0xeb10  /* WDT Register Second key */
+#define MPMU_APRR_WDTR	(1<<4)
+#define TMR_WFAR	0xbaba	/* WDT Register First key */
+#define TMP_WSAR	0xeb10	/* WDT Register Second key */
 
 /*
  * This function uses internal Watchdog Timer
@@ -165,35 +164,35 @@ int timer_init (void)
  */
 void reset_cpu (unsigned long ignored)
 {
-  struct panthmpmu_registers * mpmu =
-    (struct panthmpmu_registers *) PANTHEON_MPMU_BASE;
-  struct panthtmr_registers * panthtimers =
-    (struct panthtmr_registers *) PANTHEON_WD_TIMER_BASE;
-  u32 val;
-  
-  /* negate hardware reset to the WDT after system reset */
-  val = readl (&mpmu->aprr);
-  val = val | MPMU_APRR_WDTR;
-  writel (val, &mpmu->aprr);
-  
-  /* reset/enable WDT clock */
-  writel (APBC_APBCLK, &mpmu->wdtpcr);
-  
-  /* clear previous WDT status */
-  writel (TMR_WFAR, &panthtimers->wfar);
-  writel (TMP_WSAR, &panthtimers->wsar);
-  writel (0, &panthtimers->wdt_sts);
-  
-  /* set match counter */
-  writel (TMR_WFAR, &panthtimers->wfar);
-  writel (TMP_WSAR, &panthtimers->wsar);
-  writel (0xf, &panthtimers->wdt_match_r);
-  
-  /* enable WDT reset */
-  writel (TMR_WFAR, &panthtimers->wfar);
-  writel (TMP_WSAR, &panthtimers->wsar);
-  writel (0x3, &panthtimers->wdt_match_en);
-  
-  /*enable functional WDT clock */
-  writel (APBC_APBCLK | APBC_FNCLK, &mpmu->wdtpcr);
+	struct panthmpmu_registers *mpmu =
+		(struct panthmpmu_registers *) PANTHEON_MPMU_BASE;
+	struct panthtmr_registers *panthtimers =
+		(struct panthtmr_registers *) PANTHEON_WD_TIMER_BASE;
+	u32 val;
+
+	/* negate hardware reset to the WDT after system reset */
+	val = readl(&mpmu->aprr);
+	val = val | MPMU_APRR_WDTR;
+	writel(val, &mpmu->aprr);
+
+	/* reset/enable WDT clock */
+	writel(APBC_APBCLK, &mpmu->wdtpcr);
+
+	/* clear previous WDT status */
+	writel(TMR_WFAR, &panthtimers->wfar);
+	writel(TMP_WSAR, &panthtimers->wsar);
+	writel(0, &panthtimers->wdt_sts);
+
+	/* set match counter */
+	writel(TMR_WFAR, &panthtimers->wfar);
+	writel(TMP_WSAR, &panthtimers->wsar);
+	writel(0xf, &panthtimers->wdt_match_r);
+
+	/* enable WDT reset */
+	writel(TMR_WFAR, &panthtimers->wfar);
+	writel(TMP_WSAR, &panthtimers->wsar);
+	writel(0x3, &panthtimers->wdt_match_en);
+
+	/*enable functional WDT clock */
+	writel(APBC_APBCLK | APBC_FNCLK, &mpmu->wdtpcr);
 }

@@ -46,14 +46,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "pvrsrv_error.h"
 
 typedef struct _PVR_IRQ_PRIV_DATA_ PVR_IRQ_PRIV_DATA;
-typedef IMG_BOOL (*PFN_SYS_LISR) (IMG_VOID * pvData);
+typedef IMG_BOOL (*PFN_SYS_LISR)(IMG_VOID *pvData);
 
-PVRSRV_ERROR OSInstallSystemLISR (IMG_HANDLE * phLISR,
-                                  IMG_UINT32 ui32IRQ,
-                                  PVR_IRQ_PRIV_DATA * psPrivData,
-                                  PFN_SYS_LISR pfnLISR,
-                                  IMG_VOID * pvData);
+PVRSRV_ERROR OSInstallSystemLISR(IMG_HANDLE *phLISR, 
+				 IMG_UINT32 ui32IRQ, 
+				 PVR_IRQ_PRIV_DATA *psPrivData, 
+				 PFN_SYS_LISR pfnLISR, 
+				 IMG_VOID *pvData);
 
-PVRSRV_ERROR OSUninstallSystemLISR (IMG_HANDLE hLISRData);
+PVRSRV_ERROR OSUninstallSystemLISR(IMG_HANDLE hLISRData);
 
 #endif /* !defined(__INTERRUPT_SUPPORT_H__) */

@@ -16,14 +16,13 @@
 #include <mach/hardware.h>
 #include <mach/generic.h>
 
-void spear_restart (char mode, const char * cmd)
+void spear_restart(char mode, const char *cmd)
 {
-  if (mode == 's') {
-    /* software reset, Jump into ROM at address 0 */
-    soft_restart (0);
-  }
-  else {
-    /* hardware reset, Use on-chip reset capability */
-    sysctl_soft_reset ( (void __iomem *) VA_SPEAR_SYS_CTRL_BASE);
-  }
+	if (mode == 's') {
+		/* software reset, Jump into ROM at address 0 */
+		soft_restart(0);
+	} else {
+		/* hardware reset, Use on-chip reset capability */
+		sysctl_soft_reset((void __iomem *)VA_SPEAR_SYS_CTRL_BASE);
+	}
 }

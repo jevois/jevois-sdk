@@ -1,10 +1,10 @@
 /*
 **********************************************************************************************************************
 *
-*                      the Embedded Secure Bootloader System
+*						           the Embedded Secure Bootloader System
 *
 *
-*                  Copyright(C), 2006-2014, Allwinnertech Co., Ltd.
+*						       Copyright(C), 2006-2014, Allwinnertech Co., Ltd.
 *                                           All Rights Reserved
 *
 * File    :
@@ -13,7 +13,7 @@
 *
 * Version : V2.00
 *
-* Date    :
+* Date	  :
 *
 * Descript:
 **********************************************************************************************************************
@@ -37,20 +37,20 @@
 *
 ************************************************************************************************************
 */
-uint rtc_region_probe_fel_flag (void)
+uint rtc_region_probe_fel_flag(void)
 {
-  uint fel_flag, reg_value;
-  int  i;
-  
-  fel_flag = readl (RTC_GENERAL_PURPOSE_REG (2) );
-  printf ("fel flag  = 0x%x\n", fel_flag);
-  for (i = 0; i < 8; i++)
-  {
-    reg_value = readl (RTC_GENERAL_PURPOSE_REG (i) );
-    printf ("rtc[%d] value = 0x%x\n", i, reg_value);
-  }
-  
-  return fel_flag;
+	uint fel_flag, reg_value;
+	int  i;
+
+    fel_flag = readl(RTC_GENERAL_PURPOSE_REG(2));
+    printf("fel flag  = 0x%x\n", fel_flag);
+	for(i=0;i<8;i++)
+	{
+		reg_value = readl(RTC_GENERAL_PURPOSE_REG(i));
+		printf("rtc[%d] value = 0x%x\n", i, reg_value);
+	}
+
+	return fel_flag;
 }
 /*
 ************************************************************************************************************
@@ -68,9 +68,9 @@ uint rtc_region_probe_fel_flag (void)
 *
 ************************************************************************************************************
 */
-void rtc_region_clear_fel_flag (void)
+void rtc_region_clear_fel_flag(void)
 {
-  writel (0, RTC_GENERAL_PURPOSE_REG (2) );
+    writel(0, RTC_GENERAL_PURPOSE_REG(2));
 }
 
 

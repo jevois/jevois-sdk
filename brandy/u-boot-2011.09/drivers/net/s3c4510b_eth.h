@@ -1,7 +1,7 @@
 #ifndef __S3C4510B_ETH_H
 #define __S3C4510B_ETH_H
 /*
- * Copyright (c) 2004 Cucy Systems (http://www.cucy.com)
+ * Copyright (c) 2004	Cucy Systems (http://www.cucy.com)
  * Curt Brune <curt@cucy.com>
  *
  * See file CREDITS for list of people who contributed to this
@@ -35,9 +35,9 @@
 
 /*  Buffered DMA Receiver Control Register  */
 #define ETH_BRxBRST     0x0000F  /*  BDMA Rx Burst Size * BRxBRST  */
-/*  = Burst Data Size 16 */
+				 /*  = Burst Data Size 16 */
 #define ETH_BRxSTSKO    0x00020  /*  BDMA Rx Stop/Skip  Frame or Interrupt(=1)  */
-/*  case of not OWNER the current Frame  */
+				 /*  case of not OWNER the current Frame  */
 #define ETH_BRxMAINC    0x00040  /*  BDMA Rx Memory Address Inc/Dec  */
 #define ETH_BRxDIE      0x00080  /*  BDMA Rx Every Received Frame Interrupt Enable */
 #define ETH_BRxNLIE     0x00100  /*  BDMA Rx NULL List Interrupt Enable  */
@@ -56,9 +56,9 @@
 /*  Buffered DMA Trasmit Control Register(BDMATXCON)  */
 #define ETH_BTxBRST     0x0000F  /*  BDMA Tx Burst Size = 16  */
 #define ETH_BTxSTSKO    0x00020  /*  BDMA Tx Stop/Skip Frame or Interrupt in case */
-/*  of not Owner the current frame  */
+				 /*  of not Owner the current frame  */
 #define ETH_BTxCPIE     0x00080  /*  BDMA Tx Complete to send control  */
-/*  packet Enable */
+				 /*  packet Enable */
 #define ETH_BTxNOIE     0x00200  /*  BDMA Tx Buffer Not Owner */
 #define ETH_BTxEmpty    0x00400  /*  BDMA Tx Buffer Empty Interrupt  */
 
@@ -89,12 +89,12 @@
 
 /*  MAC Control Register  */
 #define ETH_HaltReg     0x0001   /*  stop transmission and reception  */
-/*  after completion of any current packets  */
+				 /*  after completion of any current packets  */
 #define ETH_HaltImm     0x0002   /*  Stop transmission and reception immediately  */
 #define ETH_SwReset     0x0004   /*  reset all Ethernet controller state machines */
-/*  and FIFOs  */
+				 /*  and FIFOs  */
 #define ETH_FullDup     0x0008   /*  allow transmission to begin while reception */
-/*  is occurring  */
+				 /*  is occurring  */
 #define ETH_MACLoop     0x0010   /*  MAC loopback */
 #define ETH_ConnM00     0x0000   /*  Automatic-default  */
 #define ETH_ConnM01     0x0020   /*  Force 10Mbits endec */
@@ -104,20 +104,20 @@
 #define ETH_MissRoll    0x0400   /*  Missed error counter rolled over  */
 #define ETH_MDCOFF      0x1000   /*  MII Station Management Clock Off */
 #define ETH_EnMissRoll  0x2000   /*  Interrupt when missed error counter rolls  */
-/*  over  */
+				 /*  over  */
 #define ETH_Link10      0x8000   /*  Link status 10Mbps  */
 
 /*  CAM control register(CAMCON)  */
 #define ETH_StationAcc  0x0001   /*  Accept any packet with a unicast station  */
-/*  address  */
+				 /*  address  */
 #define ETH_GroupAcc    0x0002   /*  Accept any packet with multicast-group  */
-/*  station address   */
+				 /*  station address   */
 #define ETH_BroadAcc    0x0004   /*  Accept any packet with a broadcast station */
-/*  address  */
+				 /*  address  */
 #define ETH_NegCAM      0x0008   /*  0: Accept packets CAM recognizes,  */
-/*     reject others */
-/*  1: reject packets CAM recognizes,  */
-/*     accept others  */
+				 /*     reject others */
+				 /*  1: reject packets CAM recognizes,  */
+				 /*     accept others  */
 #define ETH_CompEn      0x0010   /*  Compare Enable mode */
 
 /*  Transmit Control Register(MACTXCON) */
@@ -133,32 +133,32 @@
 #define ETH_EnDefer     0x0200   /*  Enable Deferral */
 #define ETH_EnNCarr     0x0400   /*  Enable No Carrier  */
 #define ETH_EnExColl    0x0800   /*  interrupt if 16 collision occur  */
-/*  in the same packet  */
+				 /*  in the same packet  */
 #define ETH_EnLateColl  0x1000   /*  interrupt if collision occurs after  */
-/*  512 bit times(64 bytes times)  */
+				 /*  512 bit times(64 bytes times)  */
 #define ETH_EnTxPar     0x2000   /*  interrupt if the MAC transmit FIFO  */
-/*  has a parity error  */
+				 /*  has a parity error  */
 #define ETH_EnComp      0x4000   /*  interrupt when the MAC transmits or  */
-/*  discards one packet  */
+				 /*  discards one packet  */
 
 /*  Transmit Status Register(MACTXSTAT) */
 #define ETH_ExColl      0x0010   /*  Excessive collision  */
 #define ETH_TxDeffered  0x0020   /*  set if 16 collisions occur for same packet */
 #define ETH_Paused      0x0040   /*  packet waited because of pause during  */
-/*  transmission  */
+				 /*  transmission  */
 #define ETH_IntTx       0x0080   /*  set if transmission of packet causes an  */
-/*  interrupt condiftion  */
+				 /*  interrupt condiftion  */
 #define ETH_Under       0x0100   /*  MAC transmit FIFO becomes empty during  */
-/*  transmission  */
+				 /*  transmission  */
 #define ETH_Defer       0x0200   /*  MAC defers for MAC deferral  */
 #define ETH_NCarr       0x0400   /*  No carrier sense detected during the  */
-/*  transmission of a packet  */
+				 /*  transmission of a packet  */
 #define ETH_SQE         0x0800   /*  Signal Quality Error */
 #define ETH_LateColl    0x1000   /*  a collision occures after 512 bit times  */
 #define ETH_TxPar       0x2000   /*  MAC transmit FIFO has detected a parity error */
 #define ETH_Comp        0x4000   /*  MAC transmit or discards one packet  */
 #define ETH_TxHalted    0x8000   /*  Transmission was halted by clearing  */
-/*  TxEn or Halt immedite  */
+				 /*  TxEn or Halt immedite  */
 
 /*  Receive Control Register (MACRXCON)  */
 #define ETH_RxEn        0x0001
@@ -195,108 +195,108 @@
 
 /*  bit field for frame data pointer word */
 typedef struct __BF_FrameDataPtr {
-  u32 dataPtr: 31;
-  u32   owner: 1;
+	u32 dataPtr:31;
+	u32   owner: 1;
 } BF_FrameDataPtr;
 
 typedef union _FrameDataPtr {
-  u32             ui;
-  BF_FrameDataPtr bf;
+	u32             ui;
+	BF_FrameDataPtr bf;
 } FrameDataPtr;
 
 typedef struct __BF_TX_Options {
-  u32    no_padding: 1;
-  u32        no_crc: 1;
-  u32  macTxIrqEnbl: 1;
-  u32  littleEndian: 1;
-  u32  frameDataDir: 1;
-  u32   widgetAlign: 2;
-  u32      reserved: 25;
+	u32    no_padding: 1;
+	u32        no_crc: 1;
+	u32  macTxIrqEnbl: 1;
+	u32  littleEndian: 1;
+	u32  frameDataDir: 1;
+	u32   widgetAlign: 2;
+	u32      reserved:25;
 } BF_TX_Options;
 
 typedef union _TX_Options {
-  u32    ui;
-  BF_TX_Options   bf;
+	u32    ui;
+	BF_TX_Options   bf;
 } TX_Options;
 
 typedef struct __BF_RX_Status {
-  u32           len: 16; /*  frame length */
-  u32     reserved1: 3;
-  u32       overMax: 1;
-  u32     reserved2: 1;
-  u32       ctrlRcv: 1;
-  u32         intRx: 1;
-  u32      rx10stat: 1;
-  u32      alignErr: 1;
-  u32        crcErr: 1;
-  u32      overFlow: 1;
-  u32       longErr: 1;
-  u32     reserved3: 1;
-  u32     parityErr: 1;
-  u32          good: 1;
-  u32        halted: 1;
+	u32           len:16;	/*  frame length */
+	u32     reserved1: 3;
+	u32       overMax: 1;
+	u32     reserved2: 1;
+	u32       ctrlRcv: 1;
+	u32         intRx: 1;
+	u32      rx10stat: 1;
+	u32      alignErr: 1;
+	u32        crcErr: 1;
+	u32      overFlow: 1;
+	u32       longErr: 1;
+	u32     reserved3: 1;
+	u32     parityErr: 1;
+	u32          good: 1;
+	u32        halted: 1;
 } BF_RX_Status;
 
 typedef union _RX_Status {
-  u32             ui;
-  BF_RX_Status    bf;
+	u32             ui;
+	BF_RX_Status    bf;
 } RX_Status;
 
 typedef struct __BF_TX_Status {
-  u32           len: 16; /*  frame length */
-  u32     txCollCnt: 4;
-  u32        exColl: 1;
-  u32       txDefer: 1;
-  u32        paused: 1;
-  u32         intTx: 1;
-  u32      underRun: 1;
-  u32         defer: 1;
-  u32     noCarrier: 1;
-  u32         SQErr: 1;
-  u32      lateColl: 1;
-  u32     parityErr: 1;
-  u32      complete: 1;
-  u32        halted: 1;
+	u32           len:16;	/*  frame length */
+	u32     txCollCnt: 4;
+	u32        exColl: 1;
+	u32       txDefer: 1;
+	u32        paused: 1;
+	u32         intTx: 1;
+	u32      underRun: 1;
+	u32         defer: 1;
+	u32     noCarrier: 1;
+	u32         SQErr: 1;
+	u32      lateColl: 1;
+	u32     parityErr: 1;
+	u32      complete: 1;
+	u32        halted: 1;
 } BF_TX_Status;
 
 typedef union _TX_Status {
-  u32    ui;
-  BF_TX_Status    bf;
+	u32    ui;
+	BF_TX_Status    bf;
 } TX_Status;
 
 /*  TX descriptor structure  */
 typedef struct __TX_FrameDescriptor {
-  volatile FrameDataPtr  m_frameDataPtr;
-  TX_Options                      m_opt;
-  volatile TX_Status           m_status;
-  struct __TX_FrameDescriptor * m_nextFD;
+	volatile FrameDataPtr  m_frameDataPtr;
+	TX_Options                      m_opt;
+	volatile TX_Status           m_status;
+	struct __TX_FrameDescriptor *m_nextFD;
 } TX_FrameDescriptor;
 
 /*  RX descriptor structure  */
 typedef struct __RX_FrameDescriptor {
-  volatile FrameDataPtr  m_frameDataPtr;
-  u32                        m_reserved;
-  volatile RX_Status           m_status;
-  struct __RX_FrameDescriptor * m_nextFD;
+	volatile FrameDataPtr  m_frameDataPtr;
+	u32                        m_reserved;
+	volatile RX_Status           m_status;
+	struct __RX_FrameDescriptor *m_nextFD;
 } RX_FrameDescriptor;
 
 /*  MAC Frame Structure */
 struct __MACFrame {
-  u8     m_dstAddr[6];
-  u8     m_srcAddr[6];
-  u16  m_lengthOrType;
-  u8  m_payload[1506];
-} __attribute__ ( (packed) );
+	u8     m_dstAddr[6];
+	u8     m_srcAddr[6];
+	u16  m_lengthOrType;
+	u8  m_payload[1506];
+} __attribute__ ((packed));
 
 typedef struct __MACFrame MACFrame;
 
 /* Ethernet Control block */
 typedef struct __ETH {
-  TX_FrameDescriptor  * m_curTX_FD; /*  pointer to current TX frame descriptor */
-  TX_FrameDescriptor * m_baseTX_FD; /*  pointer to base TX frame descriptor    */
-  RX_FrameDescriptor  * m_curRX_FD; /*  pointer to current RX frame descriptor */
-  RX_FrameDescriptor * m_baseRX_FD; /*  pointer to base RX frame descriptor    */
-  u8                      m_mac[6]; /*  pointer to our MAC address             */
+	TX_FrameDescriptor   *m_curTX_FD; /*  pointer to current TX frame descriptor */
+	TX_FrameDescriptor  *m_baseTX_FD; /*  pointer to base TX frame descriptor    */
+	RX_FrameDescriptor   *m_curRX_FD; /*  pointer to current RX frame descriptor */
+	RX_FrameDescriptor  *m_baseRX_FD; /*  pointer to base RX frame descriptor    */
+	u8                      m_mac[6]; /*  pointer to our MAC address             */
 } ETH;
 
 #endif

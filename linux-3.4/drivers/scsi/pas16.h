@@ -2,24 +2,24 @@
  * This driver adapted from Drew Eckhardt's Trantor T128 driver
  *
  * Copyright 1993, Drew Eckhardt
- *  Visionary Computing
- *  (Unix and Linux consulting and custom programming)
- *  drew@colorado.edu
+ *	Visionary Computing
+ *	(Unix and Linux consulting and custom programming)
+ *	drew@colorado.edu
  *      +1 (303) 666-5836
  *
- *  ( Based on T128 - DISTRIBUTION RELEASE 3. )
+ *  ( Based on T128 - DISTRIBUTION RELEASE 3. ) 
  *
  * Modified to work with the Pro Audio Spectrum/Studio 16
  * by John Weidman.
  *
  *
- * For more information, please consult
+ * For more information, please consult 
  *
  * Media Vision
  * (510) 770-8600
  * (800) 348-7116
- *
- * and
+ * 
+ * and 
  *
  * NCR 5380 Family
  * SCSI Protocol Controller
@@ -38,7 +38,7 @@
 
 #define PAS16_PUBLIC_RELEASE 3
 
-#define PDEBUG_INIT 0x1
+#define PDEBUG_INIT	0x1
 #define PDEBUG_TRANSFER 0x2
 
 #define PAS16_DEFAULT_BASE_1  0x388
@@ -56,7 +56,7 @@
  * The Pro Audio Spectrum boards are I/O mapped. They use a Zilog 5380
  * SCSI controller, which is the equivalent of NCR's 5380.  "Pseudo-DMA"
  * architecture is used, where a PAL drives the DMA signals on the 5380
- * allowing fast, blind transfers with proper handshaking.
+ * allowing fast, blind transfers with proper handshaking. 
  */
 
 
@@ -67,43 +67,43 @@
  * the holding register, an interrupt is generated (and mixed with the
  * one with the drive) using the CD-ROM interrupt pointer.
  */
+ 
+#define P_TIMEOUT_COUNTER_REG	0x4000
+#define P_TC_DISABLE	0x80	/* Set to 0 to enable timeout int. */
+				/* Bits D6-D0 contain timeout count */
 
-#define P_TIMEOUT_COUNTER_REG 0x4000
-#define P_TC_DISABLE  0x80  /* Set to 0 to enable timeout int. */
-/* Bits D6-D0 contain timeout count */
 
+#define P_TIMEOUT_STATUS_REG_OFFSET	0x4001
+#define P_TS_TIM		0x80	/* check timeout status */
+					/* Bits D6-D4 N/U */
+#define P_TS_ARM_DRQ_INT	0x08	/* Arm DRQ Int.  When set high,
+					 * the next rising edge will
+					 * cause a CD-ROM interrupt.
+					 * When set low, the interrupt
+					 * will be cleared.  There is
+					 * no status available for
+					 * this interrupt.
+					 */
+#define P_TS_ENABLE_TO_ERR_INTERRUPT	/* Enable timeout error int. */
+#define P_TS_ENABLE_WAIT		/* Enable Wait */
 
-#define P_TIMEOUT_STATUS_REG_OFFSET 0x4001
-#define P_TS_TIM    0x80  /* check timeout status */
-/* Bits D6-D4 N/U */
-#define P_TS_ARM_DRQ_INT  0x08  /* Arm DRQ Int.  When set high,
-           * the next rising edge will
-           * cause a CD-ROM interrupt.
-           * When set low, the interrupt
-           * will be cleared.  There is
-           * no status available for
-           * this interrupt.
-           */
-#define P_TS_ENABLE_TO_ERR_INTERRUPT  /* Enable timeout error int. */
-#define P_TS_ENABLE_WAIT    /* Enable Wait */
-
-#define P_TS_CT     0x01  /* clear timeout. Note: writing
-           * to this register clears the
-           * timeout error int. or status
-           */
+#define P_TS_CT			0x01	/* clear timeout. Note: writing
+					 * to this register clears the
+					 * timeout error int. or status
+					 */
 
 
 /*
  * The data register reads/writes to/from the 5380 in pseudo-DMA mode
- */
+ */ 
 
-#define P_DATA_REG_OFFSET 0x5c00  /* rw */
+#define P_DATA_REG_OFFSET	0x5c00	/* rw */
 
-#define P_STATUS_REG_OFFSET 0x5c01  /* ro */
-#define P_ST_RDY    0x80  /* 5380 DDRQ Status */
+#define P_STATUS_REG_OFFSET	0x5c01	/* ro */
+#define P_ST_RDY		0x80	/* 5380 DDRQ Status */
 
-#define P_IRQ_STATUS    0x5c03
-#define P_IS_IRQ    0x80  /* DIRQ status */
+#define P_IRQ_STATUS		0x5c03
+#define P_IS_IRQ		0x80	/* DIRQ status */
 
 #define PCB_CONFIG 0x803
 #define MASTER_ADDRESS_PTR 0x9a01  /* Fixed position - no relo */
@@ -114,46 +114,46 @@
 
 
 #ifndef ASM
-static int pas16_abort (Scsi_Cmnd *);
-static int pas16_biosparam (struct scsi_device *, struct block_device *,
-                            sector_t, int *);
-static int pas16_detect (struct scsi_host_template *);
-static int pas16_queue_command (struct Scsi_Host *, struct scsi_cmnd *);
-static int pas16_bus_reset (Scsi_Cmnd *);
+static int pas16_abort(Scsi_Cmnd *);
+static int pas16_biosparam(struct scsi_device *, struct block_device *,
+			   sector_t, int*);
+static int pas16_detect(struct scsi_host_template *);
+static int pas16_queue_command(struct Scsi_Host *, struct scsi_cmnd *);
+static int pas16_bus_reset(Scsi_Cmnd *);
 
 #ifndef CMD_PER_LUN
 #define CMD_PER_LUN 2
 #endif
 
 #ifndef CAN_QUEUE
-#define CAN_QUEUE 32
+#define CAN_QUEUE 32 
 #endif
 
 #ifndef HOSTS_C
 
 #define NCR5380_implementation_fields \
-  volatile unsigned short io_port
+    volatile unsigned short io_port
 
 #define NCR5380_local_declare() \
-  volatile unsigned short io_port
+    volatile unsigned short io_port
 
 #define NCR5380_setup(instance) \
-  io_port = (instance)->io_port
+    io_port = (instance)->io_port
 
 #define PAS16_io_port(reg) ( io_port + pas16_offset[(reg)] )
 
-#if !(PDEBUG & PDEBUG_TRANSFER)
+#if !(PDEBUG & PDEBUG_TRANSFER) 
 #define NCR5380_read(reg) ( inb(PAS16_io_port(reg)) )
 #define NCR5380_write(reg, value) ( outb((value),PAS16_io_port(reg)) )
 #else
-#define NCR5380_read(reg)           \
-  (((unsigned char) printk("scsi%d : read register %d at io_port %04x\n"\
-                           , instance->hostno, (reg), PAS16_io_port(reg))), inb( PAS16_io_port(reg)) )
+#define NCR5380_read(reg)						\
+    (((unsigned char) printk("scsi%d : read register %d at io_port %04x\n"\
+    , instance->hostno, (reg), PAS16_io_port(reg))), inb( PAS16_io_port(reg)) )
 
-#define NCR5380_write(reg, value)           \
-  (printk("scsi%d : write %02x to register %d at io_port %04x\n",   \
-          instance->hostno, (value), (reg), PAS16_io_port(reg)),  \
-   outb( (value),PAS16_io_port(reg) ) )
+#define NCR5380_write(reg, value) 					\
+    (printk("scsi%d : write %02x to register %d at io_port %04x\n", 	\
+	    instance->hostno, (value), (reg), PAS16_io_port(reg)),	\
+    outb( (value),PAS16_io_port(reg) ) )
 
 #endif
 
@@ -165,10 +165,10 @@ static int pas16_bus_reset (Scsi_Cmnd *);
 #define NCR5380_bus_reset pas16_bus_reset
 #define NCR5380_proc_info pas16_proc_info
 
-/* 15 14 12 10 7 5 3
+/* 15 14 12 10 7 5 3 
    1101 0100 1010 1000 */
-
-#define PAS16_IRQS 0xd4a8
+   
+#define PAS16_IRQS 0xd4a8 
 
 #endif /* else def HOSTS_C */
 #endif /* ndef ASM */

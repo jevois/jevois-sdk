@@ -30,70 +30,70 @@ struct task_struct;
    stack during a system call. */
 
 struct pt_regs {
-  long orig_pc;
-  long ipend;
-  long seqstat;
-  long rete;
-  long retn;
-  long retx;
-  long pc;    /* PC == RETI */
-  long rets;
-  long reserved;    /* Used as scratch during system calls */
-  long astat;
-  long lb1;
-  long lb0;
-  long lt1;
-  long lt0;
-  long lc1;
-  long lc0;
-  long a1w;
-  long a1x;
-  long a0w;
-  long a0x;
-  long b3;
-  long b2;
-  long b1;
-  long b0;
-  long l3;
-  long l2;
-  long l1;
-  long l0;
-  long m3;
-  long m2;
-  long m1;
-  long m0;
-  long i3;
-  long i2;
-  long i1;
-  long i0;
-  long usp;
-  long fp;
-  long p5;
-  long p4;
-  long p3;
-  long p2;
-  long p1;
-  long p0;
-  long r7;
-  long r6;
-  long r5;
-  long r4;
-  long r3;
-  long r2;
-  long r1;
-  long r0;
-  long orig_r0;
-  long orig_p0;
-  long syscfg;
+	long orig_pc;
+	long ipend;
+	long seqstat;
+	long rete;
+	long retn;
+	long retx;
+	long pc;		/* PC == RETI */
+	long rets;
+	long reserved;		/* Used as scratch during system calls */
+	long astat;
+	long lb1;
+	long lb0;
+	long lt1;
+	long lt0;
+	long lc1;
+	long lc0;
+	long a1w;
+	long a1x;
+	long a0w;
+	long a0x;
+	long b3;
+	long b2;
+	long b1;
+	long b0;
+	long l3;
+	long l2;
+	long l1;
+	long l0;
+	long m3;
+	long m2;
+	long m1;
+	long m0;
+	long i3;
+	long i2;
+	long i1;
+	long i0;
+	long usp;
+	long fp;
+	long p5;
+	long p4;
+	long p3;
+	long p2;
+	long p1;
+	long p0;
+	long r7;
+	long r6;
+	long r5;
+	long r4;
+	long r3;
+	long r2;
+	long r1;
+	long r0;
+	long orig_r0;
+	long orig_p0;
+	long syscfg;
 };
 
 /* Arbitrarily choose the same ptrace numbers as used by the Sparc code. */
 #define PTRACE_GETREGS            12
-#define PTRACE_SETREGS            13  /* ptrace signal  */
+#define PTRACE_SETREGS            13	/* ptrace signal  */
 
-#define PTRACE_GETFDPIC           31  /* get the ELF fdpic loadmap address */
-#define PTRACE_GETFDPIC_EXEC       0  /* [addr] request the executable loadmap */
-#define PTRACE_GETFDPIC_INTERP     1  /* [addr] request the interpreter loadmap */
+#define PTRACE_GETFDPIC           31	/* get the ELF fdpic loadmap address */
+#define PTRACE_GETFDPIC_EXEC       0	/* [addr] request the executable loadmap */
+#define PTRACE_GETFDPIC_INTERP     1	/* [addr] request the interpreter loadmap */
 
 #define PS_S  (0x0002)
 
@@ -103,12 +103,12 @@ struct pt_regs {
    master interrupt enable.  */
 #define user_mode(regs) (!(((regs)->ipend & ~0x10) & (((regs)->ipend & ~0x10) - 1)))
 
-#define arch_has_single_step()  (1)
+#define arch_has_single_step()	(1)
 /* common code demands this function */
 #define ptrace_disable(child) user_disable_single_step(child)
 
-extern int is_user_addr_valid (struct task_struct * child,
-                               unsigned long start, unsigned long len);
+extern int is_user_addr_valid(struct task_struct *child,
+			      unsigned long start, unsigned long len);
 
 /*
  * Get the address of the live pt_regs for the specified task.
@@ -120,15 +120,15 @@ extern int is_user_addr_valid (struct task_struct * child,
  * ptracing these tasks will fail.
  */
 #define task_pt_regs(task) \
-  (struct pt_regs *) \
-  ((unsigned long)task_stack_page(task) + \
-   (THREAD_SIZE - sizeof(struct pt_regs)))
+	(struct pt_regs *) \
+	    ((unsigned long)task_stack_page(task) + \
+	     (THREAD_SIZE - sizeof(struct pt_regs)))
 
 #include <asm-generic/ptrace.h>
 
 #endif  /*  __KERNEL__  */
 
-#endif        /* __ASSEMBLY__ */
+#endif				/* __ASSEMBLY__ */
 
 /*
  * Offsets used by 'ptrace' system call interface.
@@ -197,4 +197,4 @@ extern int is_user_addr_valid (struct task_struct * child,
 
 #define PT_LAST_PSEUDO PT_FDPIC_INTERP
 
-#endif        /* _BFIN_PTRACE_H */
+#endif				/* _BFIN_PTRACE_H */

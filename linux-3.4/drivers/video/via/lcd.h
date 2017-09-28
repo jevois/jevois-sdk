@@ -63,27 +63,27 @@ extern int viafb_LCD2_ON;
 extern int viafb_LCD_ON;
 extern int viafb_DVI_ON;
 
-void viafb_disable_lvds_vt1636 (struct lvds_setting_information
-                                *plvds_setting_info,
-                                struct lvds_chip_information * plvds_chip_info);
-void viafb_enable_lvds_vt1636 (struct lvds_setting_information
-                               *plvds_setting_info,
-                               struct lvds_chip_information * plvds_chip_info);
-void viafb_lcd_disable (void);
-void viafb_lcd_enable (void);
-void __devinit viafb_init_lcd_size (void);
-void __devinit viafb_init_lvds_output_interface (struct lvds_chip_information
-    *plvds_chip_info,
-    struct lvds_setting_information
-    *plvds_setting_info);
-void viafb_lcd_set_mode (const struct fb_var_screeninfo * var, u16 cxres,
-                         u16 cyres, struct lvds_setting_information * plvds_setting_info,
-                         struct lvds_chip_information * plvds_chip_info);
-bool __devinit viafb_lvds_trasmitter_identify (void);
-void viafb_init_lvds_output_interface (struct lvds_chip_information
-                                       *plvds_chip_info,
-                                       struct lvds_setting_information
-                                       *plvds_setting_info);
-bool viafb_lcd_get_mobile_state (bool * mobile);
+void viafb_disable_lvds_vt1636(struct lvds_setting_information
+			 *plvds_setting_info,
+			 struct lvds_chip_information *plvds_chip_info);
+void viafb_enable_lvds_vt1636(struct lvds_setting_information
+			*plvds_setting_info,
+			struct lvds_chip_information *plvds_chip_info);
+void viafb_lcd_disable(void);
+void viafb_lcd_enable(void);
+void __devinit viafb_init_lcd_size(void);
+void __devinit viafb_init_lvds_output_interface(struct lvds_chip_information
+				*plvds_chip_info,
+				struct lvds_setting_information
+				*plvds_setting_info);
+void viafb_lcd_set_mode(const struct fb_var_screeninfo *var, u16 cxres,
+	u16 cyres, struct lvds_setting_information *plvds_setting_info,
+	struct lvds_chip_information *plvds_chip_info);
+bool __devinit viafb_lvds_trasmitter_identify(void);
+void viafb_init_lvds_output_interface(struct lvds_chip_information
+				*plvds_chip_info,
+				struct lvds_setting_information
+				*plvds_setting_info);
+bool viafb_lcd_get_mobile_state(bool *mobile);
 
 #endif /* __LCD_H__ */

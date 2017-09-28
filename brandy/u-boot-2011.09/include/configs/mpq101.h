@@ -124,7 +124,7 @@
 #define CONFIG_SYS_INIT_RAM_SIZE   0x4000     /* Size of used area in RAM */
 
 #define CONFIG_SYS_GBL_DATA_OFFSET (CONFIG_SYS_INIT_RAM_SIZE \
-                                    - GENERATED_GBL_DATA_SIZE)
+				    - GENERATED_GBL_DATA_SIZE)
 #define CONFIG_SYS_INIT_SP_OFFSET  CONFIG_SYS_GBL_DATA_OFFSET
 
 #define CONFIG_SYS_MONITOR_LEN     (256 * 1024)  /* Reserve 256 kB for Mon */
@@ -152,13 +152,13 @@
 
 /* 0xf8001801 */
 #define CONFIG_SYS_BR0_PRELIM (BR_PHYS_ADDR(CONFIG_SYS_FLASH_BASE_PHYS) \
-                               | BR_PS_32 | BR_V)
+			       | BR_PS_32 | BR_V)
 
 /* 0xf8006ff7 */
 #define CONFIG_SYS_OR0_PRELIM (MEG_TO_AM(128) | OR_GPCM_XAM | OR_GPCM_CSNT \
-                               | OR_GPCM_ACS_DIV2 | OR_GPCM_XACS \
-                               | OR_GPCM_SCY_15 | OR_GPCM_TRLX \
-                               | OR_GPCM_EHTR | OR_GPCM_EAD)
+			       | OR_GPCM_ACS_DIV2 | OR_GPCM_XACS \
+			       | OR_GPCM_SCY_15 | OR_GPCM_TRLX \
+			       | OR_GPCM_EHTR | OR_GPCM_EAD)
 
 #define CONFIG_SYS_FLASH_BANKS_LIST    {CONFIG_SYS_FLASH_BASE_PHYS}
 #define CONFIG_FLASH_SHOW_PROGRESS     45   /* count down from 45/5: 9..1 */
@@ -209,11 +209,11 @@
 
 /* 0xf0001001 */
 #define CONFIG_SYS_BR1_PRELIM (BR_PHYS_ADDR(CONFIG_SYS_LBC_OPTION_BASE_PHYS) \
-                               | BR_PS_16 | BR_V)
+			       | BR_PS_16 | BR_V)
 
 /* fffff002 */
 #define CONFIG_SYS_OR1_PRELIM (P2SZ_TO_AM(0x8000) | OR_GPCM_XAM \
-                               | OR_GPCM_BCTLD | OR_GPCM_EHTR)
+			       | OR_GPCM_BCTLD | OR_GPCM_EHTR)
 
 /*
  * Serial Ports
@@ -225,7 +225,7 @@
 #define CONFIG_SYS_NS16550_CLK      get_bus_freq(0)
 
 #define CONFIG_SYS_BAUDRATE_TABLE   {300, 600, 1200, 2400, 4800, 9600, \
-    19200, 38400, 115200}
+				     19200, 38400, 115200}
 
 #define CONFIG_SYS_NS16550_COM1     (CONFIG_SYS_CCSRBAR+0x4500)
 #define CONFIG_SYS_NS16550_COM2     (CONFIG_SYS_CCSRBAR+0x4600)

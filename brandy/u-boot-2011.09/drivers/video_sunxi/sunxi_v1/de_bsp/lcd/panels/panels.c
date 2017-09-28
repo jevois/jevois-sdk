@@ -6,14 +6,14 @@
 #include "lp079x01.h"
 
 extern __lcd_panel_t lp079x01_panel;
-__lcd_panel_t * panel_array[] = {
-  &default_panel,
-  &edp_anx9804_panel,
-  &edp_anx6345_panel,
-  &b079xan01_panel,
-  &lp079x01_panel,
-  /* add new panel below */
-  
-  NULL,
+__lcd_panel_t* panel_array[] = {
+	&default_panel,
+	&edp_anx9804_panel,
+	&edp_anx6345_panel,
+	&b079xan01_panel,
+	&lp079x01_panel,
+	/* add new panel below */
+
+	NULL,
 };
 

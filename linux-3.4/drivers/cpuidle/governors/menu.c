@@ -110,16 +110,16 @@
  */
 
 struct menu_device {
-  int   last_state_idx;
-  int             needs_update;
-  
-  unsigned int  expected_us;
-  u64   predicted_us;
-  unsigned int  exit_us;
-  unsigned int  bucket;
-  u64   correction_factor[BUCKETS];
-  u32   intervals[INTERVALS];
-  int   interval_ptr;
+	int		last_state_idx;
+	int             needs_update;
+
+	unsigned int	expected_us;
+	u64		predicted_us;
+	unsigned int	exit_us;
+	unsigned int	bucket;
+	u64		correction_factor[BUCKETS];
+	u32		intervals[INTERVALS];
+	int		interval_ptr;
 };
 
 
@@ -130,39 +130,39 @@ struct menu_device {
  * and not be used now, so, we cancled this code for fix build waring.
  */
 #if 0
-static int get_loadavg (void)
+static int get_loadavg(void)
 {
-  unsigned long this = this_cpu_load();
-  
-  
-  return LOAD_INT (this) * 10 + LOAD_FRAC (this) / 10;
+	unsigned long this = this_cpu_load();
+
+
+	return LOAD_INT(this) * 10 + LOAD_FRAC(this) / 10;
 }
 #endif
 
-static inline int which_bucket (unsigned int duration)
+static inline int which_bucket(unsigned int duration)
 {
-  int bucket = 0;
-  
-  /*
-   * We keep two groups of stats; one with no
-   * IO pending, one without.
-   * This allows us to calculate
-   * E(duration)|iowait
-   */
-  if (nr_iowait_cpu (smp_processor_id() ) )
-  { bucket = BUCKETS / 2; }
-  
-  if (duration < 10)
-  { return bucket; }
-  if (duration < 100)
-  { return bucket + 1; }
-  if (duration < 1000)
-  { return bucket + 2; }
-  if (duration < 10000)
-  { return bucket + 3; }
-  if (duration < 100000)
-  { return bucket + 4; }
-  return bucket + 5;
+	int bucket = 0;
+
+	/*
+	 * We keep two groups of stats; one with no
+	 * IO pending, one without.
+	 * This allows us to calculate
+	 * E(duration)|iowait
+	 */
+	if (nr_iowait_cpu(smp_processor_id()))
+		bucket = BUCKETS/2;
+
+	if (duration < 10)
+		return bucket;
+	if (duration < 100)
+		return bucket + 1;
+	if (duration < 1000)
+		return bucket + 2;
+	if (duration < 10000)
+		return bucket + 3;
+	if (duration < 100000)
+		return bucket + 4;
+	return bucket + 5;
 }
 
 /*
@@ -172,33 +172,33 @@ static inline int which_bucket (unsigned int duration)
  * to be, the higher this multiplier, and thus the higher
  * the barrier to go to an expensive C state.
  */
-static inline int performance_multiplier (void)
+static inline int performance_multiplier(void)
 {
-  int mult = 1;
-  
-  /* for higher loadavg, we are more reluctant */
-  
-  /*
-   * this doesn't work as intended - it is almost always 0, but can
-   * sometimes, depending on workload, spike very high into the hundreds
-   * even when the average cpu load is under 10%.
-   */
-  /* mult += 2 * get_loadavg(); */
-  
-  /* for IO wait tasks (per cpu!) we add 5x each */
-  mult += 10 * nr_iowait_cpu (smp_processor_id() );
-  
-  return mult;
+	int mult = 1;
+
+	/* for higher loadavg, we are more reluctant */
+
+	/*
+	 * this doesn't work as intended - it is almost always 0, but can
+	 * sometimes, depending on workload, spike very high into the hundreds
+	 * even when the average cpu load is under 10%.
+	 */
+	/* mult += 2 * get_loadavg(); */
+
+	/* for IO wait tasks (per cpu!) we add 5x each */
+	mult += 10 * nr_iowait_cpu(smp_processor_id());
+
+	return mult;
 }
 
-static DEFINE_PER_CPU (struct menu_device, menu_devices);
+static DEFINE_PER_CPU(struct menu_device, menu_devices);
 
-static void menu_update (struct cpuidle_driver * drv, struct cpuidle_device * dev);
+static void menu_update(struct cpuidle_driver *drv, struct cpuidle_device *dev);
 
 /* This implements DIV_ROUND_CLOSEST but avoids 64 bit division */
-static u64 div_round64 (u64 dividend, u32 divisor)
+static u64 div_round64(u64 dividend, u32 divisor)
 {
-  return div_u64 (dividend + (divisor / 2), divisor);
+	return div_u64(dividend + (divisor / 2), divisor);
 }
 
 /*
@@ -207,34 +207,34 @@ static u64 div_round64 (u64 dividend, u32 divisor)
  * of points is below a threshold. If it is... then use the
  * average of these 8 points as the estimated value.
  */
-static void detect_repeating_patterns (struct menu_device * data)
+static void detect_repeating_patterns(struct menu_device *data)
 {
-  int i;
-  uint64_t avg = 0;
-  uint64_t stddev = 0; /* contains the square of the std deviation */
-  
-  /* first calculate average and standard deviation of the past */
-  for (i = 0; i < INTERVALS; i++)
-  { avg += data->intervals[i]; }
-  avg = avg / INTERVALS;
-  
-  /* if the avg is beyond the known next tick, it's worthless */
-  if (avg > data->expected_us)
-  { return; }
-  
-  for (i = 0; i < INTERVALS; i++)
-    stddev += (data->intervals[i] - avg) *
-              (data->intervals[i] - avg);
-              
-  stddev = stddev / INTERVALS;
-  
-  /*
-   * now.. if stddev is small.. then assume we have a
-   * repeating pattern and predict we keep doing this.
-   */
-  
-  if (avg && stddev < STDDEV_THRESH)
-  { data->predicted_us = avg; }
+	int i;
+	uint64_t avg = 0;
+	uint64_t stddev = 0; /* contains the square of the std deviation */
+
+	/* first calculate average and standard deviation of the past */
+	for (i = 0; i < INTERVALS; i++)
+		avg += data->intervals[i];
+	avg = avg / INTERVALS;
+
+	/* if the avg is beyond the known next tick, it's worthless */
+	if (avg > data->expected_us)
+		return;
+
+	for (i = 0; i < INTERVALS; i++)
+		stddev += (data->intervals[i] - avg) *
+			  (data->intervals[i] - avg);
+
+	stddev = stddev / INTERVALS;
+
+	/*
+	 * now.. if stddev is small.. then assume we have a
+	 * repeating pattern and predict we keep doing this.
+	 */
+
+	if (avg && stddev < STDDEV_THRESH)
+		data->predicted_us = avg;
 }
 
 /**
@@ -242,87 +242,87 @@ static void detect_repeating_patterns (struct menu_device * data)
  * @drv: cpuidle driver containing state data
  * @dev: the CPU
  */
-static int menu_select (struct cpuidle_driver * drv, struct cpuidle_device * dev)
+static int menu_select(struct cpuidle_driver *drv, struct cpuidle_device *dev)
 {
-  struct menu_device * data = &__get_cpu_var (menu_devices);
-  int latency_req = pm_qos_request (PM_QOS_CPU_DMA_LATENCY);
-  int power_usage = -1;
-  int i;
-  int multiplier;
-  struct timespec t;
-  
-  if (data->needs_update) {
-    menu_update (drv, dev);
-    data->needs_update = 0;
-  }
-  
-  data->last_state_idx = 0;
-  data->exit_us = 0;
-  
-  /* Special case when user has set very strict latency requirement */
-  if (unlikely (latency_req == 0) )
-  { return 0; }
-  
-  /* determine the expected residency time, round up */
-  t = ktime_to_timespec (tick_nohz_get_sleep_length() );
-  data->expected_us =
-    t.tv_sec * USEC_PER_SEC + t.tv_nsec / NSEC_PER_USEC;
-    
-    
-  data->bucket = which_bucket (data->expected_us);
-  
-  multiplier = performance_multiplier();
-  
-  /*
-   * if the correction factor is 0 (eg first time init or cpu hotplug
-   * etc), we actually want to start out with a unity factor.
-   */
-  if (data->correction_factor[data->bucket] == 0)
-  { data->correction_factor[data->bucket] = RESOLUTION * DECAY; }
-  
-  /* Make sure to round up for half microseconds */
-  data->predicted_us = div_round64 (data->expected_us * data->correction_factor[data->bucket],
-                                    RESOLUTION * DECAY);
-                                    
-  /*
-   * Ignore repeating patterns when we're
-   * forecasting a very large idle period.
-   */
-  if (data->predicted_us < MAX_INTERESTING)
-  { detect_repeating_patterns (data); }
-  
-  /*
-   * We want to default to C1 (hlt), not to busy polling
-   * unless the timer is happening really really soon.
-   */
-  if (data->expected_us > 5 &&
-      drv->states[CPUIDLE_DRIVER_STATE_START].disable == 0)
-  { data->last_state_idx = CPUIDLE_DRIVER_STATE_START; }
-  
-  /*
-   * Find the idle state with the lowest power while satisfying
-   * our constraints.
-   */
-  for (i = CPUIDLE_DRIVER_STATE_START; i < drv->state_count; i++) {
-    struct cpuidle_state * s = &drv->states[i];
-    
-    if (s->disable)
-    { continue; }
-    if (s->target_residency > data->predicted_us)
-    { continue; }
-    if (s->exit_latency > latency_req)
-    { continue; }
-    if (s->exit_latency * multiplier > data->predicted_us)
-    { continue; }
-    
-    if (s->power_usage < power_usage) {
-      power_usage = s->power_usage;
-      data->last_state_idx = i;
-      data->exit_us = s->exit_latency;
-    }
-  }
-  
-  return data->last_state_idx;
+	struct menu_device *data = &__get_cpu_var(menu_devices);
+	int latency_req = pm_qos_request(PM_QOS_CPU_DMA_LATENCY);
+	int power_usage = -1;
+	int i;
+	int multiplier;
+	struct timespec t;
+
+	if (data->needs_update) {
+		menu_update(drv, dev);
+		data->needs_update = 0;
+	}
+
+	data->last_state_idx = 0;
+	data->exit_us = 0;
+
+	/* Special case when user has set very strict latency requirement */
+	if (unlikely(latency_req == 0))
+		return 0;
+
+	/* determine the expected residency time, round up */
+	t = ktime_to_timespec(tick_nohz_get_sleep_length());
+	data->expected_us =
+		t.tv_sec * USEC_PER_SEC + t.tv_nsec / NSEC_PER_USEC;
+
+
+	data->bucket = which_bucket(data->expected_us);
+
+	multiplier = performance_multiplier();
+
+	/*
+	 * if the correction factor is 0 (eg first time init or cpu hotplug
+	 * etc), we actually want to start out with a unity factor.
+	 */
+	if (data->correction_factor[data->bucket] == 0)
+		data->correction_factor[data->bucket] = RESOLUTION * DECAY;
+
+	/* Make sure to round up for half microseconds */
+	data->predicted_us = div_round64(data->expected_us * data->correction_factor[data->bucket],
+					 RESOLUTION * DECAY);
+
+	/*
+	 * Ignore repeating patterns when we're
+	 * forecasting a very large idle period.
+	 */
+	if(data->predicted_us < MAX_INTERESTING)
+        detect_repeating_patterns(data);
+
+	/*
+	 * We want to default to C1 (hlt), not to busy polling
+	 * unless the timer is happening really really soon.
+	 */
+	if (data->expected_us > 5 &&
+		drv->states[CPUIDLE_DRIVER_STATE_START].disable == 0)
+		data->last_state_idx = CPUIDLE_DRIVER_STATE_START;
+
+	/*
+	 * Find the idle state with the lowest power while satisfying
+	 * our constraints.
+	 */
+	for (i = CPUIDLE_DRIVER_STATE_START; i < drv->state_count; i++) {
+		struct cpuidle_state *s = &drv->states[i];
+
+		if (s->disable)
+			continue;
+		if (s->target_residency > data->predicted_us)
+			continue;
+		if (s->exit_latency > latency_req)
+			continue;
+		if (s->exit_latency * multiplier > data->predicted_us)
+			continue;
+
+		if (s->power_usage < power_usage) {
+			power_usage = s->power_usage;
+			data->last_state_idx = i;
+			data->exit_us = s->exit_latency;
+		}
+	}
+
+	return data->last_state_idx;
 }
 
 /**
@@ -333,12 +333,12 @@ static int menu_select (struct cpuidle_driver * drv, struct cpuidle_device * dev
  * NOTE: it's important to be fast here because this operation will add to
  *       the overall exit latency.
  */
-static void menu_reflect (struct cpuidle_device * dev, int index)
+static void menu_reflect(struct cpuidle_device *dev, int index)
 {
-  struct menu_device * data = &__get_cpu_var (menu_devices);
-  data->last_state_idx = index;
-  if (index >= 0)
-  { data->needs_update = 1; }
+	struct menu_device *data = &__get_cpu_var(menu_devices);
+	data->last_state_idx = index;
+	if (index >= 0)
+		data->needs_update = 1;
 }
 
 /**
@@ -346,61 +346,61 @@ static void menu_reflect (struct cpuidle_device * dev, int index)
  * @drv: cpuidle driver containing state data
  * @dev: the CPU
  */
-static void menu_update (struct cpuidle_driver * drv, struct cpuidle_device * dev)
+static void menu_update(struct cpuidle_driver *drv, struct cpuidle_device *dev)
 {
-  struct menu_device * data = &__get_cpu_var (menu_devices);
-  int last_idx = data->last_state_idx;
-  unsigned int last_idle_us = cpuidle_get_last_residency (dev);
-  struct cpuidle_state * target = &drv->states[last_idx];
-  unsigned int measured_us;
-  u64 new_factor;
-  
-  /*
-   * Ugh, this idle state doesn't support residency measurements, so we
-   * are basically lost in the dark.  As a compromise, assume we slept
-   * for the whole expected time.
-   */
-  if (unlikely (! (target->flags & CPUIDLE_FLAG_TIME_VALID) ) )
-  { last_idle_us = data->expected_us; }
-  
-  
-  measured_us = last_idle_us;
-  
-  /*
-   * We correct for the exit latency; we are assuming here that the
-   * exit latency happens after the event that we're interested in.
-   */
-  if (measured_us > data->exit_us)
-  { measured_us -= data->exit_us; }
-  
-  
-  /* update our correction ratio */
-  
-  new_factor = data->correction_factor[data->bucket]
-               * (DECAY - 1) / DECAY;
-               
-  if (data->expected_us > 0 && measured_us < MAX_INTERESTING)
-  { new_factor += RESOLUTION * measured_us / data->expected_us; }
-  else
-    /*
-     * we were idle so long that we count it as a perfect
-     * prediction
-     */
-  { new_factor += RESOLUTION; }
-  
-  /*
-   * We don't want 0 as factor; we always want at least
-   * a tiny bit of estimated time.
-   */
-  if (new_factor == 0)
-  { new_factor = 1; }
-  
-  data->correction_factor[data->bucket] = new_factor;
-  
-  /* update the repeating-pattern data */
-  data->intervals[data->interval_ptr++] = last_idle_us;
-  if (data->interval_ptr >= INTERVALS)
-  { data->interval_ptr = 0; }
+	struct menu_device *data = &__get_cpu_var(menu_devices);
+	int last_idx = data->last_state_idx;
+	unsigned int last_idle_us = cpuidle_get_last_residency(dev);
+	struct cpuidle_state *target = &drv->states[last_idx];
+	unsigned int measured_us;
+	u64 new_factor;
+
+	/*
+	 * Ugh, this idle state doesn't support residency measurements, so we
+	 * are basically lost in the dark.  As a compromise, assume we slept
+	 * for the whole expected time.
+	 */
+	if (unlikely(!(target->flags & CPUIDLE_FLAG_TIME_VALID)))
+		last_idle_us = data->expected_us;
+
+
+	measured_us = last_idle_us;
+
+	/*
+	 * We correct for the exit latency; we are assuming here that the
+	 * exit latency happens after the event that we're interested in.
+	 */
+	if (measured_us > data->exit_us)
+		measured_us -= data->exit_us;
+
+
+	/* update our correction ratio */
+
+	new_factor = data->correction_factor[data->bucket]
+			* (DECAY - 1) / DECAY;
+
+	if (data->expected_us > 0 && measured_us < MAX_INTERESTING)
+		new_factor += RESOLUTION * measured_us / data->expected_us;
+	else
+		/*
+		 * we were idle so long that we count it as a perfect
+		 * prediction
+		 */
+		new_factor += RESOLUTION;
+
+	/*
+	 * We don't want 0 as factor; we always want at least
+	 * a tiny bit of estimated time.
+	 */
+	if (new_factor == 0)
+		new_factor = 1;
+
+	data->correction_factor[data->bucket] = new_factor;
+
+	/* update the repeating-pattern data */
+	data->intervals[data->interval_ptr++] = last_idle_us;
+	if (data->interval_ptr >= INTERVALS)
+		data->interval_ptr = 0;
 }
 
 /**
@@ -408,41 +408,41 @@ static void menu_update (struct cpuidle_driver * drv, struct cpuidle_device * de
  * @drv: cpuidle driver
  * @dev: the CPU
  */
-static int menu_enable_device (struct cpuidle_driver * drv,
-                               struct cpuidle_device * dev)
+static int menu_enable_device(struct cpuidle_driver *drv,
+				struct cpuidle_device *dev)
 {
-  struct menu_device * data = &per_cpu (menu_devices, dev->cpu);
-  
-  memset (data, 0, sizeof (struct menu_device) );
-  
-  return 0;
+	struct menu_device *data = &per_cpu(menu_devices, dev->cpu);
+
+	memset(data, 0, sizeof(struct menu_device));
+
+	return 0;
 }
 
 static struct cpuidle_governor menu_governor = {
-  .name =   "menu",
-  .rating = 20,
-  .enable = menu_enable_device,
-  .select = menu_select,
-  .reflect =  menu_reflect,
-  .owner =  THIS_MODULE,
+	.name =		"menu",
+	.rating =	20,
+	.enable =	menu_enable_device,
+	.select =	menu_select,
+	.reflect =	menu_reflect,
+	.owner =	THIS_MODULE,
 };
 
 /**
  * init_menu - initializes the governor
  */
-static int __init init_menu (void)
+static int __init init_menu(void)
 {
-  return cpuidle_register_governor (&menu_governor);
+	return cpuidle_register_governor(&menu_governor);
 }
 
 /**
  * exit_menu - exits the governor
  */
-static void __exit exit_menu (void)
+static void __exit exit_menu(void)
 {
-  cpuidle_unregister_governor (&menu_governor);
+	cpuidle_unregister_governor(&menu_governor);
 }
 
-MODULE_LICENSE ("GPL");
-module_init (init_menu);
-module_exit (exit_menu);
+MODULE_LICENSE("GPL");
+module_init(init_menu);
+module_exit(exit_menu);

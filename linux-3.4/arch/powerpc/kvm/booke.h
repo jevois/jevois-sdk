@@ -52,23 +52,23 @@
 
 extern unsigned long kvmppc_booke_handlers;
 
-void kvmppc_set_msr (struct kvm_vcpu * vcpu, u32 new_msr);
-void kvmppc_mmu_msr_notify (struct kvm_vcpu * vcpu, u32 old_msr);
+void kvmppc_set_msr(struct kvm_vcpu *vcpu, u32 new_msr);
+void kvmppc_mmu_msr_notify(struct kvm_vcpu *vcpu, u32 old_msr);
 
-void kvmppc_set_tcr (struct kvm_vcpu * vcpu, u32 new_tcr);
-void kvmppc_set_tsr_bits (struct kvm_vcpu * vcpu, u32 tsr_bits);
-void kvmppc_clr_tsr_bits (struct kvm_vcpu * vcpu, u32 tsr_bits);
+void kvmppc_set_tcr(struct kvm_vcpu *vcpu, u32 new_tcr);
+void kvmppc_set_tsr_bits(struct kvm_vcpu *vcpu, u32 tsr_bits);
+void kvmppc_clr_tsr_bits(struct kvm_vcpu *vcpu, u32 tsr_bits);
 
-int kvmppc_booke_emulate_op (struct kvm_run * run, struct kvm_vcpu * vcpu,
-                             unsigned int inst, int * advance);
-int kvmppc_booke_emulate_mfspr (struct kvm_vcpu * vcpu, int sprn, int rt);
-int kvmppc_booke_emulate_mtspr (struct kvm_vcpu * vcpu, int sprn, int rs);
+int kvmppc_booke_emulate_op(struct kvm_run *run, struct kvm_vcpu *vcpu,
+                            unsigned int inst, int *advance);
+int kvmppc_booke_emulate_mfspr(struct kvm_vcpu *vcpu, int sprn, int rt);
+int kvmppc_booke_emulate_mtspr(struct kvm_vcpu *vcpu, int sprn, int rs);
 
 /* low-level asm code to transfer guest state */
-void kvmppc_load_guest_spe (struct kvm_vcpu * vcpu);
-void kvmppc_save_guest_spe (struct kvm_vcpu * vcpu);
+void kvmppc_load_guest_spe(struct kvm_vcpu *vcpu);
+void kvmppc_save_guest_spe(struct kvm_vcpu *vcpu);
 
 /* high-level function, manages flags, host state */
-void kvmppc_vcpu_disable_spe (struct kvm_vcpu * vcpu);
+void kvmppc_vcpu_disable_spe(struct kvm_vcpu *vcpu);
 
 #endif /* __KVM_BOOKE_H__ */

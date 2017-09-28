@@ -7,7 +7,7 @@
  * Author: Linus Walleij <linus.walleij@stericsson.com>
  *
  * Initial version inspired by:
- *  linux-2.6.17-rc3-mm1/drivers/spi/pxa2xx_spi.c
+ *	linux-2.6.17-rc3-mm1/drivers/spi/pxa2xx_spi.c
  * Initial adoption to PL022 by:
  *      Sachin Verma <sachin.verma@st.com>
  *
@@ -31,8 +31,8 @@
  * whether SSP is in loopback mode or not
  */
 enum ssp_loopback {
-  LOOPBACK_DISABLED,
-  LOOPBACK_ENABLED
+	LOOPBACK_DISABLED,
+	LOOPBACK_ENABLED
 };
 
 /**
@@ -46,18 +46,18 @@ enum ssp_loopback {
  * &STn8815 only)
  */
 enum ssp_interface {
-  SSP_INTERFACE_MOTOROLA_SPI,
-  SSP_INTERFACE_TI_SYNC_SERIAL,
-  SSP_INTERFACE_NATIONAL_MICROWIRE,
-  SSP_INTERFACE_UNIDIRECTIONAL
+	SSP_INTERFACE_MOTOROLA_SPI,
+	SSP_INTERFACE_TI_SYNC_SERIAL,
+	SSP_INTERFACE_NATIONAL_MICROWIRE,
+	SSP_INTERFACE_UNIDIRECTIONAL
 };
 
 /**
  * enum ssp_hierarchy - whether SSP is configured as Master or Slave
  */
 enum ssp_hierarchy {
-  SSP_MASTER,
-  SSP_SLAVE
+	SSP_MASTER,
+	SSP_SLAVE
 };
 
 /**
@@ -65,8 +65,8 @@ enum ssp_hierarchy {
  * desired freq
  */
 struct ssp_clock_params {
-  u8 cpsdvsr; /* value from 2 to 254 (even only!) */
-  u8 scr;     /* value from 0 to 255 */
+	u8 cpsdvsr; /* value from 2 to 254 (even only!) */
+	u8 scr;	    /* value from 0 to 255 */
 };
 
 /**
@@ -74,41 +74,41 @@ struct ssp_clock_params {
  * this feature is only available in ST versionf of PL022
  */
 enum ssp_rx_endian {
-  SSP_RX_MSB,
-  SSP_RX_LSB
+	SSP_RX_MSB,
+	SSP_RX_LSB
 };
 
 /**
  * enum ssp_tx_endian - endianess of Tx FIFO Data
  */
 enum ssp_tx_endian {
-  SSP_TX_MSB,
-  SSP_TX_LSB
+	SSP_TX_MSB,
+	SSP_TX_LSB
 };
 
 /**
  * enum ssp_data_size - number of bits in one data element
  */
 enum ssp_data_size {
-  SSP_DATA_BITS_4 = 0x03, SSP_DATA_BITS_5, SSP_DATA_BITS_6,
-  SSP_DATA_BITS_7, SSP_DATA_BITS_8, SSP_DATA_BITS_9,
-  SSP_DATA_BITS_10, SSP_DATA_BITS_11, SSP_DATA_BITS_12,
-  SSP_DATA_BITS_13, SSP_DATA_BITS_14, SSP_DATA_BITS_15,
-  SSP_DATA_BITS_16, SSP_DATA_BITS_17, SSP_DATA_BITS_18,
-  SSP_DATA_BITS_19, SSP_DATA_BITS_20, SSP_DATA_BITS_21,
-  SSP_DATA_BITS_22, SSP_DATA_BITS_23, SSP_DATA_BITS_24,
-  SSP_DATA_BITS_25, SSP_DATA_BITS_26, SSP_DATA_BITS_27,
-  SSP_DATA_BITS_28, SSP_DATA_BITS_29, SSP_DATA_BITS_30,
-  SSP_DATA_BITS_31, SSP_DATA_BITS_32
+	SSP_DATA_BITS_4 = 0x03, SSP_DATA_BITS_5, SSP_DATA_BITS_6,
+	SSP_DATA_BITS_7, SSP_DATA_BITS_8, SSP_DATA_BITS_9,
+	SSP_DATA_BITS_10, SSP_DATA_BITS_11, SSP_DATA_BITS_12,
+	SSP_DATA_BITS_13, SSP_DATA_BITS_14, SSP_DATA_BITS_15,
+	SSP_DATA_BITS_16, SSP_DATA_BITS_17, SSP_DATA_BITS_18,
+	SSP_DATA_BITS_19, SSP_DATA_BITS_20, SSP_DATA_BITS_21,
+	SSP_DATA_BITS_22, SSP_DATA_BITS_23, SSP_DATA_BITS_24,
+	SSP_DATA_BITS_25, SSP_DATA_BITS_26, SSP_DATA_BITS_27,
+	SSP_DATA_BITS_28, SSP_DATA_BITS_29, SSP_DATA_BITS_30,
+	SSP_DATA_BITS_31, SSP_DATA_BITS_32
 };
 
 /**
  * enum ssp_mode - SSP mode of operation (Communication modes)
  */
 enum ssp_mode {
-  INTERRUPT_TRANSFER,
-  POLLING_TRANSFER,
-  DMA_TRANSFER
+	INTERRUPT_TRANSFER,
+	POLLING_TRANSFER,
+	DMA_TRANSFER
 };
 
 /**
@@ -116,11 +116,11 @@ enum ssp_mode {
  * IT: Interrupt fires when _N_ or more elements in RX FIFO.
  */
 enum ssp_rx_level_trig {
-  SSP_RX_1_OR_MORE_ELEM,
-  SSP_RX_4_OR_MORE_ELEM,
-  SSP_RX_8_OR_MORE_ELEM,
-  SSP_RX_16_OR_MORE_ELEM,
-  SSP_RX_32_OR_MORE_ELEM
+	SSP_RX_1_OR_MORE_ELEM,
+	SSP_RX_4_OR_MORE_ELEM,
+	SSP_RX_8_OR_MORE_ELEM,
+	SSP_RX_16_OR_MORE_ELEM,
+	SSP_RX_32_OR_MORE_ELEM
 };
 
 /**
@@ -128,11 +128,11 @@ enum ssp_rx_level_trig {
  * when _N_ or more empty locations in TX FIFO)
  */
 enum ssp_tx_level_trig {
-  SSP_TX_1_OR_MORE_EMPTY_LOC,
-  SSP_TX_4_OR_MORE_EMPTY_LOC,
-  SSP_TX_8_OR_MORE_EMPTY_LOC,
-  SSP_TX_16_OR_MORE_EMPTY_LOC,
-  SSP_TX_32_OR_MORE_EMPTY_LOC
+	SSP_TX_1_OR_MORE_EMPTY_LOC,
+	SSP_TX_4_OR_MORE_EMPTY_LOC,
+	SSP_TX_8_OR_MORE_EMPTY_LOC,
+	SSP_TX_16_OR_MORE_EMPTY_LOC,
+	SSP_TX_32_OR_MORE_EMPTY_LOC
 };
 
 /**
@@ -141,8 +141,8 @@ enum ssp_tx_level_trig {
  * @SSP_CLK_SECOND_EDGE: Receive data on second edge transition (actual direction depends on polarity)
  */
 enum ssp_spi_clk_phase {
-  SSP_CLK_FIRST_EDGE,
-  SSP_CLK_SECOND_EDGE
+	SSP_CLK_FIRST_EDGE,
+	SSP_CLK_SECOND_EDGE
 };
 
 /**
@@ -151,24 +151,24 @@ enum ssp_spi_clk_phase {
  * @SSP_CLK_POL_IDLE_HIGH: High inactive level
  */
 enum ssp_spi_clk_pol {
-  SSP_CLK_POL_IDLE_LOW,
-  SSP_CLK_POL_IDLE_HIGH
+	SSP_CLK_POL_IDLE_LOW,
+	SSP_CLK_POL_IDLE_HIGH
 };
 
 /**
  * Microwire Conrol Lengths Command size in microwire format
  */
 enum ssp_microwire_ctrl_len {
-  SSP_BITS_4 = 0x03, SSP_BITS_5, SSP_BITS_6,
-  SSP_BITS_7, SSP_BITS_8, SSP_BITS_9,
-  SSP_BITS_10, SSP_BITS_11, SSP_BITS_12,
-  SSP_BITS_13, SSP_BITS_14, SSP_BITS_15,
-  SSP_BITS_16, SSP_BITS_17, SSP_BITS_18,
-  SSP_BITS_19, SSP_BITS_20, SSP_BITS_21,
-  SSP_BITS_22, SSP_BITS_23, SSP_BITS_24,
-  SSP_BITS_25, SSP_BITS_26, SSP_BITS_27,
-  SSP_BITS_28, SSP_BITS_29, SSP_BITS_30,
-  SSP_BITS_31, SSP_BITS_32
+	SSP_BITS_4 = 0x03, SSP_BITS_5, SSP_BITS_6,
+	SSP_BITS_7, SSP_BITS_8, SSP_BITS_9,
+	SSP_BITS_10, SSP_BITS_11, SSP_BITS_12,
+	SSP_BITS_13, SSP_BITS_14, SSP_BITS_15,
+	SSP_BITS_16, SSP_BITS_17, SSP_BITS_18,
+	SSP_BITS_19, SSP_BITS_20, SSP_BITS_21,
+	SSP_BITS_22, SSP_BITS_23, SSP_BITS_24,
+	SSP_BITS_25, SSP_BITS_26, SSP_BITS_27,
+	SSP_BITS_28, SSP_BITS_29, SSP_BITS_30,
+	SSP_BITS_31, SSP_BITS_32
 };
 
 /**
@@ -177,8 +177,8 @@ enum ssp_microwire_ctrl_len {
  * @SSP_MWIRE_WAIT_ONE: One wait state inserted after last command bit
  */
 enum ssp_microwire_wait_state {
-  SSP_MWIRE_WAIT_ZERO,
-  SSP_MWIRE_WAIT_ONE
+	SSP_MWIRE_WAIT_ZERO,
+	SSP_MWIRE_WAIT_ONE
 };
 
 /**
@@ -190,8 +190,8 @@ enum ssp_microwire_wait_state {
  *     an input.
  */
 enum ssp_duplex {
-  SSP_MICROWIRE_CHANNEL_FULL_DUPLEX,
-  SSP_MICROWIRE_CHANNEL_HALF_DUPLEX
+	SSP_MICROWIRE_CHANNEL_FULL_DUPLEX,
+	SSP_MICROWIRE_CHANNEL_HALF_DUPLEX
 };
 
 /**
@@ -209,22 +209,22 @@ enum ssp_duplex {
  * @SSP_FEEDBACK_CLK_DELAY_7T: dito with a delay if 7T-dt
  */
 enum ssp_clkdelay {
-  SSP_FEEDBACK_CLK_DELAY_NONE,
-  SSP_FEEDBACK_CLK_DELAY_1T,
-  SSP_FEEDBACK_CLK_DELAY_2T,
-  SSP_FEEDBACK_CLK_DELAY_3T,
-  SSP_FEEDBACK_CLK_DELAY_4T,
-  SSP_FEEDBACK_CLK_DELAY_5T,
-  SSP_FEEDBACK_CLK_DELAY_6T,
-  SSP_FEEDBACK_CLK_DELAY_7T
+	SSP_FEEDBACK_CLK_DELAY_NONE,
+	SSP_FEEDBACK_CLK_DELAY_1T,
+	SSP_FEEDBACK_CLK_DELAY_2T,
+	SSP_FEEDBACK_CLK_DELAY_3T,
+	SSP_FEEDBACK_CLK_DELAY_4T,
+	SSP_FEEDBACK_CLK_DELAY_5T,
+	SSP_FEEDBACK_CLK_DELAY_6T,
+	SSP_FEEDBACK_CLK_DELAY_7T
 };
 
 /**
  * CHIP select/deselect commands
  */
 enum ssp_chip_select {
-  SSP_CHIP_SELECT,
-  SSP_CHIP_DESELECT
+	SSP_CHIP_SELECT,
+	SSP_CHIP_DESELECT
 };
 
 
@@ -245,14 +245,14 @@ struct dma_chan;
  *     priority to minimise the transfer latency on the bus.
  */
 struct pl022_ssp_controller {
-  u16 bus_id;
-  u8 num_chipselect;
-  u8 enable_dma: 1;
-  bool (*dma_filter) (struct dma_chan * chan, void * filter_param);
-  void * dma_rx_param;
-  void * dma_tx_param;
-  int autosuspend_delay;
-  bool rt;
+	u16 bus_id;
+	u8 num_chipselect;
+	u8 enable_dma:1;
+	bool (*dma_filter)(struct dma_chan *chan, void *filter_param);
+	void *dma_rx_param;
+	void *dma_tx_param;
+	int autosuspend_delay;
+	bool rt;
 };
 
 /**
@@ -283,18 +283,18 @@ struct pl022_ssp_controller {
  * @dma_config: DMA configuration for SSP controller and peripheral
  */
 struct pl022_config_chip {
-  enum ssp_interface iface;
-  enum ssp_hierarchy hierarchy;
-  bool slave_tx_disable;
-  struct ssp_clock_params clk_freq;
-  enum ssp_mode com_mode;
-  enum ssp_rx_level_trig rx_lev_trig;
-  enum ssp_tx_level_trig tx_lev_trig;
-  enum ssp_microwire_ctrl_len ctrl_len;
-  enum ssp_microwire_wait_state wait_state;
-  enum ssp_duplex duplex;
-  enum ssp_clkdelay clkdelay;
-  void (*cs_control) (u32 control);
+	enum ssp_interface iface;
+	enum ssp_hierarchy hierarchy;
+	bool slave_tx_disable;
+	struct ssp_clock_params clk_freq;
+	enum ssp_mode com_mode;
+	enum ssp_rx_level_trig rx_lev_trig;
+	enum ssp_tx_level_trig tx_lev_trig;
+	enum ssp_microwire_ctrl_len ctrl_len;
+	enum ssp_microwire_wait_state wait_state;
+	enum ssp_duplex duplex;
+	enum ssp_clkdelay clkdelay;
+	void (*cs_control) (u32 control);
 };
 
 #endif /* _SSP_PL022_H */

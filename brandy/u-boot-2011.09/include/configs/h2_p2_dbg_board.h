@@ -5,21 +5,21 @@
  *
  * Copyright (C) 2004 MPC-Data Limited. (http://www.mpc-data.co.uk)
  * Author: MPC-Data Limited
- *     Dave Peverley
+ *	   Dave Peverley
  *
- *  This program is free software; you can redistribute  it and/or modify it
- *  under  the terms of  the GNU General  Public License as published by the
- *  Free Software Foundation;  either version 2 of the  License, or (at your
+ *  This program is free software; you can redistribute	 it and/or modify it
+ *  under  the terms of	 the GNU General  Public License as published by the
+ *  Free Software Foundation;  either version 2 of the	License, or (at your
  *  option) any later version.
  *
- *  THIS  SOFTWARE  IS PROVIDED   ``AS  IS'' AND   ANY  EXPRESS OR IMPLIED
- *  WARRANTIES,   INCLUDING, BUT NOT  LIMITED  TO, THE IMPLIED WARRANTIES OF
+ *  THIS  SOFTWARE  IS PROVIDED	  ``AS	IS'' AND   ANY	EXPRESS OR IMPLIED
+ *  WARRANTIES,	  INCLUDING, BUT NOT  LIMITED  TO, THE IMPLIED WARRANTIES OF
  *  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN
- *  NO  EVENT  SHALL   THE AUTHOR  BE  LIABLE FOR ANY   DIRECT, INDIRECT,
+ *  NO	EVENT  SHALL   THE AUTHOR  BE	 LIABLE FOR ANY	  DIRECT, INDIRECT,
  *  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- *  NOT LIMITED   TO, PROCUREMENT OF  SUBSTITUTE GOODS  OR SERVICES; LOSS OF
- *  USE, DATA,  OR PROFITS; OR  BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- *  ANY THEORY OF LIABILITY, WHETHER IN  CONTRACT, STRICT LIABILITY, OR TORT
+ *  NOT LIMITED	  TO, PROCUREMENT OF  SUBSTITUTE GOODS	OR SERVICES; LOSS OF
+ *  USE, DATA,	OR PROFITS; OR	BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ *  ANY THEORY OF LIABILITY, WHETHER IN	 CONTRACT, STRICT LIABILITY, OR TORT
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
@@ -105,32 +105,32 @@
  * debug board.
  */
 
-static inline void set_led_state (int state)
+static inline void set_led_state(int state)
 {
-  static unsigned long hw_led_state = 0;
-  volatile unsigned short * led_address = (volatile unsigned short *) 0x04000016;
-  
-  hw_led_state = ( (unsigned long) state);
-  * ( (unsigned short *) (led_address) ) = (unsigned short) (~hw_led_state & 0xFFFF);
+	static unsigned long hw_led_state = 0;
+	volatile unsigned short *led_address = (volatile unsigned short *)0x04000016;
+
+	hw_led_state = ((unsigned long)state);
+	*((unsigned short *) (led_address)) = (unsigned short) (~hw_led_state & 0xFFFF);
 }
 
 
-static inline void spin_up_leds (void)
+static inline void spin_up_leds(void)
 {
-  volatile int i, j, k;
-  
-  for (k = 0; k < 2; k++) {
-    for (i = 0; i < 16; i++) {
-      for (j = 0; j < 5000; j++) {
-        set_led_state (1 << i);
-      }
-    }
-    for (i = 15; i >= 0; i--) {
-      for (j = 0; j < 5000; j++) {
-        set_led_state (1 << i);
-      }
-    }
-  }
+	volatile int i, j, k;
+
+	for (k = 0; k < 2; k++) {
+		for (i = 0; i < 16; i++) {
+			for (j = 0; j < 5000; j++) {
+				set_led_state(1 << i);
+			}
+		}
+		for (i = 15; i >= 0; i--) {
+			for (j = 0; j < 5000; j++) {
+				set_led_state(1 << i);
+			}
+		}
+	}
 }
 
 #endif    /* !  __ASSEMBLY__ */

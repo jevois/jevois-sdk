@@ -17,13 +17,13 @@
 
 /* ECC atomic, DMA, SMP and interrupt safe scrub function */
 
-static inline void atomic_scrub (void * va, u32 size)
+static inline void atomic_scrub(void *va, u32 size)
 {
-  /*
-   * These is nothing to be done here because CE is
-   * corrected by the mshim.
-   */
-  return;
+	/*
+	 * These is nothing to be done here because CE is
+	 * corrected by the mshim.
+	 */
+	return;
 }
 
 #endif /* _ASM_TILE_EDAC_H */

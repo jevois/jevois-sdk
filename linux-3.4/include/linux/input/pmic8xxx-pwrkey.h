@@ -23,9 +23,9 @@
  * @wakeup: configure power key as wakeup source
  */
 struct pm8xxx_pwrkey_platform_data  {
-  bool pull_up;
-  u32  kpd_trigger_delay_us;
-  u32  wakeup;
+	bool pull_up;
+	u32  kpd_trigger_delay_us;
+	u32  wakeup;
 };
 
 #endif /* __PMIC8XXX_PWRKEY_H__ */

@@ -11,8 +11,8 @@
 #define _ASM_C6X_DSCR_H
 
 enum dscr_devstate_t {
-  DSCR_DEVSTATE_ENABLED,
-  DSCR_DEVSTATE_DISABLED,
+	DSCR_DEVSTATE_ENABLED,
+	DSCR_DEVSTATE_DISABLED,
 };
 
 /*
@@ -22,13 +22,13 @@ enum dscr_devstate_t {
  * hardware device. The devid used to identify the device being
  * controlled should be a property in the device's tree node.
  */
-extern void dscr_set_devstate (int devid, enum dscr_devstate_t state);
+extern void dscr_set_devstate(int devid, enum dscr_devstate_t state);
 
 /*
  * Assert or de-assert an RMII reset.
  */
-extern void dscr_rmii_reset (int id, int assert);
+extern void dscr_rmii_reset(int id, int assert);
 
-extern void dscr_probe (void);
+extern void dscr_probe(void);
 
 #endif /* _ASM_C6X_DSCR_H */

@@ -3,8 +3,8 @@
  *
  * Copyright (C) 2002, Linus Torvalds
  *
- * 10Sep2002  Andrew Morton
- *    Initial version.
+ * 10Sep2002	Andrew Morton
+ *		Initial version.
  */
 
 #include <linux/kernel.h>
@@ -17,8 +17,8 @@
 #include <linux/highmem.h>
 #include <linux/pagevec.h>
 #include <linux/task_io_accounting_ops.h>
-#include <linux/buffer_head.h>  /* grr. try_to_release_page,
-           do_invalidatepage */
+#include <linux/buffer_head.h>	/* grr. try_to_release_page,
+				   do_invalidatepage */
 #include <linux/cleancache.h>
 #include "internal.h"
 
@@ -37,24 +37,24 @@
  * point.  Because the caller is about to free (and possibly reuse) those
  * blocks on-disk.
  */
-void do_invalidatepage (struct page * page, unsigned long offset)
+void do_invalidatepage(struct page *page, unsigned long offset)
 {
-  void (*invalidatepage) (struct page *, unsigned long);
-  invalidatepage = page->mapping->a_ops->invalidatepage;
-  #ifdef CONFIG_BLOCK
-  if (!invalidatepage)
-  { invalidatepage = block_invalidatepage; }
-  #endif
-  if (invalidatepage)
-  { (*invalidatepage) (page, offset); }
+	void (*invalidatepage)(struct page *, unsigned long);
+	invalidatepage = page->mapping->a_ops->invalidatepage;
+#ifdef CONFIG_BLOCK
+	if (!invalidatepage)
+		invalidatepage = block_invalidatepage;
+#endif
+	if (invalidatepage)
+		(*invalidatepage)(page, offset);
 }
 
-static inline void truncate_partial_page (struct page * page, unsigned partial)
+static inline void truncate_partial_page(struct page *page, unsigned partial)
 {
-  zero_user_segment (page, partial, PAGE_CACHE_SIZE);
-  cleancache_invalidate_page (page->mapping, page);
-  if (page_has_private (page) )
-  { do_invalidatepage (page, partial); }
+	zero_user_segment(page, partial, PAGE_CACHE_SIZE);
+	cleancache_invalidate_page(page->mapping, page);
+	if (page_has_private(page))
+		do_invalidatepage(page, partial);
 }
 
 /*
@@ -71,20 +71,20 @@ static inline void truncate_partial_page (struct page * page, unsigned partial)
  * out all the buffers on a page without actually doing it through
  * the VM. Can you say "ext3 is horribly ugly"? Tought you could.
  */
-void cancel_dirty_page (struct page * page, unsigned int account_size)
+void cancel_dirty_page(struct page *page, unsigned int account_size)
 {
-  if (TestClearPageDirty (page) ) {
-    struct address_space * mapping = page->mapping;
-    if (mapping && mapping_cap_account_dirty (mapping) ) {
-      dec_zone_page_state (page, NR_FILE_DIRTY);
-      dec_bdi_stat (mapping->backing_dev_info,
-                    BDI_RECLAIMABLE);
-      if (account_size)
-      { task_io_account_cancelled_write (account_size); }
-    }
-  }
+	if (TestClearPageDirty(page)) {
+		struct address_space *mapping = page->mapping;
+		if (mapping && mapping_cap_account_dirty(mapping)) {
+			dec_zone_page_state(page, NR_FILE_DIRTY);
+			dec_bdi_stat(mapping->backing_dev_info,
+					BDI_RECLAIMABLE);
+			if (account_size)
+				task_io_account_cancelled_write(account_size);
+		}
+	}
 }
-EXPORT_SYMBOL (cancel_dirty_page);
+EXPORT_SYMBOL(cancel_dirty_page);
 
 /*
  * If truncate cannot remove the fs-private metadata from the page, the page
@@ -97,20 +97,20 @@ EXPORT_SYMBOL (cancel_dirty_page);
  * c) when tmpfs swizzles a page between a tmpfs inode and swapper_space.
  */
 static int
-truncate_complete_page (struct address_space * mapping, struct page * page)
+truncate_complete_page(struct address_space *mapping, struct page *page)
 {
-  if (page->mapping != mapping)
-  { return -EIO; }
-  
-  if (page_has_private (page) )
-  { do_invalidatepage (page, 0); }
-  
-  cancel_dirty_page (page, PAGE_CACHE_SIZE);
-  
-  clear_page_mlock (page);
-  ClearPageMappedToDisk (page);
-  delete_from_page_cache (page);
-  return 0;
+	if (page->mapping != mapping)
+		return -EIO;
+
+	if (page_has_private(page))
+		do_invalidatepage(page, 0);
+
+	cancel_dirty_page(page, PAGE_CACHE_SIZE);
+
+	clear_page_mlock(page);
+	ClearPageMappedToDisk(page);
+	delete_from_page_cache(page);
+	return 0;
 }
 
 /*
@@ -122,48 +122,48 @@ truncate_complete_page (struct address_space * mapping, struct page * page)
  * Returns non-zero if the page was successfully invalidated.
  */
 static int
-invalidate_complete_page (struct address_space * mapping, struct page * page)
+invalidate_complete_page(struct address_space *mapping, struct page *page)
 {
-  int ret;
-  
-  if (page->mapping != mapping)
-  { return 0; }
-  
-  if (page_has_private (page) && !try_to_release_page (page, 0) )
-  { return 0; }
-  
-  clear_page_mlock (page);
-  ret = remove_mapping (mapping, page);
-  
-  return ret;
+	int ret;
+
+	if (page->mapping != mapping)
+		return 0;
+
+	if (page_has_private(page) && !try_to_release_page(page, 0))
+		return 0;
+
+	clear_page_mlock(page);
+	ret = remove_mapping(mapping, page);
+
+	return ret;
 }
 
-int truncate_inode_page (struct address_space * mapping, struct page * page)
+int truncate_inode_page(struct address_space *mapping, struct page *page)
 {
-  if (page_mapped (page) ) {
-    unmap_mapping_range (mapping,
-                         (loff_t) page->index << PAGE_CACHE_SHIFT,
-                         PAGE_CACHE_SIZE, 0);
-  }
-  return truncate_complete_page (mapping, page);
+	if (page_mapped(page)) {
+		unmap_mapping_range(mapping,
+				   (loff_t)page->index << PAGE_CACHE_SHIFT,
+				   PAGE_CACHE_SIZE, 0);
+	}
+	return truncate_complete_page(mapping, page);
 }
 
 /*
  * Used to get rid of pages on hardware memory corruption.
  */
-int generic_error_remove_page (struct address_space * mapping, struct page * page)
+int generic_error_remove_page(struct address_space *mapping, struct page *page)
 {
-  if (!mapping)
-  { return -EINVAL; }
-  /*
-   * Only punch for normal data pages for now.
-   * Handling other types like directories would need more auditing.
-   */
-  if (!S_ISREG (mapping->host->i_mode) )
-  { return -EIO; }
-  return truncate_inode_page (mapping, page);
+	if (!mapping)
+		return -EINVAL;
+	/*
+	 * Only punch for normal data pages for now.
+	 * Handling other types like directories would need more auditing.
+	 */
+	if (!S_ISREG(mapping->host->i_mode))
+		return -EIO;
+	return truncate_inode_page(mapping, page);
 }
-EXPORT_SYMBOL (generic_error_remove_page);
+EXPORT_SYMBOL(generic_error_remove_page);
 
 /*
  * Safely invalidate one page from its pagecache mapping.
@@ -171,16 +171,16 @@ EXPORT_SYMBOL (generic_error_remove_page);
  *
  * Returns 1 if the page is successfully invalidated, otherwise 0.
  */
-int invalidate_inode_page (struct page * page)
+int invalidate_inode_page(struct page *page)
 {
-  struct address_space * mapping = page_mapping (page);
-  if (!mapping)
-  { return 0; }
-  if (PageDirty (page) || PageWriteback (page) )
-  { return 0; }
-  if (page_mapped (page) )
-  { return 0; }
-  return invalidate_complete_page (mapping, page);
+	struct address_space *mapping = page_mapping(page);
+	if (!mapping)
+		return 0;
+	if (PageDirty(page) || PageWriteback(page))
+		return 0;
+	if (page_mapped(page))
+		return 0;
+	return invalidate_complete_page(mapping, page);
 }
 
 /**
@@ -203,98 +203,98 @@ int invalidate_inode_page (struct page * page)
  * mapping is large, it is probably the case that the final pages are the most
  * recently touched, and freeing happens in ascending file offset order.
  */
-void truncate_inode_pages_range (struct address_space * mapping,
-                                 loff_t lstart, loff_t lend)
+void truncate_inode_pages_range(struct address_space *mapping,
+				loff_t lstart, loff_t lend)
 {
-  const pgoff_t start = (lstart + PAGE_CACHE_SIZE - 1) >> PAGE_CACHE_SHIFT;
-  const unsigned partial = lstart & (PAGE_CACHE_SIZE - 1);
-  struct pagevec pvec;
-  pgoff_t index;
-  pgoff_t end;
-  int i;
-  
-  cleancache_invalidate_inode (mapping);
-  if (mapping->nrpages == 0)
-  { return; }
-  
-  BUG_ON ( (lend & (PAGE_CACHE_SIZE - 1) ) != (PAGE_CACHE_SIZE - 1) );
-  end = (lend >> PAGE_CACHE_SHIFT);
-  
-  pagevec_init (&pvec, 0);
-  index = start;
-  while (index <= end && pagevec_lookup (&pvec, mapping, index,
-                                         min (end - index, (pgoff_t) PAGEVEC_SIZE - 1) + 1) ) {
-    mem_cgroup_uncharge_start();
-    for (i = 0; i < pagevec_count (&pvec); i++) {
-      struct page * page = pvec.pages[i];
-      
-      /* We rely upon deletion not changing page->index */
-      index = page->index;
-      if (index > end)
-      { break; }
-      
-      if (!trylock_page (page) )
-      { continue; }
-      WARN_ON (page->index != index);
-      if (PageWriteback (page) ) {
-        unlock_page (page);
-        continue;
-      }
-      truncate_inode_page (mapping, page);
-      unlock_page (page);
-    }
-    pagevec_release (&pvec);
-    mem_cgroup_uncharge_end();
-    cond_resched();
-    index++;
-  }
-  
-  if (partial) {
-    struct page * page = find_lock_page (mapping, start - 1);
-    if (page) {
-      wait_on_page_writeback (page);
-      truncate_partial_page (page, partial);
-      unlock_page (page);
-      page_cache_release (page);
-    }
-  }
-  
-  index = start;
-  for ( ; ; ) {
-    cond_resched();
-    if (!pagevec_lookup (&pvec, mapping, index,
-                         min (end - index, (pgoff_t) PAGEVEC_SIZE - 1) + 1) ) {
-      if (index == start)
-      { break; }
-      index = start;
-      continue;
-    }
-    if (index == start && pvec.pages[0]->index > end) {
-      pagevec_release (&pvec);
-      break;
-    }
-    mem_cgroup_uncharge_start();
-    for (i = 0; i < pagevec_count (&pvec); i++) {
-      struct page * page = pvec.pages[i];
-      
-      /* We rely upon deletion not changing page->index */
-      index = page->index;
-      if (index > end)
-      { break; }
-      
-      lock_page (page);
-      WARN_ON (page->index != index);
-      wait_on_page_writeback (page);
-      truncate_inode_page (mapping, page);
-      unlock_page (page);
-    }
-    pagevec_release (&pvec);
-    mem_cgroup_uncharge_end();
-    index++;
-  }
-  cleancache_invalidate_inode (mapping);
+	const pgoff_t start = (lstart + PAGE_CACHE_SIZE-1) >> PAGE_CACHE_SHIFT;
+	const unsigned partial = lstart & (PAGE_CACHE_SIZE - 1);
+	struct pagevec pvec;
+	pgoff_t index;
+	pgoff_t end;
+	int i;
+
+	cleancache_invalidate_inode(mapping);
+	if (mapping->nrpages == 0)
+		return;
+
+	BUG_ON((lend & (PAGE_CACHE_SIZE - 1)) != (PAGE_CACHE_SIZE - 1));
+	end = (lend >> PAGE_CACHE_SHIFT);
+
+	pagevec_init(&pvec, 0);
+	index = start;
+	while (index <= end && pagevec_lookup(&pvec, mapping, index,
+			min(end - index, (pgoff_t)PAGEVEC_SIZE - 1) + 1)) {
+		mem_cgroup_uncharge_start();
+		for (i = 0; i < pagevec_count(&pvec); i++) {
+			struct page *page = pvec.pages[i];
+
+			/* We rely upon deletion not changing page->index */
+			index = page->index;
+			if (index > end)
+				break;
+
+			if (!trylock_page(page))
+				continue;
+			WARN_ON(page->index != index);
+			if (PageWriteback(page)) {
+				unlock_page(page);
+				continue;
+			}
+			truncate_inode_page(mapping, page);
+			unlock_page(page);
+		}
+		pagevec_release(&pvec);
+		mem_cgroup_uncharge_end();
+		cond_resched();
+		index++;
+	}
+
+	if (partial) {
+		struct page *page = find_lock_page(mapping, start - 1);
+		if (page) {
+			wait_on_page_writeback(page);
+			truncate_partial_page(page, partial);
+			unlock_page(page);
+			page_cache_release(page);
+		}
+	}
+
+	index = start;
+	for ( ; ; ) {
+		cond_resched();
+		if (!pagevec_lookup(&pvec, mapping, index,
+			min(end - index, (pgoff_t)PAGEVEC_SIZE - 1) + 1)) {
+			if (index == start)
+				break;
+			index = start;
+			continue;
+		}
+		if (index == start && pvec.pages[0]->index > end) {
+			pagevec_release(&pvec);
+			break;
+		}
+		mem_cgroup_uncharge_start();
+		for (i = 0; i < pagevec_count(&pvec); i++) {
+			struct page *page = pvec.pages[i];
+
+			/* We rely upon deletion not changing page->index */
+			index = page->index;
+			if (index > end)
+				break;
+
+			lock_page(page);
+			WARN_ON(page->index != index);
+			wait_on_page_writeback(page);
+			truncate_inode_page(mapping, page);
+			unlock_page(page);
+		}
+		pagevec_release(&pvec);
+		mem_cgroup_uncharge_end();
+		index++;
+	}
+	cleancache_invalidate_inode(mapping);
 }
-EXPORT_SYMBOL (truncate_inode_pages_range);
+EXPORT_SYMBOL(truncate_inode_pages_range);
 
 /**
  * truncate_inode_pages - truncate *all* the pages from an offset
@@ -308,11 +308,11 @@ EXPORT_SYMBOL (truncate_inode_pages_range);
  * mapping->nrpages can be non-zero when this function returns even after
  * truncation of the whole mapping.
  */
-void truncate_inode_pages (struct address_space * mapping, loff_t lstart)
+void truncate_inode_pages(struct address_space *mapping, loff_t lstart)
 {
-  truncate_inode_pages_range (mapping, lstart, (loff_t) - 1);
+	truncate_inode_pages_range(mapping, lstart, (loff_t)-1);
 }
-EXPORT_SYMBOL (truncate_inode_pages);
+EXPORT_SYMBOL(truncate_inode_pages);
 
 /**
  * invalidate_mapping_pages - Invalidate all the unlocked pages of one inode
@@ -327,56 +327,56 @@ EXPORT_SYMBOL (truncate_inode_pages);
  * invalidate pages which are dirty, locked, under writeback or mapped into
  * pagetables.
  */
-unsigned long invalidate_mapping_pages (struct address_space * mapping,
-                                        pgoff_t start, pgoff_t end)
+unsigned long invalidate_mapping_pages(struct address_space *mapping,
+		pgoff_t start, pgoff_t end)
 {
-  struct pagevec pvec;
-  pgoff_t index = start;
-  unsigned long ret;
-  unsigned long count = 0;
-  int i;
-  
-  /*
-   * Note: this function may get called on a shmem/tmpfs mapping:
-   * pagevec_lookup() might then return 0 prematurely (because it
-   * got a gangful of swap entries); but it's hardly worth worrying
-   * about - it can rarely have anything to free from such a mapping
-   * (most pages are dirty), and already skips over any difficulties.
-   */
-  
-  pagevec_init (&pvec, 0);
-  while (index <= end && pagevec_lookup (&pvec, mapping, index,
-                                         min (end - index, (pgoff_t) PAGEVEC_SIZE - 1) + 1) ) {
-    mem_cgroup_uncharge_start();
-    for (i = 0; i < pagevec_count (&pvec); i++) {
-      struct page * page = pvec.pages[i];
-      
-      /* We rely upon deletion not changing page->index */
-      index = page->index;
-      if (index > end)
-      { break; }
-      
-      if (!trylock_page (page) )
-      { continue; }
-      WARN_ON (page->index != index);
-      ret = invalidate_inode_page (page);
-      unlock_page (page);
-      /*
-       * Invalidation is a hint that the page is no longer
-       * of interest and try to speed up its reclaim.
-       */
-      if (!ret)
-      { deactivate_page (page); }
-      count += ret;
-    }
-    pagevec_release (&pvec);
-    mem_cgroup_uncharge_end();
-    cond_resched();
-    index++;
-  }
-  return count;
+	struct pagevec pvec;
+	pgoff_t index = start;
+	unsigned long ret;
+	unsigned long count = 0;
+	int i;
+
+	/*
+	 * Note: this function may get called on a shmem/tmpfs mapping:
+	 * pagevec_lookup() might then return 0 prematurely (because it
+	 * got a gangful of swap entries); but it's hardly worth worrying
+	 * about - it can rarely have anything to free from such a mapping
+	 * (most pages are dirty), and already skips over any difficulties.
+	 */
+
+	pagevec_init(&pvec, 0);
+	while (index <= end && pagevec_lookup(&pvec, mapping, index,
+			min(end - index, (pgoff_t)PAGEVEC_SIZE - 1) + 1)) {
+		mem_cgroup_uncharge_start();
+		for (i = 0; i < pagevec_count(&pvec); i++) {
+			struct page *page = pvec.pages[i];
+
+			/* We rely upon deletion not changing page->index */
+			index = page->index;
+			if (index > end)
+				break;
+
+			if (!trylock_page(page))
+				continue;
+			WARN_ON(page->index != index);
+			ret = invalidate_inode_page(page);
+			unlock_page(page);
+			/*
+			 * Invalidation is a hint that the page is no longer
+			 * of interest and try to speed up its reclaim.
+			 */
+			if (!ret)
+				deactivate_page(page);
+			count += ret;
+		}
+		pagevec_release(&pvec);
+		mem_cgroup_uncharge_end();
+		cond_resched();
+		index++;
+	}
+	return count;
 }
-EXPORT_SYMBOL (invalidate_mapping_pages);
+EXPORT_SYMBOL(invalidate_mapping_pages);
 
 /*
  * This is like invalidate_complete_page(), except it ignores the page's
@@ -386,42 +386,42 @@ EXPORT_SYMBOL (invalidate_mapping_pages);
  * sitting in the lru_cache_add() pagevecs.
  */
 static int
-invalidate_complete_page2 (struct address_space * mapping, struct page * page)
+invalidate_complete_page2(struct address_space *mapping, struct page *page)
 {
-  if (page->mapping != mapping)
-  { return 0; }
-  
-  if (page_has_private (page) && !try_to_release_page (page, GFP_KERNEL) )
-  { return 0; }
-  
-  clear_page_mlock (page);
-  
-  spin_lock_irq (&mapping->tree_lock);
-  if (PageDirty (page) )
-  { goto failed; }
-  
-  BUG_ON (page_has_private (page) );
-  __delete_from_page_cache (page);
-  spin_unlock_irq (&mapping->tree_lock);
-  mem_cgroup_uncharge_cache_page (page);
-  
-  if (mapping->a_ops->freepage)
-  { mapping->a_ops->freepage (page); }
-  
-  page_cache_release (page); /* pagecache ref */
-  return 1;
+	if (page->mapping != mapping)
+		return 0;
+
+	if (page_has_private(page) && !try_to_release_page(page, GFP_KERNEL))
+		return 0;
+
+	clear_page_mlock(page);
+
+	spin_lock_irq(&mapping->tree_lock);
+	if (PageDirty(page))
+		goto failed;
+
+	BUG_ON(page_has_private(page));
+	__delete_from_page_cache(page);
+	spin_unlock_irq(&mapping->tree_lock);
+	mem_cgroup_uncharge_cache_page(page);
+
+	if (mapping->a_ops->freepage)
+		mapping->a_ops->freepage(page);
+
+	page_cache_release(page);	/* pagecache ref */
+	return 1;
 failed:
-  spin_unlock_irq (&mapping->tree_lock);
-  return 0;
+	spin_unlock_irq(&mapping->tree_lock);
+	return 0;
 }
 
-static int do_launder_page (struct address_space * mapping, struct page * page)
+static int do_launder_page(struct address_space *mapping, struct page *page)
 {
-  if (!PageDirty (page) )
-  { return 0; }
-  if (page->mapping != mapping || mapping->a_ops->launder_page == NULL)
-  { return 0; }
-  return mapping->a_ops->launder_page (page);
+	if (!PageDirty(page))
+		return 0;
+	if (page->mapping != mapping || mapping->a_ops->launder_page == NULL)
+		return 0;
+	return mapping->a_ops->launder_page(page);
 }
 
 /**
@@ -435,77 +435,76 @@ static int do_launder_page (struct address_space * mapping, struct page * page)
  *
  * Returns -EBUSY if any pages could not be invalidated.
  */
-int invalidate_inode_pages2_range (struct address_space * mapping,
-                                   pgoff_t start, pgoff_t end)
+int invalidate_inode_pages2_range(struct address_space *mapping,
+				  pgoff_t start, pgoff_t end)
 {
-  struct pagevec pvec;
-  pgoff_t index;
-  int i;
-  int ret = 0;
-  int ret2 = 0;
-  int did_range_unmap = 0;
-  
-  cleancache_invalidate_inode (mapping);
-  pagevec_init (&pvec, 0);
-  index = start;
-  while (index <= end && pagevec_lookup (&pvec, mapping, index,
-                                         min (end - index, (pgoff_t) PAGEVEC_SIZE - 1) + 1) ) {
-    mem_cgroup_uncharge_start();
-    for (i = 0; i < pagevec_count (&pvec); i++) {
-      struct page * page = pvec.pages[i];
-      
-      /* We rely upon deletion not changing page->index */
-      index = page->index;
-      if (index > end)
-      { break; }
-      
-      lock_page (page);
-      WARN_ON (page->index != index);
-      if (page->mapping != mapping) {
-        unlock_page (page);
-        continue;
-      }
-      wait_on_page_writeback (page);
-      if (page_mapped (page) ) {
-        if (!did_range_unmap) {
-          /*
-           * Zap the rest of the file in one hit.
-           */
-          unmap_mapping_range (mapping,
-                               (loff_t) index << PAGE_CACHE_SHIFT,
-                               (loff_t) (1 + end - index)
-                               << PAGE_CACHE_SHIFT,
-                               0);
-          did_range_unmap = 1;
-        }
-        else {
-          /*
-           * Just zap this page
-           */
-          unmap_mapping_range (mapping,
-                               (loff_t) index << PAGE_CACHE_SHIFT,
-                               PAGE_CACHE_SIZE, 0);
-        }
-      }
-      BUG_ON (page_mapped (page) );
-      ret2 = do_launder_page (mapping, page);
-      if (ret2 == 0) {
-        if (!invalidate_complete_page2 (mapping, page) )
-        { ret2 = -EBUSY; }
-      }
-      if (ret2 < 0)
-      { ret = ret2; }
-      unlock_page (page);
-    }
-    pagevec_release (&pvec);
-    mem_cgroup_uncharge_end();
-    cond_resched();
-    index++;
-  }
-  cleancache_invalidate_inode (mapping);
-  return ret;
+	struct pagevec pvec;
+	pgoff_t index;
+	int i;
+	int ret = 0;
+	int ret2 = 0;
+	int did_range_unmap = 0;
+
+	cleancache_invalidate_inode(mapping);
+	pagevec_init(&pvec, 0);
+	index = start;
+	while (index <= end && pagevec_lookup(&pvec, mapping, index,
+			min(end - index, (pgoff_t)PAGEVEC_SIZE - 1) + 1)) {
+		mem_cgroup_uncharge_start();
+		for (i = 0; i < pagevec_count(&pvec); i++) {
+			struct page *page = pvec.pages[i];
+
+			/* We rely upon deletion not changing page->index */
+			index = page->index;
+			if (index > end)
+				break;
+
+			lock_page(page);
+			WARN_ON(page->index != index);
+			if (page->mapping != mapping) {
+				unlock_page(page);
+				continue;
+			}
+			wait_on_page_writeback(page);
+			if (page_mapped(page)) {
+				if (!did_range_unmap) {
+					/*
+					 * Zap the rest of the file in one hit.
+					 */
+					unmap_mapping_range(mapping,
+					   (loff_t)index << PAGE_CACHE_SHIFT,
+					   (loff_t)(1 + end - index)
+							 << PAGE_CACHE_SHIFT,
+					    0);
+					did_range_unmap = 1;
+				} else {
+					/*
+					 * Just zap this page
+					 */
+					unmap_mapping_range(mapping,
+					   (loff_t)index << PAGE_CACHE_SHIFT,
+					   PAGE_CACHE_SIZE, 0);
+				}
+			}
+			BUG_ON(page_mapped(page));
+			ret2 = do_launder_page(mapping, page);
+			if (ret2 == 0) {
+				if (!invalidate_complete_page2(mapping, page))
+					ret2 = -EBUSY;
+			}
+			if (ret2 < 0)
+				ret = ret2;
+			unlock_page(page);
+		}
+		pagevec_release(&pvec);
+		mem_cgroup_uncharge_end();
+		cond_resched();
+		index++;
+	}
+	cleancache_invalidate_inode(mapping);
+	return ret;
 }
-EXPORT_SYMBOL_GPL (invalidate_inode_pages2_range);
+EXPORT_SYMBOL_GPL(invalidate_inode_pages2_range);
 
 /**
  * invalidate_inode_pages2 - remove all pages from an address_space
@@ -516,11 +515,11 @@ EXPORT_SYMBOL_GPL (invalidate_inode_pages2_range);
  *
  * Returns -EBUSY if any pages could not be invalidated.
  */
-int invalidate_inode_pages2 (struct address_space * mapping)
+int invalidate_inode_pages2(struct address_space *mapping)
 {
-  return invalidate_inode_pages2_range (mapping, 0, -1);
+	return invalidate_inode_pages2_range(mapping, 0, -1);
 }
-EXPORT_SYMBOL_GPL (invalidate_inode_pages2);
+EXPORT_SYMBOL_GPL(invalidate_inode_pages2);
 
 /**
  * truncate_pagecache - unmap and remove pagecache that has been truncated
@@ -538,25 +537,25 @@ EXPORT_SYMBOL_GPL (invalidate_inode_pages2);
  * situations such as writepage being called for a page that has already
  * had its underlying blocks deallocated.
  */
-void truncate_pagecache (struct inode * inode, loff_t oldsize, loff_t newsize)
+void truncate_pagecache(struct inode *inode, loff_t oldsize, loff_t newsize)
 {
-  struct address_space * mapping = inode->i_mapping;
-  loff_t holebegin = round_up (newsize, PAGE_SIZE);
-  
-  /*
-   * unmap_mapping_range is called twice, first simply for
-   * efficiency so that truncate_inode_pages does fewer
-   * single-page unmaps.  However after this first call, and
-   * before truncate_inode_pages finishes, it is possible for
-   * private pages to be COWed, which remain after
-   * truncate_inode_pages finishes, hence the second
-   * unmap_mapping_range call must be made for correctness.
-   */
-  unmap_mapping_range (mapping, holebegin, 0, 1);
-  truncate_inode_pages (mapping, newsize);
-  unmap_mapping_range (mapping, holebegin, 0, 1);
+	struct address_space *mapping = inode->i_mapping;
+	loff_t holebegin = round_up(newsize, PAGE_SIZE);
+
+	/*
+	 * unmap_mapping_range is called twice, first simply for
+	 * efficiency so that truncate_inode_pages does fewer
+	 * single-page unmaps.  However after this first call, and
+	 * before truncate_inode_pages finishes, it is possible for
+	 * private pages to be COWed, which remain after
+	 * truncate_inode_pages finishes, hence the second
+	 * unmap_mapping_range call must be made for correctness.
+	 */
+	unmap_mapping_range(mapping, holebegin, 0, 1);
+	truncate_inode_pages(mapping, newsize);
+	unmap_mapping_range(mapping, holebegin, 0, 1);
 }
-EXPORT_SYMBOL (truncate_pagecache);
+EXPORT_SYMBOL(truncate_pagecache);
 
 /**
  * truncate_setsize - update inode and pagecache for a new file size
@@ -570,16 +569,16 @@ EXPORT_SYMBOL (truncate_pagecache);
  * Must be called with inode_mutex held and before all filesystem specific
  * block truncation has been performed.
  */
-void truncate_setsize (struct inode * inode, loff_t newsize)
+void truncate_setsize(struct inode *inode, loff_t newsize)
 {
-  loff_t oldsize;
-  
-  oldsize = inode->i_size;
-  i_size_write (inode, newsize);
-  
-  truncate_pagecache (inode, oldsize, newsize);
+	loff_t oldsize;
+
+	oldsize = inode->i_size;
+	i_size_write(inode, newsize);
+
+	truncate_pagecache(inode, oldsize, newsize);
 }
-EXPORT_SYMBOL (truncate_setsize);
+EXPORT_SYMBOL(truncate_setsize);
 
 /**
  * vmtruncate - unmap mappings "freed" by truncate() syscall
@@ -589,44 +588,44 @@ EXPORT_SYMBOL (truncate_setsize);
  * This function is deprecated and truncate_setsize or truncate_pagecache
  * should be used instead, together with filesystem specific block truncation.
  */
-int vmtruncate (struct inode * inode, loff_t newsize)
+int vmtruncate(struct inode *inode, loff_t newsize)
 {
-  int error;
-  
-  error = inode_newsize_ok (inode, newsize);
-  if (error)
-  { return error; }
-  
-  truncate_setsize (inode, newsize);
-  if (inode->i_op->truncate)
-  { inode->i_op->truncate (inode); }
-  return 0;
-}
-EXPORT_SYMBOL (vmtruncate);
+	int error;
 
-int vmtruncate_range (struct inode * inode, loff_t lstart, loff_t lend)
+	error = inode_newsize_ok(inode, newsize);
+	if (error)
+		return error;
+
+	truncate_setsize(inode, newsize);
+	if (inode->i_op->truncate)
+		inode->i_op->truncate(inode);
+	return 0;
+}
+EXPORT_SYMBOL(vmtruncate);
+
+int vmtruncate_range(struct inode *inode, loff_t lstart, loff_t lend)
 {
-  struct address_space * mapping = inode->i_mapping;
-  loff_t holebegin = round_up (lstart, PAGE_SIZE);
-  loff_t holelen = 1 + lend - holebegin;
-  
-  /*
-   * If the underlying filesystem is not going to provide
-   * a way to truncate a range of blocks (punch a hole) -
-   * we should return failure right now.
-   */
-  if (!inode->i_op->truncate_range)
-  { return -ENOSYS; }
-  
-  mutex_lock (&inode->i_mutex);
-  inode_dio_wait (inode);
-  unmap_mapping_range (mapping, holebegin, holelen, 1);
-  inode->i_op->truncate_range (inode, lstart, lend);
-  /* unmap again to remove racily COWed private pages */
-  unmap_mapping_range (mapping, holebegin, holelen, 1);
-  mutex_unlock (&inode->i_mutex);
-  
-  return 0;
+	struct address_space *mapping = inode->i_mapping;
+	loff_t holebegin = round_up(lstart, PAGE_SIZE);
+	loff_t holelen = 1 + lend - holebegin;
+
+	/*
+	 * If the underlying filesystem is not going to provide
+	 * a way to truncate a range of blocks (punch a hole) -
+	 * we should return failure right now.
+	 */
+	if (!inode->i_op->truncate_range)
+		return -ENOSYS;
+
+	mutex_lock(&inode->i_mutex);
+	inode_dio_wait(inode);
+	unmap_mapping_range(mapping, holebegin, holelen, 1);
+	inode->i_op->truncate_range(inode, lstart, lend);
+	/* unmap again to remove racily COWed private pages */
+	unmap_mapping_range(mapping, holebegin, holelen, 1);
+	mutex_unlock(&inode->i_mutex);
+
+	return 0;
 }
 
 /**
@@ -642,29 +641,29 @@ int vmtruncate_range (struct inode * inode, loff_t lstart, loff_t lend)
  * situations such as writepage being called for a page that has already
  * had its underlying blocks deallocated.
  */
-void truncate_pagecache_range (struct inode * inode, loff_t lstart, loff_t lend)
+void truncate_pagecache_range(struct inode *inode, loff_t lstart, loff_t lend)
 {
-  struct address_space * mapping = inode->i_mapping;
-  loff_t unmap_start = round_up (lstart, PAGE_SIZE);
-  loff_t unmap_end = round_down (1 + lend, PAGE_SIZE) - 1;
-  /*
-   * This rounding is currently just for example: unmap_mapping_range
-   * expands its hole outwards, whereas we want it to contract the hole
-   * inwards.  However, existing callers of truncate_pagecache_range are
-   * doing their own page rounding first; and truncate_inode_pages_range
-   * currently BUGs if lend is not pagealigned-1 (it handles partial
-   * page at start of hole, but not partial page at end of hole).  Note
-   * unmap_mapping_range allows holelen 0 for all, and we allow lend -1.
-   */
-  
-  /*
-   * Unlike in truncate_pagecache, unmap_mapping_range is called only
-   * once (before truncating pagecache), and without "even_cows" flag:
-   * hole-punching should not remove private COWed pages from the hole.
-   */
-  if ( (u64) unmap_end > (u64) unmap_start)
-    unmap_mapping_range (mapping, unmap_start,
-                         1 + unmap_end - unmap_start, 0);
-  truncate_inode_pages_range (mapping, lstart, lend);
+	struct address_space *mapping = inode->i_mapping;
+	loff_t unmap_start = round_up(lstart, PAGE_SIZE);
+	loff_t unmap_end = round_down(1 + lend, PAGE_SIZE) - 1;
+	/*
+	 * This rounding is currently just for example: unmap_mapping_range
+	 * expands its hole outwards, whereas we want it to contract the hole
+	 * inwards.  However, existing callers of truncate_pagecache_range are
+	 * doing their own page rounding first; and truncate_inode_pages_range
+	 * currently BUGs if lend is not pagealigned-1 (it handles partial
+	 * page at start of hole, but not partial page at end of hole).  Note
+	 * unmap_mapping_range allows holelen 0 for all, and we allow lend -1.
+	 */
+
+	/*
+	 * Unlike in truncate_pagecache, unmap_mapping_range is called only
+	 * once (before truncating pagecache), and without "even_cows" flag:
+	 * hole-punching should not remove private COWed pages from the hole.
+	 */
+	if ((u64)unmap_end > (u64)unmap_start)
+		unmap_mapping_range(mapping, unmap_start,
+				    1 + unmap_end - unmap_start, 0);
+	truncate_inode_pages_range(mapping, lstart, lend);
 }
-EXPORT_SYMBOL (truncate_pagecache_range);
+EXPORT_SYMBOL(truncate_pagecache_range);

@@ -40,7 +40,7 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */ /**************************************************************************/
-
+ 
 #ifndef TLCLIENT_H_
 #define TLCLIENT_H_
 
@@ -53,112 +53,112 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 /**************************************************************************/ /*!
- @Function    TLClientConnect
- @Description Initialise direct connection to Services kernel server
+ @Function		TLClientConnect
+ @Description	Initialise direct connection to Services kernel server
                 transport layer
- @Output    phSrvHandle Address of a pointer to a connection object
- @Return        PVRSRV_ERROR: for system error codes
+ @Output		phSrvHandle	Address of a pointer to a connection object
+ @Return        PVRSRV_ERROR:	for system error codes
 */ /***************************************************************************/
 IMG_INTERNAL
-PVRSRV_ERROR TLClientConnect (IMG_HANDLE * phSrvHandle);
+PVRSRV_ERROR TLClientConnect(IMG_HANDLE* phSrvHandle);
 
 
 /**************************************************************************/ /*!
- @Function    TLClientDisconnect
- @Description Disconnect from the direct connected Services kernel server
+ @Function		TLClientDisconnect
+ @Description	Disconnect from the direct connected Services kernel server
                 transport layer
- @Input     hSrvHandle  Handle to connection object as returned from
-              TLClientConnect()
- @Return        PVRSRV_ERROR: for system error codes
+ @Input			hSrvHandle	Handle to connection object as returned from
+ 	 	 	 	 	 	 	TLClientConnect()
+ @Return        PVRSRV_ERROR:	for system error codes
 */ /***************************************************************************/
 IMG_INTERNAL
-PVRSRV_ERROR TLClientDisconnect (IMG_HANDLE hSrvHandle);
+PVRSRV_ERROR TLClientDisconnect(IMG_HANDLE hSrvHandle);
 
 
 /**************************************************************************/ /*!
- @Function    TLClientOpenStream
- @Description Open a descriptor onto an existing kernel transport stream.
- @Input     hSrvHandle      Address of a pointer to a connection object
- @Input     pszName     Address of the stream name string, no longer
-                than PRVSRVTL_MAX_STREAM_NAME_SIZE.
- @Input     ui32Mode    Unused
- @Output    phSD      Address of a pointer to an stream object
- @Return    PVRSRV_ERROR_NOT_FOUND:        when named stream not found
- @Return    PVRSRV_ERROR_ALREADY_OPEN:     stream already open by another
- @Return    PVRSRV_ERROR_STREAM_ERROR:     internal driver state error
+ @Function		TLClientOpenStream
+ @Description	Open a descriptor onto an existing kernel transport stream.
+ @Input			hSrvHandle    	Address of a pointer to a connection object
+ @Input			pszName			Address of the stream name string, no longer
+ 	 	 	 	 	 	 	 	than PRVSRVTL_MAX_STREAM_NAME_SIZE.
+ @Input			ui32Mode		Unused
+ @Output		phSD			Address of a pointer to an stream object
+ @Return 		PVRSRV_ERROR_NOT_FOUND:        when named stream not found
+ @Return		PVRSRV_ERROR_ALREADY_OPEN:     stream already open by another
+ @Return		PVRSRV_ERROR_STREAM_ERROR:     internal driver state error
  @Return        PVRSRV_ERROR_TIMEOUT:          block timed out, stream not found
- @Return    PVRSRV_ERROR:            for other system codes
+ @Return		PVRSRV_ERROR:			       for other system codes
 */ /***************************************************************************/
 IMG_INTERNAL
-PVRSRV_ERROR TLClientOpenStream (IMG_HANDLE hSrvHandle,
-                                 IMG_PCHAR    pszName,
-                                 IMG_UINT32   ui32Mode,
-                                 IMG_HANDLE * phSD);
+PVRSRV_ERROR TLClientOpenStream(IMG_HANDLE hSrvHandle,
+		IMG_PCHAR    pszName,
+		IMG_UINT32   ui32Mode,
+		IMG_HANDLE*  phSD);
 
 
 /**************************************************************************/ /*!
- @Function    TLClientCloseStream
- @Description Close and release the stream connection to Services kernel
-        server transport layer. Any outstanding Acquire will be
-        released.
- @Input     hSrvHandle      Address of a pointer to a connection object
- @Input     hSD       Handle of the stream object to close
- @Return    PVRSRV_ERROR_HANDLE_NOT_FOUND: when SD handle is not known
- @Return    PVRSRV_ERROR_STREAM_ERROR:    internal driver state error
- @Return    PVRSRV_ERROR:         for system codes
+ @Function		TLClientCloseStream
+ @Description	Close and release the stream connection to Services kernel
+				server transport layer. Any outstanding Acquire will be
+				released.
+ @Input			hSrvHandle      Address of a pointer to a connection object
+ @Input			hSD				Handle of the stream object to close
+ @Return		PVRSRV_ERROR_HANDLE_NOT_FOUND: when SD handle is not known
+ @Return		PVRSRV_ERROR_STREAM_ERROR: 	  internal driver state error
+ @Return		PVRSRV_ERROR:				  for system codes
 */ /***************************************************************************/
 IMG_INTERNAL
-PVRSRV_ERROR TLClientCloseStream (IMG_HANDLE hSrvHandle,
-                                  IMG_HANDLE hSD);
+PVRSRV_ERROR TLClientCloseStream(IMG_HANDLE hSrvHandle,
+		IMG_HANDLE hSD);
 
 
 /**************************************************************************/ /*!
- @Function    TLClientAcquireData
- @Description When there is data available in the stream buffer this call
-        returns with the address and length of the data buffer the
-        client can safely read. This buffer may contain one or more
-        packets of data.
-        If no data is available then this call blocks until it becomes
-        available. However if the stream has been destroyed while
-        waiting then a resource unavailable error will be returned
-        to the caller. Clients must pair this call with a
-        ReleaseData call.
- @Input     hSrvHandle    Address of a pointer to a connection object
- @Input     hSD       Handle of the stream object to read
- @Output    ppPacketBuf   Address of a pointer to an byte buffer. On exit
-                pointer contains address of buffer to read from
- @Output    puiBufLen   Pointer to an integer. On exit it is the size
-                of the data to read from the packet buffer
- @Return    PVRSRV_ERROR_RESOURCE_UNAVAILABLE: when stream no longer exists
- @Return    PVRSRV_ERROR_HANDLE_NOT_FOUND:     when SD handle not known
- @Return    PVRSRV_ERROR_STREAM_ERROR:         internal driver state error
- @Return    PVRSRV_ERROR_RETRY:          release not called beforehand
+ @Function		TLClientAcquireData
+ @Description	When there is data available in the stream buffer this call
+ 	 	 	 	returns with the address and length of the data buffer the
+ 	 	 	 	client can safely read. This buffer may contain one or more
+ 	 	 	 	packets of data.
+ 	 	 	 	If no data is available then this call blocks until it becomes
+ 	 	 	 	available. However if the stream has been destroyed while
+ 	 	 	 	waiting then a resource unavailable error will be returned
+ 	 	 	 	to the caller. Clients must pair this call with a
+ 	 	 	 	ReleaseData call.
+ @Input			hSrvHandle  	Address of a pointer to a connection object
+ @Input			hSD				Handle of the stream object to read
+ @Output		ppPacketBuf		Address of a pointer to an byte buffer. On exit
+								pointer contains address of buffer to read from
+ @Output		puiBufLen		Pointer to an integer. On exit it is the size
+								of the data to read from the packet buffer
+ @Return		PVRSRV_ERROR_RESOURCE_UNAVAILABLE: when stream no longer exists
+ @Return		PVRSRV_ERROR_HANDLE_NOT_FOUND:     when SD handle not known
+ @Return		PVRSRV_ERROR_STREAM_ERROR: 	       internal driver state error
+ @Return		PVRSRV_ERROR_RETRY:				   release not called beforehand
  @Return        PVRSRV_ERROR_TIMEOUT:              block timed out, no data
- @Return    PVRSRV_ERROR:            for other system codes
+ @Return		PVRSRV_ERROR:					   for other system codes
 */ /***************************************************************************/
 IMG_INTERNAL
-PVRSRV_ERROR TLClientAcquireData (IMG_HANDLE hSrvHandle,
-                                  IMG_HANDLE  hSD,
-                                  IMG_PBYTE * ppPacketBuf,
-                                  IMG_UINT32 * puiBufLen);
+PVRSRV_ERROR TLClientAcquireData(IMG_HANDLE hSrvHandle,
+		IMG_HANDLE  hSD,
+		IMG_PBYTE*  ppPacketBuf,
+		IMG_UINT32* puiBufLen);
 
 
 /**************************************************************************/ /*!
- @Function    TLClientReleaseData
- @Description Called after client has read the stream data out of the buffer
-        The data is subsequently flushed from the stream buffer to make
-        room for more data packets from the stream source.
- @Input     hSrvHandle    Address of a pointer to a connection object
- @Input     hSD       Handle of the stream object to read
- @Return    PVRSRV_ERROR_RESOURCE_UNAVAILABLE: when stream no longer exists
- @Return    PVRSRV_ERROR_HANDLE_NOT_FOUND:   when SD handle not known to TL
- @Return    PVRSRV_ERROR_STREAM_ERROR:       internal driver state error
- @Return    PVRSRV_ERROR_RETRY:        acquire not called beforehand
- @Return    PVRSRV_ERROR:                  for system codes
+ @Function		TLClientReleaseData
+ @Description	Called after client has read the stream data out of the buffer
+ 	 	 	 	The data is subsequently flushed from the stream buffer to make
+ 	 	 	 	room for more data packets from the stream source.
+ @Input			hSrvHandle  	Address of a pointer to a connection object
+ @Input			hSD				Handle of the stream object to read
+ @Return		PVRSRV_ERROR_RESOURCE_UNAVAILABLE: when stream no longer exists
+ @Return		PVRSRV_ERROR_HANDLE_NOT_FOUND:   when SD handle not known to TL
+ @Return		PVRSRV_ERROR_STREAM_ERROR: 	     internal driver state error
+ @Return		PVRSRV_ERROR_RETRY:				 acquire not called beforehand
+ @Return		PVRSRV_ERROR:	                 for system codes
 */ /***************************************************************************/
 IMG_INTERNAL
-PVRSRV_ERROR TLClientReleaseData (IMG_HANDLE hSrvHandle,
-                                  IMG_HANDLE hSD);
+PVRSRV_ERROR TLClientReleaseData(IMG_HANDLE hSrvHandle,
+		IMG_HANDLE hSD);
 
 
 

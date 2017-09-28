@@ -1,7 +1,7 @@
 /*  *********************************************************************
     *  SB1250 Board Support Package
     *
-    *  DMA definitions        File: sb1250_dma.h
+    *  DMA definitions				File: sb1250_dma.h
     *
     *  This module contains constants and macros useful for
     *  programming the SB1250's DMA controllers, both the data mover
@@ -56,17 +56,17 @@
 #define M_DMA_CHAIN_SEL             _SB_MAKEMASK1(1)
 #define M_DMA_RESERVED1             _SB_MAKEMASK1(2)
 
-#define S_DMA_DESC_TYPE       _SB_MAKE64(1)
-#define M_DMA_DESC_TYPE       _SB_MAKEMASK(2, S_DMA_DESC_TYPE)
+#define S_DMA_DESC_TYPE		    _SB_MAKE64(1)
+#define M_DMA_DESC_TYPE		    _SB_MAKEMASK(2, S_DMA_DESC_TYPE)
 #define V_DMA_DESC_TYPE(x)          _SB_MAKEVALUE(x, S_DMA_DESC_TYPE)
 #define G_DMA_DESC_TYPE(x)          _SB_GETVALUE(x, S_DMA_DESC_TYPE, M_DMA_DESC_TYPE)
 
-#define K_DMA_DESC_TYPE_RING_AL   0
-#define K_DMA_DESC_TYPE_CHAIN_AL  1
+#define K_DMA_DESC_TYPE_RING_AL		0
+#define K_DMA_DESC_TYPE_CHAIN_AL	1
 
 #if SIBYTE_HDR_FEATURE(1250, PASS3) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
-#define K_DMA_DESC_TYPE_RING_UAL_WI 2
-#define K_DMA_DESC_TYPE_RING_UAL_RMW  3
+#define K_DMA_DESC_TYPE_RING_UAL_WI	2
+#define K_DMA_DESC_TYPE_RING_UAL_RMW	3
 #endif /* 1250 PASS3 || 112x PASS1 || 1480 */
 
 #define M_DMA_EOP_INT_EN            _SB_MAKEMASK1(3)
@@ -108,12 +108,12 @@
 #define M_DMA_PRE_ADDR_EN           _SB_MAKEMASK1(2)
 #define M_DMA_FLOW_CTL_EN           _SB_MAKEMASK1(3)
 #define M_DMA_NO_DSCR_UPDT          _SB_MAKEMASK1(4)
-#define M_DMA_L2CA        _SB_MAKEMASK1(5)
+#define M_DMA_L2CA		    _SB_MAKEMASK1(5)
 
 #if SIBYTE_HDR_FEATURE(1250, PASS3) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
-#define M_DMA_RX_XTRA_STATUS      _SB_MAKEMASK1(6)
-#define M_DMA_TX_CPU_PAUSE      _SB_MAKEMASK1(6)
-#define M_DMA_TX_FC_PAUSE_EN      _SB_MAKEMASK1(7)
+#define M_DMA_RX_XTRA_STATUS	    _SB_MAKEMASK1(6)
+#define M_DMA_TX_CPU_PAUSE	    _SB_MAKEMASK1(6)
+#define M_DMA_TX_FC_PAUSE_EN	    _SB_MAKEMASK1(7)
 #endif /* 1250 PASS3 || 112x PASS1 || 1480 */
 
 #define M_DMA_MBZ1                  _SB_MAKEMASK(6, 15)
@@ -165,7 +165,7 @@
 #define M_DMA_CURDSCR_COUNT         _SB_MAKEMASK(16, S_DMA_CURDSCR_COUNT)
 
 #if SIBYTE_HDR_FEATURE(1250, PASS3) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
-#define M_DMA_TX_CH_PAUSE_ON      _SB_MAKEMASK1(56)
+#define M_DMA_TX_CH_PAUSE_ON	    _SB_MAKEMASK1(56)
 #endif /* 1250 PASS3 || 112x PASS1 || 1480 */
 
 /*
@@ -211,13 +211,13 @@
 #define G_DMA_DSCRA_A_SIZE(x)       _SB_GETVALUE(x, S_DMA_DSCRA_A_SIZE, M_DMA_DSCRA_A_SIZE)
 
 #if SIBYTE_HDR_FEATURE(1250, PASS3) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
-#define S_DMA_DSCRA_DSCR_CNT      _SB_MAKE64(40)
-#define M_DMA_DSCRA_DSCR_CNT      _SB_MAKEMASK(8, S_DMA_DSCRA_DSCR_CNT)
-#define G_DMA_DSCRA_DSCR_CNT(x)     _SB_GETVALUE(x, S_DMA_DSCRA_DSCR_CNT, M_DMA_DSCRA_DSCR_CNT)
+#define S_DMA_DSCRA_DSCR_CNT	    _SB_MAKE64(40)
+#define M_DMA_DSCRA_DSCR_CNT	    _SB_MAKEMASK(8, S_DMA_DSCRA_DSCR_CNT)
+#define G_DMA_DSCRA_DSCR_CNT(x)	    _SB_GETVALUE(x, S_DMA_DSCRA_DSCR_CNT, M_DMA_DSCRA_DSCR_CNT)
 #endif /* 1250 PASS3 || 112x PASS1 || 1480 */
 
 #define M_DMA_DSCRA_INTERRUPT       _SB_MAKEMASK1(49)
-#define M_DMA_DSCRA_OFFSETB     _SB_MAKEMASK1(50)
+#define M_DMA_DSCRA_OFFSETB	    _SB_MAKEMASK1(50)
 
 #define S_DMA_DSCRA_STATUS          _SB_MAKE64(51)
 #define M_DMA_DSCRA_STATUS          _SB_MAKEMASK(13, S_DMA_DSCRA_STATUS)
@@ -279,17 +279,17 @@
  */
 
 #define M_DMA_ETHRX_BADIP4CS        _SB_MAKEMASK1(51)
-#define M_DMA_ETHRX_DSCRERR     _SB_MAKEMASK1(52)
+#define M_DMA_ETHRX_DSCRERR	    _SB_MAKEMASK1(52)
 
 #if SIBYTE_HDR_FEATURE(1250, PASS2) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
 /* Note: This bit is in the DSCR_B options field */
-#define M_DMA_ETHRX_BADTCPCS  _SB_MAKEMASK1(0)
+#define M_DMA_ETHRX_BADTCPCS	_SB_MAKEMASK1(0)
 #endif /* 1250 PASS2 || 112x PASS1 || 1480 */
 
 #if SIBYTE_HDR_FEATURE(1250, PASS3) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
 /* Note: These bits are in the DSCR_B options field */
-#define M_DMA_ETH_VLAN_FLAG _SB_MAKEMASK1(1)
-#define M_DMA_ETH_CRC_FLAG  _SB_MAKEMASK1(2)
+#define M_DMA_ETH_VLAN_FLAG	_SB_MAKEMASK1(1)
+#define M_DMA_ETH_CRC_FLAG	_SB_MAKEMASK1(2)
 #endif /* 1250 PASS3 || 112x PASS1 || 1480 */
 
 #define S_DMA_ETHRX_RXCH            53
@@ -315,14 +315,14 @@
 #define M_DMA_ETHRX_MATCH_EXACT     _SB_MAKEMASK1(59)
 #define M_DMA_ETHRX_BCAST           _SB_MAKEMASK1(60)
 #define M_DMA_ETHRX_MCAST           _SB_MAKEMASK1(61)
-#define M_DMA_ETHRX_BAD             _SB_MAKEMASK1(62)
+#define M_DMA_ETHRX_BAD	            _SB_MAKEMASK1(62)
 #define M_DMA_ETHRX_SOP             _SB_MAKEMASK1(63)
 
 /*
  * Ethernet Transmit Status Bits (Table 7-16)
  */
 
-#define M_DMA_ETHTX_SOP           _SB_MAKEMASK1(63)
+#define M_DMA_ETHTX_SOP	    	    _SB_MAKEMASK1(63)
 
 /*
  * Ethernet Transmit Options (Table 7-17)
@@ -361,7 +361,7 @@
  * Serial Transmit Status Bits (Table 7-20)
  */
 
-#define M_DMA_SERTX_FLAG      _SB_MAKEMASK1(63)
+#define M_DMA_SERTX_FLAG	    _SB_MAKEMASK1(63)
 
 /*
  * Serial Transmit Options (Table 7-21)
@@ -409,8 +409,8 @@
 
 #define M_DM_DSCR_BASE_ACTIVE       _SB_MAKEMASK1(59)
 #define M_DM_DSCR_BASE_INTERRUPT    _SB_MAKEMASK1(60)
-#define M_DM_DSCR_BASE_RESET        _SB_MAKEMASK1(61) /* write register */
-#define M_DM_DSCR_BASE_ERROR        _SB_MAKEMASK1(61) /* read register */
+#define M_DM_DSCR_BASE_RESET        _SB_MAKEMASK1(61)	/* write register */
+#define M_DM_DSCR_BASE_ERROR        _SB_MAKEMASK1(61)	/* read register */
 #define M_DM_DSCR_BASE_ABORT        _SB_MAKEMASK1(62)
 #define M_DM_DSCR_BASE_ENABL        _SB_MAKEMASK1(63)
 
@@ -435,7 +435,7 @@
 #define M_DM_CUR_DSCR_DSCR_COUNT    _SB_MAKEMASK(16, S_DM_CUR_DSCR_DSCR_COUNT)
 #define V_DM_CUR_DSCR_DSCR_COUNT(r) _SB_MAKEVALUE(r, S_DM_CUR_DSCR_DSCR_COUNT)
 #define G_DM_CUR_DSCR_DSCR_COUNT(r) _SB_GETVALUE(r, S_DM_CUR_DSCR_DSCR_COUNT,\
-    M_DM_CUR_DSCR_DSCR_COUNT)
+                                     M_DM_CUR_DSCR_DSCR_COUNT)
 
 
 #if SIBYTE_HDR_FEATURE(1250, PASS3) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
@@ -450,13 +450,13 @@
 #define M_DM_PARTIAL_CRC_PARTIAL      _SB_MAKEMASK(32, S_DM_PARTIAL_CRC_PARTIAL)
 #define V_DM_PARTIAL_CRC_PARTIAL(r)   _SB_MAKEVALUE(r, S_DM_PARTIAL_CRC_PARTIAL)
 #define G_DM_PARTIAL_CRC_PARTIAL(r)   _SB_GETVALUE(r, S_DM_PARTIAL_CRC_PARTIAL,\
-    M_DM_PARTIAL_CRC_PARTIAL)
+                                       M_DM_PARTIAL_CRC_PARTIAL)
 
 #define S_DM_PARTIAL_TCPCS_PARTIAL    _SB_MAKE64(32)
 #define M_DM_PARTIAL_TCPCS_PARTIAL    _SB_MAKEMASK(16, S_DM_PARTIAL_TCPCS_PARTIAL)
 #define V_DM_PARTIAL_TCPCS_PARTIAL(r) _SB_MAKEVALUE(r, S_DM_PARTIAL_TCPCS_PARTIAL)
 #define G_DM_PARTIAL_TCPCS_PARTIAL(r) _SB_GETVALUE(r, S_DM_PARTIAL_TCPCS_PARTIAL,\
-    M_DM_PARTIAL_TCPCS_PARTIAL)
+                                       M_DM_PARTIAL_TCPCS_PARTIAL)
 
 #define M_DM_PARTIAL_ODD_BYTE         _SB_MAKEMASK1(48)
 #endif /* 1250 PASS3 || 112x PASS1 || 1480 */
@@ -472,13 +472,13 @@
 #define M_CRC_DEF_CRC_INIT            _SB_MAKEMASK(32, S_CRC_DEF_CRC_INIT)
 #define V_CRC_DEF_CRC_INIT(r)         _SB_MAKEVALUE(r, S_CRC_DEF_CRC_INIT)
 #define G_CRC_DEF_CRC_INIT(r)         _SB_GETVALUE(r, S_CRC_DEF_CRC_INIT,\
-    M_CRC_DEF_CRC_INIT)
+                                       M_CRC_DEF_CRC_INIT)
 
 #define S_CRC_DEF_CRC_POLY            _SB_MAKE64(32)
 #define M_CRC_DEF_CRC_POLY            _SB_MAKEMASK(32, S_CRC_DEF_CRC_POLY)
 #define V_CRC_DEF_CRC_POLY(r)         _SB_MAKEVALUE(r, S_CRC_DEF_CRC_POLY)
 #define G_CRC_DEF_CRC_POLY(r)         _SB_GETVALUE(r, S_CRC_DEF_CRC_POLY,\
-    M_CRC_DEF_CRC_POLY)
+                                       M_CRC_DEF_CRC_POLY)
 #endif /* 1250 PASS3 || 112x PASS1 || 1480 */
 
 
@@ -492,19 +492,19 @@
 #define M_CTCP_DEF_CRC_TXOR           _SB_MAKEMASK(32, S_CTCP_DEF_CRC_TXOR)
 #define V_CTCP_DEF_CRC_TXOR(r)        _SB_MAKEVALUE(r, S_CTCP_DEF_CRC_TXOR)
 #define G_CTCP_DEF_CRC_TXOR(r)        _SB_GETVALUE(r, S_CTCP_DEF_CRC_TXOR,\
-    M_CTCP_DEF_CRC_TXOR)
+                                       M_CTCP_DEF_CRC_TXOR)
 
 #define S_CTCP_DEF_TCPCS_INIT         _SB_MAKE64(32)
 #define M_CTCP_DEF_TCPCS_INIT         _SB_MAKEMASK(16, S_CTCP_DEF_TCPCS_INIT)
 #define V_CTCP_DEF_TCPCS_INIT(r)      _SB_MAKEVALUE(r, S_CTCP_DEF_TCPCS_INIT)
 #define G_CTCP_DEF_TCPCS_INIT(r)      _SB_GETVALUE(r, S_CTCP_DEF_TCPCS_INIT,\
-    M_CTCP_DEF_TCPCS_INIT)
+                                       M_CTCP_DEF_TCPCS_INIT)
 
 #define S_CTCP_DEF_CRC_WIDTH          _SB_MAKE64(48)
 #define M_CTCP_DEF_CRC_WIDTH          _SB_MAKEMASK(2, S_CTCP_DEF_CRC_WIDTH)
 #define V_CTCP_DEF_CRC_WIDTH(r)       _SB_MAKEVALUE(r, S_CTCP_DEF_CRC_WIDTH)
 #define G_CTCP_DEF_CRC_WIDTH(r)       _SB_GETVALUE(r, S_CTCP_DEF_CRC_WIDTH,\
-    M_CTCP_DEF_CRC_WIDTH)
+                                       M_CTCP_DEF_CRC_WIDTH)
 
 #define K_CTCP_DEF_CRC_WIDTH_4        0
 #define K_CTCP_DEF_CRC_WIDTH_2        1
@@ -561,8 +561,8 @@
 #define M_DM_DSCRA_L2C_SRC          _SB_MAKEMASK1(51)
 
 #if SIBYTE_HDR_FEATURE(1250, PASS2) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)
-#define M_DM_DSCRA_RD_BKOFF     _SB_MAKEMASK1(52)
-#define M_DM_DSCRA_WR_BKOFF     _SB_MAKEMASK1(53)
+#define M_DM_DSCRA_RD_BKOFF	    _SB_MAKEMASK1(52)
+#define M_DM_DSCRA_WR_BKOFF	    _SB_MAKEMASK1(53)
 #endif /* 1250 PASS2 || 112x PASS1 || 1480 */
 
 #if SIBYTE_HDR_FEATURE(1250, PASS3) || SIBYTE_HDR_FEATURE(112x, PASS1) || SIBYTE_HDR_FEATURE_CHIP(1480)

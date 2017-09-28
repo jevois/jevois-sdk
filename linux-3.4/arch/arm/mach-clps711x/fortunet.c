@@ -34,49 +34,49 @@
 #include "common.h"
 
 struct meminfo memmap = {
-  .nr_banks = 1,
-  .bank   = {
-    {
-      .start  = 0xC0000000,
-      .size = 0x01000000,
-    },
-  },
+	.nr_banks	= 1,
+	.bank		= {
+		{
+			.start	= 0xC0000000,
+			.size	= 0x01000000,
+		},
+	},
 };
 
 typedef struct tag_IMAGE_PARAMS
 {
-  int ramdisk_ok;
-  int ramdisk_address;
-  int ramdisk_size;
-  int ram_size;
-  int extra_param_type;
-  int extra_param_ptr;
-  int command_line;
+	int	ramdisk_ok;
+	int	ramdisk_address;
+	int	ramdisk_size;
+	int	ram_size;
+	int	extra_param_type;
+	int	extra_param_ptr;
+	int	command_line;
 } IMAGE_PARAMS;
 
-#define IMAGE_PARAMS_PHYS 0xC01F0000
+#define IMAGE_PARAMS_PHYS	0xC01F0000
 
 static void __init
-fortunet_fixup (struct tag * tags, char ** cmdline, struct meminfo * mi)
+fortunet_fixup(struct tag *tags, char **cmdline, struct meminfo *mi)
 {
-  IMAGE_PARAMS * ip = phys_to_virt (IMAGE_PARAMS_PHYS);
-  *cmdline = phys_to_virt (ip->command_line);
-  #ifdef CONFIG_BLK_DEV_INITRD
-  if (ip->ramdisk_ok)
-  {
-    initrd_start = __phys_to_virt (ip->ramdisk_address);
-    initrd_end = initrd_start + ip->ramdisk_size;
-  }
-  #endif
-  memmap.bank[0].size = ip->ram_size;
-  *mi = memmap;
+	IMAGE_PARAMS *ip = phys_to_virt(IMAGE_PARAMS_PHYS);
+	*cmdline = phys_to_virt(ip->command_line);
+#ifdef CONFIG_BLK_DEV_INITRD
+	if(ip->ramdisk_ok)
+	{
+		initrd_start = __phys_to_virt(ip->ramdisk_address);
+		initrd_end = initrd_start + ip->ramdisk_size;
+	}
+#endif
+	memmap.bank[0].size = ip->ram_size;
+	*mi = memmap;
 }
 
-MACHINE_START (FORTUNET, "ARM-FortuNet")
-/* Maintainer: FortuNet Inc. */
-.fixup    = fortunet_fixup,
- .map_io   = clps711x_map_io,
-  .init_irq = clps711x_init_irq,
-   .timer    = &clps711x_timer,
-    .restart  = clps711x_restart,
-     MACHINE_END
+MACHINE_START(FORTUNET, "ARM-FortuNet")
+	/* Maintainer: FortuNet Inc. */
+	.fixup		= fortunet_fixup,
+	.map_io		= clps711x_map_io,
+	.init_irq	= clps711x_init_irq,
+	.timer		= &clps711x_timer,
+	.restart	= clps711x_restart,
+MACHINE_END

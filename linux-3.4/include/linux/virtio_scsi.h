@@ -8,65 +8,65 @@
 
 /* SCSI command request, followed by data-out */
 struct virtio_scsi_cmd_req {
-  u8 lun[8];    /* Logical Unit Number */
-  u64 tag;    /* Command identifier */
-  u8 task_attr;   /* Task attribute */
-  u8 prio;
-  u8 crn;
-  u8 cdb[VIRTIO_SCSI_CDB_SIZE];
+	u8 lun[8];		/* Logical Unit Number */
+	u64 tag;		/* Command identifier */
+	u8 task_attr;		/* Task attribute */
+	u8 prio;
+	u8 crn;
+	u8 cdb[VIRTIO_SCSI_CDB_SIZE];
 } __packed;
 
 /* Response, followed by sense data and data-in */
 struct virtio_scsi_cmd_resp {
-  u32 sense_len;    /* Sense data length */
-  u32 resid;    /* Residual bytes in data buffer */
-  u16 status_qualifier; /* Status qualifier */
-  u8 status;    /* Command completion status */
-  u8 response;    /* Response values */
-  u8 sense[VIRTIO_SCSI_SENSE_SIZE];
+	u32 sense_len;		/* Sense data length */
+	u32 resid;		/* Residual bytes in data buffer */
+	u16 status_qualifier;	/* Status qualifier */
+	u8 status;		/* Command completion status */
+	u8 response;		/* Response values */
+	u8 sense[VIRTIO_SCSI_SENSE_SIZE];
 } __packed;
 
 /* Task Management Request */
 struct virtio_scsi_ctrl_tmf_req {
-  u32 type;
-  u32 subtype;
-  u8 lun[8];
-  u64 tag;
+	u32 type;
+	u32 subtype;
+	u8 lun[8];
+	u64 tag;
 } __packed;
 
 struct virtio_scsi_ctrl_tmf_resp {
-  u8 response;
+	u8 response;
 } __packed;
 
 /* Asynchronous notification query/subscription */
 struct virtio_scsi_ctrl_an_req {
-  u32 type;
-  u8 lun[8];
-  u32 event_requested;
+	u32 type;
+	u8 lun[8];
+	u32 event_requested;
 } __packed;
 
 struct virtio_scsi_ctrl_an_resp {
-  u32 event_actual;
-  u8 response;
+	u32 event_actual;
+	u8 response;
 } __packed;
 
 struct virtio_scsi_event {
-  u32 event;
-  u8 lun[8];
-  u32 reason;
+	u32 event;
+	u8 lun[8];
+	u32 reason;
 } __packed;
 
 struct virtio_scsi_config {
-  u32 num_queues;
-  u32 seg_max;
-  u32 max_sectors;
-  u32 cmd_per_lun;
-  u32 event_info_size;
-  u32 sense_size;
-  u32 cdb_size;
-  u16 max_channel;
-  u16 max_target;
-  u32 max_lun;
+	u32 num_queues;
+	u32 seg_max;
+	u32 max_sectors;
+	u32 cmd_per_lun;
+	u32 event_info_size;
+	u32 sense_size;
+	u32 cdb_size;
+	u16 max_channel;
+	u16 max_target;
+	u32 max_lun;
 } __packed;
 
 /* Response codes */

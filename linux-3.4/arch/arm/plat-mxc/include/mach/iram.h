@@ -20,22 +20,22 @@
 
 #ifdef CONFIG_IRAM_ALLOC
 
-int __init iram_init (unsigned long base, unsigned long size);
-void __iomem * iram_alloc (unsigned int size, unsigned long * dma_addr);
-void iram_free (unsigned long dma_addr, unsigned int size);
+int __init iram_init(unsigned long base, unsigned long size);
+void __iomem *iram_alloc(unsigned int size, unsigned long *dma_addr);
+void iram_free(unsigned long dma_addr, unsigned int size);
 
 #else
 
-static inline int __init iram_init (unsigned long base, unsigned long size)
+static inline int __init iram_init(unsigned long base, unsigned long size)
 {
-  return -ENOMEM;
+	return -ENOMEM;
 }
 
-static inline void __iomem * iram_alloc (unsigned int size, unsigned long * dma_addr)
+static inline void __iomem *iram_alloc(unsigned int size, unsigned long *dma_addr)
 {
-  return NULL;
+	return NULL;
 }
 
-static inline void iram_free (unsigned long base, unsigned long size) {}
+static inline void iram_free(unsigned long base, unsigned long size) {}
 
 #endif

@@ -39,79 +39,79 @@
 /* adapater basis                                           */
 typedef struct adapter_s ADAPTER;
 struct adapter_s {
-  void * io;
-  byte IdTable[256];
-  byte IdTypeTable[256];
-  byte FlowControlIdTable[256];
-  byte FlowControlSkipTable[256];
-  byte ReadyInt;
-  byte RcExtensionSupported;
-  byte misc_flags_table[256];
-  dword protocol_capabilities;
-  byte (*ram_in) (ADAPTER * a, void * adr);
-  word (*ram_inw) (ADAPTER * a, void * adr);
-  void (*ram_in_buffer) (ADAPTER * a, void * adr, void * P, word length);
-  void (*ram_look_ahead) (ADAPTER * a, PBUFFER * RBuffer, ENTITY * e);
-  void (*ram_out) (ADAPTER * a, void * adr, byte data);
-  void (*ram_outw) (ADAPTER * a, void * adr, word data);
-  void (*ram_out_buffer) (ADAPTER * a, void * adr, void * P, word length);
-  void (*ram_inc) (ADAPTER * a, void * adr);
-  #if defined(DIVA_ISTREAM)
-  dword rx_stream[256];
-  dword tx_stream[256];
-  word tx_pos[256];
-  word rx_pos[256];
-  byte stream_buffer[2512];
-  dword (*ram_offset) (ADAPTER * a);
-  void (*ram_out_dw) (ADAPTER * a,
-                      void * addr,
-                      const dword * data,
-                      int dwords);
-  void (*ram_in_dw) (ADAPTER * a,
-                     void * addr,
-                     dword * data,
-                     int dwords);
-  void (*istream_wakeup) (ADAPTER * a);
-  #else
-  byte stream_buffer[4];
-  #endif
+	void *io;
+	byte IdTable[256];
+	byte IdTypeTable[256];
+	byte FlowControlIdTable[256];
+	byte FlowControlSkipTable[256];
+	byte ReadyInt;
+	byte RcExtensionSupported;
+	byte misc_flags_table[256];
+	dword protocol_capabilities;
+	byte (*ram_in)(ADAPTER *a, void *adr);
+	word (*ram_inw)(ADAPTER *a, void *adr);
+	void (*ram_in_buffer)(ADAPTER *a, void *adr, void *P, word length);
+	void (*ram_look_ahead)(ADAPTER *a, PBUFFER *RBuffer, ENTITY *e);
+	void (*ram_out)(ADAPTER *a, void *adr, byte data);
+	void (*ram_outw)(ADAPTER *a, void *adr, word data);
+	void (*ram_out_buffer)(ADAPTER *a, void *adr, void *P, word length);
+	void (*ram_inc)(ADAPTER *a, void *adr);
+#if defined(DIVA_ISTREAM)
+	dword rx_stream[256];
+	dword tx_stream[256];
+	word tx_pos[256];
+	word rx_pos[256];
+	byte stream_buffer[2512];
+	dword (*ram_offset)(ADAPTER *a);
+	void (*ram_out_dw)(ADAPTER *a,
+			   void *addr,
+			   const dword *data,
+			   int dwords);
+	void (*ram_in_dw)(ADAPTER *a,
+			  void *addr,
+			  dword *data,
+			  int dwords);
+	void (*istream_wakeup)(ADAPTER *a);
+#else
+	byte stream_buffer[4];
+#endif
 };
 /*------------------------------------------------------------------*/
 /* public functions of IDI common code                              */
 /*------------------------------------------------------------------*/
-void pr_out (ADAPTER * a);
-byte pr_dpc (ADAPTER * a);
-byte scom_test_int (ADAPTER * a);
-void scom_clear_int (ADAPTER * a);
+void pr_out(ADAPTER *a);
+byte pr_dpc(ADAPTER *a);
+byte scom_test_int(ADAPTER *a);
+void scom_clear_int(ADAPTER *a);
 /*------------------------------------------------------------------*/
 /* OS specific functions used by IDI common code                    */
 /*------------------------------------------------------------------*/
-void free_entity (ADAPTER * a, byte e_no);
-void assign_queue (ADAPTER * a, byte e_no, word ref);
-byte get_assign (ADAPTER * a, word ref);
-void req_queue (ADAPTER * a, byte e_no);
-byte look_req (ADAPTER * a);
-void next_req (ADAPTER * a);
-ENTITY * entity_ptr (ADAPTER * a, byte e_no);
+void free_entity(ADAPTER *a, byte e_no);
+void assign_queue(ADAPTER *a, byte e_no, word ref);
+byte get_assign(ADAPTER *a, word ref);
+void req_queue(ADAPTER *a, byte e_no);
+byte look_req(ADAPTER *a);
+void next_req(ADAPTER *a);
+ENTITY *entity_ptr(ADAPTER *a, byte e_no);
 #if defined(DIVA_ISTREAM)
 struct _diva_xdi_stream_interface;
-void diva_xdi_provide_istream_info (ADAPTER * a,
-                                    struct _diva_xdi_stream_interface * pI);
-void pr_stream (ADAPTER * a);
-int diva_istream_write (void * context,
-                        int Id,
-                        void * data,
-                        int length,
-                        int final,
-                        byte usr1,
-                        byte usr2);
-int diva_istream_read (void * context,
-                       int Id,
-                       void * data,
-                       int max_length,
-                       int * final,
-                       byte * usr1,
-                       byte * usr2);
+void diva_xdi_provide_istream_info(ADAPTER *a,
+				   struct _diva_xdi_stream_interface *pI);
+void pr_stream(ADAPTER *a);
+int diva_istream_write(void *context,
+		       int Id,
+		       void *data,
+		       int length,
+		       int final,
+		       byte usr1,
+		       byte usr2);
+int diva_istream_read(void *context,
+		      int Id,
+		      void *data,
+		      int max_length,
+		      int *final,
+		      byte *usr1,
+		      byte *usr2);
 #if defined(DIVA_IDI_RX_DMA)
 #include "diva_dma.h"
 #endif

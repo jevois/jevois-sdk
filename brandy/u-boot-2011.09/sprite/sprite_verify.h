@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -27,19 +27,19 @@
 
 #include <common.h>
 
-extern uint add_sum (void * buffer, uint length);
+extern uint add_sum(void *buffer, uint length);
 
-extern uint sunxi_sprite_part_rawdata_verify (uint base_start, long long base_bytes);
+extern uint sunxi_sprite_part_rawdata_verify(uint base_start, long long base_bytes);
 
-extern uint sunxi_sprite_part_sparsedata_verify (void);
+extern uint sunxi_sprite_part_sparsedata_verify(void);
 
-extern uint sunxi_sprite_generate_checksum (void * buffer, uint length, uint src_sum);
+extern uint sunxi_sprite_generate_checksum(void *buffer, uint length, uint src_sum);
 
-extern int sunxi_sprite_verify_checksum (void * buffer, uint length, uint src_sum);
+extern int sunxi_sprite_verify_checksum(void *buffer, uint length, uint src_sum);
 
-extern int sunxi_sprite_verify_dlmap (void * buffer);
+extern int sunxi_sprite_verify_dlmap(void *buffer);
 
-extern int sunxi_sprite_verify_mbr (void * buffer);
+extern int sunxi_sprite_verify_mbr(void *buffer);
 
 #endif
 

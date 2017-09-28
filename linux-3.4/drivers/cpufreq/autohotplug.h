@@ -37,86 +37,86 @@
 #define LOAD_LEVEL_BOOST      4
 
 #if defined(CONFIG_SCHED_HMP)
-#define AUTOHOTPLUG_SUNXI_SYSFS_MAX (3)
+	#define AUTOHOTPLUG_SUNXI_SYSFS_MAX (3)
 #elif defined(CONFIG_SCHED_SMP_DCMP)
-#define AUTOHOTPLUG_SUNXI_SYSFS_MAX (1)
+	#define AUTOHOTPLUG_SUNXI_SYSFS_MAX (1)
 #else
-#define AUTOHOTPLUG_SUNXI_SYSFS_MAX (0)
+	#define AUTOHOTPLUG_SUNXI_SYSFS_MAX (0)
 #endif
 
 #define HOTPLUG_DATA_SYSFS_MAX (14 + AUTOHOTPLUG_SUNXI_SYSFS_MAX + CONFIG_NR_CPUS)
 
 struct auto_cpu_hotplug_loadinfo
 {
-  unsigned int cpu_load[CONFIG_NR_CPUS];
-  unsigned long cpu_load_lasttime[CONFIG_NR_CPUS];
-  unsigned int max_load;
-  unsigned int min_load;
-  unsigned int max_cpu;
-  unsigned int min_cpu;
-  unsigned int big_min_load;
+	unsigned int cpu_load[CONFIG_NR_CPUS];
+	unsigned long cpu_load_lasttime[CONFIG_NR_CPUS];
+	unsigned int max_load;
+	unsigned int min_load;
+	unsigned int max_cpu;
+	unsigned int min_cpu;
+	unsigned int big_min_load;
 };
 
 struct auto_cpu_hotplug_governor
 {
-  struct timer_list cpu_timer;
-  struct auto_cpu_hotplug_loadinfo load;
+	struct timer_list cpu_timer;
+	struct auto_cpu_hotplug_loadinfo load;
 };
 
 struct auto_cpu_hotplug_cpuinfo {
-  spinlock_t load_lock; /* protects the next 4 fields */
-  u64 time_in_idle;
-  u64 time_in_idle_timestamp;
+	spinlock_t load_lock; /* protects the next 4 fields */
+	u64 time_in_idle;
+	u64 time_in_idle_timestamp;
 };
 
 struct auto_hotplug_global_attr {
-  struct attribute attr;
-  ssize_t (*show) (struct kobject * kobj,
-                   struct attribute * attr, char * buf);
-  ssize_t (*store) (struct kobject * a, struct attribute * b,
-                    const char * c, size_t count);
-  unsigned int * value;
-  unsigned int (*to_sysfs) (unsigned int, unsigned int *);
-  unsigned int  (*from_sysfs) (unsigned int, unsigned int *);
+	struct attribute attr;
+	ssize_t (*show)(struct kobject *kobj,
+			struct attribute *attr, char *buf);
+	ssize_t (*store)(struct kobject *a, struct attribute *b,
+			const char *c, size_t count);
+	unsigned int *value;
+	unsigned int (*to_sysfs)(unsigned int, unsigned int *);
+	unsigned int  (*from_sysfs)(unsigned int, unsigned int *);
 };
 
 struct auto_hotplug_data_struct {
-  struct attribute_group attr_group;
-  struct attribute * attributes[HOTPLUG_DATA_SYSFS_MAX + 1];
-  struct auto_hotplug_global_attr attr[HOTPLUG_DATA_SYSFS_MAX];
+	struct attribute_group attr_group;
+	struct attribute *attributes[HOTPLUG_DATA_SYSFS_MAX + 1];
+	struct auto_hotplug_global_attr attr[HOTPLUG_DATA_SYSFS_MAX];
 };
 
 struct autohotplug_governor {
-  void (*init_attr) (void);
-  int (*get_fast_and_slow_cpus) (struct cpumask * hmp_fast_cpu_mask,
-                                 struct cpumask * hmp_slow_cpu_mask);
-  int (*try_up) (struct auto_cpu_hotplug_loadinfo * load);
-  int (*try_down) (struct auto_cpu_hotplug_loadinfo * load);
-  void (*update_limits) (void);
+	void (*init_attr)(void);
+	int (*get_fast_and_slow_cpus)(struct cpumask *hmp_fast_cpu_mask,
+			struct cpumask *hmp_slow_cpu_mask);
+	int (*try_up)(struct auto_cpu_hotplug_loadinfo *load);
+	int (*try_down)(struct auto_cpu_hotplug_loadinfo *load);
+	void (*update_limits)(void);
 };
 
-extern unsigned int is_cpu_big (int cpu);
-extern unsigned int is_cpu_little (int cpu);
-extern int do_cpu_down (unsigned int cpu);
-extern int try_up_little (void);
-extern int try_up_big (void);
+extern unsigned int is_cpu_big(int cpu);
+extern unsigned int is_cpu_little(int cpu);
+extern int do_cpu_down(unsigned int cpu);
+extern int try_up_little(void);
+extern int try_up_big(void);
 
-extern void autohotplug_attr_add (const char * name,
-                                  unsigned int * value, umode_t mode,
-                                  unsigned int (*to_sysfs) (unsigned int, unsigned int *),
-                                  unsigned int (*from_sysfs) (unsigned int , unsigned int *) );
-extern int get_cpus_under (struct auto_cpu_hotplug_loadinfo * load,
-                           unsigned char level, unsigned int * first);
-extern int get_bigs_above (struct auto_cpu_hotplug_loadinfo * load,
-                           unsigned char level, unsigned int * first);
-extern int get_littles_under (struct auto_cpu_hotplug_loadinfo * load,
-                              unsigned char level, unsigned int * first);
-extern int get_bigs_under (struct auto_cpu_hotplug_loadinfo * load,
-                           unsigned char level, unsigned int * first);
-extern int get_cpus_stable_under (struct auto_cpu_hotplug_loadinfo * load,
-                                  unsigned char level, unsigned int * first, int is_up);
-extern int get_cpus_online (struct auto_cpu_hotplug_loadinfo * load,
-                            int * little, int * big);
+extern void autohotplug_attr_add(const char *name,
+					unsigned int *value, umode_t mode,
+					unsigned int (*to_sysfs)(unsigned int, unsigned int *),
+					unsigned int (*from_sysfs)(unsigned int ,unsigned int*));
+extern int get_cpus_under(struct auto_cpu_hotplug_loadinfo *load,
+					unsigned char level, unsigned int *first);
+extern int get_bigs_above(struct auto_cpu_hotplug_loadinfo *load,
+					unsigned char level, unsigned int *first);
+extern int get_littles_under(struct auto_cpu_hotplug_loadinfo* load,
+					unsigned char level, unsigned int* first);
+extern int get_bigs_under(struct auto_cpu_hotplug_loadinfo *load,
+					unsigned char level, unsigned int *first);
+extern int get_cpus_stable_under(struct auto_cpu_hotplug_loadinfo *load,
+					unsigned char level, unsigned int *first, int is_up);
+extern int get_cpus_online(struct auto_cpu_hotplug_loadinfo *load,
+					int *little, int *big);
 
 
 extern struct autohotplug_governor autohotplug_smart;

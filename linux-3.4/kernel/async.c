@@ -59,22 +59,22 @@ asynchronous and synchronous parts of the kernel.
 
 static async_cookie_t next_cookie = 1;
 
-#define MAX_WORK  32768
+#define MAX_WORK	32768
 
-static LIST_HEAD (async_pending);
-static LIST_HEAD (async_running);
-static DEFINE_SPINLOCK (async_lock);
+static LIST_HEAD(async_pending);
+static LIST_HEAD(async_running);
+static DEFINE_SPINLOCK(async_lock);
 
 struct async_entry {
-  struct list_head  list;
-  struct work_struct  work;
-  async_cookie_t    cookie;
-  async_func_ptr  *  func;
-  void   *   data;
-  struct list_head * running;
+	struct list_head	list;
+	struct work_struct	work;
+	async_cookie_t		cookie;
+	async_func_ptr		*func;
+	void			*data;
+	struct list_head	*running;
 };
 
-static DECLARE_WAIT_QUEUE_HEAD (async_done);
+static DECLARE_WAIT_QUEUE_HEAD(async_done);
 
 static atomic_t entry_count;
 
@@ -82,125 +82,125 @@ static atomic_t entry_count;
 /*
  * MUST be called with the lock held!
  */
-static async_cookie_t  __lowest_in_progress (struct list_head * running)
+static async_cookie_t  __lowest_in_progress(struct list_head *running)
 {
-  struct async_entry * entry;
-  
-  if (!running) { /* just check the entry count */
-    if (atomic_read (&entry_count) )
-    { return 0; } /* smaller than any cookie */
-    else
-    { return next_cookie; }
-  }
-  
-  if (!list_empty (running) ) {
-    entry = list_first_entry (running,
-                              struct async_entry, list);
-    return entry->cookie;
-  }
-  
-  list_for_each_entry (entry, &async_pending, list)
-  if (entry->running == running)
-  { return entry->cookie; }
-  
-  return next_cookie; /* "infinity" value */
+	struct async_entry *entry;
+
+	if (!running) { /* just check the entry count */
+		if (atomic_read(&entry_count))
+			return 0; /* smaller than any cookie */
+		else
+			return next_cookie;
+	}
+
+	if (!list_empty(running)) {
+		entry = list_first_entry(running,
+			struct async_entry, list);
+		return entry->cookie;
+	}
+
+	list_for_each_entry(entry, &async_pending, list)
+		if (entry->running == running)
+			return entry->cookie;
+
+	return next_cookie;	/* "infinity" value */
 }
 
-static async_cookie_t  lowest_in_progress (struct list_head * running)
+static async_cookie_t  lowest_in_progress(struct list_head *running)
 {
-  unsigned long flags;
-  async_cookie_t ret;
-  
-  spin_lock_irqsave (&async_lock, flags);
-  ret = __lowest_in_progress (running);
-  spin_unlock_irqrestore (&async_lock, flags);
-  return ret;
+	unsigned long flags;
+	async_cookie_t ret;
+
+	spin_lock_irqsave(&async_lock, flags);
+	ret = __lowest_in_progress(running);
+	spin_unlock_irqrestore(&async_lock, flags);
+	return ret;
 }
 
 /*
  * pick the first pending entry and run it
  */
-static void async_run_entry_fn (struct work_struct * work)
+static void async_run_entry_fn(struct work_struct *work)
 {
-  struct async_entry * entry =
-    container_of (work, struct async_entry, work);
-  unsigned long flags;
-  ktime_t uninitialized_var (calltime), delta, rettime;
-  
-  /* 1) move self to the running queue */
-  spin_lock_irqsave (&async_lock, flags);
-  list_move_tail (&entry->list, entry->running);
-  spin_unlock_irqrestore (&async_lock, flags);
-  
-  /* 2) run (and print duration) */
-  if (initcall_debug && system_state == SYSTEM_BOOTING) {
-    printk (KERN_DEBUG "calling  %lli_%pF @ %i\n",
-            (long long) entry->cookie,
-            entry->func, task_pid_nr (current) );
-    calltime = ktime_get();
-  }
-  entry->func (entry->data, entry->cookie);
-  if (initcall_debug && system_state == SYSTEM_BOOTING) {
-    rettime = ktime_get();
-    delta = ktime_sub (rettime, calltime);
-    printk (KERN_DEBUG "initcall %lli_%pF returned 0 after %lld usecs\n",
-            (long long) entry->cookie,
-            entry->func,
-            (long long) ktime_to_ns (delta) >> 10);
-  }
-  
-  /* 3) remove self from the running queue */
-  spin_lock_irqsave (&async_lock, flags);
-  list_del (&entry->list);
-  
-  /* 4) free the entry */
-  kfree (entry);
-  atomic_dec (&entry_count);
-  
-  spin_unlock_irqrestore (&async_lock, flags);
-  
-  /* 5) wake up any waiters */
-  wake_up (&async_done);
+	struct async_entry *entry =
+		container_of(work, struct async_entry, work);
+	unsigned long flags;
+	ktime_t uninitialized_var(calltime), delta, rettime;
+
+	/* 1) move self to the running queue */
+	spin_lock_irqsave(&async_lock, flags);
+	list_move_tail(&entry->list, entry->running);
+	spin_unlock_irqrestore(&async_lock, flags);
+
+	/* 2) run (and print duration) */
+	if (initcall_debug && system_state == SYSTEM_BOOTING) {
+		printk(KERN_DEBUG "calling  %lli_%pF @ %i\n",
+			(long long)entry->cookie,
+			entry->func, task_pid_nr(current));
+		calltime = ktime_get();
+	}
+	entry->func(entry->data, entry->cookie);
+	if (initcall_debug && system_state == SYSTEM_BOOTING) {
+		rettime = ktime_get();
+		delta = ktime_sub(rettime, calltime);
+		printk(KERN_DEBUG "initcall %lli_%pF returned 0 after %lld usecs\n",
+			(long long)entry->cookie,
+			entry->func,
+			(long long)ktime_to_ns(delta) >> 10);
+	}
+
+	/* 3) remove self from the running queue */
+	spin_lock_irqsave(&async_lock, flags);
+	list_del(&entry->list);
+
+	/* 4) free the entry */
+	kfree(entry);
+	atomic_dec(&entry_count);
+
+	spin_unlock_irqrestore(&async_lock, flags);
+
+	/* 5) wake up any waiters */
+	wake_up(&async_done);
 }
 
-static async_cookie_t __async_schedule (async_func_ptr * ptr, void * data, struct list_head * running)
+static async_cookie_t __async_schedule(async_func_ptr *ptr, void *data, struct list_head *running)
 {
-  struct async_entry * entry;
-  unsigned long flags;
-  async_cookie_t newcookie;
-  
-  /* allow irq-off callers */
-  entry = kzalloc (sizeof (struct async_entry), GFP_ATOMIC);
-  
-  /*
-   * If we're out of memory or if there's too much work
-   * pending already, we execute synchronously.
-   */
-  if (!entry || atomic_read (&entry_count) > MAX_WORK) {
-    kfree (entry);
-    spin_lock_irqsave (&async_lock, flags);
-    newcookie = next_cookie++;
-    spin_unlock_irqrestore (&async_lock, flags);
-    
-    /* low on memory.. run synchronously */
-    ptr (data, newcookie);
-    return newcookie;
-  }
-  INIT_WORK (&entry->work, async_run_entry_fn);
-  entry->func = ptr;
-  entry->data = data;
-  entry->running = running;
-  
-  spin_lock_irqsave (&async_lock, flags);
-  newcookie = entry->cookie = next_cookie++;
-  list_add_tail (&entry->list, &async_pending);
-  atomic_inc (&entry_count);
-  spin_unlock_irqrestore (&async_lock, flags);
-  
-  /* schedule for execution */
-  queue_work (system_unbound_wq, &entry->work);
-  
-  return newcookie;
+	struct async_entry *entry;
+	unsigned long flags;
+	async_cookie_t newcookie;
+
+	/* allow irq-off callers */
+	entry = kzalloc(sizeof(struct async_entry), GFP_ATOMIC);
+
+	/*
+	 * If we're out of memory or if there's too much work
+	 * pending already, we execute synchronously.
+	 */
+	if (!entry || atomic_read(&entry_count) > MAX_WORK) {
+		kfree(entry);
+		spin_lock_irqsave(&async_lock, flags);
+		newcookie = next_cookie++;
+		spin_unlock_irqrestore(&async_lock, flags);
+
+		/* low on memory.. run synchronously */
+		ptr(data, newcookie);
+		return newcookie;
+	}
+	INIT_WORK(&entry->work, async_run_entry_fn);
+	entry->func = ptr;
+	entry->data = data;
+	entry->running = running;
+
+	spin_lock_irqsave(&async_lock, flags);
+	newcookie = entry->cookie = next_cookie++;
+	list_add_tail(&entry->list, &async_pending);
+	atomic_inc(&entry_count);
+	spin_unlock_irqrestore(&async_lock, flags);
+
+	/* schedule for execution */
+	queue_work(system_unbound_wq, &entry->work);
+
+	return newcookie;
 }
 
 /**
@@ -211,11 +211,11 @@ static async_cookie_t __async_schedule (async_func_ptr * ptr, void * data, struc
  * Returns an async_cookie_t that may be used for checkpointing later.
  * Note: This function may be called from atomic or non-atomic contexts.
  */
-async_cookie_t async_schedule (async_func_ptr * ptr, void * data)
+async_cookie_t async_schedule(async_func_ptr *ptr, void *data)
 {
-  return __async_schedule (ptr, data, &async_running);
+	return __async_schedule(ptr, data, &async_running);
 }
-EXPORT_SYMBOL_GPL (async_schedule);
+EXPORT_SYMBOL_GPL(async_schedule);
 
 /**
  * async_schedule_domain - schedule a function for asynchronous execution within a certain domain
@@ -229,23 +229,23 @@ EXPORT_SYMBOL_GPL (async_schedule);
  * A synchronization domain is specified via the running queue @running to use.
  * Note: This function may be called from atomic or non-atomic contexts.
  */
-async_cookie_t async_schedule_domain (async_func_ptr * ptr, void * data,
-                                      struct list_head * running)
+async_cookie_t async_schedule_domain(async_func_ptr *ptr, void *data,
+				     struct list_head *running)
 {
-  return __async_schedule (ptr, data, running);
+	return __async_schedule(ptr, data, running);
 }
-EXPORT_SYMBOL_GPL (async_schedule_domain);
+EXPORT_SYMBOL_GPL(async_schedule_domain);
 
 /**
  * async_synchronize_full - synchronize all asynchronous function calls
  *
  * This function waits until all asynchronous function calls have been done.
  */
-void async_synchronize_full (void)
+void async_synchronize_full(void)
 {
-  async_synchronize_cookie_domain (next_cookie, NULL);
+	async_synchronize_cookie_domain(next_cookie, NULL);
 }
-EXPORT_SYMBOL_GPL (async_synchronize_full);
+EXPORT_SYMBOL_GPL(async_synchronize_full);
 
 /**
  * async_synchronize_full_domain - synchronize all asynchronous function within a certain domain
@@ -254,11 +254,11 @@ EXPORT_SYMBOL_GPL (async_synchronize_full);
  * This function waits until all asynchronous function calls for the
  * synchronization domain specified by the running list @list have been done.
  */
-void async_synchronize_full_domain (struct list_head * list)
+void async_synchronize_full_domain(struct list_head *list)
 {
-  async_synchronize_cookie_domain (next_cookie, list);
+	async_synchronize_cookie_domain(next_cookie, list);
 }
-EXPORT_SYMBOL_GPL (async_synchronize_full_domain);
+EXPORT_SYMBOL_GPL(async_synchronize_full_domain);
 
 /**
  * async_synchronize_cookie_domain - synchronize asynchronous function calls within a certain domain with cookie checkpointing
@@ -269,28 +269,28 @@ EXPORT_SYMBOL_GPL (async_synchronize_full_domain);
  * synchronization domain specified by the running list @list submitted
  * prior to @cookie have been done.
  */
-void async_synchronize_cookie_domain (async_cookie_t cookie,
-                                      struct list_head * running)
+void async_synchronize_cookie_domain(async_cookie_t cookie,
+				     struct list_head *running)
 {
-  ktime_t uninitialized_var (starttime), delta, endtime;
-  
-  if (initcall_debug && system_state == SYSTEM_BOOTING) {
-    printk (KERN_DEBUG "async_waiting @ %i\n", task_pid_nr (current) );
-    starttime = ktime_get();
-  }
-  
-  wait_event (async_done, lowest_in_progress (running) >= cookie);
-  
-  if (initcall_debug && system_state == SYSTEM_BOOTING) {
-    endtime = ktime_get();
-    delta = ktime_sub (endtime, starttime);
-    
-    printk (KERN_DEBUG "async_continuing @ %i after %lli usec\n",
-            task_pid_nr (current),
-            (long long) ktime_to_ns (delta) >> 10);
-  }
+	ktime_t uninitialized_var(starttime), delta, endtime;
+
+	if (initcall_debug && system_state == SYSTEM_BOOTING) {
+		printk(KERN_DEBUG "async_waiting @ %i\n", task_pid_nr(current));
+		starttime = ktime_get();
+	}
+
+	wait_event(async_done, lowest_in_progress(running) >= cookie);
+
+	if (initcall_debug && system_state == SYSTEM_BOOTING) {
+		endtime = ktime_get();
+		delta = ktime_sub(endtime, starttime);
+
+		printk(KERN_DEBUG "async_continuing @ %i after %lli usec\n",
+			task_pid_nr(current),
+			(long long)ktime_to_ns(delta) >> 10);
+	}
 }
-EXPORT_SYMBOL_GPL (async_synchronize_cookie_domain);
+EXPORT_SYMBOL_GPL(async_synchronize_cookie_domain);
 
 /**
  * async_synchronize_cookie - synchronize asynchronous function calls with cookie checkpointing
@@ -299,8 +299,8 @@ EXPORT_SYMBOL_GPL (async_synchronize_cookie_domain);
  * This function waits until all asynchronous function calls prior to @cookie
  * have been done.
  */
-void async_synchronize_cookie (async_cookie_t cookie)
+void async_synchronize_cookie(async_cookie_t cookie)
 {
-  async_synchronize_cookie_domain (cookie, &async_running);
+	async_synchronize_cookie_domain(cookie, &async_running);
 }
-EXPORT_SYMBOL_GPL (async_synchronize_cookie);
+EXPORT_SYMBOL_GPL(async_synchronize_cookie);

@@ -32,35 +32,35 @@
 
 static const struct of_device_id irq_of_match[] __initconst = {
 
-  { .compatible = "atmel,at91rm9200-aic", .data = at91_aic_of_init },
-  { .compatible = "atmel,at91rm9200-gpio", .data = at91_gpio_of_irq_setup },
-  { .compatible = "atmel,at91sam9x5-gpio", .data = at91_gpio_of_irq_setup },
-  { /*sentinel*/ }
+	{ .compatible = "atmel,at91rm9200-aic", .data = at91_aic_of_init },
+	{ .compatible = "atmel,at91rm9200-gpio", .data = at91_gpio_of_irq_setup },
+	{ .compatible = "atmel,at91sam9x5-gpio", .data = at91_gpio_of_irq_setup },
+	{ /*sentinel*/ }
 };
 
-static void __init at91_dt_init_irq (void)
+static void __init at91_dt_init_irq(void)
 {
-  of_irq_init (irq_of_match);
+	of_irq_init(irq_of_match);
 }
 
-static void __init at91_dt_device_init (void)
+static void __init at91_dt_device_init(void)
 {
-  of_platform_populate (NULL, of_default_bus_match_table, NULL, NULL);
+	of_platform_populate(NULL, of_default_bus_match_table, NULL, NULL);
 }
 
-static const char * at91_dt_board_compat[] __initdata = {
-  "atmel,at91sam9m10g45ek",
-  "atmel,at91sam9x5ek",
-  "calao,usb-a9g20",
-  NULL
+static const char *at91_dt_board_compat[] __initdata = {
+	"atmel,at91sam9m10g45ek",
+	"atmel,at91sam9x5ek",
+	"calao,usb-a9g20",
+	NULL
 };
 
-DT_MACHINE_START (at91sam_dt, "Atmel AT91SAM (Device Tree)")
-/* Maintainer: Atmel */
-.timer    = &at91sam926x_timer,
- .map_io   = at91_map_io,
-  .init_early = at91_dt_initialize,
-   .init_irq = at91_dt_init_irq,
-    .init_machine = at91_dt_device_init,
-     .dt_compat  = at91_dt_board_compat,
-      MACHINE_END
+DT_MACHINE_START(at91sam_dt, "Atmel AT91SAM (Device Tree)")
+	/* Maintainer: Atmel */
+	.timer		= &at91sam926x_timer,
+	.map_io		= at91_map_io,
+	.init_early	= at91_dt_initialize,
+	.init_irq	= at91_dt_init_irq,
+	.init_machine	= at91_dt_device_init,
+	.dt_compat	= at91_dt_board_compat,
+MACHINE_END

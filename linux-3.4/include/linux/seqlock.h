@@ -5,16 +5,16 @@
  * lock for data where the reader wants a consistent set of information
  * and is willing to retry if the information changes.  Readers never
  * block but they may have to retry if a writer is in
- * progress. Writers do not wait for readers.
+ * progress. Writers do not wait for readers. 
  *
  * This is not as cache friendly as brlock. Also, this will not work
  * for data that contains pointers, because any writer could
  * invalidate a pointer that a reader was following.
  *
  * Expected reader usage:
- *  do {
- *      seq = read_seqbegin(&foo);
- *  ...
+ * 	do {
+ *	    seq = read_seqbegin(&foo);
+ * 	...
  *      } while (read_seqretry(&foo, seq));
  *
  *
@@ -22,7 +22,7 @@
  * to increment the sequence variables because an interrupt routine could
  * change the state of the data.
  *
- * Based on x86_64 vsyscall gettimeofday
+ * Based on x86_64 vsyscall gettimeofday 
  * by Keith Owens and Andrea Arcangeli
  */
 
@@ -31,8 +31,8 @@
 #include <asm/processor.h>
 
 typedef struct {
-  unsigned sequence;
-  spinlock_t lock;
+	unsigned sequence;
+	spinlock_t lock;
 } seqlock_t;
 
 /*
@@ -40,60 +40,60 @@ typedef struct {
  * OK now.  Be cautious.
  */
 #define __SEQLOCK_UNLOCKED(lockname) \
-  { 0, __SPIN_LOCK_UNLOCKED(lockname) }
+		 { 0, __SPIN_LOCK_UNLOCKED(lockname) }
 
-#define seqlock_init(x)         \
-  do {            \
-    (x)->sequence = 0;      \
-    spin_lock_init(&(x)->lock);   \
-  } while (0)
+#define seqlock_init(x)					\
+	do {						\
+		(x)->sequence = 0;			\
+		spin_lock_init(&(x)->lock);		\
+	} while (0)
 
 #define DEFINE_SEQLOCK(x) \
-  seqlock_t x = __SEQLOCK_UNLOCKED(x)
+		seqlock_t x = __SEQLOCK_UNLOCKED(x)
 
 /* Lock out other writers and update the count.
  * Acts like a normal spin_lock/unlock.
  * Don't need preempt_disable() because that is in the spin_lock already.
  */
-static inline void write_seqlock (seqlock_t * sl)
+static inline void write_seqlock(seqlock_t *sl)
 {
-  spin_lock (&sl->lock);
-  ++sl->sequence;
-  smp_wmb();
+	spin_lock(&sl->lock);
+	++sl->sequence;
+	smp_wmb();
 }
 
-static inline void write_sequnlock (seqlock_t * sl)
+static inline void write_sequnlock(seqlock_t *sl)
 {
-  smp_wmb();
-  sl->sequence++;
-  spin_unlock (&sl->lock);
+	smp_wmb();
+	sl->sequence++;
+	spin_unlock(&sl->lock);
 }
 
-static inline int write_tryseqlock (seqlock_t * sl)
+static inline int write_tryseqlock(seqlock_t *sl)
 {
-  int ret = spin_trylock (&sl->lock);
-  
-  if (ret) {
-    ++sl->sequence;
-    smp_wmb();
-  }
-  return ret;
+	int ret = spin_trylock(&sl->lock);
+
+	if (ret) {
+		++sl->sequence;
+		smp_wmb();
+	}
+	return ret;
 }
 
 /* Start of read calculation -- fetch last complete writer token */
-static __always_inline unsigned read_seqbegin (const seqlock_t * sl)
+static __always_inline unsigned read_seqbegin(const seqlock_t *sl)
 {
-  unsigned ret;
-  
+	unsigned ret;
+
 repeat:
-  ret = ACCESS_ONCE (sl->sequence);
-  if (unlikely (ret & 1) ) {
-    cpu_relax();
-    goto repeat;
-  }
-  smp_rmb();
-  
-  return ret;
+	ret = ACCESS_ONCE(sl->sequence);
+	if (unlikely(ret & 1)) {
+		cpu_relax();
+		goto repeat;
+	}
+	smp_rmb();
+
+	return ret;
 }
 
 /*
@@ -101,11 +101,11 @@ repeat:
  *
  * If sequence value changed then writer changed data while in section.
  */
-static __always_inline int read_seqretry (const seqlock_t * sl, unsigned start)
+static __always_inline int read_seqretry(const seqlock_t *sl, unsigned start)
 {
-  smp_rmb();
-  
-  return unlikely (sl->sequence != start);
+	smp_rmb();
+
+	return unlikely(sl->sequence != start);
 }
 
 
@@ -117,11 +117,11 @@ static __always_inline int read_seqretry (const seqlock_t * sl, unsigned start)
  */
 
 typedef struct seqcount {
-  unsigned sequence;
+	unsigned sequence;
 } seqcount_t;
 
 #define SEQCNT_ZERO { 0 }
-#define seqcount_init(x)  do { *(x) = (seqcount_t) SEQCNT_ZERO; } while (0)
+#define seqcount_init(x)	do { *(x) = (seqcount_t) SEQCNT_ZERO; } while (0)
 
 /**
  * __read_seqcount_begin - begin a seq-read critical section (without barrier)
@@ -136,17 +136,17 @@ typedef struct seqcount {
  * Use carefully, only in critical code, and comment how the barrier is
  * provided.
  */
-static inline unsigned __read_seqcount_begin (const seqcount_t * s)
+static inline unsigned __read_seqcount_begin(const seqcount_t *s)
 {
-  unsigned ret;
-  
+	unsigned ret;
+
 repeat:
-  ret = ACCESS_ONCE (s->sequence);
-  if (unlikely (ret & 1) ) {
-    cpu_relax();
-    goto repeat;
-  }
-  return ret;
+	ret = ACCESS_ONCE(s->sequence);
+	if (unlikely(ret & 1)) {
+		cpu_relax();
+		goto repeat;
+	}
+	return ret;
 }
 
 /**
@@ -158,11 +158,11 @@ repeat:
  * Validity of the critical section is tested by checking read_seqcount_retry
  * function.
  */
-static inline unsigned read_seqcount_begin (const seqcount_t * s)
+static inline unsigned read_seqcount_begin(const seqcount_t *s)
 {
-  unsigned ret = __read_seqcount_begin (s);
-  smp_rmb();
-  return ret;
+	unsigned ret = __read_seqcount_begin(s);
+	smp_rmb();
+	return ret;
 }
 
 /**
@@ -179,11 +179,11 @@ static inline unsigned read_seqcount_begin (const seqcount_t * s)
  * read_seqcount_retry() instead of stabilizing at the beginning of the
  * critical section.
  */
-static inline unsigned raw_seqcount_begin (const seqcount_t * s)
+static inline unsigned raw_seqcount_begin(const seqcount_t *s)
 {
-  unsigned ret = ACCESS_ONCE (s->sequence);
-  smp_rmb();
-  return ret & ~1;
+	unsigned ret = ACCESS_ONCE(s->sequence);
+	smp_rmb();
+	return ret & ~1;
 }
 
 /**
@@ -200,9 +200,9 @@ static inline unsigned raw_seqcount_begin (const seqcount_t * s)
  * Use carefully, only in critical code, and comment how the barrier is
  * provided.
  */
-static inline int __read_seqcount_retry (const seqcount_t * s, unsigned start)
+static inline int __read_seqcount_retry(const seqcount_t *s, unsigned start)
 {
-  return unlikely (s->sequence != start);
+	return unlikely(s->sequence != start);
 }
 
 /**
@@ -215,11 +215,11 @@ static inline int __read_seqcount_retry (const seqcount_t * s, unsigned start)
  * If the critical section was invalid, it must be ignored (and typically
  * retried).
  */
-static inline int read_seqcount_retry (const seqcount_t * s, unsigned start)
+static inline int read_seqcount_retry(const seqcount_t *s, unsigned start)
 {
-  smp_rmb();
-  
-  return __read_seqcount_retry (s, start);
+	smp_rmb();
+
+	return __read_seqcount_retry(s, start);
 }
 
 
@@ -227,16 +227,16 @@ static inline int read_seqcount_retry (const seqcount_t * s, unsigned start)
  * Sequence counter only version assumes that callers are using their
  * own mutexing.
  */
-static inline void write_seqcount_begin (seqcount_t * s)
+static inline void write_seqcount_begin(seqcount_t *s)
 {
-  s->sequence++;
-  smp_wmb();
+	s->sequence++;
+	smp_wmb();
 }
 
-static inline void write_seqcount_end (seqcount_t * s)
+static inline void write_seqcount_end(seqcount_t *s)
 {
-  smp_wmb();
-  s->sequence++;
+	smp_wmb();
+	s->sequence++;
 }
 
 /**
@@ -246,37 +246,37 @@ static inline void write_seqcount_end (seqcount_t * s)
  * After write_seqcount_barrier, no read-side seq operations will complete
  * successfully and see data older than this.
  */
-static inline void write_seqcount_barrier (seqcount_t * s)
+static inline void write_seqcount_barrier(seqcount_t *s)
 {
-  smp_wmb();
-  s->sequence += 2;
+	smp_wmb();
+	s->sequence+=2;
 }
 
 /*
  * Possible sw/hw IRQ protected versions of the interfaces.
  */
-#define write_seqlock_irqsave(lock, flags)        \
-  do { local_irq_save(flags); write_seqlock(lock); } while (0)
-#define write_seqlock_irq(lock)           \
-  do { local_irq_disable();   write_seqlock(lock); } while (0)
-#define write_seqlock_bh(lock)            \
-  do { local_bh_disable();    write_seqlock(lock); } while (0)
+#define write_seqlock_irqsave(lock, flags)				\
+	do { local_irq_save(flags); write_seqlock(lock); } while (0)
+#define write_seqlock_irq(lock)						\
+	do { local_irq_disable();   write_seqlock(lock); } while (0)
+#define write_seqlock_bh(lock)						\
+        do { local_bh_disable();    write_seqlock(lock); } while (0)
 
-#define write_sequnlock_irqrestore(lock, flags)       \
-  do { write_sequnlock(lock); local_irq_restore(flags); } while(0)
-#define write_sequnlock_irq(lock)         \
-  do { write_sequnlock(lock); local_irq_enable(); } while(0)
-#define write_sequnlock_bh(lock)          \
-  do { write_sequnlock(lock); local_bh_enable(); } while(0)
+#define write_sequnlock_irqrestore(lock, flags)				\
+	do { write_sequnlock(lock); local_irq_restore(flags); } while(0)
+#define write_sequnlock_irq(lock)					\
+	do { write_sequnlock(lock); local_irq_enable(); } while(0)
+#define write_sequnlock_bh(lock)					\
+	do { write_sequnlock(lock); local_bh_enable(); } while(0)
 
-#define read_seqbegin_irqsave(lock, flags)        \
-  ({ local_irq_save(flags);   read_seqbegin(lock); })
+#define read_seqbegin_irqsave(lock, flags)				\
+	({ local_irq_save(flags);   read_seqbegin(lock); })
 
-#define read_seqretry_irqrestore(lock, iv, flags)     \
-  ({                \
-    int ret = read_seqretry(lock, iv);      \
-    local_irq_restore(flags);       \
-    ret;              \
-  })
+#define read_seqretry_irqrestore(lock, iv, flags)			\
+	({								\
+		int ret = read_seqretry(lock, iv);			\
+		local_irq_restore(flags);				\
+		ret;							\
+	})
 
 #endif /* __LINUX_SEQLOCK_H */

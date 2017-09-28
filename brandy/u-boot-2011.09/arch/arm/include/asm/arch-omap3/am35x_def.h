@@ -33,16 +33,16 @@
 #ifndef __ASSEMBLY__
 
 /* General register mappings of system control module */
-#define AM35X_SCM_GEN_BASE  0x48002270
+#define AM35X_SCM_GEN_BASE	0x48002270
 struct am35x_scm_general {
-  u32 res1[0xC4];   /* 0x000 - 0x30C */
-  u32 devconf2;   /* 0x310 */
-  u32 devconf3;   /* 0x314 */
-  u32 res2[0x2];    /* 0x318 - 0x31C */
-  u32 cba_priority; /* 0x320 */
-  u32 lvl_intr_clr; /* 0x324 */
-  u32 ip_sw_reset;  /* 0x328 */
-  u32 ipss_clk_ctrl;  /* 0x32C */
+	u32 res1[0xC4];		/* 0x000 - 0x30C */
+	u32 devconf2;		/* 0x310 */
+	u32 devconf3;		/* 0x314 */
+	u32 res2[0x2];		/* 0x318 - 0x31C */
+	u32 cba_priority;	/* 0x320 */
+	u32 lvl_intr_clr;	/* 0x324 */
+	u32 ip_sw_reset;	/* 0x328 */
+	u32 ipss_clk_ctrl;	/* 0x32C */
 };
 #define am35x_scm_general_regs ((struct am35x_scm_general *)AM35X_SCM_GEN_BASE)
 

@@ -31,40 +31,40 @@
 #include <linux/notifier.h>
 
 /* HSI message ttype */
-#define HSI_MSG_READ  0
-#define HSI_MSG_WRITE 1
+#define HSI_MSG_READ	0
+#define HSI_MSG_WRITE	1
 
 /* HSI configuration values */
 enum {
-  HSI_MODE_STREAM = 1,
-  HSI_MODE_FRAME,
+	HSI_MODE_STREAM	= 1,
+	HSI_MODE_FRAME,
 };
 
 enum {
-  HSI_FLOW_SYNC,  /* Synchronized flow */
-  HSI_FLOW_PIPE,  /* Pipelined flow */
+	HSI_FLOW_SYNC,	/* Synchronized flow */
+	HSI_FLOW_PIPE,	/* Pipelined flow */
 };
 
 enum {
-  HSI_ARB_RR, /* Round-robin arbitration */
-  HSI_ARB_PRIO, /* Channel priority arbitration */
+	HSI_ARB_RR,	/* Round-robin arbitration */
+	HSI_ARB_PRIO,	/* Channel priority arbitration */
 };
 
-#define HSI_MAX_CHANNELS  16
+#define HSI_MAX_CHANNELS	16
 
 /* HSI message status codes */
 enum {
-  HSI_STATUS_COMPLETED, /* Message transfer is completed */
-  HSI_STATUS_PENDING, /* Message pending to be read/write (POLL) */
-  HSI_STATUS_PROCEEDING,  /* Message transfer is ongoing */
-  HSI_STATUS_QUEUED,  /* Message waiting to be served */
-  HSI_STATUS_ERROR, /* Error when message transfer was ongoing */
+	HSI_STATUS_COMPLETED,	/* Message transfer is completed */
+	HSI_STATUS_PENDING,	/* Message pending to be read/write (POLL) */
+	HSI_STATUS_PROCEEDING,	/* Message transfer is ongoing */
+	HSI_STATUS_QUEUED,	/* Message waiting to be served */
+	HSI_STATUS_ERROR,	/* Error when message transfer was ongoing */
 };
 
 /* HSI port event codes */
 enum {
-  HSI_EVENT_START_RX,
-  HSI_EVENT_STOP_RX,
+	HSI_EVENT_START_RX,
+	HSI_EVENT_STOP_RX,
 };
 
 /**
@@ -76,13 +76,13 @@ enum {
  * @arb_mode: Arbitration mode for TX frame (Round robin, priority)
  */
 struct hsi_config {
-  unsigned int  mode;
-  unsigned int  channels;
-  unsigned int  speed;
-  union {
-    unsigned int  flow;   /* RX only */
-    unsigned int  arb_mode; /* TX only */
-  };
+	unsigned int	mode;
+	unsigned int	channels;
+	unsigned int	speed;
+	union {
+		unsigned int	flow;		/* RX only */
+		unsigned int	arb_mode;	/* TX only */
+	};
 };
 
 /**
@@ -96,23 +96,23 @@ struct hsi_config {
  * @archdata: Architecture-dependent device data
  */
 struct hsi_board_info {
-  const char  *  name;
-  unsigned int    hsi_id;
-  unsigned int    port;
-  struct hsi_config tx_cfg;
-  struct hsi_config rx_cfg;
-  void   *   platform_data;
-  struct dev_archdata * archdata;
+	const char		*name;
+	unsigned int		hsi_id;
+	unsigned int		port;
+	struct hsi_config	tx_cfg;
+	struct hsi_config	rx_cfg;
+	void			*platform_data;
+	struct dev_archdata	*archdata;
 };
 
 #ifdef CONFIG_HSI_BOARDINFO
-extern int hsi_register_board_info (struct hsi_board_info const * info,
-                                    unsigned int len);
+extern int hsi_register_board_info(struct hsi_board_info const *info,
+							unsigned int len);
 #else
-static inline int hsi_register_board_info (struct hsi_board_info const * info,
-    unsigned int len)
+static inline int hsi_register_board_info(struct hsi_board_info const *info,
+							unsigned int len)
 {
-  return 0;
+	return 0;
 }
 #endif /* CONFIG_HSI_BOARDINFO */
 
@@ -126,47 +126,47 @@ static inline int hsi_register_board_info (struct hsi_board_info const * info,
  * @nb: Notifier block for port events
  */
 struct hsi_client {
-  struct device   device;
-  struct hsi_config tx_cfg;
-  struct hsi_config rx_cfg;
-  /* private: */
-  void      (*ehandler) (struct hsi_client *, unsigned long);
-  unsigned int    pclaimed: 1;
-  struct notifier_block nb;
+	struct device		device;
+	struct hsi_config	tx_cfg;
+	struct hsi_config	rx_cfg;
+	/* private: */
+	void			(*ehandler)(struct hsi_client *, unsigned long);
+	unsigned int		pclaimed:1;
+	struct notifier_block	nb;
 };
 
 #define to_hsi_client(dev) container_of(dev, struct hsi_client, device)
 
-static inline void hsi_client_set_drvdata (struct hsi_client * cl, void * data)
+static inline void hsi_client_set_drvdata(struct hsi_client *cl, void *data)
 {
-  dev_set_drvdata (&cl->device, data);
+	dev_set_drvdata(&cl->device, data);
 }
 
-static inline void * hsi_client_drvdata (struct hsi_client * cl)
+static inline void *hsi_client_drvdata(struct hsi_client *cl)
 {
-  return dev_get_drvdata (&cl->device);
+	return dev_get_drvdata(&cl->device);
 }
 
-int hsi_register_port_event (struct hsi_client * cl,
-                             void (*handler) (struct hsi_client *, unsigned long) );
-int hsi_unregister_port_event (struct hsi_client * cl);
+int hsi_register_port_event(struct hsi_client *cl,
+			void (*handler)(struct hsi_client *, unsigned long));
+int hsi_unregister_port_event(struct hsi_client *cl);
 
 /**
  * struct hsi_client_driver - Driver associated to an HSI client
  * @driver: Driver model representation of the driver
  */
 struct hsi_client_driver {
-  struct device_driver  driver;
+	struct device_driver	driver;
 };
 
 #define to_hsi_client_driver(drv) container_of(drv, struct hsi_client_driver,\
-    driver)
+									driver)
 
-int hsi_register_client_driver (struct hsi_client_driver * drv);
+int hsi_register_client_driver(struct hsi_client_driver *drv);
 
-static inline void hsi_unregister_client_driver (struct hsi_client_driver * drv)
+static inline void hsi_unregister_client_driver(struct hsi_client_driver *drv)
 {
-  driver_unregister (&drv->driver);
+	driver_unregister(&drv->driver);
 }
 
 /**
@@ -182,26 +182,26 @@ static inline void hsi_unregister_client_driver (struct hsi_client_driver * drv)
  * @channel: Channel were to TX/RX the message
  * @ttype: Transfer type (TX if set, RX otherwise)
  * @break_frame: if true HSI will send/receive a break frame. Data buffers are
- *    ignored in the request.
+ *		ignored in the request.
  */
 struct hsi_msg {
-  struct list_head  link;
-  struct hsi_client * cl;
-  struct sg_table   sgt;
-  void   *   context;
-  
-  void      (*complete) (struct hsi_msg * msg);
-  void      (*destructor) (struct hsi_msg * msg);
-  
-  int     status;
-  unsigned int    actual_len;
-  unsigned int    channel;
-  unsigned int    ttype: 1;
-  unsigned int    break_frame: 1;
+	struct list_head	link;
+	struct hsi_client	*cl;
+	struct sg_table		sgt;
+	void			*context;
+
+	void			(*complete)(struct hsi_msg *msg);
+	void			(*destructor)(struct hsi_msg *msg);
+
+	int			status;
+	unsigned int		actual_len;
+	unsigned int		channel;
+	unsigned int		ttype:1;
+	unsigned int		break_frame:1;
 };
 
-struct hsi_msg * hsi_alloc_msg (unsigned int n_frag, gfp_t flags);
-void hsi_free_msg (struct hsi_msg * msg);
+struct hsi_msg *hsi_alloc_msg(unsigned int n_frag, gfp_t flags);
+void hsi_free_msg(struct hsi_msg *msg);
 
 /**
  * struct hsi_port - HSI port device
@@ -221,43 +221,43 @@ void hsi_free_msg (struct hsi_msg * msg);
  * @n_head: Notifier chain for signaling port events to the clients.
  */
 struct hsi_port {
-  struct device     device;
-  struct hsi_config   tx_cfg;
-  struct hsi_config   rx_cfg;
-  unsigned int      num;
-  unsigned int      shared: 1;
-  int       claimed;
-  struct mutex      lock;
-  int       (*async) (struct hsi_msg * msg);
-  int       (*setup) (struct hsi_client * cl);
-  int       (*flush) (struct hsi_client * cl);
-  int       (*start_tx) (struct hsi_client * cl);
-  int       (*stop_tx) (struct hsi_client * cl);
-  int       (*release) (struct hsi_client * cl);
-  /* private */
-  struct atomic_notifier_head n_head;
+	struct device			device;
+	struct hsi_config		tx_cfg;
+	struct hsi_config		rx_cfg;
+	unsigned int			num;
+	unsigned int			shared:1;
+	int				claimed;
+	struct mutex			lock;
+	int				(*async)(struct hsi_msg *msg);
+	int				(*setup)(struct hsi_client *cl);
+	int				(*flush)(struct hsi_client *cl);
+	int				(*start_tx)(struct hsi_client *cl);
+	int				(*stop_tx)(struct hsi_client *cl);
+	int				(*release)(struct hsi_client *cl);
+	/* private */
+	struct atomic_notifier_head	n_head;
 };
 
 #define to_hsi_port(dev) container_of(dev, struct hsi_port, device)
 #define hsi_get_port(cl) to_hsi_port((cl)->device.parent)
 
-int hsi_event (struct hsi_port * port, unsigned long event);
-int hsi_claim_port (struct hsi_client * cl, unsigned int share);
-void hsi_release_port (struct hsi_client * cl);
+int hsi_event(struct hsi_port *port, unsigned long event);
+int hsi_claim_port(struct hsi_client *cl, unsigned int share);
+void hsi_release_port(struct hsi_client *cl);
 
-static inline int hsi_port_claimed (struct hsi_client * cl)
+static inline int hsi_port_claimed(struct hsi_client *cl)
 {
-  return cl->pclaimed;
+	return cl->pclaimed;
 }
 
-static inline void hsi_port_set_drvdata (struct hsi_port * port, void * data)
+static inline void hsi_port_set_drvdata(struct hsi_port *port, void *data)
 {
-  dev_set_drvdata (&port->device, data);
+	dev_set_drvdata(&port->device, data);
 }
 
-static inline void * hsi_port_drvdata (struct hsi_port * port)
+static inline void *hsi_port_drvdata(struct hsi_port *port)
 {
-  return dev_get_drvdata (&port->device);
+	return dev_get_drvdata(&port->device);
 }
 
 /**
@@ -269,41 +269,41 @@ static inline void * hsi_port_drvdata (struct hsi_port * port)
  * @port: Array of HSI ports
  */
 struct hsi_controller {
-  struct device   device;
-  struct module  * owner;
-  unsigned int    id;
-  unsigned int    num_ports;
-  struct hsi_port  ** port;
+	struct device		device;
+	struct module		*owner;
+	unsigned int		id;
+	unsigned int		num_ports;
+	struct hsi_port		**port;
 };
 
 #define to_hsi_controller(dev) container_of(dev, struct hsi_controller, device)
 
-struct hsi_controller * hsi_alloc_controller (unsigned int n_ports, gfp_t flags);
-void hsi_put_controller (struct hsi_controller * hsi);
-int hsi_register_controller (struct hsi_controller * hsi);
-void hsi_unregister_controller (struct hsi_controller * hsi);
+struct hsi_controller *hsi_alloc_controller(unsigned int n_ports, gfp_t flags);
+void hsi_put_controller(struct hsi_controller *hsi);
+int hsi_register_controller(struct hsi_controller *hsi);
+void hsi_unregister_controller(struct hsi_controller *hsi);
 
-static inline void hsi_controller_set_drvdata (struct hsi_controller * hsi,
-    void * data)
+static inline void hsi_controller_set_drvdata(struct hsi_controller *hsi,
+								void *data)
 {
-  dev_set_drvdata (&hsi->device, data);
+	dev_set_drvdata(&hsi->device, data);
 }
 
-static inline void * hsi_controller_drvdata (struct hsi_controller * hsi)
+static inline void *hsi_controller_drvdata(struct hsi_controller *hsi)
 {
-  return dev_get_drvdata (&hsi->device);
+	return dev_get_drvdata(&hsi->device);
 }
 
-static inline struct hsi_port * hsi_find_port_num (struct hsi_controller * hsi,
-    unsigned int num)
+static inline struct hsi_port *hsi_find_port_num(struct hsi_controller *hsi,
+							unsigned int num)
 {
-  return (num < hsi->num_ports) ? hsi->port[num] : NULL;
+	return (num < hsi->num_ports) ? hsi->port[num] : NULL;
 }
 
 /*
  * API for HSI clients
  */
-int hsi_async (struct hsi_client * cl, struct hsi_msg * msg);
+int hsi_async(struct hsi_client *cl, struct hsi_msg *msg);
 
 /**
  * hsi_id - Get HSI controller ID associated to a client
@@ -311,9 +311,9 @@ int hsi_async (struct hsi_client * cl, struct hsi_msg * msg);
  *
  * Return the controller id where the client is attached to
  */
-static inline unsigned int hsi_id (struct hsi_client * cl)
+static inline unsigned int hsi_id(struct hsi_client *cl)
 {
-  return  to_hsi_controller (cl->device.parent->parent)->id;
+	return	to_hsi_controller(cl->device.parent->parent)->id;
 }
 
 /**
@@ -322,9 +322,9 @@ static inline unsigned int hsi_id (struct hsi_client * cl)
  *
  * Return the port number associated to the client
  */
-static inline unsigned int hsi_port_id (struct hsi_client * cl)
+static inline unsigned int hsi_port_id(struct hsi_client *cl)
 {
-  return  to_hsi_port (cl->device.parent)->num;
+	return	to_hsi_port(cl->device.parent)->num;
 }
 
 /**
@@ -336,11 +336,11 @@ static inline unsigned int hsi_port_id (struct hsi_client * cl)
  *
  * Return -errno on failure, 0 on success
  */
-static inline int hsi_setup (struct hsi_client * cl)
+static inline int hsi_setup(struct hsi_client *cl)
 {
-  if (!hsi_port_claimed (cl) )
-  { return -EACCES; }
-  return  hsi_get_port (cl)->setup (cl);
+	if (!hsi_port_claimed(cl))
+		return -EACCES;
+	return	hsi_get_port(cl)->setup(cl);
 }
 
 /**
@@ -352,11 +352,11 @@ static inline int hsi_setup (struct hsi_client * cl)
  *
  * Return -errno on failure, 0 on success
  */
-static inline int hsi_flush (struct hsi_client * cl)
+static inline int hsi_flush(struct hsi_client *cl)
 {
-  if (!hsi_port_claimed (cl) )
-  { return -EACCES; }
-  return hsi_get_port (cl)->flush (cl);
+	if (!hsi_port_claimed(cl))
+		return -EACCES;
+	return hsi_get_port(cl)->flush(cl);
 }
 
 /**
@@ -366,10 +366,10 @@ static inline int hsi_flush (struct hsi_client * cl)
  *
  * Return -errno on failure, 0 on success
  */
-static inline int hsi_async_read (struct hsi_client * cl, struct hsi_msg * msg)
+static inline int hsi_async_read(struct hsi_client *cl, struct hsi_msg *msg)
 {
-  msg->ttype = HSI_MSG_READ;
-  return hsi_async (cl, msg);
+	msg->ttype = HSI_MSG_READ;
+	return hsi_async(cl, msg);
 }
 
 /**
@@ -379,10 +379,10 @@ static inline int hsi_async_read (struct hsi_client * cl, struct hsi_msg * msg)
  *
  * Return -errno on failure, 0 on success
  */
-static inline int hsi_async_write (struct hsi_client * cl, struct hsi_msg * msg)
+static inline int hsi_async_write(struct hsi_client *cl, struct hsi_msg *msg)
 {
-  msg->ttype = HSI_MSG_WRITE;
-  return hsi_async (cl, msg);
+	msg->ttype = HSI_MSG_WRITE;
+	return hsi_async(cl, msg);
 }
 
 /**
@@ -391,11 +391,11 @@ static inline int hsi_async_write (struct hsi_client * cl, struct hsi_msg * msg)
  *
  * Return -errno on failure, 0 on success
  */
-static inline int hsi_start_tx (struct hsi_client * cl)
+static inline int hsi_start_tx(struct hsi_client *cl)
 {
-  if (!hsi_port_claimed (cl) )
-  { return -EACCES; }
-  return hsi_get_port (cl)->start_tx (cl);
+	if (!hsi_port_claimed(cl))
+		return -EACCES;
+	return hsi_get_port(cl)->start_tx(cl);
 }
 
 /**
@@ -404,10 +404,10 @@ static inline int hsi_start_tx (struct hsi_client * cl)
  *
  * Return -errno on failure, 0 on success
  */
-static inline int hsi_stop_tx (struct hsi_client * cl)
+static inline int hsi_stop_tx(struct hsi_client *cl)
 {
-  if (!hsi_port_claimed (cl) )
-  { return -EACCES; }
-  return hsi_get_port (cl)->stop_tx (cl);
+	if (!hsi_port_claimed(cl))
+		return -EACCES;
+	return hsi_get_port(cl)->stop_tx(cl);
 }
 #endif /* __LINUX_HSI_H__ */

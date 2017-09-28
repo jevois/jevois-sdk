@@ -11,9 +11,9 @@
 
 #include <linux/bug.h>
 
-static inline void flush_tlb_mm (struct mm_struct * mm)
+static inline void flush_tlb_mm(struct mm_struct *mm)
 {
-  BUG();
+	BUG();
 }
 
 

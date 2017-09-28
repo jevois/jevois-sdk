@@ -15,32 +15,32 @@
 #include <asm/dma.h>
 
 struct poll {
-  int fd;
-  short events;
-  short revents;
+	int fd;
+	short events;
+	short revents;
 };
 
 /* from entry.S */
-EXPORT_SYMBOL (__udelay);
-EXPORT_SYMBOL (__ndelay);
+EXPORT_SYMBOL(__udelay);
+EXPORT_SYMBOL(__ndelay);
 
 /* from head_32.S */
-EXPORT_SYMBOL (__ret_efault);
-EXPORT_SYMBOL (empty_zero_page);
+EXPORT_SYMBOL(__ret_efault);
+EXPORT_SYMBOL(empty_zero_page);
 
 /* Defined using magic */
 #ifndef CONFIG_SMP
-EXPORT_SYMBOL (BTFIXUP_CALL (___xchg32) );
+EXPORT_SYMBOL(BTFIXUP_CALL(___xchg32));
 #else
-EXPORT_SYMBOL (BTFIXUP_CALL (__hard_smp_processor_id) );
+EXPORT_SYMBOL(BTFIXUP_CALL(__hard_smp_processor_id));
 #endif
-EXPORT_SYMBOL (BTFIXUP_CALL (mmu_unlockarea) );
-EXPORT_SYMBOL (BTFIXUP_CALL (mmu_lockarea) );
-EXPORT_SYMBOL (BTFIXUP_CALL (mmu_get_scsi_sgl) );
-EXPORT_SYMBOL (BTFIXUP_CALL (mmu_get_scsi_one) );
-EXPORT_SYMBOL (BTFIXUP_CALL (mmu_release_scsi_sgl) );
-EXPORT_SYMBOL (BTFIXUP_CALL (mmu_release_scsi_one) );
-EXPORT_SYMBOL (BTFIXUP_CALL (pgprot_noncached) );
+EXPORT_SYMBOL(BTFIXUP_CALL(mmu_unlockarea));
+EXPORT_SYMBOL(BTFIXUP_CALL(mmu_lockarea));
+EXPORT_SYMBOL(BTFIXUP_CALL(mmu_get_scsi_sgl));
+EXPORT_SYMBOL(BTFIXUP_CALL(mmu_get_scsi_one));
+EXPORT_SYMBOL(BTFIXUP_CALL(mmu_release_scsi_sgl));
+EXPORT_SYMBOL(BTFIXUP_CALL(mmu_release_scsi_one));
+EXPORT_SYMBOL(BTFIXUP_CALL(pgprot_noncached));
 
 /* Exporting a symbol from /init/main.c */
-EXPORT_SYMBOL (saved_command_line);
+EXPORT_SYMBOL(saved_command_line);

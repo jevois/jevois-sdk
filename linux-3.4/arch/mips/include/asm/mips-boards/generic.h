@@ -71,30 +71,30 @@
 
 #define MIPS_REVISION_CORID (((*(volatile u32 *)ioremap(MIPS_REVISION_REG, 4)) >> 10) & 0x3f)
 
-#define MIPS_REVISION_SCON_OTHER     0
-#define MIPS_REVISION_SCON_SOCITSC     1
-#define MIPS_REVISION_SCON_SOCITSCP    2
+#define MIPS_REVISION_SCON_OTHER	   0
+#define MIPS_REVISION_SCON_SOCITSC	   1
+#define MIPS_REVISION_SCON_SOCITSCP	   2
 
 /* Artificial SCON defines for MIPS_REVISION_SCON_OTHER */
-#define MIPS_REVISION_SCON_UNKNOWN     -1
-#define MIPS_REVISION_SCON_GT64120     -2
-#define MIPS_REVISION_SCON_BONITO    -3
-#define MIPS_REVISION_SCON_BRTL      -4
-#define MIPS_REVISION_SCON_SOCIT     -5
-#define MIPS_REVISION_SCON_ROCIT     -6
+#define MIPS_REVISION_SCON_UNKNOWN	   -1
+#define MIPS_REVISION_SCON_GT64120	   -2
+#define MIPS_REVISION_SCON_BONITO	   -3
+#define MIPS_REVISION_SCON_BRTL		   -4
+#define MIPS_REVISION_SCON_SOCIT	   -5
+#define MIPS_REVISION_SCON_ROCIT	   -6
 
 #define MIPS_REVISION_SCONID (((*(volatile u32 *)ioremap(MIPS_REVISION_REG, 4)) >> 24) & 0xff)
 
 extern int mips_revision_sconid;
 
 #ifdef CONFIG_PCI
-extern void mips_pcibios_init (void);
+extern void mips_pcibios_init(void);
 #else
 #define mips_pcibios_init() do { } while (0)
 #endif
 
 #ifdef CONFIG_KGDB
-extern void kgdb_config (void);
+extern void kgdb_config(void);
 #endif
 
 #endif  /* __ASM_MIPS_BOARDS_GENERIC_H */

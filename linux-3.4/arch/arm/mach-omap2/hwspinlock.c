@@ -25,36 +25,36 @@
 #include <plat/omap_device.h>
 
 static struct hwspinlock_pdata omap_hwspinlock_pdata __initdata = {
-  .base_id = 0,
+	.base_id = 0,
 };
 
-int __init hwspinlocks_init (void)
+int __init hwspinlocks_init(void)
 {
-  int retval = 0;
-  struct omap_hwmod * oh;
-  struct platform_device * pdev;
-  const char * oh_name = "spinlock";
-  const char * dev_name = "omap_hwspinlock";
-  
-  /*
-   * Hwmod lookup will fail in case our platform doesn't support the
-   * hardware spinlock module, so it is safe to run this initcall
-   * on all omaps
-   */
-  oh = omap_hwmod_lookup (oh_name);
-  if (oh == NULL)
-  { return -EINVAL; }
-  
-  pdev = omap_device_build (dev_name, 0, oh, &omap_hwspinlock_pdata,
-                            sizeof (struct hwspinlock_pdata),
-                            NULL, 0, false);
-  if (IS_ERR (pdev) ) {
-    pr_err ("Can't build omap_device for %s:%s\n", dev_name,
-            oh_name);
-    retval = PTR_ERR (pdev);
-  }
-  
-  return retval;
+	int retval = 0;
+	struct omap_hwmod *oh;
+	struct platform_device *pdev;
+	const char *oh_name = "spinlock";
+	const char *dev_name = "omap_hwspinlock";
+
+	/*
+	 * Hwmod lookup will fail in case our platform doesn't support the
+	 * hardware spinlock module, so it is safe to run this initcall
+	 * on all omaps
+	 */
+	oh = omap_hwmod_lookup(oh_name);
+	if (oh == NULL)
+		return -EINVAL;
+
+	pdev = omap_device_build(dev_name, 0, oh, &omap_hwspinlock_pdata,
+				sizeof(struct hwspinlock_pdata),
+				NULL, 0, false);
+	if (IS_ERR(pdev)) {
+		pr_err("Can't build omap_device for %s:%s\n", dev_name,
+								oh_name);
+		retval = PTR_ERR(pdev);
+	}
+
+	return retval;
 }
 /* early board code might need to reserve specific hwspinlock instances */
-postcore_initcall (hwspinlocks_init);
+postcore_initcall(hwspinlocks_init);

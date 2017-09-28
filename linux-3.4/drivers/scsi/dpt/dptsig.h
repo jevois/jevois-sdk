@@ -1,4 +1,4 @@
-/*  BSDI dptsig.h,v 1.7 1998/06/03 19:15:00 karels Exp  */
+/*	BSDI dptsig.h,v 1.7 1998/06/03 19:15:00 karels Exp	*/
 
 /*
  * Copyright (c) 1996-1999 Distributed Processing Technology Corporation
@@ -48,10 +48,10 @@ typedef unsigned int sigINT;
 #if (defined(_DPT_BIG_ENDIAN))
 # define sigWORDLittleEndian(x) ((((x)&0xFF)<<8)|(((x)>>8)&0xFF))
 # define sigLONGLittleEndian(x) \
-  ((((x)&0xFF)<<24) |             \
-   (((x)&0xFF00)<<8) |    \
-   (((x)&0xFF0000L)>>8) | \
-   (((x)&0xFF000000L)>>24))
+        ((((x)&0xFF)<<24) |             \
+         (((x)&0xFF00)<<8) |    \
+         (((x)&0xFF0000L)>>8) | \
+         (((x)&0xFF000000L)>>24))
 #else
 # define sigWORDLittleEndian(x) (x)
 # define sigLONGLittleEndian(x) (x)
@@ -103,8 +103,8 @@ typedef unsigned int sigINT;
 #define PROC_386        0x04    /* Intel 80386 */
 #define PROC_486        0x08    /* Intel 80486 */
 #define PROC_PENTIUM    0x10    /* Intel 586 aka P5 aka Pentium */
-#define PROC_SEXIUM 0x20  /* Intel 686 aka P6 aka Pentium Pro or MMX */
-#define PROC_IA64 0x40  /* Intel IA64 processor */
+#define PROC_SEXIUM	0x20	/* Intel 686 aka P6 aka Pentium Pro or MMX */
+#define PROC_IA64	0x40	/* Intel IA64 processor */
 
 /* PROC_i960: */
 #define PROC_960RX      0x01    /* Intel 80960RC/RD */
@@ -112,15 +112,15 @@ typedef unsigned int sigINT;
 
 /* PROC_MOTOROLA: */
 #define PROC_68000      0x01    /* Motorola 68000 */
-#define PROC_68010  0x02  /* Motorola 68010 */
+#define PROC_68010	0x02	/* Motorola 68010 */
 #define PROC_68020      0x04    /* Motorola 68020 */
 #define PROC_68030      0x08    /* Motorola 68030 */
 #define PROC_68040      0x10    /* Motorola 68040 */
 
 /* PROC_POWERPC */
-#define PROC_PPC601   0x01  /* PowerPC 601 */
-#define PROC_PPC603   0x02  /* PowerPC 603 */
-#define PROC_PPC604   0x04  /* PowerPC 604 */
+#define PROC_PPC601		0x01	/* PowerPC 601 */
+#define PROC_PPC603		0x02	/* PowerPC 603 */
+#define PROC_PPC604		0x04	/* PowerPC 604 */
 
 /* PROC_MIPS4000: */
 #define PROC_R4000      0x01    /* MIPS R4000 */
@@ -142,8 +142,8 @@ typedef unsigned int sigINT;
 #define FT_LOGGER       12      /* Event Logger */
 #define FT_INSTALL      13      /* An Install Program */
 #define FT_LIBRARY      14      /* Storage Manager Real-Mode Calls */
-#define FT_RESOURCE 15  /* Storage Manager Resource File */
-#define FT_MODEM_DB 16  /* Storage Manager Modem Database */
+#define FT_RESOURCE	15	/* Storage Manager Resource File */
+#define FT_MODEM_DB	16	/* Storage Manager Modem Database */
 
 /* Filetype flags - sigBYTE dsFiletypeFlags;    FLAG BITS */
 /* ------------------------------------------------------------------ */
@@ -155,7 +155,7 @@ typedef unsigned int sigINT;
 #define FTF_SYS         0x20    /* DOS Loadable driver */
 #define FTF_PROTECTED   0x40    /* Runs in protected mode */
 #define FTF_APP_SPEC    0x80    /* Application Specific */
-#define FTF_ROM   (FTF_SYS|FTF_TSR) /* Special Case */
+#define FTF_ROM		(FTF_SYS|FTF_TSR)	/* Special Case */
 
 /* OEM - sigBYTE dsOEM;         DISTINCT VALUES */
 /* ------------------------------------------------------------------ */
@@ -170,37 +170,37 @@ typedef unsigned int sigINT;
 
 /* Operating System  - sigLONG dsOS;    FLAG BITS */
 /* ------------------------------------------------------------------ */
-#define OS_DOS          0x00000001 /* PC/MS-DOS       */
-#define OS_WINDOWS      0x00000002 /* Microsoft Windows 3.x   */
-#define OS_WINDOWS_NT   0x00000004 /* Microsoft Windows NT    */
+#define OS_DOS          0x00000001 /* PC/MS-DOS				*/
+#define OS_WINDOWS      0x00000002 /* Microsoft Windows 3.x		*/
+#define OS_WINDOWS_NT   0x00000004 /* Microsoft Windows NT		*/
 #define OS_OS2M         0x00000008 /* OS/2 1.2.x,MS 1.3.0,IBM 1.3.x - Monolithic */
-#define OS_OS2L         0x00000010 /* Microsoft OS/2 1.301 - LADDR  */
-#define OS_OS22x        0x00000020 /* IBM OS/2 2.x      */
-#define OS_NW286        0x00000040 /* Novell NetWare 286    */
-#define OS_NW386        0x00000080 /* Novell NetWare 386    */
-#define OS_GEN_UNIX     0x00000100 /* Generic Unix      */
-#define OS_SCO_UNIX     0x00000200 /* SCO Unix        */
-#define OS_ATT_UNIX     0x00000400 /* ATT Unix        */
-#define OS_UNIXWARE     0x00000800 /* USL Unix        */
-#define OS_INT_UNIX     0x00001000 /* Interactive Unix      */
-#define OS_SOLARIS      0x00002000 /* SunSoft Solaris     */
-#define OS_QNX          0x00004000 /* QNX for Tom Moch      */
-#define OS_NEXTSTEP     0x00008000 /* NeXTSTEP/OPENSTEP/MACH    */
-#define OS_BANYAN       0x00010000 /* Banyan Vines      */
-#define OS_OLIVETTI_UNIX 0x00020000/* Olivetti Unix     */
-#define OS_MAC_OS 0x00040000 /* Mac OS        */
-#define OS_WINDOWS_95 0x00080000 /* Microsoft Windows '95   */
-#define OS_NW4x   0x00100000 /* Novell Netware 4.x    */
-#define OS_BSDI_UNIX  0x00200000 /* BSDi Unix BSD/OS 2.0 and up */
-#define OS_AIX_UNIX     0x00400000 /* AIX Unix        */
-#define OS_FREE_BSD 0x00800000 /* FreeBSD Unix      */
-#define OS_LINUX  0x01000000 /* Linux       */
-#define OS_DGUX_UNIX  0x02000000 /* Data General Unix     */
-#define OS_SINIX_N      0x04000000 /* SNI SINIX-N     */
-#define OS_PLAN9  0x08000000 /* ATT Plan 9      */
-#define OS_TSX    0x10000000 /* SNH TSX-32      */
+#define OS_OS2L         0x00000010 /* Microsoft OS/2 1.301 - LADDR	*/
+#define OS_OS22x        0x00000020 /* IBM OS/2 2.x			*/
+#define OS_NW286        0x00000040 /* Novell NetWare 286		*/
+#define OS_NW386        0x00000080 /* Novell NetWare 386		*/
+#define OS_GEN_UNIX     0x00000100 /* Generic Unix			*/
+#define OS_SCO_UNIX     0x00000200 /* SCO Unix				*/
+#define OS_ATT_UNIX     0x00000400 /* ATT Unix				*/
+#define OS_UNIXWARE     0x00000800 /* USL Unix				*/
+#define OS_INT_UNIX     0x00001000 /* Interactive Unix			*/
+#define OS_SOLARIS      0x00002000 /* SunSoft Solaris			*/
+#define OS_QNX          0x00004000 /* QNX for Tom Moch			*/
+#define OS_NEXTSTEP     0x00008000 /* NeXTSTEP/OPENSTEP/MACH		*/
+#define OS_BANYAN       0x00010000 /* Banyan Vines			*/
+#define OS_OLIVETTI_UNIX 0x00020000/* Olivetti Unix			*/
+#define OS_MAC_OS	0x00040000 /* Mac OS				*/
+#define OS_WINDOWS_95	0x00080000 /* Microsoft Windows '95		*/
+#define OS_NW4x		0x00100000 /* Novell Netware 4.x		*/
+#define OS_BSDI_UNIX	0x00200000 /* BSDi Unix BSD/OS 2.0 and up	*/
+#define OS_AIX_UNIX     0x00400000 /* AIX Unix				*/
+#define OS_FREE_BSD	0x00800000 /* FreeBSD Unix			*/
+#define OS_LINUX	0x01000000 /* Linux				*/
+#define OS_DGUX_UNIX	0x02000000 /* Data General Unix			*/
+#define OS_SINIX_N      0x04000000 /* SNI SINIX-N			*/
+#define OS_PLAN9	0x08000000 /* ATT Plan 9			*/
+#define OS_TSX		0x10000000 /* SNH TSX-32			*/
 
-#define OS_OTHER        0x80000000 /* Other       */
+#define OS_OTHER        0x80000000 /* Other				*/
 
 /* Capabilities - sigWORD dsCapabilities;        FLAG BITS */
 /* ------------------------------------------------------------------ */
@@ -239,28 +239,28 @@ typedef unsigned int sigINT;
 #define ADF_2012A       0x0002  /* PM2012A          */
 #define ADF_PLUS_ISA    0x0004  /* PM2011,PM2021    */
 #define ADF_PLUS_EISA   0x0008  /* PM2012B,PM2022   */
-#define ADF_SC3_ISA 0x0010  /* PM2021           */
-#define ADF_SC3_EISA  0x0020  /* PM2022,PM2122, etc */
-#define ADF_SC3_PCI 0x0040  /* SmartCache III PCI */
-#define ADF_SC4_ISA 0x0080  /* SmartCache IV ISA */
-#define ADF_SC4_EISA  0x0100  /* SmartCache IV EISA */
-#define ADF_SC4_PCI 0x0200  /* SmartCache IV PCI */
-#define ADF_SC5_PCI 0x0400  /* Fifth Generation I2O products */
+#define ADF_SC3_ISA	0x0010  /* PM2021           */
+#define ADF_SC3_EISA	0x0020  /* PM2022,PM2122, etc */
+#define ADF_SC3_PCI	0x0040  /* SmartCache III PCI */
+#define ADF_SC4_ISA	0x0080  /* SmartCache IV ISA */
+#define ADF_SC4_EISA	0x0100  /* SmartCache IV EISA */
+#define ADF_SC4_PCI	0x0200	/* SmartCache IV PCI */
+#define ADF_SC5_PCI	0x0400	/* Fifth Generation I2O products */
 /*
- *  Combinations of products
+ *	Combinations of products
  */
-#define ADF_ALL_2000  (ADF_2001|ADF_2012A)
-#define ADF_ALL_PLUS  (ADF_PLUS_ISA|ADF_PLUS_EISA)
-#define ADF_ALL_SC3 (ADF_SC3_ISA|ADF_SC3_EISA|ADF_SC3_PCI)
-#define ADF_ALL_SC4 (ADF_SC4_ISA|ADF_SC4_EISA|ADF_SC4_PCI)
-#define ADF_ALL_SC5 (ADF_SC5_PCI)
+#define ADF_ALL_2000	(ADF_2001|ADF_2012A)
+#define ADF_ALL_PLUS	(ADF_PLUS_ISA|ADF_PLUS_EISA)
+#define ADF_ALL_SC3	(ADF_SC3_ISA|ADF_SC3_EISA|ADF_SC3_PCI)
+#define ADF_ALL_SC4	(ADF_SC4_ISA|ADF_SC4_EISA|ADF_SC4_PCI)
+#define ADF_ALL_SC5	(ADF_SC5_PCI)
 /* All EATA Cacheing Products */
-#define ADF_ALL_CACHE (ADF_ALL_PLUS|ADF_ALL_SC3|ADF_ALL_SC4)
+#define ADF_ALL_CACHE	(ADF_ALL_PLUS|ADF_ALL_SC3|ADF_ALL_SC4)
 /* All EATA Bus Mastering Products */
-#define ADF_ALL_MASTER  (ADF_2012A|ADF_ALL_CACHE)
+#define ADF_ALL_MASTER	(ADF_2012A|ADF_ALL_CACHE)
 /* All EATA Adapter Products */
-#define ADF_ALL_EATA  (ADF_2001|ADF_ALL_MASTER)
-#define ADF_ALL   ADF_ALL_EATA
+#define ADF_ALL_EATA	(ADF_2001|ADF_ALL_MASTER)
+#define ADF_ALL		ADF_ALL_EATA
 
 /* Application - sigWORD dsApplication;         FLAG BITS */
 /* ------------------------------------------------------------------ */
@@ -290,27 +290,27 @@ typedef unsigned int sigINT;
 #endif
 
 typedef struct dpt_sig {
-  char    dsSignature[6];      /* ALWAYS "dPtSiG" */
-  sigBYTE dsSigVersion;        /* signature version (currently 1) */
-  sigBYTE dsProcessorFamily;   /* what type of processor */
-  sigBYTE dsProcessor;         /* precise processor */
-  sigBYTE dsFiletype;          /* type of file */
-  sigBYTE dsFiletypeFlags;     /* flags to specify load type, etc. */
-  sigBYTE dsOEM;               /* OEM file was created for */
-  sigINT  dsOS;                /* which Operating systems */
-  sigWORD dsCapabilities;      /* RAID levels, etc. */
-  sigWORD dsDeviceSupp;        /* Types of SCSI devices supported */
-  sigWORD dsAdapterSupp;       /* DPT adapter families supported */
-  sigWORD dsApplication;       /* applications file is for */
-  sigBYTE dsRequirements;      /* Other driver dependencies */
-  sigBYTE dsVersion;           /* 1 */
-  sigBYTE dsRevision;          /* 'J' */
-  sigBYTE dsSubRevision;       /* '9'   ' ' if N/A */
-  sigBYTE dsMonth;             /* creation month */
-  sigBYTE dsDay;               /* creation day */
-  sigBYTE dsYear;              /* creation year since 1980 (1993=13) */
-  /* description (NULL terminated) */
-  char  dsDescription[dsDescription_size];
+    char    dsSignature[6];      /* ALWAYS "dPtSiG" */
+    sigBYTE dsSigVersion;        /* signature version (currently 1) */
+    sigBYTE dsProcessorFamily;   /* what type of processor */
+    sigBYTE dsProcessor;         /* precise processor */
+    sigBYTE dsFiletype;          /* type of file */
+    sigBYTE dsFiletypeFlags;     /* flags to specify load type, etc. */
+    sigBYTE dsOEM;               /* OEM file was created for */
+    sigINT  dsOS;                /* which Operating systems */
+    sigWORD dsCapabilities;      /* RAID levels, etc. */
+    sigWORD dsDeviceSupp;        /* Types of SCSI devices supported */
+    sigWORD dsAdapterSupp;       /* DPT adapter families supported */
+    sigWORD dsApplication;       /* applications file is for */
+    sigBYTE dsRequirements;      /* Other driver dependencies */
+    sigBYTE dsVersion;           /* 1 */
+    sigBYTE dsRevision;          /* 'J' */
+    sigBYTE dsSubRevision;       /* '9'   ' ' if N/A */
+    sigBYTE dsMonth;             /* creation month */
+    sigBYTE dsDay;               /* creation day */
+    sigBYTE dsYear;              /* creation year since 1980 (1993=13) */
+    /* description (NULL terminated) */
+    char  dsDescription[dsDescription_size];
 } dpt_sig_S;
 /* 32 bytes minimum - with no description.  Put NULL at description[0] */
 /* 81 bytes maximum - with 49 character description plus NULL. */

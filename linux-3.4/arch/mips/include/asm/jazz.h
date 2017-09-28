@@ -72,11 +72,11 @@
 
 #ifndef __ASSEMBLY__
 
-static __inline__ void pica_set_led (unsigned int bits)
+static __inline__ void pica_set_led(unsigned int bits)
 {
-  volatile unsigned int * led_register = (unsigned int *) PICA_LED;
-  
-  *led_register = bits;
+	volatile unsigned int *led_register = (unsigned int *) PICA_LED;
+
+	*led_register = bits;
 }
 
 #endif /* !__ASSEMBLY__ */
@@ -89,7 +89,7 @@ static __inline__ void pica_set_led (unsigned int bits)
 /*
  * Base address of the 53C94 SCSI hostadapter in Jazz machines.
  */
-#define JAZZ_SCSI_BASE    0xe0002000
+#define JAZZ_SCSI_BASE		0xe0002000
 
 /*
  * i8042 keyboard controller for JAZZ and PICA chipsets.
@@ -103,17 +103,17 @@ static __inline__ void pica_set_led (unsigned int bits)
 #ifndef __ASSEMBLY__
 
 typedef struct {
-  unsigned char data;
-  unsigned char command;
+	unsigned char data;
+	unsigned char command;
 } jazz_keyboard_hardware;
 
 #define jazz_kh ((keyboard_hardware *) JAZZ_KEYBOARD_ADDRESS)
 
 typedef struct {
-  unsigned char pad0[3];
-  unsigned char data;
-  unsigned char pad1[3];
-  unsigned char command;
+	unsigned char pad0[3];
+	unsigned char data;
+	unsigned char pad1[3];
+	unsigned char command;
 } mips_keyboard_hardware;
 
 /*
@@ -157,21 +157,21 @@ typedef struct {
 #ifndef __ASSEMBLY__
 #ifdef __MIPSEL__
 typedef struct {
-  unsigned int bank2 : 3;
-  unsigned int bank1 : 3;
-  unsigned int mem_bus_width : 1;
-  unsigned int reserved2 : 1;
-  unsigned int page_mode : 1;
-  unsigned int reserved1 : 23;
+	unsigned int bank2 : 3;
+	unsigned int bank1 : 3;
+	unsigned int mem_bus_width : 1;
+	unsigned int reserved2 : 1;
+	unsigned int page_mode : 1;
+	unsigned int reserved1 : 23;
 } dram_configuration;
 #else /* defined (__MIPSEB__) */
 typedef struct {
-  unsigned int reserved1 : 23;
-  unsigned int page_mode : 1;
-  unsigned int reserved2 : 1;
-  unsigned int mem_bus_width : 1;
-  unsigned int bank1 : 3;
-  unsigned int bank2 : 3;
+	unsigned int reserved1 : 23;
+	unsigned int page_mode : 1;
+	unsigned int reserved2 : 1;
+	unsigned int mem_bus_width : 1;
+	unsigned int bank1 : 3;
+	unsigned int bank2 : 3;
 } dram_configuration;
 #endif
 #endif /* !__ASSEMBLY__ */
@@ -220,22 +220,22 @@ typedef struct {
  * JAZZ R4030 MCT_ADR chip (DMA controller)
  * Note: Virtual Addresses !
  */
-#define JAZZ_R4030_CONFIG 0xE0000000  /* R4030 config register */
-#define JAZZ_R4030_REVISION     0xE0000008  /* same as PICA_ASIC_REVISION */
-#define JAZZ_R4030_INV_ADDR 0xE0000010  /* Invalid Address register */
+#define JAZZ_R4030_CONFIG	0xE0000000	/* R4030 config register */
+#define JAZZ_R4030_REVISION     0xE0000008	/* same as PICA_ASIC_REVISION */
+#define JAZZ_R4030_INV_ADDR	0xE0000010	/* Invalid Address register */
 
-#define JAZZ_R4030_TRSTBL_BASE  0xE0000018  /* Translation Table Base */
-#define JAZZ_R4030_TRSTBL_LIM   0xE0000020  /* Translation Table Limit */
-#define JAZZ_R4030_TRSTBL_INV   0xE0000028  /* Translation Table Invalidate */
+#define JAZZ_R4030_TRSTBL_BASE  0xE0000018	/* Translation Table Base */
+#define JAZZ_R4030_TRSTBL_LIM   0xE0000020	/* Translation Table Limit */
+#define JAZZ_R4030_TRSTBL_INV   0xE0000028	/* Translation Table Invalidate */
 
-#define JAZZ_R4030_CACHE_MTNC   0xE0000030  /* Cache Maintenance */
-#define JAZZ_R4030_R_FAIL_ADDR  0xE0000038  /* Remote Failed Address */
-#define JAZZ_R4030_M_FAIL_ADDR  0xE0000040  /* Memory Failed Address */
+#define JAZZ_R4030_CACHE_MTNC   0xE0000030	/* Cache Maintenance */
+#define JAZZ_R4030_R_FAIL_ADDR  0xE0000038	/* Remote Failed Address */
+#define JAZZ_R4030_M_FAIL_ADDR  0xE0000040	/* Memory Failed Address */
 
-#define JAZZ_R4030_CACHE_PTAG   0xE0000048  /* I/O Cache Physical Tag */
-#define JAZZ_R4030_CACHE_LTAG   0xE0000050  /* I/O Cache Logical Tag */
-#define JAZZ_R4030_CACHE_BMASK  0xE0000058  /* I/O Cache Byte Mask */
-#define JAZZ_R4030_CACHE_BWIN   0xE0000060  /* I/O Cache Buffer Window */
+#define JAZZ_R4030_CACHE_PTAG   0xE0000048	/* I/O Cache Physical Tag */
+#define JAZZ_R4030_CACHE_LTAG   0xE0000050	/* I/O Cache Logical Tag */
+#define JAZZ_R4030_CACHE_BMASK  0xE0000058	/* I/O Cache Byte Mask */
+#define JAZZ_R4030_CACHE_BWIN   0xE0000060	/* I/O Cache Buffer Window */
 
 /*
  * Remote Speed Registers.
@@ -245,66 +245,66 @@ typedef struct {
  *  8: parallel,  9: NVRAM,    10: CPU,      11: PROM,
  * 12: reserved, 13: free,     14: 7seg LED, 15: ???
  */
-#define JAZZ_R4030_REM_SPEED  0xE0000070  /* 16 Remote Speed Registers */
-/* 0xE0000070,78,80... 0xE00000E8 */
-#define JAZZ_R4030_IRQ_ENABLE   0xE00000E8  /* Internal Interrupt Enable */
-#define JAZZ_R4030_INVAL_ADDR   0xE0000010  /* Invalid address Register */
-#define JAZZ_R4030_IRQ_SOURCE   0xE0000200  /* Interrupt Source Register */
-#define JAZZ_R4030_I386_ERROR   0xE0000208  /* i386/EISA Bus Error */
+#define JAZZ_R4030_REM_SPEED	0xE0000070	/* 16 Remote Speed Registers */
+						/* 0xE0000070,78,80... 0xE00000E8 */
+#define JAZZ_R4030_IRQ_ENABLE   0xE00000E8	/* Internal Interrupt Enable */
+#define JAZZ_R4030_INVAL_ADDR   0xE0000010	/* Invalid address Register */
+#define JAZZ_R4030_IRQ_SOURCE   0xE0000200	/* Interrupt Source Register */
+#define JAZZ_R4030_I386_ERROR   0xE0000208	/* i386/EISA Bus Error */
 
 /*
  * Virtual (E)ISA controller address
  */
-#define JAZZ_EISA_IRQ_ACK 0xE0000238  /* EISA interrupt acknowledge */
+#define JAZZ_EISA_IRQ_ACK	0xE0000238	/* EISA interrupt acknowledge */
 
 /*
  * Access the R4030 DMA and I/O Controller
  */
 #ifndef __ASSEMBLY__
 
-static inline void r4030_delay (void)
+static inline void r4030_delay(void)
 {
-  __asm__ __volatile__ (
-    ".set\tnoreorder\n\t"
-    "nop\n\t"
-    "nop\n\t"
-    "nop\n\t"
-    "nop\n\t"
-    ".set\treorder");
+__asm__ __volatile__(
+	".set\tnoreorder\n\t"
+	"nop\n\t"
+	"nop\n\t"
+	"nop\n\t"
+	"nop\n\t"
+	".set\treorder");
 }
 
-static inline unsigned short r4030_read_reg16 (unsigned long addr)
+static inline unsigned short r4030_read_reg16(unsigned long addr)
 {
-  unsigned short ret = * ( (volatile unsigned short *) addr);
-  r4030_delay();
-  return ret;
+	unsigned short ret = *((volatile unsigned short *)addr);
+	r4030_delay();
+	return ret;
 }
 
-static inline unsigned int r4030_read_reg32 (unsigned long addr)
+static inline unsigned int r4030_read_reg32(unsigned long addr)
 {
-  unsigned int ret = * ( (volatile unsigned int *) addr);
-  r4030_delay();
-  return ret;
+	unsigned int ret = *((volatile unsigned int *)addr);
+	r4030_delay();
+	return ret;
 }
 
-static inline void r4030_write_reg16 (unsigned long addr, unsigned val)
+static inline void r4030_write_reg16(unsigned long addr, unsigned val)
 {
-  * ( (volatile unsigned short *) addr) = val;
-  r4030_delay();
+	*((volatile unsigned short *)addr) = val;
+	r4030_delay();
 }
 
-static inline void r4030_write_reg32 (unsigned long addr, unsigned val)
+static inline void r4030_write_reg32(unsigned long addr, unsigned val)
 {
-  * ( (volatile unsigned int *) addr) = val;
-  r4030_delay();
+	*((volatile unsigned int *)addr) = val;
+	r4030_delay();
 }
 
 #endif /* !__ASSEMBLY__ */
 
-#define JAZZ_FDC_BASE 0xe0003000
-#define JAZZ_RTC_BASE 0xe0004000
-#define JAZZ_PORT_BASE  0xe2000000
+#define JAZZ_FDC_BASE	0xe0003000
+#define JAZZ_RTC_BASE	0xe0004000
+#define JAZZ_PORT_BASE	0xe2000000
 
-#define JAZZ_EISA_BASE  0xe3000000
+#define JAZZ_EISA_BASE	0xe3000000
 
 #endif /* __ASM_JAZZ_H */

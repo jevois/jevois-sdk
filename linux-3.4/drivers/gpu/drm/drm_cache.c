@@ -33,68 +33,68 @@
 
 #if defined(CONFIG_X86)
 static void
-drm_clflush_page (struct page * page)
+drm_clflush_page(struct page *page)
 {
-  uint8_t * page_virtual;
-  unsigned int i;
-  
-  if (unlikely (page == NULL) )
-  { return; }
-  
-  page_virtual = kmap_atomic (page);
-  for (i = 0; i < PAGE_SIZE; i += boot_cpu_data.x86_clflush_size)
-  { clflush (page_virtual + i); }
-  kunmap_atomic (page_virtual);
+	uint8_t *page_virtual;
+	unsigned int i;
+
+	if (unlikely(page == NULL))
+		return;
+
+	page_virtual = kmap_atomic(page);
+	for (i = 0; i < PAGE_SIZE; i += boot_cpu_data.x86_clflush_size)
+		clflush(page_virtual + i);
+	kunmap_atomic(page_virtual);
 }
 
-static void drm_cache_flush_clflush (struct page * pages[],
-                                     unsigned long num_pages)
+static void drm_cache_flush_clflush(struct page *pages[],
+				    unsigned long num_pages)
 {
-  unsigned long i;
-  
-  mb();
-  for (i = 0; i < num_pages; i++)
-  { drm_clflush_page (*pages++); }
-  mb();
+	unsigned long i;
+
+	mb();
+	for (i = 0; i < num_pages; i++)
+		drm_clflush_page(*pages++);
+	mb();
 }
 
 static void
-drm_clflush_ipi_handler (void * null)
+drm_clflush_ipi_handler(void *null)
 {
-  wbinvd();
+	wbinvd();
 }
 #endif
 
 void
-drm_clflush_pages (struct page * pages[], unsigned long num_pages)
+drm_clflush_pages(struct page *pages[], unsigned long num_pages)
 {
 
-  #if defined(CONFIG_X86)
-  if (cpu_has_clflush) {
-    drm_cache_flush_clflush (pages, num_pages);
-    return;
-  }
-  
-  if (on_each_cpu (drm_clflush_ipi_handler, NULL, 1) != 0)
-  { printk (KERN_ERR "Timed out waiting for cache flush.\n"); }
-  
-  #elif defined(__powerpc__)
-  unsigned long i;
-  for (i = 0; i < num_pages; i++) {
-    struct page * page = pages[i];
-    void * page_virtual;
-  
-    if (unlikely (page == NULL) )
-    { continue; }
-  
-    page_virtual = kmap_atomic (page);
-    flush_dcache_range ( (unsigned long) page_virtual,
-                         (unsigned long) page_virtual + PAGE_SIZE);
-    kunmap_atomic (page_virtual);
-  }
-  #else
-  printk (KERN_ERR "Architecture has no drm_cache.c support\n");
-  WARN_ON_ONCE (1);
-  #endif
+#if defined(CONFIG_X86)
+	if (cpu_has_clflush) {
+		drm_cache_flush_clflush(pages, num_pages);
+		return;
+	}
+
+	if (on_each_cpu(drm_clflush_ipi_handler, NULL, 1) != 0)
+		printk(KERN_ERR "Timed out waiting for cache flush.\n");
+
+#elif defined(__powerpc__)
+	unsigned long i;
+	for (i = 0; i < num_pages; i++) {
+		struct page *page = pages[i];
+		void *page_virtual;
+
+		if (unlikely(page == NULL))
+			continue;
+
+		page_virtual = kmap_atomic(page);
+		flush_dcache_range((unsigned long)page_virtual,
+				   (unsigned long)page_virtual + PAGE_SIZE);
+		kunmap_atomic(page_virtual);
+	}
+#else
+	printk(KERN_ERR "Architecture has no drm_cache.c support\n");
+	WARN_ON_ONCE(1);
+#endif
 }
-EXPORT_SYMBOL (drm_clflush_pages);
+EXPORT_SYMBOL(drm_clflush_pages);

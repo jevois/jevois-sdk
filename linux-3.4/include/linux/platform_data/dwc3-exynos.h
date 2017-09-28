@@ -2,7 +2,7 @@
  * dwc3-exynos.h - Samsung EXYNOS DWC3 Specific Glue layer, header.
  *
  * Copyright (c) 2012 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com
+ *		http://www.samsung.com
  *
  * Author: Anton Tikhomirov <av.tikhomirov@samsung.com>
  *
@@ -16,9 +16,9 @@
 #define _DWC3_EXYNOS_H_
 
 struct dwc3_exynos_data {
-  int phy_type;
-  int (*phy_init) (struct platform_device * pdev, int type);
-  int (*phy_exit) (struct platform_device * pdev, int type);
+	int phy_type;
+	int (*phy_init)(struct platform_device *pdev, int type);
+	int (*phy_exit)(struct platform_device *pdev, int type);
 };
 
 #endif /* _DWC3_EXYNOS_H_ */

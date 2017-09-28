@@ -1,16 +1,16 @@
 /**
  * ============================================================================
  * = COPYRIGHT
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +23,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -36,7 +36,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  * = PRODUCT
@@ -60,10 +60,10 @@
  *   2) thread-related wrapper functions around thread calls
  *   3) transactor/workbench osapi calls -- defined in osApi.h
  *
- *   Both 1 and 2 classes of functions provide Thread Management, Thread
- *   Synchronization, Mutual Exclusion and  Timer primitives. Namely,
+ *   Both 1 and 2 classes of functions provide Thread Management, Thread 
+ *   Synchronization, Mutual Exclusion and  Timer primitives. Namely, 
  *   creation and deletion functions as well as the standard "wait" and
- *   "exit". Additionally, a couple of utility functions which enable to
+ *   "exit". Additionally, a couple of utility functions which enable to 
  *   pause the execution of a thread are also provided.
  *
  *   The 3rd class provides a  slew of other OSAPI functions to handle
@@ -80,7 +80,7 @@
  *             ix_ossl_thread_kill
  *             ix_ossl_thread_set_priority
  *             ix_ossl_thread__delay
- *
+ * 
  *   OSSL Semaphore APIs:
  *             The OSSL semaphore functions that allow for initialization,
  *             posting, waiting and deletion of semaphores.
@@ -101,36 +101,36 @@
  *             ix_ossl_mutex_unlock
  *
  *   OSSL Timer APIs:
- *             The timer APIs provide sleep and get time functions.
+ *     	       The timer APIs provide sleep and get time functions.
  *
  *             ix_ossl_sleep
  *             ix_ossl_sleep_tick
  *             ix_ossl_time_get
- *
+ * 
  *   OSAPIs for Transactor/WorkBench:
- *             These OSAPI functions are used for transator OS calls.
- *             They are defined in osApi.h.
+ *             These OSAPI functions are used for transator OS calls. 
+ *             They are defined in osApi.h. 
  *
- *             Sem_Init
- *             Sem_Destroy
- *             Sem_Wait
- *             Sem_Wait
- *             Thread_Create
- *             Thread_Cancel
- *             Thread_SetPriority
- *             delayMs
- *             delayTick
- *
+ *             Sem_Init 			
+ *             Sem_Destroy 		
+ *             Sem_Wait 			
+ *             Sem_Wait			
+ *             Thread_Create		
+ *             Thread_Cancel 		
+ *             Thread_SetPriority 		
+ *             delayMs 			
+ *             delayTick			
+ *             
  *
  *
  **********************************************************************
- *
+ *      
  *
  * = AUTHOR
  *      Intel Corporation
  *
  * = ACKNOWLEDGEMENTS
- *
+ *      
  *
  * = CREATION TIME
  *      1/8/2002 1:53:42 PM
@@ -138,7 +138,7 @@
  * = CHANGE HISTORY
  *   02/22/2002 : Renamed osapi.h os_api.h
  *                Moved OS header file includes from OSSL.h to os_api.h
- *                Moved OS specific datatypes to os_api.h
+ *                Moved OS specific datatypes to os_api.h 
  *                Modified data types, macros and functions as per
  *                'C' coding guidelines.
  *
@@ -152,7 +152,7 @@
 #endif /* __doxygen_hide */
 
 #include "IxOsalBackward.h"
-
+ 
 #endif /* _IX_OSSL_H */
 
 /**

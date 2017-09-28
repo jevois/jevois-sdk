@@ -4,9 +4,9 @@
 #ifdef __KERNEL__
 
 /*
- *  Access to VGA videoram
+ *	Access to VGA videoram
  *
- *  (c) 1998 Martin Mares <mj@ucw.cz>
+ *	(c) 1998 Martin Mares <mj@ucw.cz>
  */
 
 
@@ -23,18 +23,18 @@
  *  <linux/vt_buffer.h> has already done the right job for us.
  */
 
-static inline void scr_writew (u16 val, volatile u16 * addr)
+static inline void scr_writew(u16 val, volatile u16 *addr)
 {
-  st_le16 (addr, val);
+    st_le16(addr, val);
 }
 
-static inline u16 scr_readw (volatile const u16 * addr)
+static inline u16 scr_readw(volatile const u16 *addr)
 {
-  return ld_le16 (addr);
+    return ld_le16(addr);
 }
 
 #define VT_BUF_HAVE_MEMCPYW
-#define scr_memcpyw memcpy
+#define scr_memcpyw	memcpy
 
 #endif /* !CONFIG_VGA_CONSOLE && !CONFIG_MDA_CONSOLE */
 
@@ -49,5 +49,5 @@ extern unsigned long vgacon_remap_base;
 #define vga_readb(x) (*(x))
 #define vga_writeb(x,y) (*(y) = (x))
 
-#endif  /* __KERNEL__ */
-#endif  /* _ASM_POWERPC_VGA_H_ */
+#endif	/* __KERNEL__ */
+#endif	/* _ASM_POWERPC_VGA_H_ */

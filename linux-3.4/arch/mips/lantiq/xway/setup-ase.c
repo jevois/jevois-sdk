@@ -11,9 +11,9 @@
 #include "../prom.h"
 #include "devices.h"
 
-void __init ltq_soc_setup (void)
+void __init ltq_soc_setup(void)
 {
-  ltq_register_ase_asc();
-  ltq_register_gpio();
-  ltq_register_wdt();
+	ltq_register_ase_asc();
+	ltq_register_gpio();
+	ltq_register_wdt();
 }

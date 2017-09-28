@@ -23,26 +23,26 @@
 #include "usbip_common.h"
 
 struct usbip_host_driver {
-  int ndevs;
-  struct sysfs_driver * sysfs_driver;
-  /* list of exported device */
-  struct dlist * edev_list;
+	int ndevs;
+	struct sysfs_driver *sysfs_driver;
+	/* list of exported device */
+	struct dlist *edev_list;
 };
 
 struct usbip_exported_device {
-  struct sysfs_device * sudev;
-  int32_t status;
-  struct usbip_usb_device udev;
-  struct usbip_usb_interface uinf[];
+	struct sysfs_device *sudev;
+	int32_t status;
+	struct usbip_usb_device udev;
+	struct usbip_usb_interface uinf[];
 };
 
-extern struct usbip_host_driver * host_driver;
+extern struct usbip_host_driver *host_driver;
 
-int usbip_host_driver_open (void);
-void usbip_host_driver_close (void);
+int usbip_host_driver_open(void);
+void usbip_host_driver_close(void);
 
-int usbip_host_refresh_device_list (void);
-int usbip_host_export_device (struct usbip_exported_device * edev, int sockfd);
-struct usbip_exported_device * usbip_host_get_device (int num);
+int usbip_host_refresh_device_list(void);
+int usbip_host_export_device(struct usbip_exported_device *edev, int sockfd);
+struct usbip_exported_device *usbip_host_get_device(int num);
 
 #endif /* __USBIP_HOST_DRIVER_H */

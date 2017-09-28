@@ -31,64 +31,64 @@
 
 /* sysctl tunables... */
 struct files_stat_struct files_stat = {
-  .max_files = NR_FILE
+	.max_files = NR_FILE
 };
 
-DECLARE_LGLOCK (files_lglock);
-DEFINE_LGLOCK (files_lglock);
+DECLARE_LGLOCK(files_lglock);
+DEFINE_LGLOCK(files_lglock);
 
 /* SLAB cache for file structures */
-static struct kmem_cache * filp_cachep __read_mostly;
+static struct kmem_cache *filp_cachep __read_mostly;
 
 static struct percpu_counter nr_files __cacheline_aligned_in_smp;
 
-static inline void file_free_rcu (struct rcu_head * head)
+static inline void file_free_rcu(struct rcu_head *head)
 {
-  struct file * f = container_of (head, struct file, f_u.fu_rcuhead);
-  
-  put_cred (f->f_cred);
-  kmem_cache_free (filp_cachep, f);
+	struct file *f = container_of(head, struct file, f_u.fu_rcuhead);
+
+	put_cred(f->f_cred);
+	kmem_cache_free(filp_cachep, f);
 }
 
-static inline void file_free (struct file * f)
+static inline void file_free(struct file *f)
 {
-  percpu_counter_dec (&nr_files);
-  file_check_state (f);
-  call_rcu (&f->f_u.fu_rcuhead, file_free_rcu);
+	percpu_counter_dec(&nr_files);
+	file_check_state(f);
+	call_rcu(&f->f_u.fu_rcuhead, file_free_rcu);
 }
 
 /*
  * Return the total number of open files in the system
  */
-static long get_nr_files (void)
+static long get_nr_files(void)
 {
-  return percpu_counter_read_positive (&nr_files);
+	return percpu_counter_read_positive(&nr_files);
 }
 
 /*
  * Return the maximum number of open files in the system
  */
-unsigned long get_max_files (void)
+unsigned long get_max_files(void)
 {
-  return files_stat.max_files;
+	return files_stat.max_files;
 }
-EXPORT_SYMBOL_GPL (get_max_files);
+EXPORT_SYMBOL_GPL(get_max_files);
 
 /*
  * Handle nr_files sysctl
  */
 #if defined(CONFIG_SYSCTL) && defined(CONFIG_PROC_FS)
-int proc_nr_files (ctl_table * table, int write,
-                   void __user * buffer, size_t * lenp, loff_t * ppos)
+int proc_nr_files(ctl_table *table, int write,
+                     void __user *buffer, size_t *lenp, loff_t *ppos)
 {
-  files_stat.nr_files = get_nr_files();
-  return proc_doulongvec_minmax (table, write, buffer, lenp, ppos);
+	files_stat.nr_files = get_nr_files();
+	return proc_doulongvec_minmax(table, write, buffer, lenp, ppos);
 }
 #else
-int proc_nr_files (ctl_table * table, int write,
-                   void __user * buffer, size_t * lenp, loff_t * ppos)
+int proc_nr_files(ctl_table *table, int write,
+                     void __user *buffer, size_t *lenp, loff_t *ppos)
 {
-  return -ENOSYS;
+	return -ENOSYS;
 }
 #endif
 
@@ -102,53 +102,53 @@ int proc_nr_files (ctl_table * table, int write,
  * done, you will imbalance int the mount's writer count
  * and a warning at __fput() time.
  */
-struct file * get_empty_filp (void)
+struct file *get_empty_filp(void)
 {
-  const struct cred * cred = current_cred();
-  static long old_max;
-  struct file * f;
-  
-  /*
-   * Privileged users can go above max_files
-   */
-  if (get_nr_files() >= files_stat.max_files && !capable (CAP_SYS_ADMIN) ) {
-    /*
-     * percpu_counters are inaccurate.  Do an expensive check before
-     * we go and fail.
-     */
-    if (percpu_counter_sum_positive (&nr_files) >= files_stat.max_files)
-    { goto over; }
-  }
-  
-  f = kmem_cache_zalloc (filp_cachep, GFP_KERNEL);
-  if (f == NULL)
-  { goto fail; }
-  
-  percpu_counter_inc (&nr_files);
-  f->f_cred = get_cred (cred);
-  if (security_file_alloc (f) )
-  { goto fail_sec; }
-  
-  INIT_LIST_HEAD (&f->f_u.fu_list);
-  atomic_long_set (&f->f_count, 1);
-  rwlock_init (&f->f_owner.lock);
-  spin_lock_init (&f->f_lock);
-  eventpoll_init_file (f);
-  /* f->f_version: 0 */
-  return f;
-  
+	const struct cred *cred = current_cred();
+	static long old_max;
+	struct file * f;
+
+	/*
+	 * Privileged users can go above max_files
+	 */
+	if (get_nr_files() >= files_stat.max_files && !capable(CAP_SYS_ADMIN)) {
+		/*
+		 * percpu_counters are inaccurate.  Do an expensive check before
+		 * we go and fail.
+		 */
+		if (percpu_counter_sum_positive(&nr_files) >= files_stat.max_files)
+			goto over;
+	}
+
+	f = kmem_cache_zalloc(filp_cachep, GFP_KERNEL);
+	if (f == NULL)
+		goto fail;
+
+	percpu_counter_inc(&nr_files);
+	f->f_cred = get_cred(cred);
+	if (security_file_alloc(f))
+		goto fail_sec;
+
+	INIT_LIST_HEAD(&f->f_u.fu_list);
+	atomic_long_set(&f->f_count, 1);
+	rwlock_init(&f->f_owner.lock);
+	spin_lock_init(&f->f_lock);
+	eventpoll_init_file(f);
+	/* f->f_version: 0 */
+	return f;
+
 over:
-  /* Ran out of filps - report that */
-  if (get_nr_files() > old_max) {
-    pr_info ("VFS: file-max limit %lu reached\n", get_max_files() );
-    old_max = get_nr_files();
-  }
-  goto fail;
-  
+	/* Ran out of filps - report that */
+	if (get_nr_files() > old_max) {
+		pr_info("VFS: file-max limit %lu reached\n", get_max_files());
+		old_max = get_nr_files();
+	}
+	goto fail;
+
 fail_sec:
-  file_free (f);
+	file_free(f);
 fail:
-  return NULL;
+	return NULL;
 }
 
 /**
@@ -166,35 +166,35 @@ fail:
  * If all the callers of init_file() are eliminated, its
  * code should be moved into this function.
  */
-struct file * alloc_file (struct path * path, fmode_t mode,
-                          const struct file_operations * fop)
+struct file *alloc_file(struct path *path, fmode_t mode,
+		const struct file_operations *fop)
 {
-  struct file * file;
-  
-  file = get_empty_filp();
-  if (!file)
-  { return NULL; }
-  
-  file->f_path = *path;
-  file->f_mapping = path->dentry->d_inode->i_mapping;
-  file->f_mode = mode;
-  file->f_op = fop;
-  
-  /*
-   * These mounts don't really matter in practice
-   * for r/o bind mounts.  They aren't userspace-
-   * visible.  We do this for consistency, and so
-   * that we can do debugging checks at __fput()
-   */
-  if ( (mode & FMODE_WRITE) && !special_file (path->dentry->d_inode->i_mode) ) {
-    file_take_write (file);
-    WARN_ON (mnt_clone_write (path->mnt) );
-  }
-  if ( (mode & (FMODE_READ | FMODE_WRITE) ) == FMODE_READ)
-  { i_readcount_inc (path->dentry->d_inode); }
-  return file;
+	struct file *file;
+
+	file = get_empty_filp();
+	if (!file)
+		return NULL;
+
+	file->f_path = *path;
+	file->f_mapping = path->dentry->d_inode->i_mapping;
+	file->f_mode = mode;
+	file->f_op = fop;
+
+	/*
+	 * These mounts don't really matter in practice
+	 * for r/o bind mounts.  They aren't userspace-
+	 * visible.  We do this for consistency, and so
+	 * that we can do debugging checks at __fput()
+	 */
+	if ((mode & FMODE_WRITE) && !special_file(path->dentry->d_inode->i_mode)) {
+		file_take_write(file);
+		WARN_ON(mnt_clone_write(path->mnt));
+	}
+	if ((mode & (FMODE_READ | FMODE_WRITE)) == FMODE_READ)
+		i_readcount_inc(path->dentry->d_inode);
+	return file;
 }
-EXPORT_SYMBOL (alloc_file);
+EXPORT_SYMBOL(alloc_file);
 
 /**
  * drop_file_write_access - give up ability to write to a file
@@ -204,112 +204,112 @@ EXPORT_SYMBOL (alloc_file);
  * to write to @file, along with access to write through
  * its vfsmount.
  */
-static void drop_file_write_access (struct file * file)
+static void drop_file_write_access(struct file *file)
 {
-  struct vfsmount * mnt = file->f_path.mnt;
-  struct dentry * dentry = file->f_path.dentry;
-  struct inode * inode = dentry->d_inode;
-  
-  put_write_access (inode);
-  
-  if (special_file (inode->i_mode) )
-  { return; }
-  if (file_check_writeable (file) != 0)
-  { return; }
-  mnt_drop_write (mnt);
-  file_release_write (file);
+	struct vfsmount *mnt = file->f_path.mnt;
+	struct dentry *dentry = file->f_path.dentry;
+	struct inode *inode = dentry->d_inode;
+
+	put_write_access(inode);
+
+	if (special_file(inode->i_mode))
+		return;
+	if (file_check_writeable(file) != 0)
+		return;
+	mnt_drop_write(mnt);
+	file_release_write(file);
 }
 
 /* the real guts of fput() - releasing the last reference to file
  */
-static void __fput (struct file * file)
+static void __fput(struct file *file)
 {
-  struct dentry * dentry = file->f_path.dentry;
-  struct vfsmount * mnt = file->f_path.mnt;
-  struct inode * inode = dentry->d_inode;
-  
-  might_sleep();
-  
-  fsnotify_close (file);
-  /*
-   * The function eventpoll_release() should be the first called
-   * in the file cleanup chain.
-   */
-  eventpoll_release (file);
-  locks_remove_flock (file);
-  
-  if (unlikely (file->f_flags & FASYNC) ) {
-    if (file->f_op && file->f_op->fasync)
-    { file->f_op->fasync (-1, file, 0); }
-  }
-  if (file->f_op && file->f_op->release)
-  { file->f_op->release (inode, file); }
-  security_file_free (file);
-  ima_file_free (file);
-  if (unlikely (S_ISCHR (inode->i_mode) && inode->i_cdev != NULL &&
-                ! (file->f_mode & FMODE_PATH) ) ) {
-    cdev_put (inode->i_cdev);
-  }
-  fops_put (file->f_op);
-  put_pid (file->f_owner.pid);
-  file_sb_list_del (file);
-  if ( (file->f_mode & (FMODE_READ | FMODE_WRITE) ) == FMODE_READ)
-  { i_readcount_dec (inode); }
-  if (file->f_mode & FMODE_WRITE)
-  { drop_file_write_access (file); }
-  file->f_path.dentry = NULL;
-  file->f_path.mnt = NULL;
-  file_free (file);
-  dput (dentry);
-  mntput (mnt);
+	struct dentry *dentry = file->f_path.dentry;
+	struct vfsmount *mnt = file->f_path.mnt;
+	struct inode *inode = dentry->d_inode;
+
+	might_sleep();
+
+	fsnotify_close(file);
+	/*
+	 * The function eventpoll_release() should be the first called
+	 * in the file cleanup chain.
+	 */
+	eventpoll_release(file);
+	locks_remove_flock(file);
+
+	if (unlikely(file->f_flags & FASYNC)) {
+		if (file->f_op && file->f_op->fasync)
+			file->f_op->fasync(-1, file, 0);
+	}
+	if (file->f_op && file->f_op->release)
+		file->f_op->release(inode, file);
+	security_file_free(file);
+	ima_file_free(file);
+	if (unlikely(S_ISCHR(inode->i_mode) && inode->i_cdev != NULL &&
+		     !(file->f_mode & FMODE_PATH))) {
+		cdev_put(inode->i_cdev);
+	}
+	fops_put(file->f_op);
+	put_pid(file->f_owner.pid);
+	file_sb_list_del(file);
+	if ((file->f_mode & (FMODE_READ | FMODE_WRITE)) == FMODE_READ)
+		i_readcount_dec(inode);
+	if (file->f_mode & FMODE_WRITE)
+		drop_file_write_access(file);
+	file->f_path.dentry = NULL;
+	file->f_path.mnt = NULL;
+	file_free(file);
+	dput(dentry);
+	mntput(mnt);
 }
 
-void fput (struct file * file)
+void fput(struct file *file)
 {
-  if (atomic_long_dec_and_test (&file->f_count) )
-  { __fput (file); }
+	if (atomic_long_dec_and_test(&file->f_count))
+		__fput(file);
 }
 
-EXPORT_SYMBOL (fput);
+EXPORT_SYMBOL(fput);
 
-struct file * fget (unsigned int fd)
+struct file *fget(unsigned int fd)
 {
-  struct file * file;
-  struct files_struct * files = current->files;
-  
-  rcu_read_lock();
-  file = fcheck_files (files, fd);
-  if (file) {
-    /* File object ref couldn't be taken */
-    if (file->f_mode & FMODE_PATH ||
-        !atomic_long_inc_not_zero (&file->f_count) )
-    { file = NULL; }
-  }
-  rcu_read_unlock();
-  
-  return file;
+	struct file *file;
+	struct files_struct *files = current->files;
+
+	rcu_read_lock();
+	file = fcheck_files(files, fd);
+	if (file) {
+		/* File object ref couldn't be taken */
+		if (file->f_mode & FMODE_PATH ||
+		    !atomic_long_inc_not_zero(&file->f_count))
+			file = NULL;
+	}
+	rcu_read_unlock();
+
+	return file;
 }
 
-EXPORT_SYMBOL (fget);
+EXPORT_SYMBOL(fget);
 
-struct file * fget_raw (unsigned int fd)
+struct file *fget_raw(unsigned int fd)
 {
-  struct file * file;
-  struct files_struct * files = current->files;
-  
-  rcu_read_lock();
-  file = fcheck_files (files, fd);
-  if (file) {
-    /* File object ref couldn't be taken */
-    if (!atomic_long_inc_not_zero (&file->f_count) )
-    { file = NULL; }
-  }
-  rcu_read_unlock();
-  
-  return file;
+	struct file *file;
+	struct files_struct *files = current->files;
+
+	rcu_read_lock();
+	file = fcheck_files(files, fd);
+	if (file) {
+		/* File object ref couldn't be taken */
+		if (!atomic_long_inc_not_zero(&file->f_count))
+			file = NULL;
+	}
+	rcu_read_unlock();
+
+	return file;
 }
 
-EXPORT_SYMBOL (fget_raw);
+EXPORT_SYMBOL(fget_raw);
 
 /*
  * Lightweight file lookup - no refcnt increment if fd table isn't shared.
@@ -327,90 +327,88 @@ EXPORT_SYMBOL (fget_raw);
  * The fput_needed flag returned by fget_light should be passed to the
  * corresponding fput_light.
  */
-struct file * fget_light (unsigned int fd, int * fput_needed)
+struct file *fget_light(unsigned int fd, int *fput_needed)
 {
-  struct file * file;
-  struct files_struct * files = current->files;
-  
-  *fput_needed = 0;
-  if (atomic_read (&files->count) == 1) {
-    file = fcheck_files (files, fd);
-    if (file && (file->f_mode & FMODE_PATH) )
-    { file = NULL; }
-  }
-  else {
-    rcu_read_lock();
-    file = fcheck_files (files, fd);
-    if (file) {
-      if (! (file->f_mode & FMODE_PATH) &&
-          atomic_long_inc_not_zero (&file->f_count) )
-      { *fput_needed = 1; }
-      else
-        /* Didn't get the reference, someone's freed */
-      { file = NULL; }
-    }
-    rcu_read_unlock();
-  }
-  
-  return file;
+	struct file *file;
+	struct files_struct *files = current->files;
+
+	*fput_needed = 0;
+	if (atomic_read(&files->count) == 1) {
+		file = fcheck_files(files, fd);
+		if (file && (file->f_mode & FMODE_PATH))
+			file = NULL;
+	} else {
+		rcu_read_lock();
+		file = fcheck_files(files, fd);
+		if (file) {
+			if (!(file->f_mode & FMODE_PATH) &&
+			    atomic_long_inc_not_zero(&file->f_count))
+				*fput_needed = 1;
+			else
+				/* Didn't get the reference, someone's freed */
+				file = NULL;
+		}
+		rcu_read_unlock();
+	}
+
+	return file;
 }
 
-struct file * fget_raw_light (unsigned int fd, int * fput_needed)
+struct file *fget_raw_light(unsigned int fd, int *fput_needed)
 {
-  struct file * file;
-  struct files_struct * files = current->files;
-  
-  *fput_needed = 0;
-  if (atomic_read (&files->count) == 1) {
-    file = fcheck_files (files, fd);
-  }
-  else {
-    rcu_read_lock();
-    file = fcheck_files (files, fd);
-    if (file) {
-      if (atomic_long_inc_not_zero (&file->f_count) )
-      { *fput_needed = 1; }
-      else
-        /* Didn't get the reference, someone's freed */
-      { file = NULL; }
-    }
-    rcu_read_unlock();
-  }
-  
-  return file;
+	struct file *file;
+	struct files_struct *files = current->files;
+
+	*fput_needed = 0;
+	if (atomic_read(&files->count) == 1) {
+		file = fcheck_files(files, fd);
+	} else {
+		rcu_read_lock();
+		file = fcheck_files(files, fd);
+		if (file) {
+			if (atomic_long_inc_not_zero(&file->f_count))
+				*fput_needed = 1;
+			else
+				/* Didn't get the reference, someone's freed */
+				file = NULL;
+		}
+		rcu_read_unlock();
+	}
+
+	return file;
 }
 
-void put_filp (struct file * file)
+void put_filp(struct file *file)
 {
-  if (atomic_long_dec_and_test (&file->f_count) ) {
-    security_file_free (file);
-    file_sb_list_del (file);
-    file_free (file);
-  }
+	if (atomic_long_dec_and_test(&file->f_count)) {
+		security_file_free(file);
+		file_sb_list_del(file);
+		file_free(file);
+	}
 }
 
-static inline int file_list_cpu (struct file * file)
+static inline int file_list_cpu(struct file *file)
 {
-  #ifdef CONFIG_SMP
-  return file->f_sb_list_cpu;
-  #else
-  return smp_processor_id();
-  #endif
+#ifdef CONFIG_SMP
+	return file->f_sb_list_cpu;
+#else
+	return smp_processor_id();
+#endif
 }
 
 /* helper for file_sb_list_add to reduce ifdefs */
-static inline void __file_sb_list_add (struct file * file, struct super_block * sb)
+static inline void __file_sb_list_add(struct file *file, struct super_block *sb)
 {
-  struct list_head * list;
-  #ifdef CONFIG_SMP
-  int cpu;
-  cpu = smp_processor_id();
-  file->f_sb_list_cpu = cpu;
-  list = per_cpu_ptr (sb->s_files, cpu);
-  #else
-  list = &sb->s_files;
-  #endif
-  list_add (&file->f_u.fu_list, list);
+	struct list_head *list;
+#ifdef CONFIG_SMP
+	int cpu;
+	cpu = smp_processor_id();
+	file->f_sb_list_cpu = cpu;
+	list = per_cpu_ptr(sb->s_files, cpu);
+#else
+	list = &sb->s_files;
+#endif
+	list_add(&file->f_u.fu_list, list);
 }
 
 /**
@@ -421,11 +419,11 @@ static inline void __file_sb_list_add (struct file * file, struct super_block * 
  * Use this function to associate a file with the superblock of the inode it
  * refers to.
  */
-void file_sb_list_add (struct file * file, struct super_block * sb)
+void file_sb_list_add(struct file *file, struct super_block *sb)
 {
-  lg_local_lock (files_lglock);
-  __file_sb_list_add (file, sb);
-  lg_local_unlock (files_lglock);
+	lg_local_lock(files_lglock);
+	__file_sb_list_add(file, sb);
+	lg_local_unlock(files_lglock);
 }
 
 /**
@@ -435,13 +433,13 @@ void file_sb_list_add (struct file * file, struct super_block * sb)
  *
  * Use this function to remove a file from its superblock.
  */
-void file_sb_list_del (struct file * file)
+void file_sb_list_del(struct file *file)
 {
-  if (!list_empty (&file->f_u.fu_list) ) {
-    lg_local_lock_cpu (files_lglock, file_list_cpu (file) );
-    list_del_init (&file->f_u.fu_list);
-    lg_local_unlock_cpu (files_lglock, file_list_cpu (file) );
-  }
+	if (!list_empty(&file->f_u.fu_list)) {
+		lg_local_lock_cpu(files_lglock, file_list_cpu(file));
+		list_del_init(&file->f_u.fu_list);
+		lg_local_unlock_cpu(files_lglock, file_list_cpu(file));
+	}
 }
 
 #ifdef CONFIG_SMP
@@ -450,83 +448,83 @@ void file_sb_list_del (struct file * file)
  * These macros iterate all files on all CPUs for a given superblock.
  * files_lglock must be held globally.
  */
-#define do_file_list_for_each_entry(__sb, __file)   \
-  {               \
-    int i;              \
-    for_each_possible_cpu(i) {        \
-      struct list_head *list;       \
-      list = per_cpu_ptr((__sb)->s_files, i);   \
-      list_for_each_entry((__file), list, f_u.fu_list)
+#define do_file_list_for_each_entry(__sb, __file)		\
+{								\
+	int i;							\
+	for_each_possible_cpu(i) {				\
+		struct list_head *list;				\
+		list = per_cpu_ptr((__sb)->s_files, i);		\
+		list_for_each_entry((__file), list, f_u.fu_list)
 
-#define while_file_list_for_each_entry        \
-  }             \
-  }
+#define while_file_list_for_each_entry				\
+	}							\
+}
 
 #else
 
-#define do_file_list_for_each_entry(__sb, __file)   \
-  {               \
-    struct list_head *list;         \
-    list = &(sb)->s_files;          \
-    list_for_each_entry((__file), list, f_u.fu_list)
+#define do_file_list_for_each_entry(__sb, __file)		\
+{								\
+	struct list_head *list;					\
+	list = &(sb)->s_files;					\
+	list_for_each_entry((__file), list, f_u.fu_list)
 
-#define while_file_list_for_each_entry        \
-  }
+#define while_file_list_for_each_entry				\
+}
 
 #endif
 
 /**
- *  mark_files_ro - mark all files read-only
- *  @sb: superblock in question
+ *	mark_files_ro - mark all files read-only
+ *	@sb: superblock in question
  *
- *  All files are marked read-only.  We don't care about pending
- *  delete files so this should be used in 'force' mode only.
+ *	All files are marked read-only.  We don't care about pending
+ *	delete files so this should be used in 'force' mode only.
  */
-void mark_files_ro (struct super_block * sb)
+void mark_files_ro(struct super_block *sb)
 {
-  struct file * f;
-  
+	struct file *f;
+
 retry:
-  lg_global_lock (files_lglock);
-  do_file_list_for_each_entry (sb, f) {
-    struct vfsmount * mnt;
-    if (!S_ISREG (f->f_path.dentry->d_inode->i_mode) )
-    { continue; }
-    if (!file_count (f) )
-    { continue; }
-    if (! (f->f_mode & FMODE_WRITE) )
-    { continue; }
-    spin_lock (&f->f_lock);
-    f->f_mode &= ~FMODE_WRITE;
-    spin_unlock (&f->f_lock);
-    if (file_check_writeable (f) != 0)
-    { continue; }
-    file_release_write (f);
-    mnt = mntget (f->f_path.mnt);
-    /* This can sleep, so we can't hold the spinlock. */
-    lg_global_unlock (files_lglock);
-    mnt_drop_write (mnt);
-    mntput (mnt);
-    goto retry;
-  } while_file_list_for_each_entry;
-  lg_global_unlock (files_lglock);
+	lg_global_lock(files_lglock);
+	do_file_list_for_each_entry(sb, f) {
+		struct vfsmount *mnt;
+		if (!S_ISREG(f->f_path.dentry->d_inode->i_mode))
+		       continue;
+		if (!file_count(f))
+			continue;
+		if (!(f->f_mode & FMODE_WRITE))
+			continue;
+		spin_lock(&f->f_lock);
+		f->f_mode &= ~FMODE_WRITE;
+		spin_unlock(&f->f_lock);
+		if (file_check_writeable(f) != 0)
+			continue;
+		file_release_write(f);
+		mnt = mntget(f->f_path.mnt);
+		/* This can sleep, so we can't hold the spinlock. */
+		lg_global_unlock(files_lglock);
+		mnt_drop_write(mnt);
+		mntput(mnt);
+		goto retry;
+	} while_file_list_for_each_entry;
+	lg_global_unlock(files_lglock);
 }
 
-void __init files_init (unsigned long mempages)
-{
-  unsigned long n;
-  
-  filp_cachep = kmem_cache_create ("filp", sizeof (struct file), 0,
-                                   SLAB_HWCACHE_ALIGN | SLAB_PANIC, NULL);
-                                   
-  /*
-   * One file with associated inode and dcache is very roughly 1K.
-   * Per default don't use more than 10% of our memory for files.
-   */
-  
-  n = (mempages * (PAGE_SIZE / 1024) ) / 10;
-  files_stat.max_files = max_t (unsigned long, n, NR_FILE);
-  files_defer_init();
-  lg_lock_init (files_lglock);
-  percpu_counter_init (&nr_files, 0);
-}
+void __init files_init(unsigned long mempages)
+{ 
+	unsigned long n;
+
+	filp_cachep = kmem_cache_create("filp", sizeof(struct file), 0,
+			SLAB_HWCACHE_ALIGN | SLAB_PANIC, NULL);
+
+	/*
+	 * One file with associated inode and dcache is very roughly 1K.
+	 * Per default don't use more than 10% of our memory for files. 
+	 */ 
+
+	n = (mempages * (PAGE_SIZE / 1024)) / 10;
+	files_stat.max_files = max_t(unsigned long, n, NR_FILE);
+	files_defer_init();
+	lg_lock_init(files_lglock);
+	percpu_counter_init(&nr_files, 0);
+} 

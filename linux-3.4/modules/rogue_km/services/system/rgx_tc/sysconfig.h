@@ -52,267 +52,267 @@ static PVRSRV_SYSTEM_CONFIG gsSysConfig;
 
 static RGX_TIMING_INFORMATION gsRGXTimingInfo =
 {
-  /* ui32CoreClockSpeed */
-  0,  /* Initialize to 0, real value will be set in PCIInitDev() */
-  /* bEnableActivePM */
-  IMG_FALSE,
-  /* bEnableRDPowIsland */
-  IMG_FALSE,
-  /* ui32ActivePMLatencyms */
-  SYS_RGX_ACTIVE_POWER_LATENCY_MS
+	/* ui32CoreClockSpeed */
+	0,	/* Initialize to 0, real value will be set in PCIInitDev() */
+	/* bEnableActivePM */ 
+	IMG_FALSE,
+	/* bEnableRDPowIsland */ 
+	IMG_FALSE,
+	/* ui32ActivePMLatencyms */
+	SYS_RGX_ACTIVE_POWER_LATENCY_MS
 };
 
 static RGX_DATA gsRGXData =
 {
-  /* psRGXTimingInfo */
-  &gsRGXTimingInfo
+	/* psRGXTimingInfo */
+	&gsRGXTimingInfo
 };
-static PVRSRV_DEVICE_CONFIG gsDevices[] =
+static PVRSRV_DEVICE_CONFIG gsDevices[] = 
 {
-  {
-    /* uiFlags */
-    #if (TC_MEMORY_CONFIG != TC_MEMORY_DIRECT_MAPPED)
-    0,
-    #else
-    PVRSRV_DEVICE_CONFIG_LMA_USE_CPU_ADDR,
-    #endif
-    /* pszName */
-    "RGX",
-    /* eDeviceType */
-    PVRSRV_DEVICE_TYPE_RGX,
-    
-    /* Device setup information */
-    /* sRegsCpuPBase.uiAddr */
-    { 0 },
-    /* ui32RegsSize */
-    0,
-    
-    /* ui32IRQ */
-    0,
-    /* bIRQIsShared */
-    IMG_TRUE,
-    
-    /* hDevData */
-    &gsRGXData,
-    /* hSysData */
-    IMG_NULL,
-    
-    #if (TC_MEMORY_CONFIG == TC_MEMORY_HYBRID)
-    /*
-     *  PhysHeapIDs.
-     *  NB. Where allowing both LMA
-     *      and a UMA physical heaps, be
-     *      sure to provide the ID of
-     *      the LMA Heap first and that
-     *      of the UMA heap second.
-     */
-    { 1, 0 },
-    #else
-    /* usable ui32PhysHeapIDs */
-    { 0, 0 },
-    #endif
-    /* pfnPrePowerState */
-    IMG_NULL,
-    /* pfnPostPowerState */
-    IMG_NULL,
-    
-    /* pfnClockFreqGet */
-    IMG_NULL,
-    
-    /* pfnInterruptHandled */
-    IMG_NULL,
-    
-    /* pfnCheckMemAllocSize */
-    SysCheckMemAllocSize,
-    
-    /* eBPDM */
-    RGXFWIF_DM_TA,
-    /* bBPSet */
-    IMG_FALSE
-  }
+	{
+		/* uiFlags */
+#if (TC_MEMORY_CONFIG != TC_MEMORY_DIRECT_MAPPED)
+		0,
+#else
+		PVRSRV_DEVICE_CONFIG_LMA_USE_CPU_ADDR,
+#endif
+		/* pszName */
+		"RGX",
+		/* eDeviceType */
+		PVRSRV_DEVICE_TYPE_RGX,
+
+		/* Device setup information */
+		/* sRegsCpuPBase.uiAddr */
+		{ 0 },
+		/* ui32RegsSize */
+		0,
+
+		/* ui32IRQ */
+		0,
+		/* bIRQIsShared */
+		IMG_TRUE,
+
+		/* hDevData */
+		&gsRGXData,
+		/* hSysData */
+		IMG_NULL,
+
+#if (TC_MEMORY_CONFIG == TC_MEMORY_HYBRID)
+		/*
+		 *  PhysHeapIDs.
+		 *  NB. Where allowing both LMA
+		 *      and a UMA physical heaps, be
+		 *      sure to provide the ID of
+		 *      the LMA Heap first and that
+		 *      of the UMA heap second.
+		 */
+		{ 1, 0 },
+#else
+		/* usable ui32PhysHeapIDs */
+		{ 0, 0 },
+#endif
+		/* pfnPrePowerState */
+		IMG_NULL,
+		/* pfnPostPowerState */
+		IMG_NULL,
+
+		/* pfnClockFreqGet */
+		IMG_NULL,
+
+		/* pfnInterruptHandled */
+		IMG_NULL,
+		
+		/* pfnCheckMemAllocSize */
+		SysCheckMemAllocSize,
+
+		/* eBPDM */
+		RGXFWIF_DM_TA,
+		/* bBPSet */
+		IMG_FALSE
+	}
 };
 
 #if (TC_MEMORY_CONFIG == TC_MEMORY_LOCAL)
-static IMG_VOID TCLocalCpuPAddrToDevPAddr (IMG_HANDLE hPrivData,
-    IMG_DEV_PHYADDR * psDevPAddr,
-    IMG_CPU_PHYADDR * psCpuPAddr);
+static IMG_VOID TCLocalCpuPAddrToDevPAddr(IMG_HANDLE hPrivData,
+					  IMG_DEV_PHYADDR *psDevPAddr,
+					  IMG_CPU_PHYADDR *psCpuPAddr);
 
-static IMG_VOID TCLocalDevPAddrToCpuPAddr (IMG_HANDLE hPrivData,
-    IMG_CPU_PHYADDR * psCpuPAddr,
-    IMG_DEV_PHYADDR * psDevPAddr);
+static IMG_VOID TCLocalDevPAddrToCpuPAddr(IMG_HANDLE hPrivData,
+					  IMG_CPU_PHYADDR *psCpuPAddr,
+					  IMG_DEV_PHYADDR *psDevPAddr);
 #elif (TC_MEMORY_CONFIG == TC_MEMORY_HOST) || (TC_MEMORY_CONFIG == TC_MEMORY_HYBRID) || (TC_MEMORY_CONFIG == TC_MEMORY_DIRECT_MAPPED)
-static IMG_VOID TCSystemCpuPAddrToDevPAddr (IMG_HANDLE hPrivData,
-    IMG_DEV_PHYADDR * psDevPAddr,
-    IMG_CPU_PHYADDR * psCpuPAddr);
+static IMG_VOID TCSystemCpuPAddrToDevPAddr(IMG_HANDLE hPrivData,
+					   IMG_DEV_PHYADDR *psDevPAddr,
+					   IMG_CPU_PHYADDR *psCpuPAddr);
 
-static IMG_VOID TCSystemDevPAddrToCpuPAddr (IMG_HANDLE hPrivData,
-    IMG_CPU_PHYADDR * psCpuPAddr,
-    IMG_DEV_PHYADDR * psDevPAddr);
+static IMG_VOID TCSystemDevPAddrToCpuPAddr(IMG_HANDLE hPrivData,
+					   IMG_CPU_PHYADDR *psCpuPAddr,
+					   IMG_DEV_PHYADDR *psDevPAddr);
 #endif /* (TC_MEMORY_CONFIG == TC_MEMORY_HOST) || (TC_MEMORY_CONFIG == TC_MEMORY_HYBRID) || (TC_MEMORY_CONFIG == TC_MEMORY_DIRECT_MAPPED) */
 
 #if (TC_MEMORY_CONFIG == TC_MEMORY_LOCAL)
 static PHYS_HEAP_FUNCTIONS gsLocalPhysHeapFuncs =
 {
-  /* pfnCpuPAddrToDevPAddr */
-  TCLocalCpuPAddrToDevPAddr,
-  /* pfnDevPAddrToCpuPAddr */
-  TCLocalDevPAddrToCpuPAddr,
+	/* pfnCpuPAddrToDevPAddr */
+	TCLocalCpuPAddrToDevPAddr,
+	/* pfnDevPAddrToCpuPAddr */
+	TCLocalDevPAddrToCpuPAddr,
 };
 
-static PHYS_HEAP_CONFIG gsPhysHeapConfig[] =
+static PHYS_HEAP_CONFIG	gsPhysHeapConfig[] =
 {
-  {
-    /* ui32PhysHeapID */
-    0,
-    /* eType */
-    PHYS_HEAP_TYPE_LMA,
-    /* sStartAddr */
-    { 0 },
-    /* uiSize */
-    0,
-    /* pszPDumpMemspaceName */
-    "LMA",
-    /* psMemFuncs */
-    &gsLocalPhysHeapFuncs,
-    /* hPrivData */
-    (IMG_HANDLE) & gsSysConfig,
-  },
-  #if defined(SUPPORT_DISPLAY_CLASS) || defined(SUPPORT_DRM_DC_MODULE)
-  {
-    /* ui32PhysHeapID */
-    1,
-    /* eType */
-    PHYS_HEAP_TYPE_LMA,
-    /* sStartAddr */
-    { 0 },
-    /* uiSize */
-    0,
-    /* pszPDumpMemspaceName */
-    "LMA",
-    /* psMemFuncs */
-    &gsLocalPhysHeapFuncs,
-    /* hPrivData */
-    (IMG_HANDLE) & gsSysConfig,
-  },
-  #endif
-  #if defined(SUPPORT_ION)
-  {
-    /* ui32PhysHeapID */
-    2,
-    /* eType */
-    PHYS_HEAP_TYPE_LMA,
-    /* sStartAddr */
-    { 0 },
-    /* uiSize */
-    0,
-    /* pszPDumpMemspaceName */
-    "LMA",
-    /* psMemFuncs */
-    &gsLocalPhysHeapFuncs,
-    /* hPrivData */
-    (IMG_HANDLE) & gsSysConfig,
-  },
-  #endif
+	{
+		/* ui32PhysHeapID */
+		0,
+		/* eType */
+		PHYS_HEAP_TYPE_LMA,
+		/* sStartAddr */
+		{ 0 },
+		/* uiSize */
+		 0,
+		/* pszPDumpMemspaceName */
+		"LMA",
+		/* psMemFuncs */
+		&gsLocalPhysHeapFuncs,
+		/* hPrivData */
+		(IMG_HANDLE)&gsSysConfig,
+	},
+#if defined(SUPPORT_DISPLAY_CLASS) || defined(SUPPORT_DRM_DC_MODULE)
+	{
+		/* ui32PhysHeapID */
+		1,
+		/* eType */
+		PHYS_HEAP_TYPE_LMA,
+		/* sStartAddr */
+		{ 0 },
+		/* uiSize */
+		0,
+		/* pszPDumpMemspaceName */
+		"LMA",
+		/* psMemFuncs */
+		&gsLocalPhysHeapFuncs,
+		/* hPrivData */
+		(IMG_HANDLE)&gsSysConfig,
+	},
+#endif
+#if defined(SUPPORT_ION)
+	{
+		/* ui32PhysHeapID */
+		2,
+		/* eType */
+		PHYS_HEAP_TYPE_LMA,
+		/* sStartAddr */
+		{ 0 },
+		/* uiSize */
+		0,
+		/* pszPDumpMemspaceName */
+		"LMA",
+		/* psMemFuncs */
+		&gsLocalPhysHeapFuncs,
+		/* hPrivData */
+		(IMG_HANDLE)&gsSysConfig,
+	},
+#endif
 };
 #elif (TC_MEMORY_CONFIG == TC_MEMORY_HOST)
 static PHYS_HEAP_FUNCTIONS gsSystemPhysHeapFuncs =
 {
-  /* pfnCpuPAddrToDevPAddr */
-  TCSystemCpuPAddrToDevPAddr,
-  /* pfnDevPAddrToCpuPAddr */
-  TCSystemDevPAddrToCpuPAddr,
+	/* pfnCpuPAddrToDevPAddr */
+	TCSystemCpuPAddrToDevPAddr,
+	/* pfnDevPAddrToCpuPAddr */
+	TCSystemDevPAddrToCpuPAddr,
 };
 
-static PHYS_HEAP_CONFIG gsPhysHeapConfig[] =
+static PHYS_HEAP_CONFIG	gsPhysHeapConfig[] =
 {
-  {
-    /* ui32PhysHeapID */
-    0,
-    /* eType */
-    PHYS_HEAP_TYPE_UMA,
-    /* sStartAddr */
-    { 0 },
-    /* uiSize */
-    0,
-    /* pszPDumpMemspaceName */
-    "SYSMEM",
-    /* psMemFuncs */
-    &gsSystemPhysHeapFuncs,
-    /* hPrivData */
-    (IMG_HANDLE) & gsSysConfig,
-  }
+	{
+		/* ui32PhysHeapID */
+		0,
+		/* eType */
+		PHYS_HEAP_TYPE_UMA,
+		/* sStartAddr */
+		{ 0 },
+		/* uiSize */
+		0,
+		/* pszPDumpMemspaceName */
+		"SYSMEM",
+		/* psMemFuncs */
+		&gsSystemPhysHeapFuncs,
+		/* hPrivData */
+		(IMG_HANDLE)&gsSysConfig,
+	}
 };
 #elif (TC_MEMORY_CONFIG == TC_MEMORY_HYBRID)
 static PHYS_HEAP_FUNCTIONS gsHybridPhysHeapFuncs =
 {
-  /* pfnCpuPAddrToDevPAddr */
-  TCSystemCpuPAddrToDevPAddr,
-  /* pfnDevPAddrToCpuPAddr */
-  TCSystemDevPAddrToCpuPAddr,
+	/* pfnCpuPAddrToDevPAddr */
+	TCSystemCpuPAddrToDevPAddr,
+	/* pfnDevPAddrToCpuPAddr */
+	TCSystemDevPAddrToCpuPAddr,
 };
 
-static PHYS_HEAP_CONFIG gsPhysHeapConfig[] =
+static PHYS_HEAP_CONFIG	gsPhysHeapConfig[] =
 {
-  {
-    /* ui32PhysHeapID */
-    0,
-    /* eType */
-    PHYS_HEAP_TYPE_UMA,
-    /* sStartAddr */
-    { 0 },
-    /* uiSize */
-    0,
-    /* pszPDumpMemspaceName */
-    "SYSMEM",
-    /* psMemFuncs */
-    &gsHybridPhysHeapFuncs,
-    /* hPrivData */
-    (IMG_HANDLE) & gsSysConfig,
-  },
-  {
-    /* ui32PhysHeapID */
-    1,
-    /* eType */
-    PHYS_HEAP_TYPE_LMA,
-    /* sStartAddr */
-    { 0 },
-    /* uiSize */
-    0,
-    /* pszPDumpMemspaceName */
-    "LMA",
-    /* psMemFuncs */
-    &gsHybridPhysHeapFuncs,
-    /* hPrivData */
-    (IMG_HANDLE) & gsSysConfig,
-  }
+	{
+		/* ui32PhysHeapID */
+		0,
+		/* eType */
+		PHYS_HEAP_TYPE_UMA,
+		/* sStartAddr */
+		{ 0 },
+		/* uiSize */
+		0,
+		/* pszPDumpMemspaceName */
+		"SYSMEM",
+		/* psMemFuncs */
+		&gsHybridPhysHeapFuncs,
+		/* hPrivData */
+		(IMG_HANDLE)&gsSysConfig,
+	},
+	{
+		/* ui32PhysHeapID */
+		1,
+		/* eType */
+		PHYS_HEAP_TYPE_LMA,
+		/* sStartAddr */
+		{ 0 },
+		/* uiSize */
+		0,
+		/* pszPDumpMemspaceName */
+		"LMA",
+		/* psMemFuncs */
+		&gsHybridPhysHeapFuncs,
+		/* hPrivData */
+		(IMG_HANDLE)&gsSysConfig,
+	}
 };
 #elif (TC_MEMORY_CONFIG == TC_MEMORY_DIRECT_MAPPED)
 static PHYS_HEAP_FUNCTIONS gsDirectMappedPhysHeapFuncs =
 {
-  /* pfnCpuPAddrToDevPAddr */
-  TCSystemCpuPAddrToDevPAddr,
-  /* pfnDevPAddrToCpuPAddr */
-  TCSystemDevPAddrToCpuPAddr,
+	/* pfnCpuPAddrToDevPAddr */
+	TCSystemCpuPAddrToDevPAddr,
+	/* pfnDevPAddrToCpuPAddr */
+	TCSystemDevPAddrToCpuPAddr,
 };
 
-static PHYS_HEAP_CONFIG gsPhysHeapConfig[] =
+static PHYS_HEAP_CONFIG	gsPhysHeapConfig[] =
 {
-  {
-    /* ui32PhysHeapID */
-    0,
-    /* eType */
-    PHYS_HEAP_TYPE_LMA,
-    /* sStartAddr */
-    { 0 },
-    /* uiSize */
-    0,
-    /* pszPDumpMemspaceName */
-    "LMA",
-    /* psMemFuncs */
-    &gsDirectMappedPhysHeapFuncs,
-    /* hPrivData */
-    (IMG_HANDLE) & gsSysConfig,
-  }
+	{
+		/* ui32PhysHeapID */
+		0,
+		/* eType */
+		PHYS_HEAP_TYPE_LMA,
+		/* sStartAddr */
+		{ 0 },
+		/* uiSize */
+		 0,
+		/* pszPDumpMemspaceName */
+		"LMA",
+		/* psMemFuncs */
+		&gsDirectMappedPhysHeapFuncs,
+		/* hPrivData */
+		(IMG_HANDLE)&gsSysConfig,
+	}
 };
 #else
 #error "TC_MEMORY_CONFIG not valid"
@@ -321,42 +321,42 @@ static PHYS_HEAP_CONFIG gsPhysHeapConfig[] =
 /* default BIF tiling heap x-stride configurations. */
 static IMG_UINT32 gauiBIFTilingHeapXStrides[RGXFWIF_NUM_BIF_TILING_CONFIGS] =
 {
-  0, /* BIF tiling heap 1 x-stride */
-  1, /* BIF tiling heap 2 x-stride */
-  2, /* BIF tiling heap 3 x-stride */
-  3  /* BIF tiling heap 4 x-stride */
+	0, /* BIF tiling heap 1 x-stride */
+	1, /* BIF tiling heap 2 x-stride */
+	2, /* BIF tiling heap 3 x-stride */
+	3  /* BIF tiling heap 4 x-stride */
 };
 
 static PVRSRV_SYSTEM_CONFIG gsSysConfig =
 {
-  /* uiSysFlags */
-  0,
-  /* pszSystemName */
-  TC_SYSTEM_NAME,
-  /* uiDeviceCount */
-  (IMG_UINT32) (sizeof (gsDevices) / sizeof (PVRSRV_DEVICE_CONFIG) ),
-  /* pasDevices */
-  &gsDevices[0],
-  
-  /* No power management on no HW system */
-  /* pfnSysPrePowerState */
-  IMG_NULL,
-  /* pfnSysPostPowerState */
-  IMG_NULL,
-  
-  /* no cache snooping */
-  /* eCacheSnoopingMode */
-  PVRSRV_SYSTEM_SNOOP_NONE,
-  
-  /* Physcial memory heaps */
-  /* pasPhysHeaps */
-  &gsPhysHeapConfig[0],
-  /* ui32PhysHeapCount */
-  (IMG_UINT32) (sizeof (gsPhysHeapConfig) / sizeof (PHYS_HEAP_CONFIG) ),
-  
-  /* BIF tiling heap config */
-  &gauiBIFTilingHeapXStrides[0],
-  IMG_ARR_NUM_ELEMS (gauiBIFTilingHeapXStrides),
+	/* uiSysFlags */
+	0,
+	/* pszSystemName */
+	TC_SYSTEM_NAME,
+	/* uiDeviceCount */
+	(IMG_UINT32)(sizeof(gsDevices) / sizeof(PVRSRV_DEVICE_CONFIG)),
+	/* pasDevices */
+	&gsDevices[0],
+
+	/* No power management on no HW system */
+	/* pfnSysPrePowerState */
+	IMG_NULL,
+	/* pfnSysPostPowerState */
+	IMG_NULL,
+
+	/* no cache snooping */
+	/* eCacheSnoopingMode */
+	PVRSRV_SYSTEM_SNOOP_NONE,
+	
+	/* Physcial memory heaps */
+	/* pasPhysHeaps */
+	&gsPhysHeapConfig[0],
+	/* ui32PhysHeapCount */
+	(IMG_UINT32)(sizeof(gsPhysHeapConfig) / sizeof(PHYS_HEAP_CONFIG)),
+
+	/* BIF tiling heap config */
+	&gauiBIFTilingHeapXStrides[0],
+	IMG_ARR_NUM_ELEMS(gauiBIFTilingHeapXStrides),
 };
 
 /*****************************************************************************

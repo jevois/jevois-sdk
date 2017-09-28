@@ -66,30 +66,30 @@
 /* CPU exception context structure in MP shared ram after trap */
 typedef struct mp_xcptcontext_s MP_XCPTC;
 struct mp_xcptcontext_s {
-  dword       sr;
-  dword       cr;
-  dword       epc;
-  dword       vaddr;
-  dword       regs[32];
-  dword       mdlo;
-  dword       mdhi;
-  dword       reseverd;
-  dword       xclass;
+	dword       sr;
+	dword       cr;
+	dword       epc;
+	dword       vaddr;
+	dword       regs[32];
+	dword       mdlo;
+	dword       mdhi;
+	dword       reseverd;
+	dword       xclass;
 };
 /* boot interface structure for PRI */
 struct mp_load {
-  dword     volatile cmd;
-  dword     volatile addr;
-  dword     volatile len;
-  dword     volatile err;
-  dword     volatile live;
-  dword     volatile res1[0x1b];
-  dword     volatile TrapId;    /* has value 0x999999XX on a CPU trap */
-  dword     volatile res2[0x03];
-  MP_XCPTC  volatile xcpt;      /* contains register dump */
-  dword     volatile rest[ ( (0x1020 >> 2) - 6) - 0x1b - 1 - 0x03 - (sizeof (MP_XCPTC) >> 2)];
-  dword     volatile signature;
-  dword data[60000]; /* real interface description */
+	dword     volatile cmd;
+	dword     volatile addr;
+	dword     volatile len;
+	dword     volatile err;
+	dword     volatile live;
+	dword     volatile res1[0x1b];
+	dword     volatile TrapId;    /* has value 0x999999XX on a CPU trap */
+	dword     volatile res2[0x03];
+	MP_XCPTC  volatile xcpt;      /* contains register dump */
+	dword     volatile rest[((0x1020 >> 2) - 6) - 0x1b - 1 - 0x03 - (sizeof(MP_XCPTC) >> 2)];
+	dword     volatile signature;
+	dword data[60000]; /* real interface description */
 };
 /*----------------------------------------------------------------------------*/
 /* SERVER 4BRI (Quattro PCI)                                                  */
@@ -148,7 +148,7 @@ struct mp_load {
 #define CS_BASEREG    0x0018
 #define BOOT_BASEREG  0x001c
 #define GTREGS_BASEREG 0x0024   /*GTRegsBase reg-contain the base addr where*/
-/*the GT64010 internal regs where mapped    */
+				/*the GT64010 internal regs where mapped    */
 /*
  *  GT64010 internal registers
  */

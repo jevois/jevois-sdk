@@ -73,80 +73,80 @@
 
 typedef struct _CMD_MESSAGE
 {
-  BYTE        byData[256];
+    BYTE        byData[256];
 } CMD_MESSAGE, *PCMD_MESSAGE;
 
 typedef struct _CMD_WRITE_MASK
 {
-  BYTE        byData;
-  BYTE        byMask;
+    BYTE        byData;
+    BYTE        byMask;
 } CMD_WRITE_MASK, *PCMD_WRITE_MASK;
 
 typedef struct _CMD_CARD_INIT
 {
-  BYTE        byInitClass;
-  BYTE        bExistSWNetAddr;
-  BYTE        bySWNetAddr[6];
-  BYTE        byShortRetryLimit;
-  BYTE        byLongRetryLimit;
+    BYTE        byInitClass;
+    BYTE        bExistSWNetAddr;
+    BYTE        bySWNetAddr[6];
+    BYTE        byShortRetryLimit;
+    BYTE        byLongRetryLimit;
 } CMD_CARD_INIT, *PCMD_CARD_INIT;
 
 typedef struct _RSP_CARD_INIT
 {
-  BYTE        byStatus;
-  BYTE        byNetAddr[6];
-  BYTE        byRFType;
-  BYTE        byMinChannel;
-  BYTE        byMaxChannel;
+    BYTE        byStatus;
+    BYTE        byNetAddr[6];
+    BYTE        byRFType;
+    BYTE        byMinChannel;
+    BYTE        byMaxChannel;
 } RSP_CARD_INIT, *PRSP_CARD_INIT;
 
 typedef struct _CMD_SET_KEY
 {
-  WORD        wKCTL;
-  BYTE        abyMacAddr[6];
-  BYTE        abyKey[16];
+    WORD        wKCTL;
+    BYTE        abyMacAddr[6];
+    BYTE        abyKey[16];
 } CMD_SET_KEY, *PCMD_SET_KEY;
 
 typedef struct _CMD_CLRKEY_ENTRY
 {
-  BYTE        abyKeyEntry[11];
+    BYTE        abyKeyEntry[11];
 } CMD_CLRKEY_ENTRY, *PCMD_CLRKEY_ENTRY;
 
 typedef struct _CMD_WRITE_MISCFF
 {
-  DWORD       adwMiscFFData[22][4]; 
+    DWORD       adwMiscFFData[22][4]; 
 } CMD_WRITE_MISCFF, *PCMD_WRITE_MISCFF;
 
 typedef struct _CMD_SET_TSFTBTT
 {
-  BYTE        abyTSF_TBTT[8];
+    BYTE        abyTSF_TBTT[8];
 } CMD_SET_TSFTBTT, *PCMD_SET_TSFTBTT;
 
 typedef struct _CMD_SET_SSTIFS
 {
-  BYTE        bySIFS;
-  BYTE        byDIFS;
-  BYTE        byEIFS;
-  BYTE        bySlotTime;
-  BYTE        byCwMax_Min;
-  BYTE        byBBCR10;
+    BYTE        bySIFS;
+    BYTE        byDIFS;
+    BYTE        byEIFS;
+    BYTE        bySlotTime;
+    BYTE        byCwMax_Min;
+    BYTE        byBBCR10;
 } CMD_SET_SSTIFS, *PCMD_SET_SSTIFS;
 
 typedef struct _CMD_CHANGE_BBTYPE
 {
-  BYTE        bySIFS;
-  BYTE        byDIFS;
-  BYTE        byEIFS;
-  BYTE        bySlotTime;
-  BYTE        byCwMax_Min;
-  BYTE        byBBCR10;
-  BYTE        byBB_BBType;   
-  BYTE        byMAC_BBType;
-  DWORD       dwRSPINF_b_1;
-  DWORD       dwRSPINF_b_2;
-  DWORD       dwRSPINF_b_55;
-  DWORD       dwRSPINF_b_11;
-  WORD        wRSPINF_a[9];
+    BYTE        bySIFS;
+    BYTE        byDIFS;
+    BYTE        byEIFS;
+    BYTE        bySlotTime;
+    BYTE        byCwMax_Min;
+    BYTE        byBBCR10;
+    BYTE        byBB_BBType;   
+    BYTE        byMAC_BBType;
+    DWORD       dwRSPINF_b_1;
+    DWORD       dwRSPINF_b_2;
+    DWORD       dwRSPINF_b_55;
+    DWORD       dwRSPINF_b_11;
+    WORD        wRSPINF_a[9];
 } CMD_CHANGE_BBTYPE, *PCMD_CHANGE_BBTYPE;
 
 /*---------------------  Export Macros -------------------------*/

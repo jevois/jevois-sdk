@@ -16,15 +16,15 @@
 #include <mach/hardware.h>
 #include <asm/irq.h>
 
-static inline int gpio_to_irq (unsigned gpio)
+static inline int gpio_to_irq(unsigned gpio)
 {
-  return gpio;
+	return gpio;
 }
 #define gpio_to_irq gpio_to_irq
 
-static inline int irq_to_gpio (unsigned irq)
+static inline int irq_to_gpio(unsigned irq)
 {
-  return irq;
+	return irq;
 }
 
 #endif

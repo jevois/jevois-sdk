@@ -32,23 +32,23 @@
 #define PTP_BUF_TIMESTAMPS 30
 
 struct timestamp_event_queue {
-  struct ptp_extts_event buf[PTP_MAX_TIMESTAMPS];
-  int head;
-  int tail;
-  spinlock_t lock;
+	struct ptp_extts_event buf[PTP_MAX_TIMESTAMPS];
+	int head;
+	int tail;
+	spinlock_t lock;
 };
 
 struct ptp_clock {
-  struct posix_clock clock;
-  struct device * dev;
-  struct ptp_clock_info * info;
-  dev_t devid;
-  int index; /* index into clocks.map */
-  struct pps_device * pps_source;
-  struct timestamp_event_queue tsevq; /* simple fifo for time stamps */
-  struct mutex tsevq_mux; /* one process at a time reading the fifo */
-  wait_queue_head_t tsev_wq;
-  int defunct; /* tells readers to go away when clock is being removed */
+	struct posix_clock clock;
+	struct device *dev;
+	struct ptp_clock_info *info;
+	dev_t devid;
+	int index; /* index into clocks.map */
+	struct pps_device *pps_source;
+	struct timestamp_event_queue tsevq; /* simple fifo for time stamps */
+	struct mutex tsevq_mux; /* one process at a time reading the fifo */
+	wait_queue_head_t tsev_wq;
+	int defunct; /* tells readers to go away when clock is being removed */
 };
 
 /*
@@ -58,26 +58,26 @@ struct ptp_clock {
  * that a writer might concurrently increment the tail does not
  * matter, since the queue remains nonempty nonetheless.
  */
-static inline int queue_cnt (struct timestamp_event_queue * q)
+static inline int queue_cnt(struct timestamp_event_queue *q)
 {
-  int cnt = q->tail - q->head;
-  return cnt < 0 ? PTP_MAX_TIMESTAMPS + cnt : cnt;
+	int cnt = q->tail - q->head;
+	return cnt < 0 ? PTP_MAX_TIMESTAMPS + cnt : cnt;
 }
 
 /*
  * see ptp_chardev.c
  */
 
-long ptp_ioctl (struct posix_clock * pc,
-                unsigned int cmd, unsigned long arg);
+long ptp_ioctl(struct posix_clock *pc,
+	       unsigned int cmd, unsigned long arg);
 
-int ptp_open (struct posix_clock * pc, fmode_t fmode);
+int ptp_open(struct posix_clock *pc, fmode_t fmode);
 
-ssize_t ptp_read (struct posix_clock * pc,
-                  uint flags, char __user * buf, size_t cnt);
+ssize_t ptp_read(struct posix_clock *pc,
+		 uint flags, char __user *buf, size_t cnt);
 
-uint ptp_poll (struct posix_clock * pc,
-               struct file * fp, poll_table * wait);
+uint ptp_poll(struct posix_clock *pc,
+	      struct file *fp, poll_table *wait);
 
 /*
  * see ptp_sysfs.c
@@ -85,8 +85,8 @@ uint ptp_poll (struct posix_clock * pc,
 
 extern struct device_attribute ptp_dev_attrs[];
 
-int ptp_cleanup_sysfs (struct ptp_clock * ptp);
+int ptp_cleanup_sysfs(struct ptp_clock *ptp);
 
-int ptp_populate_sysfs (struct ptp_clock * ptp);
+int ptp_populate_sysfs(struct ptp_clock *ptp);
 
 #endif

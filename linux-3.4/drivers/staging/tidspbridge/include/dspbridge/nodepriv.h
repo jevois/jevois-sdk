@@ -32,49 +32,49 @@ typedef u32 nodeenv;
 
 /* Message node */
 struct node_msgargs {
-  u32 max_msgs;   /* Max # of simultaneous messages for node */
-  u32 seg_id;   /* Segment for allocating message buffers */
-  u32 notify_type;  /* Notify type (SEM_post, SWI_post, etc.) */
-  u32 arg_length;   /* Length in 32-bit words of arg data block */
-  u8 * pdata;   /* Argument data for node */
+	u32 max_msgs;		/* Max # of simultaneous messages for node */
+	u32 seg_id;		/* Segment for allocating message buffers */
+	u32 notify_type;	/* Notify type (SEM_post, SWI_post, etc.) */
+	u32 arg_length;		/* Length in 32-bit words of arg data block */
+	u8 *pdata;		/* Argument data for node */
 };
 
 struct node_strmdef {
-  u32 buf_size;   /* Size of buffers for SIO stream */
-  u32 num_bufs;   /* max # of buffers in SIO stream at once */
-  u32 seg_id;   /* Memory segment id to allocate buffers */
-  u32 timeout;    /* Timeout for blocking SIO calls */
-  u32 buf_alignment;  /* Buffer alignment */
-  char * sz_device; /* Device name for stream */
+	u32 buf_size;		/* Size of buffers for SIO stream */
+	u32 num_bufs;		/* max # of buffers in SIO stream at once */
+	u32 seg_id;		/* Memory segment id to allocate buffers */
+	u32 timeout;		/* Timeout for blocking SIO calls */
+	u32 buf_alignment;	/* Buffer alignment */
+	char *sz_device;	/* Device name for stream */
 };
 
 /* Task node */
 struct node_taskargs {
-  struct node_msgargs node_msg_args;
-  s32 prio;
-  u32 stack_size;
-  u32 sys_stack_size;
-  u32 stack_seg;
-  u32 dsp_heap_res_addr;  /* DSP virtual heap address */
-  u32 dsp_heap_addr;  /* DSP virtual heap address */
-  u32 heap_size;    /* Heap size */
-  u32 gpp_heap_addr;  /* GPP virtual heap address */
-  u32 profile_id;   /* Profile ID */
-  u32 num_inputs;
-  u32 num_outputs;
-  u32 dais_arg; /* Address of iAlg object */
-  struct node_strmdef * strm_in_def;
-  struct node_strmdef * strm_out_def;
+	struct node_msgargs node_msg_args;
+	s32 prio;
+	u32 stack_size;
+	u32 sys_stack_size;
+	u32 stack_seg;
+	u32 dsp_heap_res_addr;	/* DSP virtual heap address */
+	u32 dsp_heap_addr;	/* DSP virtual heap address */
+	u32 heap_size;		/* Heap size */
+	u32 gpp_heap_addr;	/* GPP virtual heap address */
+	u32 profile_id;		/* Profile ID */
+	u32 num_inputs;
+	u32 num_outputs;
+	u32 dais_arg;	/* Address of iAlg object */
+	struct node_strmdef *strm_in_def;
+	struct node_strmdef *strm_out_def;
 };
 
 /*
  *  ======== node_createargs ========
  */
 struct node_createargs {
-  union {
-    struct node_msgargs node_msg_args;
-    struct node_taskargs task_arg_obj;
-  } asa;
+	union {
+		struct node_msgargs node_msg_args;
+		struct node_taskargs task_arg_obj;
+	} asa;
 };
 
 /*
@@ -100,8 +100,8 @@ struct node_createargs {
  *      chan_id != NULL.
  *  Ensures:
  */
-extern int node_get_channel_id (struct node_object * hnode,
-                                u32 dir, u32 index, u32 * chan_id);
+extern int node_get_channel_id(struct node_object *hnode,
+				      u32 dir, u32 index, u32 *chan_id);
 
 /*
  *  ======== node_get_strm_mgr ========
@@ -117,8 +117,8 @@ extern int node_get_channel_id (struct node_object * hnode,
  *      strm_man != NULL.
  *  Ensures:
  */
-extern int node_get_strm_mgr (struct node_object * hnode,
-                              struct strm_mgr ** strm_man);
+extern int node_get_strm_mgr(struct node_object *hnode,
+				    struct strm_mgr **strm_man);
 
 /*
  *  ======== node_get_timeout ========
@@ -132,7 +132,7 @@ extern int node_get_strm_mgr (struct node_object * hnode,
  *      Valid hnode.
  *  Ensures:
  */
-extern u32 node_get_timeout (struct node_object * hnode);
+extern u32 node_get_timeout(struct node_object *hnode);
 
 /*
  *  ======== node_get_type ========
@@ -146,7 +146,7 @@ extern u32 node_get_timeout (struct node_object * hnode);
  *      Valid hnode.
  *  Ensures:
  */
-extern enum node_type node_get_type (struct node_object * hnode);
+extern enum node_type node_get_type(struct node_object *hnode);
 
 /*
  *  ======== get_node_info ========
@@ -161,8 +161,8 @@ extern enum node_type node_get_type (struct node_object * hnode);
  *      Valid hnode.
  *  Ensures:
  */
-extern void get_node_info (struct node_object * hnode,
-                           struct dsp_nodeinfo * node_info);
+extern void get_node_info(struct node_object *hnode,
+			  struct dsp_nodeinfo *node_info);
 
 /*
  *  ======== node_get_load_type ========
@@ -176,6 +176,6 @@ extern void get_node_info (struct node_object * hnode,
  *      Valid hnode.
  *  Ensures:
  */
-extern enum nldr_loadtype node_get_load_type (struct node_object * hnode);
+extern enum nldr_loadtype node_get_load_type(struct node_object *hnode);
 
 #endif /* NODEPRIV_ */

@@ -12,25 +12,25 @@
 #define _ASM_PCI_H
 
 #ifdef __KERNEL__
-#include <linux/mm.h>   /* for struct page */
+#include <linux/mm.h>		/* for struct page */
 
 #if 0
 #define __pcbdebug(FMT, ADDR, ...) \
-  printk(KERN_DEBUG "PCIBRIDGE[%08x]: "FMT"\n", \
-         (u32)(ADDR), ##__VA_ARGS__)
+	printk(KERN_DEBUG "PCIBRIDGE[%08x]: "FMT"\n", \
+	       (u32)(ADDR), ##__VA_ARGS__)
 
-#define __pcidebug(FMT, BUS, DEVFN, WHERE,...)    \
-  do {              \
-    printk(KERN_DEBUG "PCI[%02x:%02x.%x + %02x]: "FMT"\n",  \
-           (BUS)->number,         \
-           PCI_SLOT(DEVFN),         \
-           PCI_FUNC(DEVFN),         \
-           (u32)(WHERE), ##__VA_ARGS__);      \
-  } while (0)
+#define __pcidebug(FMT, BUS, DEVFN, WHERE,...)		\
+do {							\
+	printk(KERN_DEBUG "PCI[%02x:%02x.%x + %02x]: "FMT"\n",	\
+	       (BUS)->number,					\
+	       PCI_SLOT(DEVFN),					\
+	       PCI_FUNC(DEVFN),					\
+	       (u32)(WHERE), ##__VA_ARGS__);			\
+} while (0)
 
 #else
-#define __pcbdebug(FMT, ADDR, ...)    do {} while (0)
-#define __pcidebug(FMT, BUS, DEVFN, WHERE, ...) do {} while (0)
+#define __pcbdebug(FMT, ADDR, ...)		do {} while (0)
+#define __pcidebug(FMT, BUS, DEVFN, WHERE, ...)	do {} while (0)
 #endif
 
 /* Can be used to override the logic in pci_scan_bus for skipping
@@ -38,18 +38,18 @@
  * architectures with incomplete PCI setup by the loader */
 
 #ifdef CONFIG_PCI
-#define pcibios_assign_all_busses() 1
-extern void unit_pci_init (void);
+#define pcibios_assign_all_busses()	1
+extern void unit_pci_init(void);
 #else
-#define pcibios_assign_all_busses() 0
+#define pcibios_assign_all_busses()	0
 #endif
 
 extern unsigned long pci_mem_start;
-#define PCIBIOS_MIN_IO    0xBE000004
-#define PCIBIOS_MIN_MEM   0xB8000000
+#define PCIBIOS_MIN_IO		0xBE000004
+#define PCIBIOS_MIN_MEM		0xB8000000
 
-void pcibios_set_master (struct pci_dev * dev);
-void pcibios_penalize_isa_irq (int irq);
+void pcibios_set_master(struct pci_dev *dev);
+void pcibios_penalize_isa_irq(int irq);
 
 /* Dynamic DMA mapping stuff.
  * i386 has everything mapped statically.
@@ -67,18 +67,18 @@ struct pci_dev;
  * address space.  The networking and block device layers use
  * this boolean for bounce buffer decisions.
  */
-#define PCI_DMA_BUS_IS_PHYS (1)
+#define PCI_DMA_BUS_IS_PHYS	(1)
 
 /* Return the index of the PCI controller for device. */
-static inline int pci_controller_num (struct pci_dev * dev)
+static inline int pci_controller_num(struct pci_dev *dev)
 {
-  return 0;
+	return 0;
 }
 
 #define HAVE_PCI_MMAP
-extern int pci_mmap_page_range (struct pci_dev * dev, struct vm_area_struct * vma,
-                                enum pci_mmap_state mmap_state,
-                                int write_combine);
+extern int pci_mmap_page_range(struct pci_dev *dev, struct vm_area_struct *vma,
+			       enum pci_mmap_state mmap_state,
+			       int write_combine);
 
 #endif /* __KERNEL__ */
 
@@ -86,21 +86,21 @@ extern int pci_mmap_page_range (struct pci_dev * dev, struct vm_area_struct * vm
 #include <asm-generic/pci-dma-compat.h>
 
 static inline struct resource *
-pcibios_select_root (struct pci_dev * pdev, struct resource * res)
+pcibios_select_root(struct pci_dev *pdev, struct resource *res)
 {
-  struct resource * root = NULL;
-  
-  if (res->flags & IORESOURCE_IO)
-  { root = &ioport_resource; }
-  if (res->flags & IORESOURCE_MEM)
-  { root = &iomem_resource; }
-  
-  return root;
+	struct resource *root = NULL;
+
+	if (res->flags & IORESOURCE_IO)
+		root = &ioport_resource;
+	if (res->flags & IORESOURCE_MEM)
+		root = &iomem_resource;
+
+	return root;
 }
 
-static inline int pci_get_legacy_ide_irq (struct pci_dev * dev, int channel)
+static inline int pci_get_legacy_ide_irq(struct pci_dev *dev, int channel)
 {
-  return channel ? 15 : 14;
+	return channel ? 15 : 14;
 }
 
 #endif /* _ASM_PCI_H */

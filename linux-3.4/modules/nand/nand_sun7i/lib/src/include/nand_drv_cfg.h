@@ -11,10 +11,10 @@
 
 #include "../../osal/nand_osal.h"
 
-#define  PLATFORM           20
+#define  PLATFORM						20
 #define  NAND_VERSION_0                 0x02
 #define  NAND_VERSION_1                 0x13
-#define  TIME             2119
+#define  TIME							2119
 #define  NAND_DRV_DATE                  0x20140509
 #define  NAND_PART_TABLE_MAGIC          0x0055ff00
 
@@ -75,21 +75,21 @@
 #define CFG_SUPPORT_READ_RETRY                  (1)
 
 
-#define SUPPORT_DMA_IRQ             (0)
-#define SUPPORT_RB_IRQ              (0)
+#define SUPPORT_DMA_IRQ							(0)
+#define SUPPORT_RB_IRQ							(0)
 
 #ifndef __OS_NAND_DBG__
-#define PHY_DBG_MESSAGE_ON                  (0)
+    #define PHY_DBG_MESSAGE_ON                  (0)
 #else
-#define PHY_DBG_MESSAGE_ON                  (1)
+    #define PHY_DBG_MESSAGE_ON                  (1)
 #endif
 
 #define PHY_ERR_MESSAGE_ON                  (1)
 
 #ifndef __OS_NAND_DBG__
-#define SCAN_DBG_MESSAGE_ON                 (0)
+    #define SCAN_DBG_MESSAGE_ON                 (0)
 #else
-#define SCAN_DBG_MESSAGE_ON                 (1)
+    #define SCAN_DBG_MESSAGE_ON                 (1)
 #endif
 
 #define SCAN_ERR_MESSAGE_ON                 (1)
@@ -111,71 +111,71 @@
 
 
 #if PHY_DBG_MESSAGE_ON
-#define    PHY_DBG(...)             PRINT(__VA_ARGS__)
+#define	   PHY_DBG(...)        			PRINT(__VA_ARGS__)
 #else
 #define     PHY_DBG(...)
 #endif
 
 #if PHY_ERR_MESSAGE_ON
-#define     PHY_ERR(...)            PRINT(__VA_ARGS__)
+#define     PHY_ERR(...)        		PRINT(__VA_ARGS__)
 #else
 #define     PHY_ERR(...)
 #endif
 
 
 #if SCAN_DBG_MESSAGE_ON
-#define     SCAN_DBG(...)             PRINT(__VA_ARGS__)
+#define     SCAN_DBG(...)          		PRINT(__VA_ARGS__)
 #else
 #define     SCAN_DBG(...)
 #endif
 
 #if SCAN_ERR_MESSAGE_ON
-#define     SCAN_ERR(...)             PRINT(__VA_ARGS__)
+#define     SCAN_ERR(...)         		PRINT(__VA_ARGS__)
 #else
 #define     SCAN_ERR(...)
 #endif
 
 
 #if FORMAT_DBG_MESSAGE_ON
-#define     FORMAT_DBG(...)           PRINT(__VA_ARGS__)
+#define     FORMAT_DBG(...)         	PRINT(__VA_ARGS__)
 #else
 #define     FORMAT_DBG(...)
 #endif
 
 #if FORMAT_ERR_MESSAGE_ON
-#define     FORMAT_ERR(...)           PRINT(__VA_ARGS__)
+#define     FORMAT_ERR(...)        		PRINT(__VA_ARGS__)
 #else
 #define     FORMAT_ERR(...)
 #endif
 
 
 #if MAPPING_DBG_MESSAGE_ON
-#define     MAPPING_DBG(...)          PRINT(__VA_ARGS__)
+#define     MAPPING_DBG(...)        	PRINT(__VA_ARGS__)
 #else
 #define     MAPPING_DBG(...)
 #endif
 
 #if MAPPING_ERR_MESSAGE_ON
-#define     MAPPING_ERR(...)          PRINT(__VA_ARGS__)
+#define     MAPPING_ERR(...)       		PRINT(__VA_ARGS__)
 #else
 #define     MAPPING_ERR(...)
 #endif
 
 
 #if LOGICCTL_DBG_MESSAGE_ON
-#define     LOGICCTL_DBG(...)         PRINT(__VA_ARGS__)
+#define     LOGICCTL_DBG(...)       	PRINT(__VA_ARGS__)
 #else
 #define     LOGICCTL_DBG(...)
 #endif
 
 #if LOGICCTL_ERR_MESSAGE_ON
-#define     LOGICCTL_ERR(...)         PRINT(__VA_ARGS__)
+#define     LOGICCTL_ERR(...)       	PRINT(__VA_ARGS__)
 #else
 #define     LOGICCTL_ERR(...)
 #endif
 
 #if MBR_DBG_MESSAGE_ON
-#define     MBR_DBG(...)          PRINT(__VA_ARGS__)
+#define     MBR_DBG(...)       		PRINT(__VA_ARGS__)
 #else
 #define     MBR_DBG(...)
 #endif

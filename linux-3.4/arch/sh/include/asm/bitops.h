@@ -25,22 +25,22 @@
 /*
  * clear_bit() doesn't provide any barrier for the compiler.
  */
-#define smp_mb__before_clear_bit()  smp_mb()
-#define smp_mb__after_clear_bit() smp_mb()
+#define smp_mb__before_clear_bit()	smp_mb()
+#define smp_mb__after_clear_bit()	smp_mb()
 
 #ifdef CONFIG_SUPERH32
-static inline unsigned long ffz (unsigned long word)
+static inline unsigned long ffz(unsigned long word)
 {
-  unsigned long result;
-  
-  __asm__ ("1:\n\t"
-           "shlr	%1\n\t"
-           "bt/s	1b\n\t"
-           " add	#1, %0"
-           : "=r" (result), "=r" (word)
-           : "0" (~0L), "1" (word)
-           : "t");
-  return result;
+	unsigned long result;
+
+	__asm__("1:\n\t"
+		"shlr	%1\n\t"
+		"bt/s	1b\n\t"
+		" add	#1, %0"
+		: "=r" (result), "=r" (word)
+		: "0" (~0L), "1" (word)
+		: "t");
+	return result;
 }
 
 /**
@@ -49,40 +49,40 @@ static inline unsigned long ffz (unsigned long word)
  *
  * Undefined if no bit exists, so code should check against 0 first.
  */
-static inline unsigned long __ffs (unsigned long word)
+static inline unsigned long __ffs(unsigned long word)
 {
-  unsigned long result;
-  
-  __asm__ ("1:\n\t"
-           "shlr	%1\n\t"
-           "bf/s	1b\n\t"
-           " add	#1, %0"
-           : "=r" (result), "=r" (word)
-           : "0" (~0L), "1" (word)
-           : "t");
-  return result;
+	unsigned long result;
+
+	__asm__("1:\n\t"
+		"shlr	%1\n\t"
+		"bf/s	1b\n\t"
+		" add	#1, %0"
+		: "=r" (result), "=r" (word)
+		: "0" (~0L), "1" (word)
+		: "t");
+	return result;
 }
 #else
-static inline unsigned long ffz (unsigned long word)
+static inline unsigned long ffz(unsigned long word)
 {
-  unsigned long result, __d2, __d3;
+	unsigned long result, __d2, __d3;
 
-  __asm__ ("gettr  tr0, %2\n\t"
-           "pta    $+32, tr0\n\t"
-           "andi   %1, 1, %3\n\t"
-           "beq    %3, r63, tr0\n\t"
-           "pta    $+4, tr0\n"
-           "0:\n\t"
-           "shlri.l        %1, 1, %1\n\t"
-           "addi   %0, 1, %0\n\t"
-           "andi   %1, 1, %3\n\t"
-           "beqi   %3, 1, tr0\n"
-           "1:\n\t"
-           "ptabs  %2, tr0\n\t"
-           : "=r" (result), "=r" (word), "=r" (__d2), "=r" (__d3)
-           : "0" (0L), "1" (word) );
+        __asm__("gettr  tr0, %2\n\t"
+                "pta    $+32, tr0\n\t"
+                "andi   %1, 1, %3\n\t"
+                "beq    %3, r63, tr0\n\t"
+                "pta    $+4, tr0\n"
+                "0:\n\t"
+                "shlri.l        %1, 1, %1\n\t"
+                "addi   %0, 1, %0\n\t"
+                "andi   %1, 1, %3\n\t"
+                "beqi   %3, 1, tr0\n"
+                "1:\n\t"
+                "ptabs  %2, tr0\n\t"
+                : "=r" (result), "=r" (word), "=r" (__d2), "=r" (__d3)
+                : "0" (0L), "1" (word));
 
-  return result;
+	return result;
 }
 
 #include <asm-generic/bitops/__ffs.h>

@@ -39,11 +39,11 @@
 #define IER_REGS *(volatile unsigned short *)IER
 #endif
 
-static __inline__ int irq_canonicalize (int irq)
+static __inline__ int irq_canonicalize(int irq)
 {
-  return irq;
+	return irq;
 }
 
-typedef void (*h8300_vector) (void);
+typedef void (*h8300_vector)(void);
 
 #endif /* _H8300_IRQ_H_ */

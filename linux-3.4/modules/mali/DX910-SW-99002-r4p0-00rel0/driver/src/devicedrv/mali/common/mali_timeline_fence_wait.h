@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2013 ARM Limited. All rights reserved.
- *
+ * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- *
+ * 
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -40,10 +40,10 @@
  * activated, which happens when the fence is signaled.
  */
 struct mali_timeline_fence_wait_tracker {
-  mali_bool activated;                  /**< MALI_TRUE if the tracker has been activated, MALI_FALSE if not. */
-  _mali_osk_atomic_t refcount;          /**< Reference count. */
-  struct mali_timeline_system * system; /**< Timeline system. */
-  struct mali_timeline_tracker tracker; /**< Timeline tracker. */
+	mali_bool activated;                  /**< MALI_TRUE if the tracker has been activated, MALI_FALSE if not. */
+	_mali_osk_atomic_t refcount;          /**< Reference count. */
+	struct mali_timeline_system *system;  /**< Timeline system. */
+	struct mali_timeline_tracker tracker; /**< Timeline tracker. */
 };
 
 /**
@@ -55,13 +55,13 @@ struct mali_timeline_fence_wait_tracker {
  * MALI_TIMELINE_FENCE_WAIT_TIMEOUT_IMMEDIATELY.
  * @return MALI_TRUE if signaled, MALI_FALSE if timed out.
  */
-mali_bool mali_timeline_fence_wait (struct mali_timeline_system * system, struct mali_timeline_fence * fence, u32 timeout);
+mali_bool mali_timeline_fence_wait(struct mali_timeline_system *system, struct mali_timeline_fence *fence, u32 timeout);
 
 /**
  * Used by the Timeline system to activate a fence wait tracker.
  *
  * @param fence_wait_tracker Fence waiter tracker.
  */
-void mali_timeline_fence_wait_activate (struct mali_timeline_fence_wait_tracker * fence_wait_tracker);
+void mali_timeline_fence_wait_activate(struct mali_timeline_fence_wait_tracker *fence_wait_tracker);
 
 #endif /* __MALI_TIMELINE_FENCE_WAIT_H__ */

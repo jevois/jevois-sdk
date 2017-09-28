@@ -39,27 +39,27 @@
 typedef unsigned long xen_pfn_t;
 
 struct privcmd_hypercall {
-  __u64 op;
-  __u64 arg[5];
+	__u64 op;
+	__u64 arg[5];
 };
 
 struct privcmd_mmap_entry {
-  __u64 va;
-  __u64 mfn;
-  __u64 npages;
+	__u64 va;
+	__u64 mfn;
+	__u64 npages;
 };
 
 struct privcmd_mmap {
-  int num;
-  domid_t dom; /* target domain */
-  struct privcmd_mmap_entry __user * entry;
+	int num;
+	domid_t dom; /* target domain */
+	struct privcmd_mmap_entry __user *entry;
 };
 
 struct privcmd_mmapbatch {
-  int num;     /* number of pages to populate */
-  domid_t dom; /* target domain */
-  __u64 addr;  /* virtual address */
-  xen_pfn_t __user * arr; /* array of mfns - top nibble set on err */
+	int num;     /* number of pages to populate */
+	domid_t dom; /* target domain */
+	__u64 addr;  /* virtual address */
+	xen_pfn_t __user *arr; /* array of mfns - top nibble set on err */
 };
 
 /*
@@ -67,11 +67,11 @@ struct privcmd_mmapbatch {
  * @arg: &privcmd_hypercall_t
  * Return: Value returned from execution of the specified hypercall.
  */
-#define IOCTL_PRIVCMD_HYPERCALL         \
-  _IOC(_IOC_NONE, 'P', 0, sizeof(struct privcmd_hypercall))
-#define IOCTL_PRIVCMD_MMAP          \
-  _IOC(_IOC_NONE, 'P', 2, sizeof(struct privcmd_mmap))
-#define IOCTL_PRIVCMD_MMAPBATCH         \
-  _IOC(_IOC_NONE, 'P', 3, sizeof(struct privcmd_mmapbatch))
+#define IOCTL_PRIVCMD_HYPERCALL					\
+	_IOC(_IOC_NONE, 'P', 0, sizeof(struct privcmd_hypercall))
+#define IOCTL_PRIVCMD_MMAP					\
+	_IOC(_IOC_NONE, 'P', 2, sizeof(struct privcmd_mmap))
+#define IOCTL_PRIVCMD_MMAPBATCH					\
+	_IOC(_IOC_NONE, 'P', 3, sizeof(struct privcmd_mmapbatch))
 
 #endif /* __LINUX_PUBLIC_PRIVCMD_H__ */

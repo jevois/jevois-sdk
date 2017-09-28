@@ -1,5 +1,5 @@
 /*
- *  w1_log.h
+ *	w1_log.h
  *
  * Copyright (c) 2004 Evgeniy Polyakov <zbr@ioremap.net>
  *
@@ -28,10 +28,10 @@
 #  define assert(expr) do {} while (0)
 #else
 #  define assert(expr) \
-  if(unlikely(!(expr))) {               \
-    printk(KERN_ERR "Assertion failed! %s,%s,%s,line=%d\n", \
-           #expr, __FILE__, __func__, __LINE__);           \
-  }
+        if(unlikely(!(expr))) {				        \
+        printk(KERN_ERR "Assertion failed! %s,%s,%s,line=%d\n",	\
+	#expr, __FILE__, __func__, __LINE__);		        \
+        }
 #endif
 
 #endif /* __W1_LOG_H */

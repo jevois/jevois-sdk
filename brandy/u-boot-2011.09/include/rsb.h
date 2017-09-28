@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -22,15 +22,15 @@
  * MA 02111-1307 USA
  */
 
-#ifndef _RSB_H
+#ifndef	_RSB_H
 #define _RSB_H
 
-extern int sunxi_rsb_init (unsigned int slave_id);
-extern int sunxi_rsb_exit (unsigned int slave_id);
-extern int sunxi_rsb_config (unsigned int slave_id, unsigned int rsb_addr);
+extern int sunxi_rsb_init(unsigned int slave_id);
+extern int sunxi_rsb_exit(unsigned int slave_id);
+extern int sunxi_rsb_config(unsigned int slave_id, unsigned int rsb_addr);
 
-extern int sunxi_rsb_read (unsigned int slave_id, unsigned int daddr, unsigned char * data, unsigned int len);
-extern int sunxi_rsb_write (unsigned int slave_id, unsigned int daddr, unsigned char * data, unsigned int len);
+extern int sunxi_rsb_read(unsigned int slave_id,unsigned int daddr, unsigned char *data, unsigned int len);
+extern int sunxi_rsb_write(unsigned int slave_id,unsigned int daddr, unsigned char *data, unsigned int len);
 
 
 

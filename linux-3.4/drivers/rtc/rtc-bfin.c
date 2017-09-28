@@ -58,9 +58,9 @@
 #define dev_dbg_stamp(dev) dev_dbg(dev, "%s:%i: here i am\n", __func__, __LINE__)
 
 struct bfin_rtc {
-  struct rtc_device * rtc_dev;
-  struct rtc_time rtc_alarm;
-  u16 rtc_wrote_regs;
+	struct rtc_device *rtc_dev;
+	struct rtc_time rtc_alarm;
+	u16 rtc_wrote_regs;
 };
 
 /* Bit values for the ISTAT / ICTL registers */
@@ -83,31 +83,31 @@ struct bfin_rtc {
 /* Some helper functions to convert between the common RTC notion of time
  * and the internal Blackfin notion that is encoded in 32bits.
  */
-static inline u32 rtc_time_to_bfin (unsigned long now)
+static inline u32 rtc_time_to_bfin(unsigned long now)
 {
-  u32 sec  = (now % 60);
-  u32 min  = (now % (60 * 60) ) / 60;
-  u32 hour = (now % (60 * 60 * 24) ) / (60 * 60);
-  u32 days = (now / (60 * 60 * 24) );
-  return (sec  << SEC_BITS_OFF) +
-         (min  << MIN_BITS_OFF) +
-         (hour << HOUR_BITS_OFF) +
-         (days << DAY_BITS_OFF);
+	u32 sec  = (now % 60);
+	u32 min  = (now % (60 * 60)) / 60;
+	u32 hour = (now % (60 * 60 * 24)) / (60 * 60);
+	u32 days = (now / (60 * 60 * 24));
+	return (sec  << SEC_BITS_OFF) +
+	       (min  << MIN_BITS_OFF) +
+	       (hour << HOUR_BITS_OFF) +
+	       (days << DAY_BITS_OFF);
 }
-static inline unsigned long rtc_bfin_to_time (u32 rtc_bfin)
+static inline unsigned long rtc_bfin_to_time(u32 rtc_bfin)
 {
-  return ( ( (rtc_bfin >> SEC_BITS_OFF)  & 0x003F) ) +
-         ( ( (rtc_bfin >> MIN_BITS_OFF)  & 0x003F) * 60) +
-         ( ( (rtc_bfin >> HOUR_BITS_OFF) & 0x001F) * 60 * 60) +
-         ( ( (rtc_bfin >> DAY_BITS_OFF)  & 0x7FFF) * 60 * 60 * 24);
+	return (((rtc_bfin >> SEC_BITS_OFF)  & 0x003F)) +
+	       (((rtc_bfin >> MIN_BITS_OFF)  & 0x003F) * 60) +
+	       (((rtc_bfin >> HOUR_BITS_OFF) & 0x001F) * 60 * 60) +
+	       (((rtc_bfin >> DAY_BITS_OFF)  & 0x7FFF) * 60 * 60 * 24);
 }
-static inline void rtc_bfin_to_tm (u32 rtc_bfin, struct rtc_time * tm)
+static inline void rtc_bfin_to_tm(u32 rtc_bfin, struct rtc_time *tm)
 {
-  rtc_time_to_tm (rtc_bfin_to_time (rtc_bfin), tm);
+	rtc_time_to_tm(rtc_bfin_to_time(rtc_bfin), tm);
 }
 
 /**
- *  bfin_rtc_sync_pending - make sure pending writes have complete
+ *	bfin_rtc_sync_pending - make sure pending writes have complete
  *
  * Wait for the previous write to a RTC register to complete.
  * Unfortunately, we can't sleep here as that introduces a race condition when
@@ -133,41 +133,41 @@ static inline void rtc_bfin_to_tm (u32 rtc_bfin, struct rtc_time * tm)
 /*
 static void bfin_rtc_sync_pending_polled(void)
 {
-  while (!(bfin_read_RTC_ISTAT() & RTC_ISTAT_WRITE_COMPLETE))
-    if (!(bfin_read_RTC_ISTAT() & RTC_ISTAT_WRITE_PENDING))
-      break;
-  bfin_write_RTC_ISTAT(RTC_ISTAT_WRITE_COMPLETE);
+	while (!(bfin_read_RTC_ISTAT() & RTC_ISTAT_WRITE_COMPLETE))
+		if (!(bfin_read_RTC_ISTAT() & RTC_ISTAT_WRITE_PENDING))
+			break;
+	bfin_write_RTC_ISTAT(RTC_ISTAT_WRITE_COMPLETE);
 }
 */
-static DECLARE_COMPLETION (bfin_write_complete);
-static void bfin_rtc_sync_pending (struct device * dev)
+static DECLARE_COMPLETION(bfin_write_complete);
+static void bfin_rtc_sync_pending(struct device *dev)
 {
-  dev_dbg_stamp (dev);
-  while (bfin_read_RTC_ISTAT() & RTC_ISTAT_WRITE_PENDING)
-  { wait_for_completion_timeout (&bfin_write_complete, HZ * 5); }
-  dev_dbg_stamp (dev);
+	dev_dbg_stamp(dev);
+	while (bfin_read_RTC_ISTAT() & RTC_ISTAT_WRITE_PENDING)
+		wait_for_completion_timeout(&bfin_write_complete, HZ * 5);
+	dev_dbg_stamp(dev);
 }
 
 /**
- *  bfin_rtc_reset - set RTC to sane/known state
+ *	bfin_rtc_reset - set RTC to sane/known state
  *
  * Initialize the RTC.  Enable pre-scaler to scale RTC clock
  * to 1Hz and clear interrupt/status registers.
  */
-static void bfin_rtc_reset (struct device * dev, u16 rtc_ictl)
+static void bfin_rtc_reset(struct device *dev, u16 rtc_ictl)
 {
-  struct bfin_rtc * rtc = dev_get_drvdata (dev);
-  dev_dbg_stamp (dev);
-  bfin_rtc_sync_pending (dev);
-  bfin_write_RTC_PREN (0x1);
-  bfin_write_RTC_ICTL (rtc_ictl);
-  bfin_write_RTC_ALARM (0);
-  bfin_write_RTC_ISTAT (0xFFFF);
-  rtc->rtc_wrote_regs = 0;
+	struct bfin_rtc *rtc = dev_get_drvdata(dev);
+	dev_dbg_stamp(dev);
+	bfin_rtc_sync_pending(dev);
+	bfin_write_RTC_PREN(0x1);
+	bfin_write_RTC_ICTL(rtc_ictl);
+	bfin_write_RTC_ALARM(0);
+	bfin_write_RTC_ISTAT(0xFFFF);
+	rtc->rtc_wrote_regs = 0;
 }
 
 /**
- *  bfin_rtc_interrupt - handle interrupt from RTC
+ *	bfin_rtc_interrupt - handle interrupt from RTC
  *
  * Since we handle all RTC events here, we have to make sure the requested
  * interrupt is enabled (in RTC_ICTL) as the event status register (RTC_ISTAT)
@@ -177,270 +177,268 @@ static void bfin_rtc_reset (struct device * dev, u16 rtc_ictl)
  * have to worry about pending writes to the RTC_ICTL register as interrupts
  * only fire if they are enabled in the RTC_ICTL register.
  */
-static irqreturn_t bfin_rtc_interrupt (int irq, void * dev_id)
+static irqreturn_t bfin_rtc_interrupt(int irq, void *dev_id)
 {
-  struct device * dev = dev_id;
-  struct bfin_rtc * rtc = dev_get_drvdata (dev);
-  unsigned long events = 0;
-  bool write_complete = false;
-  u16 rtc_istat, rtc_istat_clear, rtc_ictl, bits;
-  
-  dev_dbg_stamp (dev);
-  
-  rtc_istat = bfin_read_RTC_ISTAT();
-  rtc_ictl = bfin_read_RTC_ICTL();
-  rtc_istat_clear = 0;
-  
-  bits = RTC_ISTAT_WRITE_COMPLETE;
-  if (rtc_istat & bits) {
-    rtc_istat_clear |= bits;
-    write_complete = true;
-    complete (&bfin_write_complete);
-  }
-  
-  bits = (RTC_ISTAT_ALARM | RTC_ISTAT_ALARM_DAY);
-  if (rtc_ictl & bits) {
-    if (rtc_istat & bits) {
-      rtc_istat_clear |= bits;
-      events |= RTC_AF | RTC_IRQF;
-    }
-  }
-  
-  bits = RTC_ISTAT_SEC;
-  if (rtc_ictl & bits) {
-    if (rtc_istat & bits) {
-      rtc_istat_clear |= bits;
-      events |= RTC_UF | RTC_IRQF;
-    }
-  }
-  
-  if (events)
-  { rtc_update_irq (rtc->rtc_dev, 1, events); }
-  
-  if (write_complete || events) {
-    bfin_write_RTC_ISTAT (rtc_istat_clear);
-    return IRQ_HANDLED;
-  }
-  else
-  { return IRQ_NONE; }
+	struct device *dev = dev_id;
+	struct bfin_rtc *rtc = dev_get_drvdata(dev);
+	unsigned long events = 0;
+	bool write_complete = false;
+	u16 rtc_istat, rtc_istat_clear, rtc_ictl, bits;
+
+	dev_dbg_stamp(dev);
+
+	rtc_istat = bfin_read_RTC_ISTAT();
+	rtc_ictl = bfin_read_RTC_ICTL();
+	rtc_istat_clear = 0;
+
+	bits = RTC_ISTAT_WRITE_COMPLETE;
+	if (rtc_istat & bits) {
+		rtc_istat_clear |= bits;
+		write_complete = true;
+		complete(&bfin_write_complete);
+	}
+
+	bits = (RTC_ISTAT_ALARM | RTC_ISTAT_ALARM_DAY);
+	if (rtc_ictl & bits) {
+		if (rtc_istat & bits) {
+			rtc_istat_clear |= bits;
+			events |= RTC_AF | RTC_IRQF;
+		}
+	}
+
+	bits = RTC_ISTAT_SEC;
+	if (rtc_ictl & bits) {
+		if (rtc_istat & bits) {
+			rtc_istat_clear |= bits;
+			events |= RTC_UF | RTC_IRQF;
+		}
+	}
+
+	if (events)
+		rtc_update_irq(rtc->rtc_dev, 1, events);
+
+	if (write_complete || events) {
+		bfin_write_RTC_ISTAT(rtc_istat_clear);
+		return IRQ_HANDLED;
+	} else
+		return IRQ_NONE;
 }
 
-static void bfin_rtc_int_set (u16 rtc_int)
+static void bfin_rtc_int_set(u16 rtc_int)
 {
-  bfin_write_RTC_ISTAT (rtc_int);
-  bfin_write_RTC_ICTL (bfin_read_RTC_ICTL() | rtc_int);
+	bfin_write_RTC_ISTAT(rtc_int);
+	bfin_write_RTC_ICTL(bfin_read_RTC_ICTL() | rtc_int);
 }
-static void bfin_rtc_int_clear (u16 rtc_int)
+static void bfin_rtc_int_clear(u16 rtc_int)
 {
-  bfin_write_RTC_ICTL (bfin_read_RTC_ICTL() & rtc_int);
+	bfin_write_RTC_ICTL(bfin_read_RTC_ICTL() & rtc_int);
 }
-static void bfin_rtc_int_set_alarm (struct bfin_rtc * rtc)
+static void bfin_rtc_int_set_alarm(struct bfin_rtc *rtc)
 {
-  /* Blackfin has different bits for whether the alarm is
-   * more than 24 hours away.
-   */
-  bfin_rtc_int_set (rtc->rtc_alarm.tm_yday == -1 ? RTC_ISTAT_ALARM : RTC_ISTAT_ALARM_DAY);
-}
-
-static int bfin_rtc_alarm_irq_enable (struct device * dev, unsigned int enabled)
-{
-  struct bfin_rtc * rtc = dev_get_drvdata (dev);
-  
-  dev_dbg_stamp (dev);
-  if (enabled)
-  { bfin_rtc_int_set_alarm (rtc); }
-  else
-  { bfin_rtc_int_clear (~ (RTC_ISTAT_ALARM | RTC_ISTAT_ALARM_DAY) ); }
-  
-  return 0;
+	/* Blackfin has different bits for whether the alarm is
+	 * more than 24 hours away.
+	 */
+	bfin_rtc_int_set(rtc->rtc_alarm.tm_yday == -1 ? RTC_ISTAT_ALARM : RTC_ISTAT_ALARM_DAY);
 }
 
-static int bfin_rtc_read_time (struct device * dev, struct rtc_time * tm)
+static int bfin_rtc_alarm_irq_enable(struct device *dev, unsigned int enabled)
 {
-  struct bfin_rtc * rtc = dev_get_drvdata (dev);
-  
-  dev_dbg_stamp (dev);
-  
-  if (rtc->rtc_wrote_regs & 0x1)
-  { bfin_rtc_sync_pending (dev); }
-  
-  rtc_bfin_to_tm (bfin_read_RTC_STAT(), tm);
-  
-  return 0;
+	struct bfin_rtc *rtc = dev_get_drvdata(dev);
+
+	dev_dbg_stamp(dev);
+	if (enabled)
+		bfin_rtc_int_set_alarm(rtc);
+	else
+		bfin_rtc_int_clear(~(RTC_ISTAT_ALARM | RTC_ISTAT_ALARM_DAY));
+
+	return 0;
 }
 
-static int bfin_rtc_set_time (struct device * dev, struct rtc_time * tm)
+static int bfin_rtc_read_time(struct device *dev, struct rtc_time *tm)
 {
-  struct bfin_rtc * rtc = dev_get_drvdata (dev);
-  int ret;
-  unsigned long now;
-  
-  dev_dbg_stamp (dev);
-  
-  ret = rtc_tm_to_time (tm, &now);
-  if (ret == 0) {
-    if (rtc->rtc_wrote_regs & 0x1)
-    { bfin_rtc_sync_pending (dev); }
-    bfin_write_RTC_STAT (rtc_time_to_bfin (now) );
-    rtc->rtc_wrote_regs = 0x1;
-  }
-  
-  return ret;
+	struct bfin_rtc *rtc = dev_get_drvdata(dev);
+
+	dev_dbg_stamp(dev);
+
+	if (rtc->rtc_wrote_regs & 0x1)
+		bfin_rtc_sync_pending(dev);
+
+	rtc_bfin_to_tm(bfin_read_RTC_STAT(), tm);
+
+	return 0;
 }
 
-static int bfin_rtc_read_alarm (struct device * dev, struct rtc_wkalrm * alrm)
+static int bfin_rtc_set_time(struct device *dev, struct rtc_time *tm)
 {
-  struct bfin_rtc * rtc = dev_get_drvdata (dev);
-  dev_dbg_stamp (dev);
-  alrm->time = rtc->rtc_alarm;
-  bfin_rtc_sync_pending (dev);
-  alrm->enabled = !! (bfin_read_RTC_ICTL() & (RTC_ISTAT_ALARM | RTC_ISTAT_ALARM_DAY) );
-  return 0;
+	struct bfin_rtc *rtc = dev_get_drvdata(dev);
+	int ret;
+	unsigned long now;
+
+	dev_dbg_stamp(dev);
+
+	ret = rtc_tm_to_time(tm, &now);
+	if (ret == 0) {
+		if (rtc->rtc_wrote_regs & 0x1)
+			bfin_rtc_sync_pending(dev);
+		bfin_write_RTC_STAT(rtc_time_to_bfin(now));
+		rtc->rtc_wrote_regs = 0x1;
+	}
+
+	return ret;
 }
 
-static int bfin_rtc_set_alarm (struct device * dev, struct rtc_wkalrm * alrm)
+static int bfin_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alrm)
 {
-  struct bfin_rtc * rtc = dev_get_drvdata (dev);
-  unsigned long rtc_alarm;
-  
-  dev_dbg_stamp (dev);
-  
-  if (rtc_tm_to_time (&alrm->time, &rtc_alarm) )
-  { return -EINVAL; }
-  
-  rtc->rtc_alarm = alrm->time;
-  
-  bfin_rtc_sync_pending (dev);
-  bfin_write_RTC_ALARM (rtc_time_to_bfin (rtc_alarm) );
-  if (alrm->enabled)
-  { bfin_rtc_int_set_alarm (rtc); }
-  
-  return 0;
+	struct bfin_rtc *rtc = dev_get_drvdata(dev);
+	dev_dbg_stamp(dev);
+	alrm->time = rtc->rtc_alarm;
+	bfin_rtc_sync_pending(dev);
+	alrm->enabled = !!(bfin_read_RTC_ICTL() & (RTC_ISTAT_ALARM | RTC_ISTAT_ALARM_DAY));
+	return 0;
 }
 
-static int bfin_rtc_proc (struct device * dev, struct seq_file * seq)
+static int bfin_rtc_set_alarm(struct device *dev, struct rtc_wkalrm *alrm)
+{
+	struct bfin_rtc *rtc = dev_get_drvdata(dev);
+	unsigned long rtc_alarm;
+
+	dev_dbg_stamp(dev);
+
+	if (rtc_tm_to_time(&alrm->time, &rtc_alarm))
+		return -EINVAL;
+
+	rtc->rtc_alarm = alrm->time;
+
+	bfin_rtc_sync_pending(dev);
+	bfin_write_RTC_ALARM(rtc_time_to_bfin(rtc_alarm));
+	if (alrm->enabled)
+		bfin_rtc_int_set_alarm(rtc);
+
+	return 0;
+}
+
+static int bfin_rtc_proc(struct device *dev, struct seq_file *seq)
 {
 #define yesno(x) ((x) ? "yes" : "no")
-  u16 ictl = bfin_read_RTC_ICTL();
-  dev_dbg_stamp (dev);
-  seq_printf (seq,
-              "alarm_IRQ\t: %s\n"
-              "wkalarm_IRQ\t: %s\n"
-              "seconds_IRQ\t: %s\n",
-              yesno (ictl & RTC_ISTAT_ALARM),
-              yesno (ictl & RTC_ISTAT_ALARM_DAY),
-              yesno (ictl & RTC_ISTAT_SEC) );
-  return 0;
+	u16 ictl = bfin_read_RTC_ICTL();
+	dev_dbg_stamp(dev);
+	seq_printf(seq,
+		"alarm_IRQ\t: %s\n"
+		"wkalarm_IRQ\t: %s\n"
+		"seconds_IRQ\t: %s\n",
+		yesno(ictl & RTC_ISTAT_ALARM),
+		yesno(ictl & RTC_ISTAT_ALARM_DAY),
+		yesno(ictl & RTC_ISTAT_SEC));
+	return 0;
 #undef yesno
 }
 
 static struct rtc_class_ops bfin_rtc_ops = {
-  .read_time     = bfin_rtc_read_time,
-  .set_time      = bfin_rtc_set_time,
-  .read_alarm    = bfin_rtc_read_alarm,
-  .set_alarm     = bfin_rtc_set_alarm,
-  .proc          = bfin_rtc_proc,
-  .alarm_irq_enable = bfin_rtc_alarm_irq_enable,
+	.read_time     = bfin_rtc_read_time,
+	.set_time      = bfin_rtc_set_time,
+	.read_alarm    = bfin_rtc_read_alarm,
+	.set_alarm     = bfin_rtc_set_alarm,
+	.proc          = bfin_rtc_proc,
+	.alarm_irq_enable = bfin_rtc_alarm_irq_enable,
 };
 
-static int __devinit bfin_rtc_probe (struct platform_device * pdev)
+static int __devinit bfin_rtc_probe(struct platform_device *pdev)
 {
-  struct bfin_rtc * rtc;
-  struct device * dev = &pdev->dev;
-  int ret = 0;
-  unsigned long timeout = jiffies + HZ;
-  
-  dev_dbg_stamp (dev);
-  
-  /* Allocate memory for our RTC struct */
-  rtc = kzalloc (sizeof (*rtc), GFP_KERNEL);
-  if (unlikely (!rtc) )
-  { return -ENOMEM; }
-  platform_set_drvdata (pdev, rtc);
-  device_init_wakeup (dev, 1);
-  
-  /* Register our RTC with the RTC framework */
-  rtc->rtc_dev = rtc_device_register (pdev->name, dev, &bfin_rtc_ops,
-                                      THIS_MODULE);
-  if (unlikely (IS_ERR (rtc->rtc_dev) ) ) {
-    ret = PTR_ERR (rtc->rtc_dev);
-    goto err;
-  }
-  
-  /* Grab the IRQ and init the hardware */
-  ret = request_irq (IRQ_RTC, bfin_rtc_interrupt, 0, pdev->name, dev);
-  if (unlikely (ret) )
-  { goto err_reg; }
-  /* sometimes the bootloader touched things, but the write complete was not
-   * enabled, so let's just do a quick timeout here since the IRQ will not fire ...
-   */
-  while (bfin_read_RTC_ISTAT() & RTC_ISTAT_WRITE_PENDING)
-    if (time_after (jiffies, timeout) )
-    { break; }
-  bfin_rtc_reset (dev, RTC_ISTAT_WRITE_COMPLETE);
-  bfin_write_RTC_SWCNT (0);
-  
-  return 0;
-  
+	struct bfin_rtc *rtc;
+	struct device *dev = &pdev->dev;
+	int ret = 0;
+	unsigned long timeout = jiffies + HZ;
+
+	dev_dbg_stamp(dev);
+
+	/* Allocate memory for our RTC struct */
+	rtc = kzalloc(sizeof(*rtc), GFP_KERNEL);
+	if (unlikely(!rtc))
+		return -ENOMEM;
+	platform_set_drvdata(pdev, rtc);
+	device_init_wakeup(dev, 1);
+
+	/* Register our RTC with the RTC framework */
+	rtc->rtc_dev = rtc_device_register(pdev->name, dev, &bfin_rtc_ops,
+						THIS_MODULE);
+	if (unlikely(IS_ERR(rtc->rtc_dev))) {
+		ret = PTR_ERR(rtc->rtc_dev);
+		goto err;
+	}
+
+	/* Grab the IRQ and init the hardware */
+	ret = request_irq(IRQ_RTC, bfin_rtc_interrupt, 0, pdev->name, dev);
+	if (unlikely(ret))
+		goto err_reg;
+	/* sometimes the bootloader touched things, but the write complete was not
+	 * enabled, so let's just do a quick timeout here since the IRQ will not fire ...
+	 */
+	while (bfin_read_RTC_ISTAT() & RTC_ISTAT_WRITE_PENDING)
+		if (time_after(jiffies, timeout))
+			break;
+	bfin_rtc_reset(dev, RTC_ISTAT_WRITE_COMPLETE);
+	bfin_write_RTC_SWCNT(0);
+
+	return 0;
+
 err_reg:
-  rtc_device_unregister (rtc->rtc_dev);
+	rtc_device_unregister(rtc->rtc_dev);
 err:
-  kfree (rtc);
-  return ret;
+	kfree(rtc);
+	return ret;
 }
 
-static int __devexit bfin_rtc_remove (struct platform_device * pdev)
+static int __devexit bfin_rtc_remove(struct platform_device *pdev)
 {
-  struct bfin_rtc * rtc = platform_get_drvdata (pdev);
-  struct device * dev = &pdev->dev;
-  
-  bfin_rtc_reset (dev, 0);
-  free_irq (IRQ_RTC, dev);
-  rtc_device_unregister (rtc->rtc_dev);
-  platform_set_drvdata (pdev, NULL);
-  kfree (rtc);
-  
-  return 0;
+	struct bfin_rtc *rtc = platform_get_drvdata(pdev);
+	struct device *dev = &pdev->dev;
+
+	bfin_rtc_reset(dev, 0);
+	free_irq(IRQ_RTC, dev);
+	rtc_device_unregister(rtc->rtc_dev);
+	platform_set_drvdata(pdev, NULL);
+	kfree(rtc);
+
+	return 0;
 }
 
 #ifdef CONFIG_PM
-static int bfin_rtc_suspend (struct platform_device * pdev, pm_message_t state)
+static int bfin_rtc_suspend(struct platform_device *pdev, pm_message_t state)
 {
-  struct device * dev = &pdev->dev;
-  
-  dev_dbg_stamp (dev);
-  
-  if (device_may_wakeup (dev) ) {
-    enable_irq_wake (IRQ_RTC);
-    bfin_rtc_sync_pending (dev);
-  }
-  else
-  { bfin_rtc_int_clear (0); }
-  
-  return 0;
+	struct device *dev = &pdev->dev;
+
+	dev_dbg_stamp(dev);
+
+	if (device_may_wakeup(dev)) {
+		enable_irq_wake(IRQ_RTC);
+		bfin_rtc_sync_pending(dev);
+	} else
+		bfin_rtc_int_clear(0);
+
+	return 0;
 }
 
-static int bfin_rtc_resume (struct platform_device * pdev)
+static int bfin_rtc_resume(struct platform_device *pdev)
 {
-  struct device * dev = &pdev->dev;
-  
-  dev_dbg_stamp (dev);
-  
-  if (device_may_wakeup (dev) )
-  { disable_irq_wake (IRQ_RTC); }
-  
-  /*
-   * Since only some of the RTC bits are maintained externally in the
-   * Vbat domain, we need to wait for the RTC MMRs to be synced into
-   * the core after waking up.  This happens every RTC 1HZ.  Once that
-   * has happened, we can go ahead and re-enable the important write
-   * complete interrupt event.
-   */
-  while (! (bfin_read_RTC_ISTAT() & RTC_ISTAT_SEC) )
-  { continue; }
-  bfin_rtc_int_set (RTC_ISTAT_WRITE_COMPLETE);
-  
-  return 0;
+	struct device *dev = &pdev->dev;
+
+	dev_dbg_stamp(dev);
+
+	if (device_may_wakeup(dev))
+		disable_irq_wake(IRQ_RTC);
+
+	/*
+	 * Since only some of the RTC bits are maintained externally in the
+	 * Vbat domain, we need to wait for the RTC MMRs to be synced into
+	 * the core after waking up.  This happens every RTC 1HZ.  Once that
+	 * has happened, we can go ahead and re-enable the important write
+	 * complete interrupt event.
+	 */
+	while (!(bfin_read_RTC_ISTAT() & RTC_ISTAT_SEC))
+		continue;
+	bfin_rtc_int_set(RTC_ISTAT_WRITE_COMPLETE);
+
+	return 0;
 }
 #else
 # define bfin_rtc_suspend NULL
@@ -448,19 +446,19 @@ static int bfin_rtc_resume (struct platform_device * pdev)
 #endif
 
 static struct platform_driver bfin_rtc_driver = {
-  .driver   = {
-    .name = "rtc-bfin",
-    .owner  = THIS_MODULE,
-  },
-  .probe    = bfin_rtc_probe,
-  .remove   = __devexit_p (bfin_rtc_remove),
-  .suspend  = bfin_rtc_suspend,
-  .resume   = bfin_rtc_resume,
+	.driver		= {
+		.name	= "rtc-bfin",
+		.owner	= THIS_MODULE,
+	},
+	.probe		= bfin_rtc_probe,
+	.remove		= __devexit_p(bfin_rtc_remove),
+	.suspend	= bfin_rtc_suspend,
+	.resume		= bfin_rtc_resume,
 };
 
-module_platform_driver (bfin_rtc_driver);
+module_platform_driver(bfin_rtc_driver);
 
-MODULE_DESCRIPTION ("Blackfin On-Chip Real Time Clock Driver");
-MODULE_AUTHOR ("Mike Frysinger <vapier@gentoo.org>");
-MODULE_LICENSE ("GPL");
-MODULE_ALIAS ("platform:rtc-bfin");
+MODULE_DESCRIPTION("Blackfin On-Chip Real Time Clock Driver");
+MODULE_AUTHOR("Mike Frysinger <vapier@gentoo.org>");
+MODULE_LICENSE("GPL");
+MODULE_ALIAS("platform:rtc-bfin");

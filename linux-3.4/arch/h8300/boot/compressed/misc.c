@@ -26,10 +26,10 @@ typedef unsigned char  uch;
 typedef unsigned short ush;
 typedef unsigned long  ulg;
 
-#define WSIZE 0x8000    /* Window size must be at least 32k, */
-/* and a power of two */
+#define WSIZE 0x8000		/* Window size must be at least 32k, */
+				/* and a power of two */
 
-static uch * inbuf;      /* input buffer */
+static uch *inbuf;	     /* input buffer */
 static uch window[WSIZE];    /* Sliding window buffer */
 
 static unsigned insize = 0;  /* valid bytes in inbuf */
@@ -64,22 +64,22 @@ static unsigned outcnt = 0;  /* bytes in output buffer */
 #  define Tracecv(c,x)
 #endif
 
-static int  fill_inbuf (void);
-static void flush_window (void);
-static void error (char * m);
+static int  fill_inbuf(void);
+static void flush_window(void);
+static void error(char *m);
 
 extern char input_data[];
 extern int input_len;
 
 static long bytes_out = 0;
-static uch * output_data;
+static uch *output_data;
 static unsigned long output_ptr = 0;
 
-static void error (char * m);
+static void error(char *m);
 
-int puts (const char *);
+int puts(const char *);
 
-extern int _text;   /* Defined in vmlinux.lds.S */
+extern int _text;		/* Defined in vmlinux.lds.S */
 extern int _end;
 static unsigned long free_mem_ptr;
 static unsigned long free_mem_end_ptr;
@@ -92,90 +92,90 @@ static unsigned long free_mem_end_ptr;
 #define TDR *((volatile unsigned char *)0xffff8b)
 #define SSR *((volatile unsigned char *)0xffff8c)
 
-int puts (const char * s)
+int puts(const char *s)
 {
-  return 0;
+	return 0;
 }
 
-void * memset (void * s, int c, size_t n)
+void* memset(void* s, int c, size_t n)
 {
-  int i;
-  char * ss = (char *) s;
-  
-  for (i = 0; i < n; i++) { ss[i] = c; }
-  return s;
+	int i;
+	char *ss = (char*)s;
+
+	for (i=0;i<n;i++) ss[i] = c;
+	return s;
 }
 
-void * memcpy (void * __dest, __const void * __src,
-               size_t __n)
+void* memcpy(void* __dest, __const void* __src,
+			    size_t __n)
 {
-  int i;
-  char * d = (char *) __dest, *s = (char *) __src;
-  
-  for (i = 0; i < __n; i++) { d[i] = s[i]; }
-  return __dest;
+	int i;
+	char *d = (char *)__dest, *s = (char *)__src;
+
+	for (i=0;i<__n;i++) d[i] = s[i];
+	return __dest;
 }
 
 /* ===========================================================================
  * Fill the input buffer. This is called only when the buffer is empty
  * and at least one byte is really needed.
  */
-static int fill_inbuf (void)
+static int fill_inbuf(void)
 {
-  if (insize != 0) {
-    error ("ran out of input data");
-  }
-  
-  inbuf = input_data;
-  insize = input_len;
-  inptr = 1;
-  return inbuf[0];
+	if (insize != 0) {
+		error("ran out of input data");
+	}
+
+	inbuf = input_data;
+	insize = input_len;
+	inptr = 1;
+	return inbuf[0];
 }
 
 /* ===========================================================================
  * Write the output window window[0..outcnt-1] and update crc and bytes_out.
  * (Used for the decompressed data only.)
  */
-static void flush_window (void)
+static void flush_window(void)
 {
-  ulg c = crc;         /* temporary variable */
-  unsigned n;
-  uch * in, *out, ch;
-  
-  in = window;
-  out = &output_data[output_ptr];
-  for (n = 0; n < outcnt; n++) {
-    ch = *out++ = *in++;
-    c = crc_32_tab[ ( (int) c ^ ch) & 0xff] ^ (c >> 8);
-  }
-  crc = c;
-  bytes_out += (ulg) outcnt;
-  output_ptr += (ulg) outcnt;
-  outcnt = 0;
+    ulg c = crc;         /* temporary variable */
+    unsigned n;
+    uch *in, *out, ch;
+
+    in = window;
+    out = &output_data[output_ptr];
+    for (n = 0; n < outcnt; n++) {
+	    ch = *out++ = *in++;
+	    c = crc_32_tab[((int)c ^ ch) & 0xff] ^ (c >> 8);
+    }
+    crc = c;
+    bytes_out += (ulg)outcnt;
+    output_ptr += (ulg)outcnt;
+    outcnt = 0;
 }
 
-static void error (char * x)
+static void error(char *x)
 {
-  puts ("\n\n");
-  puts (x);
-  puts ("\n\n -- System halted");
-  
-  while (1); /* Halt */
+	puts("\n\n");
+	puts(x);
+	puts("\n\n -- System halted");
+
+	while(1);	/* Halt */
 }
 
 #define STACK_SIZE (4096)
 long user_stack [STACK_SIZE];
-long * stack_start = &user_stack[STACK_SIZE];
+long* stack_start = &user_stack[STACK_SIZE];
 
-void decompress_kernel (void)
+void decompress_kernel(void)
 {
-  output_data = 0;
-  output_ptr = (unsigned long) 0x400000;
-  free_mem_ptr = (unsigned long) &_end;
-  free_mem_end_ptr = free_mem_ptr + HEAP_SIZE;
-  
-  makecrc();
-  puts ("Uncompressing Linux... ");
-  gunzip();
-  puts ("Ok, booting the kernel.\n");
+	output_data = 0;
+	output_ptr = (unsigned long)0x400000;
+	free_mem_ptr = (unsigned long)&_end;
+	free_mem_end_ptr = free_mem_ptr + HEAP_SIZE;
+
+	makecrc();
+	puts("Uncompressing Linux... ");
+	gunzip();
+	puts("Ok, booting the kernel.\n");
 }

@@ -24,19 +24,19 @@ struct public_key_signature;
  * capabilities.
  */
 struct asymmetric_key_subtype {
-  struct module  * owner;
-  const char  *  name;
-  unsigned short    name_len; /* length of name */
-  
-  /* Describe a key of this subtype for /proc/keys */
-  void (*describe) (const struct key * key, struct seq_file * m);
-  
-  /* Destroy a key of this subtype */
-  void (*destroy) (void * payload);
-  
-  /* Verify the signature on a key of this subtype (optional) */
-  int (*verify_signature) (const struct key * key,
-                           const struct public_key_signature * sig);
+	struct module		*owner;
+	const char		*name;
+	unsigned short		name_len;	/* length of name */
+
+	/* Describe a key of this subtype for /proc/keys */
+	void (*describe)(const struct key *key, struct seq_file *m);
+
+	/* Destroy a key of this subtype */
+	void (*destroy)(void *payload);
+
+	/* Verify the signature on a key of this subtype (optional) */
+	int (*verify_signature)(const struct key *key,
+				const struct public_key_signature *sig);
 };
 
 /**
@@ -47,9 +47,9 @@ struct asymmetric_key_subtype {
  * type-specific data attached to the key.
  */
 static inline
-struct asymmetric_key_subtype * asymmetric_key_subtype (const struct key * key)
+struct asymmetric_key_subtype *asymmetric_key_subtype(const struct key *key)
 {
-  return key->type_data.p[0];
+	return key->type_data.p[0];
 }
 
 #endif /* _KEYS_ASYMMETRIC_SUBTYPE_H */

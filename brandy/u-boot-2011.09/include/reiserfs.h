@@ -28,8 +28,8 @@
  */
 
 
-#define SECTOR_SIZE   0x200
-#define SECTOR_BITS   9
+#define SECTOR_SIZE		0x200
+#define SECTOR_BITS		9
 
 /* Error codes */
 typedef enum
@@ -70,13 +70,13 @@ typedef enum
   ERR_DEV_NEED_INIT,
   ERR_NO_DISK_SPACE,
   ERR_NUMBER_OVERFLOW,
-  
+
   MAX_ERR_NUM
 } reiserfs_error_t;
 
 
-extern int reiserfs_set_blk_dev (block_dev_desc_t * rbdd, int part);
-extern int reiserfs_ls (char * dirname);
-extern int reiserfs_open (char * filename);
-extern int reiserfs_read (char * buf, unsigned len);
+extern int reiserfs_set_blk_dev(block_dev_desc_t *rbdd, int part);
+extern int reiserfs_ls (char *dirname);
+extern int reiserfs_open (char *filename);
+extern int reiserfs_read (char *buf, unsigned len);
 extern int reiserfs_mount (unsigned part_length);

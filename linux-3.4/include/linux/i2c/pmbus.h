@@ -36,10 +36,10 @@
  * communication errors for no explicable reason. For such chips, checking
  * the status register must be disabled.
  */
-#define PMBUS_SKIP_STATUS_CHECK (1 << 0)
+#define PMBUS_SKIP_STATUS_CHECK	(1 << 0)
 
 struct pmbus_platform_data {
-  u32 flags;    /* Device specific flags */
+	u32 flags;		/* Device specific flags */
 };
 
 #endif /* _PMBUS_H_ */

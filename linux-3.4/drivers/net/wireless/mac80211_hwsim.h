@@ -23,9 +23,9 @@
  *
  */
 enum hwsim_tx_control_flags {
-  HWSIM_TX_CTL_REQ_TX_STATUS    = BIT (0),
-  HWSIM_TX_CTL_NO_ACK     = BIT (1),
-  HWSIM_TX_STAT_ACK     = BIT (2),
+	HWSIM_TX_CTL_REQ_TX_STATUS		= BIT(0),
+	HWSIM_TX_CTL_NO_ACK			= BIT(1),
+	HWSIM_TX_STAT_ACK			= BIT(2),
 };
 
 /**
@@ -55,24 +55,24 @@ enum hwsim_tx_control_flags {
  * @HWSIM_CMD_UNSPEC: unspecified command to catch errors
  *
  * @HWSIM_CMD_REGISTER: request to register and received all broadcasted
- *  frames by any mac80211_hwsim radio device.
+ *	frames by any mac80211_hwsim radio device.
  * @HWSIM_CMD_FRAME: send/receive a broadcasted frame from/to kernel/user
  * space, uses:
- *  %HWSIM_ATTR_ADDR_TRANSMITTER, %HWSIM_ATTR_ADDR_RECEIVER,
- *  %HWSIM_ATTR_FRAME, %HWSIM_ATTR_FLAGS, %HWSIM_ATTR_RX_RATE,
- *  %HWSIM_ATTR_SIGNAL, %HWSIM_ATTR_COOKIE
+ *	%HWSIM_ATTR_ADDR_TRANSMITTER, %HWSIM_ATTR_ADDR_RECEIVER,
+ *	%HWSIM_ATTR_FRAME, %HWSIM_ATTR_FLAGS, %HWSIM_ATTR_RX_RATE,
+ *	%HWSIM_ATTR_SIGNAL, %HWSIM_ATTR_COOKIE
  * @HWSIM_CMD_TX_INFO_FRAME: Transmission info report from user space to
  * kernel, uses:
- *  %HWSIM_ATTR_ADDR_TRANSMITTER, %HWSIM_ATTR_FLAGS,
- *  %HWSIM_ATTR_TX_INFO, %HWSIM_ATTR_SIGNAL, %HWSIM_ATTR_COOKIE
+ *	%HWSIM_ATTR_ADDR_TRANSMITTER, %HWSIM_ATTR_FLAGS,
+ *	%HWSIM_ATTR_TX_INFO, %HWSIM_ATTR_SIGNAL, %HWSIM_ATTR_COOKIE
  * @__HWSIM_CMD_MAX: enum limit
  */
 enum {
-  HWSIM_CMD_UNSPEC,
-  HWSIM_CMD_REGISTER,
-  HWSIM_CMD_FRAME,
-  HWSIM_CMD_TX_INFO_FRAME,
-  __HWSIM_CMD_MAX,
+	HWSIM_CMD_UNSPEC,
+	HWSIM_CMD_REGISTER,
+	HWSIM_CMD_FRAME,
+	HWSIM_CMD_TX_INFO_FRAME,
+	__HWSIM_CMD_MAX,
 };
 #define HWSIM_CMD_MAX (_HWSIM_CMD_MAX - 1)
 
@@ -82,16 +82,16 @@ enum {
  * @HWSIM_ATTR_UNSPEC: unspecified attribute to catch errors
  *
  * @HWSIM_ATTR_ADDR_RECEIVER: MAC address of the radio device that
- *  the frame is broadcasted to
+ *	the frame is broadcasted to
  * @HWSIM_ATTR_ADDR_TRANSMITTER: MAC address of the radio device that
- *  the frame was broadcasted from
+ *	the frame was broadcasted from
  * @HWSIM_ATTR_FRAME: Data array
  * @HWSIM_ATTR_FLAGS: mac80211 transmission flags, used to process
-  properly the frame at user space
+	properly the frame at user space
  * @HWSIM_ATTR_RX_RATE: estimated rx rate index for this frame at user
-  space
+	space
  * @HWSIM_ATTR_SIGNAL: estimated RX signal for this frame at user
-  space
+	space
  * @HWSIM_ATTR_TX_INFO: ieee80211_tx_rate array
  * @HWSIM_ATTR_COOKIE: sk_buff cookie to identify the frame
  * @__HWSIM_ATTR_MAX: enum limit
@@ -99,16 +99,16 @@ enum {
 
 
 enum {
-  HWSIM_ATTR_UNSPEC,
-  HWSIM_ATTR_ADDR_RECEIVER,
-  HWSIM_ATTR_ADDR_TRANSMITTER,
-  HWSIM_ATTR_FRAME,
-  HWSIM_ATTR_FLAGS,
-  HWSIM_ATTR_RX_RATE,
-  HWSIM_ATTR_SIGNAL,
-  HWSIM_ATTR_TX_INFO,
-  HWSIM_ATTR_COOKIE,
-  __HWSIM_ATTR_MAX,
+	HWSIM_ATTR_UNSPEC,
+	HWSIM_ATTR_ADDR_RECEIVER,
+	HWSIM_ATTR_ADDR_TRANSMITTER,
+	HWSIM_ATTR_FRAME,
+	HWSIM_ATTR_FLAGS,
+	HWSIM_ATTR_RX_RATE,
+	HWSIM_ATTR_SIGNAL,
+	HWSIM_ATTR_TX_INFO,
+	HWSIM_ATTR_COOKIE,
+	__HWSIM_ATTR_MAX,
 };
 #define HWSIM_ATTR_MAX (__HWSIM_ATTR_MAX - 1)
 
@@ -126,8 +126,8 @@ enum {
  *
  */
 struct hwsim_tx_rate {
-  s8 idx;
-  u8 count;
+	s8 idx;
+	u8 count;
 } __packed;
 
 #endif /* __MAC80211_HWSIM_H */

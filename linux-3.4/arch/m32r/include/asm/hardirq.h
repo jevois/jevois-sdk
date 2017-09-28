@@ -5,9 +5,9 @@
 #include <asm/irq.h>
 
 #if NR_IRQS > 256
-#define HARDIRQ_BITS  9
+#define HARDIRQ_BITS	9
 #else
-#define HARDIRQ_BITS  8
+#define HARDIRQ_BITS	8
 #endif
 
 /*

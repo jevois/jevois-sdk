@@ -8,4 +8,4 @@
 extern struct matrox_switch matrox_millennium;
 #endif
 
-#endif  /* __MATROXFB_TI3026_H__ */
+#endif	/* __MATROXFB_TI3026_H__ */

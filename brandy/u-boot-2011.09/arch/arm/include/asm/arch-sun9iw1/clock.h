@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -26,21 +26,21 @@
 #define _SUNXI_CLOCK_H
 
 
-extern int sunxi_clock_get_corepll (void);
-extern int sunxi_clock_set_corepll (int frequency, int core_vol);
-extern int sunxi_clock_set_pll6 (void);
-extern int sunxi_clock_get_pll6 (void);
-extern int sunxi_clock_get_pll4_periph1 (void);
-extern int sunxi_clock_get_pll12_periph2 (void);
-extern int sunxi_clock_get_pll5_ve (void);
-extern int sunxi_clock_get_pll6_ddr (void);
+extern int sunxi_clock_get_corepll(void);
+extern int sunxi_clock_set_corepll(int frequency, int core_vol);
+extern int sunxi_clock_set_pll6(void);
+extern int sunxi_clock_get_pll6(void);
+extern int sunxi_clock_get_pll4_periph1(void);
+extern int sunxi_clock_get_pll12_periph2(void);
+extern int sunxi_clock_get_pll5_ve(void);
+extern int sunxi_clock_get_pll6_ddr(void);
 
-extern int sunxi_clock_set_C1corepll (int frequency, int core_vol);
-extern int sunxi_clock_get_C1corepll (void);
+extern int sunxi_clock_set_C1corepll(int frequency, int core_vol);
+extern int sunxi_clock_get_C1corepll(void);
 
-extern void set_pll (void);
-extern void reset_pll (void);
+extern void set_pll(void);
+extern void reset_pll(void);
 
-extern void set_gpio_gate (void);
+extern void set_gpio_gate(void);
 
 #endif /* _SUNXI_CLOCK_H */

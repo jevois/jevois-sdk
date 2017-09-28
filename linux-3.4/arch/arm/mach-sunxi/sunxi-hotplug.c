@@ -56,73 +56,73 @@ static cpumask_t dead_cpus;
 #define IS_WFI_MODE(cpu)    (1)
 #endif
 
-int  sunxi_cpu_kill (unsigned int cpu)
+int  sunxi_cpu_kill(unsigned int cpu)
 {
-  int k;
-  int tmp_cpu = get_cpu();
-  put_cpu();
-  pr_info ("[hotplug]: cpu(%d) try to kill cpu(%d)\n", tmp_cpu, cpu);
-  
-  for (k = 0; k < 1000; k++) {
-    if (cpumask_test_cpu (cpu, &dead_cpus) && IS_WFI_MODE (cpu) ) {
-      /* power-off cpu */
-      disable_cpu (cpu);
-      
-      pr_info ("[hotplug]: cpu%d is killed! .\n", cpu);
-      
-      return 1;
-    }
-    mdelay (1);
-  }
-  
-  pr_err ("[hotplug]: try to kill cpu:%d failed!\n", cpu);
-  return 0;
+	int k;
+	int tmp_cpu = get_cpu();
+	put_cpu();
+	pr_info("[hotplug]: cpu(%d) try to kill cpu(%d)\n", tmp_cpu, cpu);
+
+	for (k = 0; k < 1000; k++) {
+		if (cpumask_test_cpu(cpu, &dead_cpus) && IS_WFI_MODE(cpu)) {
+			/* power-off cpu */
+		   	disable_cpu(cpu);
+
+			pr_info("[hotplug]: cpu%d is killed! .\n", cpu);
+
+			return 1;
+		}
+		mdelay(1);
+	}
+
+	pr_err("[hotplug]: try to kill cpu:%d failed!\n", cpu);
+	return 0;
 }
 
-void sunxi_cpu_die (unsigned int cpu)
+void sunxi_cpu_die(unsigned int cpu)
 {
-  unsigned long actlr;
-  
-  gic_cpu_exit (0);
-  
-  /* notify platform_cpu_kill() that hardware shutdown is finished */
-  cpumask_set_cpu (cpu, &dead_cpus);
-  
-  /* step1: disable cache */
-  asm ("mrc    p15, 0, %0, c1, c0, 0" : "=r" (actlr) );
-  actlr &= ~ (1 << 2);
-  asm ("mcr    p15, 0, %0, c1, c0, 0\n" : : "r" (actlr) );
-  
-  /* step2: clean and ivalidate L1 cache */
-  flush_cache_all();
-  
-  /* step3: execute a CLREX instruction */
-  asm ("clrex" : : : "memory", "cc");
-  
-  /* step4: switch cpu from SMP mode to AMP mode, aim is to disable cache coherency */
-  asm ("mrc    p15, 0, %0, c1, c0, 1" : "=r" (actlr) );
-  actlr &= ~ (1 << 6);
-  asm ("mcr    p15, 0, %0, c1, c0, 1\n" : : "r" (actlr) );
-  
-  /* step5: execute an ISB instruction */
-  isb();
-  /* step6: execute a DSB instruction  */
-  dsb();
-  
-  /* step7: execute a WFI instruction */
-  while (1) {
-    asm ("wfi" : : : "memory", "cc");
-  }
+	unsigned long actlr;
+
+	gic_cpu_exit(0);
+
+	/* notify platform_cpu_kill() that hardware shutdown is finished */
+	cpumask_set_cpu(cpu, &dead_cpus);
+
+	/* step1: disable cache */
+	asm("mrc    p15, 0, %0, c1, c0, 0" : "=r" (actlr) );
+	actlr &= ~(1<<2);
+	asm("mcr    p15, 0, %0, c1, c0, 0\n" : : "r" (actlr));
+
+	/* step2: clean and ivalidate L1 cache */
+	flush_cache_all();
+
+	/* step3: execute a CLREX instruction */
+	asm("clrex" : : : "memory", "cc");
+
+	/* step4: switch cpu from SMP mode to AMP mode, aim is to disable cache coherency */
+	asm("mrc    p15, 0, %0, c1, c0, 1" : "=r" (actlr) );
+	actlr &= ~(1<<6);
+	asm("mcr    p15, 0, %0, c1, c0, 1\n" : : "r" (actlr));
+
+	/* step5: execute an ISB instruction */
+	isb();
+	/* step6: execute a DSB instruction  */
+	dsb();
+
+	/* step7: execute a WFI instruction */
+	while(1) {
+		asm("wfi" : : : "memory", "cc");
+	}
 }
 
-int  sunxi_cpu_disable (unsigned int cpu)
+int  sunxi_cpu_disable(unsigned int cpu)
 {
-  cpumask_clear_cpu (cpu, &dead_cpus);
-  /*
-   * we don't allow CPU 0 to be shutdown (it is still too special
-   * e.g. clock tick interrupts)
-   */
-  return cpu == 0 ? -EPERM : 0;
+	cpumask_clear_cpu(cpu, &dead_cpus);
+	/*
+	 * we don't allow CPU 0 to be shutdown (it is still too special
+	 * e.g. clock tick interrupts)
+	 */
+	return cpu == 0 ? -EPERM : 0;
 }
 #endif
 

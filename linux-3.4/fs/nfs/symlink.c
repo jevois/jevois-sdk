@@ -26,53 +26,53 @@
  * and straight-forward than readdir caching.
  */
 
-static int nfs_symlink_filler (struct inode * inode, struct page * page)
+static int nfs_symlink_filler(struct inode *inode, struct page *page)
 {
-  int error;
-  
-  error = NFS_PROTO (inode)->readlink (inode, page, 0, PAGE_SIZE);
-  if (error < 0)
-  { goto error; }
-  SetPageUptodate (page);
-  unlock_page (page);
-  return 0;
-  
+	int error;
+
+	error = NFS_PROTO(inode)->readlink(inode, page, 0, PAGE_SIZE);
+	if (error < 0)
+		goto error;
+	SetPageUptodate(page);
+	unlock_page(page);
+	return 0;
+
 error:
-  SetPageError (page);
-  unlock_page (page);
-  return -EIO;
+	SetPageError(page);
+	unlock_page(page);
+	return -EIO;
 }
 
-static void * nfs_follow_link (struct dentry * dentry, struct nameidata * nd)
+static void *nfs_follow_link(struct dentry *dentry, struct nameidata *nd)
 {
-  struct inode * inode = dentry->d_inode;
-  struct page * page;
-  void * err;
-  
-  err = ERR_PTR (nfs_revalidate_mapping (inode, inode->i_mapping) );
-  if (err)
-  { goto read_failed; }
-  page = read_cache_page (&inode->i_data, 0,
-                          (filler_t *) nfs_symlink_filler, inode);
-  if (IS_ERR (page) ) {
-    err = page;
-    goto read_failed;
-  }
-  nd_set_link (nd, kmap (page) );
-  return page;
-  
+	struct inode *inode = dentry->d_inode;
+	struct page *page;
+	void *err;
+
+	err = ERR_PTR(nfs_revalidate_mapping(inode, inode->i_mapping));
+	if (err)
+		goto read_failed;
+	page = read_cache_page(&inode->i_data, 0,
+				(filler_t *)nfs_symlink_filler, inode);
+	if (IS_ERR(page)) {
+		err = page;
+		goto read_failed;
+	}
+	nd_set_link(nd, kmap(page));
+	return page;
+
 read_failed:
-  nd_set_link (nd, err);
-  return NULL;
+	nd_set_link(nd, err);
+	return NULL;
 }
 
 /*
  * symlinks can't do much...
  */
 const struct inode_operations nfs_symlink_inode_operations = {
-  .readlink = generic_readlink,
-  .follow_link  = nfs_follow_link,
-  .put_link = page_put_link,
-  .getattr  = nfs_getattr,
-  .setattr  = nfs_setattr,
+	.readlink	= generic_readlink,
+	.follow_link	= nfs_follow_link,
+	.put_link	= page_put_link,
+	.getattr	= nfs_getattr,
+	.setattr	= nfs_setattr,
 };

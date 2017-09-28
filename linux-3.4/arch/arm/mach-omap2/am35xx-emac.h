@@ -6,10 +6,10 @@
  * published by the Free Software Foundation.
  */
 
-#define AM35XX_DEFAULT_MDIO_FREQUENCY 1000000
+#define AM35XX_DEFAULT_MDIO_FREQUENCY	1000000
 
 #if defined(CONFIG_TI_DAVINCI_EMAC) || defined(CONFIG_TI_DAVINCI_EMAC_MODULE)
-void am35xx_emac_init (unsigned long mdio_bus_freq, u8 rmii_en);
+void am35xx_emac_init(unsigned long mdio_bus_freq, u8 rmii_en);
 #else
-static inline void am35xx_emac_init (unsigned long mdio_bus_freq, u8 rmii_en) {}
+static inline void am35xx_emac_init(unsigned long mdio_bus_freq, u8 rmii_en) {}
 #endif

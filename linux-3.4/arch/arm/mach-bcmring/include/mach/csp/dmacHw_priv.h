@@ -28,41 +28,41 @@
 
 /* Data type for DMA Link List Item */
 typedef struct {
-  uint32_t sar;   /* Source Address Register.
-           Address must be aligned to CTLx.SRC_TR_WIDTH.             */
-  uint32_t dar;   /* Destination Address Register.
-           Address must be aligned to CTLx.DST_TR_WIDTH.             */
-  uint32_t llpPhy;  /* LLP contains the physical address of the next descriptor for block chaining using linked lists.
-           Address MUST be aligned to a 32-bit boundary.             */
-  dmacHw_REG64_t ctl; /* Control Register. 64 bits */
-  uint32_t sstat;   /* Source Status Register */
-  uint32_t dstat;   /* Destination Status Register */
-  uint32_t devCtl;  /* Device specific control information */
-  uint32_t llp;   /* LLP contains the virtual address of the next descriptor for block chaining using linked lists. */
+	uint32_t sar;		/* Source Address Register.
+				   Address must be aligned to CTLx.SRC_TR_WIDTH.             */
+	uint32_t dar;		/* Destination Address Register.
+				   Address must be aligned to CTLx.DST_TR_WIDTH.             */
+	uint32_t llpPhy;	/* LLP contains the physical address of the next descriptor for block chaining using linked lists.
+				   Address MUST be aligned to a 32-bit boundary.             */
+	dmacHw_REG64_t ctl;	/* Control Register. 64 bits */
+	uint32_t sstat;		/* Source Status Register */
+	uint32_t dstat;		/* Destination Status Register */
+	uint32_t devCtl;	/* Device specific control information */
+	uint32_t llp;		/* LLP contains the virtual address of the next descriptor for block chaining using linked lists. */
 } dmacHw_DESC_t;
 
 /*
  *  Descriptor ring pointers
  */
 typedef struct {
-  int num;    /* Number of link items */
-  dmacHw_DESC_t * pHead; /* Head of descriptor ring (for writing) */
-  dmacHw_DESC_t * pTail; /* Tail of descriptor ring (for reading) */
-  dmacHw_DESC_t * pProg; /* Descriptor to program the channel (for programming the channel register) */
-  dmacHw_DESC_t * pEnd; /* End of current descriptor chain */
-  dmacHw_DESC_t * pFree; /* Descriptor to free memory (freeing dynamic memory) */
-  uint32_t virt2PhyOffset;  /* Virtual to physical address offset for the descriptor ring */
+	int num;		/* Number of link items */
+	dmacHw_DESC_t *pHead;	/* Head of descriptor ring (for writing) */
+	dmacHw_DESC_t *pTail;	/* Tail of descriptor ring (for reading) */
+	dmacHw_DESC_t *pProg;	/* Descriptor to program the channel (for programming the channel register) */
+	dmacHw_DESC_t *pEnd;	/* End of current descriptor chain */
+	dmacHw_DESC_t *pFree;	/* Descriptor to free memory (freeing dynamic memory) */
+	uint32_t virt2PhyOffset;	/* Virtual to physical address offset for the descriptor ring */
 } dmacHw_DESC_RING_t;
 
 /*
  *  DMA channel control block
  */
 typedef struct {
-  uint32_t module;  /* DMA controller module (0-1) */
-  uint32_t channel; /* DMA channel (0-7) */
-  volatile uint32_t varDataStarted; /* Flag indicating variable data channel is enabled */
-  volatile uint32_t descUpdated;  /* Flag to indicate descriptor update is complete */
-  void * userData;  /* Channel specifc user data */
+	uint32_t module;	/* DMA controller module (0-1) */
+	uint32_t channel;	/* DMA channel (0-7) */
+	volatile uint32_t varDataStarted;	/* Flag indicating variable data channel is enabled */
+	volatile uint32_t descUpdated;	/* Flag to indicate descriptor update is complete */
+	void *userData;		/* Channel specifc user data */
 } dmacHw_CBLK_t;
 
 #define dmacHw_ASSERT(a)                  if (!(a)) while (1)
@@ -90,20 +90,18 @@ typedef struct {
 *     None
 */
 /****************************************************************************/
-static inline dmacHw_TRANSACTION_WIDTH_e dmacHw_GetNextTrWidth (dmacHw_TRANSACTION_WIDTH_e tw /*   [ IN ] Current transaction width */
-                                                               ) {
-  if (tw & dmacHw_REG_CTL_SRC_TR_WIDTH_MASK) {
-    return ( (tw >> dmacHw_REG_CTL_SRC_TR_WIDTH_SHIFT) -
-             1) << dmacHw_REG_CTL_SRC_TR_WIDTH_SHIFT;
-  }
-  else
-    if (tw & dmacHw_REG_CTL_DST_TR_WIDTH_MASK) {
-      return ( (tw >> dmacHw_REG_CTL_DST_TR_WIDTH_SHIFT) -
-               1) << dmacHw_REG_CTL_DST_TR_WIDTH_SHIFT;
-    }
-    
-  /* Default return  */
-  return dmacHw_SRC_TRANSACTION_WIDTH_8;
+static inline dmacHw_TRANSACTION_WIDTH_e dmacHw_GetNextTrWidth(dmacHw_TRANSACTION_WIDTH_e tw	/*   [ IN ] Current transaction width */
+    ) {
+	if (tw & dmacHw_REG_CTL_SRC_TR_WIDTH_MASK) {
+		return ((tw >> dmacHw_REG_CTL_SRC_TR_WIDTH_SHIFT) -
+			 1) << dmacHw_REG_CTL_SRC_TR_WIDTH_SHIFT;
+	} else if (tw & dmacHw_REG_CTL_DST_TR_WIDTH_MASK) {
+		return ((tw >> dmacHw_REG_CTL_DST_TR_WIDTH_SHIFT) -
+			 1) << dmacHw_REG_CTL_DST_TR_WIDTH_SHIFT;
+	}
+
+	/* Default return  */
+	return dmacHw_SRC_TRANSACTION_WIDTH_8;
 }
 
 /****************************************************************************/
@@ -117,31 +115,31 @@ static inline dmacHw_TRANSACTION_WIDTH_e dmacHw_GetNextTrWidth (dmacHw_TRANSACTI
 *     None
 */
 /****************************************************************************/
-static inline int dmacHw_GetTrWidthInBytes (dmacHw_TRANSACTION_WIDTH_e tw /*   [ IN ]  Transaction width */
-                                           ) {
-  int width = 1;
-  switch (tw) {
-  case dmacHw_SRC_TRANSACTION_WIDTH_8:
-    width = 1;
-    break;
-  case dmacHw_SRC_TRANSACTION_WIDTH_16:
-  case dmacHw_DST_TRANSACTION_WIDTH_16:
-    width = 2;
-    break;
-  case dmacHw_SRC_TRANSACTION_WIDTH_32:
-  case dmacHw_DST_TRANSACTION_WIDTH_32:
-    width = 4;
-    break;
-  case dmacHw_SRC_TRANSACTION_WIDTH_64:
-  case dmacHw_DST_TRANSACTION_WIDTH_64:
-    width = 8;
-    break;
-  default:
-    dmacHw_ASSERT (0);
-  }
-  
-  /* Default transaction width */
-  return width;
+static inline int dmacHw_GetTrWidthInBytes(dmacHw_TRANSACTION_WIDTH_e tw	/*   [ IN ]  Transaction width */
+    ) {
+	int width = 1;
+	switch (tw) {
+	case dmacHw_SRC_TRANSACTION_WIDTH_8:
+		width = 1;
+		break;
+	case dmacHw_SRC_TRANSACTION_WIDTH_16:
+	case dmacHw_DST_TRANSACTION_WIDTH_16:
+		width = 2;
+		break;
+	case dmacHw_SRC_TRANSACTION_WIDTH_32:
+	case dmacHw_DST_TRANSACTION_WIDTH_32:
+		width = 4;
+		break;
+	case dmacHw_SRC_TRANSACTION_WIDTH_64:
+	case dmacHw_DST_TRANSACTION_WIDTH_64:
+		width = 8;
+		break;
+	default:
+		dmacHw_ASSERT(0);
+	}
+
+	/* Default transaction width */
+	return width;
 }
 
 #endif /* _DMACHW_PRIV_H */

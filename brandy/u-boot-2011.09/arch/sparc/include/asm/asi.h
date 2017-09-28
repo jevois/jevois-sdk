@@ -29,4 +29,4 @@
 /* ASI numbers are processor implementation specific */
 #include <asm/arch/asi.h>
 
-#endif  /* _SPARC_ASI_H */
+#endif	/* _SPARC_ASI_H */

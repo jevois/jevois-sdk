@@ -91,22 +91,22 @@
 
 #define LASI_82596_DRIVER_VERSION "LASI 82596 driver - Revision: 1.30"
 
-#define PA_I82596_RESET   0 /* Offsets relative to LASI-LAN-Addr.*/
-#define PA_CPU_PORT_L_ACCESS  4
-#define PA_CHANNEL_ATTENTION  8
+#define PA_I82596_RESET		0	/* Offsets relative to LASI-LAN-Addr.*/
+#define PA_CPU_PORT_L_ACCESS	4
+#define PA_CHANNEL_ATTENTION	8
 
-#define OPT_SWAP_PORT 0x0001  /* Need to wordswp on the MPU port */
+#define OPT_SWAP_PORT	0x0001	/* Need to wordswp on the MPU port */
 
 #define DMA_ALLOC                        dma_alloc_noncoherent
 #define DMA_FREE                         dma_free_noncoherent
 #define DMA_WBACK(ndev, addr, len) \
-  do { dma_cache_sync((ndev)->dev.parent, (void *)addr, len, DMA_TO_DEVICE); } while (0)
+	do { dma_cache_sync((ndev)->dev.parent, (void *)addr, len, DMA_TO_DEVICE); } while (0)
 
 #define DMA_INV(ndev, addr, len) \
-  do { dma_cache_sync((ndev)->dev.parent, (void *)addr, len, DMA_FROM_DEVICE); } while (0)
+	do { dma_cache_sync((ndev)->dev.parent, (void *)addr, len, DMA_FROM_DEVICE); } while (0)
 
 #define DMA_WBACK_INV(ndev, addr, len) \
-  do { dma_cache_sync((ndev)->dev.parent, (void *)addr, len, DMA_BIDIRECTIONAL); } while (0)
+	do { dma_cache_sync((ndev)->dev.parent, (void *)addr, len, DMA_BIDIRECTIONAL); } while (0)
 
 #define SYSBUS      0x0000006c;
 
@@ -116,124 +116,123 @@
 
 #include "lib82596.c"
 
-MODULE_AUTHOR ("Richard Hirst");
-MODULE_DESCRIPTION ("i82596 driver");
-MODULE_LICENSE ("GPL");
-module_param (i596_debug, int, 0);
-MODULE_PARM_DESC (i596_debug, "lasi_82596 debug mask");
+MODULE_AUTHOR("Richard Hirst");
+MODULE_DESCRIPTION("i82596 driver");
+MODULE_LICENSE("GPL");
+module_param(i596_debug, int, 0);
+MODULE_PARM_DESC(i596_debug, "lasi_82596 debug mask");
 
-static inline void ca (struct net_device * dev)
+static inline void ca(struct net_device *dev)
 {
-  gsc_writel (0, dev->base_addr + PA_CHANNEL_ATTENTION);
+	gsc_writel(0, dev->base_addr + PA_CHANNEL_ATTENTION);
 }
 
 
-static void mpu_port (struct net_device * dev, int c, dma_addr_t x)
+static void mpu_port(struct net_device *dev, int c, dma_addr_t x)
 {
-  struct i596_private * lp = netdev_priv (dev);
-  
-  u32 v = (u32) (c) | (u32) (x);
-  u16 a, b;
-  
-  if (lp->options & OPT_SWAP_PORT) {
-    a = v >> 16;
-    b = v & 0xffff;
-  }
-  else {
-    a = v & 0xffff;
-    b = v >> 16;
-  }
-  
-  gsc_writel (a, dev->base_addr + PA_CPU_PORT_L_ACCESS);
-  udelay (1);
-  gsc_writel (b, dev->base_addr + PA_CPU_PORT_L_ACCESS);
+	struct i596_private *lp = netdev_priv(dev);
+
+	u32 v = (u32) (c) | (u32) (x);
+	u16 a, b;
+
+	if (lp->options & OPT_SWAP_PORT) {
+		a = v >> 16;
+		b = v & 0xffff;
+	} else {
+		a = v & 0xffff;
+		b = v >> 16;
+	}
+
+	gsc_writel(a, dev->base_addr + PA_CPU_PORT_L_ACCESS);
+	udelay(1);
+	gsc_writel(b, dev->base_addr + PA_CPU_PORT_L_ACCESS);
 }
 
-#define LAN_PROM_ADDR 0xF0810000
+#define LAN_PROM_ADDR	0xF0810000
 
 static int __devinit
-lan_init_chip (struct parisc_device * dev)
+lan_init_chip(struct parisc_device *dev)
 {
-  struct  net_device * netdevice;
-  struct i596_private * lp;
-  int retval;
-  int i;
-  
-  if (!dev->irq) {
-    printk (KERN_ERR "%s: IRQ not found for i82596 at 0x%lx\n",
-            __FILE__, (unsigned long) dev->hpa.start);
-    return -ENODEV;
-  }
-  
-  printk (KERN_INFO "Found i82596 at 0x%lx, IRQ %d\n",
-          (unsigned long) dev->hpa.start, dev->irq);
-          
-  netdevice = alloc_etherdev (sizeof (struct i596_private) );
-  if (!netdevice)
-  { return -ENOMEM; }
-  SET_NETDEV_DEV (netdevice, &dev->dev);
-  parisc_set_drvdata (dev, netdevice);
-  
-  netdevice->base_addr = dev->hpa.start;
-  netdevice->irq = dev->irq;
-  
-  if (pdc_lan_station_id (netdevice->dev_addr, netdevice->base_addr) ) {
-    for (i = 0; i < 6; i++) {
-      netdevice->dev_addr[i] = gsc_readb (LAN_PROM_ADDR + i);
-    }
-    printk (KERN_INFO
-            "%s: MAC of HP700 LAN read from EEPROM\n", __FILE__);
-  }
-  
-  lp = netdev_priv (netdevice);
-  lp->options = dev->id.sversion == 0x72 ? OPT_SWAP_PORT : 0;
-  
-  retval = i82596_probe (netdevice);
-  if (retval) {
-    free_netdev (netdevice);
-    return -ENODEV;
-  }
-  return retval;
+	struct	net_device *netdevice;
+	struct i596_private *lp;
+	int	retval;
+	int i;
+
+	if (!dev->irq) {
+		printk(KERN_ERR "%s: IRQ not found for i82596 at 0x%lx\n",
+			__FILE__, (unsigned long)dev->hpa.start);
+		return -ENODEV;
+	}
+
+	printk(KERN_INFO "Found i82596 at 0x%lx, IRQ %d\n",
+			(unsigned long)dev->hpa.start, dev->irq);
+
+	netdevice = alloc_etherdev(sizeof(struct i596_private));
+	if (!netdevice)
+		return -ENOMEM;
+	SET_NETDEV_DEV(netdevice, &dev->dev);
+	parisc_set_drvdata (dev, netdevice);
+
+	netdevice->base_addr = dev->hpa.start;
+	netdevice->irq = dev->irq;
+
+	if (pdc_lan_station_id(netdevice->dev_addr, netdevice->base_addr)) {
+		for (i = 0; i < 6; i++) {
+			netdevice->dev_addr[i] = gsc_readb(LAN_PROM_ADDR + i);
+		}
+		printk(KERN_INFO
+		       "%s: MAC of HP700 LAN read from EEPROM\n", __FILE__);
+	}
+
+	lp = netdev_priv(netdevice);
+	lp->options = dev->id.sversion == 0x72 ? OPT_SWAP_PORT : 0;
+
+	retval = i82596_probe(netdevice);
+	if (retval) {
+		free_netdev(netdevice);
+		return -ENODEV;
+	}
+	return retval;
 }
 
-static int __devexit lan_remove_chip (struct parisc_device * pdev)
+static int __devexit lan_remove_chip (struct parisc_device *pdev)
 {
-  struct net_device * dev = parisc_get_drvdata (pdev);
-  struct i596_private * lp = netdev_priv (dev);
-  
-  unregister_netdev (dev);
-  DMA_FREE (&pdev->dev, sizeof (struct i596_private),
-            (void *) lp->dma, lp->dma_addr);
-  free_netdev (dev);
-  return 0;
+	struct net_device *dev = parisc_get_drvdata(pdev);
+	struct i596_private *lp = netdev_priv(dev);
+
+	unregister_netdev (dev);
+	DMA_FREE(&pdev->dev, sizeof(struct i596_private),
+		 (void *)lp->dma, lp->dma_addr);
+	free_netdev (dev);
+	return 0;
 }
 
 static struct parisc_device_id lan_tbl[] = {
-  { HPHW_FIO, HVERSION_REV_ANY_ID, HVERSION_ANY_ID, 0x0008a },
-  { HPHW_FIO, HVERSION_REV_ANY_ID, HVERSION_ANY_ID, 0x00072 },
-  { 0, }
+	{ HPHW_FIO, HVERSION_REV_ANY_ID, HVERSION_ANY_ID, 0x0008a },
+	{ HPHW_FIO, HVERSION_REV_ANY_ID, HVERSION_ANY_ID, 0x00072 },
+	{ 0, }
 };
 
-MODULE_DEVICE_TABLE (parisc, lan_tbl);
+MODULE_DEVICE_TABLE(parisc, lan_tbl);
 
 static struct parisc_driver lan_driver = {
-  .name   = "lasi_82596",
-  .id_table = lan_tbl,
-  .probe    = lan_init_chip,
-  .remove         = __devexit_p (lan_remove_chip),
+	.name		= "lasi_82596",
+	.id_table	= lan_tbl,
+	.probe		= lan_init_chip,
+	.remove         = __devexit_p(lan_remove_chip),
 };
 
-static int __devinit lasi_82596_init (void)
+static int __devinit lasi_82596_init(void)
 {
-  printk (KERN_INFO LASI_82596_DRIVER_VERSION "\n");
-  return register_parisc_driver (&lan_driver);
+	printk(KERN_INFO LASI_82596_DRIVER_VERSION "\n");
+	return register_parisc_driver(&lan_driver);
 }
 
-module_init (lasi_82596_init);
+module_init(lasi_82596_init);
 
-static void __exit lasi_82596_exit (void)
+static void __exit lasi_82596_exit(void)
 {
-  unregister_parisc_driver (&lan_driver);
+	unregister_parisc_driver(&lan_driver);
 }
 
-module_exit (lasi_82596_exit);
+module_exit(lasi_82596_exit);

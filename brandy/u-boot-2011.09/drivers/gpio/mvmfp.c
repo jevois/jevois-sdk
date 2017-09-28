@@ -50,41 +50,40 @@
  * The Configureation value is constructed using MFP()
  * array consists of 32bit values as defined in MFP(xx,xx..) macro
  */
-void mfp_config (u32 * mfp_cfgs)
+void mfp_config(u32 *mfp_cfgs)
 {
-  u32 * p_mfpr = NULL;
-  u32 cfg_val, val;
-  
-  do {
-    cfg_val = *mfp_cfgs++;
-    /* exit if End of configuration table detected */
-    if (cfg_val == MFP_EOC)
-    { break; }
-    
-    p_mfpr = (u32 *) (MV_MFPR_BASE
-                      + MFP_REG_GET_OFFSET (cfg_val) );
-                      
-    /* Write a mfg register as per configuration */
-    val = 0;
-    if (cfg_val & MFP_AF_FLAG)
-      /* Abstract and program Afternate-Func Selection */
-    { val |= cfg_val & MFP_AF_MASK; }
-    if (cfg_val & MFP_EDGE_FLAG)
-      /* Abstract and program Edge configuration */
-    { val |= cfg_val & MFP_LPM_EDGE_MASK; }
-    if (cfg_val & MFP_DRIVE_FLAG)
-      /* Abstract and program Drive configuration */
-    { val |= cfg_val & MFP_DRIVE_MASK; }
-    if (cfg_val & MFP_PULL_FLAG)
-      /* Abstract and program Pullup/down configuration */
-    { val |= cfg_val & MFP_PULL_MASK; }
-    
-    writel (val, p_mfpr);
-  }
-  while (1);
-  /*
-   * perform a read-back of any MFPR register to make sure the
-   * previous writings are finished
-   */
-  readl (p_mfpr);
+	u32 *p_mfpr = NULL;
+	u32 cfg_val, val;
+
+	do {
+		cfg_val = *mfp_cfgs++;
+		/* exit if End of configuration table detected */
+		if (cfg_val == MFP_EOC)
+			break;
+
+		p_mfpr = (u32 *)(MV_MFPR_BASE
+				+ MFP_REG_GET_OFFSET(cfg_val));
+
+		/* Write a mfg register as per configuration */
+		val = 0;
+		if (cfg_val & MFP_AF_FLAG)
+			/* Abstract and program Afternate-Func Selection */
+			val |= cfg_val & MFP_AF_MASK;
+		if (cfg_val & MFP_EDGE_FLAG)
+			/* Abstract and program Edge configuration */
+			val |= cfg_val & MFP_LPM_EDGE_MASK;
+		if (cfg_val & MFP_DRIVE_FLAG)
+			/* Abstract and program Drive configuration */
+			val |= cfg_val & MFP_DRIVE_MASK;
+		if (cfg_val & MFP_PULL_FLAG)
+			/* Abstract and program Pullup/down configuration */
+			val |= cfg_val & MFP_PULL_MASK;
+
+		writel(val, p_mfpr);
+	} while (1);
+	/*
+	 * perform a read-back of any MFPR register to make sure the
+	 * previous writings are finished
+	 */
+	readl(p_mfpr);
 }

@@ -71,27 +71,27 @@
 
 /*---------------------  Export Functions  --------------------------*/
 
-bool IFRFbWriteEmbeded (unsigned long dwIoBase, unsigned long dwData);
-bool RFbSelectChannel (unsigned long dwIoBase, unsigned char byRFType, unsigned char byChannel);
+bool IFRFbWriteEmbeded(unsigned long dwIoBase, unsigned long dwData);
+bool RFbSelectChannel(unsigned long dwIoBase, unsigned char byRFType, unsigned char byChannel);
 bool RFbInit (
-  PSDevice  pDevice
-);
-bool RFvWriteWakeProgSyn (unsigned long dwIoBase, unsigned char byRFType, unsigned int uChannel);
-bool RFbSetPower (PSDevice pDevice, unsigned int uRATE, unsigned int uCH);
-bool RFbRawSetPower (
-  PSDevice  pDevice,
-  unsigned char byPwr,
-  unsigned int uRATE
-);
+    PSDevice  pDevice
+    );
+bool RFvWriteWakeProgSyn(unsigned long dwIoBase, unsigned char byRFType, unsigned int uChannel);
+bool RFbSetPower(PSDevice pDevice, unsigned int uRATE, unsigned int uCH);
+bool RFbRawSetPower(
+    PSDevice  pDevice,
+    unsigned char byPwr,
+    unsigned int uRATE
+    );
 
 void
-RFvRSSITodBm (
-  PSDevice pDevice,
-  unsigned char byCurrRSSI,
-  long  *  pldBm
-);
+RFvRSSITodBm(
+    PSDevice pDevice,
+    unsigned char byCurrRSSI,
+    long    *pldBm
+    );
 
-bool RFbAL7230SelectChannelPostProcess (unsigned long dwIoBase, unsigned char byOldChannel, unsigned char byNewChannel);
+bool RFbAL7230SelectChannelPostProcess(unsigned long dwIoBase, unsigned char byOldChannel, unsigned char byNewChannel);
 
 #endif
 

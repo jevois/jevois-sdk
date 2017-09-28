@@ -7,100 +7,100 @@
 #define  DSX_MESSAGE_EXCHANGE_BUFFER        0xBF60AC84
 #define  DSX_MESSAGE_EXCHANGE_BUFFER_SIZE   72000
 
-typedef struct stLocalSFAddRequestAlt {
-  B_UINT8                         u8Type;
-  B_UINT8      u8Direction;
-  
-  B_UINT16                        u16TID;
-  B_UINT16                        u16CID;
-  B_UINT16                        u16VCID;
-  
-  
-  stServiceFlowParamSI              sfParameterSet;
-  
-} stLocalSFAddRequestAlt;
+typedef struct stLocalSFAddRequestAlt{
+	B_UINT8                         u8Type;
+	B_UINT8      u8Direction;
 
-typedef struct stLocalSFAddIndicationAlt {
-  B_UINT8                         u8Type;
-  B_UINT8      u8Direction;
-  B_UINT16                         u16TID;
-  B_UINT16                        u16CID;
-  B_UINT16                        u16VCID;
-  stServiceFlowParamSI              sfAuthorizedSet;
-  stServiceFlowParamSI              sfAdmittedSet;
-  stServiceFlowParamSI              sfActiveSet;
-  
-  B_UINT8             u8CC; /**<  Confirmation Code*/
-  B_UINT8             u8Padd;   /**<  8-bit Padding */
-  B_UINT16            u16Padd;  /**< 16 bit Padding */
-} stLocalSFAddIndicationAlt;
-
-typedef struct stLocalSFAddConfirmationAlt {
-  B_UINT8                     u8Type;
-  B_UINT8             u8Direction;
-  B_UINT16          u16TID;
-  B_UINT16                        u16CID;
-  B_UINT16                        u16VCID;
-  stServiceFlowParamSI              sfAuthorizedSet;
-  stServiceFlowParamSI              sfAdmittedSet;
-  stServiceFlowParamSI              sfActiveSet;
-} stLocalSFAddConfirmationAlt;
+	B_UINT16                        u16TID;
+    B_UINT16                        u16CID;
+    B_UINT16                        u16VCID;
 
 
-typedef struct stLocalSFChangeRequestAlt {
-  B_UINT8                         u8Type;
-  B_UINT8      u8Direction;
-  B_UINT16          u16TID;
-  B_UINT16                        u16CID;
-  B_UINT16                        u16VCID;
-  /*
-  */
-  stServiceFlowParamSI              sfAuthorizedSet;
-  stServiceFlowParamSI              sfAdmittedSet;
-  stServiceFlowParamSI              sfActiveSet;
-  
-  B_UINT8             u8CC; /**<  Confirmation Code*/
-  B_UINT8             u8Padd;   /**<  8-bit Padding */
-  B_UINT16            u16Padd;  /**< 16 bit */
-  
-} stLocalSFChangeRequestAlt;
+    stServiceFlowParamSI              sfParameterSet;
 
-typedef struct stLocalSFChangeConfirmationAlt {
-  B_UINT8                         u8Type;
-  B_UINT8               u8Direction;
-  B_UINT16            u16TID;
-  B_UINT16                        u16CID;
-  B_UINT16                        u16VCID;
-  stServiceFlowParamSI              sfAuthorizedSet;
-  stServiceFlowParamSI              sfAdmittedSet;
-  stServiceFlowParamSI              sfActiveSet;
-  
-} stLocalSFChangeConfirmationAlt;
+}stLocalSFAddRequestAlt;
 
-typedef struct stLocalSFChangeIndicationAlt {
-  B_UINT8                         u8Type;
-  B_UINT8      u8Direction;
-  B_UINT16            u16TID;
-  B_UINT16                        u16CID;
-  B_UINT16                        u16VCID;
-  stServiceFlowParamSI              sfAuthorizedSet;
-  stServiceFlowParamSI              sfAdmittedSet;
-  stServiceFlowParamSI              sfActiveSet;
-  
-  B_UINT8             u8CC; /**<  Confirmation Code*/
-  B_UINT8             u8Padd;   /**<  8-bit Padding */
-  B_UINT16            u16Padd;  /**< 16 bit */
-  
-} stLocalSFChangeIndicationAlt;
+typedef struct stLocalSFAddIndicationAlt{
+    B_UINT8                         u8Type;
+	B_UINT8      u8Direction;
+	B_UINT16                         u16TID;
+    B_UINT16                        u16CID;
+    B_UINT16                        u16VCID;
+    stServiceFlowParamSI              sfAuthorizedSet;
+    stServiceFlowParamSI              sfAdmittedSet;
+    stServiceFlowParamSI              sfActiveSet;
 
-ULONG StoreCmControlResponseMessage (PMINI_ADAPTER Adapter, PVOID pvBuffer, UINT * puBufferLength);
+	B_UINT8 						u8CC;	/**<  Confirmation Code*/
+	B_UINT8 						u8Padd; 	/**<  8-bit Padding */
+	B_UINT16						u16Padd;	/**< 16 bit Padding */
+}stLocalSFAddIndicationAlt;
 
-INT AllocAdapterDsxBuffer (PMINI_ADAPTER Adapter);
+typedef struct stLocalSFAddConfirmationAlt{
+	B_UINT8                     u8Type;
+	B_UINT8      				u8Direction;
+	B_UINT16					u16TID;
+    B_UINT16                        u16CID;
+    B_UINT16                        u16VCID;
+    stServiceFlowParamSI              sfAuthorizedSet;
+    stServiceFlowParamSI              sfAdmittedSet;
+    stServiceFlowParamSI              sfActiveSet;
+}stLocalSFAddConfirmationAlt;
 
-INT FreeAdapterDsxBuffer (PMINI_ADAPTER Adapter);
-ULONG SetUpTargetDsxBuffers (PMINI_ADAPTER Adapter);
 
-BOOLEAN CmControlResponseMessage (PMINI_ADAPTER Adapter, PVOID pvBuffer);
+typedef struct stLocalSFChangeRequestAlt{
+    B_UINT8                         u8Type;
+	B_UINT8      u8Direction;
+	B_UINT16					u16TID;
+    B_UINT16                        u16CID;
+    B_UINT16                        u16VCID;
+	/*
+	*/
+    stServiceFlowParamSI              sfAuthorizedSet;
+    stServiceFlowParamSI              sfAdmittedSet;
+    stServiceFlowParamSI              sfActiveSet;
+
+	B_UINT8 						u8CC;	/**<  Confirmation Code*/
+	B_UINT8 						u8Padd; 	/**<  8-bit Padding */
+	B_UINT16						u16Padd;	/**< 16 bit */
+
+}stLocalSFChangeRequestAlt;
+
+typedef struct stLocalSFChangeConfirmationAlt{
+	B_UINT8                         u8Type;
+	B_UINT8      					u8Direction;
+	B_UINT16						u16TID;
+    B_UINT16                        u16CID;
+    B_UINT16                        u16VCID;
+    stServiceFlowParamSI              sfAuthorizedSet;
+    stServiceFlowParamSI              sfAdmittedSet;
+    stServiceFlowParamSI              sfActiveSet;
+
+}stLocalSFChangeConfirmationAlt;
+
+typedef struct stLocalSFChangeIndicationAlt{
+	B_UINT8                         u8Type;
+		B_UINT8      u8Direction;
+	B_UINT16						u16TID;
+    B_UINT16                        u16CID;
+    B_UINT16                        u16VCID;
+    stServiceFlowParamSI              sfAuthorizedSet;
+    stServiceFlowParamSI              sfAdmittedSet;
+    stServiceFlowParamSI              sfActiveSet;
+
+	B_UINT8 						u8CC;	/**<  Confirmation Code*/
+	B_UINT8 						u8Padd; 	/**<  8-bit Padding */
+	B_UINT16						u16Padd;	/**< 16 bit */
+
+}stLocalSFChangeIndicationAlt;
+
+ULONG StoreCmControlResponseMessage(PMINI_ADAPTER Adapter,PVOID pvBuffer,UINT *puBufferLength);
+
+INT AllocAdapterDsxBuffer(PMINI_ADAPTER Adapter);
+
+INT FreeAdapterDsxBuffer(PMINI_ADAPTER Adapter);
+ULONG SetUpTargetDsxBuffers(PMINI_ADAPTER Adapter);
+
+BOOLEAN CmControlResponseMessage(PMINI_ADAPTER Adapter,PVOID pvBuffer);
 
 
 #pragma pack (pop)

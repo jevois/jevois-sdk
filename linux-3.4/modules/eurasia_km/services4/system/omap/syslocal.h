@@ -69,24 +69,24 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #if !defined(LDM_PLATFORM)
 #error "LDM_PLATFORM must be set"
 #endif
-#define PVR_LINUX_DYNAMIC_SGX_RESOURCE_INFO
+#define	PVR_LINUX_DYNAMIC_SGX_RESOURCE_INFO
 #include <linux/platform_device.h>
 #endif
 
 #if ((defined(DEBUG) || defined(TIMING)) && \
-(LINUX_VERSION_CODE == KERNEL_VERSION(2,6,34))) && \
-!defined(PVR_NO_OMAP_TIMER)
+    (LINUX_VERSION_CODE == KERNEL_VERSION(2,6,34))) && \
+    !defined(PVR_NO_OMAP_TIMER)
 /*
  * We need to explicitly enable the GPTIMER11 clocks, or we'll get an
  * abort when we try to access the timer registers.
  */
-#define PVR_OMAP4_TIMING_PRCM
+#define	PVR_OMAP4_TIMING_PRCM
 #endif
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,35))
 #include <plat/gpu.h>
 #if !defined(PVR_NO_OMAP_TIMER)
-#define PVR_OMAP_USE_DM_TIMER_API
+#define	PVR_OMAP_USE_DM_TIMER_API
 #include <plat/dmtimer.h>
 #endif
 #endif
@@ -97,7 +97,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #endif /* defined(__linux__) */
 
 #if !defined(NO_HARDWARE) && \
-defined(SYS_USING_INTERRUPTS)
+     defined(SYS_USING_INTERRUPTS)
 #define SGX_OCP_REGS_ENABLED
 #endif
 
@@ -117,139 +117,139 @@ extern "C" {
 /*****************************************************************************
  * system specific data structures
  *****************************************************************************/
-
+ 
 /*****************************************************************************
  * system specific function prototypes
  *****************************************************************************/
+ 
+IMG_VOID DisableSystemClocks(SYS_DATA *psSysData);
+PVRSRV_ERROR EnableSystemClocks(SYS_DATA *psSysData);
 
-IMG_VOID DisableSystemClocks (SYS_DATA * psSysData);
-PVRSRV_ERROR EnableSystemClocks (SYS_DATA * psSysData);
-
-IMG_VOID DisableSGXClocks (SYS_DATA * psSysData);
-PVRSRV_ERROR EnableSGXClocks (SYS_DATA * psSysData);
+IMG_VOID DisableSGXClocks(SYS_DATA *psSysData);
+PVRSRV_ERROR EnableSGXClocks(SYS_DATA *psSysData);
 
 /*
  * Various flags to indicate what has been initialised, and what
  * has been temporarily deinitialised for power management purposes.
  */
-#define SYS_SPECIFIC_DATA_ENABLE_SYSCLOCKS  0x00000001
-#define SYS_SPECIFIC_DATA_ENABLE_LISR   0x00000002
-#define SYS_SPECIFIC_DATA_ENABLE_MISR   0x00000004
-#define SYS_SPECIFIC_DATA_ENABLE_ENVDATA  0x00000008
-#define SYS_SPECIFIC_DATA_ENABLE_LOCDEV   0x00000010
-#define SYS_SPECIFIC_DATA_ENABLE_REGDEV   0x00000020
-#define SYS_SPECIFIC_DATA_ENABLE_PDUMPINIT  0x00000040
-#define SYS_SPECIFIC_DATA_ENABLE_INITDEV  0x00000080
-#define SYS_SPECIFIC_DATA_ENABLE_LOCATEDEV  0x00000100
+#define SYS_SPECIFIC_DATA_ENABLE_SYSCLOCKS	0x00000001
+#define SYS_SPECIFIC_DATA_ENABLE_LISR		0x00000002
+#define SYS_SPECIFIC_DATA_ENABLE_MISR		0x00000004
+#define SYS_SPECIFIC_DATA_ENABLE_ENVDATA	0x00000008
+#define SYS_SPECIFIC_DATA_ENABLE_LOCDEV		0x00000010
+#define SYS_SPECIFIC_DATA_ENABLE_REGDEV		0x00000020
+#define SYS_SPECIFIC_DATA_ENABLE_PDUMPINIT	0x00000040
+#define SYS_SPECIFIC_DATA_ENABLE_INITDEV	0x00000080
+#define SYS_SPECIFIC_DATA_ENABLE_LOCATEDEV	0x00000100
 
-#define SYS_SPECIFIC_DATA_PM_UNINSTALL_LISR 0x00000200
-#define SYS_SPECIFIC_DATA_PM_DISABLE_SYSCLOCKS  0x00000400
-#define SYS_SPECIFIC_DATA_ENABLE_OCPREGS  0x00000800
-#define SYS_SPECIFIC_DATA_ENABLE_PM_RUNTIME 0x00001000
-#define SYS_SPECIFIC_DATA_IRQ_ENABLED   0x00002000
-#define SYS_SPECIFIC_DATA_DVFS_INIT     0x00004000
+#define	SYS_SPECIFIC_DATA_PM_UNINSTALL_LISR	0x00000200
+#define	SYS_SPECIFIC_DATA_PM_DISABLE_SYSCLOCKS	0x00000400
+#define SYS_SPECIFIC_DATA_ENABLE_OCPREGS	0x00000800
+#define SYS_SPECIFIC_DATA_ENABLE_PM_RUNTIME	0x00001000
+#define SYS_SPECIFIC_DATA_IRQ_ENABLED		0x00002000
+#define SYS_SPECIFIC_DATA_DVFS_INIT			0x00004000
 
-#define SYS_SPECIFIC_DATA_SET(psSysSpecData, flag) ((IMG_VOID)((psSysSpecData)->ui32SysSpecificData |= (flag)))
+#define	SYS_SPECIFIC_DATA_SET(psSysSpecData, flag) ((IMG_VOID)((psSysSpecData)->ui32SysSpecificData |= (flag)))
 
-#define SYS_SPECIFIC_DATA_CLEAR(psSysSpecData, flag) ((IMG_VOID)((psSysSpecData)->ui32SysSpecificData &= ~(flag)))
+#define	SYS_SPECIFIC_DATA_CLEAR(psSysSpecData, flag) ((IMG_VOID)((psSysSpecData)->ui32SysSpecificData &= ~(flag)))
 
-#define SYS_SPECIFIC_DATA_TEST(psSysSpecData, flag) (((psSysSpecData)->ui32SysSpecificData & (flag)) != 0)
-
+#define	SYS_SPECIFIC_DATA_TEST(psSysSpecData, flag) (((psSysSpecData)->ui32SysSpecificData & (flag)) != 0)
+ 
 typedef struct _SYS_SPECIFIC_DATA_TAG_
 {
-  IMG_UINT32  ui32SysSpecificData;
-  PVRSRV_DEVICE_NODE * psSGXDevNode;
-  IMG_BOOL  bSGXInitComplete;
-  #if defined(PVR_OMAP_TIMER_BASE_IN_SYS_SPEC_DATA)
-  IMG_CPU_PHYADDR sTimerRegPhysBase;
-  #endif
-  #if !defined(__linux__)
-  IMG_BOOL  bSGXClocksEnabled;
-  #endif
-  IMG_UINT32  ui32SrcClockDiv;
-  #if defined(__linux__)
-  IMG_BOOL  bSysClocksOneTimeInit;
-  atomic_t  sSGXClocksEnabled;
-  #if defined(PVR_LINUX_USING_WORKQUEUES)
-  struct mutex  sPowerLock;
-  #else
-  IMG_BOOL  bConstraintNotificationsEnabled;
-  spinlock_t  sPowerLock;
-  atomic_t  sPowerLockCPU;
-  spinlock_t  sNotifyLock;
-  atomic_t  sNotifyLockCPU;
-  IMG_BOOL  bCallVDD2PostFunc;
-  #endif
-  #if defined(DEBUG) || defined(TIMING)
-  struct clk * psGPT11_FCK;
-  struct clk * psGPT11_ICK;
-  #endif
-  #if defined(PVR_OMAP_USE_DM_TIMER_API)
-  struct omap_dm_timer * psGPTimer;
-  #endif
-  IMG_UINT32 ui32SGXFreqListSize;
-  IMG_UINT32 * pui32SGXFreqList;
-  IMG_UINT32 ui32SGXFreqListIndex;
-  #endif  /* defined(__linux__) */
+	IMG_UINT32	ui32SysSpecificData;
+	PVRSRV_DEVICE_NODE *psSGXDevNode;
+	IMG_BOOL	bSGXInitComplete;
+#if defined(PVR_OMAP_TIMER_BASE_IN_SYS_SPEC_DATA)
+	IMG_CPU_PHYADDR	sTimerRegPhysBase;
+#endif
+#if !defined(__linux__)
+	IMG_BOOL	bSGXClocksEnabled;
+#endif
+	IMG_UINT32	ui32SrcClockDiv;
+#if defined(__linux__)
+	IMG_BOOL	bSysClocksOneTimeInit;
+	atomic_t	sSGXClocksEnabled;
+#if defined(PVR_LINUX_USING_WORKQUEUES)
+	struct mutex	sPowerLock;
+#else
+	IMG_BOOL	bConstraintNotificationsEnabled;
+	spinlock_t	sPowerLock;
+	atomic_t	sPowerLockCPU;
+	spinlock_t	sNotifyLock;
+	atomic_t	sNotifyLockCPU;
+	IMG_BOOL	bCallVDD2PostFunc;
+#endif
+#if defined(DEBUG) || defined(TIMING)
+	struct clk	*psGPT11_FCK;
+	struct clk	*psGPT11_ICK;
+#endif
+#if defined(PVR_OMAP_USE_DM_TIMER_API)
+	struct omap_dm_timer *psGPTimer;
+#endif
+	IMG_UINT32 ui32SGXFreqListSize;
+	IMG_UINT32 *pui32SGXFreqList;
+	IMG_UINT32 ui32SGXFreqListIndex;
+#endif	/* defined(__linux__) */
 } SYS_SPECIFIC_DATA;
 
-extern SYS_SPECIFIC_DATA * gpsSysSpecificData;
+extern SYS_SPECIFIC_DATA *gpsSysSpecificData;
 
 #if defined(SGX_OCP_REGS_ENABLED) && defined(SGX_OCP_NO_INT_BYPASS)
-IMG_VOID SysEnableSGXInterrupts (SYS_DATA * psSysData);
-IMG_VOID SysDisableSGXInterrupts (SYS_DATA * psSysData);
+IMG_VOID SysEnableSGXInterrupts(SYS_DATA* psSysData);
+IMG_VOID SysDisableSGXInterrupts(SYS_DATA* psSysData);
 #else
-#define SysEnableSGXInterrupts(psSysData)
+#define	SysEnableSGXInterrupts(psSysData)
 #define SysDisableSGXInterrupts(psSysData)
 #endif
 
 #if defined(SYS_CUSTOM_POWERLOCK_WRAP)
-IMG_BOOL WrapSystemPowerChange (SYS_SPECIFIC_DATA * psSysSpecData);
-IMG_VOID UnwrapSystemPowerChange (SYS_SPECIFIC_DATA * psSysSpecData);
+IMG_BOOL WrapSystemPowerChange(SYS_SPECIFIC_DATA *psSysSpecData);
+IMG_VOID UnwrapSystemPowerChange(SYS_SPECIFIC_DATA *psSysSpecData);
 #endif
 
 #if defined(__linux__)
 
-PVRSRV_ERROR SysPMRuntimeRegister (void);
-PVRSRV_ERROR SysPMRuntimeUnregister (void);
+PVRSRV_ERROR SysPMRuntimeRegister(void);
+PVRSRV_ERROR SysPMRuntimeUnregister(void);
 
-PVRSRV_ERROR SysDvfsInitialize (SYS_SPECIFIC_DATA * psSysSpecificData);
-PVRSRV_ERROR SysDvfsDeinitialize (SYS_SPECIFIC_DATA * psSysSpecificData);
+PVRSRV_ERROR SysDvfsInitialize(SYS_SPECIFIC_DATA *psSysSpecificData);
+PVRSRV_ERROR SysDvfsDeinitialize(SYS_SPECIFIC_DATA *psSysSpecificData);
 
 #else /* defined(__linux__) */
 
 #ifdef INLINE_IS_PRAGMA
 #pragma inline(SysPMRuntimeRegister)
 #endif
-static INLINE PVRSRV_ERROR SysPMRuntimeRegister (void)
+static INLINE PVRSRV_ERROR SysPMRuntimeRegister(void)
 {
-  return PVRSRV_OK;
+	return PVRSRV_OK;
 }
 
 #ifdef INLINE_IS_PRAGMA
 #pragma inline(SysPMRuntimeUnregister)
 #endif
-static INLINE PVRSRV_ERROR SysPMRuntimeUnregister (void)
+static INLINE PVRSRV_ERROR SysPMRuntimeUnregister(void)
 {
-  return PVRSRV_OK;
+	return PVRSRV_OK;
 }
 
 #ifdef INLINE_IS_PRAGMA
 #pragma inline(SysDvfsInitialize)
 #endif
-static INLINE PVRSRV_ERROR SysDvfsInitialize (SYS_SPECIFIC_DATA * psSysSpecificData)
+static INLINE PVRSRV_ERROR SysDvfsInitialize(SYS_SPECIFIC_DATA *psSysSpecificData)
 {
-  PVR_UNREFERENCED_PARAMETER (psSysSpecificData);
-  return PVRSRV_OK;
+	PVR_UNREFERENCED_PARAMETER(psSysSpecificData);
+	return PVRSRV_OK;
 }
 
 #ifdef INLINE_IS_PRAGMA
 #pragma inline(SysDvfsDeinitialize)
 #endif
-static INLINE PVRSRV_ERROR SysDvfsDeinitialize (SYS_SPECIFIC_DATA * psSysSpecificData)
+static INLINE PVRSRV_ERROR SysDvfsDeinitialize(SYS_SPECIFIC_DATA *psSysSpecificData)
 {
-  PVR_UNREFERENCED_PARAMETER (psSysSpecificData);
-  return PVRSRV_OK;
+	PVR_UNREFERENCED_PARAMETER(psSysSpecificData);
+	return PVRSRV_OK;
 }
 
 #endif /* defined(__linux__) */
@@ -258,6 +258,6 @@ static INLINE PVRSRV_ERROR SysDvfsDeinitialize (SYS_SPECIFIC_DATA * psSysSpecifi
 }
 #endif
 
-#endif  /* __SYSLOCAL_H__ */
+#endif	/* __SYSLOCAL_H__ */
 
 

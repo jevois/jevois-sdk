@@ -12,4 +12,4 @@
 /*
  * do_csum.S
  */
-extern unsigned int do_csum (const unsigned char *, size_t);
+extern unsigned int do_csum(const unsigned char *, size_t);

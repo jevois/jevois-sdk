@@ -1,11 +1,11 @@
 
 /*
 **********************************************************************************************************************
-*                             eGon
-*                      the Embedded GO-ON Bootloader System
-*                        eGON arm boot sub-system
+*											        eGon
+*						           the Embedded GO-ON Bootloader System
+*									       eGON arm boot sub-system
 *
-*             Copyright(C), 2006-2010, SoftWinners Microelectronic Co., Ltd.
+*						  Copyright(C), 2006-2010, SoftWinners Microelectronic Co., Ltd.
 *                                           All Rights Reserved
 *
 * File    : nand_for_boot0.c
@@ -14,7 +14,7 @@
 *
 * Version : V2.00
 *
-* Date    :
+* Date	  :
 *
 * Descript:
 **********************************************************************************************************************
@@ -22,8 +22,8 @@
 #include "../nand_common.h"
 #include "bsp_nand.h"
 
-extern void NAND_Print ( const char * str, ...);
-extern BOOT_NandGetPara (boot_nand_para_t * nand_info, __u32 size);
+extern void NAND_Print( const char * str, ...);
+extern BOOT_NandGetPara(boot_nand_para_t *nand_info, __u32 size);
 /*
 ************************************************************************************************************************
 *                       GET FLASH INFO
@@ -36,18 +36,18 @@ extern BOOT_NandGetPara (boot_nand_para_t * nand_info, __u32 size);
 *               = FAIL    get fail.
 ************************************************************************************************************************
 */
-__s32 NFB_GetFlashInfo (boot_flash_info_t * param)
+__s32 NFB_GetFlashInfo(boot_flash_info_t *param)
 {
-  boot_nand_para_t nand_info;
-  
-  BOOT_NandGetPara (&nand_info, sizeof (boot_nand_para_t) );
-  param->chip_cnt     = nand_info.ChipCnt;
-  param->blk_cnt_per_chip = nand_info.BlkCntPerDie * nand_info.DieCntPerChip;
-  param->blocksize    = nand_info.SectorCntPerPage * nand_info.PageCntPerPhyBlk;
-  param->pagesize     = nand_info.SectorCntPerPage;
-  param->pagewithbadflag  = 0 ;  
-  
-  return 0;
+    boot_nand_para_t nand_info;
+
+    BOOT_NandGetPara(&nand_info, sizeof(boot_nand_para_t));
+	param->chip_cnt	 		= nand_info.ChipCnt;
+	param->blk_cnt_per_chip = nand_info.BlkCntPerDie * nand_info.DieCntPerChip;
+	param->blocksize 		= nand_info.SectorCntPerPage * nand_info.PageCntPerPhyBlk;
+	param->pagesize 		= nand_info.SectorCntPerPage;
+	param->pagewithbadflag  = 0 ;  
+
+	return 0;
 }
 /*
 ************************************************************************************************************************
@@ -61,28 +61,28 @@ __s32 NFB_GetFlashInfo (boot_flash_info_t * param)
 *               = FAIL    initial fail.
 ************************************************************************************************************************
 */
-__s32 NFB_PhyInit (void)
+__s32 NFB_PhyInit(void)
 {
-  __s32 ret;
-  
-  ret = PHY_Init();
-  if (ret)
-  {
-    NAND_Print ("NB0 : nand phy init fail\n");
-    return ret;
-  }
-  
-  ret = BOOT_AnalyzeNandSystem();
-  if (ret)
-  {
-    NAND_Print ("NB0 : nand scan fail\n");
-    return ret;
-  }
-  
-  NAND_Print ("NB0 : nand phy init ok\n");
-  
-  
-  return (PHY_ChangeMode (1) );
+	__s32 ret;
+
+	ret = PHY_Init();
+	if (ret)
+	{
+		NAND_Print("NB0 : nand phy init fail\n");
+		return ret;
+	}
+
+	ret = BOOT_AnalyzeNandSystem();
+	if (ret)
+	{
+		NAND_Print("NB0 : nand scan fail\n");
+		return ret;
+	}
+
+	NAND_Print("NB0 : nand phy init ok\n");
+
+
+	return(PHY_ChangeMode(1));
 }
 
 /*
@@ -97,12 +97,12 @@ __s32 NFB_PhyInit (void)
 *               = FAIL    release fail.
 ************************************************************************************************************************
 */
-__s32 NFB_PhyExit (void)
+__s32 NFB_PhyExit(void)
 {
-  PHY_Exit();
-  /* close nand flash bus clock gate */
-  
-  return 0;
+	PHY_Exit();
+	/* close nand flash bus clock gate */
+
+	return 0;
 }
 
 /*
@@ -117,7 +117,7 @@ __s32 NFB_PhyExit (void)
 *               = FAIL    read fail.
 ************************************************************************************************************************
 */
-__s32 NFB_PhyRead (struct boot_physical_param * readop)
+__s32 NFB_PhyRead (struct boot_physical_param *readop)
 {
-  return (PHY_SimpleRead (readop) );
+	return(PHY_SimpleRead (readop));
 }

@@ -9,5 +9,5 @@
 #define CFI_REMEMBER_STATE
 #define CFI_RESTORE_STATE
 
-#endif  /* PERF_DWARF2_H */
+#endif	/* PERF_DWARF2_H */
 

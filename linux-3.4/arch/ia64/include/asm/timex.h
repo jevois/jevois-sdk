@@ -3,11 +3,11 @@
 
 /*
  * Copyright (C) 1998-2001, 2003 Hewlett-Packard Co
- *  David Mosberger-Tang <davidm@hpl.hp.com>
+ *	David Mosberger-Tang <davidm@hpl.hp.com>
  */
 /*
- * 2001/01/18 davidm  Removed CLOCK_TICK_RATE.  It makes no sense on IA-64.
- *      Also removed cacheflush_time as it's entirely unused.
+ * 2001/01/18 davidm	Removed CLOCK_TICK_RATE.  It makes no sense on IA-64.
+ *			Also removed cacheflush_time as it's entirely unused.
  */
 
 #include <asm/intrinsics.h>
@@ -15,7 +15,7 @@
 
 typedef unsigned long cycles_t;
 
-extern void (*ia64_udelay) (unsigned long usecs);
+extern void (*ia64_udelay)(unsigned long usecs);
 
 /*
  * For performance reasons, we don't want to define CLOCK_TICK_TRATE as
@@ -28,15 +28,15 @@ extern void (*ia64_udelay) (unsigned long usecs);
  * pick a multiple of HZ which gives us a (totally virtual) CLOCK_TICK_RATE of about
  * 100MHz.
  */
-#define CLOCK_TICK_RATE   (HZ * 100000UL)
+#define CLOCK_TICK_RATE		(HZ * 100000UL)
 
 static inline cycles_t
 get_cycles (void)
 {
-  cycles_t ret;
-  
-  ret = ia64_getreg (_IA64_REG_AR_ITC);
-  return ret;
+	cycles_t ret;
+
+	ret = ia64_getreg(_IA64_REG_AR_ITC);
+	return ret;
 }
 
 extern void ia64_cpu_local_tick (void);

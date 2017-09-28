@@ -5,7 +5,7 @@
 #ifndef HOOK_H
 #define HOOK_H
 
-int hook_call (unsigned id, unsigned pcnt, ...);
+int hook_call(unsigned id, unsigned pcnt, ...);
 
 enum hook_ids {
   hook_debug_on = 1,
@@ -36,7 +36,7 @@ enum hook_ids {
   hook_fputc,
   hook_init_fd,
   hook_sbrk
-  
+
 };
 
 #endif

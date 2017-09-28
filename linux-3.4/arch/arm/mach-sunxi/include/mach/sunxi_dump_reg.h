@@ -16,57 +16,57 @@
 #ifndef __SUNXI_DUMP_REG_H
 #define __SUNXI_DUMP_REG_H
 
-#define MAX_COMPARE_ITEM  256
-#define MAX_WRITE_ITEM    256
+#define MAX_COMPARE_ITEM 	256
+#define MAX_WRITE_ITEM 		256
 
 /**
  * compare_item - reg compare item struct
- * @reg_addr: reg address.
+ * @reg_addr:	reg address.
  * @val_expect: expected value, provided by caller.
  * @val_mask:   mask value, provided by caller. only mask bits will be compared.
  */
 struct compare_item {
-  u32   reg_addr;
-  u32 val_expect;
-  u32 val_mask;
+	u32 	reg_addr;
+	u32	val_expect;
+	u32	val_mask;
 };
 
 /**
  * compare_group - reg compare group struct
- * @num:  pitem element count. cannot exceed MAX_COMPARE_ITEM.
- * @pitem:  items that will be compared, provided by caller.
+ * @num:	pitem element count. cannot exceed MAX_COMPARE_ITEM.
+ * @pitem: 	items that will be compared, provided by caller.
  */
 struct compare_group {
-  u32 num;
-  struct compare_item * pitem;
+	u32	num;
+	struct compare_item *pitem;
 };
 
 /**
  * write_item - reg write item struct
- * @reg_addr: reg address.
- * @val:  value to write
+ * @reg_addr:	reg address.
+ * @val: 	value to write
  */
 struct write_item {
-  u32   reg_addr;
-  u32 val;
+	u32 	reg_addr;
+	u32	val;
 };
 
 /**
  * write_group - reg write group struct
- * @num:  pitem element count. cannot exceed MAX_WRITE_ITEM.
- * @pitem:  items that will be write, provided by caller.
+ * @num:	pitem element count. cannot exceed MAX_WRITE_ITEM.
+ * @pitem: 	items that will be write, provided by caller.
  */
 struct write_group {
-  u32 num;
-  struct write_item * pitem;
+	u32	num;
+	struct write_item *pitem;
 };
 
-void sunxi_dump_regs (u32 start_reg, u32 end_reg);
-void sunxi_compare_regs (struct compare_group * pgroup);
-void sunxi_write_regs (struct write_group * pgroup);
+void sunxi_dump_regs(u32 start_reg, u32 end_reg);
+void sunxi_compare_regs(struct compare_group *pgroup);
+void sunxi_write_regs(struct write_group *pgroup);
 #if (defined CONFIG_ARCH_SUN8IW6P1) || (defined CONFIG_ARCH_SUN9IW1P1)
-s32 sunxi_rtc_reg_write (u32 addr, u32 data);
-u32 sunxi_rtc_reg_read (u32 addr);
+s32 sunxi_rtc_reg_write(u32 addr, u32 data);
+u32 sunxi_rtc_reg_read(u32 addr);
 #endif
 
 #endif /* __SUNXI_DUMP_REG_H */

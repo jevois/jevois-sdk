@@ -114,9 +114,9 @@
 /*
  * Overrides for in-kernel ACPICA
  */
-static inline acpi_thread_id acpi_os_get_thread_id (void)
+static inline acpi_thread_id acpi_os_get_thread_id(void)
 {
-  return (acpi_thread_id) (unsigned long) current;
+	return (acpi_thread_id)(unsigned long)current;
 }
 
 /*
@@ -125,20 +125,20 @@ static inline acpi_thread_id acpi_os_get_thread_id (void)
  * However, boot has  (system_state != SYSTEM_RUNNING)
  * to quiet __might_sleep() in kmalloc() and resume does not.
  */
-static inline void * acpi_os_allocate (acpi_size size)
+static inline void *acpi_os_allocate(acpi_size size)
 {
-  return kmalloc (size, irqs_disabled() ? GFP_ATOMIC : GFP_KERNEL);
+	return kmalloc(size, irqs_disabled() ? GFP_ATOMIC : GFP_KERNEL);
 }
 
-static inline void * acpi_os_allocate_zeroed (acpi_size size)
+static inline void *acpi_os_allocate_zeroed(acpi_size size)
 {
-  return kzalloc (size, irqs_disabled() ? GFP_ATOMIC : GFP_KERNEL);
+	return kzalloc(size, irqs_disabled() ? GFP_ATOMIC : GFP_KERNEL);
 }
 
-static inline void * acpi_os_acquire_object (acpi_cache_t * cache)
+static inline void *acpi_os_acquire_object(acpi_cache_t * cache)
 {
-  return kmem_cache_zalloc (cache,
-                            irqs_disabled() ? GFP_ATOMIC : GFP_KERNEL);
+	return kmem_cache_zalloc(cache,
+		irqs_disabled() ? GFP_ATOMIC : GFP_KERNEL);
 }
 
 #define ACPI_ALLOCATE(a)        acpi_os_allocate(a)
@@ -151,10 +151,10 @@ static inline void * acpi_os_acquire_object (acpi_cache_t * cache)
  * when CONFIG_PREEMPT=n
  */
 #define ACPI_PREEMPTION_POINT() \
-  do { \
-    if (!irqs_disabled()) \
-      cond_resched(); \
-  } while (0)
+	do { \
+		if (!irqs_disabled()) \
+			cond_resched(); \
+	} while (0)
 #endif
 
 /*
@@ -164,16 +164,16 @@ static inline void * acpi_os_acquire_object (acpi_cache_t * cache)
  * all locks to the name of the argument of acpi_os_create_lock(), which
  * prevents lockdep from reporting false positives for ACPICA locks.
  */
-#define acpi_os_create_lock(__handle)       \
-  ({                \
-    spinlock_t *lock = ACPI_ALLOCATE(sizeof(*lock));  \
-    \
-    if (lock) {           \
-      *(__handle) = lock;       \
-      spin_lock_init(*(__handle));      \
-    }             \
-    lock ? AE_OK : AE_NO_MEMORY;        \
-  })
+#define acpi_os_create_lock(__handle)				\
+({								\
+	spinlock_t *lock = ACPI_ALLOCATE(sizeof(*lock));	\
+								\
+	if (lock) {						\
+		*(__handle) = lock;				\
+		spin_lock_init(*(__handle));			\
+	}							\
+	lock ? AE_OK : AE_NO_MEMORY;				\
+})
 
 #endif /* __KERNEL__ */
 

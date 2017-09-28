@@ -14,72 +14,72 @@
 #include <linux/serial_8250.h>
 
 struct uart_8250_port {
-  struct uart_port  port;
-  struct timer_list timer;    /* "no irq" timer */
-  struct list_head  list;   /* ports on this IRQ */
-  unsigned short    capabilities; /* port capabilities */
-  unsigned short    bugs;   /* port bugs */
-  unsigned int    tx_loadsz;  /* transmit fifo load size */
-  unsigned char   acr;
-  unsigned char   ier;
-  unsigned char   lcr;
-  unsigned char   mcr;
-  unsigned char   mcr_mask; /* mask of user bits */
-  unsigned char   mcr_force;  /* mask of forced bits */
-  unsigned char   cur_iotype; /* Running I/O type */
-  
-  /*
-   * Some bits in registers are cleared on a read, so they must
-   * be saved whenever the register is read but the bits will not
-   * be immediately processed.
-   */
+	struct uart_port	port;
+	struct timer_list	timer;		/* "no irq" timer */
+	struct list_head	list;		/* ports on this IRQ */
+	unsigned short		capabilities;	/* port capabilities */
+	unsigned short		bugs;		/* port bugs */
+	unsigned int		tx_loadsz;	/* transmit fifo load size */
+	unsigned char		acr;
+	unsigned char		ier;
+	unsigned char		lcr;
+	unsigned char		mcr;
+	unsigned char		mcr_mask;	/* mask of user bits */
+	unsigned char		mcr_force;	/* mask of forced bits */
+	unsigned char		cur_iotype;	/* Running I/O type */
+
+	/*
+	 * Some bits in registers are cleared on a read, so they must
+	 * be saved whenever the register is read but the bits will not
+	 * be immediately processed.
+	 */
 #define LSR_SAVE_FLAGS UART_LSR_BRK_ERROR_BITS
-  unsigned char   lsr_saved_flags;
+	unsigned char		lsr_saved_flags;
 #define MSR_SAVE_FLAGS UART_MSR_ANY_DELTA
-  unsigned char   msr_saved_flags;
+	unsigned char		msr_saved_flags;
 };
 
 struct old_serial_port {
-  unsigned int uart;
-  unsigned int baud_base;
-  unsigned int port;
-  unsigned int irq;
-  unsigned int flags;
-  unsigned char hub6;
-  unsigned char io_type;
-  unsigned char * iomem_base;
-  unsigned short iomem_reg_shift;
-  unsigned long irqflags;
+	unsigned int uart;
+	unsigned int baud_base;
+	unsigned int port;
+	unsigned int irq;
+	unsigned int flags;
+	unsigned char hub6;
+	unsigned char io_type;
+	unsigned char *iomem_base;
+	unsigned short iomem_reg_shift;
+	unsigned long irqflags;
 };
 
 /*
  * This replaces serial_uart_config in include/linux/serial.h
  */
 struct serial8250_config {
-  const char * name;
-  unsigned short  fifo_size;
-  unsigned short  tx_loadsz;
-  unsigned char fcr;
-  unsigned int  flags;
+	const char	*name;
+	unsigned short	fifo_size;
+	unsigned short	tx_loadsz;
+	unsigned char	fcr;
+	unsigned int	flags;
 };
 
-extern void sunxi_8250_comeback_reg (int port_num, struct uart_port * port);
-extern void sunxi_8250_backup_reg (int port_num , struct uart_port * port);
+extern void sunxi_8250_comeback_reg(int port_num,struct uart_port *port);
+extern void sunxi_8250_backup_reg(int port_num ,struct uart_port *port);
 
-#define UART_CAP_FIFO (1 << 8)  /* UART has FIFO */
-#define UART_CAP_EFR  (1 << 9)  /* UART has EFR */
-#define UART_CAP_SLEEP  (1 << 10) /* UART has IER sleep */
-#define UART_CAP_AFE  (1 << 11) /* MCR-based hw flow control */
-#define UART_CAP_UUE  (1 << 12) /* UART needs IER bit 6 set (Xscale) */
-#define UART_CAP_RTOIE  (1 << 13) /* UART needs IER bit 4 set (Xscale, Tegra) */
+#define UART_CAP_FIFO	(1 << 8)	/* UART has FIFO */
+#define UART_CAP_EFR	(1 << 9)	/* UART has EFR */
+#define UART_CAP_SLEEP	(1 << 10)	/* UART has IER sleep */
+#define UART_CAP_AFE	(1 << 11)	/* MCR-based hw flow control */
+#define UART_CAP_UUE	(1 << 12)	/* UART needs IER bit 6 set (Xscale) */
+#define UART_CAP_RTOIE	(1 << 13)	/* UART needs IER bit 4 set (Xscale, Tegra) */
 
-#define UART_BUG_QUOT (1 << 0)  /* UART has buggy quot LSB */
-#define UART_BUG_TXEN (1 << 1)  /* UART has buggy TX IIR status */
-#define UART_BUG_NOMSR  (1 << 2)  /* UART has buggy MSR status bits (Au1x00) */
-#define UART_BUG_THRE (1 << 3)  /* UART has buggy THRE reassertion */
+#define UART_BUG_QUOT	(1 << 0)	/* UART has buggy quot LSB */
+#define UART_BUG_TXEN	(1 << 1)	/* UART has buggy TX IIR status */
+#define UART_BUG_NOMSR	(1 << 2)	/* UART has buggy MSR status bits (Au1x00) */
+#define UART_BUG_THRE	(1 << 3)	/* UART has buggy THRE reassertion */
 
-#define PROBE_RSA (1 << 0)
-#define PROBE_ANY (~0)
+#define PROBE_RSA	(1 << 0)
+#define PROBE_ANY	(~0)
 
 #define HIGH_BITS_OFFSET ((sizeof(long)-sizeof(int))*8)
 
@@ -89,14 +89,14 @@ extern void sunxi_8250_backup_reg (int port_num , struct uart_port * port);
 #define SERIAL8250_SHARE_IRQS 0
 #endif
 
-static inline int serial_in (struct uart_8250_port * up, int offset)
+static inline int serial_in(struct uart_8250_port *up, int offset)
 {
-  return up->port.serial_in (&up->port, offset);
+	return up->port.serial_in(&up->port, offset);
 }
 
-static inline void serial_out (struct uart_8250_port * up, int offset, int value)
+static inline void serial_out(struct uart_8250_port *up, int offset, int value)
 {
-  up->port.serial_out (&up->port, offset, value);
+	up->port.serial_out(&up->port, offset, value);
 }
 
 #if defined(__alpha__) && !defined(CONFIG_PCI)

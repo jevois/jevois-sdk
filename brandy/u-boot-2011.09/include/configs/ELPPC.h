@@ -35,7 +35,7 @@
  * (easy to change)
  */
 
-#define CONFIG_SYS_TEXT_BASE  0xFFF00000
+#define	CONFIG_SYS_TEXT_BASE	0xFFF00000
 
 /* these hardware addresses are pretty bogus, please change them to
    suit your needs */
@@ -58,11 +58,11 @@
 
 #undef  CONFIG_BOOTARGS
 #define CONFIG_BOOTCOMMAND                                  \
-  "bootp 1000000; "                                       \
-  "setenv bootargs root=ramfs console=ttyS00,9600 "       \
-  "ip=${ipaddr}:${serverip}:${rootpath}:${gatewayip}:"    \
-  "${netmask}:${hostname}:eth0:none; "                    \
-  "bootm"
+    "bootp 1000000; "                                       \
+    "setenv bootargs root=ramfs console=ttyS00,9600 "       \
+    "ip=${ipaddr}:${serverip}:${rootpath}:${gatewayip}:"    \
+    "${netmask}:${hostname}:eth0:none; "                    \
+    "bootm"
 
 #define CONFIG_LOADS_ECHO       0       /* echo off for serial download */
 #define CONFIG_SYS_LOADS_BAUD_CHANGE           /* allow baudrate changes */
@@ -198,16 +198,16 @@
  */
 /* No command line, one static partition, whole device */
 #undef CONFIG_CMD_MTDPARTS
-#define CONFIG_JFFS2_DEV    "nor0"
-#define CONFIG_JFFS2_PART_SIZE    0xFFFFFFFF
-#define CONFIG_JFFS2_PART_OFFSET  0x00000000
+#define CONFIG_JFFS2_DEV		"nor0"
+#define CONFIG_JFFS2_PART_SIZE		0xFFFFFFFF
+#define CONFIG_JFFS2_PART_OFFSET	0x00000000
 
 /* mtdparts command line support */
 /* Note: fake mtd_id used, no linux mtd map file */
 /*
 #define CONFIG_CMD_MTDPARTS
-#define MTDIDS_DEFAULT    "nor0=elppc-0,nor1=elppc-1"
-#define MTDPARTS_DEFAULT  "mtdparts=elppc-0:-(jffs2),elppc-1:-(user)"
+#define MTDIDS_DEFAULT		"nor0=elppc-0,nor1=elppc-1"
+#define MTDPARTS_DEFAULT	"mtdparts=elppc-0:-(jffs2),elppc-1:-(user)"
 */
 
 #define CONFIG_SYS_MONITOR_BASE        CONFIG_SYS_FLASH_BASE
@@ -315,8 +315,8 @@
 /*
  * Speed settings are board specific
  */
-#define CONFIG_SYS_BUS_CLK  100000000
-#define CONFIG_SYS_CPU_CLK  400000000
+#define CONFIG_SYS_BUS_CLK	100000000
+#define CONFIG_SYS_CPU_CLK	400000000
 
 /*
  * For booting Linux, the board info and command line data
@@ -344,13 +344,13 @@
 #define L2_INIT     0       /* cpu 750 CXe*/
 #else
 #define L2_INIT     (L2CR_L2SIZ_2M | L2CR_L2CLK_3 | L2CR_L2RAM_BURST | \
-                     L2CR_L2OH_5   | L2CR_L2CTL | L2CR_L2WT)
+		     L2CR_L2OH_5   | L2CR_L2CTL | L2CR_L2WT)
 #endif
 #define L2_ENABLE   (L2_INIT | L2CR_L2E)
 
 #define CONFIG_NET_MULTI        /* Multi ethernet cards support */
 #define CONFIG_EEPRO100
-#define CONFIG_SYS_RX_ETH_BUFFER  8               /* use 8 rx buffer on eepro100  */
+#define CONFIG_SYS_RX_ETH_BUFFER	8               /* use 8 rx buffer on eepro100  */
 #define CONFIG_EEPRO100_SROM_WRITE
 
 #endif    /* __CONFIG_H */

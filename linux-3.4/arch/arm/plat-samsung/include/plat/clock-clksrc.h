@@ -1,10 +1,10 @@
 /* linux/arch/arm/plat-samsung/include/plat/clock-clksrc.h
  *
  * Parts taken from arch/arm/plat-s3c64xx/clock.c
- *  Copyright 2008 Openmoko, Inc.
- *  Copyright 2008 Simtec Electronics
- *    Ben Dooks <ben@simtec.co.uk>
- *    http://armlinux.simtec.co.uk/
+ *	Copyright 2008 Openmoko, Inc.
+ *	Copyright 2008 Simtec Electronics
+ *		Ben Dooks <ben@simtec.co.uk>
+ *		http://armlinux.simtec.co.uk/
  *
  * Copyright 2009 Ben Dooks <ben-linux@fluff.org>
  * Copyright 2009 Harald Welte
@@ -20,8 +20,8 @@
  * @nr_sources: The size of @sources
  */
 struct clksrc_sources {
-  unsigned int  nr_sources;
-  struct clk ** sources;
+	unsigned int	nr_sources;
+	struct clk	**sources;
 };
 
 /**
@@ -34,9 +34,9 @@ struct clksrc_sources {
  * in within the register specified by @reg.
  */
 struct clksrc_reg {
-  void __iomem  *  reg;
-  unsigned short    shift;
-  unsigned short    size;
+	void __iomem		*reg;
+	unsigned short		shift;
+	unsigned short		size;
 };
 
 /**
@@ -56,11 +56,11 @@ struct clksrc_reg {
  * the output.
  */
 struct clksrc_clk {
-  struct clk    clk;
-  struct clksrc_sources * sources;
-  
-  struct clksrc_reg reg_src;
-  struct clksrc_reg reg_div;
+	struct clk		clk;
+	struct clksrc_sources	*sources;
+
+	struct clksrc_reg	reg_src;
+	struct clksrc_reg	reg_div;
 };
 
 /**
@@ -71,7 +71,7 @@ struct clksrc_clk {
  * Setup the clock from the current register settings, for when the
  * kernel boots or if it is resuming from a possibly unknown state.
  */
-extern void s3c_set_clksrc (struct clksrc_clk * clk, bool announce);
+extern void s3c_set_clksrc(struct clksrc_clk *clk, bool announce);
 
 /**
  * s3c_register_clksrc() register clocks from an array of clksrc clocks
@@ -80,4 +80,4 @@ extern void s3c_set_clksrc (struct clksrc_clk * clk, bool announce);
  *
  * Initialise and register the array of clocks described by @srcs.
  */
-extern void s3c_register_clksrc (struct clksrc_clk * srcs, int size);
+extern void s3c_register_clksrc(struct clksrc_clk *srcs, int size);

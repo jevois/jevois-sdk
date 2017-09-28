@@ -18,6 +18,6 @@
 
 #include "yaffs_guts.h"
 
-int nandmtd_erase_block (struct yaffs_dev * dev, int block_no);
-int nandmtd_initialise (struct yaffs_dev * dev);
+int nandmtd_erase_block(struct yaffs_dev *dev, int block_no);
+int nandmtd_initialise(struct yaffs_dev *dev);
 #endif

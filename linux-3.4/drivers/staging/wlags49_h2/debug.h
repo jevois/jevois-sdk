@@ -68,7 +68,7 @@
 #ifndef DBG
 #define DBG 0
 #else
-#undef  DBG
+#undef	DBG
 #define DBG 1
 #endif /* DBG */
 
@@ -82,8 +82,8 @@
    wl_main.c, init_module() for how the debug level translates into the
    the types of messages displayed */
 #ifndef DBG_LVL
-#define DBG_LVL 5     /* yields nothing via init_module,
-                 original value of 5 yields DBG_TRACE_ON and DBG_VERBOSE_ON */
+#define DBG_LVL 5			/* yields nothing via init_module,
+							   original value of 5 yields DBG_TRACE_ON and DBG_VERBOSE_ON */
 #endif  /*  DBG_LVL*/
 
 
@@ -129,77 +129,77 @@
 #define _LEAVE_STR          "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
 
 
-#define _DBG_ENTER(A)           \
-  DBG_PRINT("%s:%.*s:%s\n", DBG_NAME(A), ++DBG_LEVEL(A),  \
-            _ENTER_STR, __func__)
-#define _DBG_LEAVE(A)           \
-  DBG_PRINT("%s:%.*s:%s\n", DBG_NAME(A), DBG_LEVEL(A)--,  \
-            _LEAVE_STR, __func__)
+#define _DBG_ENTER(A)						\
+	DBG_PRINT("%s:%.*s:%s\n", DBG_NAME(A), ++DBG_LEVEL(A),	\
+		  _ENTER_STR, __func__)
+#define _DBG_LEAVE(A)						\
+	DBG_PRINT("%s:%.*s:%s\n", DBG_NAME(A), DBG_LEVEL(A)--,	\
+		  _LEAVE_STR, __func__)
 
 
 #define DBG_FUNC(F)
 
 #define DBG_ENTER(A)        {if (DBG_FLAGS(A) & DBG_TRACE_ON) \
-      _DBG_ENTER(A); }
+				_DBG_ENTER(A); }
 
 #define DBG_LEAVE(A)        {if (DBG_FLAGS(A) & DBG_TRACE_ON) \
-      _DBG_LEAVE(A); }
+				 _DBG_LEAVE(A); }
 
 #define DBG_PARAM(A, N, F, S...)   {if (DBG_FLAGS(A) & DBG_PARAM_ON) \
-      DBG_PRINT("  %s -- "F"\n", N, S); }
+				DBG_PRINT("  %s -- "F"\n", N, S); }
 
 
-#define DBG_ERROR(A, S...) do {           \
-    if (DBG_FLAGS(A) & DBG_ERROR_ON) {      \
-      DBG_PRINT("%s:ERROR:%s ", DBG_NAME(A), __func__); \
-      DBG_PRINTC(S);          \
-      DBG_TRAP;         \
-    } } while (0)
+#define DBG_ERROR(A, S...) do {						\
+		if (DBG_FLAGS(A) & DBG_ERROR_ON) {			\
+			DBG_PRINT("%s:ERROR:%s ", DBG_NAME(A), __func__); \
+			DBG_PRINTC(S);					\
+			DBG_TRAP;					\
+		} } while (0)
 
 
-#define DBG_WARNING(A, S...) do {         \
-    if (DBG_FLAGS(A) & DBG_WARNING_ON) {      \
-      DBG_PRINT("%s:WARNING:%s ", DBG_NAME(A), __func__); \
-      DBG_PRINTC(S);          \
-    } } while (0)
+#define DBG_WARNING(A, S...) do {					\
+		if (DBG_FLAGS(A) & DBG_WARNING_ON) {			\
+			DBG_PRINT("%s:WARNING:%s ", DBG_NAME(A), __func__); \
+			DBG_PRINTC(S);					\
+		} } while (0)
 
 
-#define DBG_NOTICE(A, S...)  do {         \
-    if (DBG_FLAGS(A) & DBG_NOTICE_ON) {     \
-      DBG_PRINT("%s:NOTICE:%s ", DBG_NAME(A), __func__); \
-      DBG_PRINTC(S);          \
-    } } while (0)
+#define DBG_NOTICE(A, S...)  do {					\
+		if (DBG_FLAGS(A) & DBG_NOTICE_ON) {			\
+			DBG_PRINT("%s:NOTICE:%s ", DBG_NAME(A), __func__); \
+			DBG_PRINTC(S);					\
+		} } while (0)
 
 
 #define DBG_TRACE(A, S...)   do { \
-    if (DBG_FLAGS(A) & DBG_TRACE_ON) {      \
-      DBG_PRINT("%s:%s ", DBG_NAME(A), __func__); \
-      DBG_PRINTC(S);          \
-    } } while (0)
+		if (DBG_FLAGS(A) & DBG_TRACE_ON) {			\
+			DBG_PRINT("%s:%s ", DBG_NAME(A), __func__);	\
+			DBG_PRINTC(S);					\
+		} } while (0)
 
 
 #define DBG_RX(A, S...)      {if (DBG_FLAGS(A) & DBG_RX_ON) {\
-      DBG_PRINT(S); } }
+				DBG_PRINT(S); } }
 
 
 #define DBG_TX(A, S...)      {if (DBG_FLAGS(A) & DBG_TX_ON) {\
-      DBG_PRINT(S); } }
+				DBG_PRINT(S); } }
 
 #define DBG_DS(A, S...)      {if (DBG_FLAGS(A) & DBG_DS_ON) {\
-      DBG_PRINT(S); } }
+				DBG_PRINT(S); } }
 
 
 #define DBG_ASSERT(C) do { \
-    if (!(C)) {           \
-      DBG_PRINT("ASSERT(%s) -- %s#%d (%s)\n",   \
-                #C, __FILE__, __LINE__, __func__);  \
-      DBG_TRAP;         \
-    } } while (0)
+		if (!(C)) {						\
+			DBG_PRINT("ASSERT(%s) -- %s#%d (%s)\n",		\
+				  #C, __FILE__, __LINE__, __func__);	\
+			DBG_TRAP;					\
+		} } while (0)
 
 typedef struct {
-  char      *     dbgName;
-  int             dbgLevel;
-  unsigned long   DebugFlag;
+    char           *dbgName;
+    int             dbgLevel;
+    unsigned long   DebugFlag;
 } dbg_info_t;
 
 

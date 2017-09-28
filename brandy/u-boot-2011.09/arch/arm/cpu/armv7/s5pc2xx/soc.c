@@ -24,7 +24,7 @@
 #include <common.h>
 #include <asm/io.h>
 
-void reset_cpu (ulong addr)
+void reset_cpu(ulong addr)
 {
-  writel (0x1, samsung_get_base_swreset() );
+	writel(0x1, samsung_get_base_swreset());
 }

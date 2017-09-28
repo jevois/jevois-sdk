@@ -1,5 +1,5 @@
 
-/***************************************************************************\
+ /***************************************************************************\
 |*                                                                           *|
 |*       Copyright 2003 NVIDIA, Corporation.  All rights reserved.           *|
 |*                                                                           *|
@@ -36,7 +36,7 @@
 |*     all U.S. Government End Users  acquire the source code  with only     *|
 |*     those rights set forth herein.                                        *|
 |*                                                                           *|
-\***************************************************************************/
+ \***************************************************************************/
 
 /*
  * GPL Licensing Note - According to Mark Vojkovich, author of the Xorg/
@@ -84,7 +84,7 @@
 #define LINE_COLOR                                                  0x00008304
 #define LINE_MAX_LINES                                              16
 #define LINE_LINES(i)                                               0x00008400\
-  +(i)*8
+                                                                    +(i)*8
 #define LINE_LINES_POINT0_X                                         15:0
 #define LINE_LINES_POINT0_Y                                         31:16
 #define LINE_LINES_POINT1_X                                         47:32
@@ -107,7 +107,7 @@
 #define RECT_SOLID_COLOR                                            0x0000C3FC
 #define RECT_SOLID_RECTS_MAX_RECTS                                  32
 #define RECT_SOLID_RECTS(i)                                         0x0000C400\
-  +(i)*8
+                                                                    +(i)*8
 #define RECT_SOLID_RECTS_Y                                          15:0
 #define RECT_SOLID_RECTS_X                                          31:16
 #define RECT_SOLID_RECTS_HEIGHT                                     47:32
@@ -127,7 +127,7 @@
 #define RECT_EXPAND_ONE_COLOR_POINT_Y                               31:16
 #define RECT_EXPAND_ONE_COLOR_DATA_MAX_DWORDS                       128
 #define RECT_EXPAND_ONE_COLOR_DATA(i)                               0x0000C800\
-  +(i)*4
+                                                                    +(i)*4
 
 #define RECT_EXPAND_TWO_COLOR_CLIP                                  0x0000CBE4
 #define RECT_EXPAND_TWO_COLOR_CLIP_POINT0_X                         15:0
@@ -147,7 +147,7 @@
 #define RECT_EXPAND_TWO_COLOR_POINT_Y                               31:16
 #define RECT_EXPAND_TWO_COLOR_DATA_MAX_DWORDS                       128
 #define RECT_EXPAND_TWO_COLOR_DATA(i)                               0x0000CC00\
-  +(i)*4
+                                                                    +(i)*4
 
 #define STRETCH_BLIT_FORMAT                                         0x0000E300
 #define STRETCH_BLIT_FORMAT_DEPTH8                                  0x00000004

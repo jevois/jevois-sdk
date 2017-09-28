@@ -15,7 +15,7 @@
 #define __PLATFORM_DATA_DS2482__
 
 struct ds2482_platform_data {
-  int   slpz_gpio;
+	int		slpz_gpio;
 };
 
 #endif /* __PLATFORM_DATA_DS2482__ */

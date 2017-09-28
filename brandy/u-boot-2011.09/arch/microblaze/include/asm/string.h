@@ -22,10 +22,10 @@
 #define __HAVE_ARCH_MEMSET
 #define __HAVE_ARCH_MEMMOVE
 
-extern void * memcpy (void *, const void *, __kernel_size_t);
+extern void *memcpy (void *, const void *, __kernel_size_t);
 extern void bcopy (const char *, char *, int);
-extern void * memset (void *, int, __kernel_size_t);
-extern void * memmove (void *, const void *, __kernel_size_t);
+extern void *memset (void *, int, __kernel_size_t);
+extern void *memmove (void *, const void *, __kernel_size_t);
 #endif
 
 #endif /* __MICROBLAZE_STRING_H__ */

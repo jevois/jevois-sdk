@@ -4,7 +4,7 @@
 #define _BEDBUG_H
 
 #ifndef NULL
-#define NULL  0
+#define NULL	0
 #endif
 
 #define _USE_PROTOTYPES
@@ -15,9 +15,9 @@
 
 #ifndef __P
 #if defined(_USE_PROTOTYPES) && (defined(__STDC__) || defined(__cplusplus))
-#define __P(protos) protos    /* full-blown ANSI C */
+#define __P(protos)	protos		/* full-blown ANSI C */
 #else
-#define __P(protos) ()    /* traditional C preprocessor */
+#define __P(protos)	()		/* traditional C preprocessor */
 #endif
 #endif
 

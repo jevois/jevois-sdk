@@ -15,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -49,8 +49,8 @@
 #define CONFIG_MPC8240      1
 #define CONFIG_MOUSSE       1
 
-#define CONFIG_SYS_TEXT_BASE  0xFFF00000
-#define CONFIG_SYS_LDSCRIPT "board/mousse/u-boot.lds"
+#define	CONFIG_SYS_TEXT_BASE	0xFFF00000
+#define	CONFIG_SYS_LDSCRIPT	"board/mousse/u-boot.lds"
 
 #define CONFIG_SYS_ADDR_MAP_B      1
 
@@ -116,14 +116,14 @@
 #endif
 
 #ifdef DEBUG
-#define CONFIG_SYS_MONITOR_LEN     (4 << 20)  /* lots of mem ... */
+#define CONFIG_SYS_MONITOR_LEN     (4 << 20)	/* lots of mem ... */
 #else
-#define CONFIG_SYS_MONITOR_LEN     (512 << 10)  /* 512K PLCC bootrom */
+#define CONFIG_SYS_MONITOR_LEN     (512 << 10)	/* 512K PLCC bootrom */
 #endif
 #define CONFIG_SYS_MALLOC_LEN      (2*(4096 << 10))    /* 2*4096kB for malloc()  */
 
-#define CONFIG_SYS_MEMTEST_START   0x00004000 /* memtest works on      */
-#define CONFIG_SYS_MEMTEST_END     0x02000000 /* 0 ... 32 MB in DRAM   */
+#define CONFIG_SYS_MEMTEST_START   0x00004000	/* memtest works on      */
+#define CONFIG_SYS_MEMTEST_END     0x02000000	/* 0 ... 32 MB in DRAM   */
 
 
 #define CONFIG_SYS_EUMB_ADDR       0xFC000000
@@ -137,8 +137,8 @@
 #define FLASH_BASE0_PRELIM  0xFFF00000  /* 512K PLCC FLASH/AM29F040*/
 #define FLASH_BASE0_SIZE    0x80000     /* 512K */
 #define FLASH_BASE1_PRELIM  0xFFE10000  /* AMD 29LV160DB
-             1MB - 64K FLASH0 SEG =960K
-             (size=0xf0000)*/
+					   1MB - 64K FLASH0 SEG =960K
+					   (size=0xf0000)*/
 
 #define CONFIG_SYS_BAUDRATE_TABLE  { 9600, 19200, 38400, 57600, 115200 }
 
@@ -148,11 +148,11 @@
 #define CONFIG_SYS_NS16550
 #define CONFIG_SYS_NS16550_SERIAL
 
-#define CONFIG_SYS_NS16550_REG_SIZE 1
+#define CONFIG_SYS_NS16550_REG_SIZE	1
 
-#define CONFIG_SYS_NS16550_CLK    18432000
+#define CONFIG_SYS_NS16550_CLK		18432000
 
-#define CONFIG_SYS_NS16550_COM1 0xFFE08080
+#define CONFIG_SYS_NS16550_COM1	0xFFE08080
 
 /*-----------------------------------------------------------------------
  * Definitions for initial stack pointer and data area (in DPRAM)
@@ -169,7 +169,7 @@
  * For the detail description refer to the MPC8240 user's manual.
  */
 
-#define CONFIG_SYS_CLK_FREQ  33000000 /* external frequency to pll */
+#define CONFIG_SYS_CLK_FREQ  33000000	/* external frequency to pll */
 #define CONFIG_PLL_PCI_TO_MEM_MULTIPLIER  2
 #define CONFIG_SYS_HZ               1000
 
@@ -177,33 +177,33 @@
 #define CONFIG_SYS_ETH_IOBASE       0x00104000
 
 
-/* Bit-field values for MCCR1.
- */
+	/* Bit-field values for MCCR1.
+	 */
 #define CONFIG_SYS_ROMNAL          8
 #define CONFIG_SYS_ROMFAL          8
 
-/* Bit-field values for MCCR2.
- */
+	/* Bit-field values for MCCR2.
+	 */
 #define CONFIG_SYS_REFINT          0xf5     /* Refresh interval               */
 
-/* Burst To Precharge. Bits of this value go to MCCR3 and MCCR4.
- */
+	/* Burst To Precharge. Bits of this value go to MCCR3 and MCCR4.
+	 */
 #define CONFIG_SYS_BSTOPRE         0x79
 
 #ifdef INCLUDE_ECC
-#define USE_ECC       1
+#define USE_ECC				1
 #else /* INCLUDE_ECC */
-#define USE_ECC       0
+#define USE_ECC				0
 #endif /* INCLUDE_ECC */
 
 
-/* Bit-field values for MCCR3.
- */
+	/* Bit-field values for MCCR3.
+	 */
 #define CONFIG_SYS_REFREC          8       /* Refresh to activate interval   */
 #define CONFIG_SYS_RDLAT           (4+USE_ECC)   /* Data latancy from read command */
 
-/* Bit-field values for MCCR4.
- */
+	/* Bit-field values for MCCR4.
+	 */
 #define CONFIG_SYS_PRETOACT        3       /* Precharge to activate interval */
 #define CONFIG_SYS_ACTTOPRE        5       /* Activate to Precharge interval */
 #define CONFIG_SYS_SDMODE_CAS_LAT  3       /* SDMODE CAS latancy             */
@@ -250,9 +250,9 @@
 
 
 #define CONFIG_SYS_PGMAX           0x32 /* how long the 8240 reatins the currently accessed page in memory
-            see 8240 book for details*/
-#define PCI_MEM_SPACE1_START  0x80000000
-#define PCI_MEM_SPACE2_START  0xfd000000
+				    see 8240 book for details*/
+#define PCI_MEM_SPACE1_START	0x80000000
+#define PCI_MEM_SPACE2_START	0xfd000000
 
 /* IBAT/DBAT Configuration */
 /* Ram: 64MB, starts at address-0, r/w instruction/data */
@@ -265,22 +265,22 @@
 #define CONFIG_SYS_IBAT1U      (PORTX_DEV_BASE | BATU_BL_128M | BATU_VS | BATU_VP)
 #if 0
 #define CONFIG_SYS_IBAT1L      (PORTX_DEV_BASE | BATL_PP_10  | BATL_MEMCOHERENCE |\
-                                BATL_WRITETHROUGH | BATL_CACHEINHIBIT)
+			 BATL_WRITETHROUGH | BATL_CACHEINHIBIT)
 #else
 #define CONFIG_SYS_IBAT1L      (PORTX_DEV_BASE | BATL_PP_10 |BATL_CACHEINHIBIT)
 #endif
-#define CONFIG_SYS_DBAT1U CONFIG_SYS_IBAT1U
-#define CONFIG_SYS_DBAT1L CONFIG_SYS_IBAT1L
+#define CONFIG_SYS_DBAT1U	CONFIG_SYS_IBAT1U
+#define CONFIG_SYS_DBAT1L	CONFIG_SYS_IBAT1L
 
 /* PCI Memory region 1: 0x8XXX_XXXX PCI Mem space: EUMBAR, etc - 16MB */
-#define CONFIG_SYS_IBAT2U (PCI_MEM_SPACE1_START|BATU_BL_16M | BATU_VS | BATU_VP)
-#define CONFIG_SYS_IBAT2L (PCI_MEM_SPACE1_START|BATL_PP_10 | BATL_GUARDEDSTORAGE|BATL_CACHEINHIBIT)
+#define CONFIG_SYS_IBAT2U	(PCI_MEM_SPACE1_START|BATU_BL_16M | BATU_VS | BATU_VP)
+#define CONFIG_SYS_IBAT2L	(PCI_MEM_SPACE1_START|BATL_PP_10 | BATL_GUARDEDSTORAGE|BATL_CACHEINHIBIT)
 #define CONFIG_SYS_DBAT2U      CONFIG_SYS_IBAT2U
 #define CONFIG_SYS_DBAT2L      CONFIG_SYS_IBAT2L
 
 /* PCI Memory region 2: PCI Devices in 0xFD space */
-#define CONFIG_SYS_IBAT3U (PCI_MEM_SPACE2_START|BATU_BL_16M | BATU_VS | BATU_VP)
-#define CONFIG_SYS_IBAT3L (PCI_MEM_SPACE2_START|BATL_PP_10 | BATL_GUARDEDSTORAGE | BATL_CACHEINHIBIT)
+#define CONFIG_SYS_IBAT3U	(PCI_MEM_SPACE2_START|BATU_BL_16M | BATU_VS | BATU_VP)
+#define CONFIG_SYS_IBAT3L	(PCI_MEM_SPACE2_START|BATL_PP_10 | BATL_GUARDEDSTORAGE | BATL_CACHEINHIBIT)
 #define CONFIG_SYS_DBAT3U      CONFIG_SYS_IBAT3U
 #define CONFIG_SYS_DBAT3L      CONFIG_SYS_IBAT3L
 
@@ -302,8 +302,8 @@
 #define CONFIG_SYS_FLASH_WRITE_TOUT    500     /* Timeout for Flash Write (in ms)   */
 
 #if 0
-#define CONFIG_ENV_IS_IN_FLASH      1
-#define CONFIG_ENV_OFFSET          0x8000  /* Offset of the Environment Sector  */
+#define	CONFIG_ENV_IS_IN_FLASH	    1
+#define CONFIG_ENV_OFFSET          0x8000  /* Offset of the Environment Sector	*/
 #define CONFIG_ENV_SIZE            0x4000  /* Size of the Environment Sector    */
 #else
 #define CONFIG_ENV_IS_IN_NVRAM          1
@@ -331,10 +331,10 @@
  * PCI stuff
  *-----------------------------------------------------------------------
  */
-#define CONFIG_PCI      /* include pci support      */
+#define CONFIG_PCI			/* include pci support			*/
 #undef CONFIG_PCI_PNP
 
-#define CONFIG_NET_MULTI    /* Multi ethernet cards support   */
+#define CONFIG_NET_MULTI		/* Multi ethernet cards support		*/
 
 #define CONFIG_TULIP
 

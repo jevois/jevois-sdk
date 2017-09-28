@@ -3,7 +3,7 @@
 
 #define FILTER_POINT
 #ifdef FILTER_POINT
-#define FILTER_MAX  12
+#define FILTER_MAX	12
 #endif
 
 /*������Ե���겻׼�����⣬һ������²�Ҫ������꣬
@@ -11,9 +11,9 @@
 
 struct fw_data
 {
-  u32 offset : 8;
-  u32 : 0;
-  u32 val;
+    u32 offset : 8;
+    u32 : 0;
+    u32 val;
 };
 
 #endif

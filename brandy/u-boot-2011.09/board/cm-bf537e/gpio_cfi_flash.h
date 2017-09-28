@@ -6,5 +6,5 @@
  * Licensed under the GPL-2 or later.
  */
 
-void * gpio_cfi_flash_swizzle (void * vaddr);
-void gpio_cfi_flash_init (void);
+void *gpio_cfi_flash_swizzle(void *vaddr);
+void gpio_cfi_flash_init(void);

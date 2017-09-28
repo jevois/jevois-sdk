@@ -32,18 +32,18 @@
 #include <asm/elf.h>
 
 struct __read_mostly va_alignment va_align = {
-  .flags = -1,
+	.flags = -1,
 };
 
-static unsigned int stack_maxrandom_size (void)
+static unsigned int stack_maxrandom_size(void)
 {
-  unsigned int max = 0;
-  if ( (current->flags & PF_RANDOMIZE) &&
-       ! (current->personality & ADDR_NO_RANDOMIZE) ) {
-    max = ( (-1U) & STACK_RND_MASK) << PAGE_SHIFT;
-  }
-  
-  return max;
+	unsigned int max = 0;
+	if ((current->flags & PF_RANDOMIZE) &&
+		!(current->personality & ADDR_NO_RANDOMIZE)) {
+		max = ((-1U) & STACK_RND_MASK) << PAGE_SHIFT;
+	}
+
+	return max;
 }
 
 /*
@@ -54,73 +54,71 @@ static unsigned int stack_maxrandom_size (void)
 #define MIN_GAP (128*1024*1024UL + stack_maxrandom_size())
 #define MAX_GAP (TASK_SIZE/6*5)
 
-static int mmap_is_legacy (void)
+static int mmap_is_legacy(void)
 {
-  if (current->personality & ADDR_COMPAT_LAYOUT)
-  { return 1; }
-  
-  if (rlimit (RLIMIT_STACK) == RLIM_INFINITY)
-  { return 1; }
-  
-  return sysctl_legacy_va_layout;
+	if (current->personality & ADDR_COMPAT_LAYOUT)
+		return 1;
+
+	if (rlimit(RLIMIT_STACK) == RLIM_INFINITY)
+		return 1;
+
+	return sysctl_legacy_va_layout;
 }
 
-static unsigned long mmap_rnd (void)
+static unsigned long mmap_rnd(void)
 {
-  unsigned long rnd = 0;
-  
-  /*
-  *  8 bits of randomness in 32bit mmaps, 20 address space bits
-  * 28 bits of randomness in 64bit mmaps, 40 address space bits
-  */
-  if (current->flags & PF_RANDOMIZE) {
-    if (mmap_is_ia32() )
-    { rnd = get_random_int() % (1 << 8); }
-    else
-    { rnd = get_random_int() % (1 << 28); }
-  }
-  return rnd << PAGE_SHIFT;
+	unsigned long rnd = 0;
+
+	/*
+	*  8 bits of randomness in 32bit mmaps, 20 address space bits
+	* 28 bits of randomness in 64bit mmaps, 40 address space bits
+	*/
+	if (current->flags & PF_RANDOMIZE) {
+		if (mmap_is_ia32())
+			rnd = get_random_int() % (1<<8);
+		else
+			rnd = get_random_int() % (1<<28);
+	}
+	return rnd << PAGE_SHIFT;
 }
 
-static unsigned long mmap_base (void)
+static unsigned long mmap_base(void)
 {
-  unsigned long gap = rlimit (RLIMIT_STACK);
-  
-  if (gap < MIN_GAP)
-  { gap = MIN_GAP; }
-  else
-    if (gap > MAX_GAP)
-    { gap = MAX_GAP; }
-    
-  return PAGE_ALIGN (TASK_SIZE - gap - mmap_rnd() );
+	unsigned long gap = rlimit(RLIMIT_STACK);
+
+	if (gap < MIN_GAP)
+		gap = MIN_GAP;
+	else if (gap > MAX_GAP)
+		gap = MAX_GAP;
+
+	return PAGE_ALIGN(TASK_SIZE - gap - mmap_rnd());
 }
 
 /*
  * Bottom-up (legacy) layout on X86_32 did not support randomization, X86_64
  * does, but not when emulating X86_32
  */
-static unsigned long mmap_legacy_base (void)
+static unsigned long mmap_legacy_base(void)
 {
-  if (mmap_is_ia32() )
-  { return TASK_UNMAPPED_BASE; }
-  else
-  { return TASK_UNMAPPED_BASE + mmap_rnd(); }
+	if (mmap_is_ia32())
+		return TASK_UNMAPPED_BASE;
+	else
+		return TASK_UNMAPPED_BASE + mmap_rnd();
 }
 
 /*
  * This function, called very early during the creation of a new
  * process VM image, sets up which VM layout function to use:
  */
-void arch_pick_mmap_layout (struct mm_struct * mm)
+void arch_pick_mmap_layout(struct mm_struct *mm)
 {
-  if (mmap_is_legacy() ) {
-    mm->mmap_base = mmap_legacy_base();
-    mm->get_unmapped_area = arch_get_unmapped_area;
-    mm->unmap_area = arch_unmap_area;
-  }
-  else {
-    mm->mmap_base = mmap_base();
-    mm->get_unmapped_area = arch_get_unmapped_area_topdown;
-    mm->unmap_area = arch_unmap_area_topdown;
-  }
+	if (mmap_is_legacy()) {
+		mm->mmap_base = mmap_legacy_base();
+		mm->get_unmapped_area = arch_get_unmapped_area;
+		mm->unmap_area = arch_unmap_area;
+	} else {
+		mm->mmap_base = mmap_base();
+		mm->get_unmapped_area = arch_get_unmapped_area_topdown;
+		mm->unmap_area = arch_unmap_area_topdown;
+	}
 }

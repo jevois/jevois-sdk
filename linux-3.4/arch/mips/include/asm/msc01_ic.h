@@ -25,7 +25,7 @@
 #define MSC01_IC_ISAL_OFS    0x00160    /* Masked int_in 31:0          */
 #define MSC01_IC_ISAH_OFS    0x00168    /* Masked int_in 63:32         */
 #define MSC01_IC_LVL_OFS     0x00180    /* Disable priority int_out    */
-#define MSC01_IC_RAMW_OFS    0x00180    /* Shadow set RAM (EI)         */
+#define MSC01_IC_RAMW_OFS    0x00180    /* Shadow set RAM (EI)	       */
 #define MSC01_IC_OSB_OFS     0x00188    /* Raw int_out                 */
 #define MSC01_IC_OSA_OFS     0x00190    /* Masked int_out              */
 #define MSC01_IC_GENA_OFS    0x00198    /* Global HW int enable        */
@@ -54,15 +54,15 @@
 #define MSC01_IC_LVL_SPUR_SHF     16
 #define MSC01_IC_LVL_SPUR_MSK     0x00010000
 #define MSC01_IC_LVL_SPUR_BIT     MSC01_IC_LVL_SPUR_MSK
-#define MSC01_IC_RAMW_RIPL_SHF    0
-#define MSC01_IC_RAMW_RIPL_MSK    0x0000003f
-#define MSC01_IC_RAMW_DATA_SHF    6
-#define MSC01_IC_RAMW_DATA_MSK    0x00000fc0
-#define MSC01_IC_RAMW_ADDR_SHF    25
-#define MSC01_IC_RAMW_ADDR_MSK    0x7e000000
-#define MSC01_IC_RAMW_READ_SHF    31
-#define MSC01_IC_RAMW_READ_MSK    0x80000000
-#define MSC01_IC_RAMW_READ_BIT    MSC01_IC_RAMW_READ_MSK
+#define MSC01_IC_RAMW_RIPL_SHF	  0
+#define MSC01_IC_RAMW_RIPL_MSK	  0x0000003f
+#define MSC01_IC_RAMW_DATA_SHF	  6
+#define MSC01_IC_RAMW_DATA_MSK	  0x00000fc0
+#define MSC01_IC_RAMW_ADDR_SHF	  25
+#define MSC01_IC_RAMW_ADDR_MSK	  0x7e000000
+#define MSC01_IC_RAMW_READ_SHF	  31
+#define MSC01_IC_RAMW_READ_MSK	  0x80000000
+#define MSC01_IC_RAMW_READ_BIT	  MSC01_IC_RAMW_READ_MSK
 #define MSC01_IC_OSB_OSB_SHF      0
 #define MSC01_IC_OSB_OSB_MSK      0x000000ff
 #define MSC01_IC_OSA_OSA_SHF      0
@@ -132,16 +132,16 @@
  * Every board describes its IRQ mapping with this table.
  */
 typedef struct msc_irqmap {
-  int im_irq;
-  int im_type;
-  int im_lvl;
+	int	im_irq;
+	int	im_type;
+	int	im_lvl;
 } msc_irqmap_t;
 
 /* im_type */
-#define MSC01_IRQ_LEVEL   0
-#define MSC01_IRQ_EDGE    1
+#define MSC01_IRQ_LEVEL		0
+#define MSC01_IRQ_EDGE		1
 
-extern void __init init_msc_irqs (unsigned long icubase, unsigned int base, msc_irqmap_t * imp, int nirq);
-extern void ll_msc_irq (void);
+extern void __init init_msc_irqs(unsigned long icubase, unsigned int base, msc_irqmap_t *imp, int nirq);
+extern void ll_msc_irq(void);
 
 #endif /* __ASM_MIPS_BOARDS_MSC01_IC_H */

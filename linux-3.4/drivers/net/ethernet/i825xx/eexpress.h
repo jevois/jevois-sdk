@@ -13,13 +13,13 @@
 #define SIGNAL_CA     0x0006
 #define SET_IRQ       0x0007
 #define SM_PTR        0x0008
-#define MEM_Dec       0x000a
+#define	MEM_Dec	      0x000a
 #define MEM_Ctrl      0x000b
 #define MEM_Page_Ctrl 0x000c
 #define Config        0x000d
 #define EEPROM_Ctrl   0x000e
 #define ID_PORT       0x000f
-#define MEM_ECtrl     0x000f
+#define	MEM_ECtrl     0x000f
 
 /*
  * card register defines
@@ -148,26 +148,26 @@
 #define FD_NoEOF(s) (((s) & 0x0040) != 0)
 
 struct rfd_header {
-  volatile unsigned long flags;
-  volatile unsigned short link;
-  volatile unsigned short rbd_offset;
-  volatile unsigned short dstaddr1;
-  volatile unsigned short dstaddr2;
-  volatile unsigned short dstaddr3;
-  volatile unsigned short srcaddr1;
-  volatile unsigned short srcaddr2;
-  volatile unsigned short srcaddr3;
-  volatile unsigned short length;
-  
-  /* This is actually a Receive Buffer Descriptor.  The way we
-   * arrange memory means that an RBD always follows the RFD that
-   * points to it, so they might as well be in the same structure.
-   */
-  volatile unsigned short actual_count;
-  volatile unsigned short next_rbd;
-  volatile unsigned short buf_addr1;
-  volatile unsigned short buf_addr2;
-  volatile unsigned short size;
+	volatile unsigned long flags;
+	volatile unsigned short link;
+	volatile unsigned short rbd_offset;
+	volatile unsigned short dstaddr1;
+	volatile unsigned short dstaddr2;
+	volatile unsigned short dstaddr3;
+	volatile unsigned short srcaddr1;
+	volatile unsigned short srcaddr2;
+	volatile unsigned short srcaddr3;
+	volatile unsigned short length;
+
+	/* This is actually a Receive Buffer Descriptor.  The way we
+	 * arrange memory means that an RBD always follows the RFD that
+	 * points to it, so they might as well be in the same structure.
+	 */
+	volatile unsigned short actual_count;
+	volatile unsigned short next_rbd;
+	volatile unsigned short buf_addr1;
+	volatile unsigned short buf_addr2;
+	volatile unsigned short size;
 };
 
 /* Returned data from the Time Domain Reflectometer */

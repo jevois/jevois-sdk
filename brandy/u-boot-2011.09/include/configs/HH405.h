@@ -18,7 +18,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -39,48 +39,48 @@
  * (easy to change)
  */
 
-#define CONFIG_405EP    1 /* This is a PPC405 CPU   */
-#define CONFIG_4xx    1 /* ...member of PPC4xx family   */
-#define CONFIG_HH405    1 /* ...on a HH405 board          */
+#define CONFIG_405EP		1	/* This is a PPC405 CPU		*/
+#define CONFIG_4xx		1	/* ...member of PPC4xx family   */
+#define CONFIG_HH405		1	/* ...on a HH405 board	        */
 
-#define CONFIG_SYS_TEXT_BASE  0xFFF80000
+#define	CONFIG_SYS_TEXT_BASE	0xFFF80000
 
-#define CONFIG_BOARD_EARLY_INIT_F 1 /* call board_early_init_f()  */
+#define CONFIG_BOARD_EARLY_INIT_F 1	/* call board_early_init_f()	*/
 #define CONFIG_MISC_INIT_R      1       /* call misc_init_r()           */
 
 #define CONFIG_SYS_CLK_FREQ     33333400 /* external frequency to pll   */
 
-#define CONFIG_BOARD_TYPES  1 /* support board types    */
+#define CONFIG_BOARD_TYPES	1	/* support board types		*/
 
-#define CONFIG_BAUDRATE   9600
-#define CONFIG_BOOTDELAY  3 /* autoboot after 3 seconds */
+#define CONFIG_BAUDRATE		9600
+#define CONFIG_BOOTDELAY	3	/* autoboot after 3 seconds	*/
 
-#undef  CONFIG_BOOTARGS
-#undef  CONFIG_BOOTCOMMAND
+#undef	CONFIG_BOOTARGS
+#undef	CONFIG_BOOTCOMMAND
 
-#define CONFIG_PREBOOT          "autoupd"
+#define CONFIG_PREBOOT	        "autoupd"
 
-#define CONFIG_EXTRA_ENV_SETTINGS         \
-  "pciconfighost=1\0"           \
-  ""
+#define	CONFIG_EXTRA_ENV_SETTINGS					\
+	"pciconfighost=1\0"						\
+	""
 
-#define CONFIG_SYS_LOADS_BAUD_CHANGE  1 /* allow baudrate change  */
+#define CONFIG_SYS_LOADS_BAUD_CHANGE	1	/* allow baudrate change	*/
 
 #define CONFIG_PPC4xx_EMAC
-#define CONFIG_NET_MULTI  1
+#define CONFIG_NET_MULTI	1
 #undef  CONFIG_HAS_ETH1
 
-#define CONFIG_MII    1 /* MII PHY management   */
-#define CONFIG_PHY_ADDR   0 /* PHY address      */
+#define CONFIG_MII		1	/* MII PHY management		*/
+#define CONFIG_PHY_ADDR		0	/* PHY address			*/
 #define CONFIG_LXT971_NO_SLEEP  1       /* disable sleep mode in LXT971 */
 #define CONFIG_RESET_PHY_R      1       /* use reset_phy() to disable phy sleep mode */
 
-#define CONFIG_PHY_CLK_FREQ EMAC_STACR_CLK_66MHZ /* 66 MHz OPB clock*/
+#define CONFIG_PHY_CLK_FREQ	EMAC_STACR_CLK_66MHZ /* 66 MHz OPB clock*/
 
 /*
  * Video console
  */
-#define CONFIG_VIDEO      /* for sm501 video support  */
+#define CONFIG_VIDEO			/* for sm501 video support	*/
 
 #ifdef CONFIG_VIDEO
 #define CONFIG_VIDEO_SM501
@@ -98,8 +98,8 @@
 #define CONFIG_SPLASH_SCREEN
 #define CONFIG_SYS_CONSOLE_IS_IN_ENV
 #define CONFIG_SPLASH_SCREEN
-#define CONFIG_VIDEO_BMP_GZIP   /* gzip compressed bmp images */
-#define CONFIG_SYS_VIDEO_LOGO_MAX_SIZE  (2 << 20) /* for decompressed img */
+#define CONFIG_VIDEO_BMP_GZIP		/* gzip compressed bmp images	*/
+#define CONFIG_SYS_VIDEO_LOGO_MAX_SIZE	(2 << 20)	/* for decompressed img */
 
 #endif /* CONFIG_VIDEO */
 
@@ -144,79 +144,79 @@
 #define CONFIG_AUTO_UPDATE      1       /* autoupdate via compactflash  */
 #undef CONFIG_AUTO_UPDATE_SHOW          /* use board show routine       */
 
-#undef  CONFIG_BZIP2   /* include support for bzip2 compressed images */
-#undef  CONFIG_WATCHDOG     /* watchdog disabled    */
+#undef  CONFIG_BZIP2	 /* include support for bzip2 compressed images */
+#undef  CONFIG_WATCHDOG			/* watchdog disabled		*/
 
-#define CONFIG_SDRAM_BANK0  1 /* init onboard SDRAM bank 0  */
+#define	CONFIG_SDRAM_BANK0	1	/* init onboard SDRAM bank 0	*/
 
 /*
  * Miscellaneous configurable options
  */
-#define CONFIG_SYS_LONGHELP     /* undef to save memory   */
-#define CONFIG_SYS_PROMPT "=> "   /* Monitor Command Prompt */
+#define CONFIG_SYS_LONGHELP			/* undef to save memory		*/
+#define CONFIG_SYS_PROMPT	"=> "		/* Monitor Command Prompt	*/
 
-#undef  CONFIG_SYS_HUSH_PARSER      /* use "hush" command parser  */
-#ifdef  CONFIG_SYS_HUSH_PARSER
-#define CONFIG_SYS_PROMPT_HUSH_PS2  "> "
+#undef	CONFIG_SYS_HUSH_PARSER			/* use "hush" command parser	*/
+#ifdef	CONFIG_SYS_HUSH_PARSER
+#define	CONFIG_SYS_PROMPT_HUSH_PS2	"> "
 #endif
 
 #if defined(CONFIG_CMD_KGDB)
-#define CONFIG_SYS_CBSIZE 1024    /* Console I/O Buffer Size  */
+#define	CONFIG_SYS_CBSIZE	1024		/* Console I/O Buffer Size	*/
 #else
-#define CONFIG_SYS_CBSIZE 256   /* Console I/O Buffer Size  */
+#define	CONFIG_SYS_CBSIZE	256		/* Console I/O Buffer Size	*/
 #endif
 #define CONFIG_SYS_PBSIZE (CONFIG_SYS_CBSIZE+sizeof(CONFIG_SYS_PROMPT)+16) /* Print Buffer Size */
-#define CONFIG_SYS_MAXARGS  16    /* max number of command args */
-#define CONFIG_SYS_BARGSIZE CONFIG_SYS_CBSIZE /* Boot Argument Buffer Size  */
+#define CONFIG_SYS_MAXARGS	16		/* max number of command args	*/
+#define CONFIG_SYS_BARGSIZE	CONFIG_SYS_CBSIZE	/* Boot Argument Buffer Size	*/
 
 #define CONFIG_SYS_DEVICE_NULLDEV      1       /* include nulldev device       */
 
-#undef  CONFIG_SYS_CONSOLE_INFO_QUIET          /* print console @ startup */
+#undef  CONFIG_SYS_CONSOLE_INFO_QUIET          /* print console @ startup	*/
 
-#define CONFIG_AUTO_COMPLETE  1       /* add autocompletion support   */
+#define CONFIG_AUTO_COMPLETE	1       /* add autocompletion support   */
 
-#define CONFIG_SYS_MEMTEST_START  0x0400000 /* memtest works on */
-#define CONFIG_SYS_MEMTEST_END    0x0C00000 /* 4 ... 12 MB in DRAM  */
+#define CONFIG_SYS_MEMTEST_START	0x0400000	/* memtest works on	*/
+#define CONFIG_SYS_MEMTEST_END		0x0C00000	/* 4 ... 12 MB in DRAM	*/
 
-#define CONFIG_CONS_INDEX 2 /* Use UART1      */
+#define CONFIG_CONS_INDEX	2	/* Use UART1			*/
 #define CONFIG_SYS_NS16550
 #define CONFIG_SYS_NS16550_SERIAL
-#define CONFIG_SYS_NS16550_REG_SIZE 1
-#define CONFIG_SYS_NS16550_CLK    get_serial_clock()
+#define CONFIG_SYS_NS16550_REG_SIZE	1
+#define CONFIG_SYS_NS16550_CLK		get_serial_clock()
 
 #undef  CONFIG_SYS_EXT_SERIAL_CLOCK           /* no external serial clock used */
 #define CONFIG_SYS_BASE_BAUD       691200
 
 /* The following table includes the supported baudrates */
 #define CONFIG_SYS_BAUDRATE_TABLE      \
-  { 300, 600, 1200, 2400, 4800, 9600, 19200, 38400,     \
-    57600, 115200, 230400, 460800, 921600 }
+	{ 300, 600, 1200, 2400, 4800, 9600, 19200, 38400,     \
+	 57600, 115200, 230400, 460800, 921600 }
 
-#define CONFIG_SYS_LOAD_ADDR  0x100000  /* default load address */
-#define CONFIG_SYS_EXTBDINFO  1   /* To use extended board_into (bd_t) */
+#define CONFIG_SYS_LOAD_ADDR	0x100000	/* default load address */
+#define CONFIG_SYS_EXTBDINFO	1		/* To use extended board_into (bd_t) */
 
-#define CONFIG_SYS_HZ   1000    /* decrementer freq: 1 ms ticks */
+#define	CONFIG_SYS_HZ		1000		/* decrementer freq: 1 ms ticks	*/
 
-#define CONFIG_ZERO_BOOTDELAY_CHECK /* check for keypress on bootdelay==0 */
+#define CONFIG_ZERO_BOOTDELAY_CHECK	/* check for keypress on bootdelay==0 */
 
-#define CONFIG_VERSION_VARIABLE 1       /* include version env variable */
+#define CONFIG_VERSION_VARIABLE	1       /* include version env variable */
 
-#define CONFIG_SYS_RX_ETH_BUFFER  16      /* use 16 rx buffer on 405 emac */
+#define CONFIG_SYS_RX_ETH_BUFFER	16      /* use 16 rx buffer on 405 emac */
 
 /*-----------------------------------------------------------------------
  * RTC stuff
  *-----------------------------------------------------------------------
  */
 #define CONFIG_RTC_DS1338
-#define CONFIG_SYS_I2C_RTC_ADDR 0x68
+#define CONFIG_SYS_I2C_RTC_ADDR	0x68
 
 /*-----------------------------------------------------------------------
  * NAND-FLASH stuff
  *-----------------------------------------------------------------------
  */
-#define CONFIG_SYS_NAND_BASE_LIST { CONFIG_SYS_NAND_BASE }
-#define CONFIG_SYS_MAX_NAND_DEVICE  1         /* Max number of NAND devices */
-#define NAND_BIG_DELAY_US 25
+#define CONFIG_SYS_NAND_BASE_LIST	{ CONFIG_SYS_NAND_BASE }
+#define CONFIG_SYS_MAX_NAND_DEVICE	1         /* Max number of NAND devices */
+#define NAND_BIG_DELAY_US	25
 
 #define CONFIG_SYS_NAND_CE             (0x80000000 >> 1)   /* our CE is GPIO1  */
 #define CONFIG_SYS_NAND_RDY            (0x80000000 >> 4)   /* our RDY is GPIO4 */
@@ -234,10 +234,10 @@
 #define PCI_HOST_FORCE  1               /* configure as pci host        */
 #define PCI_HOST_AUTO   2               /* detected via arbiter enable  */
 
-#define CONFIG_PCI      /* include pci support          */
-#define CONFIG_PCI_HOST PCI_HOST_HOST   /* select pci host function     */
-#define CONFIG_PCI_PNP      /* do pci plug-and-play         */
-/* resource configuration       */
+#define CONFIG_PCI			/* include pci support	        */
+#define CONFIG_PCI_HOST	PCI_HOST_HOST   /* select pci host function     */
+#define CONFIG_PCI_PNP			/* do pci plug-and-play         */
+					/* resource configuration       */
 
 #define CONFIG_PCI_SCAN_SHOW            /* print pci devices @ startup  */
 
@@ -259,34 +259,34 @@
  */
 #undef  CONFIG_IDE_8xx_DIRECT               /* no pcmcia interface required */
 #undef  CONFIG_IDE_LED                  /* no led for ide supported     */
-#define CONFIG_IDE_RESET  1 /* reset for ide supported  */
+#define CONFIG_IDE_RESET	1	/* reset for ide supported	*/
 
-#define CONFIG_SYS_IDE_MAXBUS         1   /* max. 1 IDE busses  */
-#define CONFIG_SYS_IDE_MAXDEVICE  (CONFIG_SYS_IDE_MAXBUS*1) /* max. 1 drives per IDE bus */
+#define	CONFIG_SYS_IDE_MAXBUS	        1		/* max. 1 IDE busses	*/
+#define	CONFIG_SYS_IDE_MAXDEVICE	(CONFIG_SYS_IDE_MAXBUS*1) /* max. 1 drives per IDE bus */
 
-#define CONFIG_SYS_ATA_BASE_ADDR  0xF0100000
-#define CONFIG_SYS_ATA_IDE0_OFFSET  0x0000
+#define	CONFIG_SYS_ATA_BASE_ADDR	0xF0100000
+#define	CONFIG_SYS_ATA_IDE0_OFFSET	0x0000
 
-#define CONFIG_SYS_ATA_DATA_OFFSET  0x0000  /* Offset for data I/O      */
-#define CONFIG_SYS_ATA_REG_OFFSET 0x0000  /* Offset for normal register accesses  */
-#define CONFIG_SYS_ATA_ALT_OFFSET 0x0000  /* Offset for alternate registers */
+#define CONFIG_SYS_ATA_DATA_OFFSET	0x0000	/* Offset for data I/O			*/
+#define	CONFIG_SYS_ATA_REG_OFFSET	0x0000	/* Offset for normal register accesses	*/
+#define CONFIG_SYS_ATA_ALT_OFFSET	0x0000	/* Offset for alternate registers	*/
 
 /*
  * For booting Linux, the board info and command line data
  * have to be in the first 8 MB of memory, since this is
  * the maximum mapped by the Linux kernel during initialization.
  */
-#define CONFIG_SYS_BOOTMAPSZ    (8 << 20) /* Initial Memory map for Linux */
+#define CONFIG_SYS_BOOTMAPSZ		(8 << 20)	/* Initial Memory map for Linux */
 /*-----------------------------------------------------------------------
  * FLASH organization
  */
-#define FLASH_BASE0_PRELIM  0xFFC00000  /* FLASH bank #0  */
+#define FLASH_BASE0_PRELIM	0xFFC00000	/* FLASH bank #0	*/
 
-#define CONFIG_SYS_MAX_FLASH_BANKS  1 /* max number of memory banks   */
-#define CONFIG_SYS_MAX_FLASH_SECT 256 /* max number of sectors on one chip  */
+#define CONFIG_SYS_MAX_FLASH_BANKS	1	/* max number of memory banks		*/
+#define CONFIG_SYS_MAX_FLASH_SECT	256	/* max number of sectors on one chip	*/
 
-#define CONFIG_SYS_FLASH_ERASE_TOUT 120000  /* Timeout for Flash Erase (in ms)  */
-#define CONFIG_SYS_FLASH_WRITE_TOUT 1000  /* Timeout for Flash Write (in ms)  */
+#define CONFIG_SYS_FLASH_ERASE_TOUT	120000	/* Timeout for Flash Erase (in ms)	*/
+#define CONFIG_SYS_FLASH_WRITE_TOUT	1000	/* Timeout for Flash Write (in ms)	*/
 
 #define CONFIG_SYS_FLASH_WORD_SIZE     unsigned short  /* flash word size (width)      */
 #define CONFIG_SYS_FLASH_ADDR0         0x5555  /* 1st address for flash config cycles  */
@@ -311,14 +311,14 @@
  * (Set up by the startup code)
  * Please note that CONFIG_SYS_SDRAM_BASE _must_ start at 0
  */
-#define CONFIG_SYS_SDRAM_BASE   0x00000000
-#define CONFIG_SYS_FLASH_BASE   0xFFF80000
-#define CONFIG_SYS_MONITOR_BASE CONFIG_SYS_TEXT_BASE
-#define CONFIG_SYS_MONITOR_LEN    (512 * 1024)  /* Reserve 512 kB for Monitor */
-#define CONFIG_SYS_MALLOC_LEN   (4 << 20) /* Reserve 4 MB for malloc()  */
+#define CONFIG_SYS_SDRAM_BASE		0x00000000
+#define CONFIG_SYS_FLASH_BASE		0xFFF80000
+#define CONFIG_SYS_MONITOR_BASE	CONFIG_SYS_TEXT_BASE
+#define CONFIG_SYS_MONITOR_LEN		(512 * 1024)	/* Reserve 512 kB for Monitor	*/
+#define CONFIG_SYS_MALLOC_LEN		(4 << 20)	/* Reserve 4 MB for malloc()	*/
 
 #if (CONFIG_SYS_MONITOR_BASE < FLASH_BASE0_PRELIM)
-# define CONFIG_SYS_RAMBOOT   1
+# define CONFIG_SYS_RAMBOOT		1
 #else
 # undef CONFIG_SYS_RAMBOOT
 #endif
@@ -329,44 +329,44 @@
 #define CONFIG_ENV_IS_IN_EEPROM    1       /* use EEPROM for environment vars */
 #define CONFIG_ENV_OFFSET          0x100   /* environment starts at the beginning of the EEPROM */
 #define CONFIG_ENV_SIZE            0x700   /* 2048 bytes may be used for env vars*/
-/* total size of a CAT24WC16 is 2048 bytes */
+				   /* total size of a CAT24WC16 is 2048 bytes */
 
-#define CONFIG_SYS_NVRAM_BASE_ADDR  0xF4080000    /* NVRAM base address */
-#define CONFIG_SYS_NVRAM_SIZE   0x8000            /* NVRAM size   */
+#define CONFIG_SYS_NVRAM_BASE_ADDR	0xF4080000		/* NVRAM base address	*/
+#define CONFIG_SYS_NVRAM_SIZE		0x8000		        /* NVRAM size		*/
 
 /*-----------------------------------------------------------------------
  * I2C EEPROM (CAT24WC16) for environment
  */
-#define CONFIG_HARD_I2C     /* I2c with hardware support */
-#define CONFIG_PPC4XX_I2C   /* use PPC4xx driver    */
+#define CONFIG_HARD_I2C			/* I2c with hardware support */
+#define CONFIG_PPC4XX_I2C		/* use PPC4xx driver		*/
 #if 0 /* test-only */
-#define CONFIG_SYS_I2C_SPEED    400000  /* I2C speed and slave address */
+#define CONFIG_SYS_I2C_SPEED		400000	/* I2C speed and slave address */
 #else
-#define CONFIG_SYS_I2C_SPEED    100000  /* I2C speed and slave address */
+#define CONFIG_SYS_I2C_SPEED		100000	/* I2C speed and slave address */
 #endif
-#define CONFIG_SYS_I2C_SLAVE    0x7F
+#define CONFIG_SYS_I2C_SLAVE		0x7F
 
-#define CONFIG_SYS_I2C_EEPROM_ADDR  0x50  /* EEPROM CAT24WC08   */
+#define CONFIG_SYS_I2C_EEPROM_ADDR	0x50	/* EEPROM CAT24WC08		*/
 #define CONFIG_SYS_EEPROM_WREN         1
 
 #if 1 /* test-only */
 /* CAT24WC08/16... */
-#define CONFIG_SYS_I2C_EEPROM_ADDR_LEN  1 /* Bytes of address   */
+#define CONFIG_SYS_I2C_EEPROM_ADDR_LEN	1	/* Bytes of address		*/
 /* mask of address bits that overflow into the "EEPROM chip address"    */
-#define CONFIG_SYS_I2C_EEPROM_ADDR_OVERFLOW 0x07
-#define CONFIG_SYS_EEPROM_PAGE_WRITE_BITS 4 /* The Catalyst CAT24WC08 has */
-/* 16 byte page write mode using*/
-/* last 4 bits of the address */
+#define CONFIG_SYS_I2C_EEPROM_ADDR_OVERFLOW	0x07
+#define CONFIG_SYS_EEPROM_PAGE_WRITE_BITS 4	/* The Catalyst CAT24WC08 has	*/
+					/* 16 byte page write mode using*/
+					/* last	4 bits of the address	*/
 #else
 /* CAT24WC32/64... */
-#define CONFIG_SYS_I2C_EEPROM_ADDR_LEN  2 /* Bytes of address   */
+#define CONFIG_SYS_I2C_EEPROM_ADDR_LEN	2	/* Bytes of address		*/
 /* mask of address bits that overflow into the "EEPROM chip address"    */
-#define CONFIG_SYS_I2C_EEPROM_ADDR_OVERFLOW 0x01
-#define CONFIG_SYS_EEPROM_PAGE_WRITE_BITS 5 /* The Catalyst CAT24WC32 has */
-/* 32 byte page write mode using*/
-/* last 5 bits of the address */
+#define CONFIG_SYS_I2C_EEPROM_ADDR_OVERFLOW	0x01
+#define CONFIG_SYS_EEPROM_PAGE_WRITE_BITS 5	/* The Catalyst CAT24WC32 has	*/
+					/* 32 byte page write mode using*/
+					/* last	5 bits of the address	*/
 #endif
-#define CONFIG_SYS_EEPROM_PAGE_WRITE_DELAY_MS 10   /* and takes up to 10 msec */
+#define CONFIG_SYS_EEPROM_PAGE_WRITE_DELAY_MS	10   /* and takes up to 10 msec */
 
 /*-----------------------------------------------------------------------
  * External Bus Controller (EBC) Setup
@@ -447,10 +447,10 @@
 #define CONFIG_SYS_TEMP_STACK_OCM        1
 
 /* On Chip Memory location */
-#define CONFIG_SYS_OCM_DATA_ADDR  0xF8000000
-#define CONFIG_SYS_OCM_DATA_SIZE  0x1000
-#define CONFIG_SYS_INIT_RAM_ADDR  CONFIG_SYS_OCM_DATA_ADDR /* inside of SDRAM   */
-#define CONFIG_SYS_INIT_RAM_SIZE  CONFIG_SYS_OCM_DATA_SIZE /* Size of used area in RAM  */
+#define CONFIG_SYS_OCM_DATA_ADDR	0xF8000000
+#define CONFIG_SYS_OCM_DATA_SIZE	0x1000
+#define CONFIG_SYS_INIT_RAM_ADDR	CONFIG_SYS_OCM_DATA_ADDR /* inside of SDRAM		*/
+#define CONFIG_SYS_INIT_RAM_SIZE	CONFIG_SYS_OCM_DATA_SIZE /* Size of used area in RAM	*/
 
 #define CONFIG_SYS_GBL_DATA_OFFSET    (CONFIG_SYS_INIT_RAM_SIZE - GENERATED_GBL_DATA_SIZE)
 #define CONFIG_SYS_INIT_SP_OFFSET      CONFIG_SYS_GBL_DATA_OFFSET
@@ -467,19 +467,19 @@
  * GPIO0[28-29] - UART1 data signal input/output
  * GPIO0[30-31] - EMAC0 and EMAC1 reject packet inputs
  */
-#define CONFIG_SYS_GPIO0_OSRL   0x40000550
-#define CONFIG_SYS_GPIO0_OSRH   0x00000110
-#define CONFIG_SYS_GPIO0_ISR1L    0x00000000
-#define CONFIG_SYS_GPIO0_ISR1H    0x15555440
-#define CONFIG_SYS_GPIO0_TSRL   0x00000000
-#define CONFIG_SYS_GPIO0_TSRH   0x00000000
-#define CONFIG_SYS_GPIO0_TCR    0xF7FE0017
+#define CONFIG_SYS_GPIO0_OSRL		0x40000550
+#define CONFIG_SYS_GPIO0_OSRH		0x00000110
+#define CONFIG_SYS_GPIO0_ISR1L		0x00000000
+#define CONFIG_SYS_GPIO0_ISR1H		0x15555440
+#define CONFIG_SYS_GPIO0_TSRL		0x00000000
+#define CONFIG_SYS_GPIO0_TSRH		0x00000000
+#define CONFIG_SYS_GPIO0_TCR		0xF7FE0017
 
-#define CONFIG_SYS_LCD_ENDIAN   (0x80000000 >> 7)
-#define CONFIG_SYS_EEPROM_WP    (0x80000000 >> 8)   /* GPIO8 */
-#define CONFIG_SYS_TOUCH_RST    (0x80000000 >> 9)   /* GPIO9 */
-#define CONFIG_SYS_LCD0_RST   (0x80000000 >> 30)
-#define CONFIG_SYS_LCD1_RST   (0x80000000 >> 31)
+#define CONFIG_SYS_LCD_ENDIAN		(0x80000000 >> 7)
+#define CONFIG_SYS_EEPROM_WP		(0x80000000 >> 8)   /* GPIO8 */
+#define CONFIG_SYS_TOUCH_RST		(0x80000000 >> 9)   /* GPIO9 */
+#define CONFIG_SYS_LCD0_RST		(0x80000000 >> 30)
+#define CONFIG_SYS_LCD1_RST		(0x80000000 >> 31)
 
 /*
  * Default speed selection (cpu_plb_opb_ebc) in mhz.
@@ -498,4 +498,4 @@
 #define PLLMR1_DEFAULT   PLLMR1_133_66_66_33
 #endif
 
-#endif  /* __CONFIG_H */
+#endif	/* __CONFIG_H */

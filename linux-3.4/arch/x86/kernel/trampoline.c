@@ -5,25 +5,25 @@
 #include <asm/cacheflush.h>
 #include <asm/pgtable.h>
 
-unsigned char * x86_trampoline_base;
+unsigned char *x86_trampoline_base;
 
-void __init setup_trampolines (void)
+void __init setup_trampolines(void)
 {
-  phys_addr_t mem;
-  size_t size = PAGE_ALIGN (x86_trampoline_end - x86_trampoline_start);
-  
-  /* Has to be in very low memory so we can execute real-mode AP code. */
-  mem = memblock_find_in_range (0, 1 << 20, size, PAGE_SIZE);
-  if (!mem)
-  { panic ("Cannot allocate trampoline\n"); }
-  
-  x86_trampoline_base = __va (mem);
-  memblock_reserve (mem, size);
-  
-  printk (KERN_DEBUG "Base memory trampoline at [%p] %llx size %zu\n",
-          x86_trampoline_base, (unsigned long long) mem, size);
-          
-  memcpy (x86_trampoline_base, x86_trampoline_start, size);
+	phys_addr_t mem;
+	size_t size = PAGE_ALIGN(x86_trampoline_end - x86_trampoline_start);
+
+	/* Has to be in very low memory so we can execute real-mode AP code. */
+	mem = memblock_find_in_range(0, 1<<20, size, PAGE_SIZE);
+	if (!mem)
+		panic("Cannot allocate trampoline\n");
+
+	x86_trampoline_base = __va(mem);
+	memblock_reserve(mem, size);
+
+	printk(KERN_DEBUG "Base memory trampoline at [%p] %llx size %zu\n",
+	       x86_trampoline_base, (unsigned long long)mem, size);
+
+	memcpy(x86_trampoline_base, x86_trampoline_start, size);
 }
 
 /*
@@ -32,11 +32,11 @@ void __init setup_trampolines (void)
  * tables are set up, so we cannot set page permissions in that
  * function.  Thus, we use an arch_initcall instead.
  */
-static int __init configure_trampolines (void)
+static int __init configure_trampolines(void)
 {
-  size_t size = PAGE_ALIGN (x86_trampoline_end - x86_trampoline_start);
-  
-  set_memory_x ( (unsigned long) x86_trampoline_base, size >> PAGE_SHIFT);
-  return 0;
+	size_t size = PAGE_ALIGN(x86_trampoline_end - x86_trampoline_start);
+
+	set_memory_x((unsigned long)x86_trampoline_base, size >> PAGE_SHIFT);
+	return 0;
 }
-arch_initcall (configure_trampolines);
+arch_initcall(configure_trampolines);

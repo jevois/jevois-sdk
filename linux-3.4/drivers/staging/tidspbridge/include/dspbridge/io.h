@@ -27,11 +27,11 @@ struct io_mgr;
 
 /* IO manager attributes: */
 struct io_attrs {
-  u8 birq;    /* Channel's I/O IRQ number. */
-  bool irq_shared;  /* TRUE if the IRQ is shareable. */
-  u32 word_size;    /* DSP Word size. */
-  u32 shm_base;   /* Physical base address of shared memory. */
-  u32 sm_length;    /* Size (in bytes) of shared memory. */
+	u8 birq;		/* Channel's I/O IRQ number. */
+	bool irq_shared;	/* TRUE if the IRQ is shareable. */
+	u32 word_size;		/* DSP Word size. */
+	u32 shm_base;		/* Physical base address of shared memory. */
+	u32 sm_length;		/* Size (in bytes) of shared memory. */
 };
 
 
@@ -59,9 +59,9 @@ struct io_attrs {
  *      mgr_attrts != NULL.
  *  Ensures:
  */
-extern int io_create (struct io_mgr ** io_man,
-                      struct dev_object * hdev_obj,
-                      const struct io_attrs * mgr_attrts);
+extern int io_create(struct io_mgr **io_man,
+			    struct dev_object *hdev_obj,
+			    const struct io_attrs *mgr_attrts);
 
 /*
  *  ======== io_destroy ========
@@ -75,6 +75,6 @@ extern int io_create (struct io_mgr ** io_man,
  *  Requires:
  *  Ensures:
  */
-extern int io_destroy (struct io_mgr * hio_mgr);
+extern int io_destroy(struct io_mgr *hio_mgr);
 
 #endif /* CHNL_ */

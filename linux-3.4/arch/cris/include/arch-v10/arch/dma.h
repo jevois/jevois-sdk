@@ -3,7 +3,7 @@
 #ifndef _ASM_ARCH_DMA_H
 #define _ASM_ARCH_DMA_H
 
-#define MAX_DMA_CHANNELS  10
+#define MAX_DMA_CHANNELS	10
 
 /* dma0 and dma1 used for network (ethernet) */
 #define NETWORK_TX_DMA_NBR 0
@@ -68,7 +68,7 @@ enum dma_owner
 #define DMA_VERBOSE_ON_ERROR    (1<<0)
 #define DMA_PANIC_ON_ERROR     ((1<<1)|DMA_VERBOSE_ON_ERROR)
 
-int cris_request_dma (unsigned int dmanr, const char * device_id,
-                      unsigned options, enum dma_owner owner);
+int cris_request_dma(unsigned int dmanr, const char * device_id,
+                     unsigned options, enum dma_owner owner);
 
-void cris_free_dma (unsigned int dmanr, const char * device_id);
+void cris_free_dma(unsigned int dmanr, const char * device_id);

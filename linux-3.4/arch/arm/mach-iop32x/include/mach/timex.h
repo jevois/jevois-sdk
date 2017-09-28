@@ -3,4 +3,4 @@
  *
  * IOP32x architecture timex specifications
  */
-#define CLOCK_TICK_RATE   (100 * HZ)
+#define CLOCK_TICK_RATE		(100 * HZ)

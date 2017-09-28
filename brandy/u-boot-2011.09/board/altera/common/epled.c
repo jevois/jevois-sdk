@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -33,30 +33,30 @@ static led_id_t val = 0;
 
 void __led_init (led_id_t mask, int state)
 {
-  nios_pio_t * pio = (nios_pio_t *) CONFIG_SYS_LEDPIO_ADDR;
-  
-  if (state == STATUS_LED_ON)
-  { val &= ~mask; }
-  else
-  { val |= mask; }
-  writel (val, &pio->data);
+	nios_pio_t *pio = (nios_pio_t *)CONFIG_SYS_LEDPIO_ADDR;
+
+	if (state == STATUS_LED_ON)
+		val &= ~mask;
+	else
+		val |= mask;
+	writel (val, &pio->data);
 }
 
 void __led_set (led_id_t mask, int state)
 {
-  nios_pio_t * pio = (nios_pio_t *) CONFIG_SYS_LEDPIO_ADDR;
-  
-  if (state == STATUS_LED_ON)
-  { val &= ~mask; }
-  else
-  { val |= mask; }
-  writel (val, &pio->data);
+	nios_pio_t *pio = (nios_pio_t *)CONFIG_SYS_LEDPIO_ADDR;
+
+	if (state == STATUS_LED_ON)
+		val &= ~mask;
+	else
+		val |= mask;
+	writel (val, &pio->data);
 }
 
 void __led_toggle (led_id_t mask)
 {
-  nios_pio_t * pio = (nios_pio_t *) CONFIG_SYS_LEDPIO_ADDR;
-  
-  val ^= mask;
-  writel (val, &pio->data);
+	nios_pio_t *pio = (nios_pio_t *)CONFIG_SYS_LEDPIO_ADDR;
+
+	val ^= mask;
+	writel (val, &pio->data);
 }

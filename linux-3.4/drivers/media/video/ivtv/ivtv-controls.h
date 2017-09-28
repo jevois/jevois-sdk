@@ -23,6 +23,6 @@
 
 extern struct cx2341x_handler_ops ivtv_cxhdl_ops;
 extern const struct v4l2_ctrl_ops ivtv_hdl_out_ops;
-int ivtv_g_pts_frame (struct ivtv * itv, s64 * pts, s64 * frame);
+int ivtv_g_pts_frame(struct ivtv *itv, s64 *pts, s64 *frame);
 
 #endif

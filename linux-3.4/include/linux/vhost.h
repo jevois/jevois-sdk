@@ -17,50 +17,50 @@
 #include <linux/virtio_ring.h>
 
 struct vhost_vring_state {
-  unsigned int index;
-  unsigned int num;
+	unsigned int index;
+	unsigned int num;
 };
 
 struct vhost_vring_file {
-  unsigned int index;
-  int fd; /* Pass -1 to unbind from file. */
-  
+	unsigned int index;
+	int fd; /* Pass -1 to unbind from file. */
+
 };
 
 struct vhost_vring_addr {
-  unsigned int index;
-  /* Option flags. */
-  unsigned int flags;
-  /* Flag values: */
-  /* Whether log address is valid. If set enables logging. */
+	unsigned int index;
+	/* Option flags. */
+	unsigned int flags;
+	/* Flag values: */
+	/* Whether log address is valid. If set enables logging. */
 #define VHOST_VRING_F_LOG 0
-  
-  /* Start of array of descriptors (virtually contiguous) */
-  __u64 desc_user_addr;
-  /* Used structure address. Must be 32 bit aligned */
-  __u64 used_user_addr;
-  /* Available structure address. Must be 16 bit aligned */
-  __u64 avail_user_addr;
-  /* Logging support. */
-  /* Log writes to used structure, at offset calculated from specified
-   * address. Address must be 32 bit aligned. */
-  __u64 log_guest_addr;
+
+	/* Start of array of descriptors (virtually contiguous) */
+	__u64 desc_user_addr;
+	/* Used structure address. Must be 32 bit aligned */
+	__u64 used_user_addr;
+	/* Available structure address. Must be 16 bit aligned */
+	__u64 avail_user_addr;
+	/* Logging support. */
+	/* Log writes to used structure, at offset calculated from specified
+	 * address. Address must be 32 bit aligned. */
+	__u64 log_guest_addr;
 };
 
 struct vhost_memory_region {
-  __u64 guest_phys_addr;
-  __u64 memory_size; /* bytes */
-  __u64 userspace_addr;
-  __u64 flags_padding; /* No flags are currently specified. */
+	__u64 guest_phys_addr;
+	__u64 memory_size; /* bytes */
+	__u64 userspace_addr;
+	__u64 flags_padding; /* No flags are currently specified. */
 };
 
 /* All region addresses and sizes must be 4K aligned. */
 #define VHOST_PAGE_SIZE 0x1000
 
 struct vhost_memory {
-  __u32 nregions;
-  __u32 padding;
-  struct vhost_memory_region regions[0];
+	__u32 nregions;
+	__u32 padding;
+	struct vhost_memory_region regions[0];
 };
 
 /* ioctls */
@@ -69,8 +69,8 @@ struct vhost_memory {
 
 /* Features bitmask for forward compatibility.  Transport bits are used for
  * vhost specific features. */
-#define VHOST_GET_FEATURES  _IOR(VHOST_VIRTIO, 0x00, __u64)
-#define VHOST_SET_FEATURES  _IOW(VHOST_VIRTIO, 0x00, __u64)
+#define VHOST_GET_FEATURES	_IOR(VHOST_VIRTIO, 0x00, __u64)
+#define VHOST_SET_FEATURES	_IOW(VHOST_VIRTIO, 0x00, __u64)
 
 /* Set current process as the (exclusive) owner of this file descriptor.  This
  * must be called before any other vhost command.  Further calls to
@@ -81,7 +81,7 @@ struct vhost_memory {
 #define VHOST_RESET_OWNER _IO(VHOST_VIRTIO, 0x02)
 
 /* Set up/modify memory layout */
-#define VHOST_SET_MEM_TABLE _IOW(VHOST_VIRTIO, 0x03, struct vhost_memory)
+#define VHOST_SET_MEM_TABLE	_IOW(VHOST_VIRTIO, 0x03, struct vhost_memory)
 
 /* Write logging setup. */
 /* Memory writes can optionally be logged by setting bit at an offset

@@ -23,7 +23,7 @@
 #include <asm/arch/codec.h>
 #include <asm/arch/dma.h>
 
-struct sunxi_codec_t  *  sunxi_codec;
+struct sunxi_codec_t    *sunxi_codec;
 uint hdma = 0;
 /*
 ************************************************************************************************************
@@ -41,20 +41,20 @@ uint hdma = 0;
 *
 ************************************************************************************************************
 */
-int sunxi_codec_init (void)
+int sunxi_codec_init(void)
 {
-  #if 0
-  struct sunxi_ccm_reg * ccm_reg = (struct sunxi_ccm_reg *) SUNXI_CCM_BASE;
-  sunxi_codec = (struct sunxi_codec_t *) SUNXI_CODEC_BASE;
-  
-  ccm_reg->apb0_gate |= 1;
-  ccm_reg->audio_codec_clk_cfg |= (1U << 31);
-  sunxi_codec->dac_dpc = 0x80800000;
-  sunxi_codec->dac_fifoc = 0x10400f11;
-  sunxi_codec->adc_actl |= (1 << 4);
-  sunxi_codec->dac_actl |= (0x3U << 30) | (0x1 << 8) | (0x1 << 6) | (0x3c);
-  #endif
-  return 0;
+#if 0
+	struct sunxi_ccm_reg *ccm_reg = (struct sunxi_ccm_reg *)SUNXI_CCM_BASE;
+	sunxi_codec = (struct sunxi_codec_t *)SUNXI_CODEC_BASE;
+
+	ccm_reg->apb0_gate |= 1;
+	ccm_reg->audio_codec_clk_cfg |= (1U << 31);
+	sunxi_codec->dac_dpc = 0x80800000;
+	sunxi_codec->dac_fifoc = 0x10400f11;
+	sunxi_codec->adc_actl |= (1 << 4);
+	sunxi_codec->dac_actl |= (0x3U<<30)|(0x1<<8)|(0x1<<6)|(0x3c);
+#endif
+   	return 0;
 }
 /*
 ************************************************************************************************************
@@ -72,77 +72,77 @@ int sunxi_codec_init (void)
 *
 ************************************************************************************************************
 */
-int sunxi_codec_config (int samplerate, int samplebit, int channel)
+int sunxi_codec_config(int samplerate, int samplebit, int channel)
 {
-  #if 0
-  uint reg_value;
-  struct sunxi_ccm_reg * ccm_reg = (struct sunxi_ccm_reg *) SUNXI_CCM_BASE;
-  
-  reg_value = sunxi_codec->dac_fifoc;
-  reg_value &= ~ ( (1 << 6) | (1 << 5) | (0x0eU << 29) );
-  
-  if (samplebit == 24)
-  {
-    reg_value |= (1 << 5);
-  }
-  if (channel != 2)
-  {
-    reg_value |= (1 << 6);
-  }
-  
-  if (samplerate % 2000)
-  {
-    debug ("sunxi codec samplerate as 44100\n");
-    ccm_reg->pll2_cfg = 0;
-  }
-  else
-  {
-    debug ("sunxi codec samplerate as 48000\n");
-    ccm_reg->pll2_cfg = 0;
-  }
-  switch (samplerate)
-  {
-  case 48000:
-  case 44100:
-    {
-      break;
-    }
-  case 32000:
-    {
-      reg_value |= (1 << 29);
-      break;
-    }
-  case 24000:
-  case 22050:
-    {
-      reg_value |= (2 << 29);
-      break;
-    }
-  case 16000:
-    {
-      reg_value |= (3 << 29);
-      break;
-    }
-  case 12000:
-  case 11025:
-    {
-      reg_value |= (4 << 29);
-      break;
-    }
-  case 8000:
-    {
-      reg_value |= (5 << 29);
-      break;
-    }
-  default:
-    {
-      printf ("sunxi codec config error : audio sample %d not supported\n", samplerate);
-      return -1;
-    }
-  }
-  sunxi_codec->dac_fifoc = reg_value;
-  #endif
-  return 0;
+#if 0
+	uint reg_value;
+	struct sunxi_ccm_reg *ccm_reg = (struct sunxi_ccm_reg *)SUNXI_CCM_BASE;
+
+	reg_value = sunxi_codec->dac_fifoc;
+	reg_value &= ~((1 << 6) | (1 << 5) | (0x0eU << 29));
+
+	if(samplebit == 24)
+	{
+		reg_value |= (1 << 5);
+	}
+	if(channel != 2)
+	{
+		reg_value |= (1 << 6);
+	}
+
+	if(samplerate%2000)
+	{
+		debug("sunxi codec samplerate as 44100\n");
+		ccm_reg->pll2_cfg = 0;
+	}
+	else
+	{
+		debug("sunxi codec samplerate as 48000\n");
+		ccm_reg->pll2_cfg = 0;
+	}
+	switch(samplerate)
+	{
+	    case 48000:
+	    case 44100:
+	    {
+	        break;
+	    }
+	    case 32000:
+	    {
+	        reg_value |= (1 << 29);
+	        break;
+	    }
+	    case 24000:
+	    case 22050:
+	    {
+	        reg_value |= (2 << 29);
+	        break;
+	    }
+	    case 16000:
+	    {
+	        reg_value |= (3 << 29);
+	        break;
+	    }
+	    case 12000:
+	    case 11025:
+	    {
+	        reg_value |= (4 << 29);
+	        break;
+	    }
+	    case 8000:
+	    {
+	        reg_value |= (5 << 29);
+	        break;
+	    }
+		default:
+		{
+			printf("sunxi codec config error : audio sample %d not supported\n", samplerate);
+			return -1;
+		}
+	}
+	sunxi_codec->dac_fifoc = reg_value;
+#endif
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -160,42 +160,42 @@ int sunxi_codec_config (int samplerate, int samplebit, int channel)
 *
 ************************************************************************************************************
 */
-int sunxi_codec_start (void * buffer, uint length, uint loop_mode)
+int sunxi_codec_start(void *buffer, uint length, uint loop_mode)
 {
-  #if 0
-  sunxi_dma_setting_t  dma_cfg;
-  
-  if (!hdma)
-  {
-    hdma = sunxi_dma_request (0);
-    if (!hdma)
-    {
-      printf ("sunxi codec error : request dma failed\n");
-      
-      return -1;
-    }
-  }
-  
-  dma_cfg.cfg.src_drq_type   = DMAC_CFG_DEST_TYPE_DRAM;
-  dma_cfg.cfg.src_addr_mode    = 0;   //源端地址线性递增
-  dma_cfg.cfg.src_burst_length = 0;  
-  dma_cfg.cfg.src_data_width   = 1;     //一次传输16bit
-  dma_cfg.cfg.dst_drq_type     = DMAC_CFG_SRC_TYPE_CODEC;
-  dma_cfg.cfg.dst_addr_mode    = 1;     //目的端地址不变
-  dma_cfg.cfg.dst_burst_length = 0;  
-  dma_cfg.cfg.dst_data_width   = 1;     //一次接收16bit
-  
-  dma_cfg.loop_mode = loop_mode;
-  dma_cfg.wait_cyc  = 4;
-  dma_cfg.data_block_size = 1 * 16 / 8;
-  
-  dma_cfg.loop_mode = loop_mode;
-  
-  sunxi_dma_setting (hdma, &dma_cfg);
-  flush_cache ( (uint) buffer, length);
-  sunxi_dma_start (hdma, (uint) buffer, (uint) (&sunxi_codec->dac_txdata), length);
-  #endif
-  return 0;
+#if 0
+	sunxi_dma_setting_t  dma_cfg;
+
+	if(!hdma)
+	{
+		hdma = sunxi_dma_request(0);
+		if(!hdma)
+		{
+			printf("sunxi codec error : request dma failed\n");
+
+			return -1;
+		}
+	}
+
+	dma_cfg.cfg.src_drq_type 	 = DMAC_CFG_DEST_TYPE_DRAM;
+	dma_cfg.cfg.src_addr_mode 	 = 0;		//源端地址线性递增
+	dma_cfg.cfg.src_burst_length = 0;	
+	dma_cfg.cfg.src_data_width   = 1;    	//一次传输16bit
+	dma_cfg.cfg.dst_drq_type     = DMAC_CFG_SRC_TYPE_CODEC;
+	dma_cfg.cfg.dst_addr_mode    = 1;    	//目的端地址不变
+	dma_cfg.cfg.dst_burst_length = 0;	
+	dma_cfg.cfg.dst_data_width   = 1;    	//一次接收16bit
+
+	dma_cfg.loop_mode = loop_mode;
+	dma_cfg.wait_cyc  = 4;
+	dma_cfg.data_block_size = 1 * 16/8;
+
+	dma_cfg.loop_mode = loop_mode;
+
+	sunxi_dma_setting(hdma, &dma_cfg);
+	flush_cache((uint)buffer, length);
+	sunxi_dma_start(hdma, (uint)buffer, (uint)(&sunxi_codec->dac_txdata), length);
+#endif
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -213,18 +213,18 @@ int sunxi_codec_start (void * buffer, uint length, uint loop_mode)
 *
 ************************************************************************************************************
 */
-int sunxi_codec_stop (void)
+int sunxi_codec_stop(void)
 {
-  #if 0
-  if (!hdma)
-  {
-    printf ("sunxi codec error : cant stop without dma\n");
-    
-    return -1;
-  }
-  sunxi_dma_stop (hdma);
-  #endif
-  return 0;
+#if 0
+	if(!hdma)
+	{
+		printf("sunxi codec error : cant stop without dma\n");
+
+		return -1;
+	}
+	sunxi_dma_stop(hdma);
+#endif
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -242,20 +242,20 @@ int sunxi_codec_stop (void)
 *
 ************************************************************************************************************
 */
-int sunxi_codec_wink (void * buffer, uint length)
+int sunxi_codec_wink(void *buffer, uint length)
 {
-  #if 0
-  if (!hdma)
-  {
-    printf ("sunxi codec error : cant stop without dma\n");
-    
-    return -1;
-  }
-  sunxi_dma_stop (hdma);
-  flush_cache ( (uint) buffer, length);
-  sunxi_dma_start (hdma, (uint) buffer, (uint) (&sunxi_codec->dac_txdata), length);
-  #endif
-  return 0;
+#if 0
+	if(!hdma)
+	{
+		printf("sunxi codec error : cant stop without dma\n");
+
+		return -1;
+	}
+	sunxi_dma_stop(hdma);
+	flush_cache((uint)buffer, length);
+	sunxi_dma_start(hdma, (uint)buffer, (uint)(&sunxi_codec->dac_txdata), length);
+#endif
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -273,14 +273,14 @@ int sunxi_codec_wink (void * buffer, uint length)
 *
 ************************************************************************************************************
 */
-int audio_codec_exit (void)
+int audio_codec_exit(void)
 {
-  #if 0
-  struct sunxi_ccm_reg * ccm_reg = (struct sunxi_ccm_reg *) SUNXI_CCM_BASE;
-  
-  ccm_reg->apb0_gate &= ~1;
-  ccm_reg->audio_codec_clk_cfg &= ~ (1U << 31);
-  #endif
-  return 0;
+#if 0
+	struct sunxi_ccm_reg *ccm_reg = (struct sunxi_ccm_reg *)SUNXI_CCM_BASE;
+
+	ccm_reg->apb0_gate &= ~1;
+	ccm_reg->audio_codec_clk_cfg &= ~(1U << 31);
+#endif
+    return 0;
 }
 

@@ -170,7 +170,7 @@
 /* defines for VIA 3D registers */
 #define VIA_REG_STATUS          0x400
 #define VIA_REG_CR_TRANSET      0x41C
-#define VIA_REG_CR_TRANSPACE  0x420
+#define VIA_REG_CR_TRANSPACE	0x420
 #define VIA_REG_TRANSET         0x43C
 #define VIA_REG_TRANSPACE       0x440
 
@@ -199,13 +199,13 @@
 
 #define MAXLOOP                 0xFFFFFF
 
-#define VIA_BITBLT_COLOR  1
-#define VIA_BITBLT_MONO   2
-#define VIA_BITBLT_FILL   3
+#define VIA_BITBLT_COLOR	1
+#define VIA_BITBLT_MONO		2
+#define VIA_BITBLT_FILL		3
 
-int viafb_setup_engine (struct fb_info * info);
-void viafb_reset_engine (struct viafb_par * viapar);
-void viafb_show_hw_cursor (struct fb_info * info, int Status);
-void viafb_wait_engine_idle (struct fb_info * info);
+int viafb_setup_engine(struct fb_info *info);
+void viafb_reset_engine(struct viafb_par *viapar);
+void viafb_show_hw_cursor(struct fb_info *info, int Status);
+void viafb_wait_engine_idle(struct fb_info *info);
 
 #endif /* __ACCEL_H__ */

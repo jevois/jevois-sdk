@@ -27,13 +27,13 @@ struct disp_object;
 
 /* Node Dispatcher attributes */
 struct disp_attr {
-  u32 chnl_offset;  /* Offset of channel ids reserved for RMS */
-  /* Size of buffer for sending data to RMS */
-  u32 chnl_buf_size;
-  int proc_family;  /* eg, 5000 */
-  int proc_type;    /* eg, 5510 */
-  void * reserved1; /* Reserved for future use. */
-  u32 reserved2;    /* Reserved for future use. */
+	u32 chnl_offset;	/* Offset of channel ids reserved for RMS */
+	/* Size of buffer for sending data to RMS */
+	u32 chnl_buf_size;
+	int proc_family;	/* eg, 5000 */
+	int proc_type;		/* eg, 5510 */
+	void *reserved1;	/* Reserved for future use. */
+	u32 reserved2;		/* Reserved for future use. */
 };
 
 
@@ -60,9 +60,9 @@ struct disp_attr {
  *      0:        IS_VALID(*dispatch_obj).
  *      error:          *dispatch_obj == NULL.
  */
-extern int disp_create (struct disp_object ** dispatch_obj,
-                        struct dev_object * hdev_obj,
-                        const struct disp_attr * disp_attrs);
+extern int disp_create(struct disp_object **dispatch_obj,
+			      struct dev_object *hdev_obj,
+			      const struct disp_attr *disp_attrs);
 
 /*
  *  ======== disp_delete ========
@@ -76,7 +76,7 @@ extern int disp_create (struct disp_object ** dispatch_obj,
  *  Ensures:
  *      disp_obj is invalid.
  */
-extern void disp_delete (struct disp_object * disp_obj);
+extern void disp_delete(struct disp_object *disp_obj);
 
 /*
  *  ======== disp_node_change_priority ========
@@ -97,11 +97,11 @@ extern void disp_delete (struct disp_object * disp_obj);
  *      hnode != NULL.
  *  Ensures:
  */
-extern int disp_node_change_priority (struct disp_object
-                                      *disp_obj,
-                                      struct node_object * hnode,
-                                      u32 rms_fxn,
-                                      nodeenv node_env, s32 prio);
+extern int disp_node_change_priority(struct disp_object
+					    *disp_obj,
+					    struct node_object *hnode,
+					    u32 rms_fxn,
+					    nodeenv node_env, s32 prio);
 
 /*
  *  ======== disp_node_create ========
@@ -127,12 +127,12 @@ extern int disp_node_change_priority (struct disp_object
  *      node_get_type(hnode) != NODE_DEVICE.
  *  Ensures:
  */
-extern int disp_node_create (struct disp_object * disp_obj,
-                             struct node_object * hnode,
-                             u32 rms_fxn,
-                             u32 ul_create_fxn,
-                             const struct node_createargs
-                             *pargs, nodeenv * node_env);
+extern int disp_node_create(struct disp_object *disp_obj,
+				   struct node_object *hnode,
+				   u32 rms_fxn,
+				   u32 ul_create_fxn,
+				   const struct node_createargs
+				   *pargs, nodeenv *node_env);
 
 /*
  *  ======== disp_node_delete ========
@@ -153,10 +153,10 @@ extern int disp_node_create (struct disp_object * disp_obj,
  *      hnode != NULL.
  *  Ensures:
  */
-extern int disp_node_delete (struct disp_object * disp_obj,
-                             struct node_object * hnode,
-                             u32 rms_fxn,
-                             u32 ul_delete_fxn, nodeenv node_env);
+extern int disp_node_delete(struct disp_object *disp_obj,
+				   struct node_object *hnode,
+				   u32 rms_fxn,
+				   u32 ul_delete_fxn, nodeenv node_env);
 
 /*
  *  ======== disp_node_run ========
@@ -178,9 +178,9 @@ extern int disp_node_delete (struct disp_object * disp_obj,
  *      hnode != NULL.
  *  Ensures:
  */
-extern int disp_node_run (struct disp_object * disp_obj,
-                          struct node_object * hnode,
-                          u32 rms_fxn,
-                          u32 ul_execute_fxn, nodeenv node_env);
+extern int disp_node_run(struct disp_object *disp_obj,
+				struct node_object *hnode,
+				u32 rms_fxn,
+				u32 ul_execute_fxn, nodeenv node_env);
 
 #endif /* DISP_ */

@@ -10,8 +10,8 @@
 #include <asm/pgtable.h>
 #include <asm/desc.h>
 
-static struct signal_struct init_signals = INIT_SIGNALS (init_signals);
-static struct sighand_struct init_sighand = INIT_SIGHAND (init_sighand);
+static struct signal_struct init_signals = INIT_SIGNALS(init_signals);
+static struct sighand_struct init_sighand = INIT_SIGHAND(init_sighand);
 
 /*
  * Initial thread structure.
@@ -21,15 +21,15 @@ static struct sighand_struct init_sighand = INIT_SIGHAND (init_sighand);
  * "init_task" linker map entry..
  */
 union thread_union init_thread_union __init_task_data =
-{ INIT_THREAD_INFO (init_task) };
+	{ INIT_THREAD_INFO(init_task) };
 
 /*
  * Initial task structure.
  *
  * All other task structs will be allocated on slabs in fork.c
  */
-struct task_struct init_task = INIT_TASK (init_task);
-EXPORT_SYMBOL (init_task);
+struct task_struct init_task = INIT_TASK(init_task);
+EXPORT_SYMBOL(init_task);
 
 /*
  * per-CPU TSS segments. Threads are completely 'soft' on Linux,
@@ -38,5 +38,5 @@ EXPORT_SYMBOL (init_task);
  * section. Since TSS's are completely CPU-local, we want them
  * on exact cacheline boundaries, to eliminate cacheline ping-pong.
  */
-DEFINE_PER_CPU_SHARED_ALIGNED (struct tss_struct, init_tss) = INIT_TSS;
+DEFINE_PER_CPU_SHARED_ALIGNED(struct tss_struct, init_tss) = INIT_TSS;
 

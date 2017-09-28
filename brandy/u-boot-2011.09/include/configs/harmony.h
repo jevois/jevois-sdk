@@ -28,23 +28,23 @@
 #include "tegra2-common.h"
 
 /* High-level configuration options */
-#define TEGRA2_SYSMEM   "mem=384M@0M nvmem=128M@384M mem=512M@512M"
-#define V_PROMPT    "Tegra2 (Harmony) # "
-#define CONFIG_TEGRA2_BOARD_STRING  "NVIDIA Harmony"
+#define TEGRA2_SYSMEM		"mem=384M@0M nvmem=128M@384M mem=512M@512M"
+#define V_PROMPT		"Tegra2 (Harmony) # "
+#define CONFIG_TEGRA2_BOARD_STRING	"NVIDIA Harmony"
 
 /* Board-specific serial config */
 #define CONFIG_SERIAL_MULTI
 #define CONFIG_TEGRA2_ENABLE_UARTD
 
 /* UARTD: keyboard satellite board UART, default */
-#define CONFIG_SYS_NS16550_COM1   NV_PA_APB_UARTD_BASE
+#define CONFIG_SYS_NS16550_COM1		NV_PA_APB_UARTD_BASE
 #ifdef CONFIG_TEGRA2_ENABLE_UARTA
 /* UARTA: debug board UART */
-#define CONFIG_SYS_NS16550_COM2   NV_PA_APB_UARTA_BASE
+#define CONFIG_SYS_NS16550_COM2		NV_PA_APB_UARTA_BASE
 #endif
 
-#define CONFIG_MACH_TYPE    MACH_TYPE_HARMONY
-#define CONFIG_SYS_BOARD_ODMDATA  0x300d8011 /* lp1, 1GB */
+#define CONFIG_MACH_TYPE		MACH_TYPE_HARMONY
+#define CONFIG_SYS_BOARD_ODMDATA	0x300d8011 /* lp1, 1GB */
 
 #define CONFIG_BOARD_EARLY_INIT_F
 

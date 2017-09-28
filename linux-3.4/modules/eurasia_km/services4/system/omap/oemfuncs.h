@@ -47,31 +47,31 @@ extern "C" {
 #endif
 
 /* function in/out data structures: */
-typedef IMG_UINT32   (*PFN_SRV_BRIDGEDISPATCH) ( IMG_UINT32  Ioctl,
-    IMG_BYTE  * pInBuf,
-    IMG_UINT32  InBufLen,
-    IMG_BYTE  * pOutBuf,
-    IMG_UINT32  OutBufLen,
-    IMG_UINT32 * pdwBytesTransferred);
+typedef IMG_UINT32   (*PFN_SRV_BRIDGEDISPATCH)( IMG_UINT32  Ioctl,
+												IMG_BYTE   *pInBuf,
+												IMG_UINT32  InBufLen, 
+											    IMG_BYTE   *pOutBuf,
+												IMG_UINT32  OutBufLen,
+												IMG_UINT32 *pdwBytesTransferred);
 /*
-  Function table for kernel 3rd party driver to kernel services
+	Function table for kernel 3rd party driver to kernel services
 */
 typedef struct PVRSRV_DC_OEM_JTABLE_TAG
 {
-  PFN_SRV_BRIDGEDISPATCH      pfnOEMBridgeDispatch;
-  IMG_PVOID           pvDummy1;
-  IMG_PVOID           pvDummy2;
-  IMG_PVOID           pvDummy3;
-  
+	PFN_SRV_BRIDGEDISPATCH			pfnOEMBridgeDispatch;
+	IMG_PVOID						pvDummy1;
+	IMG_PVOID						pvDummy2;
+	IMG_PVOID						pvDummy3;
+
 } PVRSRV_DC_OEM_JTABLE;
 
-#define OEM_GET_EXT_FUNCS     (1<<1)
+#define OEM_GET_EXT_FUNCS			(1<<1)
 
 #if defined(__cplusplus)
 }
 #endif
 
-#endif  /* __OEMFUNCS_H__ */
+#endif	/* __OEMFUNCS_H__ */
 
 /*****************************************************************************
  End of file (oemfuncs.h)

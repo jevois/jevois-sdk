@@ -92,7 +92,7 @@ extern "C" {
 #if defined(PVR_RI_DEBUG)
 #include "common_ri_bridge.h"
 #endif
-/*
+/* 
  * Bridge Cmd Ids
  */
 
@@ -101,38 +101,38 @@ extern "C" {
 
 #ifdef __linux__
 
-#include <linux/ioctl.h>
-/*!< Nov 2006: according to ioctl-number.txt 'g' wasn't in use. */
-#define PVRSRV_IOC_GID      'g'
-#define PVRSRV_IO(INDEX)    _IO(PVRSRV_IOC_GID, INDEX, PVRSRV_BRIDGE_PACKAGE)
-#define PVRSRV_IOW(INDEX)   _IOW(PVRSRV_IOC_GID, INDEX, PVRSRV_BRIDGE_PACKAGE)
-#define PVRSRV_IOR(INDEX)   _IOR(PVRSRV_IOC_GID, INDEX, PVRSRV_BRIDGE_PACKAGE)
-#define PVRSRV_IOWR(INDEX)  _IOWR(PVRSRV_IOC_GID, INDEX, PVRSRV_BRIDGE_PACKAGE)
+		#include <linux/ioctl.h>
+    /*!< Nov 2006: according to ioctl-number.txt 'g' wasn't in use. */
+    #define PVRSRV_IOC_GID      'g'
+    #define PVRSRV_IO(INDEX)    _IO(PVRSRV_IOC_GID, INDEX, PVRSRV_BRIDGE_PACKAGE)
+    #define PVRSRV_IOW(INDEX)   _IOW(PVRSRV_IOC_GID, INDEX, PVRSRV_BRIDGE_PACKAGE)
+    #define PVRSRV_IOR(INDEX)   _IOR(PVRSRV_IOC_GID, INDEX, PVRSRV_BRIDGE_PACKAGE)
+    #define PVRSRV_IOWR(INDEX)  _IOWR(PVRSRV_IOC_GID, INDEX, PVRSRV_BRIDGE_PACKAGE)
 
 #else /* __linux__ */
 
-#if defined(UNDER_CE) || defined(UNDER_WDDM)
-#define PVRSRV_IOC_GID          (0x800UL)     /*!< (see ioctldef.h for details) */
-#else
-#if defined(__QNXNTO__)
-#define PVRSRV_IOC_GID      (0x0UL)
-#else
-#error Unknown platform: Cannot define ioctls
-#endif
-#endif
+	#if defined(UNDER_CE) || defined(UNDER_WDDM)
+		#define PVRSRV_IOC_GID          (0x800UL)			/*!< (see ioctldef.h for details) */
+	#else
+        #if defined(__QNXNTO__)
+            #define PVRSRV_IOC_GID      (0x0UL)
+        #else
+		#error Unknown platform: Cannot define ioctls
+	#endif
+	#endif
 
-#define PVRSRV_IO(INDEX)    (PVRSRV_IOC_GID + (INDEX))
-#define PVRSRV_IOW(INDEX)   (PVRSRV_IOC_GID + (INDEX))
-#define PVRSRV_IOR(INDEX)   (PVRSRV_IOC_GID + (INDEX))
-#define PVRSRV_IOWR(INDEX)  (PVRSRV_IOC_GID + (INDEX))
+	#define PVRSRV_IO(INDEX)    (PVRSRV_IOC_GID + (INDEX))
+	#define PVRSRV_IOW(INDEX)   (PVRSRV_IOC_GID + (INDEX))
+	#define PVRSRV_IOR(INDEX)   (PVRSRV_IOC_GID + (INDEX))
+	#define PVRSRV_IOWR(INDEX)  (PVRSRV_IOC_GID + (INDEX))
 
-#define PVRSRV_BRIDGE_BASE                  PVRSRV_IOC_GID
+	#define PVRSRV_BRIDGE_BASE                  PVRSRV_IOC_GID
 #endif /* __linux__ */
 
 
 /* Note: The pattern
  *   #if !defined(SUPPORT_FEATURE)
- *   #define PVRSRV_BRIDGE_FEATURE_CMD_LAST (PVRSRV_BRIDGE_FEATURE_START - 1)
+ *   #define PVRSRV_BRIDGE_FEATURE_CMD_LAST	(PVRSRV_BRIDGE_FEATURE_START - 1)
  *   #endif
  * is used in the macro definitions below to make PVRSRV_BRIDGE_FEATURE_*
  * take up no command numbers if SUPPORT_FEATURE is disabled. If
@@ -140,76 +140,76 @@ extern "C" {
  * its header (common_feature_bridge.h).
  */
 
-#define PVRSRV_BRIDGE_CORE_CMD_FIRST      0UL
+#define PVRSRV_BRIDGE_CORE_CMD_FIRST			0UL
 
 /* Core functions */
-#define PVRSRV_BRIDGE_SRVCORE_START       (PVRSRV_BRIDGE_CORE_CMD_FIRST)
+#define PVRSRV_BRIDGE_SRVCORE_START				(PVRSRV_BRIDGE_CORE_CMD_FIRST)
 
 /* Sync functions */
-#define PVRSRV_BRIDGE_SYNC_START        (PVRSRV_BRIDGE_SRVCORE_CMD_LAST + 1)
+#define PVRSRV_BRIDGE_SYNC_START				(PVRSRV_BRIDGE_SRVCORE_CMD_LAST + 1)
 
-#define PVRSRV_BRIDGE_SYNCEXPORT_START      (PVRSRV_BRIDGE_SYNC_CMD_LAST + 1)
+#define PVRSRV_BRIDGE_SYNCEXPORT_START			(PVRSRV_BRIDGE_SYNC_CMD_LAST + 1)
 #if !defined(SUPPORT_INSECURE_EXPORT)
-#define PVRSRV_BRIDGE_SYNCEXPORT_CMD_LAST   (PVRSRV_BRIDGE_SYNCEXPORT_START - 1)
+#define PVRSRV_BRIDGE_SYNCEXPORT_CMD_LAST		(PVRSRV_BRIDGE_SYNCEXPORT_START - 1)
 #endif
-#define PVRSRV_BRIDGE_SYNCSEXPORT_START     (PVRSRV_BRIDGE_SYNCEXPORT_CMD_LAST + 1)
+#define PVRSRV_BRIDGE_SYNCSEXPORT_START			(PVRSRV_BRIDGE_SYNCEXPORT_CMD_LAST + 1)
 #if !defined(SUPPORT_SECURE_EXPORT)
-#define PVRSRV_BRIDGE_SYNCSEXPORT_CMD_LAST    (PVRSRV_BRIDGE_SYNCSEXPORT_START - 1)
+#define PVRSRV_BRIDGE_SYNCSEXPORT_CMD_LAST		(PVRSRV_BRIDGE_SYNCSEXPORT_START - 1)
 #endif
 
 /* PDUMP */
-#define PVRSRV_BRIDGE_PDUMP_START       (PVRSRV_BRIDGE_SYNCSEXPORT_CMD_LAST + 1)
+#define PVRSRV_BRIDGE_PDUMP_START				(PVRSRV_BRIDGE_SYNCSEXPORT_CMD_LAST + 1)
 
 /* Memory Management */
-#define PVRSRV_BRIDGE_MM_START          (PVRSRV_BRIDGE_PDUMP_CMD_LAST + 1)
+#define PVRSRV_BRIDGE_MM_START      		(PVRSRV_BRIDGE_PDUMP_CMD_LAST + 1)
 
 #define PVRSRV_BRIDGE_MMPLAT_START              (PVRSRV_BRIDGE_MM_CMD_LAST + 1)
 #if !defined(SUPPORT_MMPLAT_BRIDGE)
 #define PVRSRV_BRIDGE_MMPLAT_CMD_LAST           (PVRSRV_BRIDGE_MMPLAT_START - 1)
 #endif
 
-#define PVRSRV_BRIDGE_MMPMR_START         (PVRSRV_BRIDGE_MMPLAT_CMD_LAST + 1)
+#define PVRSRV_BRIDGE_MMPMR_START      		(PVRSRV_BRIDGE_MMPLAT_CMD_LAST + 1)
 #if !defined(UNDER_CE)
 #define PVRSRV_BRIDGE_MMPMR_CMD_LAST        (PVRSRV_BRIDGE_MMPMR_START - 1)
 #endif
 
-#define PVRSRV_BRIDGE_CMM_START         (PVRSRV_BRIDGE_MMPMR_CMD_LAST + 1)
-#define PVRSRV_BRIDGE_PDUMPMM_START       (PVRSRV_BRIDGE_CMM_CMD_LAST + 1)
-#define PVRSRV_BRIDGE_PDUMPCMM_START        (PVRSRV_BRIDGE_PDUMPMM_CMD_LAST + 1)
-#define PVRSRV_BRIDGE_PMMIF_START     (PVRSRV_BRIDGE_PDUMPCMM_CMD_LAST + 1)
+#define PVRSRV_BRIDGE_CMM_START      		(PVRSRV_BRIDGE_MMPMR_CMD_LAST + 1)
+#define PVRSRV_BRIDGE_PDUMPMM_START      	(PVRSRV_BRIDGE_CMM_CMD_LAST + 1)
+#define PVRSRV_BRIDGE_PDUMPCMM_START      	(PVRSRV_BRIDGE_PDUMPMM_CMD_LAST + 1)
+#define PVRSRV_BRIDGE_PMMIF_START			(PVRSRV_BRIDGE_PDUMPCMM_CMD_LAST + 1)
 #if !defined(SUPPORT_PMMIF)
-#define PVRSRV_BRIDGE_PMMIF_CMD_LAST    (PVRSRV_BRIDGE_PMMIF_START - 1)
+#define PVRSRV_BRIDGE_PMMIF_CMD_LAST		(PVRSRV_BRIDGE_PMMIF_START - 1)
 #endif
-#define PVRSRV_BRIDGE_ION_START       (PVRSRV_BRIDGE_PMMIF_CMD_LAST + 1)
+#define PVRSRV_BRIDGE_ION_START				(PVRSRV_BRIDGE_PMMIF_CMD_LAST + 1)
 #if !defined(SUPPORT_ION)
-#define PVRSRV_BRIDGE_ION_CMD_LAST      (PVRSRV_BRIDGE_ION_START - 1)
+#define PVRSRV_BRIDGE_ION_CMD_LAST			(PVRSRV_BRIDGE_ION_START - 1)
 #endif
 
 /* Display Class */
-#define PVRSRV_BRIDGE_DC_START        (PVRSRV_BRIDGE_ION_CMD_LAST + 1)
+#define PVRSRV_BRIDGE_DC_START				(PVRSRV_BRIDGE_ION_CMD_LAST + 1)
 #if !defined(SUPPORT_DISPLAY_CLASS)
-#define PVRSRV_BRIDGE_DC_CMD_LAST     (PVRSRV_BRIDGE_DC_START - 1)
+#define PVRSRV_BRIDGE_DC_CMD_LAST			(PVRSRV_BRIDGE_DC_START - 1)
 #endif
 
 /* Generic cache interface */
-#define PVRSRV_BRIDGE_CACHEGENERIC_START  (PVRSRV_BRIDGE_DC_CMD_LAST + 1)
+#define PVRSRV_BRIDGE_CACHEGENERIC_START	(PVRSRV_BRIDGE_DC_CMD_LAST + 1)
 #if (CACHEFLUSH_TYPE != CACHEFLUSH_GENERIC)
-#define PVRSRV_BRIDGE_CACHEGENERIC_CMD_LAST   (PVRSRV_BRIDGE_CACHEGENERIC_START - 1)
+#define PVRSRV_BRIDGE_CACHEGENERIC_CMD_LAST		(PVRSRV_BRIDGE_CACHEGENERIC_START - 1)
 #endif
 
-#define PVRSRV_BRIDGE_SMM_START       (PVRSRV_BRIDGE_CACHEGENERIC_CMD_LAST + 1)
+#define PVRSRV_BRIDGE_SMM_START				(PVRSRV_BRIDGE_CACHEGENERIC_CMD_LAST + 1)
 #if !defined(SUPPORT_SECURE_EXPORT)
-#define PVRSRV_BRIDGE_SMM_CMD_LAST      (PVRSRV_BRIDGE_SMM_START - 1)
+#define PVRSRV_BRIDGE_SMM_CMD_LAST			(PVRSRV_BRIDGE_SMM_START - 1)
 #endif
 
 
 /* Transport Layer interface */
-#define PVRSRV_BRIDGE_PVRTL_START       (PVRSRV_BRIDGE_SMM_CMD_LAST + 1)
+#define PVRSRV_BRIDGE_PVRTL_START				(PVRSRV_BRIDGE_SMM_CMD_LAST + 1)
 
 /* RI interface */
-#define PVRSRV_BRIDGE_RI_START        (PVRSRV_BRIDGE_PVRTL_CMD_LAST + 1)
+#define PVRSRV_BRIDGE_RI_START				(PVRSRV_BRIDGE_PVRTL_CMD_LAST + 1)
 #if !defined(PVR_RI_DEBUG)
-#define PVRSRV_BRIDGE_RI_CMD_LAST     (PVRSRV_BRIDGE_RI_START - 1)
+#define PVRSRV_BRIDGE_RI_CMD_LAST			(PVRSRV_BRIDGE_RI_START - 1)
 #endif
 
 
@@ -217,22 +217,22 @@ extern "C" {
 #define PVRSRV_BRIDGE_LAST_NON_DEVICE_CMD       (PVRSRV_BRIDGE_RI_CMD_LAST)
 
 /******************************************************************************
- * Generic bridge structures
+ * Generic bridge structures 
  *****************************************************************************/
 
 
 /******************************************************************************
- *  bridge packaging structure
+ *	bridge packaging structure
  *****************************************************************************/
 typedef struct PVRSRV_BRIDGE_PACKAGE_TAG
 {
-  IMG_UINT32        ui32BridgeID;     /*!< ioctl/drvesc index */
-  IMG_UINT32        ui32Size;       /*!< size of structure */
-  IMG_VOID    *    pvParamIn;       /*!< input data buffer */
-  IMG_UINT32        ui32InBufferSize;   /*!< size of input data buffer */
-  IMG_VOID    *    pvParamOut;      /*!< output data buffer */
-  IMG_UINT32        ui32OutBufferSize;    /*!< size of output data buffer */
-} PVRSRV_BRIDGE_PACKAGE;
+	IMG_UINT32				ui32BridgeID;			/*!< ioctl/drvesc index */
+	IMG_UINT32				ui32Size;				/*!< size of structure */
+	IMG_VOID				*pvParamIn;				/*!< input data buffer */ 
+	IMG_UINT32				ui32InBufferSize;		/*!< size of input data buffer */
+	IMG_VOID				*pvParamOut;			/*!< output data buffer */
+	IMG_UINT32				ui32OutBufferSize;		/*!< size of output data buffer */
+}PVRSRV_BRIDGE_PACKAGE;
 
 
 #if defined (__cplusplus)

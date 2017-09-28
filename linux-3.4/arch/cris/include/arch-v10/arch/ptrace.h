@@ -5,7 +5,7 @@
 
 #define CRIS_FRAME_NORMAL   0 /* normal frame without SBFS stacking */
 #define CRIS_FRAME_BUSFAULT 1 /* frame stacked using SBFS, need RBF return
-         path */
+				 path */
 
 /* Register numbers in the ptrace system call interface */
 
@@ -30,7 +30,7 @@
 #define PT_SRP       18
 #define PT_IRP       19    /* This is actually the debugged process' PC */
 #define PT_CSRINSTR  20    /* CPU Status record remnants -
-            valid if frametype == busfault */
+			      valid if frametype == busfault */
 #define PT_CSRADDR   21
 #define PT_CSRDATA   22
 #define PT_USP       23    /* special case - USP is not in the pt_regs */
@@ -51,35 +51,35 @@
 #define F_DCCR_BITNR 10
 
 /* pt_regs not only specifices the format in the user-struct during
- * ptrace but is also the frame format used in the kernel prologue/epilogues
+ * ptrace but is also the frame format used in the kernel prologue/epilogues 
  * themselves
  */
 
 struct pt_regs {
-  unsigned long frametype;  /* type of stackframe */
-  unsigned long orig_r10;
-  /* pushed by movem r13, [sp] in SAVE_ALL, movem pushes backwards */
-  unsigned long r13;
-  unsigned long r12;
-  unsigned long r11;
-  unsigned long r10;
-  unsigned long r9;
-  unsigned long r8;
-  unsigned long r7;
-  unsigned long r6;
-  unsigned long r5;
-  unsigned long r4;
-  unsigned long r3;
-  unsigned long r2;
-  unsigned long r1;
-  unsigned long r0;
-  unsigned long mof;
-  unsigned long dccr;
-  unsigned long srp;
-  unsigned long irp; /* This is actually the debugged process' PC */
-  unsigned long csrinstr;
-  unsigned long csraddr;
-  unsigned long csrdata;
+	unsigned long frametype;  /* type of stackframe */
+	unsigned long orig_r10;
+	/* pushed by movem r13, [sp] in SAVE_ALL, movem pushes backwards */
+	unsigned long r13;
+	unsigned long r12;
+	unsigned long r11;
+	unsigned long r10;
+	unsigned long r9;
+	unsigned long r8;
+	unsigned long r7;
+	unsigned long r6;
+	unsigned long r5;
+	unsigned long r4;
+	unsigned long r3;
+	unsigned long r2;
+	unsigned long r1;
+	unsigned long r0;
+	unsigned long mof;
+	unsigned long dccr;
+	unsigned long srp;
+	unsigned long irp; /* This is actually the debugged process' PC */
+	unsigned long csrinstr;
+	unsigned long csraddr;
+	unsigned long csrdata;
 };
 
 /* switch_stack is the extra stuff pushed onto the stack in _resume (entry.S)
@@ -93,17 +93,17 @@ struct pt_regs {
  */
 
 struct switch_stack {
-  unsigned long r9;
-  unsigned long r8;
-  unsigned long r7;
-  unsigned long r6;
-  unsigned long r5;
-  unsigned long r4;
-  unsigned long r3;
-  unsigned long r2;
-  unsigned long r1;
-  unsigned long r0;
-  unsigned long return_ip; /* ip that _resume will return to */
+	unsigned long r9;
+	unsigned long r8;
+	unsigned long r7;
+	unsigned long r6;
+	unsigned long r5;
+	unsigned long r4;
+	unsigned long r3;
+	unsigned long r2;
+	unsigned long r1;
+	unsigned long r0;
+	unsigned long return_ip; /* ip that _resume will return to */
 };
 
 #ifdef __KERNEL__

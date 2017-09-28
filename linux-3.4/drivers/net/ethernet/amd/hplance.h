@@ -4,8 +4,8 @@
  */
 
 /* Registers */
-#define HPLANCE_ID    0x01    /* DIO register: ID byte */
-#define HPLANCE_STATUS    0x03    /* DIO register: interrupt enable/status */
+#define HPLANCE_ID		0x01		/* DIO register: ID byte */
+#define HPLANCE_STATUS		0x03		/* DIO register: interrupt enable/status */
 
 /* Control and status bits for the status register */
 #define LE_IE 0x80                                /* interrupt enable */

@@ -15,9 +15,9 @@
 
 #define __iomem
 
-static inline void sync (void)
+static inline void sync(void)
 {
-  SSYNC();
+	SSYNC();
 }
 
 /*
@@ -25,28 +25,28 @@ static inline void sync (void)
  * that can be used to access the memory range with the caching
  * properties specified by "flags".
  */
-#define MAP_NOCACHE (0)
-#define MAP_WRCOMBINE (0)
-#define MAP_WRBACK  (0)
-#define MAP_WRTHROUGH (0)
+#define MAP_NOCACHE	(0)
+#define MAP_WRCOMBINE	(0)
+#define MAP_WRBACK	(0)
+#define MAP_WRTHROUGH	(0)
 
 static inline void *
-map_physmem (phys_addr_t paddr, unsigned long len, unsigned long flags)
+map_physmem(phys_addr_t paddr, unsigned long len, unsigned long flags)
 {
-  return (void *) paddr;
+	return (void *)paddr;
 }
 
 /*
  * Take down a mapping set up by map_physmem().
  */
-static inline void unmap_physmem (void * vaddr, unsigned long flags)
+static inline void unmap_physmem(void *vaddr, unsigned long flags)
 {
 
 }
 
-static inline phys_addr_t virt_to_phys (void * vaddr)
+static inline phys_addr_t virt_to_phys(void * vaddr)
 {
-  return (phys_addr_t) (vaddr);
+	return (phys_addr_t)(vaddr);
 }
 
 /*
@@ -61,55 +61,55 @@ static inline phys_addr_t virt_to_phys (void * vaddr)
  */
 #ifndef __ASSEMBLY__
 
-static inline unsigned char readb (const volatile void __iomem * addr)
+static inline unsigned char readb(const volatile void __iomem *addr)
 {
-  unsigned int val;
-  int tmp;
-  
-  __asm__ __volatile__ (
-    "cli %1;"
-    "NOP; NOP; SSYNC;"
-    "%0 = b [%2] (z);"
-    "sti %1;"
-    : "=d" (val), "=d" (tmp)
-    : "a" (addr)
-  );
-  
-  return (unsigned char) val;
+	unsigned int val;
+	int tmp;
+
+	__asm__ __volatile__ (
+		"cli %1;"
+		"NOP; NOP; SSYNC;"
+		"%0 = b [%2] (z);"
+		"sti %1;"
+		: "=d"(val), "=d"(tmp)
+		: "a"(addr)
+	);
+
+	return (unsigned char) val;
 }
 
-static inline unsigned short readw (const volatile void __iomem * addr)
+static inline unsigned short readw(const volatile void __iomem *addr)
 {
-  unsigned int val;
-  int tmp;
-  
-  __asm__ __volatile__ (
-    "cli %1;"
-    "NOP; NOP; SSYNC;"
-    "%0 = w [%2] (z);"
-    "sti %1;"
-    : "=d" (val), "=d" (tmp)
-    : "a" (addr)
-  );
-  
-  return (unsigned short) val;
+	unsigned int val;
+	int tmp;
+
+	__asm__ __volatile__ (
+		"cli %1;"
+		"NOP; NOP; SSYNC;"
+		"%0 = w [%2] (z);"
+		"sti %1;"
+		: "=d"(val), "=d"(tmp)
+		: "a"(addr)
+	);
+
+	return (unsigned short) val;
 }
 
-static inline unsigned int readl (const volatile void __iomem * addr)
+static inline unsigned int readl(const volatile void __iomem *addr)
 {
-  unsigned int val;
-  int tmp;
-  
-  __asm__ __volatile__ (
-    "cli %1;"
-    "NOP; NOP; SSYNC;"
-    "%0 = [%2];"
-    "sti %1;"
-    : "=d" (val), "=d" (tmp)
-    : "a" (addr)
-  );
-  
-  return val;
+	unsigned int val;
+	int tmp;
+
+	__asm__ __volatile__ (
+		"cli %1;"
+		"NOP; NOP; SSYNC;"
+		"%0 = [%2];"
+		"sti %1;"
+		: "=d"(val), "=d"(tmp)
+		: "a"(addr)
+	);
+
+	return val;
 }
 
 #endif /*  __ASSEMBLY__ */
@@ -124,9 +124,9 @@ static inline unsigned int readl (const volatile void __iomem * addr)
 #define __raw_writeb writeb
 #define __raw_writew writew
 #define __raw_writel writel
-#define memset_io(a, b, c)  memset((void *)(a), (b), (c))
-#define memcpy_fromio(a, b, c)  memcpy((a), (void *)(b), (c))
-#define memcpy_toio(a, b, c)  memcpy((void *)(a), (b), (c))
+#define memset_io(a, b, c)	memset((void *)(a), (b), (c))
+#define memcpy_fromio(a, b, c)	memcpy((a), (void *)(b), (c))
+#define memcpy_toio(a, b, c)	memcpy((void *)(a), (b), (c))
 
 /* Convert "I/O port addresses" to actual addresses.  i.e. ugly casts. */
 #define __io(port) ((void *)(unsigned long)(port))
@@ -145,71 +145,71 @@ static inline unsigned int readl (const volatile void __iomem * addr)
 #define outw_p(x, port) outw(x, __io(port))
 #define outl_p(x, port) outl(x, __io(port))
 
-#define ioread8_rep(a, d, c)  readsb(a, d, c)
-#define ioread16_rep(a, d, c) readsw(a, d, c)
-#define ioread32_rep(a, d, c) readsl(a, d, c)
-#define iowrite8_rep(a, s, c) writesb(a, s, c)
-#define iowrite16_rep(a, s, c)  writesw(a, s, c)
-#define iowrite32_rep(a, s, c)  writesl(a, s, c)
+#define ioread8_rep(a, d, c)	readsb(a, d, c)
+#define ioread16_rep(a, d, c)	readsw(a, d, c)
+#define ioread32_rep(a, d, c)	readsl(a, d, c)
+#define iowrite8_rep(a, s, c)	writesb(a, s, c)
+#define iowrite16_rep(a, s, c)	writesw(a, s, c)
+#define iowrite32_rep(a, s, c)	writesl(a, s, c)
 
-#define ioread8(x)      readb(x)
-#define ioread16(x)     readw(x)
-#define ioread32(x)     readl(x)
-#define iowrite8(val, x)    writeb(val, x)
-#define iowrite16(val, x)   writew(val, x)
-#define iowrite32(val, x)   writel(val, x)
+#define ioread8(x)			readb(x)
+#define ioread16(x)			readw(x)
+#define ioread32(x)			readl(x)
+#define iowrite8(val, x)		writeb(val, x)
+#define iowrite16(val, x)		writew(val, x)
+#define iowrite32(val, x)		writel(val, x)
 
 #define mmiowb() wmb()
 
 #ifndef __ASSEMBLY__
 
-extern void outsb (unsigned long port, const void * addr, unsigned long count);
-extern void outsw (unsigned long port, const void * addr, unsigned long count);
-extern void outsw_8 (unsigned long port, const void * addr, unsigned long count);
-extern void outsl (unsigned long port, const void * addr, unsigned long count);
+extern void outsb(unsigned long port, const void *addr, unsigned long count);
+extern void outsw(unsigned long port, const void *addr, unsigned long count);
+extern void outsw_8(unsigned long port, const void *addr, unsigned long count);
+extern void outsl(unsigned long port, const void *addr, unsigned long count);
 
-extern void insb (unsigned long port, void * addr, unsigned long count);
-extern void insw (unsigned long port, void * addr, unsigned long count);
-extern void insw_8 (unsigned long port, void * addr, unsigned long count);
-extern void insl (unsigned long port, void * addr, unsigned long count);
-extern void insl_16 (unsigned long port, void * addr, unsigned long count);
+extern void insb(unsigned long port, void *addr, unsigned long count);
+extern void insw(unsigned long port, void *addr, unsigned long count);
+extern void insw_8(unsigned long port, void *addr, unsigned long count);
+extern void insl(unsigned long port, void *addr, unsigned long count);
+extern void insl_16(unsigned long port, void *addr, unsigned long count);
 
-static inline void readsl (const void __iomem * addr, void * buf, int len)
+static inline void readsl(const void __iomem *addr, void *buf, int len)
 {
-  insl ( (unsigned long) addr, buf, len);
+	insl((unsigned long)addr, buf, len);
 }
 
-static inline void readsw (const void __iomem * addr, void * buf, int len)
+static inline void readsw(const void __iomem *addr, void *buf, int len)
 {
-  insw ( (unsigned long) addr, buf, len);
+	insw((unsigned long)addr, buf, len);
 }
 
-static inline void readsb (const void __iomem * addr, void * buf, int len)
+static inline void readsb(const void __iomem *addr, void *buf, int len)
 {
-  insb ( (unsigned long) addr, buf, len);
+	insb((unsigned long)addr, buf, len);
 }
 
-static inline void writesl (const void __iomem * addr, const void * buf, int len)
+static inline void writesl(const void __iomem *addr, const void *buf, int len)
 {
-  outsl ( (unsigned long) addr, buf, len);
+	outsl((unsigned long)addr, buf, len);
 }
 
-static inline void writesw (const void __iomem * addr, const void * buf, int len)
+static inline void writesw(const void __iomem *addr, const void *buf, int len)
 {
-  outsw ( (unsigned long) addr, buf, len);
+	outsw((unsigned long)addr, buf, len);
 }
 
-static inline void writesb (const void __iomem * addr, const void * buf, int len)
+static inline void writesb(const void __iomem *addr, const void *buf, int len)
 {
-  outsb ( (unsigned long) addr, buf, len);
+	outsb((unsigned long)addr, buf, len);
 }
 
 #if defined(CONFIG_STAMP_CF) || defined(CONFIG_BFIN_IDE)
 /* This hack for CF/IDE needs to be addressed at some point */
-extern void cf_outsw (unsigned short * addr, unsigned short * sect_buf, int words);
-extern void cf_insw (unsigned short * sect_buf, unsigned short * addr, int words);
-extern unsigned char cf_inb (volatile unsigned char * addr);
-extern void cf_outb (unsigned char val, volatile unsigned char * addr);
+extern void cf_outsw(unsigned short *addr, unsigned short *sect_buf, int words);
+extern void cf_insw(unsigned short *sect_buf, unsigned short *addr, int words);
+extern unsigned char cf_inb(volatile unsigned char *addr);
+extern void cf_outb(unsigned char val, volatile unsigned char *addr);
 #undef inb
 #undef outb
 #undef insw
@@ -222,6 +222,6 @@ extern void cf_outb (unsigned char val, volatile unsigned char * addr);
 
 #endif
 
-#endif        /* __KERNEL__ */
+#endif				/* __KERNEL__ */
 
 #endif

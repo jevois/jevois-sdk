@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright (C) 2000 - 2007 Jeff Dike (jdike@{addtoit,linux.intel}.com)
  * Licensed under the GPL
  */
@@ -42,10 +42,10 @@
  */
 struct user_desc;
 
-extern int ptrace_get_thread_area (struct task_struct * child, int idx,
-                                   struct user_desc __user * user_desc);
+extern int ptrace_get_thread_area(struct task_struct *child, int idx,
+                                  struct user_desc __user *user_desc);
 
-extern int ptrace_set_thread_area (struct task_struct * child, int idx,
-                                   struct user_desc __user * user_desc);
+extern int ptrace_set_thread_area(struct task_struct *child, int idx,
+                                  struct user_desc __user *user_desc);
 
 #endif

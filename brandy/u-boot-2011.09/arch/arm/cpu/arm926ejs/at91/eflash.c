@@ -52,11 +52,11 @@
  * optional TODOs (nice to have features):
  *
  * make the driver coexist with other NOR flash drivers
- *  (use an index into flash_info[], requires work
- *  in those other drivers, too)
+ *	(use an index into flash_info[], requires work
+ *	in those other drivers, too)
  * Make the erase command fill the sectors with 0xff
- *  (if the flashes grow larger in the future and
- *  someone puts a jffs2 into them)
+ *	(if the flashes grow larger in the future and
+ *	someone puts a jffs2 into them)
  * do a read-modify-write for partially programmed pages
  */
 #include <common.h>
@@ -77,154 +77,153 @@ static u32 pagesize;
 
 unsigned long flash_init (void)
 {
-  at91_eefc_t * eefc = (at91_eefc_t *) ATMEL_BASE_EEFC;
-  at91_dbu_t * dbu = (at91_dbu_t *) ATMEL_BASE_DBGU;
-  u32 id, size, nplanes, planesize, nlocks;
-  u32 addr, i, tmp = 0;
-  
-  debug ("eflash: init\n");
-  
-  flash_info[0].flash_id = FLASH_UNKNOWN;
-  
-  /* check if its an AT91ARM9XE SoC */
-  if ( (readl (&dbu->cidr) & AT91_DBU_CID_ARCH_MASK) != AT91_DBU_CID_ARCH_9XExx) {
-    puts ("eflash: not an AT91SAM9XE\n");
-    return 0;
-  }
-  
-  /* now query the eflash for its structure */
-  writel (AT91_EEFC_FCR_KEY | AT91_EEFC_FCR_FCMD_GETD, &eefc->fcr);
-  while ( (readl (&eefc->fsr) & AT91_EEFC_FSR_FRDY) == 0)
-    ;
-  id = readl (&eefc->frr);  /* word 0 */
-  size = readl (&eefc->frr); /* word 1 */
-  pagesize = readl (&eefc->frr); /* word 2 */
-  nplanes = readl (&eefc->frr); /* word 3 */
-  planesize = readl (&eefc->frr); /* word 4 */
-  debug ("id=%08x size=%u pagesize=%u planes=%u planesize=%u\n",
-         id, size, pagesize, nplanes, planesize);
-  for (i = 1; i < nplanes; i++) {
-    tmp = readl (&eefc->frr); /* words 5..4+nplanes-1 */
-  };
-  nlocks = readl (&eefc->frr); /* word 4+nplanes */
-  debug ("nlocks=%u\n", nlocks);
-  /* since we are going to use the lock regions as sectors, check count */
-  if (nlocks > CONFIG_SYS_MAX_FLASH_SECT) {
-    printf ("eflash: number of lock regions(%u) "\
-            "> CONFIG_SYS_MAX_FLASH_SECT. reducing...\n",
-            nlocks);
-    nlocks = CONFIG_SYS_MAX_FLASH_SECT;
-  }
-  flash_info[0].size = size;
-  flash_info[0].sector_count = nlocks;
-  flash_info[0].flash_id = id;
-  
-  addr = ATMEL_BASE_FLASH;
-  for (i = 0; i < nlocks; i++) {
-    tmp = readl (&eefc->frr); /* words 4+nplanes+1.. */
-    flash_info[0].start[i] = addr;
-    flash_info[0].protect[i] = 0;
-    addr += tmp;
-  };
-  
-  /* now read the protection information for all regions */
-  writel (AT91_EEFC_FCR_KEY | AT91_EEFC_FCR_FCMD_GLB, &eefc->fcr);
-  while ( (readl (&eefc->fsr) & AT91_EEFC_FSR_FRDY) == 0)
-    ;
-  for (i = 0; i < flash_info[0].sector_count; i++) {
-    if (i % 32 == 0)
-    { tmp = readl (&eefc->frr); }
-    flash_info[0].protect[i] = (tmp >> (i % 32) ) & 1;
-    #if defined(CONFIG_EFLASH_PROTSECTORS)
-    if (i < CONFIG_EFLASH_PROTSECTORS)
-    { flash_info[0].protect[i] = 1; }
-    #endif
-  }
-  
-  return size;
+	at91_eefc_t *eefc = (at91_eefc_t *) ATMEL_BASE_EEFC;
+	at91_dbu_t *dbu = (at91_dbu_t *) ATMEL_BASE_DBGU;
+	u32 id, size, nplanes, planesize, nlocks;
+	u32 addr, i, tmp=0;
+
+	debug("eflash: init\n");
+
+	flash_info[0].flash_id = FLASH_UNKNOWN;
+
+	/* check if its an AT91ARM9XE SoC */
+	if ((readl(&dbu->cidr) & AT91_DBU_CID_ARCH_MASK) != AT91_DBU_CID_ARCH_9XExx) {
+		puts("eflash: not an AT91SAM9XE\n");
+		return 0;
+	}
+
+	/* now query the eflash for its structure */
+	writel(AT91_EEFC_FCR_KEY | AT91_EEFC_FCR_FCMD_GETD, &eefc->fcr);
+	while ((readl(&eefc->fsr) & AT91_EEFC_FSR_FRDY) == 0)
+		;
+	id = readl(&eefc->frr);		/* word 0 */
+	size = readl(&eefc->frr);	/* word 1 */
+	pagesize = readl(&eefc->frr);	/* word 2 */
+	nplanes = readl(&eefc->frr);	/* word 3 */
+	planesize = readl(&eefc->frr);	/* word 4 */
+	debug("id=%08x size=%u pagesize=%u planes=%u planesize=%u\n",
+		id, size, pagesize, nplanes, planesize);
+	for (i=1; i<nplanes; i++) {
+		tmp = readl(&eefc->frr);	/* words 5..4+nplanes-1 */
+	};
+	nlocks = readl(&eefc->frr);	/* word 4+nplanes */
+	debug("nlocks=%u\n", nlocks);
+	/* since we are going to use the lock regions as sectors, check count */
+	if (nlocks > CONFIG_SYS_MAX_FLASH_SECT) {
+		printf("eflash: number of lock regions(%u) "\
+			"> CONFIG_SYS_MAX_FLASH_SECT. reducing...\n",
+			nlocks);
+		nlocks = CONFIG_SYS_MAX_FLASH_SECT;
+	}
+	flash_info[0].size = size;
+	flash_info[0].sector_count = nlocks;
+	flash_info[0].flash_id = id;
+
+	addr = ATMEL_BASE_FLASH;
+	for (i=0; i<nlocks; i++) {
+		tmp = readl(&eefc->frr);	/* words 4+nplanes+1.. */
+		flash_info[0].start[i] = addr;
+		flash_info[0].protect[i] = 0;
+		addr += tmp;
+	};
+
+	/* now read the protection information for all regions */
+	writel(AT91_EEFC_FCR_KEY | AT91_EEFC_FCR_FCMD_GLB, &eefc->fcr);
+	while ((readl(&eefc->fsr) & AT91_EEFC_FSR_FRDY) == 0)
+		;
+	for (i=0; i<flash_info[0].sector_count; i++) {
+		if (i%32 == 0)
+			tmp = readl(&eefc->frr);
+		flash_info[0].protect[i] = (tmp >> (i%32)) & 1;
+#if defined(CONFIG_EFLASH_PROTSECTORS)
+		if (i < CONFIG_EFLASH_PROTSECTORS)
+			flash_info[0].protect[i] = 1;
+#endif
+	}
+
+	return size;
 }
 
-void flash_print_info (flash_info_t * info)
+void flash_print_info (flash_info_t *info)
 {
-  int i;
-  
-  puts ("AT91SAM9XE embedded flash\n  Size: ");
-  print_size (info->size, " in ");
-  printf ("%d Sectors\n", info->sector_count);
-  
-  printf ("  Sector Start Addresses:");
-  for (i = 0; i < info->sector_count; ++i) {
-    if ( (i % 5) == 0)
-    { printf ("\n   "); }
-    printf (" %08lX%s",
-            info->start[i],
-            info->protect[i] ? " (RO)" : "     "
-           );
-  }
-  printf ("\n");
-  return;
+	int i;
+
+	puts("AT91SAM9XE embedded flash\n  Size: ");
+	print_size(info->size, " in ");
+	printf("%d Sectors\n", info->sector_count);
+
+	printf("  Sector Start Addresses:");
+	for (i=0; i<info->sector_count; ++i) {
+		if ((i % 5) == 0)
+			printf("\n   ");
+		printf(" %08lX%s",
+			info->start[i],
+			info->protect[i] ? " (RO)" : "     "
+		);
+	}
+	printf ("\n");
+	return;
 }
 
-int flash_real_protect (flash_info_t * info, long sector, int prot)
+int flash_real_protect (flash_info_t *info, long sector, int prot)
 {
-  at91_eefc_t * eefc = (at91_eefc_t *) ATMEL_BASE_EEFC;
-  u32 pagenum = (info->start[sector] - ATMEL_BASE_FLASH) / pagesize;
-  u32 i, tmp = 0;
-  
-  debug ("protect sector=%ld prot=%d\n", sector, prot);
-  
-  #if defined(CONFIG_EFLASH_PROTSECTORS)
-  if (sector < CONFIG_EFLASH_PROTSECTORS) {
-    if (!prot) {
-      printf ("eflash: sector %lu cannot be unprotected\n",
-              sector);
-    }
-    return 1; /* return anyway, caller does not care for result */
-  }
-  #endif
-  if (prot) {
-    writel (AT91_EEFC_FCR_KEY | AT91_EEFC_FCR_FCMD_SLB |
-            (pagenum << AT91_EEFC_FCR_FARG_SHIFT), &eefc->fcr);
-  }
-  else {
-    writel (AT91_EEFC_FCR_KEY | AT91_EEFC_FCR_FCMD_CLB |
-            (pagenum << AT91_EEFC_FCR_FARG_SHIFT), &eefc->fcr);
-  }
-  while ( (readl (&eefc->fsr) & AT91_EEFC_FSR_FRDY) == 0)
-    ;
-  /* now re-read the protection information for all regions */
-  writel (AT91_EEFC_FCR_KEY | AT91_EEFC_FCR_FCMD_GLB, &eefc->fcr);
-  while ( (readl (&eefc->fsr) & AT91_EEFC_FSR_FRDY) == 0)
-    ;
-  for (i = 0; i < info->sector_count; i++) {
-    if (i % 32 == 0)
-    { tmp = readl (&eefc->frr); }
-    info->protect[i] = (tmp >> (i % 32) ) & 1;
-  }
-  return 0;
+	at91_eefc_t *eefc = (at91_eefc_t *) ATMEL_BASE_EEFC;
+	u32 pagenum = (info->start[sector]-ATMEL_BASE_FLASH)/pagesize;
+	u32 i, tmp=0;
+
+	debug("protect sector=%ld prot=%d\n", sector, prot);
+
+#if defined(CONFIG_EFLASH_PROTSECTORS)
+	if (sector < CONFIG_EFLASH_PROTSECTORS) {
+		if (!prot) {
+			printf("eflash: sector %lu cannot be unprotected\n",
+				sector);
+		}
+		return 1; /* return anyway, caller does not care for result */
+	}
+#endif
+	if (prot) {
+		writel(AT91_EEFC_FCR_KEY | AT91_EEFC_FCR_FCMD_SLB |
+			(pagenum << AT91_EEFC_FCR_FARG_SHIFT), &eefc->fcr);
+	} else {
+		writel(AT91_EEFC_FCR_KEY | AT91_EEFC_FCR_FCMD_CLB |
+			(pagenum << AT91_EEFC_FCR_FARG_SHIFT), &eefc->fcr);
+	}
+	while ((readl(&eefc->fsr) & AT91_EEFC_FSR_FRDY) == 0)
+		;
+	/* now re-read the protection information for all regions */
+	writel(AT91_EEFC_FCR_KEY | AT91_EEFC_FCR_FCMD_GLB, &eefc->fcr);
+	while ((readl(&eefc->fsr) & AT91_EEFC_FSR_FRDY) == 0)
+		;
+	for (i=0; i<info->sector_count; i++) {
+		if (i%32 == 0)
+			tmp = readl(&eefc->frr);
+		info->protect[i] = (tmp >> (i%32)) & 1;
+	}
+	return 0;
 }
 
 static u32 erase_write_page (u32 pagenum)
 {
-  at91_eefc_t * eefc = (at91_eefc_t *) ATMEL_BASE_EEFC;
-  
-  debug ("erase+write page=%u\n", pagenum);
-  
-  /* give erase and write page command */
-  writel (AT91_EEFC_FCR_KEY | AT91_EEFC_FCR_FCMD_EWP |
-          (pagenum << AT91_EEFC_FCR_FARG_SHIFT), &eefc->fcr);
-  while ( (readl (&eefc->fsr) & AT91_EEFC_FSR_FRDY) == 0)
-    ;
-  /* return status */
-  return readl (&eefc->fsr)
-         & (AT91_EEFC_FSR_FCMDE | AT91_EEFC_FSR_FLOCKE);
+	at91_eefc_t *eefc = (at91_eefc_t *) ATMEL_BASE_EEFC;
+
+	debug("erase+write page=%u\n", pagenum);
+
+	/* give erase and write page command */
+	writel(AT91_EEFC_FCR_KEY | AT91_EEFC_FCR_FCMD_EWP |
+		(pagenum << AT91_EEFC_FCR_FARG_SHIFT), &eefc->fcr);
+	while ((readl(&eefc->fsr) & AT91_EEFC_FSR_FRDY) == 0)
+		;
+	/* return status */
+	return readl(&eefc->fsr)
+		& (AT91_EEFC_FSR_FCMDE | AT91_EEFC_FSR_FLOCKE);
 }
 
-int flash_erase (flash_info_t * info, int s_first, int s_last)
+int flash_erase (flash_info_t *info, int s_first, int s_last)
 {
-  debug ("erase first=%d last=%d\n", s_first, s_last);
-  puts ("this flash does not need and support erasing!\n");
-  return 0;
+	debug("erase first=%d last=%d\n", s_first, s_last);
+	puts("this flash does not need and support erasing!\n");
+	return 0;
 }
 
 /*
@@ -233,39 +232,39 @@ int flash_erase (flash_info_t * info, int s_first, int s_last)
  * 1 - write timeout
  */
 
-int write_buff (flash_info_t * info, uchar * src, ulong addr, ulong cnt)
+int write_buff (flash_info_t *info, uchar *src, ulong addr, ulong cnt)
 {
-  u32 pagenum;
-  u32 * src32, *dst32;
-  u32 i;
-  
-  debug ("write src=%08lx addr=%08lx cnt=%lx\n",
-         (ulong) src, addr, cnt);
-         
-  /* REQUIRE addr to be on a page start, abort if not */
-  if (addr % pagesize) {
-    printf ("eflash: start %08lx is not on page start\n"\
-            "        write aborted\n", addr);
-    return 1;
-  }
-  
-  /* now start copying data */
-  pagenum = (addr - ATMEL_BASE_FLASH) / pagesize;
-  src32 = (u32 *) src;
-  dst32 = (u32 *) addr;
-  while (cnt > 0) {
-    i = pagesize / 4;
-    /* fill page buffer */
-    while (i--)
-    { *dst32++ = *src32++; }
-    /* write page */
-    if (erase_write_page (pagenum) )
-    { return 1; }
-    pagenum++;
-    if (cnt > pagesize)
-    { cnt -= pagesize; }
-    else
-    { cnt = 0; }
-  }
-  return 0;
+	u32 pagenum;
+	u32 *src32, *dst32;
+	u32 i;
+
+	debug("write src=%08lx addr=%08lx cnt=%lx\n",
+		(ulong)src, addr, cnt);
+
+	/* REQUIRE addr to be on a page start, abort if not */
+	if (addr % pagesize) {
+		printf ("eflash: start %08lx is not on page start\n"\
+			"        write aborted\n", addr);
+		return 1;
+	}
+
+	/* now start copying data */
+	pagenum = (addr-ATMEL_BASE_FLASH)/pagesize;
+	src32 = (u32 *) src;
+	dst32 = (u32 *) addr;
+	while (cnt > 0) {
+		i = pagesize / 4;
+		/* fill page buffer */
+		while (i--)
+			*dst32++ = *src32++;
+		/* write page */
+		if (erase_write_page(pagenum))
+			return 1;
+		pagenum++;
+		if (cnt > pagesize)
+			cnt -= pagesize;
+		else
+			cnt = 0;
+	}
+	return 0;
 }

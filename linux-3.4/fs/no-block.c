@@ -12,12 +12,12 @@
 #include <linux/kernel.h>
 #include <linux/fs.h>
 
-static int no_blkdev_open (struct inode * inode, struct file * filp)
+static int no_blkdev_open(struct inode * inode, struct file * filp)
 {
-  return -ENODEV;
+	return -ENODEV;
 }
 
 const struct file_operations def_blk_fops = {
-  .open   = no_blkdev_open,
-  .llseek   = noop_llseek,
+	.open		= no_blkdev_open,
+	.llseek		= noop_llseek,
 };

@@ -46,12 +46,12 @@
 #define PHY_RETEN               (1 << 1) /* PHY retention enable/disable */
 
 /* OTG definitions */
-#define OTGSC_INTSTS_MASK (0x7f << 16)
-#define OTGSC_ID    (1 << 8)
-#define OTGSC_BSV   (1 << 11)
-#define OTGSC_IDIS    (1 << 16)
-#define OTGSC_BSVIS   (1 << 19)
-#define OTGSC_IDIE    (1 << 24)
-#define OTGSC_BSVIE   (1 << 27)
+#define OTGSC_INTSTS_MASK	(0x7f << 16)
+#define OTGSC_ID		(1 << 8)
+#define OTGSC_BSV		(1 << 11)
+#define OTGSC_IDIS		(1 << 16)
+#define OTGSC_BSVIS		(1 << 19)
+#define OTGSC_IDIE		(1 << 24)
+#define OTGSC_BSVIE		(1 << 27)
 
 #endif /* __LINUX_USB_GADGET_MSM72K_UDC_H__ */

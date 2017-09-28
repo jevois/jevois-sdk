@@ -35,23 +35,23 @@
 #include <asm/arch/hardware.h>
 #include <asm/arch/at91_st.h>
 
-void  __attribute__ ( (weak) ) board_reset (void)
+void  __attribute__((weak)) board_reset(void)
 {
-  /* true empty function for defining weak symbol */
+	/* true empty function for defining weak symbol */
 }
 
-void reset_cpu (ulong ignored)
+void reset_cpu(ulong ignored)
 {
-  at91_st_t * st = (at91_st_t *) ATMEL_BASE_ST;
-  
-  board_reset();
-  
-  /* Reset the cpu by setting up the watchdog timer */
-  writel (AT91_ST_WDMR_RSTEN | AT91_ST_WDMR_EXTEN | AT91_ST_WDMR_WDV (2),
-          &st->wdmr);
-  writel (AT91_ST_CR_WDRST, &st->cr);
-  /* and let it timeout */
-  while (1)
-    ;
-  /* Never reached */
+	at91_st_t *st = (at91_st_t *) ATMEL_BASE_ST;
+
+	board_reset();
+
+	/* Reset the cpu by setting up the watchdog timer */
+	writel(AT91_ST_WDMR_RSTEN | AT91_ST_WDMR_EXTEN | AT91_ST_WDMR_WDV(2),
+		&st->wdmr);
+	writel(AT91_ST_CR_WDRST, &st->cr);
+	/* and let it timeout */
+	while (1)
+		;
+	/* Never reached */
 }

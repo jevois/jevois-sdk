@@ -21,7 +21,7 @@
  * platform a early hook-up. bp_tag_t is a list of configuration tags
  * passed from the boot-loader.
  */
-extern void platform_init (bp_tag_t *);
+extern void platform_init(bp_tag_t*);
 
 /*
  * platform_setup is called from setup_arch with a pointer to the command-line
@@ -74,5 +74,5 @@ extern int platform_pcibios_fixup (void);
  */
 extern void platform_calibrate_ccount (void);
 
-#endif  /* _XTENSA_PLATFORM_H */
+#endif	/* _XTENSA_PLATFORM_H */
 

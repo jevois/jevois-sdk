@@ -3,15 +3,15 @@
 #ifndef SUN3X_PROM_H
 #define SUN3X_PROM_H
 
-extern void (*sun3x_putchar) (int);
-extern int (*sun3x_getchar) (void);
-extern int (*sun3x_mayget) (void);
-extern int (*sun3x_mayput) (int);
+extern void (*sun3x_putchar)(int);
+extern int (*sun3x_getchar)(void);
+extern int (*sun3x_mayget)(void);
+extern int (*sun3x_mayput)(int);
 
-void sun3x_reboot (void);
-void sun3x_abort (void);
-void sun3x_prom_init (void);
-unsigned long sun3x_prom_ptov (unsigned long pa, unsigned long size);
+void sun3x_reboot(void);
+void sun3x_abort(void);
+void sun3x_prom_init(void);
+unsigned long sun3x_prom_ptov(unsigned long pa, unsigned long size);
 
 /* interesting hardware locations */
 #define SUN3X_IOMMU       0x60000000

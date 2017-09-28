@@ -11,16 +11,16 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-int checkboard (void)
+int checkboard(void)
 {
-  printf ("Board: I-SYST IBF-DSP561 Micromodule\n");
-  printf ("       Support: http://www.i-syst.com/\n");
-  return 0;
+	printf("Board: I-SYST IBF-DSP561 Micromodule\n");
+	printf("       Support: http://www.i-syst.com/\n");
+	return 0;
 }
 
 #ifdef CONFIG_DRIVER_AX88180
-int board_eth_init (bd_t * bis)
+int board_eth_init(bd_t *bis)
 {
-  return ax88180_initialize (bis);
+	return ax88180_initialize(bis);
 }
 #endif

@@ -28,12 +28,12 @@
  * This function would normally query the relevant registers or a cache to
  * discover if the event generation is enabled on the device.
  */
-int iio_simple_dummy_read_event_config (struct iio_dev * indio_dev,
-                                        u64 event_code)
+int iio_simple_dummy_read_event_config(struct iio_dev *indio_dev,
+				       u64 event_code)
 {
-  struct iio_dummy_state * st = iio_priv (indio_dev);
-  
-  return st->event_en;
+	struct iio_dummy_state *st = iio_priv(indio_dev);
+
+	return st->event_en;
 }
 
 /**
@@ -46,34 +46,34 @@ int iio_simple_dummy_read_event_config (struct iio_dev * indio_dev,
  * so that it generates the specified event. Here it just sets up a cached
  * value.
  */
-int iio_simple_dummy_write_event_config (struct iio_dev * indio_dev,
-    u64 event_code,
-    int state)
+int iio_simple_dummy_write_event_config(struct iio_dev *indio_dev,
+					u64 event_code,
+					int state)
 {
-  struct iio_dummy_state * st = iio_priv (indio_dev);
-  
-  /*
-   *  Deliberately over the top code splitting to illustrate
-   * how this is done when multiple events exist.
-   */
-  switch (IIO_EVENT_CODE_EXTRACT_CHAN_TYPE (event_code) ) {
-  case IIO_VOLTAGE:
-    switch (IIO_EVENT_CODE_EXTRACT_TYPE (event_code) ) {
-    case IIO_EV_TYPE_THRESH:
-      if (IIO_EVENT_CODE_EXTRACT_DIR (event_code) ==
-          IIO_EV_DIR_RISING)
-      { st->event_en = state; }
-      else
-      { return -EINVAL; }
-      break;
-    default:
-      return -EINVAL;
-    }
-  default:
-    return -EINVAL;
-  }
-  
-  return 0;
+	struct iio_dummy_state *st = iio_priv(indio_dev);
+
+	/*
+	 *  Deliberately over the top code splitting to illustrate
+	 * how this is done when multiple events exist.
+	 */
+	switch (IIO_EVENT_CODE_EXTRACT_CHAN_TYPE(event_code)) {
+	case IIO_VOLTAGE:
+		switch (IIO_EVENT_CODE_EXTRACT_TYPE(event_code)) {
+		case IIO_EV_TYPE_THRESH:
+			if (IIO_EVENT_CODE_EXTRACT_DIR(event_code) ==
+			    IIO_EV_DIR_RISING)
+				st->event_en = state;
+			else
+				return -EINVAL;
+			break;
+		default:
+			return -EINVAL;
+		}
+	default:
+		return -EINVAL;
+	}
+
+	return 0;
 }
 
 /**
@@ -88,15 +88,15 @@ int iio_simple_dummy_write_event_config (struct iio_dev * indio_dev,
  * associated with each possible events so that the right value is in place when
  * the enabled event is changed.
  */
-int iio_simple_dummy_read_event_value (struct iio_dev * indio_dev,
-                                       u64 event_code,
-                                       int * val)
+int iio_simple_dummy_read_event_value(struct iio_dev *indio_dev,
+				      u64 event_code,
+				      int *val)
 {
-  struct iio_dummy_state * st = iio_priv (indio_dev);
-  
-  *val = st->event_val;
-  
-  return 0;
+	struct iio_dummy_state *st = iio_priv(indio_dev);
+
+	*val = st->event_val;
+
+	return 0;
 }
 
 /**
@@ -105,15 +105,15 @@ int iio_simple_dummy_read_event_value (struct iio_dev * indio_dev,
  * @event_code: event code for the event whose value is being set
  * @val: the value to be set.
  */
-int iio_simple_dummy_write_event_value (struct iio_dev * indio_dev,
-                                        u64 event_code,
-                                        int val)
+int iio_simple_dummy_write_event_value(struct iio_dev *indio_dev,
+				       u64 event_code,
+				       int val)
 {
-  struct iio_dummy_state * st = iio_priv (indio_dev);
-  
-  st->event_val = val;
-  
-  return 0;
+	struct iio_dummy_state *st = iio_priv(indio_dev);
+
+	st->event_val = val;
+
+	return 0;
 }
 
 /**
@@ -126,15 +126,15 @@ int iio_simple_dummy_write_event_value (struct iio_dev * indio_dev,
  * Here only one event occurs so we push that directly on with locally
  * grabbed timestamp.
  */
-static irqreturn_t iio_simple_dummy_event_handler (int irq, void * private)
+static irqreturn_t iio_simple_dummy_event_handler(int irq, void *private)
 {
-  struct iio_dev * indio_dev = private;
-  iio_push_event (indio_dev,
-                  IIO_EVENT_CODE (IIO_VOLTAGE, 0, 0,
-                                  IIO_EV_DIR_RISING,
-                                  IIO_EV_TYPE_THRESH, 0, 0, 0),
-                  iio_get_time_ns() );
-  return IRQ_HANDLED;
+	struct iio_dev *indio_dev = private;
+	iio_push_event(indio_dev,
+		       IIO_EVENT_CODE(IIO_VOLTAGE, 0, 0,
+				      IIO_EV_DIR_RISING,
+				      IIO_EV_TYPE_THRESH, 0, 0, 0),
+		       iio_get_time_ns());
+	return IRQ_HANDLED;
 }
 
 /**
@@ -148,44 +148,44 @@ static irqreturn_t iio_simple_dummy_event_handler (int irq, void * private)
  * no way forms part of this example. Just assume that events magically
  * appear via the provided interrupt.
  */
-int iio_simple_dummy_events_register (struct iio_dev * indio_dev)
+int iio_simple_dummy_events_register(struct iio_dev *indio_dev)
 {
-  struct iio_dummy_state * st = iio_priv (indio_dev);
-  int ret;
-  
-  /* Fire up event source - normally not present */
-  st->event_irq = iio_dummy_evgen_get_irq();
-  if (st->event_irq < 0) {
-    ret = st->event_irq;
-    goto error_ret;
-  }
-  ret = request_threaded_irq (st->event_irq,
-                              NULL,
-                              &iio_simple_dummy_event_handler,
-                              IRQF_ONESHOT,
-                              "iio_simple_event",
-                              indio_dev);
-  if (ret < 0)
-  { goto error_free_evgen; }
-  return 0;
-  
+	struct iio_dummy_state *st = iio_priv(indio_dev);
+	int ret;
+
+	/* Fire up event source - normally not present */
+	st->event_irq = iio_dummy_evgen_get_irq();
+	if (st->event_irq < 0) {
+		ret = st->event_irq;
+		goto error_ret;
+	}
+	ret = request_threaded_irq(st->event_irq,
+				   NULL,
+				   &iio_simple_dummy_event_handler,
+				   IRQF_ONESHOT,
+				   "iio_simple_event",
+				   indio_dev);
+	if (ret < 0)
+		goto error_free_evgen;
+	return 0;
+
 error_free_evgen:
-  iio_dummy_evgen_release_irq (st->event_irq);
+	iio_dummy_evgen_release_irq(st->event_irq);
 error_ret:
-  return ret;
+	return ret;
 }
 
 /**
  * iio_simple_dummy_events_unregister() - tidy up interrupt handling on remove
  * @indio_dev: device instance data
  */
-int iio_simple_dummy_events_unregister (struct iio_dev * indio_dev)
+int iio_simple_dummy_events_unregister(struct iio_dev *indio_dev)
 {
-  struct iio_dummy_state * st = iio_priv (indio_dev);
-  
-  free_irq (st->event_irq, indio_dev);
-  /* Not part of normal driver */
-  iio_dummy_evgen_release_irq (st->event_irq);
-  
-  return 0;
+	struct iio_dummy_state *st = iio_priv(indio_dev);
+
+	free_irq(st->event_irq, indio_dev);
+	/* Not part of normal driver */
+	iio_dummy_evgen_release_irq(st->event_irq);
+
+	return 0;
 }

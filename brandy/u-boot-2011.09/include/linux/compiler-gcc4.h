@@ -9,10 +9,10 @@
 # endif
 #endif
 
-#define __used      __attribute__((__used__))
-#define __must_check    __attribute__((warn_unused_result))
+#define __used			__attribute__((__used__))
+#define __must_check 		__attribute__((warn_unused_result))
 #define __compiler_offsetof(a,b) __builtin_offsetof(a,b)
-#define __always_inline   inline __attribute__((always_inline))
+#define __always_inline		inline __attribute__((always_inline))
 
 /*
  * A trick to suppress uninitialized variable warning without generating any
@@ -34,7 +34,7 @@
    gcc also has a __attribute__((__hot__)) to move hot functions into
    a special section, but I don't see any sense in this right now in
    the kernel context */
-#define __cold      __attribute__((__cold__))
+#define __cold			__attribute__((__cold__))
 
 
 #if __GNUC_MINOR__ >= 5

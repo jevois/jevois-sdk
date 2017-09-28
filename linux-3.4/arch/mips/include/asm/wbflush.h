@@ -14,14 +14,14 @@
 
 #ifdef CONFIG_CPU_HAS_WB
 
-extern void (*__wbflush) (void);
-extern void wbflush_setup (void);
+extern void (*__wbflush)(void);
+extern void wbflush_setup(void);
 
-#define wbflush()     \
-  do {        \
-    __sync();   \
-    __wbflush();    \
-  } while (0)
+#define wbflush()			\
+	do {				\
+		__sync();		\
+		__wbflush();		\
+	} while (0)
 
 #else /* !CONFIG_CPU_HAS_WB */
 

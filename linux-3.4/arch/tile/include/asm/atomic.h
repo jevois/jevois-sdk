@@ -24,7 +24,7 @@
 #include <linux/compiler.h>
 #include <linux/types.h>
 
-#define ATOMIC_INIT(i)  { (i) }
+#define ATOMIC_INIT(i)	{ (i) }
 
 /**
  * atomic_read - read atomic variable
@@ -32,9 +32,9 @@
  *
  * Atomically reads the value of @v.
  */
-static inline int atomic_read (const atomic_t * v)
+static inline int atomic_read(const atomic_t *v)
 {
-  return ACCESS_ONCE (v->counter);
+	return ACCESS_ONCE(v->counter);
 }
 
 /**
@@ -44,7 +44,7 @@ static inline int atomic_read (const atomic_t * v)
  *
  * Atomically subtracts @i from @v and returns @v - @i
  */
-#define atomic_sub_return(i, v)   atomic_add_return((int)(-(i)), (v))
+#define atomic_sub_return(i, v)		atomic_add_return((int)(-(i)), (v))
 
 /**
  * atomic_sub - subtract integer from atomic variable
@@ -53,7 +53,7 @@ static inline int atomic_read (const atomic_t * v)
  *
  * Atomically subtracts @i from @v.
  */
-#define atomic_sub(i, v)    atomic_add((int)(-(i)), (v))
+#define atomic_sub(i, v)		atomic_add((int)(-(i)), (v))
 
 /**
  * atomic_sub_and_test - subtract value from variable and test result
@@ -63,7 +63,7 @@ static inline int atomic_read (const atomic_t * v)
  * Atomically subtracts @i from @v and returns true if the result is
  * zero, or false for all other cases.
  */
-#define atomic_sub_and_test(i, v) (atomic_sub_return((i), (v)) == 0)
+#define atomic_sub_and_test(i, v)	(atomic_sub_return((i), (v)) == 0)
 
 /**
  * atomic_inc_return - increment memory and return
@@ -71,7 +71,7 @@ static inline int atomic_read (const atomic_t * v)
  *
  * Atomically increments @v by 1 and returns the new value.
  */
-#define atomic_inc_return(v)    atomic_add_return(1, (v))
+#define atomic_inc_return(v)		atomic_add_return(1, (v))
 
 /**
  * atomic_dec_return - decrement memory and return
@@ -79,7 +79,7 @@ static inline int atomic_read (const atomic_t * v)
  *
  * Atomically decrements @v by 1 and returns the new value.
  */
-#define atomic_dec_return(v)    atomic_sub_return(1, (v))
+#define atomic_dec_return(v)		atomic_sub_return(1, (v))
 
 /**
  * atomic_inc - increment atomic variable
@@ -87,7 +87,7 @@ static inline int atomic_read (const atomic_t * v)
  *
  * Atomically increments @v by 1.
  */
-#define atomic_inc(v)     atomic_add(1, (v))
+#define atomic_inc(v)			atomic_add(1, (v))
 
 /**
  * atomic_dec - decrement atomic variable
@@ -95,7 +95,7 @@ static inline int atomic_read (const atomic_t * v)
  *
  * Atomically decrements @v by 1.
  */
-#define atomic_dec(v)     atomic_sub(1, (v))
+#define atomic_dec(v)			atomic_sub(1, (v))
 
 /**
  * atomic_dec_and_test - decrement and test
@@ -103,7 +103,7 @@ static inline int atomic_read (const atomic_t * v)
  *
  * Atomically decrements @v by 1 and returns true if the result is 0.
  */
-#define atomic_dec_and_test(v)    (atomic_dec_return(v) == 0)
+#define atomic_dec_and_test(v)		(atomic_dec_return(v) == 0)
 
 /**
  * atomic_inc_and_test - increment and test
@@ -111,7 +111,7 @@ static inline int atomic_read (const atomic_t * v)
  *
  * Atomically increments @v by 1 and returns true if the result is 0.
  */
-#define atomic_inc_and_test(v)    (atomic_inc_return(v) == 0)
+#define atomic_inc_and_test(v)		(atomic_inc_return(v) == 0)
 
 /**
  * atomic_add_negative - add and test if negative
@@ -121,7 +121,7 @@ static inline int atomic_read (const atomic_t * v)
  * Atomically adds @i to @v and returns true if the result is
  * negative, or false when result is greater than or equal to zero.
  */
-#define atomic_add_negative(i, v) (atomic_add_return((i), (v)) < 0)
+#define atomic_add_negative(i, v)	(atomic_add_return((i), (v)) < 0)
 
 #endif /* __ASSEMBLY__ */
 

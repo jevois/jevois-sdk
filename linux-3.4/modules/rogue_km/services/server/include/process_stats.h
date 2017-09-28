@@ -50,7 +50,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *  The publishing of Process Stats is controlled by the
  *  PVRSRV_ENABLE_PROCESS_STATS build option. The recording of all Memory
  *  allocations is controlled by the PVRSRV_ENABLE_MEMORY_STATS build option.
- *
+ * 
  *  Note: There will be a performance degradation with memory allocation
  *        recording enabled!
  */
@@ -60,69 +60,69 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *  Memory types which can be tracked...
  */
 typedef enum {
-  PVRSRV_MEM_ALLOC_TYPE_KMALLOC,
-  PVRSRV_MEM_ALLOC_TYPE_ALLOC_PAGES_PT_UMA, /* pages allocated from UMA to hold page table information */
-  PVRSRV_MEM_ALLOC_TYPE_VMAP_PT_UMA,      /* ALLOC_PAGES_PT_UMA mapped to kernel address space */
-  PVRSRV_MEM_ALLOC_TYPE_ALLOC_PAGES_PT_LMA, /* pages allocated from LMA to hold page table information */
-  PVRSRV_MEM_ALLOC_TYPE_IOREMAP_PT_LMA,   /* ALLOC_PAGES_PT_LMA mapped to kernel address space */
-  PVRSRV_MEM_ALLOC_TYPE_ALLOC_LMA_PAGES,    /* pages allocated from LMA */
-  PVRSRV_MEM_ALLOC_TYPE_ALLOC_UMA_PAGES,    /* pages allocated from UMA */
-  PVRSRV_MEM_ALLOC_TYPE_MAP_UMA_LMA_PAGES,    /* mapped UMA/LMA pages  */
-  
-  /* Must be the last enum...*/
-  PVRSRV_MEM_ALLOC_TYPE_COUNT
+    PVRSRV_MEM_ALLOC_TYPE_KMALLOC,
+    PVRSRV_MEM_ALLOC_TYPE_ALLOC_PAGES_PT_UMA,	/* pages allocated from UMA to hold page table information */
+    PVRSRV_MEM_ALLOC_TYPE_VMAP_PT_UMA,			/* ALLOC_PAGES_PT_UMA mapped to kernel address space */
+    PVRSRV_MEM_ALLOC_TYPE_ALLOC_PAGES_PT_LMA,	/* pages allocated from LMA to hold page table information */
+    PVRSRV_MEM_ALLOC_TYPE_IOREMAP_PT_LMA,		/* ALLOC_PAGES_PT_LMA mapped to kernel address space */
+    PVRSRV_MEM_ALLOC_TYPE_ALLOC_LMA_PAGES,		/* pages allocated from LMA */
+    PVRSRV_MEM_ALLOC_TYPE_ALLOC_UMA_PAGES,		/* pages allocated from UMA */
+    PVRSRV_MEM_ALLOC_TYPE_MAP_UMA_LMA_PAGES,		/* mapped UMA/LMA pages  */
+    
+	/* Must be the last enum...*/
+    PVRSRV_MEM_ALLOC_TYPE_COUNT
 } PVRSRV_MEM_ALLOC_TYPE;
 
 
 /*
  * Functions for managing the processes recorded...
  */
-PVRSRV_ERROR  PVRSRVStatsInitialise (IMG_VOID);
+PVRSRV_ERROR  PVRSRVStatsInitialise(IMG_VOID);
 
-IMG_VOID  PVRSRVStatsDestroy (IMG_VOID);
+IMG_VOID  PVRSRVStatsDestroy(IMG_VOID);
 
-PVRSRV_ERROR  PVRSRVStatsRegisterProcess (IMG_HANDLE * phProcessStats);
+PVRSRV_ERROR  PVRSRVStatsRegisterProcess(IMG_HANDLE* phProcessStats);
 
-IMG_VOID  PVRSRVStatsDeregisterProcess (IMG_HANDLE hProcessStats);
+IMG_VOID  PVRSRVStatsDeregisterProcess(IMG_HANDLE hProcessStats);
 
 
 /*
  * Functions for recording the statistics...
  */
-IMG_VOID  PVRSRVStatsAddMemAllocRecord (PVRSRV_MEM_ALLOC_TYPE eAllocType,
-                                        IMG_VOID * pvCpuVAddr,
-                                        IMG_CPU_PHYADDR sCpuPAddr,
-                                        IMG_SIZE_T uiBytes,
-                                        IMG_PVOID pvPrivateData);
+IMG_VOID  PVRSRVStatsAddMemAllocRecord(PVRSRV_MEM_ALLOC_TYPE eAllocType,
+                                       IMG_VOID *pvCpuVAddr,
+                                       IMG_CPU_PHYADDR sCpuPAddr,
+                                       IMG_SIZE_T uiBytes,
+                                       IMG_PVOID pvPrivateData);
 
-IMG_VOID  PVRSRVStatsRemoveMemAllocRecord (PVRSRV_MEM_ALLOC_TYPE eAllocType,
-    IMG_UINT64 ui64Key);
+IMG_VOID  PVRSRVStatsRemoveMemAllocRecord(PVRSRV_MEM_ALLOC_TYPE eAllocType,
+										  IMG_UINT64 ui64Key);
 
-IMG_VOID PVRSRVStatsIncrMemAllocStat (PVRSRV_MEM_ALLOC_TYPE eAllocType,
-                                      IMG_SIZE_T uiBytes);
-IMG_VOID PVRSRVStatsDecrMemAllocStat (PVRSRV_MEM_ALLOC_TYPE eAllocType,
-                                      IMG_SIZE_T uiBytes);
-IMG_VOID  PVRSRVStatsUpdateRenderContextStats (IMG_UINT32 ui32TotalNumPartialRenders,
-    IMG_UINT32 ui32TotalNumOutOfMemory,
-    IMG_UINT32 ui32TotalTAStores,
-    IMG_UINT32 ui32Total3DStores,
-    IMG_UINT32 ui32TotalSHStores);
+IMG_VOID PVRSRVStatsIncrMemAllocStat(PVRSRV_MEM_ALLOC_TYPE eAllocType,
+        							IMG_SIZE_T uiBytes);
+IMG_VOID PVRSRVStatsDecrMemAllocStat(PVRSRV_MEM_ALLOC_TYPE eAllocType,
+        							IMG_SIZE_T uiBytes);
+IMG_VOID  PVRSRVStatsUpdateRenderContextStats(IMG_UINT32 ui32TotalNumPartialRenders,
+                                              IMG_UINT32 ui32TotalNumOutOfMemory,
+                                              IMG_UINT32 ui32TotalTAStores,
+                                              IMG_UINT32 ui32Total3DStores,
+                                              IMG_UINT32 ui32TotalSHStores);
 
-IMG_VOID  PVRSRVStatsUpdateZSBufferStats (IMG_UINT32 ui32NumReqByApp,
-    IMG_UINT32 ui32NumReqByFW);
+IMG_VOID  PVRSRVStatsUpdateZSBufferStats(IMG_UINT32 ui32NumReqByApp,
+                                         IMG_UINT32 ui32NumReqByFW);
 
-IMG_VOID  PVRSRVStatsUpdateFreelistStats (IMG_UINT32 ui32NumGrowReqByApp,
-    IMG_UINT32 ui32NumGrowReqByFW,
-    IMG_UINT32 ui32InitFLPages,
-    IMG_UINT32 ui32NumHighPages);
+IMG_VOID  PVRSRVStatsUpdateFreelistStats(IMG_UINT32 ui32NumGrowReqByApp,
+                                         IMG_UINT32 ui32NumGrowReqByFW,
+                                         IMG_UINT32 ui32InitFLPages,
+                                         IMG_UINT32 ui32NumHighPages);
 
 
 /*
  *  Functions for obtaining the information stored...
  */
-IMG_BOOL  PVRSRVStatsObtainElement (IMG_PVOID pvStatPtr,
-                                    IMG_UINT32 ui32StatNumber,
-                                    IMG_INT32 * pi32StatData,
-                                    IMG_CHAR ** ppszStatFmtText);
+IMG_BOOL  PVRSRVStatsObtainElement(IMG_PVOID pvStatPtr,
+                                   IMG_UINT32 ui32StatNumber,
+                                   IMG_INT32* pi32StatData,
+                                   IMG_CHAR** ppszStatFmtText);
 
 #endif /* __PROCESS_STATS_H__ */

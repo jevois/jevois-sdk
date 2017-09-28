@@ -116,8 +116,8 @@
 #define E1000_PCIEMISC          0x05BB8 /* PCIE misc config register */
 
 /* TX Rate Limit Registers */
-#define E1000_RTTDQSEL  0x3604  /* Tx Desc Plane Queue Select - WO */
-#define E1000_RTTBCNRC  0x36B0  /* Tx BCN Rate-Scheduler Config - WO */
+#define E1000_RTTDQSEL	0x3604	/* Tx Desc Plane Queue Select - WO */
+#define E1000_RTTBCNRC	0x36B0	/* Tx BCN Rate-Scheduler Config - WO */
 
 /* Split and Replication RX Control - RW */
 #define E1000_RXPBS    0x02404  /* Rx Packet Buffer Size - RW */
@@ -130,37 +130,37 @@
  * E1000_RDBAL_REG(current_rx_queue)
  */
 #define E1000_RDBAL(_n)   ((_n) < 4 ? (0x02800 + ((_n) * 0x100)) \
-                           : (0x0C000 + ((_n) * 0x40)))
+				    : (0x0C000 + ((_n) * 0x40)))
 #define E1000_RDBAH(_n)   ((_n) < 4 ? (0x02804 + ((_n) * 0x100)) \
-                           : (0x0C004 + ((_n) * 0x40)))
+				    : (0x0C004 + ((_n) * 0x40)))
 #define E1000_RDLEN(_n)   ((_n) < 4 ? (0x02808 + ((_n) * 0x100)) \
-                           : (0x0C008 + ((_n) * 0x40)))
+				    : (0x0C008 + ((_n) * 0x40)))
 #define E1000_SRRCTL(_n)  ((_n) < 4 ? (0x0280C + ((_n) * 0x100)) \
-                           : (0x0C00C + ((_n) * 0x40)))
+				    : (0x0C00C + ((_n) * 0x40)))
 #define E1000_RDH(_n)     ((_n) < 4 ? (0x02810 + ((_n) * 0x100)) \
-                           : (0x0C010 + ((_n) * 0x40)))
+				    : (0x0C010 + ((_n) * 0x40)))
 #define E1000_RDT(_n)     ((_n) < 4 ? (0x02818 + ((_n) * 0x100)) \
-                           : (0x0C018 + ((_n) * 0x40)))
+				    : (0x0C018 + ((_n) * 0x40)))
 #define E1000_RXDCTL(_n)  ((_n) < 4 ? (0x02828 + ((_n) * 0x100)) \
-                           : (0x0C028 + ((_n) * 0x40)))
+				    : (0x0C028 + ((_n) * 0x40)))
 #define E1000_TDBAL(_n)   ((_n) < 4 ? (0x03800 + ((_n) * 0x100)) \
-                           : (0x0E000 + ((_n) * 0x40)))
+				    : (0x0E000 + ((_n) * 0x40)))
 #define E1000_TDBAH(_n)   ((_n) < 4 ? (0x03804 + ((_n) * 0x100)) \
-                           : (0x0E004 + ((_n) * 0x40)))
+				    : (0x0E004 + ((_n) * 0x40)))
 #define E1000_TDLEN(_n)   ((_n) < 4 ? (0x03808 + ((_n) * 0x100)) \
-                           : (0x0E008 + ((_n) * 0x40)))
+				    : (0x0E008 + ((_n) * 0x40)))
 #define E1000_TDH(_n)     ((_n) < 4 ? (0x03810 + ((_n) * 0x100)) \
-                           : (0x0E010 + ((_n) * 0x40)))
+				    : (0x0E010 + ((_n) * 0x40)))
 #define E1000_TDT(_n)     ((_n) < 4 ? (0x03818 + ((_n) * 0x100)) \
-                           : (0x0E018 + ((_n) * 0x40)))
+				    : (0x0E018 + ((_n) * 0x40)))
 #define E1000_TXDCTL(_n)  ((_n) < 4 ? (0x03828 + ((_n) * 0x100)) \
-                           : (0x0E028 + ((_n) * 0x40)))
+				    : (0x0E028 + ((_n) * 0x40)))
 #define E1000_DCA_TXCTRL(_n) (0x03814 + (_n << 8))
 #define E1000_DCA_RXCTRL(_n) (0x02814 + (_n << 8))
 #define E1000_TDWBAL(_n)  ((_n) < 4 ? (0x03838 + ((_n) * 0x100)) \
-                           : (0x0E038 + ((_n) * 0x40)))
+				    : (0x0E038 + ((_n) * 0x40)))
 #define E1000_TDWBAH(_n)  ((_n) < 4 ? (0x0383C + ((_n) * 0x100)) \
-                           : (0x0E03C + ((_n) * 0x40)))
+				    : (0x0E03C + ((_n) * 0x40)))
 #define E1000_TDFH     0x03410  /* TX Data FIFO Head - RW */
 #define E1000_TDFT     0x03418  /* TX Data FIFO Tail - RW */
 #define E1000_TDFHS    0x03420  /* TX Data FIFO Head Saved - RW */
@@ -267,9 +267,9 @@
 #define E1000_RA2      0x054E0  /* 2nd half of receive address array - RW Array */
 #define E1000_PSRTYPE(_i)       (0x05480 + ((_i) * 4))
 #define E1000_RAL(_i)  (((_i) <= 15) ? (0x05400 + ((_i) * 8)) : \
-                        (0x054E0 + ((_i - 16) * 8)))
+                                       (0x054E0 + ((_i - 16) * 8)))
 #define E1000_RAH(_i)  (((_i) <= 15) ? (0x05404 + ((_i) * 8)) : \
-                        (0x054E4 + ((_i - 16) * 8)))
+                                       (0x054E4 + ((_i - 16) * 8)))
 #define E1000_IP4AT_REG(_i)     (0x05840 + ((_i) * 8))
 #define E1000_IP6AT_REG(_i)     (0x05880 + ((_i) * 4))
 #define E1000_WUPM_REG(_i)      (0x05A00 + ((_i) * 4))
@@ -332,9 +332,9 @@
 #define wrfl() ((void)rd32(E1000_STATUS))
 
 #define array_wr32(reg, offset, value) \
-  (writel(value, hw->hw_addr + reg + ((offset) << 2)))
+	(writel(value, hw->hw_addr + reg + ((offset) << 2)))
 #define array_rd32(reg, offset) \
-  (readl(hw->hw_addr + reg + ((offset) << 2)))
+	(readl(hw->hw_addr + reg + ((offset) << 2)))
 
 /* DMA Coalescing registers */
 #define E1000_PCIEMISC          0x05BB8 /* PCIE misc config register */

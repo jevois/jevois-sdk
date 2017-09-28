@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -29,29 +29,29 @@
 #define WORK_MODE_PRODUCT      (1<<4)
 #define WORK_MODE_UPDATE       (1<<5)
 
-#define WORK_MODE_BOOT      0x00  //正常启动
-#define WORK_MODE_USB_PRODUCT 0x10  //用于USB量产
-#define WORK_MODE_CARD_PRODUCT  0x11  //用于卡量产
-#define WORK_MODE_USB_DEBUG     0x12    //利用usb量产协议完成的测试
-#define WORK_MODE_SPRITE_RECOVERY 0x13  //一键恢复
-#define WORK_MODE_USB_UPDATE  0x20  //用于USB升级
-#define WORK_MODE_OUTER_UPDATE  0x21  //用于外部盘升级
+#define WORK_MODE_BOOT			0x00	//正常启动
+#define WORK_MODE_USB_PRODUCT	0x10	//用于USB量产
+#define WORK_MODE_CARD_PRODUCT	0x11	//用于卡量产
+#define WORK_MODE_USB_DEBUG	    0x12    //利用usb量产协议完成的测试
+#define WORK_MODE_SPRITE_RECOVERY 0x13	//一键恢复
+#define WORK_MODE_USB_UPDATE	0x20	//用于USB升级
+#define WORK_MODE_OUTER_UPDATE	0x21	//用于外部盘升级
 
-#define WORK_MODE_USB_TOOL_PRODUCT  0x04  //用于量产
-#define WORK_MODE_USB_TOOL_UPDATE 0x08  //用于升级
-#define WORK_MODE_ERASE_KEY     0x20  //用于擦除key
+#define WORK_MODE_USB_TOOL_PRODUCT	0x04	//用于量产
+#define WORK_MODE_USB_TOOL_UPDATE	0x08	//用于升级
+#define WORK_MODE_ERASE_KEY			0x20	//用于擦除key
 
-#define UBOOT_MAGIC       "uboot"
+#define UBOOT_MAGIC				"uboot"
 #define STAMP_VALUE             0x5F0A6C39
-#define ALIGN_SIZE        16 * 1024
+#define ALIGN_SIZE				16 * 1024
 #define MAGIC_SIZE              8
 #define STORAGE_BUFFER_SIZE     (256)
 
-#define SUNXI_UPDATE_NEXT_ACTION_NORMAL     (1)
-#define SUNXI_UPDATE_NEXT_ACTION_REBOOT     (2)
-#define SUNXI_UPDATE_NEXT_ACTION_SHUTDOWN   (3)
-#define SUNXI_UPDATE_NEXT_ACTION_REUPDATE   (4)
-#define SUNXI_UPDATE_NEXT_ACTION_BOOT     (5)
+#define SUNXI_UPDATE_NEXT_ACTION_NORMAL			(1)
+#define SUNXI_UPDATE_NEXT_ACTION_REBOOT			(2)
+#define SUNXI_UPDATE_NEXT_ACTION_SHUTDOWN		(3)
+#define SUNXI_UPDATE_NEXT_ACTION_REUPDATE		(4)
+#define SUNXI_UPDATE_NEXT_ACTION_BOOT			(5)
 #define SUNXI_UPDATA_NEXT_ACTION_SPRITE_TEST    (6)
 
 #define SUNXI_VBUS_UNKNOWN                      (0)
@@ -76,44 +76,44 @@
 #define   BOOT_FROM_NFC     1
 #define   BOOT_FROM_SPI     3
 
-#define TOC_MAIN_INFO_STATUS_ENCRYP_NOT_USED  0x00
-#define TOC_MAIN_INFO_STATUS_ENCRYP_SSK     0x01
-#define TOC_MAIN_INFO_STATUS_ENCRYP_BSSK    0x02
+#define	TOC_MAIN_INFO_STATUS_ENCRYP_NOT_USED	0x00
+#define	TOC_MAIN_INFO_STATUS_ENCRYP_SSK			0x01
+#define	TOC_MAIN_INFO_STATUS_ENCRYP_BSSK		0x02
 
-#define TOC_ITEM_ENTRY_STATUS_ENCRYP_NOT_USED 0x00
-#define TOC_ITEM_ENTRY_STATUS_ENCRYP_USED   0x01
+#define	TOC_ITEM_ENTRY_STATUS_ENCRYP_NOT_USED	0x00
+#define	TOC_ITEM_ENTRY_STATUS_ENCRYP_USED		0x01
 
-#define TOC_ITEM_ENTRY_TYPE_NULL        0x00
-#define TOC_ITEM_ENTRY_TYPE_KEY_CERTIF      0x01
-#define TOC_ITEM_ENTRY_TYPE_BIN_CERTIF      0x02
-#define TOC_ITEM_ENTRY_TYPE_BIN           0x03
+#define	TOC_ITEM_ENTRY_TYPE_NULL				0x00
+#define	TOC_ITEM_ENTRY_TYPE_KEY_CERTIF			0x01
+#define	TOC_ITEM_ENTRY_TYPE_BIN_CERTIF			0x02
+#define	TOC_ITEM_ENTRY_TYPE_BIN     			0x03
 
 typedef struct _normal_gpio_cfg
 {
-  char      port;                       //端口号
-  char      port_num;                   //端口内编号
-  char      mul_sel;                    //功能编号
-  char      pull;                       //电阻状态
-  char      drv_level;                  //驱动驱动能力
-  char      data;                       //输出电平
-  char      reserved[2];                //保留位，保证对齐
+    char      port;                       //端口号
+    char      port_num;                   //端口内编号
+    char      mul_sel;                    //功能编号
+    char      pull;                       //电阻状态
+    char      drv_level;                  //驱动驱动能力
+    char      data;                       //输出电平
+    char      reserved[2];                //保留位，保证对齐
 }
 normal_gpio_cfg;
 
 typedef struct _special_gpio_cfg
 {
-  unsigned char   port;       //端口号
-  unsigned char   port_num;     //端口内编号
-  char        mul_sel;      //功能编号
-  char        data;       //输出电平
-} special_gpio_cfg;
+	unsigned char		port;				//端口号
+	unsigned char		port_num;			//端口内编号
+	char				mul_sel;			//功能编号
+	char				data;				//输出电平
+}special_gpio_cfg;
 
 typedef struct sdcard_spare_info_t
 {
-  int       card_no[4];                   //当前启动的卡控制器编号
-  int       speed_mode[4];                //卡的速度模式，0：低速，其它：高速
-  int       line_sel[4];                  //卡的线制，0: 1线，其它，4线
-  int       line_count[4];                //卡使用线的个数
+	int 			card_no[4];                   //当前启动的卡控制器编号
+	int 			speed_mode[4];                //卡的速度模式，0：低速，其它：高速
+	int				line_sel[4];                  //卡的线制，0: 1线，其它，4线
+	int				line_count[4];                //卡使用线的个数
 }
 sdcard_spare_info;
 

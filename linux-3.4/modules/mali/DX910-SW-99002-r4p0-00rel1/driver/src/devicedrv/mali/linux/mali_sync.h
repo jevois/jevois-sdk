@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2012-2014 ARM Limited. All rights reserved.
- *
+ * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- *
+ * 
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -38,7 +38,7 @@ struct mali_sync_flag;
  * @param name Name of the sync timeline.
  * @return The new sync timeline if successful, NULL if not.
  */
-struct sync_timeline * mali_sync_timeline_create (const char * name);
+struct sync_timeline *mali_sync_timeline_create(const char *name);
 
 /**
  * Check if sync timeline belongs to Mali.
@@ -46,7 +46,7 @@ struct sync_timeline * mali_sync_timeline_create (const char * name);
  * @param sync_tl Sync timeline to check.
  * @return MALI_TRUE if sync timeline belongs to Mali, MALI_FALSE if not.
  */
-mali_bool mali_sync_timeline_is_ours (struct sync_timeline * sync_tl);
+mali_bool mali_sync_timeline_is_ours(struct sync_timeline *sync_tl);
 
 /**
  * Creates a file descriptor representing the sync fence.  Will release sync fence if allocation of
@@ -55,7 +55,7 @@ mali_bool mali_sync_timeline_is_ours (struct sync_timeline * sync_tl);
  * @param sync_fence Sync fence.
  * @return File descriptor representing sync fence if successful, or -1 if not.
  */
-s32 mali_sync_fence_fd_alloc (struct sync_fence * sync_fence);
+s32 mali_sync_fence_fd_alloc(struct sync_fence *sync_fence);
 
 /**
  * Merges two sync fences.  Both input sync fences will be released.
@@ -64,7 +64,7 @@ s32 mali_sync_fence_fd_alloc (struct sync_fence * sync_fence);
  * @param sync_fence2 Second sync fence.
  * @return New sync fence that is the result of the merger if successful, or NULL if not.
  */
-struct sync_fence * mali_sync_fence_merge (struct sync_fence * sync_fence1, struct sync_fence * sync_fence2);
+struct sync_fence *mali_sync_fence_merge(struct sync_fence *sync_fence1, struct sync_fence *sync_fence2);
 
 /**
  * Create a sync fence that is already signaled.
@@ -72,7 +72,7 @@ struct sync_fence * mali_sync_fence_merge (struct sync_fence * sync_fence1, stru
  * @param tl Sync timeline.
  * @return New signaled sync fence if successful, NULL if not.
  */
-struct sync_fence * mali_sync_timeline_create_signaled_fence (struct sync_timeline * sync_tl);
+struct sync_fence *mali_sync_timeline_create_signaled_fence(struct sync_timeline *sync_tl);
 
 /**
  * Create a sync flag.
@@ -81,21 +81,21 @@ struct sync_fence * mali_sync_timeline_create_signaled_fence (struct sync_timeli
  * @param point Point on Mali timeline.
  * @return New sync flag if successful, NULL if not.
  */
-struct mali_sync_flag * mali_sync_flag_create (struct sync_timeline * sync_tl, u32 point);
+struct mali_sync_flag *mali_sync_flag_create(struct sync_timeline *sync_tl, u32 point);
 
 /**
  * Grab sync flag reference.
  *
  * @param flag Sync flag.
  */
-void mali_sync_flag_get (struct mali_sync_flag * flag);
+void mali_sync_flag_get(struct mali_sync_flag *flag);
 
 /**
  * Release sync flag reference.  If this was the last reference, the sync flag will be freed.
  *
  * @param flag Sync flag.
  */
-void mali_sync_flag_put (struct mali_sync_flag * flag);
+void mali_sync_flag_put(struct mali_sync_flag *flag);
 
 /**
  * Signal sync flag.  All sync fences created from this flag will be signaled.
@@ -103,7 +103,7 @@ void mali_sync_flag_put (struct mali_sync_flag * flag);
  * @param flag Sync flag to signal.
  * @param error Negative error code, or 0 if no error.
  */
-void mali_sync_flag_signal (struct mali_sync_flag * flag, int error);
+void mali_sync_flag_signal(struct mali_sync_flag *flag, int error);
 
 /**
  * Create a sync fence attached to given sync flag.
@@ -111,7 +111,7 @@ void mali_sync_flag_signal (struct mali_sync_flag * flag, int error);
  * @param flag Sync flag.
  * @return New sync fence if successful, NULL if not.
  */
-struct sync_fence * mali_sync_flag_create_fence (struct mali_sync_flag * flag);
+struct sync_fence *mali_sync_flag_create_fence(struct mali_sync_flag *flag);
 
 #endif /* defined(CONFIG_SYNC) */
 

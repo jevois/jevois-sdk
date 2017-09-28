@@ -27,7 +27,7 @@
 struct cld_net;
 
 struct nfsd_net {
-  struct cld_net * cld_net;
+	struct cld_net *cld_net;
 };
 
 extern int nfsd_net_id;

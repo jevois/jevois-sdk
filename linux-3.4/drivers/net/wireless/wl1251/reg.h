@@ -55,9 +55,9 @@
 
 #define CHIP_ID_B                      (REGISTERS_BASE + 0x5674)
 
-#define CHIP_ID_1251_PG10            (0x7010101)
-#define CHIP_ID_1251_PG11            (0x7020101)
-#define CHIP_ID_1251_PG12            (0x7030101)
+#define CHIP_ID_1251_PG10	           (0x7010101)
+#define CHIP_ID_1251_PG11	           (0x7020101)
+#define CHIP_ID_1251_PG12	           (0x7030101)
 
 #define ENABLE                         (REGISTERS_BASE + 0x5450)
 
@@ -105,149 +105,149 @@
 #define SPARE_B8                       (REGISTERS_BASE + 0x543C)
 
 enum wl12xx_acx_int_reg {
-  ACX_REG_INTERRUPT_TRIG,
-  ACX_REG_INTERRUPT_TRIG_H,
-  
-  /*=============================================
-    Host Interrupt Mask Register - 32bit (RW)
-    ------------------------------------------
-    Setting a bit in this register masks the
-    corresponding interrupt to the host.
-    0 - RX0   - Rx first dubble buffer Data Interrupt
-    1 - TXD   - Tx Data Interrupt
-    2 - TXXFR   - Tx Transfer Interrupt
-    3 - RX1   - Rx second dubble buffer Data Interrupt
-    4 - RXXFR   - Rx Transfer Interrupt
-    5 - EVENT_A - Event Mailbox interrupt
-    6 - EVENT_B - Event Mailbox interrupt
-    7 - WNONHST - Wake On Host Interrupt
-    8 - TRACE_A - Debug Trace interrupt
-    9 - TRACE_B - Debug Trace interrupt
-   10 - CDCMP   - Command Complete Interrupt
-   11 -
-   12 -
-   13 -
-   14 - ICOMP   - Initialization Complete Interrupt
-   16 - SG SE   - Soft Gemini - Sense enable interrupt
-   17 - SG SD   - Soft Gemini - Sense disable interrupt
-   18 -     -
-   19 -     -
-   20 -     -
-   21-      -
-   Default: 0x0001
-  *==============================================*/
-  ACX_REG_INTERRUPT_MASK,
-  
-  /*=============================================
-    Host Interrupt Mask Set 16bit, (Write only)
-    ------------------------------------------
-   Setting a bit in this register sets
-   the corresponding bin in ACX_HINT_MASK register
-   without effecting the mask
-   state of other bits (0 = no effect).
-  ==============================================*/
-  ACX_REG_HINT_MASK_SET,
-  
-  /*=============================================
-    Host Interrupt Mask Clear 16bit,(Write only)
-    ------------------------------------------
-   Setting a bit in this register clears
-   the corresponding bin in ACX_HINT_MASK register
-   without effecting the mask
-   state of other bits (0 = no effect).
-  =============================================*/
-  ACX_REG_HINT_MASK_CLR,
-  
-  /*=============================================
-    Host Interrupt Status Nondestructive Read
-    16bit,(Read only)
-    ------------------------------------------
-   The host can read this register to determine
-   which interrupts are active.
-   Reading this register doesn't
-   effect its content.
-  =============================================*/
-  ACX_REG_INTERRUPT_NO_CLEAR,
-  
-  /*=============================================
-    Host Interrupt Status Clear on Read  Register
-    16bit,(Read only)
-    ------------------------------------------
-   The host can read this register to determine
-   which interrupts are active.
-   Reading this register clears it,
-   thus making all interrupts inactive.
-  ==============================================*/
-  ACX_REG_INTERRUPT_CLEAR,
-  
-  /*=============================================
-    Host Interrupt Acknowledge Register
-    16bit,(Write only)
-    ------------------------------------------
-   The host can set individual bits in this
-   register to clear (acknowledge) the corresp.
-   interrupt status bits in the HINT_STS_CLR and
-   HINT_STS_ND registers, thus making the
-   assotiated interrupt inactive. (0-no effect)
-  ==============================================*/
-  ACX_REG_INTERRUPT_ACK,
-  
-  /*===============================================
-     Host Software Reset - 32bit RW
-   ------------------------------------------
-      [31:1] Reserved
-      0  SOFT_RESET Soft Reset  - When this bit is set,
-      it holds the Wlan hardware in a soft reset state.
-      This reset disables all MAC and baseband processor
-      clocks except the CardBus/PCI interface clock.
-      It also initializes all MAC state machines except
-      the host interface. It does not reload the
-      contents of the EEPROM. When this bit is cleared
-      (not self-clearing), the Wlan hardware
-      exits the software reset state.
-  ===============================================*/
-  ACX_REG_SLV_SOFT_RESET,
-  
-  /*===============================================
-   EEPROM Burst Read Start  - 32bit RW
-   ------------------------------------------
-   [31:1] Reserved
-   0  ACX_EE_START -  EEPROM Burst Read Start 0
-   Setting this bit starts a burst read from
-   the external EEPROM.
-   If this bit is set (after reset) before an EEPROM read/write,
-   the burst read starts at EEPROM address 0.
-   Otherwise, it starts at the address
-   following the address of the previous access.
-   TheWlan hardware hardware clears this bit automatically.
-  
-   Default: 0x00000000
-  *================================================*/
-  ACX_REG_EE_START,
-  
-  /* Embedded ARM CPU Control */
-  
-  /*===============================================
-   Halt eCPU   - 32bit RW
-   ------------------------------------------
-   0 HALT_ECPU Halt Embedded CPU - This bit is the
-   compliment of bit 1 (MDATA2) in the SOR_CFG register.
-   During a hardware reset, this bit holds
-   the inverse of MDATA2.
-   When downloading firmware from the host,
-   set this bit (pull down MDATA2).
-   The host clears this bit after downloading the firmware into
-   zero-wait-state SSRAM.
-   When loading firmware from Flash, clear this bit (pull up MDATA2)
-   so that the eCPU can run the bootloader code in Flash
-   HALT_ECPU eCPU State
-   --------------------
-   1 halt eCPU
-   0 enable eCPU
-   ===============================================*/
-  ACX_REG_ECPU_CONTROL,
-  
-  ACX_REG_TABLE_LEN
+	ACX_REG_INTERRUPT_TRIG,
+	ACX_REG_INTERRUPT_TRIG_H,
+
+/*=============================================
+  Host Interrupt Mask Register - 32bit (RW)
+  ------------------------------------------
+  Setting a bit in this register masks the
+  corresponding interrupt to the host.
+  0 - RX0		- Rx first dubble buffer Data Interrupt
+  1 - TXD		- Tx Data Interrupt
+  2 - TXXFR		- Tx Transfer Interrupt
+  3 - RX1		- Rx second dubble buffer Data Interrupt
+  4 - RXXFR		- Rx Transfer Interrupt
+  5 - EVENT_A	- Event Mailbox interrupt
+  6 - EVENT_B	- Event Mailbox interrupt
+  7 - WNONHST	- Wake On Host Interrupt
+  8 - TRACE_A	- Debug Trace interrupt
+  9 - TRACE_B	- Debug Trace interrupt
+ 10 - CDCMP		- Command Complete Interrupt
+ 11 -
+ 12 -
+ 13 -
+ 14 - ICOMP		- Initialization Complete Interrupt
+ 16 - SG SE		- Soft Gemini - Sense enable interrupt
+ 17 - SG SD		- Soft Gemini - Sense disable interrupt
+ 18 -			-
+ 19 -			-
+ 20 -			-
+ 21-			-
+ Default: 0x0001
+*==============================================*/
+	ACX_REG_INTERRUPT_MASK,
+
+/*=============================================
+  Host Interrupt Mask Set 16bit, (Write only)
+  ------------------------------------------
+ Setting a bit in this register sets
+ the corresponding bin in ACX_HINT_MASK register
+ without effecting the mask
+ state of other bits (0 = no effect).
+==============================================*/
+	ACX_REG_HINT_MASK_SET,
+
+/*=============================================
+  Host Interrupt Mask Clear 16bit,(Write only)
+  ------------------------------------------
+ Setting a bit in this register clears
+ the corresponding bin in ACX_HINT_MASK register
+ without effecting the mask
+ state of other bits (0 = no effect).
+=============================================*/
+	ACX_REG_HINT_MASK_CLR,
+
+/*=============================================
+  Host Interrupt Status Nondestructive Read
+  16bit,(Read only)
+  ------------------------------------------
+ The host can read this register to determine
+ which interrupts are active.
+ Reading this register doesn't
+ effect its content.
+=============================================*/
+	ACX_REG_INTERRUPT_NO_CLEAR,
+
+/*=============================================
+  Host Interrupt Status Clear on Read  Register
+  16bit,(Read only)
+  ------------------------------------------
+ The host can read this register to determine
+ which interrupts are active.
+ Reading this register clears it,
+ thus making all interrupts inactive.
+==============================================*/
+	ACX_REG_INTERRUPT_CLEAR,
+
+/*=============================================
+  Host Interrupt Acknowledge Register
+  16bit,(Write only)
+  ------------------------------------------
+ The host can set individual bits in this
+ register to clear (acknowledge) the corresp.
+ interrupt status bits in the HINT_STS_CLR and
+ HINT_STS_ND registers, thus making the
+ assotiated interrupt inactive. (0-no effect)
+==============================================*/
+	ACX_REG_INTERRUPT_ACK,
+
+/*===============================================
+   Host Software Reset - 32bit RW
+ ------------------------------------------
+    [31:1] Reserved
+    0  SOFT_RESET Soft Reset  - When this bit is set,
+    it holds the Wlan hardware in a soft reset state.
+    This reset disables all MAC and baseband processor
+    clocks except the CardBus/PCI interface clock.
+    It also initializes all MAC state machines except
+    the host interface. It does not reload the
+    contents of the EEPROM. When this bit is cleared
+    (not self-clearing), the Wlan hardware
+    exits the software reset state.
+===============================================*/
+	ACX_REG_SLV_SOFT_RESET,
+
+/*===============================================
+ EEPROM Burst Read Start  - 32bit RW
+ ------------------------------------------
+ [31:1] Reserved
+ 0  ACX_EE_START -  EEPROM Burst Read Start 0
+ Setting this bit starts a burst read from
+ the external EEPROM.
+ If this bit is set (after reset) before an EEPROM read/write,
+ the burst read starts at EEPROM address 0.
+ Otherwise, it starts at the address
+ following the address of the previous access.
+ TheWlan hardware hardware clears this bit automatically.
+
+ Default: 0x00000000
+*================================================*/
+	ACX_REG_EE_START,
+
+/* Embedded ARM CPU Control */
+
+/*===============================================
+ Halt eCPU   - 32bit RW
+ ------------------------------------------
+ 0 HALT_ECPU Halt Embedded CPU - This bit is the
+ compliment of bit 1 (MDATA2) in the SOR_CFG register.
+ During a hardware reset, this bit holds
+ the inverse of MDATA2.
+ When downloading firmware from the host,
+ set this bit (pull down MDATA2).
+ The host clears this bit after downloading the firmware into
+ zero-wait-state SSRAM.
+ When loading firmware from Flash, clear this bit (pull up MDATA2)
+ so that the eCPU can run the bootloader code in Flash
+ HALT_ECPU eCPU State
+ --------------------
+ 1 halt eCPU
+ 0 enable eCPU
+ ===============================================*/
+	ACX_REG_ECPU_CONTROL,
+
+	ACX_REG_TABLE_LEN
 };
 
 #define ACX_SLV_SOFT_RESET_BIT   BIT(0)
@@ -268,7 +268,7 @@ enum wl12xx_acx_int_reg {
  the host receives the Init Complete interrupt from
  the Wlan hardware.
  ===============================================*/
-#define REG_COMMAND_MAILBOX_PTR       (SCR_PAD0)
+#define REG_COMMAND_MAILBOX_PTR				(SCR_PAD0)
 
 /*===============================================
   Information Mailbox Pointer - 32bit RW
@@ -283,81 +283,81 @@ enum wl12xx_acx_int_reg {
  until after the host receives the Init Complete interrupt from
  the Wlan hardware.
  ===============================================*/
-#define REG_EVENT_MAILBOX_PTR       (SCR_PAD1)
+#define REG_EVENT_MAILBOX_PTR				(SCR_PAD1)
 
 
 /* Misc */
 
-#define REG_ENABLE_TX_RX        (ENABLE)
+#define REG_ENABLE_TX_RX				(ENABLE)
 /*
  * Rx configuration (filter) information element
  * ---------------------------------------------
  */
-#define REG_RX_CONFIG       (RX_CFG)
-#define REG_RX_FILTER       (RX_FILTER_CFG)
+#define REG_RX_CONFIG				(RX_CFG)
+#define REG_RX_FILTER				(RX_FILTER_CFG)
 
 
-#define RX_CFG_ENABLE_PHY_HEADER_PLCP  0x0002
+#define RX_CFG_ENABLE_PHY_HEADER_PLCP	 0x0002
 
 /* promiscuous - receives all valid frames */
-#define RX_CFG_PROMISCUOUS     0x0008
+#define RX_CFG_PROMISCUOUS		 0x0008
 
 /* receives frames from any BSSID */
-#define RX_CFG_BSSID       0x0020
+#define RX_CFG_BSSID			 0x0020
 
 /* receives frames destined to any MAC address */
-#define RX_CFG_MAC       0x0010
+#define RX_CFG_MAC			 0x0010
 
-#define RX_CFG_ENABLE_ONLY_MY_DEST_MAC   0x0010
-#define RX_CFG_ENABLE_ANY_DEST_MAC   0x0000
-#define RX_CFG_ENABLE_ONLY_MY_BSSID  0x0020
-#define RX_CFG_ENABLE_ANY_BSSID    0x0000
+#define RX_CFG_ENABLE_ONLY_MY_DEST_MAC	 0x0010
+#define RX_CFG_ENABLE_ANY_DEST_MAC	 0x0000
+#define RX_CFG_ENABLE_ONLY_MY_BSSID	 0x0020
+#define RX_CFG_ENABLE_ANY_BSSID		 0x0000
 
 /* discards all broadcast frames */
-#define RX_CFG_DISABLE_BCAST     0x0200
+#define RX_CFG_DISABLE_BCAST		 0x0200
 
-#define RX_CFG_ENABLE_ONLY_MY_SSID   0x0400
+#define RX_CFG_ENABLE_ONLY_MY_SSID	 0x0400
 #define RX_CFG_ENABLE_RX_CMPLT_FCS_ERROR 0x0800
-#define RX_CFG_COPY_RX_STATUS    0x2000
-#define RX_CFG_TSF       0x10000
+#define RX_CFG_COPY_RX_STATUS		 0x2000
+#define RX_CFG_TSF			 0x10000
 
-#define RX_CONFIG_OPTION_ANY_DST_MY_BSS  (RX_CFG_ENABLE_ANY_DEST_MAC | \
-    RX_CFG_ENABLE_ONLY_MY_BSSID)
+#define RX_CONFIG_OPTION_ANY_DST_MY_BSS	 (RX_CFG_ENABLE_ANY_DEST_MAC | \
+					  RX_CFG_ENABLE_ONLY_MY_BSSID)
 
-#define RX_CONFIG_OPTION_MY_DST_ANY_BSS  (RX_CFG_ENABLE_ONLY_MY_DEST_MAC\
-    | RX_CFG_ENABLE_ANY_BSSID)
+#define RX_CONFIG_OPTION_MY_DST_ANY_BSS	 (RX_CFG_ENABLE_ONLY_MY_DEST_MAC\
+					  | RX_CFG_ENABLE_ANY_BSSID)
 
 #define RX_CONFIG_OPTION_ANY_DST_ANY_BSS (RX_CFG_ENABLE_ANY_DEST_MAC | \
-    RX_CFG_ENABLE_ANY_BSSID)
+					  RX_CFG_ENABLE_ANY_BSSID)
 
-#define RX_CONFIG_OPTION_MY_DST_MY_BSS   (RX_CFG_ENABLE_ONLY_MY_DEST_MAC\
-    | RX_CFG_ENABLE_ONLY_MY_BSSID)
+#define RX_CONFIG_OPTION_MY_DST_MY_BSS	 (RX_CFG_ENABLE_ONLY_MY_DEST_MAC\
+					  | RX_CFG_ENABLE_ONLY_MY_BSSID)
 
 #define RX_CONFIG_OPTION_FOR_SCAN  (RX_CFG_ENABLE_PHY_HEADER_PLCP \
-                                    | RX_CFG_ENABLE_RX_CMPLT_FCS_ERROR \
-                                    | RX_CFG_COPY_RX_STATUS | RX_CFG_TSF)
+				    | RX_CFG_ENABLE_RX_CMPLT_FCS_ERROR \
+				    | RX_CFG_COPY_RX_STATUS | RX_CFG_TSF)
 
 #define RX_CONFIG_OPTION_FOR_MEASUREMENT (RX_CFG_ENABLE_ANY_DEST_MAC)
 
-#define RX_CONFIG_OPTION_FOR_JOIN  (RX_CFG_ENABLE_ONLY_MY_BSSID | \
-                                    RX_CFG_ENABLE_ONLY_MY_DEST_MAC)
+#define RX_CONFIG_OPTION_FOR_JOIN	 (RX_CFG_ENABLE_ONLY_MY_BSSID | \
+					  RX_CFG_ENABLE_ONLY_MY_DEST_MAC)
 
 #define RX_CONFIG_OPTION_FOR_IBSS_JOIN   (RX_CFG_ENABLE_ONLY_MY_SSID | \
-    RX_CFG_ENABLE_ONLY_MY_DEST_MAC)
+					  RX_CFG_ENABLE_ONLY_MY_DEST_MAC)
 
-#define RX_FILTER_OPTION_DEF        (CFG_RX_MGMT_EN | CFG_RX_DATA_EN\
-                                     | CFG_RX_CTL_EN | CFG_RX_BCN_EN\
-                                     | CFG_RX_AUTH_EN | CFG_RX_ASSOC_EN)
+#define RX_FILTER_OPTION_DEF	      (CFG_RX_MGMT_EN | CFG_RX_DATA_EN\
+				       | CFG_RX_CTL_EN | CFG_RX_BCN_EN\
+				       | CFG_RX_AUTH_EN | CFG_RX_ASSOC_EN)
 
-#define RX_FILTER_OPTION_FILTER_ALL  0
+#define RX_FILTER_OPTION_FILTER_ALL	 0
 
 #define RX_FILTER_OPTION_DEF_PRSP_BCN  (CFG_RX_PRSP_EN | CFG_RX_MGMT_EN\
-                                        | CFG_RX_RCTS_ACK | CFG_RX_BCN_EN)
+					| CFG_RX_RCTS_ACK | CFG_RX_BCN_EN)
 
-#define RX_FILTER_OPTION_JOIN      (CFG_RX_MGMT_EN | CFG_RX_DATA_EN\
-                                    | CFG_RX_BCN_EN | CFG_RX_AUTH_EN\
-                                    | CFG_RX_ASSOC_EN | CFG_RX_RCTS_ACK\
-                                    | CFG_RX_PRSP_EN)
+#define RX_FILTER_OPTION_JOIN	     (CFG_RX_MGMT_EN | CFG_RX_DATA_EN\
+				      | CFG_RX_BCN_EN | CFG_RX_AUTH_EN\
+				      | CFG_RX_ASSOC_EN | CFG_RX_RCTS_ACK\
+				      | CFG_RX_PRSP_EN)
 
 
 /*===============================================
@@ -455,16 +455,16 @@ enum wl12xx_acx_int_reg {
  */
 #ifdef USE_ACTIVE_HIGH
 #define HI_CFG_DEF_VAL              \
-  (HI_CFG_UART_ENABLE |        \
-   HI_CFG_RST232_ENABLE |      \
-   HI_CFG_CLOCK_REQ_SELECT |   \
-   HI_CFG_HOST_INT_ENABLE)
+	(HI_CFG_UART_ENABLE |        \
+	HI_CFG_RST232_ENABLE |      \
+	HI_CFG_CLOCK_REQ_SELECT |   \
+	HI_CFG_HOST_INT_ENABLE)
 #else
 #define HI_CFG_DEF_VAL              \
-  (HI_CFG_UART_ENABLE |        \
-   HI_CFG_RST232_ENABLE |      \
-   HI_CFG_CLOCK_REQ_SELECT |   \
-   HI_CFG_HOST_INT_ENABLE)
+	(HI_CFG_UART_ENABLE |        \
+	HI_CFG_RST232_ENABLE |      \
+	HI_CFG_CLOCK_REQ_SELECT |   \
+	HI_CFG_HOST_INT_ENABLE)
 
 #endif
 
@@ -496,7 +496,7 @@ enum wl12xx_acx_int_reg {
 /* Firmware image header size */
 #define FW_HDR_SIZE 8
 
-#define ECPU_CONTROL_HALT         0x00000101
+#define ECPU_CONTROL_HALT					0x00000101
 
 
 /******************************************************************************
@@ -507,56 +507,56 @@ enum wl12xx_acx_int_reg {
 
 
 enum {
-  RADIO_BAND_2_4GHZ = 0,  /* 2.4 Ghz band */
-  RADIO_BAND_5GHZ = 1,    /* 5 Ghz band */
-  RADIO_BAND_JAPAN_4_9_GHZ = 2,
-  DEFAULT_BAND = RADIO_BAND_2_4GHZ,
-  INVALID_BAND = 0xFE,
-  MAX_RADIO_BANDS = 0xFF
+	RADIO_BAND_2_4GHZ = 0,  /* 2.4 Ghz band */
+	RADIO_BAND_5GHZ = 1,    /* 5 Ghz band */
+	RADIO_BAND_JAPAN_4_9_GHZ = 2,
+	DEFAULT_BAND = RADIO_BAND_2_4GHZ,
+	INVALID_BAND = 0xFE,
+	MAX_RADIO_BANDS = 0xFF
 };
 
 enum {
-  NO_RATE      = 0,
-  RATE_1MBPS   = 0x0A,
-  RATE_2MBPS   = 0x14,
-  RATE_5_5MBPS = 0x37,
-  RATE_6MBPS   = 0x0B,
-  RATE_9MBPS   = 0x0F,
-  RATE_11MBPS  = 0x6E,
-  RATE_12MBPS  = 0x0A,
-  RATE_18MBPS  = 0x0E,
-  RATE_22MBPS  = 0xDC,
-  RATE_24MBPS  = 0x09,
-  RATE_36MBPS  = 0x0D,
-  RATE_48MBPS  = 0x08,
-  RATE_54MBPS  = 0x0C
+	NO_RATE      = 0,
+	RATE_1MBPS   = 0x0A,
+	RATE_2MBPS   = 0x14,
+	RATE_5_5MBPS = 0x37,
+	RATE_6MBPS   = 0x0B,
+	RATE_9MBPS   = 0x0F,
+	RATE_11MBPS  = 0x6E,
+	RATE_12MBPS  = 0x0A,
+	RATE_18MBPS  = 0x0E,
+	RATE_22MBPS  = 0xDC,
+	RATE_24MBPS  = 0x09,
+	RATE_36MBPS  = 0x0D,
+	RATE_48MBPS  = 0x08,
+	RATE_54MBPS  = 0x0C
 };
 
 enum {
-  RATE_INDEX_1MBPS   =  0,
-  RATE_INDEX_2MBPS   =  1,
-  RATE_INDEX_5_5MBPS =  2,
-  RATE_INDEX_6MBPS   =  3,
-  RATE_INDEX_9MBPS   =  4,
-  RATE_INDEX_11MBPS  =  5,
-  RATE_INDEX_12MBPS  =  6,
-  RATE_INDEX_18MBPS  =  7,
-  RATE_INDEX_22MBPS  =  8,
-  RATE_INDEX_24MBPS  =  9,
-  RATE_INDEX_36MBPS  =  10,
-  RATE_INDEX_48MBPS  =  11,
-  RATE_INDEX_54MBPS  =  12,
-  RATE_INDEX_MAX     =  RATE_INDEX_54MBPS,
-  MAX_RATE_INDEX,
-  INVALID_RATE_INDEX = MAX_RATE_INDEX,
-  RATE_INDEX_ENUM_MAX_SIZE = 0x7FFFFFFF
+	RATE_INDEX_1MBPS   =  0,
+	RATE_INDEX_2MBPS   =  1,
+	RATE_INDEX_5_5MBPS =  2,
+	RATE_INDEX_6MBPS   =  3,
+	RATE_INDEX_9MBPS   =  4,
+	RATE_INDEX_11MBPS  =  5,
+	RATE_INDEX_12MBPS  =  6,
+	RATE_INDEX_18MBPS  =  7,
+	RATE_INDEX_22MBPS  =  8,
+	RATE_INDEX_24MBPS  =  9,
+	RATE_INDEX_36MBPS  =  10,
+	RATE_INDEX_48MBPS  =  11,
+	RATE_INDEX_54MBPS  =  12,
+	RATE_INDEX_MAX     =  RATE_INDEX_54MBPS,
+	MAX_RATE_INDEX,
+	INVALID_RATE_INDEX = MAX_RATE_INDEX,
+	RATE_INDEX_ENUM_MAX_SIZE = 0x7FFFFFFF
 };
 
 enum {
-  RATE_MASK_1MBPS = 0x1,
-  RATE_MASK_2MBPS = 0x2,
-  RATE_MASK_5_5MBPS = 0x4,
-  RATE_MASK_11MBPS = 0x20,
+	RATE_MASK_1MBPS = 0x1,
+	RATE_MASK_2MBPS = 0x2,
+	RATE_MASK_5_5MBPS = 0x4,
+	RATE_MASK_11MBPS = 0x20,
 };
 
 #define SHORT_PREAMBLE_BIT   BIT(0) /* CCK or Barker depending on the rate */
@@ -564,11 +564,11 @@ enum {
 #define PBCC_RATE_BIT        BIT(7)
 
 enum {
-  CCK_LONG = 0,
-  CCK_SHORT = SHORT_PREAMBLE_BIT,
-  PBCC_LONG = PBCC_RATE_BIT,
-  PBCC_SHORT = PBCC_RATE_BIT | SHORT_PREAMBLE_BIT,
-  OFDM = OFDM_RATE_BIT
+	CCK_LONG = 0,
+	CCK_SHORT = SHORT_PREAMBLE_BIT,
+	PBCC_LONG = PBCC_RATE_BIT,
+	PBCC_SHORT = PBCC_RATE_BIT | SHORT_PREAMBLE_BIT,
+	OFDM = OFDM_RATE_BIT
 };
 
 /******************************************************************************
@@ -580,13 +580,13 @@ Rate & Modulation info into a single 16-bit field.
 
 TxdRateSet_t:
 b15   - Indicates Preamble type (1=SHORT, 0=LONG).
-  Notes:
-  Must be LONG (0) for 1Mbps rate.
-  Does not apply (set to 0) for RevG-OFDM rates.
+	Notes:
+	Must be LONG (0) for 1Mbps rate.
+	Does not apply (set to 0) for RevG-OFDM rates.
 b14   - Indicates PBCC encoding (1=PBCC, 0=not).
-  Notes:
-  Does not apply (set to 0) for rates 1 and 2 Mbps.
-  Does not apply (set to 0) for RevG-OFDM rates.
+	Notes:
+	Does not apply (set to 0) for rates 1 and 2 Mbps.
+	Does not apply (set to 0) for RevG-OFDM rates.
 b13    - Unused (set to 0).
 b12-b0 - Supported Rate indicator bits as defined below.
 

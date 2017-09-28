@@ -46,10 +46,10 @@ struct vport;
  * one of the datapath's queues).
  */
 struct dp_stats_percpu {
-  u64 n_hit;
-  u64 n_missed;
-  u64 n_lost;
-  struct u64_stats_sync sync;
+	u64 n_hit;
+	u64 n_missed;
+	u64 n_lost;
+	struct u64_stats_sync sync;
 };
 
 /**
@@ -68,18 +68,18 @@ struct dp_stats_percpu {
  * locking information.
  */
 struct datapath {
-  struct rcu_head rcu;
-  struct list_head list_node;
-  
-  /* Flow table. */
-  struct flow_table __rcu * table;
-  
-  /* Switch ports. */
-  struct vport __rcu * ports[DP_MAX_PORTS];
-  struct list_head port_list;
-  
-  /* Stats. */
-  struct dp_stats_percpu __percpu * stats_percpu;
+	struct rcu_head rcu;
+	struct list_head list_node;
+
+	/* Flow table. */
+	struct flow_table __rcu *table;
+
+	/* Switch ports. */
+	struct vport __rcu *ports[DP_MAX_PORTS];
+	struct list_head port_list;
+
+	/* Stats. */
+	struct dp_stats_percpu __percpu *stats_percpu;
 };
 
 /**
@@ -87,7 +87,7 @@ struct datapath {
  * @flow: The flow associated with this packet.  May be %NULL if no flow.
  */
 struct ovs_skb_cb {
-  struct sw_flow  *  flow;
+	struct sw_flow		*flow;
 };
 #define OVS_CB(skb) ((struct ovs_skb_cb *)(skb)->cb)
 
@@ -102,23 +102,23 @@ struct ovs_skb_cb {
  * counter.
  */
 struct dp_upcall_info {
-  u8 cmd;
-  const struct sw_flow_key * key;
-  const struct nlattr * userdata;
-  u32 pid;
+	u8 cmd;
+	const struct sw_flow_key *key;
+	const struct nlattr *userdata;
+	u32 pid;
 };
 
 extern struct notifier_block ovs_dp_device_notifier;
 extern struct genl_multicast_group ovs_dp_vport_multicast_group;
 
-void ovs_dp_process_received_packet (struct vport *, struct sk_buff *);
-void ovs_dp_detach_port (struct vport *);
-int ovs_dp_upcall (struct datapath *, struct sk_buff *,
-                   const struct dp_upcall_info *);
+void ovs_dp_process_received_packet(struct vport *, struct sk_buff *);
+void ovs_dp_detach_port(struct vport *);
+int ovs_dp_upcall(struct datapath *, struct sk_buff *,
+		  const struct dp_upcall_info *);
 
-const char * ovs_dp_name (const struct datapath * dp);
-struct sk_buff * ovs_vport_cmd_build_info (struct vport *, u32 pid, u32 seq,
-    u8 cmd);
+const char *ovs_dp_name(const struct datapath *dp);
+struct sk_buff *ovs_vport_cmd_build_info(struct vport *, u32 pid, u32 seq,
+					 u8 cmd);
 
-int ovs_execute_actions (struct datapath * dp, struct sk_buff * skb);
+int ovs_execute_actions(struct datapath *dp, struct sk_buff *skb);
 #endif /* datapath.h */

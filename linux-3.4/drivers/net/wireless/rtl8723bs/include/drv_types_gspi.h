@@ -21,33 +21,33 @@
 #define __DRV_TYPES_GSPI_H__
 
 #ifdef PLATFORM_LINUX
-#include <linux/platform_device.h>
-#include <linux/spi/spi.h>
-#include <linux/gpio.h>
-#include <asm/mach-types.h>
-#include <asm/gpio.h>
-#include <asm/io.h>
-#include <mach/board.h>
-#include <mach/hardware.h>
-#include <mach/irqs.h>
-#include <custom_gpio.h>
+	#include <linux/platform_device.h>
+	#include <linux/spi/spi.h>
+	#include <linux/gpio.h>
+	#include <asm/mach-types.h>
+	#include <asm/gpio.h>
+	#include <asm/io.h>
+	#include <mach/board.h>
+	#include <mach/hardware.h>
+	#include <mach/irqs.h>
+	#include <custom_gpio.h>
 #endif
 
 
 typedef struct gspi_data
 {
-  u8  func_number;
-  
-  u8  tx_block_mode;
-  u8  rx_block_mode;
-  u32 block_transfer_len;
-  
-  #ifdef PLATFORM_LINUX
-  struct spi_device * func;
-  
-  struct workqueue_struct * priv_wq;
-  struct delayed_work irq_work;
-  #endif
+	u8  func_number;
+
+	u8  tx_block_mode;
+	u8  rx_block_mode;
+	u32 block_transfer_len;
+
+#ifdef PLATFORM_LINUX
+	struct spi_device *func;
+
+	struct workqueue_struct *priv_wq;
+	struct delayed_work irq_work;
+#endif
 } GSPI_DATA, *PGSPI_DATA;
 
 #endif

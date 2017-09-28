@@ -5,7 +5,7 @@
  * Copyright 2005-2007 PMC-Sierra, Inc
  *
  * Author: MontaVista Software, Inc.
- *          ppopov@mvista.com or source@mvista.com
+ *         	ppopov@mvista.com or source@mvista.com
  *
  *  This program is free software; you can redistribute  it and/or modify it
  *  under  the terms of  the GNU General  Public License as published by the
@@ -41,124 +41,124 @@
 #include <msp_cic_int.h>
 
 /* PCI interrupt pins */
-#define IRQ4  MSP_INT_EXT4
-#define IRQ5  MSP_INT_EXT5
-#define IRQ6  MSP_INT_EXT6
+#define IRQ4	MSP_INT_EXT4
+#define IRQ5	MSP_INT_EXT5
+#define IRQ6	MSP_INT_EXT6
 
 #if defined(CONFIG_PMC_MSP7120_GW)
 /* Garibaldi Board IRQ wiring to PCI slots */
 static char irq_tab[][5] __initdata = {
-  /* INTA    INTB    INTC    INTD */
-  {0,     0,      0,      0,      0 },    /*    (AD[0]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[1]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[2]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[3]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[4]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[5]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[6]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[7]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[8]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[9]): Unused */
-  {0,     0,      0,      0,      0 },    /*  0 (AD[10]): Unused */
-  {0,     0,      0,      0,      0 },    /*  1 (AD[11]): Unused */
-  {0,     0,      0,      0,      0 },    /*  2 (AD[12]): Unused */
-  {0,     0,      0,      0,      0 },    /*  3 (AD[13]): Unused */
-  {0,     0,      0,      0,      0 },    /*  4 (AD[14]): Unused */
-  {0,     0,      0,      0,      0 },    /*  5 (AD[15]): Unused */
-  {0,     0,      0,      0,      0 },    /*  6 (AD[16]): Unused */
-  {0,     0,      0,      0,      0 },    /*  7 (AD[17]): Unused */
-  {0,     0,      0,      0,      0 },    /*  8 (AD[18]): Unused */
-  {0,     0,      0,      0,      0 },    /*  9 (AD[19]): Unused */
-  {0,     0,      0,      0,      0 },    /* 10 (AD[20]): Unused */
-  {0,     0,      0,      0,      0 },    /* 11 (AD[21]): Unused */
-  {0,     0,      0,      0,      0 },    /* 12 (AD[22]): Unused */
-  {0,     0,      0,      0,      0 },    /* 13 (AD[23]): Unused */
-  {0,     0,      0,      0,      0 },    /* 14 (AD[24]): Unused */
-  {0,     0,      0,      0,      0 },    /* 15 (AD[25]): Unused */
-  {0,     0,      0,      0,      0 },    /* 16 (AD[26]): Unused */
-  {0,     0,      0,      0,      0 },    /* 17 (AD[27]): Unused */
-  {0,     IRQ4,   IRQ4,   0,      0 },    /* 18 (AD[28]): slot 0 */
-  {0,     0,      0,      0,      0 },    /* 19 (AD[29]): Unused */
-  {0,     IRQ5,   IRQ5,   0,      0 },    /* 20 (AD[30]): slot 1 */
-  {0,     IRQ6,   IRQ6,   0,      0 }     /* 21 (AD[31]): slot 2 */
+	/* INTA    INTB    INTC    INTD */
+	{0,     0,      0,      0,      0 },    /*    (AD[0]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[1]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[2]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[3]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[4]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[5]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[6]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[7]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[8]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[9]): Unused */
+	{0,     0,      0,      0,      0 },    /*  0 (AD[10]): Unused */
+	{0,     0,      0,      0,      0 },    /*  1 (AD[11]): Unused */
+	{0,     0,      0,      0,      0 },    /*  2 (AD[12]): Unused */
+	{0,     0,      0,      0,      0 },    /*  3 (AD[13]): Unused */
+	{0,     0,      0,      0,      0 },    /*  4 (AD[14]): Unused */
+	{0,     0,      0,      0,      0 },    /*  5 (AD[15]): Unused */
+	{0,     0,      0,      0,      0 },    /*  6 (AD[16]): Unused */
+	{0,     0,      0,      0,      0 },    /*  7 (AD[17]): Unused */
+	{0,     0,      0,      0,      0 },    /*  8 (AD[18]): Unused */
+	{0,     0,      0,      0,      0 },    /*  9 (AD[19]): Unused */
+	{0,     0,      0,      0,      0 },    /* 10 (AD[20]): Unused */
+	{0,     0,      0,      0,      0 },    /* 11 (AD[21]): Unused */
+	{0,     0,      0,      0,      0 },    /* 12 (AD[22]): Unused */
+	{0,     0,      0,      0,      0 },    /* 13 (AD[23]): Unused */
+	{0,     0,      0,      0,      0 },    /* 14 (AD[24]): Unused */
+	{0,     0,      0,      0,      0 },    /* 15 (AD[25]): Unused */
+	{0,     0,      0,      0,      0 },    /* 16 (AD[26]): Unused */
+	{0,     0,      0,      0,      0 },    /* 17 (AD[27]): Unused */
+	{0,     IRQ4,   IRQ4,   0,      0 },    /* 18 (AD[28]): slot 0 */
+	{0,     0,      0,      0,      0 },    /* 19 (AD[29]): Unused */
+	{0,     IRQ5,   IRQ5,   0,      0 },    /* 20 (AD[30]): slot 1 */
+	{0,     IRQ6,   IRQ6,   0,      0 }     /* 21 (AD[31]): slot 2 */
 };
 
 #elif defined(CONFIG_PMC_MSP7120_EVAL)
 
 /* MSP7120 Eval Board IRQ wiring to PCI slots */
 static char irq_tab[][5] __initdata = {
-  /* INTA    INTB    INTC    INTD */
-  {0,     0,      0,      0,      0 },    /*    (AD[0]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[1]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[2]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[3]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[4]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[5]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[6]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[7]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[8]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[9]): Unused */
-  {0,     0,      0,      0,      0 },    /*  0 (AD[10]): Unused */
-  {0,     0,      0,      0,      0 },    /*  1 (AD[11]): Unused */
-  {0,     0,      0,      0,      0 },    /*  2 (AD[12]): Unused */
-  {0,     0,      0,      0,      0 },    /*  3 (AD[13]): Unused */
-  {0,     0,      0,      0,      0 },    /*  4 (AD[14]): Unused */
-  {0,     0,      0,      0,      0 },    /*  5 (AD[15]): Unused */
-  {0,     IRQ6,   IRQ6,   0,      0 },    /*  6 (AD[16]): slot 3 (mini) */
-  {0,     IRQ5,   IRQ5,   0,      0 },    /*  7 (AD[17]): slot 2 (mini) */
-  {0,     IRQ4,   IRQ4,   IRQ4,   IRQ4},  /*  8 (AD[18]): slot 0 (PCI) */
-  {0,     IRQ5,   IRQ5,   IRQ5,   IRQ5},  /*  9 (AD[19]): slot 1 (PCI) */
-  {0,     0,      0,      0,      0 },    /* 10 (AD[20]): Unused */
-  {0,     0,      0,      0,      0 },    /* 11 (AD[21]): Unused */
-  {0,     0,      0,      0,      0 },    /* 12 (AD[22]): Unused */
-  {0,     0,      0,      0,      0 },    /* 13 (AD[23]): Unused */
-  {0,     0,      0,      0,      0 },    /* 14 (AD[24]): Unused */
-  {0,     0,      0,      0,      0 },    /* 15 (AD[25]): Unused */
-  {0,     0,      0,      0,      0 },    /* 16 (AD[26]): Unused */
-  {0,     0,      0,      0,      0 },    /* 17 (AD[27]): Unused */
-  {0,     0,      0,      0,      0 },    /* 18 (AD[28]): Unused */
-  {0,     0,      0,      0,      0 },    /* 19 (AD[29]): Unused */
-  {0,     0,      0,      0,      0 },    /* 20 (AD[30]): Unused */
-  {0,     0,      0,      0,      0 }     /* 21 (AD[31]): Unused */
+	/* INTA    INTB    INTC    INTD */
+	{0,     0,      0,      0,      0 },    /*    (AD[0]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[1]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[2]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[3]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[4]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[5]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[6]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[7]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[8]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[9]): Unused */
+	{0,     0,      0,      0,      0 },    /*  0 (AD[10]): Unused */
+	{0,     0,      0,      0,      0 },    /*  1 (AD[11]): Unused */
+	{0,     0,      0,      0,      0 },    /*  2 (AD[12]): Unused */
+	{0,     0,      0,      0,      0 },    /*  3 (AD[13]): Unused */
+	{0,     0,      0,      0,      0 },    /*  4 (AD[14]): Unused */
+	{0,     0,      0,      0,      0 },    /*  5 (AD[15]): Unused */
+	{0,     IRQ6,   IRQ6,   0,      0 },    /*  6 (AD[16]): slot 3 (mini) */
+	{0,     IRQ5,   IRQ5,   0,      0 },    /*  7 (AD[17]): slot 2 (mini) */
+	{0,     IRQ4,   IRQ4,   IRQ4,   IRQ4},  /*  8 (AD[18]): slot 0 (PCI) */
+	{0,     IRQ5,   IRQ5,   IRQ5,   IRQ5},  /*  9 (AD[19]): slot 1 (PCI) */
+	{0,     0,      0,      0,      0 },    /* 10 (AD[20]): Unused */
+	{0,     0,      0,      0,      0 },    /* 11 (AD[21]): Unused */
+	{0,     0,      0,      0,      0 },    /* 12 (AD[22]): Unused */
+	{0,     0,      0,      0,      0 },    /* 13 (AD[23]): Unused */
+	{0,     0,      0,      0,      0 },    /* 14 (AD[24]): Unused */
+	{0,     0,      0,      0,      0 },    /* 15 (AD[25]): Unused */
+	{0,     0,      0,      0,      0 },    /* 16 (AD[26]): Unused */
+	{0,     0,      0,      0,      0 },    /* 17 (AD[27]): Unused */
+	{0,     0,      0,      0,      0 },    /* 18 (AD[28]): Unused */
+	{0,     0,      0,      0,      0 },    /* 19 (AD[29]): Unused */
+	{0,     0,      0,      0,      0 },    /* 20 (AD[30]): Unused */
+	{0,     0,      0,      0,      0 }     /* 21 (AD[31]): Unused */
 };
 
 #else
 
 /* Unknown board -- don't assign any IRQs */
 static char irq_tab[][5] __initdata = {
-  /* INTA    INTB    INTC    INTD */
-  {0,     0,      0,      0,      0 },    /*    (AD[0]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[1]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[2]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[3]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[4]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[5]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[6]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[7]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[8]): Unused */
-  {0,     0,      0,      0,      0 },    /*    (AD[9]): Unused */
-  {0,     0,      0,      0,      0 },    /*  0 (AD[10]): Unused */
-  {0,     0,      0,      0,      0 },    /*  1 (AD[11]): Unused */
-  {0,     0,      0,      0,      0 },    /*  2 (AD[12]): Unused */
-  {0,     0,      0,      0,      0 },    /*  3 (AD[13]): Unused */
-  {0,     0,      0,      0,      0 },    /*  4 (AD[14]): Unused */
-  {0,     0,      0,      0,      0 },    /*  5 (AD[15]): Unused */
-  {0,     0,      0,      0,      0 },    /*  6 (AD[16]): Unused */
-  {0,     0,      0,      0,      0 },    /*  7 (AD[17]): Unused */
-  {0,     0,      0,      0,      0 },    /*  8 (AD[18]): Unused */
-  {0,     0,      0,      0,      0 },    /*  9 (AD[19]): Unused */
-  {0,     0,      0,      0,      0 },    /* 10 (AD[20]): Unused */
-  {0,     0,      0,      0,      0 },    /* 11 (AD[21]): Unused */
-  {0,     0,      0,      0,      0 },    /* 12 (AD[22]): Unused */
-  {0,     0,      0,      0,      0 },    /* 13 (AD[23]): Unused */
-  {0,     0,      0,      0,      0 },    /* 14 (AD[24]): Unused */
-  {0,     0,      0,      0,      0 },    /* 15 (AD[25]): Unused */
-  {0,     0,      0,      0,      0 },    /* 16 (AD[26]): Unused */
-  {0,     0,      0,      0,      0 },    /* 17 (AD[27]): Unused */
-  {0,     0,      0,      0,      0 },    /* 18 (AD[28]): Unused */
-  {0,     0,      0,      0,      0 },    /* 19 (AD[29]): Unused */
-  {0,     0,      0,      0,      0 },    /* 20 (AD[30]): Unused */
-  {0,     0,      0,      0,      0 }     /* 21 (AD[31]): Unused */
+	/* INTA    INTB    INTC    INTD */
+	{0,     0,      0,      0,      0 },    /*    (AD[0]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[1]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[2]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[3]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[4]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[5]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[6]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[7]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[8]): Unused */
+	{0,     0,      0,      0,      0 },    /*    (AD[9]): Unused */
+	{0,     0,      0,      0,      0 },    /*  0 (AD[10]): Unused */
+	{0,     0,      0,      0,      0 },    /*  1 (AD[11]): Unused */
+	{0,     0,      0,      0,      0 },    /*  2 (AD[12]): Unused */
+	{0,     0,      0,      0,      0 },    /*  3 (AD[13]): Unused */
+	{0,     0,      0,      0,      0 },    /*  4 (AD[14]): Unused */
+	{0,     0,      0,      0,      0 },    /*  5 (AD[15]): Unused */
+	{0,     0,      0,      0,      0 },    /*  6 (AD[16]): Unused */
+	{0,     0,      0,      0,      0 },    /*  7 (AD[17]): Unused */
+	{0,     0,      0,      0,      0 },    /*  8 (AD[18]): Unused */
+	{0,     0,      0,      0,      0 },    /*  9 (AD[19]): Unused */
+	{0,     0,      0,      0,      0 },    /* 10 (AD[20]): Unused */
+	{0,     0,      0,      0,      0 },    /* 11 (AD[21]): Unused */
+	{0,     0,      0,      0,      0 },    /* 12 (AD[22]): Unused */
+	{0,     0,      0,      0,      0 },    /* 13 (AD[23]): Unused */
+	{0,     0,      0,      0,      0 },    /* 14 (AD[24]): Unused */
+	{0,     0,      0,      0,      0 },    /* 15 (AD[25]): Unused */
+	{0,     0,      0,      0,      0 },    /* 16 (AD[26]): Unused */
+	{0,     0,      0,      0,      0 },    /* 17 (AD[27]): Unused */
+	{0,     0,      0,      0,      0 },    /* 18 (AD[28]): Unused */
+	{0,     0,      0,      0,      0 },    /* 19 (AD[29]): Unused */
+	{0,     0,      0,      0,      0 },    /* 20 (AD[30]): Unused */
+	{0,     0,      0,      0,      0 }     /* 21 (AD[31]): Unused */
 };
 #endif
 
@@ -178,9 +178,9 @@ static char irq_tab[][5] __initdata = {
  *  RETURNS:     PCIBIOS_SUCCESSFUL
  *
  ****************************************************************************/
-int pcibios_plat_dev_init (struct pci_dev * dev)
+int pcibios_plat_dev_init(struct pci_dev *dev)
 {
-  return PCIBIOS_SUCCESSFUL;
+	return PCIBIOS_SUCCESSFUL;
 }
 
 /*****************************************************************************
@@ -202,15 +202,15 @@ int pcibios_plat_dev_init (struct pci_dev * dev)
  *  RETURNS:     IRQ number
  *
  ****************************************************************************/
-int __init pcibios_map_irq (const struct pci_dev * dev, u8 slot, u8 pin)
+int __init pcibios_map_irq(const struct pci_dev *dev, u8 slot, u8 pin)
 {
-  #if !defined(CONFIG_PMC_MSP7120_GW) && !defined(CONFIG_PMC_MSP7120_EVAL)
-  printk (KERN_WARNING "PCI: unknown board, no PCI IRQs assigned.\n");
-  #endif
-  printk (KERN_WARNING "PCI: irq_tab returned %d for slot=%d pin=%d\n",
-          irq_tab[slot][pin], slot, pin);
-          
-  return irq_tab[slot][pin];
+#if !defined(CONFIG_PMC_MSP7120_GW) && !defined(CONFIG_PMC_MSP7120_EVAL)
+	printk(KERN_WARNING "PCI: unknown board, no PCI IRQs assigned.\n");
+#endif
+	printk(KERN_WARNING "PCI: irq_tab returned %d for slot=%d pin=%d\n",
+		irq_tab[slot][pin], slot, pin);
+
+	return irq_tab[slot][pin];
 }
 
-#endif  /* CONFIG_PCI */
+#endif	/* CONFIG_PCI */

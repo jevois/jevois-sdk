@@ -20,29 +20,29 @@ struct scsi_cmnd;
  * to SG_MAX_SINGLE_ALLOC to pack correctly at the highest order.  The
  * minimum value is 32
  */
-#define SCSI_MAX_SG_SEGMENTS  128
+#define SCSI_MAX_SG_SEGMENTS	128
 
 /*
  * Like SCSI_MAX_SG_SEGMENTS, but for archs that have sg chaining. This limit
  * is totally arbitrary, a setting of 2048 will get you at least 8mb ios.
  */
 #ifdef ARCH_HAS_SG_CHAIN
-#define SCSI_MAX_SG_CHAIN_SEGMENTS  2048
+#define SCSI_MAX_SG_CHAIN_SEGMENTS	2048
 #else
-#define SCSI_MAX_SG_CHAIN_SEGMENTS  SCSI_MAX_SG_SEGMENTS
+#define SCSI_MAX_SG_CHAIN_SEGMENTS	SCSI_MAX_SG_SEGMENTS
 #endif
 
 /*
  * DIX-capable adapters effectively support infinite chaining for the
  * protection information scatterlist
  */
-#define SCSI_MAX_PROT_SG_SEGMENTS 0xFFFF
+#define SCSI_MAX_PROT_SG_SEGMENTS	0xFFFF
 
 /*
  * Special value for scanning to specify scanning or rescanning of all
  * possible channels, (target) ids, or luns on a given shost.
  */
-#define SCAN_WILD_CARD  ~0
+#define SCAN_WILD_CARD	~0
 
 /*
  *      SCSI opcodes
@@ -102,7 +102,7 @@ struct scsi_cmnd;
 #define WRITE_LONG            0x3f
 #define CHANGE_DEFINITION     0x40
 #define WRITE_SAME            0x41
-#define UNMAP         0x42
+#define UNMAP		      0x42
 #define READ_TOC              0x43
 #define READ_HEADER           0x44
 #define GET_EVENT_STATUS_NOTIFICATION 0x4a
@@ -126,7 +126,7 @@ struct scsi_cmnd;
 #define WRITE_12              0xaa
 #define READ_MEDIA_SERIAL_NUMBER 0xab
 #define WRITE_VERIFY_12       0xae
-#define VERIFY_12       0xaf
+#define VERIFY_12	      0xaf
 #define SEARCH_HIGH_12        0xb0
 #define SEARCH_EQUAL_12       0xb1
 #define SEARCH_LOW_12         0xb2
@@ -141,13 +141,13 @@ struct scsi_cmnd;
 #define READ_16               0x88
 #define WRITE_16              0x8a
 #define READ_ATTRIBUTE        0x8c
-#define WRITE_ATTRIBUTE       0x8d
-#define VERIFY_16       0x8f
+#define WRITE_ATTRIBUTE	      0x8d
+#define VERIFY_16	      0x8f
 #define SYNCHRONIZE_CACHE_16  0x91
-#define WRITE_SAME_16       0x93
+#define WRITE_SAME_16	      0x93
 #define SERVICE_ACTION_IN     0x9e
 /* values for service action in */
-#define SAI_READ_CAPACITY_16  0x10
+#define	SAI_READ_CAPACITY_16  0x10
 #define SAI_GET_LBA_STATUS    0x12
 /* values for VARIABLE_LENGTH_CMD service action codes
  * see spc4r17 Section D.3.5, table D.7 and D.8 */
@@ -169,49 +169,49 @@ struct scsi_cmnd;
 #define MO_SET_TIMESTAMP      0x0f
 #define MO_MANAGEMENT_PROTOCOL_OUT 0x10
 /* values for variable length command */
-#define XDREAD_32       0x03
-#define XDWRITE_32        0x04
-#define XPWRITE_32        0x06
-#define XDWRITEREAD_32        0x07
-#define READ_32         0x09
-#define VERIFY_32       0x0a
-#define WRITE_32        0x0b
-#define WRITE_SAME_32       0x0d
+#define XDREAD_32	      0x03
+#define XDWRITE_32	      0x04
+#define XPWRITE_32	      0x06
+#define XDWRITEREAD_32	      0x07
+#define READ_32		      0x09
+#define VERIFY_32	      0x0a
+#define WRITE_32	      0x0b
+#define WRITE_SAME_32	      0x0d
 
 /* Values for T10/04-262r7 */
-#define ATA_16          0x85  /* 16-byte pass-thru */
-#define ATA_12          0xa1  /* 12-byte pass-thru */
+#define	ATA_16		      0x85	/* 16-byte pass-thru */
+#define	ATA_12		      0xa1	/* 12-byte pass-thru */
 
 /*
- *  SCSI command lengths
+ *	SCSI command lengths
  */
 
 #define SCSI_MAX_VARLEN_CDB_SIZE 260
 
 /* defined in T10 SCSI Primary Commands-2 (SPC2) */
 struct scsi_varlen_cdb_hdr {
-  __u8 opcode;        /* opcode always == VARIABLE_LENGTH_CMD */
-  __u8 control;
-  __u8 misc[5];
-  __u8 additional_cdb_length;         /* total cdb length - 8 */
-  __be16 service_action;
-  /* service specific data follows */
+	__u8 opcode;        /* opcode always == VARIABLE_LENGTH_CMD */
+	__u8 control;
+	__u8 misc[5];
+	__u8 additional_cdb_length;         /* total cdb length - 8 */
+	__be16 service_action;
+	/* service specific data follows */
 };
 
 static inline unsigned
-scsi_varlen_cdb_length (const void * hdr)
+scsi_varlen_cdb_length(const void *hdr)
 {
-  return ( (struct scsi_varlen_cdb_hdr *) hdr)->additional_cdb_length + 8;
+	return ((struct scsi_varlen_cdb_hdr *)hdr)->additional_cdb_length + 8;
 }
 
 extern const unsigned char scsi_command_size_tbl[8];
 #define COMMAND_SIZE(opcode) scsi_command_size_tbl[((opcode) >> 5) & 7]
 
 static inline unsigned
-scsi_command_size (const unsigned char * cmnd)
+scsi_command_size(const unsigned char *cmnd)
 {
-  return (cmnd[0] == VARIABLE_LENGTH_CMD) ?
-         scsi_varlen_cdb_length (cmnd) : COMMAND_SIZE (cmnd[0]);
+	return (cmnd[0] == VARIABLE_LENGTH_CMD) ?
+		scsi_varlen_cdb_length(cmnd) : COMMAND_SIZE(cmnd[0]);
 }
 
 /*
@@ -225,7 +225,7 @@ scsi_command_size (const unsigned char * cmnd)
 #define SAM_STAT_INTERMEDIATE    0x10
 #define SAM_STAT_INTERMEDIATE_CONDITION_MET 0x14
 #define SAM_STAT_RESERVATION_CONFLICT 0x18
-#define SAM_STAT_COMMAND_TERMINATED 0x22  /* obsolete in SAM-3 */
+#define SAM_STAT_COMMAND_TERMINATED 0x22	/* obsolete in SAM-3 */
 #define SAM_STAT_TASK_SET_FULL   0x28
 #define SAM_STAT_ACA_ACTIVE      0x30
 #define SAM_STAT_TASK_ABORTED    0x40
@@ -238,19 +238,19 @@ scsi_command_size (const unsigned char * cmnd)
  * This returns true for known good conditions that may be treated as
  * command completed normally
  */
-static inline int scsi_status_is_good (int status)
+static inline int scsi_status_is_good(int status)
 {
-  /*
-   * FIXME: bit0 is listed as reserved in SCSI-2, but is
-   * significant in SCSI-3.  For now, we follow the SCSI-2
-   * behaviour and ignore reserved bits.
-   */
-  status &= 0xfe;
-  return ( (status == SAM_STAT_GOOD) ||
-           (status == SAM_STAT_INTERMEDIATE) ||
-           (status == SAM_STAT_INTERMEDIATE_CONDITION_MET) ||
-           /* FIXME: this is obsolete in SAM-3 */
-           (status == SAM_STAT_COMMAND_TERMINATED) );
+	/*
+	 * FIXME: bit0 is listed as reserved in SCSI-2, but is
+	 * significant in SCSI-3.  For now, we follow the SCSI-2
+	 * behaviour and ignore reserved bits.
+	 */
+	status &= 0xfe;
+	return ((status == SAM_STAT_GOOD) ||
+		(status == SAM_STAT_INTERMEDIATE) ||
+		(status == SAM_STAT_INTERMEDIATE_CONDITION_MET) ||
+		/* FIXME: this is obsolete in SAM-3 */
+		(status == SAM_STAT_COMMAND_TERMINATED));
 }
 
 /*
@@ -306,56 +306,56 @@ static inline int scsi_status_is_good (int status)
 #define TYPE_ROM            0x05
 #define TYPE_SCANNER        0x06
 #define TYPE_MOD            0x07    /* Magneto-optical disk - 
-             * - treated as TYPE_DISK */
+				     * - treated as TYPE_DISK */
 #define TYPE_MEDIUM_CHANGER 0x08
 #define TYPE_COMM           0x09    /* Communications device */
 #define TYPE_RAID           0x0c
 #define TYPE_ENCLOSURE      0x0d    /* Enclosure Services Device */
-#define TYPE_RBC      0x0e
+#define TYPE_RBC	    0x0e
 #define TYPE_OSD            0x11
 #define TYPE_NO_LUN         0x7f
 
 /* SCSI protocols; these are taken from SPC-3 section 7.5 */
 enum scsi_protocol {
-  SCSI_PROTOCOL_FCP = 0,  /* Fibre Channel */
-  SCSI_PROTOCOL_SPI = 1,  /* parallel SCSI */
-  SCSI_PROTOCOL_SSA = 2,  /* Serial Storage Architecture - Obsolete */
-  SCSI_PROTOCOL_SBP = 3,  /* firewire */
-  SCSI_PROTOCOL_SRP = 4,  /* Infiniband RDMA */
-  SCSI_PROTOCOL_ISCSI = 5,
-  SCSI_PROTOCOL_SAS = 6,
-  SCSI_PROTOCOL_ADT = 7,  /* Media Changers */
-  SCSI_PROTOCOL_ATA = 8,
-  SCSI_PROTOCOL_UNSPEC = 0xf, /* No specific protocol */
+	SCSI_PROTOCOL_FCP = 0,	/* Fibre Channel */
+	SCSI_PROTOCOL_SPI = 1,	/* parallel SCSI */
+	SCSI_PROTOCOL_SSA = 2,	/* Serial Storage Architecture - Obsolete */
+	SCSI_PROTOCOL_SBP = 3,	/* firewire */
+	SCSI_PROTOCOL_SRP = 4,	/* Infiniband RDMA */
+	SCSI_PROTOCOL_ISCSI = 5,
+	SCSI_PROTOCOL_SAS = 6,
+	SCSI_PROTOCOL_ADT = 7,	/* Media Changers */
+	SCSI_PROTOCOL_ATA = 8,
+	SCSI_PROTOCOL_UNSPEC = 0xf, /* No specific protocol */
 };
 
 /* Returns a human-readable name for the device */
-extern const char * scsi_device_type (unsigned type);
+extern const char * scsi_device_type(unsigned type);
 
 /*
  * standard mode-select header prepended to all mode-select commands
  */
 
 struct ccs_modesel_head {
-  __u8 _r1;     /* reserved */
-  __u8 medium;    /* device-specific medium type */
-  __u8 _r2;     /* reserved */
-  __u8 block_desc_length; /* block descriptor length */
-  __u8 density;   /* device-specific density code */
-  __u8 number_blocks_hi;  /* number of blocks in this block desc */
-  __u8 number_blocks_med;
-  __u8 number_blocks_lo;
-  __u8 _r3;
-  __u8 block_length_hi; /* block length for blocks in this desc */
-  __u8 block_length_med;
-  __u8 block_length_lo;
+	__u8 _r1;			/* reserved */
+	__u8 medium;		/* device-specific medium type */
+	__u8 _r2;			/* reserved */
+	__u8 block_desc_length;	/* block descriptor length */
+	__u8 density;		/* device-specific density code */
+	__u8 number_blocks_hi;	/* number of blocks in this block desc */
+	__u8 number_blocks_med;
+	__u8 number_blocks_lo;
+	__u8 _r3;
+	__u8 block_length_hi;	/* block length for blocks in this desc */
+	__u8 block_length_med;
+	__u8 block_length_lo;
 };
 
 /*
  * ScsiLun: 8 byte LUN.
  */
 struct scsi_lun {
-  __u8 scsi_lun[8];
+	__u8 scsi_lun[8];
 };
 
 /*
@@ -366,9 +366,9 @@ struct scsi_lun {
 #define SCSI_W_LUN_ACCESS_CONTROL (SCSI_W_LUN_BASE + 2)
 #define SCSI_W_LUN_TARGET_LOG_PAGE (SCSI_W_LUN_BASE + 3)
 
-static inline int scsi_is_wlun (unsigned int lun)
+static inline int scsi_is_wlun(unsigned int lun)
 {
-  return (lun & 0xff00) == SCSI_W_LUN_BASE;
+	return (lun & 0xff00) == SCSI_W_LUN_BASE;
 }
 
 
@@ -416,31 +416,31 @@ static inline int scsi_is_wlun (unsigned int lun)
  * Host byte codes
  */
 
-#define DID_OK          0x00  /* NO error                                */
-#define DID_NO_CONNECT  0x01  /* Couldn't connect before timeout period  */
-#define DID_BUS_BUSY    0x02  /* BUS stayed busy through time out period */
-#define DID_TIME_OUT    0x03  /* TIMED OUT for other reason              */
-#define DID_BAD_TARGET  0x04  /* BAD target.                             */
-#define DID_ABORT       0x05  /* Told to abort for some other reason     */
-#define DID_PARITY      0x06  /* Parity error                            */
-#define DID_ERROR       0x07  /* Internal error                          */
-#define DID_RESET       0x08  /* Reset by somebody.                      */
-#define DID_BAD_INTR    0x09  /* Got an interrupt we weren't expecting.  */
-#define DID_PASSTHROUGH 0x0a  /* Force command past mid-layer            */
-#define DID_SOFT_ERROR  0x0b  /* The low level driver just wish a retry  */
-#define DID_IMM_RETRY   0x0c  /* Retry without decrementing retry count  */
-#define DID_REQUEUE 0x0d  /* Requeue command (no immediate retry) also
-         * without decrementing the retry count    */
+#define DID_OK          0x00	/* NO error                                */
+#define DID_NO_CONNECT  0x01	/* Couldn't connect before timeout period  */
+#define DID_BUS_BUSY    0x02	/* BUS stayed busy through time out period */
+#define DID_TIME_OUT    0x03	/* TIMED OUT for other reason              */
+#define DID_BAD_TARGET  0x04	/* BAD target.                             */
+#define DID_ABORT       0x05	/* Told to abort for some other reason     */
+#define DID_PARITY      0x06	/* Parity error                            */
+#define DID_ERROR       0x07	/* Internal error                          */
+#define DID_RESET       0x08	/* Reset by somebody.                      */
+#define DID_BAD_INTR    0x09	/* Got an interrupt we weren't expecting.  */
+#define DID_PASSTHROUGH 0x0a	/* Force command past mid-layer            */
+#define DID_SOFT_ERROR  0x0b	/* The low level driver just wish a retry  */
+#define DID_IMM_RETRY   0x0c	/* Retry without decrementing retry count  */
+#define DID_REQUEUE	0x0d	/* Requeue command (no immediate retry) also
+				 * without decrementing the retry count	   */
 #define DID_TRANSPORT_DISRUPTED 0x0e /* Transport error disrupted execution
-              * and the driver blocked the port to
-              * recover the link. Transport class will
-              * retry or fail IO */
-#define DID_TRANSPORT_FAILFAST  0x0f /* Transport class fastfailed the io */
+				      * and the driver blocked the port to
+				      * recover the link. Transport class will
+				      * retry or fail IO */
+#define DID_TRANSPORT_FAILFAST	0x0f /* Transport class fastfailed the io */
 #define DID_TARGET_FAILURE 0x10 /* Permanent target failure, do not retry on
-         * other paths */
+				 * other paths */
 #define DID_NEXUS_FAILURE 0x11  /* Permanent nexus failure, retry on other
-         * paths might yield different results */
-#define DRIVER_OK       0x00  /* Driver status                           */
+				 * paths might yield different results */
+#define DRIVER_OK       0x00	/* Driver status                           */
 
 /*
  *  These indicate the error that occurred, and what is available.
@@ -454,7 +454,7 @@ static inline int scsi_is_wlun (unsigned int lun)
 #define DRIVER_INVALID      0x05
 #define DRIVER_TIMEOUT      0x06
 #define DRIVER_HARD         0x07
-#define DRIVER_SENSE      0x08
+#define DRIVER_SENSE	    0x08
 
 /*
  * Internal return values.
@@ -468,7 +468,7 @@ static inline int scsi_is_wlun (unsigned int lun)
 #define ADD_TO_MLQUEUE  0x2006
 #define TIMEOUT_ERROR   0x2007
 #define SCSI_RETURN_NOT_HANDLED   0x2008
-#define FAST_IO_FAIL  0x2009
+#define FAST_IO_FAIL	0x2009
 #define TARGET_ERROR    0x200A
 
 /*
@@ -501,17 +501,17 @@ static inline int scsi_is_wlun (unsigned int lun)
 /*
  * default timeouts
 */
-#define FORMAT_UNIT_TIMEOUT   (2 * 60 * 60 * HZ)
-#define START_STOP_TIMEOUT    (60 * HZ)
-#define MOVE_MEDIUM_TIMEOUT   (5 * 60 * HZ)
-#define READ_ELEMENT_STATUS_TIMEOUT (5 * 60 * HZ)
-#define READ_DEFECT_DATA_TIMEOUT  (60 * HZ )
+#define FORMAT_UNIT_TIMEOUT		(2 * 60 * 60 * HZ)
+#define START_STOP_TIMEOUT		(60 * HZ)
+#define MOVE_MEDIUM_TIMEOUT		(5 * 60 * HZ)
+#define READ_ELEMENT_STATUS_TIMEOUT	(5 * 60 * HZ)
+#define READ_DEFECT_DATA_TIMEOUT	(60 * HZ )
 
 
 #define IDENTIFY_BASE       0x80
 #define IDENTIFY(can_disconnect, lun)   (IDENTIFY_BASE |\
-    ((can_disconnect) ?  0x40 : 0) |\
-    ((lun) & 0x07))
+		     ((can_disconnect) ?  0x40 : 0) |\
+		     ((lun) & 0x07))
 
 /*
  *  struct scsi_device::scsi_level values. For SCSI devices other than those
@@ -543,23 +543,23 @@ static inline int scsi_is_wlun (unsigned int lun)
  */
 
 /* Used to obtain PUN and LUN info.  Conflicts with CDROMAUDIOBUFSIZ */
-#define SCSI_IOCTL_GET_IDLUN    0x5382
+#define SCSI_IOCTL_GET_IDLUN		0x5382
 
 /* 0x5383 and 0x5384 were used for SCSI_IOCTL_TAGGED_{ENABLE,DISABLE} */
 
 /* Used to obtain the host number of a device. */
-#define SCSI_IOCTL_PROBE_HOST   0x5385
+#define SCSI_IOCTL_PROBE_HOST		0x5385
 
 /* Used to obtain the bus number for a device */
-#define SCSI_IOCTL_GET_BUS_NUMBER 0x5386
+#define SCSI_IOCTL_GET_BUS_NUMBER	0x5386
 
 /* Used to obtain the PCI location of a device */
-#define SCSI_IOCTL_GET_PCI    0x5387
+#define SCSI_IOCTL_GET_PCI		0x5387
 
 /* Pull a u32 out of a SCSI message (using BE SCSI conventions) */
-static inline __u32 scsi_to_u32 (__u8 * ptr)
+static inline __u32 scsi_to_u32(__u8 *ptr)
 {
-  return (ptr[0] << 24) + (ptr[1] << 16) + (ptr[2] << 8) + ptr[3];
+	return (ptr[0]<<24) + (ptr[1]<<16) + (ptr[2]<<8) + ptr[3];
 }
 
 #endif /* _SCSI_SCSI_H */

@@ -25,31 +25,31 @@
 #include "core.h"
 #include "sysregs.h"
 
-static int highbank_suspend_finish (unsigned long val)
+static int highbank_suspend_finish(unsigned long val)
 {
-  cpu_do_idle();
-  return 0;
+	cpu_do_idle();
+	return 0;
 }
 
-static int highbank_pm_enter (suspend_state_t state)
+static int highbank_pm_enter(suspend_state_t state)
 {
-  hignbank_set_pwr_suspend();
-  highbank_set_cpu_jump (0, cpu_resume);
-  
-  scu_power_mode (scu_base_addr, SCU_PM_POWEROFF);
-  cpu_suspend (0, highbank_suspend_finish);
-  
-  return 0;
+	hignbank_set_pwr_suspend();
+	highbank_set_cpu_jump(0, cpu_resume);
+
+	scu_power_mode(scu_base_addr, SCU_PM_POWEROFF);
+	cpu_suspend(0, highbank_suspend_finish);
+
+	return 0;
 }
 
 static const struct platform_suspend_ops highbank_pm_ops = {
-  .enter = highbank_pm_enter,
-  .valid = suspend_valid_only_mem,
+	.enter = highbank_pm_enter,
+	.valid = suspend_valid_only_mem,
 };
 
-static int __init highbank_pm_init (void)
+static int __init highbank_pm_init(void)
 {
-  suspend_set_ops (&highbank_pm_ops);
-  return 0;
+	suspend_set_ops(&highbank_pm_ops);
+	return 0;
 }
-module_init (highbank_pm_init);
+module_init(highbank_pm_init);

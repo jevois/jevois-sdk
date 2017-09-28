@@ -17,9 +17,9 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-extern void __init netx_map_io (void);
-extern void __init netx_init_irq (void);
-extern void netx_restart (char, const char *);
+extern void __init netx_map_io(void);
+extern void __init netx_init_irq(void);
+extern void netx_restart(char, const char *);
 
 struct sys_timer;
 extern struct sys_timer netx_timer;

@@ -10,7 +10,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -47,23 +47,23 @@
 /*
  * Generic virtual read/write.
  */
-#define __arch_getb(a)      (READ_BYTE(a))
-#define __arch_getw(a)      (READ_HWORD(a))
-#define __arch_getl(a)      (READ_WORD(a))
-#define __arch_getq(a)      (READ_DWORD(a))
+#define __arch_getb(a)			(READ_BYTE(a))
+#define __arch_getw(a)			(READ_HWORD(a))
+#define __arch_getl(a)			(READ_WORD(a))
+#define __arch_getq(a)			(READ_DWORD(a))
 
-#define __arch_putb(v,a)    (*(volatile unsigned char *)(a) = (v))
-#define __arch_putw(v,a)    (*(volatile unsigned short *)(a) = (v))
-#define __arch_putl(v,a)    (*(volatile unsigned int *)(a) = (v))
+#define __arch_putb(v,a)		(*(volatile unsigned char *)(a) = (v))
+#define __arch_putw(v,a)		(*(volatile unsigned short *)(a) = (v))
+#define __arch_putl(v,a)		(*(volatile unsigned int *)(a) = (v))
 
-#define __raw_writeb(v,a)   __arch_putb(v,a)
-#define __raw_writew(v,a)   __arch_putw(v,a)
-#define __raw_writel(v,a)   __arch_putl(v,a)
+#define __raw_writeb(v,a)		__arch_putb(v,a)
+#define __raw_writew(v,a)		__arch_putw(v,a)
+#define __raw_writel(v,a)		__arch_putl(v,a)
 
-#define __raw_readb(a)      __arch_getb(a)
-#define __raw_readw(a)      __arch_getw(a)
-#define __raw_readl(a)      __arch_getl(a)
-#define __raw_readq(a)      __arch_getq(a)
+#define __raw_readb(a)			__arch_getb(a)
+#define __raw_readw(a)			__arch_getw(a)
+#define __raw_readl(a)			__arch_getl(a)
+#define __raw_readq(a)			__arch_getq(a)
 
 /*
  * Given a physical address and a length, return a virtual address
@@ -71,28 +71,28 @@
  * properties specified by "flags".
  */
 
-#define MAP_NOCACHE (0)
-#define MAP_WRCOMBINE (0)
-#define MAP_WRBACK  (0)
-#define MAP_WRTHROUGH (0)
+#define MAP_NOCACHE	(0)
+#define MAP_WRCOMBINE	(0)
+#define MAP_WRBACK	(0)
+#define MAP_WRTHROUGH	(0)
 
-static inline void * map_physmem (phys_addr_t paddr, unsigned long len,
-                                  unsigned long flags)
+static inline void *map_physmem(phys_addr_t paddr, unsigned long len,
+				unsigned long flags)
 {
-  return (void *) paddr;
+	return (void *)paddr;
 }
 
 /*
  * Take down a mapping set up by map_physmem().
  */
-static inline void unmap_physmem (void * vaddr, unsigned long flags)
+static inline void unmap_physmem(void *vaddr, unsigned long flags)
 {
 
 }
 
-static inline phys_addr_t virt_to_phys (void * vaddr)
+static inline phys_addr_t virt_to_phys(void * vaddr)
 {
-  return (phys_addr_t) (vaddr);
+	return (phys_addr_t)(vaddr);
 }
 
 #endif

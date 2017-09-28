@@ -27,30 +27,30 @@
 extern const void __nosave_begin, __nosave_end;
 extern const void _text, __end_rodata;
 
-int pfn_is_nosave (unsigned long pfn)
+int pfn_is_nosave(unsigned long pfn)
 {
-  int result;
-  unsigned long nosave_begin_pfn = PFN_DOWN (__pa (&__nosave_begin) );
-  unsigned long nosave_end_pfn = PFN_UP (__pa (&__nosave_end) );
-  unsigned long textsave_begin_pfn = PFN_DOWN (__pa (&_text) );
-  unsigned long textsave_end_pfn = PFN_UP (__pa (&__end_rodata) );
-  
-  result = ( (pfn >= nosave_begin_pfn) && (pfn < nosave_end_pfn) ) ||
-           ( (pfn >= textsave_begin_pfn) && (pfn < textsave_end_pfn) );
-           
-  return result;
+	int result;
+	unsigned long nosave_begin_pfn = PFN_DOWN(__pa(&__nosave_begin));
+	unsigned long nosave_end_pfn = PFN_UP(__pa(&__nosave_end));
+	unsigned long textsave_begin_pfn = PFN_DOWN(__pa(&_text));
+	unsigned long textsave_end_pfn = PFN_UP(__pa(&__end_rodata));
+
+	result = ((pfn >= nosave_begin_pfn) && (pfn < nosave_end_pfn)) ||
+		((pfn >= textsave_begin_pfn) && (pfn < textsave_end_pfn));
+
+	return result;
 }
 
 
-void notrace hibernate_save_processor_state (void)
+void notrace hibernate_save_processor_state(void)
 {
-  WARN_ON (num_online_cpus() != 1);
-  local_fiq_disable();
+	WARN_ON(num_online_cpus() != 1);
+	local_fiq_disable();
 }
 
-void notrace hibernate_restore_processor_state (void)
+void notrace hibernate_restore_processor_state(void)
 {
-  local_fiq_enable();
+	local_fiq_enable();
 }
 
 /*
@@ -66,22 +66,22 @@ void notrace hibernate_restore_processor_state (void)
  *
  * When soft reboot completes, the hibernation snapshot is written out.
  */
-static int notrace arch_save_image (unsigned long unused)
+static int notrace arch_save_image(unsigned long unused)
 {
-  int ret;
-  
-  ret = swsusp_save();
-  if (ret == 0)
-  { soft_restart (virt_to_phys (cpu_resume) ); }
-  return ret;
+	int ret;
+
+	ret = swsusp_save();
+	if (ret == 0)
+		soft_restart(virt_to_phys(cpu_resume));
+	return ret;
 }
 
 /*
  * Save the current CPU state before suspend / poweroff.
  */
-int notrace swsusp_arch_suspend (void)
+int notrace swsusp_arch_suspend(void)
 {
-  return cpu_suspend (0, arch_save_image);
+	return cpu_suspend(0, arch_save_image);
 }
 
 /*
@@ -89,18 +89,18 @@ int notrace swsusp_arch_suspend (void)
  * hibernation image.  Switch to idmap_pgd so the physical page tables
  * are overwritten with the same contents.
  */
-static void notrace arch_restore_image (void * unused)
+static void notrace arch_restore_image(void *unused)
 {
-  struct pbe * pbe;
-  
-  cpu_switch_mm (idmap_pgd, &init_mm);
-  for (pbe = restore_pblist; pbe; pbe = pbe->next)
-  { copy_page (pbe->orig_address, pbe->address); }
-  
-  soft_restart (virt_to_phys (cpu_resume) );
+	struct pbe *pbe;
+
+	cpu_switch_mm(idmap_pgd, &init_mm);
+	for (pbe = restore_pblist; pbe; pbe = pbe->next)
+		copy_page(pbe->orig_address, pbe->address);
+
+	soft_restart(virt_to_phys(cpu_resume));
 }
 
-static u64 resume_stack[PAGE_SIZE / 2 / sizeof (u64)] __nosavedata;
+static u64 resume_stack[PAGE_SIZE/2/sizeof(u64)] __nosavedata;
 
 /*
  * Resume from the hibernation image.
@@ -108,11 +108,11 @@ static u64 resume_stack[PAGE_SIZE / 2 / sizeof (u64)] __nosavedata;
  * and that would make function calls impossible; switch to a temporary
  * stack within the nosave region to avoid that problem.
  */
-int swsusp_arch_resume (void)
+int swsusp_arch_resume(void)
 {
-  extern void call_with_stack (void (*fn) (void *), void * arg, void * sp);
-  call_with_stack (arch_restore_image, 0,
-                   resume_stack + ARRAY_SIZE (resume_stack) );
-  return 0;
+	extern void call_with_stack(void (*fn)(void *), void *arg, void *sp);
+	call_with_stack(arch_restore_image, 0,
+		resume_stack + ARRAY_SIZE(resume_stack));
+	return 0;
 }
 

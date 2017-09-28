@@ -30,20 +30,20 @@
 #include <mach/board.h>
 #include "generic.h"
 
-static void __init at91eb01_init_irq (void)
+static void __init at91eb01_init_irq(void)
 {
-  at91x40_init_interrupts (NULL);
+	at91x40_init_interrupts(NULL);
 }
 
-static void __init at91eb01_init_early (void)
+static void __init at91eb01_init_early(void)
 {
-  at91x40_initialize (40000000);
+	at91x40_initialize(40000000);
 }
 
-MACHINE_START (AT91EB01, "Atmel AT91 EB01")
-/* Maintainer: Greg Ungerer <gerg@snapgear.com> */
-.timer    = &at91x40_timer,
- .init_early = at91eb01_init_early,
-  .init_irq = at91eb01_init_irq,
-   MACHINE_END
+MACHINE_START(AT91EB01, "Atmel AT91 EB01")
+	/* Maintainer: Greg Ungerer <gerg@snapgear.com> */
+	.timer		= &at91x40_timer,
+	.init_early	= at91eb01_init_early,
+	.init_irq	= at91eb01_init_irq,
+MACHINE_END
 

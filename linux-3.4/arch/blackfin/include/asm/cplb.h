@@ -20,7 +20,7 @@
 #define ANOMALY_05000158_WORKAROUND             0x0
 #endif
 
-#define CPLB_COMMON (CPLB_DIRTY | CPLB_SUPV_WR | CPLB_USER_WR | CPLB_USER_RD | CPLB_VALID | ANOMALY_05000158_WORKAROUND)
+#define CPLB_COMMON	(CPLB_DIRTY | CPLB_SUPV_WR | CPLB_USER_WR | CPLB_USER_RD | CPLB_VALID | ANOMALY_05000158_WORKAROUND)
 
 #ifdef CONFIG_BFIN_EXTMEM_WRITEBACK
 #define SDRAM_DGENERIC   (CPLB_L1_CHBL | CPLB_COMMON)
@@ -65,38 +65,38 @@
 
 #define MAX_CPLBS 16
 
-#define CPLB_ENABLE_ICACHE_P  0
-#define CPLB_ENABLE_DCACHE_P  1
-#define CPLB_ENABLE_DCACHE2_P 2
-#define CPLB_ENABLE_CPLBS_P 3 /* Deprecated! */
-#define CPLB_ENABLE_ICPLBS_P  4
-#define CPLB_ENABLE_DCPLBS_P  5
+#define CPLB_ENABLE_ICACHE_P	0
+#define CPLB_ENABLE_DCACHE_P	1
+#define CPLB_ENABLE_DCACHE2_P	2
+#define CPLB_ENABLE_CPLBS_P	3	/* Deprecated! */
+#define CPLB_ENABLE_ICPLBS_P	4
+#define CPLB_ENABLE_DCPLBS_P	5
 
-#define CPLB_ENABLE_ICACHE  (1<<CPLB_ENABLE_ICACHE_P)
-#define CPLB_ENABLE_DCACHE  (1<<CPLB_ENABLE_DCACHE_P)
-#define CPLB_ENABLE_DCACHE2 (1<<CPLB_ENABLE_DCACHE2_P)
-#define CPLB_ENABLE_CPLBS (1<<CPLB_ENABLE_CPLBS_P)
-#define CPLB_ENABLE_ICPLBS  (1<<CPLB_ENABLE_ICPLBS_P)
-#define CPLB_ENABLE_DCPLBS  (1<<CPLB_ENABLE_DCPLBS_P)
-#define CPLB_ENABLE_ANY_CPLBS CPLB_ENABLE_CPLBS | \
-  CPLB_ENABLE_ICPLBS | \
-  CPLB_ENABLE_DCPLBS
+#define CPLB_ENABLE_ICACHE	(1<<CPLB_ENABLE_ICACHE_P)
+#define CPLB_ENABLE_DCACHE	(1<<CPLB_ENABLE_DCACHE_P)
+#define CPLB_ENABLE_DCACHE2	(1<<CPLB_ENABLE_DCACHE2_P)
+#define CPLB_ENABLE_CPLBS	(1<<CPLB_ENABLE_CPLBS_P)
+#define CPLB_ENABLE_ICPLBS	(1<<CPLB_ENABLE_ICPLBS_P)
+#define CPLB_ENABLE_DCPLBS	(1<<CPLB_ENABLE_DCPLBS_P)
+#define CPLB_ENABLE_ANY_CPLBS	CPLB_ENABLE_CPLBS | \
+				CPLB_ENABLE_ICPLBS | \
+				CPLB_ENABLE_DCPLBS
 
-#define CPLB_RELOADED   0x0000
-#define CPLB_NO_UNLOCKED  0x0001
-#define CPLB_NO_ADDR_MATCH  0x0002
-#define CPLB_PROT_VIOL    0x0003
-#define CPLB_UNKNOWN_ERR  0x0004
+#define CPLB_RELOADED		0x0000
+#define CPLB_NO_UNLOCKED	0x0001
+#define CPLB_NO_ADDR_MATCH	0x0002
+#define CPLB_PROT_VIOL		0x0003
+#define CPLB_UNKNOWN_ERR	0x0004
 
-#define CPLB_DEF_CACHE    CPLB_L1_CHBL | CPLB_WT
-#define CPLB_CACHE_ENABLED  CPLB_L1_CHBL | CPLB_DIRTY
+#define CPLB_DEF_CACHE		CPLB_L1_CHBL | CPLB_WT
+#define CPLB_CACHE_ENABLED	CPLB_L1_CHBL | CPLB_DIRTY
 
-#define CPLB_I_PAGE_MGMT  CPLB_LOCK | CPLB_VALID
-#define CPLB_D_PAGE_MGMT  CPLB_LOCK | CPLB_ALL_ACCESS | CPLB_VALID
-#define CPLB_DNOCACHE   CPLB_ALL_ACCESS | CPLB_VALID
-#define CPLB_DDOCACHE   CPLB_DNOCACHE | CPLB_DEF_CACHE
-#define CPLB_INOCACHE     CPLB_USER_RD | CPLB_VALID
-#define CPLB_IDOCACHE     CPLB_INOCACHE | CPLB_L1_CHBL
+#define CPLB_I_PAGE_MGMT	CPLB_LOCK | CPLB_VALID
+#define CPLB_D_PAGE_MGMT	CPLB_LOCK | CPLB_ALL_ACCESS | CPLB_VALID
+#define CPLB_DNOCACHE		CPLB_ALL_ACCESS | CPLB_VALID
+#define CPLB_DDOCACHE		CPLB_DNOCACHE | CPLB_DEF_CACHE
+#define CPLB_INOCACHE   	CPLB_USER_RD | CPLB_VALID
+#define CPLB_IDOCACHE   	CPLB_INOCACHE | CPLB_L1_CHBL
 
 #define FAULT_RW        (1 << 16)
 #define FAULT_USERSUPV  (1 << 17)
@@ -104,46 +104,46 @@
 
 #ifndef __ASSEMBLY__
 
-static inline void _disable_cplb (u32 mmr, u32 mask)
+static inline void _disable_cplb(u32 mmr, u32 mask)
 {
-  u32 ctrl = bfin_read32 (mmr) & ~mask;
-  /* CSYNC to ensure load store ordering */
-  __builtin_bfin_csync();
-  bfin_write32 (mmr, ctrl);
-  __builtin_bfin_ssync();
+	u32 ctrl = bfin_read32(mmr) & ~mask;
+	/* CSYNC to ensure load store ordering */
+	__builtin_bfin_csync();
+	bfin_write32(mmr, ctrl);
+	__builtin_bfin_ssync();
 }
-static inline void disable_cplb (u32 mmr, u32 mask)
+static inline void disable_cplb(u32 mmr, u32 mask)
 {
-  u32 ctrl = bfin_read32 (mmr) & ~mask;
-  CSYNC();
-  bfin_write32 (mmr, ctrl);
-  SSYNC();
+	u32 ctrl = bfin_read32(mmr) & ~mask;
+	CSYNC();
+	bfin_write32(mmr, ctrl);
+	SSYNC();
 }
 #define _disable_dcplb() _disable_cplb(DMEM_CONTROL, ENDCPLB)
 #define  disable_dcplb()  disable_cplb(DMEM_CONTROL, ENDCPLB)
 #define _disable_icplb() _disable_cplb(IMEM_CONTROL, ENICPLB)
 #define  disable_icplb()  disable_cplb(IMEM_CONTROL, ENICPLB)
 
-static inline void _enable_cplb (u32 mmr, u32 mask)
+static inline void _enable_cplb(u32 mmr, u32 mask)
 {
-  u32 ctrl = bfin_read32 (mmr) | mask;
-  /* CSYNC to ensure load store ordering */
-  __builtin_bfin_csync();
-  bfin_write32 (mmr, ctrl);
-  __builtin_bfin_ssync();
+	u32 ctrl = bfin_read32(mmr) | mask;
+	/* CSYNC to ensure load store ordering */
+	__builtin_bfin_csync();
+	bfin_write32(mmr, ctrl);
+	__builtin_bfin_ssync();
 }
-static inline void enable_cplb (u32 mmr, u32 mask)
+static inline void enable_cplb(u32 mmr, u32 mask)
 {
-  u32 ctrl = bfin_read32 (mmr) | mask;
-  CSYNC();
-  bfin_write32 (mmr, ctrl);
-  SSYNC();
+	u32 ctrl = bfin_read32(mmr) | mask;
+	CSYNC();
+	bfin_write32(mmr, ctrl);
+	SSYNC();
 }
 #define _enable_dcplb()  _enable_cplb(DMEM_CONTROL, ENDCPLB)
 #define  enable_dcplb()   enable_cplb(DMEM_CONTROL, ENDCPLB)
 #define _enable_icplb()  _enable_cplb(IMEM_CONTROL, ENICPLB)
 #define  enable_icplb()   enable_cplb(IMEM_CONTROL, ENICPLB)
 
-#endif    /* __ASSEMBLY__ */
+#endif		/* __ASSEMBLY__ */
 
-#endif    /* _CPLB_H */
+#endif		/* _CPLB_H */

@@ -14,12 +14,12 @@
 #ifndef __PICOXCELL_MAP_H__
 #define __PICOXCELL_MAP_H__
 
-#define PHYS_TO_IO(x)   (((x) & 0x00ffffff) | 0xfe000000)
+#define PHYS_TO_IO(x)		(((x) & 0x00ffffff) | 0xfe000000)
 
 #ifdef __ASSEMBLY__
-#define IO_ADDRESS(x)   PHYS_TO_IO((x))
+#define IO_ADDRESS(x)		PHYS_TO_IO((x))
 #else
-#define IO_ADDRESS(x)   (void __iomem __force *)(PHYS_TO_IO((x)))
+#define IO_ADDRESS(x)		(void __iomem __force *)(PHYS_TO_IO((x)))
 #endif
 
 #endif /* __PICOXCELL_MAP_H__ */

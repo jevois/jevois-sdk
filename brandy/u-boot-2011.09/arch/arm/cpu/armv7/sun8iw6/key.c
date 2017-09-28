@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -31,101 +31,100 @@
 #include <sys_config.h>
 #include <smc.h>
 
-int sunxi_key_init (void)
+int sunxi_key_init(void)
 {
-  uint reg_val;
-  
-  reg_val = smc_readl (SUNXI_KEY_ADC_CRTL);
-  reg_val &= ~ ( (7 << 1) | (0xffU << 24) );
-  reg_val |=  LRADC_HOLD_EN;
-  reg_val |=  LRADC_EN;
-  smc_writel (reg_val, SUNXI_KEY_ADC_CRTL);
-  
-  /* disable all key irq */
-  smc_writel (0, SUNXI_KEY_ADC_INTC);
-  smc_writel (0x1f1f, SUNXI_KEY_ADC_INTS);
-  
-  return 0;
+    uint reg_val;
+
+	reg_val = smc_readl(SUNXI_KEY_ADC_CRTL);
+    reg_val &= ~((7<<1) | (0xffU << 24));
+	reg_val |=  LRADC_HOLD_EN;
+	reg_val |=  LRADC_EN;
+	smc_writel(reg_val, SUNXI_KEY_ADC_CRTL);
+
+	/* disable all key irq */
+	smc_writel(0, SUNXI_KEY_ADC_INTC);
+	smc_writel(0x1f1f, SUNXI_KEY_ADC_INTS);
+
+	return 0;
 }
 
-int sunxi_key_exit (void)
+int sunxi_key_exit(void)
 {
-  smc_writel (0, SUNXI_KEY_ADC_CRTL);
-  /* disable all key irq */
-  smc_writel (0, SUNXI_KEY_ADC_INTC);
-  smc_writel (0x1f1f, SUNXI_KEY_ADC_INTS);
-  
-  return 0;
+    smc_writel(0, SUNXI_KEY_ADC_CRTL);
+	/* disable all key irq */
+	smc_writel(0, SUNXI_KEY_ADC_INTC);
+	smc_writel(0x1f1f, SUNXI_KEY_ADC_INTS);
+
+	return 0;
 }
 
 
-int sunxi_key_read (void)
+int sunxi_key_read(void)
 {
-  u32 ints;
-  int key = -1;
-  int keyen_flag = 1;
-  
-  if ( !script_parser_fetch ("key_detect_en", "keyen_flag", &keyen_flag, 1) )
-  {
-    if (!keyen_flag)
-    { return -1; }
-  }
-  
-  ints = smc_readl (SUNXI_KEY_ADC_INTS);
-  /* clear the pending data */
-  smc_writel (ints & 0x1f, SUNXI_KEY_ADC_INTS);
-  /* if there is already data pending,
-   read it */
-  if ( ints & ADC0_KEYDOWN_PENDING)
-  {
-    if (ints & ADC0_DATA_PENDING)
+	u32 ints;
+	int key = -1;
+    int keyen_flag = 1;
+
+	if( !script_parser_fetch("key_detect_en","keyen_flag",&keyen_flag,1) )
+	{
+		if(!keyen_flag)
+			return -1;
+	}
+
+	ints = smc_readl(SUNXI_KEY_ADC_INTS);
+	/* clear the pending data */
+	smc_writel(ints & 0x1f, SUNXI_KEY_ADC_INTS);
+	/* if there is already data pending,
+	 read it */
+	if( ints & ADC0_KEYDOWN_PENDING)
+	{
+		if(ints & ADC0_DATA_PENDING)
+		{
+			key = smc_readl(SUNXI_KEY_ADC_DATA0) & 0x3f;
+			if(!key)
+			{
+				key = -1;
+			}
+		}
+	}
+	else if(ints & ADC0_DATA_PENDING)
+	{
+		key = smc_readl(SUNXI_KEY_ADC_DATA0) & 0x3f;
+		if(!key)
+		{
+			key = -1;
+		}
+	}
+	if(key > 0)
+		printf("key pressed value=0x%x\n", key);
+
+	return key;
+}
+
+int do_key_test(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
+{
+	struct sunxi_lradc *sunxi_key_base = (struct sunxi_lradc *)SUNXI_LRADC_BASE;
+	int power_key;
+
+	puts("press a key:\n");
+	sunxi_key_base->ints = 0x1f1f;
+
+    while(!ctrlc())
     {
-      key = smc_readl (SUNXI_KEY_ADC_DATA0) & 0x3f;
-      if (!key)
-      {
-        key = -1;
-      }
-    }
-  }
-  else
-    if (ints & ADC0_DATA_PENDING)
-    {
-      key = smc_readl (SUNXI_KEY_ADC_DATA0) & 0x3f;
-      if (!key)
-      {
-        key = -1;
-      }
-    }
-  if (key > 0)
-  { printf ("key pressed value=0x%x\n", key); }
+		sunxi_key_read();
+		power_key = axp_probe_key();
+		if(power_key > 0)
+		{
+			break;
+		}
+	}
 
-  return key;
+	return 0;
+
 }
 
-int do_key_test (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
-{
-  struct sunxi_lradc * sunxi_key_base = (struct sunxi_lradc *) SUNXI_LRADC_BASE;
-  int power_key;
-  
-  puts ("press a key:\n");
-  sunxi_key_base->ints = 0x1f1f;
-  
-  while (!ctrlc() )
-  {
-    sunxi_key_read();
-    power_key = axp_probe_key();
-    if (power_key > 0)
-    {
-      break;
-    }
-  }
-  
-  return 0;
-  
-}
-
-U_BOOT_CMD (
-  key_test, 1, 0, do_key_test,
-  "Test the key value\n",
-  ""
+U_BOOT_CMD(
+	key_test, 1, 0,	do_key_test,
+	"Test the key value\n",
+	""
 );

@@ -1,7 +1,7 @@
 /* linux/arch/arm/mach-s5pc100/include/mach/regs-irq.h
  *
  * Copyright 2009 Samsung Electronics Co.
- *  Byungho Min <bhmin@samsung.com>
+ *	Byungho Min <bhmin@samsung.com>
  *
  * S5PC100 - IRQ register definitions
  *

@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -36,39 +36,39 @@
 /******************************************************************************/
 typedef struct _Boot_file_head
 {
-  __u32  jump_instruction;  
-  __u8   magic[MAGIC_SIZE]; 
-  __u32  check_sum;         
-  __u32  length;            
-  __u32  pub_head_size;     
-  special_gpio_cfg  a15_power_gpio; 
-  __u32  ret_addr;          
-  __u32  run_addr;          
-  __u32  boot_cpu;          
-  __u8   platform[8];       
-} boot_file_head_t;
+	__u32  jump_instruction;  
+	__u8   magic[MAGIC_SIZE]; 
+	__u32  check_sum;         
+	__u32  length;            
+	__u32  pub_head_size;     
+	special_gpio_cfg  a15_power_gpio; 
+	__u32  ret_addr;          
+	__u32  run_addr;          
+	__u32  boot_cpu;          
+	__u8   platform[8];       
+}boot_file_head_t;
 /******************************************************************************/
 /*                              file head of Boot0                            */
 /******************************************************************************/
 typedef struct _boot0_private_head_t
 {
-  __u32                       prvt_head_size;
-  __u32                        debug_mode;      
-  unsigned int                dram_para[32];;        
-  __s32           uart_port;              // UART控制器编号
-  normal_gpio_cfg             uart_ctrl[2];           // UART控制器(调试打印口)数据信息
-  __s32                       enable_jtag;           
-  normal_gpio_cfg             jtag_gpio[5];           // 保存JTAG的全部GPIO信息
-  normal_gpio_cfg             storage_gpio[32];       // 存储设备 GPIO信息
-  char                        storage_data[512 - sizeof (normal_gpio_cfg) * 32];     // 用户保留数据信息
-} boot0_private_head_t;
+	__u32                       prvt_head_size;
+	__u32                        debug_mode;      
+	unsigned int                dram_para[32];;        
+	__s32						uart_port;              // UART控制器编号
+	normal_gpio_cfg             uart_ctrl[2];           // UART控制器(调试打印口)数据信息
+	__s32                       enable_jtag;           
+    normal_gpio_cfg	            jtag_gpio[5];           // 保存JTAG的全部GPIO信息
+    normal_gpio_cfg             storage_gpio[32];       // 存储设备 GPIO信息
+    char                        storage_data[512 - sizeof(normal_gpio_cfg) * 32];      // 用户保留数据信息
+}boot0_private_head_t;
 
 
 typedef struct _boot0_file_head_t
 {
-  boot_file_head_t      boot_head;
-  boot0_private_head_t  prvt_head;
-} boot0_file_head_t;
+	boot_file_head_t      boot_head;
+	boot0_private_head_t  prvt_head;
+}boot0_file_head_t;
 
 
 #endif    

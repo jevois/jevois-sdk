@@ -2,7 +2,7 @@
  * Copyright (C) 2011 Google, Inc.
  *
  * Author:
- *  Colin Cross <ccross@android.com>
+ *	Colin Cross <ccross@android.com>
  *
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
@@ -22,17 +22,17 @@
 #include <linux/spinlock.h>
 #include <linux/syscore_ops.h>
 
-static DEFINE_RWLOCK (cpu_pm_notifier_lock);
-static RAW_NOTIFIER_HEAD (cpu_pm_notifier_chain);
+static DEFINE_RWLOCK(cpu_pm_notifier_lock);
+static RAW_NOTIFIER_HEAD(cpu_pm_notifier_chain);
 
-static int cpu_pm_notify (enum cpu_pm_event event, int nr_to_call, int * nr_calls)
+static int cpu_pm_notify(enum cpu_pm_event event, int nr_to_call, int *nr_calls)
 {
-  int ret;
-  
-  ret = __raw_notifier_call_chain (&cpu_pm_notifier_chain, event, NULL,
-                                   nr_to_call, nr_calls);
-                                   
-  return notifier_to_errno (ret);
+	int ret;
+
+	ret = __raw_notifier_call_chain(&cpu_pm_notifier_chain, event, NULL,
+		nr_to_call, nr_calls);
+
+	return notifier_to_errno(ret);
 }
 
 /**
@@ -45,18 +45,18 @@ static int cpu_pm_notify (enum cpu_pm_event event, int nr_to_call, int * nr_call
  * This function may sleep, and has the same return conditions as
  * raw_notifier_chain_register.
  */
-int cpu_pm_register_notifier (struct notifier_block * nb)
+int cpu_pm_register_notifier(struct notifier_block *nb)
 {
-  unsigned long flags;
-  int ret;
-  
-  write_lock_irqsave (&cpu_pm_notifier_lock, flags);
-  ret = raw_notifier_chain_register (&cpu_pm_notifier_chain, nb);
-  write_unlock_irqrestore (&cpu_pm_notifier_lock, flags);
-  
-  return ret;
+	unsigned long flags;
+	int ret;
+
+	write_lock_irqsave(&cpu_pm_notifier_lock, flags);
+	ret = raw_notifier_chain_register(&cpu_pm_notifier_chain, nb);
+	write_unlock_irqrestore(&cpu_pm_notifier_lock, flags);
+
+	return ret;
 }
-EXPORT_SYMBOL_GPL (cpu_pm_register_notifier);
+EXPORT_SYMBOL_GPL(cpu_pm_register_notifier);
 
 /**
  * cpu_pm_unregister_notifier - unregister a driver with cpu_pm
@@ -67,18 +67,18 @@ EXPORT_SYMBOL_GPL (cpu_pm_register_notifier);
  * This function may sleep, and has the same return conditions as
  * raw_notifier_chain_unregister.
  */
-int cpu_pm_unregister_notifier (struct notifier_block * nb)
+int cpu_pm_unregister_notifier(struct notifier_block *nb)
 {
-  unsigned long flags;
-  int ret;
-  
-  write_lock_irqsave (&cpu_pm_notifier_lock, flags);
-  ret = raw_notifier_chain_unregister (&cpu_pm_notifier_chain, nb);
-  write_unlock_irqrestore (&cpu_pm_notifier_lock, flags);
-  
-  return ret;
+	unsigned long flags;
+	int ret;
+
+	write_lock_irqsave(&cpu_pm_notifier_lock, flags);
+	ret = raw_notifier_chain_unregister(&cpu_pm_notifier_chain, nb);
+	write_unlock_irqrestore(&cpu_pm_notifier_lock, flags);
+
+	return ret;
 }
-EXPORT_SYMBOL_GPL (cpu_pm_unregister_notifier);
+EXPORT_SYMBOL_GPL(cpu_pm_unregister_notifier);
 
 /**
  * cpm_pm_enter - CPU low power entry notifier
@@ -95,24 +95,24 @@ EXPORT_SYMBOL_GPL (cpu_pm_unregister_notifier);
  *
  * Return conditions are same as __raw_notifier_call_chain.
  */
-int cpu_pm_enter (void)
+int cpu_pm_enter(void)
 {
-  int nr_calls;
-  int ret = 0;
-  
-  read_lock (&cpu_pm_notifier_lock);
-  ret = cpu_pm_notify (CPU_PM_ENTER, -1, &nr_calls);
-  if (ret)
-    /*
-     * Inform listeners (nr_calls - 1) about failure of CPU PM
-     * PM entry who are notified earlier to prepare for it.
-     */
-  { cpu_pm_notify (CPU_PM_ENTER_FAILED, nr_calls - 1, NULL); }
-  read_unlock (&cpu_pm_notifier_lock);
-  
-  return ret;
+	int nr_calls;
+	int ret = 0;
+
+	read_lock(&cpu_pm_notifier_lock);
+	ret = cpu_pm_notify(CPU_PM_ENTER, -1, &nr_calls);
+	if (ret)
+		/*
+		 * Inform listeners (nr_calls - 1) about failure of CPU PM
+		 * PM entry who are notified earlier to prepare for it.
+		 */
+		cpu_pm_notify(CPU_PM_ENTER_FAILED, nr_calls - 1, NULL);
+	read_unlock(&cpu_pm_notifier_lock);
+
+	return ret;
 }
-EXPORT_SYMBOL_GPL (cpu_pm_enter);
+EXPORT_SYMBOL_GPL(cpu_pm_enter);
 
 /**
  * cpm_pm_exit - CPU low power exit notifier
@@ -126,17 +126,17 @@ EXPORT_SYMBOL_GPL (cpu_pm_enter);
  *
  * Return conditions are same as __raw_notifier_call_chain.
  */
-int cpu_pm_exit (void)
+int cpu_pm_exit(void)
 {
-  int ret;
-  
-  read_lock (&cpu_pm_notifier_lock);
-  ret = cpu_pm_notify (CPU_PM_EXIT, -1, NULL);
-  read_unlock (&cpu_pm_notifier_lock);
-  
-  return ret;
+	int ret;
+
+	read_lock(&cpu_pm_notifier_lock);
+	ret = cpu_pm_notify(CPU_PM_EXIT, -1, NULL);
+	read_unlock(&cpu_pm_notifier_lock);
+
+	return ret;
 }
-EXPORT_SYMBOL_GPL (cpu_pm_exit);
+EXPORT_SYMBOL_GPL(cpu_pm_exit);
 
 /**
  * cpm_cluster_pm_enter - CPU cluster low power entry notifier
@@ -154,24 +154,24 @@ EXPORT_SYMBOL_GPL (cpu_pm_exit);
  *
  * Return conditions are same as __raw_notifier_call_chain.
  */
-int cpu_cluster_pm_enter (void)
+int cpu_cluster_pm_enter(void)
 {
-  int nr_calls;
-  int ret = 0;
-  
-  read_lock (&cpu_pm_notifier_lock);
-  ret = cpu_pm_notify (CPU_CLUSTER_PM_ENTER, -1, &nr_calls);
-  if (ret)
-    /*
-     * Inform listeners (nr_calls - 1) about failure of CPU cluster
-     * PM entry who are notified earlier to prepare for it.
-     */
-  { cpu_pm_notify (CPU_CLUSTER_PM_ENTER_FAILED, nr_calls - 1, NULL); }
-  read_unlock (&cpu_pm_notifier_lock);
-  
-  return ret;
+	int nr_calls;
+	int ret = 0;
+
+	read_lock(&cpu_pm_notifier_lock);
+	ret = cpu_pm_notify(CPU_CLUSTER_PM_ENTER, -1, &nr_calls);
+	if (ret)
+		/*
+		 * Inform listeners (nr_calls - 1) about failure of CPU cluster
+		 * PM entry who are notified earlier to prepare for it.
+		 */
+		cpu_pm_notify(CPU_CLUSTER_PM_ENTER_FAILED, nr_calls - 1, NULL);
+	read_unlock(&cpu_pm_notifier_lock);
+
+	return ret;
 }
-EXPORT_SYMBOL_GPL (cpu_cluster_pm_enter);
+EXPORT_SYMBOL_GPL(cpu_cluster_pm_enter);
 
 /**
  * cpm_cluster_pm_exit - CPU cluster low power exit notifier
@@ -188,46 +188,46 @@ EXPORT_SYMBOL_GPL (cpu_cluster_pm_enter);
  *
  * Return conditions are same as __raw_notifier_call_chain.
  */
-int cpu_cluster_pm_exit (void)
+int cpu_cluster_pm_exit(void)
 {
-  int ret;
-  
-  read_lock (&cpu_pm_notifier_lock);
-  ret = cpu_pm_notify (CPU_CLUSTER_PM_EXIT, -1, NULL);
-  read_unlock (&cpu_pm_notifier_lock);
-  
-  return ret;
+	int ret;
+
+	read_lock(&cpu_pm_notifier_lock);
+	ret = cpu_pm_notify(CPU_CLUSTER_PM_EXIT, -1, NULL);
+	read_unlock(&cpu_pm_notifier_lock);
+
+	return ret;
 }
-EXPORT_SYMBOL_GPL (cpu_cluster_pm_exit);
+EXPORT_SYMBOL_GPL(cpu_cluster_pm_exit);
 
 #ifdef CONFIG_PM
-static int cpu_pm_suspend (void)
+static int cpu_pm_suspend(void)
 {
-  int ret;
-  
-  ret = cpu_pm_enter();
-  if (ret)
-  { return ret; }
-  
-  ret = cpu_cluster_pm_enter();
-  return ret;
+	int ret;
+
+	ret = cpu_pm_enter();
+	if (ret)
+		return ret;
+
+	ret = cpu_cluster_pm_enter();
+	return ret;
 }
 
-static void cpu_pm_resume (void)
+static void cpu_pm_resume(void)
 {
-  cpu_cluster_pm_exit();
-  cpu_pm_exit();
+	cpu_cluster_pm_exit();
+	cpu_pm_exit();
 }
 
 static struct syscore_ops cpu_pm_syscore_ops = {
-  .suspend = cpu_pm_suspend,
-  .resume = cpu_pm_resume,
+	.suspend = cpu_pm_suspend,
+	.resume = cpu_pm_resume,
 };
 
-static int cpu_pm_init (void)
+static int cpu_pm_init(void)
 {
-  register_syscore_ops (&cpu_pm_syscore_ops);
-  return 0;
+	register_syscore_ops(&cpu_pm_syscore_ops);
+	return 0;
 }
-core_initcall (cpu_pm_init);
+core_initcall(cpu_pm_init);
 #endif

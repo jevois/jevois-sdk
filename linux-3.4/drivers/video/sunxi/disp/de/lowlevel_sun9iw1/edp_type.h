@@ -53,62 +53,62 @@
 
 struct video_timming
 {
-  unsigned int pclk;
-  unsigned int x;
-  unsigned int y;
-  unsigned int ht;
-  unsigned int hbp;
-  unsigned int hpsw;
-  unsigned int vt;
-  unsigned int vbp;
-  unsigned int vpsw;
-  unsigned int fps;
+	unsigned int pclk;
+	unsigned int x;
+	unsigned int y;
+	unsigned int ht;
+	unsigned int hbp;
+	unsigned int hpsw;
+	unsigned int vt;
+	unsigned int vbp;
+	unsigned int vpsw;
+	unsigned int fps;
 };
 
 struct sink_info
 {
-  unsigned int dp_rev;
-  unsigned int dp_enhanced_frame_cap;
-  unsigned int dp_max_link_rate;
-  unsigned int dp_max_lane_count;
-  unsigned int eDP_capable;
+	unsigned int dp_rev;
+	unsigned int dp_enhanced_frame_cap;
+	unsigned int dp_max_link_rate;
+	unsigned int dp_max_lane_count;
+	unsigned int eDP_capable;
 };
 
 struct training_info
 {
-  unsigned int swing_lv;
-  unsigned int preemp_lv;
-  unsigned int postcur2_lv;
+	unsigned int swing_lv;
+	unsigned int preemp_lv;
+	unsigned int postcur2_lv;
 };
 
 enum edp_int
 {
-  LINE0 = BIT31,
-  LINE1 = BIT30,
-  FIFO_EMPTY = BIT29,
+	LINE0 = BIT31,
+	LINE1 = BIT30,
+	FIFO_EMPTY = BIT29,
 };
 
 struct edp_para
 {
-  unsigned int lane_count;
-  unsigned int start_delay;
-  unsigned int bit_rate;
-  unsigned int swing_level;
+	unsigned int lane_count;
+	unsigned int start_delay;
+	unsigned int bit_rate;
+	unsigned int swing_level;
 };
 
-typedef void (*edp_print_string) (const char * c);
-typedef void (*edp_print_value) (unsigned int val);
+typedef void (*edp_print_string)(const char *c);
+typedef void (*edp_print_value)(unsigned int val);
 
-extern int edp_set_base_address (unsigned int address);
-extern int edp_set_print_str_func (edp_print_string print);
-extern int edp_set_print_val_func (edp_print_value print);
-extern int edp_enable (struct edp_para * para, struct video_timming * tmg);
-extern void edp_disable (void);
-extern void edp_set_start_delay (unsigned int delay);
-extern unsigned int edp_get_start_delay (void);
-extern void edp_int_enable (enum edp_int intterupt);
-extern void edp_int_disable (enum edp_int intterupt);
-extern unsigned int edp_get_int_status (enum edp_int intterupt);
-extern void edp_clr_int_status (enum edp_int intterupt);
+extern int edp_set_base_address(unsigned int address);
+extern int edp_set_print_str_func(edp_print_string print);
+extern int edp_set_print_val_func(edp_print_value print);
+extern int edp_enable(struct edp_para *para, struct video_timming *tmg);
+extern void edp_disable(void);
+extern void edp_set_start_delay(unsigned int delay);
+extern unsigned int edp_get_start_delay(void);
+extern void edp_int_enable(enum edp_int intterupt);
+extern void edp_int_disable(enum edp_int intterupt);
+extern unsigned int edp_get_int_status(enum edp_int intterupt);
+extern void edp_clr_int_status(enum edp_int intterupt);
 
 #endif    

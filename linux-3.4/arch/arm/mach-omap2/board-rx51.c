@@ -36,26 +36,26 @@
 
 #define RX51_GPIO_SLEEP_IND 162
 
-extern void rx51_video_mem_init (void);
+extern void rx51_video_mem_init(void);
 
 static struct gpio_led gpio_leds[] = {
-  {
-    .name = "sleep_ind",
-    .gpio = RX51_GPIO_SLEEP_IND,
-  },
+	{
+		.name	= "sleep_ind",
+		.gpio	= RX51_GPIO_SLEEP_IND,
+	},
 };
 
 static struct gpio_led_platform_data gpio_led_info = {
-  .leds   = gpio_leds,
-  .num_leds = ARRAY_SIZE (gpio_leds),
+	.leds		= gpio_leds,
+	.num_leds	= ARRAY_SIZE(gpio_leds),
 };
 
 static struct platform_device leds_gpio = {
-  .name = "leds-gpio",
-  .id = -1,
-  .dev  = {
-    .platform_data  = &gpio_led_info,
-  },
+	.name	= "leds-gpio",
+	.id	= -1,
+	.dev	= {
+		.platform_data	= &gpio_led_info,
+	},
 };
 
 /*
@@ -63,72 +63,72 @@ static struct platform_device leds_gpio = {
  * The 'exit_latency' field is the sum of sleep and wake-up latencies.
  */
 static struct cpuidle_params rx51_cpuidle_params[] = {
-  /* C1 */
-  {110 + 162, 5 , 1},
-  /* C2 */
-  {106 + 180, 309, 1},
-  /* C3 */
-  {107 + 410, 46057, 0},
-  /* C4 */
-  {121 + 3374, 46057, 0},
-  /* C5 */
-  {855 + 1146, 46057, 1},
-  /* C6 */
-  {7580 + 4134, 484329, 0},
-  /* C7 */
-  {7505 + 15274, 484329, 1},
+	/* C1 */
+	{110 + 162, 5 , 1},
+	/* C2 */
+	{106 + 180, 309, 1},
+	/* C3 */
+	{107 + 410, 46057, 0},
+	/* C4 */
+	{121 + 3374, 46057, 0},
+	/* C5 */
+	{855 + 1146, 46057, 1},
+	/* C6 */
+	{7580 + 4134, 484329, 0},
+	/* C7 */
+	{7505 + 15274, 484329, 1},
 };
 
-extern void __init rx51_peripherals_init (void);
+extern void __init rx51_peripherals_init(void);
 
 #ifdef CONFIG_OMAP_MUX
 static struct omap_board_mux board_mux[] __initdata = {
-  { .reg_offset = OMAP_MUX_TERMINATOR },
+	{ .reg_offset = OMAP_MUX_TERMINATOR },
 };
 #endif
 
 static struct omap_musb_board_data musb_board_data = {
-  .interface_type   = MUSB_INTERFACE_ULPI,
-  .mode     = MUSB_PERIPHERAL,
-  .power      = 0,
+	.interface_type		= MUSB_INTERFACE_ULPI,
+	.mode			= MUSB_PERIPHERAL,
+	.power			= 0,
 };
 
-static void __init rx51_init (void)
+static void __init rx51_init(void)
 {
-  struct omap_sdrc_params * sdrc_params;
-  
-  omap3_mux_init (board_mux, OMAP_PACKAGE_CBB);
-  omap3_pm_init_cpuidle (rx51_cpuidle_params);
-  omap_serial_init();
-  
-  sdrc_params = nokia_get_sdram_timings();
-  omap_sdrc_init (sdrc_params, sdrc_params);
-  
-  usb_musb_init (&musb_board_data);
-  rx51_peripherals_init();
-  
-  /* Ensure SDRC pins are mux'd for self-refresh */
-  omap_mux_init_signal ("sdrc_cke0", OMAP_PIN_OUTPUT);
-  omap_mux_init_signal ("sdrc_cke1", OMAP_PIN_OUTPUT);
-  
-  platform_device_register (&leds_gpio);
+	struct omap_sdrc_params *sdrc_params;
+
+	omap3_mux_init(board_mux, OMAP_PACKAGE_CBB);
+	omap3_pm_init_cpuidle(rx51_cpuidle_params);
+	omap_serial_init();
+
+	sdrc_params = nokia_get_sdram_timings();
+	omap_sdrc_init(sdrc_params, sdrc_params);
+
+	usb_musb_init(&musb_board_data);
+	rx51_peripherals_init();
+
+	/* Ensure SDRC pins are mux'd for self-refresh */
+	omap_mux_init_signal("sdrc_cke0", OMAP_PIN_OUTPUT);
+	omap_mux_init_signal("sdrc_cke1", OMAP_PIN_OUTPUT);
+
+	platform_device_register(&leds_gpio);
 }
 
-static void __init rx51_reserve (void)
+static void __init rx51_reserve(void)
 {
-  rx51_video_mem_init();
-  omap_reserve();
+	rx51_video_mem_init();
+	omap_reserve();
 }
 
-MACHINE_START (NOKIA_RX51, "Nokia RX-51 board")
-/* Maintainer: Lauri Leukkunen <lauri.leukkunen@nokia.com> */
-.atag_offset  = 0x100,
- .reserve  = rx51_reserve,
-  .map_io   = omap3_map_io,
-   .init_early = omap3430_init_early,
-    .init_irq = omap3_init_irq,
-     .handle_irq = omap3_intc_handle_irq,
-      .init_machine = rx51_init,
-       .timer    = &omap3_timer,
-        .restart  = omap_prcm_restart,
-         MACHINE_END
+MACHINE_START(NOKIA_RX51, "Nokia RX-51 board")
+	/* Maintainer: Lauri Leukkunen <lauri.leukkunen@nokia.com> */
+	.atag_offset	= 0x100,
+	.reserve	= rx51_reserve,
+	.map_io		= omap3_map_io,
+	.init_early	= omap3430_init_early,
+	.init_irq	= omap3_init_irq,
+	.handle_irq	= omap3_intc_handle_irq,
+	.init_machine	= rx51_init,
+	.timer		= &omap3_timer,
+	.restart	= omap_prcm_restart,
+MACHINE_END

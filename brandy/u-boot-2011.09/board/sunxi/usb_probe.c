@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -47,9 +47,9 @@ static int         usb_working = 0;
 *
 ************************************************************************************************************
 */
-static unsigned int usb_get_bus_interrupt_status (void)
+static unsigned int usb_get_bus_interrupt_status(void)
 {
-  return readl (SUNXI_USBOTG_BASE + USB_bINTRUSB_OFF) & 0xff;
+	return readl(SUNXI_USBOTG_BASE + USB_bINTRUSB_OFF) & 0xff;
 }
 /*
 ************************************************************************************************************
@@ -67,9 +67,9 @@ static unsigned int usb_get_bus_interrupt_status (void)
 *
 ************************************************************************************************************
 */
-static void usb_clear_bus_interrupt_status (unsigned int bm)
+static void usb_clear_bus_interrupt_status(unsigned int bm)
 {
-  writel (bm & 0xff, SUNXI_USBOTG_BASE + USB_bINTRUSB_OFF);
+	writel(bm&0xff, SUNXI_USBOTG_BASE + USB_bINTRUSB_OFF);
 }
 /*
 ************************************************************************************************************
@@ -87,28 +87,28 @@ static void usb_clear_bus_interrupt_status (unsigned int bm)
 *
 ************************************************************************************************************
 */
-static void usb_drive_vbus (int vbus, int index)
+static void usb_drive_vbus(int vbus, int index)
 {
-  unsigned int temp;
-  if (index == 0)
-  {
-    temp = readl (0x01c20800 + 0x100);
-    temp &= ~ (0x7 << 24);
-    temp |= (0x1 << 24);
-    writel (temp, 0x01c20800 + 0x100);
-    if (vbus)
-    {
-      temp = readl (0x01c20800 + 0x10c);
-      temp |= (0x1 << 14);
-      writel (temp, 0x01c20800 + 0x10c);
-    }
-    else
-    {
-      temp = readl (0x01c20800 + 0x10c);
-      temp &= ~ (0x1 << 14);
-      writel (temp, 0x01c20800 + 0x10c);
-    }
-  }
+	unsigned int temp;
+	if(index == 0)
+	{
+		temp = readl(0x01c20800+0x100);
+		temp &= ~(0x7<<24);
+		temp |= (0x1<<24);
+		writel(temp, 0x01c20800+0x100);
+		if(vbus)
+		{
+			temp = readl(0x01c20800+0x10c);
+			temp |= (0x1<<14);
+			writel(temp, 0x01c20800+0x10c);
+		}
+		else
+		{
+			temp = readl(0x01c20800+0x10c);
+			temp &= ~(0x1<<14);
+			writel(temp, 0x01c20800+0x10c);
+		}
+	}
 }
 /*
 ************************************************************************************************************
@@ -126,21 +126,21 @@ static void usb_drive_vbus (int vbus, int index)
 *
 ************************************************************************************************************
 */
-static void usb_force_id (int id)
+static void usb_force_id(int id)
 {
-  uint temp;
-  
-  temp = readl (SUNXI_USBOTG_BASE + USB_wISCR_OFF);
-  temp |= (1 << 15);
-  if (id)
-  {
-    temp |= (1 << 14);
-  }
-  else
-  {
-    temp &= ~ (1 << 14);
-  }
-  writel (temp, SUNXI_USBOTG_BASE + USB_wISCR_OFF);
+	uint temp;
+
+	temp = readl(SUNXI_USBOTG_BASE + USB_wISCR_OFF);
+	temp |= (1 << 15);
+	if(id)
+	{
+		temp |= (1 << 14);
+	}
+	else
+	{
+		temp &= ~(1 << 14);
+	}
+	writel(temp, SUNXI_USBOTG_BASE + USB_wISCR_OFF);
 }
 /*
 ************************************************************************************************************
@@ -158,20 +158,20 @@ static void usb_force_id (int id)
 *
 ************************************************************************************************************
 */
-static void usb_high_speed_set (int on_off)
+static void usb_high_speed_set(int on_off)
 {
-  uint temp;
-  
-  temp = readl (SUNXI_USBOTG_BASE + USB_bPOWER_OFF);
-  if (on_off)
-  {
-    temp |= (0x1 << 5);
-  }
-  else
-  {
-    temp &= ~ (0x1 << 5);
-  }
-  writel (temp, SUNXI_USBOTG_BASE + USB_bPOWER_OFF);
+	uint temp;
+
+	temp = readl(SUNXI_USBOTG_BASE + USB_bPOWER_OFF);
+	if(on_off)
+	{
+		temp |= (0x1<<5);
+	}
+	else
+	{
+		temp &= ~(0x1<<5);
+	}
+	writel(temp, SUNXI_USBOTG_BASE + USB_bPOWER_OFF);
 }
 /*
 ************************************************************************************************************
@@ -189,13 +189,13 @@ static void usb_high_speed_set (int on_off)
 *
 ************************************************************************************************************
 */
-static void usb_suspendm_enable (void)
+static void usb_suspendm_enable(void)
 {
-  uint temp;
-  
-  temp = readl (SUNXI_USBOTG_BASE + USB_bPOWER_OFF);
-  temp |= (0x1 << 0);
-  writel (temp, SUNXI_USBOTG_BASE + USB_bPOWER_OFF);
+	uint temp;
+
+	temp = readl(SUNXI_USBOTG_BASE + USB_bPOWER_OFF);
+	temp |= (0x1<<0);
+	writel(temp, SUNXI_USBOTG_BASE + USB_bPOWER_OFF);
 }
 /*
 ************************************************************************************************************
@@ -213,14 +213,14 @@ static void usb_suspendm_enable (void)
 *
 ************************************************************************************************************
 */
-static void usb_vbus_src (int src)
+static void usb_vbus_src(int src)
 {
-  uint temp;
-  
-  temp = readl (SUNXI_USBOTG_BASE + USB_wISCR_OFF);
-  temp &= ~ (0x3 << 10);
-  temp |=  ( (src & 0x03) << 10);
-  writel (temp, SUNXI_USBOTG_BASE + USB_wISCR_OFF);
+	uint temp;
+
+	temp = readl(SUNXI_USBOTG_BASE + USB_wISCR_OFF);
+	temp &= ~(0x3<<10);
+	temp |=  ((src&0x03)<<10);
+	writel(temp, SUNXI_USBOTG_BASE + USB_wISCR_OFF);
 }
 /*
 ************************************************************************************************************
@@ -238,13 +238,13 @@ static void usb_vbus_src (int src)
 *
 ************************************************************************************************************
 */
-static void usb_release_vbus (void)
+static void usb_release_vbus(void)
 {
-  uint temp;
-  
-  temp = readl (SUNXI_USBOTG_BASE + USB_wISCR_OFF);
-  temp &= ~ (0x3 << 12);
-  writel (temp, SUNXI_USBOTG_BASE + USB_wISCR_OFF);
+	uint temp;
+
+	temp = readl(SUNXI_USBOTG_BASE + USB_wISCR_OFF);
+	temp &= ~(0x3<<12);
+	writel(temp, SUNXI_USBOTG_BASE + USB_wISCR_OFF);
 }
 /*
 ************************************************************************************************************
@@ -262,21 +262,21 @@ static void usb_release_vbus (void)
 *
 ************************************************************************************************************
 */
-static void usb_force_vbus (int vbus)
+static void usb_force_vbus(int vbus)
 {
-  uint temp;
-  
-  temp = readl (SUNXI_USBOTG_BASE + USB_wISCR_OFF);
-  temp |= (1 << 13);
-  if (vbus)
-  {
-    temp |= (1 << 12);
-  }
-  else
-  {
-    temp &= ~ (1 << 12);
-  }
-  writel (temp, SUNXI_USBOTG_BASE + USB_wISCR_OFF);
+	uint temp;
+
+	temp = readl(SUNXI_USBOTG_BASE + USB_wISCR_OFF);
+	temp |= (1 << 13);
+	if(vbus)
+	{
+		temp |= (1 << 12);
+	}
+	else
+	{
+		temp &= ~(1 << 12);
+	}
+	writel(temp, SUNXI_USBOTG_BASE + USB_wISCR_OFF);
 }
 /*
 ************************************************************************************************************
@@ -294,13 +294,13 @@ static void usb_force_vbus (int vbus)
 *
 ************************************************************************************************************
 */
-static void usb_select_ep (int ep_no)
+static void usb_select_ep(int ep_no)
 {
-  uint temp;
-  
-  temp = readl (SUNXI_USBOTG_BASE + USB_GCS_OFFSET);
-  temp &= ~ (0xff << 16);
-  writel (ep_no | temp, SUNXI_USBOTG_BASE + USB_GCS_OFFSET);
+	uint temp;
+
+	temp = readl(SUNXI_USBOTG_BASE + USB_GCS_OFFSET);
+	temp &= ~(0xff << 16);
+	writel(ep_no | temp, SUNXI_USBOTG_BASE + USB_GCS_OFFSET);
 }
 /*
 ************************************************************************************************************
@@ -318,13 +318,13 @@ static void usb_select_ep (int ep_no)
 *
 ************************************************************************************************************
 */
-static void usb_ep0_flush_fifo (void)
+static void usb_ep0_flush_fifo(void)
 {
-  uint temp;
-  
-  temp = readl (SUNXI_USBOTG_BASE + USB_hTXMAXP_OFF);
-  temp |= (0x1 << 24);
-  writel (temp, SUNXI_USBOTG_BASE + USB_hTXMAXP_OFF);
+	uint temp;
+
+	temp = readl(SUNXI_USBOTG_BASE + USB_hTXMAXP_OFF);
+	temp |= (0x1<<24);
+	writel(temp, SUNXI_USBOTG_BASE + USB_hTXMAXP_OFF);
 }
 /*
 ************************************************************************************************************
@@ -342,13 +342,13 @@ static void usb_ep0_flush_fifo (void)
 *
 ************************************************************************************************************
 */
-static void usb_clear_bus_interrupt_enable (int bm)
+static void usb_clear_bus_interrupt_enable(int bm)
 {
-  uint temp;
-  
-  temp = readl (SUNXI_USBOTG_BASE + USB_bINTRUSBE_OFF);
-  temp &= ~ (bm & 0xff);
-  writel (temp, SUNXI_USBOTG_BASE + USB_bINTRUSBE_OFF);
+	uint temp;
+
+	temp = readl(SUNXI_USBOTG_BASE + USB_bINTRUSBE_OFF);
+	temp &= ~(bm&0xff);
+	writel(temp, SUNXI_USBOTG_BASE + USB_bINTRUSBE_OFF);
 }
 /*
 ************************************************************************************************************
@@ -366,13 +366,13 @@ static void usb_clear_bus_interrupt_enable (int bm)
 *
 ************************************************************************************************************
 */
-static void usb_set_bus_interrupt_enable (int bm)
+static void usb_set_bus_interrupt_enable(int bm)
 {
-  uint temp;
-  
-  temp = readl (SUNXI_USBOTG_BASE + USB_bINTRUSBE_OFF);
-  temp |= (bm & 0xff);
-  writel (temp, SUNXI_USBOTG_BASE + USB_bINTRUSBE_OFF);
+	uint temp;
+
+	temp = readl(SUNXI_USBOTG_BASE + USB_bINTRUSBE_OFF);
+	temp |= (bm&0xff);
+	writel(temp, SUNXI_USBOTG_BASE + USB_bINTRUSBE_OFF);
 }
 /*
 ************************************************************************************************************
@@ -390,13 +390,13 @@ static void usb_set_bus_interrupt_enable (int bm)
 *
 ************************************************************************************************************
 */
-static void usb_soft_connect (void)
+static void usb_soft_connect(void)
 {
-  uint temp;
-  
-  temp = readl (SUNXI_USBOTG_BASE + USB_bPOWER_OFF);
-  temp |= (0x1 << 6);
-  writel (temp, SUNXI_USBOTG_BASE + USB_bPOWER_OFF);
+	uint temp;
+
+	temp = readl(SUNXI_USBOTG_BASE + USB_bPOWER_OFF);
+	temp |= (0x1<<6);
+	writel(temp, SUNXI_USBOTG_BASE + USB_bPOWER_OFF);
 }
 /*
 ************************************************************************************************************
@@ -414,63 +414,63 @@ static void usb_soft_connect (void)
 *
 ************************************************************************************************************
 */
-static void usb_clock_init (void)
+static void usb_clock_init(void)
 {
 
-  #ifdef CONFIG_ARCH_SUN7I
-  __u32 temp;
-  
-  /* AHB gating */
-  temp = * (volatile unsigned int *) (0x1c20000 + 0x60);
-  temp |= 0x01;
-  * (volatile unsigned int *) (0x1c20000 + 0x60) = temp;
-  __msdelay (1);
-  
-  /* phy0/1/2 gating */
-  temp = * (volatile unsigned int *) (0x1c20000 + 0xcc);
-  temp |= 0x01 << 8;
-  * (volatile unsigned int *) (0x1c20000 + 0xcc) = temp;
-  __msdelay (1);
-  
-  /* usb phy0 reset control*/
-  temp = * (volatile unsigned int *) (0x1c20000 + 0xcc);
-  temp |= 0x01;
-  * (volatile unsigned int *) (0x1c20000 + 0xcc) = temp;
-  
-  __msdelay (1);
-  
-  return;
-  #endif
-  
-  u32 ccmu_base = 0x1c20000;
-  u32 reg_value = 0;
-  u32 offset_ahb = 0x60;
-  u32 offset_ahb_rst = 0x2c0;
-  u32 offet_phy = 0xcc;
-  
-  /* AHB gating */
-  reg_value = readl (ccmu_base + offset_ahb);
-  reg_value |= (1 << 24);
-  writel (reg_value, (ccmu_base + offset_ahb) );
-  
-  /* AHB reset */
-  reg_value = readl (ccmu_base + offset_ahb_rst);
-  reg_value |= (1 << 24);
-  writel (reg_value, (ccmu_base + offset_ahb_rst) );
-  __msdelay (1);
-  
-  /* phy gating */
-  reg_value = readl (ccmu_base + offet_phy);
-  reg_value |= (1 << 8);
-  writel (reg_value, (ccmu_base + offet_phy) );
-  
-  /* phy reset */
-  reg_value = readl (ccmu_base + offet_phy);
-  reg_value |= (1 << 0);
-  writel (reg_value, (ccmu_base + offet_phy) );
-  __msdelay (1);
-  
-  return;
+#ifdef CONFIG_ARCH_SUN7I
+	__u32 temp;
+
+    /* AHB gating */
+	temp = *(volatile unsigned int *)(0x1c20000 + 0x60);
+	temp |= 0x01;
+	*(volatile unsigned int *)(0x1c20000 + 0x60) = temp;
+	__msdelay(1);
+
+    /* phy0/1/2 gating */
+	temp = *(volatile unsigned int *)(0x1c20000 + 0xcc);
+	temp |= 0x01<<8;
+	*(volatile unsigned int *)(0x1c20000 + 0xcc) = temp;
+	__msdelay(1);
+
+    /* usb phy0 reset control*/
+	temp = *(volatile unsigned int *)(0x1c20000 + 0xcc);
+	temp |= 0x01;
+	*(volatile unsigned int *)(0x1c20000 + 0xcc) = temp;
+
+	__msdelay(1);
+
+	return;
+#endif
+
+    u32 ccmu_base = 0x1c20000;
+    u32 reg_value = 0;
+    u32 offset_ahb = 0x60;
+    u32 offset_ahb_rst = 0x2c0;
+    u32 offet_phy = 0xcc;
+
+    /* AHB gating */
+    reg_value = readl(ccmu_base + offset_ahb);
+    reg_value |= (1 << 24);
+    writel(reg_value, (ccmu_base + offset_ahb));
+
+    /* AHB reset */
+    reg_value = readl(ccmu_base + offset_ahb_rst);
+    reg_value |= (1 << 24);
+    writel(reg_value, (ccmu_base + offset_ahb_rst));
+    __msdelay(1);
+
+    /* phy gating */
+    reg_value = readl(ccmu_base + offet_phy);
+    reg_value |= (1 << 8);
+    writel(reg_value, (ccmu_base + offet_phy));
+
+    /* phy reset */
+    reg_value = readl(ccmu_base + offet_phy);
+    reg_value |= (1 << 0);
+    writel(reg_value, (ccmu_base + offet_phy));
+    __msdelay(1);
+
+    return;
 }
 /*
 ************************************************************************************************************
@@ -488,64 +488,64 @@ static void usb_clock_init (void)
 *
 ************************************************************************************************************
 */
-static void usb_clock_exit (void)
+static void usb_clock_exit(void)
 {
 
-  #ifdef CONFIG_ARCH_SUN7I
-  __u32 temp;
-  
-  /* AHB gating */
-  temp = * (volatile unsigned int *) (0x1c20000 + 0x60);
-  temp &= ~0x01;
-  * (volatile unsigned int *) (0x1c20000 + 0x60) = temp;
-  __msdelay (1);
-  
-  
-  /* phy0/1/2 gating */
-  temp = * (volatile unsigned int *) (0x1c20000 + 0xcc);
-  temp &= ~ (0x01 << 8);
-  * (volatile unsigned int *) (0x1c20000 + 0xcc) = temp;
-  __msdelay (1);
-  
-  
-  /* usb phy0 reset control*/
-  temp = * (volatile unsigned int *) (0x1c20000 + 0xcc);
-  temp &= ~0x01;
-  * (volatile unsigned int *) (0x1c20000 + 0xcc) = temp;
-  __msdelay (1);
-  
-  return;
-  #endif
-  
-  u32 ccmu_base = 0x1c20000;
-  u32 reg_value = 0;
-  u32 offset_ahb = 0x60;
-  u32 offset_ahb_rst = 0x2c0;
-  u32 offet_phy = 0xcc;
-  
-  /* AHB gating */
-  reg_value = readl (ccmu_base + offset_ahb);
-  reg_value &= ~ (1 << 24);
-  writel (reg_value, (ccmu_base + offset_ahb) );
-  
-  /* AHB reset */
-  reg_value = readl (ccmu_base + offset_ahb_rst);
-  reg_value &= ~ (1 << 24);
-  writel (reg_value, (ccmu_base + offset_ahb_rst) );
-  __msdelay (1);
-  
-  /* phy gating */
-  reg_value = readl (ccmu_base + offet_phy);
-  reg_value &= ~ (1 << 8);
-  writel (reg_value, (ccmu_base + offet_phy) );
-  
-  /* phy reset */
-  reg_value = readl (ccmu_base + offet_phy);
-  reg_value &= ~ (1 << 0);
-  writel (reg_value, (ccmu_base + offet_phy) );
-  __msdelay (1);
-  
-  return;
+#ifdef CONFIG_ARCH_SUN7I
+	__u32 temp;
+
+    /* AHB gating */
+	temp = *(volatile unsigned int *)(0x1c20000 + 0x60);
+	temp &= ~0x01;
+	*(volatile unsigned int *)(0x1c20000 + 0x60) = temp;
+	__msdelay(1);
+
+
+    /* phy0/1/2 gating */
+	temp = *(volatile unsigned int *)(0x1c20000 + 0xcc);
+	temp &= ~(0x01<<8);
+	*(volatile unsigned int *)(0x1c20000 + 0xcc) = temp;
+	__msdelay(1);
+
+
+    /* usb phy0 reset control*/
+	temp = *(volatile unsigned int *)(0x1c20000 + 0xcc);
+	temp &= ~0x01;
+	*(volatile unsigned int *)(0x1c20000 + 0xcc) = temp;
+	__msdelay(1);
+
+	return;
+#endif
+
+    u32 ccmu_base = 0x1c20000;
+    u32 reg_value = 0;
+    u32 offset_ahb = 0x60;
+    u32 offset_ahb_rst = 0x2c0;
+    u32 offet_phy = 0xcc;
+
+    /* AHB gating */
+    reg_value = readl(ccmu_base + offset_ahb);
+    reg_value &= ~(1 << 24);
+    writel(reg_value, (ccmu_base + offset_ahb));
+
+    /* AHB reset */
+    reg_value = readl(ccmu_base + offset_ahb_rst);
+    reg_value &= ~(1 << 24);
+    writel(reg_value, (ccmu_base + offset_ahb_rst));
+    __msdelay(1);
+
+    /* phy gating */
+    reg_value = readl(ccmu_base + offet_phy);
+    reg_value &= ~(1 << 8);
+    writel(reg_value, (ccmu_base + offet_phy));
+
+    /* phy reset */
+    reg_value = readl(ccmu_base + offet_phy);
+    reg_value &= ~(1 << 0);
+    writel(reg_value, (ccmu_base + offet_phy));
+    __msdelay(1);
+
+    return;
 }
 /*
 ************************************************************************************************************
@@ -563,25 +563,25 @@ static void usb_clock_exit (void)
 *
 ************************************************************************************************************
 */
-static void usb_init (void)
+static void usb_init(void)
 {
-  usb_drive_vbus (0, 0);
-  usb_force_id (1);
-  usb_high_speed_set (1);
-  
-  usb_suspendm_enable();
-  
-  usb_vbus_src (0x1);
-  usb_release_vbus();
-  usb_force_vbus (1);
-  
-  usb_select_ep (0);
-  usb_ep0_flush_fifo();
-  
-  debug ("USB Device!!\n");
-  usb_clear_bus_interrupt_enable (0xff);
-  usb_set_bus_interrupt_enable (0xff);
-  return;
+	usb_drive_vbus(0, 0);
+	usb_force_id(1);
+	usb_high_speed_set(1);
+
+	usb_suspendm_enable();
+
+	usb_vbus_src(0x1);
+	usb_release_vbus();
+	usb_force_vbus(1);
+
+	usb_select_ep(0);
+	usb_ep0_flush_fifo();
+
+	debug("USB Device!!\n");
+	usb_clear_bus_interrupt_enable(0xff);
+	usb_set_bus_interrupt_enable(0xff);
+	return;
 }
 /*
 ************************************************************************************************************
@@ -599,16 +599,16 @@ static void usb_init (void)
 *
 ************************************************************************************************************
 */
-static void timer_test_usbdc (void * p_arg)
+static void timer_test_usbdc(void *p_arg)
 {
-  usb_clock_exit();
-  irq_disable (AW_IRQ_USB_OTG);
-  usb_working = 0;
-  
-  tick_printf ("timer irq ,set dc\n");
-  axp_set_vbus_limit_dc();
-  
-  return ;
+	usb_clock_exit();
+	irq_disable(AW_IRQ_USB_OTG);
+	usb_working = 0;
+
+	tick_printf("timer irq ,set dc\n");
+	axp_set_vbus_limit_dc();
+
+	return ;
 }
 /*
 ************************************************************************************************************
@@ -626,28 +626,28 @@ static void timer_test_usbdc (void * p_arg)
 *
 ************************************************************************************************************
 */
-static void usb_detect_irq_handler (void * p_arg)
+static void usb_detect_irq_handler(void *p_arg)
 {
-  uint temp;
-  
-  temp = usb_get_bus_interrupt_status();
-  usb_clear_bus_interrupt_status (temp);
-  
-  debug ("usb irq %x\n", temp);
-  tick_printf ("usb irq %x\n", temp);
-  
-  if (temp & 0x08)
-  {
-    usb_clock_exit();
-    irq_disable (AW_IRQ_USB_OTG);
-    del_timer (&timer_for_usb);
-    usb_working = 0;
-    
-    tick_printf ("usb irq ,set pc\n");
-    axp_set_vbus_limit_pc();
-  }
-  
-  return;
+	uint temp;
+
+	temp = usb_get_bus_interrupt_status();
+	usb_clear_bus_interrupt_status(temp);
+
+	debug("usb irq %x\n", temp);
+	tick_printf("usb irq %x\n", temp);
+
+	if(temp & 0x08)
+	{
+		usb_clock_exit();
+		irq_disable(AW_IRQ_USB_OTG);
+		del_timer(&timer_for_usb);
+		usb_working = 0;
+
+		tick_printf("usb irq ,set pc\n");
+		axp_set_vbus_limit_pc();
+	}
+
+	return;
 }
 /*
 ************************************************************************************************************
@@ -665,33 +665,33 @@ static void usb_detect_irq_handler (void * p_arg)
 *
 ************************************************************************************************************
 */
-int usb_detect_enter (void)
+int usb_detect_enter(void)
 {
-  debug ("usb start detect\n");
-  if (!usb_working)
-  {
-    tick_printf ("usb enter detect\n");
-    usb_working = 1;
-    usb_clock_init();
-    
-    
-    #ifdef CONFIG_ARCH_SUN7I
-    timer_for_usb.expires  = 2000;
-    #else
-    timer_for_usb.expires  = BOOT_USB_DETECT_DELAY_TIME;
-    #endif
-    
-    timer_for_usb.function = timer_test_usbdc;
-    timer_for_usb.data     = 0;
-    add_timer (&timer_for_usb);
-    
-    irq_install_handler (AW_IRQ_USB_OTG, usb_detect_irq_handler, 0);
-    irq_enable (AW_IRQ_USB_OTG);
-    usb_init();
-    usb_soft_connect();
-  }
-  
-  return 0;
+	debug("usb start detect\n");
+	if(!usb_working)
+	{
+		tick_printf("usb enter detect\n");
+		usb_working = 1;
+		usb_clock_init();
+
+	
+        #ifdef CONFIG_ARCH_SUN7I
+		timer_for_usb.expires  = 2000; 
+        #else
+		timer_for_usb.expires  = BOOT_USB_DETECT_DELAY_TIME;
+       	#endif
+        
+		timer_for_usb.function = timer_test_usbdc;
+		timer_for_usb.data     = 0;
+		add_timer(&timer_for_usb);
+
+		irq_install_handler(AW_IRQ_USB_OTG, usb_detect_irq_handler, 0);
+		irq_enable(AW_IRQ_USB_OTG);
+		usb_init();
+		usb_soft_connect();
+	}
+
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -709,15 +709,15 @@ int usb_detect_enter (void)
 *
 ************************************************************************************************************
 */
-int usb_detect_exit (void)
+int usb_detect_exit(void)
 {
-  tick_printf ("usb exit detect\n");
-  usb_working = 0;
-  usb_clock_exit();
-  irq_disable (AW_IRQ_USB_OTG);
-  del_timer (&timer_for_usb);
-  
-  return 0;
+	tick_printf("usb exit detect\n");
+	usb_working = 0;
+	usb_clock_exit();
+	irq_disable(AW_IRQ_USB_OTG);
+	del_timer(&timer_for_usb);
+
+	return 0;
 }
 
 /*
@@ -736,11 +736,11 @@ int usb_detect_exit (void)
 *
 ************************************************************************************************************
 */
-void usb_detect_for_charge (int detect_time)
+void usb_detect_for_charge(int detect_time)
 {
-  usb_detect_enter();
-  __msdelay (detect_time);
-  usb_detect_exit();
+	usb_detect_enter();
+	__msdelay(detect_time);
+	usb_detect_exit();
 }
 
 

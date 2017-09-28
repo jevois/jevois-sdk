@@ -28,31 +28,31 @@
  * Ethernet IRQ mappings
  */
 
-#define PLEB_ETH0_P   (0x20000300)  /* Ethernet 0 in PCMCIA0 IO */
-#define PLEB_ETH0_V   (0xf6000300)
+#define PLEB_ETH0_P		(0x20000300)	/* Ethernet 0 in PCMCIA0 IO */
+#define PLEB_ETH0_V		(0xf6000300)
 
-#define GPIO_ETH0_IRQ   GPIO_GPIO(21)
-#define GPIO_ETH0_EN    GPIO_GPIO(26)
+#define GPIO_ETH0_IRQ		GPIO_GPIO(21)
+#define GPIO_ETH0_EN		GPIO_GPIO(26)
 
-#define IRQ_GPIO_ETH0_IRQ IRQ_GPIO21
+#define IRQ_GPIO_ETH0_IRQ	IRQ_GPIO21
 
 static struct resource smc91x_resources[] = {
-  [0] = DEFINE_RES_MEM (PLEB_ETH0_P, 0x04000000),
-  #if 0 /* Autoprobe instead, to get rising/falling edge characteristic right */
-  [1] = DEFINE_RES_IRQ (IRQ_GPIO_ETH0_IRQ),
-  #endif
+	[0] = DEFINE_RES_MEM(PLEB_ETH0_P, 0x04000000),
+#if 0 /* Autoprobe instead, to get rising/falling edge characteristic right */
+	[1] = DEFINE_RES_IRQ(IRQ_GPIO_ETH0_IRQ),
+#endif
 };
 
 
 static struct platform_device smc91x_device = {
-  .name   = "smc91x",
-  .id   = 0,
-  .num_resources  = ARRAY_SIZE (smc91x_resources),
-  .resource = smc91x_resources,
+	.name		= "smc91x",
+	.id		= 0,
+	.num_resources	= ARRAY_SIZE(smc91x_resources),
+	.resource	= smc91x_resources,
 };
 
-static struct platform_device * devices[] __initdata = {
-  &smc91x_device,
+static struct platform_device *devices[] __initdata = {
+	&smc91x_device,
 };
 
 
@@ -62,78 +62,78 @@ static struct platform_device * devices[] __initdata = {
  * the two SA1100 lowest chip select outputs.
  */
 static struct resource pleb_flash_resources[] = {
-  [0] = DEFINE_RES_MEM (SA1100_CS0_PHYS, SZ_8M),
-  [1] = DEFINE_RES_MEM (SA1100_CS1_PHYS, SZ_8M),
+	[0] = DEFINE_RES_MEM(SA1100_CS0_PHYS, SZ_8M),
+	[1] = DEFINE_RES_MEM(SA1100_CS1_PHYS, SZ_8M),
 };
 
 
 static struct mtd_partition pleb_partitions[] = {
-  {
-    .name   = "blob",
-    .offset   = 0,
-    .size   = 0x00020000,
-  }, {
-    .name   = "kernel",
-    .offset   = MTDPART_OFS_APPEND,
-    .size   = 0x000e0000,
-  }, {
-    .name   = "rootfs",
-    .offset   = MTDPART_OFS_APPEND,
-    .size   = 0x00300000,
-  }
+	{
+		.name		= "blob",
+		.offset		= 0,
+		.size		= 0x00020000,
+	}, {
+		.name		= "kernel",
+		.offset		= MTDPART_OFS_APPEND,
+		.size		= 0x000e0000,
+	}, {
+		.name		= "rootfs",
+		.offset		= MTDPART_OFS_APPEND,
+		.size		= 0x00300000,
+	}
 };
 
 
 static struct flash_platform_data pleb_flash_data = {
-  .map_name = "cfi_probe",
-  .parts = pleb_partitions,
-  .nr_parts = ARRAY_SIZE (pleb_partitions),
+	.map_name = "cfi_probe",
+	.parts = pleb_partitions,
+	.nr_parts = ARRAY_SIZE(pleb_partitions),
 };
 
 
-static void __init pleb_init (void)
+static void __init pleb_init(void)
 {
-  sa11x0_register_mtd (&pleb_flash_data, pleb_flash_resources,
-                       ARRAY_SIZE (pleb_flash_resources) );
-                       
-                       
-  platform_add_devices (devices, ARRAY_SIZE (devices) );
+	sa11x0_register_mtd(&pleb_flash_data, pleb_flash_resources,
+			      ARRAY_SIZE(pleb_flash_resources));
+
+
+	platform_add_devices(devices, ARRAY_SIZE(devices));
 }
 
 
-static void __init pleb_map_io (void)
+static void __init pleb_map_io(void)
 {
-  sa1100_map_io();
-  
-  sa1100_register_uart (0, 3);
-  sa1100_register_uart (1, 1);
-  
-  GAFR |= (GPIO_UART_TXD | GPIO_UART_RXD);
-  GPDR |= GPIO_UART_TXD;
-  GPDR &= ~GPIO_UART_RXD;
-  PPAR |= PPAR_UPR;
-  
-  /*
-   * Fix expansion memory timing for network card
-   */
-  MECR = ( (2 << 10) | (2 << 5) | (2 << 0) );
-  
-  /*
-   * Enable the SMC ethernet controller
-   */
-  GPDR |= GPIO_ETH0_EN; /* set to output */
-  GPCR  = GPIO_ETH0_EN; /* clear MCLK (enable smc) */
-  
-  GPDR &= ~GPIO_ETH0_IRQ;
-  
-  irq_set_irq_type (GPIO_ETH0_IRQ, IRQ_TYPE_EDGE_FALLING);
+	sa1100_map_io();
+
+	sa1100_register_uart(0, 3);
+	sa1100_register_uart(1, 1);
+
+	GAFR |= (GPIO_UART_TXD | GPIO_UART_RXD);
+	GPDR |= GPIO_UART_TXD;
+	GPDR &= ~GPIO_UART_RXD;
+	PPAR |= PPAR_UPR;
+
+	/*
+	 * Fix expansion memory timing for network card
+	 */
+	MECR = ((2<<10) | (2<<5) | (2<<0));
+
+	/*
+	 * Enable the SMC ethernet controller
+	 */
+	GPDR |= GPIO_ETH0_EN;	/* set to output */
+	GPCR  = GPIO_ETH0_EN;	/* clear MCLK (enable smc) */
+
+	GPDR &= ~GPIO_ETH0_IRQ;
+
+	irq_set_irq_type(GPIO_ETH0_IRQ, IRQ_TYPE_EDGE_FALLING);
 }
 
-MACHINE_START (PLEB, "PLEB")
-.map_io   = pleb_map_io,
- .nr_irqs  = SA1100_NR_IRQS,
-  .init_irq = sa1100_init_irq,
-   .timer    = &sa1100_timer,
-    .init_machine   = pleb_init,
-     .restart  = sa11x0_restart,
-      MACHINE_END
+MACHINE_START(PLEB, "PLEB")
+	.map_io		= pleb_map_io,
+	.nr_irqs	= SA1100_NR_IRQS,
+	.init_irq	= sa1100_init_irq,
+	.timer		= &sa1100_timer,
+	.init_machine   = pleb_init,
+	.restart	= sa11x0_restart,
+MACHINE_END

@@ -16,15 +16,15 @@
 /*
  * output data from a potentially misaligned buffer
  */
-void __outsl (unsigned long addr, const void * buffer, int count)
+void __outsl(unsigned long addr, const void *buffer, int count)
 {
-  const unsigned char * buf = buffer;
-  unsigned long val;
-  
-  while (count--) {
-    memcpy (&val, buf, 4);
-    outl (val, addr);
-    buf += 4;
-  }
+	const unsigned char *buf = buffer;
+	unsigned long val;
+
+	while (count--) {
+		memcpy(&val, buf, 4);
+		outl(val, addr);
+		buf += 4;
+	}
 }
-EXPORT_SYMBOL (__outsl);
+EXPORT_SYMBOL(__outsl);

@@ -54,11 +54,11 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 PVRSRV_ERROR
-PhysmemImportIon (CONNECTION_DATA * psConnection,
-                  IMG_INT fd,
-                  PVRSRV_MEMALLOCFLAGS_T uiFlags,
-                  PMR ** ppsPMRPtr,
-                  IMG_DEVMEM_SIZE_T * puiSize,
-                  IMG_DEVMEM_ALIGN_T * puiAlign);
+PhysmemImportIon(CONNECTION_DATA *psConnection,
+				 IMG_INT fd,
+				 PVRSRV_MEMALLOCFLAGS_T uiFlags,
+				 PMR **ppsPMRPtr,
+				 IMG_DEVMEM_SIZE_T *puiSize,
+				 IMG_DEVMEM_ALIGN_T *puiAlign);
 
 #endif /* #ifndef _PHYSMEM_ION_H_ */

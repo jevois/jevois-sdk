@@ -23,8 +23,8 @@
  * we don't want to put variables in the GP-REL section if they're not used very much - that would
  * be waste since GP-REL addressing is limited to GP16+/-2048
  */
-#define __nongpreldata  __attribute__((section(".data")))
-#define __nongprelbss __attribute__((section(".bss")))
+#define __nongpreldata	__attribute__((section(".data")))
+#define __nongprelbss	__attribute__((section(".bss")))
 
 /*
  * linker symbols
@@ -36,9 +36,9 @@ extern unsigned long __nongprelbss memory_end;
 extern unsigned long __nongprelbss rom_length;
 
 /* determine if we're running from ROM */
-static inline int is_in_rom (unsigned long addr)
+static inline int is_in_rom(unsigned long addr)
 {
-  return 0; /* default case: not in ROM */
+	return 0; /* default case: not in ROM */
 }
 
 #endif

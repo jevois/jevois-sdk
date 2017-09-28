@@ -12,6 +12,6 @@
 #define SIRFSOC_INTENAL_IRQ_START  0
 #define SIRFSOC_INTENAL_IRQ_END    59
 
-#define NR_IRQS 220
+#define NR_IRQS	220
 
 #endif

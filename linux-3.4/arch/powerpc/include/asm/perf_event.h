@@ -26,10 +26,10 @@
 #include <asm/ptrace.h>
 #include <asm/reg.h>
 
-#define perf_arch_fetch_caller_regs(regs, __ip)     \
-  do {              \
-    (regs)->nip = __ip;       \
-    (regs)->gpr[1] = *(unsigned long *)__get_SP();  \
-    asm volatile("mfmsr %0" : "=r" ((regs)->msr));  \
-  } while (0)
+#define perf_arch_fetch_caller_regs(regs, __ip)			\
+	do {							\
+		(regs)->nip = __ip;				\
+		(regs)->gpr[1] = *(unsigned long *)__get_SP();	\
+		asm volatile("mfmsr %0" : "=r" ((regs)->msr));	\
+	} while (0)
 #endif

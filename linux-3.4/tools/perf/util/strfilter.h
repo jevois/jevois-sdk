@@ -7,14 +7,14 @@
 
 /* A node of string filter */
 struct strfilter_node {
-  struct strfilter_node * l; /* Tree left branche (for &,|) */
-  struct strfilter_node * r; /* Tree right branche (for !,&,|) */
-  const char * p;   /* Operator or rule */
+	struct strfilter_node *l;	/* Tree left branche (for &,|) */
+	struct strfilter_node *r;	/* Tree right branche (for !,&,|) */
+	const char *p;		/* Operator or rule */
 };
 
 /* String filter */
 struct strfilter {
-  struct strfilter_node * root;
+	struct strfilter_node *root;
 };
 
 /**
@@ -26,7 +26,7 @@ struct strfilter {
  * In that case, *@err will indicate where it is detected, and *@err is NULL
  * if a memory allocation is failed.
  */
-struct strfilter * strfilter__new (const char * rules, const char ** err);
+struct strfilter *strfilter__new(const char *rules, const char **err);
 
 /**
  * strfilter__compare - compare given string and a string filter
@@ -35,7 +35,7 @@ struct strfilter * strfilter__new (const char * rules, const char ** err);
  *
  * Compare @str and @self. Return true if the str match the rule
  */
-bool strfilter__compare (struct strfilter * self, const char * str);
+bool strfilter__compare(struct strfilter *self, const char *str);
 
 /**
  * strfilter__delete - delete a string filter
@@ -43,6 +43,6 @@ bool strfilter__compare (struct strfilter * self, const char * str);
  *
  * Delete @self.
  */
-void strfilter__delete (struct strfilter * self);
+void strfilter__delete(struct strfilter *self);
 
 #endif

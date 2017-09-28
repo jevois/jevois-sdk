@@ -25,238 +25,238 @@ extern __lcd_panel_t edp_anx6345_panel;
 
 
 struct Bist_Video_Format {
-  char number;
-  char video_type[32];
-  unsigned int pixel_frequency;
-  unsigned int h_total_length;
-  unsigned int h_active_length;
-  unsigned int v_total_length;
-  unsigned int v_active_length;
-  unsigned int h_front_porch;
-  unsigned int h_sync_width;
-  unsigned int h_back_porch;
-  unsigned int v_front_porch;
-  unsigned int v_sync_width;
-  unsigned int v_back_porch;
-  unsigned char h_sync_polarity;
-  unsigned char v_sync_polarity;
-  unsigned char is_interlaced;
-  unsigned char pix_repeat_times;
-  unsigned char frame_rate;
-  unsigned char bpp_mode;
-  unsigned char video_mode;
+    char number;
+    char video_type[32];
+    unsigned int pixel_frequency;    
+    unsigned int h_total_length;
+    unsigned int h_active_length;
+    unsigned int v_total_length;
+    unsigned int v_active_length;
+    unsigned int h_front_porch;
+    unsigned int h_sync_width;
+    unsigned int h_back_porch;
+    unsigned int v_front_porch;
+    unsigned int v_sync_width;
+    unsigned int v_back_porch;
+    unsigned char h_sync_polarity;
+    unsigned char v_sync_polarity;
+    unsigned char is_interlaced;
+    unsigned char pix_repeat_times;
+    unsigned char frame_rate;
+    unsigned char bpp_mode;
+    unsigned char video_mode;
 };
 
 typedef enum
 {
-  SP_TX_PWR_REG,
-  SP_TX_PWR_IO,
-  SP_TX_PWR_AUDIO,
-  SP_TX_PWR_VIDEO,
-  SP_TX_PWR_LINK,
-  SP_TX_PWR_TOTAL
-} SP_TX_POWER_BLOCK;
+	SP_TX_PWR_REG,
+	SP_TX_PWR_IO,
+	SP_TX_PWR_AUDIO,
+	SP_TX_PWR_VIDEO,
+	SP_TX_PWR_LINK,
+	SP_TX_PWR_TOTAL
+}SP_TX_POWER_BLOCK;
 
 
 
 typedef enum
 {
-  AUDIO_BIST,
-  AUDIO_SPDIF,
-  AUDIO_I2S
-} AudioType;
+	AUDIO_BIST,
+	AUDIO_SPDIF,
+	AUDIO_I2S
+}AudioType;
 
 typedef enum
 {
-  AUDIO_FS_441K = 0x00,
-  AUDIO_FS_48K   = 0x02,
-  AUDIO_FS_32K   = 0x03,
-  AUDIO_FS_882K = 0x08,
-  AUDIO_FS_96K   = 0x0a,
-  AUDIO_FS_1764K = 0x0c,
-  AUDIO_FS_192K =  0x0e
-} AudioFs;
+	AUDIO_FS_441K = 0x00,
+	AUDIO_FS_48K   = 0x02,
+	AUDIO_FS_32K   = 0x03,
+	AUDIO_FS_882K = 0x08,
+	AUDIO_FS_96K   = 0x0a,
+	AUDIO_FS_1764K= 0x0c,
+	AUDIO_FS_192K =  0x0e
+}AudioFs;
 
 typedef enum
 {
-  AUDIO_W_LEN_16_20MAX = 0x02,
-  AUDIO_W_LEN_18_20MAX = 0x04,
-  AUDIO_W_LEN_17_20MAX = 0x0c,
-  AUDIO_W_LEN_19_20MAX = 0x08,
-  AUDIO_W_LEN_20_20MAX = 0x0a,
-  AUDIO_W_LEN_20_24MAX = 0x03,
-  AUDIO_W_LEN_22_24MAX = 0x05,
-  AUDIO_W_LEN_21_24MAX = 0x0d,
-  AUDIO_W_LEN_23_24MAX = 0x09,
-  AUDIO_W_LEN_24_24MAX = 0x0b
-} AudioWdLen;
+	AUDIO_W_LEN_16_20MAX = 0x02,
+	AUDIO_W_LEN_18_20MAX = 0x04,
+	AUDIO_W_LEN_17_20MAX = 0x0c,
+	AUDIO_W_LEN_19_20MAX = 0x08,
+	AUDIO_W_LEN_20_20MAX = 0x0a,
+	AUDIO_W_LEN_20_24MAX = 0x03,
+	AUDIO_W_LEN_22_24MAX = 0x05,
+	AUDIO_W_LEN_21_24MAX = 0x0d,
+	AUDIO_W_LEN_23_24MAX = 0x09,
+	AUDIO_W_LEN_24_24MAX = 0x0b
+}AudioWdLen;
 
 typedef enum
 {
-  I2S_CH_2 = 0x01,
-  I2S_CH_4 = 0x03,
-  I2S_CH_6 = 0x07,
-  I2S_CH_8 = 0x0f
-} I2SChNum;
+	I2S_CH_2 =0x01,
+	I2S_CH_4 =0x03,
+	I2S_CH_6 =0x07,
+	I2S_CH_8 =0x0f
+}I2SChNum;
 
 typedef enum
 {
-  I2S_LAYOUT_0,
-  I2S_LAYOUT_1
-} I2SLayOut;
+	I2S_LAYOUT_0,
+	I2S_LAYOUT_1 
+}I2SLayOut;
 
 
-typedef struct
+typedef struct 
 {
-  I2SChNum Channel_Num;
-  I2SLayOut  AUDIO_LAYOUT;
-  unsigned char SHIFT_CTRL;
-  unsigned char DIR_CTRL;
-  unsigned char WS_POL;
-  unsigned char JUST_CTRL;
-  unsigned char EXT_VUCP;
-  unsigned char I2S_SW;
-  unsigned char Channel_status1;
-  unsigned char Channel_status2;
-  unsigned char Channel_status3;
-  unsigned char Channel_status4;
-  unsigned char Channel_status5;
-  
-} I2S_FORMAT;
+     I2SChNum Channel_Num;
+     I2SLayOut  AUDIO_LAYOUT;	
+     unsigned char SHIFT_CTRL;
+     unsigned char DIR_CTRL;
+     unsigned char WS_POL;
+     unsigned char JUST_CTRL;
+     unsigned char EXT_VUCP;
+     unsigned char I2S_SW;
+     unsigned char Channel_status1;
+     unsigned char Channel_status2;
+     unsigned char Channel_status3;
+     unsigned char Channel_status4;
+     unsigned char Channel_status5;
+	
+}I2S_FORMAT;
 
 
 struct AudioFormat
 {
-  AudioType bAudioType;
-  unsigned char  bAudio_Fs;
-  unsigned char bAudio_word_len;
-  I2S_FORMAT bI2S_FORMAT;
+	AudioType bAudioType;
+	unsigned char  bAudio_Fs;
+	unsigned char bAudio_word_len;
+	I2S_FORMAT bI2S_FORMAT;
 };
 
 typedef enum
 {
-  AVI_PACKETS,
-  SPD_PACKETS,
-  MPEG_PACKETS
-} PACKETS_TYPE;
+	AVI_PACKETS,
+	SPD_PACKETS,
+	MPEG_PACKETS
+}PACKETS_TYPE;
 
-struct Packet_AVI {
-  unsigned char AVI_data[13];
+struct Packet_AVI{
+     unsigned char AVI_data[13];
 } ;
 
 
-struct Packet_SPD {
-  unsigned char SPD_data[25];
-};
+struct Packet_SPD{
+     unsigned char SPD_data[25];    
+};      
 
 
-struct Packet_MPEG {
-  unsigned char MPEG_data[10];
+struct Packet_MPEG{
+     unsigned char MPEG_data[10];   
 } ;
 
 
 struct AudiInfoframe
 {
-  unsigned char type;
-  unsigned char version;
-  unsigned char length;
-  unsigned char pb_byte[10];
+     unsigned char type;
+     unsigned char version; 
+     unsigned char length;
+     unsigned char pb_byte[10];
 };
 
 
 typedef struct subEmbedded_Sync_t
 {
-  unsigned char Embedded_Sync;
-  unsigned char Extend_Embedded_Sync_flag;
-} subEmbedded_Sync;
+     unsigned char Embedded_Sync;
+     unsigned char Extend_Embedded_Sync_flag;
+}subEmbedded_Sync;
 
 typedef struct subYC_MUX_t
 {
-  unsigned char YC_MUX;
-  unsigned char YC_BIT_SEL;
-} subYC_MUX;
+     unsigned char YC_MUX;
+     unsigned char YC_BIT_SEL;
+}subYC_MUX;
 
 struct LVTTL_HW_Interface
 {
-  unsigned char DE_reDenerate;
-  unsigned char DDR_Mode;
-  unsigned char Clock_EDGE;// 1:negedge 0:posedge
-  subEmbedded_Sync sEmbedded_Sync;// 1:valueable
-  subYC_MUX sYC_MUX;
+	unsigned char DE_reDenerate;
+	unsigned char DDR_Mode;
+	unsigned char Clock_EDGE;// 1:negedge 0:posedge
+	subEmbedded_Sync sEmbedded_Sync;// 1:valueable
+	subYC_MUX sYC_MUX;
 };
 
 typedef enum
 {
-  LVTTL_RGB,
-  MIPI_DSI
-} VideoInterface;
+	LVTTL_RGB,
+	MIPI_DSI
+}VideoInterface;
 
 typedef enum
 {
-  COLOR_6_BIT,
-  COLOR_8_BIT,
-  COLOR_10_BIT,
-  COLOR_12_BIT
-} ColorDepth;
+	COLOR_6_BIT,
+	COLOR_8_BIT,
+	COLOR_10_BIT,
+	COLOR_12_BIT	
+}ColorDepth;
 
 typedef enum
 {
-  COLOR_RGB,
-  COLOR_YCBCR_444,
-  COLOR_YCBCR_422
-} ColorSpace;
+	COLOR_RGB,
+	COLOR_YCBCR_444,
+	COLOR_YCBCR_422
+}ColorSpace;
 
 struct VideoFormat
-{
-  VideoInterface Interface;// 0:LVTTL ; 1:mipi
-  ColorDepth bColordepth;
-  ColorSpace bColorSpace;
-  struct LVTTL_HW_Interface bLVTTL_HW_Interface;
+{    
+	VideoInterface Interface;// 0:LVTTL ; 1:mipi
+	ColorDepth bColordepth;
+	ColorSpace bColorSpace;
+	struct LVTTL_HW_Interface bLVTTL_HW_Interface;
 };
 
 typedef enum
 {
-  COMMON_INT_1 = 0,
-  COMMON_INT_2 = 1,
-  COMMON_INT_3 = 2,
-  COMMON_INT_4 = 3,
-  SP_INT_STATUS = 6
-} INTStatus;
+	COMMON_INT_1 = 0,
+	COMMON_INT_2 = 1,
+	COMMON_INT_3 = 2,
+	COMMON_INT_4 = 3,
+	SP_INT_STATUS = 6
+}INTStatus;
 
 
 typedef enum
 {
-  PLL_BLOCK,
-  AUX_BLOCK,
-  CH0_BLOCK,
-  CH1_BLOCK,
-  ANALOG_TOTAL,
-  POWER_ALL
-} ANALOG_PWD_BLOCK;
+	PLL_BLOCK,
+	AUX_BLOCK,
+	CH0_BLOCK,
+	CH1_BLOCK,
+	ANALOG_TOTAL,
+	POWER_ALL
+}ANALOG_PWD_BLOCK;
 
 typedef enum
 {
-  PRBS_7,
-  D10_2,
-  TRAINING_PTN1,
-  TRAINING_PTN2,
-  NONE
-} PATTERN_SET;
+	PRBS_7,
+	D10_2,
+	TRAINING_PTN1,
+	TRAINING_PTN2,
+	NONE
+}PATTERN_SET;
 
 typedef enum
 {
-  BW_54G = 0x14,
-  BW_45G = 0x10,
-  BW_27G = 0x0A,
-  BW_162G = 0x06,
-  BW_NULL = 0x00
-} SP_LINK_BW;
+	BW_54G = 0x14,
+	BW_45G = 0x10,	
+	BW_27G = 0x0A,
+	BW_162G = 0x06,
+	BW_NULL = 0x00
+}SP_LINK_BW;
 
-typedef enum {
-  LINKTRAINING_START,
-  CLOCK_RECOVERY_PROCESS,
-  EQ_TRAINING_PROCESS,
-  LINKTRAINING_FINISHED
+typedef enum{
+    LINKTRAINING_START,
+    CLOCK_RECOVERY_PROCESS,
+    EQ_TRAINING_PROCESS,
+    LINKTRAINING_FINISHED
 } SP_SW_LINK_State;
 
 
@@ -266,45 +266,45 @@ typedef enum {
 #define MIPI_RX_PORT1_ADDR 0x7A
 
 
-#define CMD_SPI_READ                  0x04
+#define CMD_SPI_READ	                0x04
 #define CMD_SPI_WRITE                   0x0b
 
 
 /***************************************************************/
-#define MIPI_ANALOG_PWD_CTRL0        0x00
-#define MIPI_ANALOG_PWD_CTRL1             0x01
-#define MIPI_ANALOG_PWD_CTRL2             0x02
+#define MIPI_ANALOG_PWD_CTRL0				 0x00
+#define MIPI_ANALOG_PWD_CTRL1			        0x01
+#define MIPI_ANALOG_PWD_CTRL2			        0x02
 
-#define MIPI_MISC_CTRL                         0x03
+#define MIPI_MISC_CTRL                         0x03 
 
-#define MIPI_TIMING_REG0                    0x04
-#define MIPI_TIMING_REG1                    0x05
-#define MIPI_TIMING_REG2                    0x06
+#define MIPI_TIMING_REG0                    0x04 
+#define MIPI_TIMING_REG1                    0x05 
+#define MIPI_TIMING_REG2                    0x06 
 #define MIPI_TIMING_REG3                    0x07
-#define MIPI_TIMING_REG4                    0x08
-#define MIPI_TIMING_REG5                    0x09
-#define MIPI_TIMING_REG6                    0x0a
+#define MIPI_TIMING_REG4                    0x08 
+#define MIPI_TIMING_REG5                    0x09 
+#define MIPI_TIMING_REG6                    0x0a 
 
 #define MIPI_HS_JITTER_REG                 0x0B
 
-#define MIPI_VID_STABLE_CNT               0x0C
+#define MIPI_VID_STABLE_CNT               0x0C 
 
-#define MIPI_ANALOG_CTRL0                  0x0D
+#define MIPI_ANALOG_CTRL0                  0x0D 
 #define MIPI_ANALOG_CTRL1                  0x0E
-#define MIPI_ANALOG_CTRL2                  0x0F
+#define MIPI_ANALOG_CTRL2                  0x0F 
 
-#define MIPI_PRBS_REG                           0x10
-#define MIPI_PROTOCOL_STATE               0x11
+#define MIPI_PRBS_REG                           0x10 
+#define MIPI_PROTOCOL_STATE               0x11 
 
 
 
 /***************************************************************/
-#define SP_TX_HDCP_STATUS                       0x00
-#define SP_TX_HDCP_AUTH_PASS                    0x02//bit position
+#define SP_TX_HDCP_STATUS							  				0x00
+#define SP_TX_HDCP_AUTH_PASS						  			0x02//bit position
 
-#define SP_TX_HDCP_CONTROL_0_REG                      0x01
+#define SP_TX_HDCP_CONTROL_0_REG                  		0x01
 #define SP_TX_HDCP_CONTROL_0_STORE_AN            0x80//bit position
-#define SP_TX_HDCP_CONTROL_0_RX_REPEATER    0x40//bit position
+#define SP_TX_HDCP_CONTROL_0_RX_REPEATER   	0x40//bit position
 #define SP_TX_HDCP_CONTROL_0_RE_AUTH              0x20//bit position
 #define SP_TX_HDCP_CONTROL_0_SW_AUTH_OK       0x10//bit position
 #define SP_TX_HDCP_CONTROL_0_HARD_AUTH_EN   0x08//bit position
@@ -313,39 +313,39 @@ typedef enum {
 #define SP_TX_HDCP_CONTROL_0_KSVLIST_VLD        0x01//bit position
 
 
-#define SP_TX_HDCP_CONTROL_1_REG                      0x02
-#define SP_TX_HDCP_CONTROL_1_DDC_NO_STOP            0x20//bit position
-#define SP_TX_HDCP_CONTROL_1_DDC_NO_ACK             0x10//bit position
-#define SP_TX_HDCP_CONTROL_1_EDDC_NO_ACK              0x08//bit position
+#define SP_TX_HDCP_CONTROL_1_REG                  		0x02
+#define SP_TX_HDCP_CONTROL_1_DDC_NO_STOP      			0x20//bit position
+#define SP_TX_HDCP_CONTROL_1_DDC_NO_ACK        			0x10//bit position
+#define SP_TX_HDCP_CONTROL_1_EDDC_NO_ACK          		0x08//bit position
 #define SP_TX_HDCP_CONTROL_1_RCV_11_EN                  0x02//bit position
-#define SP_TX_HDCP_CONTROL_1_HDCP_11_EN               0x01//bit position
+#define SP_TX_HDCP_CONTROL_1_HDCP_11_EN           		0x01//bit position
 
-#define SP_TX_HDCP_LINK_CHK_FRAME_NUM         0x03
-#define SP_TX_HDCP_CONTROL_2_REG            0x04
+#define SP_TX_HDCP_LINK_CHK_FRAME_NUM				 	0x03
+#define SP_TX_HDCP_CONTROL_2_REG						0x04
 
-#define SP_TX_HDCP_AKSV0                0x05
-#define SP_TX_HDCP_AKSV1                0x06
-#define SP_TX_HDCP_AKSV2                0x07
-#define SP_TX_HDCP_AKSV3                0x08
-#define SP_TX_HDCP_AKSV4                0x09
+#define SP_TX_HDCP_AKSV0								0x05
+#define SP_TX_HDCP_AKSV1								0x06
+#define SP_TX_HDCP_AKSV2								0x07
+#define SP_TX_HDCP_AKSV3								0x08
+#define SP_TX_HDCP_AKSV4								0x09
 
-#define SP_TX_HDCP_AN0                  0x0A
-#define SP_TX_HDCP_AN1                  0x0B
-#define SP_TX_HDCP_AN2                  0x0C
-#define SP_TX_HDCP_AN3                  0x0D
-#define SP_TX_HDCP_AN4                  0x0E
-#define SP_TX_HDCP_AN5                  0x0F
-#define SP_TX_HDCP_AN6                  0x10
-#define SP_TX_HDCP_AN7                  0x11
+#define SP_TX_HDCP_AN0									0x0A
+#define SP_TX_HDCP_AN1									0x0B
+#define SP_TX_HDCP_AN2									0x0C
+#define SP_TX_HDCP_AN3									0x0D
+#define SP_TX_HDCP_AN4									0x0E
+#define SP_TX_HDCP_AN5									0x0F
+#define SP_TX_HDCP_AN6									0x10
+#define SP_TX_HDCP_AN7									0x11
 
-#define SP_TX_HDCP_BKSV0                0x12
-#define SP_TX_HDCP_BKSV1                0x13
-#define SP_TX_HDCP_BKSV2                0x14
-#define SP_TX_HDCP_BKSV3                0x15
-#define SP_TX_HDCP_BKSV4                0x16
+#define SP_TX_HDCP_BKSV0								0x12
+#define SP_TX_HDCP_BKSV1								0x13
+#define SP_TX_HDCP_BKSV2								0x14
+#define SP_TX_HDCP_BKSV3								0x15
+#define SP_TX_HDCP_BKSV4								0x16
 
-#define SP_TX_HDCP_R0_L                 0x17
-#define SP_TX_HDCP_R0_H                 0x18
+#define SP_TX_HDCP_R0_L									0x17
+#define SP_TX_HDCP_R0_H									0x18
 
 #ifndef M_VID_0
 #define M_VID_0 0xC0
@@ -356,76 +356,76 @@ typedef enum {
 #define N_VID_2 0xC5
 #endif
 
-#define SP_TX_HDCP_R0_WAIT_Timer           0x40
+#define SP_TX_HDCP_R0_WAIT_Timer					 0x40
 
 
 
-#define SP_TX_SYS_CTRL1_REG                     0x80
-#define SP_TX_SYS_CTRL1_DET_STA                 0x04   
-#define SP_TX_SYS_CTRL1_FORCE_DET               0x02   
-#define SP_TX_SYS_CTRL1_DET_CTRL                0x01   
+#define SP_TX_SYS_CTRL1_REG           					0x80
+#define SP_TX_SYS_CTRL1_DET_STA       					0x04   
+#define SP_TX_SYS_CTRL1_FORCE_DET     					0x02   
+#define SP_TX_SYS_CTRL1_DET_CTRL      					0x01   
 
-#define SP_TX_SYS_CTRL2_REG                     0x81
-#define SP_TX_SYS_CTRL2_CHA_STA                 0x04   
-#define SP_TX_SYS_CTRL2_FORCE_CHA               0x02   
-#define SP_TX_SYS_CTRL2_CHA_CTRL                0x01   
+#define SP_TX_SYS_CTRL2_REG           					0x81
+#define SP_TX_SYS_CTRL2_CHA_STA       					0x04   
+#define SP_TX_SYS_CTRL2_FORCE_CHA     					0x02   
+#define SP_TX_SYS_CTRL2_CHA_CTRL      					0x01   
 
-#define SP_TX_SYS_CTRL3_REG                     0x82
-#define SP_TX_SYS_CTRL3_HPD_STATUS              0x40   
-#define SP_TX_SYS_CTRL3_F_HPD                   0x20   
-#define SP_TX_SYS_CTRL3_HPD_CTRL                0x10   
-#define SP_TX_SYS_CTRL3_STRM_VALID              0x04   
-#define SP_TX_SYS_CTRL3_F_VALID                 0x02   
-#define SP_TX_SYS_CTRL3_VALID_CTRL              0x01   
+#define SP_TX_SYS_CTRL3_REG           					0x82
+#define SP_TX_SYS_CTRL3_HPD_STATUS    					0x40   
+#define SP_TX_SYS_CTRL3_F_HPD         					0x20   
+#define SP_TX_SYS_CTRL3_HPD_CTRL      					0x10   
+#define SP_TX_SYS_CTRL3_STRM_VALID    					0x04   
+#define SP_TX_SYS_CTRL3_F_VALID       					0x02   
+#define SP_TX_SYS_CTRL3_VALID_CTRL    					0x01   
 
-#define SP_TX_SYS_CTRL4_REG                 0x83
-#define SP_TX_SYS_CTRL4_ENHANCED              0x08//bit position
+#define SP_TX_SYS_CTRL4_REG			  					0x83
+#define SP_TX_SYS_CTRL4_ENHANCED 	  					0x08//bit position
 
-#define SP_TX_VID_CTRL                    0x84
+#define SP_TX_VID_CTRL				  					0x84
 
-#define SP_TX_AUD_CTRL                  0x87
-#define SP_TX_AUD_CTRL_AUD_EN             0x01
-
-
-#define SP_TX_PKT_EN_REG                        0x90
-#define SP_TX_PKT_AUD_UP                0x80 
-#define SP_TX_PKT_AVI_UD                        0x40 
-#define SP_TX_PKT_MPEG_UD                       0x20 
-#define SP_TX_PKT_SPD_UD                        0x10 
-#define SP_TX_PKT_AUD_EN                0x08 
-#define SP_TX_PKT_AVI_EN                        0x04 
-#define SP_TX_PKT_MPEG_EN                       0x02 
-#define SP_TX_PKT_SPD_EN                        0x01 
+#define SP_TX_AUD_CTRL									0x87
+#define SP_TX_AUD_CTRL_AUD_EN							0x01
 
 
-#define SP_TX_HDCP_CTRL                         0x92
+#define SP_TX_PKT_EN_REG              					0x90
+#define SP_TX_PKT_AUD_UP								0x80 
+#define SP_TX_PKT_AVI_UD              					0x40 
+#define SP_TX_PKT_MPEG_UD             					0x20 
+#define SP_TX_PKT_SPD_UD              					0x10 
+#define SP_TX_PKT_AUD_EN								0x08 
+#define SP_TX_PKT_AVI_EN              					0x04 
+#define SP_TX_PKT_MPEG_EN             					0x02 
+#define SP_TX_PKT_SPD_EN              					0x01 
 
-#define SP_TX_LINK_BW_SET_REG                  0xA0
-#define SP_TX_LANE_COUNT_SET_REG               0xA1
+
+#define SP_TX_HDCP_CTRL 												0x92
+
+#define SP_TX_LINK_BW_SET_REG         				 0xA0
+#define SP_TX_LANE_COUNT_SET_REG      				 0xA1
 
 #define SP_TX_TRAINING_PTN_SET_REG                   0xA2
-#define SP_TX_SCRAMBLE_DISABLE             0x20//bit 5
+#define SP_TX_SCRAMBLE_DISABLE						 0x20//bit 5
 
-#define SP_TX_TRAINING_LANE0_SET_REG                        0xA3
+#define SP_TX_TRAINING_LANE0_SET_REG                 				0xA3
 #define SP_TX_TRAINING_LANE0_SET_MAX_PRE_REACH        0x20       
 #define SP_TX_TRAINING_LANE0_SET_MAX_DRIVE_REACH     0x04       
 
 #define SP_TX_TRAINING_LANE1_SET_REG                0xA4
 
 
-#define SSC_CTRL_REG1          0xA7
-#define SPREAD_AMP             0x10//bit 4
-#define MODULATION_FREQ          0x01//bit 0
+#define SSC_CTRL_REG1					 0xA7
+#define SPREAD_AMP						 0x10//bit 4
+#define MODULATION_FREQ					 0x01//bit 0
 
 
 #define SP_TX_LINK_TRAINING_CTRL_REG                0xA8
 #define SP_TX_LINK_TRAINING_CTRL_EN                 0x01       
 
 
-#define SP_TX_DEBUG_REG1              0xB0
-#define SP_TX_DEBUG_HPD_POLLING_DET           0x40//bit position
-#define SP_TX_DEBUG_HPD_POLLING_EN            0x20//bit position
-#define SP_TX_DEBUG_PLL_LOCK            0x10//bit position
+#define SP_TX_DEBUG_REG1							0xB0
+#define SP_TX_DEBUG_HPD_POLLING_DET						0x40//bit position
+#define SP_TX_DEBUG_HPD_POLLING_EN						0x20//bit position
+#define SP_TX_DEBUG_PLL_LOCK						0x10//bit position
 
 
 #define SP_TX_LINK_DEBUG_REG                        0xB8
@@ -437,35 +437,35 @@ typedef enum {
 #define SP_TX_LINK_STATUS_REG1                               0xBB
 
 #define SP_TX_SINK_STATUS_REG                                   0xBE
-#define SP_TX_SINK_STATUS_SINK_STATUS_1           0x02       
-#define SP_TX_SINK_STATUS_SINK_STATUS_0           0x01       
+#define SP_TX_SINK_STATUS_SINK_STATUS_1          	0x02       
+#define SP_TX_SINK_STATUS_SINK_STATUS_0          	0x01       
 
 
 
 
-#define SP_TX_PLL_CTRL_REG                      0xC7
-#define SP_TX_PLL_CTRL_PLL_PD                       0x80       
-#define SP_TX_PLL_CTRL_PLL_RESET                  0x40       
+#define SP_TX_PLL_CTRL_REG											0xC7	
+#define SP_TX_PLL_CTRL_PLL_PD           						0x80       
+#define SP_TX_PLL_CTRL_PLL_RESET        					0x40       
 
-#define SP_TX_ANALOG_POWER_DOWN_REG                         0xC8
-#define SP_TX_ANALOG_POWER_DOWN_MACRO_PD                0x20       
-#define SP_TX_ANALOG_POWER_DOWN_AUX_PD                    0x10       
-#define SP_TX_ANALOG_POWER_DOWN_CH1_PD                    0x02       
-#define SP_TX_ANALOG_POWER_DOWN_CH0_PD                    0x01       
+#define SP_TX_ANALOG_POWER_DOWN_REG                   			0xC8
+#define SP_TX_ANALOG_POWER_DOWN_MACRO_PD              	0x20       
+#define SP_TX_ANALOG_POWER_DOWN_AUX_PD                		0x10       
+#define SP_TX_ANALOG_POWER_DOWN_CH1_PD                		0x02       
+#define SP_TX_ANALOG_POWER_DOWN_CH0_PD                		0x01       
 
 
-#define SP_TX_ANALOG_TEST_REG                                   0xC9
-#define SP_TX_ANALOG_TEST_MACRO_RST                           0x20      
-#define SP_TX_ANALOG_TEST_PLL_TEST                            0x10      
-#define SP_TX_ANALOG_TEST_CH3_TEST                            0x08      
-#define SP_TX_ANALOG_TEST_CH2_TEST                            0x04      
-#define SP_TX_ANALOG_TEST_CH1_TEST                            0x02      
-#define SP_TX_ANALOG_TEST_CH0_TEST                            0x01      
+#define SP_TX_ANALOG_TEST_REG                         					0xC9
+#define SP_TX_ANALOG_TEST_MACRO_RST                   				0x20      
+#define SP_TX_ANALOG_TEST_PLL_TEST                    				0x10      
+#define SP_TX_ANALOG_TEST_CH3_TEST                    				0x08      
+#define SP_TX_ANALOG_TEST_CH2_TEST                    				0x04      
+#define SP_TX_ANALOG_TEST_CH1_TEST                    				0x02      
+#define SP_TX_ANALOG_TEST_CH0_TEST                    				0x01      
 
-#define SP_TX_GNS_CTRL_REG                                          0xCD
-#define SP_EQ_LOOP_CNT                      0x40//bit position
-#define SP_TX_VIDEO_MAP_CTRL                                                  0x02      
-#define SP_TX_RS_CTRL                                                 0x01      
+#define SP_TX_GNS_CTRL_REG                            							0xCD
+#define SP_EQ_LOOP_CNT											0x40//bit position
+#define SP_TX_VIDEO_MAP_CTRL                 			                            0x02      
+#define SP_TX_RS_CTRL                        					              	0x01      
 
 #define SP_TX_DOWN_SPREADING_CTRL1                                               0xD0  
 #define SP_TX_DOWN_SPREADING_CTRL2                                               0xD1
@@ -473,26 +473,26 @@ typedef enum {
 #define SP_TX_SSC_D_CTRL                                                             0x40      
 #define SP_TX_FS_CTRL_TH_CTRL                                                   0x20      
 
-#define SP_TX_M_CALCU_CTRL                        0xD9
-#define M_GEN_CLK_SEL                         0x01//bit 0
+#define SP_TX_M_CALCU_CTRL												0xD9
+#define M_GEN_CLK_SEL													0x01//bit 0
 
 
-#define SP_TX_EXTRA_ADDR_REG                      0xCE
+#define SP_TX_EXTRA_ADDR_REG											0xCE
 #define SP_TX_I2C_STRETCH_CTRL_REG                                                              0xDB
-#define SP_TX_AUX_STATUS                                0xE0
-#define SP_TX_DEFER_CTRL_REG                              0xE2
-#define SP_TXL_DEFER_CTRL_EN                                           0x80      
+#define SP_TX_AUX_STATUS            										0xE0
+#define SP_TX_DEFER_CTRL_REG            									0xE2
+#define SP_TXL_DEFER_CTRL_EN  					                     		       0x80      
 
-#define SP_TX_BUF_DATA_COUNT_REG                      0xE4
-#define SP_TX_AUX_CTRL_REG                                  0xE5
-#define SP_TX_MOT_BIT                         0x04//bit 2
+#define SP_TX_BUF_DATA_COUNT_REG											0xE4
+#define SP_TX_AUX_CTRL_REG              										0xE5
+#define SP_TX_MOT_BIT													0x04//bit 2
 
-#define SP_TX_AUX_ADDR_7_0_REG                            0xE6
-#define SP_TX_AUX_ADDR_15_8_REG                           0xE7
-#define SP_TX_AUX_ADDR_19_16_REG                          0xE8
+#define SP_TX_AUX_ADDR_7_0_REG          									0xE6
+#define SP_TX_AUX_ADDR_15_8_REG         									0xE7
+#define SP_TX_AUX_ADDR_19_16_REG        									0xE8
 
 #define SP_TX_AUX_CTRL_REG2                                                 0xE9
-#define SP_TX_ADDR_ONLY_BIT                         0x02//bit 1
+#define SP_TX_ADDR_ONLY_BIT													0x02//bit 1
 
 #define SP_TX_BUF_DATA_0_REG                          0xf0
 #define SP_TX_BUF_DATA_1_REG                          0xf1
@@ -513,71 +513,71 @@ typedef enum {
 
 
 /***************************************************************/
-#define SP_TX_VND_IDL_REG               0x00
-#define SP_TX_VND_IDH_REG               0x01
-#define SP_TX_DEV_IDL_REG               0x02
-#define SP_TX_DEV_IDH_REG               0x03
-#define SP_TX_DEV_REV_REG               0x04
+#define SP_TX_VND_IDL_REG             	0x00
+#define SP_TX_VND_IDH_REG             	0x01
+#define SP_TX_DEV_IDL_REG             	0x02
+#define SP_TX_DEV_IDH_REG             	0x03
+#define SP_TX_DEV_REV_REG             	0x04
 
-#define SP_POWERD_CTRL_REG          0x05
-#define SP_POWERD_REGISTER_REG      0x80// bit position
-#define SP_POWERD_IO_REG          0x20// bit position
-#define SP_POWERD_AUDIO_REG       0x10// bit position
-#define SP_POWERD_VIDEO_REG         0x08// bit position
-#define SP_POWERD_LINK_REG          0x04// bit position
-#define SP_POWERD_TOTAL_REG         0x02// bit position
-#define SP_MODE_SEL_REG           0x01// bit position
+#define SP_POWERD_CTRL_REG			  	0x05
+#define SP_POWERD_REGISTER_REG			0x80// bit position
+#define SP_POWERD_IO_REG			  	0x20// bit position
+#define SP_POWERD_AUDIO_REG				0x10// bit position
+#define SP_POWERD_VIDEO_REG			  	0x08// bit position
+#define SP_POWERD_LINK_REG			  	0x04// bit position
+#define SP_POWERD_TOTAL_REG			  	0x02// bit position
+#define SP_MODE_SEL_REG				  	0x01// bit position
 
-#define SP_TX_RST_CTRL_REG              0x06
-#define SP_TX_RST_MISC_REG          0x80 
-#define SP_TX_RST_VIDCAP_REG        0x40 
-#define SP_TX_RST_VIDFIF_REG            0x20   
-#define SP_TX_RST_AUDFIF_REG            0x10   
-#define SP_TX_RST_AUDCAP_REG          0x08   
-#define SP_TX_RST_HDCP_REG              0x04   
-#define SP_TX_RST_SW_RST              0x02   
-#define SP_TX_RST_HW_RST              0x01   
+#define SP_TX_RST_CTRL_REG            	0x06
+#define SP_TX_RST_MISC_REG 			  	0x80
+#define SP_TX_RST_VIDCAP_REG		  	0x40
+#define SP_TX_RST_VIDFIF_REG          	0x20   
+#define SP_TX_RST_AUDFIF_REG          	0x10   
+#define SP_TX_RST_AUDCAP_REG         	0x08   
+#define SP_TX_RST_HDCP_REG            	0x04   
+#define SP_TX_RST_SW_RST             	0x02   
+#define SP_TX_RST_HW_RST             	0x01   
 
-#define SP_TX_RST_CTRL2_REG       0x07
-#define SP_TX_RST_SSC         0x80//bit position
-#define SP_TX_AC_MODE         0x40//bit position
-#define SP_TX_AUX_RST         0x04//bit position
-#define SP_TX_SERDES_FIFO_RST     0x02//bit position
-#define SP_TX_I2C_REG_RST       0x01//bit position
+#define SP_TX_RST_CTRL2_REG				0x07
+#define SP_TX_RST_SSC					0x80//bit position
+#define SP_TX_AC_MODE					0x40//bit position
+#define SP_TX_AUX_RST					0x04//bit position
+#define SP_TX_SERDES_FIFO_RST			0x02//bit position
+#define SP_TX_I2C_REG_RST				0x01//bit position
 
 
-#define SP_TX_VID_CTRL1_REG             0x08
+#define SP_TX_VID_CTRL1_REG           	0x08
 #define SP_TX_VID_CTRL1_VID_EN       0x80   
 #define SP_TX_VID_CTRL1_VID_MUTE   0x40   
 #define SP_TX_VID_CTRL1_DE_GEN      0x20   
 #define SP_TX_VID_CTRL1_DEMUX        0x10   
-#define SP_TX_VID_CTRL1_IN_BIT        0x04   
-#define SP_TX_VID_CTRL1_DDRCTRL   0x02   
-#define SP_TX_VID_CTRL1_EDGE          0x01   
+#define SP_TX_VID_CTRL1_IN_BIT		  	0x04   
+#define SP_TX_VID_CTRL1_DDRCTRL		0x02   
+#define SP_TX_VID_CTRL1_EDGE		  		0x01   
 
-#define SP_TX_VID_CTRL2_REG             0x09
-#define SP_TX_VID_CTRL1_YCBIT_SEL     0x04   
+#define SP_TX_VID_CTRL2_REG           	0x09
+#define SP_TX_VID_CTRL1_YCBIT_SEL  		0x04   
 
-#define SP_TX_VID_CTRL3_REG             0x0A
+#define SP_TX_VID_CTRL3_REG           	0x0A
 
-#define SP_TX_VID_CTRL4_REG             0x0B
-#define SP_TX_VID_CTRL4_E_SYNC_EN     0x80   
+#define SP_TX_VID_CTRL4_REG           	0x0B
+#define SP_TX_VID_CTRL4_E_SYNC_EN	  	0x80	 
 #define SP_TX_VID_CTRL4_EX_E_SYNC    0x40   
-#define SP_TX_VID_CTRL4_BIST              0x08   
+#define SP_TX_VID_CTRL4_BIST          		0x08   
 #define SP_TX_VID_CTRL4_BIST_WIDTH   0x04       
 
-#define SP_TX_VID_CTRL5_REG               0x0C
+#define SP_TX_VID_CTRL5_REG           		0x0C
 
-#define SP_TX_VID_CTRL6_REG               0x0D
-#define SP_TX_VID_UPSAMPLE          0x02//bit position
+#define SP_TX_VID_CTRL6_REG           		0x0D
+#define SP_TX_VID_UPSAMPLE					0x02//bit position
 
-#define SP_TX_VID_CTRL7_REG               0x0E
-#define SP_TX_VID_CTRL8_REG               0x0F
-#define SP_TX_VID_CTRL9_REG               0x10
+#define SP_TX_VID_CTRL7_REG           		0x0E
+#define SP_TX_VID_CTRL8_REG           		0x0F
+#define SP_TX_VID_CTRL9_REG           		0x10
 
-#define SP_TX_VID_CTRL10_REG            0x11
-#define SP_TX_VID_CTRL10_INV_F          0x08   
-#define SP_TX_VID_CTRL10_I_SCAN         0x04   
+#define SP_TX_VID_CTRL10_REG           	0x11
+#define SP_TX_VID_CTRL10_INV_F         	0x08   
+#define SP_TX_VID_CTRL10_I_SCAN        	0x04   
 #define SP_TX_VID_CTRL10_VSYNC_POL   0x02   
 #define SP_TX_VID_CTRL10_HSYNC_POL   0x01   
 
@@ -599,7 +599,7 @@ typedef enum {
 #define SP_TX_HB_PORCHL_REG           0x21
 #define SP_TX_HB_PORCHH_REG           0x22
 
-#define SP_TX_VID_STATUS            0x23
+#define SP_TX_VID_STATUS						0x23
 
 #define SP_TX_TOTAL_LINE_STA_L        0x24
 #define SP_TX_TOTAL_LINE_STA_H        0x25
@@ -621,10 +621,10 @@ typedef enum {
 
 #define SP_TX_Video_Interface_BIST    0x35
 
-#define SPDIF_AUDIO_CTRL0     0x36
+#define SPDIF_AUDIO_CTRL0			0x36
 #define SPDIF_AUDIO_CTRL0_SPDIF_IN  0x80
 
-#define SPDIF_AUDIO_STATUS0     0x38
+#define SPDIF_AUDIO_STATUS0			0x38
 #define SPDIF_AUDIO_STATUS0_CLK_DET 0x80
 #define SPDIF_AUDIO_STATUS0_AUD_DET 0x01
 
@@ -686,7 +686,7 @@ typedef enum {
 #define SP_TX_AVI_TYPE              0x70
 #define SP_TX_AVI_VER               0x71
 #define SP_TX_AVI_LEN               0x72
-#define SP_TX_AVI_DB0        0x73
+#define SP_TX_AVI_DB0		     0x73
 #define SP_TX_AVI_DB1               0x74
 #define SP_TX_AVI_DB2               0x75
 #define SP_TX_AVI_DB3               0x76
@@ -703,25 +703,25 @@ typedef enum {
 #define SP_TX_AVI_DB14              0x81
 #define SP_TX_AVI_DB15              0x82
 
-#define SP_TX_AUD_TYPE       0x83
-#define SP_TX_AUD_VER      0x84
-#define SP_TX_AUD_LEN      0x85
-#define SP_TX_AUD_DB0      0x86
-#define SP_TX_AUD_DB1      0x87
-#define SP_TX_AUD_DB2      0x88
-#define SP_TX_AUD_DB3      0x89
-#define SP_TX_AUD_DB4      0x8A
-#define SP_TX_AUD_DB5      0x8B
-#define SP_TX_AUD_DB6      0x8C
-#define SP_TX_AUD_DB7      0x8D
-#define SP_TX_AUD_DB8      0x8E
-#define SP_TX_AUD_DB9      0x8F
-#define SP_TX_AUD_DB10       0x90
+#define SP_TX_AUD_TYPE			 0x83
+#define SP_TX_AUD_VER			 0x84
+#define SP_TX_AUD_LEN			 0x85
+#define SP_TX_AUD_DB0			 0x86
+#define SP_TX_AUD_DB1			 0x87
+#define SP_TX_AUD_DB2			 0x88
+#define SP_TX_AUD_DB3			 0x89
+#define SP_TX_AUD_DB4			 0x8A
+#define SP_TX_AUD_DB5			 0x8B
+#define SP_TX_AUD_DB6			 0x8C
+#define SP_TX_AUD_DB7			 0x8D
+#define SP_TX_AUD_DB8			 0x8E
+#define SP_TX_AUD_DB9			 0x8F
+#define SP_TX_AUD_DB10			 0x90
 
 #define SP_TX_SPD_TYPE                0x91
 #define SP_TX_SPD_VER                 0x92
 #define SP_TX_SPD_LEN                 0x93
-#define SP_TX_SPD_DATA0   0x94
+#define SP_TX_SPD_DATA0		0x94
 #define SP_TX_SPD_DATA1               0x95
 #define SP_TX_SPD_DATA2               0x96
 #define SP_TX_SPD_DATA3               0x97
@@ -784,68 +784,68 @@ typedef enum {
 
 
 
-#define ANALOG_DEBUG_REG1     0xDC
-#define ANALOG_SEL_BG       0x40//bit 4
-#define ANALOG_SWING_A_30PER    0x08//bit 3
+#define ANALOG_DEBUG_REG1			0xDC
+#define ANALOG_SEL_BG				0x40//bit 4
+#define ANALOG_SWING_A_30PER		0x08//bit 3
 
-#define ANALOG_DEBUG_REG2     0xDD
-#define ANALOG_24M_SEL        0x08//bit 3
+#define ANALOG_DEBUG_REG2			0xDD
+#define ANALOG_24M_SEL				0x08//bit 3
 
 
-#define ANALOG_DEBUG_REG3     0xDE
+#define ANALOG_DEBUG_REG3			0xDE
 
-#define PLL_FILTER_CTRL1      0xDF
-#define PD_RING_OSC         0x40//bit 6
+#define PLL_FILTER_CTRL1			0xDF
+#define PD_RING_OSC					0x40//bit 6
 
-#define PLL_FILTER_CTRL2      0xE0
-#define PLL_FILTER_CTRL3      0xE1
-#define PLL_FILTER_CTRL4      0xE2
-#define PLL_FILTER_CTRL5      0xE3
-#define PLL_FILTER_CTRL6      0xE4
+#define PLL_FILTER_CTRL2			0xE0
+#define PLL_FILTER_CTRL3			0xE1
+#define PLL_FILTER_CTRL4			0xE2
+#define PLL_FILTER_CTRL5			0xE3
+#define PLL_FILTER_CTRL6			0xE4
 
-#define SP_TX_I2S_CTRL      0xE6
-#define SP_TX_I2S_FMT     0xE7
-#define SP_TX_I2S_CH_Status1      0xD0
-#define SP_TX_I2S_CH_Status2      0xD1
-#define SP_TX_I2S_CH_Status3      0xD2
-#define SP_TX_I2S_CH_Status4      0xD3
-#define SP_TX_I2S_CH_Status5      0xD4
+#define SP_TX_I2S_CTRL			0xE6
+#define SP_TX_I2S_FMT			0xE7
+#define SP_TX_I2S_CH_Status1			0xD0
+#define SP_TX_I2S_CH_Status2			0xD1
+#define SP_TX_I2S_CH_Status3			0xD2
+#define SP_TX_I2S_CH_Status4			0xD3
+#define SP_TX_I2S_CH_Status5			0xD4
 
 #define SP_COMMON_INT_STATUS1     0xF1
-#define SP_COMMON_INT1_PLL_LOCK_CHG   0x40//bit position
+#define SP_COMMON_INT1_PLL_LOCK_CHG 	0x40//bit position
 #define SP_COMMON_INT1_VIDEO_FORMAT_CHG 0x08//bit position
-#define SP_COMMON_INT1_AUDIO_CLK_CHG  0x04//bit position
+#define SP_COMMON_INT1_AUDIO_CLK_CHG	0x04//bit position
 #define SP_COMMON_INT1_VIDEO_CLOCK_CHG  0x02//bit position
 
 
-#define SP_COMMON_INT_STATUS2   0xF2
-#define SP_COMMON_INT2_AUTHCHG    0x02
-#define SP_COMMON_INT2_AUTHDONE   0x01
+#define SP_COMMON_INT_STATUS2	  0xF2
+#define SP_COMMON_INT2_AUTHCHG	  0x02
+#define SP_COMMON_INT2_AUTHDONE	  0x01
 
-#define SP_COMMON_INT_STATUS3   0xF3
-#define SP_COMMON_INT3_AFIFO_UNDER  0x80//bit position
-#define SP_COMMON_INT3_AFIFO_OVER 0x40//bit position
+#define SP_COMMON_INT_STATUS3	  0xF3
+#define SP_COMMON_INT3_AFIFO_UNDER	0x80//bit position
+#define SP_COMMON_INT3_AFIFO_OVER	0x40//bit position
 
-#define SP_COMMON_INT_STATUS4     0xF4
+#define SP_COMMON_INT_STATUS4	    0xF4
 #define SP_COMMON_INT4_PLUG                0x01  
 #define SP_COMMON_INT4_ESYNC_ERR          0x10  
-#define SP_COMMON_INT4_HPDLOST    0x02  
+#define SP_COMMON_INT4_HPDLOST		0x02  
 #define SP_COMMON_INT4_HPD_CHANGE   0x04  
 
 
-#define SP_TX_INT_STATUS1     0xF7
-#define SP_TX_INT_STATUS1_HPD   0x40
+#define SP_TX_INT_STATUS1		  0xF7
+#define SP_TX_INT_STATUS1_HPD	  0x40
 #define SP_TX_INT_STATUS1_TRAINING_Finish       0x20  
 #define SP_TX_INT_STATUS1_POLLING_ERR        0x10  
 
-#define SP_TX_INT_SINK_CHG      0x08//bit position
+#define SP_TX_INT_SINK_CHG		  0x08//bit position
 
-#define SP_COMMON_INT_MASK1       0xF8
-#define SP_COMMON_INT_MASK2       0xF9
-#define SP_COMMON_INT_MASK3       0xFA
-#define SP_COMMON_INT_MASK4       0xFB
-#define SP_INT_MASK                     0xFE
-#define SP_TX_INT_CTRL_REG                0xFF
+#define SP_COMMON_INT_MASK1			  0xF8
+#define SP_COMMON_INT_MASK2			  0xF9
+#define SP_COMMON_INT_MASK3			  0xFA
+#define SP_COMMON_INT_MASK4			  0xFB
+#define SP_INT_MASK					  					0xFE
+#define SP_TX_INT_CTRL_REG            		0xFF
 
 /***************************************************************/
 /***************************************************************/
@@ -900,7 +900,7 @@ typedef enum {
 #define DPCD_USER_COMM1                                             0x22//define for downstream HDMI Rx sense detection
 
 
-void anx6345_init (__panel_para_t * info);
-void anx6345_exit (__panel_para_t * info);
+void anx6345_init(__panel_para_t * info);
+void anx6345_exit(__panel_para_t * info);
 #endif
 

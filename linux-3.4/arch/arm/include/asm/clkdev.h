@@ -17,13 +17,13 @@
 #ifdef CONFIG_HAVE_MACH_CLKDEV
 #include <mach/clkdev.h>
 #else
-#define __clk_get(clk)  ({ 1; })
-#define __clk_put(clk)  do { } while (0)
+#define __clk_get(clk)	({ 1; })
+#define __clk_put(clk)	do { } while (0)
 #endif
 
-static inline struct clk_lookup_alloc * __clkdev_alloc (size_t size)
+static inline struct clk_lookup_alloc *__clkdev_alloc(size_t size)
 {
-  return kzalloc (size, GFP_KERNEL);
+	return kzalloc(size, GFP_KERNEL);
 }
 
 #endif

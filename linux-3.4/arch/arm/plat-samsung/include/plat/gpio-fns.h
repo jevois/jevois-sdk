@@ -1,7 +1,7 @@
 /* arch/arm/mach-s3c2410/include/mach/gpio-fns.h
  *
  * Copyright (c) 2003-2009 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * S3C2410 - hardware
  *
@@ -26,10 +26,10 @@
 
 #include <plat/gpio-cfg.h>
 
-static inline void s3c2410_gpio_cfgpin (unsigned int pin, unsigned int cfg)
+static inline void s3c2410_gpio_cfgpin(unsigned int pin, unsigned int cfg)
 {
-  /* 1:1 mapping between cfgpin and setcfg calls at the moment */
-  s3c_gpio_cfgpin (pin, cfg);
+	/* 1:1 mapping between cfgpin and setcfg calls at the moment */
+	s3c_gpio_cfgpin(pin, cfg);
 }
 
 /* external functions for GPIO support
@@ -39,18 +39,18 @@ static inline void s3c2410_gpio_cfgpin (unsigned int pin, unsigned int cfg)
  * GPIO register, then it is safe to ioremap/__raw_{read|write} to it.
 */
 
-extern unsigned int s3c2410_gpio_getcfg (unsigned int pin);
+extern unsigned int s3c2410_gpio_getcfg(unsigned int pin);
 
 /* s3c2410_gpio_getirq
  *
  * turn the given pin number into the corresponding IRQ number
  *
  * returns:
- *  < 0 = no interrupt for this pin
- *  >=0 = interrupt number for the pin
+ *	< 0 = no interrupt for this pin
+ *	>=0 = interrupt number for the pin
 */
 
-extern int s3c2410_gpio_getirq (unsigned int pin);
+extern int s3c2410_gpio_getirq(unsigned int pin);
 
 /* s3c2410_gpio_irqfilter
  *
@@ -65,8 +65,8 @@ extern int s3c2410_gpio_getirq (unsigned int pin);
  *
 */
 
-extern int s3c2410_gpio_irqfilter (unsigned int pin, unsigned int on,
-                                   unsigned int config);
+extern int s3c2410_gpio_irqfilter(unsigned int pin, unsigned int on,
+				  unsigned int config);
 
 /* s3c2410_gpio_pullup
  *
@@ -89,10 +89,10 @@ extern int s3c2410_gpio_irqfilter (unsigned int pin, unsigned int on,
  *   s3c2410_gpio_pullup(S3C2410_GPE(8), 0);
 */
 
-extern void s3c2410_gpio_pullup (unsigned int pin, unsigned int to);
+extern void s3c2410_gpio_pullup(unsigned int pin, unsigned int to);
 
-extern void s3c2410_gpio_setpin (unsigned int pin, unsigned int to);
+extern void s3c2410_gpio_setpin(unsigned int pin, unsigned int to);
 
-extern unsigned int s3c2410_gpio_getpin (unsigned int pin);
+extern unsigned int s3c2410_gpio_getpin(unsigned int pin);
 
 #endif /* __MACH_GPIO_FNS_H */

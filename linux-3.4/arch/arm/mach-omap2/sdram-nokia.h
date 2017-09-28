@@ -8,5 +8,5 @@
  * published by the Free Software Foundation.
  */
 
-struct omap_sdrc_params * nokia_get_sdram_timings (void);
+struct omap_sdrc_params *nokia_get_sdram_timings(void);
 

@@ -42,43 +42,43 @@
  * Returns 1 if valid, 0 otherwise.
  *
  */
-static int ecryptfs_d_revalidate (struct dentry * dentry, struct nameidata * nd)
+static int ecryptfs_d_revalidate(struct dentry *dentry, struct nameidata *nd)
 {
-  struct dentry * lower_dentry;
-  struct vfsmount * lower_mnt;
-  struct dentry * dentry_save = NULL;
-  struct vfsmount * vfsmount_save = NULL;
-  int rc = 1;
-  
-  if (nd && nd->flags & LOOKUP_RCU)
-  { return -ECHILD; }
-  
-  lower_dentry = ecryptfs_dentry_to_lower (dentry);
-  lower_mnt = ecryptfs_dentry_to_lower_mnt (dentry);
-  if (!lower_dentry->d_op || !lower_dentry->d_op->d_revalidate)
-  { goto out; }
-  if (nd) {
-    dentry_save = nd->path.dentry;
-    vfsmount_save = nd->path.mnt;
-    nd->path.dentry = lower_dentry;
-    nd->path.mnt = lower_mnt;
-  }
-  rc = lower_dentry->d_op->d_revalidate (lower_dentry, nd);
-  if (nd) {
-    nd->path.dentry = dentry_save;
-    nd->path.mnt = vfsmount_save;
-  }
-  if (dentry->d_inode) {
-    struct inode * lower_inode =
-      ecryptfs_inode_to_lower (dentry->d_inode);
-      
-    fsstack_copy_attr_all (dentry->d_inode, lower_inode);
-  }
+	struct dentry *lower_dentry;
+	struct vfsmount *lower_mnt;
+	struct dentry *dentry_save = NULL;
+	struct vfsmount *vfsmount_save = NULL;
+	int rc = 1;
+
+	if (nd && nd->flags & LOOKUP_RCU)
+		return -ECHILD;
+
+	lower_dentry = ecryptfs_dentry_to_lower(dentry);
+	lower_mnt = ecryptfs_dentry_to_lower_mnt(dentry);
+	if (!lower_dentry->d_op || !lower_dentry->d_op->d_revalidate)
+		goto out;
+	if (nd) {
+		dentry_save = nd->path.dentry;
+		vfsmount_save = nd->path.mnt;
+		nd->path.dentry = lower_dentry;
+		nd->path.mnt = lower_mnt;
+	}
+	rc = lower_dentry->d_op->d_revalidate(lower_dentry, nd);
+	if (nd) {
+		nd->path.dentry = dentry_save;
+		nd->path.mnt = vfsmount_save;
+	}
+	if (dentry->d_inode) {
+		struct inode *lower_inode =
+			ecryptfs_inode_to_lower(dentry->d_inode);
+
+		fsstack_copy_attr_all(dentry->d_inode, lower_inode);
+	}
 out:
-  return rc;
+	return rc;
 }
 
-struct kmem_cache * ecryptfs_dentry_info_cache;
+struct kmem_cache *ecryptfs_dentry_info_cache;
 
 /**
  * ecryptfs_d_release
@@ -86,20 +86,20 @@ struct kmem_cache * ecryptfs_dentry_info_cache;
  *
  * Called when a dentry is really deallocated.
  */
-static void ecryptfs_d_release (struct dentry * dentry)
+static void ecryptfs_d_release(struct dentry *dentry)
 {
-  if (ecryptfs_dentry_to_private (dentry) ) {
-    if (ecryptfs_dentry_to_lower (dentry) ) {
-      dput (ecryptfs_dentry_to_lower (dentry) );
-      mntput (ecryptfs_dentry_to_lower_mnt (dentry) );
-    }
-    kmem_cache_free (ecryptfs_dentry_info_cache,
-                     ecryptfs_dentry_to_private (dentry) );
-  }
-  return;
+	if (ecryptfs_dentry_to_private(dentry)) {
+		if (ecryptfs_dentry_to_lower(dentry)) {
+			dput(ecryptfs_dentry_to_lower(dentry));
+			mntput(ecryptfs_dentry_to_lower_mnt(dentry));
+		}
+		kmem_cache_free(ecryptfs_dentry_info_cache,
+				ecryptfs_dentry_to_private(dentry));
+	}
+	return;
 }
 
 const struct dentry_operations ecryptfs_dops = {
-  .d_revalidate = ecryptfs_d_revalidate,
-  .d_release = ecryptfs_d_release,
+	.d_revalidate = ecryptfs_d_revalidate,
+	.d_release = ecryptfs_d_release,
 };

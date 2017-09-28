@@ -15,8 +15,8 @@
 
 /* Debug --- Event log definitions --- */
 /* EVENTLOGSIZE*EVENTLOGARGS needs to be a power of 2 */
-#define LMC_EVENTLOGSIZE 1024 /* number of events in eventlog */
-#define LMC_EVENTLOGARGS 4    /* number of args for each event */
+#define LMC_EVENTLOGSIZE 1024	/* number of events in eventlog */
+#define LMC_EVENTLOGARGS 4		/* number of args for each event */
 
 /* event indicators */
 #define LMC_EVENT_XMT           1
@@ -45,8 +45,8 @@ extern u32 lmcEventLogBuf[LMC_EVENTLOGSIZE * LMC_EVENTLOGARGS];
 #define LMC_EVENT_LOG(x,y,z)
 #endif /* end ifdef _DBG_EVENTLOG */
 
-void lmcConsoleLog (char * type, unsigned char * ucData, int iLen);
-void lmcEventLog (u32 EventNum, u32 arg2, u32 arg3);
-void lmc_trace (struct net_device * dev, char * msg);
+void lmcConsoleLog(char *type, unsigned char *ucData, int iLen);
+void lmcEventLog(u32 EventNum, u32 arg2, u32 arg3);
+void lmc_trace(struct net_device *dev, char *msg);
 
 #endif

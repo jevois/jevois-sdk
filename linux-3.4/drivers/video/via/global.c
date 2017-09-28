@@ -43,8 +43,8 @@ int viafb_hotplug_bpp = 32;
 int viafb_hotplug_refresh = 60;
 int viafb_primary_dev = None_Device;
 int viafb_lcd_panel_id = LCD_PANEL_ID_MAXIMUM + 1;
-struct fb_info * viafbinfo;
-struct fb_info * viafbinfo1;
-struct viafb_par * viaparinfo;
-struct viafb_par * viaparinfo1;
+struct fb_info *viafbinfo;
+struct fb_info *viafbinfo1;
+struct viafb_par *viaparinfo;
+struct viafb_par *viaparinfo1;
 

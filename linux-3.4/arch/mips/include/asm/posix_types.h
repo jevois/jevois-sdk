@@ -18,16 +18,16 @@
  */
 
 #if (_MIPS_SZLONG == 64)
-typedef unsigned int  __kernel_nlink_t;
+typedef unsigned int	__kernel_nlink_t;
 #define __kernel_nlink_t __kernel_nlink_t
 #endif
 
-typedef long    __kernel_daddr_t;
+typedef long		__kernel_daddr_t;
 #define __kernel_daddr_t __kernel_daddr_t
 
 #if (_MIPS_SZLONG == 32)
 typedef struct {
-  long  val[2];
+	long	val[2];
 } __kernel_fsid_t;
 #define __kernel_fsid_t __kernel_fsid_t
 #endif

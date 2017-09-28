@@ -27,28 +27,28 @@
 #include <linux/spinlock.h>
 #include <linux/clk.h>
 
-#define MCBSP_CONFIG_TYPE2  0x2
-#define MCBSP_CONFIG_TYPE3  0x3
-#define MCBSP_CONFIG_TYPE4  0x4
+#define MCBSP_CONFIG_TYPE2	0x2
+#define MCBSP_CONFIG_TYPE3	0x3
+#define MCBSP_CONFIG_TYPE4	0x4
 
 /* Platform specific configuration */
 struct omap_mcbsp_ops {
-  void (*request) (unsigned int);
-  void (*free) (unsigned int);
+	void (*request)(unsigned int);
+	void (*free)(unsigned int);
 };
 
 struct omap_mcbsp_platform_data {
-  struct omap_mcbsp_ops * ops;
-  u16 buffer_size;
-  u8 reg_size;
-  u8 reg_step;
-  
-  /* McBSP platform and instance specific features */
-  bool has_wakeup; /* Wakeup capability */
-  bool has_ccr; /* Transceiver has configuration control registers */
-  int (*enable_st_clock) (unsigned int, bool);
-  int (*set_clk_src) (struct device * dev, struct clk * clk, const char * src);
-  int (*mux_signal) (struct device * dev, const char * signal, const char * src);
+	struct omap_mcbsp_ops *ops;
+	u16 buffer_size;
+	u8 reg_size;
+	u8 reg_step;
+
+	/* McBSP platform and instance specific features */
+	bool has_wakeup; /* Wakeup capability */
+	bool has_ccr; /* Transceiver has configuration control registers */
+	int (*enable_st_clock)(unsigned int, bool);
+	int (*set_clk_src)(struct device *dev, struct clk *clk, const char *src);
+	int (*mux_signal)(struct device *dev, const char *signal, const char *src);
 };
 
 /**
@@ -56,7 +56,7 @@ struct omap_mcbsp_platform_data {
  * @sidetone: name of the sidetone device
  */
 struct omap_mcbsp_dev_attr {
-  const char * sidetone;
+	const char *sidetone;
 };
 
 #endif

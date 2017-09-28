@@ -101,15 +101,15 @@ typedef uint32_t grant_ref_t;
  * for backwards compatibility.  New guests should use version 2.
  */
 struct grant_entry_v1 {
-  /* GTF_xxx: various type and flag information.  [XEN,GST] */
-  uint16_t flags;
-  /* The domain being granted foreign privileges. [GST] */
-  domid_t  domid;
-  /*
-   * GTF_permit_access: Frame that @domid is allowed to map and access. [GST]
-   * GTF_accept_transfer: Frame whose ownership transferred by @domid. [XEN]
-   */
-  uint32_t frame;
+    /* GTF_xxx: various type and flag information.  [XEN,GST] */
+    uint16_t flags;
+    /* The domain being granted foreign privileges. [GST] */
+    domid_t  domid;
+    /*
+     * GTF_permit_access: Frame that @domid is allowed to map and access. [GST]
+     * GTF_accept_transfer: Frame whose ownership transferred by @domid. [XEN]
+     */
+    uint32_t frame;
 };
 
 /*
@@ -176,8 +176,8 @@ struct grant_entry_v1 {
  * grant_entry_v1.
  */
 struct grant_entry_header {
-  uint16_t flags;
-  domid_t  domid;
+    uint16_t flags;
+    domid_t  domid;
 };
 
 /*
@@ -185,49 +185,49 @@ struct grant_entry_header {
  * different types are suppotted: full_page, sub_page and transitive.
  */
 union grant_entry_v2 {
-  struct grant_entry_header hdr;
-  
-  /*
-   * This member is used for V1-style full page grants, where either:
-   *
-   * -- hdr.type is GTF_accept_transfer, or
-   * -- hdr.type is GTF_permit_access and GTF_sub_page is not set.
-   *
-   * In that case, the frame field has the same semantics as the
-   * field of the same name in the V1 entry structure.
-   */
-  struct {
     struct grant_entry_header hdr;
-    uint32_t pad0;
-    uint64_t frame;
-  } full_page;
-  
-  /*
-   * If the grant type is GTF_grant_access and GTF_sub_page is set,
-   * @domid is allowed to access bytes [@page_off,@page_off+@length)
-   * in frame @frame.
-   */
-  struct {
-    struct grant_entry_header hdr;
-    uint16_t page_off;
-    uint16_t length;
-    uint64_t frame;
-  } sub_page;
-  
-  /*
-   * If the grant is GTF_transitive, @domid is allowed to use the
-   * grant @gref in domain @trans_domid, as if it was the local
-   * domain.  Obviously, the transitive access must be compatible
-   * with the original grant.
-   */
-  struct {
-    struct grant_entry_header hdr;
-    domid_t trans_domid;
-    uint16_t pad0;
-    grant_ref_t gref;
-  } transitive;
-  
-  uint32_t __spacer[4]; /* Pad to a power of two */
+
+    /*
+     * This member is used for V1-style full page grants, where either:
+     *
+     * -- hdr.type is GTF_accept_transfer, or
+     * -- hdr.type is GTF_permit_access and GTF_sub_page is not set.
+     *
+     * In that case, the frame field has the same semantics as the
+     * field of the same name in the V1 entry structure.
+     */
+    struct {
+	struct grant_entry_header hdr;
+	uint32_t pad0;
+	uint64_t frame;
+    } full_page;
+
+    /*
+     * If the grant type is GTF_grant_access and GTF_sub_page is set,
+     * @domid is allowed to access bytes [@page_off,@page_off+@length)
+     * in frame @frame.
+     */
+    struct {
+	struct grant_entry_header hdr;
+	uint16_t page_off;
+	uint16_t length;
+	uint64_t frame;
+    } sub_page;
+
+    /*
+     * If the grant is GTF_transitive, @domid is allowed to use the
+     * grant @gref in domain @trans_domid, as if it was the local
+     * domain.  Obviously, the transitive access must be compatible
+     * with the original grant.
+     */
+    struct {
+	struct grant_entry_header hdr;
+	domid_t trans_domid;
+	uint16_t pad0;
+	grant_ref_t gref;
+    } transitive;
+
+    uint32_t __spacer[4]; /* Pad to a power of two */
 };
 
 typedef uint16_t grant_status_t;
@@ -260,17 +260,17 @@ typedef uint32_t grant_handle_t;
  */
 #define GNTTABOP_map_grant_ref        0
 struct gnttab_map_grant_ref {
-  /* IN parameters. */
-  uint64_t host_addr;
-  uint32_t flags;               /* GNTMAP_* */
-  grant_ref_t ref;
-  domid_t  dom;
-  /* OUT parameters. */
-  int16_t  status;              /* GNTST_* */
-  grant_handle_t handle;
-  uint64_t dev_bus_addr;
+    /* IN parameters. */
+    uint64_t host_addr;
+    uint32_t flags;               /* GNTMAP_* */
+    grant_ref_t ref;
+    domid_t  dom;
+    /* OUT parameters. */
+    int16_t  status;              /* GNTST_* */
+    grant_handle_t handle;
+    uint64_t dev_bus_addr;
 };
-DEFINE_GUEST_HANDLE_STRUCT (gnttab_map_grant_ref);
+DEFINE_GUEST_HANDLE_STRUCT(gnttab_map_grant_ref);
 
 /*
  * GNTTABOP_unmap_grant_ref: Destroy one or more grant-reference mappings
@@ -285,14 +285,14 @@ DEFINE_GUEST_HANDLE_STRUCT (gnttab_map_grant_ref);
  */
 #define GNTTABOP_unmap_grant_ref      1
 struct gnttab_unmap_grant_ref {
-  /* IN parameters. */
-  uint64_t host_addr;
-  uint64_t dev_bus_addr;
-  grant_handle_t handle;
-  /* OUT parameters. */
-  int16_t  status;              /* GNTST_* */
+    /* IN parameters. */
+    uint64_t host_addr;
+    uint64_t dev_bus_addr;
+    grant_handle_t handle;
+    /* OUT parameters. */
+    int16_t  status;              /* GNTST_* */
 };
-DEFINE_GUEST_HANDLE_STRUCT (gnttab_unmap_grant_ref);
+DEFINE_GUEST_HANDLE_STRUCT(gnttab_unmap_grant_ref);
 
 /*
  * GNTTABOP_setup_table: Set up a grant table for <dom> comprising at least
@@ -305,14 +305,14 @@ DEFINE_GUEST_HANDLE_STRUCT (gnttab_unmap_grant_ref);
  */
 #define GNTTABOP_setup_table          2
 struct gnttab_setup_table {
-  /* IN parameters. */
-  domid_t  dom;
-  uint32_t nr_frames;
-  /* OUT parameters. */
-  int16_t  status;              /* GNTST_* */
-  GUEST_HANDLE (ulong) frame_list;
+    /* IN parameters. */
+    domid_t  dom;
+    uint32_t nr_frames;
+    /* OUT parameters. */
+    int16_t  status;              /* GNTST_* */
+    GUEST_HANDLE(ulong) frame_list;
 };
-DEFINE_GUEST_HANDLE_STRUCT (gnttab_setup_table);
+DEFINE_GUEST_HANDLE_STRUCT(gnttab_setup_table);
 
 /*
  * GNTTABOP_dump_table: Dump the contents of the grant table to the
@@ -320,12 +320,12 @@ DEFINE_GUEST_HANDLE_STRUCT (gnttab_setup_table);
  */
 #define GNTTABOP_dump_table           3
 struct gnttab_dump_table {
-  /* IN parameters. */
-  domid_t dom;
-  /* OUT parameters. */
-  int16_t status;               /* GNTST_* */
+    /* IN parameters. */
+    domid_t dom;
+    /* OUT parameters. */
+    int16_t status;               /* GNTST_* */
 };
-DEFINE_GUEST_HANDLE_STRUCT (gnttab_dump_table);
+DEFINE_GUEST_HANDLE_STRUCT(gnttab_dump_table);
 
 /*
  * GNTTABOP_transfer_grant_ref: Transfer <frame> to a foreign domain. The
@@ -337,14 +337,14 @@ DEFINE_GUEST_HANDLE_STRUCT (gnttab_dump_table);
  */
 #define GNTTABOP_transfer                4
 struct gnttab_transfer {
-  /* IN parameters. */
-  unsigned long mfn;
-  domid_t       domid;
-  grant_ref_t   ref;
-  /* OUT parameters. */
-  int16_t       status;
+    /* IN parameters. */
+    unsigned long mfn;
+    domid_t       domid;
+    grant_ref_t   ref;
+    /* OUT parameters. */
+    int16_t       status;
 };
-DEFINE_GUEST_HANDLE_STRUCT (gnttab_transfer);
+DEFINE_GUEST_HANDLE_STRUCT(gnttab_transfer);
 
 /*
  * GNTTABOP_copy: Hypervisor based copy
@@ -371,21 +371,21 @@ DEFINE_GUEST_HANDLE_STRUCT (gnttab_transfer);
 
 #define GNTTABOP_copy                 5
 struct gnttab_copy {
-  /* IN parameters. */
-  struct {
-    union {
-      grant_ref_t ref;
-      unsigned long   gmfn;
-    } u;
-    domid_t  domid;
-    uint16_t offset;
-  } source, dest;
-  uint16_t      len;
-  uint16_t      flags;          /* GNTCOPY_* */
-  /* OUT parameters. */
-  int16_t       status;
+	/* IN parameters. */
+	struct {
+		union {
+			grant_ref_t ref;
+			unsigned long   gmfn;
+		} u;
+		domid_t  domid;
+		uint16_t offset;
+	} source, dest;
+	uint16_t      len;
+	uint16_t      flags;          /* GNTCOPY_* */
+	/* OUT parameters. */
+	int16_t       status;
 };
-DEFINE_GUEST_HANDLE_STRUCT (gnttab_copy);
+DEFINE_GUEST_HANDLE_STRUCT(gnttab_copy);
 
 /*
  * GNTTABOP_query_size: Query the current and maximum sizes of the shared
@@ -396,14 +396,14 @@ DEFINE_GUEST_HANDLE_STRUCT (gnttab_copy);
  */
 #define GNTTABOP_query_size           6
 struct gnttab_query_size {
-  /* IN parameters. */
-  domid_t  dom;
-  /* OUT parameters. */
-  uint32_t nr_frames;
-  uint32_t max_nr_frames;
-  int16_t  status;              /* GNTST_* */
+    /* IN parameters. */
+    domid_t  dom;
+    /* OUT parameters. */
+    uint32_t nr_frames;
+    uint32_t max_nr_frames;
+    int16_t  status;              /* GNTST_* */
 };
-DEFINE_GUEST_HANDLE_STRUCT (gnttab_query_size);
+DEFINE_GUEST_HANDLE_STRUCT(gnttab_query_size);
 
 /*
  * GNTTABOP_unmap_and_replace: Destroy one or more grant-reference mappings
@@ -418,14 +418,14 @@ DEFINE_GUEST_HANDLE_STRUCT (gnttab_query_size);
  */
 #define GNTTABOP_unmap_and_replace    7
 struct gnttab_unmap_and_replace {
-  /* IN parameters. */
-  uint64_t host_addr;
-  uint64_t new_addr;
-  grant_handle_t handle;
-  /* OUT parameters. */
-  int16_t  status;              /* GNTST_* */
+    /* IN parameters. */
+    uint64_t host_addr;
+    uint64_t new_addr;
+    grant_handle_t handle;
+    /* OUT parameters. */
+    int16_t  status;              /* GNTST_* */
 };
-DEFINE_GUEST_HANDLE_STRUCT (gnttab_unmap_and_replace);
+DEFINE_GUEST_HANDLE_STRUCT(gnttab_unmap_and_replace);
 
 /*
  * GNTTABOP_set_version: Request a particular version of the grant
@@ -436,10 +436,10 @@ DEFINE_GUEST_HANDLE_STRUCT (gnttab_unmap_and_replace);
  */
 #define GNTTABOP_set_version          8
 struct gnttab_set_version {
-  /* IN parameters */
-  uint32_t version;
+    /* IN parameters */
+    uint32_t version;
 };
-DEFINE_GUEST_HANDLE_STRUCT (gnttab_set_version);
+DEFINE_GUEST_HANDLE_STRUCT(gnttab_set_version);
 
 /*
  * GNTTABOP_get_status_frames: Get the list of frames used to store grant
@@ -455,14 +455,14 @@ DEFINE_GUEST_HANDLE_STRUCT (gnttab_set_version);
  */
 #define GNTTABOP_get_status_frames     9
 struct gnttab_get_status_frames {
-  /* IN parameters. */
-  uint32_t nr_frames;
-  domid_t  dom;
-  /* OUT parameters. */
-  int16_t  status;              /* GNTST_* */
-  GUEST_HANDLE (uint64_t) frame_list;
+    /* IN parameters. */
+    uint32_t nr_frames;
+    domid_t  dom;
+    /* OUT parameters. */
+    int16_t  status;              /* GNTST_* */
+    GUEST_HANDLE(uint64_t) frame_list;
 };
-DEFINE_GUEST_HANDLE_STRUCT (gnttab_get_status_frames);
+DEFINE_GUEST_HANDLE_STRUCT(gnttab_get_status_frames);
 
 /*
  * GNTTABOP_get_version: Get the grant table version which is in
@@ -470,39 +470,39 @@ DEFINE_GUEST_HANDLE_STRUCT (gnttab_get_status_frames);
  */
 #define GNTTABOP_get_version          10
 struct gnttab_get_version {
-  /* IN parameters */
-  domid_t dom;
-  uint16_t pad;
-  /* OUT parameters */
-  uint32_t version;
+    /* IN parameters */
+    domid_t dom;
+    uint16_t pad;
+    /* OUT parameters */
+    uint32_t version;
 };
-DEFINE_GUEST_HANDLE_STRUCT (gnttab_get_version);
+DEFINE_GUEST_HANDLE_STRUCT(gnttab_get_version);
 
 /*
  * Bitfield values for update_pin_status.flags.
  */
-/* Map the grant entry for access by I/O devices. */
+ /* Map the grant entry for access by I/O devices. */
 #define _GNTMAP_device_map      (0)
 #define GNTMAP_device_map       (1<<_GNTMAP_device_map)
-/* Map the grant entry for access by host CPUs. */
+ /* Map the grant entry for access by host CPUs. */
 #define _GNTMAP_host_map        (1)
 #define GNTMAP_host_map         (1<<_GNTMAP_host_map)
-/* Accesses to the granted frame will be restricted to read-only access. */
+ /* Accesses to the granted frame will be restricted to read-only access. */
 #define _GNTMAP_readonly        (2)
 #define GNTMAP_readonly         (1<<_GNTMAP_readonly)
-/*
- * GNTMAP_host_map subflag:
- *  0 => The host mapping is usable only by the guest OS.
- *  1 => The host mapping is usable by guest OS + current application.
- */
+ /*
+  * GNTMAP_host_map subflag:
+  *  0 => The host mapping is usable only by the guest OS.
+  *  1 => The host mapping is usable by guest OS + current application.
+  */
 #define _GNTMAP_application_map (3)
 #define GNTMAP_application_map  (1<<_GNTMAP_application_map)
 
-/*
- * GNTMAP_contains_pte subflag:
- *  0 => This map request contains a host virtual address.
- *  1 => This map request contains the machine addess of the PTE to update.
- */
+ /*
+  * GNTMAP_contains_pte subflag:
+  *  0 => This map request contains a host virtual address.
+  *  1 => This map request contains the machine addess of the PTE to update.
+  */
 #define _GNTMAP_contains_pte    (4)
 #define GNTMAP_contains_pte     (1<<_GNTMAP_contains_pte)
 
@@ -533,6 +533,6 @@ DEFINE_GUEST_HANDLE_STRUCT (gnttab_get_version);
     "permission denied",                        \
     "bad page",                                 \
     "copy arguments cross page boundary"        \
-  }
+}
 
 #endif /* __XEN_PUBLIC_GRANT_TABLE_H__ */

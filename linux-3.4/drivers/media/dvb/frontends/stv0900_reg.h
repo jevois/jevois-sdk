@@ -26,7 +26,7 @@
 #ifndef STV0900_REG_H
 #define STV0900_REG_H
 
-extern s32 shiftx (s32 x, int demod, s32 shift);
+extern s32 shiftx(s32 x, int demod, s32 shift);
 
 #define REGx(x) shiftx(x, demod, 0x200)
 #define FLDx(x) shiftx(x, demod, 0x2000000)

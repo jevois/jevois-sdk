@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -26,41 +26,41 @@
 #include <private_uboot.h>
 
 struct spare_boot_head_t  uboot_spare_head = {
-  {
-    /* jump_instruction */          ( 0xEA000000 | ( ( ( sizeof ( struct spare_boot_head_t ) + sizeof ( int ) - 1 ) / sizeof ( int ) - 2 ) & 0x00FFFFFF ) ),
-    UBOOT_MAGIC,
-    STAMP_VALUE,
-    ALIGN_SIZE,
-    0,
-    0,
-    UBOOT_VERSION,
-    UBOOT_PLATFORM,
-    {CONFIG_SYS_TEXT_BASE}
-  },
-  {
-    { 0 },   
-    1008,    
-    1200,    
-    0,     
-    {
-      { 2, 0, 3, 1, 1, 0, },
-      { 2, 1, 3, 1, 1, 0, }
-    },
-    0,     
-    {
-      {0}, {0}
-    },
-    0,     
-    0,     
-    { {0} },   
-    { 0 },   
-    { {0} },   
-    { 0 },   
-    -1,
-    UBOOT_START_SECTOR_IN_SDMMC,
-    { 0 }    
-  }
-};
+	                                  {
+	      /* jump_instruction */          ( 0xEA000000 | ( ( ( sizeof( struct spare_boot_head_t ) + sizeof( int ) - 1 ) / sizeof( int ) - 2 ) & 0x00FFFFFF ) ),
+							   		      UBOOT_MAGIC,
+							   		      STAMP_VALUE,
+							   		      ALIGN_SIZE,
+							   		      0,
+							   		      0,
+							   		      UBOOT_VERSION,
+							   		      UBOOT_PLATFORM,
+							   		      {CONFIG_SYS_TEXT_BASE}
+							 	      },
+							 	      {
+										  { 0 },	
+							 	      	  1008,		
+							 	      	  1200,		
+							 	      	  0,		
+							 	      	  {            
+							 	      	    { 2, 0, 3, 1, 1, 0, },
+										  	{ 2, 1, 3, 1, 1, 0, }
+										  },
+							 	      	  0,		
+							 	      	  {            
+							 	      	  	{0}, {0}
+		                                  },
+							 	      	  0,		
+							 	      	  0,		
+							 	      	  { {0} },	
+							 	      	  { 0 },	
+							 	      	  { {0} },	
+							 	      	  { 0 }, 	
+							 	      	  -1,
+                                                                          UBOOT_START_SECTOR_IN_SDMMC,
+							 	      	  { 0 }		
+							 	      }
+							 	  };
 
 
 /*******************************************************************************

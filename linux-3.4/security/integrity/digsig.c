@@ -19,30 +19,30 @@
 
 #include "integrity.h"
 
-static struct key * keyring[INTEGRITY_KEYRING_MAX];
+static struct key *keyring[INTEGRITY_KEYRING_MAX];
 
-static const char * keyring_name[INTEGRITY_KEYRING_MAX] = {
-  "_evm",
-  "_module",
-  "_ima",
+static const char *keyring_name[INTEGRITY_KEYRING_MAX] = {
+	"_evm",
+	"_module",
+	"_ima",
 };
 
-int integrity_digsig_verify (const unsigned int id, const char * sig, int siglen,
-                             const char * digest, int digestlen)
+int integrity_digsig_verify(const unsigned int id, const char *sig, int siglen,
+					const char *digest, int digestlen)
 {
-  if (id >= INTEGRITY_KEYRING_MAX)
-  { return -EINVAL; }
-  
-  if (!keyring[id]) {
-    keyring[id] =
-      request_key (&key_type_keyring, keyring_name[id], NULL);
-    if (IS_ERR (keyring[id]) ) {
-      int err = PTR_ERR (keyring[id]);
-      pr_err ("no %s keyring: %d\n", keyring_name[id], err);
-      keyring[id] = NULL;
-      return err;
-    }
-  }
-  
-  return digsig_verify (keyring[id], sig, siglen, digest, digestlen);
+	if (id >= INTEGRITY_KEYRING_MAX)
+		return -EINVAL;
+
+	if (!keyring[id]) {
+		keyring[id] =
+			request_key(&key_type_keyring, keyring_name[id], NULL);
+		if (IS_ERR(keyring[id])) {
+			int err = PTR_ERR(keyring[id]);
+			pr_err("no %s keyring: %d\n", keyring_name[id], err);
+			keyring[id] = NULL;
+			return err;
+		}
+	}
+
+	return digsig_verify(keyring[id], sig, siglen, digest, digestlen);
 }

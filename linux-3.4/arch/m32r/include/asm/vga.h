@@ -2,14 +2,14 @@
 #define _ASM_M32R_VGA_H
 
 /*
- *  Access to VGA videoram
+ *	Access to VGA videoram
  *
- *  (c) 1998 Martin Mares <mj@ucw.cz>
+ *	(c) 1998 Martin Mares <mj@ucw.cz>
  */
 
 /*
- *  On the PC, we can just recalculate addresses and then
- *  access the videoram directly without any black magic.
+ *	On the PC, we can just recalculate addresses and then
+ *	access the videoram directly without any black magic.
  */
 
 #define VGA_MAP_MEM(x,s) (unsigned long)phys_to_virt(x)

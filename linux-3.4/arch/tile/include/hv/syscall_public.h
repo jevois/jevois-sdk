@@ -37,6 +37,6 @@
 
 /** Perform an MF that waits for all victims to reach DRAM. */
 #define HV_SYS_fence_incoherent         (51 | HV_SYS_FAST_MASK \
-    | HV_SYS_FAST_PL0_MASK)
+                                       | HV_SYS_FAST_PL0_MASK)
 
 #endif /* !_SYS_HV_INCLUDE_SYSCALL_PUBLIC_H */

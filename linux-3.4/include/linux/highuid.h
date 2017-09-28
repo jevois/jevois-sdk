@@ -34,11 +34,11 @@
 extern int overflowuid;
 extern int overflowgid;
 
-extern void __bad_uid (void);
-extern void __bad_gid (void);
+extern void __bad_uid(void);
+extern void __bad_gid(void);
 
-#define DEFAULT_OVERFLOWUID 65534
-#define DEFAULT_OVERFLOWGID 65534
+#define DEFAULT_OVERFLOWUID	65534
+#define DEFAULT_OVERFLOWGID	65534
 
 #ifdef CONFIG_UID16
 
@@ -53,10 +53,10 @@ extern void __bad_gid (void);
 #define low2highgid(gid) ((gid) == (old_gid_t)-1 ? (gid_t)-1 : (gid_t)(gid))
 
 #define __convert_uid(size, uid) \
-  (size >= sizeof(uid) ? (uid) : high2lowuid(uid))
+	(size >= sizeof(uid) ? (uid) : high2lowuid(uid))
 #define __convert_gid(size, gid) \
-  (size >= sizeof(gid) ? (gid) : high2lowgid(gid))
-
+	(size >= sizeof(gid) ? (gid) : high2lowgid(gid))
+	
 
 #else
 
@@ -81,8 +81,8 @@ extern void __bad_gid (void);
 extern int fs_overflowuid;
 extern int fs_overflowgid;
 
-#define DEFAULT_FS_OVERFLOWUID  65534
-#define DEFAULT_FS_OVERFLOWGID  65534
+#define DEFAULT_FS_OVERFLOWUID	65534
+#define DEFAULT_FS_OVERFLOWGID	65534
 
 /*
  * Since these macros are used in architectures that only need limited
@@ -91,7 +91,7 @@ extern int fs_overflowgid;
 #define fs_high2lowuid(uid) ((uid) & ~0xFFFF ? (uid16_t)fs_overflowuid : (uid16_t)(uid))
 #define fs_high2lowgid(gid) ((gid) & ~0xFFFF ? (gid16_t)fs_overflowgid : (gid16_t)(gid))
 
-#define low_16_bits(x)  ((x) & 0xFFFF)
-#define high_16_bits(x) (((x) & 0xFFFF0000) >> 16)
+#define low_16_bits(x)	((x) & 0xFFFF)
+#define high_16_bits(x)	(((x) & 0xFFFF0000) >> 16)
 
 #endif /* _LINUX_HIGHUID_H */

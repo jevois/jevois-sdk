@@ -32,10 +32,10 @@ extern const struct inode_operations ocfs2_fast_symlink_inode_operations;
 /*
  * Test whether an inode is a fast symlink.
  */
-static inline int ocfs2_inode_is_fast_symlink (struct inode * inode)
+static inline int ocfs2_inode_is_fast_symlink(struct inode *inode)
 {
-  return (S_ISLNK (inode->i_mode) &&
-          inode->i_blocks == 0);
+	return (S_ISLNK(inode->i_mode) &&
+		inode->i_blocks == 0);
 }
 
 

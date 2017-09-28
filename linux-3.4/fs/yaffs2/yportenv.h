@@ -35,18 +35,18 @@
 #define YUCHAR unsigned char
 #define _Y(x)     x
 
-#define YAFFS_LOSTNFOUND_NAME   "lost+found"
-#define YAFFS_LOSTNFOUND_PREFIX   "obj"
+#define YAFFS_LOSTNFOUND_NAME		"lost+found"
+#define YAFFS_LOSTNFOUND_PREFIX		"obj"
 
 
-#define YAFFS_ROOT_MODE     0755
-#define YAFFS_LOSTNFOUND_MODE   0700
+#define YAFFS_ROOT_MODE			0755
+#define YAFFS_LOSTNFOUND_MODE		0700
 
 #define Y_CURRENT_TIME CURRENT_TIME.tv_sec
 #define Y_TIME_CONVERT(x) (x).tv_sec
 
 #define compile_time_assertion(assertion) \
-  ({ int x = __builtin_choose_expr(assertion, 0, (void)0); (void) x; })
+	({ int x = __builtin_choose_expr(assertion, 0, (void)0); (void) x; })
 
 
 #ifndef Y_DUMP_STACK
@@ -54,17 +54,17 @@
 #endif
 
 #define yaffs_trace(msk, fmt, ...) do { \
-    if(yaffs_trace_mask & (msk)) \
-      printk(KERN_DEBUG "yaffs: " fmt "\n", ##__VA_ARGS__); \
-  } while(0)
+	if(yaffs_trace_mask & (msk)) \
+		printk(KERN_DEBUG "yaffs: " fmt "\n", ##__VA_ARGS__); \
+} while(0)
 
 #ifndef YBUG
 #define YBUG() do {\
-    yaffs_trace(YAFFS_TRACE_BUG,\
-                "bug " __FILE__ " %d",\
-                __LINE__);\
-    Y_DUMP_STACK();\
-  } while (0)
+	yaffs_trace(YAFFS_TRACE_BUG,\
+		"bug " __FILE__ " %d",\
+		__LINE__);\
+	Y_DUMP_STACK();\
+} while (0)
 #endif
 
 #endif

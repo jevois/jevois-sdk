@@ -41,12 +41,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #ifndef _CACHE_DEFINES_H_
 
-#define CACHEFLUSH_GENERIC  1
-#define CACHEFLUSH_X86    2
+#define CACHEFLUSH_GENERIC	1
+#define CACHEFLUSH_X86		2
 
 #if CACHEFLUSH_TYPE == 0
 #error Unknown cache flush type, please addd to cache_defines.h
 #endif
 
-#endif  /* _CACHE_DEFINES_H_ */
+#endif	/* _CACHE_DEFINES_H_ */
 

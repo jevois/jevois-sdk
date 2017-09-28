@@ -81,17 +81,17 @@
 
 /* Ethernet configuration registers */
 typedef struct _greth_regs {
-  volatile unsigned int control;
-  volatile unsigned int status;
-  volatile unsigned int esa_msb;
-  volatile unsigned int esa_lsb;
-  volatile unsigned int mdio;
-  volatile unsigned int tx_desc_p;
-  volatile unsigned int rx_desc_p;
+	volatile unsigned int control;
+	volatile unsigned int status;
+	volatile unsigned int esa_msb;
+	volatile unsigned int esa_lsb;
+	volatile unsigned int mdio;
+	volatile unsigned int tx_desc_p;
+	volatile unsigned int rx_desc_p;
 } greth_regs;
 
 /* Ethernet buffer descriptor */
 typedef struct _greth_bd {
-  volatile unsigned int stat;
-  unsigned int addr;  /* Buffer address not changed by HW */
+	volatile unsigned int stat;
+	unsigned int addr;	/* Buffer address not changed by HW */
 } greth_bd;

@@ -1,7 +1,7 @@
 /* linux/arch/arm/mach-exynos4/include/mach/regs-mem.h
  *
  * Copyright (c) 2010-2011 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com
+ *		http://www.samsung.com
  *
  * EXYNOS4 - SROMC and DMC register definitions
  *
@@ -15,9 +15,9 @@
 
 #include <mach/map.h>
 
-#define S5P_DMC0_MEMCON_OFFSET    0x04
+#define S5P_DMC0_MEMCON_OFFSET		0x04
 
-#define S5P_DMC0_MEMTYPE_SHIFT    8
-#define S5P_DMC0_MEMTYPE_MASK   0xF
+#define S5P_DMC0_MEMTYPE_SHIFT		8
+#define S5P_DMC0_MEMTYPE_MASK		0xF
 
 #endif /* __ASM_ARCH_REGS_MEM_H */

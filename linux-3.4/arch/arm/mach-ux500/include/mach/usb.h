@@ -13,13 +13,13 @@
 #define UX500_MUSB_DMA_NUM_TX_CHANNELS 8
 
 struct ux500_musb_board_data {
-  void ** dma_rx_param_array;
-  void ** dma_tx_param_array;
-  u32 num_rx_channels;
-  u32 num_tx_channels;
-  bool (*dma_filter) (struct dma_chan * chan, void * filter_param);
+	void	**dma_rx_param_array;
+	void	**dma_tx_param_array;
+	u32	num_rx_channels;
+	u32	num_tx_channels;
+	bool (*dma_filter)(struct dma_chan *chan, void *filter_param);
 };
 
-void ux500_add_usb (struct device * parent, resource_size_t base,
-                    int irq, int * dma_rx_cfg, int * dma_tx_cfg);
+void ux500_add_usb(struct device *parent, resource_size_t base,
+		   int irq, int *dma_rx_cfg, int *dma_tx_cfg);
 #endif

@@ -26,17 +26,17 @@
 #define _OMAP24XX_SYS_INFO_H_
 
 typedef struct  h4_system_data {
-  /* base board info */
-  u32 base_b_rev;   /* rev from base board i2c */
-  /* cpu board info */
-  u32 cpu_b_rev;    /* rev from cpu board i2c */
-  u32 cpu_b_mux;    /* mux type on daughter board */
-  u32 cpu_b_ddr_type; /* mem type */
-  u32 cpu_b_ddr_speed;  /* ddr speed rating */
-  u32 cpu_b_switches; /* boot ctrl switch settings */
-  /* cpu info */
-  u32 cpu_type;   /* type of cpu; 2420, 2422, 2430,...*/
-  u32 cpu_rev;    /* rev of given cpu; ES1, ES2,...*/
+	/* base board info */
+	u32 base_b_rev;		/* rev from base board i2c */
+	/* cpu board info */
+	u32 cpu_b_rev;		/* rev from cpu board i2c */
+	u32 cpu_b_mux;		/* mux type on daughter board */
+	u32 cpu_b_ddr_type;	/* mem type */
+	u32 cpu_b_ddr_speed;	/* ddr speed rating */
+	u32 cpu_b_switches;	/* boot ctrl switch settings */
+	/* cpu info */
+	u32 cpu_type;		/* type of cpu; 2420, 2422, 2430,...*/
+	u32 cpu_rev;		/* rev of given cpu; ES1, ES2,...*/
 } h4_sys_data;
 
 #define XDR_POP           5      /* package on package part */
@@ -77,6 +77,6 @@ typedef struct  h4_system_data {
 #define WIDTH_8BIT        0x0000
 #define WIDTH_16BIT       0x1000  /* bit pos for 16 bit in gpmc */
 
-#define I2C_MENELAUS 0x72 /* i2c id for companion chip */
+#define I2C_MENELAUS 0x72	/* i2c id for companion chip */
 
 #endif

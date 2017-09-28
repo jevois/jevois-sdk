@@ -43,7 +43,7 @@
 *
 *
 * 10/23/2000 - Alpha Release
-* First release to the public
+*	First release to the public
 */
 
 #ifndef _LINUX_MWAVEDD_H
@@ -124,27 +124,27 @@ extern int mwave_uart_io;
 
 
 typedef struct _MWAVE_IPC {
-  unsigned short usIntCount;  /* 0=none, 1=first, 2=greater than 1st */
-  BOOLEAN bIsEnabled;
-  BOOLEAN bIsHere;
-  /* entry spin lock */
-  wait_queue_head_t ipc_wait_queue;
+	unsigned short usIntCount;	/* 0=none, 1=first, 2=greater than 1st */
+	BOOLEAN bIsEnabled;
+	BOOLEAN bIsHere;
+	/* entry spin lock */
+	wait_queue_head_t ipc_wait_queue;
 } MWAVE_IPC;
 
 typedef struct _MWAVE_DEVICE_DATA {
-  THINKPAD_BD_DATA rBDData; /* board driver's data area */
-  unsigned long ulIPCSource_ISR;  /* IPC source bits for recently processed intr, set during ISR processing */
-  unsigned long ulIPCSource_DPC;  /* IPC source bits for recently processed intr, set during DPC processing */
-  BOOLEAN bBDInitialized;
-  BOOLEAN bResourcesClaimed;
-  BOOLEAN bDSPEnabled;
-  BOOLEAN bDSPReset;
-  MWAVE_IPC IPCs[16];
-  BOOLEAN bMwaveDevRegistered;
-  short sLine;
-  int nr_registered_attrs;
-  int device_registered;
-  
+	THINKPAD_BD_DATA rBDData;	/* board driver's data area */
+	unsigned long ulIPCSource_ISR;	/* IPC source bits for recently processed intr, set during ISR processing */
+	unsigned long ulIPCSource_DPC;	/* IPC source bits for recently processed intr, set during DPC processing */
+	BOOLEAN bBDInitialized;
+	BOOLEAN bResourcesClaimed;
+	BOOLEAN bDSPEnabled;
+	BOOLEAN bDSPReset;
+	MWAVE_IPC IPCs[16];
+	BOOLEAN bMwaveDevRegistered;
+	short sLine;
+	int nr_registered_attrs;
+	int device_registered;
+
 } MWAVE_DEVICE_DATA, *pMWAVE_DEVICE_DATA;
 
 extern MWAVE_DEVICE_DATA mwave_s_mdd;

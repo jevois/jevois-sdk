@@ -27,9 +27,9 @@
  * in the file called LICENSE.GPL.
  *
  * Contact Information:
- *  Intel Corporation.
- *  linux-mei@linux.intel.com
- *  http://www.intel.com
+ *	Intel Corporation.
+ *	linux-mei@linux.intel.com
+ *	http://www.intel.com
  *
  * BSD LICENSE
  *
@@ -86,25 +86,25 @@
  *
  */
 #define IOCTL_MEI_CONNECT_CLIENT \
-  _IOWR('H' , 0x01, struct mei_connect_client_data)
+	_IOWR('H' , 0x01, struct mei_connect_client_data)
 
 /*
  * Intel MEI client information struct
  */
 struct mei_client {
-  __u32 max_msg_length;
-  __u8 protocol_version;
-  __u8 reserved[3];
+	__u32 max_msg_length;
+	__u8 protocol_version;
+	__u8 reserved[3];
 };
 
 /*
  * IOCTL Connect Client Data structure
  */
 struct mei_connect_client_data {
-  union {
-    uuid_le in_client_uuid;
-    struct mei_client out_client_properties;
-  };
+	union {
+		uuid_le in_client_uuid;
+		struct mei_client out_client_properties;
+	};
 };
 
 #endif /* _LINUX_MEI_H  */

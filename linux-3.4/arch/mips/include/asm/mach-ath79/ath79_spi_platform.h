@@ -12,12 +12,12 @@
 #define _ATH79_SPI_PLATFORM_H
 
 struct ath79_spi_platform_data {
-  unsigned  bus_num;
-  unsigned  num_chipselect;
+	unsigned	bus_num;
+	unsigned	num_chipselect;
 };
 
 struct ath79_spi_controller_data {
-  unsigned  gpio;
+	unsigned	gpio;
 };
 
 #endif /* _ATH79_SPI_PLATFORM_H */

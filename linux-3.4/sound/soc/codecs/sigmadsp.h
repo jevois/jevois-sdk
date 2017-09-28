@@ -14,8 +14,8 @@
 
 struct i2c_client;
 
-extern int process_sigma_firmware (struct i2c_client * client, const char * name);
-extern int process_sigma_firmware_regmap (struct device * dev,
-    struct regmap * regmap, const char * name);
+extern int process_sigma_firmware(struct i2c_client *client, const char *name);
+extern int process_sigma_firmware_regmap(struct device *dev,
+		struct regmap *regmap, const char *name);
 
 #endif

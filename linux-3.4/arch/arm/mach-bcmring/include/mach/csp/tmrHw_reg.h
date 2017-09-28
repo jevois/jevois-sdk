@@ -36,11 +36,11 @@ Timer two   (Timer ID 1) runs at  25 MHz
 Timer three (Timer ID 2) runs at 150 MHz
 Timer four  (Timer ID 3) runs at 150 MHz
 */
-#define tmrHw_LOW_FREQUENCY_MHZ         25  /* Always 25MHz from XTAL */
+#define tmrHw_LOW_FREQUENCY_MHZ         25	/* Always 25MHz from XTAL */
 #define tmrHw_LOW_FREQUENCY_HZ          25000000
 
 #if defined(CFG_GLOBAL_CHIP) && (CFG_GLOBAL_CHIP == FPGA11107)
-#define tmrHw_HIGH_FREQUENCY_MHZ        150 /* Always 150MHz for FPGA */
+#define tmrHw_HIGH_FREQUENCY_MHZ        150	/* Always 150MHz for FPGA */
 #define tmrHw_HIGH_FREQUENCY_HZ         150000000
 #else
 #define tmrHw_HIGH_FREQUENCY_HZ         HW_CFG_BUS_CLK_HZ
@@ -49,18 +49,18 @@ Timer four  (Timer ID 3) runs at 150 MHz
 
 #define tmrHw_LOW_RESOLUTION_CLOCK      tmrHw_LOW_FREQUENCY_HZ
 #define tmrHw_HIGH_RESOLUTION_CLOCK     tmrHw_HIGH_FREQUENCY_HZ
-#define tmrHw_MAX_COUNT                 (0xFFFFFFFF)  /* maximum number of count a timer can count */
-#define tmrHw_TIMER_NUM_COUNT           (4) /* Number of timer module supported */
+#define tmrHw_MAX_COUNT                 (0xFFFFFFFF)	/* maximum number of count a timer can count */
+#define tmrHw_TIMER_NUM_COUNT           (4)	/* Number of timer module supported */
 
 typedef struct {
-  uint32_t LoadValue; /* Load value for timer */
-  uint32_t CurrentValue;  /* Current value for timer */
-  uint32_t Control; /* Control register */
-  uint32_t InterruptClear;  /* Interrupt clear register */
-  uint32_t RawInterruptStatus;  /* Raw interrupt status */
-  uint32_t InterruptStatus; /* Masked interrupt status */
-  uint32_t BackgroundLoad;  /* Background load value */
-  uint32_t padding; /* Padding register */
+	uint32_t LoadValue;	/* Load value for timer */
+	uint32_t CurrentValue;	/* Current value for timer */
+	uint32_t Control;	/* Control register */
+	uint32_t InterruptClear;	/* Interrupt clear register */
+	uint32_t RawInterruptStatus;	/* Raw interrupt status */
+	uint32_t InterruptStatus;	/* Masked interrupt status */
+	uint32_t BackgroundLoad;	/* Background load value */
+	uint32_t padding;	/* Padding register */
 } tmrHw_REG_t;
 
 /* Control bot masks */

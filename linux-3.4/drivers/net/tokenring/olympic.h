@@ -23,9 +23,9 @@
 
 #define GPR 0x4a
 #define GPR_OPTI_BF (1<<6)
-#define GPR_NEPTUNE_BF (1<<4)
+#define GPR_NEPTUNE_BF (1<<4) 
 #define GPR_AUTOSENSE (1<<2)
-#define GPR_16MBPS (1<<3)
+#define GPR_16MBPS (1<<3) 
 
 #define PAG 0x85
 #define LBC 0x8e
@@ -91,15 +91,15 @@
 #define TIMER 0x50
 
 #define CLKCTL 0x74
-#define CLKCTL_PAUSE (1<<15)
+#define CLKCTL_PAUSE (1<<15) 
 
 #define PM_CON 0x4
 
 #define BMCTL_SUM 0x40
 #define BMCTL_RWM 0x44
-#define BMCTL_TX2_DIS (1<<30)
-#define BMCTL_TX1_DIS (1<<26)
-#define BMCTL_RX_DIS (1<<22)
+#define BMCTL_TX2_DIS (1<<30) 
+#define BMCTL_TX1_DIS (1<<26) 
+#define BMCTL_RX_DIS (1<<22) 
 
 #define BMASR 0xcc
 
@@ -194,7 +194,7 @@
 
 /* Clear return code */
 
-#define OLYMPIC_CLEAR_RET_CODE 0xfe
+#define OLYMPIC_CLEAR_RET_CODE 0xfe 
 
 /* ARB Commands */
 #define ARB_RECEIVE_DATA 0x81
@@ -205,7 +205,7 @@
 
 
 /* Olympic defaults for buffers */
-
+ 
 #define OLYMPIC_RX_RING_SIZE 16 /* should be a power of 2 */
 #define OLYMPIC_TX_RING_SIZE 8 /* should be a power of 2 */
 
@@ -216,106 +216,106 @@
 /* xxxx These structures are all little endian in hardware. */
 
 struct olympic_tx_desc {
-  __le32 buffer;
-  __le32 status_length;
+	__le32 buffer;
+	__le32 status_length;
 };
 
 struct olympic_tx_status {
-  __le32 status;
+	__le32 status;
 };
 
 struct olympic_rx_desc {
-  __le32 buffer;
-  __le32 res_length;
+	__le32 buffer;
+	__le32 res_length; 
 };
 
 struct olympic_rx_status {
-  __le32 fragmentcnt_framelen;
-  __le32 status_buffercnt;
+	__le32 fragmentcnt_framelen;
+	__le32 status_buffercnt;
 };
 /* xxxx END These structures are all little endian in hardware. */
 /* xxxx There may be more, but I'm pretty sure about these */
 
 struct mac_receive_buffer {
-  __le16 next ;
-  u8 padding ;
-  u8 frame_status ;
-  __le16 buffer_length ;
-  u8 frame_data ;
+	__le16 next ; 
+	u8 padding ; 
+	u8 frame_status ;
+	__le16 buffer_length ; 
+	u8 frame_data ; 
 };
 
 struct olympic_private {
+	
+	u16 srb;      /* be16 */
+	u16 trb;      /* be16 */
+	u16 arb;      /* be16 */
+	u16 asb;      /* be16 */
 
-  u16 srb;      /* be16 */
-  u16 trb;      /* be16 */
-  u16 arb;      /* be16 */
-  u16 asb;      /* be16 */
-  
-  u8 __iomem * olympic_mmio;
-  u8 __iomem * olympic_lap;
-  struct pci_dev * pdev ;
-  const char * olympic_card_name;
-  
-  spinlock_t olympic_lock ;
-  
-  volatile int srb_queued;    /* True if an SRB is still posted */
-  wait_queue_head_t srb_wait;
-  
-  volatile int asb_queued;    /* True if an ASB is posted */
-  
-  volatile int trb_queued;   /* True if a TRB is posted */
-  wait_queue_head_t trb_wait ;
-  
-  /* These must be on a 4 byte boundary. */
-  struct olympic_rx_desc olympic_rx_ring[OLYMPIC_RX_RING_SIZE];
-  struct olympic_tx_desc olympic_tx_ring[OLYMPIC_TX_RING_SIZE];
-  struct olympic_rx_status olympic_rx_status_ring[OLYMPIC_RX_RING_SIZE];
-  struct olympic_tx_status olympic_tx_status_ring[OLYMPIC_TX_RING_SIZE];
-  
-  struct sk_buff * tx_ring_skb[OLYMPIC_TX_RING_SIZE], *rx_ring_skb[OLYMPIC_RX_RING_SIZE];
-  int tx_ring_free, tx_ring_last_status, rx_ring_last_received, rx_status_last_received, free_tx_ring_entries;
-  
-  u16 olympic_lan_status ;
-  u8 olympic_ring_speed ;
-  u16 pkt_buf_sz ;
-  u8 olympic_receive_options, olympic_copy_all_options, olympic_message_level, olympic_network_monitor;
-  u16 olympic_addr_table_addr, olympic_parms_addr ;
-  u8 olympic_laa[6] ;
-  u32 rx_ring_dma_addr;
-  u32 rx_status_ring_dma_addr;
-  u32 tx_ring_dma_addr;
-  u32 tx_status_ring_dma_addr;
+	u8 __iomem *olympic_mmio;
+	u8 __iomem *olympic_lap;
+	struct pci_dev *pdev ; 
+	const char *olympic_card_name;
+
+	spinlock_t olympic_lock ; 
+
+	volatile int srb_queued;    /* True if an SRB is still posted */	
+	wait_queue_head_t srb_wait;
+
+	volatile int asb_queued;    /* True if an ASB is posted */
+
+	volatile int trb_queued;   /* True if a TRB is posted */
+	wait_queue_head_t trb_wait ; 
+
+	/* These must be on a 4 byte boundary. */
+	struct olympic_rx_desc olympic_rx_ring[OLYMPIC_RX_RING_SIZE];
+	struct olympic_tx_desc olympic_tx_ring[OLYMPIC_TX_RING_SIZE];
+	struct olympic_rx_status olympic_rx_status_ring[OLYMPIC_RX_RING_SIZE];	
+	struct olympic_tx_status olympic_tx_status_ring[OLYMPIC_TX_RING_SIZE];	
+
+	struct sk_buff *tx_ring_skb[OLYMPIC_TX_RING_SIZE], *rx_ring_skb[OLYMPIC_RX_RING_SIZE];	
+	int tx_ring_free, tx_ring_last_status, rx_ring_last_received,rx_status_last_received, free_tx_ring_entries;
+
+	u16 olympic_lan_status ;
+	u8 olympic_ring_speed ;
+	u16 pkt_buf_sz ; 
+	u8 olympic_receive_options, olympic_copy_all_options,olympic_message_level, olympic_network_monitor;  
+	u16 olympic_addr_table_addr, olympic_parms_addr ; 
+	u8 olympic_laa[6] ; 
+	u32 rx_ring_dma_addr;
+	u32 rx_status_ring_dma_addr;
+	u32 tx_ring_dma_addr;
+	u32 tx_status_ring_dma_addr;
 };
 
 struct olympic_adapter_addr_table {
 
-  u8 node_addr[6] ;
-  u8 reserved[4] ;
-  u8 func_addr[4] ;
-} ;
+	u8 node_addr[6] ; 
+	u8 reserved[4] ; 
+	u8 func_addr[4] ; 
+} ; 
 
-struct olympic_parameters_table {
-
-  u8  phys_addr[4] ;
-  u8  up_node_addr[6] ;
-  u8  up_phys_addr[4] ;
-  u8  poll_addr[6] ;
-  u16 reserved ;
-  u16 acc_priority ;
-  u16 auth_source_class ;
-  u16 att_code ;
-  u8  source_addr[6] ;
-  u16 beacon_type ;
-  u16 major_vector ;
-  u16 lan_status ;
-  u16 soft_error_time ;
-  u16 reserved1 ;
-  u16 local_ring ;
-  u16 mon_error ;
-  u16 beacon_transmit ;
-  u16 beacon_receive ;
-  u16 frame_correl ;
-  u8  beacon_naun[6] ;
-  u32 reserved2 ;
-  u8  beacon_phys[4] ;
-};
+struct olympic_parameters_table { 
+	
+	u8  phys_addr[4] ; 
+	u8  up_node_addr[6] ; 
+	u8  up_phys_addr[4] ; 
+	u8  poll_addr[6] ; 
+	u16 reserved ; 
+	u16 acc_priority ; 
+	u16 auth_source_class ; 
+	u16 att_code ; 
+	u8  source_addr[6] ; 
+	u16 beacon_type ; 
+	u16 major_vector ; 
+	u16 lan_status ; 
+	u16 soft_error_time ; 
+ 	u16 reserved1 ; 
+	u16 local_ring ; 
+	u16 mon_error ; 
+	u16 beacon_transmit ; 
+	u16 beacon_receive ; 
+	u16 frame_correl ; 
+	u8  beacon_naun[6] ; 
+	u32 reserved2 ; 
+	u8  beacon_phys[4] ; 	
+}; 

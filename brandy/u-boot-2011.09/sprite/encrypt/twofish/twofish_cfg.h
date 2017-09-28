@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -28,16 +28,16 @@
 #include "twofish.h"
 
 
-typedef HTF       (*pInitial) (uint * key, uint keylen);
-typedef uint    (*pEnDecode) (HTF hTF, void * ibuf, uint len, void * obuf);
-typedef uint    (*pUnInitial) (HTF hTF);
+typedef HTF 	    (*pInitial)(uint * key, uint keylen);
+typedef uint		(*pEnDecode)(HTF hTF, void * ibuf, uint len, void * obuf);
+typedef uint		(*pUnInitial)(HTF hTF);
 typedef struct tag_TF_ENDECODE_IF
 {
-  HTF     handle;
-  pInitial  Initial;
-  pEnDecode   EnDecode;
-  pUnInitial  UnInitial;
-} TF_ENDECODE_IF_t;
+	HTF 		handle;
+	pInitial	Initial;
+	pEnDecode 	EnDecode;
+	pUnInitial	UnInitial;
+}TF_ENDECODE_IF_t;
 
 
 

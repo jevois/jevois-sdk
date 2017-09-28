@@ -40,35 +40,33 @@
 #define FR_BUSY (1<<3)
 #define FR_TXFF (1<<5)
 
-static void putc (char c)
+static void putc(char c)
 {
-  unsigned long base;
-  
-  if (REG (UART1_BASE + UART_CR) & CR_UART_EN)
-  { base = UART1_BASE; }
-  else
-    if (REG (UART2_BASE + UART_CR) & CR_UART_EN)
-    { base = UART2_BASE; }
-    else
-    { return; }
-    
-  while (REG (base + UART_FR) & FR_TXFF);
-  REG (base + UART_DR) = c;
+	unsigned long base;
+
+	if (REG(UART1_BASE + UART_CR) & CR_UART_EN)
+		base = UART1_BASE;
+	else if (REG(UART2_BASE + UART_CR) & CR_UART_EN)
+		base = UART2_BASE;
+	else
+		return;
+
+	while (REG(base + UART_FR) & FR_TXFF);
+	REG(base + UART_DR) = c;
 }
 
-static inline void flush (void)
+static inline void flush(void)
 {
-  unsigned long base;
-  
-  if (REG (UART1_BASE + UART_CR) & CR_UART_EN)
-  { base = UART1_BASE; }
-  else
-    if (REG (UART2_BASE + UART_CR) & CR_UART_EN)
-    { base = UART2_BASE; }
-    else
-    { return; }
-    
-  while (REG (base + UART_FR) & FR_BUSY);
+	unsigned long base;
+
+	if (REG(UART1_BASE + UART_CR) & CR_UART_EN)
+		base = UART1_BASE;
+	else if (REG(UART2_BASE + UART_CR) & CR_UART_EN)
+		base = UART2_BASE;
+	else
+		return;
+
+	while (REG(base + UART_FR) & FR_BUSY);
 }
 
 /*

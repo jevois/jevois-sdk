@@ -39,12 +39,12 @@
 #define VMWGFX_IRQSTATUS_PORT 0x8
 
 struct svga_guest_mem_descriptor {
-  __le32 ppn;
-  __le32 num_pages;
+	__le32 ppn;
+	__le32 num_pages;
 };
 
 struct svga_fifo_cmd_fence {
-  __le32 fence;
+	__le32 fence;
 };
 
 #define SVGA_SYNC_GENERIC         1

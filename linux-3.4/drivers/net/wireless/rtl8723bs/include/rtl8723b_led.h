@@ -26,20 +26,20 @@
 
 
 #ifdef CONFIG_USB_HCI
-void rtl8723bu_InitSwLeds (PADAPTER padapter);
-void rtl8723bu_DeInitSwLeds (PADAPTER padapter);
+void rtl8723bu_InitSwLeds(PADAPTER padapter);
+void rtl8723bu_DeInitSwLeds(PADAPTER padapter);
 #endif
 #ifdef CONFIG_SDIO_HCI
-void rtl8723bs_InitSwLeds (PADAPTER padapter);
-void rtl8723bs_DeInitSwLeds (PADAPTER padapter);
+void rtl8723bs_InitSwLeds(PADAPTER padapter);
+void rtl8723bs_DeInitSwLeds(PADAPTER padapter);
 #endif
 #ifdef CONFIG_GSPI_HCI
-void rtl8723bs_InitSwLeds (PADAPTER padapter);
-void rtl8723bs_DeInitSwLeds (PADAPTER padapter);
+void rtl8723bs_InitSwLeds(PADAPTER padapter);
+void rtl8723bs_DeInitSwLeds(PADAPTER padapter);
 #endif
 #ifdef CONFIG_PCI_HCI
-void rtl8723be_InitSwLeds (PADAPTER padapter);
-void rtl8723be_DeInitSwLeds (PADAPTER padapter);
+void rtl8723be_InitSwLeds(PADAPTER padapter);
+void rtl8723be_DeInitSwLeds(PADAPTER padapter);
 #endif
 
 #endif

@@ -84,564 +84,564 @@
 #define TMF_RESP_OVERLAPPED_TAG  0x0A
 
 enum sas_oob_mode {
-  OOB_NOT_CONNECTED,
-  SATA_OOB_MODE,
-  SAS_OOB_MODE
+	OOB_NOT_CONNECTED,
+	SATA_OOB_MODE,
+	SAS_OOB_MODE
 };
 
 /* See sas_discover.c if you plan on changing these */
 enum sas_dev_type {
-  NO_DEVICE   = 0,    /* protocol */
-  SAS_END_DEV = 1,    /* protocol */
-  EDGE_DEV    = 2,    /* protocol */
-  FANOUT_DEV  = 3,    /* protocol */
-  SAS_HA      = 4,
-  SATA_DEV    = 5,
-  SATA_PM     = 7,
-  SATA_PM_PORT = 8,
-  SATA_PENDING  = 9,
+	NO_DEVICE   = 0,	  /* protocol */
+	SAS_END_DEV = 1,	  /* protocol */
+	EDGE_DEV    = 2,	  /* protocol */
+	FANOUT_DEV  = 3,	  /* protocol */
+	SAS_HA      = 4,
+	SATA_DEV    = 5,
+	SATA_PM     = 7,
+	SATA_PM_PORT= 8,
+	SATA_PENDING  = 9,
 };
 
 enum sas_protocol {
-  SAS_PROTOCOL_SATA   = 0x01,
-  SAS_PROTOCOL_SMP    = 0x02,
-  SAS_PROTOCOL_STP    = 0x04,
-  SAS_PROTOCOL_SSP    = 0x08,
-  SAS_PROTOCOL_ALL    = 0x0E,
-  SAS_PROTOCOL_STP_ALL    = SAS_PROTOCOL_STP | SAS_PROTOCOL_SATA,
+	SAS_PROTOCOL_SATA		= 0x01,
+	SAS_PROTOCOL_SMP		= 0x02,
+	SAS_PROTOCOL_STP		= 0x04,
+	SAS_PROTOCOL_SSP		= 0x08,
+	SAS_PROTOCOL_ALL		= 0x0E,
+	SAS_PROTOCOL_STP_ALL		= SAS_PROTOCOL_STP|SAS_PROTOCOL_SATA,
 };
 
 /* From the spec; local phys only */
 enum phy_func {
-  PHY_FUNC_NOP,
-  PHY_FUNC_LINK_RESET,      /* Enables the phy */
-  PHY_FUNC_HARD_RESET,
-  PHY_FUNC_DISABLE,
-  PHY_FUNC_CLEAR_ERROR_LOG = 5,
-  PHY_FUNC_CLEAR_AFFIL,
-  PHY_FUNC_TX_SATA_PS_SIGNAL,
-  PHY_FUNC_RELEASE_SPINUP_HOLD = 0x10, /* LOCAL PORT ONLY! */
-  PHY_FUNC_SET_LINK_RATE,
-  PHY_FUNC_GET_EVENTS,
+	PHY_FUNC_NOP,
+	PHY_FUNC_LINK_RESET,		  /* Enables the phy */
+	PHY_FUNC_HARD_RESET,
+	PHY_FUNC_DISABLE,
+	PHY_FUNC_CLEAR_ERROR_LOG = 5,
+	PHY_FUNC_CLEAR_AFFIL,
+	PHY_FUNC_TX_SATA_PS_SIGNAL,
+	PHY_FUNC_RELEASE_SPINUP_HOLD = 0x10, /* LOCAL PORT ONLY! */
+	PHY_FUNC_SET_LINK_RATE,
+	PHY_FUNC_GET_EVENTS,
 };
 
 /* SAS LLDD would need to report only _very_few_ of those, like BROADCAST.
  * Most of those are here for completeness.
  */
 enum sas_prim {
-  SAS_PRIM_AIP_NORMAL = 1,
-  SAS_PRIM_AIP_R0     = 2,
-  SAS_PRIM_AIP_R1     = 3,
-  SAS_PRIM_AIP_R2     = 4,
-  SAS_PRIM_AIP_WC     = 5,
-  SAS_PRIM_AIP_WD     = 6,
-  SAS_PRIM_AIP_WP     = 7,
-  SAS_PRIM_AIP_RWP    = 8,
-  
-  SAS_PRIM_BC_CH      = 9,
-  SAS_PRIM_BC_RCH0    = 10,
-  SAS_PRIM_BC_RCH1    = 11,
-  SAS_PRIM_BC_R0      = 12,
-  SAS_PRIM_BC_R1      = 13,
-  SAS_PRIM_BC_R2      = 14,
-  SAS_PRIM_BC_R3      = 15,
-  SAS_PRIM_BC_R4      = 16,
-  
-  SAS_PRIM_NOTIFY_ENSP = 17,
-  SAS_PRIM_NOTIFY_R0  = 18,
-  SAS_PRIM_NOTIFY_R1  = 19,
-  SAS_PRIM_NOTIFY_R2  = 20,
-  
-  SAS_PRIM_CLOSE_CLAF = 21,
-  SAS_PRIM_CLOSE_NORM = 22,
-  SAS_PRIM_CLOSE_R0   = 23,
-  SAS_PRIM_CLOSE_R1   = 24,
-  
-  SAS_PRIM_OPEN_RTRY  = 25,
-  SAS_PRIM_OPEN_RJCT  = 26,
-  SAS_PRIM_OPEN_ACPT  = 27,
-  
-  SAS_PRIM_DONE       = 28,
-  SAS_PRIM_BREAK      = 29,
-  
-  SATA_PRIM_DMAT      = 33,
-  SATA_PRIM_PMNAK     = 34,
-  SATA_PRIM_PMACK     = 35,
-  SATA_PRIM_PMREQ_S   = 36,
-  SATA_PRIM_PMREQ_P   = 37,
-  SATA_SATA_R_ERR     = 38,
+	SAS_PRIM_AIP_NORMAL = 1,
+	SAS_PRIM_AIP_R0     = 2,
+	SAS_PRIM_AIP_R1     = 3,
+	SAS_PRIM_AIP_R2     = 4,
+	SAS_PRIM_AIP_WC     = 5,
+	SAS_PRIM_AIP_WD     = 6,
+	SAS_PRIM_AIP_WP     = 7,
+	SAS_PRIM_AIP_RWP    = 8,
+
+	SAS_PRIM_BC_CH      = 9,
+	SAS_PRIM_BC_RCH0    = 10,
+	SAS_PRIM_BC_RCH1    = 11,
+	SAS_PRIM_BC_R0      = 12,
+	SAS_PRIM_BC_R1      = 13,
+	SAS_PRIM_BC_R2      = 14,
+	SAS_PRIM_BC_R3      = 15,
+	SAS_PRIM_BC_R4      = 16,
+
+	SAS_PRIM_NOTIFY_ENSP= 17,
+	SAS_PRIM_NOTIFY_R0  = 18,
+	SAS_PRIM_NOTIFY_R1  = 19,
+	SAS_PRIM_NOTIFY_R2  = 20,
+
+	SAS_PRIM_CLOSE_CLAF = 21,
+	SAS_PRIM_CLOSE_NORM = 22,
+	SAS_PRIM_CLOSE_R0   = 23,
+	SAS_PRIM_CLOSE_R1   = 24,
+
+	SAS_PRIM_OPEN_RTRY  = 25,
+	SAS_PRIM_OPEN_RJCT  = 26,
+	SAS_PRIM_OPEN_ACPT  = 27,
+
+	SAS_PRIM_DONE       = 28,
+	SAS_PRIM_BREAK      = 29,
+
+	SATA_PRIM_DMAT      = 33,
+	SATA_PRIM_PMNAK     = 34,
+	SATA_PRIM_PMACK     = 35,
+	SATA_PRIM_PMREQ_S   = 36,
+	SATA_PRIM_PMREQ_P   = 37,
+	SATA_SATA_R_ERR     = 38,
 };
 
 enum sas_open_rej_reason {
-  /* Abandon open */
-  SAS_OREJ_UNKNOWN   = 0,
-  SAS_OREJ_BAD_DEST  = 1,
-  SAS_OREJ_CONN_RATE = 2,
-  SAS_OREJ_EPROTO    = 3,
-  SAS_OREJ_RESV_AB0  = 4,
-  SAS_OREJ_RESV_AB1  = 5,
-  SAS_OREJ_RESV_AB2  = 6,
-  SAS_OREJ_RESV_AB3  = 7,
-  SAS_OREJ_WRONG_DEST = 8,
-  SAS_OREJ_STP_NORES = 9,
-  
-  /* Retry open */
-  SAS_OREJ_NO_DEST   = 10,
-  SAS_OREJ_PATH_BLOCKED = 11,
-  SAS_OREJ_RSVD_CONT0 = 12,
-  SAS_OREJ_RSVD_CONT1 = 13,
-  SAS_OREJ_RSVD_INIT0 = 14,
-  SAS_OREJ_RSVD_INIT1 = 15,
-  SAS_OREJ_RSVD_STOP0 = 16,
-  SAS_OREJ_RSVD_STOP1 = 17,
-  SAS_OREJ_RSVD_RETRY = 18,
+	/* Abandon open */
+	SAS_OREJ_UNKNOWN   = 0,
+	SAS_OREJ_BAD_DEST  = 1,
+	SAS_OREJ_CONN_RATE = 2,
+	SAS_OREJ_EPROTO    = 3,
+	SAS_OREJ_RESV_AB0  = 4,
+	SAS_OREJ_RESV_AB1  = 5,
+	SAS_OREJ_RESV_AB2  = 6,
+	SAS_OREJ_RESV_AB3  = 7,
+	SAS_OREJ_WRONG_DEST= 8,
+	SAS_OREJ_STP_NORES = 9,
+
+	/* Retry open */
+	SAS_OREJ_NO_DEST   = 10,
+	SAS_OREJ_PATH_BLOCKED = 11,
+	SAS_OREJ_RSVD_CONT0 = 12,
+	SAS_OREJ_RSVD_CONT1 = 13,
+	SAS_OREJ_RSVD_INIT0 = 14,
+	SAS_OREJ_RSVD_INIT1 = 15,
+	SAS_OREJ_RSVD_STOP0 = 16,
+	SAS_OREJ_RSVD_STOP1 = 17,
+	SAS_OREJ_RSVD_RETRY = 18,
 };
 
 enum sas_gpio_reg_type {
-  SAS_GPIO_REG_CFG   = 0,
-  SAS_GPIO_REG_RX    = 1,
-  SAS_GPIO_REG_RX_GP = 2,
-  SAS_GPIO_REG_TX    = 3,
-  SAS_GPIO_REG_TX_GP = 4,
+	SAS_GPIO_REG_CFG   = 0,
+	SAS_GPIO_REG_RX    = 1,
+	SAS_GPIO_REG_RX_GP = 2,
+	SAS_GPIO_REG_TX    = 3,
+	SAS_GPIO_REG_TX_GP = 4,
 };
 
 struct  dev_to_host_fis {
-  u8     fis_type;    /* 0x34 */
-  u8     flags;
-  u8     status;
-  u8     error;
-  
-  u8     lbal;
-  union { u8 lbam; u8 byte_count_low; };
-  union { u8 lbah; u8 byte_count_high; };
-  u8     device;
-  
-  u8     lbal_exp;
-  u8     lbam_exp;
-  u8     lbah_exp;
-  u8     _r_a;
-  
-  union { u8  sector_count; u8 interrupt_reason; };
-  u8     sector_count_exp;
-  u8     _r_b;
-  u8     _r_c;
-  
-  u32    _r_d;
-} __attribute__ ( (packed) );
+	u8     fis_type;	  /* 0x34 */
+	u8     flags;
+	u8     status;
+	u8     error;
+
+	u8     lbal;
+	union { u8 lbam; u8 byte_count_low; };
+	union { u8 lbah; u8 byte_count_high; };
+	u8     device;
+
+	u8     lbal_exp;
+	u8     lbam_exp;
+	u8     lbah_exp;
+	u8     _r_a;
+
+	union { u8  sector_count; u8 interrupt_reason; };
+	u8     sector_count_exp;
+	u8     _r_b;
+	u8     _r_c;
+
+	u32    _r_d;
+} __attribute__ ((packed));
 
 struct host_to_dev_fis {
-  u8     fis_type;    /* 0x27 */
-  u8     flags;
-  u8     command;
-  u8     features;
-  
-  u8     lbal;
-  union { u8 lbam; u8 byte_count_low; };
-  union { u8 lbah; u8 byte_count_high; };
-  u8     device;
-  
-  u8     lbal_exp;
-  u8     lbam_exp;
-  u8     lbah_exp;
-  u8     features_exp;
-  
-  union { u8  sector_count; u8 interrupt_reason; };
-  u8     sector_count_exp;
-  u8     _r_a;
-  u8     control;
-  
-  u32    _r_b;
-} __attribute__ ( (packed) );
+	u8     fis_type;	  /* 0x27 */
+	u8     flags;
+	u8     command;
+	u8     features;
+
+	u8     lbal;
+	union { u8 lbam; u8 byte_count_low; };
+	union { u8 lbah; u8 byte_count_high; };
+	u8     device;
+
+	u8     lbal_exp;
+	u8     lbam_exp;
+	u8     lbah_exp;
+	u8     features_exp;
+
+	union { u8  sector_count; u8 interrupt_reason; };
+	u8     sector_count_exp;
+	u8     _r_a;
+	u8     control;
+
+	u32    _r_b;
+} __attribute__ ((packed));
 
 /* Prefer to have code clarity over header file clarity.
  */
 #ifdef __LITTLE_ENDIAN_BITFIELD
 struct sas_identify_frame {
-  /* Byte 0 */
-  u8  frame_type: 4;
-  u8  dev_type: 3;
-  u8  _un0: 1;
-  
-  /* Byte 1 */
-  u8  _un1;
-  
-  /* Byte 2 */
-  union {
-    struct {
-      u8  _un20: 1;
-      u8  smp_iport: 1;
-      u8  stp_iport: 1;
-      u8  ssp_iport: 1;
-      u8  _un247: 4;
-    };
-    u8 initiator_bits;
-  };
-  
-  /* Byte 3 */
-  union {
-    struct {
-      u8  _un30: 1;
-      u8 smp_tport: 1;
-      u8 stp_tport: 1;
-      u8 ssp_tport: 1;
-      u8 _un347: 4;
-    };
-    u8 target_bits;
-  };
-  
-  /* Byte 4 - 11 */
-  u8 _un4_11[8];
-  
-  /* Byte 12 - 19 */
-  u8 sas_addr[SAS_ADDR_SIZE];
-  
-  /* Byte 20 */
-  u8 phy_id;
-  
-  u8 _un21_27[7];
-  
-  __be32 crc;
-} __attribute__ ( (packed) );
+	/* Byte 0 */
+	u8  frame_type:4;
+	u8  dev_type:3;
+	u8  _un0:1;
+
+	/* Byte 1 */
+	u8  _un1;
+
+	/* Byte 2 */
+	union {
+		struct {
+			u8  _un20:1;
+			u8  smp_iport:1;
+			u8  stp_iport:1;
+			u8  ssp_iport:1;
+			u8  _un247:4;
+		};
+		u8 initiator_bits;
+	};
+
+	/* Byte 3 */
+	union {
+		struct {
+			u8  _un30:1;
+			u8 smp_tport:1;
+			u8 stp_tport:1;
+			u8 ssp_tport:1;
+			u8 _un347:4;
+		};
+		u8 target_bits;
+	};
+
+	/* Byte 4 - 11 */
+	u8 _un4_11[8];
+
+	/* Byte 12 - 19 */
+	u8 sas_addr[SAS_ADDR_SIZE];
+
+	/* Byte 20 */
+	u8 phy_id;
+
+	u8 _un21_27[7];
+
+	__be32 crc;
+} __attribute__ ((packed));
 
 struct ssp_frame_hdr {
-  u8     frame_type;
-  u8     hashed_dest_addr[HASHED_SAS_ADDR_SIZE];
-  u8     _r_a;
-  u8     hashed_src_addr[HASHED_SAS_ADDR_SIZE];
-  __be16 _r_b;
-  
-  u8     changing_data_ptr: 1;
-  u8     retransmit: 1;
-  u8     retry_data_frames: 1;
-  u8     _r_c: 5;
-  
-  u8     num_fill_bytes: 2;
-  u8     _r_d: 6;
-  
-  u32    _r_e;
-  __be16 tag;
-  __be16 tptt;
-  __be32 data_offs;
-} __attribute__ ( (packed) );
+	u8     frame_type;
+	u8     hashed_dest_addr[HASHED_SAS_ADDR_SIZE];
+	u8     _r_a;
+	u8     hashed_src_addr[HASHED_SAS_ADDR_SIZE];
+	__be16 _r_b;
+
+	u8     changing_data_ptr:1;
+	u8     retransmit:1;
+	u8     retry_data_frames:1;
+	u8     _r_c:5;
+
+	u8     num_fill_bytes:2;
+	u8     _r_d:6;
+
+	u32    _r_e;
+	__be16 tag;
+	__be16 tptt;
+	__be32 data_offs;
+} __attribute__ ((packed));
 
 struct ssp_response_iu {
-  u8     _r_a[10];
-  
-  u8     datapres: 2;
-  u8     _r_b: 6;
-  
-  u8     status;
-  
-  u32    _r_c;
-  
-  __be32 sense_data_len;
-  __be32 response_data_len;
-  
-  u8     resp_data[0];
-  u8     sense_data[0];
-} __attribute__ ( (packed) );
+	u8     _r_a[10];
+
+	u8     datapres:2;
+	u8     _r_b:6;
+
+	u8     status;
+
+	u32    _r_c;
+
+	__be32 sense_data_len;
+	__be32 response_data_len;
+
+	u8     resp_data[0];
+	u8     sense_data[0];
+} __attribute__ ((packed));
 
 /* ---------- SMP ---------- */
 
 struct report_general_resp {
-  __be16  change_count;
-  __be16  route_indexes;
-  u8      _r_a;
-  u8      num_phys;
-  
-  u8      conf_route_table: 1;
-  u8      configuring: 1;
-  u8  config_others: 1;
-  u8  orej_retry_supp: 1;
-  u8  stp_cont_awt: 1;
-  u8  self_config: 1;
-  u8  zone_config: 1;
-  u8  t2t_supp: 1;
-  
-  u8      _r_c;
-  
-  u8      enclosure_logical_id[8];
-  
-  u8      _r_d[12];
-} __attribute__ ( (packed) );
+	__be16  change_count;
+	__be16  route_indexes;
+	u8      _r_a;
+	u8      num_phys;
+
+	u8      conf_route_table:1;
+	u8      configuring:1;
+	u8	config_others:1;
+	u8	orej_retry_supp:1;
+	u8	stp_cont_awt:1;
+	u8	self_config:1;
+	u8	zone_config:1;
+	u8	t2t_supp:1;
+
+	u8      _r_c;
+
+	u8      enclosure_logical_id[8];
+
+	u8      _r_d[12];
+} __attribute__ ((packed));
 
 struct discover_resp {
-  u8    _r_a[5];
-  
-  u8    phy_id;
-  __be16 _r_b;
-  
-  u8    _r_c: 4;
-  u8    attached_dev_type: 3;
-  u8    _r_d: 1;
-  
-  u8    linkrate: 4;
-  u8    _r_e: 4;
-  
-  u8    attached_sata_host: 1;
-  u8    iproto: 3;
-  u8    _r_f: 4;
-  
-  u8    attached_sata_dev: 1;
-  u8    tproto: 3;
-  u8    _r_g: 3;
-  u8    attached_sata_ps: 1;
-  
-  u8    sas_addr[8];
-  u8    attached_sas_addr[8];
-  u8    attached_phy_id;
-  
-  u8    _r_h[7];
-  
-  u8    hmin_linkrate: 4;
-  u8    pmin_linkrate: 4;
-  u8    hmax_linkrate: 4;
-  u8    pmax_linkrate: 4;
-  
-  u8    change_count;
-  
-  u8    pptv: 4;
-  u8    _r_i: 3;
-  u8    virtual: 1;
-  
-  u8    routing_attr: 4;
-  u8    _r_j: 4;
-  
-  u8    conn_type;
-  u8    conn_el_index;
-  u8    conn_phy_link;
-  
-  u8    _r_k[8];
-} __attribute__ ( (packed) );
+	u8    _r_a[5];
+
+	u8    phy_id;
+	__be16 _r_b;
+
+	u8    _r_c:4;
+	u8    attached_dev_type:3;
+	u8    _r_d:1;
+
+	u8    linkrate:4;
+	u8    _r_e:4;
+
+	u8    attached_sata_host:1;
+	u8    iproto:3;
+	u8    _r_f:4;
+
+	u8    attached_sata_dev:1;
+	u8    tproto:3;
+	u8    _r_g:3;
+	u8    attached_sata_ps:1;
+
+	u8    sas_addr[8];
+	u8    attached_sas_addr[8];
+	u8    attached_phy_id;
+
+	u8    _r_h[7];
+
+	u8    hmin_linkrate:4;
+	u8    pmin_linkrate:4;
+	u8    hmax_linkrate:4;
+	u8    pmax_linkrate:4;
+
+	u8    change_count;
+
+	u8    pptv:4;
+	u8    _r_i:3;
+	u8    virtual:1;
+
+	u8    routing_attr:4;
+	u8    _r_j:4;
+
+	u8    conn_type;
+	u8    conn_el_index;
+	u8    conn_phy_link;
+
+	u8    _r_k[8];
+} __attribute__ ((packed));
 
 struct report_phy_sata_resp {
-  u8    _r_a[5];
-  
-  u8    phy_id;
-  u8    _r_b;
-  
-  u8    affil_valid: 1;
-  u8    affil_supp: 1;
-  u8    _r_c: 6;
-  
-  u32    _r_d;
-  
-  u8    stp_sas_addr[8];
-  
-  struct dev_to_host_fis fis;
-  
-  u32   _r_e;
-  
-  u8    affil_stp_ini_addr[8];
-  
-  __be32 crc;
-} __attribute__ ( (packed) );
+	u8    _r_a[5];
+
+	u8    phy_id;
+	u8    _r_b;
+
+	u8    affil_valid:1;
+	u8    affil_supp:1;
+	u8    _r_c:6;
+
+	u32    _r_d;
+
+	u8    stp_sas_addr[8];
+
+	struct dev_to_host_fis fis;
+
+	u32   _r_e;
+
+	u8    affil_stp_ini_addr[8];
+
+	__be32 crc;
+} __attribute__ ((packed));
 
 struct smp_resp {
-  u8    frame_type;
-  u8    function;
-  u8    result;
-  u8    reserved;
-  union {
-    struct report_general_resp  rg;
-    struct discover_resp        disc;
-    struct report_phy_sata_resp rps;
-  };
-} __attribute__ ( (packed) );
+	u8    frame_type;
+	u8    function;
+	u8    result;
+	u8    reserved;
+	union {
+		struct report_general_resp  rg;
+		struct discover_resp        disc;
+		struct report_phy_sata_resp rps;
+	};
+} __attribute__ ((packed));
 
 #elif defined(__BIG_ENDIAN_BITFIELD)
 struct sas_identify_frame {
-  /* Byte 0 */
-  u8  _un0: 1;
-  u8  dev_type: 3;
-  u8  frame_type: 4;
+	/* Byte 0 */
+	u8  _un0:1;
+	u8  dev_type:3;
+	u8  frame_type:4;
 
-  /* Byte 1 */
-  u8  _un1;
+	/* Byte 1 */
+	u8  _un1;
 
-  /* Byte 2 */
-  union {
-    struct {
-      u8  _un247: 4;
-      u8  ssp_iport: 1;
-      u8  stp_iport: 1;
-      u8  smp_iport: 1;
-      u8  _un20: 1;
-    };
-    u8 initiator_bits;
-  };
+	/* Byte 2 */
+	union {
+		struct {
+			u8  _un247:4;
+			u8  ssp_iport:1;
+			u8  stp_iport:1;
+			u8  smp_iport:1;
+			u8  _un20:1;
+		};
+		u8 initiator_bits;
+	};
 
-  /* Byte 3 */
-  union {
-    struct {
-      u8 _un347: 4;
-      u8 ssp_tport: 1;
-      u8 stp_tport: 1;
-      u8 smp_tport: 1;
-      u8 _un30: 1;
-    };
-    u8 target_bits;
-  };
+	/* Byte 3 */
+	union {
+		struct {
+			u8 _un347:4;
+			u8 ssp_tport:1;
+			u8 stp_tport:1;
+			u8 smp_tport:1;
+			u8 _un30:1;
+		};
+		u8 target_bits;
+	};
 
-  /* Byte 4 - 11 */
-  u8 _un4_11[8];
+	/* Byte 4 - 11 */
+	u8 _un4_11[8];
 
-  /* Byte 12 - 19 */
-  u8 sas_addr[SAS_ADDR_SIZE];
+	/* Byte 12 - 19 */
+	u8 sas_addr[SAS_ADDR_SIZE];
 
-  /* Byte 20 */
-  u8 phy_id;
+	/* Byte 20 */
+	u8 phy_id;
 
-  u8 _un21_27[7];
+	u8 _un21_27[7];
 
-  __be32 crc;
-} __attribute__ ( (packed) );
+	__be32 crc;
+} __attribute__ ((packed));
 
 struct ssp_frame_hdr {
-  u8     frame_type;
-  u8     hashed_dest_addr[HASHED_SAS_ADDR_SIZE];
-  u8     _r_a;
-  u8     hashed_src_addr[HASHED_SAS_ADDR_SIZE];
-  __be16 _r_b;
+	u8     frame_type;
+	u8     hashed_dest_addr[HASHED_SAS_ADDR_SIZE];
+	u8     _r_a;
+	u8     hashed_src_addr[HASHED_SAS_ADDR_SIZE];
+	__be16 _r_b;
 
-  u8     _r_c: 5;
-  u8     retry_data_frames: 1;
-  u8     retransmit: 1;
-  u8     changing_data_ptr: 1;
+	u8     _r_c:5;
+	u8     retry_data_frames:1;
+	u8     retransmit:1;
+	u8     changing_data_ptr:1;
 
-  u8     _r_d: 6;
-  u8     num_fill_bytes: 2;
+	u8     _r_d:6;
+	u8     num_fill_bytes:2;
 
-  u32    _r_e;
-  __be16 tag;
-  __be16 tptt;
-  __be32 data_offs;
-} __attribute__ ( (packed) );
+	u32    _r_e;
+	__be16 tag;
+	__be16 tptt;
+	__be32 data_offs;
+} __attribute__ ((packed));
 
 struct ssp_response_iu {
-  u8     _r_a[10];
+	u8     _r_a[10];
 
-  u8     _r_b: 6;
-  u8     datapres: 2;
+	u8     _r_b:6;
+	u8     datapres:2;
 
-  u8     status;
+	u8     status;
 
-  u32    _r_c;
+	u32    _r_c;
 
-  __be32 sense_data_len;
-  __be32 response_data_len;
+	__be32 sense_data_len;
+	__be32 response_data_len;
 
-  u8     resp_data[0];
-  u8     sense_data[0];
-} __attribute__ ( (packed) );
+	u8     resp_data[0];
+	u8     sense_data[0];
+} __attribute__ ((packed));
 
 /* ---------- SMP ---------- */
 
 struct report_general_resp {
-  __be16  change_count;
-  __be16  route_indexes;
-  u8      _r_a;
-  u8      num_phys;
+	__be16  change_count;
+	__be16  route_indexes;
+	u8      _r_a;
+	u8      num_phys;
 
-  u8  t2t_supp: 1;
-  u8  zone_config: 1;
-  u8  self_config: 1;
-  u8  stp_cont_awt: 1;
-  u8  orej_retry_supp: 1;
-  u8  config_others: 1;
-  u8      configuring: 1;
-  u8      conf_route_table: 1;
+	u8	t2t_supp:1;
+	u8	zone_config:1;
+	u8	self_config:1;
+	u8	stp_cont_awt:1;
+	u8	orej_retry_supp:1;
+	u8	config_others:1;
+	u8      configuring:1;
+	u8      conf_route_table:1;
 
-  u8      _r_c;
+	u8      _r_c;
 
-  u8      enclosure_logical_id[8];
+	u8      enclosure_logical_id[8];
 
-  u8      _r_d[12];
-} __attribute__ ( (packed) );
+	u8      _r_d[12];
+} __attribute__ ((packed));
 
 struct discover_resp {
-  u8    _r_a[5];
+	u8    _r_a[5];
 
-  u8    phy_id;
-  __be16 _r_b;
+	u8    phy_id;
+	__be16 _r_b;
 
-  u8    _r_d: 1;
-  u8    attached_dev_type: 3;
-  u8    _r_c: 4;
+	u8    _r_d:1;
+	u8    attached_dev_type:3;
+	u8    _r_c:4;
 
-  u8    _r_e: 4;
-  u8    linkrate: 4;
+	u8    _r_e:4;
+	u8    linkrate:4;
 
-  u8    _r_f: 4;
-  u8    iproto: 3;
-  u8    attached_sata_host: 1;
+	u8    _r_f:4;
+	u8    iproto:3;
+	u8    attached_sata_host:1;
 
-  u8    attached_sata_ps: 1;
-  u8    _r_g: 3;
-  u8    tproto: 3;
-  u8    attached_sata_dev: 1;
+	u8    attached_sata_ps:1;
+	u8    _r_g:3;
+	u8    tproto:3;
+	u8    attached_sata_dev:1;
 
-  u8    sas_addr[8];
-  u8    attached_sas_addr[8];
-  u8    attached_phy_id;
+	u8    sas_addr[8];
+	u8    attached_sas_addr[8];
+	u8    attached_phy_id;
 
-  u8    _r_h[7];
+	u8    _r_h[7];
 
-  u8    pmin_linkrate: 4;
-  u8    hmin_linkrate: 4;
-  u8    pmax_linkrate: 4;
-  u8    hmax_linkrate: 4;
+	u8    pmin_linkrate:4;
+	u8    hmin_linkrate:4;
+	u8    pmax_linkrate:4;
+	u8    hmax_linkrate:4;
 
-  u8    change_count;
+	u8    change_count;
 
-  u8    virtual: 1;
-  u8    _r_i: 3;
-  u8    pptv: 4;
+	u8    virtual:1;
+	u8    _r_i:3;
+	u8    pptv:4;
 
-  u8    _r_j: 4;
-  u8    routing_attr: 4;
+	u8    _r_j:4;
+	u8    routing_attr:4;
 
-  u8    conn_type;
-  u8    conn_el_index;
-  u8    conn_phy_link;
+	u8    conn_type;
+	u8    conn_el_index;
+	u8    conn_phy_link;
 
-  u8    _r_k[8];
-} __attribute__ ( (packed) );
+	u8    _r_k[8];
+} __attribute__ ((packed));
 
 struct report_phy_sata_resp {
-  u8    _r_a[5];
+	u8    _r_a[5];
 
-  u8    phy_id;
-  u8    _r_b;
+	u8    phy_id;
+	u8    _r_b;
 
-  u8    _r_c: 6;
-  u8    affil_supp: 1;
-  u8    affil_valid: 1;
+	u8    _r_c:6;
+	u8    affil_supp:1;
+	u8    affil_valid:1;
 
-  u32   _r_d;
+	u32   _r_d;
 
-  u8    stp_sas_addr[8];
+	u8    stp_sas_addr[8];
 
-  struct dev_to_host_fis fis;
+	struct dev_to_host_fis fis;
 
-  u32   _r_e;
+	u32   _r_e;
 
-  u8    affil_stp_ini_addr[8];
+	u8    affil_stp_ini_addr[8];
 
-  __be32 crc;
-} __attribute__ ( (packed) );
+	__be32 crc;
+} __attribute__ ((packed));
 
 struct smp_resp {
-  u8    frame_type;
-  u8    function;
-  u8    result;
-  u8    reserved;
-  union {
-    struct report_general_resp  rg;
-    struct discover_resp        disc;
-    struct report_phy_sata_resp rps;
-  };
-} __attribute__ ( (packed) );
+	u8    frame_type;
+	u8    function;
+	u8    result;
+	u8    reserved;
+	union {
+		struct report_general_resp  rg;
+		struct discover_resp        disc;
+		struct report_phy_sata_resp rps;
+	};
+} __attribute__ ((packed));
 
 #else
 #error "Bitfield order not defined!"

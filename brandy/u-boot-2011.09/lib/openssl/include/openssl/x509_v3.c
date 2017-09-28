@@ -62,15 +62,15 @@
 #include <evp.h>
 #include <x509.h>
 
-int X509v3_get_ext_count (const STACK_OF (X509_EXTENSION) *x)
-{
-  if (x == NULL) { return (0); }
-  return (sk_X509_EXTENSION_num (x) );
-}
+int X509v3_get_ext_count(const STACK_OF(X509_EXTENSION) *x)
+	{
+	if (x == NULL) return(0);
+	return(sk_X509_EXTENSION_num(x));
+	}
 
-ASN1_OBJECT * X509_EXTENSION_get_object (X509_EXTENSION * ex)
-{
-  if (ex == NULL) { return (NULL); }
-  return (ex->object);
-}
+ASN1_OBJECT *X509_EXTENSION_get_object(X509_EXTENSION *ex)
+	{
+	if (ex == NULL) return(NULL);
+	return(ex->object);
+	}
 

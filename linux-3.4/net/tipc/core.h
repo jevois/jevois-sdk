@@ -58,8 +58,8 @@
 
 #define TIPC_MOD_VER "2.0.0"
 
-struct tipc_msg;  /* msg.h */
-struct print_buf; /* log.h */
+struct tipc_msg;	/* msg.h */
+struct print_buf;	/* log.h */
 
 /*
  * TIPC system monitoring code
@@ -71,16 +71,16 @@ struct print_buf; /* log.h */
  * TIPC_NULL : null buffer (i.e. print nowhere)
  * TIPC_CONS : system console
  * TIPC_LOG  : TIPC log buffer
- * &buf      : user-defined buffer (struct print_buf *)
+ * &buf	     : user-defined buffer (struct print_buf *)
  *
  * Note: TIPC_LOG is configured to echo its output to the system console;
  *       user-defined buffers can be configured to do the same thing.
  */
-extern struct print_buf * const TIPC_NULL;
-extern struct print_buf * const TIPC_CONS;
-extern struct print_buf * const TIPC_LOG;
+extern struct print_buf *const TIPC_NULL;
+extern struct print_buf *const TIPC_CONS;
+extern struct print_buf *const TIPC_LOG;
 
-void tipc_printf (struct print_buf *, const char * fmt, ...);
+void tipc_printf(struct print_buf *, const char *fmt, ...);
 
 /*
  * TIPC_OUTPUT is the destination print buffer for system messages.
@@ -91,11 +91,11 @@ void tipc_printf (struct print_buf *, const char * fmt, ...);
 #endif
 
 #define err(fmt, arg...)  tipc_printf(TIPC_OUTPUT, \
-                                      KERN_ERR "TIPC: " fmt, ## arg)
+				      KERN_ERR "TIPC: " fmt, ## arg)
 #define warn(fmt, arg...) tipc_printf(TIPC_OUTPUT, \
-                                      KERN_WARNING "TIPC: " fmt, ## arg)
+				      KERN_WARNING "TIPC: " fmt, ## arg)
 #define info(fmt, arg...) tipc_printf(TIPC_OUTPUT, \
-                                      KERN_NOTICE "TIPC: " fmt, ## arg)
+				      KERN_NOTICE "TIPC: " fmt, ## arg)
 
 #ifdef CONFIG_TIPC_DEBUG
 
@@ -111,12 +111,12 @@ void tipc_printf (struct print_buf *, const char * fmt, ...);
 
 #define msg_dbg(msg, txt) tipc_msg_dbg(DBG_OUTPUT, msg, txt);
 
-void tipc_msg_dbg (struct print_buf *, struct tipc_msg *, const char *);
+void tipc_msg_dbg(struct print_buf *, struct tipc_msg *, const char *);
 
 #else
 
-#define dbg(fmt, arg...)  do {} while (0)
-#define msg_dbg(msg, txt) do {} while (0)
+#define dbg(fmt, arg...)	do {} while (0)
+#define msg_dbg(msg, txt)	do {} while (0)
 
 #define tipc_msg_dbg(buf, msg, txt) do {} while (0)
 
@@ -127,7 +127,7 @@ void tipc_msg_dbg (struct print_buf *, struct tipc_msg *, const char *);
  * TIPC-specific error codes
  */
 
-#define ELINKCONG EAGAIN  /* link congestion <=> resource unavailable */
+#define ELINKCONG EAGAIN	/* link congestion <=> resource unavailable */
 
 /*
  * Global configuration variables
@@ -152,13 +152,13 @@ extern const char tipc_alphabet[];
  * Routines available to privileged subsystems
  */
 
-extern int tipc_core_start_net (unsigned long);
-extern int  tipc_handler_start (void);
-extern void tipc_handler_stop (void);
-extern int  tipc_netlink_start (void);
-extern void tipc_netlink_stop (void);
-extern int  tipc_socket_init (void);
-extern void tipc_socket_stop (void);
+extern int tipc_core_start_net(unsigned long);
+extern int  tipc_handler_start(void);
+extern void tipc_handler_stop(void);
+extern int  tipc_netlink_start(void);
+extern void tipc_netlink_stop(void);
+extern int  tipc_socket_init(void);
+extern void tipc_socket_stop(void);
 
 /*
  * TIPC timer and signal code
@@ -166,7 +166,7 @@ extern void tipc_socket_stop (void);
 
 typedef void (*Handler) (unsigned long);
 
-u32 tipc_k_signal (Handler routine, unsigned long argument);
+u32 tipc_k_signal(Handler routine, unsigned long argument);
 
 /**
  * k_init_timer - initialize a timer
@@ -177,10 +177,10 @@ u32 tipc_k_signal (Handler routine, unsigned long argument);
  * Timer must be initialized before use (and terminated when no longer needed).
  */
 
-static inline void k_init_timer (struct timer_list * timer, Handler routine,
-                                 unsigned long argument)
+static inline void k_init_timer(struct timer_list *timer, Handler routine,
+				unsigned long argument)
 {
-  setup_timer (timer, routine, argument);
+	setup_timer(timer, routine, argument);
 }
 
 /**
@@ -197,9 +197,9 @@ static inline void k_init_timer (struct timer_list * timer, Handler routine,
  * the starting time may be in the middle of the current jiffy.
  */
 
-static inline void k_start_timer (struct timer_list * timer, unsigned long msec)
+static inline void k_start_timer(struct timer_list *timer, unsigned long msec)
 {
-  mod_timer (timer, jiffies + msecs_to_jiffies (msec) + 1);
+	mod_timer(timer, jiffies + msecs_to_jiffies(msec) + 1);
 }
 
 /**
@@ -213,9 +213,9 @@ static inline void k_start_timer (struct timer_list * timer, unsigned long msec)
  *          timeout routine, otherwise deadlock can occur on SMP systems!
  */
 
-static inline void k_cancel_timer (struct timer_list * timer)
+static inline void k_cancel_timer(struct timer_list *timer)
 {
-  del_timer_sync (timer);
+	del_timer_sync(timer);
 }
 
 /**
@@ -230,7 +230,7 @@ static inline void k_cancel_timer (struct timer_list * timer)
  * otherwise deadlock can arise when a timeout routine calls k_term_timer.)
  */
 
-static inline void k_term_timer (struct timer_list * timer)
+static inline void k_term_timer(struct timer_list *timer)
 {
 }
 
@@ -248,17 +248,17 @@ static inline void k_term_timer (struct timer_list * timer)
 #define BUF_HEADROOM LL_MAX_HEADER
 
 struct tipc_skb_cb {
-  void * handle;
+	void *handle;
 };
 
 #define TIPC_SKB_CB(__skb) ((struct tipc_skb_cb *)&((__skb)->cb[0]))
 
 
-static inline struct tipc_msg * buf_msg (struct sk_buff * skb)
+static inline struct tipc_msg *buf_msg(struct sk_buff *skb)
 {
-  return (struct tipc_msg *) skb->data;
+	return (struct tipc_msg *)skb->data;
 }
 
-extern struct sk_buff * tipc_buf_acquire (u32 size);
+extern struct sk_buff *tipc_buf_acquire(u32 size);
 
 #endif

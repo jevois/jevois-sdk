@@ -9,7 +9,7 @@
  * 2 of the Licence, or (at your option) any later version.
  */
 
-static inline const char * asymmetric_key_id (const struct key * key)
+static inline const char *asymmetric_key_id(const struct key *key)
 {
-  return key->type_data.p[1];
+	return key->type_data.p[1];
 }

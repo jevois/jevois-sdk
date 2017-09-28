@@ -82,46 +82,46 @@
  * a 'bad alias'.
  */
 #define S4CVAC_BADALIAS(vaddr1, vaddr2) \
-  ((((unsigned long) (vaddr1)) ^ ((unsigned long) (vaddr2))) & \
-   (S4CVAC_BADBITS))
+        ((((unsigned long) (vaddr1)) ^ ((unsigned long) (vaddr2))) & \
+	 (S4CVAC_BADBITS))
 
 /* The following structure describes the characteristics of a sun4c
  * VAC as probed from the prom during boot time.
  */
 struct sun4c_vac_props {
-  unsigned int num_bytes;     /* Size of the cache */
-  unsigned int do_hwflushes;  /* Hardware flushing available? */
-  unsigned int linesize;      /* Size of each line in bytes */
-  unsigned int log2lsize;     /* log2(linesize) */
-  unsigned int on;            /* VAC is enabled */
+	unsigned int num_bytes;     /* Size of the cache */
+	unsigned int do_hwflushes;  /* Hardware flushing available? */
+	unsigned int linesize;      /* Size of each line in bytes */
+	unsigned int log2lsize;     /* log2(linesize) */
+	unsigned int on;            /* VAC is enabled */
 };
 
 extern struct sun4c_vac_props sun4c_vacinfo;
 
 /* sun4c_enable_vac() enables the sun4c virtual address cache. */
-static inline void sun4c_enable_vac (void)
+static inline void sun4c_enable_vac(void)
 {
-  __asm__ __volatile__ ("lduba [%0] %1, %%g1\n\t"
-                        "or    %%g1, %2, %%g1\n\t"
-                        "stba  %%g1, [%0] %1\n\t"
-                        : /* no outputs */
-                        : "r" ( (unsigned int) AC_SENABLE),
-                        "i" (ASI_CONTROL), "i" (SENABLE_CACHE)
-                        : "g1", "memory");
-  sun4c_vacinfo.on = 1;
+	__asm__ __volatile__("lduba [%0] %1, %%g1\n\t"
+			     "or    %%g1, %2, %%g1\n\t"
+			     "stba  %%g1, [%0] %1\n\t"
+			     : /* no outputs */
+			     : "r" ((unsigned int) AC_SENABLE),
+			     "i" (ASI_CONTROL), "i" (SENABLE_CACHE)
+			     : "g1", "memory");
+	sun4c_vacinfo.on = 1;
 }
 
 /* sun4c_disable_vac() disables the virtual address cache. */
-static inline void sun4c_disable_vac (void)
+static inline void sun4c_disable_vac(void)
 {
-  __asm__ __volatile__ ("lduba [%0] %1, %%g1\n\t"
-                        "andn  %%g1, %2, %%g1\n\t"
-                        "stba  %%g1, [%0] %1\n\t"
-                        : /* no outputs */
-                        : "r" ( (unsigned int) AC_SENABLE),
-                        "i" (ASI_CONTROL), "i" (SENABLE_CACHE)
-                        : "g1", "memory");
-  sun4c_vacinfo.on = 0;
+	__asm__ __volatile__("lduba [%0] %1, %%g1\n\t"
+			     "andn  %%g1, %2, %%g1\n\t"
+			     "stba  %%g1, [%0] %1\n\t"
+			     : /* no outputs */
+			     : "r" ((unsigned int) AC_SENABLE),
+			     "i" (ASI_CONTROL), "i" (SENABLE_CACHE)
+			     : "g1", "memory");
+	sun4c_vacinfo.on = 0;
 }
 
 #endif /* !(_SPARC_VAC_OPS_H) */

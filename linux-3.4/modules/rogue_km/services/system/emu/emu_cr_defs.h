@@ -53,12 +53,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /*
 
-  Soft reset control register which drives the Rogue core and IMGBUS4 memory model
-  Write a '1' to reset and a '0' to clear
+	Soft reset control register which drives the Rogue core and IMGBUS4 memory model
+	Write a '1' to reset and a '0' to clear
 
 */
 /*
-  Register EMU_CR_SOFT_RESET
+	Register EMU_CR_SOFT_RESET
 */
 #define EMU_CR_SOFT_RESET                                 (0x0000U)
 #define EMU_CR_SOFT_RESET_MASKFULL                        (IMG_UINT64_C(0x0000000000000007))
@@ -83,12 +83,12 @@ Resets Core
 
 /*
 
-  Programming this register to '1' enables PCI Master Mode
-  All external memory accesses from Rogue will be routed over the PCI bus to the hosts system memory
+	Programming this register to '1' enables PCI Master Mode
+	All external memory accesses from Rogue will be routed over the PCI bus to the hosts system memory
 
 */
 /*
-  Register EMU_CR_PCI_MASTER
+	Register EMU_CR_PCI_MASTER
 */
 #define EMU_CR_PCI_MASTER                                 (0x0008U)
 #define EMU_CR_PCI_MASTER_MASKFULL                        (IMG_UINT64_C(0x0000000000000001))
@@ -98,11 +98,11 @@ Resets Core
 
 /*
 
-  Load seed values for the random stallers
+	Load seed values for the random stallers
 
 */
 /*
-  Register EMU_CR_RANDOM
+	Register EMU_CR_RANDOM
 */
 #define EMU_CR_RANDOM                                     (0x0010U)
 #define EMU_CR_RANDOM_MASKFULL                            (IMG_UINT64_C(0x0000000000000001))
@@ -115,14 +115,14 @@ Initialise random seeds
 
 /*
 
-  Random address stall seed
+	Random address stall seed
    Random address stall cycles
-  Random address burst seed
+	Random address burst seed
    Random address burst cycles
 
 */
 /*
-  Register EMU_CR_RANDOM_ADDR
+	Register EMU_CR_RANDOM_ADDR
 */
 #define EMU_CR_RANDOM_ADDR                                (0x0018U)
 #define EMU_CR_RANDOM_ADDR_MASKFULL                       (IMG_UINT64_C(0x00000000FF1FFF1F))
@@ -149,11 +149,11 @@ Cycle values
 
 /*
 
-  Enable random address staller
+	Enable random address staller
 
 */
 /*
-  Register EMU_CR_RANDOM_ADDR_STALL_ENABLE
+	Register EMU_CR_RANDOM_ADDR_STALL_ENABLE
 */
 #define EMU_CR_RANDOM_ADDR_STALL_ENABLE                   (0x0020U)
 #define EMU_CR_RANDOM_ADDR_STALL_ENABLE_MASKFULL          (IMG_UINT64_C(0x0000000000000001))
@@ -166,15 +166,15 @@ Enable random address staller
 
 /*
 
-  Random write data stall seed
+	Random write data stall seed
    Random write data stall cycles
-  Random write data burst seed
+ 	Random write data burst seed
    Random write data burst cycles
 
 
 */
 /*
-  Register EMU_CR_RANDOM_WDATA
+	Register EMU_CR_RANDOM_WDATA
 */
 #define EMU_CR_RANDOM_WDATA                               (0x0028U)
 #define EMU_CR_RANDOM_WDATA_MASKFULL                      (IMG_UINT64_C(0x00000000FF1FFF1F))
@@ -201,11 +201,11 @@ Cycle values
 
 /*
 
-  Enable random wdata staller
+	Enable random wdata staller
 
 */
 /*
-  Register EMU_CR_RANDOM_WDATA_STALL_ENABLE
+	Register EMU_CR_RANDOM_WDATA_STALL_ENABLE
 */
 #define EMU_CR_RANDOM_WDATA_STALL_ENABLE                  (0x0030U)
 #define EMU_CR_RANDOM_WDATA_STALL_ENABLE_MASKFULL         (IMG_UINT64_C(0x0000000000000001))
@@ -218,14 +218,14 @@ Enable random wdata staller
 
 /*
 
-  Random write response stall seed
+	Random write response stall seed
    Random write response stall cycles
-  Random write response burst seed
+ 	Random write response burst seed
    Random write response burst cycles
 
 */
 /*
-  Register EMU_CR_RANDOM_WRESP
+	Register EMU_CR_RANDOM_WRESP
 */
 #define EMU_CR_RANDOM_WRESP                               (0x0038U)
 #define EMU_CR_RANDOM_WRESP_MASKFULL                      (IMG_UINT64_C(0x00000000FF1FFF1F))
@@ -252,11 +252,11 @@ Cycle values
 
 /*
 
-  Enable random wresp tagID staller
+	Enable random wresp tagID staller
 
 */
 /*
-  Register EMU_CR_RANDOM_WRESP_STALL_ENABLE
+	Register EMU_CR_RANDOM_WRESP_STALL_ENABLE
 */
 #define EMU_CR_RANDOM_WRESP_STALL_ENABLE                  (0x0040U)
 #define EMU_CR_RANDOM_WRESP_STALL_ENABLE_MASKFULL         (IMG_UINT64_C(0x0000000000000001))
@@ -269,14 +269,14 @@ Enable random wresp tagID staller
 
 /*
 
-  Random read data stall seed
+	Random read data stall seed
    Random read data stall cycles
-  Random read data burst seed
+ 	Random read data burst seed
    Random read data burst cycles
 
 */
 /*
-  Register EMU_CR_RANDOM_RDATA
+	Register EMU_CR_RANDOM_RDATA
 */
 #define EMU_CR_RANDOM_RDATA                               (0x0048U)
 #define EMU_CR_RANDOM_RDATA_MASKFULL                      (IMG_UINT64_C(0x00000000FF1FFF1F))
@@ -303,11 +303,11 @@ Cycle values
 
 /*
 
-  Enable random rdata staller
+	Enable random rdata staller
 
 */
 /*
-  Register EMU_CR_RANDOM_RDATA_STALL_ENABLE
+	Register EMU_CR_RANDOM_RDATA_STALL_ENABLE
 */
 #define EMU_CR_RANDOM_RDATA_STALL_ENABLE                  (0x0050U)
 #define EMU_CR_RANDOM_RDATA_STALL_ENABLE_MASKFULL         (IMG_UINT64_C(0x0000000000000001))
@@ -326,7 +326,7 @@ Enable random rdata staller
 
 */
 /*
-  Register EMU_CR_RDATA_REORDER
+	Register EMU_CR_RDATA_REORDER
 */
 #define EMU_CR_RDATA_REORDER                              (0x0058U)
 #define EMU_CR_RDATA_REORDER_MASKFULL                     (IMG_UINT64_C(0x000000000000003F))
@@ -338,11 +338,11 @@ Latency value
 
 /*
 
-  Enable/disable reordering of read data and latency insertion
+	Enable/disable reordering of read data and latency insertion
 
 */
 /*
-  Register EMU_CR_RDATA_REORDER_ENABLE
+	Register EMU_CR_RDATA_REORDER_ENABLE
 */
 #define EMU_CR_RDATA_REORDER_ENABLE                       (0x0060U)
 #define EMU_CR_RDATA_REORDER_ENABLE_MASKFULL              (IMG_UINT64_C(0x0000000000000001))
@@ -355,11 +355,11 @@ Enable reordering of read data
 
 /*
 
-  Report errors in emulator wrapper
+	Report errors in emulator wrapper
 
 */
 /*
-  Register EMU_CR_WRAPPER_ERROR
+	Register EMU_CR_WRAPPER_ERROR
 */
 #define EMU_CR_WRAPPER_ERROR                              (0x0068U)
 #define EMU_CR_WRAPPER_ERROR_MASKFULL                     (IMG_UINT64_C(0x00000000000000FF))
@@ -423,7 +423,7 @@ Port0: Reordering fifos not empty while reordering is turned off
 
 */
 /*
-  Register EMU_CR_DUSTS_ENABLE
+	Register EMU_CR_DUSTS_ENABLE
 */
 #define EMU_CR_DUSTS_ENABLE                               (0x0070U)
 #define EMU_CR_DUSTS_ENABLE_MASKFULL                      (IMG_UINT64_C(0x00000000000000FF))
@@ -435,9 +435,9 @@ Dusts enabled
 
 /*
 
-  Random host write seed
-  Random host write addresses to populate and invalidate
-  Random host write scale - Controls gaps between invalidates as follow:
+	Random host write seed
+	Random host write addresses to populate and invalidate
+	Random host write scale - Controls gaps between invalidates as follow:
       b'00 => new_gap = previous_gap + previous_gap       - less frequently
       b'01 => new_gap = previous_gap + 1/4(previous_gap)
       b'10 => new_gap = previous_gap + 1/8(previous_gap)
@@ -445,7 +445,7 @@ Dusts enabled
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WRITE
+	Register EMU_CR_RANDOM_HOST_WRITE
 */
 #define EMU_CR_RANDOM_HOST_WRITE                          (0x0100U)
 #define EMU_CR_RANDOM_HOST_WRITE_MASKFULL                 (IMG_UINT64_C(0x00000000001FF3F3))
@@ -467,11 +467,11 @@ Scale write
 
 /*
 
-  Enable random host write
+	Enable random host write
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WRITE_ENABLE
+	Register EMU_CR_RANDOM_HOST_WRITE_ENABLE
 */
 #define EMU_CR_RANDOM_HOST_WRITE_ENABLE                   (0x0108U)
 #define EMU_CR_RANDOM_HOST_WRITE_ENABLE_MASKFULL          (IMG_UINT64_C(0x0000000000000001))
@@ -484,11 +484,11 @@ Enable random host write
 
 /*
 
-  Random host write address 0
+	Random host write address 0
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR0
+	Register EMU_CR_RANDOM_HOST_ADDR0
 */
 #define EMU_CR_RANDOM_HOST_ADDR0                          (0x0118U)
 #define EMU_CR_RANDOM_HOST_ADDR0_MASKFULL                 (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -500,11 +500,11 @@ Address 0 to be populated
 
 /*
 
-  Random host write address 1
+	Random host write address 1
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR1
+	Register EMU_CR_RANDOM_HOST_ADDR1
 */
 #define EMU_CR_RANDOM_HOST_ADDR1                          (0x0120U)
 #define EMU_CR_RANDOM_HOST_ADDR1_MASKFULL                 (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -516,11 +516,11 @@ Address 1 to be populated
 
 /*
 
-  Random host write address 2
+	Random host write address 2
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR2
+	Register EMU_CR_RANDOM_HOST_ADDR2
 */
 #define EMU_CR_RANDOM_HOST_ADDR2                          (0x0128U)
 #define EMU_CR_RANDOM_HOST_ADDR2_MASKFULL                 (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -532,11 +532,11 @@ Address 2 to be populated
 
 /*
 
-  Random host write address 3
+	Random host write address 3
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR3
+	Register EMU_CR_RANDOM_HOST_ADDR3
 */
 #define EMU_CR_RANDOM_HOST_ADDR3                          (0x0130U)
 #define EMU_CR_RANDOM_HOST_ADDR3_MASKFULL                 (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -548,11 +548,11 @@ Address 3 to be populated
 
 /*
 
-  Random host write address 4
+	Random host write address 4
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR4
+	Register EMU_CR_RANDOM_HOST_ADDR4
 */
 #define EMU_CR_RANDOM_HOST_ADDR4                          (0x0138U)
 #define EMU_CR_RANDOM_HOST_ADDR4_MASKFULL                 (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -564,11 +564,11 @@ Address 4 to be populated
 
 /*
 
-  Random host write address 5
+	Random host write address 5
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR5
+	Register EMU_CR_RANDOM_HOST_ADDR5
 */
 #define EMU_CR_RANDOM_HOST_ADDR5                          (0x0140U)
 #define EMU_CR_RANDOM_HOST_ADDR5_MASKFULL                 (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -580,11 +580,11 @@ Address 5 to be populated
 
 /*
 
-  Random host write address 6
+	Random host write address 6
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR6
+	Register EMU_CR_RANDOM_HOST_ADDR6
 */
 #define EMU_CR_RANDOM_HOST_ADDR6                          (0x0148U)
 #define EMU_CR_RANDOM_HOST_ADDR6_MASKFULL                 (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -596,11 +596,11 @@ Address 6 to be populated
 
 /*
 
-  Random host write address 7
+	Random host write address 7
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR7
+	Register EMU_CR_RANDOM_HOST_ADDR7
 */
 #define EMU_CR_RANDOM_HOST_ADDR7                          (0x0150U)
 #define EMU_CR_RANDOM_HOST_ADDR7_MASKFULL                 (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -612,11 +612,11 @@ Address 7 to be populated
 
 /*
 
-  Random host write address 8
+	Random host write address 8
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR8
+	Register EMU_CR_RANDOM_HOST_ADDR8
 */
 #define EMU_CR_RANDOM_HOST_ADDR8                          (0x0158U)
 #define EMU_CR_RANDOM_HOST_ADDR8_MASKFULL                 (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -628,11 +628,11 @@ Address 8 to be populated
 
 /*
 
-  Random host write address 9
+	Random host write address 9
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR9
+	Register EMU_CR_RANDOM_HOST_ADDR9
 */
 #define EMU_CR_RANDOM_HOST_ADDR9                          (0x0160U)
 #define EMU_CR_RANDOM_HOST_ADDR9_MASKFULL                 (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -644,11 +644,11 @@ Address 9 to be populated
 
 /*
 
-  Random host write address 10
+	Random host write address 10
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR10
+	Register EMU_CR_RANDOM_HOST_ADDR10
 */
 #define EMU_CR_RANDOM_HOST_ADDR10                         (0x0168U)
 #define EMU_CR_RANDOM_HOST_ADDR10_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -660,11 +660,11 @@ Address 10 to be populated
 
 /*
 
-  Random host write address 11
+	Random host write address 11
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR11
+	Register EMU_CR_RANDOM_HOST_ADDR11
 */
 #define EMU_CR_RANDOM_HOST_ADDR11                         (0x0170U)
 #define EMU_CR_RANDOM_HOST_ADDR11_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -676,11 +676,11 @@ Address 11 to be populated
 
 /*
 
-  Random host write address 12
+	Random host write address 12
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR12
+	Register EMU_CR_RANDOM_HOST_ADDR12
 */
 #define EMU_CR_RANDOM_HOST_ADDR12                         (0x0178U)
 #define EMU_CR_RANDOM_HOST_ADDR12_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -692,11 +692,11 @@ Address 12 to be populated
 
 /*
 
-  Random host write address 13
+	Random host write address 13
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR13
+	Register EMU_CR_RANDOM_HOST_ADDR13
 */
 #define EMU_CR_RANDOM_HOST_ADDR13                         (0x0180U)
 #define EMU_CR_RANDOM_HOST_ADDR13_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -708,11 +708,11 @@ Address 13 to be populated
 
 /*
 
-  Random host write address 14
+	Random host write address 14
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR14
+	Register EMU_CR_RANDOM_HOST_ADDR14
 */
 #define EMU_CR_RANDOM_HOST_ADDR14                         (0x0188U)
 #define EMU_CR_RANDOM_HOST_ADDR14_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -724,11 +724,11 @@ Address 14 to be populated
 
 /*
 
-  Random host write address 15
+	Random host write address 15
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR15
+	Register EMU_CR_RANDOM_HOST_ADDR15
 */
 #define EMU_CR_RANDOM_HOST_ADDR15                         (0x0190U)
 #define EMU_CR_RANDOM_HOST_ADDR15_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -740,11 +740,11 @@ Address 15 to be populated
 
 /*
 
-  Random host write address 16
+	Random host write address 16
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR16
+	Register EMU_CR_RANDOM_HOST_ADDR16
 */
 #define EMU_CR_RANDOM_HOST_ADDR16                         (0x0198U)
 #define EMU_CR_RANDOM_HOST_ADDR16_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -756,11 +756,11 @@ Address 16 to be populated
 
 /*
 
-  Random host write address 17
+	Random host write address 17
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR17
+	Register EMU_CR_RANDOM_HOST_ADDR17
 */
 #define EMU_CR_RANDOM_HOST_ADDR17                         (0x01A0U)
 #define EMU_CR_RANDOM_HOST_ADDR17_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -772,11 +772,11 @@ Address 17 to be populated
 
 /*
 
-  Random host write address 18
+	Random host write address 18
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR18
+	Register EMU_CR_RANDOM_HOST_ADDR18
 */
 #define EMU_CR_RANDOM_HOST_ADDR18                         (0x01A8U)
 #define EMU_CR_RANDOM_HOST_ADDR18_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -788,11 +788,11 @@ Address 18 to be populated
 
 /*
 
-  Random host write address 19
+	Random host write address 19
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR19
+	Register EMU_CR_RANDOM_HOST_ADDR19
 */
 #define EMU_CR_RANDOM_HOST_ADDR19                         (0x01B0U)
 #define EMU_CR_RANDOM_HOST_ADDR19_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -804,11 +804,11 @@ Address 19 to be populated
 
 /*
 
-  Random host write address 20
+	Random host write address 20
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR20
+	Register EMU_CR_RANDOM_HOST_ADDR20
 */
 #define EMU_CR_RANDOM_HOST_ADDR20                         (0x01B8U)
 #define EMU_CR_RANDOM_HOST_ADDR20_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -820,11 +820,11 @@ Address 20 to be populated
 
 /*
 
-  Random host write address 21
+	Random host write address 21
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR21
+	Register EMU_CR_RANDOM_HOST_ADDR21
 */
 #define EMU_CR_RANDOM_HOST_ADDR21                         (0x01C0U)
 #define EMU_CR_RANDOM_HOST_ADDR21_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -836,11 +836,11 @@ Address 21 to be populated
 
 /*
 
-  Random host write address 22
+	Random host write address 22
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR22
+	Register EMU_CR_RANDOM_HOST_ADDR22
 */
 #define EMU_CR_RANDOM_HOST_ADDR22                         (0x01C8U)
 #define EMU_CR_RANDOM_HOST_ADDR22_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -852,11 +852,11 @@ Address 22 to be populated
 
 /*
 
-  Random host write address 23
+	Random host write address 23
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR23
+	Register EMU_CR_RANDOM_HOST_ADDR23
 */
 #define EMU_CR_RANDOM_HOST_ADDR23                         (0x01D0U)
 #define EMU_CR_RANDOM_HOST_ADDR23_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -868,11 +868,11 @@ Address 23 to be populated
 
 /*
 
-  Random host write address 24
+	Random host write address 24
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR24
+	Register EMU_CR_RANDOM_HOST_ADDR24
 */
 #define EMU_CR_RANDOM_HOST_ADDR24                         (0x01D8U)
 #define EMU_CR_RANDOM_HOST_ADDR24_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -884,11 +884,11 @@ Address 24 to be populated
 
 /*
 
-  Random host write address 25
+	Random host write address 25
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR25
+	Register EMU_CR_RANDOM_HOST_ADDR25
 */
 #define EMU_CR_RANDOM_HOST_ADDR25                         (0x01E0U)
 #define EMU_CR_RANDOM_HOST_ADDR25_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -900,11 +900,11 @@ Address 25 to be populated
 
 /*
 
-  Random host write address 26
+	Random host write address 26
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR26
+	Register EMU_CR_RANDOM_HOST_ADDR26
 */
 #define EMU_CR_RANDOM_HOST_ADDR26                         (0x01E8U)
 #define EMU_CR_RANDOM_HOST_ADDR26_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -916,11 +916,11 @@ Address 26 to be populated
 
 /*
 
-  Random host write address 27
+	Random host write address 27
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR27
+	Register EMU_CR_RANDOM_HOST_ADDR27
 */
 #define EMU_CR_RANDOM_HOST_ADDR27                         (0x01F0U)
 #define EMU_CR_RANDOM_HOST_ADDR27_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -932,11 +932,11 @@ Address 27 to be populated
 
 /*
 
-  Random host write address 28
+	Random host write address 28
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR28
+	Register EMU_CR_RANDOM_HOST_ADDR28
 */
 #define EMU_CR_RANDOM_HOST_ADDR28                         (0x01F8U)
 #define EMU_CR_RANDOM_HOST_ADDR28_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -948,11 +948,11 @@ Address 28 to be populated
 
 /*
 
-  Random host write address 29
+	Random host write address 29
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR29
+	Register EMU_CR_RANDOM_HOST_ADDR29
 */
 #define EMU_CR_RANDOM_HOST_ADDR29                         (0x0200U)
 #define EMU_CR_RANDOM_HOST_ADDR29_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -964,11 +964,11 @@ Address 29 to be populated
 
 /*
 
-  Random host write address 30
+	Random host write address 30
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR30
+	Register EMU_CR_RANDOM_HOST_ADDR30
 */
 #define EMU_CR_RANDOM_HOST_ADDR30                         (0x0208U)
 #define EMU_CR_RANDOM_HOST_ADDR30_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -980,11 +980,11 @@ Address 30 to be populated
 
 /*
 
-  Random host write address 31
+	Random host write address 31
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_ADDR31
+	Register EMU_CR_RANDOM_HOST_ADDR31
 */
 #define EMU_CR_RANDOM_HOST_ADDR31                         (0x0210U)
 #define EMU_CR_RANDOM_HOST_ADDR31_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -996,11 +996,11 @@ Address 31 to be populated
 
 /*
 
-  Random host write data 0
+	Random host write data 0
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA0
+	Register EMU_CR_RANDOM_HOST_WDATA0
 */
 #define EMU_CR_RANDOM_HOST_WDATA0                         (0x0218U)
 #define EMU_CR_RANDOM_HOST_WDATA0_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1012,11 +1012,11 @@ Data for address 0 to be populated
 
 /*
 
-  Random host write data 1
+	Random host write data 1
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA1
+	Register EMU_CR_RANDOM_HOST_WDATA1
 */
 #define EMU_CR_RANDOM_HOST_WDATA1                         (0x0220U)
 #define EMU_CR_RANDOM_HOST_WDATA1_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1028,11 +1028,11 @@ Data for address 1 to be populated
 
 /*
 
-  Random host write data 2
+	Random host write data 2
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA2
+	Register EMU_CR_RANDOM_HOST_WDATA2
 */
 #define EMU_CR_RANDOM_HOST_WDATA2                         (0x0228U)
 #define EMU_CR_RANDOM_HOST_WDATA2_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1044,11 +1044,11 @@ Data for address 2 to be populated
 
 /*
 
-  Random host write data 3
+	Random host write data 3
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA3
+	Register EMU_CR_RANDOM_HOST_WDATA3
 */
 #define EMU_CR_RANDOM_HOST_WDATA3                         (0x0230U)
 #define EMU_CR_RANDOM_HOST_WDATA3_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1060,11 +1060,11 @@ Data for address 3 to be populated
 
 /*
 
-  Random host write data 4
+	Random host write data 4
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA4
+	Register EMU_CR_RANDOM_HOST_WDATA4
 */
 #define EMU_CR_RANDOM_HOST_WDATA4                         (0x0238U)
 #define EMU_CR_RANDOM_HOST_WDATA4_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1076,11 +1076,11 @@ Data for address 4 to be populated
 
 /*
 
-  Random host write data 5
+	Random host write data 5
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA5
+	Register EMU_CR_RANDOM_HOST_WDATA5
 */
 #define EMU_CR_RANDOM_HOST_WDATA5                         (0x0240U)
 #define EMU_CR_RANDOM_HOST_WDATA5_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1092,11 +1092,11 @@ Data for address 5 to be populated
 
 /*
 
-  Random host write data 6
+	Random host write data 6
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA6
+	Register EMU_CR_RANDOM_HOST_WDATA6
 */
 #define EMU_CR_RANDOM_HOST_WDATA6                         (0x0248U)
 #define EMU_CR_RANDOM_HOST_WDATA6_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1108,11 +1108,11 @@ Data for address 6 to be populated
 
 /*
 
-  Random host write data 7
+	Random host write data 7
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA7
+	Register EMU_CR_RANDOM_HOST_WDATA7
 */
 #define EMU_CR_RANDOM_HOST_WDATA7                         (0x0250U)
 #define EMU_CR_RANDOM_HOST_WDATA7_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1124,11 +1124,11 @@ Data for address 7 to be populated
 
 /*
 
-  Random host write data 8
+	Random host write data 8
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA8
+	Register EMU_CR_RANDOM_HOST_WDATA8
 */
 #define EMU_CR_RANDOM_HOST_WDATA8                         (0x0258U)
 #define EMU_CR_RANDOM_HOST_WDATA8_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1140,11 +1140,11 @@ Data for address 8 to be populated
 
 /*
 
-  Random host write data 9
+	Random host write data 9
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA9
+	Register EMU_CR_RANDOM_HOST_WDATA9
 */
 #define EMU_CR_RANDOM_HOST_WDATA9                         (0x0260U)
 #define EMU_CR_RANDOM_HOST_WDATA9_MASKFULL                (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1156,11 +1156,11 @@ Data for address 9 to be populated
 
 /*
 
-  Random host write data 10
+	Random host write data 10
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA10
+	Register EMU_CR_RANDOM_HOST_WDATA10
 */
 #define EMU_CR_RANDOM_HOST_WDATA10                        (0x0268U)
 #define EMU_CR_RANDOM_HOST_WDATA10_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1172,11 +1172,11 @@ Data for address 10 to be populated
 
 /*
 
-  Random host write data 11
+	Random host write data 11
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA11
+	Register EMU_CR_RANDOM_HOST_WDATA11
 */
 #define EMU_CR_RANDOM_HOST_WDATA11                        (0x0270U)
 #define EMU_CR_RANDOM_HOST_WDATA11_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1188,11 +1188,11 @@ Data for address 11 to be populated
 
 /*
 
-  Random host write data 12
+	Random host write data 12
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA12
+	Register EMU_CR_RANDOM_HOST_WDATA12
 */
 #define EMU_CR_RANDOM_HOST_WDATA12                        (0x0278U)
 #define EMU_CR_RANDOM_HOST_WDATA12_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1204,11 +1204,11 @@ Data for address 12 to be populated
 
 /*
 
-  Random host write data 13
+	Random host write data 13
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA13
+	Register EMU_CR_RANDOM_HOST_WDATA13
 */
 #define EMU_CR_RANDOM_HOST_WDATA13                        (0x0280U)
 #define EMU_CR_RANDOM_HOST_WDATA13_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1220,11 +1220,11 @@ Data for address 13 to be populated
 
 /*
 
-  Random host write data 14
+	Random host write data 14
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA14
+	Register EMU_CR_RANDOM_HOST_WDATA14
 */
 #define EMU_CR_RANDOM_HOST_WDATA14                        (0x0288U)
 #define EMU_CR_RANDOM_HOST_WDATA14_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1236,11 +1236,11 @@ Data for address 14 to be populated
 
 /*
 
-  Random host write data 15
+	Random host write data 15
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA15
+	Register EMU_CR_RANDOM_HOST_WDATA15
 */
 #define EMU_CR_RANDOM_HOST_WDATA15                        (0x0290U)
 #define EMU_CR_RANDOM_HOST_WDATA15_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1252,11 +1252,11 @@ Data for address 15 to be populated
 
 /*
 
-  Random host write data 16
+	Random host write data 16
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA16
+	Register EMU_CR_RANDOM_HOST_WDATA16
 */
 #define EMU_CR_RANDOM_HOST_WDATA16                        (0x0298U)
 #define EMU_CR_RANDOM_HOST_WDATA16_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1268,11 +1268,11 @@ Data for address 16 to be populated
 
 /*
 
-  Random host write data 17
+	Random host write data 17
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA17
+	Register EMU_CR_RANDOM_HOST_WDATA17
 */
 #define EMU_CR_RANDOM_HOST_WDATA17                        (0x02A0U)
 #define EMU_CR_RANDOM_HOST_WDATA17_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1284,11 +1284,11 @@ Data for address 17 to be populated
 
 /*
 
-  Random host write data 18
+	Random host write data 18
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA18
+	Register EMU_CR_RANDOM_HOST_WDATA18
 */
 #define EMU_CR_RANDOM_HOST_WDATA18                        (0x02A8U)
 #define EMU_CR_RANDOM_HOST_WDATA18_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1300,11 +1300,11 @@ Data for address 18 to be populated
 
 /*
 
-  Random host write data 19
+	Random host write data 19
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA19
+	Register EMU_CR_RANDOM_HOST_WDATA19
 */
 #define EMU_CR_RANDOM_HOST_WDATA19                        (0x02B0U)
 #define EMU_CR_RANDOM_HOST_WDATA19_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1316,11 +1316,11 @@ Data for address 19 to be populated
 
 /*
 
-  Random host write data 20
+	Random host write data 20
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA20
+	Register EMU_CR_RANDOM_HOST_WDATA20
 */
 #define EMU_CR_RANDOM_HOST_WDATA20                        (0x02B8U)
 #define EMU_CR_RANDOM_HOST_WDATA20_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1332,11 +1332,11 @@ Data for address 20 to be populated
 
 /*
 
-  Random host write data 21
+	Random host write data 21
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA21
+	Register EMU_CR_RANDOM_HOST_WDATA21
 */
 #define EMU_CR_RANDOM_HOST_WDATA21                        (0x02C0U)
 #define EMU_CR_RANDOM_HOST_WDATA21_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1348,11 +1348,11 @@ Data for address 21 to be populated
 
 /*
 
-  Random host write data 22
+	Random host write data 22
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA22
+	Register EMU_CR_RANDOM_HOST_WDATA22
 */
 #define EMU_CR_RANDOM_HOST_WDATA22                        (0x02C8U)
 #define EMU_CR_RANDOM_HOST_WDATA22_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1364,11 +1364,11 @@ Data for address 22 to be populated
 
 /*
 
-  Random host write data 23
+	Random host write data 23
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA23
+	Register EMU_CR_RANDOM_HOST_WDATA23
 */
 #define EMU_CR_RANDOM_HOST_WDATA23                        (0x02D0U)
 #define EMU_CR_RANDOM_HOST_WDATA23_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1380,11 +1380,11 @@ Data for address 23 to be populated
 
 /*
 
-  Random host write data 24
+	Random host write data 24
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA24
+	Register EMU_CR_RANDOM_HOST_WDATA24
 */
 #define EMU_CR_RANDOM_HOST_WDATA24                        (0x02D8U)
 #define EMU_CR_RANDOM_HOST_WDATA24_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1396,11 +1396,11 @@ Data for address 24 to be populated
 
 /*
 
-  Random host write data 25
+	Random host write data 25
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA25
+	Register EMU_CR_RANDOM_HOST_WDATA25
 */
 #define EMU_CR_RANDOM_HOST_WDATA25                        (0x02E0U)
 #define EMU_CR_RANDOM_HOST_WDATA25_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1412,11 +1412,11 @@ Data for address 25 to be populated
 
 /*
 
-  Random host write data 26
+	Random host write data 26
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA26
+	Register EMU_CR_RANDOM_HOST_WDATA26
 */
 #define EMU_CR_RANDOM_HOST_WDATA26                        (0x02E8U)
 #define EMU_CR_RANDOM_HOST_WDATA26_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1428,11 +1428,11 @@ Data for address 26 to be populated
 
 /*
 
-  Random host write data 27
+	Random host write data 27
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA27
+	Register EMU_CR_RANDOM_HOST_WDATA27
 */
 #define EMU_CR_RANDOM_HOST_WDATA27                        (0x02F0U)
 #define EMU_CR_RANDOM_HOST_WDATA27_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1444,11 +1444,11 @@ Data for address 27 to be populated
 
 /*
 
-  Random host write data 28
+	Random host write data 28
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA28
+	Register EMU_CR_RANDOM_HOST_WDATA28
 */
 #define EMU_CR_RANDOM_HOST_WDATA28                        (0x02F8U)
 #define EMU_CR_RANDOM_HOST_WDATA28_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1460,11 +1460,11 @@ Data for address 28 to be populated
 
 /*
 
-  Random host write data 29
+	Random host write data 29
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA29
+	Register EMU_CR_RANDOM_HOST_WDATA29
 */
 #define EMU_CR_RANDOM_HOST_WDATA29                        (0x0300U)
 #define EMU_CR_RANDOM_HOST_WDATA29_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1476,11 +1476,11 @@ Data for address 29 to be populated
 
 /*
 
-  Random host write data 30
+	Random host write data 30
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA30
+	Register EMU_CR_RANDOM_HOST_WDATA30
 */
 #define EMU_CR_RANDOM_HOST_WDATA30                        (0x0308U)
 #define EMU_CR_RANDOM_HOST_WDATA30_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1492,11 +1492,11 @@ Data for address 30 to be populated
 
 /*
 
-  Random host write data 31
+	Random host write data 31
 
 */
 /*
-  Register EMU_CR_RANDOM_HOST_WDATA31
+	Register EMU_CR_RANDOM_HOST_WDATA31
 */
 #define EMU_CR_RANDOM_HOST_WDATA31                        (0x0310U)
 #define EMU_CR_RANDOM_HOST_WDATA31_MASKFULL               (IMG_UINT64_C(0xFFFFFFFFFFFFFFFF))
@@ -1508,13 +1508,13 @@ Data for address 31 to be populated
 
 /*
 
-  The number of outstanding reads to the emulator memory bank interface on port0
-  If EMU_CR_PCI_MASTER_MODE = 0, the count will be the number of outstanding reads to local memory
-  If EMU_CR_PCI_MASTER_MODE = 1, the count will be the number of outstanding reads to the PCI interface
+	The number of outstanding reads to the emulator memory bank interface on port0
+	If EMU_CR_PCI_MASTER_MODE = 0, the count will be the number of outstanding reads to local memory
+	If EMU_CR_PCI_MASTER_MODE = 1, the count will be the number of outstanding reads to the PCI interface
 
 */
 /*
-  Register EMU_CR_BANK_OUTSTANDING0
+	Register EMU_CR_BANK_OUTSTANDING0
 */
 #define EMU_CR_BANK_OUTSTANDING0                          (0x0500U)
 #define EMU_CR_BANK_OUTSTANDING0_MASKFULL                 (IMG_UINT64_C(0x000000000000FFFF))
@@ -1526,12 +1526,12 @@ Number of outstanding reads
 
 /*
 
-  The number of outstanding reads in the IMGBUSv4 interface module on port 0
-  Only applies to certain Rogue configurations
+	The number of outstanding reads in the IMGBUSv4 interface module on port 0
+	Only applies to certain Rogue configurations
 
 */
 /*
-  Register EMU_CR_IMGBV4_OUTSTANDING0
+	Register EMU_CR_IMGBV4_OUTSTANDING0
 */
 #define EMU_CR_IMGBV4_OUTSTANDING0                        (0x0508U)
 #define EMU_CR_IMGBV4_OUTSTANDING0_MASKFULL               (IMG_UINT64_C(0x000000000000FFFF))
@@ -1543,13 +1543,13 @@ Number of outstanding reads
 
 /*
 
-  The number of outstanding reads to the emulator memory bank interface on port1
-  If EMU_CR_PCI_MASTER_MODE = 0, the count will be the number of outstanding reads to local memory
-  If EMU_CR_PCI_MASTER_MODE = 1, the count will be the number of outstanding reads to the PCI interface
+	The number of outstanding reads to the emulator memory bank interface on port1
+	If EMU_CR_PCI_MASTER_MODE = 0, the count will be the number of outstanding reads to local memory
+	If EMU_CR_PCI_MASTER_MODE = 1, the count will be the number of outstanding reads to the PCI interface
 
 */
 /*
-  Register EMU_CR_BANK_OUTSTANDING1
+	Register EMU_CR_BANK_OUTSTANDING1
 */
 #define EMU_CR_BANK_OUTSTANDING1                          (0x0510U)
 #define EMU_CR_BANK_OUTSTANDING1_MASKFULL                 (IMG_UINT64_C(0x000000000000FFFF))
@@ -1561,12 +1561,12 @@ Number of outstanding reads
 
 /*
 
-  The number of outstanding reads in the IMGBUSv4 interface module on port 1
-  Only applies to certain Rogue configurations
+	The number of outstanding reads in the IMGBUSv4 interface module on port 1
+	Only applies to certain Rogue configurations
 
 */
 /*
-  Register EMU_CR_IMGBV4_OUTSTANDING1
+	Register EMU_CR_IMGBV4_OUTSTANDING1
 */
 #define EMU_CR_IMGBV4_OUTSTANDING1                        (0x0518U)
 #define EMU_CR_IMGBV4_OUTSTANDING1_MASKFULL               (IMG_UINT64_C(0x000000000000FFFF))
@@ -1578,13 +1578,13 @@ Number of outstanding reads
 
 /*
 
-  The number of outstanding reads to the emulator memory bank interface on port2
-  If EMU_CR_PCI_MASTER_MODE = 0, the count will be the number of outstanding reads to local memory
-  If EMU_CR_PCI_MASTER_MODE = 1, the count will be the number of outstanding reads to the PCI interface
+	The number of outstanding reads to the emulator memory bank interface on port2
+	If EMU_CR_PCI_MASTER_MODE = 0, the count will be the number of outstanding reads to local memory
+	If EMU_CR_PCI_MASTER_MODE = 1, the count will be the number of outstanding reads to the PCI interface
 
 */
 /*
-  Register EMU_CR_BANK_OUTSTANDING2
+	Register EMU_CR_BANK_OUTSTANDING2
 */
 #define EMU_CR_BANK_OUTSTANDING2                          (0x0520U)
 #define EMU_CR_BANK_OUTSTANDING2_MASKFULL                 (IMG_UINT64_C(0x000000000000FFFF))
@@ -1596,12 +1596,12 @@ Number of outstanding reads
 
 /*
 
-  The number of outstanding reads in the IMGBUSv4 interface module on port 2
-  Only applies to certain Rogue configurations
+	The number of outstanding reads in the IMGBUSv4 interface module on port 2
+	Only applies to certain Rogue configurations
 
 */
 /*
-  Register EMU_CR_IMGBV4_OUTSTANDING2
+	Register EMU_CR_IMGBV4_OUTSTANDING2
 */
 #define EMU_CR_IMGBV4_OUTSTANDING2                        (0x0528U)
 #define EMU_CR_IMGBV4_OUTSTANDING2_MASKFULL               (IMG_UINT64_C(0x000000000000FFFF))
@@ -1613,13 +1613,13 @@ Number of outstanding reads
 
 /*
 
-  The number of outstanding reads to the emulator memory bank interface on port3
-  If EMU_CR_PCI_MASTER_MODE = 0, the count will be the number of outstanding reads to local memory
-  If EMU_CR_PCI_MASTER_MODE = 1, the count will be the number of outstanding reads to the PCI interface
+	The number of outstanding reads to the emulator memory bank interface on port3
+	If EMU_CR_PCI_MASTER_MODE = 0, the count will be the number of outstanding reads to local memory
+	If EMU_CR_PCI_MASTER_MODE = 1, the count will be the number of outstanding reads to the PCI interface
 
 */
 /*
-  Register EMU_CR_BANK_OUTSTANDING3
+	Register EMU_CR_BANK_OUTSTANDING3
 */
 #define EMU_CR_BANK_OUTSTANDING3                          (0x0530U)
 #define EMU_CR_BANK_OUTSTANDING3_MASKFULL                 (IMG_UINT64_C(0x000000000000FFFF))
@@ -1631,12 +1631,12 @@ Number of outstanding reads
 
 /*
 
-  The number of outstanding reads in the IMGBUSv4 interface module on port 3
-  Only applies to certain Rogue configurations
+	The number of outstanding reads in the IMGBUSv4 interface module on port 3
+	Only applies to certain Rogue configurations
 
 */
 /*
-  Register EMU_CR_IMGBV4_OUTSTANDING3
+	Register EMU_CR_IMGBV4_OUTSTANDING3
 */
 #define EMU_CR_IMGBV4_OUTSTANDING3                        (0x0538U)
 #define EMU_CR_IMGBV4_OUTSTANDING3_MASKFULL               (IMG_UINT64_C(0x000000000000FFFF))
@@ -1648,11 +1648,11 @@ Number of outstanding reads
 
 /*
 
-  Memory latency control for return data
+	Memory latency control for return data
 
 */
 /*
-  Register EMU_CR_MEMORY_LATENCY
+	Register EMU_CR_MEMORY_LATENCY
 */
 #define EMU_CR_MEMORY_LATENCY                             (0x1548U)
 #define EMU_CR_MEMORY_LATENCY_MASKFULL                    (IMG_UINT64_C(0x00000000000001FF))

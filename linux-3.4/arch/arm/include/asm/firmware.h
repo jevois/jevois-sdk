@@ -22,18 +22,18 @@
  * A filled up structure can be registered with register_firmware_ops().
  */
 struct firmware_ops {
-  unsigned int (*read_reg) (void __iomem * reg);
-  unsigned int (*write_reg) (u32 value, void __iomem * reg);
-  unsigned int (*send_command) (u32 arg0, u32 arg1, u32 arg2, u32 arg3);
-  unsigned int (*load_arisc) (void * image, u32 image_size, void * para, u32 para_size, u32 para_offset);
-  unsigned int (*set_secondary_entry) (void * entry);
-  unsigned int (*suspend) (void);
-  unsigned int (*suspend_prepare) (void);
-  unsigned int (*set_standby_status) (u32 arg0, u32 arg1, u32 arg2, u32 arg3);
+	unsigned int (*read_reg)(void __iomem *reg);
+	unsigned int (*write_reg)(u32 value, void __iomem *reg);
+	unsigned int (*send_command)(u32 arg0, u32 arg1, u32 arg2, u32 arg3);
+	unsigned int (*load_arisc)(void *image, u32 image_size, void *para, u32 para_size, u32 para_offset);
+	unsigned int (*set_secondary_entry)(void *entry);
+	unsigned int (*suspend)(void);
+	unsigned int (*suspend_prepare)(void);
+	unsigned int (*set_standby_status)(u32 arg0, u32 arg1, u32 arg2, u32 arg3);
 };
 
 /* Global pointer for current firmware_ops structure, can't be NULL. */
-extern const struct firmware_ops * firmware_ops;
+extern const struct firmware_ops *firmware_ops;
 
 /*
  * call_firmware_op(op, ...)
@@ -41,19 +41,19 @@ extern const struct firmware_ops * firmware_ops;
  * Checks if firmware operation is present and calls it,
  * otherwise returns -ENOSYS
  */
-#define call_firmware_op(op, ...)         \
-  ((firmware_ops->op) ? firmware_ops->op(__VA_ARGS__) : (-ENOSYS))
+#define call_firmware_op(op, ...)					\
+	((firmware_ops->op) ? firmware_ops->op(__VA_ARGS__) : (-ENOSYS))
 
 /*
  * register_firmware_ops(ops)
  *
  * A function to register platform firmware_ops struct.
  */
-static inline void register_firmware_ops (const struct firmware_ops * ops)
+static inline void register_firmware_ops(const struct firmware_ops *ops)
 {
-  BUG_ON (!ops);
-  
-  firmware_ops = ops;
+	BUG_ON(!ops);
+
+	firmware_ops = ops;
 }
 
 #endif

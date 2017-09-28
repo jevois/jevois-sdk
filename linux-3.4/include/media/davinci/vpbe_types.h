@@ -18,23 +18,23 @@
 #define _VPBE_TYPES_H
 
 enum vpbe_version {
-  VPBE_VERSION_1 = 1,
-  VPBE_VERSION_2,
-  VPBE_VERSION_3,
+	VPBE_VERSION_1 = 1,
+	VPBE_VERSION_2,
+	VPBE_VERSION_3,
 };
 
 /* vpbe_timing_type - Timing types used in vpbe device */
 enum vpbe_enc_timings_type {
-  VPBE_ENC_STD = 0x1,
-  VPBE_ENC_DV_PRESET = 0x2,
-  VPBE_ENC_CUSTOM_TIMINGS = 0x4,
-  /* Used when set timings through FB device interface */
-  VPBE_ENC_TIMINGS_INVALID = 0x8,
+	VPBE_ENC_STD = 0x1,
+	VPBE_ENC_DV_PRESET = 0x2,
+	VPBE_ENC_CUSTOM_TIMINGS = 0x4,
+	/* Used when set timings through FB device interface */
+	VPBE_ENC_TIMINGS_INVALID = 0x8,
 };
 
 union vpbe_timings {
-  v4l2_std_id std_id;
-  unsigned int dv_preset;
+	v4l2_std_id std_id;
+	unsigned int dv_preset;
 };
 
 /*
@@ -71,21 +71,21 @@ union vpbe_timings {
  *     b2       - field id polarity, 0 - negative, 1  - positive
  */
 struct vpbe_enc_mode_info {
-  unsigned char * name;
-  enum vpbe_enc_timings_type timings_type;
-  union vpbe_timings timings;
-  unsigned int interlaced;
-  unsigned int xres;
-  unsigned int yres;
-  struct v4l2_fract aspect;
-  struct v4l2_fract fps;
-  unsigned int left_margin;
-  unsigned int right_margin;
-  unsigned int upper_margin;
-  unsigned int lower_margin;
-  unsigned int hsync_len;
-  unsigned int vsync_len;
-  unsigned int flags;
+	unsigned char *name;
+	enum vpbe_enc_timings_type timings_type;
+	union vpbe_timings timings;
+	unsigned int interlaced;
+	unsigned int xres;
+	unsigned int yres;
+	struct v4l2_fract aspect;
+	struct v4l2_fract fps;
+	unsigned int left_margin;
+	unsigned int right_margin;
+	unsigned int upper_margin;
+	unsigned int lower_margin;
+	unsigned int hsync_len;
+	unsigned int vsync_len;
+	unsigned int flags;
 };
 
 #endif

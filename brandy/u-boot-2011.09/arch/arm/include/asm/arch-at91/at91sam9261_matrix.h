@@ -18,10 +18,10 @@
 #ifndef __ASSEMBLY__
 
 struct at91_matrix {
-  u32 mcfg; /* Master Configuration Registers */
-  u32 scfg[5];  /* Slave Configuration Registers */
-  u32 filler[6];
-  u32 ebicsa;   /* EBI Chip Select Assignment Register */
+	u32	mcfg;	/* Master Configuration Registers */
+	u32	scfg[5];	/* Slave Configuration Registers */
+	u32	filler[6];
+	u32	ebicsa;		/* EBI Chip Select Assignment Register */
 };
 #endif /* __ASSEMBLY__ */
 

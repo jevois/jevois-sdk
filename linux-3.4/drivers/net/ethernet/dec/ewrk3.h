@@ -61,106 +61,106 @@
 /*
 ** Control and Status Register bit definitions (EWRK3_CSR)
 */
-#define CSR_RA    0x80      /* Runt Accept */
-#define CSR_PME   0x40      /* Promiscuous Mode Enable */
-#define CSR_MCE   0x20      /* Multicast Enable */
-#define CSR_TNE   0x08      /* TX Done Queue Not Empty */
-#define CSR_RNE   0x04      /* RX Queue Not Empty */
-#define CSR_TXD   0x02      /* TX Disable */
-#define CSR_RXD   0x01      /* RX Disable */
+#define CSR_RA		0x80	    /* Runt Accept */
+#define CSR_PME		0x40	    /* Promiscuous Mode Enable */
+#define CSR_MCE		0x20	    /* Multicast Enable */
+#define CSR_TNE		0x08	    /* TX Done Queue Not Empty */
+#define CSR_RNE		0x04	    /* RX Queue Not Empty */
+#define CSR_TXD		0x02	    /* TX Disable */
+#define CSR_RXD		0x01	    /* RX Disable */
 
 /*
 ** Control Register bit definitions (EWRK3_CR)
 */
-#define CR_APD    0x80  /* Auto Port Disable */
-#define CR_PSEL   0x40  /* Port Select (0->TP port) */
-#define CR_LBCK   0x20  /* LoopBaCK enable */
-#define CR_FDUP   0x10  /* Full DUPlex enable */
-#define CR_FBUS   0x08  /* Fast BUS enable (ISA clk > 8.33MHz) */
-#define CR_EN_16  0x04  /* ENable 16 bit memory accesses */
-#define CR_LED    0x02  /* LED (1-> turn on) */
+#define CR_APD		0x80	/* Auto Port Disable */
+#define CR_PSEL		0x40	/* Port Select (0->TP port) */
+#define CR_LBCK		0x20	/* LoopBaCK enable */
+#define CR_FDUP		0x10	/* Full DUPlex enable */
+#define CR_FBUS		0x08	/* Fast BUS enable (ISA clk > 8.33MHz) */
+#define CR_EN_16	0x04	/* ENable 16 bit memory accesses */
+#define CR_LED		0x02	/* LED (1-> turn on) */
 
 /*
 ** Interrupt Control Register bit definitions (EWRK3_ICR)
 */
-#define ICR_IE    0x80  /* Interrupt Enable */
-#define ICR_IS    0x60  /* Interrupt Selected */
-#define ICR_TNEM  0x08  /* TNE Mask (0->mask) */
-#define ICR_RNEM  0x04  /* RNE Mask (0->mask) */
-#define ICR_TXDM  0x02  /* TXD Mask (0->mask) */
-#define ICR_RXDM  0x01  /* RXD Mask (0->mask) */
+#define ICR_IE		0x80	/* Interrupt Enable */
+#define ICR_IS		0x60	/* Interrupt Selected */
+#define ICR_TNEM	0x08	/* TNE Mask (0->mask) */
+#define ICR_RNEM	0x04	/* RNE Mask (0->mask) */
+#define ICR_TXDM	0x02	/* TXD Mask (0->mask) */
+#define ICR_RXDM	0x01	/* RXD Mask (0->mask) */
 
 /*
 ** Transmit Status Register bit definitions (EWRK3_TSR)
 */
-#define TSR_NCL   0x80  /* No Carrier Loopback */
-#define TSR_ID    0x40  /* Initially Deferred */
-#define TSR_LCL   0x20  /* Late CoLlision */
-#define TSR_ECL   0x10  /* Excessive CoLlisions */
-#define TSR_RCNTR 0x0f  /* Retries CouNTeR */
+#define TSR_NCL		0x80	/* No Carrier Loopback */
+#define TSR_ID		0x40	/* Initially Deferred */
+#define TSR_LCL		0x20	/* Late CoLlision */
+#define TSR_ECL		0x10	/* Excessive CoLlisions */
+#define TSR_RCNTR	0x0f	/* Retries CouNTeR */
 
 /*
 ** I/O Page Register bit definitions (EWRK3_IOPR)
 */
-#define EEPROM_INIT 0xc0  /* EEPROM INIT command */
-#define EEPROM_WR_EN  0xc8  /* EEPROM WRITE ENABLE command */
-#define EEPROM_WR 0xd0  /* EEPROM WRITE command */
-#define EEPROM_WR_DIS 0xd8  /* EEPROM WRITE DISABLE command */
-#define EEPROM_RD 0xe0  /* EEPROM READ command */
+#define EEPROM_INIT	0xc0	/* EEPROM INIT command */
+#define EEPROM_WR_EN	0xc8	/* EEPROM WRITE ENABLE command */
+#define EEPROM_WR	0xd0	/* EEPROM WRITE command */
+#define EEPROM_WR_DIS	0xd8	/* EEPROM WRITE DISABLE command */
+#define EEPROM_RD	0xe0	/* EEPROM READ command */
 
 /*
 ** I/O Base Register bit definitions (EWRK3_IOBR)
 */
-#define EISA_REGS_EN  0x20  /* Enable EISA ID and Control Registers */
-#define EISA_IOB        0x1f  /* Compare bits for I/O Base Address */
+#define EISA_REGS_EN	0x20	/* Enable EISA ID and Control Registers */
+#define EISA_IOB        0x1f	/* Compare bits for I/O Base Address */
 
 /*
 ** I/O Configuration/Management Register bit definitions (EWRK3_CMR)
 */
 #define CMR_RA          0x80    /* Read Ahead */
 #define CMR_WB          0x40    /* Write Behind */
-#define CMR_LINK        0x20  /* 0->TP */
-#define CMR_POLARITY    0x10  /* Informational */
-#define CMR_NO_EEPROM 0x0c  /* NO_EEPROM<1:0> pin status */
-#define CMR_HS          0x08  /* Hard Strapped pin status (LeMAC2) */
+#define CMR_LINK        0x20	/* 0->TP */
+#define CMR_POLARITY    0x10	/* Informational */
+#define CMR_NO_EEPROM	0x0c	/* NO_EEPROM<1:0> pin status */
+#define CMR_HS          0x08	/* Hard Strapped pin status (LeMAC2) */
 #define CMR_PNP         0x04    /* Plug 'n Play */
-#define CMR_DRAM        0x02  /* 0-> 1DRAM, 1-> 2 DRAM on board */
+#define CMR_DRAM        0x02	/* 0-> 1DRAM, 1-> 2 DRAM on board */
 #define CMR_0WS         0x01    /* Zero Wait State */
 
 /*
 ** MAC Receive Status Register bit definitions
 */
 
-#define R_ROK       0x80  /* Receive OK summary */
-#define R_IAM       0x10  /* Individual Address Match */
-#define R_MCM       0x08  /* MultiCast Match */
-#define R_DBE       0x04  /* Dribble Bit Error */
-#define R_CRC       0x02  /* CRC error */
-#define R_PLL       0x01  /* Phase Lock Lost */
+#define R_ROK     	0x80 	/* Receive OK summary */
+#define R_IAM     	0x10 	/* Individual Address Match */
+#define R_MCM     	0x08 	/* MultiCast Match */
+#define R_DBE     	0x04 	/* Dribble Bit Error */
+#define R_CRC     	0x02 	/* CRC error */
+#define R_PLL     	0x01 	/* Phase Lock Lost */
 
 /*
 ** MAC Transmit Control Register bit definitions
 */
 
-#define TCR_SQEE      0x40  /* SQE Enable - look for heartbeat  */
-#define TCR_SED       0x20  /* Stop when Error Detected */
-#define TCR_QMODE       0x10  /* Q_MODE */
-#define TCR_LAB         0x08  /* Less Aggressive Backoff */
-#define TCR_PAD       0x04  /* PAD Runt Packets */
-#define TCR_IFC       0x02  /* Insert Frame Check */
-#define TCR_ISA       0x01  /* Insert Source Address */
+#define TCR_SQEE    	0x40 	/* SQE Enable - look for heartbeat  */
+#define TCR_SED     	0x20 	/* Stop when Error Detected */
+#define TCR_QMODE     	0x10 	/* Q_MODE */
+#define TCR_LAB         0x08 	/* Less Aggressive Backoff */
+#define TCR_PAD     	0x04 	/* PAD Runt Packets */
+#define TCR_IFC     	0x02 	/* Insert Frame Check */
+#define TCR_ISA     	0x01 	/* Insert Source Address */
 
 /*
 ** MAC Transmit Status Register bit definitions
 */
 
-#define T_VSTS      0x80  /* Valid STatuS */
-#define T_CTU       0x40  /* Cut Through Used */
-#define T_SQE       0x20  /* Signal Quality Error */
-#define T_NCL       0x10  /* No Carrier Loopback */
-#define T_LCL           0x08  /* Late Collision */
-#define T_ID        0x04  /* Initially Deferred */
-#define T_COLL      0x03  /* COLLision status */
+#define T_VSTS    	0x80 	/* Valid STatuS */
+#define T_CTU     	0x40 	/* Cut Through Used */
+#define T_SQE     	0x20 	/* Signal Quality Error */
+#define T_NCL     	0x10 	/* No Carrier Loopback */
+#define T_LCL           0x08 	/* Late Collision */
+#define T_ID      	0x04 	/* Initially Deferred */
+#define T_COLL     	0x03 	/* COLLision status */
 #define T_XCOLL         0x03    /* Excessive Collisions */
 #define T_MCOLL         0x02    /* Multiple Collisions */
 #define T_OCOLL         0x01    /* One Collision */
@@ -223,7 +223,7 @@
 /*
 ** EEPROM MISCELLANEOUS FLAGS
 */
-#define RBE_SHADOW  0x0100  /* Remote Boot Enable Shadow */
+#define RBE_SHADOW	0x0100	/* Remote Boot Enable Shadow */
 #define READ_AHEAD      0x0080  /* Read Ahead feature */
 #define IRQ_SEL2        0x0070  /* IRQ line selection (LeMAC2) */
 #define IRQ_SEL         0x0060  /* IRQ line selection */
@@ -242,26 +242,26 @@
 /*
 ** EEPROM SW FLAGS
 */
-#define SW_SQE    0x10  /* Signal Quality Error */
-#define SW_LAB    0x08  /* Less Aggressive Backoff */
-#define SW_INIT   0x04  /* Initialized */
-#define SW_TIMEOUT      0x02  /* 0:2.5 mins, 1: 30 secs */
-#define SW_REMOTE       0x01    /* Remote Boot Enable -> 1 */
+#define SW_SQE		0x10	/* Signal Quality Error */
+#define SW_LAB		0x08	/* Less Aggressive Backoff */
+#define SW_INIT		0x04	/* Initialized */
+#define SW_TIMEOUT     	0x02	/* 0:2.5 mins, 1: 30 secs */
+#define SW_REMOTE      	0x01    /* Remote Boot Enable -> 1 */
 
 /*
 ** EEPROM SETUP FLAGS
 */
-#define SETUP_APD 0x80  /* AutoPort Disable */
-#define SETUP_PS  0x40  /* Port Select */
-#define SETUP_MP  0x20  /* MultiPort */
-#define SETUP_1TP 0x10  /* 1 port, TP */
-#define SETUP_1COAX 0x00  /* 1 port, Coax */
-#define SETUP_DRAM  0x02  /* Number of DRAMS on board */
+#define SETUP_APD	0x80	/* AutoPort Disable */
+#define SETUP_PS	0x40	/* Port Select */
+#define SETUP_MP	0x20	/* MultiPort */
+#define SETUP_1TP	0x10	/* 1 port, TP */
+#define SETUP_1COAX	0x00	/* 1 port, Coax */
+#define SETUP_DRAM	0x02	/* Number of DRAMS on board */
 
 /*
 ** EEPROM MANAGEMENT FLAGS
 */
-#define MGMT_CCE  0x01  /* Custom Counters Enable */
+#define MGMT_CCE	0x01	/* Custom Counters Enable */
 
 /*
 ** EEPROM VERSIONS
@@ -291,32 +291,32 @@
 */
 #include <linux/sockios.h>
 
-#define EWRK3IOCTL  SIOCDEVPRIVATE
+#define	EWRK3IOCTL	SIOCDEVPRIVATE
 
 struct ewrk3_ioctl {
-  unsigned short cmd;                /* Command to run */
-  unsigned short len;                /* Length of the data buffer */
-  unsigned char  __user * data;      /* Pointer to the data buffer */
+	unsigned short cmd;                /* Command to run */
+	unsigned short len;                /* Length of the data buffer */
+	unsigned char  __user *data;       /* Pointer to the data buffer */
 };
 
 /*
 ** Recognised commands for the driver
 */
-#define EWRK3_GET_HWADDR  0x01 /* Get the hardware address */
-#define EWRK3_SET_HWADDR  0x02 /* Get the hardware address */
-#define EWRK3_SET_PROM    0x03 /* Set Promiscuous Mode */
-#define EWRK3_CLR_PROM    0x04 /* Clear Promiscuous Mode */
-#define EWRK3_SAY_BOO         0x05 /* Say "Boo!" to the kernel log file */
-#define EWRK3_GET_MCA     0x06 /* Get a multicast address */
-#define EWRK3_SET_MCA     0x07 /* Set a multicast address */
-#define EWRK3_CLR_MCA     0x08 /* Clear a multicast address */
-#define EWRK3_MCA_EN      0x09 /* Enable a multicast address group */
-#define EWRK3_GET_STATS   0x0a /* Get the driver statistics */
-#define EWRK3_CLR_STATS   0x0b /* Zero out the driver statistics */
-#define EWRK3_GET_CSR     0x0c /* Get the CSR Register contents */
-#define EWRK3_SET_CSR     0x0d /* Set the CSR Register contents */
-#define EWRK3_GET_EEPROM    0x0e /* Get the EEPROM contents */
-#define EWRK3_SET_EEPROM  0x0f /* Set the EEPROM contents */
-#define EWRK3_GET_CMR     0x10 /* Get the CMR Register contents */
-#define EWRK3_CLR_TX_CUT_THRU   0x11 /* Clear the TX cut through mode */
-#define EWRK3_SET_TX_CUT_THRU 0x12 /* Set the TX cut through mode */
+#define EWRK3_GET_HWADDR	0x01 /* Get the hardware address */
+#define EWRK3_SET_HWADDR	0x02 /* Get the hardware address */
+#define EWRK3_SET_PROM  	0x03 /* Set Promiscuous Mode */
+#define EWRK3_CLR_PROM  	0x04 /* Clear Promiscuous Mode */
+#define EWRK3_SAY_BOO	        0x05 /* Say "Boo!" to the kernel log file */
+#define EWRK3_GET_MCA   	0x06 /* Get a multicast address */
+#define EWRK3_SET_MCA   	0x07 /* Set a multicast address */
+#define EWRK3_CLR_MCA    	0x08 /* Clear a multicast address */
+#define EWRK3_MCA_EN    	0x09 /* Enable a multicast address group */
+#define EWRK3_GET_STATS  	0x0a /* Get the driver statistics */
+#define EWRK3_CLR_STATS 	0x0b /* Zero out the driver statistics */
+#define EWRK3_GET_CSR   	0x0c /* Get the CSR Register contents */
+#define EWRK3_SET_CSR   	0x0d /* Set the CSR Register contents */
+#define EWRK3_GET_EEPROM   	0x0e /* Get the EEPROM contents */
+#define EWRK3_SET_EEPROM	0x0f /* Set the EEPROM contents */
+#define EWRK3_GET_CMR   	0x10 /* Get the CMR Register contents */
+#define EWRK3_CLR_TX_CUT_THRU  	0x11 /* Clear the TX cut through mode */
+#define EWRK3_SET_TX_CUT_THRU	0x12 /* Set the TX cut through mode */

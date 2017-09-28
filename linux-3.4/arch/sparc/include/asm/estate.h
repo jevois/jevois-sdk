@@ -2,13 +2,13 @@
 #define _SPARC64_ESTATE_H
 
 /* UltraSPARC-III E-cache Error Enable */
-#define ESTATE_ERROR_FMT  0x0000000000040000 /* Force MTAG ECC    */
-#define ESTATE_ERROR_FMESS  0x000000000003c000 /* Forced MTAG ECC val */
-#define ESTATE_ERROR_FMD  0x0000000000002000 /* Force DATA ECC    */
-#define ESTATE_ERROR_FDECC  0x0000000000001ff0 /* Forced DATA ECC val */
-#define ESTATE_ERROR_UCEEN  0x0000000000000008 /* See below     */
-#define ESTATE_ERROR_NCEEN  0x0000000000000002 /* See below     */
-#define ESTATE_ERROR_CEEN 0x0000000000000001 /* See below     */
+#define ESTATE_ERROR_FMT	0x0000000000040000 /* Force MTAG ECC		*/
+#define ESTATE_ERROR_FMESS	0x000000000003c000 /* Forced MTAG ECC val	*/
+#define ESTATE_ERROR_FMD	0x0000000000002000 /* Force DATA ECC		*/
+#define ESTATE_ERROR_FDECC	0x0000000000001ff0 /* Forced DATA ECC val	*/
+#define ESTATE_ERROR_UCEEN	0x0000000000000008 /* See below			*/
+#define ESTATE_ERROR_NCEEN	0x0000000000000002 /* See below			*/
+#define ESTATE_ERROR_CEEN	0x0000000000000001 /* See below			*/
 
 /* UCEEN enables the fast_ECC_error trap for: 1) software correctable E-cache
  * errors 2) uncorrectable E-cache errors.  Such events only occur on reads

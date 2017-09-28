@@ -19,19 +19,19 @@
 #ifndef _LINUX_ATH9K_PLATFORM_H
 #define _LINUX_ATH9K_PLATFORM_H
 
-#define ATH9K_PLAT_EEP_MAX_WORDS  2048
+#define ATH9K_PLAT_EEP_MAX_WORDS	2048
 
 struct ath9k_platform_data {
-  u16 eeprom_data[ATH9K_PLAT_EEP_MAX_WORDS];
-  u8 * macaddr;
-  
-  int led_pin;
-  u32 gpio_mask;
-  u32 gpio_val;
-  
-  bool is_clk_25mhz;
-  int (*get_mac_revision) (void);
-  int (*external_reset) (void);
+	u16 eeprom_data[ATH9K_PLAT_EEP_MAX_WORDS];
+	u8 *macaddr;
+
+	int led_pin;
+	u32 gpio_mask;
+	u32 gpio_val;
+
+	bool is_clk_25mhz;
+	int (*get_mac_revision)(void);
+	int (*external_reset)(void);
 };
 
 #endif /* _LINUX_ATH9K_PLATFORM_H */

@@ -32,7 +32,7 @@
  *
  * returns:  OK if initialize hwspinlock succeeded, others if failed.
  */
-int arisc_hwspinlock_init (void);
+int arisc_hwspinlock_init(void);
 
 /**
  * exit hwspinlock.
@@ -40,9 +40,9 @@ int arisc_hwspinlock_init (void);
  *
  * returns:  OK if exit hwspinlock succeeded, others if failed.
  */
-int arisc_hwspinlock_exit (void);
+int arisc_hwspinlock_exit(void);
 
-int arisc_hwspinlock_standby_suspend (void);
-int arisc_hwspinlock_standby_resume (void);
+int arisc_hwspinlock_standby_suspend(void);
+int arisc_hwspinlock_standby_resume(void);
 
 #endif  /* __ARISC_HW_SPINLOCK_H */

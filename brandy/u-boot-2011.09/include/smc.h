@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -34,13 +34,13 @@
 
 #else
 
-unsigned int smc_readl (unsigned int addr);
-void smc_writel (unsigned int value, unsigned int addr);
-int smc_efuse_writel (void * key_buf);
-int smc_efuse_readl (void * key_buf, void * read_buf);
-int smc_aes_bssk_encrypt_to_dram (void * keydata, int keylen, void * buffer, int * real_len);
-int smc_aes_bssk_decrypt_to_keysram (void * srcdata, int srclen);
-int smc_create_huk (void * huk_data, int len);
+unsigned int smc_readl(unsigned int addr);
+void smc_writel(unsigned int value, unsigned int addr);
+int smc_efuse_writel(void *key_buf);
+int smc_efuse_readl(void *key_buf, void *read_buf);
+int smc_aes_bssk_encrypt_to_dram(void *keydata, int keylen, void *buffer, int *real_len);
+int smc_aes_bssk_decrypt_to_keysram(void *srcdata, int srclen);
+int smc_create_huk(void *huk_data, int len);
 
 #endif
 

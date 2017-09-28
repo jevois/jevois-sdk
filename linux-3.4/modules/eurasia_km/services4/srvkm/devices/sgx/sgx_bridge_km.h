@@ -55,60 +55,60 @@ extern "C" {
 #endif
 
 IMG_IMPORT
-PVRSRV_ERROR SGXSubmitTransferKM (IMG_HANDLE hDevHandle, PVRSRV_TRANSFER_SGX_KICK * psKick);
+PVRSRV_ERROR SGXSubmitTransferKM(IMG_HANDLE hDevHandle, PVRSRV_TRANSFER_SGX_KICK *psKick);
 
 #if defined(SGX_FEATURE_2D_HARDWARE)
 IMG_IMPORT
-PVRSRV_ERROR SGXSubmit2DKM (IMG_HANDLE hDevHandle, PVRSRV_2D_SGX_KICK * psKick);
+PVRSRV_ERROR SGXSubmit2DKM(IMG_HANDLE hDevHandle, PVRSRV_2D_SGX_KICK *psKick);
 #endif
 
 IMG_IMPORT
-PVRSRV_ERROR SGXDoKickKM (IMG_HANDLE hDevHandle,
-                          SGX_CCB_KICK * psCCBKick);
-                          
+PVRSRV_ERROR SGXDoKickKM(IMG_HANDLE hDevHandle,
+						 SGX_CCB_KICK *psCCBKick);
+
 IMG_IMPORT
-PVRSRV_ERROR SGXGetPhysPageAddrKM (IMG_HANDLE hDevMemHeap,
-                                   IMG_DEV_VIRTADDR sDevVAddr,
-                                   IMG_DEV_PHYADDR * pDevPAddr,
-                                   IMG_CPU_PHYADDR * pCpuPAddr);
-                                   
+PVRSRV_ERROR SGXGetPhysPageAddrKM(IMG_HANDLE hDevMemHeap,
+								  IMG_DEV_VIRTADDR sDevVAddr,
+								  IMG_DEV_PHYADDR *pDevPAddr,
+								  IMG_CPU_PHYADDR *pCpuPAddr);
+
 IMG_IMPORT
-PVRSRV_ERROR IMG_CALLCONV SGXGetMMUPDAddrKM (IMG_HANDLE    hDevCookie,
-    IMG_HANDLE    hDevMemContext,
-    IMG_DEV_PHYADDR * psPDDevPAddr);
-    
+PVRSRV_ERROR IMG_CALLCONV SGXGetMMUPDAddrKM(IMG_HANDLE		hDevCookie,
+											IMG_HANDLE		hDevMemContext,
+											IMG_DEV_PHYADDR	*psPDDevPAddr);
+
 IMG_IMPORT
-PVRSRV_ERROR SGXGetClientInfoKM (IMG_HANDLE        hDevCookie,
-                                 SGX_CLIENT_INFO * psClientInfo);
-                                 
+PVRSRV_ERROR SGXGetClientInfoKM(IMG_HANDLE				hDevCookie,
+								SGX_CLIENT_INFO*	psClientInfo);
+
 IMG_IMPORT
-PVRSRV_ERROR SGXGetMiscInfoKM (PVRSRV_SGXDEV_INFO * psDevInfo,
-                               SGX_MISC_INFO   *  psMiscInfo,
-                               PVRSRV_DEVICE_NODE * psDeviceNode,
-                               IMG_HANDLE       hDevMemContext);
-                               
+PVRSRV_ERROR SGXGetMiscInfoKM(PVRSRV_SGXDEV_INFO	*psDevInfo,
+							  SGX_MISC_INFO			*psMiscInfo,
+							  PVRSRV_DEVICE_NODE 	*psDeviceNode,
+							  IMG_HANDLE 			 hDevMemContext);
+
 IMG_IMPORT
-PVRSRV_ERROR SGXReadHWPerfCBKM (IMG_HANDLE         hDevHandle,
-                                IMG_UINT32         ui32ArraySize,
-                                PVRSRV_SGX_HWPERF_CB_ENTRY * psHWPerfCBData,
-                                IMG_UINT32     *    pui32DataCount,
-                                IMG_UINT32     *    pui32ClockSpeed,
-                                IMG_UINT32     *    pui32HostTimeStamp);
-                                
+PVRSRV_ERROR SGXReadHWPerfCBKM(IMG_HANDLE					hDevHandle,
+							   IMG_UINT32					ui32ArraySize,
+							   PVRSRV_SGX_HWPERF_CB_ENTRY	*psHWPerfCBData,
+							   IMG_UINT32					*pui32DataCount,
+							   IMG_UINT32					*pui32ClockSpeed,
+							   IMG_UINT32					*pui32HostTimeStamp);
+
 IMG_IMPORT
-PVRSRV_ERROR SGX2DQueryBlitsCompleteKM (PVRSRV_SGXDEV_INFO  * psDevInfo,
-                                        PVRSRV_KERNEL_SYNC_INFO * psSyncInfo,
-                                        IMG_BOOL bWaitForComplete);
-                                        
+PVRSRV_ERROR SGX2DQueryBlitsCompleteKM(PVRSRV_SGXDEV_INFO		*psDevInfo,
+									   PVRSRV_KERNEL_SYNC_INFO	*psSyncInfo,
+									   IMG_BOOL bWaitForComplete);
+
 IMG_IMPORT
-PVRSRV_ERROR SGXGetInfoForSrvinitKM (IMG_HANDLE hDevHandle,
-                                     SGX_BRIDGE_INFO_FOR_SRVINIT * psInitInfo);
-                                     
+PVRSRV_ERROR SGXGetInfoForSrvinitKM(IMG_HANDLE hDevHandle,
+									SGX_BRIDGE_INFO_FOR_SRVINIT *psInitInfo);
+
 IMG_IMPORT
-PVRSRV_ERROR DevInitSGXPart2KM (PVRSRV_PER_PROCESS_DATA * psPerProc,
-                                IMG_HANDLE hDevHandle,
-                                SGX_BRIDGE_INIT_INFO * psInitInfo);
-                                
+PVRSRV_ERROR DevInitSGXPart2KM(PVRSRV_PER_PROCESS_DATA *psPerProc,
+							   IMG_HANDLE hDevHandle,
+							   SGX_BRIDGE_INIT_INFO *psInitInfo);
+
 /*!
  * *****************************************************************************
  * @brief Looks for a parameter buffer description that corresponds to
@@ -120,21 +120,21 @@ PVRSRV_ERROR DevInitSGXPart2KM (PVRSRV_PER_PROCESS_DATA * psPerProc,
  *        SGXUnrefSharedPBDesc to decrement this reference and free associated
  *        resources when you are done.
  *
- *    If bLockOnFailure is set, and a suitable shared PB isn't found,
- *    an internal flag is set, allowing this process to create a
- *    shared PB.  Any other process calling this function with
- *    bLockOnFailure set, will receive the return code
- *    PVRSRV_ERROR_PROCESSING_BLOCKED, indicating that it needs
- *    to retry the function call.  The internal flag is cleared
- *    when this process creates a shared PB.
+ * 	  If bLockOnFailure is set, and a suitable shared PB isn't found,
+ * 	  an internal flag is set, allowing this process to create a
+ * 	  shared PB.  Any other process calling this function with
+ * 	  bLockOnFailure set, will receive the return code
+ * 	  PVRSRV_ERROR_PROCESSING_BLOCKED, indicating that it needs
+ * 	  to retry the function call.  The internal flag is cleared
+ * 	  when this process creates a shared PB.
  *
- *    Note: You are responsible for freeing the list returned in
- *    pppsSharedPBDescSubKernelMemInfos
- *    via OSFreeMem(PVRSRV_OS_PAGEABLE_HEAP,
- *          sizeof(PVRSRV_KERNEL_MEM_INFO *)
- *            * ui32SharedPBDescSubKernelMemInfosCount,
- *          ppsSharedPBDescSubKernelMemInfos,
- *          NULL);
+ *	  Note: You are responsible for freeing the list returned in
+ *	  pppsSharedPBDescSubKernelMemInfos
+ *	  via OSFreeMem(PVRSRV_OS_PAGEABLE_HEAP,
+ *					sizeof(PVRSRV_KERNEL_MEM_INFO *)
+ *					  * ui32SharedPBDescSubKernelMemInfosCount,
+ *					ppsSharedPBDescSubKernelMemInfos,
+ *					NULL);
  *
  * @param[in] psPerProc
  * @param[in] hDevCookie
@@ -151,18 +151,18 @@ PVRSRV_ERROR DevInitSGXPart2KM (PVRSRV_PER_PROCESS_DATA * psPerProc,
 /* disable QAC pointer level check for over 2 */
 /* PRQA S 5102++ */
 IMG_IMPORT PVRSRV_ERROR
-SGXFindSharedPBDescKM (PVRSRV_PER_PROCESS_DATA * psPerProc,
-                       IMG_HANDLE        hDevCookie,
-                       IMG_BOOL        bLockOnFailure,
-                       IMG_UINT32        ui32TotalPBSize,
-                       IMG_HANDLE    *    phSharedPBDesc,
-                       PVRSRV_KERNEL_MEM_INFO ** ppsSharedPBDescKernelMemInfo,
-                       PVRSRV_KERNEL_MEM_INFO ** ppsHWPBDescKernelMemInfo,
-                       PVRSRV_KERNEL_MEM_INFO ** ppsBlockKernelMemInfo,
-                       PVRSRV_KERNEL_MEM_INFO ** ppsHWBlockKernelMemInfo,
-                       PVRSRV_KERNEL_MEM_INFO ** *pppsSharedPBDescSubKernelMemInfos,
-                       IMG_UINT32    *    ui32SharedPBDescSubKernelMemInfosCount);
-                       
+SGXFindSharedPBDescKM(PVRSRV_PER_PROCESS_DATA	*psPerProc,
+					  IMG_HANDLE				hDevCookie,
+					  IMG_BOOL				bLockOnFailure,
+					  IMG_UINT32				ui32TotalPBSize,
+					  IMG_HANDLE				*phSharedPBDesc,
+					  PVRSRV_KERNEL_MEM_INFO	**ppsSharedPBDescKernelMemInfo,
+					  PVRSRV_KERNEL_MEM_INFO	**ppsHWPBDescKernelMemInfo,
+					  PVRSRV_KERNEL_MEM_INFO	**ppsBlockKernelMemInfo,
+					  PVRSRV_KERNEL_MEM_INFO	**ppsHWBlockKernelMemInfo,
+					  PVRSRV_KERNEL_MEM_INFO	***pppsSharedPBDescSubKernelMemInfos,
+					  IMG_UINT32				*ui32SharedPBDescSubKernelMemInfosCount);
+
 /*!
  * *****************************************************************************
  * @brief Decrements the reference counter and frees all userspace resources
@@ -173,7 +173,7 @@ SGXFindSharedPBDescKM (PVRSRV_PER_PROCESS_DATA * psPerProc,
  * @return PVRSRV_ERROR
  ********************************************************************************/
 IMG_IMPORT PVRSRV_ERROR
-SGXUnrefSharedPBDescKM (IMG_HANDLE hSharedPBDesc);
+SGXUnrefSharedPBDescKM(IMG_HANDLE hSharedPBDesc);
 
 /*!
  * *****************************************************************************
@@ -193,13 +193,13 @@ SGXUnrefSharedPBDescKM (IMG_HANDLE hSharedPBDesc);
  *        in use.)
  *
  *        If the dissociation fails then all the memory associated with
- *    the psSharedPBDescKernelMemInfo and all entries in psKernelMemInfos
- *    will be freed by kernel services! Because of this, you are
- *    responsible for freeing the corresponding client meminfos _before_
- *    calling SGXAddSharedPBDescKM.
+ *	  the psSharedPBDescKernelMemInfo and all entries in psKernelMemInfos
+ *	  will be freed by kernel services! Because of this, you are
+ *	  responsible for freeing the corresponding client meminfos _before_
+ *	  calling SGXAddSharedPBDescKM.
  *
- *    This function will return an error unless a succesful call to
- *    SGXFindSharedPBDesc, with bLockOnFailure set, has been made.
+ * 	  This function will return an error unless a succesful call to
+ * 	  SGXFindSharedPBDesc, with bLockOnFailure set, has been made.
  *
  * @param psPerProc
  * @param hDevCookie
@@ -208,31 +208,31 @@ SGXUnrefSharedPBDescKM (IMG_HANDLE hSharedPBDesc);
  * @param psBlockKernelMemInfo
  * @param ui32TotalPBSize  The size of the associated parameter buffer
  * @param ppsSharedPBDescSubKernelMemInfos  A list of other meminfos integral to
- *                        the shared PB description.
+ * 										    the shared PB description.
  * @param ui32SharedPBDescSubKernelMemInfosCount  The number of entires in
- *                          psKernelMemInfos
+ * 												  psKernelMemInfos
  * @param sHWPBDescDevVAddr The device virtual address of the HWPBDesc
  *
  * @return PVRSRV_ERROR
  ********************************************************************************/
 IMG_IMPORT PVRSRV_ERROR
-SGXAddSharedPBDescKM (PVRSRV_PER_PROCESS_DATA * psPerProc,
-                      IMG_HANDLE         hDevCookie,
-                      PVRSRV_KERNEL_MEM_INFO  * psSharedPBDescKernelMemInfo,
-                      PVRSRV_KERNEL_MEM_INFO  * psHWPBDescKernelMemInfo,
-                      PVRSRV_KERNEL_MEM_INFO  * psBlockKernelMemInfo,
-                      PVRSRV_KERNEL_MEM_INFO  * psHWBlockKernelMemInfo,
-                      IMG_UINT32         ui32TotalPBSize,
-                      IMG_HANDLE     *    phSharedPBDesc,
-                      PVRSRV_KERNEL_MEM_INFO  ** psSharedPBDescSubKernelMemInfos,
-                      IMG_UINT32         ui32SharedPBDescSubKernelMemInfosCount,
-                      IMG_DEV_VIRTADDR     sHWPBDescDevVAddr);
-                      
-                      
+SGXAddSharedPBDescKM(PVRSRV_PER_PROCESS_DATA	*psPerProc,
+					 IMG_HANDLE 				hDevCookie,
+					 PVRSRV_KERNEL_MEM_INFO		*psSharedPBDescKernelMemInfo,
+					 PVRSRV_KERNEL_MEM_INFO		*psHWPBDescKernelMemInfo,
+					 PVRSRV_KERNEL_MEM_INFO		*psBlockKernelMemInfo,
+					 PVRSRV_KERNEL_MEM_INFO		*psHWBlockKernelMemInfo,
+					 IMG_UINT32					ui32TotalPBSize,
+					 IMG_HANDLE					*phSharedPBDesc,
+					 PVRSRV_KERNEL_MEM_INFO		**psSharedPBDescSubKernelMemInfos,
+					 IMG_UINT32					ui32SharedPBDescSubKernelMemInfosCount,
+					 IMG_DEV_VIRTADDR			sHWPBDescDevVAddr);
+
+
 /*!
  * *****************************************************************************
  * @brief Gets device information that is not intended to be passed
-      on beyond the srvclient libs.
+		  on beyond the srvclient libs.
  *
  * @param[in] hDevCookie
  * @param[out] psSGXInternalDevInfo
@@ -240,9 +240,9 @@ SGXAddSharedPBDescKM (PVRSRV_PER_PROCESS_DATA * psPerProc,
  * @return
  ********************************************************************************/
 IMG_IMPORT PVRSRV_ERROR
-SGXGetInternalDevInfoKM (IMG_HANDLE hDevCookie,
-                         SGX_INTERNAL_DEVINFO * psSGXInternalDevInfo);
-                         
+SGXGetInternalDevInfoKM(IMG_HANDLE hDevCookie,
+						SGX_INTERNAL_DEVINFO *psSGXInternalDevInfo);
+
 #if defined (__cplusplus)
 }
 #endif

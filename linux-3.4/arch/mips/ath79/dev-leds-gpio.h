@@ -14,8 +14,8 @@
 
 #include <linux/leds.h>
 
-void ath79_register_leds_gpio (int id,
-                               unsigned num_leds,
-                               struct gpio_led * leds);
+void ath79_register_leds_gpio(int id,
+			      unsigned num_leds,
+			      struct gpio_led *leds);
 
 #endif /* _ATH79_DEV_LEDS_GPIO_H */

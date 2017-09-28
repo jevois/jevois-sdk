@@ -1,26 +1,26 @@
 /*
-  Copyright (C) 2004 - 2009 Ivo van Doorn <IvDoorn@gmail.com>
-  <http://rt2x00.serialmonkey.com>
+	Copyright (C) 2004 - 2009 Ivo van Doorn <IvDoorn@gmail.com>
+	<http://rt2x00.serialmonkey.com>
 
-  This program is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation; either version 2 of the License, or
+	(at your option) any later version.
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the
-  Free Software Foundation, Inc.,
-  59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the
+	Free Software Foundation, Inc.,
+	59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
 /*
-  Module: rt2x00pci
-  Abstract: Data structures for the rt2x00pci module.
+	Module: rt2x00pci
+	Abstract: Data structures for the rt2x00pci module.
  */
 
 #ifndef RT2X00PCI_H
@@ -33,38 +33,38 @@
  * This variable should be used with the
  * pci_driver structure initialization.
  */
-#define PCI_DEVICE_DATA(__ops)  .driver_data = (kernel_ulong_t)(__ops)
+#define PCI_DEVICE_DATA(__ops)	.driver_data = (kernel_ulong_t)(__ops)
 
 /*
  * Register access.
  */
-static inline void rt2x00pci_register_read (struct rt2x00_dev * rt2x00dev,
-    const unsigned int offset,
-    u32 * value)
+static inline void rt2x00pci_register_read(struct rt2x00_dev *rt2x00dev,
+					   const unsigned int offset,
+					   u32 *value)
 {
-  *value = readl (rt2x00dev->csr.base + offset);
+	*value = readl(rt2x00dev->csr.base + offset);
 }
 
-static inline void rt2x00pci_register_multiread (struct rt2x00_dev * rt2x00dev,
-    const unsigned int offset,
-    void * value, const u32 length)
+static inline void rt2x00pci_register_multiread(struct rt2x00_dev *rt2x00dev,
+						const unsigned int offset,
+						void *value, const u32 length)
 {
-  memcpy_fromio (value, rt2x00dev->csr.base + offset, length);
+	memcpy_fromio(value, rt2x00dev->csr.base + offset, length);
 }
 
-static inline void rt2x00pci_register_write (struct rt2x00_dev * rt2x00dev,
-    const unsigned int offset,
-    u32 value)
+static inline void rt2x00pci_register_write(struct rt2x00_dev *rt2x00dev,
+					    const unsigned int offset,
+					    u32 value)
 {
-  writel (value, rt2x00dev->csr.base + offset);
+	writel(value, rt2x00dev->csr.base + offset);
 }
 
-static inline void rt2x00pci_register_multiwrite (struct rt2x00_dev * rt2x00dev,
-    const unsigned int offset,
-    const void * value,
-    const u32 length)
+static inline void rt2x00pci_register_multiwrite(struct rt2x00_dev *rt2x00dev,
+						 const unsigned int offset,
+						 const void *value,
+						 const u32 length)
 {
-  __iowrite32_copy (rt2x00dev->csr.base + offset, value, length >> 2);
+	__iowrite32_copy(rt2x00dev->csr.base + offset, value, length >> 2);
 }
 
 /**
@@ -80,10 +80,10 @@ static inline void rt2x00pci_register_multiwrite (struct rt2x00_dev * rt2x00dev,
  * is not read after a certain timeout, this function will return
  * FALSE.
  */
-int rt2x00pci_regbusy_read (struct rt2x00_dev * rt2x00dev,
-                            const unsigned int offset,
-                            const struct rt2x00_field32 field,
-                            u32 * reg);
+int rt2x00pci_regbusy_read(struct rt2x00_dev *rt2x00dev,
+			   const unsigned int offset,
+			   const struct rt2x00_field32 field,
+			   u32 *reg);
 
 /**
  * struct queue_entry_priv_pci: Per entry PCI specific information
@@ -94,8 +94,8 @@ int rt2x00pci_regbusy_read (struct rt2x00_dev * rt2x00dev,
  * @data_dma: DMA pointer to &data.
  */
 struct queue_entry_priv_pci {
-  __le32 * desc;
-  dma_addr_t desc_dma;
+	__le32 *desc;
+	dma_addr_t desc_dma;
 };
 
 /**
@@ -105,7 +105,7 @@ struct queue_entry_priv_pci {
  * Returns true if there are still rx frames pending and false if all
  * pending rx frames were processed.
  */
-bool rt2x00pci_rxdone (struct rt2x00_dev * rt2x00dev);
+bool rt2x00pci_rxdone(struct rt2x00_dev *rt2x00dev);
 
 /**
  * rt2x00pci_flush_queue - Flush data queue
@@ -115,25 +115,25 @@ bool rt2x00pci_rxdone (struct rt2x00_dev * rt2x00dev);
  * This will wait for a maximum of 100ms, waiting for the queues
  * to become empty.
  */
-void rt2x00pci_flush_queue (struct data_queue * queue, bool drop);
+void rt2x00pci_flush_queue(struct data_queue *queue, bool drop);
 
 /*
  * Device initialization handlers.
  */
-int rt2x00pci_initialize (struct rt2x00_dev * rt2x00dev);
-void rt2x00pci_uninitialize (struct rt2x00_dev * rt2x00dev);
+int rt2x00pci_initialize(struct rt2x00_dev *rt2x00dev);
+void rt2x00pci_uninitialize(struct rt2x00_dev *rt2x00dev);
 
 /*
  * PCI driver handlers.
  */
-int rt2x00pci_probe (struct pci_dev * pci_dev, const struct rt2x00_ops * ops);
-void rt2x00pci_remove (struct pci_dev * pci_dev);
+int rt2x00pci_probe(struct pci_dev *pci_dev, const struct rt2x00_ops *ops);
+void rt2x00pci_remove(struct pci_dev *pci_dev);
 #ifdef CONFIG_PM
-int rt2x00pci_suspend (struct pci_dev * pci_dev, pm_message_t state);
-int rt2x00pci_resume (struct pci_dev * pci_dev);
+int rt2x00pci_suspend(struct pci_dev *pci_dev, pm_message_t state);
+int rt2x00pci_resume(struct pci_dev *pci_dev);
 #else
-#define rt2x00pci_suspend NULL
-#define rt2x00pci_resume  NULL
+#define rt2x00pci_suspend	NULL
+#define rt2x00pci_resume	NULL
 #endif /* CONFIG_PM */
 
 #endif /* RT2X00PCI_H */

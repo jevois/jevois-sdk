@@ -29,64 +29,63 @@
  * Default to the loop-based delay implementation.
  */
 struct arm_delay_ops arm_delay_ops = {
-  .delay    = __loop_delay,
-  .const_udelay = __loop_const_udelay,
-  .udelay   = __loop_udelay,
+	.delay		= __loop_delay,
+	.const_udelay	= __loop_const_udelay,
+	.udelay		= __loop_udelay,
 };
 
-static const struct delay_timer * delay_timer;
+static const struct delay_timer *delay_timer;
 static bool delay_calibrated;
 
-int read_current_timer (unsigned long * timer_val)
+int read_current_timer(unsigned long *timer_val)
 {
-  if (!delay_timer)
-  { return -ENXIO; }
-  
-  *timer_val = delay_timer->read_current_timer();
-  return 0;
+	if (!delay_timer)
+		return -ENXIO;
+
+	*timer_val = delay_timer->read_current_timer();
+	return 0;
 }
 
-static void __timer_delay (unsigned long cycles)
+static void __timer_delay(unsigned long cycles)
 {
-  cycles_t start = get_cycles();
-  
-  while ( (get_cycles() - start) < cycles)
-  { cpu_relax(); }
+	cycles_t start = get_cycles();
+
+	while ((get_cycles() - start) < cycles)
+		cpu_relax();
 }
 
-static void __timer_const_udelay (unsigned long xloops)
+static void __timer_const_udelay(unsigned long xloops)
 {
-  unsigned long long loops = xloops;
-  loops *= arm_delay_ops.ticks_per_jiffy;
-  __timer_delay (loops >> UDELAY_SHIFT);
+	unsigned long long loops = xloops;
+	loops *= arm_delay_ops.ticks_per_jiffy;
+	__timer_delay(loops >> UDELAY_SHIFT);
 }
 
-static void __timer_udelay (unsigned long usecs)
+static void __timer_udelay(unsigned long usecs)
 {
-  __timer_const_udelay (usecs * UDELAY_MULT);
+	__timer_const_udelay(usecs * UDELAY_MULT);
 }
 
-void __init register_current_timer_delay (const struct delay_timer * timer)
+void __init register_current_timer_delay(const struct delay_timer *timer)
 {
-  if (!delay_calibrated) {
-    pr_info ("Switching to timer-based delay loop\n");
-    delay_timer     = timer;
-    lpj_fine      = timer->freq;
-    
-    /* cpufreq may scale loops_per_jiffy, so keep a private copy */
-    arm_delay_ops.ticks_per_jiffy = timer->freq / HZ;
-    arm_delay_ops.delay   = __timer_delay;
-    arm_delay_ops.const_udelay  = __timer_const_udelay;
-    arm_delay_ops.udelay    = __timer_udelay;
-    delay_calibrated    = true;
-  }
-  else {
-    pr_info ("Ignoring duplicate/late registration of read_current_timer delay\n");
-  }
+	if (!delay_calibrated) {
+		pr_info("Switching to timer-based delay loop\n");
+		delay_timer			= timer;
+		lpj_fine			= timer->freq;
+
+		/* cpufreq may scale loops_per_jiffy, so keep a private copy */
+		arm_delay_ops.ticks_per_jiffy	= timer->freq / HZ;
+		arm_delay_ops.delay		= __timer_delay;
+		arm_delay_ops.const_udelay	= __timer_const_udelay;
+		arm_delay_ops.udelay		= __timer_udelay;
+		delay_calibrated		= true;
+	} else {
+		pr_info("Ignoring duplicate/late registration of read_current_timer delay\n");
+	}
 }
 
-unsigned long __cpuinit calibrate_delay_is_known (void)
+unsigned long __cpuinit calibrate_delay_is_known(void)
 {
-  delay_calibrated = true;
-  return lpj_fine;
+	delay_calibrated = true;
+	return lpj_fine;
 }

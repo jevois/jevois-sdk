@@ -71,8 +71,8 @@
 #define SUNXI_IRQ_EINTE                   (SUNXI_GIC_START + 129)/* invalid */
 #define SUNXI_IRQ_EINTL                   (SUNXI_GIC_START + 130)/* invalid */
 #define SUNXI_IRQ_PMU                     (SUNXI_GIC_START + 49)
-#define SUNXI_IRQ_TOUCHPANEL      (0)
-#define SUNXI_IRQ_LRADC       (0)
+#define SUNXI_IRQ_TOUCHPANEL			(0)	
+#define SUNXI_IRQ_LRADC				(0)	
 
 #elif (defined CONFIG_EVB_PLATFORM)
 

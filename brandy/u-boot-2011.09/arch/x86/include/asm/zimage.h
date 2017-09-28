@@ -65,10 +65,10 @@
 #define BZIMAGE_LOAD_ADDR  0x100000
 #define ZIMAGE_LOAD_ADDR   0x10000
 
-void * load_zimage (char * image, unsigned long kernel_size,
-                    unsigned long initrd_addr, unsigned long initrd_size,
-                    int auto_boot);
+void *load_zimage(char *image, unsigned long kernel_size,
+		  unsigned long initrd_addr, unsigned long initrd_size,
+		  int auto_boot);
 
-void boot_zimage (void * setup_base);
+void boot_zimage(void *setup_base);
 
 #endif

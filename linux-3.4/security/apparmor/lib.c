@@ -35,44 +35,43 @@
  * NOTE: may modify the @fqname string.  The pointers returned point
  *       into the @fqname string.
  */
-char * aa_split_fqname (char * fqname, char ** ns_name)
+char *aa_split_fqname(char *fqname, char **ns_name)
 {
-  char * name = strim (fqname);
-  
-  *ns_name = NULL;
-  if (name[0] == ':') {
-    char * split = strchr (&name[1], ':');
-    *ns_name = skip_spaces (&name[1]);
-    if (split) {
-      /* overwrite ':' with \0 */
-      *split = 0;
-      name = skip_spaces (split + 1);
-    }
-    else
-      /* a ns name without a following profile is allowed */
-    { name = NULL; }
-  }
-  if (name && *name == 0)
-  { name = NULL; }
-  
-  return name;
+	char *name = strim(fqname);
+
+	*ns_name = NULL;
+	if (name[0] == ':') {
+		char *split = strchr(&name[1], ':');
+		*ns_name = skip_spaces(&name[1]);
+		if (split) {
+			/* overwrite ':' with \0 */
+			*split = 0;
+			name = skip_spaces(split + 1);
+		} else
+			/* a ns name without a following profile is allowed */
+			name = NULL;
+	}
+	if (name && *name == 0)
+		name = NULL;
+
+	return name;
 }
 
 /**
  * aa_info_message - log a none profile related status message
  * @str: message to log
  */
-void aa_info_message (const char * str)
+void aa_info_message(const char *str)
 {
-  if (audit_enabled) {
-    struct common_audit_data sa;
-    struct apparmor_audit_data aad = {0,};
-    COMMON_AUDIT_DATA_INIT (&sa, NONE);
-    sa.aad = &aad;
-    aad.info = str;
-    aa_audit_msg (AUDIT_APPARMOR_STATUS, &sa, NULL);
-  }
-  printk (KERN_INFO "AppArmor: %s\n", str);
+	if (audit_enabled) {
+		struct common_audit_data sa;
+		struct apparmor_audit_data aad = {0,};
+		COMMON_AUDIT_DATA_INIT(&sa, NONE);
+		sa.aad = &aad;
+		aad.info = str;
+		aa_audit_msg(AUDIT_APPARMOR_STATUS, &sa, NULL);
+	}
+	printk(KERN_INFO "AppArmor: %s\n", str);
 }
 
 /**
@@ -84,25 +83,25 @@ void aa_info_message (const char * str)
  * It is possible that policy being loaded from the user is larger than
  * what can be allocated by kmalloc, in those cases fall back to vmalloc.
  */
-void * kvmalloc (size_t size)
+void *kvmalloc(size_t size)
 {
-  void * buffer = NULL;
-  
-  if (size == 0)
-  { return NULL; }
-  
-  /* do not attempt kmalloc if we need more than 16 pages at once */
-  if (size <= (16 * PAGE_SIZE) )
-  { buffer = kmalloc (size, GFP_NOIO | __GFP_NOWARN); }
-  if (!buffer) {
-    /* see kvfree for why size must be at least work_struct size
-     * when allocated via vmalloc
-     */
-    if (size < sizeof (struct work_struct) )
-    { size = sizeof (struct work_struct); }
-    buffer = vmalloc (size);
-  }
-  return buffer;
+	void *buffer = NULL;
+
+	if (size == 0)
+		return NULL;
+
+	/* do not attempt kmalloc if we need more than 16 pages at once */
+	if (size <= (16*PAGE_SIZE))
+		buffer = kmalloc(size, GFP_NOIO | __GFP_NOWARN);
+	if (!buffer) {
+		/* see kvfree for why size must be at least work_struct size
+		 * when allocated via vmalloc
+		 */
+		if (size < sizeof(struct work_struct))
+			size = sizeof(struct work_struct);
+		buffer = vmalloc(size);
+	}
+	return buffer;
 }
 
 /**
@@ -113,9 +112,9 @@ void * kvmalloc (size_t size)
  * the work is scheduled the data is no longer valid, be its freeing
  * needs to be delayed until safe.
  */
-static void do_vfree (struct work_struct * work)
+static void do_vfree(struct work_struct *work)
 {
-  vfree (work);
+	vfree(work);
 }
 
 /**
@@ -124,16 +123,15 @@ static void do_vfree (struct work_struct * work)
  *
  * Free a buffer allocated by kvmalloc
  */
-void kvfree (void * buffer)
+void kvfree(void *buffer)
 {
-  if (is_vmalloc_addr (buffer) ) {
-    /* Data is no longer valid so just use the allocated space
-     * as the work_struct
-     */
-    struct work_struct * work = (struct work_struct *) buffer;
-    INIT_WORK (work, do_vfree);
-    schedule_work (work);
-  }
-  else
-  { kfree (buffer); }
+	if (is_vmalloc_addr(buffer)) {
+		/* Data is no longer valid so just use the allocated space
+		 * as the work_struct
+		 */
+		struct work_struct *work = (struct work_struct *) buffer;
+		INIT_WORK(work, do_vfree);
+		schedule_work(work);
+	} else
+		kfree(buffer);
 }

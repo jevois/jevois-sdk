@@ -18,79 +18,79 @@
 #include <linux/spinlock.h>
 #include "gpiomux.h"
 
-static DEFINE_SPINLOCK (gpiomux_lock);
+static DEFINE_SPINLOCK(gpiomux_lock);
 
-int msm_gpiomux_write (unsigned gpio,
-                       gpiomux_config_t active,
-                       gpiomux_config_t suspended)
+int msm_gpiomux_write(unsigned gpio,
+		      gpiomux_config_t active,
+		      gpiomux_config_t suspended)
 {
-  struct msm_gpiomux_config * cfg = msm_gpiomux_configs + gpio;
-  unsigned long irq_flags;
-  gpiomux_config_t setting;
-  
-  if (gpio >= GPIOMUX_NGPIOS)
-  { return -EINVAL; }
-  
-  spin_lock_irqsave (&gpiomux_lock, irq_flags);
-  
-  if (active & GPIOMUX_VALID)
-  { cfg->active = active; }
-  
-  if (suspended & GPIOMUX_VALID)
-  { cfg->suspended = suspended; }
-  
-  setting = cfg->ref ? active : suspended;
-  if (setting & GPIOMUX_VALID)
-  { __msm_gpiomux_write (gpio, setting); }
-  
-  spin_unlock_irqrestore (&gpiomux_lock, irq_flags);
-  return 0;
-}
-EXPORT_SYMBOL (msm_gpiomux_write);
+	struct msm_gpiomux_config *cfg = msm_gpiomux_configs + gpio;
+	unsigned long irq_flags;
+	gpiomux_config_t setting;
 
-int msm_gpiomux_get (unsigned gpio)
-{
-  struct msm_gpiomux_config * cfg = msm_gpiomux_configs + gpio;
-  unsigned long irq_flags;
-  
-  if (gpio >= GPIOMUX_NGPIOS)
-  { return -EINVAL; }
-  
-  spin_lock_irqsave (&gpiomux_lock, irq_flags);
-  if (cfg->ref++ == 0 && cfg->active & GPIOMUX_VALID)
-  { __msm_gpiomux_write (gpio, cfg->active); }
-  spin_unlock_irqrestore (&gpiomux_lock, irq_flags);
-  return 0;
-}
-EXPORT_SYMBOL (msm_gpiomux_get);
+	if (gpio >= GPIOMUX_NGPIOS)
+		return -EINVAL;
 
-int msm_gpiomux_put (unsigned gpio)
-{
-  struct msm_gpiomux_config * cfg = msm_gpiomux_configs + gpio;
-  unsigned long irq_flags;
-  
-  if (gpio >= GPIOMUX_NGPIOS)
-  { return -EINVAL; }
-  
-  spin_lock_irqsave (&gpiomux_lock, irq_flags);
-  BUG_ON (cfg->ref == 0);
-  if (--cfg->ref == 0 && cfg->suspended & GPIOMUX_VALID)
-  { __msm_gpiomux_write (gpio, cfg->suspended); }
-  spin_unlock_irqrestore (&gpiomux_lock, irq_flags);
-  return 0;
-}
-EXPORT_SYMBOL (msm_gpiomux_put);
+	spin_lock_irqsave(&gpiomux_lock, irq_flags);
 
-static int __init gpiomux_init (void)
-{
-  unsigned n;
-  
-  for (n = 0; n < GPIOMUX_NGPIOS; ++n) {
-    msm_gpiomux_configs[n].ref = 0;
-    if (! (msm_gpiomux_configs[n].suspended & GPIOMUX_VALID) )
-    { continue; }
-    __msm_gpiomux_write (n, msm_gpiomux_configs[n].suspended);
-  }
-  return 0;
+	if (active & GPIOMUX_VALID)
+		cfg->active = active;
+
+	if (suspended & GPIOMUX_VALID)
+		cfg->suspended = suspended;
+
+	setting = cfg->ref ? active : suspended;
+	if (setting & GPIOMUX_VALID)
+		__msm_gpiomux_write(gpio, setting);
+
+	spin_unlock_irqrestore(&gpiomux_lock, irq_flags);
+	return 0;
 }
-postcore_initcall (gpiomux_init);
+EXPORT_SYMBOL(msm_gpiomux_write);
+
+int msm_gpiomux_get(unsigned gpio)
+{
+	struct msm_gpiomux_config *cfg = msm_gpiomux_configs + gpio;
+	unsigned long irq_flags;
+
+	if (gpio >= GPIOMUX_NGPIOS)
+		return -EINVAL;
+
+	spin_lock_irqsave(&gpiomux_lock, irq_flags);
+	if (cfg->ref++ == 0 && cfg->active & GPIOMUX_VALID)
+		__msm_gpiomux_write(gpio, cfg->active);
+	spin_unlock_irqrestore(&gpiomux_lock, irq_flags);
+	return 0;
+}
+EXPORT_SYMBOL(msm_gpiomux_get);
+
+int msm_gpiomux_put(unsigned gpio)
+{
+	struct msm_gpiomux_config *cfg = msm_gpiomux_configs + gpio;
+	unsigned long irq_flags;
+
+	if (gpio >= GPIOMUX_NGPIOS)
+		return -EINVAL;
+
+	spin_lock_irqsave(&gpiomux_lock, irq_flags);
+	BUG_ON(cfg->ref == 0);
+	if (--cfg->ref == 0 && cfg->suspended & GPIOMUX_VALID)
+		__msm_gpiomux_write(gpio, cfg->suspended);
+	spin_unlock_irqrestore(&gpiomux_lock, irq_flags);
+	return 0;
+}
+EXPORT_SYMBOL(msm_gpiomux_put);
+
+static int __init gpiomux_init(void)
+{
+	unsigned n;
+
+	for (n = 0; n < GPIOMUX_NGPIOS; ++n) {
+		msm_gpiomux_configs[n].ref = 0;
+		if (!(msm_gpiomux_configs[n].suspended & GPIOMUX_VALID))
+			continue;
+		__msm_gpiomux_write(n, msm_gpiomux_configs[n].suspended);
+	}
+	return 0;
+}
+postcore_initcall(gpiomux_init);

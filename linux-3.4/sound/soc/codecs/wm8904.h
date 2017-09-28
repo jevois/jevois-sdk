@@ -25,7 +25,7 @@
  * Register values.
  */
 #define WM8904_SW_RESET_AND_ID                  0x00
-#define WM8904_REVISION       0x01
+#define WM8904_REVISION				0x01
 #define WM8904_BIAS_CONTROL_0                   0x04
 #define WM8904_VMID_CONTROL_0                   0x05
 #define WM8904_MIC_BIAS_CONTROL_0               0x06
@@ -123,7 +123,7 @@
 #define WM8904_EQ23                             0x9C
 #define WM8904_EQ24                             0x9D
 #define WM8904_CONTROL_INTERFACE_TEST_1         0xA1
-#define WM8904_ADC_TEST_0     0xC6
+#define WM8904_ADC_TEST_0			0xC6
 #define WM8904_ANALOGUE_OUTPUT_BIAS_0           0xCC
 #define WM8904_FLL_NCO_TEST_0                   0xF7
 #define WM8904_FLL_NCO_TEST_1                   0xF8
@@ -145,9 +145,9 @@
 /*
  * R1 (0x01) - Revision
  */
-#define WM8904_REVISION_MASK                0x000F  /* REVISION - [3:0] */
-#define WM8904_REVISION_SHIFT                    0  /* REVISION - [3:0] */
-#define WM8904_REVISION_WIDTH                   16  /* REVISION - [3:0] */
+#define WM8904_REVISION_MASK              	0x000F  /* REVISION - [3:0] */
+#define WM8904_REVISION_SHIFT             	     0  /* REVISION - [3:0] */
+#define WM8904_REVISION_WIDTH             	    16  /* REVISION - [3:0] */
 
 /*
  * R4 (0x04) - Bias Control 0

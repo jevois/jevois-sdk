@@ -7,29 +7,29 @@
 #include <linux/genalloc.h>
 
 /* arch/sh/mm/sram.c */
-extern struct gen_pool * sram_pool;
+extern struct gen_pool *sram_pool;
 
-static inline unsigned long sram_alloc (size_t len)
+static inline unsigned long sram_alloc(size_t len)
 {
-  if (!sram_pool)
-  { return 0UL; }
-  
-  return gen_pool_alloc (sram_pool, len);
+	if (!sram_pool)
+		return 0UL;
+
+	return gen_pool_alloc(sram_pool, len);
 }
 
-static inline void sram_free (unsigned long addr, size_t len)
+static inline void sram_free(unsigned long addr, size_t len)
 {
-  return gen_pool_free (sram_pool, addr, len);
+	return gen_pool_free(sram_pool, addr, len);
 }
 
 #else
 
-static inline unsigned long sram_alloc (size_t len)
+static inline unsigned long sram_alloc(size_t len)
 {
-  return 0;
+	return 0;
 }
 
-static inline void sram_free (unsigned long addr, size_t len)
+static inline void sram_free(unsigned long addr, size_t len)
 {
 }
 

@@ -46,7 +46,7 @@
    trouble). */
 #ifndef SHARE_LIB_CORE
 # if (defined(__KERNEL__) || !defined(RELOC_DEBUG)) \
-&& !defined(CONFIG_SHARE_SHLIB_CORE)
+     && !defined(CONFIG_SHARE_SHLIB_CORE)
 #  define SHARE_LIB_CORE 0
 # else
 #  define SHARE_LIB_CORE 1
@@ -57,34 +57,34 @@
 /* Main exported function; supposed to be called when the program a.out
    has been read in. */
 extern int
-perform_cris_aout_relocations (unsigned long text, unsigned long tlength,
-                               unsigned long data, unsigned long dlength,
-                               unsigned long baddr, unsigned long blength,
+perform_cris_aout_relocations(unsigned long text, unsigned long tlength,
+			      unsigned long data, unsigned long dlength,
+			      unsigned long baddr, unsigned long blength,
 
-                               /* These may be zero when there's "perfect"
-                               position-independent code. */
-                               unsigned char * trel, unsigned long tsrel,
-                               unsigned long dsrel,
+			      /* These may be zero when there's "perfect"
+				 position-independent code. */
+			      unsigned char *trel, unsigned long tsrel,
+			      unsigned long dsrel,
 
-                               /* These will be zero at a first try, to see
-                               if code is statically linked.  Else a
-                               second try, with the symbol table and
-                               string table nonzero should be done. */
-                               unsigned char * symbols, unsigned long symlength,
-                               unsigned char * strings, unsigned long stringlength,
+			      /* These will be zero at a first try, to see
+				 if code is statically linked.  Else a
+				 second try, with the symbol table and
+				 string table nonzero should be done. */
+			      unsigned char *symbols, unsigned long symlength,
+			      unsigned char *strings, unsigned long stringlength,
 
-                               /* These will only be used when symbol table
-                                information is present. */
-                               char ** env, int envc,
-                               int euid, int is_suid);
+			      /* These will only be used when symbol table
+			       information is present. */
+			      char **env, int envc,
+			      int euid, int is_suid);
 
 
 #ifdef RELOC_DEBUG
 /* Task-specific debug stuff. */
 struct task_reloc_debug {
-  struct memdebug * alloclast;
-  unsigned long alloc_total;
-  unsigned long export_total;
+	struct memdebug *alloclast;
+	unsigned long alloc_total;
+	unsigned long export_total;
 };
 #endif /* RELOC_DEBUG */
 
@@ -97,11 +97,11 @@ struct task_reloc_debug {
 struct shlibdep;
 
 extern void
-shlibmod_exit (struct shlibdep ** deps);
+shlibmod_exit(struct shlibdep **deps);
 
 /* Returns 0 if failure, nonzero for ok. */
 extern int
-shlibmod_fork (struct shlibdep ** deps);
+shlibmod_fork(struct shlibdep **deps);
 
 #else  /* ! SHARE_LIB_CORE */
 # define shlibmod_exit(x)

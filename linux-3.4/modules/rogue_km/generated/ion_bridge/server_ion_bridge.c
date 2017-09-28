@@ -75,101 +75,100 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /* ***************************************************************************
  * Server-side bridge entry points
  */
-
+ 
 static IMG_INT
-PVRSRVBridgePhysmemImportIon (IMG_UINT32 ui32BridgeID,
-                              PVRSRV_BRIDGE_IN_PHYSMEMIMPORTION * psPhysmemImportIonIN,
-                              PVRSRV_BRIDGE_OUT_PHYSMEMIMPORTION * psPhysmemImportIonOUT,
-                              CONNECTION_DATA * psConnection)
+PVRSRVBridgePhysmemImportIon(IMG_UINT32 ui32BridgeID,
+					 PVRSRV_BRIDGE_IN_PHYSMEMIMPORTION *psPhysmemImportIonIN,
+					 PVRSRV_BRIDGE_OUT_PHYSMEMIMPORTION *psPhysmemImportIonOUT,
+					 CONNECTION_DATA *psConnection)
 {
-  PMR * psPMRPtrInt = IMG_NULL;
-  IMG_HANDLE hPMRPtrInt2 = IMG_NULL;
-  
-  PVRSRV_BRIDGE_ASSERT_CMD (ui32BridgeID, PVRSRV_BRIDGE_ION_PHYSMEMIMPORTION);
-  
-  
-  
-  
-  
-  psPhysmemImportIonOUT->eError =
-    PhysmemImportIon (psConnection,
-                      psPhysmemImportIonIN->ifd,
-                      psPhysmemImportIonIN->uiFlags,
-                      &psPMRPtrInt,
-                      &psPhysmemImportIonOUT->uiSize,
-                      &psPhysmemImportIonOUT->sAlign);
-  /* Exit early if bridged call fails */
-  if (psPhysmemImportIonOUT->eError != PVRSRV_OK)
-  {
-    goto PhysmemImportIon_exit;
-  }
-  
-  /* Create a resman item and overwrite the handle with it */
-  hPMRPtrInt2 = ResManRegisterRes (psConnection->hResManContext,
-                                   RESMAN_TYPE_PMR,
-                                   psPMRPtrInt,
-                                   (RESMAN_FREE_FN) &PMRUnrefPMR);
-  if (hPMRPtrInt2 == IMG_NULL)
-  {
-    psPhysmemImportIonOUT->eError = PVRSRV_ERROR_UNABLE_TO_REGISTER_RESOURCE;
-    goto PhysmemImportIon_exit;
-  }
-  psPhysmemImportIonOUT->eError = PVRSRVAllocHandle (psConnection->psHandleBase,
-                                  &psPhysmemImportIonOUT->hPMRPtr,
-                                  (IMG_HANDLE) hPMRPtrInt2,
-                                  PVRSRV_HANDLE_TYPE_PHYSMEM_PMR,
-                                  PVRSRV_HANDLE_ALLOC_FLAG_NONE
-                                                    );
-  if (psPhysmemImportIonOUT->eError != PVRSRV_OK)
-  {
-    goto PhysmemImportIon_exit;
-  }
-  
-  
+	PMR * psPMRPtrInt = IMG_NULL;
+	IMG_HANDLE hPMRPtrInt2 = IMG_NULL;
+
+	PVRSRV_BRIDGE_ASSERT_CMD(ui32BridgeID, PVRSRV_BRIDGE_ION_PHYSMEMIMPORTION);
+
+
+
+
+
+	psPhysmemImportIonOUT->eError =
+		PhysmemImportIon(psConnection,
+					psPhysmemImportIonIN->ifd,
+					psPhysmemImportIonIN->uiFlags,
+					&psPMRPtrInt,
+					&psPhysmemImportIonOUT->uiSize,
+					&psPhysmemImportIonOUT->sAlign);
+	/* Exit early if bridged call fails */
+	if(psPhysmemImportIonOUT->eError != PVRSRV_OK)
+	{
+		goto PhysmemImportIon_exit;
+	}
+
+	/* Create a resman item and overwrite the handle with it */
+	hPMRPtrInt2 = ResManRegisterRes(psConnection->hResManContext,
+												RESMAN_TYPE_PMR,
+												psPMRPtrInt,
+												(RESMAN_FREE_FN)&PMRUnrefPMR);
+	if (hPMRPtrInt2 == IMG_NULL)
+	{
+		psPhysmemImportIonOUT->eError = PVRSRV_ERROR_UNABLE_TO_REGISTER_RESOURCE;
+		goto PhysmemImportIon_exit;
+	}
+	psPhysmemImportIonOUT->eError = PVRSRVAllocHandle(psConnection->psHandleBase,
+							&psPhysmemImportIonOUT->hPMRPtr,
+							(IMG_HANDLE) hPMRPtrInt2,
+							PVRSRV_HANDLE_TYPE_PHYSMEM_PMR,
+							PVRSRV_HANDLE_ALLOC_FLAG_NONE
+							);
+	if (psPhysmemImportIonOUT->eError != PVRSRV_OK)
+	{
+		goto PhysmemImportIon_exit;
+	}
+
+
 PhysmemImportIon_exit:
-  if (psPhysmemImportIonOUT->eError != PVRSRV_OK)
-  {
-    /* If we have a valid resman item we should undo the bridge function by freeing the resman item */
-    if (hPMRPtrInt2)
-    {
-      PVRSRV_ERROR eError = ResManFreeResByPtr (hPMRPtrInt2);
-      
-      /* Freeing a resource should never fail... */
-      PVR_ASSERT ( (eError == PVRSRV_OK) || (eError == PVRSRV_ERROR_RETRY) );
-    }
-    else
-      if (psPMRPtrInt)
-      {
-        PMRUnrefPMR (psPMRPtrInt);
-      }
-  }
-  
-  
-  return 0;
+	if (psPhysmemImportIonOUT->eError != PVRSRV_OK)
+	{
+		/* If we have a valid resman item we should undo the bridge function by freeing the resman item */
+		if (hPMRPtrInt2)
+		{
+			PVRSRV_ERROR eError = ResManFreeResByPtr(hPMRPtrInt2);
+
+			/* Freeing a resource should never fail... */
+			PVR_ASSERT((eError == PVRSRV_OK) || (eError == PVRSRV_ERROR_RETRY));
+		}
+		else if (psPMRPtrInt)
+		{
+			PMRUnrefPMR(psPMRPtrInt);
+		}
+	}
+
+
+	return 0;
 }
 
 
 
-/* ***************************************************************************
- * Server bridge dispatch related glue
+/* *************************************************************************** 
+ * Server bridge dispatch related glue 
  */
-
-PVRSRV_ERROR RegisterIONFunctions (IMG_VOID);
-IMG_VOID UnregisterIONFunctions (IMG_VOID);
+ 
+PVRSRV_ERROR RegisterIONFunctions(IMG_VOID);
+IMG_VOID UnregisterIONFunctions(IMG_VOID);
 
 /*
  * Register all ION functions with services
  */
-PVRSRV_ERROR RegisterIONFunctions (IMG_VOID)
+PVRSRV_ERROR RegisterIONFunctions(IMG_VOID)
 {
-  SetDispatchTableEntry (PVRSRV_BRIDGE_ION_PHYSMEMIMPORTION, PVRSRVBridgePhysmemImportIon);
-  
-  return PVRSRV_OK;
+	SetDispatchTableEntry(PVRSRV_BRIDGE_ION_PHYSMEMIMPORTION, PVRSRVBridgePhysmemImportIon);
+
+	return PVRSRV_OK;
 }
 
 /*
  * Unregister all ion functions with services
  */
-IMG_VOID UnregisterIONFunctions (IMG_VOID)
+IMG_VOID UnregisterIONFunctions(IMG_VOID)
 {
 }

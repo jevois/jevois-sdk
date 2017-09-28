@@ -25,17 +25,17 @@
  * in the low address range. Architectures for which this is not
  * true can't use this generic implementation.
  */
-extern unsigned int ioread8 (void __iomem *);
-extern unsigned int ioread16 (void __iomem *);
-extern unsigned int ioread16be (void __iomem *);
-extern unsigned int ioread32 (void __iomem *);
-extern unsigned int ioread32be (void __iomem *);
+extern unsigned int ioread8(void __iomem *);
+extern unsigned int ioread16(void __iomem *);
+extern unsigned int ioread16be(void __iomem *);
+extern unsigned int ioread32(void __iomem *);
+extern unsigned int ioread32be(void __iomem *);
 
-extern void iowrite8 (u8, void __iomem *);
-extern void iowrite16 (u16, void __iomem *);
-extern void iowrite16be (u16, void __iomem *);
-extern void iowrite32 (u32, void __iomem *);
-extern void iowrite32be (u32, void __iomem *);
+extern void iowrite8(u8, void __iomem *);
+extern void iowrite16(u16, void __iomem *);
+extern void iowrite16be(u16, void __iomem *);
+extern void iowrite32(u32, void __iomem *);
+extern void iowrite32be(u32, void __iomem *);
 
 /*
  * "string" versions of the above. Note that they
@@ -48,18 +48,18 @@ extern void iowrite32be (u32, void __iomem *);
  * memory across multiple ports, use "memcpy_toio()"
  * and friends.
  */
-extern void ioread8_rep (void __iomem * port, void * buf, unsigned long count);
-extern void ioread16_rep (void __iomem * port, void * buf, unsigned long count);
-extern void ioread32_rep (void __iomem * port, void * buf, unsigned long count);
+extern void ioread8_rep(void __iomem *port, void *buf, unsigned long count);
+extern void ioread16_rep(void __iomem *port, void *buf, unsigned long count);
+extern void ioread32_rep(void __iomem *port, void *buf, unsigned long count);
 
-extern void iowrite8_rep (void __iomem * port, const void * buf, unsigned long count);
-extern void iowrite16_rep (void __iomem * port, const void * buf, unsigned long count);
-extern void iowrite32_rep (void __iomem * port, const void * buf, unsigned long count);
+extern void iowrite8_rep(void __iomem *port, const void *buf, unsigned long count);
+extern void iowrite16_rep(void __iomem *port, const void *buf, unsigned long count);
+extern void iowrite32_rep(void __iomem *port, const void *buf, unsigned long count);
 
 #ifdef CONFIG_HAS_IOPORT
 /* Create a virtual mapping cookie for an IO port range */
-extern void __iomem * ioport_map (unsigned long port, unsigned int nr);
-extern void ioport_unmap (void __iomem *);
+extern void __iomem *ioport_map(unsigned long port, unsigned int nr);
+extern void ioport_unmap(void __iomem *);
 #endif
 
 #ifndef ARCH_HAS_IOREMAP_WC
@@ -69,10 +69,10 @@ extern void ioport_unmap (void __iomem *);
 #ifdef CONFIG_PCI
 /* Destroy a virtual mapping cookie for a PCI BAR (memory or IO) */
 struct pci_dev;
-extern void pci_iounmap (struct pci_dev * dev, void __iomem *);
+extern void pci_iounmap(struct pci_dev *dev, void __iomem *);
 #elif defined(CONFIG_GENERIC_IOMAP)
 struct pci_dev;
-static inline void pci_iounmap (struct pci_dev * dev, void __iomem * addr)
+static inline void pci_iounmap(struct pci_dev *dev, void __iomem *addr)
 { }
 #endif
 

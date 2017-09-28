@@ -30,38 +30,37 @@
 #include "dvb_frontend.h"
 
 struct stv0367_config {
-  u8 demod_address;
-  u32 xtal;
-  u32 if_khz;/*4500*/
-  int if_iq_mode;
-  int ts_mode;
-  int clk_pol;
+	u8 demod_address;
+	u32 xtal;
+	u32 if_khz;/*4500*/
+	int if_iq_mode;
+	int ts_mode;
+	int clk_pol;
 };
 
 #if defined(CONFIG_DVB_STV0367) || (defined(CONFIG_DVB_STV0367_MODULE) \
-&& defined(MODULE))
+							&& defined(MODULE))
 extern struct
-dvb_frontend * stv0367ter_attach (const struct stv0367_config * config,
-                                      struct i2c_adapter * i2c);
-      extern struct
-    dvb_frontend * stv0367cab_attach (const struct stv0367_config * config,
-                                          struct i2c_adapter * i2c);
+dvb_frontend *stv0367ter_attach(const struct stv0367_config *config,
+					struct i2c_adapter *i2c);
+extern struct
+dvb_frontend *stv0367cab_attach(const struct stv0367_config *config,
+					struct i2c_adapter *i2c);
 #else
 static inline struct
-dvb_frontend * stv0367ter_attach (const struct stv0367_config * config,
-                                  struct i2c_adapter * i2c)
+dvb_frontend *stv0367ter_attach(const struct stv0367_config *config,
+					struct i2c_adapter *i2c)
 {
-  printk (KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
-  return NULL;
+	printk(KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
+	return NULL;
 }
 static inline struct
-dvb_frontend * stv0367cab_attach (const struct stv0367_config * config,
-                                  struct i2c_adapter * i2c)
+dvb_frontend *stv0367cab_attach(const struct stv0367_config *config,
+					struct i2c_adapter *i2c)
 {
-  printk (KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
-  return NULL;
+	printk(KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
+	return NULL;
 }
 #endif
-                                          
+
 #endif
-                                          

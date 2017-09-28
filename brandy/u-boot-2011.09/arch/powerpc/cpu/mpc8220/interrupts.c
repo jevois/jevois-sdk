@@ -34,9 +34,9 @@
 
 int interrupt_init_cpu (ulong * decrementer_count)
 {
-  *decrementer_count = get_tbclk () / CONFIG_SYS_HZ;
-  
-  return (0);
+	*decrementer_count = get_tbclk () / CONFIG_SYS_HZ;
+
+	return (0);
 }
 
 /****************************************************************************/
@@ -44,15 +44,15 @@ int interrupt_init_cpu (ulong * decrementer_count)
 /*
  * Handle external interrupts
  */
-void external_interrupt (struct pt_regs * regs)
+void external_interrupt (struct pt_regs *regs)
 {
-  puts ("external_interrupt (oops!)\n");
+	puts ("external_interrupt (oops!)\n");
 }
 
-void timer_interrupt_cpu (struct pt_regs * regs)
+void timer_interrupt_cpu (struct pt_regs *regs)
 {
-  /* nothing to do here */
-  return;
+	/* nothing to do here */
+	return;
 }
 
 /****************************************************************************/
@@ -61,7 +61,7 @@ void timer_interrupt_cpu (struct pt_regs * regs)
  * Install and free a interrupt handler.
  */
 
-void irq_install_handler (int vec, interrupt_handler_t * handler, void * arg)
+void irq_install_handler (int vec, interrupt_handler_t * handler, void *arg)
 {
 
 }
@@ -76,5 +76,5 @@ void irq_free_handler (int vec)
 void
 do_irqinfo (cmd_tbl_t * cmdtp, bd_t * bd, int flag, int argc, char * const argv[])
 {
-  puts ("IRQ related functions are unimplemented currently.\n");
+	puts ("IRQ related functions are unimplemented currently.\n");
 }

@@ -1,5 +1,5 @@
 /*********************************************************************
- *
+ *                
  * Filename:      irda.h
  * Version:       1.0
  * Description:   IrDA common include file for kernel internal use
@@ -8,27 +8,27 @@
  * Created at:    Tue Dec  9 21:13:12 1997
  * Modified at:   Fri Jan 28 13:16:32 2000
  * Modified by:   Dag Brattli <dagb@cs.uit.no>
- *
+ * 
  *     Copyright (c) 1998-2000 Dag Brattli, All Rights Reserved.
  *     Copyright (c) 2000-2002 Jean Tourrilhes <jt@hpl.hp.com>
- *
- *     This program is free software; you can redistribute it and/or
- *     modify it under the terms of the GNU General Public License as
- *     published by the Free Software Foundation; either version 2 of
+ *      
+ *     This program is free software; you can redistribute it and/or 
+ *     modify it under the terms of the GNU General Public License as 
+ *     published by the Free Software Foundation; either version 2 of 
  *     the License, or (at your option) any later version.
- *
+ *  
  *     Neither Dag Brattli nor University of Tromsø admit liability nor
- *     provide warranty for any of this software. This material is
+ *     provide warranty for any of this software. This material is 
  *     provided "AS-IS" and at no charge.
- *
+ *     
  ********************************************************************/
 
 #ifndef NET_IRDA_H
 #define NET_IRDA_H
 
-#include <linux/skbuff.h>   /* struct sk_buff */
+#include <linux/skbuff.h>		/* struct sk_buff */
 #include <linux/kernel.h>
-#include <linux/if.h>     /* sa_family_t in <linux/irda.h> */
+#include <linux/if.h>			/* sa_family_t in <linux/irda.h> */
 #include <linux/irda.h>
 
 typedef __u32 magic_t;
@@ -37,7 +37,7 @@ typedef __u32 magic_t;
 #define TRUE 1
 #endif
 
-#ifndef FALSE
+#ifndef FALSE 
 #define FALSE 0
 #endif
 
@@ -62,15 +62,15 @@ extern unsigned int irda_debug;
 #define IRDA_DEBUG_LEVEL 0
 
 #define IRDA_DEBUG(n, args...) \
-  do {  if (irda_debug >= (n)) \
-      printk(KERN_DEBUG args); \
-  } while (0)
+do {	if (irda_debug >= (n)) \
+		printk(KERN_DEBUG args); \
+} while (0)
 #define IRDA_ASSERT(expr, func) \
-  do { if(!(expr)) { \
-      printk( "Assertion failed! %s:%s:%d %s\n", \
-              __FILE__,__func__,__LINE__,(#expr) ); \
-      func } } while (0)
-#define IRDA_ASSERT_LABEL(label)  label
+do { if(!(expr)) { \
+	printk( "Assertion failed! %s:%s:%d %s\n", \
+		__FILE__,__func__,__LINE__,(#expr) ); \
+	func } } while (0)
+#define IRDA_ASSERT_LABEL(label)	label
 #else
 #define IRDA_DEBUG(n, args...) do { } while (0)
 #define IRDA_ASSERT(expr, func) do { (void)(expr); } while (0)
@@ -82,7 +82,7 @@ extern unsigned int irda_debug;
 #define IRDA_ERROR(args...)   do { if (net_ratelimit()) printk(KERN_ERR args); } while (0)
 
 /*
- *  Magic numbers used by Linux-IrDA. Random numbers which must be unique to
+ *  Magic numbers used by Linux-IrDA. Random numbers which must be unique to 
  *  give the best protection
  */
 
@@ -112,20 +112,20 @@ extern unsigned int irda_debug;
 struct net_device;
 struct packet_type;
 
-extern void irda_proc_register (void);
-extern void irda_proc_unregister (void);
+extern void irda_proc_register(void);
+extern void irda_proc_unregister(void);
 
-extern int irda_sysctl_register (void);
-extern void irda_sysctl_unregister (void);
+extern int irda_sysctl_register(void);
+extern void irda_sysctl_unregister(void);
 
-extern int irsock_init (void);
-extern void irsock_cleanup (void);
+extern int irsock_init(void);
+extern void irsock_cleanup(void);
 
-extern int irda_nl_register (void);
-extern void irda_nl_unregister (void);
+extern int irda_nl_register(void);
+extern void irda_nl_unregister(void);
 
-extern int irlap_driver_rcv (struct sk_buff * skb, struct net_device * dev,
-                             struct packet_type * ptype,
-                             struct net_device * orig_dev);
+extern int irlap_driver_rcv(struct sk_buff *skb, struct net_device *dev,
+			    struct packet_type *ptype,
+			    struct net_device *orig_dev);
 
 #endif /* NET_IRDA_H */

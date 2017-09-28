@@ -11,11 +11,11 @@
  * Documentation/DMA-attributes.txt.
  */
 enum dma_attr {
-  DMA_ATTR_WRITE_BARRIER,
-  DMA_ATTR_WEAK_ORDERING,
-  DMA_ATTR_WRITE_COMBINE,
-  DMA_ATTR_NON_CONSISTENT,
-  DMA_ATTR_MAX,
+	DMA_ATTR_WRITE_BARRIER,
+	DMA_ATTR_WEAK_ORDERING,
+	DMA_ATTR_WRITE_COMBINE,
+	DMA_ATTR_NON_CONSISTENT,
+	DMA_ATTR_MAX,
 };
 
 #define __DMA_ATTRS_LONGS BITS_TO_LONGS(DMA_ATTR_MAX)
@@ -25,17 +25,17 @@ enum dma_attr {
  * @flags - bitmask representing a collection of enum dma_attr
  */
 struct dma_attrs {
-  unsigned long flags[__DMA_ATTRS_LONGS];
+	unsigned long flags[__DMA_ATTRS_LONGS];
 };
 
-#define DEFINE_DMA_ATTRS(x)           \
-  struct dma_attrs x = {          \
-    .flags = { [0 ... __DMA_ATTRS_LONGS-1] = 0 }, \
-  }
+#define DEFINE_DMA_ATTRS(x) 					\
+	struct dma_attrs x = {					\
+		.flags = { [0 ... __DMA_ATTRS_LONGS-1] = 0 },	\
+	}
 
-static inline void init_dma_attrs (struct dma_attrs * attrs)
+static inline void init_dma_attrs(struct dma_attrs *attrs)
 {
-  bitmap_zero (attrs->flags, __DMA_ATTRS_LONGS);
+	bitmap_zero(attrs->flags, __DMA_ATTRS_LONGS);
 }
 
 #ifdef CONFIG_HAVE_DMA_ATTRS
@@ -44,12 +44,12 @@ static inline void init_dma_attrs (struct dma_attrs * attrs)
  * @attr: attribute to set
  * @attrs: struct dma_attrs (may be NULL)
  */
-static inline void dma_set_attr (enum dma_attr attr, struct dma_attrs * attrs)
+static inline void dma_set_attr(enum dma_attr attr, struct dma_attrs *attrs)
 {
-  if (attrs == NULL)
-  { return; }
-  BUG_ON (attr >= DMA_ATTR_MAX);
-  __set_bit (attr, attrs->flags);
+	if (attrs == NULL)
+		return;
+	BUG_ON(attr >= DMA_ATTR_MAX);
+	__set_bit(attr, attrs->flags);
 }
 
 /**
@@ -57,21 +57,21 @@ static inline void dma_set_attr (enum dma_attr attr, struct dma_attrs * attrs)
  * @attr: attribute to set
  * @attrs: struct dma_attrs (may be NULL)
  */
-static inline int dma_get_attr (enum dma_attr attr, struct dma_attrs * attrs)
+static inline int dma_get_attr(enum dma_attr attr, struct dma_attrs *attrs)
 {
-  if (attrs == NULL)
-  { return 0; }
-  BUG_ON (attr >= DMA_ATTR_MAX);
-  return test_bit (attr, attrs->flags);
+	if (attrs == NULL)
+		return 0;
+	BUG_ON(attr >= DMA_ATTR_MAX);
+	return test_bit(attr, attrs->flags);
 }
 #else /* !CONFIG_HAVE_DMA_ATTRS */
-static inline void dma_set_attr (enum dma_attr attr, struct dma_attrs * attrs)
+static inline void dma_set_attr(enum dma_attr attr, struct dma_attrs *attrs)
 {
 }
 
-static inline int dma_get_attr (enum dma_attr attr, struct dma_attrs * attrs)
+static inline int dma_get_attr(enum dma_attr attr, struct dma_attrs *attrs)
 {
-  return 0;
+	return 0;
 }
 #endif /* CONFIG_HAVE_DMA_ATTRS */
 #endif /* _DMA_ATTR_H */

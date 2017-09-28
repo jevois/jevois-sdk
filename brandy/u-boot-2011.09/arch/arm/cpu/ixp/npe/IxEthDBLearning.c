@@ -1,15 +1,15 @@
 /**
  * @file IxEthDBLearning.c
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -22,7 +22,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -35,7 +35,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  */
@@ -46,7 +46,7 @@
  * @brief hashes the mac address in a mac descriptor with a XOR function
  *
  * @param entry pointer to a mac descriptor to be hashed
- *
+ * 
  * This function only extracts the mac address and employs ixEthDBKeyXORHash()
  * to do the actual hashing.
  * Used only to add a whole entry to a hash table, as opposed to searching which
@@ -58,11 +58,11 @@
  *
  * @internal
  */
-UINT32 ixEthDBEntryXORHash (void * entry)
+UINT32 ixEthDBEntryXORHash(void *entry)
 {
-  MacDescriptor * descriptor = (MacDescriptor *) entry;
-  
-  return ixEthDBKeyXORHash (descriptor->macAddress);
+    MacDescriptor *descriptor = (MacDescriptor *) entry;
+
+    return ixEthDBKeyXORHash(descriptor->macAddress);
 }
 
 /**
@@ -82,23 +82,23 @@ UINT32 ixEthDBEntryXORHash (void * entry)
  *
  * @internal
  */
-UINT32 ixEthDBKeyXORHash (void * key)
+UINT32 ixEthDBKeyXORHash(void *key)
 {
-  UINT32 hashValue;
-  UINT8 * value = (UINT8 *) key;
-  
-  hashValue  = (value[5] << 8) | value[4];
-  hashValue ^= (value[3] << 8) | value[2];
-  hashValue ^= (value[1] << 8) | value[0];
-  
-  return hashValue;
+    UINT32 hashValue;
+    UINT8 *value = (UINT8 *) key;
+    
+    hashValue  = (value[5] << 8) | value[4];
+    hashValue ^= (value[3] << 8) | value[2];
+    hashValue ^= (value[1] << 8) | value[0];
+
+    return hashValue;
 }
 
 /**
  * @brief mac descriptor match function
  *
  * @param reference mac address (typically an IxEthDBMacAddr pointer) structure
- * @param entry pointer to a mac descriptor whose key (mac address) is to be
+ * @param entry pointer to a mac descriptor whose key (mac address) is to be 
  * matched against the reference key
  *
  * Used by the hash table to retrieve entries. Hashing entries can produce
@@ -110,9 +110,9 @@ UINT32 ixEthDBKeyXORHash (void * key)
  *
  * @internal
  */
-BOOL ixEthDBAddressMatch (void * reference, void * entry)
+BOOL ixEthDBAddressMatch(void *reference, void *entry)
 {
-  return (ixEthDBAddressCompare (reference, ( (MacDescriptor *) entry)->macAddress) == 0);
+    return (ixEthDBAddressCompare(reference, ((MacDescriptor *) entry)->macAddress) == 0);
 }
 
 /**
@@ -120,7 +120,7 @@ BOOL ixEthDBAddressMatch (void * reference, void * entry)
  *
  * @param mac1 first mac address to compare
  * @param mac2 second mac address to compare
- *
+ * 
  * This comparison works in a similar way to strcmp, producing similar results.
  * Used to insert values keyed on mac addresses into binary search trees.
  *
@@ -128,23 +128,22 @@ BOOL ixEthDBAddressMatch (void * reference, void * entry)
  * @retval 0 if ma1 == mac2
  * @retval 1 if mac1 > mac2
  */
-UINT32 ixEthDBAddressCompare (UINT8 * mac1, UINT8 * mac2)
+UINT32 ixEthDBAddressCompare(UINT8 *mac1, UINT8 *mac2)
 {
-  UINT32 local_index;
-  
-  for (local_index = 0 ; local_index < IX_IEEE803_MAC_ADDRESS_SIZE ; local_index++)
-  {
-    if (mac1[local_index] > mac2[local_index])
+    UINT32 local_index;
+
+    for (local_index = 0 ; local_index < IX_IEEE803_MAC_ADDRESS_SIZE ; local_index++)
     {
-      return 1;
+        if (mac1[local_index] > mac2[local_index])
+        {
+            return 1;
+        }
+        else if (mac1[local_index] < mac2[local_index])
+        {
+            return -1;
+        }
     }
-    else
-      if (mac1[local_index] < mac2[local_index])
-      {
-        return -1;
-      }
-  }
-  
-  return 0;
+
+    return 0;
 }
 

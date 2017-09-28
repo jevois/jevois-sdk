@@ -46,9 +46,9 @@
  * field of the work request message, and reflected back by the adapter
  * in the verbs reply message.  The function handle_vq() in the interrupt
  * path will use this pointer to:
- *  1) append a copy of the verbs reply message
- *  2) mark that the reply is ready
- *  3) wake up the kernel verbs handler blocked awaiting the reply.
+ * 	1) append a copy of the verbs reply message
+ * 	2) mark that the reply is ready
+ * 	3) wake up the kernel verbs handler blocked awaiting the reply.
  *
  *
  * The kernel verbs handlers do a "get" to put a 2nd reference on the
@@ -79,62 +79,62 @@
  * in that order.
  */
 
-int vq_init (struct c2_dev * c2dev)
+int vq_init(struct c2_dev *c2dev)
 {
-  sprintf (c2dev->vq_cache_name, "c2-vq:dev%c",
-           (char) ('0' + c2dev->devnum) );
-  c2dev->host_msg_cache =
-    kmem_cache_create (c2dev->vq_cache_name, c2dev->rep_vq.msg_size, 0,
-                       SLAB_HWCACHE_ALIGN, NULL);
-  if (c2dev->host_msg_cache == NULL) {
-    return -ENOMEM;
-  }
-  return 0;
+	sprintf(c2dev->vq_cache_name, "c2-vq:dev%c",
+		(char) ('0' + c2dev->devnum));
+	c2dev->host_msg_cache =
+	    kmem_cache_create(c2dev->vq_cache_name, c2dev->rep_vq.msg_size, 0,
+			      SLAB_HWCACHE_ALIGN, NULL);
+	if (c2dev->host_msg_cache == NULL) {
+		return -ENOMEM;
+	}
+	return 0;
 }
 
-void vq_term (struct c2_dev * c2dev)
+void vq_term(struct c2_dev *c2dev)
 {
-  kmem_cache_destroy (c2dev->host_msg_cache);
+	kmem_cache_destroy(c2dev->host_msg_cache);
 }
 
 /* vq_req_alloc - allocate a VQ Request Object and initialize it.
  * The refcnt is set to 1.
  */
-struct c2_vq_req * vq_req_alloc (struct c2_dev * c2dev)
+struct c2_vq_req *vq_req_alloc(struct c2_dev *c2dev)
 {
-  struct c2_vq_req * r;
-  
-  r = kmalloc (sizeof (struct c2_vq_req), GFP_KERNEL);
-  if (r) {
-    init_waitqueue_head (&r->wait_object);
-    r->reply_msg = 0;
-    r->event = 0;
-    r->cm_id = NULL;
-    r->qp = NULL;
-    atomic_set (&r->refcnt, 1);
-    atomic_set (&r->reply_ready, 0);
-  }
-  return r;
+	struct c2_vq_req *r;
+
+	r = kmalloc(sizeof(struct c2_vq_req), GFP_KERNEL);
+	if (r) {
+		init_waitqueue_head(&r->wait_object);
+		r->reply_msg = 0;
+		r->event = 0;
+		r->cm_id = NULL;
+		r->qp = NULL;
+		atomic_set(&r->refcnt, 1);
+		atomic_set(&r->reply_ready, 0);
+	}
+	return r;
 }
 
 
 /* vq_req_free - free the VQ Request Object.  It is assumed the verbs handler
  * has already free the VQ Reply Buffer if it existed.
  */
-void vq_req_free (struct c2_dev * c2dev, struct c2_vq_req * r)
+void vq_req_free(struct c2_dev *c2dev, struct c2_vq_req *r)
 {
-  r->reply_msg = 0;
-  if (atomic_dec_and_test (&r->refcnt) ) {
-    kfree (r);
-  }
+	r->reply_msg = 0;
+	if (atomic_dec_and_test(&r->refcnt)) {
+		kfree(r);
+	}
 }
 
 /* vq_req_get - reference a VQ Request Object.  Done
  * only in the kernel verbs handlers.
  */
-void vq_req_get (struct c2_dev * c2dev, struct c2_vq_req * r)
+void vq_req_get(struct c2_dev *c2dev, struct c2_vq_req *r)
 {
-  atomic_inc (&r->refcnt);
+	atomic_inc(&r->refcnt);
 }
 
 
@@ -148,23 +148,23 @@ void vq_req_get (struct c2_dev * c2dev, struct c2_vq_req * r)
  * Request object _and_ the VQ Reply Buffer
  * if it exists.
  */
-void vq_req_put (struct c2_dev * c2dev, struct c2_vq_req * r)
+void vq_req_put(struct c2_dev *c2dev, struct c2_vq_req *r)
 {
-  if (atomic_dec_and_test (&r->refcnt) ) {
-    if (r->reply_msg != 0)
-      vq_repbuf_free (c2dev,
-                      (void *) (unsigned long) r->reply_msg);
-    kfree (r);
-  }
+	if (atomic_dec_and_test(&r->refcnt)) {
+		if (r->reply_msg != 0)
+			vq_repbuf_free(c2dev,
+				       (void *) (unsigned long) r->reply_msg);
+		kfree(r);
+	}
 }
 
 
 /*
  * vq_repbuf_alloc - allocate a VQ Reply Buffer.
  */
-void * vq_repbuf_alloc (struct c2_dev * c2dev)
+void *vq_repbuf_alloc(struct c2_dev *c2dev)
 {
-  return kmem_cache_alloc (c2dev->host_msg_cache, GFP_ATOMIC);
+	return kmem_cache_alloc(c2dev->host_msg_cache, GFP_ATOMIC);
 }
 
 /*
@@ -175,86 +175,86 @@ void * vq_repbuf_alloc (struct c2_dev * c2dev)
  * it inserts MQ index 0 in to the
  * adapter->host activity fifo and interrupts the host.
  */
-int vq_send_wr (struct c2_dev * c2dev, union c2wr * wr)
+int vq_send_wr(struct c2_dev *c2dev, union c2wr *wr)
 {
-  void * msg;
-  wait_queue_t __wait;
-  
-  /*
-   * grab adapter vq lock
-   */
-  spin_lock (&c2dev->vqlock);
-  
-  /*
-   * allocate msg
-   */
-  msg = c2_mq_alloc (&c2dev->req_vq);
-  
-  /*
-   * If we cannot get a msg, then we'll wait
-   * When a messages are available, the int handler will wake_up()
-   * any waiters.
-   */
-  while (msg == NULL) {
-    pr_debug ("%s:%d no available msg in VQ, waiting...\n",
-              __func__, __LINE__);
-    init_waitqueue_entry (&__wait, current);
-    add_wait_queue (&c2dev->req_vq_wo, &__wait);
-    spin_unlock (&c2dev->vqlock);
-    for (;;) {
-      set_current_state (TASK_INTERRUPTIBLE);
-      if (!c2_mq_full (&c2dev->req_vq) ) {
-        break;
-      }
-      if (!signal_pending (current) ) {
-        schedule_timeout (1 * HZ); /* 1 second... */
-        continue;
-      }
-      set_current_state (TASK_RUNNING);
-      remove_wait_queue (&c2dev->req_vq_wo, &__wait);
-      return -EINTR;
-    }
-    set_current_state (TASK_RUNNING);
-    remove_wait_queue (&c2dev->req_vq_wo, &__wait);
-    spin_lock (&c2dev->vqlock);
-    msg = c2_mq_alloc (&c2dev->req_vq);
-  }
-  
-  /*
-   * copy wr into adapter msg
-   */
-  memcpy (msg, wr, c2dev->req_vq.msg_size);
-  
-  /*
-   * post msg
-   */
-  c2_mq_produce (&c2dev->req_vq);
-  
-  /*
-   * release adapter vq lock
-   */
-  spin_unlock (&c2dev->vqlock);
-  return 0;
+	void *msg;
+	wait_queue_t __wait;
+
+	/*
+	 * grab adapter vq lock
+	 */
+	spin_lock(&c2dev->vqlock);
+
+	/*
+	 * allocate msg
+	 */
+	msg = c2_mq_alloc(&c2dev->req_vq);
+
+	/*
+	 * If we cannot get a msg, then we'll wait
+	 * When a messages are available, the int handler will wake_up()
+	 * any waiters.
+	 */
+	while (msg == NULL) {
+		pr_debug("%s:%d no available msg in VQ, waiting...\n",
+		       __func__, __LINE__);
+		init_waitqueue_entry(&__wait, current);
+		add_wait_queue(&c2dev->req_vq_wo, &__wait);
+		spin_unlock(&c2dev->vqlock);
+		for (;;) {
+			set_current_state(TASK_INTERRUPTIBLE);
+			if (!c2_mq_full(&c2dev->req_vq)) {
+				break;
+			}
+			if (!signal_pending(current)) {
+				schedule_timeout(1 * HZ);	/* 1 second... */
+				continue;
+			}
+			set_current_state(TASK_RUNNING);
+			remove_wait_queue(&c2dev->req_vq_wo, &__wait);
+			return -EINTR;
+		}
+		set_current_state(TASK_RUNNING);
+		remove_wait_queue(&c2dev->req_vq_wo, &__wait);
+		spin_lock(&c2dev->vqlock);
+		msg = c2_mq_alloc(&c2dev->req_vq);
+	}
+
+	/*
+	 * copy wr into adapter msg
+	 */
+	memcpy(msg, wr, c2dev->req_vq.msg_size);
+
+	/*
+	 * post msg
+	 */
+	c2_mq_produce(&c2dev->req_vq);
+
+	/*
+	 * release adapter vq lock
+	 */
+	spin_unlock(&c2dev->vqlock);
+	return 0;
 }
 
 
 /*
  * vq_wait_for_reply - block until the adapter posts a Verb Reply Message.
  */
-int vq_wait_for_reply (struct c2_dev * c2dev, struct c2_vq_req * req)
+int vq_wait_for_reply(struct c2_dev *c2dev, struct c2_vq_req *req)
 {
-  if (!wait_event_timeout (req->wait_object,
-                           atomic_read (&req->reply_ready),
-                           60 * HZ) )
-  { return -ETIMEDOUT; }
-  
-  return 0;
+	if (!wait_event_timeout(req->wait_object,
+				atomic_read(&req->reply_ready),
+				60*HZ))
+		return -ETIMEDOUT;
+
+	return 0;
 }
 
 /*
  * vq_repbuf_free - Free a Verbs Reply Buffer.
  */
-void vq_repbuf_free (struct c2_dev * c2dev, void * reply)
+void vq_repbuf_free(struct c2_dev *c2dev, void *reply)
 {
-  kmem_cache_free (c2dev->host_msg_cache, reply);
+	kmem_cache_free(c2dev->host_msg_cache, reply);
 }

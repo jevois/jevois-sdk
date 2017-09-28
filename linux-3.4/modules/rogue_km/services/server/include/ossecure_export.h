@@ -43,10 +43,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "pvrsrv_error.h"
 #include "connection_server.h"
 
-PVRSRV_ERROR OSSecureExport (CONNECTION_DATA * psConnection,
-                             IMG_PVOID pvData,
-                             IMG_SECURE_TYPE * phSecure,
-                             CONNECTION_DATA ** ppsSecureConnection);
-
-PVRSRV_ERROR OSSecureImport (IMG_SECURE_TYPE hSecure, IMG_PVOID * ppvData);
+PVRSRV_ERROR OSSecureExport(CONNECTION_DATA *psConnection,
+							IMG_PVOID pvData,
+							IMG_SECURE_TYPE *phSecure,
+							CONNECTION_DATA **ppsSecureConnection);
+							
+PVRSRV_ERROR OSSecureImport(IMG_SECURE_TYPE hSecure, IMG_PVOID *ppvData);
 

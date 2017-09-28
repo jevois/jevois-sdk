@@ -12,6 +12,6 @@
 #include <mmc.h>
 #include <asm/u-boot.h>
 
-int bfin_mmc_init (bd_t * bis);
+int bfin_mmc_init(bd_t *bis);
 
 #endif

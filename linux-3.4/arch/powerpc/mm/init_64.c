@@ -78,21 +78,21 @@
 #endif /* CONFIG_PPC_STD_MMU_64 */
 
 phys_addr_t memstart_addr = ~0;
-EXPORT_SYMBOL_GPL (memstart_addr);
+EXPORT_SYMBOL_GPL(memstart_addr);
 phys_addr_t kernstart_addr;
-EXPORT_SYMBOL_GPL (kernstart_addr);
+EXPORT_SYMBOL_GPL(kernstart_addr);
 
-static void pgd_ctor (void * addr)
+static void pgd_ctor(void *addr)
 {
-  memset (addr, 0, PGD_TABLE_SIZE);
+	memset(addr, 0, PGD_TABLE_SIZE);
 }
 
-static void pmd_ctor (void * addr)
+static void pmd_ctor(void *addr)
 {
-  memset (addr, 0, PMD_TABLE_SIZE);
+	memset(addr, 0, PMD_TABLE_SIZE);
 }
 
-struct kmem_cache * pgtable_cache[MAX_PGTABLE_INDEX_SIZE];
+struct kmem_cache *pgtable_cache[MAX_PGTABLE_INDEX_SIZE];
 
 /*
  * Create a kmem_cache() for pagetables.  This is not used for PTE
@@ -101,54 +101,54 @@ struct kmem_cache * pgtable_cache[MAX_PGTABLE_INDEX_SIZE];
  * everything else.  Caches created by this function are used for all
  * the higher level pagetables, and for hugepage pagetables.
  */
-void pgtable_cache_add (unsigned shift, void (*ctor) (void *) )
+void pgtable_cache_add(unsigned shift, void (*ctor)(void *))
 {
-  char * name;
-  unsigned long table_size = sizeof (void *) << shift;
-  unsigned long align = table_size;
-  
-  /* When batching pgtable pointers for RCU freeing, we store
-   * the index size in the low bits.  Table alignment must be
-   * big enough to fit it.
-   *
-   * Likewise, hugeapge pagetable pointers contain a (different)
-   * shift value in the low bits.  All tables must be aligned so
-   * as to leave enough 0 bits in the address to contain it. */
-  unsigned long minalign = max (MAX_PGTABLE_INDEX_SIZE + 1,
-                                HUGEPD_SHIFT_MASK + 1);
-  struct kmem_cache * new;
-  
-  /* It would be nice if this was a BUILD_BUG_ON(), but at the
-   * moment, gcc doesn't seem to recognize is_power_of_2 as a
-   * constant expression, so so much for that. */
-  BUG_ON (!is_power_of_2 (minalign) );
-  BUG_ON ( (shift < 1) || (shift > MAX_PGTABLE_INDEX_SIZE) );
-  
-  if (PGT_CACHE (shift) )
-  { return; } /* Already have a cache of this size */
-  
-  align = max_t (unsigned long, align, minalign);
-  name = kasprintf (GFP_KERNEL, "pgtable-2^%d", shift);
-  new = kmem_cache_create (name, table_size, align, 0, ctor);
-  PGT_CACHE (shift) = new;
-  
-  pr_debug ("Allocated pgtable cache for order %d\n", shift);
+	char *name;
+	unsigned long table_size = sizeof(void *) << shift;
+	unsigned long align = table_size;
+
+	/* When batching pgtable pointers for RCU freeing, we store
+	 * the index size in the low bits.  Table alignment must be
+	 * big enough to fit it.
+	 *
+	 * Likewise, hugeapge pagetable pointers contain a (different)
+	 * shift value in the low bits.  All tables must be aligned so
+	 * as to leave enough 0 bits in the address to contain it. */
+	unsigned long minalign = max(MAX_PGTABLE_INDEX_SIZE + 1,
+				     HUGEPD_SHIFT_MASK + 1);
+	struct kmem_cache *new;
+
+	/* It would be nice if this was a BUILD_BUG_ON(), but at the
+	 * moment, gcc doesn't seem to recognize is_power_of_2 as a
+	 * constant expression, so so much for that. */
+	BUG_ON(!is_power_of_2(minalign));
+	BUG_ON((shift < 1) || (shift > MAX_PGTABLE_INDEX_SIZE));
+
+	if (PGT_CACHE(shift))
+		return; /* Already have a cache of this size */
+
+	align = max_t(unsigned long, align, minalign);
+	name = kasprintf(GFP_KERNEL, "pgtable-2^%d", shift);
+	new = kmem_cache_create(name, table_size, align, 0, ctor);
+	PGT_CACHE(shift) = new;
+
+	pr_debug("Allocated pgtable cache for order %d\n", shift);
 }
 
 
-void pgtable_cache_init (void)
+void pgtable_cache_init(void)
 {
-  pgtable_cache_add (PGD_INDEX_SIZE, pgd_ctor);
-  pgtable_cache_add (PMD_INDEX_SIZE, pmd_ctor);
-  if (!PGT_CACHE (PGD_INDEX_SIZE) || !PGT_CACHE (PMD_INDEX_SIZE) )
-  { panic ("Couldn't allocate pgtable caches"); }
-  
-  /* In all current configs, when the PUD index exists it's the
-   * same size as either the pgd or pmd index.  Verify that the
-   * initialization above has also created a PUD cache.  This
-   * will need re-examiniation if we add new possibilities for
-   * the pagetable layout. */
-  BUG_ON (PUD_INDEX_SIZE && !PGT_CACHE (PUD_INDEX_SIZE) );
+	pgtable_cache_add(PGD_INDEX_SIZE, pgd_ctor);
+	pgtable_cache_add(PMD_INDEX_SIZE, pmd_ctor);
+	if (!PGT_CACHE(PGD_INDEX_SIZE) || !PGT_CACHE(PMD_INDEX_SIZE))
+		panic("Couldn't allocate pgtable caches");
+
+	/* In all current configs, when the PUD index exists it's the
+	 * same size as either the pgd or pmd index.  Verify that the
+	 * initialization above has also created a PUD cache.  This
+	 * will need re-examiniation if we add new possibilities for
+	 * the pagetable layout. */
+	BUG_ON(PUD_INDEX_SIZE && !PGT_CACHE(PUD_INDEX_SIZE));
 }
 
 #ifdef CONFIG_SPARSEMEM_VMEMMAP
@@ -158,12 +158,12 @@ void pgtable_cache_init (void)
  * do this by hand as the proffered address may not be correctly aligned.
  * Subtraction of non-aligned pointers produces undefined results.
  */
-static unsigned long __meminit vmemmap_section_start (unsigned long page)
+static unsigned long __meminit vmemmap_section_start(unsigned long page)
 {
-  unsigned long offset = page - ( (unsigned long) (vmemmap) );
-  
-  /* Return the pfn of the start of the section. */
-  return (offset / sizeof (struct page) ) & PAGE_SECTION_MASK;
+	unsigned long offset = page - ((unsigned long)(vmemmap));
+
+	/* Return the pfn of the start of the section. */
+	return (offset / sizeof(struct page)) & PAGE_SECTION_MASK;
 }
 
 /*
@@ -171,15 +171,15 @@ static unsigned long __meminit vmemmap_section_start (unsigned long page)
  * which overlaps this vmemmap page is initialised then this page is
  * initialised already.
  */
-static int __meminit vmemmap_populated (unsigned long start, int page_size)
+static int __meminit vmemmap_populated(unsigned long start, int page_size)
 {
-  unsigned long end = start + page_size;
-  
-  for (; start < end; start += (PAGES_PER_SECTION * sizeof (struct page) ) )
-    if (pfn_valid (vmemmap_section_start (start) ) )
-    { return 1; }
-    
-  return 0;
+	unsigned long end = start + page_size;
+
+	for (; start < end; start += (PAGES_PER_SECTION * sizeof(struct page)))
+		if (pfn_valid(vmemmap_section_start(start)))
+			return 1;
+
+	return 0;
 }
 
 /* On hash-based CPUs, the vmemmap is bolted in the hash table.
@@ -190,113 +190,113 @@ static int __meminit vmemmap_populated (unsigned long start, int page_size)
  */
 
 #ifdef CONFIG_PPC_BOOK3E
-static void __meminit vmemmap_create_mapping (unsigned long start,
-    unsigned long page_size,
-    unsigned long phys)
+static void __meminit vmemmap_create_mapping(unsigned long start,
+					     unsigned long page_size,
+					     unsigned long phys)
 {
-  /* Create a PTE encoding without page size */
-  unsigned long i, flags = _PAGE_PRESENT | _PAGE_ACCESSED |
-                           _PAGE_KERNEL_RW;
-                           
-  /* PTEs only contain page size encodings up to 32M */
-  BUG_ON (mmu_psize_defs[mmu_vmemmap_psize].enc > 0xf);
-  
-  /* Encode the size in the PTE */
-  flags |= mmu_psize_defs[mmu_vmemmap_psize].enc << 8;
-  
-  /* For each PTE for that area, map things. Note that we don't
-   * increment phys because all PTEs are of the large size and
-   * thus must have the low bits clear
-   */
-  for (i = 0; i < page_size; i += PAGE_SIZE)
-  { BUG_ON (map_kernel_page (start + i, phys, flags) ); }
+	/* Create a PTE encoding without page size */
+	unsigned long i, flags = _PAGE_PRESENT | _PAGE_ACCESSED |
+		_PAGE_KERNEL_RW;
+
+	/* PTEs only contain page size encodings up to 32M */
+	BUG_ON(mmu_psize_defs[mmu_vmemmap_psize].enc > 0xf);
+
+	/* Encode the size in the PTE */
+	flags |= mmu_psize_defs[mmu_vmemmap_psize].enc << 8;
+
+	/* For each PTE for that area, map things. Note that we don't
+	 * increment phys because all PTEs are of the large size and
+	 * thus must have the low bits clear
+	 */
+	for (i = 0; i < page_size; i += PAGE_SIZE)
+		BUG_ON(map_kernel_page(start + i, phys, flags));
 }
 #else /* CONFIG_PPC_BOOK3E */
-static void __meminit vmemmap_create_mapping (unsigned long start,
-    unsigned long page_size,
-    unsigned long phys)
+static void __meminit vmemmap_create_mapping(unsigned long start,
+					     unsigned long page_size,
+					     unsigned long phys)
 {
-  int  mapped = htab_bolt_mapping (start, start + page_size, phys,
-                                   PAGE_KERNEL, mmu_vmemmap_psize,
-                                   mmu_kernel_ssize);
-  BUG_ON (mapped < 0);
+	int  mapped = htab_bolt_mapping(start, start + page_size, phys,
+					PAGE_KERNEL, mmu_vmemmap_psize,
+					mmu_kernel_ssize);
+	BUG_ON(mapped < 0);
 }
 #endif /* CONFIG_PPC_BOOK3E */
 
-struct vmemmap_backing * vmemmap_list;
+struct vmemmap_backing *vmemmap_list;
 
-static __meminit struct vmemmap_backing * vmemmap_list_alloc (int node)
+static __meminit struct vmemmap_backing * vmemmap_list_alloc(int node)
 {
-  static struct vmemmap_backing * next;
-  static int num_left;
-  
-  /* allocate a page when required and hand out chunks */
-  if (!next || !num_left) {
-    next = vmemmap_alloc_block (PAGE_SIZE, node);
-    if (unlikely (!next) ) {
-      WARN_ON (1);
-      return NULL;
-    }
-    num_left = PAGE_SIZE / sizeof (struct vmemmap_backing);
-  }
-  
-  num_left--;
-  
-  return next++;
+	static struct vmemmap_backing *next;
+	static int num_left;
+
+	/* allocate a page when required and hand out chunks */
+	if (!next || !num_left) {
+		next = vmemmap_alloc_block(PAGE_SIZE, node);
+		if (unlikely(!next)) {
+			WARN_ON(1);
+			return NULL;
+		}
+		num_left = PAGE_SIZE / sizeof(struct vmemmap_backing);
+	}
+
+	num_left--;
+
+	return next++;
 }
 
-static __meminit void vmemmap_list_populate (unsigned long phys,
-    unsigned long start,
-    int node)
+static __meminit void vmemmap_list_populate(unsigned long phys,
+					    unsigned long start,
+					    int node)
 {
-  struct vmemmap_backing * vmem_back;
-  
-  vmem_back = vmemmap_list_alloc (node);
-  if (unlikely (!vmem_back) ) {
-    WARN_ON (1);
-    return;
-  }
-  
-  vmem_back->phys = phys;
-  vmem_back->virt_addr = start;
-  vmem_back->list = vmemmap_list;
-  
-  vmemmap_list = vmem_back;
+	struct vmemmap_backing *vmem_back;
+
+	vmem_back = vmemmap_list_alloc(node);
+	if (unlikely(!vmem_back)) {
+		WARN_ON(1);
+		return;
+	}
+
+	vmem_back->phys = phys;
+	vmem_back->virt_addr = start;
+	vmem_back->list = vmemmap_list;
+
+	vmemmap_list = vmem_back;
 }
 
-int __meminit vmemmap_populate (struct page * start_page,
-                                unsigned long nr_pages, int node)
+int __meminit vmemmap_populate(struct page *start_page,
+			       unsigned long nr_pages, int node)
 {
-  unsigned long start = (unsigned long) start_page;
-  unsigned long end = (unsigned long) (start_page + nr_pages);
-  unsigned long page_size = 1 << mmu_psize_defs[mmu_vmemmap_psize].shift;
-  
-  /* Align to the page size of the linear mapping. */
-  start = _ALIGN_DOWN (start, page_size);
-  
-  pr_debug ("vmemmap_populate page %p, %ld pages, node %d\n",
-            start_page, nr_pages, node);
-  pr_debug (" -> map %lx..%lx\n", start, end);
-  
-  for (; start < end; start += page_size) {
-    void * p;
-    
-    if (vmemmap_populated (start, page_size) )
-    { continue; }
-    
-    p = vmemmap_alloc_block (page_size, node);
-    if (!p)
-    { return -ENOMEM; }
-    
-    vmemmap_list_populate (__pa (p), start, node);
-    
-    pr_debug ("      * %016lx..%016lx allocated at %p\n",
-              start, start + page_size, p);
-              
-    vmemmap_create_mapping (start, page_size, __pa (p) );
-  }
-  
-  return 0;
+	unsigned long start = (unsigned long)start_page;
+	unsigned long end = (unsigned long)(start_page + nr_pages);
+	unsigned long page_size = 1 << mmu_psize_defs[mmu_vmemmap_psize].shift;
+
+	/* Align to the page size of the linear mapping. */
+	start = _ALIGN_DOWN(start, page_size);
+
+	pr_debug("vmemmap_populate page %p, %ld pages, node %d\n",
+		 start_page, nr_pages, node);
+	pr_debug(" -> map %lx..%lx\n", start, end);
+
+	for (; start < end; start += page_size) {
+		void *p;
+
+		if (vmemmap_populated(start, page_size))
+			continue;
+
+		p = vmemmap_alloc_block(page_size, node);
+		if (!p)
+			return -ENOMEM;
+
+		vmemmap_list_populate(__pa(p), start, node);
+
+		pr_debug("      * %016lx..%016lx allocated at %p\n",
+			 start, start + page_size, p);
+
+		vmemmap_create_mapping(start, page_size, __pa(p));
+	}
+
+	return 0;
 }
 #endif /* CONFIG_SPARSEMEM_VMEMMAP */
 

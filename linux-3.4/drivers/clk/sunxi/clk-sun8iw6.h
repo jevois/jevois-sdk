@@ -62,14 +62,14 @@
 #define CSI_CFG             0x0134
 #define VE_CFG              0x013C
 #define AVS_CFG             0x0144
-#define HDMI_CFG        0x0150
-#define HDMI_SLOW     0x0154
+#define HDMI_CFG		    0x0150
+#define HDMI_SLOW			0x0154
 #define MBUS_CFG            0x015C
 #define MIPI_DSI0           0x0168
 #define MIPI_DSI1           0x016c
-#define GPU_CORE        0x01A0
-#define GPU_MEM       0x01A4
-#define GPU_HYD       0x01A8
+#define GPU_CORE    		0x01A0
+#define	GPU_MEM				0x01A4
+#define	GPU_HYD				0x01A8
 
 #define PLL_LOCK            0x0200
 #define CPU_LOCK            0x0204
@@ -105,8 +105,8 @@
 #define PLLHSIC(n,d1,d2,freq)       {F_N8X8_D1S16X1_D2S18X1(n, d1,d2), freq}
 #define PLLDE(n,d1,d2,freq)         {F_N8X8_D1S16X1_D2S18X1(n, d1,d2), freq}
 
-struct sun8iw3_factor_config {
-  u32   factor;
-  u32   freq;
+struct sun8iw3_factor_config{
+		u32		factor;	
+    u32   freq;	
 };
 #endif

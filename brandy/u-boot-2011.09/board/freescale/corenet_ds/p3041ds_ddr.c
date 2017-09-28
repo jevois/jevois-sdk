@@ -10,5 +10,5 @@
 #include <asm/fsl_ddr_sdram.h>
 
 fixed_ddr_parm_t fixed_ddr_parm_0[] = {
-  {0, 0, NULL}
+	{0, 0, NULL}
 };

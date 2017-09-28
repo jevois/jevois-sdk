@@ -101,57 +101,57 @@
  * called with -ETIMEDOUT as the event size.
  */
 struct uwb_rc_neh {
-  struct kref kref;
-  
-  struct uwb_rc * rc;
-  u8 evt_type;
-  __le16 evt;
-  u8 context;
-  u8 completed;
-  uwb_rc_cmd_cb_f cb;
-  void * arg;
-  
-  struct timer_list timer;
-  struct list_head list_node;
+	struct kref kref;
+
+	struct uwb_rc *rc;
+	u8 evt_type;
+	__le16 evt;
+	u8 context;
+	u8 completed;
+	uwb_rc_cmd_cb_f cb;
+	void *arg;
+
+	struct timer_list timer;
+	struct list_head list_node;
 };
 
-static void uwb_rc_neh_timer (unsigned long arg);
+static void uwb_rc_neh_timer(unsigned long arg);
 
-static void uwb_rc_neh_release (struct kref * kref)
+static void uwb_rc_neh_release(struct kref *kref)
 {
-  struct uwb_rc_neh * neh = container_of (kref, struct uwb_rc_neh, kref);
-  
-  kfree (neh);
+	struct uwb_rc_neh *neh = container_of(kref, struct uwb_rc_neh, kref);
+
+	kfree(neh);
 }
 
-static void uwb_rc_neh_get (struct uwb_rc_neh * neh)
+static void uwb_rc_neh_get(struct uwb_rc_neh *neh)
 {
-  kref_get (&neh->kref);
+	kref_get(&neh->kref);
 }
 
 /**
  * uwb_rc_neh_put - release reference to a neh
  * @neh: the neh
  */
-void uwb_rc_neh_put (struct uwb_rc_neh * neh)
+void uwb_rc_neh_put(struct uwb_rc_neh *neh)
 {
-  kref_put (&neh->kref, uwb_rc_neh_release);
+	kref_put(&neh->kref, uwb_rc_neh_release);
 }
 
 
 /**
  * Assigns @neh a context id from @rc's pool
  *
- * @rc:     UWB Radio Controller descriptor; @rc->neh_lock taken
+ * @rc:	    UWB Radio Controller descriptor; @rc->neh_lock taken
  * @neh:    Notification/Event Handle
  * @returns 0 if context id was assigned ok; < 0 errno on error (if
- *      all the context IDs are taken).
+ *	    all the context IDs are taken).
  *
  * (assumes @wa is locked).
  *
  * NOTE: WUSB spec reserves context ids 0x00 for notifications and
- *   0xff is invalid, so they must not be used. Initialization
- *   fills up those two in the bitmap so they are not allocated.
+ *	 0xff is invalid, so they must not be used. Initialization
+ *	 fills up those two in the bitmap so they are not allocated.
  *
  * We spread the allocation around to reduce the possibility of two
  * consecutive opened @neh's getting the same context ID assigned (to
@@ -160,38 +160,38 @@ void uwb_rc_neh_put (struct uwb_rc_neh * neh)
  * search from zero.
  */
 static
-int __uwb_rc_ctx_get (struct uwb_rc * rc, struct uwb_rc_neh * neh)
+int __uwb_rc_ctx_get(struct uwb_rc *rc, struct uwb_rc_neh *neh)
 {
-  int result;
-  result = find_next_zero_bit (rc->ctx_bm, UWB_RC_CTX_MAX,
-                               rc->ctx_roll++);
-  if (result < UWB_RC_CTX_MAX)
-  { goto found; }
-  result = find_first_zero_bit (rc->ctx_bm, UWB_RC_CTX_MAX);
-  if (result < UWB_RC_CTX_MAX)
-  { goto found; }
-  return -ENFILE;
+	int result;
+	result = find_next_zero_bit(rc->ctx_bm, UWB_RC_CTX_MAX,
+				    rc->ctx_roll++);
+	if (result < UWB_RC_CTX_MAX)
+		goto found;
+	result = find_first_zero_bit(rc->ctx_bm, UWB_RC_CTX_MAX);
+	if (result < UWB_RC_CTX_MAX)
+		goto found;
+	return -ENFILE;
 found:
-  set_bit (result, rc->ctx_bm);
-  neh->context = result;
-  return 0;
+	set_bit(result, rc->ctx_bm);
+	neh->context = result;
+	return 0;
 }
 
 
 /** Releases @neh's context ID back to @rc (@rc->neh_lock is locked). */
 static
-void __uwb_rc_ctx_put (struct uwb_rc * rc, struct uwb_rc_neh * neh)
+void __uwb_rc_ctx_put(struct uwb_rc *rc, struct uwb_rc_neh *neh)
 {
-  struct device * dev = &rc->uwb_dev.dev;
-  if (neh->context == 0)
-  { return; }
-  if (test_bit (neh->context, rc->ctx_bm) == 0) {
-    dev_err (dev, "context %u not set in bitmap\n",
-             neh->context);
-    WARN_ON (1);
-  }
-  clear_bit (neh->context, rc->ctx_bm);
-  neh->context = 0;
+	struct device *dev = &rc->uwb_dev.dev;
+	if (neh->context == 0)
+		return;
+	if (test_bit(neh->context, rc->ctx_bm) == 0) {
+		dev_err(dev, "context %u not set in bitmap\n",
+			neh->context);
+		WARN_ON(1);
+	}
+	clear_bit(neh->context, rc->ctx_bm);
+	neh->context = 0;
 }
 
 /**
@@ -206,57 +206,57 @@ void __uwb_rc_ctx_put (struct uwb_rc * rc, struct uwb_rc_neh * neh)
  * Creates a neh and adds it to the list of those waiting for an
  * event.  A context ID will be assigned to the command.
  */
-struct uwb_rc_neh * uwb_rc_neh_add (struct uwb_rc * rc, struct uwb_rccb * cmd,
-                                    u8 expected_type, u16 expected_event,
-                                    uwb_rc_cmd_cb_f cb, void * arg)
+struct uwb_rc_neh *uwb_rc_neh_add(struct uwb_rc *rc, struct uwb_rccb *cmd,
+				  u8 expected_type, u16 expected_event,
+				  uwb_rc_cmd_cb_f cb, void *arg)
 {
-  int result;
-  unsigned long flags;
-  struct device * dev = &rc->uwb_dev.dev;
-  struct uwb_rc_neh * neh;
-  
-  neh = kzalloc (sizeof (*neh), GFP_KERNEL);
-  if (neh == NULL) {
-    result = -ENOMEM;
-    goto error_kzalloc;
-  }
-  
-  kref_init (&neh->kref);
-  INIT_LIST_HEAD (&neh->list_node);
-  init_timer (&neh->timer);
-  neh->timer.function = uwb_rc_neh_timer;
-  neh->timer.data     = (unsigned long) neh;
-  
-  neh->rc = rc;
-  neh->evt_type = expected_type;
-  neh->evt = cpu_to_le16 (expected_event);
-  neh->cb = cb;
-  neh->arg = arg;
-  
-  spin_lock_irqsave (&rc->neh_lock, flags);
-  result = __uwb_rc_ctx_get (rc, neh);
-  if (result >= 0) {
-    cmd->bCommandContext = neh->context;
-    list_add_tail (&neh->list_node, &rc->neh_list);
-    uwb_rc_neh_get (neh);
-  }
-  spin_unlock_irqrestore (&rc->neh_lock, flags);
-  if (result < 0)
-  { goto error_ctx_get; }
-  
-  return neh;
-  
+	int result;
+	unsigned long flags;
+	struct device *dev = &rc->uwb_dev.dev;
+	struct uwb_rc_neh *neh;
+
+	neh = kzalloc(sizeof(*neh), GFP_KERNEL);
+	if (neh == NULL) {
+		result = -ENOMEM;
+		goto error_kzalloc;
+	}
+
+	kref_init(&neh->kref);
+	INIT_LIST_HEAD(&neh->list_node);
+	init_timer(&neh->timer);
+	neh->timer.function = uwb_rc_neh_timer;
+	neh->timer.data     = (unsigned long)neh;
+
+	neh->rc = rc;
+	neh->evt_type = expected_type;
+	neh->evt = cpu_to_le16(expected_event);
+	neh->cb = cb;
+	neh->arg = arg;
+
+	spin_lock_irqsave(&rc->neh_lock, flags);
+	result = __uwb_rc_ctx_get(rc, neh);
+	if (result >= 0) {
+		cmd->bCommandContext = neh->context;
+		list_add_tail(&neh->list_node, &rc->neh_list);
+		uwb_rc_neh_get(neh);
+	}
+	spin_unlock_irqrestore(&rc->neh_lock, flags);
+	if (result < 0)
+		goto error_ctx_get;
+
+	return neh;
+
 error_ctx_get:
-  kfree (neh);
+	kfree(neh);
 error_kzalloc:
-  dev_err (dev, "cannot open handle to radio controller: %d\n", result);
-  return ERR_PTR (result);
+	dev_err(dev, "cannot open handle to radio controller: %d\n", result);
+	return ERR_PTR(result);
 }
 
-static void __uwb_rc_neh_rm (struct uwb_rc * rc, struct uwb_rc_neh * neh)
+static void __uwb_rc_neh_rm(struct uwb_rc *rc, struct uwb_rc_neh *neh)
 {
-  __uwb_rc_ctx_put (rc, neh);
-  list_del (&neh->list_node);
+	__uwb_rc_ctx_put(rc, neh);
+	list_del(&neh->list_node);
 }
 
 /**
@@ -267,16 +267,16 @@ static void __uwb_rc_neh_rm (struct uwb_rc * rc, struct uwb_rc_neh * neh)
  * Remove an active neh immediately instead of waiting for the event
  * (or a time out).
  */
-void uwb_rc_neh_rm (struct uwb_rc * rc, struct uwb_rc_neh * neh)
+void uwb_rc_neh_rm(struct uwb_rc *rc, struct uwb_rc_neh *neh)
 {
-  unsigned long flags;
-  
-  spin_lock_irqsave (&rc->neh_lock, flags);
-  __uwb_rc_neh_rm (rc, neh);
-  spin_unlock_irqrestore (&rc->neh_lock, flags);
-  
-  del_timer_sync (&neh->timer);
-  uwb_rc_neh_put (neh);
+	unsigned long flags;
+
+	spin_lock_irqsave(&rc->neh_lock, flags);
+	__uwb_rc_neh_rm(rc, neh);
+	spin_unlock_irqrestore(&rc->neh_lock, flags);
+
+	del_timer_sync(&neh->timer);
+	uwb_rc_neh_put(neh);
 }
 
 /**
@@ -287,28 +287,28 @@ void uwb_rc_neh_rm (struct uwb_rc * rc, struct uwb_rc_neh * neh)
  *
  * The timer is only armed if the neh is active.
  */
-void uwb_rc_neh_arm (struct uwb_rc * rc, struct uwb_rc_neh * neh)
+void uwb_rc_neh_arm(struct uwb_rc *rc, struct uwb_rc_neh *neh)
 {
-  unsigned long flags;
-  
-  spin_lock_irqsave (&rc->neh_lock, flags);
-  if (neh->context)
-    mod_timer (&neh->timer,
-               jiffies + msecs_to_jiffies (UWB_RC_CMD_TIMEOUT_MS) );
-  spin_unlock_irqrestore (&rc->neh_lock, flags);
+	unsigned long flags;
+
+	spin_lock_irqsave(&rc->neh_lock, flags);
+	if (neh->context)
+		mod_timer(&neh->timer,
+			  jiffies + msecs_to_jiffies(UWB_RC_CMD_TIMEOUT_MS));
+	spin_unlock_irqrestore(&rc->neh_lock, flags);
 }
 
-static void uwb_rc_neh_cb (struct uwb_rc_neh * neh, struct uwb_rceb * rceb, size_t size)
+static void uwb_rc_neh_cb(struct uwb_rc_neh *neh, struct uwb_rceb *rceb, size_t size)
 {
-  (*neh->cb) (neh->rc, neh->arg, rceb, size);
-  uwb_rc_neh_put (neh);
+	(*neh->cb)(neh->rc, neh->arg, rceb, size);
+	uwb_rc_neh_put(neh);
 }
 
-static bool uwb_rc_neh_match (struct uwb_rc_neh * neh, const struct uwb_rceb * rceb)
+static bool uwb_rc_neh_match(struct uwb_rc_neh *neh, const struct uwb_rceb *rceb)
 {
-  return neh->evt_type == rceb->bEventType
-         && neh->evt == rceb->wEvent
-         && neh->context == rceb->bEventContext;
+	return neh->evt_type == rceb->bEventType
+		&& neh->evt == rceb->wEvent
+		&& neh->context == rceb->bEventContext;
 }
 
 /**
@@ -326,27 +326,27 @@ static bool uwb_rc_neh_match (struct uwb_rc_neh * neh, const struct uwb_rceb * r
  * uwb_rceb'. kfree() it when done.
  */
 static
-struct uwb_rc_neh * uwb_rc_neh_lookup (struct uwb_rc * rc,
-                                       const struct uwb_rceb * rceb)
+struct uwb_rc_neh *uwb_rc_neh_lookup(struct uwb_rc *rc,
+				     const struct uwb_rceb *rceb)
 {
-  struct uwb_rc_neh * neh = NULL, *h;
-  unsigned long flags;
-  
-  spin_lock_irqsave (&rc->neh_lock, flags);
-  
-  list_for_each_entry (h, &rc->neh_list, list_node) {
-    if (uwb_rc_neh_match (h, rceb) ) {
-      neh = h;
-      break;
-    }
-  }
-  
-  if (neh)
-  { __uwb_rc_neh_rm (rc, neh); }
-  
-  spin_unlock_irqrestore (&rc->neh_lock, flags);
-  
-  return neh;
+	struct uwb_rc_neh *neh = NULL, *h;
+	unsigned long flags;
+
+	spin_lock_irqsave(&rc->neh_lock, flags);
+
+	list_for_each_entry(h, &rc->neh_list, list_node) {
+		if (uwb_rc_neh_match(h, rceb)) {
+			neh = h;
+			break;
+		}
+	}
+
+	if (neh)
+		__uwb_rc_neh_rm(rc, neh);
+
+	spin_unlock_irqrestore(&rc->neh_lock, flags);
+
+	return neh;
 }
 
 
@@ -376,75 +376,72 @@ struct uwb_rc_neh * uwb_rc_neh_lookup (struct uwb_rc * rc,
  * remember). Event if we use different pointers
  */
 static
-void uwb_rc_notif (struct uwb_rc * rc, struct uwb_rceb * rceb, ssize_t size)
+void uwb_rc_notif(struct uwb_rc *rc, struct uwb_rceb *rceb, ssize_t size)
 {
-  struct device * dev = &rc->uwb_dev.dev;
-  struct uwb_event * uwb_evt;
-  
-  if (size == -ESHUTDOWN)
-  { return; }
-  if (size < 0) {
-    dev_err (dev, "ignoring event with error code %zu\n",
-             size);
-    return;
-  }
-  
-  uwb_evt = kzalloc (sizeof (*uwb_evt), GFP_ATOMIC);
-  if (unlikely (uwb_evt == NULL) ) {
-    dev_err (dev, "no memory to queue event 0x%02x/%04x/%02x\n",
-             rceb->bEventType, le16_to_cpu (rceb->wEvent),
-             rceb->bEventContext);
-    return;
-  }
-  uwb_evt->rc = __uwb_rc_get (rc); /* will be put by uwbd's uwbd_event_handle() */
-  uwb_evt->ts_jiffies = jiffies;
-  uwb_evt->type = UWB_EVT_TYPE_NOTIF;
-  uwb_evt->notif.size = size;
-  uwb_evt->notif.rceb = rceb;
-  
-  uwbd_event_queue (uwb_evt);
+	struct device *dev = &rc->uwb_dev.dev;
+	struct uwb_event *uwb_evt;
+
+	if (size == -ESHUTDOWN)
+		return;
+	if (size < 0) {
+		dev_err(dev, "ignoring event with error code %zu\n",
+			size);
+		return;
+	}
+
+	uwb_evt = kzalloc(sizeof(*uwb_evt), GFP_ATOMIC);
+	if (unlikely(uwb_evt == NULL)) {
+		dev_err(dev, "no memory to queue event 0x%02x/%04x/%02x\n",
+			rceb->bEventType, le16_to_cpu(rceb->wEvent),
+			rceb->bEventContext);
+		return;
+	}
+	uwb_evt->rc = __uwb_rc_get(rc);	/* will be put by uwbd's uwbd_event_handle() */
+	uwb_evt->ts_jiffies = jiffies;
+	uwb_evt->type = UWB_EVT_TYPE_NOTIF;
+	uwb_evt->notif.size = size;
+	uwb_evt->notif.rceb = rceb;
+
+	uwbd_event_queue(uwb_evt);
 }
 
-static void uwb_rc_neh_grok_event (struct uwb_rc * rc, struct uwb_rceb * rceb, size_t size)
+static void uwb_rc_neh_grok_event(struct uwb_rc *rc, struct uwb_rceb *rceb, size_t size)
 {
-  struct device * dev = &rc->uwb_dev.dev;
-  struct uwb_rc_neh * neh;
-  struct uwb_rceb * notif;
-  unsigned long flags;
-  
-  if (rceb->bEventContext == 0) {
-    notif = kmalloc (size, GFP_ATOMIC);
-    if (notif) {
-      memcpy (notif, rceb, size);
-      uwb_rc_notif (rc, notif, size);
-    }
-    else
-      dev_err (dev, "event 0x%02x/%04x/%02x (%zu bytes): no memory\n",
-               rceb->bEventType, le16_to_cpu (rceb->wEvent),
-               rceb->bEventContext, size);
-  }
-  else {
-    neh = uwb_rc_neh_lookup (rc, rceb);
-    if (neh) {
-      spin_lock_irqsave (&rc->neh_lock, flags);
-      /* to guard against a timeout */
-      neh->completed = 1;
-      del_timer (&neh->timer);
-      spin_unlock_irqrestore (&rc->neh_lock, flags);
-      uwb_rc_neh_cb (neh, rceb, size);
-    }
-    else
-      dev_warn (dev, "event 0x%02x/%04x/%02x (%zu bytes): nobody cared\n",
-                rceb->bEventType, le16_to_cpu (rceb->wEvent),
-                rceb->bEventContext, size);
-  }
+	struct device *dev = &rc->uwb_dev.dev;
+	struct uwb_rc_neh *neh;
+	struct uwb_rceb *notif;
+	unsigned long flags;
+
+	if (rceb->bEventContext == 0) {
+		notif = kmalloc(size, GFP_ATOMIC);
+		if (notif) {
+			memcpy(notif, rceb, size);
+			uwb_rc_notif(rc, notif, size);
+		} else
+			dev_err(dev, "event 0x%02x/%04x/%02x (%zu bytes): no memory\n",
+				rceb->bEventType, le16_to_cpu(rceb->wEvent),
+				rceb->bEventContext, size);
+	} else {
+		neh = uwb_rc_neh_lookup(rc, rceb);
+		if (neh) {
+			spin_lock_irqsave(&rc->neh_lock, flags);
+			/* to guard against a timeout */
+			neh->completed = 1;
+			del_timer(&neh->timer);
+			spin_unlock_irqrestore(&rc->neh_lock, flags);
+			uwb_rc_neh_cb(neh, rceb, size);
+		} else
+			dev_warn(dev, "event 0x%02x/%04x/%02x (%zu bytes): nobody cared\n",
+				 rceb->bEventType, le16_to_cpu(rceb->wEvent),
+				 rceb->bEventContext, size);
+	}
 }
 
 /**
  * Given a buffer with one or more UWB RC events/notifications, break
  * them up and dispatch them.
  *
- * @rc:       UWB Radio Controller
+ * @rc:	      UWB Radio Controller
  * @buf:      Buffer with the stream of notifications/events
  * @buf_size: Amount of data in the buffer
  *
@@ -480,65 +477,64 @@ static void uwb_rc_neh_grok_event (struct uwb_rc * rc, struct uwb_rceb * rceb, s
  *            created a new event in a new memory location then this is
  *            effectively the size of a new event buffer
  */
-void uwb_rc_neh_grok (struct uwb_rc * rc, void * buf, size_t buf_size)
+void uwb_rc_neh_grok(struct uwb_rc *rc, void *buf, size_t buf_size)
 {
-  struct device * dev = &rc->uwb_dev.dev;
-  void * itr;
-  struct uwb_rceb * rceb;
-  size_t size, real_size, event_size;
-  int needtofree;
-  
-  itr = buf;
-  size = buf_size;
-  while (size > 0) {
-    if (size < sizeof (*rceb) ) {
-      dev_err (dev, "not enough data in event buffer to "
-               "process incoming events (%zu left, minimum is "
-               "%zu)\n", size, sizeof (*rceb) );
-      break;
-    }
-    
-    rceb = itr;
-    if (rc->filter_event) {
-      needtofree = rc->filter_event (rc, &rceb, size,
-                                     &real_size, &event_size);
-      if (needtofree < 0 && needtofree != -ENOANO) {
-        dev_err (dev, "BUG: Unable to filter event "
-                 "(0x%02x/%04x/%02x) from "
-                 "device. \n", rceb->bEventType,
-                 le16_to_cpu (rceb->wEvent),
-                 rceb->bEventContext);
-        break;
-      }
-    }
-    else
-    { needtofree = -ENOANO; }
-    /* do real processing if there was no filtering or the
-     * filtering didn't act */
-    if (needtofree == -ENOANO) {
-      ssize_t ret = uwb_est_find_size (rc, rceb, size);
-      if (ret < 0)
-      { break; }
-      if (ret > size) {
-        dev_err (dev, "BUG: hw sent incomplete event "
-                 "0x%02x/%04x/%02x (%zd bytes), only got "
-                 "%zu bytes. We don't handle that.\n",
-                 rceb->bEventType, le16_to_cpu (rceb->wEvent),
-                 rceb->bEventContext, ret, size);
-        break;
-      }
-      real_size = event_size = ret;
-    }
-    uwb_rc_neh_grok_event (rc, rceb, event_size);
-    
-    if (needtofree == 1)
-    { kfree (rceb); }
-    
-    itr += real_size;
-    size -= real_size;
-  }
+	struct device *dev = &rc->uwb_dev.dev;
+	void *itr;
+	struct uwb_rceb *rceb;
+	size_t size, real_size, event_size;
+	int needtofree;
+
+	itr = buf;
+	size = buf_size;
+	while (size > 0) {
+		if (size < sizeof(*rceb)) {
+			dev_err(dev, "not enough data in event buffer to "
+				"process incoming events (%zu left, minimum is "
+				"%zu)\n", size, sizeof(*rceb));
+			break;
+		}
+
+		rceb = itr;
+		if (rc->filter_event) {
+			needtofree = rc->filter_event(rc, &rceb, size,
+						      &real_size, &event_size);
+			if (needtofree < 0 && needtofree != -ENOANO) {
+				dev_err(dev, "BUG: Unable to filter event "
+					"(0x%02x/%04x/%02x) from "
+					"device. \n", rceb->bEventType,
+					le16_to_cpu(rceb->wEvent),
+					rceb->bEventContext);
+				break;
+			}
+		} else
+			needtofree = -ENOANO;
+		/* do real processing if there was no filtering or the
+		 * filtering didn't act */
+		if (needtofree == -ENOANO) {
+			ssize_t ret = uwb_est_find_size(rc, rceb, size);
+			if (ret < 0)
+				break;
+			if (ret > size) {
+				dev_err(dev, "BUG: hw sent incomplete event "
+					"0x%02x/%04x/%02x (%zd bytes), only got "
+					"%zu bytes. We don't handle that.\n",
+					rceb->bEventType, le16_to_cpu(rceb->wEvent),
+					rceb->bEventContext, ret, size);
+				break;
+			}
+			real_size = event_size = ret;
+		}
+		uwb_rc_neh_grok_event(rc, rceb, event_size);
+
+		if (needtofree == 1)
+			kfree(rceb);
+
+		itr += real_size;
+		size -= real_size;
+	}
 }
-EXPORT_SYMBOL_GPL (uwb_rc_neh_grok);
+EXPORT_SYMBOL_GPL(uwb_rc_neh_grok);
 
 
 /**
@@ -549,78 +545,78 @@ EXPORT_SYMBOL_GPL (uwb_rc_neh_grok);
  * @error: Errno error code
  *
  */
-void uwb_rc_neh_error (struct uwb_rc * rc, int error)
+void uwb_rc_neh_error(struct uwb_rc *rc, int error)
 {
-  struct uwb_rc_neh * neh;
-  unsigned long flags;
-  
-  for (;;) {
-    spin_lock_irqsave (&rc->neh_lock, flags);
-    if (list_empty (&rc->neh_list) ) {
-      spin_unlock_irqrestore (&rc->neh_lock, flags);
-      break;
-    }
-    neh = list_first_entry (&rc->neh_list, struct uwb_rc_neh, list_node);
-    __uwb_rc_neh_rm (rc, neh);
-    spin_unlock_irqrestore (&rc->neh_lock, flags);
-    
-    del_timer_sync (&neh->timer);
-    uwb_rc_neh_cb (neh, NULL, error);
-  }
+	struct uwb_rc_neh *neh;
+	unsigned long flags;
+
+	for (;;) {
+		spin_lock_irqsave(&rc->neh_lock, flags);
+		if (list_empty(&rc->neh_list)) {
+			spin_unlock_irqrestore(&rc->neh_lock, flags);
+			break;
+		}
+		neh = list_first_entry(&rc->neh_list, struct uwb_rc_neh, list_node);
+		__uwb_rc_neh_rm(rc, neh);
+		spin_unlock_irqrestore(&rc->neh_lock, flags);
+
+		del_timer_sync(&neh->timer);
+		uwb_rc_neh_cb(neh, NULL, error);
+	}
 }
-EXPORT_SYMBOL_GPL (uwb_rc_neh_error);
+EXPORT_SYMBOL_GPL(uwb_rc_neh_error);
 
 
-static void uwb_rc_neh_timer (unsigned long arg)
+static void uwb_rc_neh_timer(unsigned long arg)
 {
-  struct uwb_rc_neh * neh = (struct uwb_rc_neh *) arg;
-  struct uwb_rc * rc = neh->rc;
-  unsigned long flags;
-  
-  spin_lock_irqsave (&rc->neh_lock, flags);
-  if (neh->completed) {
-    spin_unlock_irqrestore (&rc->neh_lock, flags);
-    return;
-  }
-  if (neh->context)
-  { __uwb_rc_neh_rm (rc, neh); }
-  else
-  { neh = NULL; }
-  spin_unlock_irqrestore (&rc->neh_lock, flags);
-  
-  if (neh)
-  { uwb_rc_neh_cb (neh, NULL, -ETIMEDOUT); }
+	struct uwb_rc_neh *neh = (struct uwb_rc_neh *)arg;
+	struct uwb_rc *rc = neh->rc;
+	unsigned long flags;
+
+	spin_lock_irqsave(&rc->neh_lock, flags);
+	if (neh->completed) {
+		spin_unlock_irqrestore(&rc->neh_lock, flags);
+		return;
+	}
+	if (neh->context)
+		__uwb_rc_neh_rm(rc, neh);
+	else
+		neh = NULL;
+	spin_unlock_irqrestore(&rc->neh_lock, flags);
+
+	if (neh)
+		uwb_rc_neh_cb(neh, NULL, -ETIMEDOUT);
 }
 
 /** Initializes the @rc's neh subsystem
  */
-void uwb_rc_neh_create (struct uwb_rc * rc)
+void uwb_rc_neh_create(struct uwb_rc *rc)
 {
-  spin_lock_init (&rc->neh_lock);
-  INIT_LIST_HEAD (&rc->neh_list);
-  set_bit (0, rc->ctx_bm);  /* 0 is reserved (see [WUSB] table 8-65) */
-  set_bit (0xff, rc->ctx_bm); /* and 0xff is invalid */
-  rc->ctx_roll = 1;
+	spin_lock_init(&rc->neh_lock);
+	INIT_LIST_HEAD(&rc->neh_list);
+	set_bit(0, rc->ctx_bm);		/* 0 is reserved (see [WUSB] table 8-65) */
+	set_bit(0xff, rc->ctx_bm);	/* and 0xff is invalid */
+	rc->ctx_roll = 1;
 }
 
 
 /** Release's the @rc's neh subsystem */
-void uwb_rc_neh_destroy (struct uwb_rc * rc)
+void uwb_rc_neh_destroy(struct uwb_rc *rc)
 {
-  unsigned long flags;
-  struct uwb_rc_neh * neh;
-  
-  for (;;) {
-    spin_lock_irqsave (&rc->neh_lock, flags);
-    if (list_empty (&rc->neh_list) ) {
-      spin_unlock_irqrestore (&rc->neh_lock, flags);
-      break;
-    }
-    neh = list_first_entry (&rc->neh_list, struct uwb_rc_neh, list_node);
-    __uwb_rc_neh_rm (rc, neh);
-    spin_unlock_irqrestore (&rc->neh_lock, flags);
-    
-    del_timer_sync (&neh->timer);
-    uwb_rc_neh_put (neh);
-  }
+	unsigned long flags;
+	struct uwb_rc_neh *neh;
+
+	for (;;) {
+		spin_lock_irqsave(&rc->neh_lock, flags);
+		if (list_empty(&rc->neh_list)) {
+			spin_unlock_irqrestore(&rc->neh_lock, flags);
+			break;
+		}
+		neh = list_first_entry(&rc->neh_list, struct uwb_rc_neh, list_node);
+		__uwb_rc_neh_rm(rc, neh);
+		spin_unlock_irqrestore(&rc->neh_lock, flags);
+
+		del_timer_sync(&neh->timer);
+		uwb_rc_neh_put(neh);
+	}
 }

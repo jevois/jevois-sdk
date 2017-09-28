@@ -29,7 +29,7 @@
  * assign it to the location counter.
  */
 
-#define PAGE_OFFSET     _AC(0xc0000000, UL)
+#define PAGE_OFFSET			_AC(0xc0000000, UL)
 
 /*
  * LOAD_ADDRESS is the physical/linear address of where in memory
@@ -39,20 +39,20 @@
  */
 
 #ifndef LOAD_ADDRESS
-#define LOAD_ADDRESS      0x00000000
+#define LOAD_ADDRESS			0x00000000
 #endif
 
-#define TASK_SIZE     (PAGE_OFFSET)
+#define TASK_SIZE			(PAGE_OFFSET)
 
 /*  not sure how these are used yet  */
-#define STACK_TOP     TASK_SIZE
-#define STACK_TOP_MAX     TASK_SIZE
+#define STACK_TOP			TASK_SIZE
+#define STACK_TOP_MAX			TASK_SIZE
 
 #ifndef __ASSEMBLY__
 enum fixed_addresses {
-  FIX_KMAP_BEGIN,
-  FIX_KMAP_END,  /*  check for per-cpuism  */
-  __end_of_fixed_addresses
+	FIX_KMAP_BEGIN,
+	FIX_KMAP_END,  /*  check for per-cpuism  */
+	__end_of_fixed_addresses
 };
 
 #define MIN_KERNEL_SEG 0x300   /* From 0xc0000000 */
@@ -64,7 +64,7 @@ extern int max_kernel_seg;
  */
 
 #define VMALLOC_START (PAGE_OFFSET + VMALLOC_OFFSET + \
-                       (unsigned long)high_memory)
+	(unsigned long)high_memory)
 
 /* Gap between physical ram and vmalloc space for guard purposes. */
 #define VMALLOC_OFFSET PAGE_SIZE
@@ -86,10 +86,10 @@ extern int max_kernel_seg;
  * high-memory page frames into the kernel address space.
  */
 
-#define LAST_PKMAP  PTRS_PER_PTE
-#define LAST_PKMAP_MASK (LAST_PKMAP - 1)
-#define PKMAP_NR(virt)  ((virt - PKMAP_BASE) >> PAGE_SHIFT)
-#define PKMAP_ADDR(nr)  (PKMAP_BASE + ((nr) << PAGE_SHIFT))
+#define LAST_PKMAP	PTRS_PER_PTE
+#define LAST_PKMAP_MASK	(LAST_PKMAP - 1)
+#define PKMAP_NR(virt)	((virt - PKMAP_BASE) >> PAGE_SHIFT)
+#define PKMAP_ADDR(nr)	(PKMAP_BASE + ((nr) << PAGE_SHIFT))
 
 /*
  * To the "left" of the fixed map space is the kmap space

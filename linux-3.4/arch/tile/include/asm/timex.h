@@ -23,30 +23,30 @@
  * ACT_HZ to be set to HZ.  We make the value somewhat large just to be
  * more robust in case someone tries out a new value of HZ.
  */
-#define CLOCK_TICK_RATE 1000000
+#define CLOCK_TICK_RATE	1000000
 
 typedef unsigned long long cycles_t;
 
 #if CHIP_HAS_SPLIT_CYCLE()
-cycles_t get_cycles (void);
+cycles_t get_cycles(void);
 #define get_cycles_low() __insn_mfspr(SPR_CYCLE_LOW)
 #else
-static inline cycles_t get_cycles (void)
+static inline cycles_t get_cycles(void)
 {
-  return __insn_mfspr (SPR_CYCLE);
+	return __insn_mfspr(SPR_CYCLE);
 }
 #define get_cycles_low() __insn_mfspr(SPR_CYCLE)   /* just get all 64 bits */
 #endif
 
-cycles_t get_clock_rate (void);
+cycles_t get_clock_rate(void);
 
 /* Convert nanoseconds to core clock cycles. */
-cycles_t ns2cycles (unsigned long nsecs);
+cycles_t ns2cycles(unsigned long nsecs);
 
 /* Called at cpu initialization to set some low-level constants. */
-void setup_clock (void);
+void setup_clock(void);
 
 /* Called at cpu initialization to start the tile-timer clock device. */
-void setup_tile_timer (void);
+void setup_tile_timer(void);
 
 #endif /* _ASM_TILE_TIMEX_H */

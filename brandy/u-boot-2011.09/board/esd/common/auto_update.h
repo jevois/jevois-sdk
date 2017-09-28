@@ -40,17 +40,17 @@
 #define AU_NAND         0x04
 
 struct au_image_s {
-  char name[80];
-  ulong start;
-  ulong size;
-  ulong type;
+	char name[80];
+	ulong start;
+	ulong size;
+	ulong type;
 };
 
 typedef struct au_image_s au_image_t;
 
-int do_auto_update (void);
+int do_auto_update(void);
 #ifdef CONFIG_AUTO_UPDATE_SHOW
-void board_auto_update_show (int au_active);
+void board_auto_update_show(int au_active);
 #endif
 
 #endif /* #ifndef _AUTO_UPDATE_H_ */

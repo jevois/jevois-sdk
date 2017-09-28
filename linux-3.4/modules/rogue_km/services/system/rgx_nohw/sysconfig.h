@@ -55,14 +55,14 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /* default BIF tiling heap x-stride configurations. */
 static IMG_UINT32 gauiBIFTilingHeapXStrides[RGXFWIF_NUM_BIF_TILING_CONFIGS] =
 {
-  0, /* BIF tiling heap 1 x-stride */
-  1, /* BIF tiling heap 2 x-stride */
-  2, /* BIF tiling heap 3 x-stride */
-  3  /* BIF tiling heap 4 x-stride */
+	0, /* BIF tiling heap 1 x-stride */
+	1, /* BIF tiling heap 2 x-stride */
+	2, /* BIF tiling heap 3 x-stride */
+	3  /* BIF tiling heap 4 x-stride */
 };
 
 /*****************************************************************************
  * system specific data structures
  *****************************************************************************/
-
-#endif  /* __SYSCCONFIG_H__ */
+ 
+#endif	/* __SYSCCONFIG_H__ */

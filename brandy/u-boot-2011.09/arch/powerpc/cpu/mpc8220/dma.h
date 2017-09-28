@@ -45,24 +45,24 @@
  */
 
 /* Disable SmartDMA task */
-#define DMA_TASK_DISABLE(tasknum)           \
-  {                   \
-    volatile ushort *tcr = (ushort *)(MMAP_DMA + 0x0000001c + 2 * tasknum); \
-    *tcr = (*tcr) & (~0x8000);            \
-  }
+#define DMA_TASK_DISABLE(tasknum)						\
+{										\
+	volatile ushort *tcr = (ushort *)(MMAP_DMA + 0x0000001c + 2 * tasknum); \
+	*tcr = (*tcr) & (~0x8000);						\
+}
 
 /* Enable SmartDMA task */
-#define DMA_TASK_ENABLE(tasknum)            \
-  {                   \
-    volatile ushort *tcr = (ushort *) (MMAP_DMA + 0x0000001c + 2 * tasknum);\
-    *tcr = (*tcr)  | 0x8000;            \
-  }
+#define DMA_TASK_ENABLE(tasknum)						\
+{										\
+	volatile ushort *tcr = (ushort *) (MMAP_DMA + 0x0000001c + 2 * tasknum);\
+	*tcr = (*tcr)  | 0x8000;						\
+}
 
 /* Clear interrupt pending bits */
-#define DMA_CLEAR_IEVENT(tasknum)           \
-  {                   \
-    struct mpc8220_dma *dma = (struct mpc8220_dma *)MMAP_DMA;   \
-    dma->IntPend = (1 << tasknum);            \
-  }
+#define DMA_CLEAR_IEVENT(tasknum)						\
+{										\
+	struct mpc8220_dma *dma = (struct mpc8220_dma *)MMAP_DMA;		\
+	dma->IntPend = (1 << tasknum);						\
+}
 
 #endif  /* __MPC8220_DMA_H */

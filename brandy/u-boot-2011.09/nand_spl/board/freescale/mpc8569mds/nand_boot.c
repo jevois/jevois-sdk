@@ -32,44 +32,44 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-void board_init_f (ulong bootflag)
+void board_init_f(ulong bootflag)
 {
-  uint plat_ratio, bus_clk, sys_clk;
-  volatile ccsr_gur_t * gur = (void *) (CONFIG_SYS_MPC85xx_GUTS_ADDR);
-  
-  sys_clk = SYSCLK_66;
-  
-  plat_ratio = gur->porpllsr & 0x0000003e;
-  plat_ratio >>= 1;
-  bus_clk = plat_ratio * sys_clk;
-  NS16550_init ( (NS16550_t) CONFIG_SYS_NS16550_COM1,
-                 bus_clk / 16 / CONFIG_BAUDRATE);
-                 
-  puts ("\nNAND boot... ");
-  
-  /* copy code to DDR and jump to it - this should not return */
-  /* NOTE - code has to be copied out of NAND buffer before
-   * other blocks can be read.
-   */
-  relocate_code (CONFIG_SYS_NAND_U_BOOT_RELOC_SP, 0,
-                 CONFIG_SYS_NAND_U_BOOT_RELOC);
+	uint plat_ratio, bus_clk, sys_clk;
+	volatile ccsr_gur_t *gur = (void *)(CONFIG_SYS_MPC85xx_GUTS_ADDR);
+
+	sys_clk = SYSCLK_66;
+
+	plat_ratio = gur->porpllsr & 0x0000003e;
+	plat_ratio >>= 1;
+	bus_clk = plat_ratio * sys_clk;
+	NS16550_init((NS16550_t)CONFIG_SYS_NS16550_COM1,
+			bus_clk / 16 / CONFIG_BAUDRATE);
+
+	puts("\nNAND boot... ");
+
+	/* copy code to DDR and jump to it - this should not return */
+	/* NOTE - code has to be copied out of NAND buffer before
+	 * other blocks can be read.
+	 */
+	relocate_code(CONFIG_SYS_NAND_U_BOOT_RELOC_SP, 0,
+			CONFIG_SYS_NAND_U_BOOT_RELOC);
 }
 
-void board_init_r (gd_t * gd, ulong dest_addr)
+void board_init_r(gd_t *gd, ulong dest_addr)
 {
-  nand_boot();
+	nand_boot();
 }
 
-void putc (char c)
+void putc(char c)
 {
-  if (c == '\n')
-  { NS16550_putc ( (NS16550_t) CONFIG_SYS_NS16550_COM1, '\r'); }
-  
-  NS16550_putc ( (NS16550_t) CONFIG_SYS_NS16550_COM1, c);
+	if (c == '\n')
+		NS16550_putc((NS16550_t)CONFIG_SYS_NS16550_COM1, '\r');
+
+	NS16550_putc((NS16550_t)CONFIG_SYS_NS16550_COM1, c);
 }
 
-void puts (const char * str)
+void puts(const char *str)
 {
-  while (*str)
-  { putc (*str++); }
+	while (*str)
+		putc(*str++);
 }

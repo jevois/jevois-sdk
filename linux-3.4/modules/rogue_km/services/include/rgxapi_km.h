@@ -59,8 +59,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 @Output        phDevData      Address of a handle to a connection object
 @Return        PVRSRV_ERROR:  for system error codes
 */ /***************************************************************************/
-PVRSRV_ERROR RGXHWPerfConnect (
-  IMG_HANDLE * phDevData);
+PVRSRV_ERROR RGXHWPerfConnect(
+		IMG_HANDLE* phDevData);
 
 
 /**************************************************************************/ /*!
@@ -70,8 +70,8 @@ PVRSRV_ERROR RGXHWPerfConnect (
                                 RGXHWPerfConnect()
 @Return         PVRSRV_ERROR: for system error codes
 */ /***************************************************************************/
-PVRSRV_ERROR RGXHWPerfDisconnect (
-  IMG_HANDLE hDevData);
+PVRSRV_ERROR RGXHWPerfDisconnect(
+		IMG_HANDLE hDevData);
 
 
 /**************************************************************************/ /*!
@@ -83,10 +83,10 @@ PVRSRV_ERROR RGXHWPerfDisconnect (
 @Input          ui64Mask         Mask of events to control.
 @Return         PVRSRV_ERROR:    for system error codes
 */ /***************************************************************************/
-PVRSRV_ERROR IMG_CALLCONV RGXHWPerfControl (
-  IMG_HANDLE  hDevData,
-  IMG_BOOL    bEnable,
-  IMG_UINT64  ui64Mask);
+PVRSRV_ERROR IMG_CALLCONV RGXHWPerfControl(
+		IMG_HANDLE  hDevData,
+		IMG_BOOL    bEnable,
+		IMG_UINT64  ui64Mask);
 
 
 /**************************************************************************/ /*!
@@ -99,10 +99,10 @@ PVRSRV_ERROR IMG_CALLCONV RGXHWPerfControl (
 @Input          asBlockConfigs   Address of the array of configuration blocks
 @Return         PVRSRV_ERROR:    for system error codes
 */ /***************************************************************************/
-PVRSRV_ERROR IMG_CALLCONV RGXHWPerfConfigureAndEnableCounters (
-  IMG_HANDLE                 hDevData,
-  IMG_UINT32                 ui32NumBlocks,
-  RGX_HWPERF_CONFIG_CNTBLK * asBlockConfigs);
+PVRSRV_ERROR IMG_CALLCONV RGXHWPerfConfigureAndEnableCounters(
+		IMG_HANDLE                 hDevData,
+		IMG_UINT32                 ui32NumBlocks,
+		RGX_HWPERF_CONFIG_CNTBLK*  asBlockConfigs);
 
 
 /**************************************************************************/ /*!
@@ -115,10 +115,10 @@ PVRSRV_ERROR IMG_CALLCONV RGXHWPerfConfigureAndEnableCounters (
                                  the RGX_HWPERF_CNTBLK_ID enumeration.
 @Return         PVRSRV_ERROR:   for system error codes
 */ /***************************************************************************/
-PVRSRV_ERROR IMG_CALLCONV RGXHWPerfDisableCounters (
-  IMG_HANDLE   hDevData,
-  IMG_UINT32   ui32NumBlocks,
-  IMG_UINT8  * aeBlockIDs);
+PVRSRV_ERROR IMG_CALLCONV RGXHWPerfDisableCounters(
+		IMG_HANDLE   hDevData,
+		IMG_UINT32   ui32NumBlocks,
+		IMG_UINT8*   aeBlockIDs);
 
 
 /******************************************************************************
@@ -130,9 +130,9 @@ PVRSRV_ERROR IMG_CALLCONV RGXHWPerfDisableCounters (
 @Description    When there is data available to read this call returns with
                  the address and length of the data buffer the
                  client can safely read. This buffer may contain one or more
-                 event packets. If no data is available then this call
-         returns OK and sets *puiBufLen to 0 on exit.
-         Clients must pair this call with a ReleaseData call.
+                 event packets. If no data is available then this call 
+				 returns OK and sets *puiBufLen to 0 on exit.
+				 Clients must pair this call with a ReleaseData call.
 @Input          hDevData        Handle to connection/device object
 @Output         ppBuf           Address of a pointer to a byte buffer. On exit
                                  it contains the address of buffer to read from
@@ -140,10 +140,10 @@ PVRSRV_ERROR IMG_CALLCONV RGXHWPerfDisableCounters (
                                  of the data to read from the buffer
 @Return         PVRSRV_ERROR:   for system error codes
 */ /***************************************************************************/
-PVRSRV_ERROR RGXHWPerfAcquireData (
-  IMG_HANDLE  hDevData,
-  IMG_PBYTE * ppBuf,
-  IMG_UINT32 * pui32BufLen);
+PVRSRV_ERROR RGXHWPerfAcquireData(
+		IMG_HANDLE  hDevData,
+		IMG_PBYTE*  ppBuf,
+		IMG_UINT32* pui32BufLen);
 
 
 /**************************************************************************/ /*!
@@ -154,8 +154,8 @@ PVRSRV_ERROR RGXHWPerfAcquireData (
 @Return         PVRSRV_ERROR:   for system error codes
 */ /***************************************************************************/
 IMG_INTERNAL
-PVRSRV_ERROR RGXHWPerfReleaseData (
-  IMG_HANDLE hDevData);
+PVRSRV_ERROR RGXHWPerfReleaseData(
+		IMG_HANDLE hDevData);
 
 
 #endif /* SUPPORT_KERNEL_HWPERF */

@@ -52,81 +52,81 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include PVR_ANDROID_ION_HEADER
 
 /*
-  The ion device (the base object for all requests)
-  gets created by the system and we acquire it via
-  linux specific functions provided by the system layer
+	The ion device (the base object for all requests)
+	gets created by the system and we acquire it via
+	linux specific functions provided by the system layer
 */
 #include "ion_sys.h"
 #endif
 
-PVRSRV_ERROR OSConnectionPrivateDataInit (IMG_HANDLE * phOsPrivateData, IMG_PVOID pvOSData)
+PVRSRV_ERROR OSConnectionPrivateDataInit(IMG_HANDLE *phOsPrivateData, IMG_PVOID pvOSData)
 {
-  ENV_CONNECTION_DATA * psEnvConnection;
-  #if defined(SUPPORT_ION)
-  ENV_ION_CONNECTION_DATA * psIonConnection;
-  #endif
-  
-  *phOsPrivateData = OSAllocMem (sizeof (ENV_CONNECTION_DATA) );
-  
-  if (*phOsPrivateData == IMG_NULL)
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "%s: OSAllocMem failed", __FUNCTION__) );
-    return PVRSRV_ERROR_OUT_OF_MEMORY;
-  }
-  
-  psEnvConnection = (ENV_CONNECTION_DATA *) *phOsPrivateData;
-  OSMemSet (psEnvConnection, 0, sizeof (*psEnvConnection) );
-  
-  /* Save the pointer to our struct file */
-  psEnvConnection->psFile = pvOSData;
-  
-  #if defined(SUPPORT_ION)
-  psIonConnection = (ENV_ION_CONNECTION_DATA *) OSAllocMem (sizeof (ENV_ION_CONNECTION_DATA) );
-  if (psIonConnection == IMG_NULL)
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "%s: OSAllocMem failed", __FUNCTION__) );
-    return PVRSRV_ERROR_OUT_OF_MEMORY;
-  }
-  OSMemSet (psIonConnection, 0, sizeof (*psIonConnection) );
-  psEnvConnection->psIonData = psIonConnection;
-  /*
-    We can have more then one connection per process so we need more then
-    the PID to have a unique name
-  */
-  psEnvConnection->psIonData->psIonDev = IonDevAcquire();
-  OSSNPrintf (psEnvConnection->psIonData->azIonClientName, ION_CLIENT_NAME_SIZE, "pvr_ion_client-%p-%d", *phOsPrivateData, OSGetCurrentProcessIDKM() );
-  psEnvConnection->psIonData->psIonClient =
-    ion_client_create (psEnvConnection->psIonData->psIonDev,
-                       psEnvConnection->psIonData->azIonClientName);
-                       
-  if (IS_ERR_OR_NULL (psEnvConnection->psIonData->psIonClient) )
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "OSConnectionPrivateDataInit: Couldn't create "
-               "ion client for per connection data") );
-    return PVRSRV_ERROR_OUT_OF_MEMORY;
-  }
-  psEnvConnection->psIonData->ui32IonClientRefCount = 1;
-  #endif /* SUPPORT_ION */
-  return PVRSRV_OK;
+	ENV_CONNECTION_DATA *psEnvConnection;
+#if defined(SUPPORT_ION)
+	ENV_ION_CONNECTION_DATA *psIonConnection;
+#endif
+
+	*phOsPrivateData = OSAllocMem(sizeof(ENV_CONNECTION_DATA));
+
+	if (*phOsPrivateData == IMG_NULL)
+	{
+		PVR_DPF((PVR_DBG_ERROR, "%s: OSAllocMem failed", __FUNCTION__));
+		return PVRSRV_ERROR_OUT_OF_MEMORY;
+	}
+
+	psEnvConnection = (ENV_CONNECTION_DATA *)*phOsPrivateData;
+	OSMemSet(psEnvConnection, 0, sizeof(*psEnvConnection));
+
+	/* Save the pointer to our struct file */
+	psEnvConnection->psFile = pvOSData;
+
+#if defined(SUPPORT_ION)
+	psIonConnection = (ENV_ION_CONNECTION_DATA *)OSAllocMem(sizeof(ENV_ION_CONNECTION_DATA));
+	if (psIonConnection == IMG_NULL)
+	{
+		PVR_DPF((PVR_DBG_ERROR, "%s: OSAllocMem failed", __FUNCTION__));
+		return PVRSRV_ERROR_OUT_OF_MEMORY;
+	}
+	OSMemSet(psIonConnection, 0, sizeof(*psIonConnection));
+	psEnvConnection->psIonData = psIonConnection;
+	/*
+		We can have more then one connection per process so we need more then
+		the PID to have a unique name
+	*/
+	psEnvConnection->psIonData->psIonDev = IonDevAcquire();
+	OSSNPrintf(psEnvConnection->psIonData->azIonClientName, ION_CLIENT_NAME_SIZE, "pvr_ion_client-%p-%d", *phOsPrivateData, OSGetCurrentProcessIDKM());
+	psEnvConnection->psIonData->psIonClient =
+		ion_client_create(psEnvConnection->psIonData->psIonDev,
+						  psEnvConnection->psIonData->azIonClientName);
+ 
+	if (IS_ERR_OR_NULL(psEnvConnection->psIonData->psIonClient))
+	{
+		PVR_DPF((PVR_DBG_ERROR, "OSConnectionPrivateDataInit: Couldn't create "
+								"ion client for per connection data"));
+		return PVRSRV_ERROR_OUT_OF_MEMORY;
+	}
+	psEnvConnection->psIonData->ui32IonClientRefCount = 1;
+#endif /* SUPPORT_ION */
+	return PVRSRV_OK;
 }
 
-PVRSRV_ERROR OSConnectionPrivateDataDeInit (IMG_HANDLE hOsPrivateData)
+PVRSRV_ERROR OSConnectionPrivateDataDeInit(IMG_HANDLE hOsPrivateData)
 {
-  ENV_CONNECTION_DATA * psEnvConnection;
-  
-  if (hOsPrivateData == IMG_NULL)
-  {
-    return PVRSRV_OK;
-  }
-  
-  psEnvConnection = hOsPrivateData;
-  
-  #if defined(SUPPORT_ION)
-  EnvDataIonClientRelease (psEnvConnection->psIonData);
-  #endif
-  
-  OSFreeMem (hOsPrivateData);
-  /*not nulling pointer, copy on stack*/
-  
-  return PVRSRV_OK;
+	ENV_CONNECTION_DATA *psEnvConnection; 
+
+	if (hOsPrivateData == IMG_NULL)
+	{
+		return PVRSRV_OK;
+	}
+
+	psEnvConnection = hOsPrivateData;
+
+#if defined(SUPPORT_ION)
+	EnvDataIonClientRelease(psEnvConnection->psIonData);
+#endif
+
+	OSFreeMem(hOsPrivateData);
+	/*not nulling pointer, copy on stack*/
+
+	return PVRSRV_OK;
 }

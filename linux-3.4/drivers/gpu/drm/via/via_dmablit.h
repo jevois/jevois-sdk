@@ -38,44 +38,44 @@
 struct _drm_via_descriptor;
 
 typedef struct _drm_via_sg_info {
-  struct page ** pages;
-  unsigned long num_pages;
-  struct _drm_via_descriptor ** desc_pages;
-  int num_desc_pages;
-  int num_desc;
-  enum dma_data_direction direction;
-  unsigned char * bounce_buffer;
-  dma_addr_t chain_start;
-  uint32_t free_on_sequence;
-  unsigned int descriptors_per_page;
-  int aborted;
-  enum {
-    dr_via_device_mapped,
-    dr_via_desc_pages_alloc,
-    dr_via_pages_locked,
-    dr_via_pages_alloc,
-    dr_via_sg_init
-  } state;
+	struct page **pages;
+	unsigned long num_pages;
+	struct _drm_via_descriptor **desc_pages;
+	int num_desc_pages;
+	int num_desc;
+	enum dma_data_direction direction;
+	unsigned char *bounce_buffer;
+	dma_addr_t chain_start;
+	uint32_t free_on_sequence;
+	unsigned int descriptors_per_page;
+	int aborted;
+	enum {
+		dr_via_device_mapped,
+		dr_via_desc_pages_alloc,
+		dr_via_pages_locked,
+		dr_via_pages_alloc,
+		dr_via_sg_init
+	} state;
 } drm_via_sg_info_t;
 
 typedef struct _drm_via_blitq {
-  struct drm_device * dev;
-  uint32_t cur_blit_handle;
-  uint32_t done_blit_handle;
-  unsigned serviced;
-  unsigned head;
-  unsigned cur;
-  unsigned num_free;
-  unsigned num_outstanding;
-  unsigned long end;
-  int aborting;
-  int is_active;
-  drm_via_sg_info_t * blits[VIA_NUM_BLIT_SLOTS];
-  spinlock_t blit_lock;
-  wait_queue_head_t blit_queue[VIA_NUM_BLIT_SLOTS];
-  wait_queue_head_t busy_queue;
-  struct work_struct wq;
-  struct timer_list poll_timer;
+	struct drm_device *dev;
+	uint32_t cur_blit_handle;
+	uint32_t done_blit_handle;
+	unsigned serviced;
+	unsigned head;
+	unsigned cur;
+	unsigned num_free;
+	unsigned num_outstanding;
+	unsigned long end;
+	int aborting;
+	int is_active;
+	drm_via_sg_info_t *blits[VIA_NUM_BLIT_SLOTS];
+	spinlock_t blit_lock;
+	wait_queue_head_t blit_queue[VIA_NUM_BLIT_SLOTS];
+	wait_queue_head_t busy_queue;
+	struct work_struct wq;
+	struct timer_list poll_timer;
 } drm_via_blitq_t;
 
 
@@ -118,21 +118,21 @@ typedef struct _drm_via_blitq {
 
 /* Define for DMA engine */
 /* DPR */
-#define VIA_DMA_DPR_EC    (1<<1)  /* end of chain */
-#define VIA_DMA_DPR_DDIE  (1<<2)  /* descriptor done interrupt enable */
-#define VIA_DMA_DPR_DT    (1<<3)  /* direction of transfer (RO) */
+#define VIA_DMA_DPR_EC		(1<<1)	/* end of chain */
+#define VIA_DMA_DPR_DDIE	(1<<2)	/* descriptor done interrupt enable */
+#define VIA_DMA_DPR_DT		(1<<3)	/* direction of transfer (RO) */
 
 /* MR */
-#define VIA_DMA_MR_CM   (1<<0)  /* chaining mode */
-#define VIA_DMA_MR_TDIE   (1<<1)  /* transfer done interrupt enable */
-#define VIA_DMA_MR_HENDMACMD    (1<<7) /* ? */
+#define VIA_DMA_MR_CM		(1<<0)	/* chaining mode */
+#define VIA_DMA_MR_TDIE		(1<<1)	/* transfer done interrupt enable */
+#define VIA_DMA_MR_HENDMACMD		(1<<7) /* ? */
 
 /* CSR */
-#define VIA_DMA_CSR_DE    (1<<0)  /* DMA enable */
-#define VIA_DMA_CSR_TS    (1<<1)  /* transfer start */
-#define VIA_DMA_CSR_TA    (1<<2)  /* transfer abort */
-#define VIA_DMA_CSR_TD    (1<<3)  /* transfer done */
-#define VIA_DMA_CSR_DD    (1<<4)  /* descriptor done */
+#define VIA_DMA_CSR_DE		(1<<0)	/* DMA enable */
+#define VIA_DMA_CSR_TS		(1<<1)	/* transfer start */
+#define VIA_DMA_CSR_TA		(1<<2)	/* transfer abort */
+#define VIA_DMA_CSR_TD		(1<<3)	/* transfer done */
+#define VIA_DMA_CSR_DD		(1<<4)	/* descriptor done */
 #define VIA_DMA_DPR_EC          (1<<1)  /* end of chain */
 
 

@@ -20,13 +20,13 @@
 #include "wd_timer.h"
 
 struct omap_hwmod_irq_info omap2xxx_timer12_mpu_irqs[] = {
-  { .irq = 48, },
-  { .irq = -1 }
+	{ .irq = 48, },
+	{ .irq = -1 }
 };
 
 struct omap_hwmod_dma_info omap2xxx_dss_sdma_chs[] = {
-  { .name = "dispc", .dma_req = 5 },
-  { .dma_req = -1 }
+	{ .name = "dispc", .dma_req = 5 },
+	{ .dma_req = -1 }
 };
 
 /*
@@ -35,37 +35,37 @@ struct omap_hwmod_dma_info omap2xxx_dss_sdma_chs[] = {
  */
 
 static struct omap_hwmod_class_sysconfig omap2_dispc_sysc = {
-  .rev_offs = 0x0000,
-  .sysc_offs  = 0x0010,
-  .syss_offs  = 0x0014,
-  .sysc_flags = (SYSC_HAS_SIDLEMODE | SYSC_HAS_MIDLEMODE |
-  SYSC_HAS_SOFTRESET | SYSC_HAS_AUTOIDLE),
-  .idlemodes  = (SIDLE_FORCE | SIDLE_NO | SIDLE_SMART |
-  MSTANDBY_FORCE | MSTANDBY_NO | MSTANDBY_SMART),
-  .sysc_fields  = &omap_hwmod_sysc_type1,
+	.rev_offs	= 0x0000,
+	.sysc_offs	= 0x0010,
+	.syss_offs	= 0x0014,
+	.sysc_flags	= (SYSC_HAS_SIDLEMODE | SYSC_HAS_MIDLEMODE |
+			   SYSC_HAS_SOFTRESET | SYSC_HAS_AUTOIDLE),
+	.idlemodes	= (SIDLE_FORCE | SIDLE_NO | SIDLE_SMART |
+			   MSTANDBY_FORCE | MSTANDBY_NO | MSTANDBY_SMART),
+	.sysc_fields	= &omap_hwmod_sysc_type1,
 };
 
 struct omap_hwmod_class omap2_dispc_hwmod_class = {
-  .name = "dispc",
-  .sysc = &omap2_dispc_sysc,
+	.name	= "dispc",
+	.sysc	= &omap2_dispc_sysc,
 };
 
 /* OMAP2xxx Timer Common */
 static struct omap_hwmod_class_sysconfig omap2xxx_timer_sysc = {
-  .rev_offs = 0x0000,
-  .sysc_offs  = 0x0010,
-  .syss_offs  = 0x0014,
-  .sysc_flags = (SYSC_HAS_SIDLEMODE | SYSC_HAS_CLOCKACTIVITY |
-  SYSC_HAS_ENAWAKEUP | SYSC_HAS_SOFTRESET |
-  SYSC_HAS_AUTOIDLE),
-  .idlemodes  = (SIDLE_FORCE | SIDLE_NO | SIDLE_SMART),
-  .sysc_fields  = &omap_hwmod_sysc_type1,
+	.rev_offs	= 0x0000,
+	.sysc_offs	= 0x0010,
+	.syss_offs	= 0x0014,
+	.sysc_flags	= (SYSC_HAS_SIDLEMODE | SYSC_HAS_CLOCKACTIVITY |
+			   SYSC_HAS_ENAWAKEUP | SYSC_HAS_SOFTRESET |
+			   SYSC_HAS_AUTOIDLE),
+	.idlemodes	= (SIDLE_FORCE | SIDLE_NO | SIDLE_SMART),
+	.sysc_fields	= &omap_hwmod_sysc_type1,
 };
 
 struct omap_hwmod_class omap2xxx_timer_hwmod_class = {
-  .name = "timer",
-  .sysc = &omap2xxx_timer_sysc,
-  .rev  = OMAP_TIMER_IP_VERSION_1,
+	.name	= "timer",
+	.sysc	= &omap2xxx_timer_sysc,
+	.rev	= OMAP_TIMER_IP_VERSION_1,
 };
 
 /*
@@ -75,18 +75,18 @@ struct omap_hwmod_class omap2xxx_timer_hwmod_class = {
  */
 
 static struct omap_hwmod_class_sysconfig omap2xxx_wd_timer_sysc = {
-  .rev_offs = 0x0000,
-  .sysc_offs  = 0x0010,
-  .syss_offs  = 0x0014,
-  .sysc_flags = (SYSC_HAS_EMUFREE | SYSC_HAS_SOFTRESET |
-  SYSC_HAS_AUTOIDLE | SYSS_HAS_RESET_STATUS),
-  .sysc_fields  = &omap_hwmod_sysc_type1,
+	.rev_offs	= 0x0000,
+	.sysc_offs	= 0x0010,
+	.syss_offs	= 0x0014,
+	.sysc_flags	= (SYSC_HAS_EMUFREE | SYSC_HAS_SOFTRESET |
+			   SYSC_HAS_AUTOIDLE | SYSS_HAS_RESET_STATUS),
+	.sysc_fields	= &omap_hwmod_sysc_type1,
 };
 
 struct omap_hwmod_class omap2xxx_wd_timer_hwmod_class = {
-  .name   = "wd_timer",
-  .sysc   = &omap2xxx_wd_timer_sysc,
-  .pre_shutdown = &omap2_wd_timer_disable
+	.name		= "wd_timer",
+	.sysc		= &omap2xxx_wd_timer_sysc,
+	.pre_shutdown	= &omap2_wd_timer_disable
 };
 
 /*
@@ -94,37 +94,37 @@ struct omap_hwmod_class omap2xxx_wd_timer_hwmod_class = {
  * general purpose io module
  */
 static struct omap_hwmod_class_sysconfig omap2xxx_gpio_sysc = {
-  .rev_offs = 0x0000,
-  .sysc_offs  = 0x0010,
-  .syss_offs  = 0x0014,
-  .sysc_flags = (SYSC_HAS_ENAWAKEUP | SYSC_HAS_SIDLEMODE |
-  SYSC_HAS_SOFTRESET | SYSC_HAS_AUTOIDLE |
-  SYSS_HAS_RESET_STATUS),
-  .idlemodes  = (SIDLE_FORCE | SIDLE_NO | SIDLE_SMART),
-  .sysc_fields  = &omap_hwmod_sysc_type1,
+	.rev_offs	= 0x0000,
+	.sysc_offs	= 0x0010,
+	.syss_offs	= 0x0014,
+	.sysc_flags	= (SYSC_HAS_ENAWAKEUP | SYSC_HAS_SIDLEMODE |
+			   SYSC_HAS_SOFTRESET | SYSC_HAS_AUTOIDLE |
+			   SYSS_HAS_RESET_STATUS),
+	.idlemodes	= (SIDLE_FORCE | SIDLE_NO | SIDLE_SMART),
+	.sysc_fields	= &omap_hwmod_sysc_type1,
 };
 
 struct omap_hwmod_class omap2xxx_gpio_hwmod_class = {
-  .name = "gpio",
-  .sysc = &omap2xxx_gpio_sysc,
-  .rev = 0,
+	.name = "gpio",
+	.sysc = &omap2xxx_gpio_sysc,
+	.rev = 0,
 };
 
 /* system dma */
 static struct omap_hwmod_class_sysconfig omap2xxx_dma_sysc = {
-  .rev_offs = 0x0000,
-  .sysc_offs  = 0x002c,
-  .syss_offs  = 0x0028,
-  .sysc_flags = (SYSC_HAS_SOFTRESET | SYSC_HAS_MIDLEMODE |
-  SYSC_HAS_CLOCKACTIVITY | SYSC_HAS_EMUFREE |
-  SYSC_HAS_AUTOIDLE | SYSS_HAS_RESET_STATUS),
-  .idlemodes  = (MSTANDBY_FORCE | MSTANDBY_NO | MSTANDBY_SMART),
-  .sysc_fields  = &omap_hwmod_sysc_type1,
+	.rev_offs	= 0x0000,
+	.sysc_offs	= 0x002c,
+	.syss_offs	= 0x0028,
+	.sysc_flags	= (SYSC_HAS_SOFTRESET | SYSC_HAS_MIDLEMODE |
+			   SYSC_HAS_CLOCKACTIVITY | SYSC_HAS_EMUFREE |
+			   SYSC_HAS_AUTOIDLE | SYSS_HAS_RESET_STATUS),
+	.idlemodes	= (MSTANDBY_FORCE | MSTANDBY_NO | MSTANDBY_SMART),
+	.sysc_fields	= &omap_hwmod_sysc_type1,
 };
 
 struct omap_hwmod_class omap2xxx_dma_hwmod_class = {
-  .name = "dma",
-  .sysc = &omap2xxx_dma_sysc,
+	.name	= "dma",
+	.sysc	= &omap2xxx_dma_sysc,
 };
 
 /*
@@ -134,18 +134,18 @@ struct omap_hwmod_class omap2xxx_dma_hwmod_class = {
  */
 
 static struct omap_hwmod_class_sysconfig omap2xxx_mailbox_sysc = {
-  .rev_offs = 0x000,
-  .sysc_offs  = 0x010,
-  .syss_offs  = 0x014,
-  .sysc_flags = (SYSC_HAS_CLOCKACTIVITY | SYSC_HAS_SIDLEMODE |
-  SYSC_HAS_SOFTRESET | SYSC_HAS_AUTOIDLE),
-  .idlemodes  = (SIDLE_FORCE | SIDLE_NO | SIDLE_SMART),
-  .sysc_fields  = &omap_hwmod_sysc_type1,
+	.rev_offs	= 0x000,
+	.sysc_offs	= 0x010,
+	.syss_offs	= 0x014,
+	.sysc_flags	= (SYSC_HAS_CLOCKACTIVITY | SYSC_HAS_SIDLEMODE |
+			   SYSC_HAS_SOFTRESET | SYSC_HAS_AUTOIDLE),
+	.idlemodes	= (SIDLE_FORCE | SIDLE_NO | SIDLE_SMART),
+	.sysc_fields	= &omap_hwmod_sysc_type1,
 };
 
 struct omap_hwmod_class omap2xxx_mailbox_hwmod_class = {
-  .name = "mailbox",
-  .sysc = &omap2xxx_mailbox_sysc,
+	.name	= "mailbox",
+	.sysc	= &omap2xxx_mailbox_sysc,
 };
 
 /*
@@ -155,18 +155,18 @@ struct omap_hwmod_class omap2xxx_mailbox_hwmod_class = {
  */
 
 static struct omap_hwmod_class_sysconfig omap2xxx_mcspi_sysc = {
-  .rev_offs = 0x0000,
-  .sysc_offs  = 0x0010,
-  .syss_offs  = 0x0014,
-  .sysc_flags = (SYSC_HAS_CLOCKACTIVITY | SYSC_HAS_SIDLEMODE |
-  SYSC_HAS_ENAWAKEUP | SYSC_HAS_SOFTRESET |
-  SYSC_HAS_AUTOIDLE | SYSS_HAS_RESET_STATUS),
-  .idlemodes  = (SIDLE_FORCE | SIDLE_NO | SIDLE_SMART),
-  .sysc_fields  = &omap_hwmod_sysc_type1,
+	.rev_offs	= 0x0000,
+	.sysc_offs	= 0x0010,
+	.syss_offs	= 0x0014,
+	.sysc_flags	= (SYSC_HAS_CLOCKACTIVITY | SYSC_HAS_SIDLEMODE |
+				SYSC_HAS_ENAWAKEUP | SYSC_HAS_SOFTRESET |
+				SYSC_HAS_AUTOIDLE | SYSS_HAS_RESET_STATUS),
+	.idlemodes	= (SIDLE_FORCE | SIDLE_NO | SIDLE_SMART),
+	.sysc_fields	= &omap_hwmod_sysc_type1,
 };
 
 struct omap_hwmod_class omap2xxx_mcspi_class = {
-  .name = "mcspi",
-  .sysc = &omap2xxx_mcspi_sysc,
-  .rev  = OMAP2_MCSPI_REV,
+	.name	= "mcspi",
+	.sysc	= &omap2xxx_mcspi_sysc,
+	.rev	= OMAP2_MCSPI_REV,
 };

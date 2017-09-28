@@ -51,9 +51,9 @@
 static unsigned long s_dwGetUINT32(unsigned char *p);        
 static void s_vPutUINT32(unsigned char *p, unsigned long val);
 */
-static void s_vClear (void);                     
-static void s_vSetKey (unsigned long dwK0, unsigned long dwK1);
-static void s_vAppendByte (unsigned char b);          
+static void s_vClear(void);                      
+static void s_vSetKey(unsigned long dwK0, unsigned long dwK1);
+static void s_vAppendByte(unsigned char b);           
 
 /*---------------------  Export Variables  --------------------------*/
 static unsigned long L, R;          
@@ -89,75 +89,75 @@ static void s_vPutUINT32 (unsigned char *p, unsigned long val)
 
 static void s_vClear (void)
 {
-  L = K0;
-  R = K1;
-  nBytesInM = 0;
-  M = 0;
+    L = K0;
+    R = K1;
+    nBytesInM = 0;
+    M = 0;
 }
 
 static void s_vSetKey (unsigned long dwK0, unsigned long dwK1)
 {
-  K0 = dwK0;
-  K1 = dwK1;
-  s_vClear();
+    K0 = dwK0;
+    K1 = dwK1;
+    s_vClear();
 }
 
 static void s_vAppendByte (unsigned char b)
 {
-  M |= b << (8 * nBytesInM);
-  nBytesInM++;
-  if ( nBytesInM >= 4 )
-  {
-    L ^= M;
-    R ^= ROL32 ( L, 17 );
-    L += R;
-    R ^= ( (L & 0xff00ff00) >> 8) | ( (L & 0x00ff00ff) << 8);
-    L += R;
-    R ^= ROL32 ( L, 3 );
-    L += R;
-    R ^= ROR32 ( L, 2 );
-    L += R;
-    M = 0;
-    nBytesInM = 0;
-  }
+    M |= b << (8*nBytesInM);
+    nBytesInM++;
+    if( nBytesInM >= 4 )
+    {
+        L ^= M;
+        R ^= ROL32( L, 17 );
+        L += R;
+        R ^= ((L & 0xff00ff00) >> 8) | ((L & 0x00ff00ff) << 8);
+        L += R;
+        R ^= ROL32( L, 3 );
+        L += R;
+        R ^= ROR32( L, 2 );
+        L += R;
+        M = 0;
+        nBytesInM = 0;
+    }
 }
 
 void MIC_vInit (unsigned long dwK0, unsigned long dwK1)
 {
-  s_vSetKey (dwK0, dwK1);
+    s_vSetKey(dwK0, dwK1);
 }
 
 
 void MIC_vUnInit (void)
 {
-  K0 = 0;
-  K1 = 0;
-  
-  s_vClear();
+    K0 = 0;
+    K1 = 0;
+
+    s_vClear();
 }
 
-void MIC_vAppend (unsigned char * src, unsigned int nBytes)
+void MIC_vAppend (unsigned char *src, unsigned int nBytes)
 {
-  while (nBytes > 0)
-  {
-    s_vAppendByte (*src++);
-    nBytes--;
-  }
+    while (nBytes > 0)
+    {
+        s_vAppendByte(*src++);
+        nBytes--;
+    }
 }
 
-void MIC_vGetMIC (unsigned long * pdwL, unsigned long * pdwR)
+void MIC_vGetMIC (unsigned long *pdwL, unsigned long *pdwR)
 {
-  s_vAppendByte (0x5a);
-  s_vAppendByte (0);
-  s_vAppendByte (0);
-  s_vAppendByte (0);
-  s_vAppendByte (0);
-  while ( nBytesInM != 0 )
-  {
-    s_vAppendByte (0);
-  }
-  *pdwL = L;
-  *pdwR = R;
-  s_vClear();
+    s_vAppendByte(0x5a);
+    s_vAppendByte(0);
+    s_vAppendByte(0);
+    s_vAppendByte(0);
+    s_vAppendByte(0);
+    while( nBytesInM != 0 )
+    {
+        s_vAppendByte(0);
+    }
+    *pdwL = L;
+    *pdwR = R;
+    s_vClear();
 }
 

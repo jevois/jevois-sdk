@@ -74,30 +74,30 @@
  *   ---------------------------------
  *   |0|0|1|0|0|0|x|x|x|x|x|c|c|c|c|c|
 
- *  0010 00xx xxxc cccc
- *  0010 00nn pppp qqqq
- *  nn:
- *  00 = reserved
- *  01 = pwr state change
- *  10 = opp pre-change
- *  11 = opp post-change
+ * 	0010 00xx xxxc cccc
+ *	0010 00nn pppp qqqq
+ *	nn:
+ *	00 = reserved
+ *	01 = pwr state change
+ *	10 = opp pre-change
+ *	11 = opp post-change
  *
- *  if nn = pwr state change:
- *  pppp = don't care
- *  qqqq:
- *  0010 = hibernate
- *  0010 0001 0000 0010
- *  0110 = retention
- *  0010 0001 0000 0110
- *  others reserved
+ *	if nn = pwr state change:
+ *	pppp = don't care
+ *	qqqq:
+ *	0010 = hibernate
+ *	0010 0001 0000 0010
+ *	0110 = retention
+ *	0010 0001 0000 0110
+ *	others reserved
  *
- *  if nn = opp pre-change:
- *  pppp = current opp
- *  qqqq = next opp
+ *	if nn = opp pre-change:
+ *	pppp = current opp
+ *	qqqq = next opp
  *
- *  if nn = opp post-change:
- *  pppp = prev opp
- *  qqqq = current opp
+ *	if nn = opp post-change:
+ *	pppp = prev opp
+ *	qqqq = current opp
  *
  *   ---------------------------------
  *   |  (class)  | (module specific) |
@@ -110,18 +110,18 @@
 #ifndef _MBX_SH_H
 #define _MBX_SH_H
 
-#define MBX_PCPY_CLASS     0x0800 /* PROC-COPY  " */
-#define MBX_PM_CLASS       0x2000 /* Power Management */
-#define MBX_DBG_CLASS      0x4000 /* For debugging purpose */
+#define MBX_PCPY_CLASS     0x0800	/* PROC-COPY  " */
+#define MBX_PM_CLASS       0x2000	/* Power Management */
+#define MBX_DBG_CLASS      0x4000	/* For debugging purpose */
 
 /*
  * Exception Handler codes
  * Magic code used to determine if DSP signaled exception.
  */
 #define MBX_DEH_BASE        0x0
-#define MBX_DEH_USERS_BASE  0x100 /* 256 */
-#define MBX_DEH_LIMIT       0x3FF /* 1023 */
-#define MBX_DEH_RESET       0x101 /* DSP RESET (DEH) */
+#define MBX_DEH_USERS_BASE  0x100	/* 256 */
+#define MBX_DEH_LIMIT       0x3FF	/* 1023 */
+#define MBX_DEH_RESET       0x101	/* DSP RESET (DEH) */
 
 /*
  *  Link driver command/status codes.

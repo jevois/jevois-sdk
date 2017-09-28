@@ -27,51 +27,51 @@
 #include <asm/arch/tegra2.h>
 #include "serial_tegra2.h"
 
-static void setup_uart (struct uart_ctlr * u)
+static void setup_uart(struct uart_ctlr *u)
 {
-  u32 reg;
-  
-  /* Prepare the divisor value */
-  reg = NVRM_PLLP_FIXED_FREQ_KHZ * 1000 / NV_DEFAULT_DEBUG_BAUD / 16;
-  
-  /* Set up UART parameters */
-  writel (UART_LCR_DLAB, &u->uart_lcr);
-  writel (reg, &u->uart_thr_dlab_0);
-  writel (0, &u->uart_ier_dlab_0);
-  writel (0, &u->uart_lcr);     /* clear DLAB */
-  writel ( (UART_FCR_TRIGGER_3 | UART_FCR_FIFO_EN | \
-            UART_FCR_CLEAR_XMIT | UART_FCR_CLEAR_RCVR), &u->uart_iir_fcr);
-  writel (0, &u->uart_ier_dlab_0);
-  writel (UART_LCR_WLS_8, &u->uart_lcr); /* 8N1 */
-  writel (UART_MCR_RTS, &u->uart_mcr);
-  writel (0, &u->uart_msr);
-  writel (0, &u->uart_spr);
-  writel (0, &u->uart_irda_csr);
-  writel (0, &u->uart_asr);
-  writel ( (UART_FCR_TRIGGER_3 | UART_FCR_FIFO_EN), &u->uart_iir_fcr);
-  
-  /* Flush any old characters out of the RX FIFO */
-  reg = readl (&u->uart_lsr);
-  
-  while (reg & UART_LSR_DR) {
-    reg = readl (&u->uart_thr_dlab_0);
-    reg = readl (&u->uart_lsr);
-  }
+	u32 reg;
+
+	/* Prepare the divisor value */
+	reg = NVRM_PLLP_FIXED_FREQ_KHZ * 1000 / NV_DEFAULT_DEBUG_BAUD / 16;
+
+	/* Set up UART parameters */
+	writel(UART_LCR_DLAB, &u->uart_lcr);
+	writel(reg, &u->uart_thr_dlab_0);
+	writel(0, &u->uart_ier_dlab_0);
+	writel(0, &u->uart_lcr);			/* clear DLAB */
+	writel((UART_FCR_TRIGGER_3 | UART_FCR_FIFO_EN | \
+		UART_FCR_CLEAR_XMIT | UART_FCR_CLEAR_RCVR), &u->uart_iir_fcr);
+	writel(0, &u->uart_ier_dlab_0);
+	writel(UART_LCR_WLS_8, &u->uart_lcr);	/* 8N1 */
+	writel(UART_MCR_RTS, &u->uart_mcr);
+	writel(0, &u->uart_msr);
+	writel(0, &u->uart_spr);
+	writel(0, &u->uart_irda_csr);
+	writel(0, &u->uart_asr);
+	writel((UART_FCR_TRIGGER_3 | UART_FCR_FIFO_EN), &u->uart_iir_fcr);
+
+	/* Flush any old characters out of the RX FIFO */
+	reg = readl(&u->uart_lsr);
+
+	while (reg & UART_LSR_DR) {
+		reg = readl(&u->uart_thr_dlab_0);
+		reg = readl(&u->uart_lsr);
+	}
 }
 
 /*
  * Routine: uart_init
  * Description: init the UART clocks, muxes, and baudrate/parity/etc.
  */
-void uart_init (void)
+void uart_init(void)
 {
-  struct uart_ctlr * uart = (struct uart_ctlr *) NV_PA_APB_UARTD_BASE;
-  #if defined(CONFIG_TEGRA2_ENABLE_UARTD)
-  setup_uart (uart);
-  #endif  /* CONFIG_TEGRA2_ENABLE_UARTD */
-  #if defined(CONFIG_TEGRA2_ENABLE_UARTA)
-  uart = (struct uart_ctlr *) NV_PA_APB_UARTA_BASE;
-  
-  setup_uart (uart);
-  #endif  /* CONFIG_TEGRA2_ENABLE_UARTA */
+	struct uart_ctlr *uart = (struct uart_ctlr *)NV_PA_APB_UARTD_BASE;
+#if defined(CONFIG_TEGRA2_ENABLE_UARTD)
+	setup_uart(uart);
+#endif	/* CONFIG_TEGRA2_ENABLE_UARTD */
+#if defined(CONFIG_TEGRA2_ENABLE_UARTA)
+	uart = (struct uart_ctlr *)NV_PA_APB_UARTA_BASE;
+
+	setup_uart(uart);
+#endif	/* CONFIG_TEGRA2_ENABLE_UARTA */
 }

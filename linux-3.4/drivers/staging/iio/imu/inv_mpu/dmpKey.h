@@ -258,8 +258,8 @@
 #define NUM_KEYS                    (KEY_D_ACCEL_BIAS + 1)
 
 struct tKeyLabel  {
-  unsigned short key;
-  unsigned short addr;
+	unsigned short key;
+	unsigned short addr;
 };
 
 #define DINA0A 0x0a

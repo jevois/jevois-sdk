@@ -2,8 +2,8 @@
  *
  * Copyright 2008 Openmoko, Inc.
  * Copyright 2008 Simtec Electronics
- *  http://armlinux.simtec.co.uk/
- *  Ben Dooks <ben@simtec.co.uk>
+ *	http://armlinux.simtec.co.uk/
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * S3C64XX - Timer tick support definitions
  *
@@ -18,12 +18,12 @@
 /* note, the timer interrutps turn up in 2 places, the vic and then
  * the timer block. We take the VIC as the base at the moment.
  */
-static inline u32 s3c24xx_ostimer_pending (void)
+static inline u32 s3c24xx_ostimer_pending(void)
 {
-  u32 pend = __raw_readl (VA_VIC0 + VIC_RAW_STATUS);
-  return pend & 1 << (IRQ_TIMER4_VIC - S3C64XX_IRQ_VIC0 (0) );
+	u32 pend = __raw_readl(VA_VIC0 + VIC_RAW_STATUS);
+	return pend & 1 << (IRQ_TIMER4_VIC - S3C64XX_IRQ_VIC0(0));
 }
 
-#define TICK_MAX  (0xffffffff)
+#define TICK_MAX	(0xffffffff)
 
 #endif /* __ASM_ARCH_6400_TICK_H */

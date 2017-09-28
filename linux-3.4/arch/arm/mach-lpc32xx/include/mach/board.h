@@ -19,6 +19,6 @@
 #ifndef __ASM_ARCH_BOARD_H
 #define __ASM_ARCH_BOARD_H
 
-extern u32 lpc32xx_return_iram_size (void);
+extern u32 lpc32xx_return_iram_size(void);
 
 #endif  /* __ASM_ARCH_BOARD_H */

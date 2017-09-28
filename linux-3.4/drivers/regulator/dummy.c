@@ -23,65 +23,65 @@
 
 #include "dummy.h"
 
-struct regulator_dev * dummy_regulator_rdev;
+struct regulator_dev *dummy_regulator_rdev;
 
 static struct regulator_init_data dummy_initdata;
 
 static struct regulator_ops dummy_ops;
 
 static struct regulator_desc dummy_desc = {
-  .name = "dummy",
-  .id = -1,
-  .type = REGULATOR_VOLTAGE,
-  .owner = THIS_MODULE,
-  .ops = &dummy_ops,
+	.name = "dummy",
+	.id = -1,
+	.type = REGULATOR_VOLTAGE,
+	.owner = THIS_MODULE,
+	.ops = &dummy_ops,
 };
 
-static int __devinit dummy_regulator_probe (struct platform_device * pdev)
+static int __devinit dummy_regulator_probe(struct platform_device *pdev)
 {
-  int ret;
-  
-  dummy_regulator_rdev = regulator_register (&dummy_desc, NULL,
-                         &dummy_initdata, NULL, NULL);
-  if (IS_ERR (dummy_regulator_rdev) ) {
-    ret = PTR_ERR (dummy_regulator_rdev);
-    pr_err ("Failed to register regulator: %d\n", ret);
-    return ret;
-  }
-  
-  return 0;
+	int ret;
+
+	dummy_regulator_rdev = regulator_register(&dummy_desc, NULL,
+						  &dummy_initdata, NULL, NULL);
+	if (IS_ERR(dummy_regulator_rdev)) {
+		ret = PTR_ERR(dummy_regulator_rdev);
+		pr_err("Failed to register regulator: %d\n", ret);
+		return ret;
+	}
+
+	return 0;
 }
 
 static struct platform_driver dummy_regulator_driver = {
-  .probe    = dummy_regulator_probe,
-  .driver   = {
-    .name   = "reg-dummy",
-    .owner    = THIS_MODULE,
-  },
+	.probe		= dummy_regulator_probe,
+	.driver		= {
+		.name		= "reg-dummy",
+		.owner		= THIS_MODULE,
+	},
 };
 
-static struct platform_device * dummy_pdev;
+static struct platform_device *dummy_pdev;
 
-void __init regulator_dummy_init (void)
+void __init regulator_dummy_init(void)
 {
-  int ret;
-  
-  dummy_pdev = platform_device_alloc ("reg-dummy", -1);
-  if (!dummy_pdev) {
-    pr_err ("Failed to allocate dummy regulator device\n");
-    return;
-  }
-  
-  ret = platform_device_add (dummy_pdev);
-  if (ret != 0) {
-    pr_err ("Failed to register dummy regulator device: %d\n", ret);
-    platform_device_put (dummy_pdev);
-    return;
-  }
-  
-  ret = platform_driver_register (&dummy_regulator_driver);
-  if (ret != 0) {
-    pr_err ("Failed to register dummy regulator driver: %d\n", ret);
-    platform_device_unregister (dummy_pdev);
-  }
+	int ret;
+
+	dummy_pdev = platform_device_alloc("reg-dummy", -1);
+	if (!dummy_pdev) {
+		pr_err("Failed to allocate dummy regulator device\n");
+		return;
+	}
+
+	ret = platform_device_add(dummy_pdev);
+	if (ret != 0) {
+		pr_err("Failed to register dummy regulator device: %d\n", ret);
+		platform_device_put(dummy_pdev);
+		return;
+	}
+
+	ret = platform_driver_register(&dummy_regulator_driver);
+	if (ret != 0) {
+		pr_err("Failed to register dummy regulator driver: %d\n", ret);
+		platform_device_unregister(dummy_pdev);
+	}
 }

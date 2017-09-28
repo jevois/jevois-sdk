@@ -23,18 +23,18 @@
 #include <phy.h>
 
 static struct phy_driver KSZ804_driver = {
-  .name = "Micrel KSZ804",
-  .uid = 0x221510,
-  .mask = 0xfffff0,
-  .features = PHY_BASIC_FEATURES,
-  .config = &genphy_config,
-  .startup = &genphy_startup,
-  .shutdown = &genphy_shutdown,
+	.name = "Micrel KSZ804",
+	.uid = 0x221510,
+	.mask = 0xfffff0,
+	.features = PHY_BASIC_FEATURES,
+	.config = &genphy_config,
+	.startup = &genphy_startup,
+	.shutdown = &genphy_shutdown,
 };
 
-int phy_micrel_init (void)
+int phy_micrel_init(void)
 {
-  phy_register (&KSZ804_driver);
-  
-  return 0;
+	phy_register(&KSZ804_driver);
+
+	return 0;
 }

@@ -31,8 +31,8 @@
 /* get version information selected by arg[0] */
 #define GIGASET_VERSION  _IOWR(GIGASET_IOCTL, 3, unsigned[4])
 /* values for GIGASET_VERSION arg[0] */
-#define GIGVER_DRIVER 0   /* get driver version */
-#define GIGVER_COMPAT 1   /* get interface compatibility version */
-#define GIGVER_FWBASE 2   /* get base station firmware version */
+#define GIGVER_DRIVER 0		/* get driver version */
+#define GIGVER_COMPAT 1		/* get interface compatibility version */
+#define GIGVER_FWBASE 2		/* get base station firmware version */
 
 #endif

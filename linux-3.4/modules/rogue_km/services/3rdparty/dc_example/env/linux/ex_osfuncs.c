@@ -58,7 +58,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "dc_osfuncs.h"
 #include "dc_example.h"
 
-MODULE_SUPPORTED_DEVICE (DEVNAME);
+MODULE_SUPPORTED_DEVICE(DEVNAME);
 
 #ifndef DC_EXAMPLE_WIDTH
 #define DC_EXAMPLE_WIDTH 640
@@ -87,74 +87,74 @@ MODULE_SUPPORTED_DEVICE (DEVNAME);
 
 DC_EXAMPLE_MODULE_PARAMETERS sModuleParams =
 {
-  .ui32Width = DC_EXAMPLE_WIDTH,
-  .ui32Height = DC_EXAMPLE_HEIGHT,
-  .ui32Depth = DC_EXAMPLE_BIT_DEPTH,
-  .ui32FBCFormat = DC_EXAMPLE_FBC_FORMAT,
-  .ui32RefreshRate = DC_EXAMPLE_REFRESH_RATE,
-  .ui32XDpi = DC_EXAMPLE_DPI,
-  .ui32YDpi = DC_EXAMPLE_DPI
+	.ui32Width = DC_EXAMPLE_WIDTH,
+	.ui32Height = DC_EXAMPLE_HEIGHT,
+	.ui32Depth = DC_EXAMPLE_BIT_DEPTH,
+	.ui32FBCFormat = DC_EXAMPLE_FBC_FORMAT,
+	.ui32RefreshRate = DC_EXAMPLE_REFRESH_RATE,
+	.ui32XDpi = DC_EXAMPLE_DPI,
+	.ui32YDpi = DC_EXAMPLE_DPI
 };
 
-module_param_named (width,   sModuleParams.ui32Width, uint, S_IRUGO);
-module_param_named (height,  sModuleParams.ui32Height, uint, S_IRUGO);
-module_param_named (depth,   sModuleParams.ui32Depth, uint, S_IRUGO);
-module_param_named (fbcformat,   sModuleParams.ui32FBCFormat, uint, S_IRUGO);
-module_param_named (refreshrate, sModuleParams.ui32RefreshRate, uint, S_IRUGO);
-module_param_named (xdpi,  sModuleParams.ui32XDpi, uint, S_IRUGO);
-module_param_named (ydpi,  sModuleParams.ui32YDpi, uint, S_IRUGO);
+module_param_named(width, 	sModuleParams.ui32Width, uint, S_IRUGO);
+module_param_named(height, 	sModuleParams.ui32Height, uint, S_IRUGO);
+module_param_named(depth, 	sModuleParams.ui32Depth, uint, S_IRUGO);
+module_param_named(fbcformat, 	sModuleParams.ui32FBCFormat, uint, S_IRUGO);
+module_param_named(refreshrate, sModuleParams.ui32RefreshRate, uint, S_IRUGO);
+module_param_named(xdpi,	sModuleParams.ui32XDpi, uint, S_IRUGO);
+module_param_named(ydpi,	sModuleParams.ui32YDpi, uint, S_IRUGO);
 
-const DC_EXAMPLE_MODULE_PARAMETERS * DCExampleGetModuleParameters (IMG_VOID)
+const DC_EXAMPLE_MODULE_PARAMETERS *DCExampleGetModuleParameters(IMG_VOID)
 {
-  return &sModuleParams;
+	return &sModuleParams;
 }
 
-IMG_CPU_VIRTADDR DCExampleVirtualAllocUncached (IMG_SIZE_T uiSize)
+IMG_CPU_VIRTADDR DCExampleVirtualAllocUncached(IMG_SIZE_T uiSize)
 {
-  return __vmalloc (uiSize,
-                    GFP_KERNEL | __GFP_HIGHMEM,
-                    pgprot_noncached (PAGE_KERNEL) );
+	return __vmalloc(uiSize,
+			 GFP_KERNEL | __GFP_HIGHMEM,
+			 pgprot_noncached(PAGE_KERNEL));
 }
 
-IMG_BOOL DCExampleVirtualFree (IMG_PVOID lpAddress, IMG_SIZE_T uiSize)
+IMG_BOOL DCExampleVirtualFree(IMG_PVOID lpAddress, IMG_SIZE_T uiSize)
 {
-  PVR_UNREFERENCED_PARAMETER (uiSize);
-  vfree (lpAddress);
-  
-  /* vfree does not return a value, so all we can do is hard code IMG_TRUE */
-  return IMG_TRUE;
+	PVR_UNREFERENCED_PARAMETER(uiSize);
+	vfree(lpAddress);
+	
+	/* vfree does not return a value, so all we can do is hard code IMG_TRUE */
+	return IMG_TRUE;
 }
 
-#define VMALLOC_TO_PAGE_PHYS(vAddr) page_to_phys(vmalloc_to_page(vAddr))
+#define	VMALLOC_TO_PAGE_PHYS(vAddr) page_to_phys(vmalloc_to_page(vAddr))
 
-PVRSRV_ERROR DCExampleLinAddrToDevPAddrs (IMG_CPU_VIRTADDR pvLinAddr,
-    IMG_DEV_PHYADDR * pasDevPAddr,
-    IMG_SIZE_T uiSize)
+PVRSRV_ERROR DCExampleLinAddrToDevPAddrs(IMG_CPU_VIRTADDR pvLinAddr,
+					 IMG_DEV_PHYADDR *pasDevPAddr,
+					 IMG_SIZE_T uiSize)
 {
-  unsigned long ulPages = DC_OS_BYTES_TO_PAGES (uiSize);
-  int i;
-  
-  for (i = 0; i < ulPages; i++)
-  {
-    pasDevPAddr[i].uiAddr = VMALLOC_TO_PAGE_PHYS (pvLinAddr);
-    pvLinAddr += PAGE_SIZE;
-  }
-  
-  return PVRSRV_OK;
+	unsigned long ulPages = DC_OS_BYTES_TO_PAGES(uiSize);
+	int i;
+
+	for (i = 0; i < ulPages; i++)
+	{
+		pasDevPAddr[i].uiAddr = VMALLOC_TO_PAGE_PHYS(pvLinAddr);
+		pvLinAddr += PAGE_SIZE;
+	}
+
+	return PVRSRV_OK;
 }
 
 #if defined(SUPPORT_DRM)
-int PVR_DRM_MAKENAME (DISPLAY_CONTROLLER, _Init) (struct drm_device unref__ *dev)
+int PVR_DRM_MAKENAME(DISPLAY_CONTROLLER, _Init)(struct drm_device unref__ *dev)
 #else
-static int __init dc_example_init (void)
+static int __init dc_example_init(void)
 #endif
 {
-  if (DCExampleInit() != PVRSRV_OK)
-  {
-    return -ENODEV;
-  }
-  
-  return 0;
+	if (DCExampleInit() != PVRSRV_OK)
+	{
+		return -ENODEV;
+	}
+
+	return 0;
 }
 
 /*****************************************************************************
@@ -166,17 +166,17 @@ static int __init dc_example_init (void)
                 to module_exit() macro call below.
 *****************************************************************************/
 #if defined(SUPPORT_DRM)
-void PVR_DRM_MAKENAME (DISPLAY_CONTROLLER, _Cleanup) (struct drm_device unref__ *dev)
+void PVR_DRM_MAKENAME(DISPLAY_CONTROLLER, _Cleanup)(struct drm_device unref__ *dev)
 #else
-static void __exit dc_example_deinit (void)
+static void __exit dc_example_deinit(void)
 #endif
 {
-  DCExampleDeinit();
+	DCExampleDeinit();
 }
 
 #if !defined(SUPPORT_DRM)
-module_init (dc_example_init);
-module_exit (dc_example_deinit);
+module_init(dc_example_init);
+module_exit(dc_example_deinit);
 #endif
 
 #endif /* defined(LINUX) */

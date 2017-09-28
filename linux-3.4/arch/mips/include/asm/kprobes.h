@@ -38,60 +38,60 @@ typedef union mips_instruction kprobe_opcode_t;
 
 #define MAX_INSN_SIZE 2
 
-#define flush_insn_slot(p)            \
-  do {                  \
-    flush_icache_range((unsigned long)p->addr,      \
-                       (unsigned long)p->addr +     \
-                       (MAX_INSN_SIZE * sizeof(kprobe_opcode_t)));  \
-  } while (0)
+#define flush_insn_slot(p)						\
+do {									\
+	flush_icache_range((unsigned long)p->addr,			\
+			   (unsigned long)p->addr +			\
+			   (MAX_INSN_SIZE * sizeof(kprobe_opcode_t)));	\
+} while (0)
 
 
 #define kretprobe_blacklist_size 0
 
-void arch_remove_kprobe (struct kprobe * p);
+void arch_remove_kprobe(struct kprobe *p);
 
 /* Architecture specific copy of original instruction*/
 struct arch_specific_insn {
-  /* copy of the original instruction */
-  kprobe_opcode_t * insn;
+	/* copy of the original instruction */
+	kprobe_opcode_t *insn;
 };
 
 struct prev_kprobe {
-  struct kprobe * kp;
-  unsigned long status;
-  unsigned long old_SR;
-  unsigned long saved_SR;
-  unsigned long saved_epc;
+	struct kprobe *kp;
+	unsigned long status;
+	unsigned long old_SR;
+	unsigned long saved_SR;
+	unsigned long saved_epc;
 };
 
 #define MAX_JPROBES_STACK_SIZE 128
 #define MAX_JPROBES_STACK_ADDR \
-  (((unsigned long)current_thread_info()) + THREAD_SIZE - 32 - sizeof(struct pt_regs))
+	(((unsigned long)current_thread_info()) + THREAD_SIZE - 32 - sizeof(struct pt_regs))
 
-#define MIN_JPROBES_STACK_SIZE(ADDR)          \
-  ((((ADDR) + MAX_JPROBES_STACK_SIZE) > MAX_JPROBES_STACK_ADDR) \
-   ? MAX_JPROBES_STACK_ADDR - (ADDR)     \
-   : MAX_JPROBES_STACK_SIZE)
+#define MIN_JPROBES_STACK_SIZE(ADDR)					\
+	((((ADDR) + MAX_JPROBES_STACK_SIZE) > MAX_JPROBES_STACK_ADDR)	\
+		? MAX_JPROBES_STACK_ADDR - (ADDR)			\
+		: MAX_JPROBES_STACK_SIZE)
 
 
 #define SKIP_DELAYSLOT 0x0001
 
 /* per-cpu kprobe control block */
 struct kprobe_ctlblk {
-  unsigned long kprobe_status;
-  unsigned long kprobe_old_SR;
-  unsigned long kprobe_saved_SR;
-  unsigned long kprobe_saved_epc;
-  unsigned long jprobe_saved_sp;
-  struct pt_regs jprobe_saved_regs;
-  /* Per-thread fields, used while emulating branches */
-  unsigned long flags;
-  unsigned long target_epc;
-  u8 jprobes_stack[MAX_JPROBES_STACK_SIZE];
-  struct prev_kprobe prev_kprobe;
+	unsigned long kprobe_status;
+	unsigned long kprobe_old_SR;
+	unsigned long kprobe_saved_SR;
+	unsigned long kprobe_saved_epc;
+	unsigned long jprobe_saved_sp;
+	struct pt_regs jprobe_saved_regs;
+	/* Per-thread fields, used while emulating branches */
+	unsigned long flags;
+	unsigned long target_epc;
+	u8 jprobes_stack[MAX_JPROBES_STACK_SIZE];
+	struct prev_kprobe prev_kprobe;
 };
 
-extern int kprobe_exceptions_notify (struct notifier_block * self,
-                                     unsigned long val, void * data);
+extern int kprobe_exceptions_notify(struct notifier_block *self,
+				    unsigned long val, void *data);
 
-#endif        /* _ASM_KPROBES_H */
+#endif				/* _ASM_KPROBES_H */

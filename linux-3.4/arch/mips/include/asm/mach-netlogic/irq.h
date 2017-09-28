@@ -8,7 +8,7 @@
 #ifndef __ASM_NETLOGIC_IRQ_H
 #define __ASM_NETLOGIC_IRQ_H
 
-#define NR_IRQS     64
-#define MIPS_CPU_IRQ_BASE 0
+#define NR_IRQS			64
+#define MIPS_CPU_IRQ_BASE	0
 
 #endif /* __ASM_NETLOGIC_IRQ_H */

@@ -12,7 +12,7 @@
 #define _CRIS_BITOPS_H
 
 /* Currently this is unsuitable for consumption outside the kernel.  */
-#ifdef __KERNEL__
+#ifdef __KERNEL__ 
 
 #ifndef _LINUX_BITOPS_H
 #error only <linux/bitops.h> can be included directly
@@ -65,23 +65,23 @@
  * @nr: Bit to set
  * @addr: Address to count from
  *
- * This operation is atomic and cannot be reordered.
+ * This operation is atomic and cannot be reordered.  
  * It also implies a memory barrier.
  */
 
-static inline int test_and_set_bit (int nr, volatile unsigned long * addr)
+static inline int test_and_set_bit(int nr, volatile unsigned long *addr)
 {
-  unsigned int mask, retval;
-  unsigned long flags;
-  unsigned int * adr = (unsigned int *) addr;
-  
-  adr += nr >> 5;
-  mask = 1 << (nr & 0x1f);
-  cris_atomic_save (addr, flags);
-  retval = (mask & *adr) != 0;
-  *adr |= mask;
-  cris_atomic_restore (addr, flags);
-  return retval;
+	unsigned int mask, retval;
+	unsigned long flags;
+	unsigned int *adr = (unsigned int *)addr;
+	
+	adr += nr >> 5;
+	mask = 1 << (nr & 0x1f);
+	cris_atomic_save(addr, flags);
+	retval = (mask & *adr) != 0;
+	*adr |= mask;
+	cris_atomic_restore(addr, flags);
+	return retval;
 }
 
 /*
@@ -95,23 +95,23 @@ static inline int test_and_set_bit (int nr, volatile unsigned long * addr)
  * @nr: Bit to clear
  * @addr: Address to count from
  *
- * This operation is atomic and cannot be reordered.
+ * This operation is atomic and cannot be reordered.  
  * It also implies a memory barrier.
  */
 
-static inline int test_and_clear_bit (int nr, volatile unsigned long * addr)
+static inline int test_and_clear_bit(int nr, volatile unsigned long *addr)
 {
-  unsigned int mask, retval;
-  unsigned long flags;
-  unsigned int * adr = (unsigned int *) addr;
-  
-  adr += nr >> 5;
-  mask = 1 << (nr & 0x1f);
-  cris_atomic_save (addr, flags);
-  retval = (mask & *adr) != 0;
-  *adr &= ~mask;
-  cris_atomic_restore (addr, flags);
-  return retval;
+	unsigned int mask, retval;
+	unsigned long flags;
+	unsigned int *adr = (unsigned int *)addr;
+	
+	adr += nr >> 5;
+	mask = 1 << (nr & 0x1f);
+	cris_atomic_save(addr, flags);
+	retval = (mask & *adr) != 0;
+	*adr &= ~mask;
+	cris_atomic_restore(addr, flags);
+	return retval;
 }
 
 /**
@@ -119,22 +119,22 @@ static inline int test_and_clear_bit (int nr, volatile unsigned long * addr)
  * @nr: Bit to change
  * @addr: Address to count from
  *
- * This operation is atomic and cannot be reordered.
+ * This operation is atomic and cannot be reordered.  
  * It also implies a memory barrier.
  */
 
-static inline int test_and_change_bit (int nr, volatile unsigned long * addr)
+static inline int test_and_change_bit(int nr, volatile unsigned long *addr)
 {
-  unsigned int mask, retval;
-  unsigned long flags;
-  unsigned int * adr = (unsigned int *) addr;
-  adr += nr >> 5;
-  mask = 1 << (nr & 0x1f);
-  cris_atomic_save (addr, flags);
-  retval = (mask & *adr) != 0;
-  *adr ^= mask;
-  cris_atomic_restore (addr, flags);
-  return retval;
+	unsigned int mask, retval;
+	unsigned long flags;
+	unsigned int *adr = (unsigned int *)addr;
+	adr += nr >> 5;
+	mask = 1 << (nr & 0x1f);
+	cris_atomic_save(addr, flags);
+	retval = (mask & *adr) != 0;
+	*adr ^= mask;
+	cris_atomic_restore(addr, flags);
+	return retval;
 }
 
 #include <asm-generic/bitops/non-atomic.h>

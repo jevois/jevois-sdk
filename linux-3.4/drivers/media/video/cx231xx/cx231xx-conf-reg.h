@@ -1,6 +1,6 @@
 /*
    cx231xx_conf-reg.h - driver for Conexant Cx23100/101/102 USB
-      video capture devices
+			video capture devices
 
    Copyright (C) 2008 <srinivasa.deevi at conexant dot com>
 
@@ -60,12 +60,12 @@
 #define I2C_DEMOD_EN            0x01   /* bit0 */
 #define PWR_RESETOUT_EN         0x100  /* bit8 */
 
-enum AV_MODE {
-  POLARIS_AVMODE_DEFAULT = 0,
-  POLARIS_AVMODE_DIGITAL = 0x10,
-  POLARIS_AVMODE_ANALOGT_TV = 0x20,
-  POLARIS_AVMODE_ENXTERNAL_AV = 0x30,
-  
+enum AV_MODE{
+	POLARIS_AVMODE_DEFAULT = 0,
+	POLARIS_AVMODE_DIGITAL = 0x10,
+	POLARIS_AVMODE_ANALOGT_TV = 0x20,
+	POLARIS_AVMODE_ENXTERNAL_AV = 0x30,
+
 };
 
 /* Colibri Registers */
@@ -92,11 +92,11 @@ enum AV_MODE {
 #define ADC_COM_BIAS3           0x0e
 #define TESTBUS_CTRL            0x12
 
-#define FLD_PWRDN_TUNING_BIAS 0x10
-#define FLD_PWRDN_ENABLE_PLL  0x08
-#define FLD_PWRDN_PD_BANDGAP  0x04
-#define FLD_PWRDN_PD_BIAS 0x02
-#define FLD_PWRDN_PD_TUNECK 0x01
+#define FLD_PWRDN_TUNING_BIAS	0x10
+#define FLD_PWRDN_ENABLE_PLL	0x08
+#define FLD_PWRDN_PD_BANDGAP	0x04
+#define FLD_PWRDN_PD_BIAS	0x02
+#define FLD_PWRDN_PD_TUNECK	0x01
 
 
 #define ADC_STATUS_CH1          0x20
@@ -153,7 +153,7 @@ enum AV_MODE {
 #define TESTBUS_CTRL_CH3        0x72
 
 /******************************************************************************
-          * DIF registers *
+			    * DIF registers *
  ******************************************************************************/
 #define      DIRECT_IF_REVB_BASE  0x00300
 

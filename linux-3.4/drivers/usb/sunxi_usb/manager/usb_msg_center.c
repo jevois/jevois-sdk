@@ -44,258 +44,258 @@
 #include  "usb_hw_scan.h"
 #include  "usb_msg_center.h"
 
-int sunxi_usb_disable_ehci (__u32 usbc_no);
-int sunxi_usb_enable_ehci (__u32 usbc_no);
-int sunxi_usb_disable_ohci (__u32 usbc_no);
-int sunxi_usb_enable_ohci (__u32 usbc_no);
+int sunxi_usb_disable_ehci(__u32 usbc_no);
+int sunxi_usb_enable_ehci(__u32 usbc_no);
+int sunxi_usb_disable_ohci(__u32 usbc_no);
+int sunxi_usb_enable_ohci(__u32 usbc_no);
 
 static struct usb_msg_center_info g_center_info;
 
-enum usb_role get_usb_role (void)
+enum usb_role get_usb_role(void)
 {
-  return g_center_info.role;
+	return g_center_info.role;
 }
 
-static void set_usb_role (struct usb_msg_center_info * center_info, enum usb_role role)
+static void set_usb_role(struct usb_msg_center_info *center_info, enum usb_role role)
 {
-  center_info->role = role;
-  return;
+	center_info->role = role;
+	return;
 }
 
 #if defined (CONFIG_ARCH_SUN8IW8) || defined (CONFIG_ARCH_SUN8IW7)
-void set_usb_role_ex (enum usb_role role)
+void set_usb_role_ex(enum usb_role role)
 {
-  set_usb_role (&g_center_info, role);
-  return;
+	set_usb_role(&g_center_info, role);
+	return;
 }
 #endif
 
 /*
 void app_insmod_usb_host(void)
 {
-  g_center_info.msg.app_insmod_host = 1;
+	g_center_info.msg.app_insmod_host = 1;
 }
 
 void app_rmmod_usb_host(void)
 {
-  g_center_info.msg.app_rmmod_host = 1;
+	g_center_info.msg.app_rmmod_host = 1;
 }
 
 void app_insmod_usb_device(void)
 {
-  g_center_info.msg.app_insmod_device = 1;
+	g_center_info.msg.app_insmod_device = 1;
 }
 
 void app_rmmod_usb_device(void)
 {
-  g_center_info.msg.app_rmmod_device = 1;
+	g_center_info.msg.app_rmmod_device = 1;
 }
 */
 
-void hw_insmod_usb_host (void)
+void hw_insmod_usb_host(void)
 {
-  g_center_info.msg.hw_insmod_host = 1;
+	g_center_info.msg.hw_insmod_host = 1;
 }
 
-void hw_rmmod_usb_host (void)
+void hw_rmmod_usb_host(void)
 {
-  g_center_info.msg.hw_rmmod_host = 1;
+	g_center_info.msg.hw_rmmod_host = 1;
 }
 
-void hw_insmod_usb_device (void)
+void hw_insmod_usb_device(void)
 {
-  g_center_info.msg.hw_insmod_device = 1;
+	g_center_info.msg.hw_insmod_device = 1;
 }
 
-void hw_rmmod_usb_device (void)
+void hw_rmmod_usb_device(void)
 {
-  g_center_info.msg.hw_rmmod_device = 1;
+	g_center_info.msg.hw_rmmod_device = 1;
 }
 
-static void modify_msg (struct usb_msg * msg)
+static void modify_msg(struct usb_msg *msg)
 {
-  if (msg->hw_insmod_host && msg->hw_rmmod_host) {
-    msg->hw_insmod_host = 0;
-    msg->hw_rmmod_host  = 0;
-  }
-  
-  if (msg->hw_insmod_device && msg->hw_rmmod_device) {
-    msg->hw_insmod_device = 0;
-    msg->hw_rmmod_device  = 0;
-  }
-  
-  return;
+	if (msg->hw_insmod_host && msg->hw_rmmod_host) {
+		msg->hw_insmod_host = 0;
+		msg->hw_rmmod_host  = 0;
+	}
+
+	if (msg->hw_insmod_device && msg->hw_rmmod_device) {
+		msg->hw_insmod_device = 0;
+		msg->hw_rmmod_device  = 0;
+	}
+
+	return;
 }
 
-static void insmod_host_driver (struct usb_msg_center_info * center_info)
+static void insmod_host_driver(struct usb_msg_center_info *center_info)
 {
-  DMSG_INFO ("\n\ninsmod_host_driver\n\n");
-  
-  set_usb_role (center_info, USB_ROLE_HOST);
-  
-  #if defined (CONFIG_ARCH_SUN8IW8) || defined (CONFIG_ARCH_SUN8IW7)
-  #if defined(CONFIG_USB_SUNXI_EHCI0)
-  sunxi_usb_enable_ehci (0);
-  #endif
-  
-  #if defined(CONFIG_USB_SUNXI_OHCI0)
-  sunxi_usb_enable_ohci (0);
-  #endif
-  #else
-  sunxi_usb_host0_enable();
-  #endif
-  
-  return;
+	DMSG_INFO("\n\ninsmod_host_driver\n\n");
+
+	set_usb_role(center_info, USB_ROLE_HOST);
+
+#if defined (CONFIG_ARCH_SUN8IW8) || defined (CONFIG_ARCH_SUN8IW7)
+	#if defined(CONFIG_USB_SUNXI_EHCI0)
+		sunxi_usb_enable_ehci(0);
+	#endif
+
+	#if defined(CONFIG_USB_SUNXI_OHCI0)
+		sunxi_usb_enable_ohci(0);
+	#endif
+#else
+	sunxi_usb_host0_enable();
+#endif
+
+	return;
 }
 
-static void rmmod_host_driver (struct usb_msg_center_info * center_info)
+static void rmmod_host_driver(struct usb_msg_center_info *center_info)
 {
-  DMSG_INFO ("\n\nrmmod_host_driver\n\n");
-  #if defined (CONFIG_ARCH_SUN8IW8) || defined (CONFIG_ARCH_SUN8IW7)
-  
-  #if defined(CONFIG_USB_SUNXI_EHCI0)
-  sunxi_usb_disable_ehci (0);
-  #endif
-  
-  #if defined(CONFIG_USB_SUNXI_OHCI0)
-  sunxi_usb_disable_ohci (0);
-  #endif
-  #else
-  {
-    int ret = 0;
-  
-    ret = sunxi_usb_host0_disable();
-    if (ret != 0) {
-      DMSG_PANIC ("err: disable hcd0 failed\n");
-      return;
-    }
-  }
-  #endif
-  
-  set_usb_role (center_info, USB_ROLE_NULL);
-  return;
+	DMSG_INFO("\n\nrmmod_host_driver\n\n");
+#if defined (CONFIG_ARCH_SUN8IW8) || defined (CONFIG_ARCH_SUN8IW7)
+
+	#if defined(CONFIG_USB_SUNXI_EHCI0)
+		sunxi_usb_disable_ehci(0);
+	#endif
+
+	#if defined(CONFIG_USB_SUNXI_OHCI0)
+		sunxi_usb_disable_ohci(0);
+	#endif
+#else
+{
+	int ret = 0;
+
+	ret = sunxi_usb_host0_disable();
+	if (ret != 0) {
+		DMSG_PANIC("err: disable hcd0 failed\n");
+		return;
+	}
+}
+#endif
+
+	set_usb_role(center_info, USB_ROLE_NULL);
+	return;
 }
 
-static void insmod_device_driver (struct usb_msg_center_info * center_info)
+static void insmod_device_driver(struct usb_msg_center_info *center_info)
 {
-  DMSG_INFO ("\n\ninsmod_device_driver\n\n");
-  
-  set_usb_role (center_info, USB_ROLE_DEVICE);
-  
-  sunxi_usb_device_enable();
-  
-  return;
+	DMSG_INFO("\n\ninsmod_device_driver\n\n");
+
+	set_usb_role(center_info, USB_ROLE_DEVICE);
+
+	sunxi_usb_device_enable();
+
+	return;
 }
 
-static void rmmod_device_driver (struct usb_msg_center_info * center_info)
+static void rmmod_device_driver(struct usb_msg_center_info *center_info)
 {
-  DMSG_INFO ("\n\nrmmod_device_driver\n\n");
-  
-  set_usb_role (center_info, USB_ROLE_NULL);
-  
-  sunxi_usb_device_disable();
-  
-  #if defined(CONFIG_AW_AXP)
-  axp_usbcur (CHARGE_AC);
-  axp_usbvol (CHARGE_AC);
-  #endif
-  return;
+	DMSG_INFO("\n\nrmmod_device_driver\n\n");
+
+	set_usb_role(center_info, USB_ROLE_NULL);
+
+	sunxi_usb_device_disable();
+
+#if defined(CONFIG_AW_AXP)
+	axp_usbcur(CHARGE_AC);
+	axp_usbvol(CHARGE_AC);
+#endif
+	return;
 }
 
-static void do_usb_role_null (struct usb_msg_center_info * center_info)
+static void do_usb_role_null(struct usb_msg_center_info *center_info)
 {
-  if (center_info->msg.hw_insmod_host) {
-    insmod_host_driver (center_info);
-    center_info->msg.hw_insmod_host = 0;
-    
-    goto end;
-  }
-  
-  if (center_info->msg.hw_insmod_device) {
-    insmod_device_driver (center_info);
-    center_info->msg.hw_insmod_device = 0;
-    
-    goto end;
-  }
-  
+	if (center_info->msg.hw_insmod_host) {
+		insmod_host_driver(center_info);
+		center_info->msg.hw_insmod_host = 0;
+
+		goto end;
+	}
+
+	if (center_info->msg.hw_insmod_device) {
+		insmod_device_driver(center_info);
+		center_info->msg.hw_insmod_device = 0;
+
+		goto end;
+	}
+
 end:
-  memset (&center_info->msg, 0, sizeof (struct usb_msg) );
-  return;
+	memset(&center_info->msg, 0, sizeof(struct usb_msg));
+	return;
 }
 
-static void do_usb_role_host (struct usb_msg_center_info * center_info)
+static void do_usb_role_host(struct usb_msg_center_info *center_info)
 {
-  if (center_info->msg.hw_rmmod_host) {
-    rmmod_host_driver (center_info);
-    center_info->msg.hw_rmmod_host = 0;
-    
-    goto end;
-  }
-  
+	if (center_info->msg.hw_rmmod_host) {
+		rmmod_host_driver(center_info);
+		center_info->msg.hw_rmmod_host = 0;
+
+		goto end;
+	}
+
 end:
-  memset (&center_info->msg, 0, sizeof (struct usb_msg) );
-  return;
+	memset(&center_info->msg, 0, sizeof(struct usb_msg));
+	return;
 }
 
-static void do_usb_role_device (struct usb_msg_center_info * center_info)
+static void do_usb_role_device(struct usb_msg_center_info *center_info)
 {
-  if (center_info->msg.hw_rmmod_device) {
-    rmmod_device_driver (center_info);
-    center_info->msg.hw_rmmod_device = 0;
-    
-    goto end;
-  }
-  
+	if (center_info->msg.hw_rmmod_device) {
+		rmmod_device_driver(center_info);
+		center_info->msg.hw_rmmod_device = 0;
+
+		goto end;
+	}
+
 end:
-  memset (&center_info->msg, 0, sizeof (struct usb_msg) );
-  return;
+	memset(&center_info->msg, 0, sizeof(struct usb_msg));
+	return;
 }
 
-void usb_msg_center (struct usb_cfg * cfg)
+void usb_msg_center(struct usb_cfg *cfg)
 {
-  enum usb_role role = USB_ROLE_NULL;
-  struct usb_msg_center_info * center_info = &g_center_info;
-  
-  /* receive massage */
-  modify_msg (&center_info->msg);
-  
-  /* execute cmd */
-  role = get_usb_role();
-  
-  DMSG_DBG_MANAGER ("role=%d\n", get_usb_role() );
-  
-  switch (role) {
-  case USB_ROLE_NULL:
-    do_usb_role_null (center_info);
-    break;
-    
-  case USB_ROLE_HOST:
-    do_usb_role_host (center_info);
-    break;
-    
-  case USB_ROLE_DEVICE:
-    do_usb_role_device (center_info);
-    break;
-    
-  default:
-    DMSG_PANIC ("ERR: unkown role(%x)\n", role);
-  }
-  
-  return;
+	enum usb_role role = USB_ROLE_NULL;
+	struct usb_msg_center_info * center_info = &g_center_info;
+
+	/* receive massage */
+	modify_msg(&center_info->msg);
+
+	/* execute cmd */
+	role = get_usb_role();
+
+	DMSG_DBG_MANAGER("role=%d\n", get_usb_role());
+
+	switch(role) {
+	case USB_ROLE_NULL:
+		do_usb_role_null(center_info);
+		break;
+
+	case USB_ROLE_HOST:
+		do_usb_role_host(center_info);
+		break;
+
+	case USB_ROLE_DEVICE:
+		do_usb_role_device(center_info);
+		break;
+
+	default:
+		DMSG_PANIC("ERR: unkown role(%x)\n", role);
+	}
+
+	return;
 }
 
-s32 usb_msg_center_init (void)
+s32 usb_msg_center_init(void)
 {
-  struct usb_msg_center_info * center_info = &g_center_info;
-  memset (center_info, 0, sizeof (struct usb_msg_center_info) );
-  return 0;
+	struct usb_msg_center_info *center_info = &g_center_info;
+	memset(center_info, 0, sizeof(struct usb_msg_center_info));
+	return 0;
 }
 
-s32 usb_msg_center_exit (void)
+s32 usb_msg_center_exit(void)
 {
-  struct usb_msg_center_info * center_info = &g_center_info;
-  
-  memset (center_info, 0, sizeof (struct usb_msg_center_info) );
-  return 0;
+	struct usb_msg_center_info *center_info = &g_center_info;
+
+	memset(center_info, 0, sizeof(struct usb_msg_center_info));
+	return 0;
 }
 

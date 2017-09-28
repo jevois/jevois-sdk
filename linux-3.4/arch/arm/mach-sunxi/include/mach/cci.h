@@ -17,7 +17,7 @@
 #ifndef __ASM_ARCH_CCI_H
 #define __ASM_ARCH_CCI_H __FILE__
 
-extern void enable_cci_snoops (unsigned int cluster);
-extern void disable_cci_snoops (unsigned int cluster);
+extern void enable_cci_snoops(unsigned int cluster);
+extern void disable_cci_snoops(unsigned int cluster);
 
 #endif /* __ASM_ARCH_CCI_H */

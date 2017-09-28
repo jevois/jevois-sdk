@@ -31,15 +31,15 @@
 
 
 
-#define REG_BT_COEX_TABLE_1   0x06C0
-#define REG_BT_COEX_TABLE_2   0x06C4
+#define REG_BT_COEX_TABLE_1		0x06C0
+#define REG_BT_COEX_TABLE_2		0x06C4
 
 
-#define MASK_HSISR_CLEAR    (HSISR_GPIO12_0_INT |\
-                             HSISR_SPS_OCP_INT |\
-                             HSISR_RON_INT |\
-                             HSISR_PDNINT |\
-                             HSISR_GPIO9_INT)
+#define MASK_HSISR_CLEAR		(HSISR_GPIO12_0_INT |\
+								HSISR_SPS_OCP_INT |\
+								HSISR_RON_INT |\
+								HSISR_PDNINT |\
+								HSISR_GPIO9_INT)
 
 
 

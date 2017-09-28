@@ -28,4 +28,4 @@
 #define USB2D0_FIFO_2 (CONFIG_SYS_USB_DEVICE | 0x128)
 #define USB2D0_FIFO_3 (CONFIG_SYS_USB_DEVICE | 0x12c)
 
-void usb_dev_init (void);
+void usb_dev_init(void);

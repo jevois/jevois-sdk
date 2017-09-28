@@ -20,76 +20,74 @@
 #include "bfi.h"
 #include "cna.h"
 
-const struct firmware * bfi_fw;
-static u32 * bfi_image_ct_cna, *bfi_image_ct2_cna;
+const struct firmware *bfi_fw;
+static u32 *bfi_image_ct_cna, *bfi_image_ct2_cna;
 static u32 bfi_image_ct_cna_size, bfi_image_ct2_cna_size;
 
 static u32 *
-cna_read_firmware (struct pci_dev * pdev, u32 ** bfi_image,
-                   u32 * bfi_image_size, char * fw_name)
+cna_read_firmware(struct pci_dev *pdev, u32 **bfi_image,
+			u32 *bfi_image_size, char *fw_name)
 {
-  const struct firmware * fw;
-  
-  if (request_firmware (&fw, fw_name, &pdev->dev) ) {
-    pr_alert ("Can't locate firmware %s\n", fw_name);
-    goto error;
-  }
-  
-  *bfi_image = (u32 *) fw->data;
-  *bfi_image_size = fw->size / sizeof (u32);
-  bfi_fw = fw;
-  
-  return *bfi_image;
+	const struct firmware *fw;
+
+	if (request_firmware(&fw, fw_name, &pdev->dev)) {
+		pr_alert("Can't locate firmware %s\n", fw_name);
+		goto error;
+	}
+
+	*bfi_image = (u32 *)fw->data;
+	*bfi_image_size = fw->size/sizeof(u32);
+	bfi_fw = fw;
+
+	return *bfi_image;
 error:
-  return NULL;
+	return NULL;
 }
 
 u32 *
-cna_get_firmware_buf (struct pci_dev * pdev)
+cna_get_firmware_buf(struct pci_dev *pdev)
 {
-  if (pdev->device == BFA_PCI_DEVICE_ID_CT2) {
-    if (bfi_image_ct2_cna_size == 0)
-      cna_read_firmware (pdev, &bfi_image_ct2_cna,
-                         &bfi_image_ct2_cna_size, CNA_FW_FILE_CT2);
-    return bfi_image_ct2_cna;
-  }
-  else
-    if (bfa_asic_id_ct (pdev->device) ) {
-      if (bfi_image_ct_cna_size == 0)
-        cna_read_firmware (pdev, &bfi_image_ct_cna,
-                           &bfi_image_ct_cna_size, CNA_FW_FILE_CT);
-      return bfi_image_ct_cna;
-    }
-    
-  return NULL;
+	if (pdev->device == BFA_PCI_DEVICE_ID_CT2) {
+		if (bfi_image_ct2_cna_size == 0)
+			cna_read_firmware(pdev, &bfi_image_ct2_cna,
+				&bfi_image_ct2_cna_size, CNA_FW_FILE_CT2);
+		return bfi_image_ct2_cna;
+	} else if (bfa_asic_id_ct(pdev->device)) {
+		if (bfi_image_ct_cna_size == 0)
+			cna_read_firmware(pdev, &bfi_image_ct_cna,
+				&bfi_image_ct_cna_size, CNA_FW_FILE_CT);
+		return bfi_image_ct_cna;
+	}
+
+	return NULL;
 }
 
 u32 *
-bfa_cb_image_get_chunk (enum bfi_asic_gen asic_gen, u32 off)
+bfa_cb_image_get_chunk(enum bfi_asic_gen asic_gen, u32 off)
 {
-  switch (asic_gen) {
-  case BFI_ASIC_GEN_CT:
-    return (u32 *) (bfi_image_ct_cna + off);
-    break;
-  case BFI_ASIC_GEN_CT2:
-    return (u32 *) (bfi_image_ct2_cna + off);
-    break;
-  default:
-    return NULL;
-  }
+	switch (asic_gen) {
+	case BFI_ASIC_GEN_CT:
+		return (u32 *)(bfi_image_ct_cna + off);
+		break;
+	case BFI_ASIC_GEN_CT2:
+		return (u32 *)(bfi_image_ct2_cna + off);
+		break;
+	default:
+		return NULL;
+	}
 }
 
 u32
-bfa_cb_image_get_size (enum bfi_asic_gen asic_gen)
+bfa_cb_image_get_size(enum bfi_asic_gen asic_gen)
 {
-  switch (asic_gen) {
-  case BFI_ASIC_GEN_CT:
-    return bfi_image_ct_cna_size;
-    break;
-  case BFI_ASIC_GEN_CT2:
-    return bfi_image_ct2_cna_size;
-    break;
-  default:
-    return 0;
-  }
+	switch (asic_gen) {
+	case BFI_ASIC_GEN_CT:
+		return bfi_image_ct_cna_size;
+		break;
+	case BFI_ASIC_GEN_CT2:
+		return bfi_image_ct2_cna_size;
+		break;
+	default:
+		return 0;
+	}
 }

@@ -23,40 +23,40 @@
 #ifdef __KERNEL__
 
 struct mtp_data_header {
-  /* length of packet, including this header */
-  uint32_t  length;
-  /* container type (2 for data packet) */
-  uint16_t  type;
-  /* MTP command code */
-  uint16_t    command;
-  /* MTP transaction ID */
-  uint32_t  transaction_id;
+	/* length of packet, including this header */
+	uint32_t	length;
+	/* container type (2 for data packet) */
+	uint16_t	type;
+	/* MTP command code */
+	uint16_t    command;
+	/* MTP transaction ID */
+	uint32_t	transaction_id;
 };
 
 #endif /* __KERNEL__ */
 
 struct mtp_file_range {
-  /* file descriptor for file to transfer */
-  int     fd;
-  /* offset in file for start of transfer */
-  loff_t    offset;
-  /* number of bytes to transfer */
-  int64_t   length;
-  /* MTP command ID for data header,
-   * used only for MTP_SEND_FILE_WITH_HEADER
-   */
-  uint16_t  command;
-  /* MTP transaction ID for data header,
-   * used only for MTP_SEND_FILE_WITH_HEADER
-   */
-  uint32_t  transaction_id;
+	/* file descriptor for file to transfer */
+	int			fd;
+	/* offset in file for start of transfer */
+	loff_t		offset;
+	/* number of bytes to transfer */
+	int64_t		length;
+	/* MTP command ID for data header,
+	 * used only for MTP_SEND_FILE_WITH_HEADER
+	 */
+	uint16_t	command;
+	/* MTP transaction ID for data header,
+	 * used only for MTP_SEND_FILE_WITH_HEADER
+	 */
+	uint32_t	transaction_id;
 };
 
 struct mtp_event {
-  /* size of the event */
-  size_t    length;
-  /* event data to send */
-  void  *  data;
+	/* size of the event */
+	size_t		length;
+	/* event data to send */
+	void		*data;
 };
 
 /* Sends the specified file range to the host */

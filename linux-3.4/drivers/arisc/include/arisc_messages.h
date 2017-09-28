@@ -38,8 +38,8 @@
 /* call back struct */
 typedef struct arisc_msg_cb
 {
-  arisc_cb_t   handler;
-  void    *    arg;
+	arisc_cb_t   handler;
+	void        *arg;
 } arisc_msg_cb_t;
 
 /*
@@ -49,14 +49,14 @@ typedef struct arisc_msg_cb
  */
 typedef struct arisc_message
 {
-    volatile unsigned char           state;     /* identify the used status of message frame */
-    volatile unsigned char           attr;      /* message attribute : SYN OR ASYN           */
-    volatile unsigned char           type;      /* message type : DVFS_REQ                   */
-    volatile unsigned char           result;    /* message process result                    */
-    volatile struct arisc_message  * next;      /* pointer of next message frame             */
-    volatile struct arisc_msg_cb         cb;        /* the callback function and arg of message  */
-    volatile void          *         private;   /* message private data                      */
-    volatile unsigned int                paras[11]; /* the parameters of message                 */
+	volatile unsigned char           state;     /* identify the used status of message frame */
+	volatile unsigned char           attr;      /* message attribute : SYN OR ASYN           */
+	volatile unsigned char           type;      /* message type : DVFS_REQ                   */
+	volatile unsigned char           result;    /* message process result                    */
+	volatile struct arisc_message   *next;      /* pointer of next message frame             */
+	volatile struct arisc_msg_cb         cb;        /* the callback function and arg of message  */
+	volatile void                   *private;   /* message private data                      */
+	volatile unsigned int                paras[11]; /* the parameters of message                 */
 } arisc_message_t;
 
 /* the base of messages */
@@ -117,7 +117,7 @@ typedef struct arisc_message
 #define ARISC_P2WI_WRITE_BLOCK_DATA      (ARISC_MESSAGE_BASE + 0x71)  /* p2wi write block data       (ac327 to arisc) */
 #define ARISC_P2WI_BITS_OPS_SYNC         (ARISC_MESSAGE_BASE + 0x72)  /* p2wi clear bits sync        (ac327 to arisc) */
 #elif (defined CONFIG_ARCH_SUN8IW3P1) || (defined CONFIG_ARCH_SUN8IW5P1) || (defined CONFIG_ARCH_SUN8IW6P1) || \
-(defined CONFIG_ARCH_SUN8IW7P1) || (defined CONFIG_ARCH_SUN8IW9P1) || (defined CONFIG_ARCH_SUN9IW1P1)
+      (defined CONFIG_ARCH_SUN8IW7P1) || (defined CONFIG_ARCH_SUN8IW9P1) || (defined CONFIG_ARCH_SUN9IW1P1)
 /* rsb commands */
 #define ARISC_RSB_READ_BLOCK_DATA        (ARISC_MESSAGE_BASE + 0x70)  /* rsb read block data        (ac327 to arisc) */
 #define ARISC_RSB_WRITE_BLOCK_DATA       (ARISC_MESSAGE_BASE + 0x71)  /* rsb write block data       (ac327 to arisc) */

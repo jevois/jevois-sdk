@@ -1,7 +1,7 @@
 #ifndef SPI_ADIS16220_H_
 #define SPI_ADIS16220_H_
 
-#define ADIS16220_STARTUP_DELAY 220 /* ms */
+#define ADIS16220_STARTUP_DELAY	220 /* ms */
 
 #define ADIS16220_READ_REG(a)    a
 #define ADIS16220_WRITE_REG(a) ((a) | 0x80)
@@ -72,9 +72,9 @@
 #define ADIS16220_CAPTURE_SIZE  2048
 
 /* MSC_CTRL */
-#define ADIS16220_MSC_CTRL_SELF_TEST_EN         (1 << 8)
-#define ADIS16220_MSC_CTRL_POWER_SUP_COM_AIN1 (1 << 1)
-#define ADIS16220_MSC_CTRL_POWER_SUP_COM_AIN2 (1 << 0)
+#define ADIS16220_MSC_CTRL_SELF_TEST_EN	        (1 << 8)
+#define ADIS16220_MSC_CTRL_POWER_SUP_COM_AIN1	(1 << 1)
+#define ADIS16220_MSC_CTRL_POWER_SUP_COM_AIN2	(1 << 0)
 
 /* DIO_CTRL */
 #define ADIS16220_MSC_CTRL_DIO2_BUSY_IND     (3<<4)
@@ -99,42 +99,42 @@
 #define ADIS16220_DIAG_STAT_PEAK_ACCEL  (1<<8)
 /* Data ready, capture complete */
 #define ADIS16220_DIAG_STAT_DATA_RDY    (1<<7)
-#define ADIS16220_DIAG_STAT_FLASH_CHK (1<<6)
-#define ADIS16220_DIAG_STAT_SELF_TEST (1<<5)
+#define ADIS16220_DIAG_STAT_FLASH_CHK	(1<<6)
+#define ADIS16220_DIAG_STAT_SELF_TEST	(1<<5)
 /* Capture period violation/interruption */
-#define ADIS16220_DIAG_STAT_VIOLATION (1<<4)
+#define ADIS16220_DIAG_STAT_VIOLATION	(1<<4)
 /* SPI communications failure */
-#define ADIS16220_DIAG_STAT_SPI_FAIL  (1<<3)
+#define ADIS16220_DIAG_STAT_SPI_FAIL	(1<<3)
 /* Flash update failure */
-#define ADIS16220_DIAG_STAT_FLASH_UPT (1<<2)
+#define ADIS16220_DIAG_STAT_FLASH_UPT	(1<<2)
 /* Power supply above 3.625 V */
-#define ADIS16220_DIAG_STAT_POWER_HIGH  (1<<1)
+#define ADIS16220_DIAG_STAT_POWER_HIGH	(1<<1)
 /* Power supply below 3.15 V */
-#define ADIS16220_DIAG_STAT_POWER_LOW (1<<0)
+#define ADIS16220_DIAG_STAT_POWER_LOW	(1<<0)
 
 /* GLOB_CMD */
-#define ADIS16220_GLOB_CMD_SW_RESET (1<<7)
-#define ADIS16220_GLOB_CMD_SELF_TEST  (1<<2)
-#define ADIS16220_GLOB_CMD_PWR_DOWN (1<<1)
+#define ADIS16220_GLOB_CMD_SW_RESET	(1<<7)
+#define ADIS16220_GLOB_CMD_SELF_TEST	(1<<2)
+#define ADIS16220_GLOB_CMD_PWR_DOWN	(1<<1)
 
 #define ADIS16220_MAX_TX 2048
 #define ADIS16220_MAX_RX 2048
 
-#define ADIS16220_SPI_BURST (u32)(1000 * 1000)
-#define ADIS16220_SPI_FAST  (u32)(2000 * 1000)
+#define ADIS16220_SPI_BURST	(u32)(1000 * 1000)
+#define ADIS16220_SPI_FAST	(u32)(2000 * 1000)
 
 /**
  * struct adis16220_state - device instance specific data
- * @us:     actual spi_device
- * @tx:     transmit buffer
- * @rx:     receive buffer
- * @buf_lock:   mutex to protect tx and rx
+ * @us:			actual spi_device
+ * @tx:			transmit buffer
+ * @rx:			receive buffer
+ * @buf_lock:		mutex to protect tx and rx
  **/
 struct adis16220_state {
-  struct spi_device * us;
-  struct mutex    buf_lock;
-  u8      tx[ADIS16220_MAX_TX] ____cacheline_aligned;
-  u8      rx[ADIS16220_MAX_RX];
+	struct spi_device	*us;
+	struct mutex		buf_lock;
+	u8			tx[ADIS16220_MAX_TX] ____cacheline_aligned;
+	u8			rx[ADIS16220_MAX_RX];
 };
 
 #endif /* SPI_ADIS16220_H_ */

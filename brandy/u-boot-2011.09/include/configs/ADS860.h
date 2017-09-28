@@ -1,6 +1,6 @@
 /*
   * A collection of structures, addresses, and values associated with
-  * the Motorola 860 ADS board.  Copied from the MBX stuff.
+  * the Motorola 860 ADS board.	 Copied from the MBX stuff.
   * Magnus Damm added defines for 8xxrom and extended bd_info.
   * Helmut Buchsbaum added bitvalues for BCSRx
   *
@@ -15,29 +15,29 @@
 #define __CONFIG_H
 
 /* Board type */
-#define CONFIG_ADS    1 /* Old Motorola MPC821/860ADS */
+#define CONFIG_ADS		1	/* Old Motorola MPC821/860ADS */
 
 /* Processor type */
-#define CONFIG_MPC860   1
+#define CONFIG_MPC860		1
 
-#define CONFIG_SYS_TEXT_BASE  0xFE000000
+#define	CONFIG_SYS_TEXT_BASE	0xFE000000
 
-#define CONFIG_8xx_CONS_SMC1  1 /* Console is on SMC1 */
-#undef  CONFIG_8xx_CONS_SMC2
-#undef  CONFIG_8xx_CONS_NONE
+#define CONFIG_8xx_CONS_SMC1	1	/* Console is on SMC1 */
+#undef	CONFIG_8xx_CONS_SMC2
+#undef	CONFIG_8xx_CONS_NONE
 
-#define CONFIG_BAUDRATE   38400 /* Console baudrate */
+#define CONFIG_BAUDRATE		38400	/* Console baudrate */
 
 #if 0
-#define CONFIG_SYS_8XX_FACT   1526  /* 32.768 kHz crystal on XTAL/EXTAL */
+#define CONFIG_SYS_8XX_FACT		1526	/* 32.768 kHz crystal on XTAL/EXTAL */
 #else
-#define CONFIG_SYS_8XX_FACT   12  /* 4 MHz oscillator on EXTCLK */
+#define CONFIG_SYS_8XX_FACT		12	/* 4 MHz oscillator on EXTCLK */
 #endif
 
-#define CONFIG_SYS_PLPRCR  (((CONFIG_SYS_8XX_FACT-1) << PLPRCR_MF_SHIFT) |  \
-                            PLPRCR_SPLSS | PLPRCR_TEXPS | PLPRCR_TMIST)
+#define CONFIG_SYS_PLPRCR  (((CONFIG_SYS_8XX_FACT-1) << PLPRCR_MF_SHIFT) |	\
+		PLPRCR_SPLSS | PLPRCR_TEXPS | PLPRCR_TMIST)
 
-#define CONFIG_DRAM_50MHZ   1
+#define CONFIG_DRAM_50MHZ		1
 
 
 /*
@@ -55,6 +55,6 @@
 
 #include "../../board/fads/fads.h"
 
-#define CONFIG_SYS_PC_IDE_RESET ((ushort)0x0008)    /* PC 12  */
+#define CONFIG_SYS_PC_IDE_RESET	((ushort)0x0008)    /* PC 12	*/
 
-#endif  /* __CONFIG_H */
+#endif	/* __CONFIG_H */

@@ -20,7 +20,7 @@
 /*
  * Cache flushing area
  */
-#define FLUSH_BASE_PHYS   0x80000000
-#define FLUSH_BASE    0xdf000000
+#define FLUSH_BASE_PHYS		0x80000000
+#define FLUSH_BASE		0xdf000000
 
 #endif

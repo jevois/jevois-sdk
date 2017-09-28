@@ -27,12 +27,12 @@
  *
  * @dev: the device structure
  */
-void mei_hcsr_set (struct mei_device * dev)
+void mei_hcsr_set(struct mei_device *dev)
 {
-  if ( (dev->host_hw_state & H_IS) == H_IS)
-  { dev->host_hw_state &= ~H_IS; }
-  mei_reg_write (dev, H_CSR, dev->host_hw_state);
-  dev->host_hw_state = mei_hcsr_read (dev);
+	if ((dev->host_hw_state & H_IS) == H_IS)
+		dev->host_hw_state &= ~H_IS;
+	mei_reg_write(dev, H_CSR, dev->host_hw_state);
+	dev->host_hw_state = mei_hcsr_read(dev);
 }
 
 /**
@@ -40,10 +40,10 @@ void mei_hcsr_set (struct mei_device * dev)
  *
  * @dev: the device structure
  */
-void mei_enable_interrupts (struct mei_device * dev)
+void mei_enable_interrupts(struct mei_device *dev)
 {
-  dev->host_hw_state |= H_IE;
-  mei_hcsr_set (dev);
+	dev->host_hw_state |= H_IE;
+	mei_hcsr_set(dev);
 }
 
 /**
@@ -51,10 +51,10 @@ void mei_enable_interrupts (struct mei_device * dev)
  *
  * @dev: the device structure
  */
-void mei_disable_interrupts (struct mei_device * dev)
+void mei_disable_interrupts(struct mei_device *dev)
 {
-  dev->host_hw_state &= ~H_IE;
-  mei_hcsr_set (dev);
+	dev->host_hw_state &= ~H_IE;
+	mei_hcsr_set(dev);
 }
 
 /**
@@ -64,14 +64,14 @@ void mei_disable_interrupts (struct mei_device * dev)
  *
  * returns number of filled slots
  */
-static unsigned char _host_get_filled_slots (const struct mei_device * dev)
+static unsigned char _host_get_filled_slots(const struct mei_device *dev)
 {
-  char read_ptr, write_ptr;
-  
-  read_ptr = (char) ( (dev->host_hw_state & H_CBRP) >> 8);
-  write_ptr = (char) ( (dev->host_hw_state & H_CBWP) >> 16);
-  
-  return (unsigned char) (write_ptr - read_ptr);
+	char read_ptr, write_ptr;
+
+	read_ptr = (char) ((dev->host_hw_state & H_CBRP) >> 8);
+	write_ptr = (char) ((dev->host_hw_state & H_CBWP) >> 16);
+
+	return (unsigned char) (write_ptr - read_ptr);
 }
 
 /**
@@ -81,17 +81,17 @@ static unsigned char _host_get_filled_slots (const struct mei_device * dev)
  *
  * returns 1 if empty, 0 - otherwise.
  */
-int mei_host_buffer_is_empty (struct mei_device * dev)
+int mei_host_buffer_is_empty(struct mei_device *dev)
 {
-  unsigned char filled_slots;
-  
-  dev->host_hw_state = mei_hcsr_read (dev);
-  filled_slots = _host_get_filled_slots (dev);
-  
-  if (filled_slots == 0)
-  { return 1; }
-  
-  return 0;
+	unsigned char filled_slots;
+
+	dev->host_hw_state = mei_hcsr_read(dev);
+	filled_slots = _host_get_filled_slots(dev);
+
+	if (filled_slots == 0)
+		return 1;
+
+	return 0;
 }
 
 /**
@@ -101,20 +101,20 @@ int mei_host_buffer_is_empty (struct mei_device * dev)
  *
  * returns -1(ESLOTS_OVERFLOW) if overflow, otherwise empty slots count
  */
-int mei_count_empty_write_slots (struct mei_device * dev)
+int mei_count_empty_write_slots(struct mei_device *dev)
 {
-  unsigned char buffer_depth, filled_slots, empty_slots;
-  
-  dev->host_hw_state = mei_hcsr_read (dev);
-  buffer_depth = (unsigned char) ( (dev->host_hw_state & H_CBD) >> 24);
-  filled_slots = _host_get_filled_slots (dev);
-  empty_slots = buffer_depth - filled_slots;
-  
-  /* check for overflow */
-  if (filled_slots > buffer_depth)
-  { return -EOVERFLOW; }
-  
-  return empty_slots;
+	unsigned char buffer_depth, filled_slots, empty_slots;
+
+	dev->host_hw_state = mei_hcsr_read(dev);
+	buffer_depth = (unsigned char) ((dev->host_hw_state & H_CBD) >> 24);
+	filled_slots = _host_get_filled_slots(dev);
+	empty_slots = buffer_depth - filled_slots;
+
+	/* check for overflow */
+	if (filled_slots > buffer_depth)
+		return -EOVERFLOW;
+
+	return empty_slots;
 }
 
 /**
@@ -127,59 +127,59 @@ int mei_count_empty_write_slots (struct mei_device * dev)
  *
  * This function returns -EIO if write has failed
  */
-int mei_write_message (struct mei_device * dev,
-                       struct mei_msg_hdr * header,
-                       unsigned char * write_buffer,
-                       unsigned long write_length)
+int mei_write_message(struct mei_device *dev,
+		      struct mei_msg_hdr *header,
+		      unsigned char *write_buffer,
+		      unsigned long write_length)
 {
-  u32 temp_msg = 0;
-  unsigned long bytes_written = 0;
-  unsigned char buffer_depth, filled_slots, empty_slots;
-  unsigned long dw_to_write;
-  
-  dev->host_hw_state = mei_hcsr_read (dev);
-  
-  dev_dbg (&dev->pdev->dev,
-           "host_hw_state = 0x%08x.\n",
-           dev->host_hw_state);
-           
-  dev_dbg (&dev->pdev->dev,
-           "mei_write_message header=%08x.\n",
-           * ( (u32 *) header) );
-           
-  buffer_depth = (unsigned char) ( (dev->host_hw_state & H_CBD) >> 24);
-  filled_slots = _host_get_filled_slots (dev);
-  empty_slots = buffer_depth - filled_slots;
-  dev_dbg (&dev->pdev->dev,
-           "filled = %hu, empty = %hu.\n",
-           filled_slots, empty_slots);
-           
-  dw_to_write = ( (write_length + 3) / 4);
-  
-  if (dw_to_write > empty_slots)
-  { return -EIO; }
-  
-  mei_reg_write (dev, H_CB_WW, * ( (u32 *) header) );
-  
-  while (write_length >= 4) {
-    mei_reg_write (dev, H_CB_WW,
-                   * (u32 *) (write_buffer + bytes_written) );
-    bytes_written += 4;
-    write_length -= 4;
-  }
-  
-  if (write_length > 0) {
-    memcpy (&temp_msg, &write_buffer[bytes_written], write_length);
-    mei_reg_write (dev, H_CB_WW, temp_msg);
-  }
-  
-  dev->host_hw_state |= H_IG;
-  mei_hcsr_set (dev);
-  dev->me_hw_state = mei_mecsr_read (dev);
-  if ( (dev->me_hw_state & ME_RDY_HRA) != ME_RDY_HRA)
-  { return -EIO; }
-  
-  return 0;
+	u32 temp_msg = 0;
+	unsigned long bytes_written = 0;
+	unsigned char buffer_depth, filled_slots, empty_slots;
+	unsigned long dw_to_write;
+
+	dev->host_hw_state = mei_hcsr_read(dev);
+
+	dev_dbg(&dev->pdev->dev,
+			"host_hw_state = 0x%08x.\n",
+			dev->host_hw_state);
+
+	dev_dbg(&dev->pdev->dev,
+			"mei_write_message header=%08x.\n",
+			*((u32 *) header));
+
+	buffer_depth = (unsigned char) ((dev->host_hw_state & H_CBD) >> 24);
+	filled_slots = _host_get_filled_slots(dev);
+	empty_slots = buffer_depth - filled_slots;
+	dev_dbg(&dev->pdev->dev,
+			"filled = %hu, empty = %hu.\n",
+			filled_slots, empty_slots);
+
+	dw_to_write = ((write_length + 3) / 4);
+
+	if (dw_to_write > empty_slots)
+		return -EIO;
+
+	mei_reg_write(dev, H_CB_WW, *((u32 *) header));
+
+	while (write_length >= 4) {
+		mei_reg_write(dev, H_CB_WW,
+				*(u32 *) (write_buffer + bytes_written));
+		bytes_written += 4;
+		write_length -= 4;
+	}
+
+	if (write_length > 0) {
+		memcpy(&temp_msg, &write_buffer[bytes_written], write_length);
+		mei_reg_write(dev, H_CB_WW, temp_msg);
+	}
+
+	dev->host_hw_state |= H_IG;
+	mei_hcsr_set(dev);
+	dev->me_hw_state = mei_mecsr_read(dev);
+	if ((dev->me_hw_state & ME_RDY_HRA) != ME_RDY_HRA)
+		return -EIO;
+
+	return 0;
 }
 
 /**
@@ -189,23 +189,23 @@ int mei_write_message (struct mei_device * dev,
  *
  * returns -1(ESLOTS_OVERFLOW) if overflow, otherwise filled slots count
  */
-int mei_count_full_read_slots (struct mei_device * dev)
+int mei_count_full_read_slots(struct mei_device *dev)
 {
-  char read_ptr, write_ptr;
-  unsigned char buffer_depth, filled_slots;
-  
-  dev->me_hw_state = mei_mecsr_read (dev);
-  buffer_depth = (unsigned char) ( (dev->me_hw_state & ME_CBD_HRA) >> 24);
-  read_ptr = (char) ( (dev->me_hw_state & ME_CBRP_HRA) >> 8);
-  write_ptr = (char) ( (dev->me_hw_state & ME_CBWP_HRA) >> 16);
-  filled_slots = (unsigned char) (write_ptr - read_ptr);
-  
-  /* check for overflow */
-  if (filled_slots > buffer_depth)
-  { return -EOVERFLOW; }
-  
-  dev_dbg (&dev->pdev->dev, "filled_slots =%08x\n", filled_slots);
-  return (int) filled_slots;
+	char read_ptr, write_ptr;
+	unsigned char buffer_depth, filled_slots;
+
+	dev->me_hw_state = mei_mecsr_read(dev);
+	buffer_depth = (unsigned char)((dev->me_hw_state & ME_CBD_HRA) >> 24);
+	read_ptr = (char) ((dev->me_hw_state & ME_CBRP_HRA) >> 8);
+	write_ptr = (char) ((dev->me_hw_state & ME_CBWP_HRA) >> 16);
+	filled_slots = (unsigned char) (write_ptr - read_ptr);
+
+	/* check for overflow */
+	if (filled_slots > buffer_depth)
+		return -EOVERFLOW;
+
+	dev_dbg(&dev->pdev->dev, "filled_slots =%08x\n", filled_slots);
+	return (int)filled_slots;
 }
 
 /**
@@ -215,21 +215,21 @@ int mei_count_full_read_slots (struct mei_device * dev)
  * @buffer: message buffer will be written
  * @buffer_length: message size will be read
  */
-void mei_read_slots (struct mei_device * dev, unsigned char * buffer,
-                     unsigned long buffer_length)
+void mei_read_slots(struct mei_device *dev, unsigned char *buffer,
+		    unsigned long buffer_length)
 {
-  u32 * reg_buf = (u32 *) buffer;
-  
-  for (; buffer_length >= sizeof (u32); buffer_length -= sizeof (u32) )
-  { *reg_buf++ = mei_mecbrw_read (dev); }
-  
-  if (buffer_length > 0) {
-    u32 reg = mei_mecbrw_read (dev);
-    memcpy (reg_buf, &reg, buffer_length);
-  }
-  
-  dev->host_hw_state |= H_IG;
-  mei_hcsr_set (dev);
+	u32 *reg_buf = (u32 *)buffer;
+
+	for (; buffer_length >= sizeof(u32); buffer_length -= sizeof(u32))
+		*reg_buf++ = mei_mecbrw_read(dev);
+
+	if (buffer_length > 0) {
+		u32 reg = mei_mecbrw_read(dev);
+		memcpy(reg_buf, &reg, buffer_length);
+	}
+
+	dev->host_hw_state |= H_IG;
+	mei_hcsr_set(dev);
 }
 
 /**
@@ -239,33 +239,32 @@ void mei_read_slots (struct mei_device * dev, unsigned char * buffer,
  * @cl: private data of the file object
  *
  * returns 1 if mei_flow_ctrl_creds >0, 0 - otherwise.
- *  -ENOENT if mei_cl is not present
- *  -EINVAL if single_recv_buf == 0
+ *	-ENOENT if mei_cl is not present
+ *	-EINVAL if single_recv_buf == 0
  */
-int mei_flow_ctrl_creds (struct mei_device * dev, struct mei_cl * cl)
+int mei_flow_ctrl_creds(struct mei_device *dev, struct mei_cl *cl)
 {
-  int i;
-  
-  if (!dev->me_clients_num)
-  { return 0; }
-  
-  if (cl->mei_flow_ctrl_creds > 0)
-  { return 1; }
-  
-  for (i = 0; i < dev->me_clients_num; i++) {
-    struct mei_me_client * me_cl = &dev->me_clients[i];
-    if (me_cl->client_id == cl->me_client_id) {
-      if (me_cl->mei_flow_ctrl_creds) {
-        if (WARN_ON (me_cl->props.single_recv_buf == 0) )
-        { return -EINVAL; }
-        return 1;
-      }
-      else {
-        return 0;
-      }
-    }
-  }
-  return -ENOENT;
+	int i;
+
+	if (!dev->me_clients_num)
+		return 0;
+
+	if (cl->mei_flow_ctrl_creds > 0)
+		return 1;
+
+	for (i = 0; i < dev->me_clients_num; i++) {
+		struct mei_me_client  *me_cl = &dev->me_clients[i];
+		if (me_cl->client_id == cl->me_client_id) {
+			if (me_cl->mei_flow_ctrl_creds) {
+				if (WARN_ON(me_cl->props.single_recv_buf == 0))
+					return -EINVAL;
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+	}
+	return -ENOENT;
 }
 
 /**
@@ -274,34 +273,33 @@ int mei_flow_ctrl_creds (struct mei_device * dev, struct mei_cl * cl)
  * @dev: the device structure
  * @cl: private data of the file object
  * @returns
- *  0 on success
- *  -ENOENT when me client is not found
- *  -EINVAL when ctrl credits are <= 0
+ *	0 on success
+ *	-ENOENT when me client is not found
+ *	-EINVAL when ctrl credits are <= 0
  */
-int mei_flow_ctrl_reduce (struct mei_device * dev, struct mei_cl * cl)
+int mei_flow_ctrl_reduce(struct mei_device *dev, struct mei_cl *cl)
 {
-  int i;
-  
-  if (!dev->me_clients_num)
-  { return -ENOENT; }
-  
-  for (i = 0; i < dev->me_clients_num; i++) {
-    struct mei_me_client * me_cl = &dev->me_clients[i];
-    if (me_cl->client_id == cl->me_client_id) {
-      if (me_cl->props.single_recv_buf != 0) {
-        if (WARN_ON (me_cl->mei_flow_ctrl_creds <= 0) )
-        { return -EINVAL; }
-        dev->me_clients[i].mei_flow_ctrl_creds--;
-      }
-      else {
-        if (WARN_ON (cl->mei_flow_ctrl_creds <= 0) )
-        { return -EINVAL; }
-        cl->mei_flow_ctrl_creds--;
-      }
-      return 0;
-    }
-  }
-  return -ENOENT;
+	int i;
+
+	if (!dev->me_clients_num)
+		return -ENOENT;
+
+	for (i = 0; i < dev->me_clients_num; i++) {
+		struct mei_me_client  *me_cl = &dev->me_clients[i];
+		if (me_cl->client_id == cl->me_client_id) {
+			if (me_cl->props.single_recv_buf != 0) {
+				if (WARN_ON(me_cl->mei_flow_ctrl_creds <= 0))
+					return -EINVAL;
+				dev->me_clients[i].mei_flow_ctrl_creds--;
+			} else {
+				if (WARN_ON(cl->mei_flow_ctrl_creds <= 0))
+					return -EINVAL;
+				cl->mei_flow_ctrl_creds--;
+			}
+			return 0;
+		}
+	}
+	return -ENOENT;
 }
 
 /**
@@ -312,31 +310,31 @@ int mei_flow_ctrl_reduce (struct mei_device * dev, struct mei_cl * cl)
  *
  * This function returns -EIO on write failure
  */
-int mei_send_flow_control (struct mei_device * dev, struct mei_cl * cl)
+int mei_send_flow_control(struct mei_device *dev, struct mei_cl *cl)
 {
-  struct mei_msg_hdr * mei_hdr;
-  struct hbm_flow_control * mei_flow_control;
-  
-  mei_hdr = (struct mei_msg_hdr *) &dev->wr_msg_buf[0];
-  mei_hdr->host_addr = 0;
-  mei_hdr->me_addr = 0;
-  mei_hdr->length = sizeof (struct hbm_flow_control);
-  mei_hdr->msg_complete = 1;
-  mei_hdr->reserved = 0;
-  
-  mei_flow_control = (struct hbm_flow_control *) &dev->wr_msg_buf[1];
-  memset (mei_flow_control, 0, sizeof (*mei_flow_control) );
-  mei_flow_control->host_addr = cl->host_client_id;
-  mei_flow_control->me_addr = cl->me_client_id;
-  mei_flow_control->hbm_cmd = MEI_FLOW_CONTROL_CMD;
-  memset (mei_flow_control->reserved, 0,
-          sizeof (mei_flow_control->reserved) );
-  dev_dbg (&dev->pdev->dev, "sending flow control host client = %d, ME client = %d\n",
-           cl->host_client_id, cl->me_client_id);
-           
-  return mei_write_message (dev, mei_hdr,
-                            (unsigned char *) mei_flow_control,
-                            sizeof (struct hbm_flow_control) );
+	struct mei_msg_hdr *mei_hdr;
+	struct hbm_flow_control *mei_flow_control;
+
+	mei_hdr = (struct mei_msg_hdr *) &dev->wr_msg_buf[0];
+	mei_hdr->host_addr = 0;
+	mei_hdr->me_addr = 0;
+	mei_hdr->length = sizeof(struct hbm_flow_control);
+	mei_hdr->msg_complete = 1;
+	mei_hdr->reserved = 0;
+
+	mei_flow_control = (struct hbm_flow_control *) &dev->wr_msg_buf[1];
+	memset(mei_flow_control, 0, sizeof(*mei_flow_control));
+	mei_flow_control->host_addr = cl->host_client_id;
+	mei_flow_control->me_addr = cl->me_client_id;
+	mei_flow_control->hbm_cmd = MEI_FLOW_CONTROL_CMD;
+	memset(mei_flow_control->reserved, 0,
+			sizeof(mei_flow_control->reserved));
+	dev_dbg(&dev->pdev->dev, "sending flow control host client = %d, ME client = %d\n",
+		cl->host_client_id, cl->me_client_id);
+
+	return mei_write_message(dev, mei_hdr,
+				(unsigned char *) mei_flow_control,
+				sizeof(struct hbm_flow_control));
 }
 
 /**
@@ -348,20 +346,20 @@ int mei_send_flow_control (struct mei_device * dev, struct mei_cl * cl)
  *
  * returns 1 if other client is connected, 0 - otherwise.
  */
-int mei_other_client_is_connecting (struct mei_device * dev,
-                                    struct mei_cl * cl)
+int mei_other_client_is_connecting(struct mei_device *dev,
+				struct mei_cl *cl)
 {
-  struct mei_cl * cl_pos = NULL;
-  struct mei_cl * cl_next = NULL;
-  
-  list_for_each_entry_safe (cl_pos, cl_next, &dev->file_list, link) {
-    if ( (cl_pos->state == MEI_FILE_CONNECTING) &&
-         (cl_pos != cl) &&
-         cl->me_client_id == cl_pos->me_client_id)
-    { return 1; }
-    
-  }
-  return 0;
+	struct mei_cl *cl_pos = NULL;
+	struct mei_cl *cl_next = NULL;
+
+	list_for_each_entry_safe(cl_pos, cl_next, &dev->file_list, link) {
+		if ((cl_pos->state == MEI_FILE_CONNECTING) &&
+			(cl_pos != cl) &&
+			cl->me_client_id == cl_pos->me_client_id)
+			return 1;
+
+	}
+	return 0;
 }
 
 /**
@@ -372,29 +370,29 @@ int mei_other_client_is_connecting (struct mei_device * dev,
  *
  * This function returns -EIO on write failure
  */
-int mei_disconnect (struct mei_device * dev, struct mei_cl * cl)
+int mei_disconnect(struct mei_device *dev, struct mei_cl *cl)
 {
-  struct mei_msg_hdr * mei_hdr;
-  struct hbm_client_disconnect_request * mei_cli_disconnect;
-  
-  mei_hdr = (struct mei_msg_hdr *) &dev->wr_msg_buf[0];
-  mei_hdr->host_addr = 0;
-  mei_hdr->me_addr = 0;
-  mei_hdr->length = sizeof (struct hbm_client_disconnect_request);
-  mei_hdr->msg_complete = 1;
-  mei_hdr->reserved = 0;
-  
-  mei_cli_disconnect =
-    (struct hbm_client_disconnect_request *) &dev->wr_msg_buf[1];
-  memset (mei_cli_disconnect, 0, sizeof (*mei_cli_disconnect) );
-  mei_cli_disconnect->host_addr = cl->host_client_id;
-  mei_cli_disconnect->me_addr = cl->me_client_id;
-  mei_cli_disconnect->hbm_cmd = CLIENT_DISCONNECT_REQ_CMD;
-  mei_cli_disconnect->reserved[0] = 0;
-  
-  return mei_write_message (dev, mei_hdr,
-                            (unsigned char *) mei_cli_disconnect,
-                            sizeof (struct hbm_client_disconnect_request) );
+	struct mei_msg_hdr *mei_hdr;
+	struct hbm_client_disconnect_request *mei_cli_disconnect;
+
+	mei_hdr = (struct mei_msg_hdr *) &dev->wr_msg_buf[0];
+	mei_hdr->host_addr = 0;
+	mei_hdr->me_addr = 0;
+	mei_hdr->length = sizeof(struct hbm_client_disconnect_request);
+	mei_hdr->msg_complete = 1;
+	mei_hdr->reserved = 0;
+
+	mei_cli_disconnect =
+	    (struct hbm_client_disconnect_request *) &dev->wr_msg_buf[1];
+	memset(mei_cli_disconnect, 0, sizeof(*mei_cli_disconnect));
+	mei_cli_disconnect->host_addr = cl->host_client_id;
+	mei_cli_disconnect->me_addr = cl->me_client_id;
+	mei_cli_disconnect->hbm_cmd = CLIENT_DISCONNECT_REQ_CMD;
+	mei_cli_disconnect->reserved[0] = 0;
+
+	return mei_write_message(dev, mei_hdr,
+				(unsigned char *) mei_cli_disconnect,
+				sizeof(struct hbm_client_disconnect_request));
 }
 
 /**
@@ -405,26 +403,26 @@ int mei_disconnect (struct mei_device * dev, struct mei_cl * cl)
  *
  * This function returns -EIO on write failure
  */
-int mei_connect (struct mei_device * dev, struct mei_cl * cl)
+int mei_connect(struct mei_device *dev, struct mei_cl *cl)
 {
-  struct mei_msg_hdr * mei_hdr;
-  struct hbm_client_connect_request * mei_cli_connect;
-  
-  mei_hdr = (struct mei_msg_hdr *) &dev->wr_msg_buf[0];
-  mei_hdr->host_addr = 0;
-  mei_hdr->me_addr = 0;
-  mei_hdr->length = sizeof (struct hbm_client_connect_request);
-  mei_hdr->msg_complete = 1;
-  mei_hdr->reserved = 0;
-  
-  mei_cli_connect =
-    (struct hbm_client_connect_request *) &dev->wr_msg_buf[1];
-  mei_cli_connect->host_addr = cl->host_client_id;
-  mei_cli_connect->me_addr = cl->me_client_id;
-  mei_cli_connect->hbm_cmd = CLIENT_CONNECT_REQ_CMD;
-  mei_cli_connect->reserved = 0;
-  
-  return mei_write_message (dev, mei_hdr,
-                            (unsigned char *) mei_cli_connect,
-                            sizeof (struct hbm_client_connect_request) );
+	struct mei_msg_hdr *mei_hdr;
+	struct hbm_client_connect_request *mei_cli_connect;
+
+	mei_hdr = (struct mei_msg_hdr *) &dev->wr_msg_buf[0];
+	mei_hdr->host_addr = 0;
+	mei_hdr->me_addr = 0;
+	mei_hdr->length = sizeof(struct hbm_client_connect_request);
+	mei_hdr->msg_complete = 1;
+	mei_hdr->reserved = 0;
+
+	mei_cli_connect =
+	    (struct hbm_client_connect_request *) &dev->wr_msg_buf[1];
+	mei_cli_connect->host_addr = cl->host_client_id;
+	mei_cli_connect->me_addr = cl->me_client_id;
+	mei_cli_connect->hbm_cmd = CLIENT_CONNECT_REQ_CMD;
+	mei_cli_connect->reserved = 0;
+
+	return mei_write_message(dev, mei_hdr,
+				(unsigned char *) mei_cli_connect,
+				sizeof(struct hbm_client_connect_request));
 }

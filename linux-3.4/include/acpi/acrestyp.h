@@ -47,8 +47,8 @@
 /*
  * Definitions for Resource Attributes
  */
-typedef u16 acpi_rs_length; /* Resource Length field is fixed at 16 bits */
-typedef u32 acpi_rsdesc_size; /* Max Resource Descriptor size is (Length+3) = (64_k-1)+3 */
+typedef u16 acpi_rs_length;	/* Resource Length field is fixed at 16 bits */
+typedef u32 acpi_rsdesc_size;	/* Max Resource Descriptor size is (Length+3) = (64_k-1)+3 */
 
 /*
  * Memory Attributes
@@ -80,8 +80,8 @@ typedef u32 acpi_rsdesc_size; /* Max Resource Descriptor size is (Length+3) = (6
 /*
  * IO Port Descriptor Decode
  */
-#define ACPI_DECODE_10                  (u8) 0x00 /* 10-bit IO address decode */
-#define ACPI_DECODE_16                  (u8) 0x01 /* 16-bit IO address decode */
+#define ACPI_DECODE_10                  (u8) 0x00	/* 10-bit IO address decode */
+#define ACPI_DECODE_16                  (u8) 0x01	/* 16-bit IO address decode */
 
 /*
  * Interrupt attributes - used in multiple descriptors
@@ -155,38 +155,38 @@ typedef u32 acpi_rsdesc_size; /* Max Resource Descriptor size is (Length+3) = (6
 /* UUID data structures for use in vendor-defined resource descriptors */
 
 struct acpi_uuid {
-  u8 data[ACPI_UUID_LENGTH];
+	u8 data[ACPI_UUID_LENGTH];
 };
 
 struct acpi_vendor_uuid {
-  u8 subtype;
-  u8 data[ACPI_UUID_LENGTH];
+	u8 subtype;
+	u8 data[ACPI_UUID_LENGTH];
 };
 
 /*
  * Structures used to describe device resources
  */
 struct acpi_resource_irq {
-  u8 descriptor_length;
-  u8 triggering;
-  u8 polarity;
-  u8 sharable;
-  u8 interrupt_count;
-  u8 interrupts[1];
+	u8 descriptor_length;
+	u8 triggering;
+	u8 polarity;
+	u8 sharable;
+	u8 interrupt_count;
+	u8 interrupts[1];
 };
 
 struct acpi_resource_dma {
-  u8 type;
-  u8 bus_master;
-  u8 transfer;
-  u8 channel_count;
-  u8 channels[1];
+	u8 type;
+	u8 bus_master;
+	u8 transfer;
+	u8 channel_count;
+	u8 channels[1];
 };
 
 struct acpi_resource_start_dependent {
-  u8 descriptor_length;
-  u8 compatibility_priority;
-  u8 performance_robustness;
+	u8 descriptor_length;
+	u8 compatibility_priority;
+	u8 performance_robustness;
 };
 
 /*
@@ -195,22 +195,22 @@ struct acpi_resource_start_dependent {
  */
 
 struct acpi_resource_io {
-  u8 io_decode;
-  u8 alignment;
-  u8 address_length;
-  u16 minimum;
-  u16 maximum;
+	u8 io_decode;
+	u8 alignment;
+	u8 address_length;
+	u16 minimum;
+	u16 maximum;
 };
 
 struct acpi_resource_fixed_io {
-  u16 address;
-  u8 address_length;
+	u16 address;
+	u8 address_length;
 };
 
 struct acpi_resource_fixed_dma {
-  u16 request_lines;
-  u16 channels;
-  u8 width;
+	u16 request_lines;
+	u16 channels;
+	u8 width;
 };
 
 /* Values for Width field above */
@@ -223,159 +223,158 @@ struct acpi_resource_fixed_dma {
 #define ACPI_DMA_WIDTH256                       5
 
 struct acpi_resource_vendor {
-  u16 byte_length;
-  u8 byte_data[1];
+	u16 byte_length;
+	u8 byte_data[1];
 };
 
 /* Vendor resource with UUID info (introduced in ACPI 3.0) */
 
 struct acpi_resource_vendor_typed {
-  u16 byte_length;
-  u8 uuid_subtype;
-  u8 uuid[ACPI_UUID_LENGTH];
-  u8 byte_data[1];
+	u16 byte_length;
+	u8 uuid_subtype;
+	u8 uuid[ACPI_UUID_LENGTH];
+	u8 byte_data[1];
 };
 
 struct acpi_resource_end_tag {
-  u8 checksum;
+	u8 checksum;
 };
 
 struct acpi_resource_memory24 {
-  u8 write_protect;
-  u16 minimum;
-  u16 maximum;
-  u16 alignment;
-  u16 address_length;
+	u8 write_protect;
+	u16 minimum;
+	u16 maximum;
+	u16 alignment;
+	u16 address_length;
 };
 
 struct acpi_resource_memory32 {
-  u8 write_protect;
-  u32 minimum;
-  u32 maximum;
-  u32 alignment;
-  u32 address_length;
+	u8 write_protect;
+	u32 minimum;
+	u32 maximum;
+	u32 alignment;
+	u32 address_length;
 };
 
 struct acpi_resource_fixed_memory32 {
-  u8 write_protect;
-  u32 address;
-  u32 address_length;
+	u8 write_protect;
+	u32 address;
+	u32 address_length;
 };
 
 struct acpi_memory_attribute {
-  u8 write_protect;
-  u8 caching;
-  u8 range_type;
-  u8 translation;
+	u8 write_protect;
+	u8 caching;
+	u8 range_type;
+	u8 translation;
 };
 
 struct acpi_io_attribute {
-  u8 range_type;
-  u8 translation;
-  u8 translation_type;
-  u8 reserved1;
+	u8 range_type;
+	u8 translation;
+	u8 translation_type;
+	u8 reserved1;
 };
 
 union acpi_resource_attribute {
-  struct acpi_memory_attribute mem;
-  struct acpi_io_attribute io;
-  
-  /* Used for the *word_space macros */
-  
-  u8 type_specific;
+	struct acpi_memory_attribute mem;
+	struct acpi_io_attribute io;
+
+	/* Used for the *word_space macros */
+
+	u8 type_specific;
 };
 
 struct acpi_resource_source {
-  u8 index;
-  u16 string_length;
-  char * string_ptr;
+	u8 index;
+	u16 string_length;
+	char *string_ptr;
 };
 
 /* Fields common to all address descriptors, 16/32/64 bit */
 
 #define ACPI_RESOURCE_ADDRESS_COMMON \
-  u8                                      resource_type; \
-  u8                                      producer_consumer; \
-  u8                                      decode; \
-  u8                                      min_address_fixed; \
-  u8                                      max_address_fixed; \
-  union acpi_resource_attribute           info;
+	u8                                      resource_type; \
+	u8                                      producer_consumer; \
+	u8                                      decode; \
+	u8                                      min_address_fixed; \
+	u8                                      max_address_fixed; \
+	union acpi_resource_attribute           info;
 
 struct acpi_resource_address {
-  ACPI_RESOURCE_ADDRESS_COMMON
-};
+ACPI_RESOURCE_ADDRESS_COMMON};
 
 struct acpi_resource_address16 {
-  ACPI_RESOURCE_ADDRESS_COMMON u16 granularity;
-  u16 minimum;
-  u16 maximum;
-  u16 translation_offset;
-  u16 address_length;
-  struct acpi_resource_source resource_source;
+	ACPI_RESOURCE_ADDRESS_COMMON u16 granularity;
+	u16 minimum;
+	u16 maximum;
+	u16 translation_offset;
+	u16 address_length;
+	struct acpi_resource_source resource_source;
 };
 
 struct acpi_resource_address32 {
-  ACPI_RESOURCE_ADDRESS_COMMON u32 granularity;
-  u32 minimum;
-  u32 maximum;
-  u32 translation_offset;
-  u32 address_length;
-  struct acpi_resource_source resource_source;
+	ACPI_RESOURCE_ADDRESS_COMMON u32 granularity;
+	u32 minimum;
+	u32 maximum;
+	u32 translation_offset;
+	u32 address_length;
+	struct acpi_resource_source resource_source;
 };
 
 struct acpi_resource_address64 {
-  ACPI_RESOURCE_ADDRESS_COMMON u64 granularity;
-  u64 minimum;
-  u64 maximum;
-  u64 translation_offset;
-  u64 address_length;
-  struct acpi_resource_source resource_source;
+	ACPI_RESOURCE_ADDRESS_COMMON u64 granularity;
+	u64 minimum;
+	u64 maximum;
+	u64 translation_offset;
+	u64 address_length;
+	struct acpi_resource_source resource_source;
 };
 
 struct acpi_resource_extended_address64 {
-  ACPI_RESOURCE_ADDRESS_COMMON u8 revision_iD;
-  u64 granularity;
-  u64 minimum;
-  u64 maximum;
-  u64 translation_offset;
-  u64 address_length;
-  u64 type_specific;
+	ACPI_RESOURCE_ADDRESS_COMMON u8 revision_iD;
+	u64 granularity;
+	u64 minimum;
+	u64 maximum;
+	u64 translation_offset;
+	u64 address_length;
+	u64 type_specific;
 };
 
 struct acpi_resource_extended_irq {
-  u8 producer_consumer;
-  u8 triggering;
-  u8 polarity;
-  u8 sharable;
-  u8 interrupt_count;
-  struct acpi_resource_source resource_source;
-  u32 interrupts[1];
+	u8 producer_consumer;
+	u8 triggering;
+	u8 polarity;
+	u8 sharable;
+	u8 interrupt_count;
+	struct acpi_resource_source resource_source;
+	u32 interrupts[1];
 };
 
 struct acpi_resource_generic_register {
-  u8 space_id;
-  u8 bit_width;
-  u8 bit_offset;
-  u8 access_size;
-  u64 address;
+	u8 space_id;
+	u8 bit_width;
+	u8 bit_offset;
+	u8 access_size;
+	u64 address;
 };
 
 struct acpi_resource_gpio {
-  u8 revision_id;
-  u8 connection_type;
-  u8 producer_consumer; /* For values, see Producer/Consumer above */
-  u8 pin_config;
-  u8 sharable;    /* For values, see Interrupt Attributes above */
-  u8 io_restriction;
-  u8 triggering;    /* For values, see Interrupt Attributes above */
-  u8 polarity;    /* For values, see Interrupt Attributes above */
-  u16 drive_strength;
-  u16 debounce_timeout;
-  u16 pin_table_length;
-  u16 vendor_length;
-  struct acpi_resource_source resource_source;
-  u16 * pin_table;
-  u8 * vendor_data;
+	u8 revision_id;
+	u8 connection_type;
+	u8 producer_consumer;	/* For values, see Producer/Consumer above */
+	u8 pin_config;
+	u8 sharable;		/* For values, see Interrupt Attributes above */
+	u8 io_restriction;
+	u8 triggering;		/* For values, see Interrupt Attributes above */
+	u8 polarity;		/* For values, see Interrupt Attributes above */
+	u16 drive_strength;
+	u16 debounce_timeout;
+	u16 pin_table_length;
+	u16 vendor_length;
+	struct acpi_resource_source resource_source;
+	u16 *pin_table;
+	u8 *vendor_data;
 };
 
 /* Values for GPIO connection_type field above */
@@ -400,19 +399,18 @@ struct acpi_resource_gpio {
 /* Common structure for I2C, SPI, and UART serial descriptors */
 
 #define ACPI_RESOURCE_SERIAL_COMMON \
-  u8                                      revision_id; \
-  u8                                      type; \
-  u8                                      producer_consumer;   /* For values, see Producer/Consumer above */\
-  u8                                      slave_mode; \
-  u8                                      type_revision_id; \
-  u16                                     type_data_length; \
-  u16                                     vendor_length; \
-  struct acpi_resource_source             resource_source; \
-  u8                                      *vendor_data;
+	u8                                      revision_id; \
+	u8                                      type; \
+	u8                                      producer_consumer;   /* For values, see Producer/Consumer above */\
+	u8                                      slave_mode; \
+	u8                                      type_revision_id; \
+	u16                                     type_data_length; \
+	u16                                     vendor_length; \
+	struct acpi_resource_source             resource_source; \
+	u8                                      *vendor_data;
 
 struct acpi_resource_common_serialbus {
-  ACPI_RESOURCE_SERIAL_COMMON
-};
+ACPI_RESOURCE_SERIAL_COMMON};
 
 /* Values for the Type field above */
 
@@ -426,9 +424,9 @@ struct acpi_resource_common_serialbus {
 #define ACPI_DEVICE_INITIATED                   1
 
 struct acpi_resource_i2c_serialbus {
-  ACPI_RESOURCE_SERIAL_COMMON u8 access_mode;
-  u16 slave_address;
-  u32 connection_speed;
+	ACPI_RESOURCE_SERIAL_COMMON u8 access_mode;
+	u16 slave_address;
+	u32 connection_speed;
 };
 
 /* Values for access_mode field above */
@@ -437,13 +435,13 @@ struct acpi_resource_i2c_serialbus {
 #define ACPI_I2C_10BIT_MODE                     1
 
 struct acpi_resource_spi_serialbus {
-  ACPI_RESOURCE_SERIAL_COMMON u8 wire_mode;
-  u8 device_polarity;
-  u8 data_bit_length;
-  u8 clock_phase;
-  u8 clock_polarity;
-  u16 device_selection;
-  u32 connection_speed;
+	ACPI_RESOURCE_SERIAL_COMMON u8 wire_mode;
+	u8 device_polarity;
+	u8 data_bit_length;
+	u8 clock_phase;
+	u8 clock_polarity;
+	u16 device_selection;
+	u32 connection_speed;
 };
 
 /* Values for wire_mode field above */
@@ -467,15 +465,15 @@ struct acpi_resource_spi_serialbus {
 #define ACPI_SPI_START_HIGH                     1
 
 struct acpi_resource_uart_serialbus {
-  ACPI_RESOURCE_SERIAL_COMMON u8 endian;
-  u8 data_bits;
-  u8 stop_bits;
-  u8 flow_control;
-  u8 parity;
-  u8 lines_enabled;
-  u16 rx_fifo_size;
-  u16 tx_fifo_size;
-  u32 default_baud_rate;
+	ACPI_RESOURCE_SERIAL_COMMON u8 endian;
+	u8 data_bits;
+	u8 stop_bits;
+	u8 flow_control;
+	u8 parity;
+	u8 lines_enabled;
+	u16 rx_fifo_size;
+	u16 tx_fifo_size;
+	u32 default_baud_rate;
 };
 
 /* Values for Endian field above */
@@ -537,70 +535,70 @@ struct acpi_resource_uart_serialbus {
 #define ACPI_RESOURCE_TYPE_ADDRESS16            11
 #define ACPI_RESOURCE_TYPE_ADDRESS32            12
 #define ACPI_RESOURCE_TYPE_ADDRESS64            13
-#define ACPI_RESOURCE_TYPE_EXTENDED_ADDRESS64   14  /* ACPI 3.0 */
+#define ACPI_RESOURCE_TYPE_EXTENDED_ADDRESS64   14	/* ACPI 3.0 */
 #define ACPI_RESOURCE_TYPE_EXTENDED_IRQ         15
 #define ACPI_RESOURCE_TYPE_GENERIC_REGISTER     16
-#define ACPI_RESOURCE_TYPE_GPIO                 17  /* ACPI 5.0 */
-#define ACPI_RESOURCE_TYPE_FIXED_DMA            18  /* ACPI 5.0 */
-#define ACPI_RESOURCE_TYPE_SERIAL_BUS           19  /* ACPI 5.0 */
+#define ACPI_RESOURCE_TYPE_GPIO                 17	/* ACPI 5.0 */
+#define ACPI_RESOURCE_TYPE_FIXED_DMA            18	/* ACPI 5.0 */
+#define ACPI_RESOURCE_TYPE_SERIAL_BUS           19	/* ACPI 5.0 */
 #define ACPI_RESOURCE_TYPE_MAX                  19
 
 /* Master union for resource descriptors */
 
 union acpi_resource_data {
-  struct acpi_resource_irq irq;
-  struct acpi_resource_dma dma;
-  struct acpi_resource_start_dependent start_dpf;
-  struct acpi_resource_io io;
-  struct acpi_resource_fixed_io fixed_io;
-  struct acpi_resource_fixed_dma fixed_dma;
-  struct acpi_resource_vendor vendor;
-  struct acpi_resource_vendor_typed vendor_typed;
-  struct acpi_resource_end_tag end_tag;
-  struct acpi_resource_memory24 memory24;
-  struct acpi_resource_memory32 memory32;
-  struct acpi_resource_fixed_memory32 fixed_memory32;
-  struct acpi_resource_address16 address16;
-  struct acpi_resource_address32 address32;
-  struct acpi_resource_address64 address64;
-  struct acpi_resource_extended_address64 ext_address64;
-  struct acpi_resource_extended_irq extended_irq;
-  struct acpi_resource_generic_register generic_reg;
-  struct acpi_resource_gpio gpio;
-  struct acpi_resource_i2c_serialbus i2c_serial_bus;
-  struct acpi_resource_spi_serialbus spi_serial_bus;
-  struct acpi_resource_uart_serialbus uart_serial_bus;
-  struct acpi_resource_common_serialbus common_serial_bus;
-  
-  /* Common fields */
-  
-  struct acpi_resource_address address; /* Common 16/32/64 address fields */
+	struct acpi_resource_irq irq;
+	struct acpi_resource_dma dma;
+	struct acpi_resource_start_dependent start_dpf;
+	struct acpi_resource_io io;
+	struct acpi_resource_fixed_io fixed_io;
+	struct acpi_resource_fixed_dma fixed_dma;
+	struct acpi_resource_vendor vendor;
+	struct acpi_resource_vendor_typed vendor_typed;
+	struct acpi_resource_end_tag end_tag;
+	struct acpi_resource_memory24 memory24;
+	struct acpi_resource_memory32 memory32;
+	struct acpi_resource_fixed_memory32 fixed_memory32;
+	struct acpi_resource_address16 address16;
+	struct acpi_resource_address32 address32;
+	struct acpi_resource_address64 address64;
+	struct acpi_resource_extended_address64 ext_address64;
+	struct acpi_resource_extended_irq extended_irq;
+	struct acpi_resource_generic_register generic_reg;
+	struct acpi_resource_gpio gpio;
+	struct acpi_resource_i2c_serialbus i2c_serial_bus;
+	struct acpi_resource_spi_serialbus spi_serial_bus;
+	struct acpi_resource_uart_serialbus uart_serial_bus;
+	struct acpi_resource_common_serialbus common_serial_bus;
+
+	/* Common fields */
+
+	struct acpi_resource_address address;	/* Common 16/32/64 address fields */
 };
 
 /* Common resource header */
 
 struct acpi_resource {
-  u32 type;
-  u32 length;
-  union acpi_resource_data data;
+	u32 type;
+	u32 length;
+	union acpi_resource_data data;
 };
 
 /* restore default alignment */
 
 #pragma pack()
 
-#define ACPI_RS_SIZE_NO_DATA                8 /* Id + Length fields */
+#define ACPI_RS_SIZE_NO_DATA                8	/* Id + Length fields */
 #define ACPI_RS_SIZE_MIN                    (u32) ACPI_ROUND_UP_TO_NATIVE_WORD (12)
 #define ACPI_RS_SIZE(type)                  (u32) (ACPI_RS_SIZE_NO_DATA + sizeof (type))
 
 #define ACPI_NEXT_RESOURCE(res)             (struct acpi_resource *)((u8 *) res + res->length)
 
 struct acpi_pci_routing_table {
-  u32 length;
-  u32 pin;
-  u64 address;    /* here for 64-bit alignment */
-  u32 source_index;
-  char source[4];   /* pad to 64 bits so sizeof() works in all cases */
+	u32 length;
+	u32 pin;
+	u64 address;		/* here for 64-bit alignment */
+	u32 source_index;
+	char source[4];		/* pad to 64 bits so sizeof() works in all cases */
 };
 
-#endif        /* __ACRESTYP_H__ */
+#endif				/* __ACRESTYP_H__ */

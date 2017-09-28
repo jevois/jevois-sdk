@@ -59,26 +59,26 @@
 /*---------------------  Export Functions  --------------------------*/
 
 void
-WPA_ClearRSN (
-  PKnownBSS        pBSSList
-);
+WPA_ClearRSN(
+    PKnownBSS        pBSSList
+    );
 
 void
-WPA_ParseRSN (
-  PKnownBSS        pBSSList,
-  PWLAN_IE_RSN_EXT pRSN
-);
+WPA_ParseRSN(
+    PKnownBSS        pBSSList,
+    PWLAN_IE_RSN_EXT pRSN
+    );
 
 bool
-WPA_SearchRSN (
-  unsigned char byCmd,
-  unsigned char byEncrypt,
-  PKnownBSS        pBSSList
-);
+WPA_SearchRSN(
+    unsigned char byCmd,
+    unsigned char byEncrypt,
+    PKnownBSS        pBSSList
+    );
 
 bool
-WPAb_Is_RSN (
-  PWLAN_IE_RSN_EXT pRSN
-);
+WPAb_Is_RSN(
+    PWLAN_IE_RSN_EXT pRSN
+    );
 
 #endif

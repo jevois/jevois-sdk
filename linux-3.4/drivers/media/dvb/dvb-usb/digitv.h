@@ -5,7 +5,7 @@
 #include "dvb-usb.h"
 
 struct digitv_state {
-  int is_nxt6000;
+    int is_nxt6000;
 };
 
 /* protocol (from usblogging and the SDK:

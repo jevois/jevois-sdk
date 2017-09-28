@@ -34,10 +34,10 @@
 #include <asm/homecache.h>
 #include <arch/chip.h>
 
-SYSCALL_DEFINE0 (flush_cache)
+SYSCALL_DEFINE0(flush_cache)
 {
-  homecache_evict (cpumask_of (smp_processor_id() ) );
-  return 0;
+	homecache_evict(cpumask_of(smp_processor_id()));
+	return 0;
 }
 
 /*
@@ -51,41 +51,41 @@ SYSCALL_DEFINE0 (flush_cache)
 
 #if !defined(__tilegx__) || defined(CONFIG_COMPAT)
 
-ssize_t sys32_readahead (int fd, u32 offset_lo, u32 offset_hi, u32 count)
+ssize_t sys32_readahead(int fd, u32 offset_lo, u32 offset_hi, u32 count)
 {
-  return sys_readahead (fd, ( (loff_t) offset_hi << 32) | offset_lo, count);
+	return sys_readahead(fd, ((loff_t)offset_hi << 32) | offset_lo, count);
 }
 
-int sys32_fadvise64_64 (int fd, u32 offset_lo, u32 offset_hi,
-                        u32 len_lo, u32 len_hi, int advice)
+int sys32_fadvise64_64(int fd, u32 offset_lo, u32 offset_hi,
+		       u32 len_lo, u32 len_hi, int advice)
 {
-  return sys_fadvise64_64 (fd, ( (loff_t) offset_hi << 32) | offset_lo,
-                           ( (loff_t) len_hi << 32) | len_lo, advice);
+	return sys_fadvise64_64(fd, ((loff_t)offset_hi << 32) | offset_lo,
+				((loff_t)len_hi << 32) | len_lo, advice);
 }
 
 #endif /* 32-bit syscall wrappers */
 
 /* Note: used by the compat code even in 64-bit Linux. */
-SYSCALL_DEFINE6 (mmap2, unsigned long, addr, unsigned long, len,
-                 unsigned long, prot, unsigned long, flags,
-                 unsigned long, fd, unsigned long, off_4k)
+SYSCALL_DEFINE6(mmap2, unsigned long, addr, unsigned long, len,
+		unsigned long, prot, unsigned long, flags,
+		unsigned long, fd, unsigned long, off_4k)
 {
 #define PAGE_ADJUST (PAGE_SHIFT - 12)
-  if (off_4k & ( (1 << PAGE_ADJUST) - 1) )
-  { return -EINVAL; }
-  return sys_mmap_pgoff (addr, len, prot, flags, fd,
-                         off_4k >> PAGE_ADJUST);
+	if (off_4k & ((1 << PAGE_ADJUST) - 1))
+		return -EINVAL;
+	return sys_mmap_pgoff(addr, len, prot, flags, fd,
+			      off_4k >> PAGE_ADJUST);
 }
 
 #ifdef __tilegx__
-SYSCALL_DEFINE6 (mmap, unsigned long, addr, unsigned long, len,
-                 unsigned long, prot, unsigned long, flags,
-                 unsigned long, fd, off_t, offset)
+SYSCALL_DEFINE6(mmap, unsigned long, addr, unsigned long, len,
+		unsigned long, prot, unsigned long, flags,
+		unsigned long, fd, off_t, offset)
 {
-  if (offset & ( (1 << PAGE_SHIFT) - 1) )
-  { return -EINVAL; }
-  return sys_mmap_pgoff (addr, len, prot, flags, fd,
-                         offset >> PAGE_SHIFT);
+	if (offset & ((1 << PAGE_SHIFT) - 1))
+		return -EINVAL;
+	return sys_mmap_pgoff(addr, len, prot, flags, fd,
+			      offset >> PAGE_SHIFT);
 }
 #endif
 
@@ -113,7 +113,7 @@ SYSCALL_DEFINE6 (mmap, unsigned long, addr, unsigned long, len,
  * Note that we can't include <linux/unistd.h> here since the header
  * guard will defeat us; <asm/unistd.h> checks for __SYSCALL as well.
  */
-void * sys_call_table[__NR_syscalls] = {
-  [0 ... __NR_syscalls - 1] = sys_ni_syscall,
+void *sys_call_table[__NR_syscalls] = {
+	[0 ... __NR_syscalls-1] = sys_ni_syscall,
 #include <asm/unistd.h>
 };

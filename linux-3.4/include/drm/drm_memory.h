@@ -48,12 +48,12 @@
 #include <asm/agp.h>
 #else
 # ifdef __powerpc__
-#  define PAGE_AGP  __pgprot(_PAGE_KERNEL | _PAGE_NO_CACHE)
+#  define PAGE_AGP	__pgprot(_PAGE_KERNEL | _PAGE_NO_CACHE)
 # else
-#  define PAGE_AGP  PAGE_KERNEL
+#  define PAGE_AGP	PAGE_KERNEL
 # endif
 #endif
 
-#else       /* __OS_HAS_AGP */
+#else				/* __OS_HAS_AGP */
 
 #endif

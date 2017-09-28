@@ -12,20 +12,20 @@
  */
 enum csi_if
 {
-  CSI_IF_INTLV                = 0x00,    /* 1SEG DATA in one channel  */
-  CSI_IF_SPL                  = 0x01,    /* 2SEG: 1SEG Y in one channel , 1SEG UV in second channel */
-  CSI_IF_PL                   = 0x02,    /* 3SEG YUV444 */
-  CSI_IF_PL_SPL               = 0x03,    /* 3SEG YUV444 to 2SEG YUV422  */
+  CSI_IF_INTLV                =0x00,     /* 1SEG DATA in one channel  */ 
+  CSI_IF_SPL                  =0x01,     /* 2SEG: 1SEG Y in one channel , 1SEG UV in second channel */
+  CSI_IF_PL                   =0x02,     /* 3SEG YUV444 */
+  CSI_IF_PL_SPL               =0x03,     /* 3SEG YUV444 to 2SEG YUV422  */
   
-  CSI_IF_CCIR656_1CH          = 0x04,  /* 1SEG ccir656  1ch   */
-  CSI_IF_CCIR656_1CH_SPL      = 0x05,  /* 2SEG  ccir656 1ch   */
-  CSI_IF_CCIR656_1CH_PL       = 0x06,  /* 3SEG ccir656  1ch   */
-  CSI_IF_CCIR656_1CH_PL_SPL   = 0x07,  /* 3SEG to 2SEG ccir656  1ch   */
+  CSI_IF_CCIR656_1CH          =0x04,   /* 1SEG ccir656  1ch   */
+  CSI_IF_CCIR656_1CH_SPL      =0x05,   /* 2SEG  ccir656 1ch   */
+  CSI_IF_CCIR656_1CH_PL       =0x06,   /* 3SEG ccir656  1ch   */
+  CSI_IF_CCIR656_1CH_PL_SPL   =0x07,   /* 3SEG to 2SEG ccir656  1ch   */
   
-  CSI_IF_CCIR656_2CH          = 0x0c,  /* D7~D0:ccir656  2ch   */
-  CSI_IF_CCIR656_4CH          = 0x0d,  /* D7~D0:ccir656  4ch   */
+  CSI_IF_CCIR656_2CH          =0x0c,   /* D7~D0:ccir656  2ch   */
+  CSI_IF_CCIR656_4CH          =0x0d,   /* D7~D0:ccir656  4ch   */
   
-  CSI_IF_MIPI                 = 0x80,  /* MIPI CSI */
+  CSI_IF_MIPI                 =0x80,   /* MIPI CSI */   
 };
 
 /*
@@ -33,9 +33,9 @@ enum csi_if
  */
 enum csi_data_width
 {
-  CSI_8BIT      = 0,
-  CSI_10BIT     = 1,
-  CSI_12BIT     = 2,
+  CSI_8BIT      =0, 
+  CSI_10BIT     =1,   
+  CSI_12BIT     =2,
 };
 
 /*
@@ -43,9 +43,9 @@ enum csi_data_width
  */
 enum csi_input_fmt
 {
-  CSI_RAW = 0,     /* raw stream  */
-  CSI_YUV422 = 3,  /* yuv422      */
-  CSI_YUV420 = 4,  /* yuv420      */
+  CSI_RAW=0,       /* raw stream  */
+  CSI_YUV422=3,    /* yuv422      */
+  CSI_YUV420=4,    /* yuv420      */
 };
 
 /*
@@ -74,7 +74,7 @@ enum csi_output_fmt
   CSI_FIELD_PLANAR_YUV420 = 1,         /* parse a field(odd or even) into planar yuv420 */
   CSI_FRAME_PLANAR_YUV420 = 2,         /* parse and reconstruct every 2 fields(odd and even) into a frame, format is planar yuv420 */
   CSI_FRAME_PLANAR_YUV422 = 3,
-  CSI_FIELD_UV_CB_YUV422  = 4,
+  CSI_FIELD_UV_CB_YUV422  = 4,         
   CSI_FIELD_UV_CB_YUV420  = 5,
   CSI_FRAME_UV_CB_YUV420  = 6,
   CSI_FRAME_UV_CB_YUV422  = 7,
@@ -117,8 +117,8 @@ enum csi_field_sel
  */
 enum csi_src_type
 {
-  CSI_PROGRESSIVE = 0,  /* progressive */
-  CSI_INTERLACE = 1,    /* interlace */
+  CSI_PROGRESSIVE=0,    /* progressive */
+  CSI_INTERLACE=1,      /* interlace */
 };
 
 /*
@@ -127,13 +127,13 @@ enum csi_src_type
 enum csi_input_seq
 {
   /* only when input is yuv422 */
-  CSI_YUYV = 0,
+  CSI_YUYV=0,
   CSI_YVYU,
   CSI_UYVY,
   CSI_VYUY,
   
   /* only when input is byer */
-  CSI_RGRG = 0,             /* first line sequence is RGRG... */
+  CSI_RGRG=0,               /* first line sequence is RGRG... */
   CSI_GRGR,                 /* first line sequence is GRGR... */
   CSI_BGBG,                 /* first line sequence is BGBG... */
   CSI_GBGB,                 /* first line sequence is GBGB... */
@@ -196,7 +196,7 @@ struct csi_fmt_cfg
 
 enum csi_buf_sel
 {
-  CSI_BUF_0_A = 0,    /* FIFO for Y address A */
+  CSI_BUF_0_A = 0,    /* FIFO for Y address A */  
   CSI_BUF_0_B,        /* FIFO for Y address B */
   CSI_BUF_1_A,        /* FIFO for Cb address A */
   CSI_BUF_1_B,        /* FIFO for Cb address B */
@@ -210,8 +210,8 @@ enum csi_buf_sel
  */
 struct csi_capture_status
 {
-  _Bool               picture_in_progress;
-  _Bool               video_in_progress;
+  _Bool               picture_in_progress;  
+  _Bool               video_in_progress;    
 };
 
 enum csi_cap_mode
@@ -251,23 +251,23 @@ struct csi_int_status
   _Bool vsync_trig;
 };
 
-int csi_set_base_addr (unsigned int sel, unsigned int addr);
-void csi_enable (unsigned int sel);
-void csi_disable (unsigned int sel);
-void csi_if_cfg (unsigned int sel, struct csi_if_cfg * csi_if_cfg);
-void csi_timing_cfg (unsigned int sel, struct csi_timing_cfg * csi_tmg_cfg);
-void csi_fmt_cfg (unsigned int sel, unsigned int ch, struct csi_fmt_cfg * csi_fmt_cfg);
-void csi_set_buffer_address (unsigned int sel, unsigned int ch, enum csi_buf_sel buf, u64 addr);
-u64 csi_get_buffer_address (unsigned int sel, unsigned int ch, enum csi_buf_sel buf);
-void csi_capture_start (unsigned int sel, unsigned int ch_total_num, enum csi_cap_mode csi_cap_mode);
-void csi_capture_stop (unsigned int sel, unsigned int ch_total_num, enum csi_cap_mode csi_cap_mode);
-void csi_capture_get_status (unsigned int sel, unsigned int ch, struct csi_capture_status * status);
-void csi_set_size (unsigned int sel, unsigned int ch, unsigned int length_h, unsigned int length_v, unsigned int buf_length_y, unsigned int buf_length_c);
-void csi_set_offset (unsigned int sel, unsigned int ch, unsigned int start_h, unsigned int start_v);
-void csi_int_enable (unsigned int sel, unsigned int ch, enum csi_int_sel interrupt);
-void csi_int_disable (unsigned int sel, unsigned int ch, enum csi_int_sel interrupt);
-void csi_int_get_status (unsigned int sel, unsigned int ch, struct csi_int_status * status);
-void csi_int_clear_status (unsigned int sel, unsigned int ch, enum csi_int_sel interrupt);
+int csi_set_base_addr(unsigned int sel, unsigned int addr);
+void csi_enable(unsigned int sel);
+void csi_disable(unsigned int sel);
+void csi_if_cfg(unsigned int sel, struct csi_if_cfg *csi_if_cfg);
+void csi_timing_cfg(unsigned int sel, struct csi_timing_cfg *csi_tmg_cfg);
+void csi_fmt_cfg(unsigned int sel, unsigned int ch, struct csi_fmt_cfg *csi_fmt_cfg);
+void csi_set_buffer_address(unsigned int sel, unsigned int ch, enum csi_buf_sel buf, u64 addr);
+u64 csi_get_buffer_address(unsigned int sel, unsigned int ch, enum csi_buf_sel buf);
+void csi_capture_start(unsigned int sel, unsigned int ch_total_num, enum csi_cap_mode csi_cap_mode);
+void csi_capture_stop(unsigned int sel, unsigned int ch_total_num, enum csi_cap_mode csi_cap_mode);
+void csi_capture_get_status(unsigned int sel, unsigned int ch, struct csi_capture_status *status);
+void csi_set_size(unsigned int sel, unsigned int ch, unsigned int length_h, unsigned int length_v, unsigned int buf_length_y, unsigned int buf_length_c);
+void csi_set_offset(unsigned int sel, unsigned int ch, unsigned int start_h, unsigned int start_v);
+void csi_int_enable(unsigned int sel, unsigned int ch, enum csi_int_sel interrupt);
+void csi_int_disable(unsigned int sel, unsigned int ch, enum csi_int_sel interrupt);
+void csi_int_get_status(unsigned int sel, unsigned int ch,struct csi_int_status *status);
+void csi_int_clear_status(unsigned int sel, unsigned int ch, enum csi_int_sel interrupt);
 
 
 #endif

@@ -27,12 +27,12 @@
  * callback.
  */
 struct eeh_event {
-  struct list_head  list; /* to form event queue  */
-  struct eeh_dev  *  edev;  /* EEH device   */
+	struct list_head	list;	/* to form event queue	*/
+	struct eeh_dev		*edev;	/* EEH device		*/
 };
 
-int eeh_send_failure_event (struct eeh_dev * edev);
-struct eeh_dev * handle_eeh_events (struct eeh_event *);
+int eeh_send_failure_event(struct eeh_dev *edev);
+struct eeh_dev *handle_eeh_events(struct eeh_event *);
 
 #endif /* __KERNEL__ */
 #endif /* ASM_POWERPC_EEH_EVENT_H */

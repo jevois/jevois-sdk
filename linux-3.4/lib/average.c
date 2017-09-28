@@ -26,23 +26,23 @@
  * ewma_init() - Initialize EWMA parameters
  * @avg: Average structure
  * @factor: Factor to use for the scaled up internal value. The maximum value
- *  of averages can be ULONG_MAX/(factor*weight). For performance reasons
- *  factor has to be a power of 2.
+ *	of averages can be ULONG_MAX/(factor*weight). For performance reasons
+ *	factor has to be a power of 2.
  * @weight: Exponential weight, or decay rate. This defines how fast the
- *  influence of older values decreases. For performance reasons weight has
- *  to be a power of 2.
+ *	influence of older values decreases. For performance reasons weight has
+ *	to be a power of 2.
  *
  * Initialize the EWMA parameters for a given struct ewma @avg.
  */
-void ewma_init (struct ewma * avg, unsigned long factor, unsigned long weight)
+void ewma_init(struct ewma *avg, unsigned long factor, unsigned long weight)
 {
-  WARN_ON (!is_power_of_2 (weight) || !is_power_of_2 (factor) );
-  
-  avg->weight = ilog2 (weight);
-  avg->factor = ilog2 (factor);
-  avg->internal = 0;
+	WARN_ON(!is_power_of_2(weight) || !is_power_of_2(factor));
+
+	avg->weight = ilog2(weight);
+	avg->factor = ilog2(factor);
+	avg->internal = 0;
 }
-EXPORT_SYMBOL (ewma_init);
+EXPORT_SYMBOL(ewma_init);
 
 /**
  * ewma_add() - Exponentially weighted moving average (EWMA)
@@ -51,12 +51,12 @@ EXPORT_SYMBOL (ewma_init);
  *
  * Add a sample to the average.
  */
-struct ewma * ewma_add (struct ewma * avg, unsigned long val)
+struct ewma *ewma_add(struct ewma *avg, unsigned long val)
 {
-  avg->internal = avg->internal  ?
-                  ( ( (avg->internal << avg->weight) - avg->internal) +
-                    (val << avg->factor) ) >> avg->weight :
-                  (val << avg->factor);
-  return avg;
+	avg->internal = avg->internal  ?
+		(((avg->internal << avg->weight) - avg->internal) +
+			(val << avg->factor)) >> avg->weight :
+		(val << avg->factor);
+	return avg;
 }
-EXPORT_SYMBOL (ewma_add);
+EXPORT_SYMBOL(ewma_add);

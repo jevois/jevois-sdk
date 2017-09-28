@@ -60,10 +60,10 @@ typedef unsigned char UCHAR;
 #define C_DISASSOC_REASON_CODE_DEFAULT   8
 
 #define C_CRC_LEN                        4
-#define C_NUM_SUPPORTED_RATES            8
+#define C_NUM_SUPPORTED_RATES            8 
 /****** IEEE 802.11 mac header for type data packets *************************/
 struct mac_header {
-  UCHAR frame_ctl_1;
+  UCHAR frame_ctl_1;                          
   UCHAR frame_ctl_2;
   UCHAR duration_lsb;
   UCHAR duration_msb;
@@ -71,7 +71,7 @@ struct mac_header {
   UCHAR addr_2[ADDRLEN];
   UCHAR addr_3[ADDRLEN];
   UCHAR seq_frag_num[2];
-  /*  UCHAR addr_4[ADDRLEN]; *//* only present for AP to AP (TO DS and FROM DS */
+/*  UCHAR addr_4[ADDRLEN]; *//* only present for AP to AP (TO DS and FROM DS */
 };
 /****** IEEE 802.11 frame element structures *********************************/
 struct essid_element
@@ -100,7 +100,7 @@ struct tim_element
   UCHAR id;
   UCHAR length;
   UCHAR dtim_count;
-  UCHAR dtim_period;
+  UCHAR dtim_period;    
   UCHAR bitmap_control;
   UCHAR tim[C_TIM_BITMAP_LENGTH];
 };
@@ -120,25 +120,25 @@ struct japan_call_sign_element
 /* .elements is a large lump of max size because elements are variable size  */
 struct infra_beacon
 {
-  UCHAR timestamp[8];
-  UCHAR beacon_intvl[2];
-  UCHAR capability[2];
-  UCHAR elements[sizeof (struct essid_element)
-                 + sizeof (struct rates_element)
-                 + sizeof (struct freq_hop_element)
-                 + sizeof (struct japan_call_sign_element)
-                 + sizeof (struct tim_element)];
+    UCHAR timestamp[8];
+    UCHAR beacon_intvl[2];
+    UCHAR capability[2];
+    UCHAR elements[sizeof(struct essid_element) 
+                  + sizeof(struct rates_element)
+                  + sizeof(struct freq_hop_element) 
+                  + sizeof(struct japan_call_sign_element)
+                  + sizeof(struct tim_element)];
 };
 struct adhoc_beacon
 {
-  UCHAR timestamp[8];
-  UCHAR beacon_intvl[2];
-  UCHAR capability[2];
-  UCHAR elements[sizeof (struct essid_element)
-                 + sizeof (struct rates_element)
-                 + sizeof (struct freq_hop_element)
-                 + sizeof (struct japan_call_sign_element)
-                 + sizeof (struct ibss_element)];
+    UCHAR timestamp[8];
+    UCHAR beacon_intvl[2];
+    UCHAR capability[2];
+    UCHAR elements[sizeof(struct essid_element) 
+                  + sizeof(struct rates_element)
+                  + sizeof(struct freq_hop_element) 
+                  + sizeof(struct japan_call_sign_element)
+                  + sizeof(struct ibss_element)];
 };
 /*****************************************************************************/
 /*****************************************************************************/
@@ -177,8 +177,8 @@ struct adhoc_beacon
 #define JAPAN_TEST            9
 
 /* Hop pattern lengths */
-#define USA_HOP_MOD          79
-#define EUROPE_HOP_MOD       79
+#define USA_HOP_MOD          79 
+#define EUROPE_HOP_MOD       79 
 #define JAPAN_HOP_MOD        23
 #define KOREA_HOP_MOD        23
 #define SPAIN_HOP_MOD        27
@@ -345,8 +345,8 @@ struct adhoc_beacon
 /***********************************************************************/
 /* Parameter passing structure for update/report parameter CCS's */
 struct object_id {
-  void     *     object_addr;
-  unsigned char object_length;
+    void          *object_addr;
+    unsigned char object_length;
 };
 
 #define OBJID_network_type            0
@@ -401,311 +401,311 @@ struct object_id {
  *    Located at Shared RAM offset 0
  */
 struct scb {
-  UCHAR ccs_index;
-  UCHAR rcs_index;
+    UCHAR ccs_index;
+    UCHAR rcs_index;
 };
 
 /****** Status area at Shared RAM offset 0x0100 ******************************/
 struct status {
-  UCHAR mrx_overflow_for_host;         /* 0=ECF may write, 1=host may write*/
-  UCHAR mrx_checksum_error_for_host;   /* 0=ECF may write, 1=host may write*/
-  UCHAR rx_hec_error_for_host;         /* 0=ECF may write, 1=host may write*/
-  UCHAR reserved1;
-  short mrx_overflow;                  /* ECF increments on rx overflow    */
-  short mrx_checksum_error;            /* ECF increments on rx CRC error   */
-  short rx_hec_error;                  /* ECF incs on mac header CRC error */
-  UCHAR rxnoise;                       /* Average RSL measurement          */
+    UCHAR mrx_overflow_for_host;         /* 0=ECF may write, 1=host may write*/
+    UCHAR mrx_checksum_error_for_host;   /* 0=ECF may write, 1=host may write*/
+    UCHAR rx_hec_error_for_host;         /* 0=ECF may write, 1=host may write*/
+    UCHAR reserved1;
+    short mrx_overflow;                  /* ECF increments on rx overflow    */
+    short mrx_checksum_error;            /* ECF increments on rx CRC error   */
+    short rx_hec_error;                  /* ECF incs on mac header CRC error */
+    UCHAR rxnoise;                       /* Average RSL measurement          */
 };
 
 /****** Host-to-ECF Data Area at Shared RAM offset 0x200 *********************/
 struct host_to_ecf_area {
-
+    
 };
 
 /****** ECF-to-Host Data Area at Shared RAM offset 0x0300 ********************/
 struct startup_res_518 {
-  UCHAR startup_word;
-  UCHAR station_addr[ADDRLEN];
-  UCHAR calc_prog_chksum;
-  UCHAR calc_cis_chksum;
-  UCHAR ecf_spare[7];
-  UCHAR japan_call_sign[12];
+    UCHAR startup_word;
+    UCHAR station_addr[ADDRLEN];
+    UCHAR calc_prog_chksum;
+    UCHAR calc_cis_chksum;
+    UCHAR ecf_spare[7];
+    UCHAR japan_call_sign[12];
 };
 
 struct startup_res_6 {
-  UCHAR startup_word;
-  UCHAR station_addr[ADDRLEN];
-  UCHAR reserved;
-  UCHAR supp_rates[8];
-  UCHAR japan_call_sign[12];
-  UCHAR calc_prog_chksum;
-  UCHAR calc_cis_chksum;
-  UCHAR firmware_version[3];
-  UCHAR asic_version;
-  UCHAR tib_length;
+    UCHAR startup_word;
+    UCHAR station_addr[ADDRLEN];
+    UCHAR reserved;
+    UCHAR supp_rates[8];
+    UCHAR japan_call_sign[12];
+    UCHAR calc_prog_chksum;
+    UCHAR calc_cis_chksum;
+    UCHAR firmware_version[3];
+    UCHAR asic_version;
+    UCHAR tib_length;
 };
 
 struct start_join_net_params {
-  UCHAR net_type;
-  UCHAR ssid[ESSID_SIZE];
-  UCHAR reserved;
-  UCHAR privacy_can_join;
+    UCHAR net_type;
+    UCHAR ssid[ESSID_SIZE];
+    UCHAR reserved;
+    UCHAR privacy_can_join;
 };
 
 /****** Command Control Structure area at Shared ram offset 0x0400 ***********/
 /* Structures for command specific parameters (ccs.var) */
 struct update_param_cmd {
-  UCHAR object_id;
-  UCHAR number_objects;
-  UCHAR failure_cause;
+    UCHAR object_id;
+    UCHAR number_objects;
+    UCHAR failure_cause;
 };
 struct report_param_cmd {
-  UCHAR object_id;
-  UCHAR number_objects;
-  UCHAR failure_cause;
-  UCHAR length;
+    UCHAR object_id;
+    UCHAR number_objects;
+    UCHAR failure_cause;
+    UCHAR length;
 };
 struct start_network_cmd {
-  UCHAR update_param;
-  UCHAR bssid[ADDRLEN];
-  UCHAR net_initiated;
-  UCHAR net_default_tx_rate;
-  UCHAR encryption;
+    UCHAR update_param;
+    UCHAR bssid[ADDRLEN];
+    UCHAR net_initiated;
+    UCHAR net_default_tx_rate;
+    UCHAR encryption;
 };
 struct join_network_cmd {
-  UCHAR update_param;
-  UCHAR bssid[ADDRLEN];
-  UCHAR net_initiated;
-  UCHAR net_default_tx_rate;
-  UCHAR encryption;
+    UCHAR update_param;
+    UCHAR bssid[ADDRLEN];
+    UCHAR net_initiated;
+    UCHAR net_default_tx_rate;
+    UCHAR encryption;
 };
 struct tx_requested_cmd {
-
-  UCHAR tx_data_ptr[2];
-  UCHAR tx_data_length[2];
-  UCHAR host_reserved[2];
-  UCHAR reserved[3];
-  UCHAR tx_rate;
-  UCHAR pow_sav_mode;
-  UCHAR retries;
-  UCHAR antenna;
+ 
+    UCHAR tx_data_ptr[2];
+    UCHAR tx_data_length[2];
+    UCHAR host_reserved[2];
+    UCHAR reserved[3];
+    UCHAR tx_rate;
+    UCHAR pow_sav_mode;
+    UCHAR retries;
+    UCHAR antenna;
 };
 struct tx_requested_cmd_4 {
-
-  UCHAR tx_data_ptr[2];
-  UCHAR tx_data_length[2];
-  UCHAR dest_addr[ADDRLEN];
-  UCHAR pow_sav_mode;
-  UCHAR retries;
-  UCHAR station_id;
+ 
+    UCHAR tx_data_ptr[2];
+    UCHAR tx_data_length[2];
+    UCHAR dest_addr[ADDRLEN];
+    UCHAR pow_sav_mode;
+    UCHAR retries;
+    UCHAR station_id;
 };
 struct memory_dump_cmd {
-  UCHAR memory_type;
-  UCHAR memory_ptr[2];
-  UCHAR length;
+    UCHAR memory_type;
+    UCHAR memory_ptr[2];
+    UCHAR length;
 };
 struct update_association_cmd {
-  UCHAR status;
-  UCHAR aid[2];
+    UCHAR status;
+    UCHAR aid[2];
 };
 struct start_timer_cmd {
-  UCHAR duration[2];
+    UCHAR duration[2];
 };
 
 struct ccs {
-  UCHAR buffer_status;                 /* 0 = buffer free, 1 = buffer busy */
-  /* 2 = command complete, 3 = failed */
-  UCHAR cmd;                           /* command to ECF                   */
-  UCHAR link;                          /* link to next CCS, FF=end of list */
-  /* command specific parameters      */
-  union {
-    char reserved[13];
-    struct update_param_cmd update_param;
-    struct report_param_cmd report_param;
-    UCHAR nummulticast;
-    UCHAR mode;
-    struct start_network_cmd start_network;
-    struct join_network_cmd join_network;
-    struct tx_requested_cmd tx_request;
-    struct memory_dump_cmd memory_dump;
-    struct update_association_cmd update_assoc;
-    struct start_timer_cmd start_timer;
-  } var;
+    UCHAR buffer_status;                 /* 0 = buffer free, 1 = buffer busy */
+                                         /* 2 = command complete, 3 = failed */
+    UCHAR cmd;                           /* command to ECF                   */
+    UCHAR link;                          /* link to next CCS, FF=end of list */
+    /* command specific parameters      */
+    union {
+        char reserved[13];
+        struct update_param_cmd update_param;
+        struct report_param_cmd report_param;
+        UCHAR nummulticast;
+        UCHAR mode;
+        struct start_network_cmd start_network;
+        struct join_network_cmd join_network;
+        struct tx_requested_cmd tx_request;
+        struct memory_dump_cmd memory_dump;
+        struct update_association_cmd update_assoc;
+        struct start_timer_cmd start_timer;
+    } var;
 };
 
 /*****************************************************************************/
 /* Transmit buffer structures */
 struct tib_structure {
-  UCHAR ccs_index;
-  UCHAR psm;
-  UCHAR pass_fail;
-  UCHAR retry_count;
-  UCHAR max_retries;
-  UCHAR frags_remaining;
-  UCHAR no_rb;
-  UCHAR rts_reqd;
-  UCHAR csma_tx_cntrl_2;
-  UCHAR sifs_tx_cntrl_2;
-  UCHAR tx_dma_addr_1[2];
-  UCHAR tx_dma_addr_2[2];
-  UCHAR var_dur_2mhz[2];
-  UCHAR var_dur_1mhz[2];
-  UCHAR max_dur_2mhz[2];
-  UCHAR max_dur_1mhz[2];
-  UCHAR hdr_len;
-  UCHAR max_frag_len[2];
-  UCHAR var_len[2];
-  UCHAR phy_hdr_4;
-  UCHAR mac_hdr_1;
-  UCHAR mac_hdr_2;
-  UCHAR sid[2];
+    UCHAR ccs_index;
+    UCHAR psm;
+    UCHAR pass_fail;
+    UCHAR retry_count;
+    UCHAR max_retries;
+    UCHAR frags_remaining;
+    UCHAR no_rb;
+    UCHAR rts_reqd;
+    UCHAR csma_tx_cntrl_2;
+    UCHAR sifs_tx_cntrl_2;
+    UCHAR tx_dma_addr_1[2];
+    UCHAR tx_dma_addr_2[2];
+    UCHAR var_dur_2mhz[2];
+    UCHAR var_dur_1mhz[2];
+    UCHAR max_dur_2mhz[2];
+    UCHAR max_dur_1mhz[2];
+    UCHAR hdr_len;
+    UCHAR max_frag_len[2];
+    UCHAR var_len[2];
+    UCHAR phy_hdr_4;
+    UCHAR mac_hdr_1;
+    UCHAR mac_hdr_2;
+    UCHAR sid[2];
 };
 
 struct phy_header {
-  UCHAR sfd[2];
-  UCHAR hdr_3;
-  UCHAR hdr_4;
+    UCHAR sfd[2];
+    UCHAR hdr_3;
+    UCHAR hdr_4;
 };
 struct ray_rx_msg {
-  struct mac_header mac;
-  UCHAR  var[0];
+    struct mac_header mac;
+    UCHAR  var[0];
 };
 
 struct tx_msg {
-  struct tib_structure tib;
-  struct phy_header phy;
-  struct mac_header mac;
-  UCHAR  var[1];
+    struct tib_structure tib;
+    struct phy_header phy;
+    struct mac_header mac;
+    UCHAR  var[1];
 };
 
 /****** ECF Receive Control Structure (RCS) Area at Shared RAM offset 0x0800  */
 /* Structures for command specific parameters (rcs.var) */
 struct rx_packet_cmd {
-  UCHAR rx_data_ptr[2];
-  UCHAR rx_data_length[2];
-  UCHAR rx_sig_lev;
-  UCHAR next_frag_rcs_index;
-  UCHAR totalpacketlength[2];
+    UCHAR rx_data_ptr[2];
+    UCHAR rx_data_length[2];
+    UCHAR rx_sig_lev;
+    UCHAR next_frag_rcs_index;
+    UCHAR totalpacketlength[2];
 };
 struct rejoin_net_cmplt_cmd {
-  UCHAR reserved;
-  UCHAR bssid[ADDRLEN];
+    UCHAR reserved;
+    UCHAR bssid[ADDRLEN];
 };
 struct japan_call_sign_rxd {
-  UCHAR rxd_call_sign[8];
-  UCHAR reserved[5];
+    UCHAR rxd_call_sign[8];
+    UCHAR reserved[5];
 };
 
 struct rcs {
-  UCHAR buffer_status;
-  UCHAR interrupt_id;
-  UCHAR link_field;
-  /* command specific parameters      */
-  union {
-    UCHAR reserved[13];
-    struct rx_packet_cmd rx_packet;
-    struct rejoin_net_cmplt_cmd rejoin_net_complete;
-    struct japan_call_sign_rxd japan_call_sign;
-  } var;
+    UCHAR buffer_status;
+    UCHAR interrupt_id;
+    UCHAR link_field;
+    /* command specific parameters      */
+    union {
+        UCHAR reserved[13]; 
+        struct rx_packet_cmd rx_packet;
+        struct rejoin_net_cmplt_cmd rejoin_net_complete;
+        struct japan_call_sign_rxd japan_call_sign;
+    } var;
 };
 
 /****** Startup parameter structures for both versions of firmware ***********/
 struct b4_startup_params {
-  UCHAR a_network_type;                /* C_ADHOC, C_INFRA                 */
-  UCHAR a_acting_as_ap_status;         /* C_TYPE_STA, C_TYPE_AP            */
-  UCHAR a_current_ess_id[ESSID_SIZE];  /* Null terminated unless 32 long   */
-  UCHAR a_scanning_mode;               /* passive 0, active 1              */
-  UCHAR a_power_mgt_state;             /* CAM 0,                           */
-  UCHAR a_mac_addr[ADDRLEN];           /*                                  */
-  UCHAR a_frag_threshold[2];           /* 512                              */
-  UCHAR a_hop_time[2];                 /* 16k * 2**n, n=0-4 in Kus         */
-  UCHAR a_beacon_period[2];            /* n * a_hop_time  in Kus           */
-  UCHAR a_dtim_period;                 /* in beacons                       */
-  UCHAR a_retry_max;                   /*                                  */
-  UCHAR a_ack_timeout;                 /*                                  */
-  UCHAR a_sifs;                        /*                                  */
-  UCHAR a_difs;                        /*                                  */
-  UCHAR a_pifs;                        /*                                  */
-  UCHAR a_rts_threshold[2];            /*                                  */
-  UCHAR a_scan_dwell_time[2];          /*                                  */
-  UCHAR a_max_scan_dwell_time[2];      /*                                  */
-  UCHAR a_assoc_resp_timeout_thresh;   /*                                  */
-  UCHAR a_adhoc_scan_cycle_max;        /*                                  */
-  UCHAR a_infra_scan_cycle_max;        /*                                  */
-  UCHAR a_infra_super_scan_cycle_max;  /*                                  */
-  UCHAR a_promiscuous_mode;            /*                                  */
-  UCHAR a_unique_word[2];              /*                                  */
-  UCHAR a_slot_time;                   /*                                  */
-  UCHAR a_roaming_low_snr_thresh;      /*                                  */
-  UCHAR a_low_snr_count_thresh;        /*                                  */
-  UCHAR a_infra_missed_bcn_thresh;     /*                                  */
-  UCHAR a_adhoc_missed_bcn_thresh;     /*                                  */
-  UCHAR a_curr_country_code;           /* C_USA                            */
-  UCHAR a_hop_pattern;                 /*                                  */
-  UCHAR a_hop_pattern_length;          /*                                  */
-  /* b4 - b5 differences start here */
-  UCHAR a_cw_max;                      /*                                  */
-  UCHAR a_cw_min;                      /*                                  */
-  UCHAR a_noise_filter_gain;           /*                                  */
-  UCHAR a_noise_limit_offset;          /*                                  */
-  UCHAR a_det_rssi_thresh_offset;      /*                                  */
-  UCHAR a_med_busy_thresh_offset;      /*                                  */
-  UCHAR a_det_sync_thresh;             /*                                  */
-  UCHAR a_test_mode;                   /*                                  */
-  UCHAR a_test_min_chan_num;           /*                                  */
-  UCHAR a_test_max_chan_num;           /*                                  */
-  UCHAR a_rx_tx_delay;                 /*                                  */
-  UCHAR a_current_bss_id[ADDRLEN];     /*                                  */
-  UCHAR a_hop_set;                     /*                                  */
+    UCHAR a_network_type;                /* C_ADHOC, C_INFRA                 */
+    UCHAR a_acting_as_ap_status;         /* C_TYPE_STA, C_TYPE_AP            */
+    UCHAR a_current_ess_id[ESSID_SIZE];  /* Null terminated unless 32 long   */
+    UCHAR a_scanning_mode;               /* passive 0, active 1              */
+    UCHAR a_power_mgt_state;             /* CAM 0,                           */
+    UCHAR a_mac_addr[ADDRLEN];           /*                                  */
+    UCHAR a_frag_threshold[2];           /* 512                              */
+    UCHAR a_hop_time[2];                 /* 16k * 2**n, n=0-4 in Kus         */
+    UCHAR a_beacon_period[2];            /* n * a_hop_time  in Kus           */
+    UCHAR a_dtim_period;                 /* in beacons                       */
+    UCHAR a_retry_max;                   /*                                  */
+    UCHAR a_ack_timeout;                 /*                                  */
+    UCHAR a_sifs;                        /*                                  */
+    UCHAR a_difs;                        /*                                  */
+    UCHAR a_pifs;                        /*                                  */
+    UCHAR a_rts_threshold[2];            /*                                  */
+    UCHAR a_scan_dwell_time[2];          /*                                  */
+    UCHAR a_max_scan_dwell_time[2];      /*                                  */
+    UCHAR a_assoc_resp_timeout_thresh;   /*                                  */
+    UCHAR a_adhoc_scan_cycle_max;        /*                                  */
+    UCHAR a_infra_scan_cycle_max;        /*                                  */
+    UCHAR a_infra_super_scan_cycle_max;  /*                                  */
+    UCHAR a_promiscuous_mode;            /*                                  */
+    UCHAR a_unique_word[2];              /*                                  */
+    UCHAR a_slot_time;                   /*                                  */
+    UCHAR a_roaming_low_snr_thresh;      /*                                  */
+    UCHAR a_low_snr_count_thresh;        /*                                  */
+    UCHAR a_infra_missed_bcn_thresh;     /*                                  */
+    UCHAR a_adhoc_missed_bcn_thresh;     /*                                  */
+    UCHAR a_curr_country_code;           /* C_USA                            */
+    UCHAR a_hop_pattern;                 /*                                  */
+    UCHAR a_hop_pattern_length;          /*                                  */
+/* b4 - b5 differences start here */
+    UCHAR a_cw_max;                      /*                                  */
+    UCHAR a_cw_min;                      /*                                  */
+    UCHAR a_noise_filter_gain;           /*                                  */
+    UCHAR a_noise_limit_offset;          /*                                  */
+    UCHAR a_det_rssi_thresh_offset;      /*                                  */
+    UCHAR a_med_busy_thresh_offset;      /*                                  */
+    UCHAR a_det_sync_thresh;             /*                                  */
+    UCHAR a_test_mode;                   /*                                  */
+    UCHAR a_test_min_chan_num;           /*                                  */
+    UCHAR a_test_max_chan_num;           /*                                  */
+    UCHAR a_rx_tx_delay;                 /*                                  */
+    UCHAR a_current_bss_id[ADDRLEN];     /*                                  */
+    UCHAR a_hop_set;                     /*                                  */
 };
 struct b5_startup_params {
-  UCHAR a_network_type;                /* C_ADHOC, C_INFRA                 */
-  UCHAR a_acting_as_ap_status;         /* C_TYPE_STA, C_TYPE_AP            */
-  UCHAR a_current_ess_id[ESSID_SIZE];  /* Null terminated unless 32 long   */
-  UCHAR a_scanning_mode;               /* passive 0, active 1              */
-  UCHAR a_power_mgt_state;             /* CAM 0,                           */
-  UCHAR a_mac_addr[ADDRLEN];           /*                                  */
-  UCHAR a_frag_threshold[2];           /* 512                              */
-  UCHAR a_hop_time[2];                 /* 16k * 2**n, n=0-4 in Kus         */
-  UCHAR a_beacon_period[2];            /* n * a_hop_time  in Kus           */
-  UCHAR a_dtim_period;                 /* in beacons                       */
-  UCHAR a_retry_max;                   /* 4                                */
-  UCHAR a_ack_timeout;                 /*                                  */
-  UCHAR a_sifs;                        /*                                  */
-  UCHAR a_difs;                        /*                                  */
-  UCHAR a_pifs;                        /*                                  */
-  UCHAR a_rts_threshold[2];            /*                                  */
-  UCHAR a_scan_dwell_time[2];          /*                                  */
-  UCHAR a_max_scan_dwell_time[2];      /*                                  */
-  UCHAR a_assoc_resp_timeout_thresh;   /*                                  */
-  UCHAR a_adhoc_scan_cycle_max;        /*                                  */
-  UCHAR a_infra_scan_cycle_max;        /*                                  */
-  UCHAR a_infra_super_scan_cycle_max;  /*                                  */
-  UCHAR a_promiscuous_mode;            /*                                  */
-  UCHAR a_unique_word[2];              /*                                  */
-  UCHAR a_slot_time;                   /*                                  */
-  UCHAR a_roaming_low_snr_thresh;      /*                                  */
-  UCHAR a_low_snr_count_thresh;        /*                                  */
-  UCHAR a_infra_missed_bcn_thresh;     /*                                  */
-  UCHAR a_adhoc_missed_bcn_thresh;     /*                                  */
-  UCHAR a_curr_country_code;           /* C_USA                            */
-  UCHAR a_hop_pattern;                 /*                                  */
-  UCHAR a_hop_pattern_length;          /*                                  */
-  /* b4 - b5 differences start here */
-  UCHAR a_cw_max[2];                   /*                                  */
-  UCHAR a_cw_min[2];                   /*                                  */
-  UCHAR a_noise_filter_gain;           /*                                  */
-  UCHAR a_noise_limit_offset;          /*                                  */
-  UCHAR a_det_rssi_thresh_offset;      /*                                  */
-  UCHAR a_med_busy_thresh_offset;      /*                                  */
-  UCHAR a_det_sync_thresh;             /*                                  */
-  UCHAR a_test_mode;                   /*                                  */
-  UCHAR a_test_min_chan_num;           /*                                  */
-  UCHAR a_test_max_chan_num;           /*                                  */
-  UCHAR a_allow_bcast_SSID_probe_rsp;
-  UCHAR a_privacy_must_start;
-  UCHAR a_privacy_can_join;
-  UCHAR a_basic_rate_set[8];
+    UCHAR a_network_type;                /* C_ADHOC, C_INFRA                 */
+    UCHAR a_acting_as_ap_status;         /* C_TYPE_STA, C_TYPE_AP            */
+    UCHAR a_current_ess_id[ESSID_SIZE];  /* Null terminated unless 32 long   */
+    UCHAR a_scanning_mode;               /* passive 0, active 1              */
+    UCHAR a_power_mgt_state;             /* CAM 0,                           */
+    UCHAR a_mac_addr[ADDRLEN];           /*                                  */
+    UCHAR a_frag_threshold[2];           /* 512                              */
+    UCHAR a_hop_time[2];                 /* 16k * 2**n, n=0-4 in Kus         */
+    UCHAR a_beacon_period[2];            /* n * a_hop_time  in Kus           */
+    UCHAR a_dtim_period;                 /* in beacons                       */
+    UCHAR a_retry_max;                   /* 4                                */
+    UCHAR a_ack_timeout;                 /*                                  */
+    UCHAR a_sifs;                        /*                                  */
+    UCHAR a_difs;                        /*                                  */
+    UCHAR a_pifs;                        /*                                  */
+    UCHAR a_rts_threshold[2];            /*                                  */
+    UCHAR a_scan_dwell_time[2];          /*                                  */
+    UCHAR a_max_scan_dwell_time[2];      /*                                  */
+    UCHAR a_assoc_resp_timeout_thresh;   /*                                  */
+    UCHAR a_adhoc_scan_cycle_max;        /*                                  */
+    UCHAR a_infra_scan_cycle_max;        /*                                  */
+    UCHAR a_infra_super_scan_cycle_max;  /*                                  */
+    UCHAR a_promiscuous_mode;            /*                                  */
+    UCHAR a_unique_word[2];              /*                                  */
+    UCHAR a_slot_time;                   /*                                  */
+    UCHAR a_roaming_low_snr_thresh;      /*                                  */
+    UCHAR a_low_snr_count_thresh;        /*                                  */
+    UCHAR a_infra_missed_bcn_thresh;     /*                                  */
+    UCHAR a_adhoc_missed_bcn_thresh;     /*                                  */
+    UCHAR a_curr_country_code;           /* C_USA                            */
+    UCHAR a_hop_pattern;                 /*                                  */
+    UCHAR a_hop_pattern_length;          /*                                  */
+/* b4 - b5 differences start here */
+    UCHAR a_cw_max[2];                   /*                                  */
+    UCHAR a_cw_min[2];                   /*                                  */
+    UCHAR a_noise_filter_gain;           /*                                  */
+    UCHAR a_noise_limit_offset;          /*                                  */
+    UCHAR a_det_rssi_thresh_offset;      /*                                  */
+    UCHAR a_med_busy_thresh_offset;      /*                                  */
+    UCHAR a_det_sync_thresh;             /*                                  */
+    UCHAR a_test_mode;                   /*                                  */
+    UCHAR a_test_min_chan_num;           /*                                  */
+    UCHAR a_test_max_chan_num;           /*                                  */
+    UCHAR a_allow_bcast_SSID_probe_rsp;
+    UCHAR a_privacy_must_start;
+    UCHAR a_privacy_can_join;
+    UCHAR a_basic_rate_set[8];
 };
 
 /*****************************************************************************/

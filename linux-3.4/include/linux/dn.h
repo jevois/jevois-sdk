@@ -5,12 +5,12 @@
 
 /*
 
-  DECnet Data Structures and Constants
+	DECnet Data Structures and Constants
 
 */
 
-/*
- * DNPROTO_NSP can't be the same as SOL_SOCKET,
+/* 
+ * DNPROTO_NSP can't be the same as SOL_SOCKET, 
  * so increment each by one (compared to ULTRIX)
  */
 #define DNPROTO_NSP     2                       /* NSP protocol number       */
@@ -21,16 +21,16 @@
 #define DNPROTO_NSPT    7                       /* NSP trace protocol number */
 
 
-#define DN_ADDL   2
-#define DN_MAXADDL  2 /* ULTRIX headers have 20 here, but pathworks has 2 */
-#define DN_MAXOPTL  16
-#define DN_MAXOBJL  16
-#define DN_MAXACCL  40
-#define DN_MAXALIASL  128
-#define DN_MAXNODEL 256
-#define DNBUFSIZE 65023
+#define DN_ADDL		2
+#define DN_MAXADDL	2 /* ULTRIX headers have 20 here, but pathworks has 2 */
+#define DN_MAXOPTL	16
+#define DN_MAXOBJL	16
+#define DN_MAXACCL	40
+#define DN_MAXALIASL	128
+#define DN_MAXNODEL	256
+#define DNBUFSIZE	65023
 
-/*
+/* 
  * SET/GET Socket options  - must match the DSO_ numbers below
  */
 #define SO_CONDATA      1
@@ -48,17 +48,17 @@
 #define DSO_STREAM      8        /* Set socket type to stream           */
 #define DSO_SEQPACKET   9        /* Set socket type to sequenced packet */
 #define DSO_MAXWINDOW   11       /* Maximum window size allowed         */
-#define DSO_NODELAY 12       /* Turn off nagle                      */
+#define DSO_NODELAY	12       /* Turn off nagle                      */
 #define DSO_CORK        13       /* Wait for more data!                 */
-#define DSO_SERVICES  14       /* NSP Services field                  */
-#define DSO_INFO  15       /* NSP Info field                      */
+#define DSO_SERVICES	14       /* NSP Services field                  */
+#define DSO_INFO	15       /* NSP Info field                      */
 #define DSO_MAX         15       /* Maximum option number               */
 
 
 /* LINK States */
-#define LL_INACTIVE 0
-#define LL_CONNECTING 1
-#define LL_RUNNING  2
+#define LL_INACTIVE	0
+#define LL_CONNECTING	1
+#define LL_RUNNING	2
 #define LL_DISCONNECTING 3
 
 #define ACC_IMMED 0
@@ -72,17 +72,17 @@
 
 
 struct dn_naddr {
-  __le16    a_len;
-  __u8 a_addr[DN_MAXADDL]; /* Two bytes little endian */
+	__le16		a_len;
+	__u8 a_addr[DN_MAXADDL]; /* Two bytes little endian */
 };
 
 struct sockaddr_dn {
-  __u16   sdn_family;
-  __u8    sdn_flags;
-  __u8    sdn_objnum;
-  __le16    sdn_objnamel;
-  __u8    sdn_objname[DN_MAXOBJL];
-  struct   dn_naddr sdn_add;
+	__u16		sdn_family;
+	__u8		sdn_flags;
+	__u8		sdn_objnum;
+	__le16		sdn_objnamel;
+	__u8		sdn_objname[DN_MAXOBJL];
+	struct   dn_naddr	sdn_add;
 };
 #define sdn_nodeaddrl   sdn_add.a_len   /* Node address length  */
 #define sdn_nodeaddr    sdn_add.a_addr  /* Node address         */
@@ -93,37 +93,37 @@ struct sockaddr_dn {
  * DECnet set/get DSO_CONDATA, DSO_DISDATA (optional data) structure
  */
 struct optdata_dn {
-  __le16  opt_status;     /* Extended status return */
+        __le16  opt_status;     /* Extended status return */
 #define opt_sts opt_status
-  __le16  opt_optl;       /* Length of user data    */
-  __u8   opt_data[16];   /* User data              */
+        __le16  opt_optl;       /* Length of user data    */
+        __u8   opt_data[16];   /* User data              */
 };
 
 struct accessdata_dn {
-  __u8    acc_accl;
-  __u8    acc_acc[DN_MAXACCL];
-  __u8    acc_passl;
-  __u8    acc_pass[DN_MAXACCL];
-  __u8    acc_userl;
-  __u8    acc_user[DN_MAXACCL];
+	__u8		acc_accl;
+	__u8		acc_acc[DN_MAXACCL];
+	__u8 		acc_passl;
+	__u8		acc_pass[DN_MAXACCL];
+	__u8 		acc_userl;
+	__u8		acc_user[DN_MAXACCL];
 };
 
 /*
  * DECnet logical link information structure
  */
 struct linkinfo_dn {
-  __u16  idn_segsize;    /* Segment size for link */
-  __u8   idn_linkstate;  /* Logical link state    */
+        __u16  idn_segsize;    /* Segment size for link */
+        __u8   idn_linkstate;  /* Logical link state    */
 };
 
 /*
  * Ethernet address format (for DECnet)
  */
 union etheraddress {
-  __u8 dne_addr[6];             /* Full ethernet address */
+        __u8 dne_addr[6];             /* Full ethernet address */
   struct {
-    __u8 dne_hiord[4];    /* DECnet HIORD prefix   */
-    __u8 dne_nodeaddr[2]; /* DECnet node address   */
+                __u8 dne_hiord[4];    /* DECnet HIORD prefix   */
+                __u8 dne_nodeaddr[2]; /* DECnet node address   */
   } dne_remote;
 };
 
@@ -132,8 +132,8 @@ union etheraddress {
  * DECnet physical socket address format
  */
 struct dn_addr {
-  __le16 dna_family;      /* AF_DECnet               */
-  union etheraddress dna_netaddr; /* DECnet ethernet address */
+        __le16 dna_family;      /* AF_DECnet               */
+        union etheraddress dna_netaddr; /* DECnet ethernet address */
 };
 
 #define DECNET_IOCTL_BASE 0x89 /* PROTOPRIVATE range */

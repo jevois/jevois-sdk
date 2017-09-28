@@ -11,10 +11,10 @@
 #define QUEUE_H
 
 typedef struct {
-  struct list_head head;
-  struct list_head free;
-  spinlock_t queue_lock;
-  void * alloc;     /* start of allocated mem */
+	struct list_head head;
+	struct list_head free;
+	spinlock_t queue_lock;
+	void *alloc;			/* start of allocated mem */
 } Queue_t;
 
 /*
@@ -22,14 +22,14 @@ typedef struct {
  * Purpose : initialise a queue
  * Params  : queue - queue to initialise
  */
-extern int queue_initialise (Queue_t * queue);
+extern int queue_initialise (Queue_t *queue);
 
 /*
  * Function: void queue_free (Queue_t *queue)
  * Purpose : free a queue
  * Params  : queue - queue to free
  */
-extern void queue_free (Queue_t * queue);
+extern void queue_free (Queue_t *queue);
 
 /*
  * Function: struct scsi_cmnd *queue_remove (queue)
@@ -37,43 +37,43 @@ extern void queue_free (Queue_t * queue);
  * Params  : queue   - queue to remove command from
  * Returns : struct scsi_cmnd if successful (and a reference), or NULL if no command available
  */
-extern struct scsi_cmnd * queue_remove (Queue_t * queue);
+extern struct scsi_cmnd *queue_remove (Queue_t *queue);
 
 /*
  * Function: struct scsi_cmnd *queue_remove_exclude_ref (queue, exclude)
  * Purpose : remove a SCSI command from a queue
  * Params  : queue   - queue to remove command from
- *       exclude - array of busy LUNs
+ *	     exclude - array of busy LUNs
  * Returns : struct scsi_cmnd if successful (and a reference), or NULL if no command available
  */
-extern struct scsi_cmnd * queue_remove_exclude (Queue_t * queue,
-    unsigned long * exclude);
+extern struct scsi_cmnd *queue_remove_exclude(Queue_t *queue,
+					      unsigned long *exclude);
 
 #define queue_add_cmd_ordered(queue,SCpnt) \
-  __queue_add(queue,SCpnt,(SCpnt)->cmnd[0] == REQUEST_SENSE)
+	__queue_add(queue,SCpnt,(SCpnt)->cmnd[0] == REQUEST_SENSE)
 #define queue_add_cmd_tail(queue,SCpnt) \
-  __queue_add(queue,SCpnt,0)
+	__queue_add(queue,SCpnt,0)
 /*
  * Function: int __queue_add(Queue_t *queue, struct scsi_cmnd *SCpnt, int head)
  * Purpose : Add a new command onto a queue
  * Params  : queue - destination queue
- *       SCpnt - command to add
- *       head  - add command to head of queue
+ *	     SCpnt - command to add
+ *	     head  - add command to head of queue
  * Returns : 0 on error, !0 on success
  */
-extern int __queue_add (Queue_t * queue, struct scsi_cmnd * SCpnt, int head);
+extern int __queue_add(Queue_t *queue, struct scsi_cmnd *SCpnt, int head);
 
 /*
  * Function: struct scsi_cmnd *queue_remove_tgtluntag (queue, target, lun, tag)
  * Purpose : remove a SCSI command from the queue for a specified target/lun/tag
  * Params  : queue  - queue to remove command from
- *       target - target that we want
- *       lun    - lun on device
- *       tag    - tag on device
+ *	     target - target that we want
+ *	     lun    - lun on device
+ *	     tag    - tag on device
  * Returns : struct scsi_cmnd if successful, or NULL if no command satisfies requirements
  */
-extern struct scsi_cmnd * queue_remove_tgtluntag (Queue_t * queue, int target,
-    int lun, int tag);
+extern struct scsi_cmnd *queue_remove_tgtluntag(Queue_t *queue, int target,
+						int lun, int tag);
 
 /*
  * Function: queue_remove_all_target(queue, target)
@@ -82,26 +82,26 @@ extern struct scsi_cmnd * queue_remove_tgtluntag (Queue_t * queue, int target,
  *           target - target device id
  * Returns : nothing
  */
-extern void queue_remove_all_target (Queue_t * queue, int target);
+extern void queue_remove_all_target(Queue_t *queue, int target);
 
 /*
  * Function: int queue_probetgtlun (queue, target, lun)
  * Purpose : check to see if we have a command in the queue for the specified
- *       target/lun.
+ *	     target/lun.
  * Params  : queue  - queue to look in
- *       target - target we want to probe
- *       lun    - lun on target
+ *	     target - target we want to probe
+ *	     lun    - lun on target
  * Returns : 0 if not found, != 0 if found
  */
-extern int queue_probetgtlun (Queue_t * queue, int target, int lun);
+extern int queue_probetgtlun (Queue_t *queue, int target, int lun);
 
 /*
  * Function: int queue_remove_cmd (Queue_t *queue, struct scsi_cmnd *SCpnt)
  * Purpose : remove a specific command from the queues
  * Params  : queue - queue to look in
- *       SCpnt - command to find
+ *	     SCpnt - command to find
  * Returns : 0 if not found
  */
-int queue_remove_cmd (Queue_t * queue, struct scsi_cmnd * SCpnt);
+int queue_remove_cmd(Queue_t *queue, struct scsi_cmnd *SCpnt);
 
 #endif /* QUEUE_H */

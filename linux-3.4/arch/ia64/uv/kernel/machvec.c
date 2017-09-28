@@ -6,6 +6,6 @@
  * Copyright (c) 2008 Silicon Graphics, Inc.  All Rights Reserved.
  */
 
-#define MACHVEC_PLATFORM_NAME uv
-#define MACHVEC_PLATFORM_HEADER <asm/machvec_uv.h>
+#define MACHVEC_PLATFORM_NAME	uv
+#define MACHVEC_PLATFORM_HEADER	<asm/machvec_uv.h>
 #include <asm/machvec_init.h>

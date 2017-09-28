@@ -212,130 +212,130 @@
  */
 
 /* COM2 */
-#define SOFT_SLEEP_MODE 0x10  /* Soft sleep mode */
-/* Output drive capability */
-#define OCAP_1x         0x00  /* 1x */
-#define OCAP_2x         0x01  /* 2x */
-#define OCAP_3x         0x02  /* 3x */
-#define OCAP_4x         0x03  /* 4x */
+#define SOFT_SLEEP_MODE 0x10	/* Soft sleep mode */
+				/* Output drive capability */
+#define OCAP_1x         0x00	/* 1x */
+#define OCAP_2x         0x01	/* 2x */
+#define OCAP_3x         0x02	/* 3x */
+#define OCAP_4x         0x03	/* 4x */
 
 /* COM3 */
 #define SWAP_MASK       (SWAP_RGB | SWAP_YUV | SWAP_ML)
 #define IMG_MASK        (VFLIP_IMG | HFLIP_IMG)
 
-#define VFLIP_IMG       0x80  /* Vertical flip image ON/OFF selection */
-#define HFLIP_IMG       0x40  /* Horizontal mirror image ON/OFF selection */
-#define SWAP_RGB        0x20  /* Swap B/R  output sequence in RGB mode */
-#define SWAP_YUV        0x10  /* Swap Y/UV output sequence in YUV mode */
-#define SWAP_ML         0x08  /* Swap output MSB/LSB */
-/* Tri-state option for output clock */
-#define NOTRI_CLOCK     0x04  /*   0: Tri-state    at this period */
-/*   1: No tri-state at this period */
-/* Tri-state option for output data */
-#define NOTRI_DATA      0x02  /*   0: Tri-state    at this period */
-/*   1: No tri-state at this period */
-#define SCOLOR_TEST     0x01  /* Sensor color bar test pattern */
+#define VFLIP_IMG       0x80	/* Vertical flip image ON/OFF selection */
+#define HFLIP_IMG       0x40	/* Horizontal mirror image ON/OFF selection */
+#define SWAP_RGB        0x20	/* Swap B/R  output sequence in RGB mode */
+#define SWAP_YUV        0x10	/* Swap Y/UV output sequence in YUV mode */
+#define SWAP_ML         0x08	/* Swap output MSB/LSB */
+				/* Tri-state option for output clock */
+#define NOTRI_CLOCK     0x04	/*   0: Tri-state    at this period */
+				/*   1: No tri-state at this period */
+				/* Tri-state option for output data */
+#define NOTRI_DATA      0x02	/*   0: Tri-state    at this period */
+				/*   1: No tri-state at this period */
+#define SCOLOR_TEST     0x01	/* Sensor color bar test pattern */
 
 /* COM4 */
-/* PLL frequency control */
-#define PLL_BYPASS      0x00  /*  00: Bypass PLL */
-#define PLL_4x          0x40  /*  01: PLL 4x */
-#define PLL_6x          0x80  /*  10: PLL 6x */
-#define PLL_8x          0xc0  /*  11: PLL 8x */
-/* AEC evaluate window */
-#define AEC_FULL        0x00  /*  00: Full window */
-#define AEC_1p2         0x10  /*  01: 1/2  window */
-#define AEC_1p4         0x20  /*  10: 1/4  window */
-#define AEC_2p3         0x30  /*  11: Low 2/3 window */
+				/* PLL frequency control */
+#define PLL_BYPASS      0x00	/*  00: Bypass PLL */
+#define PLL_4x          0x40	/*  01: PLL 4x */
+#define PLL_6x          0x80	/*  10: PLL 6x */
+#define PLL_8x          0xc0	/*  11: PLL 8x */
+				/* AEC evaluate window */
+#define AEC_FULL        0x00	/*  00: Full window */
+#define AEC_1p2         0x10	/*  01: 1/2  window */
+#define AEC_1p4         0x20	/*  10: 1/4  window */
+#define AEC_2p3         0x30	/*  11: Low 2/3 window */
 
 /* COM5 */
-#define AFR_ON_OFF      0x80  /* Auto frame rate control ON/OFF selection */
-#define AFR_SPPED       0x40  /* Auto frame rate control speed selection */
-/* Auto frame rate max rate control */
-#define AFR_NO_RATE     0x00  /*     No  reduction of frame rate */
-#define AFR_1p2         0x10  /*     Max reduction to 1/2 frame rate */
-#define AFR_1p4         0x20  /*     Max reduction to 1/4 frame rate */
-#define AFR_1p8         0x30  /* Max reduction to 1/8 frame rate */
-/* Auto frame rate active point control */
-#define AF_2x           0x00  /*     Add frame when AGC reaches  2x gain */
-#define AF_4x           0x04  /*     Add frame when AGC reaches  4x gain */
-#define AF_8x           0x08  /*     Add frame when AGC reaches  8x gain */
-#define AF_16x          0x0c  /* Add frame when AGC reaches 16x gain */
-/* AEC max step control */
-#define AEC_NO_LIMIT    0x01  /*   0 : AEC incease step has limit */
-/*   1 : No limit to AEC increase step */
+#define AFR_ON_OFF      0x80	/* Auto frame rate control ON/OFF selection */
+#define AFR_SPPED       0x40	/* Auto frame rate control speed selection */
+				/* Auto frame rate max rate control */
+#define AFR_NO_RATE     0x00	/*     No  reduction of frame rate */
+#define AFR_1p2         0x10	/*     Max reduction to 1/2 frame rate */
+#define AFR_1p4         0x20	/*     Max reduction to 1/4 frame rate */
+#define AFR_1p8         0x30	/* Max reduction to 1/8 frame rate */
+				/* Auto frame rate active point control */
+#define AF_2x           0x00	/*     Add frame when AGC reaches  2x gain */
+#define AF_4x           0x04	/*     Add frame when AGC reaches  4x gain */
+#define AF_8x           0x08	/*     Add frame when AGC reaches  8x gain */
+#define AF_16x          0x0c	/* Add frame when AGC reaches 16x gain */
+				/* AEC max step control */
+#define AEC_NO_LIMIT    0x01	/*   0 : AEC incease step has limit */
+				/*   1 : No limit to AEC increase step */
 
 /* COM7 */
-/* SCCB Register Reset */
-#define SCCB_RESET      0x80  /*   0 : No change */
-/*   1 : Resets all registers to default */
-/* Resolution selection */
-#define SLCT_MASK       0x40  /*   Mask of VGA or QVGA */
-#define SLCT_VGA        0x00  /*   0 : VGA */
-#define SLCT_QVGA       0x40  /*   1 : QVGA */
-#define ITU656_ON_OFF   0x20  /* ITU656 protocol ON/OFF selection */
-/* RGB output format control */
-#define FMT_MASK        0x0c  /*      Mask of color format */
-#define FMT_GBR422      0x00  /*      00 : GBR 4:2:2 */
-#define FMT_RGB565      0x04  /*      01 : RGB 565 */
-#define FMT_RGB555      0x08  /*      10 : RGB 555 */
-#define FMT_RGB444      0x0c  /* 11 : RGB 444 */
-/* Output format control */
+				/* SCCB Register Reset */
+#define SCCB_RESET      0x80	/*   0 : No change */
+				/*   1 : Resets all registers to default */
+				/* Resolution selection */
+#define SLCT_MASK       0x40	/*   Mask of VGA or QVGA */
+#define SLCT_VGA        0x00	/*   0 : VGA */
+#define SLCT_QVGA       0x40	/*   1 : QVGA */
+#define ITU656_ON_OFF   0x20	/* ITU656 protocol ON/OFF selection */
+				/* RGB output format control */
+#define FMT_MASK        0x0c	/*      Mask of color format */
+#define FMT_GBR422      0x00	/*      00 : GBR 4:2:2 */
+#define FMT_RGB565      0x04	/*      01 : RGB 565 */
+#define FMT_RGB555      0x08	/*      10 : RGB 555 */
+#define FMT_RGB444      0x0c	/* 11 : RGB 444 */
+				/* Output format control */
 #define OFMT_MASK       0x03    /*      Mask of output format */
-#define OFMT_YUV        0x00  /*      00 : YUV */
-#define OFMT_P_BRAW     0x01  /*      01 : Processed Bayer RAW */
-#define OFMT_RGB        0x02  /*      10 : RGB */
-#define OFMT_BRAW       0x03  /* 11 : Bayer RAW */
+#define OFMT_YUV        0x00	/*      00 : YUV */
+#define OFMT_P_BRAW     0x01	/*      01 : Processed Bayer RAW */
+#define OFMT_RGB        0x02	/*      10 : RGB */
+#define OFMT_BRAW       0x03	/* 11 : Bayer RAW */
 
 /* COM8 */
-#define FAST_ALGO       0x80  /* Enable fast AGC/AEC algorithm */
-/* AEC Setp size limit */
-#define UNLMT_STEP      0x40  /*   0 : Step size is limited */
-/*   1 : Unlimited step size */
-#define BNDF_ON_OFF     0x20  /* Banding filter ON/OFF */
-#define AEC_BND         0x10  /* Enable AEC below banding value */
-#define AEC_ON_OFF      0x08  /* Fine AEC ON/OFF control */
-#define AGC_ON          0x04  /* AGC Enable */
-#define AWB_ON          0x02  /* AWB Enable */
-#define AEC_ON          0x01  /* AEC Enable */
+#define FAST_ALGO       0x80	/* Enable fast AGC/AEC algorithm */
+				/* AEC Setp size limit */
+#define UNLMT_STEP      0x40	/*   0 : Step size is limited */
+				/*   1 : Unlimited step size */
+#define BNDF_ON_OFF     0x20	/* Banding filter ON/OFF */
+#define AEC_BND         0x10	/* Enable AEC below banding value */
+#define AEC_ON_OFF      0x08	/* Fine AEC ON/OFF control */
+#define AGC_ON          0x04	/* AGC Enable */
+#define AWB_ON          0x02	/* AWB Enable */
+#define AEC_ON          0x01	/* AEC Enable */
 
 /* COM9 */
-#define BASE_AECAGC     0x80  /* Histogram or average based AEC/AGC */
-/* Automatic gain ceiling - maximum AGC value */
-#define GAIN_2x         0x00  /*    000 :   2x */
-#define GAIN_4x         0x10  /*    001 :   4x */
-#define GAIN_8x         0x20  /*    010 :   8x */
-#define GAIN_16x        0x30  /*    011 :  16x */
-#define GAIN_32x        0x40  /*    100 :  32x */
-#define GAIN_64x        0x50  /* 101 :  64x */
-#define GAIN_128x       0x60  /* 110 : 128x */
-#define DROP_VSYNC      0x04  /* Drop VSYNC output of corrupt frame */
-#define DROP_HREF       0x02  /* Drop HREF  output of corrupt frame */
+#define BASE_AECAGC     0x80	/* Histogram or average based AEC/AGC */
+				/* Automatic gain ceiling - maximum AGC value */
+#define GAIN_2x         0x00	/*    000 :   2x */
+#define GAIN_4x         0x10	/*    001 :   4x */
+#define GAIN_8x         0x20	/*    010 :   8x */
+#define GAIN_16x        0x30	/*    011 :  16x */
+#define GAIN_32x        0x40	/*    100 :  32x */
+#define GAIN_64x        0x50	/* 101 :  64x */
+#define GAIN_128x       0x60	/* 110 : 128x */
+#define DROP_VSYNC      0x04	/* Drop VSYNC output of corrupt frame */
+#define DROP_HREF       0x02	/* Drop HREF  output of corrupt frame */
 
 /* COM11 */
-#define SGLF_ON_OFF     0x02  /* Single frame ON/OFF selection */
-#define SGLF_TRIG       0x01  /* Single frame transfer trigger */
+#define SGLF_ON_OFF     0x02	/* Single frame ON/OFF selection */
+#define SGLF_TRIG       0x01	/* Single frame transfer trigger */
 
 /* EXHCH */
-#define VSIZE_LSB       0x04  /* Vertical data output size LSB */
+#define VSIZE_LSB       0x04	/* Vertical data output size LSB */
 
 /* DSP_CTRL1 */
-#define FIFO_ON         0x80  /* FIFO enable/disable selection */
-#define UV_ON_OFF       0x40  /* UV adjust function ON/OFF selection */
-#define YUV444_2_422    0x20  /* YUV444 to 422 UV channel option selection */
-#define CLR_MTRX_ON_OFF 0x10  /* Color matrix ON/OFF selection */
-#define INTPLT_ON_OFF   0x08  /* Interpolation ON/OFF selection */
-#define GMM_ON_OFF      0x04  /* Gamma function ON/OFF selection */
-#define AUTO_BLK_ON_OFF 0x02  /* Black defect auto correction ON/OFF */
-#define AUTO_WHT_ON_OFF 0x01  /* White define auto correction ON/OFF */
+#define FIFO_ON         0x80	/* FIFO enable/disable selection */
+#define UV_ON_OFF       0x40	/* UV adjust function ON/OFF selection */
+#define YUV444_2_422    0x20	/* YUV444 to 422 UV channel option selection */
+#define CLR_MTRX_ON_OFF 0x10	/* Color matrix ON/OFF selection */
+#define INTPLT_ON_OFF   0x08	/* Interpolation ON/OFF selection */
+#define GMM_ON_OFF      0x04	/* Gamma function ON/OFF selection */
+#define AUTO_BLK_ON_OFF 0x02	/* Black defect auto correction ON/OFF */
+#define AUTO_WHT_ON_OFF 0x01	/* White define auto correction ON/OFF */
 
 /* DSP_CTRL3 */
-#define UV_MASK         0x80  /* UV output sequence option */
-#define UV_ON           0x80  /*   ON */
-#define UV_OFF          0x00  /*   OFF */
-#define CBAR_MASK       0x20  /* DSP Color bar mask */
-#define CBAR_ON         0x20  /*   ON */
-#define CBAR_OFF        0x00  /*   OFF */
+#define UV_MASK         0x80	/* UV output sequence option */
+#define UV_ON           0x80	/*   ON */
+#define UV_OFF          0x00	/*   OFF */
+#define CBAR_MASK       0x20	/* DSP Color bar mask */
+#define CBAR_ON         0x20	/*   ON */
+#define CBAR_OFF        0x00	/*   OFF */
 
 /* HSTART */
 #define HST_VGA         0x23
@@ -380,37 +380,37 @@
  * struct
  */
 struct regval_list {
-  unsigned char reg_num;
-  unsigned char value;
+	unsigned char reg_num;
+	unsigned char value;
 };
 
 struct ov772x_color_format {
-  enum v4l2_mbus_pixelcode code;
-  enum v4l2_colorspace colorspace;
-  u8 dsp3;
-  u8 com3;
-  u8 com7;
+	enum v4l2_mbus_pixelcode code;
+	enum v4l2_colorspace colorspace;
+	u8 dsp3;
+	u8 com3;
+	u8 com7;
 };
 
 struct ov772x_win_size {
-  char           *          name;
-  __u32                     width;
-  __u32                     height;
-  unsigned char             com7_bit;
-  const struct regval_list * regs;
+	char                     *name;
+	__u32                     width;
+	__u32                     height;
+	unsigned char             com7_bit;
+	const struct regval_list *regs;
 };
 
 struct ov772x_priv {
-  struct v4l2_subdev                subdev;
-  struct v4l2_ctrl_handler    hdl;
-  struct ov772x_camera_info    *    info;
-  const struct ov772x_color_format * cfmt;
-  const struct ov772x_win_size   *  win;
-  int                               model;
-  unsigned short                    flag_vflip: 1;
-  unsigned short                    flag_hflip: 1;
-  /* band_filter = COM8[5] ? 256 - BDBASE : 0 */
-  unsigned short                    band_filter;
+	struct v4l2_subdev                subdev;
+	struct v4l2_ctrl_handler	  hdl;
+	struct ov772x_camera_info        *info;
+	const struct ov772x_color_format *cfmt;
+	const struct ov772x_win_size     *win;
+	int                               model;
+	unsigned short                    flag_vflip:1;
+	unsigned short                    flag_hflip:1;
+	/* band_filter = COM8[5] ? 256 - BDBASE : 0 */
+	unsigned short                    band_filter;
 };
 
 #define ENDMARKER { 0xff, 0xff }
@@ -419,78 +419,78 @@ struct ov772x_priv {
  * register setting for window size
  */
 static const struct regval_list ov772x_qvga_regs[] = {
-  { HSTART,   HST_QVGA },
-  { HSIZE,    HSZ_QVGA },
-  { VSTART,   VST_QVGA },
-  { VSIZE,    VSZ_QVGA  },
-  { HOUTSIZE, HOSZ_QVGA },
-  { VOUTSIZE, VOSZ_QVGA },
-  ENDMARKER,
+	{ HSTART,   HST_QVGA },
+	{ HSIZE,    HSZ_QVGA },
+	{ VSTART,   VST_QVGA },
+	{ VSIZE,    VSZ_QVGA  },
+	{ HOUTSIZE, HOSZ_QVGA },
+	{ VOUTSIZE, VOSZ_QVGA },
+	ENDMARKER,
 };
 
 static const struct regval_list ov772x_vga_regs[] = {
-  { HSTART,   HST_VGA },
-  { HSIZE,    HSZ_VGA },
-  { VSTART,   VST_VGA },
-  { VSIZE,    VSZ_VGA },
-  { HOUTSIZE, HOSZ_VGA },
-  { VOUTSIZE, VOSZ_VGA },
-  ENDMARKER,
+	{ HSTART,   HST_VGA },
+	{ HSIZE,    HSZ_VGA },
+	{ VSTART,   VST_VGA },
+	{ VSIZE,    VSZ_VGA },
+	{ HOUTSIZE, HOSZ_VGA },
+	{ VOUTSIZE, VOSZ_VGA },
+	ENDMARKER,
 };
 
 /*
  * supported color format list
  */
 static const struct ov772x_color_format ov772x_cfmts[] = {
-  {
-    .code   = V4L2_MBUS_FMT_YUYV8_2X8,
-    .colorspace = V4L2_COLORSPACE_JPEG,
-    .dsp3   = 0x0,
-    .com3   = SWAP_YUV,
-    .com7   = OFMT_YUV,
-  },
-  {
-    .code   = V4L2_MBUS_FMT_YVYU8_2X8,
-    .colorspace = V4L2_COLORSPACE_JPEG,
-    .dsp3   = UV_ON,
-    .com3   = SWAP_YUV,
-    .com7   = OFMT_YUV,
-  },
-  {
-    .code   = V4L2_MBUS_FMT_UYVY8_2X8,
-    .colorspace = V4L2_COLORSPACE_JPEG,
-    .dsp3   = 0x0,
-    .com3   = 0x0,
-    .com7   = OFMT_YUV,
-  },
-  {
-    .code   = V4L2_MBUS_FMT_RGB555_2X8_PADHI_LE,
-    .colorspace = V4L2_COLORSPACE_SRGB,
-    .dsp3   = 0x0,
-    .com3   = SWAP_RGB,
-    .com7   = FMT_RGB555 | OFMT_RGB,
-  },
-  {
-    .code   = V4L2_MBUS_FMT_RGB555_2X8_PADHI_BE,
-    .colorspace = V4L2_COLORSPACE_SRGB,
-    .dsp3   = 0x0,
-    .com3   = 0x0,
-    .com7   = FMT_RGB555 | OFMT_RGB,
-  },
-  {
-    .code   = V4L2_MBUS_FMT_RGB565_2X8_LE,
-    .colorspace = V4L2_COLORSPACE_SRGB,
-    .dsp3   = 0x0,
-    .com3   = SWAP_RGB,
-    .com7   = FMT_RGB565 | OFMT_RGB,
-  },
-  {
-    .code   = V4L2_MBUS_FMT_RGB565_2X8_BE,
-    .colorspace = V4L2_COLORSPACE_SRGB,
-    .dsp3   = 0x0,
-    .com3   = 0x0,
-    .com7   = FMT_RGB565 | OFMT_RGB,
-  },
+	{
+		.code		= V4L2_MBUS_FMT_YUYV8_2X8,
+		.colorspace	= V4L2_COLORSPACE_JPEG,
+		.dsp3		= 0x0,
+		.com3		= SWAP_YUV,
+		.com7		= OFMT_YUV,
+	},
+	{
+		.code		= V4L2_MBUS_FMT_YVYU8_2X8,
+		.colorspace	= V4L2_COLORSPACE_JPEG,
+		.dsp3		= UV_ON,
+		.com3		= SWAP_YUV,
+		.com7		= OFMT_YUV,
+	},
+	{
+		.code		= V4L2_MBUS_FMT_UYVY8_2X8,
+		.colorspace	= V4L2_COLORSPACE_JPEG,
+		.dsp3		= 0x0,
+		.com3		= 0x0,
+		.com7		= OFMT_YUV,
+	},
+	{
+		.code		= V4L2_MBUS_FMT_RGB555_2X8_PADHI_LE,
+		.colorspace	= V4L2_COLORSPACE_SRGB,
+		.dsp3		= 0x0,
+		.com3		= SWAP_RGB,
+		.com7		= FMT_RGB555 | OFMT_RGB,
+	},
+	{
+		.code		= V4L2_MBUS_FMT_RGB555_2X8_PADHI_BE,
+		.colorspace	= V4L2_COLORSPACE_SRGB,
+		.dsp3		= 0x0,
+		.com3		= 0x0,
+		.com7		= FMT_RGB555 | OFMT_RGB,
+	},
+	{
+		.code		= V4L2_MBUS_FMT_RGB565_2X8_LE,
+		.colorspace	= V4L2_COLORSPACE_SRGB,
+		.dsp3		= 0x0,
+		.com3		= SWAP_RGB,
+		.com7		= FMT_RGB565 | OFMT_RGB,
+	},
+	{
+		.code		= V4L2_MBUS_FMT_RGB565_2X8_BE,
+		.colorspace	= V4L2_COLORSPACE_SRGB,
+		.dsp3		= 0x0,
+		.com3		= 0x0,
+		.com7		= FMT_RGB565 | OFMT_RGB,
+	},
 };
 
 
@@ -505,631 +505,626 @@ static const struct ov772x_color_format ov772x_cfmts[] = {
 #define MAX_HEIGHT  VGA_HEIGHT
 
 static const struct ov772x_win_size ov772x_win_vga = {
-  .name     = "VGA",
-  .width    = VGA_WIDTH,
-  .height   = VGA_HEIGHT,
-  .com7_bit = SLCT_VGA,
-  .regs     = ov772x_vga_regs,
+	.name     = "VGA",
+	.width    = VGA_WIDTH,
+	.height   = VGA_HEIGHT,
+	.com7_bit = SLCT_VGA,
+	.regs     = ov772x_vga_regs,
 };
 
 static const struct ov772x_win_size ov772x_win_qvga = {
-  .name     = "QVGA",
-  .width    = QVGA_WIDTH,
-  .height   = QVGA_HEIGHT,
-  .com7_bit = SLCT_QVGA,
-  .regs     = ov772x_qvga_regs,
+	.name     = "QVGA",
+	.width    = QVGA_WIDTH,
+	.height   = QVGA_HEIGHT,
+	.com7_bit = SLCT_QVGA,
+	.regs     = ov772x_qvga_regs,
 };
 
 /*
  * general function
  */
 
-static struct ov772x_priv * to_ov772x (const struct i2c_client * client)
+static struct ov772x_priv *to_ov772x(const struct i2c_client *client)
 {
-  return container_of (i2c_get_clientdata (client), struct ov772x_priv,
-                       subdev);
+	return container_of(i2c_get_clientdata(client), struct ov772x_priv,
+			    subdev);
 }
 
-static int ov772x_write_array (struct i2c_client    *    client,
-                               const struct regval_list * vals)
+static int ov772x_write_array(struct i2c_client        *client,
+			      const struct regval_list *vals)
 {
-  while (vals->reg_num != 0xff) {
-    int ret = i2c_smbus_write_byte_data (client,
-                                         vals->reg_num,
-                                         vals->value);
-    if (ret < 0)
-    { return ret; }
-    vals++;
-  }
-  return 0;
+	while (vals->reg_num != 0xff) {
+		int ret = i2c_smbus_write_byte_data(client,
+						    vals->reg_num,
+						    vals->value);
+		if (ret < 0)
+			return ret;
+		vals++;
+	}
+	return 0;
 }
 
-static int ov772x_mask_set (struct i2c_client * client,
-                            u8  command,
-                            u8  mask,
-                            u8  set)
+static int ov772x_mask_set(struct i2c_client *client,
+					  u8  command,
+					  u8  mask,
+					  u8  set)
 {
-  s32 val = i2c_smbus_read_byte_data (client, command);
-  if (val < 0)
-  { return val; }
-  
-  val &= ~mask;
-  val |= set & mask;
-  
-  return i2c_smbus_write_byte_data (client, command, val);
+	s32 val = i2c_smbus_read_byte_data(client, command);
+	if (val < 0)
+		return val;
+
+	val &= ~mask;
+	val |= set & mask;
+
+	return i2c_smbus_write_byte_data(client, command, val);
 }
 
-static int ov772x_reset (struct i2c_client * client)
+static int ov772x_reset(struct i2c_client *client)
 {
-  int ret = i2c_smbus_write_byte_data (client, COM7, SCCB_RESET);
-  msleep (1);
-  return ret;
+	int ret = i2c_smbus_write_byte_data(client, COM7, SCCB_RESET);
+	msleep(1);
+	return ret;
 }
 
 /*
  * soc_camera_ops function
  */
 
-static int ov772x_s_stream (struct v4l2_subdev * sd, int enable)
+static int ov772x_s_stream(struct v4l2_subdev *sd, int enable)
 {
-  struct i2c_client * client = v4l2_get_subdevdata (sd);
-  struct ov772x_priv * priv = container_of (sd, struct ov772x_priv, subdev);
-  
-  if (!enable) {
-    ov772x_mask_set (client, COM2, SOFT_SLEEP_MODE, SOFT_SLEEP_MODE);
-    return 0;
-  }
-  
-  if (!priv->win || !priv->cfmt) {
-    dev_err (&client->dev, "norm or win select error\n");
-    return -EPERM;
-  }
-  
-  ov772x_mask_set (client, COM2, SOFT_SLEEP_MODE, 0);
-  
-  dev_dbg (&client->dev, "format %d, win %s\n",
-           priv->cfmt->code, priv->win->name);
-           
-  return 0;
+	struct i2c_client *client = v4l2_get_subdevdata(sd);
+	struct ov772x_priv *priv = container_of(sd, struct ov772x_priv, subdev);
+
+	if (!enable) {
+		ov772x_mask_set(client, COM2, SOFT_SLEEP_MODE, SOFT_SLEEP_MODE);
+		return 0;
+	}
+
+	if (!priv->win || !priv->cfmt) {
+		dev_err(&client->dev, "norm or win select error\n");
+		return -EPERM;
+	}
+
+	ov772x_mask_set(client, COM2, SOFT_SLEEP_MODE, 0);
+
+	dev_dbg(&client->dev, "format %d, win %s\n",
+		priv->cfmt->code, priv->win->name);
+
+	return 0;
 }
 
-static int ov772x_s_ctrl (struct v4l2_ctrl * ctrl)
+static int ov772x_s_ctrl(struct v4l2_ctrl *ctrl)
 {
-  struct ov772x_priv * priv = container_of (ctrl->handler,
-                              struct ov772x_priv, hdl);
-  struct v4l2_subdev * sd = &priv->subdev;
-  struct i2c_client * client = v4l2_get_subdevdata (sd);
-  int ret = 0;
-  u8 val;
-  
-  switch (ctrl->id) {
-  case V4L2_CID_VFLIP:
-    val = ctrl->val ? VFLIP_IMG : 0x00;
-    priv->flag_vflip = ctrl->val;
-    if (priv->info->flags & OV772X_FLAG_VFLIP)
-    { val ^= VFLIP_IMG; }
-    return ov772x_mask_set (client, COM3, VFLIP_IMG, val);
-  case V4L2_CID_HFLIP:
-    val = ctrl->val ? HFLIP_IMG : 0x00;
-    priv->flag_hflip = ctrl->val;
-    if (priv->info->flags & OV772X_FLAG_HFLIP)
-    { val ^= HFLIP_IMG; }
-    return ov772x_mask_set (client, COM3, HFLIP_IMG, val);
-  case V4L2_CID_BAND_STOP_FILTER:
-    if (!ctrl->val) {
-      /* Switch the filter off, it is on now */
-      ret = ov772x_mask_set (client, BDBASE, 0xff, 0xff);
-      if (!ret)
-        ret = ov772x_mask_set (client, COM8,
-                               BNDF_ON_OFF, 0);
-    }
-    else {
-      /* Switch the filter on, set AEC low limit */
-      val = 256 - ctrl->val;
-      ret = ov772x_mask_set (client, COM8,
-                             BNDF_ON_OFF, BNDF_ON_OFF);
-      if (!ret)
-        ret = ov772x_mask_set (client, BDBASE,
-                               0xff, val);
-    }
-    if (!ret)
-    { priv->band_filter = ctrl->val; }
-    return ret;
-  }
-  
-  return -EINVAL;
+	struct ov772x_priv *priv = container_of(ctrl->handler,
+						struct ov772x_priv, hdl);
+	struct v4l2_subdev *sd = &priv->subdev;
+	struct i2c_client *client = v4l2_get_subdevdata(sd);
+	int ret = 0;
+	u8 val;
+
+	switch (ctrl->id) {
+	case V4L2_CID_VFLIP:
+		val = ctrl->val ? VFLIP_IMG : 0x00;
+		priv->flag_vflip = ctrl->val;
+		if (priv->info->flags & OV772X_FLAG_VFLIP)
+			val ^= VFLIP_IMG;
+		return ov772x_mask_set(client, COM3, VFLIP_IMG, val);
+	case V4L2_CID_HFLIP:
+		val = ctrl->val ? HFLIP_IMG : 0x00;
+		priv->flag_hflip = ctrl->val;
+		if (priv->info->flags & OV772X_FLAG_HFLIP)
+			val ^= HFLIP_IMG;
+		return ov772x_mask_set(client, COM3, HFLIP_IMG, val);
+	case V4L2_CID_BAND_STOP_FILTER:
+		if (!ctrl->val) {
+			/* Switch the filter off, it is on now */
+			ret = ov772x_mask_set(client, BDBASE, 0xff, 0xff);
+			if (!ret)
+				ret = ov772x_mask_set(client, COM8,
+						      BNDF_ON_OFF, 0);
+		} else {
+			/* Switch the filter on, set AEC low limit */
+			val = 256 - ctrl->val;
+			ret = ov772x_mask_set(client, COM8,
+					      BNDF_ON_OFF, BNDF_ON_OFF);
+			if (!ret)
+				ret = ov772x_mask_set(client, BDBASE,
+						      0xff, val);
+		}
+		if (!ret)
+			priv->band_filter = ctrl->val;
+		return ret;
+	}
+
+	return -EINVAL;
 }
 
-static int ov772x_g_chip_ident (struct v4l2_subdev * sd,
-                                struct v4l2_dbg_chip_ident * id)
+static int ov772x_g_chip_ident(struct v4l2_subdev *sd,
+			       struct v4l2_dbg_chip_ident *id)
 {
-  struct ov772x_priv * priv = container_of (sd, struct ov772x_priv, subdev);
-  
-  id->ident    = priv->model;
-  id->revision = 0;
-  
-  return 0;
+	struct ov772x_priv *priv = container_of(sd, struct ov772x_priv, subdev);
+
+	id->ident    = priv->model;
+	id->revision = 0;
+
+	return 0;
 }
 
 #ifdef CONFIG_VIDEO_ADV_DEBUG
-static int ov772x_g_register (struct v4l2_subdev * sd,
-                              struct v4l2_dbg_register * reg)
+static int ov772x_g_register(struct v4l2_subdev *sd,
+			     struct v4l2_dbg_register *reg)
 {
-  struct i2c_client * client = v4l2_get_subdevdata (sd);
-  int ret;
-  
-  reg->size = 1;
-  if (reg->reg > 0xff)
-  { return -EINVAL; }
-  
-  ret = i2c_smbus_read_byte_data (client, reg->reg);
-  if (ret < 0)
-  { return ret; }
-  
-  reg->val = (__u64) ret;
-  
-  return 0;
+	struct i2c_client *client = v4l2_get_subdevdata(sd);
+	int ret;
+
+	reg->size = 1;
+	if (reg->reg > 0xff)
+		return -EINVAL;
+
+	ret = i2c_smbus_read_byte_data(client, reg->reg);
+	if (ret < 0)
+		return ret;
+
+	reg->val = (__u64)ret;
+
+	return 0;
 }
 
-static int ov772x_s_register (struct v4l2_subdev * sd,
-                              struct v4l2_dbg_register * reg)
+static int ov772x_s_register(struct v4l2_subdev *sd,
+			     struct v4l2_dbg_register *reg)
 {
-  struct i2c_client * client = v4l2_get_subdevdata (sd);
-  
-  if (reg->reg > 0xff ||
-      reg->val > 0xff)
-  { return -EINVAL; }
-  
-  return i2c_smbus_write_byte_data (client, reg->reg, reg->val);
+	struct i2c_client *client = v4l2_get_subdevdata(sd);
+
+	if (reg->reg > 0xff ||
+	    reg->val > 0xff)
+		return -EINVAL;
+
+	return i2c_smbus_write_byte_data(client, reg->reg, reg->val);
 }
 #endif
 
-static const struct ov772x_win_size * ov772x_select_win (u32 width, u32 height)
+static const struct ov772x_win_size *ov772x_select_win(u32 width, u32 height)
 {
-  __u32 diff;
-  const struct ov772x_win_size * win;
-  
-  /* default is QVGA */
-  diff = abs (width - ov772x_win_qvga.width) +
-         abs (height - ov772x_win_qvga.height);
-  win = &ov772x_win_qvga;
-  
-  /* VGA */
-  if (diff >
-      abs (width  - ov772x_win_vga.width) +
-      abs (height - ov772x_win_vga.height) )
-  { win = &ov772x_win_vga; }
-  
-  return win;
+	__u32 diff;
+	const struct ov772x_win_size *win;
+
+	/* default is QVGA */
+	diff = abs(width - ov772x_win_qvga.width) +
+		abs(height - ov772x_win_qvga.height);
+	win = &ov772x_win_qvga;
+
+	/* VGA */
+	if (diff >
+	    abs(width  - ov772x_win_vga.width) +
+	    abs(height - ov772x_win_vga.height))
+		win = &ov772x_win_vga;
+
+	return win;
 }
 
-static int ov772x_set_params (struct i2c_client * client, u32 * width, u32 * height,
-                              enum v4l2_mbus_pixelcode code)
+static int ov772x_set_params(struct i2c_client *client, u32 *width, u32 *height,
+			     enum v4l2_mbus_pixelcode code)
 {
-  struct ov772x_priv * priv = to_ov772x (client);
-  int ret = -EINVAL;
-  u8  val;
-  int i;
-  
-  /*
-   * select format
-   */
-  priv->cfmt = NULL;
-  for (i = 0; i < ARRAY_SIZE (ov772x_cfmts); i++) {
-    if (code == ov772x_cfmts[i].code) {
-      priv->cfmt = ov772x_cfmts + i;
-      break;
-    }
-  }
-  if (!priv->cfmt)
-  { goto ov772x_set_fmt_error; }
-  
-  /*
-   * select win
-   */
-  priv->win = ov772x_select_win (*width, *height);
-  
-  /*
-   * reset hardware
-   */
-  ov772x_reset (client);
-  
-  /*
-   * Edge Ctrl
-   */
-  if (priv->info->edgectrl.strength & OV772X_MANUAL_EDGE_CTRL) {
-  
-    /*
-     * Manual Edge Control Mode
-     *
-     * Edge auto strength bit is set by default.
-     * Remove it when manual mode.
-     */
-    
-    ret = ov772x_mask_set (client, DSPAUTO, EDGE_ACTRL, 0x00);
-    if (ret < 0)
-    { goto ov772x_set_fmt_error; }
-    
-    ret = ov772x_mask_set (client,
-                           EDGE_TRSHLD, OV772X_EDGE_THRESHOLD_MASK,
-                           priv->info->edgectrl.threshold);
-    if (ret < 0)
-    { goto ov772x_set_fmt_error; }
-    
-    ret = ov772x_mask_set (client,
-                           EDGE_STRNGT, OV772X_EDGE_STRENGTH_MASK,
-                           priv->info->edgectrl.strength);
-    if (ret < 0)
-    { goto ov772x_set_fmt_error; }
-    
-  }
-  else
-    if (priv->info->edgectrl.upper > priv->info->edgectrl.lower) {
-      /*
-       * Auto Edge Control Mode
-       *
-       * set upper and lower limit
-       */
-      ret = ov772x_mask_set (client,
-                             EDGE_UPPER, OV772X_EDGE_UPPER_MASK,
-                             priv->info->edgectrl.upper);
-      if (ret < 0)
-      { goto ov772x_set_fmt_error; }
-      
-      ret = ov772x_mask_set (client,
-                             EDGE_LOWER, OV772X_EDGE_LOWER_MASK,
-                             priv->info->edgectrl.lower);
-      if (ret < 0)
-      { goto ov772x_set_fmt_error; }
-    }
-    
-  /*
-   * set size format
-   */
-  ret = ov772x_write_array (client, priv->win->regs);
-  if (ret < 0)
-  { goto ov772x_set_fmt_error; }
-  
-  /*
-   * set DSP_CTRL3
-   */
-  val = priv->cfmt->dsp3;
-  if (val) {
-    ret = ov772x_mask_set (client,
-                           DSP_CTRL3, UV_MASK, val);
-    if (ret < 0)
-    { goto ov772x_set_fmt_error; }
-  }
-  
-  /*
-   * set COM3
-   */
-  val = priv->cfmt->com3;
-  if (priv->info->flags & OV772X_FLAG_VFLIP)
-  { val |= VFLIP_IMG; }
-  if (priv->info->flags & OV772X_FLAG_HFLIP)
-  { val |= HFLIP_IMG; }
-  if (priv->flag_vflip)
-  { val ^= VFLIP_IMG; }
-  if (priv->flag_hflip)
-  { val ^= HFLIP_IMG; }
-  
-  ret = ov772x_mask_set (client,
-                         COM3, SWAP_MASK | IMG_MASK, val);
-  if (ret < 0)
-  { goto ov772x_set_fmt_error; }
-  
-  /*
-   * set COM7
-   */
-  val = priv->win->com7_bit | priv->cfmt->com7;
-  ret = ov772x_mask_set (client,
-                         COM7, SLCT_MASK | FMT_MASK | OFMT_MASK,
-                         val);
-  if (ret < 0)
-  { goto ov772x_set_fmt_error; }
-  
-  /*
-   * set COM8
-   */
-  if (priv->band_filter) {
-    ret = ov772x_mask_set (client, COM8, BNDF_ON_OFF, 1);
-    if (!ret)
-      ret = ov772x_mask_set (client, BDBASE,
-                             0xff, 256 - priv->band_filter);
-    if (ret < 0)
-    { goto ov772x_set_fmt_error; }
-  }
-  
-  *width = priv->win->width;
-  *height = priv->win->height;
-  
-  return ret;
-  
+	struct ov772x_priv *priv = to_ov772x(client);
+	int ret = -EINVAL;
+	u8  val;
+	int i;
+
+	/*
+	 * select format
+	 */
+	priv->cfmt = NULL;
+	for (i = 0; i < ARRAY_SIZE(ov772x_cfmts); i++) {
+		if (code == ov772x_cfmts[i].code) {
+			priv->cfmt = ov772x_cfmts + i;
+			break;
+		}
+	}
+	if (!priv->cfmt)
+		goto ov772x_set_fmt_error;
+
+	/*
+	 * select win
+	 */
+	priv->win = ov772x_select_win(*width, *height);
+
+	/*
+	 * reset hardware
+	 */
+	ov772x_reset(client);
+
+	/*
+	 * Edge Ctrl
+	 */
+	if (priv->info->edgectrl.strength & OV772X_MANUAL_EDGE_CTRL) {
+
+		/*
+		 * Manual Edge Control Mode
+		 *
+		 * Edge auto strength bit is set by default.
+		 * Remove it when manual mode.
+		 */
+
+		ret = ov772x_mask_set(client, DSPAUTO, EDGE_ACTRL, 0x00);
+		if (ret < 0)
+			goto ov772x_set_fmt_error;
+
+		ret = ov772x_mask_set(client,
+				      EDGE_TRSHLD, OV772X_EDGE_THRESHOLD_MASK,
+				      priv->info->edgectrl.threshold);
+		if (ret < 0)
+			goto ov772x_set_fmt_error;
+
+		ret = ov772x_mask_set(client,
+				      EDGE_STRNGT, OV772X_EDGE_STRENGTH_MASK,
+				      priv->info->edgectrl.strength);
+		if (ret < 0)
+			goto ov772x_set_fmt_error;
+
+	} else if (priv->info->edgectrl.upper > priv->info->edgectrl.lower) {
+		/*
+		 * Auto Edge Control Mode
+		 *
+		 * set upper and lower limit
+		 */
+		ret = ov772x_mask_set(client,
+				      EDGE_UPPER, OV772X_EDGE_UPPER_MASK,
+				      priv->info->edgectrl.upper);
+		if (ret < 0)
+			goto ov772x_set_fmt_error;
+
+		ret = ov772x_mask_set(client,
+				      EDGE_LOWER, OV772X_EDGE_LOWER_MASK,
+				      priv->info->edgectrl.lower);
+		if (ret < 0)
+			goto ov772x_set_fmt_error;
+	}
+
+	/*
+	 * set size format
+	 */
+	ret = ov772x_write_array(client, priv->win->regs);
+	if (ret < 0)
+		goto ov772x_set_fmt_error;
+
+	/*
+	 * set DSP_CTRL3
+	 */
+	val = priv->cfmt->dsp3;
+	if (val) {
+		ret = ov772x_mask_set(client,
+				      DSP_CTRL3, UV_MASK, val);
+		if (ret < 0)
+			goto ov772x_set_fmt_error;
+	}
+
+	/*
+	 * set COM3
+	 */
+	val = priv->cfmt->com3;
+	if (priv->info->flags & OV772X_FLAG_VFLIP)
+		val |= VFLIP_IMG;
+	if (priv->info->flags & OV772X_FLAG_HFLIP)
+		val |= HFLIP_IMG;
+	if (priv->flag_vflip)
+		val ^= VFLIP_IMG;
+	if (priv->flag_hflip)
+		val ^= HFLIP_IMG;
+
+	ret = ov772x_mask_set(client,
+			      COM3, SWAP_MASK | IMG_MASK, val);
+	if (ret < 0)
+		goto ov772x_set_fmt_error;
+
+	/*
+	 * set COM7
+	 */
+	val = priv->win->com7_bit | priv->cfmt->com7;
+	ret = ov772x_mask_set(client,
+			      COM7, SLCT_MASK | FMT_MASK | OFMT_MASK,
+			      val);
+	if (ret < 0)
+		goto ov772x_set_fmt_error;
+
+	/*
+	 * set COM8
+	 */
+	if (priv->band_filter) {
+		ret = ov772x_mask_set(client, COM8, BNDF_ON_OFF, 1);
+		if (!ret)
+			ret = ov772x_mask_set(client, BDBASE,
+					      0xff, 256 - priv->band_filter);
+		if (ret < 0)
+			goto ov772x_set_fmt_error;
+	}
+
+	*width = priv->win->width;
+	*height = priv->win->height;
+
+	return ret;
+
 ov772x_set_fmt_error:
 
-  ov772x_reset (client);
-  priv->win = NULL;
-  priv->cfmt = NULL;
-  
-  return ret;
+	ov772x_reset(client);
+	priv->win = NULL;
+	priv->cfmt = NULL;
+
+	return ret;
 }
 
-static int ov772x_g_crop (struct v4l2_subdev * sd, struct v4l2_crop * a)
+static int ov772x_g_crop(struct v4l2_subdev *sd, struct v4l2_crop *a)
 {
-  a->c.left = 0;
-  a->c.top  = 0;
-  a->c.width  = VGA_WIDTH;
-  a->c.height = VGA_HEIGHT;
-  a->type   = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-  
-  return 0;
+	a->c.left	= 0;
+	a->c.top	= 0;
+	a->c.width	= VGA_WIDTH;
+	a->c.height	= VGA_HEIGHT;
+	a->type		= V4L2_BUF_TYPE_VIDEO_CAPTURE;
+
+	return 0;
 }
 
-static int ov772x_cropcap (struct v4l2_subdev * sd, struct v4l2_cropcap * a)
+static int ov772x_cropcap(struct v4l2_subdev *sd, struct v4l2_cropcap *a)
 {
-  a->bounds.left      = 0;
-  a->bounds.top     = 0;
-  a->bounds.width     = VGA_WIDTH;
-  a->bounds.height    = VGA_HEIGHT;
-  a->defrect      = a->bounds;
-  a->type       = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-  a->pixelaspect.numerator  = 1;
-  a->pixelaspect.denominator  = 1;
-  
-  return 0;
+	a->bounds.left			= 0;
+	a->bounds.top			= 0;
+	a->bounds.width			= VGA_WIDTH;
+	a->bounds.height		= VGA_HEIGHT;
+	a->defrect			= a->bounds;
+	a->type				= V4L2_BUF_TYPE_VIDEO_CAPTURE;
+	a->pixelaspect.numerator	= 1;
+	a->pixelaspect.denominator	= 1;
+
+	return 0;
 }
 
-static int ov772x_g_fmt (struct v4l2_subdev * sd,
-                         struct v4l2_mbus_framefmt * mf)
+static int ov772x_g_fmt(struct v4l2_subdev *sd,
+			struct v4l2_mbus_framefmt *mf)
 {
-  struct i2c_client * client = v4l2_get_subdevdata (sd);
-  struct ov772x_priv * priv = container_of (sd, struct ov772x_priv, subdev);
-  
-  if (!priv->win || !priv->cfmt) {
-    u32 width = VGA_WIDTH, height = VGA_HEIGHT;
-    int ret = ov772x_set_params (client, &width, &height,
-                                 V4L2_MBUS_FMT_YUYV8_2X8);
-    if (ret < 0)
-    { return ret; }
-  }
-  
-  mf->width = priv->win->width;
-  mf->height  = priv->win->height;
-  mf->code  = priv->cfmt->code;
-  mf->colorspace  = priv->cfmt->colorspace;
-  mf->field = V4L2_FIELD_NONE;
-  
-  return 0;
+	struct i2c_client *client = v4l2_get_subdevdata(sd);
+	struct ov772x_priv *priv = container_of(sd, struct ov772x_priv, subdev);
+
+	if (!priv->win || !priv->cfmt) {
+		u32 width = VGA_WIDTH, height = VGA_HEIGHT;
+		int ret = ov772x_set_params(client, &width, &height,
+					    V4L2_MBUS_FMT_YUYV8_2X8);
+		if (ret < 0)
+			return ret;
+	}
+
+	mf->width	= priv->win->width;
+	mf->height	= priv->win->height;
+	mf->code	= priv->cfmt->code;
+	mf->colorspace	= priv->cfmt->colorspace;
+	mf->field	= V4L2_FIELD_NONE;
+
+	return 0;
 }
 
-static int ov772x_s_fmt (struct v4l2_subdev * sd,
-                         struct v4l2_mbus_framefmt * mf)
+static int ov772x_s_fmt(struct v4l2_subdev *sd,
+			struct v4l2_mbus_framefmt *mf)
 {
-  struct i2c_client * client = v4l2_get_subdevdata (sd);
-  struct ov772x_priv * priv = container_of (sd, struct ov772x_priv, subdev);
-  int ret = ov772x_set_params (client, &mf->width, &mf->height,
-                               mf->code);
-                               
-  if (!ret)
-  { mf->colorspace = priv->cfmt->colorspace; }
-  
-  return ret;
+	struct i2c_client *client = v4l2_get_subdevdata(sd);
+	struct ov772x_priv *priv = container_of(sd, struct ov772x_priv, subdev);
+	int ret = ov772x_set_params(client, &mf->width, &mf->height,
+				    mf->code);
+
+	if (!ret)
+		mf->colorspace = priv->cfmt->colorspace;
+
+	return ret;
 }
 
-static int ov772x_try_fmt (struct v4l2_subdev * sd,
-                           struct v4l2_mbus_framefmt * mf)
+static int ov772x_try_fmt(struct v4l2_subdev *sd,
+			  struct v4l2_mbus_framefmt *mf)
 {
-  struct ov772x_priv * priv = container_of (sd, struct ov772x_priv, subdev);
-  const struct ov772x_win_size * win;
-  int i;
-  
-  /*
-   * select suitable win
-   */
-  win = ov772x_select_win (mf->width, mf->height);
-  
-  mf->width = win->width;
-  mf->height  = win->height;
-  mf->field = V4L2_FIELD_NONE;
-  
-  for (i = 0; i < ARRAY_SIZE (ov772x_cfmts); i++)
-    if (mf->code == ov772x_cfmts[i].code)
-    { break; }
-    
-  if (i == ARRAY_SIZE (ov772x_cfmts) ) {
-    /* Unsupported format requested. Propose either */
-    if (priv->cfmt) {
-      /* the current one or */
-      mf->colorspace = priv->cfmt->colorspace;
-      mf->code = priv->cfmt->code;
-    }
-    else {
-      /* the default one */
-      mf->colorspace = ov772x_cfmts[0].colorspace;
-      mf->code = ov772x_cfmts[0].code;
-    }
-  }
-  else {
-    /* Also return the colorspace */
-    mf->colorspace  = ov772x_cfmts[i].colorspace;
-  }
-  
-  return 0;
+	struct ov772x_priv *priv = container_of(sd, struct ov772x_priv, subdev);
+	const struct ov772x_win_size *win;
+	int i;
+
+	/*
+	 * select suitable win
+	 */
+	win = ov772x_select_win(mf->width, mf->height);
+
+	mf->width	= win->width;
+	mf->height	= win->height;
+	mf->field	= V4L2_FIELD_NONE;
+
+	for (i = 0; i < ARRAY_SIZE(ov772x_cfmts); i++)
+		if (mf->code == ov772x_cfmts[i].code)
+			break;
+
+	if (i == ARRAY_SIZE(ov772x_cfmts)) {
+		/* Unsupported format requested. Propose either */
+		if (priv->cfmt) {
+			/* the current one or */
+			mf->colorspace = priv->cfmt->colorspace;
+			mf->code = priv->cfmt->code;
+		} else {
+			/* the default one */
+			mf->colorspace = ov772x_cfmts[0].colorspace;
+			mf->code = ov772x_cfmts[0].code;
+		}
+	} else {
+		/* Also return the colorspace */
+		mf->colorspace	= ov772x_cfmts[i].colorspace;
+	}
+
+	return 0;
 }
 
-static int ov772x_video_probe (struct i2c_client * client)
+static int ov772x_video_probe(struct i2c_client *client)
 {
-  struct ov772x_priv * priv = to_ov772x (client);
-  u8                  pid, ver;
-  const char     *    devname;
-  
-  /*
-   * check and show product ID and manufacturer ID
-   */
-  pid = i2c_smbus_read_byte_data (client, PID);
-  ver = i2c_smbus_read_byte_data (client, VER);
-  
-  switch (VERSION (pid, ver) ) {
-  case OV7720:
-    devname     = "ov7720";
-    priv->model = V4L2_IDENT_OV7720;
-    break;
-  case OV7725:
-    devname     = "ov7725";
-    priv->model = V4L2_IDENT_OV7725;
-    break;
-  default:
-    dev_err (&client->dev,
-             "Product ID error %x:%x\n", pid, ver);
-    return -ENODEV;
-  }
-  
-  dev_info (&client->dev,
-            "%s Product ID %0x:%0x Manufacturer ID %x:%x\n",
-            devname,
-            pid,
-            ver,
-            i2c_smbus_read_byte_data (client, MIDH),
-            i2c_smbus_read_byte_data (client, MIDL) );
-  return v4l2_ctrl_handler_setup (&priv->hdl);
+	struct ov772x_priv *priv = to_ov772x(client);
+	u8                  pid, ver;
+	const char         *devname;
+
+	/*
+	 * check and show product ID and manufacturer ID
+	 */
+	pid = i2c_smbus_read_byte_data(client, PID);
+	ver = i2c_smbus_read_byte_data(client, VER);
+
+	switch (VERSION(pid, ver)) {
+	case OV7720:
+		devname     = "ov7720";
+		priv->model = V4L2_IDENT_OV7720;
+		break;
+	case OV7725:
+		devname     = "ov7725";
+		priv->model = V4L2_IDENT_OV7725;
+		break;
+	default:
+		dev_err(&client->dev,
+			"Product ID error %x:%x\n", pid, ver);
+		return -ENODEV;
+	}
+
+	dev_info(&client->dev,
+		 "%s Product ID %0x:%0x Manufacturer ID %x:%x\n",
+		 devname,
+		 pid,
+		 ver,
+		 i2c_smbus_read_byte_data(client, MIDH),
+		 i2c_smbus_read_byte_data(client, MIDL));
+	return v4l2_ctrl_handler_setup(&priv->hdl);
 }
 
 static const struct v4l2_ctrl_ops ov772x_ctrl_ops = {
-  .s_ctrl = ov772x_s_ctrl,
+	.s_ctrl = ov772x_s_ctrl,
 };
 
 static struct v4l2_subdev_core_ops ov772x_subdev_core_ops = {
-  .g_chip_ident = ov772x_g_chip_ident,
-  #ifdef CONFIG_VIDEO_ADV_DEBUG
-  .g_register = ov772x_g_register,
-  .s_register = ov772x_s_register,
-  #endif
+	.g_chip_ident	= ov772x_g_chip_ident,
+#ifdef CONFIG_VIDEO_ADV_DEBUG
+	.g_register	= ov772x_g_register,
+	.s_register	= ov772x_s_register,
+#endif
 };
 
-static int ov772x_enum_fmt (struct v4l2_subdev * sd, unsigned int index,
-                            enum v4l2_mbus_pixelcode * code)
+static int ov772x_enum_fmt(struct v4l2_subdev *sd, unsigned int index,
+			   enum v4l2_mbus_pixelcode *code)
 {
-  if (index >= ARRAY_SIZE (ov772x_cfmts) )
-  { return -EINVAL; }
-  
-  *code = ov772x_cfmts[index].code;
-  return 0;
+	if (index >= ARRAY_SIZE(ov772x_cfmts))
+		return -EINVAL;
+
+	*code = ov772x_cfmts[index].code;
+	return 0;
 }
 
-static int ov772x_g_mbus_config (struct v4l2_subdev * sd,
-                                 struct v4l2_mbus_config * cfg)
+static int ov772x_g_mbus_config(struct v4l2_subdev *sd,
+				struct v4l2_mbus_config *cfg)
 {
-  struct i2c_client * client = v4l2_get_subdevdata (sd);
-  struct soc_camera_link * icl = soc_camera_i2c_to_link (client);
-  
-  cfg->flags = V4L2_MBUS_PCLK_SAMPLE_RISING | V4L2_MBUS_MASTER |
-               V4L2_MBUS_VSYNC_ACTIVE_HIGH | V4L2_MBUS_HSYNC_ACTIVE_HIGH |
-               V4L2_MBUS_DATA_ACTIVE_HIGH;
-  cfg->type = V4L2_MBUS_PARALLEL;
-  cfg->flags = soc_camera_apply_board_flags (icl, cfg);
-  
-  return 0;
+	struct i2c_client *client = v4l2_get_subdevdata(sd);
+	struct soc_camera_link *icl = soc_camera_i2c_to_link(client);
+
+	cfg->flags = V4L2_MBUS_PCLK_SAMPLE_RISING | V4L2_MBUS_MASTER |
+		V4L2_MBUS_VSYNC_ACTIVE_HIGH | V4L2_MBUS_HSYNC_ACTIVE_HIGH |
+		V4L2_MBUS_DATA_ACTIVE_HIGH;
+	cfg->type = V4L2_MBUS_PARALLEL;
+	cfg->flags = soc_camera_apply_board_flags(icl, cfg);
+
+	return 0;
 }
 
 static struct v4l2_subdev_video_ops ov772x_subdev_video_ops = {
-  .s_stream = ov772x_s_stream,
-  .g_mbus_fmt = ov772x_g_fmt,
-  .s_mbus_fmt = ov772x_s_fmt,
-  .try_mbus_fmt = ov772x_try_fmt,
-  .cropcap  = ov772x_cropcap,
-  .g_crop   = ov772x_g_crop,
-  .enum_mbus_fmt  = ov772x_enum_fmt,
-  .g_mbus_config  = ov772x_g_mbus_config,
+	.s_stream	= ov772x_s_stream,
+	.g_mbus_fmt	= ov772x_g_fmt,
+	.s_mbus_fmt	= ov772x_s_fmt,
+	.try_mbus_fmt	= ov772x_try_fmt,
+	.cropcap	= ov772x_cropcap,
+	.g_crop		= ov772x_g_crop,
+	.enum_mbus_fmt	= ov772x_enum_fmt,
+	.g_mbus_config	= ov772x_g_mbus_config,
 };
 
 static struct v4l2_subdev_ops ov772x_subdev_ops = {
-  .core = &ov772x_subdev_core_ops,
-  .video  = &ov772x_subdev_video_ops,
+	.core	= &ov772x_subdev_core_ops,
+	.video	= &ov772x_subdev_video_ops,
 };
 
 /*
  * i2c_driver function
  */
 
-static int ov772x_probe (struct i2c_client * client,
-                         const struct i2c_device_id * did)
+static int ov772x_probe(struct i2c_client *client,
+			const struct i2c_device_id *did)
 {
-  struct ov772x_priv * priv;
-  struct soc_camera_link * icl = soc_camera_i2c_to_link (client);
-  struct i2c_adapter * adapter = to_i2c_adapter (client->dev.parent);
-  int     ret;
-  
-  if (!icl || !icl->priv) {
-    dev_err (&client->dev, "OV772X: missing platform data!\n");
-    return -EINVAL;
-  }
-  
-  if (!i2c_check_functionality (adapter, I2C_FUNC_SMBUS_BYTE_DATA) ) {
-    dev_err (&adapter->dev,
-             "I2C-Adapter doesn't support "
-             "I2C_FUNC_SMBUS_BYTE_DATA\n");
-    return -EIO;
-  }
-  
-  priv = kzalloc (sizeof (*priv), GFP_KERNEL);
-  if (!priv)
-  { return -ENOMEM; }
-  
-  priv->info = icl->priv;
-  
-  v4l2_i2c_subdev_init (&priv->subdev, client, &ov772x_subdev_ops);
-  v4l2_ctrl_handler_init (&priv->hdl, 3);
-  v4l2_ctrl_new_std (&priv->hdl, &ov772x_ctrl_ops,
-                     V4L2_CID_VFLIP, 0, 1, 1, 0);
-  v4l2_ctrl_new_std (&priv->hdl, &ov772x_ctrl_ops,
-                     V4L2_CID_HFLIP, 0, 1, 1, 0);
-  v4l2_ctrl_new_std (&priv->hdl, &ov772x_ctrl_ops,
-                     V4L2_CID_BAND_STOP_FILTER, 0, 256, 1, 0);
-  priv->subdev.ctrl_handler = &priv->hdl;
-  if (priv->hdl.error) {
-    int err = priv->hdl.error;
-    
-    kfree (priv);
-    return err;
-  }
-  
-  ret = ov772x_video_probe (client);
-  if (ret) {
-    v4l2_ctrl_handler_free (&priv->hdl);
-    kfree (priv);
-  }
-  
-  return ret;
+	struct ov772x_priv	*priv;
+	struct soc_camera_link	*icl = soc_camera_i2c_to_link(client);
+	struct i2c_adapter	*adapter = to_i2c_adapter(client->dev.parent);
+	int			ret;
+
+	if (!icl || !icl->priv) {
+		dev_err(&client->dev, "OV772X: missing platform data!\n");
+		return -EINVAL;
+	}
+
+	if (!i2c_check_functionality(adapter, I2C_FUNC_SMBUS_BYTE_DATA)) {
+		dev_err(&adapter->dev,
+			"I2C-Adapter doesn't support "
+			"I2C_FUNC_SMBUS_BYTE_DATA\n");
+		return -EIO;
+	}
+
+	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
+	if (!priv)
+		return -ENOMEM;
+
+	priv->info = icl->priv;
+
+	v4l2_i2c_subdev_init(&priv->subdev, client, &ov772x_subdev_ops);
+	v4l2_ctrl_handler_init(&priv->hdl, 3);
+	v4l2_ctrl_new_std(&priv->hdl, &ov772x_ctrl_ops,
+			V4L2_CID_VFLIP, 0, 1, 1, 0);
+	v4l2_ctrl_new_std(&priv->hdl, &ov772x_ctrl_ops,
+			V4L2_CID_HFLIP, 0, 1, 1, 0);
+	v4l2_ctrl_new_std(&priv->hdl, &ov772x_ctrl_ops,
+			V4L2_CID_BAND_STOP_FILTER, 0, 256, 1, 0);
+	priv->subdev.ctrl_handler = &priv->hdl;
+	if (priv->hdl.error) {
+		int err = priv->hdl.error;
+
+		kfree(priv);
+		return err;
+	}
+
+	ret = ov772x_video_probe(client);
+	if (ret) {
+		v4l2_ctrl_handler_free(&priv->hdl);
+		kfree(priv);
+	}
+
+	return ret;
 }
 
-static int ov772x_remove (struct i2c_client * client)
+static int ov772x_remove(struct i2c_client *client)
 {
-  struct ov772x_priv * priv = to_ov772x (client);
-  
-  v4l2_device_unregister_subdev (&priv->subdev);
-  v4l2_ctrl_handler_free (&priv->hdl);
-  kfree (priv);
-  return 0;
+	struct ov772x_priv *priv = to_ov772x(client);
+
+	v4l2_device_unregister_subdev(&priv->subdev);
+	v4l2_ctrl_handler_free(&priv->hdl);
+	kfree(priv);
+	return 0;
 }
 
 static const struct i2c_device_id ov772x_id[] = {
-  { "ov772x", 0 },
-  { }
+	{ "ov772x", 0 },
+	{ }
 };
-MODULE_DEVICE_TABLE (i2c, ov772x_id);
+MODULE_DEVICE_TABLE(i2c, ov772x_id);
 
 static struct i2c_driver ov772x_i2c_driver = {
-  .driver = {
-    .name = "ov772x",
-  },
-  .probe    = ov772x_probe,
-  .remove   = ov772x_remove,
-  .id_table = ov772x_id,
+	.driver = {
+		.name = "ov772x",
+	},
+	.probe    = ov772x_probe,
+	.remove   = ov772x_remove,
+	.id_table = ov772x_id,
 };
 
-module_i2c_driver (ov772x_i2c_driver);
+module_i2c_driver(ov772x_i2c_driver);
 
-MODULE_DESCRIPTION ("SoC Camera driver for ov772x");
-MODULE_AUTHOR ("Kuninori Morimoto");
-MODULE_LICENSE ("GPL v2");
+MODULE_DESCRIPTION("SoC Camera driver for ov772x");
+MODULE_AUTHOR("Kuninori Morimoto");
+MODULE_LICENSE("GPL v2");

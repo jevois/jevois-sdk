@@ -1,13 +1,13 @@
 /*
- *  Linux ethernet bridge
+ *	Linux ethernet bridge
  *
- *  Authors:
- *  Lennert Buytenhek   <buytenh@gnu.org>
+ *	Authors:
+ *	Lennert Buytenhek		<buytenh@gnu.org>
  *
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU General Public License
- *  as published by the Free Software Foundation; either version
- *  2 of the License, or (at your option) any later version.
+ *	This program is free software; you can redistribute it and/or
+ *	modify it under the terms of the GNU General Public License
+ *	as published by the Free Software Foundation; either version
+ *	2 of the License, or (at your option) any later version.
  */
 
 #ifndef _LINUX_IF_BRIDGE_H
@@ -15,11 +15,11 @@
 
 #include <linux/types.h>
 
-#define SYSFS_BRIDGE_ATTR "bridge"
-#define SYSFS_BRIDGE_FDB  "brforward"
+#define SYSFS_BRIDGE_ATTR	"bridge"
+#define SYSFS_BRIDGE_FDB	"brforward"
 #define SYSFS_BRIDGE_PORT_SUBDIR "brif"
-#define SYSFS_BRIDGE_PORT_ATTR  "brport"
-#define SYSFS_BRIDGE_PORT_LINK  "bridge"
+#define SYSFS_BRIDGE_PORT_ATTR	"brport"
+#define SYSFS_BRIDGE_PORT_LINK	"bridge"
 
 #define BRCTL_VERSION 1
 
@@ -50,61 +50,61 @@
 #define BR_STATE_BLOCKING 4
 
 struct __bridge_info {
-  __u64 designated_root;
-  __u64 bridge_id;
-  __u32 root_path_cost;
-  __u32 max_age;
-  __u32 hello_time;
-  __u32 forward_delay;
-  __u32 bridge_max_age;
-  __u32 bridge_hello_time;
-  __u32 bridge_forward_delay;
-  __u8 topology_change;
-  __u8 topology_change_detected;
-  __u8 root_port;
-  __u8 stp_enabled;
-  __u32 ageing_time;
-  __u32 gc_interval;
-  __u32 hello_timer_value;
-  __u32 tcn_timer_value;
-  __u32 topology_change_timer_value;
-  __u32 gc_timer_value;
+	__u64 designated_root;
+	__u64 bridge_id;
+	__u32 root_path_cost;
+	__u32 max_age;
+	__u32 hello_time;
+	__u32 forward_delay;
+	__u32 bridge_max_age;
+	__u32 bridge_hello_time;
+	__u32 bridge_forward_delay;
+	__u8 topology_change;
+	__u8 topology_change_detected;
+	__u8 root_port;
+	__u8 stp_enabled;
+	__u32 ageing_time;
+	__u32 gc_interval;
+	__u32 hello_timer_value;
+	__u32 tcn_timer_value;
+	__u32 topology_change_timer_value;
+	__u32 gc_timer_value;
 };
 
 struct __port_info {
-  __u64 designated_root;
-  __u64 designated_bridge;
-  __u16 port_id;
-  __u16 designated_port;
-  __u32 path_cost;
-  __u32 designated_cost;
-  __u8 state;
-  __u8 top_change_ack;
-  __u8 config_pending;
-  __u8 unused0;
-  __u32 message_age_timer_value;
-  __u32 forward_delay_timer_value;
-  __u32 hold_timer_value;
+	__u64 designated_root;
+	__u64 designated_bridge;
+	__u16 port_id;
+	__u16 designated_port;
+	__u32 path_cost;
+	__u32 designated_cost;
+	__u8 state;
+	__u8 top_change_ack;
+	__u8 config_pending;
+	__u8 unused0;
+	__u32 message_age_timer_value;
+	__u32 forward_delay_timer_value;
+	__u32 hold_timer_value;
 };
 
 struct __fdb_entry {
-  __u8 mac_addr[6];
-  __u8 port_no;
-  __u8 is_local;
-  __u32 ageing_timer_value;
-  __u8 port_hi;
-  __u8 pad0;
-  __u16 unused;
+	__u8 mac_addr[6];
+	__u8 port_no;
+	__u8 is_local;
+	__u32 ageing_timer_value;
+	__u8 port_hi;
+	__u8 pad0;
+	__u16 unused;
 };
 
 #ifdef __KERNEL__
 
 #include <linux/netdevice.h>
 
-extern void brioctl_set (int (*ioctl_hook) (struct net *, unsigned int, void __user *) );
+extern void brioctl_set(int (*ioctl_hook)(struct net *, unsigned int, void __user *));
 
-typedef int br_should_route_hook_t (struct sk_buff * skb);
-extern br_should_route_hook_t __rcu * br_should_route_hook;
+typedef int br_should_route_hook_t(struct sk_buff *skb);
+extern br_should_route_hook_t __rcu *br_should_route_hook;
 
 #endif
 

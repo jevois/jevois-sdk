@@ -43,9 +43,9 @@
  *
  * Nothing to do on PowerPC, so just return without error.
  */
-int qib_enable_wc (struct qib_devdata * dd)
+int qib_enable_wc(struct qib_devdata *dd)
 {
-  return 0;
+	return 0;
 }
 
 /**
@@ -56,7 +56,7 @@ int qib_enable_wc (struct qib_devdata * dd)
  * know if we are on a processor that may reorder stores when
  * write combining.
  */
-int qib_unordered_wc (void)
+int qib_unordered_wc(void)
 {
-  return 1;
+	return 1;
 }

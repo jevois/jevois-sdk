@@ -46,22 +46,22 @@
  */
 
 struct print_buf {
-  char * buf;
-  u32 size;
-  char * crs;
-  int echo;
+	char *buf;
+	u32 size;
+	char *crs;
+	int echo;
 };
 
-#define TIPC_PB_MIN_SIZE 64 /* minimum size for a print buffer's array */
-#define TIPC_PB_MAX_STR 512 /* max printable string (with trailing NUL) */
+#define TIPC_PB_MIN_SIZE 64	/* minimum size for a print buffer's array */
+#define TIPC_PB_MAX_STR 512	/* max printable string (with trailing NUL) */
 
-void tipc_printbuf_init (struct print_buf * pb, char * buf, u32 size);
-int  tipc_printbuf_validate (struct print_buf * pb);
+void tipc_printbuf_init(struct print_buf *pb, char *buf, u32 size);
+int  tipc_printbuf_validate(struct print_buf *pb);
 
-int tipc_log_resize (int log_size);
+int tipc_log_resize(int log_size);
 
-struct sk_buff * tipc_log_resize_cmd (const void * req_tlv_area,
-                                      int req_tlv_space);
-struct sk_buff * tipc_log_dump (void);
+struct sk_buff *tipc_log_resize_cmd(const void *req_tlv_area,
+				    int req_tlv_space);
+struct sk_buff *tipc_log_dump(void);
 
 #endif

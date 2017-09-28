@@ -57,52 +57,52 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 struct _DEVMEMINT_CTX_
 {
-  PVRSRV_DEVICE_NODE * psDevNode;
-  
-  /* MMU common code needs to have a context.  There's a one-to-one
-     correspondence between device memory context and MMU context,
-     but we have the abstraction here so that we don't need to care
-     what the MMU does with its context, and the MMU code need not
-     know about us at all. */
-  MMU_CONTEXT * psMMUContext;
-  
-  IMG_UINT32 ui32RefCount;
-  
-  /* Lock for this memory context */
-  POS_LOCK hLock;
-  
-  /* This handle is for devices that require notification when a new
-     memory context is created and they need to store private data that
-     is associated with the context. */
-  IMG_HANDLE hPrivData;
+    PVRSRV_DEVICE_NODE *psDevNode;
+
+    /* MMU common code needs to have a context.  There's a one-to-one
+       correspondence between device memory context and MMU context,
+       but we have the abstraction here so that we don't need to care
+       what the MMU does with its context, and the MMU code need not
+       know about us at all. */
+    MMU_CONTEXT *psMMUContext;
+
+    IMG_UINT32 ui32RefCount;
+
+    /* Lock for this memory context */
+    POS_LOCK hLock;
+
+    /* This handle is for devices that require notification when a new
+       memory context is created and they need to store private data that
+       is associated with the context. */
+    IMG_HANDLE hPrivData;
 };
 
-struct _DEVMEMINT_CTX_EXPORT_
+struct _DEVMEMINT_CTX_EXPORT_ 
 {
-  DEVMEMINT_CTX * psDevmemCtx;
+	DEVMEMINT_CTX *psDevmemCtx;
 };
 
 struct _DEVMEMINT_HEAP_
 {
-  struct _DEVMEMINT_CTX_ * psDevmemCtx;
-  IMG_UINT32 ui32RefCount;
-  /* Lock for this heap */
-  POS_LOCK hLock;
+    struct _DEVMEMINT_CTX_ *psDevmemCtx;
+    IMG_UINT32 ui32RefCount;
+    /* Lock for this heap */
+    POS_LOCK hLock;
 };
 
 struct _DEVMEMINT_RESERVATION_
 {
-  struct _DEVMEMINT_HEAP_ * psDevmemHeap;
-  IMG_DEV_VIRTADDR sBase;
-  IMG_DEVMEM_SIZE_T uiLength;
+    struct _DEVMEMINT_HEAP_ *psDevmemHeap;
+    IMG_DEV_VIRTADDR sBase;
+    IMG_DEVMEM_SIZE_T uiLength;
 };
 
 struct _DEVMEMINT_MAPPING_
 {
-  struct _DEVMEMINT_RESERVATION_ * psReservation;
-  PMR * psPMR;
-  IMG_UINT32 uiNumPages;
-  IMG_UINT32 uiLog2PageSize;
+    struct _DEVMEMINT_RESERVATION_ *psReservation;
+    PMR *psPMR;
+    IMG_UINT32 uiNumPages;
+    IMG_UINT32 uiLog2PageSize;
 };
 
 /*************************************************************************/ /*!
@@ -110,11 +110,11 @@ struct _DEVMEMINT_MAPPING_
 @Description    Acquire a reference to the provided device memory context.
 @Return         None
 */ /**************************************************************************/
-static INLINE IMG_VOID _DevmemIntCtxAcquire (DEVMEMINT_CTX * psDevmemCtx)
+static INLINE IMG_VOID _DevmemIntCtxAcquire(DEVMEMINT_CTX *psDevmemCtx)
 {
-  OSLockAcquire (psDevmemCtx->hLock);
-  psDevmemCtx->ui32RefCount++;
-  OSLockRelease (psDevmemCtx->hLock);
+	OSLockAcquire(psDevmemCtx->hLock);
+	psDevmemCtx->ui32RefCount++;
+	OSLockRelease(psDevmemCtx->hLock);
 }
 
 /*************************************************************************/ /*!
@@ -124,29 +124,29 @@ static INLINE IMG_VOID _DevmemIntCtxAcquire (DEVMEMINT_CTX * psDevmemCtx)
                 memory context will be freed.
 @Return         None
 */ /**************************************************************************/
-static INLINE IMG_VOID _DevmemIntCtxRelease (DEVMEMINT_CTX * psDevmemCtx)
+static INLINE IMG_VOID _DevmemIntCtxRelease(DEVMEMINT_CTX *psDevmemCtx)
 {
-  IMG_UINT32 ui32RefCount;
-  
-  OSLockAcquire (psDevmemCtx->hLock);
-  ui32RefCount = --psDevmemCtx->ui32RefCount;
-  OSLockRelease (psDevmemCtx->hLock);
-  
-  if (ui32RefCount == 0)
-  {
-    /* The last reference has gone, destroy the context */
-    PVRSRV_DEVICE_NODE * psDevNode = psDevmemCtx->psDevNode;
-    
-    if (psDevNode->pfnUnregisterMemoryContext)
-    {
-      psDevNode->pfnUnregisterMemoryContext (psDevmemCtx->hPrivData);
-    }
-    MMU_ContextDestroy (psDevmemCtx->psMMUContext);
-    OSLockDestroy (psDevmemCtx->hLock);
-    
-    PVR_DPF ( (PVR_DBG_MESSAGE, "%s: Freed memory context %p", __FUNCTION__, psDevmemCtx) );
-    OSFreeMem (psDevmemCtx);
-  }
+	IMG_UINT32 ui32RefCount;
+
+	OSLockAcquire(psDevmemCtx->hLock);
+	ui32RefCount = --psDevmemCtx->ui32RefCount;
+	OSLockRelease(psDevmemCtx->hLock);
+
+	if (ui32RefCount == 0)
+	{
+		/* The last reference has gone, destroy the context */
+		PVRSRV_DEVICE_NODE *psDevNode = psDevmemCtx->psDevNode;
+	
+		if (psDevNode->pfnUnregisterMemoryContext)
+		{
+			psDevNode->pfnUnregisterMemoryContext(psDevmemCtx->hPrivData);
+		}
+	    MMU_ContextDestroy(psDevmemCtx->psMMUContext);
+	    OSLockDestroy(psDevmemCtx->hLock);
+	
+		PVR_DPF((PVR_DBG_MESSAGE, "%s: Freed memory context %p", __FUNCTION__, psDevmemCtx));
+		OSFreeMem(psDevmemCtx);
+	}
 }
 
 /*************************************************************************/ /*!
@@ -154,11 +154,11 @@ static INLINE IMG_VOID _DevmemIntCtxRelease (DEVMEMINT_CTX * psDevmemCtx)
 @Description    Acquire a reference to the provided device memory heap.
 @Return         None
 */ /**************************************************************************/
-static INLINE IMG_VOID _DevmemIntHeapAcquire (DEVMEMINT_HEAP * psDevmemHeap)
+static INLINE IMG_VOID _DevmemIntHeapAcquire(DEVMEMINT_HEAP *psDevmemHeap)
 {
-  OSLockAcquire (psDevmemHeap->hLock);
-  psDevmemHeap->ui32RefCount++;
-  OSLockRelease (psDevmemHeap->hLock);
+	OSLockAcquire(psDevmemHeap->hLock);
+	psDevmemHeap->ui32RefCount++;
+	OSLockRelease(psDevmemHeap->hLock);
 }
 
 /*************************************************************************/ /*!
@@ -168,11 +168,11 @@ static INLINE IMG_VOID _DevmemIntHeapAcquire (DEVMEMINT_HEAP * psDevmemHeap)
                 memory context will be freed.
 @Return         None
 */ /**************************************************************************/
-static INLINE IMG_VOID _DevmemIntHeapRelease (DEVMEMINT_HEAP * psDevmemHeap)
+static INLINE IMG_VOID _DevmemIntHeapRelease(DEVMEMINT_HEAP *psDevmemHeap)
 {
-  OSLockAcquire (psDevmemHeap->hLock);
-  psDevmemHeap->ui32RefCount--;
-  OSLockRelease (psDevmemHeap->hLock);
+	OSLockAcquire(psDevmemHeap->hLock);
+	psDevmemHeap->ui32RefCount--;
+	OSLockRelease(psDevmemHeap->hLock);
 }
 
 /*************************************************************************/ /*!
@@ -182,22 +182,22 @@ static INLINE IMG_VOID _DevmemIntHeapRelease (DEVMEMINT_HEAP * psDevmemHeap)
                 PVRSRV_ERROR failure code
 */ /**************************************************************************/
 PVRSRV_ERROR
-DevmemServerGetImportHandle (DEVMEM_MEMDESC * psMemDesc,
-                             IMG_HANDLE * phImport)
+DevmemServerGetImportHandle(DEVMEM_MEMDESC *psMemDesc,
+						   IMG_HANDLE *phImport)
 {
-  PVRSRV_ERROR eError;
-  
-  if (psMemDesc->psImport->bExportable == IMG_FALSE)
-  {
-    eError = PVRSRV_ERROR_DEVICEMEM_CANT_EXPORT_SUBALLOCATION;
-    goto e0;
-  }
-  
-  *phImport = psMemDesc->psImport->hPMR;
-  return PVRSRV_OK;
-  
+	PVRSRV_ERROR eError;
+
+	if (psMemDesc->psImport->bExportable == IMG_FALSE)
+	{
+        eError = PVRSRV_ERROR_DEVICEMEM_CANT_EXPORT_SUBALLOCATION;
+        goto e0;
+	}
+
+	*phImport = psMemDesc->psImport->hPMR;
+	return PVRSRV_OK;
+
 e0:
-  return eError;
+	return eError;
 }
 
 /*************************************************************************/ /*!
@@ -206,11 +206,11 @@ e0:
 @Return         PVRSRV_ERROR failure code
 */ /**************************************************************************/
 PVRSRV_ERROR
-DevmemServerGetHeapHandle (DEVMEMINT_RESERVATION * psReservation,
-                           IMG_HANDLE * phHeap)
+DevmemServerGetHeapHandle(DEVMEMINT_RESERVATION *psReservation,
+						   IMG_HANDLE *phHeap)
 {
-  *phHeap = psReservation->psDevmemHeap;
-  return PVRSRV_OK;
+	*phHeap = psReservation->psDevmemHeap;
+	return PVRSRV_OK;
 }
 
 
@@ -222,342 +222,342 @@ DevmemServerGetHeapHandle (DEVMEMINT_RESERVATION * psReservation,
                 PVRSRV_ERROR failure code
 */ /**************************************************************************/
 PVRSRV_ERROR
-DevmemIntCtxCreate (
-  PVRSRV_DEVICE_NODE * psDeviceNode,
-  DEVMEMINT_CTX ** ppsDevmemCtxPtr,
-  IMG_HANDLE * hPrivData
-)
+DevmemIntCtxCreate(
+                   PVRSRV_DEVICE_NODE *psDeviceNode,
+                   DEVMEMINT_CTX **ppsDevmemCtxPtr,
+                   IMG_HANDLE *hPrivData
+                   )
 {
-  PVRSRV_ERROR eError;
-  DEVMEMINT_CTX * psDevmemCtx;
-  IMG_HANDLE hPrivDataInt = IMG_NULL;
-  
-  PVR_DPF ( (PVR_DBG_MESSAGE, "%s", __FUNCTION__) );
-  
-  /* allocate a Devmem context */
-  psDevmemCtx = OSAllocMem (sizeof * psDevmemCtx);
-  if (psDevmemCtx == IMG_NULL)
-  {
-    eError = PVRSRV_ERROR_OUT_OF_MEMORY;
-    PVR_DPF ( (PVR_DBG_ERROR, "%s: Alloc failed", __FUNCTION__) );
-    goto fail_alloc;
-  }
-  
-  eError = OSLockCreate (&psDevmemCtx->hLock, LOCK_TYPE_PASSIVE);
-  if (eError != PVRSRV_OK)
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "%s: Failed to create lock", __FUNCTION__) );
-    goto fail_lock;
-  }
-  
-  psDevmemCtx->ui32RefCount = 1;
-  psDevmemCtx->psDevNode = psDeviceNode;
-  
-  /* Call down to MMU context creation */
-  
-  eError = MMU_ContextCreate (psDeviceNode,
-                              &psDevmemCtx->psMMUContext);
-  if (eError != PVRSRV_OK)
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "%s: MMU_ContextCreate failed", __FUNCTION__) );
-    goto fail_mmucontext;
-  }
-  
-  
-  if (psDeviceNode->pfnRegisterMemoryContext)
-  {
-    eError = psDeviceNode->pfnRegisterMemoryContext (psDeviceNode, psDevmemCtx->psMMUContext, &hPrivDataInt);
+    PVRSRV_ERROR eError;
+    DEVMEMINT_CTX *psDevmemCtx;
+    IMG_HANDLE hPrivDataInt = IMG_NULL;
+
+	PVR_DPF((PVR_DBG_MESSAGE, "%s", __FUNCTION__));
+
+	/* allocate a Devmem context */
+    psDevmemCtx = OSAllocMem(sizeof *psDevmemCtx);
+    if (psDevmemCtx == IMG_NULL)
+	{
+        eError = PVRSRV_ERROR_OUT_OF_MEMORY;
+		PVR_DPF ((PVR_DBG_ERROR, "%s: Alloc failed", __FUNCTION__));
+        goto fail_alloc;
+	}
+
+	eError = OSLockCreate(&psDevmemCtx->hLock, LOCK_TYPE_PASSIVE);
+	if (eError != PVRSRV_OK)
+	{
+		PVR_DPF((PVR_DBG_ERROR, "%s: Failed to create lock", __FUNCTION__));
+		goto fail_lock;
+	}
+
+	psDevmemCtx->ui32RefCount = 1;
+    psDevmemCtx->psDevNode = psDeviceNode;
+
+    /* Call down to MMU context creation */
+
+    eError = MMU_ContextCreate(psDeviceNode,
+                               &psDevmemCtx->psMMUContext);
+	if (eError != PVRSRV_OK)
+	{
+		PVR_DPF((PVR_DBG_ERROR, "%s: MMU_ContextCreate failed", __FUNCTION__));
+		goto fail_mmucontext;
+	}
+
+
+	if (psDeviceNode->pfnRegisterMemoryContext)
+	{
+		eError = psDeviceNode->pfnRegisterMemoryContext(psDeviceNode, psDevmemCtx->psMMUContext, &hPrivDataInt);
+		if (eError != PVRSRV_OK)
+		{
+			PVR_DPF((PVR_DBG_ERROR, "%s: Failed to register MMU context", __FUNCTION__));
+			goto fail_register;
+		}
+	}
+
+	/* Store the private data as it is required to unregister the memory context */
+	psDevmemCtx->hPrivData = hPrivDataInt;
+	*hPrivData = hPrivDataInt;
+    *ppsDevmemCtxPtr = psDevmemCtx;
+
+	return PVRSRV_OK;
+
+fail_register:
+    MMU_ContextDestroy(psDevmemCtx->psMMUContext);
+
+fail_mmucontext:
+	OSLockDestroy(psDevmemCtx->hLock);
+
+fail_lock:
+    OSFreeMem(psDevmemCtx);
+
+fail_alloc:
+    PVR_ASSERT(eError != PVRSRV_OK);
+    return eError;
+}
+
+/*************************************************************************/ /*!
+@Function       DevmemIntCtxCreate
+@Description    Creates and initialises a device memory context.
+@Return         valid Device Memory context handle - Success
+                PVRSRV_ERROR failure code
+*/ /**************************************************************************/
+PVRSRV_ERROR
+DevmemIntHeapCreate(
+                    DEVMEMINT_CTX *psDevmemCtx,
+                    IMG_DEV_VIRTADDR sHeapBaseAddr,
+                    IMG_DEVMEM_SIZE_T uiHeapLength,
+                    IMG_UINT32 uiLog2DataPageSize,
+                    DEVMEMINT_HEAP **ppsDevmemHeapPtr
+                    )
+{
+    PVRSRV_ERROR eError;
+    DEVMEMINT_HEAP *psDevmemHeap;
+
+	PVR_DPF((PVR_DBG_MESSAGE, "%s: DevmemIntHeap_Create", __FUNCTION__));
+
+	/* allocate a Devmem context */
+	psDevmemHeap = OSAllocMem(sizeof *psDevmemHeap);
+    if (psDevmemHeap == IMG_NULL)
+	{
+        eError = PVRSRV_ERROR_OUT_OF_MEMORY;
+		PVR_DPF ((PVR_DBG_ERROR, "%s: Alloc failed", __FUNCTION__));
+        goto fail_alloc;
+	}
+
+	eError = OSLockCreate(&psDevmemHeap->hLock, LOCK_TYPE_PASSIVE);
+	if (eError != PVRSRV_OK)
+	{
+		PVR_DPF((PVR_DBG_ERROR, "%s: Failed to create lock", __FUNCTION__));
+		goto fail_lock;
+	}
+
+    psDevmemHeap->psDevmemCtx = psDevmemCtx;
+
+	_DevmemIntCtxAcquire(psDevmemHeap->psDevmemCtx);
+
+	psDevmemHeap->ui32RefCount = 1;
+
+    *ppsDevmemHeapPtr = psDevmemHeap;
+
+	return PVRSRV_OK;
+
+fail_lock:
+	OSFreeMem(psDevmemHeap);
+
+fail_alloc:
+    return eError;
+}
+
+PVRSRV_ERROR
+DevmemIntMapPMR(DEVMEMINT_HEAP *psDevmemHeap,
+                DEVMEMINT_RESERVATION *psReservation,
+                PMR *psPMR,
+                PVRSRV_MEMALLOCFLAGS_T uiMapFlags,
+                DEVMEMINT_MAPPING **ppsMappingPtr)
+{
+    PVRSRV_ERROR eError;
+    DEVMEMINT_MAPPING *psMapping;
+    /* page-size in device MMU */
+    IMG_UINT32 uiLog2DevPageSize;
+    /* number of pages (device pages) that allocation spans */
+    IMG_UINT32 ui32NumDevPages;
+    /* device virtual address of start of allocation */
+    IMG_DEV_VIRTADDR sAllocationDevVAddr;
+    /* and its length */
+    IMG_DEVMEM_SIZE_T uiAllocationSize;
+
+	/* allocate memory to record the mapping info */
+	psMapping = OSAllocMem(sizeof *psMapping);
+    if (psMapping == IMG_NULL)
+	{
+        eError = PVRSRV_ERROR_OUT_OF_MEMORY;
+		PVR_DPF ((PVR_DBG_ERROR, "DevmemIntMapPMR: Alloc failed"));
+        goto e0;
+	}
+
+    uiAllocationSize = psReservation->uiLength;
+
+    uiLog2DevPageSize = 12;
+    ui32NumDevPages = 0xffffffffU & (((uiAllocationSize - 1)
+                                      >> uiLog2DevPageSize) + 1);
+    PVR_ASSERT(ui32NumDevPages << uiLog2DevPageSize == uiAllocationSize);
+
+    eError = PMRLockSysPhysAddresses(psPMR,
+                                     uiLog2DevPageSize);
+    if (eError != PVRSRV_OK)
+	{
+        goto e2;
+	}
+
+    sAllocationDevVAddr = psReservation->sBase;
+
+    /*  N.B.  We pass mapping permission flags to MMU_MapPMR and let
+       it reject the mapping if the permissions on the PMR are not compatible. */
+
+    eError = MMU_MapPMR (psDevmemHeap->psDevmemCtx->psMMUContext,
+                         sAllocationDevVAddr,
+                         psPMR,
+                         ui32NumDevPages << uiLog2DevPageSize,
+                         uiMapFlags);
+    PVR_ASSERT(eError == PVRSRV_OK);
+
+    psMapping->psReservation = psReservation;
+    psMapping->uiNumPages = ui32NumDevPages;
+    psMapping->uiLog2PageSize = uiLog2DevPageSize;
+    psMapping->psPMR = psPMR;
+    /* Don't bother with refcount on reservation, as a reservation
+       only ever holds one mapping, so we directly increment the
+       refcount on the heap instead */
+    _DevmemIntHeapAcquire(psMapping->psReservation->psDevmemHeap);
+
+    *ppsMappingPtr = psMapping;
+
+    return PVRSRV_OK;
+
+ e2:
+	OSFreeMem(psMapping);
+
+ e0:
+    PVR_ASSERT (eError != PVRSRV_OK);
+    return eError;
+}
+
+
+PVRSRV_ERROR
+DevmemIntUnmapPMR(DEVMEMINT_MAPPING *psMapping)
+{
+    PVRSRV_ERROR eError;
+    DEVMEMINT_HEAP *psDevmemHeap;
+    /* device virtual address of start of allocation */
+    IMG_DEV_VIRTADDR sAllocationDevVAddr;
+    /* number of pages (device pages) that allocation spans */
+    IMG_UINT32 ui32NumDevPages;
+
+    psDevmemHeap = psMapping->psReservation->psDevmemHeap;
+
+    ui32NumDevPages = psMapping->uiNumPages;
+    sAllocationDevVAddr = psMapping->psReservation->sBase;
+
+    MMU_UnmapPages (psDevmemHeap->psDevmemCtx->psMMUContext,
+                    sAllocationDevVAddr,
+                    ui32NumDevPages);
+
+    eError = PMRUnlockSysPhysAddresses(psMapping->psPMR);
+    PVR_ASSERT(eError == PVRSRV_OK);
+
+    /* Don't bother with refcount on reservation, as a reservation
+       only ever holds one mapping, so we directly decrement the
+       refcount on the heap instead */
+    _DevmemIntHeapRelease(psDevmemHeap);
+
+	OSFreeMem(psMapping);
+
+    return PVRSRV_OK;
+}
+
+
+PVRSRV_ERROR
+DevmemIntReserveRange(DEVMEMINT_HEAP *psDevmemHeap,
+                      IMG_DEV_VIRTADDR sAllocationDevVAddr,
+                      IMG_DEVMEM_SIZE_T uiAllocationSize,
+                      DEVMEMINT_RESERVATION **ppsReservationPtr)
+{
+    PVRSRV_ERROR eError;
+    DEVMEMINT_RESERVATION *psReservation;
+
+	/* allocate memory to record the reservation info */
+	psReservation = OSAllocMem(sizeof *psReservation);
+    if (psReservation == IMG_NULL)
+	{
+        eError = PVRSRV_ERROR_OUT_OF_MEMORY;
+		PVR_DPF ((PVR_DBG_ERROR, "DevmemIntReserveRange: Alloc failed"));
+        goto e0;
+	}
+
+    psReservation->sBase = sAllocationDevVAddr;
+    psReservation->uiLength = uiAllocationSize;
+
+    eError = MMU_Alloc (psDevmemHeap->psDevmemCtx->psMMUContext,
+                        uiAllocationSize,
+                        &uiAllocationSize,
+                        0, /* IMG_UINT32 uiProtFlags */
+                        0, /* alignment is n/a since we supply devvaddr */
+                        &sAllocationDevVAddr);
     if (eError != PVRSRV_OK)
     {
-      PVR_DPF ( (PVR_DBG_ERROR, "%s: Failed to register MMU context", __FUNCTION__) );
-      goto fail_register;
+        goto e1;
     }
-  }
-  
-  /* Store the private data as it is required to unregister the memory context */
-  psDevmemCtx->hPrivData = hPrivDataInt;
-  *hPrivData = hPrivDataInt;
-  *ppsDevmemCtxPtr = psDevmemCtx;
-  
-  return PVRSRV_OK;
-  
-fail_register:
-  MMU_ContextDestroy (psDevmemCtx->psMMUContext);
-  
-fail_mmucontext:
-  OSLockDestroy (psDevmemCtx->hLock);
-  
-fail_lock:
-  OSFreeMem (psDevmemCtx);
-  
-fail_alloc:
-  PVR_ASSERT (eError != PVRSRV_OK);
-  return eError;
-}
 
-/*************************************************************************/ /*!
-@Function       DevmemIntCtxCreate
-@Description    Creates and initialises a device memory context.
-@Return         valid Device Memory context handle - Success
-                PVRSRV_ERROR failure code
-*/ /**************************************************************************/
-PVRSRV_ERROR
-DevmemIntHeapCreate (
-  DEVMEMINT_CTX * psDevmemCtx,
-  IMG_DEV_VIRTADDR sHeapBaseAddr,
-  IMG_DEVMEM_SIZE_T uiHeapLength,
-  IMG_UINT32 uiLog2DataPageSize,
-  DEVMEMINT_HEAP ** ppsDevmemHeapPtr
-)
-{
-  PVRSRV_ERROR eError;
-  DEVMEMINT_HEAP * psDevmemHeap;
-  
-  PVR_DPF ( (PVR_DBG_MESSAGE, "%s: DevmemIntHeap_Create", __FUNCTION__) );
-  
-  /* allocate a Devmem context */
-  psDevmemHeap = OSAllocMem (sizeof * psDevmemHeap);
-  if (psDevmemHeap == IMG_NULL)
-  {
-    eError = PVRSRV_ERROR_OUT_OF_MEMORY;
-    PVR_DPF ( (PVR_DBG_ERROR, "%s: Alloc failed", __FUNCTION__) );
-    goto fail_alloc;
-  }
-  
-  eError = OSLockCreate (&psDevmemHeap->hLock, LOCK_TYPE_PASSIVE);
-  if (eError != PVRSRV_OK)
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "%s: Failed to create lock", __FUNCTION__) );
-    goto fail_lock;
-  }
-  
-  psDevmemHeap->psDevmemCtx = psDevmemCtx;
-  
-  _DevmemIntCtxAcquire (psDevmemHeap->psDevmemCtx);
-  
-  psDevmemHeap->ui32RefCount = 1;
-  
-  *ppsDevmemHeapPtr = psDevmemHeap;
-  
-  return PVRSRV_OK;
-  
-fail_lock:
-  OSFreeMem (psDevmemHeap);
-  
-fail_alloc:
-  return eError;
-}
+    /* since we supplied the virt addr, MMU_Alloc shouldn't have
+       chosen a new one for us */
+    PVR_ASSERT(sAllocationDevVAddr.uiAddr == psReservation->sBase.uiAddr);
 
-PVRSRV_ERROR
-DevmemIntMapPMR (DEVMEMINT_HEAP * psDevmemHeap,
-                 DEVMEMINT_RESERVATION * psReservation,
-                 PMR * psPMR,
-                 PVRSRV_MEMALLOCFLAGS_T uiMapFlags,
-                 DEVMEMINT_MAPPING ** ppsMappingPtr)
-{
-  PVRSRV_ERROR eError;
-  DEVMEMINT_MAPPING * psMapping;
-  /* page-size in device MMU */
-  IMG_UINT32 uiLog2DevPageSize;
-  /* number of pages (device pages) that allocation spans */
-  IMG_UINT32 ui32NumDevPages;
-  /* device virtual address of start of allocation */
-  IMG_DEV_VIRTADDR sAllocationDevVAddr;
-  /* and its length */
-  IMG_DEVMEM_SIZE_T uiAllocationSize;
-  
-  /* allocate memory to record the mapping info */
-  psMapping = OSAllocMem (sizeof * psMapping);
-  if (psMapping == IMG_NULL)
-  {
-    eError = PVRSRV_ERROR_OUT_OF_MEMORY;
-    PVR_DPF ( (PVR_DBG_ERROR, "DevmemIntMapPMR: Alloc failed") );
-    goto e0;
-  }
-  
-  uiAllocationSize = psReservation->uiLength;
-  
-  uiLog2DevPageSize = 12;
-  ui32NumDevPages = 0xffffffffU & ( ( (uiAllocationSize - 1)
-                                      >> uiLog2DevPageSize) + 1);
-  PVR_ASSERT (ui32NumDevPages << uiLog2DevPageSize == uiAllocationSize);
-  
-  eError = PMRLockSysPhysAddresses (psPMR,
-                                    uiLog2DevPageSize);
-  if (eError != PVRSRV_OK)
-  {
-    goto e2;
-  }
-  
-  sAllocationDevVAddr = psReservation->sBase;
-  
-  /*  N.B.  We pass mapping permission flags to MMU_MapPMR and let
-     it reject the mapping if the permissions on the PMR are not compatible. */
-  
-  eError = MMU_MapPMR (psDevmemHeap->psDevmemCtx->psMMUContext,
-                       sAllocationDevVAddr,
-                       psPMR,
-                       ui32NumDevPages << uiLog2DevPageSize,
-                       uiMapFlags);
-  PVR_ASSERT (eError == PVRSRV_OK);
-  
-  psMapping->psReservation = psReservation;
-  psMapping->uiNumPages = ui32NumDevPages;
-  psMapping->uiLog2PageSize = uiLog2DevPageSize;
-  psMapping->psPMR = psPMR;
-  /* Don't bother with refcount on reservation, as a reservation
-     only ever holds one mapping, so we directly increment the
-     refcount on the heap instead */
-  _DevmemIntHeapAcquire (psMapping->psReservation->psDevmemHeap);
-  
-  *ppsMappingPtr = psMapping;
-  
-  return PVRSRV_OK;
-  
-e2:
-  OSFreeMem (psMapping);
-  
-e0:
-  PVR_ASSERT (eError != PVRSRV_OK);
-  return eError;
-}
+	_DevmemIntHeapAcquire(psDevmemHeap);
 
+    psReservation->psDevmemHeap = psDevmemHeap;
+    *ppsReservationPtr = psReservation;
 
-PVRSRV_ERROR
-DevmemIntUnmapPMR (DEVMEMINT_MAPPING * psMapping)
-{
-  PVRSRV_ERROR eError;
-  DEVMEMINT_HEAP * psDevmemHeap;
-  /* device virtual address of start of allocation */
-  IMG_DEV_VIRTADDR sAllocationDevVAddr;
-  /* number of pages (device pages) that allocation spans */
-  IMG_UINT32 ui32NumDevPages;
-  
-  psDevmemHeap = psMapping->psReservation->psDevmemHeap;
-  
-  ui32NumDevPages = psMapping->uiNumPages;
-  sAllocationDevVAddr = psMapping->psReservation->sBase;
-  
-  MMU_UnmapPages (psDevmemHeap->psDevmemCtx->psMMUContext,
-                  sAllocationDevVAddr,
-                  ui32NumDevPages);
-                  
-  eError = PMRUnlockSysPhysAddresses (psMapping->psPMR);
-  PVR_ASSERT (eError == PVRSRV_OK);
-  
-  /* Don't bother with refcount on reservation, as a reservation
-     only ever holds one mapping, so we directly decrement the
-     refcount on the heap instead */
-  _DevmemIntHeapRelease (psDevmemHeap);
-  
-  OSFreeMem (psMapping);
-  
-  return PVRSRV_OK;
-}
+    return PVRSRV_OK;
 
-
-PVRSRV_ERROR
-DevmemIntReserveRange (DEVMEMINT_HEAP * psDevmemHeap,
-                       IMG_DEV_VIRTADDR sAllocationDevVAddr,
-                       IMG_DEVMEM_SIZE_T uiAllocationSize,
-                       DEVMEMINT_RESERVATION ** ppsReservationPtr)
-{
-  PVRSRV_ERROR eError;
-  DEVMEMINT_RESERVATION * psReservation;
-  
-  /* allocate memory to record the reservation info */
-  psReservation = OSAllocMem (sizeof * psReservation);
-  if (psReservation == IMG_NULL)
-  {
-    eError = PVRSRV_ERROR_OUT_OF_MEMORY;
-    PVR_DPF ( (PVR_DBG_ERROR, "DevmemIntReserveRange: Alloc failed") );
-    goto e0;
-  }
-  
-  psReservation->sBase = sAllocationDevVAddr;
-  psReservation->uiLength = uiAllocationSize;
-  
-  eError = MMU_Alloc (psDevmemHeap->psDevmemCtx->psMMUContext,
-                      uiAllocationSize,
-                      &uiAllocationSize,
-                      0, /* IMG_UINT32 uiProtFlags */
-                      0, /* alignment is n/a since we supply devvaddr */
-                      &sAllocationDevVAddr);
-  if (eError != PVRSRV_OK)
-  {
-    goto e1;
-  }
-  
-  /* since we supplied the virt addr, MMU_Alloc shouldn't have
-     chosen a new one for us */
-  PVR_ASSERT (sAllocationDevVAddr.uiAddr == psReservation->sBase.uiAddr);
-  
-  _DevmemIntHeapAcquire (psDevmemHeap);
-  
-  psReservation->psDevmemHeap = psDevmemHeap;
-  *ppsReservationPtr = psReservation;
-  
-  return PVRSRV_OK;
-  
-  /*
-    error exit paths follow
-  */
-  
-e1:
-  OSFreeMem (psReservation);
-  
-e0:
-  PVR_ASSERT (eError != PVRSRV_OK);
-  return eError;
-}
-
-PVRSRV_ERROR
-DevmemIntUnreserveRange (DEVMEMINT_RESERVATION * psReservation)
-{
-  MMU_Free (psReservation->psDevmemHeap->psDevmemCtx->psMMUContext,
-            psReservation->sBase,
-            psReservation->uiLength);
-            
-  _DevmemIntHeapRelease (psReservation->psDevmemHeap);
-  OSFreeMem (psReservation);
-  
-  return PVRSRV_OK;
-}
-
-PVRSRV_ERROR
-DevmemIntHeapDestroy (
-  DEVMEMINT_HEAP * psDevmemHeap
-)
-{
-  if (psDevmemHeap->ui32RefCount != 1)
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "BUG!  %s called but has too many references (%d) "
-               "which probably means allocations have been made from the heap and not freed",
-               __FUNCTION__,
-               psDevmemHeap->ui32RefCount) );
     /*
-    Try again later when you've freed all the memory
-    
-    Note:
-    While we don't expect the application to retry (after all this call
-    would succeed if the client had freed all the memory which it should
-    have done before calling this function) resman will retry at which
-    point any allocations leaked by the client will have also been cleaned
-    up by resman and so this call would then succeed.
+      error exit paths follow
     */
-    return PVRSRV_ERROR_RETRY;
-  }
-  
-  PVR_ASSERT (psDevmemHeap->ui32RefCount == 1);
-  
-  _DevmemIntCtxRelease (psDevmemHeap->psDevmemCtx);
-  
-  OSLockDestroy (psDevmemHeap->hLock);
-  
-  PVR_DPF ( (PVR_DBG_MESSAGE, "%s: Freed heap %p", __FUNCTION__, psDevmemHeap) );
-  OSFreeMem (psDevmemHeap);
-  
-  return PVRSRV_OK;
+
+ e1:
+	OSFreeMem(psReservation);
+
+ e0:
+    PVR_ASSERT(eError != PVRSRV_OK);
+    return eError;
+}
+
+PVRSRV_ERROR
+DevmemIntUnreserveRange(DEVMEMINT_RESERVATION *psReservation)
+{
+    MMU_Free (psReservation->psDevmemHeap->psDevmemCtx->psMMUContext,
+              psReservation->sBase,
+              psReservation->uiLength);
+
+	_DevmemIntHeapRelease(psReservation->psDevmemHeap);
+	OSFreeMem(psReservation);
+
+    return PVRSRV_OK;
+}
+
+PVRSRV_ERROR
+DevmemIntHeapDestroy(
+                     DEVMEMINT_HEAP *psDevmemHeap
+                     )
+{
+    if (psDevmemHeap->ui32RefCount != 1)
+    {
+        PVR_DPF((PVR_DBG_ERROR, "BUG!  %s called but has too many references (%d) "
+                 "which probably means allocations have been made from the heap and not freed",
+                 __FUNCTION__,
+                 psDevmemHeap->ui32RefCount));
+        /*
+			Try again later when you've freed all the memory
+
+			Note:
+			While we don't expect the application to retry (after all this call
+			would succeed if the client had freed all the memory which it should
+			have done before calling this function) resman will retry at which
+			point any allocations leaked by the client will have also been cleaned
+			up by resman and so this call would then succeed.
+        */
+        return PVRSRV_ERROR_RETRY;
+    }
+
+    PVR_ASSERT(psDevmemHeap->ui32RefCount == 1);
+
+	_DevmemIntCtxRelease(psDevmemHeap->psDevmemCtx);
+
+	OSLockDestroy(psDevmemHeap->hLock);
+
+	PVR_DPF((PVR_DBG_MESSAGE, "%s: Freed heap %p", __FUNCTION__, psDevmemHeap));
+	OSFreeMem(psDevmemHeap);
+
+	return PVRSRV_OK;
 }
 
 
@@ -568,22 +568,22 @@ DevmemIntHeapDestroy (
 @Return         cannot fail.
 */ /**************************************************************************/
 PVRSRV_ERROR
-DevmemIntCtxDestroy (
-  DEVMEMINT_CTX * psDevmemCtx
-)
+DevmemIntCtxDestroy(
+                    DEVMEMINT_CTX *psDevmemCtx
+                    )
 {
-  /*
-    We can't determine if we should be freeing the context here
-    as it refcount!=1 could be due to either the fact that heap(s)
-    remain with allocations on them, or that this memory context
-    has been exported.
-    As the client couldn’t do anything useful with this information
-    anyway and the fact that the refcount will ensure we only
-    free the context when _all_ references have been released
-    don't bother checking and just return OK regardless.
-  */
-  _DevmemIntCtxRelease (psDevmemCtx);
-  return PVRSRV_OK;
+	/*
+		We can't determine if we should be freeing the context here
+		as it refcount!=1 could be due to either the fact that heap(s)
+		remain with allocations on them, or that this memory context
+		has been exported.
+		As the client couldn’t do anything useful with this information
+		anyway and the fact that the refcount will ensure we only
+		free the context when _all_ references have been released
+		don't bother checking and just return OK regardless.
+	*/
+	_DevmemIntCtxRelease(psDevmemCtx);
+	return PVRSRV_OK;
 }
 
 /*************************************************************************/ /*!
@@ -593,21 +593,21 @@ DevmemIntCtxDestroy (
                 PVRSRV_ERROR failure code
 */ /**************************************************************************/
 PVRSRV_ERROR
-DevmemIntCtxExport (DEVMEMINT_CTX * psDevmemCtx,
-                    DEVMEMINT_CTX_EXPORT ** ppsExport)
+DevmemIntCtxExport(DEVMEMINT_CTX *psDevmemCtx,
+                   DEVMEMINT_CTX_EXPORT **ppsExport)
 {
-  DEVMEMINT_CTX_EXPORT * psExport;
-  
-  psExport = OSAllocMem (sizeof (*psExport) );
-  if (psExport == IMG_NULL)
-  {
-    return PVRSRV_ERROR_OUT_OF_MEMORY;
-  }
-  _DevmemIntCtxAcquire (psDevmemCtx);
-  psExport->psDevmemCtx = psDevmemCtx;
-  
-  *ppsExport = psExport;
-  return PVRSRV_OK;
+	DEVMEMINT_CTX_EXPORT *psExport;
+
+	psExport = OSAllocMem(sizeof(*psExport));
+	if (psExport == IMG_NULL)
+	{
+		return PVRSRV_ERROR_OUT_OF_MEMORY;
+	}
+	_DevmemIntCtxAcquire(psDevmemCtx);
+	psExport->psDevmemCtx = psDevmemCtx;
+	
+	*ppsExport = psExport;
+	return PVRSRV_OK;
 }
 
 /*************************************************************************/ /*!
@@ -616,11 +616,11 @@ DevmemIntCtxExport (DEVMEMINT_CTX * psDevmemCtx,
 @Return         None
 */ /**************************************************************************/
 PVRSRV_ERROR
-DevmemIntCtxUnexport (DEVMEMINT_CTX_EXPORT * psExport)
+DevmemIntCtxUnexport(DEVMEMINT_CTX_EXPORT *psExport)
 {
-  _DevmemIntCtxRelease (psExport->psDevmemCtx);
-  OSFreeMem (psExport);
-  return PVRSRV_OK;
+	_DevmemIntCtxRelease(psExport->psDevmemCtx);
+	OSFreeMem(psExport);
+	return PVRSRV_OK;
 }
 
 /*************************************************************************/ /*!
@@ -630,18 +630,18 @@ DevmemIntCtxUnexport (DEVMEMINT_CTX_EXPORT * psExport)
                 PVRSRV_ERROR failure code
 */ /**************************************************************************/
 PVRSRV_ERROR
-DevmemIntCtxImport (DEVMEMINT_CTX_EXPORT * psExport,
-                    DEVMEMINT_CTX ** ppsDevmemCtxPtr,
-                    IMG_HANDLE * hPrivData)
+DevmemIntCtxImport(DEVMEMINT_CTX_EXPORT *psExport,
+				   DEVMEMINT_CTX **ppsDevmemCtxPtr,
+				   IMG_HANDLE *hPrivData)
 {
-  DEVMEMINT_CTX * psDevmemCtx = psExport->psDevmemCtx;
-  
-  _DevmemIntCtxAcquire (psDevmemCtx);
-  
-  *ppsDevmemCtxPtr = psDevmemCtx;
-  *hPrivData = psDevmemCtx->hPrivData;
-  
-  return PVRSRV_OK;
+	DEVMEMINT_CTX *psDevmemCtx = psExport->psDevmemCtx;
+
+	_DevmemIntCtxAcquire(psDevmemCtx);
+
+	*ppsDevmemCtxPtr = psDevmemCtx;
+	*hPrivData = psDevmemCtx->hPrivData;
+
+	return PVRSRV_OK;
 }
 
 /*************************************************************************/ /*!
@@ -652,105 +652,105 @@ DevmemIntCtxImport (DEVMEMINT_CTX_EXPORT * psExport,
 @Return         PVRSRV_OK
 */ /**************************************************************************/
 PVRSRV_ERROR
-DevmemSLCFlushInvalRequest (PVRSRV_DEVICE_NODE * psDeviceNode,
-                            PMR * psPmr)
+DevmemSLCFlushInvalRequest(PVRSRV_DEVICE_NODE *psDeviceNode,
+							PMR *psPmr)
 {
 
-  /* invoke SLC flush and invalidate request */
-  psDeviceNode->pfnSLCCacheInvalidateRequest (psDeviceNode, psPmr);
-  
-  return PVRSRV_OK;
+	/* invoke SLC flush and invalidate request */
+	psDeviceNode->pfnSLCCacheInvalidateRequest(psDeviceNode, psPmr);
+
+	return PVRSRV_OK;
 }
 
 #if defined (PDUMP)
-IMG_UINT32 DevmemIntMMUContextID (DEVMEMINT_CTX * psDevMemContext)
+IMG_UINT32 DevmemIntMMUContextID(DEVMEMINT_CTX *psDevMemContext)
 {
-  IMG_UINT32 ui32MMUContextID;
-  MMU_AcquirePDumpMMUContext (psDevMemContext->psMMUContext, &ui32MMUContextID);
-  return ui32MMUContextID;
+	IMG_UINT32 ui32MMUContextID;
+	MMU_AcquirePDumpMMUContext(psDevMemContext->psMMUContext, &ui32MMUContextID);
+	return ui32MMUContextID;
 }
 
 PVRSRV_ERROR
-DevmemIntPDumpSaveToFileVirtual (DEVMEMINT_CTX * psDevmemCtx,
-                                 IMG_DEV_VIRTADDR sDevAddrStart,
-                                 IMG_DEVMEM_SIZE_T uiSize,
-                                 IMG_UINT32 ui32ArraySize,
-                                 const IMG_CHAR * pszFilename,
-                                 IMG_UINT32 ui32FileOffset,
-                                 IMG_UINT32 ui32PDumpFlags)
+DevmemIntPDumpSaveToFileVirtual(DEVMEMINT_CTX *psDevmemCtx,
+                                IMG_DEV_VIRTADDR sDevAddrStart,
+                                IMG_DEVMEM_SIZE_T uiSize,
+                                IMG_UINT32 ui32ArraySize,
+                                const IMG_CHAR *pszFilename,
+								IMG_UINT32 ui32FileOffset,
+								IMG_UINT32 ui32PDumpFlags)
 {
-  PVRSRV_ERROR eError;
-  IMG_UINT32 uiPDumpMMUCtx;
-  
-  PVR_UNREFERENCED_PARAMETER (ui32ArraySize);
-  
-  eError = MMU_AcquirePDumpMMUContext (psDevmemCtx->psMMUContext,
-                                       &uiPDumpMMUCtx);
-                                       
-  PVR_ASSERT (eError == PVRSRV_OK);
-  
-  /*
-    The following SYSMEM refers to the 'MMU Context', hence it
-    should be the MMU context, not the PMR, that says what the PDump
-    MemSpace tag is?
-    From a PDump P.O.V. it doesn't matter which name space we use as long
-    as that MemSpace is used on the 'MMU Context' we're dumping from
-  */
-  eError = PDumpMMUSAB (psDevmemCtx->psDevNode->sDevId.pszPDumpDevName,
-                        uiPDumpMMUCtx,
-                        sDevAddrStart,
-                        uiSize,
-                        pszFilename,
-                        ui32FileOffset,
-                        ui32PDumpFlags);
-  PVR_ASSERT (eError == PVRSRV_OK);
-  
-  MMU_ReleasePDumpMMUContext (psDevmemCtx->psMMUContext);
-  return PVRSRV_OK;
+    PVRSRV_ERROR eError;
+    IMG_UINT32 uiPDumpMMUCtx;
+
+    PVR_UNREFERENCED_PARAMETER(ui32ArraySize);
+
+	eError = MMU_AcquirePDumpMMUContext(psDevmemCtx->psMMUContext,
+										&uiPDumpMMUCtx);
+
+    PVR_ASSERT(eError == PVRSRV_OK);
+
+    /*
+      The following SYSMEM refers to the 'MMU Context', hence it
+      should be the MMU context, not the PMR, that says what the PDump
+      MemSpace tag is?
+      From a PDump P.O.V. it doesn't matter which name space we use as long
+      as that MemSpace is used on the 'MMU Context' we're dumping from
+    */
+    eError = PDumpMMUSAB(psDevmemCtx->psDevNode->sDevId.pszPDumpDevName,
+                            uiPDumpMMUCtx,
+                            sDevAddrStart,
+                            uiSize,
+                            pszFilename,
+                            ui32FileOffset,
+							ui32PDumpFlags);
+    PVR_ASSERT(eError == PVRSRV_OK);
+
+	MMU_ReleasePDumpMMUContext(psDevmemCtx->psMMUContext);
+    return PVRSRV_OK;
 }
 
 
 PVRSRV_ERROR
-DevmemIntPDumpBitmap (PVRSRV_DEVICE_NODE * psDeviceNode,
-                      IMG_CHAR * pszFileName,
-                      IMG_UINT32 ui32FileOffset,
-                      IMG_UINT32 ui32Width,
-                      IMG_UINT32 ui32Height,
-                      IMG_UINT32 ui32StrideInBytes,
-                      IMG_DEV_VIRTADDR sDevBaseAddr,
-                      DEVMEMINT_CTX * psDevMemContext,
-                      IMG_UINT32 ui32Size,
-                      PDUMP_PIXEL_FORMAT ePixelFormat,
-                      IMG_UINT32 ui32AddrMode,
-                      IMG_UINT32 ui32PDumpFlags)
+DevmemIntPDumpBitmap(PVRSRV_DEVICE_NODE *psDeviceNode,
+						IMG_CHAR *pszFileName,
+						IMG_UINT32 ui32FileOffset,
+						IMG_UINT32 ui32Width,
+						IMG_UINT32 ui32Height,
+						IMG_UINT32 ui32StrideInBytes,
+						IMG_DEV_VIRTADDR sDevBaseAddr,
+						DEVMEMINT_CTX *psDevMemContext,
+						IMG_UINT32 ui32Size,
+						PDUMP_PIXEL_FORMAT ePixelFormat,
+						IMG_UINT32 ui32AddrMode,
+						IMG_UINT32 ui32PDumpFlags)
 {
-  IMG_UINT32 ui32ContextID;
-  PVRSRV_ERROR eError;
-  
-  eError = MMU_AcquirePDumpMMUContext (psDevMemContext->psMMUContext, &ui32ContextID);
-  
-  if (eError != PVRSRV_OK)
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "DevmemIntPDumpBitmap: Failed to acquire MMU context") );
-    return PVRSRV_ERROR_FAILED_TO_ALLOC_MMUCONTEXT_ID;
-  }
-  
-  eError = PDumpBitmapKM (psDeviceNode,
-                          pszFileName,
-                          ui32FileOffset,
-                          ui32Width,
-                          ui32Height,
-                          ui32StrideInBytes,
-                          sDevBaseAddr,
-                          ui32ContextID,
-                          ui32Size,
-                          ePixelFormat,
-                          ui32AddrMode,
-                          ui32PDumpFlags);
-                          
-  /* Don't care about return value */
-  MMU_ReleasePDumpMMUContext (psDevMemContext->psMMUContext);
-  
-  return eError;
+	IMG_UINT32 ui32ContextID;
+	PVRSRV_ERROR eError;
+
+	eError = MMU_AcquirePDumpMMUContext(psDevMemContext->psMMUContext, &ui32ContextID);
+
+	if (eError != PVRSRV_OK)
+	{
+		PVR_DPF((PVR_DBG_ERROR, "DevmemIntPDumpBitmap: Failed to acquire MMU context"));
+		return PVRSRV_ERROR_FAILED_TO_ALLOC_MMUCONTEXT_ID;
+	}
+
+	eError = PDumpBitmapKM(psDeviceNode,
+							pszFileName,
+							ui32FileOffset,
+							ui32Width,
+							ui32Height,
+							ui32StrideInBytes,
+							sDevBaseAddr,
+							ui32ContextID,
+							ui32Size,
+							ePixelFormat,
+							ui32AddrMode,
+							ui32PDumpFlags);
+
+	/* Don't care about return value */
+	MMU_ReleasePDumpMMUContext(psDevMemContext->psMMUContext);
+
+	return eError;
 }
 #endif

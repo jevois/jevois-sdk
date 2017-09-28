@@ -65,9 +65,9 @@ extern "C" {
 @Return         PVRSRV_OK if the query was successful
 */
 /*****************************************************************************/
-typedef IMG_VOID (*GetInfo) (IMG_HANDLE hDeviceData,
-                             DC_DISPLAY_INFO * psDisplayInfo);
-                             
+typedef IMG_VOID (*GetInfo)(IMG_HANDLE hDeviceData,
+							DC_DISPLAY_INFO *psDisplayInfo);
+
 /*************************************************************************/ /*!
 @Function       PanelQueryCount
 
@@ -81,9 +81,9 @@ typedef IMG_VOID (*GetInfo) (IMG_HANDLE hDeviceData,
 @Return         PVRSRV_OK if the query was successful
 */
 /*****************************************************************************/
-typedef PVRSRV_ERROR (*PanelQueryCount) (IMG_HANDLE hDeviceData,
-    IMG_UINT32 * ppui32NumPanels);
-    
+typedef PVRSRV_ERROR (*PanelQueryCount)(IMG_HANDLE hDeviceData,
+										 IMG_UINT32 *ppui32NumPanels);
+
 /*************************************************************************/ /*!
 @Function       PanelQuery
 
@@ -105,11 +105,11 @@ typedef PVRSRV_ERROR (*PanelQueryCount) (IMG_HANDLE hDeviceData,
 @Return         PVRSRV_OK if the query was successful
 */
 /*****************************************************************************/
-typedef PVRSRV_ERROR (*PanelQuery) (IMG_HANDLE hDeviceData,
-                                    IMG_UINT32 ui32PanelsArraySize,
-                                    IMG_UINT32 * pui32NumPanels,
-                                    PVRSRV_PANEL_INFO * pasPanelInfo);
-                                    
+typedef PVRSRV_ERROR (*PanelQuery)(IMG_HANDLE hDeviceData,
+									IMG_UINT32 ui32PanelsArraySize,
+									IMG_UINT32 *pui32NumPanels,
+									PVRSRV_PANEL_INFO *pasPanelInfo);
+
 /*************************************************************************/ /*!
 @Function       FormatQuery
 
@@ -122,17 +122,17 @@ typedef PVRSRV_ERROR (*PanelQuery) (IMG_HANDLE hDeviceData,
 
 @Input          pasFormat               Array of formats to check
 
-@Output     pui32Supported          For each format, the number of display
+@Output			pui32Supported          For each format, the number of display
                                         pipes that support that format
 
 @Return         PVRSRV_OK if the query was successful
 */
 /*****************************************************************************/
-typedef PVRSRV_ERROR (*FormatQuery) (IMG_HANDLE hDeviceData,
-                                     IMG_UINT32 ui32NumFormats,
-                                     PVRSRV_SURFACE_FORMAT * pasFormat,
-                                     IMG_UINT32 * pui32Supported);
-                                     
+typedef PVRSRV_ERROR (*FormatQuery)(IMG_HANDLE hDeviceData,
+									IMG_UINT32 ui32NumFormats,
+									PVRSRV_SURFACE_FORMAT *pasFormat,
+									IMG_UINT32 *pui32Supported);
+
 /*************************************************************************/ /*!
 @Function       DimQuery
 
@@ -152,12 +152,12 @@ typedef PVRSRV_ERROR (*FormatQuery) (IMG_HANDLE hDeviceData,
 @Return         PVRSRV_OK if the query was successful
 */
 /*****************************************************************************/
-typedef PVRSRV_ERROR (*DimQuery) (IMG_HANDLE hDeviceData,
-                                  IMG_UINT32 ui32NumDims,
-                                  PVRSRV_SURFACE_DIMS * psDim,
-                                  IMG_UINT32 * pui32Supported);
-                                  
-                                  
+typedef PVRSRV_ERROR (*DimQuery)(IMG_HANDLE hDeviceData,
+								 IMG_UINT32 ui32NumDims,
+								 PVRSRV_SURFACE_DIMS *psDim,
+								 IMG_UINT32 *pui32Supported);
+
+
 /*************************************************************************/ /*!
 @Function       SetBlank
 
@@ -172,9 +172,9 @@ typedef PVRSRV_ERROR (*DimQuery) (IMG_HANDLE hDeviceData,
 @Return         PVRSRV_OK on success
 */
 /*****************************************************************************/
-typedef PVRSRV_ERROR (*SetBlank) (IMG_HANDLE hDeviceData,
-                                  IMG_BOOL bEnabled);
-                                  
+typedef PVRSRV_ERROR (*SetBlank)(IMG_HANDLE hDeviceData,
+								 IMG_BOOL bEnabled);
+
 /*************************************************************************/ /*!
 @Function       SetVSyncReporting
 
@@ -190,9 +190,9 @@ typedef PVRSRV_ERROR (*SetBlank) (IMG_HANDLE hDeviceData,
 @Return         PVRSRV_OK on success
 */
 /*****************************************************************************/
-typedef PVRSRV_ERROR (*SetVSyncReporting) (IMG_HANDLE hDeviceData,
-    IMG_BOOL bEnabled);
-    
+typedef PVRSRV_ERROR (*SetVSyncReporting)(IMG_HANDLE hDeviceData,
+										  IMG_BOOL bEnabled);
+
 /*************************************************************************/ /*!
 @Function       PVRSRVDCLastVSyncQuery
 
@@ -207,17 +207,17 @@ typedef PVRSRV_ERROR (*SetVSyncReporting) (IMG_HANDLE hDeviceData,
 @Return         PVRSRV_OK if the query was successful
 */
 /*****************************************************************************/
-typedef PVRSRV_ERROR (*LastVSyncQuery) (IMG_HANDLE hDeviceData,
-                                        IMG_INT64 * pi64Timestamp);
-                                        
-typedef PVRSRV_ERROR (*BufferSystemAcquire) (IMG_HANDLE hDeviceData,
-    IMG_DEVMEM_LOG2ALIGN_T * puiLog2PageSize,
-    IMG_UINT32 * pui32PageCount,
-    IMG_UINT32 * pui32PhysHeapID,
-    IMG_UINT32 * pui32ByteStride,
-    IMG_HANDLE * phSystemBuffer);
-    
-typedef IMG_VOID (*BufferSystemRelease) (IMG_HANDLE hSystemBuffer);
+typedef PVRSRV_ERROR (*LastVSyncQuery)(IMG_HANDLE hDeviceData,
+									   IMG_INT64 *pi64Timestamp);
+
+typedef PVRSRV_ERROR (*BufferSystemAcquire)(IMG_HANDLE hDeviceData,
+											IMG_DEVMEM_LOG2ALIGN_T *puiLog2PageSize,
+											IMG_UINT32 *pui32PageCount,
+											IMG_UINT32 *pui32PhysHeapID,
+											IMG_UINT32 *pui32ByteStride,
+											IMG_HANDLE *phSystemBuffer);
+
+typedef	IMG_VOID (*BufferSystemRelease)(IMG_HANDLE hSystemBuffer);
 
 /*************************************************************************/ /*!
 @Function       ContextCreate
@@ -231,9 +231,9 @@ typedef IMG_VOID (*BufferSystemRelease) (IMG_HANDLE hSystemBuffer);
 @Return         PVRSRV_OK if the context was created
 */
 /*****************************************************************************/
-typedef PVRSRV_ERROR (*ContextCreate) (IMG_HANDLE hDeviceData,
-                                       IMG_HANDLE * hDisplayContext);
-                                       
+typedef PVRSRV_ERROR (*ContextCreate)(IMG_HANDLE hDeviceData,
+									  IMG_HANDLE *hDisplayContext);
+
 /*************************************************************************/ /*!
 @Function       ContextConfigureCheck
 
@@ -255,11 +255,11 @@ typedef PVRSRV_ERROR (*ContextCreate) (IMG_HANDLE hDeviceData,
 @Return         PVRSRV_OK if the configuration is valid
 */
 /*****************************************************************************/
-typedef PVRSRV_ERROR (*ContextConfigureCheck) (IMG_HANDLE hDisplayContext,
-    IMG_UINT32 ui32PipeCount,
-    PVRSRV_SURFACE_CONFIG_INFO * pasSurfAttrib,
-    IMG_HANDLE * ahBuffers);
-    
+typedef PVRSRV_ERROR (*ContextConfigureCheck)(IMG_HANDLE hDisplayContext,
+											  IMG_UINT32 ui32PipeCount,
+											  PVRSRV_SURFACE_CONFIG_INFO *pasSurfAttrib,
+											  IMG_HANDLE *ahBuffers);
+
 /*************************************************************************/ /*!
 @Function       ContextConfigure
 
@@ -275,7 +275,7 @@ typedef PVRSRV_ERROR (*ContextConfigureCheck) (IMG_HANDLE hDisplayContext,
 @Input          ahBuffers               Array of buffers (one for
                                         each display plane)
 
-@Input          ui32DisplayPeriod   The number of VSync periods this
+@Input          ui32DisplayPeriod		The number of VSync periods this
                                         configuration should be displayed for
 
 @Input          hConfigData             Config handle which gets passed to
@@ -285,13 +285,13 @@ typedef PVRSRV_ERROR (*ContextConfigureCheck) (IMG_HANDLE hDisplayContext,
 @Return         PVRSRV_OK if the configuration was successfully queued
 */
 /*****************************************************************************/
-typedef IMG_VOID (*ContextConfigure) (IMG_HANDLE hDisplayContext,
-                                      IMG_UINT32 ui32PipeCount,
-                                      PVRSRV_SURFACE_CONFIG_INFO * pasSurfAttrib,
-                                      IMG_HANDLE * ahBuffers,
-                                      IMG_UINT32 ui32DisplayPeriod,
-                                      IMG_HANDLE hConfigData);
-                                      
+typedef IMG_VOID (*ContextConfigure)(IMG_HANDLE hDisplayContext,
+									 IMG_UINT32 ui32PipeCount,
+									 PVRSRV_SURFACE_CONFIG_INFO *pasSurfAttrib,
+									 IMG_HANDLE *ahBuffers,
+									 IMG_UINT32 ui32DisplayPeriod,
+									 IMG_HANDLE hConfigData);
+
 /*************************************************************************/ /*!
 @Function       ContextDestroy
 
@@ -302,7 +302,7 @@ typedef IMG_VOID (*ContextConfigure) (IMG_HANDLE hDisplayContext,
 @Return         None
 */
 /*****************************************************************************/
-typedef IMG_VOID (*ContextDestroy) (IMG_HANDLE hDisplayContext);
+typedef IMG_VOID (*ContextDestroy)(IMG_HANDLE hDisplayContext);
 
 /*************************************************************************/ /*!
 @Function       BufferAlloc
@@ -334,14 +334,14 @@ typedef IMG_VOID (*ContextDestroy) (IMG_HANDLE hDisplayContext);
 @Return         PVRSRV_OK if the buffer was successfully allocated
 */
 /*****************************************************************************/
-typedef PVRSRV_ERROR (*BufferAlloc) (IMG_HANDLE hDisplayContext,
-                                     DC_BUFFER_CREATE_INFO * psSurfInfo,
-                                     IMG_DEVMEM_LOG2ALIGN_T * puiLog2PageSize,
-                                     IMG_UINT32 * pui32PageCount,
-                                     IMG_UINT32 * pui32PhysHeapID,
-                                     IMG_UINT32 * pui32ByteStride,
-                                     IMG_HANDLE * phBuffer);
-                                     
+typedef PVRSRV_ERROR (*BufferAlloc)(IMG_HANDLE hDisplayContext,
+									DC_BUFFER_CREATE_INFO *psSurfInfo,
+									IMG_DEVMEM_LOG2ALIGN_T *puiLog2PageSize,
+									IMG_UINT32 *pui32PageCount,
+									IMG_UINT32 *pui32PhysHeapID,
+									IMG_UINT32 *pui32ByteStride,
+									IMG_HANDLE *phBuffer);
+
 /*************************************************************************/ /*!
 @Function       BufferImport
 
@@ -366,12 +366,12 @@ typedef PVRSRV_ERROR (*BufferAlloc) (IMG_HANDLE hDisplayContext,
 @Return         PVRSRV_OK if the buffer was successfully imported
 */
 /*****************************************************************************/
-typedef PVRSRV_ERROR (*BufferImport) (IMG_HANDLE hDisplayContext,
-                                      IMG_UINT32 ui32NumPlanes,
-                                      IMG_HANDLE ** paphImport,
-                                      DC_BUFFER_IMPORT_INFO * psSurfAttrib,
-                                      IMG_HANDLE * phBuffer);
-                                      
+typedef PVRSRV_ERROR (*BufferImport)(IMG_HANDLE hDisplayContext,
+									 IMG_UINT32 ui32NumPlanes,
+									 IMG_HANDLE **paphImport,
+									 DC_BUFFER_IMPORT_INFO *psSurfAttrib,
+									 IMG_HANDLE *phBuffer);
+
 /*************************************************************************/ /*!
 @Function       BufferAcquire
 
@@ -394,10 +394,10 @@ typedef PVRSRV_ERROR (*BufferImport) (IMG_HANDLE hDisplayContext,
 @Return         PVRSRV_OK if the buffer was successfully acquired
 */
 /*****************************************************************************/
-typedef PVRSRV_ERROR (*BufferAcquire) (IMG_HANDLE hBuffer,
-                                       IMG_DEV_PHYADDR * pasDevPAddr,
-                                       IMG_PVOID * ppvLinAddr);
-                                       
+typedef PVRSRV_ERROR (*BufferAcquire)(IMG_HANDLE hBuffer,
+									  IMG_DEV_PHYADDR *pasDevPAddr,
+									  IMG_PVOID *ppvLinAddr);
+
 /*************************************************************************/ /*!
 @Function       BufferRelease
 
@@ -408,7 +408,7 @@ typedef PVRSRV_ERROR (*BufferAcquire) (IMG_HANDLE hBuffer,
 @Return         None
 */
 /*****************************************************************************/
-typedef IMG_VOID (*BufferRelease) (IMG_HANDLE hBuffer);
+typedef IMG_VOID (*BufferRelease)(IMG_HANDLE hBuffer);
 
 /*************************************************************************/ /*!
 @Function       BufferFree
@@ -422,7 +422,7 @@ typedef IMG_VOID (*BufferRelease) (IMG_HANDLE hBuffer);
 @Return         None
 */
 /*****************************************************************************/
-typedef IMG_VOID (*BufferFree) (IMG_HANDLE hBuffer);
+typedef IMG_VOID (*BufferFree)(IMG_HANDLE hBuffer);
 
 /*************************************************************************/ /*!
 @Function       BufferMap
@@ -436,7 +436,7 @@ typedef IMG_VOID (*BufferFree) (IMG_HANDLE hBuffer);
 @Return         PVRSRV_OK if the buffer was successfully mapped
 */
 /*****************************************************************************/
-typedef PVRSRV_ERROR (*BufferMap) (IMG_HANDLE hBuffer);
+typedef PVRSRV_ERROR (*BufferMap)(IMG_HANDLE hBuffer);
 
 /*************************************************************************/ /*!
 @Function       BufferUnmap
@@ -450,53 +450,53 @@ typedef PVRSRV_ERROR (*BufferMap) (IMG_HANDLE hBuffer);
 @Return         None
 */
 /*****************************************************************************/
-typedef IMG_VOID (*BufferUnmap) (IMG_HANDLE hBuffer);
+typedef IMG_VOID (*BufferUnmap)(IMG_HANDLE hBuffer);
 
 
 /*
-  Function table for server->display
+	Function table for server->display
 */
 typedef struct _DC_DEVICE_FUNCTIONS_
 {
-  /*! Mandatory query functions */
-  GetInfo           pfnGetInfo;
-  PanelQueryCount       pfnPanelQueryCount;
-  PanelQuery          pfnPanelQuery;
-  FormatQuery         pfnFormatQuery;
-  DimQuery          pfnDimQuery;
-  
-  /*! Optional blank/vsync function */
-  SetBlank                pfnSetBlank;
-  SetVSyncReporting       pfnSetVSyncReporting;
-  LastVSyncQuery        pfnLastVSyncQuery;
-  
-  /*! Mandatory configure function */
-  ContextCreate       pfnContextCreate;
-  ContextDestroy        pfnContextDestroy;
-  ContextConfigure      pfnContextConfigure;
-  
-  /*! Optional context function */
-  ContextConfigureCheck   pfnContextConfigureCheck;
-  
-  /*! Mandatory buffer functions */
-  BufferAlloc         pfnBufferAlloc;
-  BufferAcquire       pfnBufferAcquire;
-  BufferRelease       pfnBufferRelease;
-  BufferFree          pfnBufferFree;
-  
-  /*! Optional buffer functions, pfnBufferMap and pfnBufferUnmap are paired
-    functions, provide both or neither */
-  BufferImport        pfnBufferImport;
-  BufferMap         pfnBufferMap;
-  BufferUnmap         pfnBufferUnmap;
-  BufferSystemAcquire     pfnBufferSystemAcquire;
-  BufferSystemRelease     pfnBufferSystemRelease;
+	/*! Mandatory query functions */
+	GetInfo						pfnGetInfo;
+	PanelQueryCount				pfnPanelQueryCount;
+	PanelQuery					pfnPanelQuery;
+	FormatQuery					pfnFormatQuery;
+	DimQuery					pfnDimQuery;
+
+	/*! Optional blank/vsync function */
+	SetBlank		            pfnSetBlank;
+	SetVSyncReporting		    pfnSetVSyncReporting;
+	LastVSyncQuery				pfnLastVSyncQuery;
+
+	/*! Mandatory configure function */
+	ContextCreate				pfnContextCreate;
+	ContextDestroy				pfnContextDestroy;
+	ContextConfigure			pfnContextConfigure;
+
+	/*! Optional context function */
+	ContextConfigureCheck		pfnContextConfigureCheck;
+
+	/*! Mandatory buffer functions */
+	BufferAlloc					pfnBufferAlloc;
+	BufferAcquire				pfnBufferAcquire;
+	BufferRelease				pfnBufferRelease;
+	BufferFree					pfnBufferFree;
+
+	/*! Optional buffer functions, pfnBufferMap and pfnBufferUnmap are paired
+		functions, provide both or neither */
+	BufferImport				pfnBufferImport;
+	BufferMap					pfnBufferMap;
+	BufferUnmap					pfnBufferUnmap;
+	BufferSystemAcquire			pfnBufferSystemAcquire;
+	BufferSystemRelease			pfnBufferSystemRelease;
 } DC_DEVICE_FUNCTIONS;
 
 
 /*
-  functions exported by kernel services for use by 3rd party kernel display
-  class device driver
+	functions exported by kernel services for use by 3rd party kernel display
+	class device driver
 */
 
 /*************************************************************************/ /*!
@@ -518,11 +518,11 @@ typedef struct _DC_DEVICE_FUNCTIONS_
 @Return         PVRSRV_OK if the display class driver was successfully registered
 */
 /*****************************************************************************/
-PVRSRV_ERROR DCRegisterDevice (DC_DEVICE_FUNCTIONS * psFuncTable,
-                               IMG_UINT32 ui32MaxConfigsInFlight,
-                               IMG_HANDLE hDeviceData,
-                               IMG_HANDLE * phSrvHandle);
-                               
+PVRSRV_ERROR DCRegisterDevice(DC_DEVICE_FUNCTIONS *psFuncTable,
+							  IMG_UINT32 ui32MaxConfigsInFlight,
+							  IMG_HANDLE hDeviceData,
+							  IMG_HANDLE *phSrvHandle);
+
 /*************************************************************************/ /*!
 @Function       DCUnregisterDevice
 
@@ -533,7 +533,7 @@ PVRSRV_ERROR DCRegisterDevice (DC_DEVICE_FUNCTIONS * psFuncTable,
 @Return         None
 */
 /*****************************************************************************/
-IMG_VOID DCUnregisterDevice (IMG_HANDLE hSrvHandle);
+IMG_VOID DCUnregisterDevice(IMG_HANDLE hSrvHandle);
 
 /*************************************************************************/ /*!
 @Function       DCDisplayConfigurationRetired
@@ -546,7 +546,7 @@ IMG_VOID DCUnregisterDevice (IMG_HANDLE hSrvHandle);
 @Return         None
 */
 /*****************************************************************************/
-IMG_VOID DCDisplayConfigurationRetired (IMG_HANDLE hConfigData);
+IMG_VOID DCDisplayConfigurationRetired(IMG_HANDLE hConfigData);
 
 /*************************************************************************/ /*!
 @Function       DCImportBufferAcquire
@@ -566,11 +566,11 @@ IMG_VOID DCDisplayConfigurationRetired (IMG_HANDLE hConfigData);
 @Return         PVRSRV_OK if the import buffer was successfully acquired
 */
 /*****************************************************************************/
-PVRSRV_ERROR DCImportBufferAcquire (IMG_HANDLE hImport,
-                                    IMG_DEVMEM_LOG2ALIGN_T uiLog2PageSize,
-                                    IMG_UINT32 * pui32PageCount,
-                                    IMG_DEV_PHYADDR ** ppasDevPAddr);
-                                    
+PVRSRV_ERROR DCImportBufferAcquire(IMG_HANDLE hImport,
+								   IMG_DEVMEM_LOG2ALIGN_T uiLog2PageSize,
+								   IMG_UINT32 *pui32PageCount,
+								   IMG_DEV_PHYADDR **ppasDevPAddr);
+
 /*************************************************************************/ /*!
 @Function       DCImportBufferRelease
 
@@ -584,9 +584,9 @@ PVRSRV_ERROR DCImportBufferAcquire (IMG_HANDLE hImport,
 @Return         None
 */
 /*****************************************************************************/
-IMG_VOID DCImportBufferRelease (IMG_HANDLE hImport,
-                                IMG_DEV_PHYADDR * pasDevPAddr);
-                                
+IMG_VOID DCImportBufferRelease(IMG_HANDLE hImport,
+							   IMG_DEV_PHYADDR *pasDevPAddr);
+
 #if defined (__cplusplus)
 }
 #endif

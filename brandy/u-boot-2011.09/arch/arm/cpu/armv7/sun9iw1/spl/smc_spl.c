@@ -1,10 +1,10 @@
 /*
 **********************************************************************************************************************
 *
-*                      the Embedded Secure Bootloader System
+*						           the Embedded Secure Bootloader System
 *
 *
-*                  Copyright(C), 2006-2014, Allwinnertech Co., Ltd.
+*						       Copyright(C), 2006-2014, Allwinnertech Co., Ltd.
 *                                           All Rights Reserved
 *
 * File    :
@@ -13,7 +13,7 @@
 *
 * Version : V2.00
 *
-* Date    :
+* Date	  :
 *
 * Descript:
 **********************************************************************************************************************
@@ -38,18 +38,18 @@
 *
 ************************************************************************************************************
 */
-static uint __tzasc_calc_2_power (uint data)
+static uint __tzasc_calc_2_power(uint data)
 {
-  uint ret = 0;
-  
-  do
-  {
-    data >>= 1;
-    ret ++;
-  }
-  while (data);
-  
-  return (ret - 1);
+	uint ret = 0;
+
+	do
+	{
+		data >>= 1;
+		ret ++;
+	}
+	while(data);
+
+	return (ret - 1);
 }
 /*
 ************************************************************************************************************
@@ -67,42 +67,42 @@ static uint __tzasc_calc_2_power (uint data)
 *
 ************************************************************************************************************
 */
-int sunxi_smc_config (uint dram_size, uint secure_region_size)
+int sunxi_smc_config(uint dram_size, uint secure_region_size)
 {
-  uint region_size, permission, region_start;
-  
-  writel (0, SMC_MASTER_BYPASS0_REG);
-  writel (0, SMC_MASTER_BYPASS1_REG);
-  writel (0xffffffff, SMC_MASTER_SECURITY0_REG);
-  writel (0xffffffff, SMC_MASTER_SECURITY1_REG);
-  region_size = (__tzasc_calc_2_power (dram_size * 1024 / 32) + 0b001110) << 1;
-  permission  = 0b1111 << 28; //设置允许安全模式和非安全模式下访问
-  
-  writel (0, SMC_REGIN_SETUP_LOW_REG (1) );   //填入的是相对dram起始地址的偏移量
-  writel (0, SMC_REGIN_SETUP_HIGH_REG (1) );
-  writel (permission | region_size | 1 , SMC_REGIN_ATTRIBUTE_REG (1) );
-  
-  region_size = (__tzasc_calc_2_power (secure_region_size * 1024 / 32) + 0b001110) << 1;
-  permission  = 0b1100 << 28; //设置只允许安全模式访问
-  
-  region_start = dram_size - secure_region_size;
-  if (region_start <= (4 * 1024) )  //表示不超过4G
-  {
-    writel ( (region_start * 1024 * 1024) & 0xffff8000, SMC_REGIN_SETUP_LOW_REG (2) );
-    writel (0, SMC_REGIN_SETUP_HIGH_REG (2) );
-  }
-  else
-  {
-    unsigned long long long_regin_start;
-    
-    long_regin_start = region_start;
-    long_regin_start = long_regin_start * 1024 * 1024;
-    writel (long_regin_start & 0xffff8000, SMC_REGIN_SETUP_LOW_REG (2) );
-    writel ( (long_regin_start >> 32) & 0xffffffff, SMC_REGIN_SETUP_HIGH_REG (2) );
-  }
-  writel (permission | region_size | 1 , SMC_REGIN_ATTRIBUTE_REG (2) );
-  
-  return 0;
+	uint region_size, permission, region_start;
+
+	writel(0, SMC_MASTER_BYPASS0_REG);
+	writel(0, SMC_MASTER_BYPASS1_REG);
+	writel(0xffffffff, SMC_MASTER_SECURITY0_REG);
+	writel(0xffffffff, SMC_MASTER_SECURITY1_REG);
+	region_size = (__tzasc_calc_2_power(dram_size*1024/32) + 0b001110)<<1;
+	permission  = 0b1111<<28;	//设置允许安全模式和非安全模式下访问
+
+	writel(0, SMC_REGIN_SETUP_LOW_REG(1));			//填入的是相对dram起始地址的偏移量
+	writel(0, SMC_REGIN_SETUP_HIGH_REG(1));
+	writel(permission | region_size | 1 , SMC_REGIN_ATTRIBUTE_REG(1));
+
+	region_size = (__tzasc_calc_2_power(secure_region_size*1024/32) + 0b001110)<<1;
+	permission  = 0b1100<<28;	//设置只允许安全模式访问
+
+	region_start = dram_size - secure_region_size;
+	if(region_start <= (4 * 1024))		//表示不超过4G
+	{
+		writel((region_start * 1024 * 1024) & 0xffff8000, SMC_REGIN_SETUP_LOW_REG(2));
+		writel(0, SMC_REGIN_SETUP_HIGH_REG(2));
+	}
+	else
+	{
+		unsigned long long long_regin_start;
+
+		long_regin_start = region_start;
+		long_regin_start = long_regin_start * 1024 * 1024;
+		writel(long_regin_start & 0xffff8000, SMC_REGIN_SETUP_LOW_REG(2));
+		writel((long_regin_start>>32) & 0xffffffff, SMC_REGIN_SETUP_HIGH_REG(2));
+	}
+	writel(permission | region_size | 1 , SMC_REGIN_ATTRIBUTE_REG(2));
+
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -120,8 +120,8 @@ int sunxi_smc_config (uint dram_size, uint secure_region_size)
 *
 ************************************************************************************************************
 */
-int sunxi_drm_config (u32 drm_start, u32 dram_size)
+int sunxi_drm_config(u32 drm_start, u32 dram_size)
 {
-  return 0;
+	return 0;
 }
 

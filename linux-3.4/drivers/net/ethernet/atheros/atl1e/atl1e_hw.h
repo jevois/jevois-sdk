@@ -29,26 +29,26 @@ struct atl1e_adapter;
 struct atl1e_hw;
 
 /* function prototype */
-s32 atl1e_reset_hw (struct atl1e_hw * hw);
-s32 atl1e_read_mac_addr (struct atl1e_hw * hw);
-s32 atl1e_init_hw (struct atl1e_hw * hw);
-s32 atl1e_phy_commit (struct atl1e_hw * hw);
-s32 atl1e_get_speed_and_duplex (struct atl1e_hw * hw, u16 * speed, u16 * duplex);
-u32 atl1e_auto_get_fc (struct atl1e_adapter * adapter, u16 duplex);
-u32 atl1e_hash_mc_addr (struct atl1e_hw * hw, u8 * mc_addr);
-void atl1e_hash_set (struct atl1e_hw * hw, u32 hash_value);
-s32 atl1e_read_phy_reg (struct atl1e_hw * hw, u16 reg_addr, u16 * phy_data);
-s32 atl1e_write_phy_reg (struct atl1e_hw * hw, u32 reg_addr, u16 phy_data);
-s32 atl1e_validate_mdi_setting (struct atl1e_hw * hw);
-void atl1e_hw_set_mac_addr (struct atl1e_hw * hw);
-bool atl1e_read_eeprom (struct atl1e_hw * hw, u32 offset, u32 * p_value);
-bool atl1e_write_eeprom (struct atl1e_hw * hw, u32 offset, u32 value);
-s32 atl1e_phy_enter_power_saving (struct atl1e_hw * hw);
-s32 atl1e_phy_leave_power_saving (struct atl1e_hw * hw);
-s32 atl1e_phy_init (struct atl1e_hw * hw);
-int atl1e_check_eeprom_exist (struct atl1e_hw * hw);
-void atl1e_force_ps (struct atl1e_hw * hw);
-s32 atl1e_restart_autoneg (struct atl1e_hw * hw);
+s32 atl1e_reset_hw(struct atl1e_hw *hw);
+s32 atl1e_read_mac_addr(struct atl1e_hw *hw);
+s32 atl1e_init_hw(struct atl1e_hw *hw);
+s32 atl1e_phy_commit(struct atl1e_hw *hw);
+s32 atl1e_get_speed_and_duplex(struct atl1e_hw *hw, u16 *speed, u16 *duplex);
+u32 atl1e_auto_get_fc(struct atl1e_adapter *adapter, u16 duplex);
+u32 atl1e_hash_mc_addr(struct atl1e_hw *hw, u8 *mc_addr);
+void atl1e_hash_set(struct atl1e_hw *hw, u32 hash_value);
+s32 atl1e_read_phy_reg(struct atl1e_hw *hw, u16 reg_addr, u16 *phy_data);
+s32 atl1e_write_phy_reg(struct atl1e_hw *hw, u32 reg_addr, u16 phy_data);
+s32 atl1e_validate_mdi_setting(struct atl1e_hw *hw);
+void atl1e_hw_set_mac_addr(struct atl1e_hw *hw);
+bool atl1e_read_eeprom(struct atl1e_hw *hw, u32 offset, u32 *p_value);
+bool atl1e_write_eeprom(struct atl1e_hw *hw, u32 offset, u32 value);
+s32 atl1e_phy_enter_power_saving(struct atl1e_hw *hw);
+s32 atl1e_phy_leave_power_saving(struct atl1e_hw *hw);
+s32 atl1e_phy_init(struct atl1e_hw *hw);
+int atl1e_check_eeprom_exist(struct atl1e_hw *hw);
+void atl1e_force_ps(struct atl1e_hw *hw);
+s32 atl1e_restart_autoneg(struct atl1e_hw *hw);
 
 /* register definition */
 #define REG_PM_CTRLSTAT             0x44
@@ -150,8 +150,8 @@ s32 atl1e_restart_autoneg (struct atl1e_hw * hw);
 #define     PCIE_DEV_MISC_CTRL_SERDES_ENDIAN    0x8
 #define     PCIE_DEV_MISC_CTRL_SERDES_SEL_DIN   0x10
 
-#define REG_PCIE_PHYMISC      0x1000
-#define PCIE_PHYMISC_FORCE_RCV_DET  0x4
+#define REG_PCIE_PHYMISC	    0x1000
+#define PCIE_PHYMISC_FORCE_RCV_DET	0x4
 
 #define REG_LTSSM_TEST_MODE         0x12FC
 #define         LTSSM_TEST_MODE_DEF     0xE000
@@ -164,7 +164,7 @@ s32 atl1e_restart_autoneg (struct atl1e_hw * hw);
 #define     MASTER_CTRL_MANUAL_INT          0x8
 #define     MASTER_CTRL_ITIMER2_EN          0x20
 #define     MASTER_CTRL_INT_RDCLR           0x40
-#define     MASTER_CTRL_LED_MODE      0x200
+#define     MASTER_CTRL_LED_MODE	    0x200
 #define     MASTER_CTRL_REV_NUM_SHIFT       16
 #define     MASTER_CTRL_REV_NUM_MASK        0xff
 #define     MASTER_CTRL_DEV_ID_SHIFT        24
@@ -194,28 +194,28 @@ s32 atl1e_restart_autoneg (struct atl1e_hw * hw);
 #define     GPHY_CTRL_HIB_PULSE         0x800
 #define     GPHY_CTRL_SEL_ANA_RST       0x1000
 #define     GPHY_CTRL_PHY_PLL_ON        0x2000
-#define     GPHY_CTRL_PWDOWN_HW   0x4000
+#define     GPHY_CTRL_PWDOWN_HW		0x4000
 #define     GPHY_CTRL_DEFAULT (\
-                               GPHY_CTRL_PHY_PLL_ON  |\
-                               GPHY_CTRL_SEL_ANA_RST |\
-                               GPHY_CTRL_HIB_PULSE |\
-                               GPHY_CTRL_HIB_EN)
+		GPHY_CTRL_PHY_PLL_ON	|\
+		GPHY_CTRL_SEL_ANA_RST	|\
+		GPHY_CTRL_HIB_PULSE	|\
+		GPHY_CTRL_HIB_EN)
 
 #define     GPHY_CTRL_PW_WOL_DIS (\
-                                  GPHY_CTRL_PHY_PLL_ON  |\
-                                  GPHY_CTRL_SEL_ANA_RST |\
-                                  GPHY_CTRL_HIB_PULSE |\
-                                  GPHY_CTRL_HIB_EN  |\
-                                  GPHY_CTRL_PWDOWN_HW |\
-                                  GPHY_CTRL_PCLK_SEL_DIS  |\
-                                  GPHY_CTRL_PHY_IDDQ)
+		GPHY_CTRL_PHY_PLL_ON	|\
+		GPHY_CTRL_SEL_ANA_RST	|\
+		GPHY_CTRL_HIB_PULSE	|\
+		GPHY_CTRL_HIB_EN	|\
+		GPHY_CTRL_PWDOWN_HW	|\
+		GPHY_CTRL_PCLK_SEL_DIS	|\
+		GPHY_CTRL_PHY_IDDQ)
 
 /* IRQ Anti-Lost Timer Initial Value Register */
 #define REG_CMBDISDMA_TIMER         0x140E
 
 
 /* Block IDLE Status Register */
-#define REG_IDLE_STATUS   0x1410
+#define REG_IDLE_STATUS  	0x1410
 #define     IDLE_STATUS_RXMAC       1    /* 1: RXMAC state machine is in non-IDLE state. 0: RXMAC is idling */
 #define     IDLE_STATUS_TXMAC       2    /* 1: TXMAC state machine is in non-IDLE state. 0: TXMAC is idling */
 #define     IDLE_STATUS_RXQ         4    /* 1: RXQ state machine is in non-IDLE state.   0: RXQ is idling   */
@@ -248,8 +248,8 @@ s32 atl1e_restart_autoneg (struct atl1e_hw * hw);
 
 /* MII PHY Status Register */
 #define REG_PHY_STATUS           0x1418
-#define     PHY_STATUS_100M       0x20000
-#define     PHY_STATUS_EMI_CA       0x40000
+#define     PHY_STATUS_100M	      0x20000
+#define     PHY_STATUS_EMI_CA	      0x40000
 
 /* BIST Control and Status Register0 (for the Packet Memory) */
 #define REG_BIST0_CTRL              0x141c
@@ -447,10 +447,10 @@ s32 atl1e_restart_autoneg (struct atl1e_hw * hw);
 #define         RXQ_CTRL_PBA_ALIGN_64                   1
 #define         RXQ_CTRL_PBA_ALIGN_128                  2
 #define         RXQ_CTRL_PBA_ALIGN_256                  3
-#define         RXQ_CTRL_Q1_EN        0x10
-#define         RXQ_CTRL_Q2_EN        0x20
-#define         RXQ_CTRL_Q3_EN        0x40
-#define         RXQ_CTRL_IPV6_XSUM_VERIFY_EN    0x80
+#define         RXQ_CTRL_Q1_EN				0x10
+#define         RXQ_CTRL_Q2_EN				0x20
+#define         RXQ_CTRL_Q3_EN				0x40
+#define         RXQ_CTRL_IPV6_XSUM_VERIFY_EN		0x80
 #define         RXQ_CTRL_HASH_TLEN_SHIFT                8
 #define         RXQ_CTRL_HASH_TLEN_MASK                 0xFF
 #define         RXQ_CTRL_HASH_TYPE_IPV4                 0x10000
@@ -502,7 +502,7 @@ s32 atl1e_restart_autoneg (struct atl1e_hw * hw);
 #define     DMA_CTRL_DMAW_DLY_CNT_MASK      0xF
 #define     DMA_CTRL_DMAW_DLY_CNT_SHIFT     16
 #define     DMA_CTRL_TXCMB_EN               0x100000
-#define     DMA_CTRL_RXCMB_EN       0x200000
+#define     DMA_CTRL_RXCMB_EN				0x200000
 
 
 /* CMB/SMB Control Register */
@@ -541,13 +541,13 @@ s32 atl1e_restart_autoneg (struct atl1e_hw * hw);
 
 /* Interrupt Status Register */
 #define REG_ISR    0x1600
-#define  ISR_SMB      1
-#define  ISR_TIMER    2       /* Interrupt when Timer is counted down to zero */
+#define  ISR_SMB   		1
+#define  ISR_TIMER		2       /* Interrupt when Timer is counted down to zero */
 /*
  * Software manual interrupt, for debug. Set when SW_MAN_INT_EN is set
  * in Table 51 Selene Master Control Register (Offset 0x1400).
  */
-#define  ISR_MANUAL           4
+#define  ISR_MANUAL         	4
 #define  ISR_HW_RXF_OV          8        /* RXF overflow interrupt */
 #define  ISR_HOST_RXF0_OV       0x10
 #define  ISR_HOST_RXF1_OV       0x20
@@ -581,18 +581,18 @@ s32 atl1e_restart_autoneg (struct atl1e_hw * hw);
 
 
 #define IMR_NORMAL_MASK (\
-                         ISR_SMB         |\
-                         ISR_TXF_UN      |\
-                         ISR_HW_RXF_OV   |\
-                         ISR_HOST_RXF0_OV|\
-                         ISR_MANUAL      |\
-                         ISR_GPHY        |\
-                         ISR_GPHY_LPW    |\
-                         ISR_DMAR_TO_RST |\
-                         ISR_DMAW_TO_RST |\
-                         ISR_PHY_LINKDOWN|\
-                         ISR_RX_PKT      |\
-                         ISR_TX_PKT)
+		ISR_SMB	        |\
+		ISR_TXF_UN      |\
+		ISR_HW_RXF_OV   |\
+		ISR_HOST_RXF0_OV|\
+		ISR_MANUAL      |\
+		ISR_GPHY        |\
+		ISR_GPHY_LPW    |\
+		ISR_DMAR_TO_RST |\
+		ISR_DMAW_TO_RST |\
+		ISR_PHY_LINKDOWN|\
+		ISR_RX_PKT      |\
+		ISR_TX_PKT)
 
 #define ISR_TX_EVENT (ISR_TXF_UN | ISR_TX_PKT)
 #define ISR_RX_EVENT (ISR_HOST_RXF0_OV | ISR_HW_RXF_OV | ISR_RX_PKT)
@@ -637,16 +637,16 @@ s32 atl1e_restart_autoneg (struct atl1e_hw * hw);
 #define MII_LBRERROR                    0x18
 #define MII_RESV2                       0x1a
 
-#define MII_DBG_ADDR      0x1D
-#define MII_DBG_DATA      0x1E
+#define MII_DBG_ADDR			0x1D
+#define MII_DBG_DATA			0x1E
 
 /* Autoneg Advertisement Register */
 #define MII_AR_DEFAULT_CAP_MASK                 0
 
 /* 1000BASE-T Control Register */
 #define MII_AT001_CR_1000T_SPEED_MASK \
-  (ADVERTISE_1000FULL | ADVERTISE_1000HALF)
-#define MII_AT001_CR_1000T_DEFAULT_CAP_MASK MII_AT001_CR_1000T_SPEED_MASK
+	(ADVERTISE_1000FULL | ADVERTISE_1000HALF)
+#define MII_AT001_CR_1000T_DEFAULT_CAP_MASK	MII_AT001_CR_1000T_SPEED_MASK
 
 /* AT001 PHY Specific Control Register */
 #define MII_AT001_PSCR_JABBER_DISABLE           0x0001  /* 1=Jabber Function disabled */
@@ -654,18 +654,18 @@ s32 atl1e_restart_autoneg (struct atl1e_hw * hw);
 #define MII_AT001_PSCR_SQE_TEST                 0x0004  /* 1=SQE Test enabled */
 #define MII_AT001_PSCR_MAC_POWERDOWN            0x0008
 #define MII_AT001_PSCR_CLK125_DISABLE           0x0010  /* 1=CLK125 low,
-               * 0=CLK125 toggling
-               */
+							 * 0=CLK125 toggling
+							 */
 #define MII_AT001_PSCR_MDI_MANUAL_MODE          0x0000  /* MDI Crossover Mode bits 6:5 */
 /* Manual MDI configuration */
 #define MII_AT001_PSCR_MDIX_MANUAL_MODE         0x0020  /* Manual MDIX configuration */
 #define MII_AT001_PSCR_AUTO_X_1000T             0x0040  /* 1000BASE-T: Auto crossover,
-               *  100BASE-TX/10BASE-T:
-               *  MDI Mode
-               */
+							 *  100BASE-TX/10BASE-T:
+							 *  MDI Mode
+							 */
 #define MII_AT001_PSCR_AUTO_X_MODE              0x0060  /* Auto crossover enabled
-               * all speeds.
-               */
+							 * all speeds.
+							 */
 #define MII_AT001_PSCR_10BT_EXT_DIST_ENABLE     0x0080
 /* 1=Enable Extended 10BASE-T distance
  * (Lower 10BASE-T RX Threshold)

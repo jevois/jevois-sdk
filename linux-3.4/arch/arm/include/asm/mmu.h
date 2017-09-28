@@ -4,21 +4,21 @@
 #ifdef CONFIG_MMU
 
 typedef struct {
-  #ifdef CONFIG_CPU_HAS_ASID
-  unsigned int id;
-  raw_spinlock_t id_lock;
-  #endif
-  unsigned int kvm_seq;
+#ifdef CONFIG_CPU_HAS_ASID
+	unsigned int id;
+	raw_spinlock_t id_lock;
+#endif
+	unsigned int kvm_seq;
 } mm_context_t;
 
 #ifdef CONFIG_CPU_HAS_ASID
-#define ASID(mm)  ((mm)->context.id & 255)
+#define ASID(mm)	((mm)->context.id & 255)
 
 /* init_mm.context.id_lock should be initialized. */
 #define INIT_MM_CONTEXT(name)                                                 \
-  .context.id_lock    = __RAW_SPIN_LOCK_UNLOCKED(name.context.id_lock),
+	.context.id_lock    = __RAW_SPIN_LOCK_UNLOCKED(name.context.id_lock),
 #else
-#define ASID(mm)  (0)
+#define ASID(mm)	(0)
 #endif
 
 #else
@@ -29,7 +29,7 @@ typedef struct {
  *  modified for 2.6 by Hyok S. Choi <hyok.choi@samsung.com>
  */
 typedef struct {
-  unsigned long   end_brk;
+	unsigned long		end_brk;
 } mm_context_t;
 
 #endif

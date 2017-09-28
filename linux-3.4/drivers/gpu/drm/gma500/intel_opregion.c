@@ -26,56 +26,56 @@
 #include "psb_drv.h"
 
 struct opregion_header {
-  u8 signature[16];
-  u32 size;
-  u32 opregion_ver;
-  u8 bios_ver[32];
-  u8 vbios_ver[16];
-  u8 driver_ver[16];
-  u32 mboxes;
-  u8 reserved[164];
+	u8 signature[16];
+	u32 size;
+	u32 opregion_ver;
+	u8 bios_ver[32];
+	u8 vbios_ver[16];
+	u8 driver_ver[16];
+	u32 mboxes;
+	u8 reserved[164];
 } __packed;
 
 struct opregion_apci {
-  /*FIXME: add it later*/
+	/*FIXME: add it later*/
 } __packed;
 
 struct opregion_swsci {
-  /*FIXME: add it later*/
+	/*FIXME: add it later*/
 } __packed;
 
 struct opregion_acpi {
-  /*FIXME: add it later*/
+	/*FIXME: add it later*/
 } __packed;
 
-int gma_intel_opregion_init (struct drm_device * dev)
+int gma_intel_opregion_init(struct drm_device *dev)
 {
-  struct drm_psb_private * dev_priv = dev->dev_private;
-  u32 opregion_phy;
-  void * base;
-  u32 * lid_state;
-  
-  dev_priv->lid_state = NULL;
-  
-  pci_read_config_dword (dev->pdev, 0xfc, &opregion_phy);
-  if (opregion_phy == 0)
-  { return -ENOTSUPP; }
-  
-  base = ioremap (opregion_phy, 8 * 1024);
-  if (!base)
-  { return -ENOMEM; }
-  
-  lid_state = base + 0x01ac;
-  
-  dev_priv->lid_state = lid_state;
-  dev_priv->lid_last_state = readl (lid_state);
-  return 0;
+	struct drm_psb_private *dev_priv = dev->dev_private;
+	u32 opregion_phy;
+	void *base;
+	u32 *lid_state;
+
+	dev_priv->lid_state = NULL;
+
+	pci_read_config_dword(dev->pdev, 0xfc, &opregion_phy);
+	if (opregion_phy == 0)
+		return -ENOTSUPP;
+
+	base = ioremap(opregion_phy, 8*1024);
+	if (!base)
+		return -ENOMEM;
+
+	lid_state = base + 0x01ac;
+
+	dev_priv->lid_state = lid_state;
+	dev_priv->lid_last_state = readl(lid_state);
+	return 0;
 }
 
-int gma_intel_opregion_exit (struct drm_device * dev)
+int gma_intel_opregion_exit(struct drm_device *dev)
 {
-  struct drm_psb_private * dev_priv = dev->dev_private;
-  if (dev_priv->lid_state)
-  { iounmap (dev_priv->lid_state); }
-  return 0;
+	struct drm_psb_private *dev_priv = dev->dev_private;
+	if (dev_priv->lid_state)
+		iounmap(dev_priv->lid_state);
+	return 0;
 }

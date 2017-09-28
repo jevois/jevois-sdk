@@ -11,10 +11,10 @@
  * @vdd_uv: VDD voltage in uV
  */
 struct mpr121_platform_data {
-  const unsigned short * keymap;
-  unsigned int keymap_size;
-  bool wakeup;
-  int vdd_uv;
+	const unsigned short *keymap;
+	unsigned int keymap_size;
+	bool wakeup;
+	int vdd_uv;
 };
 
 #endif /* _MPR121_TOUCHKEY_H */

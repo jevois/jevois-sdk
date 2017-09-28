@@ -34,10 +34,10 @@
 #include <common.h>
 
 
-int db64360_eth0_poll (void);
-int db64360_eth0_transmit (unsigned int s, volatile char * p);
-void db64360_eth0_disable (void);
-bool network_start (bd_t * bis);
+int db64360_eth0_poll(void);
+int db64360_eth0_transmit(unsigned int s, volatile char *p);
+void db64360_eth0_disable(void);
+bool network_start(bd_t *bis);
 
 
 #endif /* __EVB64360_ETH_H__ */

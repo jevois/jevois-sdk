@@ -20,8 +20,8 @@
 #define _MXS_PCM_H
 
 struct mxs_pcm_dma_params {
-  int chan_irq;
-  int chan_num;
+	int chan_irq;
+	int chan_num;
 };
 
 #endif

@@ -35,61 +35,61 @@
 typedef struct
 {
   u32       mod;
-  
-  u32       drc_win_en;
-  disp_window   drc_win;
-  u32           drc_win_dirty;
-  u32           adjust_en;
-  u32           lgc_autoload_dis;
-  u32           waitframe;
-  u32           runframe;
-  u32           scn_width;
-  u32           scn_height;
-  u32           video_mode_en;
-  u32           backlight;
-  u32           backlight_dimming;
-  
-  u32           lgc_base_add;
-  u8            lh_thres_val[7];
-  
-  u32           deflicker_win_en;
-  disp_window   deflicker_win;
-} __drc_t;
+
+	u32       drc_win_en;
+	disp_window   drc_win;
+	u32           drc_win_dirty;
+	u32           adjust_en;
+	u32           lgc_autoload_dis;
+	u32           waitframe;
+	u32           runframe;
+	u32           scn_width;
+	u32           scn_height;
+	u32           video_mode_en;
+	u32           backlight;
+	u32           backlight_dimming;
+
+	u32           lgc_base_add;
+	u8            lh_thres_val[7];
+
+	u32           deflicker_win_en;
+	disp_window   deflicker_win;
+}__drc_t;
 
 typedef struct
 {
-  u8      min_adj_index_hist[IEP_LH_PWRSV_NUM];
-  u32           user_bl;
-} __drc_pwrsv_t;
+	u8      min_adj_index_hist[IEP_LH_PWRSV_NUM];
+	u32           user_bl;
+}__drc_pwrsv_t;
 
 
-s32 drc_clk_init (u32 sel);
-s32 drc_clk_exit (u32 sel);
-s32 drc_clk_open (u32 sel, u32 type);
-s32 drc_clk_close (u32 sel, u32 type);
-s32 drc_enable (u32 sel, u32 en);
-s32 drc_init (u32 sel);
-s32 drc_proc (u32 sel);
-s32 drc_close_proc (u32 sel);
+s32 drc_clk_init(u32 sel);
+s32 drc_clk_exit(u32 sel);
+s32 drc_clk_open(u32 sel, u32 type);
+s32 drc_clk_close(u32 sel, u32 type);
+s32 drc_enable(u32 sel, u32 en);
+s32 drc_init(u32 sel);
+s32 drc_proc(u32 sel);
+s32 drc_close_proc(u32 sel);
 
-s32 IEP_Drc_Init (u32 sel);
-s32 IEP_Drc_Exit (u32 sel);
-s32 IEP_Drc_Enable (u32 sel, u32 en);
-s32 IEP_Drc_Operation_In_Vblanking (u32 sel);
-s32 IEP_Drc_Tasklet (u32 sel);
-s32 IEP_Drc_Set_Reg_Base (u32 sel, u32 base);
-s32 IEP_Drc_Get_Reg_Base (u32 sel);
-s32 IEP_Drc_Set_Winodw (u32 sel, disp_window window);
-s32 IEP_Drc_Set_Mode (u32 sel, __iep_drc_mode_t mode);
-s32 iep_drc_early_suspend (u32 sel);
-s32 iep_drc_suspend (u32 sel);
+s32 IEP_Drc_Init(u32 sel);
+s32 IEP_Drc_Exit(u32 sel);
+s32 IEP_Drc_Enable(u32 sel, u32 en);
+s32 IEP_Drc_Operation_In_Vblanking(u32 sel);
+s32 IEP_Drc_Tasklet(u32 sel);
+s32 IEP_Drc_Set_Reg_Base(u32 sel, u32 base);
+s32 IEP_Drc_Get_Reg_Base(u32 sel);
+s32 IEP_Drc_Set_Winodw(u32 sel, disp_window window);//full screen for default
+s32 IEP_Drc_Set_Mode(u32 sel, __iep_drc_mode_t mode);
+s32 iep_drc_early_suspend(u32 sel);//close clk
+s32 iep_drc_suspend(u32 sel);//save register
 s32 iep_drc_resume (u32 sel);//restore register
-s32 iep_drc_late_resume (u32 sel);
-s32 IEP_Drc_Set_Imgsize (u32 sel, u32 width, u32 height);
-s32 IEP_Drc_Get_Cur_Backlight (u32 sel);
-s32 IEP_Drc_Update_Backlight (u32 sel, u32 backlight);
-s32 IEP_Drc_Get_Backlight_Dimming (u32 sel);
-s32 IEP_Drc_Set_Backlight_Dimming (u32 sel, u32 backlight_dimming);
+s32 iep_drc_late_resume(u32 sel);//open clk
+s32 IEP_Drc_Set_Imgsize(u32 sel, u32 width, u32 height);
+s32 IEP_Drc_Get_Cur_Backlight(u32 sel);
+s32 IEP_Drc_Update_Backlight(u32 sel, u32 backlight);
+s32 IEP_Drc_Get_Backlight_Dimming(u32 sel);
+s32 IEP_Drc_Set_Backlight_Dimming(u32 sel, u32 backlight_dimming);
 
 
 #endif

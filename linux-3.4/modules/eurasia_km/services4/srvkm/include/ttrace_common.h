@@ -1,7 +1,7 @@
 /*************************************************************************/ /*!
 @Title          Timed Trace header
 @Copyright      Copyright (c) Imagination Technologies Ltd. All Rights Reserved
-@Description  Timed Trace common header. Contains shared defines and
+@Description	Timed Trace common header. Contains shared defines and 
                 structures which are shared with the post processing tool.
 @License        Dual MIT/GPLv2
 
@@ -72,10 +72,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  * S = data packet size
  * T = Type
- *    0000 - 8 bit
- *    0001 - 16 bit
- *    0010 - 32 bit
- *    0011 - 64 bit
+ *		0000 - 8 bit
+ *		0001 - 16 bit
+ *		0010 - 32 bit
+ *		0011 - 64 bit
  *
  * C = data item count
  *
@@ -90,62 +90,62 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 
-#define PVRSRV_TRACE_HEADER   0
-#define PVRSRV_TRACE_TIMESTAMP    1
-#define PVRSRV_TRACE_HOSTUID    2
-#define PVRSRV_TRACE_DATA_HEADER  3
-#define PVRSRV_TRACE_DATA_PAYLOAD 4
+#define PVRSRV_TRACE_HEADER		0
+#define PVRSRV_TRACE_TIMESTAMP		1
+#define PVRSRV_TRACE_HOSTUID		2
+#define PVRSRV_TRACE_DATA_HEADER	3
+#define PVRSRV_TRACE_DATA_PAYLOAD	4
 
-#define PVRSRV_TRACE_ITEM_SIZE    16
+#define PVRSRV_TRACE_ITEM_SIZE		16
 
-#define PVRSRV_TRACE_GROUP_MASK   0xff
-#define PVRSRV_TRACE_CLASS_MASK   0xff
-#define PVRSRV_TRACE_TOKEN_MASK   0xffff
+#define PVRSRV_TRACE_GROUP_MASK		0xff
+#define PVRSRV_TRACE_CLASS_MASK		0xff
+#define PVRSRV_TRACE_TOKEN_MASK		0xffff
 
-#define PVRSRV_TRACE_GROUP_SHIFT  24
-#define PVRSRV_TRACE_CLASS_SHIFT  16
-#define PVRSRV_TRACE_TOKEN_SHIFT  0
+#define PVRSRV_TRACE_GROUP_SHIFT	24
+#define PVRSRV_TRACE_CLASS_SHIFT	16
+#define PVRSRV_TRACE_TOKEN_SHIFT	0
 
-#define PVRSRV_TRACE_SIZE_MASK    0xffff
-#define PVRSRV_TRACE_TYPE_MASK    0xf
-#define PVRSRV_TRACE_COUNT_MASK   0xfff
+#define PVRSRV_TRACE_SIZE_MASK		0xffff
+#define PVRSRV_TRACE_TYPE_MASK		0xf
+#define PVRSRV_TRACE_COUNT_MASK		0xfff
 
-#define PVRSRV_TRACE_SIZE_SHIFT   16
-#define PVRSRV_TRACE_TYPE_SHIFT   12
-#define PVRSRV_TRACE_COUNT_SHIFT  0
+#define PVRSRV_TRACE_SIZE_SHIFT		16
+#define PVRSRV_TRACE_TYPE_SHIFT		12
+#define PVRSRV_TRACE_COUNT_SHIFT	0
 
 
 #define WRITE_HEADER(n,m) \
-  ((m & PVRSRV_TRACE_##n##_MASK) << PVRSRV_TRACE_##n##_SHIFT)
+	((m & PVRSRV_TRACE_##n##_MASK) << PVRSRV_TRACE_##n##_SHIFT)
 
 #define READ_HEADER(n,m) \
-  ((m & (PVRSRV_TRACE_##n##_MASK << PVRSRV_TRACE_##n##_SHIFT)) >> PVRSRV_TRACE_##n##_SHIFT)
+	((m & (PVRSRV_TRACE_##n##_MASK << PVRSRV_TRACE_##n##_SHIFT)) >> PVRSRV_TRACE_##n##_SHIFT)
 
 
 #if defined(TTRACE_LARGE_BUFFER)
-#define TIME_TRACE_BUFFER_SIZE    8192
+#define TIME_TRACE_BUFFER_SIZE		8192
 #else
-#define TIME_TRACE_BUFFER_SIZE    4096
+#define TIME_TRACE_BUFFER_SIZE		4096
 #endif
 
 /* Type defines for trace items */
-#define PVRSRV_TRACE_TYPE_UI8   0
-#define PVRSRV_TRACE_TYPE_UI16    1
-#define PVRSRV_TRACE_TYPE_UI32    2
-#define PVRSRV_TRACE_TYPE_UI64    3
+#define PVRSRV_TRACE_TYPE_UI8		0
+#define PVRSRV_TRACE_TYPE_UI16		1
+#define PVRSRV_TRACE_TYPE_UI32		2
+#define PVRSRV_TRACE_TYPE_UI64		3
 
-#define PVRSRV_TRACE_TYPE_SYNC    15
-#define PVRSRV_TRACE_SYNC_UID    0
-#define PVRSRV_TRACE_SYNC_WOP    1
-#define PVRSRV_TRACE_SYNC_WOC    2
-#define PVRSRV_TRACE_SYNC_ROP    3
-#define PVRSRV_TRACE_SYNC_ROC    4
-#define PVRSRV_TRACE_SYNC_WO_DEV_VADDR 5
-#define PVRSRV_TRACE_SYNC_RO_DEV_VADDR 6
-#define PVRSRV_TRACE_SYNC_OP   7
-#define PVRSRV_TRACE_SYNC_RO2P   8
-#define PVRSRV_TRACE_SYNC_RO2C   9
-#define PVRSRV_TRACE_SYNC_RO2_DEV_VADDR 10
-#define PVRSRV_TRACE_TYPE_SYNC_SIZE ((PVRSRV_TRACE_SYNC_RO2_DEV_VADDR + 1) * sizeof(IMG_UINT32))
+#define PVRSRV_TRACE_TYPE_SYNC		15
+ #define PVRSRV_TRACE_SYNC_UID		0
+ #define PVRSRV_TRACE_SYNC_WOP		1
+ #define PVRSRV_TRACE_SYNC_WOC		2
+ #define PVRSRV_TRACE_SYNC_ROP		3
+ #define PVRSRV_TRACE_SYNC_ROC		4
+ #define PVRSRV_TRACE_SYNC_WO_DEV_VADDR	5
+ #define PVRSRV_TRACE_SYNC_RO_DEV_VADDR	6
+ #define PVRSRV_TRACE_SYNC_OP		7
+ #define PVRSRV_TRACE_SYNC_RO2P		8
+ #define PVRSRV_TRACE_SYNC_RO2C		9
+ #define PVRSRV_TRACE_SYNC_RO2_DEV_VADDR 10
+#define PVRSRV_TRACE_TYPE_SYNC_SIZE	((PVRSRV_TRACE_SYNC_RO2_DEV_VADDR + 1) * sizeof(IMG_UINT32))
 
 #endif /* __TTRACE_COMMON_H__*/

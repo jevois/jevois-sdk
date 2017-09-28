@@ -58,98 +58,98 @@
 #include <linux/list.h>
 #include <linux/stacktrace.h>
 
-static DEFINE_RAW_SPINLOCK (latency_lock);
+static DEFINE_RAW_SPINLOCK(latency_lock);
 
 #define MAXLR 128
 static struct latency_record latency_record[MAXLR];
 
 int latencytop_enabled;
 
-void clear_all_latency_tracing (struct task_struct * p)
+void clear_all_latency_tracing(struct task_struct *p)
 {
-  unsigned long flags;
-  
-  if (!latencytop_enabled)
-  { return; }
-  
-  raw_spin_lock_irqsave (&latency_lock, flags);
-  memset (&p->latency_record, 0, sizeof (p->latency_record) );
-  p->latency_record_count = 0;
-  raw_spin_unlock_irqrestore (&latency_lock, flags);
+	unsigned long flags;
+
+	if (!latencytop_enabled)
+		return;
+
+	raw_spin_lock_irqsave(&latency_lock, flags);
+	memset(&p->latency_record, 0, sizeof(p->latency_record));
+	p->latency_record_count = 0;
+	raw_spin_unlock_irqrestore(&latency_lock, flags);
 }
 
-static void clear_global_latency_tracing (void)
+static void clear_global_latency_tracing(void)
 {
-  unsigned long flags;
-  
-  raw_spin_lock_irqsave (&latency_lock, flags);
-  memset (&latency_record, 0, sizeof (latency_record) );
-  raw_spin_unlock_irqrestore (&latency_lock, flags);
+	unsigned long flags;
+
+	raw_spin_lock_irqsave(&latency_lock, flags);
+	memset(&latency_record, 0, sizeof(latency_record));
+	raw_spin_unlock_irqrestore(&latency_lock, flags);
 }
 
 static void __sched
-account_global_scheduler_latency (struct task_struct * tsk, struct latency_record * lat)
+account_global_scheduler_latency(struct task_struct *tsk, struct latency_record *lat)
 {
-  int firstnonnull = MAXLR + 1;
-  int i;
-  
-  if (!latencytop_enabled)
-  { return; }
-  
-  /* skip kernel threads for now */
-  if (!tsk->mm)
-  { return; }
-  
-  for (i = 0; i < MAXLR; i++) {
-    int q, same = 1;
-    
-    /* Nothing stored: */
-    if (!latency_record[i].backtrace[0]) {
-      if (firstnonnull > i)
-      { firstnonnull = i; }
-      continue;
-    }
-    for (q = 0; q < LT_BACKTRACEDEPTH; q++) {
-      unsigned long record = lat->backtrace[q];
-      
-      if (latency_record[i].backtrace[q] != record) {
-        same = 0;
-        break;
-      }
-      
-      /* 0 and ULONG_MAX entries mean end of backtrace: */
-      if (record == 0 || record == ULONG_MAX)
-      { break; }
-    }
-    if (same) {
-      latency_record[i].count++;
-      latency_record[i].time += lat->time;
-      if (lat->time > latency_record[i].max)
-      { latency_record[i].max = lat->time; }
-      return;
-    }
-  }
-  
-  i = firstnonnull;
-  if (i >= MAXLR - 1)
-  { return; }
-  
-  /* Allocted a new one: */
-  memcpy (&latency_record[i], lat, sizeof (struct latency_record) );
+	int firstnonnull = MAXLR + 1;
+	int i;
+
+	if (!latencytop_enabled)
+		return;
+
+	/* skip kernel threads for now */
+	if (!tsk->mm)
+		return;
+
+	for (i = 0; i < MAXLR; i++) {
+		int q, same = 1;
+
+		/* Nothing stored: */
+		if (!latency_record[i].backtrace[0]) {
+			if (firstnonnull > i)
+				firstnonnull = i;
+			continue;
+		}
+		for (q = 0; q < LT_BACKTRACEDEPTH; q++) {
+			unsigned long record = lat->backtrace[q];
+
+			if (latency_record[i].backtrace[q] != record) {
+				same = 0;
+				break;
+			}
+
+			/* 0 and ULONG_MAX entries mean end of backtrace: */
+			if (record == 0 || record == ULONG_MAX)
+				break;
+		}
+		if (same) {
+			latency_record[i].count++;
+			latency_record[i].time += lat->time;
+			if (lat->time > latency_record[i].max)
+				latency_record[i].max = lat->time;
+			return;
+		}
+	}
+
+	i = firstnonnull;
+	if (i >= MAXLR - 1)
+		return;
+
+	/* Allocted a new one: */
+	memcpy(&latency_record[i], lat, sizeof(struct latency_record));
 }
 
 /*
  * Iterator to store a backtrace into a latency record entry
  */
-static inline void store_stacktrace (struct task_struct * tsk,
-                                     struct latency_record * lat)
+static inline void store_stacktrace(struct task_struct *tsk,
+					struct latency_record *lat)
 {
-  struct stack_trace trace;
-  
-  memset (&trace, 0, sizeof (trace) );
-  trace.max_entries = LT_BACKTRACEDEPTH;
-  trace.entries = &lat->backtrace[0];
-  save_stack_trace_tsk (tsk, &trace);
+	struct stack_trace trace;
+
+	memset(&trace, 0, sizeof(trace));
+	trace.max_entries = LT_BACKTRACEDEPTH;
+	trace.entries = &lat->backtrace[0];
+	save_stack_trace_tsk(tsk, &trace);
 }
 
 /**
@@ -169,123 +169,123 @@ static inline void store_stacktrace (struct task_struct * tsk,
  * skipped.
  */
 void __sched
-__account_scheduler_latency (struct task_struct * tsk, int usecs, int inter)
+__account_scheduler_latency(struct task_struct *tsk, int usecs, int inter)
 {
-  unsigned long flags;
-  int i, q;
-  struct latency_record lat;
-  
-  /* Long interruptible waits are generally user requested... */
-  if (inter && usecs > 5000)
-  { return; }
-  
-  /* Negative sleeps are time going backwards */
-  /* Zero-time sleeps are non-interesting */
-  if (usecs <= 0)
-  { return; }
-  
-  memset (&lat, 0, sizeof (lat) );
-  lat.count = 1;
-  lat.time = usecs;
-  lat.max = usecs;
-  store_stacktrace (tsk, &lat);
-  
-  raw_spin_lock_irqsave (&latency_lock, flags);
-  
-  account_global_scheduler_latency (tsk, &lat);
-  
-  for (i = 0; i < tsk->latency_record_count; i++) {
-    struct latency_record * mylat;
-    int same = 1;
-    
-    mylat = &tsk->latency_record[i];
-    for (q = 0; q < LT_BACKTRACEDEPTH; q++) {
-      unsigned long record = lat.backtrace[q];
-      
-      if (mylat->backtrace[q] != record) {
-        same = 0;
-        break;
-      }
-      
-      /* 0 and ULONG_MAX entries mean end of backtrace: */
-      if (record == 0 || record == ULONG_MAX)
-      { break; }
-    }
-    if (same) {
-      mylat->count++;
-      mylat->time += lat.time;
-      if (lat.time > mylat->max)
-      { mylat->max = lat.time; }
-      goto out_unlock;
-    }
-  }
-  
-  /*
-   * short term hack; if we're > 32 we stop; future we recycle:
-   */
-  if (tsk->latency_record_count >= LT_SAVECOUNT)
-  { goto out_unlock; }
-  
-  /* Allocated a new one: */
-  i = tsk->latency_record_count++;
-  memcpy (&tsk->latency_record[i], &lat, sizeof (struct latency_record) );
-  
+	unsigned long flags;
+	int i, q;
+	struct latency_record lat;
+
+	/* Long interruptible waits are generally user requested... */
+	if (inter && usecs > 5000)
+		return;
+
+	/* Negative sleeps are time going backwards */
+	/* Zero-time sleeps are non-interesting */
+	if (usecs <= 0)
+		return;
+
+	memset(&lat, 0, sizeof(lat));
+	lat.count = 1;
+	lat.time = usecs;
+	lat.max = usecs;
+	store_stacktrace(tsk, &lat);
+
+	raw_spin_lock_irqsave(&latency_lock, flags);
+
+	account_global_scheduler_latency(tsk, &lat);
+
+	for (i = 0; i < tsk->latency_record_count; i++) {
+		struct latency_record *mylat;
+		int same = 1;
+
+		mylat = &tsk->latency_record[i];
+		for (q = 0; q < LT_BACKTRACEDEPTH; q++) {
+			unsigned long record = lat.backtrace[q];
+
+			if (mylat->backtrace[q] != record) {
+				same = 0;
+				break;
+			}
+
+			/* 0 and ULONG_MAX entries mean end of backtrace: */
+			if (record == 0 || record == ULONG_MAX)
+				break;
+		}
+		if (same) {
+			mylat->count++;
+			mylat->time += lat.time;
+			if (lat.time > mylat->max)
+				mylat->max = lat.time;
+			goto out_unlock;
+		}
+	}
+
+	/*
+	 * short term hack; if we're > 32 we stop; future we recycle:
+	 */
+	if (tsk->latency_record_count >= LT_SAVECOUNT)
+		goto out_unlock;
+
+	/* Allocated a new one: */
+	i = tsk->latency_record_count++;
+	memcpy(&tsk->latency_record[i], &lat, sizeof(struct latency_record));
+
 out_unlock:
-  raw_spin_unlock_irqrestore (&latency_lock, flags);
+	raw_spin_unlock_irqrestore(&latency_lock, flags);
 }
 
-static int lstats_show (struct seq_file * m, void * v)
+static int lstats_show(struct seq_file *m, void *v)
 {
-  int i;
-  
-  seq_puts (m, "Latency Top version : v0.1\n");
-  
-  for (i = 0; i < MAXLR; i++) {
-    struct latency_record * lr = &latency_record[i];
-    
-    if (lr->backtrace[0]) {
-      int q;
-      seq_printf (m, "%i %lu %lu",
-                  lr->count, lr->time, lr->max);
-      for (q = 0; q < LT_BACKTRACEDEPTH; q++) {
-        unsigned long bt = lr->backtrace[q];
-        if (!bt)
-        { break; }
-        if (bt == ULONG_MAX)
-        { break; }
-        seq_printf (m, " %ps", (void *) bt);
-      }
-      seq_printf (m, "\n");
-    }
-  }
-  return 0;
+	int i;
+
+	seq_puts(m, "Latency Top version : v0.1\n");
+
+	for (i = 0; i < MAXLR; i++) {
+		struct latency_record *lr = &latency_record[i];
+
+		if (lr->backtrace[0]) {
+			int q;
+			seq_printf(m, "%i %lu %lu",
+				   lr->count, lr->time, lr->max);
+			for (q = 0; q < LT_BACKTRACEDEPTH; q++) {
+				unsigned long bt = lr->backtrace[q];
+				if (!bt)
+					break;
+				if (bt == ULONG_MAX)
+					break;
+				seq_printf(m, " %ps", (void *)bt);
+			}
+			seq_printf(m, "\n");
+		}
+	}
+	return 0;
 }
 
 static ssize_t
-lstats_write (struct file * file, const char __user * buf, size_t count,
-              loff_t * offs)
+lstats_write(struct file *file, const char __user *buf, size_t count,
+	     loff_t *offs)
 {
-  clear_global_latency_tracing();
-  
-  return count;
+	clear_global_latency_tracing();
+
+	return count;
 }
 
-static int lstats_open (struct inode * inode, struct file * filp)
+static int lstats_open(struct inode *inode, struct file *filp)
 {
-  return single_open (filp, lstats_show, NULL);
+	return single_open(filp, lstats_show, NULL);
 }
 
 static const struct file_operations lstats_fops = {
-  .open   = lstats_open,
-  .read   = seq_read,
-  .write    = lstats_write,
-  .llseek   = seq_lseek,
-  .release  = single_release,
+	.open		= lstats_open,
+	.read		= seq_read,
+	.write		= lstats_write,
+	.llseek		= seq_lseek,
+	.release	= single_release,
 };
 
-static int __init init_lstats_procfs (void)
+static int __init init_lstats_procfs(void)
 {
-  proc_create ("latency_stats", 0644, NULL, &lstats_fops);
-  return 0;
+	proc_create("latency_stats", 0644, NULL, &lstats_fops);
+	return 0;
 }
-device_initcall (init_lstats_procfs);
+device_initcall(init_lstats_procfs);

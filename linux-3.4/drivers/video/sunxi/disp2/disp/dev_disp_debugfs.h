@@ -18,5 +18,5 @@
 #include "de/bsp_display.h"
 #include "de/disp_tv.h"
 
-int dispdbg_init (void);
-int dispdbg_exit (void);
+int dispdbg_init(void);
+int dispdbg_exit(void);

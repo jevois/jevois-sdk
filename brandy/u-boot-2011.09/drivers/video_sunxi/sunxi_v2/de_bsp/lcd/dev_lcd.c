@@ -14,10 +14,10 @@
 
 struct sunxi_lcd_drv g_lcd_drv;
 
-int lcd_init (void)
+int lcd_init(void)
 {
-  sunxi_disp_get_source_ops (&g_lcd_drv.src_ops);
-  LCD_set_panel_funs();
-  
-  return 0;
+	sunxi_disp_get_source_ops(&g_lcd_drv.src_ops);
+	LCD_set_panel_funs();
+
+	return 0;
 }

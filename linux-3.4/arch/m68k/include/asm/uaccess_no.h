@@ -10,10 +10,10 @@
 
 #include <asm/segment.h>
 
-#define VERIFY_READ 0
-#define VERIFY_WRITE  1
+#define VERIFY_READ	0
+#define VERIFY_WRITE	1
 
-#define access_ok(type,addr,size) _access_ok((unsigned long)(addr),(size))
+#define access_ok(type,addr,size)	_access_ok((unsigned long)(addr),(size))
 
 /*
  * It is not enough to just have access_ok check for a real RAM address.
@@ -21,9 +21,9 @@
  * Ideally we would check the possible flash ranges too, but that is
  * currently not so easy.
  */
-static inline int _access_ok (unsigned long addr, unsigned long size)
+static inline int _access_ok(unsigned long addr, unsigned long size)
 {
-  return 1;
+	return 1;
 }
 
 /*
@@ -41,11 +41,11 @@ static inline int _access_ok (unsigned long addr, unsigned long size)
 
 struct exception_table_entry
 {
-  unsigned long insn, fixup;
+	unsigned long insn, fixup;
 };
 
 /* Returns 0 if exception not found and fixup otherwise.  */
-extern unsigned long search_exception_table (unsigned long);
+extern unsigned long search_exception_table(unsigned long);
 
 
 /*
@@ -53,32 +53,32 @@ extern unsigned long search_exception_table (unsigned long);
  * use the right size if we just have the right pointer type.
  */
 
-#define put_user(x, ptr)        \
-  ({              \
-    int __pu_err = 0;         \
-    typeof(*(ptr)) __pu_val = (x);      \
-    switch (sizeof (*(ptr))) {        \
-    case 1:           \
-      __put_user_asm(__pu_err, __pu_val, ptr, b); \
-      break;            \
-    case 2:           \
-      __put_user_asm(__pu_err, __pu_val, ptr, w); \
-      break;            \
-    case 4:           \
-      __put_user_asm(__pu_err, __pu_val, ptr, l); \
-      break;            \
-    case 8:           \
-      memcpy(ptr, &__pu_val, sizeof (*(ptr))); \
-      break;            \
-    default:            \
-      __pu_err = __put_user_bad();      \
-      break;            \
-    }             \
-    __pu_err;           \
-  })
+#define put_user(x, ptr)				\
+({							\
+    int __pu_err = 0;					\
+    typeof(*(ptr)) __pu_val = (x);			\
+    switch (sizeof (*(ptr))) {				\
+    case 1:						\
+	__put_user_asm(__pu_err, __pu_val, ptr, b);	\
+	break;						\
+    case 2:						\
+	__put_user_asm(__pu_err, __pu_val, ptr, w);	\
+	break;						\
+    case 4:						\
+	__put_user_asm(__pu_err, __pu_val, ptr, l);	\
+	break;						\
+    case 8:						\
+	memcpy(ptr, &__pu_val, sizeof (*(ptr))); \
+	break;						\
+    default:						\
+	__pu_err = __put_user_bad();			\
+	break;						\
+    }							\
+    __pu_err;						\
+})
 #define __put_user(x, ptr) put_user(x, ptr)
 
-extern int __put_user_bad (void);
+extern int __put_user_bad(void);
 
 /*
  * Tell gcc we read from memory instead of writing: this is because
@@ -88,47 +88,47 @@ extern int __put_user_bad (void);
 
 #define __ptr(x) ((unsigned long *)(x))
 
-#define __put_user_asm(err,x,ptr,bwl)       \
-  __asm__ ("move" #bwl " %0,%1"       \
-           : /* no outputs */            \
-           :"d" (x),"m" (*__ptr(ptr)) : "memory")
+#define __put_user_asm(err,x,ptr,bwl)				\
+	__asm__ ("move" #bwl " %0,%1"				\
+		: /* no outputs */						\
+		:"d" (x),"m" (*__ptr(ptr)) : "memory")
 
-#define get_user(x, ptr)          \
-  ({                \
-    int __gu_err = 0;           \
-    typeof(x) __gu_val = 0;         \
-    switch (sizeof(*(ptr))) {         \
-    case 1:             \
-      __get_user_asm(__gu_err, __gu_val, ptr, b, "=d"); \
-      break;              \
-    case 2:             \
-      __get_user_asm(__gu_err, __gu_val, ptr, w, "=r"); \
-      break;              \
-    case 4:             \
-      __get_user_asm(__gu_err, __gu_val, ptr, l, "=r"); \
-      break;              \
-    case 8:             \
-      memcpy((void *) &__gu_val, ptr, sizeof (*(ptr))); \
-      break;              \
-    default:              \
-      __gu_val = 0;           \
-      __gu_err = __get_user_bad();        \
-      break;              \
-    }               \
-    (x) = (typeof(*(ptr))) __gu_val;        \
-    __gu_err;             \
-  })
+#define get_user(x, ptr)					\
+({								\
+    int __gu_err = 0;						\
+    typeof(x) __gu_val = 0;					\
+    switch (sizeof(*(ptr))) {					\
+    case 1:							\
+	__get_user_asm(__gu_err, __gu_val, ptr, b, "=d");	\
+	break;							\
+    case 2:							\
+	__get_user_asm(__gu_err, __gu_val, ptr, w, "=r");	\
+	break;							\
+    case 4:							\
+	__get_user_asm(__gu_err, __gu_val, ptr, l, "=r");	\
+	break;							\
+    case 8:							\
+	memcpy((void *) &__gu_val, ptr, sizeof (*(ptr)));	\
+	break;							\
+    default:							\
+	__gu_val = 0;						\
+	__gu_err = __get_user_bad();				\
+	break;							\
+    }								\
+    (x) = (typeof(*(ptr))) __gu_val;				\
+    __gu_err;							\
+})
 #define __get_user(x, ptr) get_user(x, ptr)
 
-extern int __get_user_bad (void);
+extern int __get_user_bad(void);
 
-#define __get_user_asm(err,x,ptr,bwl,reg)     \
-  __asm__ ("move" #bwl " %1,%0"       \
-           : "=d" (x)         \
-           : "m" (*__ptr(ptr)))
+#define __get_user_asm(err,x,ptr,bwl,reg)			\
+	__asm__ ("move" #bwl " %1,%0"				\
+		 : "=d" (x)					\
+		 : "m" (*__ptr(ptr)))
 
-#define copy_from_user(to, from, n)   (memcpy(to, from, n), 0)
-#define copy_to_user(to, from, n)   (memcpy(to, from, n), 0)
+#define copy_from_user(to, from, n)		(memcpy(to, from, n), 0)
+#define copy_to_user(to, from, n)		(memcpy(to, from, n), 0)
 
 #define __copy_from_user(to, from, n) copy_from_user(to, from, n)
 #define __copy_to_user(to, from, n) copy_to_user(to, from, n)
@@ -144,13 +144,13 @@ extern int __get_user_bad (void);
  */
 
 static inline long
-strncpy_from_user (char * dst, const char * src, long count)
+strncpy_from_user(char *dst, const char *src, long count)
 {
-  char * tmp;
-  strncpy (dst, src, count);
-  for (tmp = dst; *tmp && count > 0; tmp++, count--)
-    ;
-  return (tmp - dst); /* DAVIDM should we count a NUL ?  check getname */
+	char *tmp;
+	strncpy(dst, src, count);
+	for (tmp = dst; *tmp && count > 0; tmp++, count--)
+		;
+	return(tmp - dst); /* DAVIDM should we count a NUL ?  check getname */
 }
 
 /*
@@ -158,9 +158,9 @@ strncpy_from_user (char * dst, const char * src, long count)
  *
  * Return 0 on exception, a value greater than N if too long
  */
-static inline long strnlen_user (const char * src, long n)
+static inline long strnlen_user(const char *src, long n)
 {
-  return (strlen (src) + 1); /* DAVIDM make safer */
+	return(strlen(src) + 1); /* DAVIDM make safer */
 }
 
 #define strlen_user(str) strnlen_user(str, 32767)
@@ -170,12 +170,12 @@ static inline long strnlen_user (const char * src, long n)
  */
 
 static inline unsigned long
-__clear_user (void * to, unsigned long n)
+__clear_user(void *to, unsigned long n)
 {
-  memset (to, 0, n);
-  return 0;
+	memset(to, 0, n);
+	return 0;
 }
 
-#define clear_user(to,n)  __clear_user(to,n)
+#define	clear_user(to,n)	__clear_user(to,n)
 
 #endif /* _M68KNOMMU_UACCESS_H */

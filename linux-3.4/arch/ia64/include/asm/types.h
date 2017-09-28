@@ -11,7 +11,7 @@
  * Based on <asm-alpha/types.h>.
  *
  * Modified 1998-2000, 2002
- *  David Mosberger-Tang <davidm@hpl.hp.com>, Hewlett-Packard Co
+ *	David Mosberger-Tang <davidm@hpl.hp.com>, Hewlett-Packard Co
  */
 
 #ifdef __KERNEL__
@@ -21,12 +21,12 @@
 #endif
 
 #ifdef __ASSEMBLY__
-# define __IA64_UL(x)   (x)
-# define __IA64_UL_CONST(x) x
+# define __IA64_UL(x)		(x)
+# define __IA64_UL_CONST(x)	x
 
 #else
-# define __IA64_UL(x)   ((unsigned long)(x))
-# define __IA64_UL_CONST(x) x##UL
+# define __IA64_UL(x)		((unsigned long)(x))
+# define __IA64_UL_CONST(x)	x##UL
 
 /*
  * These aren't exported outside the kernel to avoid name space clashes
@@ -34,8 +34,8 @@
 # ifdef __KERNEL__
 
 struct fnptr {
-  unsigned long ip;
-  unsigned long gp;
+	unsigned long ip;
+	unsigned long gp;
 };
 
 # endif /* __KERNEL__ */

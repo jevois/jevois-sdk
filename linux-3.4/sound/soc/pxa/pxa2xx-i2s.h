@@ -10,9 +10,9 @@
 #define _PXA2XX_I2S_H
 
 /* pxa2xx DAI ID's */
-#define PXA2XX_DAI_I2S      0
+#define PXA2XX_DAI_I2S			0
 
 /* I2S clock */
-#define PXA2XX_I2S_SYSCLK   0
+#define PXA2XX_I2S_SYSCLK		0
 
 #endif

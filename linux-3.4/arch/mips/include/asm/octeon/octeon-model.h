@@ -74,8 +74,8 @@
 #define OCTEON_CN68XX_PASS1_X   (OCTEON_CN68XX_PASS1_0 | OM_IGNORE_MINOR_REVISION)
 #define OCTEON_CN68XX_PASS2_X   (OCTEON_CN68XX_PASS2_0 | OM_IGNORE_MINOR_REVISION)
 
-#define OCTEON_CN68XX_PASS1 OCTEON_CN68XX_PASS1_X
-#define OCTEON_CN68XX_PASS2 OCTEON_CN68XX_PASS2_X
+#define OCTEON_CN68XX_PASS1	OCTEON_CN68XX_PASS1_X
+#define OCTEON_CN68XX_PASS2	OCTEON_CN68XX_PASS2_X
 
 #define OCTEON_CN66XX_PASS1_0   0x000d9200
 #define OCTEON_CN66XX_PASS1_2   0x000d9202
@@ -241,58 +241,58 @@
 #define OCTEON_5XXX_MODEL_MASK       0x00ff0fc0
 
 /* forward declarations */
-static inline uint32_t cvmx_get_proc_id (void) __attribute__ ( (pure) );
-static inline uint64_t cvmx_read_csr (uint64_t csr_addr);
+static inline uint32_t cvmx_get_proc_id(void) __attribute__ ((pure));
+static inline uint64_t cvmx_read_csr(uint64_t csr_addr);
 
 #define __OCTEON_MATCH_MASK__(x, y, z) (((x) & (z)) == ((y) & (z)))
 
 /* NOTE: This for internal use only! */
-#define __OCTEON_IS_MODEL_COMPILE__(arg_model, chip_model)    \
-  ((((arg_model & OCTEON_38XX_FAMILY_MASK) < OCTEON_CN58XX_PASS1_0)  && ( \
-      ((((arg_model) & (OM_FLAG_MASK)) == (OM_IGNORE_REVISION | OM_CHECK_SUBMODEL)) \
-       && __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_38XX_MODEL_MASK)) || \
-      ((((arg_model) & (OM_FLAG_MASK)) == 0)      \
-       && __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_38XX_FAMILY_REV_MASK)) || \
-      ((((arg_model) & (OM_FLAG_MASK)) == OM_IGNORE_REVISION) \
-       && __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_38XX_FAMILY_MASK)) || \
-      ((((arg_model) & (OM_FLAG_MASK)) == OM_CHECK_SUBMODEL)  \
-       && __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_38XX_MODEL_REV_MASK)) || \
-      ((((arg_model) & (OM_MATCH_PREVIOUS_MODELS)) == OM_MATCH_PREVIOUS_MODELS) \
-       && (((chip_model) & OCTEON_38XX_MODEL_MASK) < ((arg_model) & OCTEON_38XX_MODEL_MASK))) \
-                                                                        )) ||             \
-   (((arg_model & OCTEON_38XX_FAMILY_MASK) >= OCTEON_CN58XX_PASS1_0)  && ( \
-       ((((arg_model) & (OM_FLAG_MASK)) == (OM_IGNORE_REVISION | OM_CHECK_SUBMODEL)) \
-        && __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_58XX_MODEL_MASK)) || \
-       ((((arg_model) & (OM_FLAG_MASK)) == 0)      \
-        && __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_58XX_FAMILY_REV_MASK)) || \
-       ((((arg_model) & (OM_FLAG_MASK)) == OM_IGNORE_MINOR_REVISION) \
-        && __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_58XX_MODEL_MINOR_REV_MASK)) || \
-       ((((arg_model) & (OM_FLAG_MASK)) == OM_IGNORE_REVISION) \
-        && __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_58XX_FAMILY_MASK)) || \
-       ((((arg_model) & (OM_FLAG_MASK)) == OM_CHECK_SUBMODEL)  \
-        && __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_58XX_MODEL_REV_MASK)) || \
-       ((((arg_model) & (OM_MATCH_5XXX_FAMILY_MODELS)) == OM_MATCH_5XXX_FAMILY_MODELS) \
-        && ((chip_model) >= OCTEON_CN58XX_PASS1_0) && ((chip_model) < OCTEON_CN63XX_PASS1_0)) || \
-       ((((arg_model) & (OM_MATCH_6XXX_FAMILY_MODELS)) == OM_MATCH_6XXX_FAMILY_MODELS) \
-        && ((chip_model) >= OCTEON_CN63XX_PASS1_0)) ||  \
-       ((((arg_model) & (OM_MATCH_PREVIOUS_MODELS)) == OM_MATCH_PREVIOUS_MODELS) \
-        && (((chip_model) & OCTEON_58XX_MODEL_MASK) < ((arg_model) & OCTEON_58XX_MODEL_MASK))) \
-                                                                         )))
+#define __OCTEON_IS_MODEL_COMPILE__(arg_model, chip_model)		\
+((((arg_model & OCTEON_38XX_FAMILY_MASK) < OCTEON_CN58XX_PASS1_0)  && (	\
+		((((arg_model) & (OM_FLAG_MASK)) == (OM_IGNORE_REVISION | OM_CHECK_SUBMODEL)) \
+			&& __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_38XX_MODEL_MASK)) || \
+		((((arg_model) & (OM_FLAG_MASK)) == 0)			\
+			&& __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_38XX_FAMILY_REV_MASK)) || \
+		((((arg_model) & (OM_FLAG_MASK)) == OM_IGNORE_REVISION) \
+			&& __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_38XX_FAMILY_MASK)) || \
+		((((arg_model) & (OM_FLAG_MASK)) == OM_CHECK_SUBMODEL)	\
+			&& __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_38XX_MODEL_REV_MASK)) || \
+		((((arg_model) & (OM_MATCH_PREVIOUS_MODELS)) == OM_MATCH_PREVIOUS_MODELS) \
+			&& (((chip_model) & OCTEON_38XX_MODEL_MASK) < ((arg_model) & OCTEON_38XX_MODEL_MASK))) \
+		)) ||							\
+	(((arg_model & OCTEON_38XX_FAMILY_MASK) >= OCTEON_CN58XX_PASS1_0)  && (	\
+		((((arg_model) & (OM_FLAG_MASK)) == (OM_IGNORE_REVISION | OM_CHECK_SUBMODEL)) \
+			&& __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_58XX_MODEL_MASK)) || \
+		((((arg_model) & (OM_FLAG_MASK)) == 0)			\
+			&& __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_58XX_FAMILY_REV_MASK)) || \
+		((((arg_model) & (OM_FLAG_MASK)) == OM_IGNORE_MINOR_REVISION) \
+			&& __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_58XX_MODEL_MINOR_REV_MASK)) || \
+		((((arg_model) & (OM_FLAG_MASK)) == OM_IGNORE_REVISION) \
+			&& __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_58XX_FAMILY_MASK)) || \
+		((((arg_model) & (OM_FLAG_MASK)) == OM_CHECK_SUBMODEL)	\
+			&& __OCTEON_MATCH_MASK__((chip_model), (arg_model), OCTEON_58XX_MODEL_REV_MASK)) || \
+		((((arg_model) & (OM_MATCH_5XXX_FAMILY_MODELS)) == OM_MATCH_5XXX_FAMILY_MODELS) \
+			&& ((chip_model) >= OCTEON_CN58XX_PASS1_0) && ((chip_model) < OCTEON_CN63XX_PASS1_0)) || \
+		((((arg_model) & (OM_MATCH_6XXX_FAMILY_MODELS)) == OM_MATCH_6XXX_FAMILY_MODELS) \
+			&& ((chip_model) >= OCTEON_CN63XX_PASS1_0)) ||	\
+		((((arg_model) & (OM_MATCH_PREVIOUS_MODELS)) == OM_MATCH_PREVIOUS_MODELS) \
+			&& (((chip_model) & OCTEON_58XX_MODEL_MASK) < ((arg_model) & OCTEON_58XX_MODEL_MASK))) \
+		)))
 
 /* NOTE: This for internal use only!!!!! */
-static inline int __octeon_is_model_runtime__ (uint32_t model)
+static inline int __octeon_is_model_runtime__(uint32_t model)
 {
-  uint32_t cpuid = cvmx_get_proc_id();
-  
-  /*
-   * Check for special case of mismarked 3005 samples. We only
-   * need to check if the sub model isn't being ignored
-   */
-  if ( (model & OM_CHECK_SUBMODEL) == OM_CHECK_SUBMODEL) {
-    if (cpuid == OCTEON_CN3010_PASS1 && (cvmx_read_csr (0x80011800800007B8ull) & (1ull << 34) ) )
-    { cpuid |= 0x10; }
-  }
-  return __OCTEON_IS_MODEL_COMPILE__ (model, cpuid);
+	uint32_t cpuid = cvmx_get_proc_id();
+
+	/*
+	 * Check for special case of mismarked 3005 samples. We only
+	 * need to check if the sub model isn't being ignored
+	 */
+	if ((model & OM_CHECK_SUBMODEL) == OM_CHECK_SUBMODEL) {
+		if (cpuid == OCTEON_CN3010_PASS1 && (cvmx_read_csr(0x80011800800007B8ull) & (1ull << 34)))
+			cpuid |= 0x10;
+	}
+	return __OCTEON_IS_MODEL_COMPILE__(model, cpuid);
 }
 
 /*
@@ -310,8 +310,8 @@ static inline int __octeon_is_model_runtime__ (uint32_t model)
 #define OCTEON_IS_COMMON_BINARY() 1
 #undef OCTEON_MODEL
 
-const char * octeon_model_get_string (uint32_t chip_id);
-const char * octeon_model_get_string_buffer (uint32_t chip_id, char * buffer);
+const char *octeon_model_get_string(uint32_t chip_id);
+const char *octeon_model_get_string_buffer(uint32_t chip_id, char *buffer);
 
 #include "octeon-feature.h"
 

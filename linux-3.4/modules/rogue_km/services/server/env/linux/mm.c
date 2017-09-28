@@ -51,48 +51,48 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 IMG_VOID *
-_IORemapWrapper (IMG_CPU_PHYADDR BasePAddr,
-                 IMG_UINT32 ui32Bytes,
-                 IMG_UINT32 ui32MappingFlags,
-                 IMG_CHAR * pszFileName,
-                 IMG_UINT32 ui32Line)
+_IORemapWrapper(IMG_CPU_PHYADDR BasePAddr,
+               IMG_UINT32 ui32Bytes,
+               IMG_UINT32 ui32MappingFlags,
+               IMG_CHAR *pszFileName,
+               IMG_UINT32 ui32Line)
 {
-  IMG_VOID * pvIORemapCookie;
-  IMG_UINT32 ui32CPUCacheMode = DevmemCPUCacheMode (ui32MappingFlags);
-  
-  switch (ui32CPUCacheMode)
-  {
-  case PVRSRV_MEMALLOCFLAG_CPU_UNCACHED:
-    pvIORemapCookie = (IMG_VOID *) IOREMAP_UC (BasePAddr.uiAddr, ui32Bytes);
-    break;
-    
-  case PVRSRV_MEMALLOCFLAG_CPU_WRITE_COMBINE:
-    pvIORemapCookie = (IMG_VOID *) IOREMAP_WC (BasePAddr.uiAddr, ui32Bytes);
-    break;
-    
-  case PVRSRV_MEMALLOCFLAG_CPU_CACHED:
-    pvIORemapCookie = (IMG_VOID *) IOREMAP (BasePAddr.uiAddr, ui32Bytes);
-    break;
-    
-  default:
-    return IMG_NULL;
-    break;
-  }
-  
-  
-  PVR_UNREFERENCED_PARAMETER (pszFileName);
-  PVR_UNREFERENCED_PARAMETER (ui32Line);
-  
-  return pvIORemapCookie;
+    IMG_VOID *pvIORemapCookie;
+	IMG_UINT32 ui32CPUCacheMode = DevmemCPUCacheMode(ui32MappingFlags);
+
+	switch (ui32CPUCacheMode)
+	{
+		case PVRSRV_MEMALLOCFLAG_CPU_UNCACHED:
+				pvIORemapCookie = (IMG_VOID *)IOREMAP_UC(BasePAddr.uiAddr, ui32Bytes);
+				break;
+
+		case PVRSRV_MEMALLOCFLAG_CPU_WRITE_COMBINE:
+				pvIORemapCookie = (IMG_VOID *)IOREMAP_WC(BasePAddr.uiAddr, ui32Bytes);
+				break;
+
+		case PVRSRV_MEMALLOCFLAG_CPU_CACHED:
+				pvIORemapCookie = (IMG_VOID *)IOREMAP(BasePAddr.uiAddr, ui32Bytes);
+				break;
+
+		default:
+				return IMG_NULL;
+				break;
+	}
+
+
+    PVR_UNREFERENCED_PARAMETER(pszFileName);
+    PVR_UNREFERENCED_PARAMETER(ui32Line);
+
+    return pvIORemapCookie;
 }
 
 
 IMG_VOID
-_IOUnmapWrapper (IMG_VOID * pvIORemapCookie, IMG_CHAR * pszFileName, IMG_UINT32 ui32Line)
+_IOUnmapWrapper(IMG_VOID *pvIORemapCookie, IMG_CHAR *pszFileName, IMG_UINT32 ui32Line)
 {
-  PVR_UNREFERENCED_PARAMETER (pszFileName);
-  PVR_UNREFERENCED_PARAMETER (ui32Line);
-  
-  
-  iounmap (pvIORemapCookie);
+    PVR_UNREFERENCED_PARAMETER(pszFileName);
+    PVR_UNREFERENCED_PARAMETER(ui32Line);
+
+
+    iounmap(pvIORemapCookie);
 }

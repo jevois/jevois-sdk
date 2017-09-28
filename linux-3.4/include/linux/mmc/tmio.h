@@ -60,6 +60,6 @@
 #define TMIO_STAT_CMD_BUSY      0x40000000
 #define TMIO_STAT_ILL_ACCESS    0x80000000
 
-#define TMIO_BBS    512   /* Boot block size */
+#define TMIO_BBS		512		/* Boot block size */
 
 #endif /* LINUX_MMC_TMIO_H */

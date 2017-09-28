@@ -21,127 +21,127 @@
 #define UASM_EXPORT_SYMBOL(sym)
 #endif
 
-#define Ip_u1u2u3(op)             \
-  void __uasminit               \
-  uasm_i##op(u32 **buf, unsigned int a, unsigned int b, unsigned int c)
+#define Ip_u1u2u3(op)							\
+void __uasminit								\
+uasm_i##op(u32 **buf, unsigned int a, unsigned int b, unsigned int c)
 
-#define Ip_u2u1u3(op)             \
-  void __uasminit               \
-  uasm_i##op(u32 **buf, unsigned int a, unsigned int b, unsigned int c)
+#define Ip_u2u1u3(op)							\
+void __uasminit								\
+uasm_i##op(u32 **buf, unsigned int a, unsigned int b, unsigned int c)
 
-#define Ip_u3u1u2(op)             \
-  void __uasminit               \
-  uasm_i##op(u32 **buf, unsigned int a, unsigned int b, unsigned int c)
+#define Ip_u3u1u2(op)							\
+void __uasminit								\
+uasm_i##op(u32 **buf, unsigned int a, unsigned int b, unsigned int c)
 
-#define Ip_u1u2s3(op)             \
-  void __uasminit               \
-  uasm_i##op(u32 **buf, unsigned int a, unsigned int b, signed int c)
+#define Ip_u1u2s3(op)							\
+void __uasminit								\
+uasm_i##op(u32 **buf, unsigned int a, unsigned int b, signed int c)
 
-#define Ip_u2s3u1(op)             \
-  void __uasminit               \
-  uasm_i##op(u32 **buf, unsigned int a, signed int b, unsigned int c)
+#define Ip_u2s3u1(op)							\
+void __uasminit								\
+uasm_i##op(u32 **buf, unsigned int a, signed int b, unsigned int c)
 
-#define Ip_u2u1s3(op)             \
-  void __uasminit               \
-  uasm_i##op(u32 **buf, unsigned int a, unsigned int b, signed int c)
+#define Ip_u2u1s3(op)							\
+void __uasminit								\
+uasm_i##op(u32 **buf, unsigned int a, unsigned int b, signed int c)
 
-#define Ip_u2u1msbu3(op)            \
-  void __uasminit               \
-  uasm_i##op(u32 **buf, unsigned int a, unsigned int b, unsigned int c, \
-             unsigned int d)
+#define Ip_u2u1msbu3(op)						\
+void __uasminit								\
+uasm_i##op(u32 **buf, unsigned int a, unsigned int b, unsigned int c,	\
+	   unsigned int d)
 
-#define Ip_u1u2(op)             \
-  void __uasminit uasm_i##op(u32 **buf, unsigned int a, unsigned int b)
+#define Ip_u1u2(op)							\
+void __uasminit uasm_i##op(u32 **buf, unsigned int a, unsigned int b)
 
-#define Ip_u1s2(op)             \
-  void __uasminit uasm_i##op(u32 **buf, unsigned int a, signed int b)
+#define Ip_u1s2(op)							\
+void __uasminit uasm_i##op(u32 **buf, unsigned int a, signed int b)
 
 #define Ip_u1(op) void __uasminit uasm_i##op(u32 **buf, unsigned int a)
 
 #define Ip_0(op) void __uasminit uasm_i##op(u32 **buf)
 
-Ip_u2u1s3 (_addiu);
-Ip_u3u1u2 (_addu);
-Ip_u2u1u3 (_andi);
-Ip_u3u1u2 (_and);
-Ip_u1u2s3 (_beq);
-Ip_u1u2s3 (_beql);
-Ip_u1s2 (_bgez);
-Ip_u1s2 (_bgezl);
-Ip_u1s2 (_bltz);
-Ip_u1s2 (_bltzl);
-Ip_u1u2s3 (_bne);
-Ip_u2s3u1 (_cache);
-Ip_u1u2u3 (_dmfc0);
-Ip_u1u2u3 (_dmtc0);
-Ip_u2u1s3 (_daddiu);
-Ip_u3u1u2 (_daddu);
-Ip_u2u1u3 (_dsll);
-Ip_u2u1u3 (_dsll32);
-Ip_u2u1u3 (_dsra);
-Ip_u2u1u3 (_dsrl);
-Ip_u2u1u3 (_dsrl32);
-Ip_u2u1u3 (_drotr);
-Ip_u2u1u3 (_drotr32);
-Ip_u3u1u2 (_dsubu);
-Ip_0 (_eret);
-Ip_u1 (_j);
-Ip_u1 (_jal);
-Ip_u1 (_jr);
-Ip_u2s3u1 (_ld);
-Ip_u2s3u1 (_ll);
-Ip_u2s3u1 (_lld);
-Ip_u1s2 (_lui);
-Ip_u2s3u1 (_lw);
-Ip_u1u2u3 (_mfc0);
-Ip_u1u2u3 (_mtc0);
-Ip_u2u1u3 (_ori);
-Ip_u3u1u2 (_or);
-Ip_u2s3u1 (_pref);
-Ip_0 (_rfe);
-Ip_u2s3u1 (_sc);
-Ip_u2s3u1 (_scd);
-Ip_u2s3u1 (_sd);
-Ip_u2u1u3 (_sll);
-Ip_u2u1u3 (_sra);
-Ip_u2u1u3 (_srl);
-Ip_u2u1u3 (_rotr);
-Ip_u3u1u2 (_subu);
-Ip_u2s3u1 (_sw);
-Ip_0 (_tlbp);
-Ip_0 (_tlbr);
-Ip_0 (_tlbwi);
-Ip_0 (_tlbwr);
-Ip_u3u1u2 (_xor);
-Ip_u2u1u3 (_xori);
-Ip_u2u1msbu3 (_dins);
-Ip_u2u1msbu3 (_dinsm);
-Ip_u1 (_syscall);
-Ip_u1u2s3 (_bbit0);
-Ip_u1u2s3 (_bbit1);
-Ip_u3u1u2 (_lwx);
-Ip_u3u1u2 (_ldx);
+Ip_u2u1s3(_addiu);
+Ip_u3u1u2(_addu);
+Ip_u2u1u3(_andi);
+Ip_u3u1u2(_and);
+Ip_u1u2s3(_beq);
+Ip_u1u2s3(_beql);
+Ip_u1s2(_bgez);
+Ip_u1s2(_bgezl);
+Ip_u1s2(_bltz);
+Ip_u1s2(_bltzl);
+Ip_u1u2s3(_bne);
+Ip_u2s3u1(_cache);
+Ip_u1u2u3(_dmfc0);
+Ip_u1u2u3(_dmtc0);
+Ip_u2u1s3(_daddiu);
+Ip_u3u1u2(_daddu);
+Ip_u2u1u3(_dsll);
+Ip_u2u1u3(_dsll32);
+Ip_u2u1u3(_dsra);
+Ip_u2u1u3(_dsrl);
+Ip_u2u1u3(_dsrl32);
+Ip_u2u1u3(_drotr);
+Ip_u2u1u3(_drotr32);
+Ip_u3u1u2(_dsubu);
+Ip_0(_eret);
+Ip_u1(_j);
+Ip_u1(_jal);
+Ip_u1(_jr);
+Ip_u2s3u1(_ld);
+Ip_u2s3u1(_ll);
+Ip_u2s3u1(_lld);
+Ip_u1s2(_lui);
+Ip_u2s3u1(_lw);
+Ip_u1u2u3(_mfc0);
+Ip_u1u2u3(_mtc0);
+Ip_u2u1u3(_ori);
+Ip_u3u1u2(_or);
+Ip_u2s3u1(_pref);
+Ip_0(_rfe);
+Ip_u2s3u1(_sc);
+Ip_u2s3u1(_scd);
+Ip_u2s3u1(_sd);
+Ip_u2u1u3(_sll);
+Ip_u2u1u3(_sra);
+Ip_u2u1u3(_srl);
+Ip_u2u1u3(_rotr);
+Ip_u3u1u2(_subu);
+Ip_u2s3u1(_sw);
+Ip_0(_tlbp);
+Ip_0(_tlbr);
+Ip_0(_tlbwi);
+Ip_0(_tlbwr);
+Ip_u3u1u2(_xor);
+Ip_u2u1u3(_xori);
+Ip_u2u1msbu3(_dins);
+Ip_u2u1msbu3(_dinsm);
+Ip_u1(_syscall);
+Ip_u1u2s3(_bbit0);
+Ip_u1u2s3(_bbit1);
+Ip_u3u1u2(_lwx);
+Ip_u3u1u2(_ldx);
 
 /* Handle labels. */
 struct uasm_label {
-  u32 * addr;
-  int lab;
+	u32 *addr;
+	int lab;
 };
 
-void __uasminit uasm_build_label (struct uasm_label ** lab, u32 * addr, int lid);
+void __uasminit uasm_build_label(struct uasm_label **lab, u32 *addr, int lid);
 #ifdef CONFIG_64BIT
-int uasm_in_compat_space_p (long addr);
+int uasm_in_compat_space_p(long addr);
 #endif
-int uasm_rel_hi (long val);
-int uasm_rel_lo (long val);
-void UASM_i_LA_mostly (u32 ** buf, unsigned int rs, long addr);
-void UASM_i_LA (u32 ** buf, unsigned int rs, long addr);
+int uasm_rel_hi(long val);
+int uasm_rel_lo(long val);
+void UASM_i_LA_mostly(u32 **buf, unsigned int rs, long addr);
+void UASM_i_LA(u32 **buf, unsigned int rs, long addr);
 
-#define UASM_L_LA(lb)             \
-  static inline void __uasminit uasm_l##lb(struct uasm_label **lab, u32 *addr) \
-  {                 \
-    uasm_build_label(lab, addr, label##lb);       \
-  }
+#define UASM_L_LA(lb)							\
+static inline void __uasminit uasm_l##lb(struct uasm_label **lab, u32 *addr) \
+{									\
+	uasm_build_label(lab, addr, label##lb);				\
+}
 
 /* convenience macros for instructions */
 #ifdef CONFIG_64BIT
@@ -188,62 +188,62 @@ void UASM_i_LA (u32 ** buf, unsigned int rs, long addr);
 #define uasm_i_ssnop(buf) uasm_i_sll(buf, 0, 0, 1)
 #define uasm_i_ehb(buf) uasm_i_sll(buf, 0, 0, 3)
 
-static inline void uasm_i_dsrl_safe (u32 ** p, unsigned int a1,
-                                     unsigned int a2, unsigned int a3)
+static inline void uasm_i_dsrl_safe(u32 **p, unsigned int a1,
+				    unsigned int a2, unsigned int a3)
 {
-  if (a3 < 32)
-  { uasm_i_dsrl (p, a1, a2, a3); }
-  else
-  { uasm_i_dsrl32 (p, a1, a2, a3 - 32); }
+	if (a3 < 32)
+		uasm_i_dsrl(p, a1, a2, a3);
+	else
+		uasm_i_dsrl32(p, a1, a2, a3 - 32);
 }
 
-static inline void uasm_i_drotr_safe (u32 ** p, unsigned int a1,
-                                      unsigned int a2, unsigned int a3)
+static inline void uasm_i_drotr_safe(u32 **p, unsigned int a1,
+				     unsigned int a2, unsigned int a3)
 {
-  if (a3 < 32)
-  { uasm_i_drotr (p, a1, a2, a3); }
-  else
-  { uasm_i_drotr32 (p, a1, a2, a3 - 32); }
+	if (a3 < 32)
+		uasm_i_drotr(p, a1, a2, a3);
+	else
+		uasm_i_drotr32(p, a1, a2, a3 - 32);
 }
 
-static inline void uasm_i_dsll_safe (u32 ** p, unsigned int a1,
-                                     unsigned int a2, unsigned int a3)
+static inline void uasm_i_dsll_safe(u32 **p, unsigned int a1,
+				    unsigned int a2, unsigned int a3)
 {
-  if (a3 < 32)
-  { uasm_i_dsll (p, a1, a2, a3); }
-  else
-  { uasm_i_dsll32 (p, a1, a2, a3 - 32); }
+	if (a3 < 32)
+		uasm_i_dsll(p, a1, a2, a3);
+	else
+		uasm_i_dsll32(p, a1, a2, a3 - 32);
 }
 
 /* Handle relocations. */
 struct uasm_reloc {
-  u32 * addr;
-  unsigned int type;
-  int lab;
+	u32 *addr;
+	unsigned int type;
+	int lab;
 };
 
 /* This is zero so we can use zeroed label arrays. */
 #define UASM_LABEL_INVALID 0
 
-void uasm_r_mips_pc16 (struct uasm_reloc ** rel, u32 * addr, int lid);
-void uasm_resolve_relocs (struct uasm_reloc * rel, struct uasm_label * lab);
-void uasm_move_relocs (struct uasm_reloc * rel, u32 * first, u32 * end, long off);
-void uasm_move_labels (struct uasm_label * lab, u32 * first, u32 * end, long off);
-void uasm_copy_handler (struct uasm_reloc * rel, struct uasm_label * lab,
-                        u32 * first, u32 * end, u32 * target);
-int uasm_insn_has_bdelay (struct uasm_reloc * rel, u32 * addr);
+void uasm_r_mips_pc16(struct uasm_reloc **rel, u32 *addr, int lid);
+void uasm_resolve_relocs(struct uasm_reloc *rel, struct uasm_label *lab);
+void uasm_move_relocs(struct uasm_reloc *rel, u32 *first, u32 *end, long off);
+void uasm_move_labels(struct uasm_label *lab, u32 *first, u32 *end, long off);
+void uasm_copy_handler(struct uasm_reloc *rel, struct uasm_label *lab,
+	u32 *first, u32 *end, u32 *target);
+int uasm_insn_has_bdelay(struct uasm_reloc *rel, u32 *addr);
 
 /* Convenience functions for labeled branches. */
-void uasm_il_bltz (u32 ** p, struct uasm_reloc ** r, unsigned int reg, int lid);
-void uasm_il_b (u32 ** p, struct uasm_reloc ** r, int lid);
-void uasm_il_beqz (u32 ** p, struct uasm_reloc ** r, unsigned int reg, int lid);
-void uasm_il_beqzl (u32 ** p, struct uasm_reloc ** r, unsigned int reg, int lid);
-void uasm_il_bne (u32 ** p, struct uasm_reloc ** r, unsigned int reg1,
-                  unsigned int reg2, int lid);
-void uasm_il_bnez (u32 ** p, struct uasm_reloc ** r, unsigned int reg, int lid);
-void uasm_il_bgezl (u32 ** p, struct uasm_reloc ** r, unsigned int reg, int lid);
-void uasm_il_bgez (u32 ** p, struct uasm_reloc ** r, unsigned int reg, int lid);
-void uasm_il_bbit0 (u32 ** p, struct uasm_reloc ** r, unsigned int reg,
-                    unsigned int bit, int lid);
-void uasm_il_bbit1 (u32 ** p, struct uasm_reloc ** r, unsigned int reg,
-                    unsigned int bit, int lid);
+void uasm_il_bltz(u32 **p, struct uasm_reloc **r, unsigned int reg, int lid);
+void uasm_il_b(u32 **p, struct uasm_reloc **r, int lid);
+void uasm_il_beqz(u32 **p, struct uasm_reloc **r, unsigned int reg, int lid);
+void uasm_il_beqzl(u32 **p, struct uasm_reloc **r, unsigned int reg, int lid);
+void uasm_il_bne(u32 **p, struct uasm_reloc **r, unsigned int reg1,
+		 unsigned int reg2, int lid);
+void uasm_il_bnez(u32 **p, struct uasm_reloc **r, unsigned int reg, int lid);
+void uasm_il_bgezl(u32 **p, struct uasm_reloc **r, unsigned int reg, int lid);
+void uasm_il_bgez(u32 **p, struct uasm_reloc **r, unsigned int reg, int lid);
+void uasm_il_bbit0(u32 **p, struct uasm_reloc **r, unsigned int reg,
+		   unsigned int bit, int lid);
+void uasm_il_bbit1(u32 **p, struct uasm_reloc **r, unsigned int reg,
+		   unsigned int bit, int lid);

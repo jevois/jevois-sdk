@@ -62,12 +62,12 @@
  * @irq:      interrupt line.
  */
 struct umc_dev {
-  u16   version;
-  u8    cap_id;
-  u8    bar;
-  struct resource resource;
-  unsigned  irq;
-  struct device dev;
+	u16		version;
+	u8		cap_id;
+	u8		bar;
+	struct resource resource;
+	unsigned	irq;
+	struct device	dev;
 };
 
 #define to_umc_dev(d) container_of(d, struct umc_dev, dev)
@@ -80,48 +80,48 @@ struct umc_dev {
  * table of pci_device_id's if umc_match_pci_id() is used).
  */
 struct umc_driver {
-  char * name;
-  u8 cap_id;
-  int (*match) (struct umc_driver *, struct umc_dev *);
-  const void * match_data;
-  
-  int  (*probe) (struct umc_dev *);
-  void (*remove) (struct umc_dev *);
-  int  (*suspend) (struct umc_dev *, pm_message_t state);
-  int  (*resume) (struct umc_dev *);
-  int  (*pre_reset) (struct umc_dev *);
-  int  (*post_reset) (struct umc_dev *);
-  
-  struct device_driver driver;
+	char *name;
+	u8 cap_id;
+	int (*match)(struct umc_driver *, struct umc_dev *);
+	const void *match_data;
+
+	int  (*probe)(struct umc_dev *);
+	void (*remove)(struct umc_dev *);
+	int  (*suspend)(struct umc_dev *, pm_message_t state);
+	int  (*resume)(struct umc_dev *);
+	int  (*pre_reset)(struct umc_dev *);
+	int  (*post_reset)(struct umc_dev *);
+
+	struct device_driver driver;
 };
 
 #define to_umc_driver(d) container_of(d, struct umc_driver, driver)
 
 extern struct bus_type umc_bus_type;
 
-struct umc_dev * umc_device_create (struct device * parent, int n);
-int __must_check umc_device_register (struct umc_dev * umc);
-void umc_device_unregister (struct umc_dev * umc);
+struct umc_dev *umc_device_create(struct device *parent, int n);
+int __must_check umc_device_register(struct umc_dev *umc);
+void umc_device_unregister(struct umc_dev *umc);
 
-int __must_check __umc_driver_register (struct umc_driver * umc_drv,
-                                        struct module * mod,
-                                        const char * mod_name);
+int __must_check __umc_driver_register(struct umc_driver *umc_drv,
+				       struct module *mod,
+				       const char *mod_name);
 
 /**
  * umc_driver_register - register a UMC capabiltity driver.
  * @umc_drv:  pointer to the driver.
  */
 #define umc_driver_register(umc_drv) \
-  __umc_driver_register(umc_drv, THIS_MODULE, KBUILD_MODNAME)
+	__umc_driver_register(umc_drv, THIS_MODULE, KBUILD_MODNAME)
 
-void umc_driver_unregister (struct umc_driver * umc_drv);
+void umc_driver_unregister(struct umc_driver *umc_drv);
 
 /*
  * Utility function you can use to match (umc_driver->match) against a
  * null-terminated array of 'struct pci_device_id' in
  * umc_driver->match_data.
  */
-int umc_match_pci_id (struct umc_driver * umc_drv, struct umc_dev * umc);
+int umc_match_pci_id(struct umc_driver *umc_drv, struct umc_dev *umc);
 
 /**
  * umc_parent_pci_dev - return the UMC's parent PCI device or NULL if none
@@ -140,12 +140,12 @@ int umc_match_pci_id (struct umc_driver * umc_drv, struct umc_dev * umc);
  * THIS might (probably will) be removed in the future, so don't count
  * on it.
  */
-static inline struct pci_dev * umc_parent_pci_dev (struct umc_dev * umc_dev)
+static inline struct pci_dev *umc_parent_pci_dev(struct umc_dev *umc_dev)
 {
-  struct pci_dev * pci_dev = NULL;
-  if (umc_dev->dev.parent->bus == &pci_bus_type)
-  { pci_dev = to_pci_dev (umc_dev->dev.parent); }
-  return pci_dev;
+	struct pci_dev *pci_dev = NULL;
+	if (umc_dev->dev.parent->bus == &pci_bus_type)
+		pci_dev = to_pci_dev(umc_dev->dev.parent);
+	return pci_dev;
 }
 
 /**
@@ -156,19 +156,19 @@ static inline struct pci_dev * umc_parent_pci_dev (struct umc_dev * umc_dev)
  *       is referenced at _probe() time and unreferenced at _remove()
  *       time by the parent's subsystem.
  */
-static inline struct umc_dev * umc_dev_get (struct umc_dev * umc_dev)
+static inline struct umc_dev *umc_dev_get(struct umc_dev *umc_dev)
 {
-  get_device (&umc_dev->dev);
-  return umc_dev;
+	get_device(&umc_dev->dev);
+	return umc_dev;
 }
 
 /**
  * umc_dev_put() - unreference a UMC device.
  * @umc_dev: Pointer to UMC device.
  */
-static inline void umc_dev_put (struct umc_dev * umc_dev)
+static inline void umc_dev_put(struct umc_dev *umc_dev)
 {
-  put_device (&umc_dev->dev);
+	put_device(&umc_dev->dev);
 }
 
 /**
@@ -176,20 +176,20 @@ static inline void umc_dev_put (struct umc_dev * umc_dev)
  * @umc_dev: Pointer to UMC device.
  * @data:    Data to set.
  */
-static inline void umc_set_drvdata (struct umc_dev * umc_dev, void * data)
+static inline void umc_set_drvdata(struct umc_dev *umc_dev, void *data)
 {
-  dev_set_drvdata (&umc_dev->dev, data);
+	dev_set_drvdata(&umc_dev->dev, data);
 }
 
 /**
  * umc_get_drvdata - recover UMC device's driver data.
  * @umc_dev: Pointer to UMC device.
  */
-static inline void * umc_get_drvdata (struct umc_dev * umc_dev)
+static inline void *umc_get_drvdata(struct umc_dev *umc_dev)
 {
-  return dev_get_drvdata (&umc_dev->dev);
+	return dev_get_drvdata(&umc_dev->dev);
 }
 
-int umc_controller_reset (struct umc_dev * umc);
+int umc_controller_reset(struct umc_dev *umc);
 
 #endif /* #ifndef _LINUX_UWB_UMC_H_ */

@@ -24,27 +24,27 @@
 #include <linux/bcma/bcma_soc.h>
 
 enum bcm47xx_bus_type {
-  #ifdef CONFIG_BCM47XX_SSB
-  BCM47XX_BUS_TYPE_SSB,
-  #endif
-  #ifdef CONFIG_BCM47XX_BCMA
-  BCM47XX_BUS_TYPE_BCMA,
-  #endif
+#ifdef CONFIG_BCM47XX_SSB
+	BCM47XX_BUS_TYPE_SSB,
+#endif
+#ifdef CONFIG_BCM47XX_BCMA
+	BCM47XX_BUS_TYPE_BCMA,
+#endif
 };
 
 union bcm47xx_bus {
-  #ifdef CONFIG_BCM47XX_SSB
-  struct ssb_bus ssb;
-  #endif
-  #ifdef CONFIG_BCM47XX_BCMA
-  struct bcma_soc bcma;
-  #endif
+#ifdef CONFIG_BCM47XX_SSB
+	struct ssb_bus ssb;
+#endif
+#ifdef CONFIG_BCM47XX_BCMA
+	struct bcma_soc bcma;
+#endif
 };
 
 extern union bcm47xx_bus bcm47xx_bus;
 extern enum bcm47xx_bus_type bcm47xx_bus_type;
 
-void bcm47xx_fill_sprom (struct ssb_sprom * sprom, const char * prefix);
-void bcm47xx_fill_sprom_ethernet (struct ssb_sprom * sprom, const char * prefix);
+void bcm47xx_fill_sprom(struct ssb_sprom *sprom, const char *prefix);
+void bcm47xx_fill_sprom_ethernet(struct ssb_sprom *sprom, const char *prefix);
 
 #endif /* __ASM_BCM47XX_H */

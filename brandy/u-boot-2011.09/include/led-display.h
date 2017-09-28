@@ -27,9 +27,9 @@
 #define _led_display_h_
 
 /* Display Commands */
-#define DISPLAY_CLEAR 0x1 /* Clear the display */
-#define DISPLAY_HOME  0x2 /* Set cursor at home position */
+#define DISPLAY_CLEAR	0x1 /* Clear the display */
+#define DISPLAY_HOME	0x2 /* Set cursor at home position */
 
-void display_set (int cmd);
-int display_putc (char c);
+void display_set(int cmd);
+int display_putc(char c);
 #endif

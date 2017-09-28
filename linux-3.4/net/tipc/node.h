@@ -49,9 +49,9 @@
 
 /* Flags used to block (re)establishment of contact with a neighboring node */
 
-#define WAIT_PEER_DOWN  0x0001  /* wait to see that peer's links are down */
-#define WAIT_NAMES_GONE 0x0002  /* wait for peer's publications to be purged */
-#define WAIT_NODE_DOWN  0x0004  /* wait until peer node is declared down */
+#define WAIT_PEER_DOWN	0x0001	/* wait to see that peer's links are down */
+#define WAIT_NAMES_GONE	0x0002	/* wait for peer's publications to be purged */
+#define WAIT_NODE_DOWN	0x0004	/* wait until peer node is declared down */
 
 /**
  * struct tipc_node - TIPC node structure
@@ -81,55 +81,55 @@
  */
 
 struct tipc_node {
-  u32 addr;
-  spinlock_t lock;
-  struct hlist_node hash;
-  struct list_head list;
-  struct list_head nsub;
-  struct tipc_link * active_links[2];
-  struct tipc_link * links[MAX_BEARERS];
-  int link_cnt;
-  int working_links;
-  int block_setup;
-  int permit_changeover;
-  u32 signature;
-  struct {
-    u8 supportable;
-    u8 supported;
-    u32 acked;
-    u32 last_in;
-    u32 last_sent;
-    u32 oos_state;
-    u32 deferred_size;
-    struct sk_buff * deferred_head;
-    struct sk_buff * deferred_tail;
-    struct sk_buff * defragm;
-  } bclink;
+	u32 addr;
+	spinlock_t lock;
+	struct hlist_node hash;
+	struct list_head list;
+	struct list_head nsub;
+	struct tipc_link *active_links[2];
+	struct tipc_link *links[MAX_BEARERS];
+	int link_cnt;
+	int working_links;
+	int block_setup;
+	int permit_changeover;
+	u32 signature;
+	struct {
+		u8 supportable;
+		u8 supported;
+		u32 acked;
+		u32 last_in;
+		u32 last_sent;
+		u32 oos_state;
+		u32 deferred_size;
+		struct sk_buff *deferred_head;
+		struct sk_buff *deferred_tail;
+		struct sk_buff *defragm;
+	} bclink;
 };
 
 extern struct list_head tipc_node_list;
 
-struct tipc_node * tipc_node_find (u32 addr);
-struct tipc_node * tipc_node_create (u32 addr);
-void tipc_node_delete (struct tipc_node * n_ptr);
-void tipc_node_attach_link (struct tipc_node * n_ptr, struct tipc_link * l_ptr);
-void tipc_node_detach_link (struct tipc_node * n_ptr, struct tipc_link * l_ptr);
-void tipc_node_link_down (struct tipc_node * n_ptr, struct tipc_link * l_ptr);
-void tipc_node_link_up (struct tipc_node * n_ptr, struct tipc_link * l_ptr);
-int tipc_node_active_links (struct tipc_node * n_ptr);
-int tipc_node_redundant_links (struct tipc_node * n_ptr);
-int tipc_node_is_up (struct tipc_node * n_ptr);
-struct sk_buff * tipc_node_get_links (const void * req_tlv_area, int req_tlv_space);
-struct sk_buff * tipc_node_get_nodes (const void * req_tlv_area, int req_tlv_space);
+struct tipc_node *tipc_node_find(u32 addr);
+struct tipc_node *tipc_node_create(u32 addr);
+void tipc_node_delete(struct tipc_node *n_ptr);
+void tipc_node_attach_link(struct tipc_node *n_ptr, struct tipc_link *l_ptr);
+void tipc_node_detach_link(struct tipc_node *n_ptr, struct tipc_link *l_ptr);
+void tipc_node_link_down(struct tipc_node *n_ptr, struct tipc_link *l_ptr);
+void tipc_node_link_up(struct tipc_node *n_ptr, struct tipc_link *l_ptr);
+int tipc_node_active_links(struct tipc_node *n_ptr);
+int tipc_node_redundant_links(struct tipc_node *n_ptr);
+int tipc_node_is_up(struct tipc_node *n_ptr);
+struct sk_buff *tipc_node_get_links(const void *req_tlv_area, int req_tlv_space);
+struct sk_buff *tipc_node_get_nodes(const void *req_tlv_area, int req_tlv_space);
 
-static inline void tipc_node_lock (struct tipc_node * n_ptr)
+static inline void tipc_node_lock(struct tipc_node *n_ptr)
 {
-  spin_lock_bh (&n_ptr->lock);
+	spin_lock_bh(&n_ptr->lock);
 }
 
-static inline void tipc_node_unlock (struct tipc_node * n_ptr)
+static inline void tipc_node_unlock(struct tipc_node *n_ptr)
 {
-  spin_unlock_bh (&n_ptr->lock);
+	spin_unlock_bh(&n_ptr->lock);
 }
 
 #endif

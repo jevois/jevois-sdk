@@ -23,17 +23,17 @@
  * A far more intelligent version of this is planned.  For now, just
  * try an exact match on the name of the algorithm.
  */
-void crypto_alg_autoload (const char * name)
+void crypto_alg_autoload(const char *name)
 {
-  request_module (name);
+	request_module(name);
 }
 
-struct crypto_alg * crypto_alg_mod_lookup (const char * name)
+struct crypto_alg *crypto_alg_mod_lookup(const char *name)
 {
-  struct crypto_alg * alg = crypto_alg_lookup (name);
-  if (alg == NULL) {
-    crypto_alg_autoload (name);
-    alg = crypto_alg_lookup (name);
-  }
-  return alg;
+	struct crypto_alg *alg = crypto_alg_lookup(name);
+	if (alg == NULL) {
+		crypto_alg_autoload(name);
+		alg = crypto_alg_lookup(name);
+	}
+	return alg;
 }

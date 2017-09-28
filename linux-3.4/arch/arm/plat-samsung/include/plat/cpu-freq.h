@@ -1,8 +1,8 @@
 /* arch/arm/plat-samsung/include/plat/cpu-freq.h
  *
  * Copyright (c) 2006-2007 Simtec Electronics
- *  http://armlinux.simtec.co.uk/
- *  Ben Dooks <ben@simtec.co.uk>
+ *	http://armlinux.simtec.co.uk/
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * S3C CPU frequency scaling support - driver and board
  *
@@ -33,11 +33,11 @@ struct s3c_iotimings;
  * need to calculate IO timings and suchlike.
  */
 struct s3c_freq {
-  unsigned long fclk;
-  unsigned long armclk;
-  unsigned long hclk_tns; /* in 10ths of ns */
-  unsigned long hclk;
-  unsigned long pclk;
+	unsigned long	fclk;
+	unsigned long	armclk;
+	unsigned long	hclk_tns;	/* in 10ths of ns */
+	unsigned long	hclk;
+	unsigned long	pclk;
 };
 
 /**
@@ -60,11 +60,11 @@ struct s3c_freq {
  * may be removed in the future.
  */
 struct s3c_cpufreq_freqs {
-  struct cpufreq_freqs  freqs;
-  struct s3c_freq   old;
-  struct s3c_freq   new;
-  
-  unsigned int    pll_changing: 1;
+	struct cpufreq_freqs	freqs;
+	struct s3c_freq		old;
+	struct s3c_freq		new;
+
+	unsigned int		pll_changing:1;
 };
 
 #define to_s3c_cpufreq(_cf) container_of(_cf, struct s3c_cpufreq_freqs, freqs)
@@ -79,10 +79,10 @@ struct s3c_cpufreq_freqs {
  * Divisor settings for the core clocks.
  */
 struct s3c_clkdivs {
-  int   p_divisor;
-  int   h_divisor;
-  int   arm_divisor;
-  unsigned char dvs;
+	int		p_divisor;
+	int		h_divisor;
+	int		arm_divisor;
+	unsigned char	dvs;
 };
 
 #define PLLVAL(_m, _p, _s) (((_m) << 12) | ((_p) << 4) | (_s))
@@ -93,20 +93,20 @@ struct s3c_clkdivs {
  * @pll_reg: The PLL register setting for this PLL value.
  */
 struct s3c_pllval {
-  unsigned long   freq;
-  unsigned long   pll_reg;
+	unsigned long		freq;
+	unsigned long		pll_reg;
 };
 
 /**
  * struct s3c_cpufreq_board - per-board cpu frequency informatin
  * @refresh: The SDRAM refresh period in nanoseconds.
  * @auto_io: Set if the IO timing settings should be generated from the
- *  initialisation time hardware registers.
+ *	initialisation time hardware registers.
  * @need_io: Set if the board has external IO on any of the chipselect
- *  lines that will require the hardware timing registers to be
- *  updated on a clock change.
+ *	lines that will require the hardware timing registers to be
+ *	updated on a clock change.
  * @max: The maxium frequency limits for the system. Any field that
- *  is left at zero will use the CPU's settings.
+ *	is left at zero will use the CPU's settings.
  *
  * This contains the board specific settings that affect how the CPU
  * drivers chose settings. These include the memory refresh and IO
@@ -117,12 +117,12 @@ struct s3c_pllval {
  * driver requires this to be available.
  */
 struct s3c_cpufreq_board {
-  unsigned int  refresh;
-  unsigned int  auto_io: 1; /* automatically init io timings. */
-  unsigned int  need_io: 1; /* set if needs io timing support. */
-  
-  /* any non-zero field in here is taken as an upper limit. */
-  struct s3c_freq max;  /* frequency limits */
+	unsigned int	refresh;
+	unsigned int	auto_io:1;	/* automatically init io timings. */
+	unsigned int	need_io:1;	/* set if needs io timing support. */
+
+	/* any non-zero field in here is taken as an upper limit. */
+	struct s3c_freq	max;	/* frequency limits */
 };
 
 /* Things depending on frequency scaling. */
@@ -135,11 +135,11 @@ struct s3c_cpufreq_board {
 /* Board functions */
 
 #ifdef CONFIG_CPU_FREQ_S3C
-extern int s3c_cpufreq_setboard (struct s3c_cpufreq_board * board);
+extern int s3c_cpufreq_setboard(struct s3c_cpufreq_board *board);
 #else
 
-static inline int s3c_cpufreq_setboard (struct s3c_cpufreq_board * board)
+static inline int s3c_cpufreq_setboard(struct s3c_cpufreq_board *board)
 {
-  return 0;
+	return 0;
 }
 #endif  /* CONFIG_CPU_FREQ_S3C */

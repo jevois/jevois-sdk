@@ -9,8 +9,8 @@
 #include <asm/uaccess.h>
 #include <asm/pgtable.h>
 
-static struct signal_struct init_signals = INIT_SIGNALS (init_signals);
-static struct sighand_struct init_sighand = INIT_SIGHAND (init_sighand);
+static struct signal_struct init_signals = INIT_SIGNALS(init_signals);
+static struct sighand_struct init_sighand = INIT_SIGHAND(init_sighand);
 /*
  * Initial thread structure.
  *
@@ -22,14 +22,14 @@ static struct sighand_struct init_sighand = INIT_SIGHAND (init_sighand);
  * The things we do for performance..
  */
 union thread_union init_thread_union __init_task_data
-    __attribute__ ( (__aligned__ (THREAD_SIZE) ) ) =
-{ INIT_THREAD_INFO (init_task) };
+	__attribute__((__aligned__(THREAD_SIZE))) =
+		{ INIT_THREAD_INFO(init_task) };
 
 /*
  * Initial task structure.
  *
  * All other task structs will be allocated on slabs in fork.c
  */
-struct task_struct init_task = INIT_TASK (init_task);
+struct task_struct init_task = INIT_TASK(init_task);
 
-EXPORT_SYMBOL (init_task);
+EXPORT_SYMBOL(init_task);

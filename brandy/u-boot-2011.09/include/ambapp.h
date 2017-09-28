@@ -42,7 +42,7 @@
 #define LEON3_AHB_MASTERS 16
 #define LEON3_AHB_SLAVES 16
 /*#define LEON3_APB_MASTERS 1*/ /* Number of APB buses that has Plug&Play */
-#define LEON3_APB_SLAVES 16 /* Total number of APB slaves per APB bus */
+#define LEON3_APB_SLAVES 16	/* Total number of APB slaves per APB bus */
 
 /* Vendor codes */
 #define VENDOR_GAISLER       1
@@ -94,9 +94,9 @@
 #define GAISLER_AHBSTAT  0x052
 #define GAISLER_FTMCTRL  0x054
 
-#define GAISLER_L2TIME   0xffd  /* internal device: leon2 timer */
-#define GAISLER_L2C      0xffe  /* internal device: leon2compat */
-#define GAISLER_PLUGPLAY 0xfff  /* internal device: plug & play configarea */
+#define GAISLER_L2TIME   0xffd	/* internal device: leon2 timer */
+#define GAISLER_L2C      0xffe	/* internal device: leon2compat */
+#define GAISLER_PLUGPLAY 0xfff	/* internal device: plug & play configarea */
 
 /* European Space Agency device id's */
 #define ESA_LEON2        0x2
@@ -119,10 +119,10 @@
 #define amba_device(x) (((x) >> 12) & 0xfff)
 
 #define amba_membar_start(mbar) \
-  (((mbar) & 0xfff00000) & (((mbar) & 0xfff0) << 16))
+ (((mbar) & 0xfff00000) & (((mbar) & 0xfff0) << 16))
 
 #define amba_iobar_start(base, iobar) \
-  ((base) | ((((iobar) & 0xfff00000)>>12) & (((iobar) & 0xfff0)<<4)) )
+ ((base) | ((((iobar) & 0xfff00000)>>12) & (((iobar) & 0xfff0)<<4)) )
 
 #define amba_irq(conf) ((conf) & 0xf)
 
@@ -143,15 +143,15 @@
 #ifdef CONFIG_CMD_AMBAPP
 
 /* AMBA Plug&Play relocation & initialization */
-int ambapp_init_reloc (void);
+int ambapp_init_reloc(void);
 
 /* AMBA Plug&Play Name of Vendors and devices */
 
 /* Return name of device */
-char * ambapp_device_id2str (int vendor, int id);
+char *ambapp_device_id2str(int vendor, int id);
 
 /* Return name of vendor */
-char * ambapp_vendor_id2str (int vendor);
+char *ambapp_vendor_id2str(int vendor);
 #endif
 
 /*
@@ -160,9 +160,9 @@ char * ambapp_vendor_id2str (int vendor);
 
 /* AMBA Plug&Play AHB information layout */
 typedef struct {
-  unsigned int conf;
-  unsigned int userdef[3];
-  unsigned int bars[4];
+	unsigned int conf;
+	unsigned int userdef[3];
+	unsigned int bars[4];
 } ahbctrl_pp_dev;
 
 /* Prototypes for scanning AMBA Plug&Play bus for AMBA
@@ -172,16 +172,16 @@ typedef struct {
  */
 
 typedef struct {
-  unsigned char irq;
-  unsigned char ver;
-  unsigned int address;
+	unsigned char irq;
+	unsigned char ver;
+	unsigned int address;
 } ambapp_apbdev;
 
 typedef struct {
-  unsigned char irq;
-  unsigned char ver;
-  unsigned int userdef[3];
-  unsigned int address[4];
+	unsigned char irq;
+	unsigned char ver;
+	unsigned int userdef[3];
+	unsigned int address[4];
 } ambapp_ahbdev;
 
 /* AMBA Plug&Play AHB Masters & Slaves information locations
@@ -189,14 +189,14 @@ typedef struct {
  * are used.
  */
 typedef struct {
-  ahbctrl_pp_dev masters[64];
-  ahbctrl_pp_dev slaves[64];
+	ahbctrl_pp_dev masters[64];
+	ahbctrl_pp_dev slaves[64];
 } ahbctrl_info;
 
 /* AMBA Plug&Play AHB information layout */
 typedef struct {
-  unsigned int conf;
-  unsigned int bar;
+	unsigned int conf;
+	unsigned int bar;
 } apbctrl_pp_dev;
 
 /* All functions return the number of found devices
@@ -204,40 +204,40 @@ typedef struct {
  */
 
 /****************************** APB SLAVES ******************************/
-int ambapp_apb_count (unsigned int vendor, unsigned int driver);
+int ambapp_apb_count(unsigned int vendor, unsigned int driver);
 
-int ambapp_apb_first (unsigned int vendor,
-                      unsigned int driver, ambapp_apbdev * dev);
+int ambapp_apb_first(unsigned int vendor,
+		     unsigned int driver, ambapp_apbdev * dev);
 
-int ambapp_apb_next (unsigned int vendor,
-                     unsigned int driver, ambapp_apbdev * dev, int index);
+int ambapp_apb_next(unsigned int vendor,
+		    unsigned int driver, ambapp_apbdev * dev, int index);
 
-int ambapp_apbs_first (unsigned int vendor,
-                       unsigned int driver, ambapp_apbdev * dev, int max_cnt);
+int ambapp_apbs_first(unsigned int vendor,
+		      unsigned int driver, ambapp_apbdev * dev, int max_cnt);
 
 /****************************** AHB MASTERS ******************************/
-int ambapp_ahbmst_count (unsigned int vendor, unsigned int driver);
+int ambapp_ahbmst_count(unsigned int vendor, unsigned int driver);
 
-int ambapp_ahbmst_first (unsigned int vendor,
-                         unsigned int driver, ambapp_ahbdev * dev);
+int ambapp_ahbmst_first(unsigned int vendor,
+			unsigned int driver, ambapp_ahbdev * dev);
 
-int ambapp_ahbmst_next (unsigned int vendor,
-                        unsigned int driver, ambapp_ahbdev * dev, int index);
+int ambapp_ahbmst_next(unsigned int vendor,
+		       unsigned int driver, ambapp_ahbdev * dev, int index);
 
-int ambapp_ahbmsts_first (unsigned int vendor,
-                          unsigned int driver, ambapp_ahbdev * dev, int max_cnt);
+int ambapp_ahbmsts_first(unsigned int vendor,
+			 unsigned int driver, ambapp_ahbdev * dev, int max_cnt);
 
 /****************************** AHB SLAVES ******************************/
-int ambapp_ahbslv_count (unsigned int vendor, unsigned int driver);
+int ambapp_ahbslv_count(unsigned int vendor, unsigned int driver);
 
-int ambapp_ahbslv_first (unsigned int vendor,
-                         unsigned int driver, ambapp_ahbdev * dev);
+int ambapp_ahbslv_first(unsigned int vendor,
+			unsigned int driver, ambapp_ahbdev * dev);
 
-int ambapp_ahbslv_next (unsigned int vendor,
-                        unsigned int driver, ambapp_ahbdev * dev, int index);
+int ambapp_ahbslv_next(unsigned int vendor,
+		       unsigned int driver, ambapp_ahbdev * dev, int index);
 
-int ambapp_ahbslvs_first (unsigned int vendor,
-                          unsigned int driver, ambapp_ahbdev * dev, int max_cnt);
+int ambapp_ahbslvs_first(unsigned int vendor,
+			 unsigned int driver, ambapp_ahbdev * dev, int max_cnt);
 
 /*************************** AHB/APB only regs functions *************************
  * During start up, no memory is available we can use the simplified functions
@@ -245,16 +245,16 @@ int ambapp_ahbslvs_first (unsigned int vendor,
  *
  * Functions uses no stack/memory, only registers.
  */
-unsigned int ambapp_apb_next_nomem (register unsigned int vendor, /* Plug&Play Vendor ID */
-                                    register unsigned int driver,  /* Plug&Play Device ID */
-                                    register int index);
+unsigned int ambapp_apb_next_nomem(register unsigned int vendor,	/* Plug&Play Vendor ID */
+				   register unsigned int driver,	/* Plug&Play Device ID */
+				   register int index);
 
-ahbctrl_pp_dev * ambapp_ahb_next_nomem (register unsigned int vendor, /* Plug&Play Vendor ID */
-                                        register unsigned int driver, /* Plug&Play Device ID */
-                                        register unsigned int opts, /* scan for AHB 1=slave, 0=masters */
-                                        register int index);
+ahbctrl_pp_dev *ambapp_ahb_next_nomem(register unsigned int vendor,	/* Plug&Play Vendor ID */
+				      register unsigned int driver,	/* Plug&Play Device ID */
+				      register unsigned int opts,	/* scan for AHB 1=slave, 0=masters */
+				      register int index);
 
-unsigned int ambapp_ahb_get_info (ahbctrl_pp_dev * ahb, int info);
+unsigned int ambapp_ahb_get_info(ahbctrl_pp_dev * ahb, int info);
 
 /*************************** AMBA Plug&Play device register MAPS *****************/
 
@@ -262,28 +262,28 @@ unsigned int ambapp_ahb_get_info (ahbctrl_pp_dev * ahb, int info);
  *  The following defines the bits in the LEON UART Status Registers.
  */
 
-#define LEON_REG_UART_STATUS_DR   0x00000001  /* Data Ready */
-#define LEON_REG_UART_STATUS_TSE  0x00000002  /* TX Send Register Empty */
-#define LEON_REG_UART_STATUS_THE  0x00000004  /* TX Hold Register Empty */
-#define LEON_REG_UART_STATUS_BR   0x00000008  /* Break Error */
-#define LEON_REG_UART_STATUS_OE   0x00000010  /* RX Overrun Error */
-#define LEON_REG_UART_STATUS_PE   0x00000020  /* RX Parity Error */
-#define LEON_REG_UART_STATUS_FE   0x00000040  /* RX Framing Error */
-#define LEON_REG_UART_STATUS_ERR  0x00000078  /* Error Mask */
+#define LEON_REG_UART_STATUS_DR   0x00000001	/* Data Ready */
+#define LEON_REG_UART_STATUS_TSE  0x00000002	/* TX Send Register Empty */
+#define LEON_REG_UART_STATUS_THE  0x00000004	/* TX Hold Register Empty */
+#define LEON_REG_UART_STATUS_BR   0x00000008	/* Break Error */
+#define LEON_REG_UART_STATUS_OE   0x00000010	/* RX Overrun Error */
+#define LEON_REG_UART_STATUS_PE   0x00000020	/* RX Parity Error */
+#define LEON_REG_UART_STATUS_FE   0x00000040	/* RX Framing Error */
+#define LEON_REG_UART_STATUS_ERR  0x00000078	/* Error Mask */
 
 /*
  *  The following defines the bits in the LEON UART Ctrl Registers.
  */
 
-#define LEON_REG_UART_CTRL_RE     0x00000001  /* Receiver enable */
-#define LEON_REG_UART_CTRL_TE     0x00000002  /* Transmitter enable */
-#define LEON_REG_UART_CTRL_RI     0x00000004  /* Receiver interrupt enable */
-#define LEON_REG_UART_CTRL_TI     0x00000008  /* Transmitter interrupt enable */
-#define LEON_REG_UART_CTRL_PS     0x00000010  /* Parity select */
-#define LEON_REG_UART_CTRL_PE     0x00000020  /* Parity enable */
-#define LEON_REG_UART_CTRL_FL     0x00000040  /* Flow control enable */
-#define LEON_REG_UART_CTRL_LB     0x00000080  /* Loop Back enable */
-#define LEON_REG_UART_CTRL_DBG    (1<<11) /* Debug Bit used by GRMON */
+#define LEON_REG_UART_CTRL_RE     0x00000001	/* Receiver enable */
+#define LEON_REG_UART_CTRL_TE     0x00000002	/* Transmitter enable */
+#define LEON_REG_UART_CTRL_RI     0x00000004	/* Receiver interrupt enable */
+#define LEON_REG_UART_CTRL_TI     0x00000008	/* Transmitter interrupt enable */
+#define LEON_REG_UART_CTRL_PS     0x00000010	/* Parity select */
+#define LEON_REG_UART_CTRL_PE     0x00000020	/* Parity enable */
+#define LEON_REG_UART_CTRL_FL     0x00000040	/* Flow control enable */
+#define LEON_REG_UART_CTRL_LB     0x00000080	/* Loop Back enable */
+#define LEON_REG_UART_CTRL_DBG    (1<<11)	/* Debug Bit used by GRMON */
 
 #define LEON3_GPTIMER_EN 1
 #define LEON3_GPTIMER_RL 2
@@ -294,99 +294,99 @@ unsigned int ambapp_ahb_get_info (ahbctrl_pp_dev * ahb, int info);
  *  The following defines the bits in the LEON PS/2 Status Registers.
  */
 
-#define LEON_REG_PS2_STATUS_DR   0x00000001 /* Data Ready */
-#define LEON_REG_PS2_STATUS_PE   0x00000002 /* Parity error */
-#define LEON_REG_PS2_STATUS_FE   0x00000004 /* Framing error */
-#define LEON_REG_PS2_STATUS_KI   0x00000008 /* Keyboard inhibit */
+#define LEON_REG_PS2_STATUS_DR   0x00000001	/* Data Ready */
+#define LEON_REG_PS2_STATUS_PE   0x00000002	/* Parity error */
+#define LEON_REG_PS2_STATUS_FE   0x00000004	/* Framing error */
+#define LEON_REG_PS2_STATUS_KI   0x00000008	/* Keyboard inhibit */
 
 /*
  *  The following defines the bits in the LEON PS/2 Ctrl Registers.
  */
 
-#define LEON_REG_PS2_CTRL_RE     0x00000001 /* Receiver enable */
-#define LEON_REG_PS2_CTRL_TE     0x00000002 /* Transmitter enable */
-#define LEON_REG_PS2_CTRL_RI     0x00000004 /* Keyboard receive interrupt  */
-#define LEON_REG_PS2_CTRL_TI     0x00000008 /* Keyboard transmit interrupt */
+#define LEON_REG_PS2_CTRL_RE     0x00000001	/* Receiver enable */
+#define LEON_REG_PS2_CTRL_TE     0x00000002	/* Transmitter enable */
+#define LEON_REG_PS2_CTRL_RI     0x00000004	/* Keyboard receive interrupt  */
+#define LEON_REG_PS2_CTRL_TI     0x00000008	/* Keyboard transmit interrupt */
 
 typedef struct {
-  volatile unsigned int ilevel;
-  volatile unsigned int ipend;
-  volatile unsigned int iforce;
-  volatile unsigned int iclear;
-  volatile unsigned int mstatus;
-  volatile unsigned int notused[11];
-  volatile unsigned int cpu_mask[16];
-  volatile unsigned int cpu_force[16];
+	volatile unsigned int ilevel;
+	volatile unsigned int ipend;
+	volatile unsigned int iforce;
+	volatile unsigned int iclear;
+	volatile unsigned int mstatus;
+	volatile unsigned int notused[11];
+	volatile unsigned int cpu_mask[16];
+	volatile unsigned int cpu_force[16];
 } ambapp_dev_irqmp;
 
 typedef struct {
-  volatile unsigned int data;
-  volatile unsigned int status;
-  volatile unsigned int ctrl;
-  volatile unsigned int scaler;
+	volatile unsigned int data;
+	volatile unsigned int status;
+	volatile unsigned int ctrl;
+	volatile unsigned int scaler;
 } ambapp_dev_apbuart;
 
 typedef struct {
-  volatile unsigned int val;
-  volatile unsigned int rld;
-  volatile unsigned int ctrl;
-  volatile unsigned int unused;
+	volatile unsigned int val;
+	volatile unsigned int rld;
+	volatile unsigned int ctrl;
+	volatile unsigned int unused;
 } ambapp_dev_gptimer_element;
 
-#define LEON3_GPTIMER_CTRL_EN 0x1 /* Timer enable */
-#define LEON3_GPTIMER_CTRL_RS 0x2 /* Timer reStart  */
-#define LEON3_GPTIMER_CTRL_LD 0x4 /* Timer reLoad */
-#define LEON3_GPTIMER_CTRL_IE 0x8 /* interrupt enable */
-#define LEON3_GPTIMER_CTRL_IP 0x10  /* interrupt flag/pending */
-#define LEON3_GPTIMER_CTRL_CH 0x20  /* Chain with previous timer */
+#define LEON3_GPTIMER_CTRL_EN	0x1	/* Timer enable */
+#define LEON3_GPTIMER_CTRL_RS	0x2	/* Timer reStart  */
+#define LEON3_GPTIMER_CTRL_LD	0x4	/* Timer reLoad */
+#define LEON3_GPTIMER_CTRL_IE	0x8	/* interrupt enable */
+#define LEON3_GPTIMER_CTRL_IP	0x10	/* interrupt flag/pending */
+#define LEON3_GPTIMER_CTRL_CH	0x20	/* Chain with previous timer */
 
 typedef struct {
-  volatile unsigned int scalar;
-  volatile unsigned int scalar_reload;
-  volatile unsigned int config;
-  volatile unsigned int unused;
-  volatile ambapp_dev_gptimer_element e[8];
+	volatile unsigned int scalar;
+	volatile unsigned int scalar_reload;
+	volatile unsigned int config;
+	volatile unsigned int unused;
+	volatile ambapp_dev_gptimer_element e[8];
 } ambapp_dev_gptimer;
 
 typedef struct {
-  volatile unsigned int iodata;
-  volatile unsigned int ioout;
-  volatile unsigned int iodir;
-  volatile unsigned int irqmask;
-  volatile unsigned int irqpol;
-  volatile unsigned int irqedge;
+	volatile unsigned int iodata;
+	volatile unsigned int ioout;
+	volatile unsigned int iodir;
+	volatile unsigned int irqmask;
+	volatile unsigned int irqpol;
+	volatile unsigned int irqedge;
 } ambapp_dev_ioport;
 
 typedef struct {
-  volatile unsigned int write;
-  volatile unsigned int dummy;
-  volatile unsigned int txcolor;
-  volatile unsigned int bgcolor;
+	volatile unsigned int write;
+	volatile unsigned int dummy;
+	volatile unsigned int txcolor;
+	volatile unsigned int bgcolor;
 } ambapp_dev_textvga;
 
 typedef struct {
-  volatile unsigned int data;
-  volatile unsigned int status;
-  volatile unsigned int ctrl;
+	volatile unsigned int data;
+	volatile unsigned int status;
+	volatile unsigned int ctrl;
 } ambapp_dev_apbps2;
 
 typedef struct {
-  unsigned int mcfg1, mcfg2, mcfg3;
+	unsigned int mcfg1, mcfg2, mcfg3;
 } ambapp_dev_mctrl;
 
 typedef struct {
-  unsigned int sdcfg;
+	unsigned int sdcfg;
 } ambapp_dev_sdctrl;
 
 typedef struct {
-  unsigned int cfg1;
-  unsigned int cfg2;
-  unsigned int cfg3;
+	unsigned int cfg1;
+	unsigned int cfg2;
+	unsigned int cfg3;
 } ambapp_dev_ddr2spa;
 
 typedef struct {
-  unsigned int ctrl;
-  unsigned int cfg;
+	unsigned int ctrl;
+	unsigned int cfg;
 } ambapp_dev_ddrspa;
 
 #endif

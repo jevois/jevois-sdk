@@ -39,47 +39,47 @@ DECLARE_GLOBAL_DATA_PTR;
 
 int board_init (void)
 {
-  /* We have RAM, disable cache */
-  dcache_disable();
-  icache_disable();
-  
-  /* arch number of xaeniax */
-  gd->bd->bi_arch_number = 585;
-  
-  /* adress of boot parameters */
-  gd->bd->bi_boot_params = 0xa0000100;
-  
-  return 0;
+	/* We have RAM, disable cache */
+	dcache_disable();
+	icache_disable();
+
+	/* arch number of xaeniax */
+	gd->bd->bi_arch_number = 585;
+
+	/* adress of boot parameters */
+	gd->bd->bi_boot_params = 0xa0000100;
+
+	return 0;
 }
 
-int board_late_init (void)
+int board_late_init(void)
 {
-  setenv ("stdout", "serial");
-  setenv ("stderr", "serial");
-  return 0;
+	setenv("stdout", "serial");
+	setenv("stderr", "serial");
+	return 0;
 }
 
-extern void pxa_dram_init (void);
-int dram_init (void)
+extern void pxa_dram_init(void);
+int dram_init(void)
 {
-  pxa_dram_init();
-  gd->ram_size = PHYS_SDRAM_1_SIZE;
-  return 0;
+	pxa_dram_init();
+	gd->ram_size = PHYS_SDRAM_1_SIZE;
+	return 0;
 }
 
-void dram_init_banksize (void)
+void dram_init_banksize(void)
 {
-  gd->bd->bi_dram[0].start = PHYS_SDRAM_1;
-  gd->bd->bi_dram[0].size = PHYS_SDRAM_1_SIZE;
+	gd->bd->bi_dram[0].start = PHYS_SDRAM_1;
+	gd->bd->bi_dram[0].size = PHYS_SDRAM_1_SIZE;
 }
 
 #ifdef CONFIG_CMD_NET
-int board_eth_init (bd_t * bis)
+int board_eth_init(bd_t *bis)
 {
-  int rc = 0;
-  #ifdef CONFIG_SMC91111
-  rc = smc91111_initialize (0, CONFIG_SMC91111_BASE);
-  #endif
-  return rc;
+	int rc = 0;
+#ifdef CONFIG_SMC91111
+	rc = smc91111_initialize(0, CONFIG_SMC91111_BASE);
+#endif
+	return rc;
 }
 #endif

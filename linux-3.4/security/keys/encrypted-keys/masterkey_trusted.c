@@ -28,20 +28,20 @@
  * manages both trusted/encrypted key-types, like the encrypted key type
  * data, trusted key type data is not visible decrypted from userspace.
  */
-struct key * request_trusted_key (const char * trusted_desc,
-                                  u8 ** master_key, size_t * master_keylen)
+struct key *request_trusted_key(const char *trusted_desc,
+				u8 **master_key, size_t *master_keylen)
 {
-  struct trusted_key_payload * tpayload;
-  struct key * tkey;
-  
-  tkey = request_key (&key_type_trusted, trusted_desc, NULL);
-  if (IS_ERR (tkey) )
-  { goto error; }
-  
-  down_read (&tkey->sem);
-  tpayload = tkey->payload.data;
-  *master_key = tpayload->key;
-  *master_keylen = tpayload->key_len;
+	struct trusted_key_payload *tpayload;
+	struct key *tkey;
+
+	tkey = request_key(&key_type_trusted, trusted_desc, NULL);
+	if (IS_ERR(tkey))
+		goto error;
+
+	down_read(&tkey->sem);
+	tpayload = tkey->payload.data;
+	*master_key = tpayload->key;
+	*master_keylen = tpayload->key_len;
 error:
-  return tkey;
+	return tkey;
 }

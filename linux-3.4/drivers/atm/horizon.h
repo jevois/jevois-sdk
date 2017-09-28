@@ -217,7 +217,7 @@
 /* TX status register */
 
 #define IDLE_CHANNELS_MASK                    0x00FF
-#define ABR_CELL_COUNT_REACHED_MULT           0x0100
+#define ABR_CELL_COUNT_REACHED_MULT           0x0100 
 #define ABR_CELL_COUNT_REACHED_MASK           0xFF
 
 /* RX config register */
@@ -370,53 +370,53 @@ typedef struct {
   u16                 channel;
   u16                 tx_xbr_bits;
   u16                 tx_pcr_bits;
-  #if 0
+#if 0
   u16                 tx_scr_bits;
   u16                 tx_bucket_bits;
-  #endif
+#endif
   hrz_aal             aal;
 } hrz_vcc;
 
 struct hrz_dev {
-
+  
   u32                 iobase;
-  u32        *        membase;
-  
-  struct sk_buff   *  rx_skb;    
+  u32 *               membase;
+
+  struct sk_buff *    rx_skb;    
   unsigned int        rx_bytes;  
-  void        *       rx_addr;   
+  void *              rx_addr;   
   unsigned int        rx_channel;
-  
-  struct sk_buff   *  tx_skb;    
+
+  struct sk_buff *    tx_skb;    
   unsigned int        tx_bytes;  
-  void        *       tx_addr;   
-  struct iovec    *   tx_iovec;  
+  void *              tx_addr;   
+  struct iovec *      tx_iovec;  
   unsigned int        tx_regions;
-  
+
   spinlock_t          mem_lock;
   wait_queue_head_t   tx_queue;
-  
+
   u8                  irq;
-  unsigned long       flags;
+  unsigned long	      flags;
   u8                  tx_last;
   u8                  tx_idle;
-  
-  rx_q_entry     *    rx_q_reset;
-  rx_q_entry     *    rx_q_entry;
-  rx_q_entry     *    rx_q_wrap;
-  
-  struct atm_dev   *  atm_dev;
-  
+
+  rx_q_entry *        rx_q_reset;
+  rx_q_entry *        rx_q_entry;
+  rx_q_entry *        rx_q_wrap;
+
+  struct atm_dev *    atm_dev;
+
   u32                 last_vc;
   
   int                 noof_spare_buffers;
   u16                 spare_buffers[SPARE_BUFFER_POOL_SIZE];
-  
+
   u16                 tx_channel_record[TX_CHANS];
-  
-  u32              txer[MAX_VCS / 32];
+
+  u32              txer[MAX_VCS/32];
   struct atm_vcc * rxer[MAX_VCS];
-  
+
   spinlock_t       rate_lock;
   unsigned int     rx_avail;
   unsigned int     tx_avail;
@@ -425,7 +425,7 @@ struct hrz_dev {
   unsigned long    rx_cell_count;
   unsigned long    hec_error_count;
   unsigned long    unassigned_cell_count;
-  
+
   struct pci_dev * pci_dev;
   struct timer_list housekeeping;
 };

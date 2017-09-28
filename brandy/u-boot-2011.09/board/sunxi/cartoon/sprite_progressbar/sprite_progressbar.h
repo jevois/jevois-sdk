@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -25,12 +25,12 @@
 #define  __SPRITE_PROGRESSBAR_H__
 
 
-extern  unsigned  sprite_cartoon_progressbar_create (int x1, int y1, int x2, int y2);
-extern  int         sprite_cartoon_progressbar_config (unsigned p, int frame_color, int progress_color, int thickness);
+extern  unsigned	sprite_cartoon_progressbar_create(int x1, int y1, int x2, int y2);
+extern  int       	sprite_cartoon_progressbar_config(unsigned p, int frame_color, int progress_color, int thickness);
 
-extern  int     sprite_cartoon_progressbar_active (unsigned p);
-extern  int     sprite_cartoon_progressbar_destroy (unsigned p);
-extern  int     sprite_cartoon_progressbar_upgrate (unsigned p, int rate);
+extern  int 		sprite_cartoon_progressbar_active(unsigned p);
+extern  int 		sprite_cartoon_progressbar_destroy(unsigned p);
+extern  int 		sprite_cartoon_progressbar_upgrate(unsigned p, int rate);
 
 
 

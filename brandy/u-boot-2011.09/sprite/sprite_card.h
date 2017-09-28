@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -27,28 +27,28 @@
 #include <common.h>
 #include <sunxi_mbr.h>
 
-extern uint sprite_card_firmware_start (void);
+extern uint sprite_card_firmware_start(void);
 
-extern int sprite_card_firmware_probe (char * name);
+extern int sprite_card_firmware_probe(char *name);
 
-extern int sprite_card_fetch_download_map (sunxi_download_info * dl_map);
+extern int sprite_card_fetch_download_map(sunxi_download_info  *dl_map);
 
-extern int sprite_card_fetch_mbr (void * img_mbr);
+extern int sprite_card_fetch_mbr(void  *img_mbr);
 
-extern int sunxi_sprite_deal_part (sunxi_download_info * dl_map);
+extern int sunxi_sprite_deal_part(sunxi_download_info *dl_map);
 
-extern int sunxi_sprite_deal_uboot (int production_media);
+extern int sunxi_sprite_deal_uboot(int production_media);
 
-extern int sunxi_sprite_deal_boot0 (int production_media);
+extern int sunxi_sprite_deal_boot0(int production_media);
 
-extern int card_download_uboot (uint length, void * buffer);
+extern int card_download_uboot(uint length, void *buffer);
 
-extern int card_download_boot0 (uint length, void * buffer);
-extern int card_upload_boot0 (uint length, void * buffer);
+extern int card_download_boot0(uint length, void *buffer);
+extern int card_upload_boot0(uint length, void *buffer);
 
-extern int card_download_standard_mbr (void * buffer);
+extern int card_download_standard_mbr(void *buffer);
 #ifdef CONFIG_SUNXI_SPINOR
-extern int sunxi_sprite_deal_fullimg (void);
+extern int sunxi_sprite_deal_fullimg(void);
 #endif
 
 

@@ -21,17 +21,17 @@
 #ifndef BEAT_BEAT_syscall_H
 #define BEAT_BEAT_syscall_H
 
-#ifdef  __ASSEMBLY__
-#define __BEAT_ADD_VENDOR_ID(__x, __v)  ((__v)<<60|(__x))
+#ifdef	__ASSEMBLY__
+#define	__BEAT_ADD_VENDOR_ID(__x, __v)	((__v)<<60|(__x))
 #else
-#define __BEAT_ADD_VENDOR_ID(__x, __v)  ((u64)(__v)<<60|(__x))
+#define	__BEAT_ADD_VENDOR_ID(__x, __v)	((u64)(__v)<<60|(__x))
 #endif
 #define HV_allocate_memory __BEAT_ADD_VENDOR_ID(0, 0)
 #define HV_construct_virtual_address_space __BEAT_ADD_VENDOR_ID(2, 0)
 #define HV_destruct_virtual_address_space __BEAT_ADD_VENDOR_ID(10, 0)
 #define HV_get_virtual_address_space_id_of_ppe __BEAT_ADD_VENDOR_ID(4, 0)
-#define HV_query_logical_partition_address_region_info      \
-  __BEAT_ADD_VENDOR_ID(6, 0)
+#define HV_query_logical_partition_address_region_info 			\
+						__BEAT_ADD_VENDOR_ID(6, 0)
 #define HV_release_memory __BEAT_ADD_VENDOR_ID(13, 0)
 #define HV_select_virtual_address_space __BEAT_ADD_VENDOR_ID(7, 0)
 #define HV_load_range_registers __BEAT_ADD_VENDOR_ID(68, 0)
@@ -79,8 +79,8 @@
 #define HV_insert_htab_entry __BEAT_ADD_VENDOR_ID(101, 0)
 #define HV_read_htab_entries __BEAT_ADD_VENDOR_ID(95, 0)
 #define HV_write_htab_entry __BEAT_ADD_VENDOR_ID(94, 0)
-#define HV_assign_io_address_translation_fault_port       \
-  __BEAT_ADD_VENDOR_ID(100, 0)
+#define HV_assign_io_address_translation_fault_port 			\
+						__BEAT_ADD_VENDOR_ID(100, 0)
 #define HV_set_interrupt_mask __BEAT_ADD_VENDOR_ID(73, 0)
 #define HV_get_logical_partition_id __BEAT_ADD_VENDOR_ID(74, 0)
 #define HV_create_repository_node2 __BEAT_ADD_VENDOR_ID(90, 0)
@@ -148,8 +148,8 @@
 #define HV_construct_pm_context __BEAT_ADD_VENDOR_ID(0x164, 1)
 #define HV_destruct_pm_context __BEAT_ADD_VENDOR_ID(0x165, 1)
 #define HV_be_slow __BEAT_ADD_VENDOR_ID(0x170, 1)
-#define HV_assign_ipspc_server_connection_status_notification_port  \
-  __BEAT_ADD_VENDOR_ID(0x173, 1)
+#define HV_assign_ipspc_server_connection_status_notification_port 	\
+						__BEAT_ADD_VENDOR_ID(0x173, 1)
 #define HV_get_raid_of_physical_spe __BEAT_ADD_VENDOR_ID(0x174, 1)
 #define HV_set_physical_spe_to_rag __BEAT_ADD_VENDOR_ID(0x175, 1)
 #define HV_release_physical_spe_from_rag __BEAT_ADD_VENDOR_ID(0x176, 1)

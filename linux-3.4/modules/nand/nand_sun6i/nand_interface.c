@@ -10,21 +10,21 @@
 #include <linux/module.h>
 #include "include/nand_include.h"
 
-static int __init init_nand_libmodule (void)
+static int __init init_nand_libmodule(void)
 {
-  printk ("hello:%s,%d\n", __func__, __LINE__);
-  printk ("hello:%s,%d\n", __func__, __LINE__);
-  nand_init();
-  return 0;
+	printk("hello:%s,%d\n", __func__, __LINE__);
+	printk("hello:%s,%d\n", __func__, __LINE__);
+	nand_init();
+	return 0;
 }
-module_init (init_nand_libmodule);
+module_init(init_nand_libmodule);
 
-static void __exit exit_nand_libmodule (void)
+static void __exit exit_nand_libmodule(void)
 {
-  nand_exit();
+	nand_exit();
 }
-module_exit (exit_nand_libmodule);
+module_exit(exit_nand_libmodule);
 
-MODULE_AUTHOR ("Soft-Reuuimlla");
-MODULE_DESCRIPTION ("User mode CEDAR device interface");
-MODULE_LICENSE ("GPL");
+MODULE_AUTHOR("Soft-Reuuimlla");
+MODULE_DESCRIPTION("User mode CEDAR device interface");
+MODULE_LICENSE("GPL");

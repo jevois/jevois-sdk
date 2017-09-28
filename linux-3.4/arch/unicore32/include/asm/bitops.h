@@ -22,14 +22,14 @@
  * the cntlz instruction for much better code efficiency.
  */
 
-static inline int fls (int x)
+static inline int fls(int x)
 {
-  int ret;
-  
-  asm ("cntlz\t%0, %1" : "=r" (ret) : "r" (x) : "cc");
-  ret = 32 - ret;
-  
-  return ret;
+	int ret;
+
+	asm("cntlz\t%0, %1" : "=r" (ret) : "r" (x) : "cc");
+	ret = 32 - ret;
+
+	return ret;
 }
 
 #define __fls(x) (fls(x) - 1)
@@ -39,9 +39,9 @@ static inline int fls (int x)
 #include <asm-generic/bitops.h>
 
 /* following definitions: to avoid using codes in lib/find_*.c */
-#define find_next_bit   find_next_bit
-#define find_next_zero_bit  find_next_zero_bit
-#define find_first_bit    find_first_bit
-#define find_first_zero_bit find_first_zero_bit
+#define find_next_bit		find_next_bit
+#define find_next_zero_bit	find_next_zero_bit
+#define find_first_bit		find_first_bit
+#define find_first_zero_bit	find_first_zero_bit
 
 #endif /* __UNICORE_BITOPS_H__ */

@@ -18,31 +18,30 @@
 #include <linux/atomic.h>
 #include "kvm_timer.h"
 
-enum hrtimer_restart kvm_timer_fn (struct hrtimer * data)
+enum hrtimer_restart kvm_timer_fn(struct hrtimer *data)
 {
-  struct kvm_timer * ktimer = container_of (data, struct kvm_timer, timer);
-  struct kvm_vcpu * vcpu = ktimer->vcpu;
-  wait_queue_head_t * q = &vcpu->wq;
-  
-  /*
-   * There is a race window between reading and incrementing, but we do
-   * not care about potentially losing timer events in the !reinject
-   * case anyway. Note: KVM_REQ_PENDING_TIMER is implicitly checked
-   * in vcpu_enter_guest.
-   */
-  if (ktimer->reinject || !atomic_read (&ktimer->pending) ) {
-    atomic_inc (&ktimer->pending);
-    /* FIXME: this code should not know anything about vcpus */
-    kvm_make_request (KVM_REQ_PENDING_TIMER, vcpu);
-  }
-  
-  if (waitqueue_active (q) )
-  { wake_up_interruptible (q); }
-  
-  if (ktimer->t_ops->is_periodic (ktimer) ) {
-    hrtimer_add_expires_ns (&ktimer->timer, ktimer->period);
-    return HRTIMER_RESTART;
-  }
-  else
-  { return HRTIMER_NORESTART; }
+	struct kvm_timer *ktimer = container_of(data, struct kvm_timer, timer);
+	struct kvm_vcpu *vcpu = ktimer->vcpu;
+	wait_queue_head_t *q = &vcpu->wq;
+
+	/*
+	 * There is a race window between reading and incrementing, but we do
+	 * not care about potentially losing timer events in the !reinject
+	 * case anyway. Note: KVM_REQ_PENDING_TIMER is implicitly checked
+	 * in vcpu_enter_guest.
+	 */
+	if (ktimer->reinject || !atomic_read(&ktimer->pending)) {
+		atomic_inc(&ktimer->pending);
+		/* FIXME: this code should not know anything about vcpus */
+		kvm_make_request(KVM_REQ_PENDING_TIMER, vcpu);
+	}
+
+	if (waitqueue_active(q))
+		wake_up_interruptible(q);
+
+	if (ktimer->t_ops->is_periodic(ktimer)) {
+		hrtimer_add_expires_ns(&ktimer->timer, ktimer->period);
+		return HRTIMER_RESTART;
+	} else
+		return HRTIMER_NORESTART;
 }

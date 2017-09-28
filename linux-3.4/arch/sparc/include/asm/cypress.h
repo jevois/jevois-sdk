@@ -48,28 +48,28 @@
 #define CYPRESS_NFAULT    0x00000002
 #define CYPRESS_MENABLE   0x00000001
 
-static inline void cypress_flush_page (unsigned long page)
+static inline void cypress_flush_page(unsigned long page)
 {
-  __asm__ __volatile__ ("sta %%g0, [%0] %1\n\t" : :
-                        "r" (page), "i" (ASI_M_FLUSH_PAGE) );
+	__asm__ __volatile__("sta %%g0, [%0] %1\n\t" : :
+			     "r" (page), "i" (ASI_M_FLUSH_PAGE));
 }
 
-static inline void cypress_flush_segment (unsigned long addr)
+static inline void cypress_flush_segment(unsigned long addr)
 {
-  __asm__ __volatile__ ("sta %%g0, [%0] %1\n\t" : :
-                        "r" (addr), "i" (ASI_M_FLUSH_SEG) );
+	__asm__ __volatile__("sta %%g0, [%0] %1\n\t" : :
+			     "r" (addr), "i" (ASI_M_FLUSH_SEG));
 }
 
-static inline void cypress_flush_region (unsigned long addr)
+static inline void cypress_flush_region(unsigned long addr)
 {
-  __asm__ __volatile__ ("sta %%g0, [%0] %1\n\t" : :
-                        "r" (addr), "i" (ASI_M_FLUSH_REGION) );
+	__asm__ __volatile__("sta %%g0, [%0] %1\n\t" : :
+			     "r" (addr), "i" (ASI_M_FLUSH_REGION));
 }
 
-static inline void cypress_flush_context (void)
+static inline void cypress_flush_context(void)
 {
-  __asm__ __volatile__ ("sta %%g0, [%%g0] %0\n\t" : :
-                        "i" (ASI_M_FLUSH_CTX) );
+	__asm__ __volatile__("sta %%g0, [%%g0] %0\n\t" : :
+			     "i" (ASI_M_FLUSH_CTX));
 }
 
 /* XXX Displacement flushes for buggy chips and initial testing

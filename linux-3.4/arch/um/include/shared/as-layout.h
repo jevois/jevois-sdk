@@ -22,10 +22,10 @@
  */
 
 #ifdef __ASSEMBLY__
-#define _UML_AC(X, Y) (Y)
+#define _UML_AC(X, Y)	(Y)
 #else
-#define __UML_AC(X, Y)  (X(Y))
-#define _UML_AC(X, Y) __UML_AC(X, Y)
+#define __UML_AC(X, Y)	(X(Y))
+#define _UML_AC(X, Y)	__UML_AC(X, Y)
 #endif
 
 #define STUB_START _UML_AC(, 0x100000)
@@ -38,8 +38,8 @@
 #include "sysdep/ptrace.h"
 
 struct cpu_task {
-  int pid;
-  void * task;
+	int pid;
+	void *task;
 };
 
 extern struct cpu_task cpu_tasks[];
@@ -58,9 +58,9 @@ extern unsigned long brk_start;
 
 extern unsigned long host_task_size;
 
-extern int linux_main (int argc, char ** argv);
+extern int linux_main(int argc, char **argv);
 
-extern void (*sig_info[]) (int, struct uml_pt_regs *);
+extern void (*sig_info[])(int, struct uml_pt_regs *);
 
 #endif
 

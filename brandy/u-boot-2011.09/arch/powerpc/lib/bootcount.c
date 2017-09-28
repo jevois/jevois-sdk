@@ -31,67 +31,67 @@
 #if !defined(CONFIG_SYS_BOOTCOUNT_ADDR)
 
 #if defined(CONFIG_MPC5xxx)
-#define CONFIG_SYS_BOOTCOUNT_ADDR (MPC5XXX_CDM_BRDCRMB)
+#define CONFIG_SYS_BOOTCOUNT_ADDR	(MPC5XXX_CDM_BRDCRMB)
 #define CONFIG_SYS_BOOTCOUNT_SINGLEWORD
 #endif /* defined(CONFIG_MPC5xxx) */
 
 #if defined(CONFIG_MPC512X)
-#define CONFIG_SYS_BOOTCOUNT_ADDR (&((immap_t *)CONFIG_SYS_IMMR)->clk.bcr)
+#define CONFIG_SYS_BOOTCOUNT_ADDR	(&((immap_t *)CONFIG_SYS_IMMR)->clk.bcr)
 #define CONFIG_SYS_BOOTCOUNT_SINGLEWORD
 #endif /* defined(CONFIG_MPC512X) */
 
 #if defined(CONFIG_8xx)
 #define CONFIG_SYS_BOOTCOUNT_ADDR (((immap_t *)CONFIG_SYS_IMMR)->im_cpm.cp_dpmem + \
-                                   CPM_BOOTCOUNT_ADDR)
+				CPM_BOOTCOUNT_ADDR)
 #endif /* defined(CONFIG_8xx) */
 
 #if defined(CONFIG_MPC8260)
 #include <asm/cpm_8260.h>
 
-#define CONFIG_SYS_BOOTCOUNT_ADDR (CONFIG_SYS_IMMR + CPM_BOOTCOUNT_ADDR)
+#define CONFIG_SYS_BOOTCOUNT_ADDR	(CONFIG_SYS_IMMR + CPM_BOOTCOUNT_ADDR)
 #endif /* defined(CONFIG_MPC8260) */
 
 #if defined(CONFIG_QE)
 #include <asm/immap_qe.h>
 
-#define CONFIG_SYS_BOOTCOUNT_ADDR (CONFIG_SYS_IMMR + 0x110000 + \
-                                   QE_MURAM_SIZE - 2 * sizeof(u32))
+#define CONFIG_SYS_BOOTCOUNT_ADDR	(CONFIG_SYS_IMMR + 0x110000 + \
+					 QE_MURAM_SIZE - 2 * sizeof(u32))
 #endif /* defined(CONFIG_MPC8360) */
 
 #if defined(CONFIG_4xx)
-#define CONFIG_SYS_BOOTCOUNT_ADDR (CONFIG_SYS_OCM_DATA_ADDR + \
-                                   CONFIG_SYS_BOOTCOUNT_ADDR)
+#define CONFIG_SYS_BOOTCOUNT_ADDR	(CONFIG_SYS_OCM_DATA_ADDR + \
+				CONFIG_SYS_BOOTCOUNT_ADDR)
 #endif /* defined(CONFIG_4xx) */
 
 #endif /* !defined(CONFIG_SYS_BOOTCOUNT_ADDR) */
 
-void bootcount_store (ulong a)
+void bootcount_store(ulong a)
 {
-  void * reg = (void *) CONFIG_SYS_BOOTCOUNT_ADDR;
-  
-  #if defined(CONFIG_SYS_BOOTCOUNT_SINGLEWORD)
-  out_be32 (reg, (BOOTCOUNT_MAGIC & 0xffff0000) | a);
-  #else
-  out_be32 (reg, a);
-  out_be32 (reg + 4, BOOTCOUNT_MAGIC);
-  #endif
+	void *reg = (void *)CONFIG_SYS_BOOTCOUNT_ADDR;
+
+#if defined(CONFIG_SYS_BOOTCOUNT_SINGLEWORD)
+	out_be32(reg, (BOOTCOUNT_MAGIC & 0xffff0000) | a);
+#else
+	out_be32(reg, a);
+	out_be32(reg + 4, BOOTCOUNT_MAGIC);
+#endif
 }
 
-ulong bootcount_load (void)
+ulong bootcount_load(void)
 {
-  void * reg = (void *) CONFIG_SYS_BOOTCOUNT_ADDR;
-  
-  #if defined(CONFIG_SYS_BOOTCOUNT_SINGLEWORD)
-  u32 tmp = in_be32 (reg);
-  
-  if ( (tmp & 0xffff0000) != (BOOTCOUNT_MAGIC & 0xffff0000) )
-  { return 0; }
-  else
-  { return (tmp & 0x0000ffff); }
-  #else
-  if (in_be32 (reg + 4) != BOOTCOUNT_MAGIC)
-  { return 0; }
-  else
-  { return in_be32 (reg); }
-  #endif
+	void *reg = (void *)CONFIG_SYS_BOOTCOUNT_ADDR;
+
+#if defined(CONFIG_SYS_BOOTCOUNT_SINGLEWORD)
+	u32 tmp = in_be32(reg);
+
+	if ((tmp & 0xffff0000) != (BOOTCOUNT_MAGIC & 0xffff0000))
+		return 0;
+	else
+		return (tmp & 0x0000ffff);
+#else
+	if (in_be32(reg + 4) != BOOTCOUNT_MAGIC)
+		return 0;
+	else
+		return in_be32(reg);
+#endif
 }

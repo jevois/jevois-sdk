@@ -4,10 +4,10 @@
 #include <linux/ioctl.h>
 
 /* version */
-#define VERSION_STR "1.00"
+#define VERSION_STR	"1.00"
 
 /* Driver name */
-#define GIO_DRIVER_NAME   "/dev/giodrv"
+#define GIO_DRIVER_NAME		"/dev/giodrv"
 
 /* Use 'k' as magic number */
 #define GIODRV_IOC_MAGIC  'k'

@@ -32,150 +32,149 @@
 
 static unsigned char default_bit_pos[] = { 0, 1, 2, 3, 4, 5, 6, 7 };
 
-static inline void heartbeat_toggle_bit (struct heartbeat_data * hd,
-    unsigned bit, unsigned int inverted)
+static inline void heartbeat_toggle_bit(struct heartbeat_data *hd,
+					unsigned bit, unsigned int inverted)
 {
-  unsigned int new;
-  
-  new = (1 << hd->bit_pos[bit]);
-  if (inverted)
-  { new = ~new; }
-  
-  new &= hd->mask;
-  
-  switch (hd->regsize) {
-  case 32:
-    new |= ioread32 (hd->base) & ~hd->mask;
-    iowrite32 (new, hd->base);
-    break;
-  case 16:
-    new |= ioread16 (hd->base) & ~hd->mask;
-    iowrite16 (new, hd->base);
-    break;
-  default:
-    new |= ioread8 (hd->base) & ~hd->mask;
-    iowrite8 (new, hd->base);
-    break;
-  }
+	unsigned int new;
+
+	new = (1 << hd->bit_pos[bit]);
+	if (inverted)
+		new = ~new;
+
+	new &= hd->mask;
+
+	switch (hd->regsize) {
+	case 32:
+		new |= ioread32(hd->base) & ~hd->mask;
+		iowrite32(new, hd->base);
+		break;
+	case 16:
+		new |= ioread16(hd->base) & ~hd->mask;
+		iowrite16(new, hd->base);
+		break;
+	default:
+		new |= ioread8(hd->base) & ~hd->mask;
+		iowrite8(new, hd->base);
+		break;
+	}
 }
 
-static void heartbeat_timer (unsigned long data)
+static void heartbeat_timer(unsigned long data)
 {
-  struct heartbeat_data * hd = (struct heartbeat_data *) data;
-  static unsigned bit = 0, up = 1;
-  
-  heartbeat_toggle_bit (hd, bit, hd->flags & HEARTBEAT_INVERTED);
-  
-  bit += up;
-  if ( (bit == 0) || (bit == (hd->nr_bits) - 1) )
-  { up = -up; }
-  
-  mod_timer (&hd->timer, jiffies + (110 - ( (300 << FSHIFT) /
-                                    ( (avenrun[0] / 5) + (3 << FSHIFT) ) ) ) );
+	struct heartbeat_data *hd = (struct heartbeat_data *)data;
+	static unsigned bit = 0, up = 1;
+
+	heartbeat_toggle_bit(hd, bit, hd->flags & HEARTBEAT_INVERTED);
+
+	bit += up;
+	if ((bit == 0) || (bit == (hd->nr_bits)-1))
+		up = -up;
+
+	mod_timer(&hd->timer, jiffies + (110 - ((300 << FSHIFT) /
+			((avenrun[0] / 5) + (3 << FSHIFT)))));
 }
 
-static int heartbeat_drv_probe (struct platform_device * pdev)
+static int heartbeat_drv_probe(struct platform_device *pdev)
 {
-  struct resource * res;
-  struct heartbeat_data * hd;
-  int i;
-  
-  if (unlikely (pdev->num_resources != 1) ) {
-    dev_err (&pdev->dev, "invalid number of resources\n");
-    return -EINVAL;
-  }
-  
-  res = platform_get_resource (pdev, IORESOURCE_MEM, 0);
-  if (unlikely (res == NULL) ) {
-    dev_err (&pdev->dev, "invalid resource\n");
-    return -EINVAL;
-  }
-  
-  if (pdev->dev.platform_data) {
-    hd = pdev->dev.platform_data;
-  }
-  else {
-    hd = kzalloc (sizeof (struct heartbeat_data), GFP_KERNEL);
-    if (unlikely (!hd) )
-    { return -ENOMEM; }
-  }
-  
-  hd->base = ioremap_nocache (res->start, resource_size (res) );
-  if (unlikely (!hd->base) ) {
-    dev_err (&pdev->dev, "ioremap failed\n");
-    
-    if (!pdev->dev.platform_data)
-    { kfree (hd); }
-    
-    return -ENXIO;
-  }
-  
-  if (!hd->nr_bits) {
-    hd->bit_pos = default_bit_pos;
-    hd->nr_bits = ARRAY_SIZE (default_bit_pos);
-  }
-  
-  hd->mask = 0;
-  for (i = 0; i < hd->nr_bits; i++)
-  { hd->mask |= (1 << hd->bit_pos[i]); }
-  
-  if (!hd->regsize) {
-    switch (res->flags & IORESOURCE_MEM_TYPE_MASK) {
-    case IORESOURCE_MEM_32BIT:
-      hd->regsize = 32;
-      break;
-    case IORESOURCE_MEM_16BIT:
-      hd->regsize = 16;
-      break;
-    case IORESOURCE_MEM_8BIT:
-    default:
-      hd->regsize = 8;
-      break;
-    }
-  }
-  
-  setup_timer (&hd->timer, heartbeat_timer, (unsigned long) hd);
-  platform_set_drvdata (pdev, hd);
-  
-  return mod_timer (&hd->timer, jiffies + 1);
+	struct resource *res;
+	struct heartbeat_data *hd;
+	int i;
+
+	if (unlikely(pdev->num_resources != 1)) {
+		dev_err(&pdev->dev, "invalid number of resources\n");
+		return -EINVAL;
+	}
+
+	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+	if (unlikely(res == NULL)) {
+		dev_err(&pdev->dev, "invalid resource\n");
+		return -EINVAL;
+	}
+
+	if (pdev->dev.platform_data) {
+		hd = pdev->dev.platform_data;
+	} else {
+		hd = kzalloc(sizeof(struct heartbeat_data), GFP_KERNEL);
+		if (unlikely(!hd))
+			return -ENOMEM;
+	}
+
+	hd->base = ioremap_nocache(res->start, resource_size(res));
+	if (unlikely(!hd->base)) {
+		dev_err(&pdev->dev, "ioremap failed\n");
+
+		if (!pdev->dev.platform_data)
+			kfree(hd);
+
+		return -ENXIO;
+	}
+
+	if (!hd->nr_bits) {
+		hd->bit_pos = default_bit_pos;
+		hd->nr_bits = ARRAY_SIZE(default_bit_pos);
+	}
+
+	hd->mask = 0;
+	for (i = 0; i < hd->nr_bits; i++)
+		hd->mask |= (1 << hd->bit_pos[i]);
+
+	if (!hd->regsize) {
+		switch (res->flags & IORESOURCE_MEM_TYPE_MASK) {
+		case IORESOURCE_MEM_32BIT:
+			hd->regsize = 32;
+			break;
+		case IORESOURCE_MEM_16BIT:
+			hd->regsize = 16;
+			break;
+		case IORESOURCE_MEM_8BIT:
+		default:
+			hd->regsize = 8;
+			break;
+		}
+	}
+
+	setup_timer(&hd->timer, heartbeat_timer, (unsigned long)hd);
+	platform_set_drvdata(pdev, hd);
+
+	return mod_timer(&hd->timer, jiffies + 1);
 }
 
-static int heartbeat_drv_remove (struct platform_device * pdev)
+static int heartbeat_drv_remove(struct platform_device *pdev)
 {
-  struct heartbeat_data * hd = platform_get_drvdata (pdev);
-  
-  del_timer_sync (&hd->timer);
-  iounmap (hd->base);
-  
-  platform_set_drvdata (pdev, NULL);
-  
-  if (!pdev->dev.platform_data)
-  { kfree (hd); }
-  
-  return 0;
+	struct heartbeat_data *hd = platform_get_drvdata(pdev);
+
+	del_timer_sync(&hd->timer);
+	iounmap(hd->base);
+
+	platform_set_drvdata(pdev, NULL);
+
+	if (!pdev->dev.platform_data)
+		kfree(hd);
+
+	return 0;
 }
 
 static struct platform_driver heartbeat_driver = {
-  .probe    = heartbeat_drv_probe,
-  .remove   = heartbeat_drv_remove,
-  .driver   = {
-    .name = DRV_NAME,
-  },
+	.probe		= heartbeat_drv_probe,
+	.remove		= heartbeat_drv_remove,
+	.driver		= {
+		.name	= DRV_NAME,
+	},
 };
 
-static int __init heartbeat_init (void)
+static int __init heartbeat_init(void)
 {
-  printk (KERN_NOTICE DRV_NAME ": version %s loaded\n", DRV_VERSION);
-  return platform_driver_register (&heartbeat_driver);
+	printk(KERN_NOTICE DRV_NAME ": version %s loaded\n", DRV_VERSION);
+	return platform_driver_register(&heartbeat_driver);
 }
 
-static void __exit heartbeat_exit (void)
+static void __exit heartbeat_exit(void)
 {
-  platform_driver_unregister (&heartbeat_driver);
+	platform_driver_unregister(&heartbeat_driver);
 }
-module_init (heartbeat_init);
-module_exit (heartbeat_exit);
+module_init(heartbeat_init);
+module_exit(heartbeat_exit);
 
-MODULE_VERSION (DRV_VERSION);
-MODULE_AUTHOR ("Paul Mundt");
-MODULE_LICENSE ("GPL v2");
+MODULE_VERSION(DRV_VERSION);
+MODULE_AUTHOR("Paul Mundt");
+MODULE_LICENSE("GPL v2");

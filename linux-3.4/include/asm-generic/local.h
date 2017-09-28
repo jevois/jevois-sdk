@@ -20,17 +20,17 @@
 /* Don't use typedef: don't want them to be mixed with atomic_t's. */
 typedef struct
 {
-  atomic_long_t a;
+	atomic_long_t a;
 } local_t;
 
-#define LOCAL_INIT(i) { ATOMIC_LONG_INIT(i) }
+#define LOCAL_INIT(i)	{ ATOMIC_LONG_INIT(i) }
 
-#define local_read(l) atomic_long_read(&(l)->a)
-#define local_set(l,i)  atomic_long_set((&(l)->a),(i))
-#define local_inc(l)  atomic_long_inc(&(l)->a)
-#define local_dec(l)  atomic_long_dec(&(l)->a)
-#define local_add(i,l)  atomic_long_add((i),(&(l)->a))
-#define local_sub(i,l)  atomic_long_sub((i),(&(l)->a))
+#define local_read(l)	atomic_long_read(&(l)->a)
+#define local_set(l,i)	atomic_long_set((&(l)->a),(i))
+#define local_inc(l)	atomic_long_inc(&(l)->a)
+#define local_dec(l)	atomic_long_dec(&(l)->a)
+#define local_add(i,l)	atomic_long_add((i),(&(l)->a))
+#define local_sub(i,l)	atomic_long_sub((i),(&(l)->a))
 
 #define local_sub_and_test(i, l) atomic_long_sub_and_test((i), (&(l)->a))
 #define local_dec_and_test(l) atomic_long_dec_and_test(&(l)->a)
@@ -47,9 +47,9 @@ typedef struct
 
 /* Non-atomic variants, ie. preemption disabled and won't be touched
  * in interrupt, etc.  Some archs can optimize this case well. */
-#define __local_inc(l)    local_set((l), local_read(l) + 1)
-#define __local_dec(l)    local_set((l), local_read(l) - 1)
-#define __local_add(i,l)  local_set((l), local_read(l) + (i))
-#define __local_sub(i,l)  local_set((l), local_read(l) - (i))
+#define __local_inc(l)		local_set((l), local_read(l) + 1)
+#define __local_dec(l)		local_set((l), local_read(l) - 1)
+#define __local_add(i,l)	local_set((l), local_read(l) + (i))
+#define __local_sub(i,l)	local_set((l), local_read(l) - (i))
 
 #endif /* _ASM_GENERIC_LOCAL_H */

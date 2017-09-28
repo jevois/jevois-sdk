@@ -55,14 +55,14 @@
 #include "./arisc_hwspinlock.h"
 
 /* global functions */
-extern int arisc_axp_int_notify (struct arisc_message * pmessage);
-extern int arisc_audio_perdone_notify (struct arisc_message * pmessage);
-extern int arisc_set_debug_level (unsigned int level);
-extern int arisc_dvfs_cfg_vf_table (void);
-extern int arisc_set_uart_baudrate (u32 baudrate);
-extern int arisc_set_dram_crc_paras (unsigned int dram_crc_en, unsigned int dram_crc_srcaddr, unsigned int dram_crc_len);
-extern int arisc_query_set_standby_info (struct standby_info_para * para, arisc_rw_type_e op);
-extern int arisc_sysconfig_sstpower_paras (void);
-extern int arisc_report_error_info (struct arisc_message * pmessage);
+extern int arisc_axp_int_notify(struct arisc_message *pmessage);
+extern int arisc_audio_perdone_notify(struct arisc_message *pmessage);
+extern int arisc_set_debug_level(unsigned int level);
+extern int arisc_dvfs_cfg_vf_table(void);
+extern int arisc_set_uart_baudrate(u32 baudrate);
+extern int arisc_set_dram_crc_paras(unsigned int dram_crc_en, unsigned int dram_crc_srcaddr, unsigned int dram_crc_len);
+extern int arisc_query_set_standby_info(struct standby_info_para *para, arisc_rw_type_e op);
+extern int arisc_sysconfig_sstpower_paras(void);
+extern int arisc_report_error_info(struct arisc_message *pmessage);
 
 #endif /* __ARISC_INCLUDES_H */

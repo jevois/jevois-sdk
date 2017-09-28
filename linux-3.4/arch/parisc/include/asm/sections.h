@@ -6,7 +6,7 @@
 
 #ifdef CONFIG_64BIT
 #undef dereference_function_descriptor
-void * dereference_function_descriptor (void *);
+void *dereference_function_descriptor(void *);
 #endif
 
 #endif

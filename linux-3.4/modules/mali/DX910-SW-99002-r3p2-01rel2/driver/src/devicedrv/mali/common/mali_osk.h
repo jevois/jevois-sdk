@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2010-2013 ARM Limited. All rights reserved.
- *
+ * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- *
+ * 
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -38,29 +38,29 @@ extern "C"
 
 /* Define integer types used by OSK. Note: these currently clash with Linux so we only define them if not defined already */
 #ifndef __KERNEL__
-typedef unsigned char      u8;
-typedef signed char        s8;
-typedef unsigned short     u16;
-typedef signed short       s16;
-typedef unsigned int       u32;
-typedef signed int         s32;
-typedef unsigned long long u64;
-#define BITS_PER_LONG (sizeof(long)*8)
+	typedef unsigned char      u8;
+	typedef signed char        s8;
+	typedef unsigned short     u16;
+	typedef signed short       s16;
+	typedef unsigned int       u32;
+	typedef signed int         s32;
+	typedef unsigned long long u64;
+	#define BITS_PER_LONG (sizeof(long)*8)
 #else
-/* Ensure Linux types u32, etc. are defined */
-#include <linux/types.h>
+	/* Ensure Linux types u32, etc. are defined */
+	#include <linux/types.h>
 #endif
 
 /** @brief Mali Boolean type which uses MALI_TRUE and MALI_FALSE
   */
-typedef unsigned long mali_bool;
+	typedef unsigned long mali_bool;
 
 #ifndef MALI_TRUE
-#define MALI_TRUE ((mali_bool)1)
+	#define MALI_TRUE ((mali_bool)1)
 #endif
 
 #ifndef MALI_FALSE
-#define MALI_FALSE ((mali_bool)0)
+	#define MALI_FALSE ((mali_bool)0)
 #endif
 
 #define MALI_HW_CORE_NO_COUNTER     ((u32)-1)
@@ -80,16 +80,16 @@ typedef unsigned long mali_bool;
  */
 typedef enum
 {
-  _MALI_OSK_ERR_OK = 0, /**< Success. */
-  _MALI_OSK_ERR_FAULT = -1, /**< General non-success */
-  _MALI_OSK_ERR_INVALID_FUNC = -2, /**< Invalid function requested through User/Kernel interface (e.g. bad IOCTL number) */
-  _MALI_OSK_ERR_INVALID_ARGS = -3, /**< Invalid arguments passed through User/Kernel interface */
-  _MALI_OSK_ERR_NOMEM = -4, /**< Insufficient memory */
-  _MALI_OSK_ERR_TIMEOUT = -5, /**< Timeout occurred */
-  _MALI_OSK_ERR_RESTARTSYSCALL = -6, /**< Special: On certain OSs, must report when an interruptable mutex is interrupted. Ignore otherwise. */
-  _MALI_OSK_ERR_ITEM_NOT_FOUND = -7, /**< Table Lookup failed */
-  _MALI_OSK_ERR_BUSY = -8, /**< Device/operation is busy. Try again later */
-  _MALI_OSK_ERR_UNSUPPORTED = -9, /**< Optional part of the interface used, and is unsupported */
+    _MALI_OSK_ERR_OK = 0, /**< Success. */
+    _MALI_OSK_ERR_FAULT = -1, /**< General non-success */
+    _MALI_OSK_ERR_INVALID_FUNC = -2, /**< Invalid function requested through User/Kernel interface (e.g. bad IOCTL number) */
+    _MALI_OSK_ERR_INVALID_ARGS = -3, /**< Invalid arguments passed through User/Kernel interface */
+    _MALI_OSK_ERR_NOMEM = -4, /**< Insufficient memory */
+    _MALI_OSK_ERR_TIMEOUT = -5, /**< Timeout occurred */
+    _MALI_OSK_ERR_RESTARTSYSCALL = -6, /**< Special: On certain OSs, must report when an interruptable mutex is interrupted. Ignore otherwise. */
+    _MALI_OSK_ERR_ITEM_NOT_FOUND = -7, /**< Table Lookup failed */
+    _MALI_OSK_ERR_BUSY = -8, /**< Device/operation is busy. Try again later */
+	_MALI_OSK_ERR_UNSUPPORTED = -9, /**< Optional part of the interface used, and is unsupported */
 } _mali_osk_errcode_t;
 
 /** @} */ /* end group _mali_osk_miscellaneous */
@@ -110,7 +110,7 @@ typedef struct _mali_osk_wq_work_t_struct _mali_osk_wq_work_t;
  *
  * @param arg resource-specific data
  */
-typedef void (*_mali_osk_wq_work_handler_t) ( void * arg );
+typedef void (*_mali_osk_wq_work_handler_t)( void * arg );
 
 /* @} */ /* end group _mali_osk_wq */
 
@@ -124,14 +124,14 @@ typedef struct _mali_osk_irq_t_struct _mali_osk_irq_t;
  *
  * This function is implemented by the common layer to allow probing of a resource's IRQ.
  * @param arg resource-specific data */
-typedef void  (*_mali_osk_irq_trigger_t) ( void * arg );
+typedef void  (*_mali_osk_irq_trigger_t)( void * arg );
 
 /** @brief Optional function to acknowledge an irq from a resource
  *
  * This function is implemented by the common layer to allow probing of a resource's IRQ.
  * @param arg resource-specific data
  * @return _MALI_OSK_ERR_OK if the IRQ was successful, or a suitable _mali_osk_errcode_t on failure. */
-typedef _mali_osk_errcode_t (*_mali_osk_irq_ack_t) ( void * arg );
+typedef _mali_osk_errcode_t (*_mali_osk_irq_ack_t)( void * arg );
 
 /** @brief IRQ 'upper-half' handler callback.
  *
@@ -155,7 +155,7 @@ typedef _mali_osk_errcode_t (*_mali_osk_irq_ack_t) ( void * arg );
  * @return _MALI_OSK_ERR_OK if the IRQ was correctly handled, or a suitable
  * _mali_osk_errcode_t otherwise.
  */
-typedef _mali_osk_errcode_t  (*_mali_osk_irq_uhandler_t) ( void * arg );
+typedef _mali_osk_errcode_t  (*_mali_osk_irq_uhandler_t)( void * arg );
 
 /** @} */ /* end group _mali_osk_irq */
 
@@ -174,11 +174,11 @@ typedef _mali_osk_errcode_t  (*_mali_osk_irq_uhandler_t) ( void * arg );
  */
 typedef struct
 {
-  union
-  {
-    u32 val;
-    void * obj;
-  } u;
+    union
+    {
+        u32 val;
+        void *obj;
+    } u;
 } _mali_osk_atomic_t;
 /** @} */ /* end group _mali_osk_atomic */
 
@@ -198,26 +198,26 @@ typedef struct
  */
 typedef enum
 {
-  _MALI_OSK_LOCK_ORDER_LAST = 0,
-  
-  _MALI_OSK_LOCK_ORDER_SESSION_PENDING_JOBS,
-  _MALI_OSK_LOCK_ORDER_PM_EXECUTE,
-  _MALI_OSK_LOCK_ORDER_UTILIZATION,
-  _MALI_OSK_LOCK_ORDER_L2_COUNTER,
-  _MALI_OSK_LOCK_ORDER_PROFILING,
-  _MALI_OSK_LOCK_ORDER_L2_COMMAND,
-  _MALI_OSK_LOCK_ORDER_PM_CORE_STATE,
-  _MALI_OSK_LOCK_ORDER_SCHEDULER_DEFERRED,
-  _MALI_OSK_LOCK_ORDER_SCHEDULER,
-  _MALI_OSK_LOCK_ORDER_GROUP,
-  _MALI_OSK_LOCK_ORDER_GROUP_VIRTUAL,
-  _MALI_OSK_LOCK_ORDER_DESCRIPTOR_MAP,
-  _MALI_OSK_LOCK_ORDER_MEM_PT_CACHE,
-  _MALI_OSK_LOCK_ORDER_MEM_INFO,
-  _MALI_OSK_LOCK_ORDER_MEM_SESSION,
-  _MALI_OSK_LOCK_ORDER_SESSIONS,
-  
-  _MALI_OSK_LOCK_ORDER_FIRST
+	_MALI_OSK_LOCK_ORDER_LAST = 0,
+
+	_MALI_OSK_LOCK_ORDER_SESSION_PENDING_JOBS,
+	_MALI_OSK_LOCK_ORDER_PM_EXECUTE,
+	_MALI_OSK_LOCK_ORDER_UTILIZATION,
+	_MALI_OSK_LOCK_ORDER_L2_COUNTER,
+	_MALI_OSK_LOCK_ORDER_PROFILING,
+	_MALI_OSK_LOCK_ORDER_L2_COMMAND,
+	_MALI_OSK_LOCK_ORDER_PM_CORE_STATE,
+	_MALI_OSK_LOCK_ORDER_SCHEDULER_DEFERRED,
+	_MALI_OSK_LOCK_ORDER_SCHEDULER,
+	_MALI_OSK_LOCK_ORDER_GROUP,
+	_MALI_OSK_LOCK_ORDER_GROUP_VIRTUAL,
+	_MALI_OSK_LOCK_ORDER_DESCRIPTOR_MAP,
+	_MALI_OSK_LOCK_ORDER_MEM_PT_CACHE,
+	_MALI_OSK_LOCK_ORDER_MEM_INFO,
+	_MALI_OSK_LOCK_ORDER_MEM_SESSION,
+	_MALI_OSK_LOCK_ORDER_SESSIONS,
+
+	_MALI_OSK_LOCK_ORDER_FIRST
 } _mali_osk_lock_order_t;
 
 
@@ -267,16 +267,16 @@ typedef enum
  */
 typedef enum
 {
-  _MALI_OSK_LOCKFLAG_SPINLOCK = 0x1,          /**< Specifically, don't sleep on those architectures that require it */
-  _MALI_OSK_LOCKFLAG_NONINTERRUPTABLE = 0x2,  /**< The mutex cannot be interrupted, e.g. delivery of signals on those architectures where this is required */
-  _MALI_OSK_LOCKFLAG_READERWRITER = 0x4,      /**< Optimise for readers/writers */
-  _MALI_OSK_LOCKFLAG_ORDERED = 0x8,           /**< Use the order parameter; otherwise use automatic ordering */
-  _MALI_OSK_LOCKFLAG_ONELOCK = 0x10,          /**< Each thread can only hold one lock at a time */
-  _MALI_OSK_LOCKFLAG_SPINLOCK_IRQ = 0x20,    /**<  IRQ version of spinlock */
-  /** @enum _mali_osk_lock_flags_t
-   *
-   * Flags from 0x10000--0x80000000 are RESERVED for User-mode */
-  
+	_MALI_OSK_LOCKFLAG_SPINLOCK = 0x1,          /**< Specifically, don't sleep on those architectures that require it */
+	_MALI_OSK_LOCKFLAG_NONINTERRUPTABLE = 0x2,  /**< The mutex cannot be interrupted, e.g. delivery of signals on those architectures where this is required */
+	_MALI_OSK_LOCKFLAG_READERWRITER = 0x4,      /**< Optimise for readers/writers */
+	_MALI_OSK_LOCKFLAG_ORDERED = 0x8,           /**< Use the order parameter; otherwise use automatic ordering */
+	_MALI_OSK_LOCKFLAG_ONELOCK = 0x10,          /**< Each thread can only hold one lock at a time */
+	_MALI_OSK_LOCKFLAG_SPINLOCK_IRQ = 0x20,    /**<  IRQ version of spinlock */
+	/** @enum _mali_osk_lock_flags_t
+	 *
+	 * Flags from 0x10000--0x80000000 are RESERVED for User-mode */
+
 } _mali_osk_lock_flags_t;
 
 /** @brief Mutual Exclusion Lock Mode Optimization hint
@@ -296,12 +296,12 @@ typedef enum
  */
 typedef enum
 {
-  _MALI_OSK_LOCKMODE_UNDEF = -1,  /**< Undefined lock mode. For internal use only */
-  _MALI_OSK_LOCKMODE_RW    = 0x0, /**< Read-write mode, default. All readers and writers are mutually-exclusive */
-  _MALI_OSK_LOCKMODE_RO,          /**< Read-only mode, to support multiple concurrent readers, but mutual exclusion in the presence of writers. */
-  /** @enum _mali_osk_lock_mode_t
-   *
-   * Lock modes 0x40--0x7F are RESERVED for User-mode */
+	_MALI_OSK_LOCKMODE_UNDEF = -1,  /**< Undefined lock mode. For internal use only */
+	_MALI_OSK_LOCKMODE_RW    = 0x0, /**< Read-write mode, default. All readers and writers are mutually-exclusive */
+	_MALI_OSK_LOCKMODE_RO,          /**< Read-only mode, to support multiple concurrent readers, but mutual exclusion in the presence of writers. */
+	/** @enum _mali_osk_lock_mode_t
+	 *
+	 * Lock modes 0x40--0x7F are RESERVED for User-mode */
 } _mali_osk_lock_mode_t;
 
 /** @brief Private type for Mutual Exclusion lock objects */
@@ -314,7 +314,7 @@ typedef struct _mali_osk_lock_t_struct _mali_osk_lock_t;
 
 /** @brief returns a lock's owner (thread id) if debugging is enabled
  */
-u32 _mali_osk_lock_get_owner ( _mali_osk_lock_t * lock );
+u32 _mali_osk_lock_get_owner( _mali_osk_lock_t *lock );
 #else
 #define MALI_DEBUG_ASSERT_LOCK_HELD(l) do {} while(0)
 #endif
@@ -403,7 +403,7 @@ typedef struct _mali_io_address * mali_io_address;
  */
 typedef enum
 {
-  _MALI_OSK_MEM_MAPREGION_FLAG_OS_ALLOCATED_PHYSADDR = 0x1, /**< Physical address is OS Allocated */
+	_MALI_OSK_MEM_MAPREGION_FLAG_OS_ALLOCATED_PHYSADDR = 0x1, /**< Physical address is OS Allocated */
 } _mali_osk_mem_mapregion_flags_t;
 /** @} */ /* end group _mali_osk_low_level_memory */
 
@@ -416,9 +416,9 @@ typedef struct _mali_osk_notification_queue_t_struct _mali_osk_notification_queu
 /** @brief Public notification data object type */
 typedef struct _mali_osk_notification_t_struct
 {
-  u32 notification_type;   /**< The notification type */
-  u32 result_buffer_size; /**< Size of the result buffer to copy to user space */
-  void * result_buffer;   /**< Buffer containing any type specific data */
+	u32 notification_type;   /**< The notification type */
+	u32 result_buffer_size; /**< Size of the result buffer to copy to user space */
+	void * result_buffer;   /**< Buffer containing any type specific data */
 } _mali_osk_notification_t;
 
 /** @} */ /* end group _mali_osk_notification */
@@ -443,7 +443,7 @@ typedef struct _mali_osk_notification_t_struct
  * by any callers of _mali_osk_timer_del(). Otherwise, a deadlock may occur.
  *
  * @param arg Function-specific data */
-typedef void (*_mali_osk_timer_callback_t) (void * arg );
+typedef void (*_mali_osk_timer_callback_t)(void * arg );
 
 /** @brief Private type for Timer Callback Objects */
 typedef struct _mali_osk_timer_t_struct _mali_osk_timer_t;
@@ -467,8 +467,8 @@ typedef struct _mali_osk_timer_t_struct _mali_osk_timer_t;
  */
 typedef struct _mali_osk_list_s
 {
-  struct _mali_osk_list_s * next;
-  struct _mali_osk_list_s * prev;
+	struct _mali_osk_list_s *next;
+	struct _mali_osk_list_s *prev;
 } _mali_osk_list_t;
 
 /** @brief Initialize a list to be a head of an empty list
@@ -506,7 +506,7 @@ typedef struct _mali_osk_list_s
  * to by \a ptr.
  */
 #define _MALI_OSK_CONTAINER_OF(ptr, type, member) \
-  ((type *)( ((char *)ptr) - offsetof(type,member) ))
+             ((type *)( ((char *)ptr) - offsetof(type,member) ))
 
 /** @brief Find the containing structure of a list
  *
@@ -528,7 +528,7 @@ typedef struct _mali_osk_list_s
  * \a member, as pointed to by the _mali_osk_list_t \a *ptr.
  */
 #define _MALI_OSK_LIST_ENTRY(ptr, type, member) \
-  _MALI_OSK_CONTAINER_OF(ptr, type, member)
+            _MALI_OSK_CONTAINER_OF(ptr, type, member)
 
 /** @brief Enumerate a list safely
  *
@@ -557,10 +557,10 @@ typedef struct _mali_osk_list_s
  * the list to be enumerated.
  */
 #define _MALI_OSK_LIST_FOREACHENTRY(ptr, tmp, list, type, member)         \
-  for (ptr = _MALI_OSK_LIST_ENTRY((list)->next, type, member),      \
-       tmp = _MALI_OSK_LIST_ENTRY(ptr->member.next, type, member); \
-       &ptr->member != (list);                                    \
-       ptr = tmp, tmp = _MALI_OSK_LIST_ENTRY(tmp->member.next, type, member))
+        for (ptr = _MALI_OSK_LIST_ENTRY((list)->next, type, member),      \
+             tmp = _MALI_OSK_LIST_ENTRY(ptr->member.next, type, member); \
+             &ptr->member != (list);                                    \
+             ptr = tmp, tmp = _MALI_OSK_LIST_ENTRY(tmp->member.next, type, member))
 /** @} */ /* end group _mali_osk_list */
 
 
@@ -573,9 +573,9 @@ typedef struct _mali_osk_list_s
  */
 typedef struct _mali_osk_resource
 {
-  const char * description;       /**< short description of the resource */
-  u32 base;                       /**< Physical base address of the resource, as seen by Mali resources. */
-  u32 irq;                        /**< IRQ number delivered to the CPU, or -1 to tell the driver to probe for it (if possible) */
+	const char * description;       /**< short description of the resource */
+	u32 base;                       /**< Physical base address of the resource, as seen by Mali resources. */
+	u32 irq;                        /**< IRQ number delivered to the CPU, or -1 to tell the driver to probe for it (if possible) */
 } _mali_osk_resource_t;
 /** @} */ /* end group _mali_osk_miscellaneous */
 
@@ -589,11 +589,11 @@ typedef struct _mali_osk_resource
  *
  * @return _MALI_OSK_ERR_OK on success, otherwise failure.
  */
-_mali_osk_errcode_t _mali_osk_wq_init (void);
+_mali_osk_errcode_t _mali_osk_wq_init(void);
 
 /** @brief Terminate work queues (for deferred work)
  */
-void _mali_osk_wq_term (void);
+void _mali_osk_wq_term(void);
 
 /** @brief Create work in the work queue
  *
@@ -606,21 +606,21 @@ void _mali_osk_wq_term (void);
  * The returned pointer must be freed with \ref _mali_osk_wq_delete_work()
  * when no longer needed.
  */
-_mali_osk_wq_work_t * _mali_osk_wq_create_work ( _mali_osk_wq_work_handler_t handler, void * data );
+_mali_osk_wq_work_t *_mali_osk_wq_create_work( _mali_osk_wq_work_handler_t handler, void *data );
 
 /** @brief Delete a work object
  *
  * This will flush the work queue to ensure that the work handler will not
  * be called after deletion.
  */
-void _mali_osk_wq_delete_work ( _mali_osk_wq_work_t * work );
+void _mali_osk_wq_delete_work( _mali_osk_wq_work_t *work );
 
 /** @brief Delete a work object
  *
  * This will NOT flush the work queue, so only call this if you are sure that the work handler will
  * not be called after deletion.
  */
-void _mali_osk_wq_delete_work_nonflush ( _mali_osk_wq_work_t * work );
+void _mali_osk_wq_delete_work_nonflush( _mali_osk_wq_work_t *work );
 
 /** @brief Cause a queued, deferred call of the work handler
  *
@@ -672,7 +672,7 @@ void _mali_osk_wq_delete_work_nonflush ( _mali_osk_wq_work_t * work );
  * @param work a pointer to the _mali_osk_wq_work_t object corresponding to the
  * work to begin processing.
  */
-void _mali_osk_wq_schedule_work ( _mali_osk_wq_work_t * work );
+void _mali_osk_wq_schedule_work( _mali_osk_wq_work_t *work );
 
 /** @brief Flush the work queue
  *
@@ -684,7 +684,7 @@ void _mali_osk_wq_schedule_work ( _mali_osk_wq_work_t * work );
  * any registered work handler. To do so may cause a deadlock.
  *
  */
-void _mali_osk_wq_flush (void);
+void _mali_osk_wq_flush(void);
 
 
 /** @} */ /* end group _mali_osk_wq */
@@ -717,7 +717,7 @@ void _mali_osk_wq_flush (void);
  * @return on success, a pointer to a _mali_osk_irq_t object, which represents
  * the IRQ handling on this resource. NULL on failure.
  */
-_mali_osk_irq_t * _mali_osk_irq_init ( u32 irqnum, _mali_osk_irq_uhandler_t uhandler, void * int_data, _mali_osk_irq_trigger_t trigger_func, _mali_osk_irq_ack_t ack_func, void * probe_data, const char * description );
+_mali_osk_irq_t *_mali_osk_irq_init( u32 irqnum, _mali_osk_irq_uhandler_t uhandler, void *int_data, _mali_osk_irq_trigger_t trigger_func, _mali_osk_irq_ack_t ack_func, void *probe_data, const char *description );
 
 /** @brief Terminate IRQ handling on a resource.
  *
@@ -731,7 +731,7 @@ _mali_osk_irq_t * _mali_osk_irq_init ( u32 irqnum, _mali_osk_irq_uhandler_t uhan
  * @param irq a pointer to the _mali_osk_irq_t object corresponding to the
  * resource whose IRQ handling is to be terminated.
  */
-void _mali_osk_irq_term ( _mali_osk_irq_t * irq );
+void _mali_osk_irq_term( _mali_osk_irq_t *irq );
 
 /** @} */ /* end group _mali_osk_irq */
 
@@ -744,25 +744,25 @@ void _mali_osk_irq_term ( _mali_osk_irq_t * irq );
  * @note It is an error to decrement the counter beyond -(1<<23)
  *
  * @param atom pointer to an atomic counter */
-void _mali_osk_atomic_dec ( _mali_osk_atomic_t * atom );
+void _mali_osk_atomic_dec( _mali_osk_atomic_t *atom );
 
 /** @brief Decrement an atomic counter, return new value
  *
  * @param atom pointer to an atomic counter
  * @return The new value, after decrement */
-u32 _mali_osk_atomic_dec_return ( _mali_osk_atomic_t * atom );
+u32 _mali_osk_atomic_dec_return( _mali_osk_atomic_t *atom );
 
 /** @brief Increment an atomic counter
  *
  * @note It is an error to increment the counter beyond (1<<23)-1
  *
  * @param atom pointer to an atomic counter */
-void _mali_osk_atomic_inc ( _mali_osk_atomic_t * atom );
+void _mali_osk_atomic_inc( _mali_osk_atomic_t *atom );
 
 /** @brief Increment an atomic counter, return new value
  *
  * @param atom pointer to an atomic counter */
-u32 _mali_osk_atomic_inc_return ( _mali_osk_atomic_t * atom );
+u32 _mali_osk_atomic_inc_return( _mali_osk_atomic_t *atom );
 
 /** @brief Initialize an atomic counter
  *
@@ -774,7 +774,7 @@ u32 _mali_osk_atomic_inc_return ( _mali_osk_atomic_t * atom );
  * @return _MALI_OSK_ERR_OK on success, otherwise, a suitable
  * _mali_osk_errcode_t on failure.
  */
-_mali_osk_errcode_t _mali_osk_atomic_init ( _mali_osk_atomic_t * atom, u32 val );
+_mali_osk_errcode_t _mali_osk_atomic_init( _mali_osk_atomic_t *atom, u32 val );
 
 /** @brief Read a value from an atomic counter
  *
@@ -784,13 +784,13 @@ _mali_osk_errcode_t _mali_osk_atomic_init ( _mali_osk_atomic_t * atom, u32 val )
  *
  * @param atom pointer to an atomic counter
  */
-u32 _mali_osk_atomic_read ( _mali_osk_atomic_t * atom );
+u32 _mali_osk_atomic_read( _mali_osk_atomic_t *atom );
 
 /** @brief Terminate an atomic counter
  *
  * @param atom pointer to an atomic counter
  */
-void _mali_osk_atomic_term ( _mali_osk_atomic_t * atom );
+void _mali_osk_atomic_term( _mali_osk_atomic_t *atom );
 /** @} */  /* end group _mali_osk_atomic */
 
 
@@ -821,7 +821,7 @@ void _mali_osk_atomic_term ( _mali_osk_atomic_t * atom );
  * @param size Size of each element
  * @return On success, the zero-initialized buffer allocated. NULL on failure
  */
-void * _mali_osk_calloc ( u32 n, u32 size );
+void *_mali_osk_calloc( u32 n, u32 size );
 
 /** @brief Allocate memory.
  *
@@ -847,7 +847,7 @@ void * _mali_osk_calloc ( u32 n, u32 size );
  * @param size Number of bytes to allocate
  * @return On success, the buffer allocated. NULL on failure.
  */
-void * _mali_osk_malloc ( u32 size );
+void *_mali_osk_malloc( u32 size );
 
 /** @brief Free memory.
  *
@@ -863,7 +863,7 @@ void * _mali_osk_malloc ( u32 size );
  *
  * @param ptr Pointer to buffer to free
  */
-void _mali_osk_free ( void * ptr );
+void _mali_osk_free( void *ptr );
 
 /** @brief Allocate memory.
  *
@@ -888,7 +888,7 @@ void _mali_osk_free ( void * ptr );
  * @param size Number of bytes to allocate
  * @return On success, the buffer allocated. NULL on failure.
  */
-void * _mali_osk_valloc ( u32 size );
+void *_mali_osk_valloc( u32 size );
 
 /** @brief Free memory.
  *
@@ -903,7 +903,7 @@ void * _mali_osk_valloc ( u32 size );
  *
  * @param ptr Pointer to buffer to free
  */
-void _mali_osk_vfree ( void * ptr );
+void _mali_osk_vfree( void *ptr );
 
 /** @brief Copies memory.
  *
@@ -918,7 +918,7 @@ void _mali_osk_vfree ( void * ptr );
  * @param len Number of bytes to copy.
  * @return \a dst is always passed through unmodified.
  */
-void * _mali_osk_memcpy ( void * dst, const void * src, u32 len );
+void *_mali_osk_memcpy( void *dst, const void *src, u32 len );
 
 /** @brief Fills memory.
  *
@@ -930,7 +930,7 @@ void * _mali_osk_memcpy ( void * dst, const void * src, u32 len );
  * @param n Number of bytes to be set to the value.
  * @return \a s is always passed through unmodified
  */
-void * _mali_osk_memset ( void * s, u32 c, u32 n );
+void *_mali_osk_memset( void *s, u32 c, u32 n );
 /** @} */ /* end group _mali_osk_memory */
 
 
@@ -947,7 +947,7 @@ void * _mali_osk_memset ( void * s, u32 c, u32 n );
  * @return MALI_TRUE when \a max_allocated bytes are not in use yet. MALI_FALSE
  * when at least \a max_allocated bytes are in use.
  */
-mali_bool _mali_osk_mem_check_allocated ( u32 max_allocated );
+mali_bool _mali_osk_mem_check_allocated( u32 max_allocated );
 
 /** @addtogroup _mali_osk_lock
  * @{ */
@@ -974,7 +974,7 @@ mali_bool _mali_osk_mem_check_allocated ( u32 max_allocated );
  * deadlock prevention. Setting to zero causes 'automatic' ordering to be used.
  * @return On success, a pointer to a _mali_osk_lock_t object. NULL on failure.
  */
-_mali_osk_lock_t * _mali_osk_lock_init ( _mali_osk_lock_flags_t flags, u32 initial, u32 order );
+_mali_osk_lock_t *_mali_osk_lock_init( _mali_osk_lock_flags_t flags, u32 initial, u32 order );
 
 /** @brief Wait for a lock to be signalled (obtained)
 
@@ -1001,7 +1001,7 @@ _mali_osk_lock_t * _mali_osk_lock_init ( _mali_osk_lock_flags_t flags, u32 initi
  * obtained. In this case, the error code must be propagated up to the U/K
  * interface.
  */
-_mali_osk_errcode_t _mali_osk_lock_wait ( _mali_osk_lock_t * lock, _mali_osk_lock_mode_t mode);
+_mali_osk_errcode_t _mali_osk_lock_wait( _mali_osk_lock_t *lock, _mali_osk_lock_mode_t mode);
 
 
 /** @brief Signal (release) a lock
@@ -1016,7 +1016,7 @@ _mali_osk_errcode_t _mali_osk_lock_wait ( _mali_osk_lock_t * lock, _mali_osk_loc
  * @param mode the mode in which the lock should be obtained. This must match
  * the mode in which the lock was waited upon.
  */
-void _mali_osk_lock_signal ( _mali_osk_lock_t * lock, _mali_osk_lock_mode_t mode );
+void _mali_osk_lock_signal( _mali_osk_lock_t *lock, _mali_osk_lock_mode_t mode );
 
 /** @brief Terminate a lock
  *
@@ -1027,7 +1027,7 @@ void _mali_osk_lock_signal ( _mali_osk_lock_t * lock, _mali_osk_lock_mode_t mode
  *
  * @param lock the lock to terminate.
  */
-void _mali_osk_lock_term ( _mali_osk_lock_t * lock );
+void _mali_osk_lock_term( _mali_osk_lock_t *lock );
 /** @} */ /* end group _mali_osk_lock */
 
 
@@ -1039,14 +1039,14 @@ void _mali_osk_lock_term ( _mali_osk_lock_t * lock );
  * This defines an arbitrary memory barrier operation, which forces an ordering constraint
  * on memory read and write operations.
  */
-void _mali_osk_mem_barrier ( void );
+void _mali_osk_mem_barrier( void );
 
 /** @brief Issue a write memory barrier
  *
  * This defines an write memory barrier operation which forces an ordering constraint
  * on memory write operations.
  */
-void _mali_osk_write_mem_barrier ( void );
+void _mali_osk_write_mem_barrier( void );
 
 /** @brief Map a physically contiguous region into kernel space
  *
@@ -1063,7 +1063,7 @@ void _mali_osk_write_mem_barrier ( void );
  * @return On success, a Mali IO address through which the mapped-in
  * memory/registers can be accessed. NULL on failure.
  */
-mali_io_address _mali_osk_mem_mapioregion ( u32 phys, u32 size, const char * description );
+mali_io_address _mali_osk_mem_mapioregion( u32 phys, u32 size, const char *description );
 
 /** @brief Unmap a physically contiguous address range from kernel space.
  *
@@ -1085,7 +1085,7 @@ mali_io_address _mali_osk_mem_mapioregion ( u32 phys, u32 size, const char * des
  * @param mapping The Mali IO address through which the mapping is
  * accessed.
  */
-void _mali_osk_mem_unmapioregion ( u32 phys, u32 size, mali_io_address mapping );
+void _mali_osk_mem_unmapioregion( u32 phys, u32 size, mali_io_address mapping );
 
 /** @brief Allocate and Map a physically contiguous region into kernel space
  *
@@ -1112,7 +1112,7 @@ void _mali_osk_mem_unmapioregion ( u32 phys, u32 size, mali_io_address mapping )
  * @return On success, a Mali IO address through which the mapped-in
  * memory/registers can be accessed. NULL on failure, and (*phys) is unmodified.
  */
-mali_io_address _mali_osk_mem_allocioregion ( u32 * phys, u32 size );
+mali_io_address _mali_osk_mem_allocioregion( u32 *phys, u32 size );
 
 /** @brief Free a physically contiguous address range from kernel space.
  *
@@ -1134,7 +1134,7 @@ mali_io_address _mali_osk_mem_allocioregion ( u32 * phys, u32 size );
  * @param mapping The Mali IO address through which the mapping is
  * accessed.
  */
-void _mali_osk_mem_freeioregion ( u32 phys, u32 size, mali_io_address mapping );
+void _mali_osk_mem_freeioregion( u32 phys, u32 size, mali_io_address mapping );
 
 /** @brief Request a region of physically contiguous memory
  *
@@ -1154,7 +1154,7 @@ void _mali_osk_mem_freeioregion ( u32 phys, u32 size, mali_io_address mapping );
  * @return _MALI_OSK_ERR_OK on success. Otherwise, a suitable
  * _mali_osk_errcode_t on failure.
  */
-_mali_osk_errcode_t _mali_osk_mem_reqregion ( u32 phys, u32 size, const char * description );
+_mali_osk_errcode_t _mali_osk_mem_reqregion( u32 phys, u32 size, const char *description );
 
 /** @brief Un-request a region of physically contiguous memory
  *
@@ -1174,7 +1174,7 @@ _mali_osk_errcode_t _mali_osk_mem_reqregion ( u32 phys, u32 size, const char * d
  * @param size the number of bytes of physically contiguous address space to
  * un-request.
  */
-void _mali_osk_mem_unreqregion ( u32 phys, u32 size );
+void _mali_osk_mem_unreqregion( u32 phys, u32 size );
 
 /** @brief Read from a location currently mapped in through
  * _mali_osk_mem_mapioregion
@@ -1188,7 +1188,7 @@ void _mali_osk_mem_unreqregion ( u32 phys, u32 size );
  * @param offset Byte offset from the given IO address to operate on, must be a multiple of 4
  * @return the 32-bit word from the specified location.
  */
-u32 _mali_osk_mem_ioread32 ( volatile mali_io_address mapping, u32 offset );
+u32 _mali_osk_mem_ioread32( volatile mali_io_address mapping, u32 offset );
 
 /** @brief Write to a location currently mapped in through
  * _mali_osk_mem_mapioregion without memory barriers
@@ -1202,7 +1202,7 @@ u32 _mali_osk_mem_ioread32 ( volatile mali_io_address mapping, u32 offset );
  * @param offset Byte offset from the given IO address to operate on, must be a multiple of 4
  * @param val the 32-bit word to write.
  */
-void _mali_osk_mem_iowrite32_relaxed ( volatile mali_io_address addr, u32 offset, u32 val );
+void _mali_osk_mem_iowrite32_relaxed( volatile mali_io_address addr, u32 offset, u32 val );
 
 /** @brief Write to a location currently mapped in through
  * _mali_osk_mem_mapioregion with write memory barrier
@@ -1216,14 +1216,14 @@ void _mali_osk_mem_iowrite32_relaxed ( volatile mali_io_address addr, u32 offset
  * @param offset Byte offset from the given IO address to operate on, must be a multiple of 4
  * @param val the 32-bit word to write.
  */
-void _mali_osk_mem_iowrite32 ( volatile mali_io_address mapping, u32 offset, u32 val );
+void _mali_osk_mem_iowrite32( volatile mali_io_address mapping, u32 offset, u32 val );
 
 /** @brief Flush all CPU caches
  *
  * This should only be implemented if flushing of the cache is required for
  * memory mapped in through _mali_osk_mem_mapregion.
  */
-void _mali_osk_cache_flushall ( void );
+void _mali_osk_cache_flushall( void );
 
 /** @brief Flush any caches necessary for the CPU and MALI to have the same view of a range of uncached mapped memory
  *
@@ -1234,7 +1234,7 @@ void _mali_osk_cache_flushall ( void );
  * They zero the memory through a cached mapping, then flush the inner caches but not the outer caches.
  * This is required for MALI to have the correct view of the memory.
  */
-void _mali_osk_cache_ensure_uncached_range_flushed ( void * uncached_mapping, u32 offset, u32 size );
+void _mali_osk_cache_ensure_uncached_range_flushed( void *uncached_mapping, u32 offset, u32 size );
 
 /** @} */ /* end group _mali_osk_low_level_memory */
 
@@ -1299,7 +1299,7 @@ void _mali_osk_cache_ensure_uncached_range_flushed ( void * uncached_mapping, u3
  * @param size The size of the type specific buffer to send
  * @return Pointer to a notification object with a suitable buffer, or NULL on error.
  */
-_mali_osk_notification_t * _mali_osk_notification_create ( u32 type, u32 size );
+_mali_osk_notification_t *_mali_osk_notification_create( u32 type, u32 size );
 
 /** @brief Delete a notification object
  *
@@ -1319,7 +1319,7 @@ _mali_osk_notification_t * _mali_osk_notification_create ( u32 type, u32 size );
  *
  * @param object the notification object to delete.
  */
-void _mali_osk_notification_delete ( _mali_osk_notification_t * object );
+void _mali_osk_notification_delete( _mali_osk_notification_t *object );
 
 /** @brief Create a notification queue
  *
@@ -1335,7 +1335,7 @@ void _mali_osk_notification_delete ( _mali_osk_notification_t * object );
  *
  * @return Pointer to a new notification queue or NULL on error.
  */
-_mali_osk_notification_queue_t * _mali_osk_notification_queue_init ( void );
+_mali_osk_notification_queue_t *_mali_osk_notification_queue_init( void );
 
 /** @brief Destroy a notification queue
  *
@@ -1365,7 +1365,7 @@ _mali_osk_notification_queue_t * _mali_osk_notification_queue_init ( void );
  *
  * @param queue The queue to destroy
  */
-void _mali_osk_notification_queue_term ( _mali_osk_notification_queue_t * queue );
+void _mali_osk_notification_queue_term( _mali_osk_notification_queue_t *queue );
 
 /** @brief Schedule notification for delivery
  *
@@ -1386,7 +1386,7 @@ void _mali_osk_notification_queue_term ( _mali_osk_notification_queue_t * queue 
  * @param queue The notification queue to add this notification to
  * @param object The entry to add
  */
-void _mali_osk_notification_queue_send ( _mali_osk_notification_queue_t * queue, _mali_osk_notification_t * object );
+void _mali_osk_notification_queue_send( _mali_osk_notification_queue_t *queue, _mali_osk_notification_t *object );
 
 /** @brief Receive a notification from a queue
  *
@@ -1403,7 +1403,7 @@ void _mali_osk_notification_queue_send ( _mali_osk_notification_queue_t * queue,
  * \ref _mali_osk_notification_t object, or NULL if none were received.
  * @return _MALI_OSK_ERR_OK on success. _MALI_OSK_ERR_RESTARTSYSCALL if the sleep was interrupted.
  */
-_mali_osk_errcode_t _mali_osk_notification_queue_receive ( _mali_osk_notification_queue_t * queue, _mali_osk_notification_t ** result );
+_mali_osk_errcode_t _mali_osk_notification_queue_receive( _mali_osk_notification_queue_t *queue, _mali_osk_notification_t **result );
 
 /** @brief Dequeues a notification from a queue
  *
@@ -1418,7 +1418,7 @@ _mali_osk_errcode_t _mali_osk_notification_queue_receive ( _mali_osk_notificatio
  * \ref _mali_osk_notification_t object, or NULL if none were received.
  * @return _MALI_OSK_ERR_OK on success, _MALI_OSK_ERR_ITEM_NOT_FOUND if queue was empty.
  */
-_mali_osk_errcode_t _mali_osk_notification_queue_dequeue ( _mali_osk_notification_queue_t * queue, _mali_osk_notification_t ** result );
+_mali_osk_errcode_t _mali_osk_notification_queue_dequeue( _mali_osk_notification_queue_t *queue, _mali_osk_notification_t **result );
 
 /** @} */ /* end group _mali_osk_notification */
 
@@ -1438,7 +1438,7 @@ _mali_osk_errcode_t _mali_osk_notification_queue_dequeue ( _mali_osk_notificatio
  *
  * @return a pointer to the allocated timer object, or NULL on failure.
  */
-_mali_osk_timer_t * _mali_osk_timer_init (void);
+_mali_osk_timer_t *_mali_osk_timer_init(void);
 
 /** @brief Start a timer
  *
@@ -1455,7 +1455,7 @@ _mali_osk_timer_t * _mali_osk_timer_init (void);
  * @param ticks_to_expire the amount of time in ticks for the timer to run
  * before triggering.
  */
-void _mali_osk_timer_add ( _mali_osk_timer_t * tim, u32 ticks_to_expire );
+void _mali_osk_timer_add( _mali_osk_timer_t *tim, u32 ticks_to_expire );
 
 /** @brief Modify a timer
  *
@@ -1474,7 +1474,7 @@ void _mali_osk_timer_add ( _mali_osk_timer_t * tim, u32 ticks_to_expire );
  * should trigger.
  *
  */
-void _mali_osk_timer_mod ( _mali_osk_timer_t * tim, u32 ticks_to_expire);
+void _mali_osk_timer_mod( _mali_osk_timer_t *tim, u32 ticks_to_expire);
 
 /** @brief Stop a timer, and block on its completion.
  *
@@ -1495,7 +1495,7 @@ void _mali_osk_timer_mod ( _mali_osk_timer_t * tim, u32 ticks_to_expire);
  * @param tim the timer to stop.
  *
  */
-void _mali_osk_timer_del ( _mali_osk_timer_t * tim );
+void _mali_osk_timer_del( _mali_osk_timer_t *tim );
 
 /** @brief Stop a timer.
  *
@@ -1506,7 +1506,7 @@ void _mali_osk_timer_del ( _mali_osk_timer_t * tim );
  *
  * @param tim the timer to stop.
  */
-void _mali_osk_timer_del_async ( _mali_osk_timer_t * tim );
+void _mali_osk_timer_del_async( _mali_osk_timer_t *tim );
 
 /** @brief Check if timer is pending.
  *
@@ -1515,7 +1515,7 @@ void _mali_osk_timer_del_async ( _mali_osk_timer_t * tim );
  * @param tim the timer to check
  * @return MALI_TRUE if time is active, MALI_FALSE if it is not active
  */
-mali_bool _mali_osk_timer_pending ( _mali_osk_timer_t * tim);
+mali_bool _mali_osk_timer_pending( _mali_osk_timer_t *tim);
 
 /** @brief Set a timer's callback parameters.
  *
@@ -1529,7 +1529,7 @@ mali_bool _mali_osk_timer_pending ( _mali_osk_timer_t * tim);
  * @param callback Function to call when timer expires
  * @param data Function-specific data to supply to the function on expiry.
  */
-void _mali_osk_timer_setcallback ( _mali_osk_timer_t * tim, _mali_osk_timer_callback_t callback, void * data );
+void _mali_osk_timer_setcallback( _mali_osk_timer_t *tim, _mali_osk_timer_callback_t callback, void *data );
 
 /** @brief Terminate a timer, and deallocate resources.
  *
@@ -1541,7 +1541,7 @@ void _mali_osk_timer_setcallback ( _mali_osk_timer_t * tim, _mali_osk_timer_call
  *
  * @param tim the timer to deallocate.
  */
-void _mali_osk_timer_term ( _mali_osk_timer_t * tim );
+void _mali_osk_timer_term( _mali_osk_timer_t *tim );
 /** @} */ /* end group _mali_osk_timer */
 
 
@@ -1578,27 +1578,27 @@ void _mali_osk_timer_term ( _mali_osk_timer_t * tim );
  * @return non-zero if ticka represents a time that occurs after tickb.
  * Zero otherwise.
  */
-int _mali_osk_time_after ( u32 ticka, u32 tickb );
+int	_mali_osk_time_after( u32 ticka, u32 tickb );
 
 /** @brief Convert milliseconds to OS 'ticks'
  *
  * @param ms time interval in milliseconds
  * @return the corresponding time interval in OS ticks.
  */
-u32 _mali_osk_time_mstoticks ( u32 ms );
+u32	_mali_osk_time_mstoticks( u32 ms );
 
 /** @brief Convert OS 'ticks' to milliseconds
  *
  * @param ticks time interval in OS ticks.
  * @return the corresponding time interval in milliseconds
  */
-u32 _mali_osk_time_tickstoms ( u32 ticks );
+u32	_mali_osk_time_tickstoms( u32 ticks );
 
 
 /** @brief Get the current time in OS 'ticks'.
  * @return the current time in OS 'ticks'.
  */
-u32 _mali_osk_time_tickcount ( void );
+u32	_mali_osk_time_tickcount( void );
 
 /** @brief Cause a microsecond delay
  *
@@ -1612,13 +1612,13 @@ u32 _mali_osk_time_tickcount ( void );
  *
  * @param usecs the number of microseconds to wait for.
  */
-void _mali_osk_time_ubusydelay ( u32 usecs );
+void _mali_osk_time_ubusydelay( u32 usecs );
 
 /** @brief Return time in nano seconds, since any given reference.
  *
  * @return Time in nano seconds
  */
-u64 _mali_osk_time_get_ns ( void );
+u64 _mali_osk_time_get_ns( void );
 
 
 /** @} */ /* end group _mali_osk_time */
@@ -1635,7 +1635,7 @@ u64 _mali_osk_time_get_ns ( void );
  * @param val 32-bit words to count leading zeros on
  * @return the number of leading zeros.
  */
-u32 _mali_osk_clz ( u32 val );
+u32 _mali_osk_clz( u32 val );
 /** @} */ /* end group _mali_osk_math */
 
 /** @defgroup _mali_osk_wait_queue OSK Wait Queue functionality
@@ -1644,7 +1644,7 @@ u32 _mali_osk_clz ( u32 val );
 typedef struct _mali_osk_wait_queue_t_struct _mali_osk_wait_queue_t;
 
 /** @brief Initialize an empty Wait Queue */
-_mali_osk_wait_queue_t * _mali_osk_wait_queue_init ( void );
+_mali_osk_wait_queue_t* _mali_osk_wait_queue_init( void );
 
 /** @brief Sleep  if condition is false
  *
@@ -1655,7 +1655,7 @@ _mali_osk_wait_queue_t * _mali_osk_wait_queue_init ( void );
  * being asked to wake up again, the condition will be re-checked and the
  * thread only woken up if the condition is now true.
  */
-void _mali_osk_wait_queue_wait_event ( _mali_osk_wait_queue_t * queue, mali_bool (*condition) (void) );
+void _mali_osk_wait_queue_wait_event( _mali_osk_wait_queue_t *queue, mali_bool (*condition)(void) );
 
 /** @brief Wake up all threads in wait queue if their respective conditions are
  * true
@@ -1664,13 +1664,13 @@ void _mali_osk_wait_queue_wait_event ( _mali_osk_wait_queue_t * queue, mali_bool
  *
  * Wake up all threads in wait queue \a queue whose condition is now true.
  */
-void _mali_osk_wait_queue_wake_up ( _mali_osk_wait_queue_t * queue );
+void _mali_osk_wait_queue_wake_up( _mali_osk_wait_queue_t *queue );
 
 /** @brief terminate a wait queue
  *
  * @param queue the queue to terminate.
  */
-void _mali_osk_wait_queue_term ( _mali_osk_wait_queue_t * queue );
+void _mali_osk_wait_queue_term( _mali_osk_wait_queue_t *queue );
 /** @} */ /* end group _mali_osk_wait_queue */
 
 
@@ -1685,7 +1685,7 @@ void _mali_osk_wait_queue_term ( _mali_osk_wait_queue_t * queue );
  * @param fmt a _mali_osu_vsnprintf() style format string
  * @param ... a variable-number of parameters suitable for \a fmt
  */
-void _mali_osk_dbgmsg ( const char * fmt, ... );
+void _mali_osk_dbgmsg( const char *fmt, ... );
 
 /** @brief Print fmt into buf.
  *
@@ -1698,7 +1698,7 @@ void _mali_osk_dbgmsg ( const char * fmt, ... );
  * @param ... a variable-number of parameters suitable for \a fmt
  * @return The number of bytes written to \a buf
  */
-u32 _mali_osk_snprintf ( char * buf, u32 size, const char * fmt, ... );
+u32 _mali_osk_snprintf( char *buf, u32 size, const char *fmt, ... );
 
 /** @brief Abnormal process abort.
  *
@@ -1711,7 +1711,7 @@ u32 _mali_osk_snprintf ( char * buf, u32 size, const char * fmt, ... );
  *
  * This function is only used in Debug builds, and is not used in Release builds.
  */
-void _mali_osk_abort (void);
+void _mali_osk_abort(void);
 
 /** @brief Sets breakpoint at point where function is called.
  *
@@ -1721,27 +1721,27 @@ void _mali_osk_abort (void);
  *
  * This function is only used in Debug builds, and is not used in Release builds.
  */
-void _mali_osk_break (void);
+void _mali_osk_break(void);
 
 /** @brief Return an identificator for calling process.
  *
  * @return Identificator for calling process.
  */
-u32 _mali_osk_get_pid (void);
+u32 _mali_osk_get_pid(void);
 
 /** @brief Return an identificator for calling thread.
  *
  * @return Identificator for calling thread.
  */
-u32 _mali_osk_get_tid (void);
+u32 _mali_osk_get_tid(void);
 
 /** @brief Enable OS controlled runtime power management
  */
-void _mali_osk_pm_dev_enable (void);
+void _mali_osk_pm_dev_enable(void);
 
 /** @brief Disable OS controlled runtime power management
  */
-void _mali_osk_pm_dev_disable (void);
+void _mali_osk_pm_dev_disable(void);
 
 
 /** @brief Take a reference to the power manager system for the Mali device.
@@ -1750,7 +1750,7 @@ void _mali_osk_pm_dev_disable (void);
  *
  * @note Call \a _mali_osk_pm_dev_ref_dec() to release this reference.
  */
-_mali_osk_errcode_t _mali_osk_pm_dev_ref_add (void);
+_mali_osk_errcode_t _mali_osk_pm_dev_ref_add(void);
 
 
 /** @brief Release the reference to the power manger system for the Mali device.
@@ -1759,7 +1759,7 @@ _mali_osk_errcode_t _mali_osk_pm_dev_ref_add (void);
  *
  * @note This must be used to release references taken with \a _mali_osk_pm_dev_ref_add().
  */
-void _mali_osk_pm_dev_ref_dec (void);
+void _mali_osk_pm_dev_ref_dec(void);
 
 
 /** @brief Take a reference to the power manager system for the Mali device.
@@ -1770,7 +1770,7 @@ void _mali_osk_pm_dev_ref_dec (void);
  *
  * @return MALI_TRUE if the Mali GPU is powered on, otherwise MALI_FALSE.
  */
-mali_bool _mali_osk_pm_dev_ref_add_no_power_on (void);
+mali_bool _mali_osk_pm_dev_ref_add_no_power_on(void);
 
 
 /** @brief Releasing the reference to the power manger system for the Mali device.
@@ -1779,7 +1779,7 @@ mali_bool _mali_osk_pm_dev_ref_add_no_power_on (void);
  *
  * @note This must be used to release references taken with \a _mali_osk_pm_dev_ref_add_no_power_on().
  */
-void _mali_osk_pm_dev_ref_dec_no_power_on (void);
+void _mali_osk_pm_dev_ref_dec_no_power_on(void);
 
 /** @} */ /* end group  _mali_osk_miscellaneous */
 
@@ -1795,11 +1795,11 @@ void _mali_osk_pm_dev_ref_dec_no_power_on (void);
 
 /* Check standard inlines */
 #ifndef MALI_STATIC_INLINE
-#error MALI_STATIC_INLINE not defined on your OS
+	#error MALI_STATIC_INLINE not defined on your OS
 #endif
 
 #ifndef MALI_NON_STATIC_INLINE
-#error MALI_NON_STATIC_INLINE not defined on your OS
+	#error MALI_NON_STATIC_INLINE not defined on your OS
 #endif
 
 #endif /* __MALI_OSK_H__ */

@@ -17,27 +17,27 @@
 /*
  * Tell the user there is some problem.
  */
-extern asmlinkage void __debug_bug_trap (int signr);
+extern asmlinkage void __debug_bug_trap(int signr);
 
 #ifdef CONFIG_NO_KERNEL_MSG
-#define _debug_bug_printk()
+#define	_debug_bug_printk()
 #else
-extern void __debug_bug_printk (const char * file, unsigned line);
-#define _debug_bug_printk() __debug_bug_printk(__FILE__, __LINE__)
+extern void __debug_bug_printk(const char *file, unsigned line);
+#define	_debug_bug_printk() __debug_bug_printk(__FILE__, __LINE__)
 #endif
 
-#define _debug_bug_trap(signr)      \
-  do {            \
-    __debug_bug_trap(signr);    \
-    asm volatile("nop");      \
-  } while(1)
+#define _debug_bug_trap(signr)			\
+do {						\
+	__debug_bug_trap(signr);		\
+	asm volatile("nop");			\
+} while(1)
 
 #define HAVE_ARCH_BUG
-#define BUG()         \
-  do {            \
-    _debug_bug_printk();      \
-    _debug_bug_trap(6 /*SIGABRT*/);   \
-  } while (0)
+#define BUG()					\
+do {						\
+	_debug_bug_printk();			\
+	_debug_bug_trap(6 /*SIGABRT*/);		\
+} while (0)
 
 #ifdef CONFIG_GDBSTUB
 #define HAVE_ARCH_KGDB_RAISE
@@ -51,6 +51,6 @@ extern void __debug_bug_printk (const char * file, unsigned line);
 
 #include <asm-generic/bug.h>
 
-extern void die_if_kernel (const char *, ...) __attribute__ ( (format (printf, 1, 2) ) );
+extern void die_if_kernel(const char *, ...) __attribute__((format(printf, 1, 2)));
 
 #endif

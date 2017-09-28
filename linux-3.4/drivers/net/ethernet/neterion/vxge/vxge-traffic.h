@@ -17,32 +17,32 @@
 #include "vxge-reg.h"
 #include "vxge-version.h"
 
-#define VXGE_HW_DTR_MAX_T_CODE    16
-#define VXGE_HW_ALL_FOXES   0xFFFFFFFFFFFFFFFFULL
-#define VXGE_HW_INTR_MASK_ALL   0xFFFFFFFFFFFFFFFFULL
-#define VXGE_HW_MAX_VIRTUAL_PATHS 17
+#define VXGE_HW_DTR_MAX_T_CODE		16
+#define VXGE_HW_ALL_FOXES		0xFFFFFFFFFFFFFFFFULL
+#define VXGE_HW_INTR_MASK_ALL		0xFFFFFFFFFFFFFFFFULL
+#define	VXGE_HW_MAX_VIRTUAL_PATHS	17
 
-#define VXGE_HW_MAC_MAX_MAC_PORT_ID 2
+#define VXGE_HW_MAC_MAX_MAC_PORT_ID	2
 
-#define VXGE_HW_DEFAULT_32    0xffffffff
+#define VXGE_HW_DEFAULT_32		0xffffffff
 /* frames sizes */
-#define VXGE_HW_HEADER_802_2_SIZE 3
-#define VXGE_HW_HEADER_SNAP_SIZE  5
-#define VXGE_HW_HEADER_VLAN_SIZE  4
+#define VXGE_HW_HEADER_802_2_SIZE	3
+#define VXGE_HW_HEADER_SNAP_SIZE	5
+#define VXGE_HW_HEADER_VLAN_SIZE	4
 #define VXGE_HW_MAC_HEADER_MAX_SIZE \
-  (ETH_HLEN + \
-   VXGE_HW_HEADER_802_2_SIZE + \
-   VXGE_HW_HEADER_VLAN_SIZE + \
-   VXGE_HW_HEADER_SNAP_SIZE)
+			(ETH_HLEN + \
+			VXGE_HW_HEADER_802_2_SIZE + \
+			VXGE_HW_HEADER_VLAN_SIZE + \
+			VXGE_HW_HEADER_SNAP_SIZE)
 
 /* 32bit alignments */
-#define VXGE_HW_HEADER_ETHERNET_II_802_3_ALIGN    2
-#define VXGE_HW_HEADER_802_2_SNAP_ALIGN     2
-#define VXGE_HW_HEADER_802_2_ALIGN      3
-#define VXGE_HW_HEADER_SNAP_ALIGN     1
+#define VXGE_HW_HEADER_ETHERNET_II_802_3_ALIGN		2
+#define VXGE_HW_HEADER_802_2_SNAP_ALIGN			2
+#define VXGE_HW_HEADER_802_2_ALIGN			3
+#define VXGE_HW_HEADER_SNAP_ALIGN			1
 
-#define VXGE_HW_L3_CKSUM_OK       0xFFFF
-#define VXGE_HW_L4_CKSUM_OK       0xFFFF
+#define VXGE_HW_L3_CKSUM_OK				0xFFFF
+#define VXGE_HW_L4_CKSUM_OK				0xFFFF
 
 /* Forward declarations */
 struct __vxge_hw_device;
@@ -65,8 +65,8 @@ struct vxge_hw_mempool;
 
 /*VXGE_HW_STATUS_H*/
 
-#define VXGE_HW_EVENT_BASE      0
-#define VXGE_LL_EVENT_BASE      100
+#define VXGE_HW_EVENT_BASE			0
+#define VXGE_LL_EVENT_BASE			100
 
 /**
  * enum vxge_hw_event- Enumerates slow-path HW events.
@@ -90,34 +90,34 @@ struct vxge_hw_mempool;
  * vxge_uld_link_down_f{}.
  */
 enum vxge_hw_event {
-  VXGE_HW_EVENT_UNKNOWN   = 0,
-  /* HW events */
-  VXGE_HW_EVENT_RESET_START = VXGE_HW_EVENT_BASE + 1,
-  VXGE_HW_EVENT_RESET_COMPLETE  = VXGE_HW_EVENT_BASE + 2,
-  VXGE_HW_EVENT_LINK_DOWN   = VXGE_HW_EVENT_BASE + 3,
-  VXGE_HW_EVENT_LINK_UP   = VXGE_HW_EVENT_BASE + 4,
-  VXGE_HW_EVENT_ALARM_CLEARED = VXGE_HW_EVENT_BASE + 5,
-  VXGE_HW_EVENT_ECCERR    = VXGE_HW_EVENT_BASE + 6,
-  VXGE_HW_EVENT_MRPCIM_ECCERR = VXGE_HW_EVENT_BASE + 7,
-  VXGE_HW_EVENT_FIFO_ERR    = VXGE_HW_EVENT_BASE + 8,
-  VXGE_HW_EVENT_VPATH_ERR   = VXGE_HW_EVENT_BASE + 9,
-  VXGE_HW_EVENT_CRITICAL_ERR  = VXGE_HW_EVENT_BASE + 10,
-  VXGE_HW_EVENT_SERR    = VXGE_HW_EVENT_BASE + 11,
-  VXGE_HW_EVENT_SRPCIM_SERR = VXGE_HW_EVENT_BASE + 12,
-  VXGE_HW_EVENT_MRPCIM_SERR = VXGE_HW_EVENT_BASE + 13,
-  VXGE_HW_EVENT_SLOT_FREEZE = VXGE_HW_EVENT_BASE + 14,
+	VXGE_HW_EVENT_UNKNOWN		= 0,
+	/* HW events */
+	VXGE_HW_EVENT_RESET_START	= VXGE_HW_EVENT_BASE + 1,
+	VXGE_HW_EVENT_RESET_COMPLETE	= VXGE_HW_EVENT_BASE + 2,
+	VXGE_HW_EVENT_LINK_DOWN		= VXGE_HW_EVENT_BASE + 3,
+	VXGE_HW_EVENT_LINK_UP		= VXGE_HW_EVENT_BASE + 4,
+	VXGE_HW_EVENT_ALARM_CLEARED	= VXGE_HW_EVENT_BASE + 5,
+	VXGE_HW_EVENT_ECCERR		= VXGE_HW_EVENT_BASE + 6,
+	VXGE_HW_EVENT_MRPCIM_ECCERR	= VXGE_HW_EVENT_BASE + 7,
+	VXGE_HW_EVENT_FIFO_ERR		= VXGE_HW_EVENT_BASE + 8,
+	VXGE_HW_EVENT_VPATH_ERR		= VXGE_HW_EVENT_BASE + 9,
+	VXGE_HW_EVENT_CRITICAL_ERR	= VXGE_HW_EVENT_BASE + 10,
+	VXGE_HW_EVENT_SERR		= VXGE_HW_EVENT_BASE + 11,
+	VXGE_HW_EVENT_SRPCIM_SERR	= VXGE_HW_EVENT_BASE + 12,
+	VXGE_HW_EVENT_MRPCIM_SERR	= VXGE_HW_EVENT_BASE + 13,
+	VXGE_HW_EVENT_SLOT_FREEZE	= VXGE_HW_EVENT_BASE + 14,
 };
 
 #define VXGE_HW_SET_LEVEL(a, b) (((a) > (b)) ? (a) : (b))
 
 /*
  * struct vxge_hw_mempool_dma - Represents DMA objects passed to the
-  caller.
+	caller.
  */
 struct vxge_hw_mempool_dma {
-  dma_addr_t      addr;
-  struct pci_dev * handle;
-  struct pci_dev * acc_handle;
+	dma_addr_t			addr;
+	struct pci_dev *handle;
+	struct pci_dev *acc_handle;
 };
 
 /*
@@ -138,37 +138,37 @@ struct vxge_hw_mempool_dma {
  */
 struct vxge_hw_mempool {
 
-  void (*item_func_alloc) (
-    struct vxge_hw_mempool * mempoolh,
-    u32     memblock_index,
-    struct vxge_hw_mempool_dma * dma_object,
-    u32     index,
-    u32     is_last);
-    
-  void  *  userdata;
-  void  **  memblocks_arr;
-  void  **  memblocks_priv_arr;
-  struct vxge_hw_mempool_dma * memblocks_dma_arr;
-  struct __vxge_hw_device * devh;
-  u32     memblock_size;
-  u32     memblocks_max;
-  u32     memblocks_allocated;
-  u32     item_size;
-  u32     items_max;
-  u32     items_initial;
-  u32     items_current;
-  u32     items_per_memblock;
-  void  **  items_arr;
-  u32     items_priv_size;
+	void (*item_func_alloc)(
+	struct vxge_hw_mempool *mempoolh,
+	u32			memblock_index,
+	struct vxge_hw_mempool_dma	*dma_object,
+	u32			index,
+	u32			is_last);
+
+	void		*userdata;
+	void		**memblocks_arr;
+	void		**memblocks_priv_arr;
+	struct vxge_hw_mempool_dma	*memblocks_dma_arr;
+	struct __vxge_hw_device *devh;
+	u32			memblock_size;
+	u32			memblocks_max;
+	u32			memblocks_allocated;
+	u32			item_size;
+	u32			items_max;
+	u32			items_initial;
+	u32			items_current;
+	u32			items_per_memblock;
+	void		**items_arr;
+	u32			items_priv_size;
 };
 
-#define VXGE_HW_MAX_INTR_PER_VP       4
-#define VXGE_HW_VPATH_INTR_TX       0
-#define VXGE_HW_VPATH_INTR_RX       1
-#define VXGE_HW_VPATH_INTR_EINTA      2
-#define VXGE_HW_VPATH_INTR_BMAP       3
+#define	VXGE_HW_MAX_INTR_PER_VP				4
+#define	VXGE_HW_VPATH_INTR_TX				0
+#define	VXGE_HW_VPATH_INTR_RX				1
+#define	VXGE_HW_VPATH_INTR_EINTA			2
+#define	VXGE_HW_VPATH_INTR_BMAP				3
 
-#define VXGE_HW_BLOCK_SIZE        4096
+#define VXGE_HW_BLOCK_SIZE				4096
 
 /**
  * struct vxge_hw_tim_intr_config - Titan Tim interrupt configuration.
@@ -232,97 +232,97 @@ struct vxge_hw_mempool {
  */
 struct vxge_hw_tim_intr_config {
 
-  u32       intr_enable;
-#define VXGE_HW_TIM_INTR_ENABLE       1
-#define VXGE_HW_TIM_INTR_DISABLE        0
-#define VXGE_HW_TIM_INTR_DEFAULT        0
-  
-  u32       btimer_val;
-#define VXGE_HW_MIN_TIM_BTIMER_VAL        0
-#define VXGE_HW_MAX_TIM_BTIMER_VAL        67108864
-#define VXGE_HW_USE_FLASH_DEFAULT       (~0)
-  
-  u32       timer_ac_en;
-#define VXGE_HW_TIM_TIMER_AC_ENABLE       1
-#define VXGE_HW_TIM_TIMER_AC_DISABLE        0
-  
-  u32       timer_ci_en;
-#define VXGE_HW_TIM_TIMER_CI_ENABLE       1
-#define VXGE_HW_TIM_TIMER_CI_DISABLE        0
-  
-  u32       timer_ri_en;
-#define VXGE_HW_TIM_TIMER_RI_ENABLE       1
-#define VXGE_HW_TIM_TIMER_RI_DISABLE        0
-  
-  u32       rtimer_val;
-#define VXGE_HW_MIN_TIM_RTIMER_VAL        0
-#define VXGE_HW_MAX_TIM_RTIMER_VAL        67108864
-  
-  u32       util_sel;
-#define VXGE_HW_TIM_UTIL_SEL_LEGACY_TX_NET_UTIL   17
-#define VXGE_HW_TIM_UTIL_SEL_LEGACY_RX_NET_UTIL   18
-#define VXGE_HW_TIM_UTIL_SEL_LEGACY_TX_RX_AVE_NET_UTIL    19
-#define VXGE_HW_TIM_UTIL_SEL_PER_VPATH        63
-  
-  u32       ltimer_val;
-#define VXGE_HW_MIN_TIM_LTIMER_VAL        0
-#define VXGE_HW_MAX_TIM_LTIMER_VAL        67108864
-  
-  /* Line utilization interrupts */
-  u32       urange_a;
-#define VXGE_HW_MIN_TIM_URANGE_A        0
-#define VXGE_HW_MAX_TIM_URANGE_A        100
-  
-  u32       uec_a;
-#define VXGE_HW_MIN_TIM_UEC_A         0
-#define VXGE_HW_MAX_TIM_UEC_A         65535
-  
-  u32       urange_b;
-#define VXGE_HW_MIN_TIM_URANGE_B        0
-#define VXGE_HW_MAX_TIM_URANGE_B        100
-  
-  u32       uec_b;
-#define VXGE_HW_MIN_TIM_UEC_B         0
-#define VXGE_HW_MAX_TIM_UEC_B         65535
-  
-  u32       urange_c;
-#define VXGE_HW_MIN_TIM_URANGE_C        0
-#define VXGE_HW_MAX_TIM_URANGE_C        100
-  
-  u32       uec_c;
-#define VXGE_HW_MIN_TIM_UEC_C         0
-#define VXGE_HW_MAX_TIM_UEC_C         65535
-  
-  u32       uec_d;
-#define VXGE_HW_MIN_TIM_UEC_D         0
-#define VXGE_HW_MAX_TIM_UEC_D         65535
+	u32				intr_enable;
+#define VXGE_HW_TIM_INTR_ENABLE				1
+#define VXGE_HW_TIM_INTR_DISABLE				0
+#define VXGE_HW_TIM_INTR_DEFAULT				0
+
+	u32				btimer_val;
+#define VXGE_HW_MIN_TIM_BTIMER_VAL				0
+#define VXGE_HW_MAX_TIM_BTIMER_VAL				67108864
+#define VXGE_HW_USE_FLASH_DEFAULT				(~0)
+
+	u32				timer_ac_en;
+#define VXGE_HW_TIM_TIMER_AC_ENABLE				1
+#define VXGE_HW_TIM_TIMER_AC_DISABLE				0
+
+	u32				timer_ci_en;
+#define VXGE_HW_TIM_TIMER_CI_ENABLE				1
+#define VXGE_HW_TIM_TIMER_CI_DISABLE				0
+
+	u32				timer_ri_en;
+#define VXGE_HW_TIM_TIMER_RI_ENABLE				1
+#define VXGE_HW_TIM_TIMER_RI_DISABLE				0
+
+	u32				rtimer_val;
+#define VXGE_HW_MIN_TIM_RTIMER_VAL				0
+#define VXGE_HW_MAX_TIM_RTIMER_VAL				67108864
+
+	u32				util_sel;
+#define VXGE_HW_TIM_UTIL_SEL_LEGACY_TX_NET_UTIL		17
+#define VXGE_HW_TIM_UTIL_SEL_LEGACY_RX_NET_UTIL		18
+#define VXGE_HW_TIM_UTIL_SEL_LEGACY_TX_RX_AVE_NET_UTIL		19
+#define VXGE_HW_TIM_UTIL_SEL_PER_VPATH				63
+
+	u32				ltimer_val;
+#define VXGE_HW_MIN_TIM_LTIMER_VAL				0
+#define VXGE_HW_MAX_TIM_LTIMER_VAL				67108864
+
+	/* Line utilization interrupts */
+	u32				urange_a;
+#define VXGE_HW_MIN_TIM_URANGE_A				0
+#define VXGE_HW_MAX_TIM_URANGE_A				100
+
+	u32				uec_a;
+#define VXGE_HW_MIN_TIM_UEC_A					0
+#define VXGE_HW_MAX_TIM_UEC_A					65535
+
+	u32				urange_b;
+#define VXGE_HW_MIN_TIM_URANGE_B				0
+#define VXGE_HW_MAX_TIM_URANGE_B				100
+
+	u32				uec_b;
+#define VXGE_HW_MIN_TIM_UEC_B					0
+#define VXGE_HW_MAX_TIM_UEC_B					65535
+
+	u32				urange_c;
+#define VXGE_HW_MIN_TIM_URANGE_C				0
+#define VXGE_HW_MAX_TIM_URANGE_C				100
+
+	u32				uec_c;
+#define VXGE_HW_MIN_TIM_UEC_C					0
+#define VXGE_HW_MAX_TIM_UEC_C					65535
+
+	u32				uec_d;
+#define VXGE_HW_MIN_TIM_UEC_D					0
+#define VXGE_HW_MAX_TIM_UEC_D					65535
 };
 
-#define VXGE_HW_STATS_OP_READ         0
-#define VXGE_HW_STATS_OP_CLEAR_STAT       1
-#define VXGE_HW_STATS_OP_CLEAR_ALL_VPATH_STATS      2
-#define VXGE_HW_STATS_OP_CLEAR_ALL_STATS_OF_LOC     2
-#define VXGE_HW_STATS_OP_CLEAR_ALL_STATS      3
+#define	VXGE_HW_STATS_OP_READ					0
+#define	VXGE_HW_STATS_OP_CLEAR_STAT				1
+#define	VXGE_HW_STATS_OP_CLEAR_ALL_VPATH_STATS			2
+#define	VXGE_HW_STATS_OP_CLEAR_ALL_STATS_OF_LOC			2
+#define	VXGE_HW_STATS_OP_CLEAR_ALL_STATS			3
 
-#define VXGE_HW_STATS_LOC_AGGR          17
-#define VXGE_HW_STATS_AGGRn_OFFSET        0x00720
+#define	VXGE_HW_STATS_LOC_AGGR					17
+#define VXGE_HW_STATS_AGGRn_OFFSET				0x00720
 
-#define VXGE_HW_STATS_VPATH_TX_OFFSET       0x0
-#define VXGE_HW_STATS_VPATH_RX_OFFSET       0x00090
+#define VXGE_HW_STATS_VPATH_TX_OFFSET				0x0
+#define VXGE_HW_STATS_VPATH_RX_OFFSET				0x00090
 
-#define VXGE_HW_STATS_VPATH_PROG_EVENT_VNUM0_OFFSET    (0x001d0 >> 3)
-#define VXGE_HW_STATS_GET_VPATH_PROG_EVENT_VNUM0(bits) \
-  vxge_bVALn(bits, 0, 32)
+#define	VXGE_HW_STATS_VPATH_PROG_EVENT_VNUM0_OFFSET	   (0x001d0 >> 3)
+#define	VXGE_HW_STATS_GET_VPATH_PROG_EVENT_VNUM0(bits) \
+						vxge_bVALn(bits, 0, 32)
 
-#define VXGE_HW_STATS_GET_VPATH_PROG_EVENT_VNUM1(bits) \
-  vxge_bVALn(bits, 32, 32)
+#define	VXGE_HW_STATS_GET_VPATH_PROG_EVENT_VNUM1(bits) \
+						vxge_bVALn(bits, 32, 32)
 
-#define VXGE_HW_STATS_VPATH_PROG_EVENT_VNUM2_OFFSET    (0x001d8 >> 3)
-#define VXGE_HW_STATS_GET_VPATH_PROG_EVENT_VNUM2(bits) \
-  vxge_bVALn(bits, 0, 32)
+#define	VXGE_HW_STATS_VPATH_PROG_EVENT_VNUM2_OFFSET	   (0x001d8 >> 3)
+#define	VXGE_HW_STATS_GET_VPATH_PROG_EVENT_VNUM2(bits) \
+						vxge_bVALn(bits, 0, 32)
 
-#define VXGE_HW_STATS_GET_VPATH_PROG_EVENT_VNUM3(bits) \
-  vxge_bVALn(bits, 32, 32)
+#define	VXGE_HW_STATS_GET_VPATH_PROG_EVENT_VNUM3(bits) \
+						vxge_bVALn(bits, 32, 32)
 
 /**
  * struct vxge_hw_xmac_aggr_stats - Per-Aggregator XMAC Statistics
@@ -382,19 +382,19 @@ struct vxge_hw_tim_intr_config {
  * Per aggregator XMAC RX statistics.
  */
 struct vxge_hw_xmac_aggr_stats {
-  /*0x000*/   u64 tx_frms;
-  /*0x008*/   u64 tx_data_octets;
-  /*0x010*/   u64 tx_mcast_frms;
-  /*0x018*/   u64 tx_bcast_frms;
-  /*0x020*/   u64 tx_discarded_frms;
-  /*0x028*/   u64 tx_errored_frms;
-  /*0x030*/   u64 rx_frms;
-  /*0x038*/   u64 rx_data_octets;
-  /*0x040*/   u64 rx_mcast_frms;
-  /*0x048*/   u64 rx_bcast_frms;
-  /*0x050*/   u64 rx_discarded_frms;
-  /*0x058*/   u64 rx_errored_frms;
-  /*0x060*/   u64 rx_unknown_slow_proto_frms;
+/*0x000*/		u64	tx_frms;
+/*0x008*/		u64	tx_data_octets;
+/*0x010*/		u64	tx_mcast_frms;
+/*0x018*/		u64	tx_bcast_frms;
+/*0x020*/		u64	tx_discarded_frms;
+/*0x028*/		u64	tx_errored_frms;
+/*0x030*/		u64	rx_frms;
+/*0x038*/		u64	rx_data_octets;
+/*0x040*/		u64	rx_mcast_frms;
+/*0x048*/		u64	rx_bcast_frms;
+/*0x050*/		u64	rx_discarded_frms;
+/*0x058*/		u64	rx_errored_frms;
+/*0x060*/		u64	rx_unknown_slow_proto_frms;
 } __packed;
 
 /**
@@ -508,7 +508,7 @@ struct vxge_hw_xmac_aggr_stats {
  *            characters, of offloaded received frames that are passed
  *            to the host.
  * @rx_vld_mcast_frms: Count of successfully received MAC frames containing a
- *        nonbroadcast group address. Does not include frames received
+ *	      nonbroadcast group address. Does not include frames received
  *            with frame-too-long, FCS, or length errors.
  * @rx_vld_bcast_frms: Count of successfully received MAC frames containing
  *            the broadcast group address. Does not include frames received
@@ -583,10 +583,10 @@ struct vxge_hw_xmac_aggr_stats {
  *            FCS, or length errors.
  * @rx_ip: Count of received IP datagrams. Includes errored IP datagrams.
  * @rx_accepted_ip: Count of received IP datagrams that
- *    are passed to the system.
+ * 		are passed to the system.
  * @rx_ip_octets: Count of number of octets in received IP datagrams. Includes
  *            errored IP datagrams.
- * @rx_err_ip:  Count of received IP datagrams containing errors. For example,
+ * @rx_err_ip: 	Count of received IP datagrams containing errors. For example,
  *            bad IP checksum.
  * @rx_icmp: Count of received ICMP messages. Includes errored ICMP messages.
  * @rx_tcp: Count of received TCP segments. Includes errored TCP segments.
@@ -624,7 +624,7 @@ struct vxge_hw_xmac_aggr_stats {
  *            for a list of reasons. Because the RMAC drops one frame at a time,
  *            this stat also indicates the number of drop events.
  * @rx_discarded_frms: Count of received frames containing
- *    any error that prevents
+ * 		any error that prevents
  *            them from being passed to the system. See PORTn_RX_FCS_DISCARD,
  *            PORTn_RX_LEN_DISCARD, and PORTn_RX_SWITCH_DISCARD for a list of
  *            reasons.
@@ -737,101 +737,101 @@ struct vxge_hw_xmac_aggr_stats {
  * XMAC Port Statistics.
  */
 struct vxge_hw_xmac_port_stats {
-  /*0x000*/   u64 tx_ttl_frms;
-  /*0x008*/   u64 tx_ttl_octets;
-  /*0x010*/   u64 tx_data_octets;
-  /*0x018*/   u64 tx_mcast_frms;
-  /*0x020*/   u64 tx_bcast_frms;
-  /*0x028*/   u64 tx_ucast_frms;
-  /*0x030*/   u64 tx_tagged_frms;
-  /*0x038*/   u64 tx_vld_ip;
-  /*0x040*/   u64 tx_vld_ip_octets;
-  /*0x048*/   u64 tx_icmp;
-  /*0x050*/   u64 tx_tcp;
-  /*0x058*/   u64 tx_rst_tcp;
-  /*0x060*/   u64 tx_udp;
-  /*0x068*/   u32 tx_parse_error;
-  /*0x06c*/   u32 tx_unknown_protocol;
-  /*0x070*/   u64 tx_pause_ctrl_frms;
-  /*0x078*/   u32 tx_marker_pdu_frms;
-  /*0x07c*/   u32 tx_lacpdu_frms;
-  /*0x080*/   u32 tx_drop_ip;
-  /*0x084*/   u32 tx_marker_resp_pdu_frms;
-  /*0x088*/   u32 tx_xgmii_char2_match;
-  /*0x08c*/   u32 tx_xgmii_char1_match;
-  /*0x090*/   u32 tx_xgmii_column2_match;
-  /*0x094*/   u32 tx_xgmii_column1_match;
-  /*0x098*/   u32 unused1;
-  /*0x09c*/   u16 tx_any_err_frms;
-  /*0x09e*/   u16 tx_drop_frms;
-  /*0x0a0*/   u64 rx_ttl_frms;
-  /*0x0a8*/   u64 rx_vld_frms;
-  /*0x0b0*/   u64 rx_offload_frms;
-  /*0x0b8*/   u64 rx_ttl_octets;
-  /*0x0c0*/   u64 rx_data_octets;
-  /*0x0c8*/   u64 rx_offload_octets;
-  /*0x0d0*/   u64 rx_vld_mcast_frms;
-  /*0x0d8*/   u64 rx_vld_bcast_frms;
-  /*0x0e0*/   u64 rx_accepted_ucast_frms;
-  /*0x0e8*/   u64 rx_accepted_nucast_frms;
-  /*0x0f0*/   u64 rx_tagged_frms;
-  /*0x0f8*/   u64 rx_long_frms;
-  /*0x100*/   u64 rx_usized_frms;
-  /*0x108*/   u64 rx_osized_frms;
-  /*0x110*/   u64 rx_frag_frms;
-  /*0x118*/   u64 rx_jabber_frms;
-  /*0x120*/   u64 rx_ttl_64_frms;
-  /*0x128*/   u64 rx_ttl_65_127_frms;
-  /*0x130*/   u64 rx_ttl_128_255_frms;
-  /*0x138*/   u64 rx_ttl_256_511_frms;
-  /*0x140*/   u64 rx_ttl_512_1023_frms;
-  /*0x148*/   u64 rx_ttl_1024_1518_frms;
-  /*0x150*/   u64 rx_ttl_1519_4095_frms;
-  /*0x158*/   u64 rx_ttl_4096_8191_frms;
-  /*0x160*/   u64 rx_ttl_8192_max_frms;
-  /*0x168*/   u64 rx_ttl_gt_max_frms;
-  /*0x170*/   u64 rx_ip;
-  /*0x178*/   u64 rx_accepted_ip;
-  /*0x180*/   u64 rx_ip_octets;
-  /*0x188*/   u64 rx_err_ip;
-  /*0x190*/   u64 rx_icmp;
-  /*0x198*/   u64 rx_tcp;
-  /*0x1a0*/   u64 rx_udp;
-  /*0x1a8*/   u64 rx_err_tcp;
-  /*0x1b0*/   u64 rx_pause_count;
-  /*0x1b8*/   u64 rx_pause_ctrl_frms;
-  /*0x1c0*/   u64 rx_unsup_ctrl_frms;
-  /*0x1c8*/   u64 rx_fcs_err_frms;
-  /*0x1d0*/   u64 rx_in_rng_len_err_frms;
-  /*0x1d8*/   u64 rx_out_rng_len_err_frms;
-  /*0x1e0*/   u64 rx_drop_frms;
-  /*0x1e8*/   u64 rx_discarded_frms;
-  /*0x1f0*/   u64 rx_drop_ip;
-  /*0x1f8*/   u64 rx_drop_udp;
-  /*0x200*/   u32 rx_marker_pdu_frms;
-  /*0x204*/   u32 rx_lacpdu_frms;
-  /*0x208*/   u32 rx_unknown_pdu_frms;
-  /*0x20c*/   u32 rx_marker_resp_pdu_frms;
-  /*0x210*/   u32 rx_fcs_discard;
-  /*0x214*/   u32 rx_illegal_pdu_frms;
-  /*0x218*/   u32 rx_switch_discard;
-  /*0x21c*/   u32 rx_len_discard;
-  /*0x220*/   u32 rx_rpa_discard;
-  /*0x224*/   u32 rx_l2_mgmt_discard;
-  /*0x228*/   u32 rx_rts_discard;
-  /*0x22c*/   u32 rx_trash_discard;
-  /*0x230*/   u32 rx_buff_full_discard;
-  /*0x234*/   u32 rx_red_discard;
-  /*0x238*/   u32 rx_xgmii_ctrl_err_cnt;
-  /*0x23c*/   u32 rx_xgmii_data_err_cnt;
-  /*0x240*/   u32 rx_xgmii_char1_match;
-  /*0x244*/   u32 rx_xgmii_err_sym;
-  /*0x248*/   u32 rx_xgmii_column1_match;
-  /*0x24c*/   u32 rx_xgmii_char2_match;
-  /*0x250*/   u32 rx_local_fault;
-  /*0x254*/   u32 rx_xgmii_column2_match;
-  /*0x258*/   u32 rx_jettison;
-  /*0x25c*/   u32 rx_remote_fault;
+/*0x000*/		u64	tx_ttl_frms;
+/*0x008*/		u64	tx_ttl_octets;
+/*0x010*/		u64	tx_data_octets;
+/*0x018*/		u64	tx_mcast_frms;
+/*0x020*/		u64	tx_bcast_frms;
+/*0x028*/		u64	tx_ucast_frms;
+/*0x030*/		u64	tx_tagged_frms;
+/*0x038*/		u64	tx_vld_ip;
+/*0x040*/		u64	tx_vld_ip_octets;
+/*0x048*/		u64	tx_icmp;
+/*0x050*/		u64	tx_tcp;
+/*0x058*/		u64	tx_rst_tcp;
+/*0x060*/		u64	tx_udp;
+/*0x068*/		u32	tx_parse_error;
+/*0x06c*/		u32	tx_unknown_protocol;
+/*0x070*/		u64	tx_pause_ctrl_frms;
+/*0x078*/		u32	tx_marker_pdu_frms;
+/*0x07c*/		u32	tx_lacpdu_frms;
+/*0x080*/		u32	tx_drop_ip;
+/*0x084*/		u32	tx_marker_resp_pdu_frms;
+/*0x088*/		u32	tx_xgmii_char2_match;
+/*0x08c*/		u32	tx_xgmii_char1_match;
+/*0x090*/		u32	tx_xgmii_column2_match;
+/*0x094*/		u32	tx_xgmii_column1_match;
+/*0x098*/		u32	unused1;
+/*0x09c*/		u16	tx_any_err_frms;
+/*0x09e*/		u16	tx_drop_frms;
+/*0x0a0*/		u64	rx_ttl_frms;
+/*0x0a8*/		u64	rx_vld_frms;
+/*0x0b0*/		u64	rx_offload_frms;
+/*0x0b8*/		u64	rx_ttl_octets;
+/*0x0c0*/		u64	rx_data_octets;
+/*0x0c8*/		u64	rx_offload_octets;
+/*0x0d0*/		u64	rx_vld_mcast_frms;
+/*0x0d8*/		u64	rx_vld_bcast_frms;
+/*0x0e0*/		u64	rx_accepted_ucast_frms;
+/*0x0e8*/		u64	rx_accepted_nucast_frms;
+/*0x0f0*/		u64	rx_tagged_frms;
+/*0x0f8*/		u64	rx_long_frms;
+/*0x100*/		u64	rx_usized_frms;
+/*0x108*/		u64	rx_osized_frms;
+/*0x110*/		u64	rx_frag_frms;
+/*0x118*/		u64	rx_jabber_frms;
+/*0x120*/		u64	rx_ttl_64_frms;
+/*0x128*/		u64	rx_ttl_65_127_frms;
+/*0x130*/		u64	rx_ttl_128_255_frms;
+/*0x138*/		u64	rx_ttl_256_511_frms;
+/*0x140*/		u64	rx_ttl_512_1023_frms;
+/*0x148*/		u64	rx_ttl_1024_1518_frms;
+/*0x150*/		u64	rx_ttl_1519_4095_frms;
+/*0x158*/		u64	rx_ttl_4096_8191_frms;
+/*0x160*/		u64	rx_ttl_8192_max_frms;
+/*0x168*/		u64	rx_ttl_gt_max_frms;
+/*0x170*/		u64	rx_ip;
+/*0x178*/		u64	rx_accepted_ip;
+/*0x180*/		u64	rx_ip_octets;
+/*0x188*/		u64	rx_err_ip;
+/*0x190*/		u64	rx_icmp;
+/*0x198*/		u64	rx_tcp;
+/*0x1a0*/		u64	rx_udp;
+/*0x1a8*/		u64	rx_err_tcp;
+/*0x1b0*/		u64	rx_pause_count;
+/*0x1b8*/		u64	rx_pause_ctrl_frms;
+/*0x1c0*/		u64	rx_unsup_ctrl_frms;
+/*0x1c8*/		u64	rx_fcs_err_frms;
+/*0x1d0*/		u64	rx_in_rng_len_err_frms;
+/*0x1d8*/		u64	rx_out_rng_len_err_frms;
+/*0x1e0*/		u64	rx_drop_frms;
+/*0x1e8*/		u64	rx_discarded_frms;
+/*0x1f0*/		u64	rx_drop_ip;
+/*0x1f8*/		u64	rx_drop_udp;
+/*0x200*/		u32	rx_marker_pdu_frms;
+/*0x204*/		u32	rx_lacpdu_frms;
+/*0x208*/		u32	rx_unknown_pdu_frms;
+/*0x20c*/		u32	rx_marker_resp_pdu_frms;
+/*0x210*/		u32	rx_fcs_discard;
+/*0x214*/		u32	rx_illegal_pdu_frms;
+/*0x218*/		u32	rx_switch_discard;
+/*0x21c*/		u32	rx_len_discard;
+/*0x220*/		u32	rx_rpa_discard;
+/*0x224*/		u32	rx_l2_mgmt_discard;
+/*0x228*/		u32	rx_rts_discard;
+/*0x22c*/		u32	rx_trash_discard;
+/*0x230*/		u32	rx_buff_full_discard;
+/*0x234*/		u32	rx_red_discard;
+/*0x238*/		u32	rx_xgmii_ctrl_err_cnt;
+/*0x23c*/		u32	rx_xgmii_data_err_cnt;
+/*0x240*/		u32	rx_xgmii_char1_match;
+/*0x244*/		u32	rx_xgmii_err_sym;
+/*0x248*/		u32	rx_xgmii_column1_match;
+/*0x24c*/		u32	rx_xgmii_char2_match;
+/*0x250*/		u32	rx_local_fault;
+/*0x254*/		u32	rx_xgmii_column2_match;
+/*0x258*/		u32	rx_jettison;
+/*0x25c*/		u32	rx_remote_fault;
 } __packed;
 
 /**
@@ -888,26 +888,26 @@ struct vxge_hw_xmac_port_stats {
  * XMAC Vpath TX Statistics.
  */
 struct vxge_hw_xmac_vpath_tx_stats {
-  u64 tx_ttl_eth_frms;
-  u64 tx_ttl_eth_octets;
-  u64 tx_data_octets;
-  u64 tx_mcast_frms;
-  u64 tx_bcast_frms;
-  u64 tx_ucast_frms;
-  u64 tx_tagged_frms;
-  u64 tx_vld_ip;
-  u64 tx_vld_ip_octets;
-  u64 tx_icmp;
-  u64 tx_tcp;
-  u64 tx_rst_tcp;
-  u64 tx_udp;
-  u32 tx_unknown_protocol;
-  u32 tx_lost_ip;
-  u32 unused1;
-  u32 tx_parse_error;
-  u64 tx_tcp_offload;
-  u64 tx_retx_tcp_offload;
-  u64 tx_lost_ip_offload;
+	u64	tx_ttl_eth_frms;
+	u64	tx_ttl_eth_octets;
+	u64	tx_data_octets;
+	u64	tx_mcast_frms;
+	u64	tx_bcast_frms;
+	u64	tx_ucast_frms;
+	u64	tx_tagged_frms;
+	u64	tx_vld_ip;
+	u64	tx_vld_ip_octets;
+	u64	tx_icmp;
+	u64	tx_tcp;
+	u64	tx_rst_tcp;
+	u64	tx_udp;
+	u32	tx_unknown_protocol;
+	u32	tx_lost_ip;
+	u32	unused1;
+	u32	tx_parse_error;
+	u64	tx_tcp_offload;
+	u64	tx_retx_tcp_offload;
+	u64	tx_lost_ip_offload;
 } __packed;
 
 /**
@@ -963,7 +963,7 @@ struct vxge_hw_xmac_vpath_tx_stats {
  *            FCS, but not framing bits) of exactly 64 octets. Includes frames
  *            received with frame-too-long, FCS, or length errors.
  * @rx_ttl_65_127_frms: Count of total received MAC frames
- *    with length (including
+ * 		with length (including
  *            FCS, but not framing bits) of between 65 and 127 octets inclusive.
  *            Includes frames received with frame-too-long, FCS,
  *            or length errors.
@@ -1003,7 +1003,7 @@ struct vxge_hw_xmac_vpath_tx_stats {
  *            received with frame-too-long, FCS, or length errors.
  * @rx_ip: Count of received IP datagrams. Includes errored IP datagrams.
  * @rx_accepted_ip: Count of received IP datagrams that
- *    are passed to the system.
+ * 		are passed to the system.
  * @rx_ip_octets: Count of number of octets in received IP datagrams.
  *            Includes errored IP datagrams.
  * @rx_err_ip: Count of received IP datagrams containing errors. For example,
@@ -1038,48 +1038,48 @@ struct vxge_hw_xmac_vpath_tx_stats {
  * XMAC Vpath RX Statistics.
  */
 struct vxge_hw_xmac_vpath_rx_stats {
-  u64 rx_ttl_eth_frms;
-  u64 rx_vld_frms;
-  u64 rx_offload_frms;
-  u64 rx_ttl_eth_octets;
-  u64 rx_data_octets;
-  u64 rx_offload_octets;
-  u64 rx_vld_mcast_frms;
-  u64 rx_vld_bcast_frms;
-  u64 rx_accepted_ucast_frms;
-  u64 rx_accepted_nucast_frms;
-  u64 rx_tagged_frms;
-  u64 rx_long_frms;
-  u64 rx_usized_frms;
-  u64 rx_osized_frms;
-  u64 rx_frag_frms;
-  u64 rx_jabber_frms;
-  u64 rx_ttl_64_frms;
-  u64 rx_ttl_65_127_frms;
-  u64 rx_ttl_128_255_frms;
-  u64 rx_ttl_256_511_frms;
-  u64 rx_ttl_512_1023_frms;
-  u64 rx_ttl_1024_1518_frms;
-  u64 rx_ttl_1519_4095_frms;
-  u64 rx_ttl_4096_8191_frms;
-  u64 rx_ttl_8192_max_frms;
-  u64 rx_ttl_gt_max_frms;
-  u64 rx_ip;
-  u64 rx_accepted_ip;
-  u64 rx_ip_octets;
-  u64 rx_err_ip;
-  u64 rx_icmp;
-  u64 rx_tcp;
-  u64 rx_udp;
-  u64 rx_err_tcp;
-  u64 rx_lost_frms;
-  u64 rx_lost_ip;
-  u64 rx_lost_ip_offload;
-  u16 rx_various_discard;
-  u16 rx_sleep_discard;
-  u16 rx_red_discard;
-  u16 rx_queue_full_discard;
-  u64 rx_mpa_ok_frms;
+	u64	rx_ttl_eth_frms;
+	u64	rx_vld_frms;
+	u64	rx_offload_frms;
+	u64	rx_ttl_eth_octets;
+	u64	rx_data_octets;
+	u64	rx_offload_octets;
+	u64	rx_vld_mcast_frms;
+	u64	rx_vld_bcast_frms;
+	u64	rx_accepted_ucast_frms;
+	u64	rx_accepted_nucast_frms;
+	u64	rx_tagged_frms;
+	u64	rx_long_frms;
+	u64	rx_usized_frms;
+	u64	rx_osized_frms;
+	u64	rx_frag_frms;
+	u64	rx_jabber_frms;
+	u64	rx_ttl_64_frms;
+	u64	rx_ttl_65_127_frms;
+	u64	rx_ttl_128_255_frms;
+	u64	rx_ttl_256_511_frms;
+	u64	rx_ttl_512_1023_frms;
+	u64	rx_ttl_1024_1518_frms;
+	u64	rx_ttl_1519_4095_frms;
+	u64	rx_ttl_4096_8191_frms;
+	u64	rx_ttl_8192_max_frms;
+	u64	rx_ttl_gt_max_frms;
+	u64	rx_ip;
+	u64	rx_accepted_ip;
+	u64	rx_ip_octets;
+	u64	rx_err_ip;
+	u64	rx_icmp;
+	u64	rx_tcp;
+	u64	rx_udp;
+	u64	rx_err_tcp;
+	u64	rx_lost_frms;
+	u64	rx_lost_ip;
+	u64	rx_lost_ip_offload;
+	u16	rx_various_discard;
+	u16	rx_sleep_discard;
+	u16	rx_red_discard;
+	u16	rx_queue_full_discard;
+	u64	rx_mpa_ok_frms;
 } __packed;
 
 /**
@@ -1093,14 +1093,14 @@ struct vxge_hw_xmac_vpath_rx_stats {
  * XMAC Statistics.
  */
 struct vxge_hw_xmac_stats {
-  struct vxge_hw_xmac_aggr_stats
-      aggr_stats[VXGE_HW_MAC_MAX_MAC_PORT_ID];
-  struct vxge_hw_xmac_port_stats
-      port_stats[VXGE_HW_MAC_MAX_MAC_PORT_ID + 1];
-  struct vxge_hw_xmac_vpath_tx_stats
-      vpath_tx_stats[VXGE_HW_MAX_VIRTUAL_PATHS];
-  struct vxge_hw_xmac_vpath_rx_stats
-      vpath_rx_stats[VXGE_HW_MAX_VIRTUAL_PATHS];
+	struct vxge_hw_xmac_aggr_stats
+				aggr_stats[VXGE_HW_MAC_MAX_MAC_PORT_ID];
+	struct vxge_hw_xmac_port_stats
+				port_stats[VXGE_HW_MAC_MAX_MAC_PORT_ID+1];
+	struct vxge_hw_xmac_vpath_tx_stats
+				vpath_tx_stats[VXGE_HW_MAX_VIRTUAL_PATHS];
+	struct vxge_hw_xmac_vpath_rx_stats
+				vpath_rx_stats[VXGE_HW_MAX_VIRTUAL_PATHS];
 };
 
 /**
@@ -1140,9 +1140,9 @@ struct vxge_hw_xmac_stats {
  * @rx_frm_transferred: TBD
  * @rxd_returned: TBD
  * @rx_mpa_len_fail_frms: Count of received frames
- *    that fail the MPA length check
+ * 		that fail the MPA length check
  * @rx_mpa_mrk_fail_frms: Count of received frames
- *    that fail the MPA marker check
+ * 		that fail the MPA marker check
  * @rx_mpa_crc_fail_frms: Count of received frames that fail the MPA CRC check
  * @rx_permitted_frms: Count of frames that pass through the FAU and on to the
  *             frame buffer (and subsequently to the host).
@@ -1158,372 +1158,372 @@ struct vxge_hw_xmac_stats {
  * Titan vpath hardware statistics.
  */
 struct vxge_hw_vpath_stats_hw_info {
-  /*0x000*/ u32 ini_num_mwr_sent;
-  /*0x004*/ u32 unused1;
-  /*0x008*/ u32 ini_num_mrd_sent;
-  /*0x00c*/ u32 unused2;
-  /*0x010*/ u32 ini_num_cpl_rcvd;
-  /*0x014*/ u32 unused3;
-  /*0x018*/ u64 ini_num_mwr_byte_sent;
-  /*0x020*/ u64 ini_num_cpl_byte_rcvd;
-  /*0x028*/ u32 wrcrdtarb_xoff;
-  /*0x02c*/ u32 unused4;
-  /*0x030*/ u32 rdcrdtarb_xoff;
-  /*0x034*/ u32 unused5;
-  /*0x038*/ u32 vpath_genstats_count0;
-  /*0x03c*/ u32 vpath_genstats_count1;
-  /*0x040*/ u32 vpath_genstats_count2;
-  /*0x044*/ u32 vpath_genstats_count3;
-  /*0x048*/ u32 vpath_genstats_count4;
-  /*0x04c*/ u32 unused6;
-  /*0x050*/ u32 vpath_genstats_count5;
-  /*0x054*/ u32 unused7;
-  /*0x058*/ struct vxge_hw_xmac_vpath_tx_stats tx_stats;
-  /*0x0e8*/ struct vxge_hw_xmac_vpath_rx_stats rx_stats;
-  /*0x220*/ u64 unused9;
-  /*0x228*/ u32 prog_event_vnum1;
-  /*0x22c*/ u32 prog_event_vnum0;
-  /*0x230*/ u32 prog_event_vnum3;
-  /*0x234*/ u32 prog_event_vnum2;
-  /*0x238*/ u16 rx_multi_cast_frame_discard;
-  /*0x23a*/ u8 unused10[6];
-  /*0x240*/ u32 rx_frm_transferred;
-  /*0x244*/ u32 unused11;
-  /*0x248*/ u16 rxd_returned;
-  /*0x24a*/ u8 unused12[6];
-  /*0x252*/ u16 rx_mpa_len_fail_frms;
-  /*0x254*/ u16 rx_mpa_mrk_fail_frms;
-  /*0x256*/ u16 rx_mpa_crc_fail_frms;
-  /*0x258*/ u16 rx_permitted_frms;
-  /*0x25c*/ u64 rx_vp_reset_discarded_frms;
-  /*0x25e*/ u64 rx_wol_frms;
-  /*0x260*/ u64 tx_vp_reset_discarded_frms;
+/*0x000*/	u32 ini_num_mwr_sent;
+/*0x004*/	u32 unused1;
+/*0x008*/	u32 ini_num_mrd_sent;
+/*0x00c*/	u32 unused2;
+/*0x010*/	u32 ini_num_cpl_rcvd;
+/*0x014*/	u32 unused3;
+/*0x018*/	u64 ini_num_mwr_byte_sent;
+/*0x020*/	u64 ini_num_cpl_byte_rcvd;
+/*0x028*/	u32 wrcrdtarb_xoff;
+/*0x02c*/	u32 unused4;
+/*0x030*/	u32 rdcrdtarb_xoff;
+/*0x034*/	u32 unused5;
+/*0x038*/	u32 vpath_genstats_count0;
+/*0x03c*/	u32 vpath_genstats_count1;
+/*0x040*/	u32 vpath_genstats_count2;
+/*0x044*/	u32 vpath_genstats_count3;
+/*0x048*/	u32 vpath_genstats_count4;
+/*0x04c*/	u32 unused6;
+/*0x050*/	u32 vpath_genstats_count5;
+/*0x054*/	u32 unused7;
+/*0x058*/	struct vxge_hw_xmac_vpath_tx_stats tx_stats;
+/*0x0e8*/	struct vxge_hw_xmac_vpath_rx_stats rx_stats;
+/*0x220*/	u64 unused9;
+/*0x228*/	u32 prog_event_vnum1;
+/*0x22c*/	u32 prog_event_vnum0;
+/*0x230*/	u32 prog_event_vnum3;
+/*0x234*/	u32 prog_event_vnum2;
+/*0x238*/	u16 rx_multi_cast_frame_discard;
+/*0x23a*/	u8 unused10[6];
+/*0x240*/	u32 rx_frm_transferred;
+/*0x244*/	u32 unused11;
+/*0x248*/	u16 rxd_returned;
+/*0x24a*/	u8 unused12[6];
+/*0x252*/	u16 rx_mpa_len_fail_frms;
+/*0x254*/	u16 rx_mpa_mrk_fail_frms;
+/*0x256*/	u16 rx_mpa_crc_fail_frms;
+/*0x258*/	u16 rx_permitted_frms;
+/*0x25c*/	u64 rx_vp_reset_discarded_frms;
+/*0x25e*/	u64 rx_wol_frms;
+/*0x260*/	u64 tx_vp_reset_discarded_frms;
 } __packed;
 
 
 /**
  * struct vxge_hw_device_stats_mrpcim_info - Titan mrpcim hardware statistics.
- * @pic.ini_rd_drop    0x0000    4     Number of DMA reads initiated
+ * @pic.ini_rd_drop  	 0x0000  	 4  	 Number of DMA reads initiated
  *  by the adapter that were discarded because the VPATH is out of service
- * @pic.ini_wr_drop   0x0004  4   Number of DMA writes initiated by the
+ * @pic.ini_wr_drop 	0x0004 	4 	Number of DMA writes initiated by the
  *  adapter that were discared because the VPATH is out of service
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane0]   0x0008  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane0] 	0x0008 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane1]   0x0010  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane1] 	0x0010 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane2]   0x0018  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane2] 	0x0018 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane3]   0x0020  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane3] 	0x0020 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane4]   0x0028  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane4] 	0x0028 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane5]   0x0030  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane5] 	0x0030 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane6]   0x0038  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane6] 	0x0038 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane7]   0x0040  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane7] 	0x0040 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane8]   0x0048  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane8] 	0x0048 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane9]   0x0050  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane9] 	0x0050 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane10]  0x0058  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane10] 	0x0058 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane11]  0x0060  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane11] 	0x0060 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane12]  0x0068  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane12] 	0x0068 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane13]  0x0070  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane13] 	0x0070 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane14]  0x0078  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane14] 	0x0078 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane15]  0x0080  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane15] 	0x0080 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_ph_crdt_depleted[vplane16]  0x0088  4   Number of times
+ * @pic.wrcrdtarb_ph_crdt_depleted[vplane16] 	0x0088 	4 	Number of times
  *  the posted header credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane0]   0x0090  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane0] 	0x0090 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane1]   0x0098  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane1] 	0x0098 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane2]   0x00a0  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane2] 	0x00a0 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane3]   0x00a8  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane3] 	0x00a8 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane4]   0x00b0  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane4] 	0x00b0 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane5]   0x00b8  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane5] 	0x00b8 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane6]   0x00c0  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane6] 	0x00c0 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane7]   0x00c8  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane7] 	0x00c8 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane8]   0x00d0  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane8] 	0x00d0 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane9]   0x00d8  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane9] 	0x00d8 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane10]  0x00e0  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane10] 	0x00e0 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane11]  0x00e8  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane11] 	0x00e8 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane12]  0x00f0  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane12] 	0x00f0 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane13]  0x00f8  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane13] 	0x00f8 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane14]  0x0100  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane14] 	0x0100 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane15]  0x0108  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane15] 	0x0108 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.wrcrdtarb_pd_crdt_depleted[vplane16]  0x0110  4   Number of times
+ * @pic.wrcrdtarb_pd_crdt_depleted[vplane16] 	0x0110 	4 	Number of times
  *  the posted data credits for upstream PCI writes were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane0]  0x0118  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane0] 	0x0118 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane1]  0x0120  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane1] 	0x0120 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane2]  0x0128  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane2] 	0x0128 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane3]  0x0130  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane3] 	0x0130 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane4]  0x0138  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane4] 	0x0138 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane5]  0x0140  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane5] 	0x0140 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane6]  0x0148  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane6] 	0x0148 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane7]  0x0150  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane7] 	0x0150 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane8]  0x0158  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane8] 	0x0158 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane9]  0x0160  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane9] 	0x0160 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane10]   0x0168  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane10] 	0x0168 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane11]   0x0170  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane11] 	0x0170 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane12]   0x0178  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane12] 	0x0178 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane13]   0x0180  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane13] 	0x0180 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane14]   0x0188  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane14] 	0x0188 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane15]   0x0190  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane15] 	0x0190 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.rdcrdtarb_nph_crdt_depleted[vplane16]   0x0198  4   Number of times
+ * @pic.rdcrdtarb_nph_crdt_depleted[vplane16] 	0x0198 	4 	Number of times
  *  the non-posted header credits for upstream PCI reads were depleted
- * @pic.ini_rd_vpin_drop  0x01a0  4   Number of DMA reads initiated by
+ * @pic.ini_rd_vpin_drop 	0x01a0 	4 	Number of DMA reads initiated by
  *  the adapter that were discarded because the VPATH instance number does
  *  not match
- * @pic.ini_wr_vpin_drop  0x01a4  4   Number of DMA writes initiated
+ * @pic.ini_wr_vpin_drop 	0x01a4 	4 	Number of DMA writes initiated
  *  by the adapter that were discarded because the VPATH instance number
  *  does not match
- * @pic.genstats_count0   0x01a8  4   Configurable statistic #1. Refer
+ * @pic.genstats_count0 	0x01a8 	4 	Configurable statistic #1. Refer
  *  to the GENSTATS0_CFG for information on configuring this statistic
- * @pic.genstats_count1   0x01ac  4   Configurable statistic #2. Refer
+ * @pic.genstats_count1 	0x01ac 	4 	Configurable statistic #2. Refer
  *  to the GENSTATS1_CFG for information on configuring this statistic
- * @pic.genstats_count2   0x01b0  4   Configurable statistic #3. Refer
+ * @pic.genstats_count2 	0x01b0 	4 	Configurable statistic #3. Refer
  *  to the GENSTATS2_CFG for information on configuring this statistic
- * @pic.genstats_count3   0x01b4  4   Configurable statistic #4. Refer
+ * @pic.genstats_count3 	0x01b4 	4 	Configurable statistic #4. Refer
  *  to the GENSTATS3_CFG for information on configuring this statistic
- * @pic.genstats_count4   0x01b8  4   Configurable statistic #5. Refer
+ * @pic.genstats_count4 	0x01b8 	4 	Configurable statistic #5. Refer
  *  to the GENSTATS4_CFG for information on configuring this statistic
- * @pic.genstats_count5   0x01c0  4   Configurable statistic #6. Refer
+ * @pic.genstats_count5 	0x01c0 	4 	Configurable statistic #6. Refer
  *  to the GENSTATS5_CFG for information on configuring this statistic
- * @pci.rstdrop_cpl   0x01c8  4
- * @pci.rstdrop_msg   0x01cc  4
- * @pci.rstdrop_client1   0x01d0  4
- * @pci.rstdrop_client0   0x01d4  4
- * @pci.rstdrop_client2   0x01d8  4
- * @pci.depl_cplh[vplane0]  0x01e2  2   Number of times completion
+ * @pci.rstdrop_cpl 	0x01c8 	4
+ * @pci.rstdrop_msg 	0x01cc 	4
+ * @pci.rstdrop_client1 	0x01d0 	4
+ * @pci.rstdrop_client0 	0x01d4 	4
+ * @pci.rstdrop_client2 	0x01d8 	4
+ * @pci.depl_cplh[vplane0] 	0x01e2 	2 	Number of times completion
  *  header credits were depleted
- * @pci.depl_nph[vplane0]   0x01e4  2   Number of times non posted
+ * @pci.depl_nph[vplane0] 	0x01e4 	2 	Number of times non posted
  *  header credits were depleted
- * @pci.depl_ph[vplane0]  0x01e6  2   Number of times the posted
+ * @pci.depl_ph[vplane0] 	0x01e6 	2 	Number of times the posted
  *  header credits were depleted
- * @pci.depl_cplh[vplane1]  0x01ea  2
- * @pci.depl_nph[vplane1]   0x01ec  2
- * @pci.depl_ph[vplane1]  0x01ee  2
- * @pci.depl_cplh[vplane2]  0x01f2  2
- * @pci.depl_nph[vplane2]   0x01f4  2
- * @pci.depl_ph[vplane2]  0x01f6  2
- * @pci.depl_cplh[vplane3]  0x01fa  2
- * @pci.depl_nph[vplane3]   0x01fc  2
- * @pci.depl_ph[vplane3]  0x01fe  2
- * @pci.depl_cplh[vplane4]  0x0202  2
- * @pci.depl_nph[vplane4]   0x0204  2
- * @pci.depl_ph[vplane4]  0x0206  2
- * @pci.depl_cplh[vplane5]  0x020a  2
- * @pci.depl_nph[vplane5]   0x020c  2
- * @pci.depl_ph[vplane5]  0x020e  2
- * @pci.depl_cplh[vplane6]  0x0212  2
- * @pci.depl_nph[vplane6]   0x0214  2
- * @pci.depl_ph[vplane6]  0x0216  2
- * @pci.depl_cplh[vplane7]  0x021a  2
- * @pci.depl_nph[vplane7]   0x021c  2
- * @pci.depl_ph[vplane7]  0x021e  2
- * @pci.depl_cplh[vplane8]  0x0222  2
- * @pci.depl_nph[vplane8]   0x0224  2
- * @pci.depl_ph[vplane8]  0x0226  2
- * @pci.depl_cplh[vplane9]  0x022a  2
- * @pci.depl_nph[vplane9]   0x022c  2
- * @pci.depl_ph[vplane9]  0x022e  2
- * @pci.depl_cplh[vplane10]   0x0232  2
- * @pci.depl_nph[vplane10]  0x0234  2
- * @pci.depl_ph[vplane10]   0x0236  2
- * @pci.depl_cplh[vplane11]   0x023a  2
- * @pci.depl_nph[vplane11]  0x023c  2
- * @pci.depl_ph[vplane11]   0x023e  2
- * @pci.depl_cplh[vplane12]   0x0242  2
- * @pci.depl_nph[vplane12]  0x0244  2
- * @pci.depl_ph[vplane12]   0x0246  2
- * @pci.depl_cplh[vplane13]   0x024a  2
- * @pci.depl_nph[vplane13]  0x024c  2
- * @pci.depl_ph[vplane13]   0x024e  2
- * @pci.depl_cplh[vplane14]   0x0252  2
- * @pci.depl_nph[vplane14]  0x0254  2
- * @pci.depl_ph[vplane14]   0x0256  2
- * @pci.depl_cplh[vplane15]   0x025a  2
- * @pci.depl_nph[vplane15]  0x025c  2
- * @pci.depl_ph[vplane15]   0x025e  2
- * @pci.depl_cplh[vplane16]   0x0262  2
- * @pci.depl_nph[vplane16]  0x0264  2
- * @pci.depl_ph[vplane16]   0x0266  2
- * @pci.depl_cpld[vplane0]  0x026a  2   Number of times completion data
+ * @pci.depl_cplh[vplane1] 	0x01ea 	2
+ * @pci.depl_nph[vplane1] 	0x01ec 	2
+ * @pci.depl_ph[vplane1] 	0x01ee 	2
+ * @pci.depl_cplh[vplane2] 	0x01f2 	2
+ * @pci.depl_nph[vplane2] 	0x01f4 	2
+ * @pci.depl_ph[vplane2] 	0x01f6 	2
+ * @pci.depl_cplh[vplane3] 	0x01fa 	2
+ * @pci.depl_nph[vplane3] 	0x01fc 	2
+ * @pci.depl_ph[vplane3] 	0x01fe 	2
+ * @pci.depl_cplh[vplane4] 	0x0202 	2
+ * @pci.depl_nph[vplane4] 	0x0204 	2
+ * @pci.depl_ph[vplane4] 	0x0206 	2
+ * @pci.depl_cplh[vplane5] 	0x020a 	2
+ * @pci.depl_nph[vplane5] 	0x020c 	2
+ * @pci.depl_ph[vplane5] 	0x020e 	2
+ * @pci.depl_cplh[vplane6] 	0x0212 	2
+ * @pci.depl_nph[vplane6] 	0x0214 	2
+ * @pci.depl_ph[vplane6] 	0x0216 	2
+ * @pci.depl_cplh[vplane7] 	0x021a 	2
+ * @pci.depl_nph[vplane7] 	0x021c 	2
+ * @pci.depl_ph[vplane7] 	0x021e 	2
+ * @pci.depl_cplh[vplane8] 	0x0222 	2
+ * @pci.depl_nph[vplane8] 	0x0224 	2
+ * @pci.depl_ph[vplane8] 	0x0226 	2
+ * @pci.depl_cplh[vplane9] 	0x022a 	2
+ * @pci.depl_nph[vplane9] 	0x022c 	2
+ * @pci.depl_ph[vplane9] 	0x022e 	2
+ * @pci.depl_cplh[vplane10] 	0x0232 	2
+ * @pci.depl_nph[vplane10] 	0x0234 	2
+ * @pci.depl_ph[vplane10] 	0x0236 	2
+ * @pci.depl_cplh[vplane11] 	0x023a 	2
+ * @pci.depl_nph[vplane11] 	0x023c 	2
+ * @pci.depl_ph[vplane11] 	0x023e 	2
+ * @pci.depl_cplh[vplane12] 	0x0242 	2
+ * @pci.depl_nph[vplane12] 	0x0244 	2
+ * @pci.depl_ph[vplane12] 	0x0246 	2
+ * @pci.depl_cplh[vplane13] 	0x024a 	2
+ * @pci.depl_nph[vplane13] 	0x024c 	2
+ * @pci.depl_ph[vplane13] 	0x024e 	2
+ * @pci.depl_cplh[vplane14] 	0x0252 	2
+ * @pci.depl_nph[vplane14] 	0x0254 	2
+ * @pci.depl_ph[vplane14] 	0x0256 	2
+ * @pci.depl_cplh[vplane15] 	0x025a 	2
+ * @pci.depl_nph[vplane15] 	0x025c 	2
+ * @pci.depl_ph[vplane15] 	0x025e 	2
+ * @pci.depl_cplh[vplane16] 	0x0262 	2
+ * @pci.depl_nph[vplane16] 	0x0264 	2
+ * @pci.depl_ph[vplane16] 	0x0266 	2
+ * @pci.depl_cpld[vplane0] 	0x026a 	2 	Number of times completion data
  *  credits were depleted
- * @pci.depl_npd[vplane0]   0x026c  2   Number of times non posted data
+ * @pci.depl_npd[vplane0] 	0x026c 	2 	Number of times non posted data
  *  credits were depleted
- * @pci.depl_pd[vplane0]  0x026e  2   Number of times the posted data
+ * @pci.depl_pd[vplane0] 	0x026e 	2 	Number of times the posted data
  *  credits were depleted
- * @pci.depl_cpld[vplane1]  0x0272  2
- * @pci.depl_npd[vplane1]   0x0274  2
- * @pci.depl_pd[vplane1]  0x0276  2
- * @pci.depl_cpld[vplane2]  0x027a  2
- * @pci.depl_npd[vplane2]   0x027c  2
- * @pci.depl_pd[vplane2]  0x027e  2
- * @pci.depl_cpld[vplane3]  0x0282  2
- * @pci.depl_npd[vplane3]   0x0284  2
- * @pci.depl_pd[vplane3]  0x0286  2
- * @pci.depl_cpld[vplane4]  0x028a  2
- * @pci.depl_npd[vplane4]   0x028c  2
- * @pci.depl_pd[vplane4]  0x028e  2
- * @pci.depl_cpld[vplane5]  0x0292  2
- * @pci.depl_npd[vplane5]   0x0294  2
- * @pci.depl_pd[vplane5]  0x0296  2
- * @pci.depl_cpld[vplane6]  0x029a  2
- * @pci.depl_npd[vplane6]   0x029c  2
- * @pci.depl_pd[vplane6]  0x029e  2
- * @pci.depl_cpld[vplane7]  0x02a2  2
- * @pci.depl_npd[vplane7]   0x02a4  2
- * @pci.depl_pd[vplane7]  0x02a6  2
- * @pci.depl_cpld[vplane8]  0x02aa  2
- * @pci.depl_npd[vplane8]   0x02ac  2
- * @pci.depl_pd[vplane8]  0x02ae  2
- * @pci.depl_cpld[vplane9]  0x02b2  2
- * @pci.depl_npd[vplane9]   0x02b4  2
- * @pci.depl_pd[vplane9]  0x02b6  2
- * @pci.depl_cpld[vplane10]   0x02ba  2
- * @pci.depl_npd[vplane10]  0x02bc  2
- * @pci.depl_pd[vplane10]   0x02be  2
- * @pci.depl_cpld[vplane11]   0x02c2  2
- * @pci.depl_npd[vplane11]  0x02c4  2
- * @pci.depl_pd[vplane11]   0x02c6  2
- * @pci.depl_cpld[vplane12]   0x02ca  2
- * @pci.depl_npd[vplane12]  0x02cc  2
- * @pci.depl_pd[vplane12]   0x02ce  2
- * @pci.depl_cpld[vplane13]   0x02d2  2
- * @pci.depl_npd[vplane13]  0x02d4  2
- * @pci.depl_pd[vplane13]   0x02d6  2
- * @pci.depl_cpld[vplane14]   0x02da  2
- * @pci.depl_npd[vplane14]  0x02dc  2
- * @pci.depl_pd[vplane14]   0x02de  2
- * @pci.depl_cpld[vplane15]   0x02e2  2
- * @pci.depl_npd[vplane15]  0x02e4  2
- * @pci.depl_pd[vplane15]   0x02e6  2
- * @pci.depl_cpld[vplane16]   0x02ea  2
- * @pci.depl_npd[vplane16]  0x02ec  2
- * @pci.depl_pd[vplane16]   0x02ee  2
+ * @pci.depl_cpld[vplane1] 	0x0272 	2
+ * @pci.depl_npd[vplane1] 	0x0274 	2
+ * @pci.depl_pd[vplane1] 	0x0276 	2
+ * @pci.depl_cpld[vplane2] 	0x027a 	2
+ * @pci.depl_npd[vplane2] 	0x027c 	2
+ * @pci.depl_pd[vplane2] 	0x027e 	2
+ * @pci.depl_cpld[vplane3] 	0x0282 	2
+ * @pci.depl_npd[vplane3] 	0x0284 	2
+ * @pci.depl_pd[vplane3] 	0x0286 	2
+ * @pci.depl_cpld[vplane4] 	0x028a 	2
+ * @pci.depl_npd[vplane4] 	0x028c 	2
+ * @pci.depl_pd[vplane4] 	0x028e 	2
+ * @pci.depl_cpld[vplane5] 	0x0292 	2
+ * @pci.depl_npd[vplane5] 	0x0294 	2
+ * @pci.depl_pd[vplane5] 	0x0296 	2
+ * @pci.depl_cpld[vplane6] 	0x029a 	2
+ * @pci.depl_npd[vplane6] 	0x029c 	2
+ * @pci.depl_pd[vplane6] 	0x029e 	2
+ * @pci.depl_cpld[vplane7] 	0x02a2 	2
+ * @pci.depl_npd[vplane7] 	0x02a4 	2
+ * @pci.depl_pd[vplane7] 	0x02a6 	2
+ * @pci.depl_cpld[vplane8] 	0x02aa 	2
+ * @pci.depl_npd[vplane8] 	0x02ac 	2
+ * @pci.depl_pd[vplane8] 	0x02ae 	2
+ * @pci.depl_cpld[vplane9] 	0x02b2 	2
+ * @pci.depl_npd[vplane9] 	0x02b4 	2
+ * @pci.depl_pd[vplane9] 	0x02b6 	2
+ * @pci.depl_cpld[vplane10] 	0x02ba 	2
+ * @pci.depl_npd[vplane10] 	0x02bc 	2
+ * @pci.depl_pd[vplane10] 	0x02be 	2
+ * @pci.depl_cpld[vplane11] 	0x02c2 	2
+ * @pci.depl_npd[vplane11] 	0x02c4 	2
+ * @pci.depl_pd[vplane11] 	0x02c6 	2
+ * @pci.depl_cpld[vplane12] 	0x02ca 	2
+ * @pci.depl_npd[vplane12] 	0x02cc 	2
+ * @pci.depl_pd[vplane12] 	0x02ce 	2
+ * @pci.depl_cpld[vplane13] 	0x02d2 	2
+ * @pci.depl_npd[vplane13] 	0x02d4 	2
+ * @pci.depl_pd[vplane13] 	0x02d6 	2
+ * @pci.depl_cpld[vplane14] 	0x02da 	2
+ * @pci.depl_npd[vplane14] 	0x02dc 	2
+ * @pci.depl_pd[vplane14] 	0x02de 	2
+ * @pci.depl_cpld[vplane15] 	0x02e2 	2
+ * @pci.depl_npd[vplane15] 	0x02e4 	2
+ * @pci.depl_pd[vplane15] 	0x02e6 	2
+ * @pci.depl_cpld[vplane16] 	0x02ea 	2
+ * @pci.depl_npd[vplane16] 	0x02ec 	2
+ * @pci.depl_pd[vplane16] 	0x02ee 	2
  * @xgmac_port[3];
  * @xgmac_aggr[2];
- * @xgmac.global_prog_event_gnum0   0x0ae0  8   Programmable statistic.
+ * @xgmac.global_prog_event_gnum0 	0x0ae0 	8 	Programmable statistic.
  *  Increments when internal logic detects a certain event. See register
  *  XMAC_STATS_GLOBAL_CFG.EVENT_GNUM0_CFG for more information.
- * @xgmac.global_prog_event_gnum1   0x0ae8  8   Programmable statistic.
+ * @xgmac.global_prog_event_gnum1 	0x0ae8 	8 	Programmable statistic.
  *  Increments when internal logic detects a certain event. See register
  *  XMAC_STATS_GLOBAL_CFG.EVENT_GNUM1_CFG for more information.
- * @xgmac.orp_lro_events  0x0af8  8
- * @xgmac.orp_bs_events   0x0b00  8
- * @xgmac.orp_iwarp_events  0x0b08  8
- * @xgmac.tx_permitted_frms   0x0b14  4
- * @xgmac.port2_tx_any_frms   0x0b1d  1
- * @xgmac.port1_tx_any_frms   0x0b1e  1
- * @xgmac.port0_tx_any_frms   0x0b1f  1
- * @xgmac.port2_rx_any_frms   0x0b25  1
- * @xgmac.port1_rx_any_frms   0x0b26  1
- * @xgmac.port0_rx_any_frms   0x0b27  1
+ * @xgmac.orp_lro_events 	0x0af8 	8
+ * @xgmac.orp_bs_events 	0x0b00 	8
+ * @xgmac.orp_iwarp_events 	0x0b08 	8
+ * @xgmac.tx_permitted_frms 	0x0b14 	4
+ * @xgmac.port2_tx_any_frms 	0x0b1d 	1
+ * @xgmac.port1_tx_any_frms 	0x0b1e 	1
+ * @xgmac.port0_tx_any_frms 	0x0b1f 	1
+ * @xgmac.port2_rx_any_frms 	0x0b25 	1
+ * @xgmac.port1_rx_any_frms 	0x0b26 	1
+ * @xgmac.port0_rx_any_frms 	0x0b27 	1
  *
  * Titan mrpcim hardware statistics.
  */
 struct vxge_hw_device_stats_mrpcim_info {
-  /*0x0000*/  u32 pic_ini_rd_drop;
-  /*0x0004*/  u32 pic_ini_wr_drop;
-  /*0x0008*/  struct {
-    /*0x0000*/  u32 pic_wrcrdtarb_ph_crdt_depleted;
-    /*0x0004*/  u32 unused1;
-  } pic_wrcrdtarb_ph_crdt_depleted_vplane[17];
-  /*0x0090*/  struct {
-    /*0x0000*/  u32 pic_wrcrdtarb_pd_crdt_depleted;
-    /*0x0004*/  u32 unused2;
-  } pic_wrcrdtarb_pd_crdt_depleted_vplane[17];
-  /*0x0118*/  struct {
-    /*0x0000*/  u32 pic_rdcrdtarb_nph_crdt_depleted;
-    /*0x0004*/  u32 unused3;
-  } pic_rdcrdtarb_nph_crdt_depleted_vplane[17];
-  /*0x01a0*/  u32 pic_ini_rd_vpin_drop;
-  /*0x01a4*/  u32 pic_ini_wr_vpin_drop;
-  /*0x01a8*/  u32 pic_genstats_count0;
-  /*0x01ac*/  u32 pic_genstats_count1;
-  /*0x01b0*/  u32 pic_genstats_count2;
-  /*0x01b4*/  u32 pic_genstats_count3;
-  /*0x01b8*/  u32 pic_genstats_count4;
-  /*0x01bc*/  u32 unused4;
-  /*0x01c0*/  u32 pic_genstats_count5;
-  /*0x01c4*/  u32 unused5;
-  /*0x01c8*/  u32 pci_rstdrop_cpl;
-  /*0x01cc*/  u32 pci_rstdrop_msg;
-  /*0x01d0*/  u32 pci_rstdrop_client1;
-  /*0x01d4*/  u32 pci_rstdrop_client0;
-  /*0x01d8*/  u32 pci_rstdrop_client2;
-  /*0x01dc*/  u32 unused6;
-  /*0x01e0*/  struct {
-    /*0x0000*/  u16 unused7;
-    /*0x0002*/  u16 pci_depl_cplh;
-    /*0x0004*/  u16 pci_depl_nph;
-    /*0x0006*/  u16 pci_depl_ph;
-  } pci_depl_h_vplane[17];
-  /*0x0268*/  struct {
-    /*0x0000*/  u16 unused8;
-    /*0x0002*/  u16 pci_depl_cpld;
-    /*0x0004*/  u16 pci_depl_npd;
-    /*0x0006*/  u16 pci_depl_pd;
-  } pci_depl_d_vplane[17];
-  /*0x02f0*/  struct vxge_hw_xmac_port_stats xgmac_port[3];
-  /*0x0a10*/  struct vxge_hw_xmac_aggr_stats xgmac_aggr[2];
-  /*0x0ae0*/  u64 xgmac_global_prog_event_gnum0;
-  /*0x0ae8*/  u64 xgmac_global_prog_event_gnum1;
-  /*0x0af0*/  u64 unused7;
-  /*0x0af8*/  u64 unused8;
-  /*0x0b00*/  u64 unused9;
-  /*0x0b08*/  u64 unused10;
-  /*0x0b10*/  u32 unused11;
-  /*0x0b14*/  u32 xgmac_tx_permitted_frms;
-  /*0x0b18*/  u32 unused12;
-  /*0x0b1c*/  u8  unused13;
-  /*0x0b1d*/  u8  xgmac_port2_tx_any_frms;
-  /*0x0b1e*/  u8  xgmac_port1_tx_any_frms;
-  /*0x0b1f*/  u8  xgmac_port0_tx_any_frms;
-  /*0x0b20*/  u32 unused14;
-  /*0x0b24*/  u8  unused15;
-  /*0x0b25*/  u8  xgmac_port2_rx_any_frms;
-  /*0x0b26*/  u8  xgmac_port1_rx_any_frms;
-  /*0x0b27*/  u8  xgmac_port0_rx_any_frms;
+/*0x0000*/	u32	pic_ini_rd_drop;
+/*0x0004*/	u32	pic_ini_wr_drop;
+/*0x0008*/	struct {
+	/*0x0000*/	u32	pic_wrcrdtarb_ph_crdt_depleted;
+	/*0x0004*/	u32	unused1;
+		} pic_wrcrdtarb_ph_crdt_depleted_vplane[17];
+/*0x0090*/	struct {
+	/*0x0000*/	u32	pic_wrcrdtarb_pd_crdt_depleted;
+	/*0x0004*/	u32	unused2;
+		} pic_wrcrdtarb_pd_crdt_depleted_vplane[17];
+/*0x0118*/	struct {
+	/*0x0000*/	u32	pic_rdcrdtarb_nph_crdt_depleted;
+	/*0x0004*/	u32	unused3;
+		} pic_rdcrdtarb_nph_crdt_depleted_vplane[17];
+/*0x01a0*/	u32	pic_ini_rd_vpin_drop;
+/*0x01a4*/	u32	pic_ini_wr_vpin_drop;
+/*0x01a8*/	u32	pic_genstats_count0;
+/*0x01ac*/	u32	pic_genstats_count1;
+/*0x01b0*/	u32	pic_genstats_count2;
+/*0x01b4*/	u32	pic_genstats_count3;
+/*0x01b8*/	u32	pic_genstats_count4;
+/*0x01bc*/	u32	unused4;
+/*0x01c0*/	u32	pic_genstats_count5;
+/*0x01c4*/	u32	unused5;
+/*0x01c8*/	u32	pci_rstdrop_cpl;
+/*0x01cc*/	u32	pci_rstdrop_msg;
+/*0x01d0*/	u32	pci_rstdrop_client1;
+/*0x01d4*/	u32	pci_rstdrop_client0;
+/*0x01d8*/	u32	pci_rstdrop_client2;
+/*0x01dc*/	u32	unused6;
+/*0x01e0*/	struct {
+	/*0x0000*/	u16	unused7;
+	/*0x0002*/	u16	pci_depl_cplh;
+	/*0x0004*/	u16	pci_depl_nph;
+	/*0x0006*/	u16	pci_depl_ph;
+		} pci_depl_h_vplane[17];
+/*0x0268*/	struct {
+	/*0x0000*/	u16	unused8;
+	/*0x0002*/	u16	pci_depl_cpld;
+	/*0x0004*/	u16	pci_depl_npd;
+	/*0x0006*/	u16	pci_depl_pd;
+		} pci_depl_d_vplane[17];
+/*0x02f0*/	struct vxge_hw_xmac_port_stats xgmac_port[3];
+/*0x0a10*/	struct vxge_hw_xmac_aggr_stats xgmac_aggr[2];
+/*0x0ae0*/	u64	xgmac_global_prog_event_gnum0;
+/*0x0ae8*/	u64	xgmac_global_prog_event_gnum1;
+/*0x0af0*/	u64	unused7;
+/*0x0af8*/	u64	unused8;
+/*0x0b00*/	u64	unused9;
+/*0x0b08*/	u64	unused10;
+/*0x0b10*/	u32	unused11;
+/*0x0b14*/	u32	xgmac_tx_permitted_frms;
+/*0x0b18*/	u32	unused12;
+/*0x0b1c*/	u8	unused13;
+/*0x0b1d*/	u8	xgmac_port2_tx_any_frms;
+/*0x0b1e*/	u8	xgmac_port1_tx_any_frms;
+/*0x0b1f*/	u8	xgmac_port0_tx_any_frms;
+/*0x0b20*/	u32	unused14;
+/*0x0b24*/	u8	unused15;
+/*0x0b25*/	u8	xgmac_port2_rx_any_frms;
+/*0x0b26*/	u8	xgmac_port1_rx_any_frms;
+/*0x0b27*/	u8	xgmac_port0_rx_any_frms;
 } __packed;
 
 /**
@@ -1534,10 +1534,10 @@ struct vxge_hw_device_stats_mrpcim_info {
  * Titan hardware statistics.
  */
 struct vxge_hw_device_stats_hw_info {
-  struct vxge_hw_vpath_stats_hw_info
-      * vpath_info[VXGE_HW_MAX_VIRTUAL_PATHS];
-  struct vxge_hw_vpath_stats_hw_info
-      vpath_info_sav[VXGE_HW_MAX_VIRTUAL_PATHS];
+	struct vxge_hw_vpath_stats_hw_info
+		*vpath_info[VXGE_HW_MAX_VIRTUAL_PATHS];
+	struct vxge_hw_vpath_stats_hw_info
+		vpath_info_sav[VXGE_HW_MAX_VIRTUAL_PATHS];
 };
 
 /**
@@ -1554,11 +1554,11 @@ struct vxge_hw_device_stats_hw_info {
  * struct vxge_hw_vpath_stats_sw_ring_info{},
  */
 struct vxge_hw_vpath_stats_sw_common_info {
-  u32 full_cnt;
-  u32 usage_cnt;
-  u32 usage_max;
-  u32 reserve_free_swaps_cnt;
-  u32 total_compl_cnt;
+	u32	full_cnt;
+	u32	usage_cnt;
+	u32	usage_max;
+	u32	reserve_free_swaps_cnt;
+	u32 total_compl_cnt;
 };
 
 /**
@@ -1577,10 +1577,10 @@ struct vxge_hw_vpath_stats_sw_common_info {
  * struct vxge_hw_vpath_stats_sw_ring_info{},
  */
 struct vxge_hw_vpath_stats_sw_fifo_info {
-  struct vxge_hw_vpath_stats_sw_common_info common_stats;
-  u32 total_posts;
-  u32 total_buffers;
-  u32 txd_t_code_err_cnt[VXGE_HW_DTR_MAX_T_CODE];
+	struct vxge_hw_vpath_stats_sw_common_info common_stats;
+	u32 total_posts;
+	u32 total_buffers;
+	u32 txd_t_code_err_cnt[VXGE_HW_DTR_MAX_T_CODE];
 };
 
 /**
@@ -1598,9 +1598,9 @@ struct vxge_hw_vpath_stats_sw_fifo_info {
  * struct vxge_hw_vpath_stats_sw_fifo_info{},
  */
 struct vxge_hw_vpath_stats_sw_ring_info {
-  struct vxge_hw_vpath_stats_sw_common_info common_stats;
-  u32 rxd_t_code_err_cnt[VXGE_HW_DTR_MAX_T_CODE];
-  
+	struct vxge_hw_vpath_stats_sw_common_info common_stats;
+	u32 rxd_t_code_err_cnt[VXGE_HW_DTR_MAX_T_CODE];
+
 };
 
 /**
@@ -1624,21 +1624,21 @@ struct vxge_hw_vpath_stats_sw_ring_info {
  * HW vpath error statistics
  */
 struct vxge_hw_vpath_stats_sw_err {
-  u32 unknown_alarms;
-  u32 network_sustained_fault;
-  u32 network_sustained_ok;
-  u32 kdfcctl_fifo0_overwrite;
-  u32 kdfcctl_fifo0_poison;
-  u32 kdfcctl_fifo0_dma_error;
-  u32 dblgen_fifo0_overflow;
-  u32 statsb_pif_chain_error;
-  u32 statsb_drop_timeout;
-  u32 target_illegal_access;
-  u32 ini_serr_det;
-  u32 prc_ring_bumps;
-  u32 prc_rxdcm_sc_err;
-  u32 prc_rxdcm_sc_abort;
-  u32 prc_quanta_size_err;
+	u32	unknown_alarms;
+	u32	network_sustained_fault;
+	u32	network_sustained_ok;
+	u32	kdfcctl_fifo0_overwrite;
+	u32	kdfcctl_fifo0_poison;
+	u32	kdfcctl_fifo0_dma_error;
+	u32	dblgen_fifo0_overflow;
+	u32	statsb_pif_chain_error;
+	u32	statsb_drop_timeout;
+	u32	target_illegal_access;
+	u32	ini_serr_det;
+	u32	prc_ring_bumps;
+	u32	prc_rxdcm_sc_err;
+	u32	prc_rxdcm_sc_abort;
+	u32	prc_quanta_size_err;
 };
 
 /**
@@ -1652,10 +1652,10 @@ struct vxge_hw_vpath_stats_sw_err {
  * See also: struct vxge_hw_device_info{} }.
  */
 struct vxge_hw_vpath_stats_sw_info {
-  u32    soft_reset_cnt;
-  struct vxge_hw_vpath_stats_sw_err error_stats;
-  struct vxge_hw_vpath_stats_sw_ring_info ring_stats;
-  struct vxge_hw_vpath_stats_sw_fifo_info fifo_stats;
+	u32    soft_reset_cnt;
+	struct vxge_hw_vpath_stats_sw_err	error_stats;
+	struct vxge_hw_vpath_stats_sw_ring_info	ring_stats;
+	struct vxge_hw_vpath_stats_sw_fifo_info	fifo_stats;
 };
 
 /**
@@ -1673,12 +1673,12 @@ struct vxge_hw_vpath_stats_sw_info {
  * HW per-device statistics.
  */
 struct vxge_hw_device_stats_sw_info {
-  u32 not_traffic_intr_cnt;
-  u32 traffic_intr_cnt;
-  u32 total_intr_cnt;
-  u32 soft_reset_cnt;
-  struct vxge_hw_vpath_stats_sw_info
-      vpath_info[VXGE_HW_MAX_VIRTUAL_PATHS];
+	u32	not_traffic_intr_cnt;
+	u32	traffic_intr_cnt;
+	u32	total_intr_cnt;
+	u32	soft_reset_cnt;
+	struct vxge_hw_vpath_stats_sw_info
+		vpath_info[VXGE_HW_MAX_VIRTUAL_PATHS];
 };
 
 /**
@@ -1688,7 +1688,7 @@ struct vxge_hw_device_stats_sw_info {
  * HW Device error stats
  */
 struct vxge_hw_device_stats_sw_err {
-  u32     vpath_alarms;
+	u32     vpath_alarms;
 };
 
 /**
@@ -1713,44 +1713,44 @@ struct vxge_hw_device_stats_sw_err {
  * channels.
  */
 struct vxge_hw_device_stats {
-  /* handles */
-  struct __vxge_hw_device * devh;
-  
-  /* HW device hardware statistics */
-  struct vxge_hw_device_stats_hw_info hw_dev_info_stats;
-  
-  /* HW device "soft" stats */
-  struct vxge_hw_device_stats_sw_err   sw_dev_err_stats;
-  struct vxge_hw_device_stats_sw_info  sw_dev_info_stats;
-  
+	/* handles */
+	struct __vxge_hw_device *devh;
+
+	/* HW device hardware statistics */
+	struct vxge_hw_device_stats_hw_info	hw_dev_info_stats;
+
+	/* HW device "soft" stats */
+	struct vxge_hw_device_stats_sw_err   sw_dev_err_stats;
+	struct vxge_hw_device_stats_sw_info  sw_dev_info_stats;
+
 };
 
-enum vxge_hw_status vxge_hw_device_hw_stats_enable (
-  struct __vxge_hw_device * devh);
+enum vxge_hw_status vxge_hw_device_hw_stats_enable(
+			struct __vxge_hw_device *devh);
 
-enum vxge_hw_status vxge_hw_device_stats_get (
-  struct __vxge_hw_device * devh,
-  struct vxge_hw_device_stats_hw_info * hw_stats);
+enum vxge_hw_status vxge_hw_device_stats_get(
+			struct __vxge_hw_device *devh,
+			struct vxge_hw_device_stats_hw_info *hw_stats);
 
-enum vxge_hw_status vxge_hw_driver_stats_get (
-  struct __vxge_hw_device * devh,
-  struct vxge_hw_device_stats_sw_info * sw_stats);
+enum vxge_hw_status vxge_hw_driver_stats_get(
+			struct __vxge_hw_device *devh,
+			struct vxge_hw_device_stats_sw_info *sw_stats);
 
-enum vxge_hw_status vxge_hw_mrpcim_stats_enable (struct __vxge_hw_device * devh);
+enum vxge_hw_status vxge_hw_mrpcim_stats_enable(struct __vxge_hw_device *devh);
 
-enum vxge_hw_status vxge_hw_mrpcim_stats_disable (struct __vxge_hw_device * devh);
-
-enum vxge_hw_status
-vxge_hw_mrpcim_stats_access (
-  struct __vxge_hw_device * devh,
-  u32 operation,
-  u32 location,
-  u32 offset,
-  u64 * stat);
+enum vxge_hw_status vxge_hw_mrpcim_stats_disable(struct __vxge_hw_device *devh);
 
 enum vxge_hw_status
-vxge_hw_device_xmac_stats_get (struct __vxge_hw_device * devh,
-                               struct vxge_hw_xmac_stats * xmac_stats);
+vxge_hw_mrpcim_stats_access(
+	struct __vxge_hw_device *devh,
+	u32 operation,
+	u32 location,
+	u32 offset,
+	u64 *stat);
+
+enum vxge_hw_status
+vxge_hw_device_xmac_stats_get(struct __vxge_hw_device *devh,
+			      struct vxge_hw_xmac_stats *xmac_stats);
 
 /**
  * enum enum vxge_hw_mgmt_reg_type - Register types.
@@ -1766,28 +1766,28 @@ vxge_hw_device_xmac_stats_get (struct __vxge_hw_device * devh,
  * Register type enumaration
  */
 enum vxge_hw_mgmt_reg_type {
-  vxge_hw_mgmt_reg_type_legacy = 0,
-  vxge_hw_mgmt_reg_type_toc = 1,
-  vxge_hw_mgmt_reg_type_common = 2,
-  vxge_hw_mgmt_reg_type_mrpcim = 3,
-  vxge_hw_mgmt_reg_type_srpcim = 4,
-  vxge_hw_mgmt_reg_type_vpmgmt = 5,
-  vxge_hw_mgmt_reg_type_vpath = 6
+	vxge_hw_mgmt_reg_type_legacy = 0,
+	vxge_hw_mgmt_reg_type_toc = 1,
+	vxge_hw_mgmt_reg_type_common = 2,
+	vxge_hw_mgmt_reg_type_mrpcim = 3,
+	vxge_hw_mgmt_reg_type_srpcim = 4,
+	vxge_hw_mgmt_reg_type_vpmgmt = 5,
+	vxge_hw_mgmt_reg_type_vpath = 6
 };
 
 enum vxge_hw_status
-vxge_hw_mgmt_reg_read (struct __vxge_hw_device * devh,
-                       enum vxge_hw_mgmt_reg_type type,
-                       u32 index,
-                       u32 offset,
-                       u64 * value);
+vxge_hw_mgmt_reg_read(struct __vxge_hw_device *devh,
+		      enum vxge_hw_mgmt_reg_type type,
+		      u32 index,
+		      u32 offset,
+		      u64 *value);
 
 enum vxge_hw_status
-vxge_hw_mgmt_reg_write (struct __vxge_hw_device * devh,
-                        enum vxge_hw_mgmt_reg_type type,
-                        u32 index,
-                        u32 offset,
-                        u64 value);
+vxge_hw_mgmt_reg_write(struct __vxge_hw_device *devh,
+		      enum vxge_hw_mgmt_reg_type type,
+		      u32 index,
+		      u32 offset,
+		      u64 value);
 
 /**
  * enum enum vxge_hw_rxd_state - Descriptor (RXD) state.
@@ -1802,10 +1802,10 @@ vxge_hw_mgmt_reg_write (struct __vxge_hw_device * devh,
  *
  */
 enum vxge_hw_rxd_state {
-  VXGE_HW_RXD_STATE_NONE    = 0,
-  VXGE_HW_RXD_STATE_AVAIL   = 1,
-  VXGE_HW_RXD_STATE_POSTED  = 2,
-  VXGE_HW_RXD_STATE_FREED   = 3
+	VXGE_HW_RXD_STATE_NONE		= 0,
+	VXGE_HW_RXD_STATE_AVAIL		= 1,
+	VXGE_HW_RXD_STATE_POSTED	= 2,
+	VXGE_HW_RXD_STATE_FREED		= 3
 };
 
 /**
@@ -1825,7 +1825,7 @@ enum vxge_hw_rxd_state {
  *            the checksum is correct. Otherwise - the packet is
  *            corrupted.
  * @frame: Zero or more of enum vxge_hw_frame_type flags.
- *    See enum vxge_hw_frame_type{}.
+ * 		See enum vxge_hw_frame_type{}.
  * @proto: zero or more of enum vxge_hw_frame_proto flags.  Reporting bits for
  *            various higher-layer protocols, including (but note restricted to)
  *            TCP and UDP. See enum vxge_hw_frame_proto{}.
@@ -1841,108 +1841,108 @@ enum vxge_hw_rxd_state {
  *             hardware if RTH is enabled.
  */
 struct vxge_hw_ring_rxd_info {
-  u32 syn_flag;
-  u32 is_icmp;
-  u32 fast_path_eligible;
-  u32 l3_cksum_valid;
-  u32 l3_cksum;
-  u32 l4_cksum_valid;
-  u32 l4_cksum;
-  u32 frame;
-  u32 proto;
-  u32 is_vlan;
-  u32 vlan;
-  u32 rth_bucket;
-  u32 rth_it_hit;
-  u32 rth_spdm_hit;
-  u32 rth_hash_type;
-  u32 rth_value;
+	u32	syn_flag;
+	u32	is_icmp;
+	u32	fast_path_eligible;
+	u32	l3_cksum_valid;
+	u32	l3_cksum;
+	u32	l4_cksum_valid;
+	u32	l4_cksum;
+	u32	frame;
+	u32	proto;
+	u32	is_vlan;
+	u32	vlan;
+	u32	rth_bucket;
+	u32	rth_it_hit;
+	u32	rth_spdm_hit;
+	u32	rth_hash_type;
+	u32	rth_value;
 };
 /**
  * enum vxge_hw_ring_tcode - Transfer codes returned by adapter
  * @VXGE_HW_RING_T_CODE_OK: Transfer ok.
  * @VXGE_HW_RING_T_CODE_L3_CKSUM_MISMATCH: Layer 3 checksum presentation
- *    configuration mismatch.
+ *		configuration mismatch.
  * @VXGE_HW_RING_T_CODE_L4_CKSUM_MISMATCH: Layer 4 checksum presentation
- *    configuration mismatch.
+ *		configuration mismatch.
  * @VXGE_HW_RING_T_CODE_L3_L4_CKSUM_MISMATCH: Layer 3 and Layer 4 checksum
- *    presentation configuration mismatch.
+ *		presentation configuration mismatch.
  * @VXGE_HW_RING_T_CODE_L3_PKT_ERR: Layer 3 error unparseable packet,
- *    such as unknown IPv6 header.
+ *		such as unknown IPv6 header.
  * @VXGE_HW_RING_T_CODE_L2_FRM_ERR: Layer 2 error frame integrity
- *    error, such as FCS or ECC).
+ *		error, such as FCS or ECC).
  * @VXGE_HW_RING_T_CODE_BUF_SIZE_ERR: Buffer size error the RxD buffer(
- *    s) were not appropriately sized and data loss occurred.
+ *		s) were not appropriately sized and data loss occurred.
  * @VXGE_HW_RING_T_CODE_INT_ECC_ERR: Internal ECC error RxD corrupted.
  * @VXGE_HW_RING_T_CODE_BENIGN_OVFLOW: Benign overflow the contents of
- *    Segment1 exceeded the capacity of Buffer1 and the remainder
- *    was placed in Buffer2. Segment2 now starts in Buffer3.
- *    No data loss or errors occurred.
+ *		Segment1 exceeded the capacity of Buffer1 and the remainder
+ *		was placed in Buffer2. Segment2 now starts in Buffer3.
+ *		No data loss or errors occurred.
  * @VXGE_HW_RING_T_CODE_ZERO_LEN_BUFF: Buffer size 0 one of the RxDs
- *    assigned buffers has a size of 0 bytes.
+ *		assigned buffers has a size of 0 bytes.
  * @VXGE_HW_RING_T_CODE_FRM_DROP: Frame dropped either due to
- *    VPath Reset or because of a VPIN mismatch.
+ *		VPath Reset or because of a VPIN mismatch.
  * @VXGE_HW_RING_T_CODE_UNUSED: Unused
  * @VXGE_HW_RING_T_CODE_MULTI_ERR: Multiple errors more than one
- *    transfer code condition occurred.
+ *		transfer code condition occurred.
  *
  * Transfer codes returned by adapter.
  */
 enum vxge_hw_ring_tcode {
-  VXGE_HW_RING_T_CODE_OK        = 0x0,
-  VXGE_HW_RING_T_CODE_L3_CKSUM_MISMATCH   = 0x1,
-  VXGE_HW_RING_T_CODE_L4_CKSUM_MISMATCH   = 0x2,
-  VXGE_HW_RING_T_CODE_L3_L4_CKSUM_MISMATCH  = 0x3,
-  VXGE_HW_RING_T_CODE_L3_PKT_ERR      = 0x5,
-  VXGE_HW_RING_T_CODE_L2_FRM_ERR      = 0x6,
-  VXGE_HW_RING_T_CODE_BUF_SIZE_ERR    = 0x7,
-  VXGE_HW_RING_T_CODE_INT_ECC_ERR     = 0x8,
-  VXGE_HW_RING_T_CODE_BENIGN_OVFLOW   = 0x9,
-  VXGE_HW_RING_T_CODE_ZERO_LEN_BUFF   = 0xA,
-  VXGE_HW_RING_T_CODE_FRM_DROP      = 0xC,
-  VXGE_HW_RING_T_CODE_UNUSED      = 0xE,
-  VXGE_HW_RING_T_CODE_MULTI_ERR     = 0xF
+	VXGE_HW_RING_T_CODE_OK				= 0x0,
+	VXGE_HW_RING_T_CODE_L3_CKSUM_MISMATCH		= 0x1,
+	VXGE_HW_RING_T_CODE_L4_CKSUM_MISMATCH		= 0x2,
+	VXGE_HW_RING_T_CODE_L3_L4_CKSUM_MISMATCH	= 0x3,
+	VXGE_HW_RING_T_CODE_L3_PKT_ERR			= 0x5,
+	VXGE_HW_RING_T_CODE_L2_FRM_ERR			= 0x6,
+	VXGE_HW_RING_T_CODE_BUF_SIZE_ERR		= 0x7,
+	VXGE_HW_RING_T_CODE_INT_ECC_ERR			= 0x8,
+	VXGE_HW_RING_T_CODE_BENIGN_OVFLOW		= 0x9,
+	VXGE_HW_RING_T_CODE_ZERO_LEN_BUFF		= 0xA,
+	VXGE_HW_RING_T_CODE_FRM_DROP			= 0xC,
+	VXGE_HW_RING_T_CODE_UNUSED			= 0xE,
+	VXGE_HW_RING_T_CODE_MULTI_ERR			= 0xF
 };
 
-enum vxge_hw_status vxge_hw_ring_rxd_reserve (
-  struct __vxge_hw_ring * ring_handle,
-  void ** rxdh);
+enum vxge_hw_status vxge_hw_ring_rxd_reserve(
+	struct __vxge_hw_ring *ring_handle,
+	void **rxdh);
 
 void
-vxge_hw_ring_rxd_pre_post (
-  struct __vxge_hw_ring * ring_handle,
-  void * rxdh);
+vxge_hw_ring_rxd_pre_post(
+	struct __vxge_hw_ring *ring_handle,
+	void *rxdh);
 
 void
-vxge_hw_ring_rxd_post_post (
-  struct __vxge_hw_ring * ring_handle,
-  void * rxdh);
+vxge_hw_ring_rxd_post_post(
+	struct __vxge_hw_ring *ring_handle,
+	void *rxdh);
 
 enum vxge_hw_status
-vxge_hw_ring_replenish (struct __vxge_hw_ring * ring_handle);
+vxge_hw_ring_replenish(struct __vxge_hw_ring *ring_handle);
 
 void
-vxge_hw_ring_rxd_post_post_wmb (
-  struct __vxge_hw_ring * ring_handle,
-  void * rxdh);
+vxge_hw_ring_rxd_post_post_wmb(
+	struct __vxge_hw_ring *ring_handle,
+	void *rxdh);
 
-void vxge_hw_ring_rxd_post (
-  struct __vxge_hw_ring * ring_handle,
-  void * rxdh);
+void vxge_hw_ring_rxd_post(
+	struct __vxge_hw_ring *ring_handle,
+	void *rxdh);
 
-enum vxge_hw_status vxge_hw_ring_rxd_next_completed (
-  struct __vxge_hw_ring * ring_handle,
-  void ** rxdh,
-  u8 * t_code);
+enum vxge_hw_status vxge_hw_ring_rxd_next_completed(
+	struct __vxge_hw_ring *ring_handle,
+	void **rxdh,
+	u8 *t_code);
 
-enum vxge_hw_status vxge_hw_ring_handle_tcode (
-  struct __vxge_hw_ring * ring_handle,
-  void * rxdh,
-  u8 t_code);
+enum vxge_hw_status vxge_hw_ring_handle_tcode(
+	struct __vxge_hw_ring *ring_handle,
+	void *rxdh,
+	u8 t_code);
 
-void vxge_hw_ring_rxd_free (
-  struct __vxge_hw_ring * ring_handle,
-  void * rxdh);
+void vxge_hw_ring_rxd_free(
+	struct __vxge_hw_ring *ring_handle,
+	void *rxdh);
 
 /**
  * enum enum vxge_hw_frame_proto - Higher-layer ethernet protocols.
@@ -1957,14 +1957,14 @@ void vxge_hw_ring_rxd_free (
  * Higher layer ethernet protocols and options.
  */
 enum vxge_hw_frame_proto {
-  VXGE_HW_FRAME_PROTO_VLAN_TAGGED = 0x80,
-  VXGE_HW_FRAME_PROTO_IPV4    = 0x10,
-  VXGE_HW_FRAME_PROTO_IPV6    = 0x08,
-  VXGE_HW_FRAME_PROTO_IP_FRAG   = 0x04,
-  VXGE_HW_FRAME_PROTO_TCP     = 0x02,
-  VXGE_HW_FRAME_PROTO_UDP     = 0x01,
-  VXGE_HW_FRAME_PROTO_TCP_OR_UDP  = (VXGE_HW_FRAME_PROTO_TCP | \
-                                     VXGE_HW_FRAME_PROTO_UDP)
+	VXGE_HW_FRAME_PROTO_VLAN_TAGGED = 0x80,
+	VXGE_HW_FRAME_PROTO_IPV4		= 0x10,
+	VXGE_HW_FRAME_PROTO_IPV6		= 0x08,
+	VXGE_HW_FRAME_PROTO_IP_FRAG		= 0x04,
+	VXGE_HW_FRAME_PROTO_TCP			= 0x02,
+	VXGE_HW_FRAME_PROTO_UDP			= 0x01,
+	VXGE_HW_FRAME_PROTO_TCP_OR_UDP	= (VXGE_HW_FRAME_PROTO_TCP | \
+						   VXGE_HW_FRAME_PROTO_UDP)
 };
 
 /**
@@ -1977,10 +1977,10 @@ enum vxge_hw_frame_proto {
  * These gather codes are used to indicate the position of a TxD in a TxD list
  */
 enum vxge_hw_fifo_gather_code {
-  VXGE_HW_FIFO_GATHER_CODE_FIRST    = 0x2,
-  VXGE_HW_FIFO_GATHER_CODE_MIDDLE   = 0x0,
-  VXGE_HW_FIFO_GATHER_CODE_LAST   = 0x1,
-  VXGE_HW_FIFO_GATHER_CODE_FIRST_LAST = 0x3
+	VXGE_HW_FIFO_GATHER_CODE_FIRST		= 0x2,
+	VXGE_HW_FIFO_GATHER_CODE_MIDDLE		= 0x0,
+	VXGE_HW_FIFO_GATHER_CODE_LAST		= 0x1,
+	VXGE_HW_FIFO_GATHER_CODE_FIRST_LAST	= 0x3
 };
 
 /**
@@ -1993,8 +1993,8 @@ enum vxge_hw_fifo_gather_code {
  * @VXGE_HW_FIFO_T_CODE_INVALID_MSS: The host attempted to send either a
  *             frame or LSO MSS that was too long (>9800B).
  * @VXGE_HW_FIFO_T_CODE_LSO_ERROR: Error detected during TCP/UDP Large Send
-  *        Offload operation, due to improper header template,
-  *        unsupported protocol, etc.
+	*	       Offload operation, due to improper header template,
+	*	       unsupported protocol, etc.
  * @VXGE_HW_FIFO_T_CODE_UNUSED: Unused
  * @VXGE_HW_FIFO_T_CODE_MULTI_ERROR: Set to 1 by the adapter if multiple
  *             data buffer transfer errors are encountered (see below).
@@ -2003,54 +2003,54 @@ enum vxge_hw_fifo_gather_code {
  * These tcodes are returned in various API for TxD status
  */
 enum vxge_hw_fifo_tcode {
-  VXGE_HW_FIFO_T_CODE_OK      = 0x0,
-  VXGE_HW_FIFO_T_CODE_PCI_READ_CORRUPT  = 0x1,
-  VXGE_HW_FIFO_T_CODE_PCI_READ_FAIL = 0x2,
-  VXGE_HW_FIFO_T_CODE_INVALID_MSS   = 0x3,
-  VXGE_HW_FIFO_T_CODE_LSO_ERROR   = 0x4,
-  VXGE_HW_FIFO_T_CODE_UNUSED    = 0x7,
-  VXGE_HW_FIFO_T_CODE_MULTI_ERROR   = 0x8
+	VXGE_HW_FIFO_T_CODE_OK			= 0x0,
+	VXGE_HW_FIFO_T_CODE_PCI_READ_CORRUPT	= 0x1,
+	VXGE_HW_FIFO_T_CODE_PCI_READ_FAIL	= 0x2,
+	VXGE_HW_FIFO_T_CODE_INVALID_MSS		= 0x3,
+	VXGE_HW_FIFO_T_CODE_LSO_ERROR		= 0x4,
+	VXGE_HW_FIFO_T_CODE_UNUSED		= 0x7,
+	VXGE_HW_FIFO_T_CODE_MULTI_ERROR		= 0x8
 };
 
-enum vxge_hw_status vxge_hw_fifo_txdl_reserve (
-  struct __vxge_hw_fifo * fifoh,
-  void ** txdlh,
-  void ** txdl_priv);
+enum vxge_hw_status vxge_hw_fifo_txdl_reserve(
+	struct __vxge_hw_fifo *fifoh,
+	void **txdlh,
+	void **txdl_priv);
 
-void vxge_hw_fifo_txdl_buffer_set (
-  struct __vxge_hw_fifo * fifo_handle,
-  void * txdlh,
-  u32 frag_idx,
-  dma_addr_t dma_pointer,
-  u32 size);
+void vxge_hw_fifo_txdl_buffer_set(
+			struct __vxge_hw_fifo *fifo_handle,
+			void *txdlh,
+			u32 frag_idx,
+			dma_addr_t dma_pointer,
+			u32 size);
 
-void vxge_hw_fifo_txdl_post (
-  struct __vxge_hw_fifo * fifo_handle,
-  void * txdlh);
+void vxge_hw_fifo_txdl_post(
+			struct __vxge_hw_fifo *fifo_handle,
+			void *txdlh);
 
-u32 vxge_hw_fifo_free_txdl_count_get (
-  struct __vxge_hw_fifo * fifo_handle);
+u32 vxge_hw_fifo_free_txdl_count_get(
+			struct __vxge_hw_fifo *fifo_handle);
 
-enum vxge_hw_status vxge_hw_fifo_txdl_next_completed (
-  struct __vxge_hw_fifo * fifoh,
-  void ** txdlh,
-  enum vxge_hw_fifo_tcode * t_code);
+enum vxge_hw_status vxge_hw_fifo_txdl_next_completed(
+	struct __vxge_hw_fifo *fifoh,
+	void **txdlh,
+	enum vxge_hw_fifo_tcode *t_code);
 
-enum vxge_hw_status vxge_hw_fifo_handle_tcode (
-  struct __vxge_hw_fifo * fifoh,
-  void * txdlh,
-  enum vxge_hw_fifo_tcode t_code);
+enum vxge_hw_status vxge_hw_fifo_handle_tcode(
+	struct __vxge_hw_fifo *fifoh,
+	void *txdlh,
+	enum vxge_hw_fifo_tcode t_code);
 
-void vxge_hw_fifo_txdl_free (
-  struct __vxge_hw_fifo * fifoh,
-  void * txdlh);
+void vxge_hw_fifo_txdl_free(
+	struct __vxge_hw_fifo *fifoh,
+	void *txdlh);
 
 /*
  * Device
  */
 
-#define VXGE_HW_RING_NEXT_BLOCK_POINTER_OFFSET  (VXGE_HW_BLOCK_SIZE-8)
-#define VXGE_HW_RING_MEMBLOCK_IDX_OFFSET    (VXGE_HW_BLOCK_SIZE-16)
+#define VXGE_HW_RING_NEXT_BLOCK_POINTER_OFFSET	(VXGE_HW_BLOCK_SIZE-8)
+#define VXGE_HW_RING_MEMBLOCK_IDX_OFFSET		(VXGE_HW_BLOCK_SIZE-16)
 
 /*
  * struct __vxge_hw_ring_rxd_priv - Receive descriptor HW-private data.
@@ -2073,226 +2073,226 @@ void vxge_hw_fifo_txdl_free (
  * purposes.
  */
 struct __vxge_hw_ring_rxd_priv {
-  dma_addr_t  dma_addr;
-  struct pci_dev * dma_handle;
-  ptrdiff_t dma_offset;
-  #ifdef VXGE_DEBUG_ASSERT
-  struct vxge_hw_mempool_dma * dma_object;
-  #endif
+	dma_addr_t	dma_addr;
+	struct pci_dev *dma_handle;
+	ptrdiff_t	dma_offset;
+#ifdef VXGE_DEBUG_ASSERT
+	struct vxge_hw_mempool_dma	*dma_object;
+#endif
 };
 
 struct vxge_hw_mempool_cbs {
-  void (*item_func_alloc) (
-    struct vxge_hw_mempool * mempoolh,
-    u32     memblock_index,
-    struct vxge_hw_mempool_dma * dma_object,
-    u32     index,
-    u32     is_last);
+	void (*item_func_alloc)(
+			struct vxge_hw_mempool *mempoolh,
+			u32			memblock_index,
+			struct vxge_hw_mempool_dma	*dma_object,
+			u32			index,
+			u32			is_last);
 };
 
-#define VXGE_HW_VIRTUAL_PATH_HANDLE(vpath)        \
-  ((struct __vxge_hw_vpath_handle *)(vpath)->vpath_handles.next)
+#define VXGE_HW_VIRTUAL_PATH_HANDLE(vpath)				\
+		((struct __vxge_hw_vpath_handle *)(vpath)->vpath_handles.next)
 
 enum vxge_hw_status
-__vxge_hw_vpath_rts_table_get (
-  struct __vxge_hw_vpath_handle * vpath_handle,
-  u32     action,
-  u32     rts_table,
-  u32     offset,
-  u64   *  data1,
-  u64   *  data2);
+__vxge_hw_vpath_rts_table_get(
+	struct __vxge_hw_vpath_handle *vpath_handle,
+	u32			action,
+	u32			rts_table,
+	u32			offset,
+	u64			*data1,
+	u64			*data2);
 
 enum vxge_hw_status
-__vxge_hw_vpath_rts_table_set (
-  struct __vxge_hw_vpath_handle * vpath_handle,
-  u32     action,
-  u32     rts_table,
-  u32     offset,
-  u64     data1,
-  u64     data2);
+__vxge_hw_vpath_rts_table_set(
+	struct __vxge_hw_vpath_handle *vpath_handle,
+	u32			action,
+	u32			rts_table,
+	u32			offset,
+	u64			data1,
+	u64			data2);
 
 enum vxge_hw_status
-__vxge_hw_vpath_enable (
-  struct __vxge_hw_device * devh,
-  u32     vp_id);
+__vxge_hw_vpath_enable(
+	struct __vxge_hw_device *devh,
+	u32			vp_id);
 
-void vxge_hw_device_intr_enable (
-  struct __vxge_hw_device * devh);
+void vxge_hw_device_intr_enable(
+	struct __vxge_hw_device *devh);
 
-u32 vxge_hw_device_set_intr_type (struct __vxge_hw_device * devh, u32 intr_mode);
+u32 vxge_hw_device_set_intr_type(struct __vxge_hw_device *devh, u32 intr_mode);
 
-void vxge_hw_device_intr_disable (
-  struct __vxge_hw_device * devh);
+void vxge_hw_device_intr_disable(
+	struct __vxge_hw_device *devh);
 
-void vxge_hw_device_mask_all (
-  struct __vxge_hw_device * devh);
+void vxge_hw_device_mask_all(
+	struct __vxge_hw_device *devh);
 
-void vxge_hw_device_unmask_all (
-  struct __vxge_hw_device * devh);
+void vxge_hw_device_unmask_all(
+	struct __vxge_hw_device *devh);
 
-enum vxge_hw_status vxge_hw_device_begin_irq (
-  struct __vxge_hw_device * devh,
-  u32 skip_alarms,
-  u64 * reason);
+enum vxge_hw_status vxge_hw_device_begin_irq(
+	struct __vxge_hw_device *devh,
+	u32 skip_alarms,
+	u64 *reason);
 
-void vxge_hw_device_clear_tx_rx (
-  struct __vxge_hw_device * devh);
+void vxge_hw_device_clear_tx_rx(
+	struct __vxge_hw_device *devh);
 
 /*
  *  Virtual Paths
  */
 
-void vxge_hw_vpath_dynamic_rti_rtimer_set (struct __vxge_hw_ring * ring);
+void vxge_hw_vpath_dynamic_rti_rtimer_set(struct __vxge_hw_ring *ring);
 
-void vxge_hw_vpath_dynamic_tti_rtimer_set (struct __vxge_hw_fifo * fifo);
+void vxge_hw_vpath_dynamic_tti_rtimer_set(struct __vxge_hw_fifo *fifo);
 
-u32 vxge_hw_vpath_id (
-  struct __vxge_hw_vpath_handle * vpath_handle);
+u32 vxge_hw_vpath_id(
+	struct __vxge_hw_vpath_handle *vpath_handle);
 
 enum vxge_hw_vpath_mac_addr_add_mode {
-  VXGE_HW_VPATH_MAC_ADDR_ADD_DUPLICATE = 0,
-  VXGE_HW_VPATH_MAC_ADDR_DISCARD_DUPLICATE = 1,
-  VXGE_HW_VPATH_MAC_ADDR_REPLACE_DUPLICATE = 2
+	VXGE_HW_VPATH_MAC_ADDR_ADD_DUPLICATE = 0,
+	VXGE_HW_VPATH_MAC_ADDR_DISCARD_DUPLICATE = 1,
+	VXGE_HW_VPATH_MAC_ADDR_REPLACE_DUPLICATE = 2
 };
 
 enum vxge_hw_status
-vxge_hw_vpath_mac_addr_add (
-  struct __vxge_hw_vpath_handle * vpath_handle,
-  u8 * macaddr,
-  u8 * macaddr_mask,
-  enum vxge_hw_vpath_mac_addr_add_mode duplicate_mode);
+vxge_hw_vpath_mac_addr_add(
+	struct __vxge_hw_vpath_handle *vpath_handle,
+	u8 *macaddr,
+	u8 *macaddr_mask,
+	enum vxge_hw_vpath_mac_addr_add_mode duplicate_mode);
 
 enum vxge_hw_status
-vxge_hw_vpath_mac_addr_get (
-  struct __vxge_hw_vpath_handle * vpath_handle,
-  u8 * macaddr,
-  u8 * macaddr_mask);
+vxge_hw_vpath_mac_addr_get(
+	struct __vxge_hw_vpath_handle *vpath_handle,
+	u8 *macaddr,
+	u8 *macaddr_mask);
 
 enum vxge_hw_status
-vxge_hw_vpath_mac_addr_get_next (
-  struct __vxge_hw_vpath_handle * vpath_handle,
-  u8 * macaddr,
-  u8 * macaddr_mask);
+vxge_hw_vpath_mac_addr_get_next(
+	struct __vxge_hw_vpath_handle *vpath_handle,
+	u8 *macaddr,
+	u8 *macaddr_mask);
 
 enum vxge_hw_status
-vxge_hw_vpath_mac_addr_delete (
-  struct __vxge_hw_vpath_handle * vpath_handle,
-  u8 * macaddr,
-  u8 * macaddr_mask);
+vxge_hw_vpath_mac_addr_delete(
+	struct __vxge_hw_vpath_handle *vpath_handle,
+	u8 *macaddr,
+	u8 *macaddr_mask);
 
 enum vxge_hw_status
-vxge_hw_vpath_vid_add (
-  struct __vxge_hw_vpath_handle * vpath_handle,
-  u64     vid);
+vxge_hw_vpath_vid_add(
+	struct __vxge_hw_vpath_handle *vpath_handle,
+	u64			vid);
 
 enum vxge_hw_status
-vxge_hw_vpath_vid_get (
-  struct __vxge_hw_vpath_handle * vpath_handle,
-  u64   *  vid);
+vxge_hw_vpath_vid_get(
+	struct __vxge_hw_vpath_handle *vpath_handle,
+	u64			*vid);
 
 enum vxge_hw_status
-vxge_hw_vpath_vid_delete (
-  struct __vxge_hw_vpath_handle * vpath_handle,
-  u64     vid);
+vxge_hw_vpath_vid_delete(
+	struct __vxge_hw_vpath_handle *vpath_handle,
+	u64			vid);
 
 enum vxge_hw_status
-vxge_hw_vpath_etype_add (
-  struct __vxge_hw_vpath_handle * vpath_handle,
-  u64     etype);
+vxge_hw_vpath_etype_add(
+	struct __vxge_hw_vpath_handle *vpath_handle,
+	u64			etype);
 
 enum vxge_hw_status
-vxge_hw_vpath_etype_get (
-  struct __vxge_hw_vpath_handle * vpath_handle,
-  u64   *  etype);
+vxge_hw_vpath_etype_get(
+	struct __vxge_hw_vpath_handle *vpath_handle,
+	u64			*etype);
 
 enum vxge_hw_status
-vxge_hw_vpath_etype_get_next (
-  struct __vxge_hw_vpath_handle * vpath_handle,
-  u64   *  etype);
+vxge_hw_vpath_etype_get_next(
+	struct __vxge_hw_vpath_handle *vpath_handle,
+	u64			*etype);
 
 enum vxge_hw_status
-vxge_hw_vpath_etype_delete (
-  struct __vxge_hw_vpath_handle * vpath_handle,
-  u64     etype);
+vxge_hw_vpath_etype_delete(
+	struct __vxge_hw_vpath_handle *vpath_handle,
+	u64			etype);
 
-enum vxge_hw_status vxge_hw_vpath_promisc_enable (
-  struct __vxge_hw_vpath_handle * vpath_handle);
+enum vxge_hw_status vxge_hw_vpath_promisc_enable(
+	struct __vxge_hw_vpath_handle *vpath_handle);
 
-enum vxge_hw_status vxge_hw_vpath_promisc_disable (
-  struct __vxge_hw_vpath_handle * vpath_handle);
+enum vxge_hw_status vxge_hw_vpath_promisc_disable(
+	struct __vxge_hw_vpath_handle *vpath_handle);
 
-enum vxge_hw_status vxge_hw_vpath_bcast_enable (
-  struct __vxge_hw_vpath_handle * vpath_handle);
+enum vxge_hw_status vxge_hw_vpath_bcast_enable(
+	struct __vxge_hw_vpath_handle *vpath_handle);
 
-enum vxge_hw_status vxge_hw_vpath_mcast_enable (
-  struct __vxge_hw_vpath_handle * vpath_handle);
+enum vxge_hw_status vxge_hw_vpath_mcast_enable(
+	struct __vxge_hw_vpath_handle *vpath_handle);
 
-enum vxge_hw_status vxge_hw_vpath_mcast_disable (
-  struct __vxge_hw_vpath_handle * vpath_handle);
+enum vxge_hw_status vxge_hw_vpath_mcast_disable(
+	struct __vxge_hw_vpath_handle *vpath_handle);
 
-enum vxge_hw_status vxge_hw_vpath_poll_rx (
-  struct __vxge_hw_ring * ringh);
+enum vxge_hw_status vxge_hw_vpath_poll_rx(
+	struct __vxge_hw_ring *ringh);
 
-enum vxge_hw_status vxge_hw_vpath_poll_tx (
-  struct __vxge_hw_fifo * fifoh,
-  struct sk_buff ** *skb_ptr, int nr_skb, int * more);
+enum vxge_hw_status vxge_hw_vpath_poll_tx(
+	struct __vxge_hw_fifo *fifoh,
+	struct sk_buff ***skb_ptr, int nr_skb, int *more);
 
-enum vxge_hw_status vxge_hw_vpath_alarm_process (
-  struct __vxge_hw_vpath_handle * vpath_handle,
-  u32 skip_alarms);
+enum vxge_hw_status vxge_hw_vpath_alarm_process(
+	struct __vxge_hw_vpath_handle *vpath_handle,
+	u32 skip_alarms);
 
 void
-vxge_hw_vpath_msix_set (struct __vxge_hw_vpath_handle * vpath_handle,
-                        int * tim_msix_id, int alarm_msix_id);
+vxge_hw_vpath_msix_set(struct __vxge_hw_vpath_handle *vpath_handle,
+		       int *tim_msix_id, int alarm_msix_id);
 
 void
-vxge_hw_vpath_msix_mask (struct __vxge_hw_vpath_handle * vpath_handle,
-                         int msix_id);
+vxge_hw_vpath_msix_mask(struct __vxge_hw_vpath_handle *vpath_handle,
+			int msix_id);
 
-void vxge_hw_vpath_msix_clear (struct __vxge_hw_vpath_handle * vp, int msix_id);
+void vxge_hw_vpath_msix_clear(struct __vxge_hw_vpath_handle *vp, int msix_id);
 
-void vxge_hw_device_flush_io (struct __vxge_hw_device * devh);
-
-void
-vxge_hw_vpath_msix_unmask (struct __vxge_hw_vpath_handle * vpath_handle,
-                           int msix_id);
-
-enum vxge_hw_status vxge_hw_vpath_intr_enable (
-  struct __vxge_hw_vpath_handle * vpath_handle);
-
-enum vxge_hw_status vxge_hw_vpath_intr_disable (
-  struct __vxge_hw_vpath_handle * vpath_handle);
-
-void vxge_hw_vpath_inta_mask_tx_rx (
-  struct __vxge_hw_vpath_handle * vpath_handle);
-
-void vxge_hw_vpath_inta_unmask_tx_rx (
-  struct __vxge_hw_vpath_handle * vpath_handle);
+void vxge_hw_device_flush_io(struct __vxge_hw_device *devh);
 
 void
-vxge_hw_channel_msix_mask (struct __vxge_hw_channel * channelh, int msix_id);
+vxge_hw_vpath_msix_unmask(struct __vxge_hw_vpath_handle *vpath_handle,
+			  int msix_id);
+
+enum vxge_hw_status vxge_hw_vpath_intr_enable(
+				struct __vxge_hw_vpath_handle *vpath_handle);
+
+enum vxge_hw_status vxge_hw_vpath_intr_disable(
+				struct __vxge_hw_vpath_handle *vpath_handle);
+
+void vxge_hw_vpath_inta_mask_tx_rx(
+	struct __vxge_hw_vpath_handle *vpath_handle);
+
+void vxge_hw_vpath_inta_unmask_tx_rx(
+	struct __vxge_hw_vpath_handle *vpath_handle);
 
 void
-vxge_hw_channel_msix_unmask (struct __vxge_hw_channel * channelh, int msix_id);
+vxge_hw_channel_msix_mask(struct __vxge_hw_channel *channelh, int msix_id);
 
 void
-vxge_hw_channel_msix_clear (struct __vxge_hw_channel * channelh, int msix_id);
+vxge_hw_channel_msix_unmask(struct __vxge_hw_channel *channelh, int msix_id);
 
 void
-vxge_hw_channel_dtr_try_complete (struct __vxge_hw_channel * channel,
-                                  void ** dtrh);
+vxge_hw_channel_msix_clear(struct __vxge_hw_channel *channelh, int msix_id);
 
 void
-vxge_hw_channel_dtr_complete (struct __vxge_hw_channel * channel);
+vxge_hw_channel_dtr_try_complete(struct __vxge_hw_channel *channel,
+				 void **dtrh);
 
 void
-vxge_hw_channel_dtr_free (struct __vxge_hw_channel * channel, void * dtrh);
+vxge_hw_channel_dtr_complete(struct __vxge_hw_channel *channel);
+
+void
+vxge_hw_channel_dtr_free(struct __vxge_hw_channel *channel, void *dtrh);
 
 int
-vxge_hw_channel_dtr_count (struct __vxge_hw_channel * channel);
+vxge_hw_channel_dtr_count(struct __vxge_hw_channel *channel);
 
-void vxge_hw_vpath_tti_ci_set (struct __vxge_hw_fifo * fifo);
+void vxge_hw_vpath_tti_ci_set(struct __vxge_hw_fifo *fifo);
 
-void vxge_hw_vpath_dynamic_rti_ci_set (struct __vxge_hw_ring * ring);
+void vxge_hw_vpath_dynamic_rti_ci_set(struct __vxge_hw_ring *ring);
 
 #endif

@@ -1,7 +1,7 @@
 /* linux/arch/arm/plat-samsung/include/plat/common-smdk.h
  *
  * Copyright (c) 2006 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * Common code for SMDK2410 and SMDK2440 boards
  *
@@ -12,4 +12,4 @@
  * published by the Free Software Foundation.
 */
 
-extern void smdk_machine_init (void);
+extern void smdk_machine_init(void);

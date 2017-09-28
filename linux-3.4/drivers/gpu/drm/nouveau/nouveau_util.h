@@ -29,21 +29,21 @@
 #define __NOUVEAU_UTIL_H__
 
 struct nouveau_bitfield {
-  u32 mask;
-  const char * name;
+	u32 mask;
+	const char *name;
 };
 
 struct nouveau_enum {
-  u32 value;
-  const char * name;
-  void * data;
+	u32 value;
+	const char *name;
+	void *data;
 };
 
-void nouveau_bitfield_print (const struct nouveau_bitfield *, u32 value);
-void nouveau_enum_print (const struct nouveau_enum *, u32 value);
+void nouveau_bitfield_print(const struct nouveau_bitfield *, u32 value);
+void nouveau_enum_print(const struct nouveau_enum *, u32 value);
 const struct nouveau_enum *
-nouveau_enum_find (const struct nouveau_enum *, u32 value);
+nouveau_enum_find(const struct nouveau_enum *, u32 value);
 
-int nouveau_ratelimit (void);
+int nouveau_ratelimit(void);
 
 #endif

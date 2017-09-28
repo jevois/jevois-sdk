@@ -50,15 +50,15 @@
 #define iwm_to_if_sdio(i) (struct iwm_sdio_priv *)(iwm->private)
 
 struct iwm_sdio_priv {
-  struct sdio_func * func;
-  struct iwm_priv * iwm;
-  
-  struct workqueue_struct * isr_wq;
-  struct work_struct isr_worker;
-  
-  struct dentry * cccr_dentry;
-  
-  unsigned int blk_size;
+	struct sdio_func *func;
+	struct iwm_priv *iwm;
+
+	struct workqueue_struct *isr_wq;
+	struct work_struct isr_worker;
+
+	struct dentry *cccr_dentry;
+
+	unsigned int blk_size;
 };
 
 #endif

@@ -20,17 +20,17 @@
 #define WORD_INSN ".word"
 #endif
 
-static __always_inline bool arch_static_branch (struct static_key * key)
+static __always_inline bool arch_static_branch(struct static_key *key)
 {
-  asm goto ("1:\tnop\n\t"
-            "nop\n\t"
-            ".pushsection __jump_table,  \"aw\"\n\t"
-            WORD_INSN " 1b, %l[l_yes], %0\n\t"
-            ".popsection\n\t"
-            : :  "i" (key) : : l_yes);
-  return false;
+	asm goto("1:\tnop\n\t"
+		"nop\n\t"
+		".pushsection __jump_table,  \"aw\"\n\t"
+		WORD_INSN " 1b, %l[l_yes], %0\n\t"
+		".popsection\n\t"
+		: :  "i" (key) : : l_yes);
+	return false;
 l_yes:
-  return true;
+	return true;
 }
 
 #endif /* __KERNEL__ */
@@ -42,9 +42,9 @@ typedef u32 jump_label_t;
 #endif
 
 struct jump_entry {
-  jump_label_t code;
-  jump_label_t target;
-  jump_label_t key;
+	jump_label_t code;
+	jump_label_t target;
+	jump_label_t key;
 };
 
 #endif /* _ASM_MIPS_JUMP_LABEL_H */

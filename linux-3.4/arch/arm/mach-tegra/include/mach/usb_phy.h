@@ -21,66 +21,66 @@
 #include <linux/usb/otg.h>
 
 struct tegra_utmip_config {
-  u8 hssync_start_delay;
-  u8 elastic_limit;
-  u8 idle_wait_delay;
-  u8 term_range_adj;
-  u8 xcvr_setup;
-  u8 xcvr_lsfslew;
-  u8 xcvr_lsrslew;
+	u8 hssync_start_delay;
+	u8 elastic_limit;
+	u8 idle_wait_delay;
+	u8 term_range_adj;
+	u8 xcvr_setup;
+	u8 xcvr_lsfslew;
+	u8 xcvr_lsrslew;
 };
 
 struct tegra_ulpi_config {
-  int reset_gpio;
-  const char * clk;
+	int reset_gpio;
+	const char *clk;
 };
 
 enum tegra_usb_phy_port_speed {
-  TEGRA_USB_PHY_PORT_SPEED_FULL = 0,
-  TEGRA_USB_PHY_PORT_SPEED_LOW,
-  TEGRA_USB_PHY_PORT_SPEED_HIGH,
+	TEGRA_USB_PHY_PORT_SPEED_FULL = 0,
+	TEGRA_USB_PHY_PORT_SPEED_LOW,
+	TEGRA_USB_PHY_PORT_SPEED_HIGH,
 };
 
 enum tegra_usb_phy_mode {
-  TEGRA_USB_PHY_MODE_DEVICE,
-  TEGRA_USB_PHY_MODE_HOST,
+	TEGRA_USB_PHY_MODE_DEVICE,
+	TEGRA_USB_PHY_MODE_HOST,
 };
 
 struct tegra_xtal_freq;
 
 struct tegra_usb_phy {
-  int instance;
-  const struct tegra_xtal_freq * freq;
-  void __iomem * regs;
-  void __iomem * pad_regs;
-  struct clk * clk;
-  struct clk * pll_u;
-  struct clk * pad_clk;
-  enum tegra_usb_phy_mode mode;
-  void * config;
-  struct usb_phy * ulpi;
+	int instance;
+	const struct tegra_xtal_freq *freq;
+	void __iomem *regs;
+	void __iomem *pad_regs;
+	struct clk *clk;
+	struct clk *pll_u;
+	struct clk *pad_clk;
+	enum tegra_usb_phy_mode mode;
+	void *config;
+	struct usb_phy *ulpi;
 };
 
-struct tegra_usb_phy * tegra_usb_phy_open (int instance, void __iomem * regs,
-    void * config, enum tegra_usb_phy_mode phy_mode);
+struct tegra_usb_phy *tegra_usb_phy_open(int instance, void __iomem *regs,
+			void *config, enum tegra_usb_phy_mode phy_mode);
 
-int tegra_usb_phy_power_on (struct tegra_usb_phy * phy);
+int tegra_usb_phy_power_on(struct tegra_usb_phy *phy);
 
-void tegra_usb_phy_clk_disable (struct tegra_usb_phy * phy);
+void tegra_usb_phy_clk_disable(struct tegra_usb_phy *phy);
 
-void tegra_usb_phy_clk_enable (struct tegra_usb_phy * phy);
+void tegra_usb_phy_clk_enable(struct tegra_usb_phy *phy);
 
-void tegra_usb_phy_power_off (struct tegra_usb_phy * phy);
+void tegra_usb_phy_power_off(struct tegra_usb_phy *phy);
 
-void tegra_usb_phy_preresume (struct tegra_usb_phy * phy);
+void tegra_usb_phy_preresume(struct tegra_usb_phy *phy);
 
-void tegra_usb_phy_postresume (struct tegra_usb_phy * phy);
+void tegra_usb_phy_postresume(struct tegra_usb_phy *phy);
 
-void tegra_ehci_phy_restore_start (struct tegra_usb_phy * phy,
-                                   enum tegra_usb_phy_port_speed port_speed);
+void tegra_ehci_phy_restore_start(struct tegra_usb_phy *phy,
+				 enum tegra_usb_phy_port_speed port_speed);
 
-void tegra_ehci_phy_restore_end (struct tegra_usb_phy * phy);
+void tegra_ehci_phy_restore_end(struct tegra_usb_phy *phy);
 
-void tegra_usb_phy_close (struct tegra_usb_phy * phy);
+void tegra_usb_phy_close(struct tegra_usb_phy *phy);
 
 #endif /* __MACH_USB_PHY_H */

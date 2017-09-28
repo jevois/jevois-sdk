@@ -16,43 +16,43 @@
 #include "sh_pfc.h"
 
 struct sh_pfc_window {
-  phys_addr_t phys;
-  void __iomem * virt;
-  unsigned long size;
+	phys_addr_t phys;
+	void __iomem *virt;
+	unsigned long size;
 };
 
 struct sh_pfc_chip;
 struct sh_pfc_pinctrl;
 
 struct sh_pfc {
-  struct device * dev;
-  const struct sh_pfc_soc_info * info;
-  spinlock_t lock;
-  
-  unsigned int num_windows;
-  struct sh_pfc_window * window;
-  
-  unsigned int nr_pins;
-  
-  struct sh_pfc_chip * gpio;
-  struct sh_pfc_chip * func;
-  
-  struct sh_pfc_pinctrl * pinctrl;
+	struct device *dev;
+	const struct sh_pfc_soc_info *info;
+	spinlock_t lock;
+
+	unsigned int num_windows;
+	struct sh_pfc_window *window;
+
+	unsigned int nr_pins;
+
+	struct sh_pfc_chip *gpio;
+	struct sh_pfc_chip *func;
+
+	struct sh_pfc_pinctrl *pinctrl;
 };
 
-int sh_pfc_register_gpiochip (struct sh_pfc * pfc);
-int sh_pfc_unregister_gpiochip (struct sh_pfc * pfc);
+int sh_pfc_register_gpiochip(struct sh_pfc *pfc);
+int sh_pfc_unregister_gpiochip(struct sh_pfc *pfc);
 
-int sh_pfc_register_pinctrl (struct sh_pfc * pfc);
-int sh_pfc_unregister_pinctrl (struct sh_pfc * pfc);
+int sh_pfc_register_pinctrl(struct sh_pfc *pfc);
+int sh_pfc_unregister_pinctrl(struct sh_pfc *pfc);
 
-unsigned long sh_pfc_read_raw_reg (void __iomem * mapped_reg,
-                                   unsigned long reg_width);
-void sh_pfc_write_raw_reg (void __iomem * mapped_reg, unsigned long reg_width,
-                           unsigned long data);
+unsigned long sh_pfc_read_raw_reg(void __iomem *mapped_reg,
+				  unsigned long reg_width);
+void sh_pfc_write_raw_reg(void __iomem *mapped_reg, unsigned long reg_width,
+			  unsigned long data);
 
-int sh_pfc_get_pin_index (struct sh_pfc * pfc, unsigned int pin);
-int sh_pfc_config_mux (struct sh_pfc * pfc, unsigned mark, int pinmux_type);
+int sh_pfc_get_pin_index(struct sh_pfc *pfc, unsigned int pin);
+int sh_pfc_config_mux(struct sh_pfc *pfc, unsigned mark, int pinmux_type);
 
 extern const struct sh_pfc_soc_info r8a73a4_pinmux_info;
 extern const struct sh_pfc_soc_info r8a7740_pinmux_info;

@@ -21,7 +21,7 @@ typedef unsigned char  uch;
 typedef unsigned short ush;
 typedef unsigned long  ulg;
 
-/* common constants */
+        /* common constants */
 
 #define STORED_BLOCK 0
 #define STATIC_TREES 1
@@ -34,21 +34,21 @@ typedef unsigned long  ulg;
 
 #define PRESET_DICT 0x20 /* preset dictionary flag in zlib header */
 
-/* target dependencies */
+        /* target dependencies */
 
-/* Common defaults */
+        /* Common defaults */
 
 #ifndef OS_CODE
 #  define OS_CODE  0x03  /* assume Unix */
 #endif
 
-/* functions */
+         /* functions */
 
-typedef uLong (*check_func) (uLong check, const Byte * buf,
-                             uInt len);
+typedef uLong (*check_func) (uLong check, const Byte *buf,
+				       uInt len);
 
 
-/* checksum functions */
+                        /* checksum functions */
 
 #define BASE 65521L /* largest prime smaller than 65536 */
 #define NMAX 5552
@@ -75,33 +75,32 @@ typedef uLong (*check_func) (uLong check, const Byte * buf,
      }
      if (adler != original_adler) error();
 */
-static inline uLong zlib_adler32 (uLong adler,
-                                  const Byte * buf,
-                                  uInt len)
+static inline uLong zlib_adler32(uLong adler,
+				 const Byte *buf,
+				 uInt len)
 {
-  unsigned long s1 = adler & 0xffff;
-  unsigned long s2 = (adler >> 16) & 0xffff;
-  int k;
-  
-  if (buf == NULL) { return 1L; }
-  
-  while (len > 0) {
-    k = len < NMAX ? len : NMAX;
-    len -= k;
-    while (k >= 16) {
-      DO16 (buf);
-      buf += 16;
-      k -= 16;
+    unsigned long s1 = adler & 0xffff;
+    unsigned long s2 = (adler >> 16) & 0xffff;
+    int k;
+
+    if (buf == NULL) return 1L;
+
+    while (len > 0) {
+        k = len < NMAX ? len : NMAX;
+        len -= k;
+        while (k >= 16) {
+            DO16(buf);
+	    buf += 16;
+            k -= 16;
+        }
+        if (k != 0) do {
+            s1 += *buf++;
+	    s2 += s1;
+        } while (--k);
+        s1 %= BASE;
+        s2 %= BASE;
     }
-    if (k != 0) do {
-        s1 += *buf++;
-        s2 += s1;
-      }
-      while (--k);
-    s1 %= BASE;
-    s2 %= BASE;
-  }
-  return (s2 << 16) | s1;
+    return (s2 << 16) | s1;
 }
 
 #endif /* _Z_UTIL_H */

@@ -36,7 +36,7 @@
 #define KS_INPUT_SVIDEO_2       9
 #define KS_INPUT_SVIDEO_3       10
 
-#define KS_INPUT_YUV656   15
+#define KS_INPUT_YUV656		15
 #define KS_INPUT_COUNT          10
 
 /* output channels */

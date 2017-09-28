@@ -1,7 +1,7 @@
 /* arch/arm/mach-s3c2410/include/mach/hardware.h
  *
  * Copyright (c) 2003 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * S3C2410 - hardware
  *
@@ -15,17 +15,17 @@
 
 #ifndef __ASSEMBLY__
 
-extern unsigned int s3c2410_modify_misccr (unsigned int clr, unsigned int chg);
+extern unsigned int s3c2410_modify_misccr(unsigned int clr, unsigned int chg);
 
 #ifdef CONFIG_CPU_S3C2440
 
-extern int s3c2440_set_dsc (unsigned int pin, unsigned int value);
+extern int s3c2440_set_dsc(unsigned int pin, unsigned int value);
 
 #endif /* CONFIG_CPU_S3C2440 */
 
 #ifdef CONFIG_CPU_S3C2412
 
-extern int s3c2412_gpio_set_sleepcfg (unsigned int pin, unsigned int state);
+extern int s3c2412_gpio_set_sleepcfg(unsigned int pin, unsigned int state);
 
 #endif /* CONFIG_CPU_S3C2412 */
 

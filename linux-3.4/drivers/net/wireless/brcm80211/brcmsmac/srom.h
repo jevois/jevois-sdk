@@ -14,16 +14,16 @@
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#ifndef _BRCM_SROM_H_
-#define _BRCM_SROM_H_
+#ifndef	_BRCM_SROM_H_
+#define	_BRCM_SROM_H_
 
 #include "types.h"
 
 /* Prototypes */
-extern int srom_var_init (struct si_pub * sih);
-extern void srom_free_vars (struct si_pub * sih);
+extern int srom_var_init(struct si_pub *sih);
+extern void srom_free_vars(struct si_pub *sih);
 
-extern int srom_read (struct si_pub * sih, uint bus, void * curmap,
-                      uint byteoff, uint nbytes, u16 * buf, bool check_crc);
+extern int srom_read(struct si_pub *sih, uint bus, void *curmap,
+		     uint byteoff, uint nbytes, u16 *buf, bool check_crc);
 
-#endif        /* _BRCM_SROM_H_ */
+#endif				/* _BRCM_SROM_H_ */

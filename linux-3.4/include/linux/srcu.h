@@ -20,7 +20,7 @@
  * Author: Paul McKenney <paulmck@us.ibm.com>
  *
  * For detailed explanation of Read-Copy Update mechanism see -
- *    Documentation/RCU/ *.txt
+ * 		Documentation/RCU/ *.txt
  *
  */
 
@@ -31,16 +31,16 @@
 #include <linux/rcupdate.h>
 
 struct srcu_struct_array {
-  int c[2];
+	int c[2];
 };
 
 struct srcu_struct {
-  int completed;
-  struct srcu_struct_array __percpu * per_cpu_ref;
-  struct mutex mutex;
-  #ifdef CONFIG_DEBUG_LOCK_ALLOC
-  struct lockdep_map dep_map;
-  #endif /* #ifdef CONFIG_DEBUG_LOCK_ALLOC */
+	int completed;
+	struct srcu_struct_array __percpu *per_cpu_ref;
+	struct mutex mutex;
+#ifdef CONFIG_DEBUG_LOCK_ALLOC
+	struct lockdep_map dep_map;
+#endif /* #ifdef CONFIG_DEBUG_LOCK_ALLOC */
 };
 
 #ifndef CONFIG_PREEMPT
@@ -51,28 +51,28 @@ struct srcu_struct {
 
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
 
-int __init_srcu_struct (struct srcu_struct * sp, const char * name,
-                        struct lock_class_key * key);
+int __init_srcu_struct(struct srcu_struct *sp, const char *name,
+		       struct lock_class_key *key);
 
 #define init_srcu_struct(sp) \
-  ({ \
-    static struct lock_class_key __srcu_key; \
-    \
-    __init_srcu_struct((sp), #sp, &__srcu_key); \
-  })
+({ \
+	static struct lock_class_key __srcu_key; \
+	\
+	__init_srcu_struct((sp), #sp, &__srcu_key); \
+})
 
 #else /* #ifdef CONFIG_DEBUG_LOCK_ALLOC */
 
-int init_srcu_struct (struct srcu_struct * sp);
+int init_srcu_struct(struct srcu_struct *sp);
 
 #endif /* #else #ifdef CONFIG_DEBUG_LOCK_ALLOC */
 
-void cleanup_srcu_struct (struct srcu_struct * sp);
-int __srcu_read_lock (struct srcu_struct * sp) __acquires (sp);
-void __srcu_read_unlock (struct srcu_struct * sp, int idx) __releases (sp);
-void synchronize_srcu (struct srcu_struct * sp);
-void synchronize_srcu_expedited (struct srcu_struct * sp);
-long srcu_batches_completed (struct srcu_struct * sp);
+void cleanup_srcu_struct(struct srcu_struct *sp);
+int __srcu_read_lock(struct srcu_struct *sp) __acquires(sp);
+void __srcu_read_unlock(struct srcu_struct *sp, int idx) __releases(sp);
+void synchronize_srcu(struct srcu_struct *sp);
+void synchronize_srcu_expedited(struct srcu_struct *sp);
+long srcu_batches_completed(struct srcu_struct *sp);
 
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
 
@@ -103,22 +103,22 @@ long srcu_batches_completed (struct srcu_struct * sp);
  * Similarly, we avoid claiming an SRCU read lock held if the current
  * CPU is offline.
  */
-static inline int srcu_read_lock_held (struct srcu_struct * sp)
+static inline int srcu_read_lock_held(struct srcu_struct *sp)
 {
-  if (!debug_lockdep_rcu_enabled() )
-  { return 1; }
-  if (rcu_is_cpu_idle() )
-  { return 0; }
-  if (!rcu_lockdep_current_cpu_online() )
-  { return 0; }
-  return lock_is_held (&sp->dep_map);
+	if (!debug_lockdep_rcu_enabled())
+		return 1;
+	if (rcu_is_cpu_idle())
+		return 0;
+	if (!rcu_lockdep_current_cpu_online())
+		return 0;
+	return lock_is_held(&sp->dep_map);
 }
 
 #else /* #ifdef CONFIG_DEBUG_LOCK_ALLOC */
 
-static inline int srcu_read_lock_held (struct srcu_struct * sp)
+static inline int srcu_read_lock_held(struct srcu_struct *sp)
 {
-  return 1;
+	return 1;
 }
 
 #endif /* #else #ifdef CONFIG_DEBUG_LOCK_ALLOC */
@@ -127,7 +127,7 @@ static inline int srcu_read_lock_held (struct srcu_struct * sp)
  * srcu_dereference_check - fetch SRCU-protected pointer for later dereferencing
  * @p: the pointer to fetch and protect for later dereferencing
  * @sp: pointer to the srcu_struct, which is used to check that we
- *  really are in an SRCU read-side critical section.
+ *	really are in an SRCU read-side critical section.
  * @c: condition to check for update-side use
  *
  * If PROVE_RCU is enabled, invoking this outside of an RCU read-side
@@ -136,13 +136,13 @@ static inline int srcu_read_lock_held (struct srcu_struct * sp)
  * lockdep_is_held() calls.
  */
 #define srcu_dereference_check(p, sp, c) \
-  __rcu_dereference_check((p), srcu_read_lock_held(sp) || (c), __rcu)
+	__rcu_dereference_check((p), srcu_read_lock_held(sp) || (c), __rcu)
 
 /**
  * srcu_dereference - fetch SRCU-protected pointer for later dereferencing
  * @p: the pointer to fetch and protect for later dereferencing
  * @sp: pointer to the srcu_struct, which is used to check that we
- *  really are in an SRCU read-side critical section.
+ *	really are in an SRCU read-side critical section.
  *
  * Makes rcu_dereference_check() do the dirty work.  If PROVE_RCU
  * is enabled, invoking this outside of an RCU read-side critical
@@ -167,14 +167,14 @@ static inline int srcu_read_lock_held (struct srcu_struct * sp)
  * srcu_read_unlock() in an irq handler if the matching srcu_read_lock()
  * was invoked in process context.
  */
-static inline int srcu_read_lock (struct srcu_struct * sp) __acquires (sp)
+static inline int srcu_read_lock(struct srcu_struct *sp) __acquires(sp)
 {
-  int retval = __srcu_read_lock (sp);
-  
-  rcu_lock_acquire (& (sp)->dep_map);
-  rcu_lockdep_assert (!rcu_is_cpu_idle(),
-                      "srcu_read_lock() used illegally while idle");
-  return retval;
+	int retval = __srcu_read_lock(sp);
+
+	rcu_lock_acquire(&(sp)->dep_map);
+	rcu_lockdep_assert(!rcu_is_cpu_idle(),
+			   "srcu_read_lock() used illegally while idle");
+	return retval;
 }
 
 /**
@@ -184,13 +184,13 @@ static inline int srcu_read_lock (struct srcu_struct * sp) __acquires (sp)
  *
  * Exit an SRCU read-side critical section.
  */
-static inline void srcu_read_unlock (struct srcu_struct * sp, int idx)
-__releases (sp)
+static inline void srcu_read_unlock(struct srcu_struct *sp, int idx)
+	__releases(sp)
 {
-  rcu_lockdep_assert (!rcu_is_cpu_idle(),
-                      "srcu_read_unlock() used illegally while idle");
-  rcu_lock_release (& (sp)->dep_map);
-  __srcu_read_unlock (sp, idx);
+	rcu_lockdep_assert(!rcu_is_cpu_idle(),
+			   "srcu_read_unlock() used illegally while idle");
+	rcu_lock_release(&(sp)->dep_map);
+	__srcu_read_unlock(sp, idx);
 }
 
 /**
@@ -208,15 +208,15 @@ __releases (sp)
  * a device interrupt handler and srcu_read_unlock() in the interrupted
  * task:  This will not work if interrupts are threaded.
  */
-static inline int srcu_read_lock_raw (struct srcu_struct * sp)
+static inline int srcu_read_lock_raw(struct srcu_struct *sp)
 {
-  unsigned long flags;
-  int ret;
-  
-  local_irq_save (flags);
-  ret =  __srcu_read_lock (sp);
-  local_irq_restore (flags);
-  return ret;
+	unsigned long flags;
+	int ret;
+
+	local_irq_save(flags);
+	ret =  __srcu_read_lock(sp);
+	local_irq_restore(flags);
+	return ret;
 }
 
 /**
@@ -227,13 +227,13 @@ static inline int srcu_read_lock_raw (struct srcu_struct * sp)
  * Exit an SRCU read-side critical section without lockdep-RCU checking.
  * See srcu_read_lock_raw() for more details.
  */
-static inline void srcu_read_unlock_raw (struct srcu_struct * sp, int idx)
+static inline void srcu_read_unlock_raw(struct srcu_struct *sp, int idx)
 {
-  unsigned long flags;
-  
-  local_irq_save (flags);
-  __srcu_read_unlock (sp, idx);
-  local_irq_restore (flags);
+	unsigned long flags;
+
+	local_irq_save(flags);
+	__srcu_read_unlock(sp, idx);
+	local_irq_restore(flags);
 }
 
 #endif

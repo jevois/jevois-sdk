@@ -1,7 +1,7 @@
 /*  *********************************************************************
     *  BCM1280/BCM1480 Board Support Package
     *
-    *  L2 Cache constants and macros    File: bcm1480_l2c.h
+    *  L2 Cache constants and macros		File: bcm1480_l2c.h
     *
     *  This module contains constants useful for manipulating the
     *  level 2 cache.

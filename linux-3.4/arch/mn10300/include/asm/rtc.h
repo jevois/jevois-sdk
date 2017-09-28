@@ -15,11 +15,11 @@
 
 #include <linux/init.h>
 
-extern void __init calibrate_clock (void);
+extern void __init calibrate_clock(void);
 
 #else /* !CONFIG_MN10300_RTC */
 
-static inline void calibrate_clock (void)
+static inline void calibrate_clock(void)
 {
 }
 

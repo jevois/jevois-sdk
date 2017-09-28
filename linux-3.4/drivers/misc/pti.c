@@ -36,37 +36,37 @@
 #include <linux/slab.h>
 #include <linux/uaccess.h>
 
-#define DRIVERNAME    "pti"
-#define PCINAME     "pciPTI"
-#define TTYNAME     "ttyPTI"
-#define CHARNAME    "pti"
-#define PTITTY_MINOR_START  0
-#define PTITTY_MINOR_NUM  2
-#define MAX_APP_IDS   16   /* 128 channel ids / u8 bit size */
-#define MAX_OS_IDS    16   /* 128 channel ids / u8 bit size */
-#define MAX_MODEM_IDS   16   /* 128 channel ids / u8 bit size */
-#define MODEM_BASE_ID   71   /* modem master ID address    */
-#define CONTROL_ID    72   /* control master ID address  */
-#define CONSOLE_ID    73   /* console master ID address  */
-#define OS_BASE_ID    74   /* base OS master ID address  */
-#define APP_BASE_ID   80   /* base App master ID address */
-#define CONTROL_FRAME_LEN 32   /* PTI control frame maximum size */
-#define USER_COPY_SIZE    8192 /* 8Kb buffer for user space copy */
-#define APERTURE_14   0x3800000 /* offset to first OS write addr */
-#define APERTURE_LEN    0x400000  /* address length */
+#define DRIVERNAME		"pti"
+#define PCINAME			"pciPTI"
+#define TTYNAME			"ttyPTI"
+#define CHARNAME		"pti"
+#define PTITTY_MINOR_START	0
+#define PTITTY_MINOR_NUM	2
+#define MAX_APP_IDS		16   /* 128 channel ids / u8 bit size */
+#define MAX_OS_IDS		16   /* 128 channel ids / u8 bit size */
+#define MAX_MODEM_IDS		16   /* 128 channel ids / u8 bit size */
+#define MODEM_BASE_ID		71   /* modem master ID address    */
+#define CONTROL_ID		72   /* control master ID address  */
+#define CONSOLE_ID		73   /* console master ID address  */
+#define OS_BASE_ID		74   /* base OS master ID address  */
+#define APP_BASE_ID		80   /* base App master ID address */
+#define CONTROL_FRAME_LEN	32   /* PTI control frame maximum size */
+#define USER_COPY_SIZE		8192 /* 8Kb buffer for user space copy */
+#define APERTURE_14		0x3800000 /* offset to first OS write addr */
+#define APERTURE_LEN		0x400000  /* address length */
 
 struct pti_tty {
-  struct pti_masterchannel * mc;
+	struct pti_masterchannel *mc;
 };
 
 struct pti_dev {
-  struct tty_port port;
-  unsigned long pti_addr;
-  unsigned long aperture_base;
-  void __iomem * pti_ioaddr;
-  u8 ia_app[MAX_APP_IDS];
-  u8 ia_os[MAX_OS_IDS];
-  u8 ia_modem[MAX_MODEM_IDS];
+	struct tty_port port;
+	unsigned long pti_addr;
+	unsigned long aperture_base;
+	void __iomem *pti_ioaddr;
+	u8 ia_app[MAX_APP_IDS];
+	u8 ia_os[MAX_OS_IDS];
+	u8 ia_modem[MAX_MODEM_IDS];
 };
 
 /*
@@ -74,15 +74,15 @@ struct pti_dev {
  * which keeps track of channels allocated in
  * an aperture write id.
  */
-static DEFINE_MUTEX (alloclock);
+static DEFINE_MUTEX(alloclock);
 
 static struct pci_device_id pci_ids[] __devinitconst = {
-  {PCI_DEVICE (PCI_VENDOR_ID_INTEL, 0x82B) },
-  {0}
+		{PCI_DEVICE(PCI_VENDOR_ID_INTEL, 0x82B)},
+		{0}
 };
 
-static struct tty_driver * pti_tty_driver;
-static struct pti_dev * drv_data;
+static struct tty_driver *pti_tty_driver;
+static struct pti_dev *drv_data;
 
 static unsigned int pti_console_channel;
 static unsigned int pti_control_channel;
@@ -104,45 +104,45 @@ static unsigned int pti_control_channel;
  *  regroup the appropriate message segments together reconstituting each
  *  message.
  */
-static void pti_write_to_aperture (struct pti_masterchannel * mc,
-                                   u8 * buf,
-                                   int len)
+static void pti_write_to_aperture(struct pti_masterchannel *mc,
+				  u8 *buf,
+				  int len)
 {
-  int dwordcnt;
-  int final;
-  int i;
-  u32 ptiword;
-  u32 __iomem * aperture;
-  u8 * p = buf;
-  
-  /*
-   * calculate the aperture offset from the base using the master and
-   * channel id's.
-   */
-  aperture = drv_data->pti_ioaddr + (mc->master << 15)
-             + (mc->channel << 8);
-             
-  dwordcnt = len >> 2;
-  final = len - (dwordcnt << 2);      /* final = trailing bytes    */
-  if (final == 0 && dwordcnt != 0) {  /* always need a final dword */
-    final += 4;
-    dwordcnt--;
-  }
-  
-  for (i = 0; i < dwordcnt; i++) {
-    ptiword = be32_to_cpu (* (u32 *) p);
-    p += 4;
-    iowrite32 (ptiword, aperture);
-  }
-  
-  aperture += PTI_LASTDWORD_DTS;  /* adding DTS signals that is EOM */
-  
-  ptiword = 0;
-  for (i = 0; i < final; i++)
-  { ptiword |= *p++ << (24 - (8 * i) ); }
-  
-  iowrite32 (ptiword, aperture);
-  return;
+	int dwordcnt;
+	int final;
+	int i;
+	u32 ptiword;
+	u32 __iomem *aperture;
+	u8 *p = buf;
+
+	/*
+	 * calculate the aperture offset from the base using the master and
+	 * channel id's.
+	 */
+	aperture = drv_data->pti_ioaddr + (mc->master << 15)
+		+ (mc->channel << 8);
+
+	dwordcnt = len >> 2;
+	final = len - (dwordcnt << 2);	    /* final = trailing bytes    */
+	if (final == 0 && dwordcnt != 0) {  /* always need a final dword */
+		final += 4;
+		dwordcnt--;
+	}
+
+	for (i = 0; i < dwordcnt; i++) {
+		ptiword = be32_to_cpu(*(u32 *)p);
+		p += 4;
+		iowrite32(ptiword, aperture);
+	}
+
+	aperture += PTI_LASTDWORD_DTS;	/* adding DTS signals that is EOM */
+
+	ptiword = 0;
+	for (i = 0; i < final; i++)
+		ptiword |= *p++ << (24-(8*i));
+
+	iowrite32(ptiword, aperture);
+	return;
 }
 
 /**
@@ -162,46 +162,44 @@ static void pti_write_to_aperture (struct pti_masterchannel * mc,
  *  The overhead is only 32 bytes since the driver only writes to HW
  *  in 32 byte chunks.
  */
-static void pti_control_frame_built_and_sent (struct pti_masterchannel * mc,
-    const char * thread_name)
+static void pti_control_frame_built_and_sent(struct pti_masterchannel *mc,
+					     const char *thread_name)
 {
-  /*
-   * Since we access the comm member in current's task_struct, we only
-   * need to be as large as what 'comm' in that structure is.
-   */
-  char comm[TASK_COMM_LEN];
-  struct pti_masterchannel mccontrol = {.master = CONTROL_ID,
-    .channel = 0
-  };
-  const char * thread_name_p;
-  const char * control_format = "%3d %3d %s";
-  u8 control_frame[CONTROL_FRAME_LEN];
-  
-  if (!thread_name) {
-    if (!in_interrupt() )
-    { get_task_comm (comm, current); }
-    else
-    { strncpy (comm, "Interrupt", TASK_COMM_LEN); }
-    
-    /* Absolutely ensure our buffer is zero terminated. */
-    comm[TASK_COMM_LEN - 1] = 0;
-    thread_name_p = comm;
-  }
-  else {
-    thread_name_p = thread_name;
-  }
-  
-  mccontrol.channel = pti_control_channel;
-  pti_control_channel = (pti_control_channel + 1) & 0x7f;
-  
-  snprintf (control_frame, CONTROL_FRAME_LEN, control_format, mc->master,
-            mc->channel, thread_name_p);
-  pti_write_to_aperture (&mccontrol, control_frame, strlen (control_frame) );
+	/*
+	 * Since we access the comm member in current's task_struct, we only
+	 * need to be as large as what 'comm' in that structure is.
+	 */
+	char comm[TASK_COMM_LEN];
+	struct pti_masterchannel mccontrol = {.master = CONTROL_ID,
+					      .channel = 0};
+	const char *thread_name_p;
+	const char *control_format = "%3d %3d %s";
+	u8 control_frame[CONTROL_FRAME_LEN];
+
+	if (!thread_name) {
+		if (!in_interrupt())
+			get_task_comm(comm, current);
+		else
+			strncpy(comm, "Interrupt", TASK_COMM_LEN);
+
+		/* Absolutely ensure our buffer is zero terminated. */
+		comm[TASK_COMM_LEN-1] = 0;
+		thread_name_p = comm;
+	} else {
+		thread_name_p = thread_name;
+	}
+
+	mccontrol.channel = pti_control_channel;
+	pti_control_channel = (pti_control_channel + 1) & 0x7f;
+
+	snprintf(control_frame, CONTROL_FRAME_LEN, control_format, mc->master,
+		mc->channel, thread_name_p);
+	pti_write_to_aperture(&mccontrol, control_frame, strlen(control_frame));
 }
 
 /**
  *  pti_write_full_frame_to_aperture()- high level function to
- *          write to PTI.
+ *					write to PTI.
  *
  *  @mc:  The 'aperture'. It's part of a write address that holds
  *        a master and channel ID.
@@ -213,12 +211,12 @@ static void pti_control_frame_built_and_sent (struct pti_masterchannel * mc,
  *  are calling the high level function to write to PTI meaning that it is
  *  possible to add a control frame before sending the content.
  */
-static void pti_write_full_frame_to_aperture (struct pti_masterchannel * mc,
-    const unsigned char * buf,
-    int len)
+static void pti_write_full_frame_to_aperture(struct pti_masterchannel *mc,
+						const unsigned char *buf,
+						int len)
 {
-  pti_control_frame_built_and_sent (mc, NULL);
-  pti_write_to_aperture (mc, (u8 *) buf, len);
+	pti_control_frame_built_and_sent(mc, NULL);
+	pti_write_to_aperture(mc, (u8 *)buf, len);
 }
 
 /**
@@ -233,48 +231,48 @@ static void pti_write_full_frame_to_aperture (struct pti_masterchannel * mc,
  *               'NULL' if using the 'current' global variable.
  *
  * Returns:
- *  pti_masterchannel struct with master, channel ID address
- *  0 for error
+ *	pti_masterchannel struct with master, channel ID address
+ *	0 for error
  *
  * Each bit in the arrays ia_app and ia_os correspond to a master and
  * channel id. The bit is one if the id is taken and 0 if free. For
  * every master there are 128 channel id's.
  */
-static struct pti_masterchannel * get_id (u8 * id_array,
-    int max_ids,
-    int base_id,
-    const char * thread_name)
+static struct pti_masterchannel *get_id(u8 *id_array,
+					int max_ids,
+					int base_id,
+					const char *thread_name)
 {
-  struct pti_masterchannel * mc;
-  int i, j, mask;
-  
-  mc = kmalloc (sizeof (struct pti_masterchannel), GFP_KERNEL);
-  if (mc == NULL)
-  { return NULL; }
-  
-  /* look for a byte with a free bit */
-  for (i = 0; i < max_ids; i++)
-    if (id_array[i] != 0xff)
-    { break; }
-  if (i == max_ids) {
-    kfree (mc);
-    return NULL;
-  }
-  /* find the bit in the 128 possible channel opportunities */
-  mask = 0x80;
-  for (j = 0; j < 8; j++) {
-    if ( (id_array[i] & mask) == 0)
-    { break; }
-    mask >>= 1;
-  }
-  
-  /* grab it */
-  id_array[i] |= mask;
-  mc->master  = base_id;
-  mc->channel = ( (i & 0xf) << 3) + j;
-  /* write new master Id / channel Id allocation to channel control */
-  pti_control_frame_built_and_sent (mc, thread_name);
-  return mc;
+	struct pti_masterchannel *mc;
+	int i, j, mask;
+
+	mc = kmalloc(sizeof(struct pti_masterchannel), GFP_KERNEL);
+	if (mc == NULL)
+		return NULL;
+
+	/* look for a byte with a free bit */
+	for (i = 0; i < max_ids; i++)
+		if (id_array[i] != 0xff)
+			break;
+	if (i == max_ids) {
+		kfree(mc);
+		return NULL;
+	}
+	/* find the bit in the 128 possible channel opportunities */
+	mask = 0x80;
+	for (j = 0; j < 8; j++) {
+		if ((id_array[i] & mask) == 0)
+			break;
+		mask >>= 1;
+	}
+
+	/* grab it */
+	id_array[i] |= mask;
+	mc->master  = base_id;
+	mc->channel = ((i & 0xf)<<3) + j;
+	/* write new master Id / channel Id allocation to channel control */
+	pti_control_frame_built_and_sent(mc, thread_name);
+	return mc;
 }
 
 /*
@@ -286,8 +284,8 @@ static struct pti_masterchannel * get_id (u8 * id_array,
 
 /**
  * pti_request_masterchannel()- Kernel API function used to allocate
- *        a master, channel ID address
- *        to write to PTI HW.
+ *				a master, channel ID address
+ *				to write to PTI HW.
  *
  * @type:        0- request Application  master, channel aperture ID
  *                  write address.
@@ -300,79 +298,76 @@ static struct pti_masterchannel * get_id (u8 * id_array,
  *               'NULL' if using the 'current' global variable.
  *
  * Returns:
- *  pti_masterchannel struct
- *  0 for error
+ *	pti_masterchannel struct
+ *	0 for error
  */
-struct pti_masterchannel * pti_request_masterchannel (u8 type,
-    const char * thread_name)
+struct pti_masterchannel *pti_request_masterchannel(u8 type,
+						    const char *thread_name)
 {
-  struct pti_masterchannel * mc;
-  
-  mutex_lock (&alloclock);
-  
-  switch (type) {
-  
-  case 0:
-    mc = get_id (drv_data->ia_app, MAX_APP_IDS,
-                 APP_BASE_ID, thread_name);
-    break;
-    
-  case 1:
-    mc = get_id (drv_data->ia_os, MAX_OS_IDS,
-                 OS_BASE_ID, thread_name);
-    break;
-    
-  case 2:
-    mc = get_id (drv_data->ia_modem, MAX_MODEM_IDS,
-                 MODEM_BASE_ID, thread_name);
-    break;
-  default:
-    mc = NULL;
-  }
-  
-  mutex_unlock (&alloclock);
-  return mc;
+	struct pti_masterchannel *mc;
+
+	mutex_lock(&alloclock);
+
+	switch (type) {
+
+	case 0:
+		mc = get_id(drv_data->ia_app, MAX_APP_IDS,
+			    APP_BASE_ID, thread_name);
+		break;
+
+	case 1:
+		mc = get_id(drv_data->ia_os, MAX_OS_IDS,
+			    OS_BASE_ID, thread_name);
+		break;
+
+	case 2:
+		mc = get_id(drv_data->ia_modem, MAX_MODEM_IDS,
+			    MODEM_BASE_ID, thread_name);
+		break;
+	default:
+		mc = NULL;
+	}
+
+	mutex_unlock(&alloclock);
+	return mc;
 }
-EXPORT_SYMBOL_GPL (pti_request_masterchannel);
+EXPORT_SYMBOL_GPL(pti_request_masterchannel);
 
 /**
  * pti_release_masterchannel()- Kernel API function used to release
- *        a master, channel ID address
- *        used to write to PTI HW.
+ *				a master, channel ID address
+ *				used to write to PTI HW.
  *
  * @mc: master, channel apeture ID address to be released.  This
  *      will de-allocate the structure via kfree().
  */
-void pti_release_masterchannel (struct pti_masterchannel * mc)
+void pti_release_masterchannel(struct pti_masterchannel *mc)
 {
-  u8 master, channel, i;
-  
-  mutex_lock (&alloclock);
-  
-  if (mc) {
-    master = mc->master;
-    channel = mc->channel;
-    
-    if (master == APP_BASE_ID) {
-      i = channel >> 3;
-      drv_data->ia_app[i] &=  ~ (0x80 >> (channel & 0x7) );
-    }
-    else
-      if (master == OS_BASE_ID) {
-        i = channel >> 3;
-        drv_data->ia_os[i] &= ~ (0x80 >> (channel & 0x7) );
-      }
-      else {
-        i = channel >> 3;
-        drv_data->ia_modem[i] &= ~ (0x80 >> (channel & 0x7) );
-      }
-      
-    kfree (mc);
-  }
-  
-  mutex_unlock (&alloclock);
+	u8 master, channel, i;
+
+	mutex_lock(&alloclock);
+
+	if (mc) {
+		master = mc->master;
+		channel = mc->channel;
+
+		if (master == APP_BASE_ID) {
+			i = channel >> 3;
+			drv_data->ia_app[i] &=  ~(0x80>>(channel & 0x7));
+		} else if (master == OS_BASE_ID) {
+			i = channel >> 3;
+			drv_data->ia_os[i] &= ~(0x80>>(channel & 0x7));
+		} else {
+			i = channel >> 3;
+			drv_data->ia_modem[i] &= ~(0x80>>(channel & 0x7));
+		}
+
+		kfree(mc);
+	}
+
+	mutex_unlock(&alloclock);
 }
-EXPORT_SYMBOL_GPL (pti_release_masterchannel);
+EXPORT_SYMBOL_GPL(pti_release_masterchannel);
 
 /**
  * pti_writedata()- Kernel API function used to write trace
@@ -385,36 +380,36 @@ EXPORT_SYMBOL_GPL (pti_release_masterchannel);
  * @count: Size of buf. Value of 0 or a negative number will
  *         return with no write occuring.
  */
-void pti_writedata (struct pti_masterchannel * mc, u8 * buf, int count)
+void pti_writedata(struct pti_masterchannel *mc, u8 *buf, int count)
 {
-  /*
-   * since this function is exported, this is treated like an
-   * API function, thus, all parameters should
-   * be checked for validity.
-   */
-  if ( (mc != NULL) && (buf != NULL) && (count > 0) )
-  { pti_write_to_aperture (mc, buf, count); }
-  return;
+	/*
+	 * since this function is exported, this is treated like an
+	 * API function, thus, all parameters should
+	 * be checked for validity.
+	 */
+	if ((mc != NULL) && (buf != NULL) && (count > 0))
+		pti_write_to_aperture(mc, buf, count);
+	return;
 }
-EXPORT_SYMBOL_GPL (pti_writedata);
+EXPORT_SYMBOL_GPL(pti_writedata);
 
 /**
  * pti_pci_remove()- Driver exit method to remove PTI from
- *       PCI bus.
+ *		   PCI bus.
  * @pdev: variable containing pci info of PTI.
  */
-static void __devexit pti_pci_remove (struct pci_dev * pdev)
+static void __devexit pti_pci_remove(struct pci_dev *pdev)
 {
-  struct pti_dev * drv_data;
-  
-  drv_data = pci_get_drvdata (pdev);
-  if (drv_data != NULL) {
-    pci_iounmap (pdev, drv_data->pti_ioaddr);
-    pci_set_drvdata (pdev, NULL);
-    kfree (drv_data);
-    pci_release_region (pdev, 1);
-    pci_disable_device (pdev);
-  }
+	struct pti_dev *drv_data;
+
+	drv_data = pci_get_drvdata(pdev);
+	if (drv_data != NULL) {
+		pci_iounmap(pdev, drv_data->pti_ioaddr);
+		pci_set_drvdata(pdev, NULL);
+		kfree(drv_data);
+		pci_release_region(pdev, 1);
+		pci_disable_device(pdev);
+	}
 }
 
 /*
@@ -430,8 +425,8 @@ static void __devexit pti_pci_remove (struct pci_dev * pdev)
  * @filp: filp interface pased to tty_port_open() call.
  *
  * Returns:
- *  int, 0 for success
- *  otherwise, fail value
+ *	int, 0 for success
+ *	otherwise, fail value
  *
  * The main purpose of using the tty device interface is for
  * each tty port to have a unique PTI write aperture.  In an
@@ -442,16 +437,16 @@ static void __devexit pti_pci_remove (struct pci_dev * pdev)
  * master IDs.  These messages go through the PTI HW and out of
  * the handheld platform and to the Fido/Lauterbach device.
  */
-static int pti_tty_driver_open (struct tty_struct * tty, struct file * filp)
+static int pti_tty_driver_open(struct tty_struct *tty, struct file *filp)
 {
-  /*
-   * we actually want to allocate a new channel per open, per
-   * system arch.  HW gives more than plenty channels for a single
-   * system task to have its own channel to write trace data. This
-   * also removes a locking requirement for the actual write
-   * procedure.
-   */
-  return tty_port_open (&drv_data->port, tty, filp);
+	/*
+	 * we actually want to allocate a new channel per open, per
+	 * system arch.  HW gives more than plenty channels for a single
+	 * system task to have its own channel to write trace data. This
+	 * also removes a locking requirement for the actual write
+	 * procedure.
+	 */
+	return tty_port_open(&drv_data->port, tty, filp);
 }
 
 /**
@@ -465,63 +460,63 @@ static int pti_tty_driver_open (struct tty_struct * tty, struct file * filp)
  * syslog daemon messages to the PTI HW and out of the handheld platform
  * and to the Fido/Lauterbach device.
  */
-static void pti_tty_driver_close (struct tty_struct * tty, struct file * filp)
+static void pti_tty_driver_close(struct tty_struct *tty, struct file *filp)
 {
-  tty_port_close (&drv_data->port, tty, filp);
+	tty_port_close(&drv_data->port, tty, filp);
 }
 
 /**
  * pti_tty_install()- Used to set up specific master-channels
- *          to tty ports for organizational purposes when
- *          tracing viewed from debuging tools.
+ *		      to tty ports for organizational purposes when
+ *		      tracing viewed from debuging tools.
  *
  * @driver: tty driver information.
  * @tty: tty struct containing pti information.
  *
  * Returns:
- *  0 for success
- *  otherwise, error
+ *	0 for success
+ *	otherwise, error
  */
-static int pti_tty_install (struct tty_driver * driver, struct tty_struct * tty)
+static int pti_tty_install(struct tty_driver *driver, struct tty_struct *tty)
 {
-  int idx = tty->index;
-  struct pti_tty * pti_tty_data;
-  int ret = tty_standard_install (driver, tty);
-  
-  if (ret == 0) {
-    pti_tty_data = kmalloc (sizeof (struct pti_tty), GFP_KERNEL);
-    if (pti_tty_data == NULL)
-    { return -ENOMEM; }
-    
-    if (idx == PTITTY_MINOR_START)
-    { pti_tty_data->mc = pti_request_masterchannel (0, NULL); }
-    else
-    { pti_tty_data->mc = pti_request_masterchannel (2, NULL); }
-    
-    if (pti_tty_data->mc == NULL) {
-      kfree (pti_tty_data);
-      return -ENXIO;
-    }
-    tty->driver_data = pti_tty_data;
-  }
-  
-  return ret;
+	int idx = tty->index;
+	struct pti_tty *pti_tty_data;
+	int ret = tty_standard_install(driver, tty);
+
+	if (ret == 0) {
+		pti_tty_data = kmalloc(sizeof(struct pti_tty), GFP_KERNEL);
+		if (pti_tty_data == NULL)
+			return -ENOMEM;
+
+		if (idx == PTITTY_MINOR_START)
+			pti_tty_data->mc = pti_request_masterchannel(0, NULL);
+		else
+			pti_tty_data->mc = pti_request_masterchannel(2, NULL);
+
+		if (pti_tty_data->mc == NULL) {
+			kfree(pti_tty_data);
+			return -ENXIO;
+		}
+		tty->driver_data = pti_tty_data;
+	}
+
+	return ret;
 }
 
 /**
  * pti_tty_cleanup()- Used to de-allocate master-channel resources
- *          tied to tty's of this driver.
+ *		      tied to tty's of this driver.
  *
  * @tty: tty struct containing pti information.
  */
-static void pti_tty_cleanup (struct tty_struct * tty)
+static void pti_tty_cleanup(struct tty_struct *tty)
 {
-  struct pti_tty * pti_tty_data = tty->driver_data;
-  if (pti_tty_data == NULL)
-  { return; }
-  pti_release_masterchannel (pti_tty_data->mc);
-  kfree (pti_tty_data);
-  tty->driver_data = NULL;
+	struct pti_tty *pti_tty_data = tty->driver_data;
+	if (pti_tty_data == NULL)
+		return;
+	pti_release_masterchannel(pti_tty_data->mc);
+	kfree(pti_tty_data);
+	tty->driver_data = NULL;
 }
 
 /**
@@ -534,23 +529,23 @@ static void pti_tty_cleanup (struct tty_struct * tty)
  * @len:  # of byte to write.
  *
  * Returns:
- *  int, # of bytes written
- *  otherwise, error
+ *	int, # of bytes written
+ *	otherwise, error
  */
-static int pti_tty_driver_write (struct tty_struct * tty,
-                                 const unsigned char * buf, int len)
+static int pti_tty_driver_write(struct tty_struct *tty,
+	const unsigned char *buf, int len)
 {
-  struct pti_tty * pti_tty_data = tty->driver_data;
-  if ( (pti_tty_data != NULL) && (pti_tty_data->mc != NULL) ) {
-    pti_write_to_aperture (pti_tty_data->mc, (u8 *) buf, len);
-    return len;
-  }
-  /*
-   * we can't write to the pti hardware if the private driver_data
-   * and the mc address is not there.
-   */
-  else
-  { return -EFAULT; }
+	struct pti_tty *pti_tty_data = tty->driver_data;
+	if ((pti_tty_data != NULL) && (pti_tty_data->mc != NULL)) {
+		pti_write_to_aperture(pti_tty_data->mc, (u8 *)buf, len);
+		return len;
+	}
+	/*
+	 * we can't write to the pti hardware if the private driver_data
+	 * and the mc address is not there.
+	 */
+	else
+		return -EFAULT;
 }
 
 /**
@@ -558,9 +553,9 @@ static int pti_tty_driver_write (struct tty_struct * tty,
  *
  * @tty: contains tty info of the pti driver.
  */
-static int pti_tty_write_room (struct tty_struct * tty)
+static int pti_tty_write_room(struct tty_struct *tty)
 {
-  return 2048;
+	return 2048;
 }
 
 /**
@@ -572,24 +567,24 @@ static int pti_tty_write_room (struct tty_struct * tty)
  *                 the allocated application PTI aperture write address.
  *
  * Returns:
- *  int, 0 for success
- *  otherwise, a fail value
+ *	int, 0 for success
+ *	otherwise, a fail value
  */
-static int pti_char_open (struct inode * inode, struct file * filp)
+static int pti_char_open(struct inode *inode, struct file *filp)
 {
-  struct pti_masterchannel * mc;
-  
-  /*
-   * We really do want to fail immediately if
-   * pti_request_masterchannel() fails,
-   * before assigning the value to filp->private_data.
-   * Slightly easier to debug if this driver needs debugging.
-   */
-  mc = pti_request_masterchannel (0, NULL);
-  if (mc == NULL)
-  { return -ENOMEM; }
-  filp->private_data = mc;
-  return 0;
+	struct pti_masterchannel *mc;
+
+	/*
+	 * We really do want to fail immediately if
+	 * pti_request_masterchannel() fails,
+	 * before assigning the value to filp->private_data.
+	 * Slightly easier to debug if this driver needs debugging.
+	 */
+	mc = pti_request_masterchannel(0, NULL);
+	if (mc == NULL)
+		return -ENOMEM;
+	filp->private_data = mc;
+	return 0;
 }
 
 /**
@@ -601,13 +596,13 @@ static int pti_char_open (struct inode * inode, struct file * filp)
  *         ID to be released by the PTI device.
  *
  * Returns:
- *  always 0
+ *	always 0
  */
-static int pti_char_release (struct inode * inode, struct file * filp)
+static int pti_char_release(struct inode *inode, struct file *filp)
 {
-  pti_release_masterchannel (filp->private_data);
-  filp->private_data = NULL;
-  return 0;
+	pti_release_masterchannel(filp->private_data);
+	filp->private_data = NULL;
+	return 0;
 }
 
 /**
@@ -621,8 +616,8 @@ static int pti_char_release (struct inode * inode, struct file * filp)
  * @ppose: Not used in this function implementation.
  *
  * Returns:
- *  int, # of bytes written
- *  otherwise, error value
+ *	int, # of bytes written
+ *	otherwise, error value
  *
  * Notes: From side discussions with Alan Cox and experimenting
  * with PTI debug HW like Nokia's Fido box and Lauterbach
@@ -630,67 +625,66 @@ static int pti_char_release (struct inode * inode, struct file * filp)
  * deemed an appropriate size for this type of usage with
  * debugging HW.
  */
-static ssize_t pti_char_write (struct file * filp, const char __user * data,
-                               size_t len, loff_t * ppose)
+static ssize_t pti_char_write(struct file *filp, const char __user *data,
+			      size_t len, loff_t *ppose)
 {
-  struct pti_masterchannel * mc;
-  void * kbuf;
-  const char __user * tmp;
-  size_t size = USER_COPY_SIZE;
-  size_t n = 0;
-  
-  tmp = data;
-  mc = filp->private_data;
-  
-  kbuf = kmalloc (size, GFP_KERNEL);
-  if (kbuf == NULL)  {
-    pr_err ("%s(%d): buf allocation failed\n",
-            __func__, __LINE__);
-    return -ENOMEM;
-  }
-  
-  do {
-    if (len - n > USER_COPY_SIZE)
-    { size = USER_COPY_SIZE; }
-    else
-    { size = len - n; }
-    
-    if (copy_from_user (kbuf, tmp, size) ) {
-      kfree (kbuf);
-      return n ? n : -EFAULT;
-    }
-    
-    pti_write_to_aperture (mc, kbuf, size);
-    n  += size;
-    tmp += size;
-    
-  }
-  while (len > n);
-  
-  kfree (kbuf);
-  return len;
+	struct pti_masterchannel *mc;
+	void *kbuf;
+	const char __user *tmp;
+	size_t size = USER_COPY_SIZE;
+	size_t n = 0;
+
+	tmp = data;
+	mc = filp->private_data;
+
+	kbuf = kmalloc(size, GFP_KERNEL);
+	if (kbuf == NULL)  {
+		pr_err("%s(%d): buf allocation failed\n",
+			__func__, __LINE__);
+		return -ENOMEM;
+	}
+
+	do {
+		if (len - n > USER_COPY_SIZE)
+			size = USER_COPY_SIZE;
+		else
+			size = len - n;
+
+		if (copy_from_user(kbuf, tmp, size)) {
+			kfree(kbuf);
+			return n ? n : -EFAULT;
+		}
+
+		pti_write_to_aperture(mc, kbuf, size);
+		n  += size;
+		tmp += size;
+
+	} while (len > n);
+
+	kfree(kbuf);
+	return len;
 }
 
 static const struct tty_operations pti_tty_driver_ops = {
-  .open   = pti_tty_driver_open,
-  .close    = pti_tty_driver_close,
-  .write    = pti_tty_driver_write,
-  .write_room = pti_tty_write_room,
-  .install  = pti_tty_install,
-  .cleanup  = pti_tty_cleanup
+	.open		= pti_tty_driver_open,
+	.close		= pti_tty_driver_close,
+	.write		= pti_tty_driver_write,
+	.write_room	= pti_tty_write_room,
+	.install	= pti_tty_install,
+	.cleanup	= pti_tty_cleanup
 };
 
 static const struct file_operations pti_char_driver_ops = {
-  .owner    = THIS_MODULE,
-  .write    = pti_char_write,
-  .open   = pti_char_open,
-  .release  = pti_char_release,
+	.owner		= THIS_MODULE,
+	.write		= pti_char_write,
+	.open		= pti_char_open,
+	.release	= pti_char_release,
 };
 
 static struct miscdevice pti_char_driver = {
-  .minor    = MISC_DYNAMIC_MINOR,
-  .name   = CHARNAME,
-  .fops   = &pti_char_driver_ops
+	.minor		= MISC_DYNAMIC_MINOR,
+	.name		= CHARNAME,
+	.fops		= &pti_char_driver_ops
 };
 
 /**
@@ -700,33 +694,32 @@ static struct miscdevice pti_char_driver = {
  * @buf: Data to be written.
  * @len: Length of buf.
  */
-static void pti_console_write (struct console * c, const char * buf, unsigned len)
+static void pti_console_write(struct console *c, const char *buf, unsigned len)
 {
-  static struct pti_masterchannel mc = {.master  = CONSOLE_ID,
-    .channel = 0
-  };
-  
-  mc.channel = pti_console_channel;
-  pti_console_channel = (pti_console_channel + 1) & 0x7f;
-  
-  pti_write_full_frame_to_aperture (&mc, buf, len);
+	static struct pti_masterchannel mc = {.master  = CONSOLE_ID,
+					      .channel = 0};
+
+	mc.channel = pti_console_channel;
+	pti_console_channel = (pti_console_channel + 1) & 0x7f;
+
+	pti_write_full_frame_to_aperture(&mc, buf, len);
 }
 
 /**
  * pti_console_device()-  Return the driver tty structure and set the
- *        associated index implementation.
+ *			  associated index implementation.
  *
  * @c:     Console device of the driver.
  * @index: index associated with c.
  *
  * Returns:
- *  always value of pti_tty_driver structure when this function
- *  is called.
+ *	always value of pti_tty_driver structure when this function
+ *	is called.
  */
-static struct tty_driver * pti_console_device (struct console * c, int * index)
+static struct tty_driver *pti_console_device(struct console *c, int *index)
 {
-  *index = c->index;
-  return pti_tty_driver;
+	*index = c->index;
+	return pti_tty_driver;
 }
 
 /**
@@ -736,13 +729,13 @@ static struct tty_driver * pti_console_device (struct console * c, int * index)
  * @opts:  Not used.
  *
  * Returns:
- *  always 0.
+ *	always 0.
  */
-static int pti_console_setup (struct console * c, char * opts)
+static int pti_console_setup(struct console *c, char *opts)
 {
-  pti_console_channel = 0;
-  pti_control_channel = 0;
-  return 0;
+	pti_console_channel = 0;
+	pti_control_channel = 0;
+	return 0;
 }
 
 /*
@@ -756,12 +749,12 @@ static int pti_console_setup (struct console * c, char * opts)
  * will be open for a really long time.
  */
 static struct console pti_console = {
-  .name   = TTYNAME,
-  .write    = pti_console_write,
-  .device   = pti_console_device,
-  .setup    = pti_console_setup,
-  .flags    = CON_PRINTBUFFER,
-  .index    = 0,
+	.name		= TTYNAME,
+	.write		= pti_console_write,
+	.device		= pti_console_device,
+	.setup		= pti_console_setup,
+	.flags		= CON_PRINTBUFFER,
+	.index		= 0,
 };
 
 /**
@@ -772,17 +765,17 @@ static struct console pti_console = {
  * @tty-  The tty struct associated with this device.
  *
  * Returns:
- *  always returns 0
+ *	always returns 0
  *
  * Notes: The primary purpose of the PTI tty port 0 is to hook
  * the syslog daemon to it; thus this port will be open for a
  * very long time.
  */
-static int pti_port_activate (struct tty_port * port, struct tty_struct * tty)
+static int pti_port_activate(struct tty_port *port, struct tty_struct *tty)
 {
-  if (port->tty->index == PTITTY_MINOR_START)
-  { console_start (&pti_console); }
-  return 0;
+	if (port->tty->index == PTITTY_MINOR_START)
+		console_start(&pti_console);
+	return 0;
 }
 
 /**
@@ -795,15 +788,15 @@ static int pti_port_activate (struct tty_port * port, struct tty_struct * tty)
  * the syslog daemon to it; thus this port will be open for a
  * very long time.
  */
-static void pti_port_shutdown (struct tty_port * port)
+static void pti_port_shutdown(struct tty_port *port)
 {
-  if (port->tty->index == PTITTY_MINOR_START)
-  { console_stop (&pti_console); }
+	if (port->tty->index == PTITTY_MINOR_START)
+		console_stop(&pti_console);
 }
 
 static const struct tty_port_operations tty_port_ops = {
-  .activate = pti_port_activate,
-  .shutdown = pti_port_shutdown,
+	.activate = pti_port_activate,
+	.shutdown = pti_port_shutdown,
 };
 
 /*
@@ -813,89 +806,89 @@ static const struct tty_port_operations tty_port_ops = {
 
 /**
  * pti_pci_probe()- Used to detect pti on the pci bus and set
- *        things up in the driver.
+ *		    things up in the driver.
  *
  * @pdev- pci_dev struct values for pti.
  * @ent-  pci_device_id struct for pti driver.
  *
  * Returns:
- *  0 for success
- *  otherwise, error
+ *	0 for success
+ *	otherwise, error
  */
-static int __devinit pti_pci_probe (struct pci_dev * pdev,
-                                    const struct pci_device_id * ent)
+static int __devinit pti_pci_probe(struct pci_dev *pdev,
+		const struct pci_device_id *ent)
 {
-  int retval = -EINVAL;
-  int pci_bar = 1;
-  
-  dev_dbg (&pdev->dev, "%s %s(%d): PTI PCI ID %04x:%04x\n", __FILE__,
-           __func__, __LINE__, pdev->vendor, pdev->device);
-           
-  retval = misc_register (&pti_char_driver);
-  if (retval) {
-    pr_err ("%s(%d): CHAR registration failed of pti driver\n",
-            __func__, __LINE__);
-    pr_err ("%s(%d): Error value returned: %d\n",
-            __func__, __LINE__, retval);
-    return retval;
-  }
-  
-  retval = pci_enable_device (pdev);
-  if (retval != 0) {
-    dev_err (&pdev->dev,
-             "%s: pci_enable_device() returned error %d\n",
-             __func__, retval);
-    return retval;
-  }
-  
-  drv_data = kzalloc (sizeof (*drv_data), GFP_KERNEL);
-  
-  if (drv_data == NULL) {
-    retval = -ENOMEM;
-    dev_err (&pdev->dev,
-             "%s(%d): kmalloc() returned NULL memory.\n",
-             __func__, __LINE__);
-    return retval;
-  }
-  drv_data->pti_addr = pci_resource_start (pdev, pci_bar);
-  
-  retval = pci_request_region (pdev, pci_bar, dev_name (&pdev->dev) );
-  if (retval != 0) {
-    dev_err (&pdev->dev,
-             "%s(%d): pci_request_region() returned error %d\n",
-             __func__, __LINE__, retval);
-    kfree (drv_data);
-    return retval;
-  }
-  drv_data->aperture_base = drv_data->pti_addr + APERTURE_14;
-  drv_data->pti_ioaddr =
-    ioremap_nocache ( (u32) drv_data->aperture_base,
-                      APERTURE_LEN);
-  if (!drv_data->pti_ioaddr) {
-    pci_release_region (pdev, pci_bar);
-    retval = -ENOMEM;
-    kfree (drv_data);
-    return retval;
-  }
-  
-  pci_set_drvdata (pdev, drv_data);
-  
-  tty_port_init (&drv_data->port);
-  drv_data->port.ops = &tty_port_ops;
-  
-  tty_register_device (pti_tty_driver, 0, &pdev->dev);
-  tty_register_device (pti_tty_driver, 1, &pdev->dev);
-  
-  register_console (&pti_console);
-  
-  return retval;
+	int retval = -EINVAL;
+	int pci_bar = 1;
+
+	dev_dbg(&pdev->dev, "%s %s(%d): PTI PCI ID %04x:%04x\n", __FILE__,
+			__func__, __LINE__, pdev->vendor, pdev->device);
+
+	retval = misc_register(&pti_char_driver);
+	if (retval) {
+		pr_err("%s(%d): CHAR registration failed of pti driver\n",
+			__func__, __LINE__);
+		pr_err("%s(%d): Error value returned: %d\n",
+			__func__, __LINE__, retval);
+		return retval;
+	}
+
+	retval = pci_enable_device(pdev);
+	if (retval != 0) {
+		dev_err(&pdev->dev,
+			"%s: pci_enable_device() returned error %d\n",
+			__func__, retval);
+		return retval;
+	}
+
+	drv_data = kzalloc(sizeof(*drv_data), GFP_KERNEL);
+
+	if (drv_data == NULL) {
+		retval = -ENOMEM;
+		dev_err(&pdev->dev,
+			"%s(%d): kmalloc() returned NULL memory.\n",
+			__func__, __LINE__);
+		return retval;
+	}
+	drv_data->pti_addr = pci_resource_start(pdev, pci_bar);
+
+	retval = pci_request_region(pdev, pci_bar, dev_name(&pdev->dev));
+	if (retval != 0) {
+		dev_err(&pdev->dev,
+			"%s(%d): pci_request_region() returned error %d\n",
+			__func__, __LINE__, retval);
+		kfree(drv_data);
+		return retval;
+	}
+	drv_data->aperture_base = drv_data->pti_addr+APERTURE_14;
+	drv_data->pti_ioaddr =
+		ioremap_nocache((u32)drv_data->aperture_base,
+		APERTURE_LEN);
+	if (!drv_data->pti_ioaddr) {
+		pci_release_region(pdev, pci_bar);
+		retval = -ENOMEM;
+		kfree(drv_data);
+		return retval;
+	}
+
+	pci_set_drvdata(pdev, drv_data);
+
+	tty_port_init(&drv_data->port);
+	drv_data->port.ops = &tty_port_ops;
+
+	tty_register_device(pti_tty_driver, 0, &pdev->dev);
+	tty_register_device(pti_tty_driver, 1, &pdev->dev);
+
+	register_console(&pti_console);
+
+	return retval;
 }
 
 static struct pci_driver pti_pci_driver = {
-  .name   = PCINAME,
-  .id_table = pci_ids,
-  .probe    = pti_pci_probe,
-  .remove   = pti_pci_remove,
+	.name		= PCINAME,
+	.id_table	= pci_ids,
+	.probe		= pti_pci_probe,
+	.remove		= pti_pci_remove,
 };
 
 /**
@@ -904,100 +897,100 @@ static struct pci_driver pti_pci_driver = {
  *             It starts the registration process with the kernel.
  *
  * Returns:
- *  int __init, 0 for success
- *  otherwise value is an error
+ *	int __init, 0 for success
+ *	otherwise value is an error
  *
  */
-static int __init pti_init (void)
+static int __init pti_init(void)
 {
-  int retval = -EINVAL;
-  
-  /* First register module as tty device */
-  
-  pti_tty_driver = alloc_tty_driver (PTITTY_MINOR_NUM);
-  if (pti_tty_driver == NULL) {
-    pr_err ("%s(%d): Memory allocation failed for ptiTTY driver\n",
-            __func__, __LINE__);
-    return -ENOMEM;
-  }
-  
-  pti_tty_driver->driver_name   = DRIVERNAME;
-  pti_tty_driver->name      = TTYNAME;
-  pti_tty_driver->major     = 0;
-  pti_tty_driver->minor_start   = PTITTY_MINOR_START;
-  pti_tty_driver->type      = TTY_DRIVER_TYPE_SYSTEM;
-  pti_tty_driver->subtype     = SYSTEM_TYPE_SYSCONS;
-  pti_tty_driver->flags     = TTY_DRIVER_REAL_RAW |
-                              TTY_DRIVER_DYNAMIC_DEV;
-  pti_tty_driver->init_termios    = tty_std_termios;
-  
-  tty_set_operations (pti_tty_driver, &pti_tty_driver_ops);
-  
-  retval = tty_register_driver (pti_tty_driver);
-  if (retval) {
-    pr_err ("%s(%d): TTY registration failed of pti driver\n",
-            __func__, __LINE__);
-    pr_err ("%s(%d): Error value returned: %d\n",
-            __func__, __LINE__, retval);
-            
-    pti_tty_driver = NULL;
-    return retval;
-  }
-  
-  retval = pci_register_driver (&pti_pci_driver);
-  
-  if (retval) {
-    pr_err ("%s(%d): PCI registration failed of pti driver\n",
-            __func__, __LINE__);
-    pr_err ("%s(%d): Error value returned: %d\n",
-            __func__, __LINE__, retval);
-            
-    tty_unregister_driver (pti_tty_driver);
-    pr_err ("%s(%d): Unregistering TTY part of pti driver\n",
-            __func__, __LINE__);
-    pti_tty_driver = NULL;
-    return retval;
-  }
-  
-  return retval;
+	int retval = -EINVAL;
+
+	/* First register module as tty device */
+
+	pti_tty_driver = alloc_tty_driver(PTITTY_MINOR_NUM);
+	if (pti_tty_driver == NULL) {
+		pr_err("%s(%d): Memory allocation failed for ptiTTY driver\n",
+			__func__, __LINE__);
+		return -ENOMEM;
+	}
+
+	pti_tty_driver->driver_name		= DRIVERNAME;
+	pti_tty_driver->name			= TTYNAME;
+	pti_tty_driver->major			= 0;
+	pti_tty_driver->minor_start		= PTITTY_MINOR_START;
+	pti_tty_driver->type			= TTY_DRIVER_TYPE_SYSTEM;
+	pti_tty_driver->subtype			= SYSTEM_TYPE_SYSCONS;
+	pti_tty_driver->flags			= TTY_DRIVER_REAL_RAW |
+						  TTY_DRIVER_DYNAMIC_DEV;
+	pti_tty_driver->init_termios		= tty_std_termios;
+
+	tty_set_operations(pti_tty_driver, &pti_tty_driver_ops);
+
+	retval = tty_register_driver(pti_tty_driver);
+	if (retval) {
+		pr_err("%s(%d): TTY registration failed of pti driver\n",
+			__func__, __LINE__);
+		pr_err("%s(%d): Error value returned: %d\n",
+			__func__, __LINE__, retval);
+
+		pti_tty_driver = NULL;
+		return retval;
+	}
+
+	retval = pci_register_driver(&pti_pci_driver);
+
+	if (retval) {
+		pr_err("%s(%d): PCI registration failed of pti driver\n",
+			__func__, __LINE__);
+		pr_err("%s(%d): Error value returned: %d\n",
+			__func__, __LINE__, retval);
+
+		tty_unregister_driver(pti_tty_driver);
+		pr_err("%s(%d): Unregistering TTY part of pti driver\n",
+			__func__, __LINE__);
+		pti_tty_driver = NULL;
+		return retval;
+	}
+
+	return retval;
 }
 
 /**
  * pti_exit()- Unregisters this module as a tty and pci driver.
  */
-static void __exit pti_exit (void)
+static void __exit pti_exit(void)
 {
-  int retval;
-  
-  tty_unregister_device (pti_tty_driver, 0);
-  tty_unregister_device (pti_tty_driver, 1);
-  
-  retval = tty_unregister_driver (pti_tty_driver);
-  if (retval) {
-    pr_err ("%s(%d): TTY unregistration failed of pti driver\n",
-            __func__, __LINE__);
-    pr_err ("%s(%d): Error value returned: %d\n",
-            __func__, __LINE__, retval);
-  }
-  
-  pci_unregister_driver (&pti_pci_driver);
-  
-  retval = misc_deregister (&pti_char_driver);
-  if (retval) {
-    pr_err ("%s(%d): CHAR unregistration failed of pti driver\n",
-            __func__, __LINE__);
-    pr_err ("%s(%d): Error value returned: %d\n",
-            __func__, __LINE__, retval);
-  }
-  
-  unregister_console (&pti_console);
-  return;
+	int retval;
+
+	tty_unregister_device(pti_tty_driver, 0);
+	tty_unregister_device(pti_tty_driver, 1);
+
+	retval = tty_unregister_driver(pti_tty_driver);
+	if (retval) {
+		pr_err("%s(%d): TTY unregistration failed of pti driver\n",
+			__func__, __LINE__);
+		pr_err("%s(%d): Error value returned: %d\n",
+			__func__, __LINE__, retval);
+	}
+
+	pci_unregister_driver(&pti_pci_driver);
+
+	retval = misc_deregister(&pti_char_driver);
+	if (retval) {
+		pr_err("%s(%d): CHAR unregistration failed of pti driver\n",
+			__func__, __LINE__);
+		pr_err("%s(%d): Error value returned: %d\n",
+			__func__, __LINE__, retval);
+	}
+
+	unregister_console(&pti_console);
+	return;
 }
 
-module_init (pti_init);
-module_exit (pti_exit);
+module_init(pti_init);
+module_exit(pti_exit);
 
-MODULE_LICENSE ("GPL");
-MODULE_AUTHOR ("Ken Mills, Jay Freyensee");
-MODULE_DESCRIPTION ("PTI Driver");
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Ken Mills, Jay Freyensee");
+MODULE_DESCRIPTION("PTI Driver");
 

@@ -17,7 +17,7 @@
  * @dws: DMA slave interface to use for sound playback.
  */
 struct atmel_abdac_pdata {
-  struct dw_dma_slave dws;
+	struct dw_dma_slave	dws;
 };
 
 #endif /* __INCLUDE_SOUND_ATMEL_ABDAC_H */

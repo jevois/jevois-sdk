@@ -87,12 +87,12 @@ struct iwl_fw;
  *
  * The operational mode has a very simple life cycle.
  *
- *  1) The driver layer (iwl-drv.c) chooses the op_mode based on the
- *     capabilities advertized by the fw file (in TLV format).
- *  2) The driver layer starts the op_mode (ops->start)
- *  3) The op_mode registers registers mac80211
- *  4) The op_mode is governed by mac80211
- *  5) The driver layer stops the op_mode
+ *	1) The driver layer (iwl-drv.c) chooses the op_mode based on the
+ *	   capabilities advertized by the fw file (in TLV format).
+ *	2) The driver layer starts the op_mode (ops->start)
+ *	3) The op_mode registers registers mac80211
+ *	4) The op_mode is governed by mac80211
+ *	5) The driver layer stops the op_mode
  */
 
 /**
@@ -105,40 +105,40 @@ struct iwl_fw;
  * All the handlers MUST be implemented
  *
  * @start: start the op_mode. The transport layer is already allocated.
- *  May sleep
+ *	May sleep
  * @stop: stop the op_mode. Must free all the memory allocated.
- *  May sleep
+ *	May sleep
  * @rx: Rx notification to the op_mode. rxb is the Rx buffer itself. Cmd is the
- *  HCMD the this Rx responds to.
- *  Must be atomic.
+ *	HCMD the this Rx responds to.
+ *	Must be atomic.
  * @queue_full: notifies that a HW queue is full. Ac is the ac of the queue
- *  Must be atomic
+ *	Must be atomic
  * @queue_not_full: notifies that a HW queue is not full any more.
- *  Ac is the ac of the queue. Must be atomic
+ *	Ac is the ac of the queue. Must be atomic
  * @hw_rf_kill:notifies of a change in the HW rf kill switch. True means that
- *  the radio is killed. Must be atomic.
+ *	the radio is killed. Must be atomic.
  * @free_skb: allows the transport layer to free skbs that haven't been
- *  reclaimed by the op_mode. This can happen when the driver is freed and
- *  there are Tx packets pending in the transport layer.
- *  Must be atomic
+ *	reclaimed by the op_mode. This can happen when the driver is freed and
+ *	there are Tx packets pending in the transport layer.
+ *	Must be atomic
  * @nic_error: error notification. Must be atomic
  * @cmd_queue_full: Called when the command queue gets full. Must be atomic.
  * @nic_config: configure NIC, called before firmware is started.
- *  May sleep
+ *	May sleep
  */
 struct iwl_op_mode_ops {
-  struct iwl_op_mode * (*start) (struct iwl_trans * trans,
-                                 const struct iwl_fw * fw);
-  void (*stop) (struct iwl_op_mode * op_mode);
-  int (*rx) (struct iwl_op_mode * op_mode, struct iwl_rx_cmd_buffer * rxb,
-             struct iwl_device_cmd * cmd);
-  void (*queue_full) (struct iwl_op_mode * op_mode, u8 ac);
-  void (*queue_not_full) (struct iwl_op_mode * op_mode, u8 ac);
-  void (*hw_rf_kill) (struct iwl_op_mode * op_mode, bool state);
-  void (*free_skb) (struct iwl_op_mode * op_mode, struct sk_buff * skb);
-  void (*nic_error) (struct iwl_op_mode * op_mode);
-  void (*cmd_queue_full) (struct iwl_op_mode * op_mode);
-  void (*nic_config) (struct iwl_op_mode * op_mode);
+	struct iwl_op_mode *(*start)(struct iwl_trans *trans,
+				     const struct iwl_fw *fw);
+	void (*stop)(struct iwl_op_mode *op_mode);
+	int (*rx)(struct iwl_op_mode *op_mode, struct iwl_rx_cmd_buffer *rxb,
+		  struct iwl_device_cmd *cmd);
+	void (*queue_full)(struct iwl_op_mode *op_mode, u8 ac);
+	void (*queue_not_full)(struct iwl_op_mode *op_mode, u8 ac);
+	void (*hw_rf_kill)(struct iwl_op_mode *op_mode, bool state);
+	void (*free_skb)(struct iwl_op_mode *op_mode, struct sk_buff *skb);
+	void (*nic_error)(struct iwl_op_mode *op_mode);
+	void (*cmd_queue_full)(struct iwl_op_mode *op_mode);
+	void (*nic_config)(struct iwl_op_mode *op_mode);
 };
 
 /**
@@ -149,63 +149,63 @@ struct iwl_op_mode_ops {
  * @ops - pointer to its own ops
  */
 struct iwl_op_mode {
-  const struct iwl_op_mode_ops * ops;
-  const struct iwl_trans * trans;
-  
-  char op_mode_specific[0] __aligned (sizeof (void *) );
+	const struct iwl_op_mode_ops *ops;
+	const struct iwl_trans *trans;
+
+	char op_mode_specific[0] __aligned(sizeof(void *));
 };
 
-static inline void iwl_op_mode_stop (struct iwl_op_mode * op_mode)
+static inline void iwl_op_mode_stop(struct iwl_op_mode *op_mode)
 {
-  might_sleep();
-  
-  op_mode->ops->stop (op_mode);
+	might_sleep();
+
+	op_mode->ops->stop(op_mode);
 }
 
-static inline int iwl_op_mode_rx (struct iwl_op_mode * op_mode,
-                                  struct iwl_rx_cmd_buffer * rxb,
-                                  struct iwl_device_cmd * cmd)
+static inline int iwl_op_mode_rx(struct iwl_op_mode *op_mode,
+				  struct iwl_rx_cmd_buffer *rxb,
+				  struct iwl_device_cmd *cmd)
 {
-  return op_mode->ops->rx (op_mode, rxb, cmd);
+	return op_mode->ops->rx(op_mode, rxb, cmd);
 }
 
-static inline void iwl_op_mode_queue_full (struct iwl_op_mode * op_mode, u8 ac)
+static inline void iwl_op_mode_queue_full(struct iwl_op_mode *op_mode, u8 ac)
 {
-  op_mode->ops->queue_full (op_mode, ac);
+	op_mode->ops->queue_full(op_mode, ac);
 }
 
-static inline void iwl_op_mode_queue_not_full (struct iwl_op_mode * op_mode,
-    u8 ac)
+static inline void iwl_op_mode_queue_not_full(struct iwl_op_mode *op_mode,
+					      u8 ac)
 {
-  op_mode->ops->queue_not_full (op_mode, ac);
+	op_mode->ops->queue_not_full(op_mode, ac);
 }
 
-static inline void iwl_op_mode_hw_rf_kill (struct iwl_op_mode * op_mode,
-    bool state)
+static inline void iwl_op_mode_hw_rf_kill(struct iwl_op_mode *op_mode,
+					  bool state)
 {
-  op_mode->ops->hw_rf_kill (op_mode, state);
+	op_mode->ops->hw_rf_kill(op_mode, state);
 }
 
-static inline void iwl_op_mode_free_skb (struct iwl_op_mode * op_mode,
-    struct sk_buff * skb)
+static inline void iwl_op_mode_free_skb(struct iwl_op_mode *op_mode,
+					struct sk_buff *skb)
 {
-  op_mode->ops->free_skb (op_mode, skb);
+	op_mode->ops->free_skb(op_mode, skb);
 }
 
-static inline void iwl_op_mode_nic_error (struct iwl_op_mode * op_mode)
+static inline void iwl_op_mode_nic_error(struct iwl_op_mode *op_mode)
 {
-  op_mode->ops->nic_error (op_mode);
+	op_mode->ops->nic_error(op_mode);
 }
 
-static inline void iwl_op_mode_cmd_queue_full (struct iwl_op_mode * op_mode)
+static inline void iwl_op_mode_cmd_queue_full(struct iwl_op_mode *op_mode)
 {
-  op_mode->ops->cmd_queue_full (op_mode);
+	op_mode->ops->cmd_queue_full(op_mode);
 }
 
-static inline void iwl_op_mode_nic_config (struct iwl_op_mode * op_mode)
+static inline void iwl_op_mode_nic_config(struct iwl_op_mode *op_mode)
 {
-  might_sleep();
-  op_mode->ops->nic_config (op_mode);
+	might_sleep();
+	op_mode->ops->nic_config(op_mode);
 }
 
 /*****************************************************

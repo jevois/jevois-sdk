@@ -8,16 +8,16 @@
 #define  __OSAL_PWM_MASK__
 #endif
 
-__hdle OSAL_Pwm_request (u32 pwm_id);
+__hdle OSAL_Pwm_request(u32 pwm_id);
 
-int OSAL_Pwm_free (__hdle p_handler);
+int OSAL_Pwm_free(__hdle p_handler);
 
-int OSAL_Pwm_Enable (__hdle p_handler);
+int OSAL_Pwm_Enable(__hdle p_handler);
 
-int OSAL_Pwm_Disable (__hdle p_handler);
+int OSAL_Pwm_Disable(__hdle p_handler);
 
-int OSAL_Pwm_Config (__hdle p_handler, int duty_ns, int period_ns);
+int OSAL_Pwm_Config(__hdle p_handler, int duty_ns, int period_ns);
 
-int OSAL_Pwm_Set_Polarity (__hdle p_handler, int polarity);
+int OSAL_Pwm_Set_Polarity(__hdle p_handler, int polarity);
 
 #endif

@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -27,8 +27,8 @@
 #define __SPARC_MACHINES_H__
 
 struct Sun_Machine_Models {
-  char * name;
-  unsigned char id_machtype;
+	char *name;
+	unsigned char id_machtype;
 };
 
 /* Current number of machines we know about that has an IDPROM
@@ -58,22 +58,22 @@ extern struct Sun_Machine_Models Sun_Machines[NUM_SUN_MACHINES];
 
 #define SM_TYP_MASK   0x0f
 /* Sun4 machines */
-#define SM_4_260      0x01  /* Sun 4/200 series */
-#define SM_4_110      0x02  /* Sun 4/100 series */
-#define SM_4_330      0x03  /* Sun 4/300 series */
-#define SM_4_470      0x04  /* Sun 4/400 series */
+#define SM_4_260      0x01	/* Sun 4/200 series */
+#define SM_4_110      0x02	/* Sun 4/100 series */
+#define SM_4_330      0x03	/* Sun 4/300 series */
+#define SM_4_470      0x04	/* Sun 4/400 series */
 
 /* Leon machines */
-#define M_LEON2_SOC   0x01  /* Leon2 SoC */
+#define M_LEON2_SOC   0x01	/* Leon2 SoC */
 
 /* Sun4c machines                Full Name              - PROM NAME */
-#define SM_4C_SS1     0x01  /* Sun4c SparcStation 1   - Sun 4/60  */
-#define SM_4C_IPC     0x02  /* Sun4c SparcStation IPC - Sun 4/40  */
-#define SM_4C_SS1PLUS 0x03  /* Sun4c SparcStation 1+  - Sun 4/65  */
-#define SM_4C_SLC     0x04  /* Sun4c SparcStation SLC - Sun 4/20  */
-#define SM_4C_SS2     0x05  /* Sun4c SparcStation 2   - Sun 4/75  */
-#define SM_4C_ELC     0x06  /* Sun4c SparcStation ELC - Sun 4/25  */
-#define SM_4C_IPX     0x07  /* Sun4c SparcStation IPX - Sun 4/50  */
+#define SM_4C_SS1     0x01	/* Sun4c SparcStation 1   - Sun 4/60  */
+#define SM_4C_IPC     0x02	/* Sun4c SparcStation IPC - Sun 4/40  */
+#define SM_4C_SS1PLUS 0x03	/* Sun4c SparcStation 1+  - Sun 4/65  */
+#define SM_4C_SLC     0x04	/* Sun4c SparcStation SLC - Sun 4/20  */
+#define SM_4C_SS2     0x05	/* Sun4c SparcStation 2   - Sun 4/75  */
+#define SM_4C_ELC     0x06	/* Sun4c SparcStation ELC - Sun 4/25  */
+#define SM_4C_IPX     0x07	/* Sun4c SparcStation IPX - Sun 4/50  */
 
 /* Sun4m machines, these predate the OpenBoot.  These values only mean
  * something if the value in the ARCH field is SM_SUN4M, if it is
@@ -81,12 +81,12 @@ extern struct Sun_Machine_Models Sun_Machines[NUM_SUN_MACHINES];
  * 1) You either have a sun4d, a sun4e, or a recently made sun4m.
  * 2) You have to consult OpenBoot to determine which machine this is.
  */
-#define SM_4M_SS60    0x01  /* Sun4m SparcSystem 600                  */
-#define SM_4M_SS50    0x02  /* Sun4m SparcStation 10                  */
-#define SM_4M_SS40    0x03  /* Sun4m SparcStation 5                   */
+#define SM_4M_SS60    0x01	/* Sun4m SparcSystem 600                  */
+#define SM_4M_SS50    0x02	/* Sun4m SparcStation 10                  */
+#define SM_4M_SS40    0x03	/* Sun4m SparcStation 5                   */
 
 /* Sun4d machines -- N/A */
 /* Sun4e machines -- N/A */
 /* Sun4u machines -- N/A */
 
-#endif        /* !(_SPARC_MACHINES_H) */
+#endif				/* !(_SPARC_MACHINES_H) */

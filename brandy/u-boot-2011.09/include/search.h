@@ -26,7 +26,7 @@
  */
 
 #ifndef _SEARCH_H
-#define _SEARCH_H 1
+#define	_SEARCH_H 1
 
 #include <stddef.h>
 
@@ -34,13 +34,13 @@
 
 /* Action which shall be performed in the call the hsearch.  */
 typedef enum {
-  FIND,
-  ENTER
+	FIND,
+	ENTER
 } ACTION;
 
 typedef struct entry {
-  const char * key;
-  char * data;
+	const char *key;
+	char *data;
 } ENTRY;
 
 /* Opaque type for internal use.  */
@@ -54,16 +54,16 @@ struct _ENTRY;
 
 /* Data type for reentrant functions.  */
 struct hsearch_data {
-  struct _ENTRY * table;
-  unsigned int size;
-  unsigned int filled;
+	struct _ENTRY *table;
+	unsigned int size;
+	unsigned int filled;
 };
 
 /* Create a new hashing table which will at most contain NEL elements.  */
-extern int hcreate_r (size_t __nel, struct hsearch_data * __htab);
+extern int hcreate_r(size_t __nel, struct hsearch_data *__htab);
 
 /* Destroy current internal hashing table.  */
-extern void hdestroy_r (struct hsearch_data * __htab);
+extern void hdestroy_r(struct hsearch_data *__htab);
 
 /*
  * Search for entry matching ITEM.key in internal hash table.  If
@@ -71,33 +71,33 @@ extern void hdestroy_r (struct hsearch_data * __htab);
  * NULL.  If ACTION is `ENTER' replace existing data (if any) with
  * ITEM.data.
  * */
-extern int hsearch_r (ENTRY __item, ACTION __action, ENTRY ** __retval,
-                      struct hsearch_data * __htab);
+extern int hsearch_r(ENTRY __item, ACTION __action, ENTRY ** __retval,
+		     struct hsearch_data *__htab);
 
 /*
  * Search for an entry matching `MATCH'.  Otherwise, Same semantics
  * as hsearch_r().
  */
-extern int hmatch_r (const char * __match, int __last_idx, ENTRY ** __retval,
-                     struct hsearch_data * __htab);
+extern int hmatch_r(const char *__match, int __last_idx, ENTRY ** __retval,
+		    struct hsearch_data *__htab);
 /*
  * Search for an entry whose key or data contains `MATCH'.  Otherwise,
  * Same semantics as hsearch_r().
  */
-extern int hstrstr_r (const char * __match, int __last_idx, ENTRY ** __retval,
-                      struct hsearch_data * __htab);
+extern int hstrstr_r(const char *__match, int __last_idx, ENTRY ** __retval,
+		    struct hsearch_data *__htab);
 
 /* Search and delete entry matching ITEM.key in internal hash table. */
-extern int hdelete_r (const char * __key, struct hsearch_data * __htab);
+extern int hdelete_r(const char *__key, struct hsearch_data *__htab);
 
-extern ssize_t hexport_r (struct hsearch_data * __htab,
-                          const char __sep, char ** __resp, size_t __size);
+extern ssize_t hexport_r(struct hsearch_data *__htab,
+		     const char __sep, char **__resp, size_t __size);
 
-extern int himport_r (struct hsearch_data * __htab,
-                      const char * __env, size_t __size, const char __sep,
-                      int __flag);
+extern int himport_r(struct hsearch_data *__htab,
+		     const char *__env, size_t __size, const char __sep,
+		     int __flag);
 
 /* Flags for himport_r() */
-#define H_NOCLEAR 1 /* do not clear hash table before importing */
+#define	H_NOCLEAR	1	/* do not clear hash table before importing */
 
 #endif /* search.h */

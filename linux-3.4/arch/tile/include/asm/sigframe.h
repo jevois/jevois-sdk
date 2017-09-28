@@ -23,9 +23,9 @@
 #include <arch/abi.h>
 
 struct rt_sigframe {
-  unsigned char save_area[C_ABI_SAVE_AREA_SIZE]; /* caller save area */
-  struct siginfo info;
-  struct ucontext uc;
+	unsigned char save_area[C_ABI_SAVE_AREA_SIZE]; /* caller save area */
+	struct siginfo info;
+	struct ucontext uc;
 };
 
 #endif /* !__ASSEMBLY__ */

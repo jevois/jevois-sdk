@@ -35,94 +35,94 @@
  * for the device you are using
  */
 enum {
-  REG_INT_STATUS0 = 0,
-  REG_INT_MASK0,
-  REG_INT_SENSE0,
-  REG_INT_STATUS1,
-  REG_INT_MASK1,
-  REG_INT_SENSE1,
-  REG_PU_MODE_S,
-  REG_IDENTIFICATION,
-  REG_UNUSED0,
-  REG_ACC0,
-  REG_ACC1,   /*10 */
-  REG_UNUSED1,
-  REG_UNUSED2,
-  REG_POWER_CTL0,
-  REG_POWER_CTL1,
-  REG_POWER_CTL2,
-  REG_REGEN_ASSIGN,
-  REG_UNUSED3,
-  REG_MEM_A,
-  REG_MEM_B,
-  REG_RTC_TIME,   /*20 */
-  REG_RTC_ALARM,
-  REG_RTC_DAY,
-  REG_RTC_DAY_ALARM,
-  REG_SW_0,
-  REG_SW_1,
-  REG_SW_2,
-  REG_SW_3,
-  REG_SW_4,
-  REG_SW_5,
-  REG_SETTING_0,    /*30 */
-  REG_SETTING_1,
-  REG_MODE_0,
-  REG_MODE_1,
-  REG_POWER_MISC,
-  REG_UNUSED4,
-  REG_UNUSED5,
-  REG_UNUSED6,
-  REG_UNUSED7,
-  REG_UNUSED8,
-  REG_UNUSED9,    /*40 */
-  REG_UNUSED10,
-  REG_UNUSED11,
-  REG_ADC0,
-  REG_ADC1,
-  REG_ADC2,
-  REG_ADC3,
-  REG_ADC4,
-  REG_CHARGE,
-  REG_USB0,
-  REG_USB1,   /*50 */
-  REG_LED_CTL0,
-  REG_LED_CTL1,
-  REG_LED_CTL2,
-  REG_LED_CTL3,
-  REG_UNUSED12,
-  REG_UNUSED13,
-  REG_TRIM0,
-  REG_TRIM1,
-  REG_TEST0,
-  REG_TEST1,    /*60 */
-  REG_TEST2,
-  REG_TEST3,
-  REG_TEST4,
+	REG_INT_STATUS0 = 0,
+	REG_INT_MASK0,
+	REG_INT_SENSE0,
+	REG_INT_STATUS1,
+	REG_INT_MASK1,
+	REG_INT_SENSE1,
+	REG_PU_MODE_S,
+	REG_IDENTIFICATION,
+	REG_UNUSED0,
+	REG_ACC0,
+	REG_ACC1,		/*10 */
+	REG_UNUSED1,
+	REG_UNUSED2,
+	REG_POWER_CTL0,
+	REG_POWER_CTL1,
+	REG_POWER_CTL2,
+	REG_REGEN_ASSIGN,
+	REG_UNUSED3,
+	REG_MEM_A,
+	REG_MEM_B,
+	REG_RTC_TIME,		/*20 */
+	REG_RTC_ALARM,
+	REG_RTC_DAY,
+	REG_RTC_DAY_ALARM,
+	REG_SW_0,
+	REG_SW_1,
+	REG_SW_2,
+	REG_SW_3,
+	REG_SW_4,
+	REG_SW_5,
+	REG_SETTING_0,		/*30 */
+	REG_SETTING_1,
+	REG_MODE_0,
+	REG_MODE_1,
+	REG_POWER_MISC,
+	REG_UNUSED4,
+	REG_UNUSED5,
+	REG_UNUSED6,
+	REG_UNUSED7,
+	REG_UNUSED8,
+	REG_UNUSED9,		/*40 */
+	REG_UNUSED10,
+	REG_UNUSED11,
+	REG_ADC0,
+	REG_ADC1,
+	REG_ADC2,
+	REG_ADC3,
+	REG_ADC4,
+	REG_CHARGE,
+	REG_USB0,
+	REG_USB1,		/*50 */
+	REG_LED_CTL0,
+	REG_LED_CTL1,
+	REG_LED_CTL2,
+	REG_LED_CTL3,
+	REG_UNUSED12,
+	REG_UNUSED13,
+	REG_TRIM0,
+	REG_TRIM1,
+	REG_TEST0,
+	REG_TEST1,		/*60 */
+	REG_TEST2,
+	REG_TEST3,
+	REG_TEST4,
 };
 
 /* REG_POWER_MISC */
-#define GPO1EN    (1 << 6)
-#define GPO1STBY  (1 << 7)
-#define GPO2EN    (1 << 8)
-#define GPO2STBY  (1 << 9)
-#define GPO3EN    (1 << 10)
-#define GPO3STBY  (1 << 11)
-#define GPO4EN    (1 << 12)
-#define GPO4STBY  (1 << 13)
-#define PWGT1SPIEN  (1 << 15)
-#define PWGT2SPIEN  (1 << 16)
-#define PWUP    (1 << 21)
+#define GPO1EN		(1 << 6)
+#define GPO1STBY	(1 << 7)
+#define GPO2EN		(1 << 8)
+#define GPO2STBY	(1 << 9)
+#define GPO3EN		(1 << 10)
+#define GPO3STBY	(1 << 11)
+#define GPO4EN		(1 << 12)
+#define GPO4STBY	(1 << 13)
+#define PWGT1SPIEN	(1 << 15)
+#define PWGT2SPIEN	(1 << 16)
+#define PWUP		(1 << 21)
 
 /* Power Control 0 */
-#define COINCHEN  (1 << 23)
-#define BATTDETEN (1 << 19)
+#define COINCHEN	(1 << 23)
+#define BATTDETEN	(1 << 19)
 
 /* Interrupt status 1 */
-#define RTCRSTI   (1 << 7)
+#define RTCRSTI		(1 << 7)
 
-void pmic_show_pmic_info (void);
-void pmic_reg_write (u32 reg, u32 value);
-u32 pmic_reg_read (u32 reg);
+void pmic_show_pmic_info(void);
+void pmic_reg_write(u32 reg, u32 value);
+u32 pmic_reg_read(u32 reg);
 
 #endif

@@ -19,10 +19,10 @@
  * 1 even when the "1" assertion wasn't true.
  */
 static inline void
-__mutex_fastpath_lock (atomic_t * count, void (*fail_fn) (atomic_t *) )
+__mutex_fastpath_lock(atomic_t *count, void (*fail_fn)(atomic_t *))
 {
-  if (unlikely (ia64_fetchadd4_acq (count, -1) != 1) )
-  { fail_fn (count); }
+	if (unlikely(ia64_fetchadd4_acq(count, -1) != 1))
+		fail_fn(count);
 }
 
 /**
@@ -36,11 +36,11 @@ __mutex_fastpath_lock (atomic_t * count, void (*fail_fn) (atomic_t *) )
  * or anything the slow path function returns.
  */
 static inline int
-__mutex_fastpath_lock_retval (atomic_t * count, int (*fail_fn) (atomic_t *) )
+__mutex_fastpath_lock_retval(atomic_t *count, int (*fail_fn)(atomic_t *))
 {
-  if (unlikely (ia64_fetchadd4_acq (count, -1) != 1) )
-  { return fail_fn (count); }
-  return 0;
+	if (unlikely(ia64_fetchadd4_acq(count, -1) != 1))
+		return fail_fn(count);
+	return 0;
 }
 
 /**
@@ -57,14 +57,14 @@ __mutex_fastpath_lock_retval (atomic_t * count, int (*fail_fn) (atomic_t *) )
  * to return 0 otherwise.
  */
 static inline void
-__mutex_fastpath_unlock (atomic_t * count, void (*fail_fn) (atomic_t *) )
+__mutex_fastpath_unlock(atomic_t *count, void (*fail_fn)(atomic_t *))
 {
-  int ret = ia64_fetchadd4_rel (count, 1);
-  if (unlikely (ret < 0) )
-  { fail_fn (count); }
+	int ret = ia64_fetchadd4_rel(count, 1);
+	if (unlikely(ret < 0))
+		fail_fn(count);
 }
 
-#define __mutex_slowpath_needs_to_unlock()    1
+#define __mutex_slowpath_needs_to_unlock()		1
 
 /**
  * __mutex_fastpath_trylock - try to acquire the mutex, without waiting
@@ -82,11 +82,11 @@ __mutex_fastpath_unlock (atomic_t * count, void (*fail_fn) (atomic_t *) )
  * <fail_fn> spinlock-based trylock variant unconditionally.
  */
 static inline int
-__mutex_fastpath_trylock (atomic_t * count, int (*fail_fn) (atomic_t *) )
+__mutex_fastpath_trylock(atomic_t *count, int (*fail_fn)(atomic_t *))
 {
-  if (cmpxchg_acq (count, 1, 0) == 1)
-  { return 1; }
-  return 0;
+	if (cmpxchg_acq(count, 1, 0) == 1)
+		return 1;
+	return 0;
 }
 
 #endif

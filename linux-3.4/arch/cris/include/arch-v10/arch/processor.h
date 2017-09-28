@@ -18,9 +18,9 @@
 */
 
 struct thread_struct {
-  unsigned long ksp;     /* kernel stack pointer */
-  unsigned long usp;     /* user stack pointer */
-  unsigned long dccr;    /* saved flag register */
+	unsigned long ksp;     /* kernel stack pointer */
+	unsigned long usp;     /* user stack pointer */
+	unsigned long dccr;    /* saved flag register */
 };
 
 /*
@@ -35,28 +35,28 @@ struct thread_struct {
 #endif
 
 #define INIT_THREAD  { \
-    0, 0, 0x20 }  /* ccr = int enable, nothing else */
+   0, 0, 0x20 }  /* ccr = int enable, nothing else */
 
-#define KSTK_EIP(tsk) \
-  ({      \
-    unsigned long eip = 0;   \
-    unsigned long regs = (unsigned long)task_pt_regs(tsk); \
-    if (regs > PAGE_SIZE && \
-        virt_addr_valid(regs)) \
-      eip = ((struct pt_regs *)regs)->irp; \
-    eip; \
-  })
+#define KSTK_EIP(tsk)	\
+({			\
+	unsigned long eip = 0;   \
+	unsigned long regs = (unsigned long)task_pt_regs(tsk); \
+	if (regs > PAGE_SIZE && \
+		virt_addr_valid(regs)) \
+	eip = ((struct pt_regs *)regs)->irp; \
+	eip; \
+})
 
 /* give the thread a program location
- * set user-mode (The 'U' flag (User mode flag) is CCR/DCCR bit 8)
+ * set user-mode (The 'U' flag (User mode flag) is CCR/DCCR bit 8) 
  * switch user-stackpointer
  */
 
 #define start_thread(regs, ip, usp) do { \
-    regs->irp = ip;       \
-    regs->dccr |= 1 << U_DCCR_BITNR; \
-    wrusp(usp);           \
-  } while(0)
+	regs->irp = ip;       \
+	regs->dccr |= 1 << U_DCCR_BITNR; \
+	wrusp(usp);           \
+} while(0)
 
 /* Called when handling a kernel bus fault fixup.
  *
@@ -64,6 +64,6 @@ struct thread_struct {
  * anymore, so switch frame-types (see ptrace.h)
  */
 #define arch_fixup(regs) \
-  regs->frametype = CRIS_FRAME_NORMAL;
+   regs->frametype = CRIS_FRAME_NORMAL;
 
 #endif

@@ -21,9 +21,9 @@
 
 #define ARISC_INIT_READY  0x0001 /* arisc module init ready */
 
-int  arisc_register_notifier (struct notifier_block * nb);
-int  arisc_notify (unsigned long val, void * v);
-void arisc_unregister_notifier (struct notifier_block * nb);
+int  arisc_register_notifier(struct notifier_block *nb);
+int  arisc_notify(unsigned long val, void *v);
+void arisc_unregister_notifier(struct notifier_block *nb);
 
 #endif /* __LINUX_ARISC_NOTIFIER_H__ */
 

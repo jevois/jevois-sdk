@@ -28,7 +28,7 @@
 #include <asm/mmu.h>
 
 struct law_entry law_table[] = {
-  SET_LAW (CONFIG_SYS_LBC_NONCACHE_BASE, LAW_SIZE_128M, LAW_TRGT_IF_LBC),
+	SET_LAW(CONFIG_SYS_LBC_NONCACHE_BASE, LAW_SIZE_128M, LAW_TRGT_IF_LBC),
 };
 
-int num_law_entries = ARRAY_SIZE (law_table);
+int num_law_entries = ARRAY_SIZE(law_table);

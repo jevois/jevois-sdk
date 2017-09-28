@@ -44,7 +44,7 @@ Retry Counter Definition
 /***************************************************************************
 Hardware ECC Definition
 ***************************************************************************/
-#define HW_ECC_SUPPORTED    1    /* Hardware ECC Supported */
+#define HW_ECC_SUPPORTED    1	   /* Hardware ECC Supported */
 /* No difinition for Software ECC */
 
 /***************************************************************************
@@ -169,51 +169,51 @@ SmartMedia Model & Attribute
 Struct Definition
 ***************************************************************************/
 struct SSFDCTYPE {
-  BYTE Model;
-  BYTE Attribute;
-  BYTE MaxZones;
-  BYTE MaxSectors;
-  WORD MaxBlocks;
-  WORD MaxLogBlocks;
+	BYTE Model;
+	BYTE Attribute;
+	BYTE MaxZones;
+	BYTE MaxSectors;
+	WORD MaxBlocks;
+	WORD MaxLogBlocks;
 };
 
 typedef struct SSFDCTYPE_T {
-  BYTE Model;
-  BYTE Attribute;
-  BYTE MaxZones;
-  BYTE MaxSectors;
-  WORD MaxBlocks;
-  WORD MaxLogBlocks;
-} * SSFDCTYPE_T;
+	BYTE Model;
+	BYTE Attribute;
+	BYTE MaxZones;
+	BYTE MaxSectors;
+	WORD MaxBlocks;
+	WORD MaxLogBlocks;
+} *SSFDCTYPE_T;
 
 struct ADDRESS {
-  BYTE Zone;  /* Zone Number */
-  BYTE Sector;  /* Sector(512byte) Number on Block */
-  WORD PhyBlock;  /* Physical Block Number on Zone */
-  WORD LogBlock;  /* Logical Block Number of Zone */
+	BYTE Zone;	/* Zone Number */
+	BYTE Sector;	/* Sector(512byte) Number on Block */
+	WORD PhyBlock;	/* Physical Block Number on Zone */
+	WORD LogBlock;	/* Logical Block Number of Zone */
 };
 
 typedef struct ADDRESS_T {
-  BYTE Zone;  /* Zone Number */
-  BYTE Sector;  /* Sector(512byte) Number on Block */
-  WORD PhyBlock;  /* Physical Block Number on Zone */
-  WORD LogBlock;  /* Logical Block Number of Zone */
-} * ADDRESS_T;
+	BYTE Zone;	/* Zone Number */
+	BYTE Sector;	/* Sector(512byte) Number on Block */
+	WORD PhyBlock;	/* Physical Block Number on Zone */
+	WORD LogBlock;	/* Logical Block Number of Zone */
+} *ADDRESS_T;
 
 struct CIS_AREA {
-  BYTE Sector;  /* Sector(512byte) Number on Block */
-  WORD PhyBlock;  /* Physical Block Number on Zone 0 */
+	BYTE Sector;	/* Sector(512byte) Number on Block */
+	WORD PhyBlock;	/* Physical Block Number on Zone 0 */
 };
 
 
 extern BYTE IsSSFDCCompliance;
 extern BYTE IsXDCompliance;
 
-extern DWORD  ErrXDCode;
-extern DWORD  ErrCode;
-extern WORD ReadBlock;
-extern WORD WriteBlock;
-extern DWORD  MediaChange;
+extern DWORD	ErrXDCode;
+extern DWORD	ErrCode;
+extern WORD	ReadBlock;
+extern WORD	WriteBlock;
+extern DWORD	MediaChange;
 
 extern struct SSFDCTYPE  Ssfdc;
 extern struct ADDRESS    Media;
@@ -223,89 +223,89 @@ extern struct CIS_AREA   CisArea;
  * SMILMain.c
  */
 /******************************************/
-int         Init_D_SmartMedia (void);
-int         Pwoff_D_SmartMedia (void);
-int         Check_D_SmartMedia (void);
-int         Check_D_Parameter (struct us_data *, WORD *, BYTE *, BYTE *);
-int         Media_D_ReadSector (struct us_data *, DWORD, WORD, BYTE *);
-int         Media_D_WriteSector (struct us_data *, DWORD, WORD, BYTE *);
-int         Media_D_CopySector (struct us_data *, DWORD, WORD, BYTE *);
-int         Media_D_EraseBlock (struct us_data *, DWORD, WORD);
-int         Media_D_EraseAll (struct us_data *);
+int         Init_D_SmartMedia(void);
+int         Pwoff_D_SmartMedia(void);
+int         Check_D_SmartMedia(void);
+int         Check_D_Parameter(struct us_data *, WORD *, BYTE *, BYTE *);
+int         Media_D_ReadSector(struct us_data *, DWORD, WORD, BYTE *);
+int         Media_D_WriteSector(struct us_data *, DWORD, WORD, BYTE *);
+int         Media_D_CopySector(struct us_data *, DWORD, WORD, BYTE *);
+int         Media_D_EraseBlock(struct us_data *, DWORD, WORD);
+int         Media_D_EraseAll(struct us_data *);
 /******************************************/
-int         Media_D_OneSectWriteStart (struct us_data *, DWORD, BYTE *);
-int         Media_D_OneSectWriteNext (struct us_data *, BYTE *);
-int         Media_D_OneSectWriteFlush (struct us_data *);
+int         Media_D_OneSectWriteStart(struct us_data *, DWORD, BYTE *);
+int         Media_D_OneSectWriteNext(struct us_data *, BYTE *);
+int         Media_D_OneSectWriteFlush(struct us_data *);
 
 /******************************************/
-extern int  SM_FreeMem (void); /* ENE SM function */
-void        SM_EnableLED (struct us_data *, BOOLEAN);
-void        Led_D_TernOn (void);
-void        Led_D_TernOff (void);
+extern int	SM_FreeMem(void);	/* ENE SM function */
+void        SM_EnableLED(struct us_data *, BOOLEAN);
+void        Led_D_TernOn(void);
+void        Led_D_TernOff(void);
 
-int         Media_D_EraseAllRedtData (DWORD Index, BOOLEAN CheckBlock);
+int         Media_D_EraseAllRedtData(DWORD Index, BOOLEAN CheckBlock);
 /*DWORD Media_D_GetMediaInfo(struct us_data * fdoExt,
-  PIOCTL_MEDIA_INFO_IN pParamIn, PIOCTL_MEDIA_INFO_OUT pParamOut); */
+	PIOCTL_MEDIA_INFO_IN pParamIn, PIOCTL_MEDIA_INFO_OUT pParamOut); */
 
 /*
  * SMILSub.c
  */
 /******************************************/
-int  Check_D_DataBlank (BYTE *);
-int  Check_D_FailBlock (BYTE *);
-int  Check_D_DataStatus (BYTE *);
-int  Load_D_LogBlockAddr (BYTE *);
-void Clr_D_RedundantData (BYTE *);
-void Set_D_LogBlockAddr (BYTE *);
-void Set_D_FailBlock (BYTE *);
-void Set_D_DataStaus (BYTE *);
+int  Check_D_DataBlank(BYTE *);
+int  Check_D_FailBlock(BYTE *);
+int  Check_D_DataStatus(BYTE *);
+int  Load_D_LogBlockAddr(BYTE *);
+void Clr_D_RedundantData(BYTE *);
+void Set_D_LogBlockAddr(BYTE *);
+void Set_D_FailBlock(BYTE *);
+void Set_D_DataStaus(BYTE *);
 
 /******************************************/
-void Ssfdc_D_Reset (struct us_data *);
-int  Ssfdc_D_ReadCisSect (struct us_data *, BYTE *, BYTE *);
-void Ssfdc_D_WriteRedtMode (void);
-void Ssfdc_D_ReadID (BYTE *, BYTE);
-int  Ssfdc_D_ReadSect (struct us_data *, BYTE *, BYTE *);
-int  Ssfdc_D_ReadBlock (struct us_data *, WORD, BYTE *, BYTE *);
-int  Ssfdc_D_WriteSect (struct us_data *, BYTE *, BYTE *);
-int  Ssfdc_D_WriteBlock (struct us_data *, WORD, BYTE *, BYTE *);
-int  Ssfdc_D_CopyBlock (struct us_data *, WORD, BYTE *, BYTE *);
-int  Ssfdc_D_WriteSectForCopy (struct us_data *, BYTE *, BYTE *);
-int  Ssfdc_D_EraseBlock (struct us_data *);
-int  Ssfdc_D_ReadRedtData (struct us_data *, BYTE *);
-int  Ssfdc_D_WriteRedtData (struct us_data *, BYTE *);
-int  Ssfdc_D_CheckStatus (void);
-int  Set_D_SsfdcModel (BYTE);
-void Cnt_D_Reset (void);
-int  Cnt_D_PowerOn (void);
-void Cnt_D_PowerOff (void);
-void Cnt_D_LedOn (void);
-void Cnt_D_LedOff (void);
-int  Check_D_CntPower (void);
-int  Check_D_CardExist (void);
-int  Check_D_CardStsChg (void);
-int  Check_D_SsfdcWP (void);
-int  SM_ReadBlock (struct us_data *, BYTE *, BYTE *);
+void Ssfdc_D_Reset(struct us_data *);
+int  Ssfdc_D_ReadCisSect(struct us_data *, BYTE *, BYTE *);
+void Ssfdc_D_WriteRedtMode(void);
+void Ssfdc_D_ReadID(BYTE *, BYTE);
+int  Ssfdc_D_ReadSect(struct us_data *, BYTE *, BYTE *);
+int  Ssfdc_D_ReadBlock(struct us_data *, WORD, BYTE *, BYTE *);
+int  Ssfdc_D_WriteSect(struct us_data *, BYTE *, BYTE *);
+int  Ssfdc_D_WriteBlock(struct us_data *, WORD, BYTE *, BYTE *);
+int  Ssfdc_D_CopyBlock(struct us_data *, WORD, BYTE *, BYTE *);
+int  Ssfdc_D_WriteSectForCopy(struct us_data *, BYTE *, BYTE *);
+int  Ssfdc_D_EraseBlock(struct us_data *);
+int  Ssfdc_D_ReadRedtData(struct us_data *, BYTE *);
+int  Ssfdc_D_WriteRedtData(struct us_data *, BYTE *);
+int  Ssfdc_D_CheckStatus(void);
+int  Set_D_SsfdcModel(BYTE);
+void Cnt_D_Reset(void);
+int  Cnt_D_PowerOn(void);
+void Cnt_D_PowerOff(void);
+void Cnt_D_LedOn(void);
+void Cnt_D_LedOff(void);
+int  Check_D_CntPower(void);
+int  Check_D_CardExist(void);
+int  Check_D_CardStsChg(void);
+int  Check_D_SsfdcWP(void);
+int  SM_ReadBlock(struct us_data *, BYTE *, BYTE *);
 
-int  Ssfdc_D_ReadSect_DMA (struct us_data *, BYTE *, BYTE *);
-int  Ssfdc_D_ReadSect_PIO (struct us_data *, BYTE *, BYTE *);
-int  Ssfdc_D_WriteSect_DMA (struct us_data *, BYTE *, BYTE *);
-int  Ssfdc_D_WriteSect_PIO (struct us_data *, BYTE *, BYTE *);
+int  Ssfdc_D_ReadSect_DMA(struct us_data *, BYTE *, BYTE *);
+int  Ssfdc_D_ReadSect_PIO(struct us_data *, BYTE *, BYTE *);
+int  Ssfdc_D_WriteSect_DMA(struct us_data *, BYTE *, BYTE *);
+int  Ssfdc_D_WriteSect_PIO(struct us_data *, BYTE *, BYTE *);
 
 /******************************************/
-int  Check_D_ReadError (BYTE *);
-int  Check_D_Correct (BYTE *, BYTE *);
-int  Check_D_CISdata (BYTE *, BYTE *);
-void Set_D_RightECC (BYTE *);
+int  Check_D_ReadError(BYTE *);
+int  Check_D_Correct(BYTE *, BYTE *);
+int  Check_D_CISdata(BYTE *, BYTE *);
+void Set_D_RightECC(BYTE *);
 
 /*
  * SMILECC.c
  */
-void calculate_ecc (BYTE *, BYTE *, BYTE *, BYTE *, BYTE *);
-BYTE correct_data (BYTE *, BYTE *, BYTE,   BYTE,   BYTE);
-int  _Correct_D_SwECC (BYTE *, BYTE *, BYTE *);
-void _Calculate_D_SwECC (BYTE *, BYTE *);
+void calculate_ecc(BYTE *, BYTE *, BYTE *, BYTE *, BYTE *);
+BYTE correct_data(BYTE *, BYTE *, BYTE,   BYTE,   BYTE);
+int  _Correct_D_SwECC(BYTE *, BYTE *, BYTE *);
+void _Calculate_D_SwECC(BYTE *, BYTE *);
 
-void SM_Init (void);
+void SM_Init(void);
 
 #endif /* already included */

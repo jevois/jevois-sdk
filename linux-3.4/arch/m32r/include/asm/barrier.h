@@ -75,19 +75,19 @@
  * in cases like this where there are no data dependencies.
  **/
 
-#define read_barrier_depends()  do { } while (0)
+#define read_barrier_depends()	do { } while (0)
 
 #ifdef CONFIG_SMP
-#define smp_mb()  mb()
-#define smp_rmb() rmb()
-#define smp_wmb() wmb()
-#define smp_read_barrier_depends()  read_barrier_depends()
+#define smp_mb()	mb()
+#define smp_rmb()	rmb()
+#define smp_wmb()	wmb()
+#define smp_read_barrier_depends()	read_barrier_depends()
 #define set_mb(var, value) do { (void) xchg(&var, value); } while (0)
 #else
-#define smp_mb()  barrier()
-#define smp_rmb() barrier()
-#define smp_wmb() barrier()
-#define smp_read_barrier_depends()  do { } while (0)
+#define smp_mb()	barrier()
+#define smp_rmb()	barrier()
+#define smp_wmb()	barrier()
+#define smp_read_barrier_depends()	do { } while (0)
 #define set_mb(var, value) do { var = value; barrier(); } while (0)
 #endif
 

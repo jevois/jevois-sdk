@@ -28,10 +28,10 @@
 #include <string.h>
 #include <sys/stat.h>
 
-#define CHECKSUM_OFFSET   (14*1024-4)
-#define BUFSIZE     (16*1024)
-#define FILE_PERM   (S_IRUSR | S_IWUSR | S_IRGRP \
-                     | S_IWGRP | S_IROTH | S_IWOTH)
+#define CHECKSUM_OFFSET		(14*1024-4)
+#define BUFSIZE			(16*1024)
+#define FILE_PERM		(S_IRUSR | S_IWUSR | S_IRGRP \
+				| S_IWGRP | S_IROTH | S_IWOTH)
 /*
 * Requirement:
 * IROM code reads first 14K bytes from boot device.
@@ -46,72 +46,72 @@
 * It writes the buffer to "u-boot-mmc-spl.bin" file.
 */
 
-int main (int argc, char ** argv)
+int main(int argc, char **argv)
 {
-  int i, len;
-  unsigned char buffer[BUFSIZE] = {0};
-  int ifd, ofd;
-  unsigned int checksum = 0, count;
-  
-  if (argc != 3) {
-    printf (" %d Wrong number of arguments\n", argc);
-    exit (EXIT_FAILURE);
-  }
-  
-  ifd = open (argv[1], O_RDONLY);
-  if (ifd < 0) {
-    fprintf (stderr, "%s: Can't open %s: %s\n",
-             argv[0], argv[1], strerror (errno) );
-    exit (EXIT_FAILURE);
-  }
-  
-  ofd = open (argv[2], O_WRONLY | O_CREAT | O_TRUNC, FILE_PERM);
-  if (ifd < 0) {
-    fprintf (stderr, "%s: Can't open %s: %s\n",
-             argv[0], argv[2], strerror (errno) );
-    if (ifd)
-    { close (ifd); }
-    exit (EXIT_FAILURE);
-  }
-  
-  len = lseek (ifd, 0, SEEK_END);
-  lseek (ifd, 0, SEEK_SET);
-  
-  count = (len < CHECKSUM_OFFSET) ? len : CHECKSUM_OFFSET;
-  
-  if (read (ifd, buffer, count) != count) {
-    fprintf (stderr, "%s: Can't read %s: %s\n",
-             argv[0], argv[1], strerror (errno) );
-             
-    if (ifd)
-    { close (ifd); }
-    if (ofd)
-    { close (ofd); }
-    
-    exit (EXIT_FAILURE);
-  }
-  
-  for (i = 0, checksum = 0; i < CHECKSUM_OFFSET; i++)
-  { checksum += buffer[i]; }
-  
-  memcpy (&buffer[CHECKSUM_OFFSET], &checksum, sizeof (checksum) );
-  
-  if (write (ofd, buffer, BUFSIZE) != BUFSIZE) {
-    fprintf (stderr, "%s: Can't write %s: %s\n",
-             argv[0], argv[2], strerror (errno) );
-             
-    if (ifd)
-    { close (ifd); }
-    if (ofd)
-    { close (ofd); }
-    
-    exit (EXIT_FAILURE);
-  }
-  
-  if (ifd)
-  { close (ifd); }
-  if (ofd)
-  { close (ofd); }
-  
-  return EXIT_SUCCESS;
+	int i, len;
+	unsigned char buffer[BUFSIZE] = {0};
+	int ifd, ofd;
+	unsigned int checksum = 0, count;
+
+	if (argc != 3) {
+		printf(" %d Wrong number of arguments\n", argc);
+		exit(EXIT_FAILURE);
+	}
+
+	ifd = open(argv[1], O_RDONLY);
+	if (ifd < 0) {
+		fprintf(stderr, "%s: Can't open %s: %s\n",
+			argv[0], argv[1], strerror(errno));
+		exit(EXIT_FAILURE);
+	}
+
+	ofd = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, FILE_PERM);
+	if (ifd < 0) {
+		fprintf(stderr, "%s: Can't open %s: %s\n",
+			argv[0], argv[2], strerror(errno));
+		if (ifd)
+			close(ifd);
+		exit(EXIT_FAILURE);
+	}
+
+	len = lseek(ifd, 0, SEEK_END);
+	lseek(ifd, 0, SEEK_SET);
+
+	count = (len < CHECKSUM_OFFSET) ? len : CHECKSUM_OFFSET;
+
+	if (read(ifd, buffer, count) != count) {
+		fprintf(stderr, "%s: Can't read %s: %s\n",
+			argv[0], argv[1], strerror(errno));
+
+		if (ifd)
+			close(ifd);
+		if (ofd)
+			close(ofd);
+
+		exit(EXIT_FAILURE);
+	}
+
+	for (i = 0, checksum = 0; i < CHECKSUM_OFFSET; i++)
+		checksum += buffer[i];
+
+	memcpy(&buffer[CHECKSUM_OFFSET], &checksum, sizeof(checksum));
+
+	if (write(ofd, buffer, BUFSIZE) != BUFSIZE) {
+		fprintf(stderr, "%s: Can't write %s: %s\n",
+			argv[0], argv[2], strerror(errno));
+
+		if (ifd)
+			close(ifd);
+		if (ofd)
+			close(ofd);
+
+		exit(EXIT_FAILURE);
+	}
+
+	if (ifd)
+		close(ifd);
+	if (ofd)
+		close(ofd);
+
+	return EXIT_SUCCESS;
 }

@@ -14,19 +14,19 @@
  *
  * Don't use in new code.
  */
-static DEFINE_MUTEX (big_tty_mutex);
+static DEFINE_MUTEX(big_tty_mutex);
 
 /*
  * Getting the big tty mutex.
  */
-void __lockfunc tty_lock (void)
+void __lockfunc tty_lock(void)
 {
-  mutex_lock (&big_tty_mutex);
+	mutex_lock(&big_tty_mutex);
 }
-EXPORT_SYMBOL (tty_lock);
+EXPORT_SYMBOL(tty_lock);
 
-void __lockfunc tty_unlock (void)
+void __lockfunc tty_unlock(void)
 {
-  mutex_unlock (&big_tty_mutex);
+	mutex_unlock(&big_tty_mutex);
 }
-EXPORT_SYMBOL (tty_unlock);
+EXPORT_SYMBOL(tty_unlock);

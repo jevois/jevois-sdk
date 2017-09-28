@@ -38,14 +38,14 @@ typedef struct
  * Defines for accessing the bits. Also define some synonyms for use with
  * the software-based defined bits below.
  */
-#define _PAGE_EXECUTE       (1 << 0)  /* Execution bit. */
-#define _PAGE_WE            (1 << 1)  /* Write bit. */
-#define _PAGE_SILENT_WRITE  (1 << 1)  /* Same as above. */
-#define _PAGE_KERNEL        (1 << 2)  /* Kernel mode page. */
-#define _PAGE_VALID         (1 << 3)  /* Page is valid. */
-#define _PAGE_SILENT_READ   (1 << 3)  /* Same as above. */
-#define _PAGE_GLOBAL        (1 << 4)  /* Global page. */
-#define _PAGE_NO_CACHE      (1 << 31) /* part of the uncached memory map */
+#define _PAGE_EXECUTE       (1 << 0)	/* Execution bit. */
+#define _PAGE_WE            (1 << 1)	/* Write bit. */
+#define _PAGE_SILENT_WRITE  (1 << 1)	/* Same as above. */
+#define _PAGE_KERNEL        (1 << 2)	/* Kernel mode page. */
+#define _PAGE_VALID         (1 << 3)	/* Page is valid. */
+#define _PAGE_SILENT_READ   (1 << 3)	/* Same as above. */
+#define _PAGE_GLOBAL        (1 << 4)	/* Global page. */
+#define _PAGE_NO_CACHE	    (1 << 31)	/* part of the uncached memory map */
 
 
 /*
@@ -63,7 +63,7 @@ typedef struct
 #define __READABLE      (_PAGE_READ | _PAGE_SILENT_READ | _PAGE_ACCESSED)
 #define __WRITEABLE     (_PAGE_WRITE | _PAGE_SILENT_WRITE | _PAGE_MODIFIED)
 
-#define _PAGE_TABLE (_PAGE_PRESENT | __READABLE | __WRITEABLE)
+#define _PAGE_TABLE	(_PAGE_PRESENT | __READABLE | __WRITEABLE)
 #define _PAGE_CHG_MASK  (PAGE_MASK | _PAGE_ACCESSED | _PAGE_MODIFIED)
 
 #define PAGE_NONE       __pgprot(_PAGE_PRESENT | _PAGE_ACCESSED)
@@ -76,13 +76,13 @@ typedef struct
 #define PAGE_READONLY_EXEC __pgprot(_PAGE_PRESENT | __READABLE | _PAGE_EXECUTE | _PAGE_ACCESSED)
 
 #define PAGE_COPY       __pgprot(_PAGE_PRESENT | __READABLE)
-#define PAGE_COPY_EXEC  __pgprot(_PAGE_PRESENT | __READABLE | _PAGE_EXECUTE)
+#define PAGE_COPY_EXEC	__pgprot(_PAGE_PRESENT | __READABLE | _PAGE_EXECUTE)
 #define PAGE_KERNEL     __pgprot(_PAGE_GLOBAL | _PAGE_KERNEL | \
                                  _PAGE_PRESENT | __READABLE | __WRITEABLE)
 #define PAGE_KERNEL_EXEC __pgprot(_PAGE_GLOBAL | _PAGE_KERNEL | _PAGE_EXECUTE | \
-                                  _PAGE_PRESENT | __READABLE | __WRITEABLE)
+                                 _PAGE_PRESENT | __READABLE | __WRITEABLE)
 #define PAGE_SIGNAL_TRAMPOLINE __pgprot(_PAGE_GLOBAL | _PAGE_EXECUTE | \
-                                        _PAGE_PRESENT | __READABLE)
+                                       _PAGE_PRESENT | __READABLE)
 
 #define _KERNPG_TABLE   (_PAGE_TABLE | _PAGE_KERNEL)
 
@@ -108,6 +108,6 @@ typedef struct
 #define __S110  PAGE_SHARED_EXEC
 #define __S111  PAGE_SHARED_EXEC
 
-#define PTE_FILE_MAX_BITS 25
+#define PTE_FILE_MAX_BITS	25
 
 #endif /* _ASM_CRIS_ARCH_MMU_H */

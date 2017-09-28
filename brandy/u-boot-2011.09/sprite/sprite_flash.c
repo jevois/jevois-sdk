@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -44,22 +44,22 @@
 *
 ************************************************************************************************************
 */
-void sunxi_sprite_probe_part_data_format (void * buffer)
+void sunxi_sprite_probe_part_data_format(void *buffer)
 {
-  int format;
-  
-  if (sparse_format_detect (buffer) )
-  {
-    puts ("part format: format\n");
-    ;
-  }
-  else
-  {
-    puts ("part format: raw\n");
-    ;
-  }
-  
-  return ;
+	int format;
+
+	if(sparse_format_detect(buffer))
+	{
+		puts("part format: format\n");
+		;
+	}
+	else
+	{
+		puts("part format: raw\n");
+		;
+	}
+
+	return ;
 }
 /*
 ************************************************************************************************************

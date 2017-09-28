@@ -15,15 +15,15 @@
 #if defined(CONFIG_OF_I2C) || defined(CONFIG_OF_I2C_MODULE)
 #include <linux/i2c.h>
 
-extern void of_i2c_register_devices (struct i2c_adapter * adap);
+extern void of_i2c_register_devices(struct i2c_adapter *adap);
 
 /* must call put_device() when done with returned i2c_client device */
-extern struct i2c_client * of_find_i2c_device_by_node (struct device_node * node);
+extern struct i2c_client *of_find_i2c_device_by_node(struct device_node *node);
 
 #else
-static inline void of_i2c_register_devices (struct i2c_adapter * adap)
+static inline void of_i2c_register_devices(struct i2c_adapter *adap)
 {
-  return;
+	return;
 }
 #endif /* CONFIG_OF_I2C */
 

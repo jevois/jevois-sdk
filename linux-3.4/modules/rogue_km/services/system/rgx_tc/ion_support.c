@@ -54,120 +54,120 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "ion_lma_heap.h"
 
 struct ion_platform_data gsTCIonConfig = {
-  .nr = 1,
-  .heaps =
-  #if (LINUX_VERSION_CODE < KERNEL_VERSION(3,4,39))
-  #else
-  (struct ion_platform_heap [])
-  #endif
-  {
-    {
-      /* This heap must be first. The base address and size are filled
-         in from data passed down by sysconfig.c. */
-      .type = ION_HEAP_TYPE_CUSTOM,
-      .name = "tc_local_mem",
-      .id = ION_HEAP_TYPE_CUSTOM + 1,
-      .base = 0,      /* filled in later */
-      .size = 0,      /* filled in later */
-    }
-  }
+	.nr = 1,
+	.heaps =
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(3,4,39))
+#else
+		(struct ion_platform_heap [])
+#endif
+		{
+			{
+				/* This heap must be first. The base address and size are filled
+				   in from data passed down by sysconfig.c. */
+				.type = ION_HEAP_TYPE_CUSTOM,
+				.name = "tc_local_mem",
+				.id = ION_HEAP_TYPE_CUSTOM + 1,
+				.base = 0,			/* filled in later */
+				.size = 0,			/* filled in later */
+			}
+		}
 };
 
-struct ion_heap ** gapsIonHeaps;
-struct ion_device * gpsIonDev;
+struct ion_heap **gapsIonHeaps;
+struct ion_device *gpsIonDev;
 ION_TC_PRIVATE_DATA sPrivateData;
 
-PVRSRV_ERROR IonInit (void * pvPrivateData)
+PVRSRV_ERROR IonInit(void *pvPrivateData)
 {
-  PVRSRV_ERROR eError = PVRSRV_OK;
-  int i;
-  
-  sPrivateData = * (ION_TC_PRIVATE_DATA *) pvPrivateData;
-  
-  /* Fill in the heap base and size according to the private data. */
-  gsTCIonConfig.heaps[0].base = sPrivateData.uiHeapBase;
-  gsTCIonConfig.heaps[0].size = sPrivateData.uiHeapSize;
-  
-  gapsIonHeaps = kzalloc (sizeof (struct ion_heap *) * gsTCIonConfig.nr,
-                          GFP_KERNEL);
-  gpsIonDev = ion_device_create (NULL);
-  if (IS_ERR_OR_NULL (gpsIonDev) )
-  {
-    kfree (gapsIonHeaps);
-    return PVRSRV_ERROR_OUT_OF_MEMORY;
-  }
-  
-  for (i = 0; i < gsTCIonConfig.nr; i++)
-  {
-    struct ion_platform_heap * psPlatHeapData = &gsTCIonConfig.heaps[i];
-    
-    switch (psPlatHeapData->type)
-    {
-    case ION_HEAP_TYPE_CUSTOM:
-      /* Custom heap: this is used to mean a TC-specific heap,
-         which allocates from local memory. */
-      gapsIonHeaps[i] = lma_heap_create (psPlatHeapData);
-      break;
-    default:
-      /* For any other type of heap, hand this to ion to create as
-         appropriate. We don't necessarily need any of these -
-         this just gives us the flexibility to have another kind
-         of heap if necessary. */
-      gapsIonHeaps[i] = ion_heap_create (psPlatHeapData);
-      break;
-    }
-    
-    if (IS_ERR_OR_NULL (gapsIonHeaps[i]) )
-    {
-      PVR_DPF ( (PVR_DBG_ERROR, "%s: Failed to create ion heap '%s'",
-                 __func__, psPlatHeapData->name) );
-      goto err_destroy_heaps;
-    }
-    
-    ion_device_add_heap (gpsIonDev, gapsIonHeaps[i]);
-  }
-  
+	PVRSRV_ERROR eError = PVRSRV_OK;
+	int i;
+
+	sPrivateData = *(ION_TC_PRIVATE_DATA *)pvPrivateData;
+
+	/* Fill in the heap base and size according to the private data. */
+	gsTCIonConfig.heaps[0].base = sPrivateData.uiHeapBase;
+	gsTCIonConfig.heaps[0].size = sPrivateData.uiHeapSize;
+
+	gapsIonHeaps = kzalloc(sizeof(struct ion_heap *) * gsTCIonConfig.nr,
+						   GFP_KERNEL);
+	gpsIonDev = ion_device_create(NULL);
+	if (IS_ERR_OR_NULL(gpsIonDev))
+	{
+		kfree(gapsIonHeaps);
+		return PVRSRV_ERROR_OUT_OF_MEMORY;
+	}
+
+	for (i = 0; i < gsTCIonConfig.nr; i++)
+	{
+		struct ion_platform_heap *psPlatHeapData = &gsTCIonConfig.heaps[i];
+
+		switch (psPlatHeapData->type)
+		{
+			case ION_HEAP_TYPE_CUSTOM:
+				/* Custom heap: this is used to mean a TC-specific heap,
+				   which allocates from local memory. */
+				gapsIonHeaps[i] = lma_heap_create(psPlatHeapData);
+				break;
+			default:
+				/* For any other type of heap, hand this to ion to create as
+				   appropriate. We don't necessarily need any of these -
+				   this just gives us the flexibility to have another kind
+				   of heap if necessary. */
+				gapsIonHeaps[i] = ion_heap_create(psPlatHeapData);
+				break;
+		}
+
+		if (IS_ERR_OR_NULL(gapsIonHeaps[i]))
+		{
+			PVR_DPF((PVR_DBG_ERROR, "%s: Failed to create ion heap '%s'",
+					 __func__, psPlatHeapData->name));
+			goto err_destroy_heaps;
+		}
+
+		ion_device_add_heap(gpsIonDev, gapsIonHeaps[i]);
+	}
+
 out:
-  return eError;
-  
+	return eError;
+
 err_destroy_heaps:
-  IonDeinit();
-  goto out;
+	IonDeinit();
+	goto out;
 }
 
-struct ion_device * IonDevAcquire (IMG_VOID)
+struct ion_device *IonDevAcquire(IMG_VOID)
 {
-  return gpsIonDev;
+	return gpsIonDev;
 }
 
-IMG_VOID IonDevRelease (struct ion_device * psIonDev)
+IMG_VOID IonDevRelease(struct ion_device *psIonDev)
 {
-  /* Nothing to do, sanity check the pointer we're passed back */
-  PVR_ASSERT (psIonDev == gpsIonDev);
+	/* Nothing to do, sanity check the pointer we're passed back */
+	PVR_ASSERT(psIonDev == gpsIonDev);
 }
 
-IMG_UINT32 IonPhysHeapID (IMG_VOID)
+IMG_UINT32 IonPhysHeapID(IMG_VOID)
 {
-  return sPrivateData.ui32IonPhysHeapID;
+	return sPrivateData.ui32IonPhysHeapID;
 }
 
 #if defined(LMA)
-IMG_DEV_PHYADDR IonCPUPhysToDevPhys (IMG_CPU_PHYADDR sCPUPhysAddr,
-                                     IMG_UINT32 ui32Offset)
+IMG_DEV_PHYADDR IonCPUPhysToDevPhys(IMG_CPU_PHYADDR sCPUPhysAddr,
+									IMG_UINT32 ui32Offset)
 {
-  return (IMG_DEV_PHYADDR) {
-    .uiAddr = sCPUPhysAddr.uiAddr + ui32Offset
-              - sPrivateData.sPCIAddrRangeStart.uiAddr,
-  };
+	return (IMG_DEV_PHYADDR){
+		.uiAddr = sCPUPhysAddr.uiAddr + ui32Offset
+			- sPrivateData.sPCIAddrRangeStart.uiAddr,
+	};
 }
 #endif /* defined(LMA) */
 
-IMG_VOID IonDeinit (void)
+IMG_VOID IonDeinit(void)
 {
-  int i;
-  for (i = 0; i < gsTCIonConfig.nr; i++)
-    if (gapsIonHeaps[i])
-    { ion_heap_destroy (gapsIonHeaps[i]); }
-  kfree (gapsIonHeaps);
-  ion_device_destroy (gpsIonDev);
+	int i;
+	for (i = 0; i < gsTCIonConfig.nr; i++)
+		if (gapsIonHeaps[i])
+			ion_heap_destroy(gapsIonHeaps[i]);
+	kfree(gapsIonHeaps);
+	ion_device_destroy(gpsIonDev);
 }

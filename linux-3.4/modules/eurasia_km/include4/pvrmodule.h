@@ -39,10 +39,10 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */ /**************************************************************************/
 
-#ifndef _PVRMODULE_H_
-#define _PVRMODULE_H_
+#ifndef	_PVRMODULE_H_
+#define	_PVRMODULE_H_
 
-MODULE_AUTHOR ("Imagination Technologies Ltd. <gpl-support@imgtec.com>");
-MODULE_LICENSE ("Dual MIT/GPL");
+MODULE_AUTHOR("Imagination Technologies Ltd. <gpl-support@imgtec.com>");
+MODULE_LICENSE("Dual MIT/GPL");
 
-#endif  /* _PVRMODULE_H_ */
+#endif	/* _PVRMODULE_H_ */

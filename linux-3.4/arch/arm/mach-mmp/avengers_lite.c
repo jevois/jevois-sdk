@@ -27,25 +27,25 @@
 
 /* Avengers lite MFP configurations */
 static unsigned long avengers_lite_pin_config_V16F[] __initdata = {
-  /* DEBUG_UART */
-  GPIO88_UART2_TXD,
-  GPIO89_UART2_RXD,
+	/* DEBUG_UART */
+	GPIO88_UART2_TXD,
+	GPIO89_UART2_RXD,
 };
 
-static void __init avengers_lite_init (void)
+static void __init avengers_lite_init(void)
 {
-  mfp_config (ARRAY_AND_SIZE (avengers_lite_pin_config_V16F) );
-  
-  /* on-chip devices */
-  pxa168_add_uart (2);
-  platform_device_register (&pxa168_device_gpio);
+	mfp_config(ARRAY_AND_SIZE(avengers_lite_pin_config_V16F));
+
+	/* on-chip devices */
+	pxa168_add_uart(2);
+	platform_device_register(&pxa168_device_gpio);
 }
 
-MACHINE_START (AVENGERS_LITE, "PXA168 Avengers lite Development Platform")
-.map_io   = mmp_map_io,
- .nr_irqs  = MMP_NR_IRQS,
-  .init_irq       = pxa168_init_irq,
-   .timer          = &pxa168_timer,
-    .init_machine   = avengers_lite_init,
-     .restart  = pxa168_restart,
-      MACHINE_END
+MACHINE_START(AVENGERS_LITE, "PXA168 Avengers lite Development Platform")
+	.map_io		= mmp_map_io,
+	.nr_irqs	= MMP_NR_IRQS,
+	.init_irq       = pxa168_init_irq,
+	.timer          = &pxa168_timer,
+	.init_machine   = avengers_lite_init,
+	.restart	= pxa168_restart,
+MACHINE_END

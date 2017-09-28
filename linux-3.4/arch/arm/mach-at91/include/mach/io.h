@@ -21,7 +21,7 @@
 #ifndef __ASM_ARCH_IO_H
 #define __ASM_ARCH_IO_H
 
-#define IO_SPACE_LIMIT    0xFFFFFFFF
-#define __io(a)     __typesafe_io(a)
+#define IO_SPACE_LIMIT		0xFFFFFFFF
+#define __io(a)			__typesafe_io(a)
 
 #endif

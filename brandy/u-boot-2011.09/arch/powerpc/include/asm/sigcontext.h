@@ -5,11 +5,11 @@
 
 
 struct sigcontext_struct {
-  unsigned long _unused[4];
-  int   signal;
-  unsigned long handler;
-  unsigned long oldmask;
-  struct pt_regs * regs;
+	unsigned long	_unused[4];
+	int		signal;
+	unsigned long	handler;
+	unsigned long	oldmask;
+	struct pt_regs	*regs;
 };
 
 #endif

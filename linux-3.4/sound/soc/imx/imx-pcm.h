@@ -16,17 +16,17 @@
 /*
  * Do not change this as the FIQ handler depends on this size
  */
-#define IMX_SSI_DMABUF_SIZE (64 * 1024)
+#define IMX_SSI_DMABUF_SIZE	(64 * 1024)
 
 struct imx_pcm_dma_params {
-  int dma;
-  unsigned long dma_addr;
-  int burstsize;
+	int dma;
+	unsigned long dma_addr;
+	int burstsize;
 };
 
-int snd_imx_pcm_mmap (struct snd_pcm_substream * substream,
-                      struct vm_area_struct * vma);
-int imx_pcm_new (struct snd_soc_pcm_runtime * rtd);
-void imx_pcm_free (struct snd_pcm * pcm);
+int snd_imx_pcm_mmap(struct snd_pcm_substream *substream,
+		     struct vm_area_struct *vma);
+int imx_pcm_new(struct snd_soc_pcm_runtime *rtd);
+void imx_pcm_free(struct snd_pcm *pcm);
 
 #endif /* _IMX_PCM_H */

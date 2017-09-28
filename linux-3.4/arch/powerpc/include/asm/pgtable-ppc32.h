@@ -6,10 +6,10 @@
 #ifndef __ASSEMBLY__
 #include <linux/sched.h>
 #include <linux/threads.h>
-#include <asm/io.h>     /* For sub-arch specific PPC_PIN_SIZE */
+#include <asm/io.h>			/* For sub-arch specific PPC_PIN_SIZE */
 
-extern unsigned long va_to_phys (unsigned long address);
-extern pte_t * va_to_pte (unsigned long address);
+extern unsigned long va_to_phys(unsigned long address);
+extern pte_t *va_to_pte(unsigned long address);
 extern unsigned long ioremap_bot;
 
 #ifdef CONFIG_44x
@@ -29,31 +29,31 @@ extern int icache_44x_need_flush;
  * -Matt
  */
 /* PGDIR_SHIFT determines what a top-level page table entry can map */
-#define PGDIR_SHIFT (PAGE_SHIFT + PTE_SHIFT)
-#define PGDIR_SIZE  (1UL << PGDIR_SHIFT)
-#define PGDIR_MASK  (~(PGDIR_SIZE-1))
+#define PGDIR_SHIFT	(PAGE_SHIFT + PTE_SHIFT)
+#define PGDIR_SIZE	(1UL << PGDIR_SHIFT)
+#define PGDIR_MASK	(~(PGDIR_SIZE-1))
 
 /*
  * entries per page directory level: our page-table tree is two-level, so
  * we don't really have any PMD directory.
  */
 #ifndef __ASSEMBLY__
-#define PTE_TABLE_SIZE  (sizeof(pte_t) << PTE_SHIFT)
-#define PGD_TABLE_SIZE  (sizeof(pgd_t) << (32 - PGDIR_SHIFT))
-#endif  /* __ASSEMBLY__ */
+#define PTE_TABLE_SIZE	(sizeof(pte_t) << PTE_SHIFT)
+#define PGD_TABLE_SIZE	(sizeof(pgd_t) << (32 - PGDIR_SHIFT))
+#endif	/* __ASSEMBLY__ */
 
-#define PTRS_PER_PTE  (1 << PTE_SHIFT)
-#define PTRS_PER_PMD  1
-#define PTRS_PER_PGD  (1 << (32 - PGDIR_SHIFT))
+#define PTRS_PER_PTE	(1 << PTE_SHIFT)
+#define PTRS_PER_PMD	1
+#define PTRS_PER_PGD	(1 << (32 - PGDIR_SHIFT))
 
-#define USER_PTRS_PER_PGD (TASK_SIZE / PGDIR_SIZE)
-#define FIRST_USER_ADDRESS  0
+#define USER_PTRS_PER_PGD	(TASK_SIZE / PGDIR_SIZE)
+#define FIRST_USER_ADDRESS	0
 
 #define pte_ERROR(e) \
-  printk("%s:%d: bad pte %llx.\n", __FILE__, __LINE__, \
-         (unsigned long long)pte_val(e))
+	printk("%s:%d: bad pte %llx.\n", __FILE__, __LINE__, \
+		(unsigned long long)pte_val(e))
 #define pgd_ERROR(e) \
-  printk("%s:%d: bad pgd %08lx.\n", __FILE__, __LINE__, pgd_val(e))
+	printk("%s:%d: bad pgd %08lx.\n", __FILE__, __LINE__, pgd_val(e))
 
 /*
  * This is the bottom of the PKMAP area with HIGHMEM or an arbitrary
@@ -61,9 +61,9 @@ extern int icache_44x_need_flush;
  * virtual space that goes below PKMAP and FIXMAP
  */
 #ifdef CONFIG_HIGHMEM
-#define KVIRT_TOP PKMAP_BASE
+#define KVIRT_TOP	PKMAP_BASE
 #else
-#define KVIRT_TOP (0xfe000000UL)  /* for now, could be FIXMAP_BASE ? */
+#define KVIRT_TOP	(0xfe000000UL)	/* for now, could be FIXMAP_BASE ? */
 #endif
 
 /*
@@ -72,9 +72,9 @@ extern int icache_44x_need_flush;
  * and ioremap space
  */
 #ifdef CONFIG_NOT_COHERENT_CACHE
-#define IOREMAP_TOP ((KVIRT_TOP - CONFIG_CONSISTENT_SIZE) & PAGE_MASK)
+#define IOREMAP_TOP	((KVIRT_TOP - CONFIG_CONSISTENT_SIZE) & PAGE_MASK)
 #else
-#define IOREMAP_TOP KVIRT_TOP
+#define IOREMAP_TOP	KVIRT_TOP
 #endif
 
 /*
@@ -100,7 +100,7 @@ extern int icache_44x_need_flush;
 #else
 #define VMALLOC_START ((((long)high_memory + VMALLOC_OFFSET) & ~(VMALLOC_OFFSET-1)))
 #endif
-#define VMALLOC_END ioremap_bot
+#define VMALLOC_END	ioremap_bot
 
 /*
  * Bits in a linux-style PTE.  These match the bits in the
@@ -127,27 +127,27 @@ extern int icache_44x_need_flush;
 #ifndef __ASSEMBLY__
 
 #define pte_clear(mm, addr, ptep) \
-  do { pte_update(ptep, ~_PAGE_HASHPTE, 0); } while (0)
+	do { pte_update(ptep, ~_PAGE_HASHPTE, 0); } while (0)
 
-#define pmd_none(pmd)   (!pmd_val(pmd))
-#define pmd_bad(pmd)    (pmd_val(pmd) & _PMD_BAD)
-#define pmd_present(pmd)  (pmd_val(pmd) & _PMD_PRESENT_MASK)
-#define pmd_clear(pmdp)   do { pmd_val(*(pmdp)) = 0; } while (0)
+#define pmd_none(pmd)		(!pmd_val(pmd))
+#define	pmd_bad(pmd)		(pmd_val(pmd) & _PMD_BAD)
+#define	pmd_present(pmd)	(pmd_val(pmd) & _PMD_PRESENT_MASK)
+#define	pmd_clear(pmdp)		do { pmd_val(*(pmdp)) = 0; } while (0)
 
 /*
  * When flushing the tlb entry for a page, we also need to flush the hash
  * table entry.  flush_hash_pages is assembler (for speed) in hashtable.S.
  */
-extern int flush_hash_pages (unsigned context, unsigned long va,
-                             unsigned long pmdval, int count);
+extern int flush_hash_pages(unsigned context, unsigned long va,
+			    unsigned long pmdval, int count);
 
 /* Add an HPTE to the hash table */
-extern void add_hash_page (unsigned context, unsigned long va,
-                           unsigned long pmdval);
+extern void add_hash_page(unsigned context, unsigned long va,
+			  unsigned long pmdval);
 
 /* Flush an entry from the TLB/hash table */
-extern void flush_hash_entry (struct mm_struct * mm, pte_t * ptep,
-                              unsigned long address);
+extern void flush_hash_entry(struct mm_struct *mm, pte_t *ptep,
+			     unsigned long address);
 
 /*
  * PTE updates. This function is called whenever an existing
@@ -165,64 +165,64 @@ extern void flush_hash_entry (struct mm_struct * mm, pte_t * ptep,
  * those implementations.
  */
 #ifndef CONFIG_PTE_64BIT
-static inline unsigned long pte_update (pte_t * p,
-                                        unsigned long clr,
-                                        unsigned long set)
+static inline unsigned long pte_update(pte_t *p,
+				       unsigned long clr,
+				       unsigned long set)
 {
-  #ifdef PTE_ATOMIC_UPDATES
-  unsigned long old, tmp;
-  
-  __asm__ __volatile__ ("\
+#ifdef PTE_ATOMIC_UPDATES
+	unsigned long old, tmp;
+
+	__asm__ __volatile__("\
 1:	lwarx	%0,0,%3\n\
 	andc	%1,%0,%4\n\
 	or	%1,%1,%5\n"
-                        PPC405_ERR77 (0, %3)
-                        "	stwcx.	%1,0,%3\n\
+	PPC405_ERR77(0,%3)
+"	stwcx.	%1,0,%3\n\
 	bne-	1b"
-                        : "=&r" (old), "=&r" (tmp), "=m" (*p)
-                        : "r" (p), "r" (clr), "r" (set), "m" (*p)
-                        : "cc" );
-  #else /* PTE_ATOMIC_UPDATES */
-  unsigned long old = pte_val (*p);
-  *p = __pte ( (old & ~clr) | set);
-  #endif /* !PTE_ATOMIC_UPDATES */
-                        
-  #ifdef CONFIG_44x
-  if ( (old & _PAGE_USER) && (old & _PAGE_EXEC) )
-  { icache_44x_need_flush = 1; }
-  #endif
-  return old;
+	: "=&r" (old), "=&r" (tmp), "=m" (*p)
+	: "r" (p), "r" (clr), "r" (set), "m" (*p)
+	: "cc" );
+#else /* PTE_ATOMIC_UPDATES */
+	unsigned long old = pte_val(*p);
+	*p = __pte((old & ~clr) | set);
+#endif /* !PTE_ATOMIC_UPDATES */
+
+#ifdef CONFIG_44x
+	if ((old & _PAGE_USER) && (old & _PAGE_EXEC))
+		icache_44x_need_flush = 1;
+#endif
+	return old;
 }
 #else /* CONFIG_PTE_64BIT */
-static inline unsigned long long pte_update (pte_t * p,
-    unsigned long clr,
-    unsigned long set)
+static inline unsigned long long pte_update(pte_t *p,
+					    unsigned long clr,
+					    unsigned long set)
 {
-  #ifdef PTE_ATOMIC_UPDATES
-  unsigned long long old;
-  unsigned long tmp;
+#ifdef PTE_ATOMIC_UPDATES
+	unsigned long long old;
+	unsigned long tmp;
 
-  __asm__ __volatile__ ("\
+	__asm__ __volatile__("\
 1:	lwarx	%L0,0,%4\n\
 	lwzx	%0,0,%3\n\
 	andc	%1,%L0,%5\n\
 	or	%1,%1,%6\n"
-                        PPC405_ERR77 (0, %3)
-                        "	stwcx.	%1,0,%4\n\
+	PPC405_ERR77(0,%3)
+"	stwcx.	%1,0,%4\n\
 	bne-	1b"
-                        : "=&r" (old), "=&r" (tmp), "=m" (*p)
-                        : "r" (p), "r" ( (unsigned long) (p) + 4), "r" (clr), "r" (set), "m" (*p)
-                        : "cc" );
-  #else /* PTE_ATOMIC_UPDATES */
-  unsigned long long old = pte_val (*p);
-  *p = __pte ( (old & ~ (unsigned long long) clr) | set);
-  #endif /* !PTE_ATOMIC_UPDATES */
+	: "=&r" (old), "=&r" (tmp), "=m" (*p)
+	: "r" (p), "r" ((unsigned long)(p) + 4), "r" (clr), "r" (set), "m" (*p)
+	: "cc" );
+#else /* PTE_ATOMIC_UPDATES */
+	unsigned long long old = pte_val(*p);
+	*p = __pte((old & ~(unsigned long long)clr) | set);
+#endif /* !PTE_ATOMIC_UPDATES */
 
-  #ifdef CONFIG_44x
-  if ( (old & _PAGE_USER) && (old & _PAGE_EXEC) )
-  { icache_44x_need_flush = 1; }
-  #endif
-  return old;
+#ifdef CONFIG_44x
+	if ((old & _PAGE_USER) && (old & _PAGE_EXEC))
+		icache_44x_need_flush = 1;
+#endif
+	return old;
 }
 #endif /* CONFIG_PTE_64BIT */
 
@@ -231,50 +231,50 @@ static inline unsigned long long pte_update (pte_t * p,
  * for our hash-based implementation, we fix that up here.
  */
 #define __HAVE_ARCH_PTEP_TEST_AND_CLEAR_YOUNG
-static inline int __ptep_test_and_clear_young (unsigned int context, unsigned long addr, pte_t * ptep)
+static inline int __ptep_test_and_clear_young(unsigned int context, unsigned long addr, pte_t *ptep)
 {
-  unsigned long old;
-  old = pte_update (ptep, _PAGE_ACCESSED, 0);
-  #if _PAGE_HASHPTE != 0
-  if (old & _PAGE_HASHPTE) {
-    unsigned long ptephys = __pa (ptep) & PAGE_MASK;
-    flush_hash_pages (context, addr, ptephys, 1);
-  }
-  #endif
-  return (old & _PAGE_ACCESSED) != 0;
+	unsigned long old;
+	old = pte_update(ptep, _PAGE_ACCESSED, 0);
+#if _PAGE_HASHPTE != 0
+	if (old & _PAGE_HASHPTE) {
+		unsigned long ptephys = __pa(ptep) & PAGE_MASK;
+		flush_hash_pages(context, addr, ptephys, 1);
+	}
+#endif
+	return (old & _PAGE_ACCESSED) != 0;
 }
 #define ptep_test_and_clear_young(__vma, __addr, __ptep) \
-  __ptep_test_and_clear_young((__vma)->vm_mm->context.id, __addr, __ptep)
+	__ptep_test_and_clear_young((__vma)->vm_mm->context.id, __addr, __ptep)
 
 #define __HAVE_ARCH_PTEP_GET_AND_CLEAR
-static inline pte_t ptep_get_and_clear (struct mm_struct * mm, unsigned long addr,
-                                        pte_t * ptep)
+static inline pte_t ptep_get_and_clear(struct mm_struct *mm, unsigned long addr,
+				       pte_t *ptep)
 {
-  return __pte (pte_update (ptep, ~_PAGE_HASHPTE, 0) );
+	return __pte(pte_update(ptep, ~_PAGE_HASHPTE, 0));
 }
 
 #define __HAVE_ARCH_PTEP_SET_WRPROTECT
-static inline void ptep_set_wrprotect (struct mm_struct * mm, unsigned long addr,
-                                       pte_t * ptep)
+static inline void ptep_set_wrprotect(struct mm_struct *mm, unsigned long addr,
+				      pte_t *ptep)
 {
-  pte_update (ptep, (_PAGE_RW | _PAGE_HWWRITE), 0);
+	pte_update(ptep, (_PAGE_RW | _PAGE_HWWRITE), 0);
 }
-static inline void huge_ptep_set_wrprotect (struct mm_struct * mm,
-    unsigned long addr, pte_t * ptep)
+static inline void huge_ptep_set_wrprotect(struct mm_struct *mm,
+					   unsigned long addr, pte_t *ptep)
 {
-  ptep_set_wrprotect (mm, addr, ptep);
+	ptep_set_wrprotect(mm, addr, ptep);
 }
 
 
-static inline void __ptep_set_access_flags (pte_t * ptep, pte_t entry)
+static inline void __ptep_set_access_flags(pte_t *ptep, pte_t entry)
 {
-  unsigned long bits = pte_val (entry) &
-                       (_PAGE_DIRTY | _PAGE_ACCESSED | _PAGE_RW | _PAGE_EXEC);
-  pte_update (ptep, 0, bits);
+	unsigned long bits = pte_val(entry) &
+		(_PAGE_DIRTY | _PAGE_ACCESSED | _PAGE_RW | _PAGE_EXEC);
+	pte_update(ptep, 0, bits);
 }
 
 #define __HAVE_ARCH_PTE_SAME
-#define pte_same(A,B) (((pte_val(A) ^ pte_val(B)) & ~_PAGE_HASHPTE) == 0)
+#define pte_same(A,B)	(((pte_val(A) ^ pte_val(B)) & ~_PAGE_HASHPTE) == 0)
 
 /*
  * Note that on Book E processors, the pmd contains the kernel virtual
@@ -284,32 +284,32 @@ static inline void __ptep_set_access_flags (pte_t * ptep, pte_t entry)
  * of the pte page.  -- paulus
  */
 #ifndef CONFIG_BOOKE
-#define pmd_page_vaddr(pmd) \
-  ((unsigned long) __va(pmd_val(pmd) & PAGE_MASK))
-#define pmd_page(pmd)   \
-  pfn_to_page(pmd_val(pmd) >> PAGE_SHIFT)
+#define pmd_page_vaddr(pmd)	\
+	((unsigned long) __va(pmd_val(pmd) & PAGE_MASK))
+#define pmd_page(pmd)		\
+	pfn_to_page(pmd_val(pmd) >> PAGE_SHIFT)
 #else
-#define pmd_page_vaddr(pmd) \
-  ((unsigned long) (pmd_val(pmd) & PAGE_MASK))
-#define pmd_page(pmd)   \
-  pfn_to_page((__pa(pmd_val(pmd)) >> PAGE_SHIFT))
+#define pmd_page_vaddr(pmd)	\
+	((unsigned long) (pmd_val(pmd) & PAGE_MASK))
+#define pmd_page(pmd)		\
+	pfn_to_page((__pa(pmd_val(pmd)) >> PAGE_SHIFT))
 #endif
 
 /* to find an entry in a kernel page-table-directory */
 #define pgd_offset_k(address) pgd_offset(&init_mm, address)
 
 /* to find an entry in a page-table-directory */
-#define pgd_index(address)   ((address) >> PGDIR_SHIFT)
-#define pgd_offset(mm, address)  ((mm)->pgd + pgd_index(address))
+#define pgd_index(address)	 ((address) >> PGDIR_SHIFT)
+#define pgd_offset(mm, address)	 ((mm)->pgd + pgd_index(address))
 
 /* Find an entry in the third-level page table.. */
-#define pte_index(address)    \
-  (((address) >> PAGE_SHIFT) & (PTRS_PER_PTE - 1))
-#define pte_offset_kernel(dir, addr)  \
-  ((pte_t *) pmd_page_vaddr(*(dir)) + pte_index(addr))
-#define pte_offset_map(dir, addr)   \
-  ((pte_t *) kmap_atomic(pmd_page(*(dir))) + pte_index(addr))
-#define pte_unmap(pte)    kunmap_atomic(pte)
+#define pte_index(address)		\
+	(((address) >> PAGE_SHIFT) & (PTRS_PER_PTE - 1))
+#define pte_offset_kernel(dir, addr)	\
+	((pte_t *) pmd_page_vaddr(*(dir)) + pte_index(addr))
+#define pte_offset_map(dir, addr)		\
+	((pte_t *) kmap_atomic(pmd_page(*(dir))) + pte_index(addr))
+#define pte_unmap(pte)		kunmap_atomic(pte)
 
 /*
  * Encode and decode a swap entry.
@@ -317,24 +317,24 @@ static inline void __ptep_set_access_flags (pte_t * ptep, pte_t entry)
  * must not include the _PAGE_PRESENT bit, the _PAGE_FILE bit, or the
  *_PAGE_HASHPTE bit (if used).  -- paulus
  */
-#define __swp_type(entry)   ((entry).val & 0x1f)
-#define __swp_offset(entry)   ((entry).val >> 5)
-#define __swp_entry(type, offset) ((swp_entry_t) { (type) | ((offset) << 5) })
-#define __pte_to_swp_entry(pte)   ((swp_entry_t) { pte_val(pte) >> 3 })
-#define __swp_entry_to_pte(x)   ((pte_t) { (x).val << 3 })
+#define __swp_type(entry)		((entry).val & 0x1f)
+#define __swp_offset(entry)		((entry).val >> 5)
+#define __swp_entry(type, offset)	((swp_entry_t) { (type) | ((offset) << 5) })
+#define __pte_to_swp_entry(pte)		((swp_entry_t) { pte_val(pte) >> 3 })
+#define __swp_entry_to_pte(x)		((pte_t) { (x).val << 3 })
 
 /* Encode and decode a nonlinear file mapping entry */
-#define PTE_FILE_MAX_BITS 29
-#define pte_to_pgoff(pte) (pte_val(pte) >> 3)
-#define pgoff_to_pte(off) ((pte_t) { ((off) << 3) | _PAGE_FILE })
+#define PTE_FILE_MAX_BITS	29
+#define pte_to_pgoff(pte)	(pte_val(pte) >> 3)
+#define pgoff_to_pte(off)	((pte_t) { ((off) << 3) | _PAGE_FILE })
 
 /*
  * No page table caches to initialise
  */
-#define pgtable_cache_init()  do { } while (0)
+#define pgtable_cache_init()	do { } while (0)
 
-extern int get_pteptr (struct mm_struct * mm, unsigned long addr, pte_t ** ptep,
-                       pmd_t ** pmdp);
+extern int get_pteptr(struct mm_struct *mm, unsigned long addr, pte_t **ptep,
+		      pmd_t **pmdp);
 
 #endif /* !__ASSEMBLY__ */
 

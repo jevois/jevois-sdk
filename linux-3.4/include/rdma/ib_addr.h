@@ -44,35 +44,35 @@
 #include <rdma/ib_pack.h>
 
 struct rdma_addr_client {
-  atomic_t refcount;
-  struct completion comp;
+	atomic_t refcount;
+	struct completion comp;
 };
 
 /**
  * rdma_addr_register_client - Register an address client.
  */
-void rdma_addr_register_client (struct rdma_addr_client * client);
+void rdma_addr_register_client(struct rdma_addr_client *client);
 
 /**
  * rdma_addr_unregister_client - Deregister an address client.
  * @client: Client object to deregister.
  */
-void rdma_addr_unregister_client (struct rdma_addr_client * client);
+void rdma_addr_unregister_client(struct rdma_addr_client *client);
 
 struct rdma_dev_addr {
-  unsigned char src_dev_addr[MAX_ADDR_LEN];
-  unsigned char dst_dev_addr[MAX_ADDR_LEN];
-  unsigned char broadcast[MAX_ADDR_LEN];
-  unsigned short dev_type;
-  int bound_dev_if;
-  enum rdma_transport_type transport;
+	unsigned char src_dev_addr[MAX_ADDR_LEN];
+	unsigned char dst_dev_addr[MAX_ADDR_LEN];
+	unsigned char broadcast[MAX_ADDR_LEN];
+	unsigned short dev_type;
+	int bound_dev_if;
+	enum rdma_transport_type transport;
 };
 
 /**
  * rdma_translate_ip - Translate a local IP address to an RDMA hardware
  *   address.
  */
-int rdma_translate_ip (struct sockaddr * addr, struct rdma_dev_addr * dev_addr);
+int rdma_translate_ip(struct sockaddr *addr, struct rdma_dev_addr *dev_addr);
 
 /**
  * rdma_resolve_ip - Resolve source and destination IP addresses to
@@ -90,206 +90,198 @@ int rdma_translate_ip (struct sockaddr * addr, struct rdma_dev_addr * dev_addr);
  *   or been canceled.  A status of 0 indicates success.
  * @context: User-specified context associated with the call.
  */
-int rdma_resolve_ip (struct rdma_addr_client * client,
-                     struct sockaddr * src_addr, struct sockaddr * dst_addr,
-                     struct rdma_dev_addr * addr, int timeout_ms,
-                     void (*callback) (int status, struct sockaddr * src_addr,
-                                       struct rdma_dev_addr * addr, void * context),
-                     void * context);
+int rdma_resolve_ip(struct rdma_addr_client *client,
+		    struct sockaddr *src_addr, struct sockaddr *dst_addr,
+		    struct rdma_dev_addr *addr, int timeout_ms,
+		    void (*callback)(int status, struct sockaddr *src_addr,
+				     struct rdma_dev_addr *addr, void *context),
+		    void *context);
 
-void rdma_addr_cancel (struct rdma_dev_addr * addr);
+void rdma_addr_cancel(struct rdma_dev_addr *addr);
 
-int rdma_copy_addr (struct rdma_dev_addr * dev_addr, struct net_device * dev,
-                    const unsigned char * dst_dev_addr);
+int rdma_copy_addr(struct rdma_dev_addr *dev_addr, struct net_device *dev,
+	      const unsigned char *dst_dev_addr);
 
-static inline int ip_addr_size (struct sockaddr * addr)
+static inline int ip_addr_size(struct sockaddr *addr)
 {
-  return addr->sa_family == AF_INET6 ?
-         sizeof (struct sockaddr_in6) : sizeof (struct sockaddr_in);
+	return addr->sa_family == AF_INET6 ?
+	       sizeof(struct sockaddr_in6) : sizeof(struct sockaddr_in);
 }
 
-static inline u16 ib_addr_get_pkey (struct rdma_dev_addr * dev_addr)
+static inline u16 ib_addr_get_pkey(struct rdma_dev_addr *dev_addr)
 {
-  return ( (u16) dev_addr->broadcast[8] << 8) | (u16) dev_addr->broadcast[9];
+	return ((u16)dev_addr->broadcast[8] << 8) | (u16)dev_addr->broadcast[9];
 }
 
-static inline void ib_addr_set_pkey (struct rdma_dev_addr * dev_addr, u16 pkey)
+static inline void ib_addr_set_pkey(struct rdma_dev_addr *dev_addr, u16 pkey)
 {
-  dev_addr->broadcast[8] = pkey >> 8;
-  dev_addr->broadcast[9] = (unsigned char) pkey;
+	dev_addr->broadcast[8] = pkey >> 8;
+	dev_addr->broadcast[9] = (unsigned char) pkey;
 }
 
-static inline void ib_addr_get_mgid (struct rdma_dev_addr * dev_addr,
-                                     union ib_gid * gid)
+static inline void ib_addr_get_mgid(struct rdma_dev_addr *dev_addr,
+				    union ib_gid *gid)
 {
-  memcpy (gid, dev_addr->broadcast + 4, sizeof * gid);
+	memcpy(gid, dev_addr->broadcast + 4, sizeof *gid);
 }
 
-static inline int rdma_addr_gid_offset (struct rdma_dev_addr * dev_addr)
+static inline int rdma_addr_gid_offset(struct rdma_dev_addr *dev_addr)
 {
-  return dev_addr->dev_type == ARPHRD_INFINIBAND ? 4 : 0;
+	return dev_addr->dev_type == ARPHRD_INFINIBAND ? 4 : 0;
 }
 
-static inline void iboe_mac_vlan_to_ll (union ib_gid * gid, u8 * mac, u16 vid)
+static inline void iboe_mac_vlan_to_ll(union ib_gid *gid, u8 *mac, u16 vid)
 {
-  memset (gid->raw, 0, 16);
-  * ( (__be32 *) gid->raw) = cpu_to_be32 (0xfe800000);
-  if (vid < 0x1000) {
-    gid->raw[12] = vid & 0xff;
-    gid->raw[11] = vid >> 8;
-  }
-  else {
-    gid->raw[12] = 0xfe;
-    gid->raw[11] = 0xff;
-  }
-  memcpy (gid->raw + 13, mac + 3, 3);
-  memcpy (gid->raw + 8, mac, 3);
-  gid->raw[8] ^= 2;
+	memset(gid->raw, 0, 16);
+	*((__be32 *) gid->raw) = cpu_to_be32(0xfe800000);
+	if (vid < 0x1000) {
+		gid->raw[12] = vid & 0xff;
+		gid->raw[11] = vid >> 8;
+	} else {
+		gid->raw[12] = 0xfe;
+		gid->raw[11] = 0xff;
+	}
+	memcpy(gid->raw + 13, mac + 3, 3);
+	memcpy(gid->raw + 8, mac, 3);
+	gid->raw[8] ^= 2;
 }
 
-static inline u16 rdma_vlan_dev_vlan_id (const struct net_device * dev)
+static inline u16 rdma_vlan_dev_vlan_id(const struct net_device *dev)
 {
-  return dev->priv_flags & IFF_802_1Q_VLAN ?
-         vlan_dev_vlan_id (dev) : 0xffff;
+	return dev->priv_flags & IFF_802_1Q_VLAN ?
+		vlan_dev_vlan_id(dev) : 0xffff;
 }
 
-static inline void iboe_addr_get_sgid (struct rdma_dev_addr * dev_addr,
-                                       union ib_gid * gid)
+static inline void iboe_addr_get_sgid(struct rdma_dev_addr *dev_addr,
+				      union ib_gid *gid)
 {
-  struct net_device * dev;
-  u16 vid = 0xffff;
-  
-  dev = dev_get_by_index (&init_net, dev_addr->bound_dev_if);
-  if (dev) {
-    vid = rdma_vlan_dev_vlan_id (dev);
-    dev_put (dev);
-  }
-  
-  iboe_mac_vlan_to_ll (gid, dev_addr->src_dev_addr, vid);
+	struct net_device *dev;
+	u16 vid = 0xffff;
+
+	dev = dev_get_by_index(&init_net, dev_addr->bound_dev_if);
+	if (dev) {
+		vid = rdma_vlan_dev_vlan_id(dev);
+		dev_put(dev);
+	}
+
+	iboe_mac_vlan_to_ll(gid, dev_addr->src_dev_addr, vid);
 }
 
-static inline void rdma_addr_get_sgid (struct rdma_dev_addr * dev_addr, union ib_gid * gid)
+static inline void rdma_addr_get_sgid(struct rdma_dev_addr *dev_addr, union ib_gid *gid)
 {
-  if (dev_addr->transport == RDMA_TRANSPORT_IB &&
-      dev_addr->dev_type != ARPHRD_INFINIBAND)
-  { iboe_addr_get_sgid (dev_addr, gid); }
-  else
-    memcpy (gid, dev_addr->src_dev_addr +
-            rdma_addr_gid_offset (dev_addr), sizeof * gid);
+	if (dev_addr->transport == RDMA_TRANSPORT_IB &&
+	    dev_addr->dev_type != ARPHRD_INFINIBAND)
+		iboe_addr_get_sgid(dev_addr, gid);
+	else
+		memcpy(gid, dev_addr->src_dev_addr +
+		       rdma_addr_gid_offset(dev_addr), sizeof *gid);
 }
 
-static inline void rdma_addr_set_sgid (struct rdma_dev_addr * dev_addr, union ib_gid * gid)
+static inline void rdma_addr_set_sgid(struct rdma_dev_addr *dev_addr, union ib_gid *gid)
 {
-  memcpy (dev_addr->src_dev_addr + rdma_addr_gid_offset (dev_addr), gid, sizeof * gid);
+	memcpy(dev_addr->src_dev_addr + rdma_addr_gid_offset(dev_addr), gid, sizeof *gid);
 }
 
-static inline void rdma_addr_get_dgid (struct rdma_dev_addr * dev_addr, union ib_gid * gid)
+static inline void rdma_addr_get_dgid(struct rdma_dev_addr *dev_addr, union ib_gid *gid)
 {
-  memcpy (gid, dev_addr->dst_dev_addr + rdma_addr_gid_offset (dev_addr), sizeof * gid);
+	memcpy(gid, dev_addr->dst_dev_addr + rdma_addr_gid_offset(dev_addr), sizeof *gid);
 }
 
-static inline void rdma_addr_set_dgid (struct rdma_dev_addr * dev_addr, union ib_gid * gid)
+static inline void rdma_addr_set_dgid(struct rdma_dev_addr *dev_addr, union ib_gid *gid)
 {
-  memcpy (dev_addr->dst_dev_addr + rdma_addr_gid_offset (dev_addr), gid, sizeof * gid);
+	memcpy(dev_addr->dst_dev_addr + rdma_addr_gid_offset(dev_addr), gid, sizeof *gid);
 }
 
-static inline enum ib_mtu iboe_get_mtu (int mtu)
+static inline enum ib_mtu iboe_get_mtu(int mtu)
 {
-  /*
-   * reduce IB headers from effective IBoE MTU. 28 stands for
-   * atomic header which is the biggest possible header after BTH
-   */
-  mtu = mtu - IB_GRH_BYTES - IB_BTH_BYTES - 28;
-  
-  if (mtu >= ib_mtu_enum_to_int (IB_MTU_4096) )
-  { return IB_MTU_4096; }
-  else
-    if (mtu >= ib_mtu_enum_to_int (IB_MTU_2048) )
-    { return IB_MTU_2048; }
-    else
-      if (mtu >= ib_mtu_enum_to_int (IB_MTU_1024) )
-      { return IB_MTU_1024; }
-      else
-        if (mtu >= ib_mtu_enum_to_int (IB_MTU_512) )
-        { return IB_MTU_512; }
-        else
-          if (mtu >= ib_mtu_enum_to_int (IB_MTU_256) )
-          { return IB_MTU_256; }
-          else
-          { return 0; }
+	/*
+	 * reduce IB headers from effective IBoE MTU. 28 stands for
+	 * atomic header which is the biggest possible header after BTH
+	 */
+	mtu = mtu - IB_GRH_BYTES - IB_BTH_BYTES - 28;
+
+	if (mtu >= ib_mtu_enum_to_int(IB_MTU_4096))
+		return IB_MTU_4096;
+	else if (mtu >= ib_mtu_enum_to_int(IB_MTU_2048))
+		return IB_MTU_2048;
+	else if (mtu >= ib_mtu_enum_to_int(IB_MTU_1024))
+		return IB_MTU_1024;
+	else if (mtu >= ib_mtu_enum_to_int(IB_MTU_512))
+		return IB_MTU_512;
+	else if (mtu >= ib_mtu_enum_to_int(IB_MTU_256))
+		return IB_MTU_256;
+	else
+		return 0;
 }
 
-static inline int iboe_get_rate (struct net_device * dev)
+static inline int iboe_get_rate(struct net_device *dev)
 {
-  struct ethtool_cmd cmd;
-  u32 speed;
-  int err;
-  
-  rtnl_lock();
-  err = __ethtool_get_settings (dev, &cmd);
-  rtnl_unlock();
-  if (err)
-  { return IB_RATE_PORT_CURRENT; }
-  
-  speed = ethtool_cmd_speed (&cmd);
-  if (speed >= 40000)
-  { return IB_RATE_40_GBPS; }
-  else
-    if (speed >= 30000)
-    { return IB_RATE_30_GBPS; }
-    else
-      if (speed >= 20000)
-      { return IB_RATE_20_GBPS; }
-      else
-        if (speed >= 10000)
-        { return IB_RATE_10_GBPS; }
-        else
-        { return IB_RATE_PORT_CURRENT; }
+	struct ethtool_cmd cmd;
+	u32 speed;
+	int err;
+
+	rtnl_lock();
+	err = __ethtool_get_settings(dev, &cmd);
+	rtnl_unlock();
+	if (err)
+		return IB_RATE_PORT_CURRENT;
+
+	speed = ethtool_cmd_speed(&cmd);
+	if (speed >= 40000)
+		return IB_RATE_40_GBPS;
+	else if (speed >= 30000)
+		return IB_RATE_30_GBPS;
+	else if (speed >= 20000)
+		return IB_RATE_20_GBPS;
+	else if (speed >= 10000)
+		return IB_RATE_10_GBPS;
+	else
+		return IB_RATE_PORT_CURRENT;
 }
 
-static inline int rdma_link_local_addr (struct in6_addr * addr)
+static inline int rdma_link_local_addr(struct in6_addr *addr)
 {
-  if (addr->s6_addr32[0] == htonl (0xfe800000) &&
-      addr->s6_addr32[1] == 0)
-  { return 1; }
-  
-  return 0;
+	if (addr->s6_addr32[0] == htonl(0xfe800000) &&
+	    addr->s6_addr32[1] == 0)
+		return 1;
+
+	return 0;
 }
 
-static inline void rdma_get_ll_mac (struct in6_addr * addr, u8 * mac)
+static inline void rdma_get_ll_mac(struct in6_addr *addr, u8 *mac)
 {
-  memcpy (mac, &addr->s6_addr[8], 3);
-  memcpy (mac + 3, &addr->s6_addr[13], 3);
-  mac[0] ^= 2;
+	memcpy(mac, &addr->s6_addr[8], 3);
+	memcpy(mac + 3, &addr->s6_addr[13], 3);
+	mac[0] ^= 2;
 }
 
-static inline int rdma_is_multicast_addr (struct in6_addr * addr)
+static inline int rdma_is_multicast_addr(struct in6_addr *addr)
 {
-  return addr->s6_addr[0] == 0xff;
+	return addr->s6_addr[0] == 0xff;
 }
 
-static inline void rdma_get_mcast_mac (struct in6_addr * addr, u8 * mac)
+static inline void rdma_get_mcast_mac(struct in6_addr *addr, u8 *mac)
 {
-  int i;
-  
-  mac[0] = 0x33;
-  mac[1] = 0x33;
-  for (i = 2; i < 6; ++i)
-  { mac[i] = addr->s6_addr[i + 10]; }
+	int i;
+
+	mac[0] = 0x33;
+	mac[1] = 0x33;
+	for (i = 2; i < 6; ++i)
+		mac[i] = addr->s6_addr[i + 10];
 }
 
-static inline u16 rdma_get_vlan_id (union ib_gid * dgid)
+static inline u16 rdma_get_vlan_id(union ib_gid *dgid)
 {
-  u16 vid;
-  
-  vid = dgid->raw[11] << 8 | dgid->raw[12];
-  return vid < 0x1000 ? vid : 0xffff;
+	u16 vid;
+
+	vid = dgid->raw[11] << 8 | dgid->raw[12];
+	return vid < 0x1000 ? vid : 0xffff;
 }
 
-static inline struct net_device * rdma_vlan_dev_real_dev (const struct net_device * dev)
+static inline struct net_device *rdma_vlan_dev_real_dev(const struct net_device *dev)
 {
-  return dev->priv_flags & IFF_802_1Q_VLAN ?
-         vlan_dev_real_dev (dev) : NULL;
+	return dev->priv_flags & IFF_802_1Q_VLAN ?
+		vlan_dev_real_dev(dev) : NULL;
 }
 
 #endif /* IB_ADDR_H */

@@ -37,10 +37,10 @@
 #define RW_MM_TLB_HI    6
 #define RW_MM_TLB_PGD   7
 
-#define BANK_GC   0
-#define BANK_IM   1
-#define BANK_DM   2
-#define BANK_BP   3
+#define BANK_GC		0
+#define BANK_IM		1
+#define BANK_DM		2
+#define BANK_BP		3
 
 #define RW_GC_CFG       0
 #define RW_GC_CCS       1
@@ -51,28 +51,28 @@
 #define RW_GC_R1        9
 
 #define SPEC_REG_WR(r,v) \
-  __asm__ __volatile__ ("move %0, $" r : : "r" (v));
+__asm__ __volatile__ ("move %0, $" r : : "r" (v));
 
 #define SPEC_REG_RD(r,v) \
-  __asm__ __volatile__ ("move $" r ",%0" : "=r" (v));
+__asm__ __volatile__ ("move $" r ",%0" : "=r" (v));
 
 #define NOP() \
-  __asm__ __volatile__ ("nop");
+	__asm__ __volatile__ ("nop");
 
-#define SUPP_BANK_SEL(b)    \
-  SPEC_REG_WR(SPEC_REG_SRS,b);  \
-  NOP();        \
-  NOP();        \
-  NOP();
+#define SUPP_BANK_SEL(b) 		\
+	SPEC_REG_WR(SPEC_REG_SRS,b);	\
+	NOP();				\
+	NOP();				\
+	NOP();
 
 #define SUPP_REG_WR(r,v) \
-  __asm__ __volatile__ ("move %0, $S" STRINGIFYFY(r) "\n\t" \
-                        "nop\n\t"         \
-                        "nop\n\t"         \
-                        "nop\n\t"         \
-                        : : "r" (v));
+__asm__ __volatile__ ("move %0, $S" STRINGIFYFY(r) "\n\t"	\
+		      "nop\n\t"					\
+		      "nop\n\t"					\
+		      "nop\n\t"					\
+		      : : "r" (v));
 
 #define SUPP_REG_RD(r,v) \
-  __asm__ __volatile__ ("move $S" STRINGIFYFY(r) ",%0" : "=r" (v));
+__asm__ __volatile__ ("move $S" STRINGIFYFY(r) ",%0" : "=r" (v));
 
 #endif /* __SUPP_REG_H__ */

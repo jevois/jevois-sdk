@@ -37,19 +37,19 @@
 /*---------------------  Export Classes  ----------------------------*/
 
 typedef struct tagSChannelTblElement {
-  BYTE    byChannelNumber;
-  unsigned int    uFrequency;
-  BOOL    bValid;
+    BYTE    byChannelNumber;
+    unsigned int    uFrequency;
+    BOOL    bValid;
 } SChannelTblElement, *PSChannelTblElement;
 
 /*---------------------  Export Variables  --------------------------*/
 
 /*---------------------  Export Functions  --------------------------*/
 
-BOOL    ChannelValid (unsigned int CountryCode, unsigned int ChannelNum);
-void    CHvInitChannelTable (void * pDeviceHandler);
-BYTE    CHbyGetChannelMapping (BYTE byChannelNumber);
+BOOL    ChannelValid(unsigned int CountryCode, unsigned int ChannelNum);
+void    CHvInitChannelTable(void *pDeviceHandler);
+BYTE    CHbyGetChannelMapping(BYTE byChannelNumber);
 
-BOOL CHvChannelGetList (unsigned int uCountryCodeIdx, PBYTE pbyChannelTable);
+BOOL CHvChannelGetList(unsigned int uCountryCodeIdx, PBYTE pbyChannelTable);
 
 #endif  /* _CHANNEL_H_ */

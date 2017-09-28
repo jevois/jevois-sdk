@@ -33,7 +33,7 @@
 
 
 /* Legacy VGA regions */
-#define VGA_RSRC_NONE        0x00
+#define VGA_RSRC_NONE	       0x00
 #define VGA_RSRC_LEGACY_IO     0x01
 #define VGA_RSRC_LEGACY_MEM    0x02
 #define VGA_RSRC_LEGACY_MASK   (VGA_RSRC_LEGACY_IO | VGA_RSRC_LEGACY_MEM)
@@ -64,8 +64,8 @@ struct pci_dev;
  *     out of the arbitration process (and can be safe to take
  *     interrupts at any time.
  */
-extern void vga_set_legacy_decoding (struct pci_dev * pdev,
-                                     unsigned int decodes);
+extern void vga_set_legacy_decoding(struct pci_dev *pdev,
+				    unsigned int decodes);
 
 /**
  *     vga_get         - acquire & locks VGA resources
@@ -96,9 +96,9 @@ extern void vga_set_legacy_decoding (struct pci_dev * pdev,
  */
 
 #if defined(CONFIG_VGA_ARB)
-extern int vga_get (struct pci_dev * pdev, unsigned int rsrc, int interruptible);
+extern int vga_get(struct pci_dev *pdev, unsigned int rsrc, int interruptible);
 #else
-static inline int vga_get (struct pci_dev * pdev, unsigned int rsrc, int interruptible) { return 0; }
+static inline int vga_get(struct pci_dev *pdev, unsigned int rsrc, int interruptible) { return 0; }
 #endif
 
 /**
@@ -107,10 +107,10 @@ static inline int vga_get (struct pci_dev * pdev, unsigned int rsrc, int interru
  *     Shortcut to vga_get
  */
 
-static inline int vga_get_interruptible (struct pci_dev * pdev,
-    unsigned int rsrc)
+static inline int vga_get_interruptible(struct pci_dev *pdev,
+					unsigned int rsrc)
 {
-  return vga_get (pdev, rsrc, 1);
+       return vga_get(pdev, rsrc, 1);
 }
 
 /**
@@ -119,10 +119,10 @@ static inline int vga_get_interruptible (struct pci_dev * pdev,
  *     Shortcut to vga_get
  */
 
-static inline int vga_get_uninterruptible (struct pci_dev * pdev,
-    unsigned int rsrc)
+static inline int vga_get_uninterruptible(struct pci_dev *pdev,
+					  unsigned int rsrc)
 {
-  return vga_get (pdev, rsrc, 0);
+       return vga_get(pdev, rsrc, 0);
 }
 
 /**
@@ -137,9 +137,9 @@ static inline int vga_get_uninterruptible (struct pci_dev * pdev,
  */
 
 #if defined(CONFIG_VGA_ARB)
-extern int vga_tryget (struct pci_dev * pdev, unsigned int rsrc);
+extern int vga_tryget(struct pci_dev *pdev, unsigned int rsrc);
 #else
-static inline int vga_tryget (struct pci_dev * pdev, unsigned int rsrc) { return 0; }
+static inline int vga_tryget(struct pci_dev *pdev, unsigned int rsrc) { return 0; }
 #endif
 
 /**
@@ -156,7 +156,7 @@ static inline int vga_tryget (struct pci_dev * pdev, unsigned int rsrc) { return
  */
 
 #if defined(CONFIG_VGA_ARB)
-extern void vga_put (struct pci_dev * pdev, unsigned int rsrc);
+extern void vga_put(struct pci_dev *pdev, unsigned int rsrc);
 #else
 #define vga_put(pdev, rsrc)
 #endif
@@ -182,7 +182,7 @@ extern void vga_put (struct pci_dev * pdev, unsigned int rsrc);
  */
 
 #ifndef __ARCH_HAS_VGA_DEFAULT_DEVICE
-extern struct pci_dev * vga_default_device (void);
+extern struct pci_dev *vga_default_device(void);
 #endif
 
 /**
@@ -194,31 +194,31 @@ extern struct pci_dev * vga_default_device (void);
  */
 
 #ifndef __ARCH_HAS_VGA_CONFLICT
-static inline int vga_conflicts (struct pci_dev * p1, struct pci_dev * p2)
+static inline int vga_conflicts(struct pci_dev *p1, struct pci_dev *p2)
 {
-  return 1;
+       return 1;
 }
 #endif
 
 /**
- *  vga_client_register
+ *	vga_client_register
  *
- *  @pdev: pci device of the VGA client
- *  @cookie: client cookie to be used in callbacks
- *  @irq_set_state: irq state change callback
- *  @set_vga_decode: vga decode change callback
+ *	@pdev: pci device of the VGA client
+ *	@cookie: client cookie to be used in callbacks
+ *	@irq_set_state: irq state change callback
+ *	@set_vga_decode: vga decode change callback
  *
- *  return value: 0 on success, -1 on failure
- *  Register a client with the VGA arbitration logic
+ * 	return value: 0 on success, -1 on failure
+ * 	Register a client with the VGA arbitration logic
  *
- *  Clients have two callback mechanisms they can use.
- *  irq enable/disable callback -
- *    If a client can't disable its GPUs VGA resources, then we
- *    need to be able to ask it to turn off its irqs when we
- *    turn off its mem and io decoding.
- *  set_vga_decode
- *    If a client can disable its GPU VGA resource, it will
- *    get a callback from this to set the encode/decode state
+ *	Clients have two callback mechanisms they can use.
+ *	irq enable/disable callback -
+ *		If a client can't disable its GPUs VGA resources, then we
+ *		need to be able to ask it to turn off its irqs when we
+ *		turn off its mem and io decoding.
+ *	set_vga_decode
+ *		If a client can disable its GPU VGA resource, it will
+ *		get a callback from this to set the encode/decode state
  *
  * Rationale: we cannot disable VGA decode resources unconditionally
  * some single GPU laptops seem to require ACPI or BIOS access to the
@@ -229,15 +229,15 @@ static inline int vga_conflicts (struct pci_dev * p1, struct pci_dev * p2)
  * by userspace since we some older X servers have issues.
  */
 #if defined(CONFIG_VGA_ARB)
-int vga_client_register (struct pci_dev * pdev, void * cookie,
-                         void (*irq_set_state) (void * cookie, bool state),
-                         unsigned int (*set_vga_decode) (void * cookie, bool state) );
+int vga_client_register(struct pci_dev *pdev, void *cookie,
+			void (*irq_set_state)(void *cookie, bool state),
+			unsigned int (*set_vga_decode)(void *cookie, bool state));
 #else
-static inline int vga_client_register (struct pci_dev * pdev, void * cookie,
-                                       void (*irq_set_state) (void * cookie, bool state),
-                                       unsigned int (*set_vga_decode) (void * cookie, bool state) )
+static inline int vga_client_register(struct pci_dev *pdev, void *cookie,
+				      void (*irq_set_state)(void *cookie, bool state),
+				      unsigned int (*set_vga_decode)(void *cookie, bool state))
 {
-  return 0;
+	return 0;
 }
 #endif
 

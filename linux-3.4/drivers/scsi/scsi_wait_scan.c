@@ -14,29 +14,29 @@
 #include <linux/device.h>
 #include "scsi_priv.h"
 
-static int __init wait_scan_init (void)
+static int __init wait_scan_init(void)
 {
-  /*
-   * First we need to wait for device probing to finish;
-   * the drivers we just loaded might just still be probing
-   * and might not yet have reached the scsi async scanning
-   */
-  wait_for_device_probe();
-  /*
-   * and then we wait for the actual asynchronous scsi scan
-   * to finish.
-   */
-  scsi_complete_async_scans();
-  return 0;
+	/*
+	 * First we need to wait for device probing to finish;
+	 * the drivers we just loaded might just still be probing
+	 * and might not yet have reached the scsi async scanning
+	 */
+	wait_for_device_probe();
+	/*
+	 * and then we wait for the actual asynchronous scsi scan
+	 * to finish.
+	 */
+	scsi_complete_async_scans();
+	return 0;
 }
 
-static void __exit wait_scan_exit (void)
+static void __exit wait_scan_exit(void)
 {
 }
 
-MODULE_DESCRIPTION ("SCSI wait for scans");
-MODULE_AUTHOR ("James Bottomley");
-MODULE_LICENSE ("GPL");
+MODULE_DESCRIPTION("SCSI wait for scans");
+MODULE_AUTHOR("James Bottomley");
+MODULE_LICENSE("GPL");
 
-late_initcall (wait_scan_init);
-module_exit (wait_scan_exit);
+late_initcall(wait_scan_init);
+module_exit(wait_scan_exit);

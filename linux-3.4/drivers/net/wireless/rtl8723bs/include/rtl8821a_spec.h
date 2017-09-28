@@ -39,8 +39,8 @@
 
 
 #undef SDIO_REG_HCPWM1
-#define SDIO_REG_FREE_TXPG2   0x024
-#define SDIO_REG_HCPWM1     0x025
+#define SDIO_REG_FREE_TXPG2		0x024
+#define SDIO_REG_HCPWM1			0x025
 
 
 

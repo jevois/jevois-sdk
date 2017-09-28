@@ -25,8 +25,8 @@
 #include <linux/fscache-cache.h>
 #include <linux/sched.h>
 
-#define FSCACHE_MIN_THREADS 4
-#define FSCACHE_MAX_THREADS 32
+#define FSCACHE_MIN_THREADS	4
+#define FSCACHE_MAX_THREADS	32
 
 /*
  * cache.c
@@ -34,16 +34,16 @@
 extern struct list_head fscache_cache_list;
 extern struct rw_semaphore fscache_addremove_sem;
 
-extern struct fscache_cache * fscache_select_cache_for_object (
-  struct fscache_cookie *);
+extern struct fscache_cache *fscache_select_cache_for_object(
+	struct fscache_cookie *);
 
 /*
  * cookie.c
  */
-extern struct kmem_cache * fscache_cookie_jar;
+extern struct kmem_cache *fscache_cookie_jar;
 
-extern void fscache_cookie_init_once (void *);
-extern void __fscache_cookie_put (struct fscache_cookie *);
+extern void fscache_cookie_init_once(void *);
+extern void __fscache_cookie_put(struct fscache_cookie *);
 
 /*
  * fsdef.c
@@ -61,12 +61,12 @@ extern atomic_t fscache_ops_histogram[HZ];
 extern atomic_t fscache_retrieval_delay_histogram[HZ];
 extern atomic_t fscache_retrieval_histogram[HZ];
 
-static inline void fscache_hist (atomic_t histogram[], unsigned long start_jif)
+static inline void fscache_hist(atomic_t histogram[], unsigned long start_jif)
 {
-  unsigned long jif = jiffies - start_jif;
-  if (jif >= HZ)
-  { jif = HZ - 1; }
-  atomic_inc (&histogram[jif]);
+	unsigned long jif = jiffies - start_jif;
+	if (jif >= HZ)
+		jif = HZ - 1;
+	atomic_inc(&histogram[jif]);
 }
 
 extern const struct file_operations fscache_histogram_fops;
@@ -81,27 +81,27 @@ extern const struct file_operations fscache_histogram_fops;
 extern unsigned fscache_defer_lookup;
 extern unsigned fscache_defer_create;
 extern unsigned fscache_debug;
-extern struct kobject * fscache_root;
-extern struct workqueue_struct * fscache_object_wq;
-extern struct workqueue_struct * fscache_op_wq;
-DECLARE_PER_CPU (wait_queue_head_t, fscache_object_cong_wait);
+extern struct kobject *fscache_root;
+extern struct workqueue_struct *fscache_object_wq;
+extern struct workqueue_struct *fscache_op_wq;
+DECLARE_PER_CPU(wait_queue_head_t, fscache_object_cong_wait);
 
-static inline bool fscache_object_congested (void)
+static inline bool fscache_object_congested(void)
 {
-  return workqueue_congested (WORK_CPU_UNBOUND, fscache_object_wq);
+	return workqueue_congested(WORK_CPU_UNBOUND, fscache_object_wq);
 }
 
-extern int fscache_wait_bit (void *);
-extern int fscache_wait_bit_interruptible (void *);
+extern int fscache_wait_bit(void *);
+extern int fscache_wait_bit_interruptible(void *);
 
 /*
  * object.c
  */
 extern const char fscache_object_states_short[FSCACHE_OBJECT__NSTATES][5];
 
-extern void fscache_withdrawing_object (struct fscache_cache *,
-                                        struct fscache_object *);
-extern void fscache_enqueue_object (struct fscache_object *);
+extern void fscache_withdrawing_object(struct fscache_cache *,
+				       struct fscache_object *);
+extern void fscache_enqueue_object(struct fscache_object *);
 
 /*
  * object-list.c
@@ -109,7 +109,7 @@ extern void fscache_enqueue_object (struct fscache_object *);
 #ifdef CONFIG_FSCACHE_OBJECT_LIST
 extern const struct file_operations fscache_objlist_fops;
 
-extern void fscache_objlist_add (struct fscache_object *);
+extern void fscache_objlist_add(struct fscache_object *);
 #else
 #define fscache_objlist_add(object) do {} while(0)
 #endif
@@ -117,24 +117,24 @@ extern void fscache_objlist_add (struct fscache_object *);
 /*
  * operation.c
  */
-extern int fscache_submit_exclusive_op (struct fscache_object *,
-                                        struct fscache_operation *);
-extern int fscache_submit_op (struct fscache_object *,
-                              struct fscache_operation *);
-extern int fscache_cancel_op (struct fscache_operation *);
-extern void fscache_abort_object (struct fscache_object *);
-extern void fscache_start_operations (struct fscache_object *);
-extern void fscache_operation_gc (struct work_struct *);
+extern int fscache_submit_exclusive_op(struct fscache_object *,
+				       struct fscache_operation *);
+extern int fscache_submit_op(struct fscache_object *,
+			     struct fscache_operation *);
+extern int fscache_cancel_op(struct fscache_operation *);
+extern void fscache_abort_object(struct fscache_object *);
+extern void fscache_start_operations(struct fscache_object *);
+extern void fscache_operation_gc(struct work_struct *);
 
 /*
  * proc.c
  */
 #ifdef CONFIG_PROC_FS
-extern int __init fscache_proc_init (void);
-extern void fscache_proc_cleanup (void);
+extern int __init fscache_proc_init(void);
+extern void fscache_proc_cleanup(void);
 #else
-#define fscache_proc_init() (0)
-#define fscache_proc_cleanup()  do {} while (0)
+#define fscache_proc_init()	(0)
+#define fscache_proc_cleanup()	do {} while (0)
 #endif
 
 /*
@@ -250,14 +250,14 @@ extern atomic_t fscache_n_cop_write_page;
 extern atomic_t fscache_n_cop_uncache_page;
 extern atomic_t fscache_n_cop_dissociate_pages;
 
-static inline void fscache_stat (atomic_t * stat)
+static inline void fscache_stat(atomic_t *stat)
 {
-  atomic_inc (stat);
+	atomic_inc(stat);
 }
 
-static inline void fscache_stat_d (atomic_t * stat)
+static inline void fscache_stat_d(atomic_t *stat)
 {
-  atomic_dec (stat);
+	atomic_dec(stat);
 }
 
 #define __fscache_stat(stat) (stat)
@@ -275,43 +275,43 @@ extern const struct file_operations fscache_stats_fops;
  * - if the event is not masked for that object, then the object is
  *   queued for attention by the thread pool.
  */
-static inline void fscache_raise_event (struct fscache_object * object,
-                                        unsigned event)
+static inline void fscache_raise_event(struct fscache_object *object,
+				       unsigned event)
 {
-  if (!test_and_set_bit (event, &object->events) &&
-      test_bit (event, &object->event_mask) )
-  { fscache_enqueue_object (object); }
+	if (!test_and_set_bit(event, &object->events) &&
+	    test_bit(event, &object->event_mask))
+		fscache_enqueue_object(object);
 }
 
 /*
  * drop a reference to a cookie
  */
-static inline void fscache_cookie_put (struct fscache_cookie * cookie)
+static inline void fscache_cookie_put(struct fscache_cookie *cookie)
 {
-  BUG_ON (atomic_read (&cookie->usage) <= 0);
-  if (atomic_dec_and_test (&cookie->usage) )
-  { __fscache_cookie_put (cookie); }
+	BUG_ON(atomic_read(&cookie->usage) <= 0);
+	if (atomic_dec_and_test(&cookie->usage))
+		__fscache_cookie_put(cookie);
 }
 
 /*
  * get an extra reference to a netfs retrieval context
  */
 static inline
-void * fscache_get_context (struct fscache_cookie * cookie, void * context)
+void *fscache_get_context(struct fscache_cookie *cookie, void *context)
 {
-  if (cookie->def->get_context)
-  { cookie->def->get_context (cookie->netfs_data, context); }
-  return context;
+	if (cookie->def->get_context)
+		cookie->def->get_context(cookie->netfs_data, context);
+	return context;
 }
 
 /*
  * release a reference to a netfs retrieval context
  */
 static inline
-void fscache_put_context (struct fscache_cookie * cookie, void * context)
+void fscache_put_context(struct fscache_cookie *cookie, void *context)
 {
-  if (cookie->def->put_context)
-  { cookie->def->put_context (cookie->netfs_data, context); }
+	if (cookie->def->put_context)
+		cookie->def->put_context(cookie->netfs_data, context);
 }
 
 /*****************************************************************************/
@@ -319,7 +319,7 @@ void fscache_put_context (struct fscache_cookie * cookie, void * context)
  * debug tracing
  */
 #define dbgprintk(FMT, ...) \
-  printk(KERN_DEBUG "[%-6.6s] "FMT"\n", current->comm, ##__VA_ARGS__)
+	printk(KERN_DEBUG "[%-6.6s] "FMT"\n", current->comm, ##__VA_ARGS__)
 
 #define kenter(FMT, ...) dbgprintk("==> %s("FMT")", __func__, ##__VA_ARGS__)
 #define kleave(FMT, ...) dbgprintk("<== %s()"FMT"", __func__, ##__VA_ARGS__)
@@ -333,23 +333,23 @@ void fscache_put_context (struct fscache_cookie * cookie, void * context)
 #define _debug(FMT, ...) kdebug(FMT, ##__VA_ARGS__)
 
 #elif defined(CONFIG_FSCACHE_DEBUG)
-#define _enter(FMT, ...)      \
-  do {            \
-    if (__do_kdebug(ENTER))     \
-      kenter(FMT, ##__VA_ARGS__); \
-  } while (0)
+#define _enter(FMT, ...)			\
+do {						\
+	if (__do_kdebug(ENTER))			\
+		kenter(FMT, ##__VA_ARGS__);	\
+} while (0)
 
-#define _leave(FMT, ...)      \
-  do {            \
-    if (__do_kdebug(LEAVE))     \
-      kleave(FMT, ##__VA_ARGS__); \
-  } while (0)
+#define _leave(FMT, ...)			\
+do {						\
+	if (__do_kdebug(LEAVE))			\
+		kleave(FMT, ##__VA_ARGS__);	\
+} while (0)
 
-#define _debug(FMT, ...)      \
-  do {            \
-    if (__do_kdebug(DEBUG))     \
-      kdebug(FMT, ##__VA_ARGS__); \
-  } while (0)
+#define _debug(FMT, ...)			\
+do {						\
+	if (__do_kdebug(DEBUG))			\
+		kdebug(FMT, ##__VA_ARGS__);	\
+} while (0)
 
 #else
 #define _enter(FMT, ...) no_printk("==> %s("FMT")", __func__, ##__VA_ARGS__)
@@ -363,21 +363,21 @@ void fscache_put_context (struct fscache_cookie * cookie, void * context)
  *   shorthand in FSCACHE_DEBUG_LEVEL with its prefix
  */
 #define ____do_kdebug(LEVEL, POINT) \
-  unlikely((fscache_debug & \
-            (FSCACHE_POINT_##POINT << (FSCACHE_DEBUG_ ## LEVEL * 3))))
+	unlikely((fscache_debug & \
+		  (FSCACHE_POINT_##POINT << (FSCACHE_DEBUG_ ## LEVEL * 3))))
 #define ___do_kdebug(LEVEL, POINT) \
-  ____do_kdebug(LEVEL, POINT)
+	____do_kdebug(LEVEL, POINT)
 #define __do_kdebug(POINT) \
-  ___do_kdebug(FSCACHE_DEBUG_LEVEL, POINT)
+	___do_kdebug(FSCACHE_DEBUG_LEVEL, POINT)
 
-#define FSCACHE_DEBUG_CACHE 0
-#define FSCACHE_DEBUG_COOKIE  1
-#define FSCACHE_DEBUG_PAGE  2
-#define FSCACHE_DEBUG_OPERATION 3
+#define FSCACHE_DEBUG_CACHE	0
+#define FSCACHE_DEBUG_COOKIE	1
+#define FSCACHE_DEBUG_PAGE	2
+#define FSCACHE_DEBUG_OPERATION	3
 
-#define FSCACHE_POINT_ENTER 1
-#define FSCACHE_POINT_LEAVE 2
-#define FSCACHE_POINT_DEBUG 4
+#define FSCACHE_POINT_ENTER	1
+#define FSCACHE_POINT_LEAVE	2
+#define FSCACHE_POINT_DEBUG	4
 
 #ifndef FSCACHE_DEBUG_LEVEL
 #define FSCACHE_DEBUG_LEVEL CACHE
@@ -388,51 +388,51 @@ void fscache_put_context (struct fscache_cookie * cookie, void * context)
  */
 #if 1 /* defined(__KDEBUGALL) */
 
-#define ASSERT(X)             \
-  do {                  \
-    if (unlikely(!(X))) {           \
-      printk(KERN_ERR "\n");          \
-      printk(KERN_ERR "FS-Cache: Assertion failed\n");  \
-      BUG();              \
-    }               \
-  } while (0)
+#define ASSERT(X)							\
+do {									\
+	if (unlikely(!(X))) {						\
+		printk(KERN_ERR "\n");					\
+		printk(KERN_ERR "FS-Cache: Assertion failed\n");	\
+		BUG();							\
+	}								\
+} while (0)
 
-#define ASSERTCMP(X, OP, Y)           \
-  do {                  \
-    if (unlikely(!((X) OP (Y)))) {          \
-      printk(KERN_ERR "\n");          \
-      printk(KERN_ERR "FS-Cache: Assertion failed\n");  \
-      printk(KERN_ERR "%lx " #OP " %lx is false\n",   \
-             (unsigned long)(X), (unsigned long)(Y));   \
-      BUG();              \
-    }               \
-  } while (0)
+#define ASSERTCMP(X, OP, Y)						\
+do {									\
+	if (unlikely(!((X) OP (Y)))) {					\
+		printk(KERN_ERR "\n");					\
+		printk(KERN_ERR "FS-Cache: Assertion failed\n");	\
+		printk(KERN_ERR "%lx " #OP " %lx is false\n",		\
+		       (unsigned long)(X), (unsigned long)(Y));		\
+		BUG();							\
+	}								\
+} while (0)
 
-#define ASSERTIF(C, X)              \
-  do {                  \
-    if (unlikely((C) && !(X))) {          \
-      printk(KERN_ERR "\n");          \
-      printk(KERN_ERR "FS-Cache: Assertion failed\n");  \
-      BUG();              \
-    }               \
-  } while (0)
+#define ASSERTIF(C, X)							\
+do {									\
+	if (unlikely((C) && !(X))) {					\
+		printk(KERN_ERR "\n");					\
+		printk(KERN_ERR "FS-Cache: Assertion failed\n");	\
+		BUG();							\
+	}								\
+} while (0)
 
-#define ASSERTIFCMP(C, X, OP, Y)          \
-  do {                  \
-    if (unlikely((C) && !((X) OP (Y)))) {       \
-      printk(KERN_ERR "\n");          \
-      printk(KERN_ERR "FS-Cache: Assertion failed\n");  \
-      printk(KERN_ERR "%lx " #OP " %lx is false\n",   \
-             (unsigned long)(X), (unsigned long)(Y));   \
-      BUG();              \
-    }               \
-  } while (0)
+#define ASSERTIFCMP(C, X, OP, Y)					\
+do {									\
+	if (unlikely((C) && !((X) OP (Y)))) {				\
+		printk(KERN_ERR "\n");					\
+		printk(KERN_ERR "FS-Cache: Assertion failed\n");	\
+		printk(KERN_ERR "%lx " #OP " %lx is false\n",		\
+		       (unsigned long)(X), (unsigned long)(Y));		\
+		BUG();							\
+	}								\
+} while (0)
 
 #else
 
-#define ASSERT(X)     do {} while (0)
-#define ASSERTCMP(X, OP, Y)   do {} while (0)
-#define ASSERTIF(C, X)      do {} while (0)
-#define ASSERTIFCMP(C, X, OP, Y)  do {} while (0)
+#define ASSERT(X)			do {} while (0)
+#define ASSERTCMP(X, OP, Y)		do {} while (0)
+#define ASSERTIF(C, X)			do {} while (0)
+#define ASSERTIFCMP(C, X, OP, Y)	do {} while (0)
 
 #endif /* assert or not */

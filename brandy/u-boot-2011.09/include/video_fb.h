@@ -52,23 +52,23 @@
 /******************************************************************************/
 
 typedef struct {
-  unsigned int isaBase;
-  unsigned int pciBase;
-  unsigned int dprBase;
-  unsigned int vprBase;
-  unsigned int cprBase;
-  unsigned int frameAdrs;
-  unsigned int memSize;
-  unsigned int mode;
-  unsigned int gdfIndex;
-  unsigned int gdfBytesPP;
-  unsigned int fg;
-  unsigned int bg;
-  unsigned int plnSizeX;
-  unsigned int plnSizeY;
-  unsigned int winSizeX;
-  unsigned int winSizeY;
-  char modeIdent[80];
+    unsigned int isaBase;
+    unsigned int pciBase;
+    unsigned int dprBase;
+    unsigned int vprBase;
+    unsigned int cprBase;
+    unsigned int frameAdrs;
+    unsigned int memSize;
+    unsigned int mode;
+    unsigned int gdfIndex;
+    unsigned int gdfBytesPP;
+    unsigned int fg;
+    unsigned int bg;
+    unsigned int plnSizeX;
+    unsigned int plnSizeY;
+    unsigned int winSizeX;
+    unsigned int winSizeY;
+    char modeIdent[80];
 } GraphicDevice;
 
 
@@ -76,40 +76,40 @@ typedef struct {
 /* Export Graphic Functions                                                   */
 /******************************************************************************/
 
-void * video_hw_init (void);      /* returns GraphicDevice struct or NULL */
+void *video_hw_init (void);       /* returns GraphicDevice struct or NULL */
 
 #ifdef VIDEO_HW_BITBLT
 void video_hw_bitblt (
-  unsigned int bpp,             /* bytes per pixel */
-  unsigned int src_x,           /* source pos x */
-  unsigned int src_y,           /* source pos y */
-  unsigned int dst_x,           /* dest pos x */
-  unsigned int dst_y,           /* dest pos y */
-  unsigned int dim_x,           /* frame width */
-  unsigned int dim_y            /* frame height */
-);
+    unsigned int bpp,             /* bytes per pixel */
+    unsigned int src_x,           /* source pos x */
+    unsigned int src_y,           /* source pos y */
+    unsigned int dst_x,           /* dest pos x */
+    unsigned int dst_y,           /* dest pos y */
+    unsigned int dim_x,           /* frame width */
+    unsigned int dim_y            /* frame height */
+    );
 #endif
 
 #ifdef VIDEO_HW_RECTFILL
 void video_hw_rectfill (
-  unsigned int bpp,             /* bytes per pixel */
-  unsigned int dst_x,           /* dest pos x */
-  unsigned int dst_y,           /* dest pos y */
-  unsigned int dim_x,           /* frame width */
-  unsigned int dim_y,           /* frame height */
-  unsigned int color            /* fill color */
-);
+    unsigned int bpp,             /* bytes per pixel */
+    unsigned int dst_x,           /* dest pos x */
+    unsigned int dst_y,           /* dest pos y */
+    unsigned int dim_x,           /* frame width */
+    unsigned int dim_y,           /* frame height */
+    unsigned int color            /* fill color */
+     );
 #endif
 
 void video_set_lut (
-  unsigned int index,           /* color number */
-  unsigned char r,              /* red */
-  unsigned char g,              /* green */
-  unsigned char b               /* blue */
-);
+    unsigned int index,           /* color number */
+    unsigned char r,              /* red */
+    unsigned char g,              /* green */
+    unsigned char b               /* blue */
+    );
 #ifdef CONFIG_VIDEO_HW_CURSOR
-void video_set_hw_cursor (int x, int y); /* x y in pixel */
-void video_init_hw_cursor (int font_width, int font_height);
+void video_set_hw_cursor(int x, int y); /* x y in pixel */
+void video_init_hw_cursor(int font_width, int font_height);
 #endif
 
 #endif /*_VIDEO_FB_H_ */

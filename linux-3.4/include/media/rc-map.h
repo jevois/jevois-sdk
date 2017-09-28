@@ -11,49 +11,49 @@
 
 #include <linux/input.h>
 
-#define RC_TYPE_UNKNOWN 0
-#define RC_TYPE_RC5 (1  << 0) /* Philips RC5 protocol */
-#define RC_TYPE_NEC (1  << 1)
-#define RC_TYPE_RC6 (1  << 2) /* Philips RC6 protocol */
-#define RC_TYPE_JVC (1  << 3) /* JVC protocol */
-#define RC_TYPE_SONY  (1  << 4) /* Sony12/15/20 protocol */
-#define RC_TYPE_RC5_SZ  (1  << 5) /* RC5 variant used by Streamzap */
-#define RC_TYPE_SANYO   (1  << 6) /* Sanyo protocol */
-#define RC_TYPE_MCE_KBD (1  << 29)  /* RC6-ish MCE keyboard/mouse */
-#define RC_TYPE_LIRC  (1  << 30)  /* Pass raw IR to lirc userspace */
-#define RC_TYPE_OTHER (1u << 31)
+#define RC_TYPE_UNKNOWN	0
+#define RC_TYPE_RC5	(1  << 0)	/* Philips RC5 protocol */
+#define RC_TYPE_NEC	(1  << 1)
+#define RC_TYPE_RC6	(1  << 2)	/* Philips RC6 protocol */
+#define RC_TYPE_JVC	(1  << 3)	/* JVC protocol */
+#define RC_TYPE_SONY	(1  << 4)	/* Sony12/15/20 protocol */
+#define RC_TYPE_RC5_SZ	(1  << 5)	/* RC5 variant used by Streamzap */
+#define RC_TYPE_SANYO   (1  << 6)	/* Sanyo protocol */
+#define RC_TYPE_MCE_KBD	(1  << 29)	/* RC6-ish MCE keyboard/mouse */
+#define RC_TYPE_LIRC	(1  << 30)	/* Pass raw IR to lirc userspace */
+#define RC_TYPE_OTHER	(1u << 31)
 
 #define RC_TYPE_ALL (RC_TYPE_RC5    | RC_TYPE_NEC   | RC_TYPE_RC6     | \
-                     RC_TYPE_JVC    | RC_TYPE_SONY  | RC_TYPE_LIRC    | \
-                     RC_TYPE_RC5_SZ | RC_TYPE_SANYO | RC_TYPE_MCE_KBD | \
-                     RC_TYPE_OTHER)
+		     RC_TYPE_JVC    | RC_TYPE_SONY  | RC_TYPE_LIRC    | \
+		     RC_TYPE_RC5_SZ | RC_TYPE_SANYO | RC_TYPE_MCE_KBD | \
+		     RC_TYPE_OTHER)
 
 struct rc_map_table {
-  u32 scancode;
-  u32 keycode;
+	u32	scancode;
+	u32	keycode;
 };
 
 struct rc_map {
-  struct rc_map_table * scan;
-  unsigned int    size; /* Max number of entries */
-  unsigned int    len;  /* Used number of entries */
-  unsigned int    alloc;  /* Size of *scan in bytes */
-  u64     rc_type;
-  const char  *  name;
-  spinlock_t    lock;
+	struct rc_map_table	*scan;
+	unsigned int		size;	/* Max number of entries */
+	unsigned int		len;	/* Used number of entries */
+	unsigned int		alloc;	/* Size of *scan in bytes */
+	u64			rc_type;
+	const char		*name;
+	spinlock_t		lock;
 };
 
 struct rc_map_list {
-  struct list_head   list;
-  struct rc_map map;
+	struct list_head	 list;
+	struct rc_map map;
 };
 
 /* Routines from rc-map.c */
 
-int rc_map_register (struct rc_map_list * map);
-void rc_map_unregister (struct rc_map_list * map);
-struct rc_map * rc_map_get (const char * name);
-void rc_map_init (void);
+int rc_map_register(struct rc_map_list *map);
+void rc_map_unregister(struct rc_map_list *map);
+struct rc_map *rc_map_get(const char *name);
+void rc_map_init(void);
 
 /* Names of the several keytables defined in-kernel */
 
@@ -127,7 +127,7 @@ void rc_map_init (void);
 #define RC_MAP_PINNACLE_PCTV_HD          "rc-pinnacle-pctv-hd"
 #define RC_MAP_PIXELVIEW_NEW             "rc-pixelview-new"
 #define RC_MAP_PIXELVIEW                 "rc-pixelview"
-#define RC_MAP_PIXELVIEW_002T    "rc-pixelview-002t"
+#define RC_MAP_PIXELVIEW_002T		 "rc-pixelview-002t"
 #define RC_MAP_PIXELVIEW_MK12            "rc-pixelview-mk12"
 #define RC_MAP_POWERCOLOR_REAL_ANGEL     "rc-powercolor-real-angel"
 #define RC_MAP_PROTEUS_2309              "rc-proteus-2309"

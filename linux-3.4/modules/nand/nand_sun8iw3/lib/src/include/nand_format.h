@@ -16,32 +16,32 @@
 
 struct __ScanZoneInfo_t
 {
-  __u16   nDataBlkCnt;               
-  __u16   nFreeBlkCnt;               
-  __u16   nFreeBlkIndex;             
-  __u16   Reserved;                  
-  struct __SuperPhyBlkType_t ZoneTbl[BLOCK_CNT_OF_ZONE]; 
-  struct __LogBlkType_t LogBlkTbl[MAX_LOG_BLK_CNT];      
+    __u16   nDataBlkCnt;               
+    __u16   nFreeBlkCnt;               
+    __u16   nFreeBlkIndex;             
+    __u16   Reserved;                  
+    struct __SuperPhyBlkType_t ZoneTbl[BLOCK_CNT_OF_ZONE]; 
+	struct __LogBlkType_t LogBlkTbl[MAX_LOG_BLK_CNT];      
 };
 
 
 struct __ScanDieInfo_t
 {
-  __u8    nDie;                      
-  __u8    TblBitmap;                 
-  __u16   nBadCnt;                   
-  __u16   nFreeCnt;                  
-  __u16   nFreeIndex;                
-  __u16  * pPhyBlk;                  
-  struct __ScanZoneInfo_t * ZoneInfo;
+    __u8    nDie;                      
+    __u8    TblBitmap;                 
+    __u16   nBadCnt;                   
+    __u16   nFreeCnt;                  
+    __u16   nFreeIndex;                
+    __u16   *pPhyBlk;                  
+    struct __ScanZoneInfo_t *ZoneInfo; 
 };
 
 typedef struct _blk_for_boot1_t
 {
-  __u32 blk_size;
-  __u32 blks_boot0;
-  __u32 blks_boot1;
-} blk_for_boot1_t;
+	__u32 blk_size;
+	__u32 blks_boot0;
+	__u32 blks_boot1;
+}blk_for_boot1_t;
 
 #define TBL_AREA_BLK_NUM    32
 
@@ -86,7 +86,7 @@ typedef struct _blk_for_boot1_t
 *               < 0     format module init failed.
 ************************************************************************************************************************
 */
-__s32 FMT_Init (void);
+__s32 FMT_Init(void);
 
 
 /*
@@ -102,7 +102,7 @@ __s32 FMT_Init (void);
 *               < 0     format module exit failed.
 ************************************************************************************************************************
 */
-__s32 FMT_Exit (void);
+__s32 FMT_Exit(void);
 
 
 /*
@@ -122,9 +122,9 @@ __s32 FMT_Exit (void);
 *             information has some error, need repair it. If find none mapping information, create it!
 ************************************************************************************************************************
 */
-__s32 FMT_FormatNand (void);
+__s32 FMT_FormatNand(void);
 
-void ClearNandStruct ( void );
+void ClearNandStruct( void );
 
 
 #endif 

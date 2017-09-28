@@ -3,11 +3,11 @@
  *
  * @brief this file contains the public API of @ref IxEthMii component
  *
- * Design notes :
+ * Design notes :  
  * The main intent of this API is to inplement MII high level fonctionalitoes
- * to support the codelets provided with the IXP400 software releases. It
+ * to support the codelets provided with the IXP400 software releases. It 
  * superceedes previous interfaces provided with @ref IxEThAcc component.
- *
+ * 
  * This API has been tested with the PHYs provided with the
  * IXP400 development platforms. It may not work for specific Ethernet PHYs
  * used on specific boards.
@@ -20,18 +20,18 @@
  *
  * It is strongly recommended to use public domain and GPL utilities
  * like libmii, mii-diag for MII interface support.
+ * 
  *
- *
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -44,7 +44,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -57,7 +57,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  */
@@ -70,7 +70,7 @@
 /**
  * @defgroup IxEthMii IXP400 Ethernet Phy Access (IxEthMii) API
  *
- * @brief ethMii is a library that does provides access to the
+ * @brief ethMii is a library that does provides access to the 
  * Ethernet PHYs
  *
  *@{
@@ -82,8 +82,8 @@
  * @fn  ixEthMiiPhyScan(BOOL phyPresent[], UINT32 maxPhyCount)
  *
  * @brief Scan the MDIO bus for PHYs
- *  This function scans PHY addresses 0 through 31, and sets phyPresent[n] to
- *  TRUE if a phy is discovered at address n.
+ *  This function scans PHY addresses 0 through 31, and sets phyPresent[n] to 
+ *  TRUE if a phy is discovered at address n. 
  *
  * - Reentrant    - no
  * - ISR Callable - no
@@ -100,15 +100,15 @@
  *
  * <hr>
  */
-PUBLIC IX_STATUS ixEthMiiPhyScan (BOOL phyPresent[], UINT32 maxPhyCount);
+PUBLIC IX_STATUS ixEthMiiPhyScan(BOOL phyPresent[], UINT32 maxPhyCount);
 
 /**
  * @ingroup IxEthMii
  *
  * @fn ixEthMiiPhyConfig(UINT32 phyAddr,
-             BOOL speed100,
-       BOOL fullDuplex,
-       BOOL autonegotiate)
+		         BOOL speed100, 
+			 BOOL fullDuplex, 
+			 BOOL autonegotiate)
  *
  *
  * @brief Configure a PHY
@@ -118,8 +118,8 @@ PUBLIC IX_STATUS ixEthMiiPhyScan (BOOL phyPresent[], UINT32 maxPhyCount);
  * - ISR Callable - no
  *
  * @pre The MAC on Ethernet Port 2 (NPE C) must be initialised, and generating the MDIO clock.
- *
- * @param phyAddr UINT32 [in]
+ *   
+ * @param phyAddr UINT32 [in] 
  * @param speed100 BOOL [in] - set to TRUE for 100Mbit/s operation, FALSE for 10Mbit/s
  * @param fullDuplex BOOL [in] - set to TRUE for Full Duplex, FALSE for Half Duplex
  * @param autonegotiate BOOL [in] - set to TRUE to enable autonegotiation
@@ -130,10 +130,10 @@ PUBLIC IX_STATUS ixEthMiiPhyScan (BOOL phyPresent[], UINT32 maxPhyCount);
  *
  * <hr>
  */
-PUBLIC IX_STATUS ixEthMiiPhyConfig (UINT32 phyAddr,
-                                    BOOL speed100,
-                                    BOOL fullDuplex,
-                                    BOOL autonegotiate);
+PUBLIC IX_STATUS ixEthMiiPhyConfig(UINT32 phyAddr,
+				    BOOL speed100, 
+				    BOOL fullDuplex, 
+				    BOOL autonegotiate);
 
 /**
  * @ingroup IxEthMii
@@ -170,7 +170,7 @@ ixEthMiiPhyLoopbackEnable (UINT32 phyAddr);
  *
  * - Reentrant    - no
  * - ISR Callable - no
- *
+ *   
  * @param phyAddr UINT32 [in] - the address of the Ethernet PHY (0-31)
  *
  * @return IX_STATUS
@@ -193,7 +193,7 @@ ixEthMiiPhyLoopbackDisable (UINT32 phyAddr);
  * - ISR Callable - no
  *
  * @pre The MAC on Ethernet Port 2 (NPE C) must be initialised, and generating the MDIO clock.
- *
+ *   
  * @param phyAddr UINT32 [in] - the address of the Ethernet PHY (0-31)
  *
  * @return IX_STATUS
@@ -202,17 +202,17 @@ ixEthMiiPhyLoopbackDisable (UINT32 phyAddr);
  *
  * <hr>
  */
-PUBLIC IX_STATUS ixEthMiiPhyReset (UINT32 phyAddr);
+PUBLIC IX_STATUS ixEthMiiPhyReset(UINT32 phyAddr);
 
 
 /**
  * @ingroup IxEthMii
  *
- * @fn ixEthMiiLinkStatus(UINT32 phyAddr,
-        BOOL *linkUp,
-        BOOL *speed100,
-        BOOL *fullDuplex,
-              BOOL *autoneg)
+ * @fn ixEthMiiLinkStatus(UINT32 phyAddr, 
+			  BOOL *linkUp,
+			  BOOL *speed100, 
+			  BOOL *fullDuplex,
+		          BOOL *autoneg)
  *
  * @brief Retrieve the current status of a PHY
  *   Retrieve the link, speed, duplex and autonegotiation status of a PHY
@@ -221,7 +221,7 @@ PUBLIC IX_STATUS ixEthMiiPhyReset (UINT32 phyAddr);
  * - ISR Callable - no
  *
  * @pre The MAC on Ethernet Port 2 (NPE C) must be initialised, and generating the MDIO clock.
- *
+ *   
  * @param phyAddr UINT32 [in] - the address of the Ethernet PHY (0-31)
  * @param linkUp BOOL [out] - set to TRUE if the link is up
  * @param speed100 BOOL [out] - set to TRUE indicates 100Mbit/s, FALSE indicates 10Mbit/s
@@ -234,11 +234,11 @@ PUBLIC IX_STATUS ixEthMiiPhyReset (UINT32 phyAddr);
  *
  * <hr>
  */
-PUBLIC IX_STATUS ixEthMiiLinkStatus (UINT32 phyAddr,
-                                     BOOL * linkUp,
-                                     BOOL * speed100,
-                                     BOOL * fullDuplex,
-                                     BOOL * autoneg);
+PUBLIC IX_STATUS ixEthMiiLinkStatus(UINT32 phyAddr, 
+				     BOOL *linkUp,
+				     BOOL *speed100, 
+				     BOOL *fullDuplex,
+				     BOOL *autoneg);
 
 /**
  * @ingroup IxEthMii
@@ -253,7 +253,7 @@ PUBLIC IX_STATUS ixEthMiiLinkStatus (UINT32 phyAddr,
  * - ISR Callable - no
  *
  * @pre The MAC on Ethernet Port 2 (NPE C) must be initialised, and generating the MDIO clock.
- *
+ *   
  * @param phyAddr UINT32 [in] - the address of the Ethernet PHY (0-31)
  *
  * @return IX_STATUS

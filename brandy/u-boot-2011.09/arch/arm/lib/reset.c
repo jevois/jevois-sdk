@@ -40,20 +40,20 @@
 #include <common.h>
 #include <sunxi_board.h>
 
-int do_reset (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
+int do_reset(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
-  puts ("resetting ...\n");
-  
-  udelay (50000);       /* wait 50 ms */
-  debug ("delayed\n");
-  #ifndef  CONFIG_ALLWINNER
-  disable_interrupts();
-  sunxi_flash_exit (1);
-  debug ("disable interrupts\n");
-  reset_cpu (0);
-  #else
-  sunxi_board_restart (0);
-  #endif
-  /*NOTREACHED*/
-  return 0;
+	puts ("resetting ...\n");
+
+	udelay (50000);				/* wait 50 ms */
+	debug("delayed\n");
+#ifndef  CONFIG_ALLWINNER
+	disable_interrupts();
+	sunxi_flash_exit(1);
+	debug("disable interrupts\n");
+	reset_cpu(0);
+#else
+	sunxi_board_restart(0);
+#endif
+	/*NOTREACHED*/
+	return 0;
 }

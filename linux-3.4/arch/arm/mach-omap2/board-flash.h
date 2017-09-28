@@ -14,36 +14,36 @@
 #include <linux/mtd/partitions.h>
 #include <plat/gpmc.h>
 
-#define PDC_NOR   1
-#define PDC_NAND  2
-#define PDC_ONENAND 3
-#define DBG_MPDB  4
+#define PDC_NOR		1
+#define PDC_NAND	2
+#define PDC_ONENAND	3
+#define DBG_MPDB	4
 
 struct flash_partitions {
-  struct mtd_partition * parts;
-  int nr_parts;
+	struct mtd_partition *parts;
+	int nr_parts;
 };
 
 #if defined(CONFIG_MTD_NAND_OMAP2) || \
-defined(CONFIG_MTD_NAND_OMAP2_MODULE) || \
-defined(CONFIG_MTD_ONENAND_OMAP2) || \
-defined(CONFIG_MTD_ONENAND_OMAP2_MODULE)
-extern void board_flash_init (struct flash_partitions [],
-                              char chip_sel[][GPMC_CS_NUM], int nand_type);
+		defined(CONFIG_MTD_NAND_OMAP2_MODULE) || \
+		defined(CONFIG_MTD_ONENAND_OMAP2) || \
+		defined(CONFIG_MTD_ONENAND_OMAP2_MODULE)
+extern void board_flash_init(struct flash_partitions [],
+				char chip_sel[][GPMC_CS_NUM], int nand_type);
 #else
-static inline void board_flash_init (struct flash_partitions part[],
-                                     char chip_sel[][GPMC_CS_NUM], int nand_type)
+static inline void board_flash_init(struct flash_partitions part[],
+				char chip_sel[][GPMC_CS_NUM], int nand_type)
 {
 }
 #endif
 
 #if defined(CONFIG_MTD_NAND_OMAP2) || \
-defined(CONFIG_MTD_NAND_OMAP2_MODULE)
-extern void board_nand_init (struct mtd_partition * nand_parts,
-                             u8 nr_parts, u8 cs, int nand_type);
+		defined(CONFIG_MTD_NAND_OMAP2_MODULE)
+extern void board_nand_init(struct mtd_partition *nand_parts,
+					u8 nr_parts, u8 cs, int nand_type);
 #else
-static inline void board_nand_init (struct mtd_partition * nand_parts,
-                                    u8 nr_parts, u8 cs, int nand_type)
+static inline void board_nand_init(struct mtd_partition *nand_parts,
+					u8 nr_parts, u8 cs, int nand_type)
 {
 }
 #endif

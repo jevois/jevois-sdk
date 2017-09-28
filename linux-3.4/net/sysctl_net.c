@@ -31,94 +31,94 @@
 #endif
 
 static struct ctl_table_set *
-net_ctl_header_lookup (struct ctl_table_root * root, struct nsproxy * namespaces)
+net_ctl_header_lookup(struct ctl_table_root *root, struct nsproxy *namespaces)
 {
-  return &namespaces->net_ns->sysctls;
+	return &namespaces->net_ns->sysctls;
 }
 
-static int is_seen (struct ctl_table_set * set)
+static int is_seen(struct ctl_table_set *set)
 {
-  return &current->nsproxy->net_ns->sysctls == set;
+	return &current->nsproxy->net_ns->sysctls == set;
 }
 
 /* Return standard mode bits for table entry. */
-static int net_ctl_permissions (struct ctl_table_root * root,
-                                struct nsproxy * nsproxy,
-                                struct ctl_table * table)
+static int net_ctl_permissions(struct ctl_table_root *root,
+			       struct nsproxy *nsproxy,
+			       struct ctl_table *table)
 {
-  /* Allow network administrator to have same access as root. */
-  if (capable (CAP_NET_ADMIN) ) {
-    int mode = (table->mode >> 6) & 7;
-    return (mode << 6) | (mode << 3) | mode;
-  }
-  return table->mode;
+	/* Allow network administrator to have same access as root. */
+	if (capable(CAP_NET_ADMIN)) {
+		int mode = (table->mode >> 6) & 7;
+		return (mode << 6) | (mode << 3) | mode;
+	}
+	return table->mode;
 }
 
 static struct ctl_table_root net_sysctl_root = {
-  .lookup = net_ctl_header_lookup,
-  .permissions = net_ctl_permissions,
+	.lookup = net_ctl_header_lookup,
+	.permissions = net_ctl_permissions,
 };
 
-static int net_ctl_ro_header_perms (struct ctl_table_root * root,
-                                    struct nsproxy * namespaces, struct ctl_table * table)
+static int net_ctl_ro_header_perms(struct ctl_table_root *root,
+		struct nsproxy *namespaces, struct ctl_table *table)
 {
-  if (net_eq (namespaces->net_ns, &init_net) )
-  { return table->mode; }
-  else
-  { return table->mode & ~0222; }
+	if (net_eq(namespaces->net_ns, &init_net))
+		return table->mode;
+	else
+		return table->mode & ~0222;
 }
 
 static struct ctl_table_root net_sysctl_ro_root = {
-  .permissions = net_ctl_ro_header_perms,
+	.permissions = net_ctl_ro_header_perms,
 };
 
-static int __net_init sysctl_net_init (struct net * net)
+static int __net_init sysctl_net_init(struct net *net)
 {
-  setup_sysctl_set (&net->sysctls, &net_sysctl_root, is_seen);
-  return 0;
+	setup_sysctl_set(&net->sysctls, &net_sysctl_root, is_seen);
+	return 0;
 }
 
-static void __net_exit sysctl_net_exit (struct net * net)
+static void __net_exit sysctl_net_exit(struct net *net)
 {
-  retire_sysctl_set (&net->sysctls);
+	retire_sysctl_set(&net->sysctls);
 }
 
 static struct pernet_operations sysctl_pernet_ops = {
-  .init = sysctl_net_init,
-  .exit = sysctl_net_exit,
+	.init = sysctl_net_init,
+	.exit = sysctl_net_exit,
 };
 
-static __init int net_sysctl_init (void)
+static __init int net_sysctl_init(void)
 {
-  int ret;
-  ret = register_pernet_subsys (&sysctl_pernet_ops);
-  if (ret)
-  { goto out; }
-  setup_sysctl_set (&net_sysctl_ro_root.default_set, &net_sysctl_ro_root, NULL);
-  register_sysctl_root (&net_sysctl_ro_root);
-  register_sysctl_root (&net_sysctl_root);
+	int ret;
+	ret = register_pernet_subsys(&sysctl_pernet_ops);
+	if (ret)
+		goto out;
+	setup_sysctl_set(&net_sysctl_ro_root.default_set, &net_sysctl_ro_root, NULL);
+	register_sysctl_root(&net_sysctl_ro_root);
+	register_sysctl_root(&net_sysctl_root);
 out:
-  return ret;
+	return ret;
 }
-subsys_initcall (net_sysctl_init);
+subsys_initcall(net_sysctl_init);
 
-struct ctl_table_header * register_net_sysctl_table (struct net * net,
-    const struct ctl_path * path, struct ctl_table * table)
+struct ctl_table_header *register_net_sysctl_table(struct net *net,
+	const struct ctl_path *path, struct ctl_table *table)
 {
-  return __register_sysctl_paths (&net->sysctls, path, table);
+	return __register_sysctl_paths(&net->sysctls, path, table);
 }
-EXPORT_SYMBOL_GPL (register_net_sysctl_table);
+EXPORT_SYMBOL_GPL(register_net_sysctl_table);
 
-struct ctl_table_header * register_net_sysctl_rotable (const
-    struct ctl_path * path, struct ctl_table * table)
+struct ctl_table_header *register_net_sysctl_rotable(const
+		struct ctl_path *path, struct ctl_table *table)
 {
-  return __register_sysctl_paths (&net_sysctl_ro_root.default_set,
-                                  path, table);
+	return __register_sysctl_paths(&net_sysctl_ro_root.default_set,
+					path, table);
 }
-EXPORT_SYMBOL_GPL (register_net_sysctl_rotable);
+EXPORT_SYMBOL_GPL(register_net_sysctl_rotable);
 
-void unregister_net_sysctl_table (struct ctl_table_header * header)
+void unregister_net_sysctl_table(struct ctl_table_header *header)
 {
-  unregister_sysctl_table (header);
+	unregister_sysctl_table(header);
 }
-EXPORT_SYMBOL_GPL (unregister_net_sysctl_table);
+EXPORT_SYMBOL_GPL(unregister_net_sysctl_table);

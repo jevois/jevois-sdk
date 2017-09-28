@@ -36,8 +36,8 @@ struct iwl_priv;
 #define IWL_LED_ACTIVITY       (0<<1)
 #define IWL_LED_LINK           (1<<1)
 
-void iwlagn_led_enable (struct iwl_priv * priv);
-void iwl_leds_init (struct iwl_priv * priv);
-void iwl_leds_exit (struct iwl_priv * priv);
+void iwlagn_led_enable(struct iwl_priv *priv);
+void iwl_leds_init(struct iwl_priv *priv);
+void iwl_leds_exit(struct iwl_priv *priv);
 
 #endif /* __iwl_leds_h__ */

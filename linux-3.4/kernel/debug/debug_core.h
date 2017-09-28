@@ -17,15 +17,15 @@
 
 /* kernel debug core data structures */
 struct kgdb_state {
-  int     ex_vector;
-  int     signo;
-  int     err_code;
-  int     cpu;
-  int     pass_exception;
-  unsigned long   thr_query;
-  unsigned long   threadid;
-  long      kgdb_usethreadid;
-  struct pt_regs  *  linux_regs;
+	int			ex_vector;
+	int			signo;
+	int			err_code;
+	int			cpu;
+	int			pass_exception;
+	unsigned long		thr_query;
+	unsigned long		threadid;
+	long			kgdb_usethreadid;
+	struct pt_regs		*linux_regs;
 };
 
 /* Exception state values */
@@ -35,25 +35,25 @@ struct kgdb_state {
 #define DCPU_SSTEP       0x8 /* CPU is single stepping */
 
 struct debuggerinfo_struct {
-  void   *   debuggerinfo;
-  struct task_struct * task;
-  int     exception_state;
-  int     ret_state;
-  int     irq_depth;
-  int     enter_kgdb;
+	void			*debuggerinfo;
+	struct task_struct	*task;
+	int			exception_state;
+	int			ret_state;
+	int			irq_depth;
+	int			enter_kgdb;
 };
 
 extern struct debuggerinfo_struct kgdb_info[];
 
 /* kernel debug core break point routines */
-extern int dbg_remove_all_break (void);
-extern int dbg_set_sw_break (unsigned long addr);
-extern int dbg_remove_sw_break (unsigned long addr);
-extern int dbg_activate_sw_breakpoints (void);
-extern int dbg_deactivate_sw_breakpoints (void);
+extern int dbg_remove_all_break(void);
+extern int dbg_set_sw_break(unsigned long addr);
+extern int dbg_remove_sw_break(unsigned long addr);
+extern int dbg_activate_sw_breakpoints(void);
+extern int dbg_deactivate_sw_breakpoints(void);
 
 /* polled character access to i/o module */
-extern int dbg_io_get_char (void);
+extern int dbg_io_get_char(void);
 
 /* stub return value for switching between the gdbstub and kdb */
 #define DBG_PASS_EVENT -12345
@@ -62,20 +62,20 @@ extern int dbg_io_get_char (void);
 extern int dbg_switch_cpu;
 
 /* gdbstub interface functions */
-extern int gdb_serial_stub (struct kgdb_state * ks);
-extern void gdbstub_msg_write (const char * s, int len);
+extern int gdb_serial_stub(struct kgdb_state *ks);
+extern void gdbstub_msg_write(const char *s, int len);
 
 /* gdbstub functions used for kdb <-> gdbstub transition */
-extern int gdbstub_state (struct kgdb_state * ks, char * cmd);
+extern int gdbstub_state(struct kgdb_state *ks, char *cmd);
 extern int dbg_kdb_mode;
 
 #ifdef CONFIG_KGDB_KDB
-extern int kdb_stub (struct kgdb_state * ks);
-extern int kdb_parse (const char * cmdstr);
+extern int kdb_stub(struct kgdb_state *ks);
+extern int kdb_parse(const char *cmdstr);
 #else /* ! CONFIG_KGDB_KDB */
-static inline int kdb_stub (struct kgdb_state * ks)
+static inline int kdb_stub(struct kgdb_state *ks)
 {
-  return DBG_PASS_EVENT;
+	return DBG_PASS_EVENT;
 }
 #endif /* CONFIG_KGDB_KDB */
 

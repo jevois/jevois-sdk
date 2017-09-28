@@ -1,8 +1,8 @@
 /* arch/arm/mach-s3c2410/include/mach/anubis-cpld.h
  *
  * Copyright (c) 2005 Simtec Electronics
- *  http://www.simtec.co.uk/products/
- *  Ben Dooks <ben@simtec.co.uk>
+ *	http://www.simtec.co.uk/products/
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * ANUBIS - CPLD control constants
  *
@@ -16,10 +16,10 @@
 
 /* CTRL2 - NAND WP control, IDE Reset assert/check */
 
-#define ANUBIS_CTRL1_NANDSEL    (0x3)
+#define ANUBIS_CTRL1_NANDSEL		(0x3)
 
 /* IDREG - revision */
 
-#define ANUBIS_IDREG_REVMASK    (0x7)
+#define ANUBIS_IDREG_REVMASK		(0x7)
 
 #endif /* __ASM_ARCH_ANUBISCPLD_H */

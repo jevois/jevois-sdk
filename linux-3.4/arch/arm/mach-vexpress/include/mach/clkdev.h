@@ -4,9 +4,9 @@
 #include <plat/clock.h>
 
 struct clk {
-  const struct clk_ops * ops;
-  unsigned long   rate;
-  const struct icst_params * params;
+	const struct clk_ops	*ops;
+	unsigned long		rate;
+	const struct icst_params *params;
 };
 
 #define __clk_get(clk) ({ 1; })

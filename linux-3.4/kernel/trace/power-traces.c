@@ -14,7 +14,7 @@
 #include <trace/events/power.h>
 
 #ifdef EVENT_POWER_TRACING_DEPRECATED
-EXPORT_TRACEPOINT_SYMBOL_GPL (power_start);
+EXPORT_TRACEPOINT_SYMBOL_GPL(power_start);
 #endif
-EXPORT_TRACEPOINT_SYMBOL_GPL (cpu_idle);
+EXPORT_TRACEPOINT_SYMBOL_GPL(cpu_idle);
 

@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -24,9 +24,9 @@
 #ifndef  __SUNXI_SPRITE_ERASE_H__
 #define  __SUNXI_SPRITE_ERASE_H__
 
-extern  int sunxi_sprite_erase_flash (void * img_mbr_buffer);
+extern  int sunxi_sprite_erase_flash(void  *img_mbr_buffer);
 
-extern  int sunxi_sprite_force_erase_key (void);
+extern  int sunxi_sprite_force_erase_key(void);
 #endif
 
 

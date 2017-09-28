@@ -50,6 +50,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /* pdump symbolic addresses are generated on-the-fly with a callback */
 
-typedef PVRSRV_ERROR (*PVRSRV_SYMADDRFUNCPTR) (IMG_HANDLE hPriv, IMG_UINT32 uiOffset, IMG_CHAR * pszSymbolicAddr, IMG_UINT32 ui32SymbolicAddrLen, IMG_UINT32 * pui32NewOffset);
+typedef PVRSRV_ERROR (*PVRSRV_SYMADDRFUNCPTR)(IMG_HANDLE hPriv, IMG_UINT32 uiOffset, IMG_CHAR *pszSymbolicAddr, IMG_UINT32 ui32SymbolicAddrLen, IMG_UINT32 *pui32NewOffset);
 
 #endif /* #ifndef SRVKM_PDUMP_SYMBOLICADDR_H */

@@ -93,15 +93,15 @@ err: define bus type;
 #endif 
 
 #if defined HERMES25
-#define HW_TYPE       "HII.5"
+#define HW_TYPE				"HII.5"
 #else
-#define HW_TYPE       "HII"
+#define HW_TYPE				"HII"
 #endif
 
 #if defined WARP
-#define FW_TYPE       "WARP"
+#define FW_TYPE				"WARP"
 #else
-#define FW_TYPE       "BEAGLE"
+#define FW_TYPE				"BEAGLE"
 #endif
 
 #if defined HERMES25
@@ -136,8 +136,8 @@ err: define bus type;
 
 
 #define VERSION_INFO        MODULE_NAME " v" DRV_VERSION_STR \
-  " for " BUS_TYPE ", "                            \
-  MODULE_DATE " by " VENDOR_NAME
+							" for " BUS_TYPE ", " 											   	 \
+							MODULE_DATE " by " VENDOR_NAME
 
 /* The version of wireless extensions we support */
 #define WIRELESS_SUPPORT    21
@@ -157,13 +157,13 @@ err: define bus type;
 #define NEW_MULTICAST
 #define ALLOC_SKB(len)   dev_alloc_skb(len+2)
 #define GET_PACKET(dev, skb, count)\
-  skb_reserve((skb), 2); \
-  BLOCK_INPUT(skb_put((skb), (count)), (count)); \
-  (skb)->protocol = eth_type_trans((skb), (dev))
+                        skb_reserve((skb), 2); \
+                        BLOCK_INPUT(skb_put((skb), (count)), (count)); \
+                        (skb)->protocol = eth_type_trans((skb), (dev))
 #define GET_PACKET_DMA(dev, skb, count)\
-  skb_reserve((skb), 2); \
-  BLOCK_INPUT_DMA(skb_put((skb), (count)), (count)); \
-  (skb)->protocol = eth_type_trans((skb), (dev))
+                        skb_reserve((skb), 2); \
+                        BLOCK_INPUT_DMA(skb_put((skb), (count)), (count)); \
+                        (skb)->protocol = eth_type_trans((skb), (dev))
 
 
 

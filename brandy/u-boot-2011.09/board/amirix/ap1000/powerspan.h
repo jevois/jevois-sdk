@@ -149,22 +149,22 @@
 #define IDR_MBOX_OUT    0x10000000
 
 
-int pci_read_config_byte (int bus, int dev, int fn, int reg, unsigned char * val);
-int pci_write_config_byte (int bus, int dev, int fn, int reg, unsigned char val);
-int pci_read_config_word (int bus, int dev, int fn, int reg, unsigned short * val);
-int pci_write_config_word (int bus, int dev, int fn, int reg, unsigned short val);
-int pci_read_config_dword (int bus, int dev, int fn, int reg, unsigned long * val);
-int pci_write_config_dword (int bus, int dev, int fn, int reg, unsigned long val);
+int pci_read_config_byte(int bus, int dev, int fn, int reg, unsigned char* val);
+int pci_write_config_byte(int bus, int dev, int fn, int reg, unsigned char val);
+int pci_read_config_word(int bus, int dev, int fn, int reg, unsigned short* val);
+int pci_write_config_word(int bus, int dev, int fn, int reg, unsigned short val);
+int pci_read_config_dword(int bus, int dev, int fn, int reg, unsigned long* val);
+int pci_write_config_dword(int bus, int dev, int fn, int reg, unsigned long val);
 
-unsigned int PowerSpanRead (unsigned int theOffset);
-void PowerSpanWrite (unsigned int theOffset, unsigned int theValue);
+unsigned int PowerSpanRead(unsigned int theOffset);
+void PowerSpanWrite(unsigned int theOffset, unsigned int theValue);
 
-int I2CAccess (unsigned char theI2CAddress, unsigned char theDevCode, unsigned char theChipSel, unsigned char * theValue, int RWFlag);
+int I2CAccess(unsigned char theI2CAddress, unsigned char theDevCode, unsigned char theChipSel, unsigned char* theValue, int RWFlag);
 
-int PCIWriteConfig (int bus, int dev, int fn, int reg, int width, unsigned long val);
-int PCIReadConfig (int bus, int dev, int fn, int reg, int width, unsigned long * val);
+int PCIWriteConfig(int bus, int dev, int fn, int reg, int width, unsigned long val);
+int PCIReadConfig(int bus, int dev, int fn, int reg, int width, unsigned long* val);
 
-int SetSlaveImage (int theImageIndex, unsigned int theBlockSize, int theMemIOFlag, int theEndianness, unsigned int theLocalBaseAddr, unsigned int thePCIBaseAddr);
-int SetTargetImage (int theImageIndex, unsigned int theBlockSize, int theMemIOFlag, int theEndianness, unsigned int theLocalBaseAddr, unsigned int thePCIBaseAddr);
+int SetSlaveImage(int theImageIndex, unsigned int theBlockSize, int theMemIOFlag, int theEndianness, unsigned int theLocalBaseAddr, unsigned int thePCIBaseAddr);
+int SetTargetImage(int theImageIndex, unsigned int theBlockSize, int theMemIOFlag, int theEndianness, unsigned int theLocalBaseAddr, unsigned int thePCIBaseAddr);
 
 #endif

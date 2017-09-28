@@ -10,7 +10,7 @@
 #include <asm/isc.h>
 
 static unsigned int isc_refs[MAX_ISC + 1];
-static DEFINE_SPINLOCK (isc_ref_lock);
+static DEFINE_SPINLOCK(isc_ref_lock);
 
 
 /**
@@ -23,20 +23,20 @@ static DEFINE_SPINLOCK (isc_ref_lock);
  * Context:
  *   This function must not be called in interrupt context.
  */
-void isc_register (unsigned int isc)
+void isc_register(unsigned int isc)
 {
-  if (isc > MAX_ISC) {
-    WARN_ON (1);
-    return;
-  }
-  
-  spin_lock (&isc_ref_lock);
-  if (isc_refs[isc] == 0)
-  { ctl_set_bit (6, 31 - isc); }
-  isc_refs[isc]++;
-  spin_unlock (&isc_ref_lock);
+	if (isc > MAX_ISC) {
+		WARN_ON(1);
+		return;
+	}
+
+	spin_lock(&isc_ref_lock);
+	if (isc_refs[isc] == 0)
+		ctl_set_bit(6, 31 - isc);
+	isc_refs[isc]++;
+	spin_unlock(&isc_ref_lock);
 }
-EXPORT_SYMBOL_GPL (isc_register);
+EXPORT_SYMBOL_GPL(isc_register);
 
 /**
  * isc_unregister - unregister an I/O interruption subclass.
@@ -51,18 +51,18 @@ EXPORT_SYMBOL_GPL (isc_register);
  * Context:
  *   This function must not be called in interrupt context.
  */
-void isc_unregister (unsigned int isc)
+void isc_unregister(unsigned int isc)
 {
-  spin_lock (&isc_ref_lock);
-  /* check for misuse */
-  if (isc > MAX_ISC || isc_refs[isc] == 0) {
-    WARN_ON (1);
-    goto out_unlock;
-  }
-  if (isc_refs[isc] == 1)
-  { ctl_clear_bit (6, 31 - isc); }
-  isc_refs[isc]--;
+	spin_lock(&isc_ref_lock);
+	/* check for misuse */
+	if (isc > MAX_ISC || isc_refs[isc] == 0) {
+		WARN_ON(1);
+		goto out_unlock;
+	}
+	if (isc_refs[isc] == 1)
+		ctl_clear_bit(6, 31 - isc);
+	isc_refs[isc]--;
 out_unlock:
-  spin_unlock (&isc_ref_lock);
+	spin_unlock(&isc_ref_lock);
 }
-EXPORT_SYMBOL_GPL (isc_unregister);
+EXPORT_SYMBOL_GPL(isc_unregister);

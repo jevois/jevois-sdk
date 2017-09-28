@@ -9,7 +9,7 @@
 #ifndef __SCLP_CPI_SYS_H__
 #define __SCLP_CPI_SYS_H__
 
-int sclp_cpi_set_data (const char * system, const char * sysplex,
-                       const char * type, u64 level);
+int sclp_cpi_set_data(const char *system, const char *sysplex,
+		      const char *type, u64 level);
 
-#endif   /* __SCLP_CPI_SYS_H__ */
+#endif	 /* __SCLP_CPI_SYS_H__ */

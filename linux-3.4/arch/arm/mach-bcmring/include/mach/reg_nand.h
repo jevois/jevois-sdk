@@ -35,7 +35,7 @@
 
 /* ---- Constants and Types ---------------------------------------------- */
 
-#define HW_NAND_BASE       MM_IO_BASE_NAND  /* NAND Flash */
+#define HW_NAND_BASE       MM_IO_BASE_NAND	/* NAND Flash */
 
 /* DMA accesses by the bootstrap need hard nonvirtual addresses */
 #define REG_NAND_CMD            __REG16(HW_NAND_BASE + 0)

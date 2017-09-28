@@ -25,7 +25,7 @@
 #define LOG_PREFIX "ec100"
 
 #define dprintk(var, level, args...) \
-  do { if ((var & level)) printk(args); } while (0)
+	do { if ((var & level)) printk(args); } while (0)
 
 #define deb_info(args...) dprintk(ec100_debug, 0x01, args)
 

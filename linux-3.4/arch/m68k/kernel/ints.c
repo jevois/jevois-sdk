@@ -32,42 +32,42 @@ extern u16 user_irqvec_fixup[];
 static int m68k_first_user_vec;
 
 static struct irq_chip auto_irq_chip = {
-  .name   = "auto",
-  .irq_startup  = m68k_irq_startup,
-  .irq_shutdown = m68k_irq_shutdown,
+	.name		= "auto",
+	.irq_startup	= m68k_irq_startup,
+	.irq_shutdown	= m68k_irq_shutdown,
 };
 
 static struct irq_chip user_irq_chip = {
-  .name   = "user",
-  .irq_startup  = m68k_irq_startup,
-  .irq_shutdown = m68k_irq_shutdown,
+	.name		= "user",
+	.irq_startup	= m68k_irq_startup,
+	.irq_shutdown	= m68k_irq_shutdown,
 };
 
 /*
  * void init_IRQ(void)
  *
- * Parameters:  None
+ * Parameters:	None
  *
- * Returns: Nothing
+ * Returns:	Nothing
  *
  * This function should be called during kernel startup to initialize
  * the IRQ handling routines.
  */
 
-void __init init_IRQ (void)
+void __init init_IRQ(void)
 {
-  int i;
-  
-  /* assembly irq entry code relies on this... */
-  if (HARDIRQ_MASK != 0x00ff0000) {
-    extern void hardirq_mask_is_broken (void);
-    hardirq_mask_is_broken();
-  }
-  
-  for (i = IRQ_AUTO_1; i <= IRQ_AUTO_7; i++)
-  { irq_set_chip_and_handler (i, &auto_irq_chip, handle_simple_irq); }
-  
-  mach_init_IRQ();
+	int i;
+
+	/* assembly irq entry code relies on this... */
+	if (HARDIRQ_MASK != 0x00ff0000) {
+		extern void hardirq_mask_is_broken(void);
+		hardirq_mask_is_broken();
+	}
+
+	for (i = IRQ_AUTO_1; i <= IRQ_AUTO_7; i++)
+		irq_set_chip_and_handler(i, &auto_irq_chip, handle_simple_irq);
+
+	mach_init_IRQ();
 }
 
 /**
@@ -78,11 +78,11 @@ void __init init_IRQ (void)
  * standard do_IRQ(), it will be called with irq numbers in the range
  * from IRQ_AUTO_1 - IRQ_AUTO_7.
  */
-void __init m68k_setup_auto_interrupt (void (*handler) (unsigned int, struct pt_regs *) )
+void __init m68k_setup_auto_interrupt(void (*handler)(unsigned int, struct pt_regs *))
 {
-  if (handler)
-  { *auto_irqhandler_fixup = (u32) handler; }
-  flush_icache();
+	if (handler)
+		*auto_irqhandler_fixup = (u32)handler;
+	flush_icache();
 }
 
 /**
@@ -94,16 +94,16 @@ void __init m68k_setup_auto_interrupt (void (*handler) (unsigned int, struct pt_
  * of interrupts, only then these interrupts can be requested (note: this is
  * different from auto vector interrupts).
  */
-void __init m68k_setup_user_interrupt (unsigned int vec, unsigned int cnt)
+void __init m68k_setup_user_interrupt(unsigned int vec, unsigned int cnt)
 {
-  int i;
-  
-  BUG_ON (IRQ_USER + cnt > NR_IRQS);
-  m68k_first_user_vec = vec;
-  for (i = 0; i < cnt; i++)
-  { irq_set_chip (IRQ_USER + i, &user_irq_chip); }
-  *user_irqvec_fixup = vec - IRQ_USER;
-  flush_icache();
+	int i;
+
+	BUG_ON(IRQ_USER + cnt > NR_IRQS);
+	m68k_first_user_vec = vec;
+	for (i = 0; i < cnt; i++)
+		irq_set_chip(IRQ_USER + i, &user_irq_chip);
+	*user_irqvec_fixup = vec - IRQ_USER;
+	flush_icache();
 }
 
 /**
@@ -118,58 +118,58 @@ void __init m68k_setup_user_interrupt (unsigned int vec, unsigned int cnt)
  * be changed as well, but the controller probably should use m68k_irq_startup/
  * m68k_irq_shutdown.
  */
-void m68k_setup_irq_controller (struct irq_chip * chip,
-                                irq_flow_handler_t handle, unsigned int irq,
-                                unsigned int cnt)
+void m68k_setup_irq_controller(struct irq_chip *chip,
+			       irq_flow_handler_t handle, unsigned int irq,
+			       unsigned int cnt)
 {
-  int i;
-  
-  for (i = 0; i < cnt; i++) {
-    irq_set_chip (irq + i, chip);
-    if (handle)
-    { irq_set_handler (irq + i, handle); }
-  }
+	int i;
+
+	for (i = 0; i < cnt; i++) {
+		irq_set_chip(irq + i, chip);
+		if (handle)
+			irq_set_handler(irq + i, handle);
+	}
 }
 
-unsigned int m68k_irq_startup_irq (unsigned int irq)
+unsigned int m68k_irq_startup_irq(unsigned int irq)
 {
-  if (irq <= IRQ_AUTO_7)
-  { vectors[VEC_SPUR + irq] = auto_inthandler; }
-  else
-  { vectors[m68k_first_user_vec + irq - IRQ_USER] = user_inthandler; }
-  return 0;
+	if (irq <= IRQ_AUTO_7)
+		vectors[VEC_SPUR + irq] = auto_inthandler;
+	else
+		vectors[m68k_first_user_vec + irq - IRQ_USER] = user_inthandler;
+	return 0;
 }
 
-unsigned int m68k_irq_startup (struct irq_data * data)
+unsigned int m68k_irq_startup(struct irq_data *data)
 {
-  return m68k_irq_startup_irq (data->irq);
+	return m68k_irq_startup_irq(data->irq);
 }
 
-void m68k_irq_shutdown (struct irq_data * data)
+void m68k_irq_shutdown(struct irq_data *data)
 {
-  unsigned int irq = data->irq;
-  
-  if (irq <= IRQ_AUTO_7)
-  { vectors[VEC_SPUR + irq] = bad_inthandler; }
-  else
-  { vectors[m68k_first_user_vec + irq - IRQ_USER] = bad_inthandler; }
+	unsigned int irq = data->irq;
+
+	if (irq <= IRQ_AUTO_7)
+		vectors[VEC_SPUR + irq] = bad_inthandler;
+	else
+		vectors[m68k_first_user_vec + irq - IRQ_USER] = bad_inthandler;
 }
 
 
-unsigned int irq_canonicalize (unsigned int irq)
+unsigned int irq_canonicalize(unsigned int irq)
 {
-  #ifdef CONFIG_Q40
-  if (MACH_IS_Q40 && irq == 11)
-  { irq = 10; }
-  #endif
-  return irq;
+#ifdef CONFIG_Q40
+	if (MACH_IS_Q40 && irq == 11)
+		irq = 10;
+#endif
+	return irq;
 }
 
-EXPORT_SYMBOL (irq_canonicalize);
+EXPORT_SYMBOL(irq_canonicalize);
 
 
-asmlinkage void handle_badint (struct pt_regs * regs)
+asmlinkage void handle_badint(struct pt_regs *regs)
 {
-  atomic_inc (&irq_err_count);
-  pr_warn ("unexpected interrupt from %u\n", regs->vector);
+	atomic_inc(&irq_err_count);
+	pr_warn("unexpected interrupt from %u\n", regs->vector);
 }

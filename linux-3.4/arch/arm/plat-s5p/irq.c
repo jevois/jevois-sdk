@@ -1,7 +1,7 @@
 /* arch/arm/plat-s5p/irq.c
  *
  * Copyright (c) 2009 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com/
+ *		http://www.samsung.com/
  *
  * S5P - Interrupt handling
  *
@@ -22,15 +22,15 @@
 #include <plat/cpu.h>
 #include <plat/irq-vic-timer.h>
 
-void __init s5p_init_irq (u32 * vic, u32 num_vic)
+void __init s5p_init_irq(u32 *vic, u32 num_vic)
 {
-  #ifdef CONFIG_ARM_VIC
-  int irq;
-  
-  /* initialize the VICs */
-  for (irq = 0; irq < num_vic; irq++)
-  { vic_init (VA_VIC (irq), VIC_BASE (irq), vic[irq], 0); }
-  #endif
-  
-  s3c_init_vic_timer_irq (5, IRQ_TIMER0);
+#ifdef CONFIG_ARM_VIC
+	int irq;
+
+	/* initialize the VICs */
+	for (irq = 0; irq < num_vic; irq++)
+		vic_init(VA_VIC(irq), VIC_BASE(irq), vic[irq], 0);
+#endif
+
+	s3c_init_vic_timer_irq(5, IRQ_TIMER0);
 }

@@ -253,8 +253,8 @@
 #define SUNXI_UART_LOG(fmt, args...) do {} while(0)
 
 #define SUNXI_R_UART_LOG(fmt, args...)      \
-  do {                             \
-    aw_printk((u32)SUNXI_R_UART_PBASE, "[%s]"fmt"\n", __FUNCTION__, ##args); \
-  } while (0)
+        do {                             \
+                aw_printk((u32)SUNXI_R_UART_PBASE, "[%s]"fmt"\n", __FUNCTION__, ##args); \
+        } while (0)
 
 #endif    /* __PLATFORM_SUN8I_W7P1_H */

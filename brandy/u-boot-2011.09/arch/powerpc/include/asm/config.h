@@ -8,7 +8,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -43,23 +43,23 @@
 
 #ifndef CONFIG_MAX_MEM_MAPPED
 #if defined(CONFIG_4xx) || defined(CONFIG_E500) || defined(CONFIG_MPC86xx)
-#define CONFIG_MAX_MEM_MAPPED ((phys_size_t)2 << 30)
+#define CONFIG_MAX_MEM_MAPPED	((phys_size_t)2 << 30)
 #else
-#define CONFIG_MAX_MEM_MAPPED (256 << 20)
+#define CONFIG_MAX_MEM_MAPPED	(256 << 20)
 #endif
 #endif
 
 /* Check if boards need to enable FSL DMA engine for SDRAM init */
 #if !defined(CONFIG_FSL_DMA) && defined(CONFIG_DDR_ECC)
 #if (defined(CONFIG_MPC83xx) && defined(CONFIG_DDR_ECC_INIT_VIA_DMA)) || \
-((defined(CONFIG_MPC85xx) || defined(CONFIG_MPC86xx)) && \
- !defined(CONFIG_ECC_INIT_VIA_DDRCONTROLLER))
+	((defined(CONFIG_MPC85xx) || defined(CONFIG_MPC86xx)) && \
+	!defined(CONFIG_ECC_INIT_VIA_DDRCONTROLLER))
 #define CONFIG_FSL_DMA
 #endif
 #endif
 
 #ifndef CONFIG_MAX_CPUS
-#define CONFIG_MAX_CPUS   1
+#define CONFIG_MAX_CPUS		1
 #endif
 
 /*
@@ -68,7 +68,7 @@
  */
 #if (defined(CONFIG_E500) && defined(CONFIG_MP))
 #ifndef CONFIG_BPTR_VIRT_ADDR
-#define CONFIG_BPTR_VIRT_ADDR 0xfffff000
+#define CONFIG_BPTR_VIRT_ADDR	0xfffff000
 #endif
 #endif
 
@@ -76,12 +76,12 @@
  * SEC (crypto unit) major compatible version determination
  */
 #if defined(CONFIG_MPC83xx)
-#define CONFIG_SYS_FSL_SEC_COMPAT 2
+#define CONFIG_SYS_FSL_SEC_COMPAT	2
 #endif
 
 /* Since so many PPC SOCs have a semi-common LBC, define this here */
 #if defined(CONFIG_MPC85xx) || defined(CONFIG_MPC86xx) || \
-defined(CONFIG_MPC83xx)
+	defined(CONFIG_MPC83xx)
 #if !defined(CONFIG_FSL_IFC)
 #define CONFIG_FSL_LBC
 #endif

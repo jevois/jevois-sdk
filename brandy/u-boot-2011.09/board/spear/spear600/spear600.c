@@ -29,25 +29,25 @@
 #include <asm/arch/spr_misc.h>
 #include <asm/arch/spr_nand.h>
 
-int board_init (void)
+int board_init(void)
 {
-  return spear_board_init (MACH_TYPE_SPEAR600);
+	return spear_board_init(MACH_TYPE_SPEAR600);
 }
 
 /*
  * board_nand_init - Board specific NAND initialization
- * @nand: mtd private chip structure
+ * @nand:	mtd private chip structure
  *
  * Called by nand_init_chip to initialize the board specific functions
  */
 
-int board_nand_init (struct nand_chip * nand)
+int board_nand_init(struct nand_chip *nand)
 {
-  struct misc_regs * const misc_regs_p =
-    (struct misc_regs *) CONFIG_SPEAR_MISCBASE;
-    
-  if (! (readl (&misc_regs_p->auto_cfg_reg) & MISC_NANDDIS) )
-  { return spear_nand_init (nand); }
-  
-  return -1;
+	struct misc_regs *const misc_regs_p =
+	    (struct misc_regs *)CONFIG_SPEAR_MISCBASE;
+
+	if (!(readl(&misc_regs_p->auto_cfg_reg) & MISC_NANDDIS))
+		return spear_nand_init(nand);
+
+	return -1;
 }

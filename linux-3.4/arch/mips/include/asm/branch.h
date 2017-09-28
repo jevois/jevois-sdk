@@ -11,33 +11,33 @@
 #include <asm/ptrace.h>
 #include <asm/inst.h>
 
-static inline int delay_slot (struct pt_regs * regs)
+static inline int delay_slot(struct pt_regs *regs)
 {
-  return regs->cp0_cause & CAUSEF_BD;
+	return regs->cp0_cause & CAUSEF_BD;
 }
 
-static inline unsigned long exception_epc (struct pt_regs * regs)
+static inline unsigned long exception_epc(struct pt_regs *regs)
 {
-  if (!delay_slot (regs) )
-  { return regs->cp0_epc; }
-  
-  return regs->cp0_epc + 4;
+	if (!delay_slot(regs))
+		return regs->cp0_epc;
+
+	return regs->cp0_epc + 4;
 }
 
 #define BRANCH_LIKELY_TAKEN 0x0001
 
-extern int __compute_return_epc (struct pt_regs * regs);
-extern int __compute_return_epc_for_insn (struct pt_regs * regs,
-    union mips_instruction insn);
+extern int __compute_return_epc(struct pt_regs *regs);
+extern int __compute_return_epc_for_insn(struct pt_regs *regs,
+					 union mips_instruction insn);
 
-static inline int compute_return_epc (struct pt_regs * regs)
+static inline int compute_return_epc(struct pt_regs *regs)
 {
-  if (!delay_slot (regs) ) {
-    regs->cp0_epc += 4;
-    return 0;
-  }
-  
-  return __compute_return_epc (regs);
+	if (!delay_slot(regs)) {
+		regs->cp0_epc += 4;
+		return 0;
+	}
+
+	return __compute_return_epc(regs);
 }
 
 #endif /* _ASM_BRANCH_H */

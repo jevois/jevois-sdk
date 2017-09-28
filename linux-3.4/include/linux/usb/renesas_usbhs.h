@@ -25,9 +25,9 @@
  * it will be return value from get_id
  */
 enum {
-  USBHS_HOST = 0,
-  USBHS_GADGET,
-  USBHS_MAX,
+	USBHS_HOST = 0,
+	USBHS_GADGET,
+	USBHS_MAX,
 };
 
 /*
@@ -38,7 +38,7 @@ enum {
  * renesas_usbhs_platform_callback :: hardware_init was called
  */
 struct renesas_usbhs_driver_callback {
-  int (*notify_hotplug) (struct platform_device * pdev);
+	int (*notify_hotplug)(struct platform_device *pdev);
 };
 
 /*
@@ -48,55 +48,55 @@ struct renesas_usbhs_driver_callback {
  */
 struct renesas_usbhs_platform_callback {
 
-  /*
-   * option:
-   *
-   * Hardware init function for platform.
-   * it is called when driver was probed.
-   */
-  int (*hardware_init) (struct platform_device * pdev);
-  
-  /*
-   * option:
-   *
-   * Hardware exit function for platform.
-   * it is called when driver was removed
-   */
-  void (*hardware_exit) (struct platform_device * pdev);
-  
-  /*
-   * option:
-   *
-   * for board specific clock control
-   */
-  void (*power_ctrl) (struct platform_device * pdev,
-                      void __iomem * base, int enable);
-                      
-  /*
-   * option:
-   *
-   * Phy reset for platform
-   */
-  void (*phy_reset) (struct platform_device * pdev);
-  
-  /*
-   * get USB ID function
-   *  - USBHS_HOST
-   *  - USBHS_GADGET
-   */
-  int (*get_id) (struct platform_device * pdev);
-  
-  /*
-   * get VBUS status function.
-   */
-  int (*get_vbus) (struct platform_device * pdev);
-  
-  /*
-   * option:
-   *
-   * VBUS control is needed for Host
-   */
-  int (*set_vbus) (struct platform_device * pdev, int enable);
+	/*
+	 * option:
+	 *
+	 * Hardware init function for platform.
+	 * it is called when driver was probed.
+	 */
+	int (*hardware_init)(struct platform_device *pdev);
+
+	/*
+	 * option:
+	 *
+	 * Hardware exit function for platform.
+	 * it is called when driver was removed
+	 */
+	void (*hardware_exit)(struct platform_device *pdev);
+
+	/*
+	 * option:
+	 *
+	 * for board specific clock control
+	 */
+	void (*power_ctrl)(struct platform_device *pdev,
+			   void __iomem *base, int enable);
+
+	/*
+	 * option:
+	 *
+	 * Phy reset for platform
+	 */
+	void (*phy_reset)(struct platform_device *pdev);
+
+	/*
+	 * get USB ID function
+	 *  - USBHS_HOST
+	 *  - USBHS_GADGET
+	 */
+	int (*get_id)(struct platform_device *pdev);
+
+	/*
+	 * get VBUS status function.
+	 */
+	int (*get_vbus)(struct platform_device *pdev);
+
+	/*
+	 * option:
+	 *
+	 * VBUS control is needed for Host
+	 */
+	int (*set_vbus)(struct platform_device *pdev, int enable);
 };
 
 /*
@@ -106,50 +106,50 @@ struct renesas_usbhs_platform_callback {
  * This struct show it to driver
  */
 struct renesas_usbhs_driver_param {
-  /*
-   * pipe settings
-   */
-  u32 * pipe_type; /* array of USB_ENDPOINT_XFER_xxx (from ep0) */
-  int pipe_size; /* pipe_type array size */
-  
-  /*
-   * option:
-   *
-   * for BUSWAIT :: BWAIT
-   * see
-   *  renesas_usbhs/common.c :: usbhsc_set_buswait()
-   * */
-  int buswait_bwait;
-  
-  /*
-   * option:
-   *
-   * delay time from notify_hotplug callback
-   */
-  int detection_delay; /* msec */
-  
-  /*
-   * option:
-   *
-   * dma id for dmaengine
-   */
-  int d0_tx_id;
-  int d0_rx_id;
-  int d1_tx_id;
-  int d1_rx_id;
-  
-  /*
-   * option:
-   *
-   * pio <--> dma border.
-   */
-  int pio_dma_border; /* default is 64byte */
-  
-  /*
-   * option:
-   */
-  u32 has_otg: 1; /* for controlling PWEN/EXTLP */
-  u32 has_sudmac: 1; /* for SUDMAC */
+	/*
+	 * pipe settings
+	 */
+	u32 *pipe_type; /* array of USB_ENDPOINT_XFER_xxx (from ep0) */
+	int pipe_size; /* pipe_type array size */
+
+	/*
+	 * option:
+	 *
+	 * for BUSWAIT :: BWAIT
+	 * see
+	 *	renesas_usbhs/common.c :: usbhsc_set_buswait()
+	 * */
+	int buswait_bwait;
+
+	/*
+	 * option:
+	 *
+	 * delay time from notify_hotplug callback
+	 */
+	int detection_delay; /* msec */
+
+	/*
+	 * option:
+	 *
+	 * dma id for dmaengine
+	 */
+	int d0_tx_id;
+	int d0_rx_id;
+	int d1_tx_id;
+	int d1_rx_id;
+
+	/*
+	 * option:
+	 *
+	 * pio <--> dma border.
+	 */
+	int pio_dma_border; /* default is 64byte */
+
+	/*
+	 * option:
+	 */
+	u32 has_otg:1; /* for controlling PWEN/EXTLP */
+	u32 has_sudmac:1; /* for SUDMAC */
 };
 
 /*
@@ -158,39 +158,39 @@ struct renesas_usbhs_driver_param {
  * platform information for renesas_usbhs driver.
  */
 struct renesas_usbhs_platform_info {
-  /*
-   * option:
-   *
-   * platform set these functions before
-   * call platform_add_devices if needed
-   */
-  struct renesas_usbhs_platform_callback  platform_callback;
-  
-  /*
-   * driver set these callback functions pointer.
-   * platform can use it on callback functions
-   */
-  struct renesas_usbhs_driver_callback  driver_callback;
-  
-  /*
-   * option:
-   *
-   * driver use these param for some register
-   */
-  struct renesas_usbhs_driver_param driver_param;
+	/*
+	 * option:
+	 *
+	 * platform set these functions before
+	 * call platform_add_devices if needed
+	 */
+	struct renesas_usbhs_platform_callback	platform_callback;
+
+	/*
+	 * driver set these callback functions pointer.
+	 * platform can use it on callback functions
+	 */
+	struct renesas_usbhs_driver_callback	driver_callback;
+
+	/*
+	 * option:
+	 *
+	 * driver use these param for some register
+	 */
+	struct renesas_usbhs_driver_param	driver_param;
 };
 
 /*
  * macro for platform
  */
 #define renesas_usbhs_get_info(pdev)\
-  ((struct renesas_usbhs_platform_info *)(pdev)->dev.platform_data)
+	((struct renesas_usbhs_platform_info *)(pdev)->dev.platform_data)
 
-#define renesas_usbhs_call_notify_hotplug(pdev)       \
-  ({                \
-    struct renesas_usbhs_driver_callback *dc;   \
-    dc = &(renesas_usbhs_get_info(pdev)->driver_callback);  \
-    if (dc && dc->notify_hotplug)       \
-      dc->notify_hotplug(pdev);     \
-  })
+#define renesas_usbhs_call_notify_hotplug(pdev)				\
+	({								\
+		struct renesas_usbhs_driver_callback *dc;		\
+		dc = &(renesas_usbhs_get_info(pdev)->driver_callback);	\
+		if (dc && dc->notify_hotplug)				\
+			dc->notify_hotplug(pdev);			\
+	})
 #endif /* RENESAS_USB_H */

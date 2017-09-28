@@ -30,71 +30,69 @@
 #ifdef CONFIG_SND_DEBUG
 
 #ifdef CONFIG_SND_DEBUG_VERBOSE
-#define DEFAULT_DEBUG_LEVEL 2
+#define DEFAULT_DEBUG_LEVEL	2
 #else
-#define DEFAULT_DEBUG_LEVEL 1
+#define DEFAULT_DEBUG_LEVEL	1
 #endif
 
 static int debug = DEFAULT_DEBUG_LEVEL;
-module_param (debug, int, 0644);
-MODULE_PARM_DESC (debug, "Debug level (0 = disable)");
+module_param(debug, int, 0644);
+MODULE_PARM_DESC(debug, "Debug level (0 = disable)");
 
 #endif /* CONFIG_SND_DEBUG */
 
-void release_and_free_resource (struct resource * res)
+void release_and_free_resource(struct resource *res)
 {
-  if (res) {
-    release_resource (res);
-    kfree (res);
-  }
+	if (res) {
+		release_resource(res);
+		kfree(res);
+	}
 }
 
-EXPORT_SYMBOL (release_and_free_resource);
+EXPORT_SYMBOL(release_and_free_resource);
 
 #ifdef CONFIG_SND_VERBOSE_PRINTK
 /* strip the leading path if the given path is absolute */
-static const char * sanity_file_name (const char * path)
+static const char *sanity_file_name(const char *path)
 {
-  if (*path == '/')
-  { return strrchr (path, '/') + 1; }
-  else
-  { return path; }
+	if (*path == '/')
+		return strrchr(path, '/') + 1;
+	else
+		return path;
 }
 #endif
 
 #if defined(CONFIG_SND_DEBUG) || defined(CONFIG_SND_VERBOSE_PRINTK)
-void __snd_printk (unsigned int level, const char * path, int line,
-                   const char * format, ...)
+void __snd_printk(unsigned int level, const char *path, int line,
+		  const char *format, ...)
 {
-  va_list args;
-  #ifdef CONFIG_SND_VERBOSE_PRINTK
-  struct va_format vaf;
-  char verbose_fmt[] = KERN_DEFAULT "ALSA %s:%d %pV";
-  #endif
-  
-  #ifdef CONFIG_SND_DEBUG
-  if (debug < level)
-  { return; }
-  #endif
-  
-  va_start (args, format);
-  #ifdef CONFIG_SND_VERBOSE_PRINTK
-  vaf.fmt = format;
-  vaf.va = &args;
-  if (format[0] == '<' && format[2] == '>') {
-    memcpy (verbose_fmt, format, 3);
-    vaf.fmt = format + 3;
-  }
-  else
-    if (level)
-    { memcpy (verbose_fmt, KERN_DEBUG, 3); }
-  printk (verbose_fmt, sanity_file_name (path), line, &vaf);
-  #else
-  vprintk (format, args);
-  #endif
-  va_end (args);
+	va_list args;
+#ifdef CONFIG_SND_VERBOSE_PRINTK
+	struct va_format vaf;
+	char verbose_fmt[] = KERN_DEFAULT "ALSA %s:%d %pV";
+#endif
+
+#ifdef CONFIG_SND_DEBUG
+	if (debug < level)
+		return;
+#endif
+
+	va_start(args, format);
+#ifdef CONFIG_SND_VERBOSE_PRINTK
+	vaf.fmt = format;
+	vaf.va = &args;
+	if (format[0] == '<' && format[2] == '>') {
+		memcpy(verbose_fmt, format, 3);
+		vaf.fmt = format + 3;
+	} else if (level)
+		memcpy(verbose_fmt, KERN_DEBUG, 3);
+	printk(verbose_fmt, sanity_file_name(path), line, &vaf);
+#else
+	vprintk(format, args);
+#endif
+	va_end(args);
 }
-EXPORT_SYMBOL_GPL (__snd_printk);
+EXPORT_SYMBOL_GPL(__snd_printk);
 #endif
 
 #ifdef CONFIG_PCI
@@ -112,21 +110,21 @@ EXPORT_SYMBOL_GPL (__snd_printk);
  * Returns the matched entry pointer, or NULL if nothing matched.
  */
 const struct snd_pci_quirk *
-snd_pci_quirk_lookup_id (u16 vendor, u16 device,
-                         const struct snd_pci_quirk * list)
+snd_pci_quirk_lookup_id(u16 vendor, u16 device,
+			const struct snd_pci_quirk *list)
 {
-  const struct snd_pci_quirk * q;
-  
-  for (q = list; q->subvendor; q++) {
-    if (q->subvendor != vendor)
-    { continue; }
-    if (!q->subdevice ||
-        (device & q->subdevice_mask) == q->subdevice)
-    { return q; }
-  }
-  return NULL;
+	const struct snd_pci_quirk *q;
+
+	for (q = list; q->subvendor; q++) {
+		if (q->subvendor != vendor)
+			continue;
+		if (!q->subdevice ||
+		    (device & q->subdevice_mask) == q->subdevice)
+			return q;
+	}
+	return NULL;
 }
-EXPORT_SYMBOL (snd_pci_quirk_lookup_id);
+EXPORT_SYMBOL(snd_pci_quirk_lookup_id);
 
 /**
  * snd_pci_quirk_lookup - look up a PCI SSID quirk list
@@ -140,11 +138,11 @@ EXPORT_SYMBOL (snd_pci_quirk_lookup_id);
  * Returns the matched entry pointer, or NULL if nothing matched.
  */
 const struct snd_pci_quirk *
-snd_pci_quirk_lookup (struct pci_dev * pci, const struct snd_pci_quirk * list)
+snd_pci_quirk_lookup(struct pci_dev *pci, const struct snd_pci_quirk *list)
 {
-  return snd_pci_quirk_lookup_id (pci->subsystem_vendor,
-                                  pci->subsystem_device,
-                                  list);
+	return snd_pci_quirk_lookup_id(pci->subsystem_vendor,
+				       pci->subsystem_device,
+				       list);
 }
-EXPORT_SYMBOL (snd_pci_quirk_lookup);
+EXPORT_SYMBOL(snd_pci_quirk_lookup);
 #endif

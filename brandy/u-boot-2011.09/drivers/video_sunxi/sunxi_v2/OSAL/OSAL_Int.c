@@ -1,20 +1,20 @@
 /*
 *************************************************************************************
-*                               eBsp
-*            Operation System Adapter Layer
+*                         			eBsp
+*					   Operation System Adapter Layer
 *
-*       (c) Copyright 2006-2010, All winners Co,Ld.
-*             All Rights Reserved
+*				(c) Copyright 2006-2010, All winners Co,Ld.
+*							All	Rights Reserved
 *
-* File Name   : OSAL_Int.h
+* File Name 	: OSAL_Int.h
 *
-* Author    : javen
+* Author 		: javen
 *
-* Description   : 中断操作
+* Description 	: 中断操作
 *
-* History     :
-*      <author>       <time>        <version >        <desc>
-*       javen          2010-09-07          1.0         create this word
+* History 		:
+*      <author>    		<time>       	<version >    		<desc>
+*       javen     	   2010-09-07          1.0         create this word
 *
 *************************************************************************************
 */
@@ -30,14 +30,14 @@
 *    注册中断服务程序
 *
 * Parameters:
-*    irqno          ：input.  中断号
-*    flags          ：input.  中断类型，默认值为0。
-*    Handler        ：input.  中断处理程序入口，或者中断事件句柄
-*    pArg           ：input.  参数
-*    DataSize       ：input.  参数的长度
-*    prio         ：input.  中断优先级
+*    irqno    	    ：input.  中断号
+*    flags    	    ：input.  中断类型，默认值为0。
+*    Handler  	    ：input.  中断处理程序入口，或者中断事件句柄
+*    pArg 	        ：input.  参数
+*    DataSize 	    ：input.  参数的长度
+*    prio	        ：input.  中断优先级
 
-*
+* 
 * Return value:
 *     返回成功或者失败。
 *
@@ -46,13 +46,13 @@
 *
 *******************************************************************************
 */
-int OSAL_RegISR (__u32 IrqNo, __u32 Flags, ISRCallback Handler, void * pArg, __u32 DataSize, __u32 Prio)
+int OSAL_RegISR(__u32 IrqNo, __u32 Flags,ISRCallback Handler,void *pArg,__u32 DataSize,__u32 Prio)
 {
-  __inf ("OSAL_RegISR, irqNo=%d, Handler=0x%x, pArg=0x%x\n", IrqNo, (int) Handler, (int) pArg);
-  irq_install_handler (IrqNo, (interrupt_handler_t *) Handler,  pArg);
-  
-  return 0;
-}
+    __inf("OSAL_RegISR, irqNo=%d, Handler=0x%x, pArg=0x%x\n", IrqNo, (int)Handler, (int)pArg);
+		irq_install_handler(IrqNo, (interrupt_handler_t *)Handler,  pArg);
+
+    return 0;
+}		
 
 /*
 *******************************************************************************
@@ -62,10 +62,10 @@ int OSAL_RegISR (__u32 IrqNo, __u32 Flags, ISRCallback Handler, void * pArg, __u
 *    注销中断服务程序
 *
 * Parameters:
-*    irqno      ：input.  中断号
-*    handler    ：input.  中断处理程序入口，或者中断事件句柄
-*    Argment  ：input.  参数
-*
+*    irqno    	：input.  中断号
+*    handler  	：input.  中断处理程序入口，或者中断事件句柄
+*    Argment 	：input.  参数
+* 
 * Return value:
 *    void
 *
@@ -74,10 +74,10 @@ int OSAL_RegISR (__u32 IrqNo, __u32 Flags, ISRCallback Handler, void * pArg, __u
 *
 *******************************************************************************
 */
-void OSAL_UnRegISR (__u32 IrqNo, ISRCallback Handler, void * pArg)
+void OSAL_UnRegISR(__u32 IrqNo, ISRCallback Handler, void *pArg)
 {
-  /* todo */
-  irq_free_handler (IrqNo);
+    /* todo */
+    irq_free_handler(IrqNo);
 }
 
 /*
@@ -89,7 +89,7 @@ void OSAL_UnRegISR (__u32 IrqNo, ISRCallback Handler, void * pArg)
 *
 * Parameters:
 *    irqno ：input.  中断号
-*
+* 
 * Return value:
 *    void
 *
@@ -98,10 +98,10 @@ void OSAL_UnRegISR (__u32 IrqNo, ISRCallback Handler, void * pArg)
 *
 *******************************************************************************
 */
-void OSAL_InterruptEnable (__u32 IrqNo)
+void OSAL_InterruptEnable(__u32 IrqNo)
 {
-  /* todo */
-  irq_enable (IrqNo);
+    /* todo */
+    irq_enable(IrqNo);
 }
 
 /*
@@ -113,7 +113,7 @@ void OSAL_InterruptEnable (__u32 IrqNo)
 *
 * Parameters:
 *     irqno ：input.  中断号
-*
+* 
 * Return value:
 *    void
 *
@@ -122,9 +122,9 @@ void OSAL_InterruptEnable (__u32 IrqNo)
 *
 *******************************************************************************
 */
-void OSAL_InterruptDisable (__u32 IrqNo)
+void OSAL_InterruptDisable(__u32 IrqNo)
 {
-  /* todo */
-  irq_disable (IrqNo);
+    /* todo */
+    irq_disable(IrqNo);
 }
 

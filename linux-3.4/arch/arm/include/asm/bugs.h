@@ -11,7 +11,7 @@
 #define __ASM_BUGS_H
 
 #ifdef CONFIG_MMU
-extern void check_writebuffer_bugs (void);
+extern void check_writebuffer_bugs(void);
 
 #define check_bugs() check_writebuffer_bugs()
 #else

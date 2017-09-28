@@ -14,25 +14,25 @@
 #include "dev-spi.h"
 
 static struct resource ath79_spi_resources[] = {
-  {
-    .start  = AR71XX_SPI_BASE,
-    .end  = AR71XX_SPI_BASE + AR71XX_SPI_SIZE - 1,
-    .flags  = IORESOURCE_MEM,
-  },
+	{
+		.start	= AR71XX_SPI_BASE,
+		.end	= AR71XX_SPI_BASE + AR71XX_SPI_SIZE - 1,
+		.flags	= IORESOURCE_MEM,
+	},
 };
 
 static struct platform_device ath79_spi_device = {
-  .name   = "ath79-spi",
-  .id   = -1,
-  .resource = ath79_spi_resources,
-  .num_resources  = ARRAY_SIZE (ath79_spi_resources),
+	.name		= "ath79-spi",
+	.id		= -1,
+	.resource	= ath79_spi_resources,
+	.num_resources	= ARRAY_SIZE(ath79_spi_resources),
 };
 
-void __init ath79_register_spi (struct ath79_spi_platform_data * pdata,
-                                struct spi_board_info const * info,
-                                unsigned n)
+void __init ath79_register_spi(struct ath79_spi_platform_data *pdata,
+			       struct spi_board_info const *info,
+			       unsigned n)
 {
-  spi_register_board_info (info, n);
-  ath79_spi_device.dev.platform_data = pdata;
-  platform_device_register (&ath79_spi_device);
+	spi_register_board_info(info, n);
+	ath79_spi_device.dev.platform_data = pdata;
+	platform_device_register(&ath79_spi_device);
 }

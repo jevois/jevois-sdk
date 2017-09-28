@@ -19,15 +19,15 @@
 
 extern struct samsung_gpio_chip s3c24xx_gpios[];
 
-static inline struct samsung_gpio_chip * samsung_gpiolib_getchip (unsigned int pin)
+static inline struct samsung_gpio_chip *samsung_gpiolib_getchip(unsigned int pin)
 {
-  struct samsung_gpio_chip * chip;
-  
-  if (pin > S3C_GPIO_END)
-  { return NULL; }
-  
-  chip = &s3c24xx_gpios[pin / 32];
-  return ( (pin - chip->chip.base) < chip->chip.ngpio) ? chip : NULL;
+	struct samsung_gpio_chip *chip;
+
+	if (pin > S3C_GPIO_END)
+		return NULL;
+
+	chip = &s3c24xx_gpios[pin/32];
+	return ((pin - chip->chip.base) < chip->chip.ngpio) ? chip : NULL;
 }
 
 #endif /* __ASM_ARCH_GPIO_CORE_H */

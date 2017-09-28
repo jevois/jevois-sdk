@@ -31,18 +31,18 @@
 /* Platform Family types
  * For compitability, the new value must be added in the end */
 enum family_type {
-  FAMILY_8500,
-  FAMILY_8500RNG,
-  FAMILY_4500,
-  FAMILY_1500,
-  FAMILY_8600,
-  FAMILY_4600,
-  FAMILY_4600VZA,
-  FAMILY_8600VZB,
-  FAMILY_1500VZE,
-  FAMILY_1500VZF,
-  FAMILY_8700,
-  FAMILIES
+	FAMILY_8500,
+	FAMILY_8500RNG,
+	FAMILY_4500,
+	FAMILY_1500,
+	FAMILY_8600,
+	FAMILY_4600,
+	FAMILY_4600VZA,
+	FAMILY_8600VZB,
+	FAMILY_1500VZE,
+	FAMILY_1500VZF,
+	FAMILY_8700,
+	FAMILIES
 };
 
 /* Register maps for each ASIC */
@@ -63,58 +63,58 @@ extern struct resource non_dvr_vze_calliope_resources[];
 extern struct resource non_dvr_vzf_calliope_resources[];
 extern struct resource non_dvr_zeus_resources[];
 
-extern void powertv_platform_init (void);
-extern void platform_alloc_bootmem (void);
-extern enum asic_type platform_get_asic (void);
-extern enum family_type platform_get_family (void);
-extern int platform_supports_dvr (void);
-extern int platform_supports_ffs (void);
-extern int platform_supports_pcie (void);
-extern int platform_supports_display (void);
-extern void configure_platform (void);
+extern void powertv_platform_init(void);
+extern void platform_alloc_bootmem(void);
+extern enum asic_type platform_get_asic(void);
+extern enum family_type platform_get_family(void);
+extern int platform_supports_dvr(void);
+extern int platform_supports_ffs(void);
+extern int platform_supports_pcie(void);
+extern int platform_supports_display(void);
+extern void configure_platform(void);
 
 /* Platform Resources */
 #define ASIC_RESOURCE_GET_EXISTS 1
-extern struct resource * asic_resource_get (const char * name);
-extern void platform_release_memory (void * baddr, int size);
+extern struct resource *asic_resource_get(const char *name);
+extern void platform_release_memory(void *baddr, int size);
 
 /* USB configuration */
-struct usb_hcd;     /* Forward reference */
-extern void platform_configure_usb_ehci (void);
-extern void platform_unconfigure_usb_ehci (void);
-extern void platform_configure_usb_ohci (void);
-extern void platform_unconfigure_usb_ohci (void);
+struct usb_hcd;			/* Forward reference */
+extern void platform_configure_usb_ehci(void);
+extern void platform_unconfigure_usb_ehci(void);
+extern void platform_configure_usb_ohci(void);
+extern void platform_unconfigure_usb_ohci(void);
 
 /* Resource for ASIC registers */
 extern struct resource asic_resource;
-extern int platform_usb_devices_init (struct platform_device ** echi_dev,
-                                      struct platform_device ** ohci_dev);
+extern int platform_usb_devices_init(struct platform_device **echi_dev,
+	struct platform_device **ohci_dev);
 
 /* Reboot Cause */
-extern void set_reboot_cause (char code, unsigned int data, unsigned int data2);
-extern void set_locked_reboot_cause (char code, unsigned int data,
-                                     unsigned int data2);
+extern void set_reboot_cause(char code, unsigned int data, unsigned int data2);
+extern void set_locked_reboot_cause(char code, unsigned int data,
+	unsigned int data2);
 
 enum sys_reboot_type {
-  sys_unknown_reboot = 0x00,  /* Unknown reboot cause */
-  sys_davic_change = 0x01,  /* Reboot due to change in DAVIC
-           * mode */
-  sys_user_reboot = 0x02,   /* Reboot initiated by user */
-  sys_system_reboot = 0x03, /* Reboot initiated by OS */
-  sys_trap_reboot = 0x04,   /* Reboot due to a CPU trap */
-  sys_silent_reboot = 0x05, /* Silent reboot */
-  sys_boot_ldr_reboot = 0x06, /* Bootloader reboot */
-  sys_power_up_reboot = 0x07, /* Power on bootup.  Older
-           * drivers may report as
-           * userReboot. */
-  sys_code_change = 0x08,   /* Reboot to take code change.
-           * Older drivers may report as
-           * userReboot. */
-  sys_hardware_reset = 0x09,  /* HW watchdog or front-panel
-           * reset button reset.  Older
-           * drivers may report as
-           * userReboot. */
-  sys_watchdogInterrupt = 0x0A  /* Pre-watchdog interrupt */
+	sys_unknown_reboot = 0x00,	/* Unknown reboot cause */
+	sys_davic_change = 0x01,	/* Reboot due to change in DAVIC
+					 * mode */
+	sys_user_reboot = 0x02,		/* Reboot initiated by user */
+	sys_system_reboot = 0x03,	/* Reboot initiated by OS */
+	sys_trap_reboot = 0x04,		/* Reboot due to a CPU trap */
+	sys_silent_reboot = 0x05,	/* Silent reboot */
+	sys_boot_ldr_reboot = 0x06,	/* Bootloader reboot */
+	sys_power_up_reboot = 0x07,	/* Power on bootup.  Older
+					 * drivers may report as
+					 * userReboot. */
+	sys_code_change = 0x08,		/* Reboot to take code change.
+					 * Older drivers may report as
+					 * userReboot. */
+	sys_hardware_reset = 0x09,	/* HW watchdog or front-panel
+					 * reset button reset.  Older
+					 * drivers may report as
+					 * userReboot. */
+	sys_watchdogInterrupt = 0x0A	/* Pre-watchdog interrupt */
 };
 
 #endif /* _ASM_MACH_POWERTV_ASIC_H */

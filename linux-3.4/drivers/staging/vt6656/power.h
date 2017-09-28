@@ -48,14 +48,14 @@
 /*  PSDevice pDevice */
 /*  PSDevice hDeviceContext */
 
-BOOL PSbConsiderPowerDown (void * hDeviceContext,
-                           BOOL bCheckRxDMA,
-                           BOOL bCheckCountToWakeUp);
+BOOL PSbConsiderPowerDown(void *hDeviceContext,
+			  BOOL bCheckRxDMA,
+			  BOOL bCheckCountToWakeUp);
 
-void PSvDisablePowerSaving (void * hDeviceContext);
-void PSvEnablePowerSaving (void * hDeviceContext, WORD wListenInterval);
-void PSvSendPSPOLL (void * hDeviceContext);
-BOOL PSbSendNullPacket (void * hDeviceContext);
-BOOL PSbIsNextTBTTWakeUp (void * hDeviceContext);
+void PSvDisablePowerSaving(void *hDeviceContext);
+void PSvEnablePowerSaving(void *hDeviceContext, WORD wListenInterval);
+void PSvSendPSPOLL(void *hDeviceContext);
+BOOL PSbSendNullPacket(void *hDeviceContext);
+BOOL PSbIsNextTBTTWakeUp(void *hDeviceContext);
 
 #endif /* __POWER_H__ */

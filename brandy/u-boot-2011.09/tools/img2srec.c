@@ -67,22 +67,20 @@
 |  FUNCTIONS
 |*************************************************************************/
 
-static char * ExtractHex (uint32_t * value,  char * getPtr)
+static char* ExtractHex (uint32_t* value,  char* getPtr)
 {
   uint32_t num;
   uint32_t digit;
   uint8_t  c;
-  
-  while (*getPtr == ' ') { getPtr++; }
+
+  while (*getPtr == ' ') getPtr++;
   num = 0;
   for (;;) {
     c = *getPtr;
-    if      ( (c >= '0') && (c <= '9') ) { digit = (uint32_t) (c - '0'); }
-    else
-      if ( (c >= 'A') && (c <= 'F') ) { digit = (uint32_t) (c - 'A' + 10); }
-      else
-        if ( (c >= 'a') && (c <= 'f') ) { digit = (uint32_t) (c - 'a' + 10); }
-        else { break; }
+    if      ((c >= '0') && (c <= '9')) digit = (uint32_t)(c - '0');
+    else if ((c >= 'A') && (c <= 'F')) digit = (uint32_t)(c - 'A' + 10);
+    else if ((c >= 'a') && (c <= 'f')) digit = (uint32_t)(c - 'a' + 10);
+    else break;
     num <<= 4;
     num += digit;
     getPtr++;
@@ -91,18 +89,18 @@ static char * ExtractHex (uint32_t * value,  char * getPtr)
   return getPtr;
 } /* ExtractHex */
 
-static char * ExtractDecimal (uint32_t * value,  char * getPtr)
+static char* ExtractDecimal (uint32_t* value,  char* getPtr)
 {
   uint32_t num;
   uint32_t digit;
   uint8_t  c;
-  
-  while (*getPtr == ' ') { getPtr++; }
+
+  while (*getPtr == ' ') getPtr++;
   num = 0;
   for (;;) {
     c = *getPtr;
-    if      ( (c >= '0') && (c <= '9') ) { digit = (uint32_t) (c - '0'); }
-    else { break; }
+    if      ((c >= '0') && (c <= '9')) digit = (uint32_t)(c - '0');
+    else break;
     num *= 10;
     num += digit;
     getPtr++;
@@ -112,61 +110,61 @@ static char * ExtractDecimal (uint32_t * value,  char * getPtr)
 } /* ExtractDecimal */
 
 
-static void ExtractNumber (uint32_t * value,  char * getPtr)
+static void ExtractNumber (uint32_t* value,  char* getPtr)
 {
   bool  neg = false;;
-  
-  while (*getPtr == ' ') { getPtr++; }
+
+  while (*getPtr == ' ') getPtr++;
   if (*getPtr == '-') {
     neg = true;
     getPtr++;
   } /* if */
-  if ( (*getPtr == '0') && ( (* (getPtr + 1) == 'x') || (* (getPtr + 1) == 'X') ) ) {
-    getPtr += 2;
-    (void) ExtractHex (value, getPtr);
+  if ((*getPtr == '0') && ((*(getPtr+1) == 'x') || (*(getPtr+1) == 'X'))) {
+    getPtr +=2;
+    (void)ExtractHex(value, getPtr);
   } /* if */
   else {
-    (void) ExtractDecimal (value, getPtr);
+    (void)ExtractDecimal(value, getPtr);
   } /* else */
-  if (neg) { *value = - (*value); }
+  if (neg) *value = -(*value);
 } /* ExtractNumber */
 
 
-static uint8_t * ExtractWord (uint16_t * value, uint8_t * buffer)
+static uint8_t* ExtractWord(uint16_t* value, uint8_t* buffer)
 {
   uint16_t x;
-  x = (uint16_t) * buffer++;
-  x = (x << 8) + (uint16_t) * buffer++;
+  x = (uint16_t)*buffer++;
+  x = (x<<8) + (uint16_t)*buffer++;
   *value = x;
   return buffer;
 } /* ExtractWord */
 
 
-static uint8_t * ExtractLong (uint32_t * value, uint8_t * buffer)
+static uint8_t* ExtractLong(uint32_t* value, uint8_t* buffer)
 {
   uint32_t x;
-  x = (uint32_t) * buffer++;
-  x = (x << 8) + (uint32_t) * buffer++;
-  x = (x << 8) + (uint32_t) * buffer++;
-  x = (x << 8) + (uint32_t) * buffer++;
+  x = (uint32_t)*buffer++;
+  x = (x<<8) + (uint32_t)*buffer++;
+  x = (x<<8) + (uint32_t)*buffer++;
+  x = (x<<8) + (uint32_t)*buffer++;
   *value = x;
   return buffer;
 } /* ExtractLong */
 
 
-static uint8_t * ExtractBlock (uint16_t count, uint8_t * data, uint8_t * buffer)
+static uint8_t* ExtractBlock(uint16_t count, uint8_t* data, uint8_t* buffer)
 {
-  while (count--) { *data++ = *buffer++; }
+  while (count--) *data++ = *buffer++;
   return buffer;
 } /* ExtractBlock */
 
 
-static char * WriteHex (char * pa, uint8_t value, uint16_t * pCheckSum)
+static char* WriteHex(char* pa, uint8_t value, uint16_t* pCheckSum)
 {
   uint16_t  temp;
-  
+
   static  char ByteToHex[] = "0123456789ABCDEF";
-  
+
   *pCheckSum += value;
   temp  = value / 16;
   *pa++ = ByteToHex[temp];
@@ -176,14 +174,14 @@ static char * WriteHex (char * pa, uint8_t value, uint16_t * pCheckSum)
 }
 
 
-static char * BuildSRecord (char * pa, uint16_t sType, uint32_t addr,
-                            const uint8_t * data, int nCount)
+static char* BuildSRecord(char* pa, uint16_t sType, uint32_t addr,
+			  const uint8_t* data, int nCount)
 {
   uint16_t  addrLen;
   uint16_t  sRLen;
   uint16_t  checkSum;
   uint16_t  i;
-  
+
   switch (sType) {
   case 0:
   case 1:
@@ -201,34 +199,34 @@ static char * BuildSRecord (char * pa, uint16_t sType, uint32_t addr,
   default:
     return pa;
   } /* switch */
-  
+
   *pa++ = 'S';
-  *pa++ = (char) (sType + '0');
+  *pa++ = (char)(sType + '0');
   sRLen = addrLen + nCount + 1;
   checkSum = 0;
-  pa = WriteHex (pa, (uint8_t) sRLen, &checkSum);
-  
+  pa = WriteHex(pa, (uint8_t)sRLen, &checkSum);
+
   /* Write address field */
   for (i = 1; i <= addrLen; i++) {
-    pa = WriteHex (pa, (uint8_t) (addr >> (8 * (addrLen - i) ) ), &checkSum);
+    pa = WriteHex(pa, (uint8_t)(addr >> (8 * (addrLen - i))), &checkSum);
   } /* for */
-  
+
   /* Write code/data fields */
   for (i = 0; i < nCount; i++) {
-    pa = WriteHex (pa, *data++, &checkSum);
+    pa = WriteHex(pa, *data++, &checkSum);
   } /* for */
-  
+
   /* Write checksum field */
   checkSum = ~checkSum;
-  pa = WriteHex (pa, (uint8_t) checkSum, &checkSum);
+  pa = WriteHex(pa, (uint8_t)checkSum, &checkSum);
   *pa++ = '\0';
   return pa;
 }
 
 
-static void ConvertELF (char * fileName, uint32_t loadOffset)
+static void ConvertELF(char* fileName, uint32_t loadOffset)
 {
-  FILE     *    file;
+  FILE*         file;
   int           i;
   int           rxCount;
   uint8_t          rxBlock[1024];
@@ -238,117 +236,116 @@ static void ConvertELF (char * fileName, uint32_t loadOffset)
   uint32_t         loadDiff = 0;
   Elf32_Ehdr    elfHeader;
   Elf32_Shdr    sectHeader[32];
-  uint8_t     *    getPtr;
+  uint8_t*         getPtr;
   char          srecLine[128];
-  char  *  hdr_name;
-  
-  
+  char		*hdr_name;
+
+
   /* open file */
-  if ( (file = fopen (fileName, "rb") ) == NULL) {
-    fprintf (stderr, "Can't open %s: %s\n", fileName, strerror (errno) );
+  if ((file = fopen(fileName,"rb")) == NULL) {
+    fprintf (stderr, "Can't open %s: %s\n", fileName, strerror(errno));
     return;
   } /* if */
-  
+
   /* read ELF header */
-  rxCount = fread (rxBlock, 1, sizeof elfHeader, file);
-  getPtr = ExtractBlock (sizeof elfHeader.e_ident, elfHeader.e_ident, rxBlock);
-  getPtr = ExtractWord (&elfHeader.e_type, getPtr);
-  getPtr = ExtractWord (&elfHeader.e_machine, getPtr);
-  getPtr = ExtractLong ( (uint32_t *) &elfHeader.e_version, getPtr);
-  getPtr = ExtractLong ( (uint32_t *) &elfHeader.e_entry, getPtr);
-  getPtr = ExtractLong ( (uint32_t *) &elfHeader.e_phoff, getPtr);
-  getPtr = ExtractLong ( (uint32_t *) &elfHeader.e_shoff, getPtr);
-  getPtr = ExtractLong ( (uint32_t *) &elfHeader.e_flags, getPtr);
-  getPtr = ExtractWord (&elfHeader.e_ehsize, getPtr);
-  getPtr = ExtractWord (&elfHeader.e_phentsize, getPtr);
-  getPtr = ExtractWord (&elfHeader.e_phnum, getPtr);
-  getPtr = ExtractWord (&elfHeader.e_shentsize, getPtr);
-  getPtr = ExtractWord (&elfHeader.e_shnum, getPtr);
-  getPtr = ExtractWord (&elfHeader.e_shstrndx, getPtr);
+  rxCount = fread(rxBlock, 1, sizeof elfHeader, file);
+  getPtr = ExtractBlock(sizeof elfHeader.e_ident, elfHeader.e_ident, rxBlock);
+  getPtr = ExtractWord(&elfHeader.e_type, getPtr);
+  getPtr = ExtractWord(&elfHeader.e_machine, getPtr);
+  getPtr = ExtractLong((uint32_t *)&elfHeader.e_version, getPtr);
+  getPtr = ExtractLong((uint32_t *)&elfHeader.e_entry, getPtr);
+  getPtr = ExtractLong((uint32_t *)&elfHeader.e_phoff, getPtr);
+  getPtr = ExtractLong((uint32_t *)&elfHeader.e_shoff, getPtr);
+  getPtr = ExtractLong((uint32_t *)&elfHeader.e_flags, getPtr);
+  getPtr = ExtractWord(&elfHeader.e_ehsize, getPtr);
+  getPtr = ExtractWord(&elfHeader.e_phentsize, getPtr);
+  getPtr = ExtractWord(&elfHeader.e_phnum, getPtr);
+  getPtr = ExtractWord(&elfHeader.e_shentsize, getPtr);
+  getPtr = ExtractWord(&elfHeader.e_shnum, getPtr);
+  getPtr = ExtractWord(&elfHeader.e_shstrndx, getPtr);
   if (    (rxCount              != sizeof elfHeader)
-          || (elfHeader.e_ident[0] != ELFMAG0)
-          || (elfHeader.e_ident[1] != ELFMAG1)
-          || (elfHeader.e_ident[2] != ELFMAG2)
-          || (elfHeader.e_ident[3] != ELFMAG3)
-          || (elfHeader.e_type     != ET_EXEC)
+       || (elfHeader.e_ident[0] != ELFMAG0)
+       || (elfHeader.e_ident[1] != ELFMAG1)
+       || (elfHeader.e_ident[2] != ELFMAG2)
+       || (elfHeader.e_ident[3] != ELFMAG3)
+       || (elfHeader.e_type     != ET_EXEC)
      ) {
-    fclose (file);
+    fclose(file);
     fprintf (stderr, "*** illegal file format\n");
     return;
   } /* if */
-  
+
   /* read all section headers */
-  fseek (file, elfHeader.e_shoff, SEEK_SET);
+  fseek(file, elfHeader.e_shoff, SEEK_SET);
   for (i = 0; i < elfHeader.e_shnum; i++) {
-    rxCount = fread (rxBlock, 1, sizeof sectHeader[0], file);
-    getPtr = ExtractLong ( (uint32_t *) &sectHeader[i].sh_name, rxBlock);
-    getPtr = ExtractLong ( (uint32_t *) &sectHeader[i].sh_type, getPtr);
-    getPtr = ExtractLong ( (uint32_t *) &sectHeader[i].sh_flags, getPtr);
-    getPtr = ExtractLong ( (uint32_t *) &sectHeader[i].sh_addr, getPtr);
-    getPtr = ExtractLong ( (uint32_t *) &sectHeader[i].sh_offset, getPtr);
-    getPtr = ExtractLong ( (uint32_t *) &sectHeader[i].sh_size, getPtr);
-    getPtr = ExtractLong ( (uint32_t *) &sectHeader[i].sh_link, getPtr);
-    getPtr = ExtractLong ( (uint32_t *) &sectHeader[i].sh_info, getPtr);
-    getPtr = ExtractLong ( (uint32_t *) &sectHeader[i].sh_addralign, getPtr);
-    getPtr = ExtractLong ( (uint32_t *) &sectHeader[i].sh_entsize, getPtr);
+    rxCount = fread(rxBlock, 1, sizeof sectHeader[0], file);
+    getPtr = ExtractLong((uint32_t *)&sectHeader[i].sh_name, rxBlock);
+    getPtr = ExtractLong((uint32_t *)&sectHeader[i].sh_type, getPtr);
+    getPtr = ExtractLong((uint32_t *)&sectHeader[i].sh_flags, getPtr);
+    getPtr = ExtractLong((uint32_t *)&sectHeader[i].sh_addr, getPtr);
+    getPtr = ExtractLong((uint32_t *)&sectHeader[i].sh_offset, getPtr);
+    getPtr = ExtractLong((uint32_t *)&sectHeader[i].sh_size, getPtr);
+    getPtr = ExtractLong((uint32_t *)&sectHeader[i].sh_link, getPtr);
+    getPtr = ExtractLong((uint32_t *)&sectHeader[i].sh_info, getPtr);
+    getPtr = ExtractLong((uint32_t *)&sectHeader[i].sh_addralign, getPtr);
+    getPtr = ExtractLong((uint32_t *)&sectHeader[i].sh_entsize, getPtr);
     if (rxCount != sizeof sectHeader[0]) {
-      fclose (file);
+      fclose(file);
       fprintf (stderr, "*** illegal file format\n");
       return;
     } /* if */
   } /* for */
-  
-  if ( (hdr_name = strrchr (fileName, '/') ) == NULL) {
+
+  if ((hdr_name = strrchr(fileName, '/')) == NULL) {
     hdr_name = fileName;
-  }
-  else {
+  } else {
     ++hdr_name;
   }
   /* write start record */
-  (void) BuildSRecord (srecLine, 0, 0, (uint8_t *) hdr_name, strlen (hdr_name) );
-  printf ("%s\r\n", srecLine);
-  
+  (void)BuildSRecord(srecLine, 0, 0, (uint8_t *)hdr_name, strlen(hdr_name));
+  printf("%s\r\n",srecLine);
+
   /* write data records */
   firstAddr = ~0;
   loadAddr  =  0;
   for (i = 0; i < elfHeader.e_shnum; i++) {
     if (    (sectHeader[i].sh_type == SHT_PROGBITS)
-            && (sectHeader[i].sh_size != 0)
-       ) {
+	 && (sectHeader[i].sh_size != 0)
+	 ) {
       loadSize = sectHeader[i].sh_size;
       if (sectHeader[i].sh_flags != 0) {
-        loadAddr = sectHeader[i].sh_addr;
-        loadDiff = loadAddr - sectHeader[i].sh_offset;
+	loadAddr = sectHeader[i].sh_addr;
+	loadDiff = loadAddr - sectHeader[i].sh_offset;
       } /* if */
       else {
-        loadAddr = sectHeader[i].sh_offset + loadDiff;
+	loadAddr = sectHeader[i].sh_offset + loadDiff;
       } /* else */
-      
+
       if (loadAddr < firstAddr)
-      { firstAddr = loadAddr; }
-      
+	firstAddr = loadAddr;
+
       /* build s-records */
       loadSize = sectHeader[i].sh_size;
-      fseek (file, sectHeader[i].sh_offset, SEEK_SET);
+      fseek(file, sectHeader[i].sh_offset, SEEK_SET);
       while (loadSize) {
-        rxCount = fread (rxBlock, 1, (loadSize > 32) ? 32 : loadSize, file);
-        if (rxCount < 0) {
-          fclose (file);
-          fprintf (stderr, "*** illegal file format\n");
-          return;
-        } /* if */
-        (void) BuildSRecord (srecLine, 3, loadAddr + loadOffset, rxBlock, rxCount);
-        loadSize -= rxCount;
-        loadAddr += rxCount;
-        printf ("%s\r\n", srecLine);
+	rxCount = fread(rxBlock, 1, (loadSize > 32) ? 32 : loadSize, file);
+	if (rxCount < 0) {
+	  fclose(file);
+	  fprintf (stderr, "*** illegal file format\n");
+	return;
+	} /* if */
+	(void)BuildSRecord(srecLine, 3, loadAddr + loadOffset, rxBlock, rxCount);
+	loadSize -= rxCount;
+	loadAddr += rxCount;
+	printf("%s\r\n",srecLine);
       } /* while */
     } /* if */
   } /* for */
-  
+
   /* add end record */
-  (void) BuildSRecord (srecLine, 7, firstAddr + loadOffset, 0, 0);
-  printf ("%s\r\n", srecLine);
-  fclose (file);
+  (void)BuildSRecord(srecLine, 7, firstAddr + loadOffset, 0, 0);
+  printf("%s\r\n",srecLine);
+  fclose(file);
 } /* ConvertELF */
 
 
@@ -356,21 +353,20 @@ static void ConvertELF (char * fileName, uint32_t loadOffset)
 |  MAIN
 |*************************************************************************/
 
-int main ( int argc, char * argv[ ])
+int main( int argc, char *argv[ ])
 {
   uint32_t offset;
-  
+
   if (argc == 2) {
-    ConvertELF (argv[1], 0);
+    ConvertELF(argv[1], 0);
   } /* if */
-  else
-    if ( (argc == 4) && (strcmp (argv[1], "-o") == 0) ) {
-      ExtractNumber (&offset, argv[2]);
-      ConvertELF (argv[3], offset);
-    } /* if */
-    else {
-      fprintf (stderr, "Usage: img2srec [-o offset] <image>\n");
-    } /* if */
-    
+  else if ((argc == 4) && (strcmp(argv[1], "-o") == 0)) {
+    ExtractNumber(&offset, argv[2]);
+    ConvertELF(argv[3], offset);
+  } /* if */
+  else {
+    fprintf (stderr, "Usage: img2srec [-o offset] <image>\n");
+  } /* if */
+
   return 0;
 } /* main */

@@ -30,18 +30,18 @@
 struct net_device;
 
 #define RT_CHECK_FOR_HANG_PERIOD 2
-#define INIT_DEFAULT_CHAN  1
+#define INIT_DEFAULT_CHAN	 1
 
-void rtl8192_hw_wakeup (struct net_device * dev);
-void rtl8192_hw_to_sleep (struct net_device * dev, u64 time);
-void rtllib_ips_leave_wq (struct net_device * dev);
-void rtllib_ips_leave (struct net_device * dev);
-void IPSLeave_wq (void * data);
+void rtl8192_hw_wakeup(struct net_device *dev);
+void rtl8192_hw_to_sleep(struct net_device *dev, u64 time);
+void rtllib_ips_leave_wq(struct net_device *dev);
+void rtllib_ips_leave(struct net_device *dev);
+void IPSLeave_wq(void *data);
 
-void IPSEnter (struct net_device * dev);
-void IPSLeave (struct net_device * dev);
+void IPSEnter(struct net_device *dev);
+void IPSLeave(struct net_device *dev);
 
-void LeisurePSEnter (struct net_device * dev);
-void LeisurePSLeave (struct net_device * dev);
+void LeisurePSEnter(struct net_device *dev);
+void LeisurePSLeave(struct net_device *dev);
 
 #endif

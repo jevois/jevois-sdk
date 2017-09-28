@@ -18,6 +18,6 @@
 #ifndef __MACH_TEGRA_PMC_H
 #define __MACH_TEGRA_PMC_H
 
-void tegra_pmc_init (void);
+void tegra_pmc_init(void);
 
 #endif

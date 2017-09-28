@@ -1,7 +1,7 @@
 /* linux/arch/arm/plat-s3c24xx/pm.c
  *
  * Copyright (c) 2004-2006 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * S3C24XX Power Manager (Suspend-To-RAM) support
  *
@@ -49,36 +49,36 @@
 #define PFX "s3c24xx-pm: "
 
 static struct sleep_save core_save[] = {
-  SAVE_ITEM (S3C2410_LOCKTIME),
-  SAVE_ITEM (S3C2410_CLKCON),
-  
-  /* we restore the timings here, with the proviso that the board
-   * brings the system up in an slower, or equal frequency setting
-   * to the original system.
-   *
-   * if we cannot guarantee this, then things are going to go very
-   * wrong here, as we modify the refresh and both pll settings.
-   */
-  
-  SAVE_ITEM (S3C2410_BWSCON),
-  SAVE_ITEM (S3C2410_BANKCON0),
-  SAVE_ITEM (S3C2410_BANKCON1),
-  SAVE_ITEM (S3C2410_BANKCON2),
-  SAVE_ITEM (S3C2410_BANKCON3),
-  SAVE_ITEM (S3C2410_BANKCON4),
-  SAVE_ITEM (S3C2410_BANKCON5),
-  
-  #ifndef CONFIG_CPU_FREQ
-  SAVE_ITEM (S3C2410_CLKDIVN),
-  SAVE_ITEM (S3C2410_MPLLCON),
-  SAVE_ITEM (S3C2410_REFRESH),
-  #endif
-  SAVE_ITEM (S3C2410_UPLLCON),
-  SAVE_ITEM (S3C2410_CLKSLOW),
+	SAVE_ITEM(S3C2410_LOCKTIME),
+	SAVE_ITEM(S3C2410_CLKCON),
+
+	/* we restore the timings here, with the proviso that the board
+	 * brings the system up in an slower, or equal frequency setting
+	 * to the original system.
+	 *
+	 * if we cannot guarantee this, then things are going to go very
+	 * wrong here, as we modify the refresh and both pll settings.
+	 */
+
+	SAVE_ITEM(S3C2410_BWSCON),
+	SAVE_ITEM(S3C2410_BANKCON0),
+	SAVE_ITEM(S3C2410_BANKCON1),
+	SAVE_ITEM(S3C2410_BANKCON2),
+	SAVE_ITEM(S3C2410_BANKCON3),
+	SAVE_ITEM(S3C2410_BANKCON4),
+	SAVE_ITEM(S3C2410_BANKCON5),
+
+#ifndef CONFIG_CPU_FREQ
+	SAVE_ITEM(S3C2410_CLKDIVN),
+	SAVE_ITEM(S3C2410_MPLLCON),
+	SAVE_ITEM(S3C2410_REFRESH),
+#endif
+	SAVE_ITEM(S3C2410_UPLLCON),
+	SAVE_ITEM(S3C2410_CLKSLOW),
 };
 
 static struct sleep_save misc_save[] = {
-  SAVE_ITEM (S3C2410_DCLKCON),
+	SAVE_ITEM(S3C2410_DCLKCON),
 };
 
 /* s3c_pm_check_resume_pin
@@ -87,29 +87,28 @@ static struct sleep_save misc_save[] = {
  * make any necessary adjustments if it is not
 */
 
-static void s3c_pm_check_resume_pin (unsigned int pin, unsigned int irqoffs)
+static void s3c_pm_check_resume_pin(unsigned int pin, unsigned int irqoffs)
 {
-  unsigned long irqstate;
-  unsigned long pinstate;
-  int irq = gpio_to_irq (pin);
-  
-  if (irqoffs < 4)
-  { irqstate = s3c_irqwake_intmask & (1L << irqoffs); }
-  else
-  { irqstate = s3c_irqwake_eintmask & (1L << irqoffs); }
-  
-  pinstate = s3c_gpio_getcfg (pin);
-  
-  if (!irqstate) {
-    if (pinstate == S3C2410_GPIO_IRQ)
-    { S3C_PMDBG ("Leaving IRQ %d (pin %d) as is\n", irq, pin); }
-  }
-  else {
-    if (pinstate == S3C2410_GPIO_IRQ) {
-      S3C_PMDBG ("Disabling IRQ %d (pin %d)\n", irq, pin);
-      s3c_gpio_cfgpin (pin, S3C2410_GPIO_INPUT);
-    }
-  }
+	unsigned long irqstate;
+	unsigned long pinstate;
+	int irq = gpio_to_irq(pin);
+
+	if (irqoffs < 4)
+		irqstate = s3c_irqwake_intmask & (1L<<irqoffs);
+	else
+		irqstate = s3c_irqwake_eintmask & (1L<<irqoffs);
+
+	pinstate = s3c_gpio_getcfg(pin);
+
+	if (!irqstate) {
+		if (pinstate == S3C2410_GPIO_IRQ)
+			S3C_PMDBG("Leaving IRQ %d (pin %d) as is\n", irq, pin);
+	} else {
+		if (pinstate == S3C2410_GPIO_IRQ) {
+			S3C_PMDBG("Disabling IRQ %d (pin %d)\n", irq, pin);
+			s3c_gpio_cfgpin(pin, S3C2410_GPIO_INPUT);
+		}
+	}
 }
 
 /* s3c_pm_configure_extint
@@ -117,34 +116,34 @@ static void s3c_pm_check_resume_pin (unsigned int pin, unsigned int irqoffs)
  * configure all external interrupt pins
 */
 
-void s3c_pm_configure_extint (void)
+void s3c_pm_configure_extint(void)
 {
-  int pin;
-  
-  /* for each of the external interrupts (EINT0..EINT15) we
-   * need to check wether it is an external interrupt source,
-   * and then configure it as an input if it is not
-  */
-  
-  for (pin = S3C2410_GPF (0); pin <= S3C2410_GPF (7); pin++) {
-    s3c_pm_check_resume_pin (pin, pin - S3C2410_GPF (0) );
-  }
-  
-  for (pin = S3C2410_GPG (0); pin <= S3C2410_GPG (7); pin++) {
-    s3c_pm_check_resume_pin (pin, (pin - S3C2410_GPG (0) ) + 8);
-  }
+	int pin;
+
+	/* for each of the external interrupts (EINT0..EINT15) we
+	 * need to check wether it is an external interrupt source,
+	 * and then configure it as an input if it is not
+	*/
+
+	for (pin = S3C2410_GPF(0); pin <= S3C2410_GPF(7); pin++) {
+		s3c_pm_check_resume_pin(pin, pin - S3C2410_GPF(0));
+	}
+
+	for (pin = S3C2410_GPG(0); pin <= S3C2410_GPG(7); pin++) {
+		s3c_pm_check_resume_pin(pin, (pin - S3C2410_GPG(0))+8);
+	}
 }
 
 
-void s3c_pm_restore_core (void)
+void s3c_pm_restore_core(void)
 {
-  s3c_pm_do_restore_core (core_save, ARRAY_SIZE (core_save) );
-  s3c_pm_do_restore (misc_save, ARRAY_SIZE (misc_save) );
+	s3c_pm_do_restore_core(core_save, ARRAY_SIZE(core_save));
+	s3c_pm_do_restore(misc_save, ARRAY_SIZE(misc_save));
 }
 
-void s3c_pm_save_core (void)
+void s3c_pm_save_core(void)
 {
-  s3c_pm_do_save (misc_save, ARRAY_SIZE (misc_save) );
-  s3c_pm_do_save (core_save, ARRAY_SIZE (core_save) );
+	s3c_pm_do_save(misc_save, ARRAY_SIZE(misc_save));
+	s3c_pm_do_save(core_save, ARRAY_SIZE(core_save));
 }
 

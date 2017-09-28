@@ -20,10 +20,10 @@
 #define __LINUX_CLK_SUNXI_H_
 
 
-int sunxi_periph_reset_deassert (struct clk * c);
-int sunxi_periph_reset_assert (struct clk * c);
-void sunxi_periph_auto_reset_enable (struct clk * c);
-void sunxi_periph_auto_reset_disable (struct clk * c);
-void __init sunxi_init_clocks (void);
+int sunxi_periph_reset_deassert(struct clk *c);
+int sunxi_periph_reset_assert(struct clk *c);
+void sunxi_periph_auto_reset_enable(struct clk *c);
+void sunxi_periph_auto_reset_disable(struct clk *c);
+void __init sunxi_init_clocks(void);
 
 #endif

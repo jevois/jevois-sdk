@@ -46,11 +46,11 @@
  * @list: list structure, used internally
  */
 struct netlbl_af4list {
-  __be32 addr;
-  __be32 mask;
-  
-  u32 valid;
-  struct list_head list;
+	__be32 addr;
+	__be32 mask;
+
+	u32 valid;
+	struct list_head list;
 };
 
 /**
@@ -61,74 +61,74 @@ struct netlbl_af4list {
  * @list: list structure, used internally
  */
 struct netlbl_af6list {
-  struct in6_addr addr;
-  struct in6_addr mask;
-  
-  u32 valid;
-  struct list_head list;
+	struct in6_addr addr;
+	struct in6_addr mask;
+
+	u32 valid;
+	struct list_head list;
 };
 
 #define __af4list_entry(ptr) container_of(ptr, struct netlbl_af4list, list)
 
-static inline struct netlbl_af4list * __af4list_valid (struct list_head * s,
-    struct list_head * h)
+static inline struct netlbl_af4list *__af4list_valid(struct list_head *s,
+						     struct list_head *h)
 {
-  struct list_head * i = s;
-  struct netlbl_af4list * n = __af4list_entry (s);
-  while (i != h && !n->valid) {
-    i = i->next;
-    n = __af4list_entry (i);
-  }
-  return n;
+	struct list_head *i = s;
+	struct netlbl_af4list *n = __af4list_entry(s);
+	while (i != h && !n->valid) {
+		i = i->next;
+		n = __af4list_entry(i);
+	}
+	return n;
 }
 
-static inline struct netlbl_af4list * __af4list_valid_rcu (struct list_head * s,
-    struct list_head * h)
+static inline struct netlbl_af4list *__af4list_valid_rcu(struct list_head *s,
+							 struct list_head *h)
 {
-  struct list_head * i = s;
-  struct netlbl_af4list * n = __af4list_entry (s);
-  while (i != h && !n->valid) {
-    i = rcu_dereference (i->next);
-    n = __af4list_entry (i);
-  }
-  return n;
+	struct list_head *i = s;
+	struct netlbl_af4list *n = __af4list_entry(s);
+	while (i != h && !n->valid) {
+		i = rcu_dereference(i->next);
+		n = __af4list_entry(i);
+	}
+	return n;
 }
 
-#define netlbl_af4list_foreach(iter, head)        \
-  for (iter = __af4list_valid((head)->next, head);    \
-       &iter->list != (head);         \
-       iter = __af4list_valid(iter->list.next, head))
+#define netlbl_af4list_foreach(iter, head)				\
+	for (iter = __af4list_valid((head)->next, head);		\
+	     &iter->list != (head);					\
+	     iter = __af4list_valid(iter->list.next, head))
 
-#define netlbl_af4list_foreach_rcu(iter, head)        \
-  for (iter = __af4list_valid_rcu((head)->next, head);    \
-       &iter->list != (head);         \
-       iter = __af4list_valid_rcu(iter->list.next, head))
+#define netlbl_af4list_foreach_rcu(iter, head)				\
+	for (iter = __af4list_valid_rcu((head)->next, head);		\
+	     &iter->list != (head);					\
+	     iter = __af4list_valid_rcu(iter->list.next, head))
 
-#define netlbl_af4list_foreach_safe(iter, tmp, head)      \
-  for (iter = __af4list_valid((head)->next, head),    \
-       tmp = __af4list_valid(iter->list.next, head);  \
-       &iter->list != (head);         \
-       iter = tmp, tmp = __af4list_valid(iter->list.next, head))
+#define netlbl_af4list_foreach_safe(iter, tmp, head)			\
+	for (iter = __af4list_valid((head)->next, head),		\
+		     tmp = __af4list_valid(iter->list.next, head);	\
+	     &iter->list != (head);					\
+	     iter = tmp, tmp = __af4list_valid(iter->list.next, head))
 
-int netlbl_af4list_add (struct netlbl_af4list * entry,
-                        struct list_head * head);
-struct netlbl_af4list * netlbl_af4list_remove (__be32 addr, __be32 mask,
-    struct list_head * head);
-void netlbl_af4list_remove_entry (struct netlbl_af4list * entry);
-struct netlbl_af4list * netlbl_af4list_search (__be32 addr,
-    struct list_head * head);
-struct netlbl_af4list * netlbl_af4list_search_exact (__be32 addr,
-    __be32 mask,
-    struct list_head * head);
+int netlbl_af4list_add(struct netlbl_af4list *entry,
+		       struct list_head *head);
+struct netlbl_af4list *netlbl_af4list_remove(__be32 addr, __be32 mask,
+					     struct list_head *head);
+void netlbl_af4list_remove_entry(struct netlbl_af4list *entry);
+struct netlbl_af4list *netlbl_af4list_search(__be32 addr,
+					     struct list_head *head);
+struct netlbl_af4list *netlbl_af4list_search_exact(__be32 addr,
+						   __be32 mask,
+						   struct list_head *head);
 
 #ifdef CONFIG_AUDIT
-void netlbl_af4list_audit_addr (struct audit_buffer * audit_buf,
-                                int src, const char * dev,
-                                __be32 addr, __be32 mask);
+void netlbl_af4list_audit_addr(struct audit_buffer *audit_buf,
+			       int src, const char *dev,
+			       __be32 addr, __be32 mask);
 #else
-static inline void netlbl_af4list_audit_addr (struct audit_buffer * audit_buf,
-    int src, const char * dev,
-    __be32 addr, __be32 mask)
+static inline void netlbl_af4list_audit_addr(struct audit_buffer *audit_buf,
+					     int src, const char *dev,
+					     __be32 addr, __be32 mask)
 {
 }
 #endif
@@ -137,70 +137,70 @@ static inline void netlbl_af4list_audit_addr (struct audit_buffer * audit_buf,
 
 #define __af6list_entry(ptr) container_of(ptr, struct netlbl_af6list, list)
 
-static inline struct netlbl_af6list * __af6list_valid (struct list_head * s,
-    struct list_head * h)
+static inline struct netlbl_af6list *__af6list_valid(struct list_head *s,
+						     struct list_head *h)
 {
-  struct list_head * i = s;
-  struct netlbl_af6list * n = __af6list_entry (s);
-  while (i != h && !n->valid) {
-    i = i->next;
-    n = __af6list_entry (i);
-  }
-  return n;
+	struct list_head *i = s;
+	struct netlbl_af6list *n = __af6list_entry(s);
+	while (i != h && !n->valid) {
+		i = i->next;
+		n = __af6list_entry(i);
+	}
+	return n;
 }
 
-static inline struct netlbl_af6list * __af6list_valid_rcu (struct list_head * s,
-    struct list_head * h)
+static inline struct netlbl_af6list *__af6list_valid_rcu(struct list_head *s,
+							 struct list_head *h)
 {
-  struct list_head * i = s;
-  struct netlbl_af6list * n = __af6list_entry (s);
-  while (i != h && !n->valid) {
-    i = rcu_dereference (i->next);
-    n = __af6list_entry (i);
-  }
-  return n;
+	struct list_head *i = s;
+	struct netlbl_af6list *n = __af6list_entry(s);
+	while (i != h && !n->valid) {
+		i = rcu_dereference(i->next);
+		n = __af6list_entry(i);
+	}
+	return n;
 }
 
-#define netlbl_af6list_foreach(iter, head)        \
-  for (iter = __af6list_valid((head)->next, head);    \
-       &iter->list != (head);         \
-       iter = __af6list_valid(iter->list.next, head))
+#define netlbl_af6list_foreach(iter, head)				\
+	for (iter = __af6list_valid((head)->next, head);		\
+	     &iter->list != (head);					\
+	     iter = __af6list_valid(iter->list.next, head))
 
-#define netlbl_af6list_foreach_rcu(iter, head)        \
-  for (iter = __af6list_valid_rcu((head)->next, head);    \
-       &iter->list != (head);         \
-       iter = __af6list_valid_rcu(iter->list.next, head))
+#define netlbl_af6list_foreach_rcu(iter, head)				\
+	for (iter = __af6list_valid_rcu((head)->next, head);		\
+	     &iter->list != (head);					\
+	     iter = __af6list_valid_rcu(iter->list.next, head))
 
-#define netlbl_af6list_foreach_safe(iter, tmp, head)      \
-  for (iter = __af6list_valid((head)->next, head),    \
-       tmp = __af6list_valid(iter->list.next, head);  \
-       &iter->list != (head);         \
-       iter = tmp, tmp = __af6list_valid(iter->list.next, head))
+#define netlbl_af6list_foreach_safe(iter, tmp, head)			\
+	for (iter = __af6list_valid((head)->next, head),		\
+		     tmp = __af6list_valid(iter->list.next, head);	\
+	     &iter->list != (head);					\
+	     iter = tmp, tmp = __af6list_valid(iter->list.next, head))
 
-int netlbl_af6list_add (struct netlbl_af6list * entry,
-                        struct list_head * head);
-struct netlbl_af6list * netlbl_af6list_remove (const struct in6_addr * addr,
-    const struct in6_addr * mask,
-    struct list_head * head);
-void netlbl_af6list_remove_entry (struct netlbl_af6list * entry);
-struct netlbl_af6list * netlbl_af6list_search (const struct in6_addr * addr,
-    struct list_head * head);
-struct netlbl_af6list * netlbl_af6list_search_exact (const struct in6_addr * addr,
-    const struct in6_addr * mask,
-    struct list_head * head);
+int netlbl_af6list_add(struct netlbl_af6list *entry,
+		       struct list_head *head);
+struct netlbl_af6list *netlbl_af6list_remove(const struct in6_addr *addr,
+					     const struct in6_addr *mask,
+					     struct list_head *head);
+void netlbl_af6list_remove_entry(struct netlbl_af6list *entry);
+struct netlbl_af6list *netlbl_af6list_search(const struct in6_addr *addr,
+					     struct list_head *head);
+struct netlbl_af6list *netlbl_af6list_search_exact(const struct in6_addr *addr,
+						   const struct in6_addr *mask,
+						   struct list_head *head);
 
 #ifdef CONFIG_AUDIT
-void netlbl_af6list_audit_addr (struct audit_buffer * audit_buf,
-                                int src,
-                                const char * dev,
-                                const struct in6_addr * addr,
-                                const struct in6_addr * mask);
+void netlbl_af6list_audit_addr(struct audit_buffer *audit_buf,
+			       int src,
+			       const char *dev,
+			       const struct in6_addr *addr,
+			       const struct in6_addr *mask);
 #else
-static inline void netlbl_af6list_audit_addr (struct audit_buffer * audit_buf,
-    int src,
-    const char * dev,
-    const struct in6_addr * addr,
-    const struct in6_addr * mask)
+static inline void netlbl_af6list_audit_addr(struct audit_buffer *audit_buf,
+					     int src,
+					     const char *dev,
+					     const struct in6_addr *addr,
+					     const struct in6_addr *mask)
 {
 }
 #endif

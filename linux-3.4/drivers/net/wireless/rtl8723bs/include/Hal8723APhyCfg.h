@@ -22,17 +22,17 @@
 
 #include <Hal8192CPhyCfg.h>
 /* MAC/BB/RF HAL config */
-int PHY_BBConfig8723A (  IN  PADAPTER  Adapter );
-int PHY_RFConfig8723A (  IN  PADAPTER  Adapter );
-s32 PHY_MACConfig8723A (PADAPTER padapter);
+int	PHY_BBConfig8723A(	IN	PADAPTER	Adapter	);
+int	PHY_RFConfig8723A(	IN	PADAPTER	Adapter	);
+s32 PHY_MACConfig8723A(PADAPTER padapter);
 
 VOID
-PHY_SetSwChnlBWMode8723A (
-  IN  PADAPTER      Adapter,
-  IN  u8          channel,
-  IN  CHANNEL_WIDTH Bandwidth,
-  IN  u8          Offset40,
-  IN  u8          Offset80
+PHY_SetSwChnlBWMode8723A(
+	IN	PADAPTER			Adapter,
+	IN	u8					channel,
+	IN	CHANNEL_WIDTH	Bandwidth,
+	IN	u8					Offset40,
+	IN	u8					Offset80
 );
 
 #endif

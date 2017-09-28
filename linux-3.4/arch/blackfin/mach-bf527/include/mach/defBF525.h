@@ -261,131 +261,131 @@
 /* Bit masks for USB_POWER */
 
 #define           ENABLE_SUSPENDM  0x1        /* enable SuspendM output */
-#define          nENABLE_SUSPENDM  0x0
+#define          nENABLE_SUSPENDM  0x0       
 #define              SUSPEND_MODE  0x2        /* Suspend Mode indicator */
-#define             nSUSPEND_MODE  0x0
+#define             nSUSPEND_MODE  0x0       
 #define               RESUME_MODE  0x4        /* DMA Mode */
-#define              nRESUME_MODE  0x0
+#define              nRESUME_MODE  0x0       
 #define                     RESET  0x8        /* Reset indicator */
-#define                    nRESET  0x0
+#define                    nRESET  0x0       
 #define                   HS_MODE  0x10       /* High Speed mode indicator */
-#define                  nHS_MODE  0x0
+#define                  nHS_MODE  0x0       
 #define                 HS_ENABLE  0x20       /* high Speed Enable */
-#define                nHS_ENABLE  0x0
+#define                nHS_ENABLE  0x0       
 #define                 SOFT_CONN  0x40       /* Soft connect */
-#define                nSOFT_CONN  0x0
+#define                nSOFT_CONN  0x0       
 #define                ISO_UPDATE  0x80       /* Isochronous update */
-#define               nISO_UPDATE  0x0
+#define               nISO_UPDATE  0x0       
 
 /* Bit masks for USB_INTRTX */
 
 #define                    EP0_TX  0x1        /* Tx Endpoint 0 interrupt */
-#define                   nEP0_TX  0x0
+#define                   nEP0_TX  0x0       
 #define                    EP1_TX  0x2        /* Tx Endpoint 1 interrupt */
-#define                   nEP1_TX  0x0
+#define                   nEP1_TX  0x0       
 #define                    EP2_TX  0x4        /* Tx Endpoint 2 interrupt */
-#define                   nEP2_TX  0x0
+#define                   nEP2_TX  0x0       
 #define                    EP3_TX  0x8        /* Tx Endpoint 3 interrupt */
-#define                   nEP3_TX  0x0
+#define                   nEP3_TX  0x0       
 #define                    EP4_TX  0x10       /* Tx Endpoint 4 interrupt */
-#define                   nEP4_TX  0x0
+#define                   nEP4_TX  0x0       
 #define                    EP5_TX  0x20       /* Tx Endpoint 5 interrupt */
-#define                   nEP5_TX  0x0
+#define                   nEP5_TX  0x0       
 #define                    EP6_TX  0x40       /* Tx Endpoint 6 interrupt */
-#define                   nEP6_TX  0x0
+#define                   nEP6_TX  0x0       
 #define                    EP7_TX  0x80       /* Tx Endpoint 7 interrupt */
-#define                   nEP7_TX  0x0
+#define                   nEP7_TX  0x0       
 
 /* Bit masks for USB_INTRRX */
 
 #define                    EP1_RX  0x2        /* Rx Endpoint 1 interrupt */
-#define                   nEP1_RX  0x0
+#define                   nEP1_RX  0x0       
 #define                    EP2_RX  0x4        /* Rx Endpoint 2 interrupt */
-#define                   nEP2_RX  0x0
+#define                   nEP2_RX  0x0       
 #define                    EP3_RX  0x8        /* Rx Endpoint 3 interrupt */
-#define                   nEP3_RX  0x0
+#define                   nEP3_RX  0x0       
 #define                    EP4_RX  0x10       /* Rx Endpoint 4 interrupt */
-#define                   nEP4_RX  0x0
+#define                   nEP4_RX  0x0       
 #define                    EP5_RX  0x20       /* Rx Endpoint 5 interrupt */
-#define                   nEP5_RX  0x0
+#define                   nEP5_RX  0x0       
 #define                    EP6_RX  0x40       /* Rx Endpoint 6 interrupt */
-#define                   nEP6_RX  0x0
+#define                   nEP6_RX  0x0       
 #define                    EP7_RX  0x80       /* Rx Endpoint 7 interrupt */
-#define                   nEP7_RX  0x0
+#define                   nEP7_RX  0x0       
 
 /* Bit masks for USB_INTRTXE */
 
 #define                  EP0_TX_E  0x1        /* Endpoint 0 interrupt Enable */
-#define                 nEP0_TX_E  0x0
+#define                 nEP0_TX_E  0x0       
 #define                  EP1_TX_E  0x2        /* Tx Endpoint 1 interrupt  Enable */
-#define                 nEP1_TX_E  0x0
+#define                 nEP1_TX_E  0x0       
 #define                  EP2_TX_E  0x4        /* Tx Endpoint 2 interrupt  Enable */
-#define                 nEP2_TX_E  0x0
+#define                 nEP2_TX_E  0x0       
 #define                  EP3_TX_E  0x8        /* Tx Endpoint 3 interrupt  Enable */
-#define                 nEP3_TX_E  0x0
+#define                 nEP3_TX_E  0x0       
 #define                  EP4_TX_E  0x10       /* Tx Endpoint 4 interrupt  Enable */
-#define                 nEP4_TX_E  0x0
+#define                 nEP4_TX_E  0x0       
 #define                  EP5_TX_E  0x20       /* Tx Endpoint 5 interrupt  Enable */
-#define                 nEP5_TX_E  0x0
+#define                 nEP5_TX_E  0x0       
 #define                  EP6_TX_E  0x40       /* Tx Endpoint 6 interrupt  Enable */
-#define                 nEP6_TX_E  0x0
+#define                 nEP6_TX_E  0x0       
 #define                  EP7_TX_E  0x80       /* Tx Endpoint 7 interrupt  Enable */
-#define                 nEP7_TX_E  0x0
+#define                 nEP7_TX_E  0x0       
 
 /* Bit masks for USB_INTRRXE */
 
 #define                  EP1_RX_E  0x2        /* Rx Endpoint 1 interrupt  Enable */
-#define                 nEP1_RX_E  0x0
+#define                 nEP1_RX_E  0x0       
 #define                  EP2_RX_E  0x4        /* Rx Endpoint 2 interrupt  Enable */
-#define                 nEP2_RX_E  0x0
+#define                 nEP2_RX_E  0x0       
 #define                  EP3_RX_E  0x8        /* Rx Endpoint 3 interrupt  Enable */
-#define                 nEP3_RX_E  0x0
+#define                 nEP3_RX_E  0x0       
 #define                  EP4_RX_E  0x10       /* Rx Endpoint 4 interrupt  Enable */
-#define                 nEP4_RX_E  0x0
+#define                 nEP4_RX_E  0x0       
 #define                  EP5_RX_E  0x20       /* Rx Endpoint 5 interrupt  Enable */
-#define                 nEP5_RX_E  0x0
+#define                 nEP5_RX_E  0x0       
 #define                  EP6_RX_E  0x40       /* Rx Endpoint 6 interrupt  Enable */
-#define                 nEP6_RX_E  0x0
+#define                 nEP6_RX_E  0x0       
 #define                  EP7_RX_E  0x80       /* Rx Endpoint 7 interrupt  Enable */
-#define                 nEP7_RX_E  0x0
+#define                 nEP7_RX_E  0x0       
 
 /* Bit masks for USB_INTRUSB */
 
 #define                 SUSPEND_B  0x1        /* Suspend indicator */
-#define                nSUSPEND_B  0x0
+#define                nSUSPEND_B  0x0       
 #define                  RESUME_B  0x2        /* Resume indicator */
-#define                 nRESUME_B  0x0
+#define                 nRESUME_B  0x0       
 #define          RESET_OR_BABLE_B  0x4        /* Reset/babble indicator */
-#define         nRESET_OR_BABLE_B  0x0
+#define         nRESET_OR_BABLE_B  0x0       
 #define                     SOF_B  0x8        /* Start of frame */
-#define                    nSOF_B  0x0
+#define                    nSOF_B  0x0       
 #define                    CONN_B  0x10       /* Connection indicator */
-#define                   nCONN_B  0x0
+#define                   nCONN_B  0x0       
 #define                  DISCON_B  0x20       /* Disconnect indicator */
-#define                 nDISCON_B  0x0
+#define                 nDISCON_B  0x0       
 #define             SESSION_REQ_B  0x40       /* Session Request */
-#define            nSESSION_REQ_B  0x0
+#define            nSESSION_REQ_B  0x0       
 #define              VBUS_ERROR_B  0x80       /* Vbus threshold indicator */
-#define             nVBUS_ERROR_B  0x0
+#define             nVBUS_ERROR_B  0x0       
 
 /* Bit masks for USB_INTRUSBE */
 
 #define                SUSPEND_BE  0x1        /* Suspend indicator int enable */
-#define               nSUSPEND_BE  0x0
+#define               nSUSPEND_BE  0x0       
 #define                 RESUME_BE  0x2        /* Resume indicator int enable */
-#define                nRESUME_BE  0x0
+#define                nRESUME_BE  0x0       
 #define         RESET_OR_BABLE_BE  0x4        /* Reset/babble indicator int enable */
-#define        nRESET_OR_BABLE_BE  0x0
+#define        nRESET_OR_BABLE_BE  0x0       
 #define                    SOF_BE  0x8        /* Start of frame int enable */
-#define                   nSOF_BE  0x0
+#define                   nSOF_BE  0x0       
 #define                   CONN_BE  0x10       /* Connection indicator int enable */
-#define                  nCONN_BE  0x0
+#define                  nCONN_BE  0x0       
 #define                 DISCON_BE  0x20       /* Disconnect indicator int enable */
-#define                nDISCON_BE  0x0
+#define                nDISCON_BE  0x0       
 #define            SESSION_REQ_BE  0x40       /* Session Request int enable */
-#define           nSESSION_REQ_BE  0x0
+#define           nSESSION_REQ_BE  0x0       
 #define             VBUS_ERROR_BE  0x80       /* Vbus threshold indicator int enable */
-#define            nVBUS_ERROR_BE  0x0
+#define            nVBUS_ERROR_BE  0x0       
 
 /* Bit masks for USB_FRAME */
 
@@ -398,117 +398,117 @@
 /* Bit masks for USB_GLOBAL_CTL */
 
 #define                GLOBAL_ENA  0x1        /* enables USB module */
-#define               nGLOBAL_ENA  0x0
+#define               nGLOBAL_ENA  0x0       
 #define                EP1_TX_ENA  0x2        /* Transmit endpoint 1 enable */
-#define               nEP1_TX_ENA  0x0
+#define               nEP1_TX_ENA  0x0       
 #define                EP2_TX_ENA  0x4        /* Transmit endpoint 2 enable */
-#define               nEP2_TX_ENA  0x0
+#define               nEP2_TX_ENA  0x0       
 #define                EP3_TX_ENA  0x8        /* Transmit endpoint 3 enable */
-#define               nEP3_TX_ENA  0x0
+#define               nEP3_TX_ENA  0x0       
 #define                EP4_TX_ENA  0x10       /* Transmit endpoint 4 enable */
-#define               nEP4_TX_ENA  0x0
+#define               nEP4_TX_ENA  0x0       
 #define                EP5_TX_ENA  0x20       /* Transmit endpoint 5 enable */
-#define               nEP5_TX_ENA  0x0
+#define               nEP5_TX_ENA  0x0       
 #define                EP6_TX_ENA  0x40       /* Transmit endpoint 6 enable */
-#define               nEP6_TX_ENA  0x0
+#define               nEP6_TX_ENA  0x0       
 #define                EP7_TX_ENA  0x80       /* Transmit endpoint 7 enable */
-#define               nEP7_TX_ENA  0x0
+#define               nEP7_TX_ENA  0x0       
 #define                EP1_RX_ENA  0x100      /* Receive endpoint 1 enable */
-#define               nEP1_RX_ENA  0x0
+#define               nEP1_RX_ENA  0x0       
 #define                EP2_RX_ENA  0x200      /* Receive endpoint 2 enable */
-#define               nEP2_RX_ENA  0x0
+#define               nEP2_RX_ENA  0x0       
 #define                EP3_RX_ENA  0x400      /* Receive endpoint 3 enable */
-#define               nEP3_RX_ENA  0x0
+#define               nEP3_RX_ENA  0x0       
 #define                EP4_RX_ENA  0x800      /* Receive endpoint 4 enable */
-#define               nEP4_RX_ENA  0x0
+#define               nEP4_RX_ENA  0x0       
 #define                EP5_RX_ENA  0x1000     /* Receive endpoint 5 enable */
-#define               nEP5_RX_ENA  0x0
+#define               nEP5_RX_ENA  0x0       
 #define                EP6_RX_ENA  0x2000     /* Receive endpoint 6 enable */
-#define               nEP6_RX_ENA  0x0
+#define               nEP6_RX_ENA  0x0       
 #define                EP7_RX_ENA  0x4000     /* Receive endpoint 7 enable */
-#define               nEP7_RX_ENA  0x0
+#define               nEP7_RX_ENA  0x0       
 
 /* Bit masks for USB_OTG_DEV_CTL */
 
 #define                   SESSION  0x1        /* session indicator */
-#define                  nSESSION  0x0
+#define                  nSESSION  0x0       
 #define                  HOST_REQ  0x2        /* Host negotiation request */
-#define                 nHOST_REQ  0x0
+#define                 nHOST_REQ  0x0       
 #define                 HOST_MODE  0x4        /* indicates USBDRC is a host */
-#define                nHOST_MODE  0x0
+#define                nHOST_MODE  0x0       
 #define                     VBUS0  0x8        /* Vbus level indicator[0] */
-#define                    nVBUS0  0x0
+#define                    nVBUS0  0x0       
 #define                     VBUS1  0x10       /* Vbus level indicator[1] */
-#define                    nVBUS1  0x0
+#define                    nVBUS1  0x0       
 #define                     LSDEV  0x20       /* Low-speed indicator */
-#define                    nLSDEV  0x0
+#define                    nLSDEV  0x0       
 #define                     FSDEV  0x40       /* Full or High-speed indicator */
-#define                    nFSDEV  0x0
+#define                    nFSDEV  0x0       
 #define                  B_DEVICE  0x80       /* A' or 'B' device indicator */
-#define                 nB_DEVICE  0x0
+#define                 nB_DEVICE  0x0       
 
 /* Bit masks for USB_OTG_VBUS_IRQ */
 
 #define             DRIVE_VBUS_ON  0x1        /* indicator to drive VBUS control circuit */
-#define            nDRIVE_VBUS_ON  0x0
+#define            nDRIVE_VBUS_ON  0x0       
 #define            DRIVE_VBUS_OFF  0x2        /* indicator to shut off charge pump */
-#define           nDRIVE_VBUS_OFF  0x0
+#define           nDRIVE_VBUS_OFF  0x0       
 #define           CHRG_VBUS_START  0x4        /* indicator for external circuit to start charging VBUS */
-#define          nCHRG_VBUS_START  0x0
+#define          nCHRG_VBUS_START  0x0       
 #define             CHRG_VBUS_END  0x8        /* indicator for external circuit to end charging VBUS */
-#define            nCHRG_VBUS_END  0x0
+#define            nCHRG_VBUS_END  0x0       
 #define        DISCHRG_VBUS_START  0x10       /* indicator to start discharging VBUS */
-#define       nDISCHRG_VBUS_START  0x0
+#define       nDISCHRG_VBUS_START  0x0       
 #define          DISCHRG_VBUS_END  0x20       /* indicator to stop discharging VBUS */
-#define         nDISCHRG_VBUS_END  0x0
+#define         nDISCHRG_VBUS_END  0x0       
 
 /* Bit masks for USB_OTG_VBUS_MASK */
 
 #define         DRIVE_VBUS_ON_ENA  0x1        /* enable DRIVE_VBUS_ON interrupt */
-#define        nDRIVE_VBUS_ON_ENA  0x0
+#define        nDRIVE_VBUS_ON_ENA  0x0       
 #define        DRIVE_VBUS_OFF_ENA  0x2        /* enable DRIVE_VBUS_OFF interrupt */
-#define       nDRIVE_VBUS_OFF_ENA  0x0
+#define       nDRIVE_VBUS_OFF_ENA  0x0       
 #define       CHRG_VBUS_START_ENA  0x4        /* enable CHRG_VBUS_START interrupt */
-#define      nCHRG_VBUS_START_ENA  0x0
+#define      nCHRG_VBUS_START_ENA  0x0       
 #define         CHRG_VBUS_END_ENA  0x8        /* enable CHRG_VBUS_END interrupt */
-#define        nCHRG_VBUS_END_ENA  0x0
+#define        nCHRG_VBUS_END_ENA  0x0       
 #define    DISCHRG_VBUS_START_ENA  0x10       /* enable DISCHRG_VBUS_START interrupt */
-#define   nDISCHRG_VBUS_START_ENA  0x0
+#define   nDISCHRG_VBUS_START_ENA  0x0       
 #define      DISCHRG_VBUS_END_ENA  0x20       /* enable DISCHRG_VBUS_END interrupt */
-#define     nDISCHRG_VBUS_END_ENA  0x0
+#define     nDISCHRG_VBUS_END_ENA  0x0       
 
 /* Bit masks for USB_CSR0 */
 
 #define                  RXPKTRDY  0x1        /* data packet receive indicator */
-#define                 nRXPKTRDY  0x0
+#define                 nRXPKTRDY  0x0       
 #define                  TXPKTRDY  0x2        /* data packet in FIFO indicator */
-#define                 nTXPKTRDY  0x0
+#define                 nTXPKTRDY  0x0       
 #define                STALL_SENT  0x4        /* STALL handshake sent */
-#define               nSTALL_SENT  0x0
+#define               nSTALL_SENT  0x0       
 #define                   DATAEND  0x8        /* Data end indicator */
-#define                  nDATAEND  0x0
+#define                  nDATAEND  0x0       
 #define                  SETUPEND  0x10       /* Setup end */
-#define                 nSETUPEND  0x0
+#define                 nSETUPEND  0x0       
 #define                 SENDSTALL  0x20       /* Send STALL handshake */
-#define                nSENDSTALL  0x0
+#define                nSENDSTALL  0x0       
 #define         SERVICED_RXPKTRDY  0x40       /* used to clear the RxPktRdy bit */
-#define        nSERVICED_RXPKTRDY  0x0
+#define        nSERVICED_RXPKTRDY  0x0       
 #define         SERVICED_SETUPEND  0x80       /* used to clear the SetupEnd bit */
-#define        nSERVICED_SETUPEND  0x0
+#define        nSERVICED_SETUPEND  0x0       
 #define                 FLUSHFIFO  0x100      /* flush endpoint FIFO */
-#define                nFLUSHFIFO  0x0
+#define                nFLUSHFIFO  0x0       
 #define          STALL_RECEIVED_H  0x4        /* STALL handshake received host mode */
-#define         nSTALL_RECEIVED_H  0x0
+#define         nSTALL_RECEIVED_H  0x0       
 #define                SETUPPKT_H  0x8        /* send Setup token host mode */
-#define               nSETUPPKT_H  0x0
+#define               nSETUPPKT_H  0x0       
 #define                   ERROR_H  0x10       /* timeout error indicator host mode */
-#define                  nERROR_H  0x0
+#define                  nERROR_H  0x0       
 #define                  REQPKT_H  0x20       /* Request an IN transaction host mode */
-#define                 nREQPKT_H  0x0
+#define                 nREQPKT_H  0x0       
 #define               STATUSPKT_H  0x40       /* Status stage transaction host mode */
-#define              nSTATUSPKT_H  0x0
+#define              nSTATUSPKT_H  0x0       
 #define             NAK_TIMEOUT_H  0x80       /* EP0 halted after a NAK host mode */
-#define            nNAK_TIMEOUT_H  0x0
+#define            nNAK_TIMEOUT_H  0x0       
 
 /* Bit masks for USB_COUNT0 */
 
@@ -529,37 +529,37 @@
 /* Bit masks for USB_TXCSR */
 
 #define                TXPKTRDY_T  0x1        /* data packet in FIFO indicator */
-#define               nTXPKTRDY_T  0x0
+#define               nTXPKTRDY_T  0x0       
 #define          FIFO_NOT_EMPTY_T  0x2        /* FIFO not empty */
-#define         nFIFO_NOT_EMPTY_T  0x0
+#define         nFIFO_NOT_EMPTY_T  0x0       
 #define                UNDERRUN_T  0x4        /* TxPktRdy not set  for an IN token */
-#define               nUNDERRUN_T  0x0
+#define               nUNDERRUN_T  0x0       
 #define               FLUSHFIFO_T  0x8        /* flush endpoint FIFO */
-#define              nFLUSHFIFO_T  0x0
+#define              nFLUSHFIFO_T  0x0       
 #define              STALL_SEND_T  0x10       /* issue a Stall handshake */
-#define             nSTALL_SEND_T  0x0
+#define             nSTALL_SEND_T  0x0       
 #define              STALL_SENT_T  0x20       /* Stall handshake transmitted */
-#define             nSTALL_SENT_T  0x0
+#define             nSTALL_SENT_T  0x0       
 #define        CLEAR_DATATOGGLE_T  0x40       /* clear endpoint data toggle */
-#define       nCLEAR_DATATOGGLE_T  0x0
+#define       nCLEAR_DATATOGGLE_T  0x0       
 #define                INCOMPTX_T  0x80       /* indicates that a large packet is split */
-#define               nINCOMPTX_T  0x0
+#define               nINCOMPTX_T  0x0       
 #define              DMAREQMODE_T  0x400      /* DMA mode (0 or 1) selection */
-#define             nDMAREQMODE_T  0x0
+#define             nDMAREQMODE_T  0x0       
 #define        FORCE_DATATOGGLE_T  0x800      /* Force data toggle */
-#define       nFORCE_DATATOGGLE_T  0x0
+#define       nFORCE_DATATOGGLE_T  0x0       
 #define              DMAREQ_ENA_T  0x1000     /* Enable DMA request for Tx EP */
-#define             nDMAREQ_ENA_T  0x0
+#define             nDMAREQ_ENA_T  0x0       
 #define                     ISO_T  0x4000     /* enable Isochronous transfers */
-#define                    nISO_T  0x0
+#define                    nISO_T  0x0       
 #define                 AUTOSET_T  0x8000     /* allows TxPktRdy to be set automatically */
-#define                nAUTOSET_T  0x0
+#define                nAUTOSET_T  0x0       
 #define                  ERROR_TH  0x4        /* error condition host mode */
-#define                 nERROR_TH  0x0
+#define                 nERROR_TH  0x0       
 #define         STALL_RECEIVED_TH  0x20       /* Stall handshake received host mode */
-#define        nSTALL_RECEIVED_TH  0x0
+#define        nSTALL_RECEIVED_TH  0x0       
 #define            NAK_TIMEOUT_TH  0x80       /* NAK timeout host mode */
-#define           nNAK_TIMEOUT_TH  0x0
+#define           nNAK_TIMEOUT_TH  0x0       
 
 /* Bit masks for USB_TXCOUNT */
 
@@ -568,45 +568,45 @@
 /* Bit masks for USB_RXCSR */
 
 #define                RXPKTRDY_R  0x1        /* data packet in FIFO indicator */
-#define               nRXPKTRDY_R  0x0
+#define               nRXPKTRDY_R  0x0       
 #define               FIFO_FULL_R  0x2        /* FIFO not empty */
-#define              nFIFO_FULL_R  0x0
+#define              nFIFO_FULL_R  0x0       
 #define                 OVERRUN_R  0x4        /* TxPktRdy not set  for an IN token */
-#define                nOVERRUN_R  0x0
+#define                nOVERRUN_R  0x0       
 #define               DATAERROR_R  0x8        /* Out packet cannot be loaded into Rx  FIFO */
-#define              nDATAERROR_R  0x0
+#define              nDATAERROR_R  0x0       
 #define               FLUSHFIFO_R  0x10       /* flush endpoint FIFO */
-#define              nFLUSHFIFO_R  0x0
+#define              nFLUSHFIFO_R  0x0       
 #define              STALL_SEND_R  0x20       /* issue a Stall handshake */
-#define             nSTALL_SEND_R  0x0
+#define             nSTALL_SEND_R  0x0       
 #define              STALL_SENT_R  0x40       /* Stall handshake transmitted */
-#define             nSTALL_SENT_R  0x0
+#define             nSTALL_SENT_R  0x0       
 #define        CLEAR_DATATOGGLE_R  0x80       /* clear endpoint data toggle */
-#define       nCLEAR_DATATOGGLE_R  0x0
+#define       nCLEAR_DATATOGGLE_R  0x0       
 #define                INCOMPRX_R  0x100      /* indicates that a large packet is split */
-#define               nINCOMPRX_R  0x0
+#define               nINCOMPRX_R  0x0       
 #define              DMAREQMODE_R  0x800      /* DMA mode (0 or 1) selection */
-#define             nDMAREQMODE_R  0x0
+#define             nDMAREQMODE_R  0x0       
 #define                 DISNYET_R  0x1000     /* disable Nyet handshakes */
-#define                nDISNYET_R  0x0
+#define                nDISNYET_R  0x0       
 #define              DMAREQ_ENA_R  0x2000     /* Enable DMA request for Tx EP */
-#define             nDMAREQ_ENA_R  0x0
+#define             nDMAREQ_ENA_R  0x0       
 #define                     ISO_R  0x4000     /* enable Isochronous transfers */
-#define                    nISO_R  0x0
+#define                    nISO_R  0x0       
 #define               AUTOCLEAR_R  0x8000     /* allows TxPktRdy to be set automatically */
-#define              nAUTOCLEAR_R  0x0
+#define              nAUTOCLEAR_R  0x0       
 #define                  ERROR_RH  0x4        /* TxPktRdy not set  for an IN token host mode */
-#define                 nERROR_RH  0x0
+#define                 nERROR_RH  0x0       
 #define                 REQPKT_RH  0x20       /* request an IN transaction host mode */
-#define                nREQPKT_RH  0x0
+#define                nREQPKT_RH  0x0       
 #define         STALL_RECEIVED_RH  0x40       /* Stall handshake received host mode */
-#define        nSTALL_RECEIVED_RH  0x0
+#define        nSTALL_RECEIVED_RH  0x0       
 #define               INCOMPRX_RH  0x100      /* indicates that a large packet is split host mode */
-#define              nINCOMPRX_RH  0x0
+#define              nINCOMPRX_RH  0x0       
 #define             DMAREQMODE_RH  0x800      /* DMA mode (0 or 1) selection host mode */
-#define            nDMAREQMODE_RH  0x0
+#define            nDMAREQMODE_RH  0x0       
 #define                AUTOREQ_RH  0x4000     /* sets ReqPkt automatically host mode */
-#define               nAUTOREQ_RH  0x0
+#define               nAUTOREQ_RH  0x0       
 
 /* Bit masks for USB_RXCOUNT */
 
@@ -633,35 +633,35 @@
 /* Bit masks for USB_DMA_INTERRUPT */
 
 #define                  DMA0_INT  0x1        /* DMA0 pending interrupt */
-#define                 nDMA0_INT  0x0
+#define                 nDMA0_INT  0x0       
 #define                  DMA1_INT  0x2        /* DMA1 pending interrupt */
-#define                 nDMA1_INT  0x0
+#define                 nDMA1_INT  0x0       
 #define                  DMA2_INT  0x4        /* DMA2 pending interrupt */
-#define                 nDMA2_INT  0x0
+#define                 nDMA2_INT  0x0       
 #define                  DMA3_INT  0x8        /* DMA3 pending interrupt */
-#define                 nDMA3_INT  0x0
+#define                 nDMA3_INT  0x0       
 #define                  DMA4_INT  0x10       /* DMA4 pending interrupt */
-#define                 nDMA4_INT  0x0
+#define                 nDMA4_INT  0x0       
 #define                  DMA5_INT  0x20       /* DMA5 pending interrupt */
-#define                 nDMA5_INT  0x0
+#define                 nDMA5_INT  0x0       
 #define                  DMA6_INT  0x40       /* DMA6 pending interrupt */
-#define                 nDMA6_INT  0x0
+#define                 nDMA6_INT  0x0       
 #define                  DMA7_INT  0x80       /* DMA7 pending interrupt */
-#define                 nDMA7_INT  0x0
+#define                 nDMA7_INT  0x0       
 
 /* Bit masks for USB_DMAxCONTROL */
 
 #define                   DMA_ENA  0x1        /* DMA enable */
-#define                  nDMA_ENA  0x0
+#define                  nDMA_ENA  0x0       
 #define                 DIRECTION  0x2        /* direction of DMA transfer */
-#define                nDIRECTION  0x0
+#define                nDIRECTION  0x0       
 #define                      MODE  0x4        /* DMA Bus error */
-#define                     nMODE  0x0
+#define                     nMODE  0x0       
 #define                   INT_ENA  0x8        /* Interrupt enable */
-#define                  nINT_ENA  0x0
+#define                  nINT_ENA  0x0       
 #define                     EPNUM  0xf0       /* EP number */
 #define                  BUSERROR  0x100      /* DMA Bus error */
-#define                 nBUSERROR  0x0
+#define                 nBUSERROR  0x0       
 
 /* Bit masks for USB_DMAxADDRHIGH */
 

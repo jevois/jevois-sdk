@@ -27,55 +27,55 @@
 #include <errno.h>
 #include "error.h"
 
-char * pname;
+char *pname;
 
 void
-Warning (char * fmt, ...)
+Warning(char *fmt, ...)
 {
-  va_list args;
-  
-  fprintf (stderr, "%s: WARNING: ", pname);
-  
-  va_start (args, fmt);
-  vfprintf (stderr, fmt, args);
-  va_end (args);
-  
-  fprintf (stderr, "\n");
+    va_list args;
+
+    fprintf(stderr, "%s: WARNING: ", pname);
+
+    va_start(args, fmt);
+    vfprintf(stderr, fmt, args);
+    va_end(args);
+
+    fprintf(stderr, "\n");
 }
 
 void
-Error (char * fmt, ...)
+Error(char *fmt, ...)
 {
-  va_list args;
-  
-  fprintf (stderr, "%s: ERROR: ", pname);
-  
-  va_start (args, fmt);
-  vfprintf (stderr, fmt, args);
-  va_end (args);
-  
-  fprintf (stderr, "\n");
-  
-  exit (1);
+    va_list args;
+
+    fprintf(stderr, "%s: ERROR: ", pname);
+
+    va_start(args, fmt);
+    vfprintf(stderr, fmt, args);
+    va_end(args);
+
+    fprintf(stderr, "\n");
+
+    exit(1);
 }
 
 void
-Perror (char * fmt, ...)
+Perror(char *fmt, ...)
 {
-  va_list args;
-  int e = errno;
-  char * p;
-  
-  fprintf (stderr, "%s: ERROR: ", pname);
-  
-  va_start (args, fmt);
-  vfprintf (stderr, fmt, args);
-  va_end (args);
-  
-  if ( (p = strerror (e) ) == NULL || *p == '\0')
-  { fprintf (stderr, ": Unknown Error (%d)\n", e); }
-  else
-  { fprintf (stderr, ": %s\n", p); }
-  
-  exit (1);
+    va_list args;
+    int e = errno;
+    char *p;
+
+    fprintf(stderr, "%s: ERROR: ", pname);
+
+    va_start(args, fmt);
+    vfprintf(stderr, fmt, args);
+    va_end(args);
+
+    if ((p = strerror(e)) == NULL || *p == '\0')
+	fprintf(stderr, ": Unknown Error (%d)\n", e);
+    else
+	fprintf(stderr, ": %s\n", p);
+
+    exit(1);
 }

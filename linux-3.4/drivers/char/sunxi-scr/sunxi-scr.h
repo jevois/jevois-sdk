@@ -43,7 +43,7 @@
 #define SCR_INTSTA_TXFDONE              (0x1<<0)
 
 #define SCR_BUFFER_SIZE_MASK            0xff//256
-#define MAX_ATR_LEN       33
+#define MAX_ATR_LEN				33
 
 #define SCR_ATR_RESP_INVALID            0
 #define SCR_ATR_RESP_FAIL               1
@@ -51,75 +51,75 @@
 
 typedef enum
 {
-  SCR_CARD_OUT,
-  SCR_CARD_IN,
-} scr_status_t;
+	SCR_CARD_OUT,
+	SCR_CARD_IN,
+}scr_status_t;
 
 typedef struct
 {
-  volatile uint32_t wptr;
-  volatile uint32_t rptr;
-  uint8_t buffer[SCR_BUFFER_SIZE_MASK + 1];
-} scr_buffer, *pscr_buffer;
+	volatile uint32_t wptr;
+	volatile uint32_t rptr;
+	uint8_t buffer[SCR_BUFFER_SIZE_MASK+1];
+}scr_buffer, *pscr_buffer;
 
 typedef struct
 {
-  uint32_t atr_len;
-  uint8_t buffer[MAX_ATR_LEN];
-} atr_buffer;
+	uint32_t atr_len;
+	uint8_t buffer[MAX_ATR_LEN];
+}atr_buffer;
 
 typedef struct {
-  uint16_t f;
-  uint16_t d;
-  uint16_t freq;
-  uint16_t recv_no_parity;
+	uint16_t f;
+	uint16_t d;
+	uint16_t freq;
+	uint16_t recv_no_parity;
 } cardPara;
 
 typedef struct {
-  void __iomem * reg_base;
-  uint32_t irq_no;
-  volatile uint32_t irq_accsta;
-  volatile uint32_t irq_cursta;
-  uint32_t csr_config;
-  uint32_t inten_bm;
-  uint32_t txfifo_thh;
-  uint32_t rxfifo_thh;
-  uint32_t tx_repeat;
-  uint32_t rx_repeat;
-  uint32_t scclk_div;
-  uint32_t baud_div;
-  uint32_t act_time;
-  uint32_t rst_time;
-  uint32_t atr_time;
-  uint32_t guard_time;
-  uint32_t chlimit_time;
-  
-  scr_buffer rxbuf;
-  scr_buffer txbuf;
-  
-  volatile uint32_t detected;
-  volatile uint32_t activated;
-  volatile uint32_t atr_resp;
-  
-  uint32_t chto_flag;
-} scr_struct, *pscr_struct;
+	void __iomem * reg_base;
+	uint32_t irq_no;
+	volatile uint32_t irq_accsta;
+	volatile uint32_t irq_cursta;
+	uint32_t csr_config;
+	uint32_t inten_bm;
+	uint32_t txfifo_thh;
+	uint32_t rxfifo_thh;
+	uint32_t tx_repeat;
+	uint32_t rx_repeat;
+	uint32_t scclk_div;
+	uint32_t baud_div;
+	uint32_t act_time;
+	uint32_t rst_time;
+	uint32_t atr_time;
+	uint32_t guard_time;
+	uint32_t chlimit_time;
 
-#define SCR_IOC_MAGIC   'c'
+	scr_buffer rxbuf;
+	scr_buffer txbuf;
 
-#define SCR_IOCGSTATUS    _IOR (SCR_IOC_MAGIC, 0, uint32_t *)
-#define SCR_IOCRESET    _IOWR(SCR_IOC_MAGIC, 1, atr_buffer *)
-#define SCR_IOCGPARA    _IOR(SCR_IOC_MAGIC, 2, cardPara *)
-#define SCR_IOCSPARA    _IOW(SCR_IOC_MAGIC, 3, cardPara *)
+	volatile uint32_t detected;
+	volatile uint32_t activated;
+	volatile uint32_t atr_resp;
+
+	uint32_t chto_flag;
+}scr_struct, *pscr_struct;
+
+#define	SCR_IOC_MAGIC		'c'
+
+#define	SCR_IOCGSTATUS		_IOR (SCR_IOC_MAGIC, 0, uint32_t *)
+#define	SCR_IOCRESET		_IOWR(SCR_IOC_MAGIC, 1, atr_buffer *)
+#define	SCR_IOCGPARA		_IOR(SCR_IOC_MAGIC, 2, cardPara *)
+#define	SCR_IOCSPARA		_IOW(SCR_IOC_MAGIC, 3, cardPara *)
 
 enum {
-  DEBUG_INIT = 1U << 0,
-  DEBUG_INT = 1U << 1,
-  DEBUG_DATA_INFO = 1U << 2,
-  DEBUG_SUSPEND = 1U << 3,
+	DEBUG_INIT = 1U << 0,
+	DEBUG_INT = 1U << 1,
+	DEBUG_DATA_INFO = 1U << 2,
+	DEBUG_SUSPEND = 1U << 3,
 };
 
-#define dprintk(level_mask, fmt, arg...)  if (unlikely(scr_debug_mask & level_mask)) \
-    printk(KERN_DEBUG fmt , ## arg)
+#define dprintk(level_mask, fmt, arg...)	if (unlikely(scr_debug_mask & level_mask)) \
+	 printk(KERN_DEBUG fmt , ## arg)
 
 #endif
 

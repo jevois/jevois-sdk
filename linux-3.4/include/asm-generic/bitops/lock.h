@@ -9,7 +9,7 @@
  * This operation is atomic and provides acquire barrier semantics.
  * It can be used to implement bit locks.
  */
-#define test_and_set_bit_lock(nr, addr) test_and_set_bit(nr, addr)
+#define test_and_set_bit_lock(nr, addr)	test_and_set_bit(nr, addr)
 
 /**
  * clear_bit_unlock - Clear a bit in memory, for unlock
@@ -18,11 +18,11 @@
  *
  * This operation is atomic and provides release barrier semantics.
  */
-#define clear_bit_unlock(nr, addr)  \
-  do {          \
-    smp_mb__before_clear_bit(); \
-    clear_bit(nr, addr);    \
-  } while (0)
+#define clear_bit_unlock(nr, addr)	\
+do {					\
+	smp_mb__before_clear_bit();	\
+	clear_bit(nr, addr);		\
+} while (0)
 
 /**
  * __clear_bit_unlock - Clear a bit in memory, for unlock
@@ -35,11 +35,11 @@
  * any bits in the memory until the lock is released (a good example is
  * if the bit lock itself protects access to the other bits in the word).
  */
-#define __clear_bit_unlock(nr, addr)  \
-  do {          \
-    smp_mb();     \
-    __clear_bit(nr, addr);    \
-  } while (0)
+#define __clear_bit_unlock(nr, addr)	\
+do {					\
+	smp_mb();			\
+	__clear_bit(nr, addr);		\
+} while (0)
 
 #endif /* _ASM_GENERIC_BITOPS_LOCK_H_ */
 

@@ -1,16 +1,16 @@
 /**
  * ============================================================================
  * = COPYRIGHT
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +23,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -36,7 +36,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  * = PRODUCT
@@ -53,7 +53,7 @@
  *      Intel Corporation
  *
  * = CHANGE HISTORY
- *      4/22/2002 4:41:05 PM - creation time
+ *      4/22/2002 4:41:05 PM - creation time 
  * ============================================================================
  */
 
@@ -82,9 +82,9 @@ extern "C"
 #define IX_BIT_FIELD_MASK16( \
                              arg_FieldLSBBit, \
                              arg_FieldMSBBit \
-                           ) \
-((ix_bit_mask16)((((ix_uint16)1 << (arg_FieldMSBBit + 1 - arg_FieldLSBBit)) - \
-                  (ix_uint16)1) << arg_FieldLSBBit))
+                            ) \
+                            ((ix_bit_mask16)((((ix_uint16)1 << (arg_FieldMSBBit + 1 - arg_FieldLSBBit)) - \
+                            (ix_uint16)1) << arg_FieldLSBBit))
 
 
 
@@ -108,8 +108,8 @@ extern "C"
                             arg_FieldLSBBit, \
                             arg_FieldMSBBit \
                           ) \
-(((ix_uint16)(arg_PackedData16) & IX_BIT_FIELD_MASK16(arg_FieldLSBBit, arg_FieldMSBBit)) >> \
- arg_FieldLSBBit)
+                          (((ix_uint16)(arg_PackedData16) & IX_BIT_FIELD_MASK16(arg_FieldLSBBit, arg_FieldMSBBit)) >> \
+                             arg_FieldLSBBit)
 
 
 /**
@@ -118,13 +118,13 @@ extern "C"
  * DESCRIPTION: This macro will create a temporary 16 bit value with the bit field
  *          desired set to the desired value.
  *
- * @Param:  - IN arg_BitFieldValue is the new value of the bit field. The value can be from 0 to
+ * @Param:  - IN arg_BitFieldValue is the new value of the bit field. The value can be from 0 to 
  *          (1 << (arg_FieldMSBBit + 1 - arg_FieldLSBBit)) - 1.
  * @Param:  - IN arg_FieldLSBBit an unsigned integer value representing the position of the least significant
  *          bit of the bit field.
  * @Param:  - IN arg_FieldMSBBit an unsigned integer value representing the position of the most significant
  *          bit of the bit field.
- *
+ * 
  * @Return: Returns a temporary ix_uint16 value that has the bit field set to the appropriate value.
  */
 #define IX_MAKE_BIT_FIELD16( \
@@ -132,16 +132,16 @@ extern "C"
                              arg_FieldLSBBit, \
                              arg_FieldMSBBit \
                            ) \
-(((ix_uint16)(arg_BitFieldValue) << arg_FieldLSBBit) & \
- IX_BIT_FIELD_MASK16(arg_FieldLSBBit, arg_FieldMSBBit))
-
+                           (((ix_uint16)(arg_BitFieldValue) << arg_FieldLSBBit) & \
+                           IX_BIT_FIELD_MASK16(arg_FieldLSBBit, arg_FieldMSBBit))
+                                 
 /**
  * MACRO NAME: IX_SET_BIT_FIELD16
  *
  * DESCRIPTION: Sets a new value for a bit field from a 16 bit unsigned integer.
  *
  * @Param:  - IN arg_PackedData16 a 16 bit unsigned integer that contains the bit field of interest.
- * @Param:  - IN arg_BitFieldValue is the new vale of the bit field. The value can be from 0 to
+ * @Param:  - IN arg_BitFieldValue is the new vale of the bit field. The value can be from 0 to 
  *          (1 << (arg_FieldMSBBit + 1 - arg_FieldLSBBit)) - 1.
  * @Param:  - IN arg_FieldLSBBit an unsigned integer value representing the position of the least significant
  *          bit of the bit field.
@@ -156,9 +156,9 @@ extern "C"
                             arg_FieldLSBBit, \
                             arg_FieldMSBBit \
                           ) \
-(arg_PackedData16 = (((ix_uint16)(arg_PackedData16) & \
-                      ~(IX_BIT_FIELD_MASK16(arg_FieldLSBBit, arg_FieldMSBBit))) | \
-                     IX_MAKE_BIT_FIELD16(arg_BitFieldValue, arg_FieldLSBBit, arg_FieldMSBBit)))
+                          (arg_PackedData16 = (((ix_uint16)(arg_PackedData16) & \
+                          ~(IX_BIT_FIELD_MASK16(arg_FieldLSBBit, arg_FieldMSBBit))) | \
+                          IX_MAKE_BIT_FIELD16(arg_BitFieldValue, arg_FieldLSBBit, arg_FieldMSBBit))) 
 
 
 /**
@@ -177,8 +177,8 @@ extern "C"
                              arg_FieldLSBBit, \
                              arg_FieldMSBBit \
                            ) \
-((ix_bit_mask32)((((ix_uint32)1 << (arg_FieldMSBBit + 1 - arg_FieldLSBBit)) - \
-                  (ix_uint32)1) << arg_FieldLSBBit))
+                           ((ix_bit_mask32)((((ix_uint32)1 << (arg_FieldMSBBit + 1 - arg_FieldLSBBit)) - \
+                           (ix_uint32)1) << arg_FieldLSBBit))
 
 
 
@@ -202,8 +202,8 @@ extern "C"
                             arg_FieldLSBBit, \
                             arg_FieldMSBBit \
                           ) \
-(((ix_uint32)(arg_PackedData32) & IX_BIT_FIELD_MASK32(arg_FieldLSBBit, arg_FieldMSBBit)) >> \
- arg_FieldLSBBit)
+                          (((ix_uint32)(arg_PackedData32) & IX_BIT_FIELD_MASK32(arg_FieldLSBBit, arg_FieldMSBBit)) >> \
+                             arg_FieldLSBBit)
 
 
 
@@ -214,13 +214,13 @@ extern "C"
  * DESCRIPTION: This macro will create a temporary 32 bit value with the bit field
  *          desired set to the desired value.
  *
- * @Param:  - IN arg_BitFieldValue is the new value of the bit field. The value can be from 0 to
+ * @Param:  - IN arg_BitFieldValue is the new value of the bit field. The value can be from 0 to 
  *          (1 << (arg_FieldMSBBit + 1 - arg_FieldLSBBit)) - 1.
  * @Param:  - IN arg_FieldLSBBit an unsigned integer value representing the position of the least significant
  *          bit of the bit field.
  * @Param:  - IN arg_FieldMSBBit an unsigned integer value representing the position of the most significant
  *          bit of the bit field.
- *
+ * 
  * @Return: Returns a temporary ix_uint32 value that has the bit field set to the appropriate value.
  */
 #define IX_MAKE_BIT_FIELD32( \
@@ -228,17 +228,17 @@ extern "C"
                              arg_FieldLSBBit, \
                              arg_FieldMSBBit \
                            ) \
-(((ix_uint32)(arg_BitFieldValue) << arg_FieldLSBBit) & \
- IX_BIT_FIELD_MASK32(arg_FieldLSBBit, arg_FieldMSBBit))
-
-
+                           (((ix_uint32)(arg_BitFieldValue) << arg_FieldLSBBit) & \
+                           IX_BIT_FIELD_MASK32(arg_FieldLSBBit, arg_FieldMSBBit))
+                            
+                                
 /**
  * MACRO NAME: IX_SET_BIT_FIELD32
  *
  * DESCRIPTION: Sets a new value for a bit field from a 32 bit unsigned integer.
  *
  * @Param:  - IN arg_PackedData32 a 32 bit unsigned integer that contains the bit field of interest.
- * @Param:  - IN arg_BitFieldValue is the new value of the bit field. The value can be from 0 to
+ * @Param:  - IN arg_BitFieldValue is the new value of the bit field. The value can be from 0 to 
  *          (1 << (arg_FieldMSBBit + 1 - arg_FieldLSBBit)) - 1.
  * @Param:  - IN arg_FieldLSBBit an unsigned integer value representing the position of the least significant
  *          bit of the bit field.
@@ -253,9 +253,9 @@ extern "C"
                             arg_FieldLSBBit, \
                             arg_FieldMSBBit \
                           ) \
-(arg_PackedData32 = (((ix_uint32)(arg_PackedData32) & \
-                      ~(IX_BIT_FIELD_MASK32(arg_FieldLSBBit, arg_FieldMSBBit))) | \
-                     IX_MAKE_BIT_FIELD32(arg_BitFieldValue, arg_FieldLSBBit, arg_FieldMSBBit)))
+                          (arg_PackedData32 = (((ix_uint32)(arg_PackedData32) & \
+                          ~(IX_BIT_FIELD_MASK32(arg_FieldLSBBit, arg_FieldMSBBit))) | \
+                          IX_MAKE_BIT_FIELD32(arg_BitFieldValue, arg_FieldLSBBit, arg_FieldMSBBit))) 
 
 
 

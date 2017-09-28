@@ -15,68 +15,68 @@
    */
 
 
-#define PP_ChipID 0x0000  /* offset   0h -> Corp -ID              */
-/* offset   2h -> Model/Product Number  */
-/* offset   3h -> Chip Revision Number  */
+#define PP_ChipID 0x0000	/* offset   0h -> Corp -ID              */
+				/* offset   2h -> Model/Product Number  */
+				/* offset   3h -> Chip Revision Number  */
 
-#define PP_ISAIOB 0x0020  /*  IO base address */
-#define PP_CS8900_ISAINT 0x0022 /*  ISA interrupt select */
-#define PP_CS8920_ISAINT 0x0370 /*  ISA interrupt select */
-#define PP_CS8900_ISADMA 0x0024 /*  ISA Rec DMA channel */
-#define PP_CS8920_ISADMA 0x0374 /*  ISA Rec DMA channel */
-#define PP_ISASOF 0x0026  /*  ISA DMA offset */
-#define PP_DmaFrameCnt 0x0028 /*  ISA DMA Frame count */
-#define PP_DmaByteCnt 0x002A  /*  ISA DMA Byte count */
-#define PP_CS8900_ISAMemB 0x002C  /*  Memory base */
+#define PP_ISAIOB 0x0020	/*  IO base address */
+#define PP_CS8900_ISAINT 0x0022	/*  ISA interrupt select */
+#define PP_CS8920_ISAINT 0x0370	/*  ISA interrupt select */
+#define PP_CS8900_ISADMA 0x0024	/*  ISA Rec DMA channel */
+#define PP_CS8920_ISADMA 0x0374	/*  ISA Rec DMA channel */
+#define PP_ISASOF 0x0026	/*  ISA DMA offset */
+#define PP_DmaFrameCnt 0x0028	/*  ISA DMA Frame count */
+#define PP_DmaByteCnt 0x002A	/*  ISA DMA Byte count */
+#define PP_CS8900_ISAMemB 0x002C	/*  Memory base */
 #define PP_CS8920_ISAMemB 0x0348 /*  */
 
-#define PP_ISABootBase 0x0030 /*  Boot Prom base  */
-#define PP_ISABootMask 0x0034 /*  Boot Prom Mask */
+#define PP_ISABootBase 0x0030	/*  Boot Prom base  */
+#define PP_ISABootMask 0x0034	/*  Boot Prom Mask */
 
 /* EEPROM data and command registers */
-#define PP_EECMD 0x0040   /*  NVR Interface Command register */
-#define PP_EEData 0x0042  /*  NVR Interface Data Register */
-#define PP_DebugReg 0x0044  /*  Debug Register */
+#define PP_EECMD 0x0040		/*  NVR Interface Command register */
+#define PP_EEData 0x0042	/*  NVR Interface Data Register */
+#define PP_DebugReg 0x0044	/*  Debug Register */
 
-#define PP_RxCFG 0x0102   /*  Rx Bus config */
-#define PP_RxCTL 0x0104   /*  Receive Control Register */
-#define PP_TxCFG 0x0106   /*  Transmit Config Register */
-#define PP_TxCMD 0x0108   /*  Transmit Command Register */
-#define PP_BufCFG 0x010A  /*  Bus configuration Register */
-#define PP_LineCTL 0x0112 /*  Line Config Register */
-#define PP_SelfCTL 0x0114 /*  Self Command Register */
-#define PP_BusCTL 0x0116  /*  ISA bus control Register */
-#define PP_TestCTL 0x0118 /*  Test Register */
-#define PP_AutoNegCTL 0x011C  /*  Auto Negotiation Ctrl */
+#define PP_RxCFG 0x0102		/*  Rx Bus config */
+#define PP_RxCTL 0x0104		/*  Receive Control Register */
+#define PP_TxCFG 0x0106		/*  Transmit Config Register */
+#define PP_TxCMD 0x0108		/*  Transmit Command Register */
+#define PP_BufCFG 0x010A	/*  Bus configuration Register */
+#define PP_LineCTL 0x0112	/*  Line Config Register */
+#define PP_SelfCTL 0x0114	/*  Self Command Register */
+#define PP_BusCTL 0x0116	/*  ISA bus control Register */
+#define PP_TestCTL 0x0118	/*  Test Register */
+#define PP_AutoNegCTL 0x011C	/*  Auto Negotiation Ctrl */
 
-#define PP_ISQ 0x0120   /*  Interrupt Status */
-#define PP_RxEvent 0x0124 /*  Rx Event Register */
-#define PP_TxEvent 0x0128 /*  Tx Event Register */
-#define PP_BufEvent 0x012C  /*  Bus Event Register */
-#define PP_RxMiss 0x0130  /*  Receive Miss Count */
-#define PP_TxCol 0x0132   /*  Transmit Collision Count */
-#define PP_LineST 0x0134  /*  Line State Register */
-#define PP_SelfST 0x0136  /*  Self State register */
-#define PP_BusST 0x0138   /*  Bus Status */
-#define PP_TDR 0x013C   /*  Time Domain Reflectometry */
-#define PP_AutoNegST 0x013E /*  Auto Neg Status */
-#define PP_TxCommand 0x0144 /*  Tx Command */
-#define PP_TxLength 0x0146  /*  Tx Length */
-#define PP_LAF 0x0150   /*  Hash Table */
-#define PP_IA 0x0158    /*  Physical Address Register */
+#define PP_ISQ 0x0120		/*  Interrupt Status */
+#define PP_RxEvent 0x0124	/*  Rx Event Register */
+#define PP_TxEvent 0x0128	/*  Tx Event Register */
+#define PP_BufEvent 0x012C	/*  Bus Event Register */
+#define PP_RxMiss 0x0130	/*  Receive Miss Count */
+#define PP_TxCol 0x0132		/*  Transmit Collision Count */
+#define PP_LineST 0x0134	/*  Line State Register */
+#define PP_SelfST 0x0136	/*  Self State register */
+#define PP_BusST 0x0138		/*  Bus Status */
+#define PP_TDR 0x013C		/*  Time Domain Reflectometry */
+#define PP_AutoNegST 0x013E	/*  Auto Neg Status */
+#define PP_TxCommand 0x0144	/*  Tx Command */
+#define PP_TxLength 0x0146	/*  Tx Length */
+#define PP_LAF 0x0150		/*  Hash Table */
+#define PP_IA 0x0158		/*  Physical Address Register */
 
-#define PP_RxStatus 0x0400  /*  Receive start of frame */
-#define PP_RxLength 0x0402  /*  Receive Length of frame */
-#define PP_RxFrame 0x0404 /*  Receive frame pointer */
-#define PP_TxFrame 0x0A00 /*  Transmit frame pointer */
+#define PP_RxStatus 0x0400	/*  Receive start of frame */
+#define PP_RxLength 0x0402	/*  Receive Length of frame */
+#define PP_RxFrame 0x0404	/*  Receive frame pointer */
+#define PP_TxFrame 0x0A00	/*  Transmit frame pointer */
 
 /*  Primary I/O Base Address. If no I/O base is supplied by the user, then this */
 /*  can be used as the default I/O base to access the PacketPage Area. */
 #define DEFAULTIOBASE 0x0300
-#define FIRST_IO 0x020C   /*  First I/O port to check */
-#define LAST_IO 0x037C    /*  Last I/O port to check (+10h) */
-#define ADD_MASK 0x3000   /*  Mask it use of the ADD_PORT register */
-#define ADD_SIG 0x3000    /*  Expected ID signature */
+#define FIRST_IO 0x020C		/*  First I/O port to check */
+#define LAST_IO 0x037C		/*  Last I/O port to check (+10h) */
+#define ADD_MASK 0x3000		/*  Mask it use of the ADD_PORT register */
+#define ADD_SIG 0x3000		/*  Expected ID signature */
 
 /* On Macs, we only need use the ISA I/O stuff until we do MEMORY_ON */
 #ifdef CONFIG_MAC
@@ -88,13 +88,13 @@
 #define CHIP_EISA_ID_SIG_STR "0x630E"
 
 #ifdef IBMEIPKT
-#define EISA_ID_SIG 0x4D24  /*  IBM */
-#define PART_NO_SIG 0x1010  /*  IBM */
-#define MONGOOSE_BIT 0x0000 /*  IBM */
+#define EISA_ID_SIG 0x4D24	/*  IBM */
+#define PART_NO_SIG 0x1010	/*  IBM */
+#define MONGOOSE_BIT 0x0000	/*  IBM */
 #else
-#define EISA_ID_SIG 0x630E  /*  PnP Vendor ID (same as chip id for Crystal board) */
-#define PART_NO_SIG 0x4000  /*  ID code CS8920 board (PnP Vendor Product code) */
-#define MONGOOSE_BIT 0x2000 /*  PART_NO_SIG + MONGOOSE_BUT => ID of mongoose */
+#define EISA_ID_SIG 0x630E	/*  PnP Vendor ID (same as chip id for Crystal board) */
+#define PART_NO_SIG 0x4000	/*  ID code CS8920 board (PnP Vendor Product code) */
+#define MONGOOSE_BIT 0x2000	/*  PART_NO_SIG + MONGOOSE_BUT => ID of mongoose */
 #endif
 
 #define PRODUCT_ID_ADD 0x0002   /*  Address of product ID */
@@ -299,8 +299,8 @@
 #define ISQ_TX_COL_EVENT 0x12
 
 #define ISQ_EVENT_MASK 0x003F   /*  ISQ mask to find out type of event */
-#define ISQ_HIST 16   /*  small history buffer */
-#define AUTOINCREMENT 0x8000  /*  Bit mask to set bit-15 for autoincrement */
+#define ISQ_HIST 16		/*  small history buffer */
+#define AUTOINCREMENT 0x8000	/*  Bit mask to set bit-15 for autoincrement */
 
 #define TXRXBUFSIZE 0x0600
 #define RXDMABUFSIZE 0x8000
@@ -308,45 +308,45 @@
 #define TXRX_LENGTH_MASK 0x07FF
 
 /*  rx options bits */
-#define RCV_WITH_RXON 1       /*  Set SerRx ON */
-#define RCV_COUNTS  2       /*  Use Framecnt1 */
-#define RCV_PONG  4       /*  Pong respondent */
-#define RCV_DONG  8       /*  Dong operation */
-#define RCV_POLLING 0x10  /*  Poll RxEvent */
-#define RCV_ISQ   0x20  /*  Use ISQ, int */
-#define RCV_AUTO_DMA  0x100 /*  Set AutoRxDMAE */
-#define RCV_DMA   0x200 /*  Set RxDMA only */
-#define RCV_DMA_ALL 0x400 /*  Copy all DMA'ed */
-#define RCV_FIXED_DATA  0x800 /*  Every frame same */
-#define RCV_IO    0x1000  /*  Use ISA IO only */
-#define RCV_MEMORY  0x2000  /*  Use ISA Memory */
+#define RCV_WITH_RXON	1       /*  Set SerRx ON */
+#define RCV_COUNTS	2       /*  Use Framecnt1 */
+#define RCV_PONG	4       /*  Pong respondent */
+#define RCV_DONG	8       /*  Dong operation */
+#define RCV_POLLING	0x10	/*  Poll RxEvent */
+#define RCV_ISQ		0x20	/*  Use ISQ, int */
+#define RCV_AUTO_DMA	0x100	/*  Set AutoRxDMAE */
+#define RCV_DMA		0x200	/*  Set RxDMA only */
+#define RCV_DMA_ALL	0x400	/*  Copy all DMA'ed */
+#define RCV_FIXED_DATA	0x800	/*  Every frame same */
+#define RCV_IO		0x1000	/*  Use ISA IO only */
+#define RCV_MEMORY	0x2000	/*  Use ISA Memory */
 
-#define RAM_SIZE  0x1000       /*  The card has 4k bytes or RAM */
+#define RAM_SIZE	0x1000       /*  The card has 4k bytes or RAM */
 #define PKT_START PP_TxFrame  /*  Start of packet RAM */
 
-#define RX_FRAME_PORT 0x0000
+#define RX_FRAME_PORT	0x0000
 #define TX_FRAME_PORT RX_FRAME_PORT
-#define TX_CMD_PORT 0x0004
-#define TX_NOW    0x0000       /*  Tx packet after   5 bytes copied */
-#define TX_AFTER_381  0x0040       /*  Tx packet after 381 bytes copied */
-#define TX_AFTER_ALL  0x00c0       /*  Tx packet after all bytes copied */
-#define TX_LEN_PORT 0x0006
-#define ISQ_PORT  0x0008
-#define ADD_PORT  0x000A
-#define DATA_PORT 0x000C
+#define TX_CMD_PORT	0x0004
+#define TX_NOW		0x0000       /*  Tx packet after   5 bytes copied */
+#define TX_AFTER_381	0x0040       /*  Tx packet after 381 bytes copied */
+#define TX_AFTER_ALL	0x00c0       /*  Tx packet after all bytes copied */
+#define TX_LEN_PORT	0x0006
+#define ISQ_PORT	0x0008
+#define ADD_PORT	0x000A
+#define DATA_PORT	0x000C
 
-#define EEPROM_WRITE_EN   0x00F0
-#define EEPROM_WRITE_DIS  0x0000
-#define EEPROM_WRITE_CMD  0x0100
-#define EEPROM_READ_CMD   0x0200
+#define EEPROM_WRITE_EN		0x00F0
+#define EEPROM_WRITE_DIS	0x0000
+#define EEPROM_WRITE_CMD	0x0100
+#define EEPROM_READ_CMD		0x0200
 
 /*  Receive Header */
 /*  Description of header of each packet in receive area of memory */
-#define RBUF_EVENT_LOW  0   /*  Low byte of RxEvent - status of received frame */
-#define RBUF_EVENT_HIGH 1   /*  High byte of RxEvent - status of received frame */
-#define RBUF_LEN_LOW  2   /*  Length of received data - low byte */
-#define RBUF_LEN_HI 3   /*  Length of received data - high byte */
-#define RBUF_HEAD_LEN 4   /*  Length of this header */
+#define RBUF_EVENT_LOW	0   /*  Low byte of RxEvent - status of received frame */
+#define RBUF_EVENT_HIGH	1   /*  High byte of RxEvent - status of received frame */
+#define RBUF_LEN_LOW	2   /*  Length of received data - low byte */
+#define RBUF_LEN_HI	3   /*  Length of received data - high byte */
+#define RBUF_HEAD_LEN	4   /*  Length of this header */
 
 #define CHIP_READ 0x1   /*  Used to mark state of the repins code (chip or dma) */
 #define DMA_READ 0x2   /*  Used to mark state of the repins code (chip or dma) */
@@ -366,20 +366,20 @@
 
 /*  Byte offsets into the EEPROM configuration buffer */
 #define ISA_CNF_OFFSET 0x6
-#define TX_CTL_OFFSET (ISA_CNF_OFFSET + 8)      /*  8900 eeprom */
-#define AUTO_NEG_CNF_OFFSET (ISA_CNF_OFFSET + 8)    /*  8920 eeprom */
+#define TX_CTL_OFFSET (ISA_CNF_OFFSET + 8)			/*  8900 eeprom */
+#define AUTO_NEG_CNF_OFFSET (ISA_CNF_OFFSET + 8)		/*  8920 eeprom */
 
-/*  the assumption here is that the bits in the eeprom are generally  */
-/*  in the same position as those in the autonegctl register. */
-/*  Of course the IMM bit is not in that register so it must be  */
-/*  masked out */
+  /*  the assumption here is that the bits in the eeprom are generally  */
+  /*  in the same position as those in the autonegctl register. */
+  /*  Of course the IMM bit is not in that register so it must be  */
+  /*  masked out */
 #define EE_FORCE_FDX  0x8000
 #define EE_NLP_ENABLE 0x0200
 #define EE_AUTO_NEG_ENABLE 0x0100
 #define EE_ALLOW_FDX 0x0080
 #define EE_AUTO_NEG_CNF_MASK (EE_FORCE_FDX|EE_NLP_ENABLE|EE_AUTO_NEG_ENABLE|EE_ALLOW_FDX)
 
-#define IMM_BIT 0x0040    /*  ignore missing media   */
+#define IMM_BIT 0x0040		/*  ignore missing media	 */
 
 #define ADAPTER_CNF_OFFSET (AUTO_NEG_CNF_OFFSET + 2)
 #define A_CNF_10B_T 0x0001

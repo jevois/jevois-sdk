@@ -187,7 +187,7 @@
 #define UBI_IOCEBISMAP _IOR(UBI_VOL_IOC_MAGIC, 5, __s32)
 /* Set an UBI volume property */
 #define UBI_IOCSETVOLPROP _IOW(UBI_VOL_IOC_MAGIC, 6, \
-                               struct ubi_set_vol_prop_req)
+			       struct ubi_set_vol_prop_req)
 
 /* Maximum MTD device name length supported by UBI */
 #define MAX_UBI_MTD_NAME_LEN 127
@@ -207,9 +207,9 @@
  * eraseblocks.
  */
 enum {
-  UBI_LONGTERM  = 1,
-  UBI_SHORTTERM = 2,
-  UBI_UNKNOWN   = 3,
+	UBI_LONGTERM  = 1,
+	UBI_SHORTTERM = 2,
+	UBI_UNKNOWN   = 3,
 };
 
 /*
@@ -219,8 +219,8 @@ enum {
  * @UBI_STATIC_VOLUME:  static volume
  */
 enum {
-  UBI_DYNAMIC_VOLUME = 3,
-  UBI_STATIC_VOLUME  = 4,
+	UBI_DYNAMIC_VOLUME = 3,
+	UBI_STATIC_VOLUME  = 4,
 };
 
 /*
@@ -231,7 +231,7 @@ enum {
  *                             eraseblocks on dynamic volumes
  */
 enum {
-  UBI_VOL_PROP_DIRECT_WRITE = 1,
+	UBI_VOL_PROP_DIRECT_WRITE = 1,
 };
 
 /**
@@ -264,10 +264,10 @@ enum {
  * sub-page of the first page and add needed padding.
  */
 struct ubi_attach_req {
-  __s32 ubi_num;
-  __s32 mtd_num;
-  __s32 vid_hdr_offset;
-  __s8 padding[12];
+	__s32 ubi_num;
+	__s32 mtd_num;
+	__s32 vid_hdr_offset;
+	__s8 padding[12];
 };
 
 /**
@@ -288,7 +288,7 @@ struct ubi_attach_req {
  * The @alignment field specifies the required alignment of the volume logical
  * eraseblock. This means, that the size of logical eraseblocks will be aligned
  * to this number, i.e.,
- *  (UBI device logical eraseblock size) mod (@alignment) = 0.
+ *	(UBI device logical eraseblock size) mod (@alignment) = 0.
  *
  * To put it differently, the logical eraseblock of this volume may be slightly
  * shortened in order to make it properly aligned. The alignment has to be
@@ -302,14 +302,14 @@ struct ubi_attach_req {
  * BLOBs, without caring about how to properly align them.
  */
 struct ubi_mkvol_req {
-  __s32 vol_id;
-  __s32 alignment;
-  __s64 bytes;
-  __s8 vol_type;
-  __s8 padding1;
-  __s16 name_len;
-  __s8 padding2[4];
-  char name[UBI_MAX_VOLUME_NAME + 1];
+	__s32 vol_id;
+	__s32 alignment;
+	__s64 bytes;
+	__s8 vol_type;
+	__s8 padding1;
+	__s16 name_len;
+	__s8 padding2[4];
+	char name[UBI_MAX_VOLUME_NAME + 1];
 } __packed;
 
 /**
@@ -324,8 +324,8 @@ struct ubi_mkvol_req {
  * zero number of bytes).
  */
 struct ubi_rsvol_req {
-  __s64 bytes;
-  __s32 vol_id;
+	__s64 bytes;
+	__s32 vol_id;
 } __packed;
 
 /**
@@ -360,14 +360,14 @@ struct ubi_rsvol_req {
  * re-name request.
  */
 struct ubi_rnvol_req {
-  __s32 count;
-  __s8 padding1[12];
-  struct {
-    __s32 vol_id;
-    __s16 name_len;
-    __s8  padding2[2];
-    char    name[UBI_MAX_VOLUME_NAME + 1];
-  } ents[UBI_MAX_RNVOL];
+	__s32 count;
+	__s8 padding1[12];
+	struct {
+		__s32 vol_id;
+		__s16 name_len;
+		__s8  padding2[2];
+		char    name[UBI_MAX_VOLUME_NAME + 1];
+	} ents[UBI_MAX_RNVOL];
 } __packed;
 
 /**
@@ -379,10 +379,10 @@ struct ubi_rnvol_req {
  * @padding: reserved for future, not used, has to be zeroed
  */
 struct ubi_leb_change_req {
-  __s32 lnum;
-  __s32 bytes;
-  __s8  dtype;
-  __s8  padding[7];
+	__s32 lnum;
+	__s32 bytes;
+	__s8  dtype;
+	__s8  padding[7];
 } __packed;
 
 /**
@@ -392,9 +392,9 @@ struct ubi_leb_change_req {
  * @padding: reserved for future, not used, has to be zeroed
  */
 struct ubi_map_req {
-  __s32 lnum;
-  __s8  dtype;
-  __s8  padding[3];
+	__s32 lnum;
+	__s8  dtype;
+	__s8  padding[3];
 } __packed;
 
 
@@ -406,9 +406,9 @@ struct ubi_map_req {
  * @value: value to set
  */
 struct ubi_set_vol_prop_req {
-  __u8  property;
-  __u8  padding[7];
-  __u64 value;
+	__u8  property;
+	__u8  padding[7];
+	__u64 value;
 }  __packed;
 
 #endif /* __UBI_USER_H__ */

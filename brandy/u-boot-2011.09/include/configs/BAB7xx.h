@@ -35,7 +35,7 @@
  * (easy to change)
  */
 
-#define CONFIG_SYS_TEXT_BASE  0xFFF00000
+#define	CONFIG_SYS_TEXT_BASE	0xFFF00000
 
 /* these hardware addresses are pretty bogus, please change them to
    suit your needs */
@@ -58,11 +58,11 @@
 
 #undef  CONFIG_BOOTARGS
 #define CONFIG_BOOTCOMMAND                                  \
-  "bootp 1000000; "                                       \
-  "setenv bootargs root=ramfs console=ttyS00,9600 "       \
-  "ip=${ipaddr}:${serverip}:${rootpath}:${gatewayip}:"    \
-  "${netmask}:${hostname}:eth0:none; "                    \
-  "bootm"
+    "bootp 1000000; "                                       \
+    "setenv bootargs root=ramfs console=ttyS00,9600 "       \
+    "ip=${ipaddr}:${serverip}:${rootpath}:${gatewayip}:"    \
+    "${netmask}:${hostname}:eth0:none; "                    \
+    "bootm"
 
 #define CONFIG_LOADS_ECHO       0       /* echo off for serial download */
 #define CONFIG_SYS_LOADS_BAUD_CHANGE           /* allow baudrate changes */
@@ -221,9 +221,9 @@
  */
 /* No command line, one static partition */
 #undef CONFIG_CMD_MTDPARTS
-#define CONFIG_JFFS2_DEV    "nor"
-#define CONFIG_JFFS2_PART_SIZE    0xFFFFFFFF
-#define CONFIG_JFFS2_PART_OFFSET  0x00000000
+#define CONFIG_JFFS2_DEV		"nor"
+#define CONFIG_JFFS2_PART_SIZE		0xFFFFFFFF
+#define CONFIG_JFFS2_PART_OFFSET	0x00000000
 
 /* mtdparts command line support
  *
@@ -231,8 +231,8 @@
  */
 /*
 #define CONFIG_CMD_MTDPARTS
-#define MTDIDS_DEFAULT    "nor0=bab7xx-0"
-#define MTDPARTS_DEFAULT  "mtdparts=bab7xx-0:-(jffs2)"
+#define MTDIDS_DEFAULT		"nor0=bab7xx-0"
+#define MTDPARTS_DEFAULT	"mtdparts=bab7xx-0:-(jffs2)"
 */
 
 #define CONFIG_SYS_MONITOR_BASE        CONFIG_SYS_FLASH_BASE
@@ -351,14 +351,14 @@ extern unsigned char   scsi_sym53c8xx_ccf;
 #define CONFIG_NS87308                    /* Nat Semi super-io cntr on ISA bus */
 #define CONFIG_SYS_NS87308_BADDR_10    1
 #define CONFIG_SYS_NS87308_DEVS        (CONFIG_SYS_NS87308_UART1   | \
-                                        CONFIG_SYS_NS87308_UART2   | \
-                                        CONFIG_SYS_NS87308_KBC1    | \
-                                        CONFIG_SYS_NS87308_MOUSE   | \
-                                        CONFIG_SYS_NS87308_FDC     | \
-                                        CONFIG_SYS_NS87308_RARP    | \
-                                        CONFIG_SYS_NS87308_GPIO    | \
-                                        CONFIG_SYS_NS87308_POWRMAN | \
-                                        CONFIG_SYS_NS87308_RTC_APC )
+				 CONFIG_SYS_NS87308_UART2   | \
+				 CONFIG_SYS_NS87308_KBC1    | \
+				 CONFIG_SYS_NS87308_MOUSE   | \
+				 CONFIG_SYS_NS87308_FDC     | \
+				 CONFIG_SYS_NS87308_RARP    | \
+				 CONFIG_SYS_NS87308_GPIO    | \
+				 CONFIG_SYS_NS87308_POWRMAN | \
+				 CONFIG_SYS_NS87308_RTC_APC )
 
 #define CONFIG_SYS_NS87308_PS2MOD
 #define CONFIG_SYS_NS87308_GPIO_BASE   0x0220
@@ -438,8 +438,8 @@ extern unsigned char   scsi_sym53c8xx_ccf;
 extern  unsigned long           bab7xx_get_bus_freq (void);
 extern  unsigned long           bab7xx_get_gclk_freq (void);
 #endif
-#define CONFIG_SYS_BUS_CLK  bab7xx_get_bus_freq()
-#define CONFIG_SYS_CPU_CLK  bab7xx_get_gclk_freq()
+#define CONFIG_SYS_BUS_CLK	bab7xx_get_bus_freq()
+#define CONFIG_SYS_CPU_CLK	bab7xx_get_gclk_freq()
 
 /*
  * For booting Linux, the board info and command line data
@@ -462,7 +462,7 @@ extern  unsigned long           bab7xx_get_gclk_freq (void);
  */
 #undef  CONFIG_SYS_L2
 #define L2_INIT     (L2CR_L2SIZ_HM | L2CR_L2CLK_3 | L2CR_L2RAM_BURST | \
-                     L2CR_L2OH_5   | L2CR_L2CTL   | L2CR_L2WT)
+		     L2CR_L2OH_5   | L2CR_L2CTL   | L2CR_L2WT)
 #define L2_ENABLE   (L2_INIT | L2CR_L2E)
 
 #define CONFIG_SYS_L2_BAB7xx

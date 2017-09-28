@@ -34,9 +34,9 @@
  *
  * Undefined if no set bit exists, so code should check against 0 first.
  */
-static inline unsigned long __ffs (unsigned long word)
+static inline unsigned long __ffs(unsigned long word)
 {
-  return __builtin_ctzl (word);
+	return __builtin_ctzl(word);
 }
 
 /**
@@ -45,9 +45,9 @@ static inline unsigned long __ffs (unsigned long word)
  *
  * Undefined if no zero exists, so code should check against ~0UL first.
  */
-static inline unsigned long ffz (unsigned long word)
+static inline unsigned long ffz(unsigned long word)
 {
-  return __builtin_ctzl (~word);
+	return __builtin_ctzl(~word);
 }
 
 /**
@@ -56,9 +56,9 @@ static inline unsigned long ffz (unsigned long word)
  *
  * Undefined if no set bit exists, so code should check against 0 first.
  */
-static inline unsigned long __fls (unsigned long word)
+static inline unsigned long __fls(unsigned long word)
 {
-  return (sizeof (word) * 8) - 1 - __builtin_clzl (word);
+	return (sizeof(word) * 8) - 1 - __builtin_clzl(word);
 }
 
 /**
@@ -72,14 +72,14 @@ static inline unsigned long __fls (unsigned long word)
  * set bit if value is nonzero. The first (least significant) bit
  * is at position 1.
  */
-static inline int ffs (int x)
+static inline int ffs(int x)
 {
-  return __builtin_ffs (x);
+	return __builtin_ffs(x);
 }
 
-static inline int fls64 (__u64 w)
+static inline int fls64(__u64 w)
 {
-  return (sizeof (__u64) * 8) - __builtin_clzll (w);
+	return (sizeof(__u64) * 8) - __builtin_clzll(w);
 }
 
 /**
@@ -93,29 +93,29 @@ static inline int fls64 (__u64 w)
  * set bit if value is nonzero. The last (most significant) bit is
  * at position 32.
  */
-static inline int fls (int x)
+static inline int fls(int x)
 {
-  return fls64 ( (unsigned int) x);
+	return fls64((unsigned int) x);
 }
 
-static inline unsigned int __arch_hweight32 (unsigned int w)
+static inline unsigned int __arch_hweight32(unsigned int w)
 {
-  return __builtin_popcount (w);
+	return __builtin_popcount(w);
 }
 
-static inline unsigned int __arch_hweight16 (unsigned int w)
+static inline unsigned int __arch_hweight16(unsigned int w)
 {
-  return __builtin_popcount (w & 0xffff);
+	return __builtin_popcount(w & 0xffff);
 }
 
-static inline unsigned int __arch_hweight8 (unsigned int w)
+static inline unsigned int __arch_hweight8(unsigned int w)
 {
-  return __builtin_popcount (w & 0xff);
+	return __builtin_popcount(w & 0xff);
 }
 
-static inline unsigned long __arch_hweight64 (__u64 w)
+static inline unsigned long __arch_hweight64(__u64 w)
 {
-  return __builtin_popcountll (w);
+	return __builtin_popcountll(w);
 }
 
 #include <asm-generic/bitops/const_hweight.h>

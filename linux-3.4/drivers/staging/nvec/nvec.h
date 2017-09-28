@@ -27,7 +27,7 @@
 #include <linux/workqueue.h>
 
 /* NVEC_POOL_SIZE - Size of the pool in &struct nvec_msg */
-#define NVEC_POOL_SIZE  64
+#define NVEC_POOL_SIZE	64
 
 /*
  * NVEC_MSG_SIZE - Maximum size of the data field of &struct nvec_msg.
@@ -36,7 +36,7 @@
  * one command byte, one count byte, and up to 32 payload bytes = 34
  * byte.
  */
-#define NVEC_MSG_SIZE 34
+#define NVEC_MSG_SIZE	34
 
 /**
  * enum nvec_event_size - The size of an event message
@@ -50,9 +50,9 @@
  * types, which are always variable sized.
  */
 enum nvec_event_size {
-  NVEC_2BYTES,
-  NVEC_3BYTES,
-  NVEC_VAR_SIZE,
+	NVEC_2BYTES,
+	NVEC_3BYTES,
+	NVEC_VAR_SIZE,
 };
 
 /**
@@ -69,13 +69,13 @@ enum nvec_event_size {
  * types, which are always variable sized.
  */
 enum nvec_msg_type {
-  NVEC_SYS = 1,
-  NVEC_BAT,
-  NVEC_KBD = 5,
-  NVEC_PS2,
-  NVEC_CNTL,
-  NVEC_KB_EVT = 0x80,
-  NVEC_PS2_EVT,
+	NVEC_SYS = 1,
+	NVEC_BAT,
+	NVEC_KBD = 5,
+	NVEC_PS2,
+	NVEC_CNTL,
+	NVEC_KB_EVT = 0x80,
+	NVEC_PS2_EVT,
 };
 
 /**
@@ -92,11 +92,11 @@ enum nvec_msg_type {
  * documented yet.
  */
 struct nvec_msg {
-  struct list_head node;
-  unsigned char data[NVEC_MSG_SIZE];
-  unsigned short size;
-  unsigned short pos;
-  atomic_t used;
+	struct list_head node;
+	unsigned char data[NVEC_MSG_SIZE];
+	unsigned short size;
+	unsigned short pos;
+	atomic_t used;
 };
 
 /**
@@ -106,9 +106,9 @@ struct nvec_msg {
  * @id: Identifier of the sub device
  */
 struct nvec_subdev {
-  const char * name;
-  void * platform_data;
-  int id;
+	const char *name;
+	void *platform_data;
+	int id;
 };
 
 /**
@@ -120,8 +120,8 @@ struct nvec_subdev {
  * look at the paz00 board in arch/arm/mach-tegra/board-paz00.c
  */
 struct nvec_platform_data {
-  int i2c_addr;
-  int gpio;
+	int i2c_addr;
+	int gpio;
 };
 
 /**
@@ -155,49 +155,49 @@ struct nvec_platform_data {
  * @state: State of our finite state machine used in nvec_interrupt()
  */
 struct nvec_chip {
-  struct device * dev;
-  int gpio;
-  int irq;
-  int i2c_addr;
-  void __iomem * base;
-  struct clk * i2c_clk;
-  struct atomic_notifier_head notifier_list;
-  struct list_head rx_data, tx_data;
-  struct notifier_block nvec_status_notifier;
-  struct work_struct rx_work, tx_work;
-  struct workqueue_struct * wq;
-  struct nvec_msg msg_pool[NVEC_POOL_SIZE];
-  struct nvec_msg * rx;
-  
-  struct nvec_msg * tx;
-  struct nvec_msg tx_scratch;
-  struct completion ec_transfer;
-  
-  spinlock_t tx_lock, rx_lock;
-  
-  /* sync write stuff */
-  struct mutex sync_write_mutex;
-  struct completion sync_write;
-  u16 sync_write_pending;
-  struct nvec_msg * last_sync_msg;
-  
-  int state;
+	struct device *dev;
+	int gpio;
+	int irq;
+	int i2c_addr;
+	void __iomem *base;
+	struct clk *i2c_clk;
+	struct atomic_notifier_head notifier_list;
+	struct list_head rx_data, tx_data;
+	struct notifier_block nvec_status_notifier;
+	struct work_struct rx_work, tx_work;
+	struct workqueue_struct *wq;
+	struct nvec_msg msg_pool[NVEC_POOL_SIZE];
+	struct nvec_msg *rx;
+
+	struct nvec_msg *tx;
+	struct nvec_msg tx_scratch;
+	struct completion ec_transfer;
+
+	spinlock_t tx_lock, rx_lock;
+
+	/* sync write stuff */
+	struct mutex sync_write_mutex;
+	struct completion sync_write;
+	u16 sync_write_pending;
+	struct nvec_msg *last_sync_msg;
+
+	int state;
 };
 
-extern int nvec_write_async (struct nvec_chip * nvec, const unsigned char * data,
-                             short size);
+extern int nvec_write_async(struct nvec_chip *nvec, const unsigned char *data,
+			     short size);
 
-extern struct nvec_msg * nvec_write_sync (struct nvec_chip * nvec,
-    const unsigned char * data, short size);
+extern struct nvec_msg *nvec_write_sync(struct nvec_chip *nvec,
+					const unsigned char *data, short size);
 
-extern int nvec_register_notifier (struct nvec_chip * nvec,
-                                   struct notifier_block * nb,
-                                   unsigned int events);
+extern int nvec_register_notifier(struct nvec_chip *nvec,
+				  struct notifier_block *nb,
+				  unsigned int events);
 
-extern int nvec_unregister_notifier (struct device * dev,
-                                     struct notifier_block * nb,
-                                     unsigned int events);
+extern int nvec_unregister_notifier(struct device *dev,
+				    struct notifier_block *nb,
+				    unsigned int events);
 
-extern void nvec_msg_free (struct nvec_chip * nvec, struct nvec_msg * msg);
+extern void nvec_msg_free(struct nvec_chip *nvec, struct nvec_msg *msg);
 
 #endif

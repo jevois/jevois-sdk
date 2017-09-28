@@ -58,7 +58,7 @@ extern "C" {
 /*!
 *******************************************************************************
 
- @Function  PVRSRVRGXInitDevPart2KM
+ @Function	PVRSRVRGXInitDevPart2KM
 
  @Description
 
@@ -70,43 +70,43 @@ extern "C" {
 
 ******************************************************************************/
 IMG_IMPORT
-PVRSRV_ERROR PVRSRVRGXInitDevPart2KM (PVRSRV_DEVICE_NODE * psDeviceNode,
-                                      RGX_INIT_COMMAND  *  psInitScript,
-                                      RGX_INIT_COMMAND  *  psDbgScript,
-                                      RGX_INIT_COMMAND  *  psDbgBusScript,
-                                      RGX_INIT_COMMAND  *  psDeinitScript,
-                                      IMG_UINT32      ui32KernelCatBaseIdReg,
-                                      IMG_UINT32      ui32KernelCatBaseId,
-                                      IMG_UINT32      ui32KernelCatBaseReg,
-                                      IMG_UINT32      ui32KernelCatBaseWordSize,
-                                      IMG_UINT32      ui32KernelCatBaseAlignShift,
-                                      IMG_UINT32      ui32KernelCatBaseShift,
-                                      IMG_UINT64      ui64KernelCatBaseMask,
-                                      IMG_UINT32      ui32DeviceFlags,
-                                      RGX_ACTIVEPM_CONF   eActivePMConf,
-                                      DEVMEM_EXPORTCOOKIE * psFWCodeAllocServerExportCookie,
-                                      DEVMEM_EXPORTCOOKIE * psFWDataAllocServerExportCookie,
-                                      DEVMEM_EXPORTCOOKIE * psFWCorememAllocServerExportCookie);
-                                      
+PVRSRV_ERROR PVRSRVRGXInitDevPart2KM (PVRSRV_DEVICE_NODE	*psDeviceNode,
+									  RGX_INIT_COMMAND		*psInitScript,
+									  RGX_INIT_COMMAND		*psDbgScript,
+									  RGX_INIT_COMMAND		*psDbgBusScript,
+									  RGX_INIT_COMMAND		*psDeinitScript,
+									  IMG_UINT32			ui32KernelCatBaseIdReg,
+									  IMG_UINT32			ui32KernelCatBaseId,
+									  IMG_UINT32			ui32KernelCatBaseReg,
+									  IMG_UINT32			ui32KernelCatBaseWordSize,
+									  IMG_UINT32			ui32KernelCatBaseAlignShift,
+									  IMG_UINT32			ui32KernelCatBaseShift,
+									  IMG_UINT64			ui64KernelCatBaseMask,
+									  IMG_UINT32			ui32DeviceFlags,
+									  RGX_ACTIVEPM_CONF		eActivePMConf,
+								 	  DEVMEM_EXPORTCOOKIE	*psFWCodeAllocServerExportCookie,
+								 	  DEVMEM_EXPORTCOOKIE	*psFWDataAllocServerExportCookie,
+								 	  DEVMEM_EXPORTCOOKIE	*psFWCorememAllocServerExportCookie);
+
 IMG_EXPORT
-PVRSRV_ERROR PVRSRVRGXInitAllocFWImgMemKM (PVRSRV_DEVICE_NODE  *  psDeviceNode,
-    IMG_DEVMEM_SIZE_T     ui32FWCodeLen,
-    IMG_DEVMEM_SIZE_T     ui32FWDataLen,
-    IMG_DEVMEM_SIZE_T     uiFWCorememLen,
-    DEVMEM_EXPORTCOOKIE  ** ppsFWCodeAllocServerExportCookie,
-    IMG_DEV_VIRTADDR   *   psFWCodeDevVAddrBase,
-    DEVMEM_EXPORTCOOKIE  ** ppsFWDataAllocServerExportCookie,
-    IMG_DEV_VIRTADDR   *   psFWDataDevVAddrBase,
-    DEVMEM_EXPORTCOOKIE  ** ppsFWCorememAllocServerExportCookie,
-    IMG_DEV_VIRTADDR   *   psFWCorememDevVAddrBase,
-    RGXFWIF_DEV_VIRTADDR * psFWCorememMetaVAddrBase);
-    
-    
-    
+PVRSRV_ERROR PVRSRVRGXInitAllocFWImgMemKM(PVRSRV_DEVICE_NODE    *psDeviceNode,
+										  IMG_DEVMEM_SIZE_T     ui32FWCodeLen,
+									 	  IMG_DEVMEM_SIZE_T     ui32FWDataLen,
+									 	  IMG_DEVMEM_SIZE_T     uiFWCorememLen,
+									 	  DEVMEM_EXPORTCOOKIE   **ppsFWCodeAllocServerExportCookie,
+									 	  IMG_DEV_VIRTADDR      *psFWCodeDevVAddrBase,
+									 	  DEVMEM_EXPORTCOOKIE   **ppsFWDataAllocServerExportCookie,
+									 	  IMG_DEV_VIRTADDR      *psFWDataDevVAddrBase,
+										  DEVMEM_EXPORTCOOKIE   **ppsFWCorememAllocServerExportCookie,
+										  IMG_DEV_VIRTADDR      *psFWCorememDevVAddrBase,
+										  RGXFWIF_DEV_VIRTADDR  *psFWCorememMetaVAddrBase);
+
+
+
 /*!
 *******************************************************************************
 
- @Function  PVRSRVRGXInitFirmwareKM
+ @Function	PVRSRVRGXInitFirmwareKM
 
  @Description
 
@@ -118,24 +118,24 @@ PVRSRV_ERROR PVRSRVRGXInitAllocFWImgMemKM (PVRSRV_DEVICE_NODE  *  psDeviceNode,
 
 ******************************************************************************/
 IMG_IMPORT
-PVRSRV_ERROR PVRSRVRGXInitFirmwareKM (PVRSRV_DEVICE_NODE   *  psDeviceNode,
-                                      RGXFWIF_DEV_VIRTADDR  *  psRGXFwInit,
-                                      IMG_BOOL          bEnableSignatureChecks,
-                                      IMG_UINT32          ui32SignatureChecksBufSize,
-                                      IMG_UINT32          ui32HWPerfFWBufSizeKB,
-                                      IMG_UINT64          ui64HWPerfFilter,
-                                      IMG_UINT32          ui32RGXFWAlignChecksSize,
-                                      IMG_UINT32     *     pui32RGXFWAlignChecks,
-                                      IMG_UINT32          ui32ConfigFlags,
-                                      IMG_UINT32          ui32LogType,
-                                      IMG_UINT32          ui32FilterMode,
-                                      RGXFWIF_COMPCHECKS_BVNC   *  psClientBVNC);
-                                      
-                                      
+PVRSRV_ERROR PVRSRVRGXInitFirmwareKM(PVRSRV_DEVICE_NODE			*psDeviceNode, 
+									    RGXFWIF_DEV_VIRTADDR		*psRGXFwInit,
+									    IMG_BOOL					bEnableSignatureChecks,
+									    IMG_UINT32					ui32SignatureChecksBufSize,
+									    IMG_UINT32					ui32HWPerfFWBufSizeKB,
+									    IMG_UINT64					ui64HWPerfFilter,
+									    IMG_UINT32					ui32RGXFWAlignChecksSize,
+									    IMG_UINT32					*pui32RGXFWAlignChecks,
+									    IMG_UINT32					ui32ConfigFlags,
+									    IMG_UINT32					ui32LogType,
+										IMG_UINT32					ui32FilterMode,
+									    RGXFWIF_COMPCHECKS_BVNC     *psClientBVNC);
+
+
 /*!
 *******************************************************************************
 
- @Function  PVRSRVRGXInitLoadFWImageKM
+ @Function	PVRSRVRGXInitLoadFWImageKM
 
  @Description
 
@@ -156,34 +156,34 @@ PVRSRV_ERROR PVRSRVRGXInitFirmwareKM (PVRSRV_DEVICE_NODE   *  psDeviceNode,
 ******************************************************************************/
 
 IMG_EXPORT
-PVRSRV_ERROR PVRSRVRGXInitLoadFWImageKM (PMR * psFWImgDestPMR,
-    PMR * psFWImgSrcPMR,
-    IMG_UINT64 ui64FWImgLen,
-    PMR * psFWImgSigPMR,
-    IMG_UINT64 ui64FWSigLen);
-    
-    
+PVRSRV_ERROR PVRSRVRGXInitLoadFWImageKM(PMR *psFWImgDestPMR,
+                                        PMR *psFWImgSrcPMR,
+                                        IMG_UINT64 ui64FWImgLen,
+										PMR *psFWImgSigPMR,
+                                        IMG_UINT64 ui64FWSigLen);
+
+
 /*!
 *******************************************************************************
 
- @Function  RGXRegisterDevice
+ @Function	RGXRegisterDevice
 
  @Description
 
  Registers the device with the system
 
- @Input:  psDeviceNode - device node
+ @Input: 	psDeviceNode - device node
 
  @Return   PVRSRV_ERROR :
 
 ******************************************************************************/
-PVRSRV_ERROR RGXRegisterDevice (PVRSRV_DEVICE_NODE * psDeviceNode);
+PVRSRV_ERROR RGXRegisterDevice(PVRSRV_DEVICE_NODE *psDeviceNode);
 
 
 /*!
 *******************************************************************************
 
- @Function  DevDeInitRGX
+ @Function	DevDeInitRGX
 
  @Description
 
@@ -194,7 +194,7 @@ PVRSRV_ERROR RGXRegisterDevice (PVRSRV_DEVICE_NODE * psDeviceNode);
  @Return   PVRSRV_ERROR
 
 ******************************************************************************/
-PVRSRV_ERROR DevDeInitRGX (PVRSRV_DEVICE_NODE * psDeviceNode);
+PVRSRV_ERROR DevDeInitRGX(PVRSRV_DEVICE_NODE *psDeviceNode);
 
 
 #endif /* __RGXINIT_H__ */

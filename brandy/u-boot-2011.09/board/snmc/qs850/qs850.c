@@ -40,40 +40,40 @@ static long  int dram_size (long int, long int *, long int);
 
 const uint sdram_table[] =
 {
-  /*
-   * Single Read. (Offset 0 in UPMA RAM)
-   */
-  0x0f07cc04,  0x00adcc04,  0x00a74c00,  0x00bfcc04,
-  0x1fffcc05,  0xffffcc05,  0xffffcc05,  0xffffcc05,
-  /*
-   * Burst Read. (Offset 8 in UPMA RAM)
-   */
-  0x0ff7fc04,  0x0ffffc04,  0x00bdfc04,  0x00fffc00,
-  0x00fffc00,  0x00fffc00,  0x0ff77c00,  0x1ffffc05,
-  0x1ffffc05,  0x1ffffc05,  0x1ffffc05,  0x1ffffc05,
-  0x1ffffc05,  0x1ffffc05,  0x1ffffc05,  0x1ffffc05,
-  /*
-   * Single Write. (Offset 18 in UPMA RAM)
-   */
-  0x0f07cc04,  0x0fafcc00,  0x01ad0c04,  0x1ff74c07,
-  0xffffcc05,  0xffffcc05,  0xffffcc05,  0xffffcc05,
-  /*
-   * Burst Write. (Offset 20 in UPMA RAM)
-   */
-  0x0ff7fc04,  0x0ffffc00,  0x00bd7c00,  0x00fffc00,
-  0x00fffc00,  0x00fffc00,  0x0ffffc04,  0x0ff77c04,
-  0x1ffffc05,  0x1ffffc05,  0x1ffffc05,  0x1ffffc05,
-  0x1ffffc05,  0x1ffffc05,  0x1ffffc05,  0x1ffffc05,
-  /*
-   * Refresh  (Offset 30 in UPMA RAM)
-   */
-  0xffffcc04,  0x1ff5cc84,  0xffffcc04,  0xffffcc04,
-  0xffffcc84,  0xffffcc05,  0xffffcc04,  0xffffcc04,
-  0xffffcc04,  0xffffcc04,  0xffffcc04,  0xffffcc04,
-  /*
-   * Exception. (Offset 3c in UPMA RAM)
-   */
-  0x1ff74c04,  0xffffcc07,  0xffffaa34,  0x1fb54a37
+	/*
+	 * Single Read. (Offset 0 in UPMA RAM)
+	 */
+	0x0f07cc04,  0x00adcc04,  0x00a74c00,  0x00bfcc04,
+	0x1fffcc05,  0xffffcc05,  0xffffcc05,  0xffffcc05,
+	/*
+	 * Burst Read. (Offset 8 in UPMA RAM)
+	 */
+	0x0ff7fc04,  0x0ffffc04,  0x00bdfc04,  0x00fffc00,
+	0x00fffc00,  0x00fffc00,  0x0ff77c00,  0x1ffffc05,
+	0x1ffffc05,  0x1ffffc05,  0x1ffffc05,  0x1ffffc05,
+	0x1ffffc05,  0x1ffffc05,  0x1ffffc05,  0x1ffffc05,
+	/*
+	 * Single Write. (Offset 18 in UPMA RAM)
+	 */
+	0x0f07cc04,  0x0fafcc00,  0x01ad0c04,  0x1ff74c07,
+	0xffffcc05,  0xffffcc05,  0xffffcc05,  0xffffcc05,
+	/*
+	 * Burst Write. (Offset 20 in UPMA RAM)
+	 */
+	0x0ff7fc04,  0x0ffffc00,  0x00bd7c00,  0x00fffc00,
+	0x00fffc00,  0x00fffc00,  0x0ffffc04,  0x0ff77c04,
+	0x1ffffc05,  0x1ffffc05,  0x1ffffc05,  0x1ffffc05,
+	0x1ffffc05,  0x1ffffc05,  0x1ffffc05,  0x1ffffc05,
+	/*
+	 * Refresh  (Offset 30 in UPMA RAM)
+	 */
+	0xffffcc04,  0x1ff5cc84,  0xffffcc04,  0xffffcc04,
+	0xffffcc84,  0xffffcc05,  0xffffcc04,  0xffffcc04,
+	0xffffcc04,  0xffffcc04,  0xffffcc04,  0xffffcc04,
+	/*
+	 * Exception. (Offset 3c in UPMA RAM)
+	 */
+	0x1ff74c04,  0xffffcc07,  0xffffaa34,  0x1fb54a37
 };
 
 /* ------------------------------------------------------------------------- */
@@ -87,38 +87,37 @@ const uint sdram_table[] =
  * Always return 1
  */
 #if defined(CONFIG_QS850)
-#define BOARD_IDENTITY  "QS850"
+#define BOARD_IDENTITY	"QS850"
 #elif defined(CONFIG_QS823)
-#define BOARD_IDENTITY  "QS823"
+#define BOARD_IDENTITY	"QS823"
 #else
-#define BOARD_IDENTITY  "QS???"
+#define	BOARD_IDENTITY	"QS???"
 #endif
 
 int checkboard (void)
 {
-  char * s, *e;
-  char buf[64];
-  int i;
-  
-  i = getenv_f ("serial#", buf, sizeof (buf) );
-  s = (i > 0) ? buf : NULL;
-  
-  if (!s || strncmp (s, BOARD_IDENTITY, 5) ) {
-    puts ("### No HW ID - assuming " BOARD_IDENTITY);
-  }
-  else {
-    for (e = s; *e; ++e) {
-      if (*e == ' ')
-      { break; }
-    }
-    
-    for ( ; s < e; ++s) {
-      putc (*s);
-    }
-  }
-  putc ('\n');
-  
-  return (0);
+	char *s, *e;
+	char buf[64];
+	int i;
+
+	i = getenv_f("serial#", buf, sizeof(buf));
+	s = (i>0) ? buf : NULL;
+
+	if (!s || strncmp(s, BOARD_IDENTITY, 5)) {
+		puts ("### No HW ID - assuming " BOARD_IDENTITY);
+	} else {
+		for (e=s; *e; ++e) {
+		if (*e == ' ')
+		break;
+	}
+
+	for ( ; s<e; ++s) {
+		putc (*s);
+		}
+	}
+	putc ('\n');
+
+	return (0);
 }
 
 /* ------------------------------------------------------------------------- */
@@ -147,67 +146,67 @@ int checkboard (void)
 
 phys_size_t initdram (int board_type)
 {
-  volatile immap_t   *  immap  = (immap_t *) CONFIG_SYS_IMMR;
-  volatile memctl8xx_t * memctl = &immap->im_memctl;
-  long int size;
-  
-  upmconfig (UPMA, (uint *) sdram_table, sizeof (sdram_table) / sizeof (uint) );
-  
-  /*
-  * Prescaler for refresh
-  */
-  memctl->memc_mptpr = CONFIG_SYS_MPTPR;
-  
-  /*
-  * Map controller bank 1 to the SDRAM address
-  */
-  memctl->memc_or1 = CONFIG_SYS_OR1;
-  memctl->memc_br1 = CONFIG_SYS_BR1;
-  udelay (1000);
-  
-  /* perform SDRAM initialization sequence */
-  memctl->memc_mamr = CONFIG_SYS_16M_MAMR;
-  udelay (100);
-  
-  /* Program the SDRAM's Mode Register */
-  memctl->memc_mar  = SDRAM_MODE_REG;
-  
-  /* Run the Prechard Pattern at 0x3C */
-  memctl->memc_mcr  = UPMA_RUN (1, 0x3c);
-  udelay (1);
-  
-  /* Run the Refresh program residing at MAD index 0x30 */
-  /* This contains the CBR Refresh command with a loop */
-  /* The SDRAM must be refreshed at least 2 times */
-  /* Please note a value of zero = 16 loops */
-  memctl->memc_mcr  = UPMA_RUN (REFRESH_INIT_LOOPS, 0x30);
-  udelay (1);
-  
-  /* Run the Exception program residing at MAD index 0x3E */
-  /* This contains the Write Mode Register command */
-  /* The Write Mode Register command uses the value written to MAR */
-  memctl->memc_mcr  = UPMA_RUN (1, 0x3e);
-  
-  udelay (1000);
-  
-  /*
-  * Check for 32M SDRAM Memory Size
-  */
-  size = dram_size (CONFIG_SYS_32M_MAMR | MAMR_PTAE,
-                    (long *) SDRAM_BASE, SDRAM_32M_MAX_SIZE);
-  udelay (1000);
-  
-  /*
-  * Check for 16M SDRAM Memory Size
-  */
-  if (size != SDRAM_32M_MAX_SIZE) {
-    size = dram_size (CONFIG_SYS_16M_MAMR | MAMR_PTAE,
-                      (long *) SDRAM_BASE, SDRAM_16M_MAX_SIZE);
-    udelay (1000);
-  }
-  
-  udelay (10000);
-  return (size);
+	volatile immap_t     *immap  = (immap_t *)CONFIG_SYS_IMMR;
+	volatile memctl8xx_t *memctl = &immap->im_memctl;
+	long int size;
+
+	upmconfig(UPMA, (uint *)sdram_table, sizeof(sdram_table)/sizeof(uint));
+
+	/*
+	* Prescaler for refresh
+	*/
+	memctl->memc_mptpr = CONFIG_SYS_MPTPR;
+
+	/*
+	* Map controller bank 1 to the SDRAM address
+	*/
+	memctl->memc_or1 = CONFIG_SYS_OR1;
+	memctl->memc_br1 = CONFIG_SYS_BR1;
+	udelay(1000);
+
+	/* perform SDRAM initialization sequence */
+	memctl->memc_mamr = CONFIG_SYS_16M_MAMR;
+	udelay(100);
+
+	/* Program the SDRAM's Mode Register */
+	memctl->memc_mar  = SDRAM_MODE_REG;
+
+	/* Run the Prechard Pattern at 0x3C */
+	memctl->memc_mcr  = UPMA_RUN(1,0x3c);
+	udelay(1);
+
+	/* Run the Refresh program residing at MAD index 0x30 */
+	/* This contains the CBR Refresh command with a loop */
+	/* The SDRAM must be refreshed at least 2 times */
+	/* Please note a value of zero = 16 loops */
+	memctl->memc_mcr  = UPMA_RUN(REFRESH_INIT_LOOPS,0x30);
+	udelay(1);
+
+	/* Run the Exception program residing at MAD index 0x3E */
+	/* This contains the Write Mode Register command */
+	/* The Write Mode Register command uses the value written to MAR */
+	memctl->memc_mcr  = UPMA_RUN(1,0x3e);
+
+	udelay (1000);
+
+	/*
+	* Check for 32M SDRAM Memory Size
+	*/
+	size = dram_size(CONFIG_SYS_32M_MAMR|MAMR_PTAE,
+	(long *)SDRAM_BASE, SDRAM_32M_MAX_SIZE);
+	udelay (1000);
+
+	/*
+	* Check for 16M SDRAM Memory Size
+	*/
+	if (size != SDRAM_32M_MAX_SIZE) {
+	size = dram_size(CONFIG_SYS_16M_MAMR|MAMR_PTAE,
+	(long *)SDRAM_BASE, SDRAM_16M_MAX_SIZE);
+	udelay (1000);
+	}
+
+	udelay(10000);
+	return (size);
 }
 
 /* ------------------------------------------------------------------------- */
@@ -220,12 +219,12 @@ phys_size_t initdram (int board_type)
  * - short between data lines
  */
 
-static long int dram_size (long int mamr_value, long int * base, long int maxsize)
+static long int dram_size (long int mamr_value, long int *base, long int maxsize)
 {
-  volatile immap_t * immap = (immap_t *) CONFIG_SYS_IMMR;
-  volatile memctl8xx_t * memctl = &immap->im_memctl;
-  
-  memctl->memc_mamr = mamr_value;
-  
-  return (get_ram_size (base, maxsize) );
+	volatile immap_t *immap = (immap_t *)CONFIG_SYS_IMMR;
+	volatile memctl8xx_t *memctl = &immap->im_memctl;
+
+	memctl->memc_mamr = mamr_value;
+
+	return (get_ram_size(base, maxsize));
 }

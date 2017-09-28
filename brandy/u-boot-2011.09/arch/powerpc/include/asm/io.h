@@ -69,16 +69,16 @@
 #define inl_p(port)     in_le32((u32 *)((port)+_IO_BASE))
 #define outl_p(val, port)   out_le32((u32 *)((port)+_IO_BASE), (val))
 
-extern void _insb (volatile u8 * port, void * buf, int ns);
-extern void _outsb (volatile u8 * port, const void * buf, int ns);
-extern void _insw (volatile u16 * port, void * buf, int ns);
-extern void _outsw (volatile u16 * port, const void * buf, int ns);
-extern void _insl (volatile u32 * port, void * buf, int nl);
-extern void _outsl (volatile u32 * port, const void * buf, int nl);
-extern void _insw_ns (volatile u16 * port, void * buf, int ns);
-extern void _outsw_ns (volatile u16 * port, const void * buf, int ns);
-extern void _insl_ns (volatile u32 * port, void * buf, int nl);
-extern void _outsl_ns (volatile u32 * port, const void * buf, int nl);
+extern void _insb(volatile u8 *port, void *buf, int ns);
+extern void _outsb(volatile u8 *port, const void *buf, int ns);
+extern void _insw(volatile u16 *port, void *buf, int ns);
+extern void _outsw(volatile u16 *port, const void *buf, int ns);
+extern void _insl(volatile u32 *port, void *buf, int nl);
+extern void _outsl(volatile u32 *port, const void *buf, int nl);
+extern void _insw_ns(volatile u16 *port, void *buf, int ns);
+extern void _outsw_ns(volatile u16 *port, const void *buf, int ns);
+extern void _insl_ns(volatile u32 *port, void *buf, int nl);
+extern void _outsl_ns(volatile u32 *port, const void *buf, int nl);
 
 /*
  * The *_ns versions below don't do byte-swapping.
@@ -102,19 +102,19 @@ extern void _outsl_ns (volatile u32 * port, const void * buf, int nl);
  * Acts as a barrier to ensure all previous I/O accesses have
  * completed before any further ones are issued.
  */
-static inline void eieio (void)
+static inline void eieio(void)
 {
-  __asm__ __volatile__ ("eieio" : : : "memory");
+	__asm__ __volatile__ ("eieio" : : : "memory");
 }
 
-static inline void sync (void)
+static inline void sync(void)
 {
-  __asm__ __volatile__ ("sync" : : : "memory");
+	__asm__ __volatile__ ("sync" : : : "memory");
 }
 
-static inline void isync (void)
+static inline void isync(void)
 {
-  __asm__ __volatile__ ("isync" : : : "memory");
+	__asm__ __volatile__ ("isync" : : : "memory");
 }
 
 /* Enforce in-order execution of data I/O.
@@ -128,31 +128,31 @@ static inline void isync (void)
  * Non ordered and non-swapping "raw" accessors
  */
 #define __iomem
-#define PCI_FIX_ADDR(addr)  (addr)
+#define PCI_FIX_ADDR(addr)	(addr)
 
-static inline unsigned char __raw_readb (const volatile void __iomem * addr)
+static inline unsigned char __raw_readb(const volatile void __iomem *addr)
 {
-  return * (volatile unsigned char *) PCI_FIX_ADDR (addr);
+	return *(volatile unsigned char *)PCI_FIX_ADDR(addr);
 }
-static inline unsigned short __raw_readw (const volatile void __iomem * addr)
+static inline unsigned short __raw_readw(const volatile void __iomem *addr)
 {
-  return * (volatile unsigned short *) PCI_FIX_ADDR (addr);
+	return *(volatile unsigned short *)PCI_FIX_ADDR(addr);
 }
-static inline unsigned int __raw_readl (const volatile void __iomem * addr)
+static inline unsigned int __raw_readl(const volatile void __iomem *addr)
 {
-  return * (volatile unsigned int *) PCI_FIX_ADDR (addr);
+	return *(volatile unsigned int *)PCI_FIX_ADDR(addr);
 }
-static inline void __raw_writeb (unsigned char v, volatile void __iomem * addr)
+static inline void __raw_writeb(unsigned char v, volatile void __iomem *addr)
 {
-  * (volatile unsigned char *) PCI_FIX_ADDR (addr) = v;
+	*(volatile unsigned char *)PCI_FIX_ADDR(addr) = v;
 }
-static inline void __raw_writew (unsigned short v, volatile void __iomem * addr)
+static inline void __raw_writew(unsigned short v, volatile void __iomem *addr)
 {
-  * (volatile unsigned short *) PCI_FIX_ADDR (addr) = v;
+	*(volatile unsigned short *)PCI_FIX_ADDR(addr) = v;
 }
-static inline void __raw_writel (unsigned int v, volatile void __iomem * addr)
+static inline void __raw_writel(unsigned int v, volatile void __iomem *addr)
 {
-  * (volatile unsigned int *) PCI_FIX_ADDR (addr) = v;
+	*(volatile unsigned int *)PCI_FIX_ADDR(addr) = v;
 }
 
 /*
@@ -162,87 +162,87 @@ static inline void __raw_writel (unsigned int v, volatile void __iomem * addr)
  * is actually performed (i.e. the data has come back) before we start
  * executing any following instructions.
  */
-extern inline int in_8 (const volatile unsigned char __iomem * addr)
+extern inline int in_8(const volatile unsigned char __iomem *addr)
 {
-  int ret;
-  
-  __asm__ __volatile__ (
-    "sync; lbz%U1%X1 %0,%1;\n"
-    "twi 0,%0,0;\n"
-    "isync" : "=r" (ret) : "m" (*addr) );
-  return ret;
+	int ret;
+
+	__asm__ __volatile__(
+		"sync; lbz%U1%X1 %0,%1;\n"
+		"twi 0,%0,0;\n"
+		"isync" : "=r" (ret) : "m" (*addr));
+	return ret;
 }
 
-extern inline void out_8 (volatile unsigned char __iomem * addr, int val)
+extern inline void out_8(volatile unsigned char __iomem *addr, int val)
 {
-  __asm__ __volatile__ ("sync;\n"
-                        "stb%U0%X0 %1,%0;\n"
-                        : "=m" (*addr)
-                        : "r" (val) );
+	__asm__ __volatile__("sync;\n"
+			     "stb%U0%X0 %1,%0;\n"
+			     : "=m" (*addr)
+			     : "r" (val));
 }
 
-extern inline int in_le16 (const volatile unsigned short __iomem * addr)
+extern inline int in_le16(const volatile unsigned short __iomem *addr)
 {
-  int ret;
-  
-  __asm__ __volatile__ ("sync; lhbrx %0,0,%1;\n"
-                        "twi 0,%0,0;\n"
-                        "isync" : "=r" (ret) :
-                        "r" (addr), "m" (*addr) );
-  return ret;
+	int ret;
+
+	__asm__ __volatile__("sync; lhbrx %0,0,%1;\n"
+			     "twi 0,%0,0;\n"
+			     "isync" : "=r" (ret) :
+			      "r" (addr), "m" (*addr));
+	return ret;
 }
 
-extern inline int in_be16 (const volatile unsigned short __iomem * addr)
+extern inline int in_be16(const volatile unsigned short __iomem *addr)
 {
-  int ret;
-  
-  __asm__ __volatile__ ("sync; lhz%U1%X1 %0,%1;\n"
-                        "twi 0,%0,0;\n"
-                        "isync" : "=r" (ret) : "m" (*addr) );
-  return ret;
+	int ret;
+
+	__asm__ __volatile__("sync; lhz%U1%X1 %0,%1;\n"
+			     "twi 0,%0,0;\n"
+			     "isync" : "=r" (ret) : "m" (*addr));
+	return ret;
 }
 
-extern inline void out_le16 (volatile unsigned short __iomem * addr, int val)
+extern inline void out_le16(volatile unsigned short __iomem *addr, int val)
 {
-  __asm__ __volatile__ ("sync; sthbrx %1,0,%2" : "=m" (*addr) :
-                        "r" (val), "r" (addr) );
+	__asm__ __volatile__("sync; sthbrx %1,0,%2" : "=m" (*addr) :
+			      "r" (val), "r" (addr));
 }
 
-extern inline void out_be16 (volatile unsigned short __iomem * addr, int val)
+extern inline void out_be16(volatile unsigned short __iomem *addr, int val)
 {
-  __asm__ __volatile__ ("sync; sth%U0%X0 %1,%0" : "=m" (*addr) : "r" (val) );
+	__asm__ __volatile__("sync; sth%U0%X0 %1,%0" : "=m" (*addr) : "r" (val));
 }
 
-extern inline unsigned in_le32 (const volatile unsigned __iomem * addr)
+extern inline unsigned in_le32(const volatile unsigned __iomem *addr)
 {
-  unsigned ret;
-  
-  __asm__ __volatile__ ("sync; lwbrx %0,0,%1;\n"
-                        "twi 0,%0,0;\n"
-                        "isync" : "=r" (ret) :
-                        "r" (addr), "m" (*addr) );
-  return ret;
+	unsigned ret;
+
+	__asm__ __volatile__("sync; lwbrx %0,0,%1;\n"
+			     "twi 0,%0,0;\n"
+			     "isync" : "=r" (ret) :
+			     "r" (addr), "m" (*addr));
+	return ret;
 }
 
-extern inline unsigned in_be32 (const volatile unsigned __iomem * addr)
+extern inline unsigned in_be32(const volatile unsigned __iomem *addr)
 {
-  unsigned ret;
-  
-  __asm__ __volatile__ ("sync; lwz%U1%X1 %0,%1;\n"
-                        "twi 0,%0,0;\n"
-                        "isync" : "=r" (ret) : "m" (*addr) );
-  return ret;
+	unsigned ret;
+
+	__asm__ __volatile__("sync; lwz%U1%X1 %0,%1;\n"
+			     "twi 0,%0,0;\n"
+			     "isync" : "=r" (ret) : "m" (*addr));
+	return ret;
 }
 
-extern inline void out_le32 (volatile unsigned __iomem * addr, int val)
+extern inline void out_le32(volatile unsigned __iomem *addr, int val)
 {
-  __asm__ __volatile__ ("sync; stwbrx %1,0,%2" : "=m" (*addr) :
-                        "r" (val), "r" (addr) );
+	__asm__ __volatile__("sync; stwbrx %1,0,%2" : "=m" (*addr) :
+			     "r" (val), "r" (addr));
 }
 
-extern inline void out_be32 (volatile unsigned __iomem * addr, int val)
+extern inline void out_be32(volatile unsigned __iomem *addr, int val)
 {
-  __asm__ __volatile__ ("sync; stw%U0%X0 %1,%0" : "=m" (*addr) : "r" (val) );
+	__asm__ __volatile__("sync; stw%U0%X0 %1,%0" : "=m" (*addr) : "r" (val));
 }
 
 /* Clear and set bits in one shot. These macros can be used to clear and
@@ -253,13 +253,13 @@ extern inline void out_be32 (volatile unsigned __iomem * addr, int val)
  */
 
 #define clrbits(type, addr, clear) \
-  out_##type((addr), in_##type(addr) & ~(clear))
+	out_##type((addr), in_##type(addr) & ~(clear))
 
 #define setbits(type, addr, set) \
-  out_##type((addr), in_##type(addr) | (set))
+	out_##type((addr), in_##type(addr) | (set))
 
 #define clrsetbits(type, addr, clear, set) \
-  out_##type((addr), (in_##type(addr) & ~(clear)) | (set))
+	out_##type((addr), (in_##type(addr) & ~(clear)) | (set))
 
 #define clrbits_be32(addr, clear) clrbits(be32, addr, clear)
 #define setbits_be32(addr, set) setbits(be32, addr, set)
@@ -286,36 +286,36 @@ extern inline void out_be32 (volatile unsigned __iomem * addr, int val)
  * that can be used to access the memory range with the caching
  * properties specified by "flags".
  */
-#define MAP_NOCACHE (0)
-#define MAP_WRCOMBINE (0)
-#define MAP_WRBACK  (0)
-#define MAP_WRTHROUGH (0)
+#define MAP_NOCACHE	(0)
+#define MAP_WRCOMBINE	(0)
+#define MAP_WRBACK	(0)
+#define MAP_WRTHROUGH	(0)
 
 static inline void *
-map_physmem (phys_addr_t paddr, unsigned long len, unsigned long flags)
+map_physmem(phys_addr_t paddr, unsigned long len, unsigned long flags)
 {
-  #ifdef CONFIG_ADDR_MAP
-  return (void *) (addrmap_phys_to_virt (paddr) );
-  #else
-  return (void *) ( (unsigned long) paddr);
-  #endif
+#ifdef CONFIG_ADDR_MAP
+	return (void *)(addrmap_phys_to_virt(paddr));
+#else
+	return (void *)((unsigned long)paddr);
+#endif
 }
 
 /*
  * Take down a mapping set up by map_physmem().
  */
-static inline void unmap_physmem (void * vaddr, unsigned long flags)
+static inline void unmap_physmem(void *vaddr, unsigned long flags)
 {
 
 }
 
-static inline phys_addr_t virt_to_phys (void * vaddr)
+static inline phys_addr_t virt_to_phys(void * vaddr)
 {
-  #ifdef CONFIG_ADDR_MAP
-  return addrmap_virt_to_phys (vaddr);
-  #else
-  return (phys_addr_t) ( (unsigned long) vaddr);
-  #endif
+#ifdef CONFIG_ADDR_MAP
+	return addrmap_virt_to_phys(vaddr);
+#else
+	return (phys_addr_t)((unsigned long)vaddr);
+#endif
 }
 
 #endif

@@ -1,37 +1,37 @@
 /*
 *************************************************************************************
-*                               eBsp
-*            Operation System Adapter Layer
+*                         			eBsp
+*					   Operation System Adapter Layer
 *
-*       (c) Copyright 2006-2010, All winners Co,Ld.
-*             All Rights Reserved
+*				(c) Copyright 2006-2010, All winners Co,Ld.
+*							All	Rights Reserved
 *
-* File Name   : OSAL.h
+* File Name 	: OSAL.h
 *
-* Author    : javen
+* Author 		: javen
 *
-* Description   : 操作系统适配层
+* Description 	: 操作系统适配层
 *
-* History     :
-*      <author>       <time>        <version >        <desc>
-*       javen          2010-09-07          1.0         create this word
+* History 		:
+*      <author>    		<time>       	<version >    		<desc>
+*       javen     	   2010-09-07          1.0         create this word
 *
 *************************************************************************************
-*/
+*/ 
 #ifndef  __OSAL_H__
 #define  __OSAL_H__
 
 
 typedef struct
 {
-  char  gpio_name[32];
-  int port;
-  int port_num;
-  int mul_sel;
-  int pull;
-  int drv_level;
-  int data;
-  int gpio;
+    char  gpio_name[32];
+    int port;
+    int port_num;
+    int mul_sel;
+    int pull;
+    int drv_level;
+    int data;
+    int gpio;
 } disp_gpio_set_t;
 
 
@@ -57,7 +57,7 @@ typedef struct
 #define sys_clr_hbit(n,c)   (*((volatile u16 *)(n))&=~(c))   /* half word bit clear */
 #define sys_set_wbit(n,c)   (*((volatile u32 *)(n))|= (c))    /* word bit set */
 #define sys_cmp_wvalue(n,c) (c == (*((volatile __u32 *) (n))))
-#define sys_clr_wbit(n,c)   (*((volatile u32 *)(n))&=~(c))
+#define sys_clr_wbit(n,c)   (*((volatile u32 *)(n))&=~(c))  
 
 
 #endif  

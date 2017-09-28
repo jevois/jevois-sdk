@@ -18,8 +18,8 @@
 /* Uncomment and define any of the below options */
 
 /* #define CONFIG_750CX */ /* The 750CX doesn't support as many things in L2CR */
-/* Note: If you defined CONFIG_EVB64260_750CX this */
-/* gets defined automatically. */
+			/* Note: If you defined CONFIG_EVB64260_750CX this */
+			/* gets defined automatically. */
 
 /* These want string arguments */
 /* #define CONFIG_BOOTARGS */
@@ -54,9 +54,9 @@
 
 /* next two ethernet hwaddrs */
 #define CONFIG_HAS_ETH1
-#define CONFIG_ETH1ADDR   00:11:22:33:44:66
+#define CONFIG_ETH1ADDR		00:11:22:33:44:66
 #define CONFIG_HAS_ETH2
-#define CONFIG_ETH2ADDR   00:11:22:33:44:77
+#define CONFIG_ETH2ADDR		00:11:22:33:44:77
 
 #define CONFIG_ENV_OVERWRITE
-#endif  /* __CONFIG_H */
+#endif	/* __CONFIG_H */

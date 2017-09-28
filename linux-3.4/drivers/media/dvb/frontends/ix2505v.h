@@ -32,32 +32,32 @@
  */
 
 struct ix2505v_config {
-  u8 tuner_address;
-  
-  /*Baseband AMP gain control 0/1=0dB(default) 2=-2bB 3=-4dB */
-  u8 tuner_gain;
-  
-  /*Charge pump output +/- 0=120 1=260 2=555 3=1200(default) */
-  u8 tuner_chargepump;
-  
-  /* delay after tune */
-  int min_delay_ms;
-  
-  /* disables reads*/
-  u8 tuner_write_only;
-  
+	u8 tuner_address;
+
+	/*Baseband AMP gain control 0/1=0dB(default) 2=-2bB 3=-4dB */
+	u8 tuner_gain;
+
+	/*Charge pump output +/- 0=120 1=260 2=555 3=1200(default) */
+	u8 tuner_chargepump;
+
+	/* delay after tune */
+	int min_delay_ms;
+
+	/* disables reads*/
+	u8 tuner_write_only;
+
 };
 
 #if defined(CONFIG_DVB_IX2505V) || \
-(defined(CONFIG_DVB_IX2505V_MODULE) && defined(MODULE))
-extern struct dvb_frontend * ix2505v_attach (struct dvb_frontend * fe,
-    const struct ix2505v_config * config, struct i2c_adapter * i2c);
+	(defined(CONFIG_DVB_IX2505V_MODULE) && defined(MODULE))
+extern struct dvb_frontend *ix2505v_attach(struct dvb_frontend *fe,
+	const struct ix2505v_config *config, struct i2c_adapter *i2c);
 #else
-static inline struct dvb_frontend * ix2505v_attach (struct dvb_frontend * fe,
-    const struct ix2505v_config * config, struct i2c_adapter * i2c)
+static inline struct dvb_frontend *ix2505v_attach(struct dvb_frontend *fe,
+	const struct ix2505v_config *config, struct i2c_adapter *i2c)
 {
-  printk (KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
-  return NULL;
+	printk(KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
+	return NULL;
 }
 #endif
 

@@ -41,35 +41,35 @@
 #include <uart.h>
 #include <nand.h>
 
-extern void __init board_setup (void);
-extern void pnx8550_machine_restart (char *);
-extern void pnx8550_machine_halt (void);
+extern void __init board_setup(void);
+extern void pnx8550_machine_restart(char *);
+extern void pnx8550_machine_halt(void);
 extern struct resource ioport_resource;
 extern struct resource iomem_resource;
-extern char * prom_getcmdline (void);
+extern char *prom_getcmdline(void);
 
 struct resource standard_io_resources[] = {
-  {
-    .start  = 0x00,
-    .end  = 0x1f,
-    .name = "dma1",
-    .flags  = IORESOURCE_BUSY
-  }, {
-    .start  = 0x40,
-    .end  = 0x5f,
-    .name = "timer",
-    .flags  = IORESOURCE_BUSY
-  }, {
-    .start  = 0x80,
-    .end  = 0x8f,
-    .name = "dma page reg",
-    .flags  = IORESOURCE_BUSY
-  }, {
-    .start  = 0xc0,
-    .end  = 0xdf,
-    .name = "dma2",
-    .flags  = IORESOURCE_BUSY
-  },
+	{
+		.start	= 0x00,
+		.end	= 0x1f,
+		.name	= "dma1",
+		.flags	= IORESOURCE_BUSY
+	}, {
+		.start	= 0x40,
+		.end	= 0x5f,
+		.name	= "timer",
+		.flags	= IORESOURCE_BUSY
+	}, {
+		.start	= 0x80,
+		.end	= 0x8f,
+		.name	= "dma page reg",
+		.flags	= IORESOURCE_BUSY
+	}, {
+		.start	= 0xc0,
+		.end	= 0xdf,
+		.name	= "dma2",
+		.flags	= IORESOURCE_BUSY
+	},
 };
 
 #define STANDARD_IO_RESOURCES ARRAY_SIZE(standard_io_resources)
@@ -78,65 +78,65 @@ extern struct resource pci_io_resource;
 extern struct resource pci_mem_resource;
 
 /* Return the total size of DRAM-memory, (RANK0 + RANK1) */
-unsigned long get_system_mem_size (void)
+unsigned long get_system_mem_size(void)
 {
-  /* Read IP2031_RANK0_ADDR_LO */
-  unsigned long dram_r0_lo = inl (PCI_BASE | 0x65010);
-  /* Read IP2031_RANK1_ADDR_HI */
-  unsigned long dram_r1_hi = inl (PCI_BASE | 0x65018);
-  
-  return dram_r1_hi - dram_r0_lo + 1;
+	/* Read IP2031_RANK0_ADDR_LO */
+	unsigned long dram_r0_lo = inl(PCI_BASE | 0x65010);
+	/* Read IP2031_RANK1_ADDR_HI */
+	unsigned long dram_r1_hi = inl(PCI_BASE | 0x65018);
+
+	return dram_r1_hi - dram_r0_lo + 1;
 }
 
 int pnx8550_console_port = -1;
 
-void __init plat_mem_setup (void)
+void __init plat_mem_setup(void)
 {
-  int i;
-  char * argptr;
-  
-  board_setup();  /* board specific setup */
-  
-  _machine_restart = pnx8550_machine_restart;
-  _machine_halt = pnx8550_machine_halt;
-  pm_power_off = pnx8550_machine_halt;
-  
-  /* Clear the Global 2 Register, PCI Inta Output Enable Registers
-     Bit 1:Enable DAC Powerdown
-    -> 0:DACs are enabled and are working normally
-       1:DACs are powerdown
-     Bit 0:Enable of PCI inta output
-    -> 0 = Disable PCI inta output
-       1 = Enable PCI inta output
-  */
-  PNX8550_GLB2_ENAB_INTA_O = 0;
-  
-  /* IO/MEM resources. */
-  set_io_port_base (PNX8550_PORT_BASE);
-  ioport_resource.start = 0;
-  ioport_resource.end = ~0;
-  iomem_resource.start = 0;
-  iomem_resource.end = ~0;
-  
-  /* Request I/O space for devices on this board */
-  for (i = 0; i < STANDARD_IO_RESOURCES; i++)
-  { request_resource (&ioport_resource, standard_io_resources + i); }
-  
-  /* Place the Mode Control bit for GPIO pin 16 in primary function */
-  /* Pin 16 is used by UART1, UA1_TX                                */
-  outl ( (PNX8550_GPIO_MODE_PRIMOP << PNX8550_GPIO_MC_16_BIT) |
-         (PNX8550_GPIO_MODE_PRIMOP << PNX8550_GPIO_MC_17_BIT),
-         PNX8550_GPIO_MC1);
-         
-  argptr = prom_getcmdline();
-  if ( (argptr = strstr (argptr, "console=ttyS") ) != NULL) {
-    argptr += strlen ("console=ttyS");
-    pnx8550_console_port = *argptr == '0' ? 0 : 1;
-    
-    /* We must initialize the UART (console) before early printk */
-    /* Set LCR to 8-bit and BAUD to 38400 (no 5)                */
-    ip3106_lcr (UART_BASE, pnx8550_console_port) =
-      PNX8XXX_UART_LCR_8BIT;
-    ip3106_baud (UART_BASE, pnx8550_console_port) = 5;
-  }
+	int i;
+	char* argptr;
+
+	board_setup();  /* board specific setup */
+
+        _machine_restart = pnx8550_machine_restart;
+        _machine_halt = pnx8550_machine_halt;
+        pm_power_off = pnx8550_machine_halt;
+
+	/* Clear the Global 2 Register, PCI Inta Output Enable Registers
+	   Bit 1:Enable DAC Powerdown
+	  -> 0:DACs are enabled and are working normally
+	     1:DACs are powerdown
+	   Bit 0:Enable of PCI inta output
+	  -> 0 = Disable PCI inta output
+	     1 = Enable PCI inta output
+	*/
+	PNX8550_GLB2_ENAB_INTA_O = 0;
+
+	/* IO/MEM resources. */
+	set_io_port_base(PNX8550_PORT_BASE);
+	ioport_resource.start = 0;
+	ioport_resource.end = ~0;
+	iomem_resource.start = 0;
+	iomem_resource.end = ~0;
+
+	/* Request I/O space for devices on this board */
+	for (i = 0; i < STANDARD_IO_RESOURCES; i++)
+		request_resource(&ioport_resource, standard_io_resources + i);
+
+	/* Place the Mode Control bit for GPIO pin 16 in primary function */
+	/* Pin 16 is used by UART1, UA1_TX                                */
+	outl((PNX8550_GPIO_MODE_PRIMOP << PNX8550_GPIO_MC_16_BIT) |
+			(PNX8550_GPIO_MODE_PRIMOP << PNX8550_GPIO_MC_17_BIT),
+			PNX8550_GPIO_MC1);
+
+	argptr = prom_getcmdline();
+	if ((argptr = strstr(argptr, "console=ttyS")) != NULL) {
+		argptr += strlen("console=ttyS");
+		pnx8550_console_port = *argptr == '0' ? 0 : 1;
+
+		/* We must initialize the UART (console) before early printk */
+		/* Set LCR to 8-bit and BAUD to 38400 (no 5)                */
+		ip3106_lcr(UART_BASE, pnx8550_console_port) =
+			PNX8XXX_UART_LCR_8BIT;
+		ip3106_baud(UART_BASE, pnx8550_console_port) = 5;
+	}
 }

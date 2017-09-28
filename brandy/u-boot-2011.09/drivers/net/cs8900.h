@@ -46,27 +46,27 @@
    upper 16-bits. i'm not sure if this holds for the EDB7211. */
 
 #ifdef CONFIG_CS8900_BUS16
-/* 16 bit aligned registers, 16 bit wide */
-#define CS8900_REG u16
+  /* 16 bit aligned registers, 16 bit wide */
+  #define CS8900_REG u16
 #elif defined(CONFIG_CS8900_BUS32)
-/* 32 bit aligned registers, 16 bit wide (we ignore upper 16 bits) */
-#define CS8900_REG u32
+  /* 32 bit aligned registers, 16 bit wide (we ignore upper 16 bits) */
+  #define CS8900_REG u32
 #else
-#error unknown bussize ...
+  #error unknown bussize ...
 #endif
 
 struct cs8900_regs {
-  CS8900_REG rtdata;
-  CS8900_REG pad0;
-  CS8900_REG txcmd;
-  CS8900_REG txlen;
-  CS8900_REG isq;
-  CS8900_REG pptr;
-  CS8900_REG pdata;
+	CS8900_REG rtdata;
+	CS8900_REG pad0;
+	CS8900_REG txcmd;
+	CS8900_REG txlen;
+	CS8900_REG isq;
+	CS8900_REG pptr;
+	CS8900_REG pdata;
 };
 
 struct cs8900_priv {
-  struct cs8900_regs * regs;
+	struct cs8900_regs *regs;
 };
 
 #define ISQ_RxEvent     0x04
@@ -249,16 +249,16 @@ struct cs8900_priv {
 
 /* EEPROM Kram */
 #define SI_BUSY 0x0100
-#define PP_EECMD 0x0040   /*  NVR Interface Command register */
-#define PP_EEData 0x0042  /*  NVR Interface Data Register */
-#define EEPROM_WRITE_EN   0x00F0
-#define EEPROM_WRITE_DIS  0x0000
-#define EEPROM_WRITE_CMD  0x0100
-#define EEPROM_READ_CMD   0x0200
-#define EEPROM_ERASE_CMD  0x0300
+#define PP_EECMD 0x0040		/*  NVR Interface Command register */
+#define PP_EEData 0x0042	/*  NVR Interface Data Register */
+#define EEPROM_WRITE_EN		0x00F0
+#define EEPROM_WRITE_DIS	0x0000
+#define EEPROM_WRITE_CMD	0x0100
+#define EEPROM_READ_CMD		0x0200
+#define EEPROM_ERASE_CMD	0x0300
 
 /* Exported functions */
-int cs8900_e2prom_read (struct eth_device * dev, uchar, ushort *);
-int cs8900_e2prom_write (struct eth_device * dev, uchar, ushort);
+int cs8900_e2prom_read(struct eth_device *dev, uchar, ushort *);
+int cs8900_e2prom_write(struct eth_device *dev, uchar, ushort);
 
 #endif  /* CS8900_H */

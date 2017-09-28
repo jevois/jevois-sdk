@@ -21,8 +21,8 @@
  * MA 02111-1307 USA
  */
 
-int hpi_init (void);
+int hpi_init(void);
 
 #ifdef CONFIG_SPC1920_HPI_TEST
-int hpi_test (void);
+int hpi_test(void);
 #endif

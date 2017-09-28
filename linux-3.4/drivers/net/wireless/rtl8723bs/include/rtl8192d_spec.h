@@ -1,7 +1,7 @@
 /******************************************************************************
  *
  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
- *
+ *                                        
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of version 2 of the GNU General Public License as
  * published by the Free Software Foundation.
@@ -26,18 +26,18 @@
 
 
 
-#define REG_HMEBOX_EXT_0      0x0088
-#define REG_HMEBOX_EXT_1      0x008A
-#define REG_HMEBOX_EXT_2      0x008C
-#define REG_HMEBOX_EXT_3      0x008E
-#define REG_MAC0                                  0x0081
-#define REG_MAC1                                  0x0053
-#define FW_MAC0_ready                       0x18
-#define FW_MAC1_ready                       0x1A
-#define MAC0_ON                                   BIT7
-#define MAC1_ON                                   BIT0
-#define mac0_ready                              BIT0
-#define mac1_ready                              BIT0
+#define REG_HMEBOX_EXT_0			0x0088
+#define REG_HMEBOX_EXT_1			0x008A
+#define REG_HMEBOX_EXT_2			0x008C
+#define REG_HMEBOX_EXT_3			0x008E
+#define REG_MAC0                                	0x0081
+#define REG_MAC1                                	0x0053
+#define FW_MAC0_ready                      	0x18
+#define FW_MAC1_ready                      	0x1A
+#define MAC0_ON                                  	BIT7
+#define MAC1_ON                                  	BIT0
+#define mac0_ready                             	BIT0
+#define mac1_ready                             	BIT0
 
 
 
@@ -49,8 +49,8 @@
 
 
 #ifdef CONFIG_PCI_HCI
-#define RT_BCN_INT_MASKS        (IMR_BcnInt | IMR_TBDOK | IMR_TBDER)
-#define RT_AC_INT_MASKS       (IMR_VIDOK | IMR_VODOK | IMR_BEDOK|IMR_BKDOK)
+#define RT_BCN_INT_MASKS				(IMR_BcnInt | IMR_TBDOK | IMR_TBDER)
+#define RT_AC_INT_MASKS				(IMR_VIDOK | IMR_VODOK | IMR_BEDOK|IMR_BKDOK)
 #endif
 
 

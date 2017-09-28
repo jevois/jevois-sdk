@@ -6,9 +6,9 @@
  */
 
 /*
- *  linux/arch/i386/kernel/irq.c
+ *	linux/arch/i386/kernel/irq.c
  *
- *  Copyright (C) 1992, 1998 Linus Torvalds, Ingo Molnar
+ *	Copyright (C) 1992, 1998 Linus Torvalds, Ingo Molnar
  *
  * This file contains the lowest level m32r-specific interrupt
  * entry and irq statistics code. All the remaining irq logic is
@@ -26,18 +26,18 @@
  * SMP cross-CPU interrupts have their own specific
  * handlers).
  */
-asmlinkage unsigned int do_IRQ (int irq, struct pt_regs * regs)
+asmlinkage unsigned int do_IRQ(int irq, struct pt_regs *regs)
 {
-  struct pt_regs * old_regs;
-  old_regs = set_irq_regs (regs);
-  irq_enter();
-  
-  #ifdef CONFIG_DEBUG_STACKOVERFLOW
-  /* FIXME M32R */
-  #endif
-  generic_handle_irq (irq);
-  irq_exit();
-  set_irq_regs (old_regs);
-  
-  return 1;
+	struct pt_regs *old_regs;
+	old_regs = set_irq_regs(regs);
+	irq_enter();
+
+#ifdef CONFIG_DEBUG_STACKOVERFLOW
+	/* FIXME M32R */
+#endif
+	generic_handle_irq(irq);
+	irq_exit();
+	set_irq_regs(old_regs);
+
+	return 1;
 }

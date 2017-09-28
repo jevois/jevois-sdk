@@ -19,39 +19,39 @@
 #include "devices.h"
 
 static struct mtd_partition easy50601_partitions[] = {
-  {
-    .name = "uboot",
-    .offset = 0x0,
-    .size = 0x10000,
-  },
-  {
-    .name = "uboot_env",
-    .offset = 0x10000,
-    .size = 0x10000,
-  },
-  {
-    .name = "linux",
-    .offset = 0x20000,
-    .size = 0xE0000,
-  },
-  {
-    .name = "rootfs",
-    .offset = 0x100000,
-    .size = 0x300000,
-  },
+	{
+		.name	= "uboot",
+		.offset	= 0x0,
+		.size	= 0x10000,
+	},
+	{
+		.name	= "uboot_env",
+		.offset	= 0x10000,
+		.size	= 0x10000,
+	},
+	{
+		.name	= "linux",
+		.offset	= 0x20000,
+		.size	= 0xE0000,
+	},
+	{
+		.name	= "rootfs",
+		.offset	= 0x100000,
+		.size	= 0x300000,
+	},
 };
 
 static struct physmap_flash_data easy50601_flash_data = {
-  .nr_parts = ARRAY_SIZE (easy50601_partitions),
-  .parts    = easy50601_partitions,
+	.nr_parts	= ARRAY_SIZE(easy50601_partitions),
+	.parts		= easy50601_partitions,
 };
 
-static void __init easy50601_init (void)
+static void __init easy50601_init(void)
 {
-  ltq_register_nor (&easy50601_flash_data);
+	ltq_register_nor(&easy50601_flash_data);
 }
 
-MIPS_MACHINE (LTQ_MACH_EASY50601,
-              "EASY50601",
-              "EASY50601 Eval Board",
-              easy50601_init);
+MIPS_MACHINE(LTQ_MACH_EASY50601,
+			"EASY50601",
+			"EASY50601 Eval Board",
+			easy50601_init);

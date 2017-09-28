@@ -33,38 +33,38 @@
 /*---------------------  Export Definitions -------------------------*/
 
 /* bit type */
-#define BIT0  0x00000001
-#define BIT1  0x00000002
-#define BIT2  0x00000004
-#define BIT3  0x00000008
-#define BIT4  0x00000010
-#define BIT5  0x00000020
-#define BIT6  0x00000040
-#define BIT7  0x00000080
-#define BIT8  0x00000100
-#define BIT9  0x00000200
-#define BIT10 0x00000400
-#define BIT11 0x00000800
-#define BIT12 0x00001000
-#define BIT13 0x00002000
-#define BIT14 0x00004000
-#define BIT15 0x00008000
-#define BIT16 0x00010000
-#define BIT17 0x00020000
-#define BIT18 0x00040000
-#define BIT19 0x00080000
-#define BIT20 0x00100000
-#define BIT21 0x00200000
-#define BIT22 0x00400000
-#define BIT23 0x00800000
-#define BIT24 0x01000000
-#define BIT25 0x02000000
-#define BIT26 0x04000000
-#define BIT27 0x08000000
-#define BIT28 0x10000000
-#define BIT29 0x20000000
-#define BIT30 0x40000000
-#define BIT31 0x80000000
+#define BIT0	0x00000001
+#define BIT1	0x00000002
+#define BIT2	0x00000004
+#define BIT3	0x00000008
+#define BIT4	0x00000010
+#define BIT5	0x00000020
+#define BIT6	0x00000040
+#define BIT7	0x00000080
+#define BIT8	0x00000100
+#define BIT9	0x00000200
+#define BIT10	0x00000400
+#define BIT11	0x00000800
+#define BIT12	0x00001000
+#define BIT13	0x00002000
+#define BIT14	0x00004000
+#define BIT15	0x00008000
+#define BIT16	0x00010000
+#define BIT17	0x00020000
+#define BIT18	0x00040000
+#define BIT19	0x00080000
+#define BIT20	0x00100000
+#define BIT21	0x00200000
+#define BIT22	0x00400000
+#define BIT23	0x00800000
+#define BIT24	0x01000000
+#define BIT25	0x02000000
+#define BIT26	0x04000000
+#define BIT27	0x08000000
+#define BIT28	0x10000000
+#define BIT29	0x20000000
+#define BIT30	0x40000000
+#define BIT31	0x80000000
 
 /* 802.11 frame related, defined as 802.11 spec */
 #define WLAN_ADDR_LEN               6
@@ -84,8 +84,8 @@
 #define WLAN_RSN_MAXLEN             32
 #define WLAN_DATA_MAXLEN            2312
 #define WLAN_A3FR_MAXLEN            (WLAN_HDR_ADDR3_LEN \
-                                     + WLAN_DATA_MAXLEN \
-                                     + WLAN_CRC_LEN)
+				     + WLAN_DATA_MAXLEN \
+				     + WLAN_CRC_LEN)
 
 #define WLAN_BEACON_FR_MAXLEN       WLAN_A3FR_MAXLEN
 #define WLAN_ATIM_FR_MAXLEN         (WLAN_HDR_ADDR3_LEN + 0)
@@ -160,7 +160,7 @@
 #define WLAN_GET_FC_PRVER(n)    ((((WORD)(n) >> 8) & (BIT0 | BIT1))
 #define WLAN_GET_FC_FTYPE(n)    ((((WORD)(n) >> 8) & (BIT2 | BIT3)) >> 2)
 #define WLAN_GET_FC_FSTYPE(n)   ((((WORD)(n) >> 8) \
-                                  & (BIT4|BIT5|BIT6|BIT7)) >> 4)
+				  & (BIT4|BIT5|BIT6|BIT7)) >> 4)
 #define WLAN_GET_FC_TODS(n)     ((((WORD)(n) << 8) & (BIT8)) >> 8)
 #define WLAN_GET_FC_FROMDS(n)   ((((WORD)(n) << 8) & (BIT9)) >> 9)
 #define WLAN_GET_FC_MOREFRAG(n) ((((WORD)(n) << 8) & (BIT10)) >> 10)
@@ -173,7 +173,7 @@
 /* Sequence Field bit */
 #define WLAN_GET_SEQ_FRGNUM(n) (((WORD)(n) >> 8) & (BIT0|BIT1|BIT2|BIT3))
 #define WLAN_GET_SEQ_SEQNUM(n) ((((WORD)(n) >> 8) \
-                                 & (~(BIT0|BIT1|BIT2|BIT3))) >> 4)
+				 & (~(BIT0|BIT1|BIT2|BIT3))) >> 4)
 
 /* Capability Field bit */
 #define WLAN_GET_CAP_INFO_ESS(n)           (((n) >> 8) & BIT0)
@@ -279,52 +279,52 @@
 #define IEEE_ADDR_GROUP             0x01
 
 typedef struct {
-  BYTE            abyAddr[6];
+    BYTE            abyAddr[6];
 } IEEE_ADDR, *PIEEE_ADDR;
 
 /* 802.11 Header Format */
 
 typedef struct tagWLAN_80211HDR_A2 {
 
-  WORD    wFrameCtl;
-  WORD    wDurationID;
-  BYTE    abyAddr1[WLAN_ADDR_LEN];
-  BYTE    abyAddr2[WLAN_ADDR_LEN];
-  
-} __attribute__ ( (__packed__) )
+    WORD    wFrameCtl;
+    WORD    wDurationID;
+    BYTE    abyAddr1[WLAN_ADDR_LEN];
+    BYTE    abyAddr2[WLAN_ADDR_LEN];
+
+} __attribute__ ((__packed__))
 WLAN_80211HDR_A2, *PWLAN_80211HDR_A2;
 
 typedef struct tagWLAN_80211HDR_A3 {
 
-  WORD    wFrameCtl;
-  WORD    wDurationID;
-  BYTE    abyAddr1[WLAN_ADDR_LEN];
-  BYTE    abyAddr2[WLAN_ADDR_LEN];
-  BYTE    abyAddr3[WLAN_ADDR_LEN];
-  WORD    wSeqCtl;
-  
-} __attribute__ ( (__packed__) )
+    WORD    wFrameCtl;
+    WORD    wDurationID;
+    BYTE    abyAddr1[WLAN_ADDR_LEN];
+    BYTE    abyAddr2[WLAN_ADDR_LEN];
+    BYTE    abyAddr3[WLAN_ADDR_LEN];
+    WORD    wSeqCtl;
+
+} __attribute__ ((__packed__))
 WLAN_80211HDR_A3, *PWLAN_80211HDR_A3;
 
 typedef struct tagWLAN_80211HDR_A4 {
 
-  WORD    wFrameCtl;
-  WORD    wDurationID;
-  BYTE    abyAddr1[WLAN_ADDR_LEN];
-  BYTE    abyAddr2[WLAN_ADDR_LEN];
-  BYTE    abyAddr3[WLAN_ADDR_LEN];
-  WORD    wSeqCtl;
-  BYTE    abyAddr4[WLAN_ADDR_LEN];
-  
-} __attribute__ ( (__packed__) )
+    WORD    wFrameCtl;
+    WORD    wDurationID;
+    BYTE    abyAddr1[WLAN_ADDR_LEN];
+    BYTE    abyAddr2[WLAN_ADDR_LEN];
+    BYTE    abyAddr3[WLAN_ADDR_LEN];
+    WORD    wSeqCtl;
+    BYTE    abyAddr4[WLAN_ADDR_LEN];
+
+} __attribute__ ((__packed__))
 WLAN_80211HDR_A4, *PWLAN_80211HDR_A4;
 
 typedef union tagUWLAN_80211HDR {
 
-  WLAN_80211HDR_A2        sA2;
-  WLAN_80211HDR_A3        sA3;
-  WLAN_80211HDR_A4        sA4;
-  
+    WLAN_80211HDR_A2        sA2;
+    WLAN_80211HDR_A3        sA3;
+    WLAN_80211HDR_A4        sA4;
+
 } UWLAN_80211HDR, *PUWLAN_80211HDR;
 
 /*---------------------  Export Classes  ----------------------------*/

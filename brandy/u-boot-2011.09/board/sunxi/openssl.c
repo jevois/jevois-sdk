@@ -11,7 +11,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -33,7 +33,7 @@
 
 #include "../fs/aw_fs/ff.h"
 
-extern RSA * PEM_read_RSA_PUBKEY (FILE * fp, RSA ** x, void * cb, void * u);
+extern RSA *PEM_read_RSA_PUBKEY(FILE *fp, RSA **x, void *cb, void *u);
 /*
 ************************************************************************************************************
 *
@@ -50,43 +50,43 @@ extern RSA * PEM_read_RSA_PUBKEY (FILE * fp, RSA ** x, void * cb, void * u);
 *
 ************************************************************************************************************
 */
-int sunxi_rsa_publickey_decrypt (char * source_str, char * decryped_data, int data_bytes, char * key_path)
+int sunxi_rsa_publickey_decrypt(char *source_str, char *decryped_data, int data_bytes, char *key_path)
 {
-  RSA * p_rsa;
-  FILE file;
-  int rsa_len, ret = -1;
-  
-  printf ("sunxi_rsa_publickey_decrypt key name=%s\n", key_path);
-  
-  ret = f_open (&file, key_path, FA_OPEN_EXISTING | FA_READ );
-  if (ret)
-  {
-    printf ("open key file error\n");
-    
-    return -1;
-  }
-  if ( (p_rsa = PEM_read_RSA_PUBKEY (&file, NULL, NULL, NULL) ) == NULL)
-  {
-    printf ("unable to get public key\n");
-    
-    goto __sunxi_rsa_publickey_decrypt_err;
-  }
-  
-  rsa_len = RSA_size (p_rsa);
-  
-  if (RSA_public_decrypt (rsa_len, (unsigned char *) source_str, (unsigned char *) decryped_data, p_rsa, RSA_NO_PADDING) < 0)
-  {
-    goto __sunxi_rsa_publickey_decrypt_err;
-  }
-  ret = 0;
-  
+    RSA *p_rsa;
+    FILE file;
+    int rsa_len, ret = -1;
+
+	printf("sunxi_rsa_publickey_decrypt key name=%s\n", key_path);
+
+	ret = f_open (&file, key_path, FA_OPEN_EXISTING | FA_READ );
+    if(ret)
+    {
+        printf("open key file error\n");
+
+        return -1;
+    }
+    if((p_rsa=PEM_read_RSA_PUBKEY(&file,NULL,NULL,NULL))==NULL)
+    {
+        printf("unable to get public key\n");
+
+        goto __sunxi_rsa_publickey_decrypt_err;
+    }
+
+    rsa_len=RSA_size(p_rsa);
+
+    if(RSA_public_decrypt(rsa_len,(unsigned char *)source_str, (unsigned char*)decryped_data, p_rsa, RSA_NO_PADDING)<0)
+    {
+        goto __sunxi_rsa_publickey_decrypt_err;
+    }
+    ret = 0;
+
 __sunxi_rsa_publickey_decrypt_err:
-  f_close (&file);
-  
-  if (p_rsa != NULL)
-  { RSA_free (p_rsa); }
-  
-  return ret;
+	f_close(&file);
+
+	if(p_rsa != NULL)
+		RSA_free(p_rsa);
+
+    return ret;
 }
 /*
 ************************************************************************************************************

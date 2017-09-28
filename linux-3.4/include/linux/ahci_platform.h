@@ -21,13 +21,13 @@ struct device;
 struct ata_port_info;
 
 struct ahci_platform_data {
-  int (*init) (struct device * dev, void __iomem * addr);
-  void (*exit) (struct device * dev);
-  int (*suspend) (struct device * dev);
-  int (*resume) (struct device * dev);
-  const struct ata_port_info * ata_port_info;
-  unsigned int force_port_map;
-  unsigned int mask_port_map;
+	int (*init)(struct device *dev, void __iomem *addr);
+	void (*exit)(struct device *dev);
+	int (*suspend)(struct device *dev);
+	int (*resume)(struct device *dev);
+	const struct ata_port_info *ata_port_info;
+	unsigned int force_port_map;
+	unsigned int mask_port_map;
 };
 
 #endif /* _AHCI_PLATFORM_H */

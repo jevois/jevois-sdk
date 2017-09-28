@@ -16,10 +16,10 @@
 #ifndef  __SUNXI_UDC_BOARD_H__
 #define  __SUNXI_UDC_BOARD_H__
 
-u32 open_usb_clock (sunxi_udc_io_t * sunxi_udc_io);
-u32 close_usb_clock (sunxi_udc_io_t * sunxi_udc_io);
+u32 open_usb_clock(sunxi_udc_io_t *sunxi_udc_io);
+u32 close_usb_clock(sunxi_udc_io_t *sunxi_udc_io);
 
-__s32 sunxi_udc_io_init (__u32 usbc_no, struct platform_device * pdev, sunxi_udc_io_t * sunxi_udc_io);
-__s32 sunxi_udc_io_exit (__u32 usbc_no, struct platform_device * pdev, sunxi_udc_io_t * sunxi_udc_io);
-__s32 sunxi_udc_bsp_init (__u32 usbc_no, sunxi_udc_io_t * sunxi_udc_io);
+__s32 sunxi_udc_io_init(__u32 usbc_no, struct platform_device *pdev, sunxi_udc_io_t *sunxi_udc_io);
+__s32 sunxi_udc_io_exit(__u32 usbc_no, struct platform_device *pdev, sunxi_udc_io_t *sunxi_udc_io);
+__s32 sunxi_udc_bsp_init(__u32 usbc_no, sunxi_udc_io_t *sunxi_udc_io);
 #endif  

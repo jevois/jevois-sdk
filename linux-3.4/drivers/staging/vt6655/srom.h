@@ -82,34 +82,34 @@
 /*---------------------  Export Types  ------------------------------*/
 
 typedef struct tagSSromReg {
-  unsigned char abyPAR[6];                 
-  
-  unsigned short wSUB_VID;                  
-  unsigned short wSUB_SID;
-  
-  unsigned char byBCFG0;                   
-  unsigned char byBCFG1;
-  
-  unsigned char byFCR0;                    
-  unsigned char byFCR1;
-  unsigned char byPMC0;                    
-  unsigned char byPMC1;
-  unsigned char byMAXLAT;                  
-  unsigned char byMINGNT;
-  unsigned char byCFG0;                    
-  unsigned char byCFG1;
-  unsigned short wCISPTR;                   
-  unsigned short wRsv0;                     
-  unsigned short wRsv1;                     
-  unsigned char byBBPAIR;                  
-  unsigned char byRFTYPE;
-  unsigned char byMinChannel;              
-  unsigned char byMaxChannel;
-  unsigned char bySignature;               
-  unsigned char byCheckSum;
-  
-  unsigned char abyReserved0[96];          
-  unsigned char abyCIS[128];               
+    unsigned char abyPAR[6];                 
+
+    unsigned short wSUB_VID;                  
+    unsigned short wSUB_SID;
+
+    unsigned char byBCFG0;                   
+    unsigned char byBCFG1;
+
+    unsigned char byFCR0;                    
+    unsigned char byFCR1;
+    unsigned char byPMC0;                    
+    unsigned char byPMC1;
+    unsigned char byMAXLAT;                  
+    unsigned char byMINGNT;
+    unsigned char byCFG0;                    
+    unsigned char byCFG1;
+    unsigned short wCISPTR;                   
+    unsigned short wRsv0;                     
+    unsigned short wRsv1;                     
+    unsigned char byBBPAIR;                  
+    unsigned char byRFTYPE;
+    unsigned char byMinChannel;              
+    unsigned char byMaxChannel;
+    unsigned char bySignature;               
+    unsigned char byCheckSum;
+
+    unsigned char abyReserved0[96];          
+    unsigned char abyCIS[128];               
 } SSromReg, *PSSromReg;
 
 /*---------------------  Export Macros ------------------------------*/
@@ -120,22 +120,22 @@ typedef struct tagSSromReg {
 
 /*---------------------  Export Functions  --------------------------*/
 
-unsigned char SROMbyReadEmbedded (unsigned long dwIoBase, unsigned char byContntOffset);
-bool SROMbWriteEmbedded (unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byData);
+unsigned char SROMbyReadEmbedded(unsigned long dwIoBase, unsigned char byContntOffset);
+bool SROMbWriteEmbedded(unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byData);
 
-void SROMvRegBitsOn (unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byBits);
-void SROMvRegBitsOff (unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byBits);
+void SROMvRegBitsOn(unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byBits);
+void SROMvRegBitsOff(unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byBits);
 
-bool SROMbIsRegBitsOn (unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byTestBits);
-bool SROMbIsRegBitsOff (unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byTestBits);
+bool SROMbIsRegBitsOn(unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byTestBits);
+bool SROMbIsRegBitsOff(unsigned long dwIoBase, unsigned char byContntOffset, unsigned char byTestBits);
 
-void SROMvReadAllContents (unsigned long dwIoBase, unsigned char * pbyEepromRegs);
-void SROMvWriteAllContents (unsigned long dwIoBase, unsigned char * pbyEepromRegs);
+void SROMvReadAllContents(unsigned long dwIoBase, unsigned char *pbyEepromRegs);
+void SROMvWriteAllContents(unsigned long dwIoBase, unsigned char *pbyEepromRegs);
 
-void SROMvReadEtherAddress (unsigned long dwIoBase, unsigned char * pbyEtherAddress);
-void SROMvWriteEtherAddress (unsigned long dwIoBase, unsigned char * pbyEtherAddress);
+void SROMvReadEtherAddress(unsigned long dwIoBase, unsigned char *pbyEtherAddress);
+void SROMvWriteEtherAddress(unsigned long dwIoBase, unsigned char *pbyEtherAddress);
 
-void SROMvReadSubSysVenId (unsigned long dwIoBase, unsigned long * pdwSubSysVenId);
+void SROMvReadSubSysVenId(unsigned long dwIoBase, unsigned long *pdwSubSysVenId);
 
 bool SROMbAutoLoad (unsigned long dwIoBase);
 

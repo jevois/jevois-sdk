@@ -11,7 +11,7 @@
 
 #ifndef REG_WRITE
 #define REG_WRITE(type, addr, val) \
-  do { *((volatile type *) (addr)) = (val); } while(0)
+   do { *((volatile type *) (addr)) = (val); } while(0)
 #endif
 
 #endif

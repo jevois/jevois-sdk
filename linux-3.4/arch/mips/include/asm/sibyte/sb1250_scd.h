@@ -1,7 +1,7 @@
 /*  *********************************************************************
     *  SB1250 Board Support Package
     *
-    *  SCD Constants and Macros     File: sb1250_scd.h
+    *  SCD Constants and Macros			File: sb1250_scd.h
     *
     *  This module contains constants and macros useful for
     *  manipulating the System Control and Debug module on the 1250.
@@ -42,55 +42,55 @@
  * System Revision Register (Table 4-1)
  */
 
-#define M_SYS_RESERVED        _SB_MAKEMASK(8, 0)
+#define M_SYS_RESERVED		    _SB_MAKEMASK(8, 0)
 
 #define S_SYS_REVISION              _SB_MAKE64(8)
 #define M_SYS_REVISION              _SB_MAKEMASK(8, S_SYS_REVISION)
 #define V_SYS_REVISION(x)           _SB_MAKEVALUE(x, S_SYS_REVISION)
 #define G_SYS_REVISION(x)           _SB_GETVALUE(x, S_SYS_REVISION, M_SYS_REVISION)
 
-#define K_SYS_REVISION_BCM1250_PASS1  0x01
+#define K_SYS_REVISION_BCM1250_PASS1	0x01
 
-#define K_SYS_REVISION_BCM1250_PASS2  0x03
-#define K_SYS_REVISION_BCM1250_A1 0x03  /* Pass 2.0 WB */
-#define K_SYS_REVISION_BCM1250_A2 0x04  /* Pass 2.0 FC */
-#define K_SYS_REVISION_BCM1250_A3 0x05  /* Pass 2.1 FC */
-#define K_SYS_REVISION_BCM1250_A4 0x06  /* Pass 2.1 WB */
-#define K_SYS_REVISION_BCM1250_A6 0x07  /* OR 0x04 (A2) w/WID != 0 */
-#define K_SYS_REVISION_BCM1250_A8 0x0b  /* A8/A10 */
-#define K_SYS_REVISION_BCM1250_A9 0x08
-#define K_SYS_REVISION_BCM1250_A10  K_SYS_REVISION_BCM1250_A8
+#define K_SYS_REVISION_BCM1250_PASS2	0x03
+#define K_SYS_REVISION_BCM1250_A1	0x03	/* Pass 2.0 WB */
+#define K_SYS_REVISION_BCM1250_A2	0x04	/* Pass 2.0 FC */
+#define K_SYS_REVISION_BCM1250_A3	0x05	/* Pass 2.1 FC */
+#define K_SYS_REVISION_BCM1250_A4	0x06	/* Pass 2.1 WB */
+#define K_SYS_REVISION_BCM1250_A6	0x07	/* OR 0x04 (A2) w/WID != 0 */
+#define K_SYS_REVISION_BCM1250_A8	0x0b	/* A8/A10 */
+#define K_SYS_REVISION_BCM1250_A9	0x08
+#define K_SYS_REVISION_BCM1250_A10	K_SYS_REVISION_BCM1250_A8
 
-#define K_SYS_REVISION_BCM1250_PASS2_2  0x10
-#define K_SYS_REVISION_BCM1250_B0 K_SYS_REVISION_BCM1250_B1
-#define K_SYS_REVISION_BCM1250_B1 0x10
-#define K_SYS_REVISION_BCM1250_B2 0x11
+#define K_SYS_REVISION_BCM1250_PASS2_2	0x10
+#define K_SYS_REVISION_BCM1250_B0	K_SYS_REVISION_BCM1250_B1
+#define K_SYS_REVISION_BCM1250_B1	0x10
+#define K_SYS_REVISION_BCM1250_B2	0x11
 
-#define K_SYS_REVISION_BCM1250_C0 0x20
-#define K_SYS_REVISION_BCM1250_C1 0x21
-#define K_SYS_REVISION_BCM1250_C2 0x22
-#define K_SYS_REVISION_BCM1250_C3 0x23
+#define K_SYS_REVISION_BCM1250_C0	0x20
+#define K_SYS_REVISION_BCM1250_C1	0x21
+#define K_SYS_REVISION_BCM1250_C2	0x22
+#define K_SYS_REVISION_BCM1250_C3	0x23
 
 #if SIBYTE_HDR_FEATURE_CHIP(1250)
 /* XXX: discourage people from using these constants.  */
-#define K_SYS_REVISION_PASS1      K_SYS_REVISION_BCM1250_PASS1
-#define K_SYS_REVISION_PASS2      K_SYS_REVISION_BCM1250_PASS2
-#define K_SYS_REVISION_PASS2_2      K_SYS_REVISION_BCM1250_PASS2_2
-#define K_SYS_REVISION_PASS3      K_SYS_REVISION_BCM1250_PASS3
-#define K_SYS_REVISION_BCM1250_PASS3  K_SYS_REVISION_BCM1250_C0
+#define K_SYS_REVISION_PASS1	    K_SYS_REVISION_BCM1250_PASS1
+#define K_SYS_REVISION_PASS2	    K_SYS_REVISION_BCM1250_PASS2
+#define K_SYS_REVISION_PASS2_2	    K_SYS_REVISION_BCM1250_PASS2_2
+#define K_SYS_REVISION_PASS3	    K_SYS_REVISION_BCM1250_PASS3
+#define K_SYS_REVISION_BCM1250_PASS3	K_SYS_REVISION_BCM1250_C0
 #endif /* 1250 */
 
-#define K_SYS_REVISION_BCM112x_A1 0x20
-#define K_SYS_REVISION_BCM112x_A2 0x21
-#define K_SYS_REVISION_BCM112x_A3 0x22
-#define K_SYS_REVISION_BCM112x_A4 0x23
-#define K_SYS_REVISION_BCM112x_B0 0x30
+#define K_SYS_REVISION_BCM112x_A1	0x20
+#define K_SYS_REVISION_BCM112x_A2	0x21
+#define K_SYS_REVISION_BCM112x_A3	0x22
+#define K_SYS_REVISION_BCM112x_A4	0x23
+#define K_SYS_REVISION_BCM112x_B0	0x30
 
-#define K_SYS_REVISION_BCM1480_S0 0x01
-#define K_SYS_REVISION_BCM1480_A1 0x02
-#define K_SYS_REVISION_BCM1480_A2 0x03
-#define K_SYS_REVISION_BCM1480_A3 0x04
-#define K_SYS_REVISION_BCM1480_B0 0x11
+#define K_SYS_REVISION_BCM1480_S0	0x01
+#define K_SYS_REVISION_BCM1480_A1	0x02
+#define K_SYS_REVISION_BCM1480_A2	0x03
+#define K_SYS_REVISION_BCM1480_A3	0x04
+#define K_SYS_REVISION_BCM1480_B0	0x11
 
 /*Cache size - 23:20  of revision register*/
 #define S_SYS_L2C_SIZE            _SB_MAKE64(20)
@@ -98,14 +98,14 @@
 #define V_SYS_L2C_SIZE(x)         _SB_MAKEVALUE(x, S_SYS_L2C_SIZE)
 #define G_SYS_L2C_SIZE(x)         _SB_GETVALUE(x, S_SYS_L2C_SIZE, M_SYS_L2C_SIZE)
 
-#define K_SYS_L2C_SIZE_1MB  0
-#define K_SYS_L2C_SIZE_512KB  5
-#define K_SYS_L2C_SIZE_256KB  2
-#define K_SYS_L2C_SIZE_128KB  1
+#define K_SYS_L2C_SIZE_1MB	0
+#define K_SYS_L2C_SIZE_512KB	5
+#define K_SYS_L2C_SIZE_256KB	2
+#define K_SYS_L2C_SIZE_128KB	1
 
-#define K_SYS_L2C_SIZE_BCM1250  K_SYS_L2C_SIZE_512KB
-#define K_SYS_L2C_SIZE_BCM1125  K_SYS_L2C_SIZE_256KB
-#define K_SYS_L2C_SIZE_BCM1122  K_SYS_L2C_SIZE_128KB
+#define K_SYS_L2C_SIZE_BCM1250	K_SYS_L2C_SIZE_512KB
+#define K_SYS_L2C_SIZE_BCM1125	K_SYS_L2C_SIZE_256KB
+#define K_SYS_L2C_SIZE_BCM1122	K_SYS_L2C_SIZE_128KB
 
 
 /* Number of CPU cores, bits 27:24  of revision register*/
@@ -137,10 +137,10 @@
 
 #define K_SYS_SOC_TYPE_BCM1250      0x0
 #define K_SYS_SOC_TYPE_BCM1120      0x1
-#define K_SYS_SOC_TYPE_BCM1250_ALT  0x2   /* 1250pass2 w/ 1/4 L2.  */
+#define K_SYS_SOC_TYPE_BCM1250_ALT  0x2		/* 1250pass2 w/ 1/4 L2.  */
 #define K_SYS_SOC_TYPE_BCM1125      0x3
 #define K_SYS_SOC_TYPE_BCM1125H     0x4
-#define K_SYS_SOC_TYPE_BCM1250_ALT2 0x5   /* 1250pass2 w/ 1/2 L2.  */
+#define K_SYS_SOC_TYPE_BCM1250_ALT2 0x5		/* 1250pass2 w/ 1/2 L2.  */
 #define K_SYS_SOC_TYPE_BCM1x80      0x6
 #define K_SYS_SOC_TYPE_BCM1x55      0x7
 
@@ -151,22 +151,22 @@
  * Also, it clobbers AT.)
  */
 #ifdef __ASSEMBLER__
-#define SYS_SOC_TYPE(dest, sysrev)          \
-  .set push ;             \
-  .set reorder ;              \
-  dsrl  dest, sysrev, S_SYS_SOC_TYPE ;        \
-  andi  dest, dest, (M_SYS_SOC_TYPE >> S_SYS_SOC_TYPE);   \
-  beq dest, K_SYS_SOC_TYPE_BCM1250_ALT, 991f ;    \
-  beq dest, K_SYS_SOC_TYPE_BCM1250_ALT2, 991f  ;    \
-  b 992f ;              \
-  991:  li  dest, K_SYS_SOC_TYPE_BCM1250 ;        \
-  992:                  \
-  .set pop
+#define SYS_SOC_TYPE(dest, sysrev)					\
+	.set push ;							\
+	.set reorder ;							\
+	dsrl	dest, sysrev, S_SYS_SOC_TYPE ;				\
+	andi	dest, dest, (M_SYS_SOC_TYPE >> S_SYS_SOC_TYPE);		\
+	beq	dest, K_SYS_SOC_TYPE_BCM1250_ALT, 991f ;		\
+	beq	dest, K_SYS_SOC_TYPE_BCM1250_ALT2, 991f	 ;		\
+	b	992f ;							\
+991:	li	dest, K_SYS_SOC_TYPE_BCM1250 ;				\
+992:									\
+	.set pop
 #else
-#define SYS_SOC_TYPE(sysrev)            \
-  ((G_SYS_SOC_TYPE(sysrev) == K_SYS_SOC_TYPE_BCM1250_ALT    \
-    || G_SYS_SOC_TYPE(sysrev) == K_SYS_SOC_TYPE_BCM1250_ALT2) \
-   ? K_SYS_SOC_TYPE_BCM1250 : G_SYS_SOC_TYPE(sysrev))
+#define SYS_SOC_TYPE(sysrev)						\
+	((G_SYS_SOC_TYPE(sysrev) == K_SYS_SOC_TYPE_BCM1250_ALT		\
+	  || G_SYS_SOC_TYPE(sysrev) == K_SYS_SOC_TYPE_BCM1250_ALT2)	\
+	 ? K_SYS_SOC_TYPE_BCM1250 : G_SYS_SOC_TYPE(sysrev))
 #endif
 
 #define S_SYS_WID                   _SB_MAKE64(32)
@@ -271,14 +271,14 @@
 
 #define M_SYS_PLL_BYPASS            _SB_MAKEMASK1(42)
 
-#define S_SYS_PLL_IREF        43
-#define M_SYS_PLL_IREF        _SB_MAKEMASK(2, S_SYS_PLL_IREF)
+#define S_SYS_PLL_IREF		    43
+#define M_SYS_PLL_IREF		    _SB_MAKEMASK(2, S_SYS_PLL_IREF)
 
-#define S_SYS_PLL_VCO       45
-#define M_SYS_PLL_VCO       _SB_MAKEMASK(2, S_SYS_PLL_VCO)
+#define S_SYS_PLL_VCO		    45
+#define M_SYS_PLL_VCO		    _SB_MAKEMASK(2, S_SYS_PLL_VCO)
 
-#define S_SYS_PLL_VREG        47
-#define M_SYS_PLL_VREG        _SB_MAKEMASK(2, S_SYS_PLL_VREG)
+#define S_SYS_PLL_VREG		    47
+#define M_SYS_PLL_VREG		    _SB_MAKEMASK(2, S_SYS_PLL_VREG)
 
 #define M_SYS_MEM_RESET             _SB_MAKEMASK1(49)
 #define M_SYS_L2C_RESET             _SB_MAKEMASK1(50)
@@ -302,7 +302,7 @@
 #define M_SYS_MISR_RESET            _SB_MAKEMASK1(62)
 
 #if SIBYTE_HDR_FEATURE(1250, PASS2) || SIBYTE_HDR_FEATURE(112x, PASS1)
-#define M_SYS_SW_FLAG       _SB_MAKEMASK1(63)
+#define M_SYS_SW_FLAG		    _SB_MAKEMASK1(63)
 #endif /* 1250 PASS2 || 112x PASS1 */
 
 #endif
@@ -343,7 +343,7 @@
 #define V_SCD_WDOG_RESET_TYPE(x)    _SB_MAKEVALUE(x, S_SCD_WDOG_RESET_TYPE)
 #define G_SCD_WDOG_RESET_TYPE(x)    _SB_GETVALUE(x, S_SCD_WDOG_RESET_TYPE, M_SCD_WDOG_RESET_TYPE)
 
-#define K_SCD_WDOG_RESET_FULL       0 /* actually, (x & 1) == 0  */
+#define K_SCD_WDOG_RESET_FULL       0	/* actually, (x & 1) == 0  */
 #define K_SCD_WDOG_RESET_SOFT       1
 #define K_SCD_WDOG_RESET_CPU0       3
 #define K_SCD_WDOG_RESET_CPU1       5
@@ -367,7 +367,7 @@
 #define V_SCD_TIMER_INIT(x)         _SB_MAKEVALUE(x, S_SCD_TIMER_INIT)
 #define G_SCD_TIMER_INIT(x)         _SB_GETVALUE(x, S_SCD_TIMER_INIT, M_SCD_TIMER_INIT)
 
-#define V_SCD_TIMER_WIDTH     23
+#define V_SCD_TIMER_WIDTH	    23
 #define S_SCD_TIMER_CNT             0
 #define M_SCD_TIMER_CNT             _SB_MAKEMASK(V_SCD_TIMER_WIDTH, S_SCD_TIMER_CNT)
 #define V_SCD_TIMER_CNT(x)         _SB_MAKEVALUE(x, S_SCD_TIMER_CNT)
@@ -402,8 +402,8 @@
 #define G_SPC_CFG_SRC3(x)         _SB_GETVALUE(x, S_SPC_CFG_SRC3, M_SPC_CFG_SRC3)
 
 #if SIBYTE_HDR_FEATURE_1250_112x
-#define M_SPC_CFG_CLEAR   _SB_MAKEMASK1(32)
-#define M_SPC_CFG_ENABLE  _SB_MAKEMASK1(33)
+#define M_SPC_CFG_CLEAR		_SB_MAKEMASK1(32)
+#define M_SPC_CFG_ENABLE	_SB_MAKEMASK1(33)
 #endif
 
 
@@ -470,48 +470,48 @@
  */
 
 #if SIBYTE_HDR_FEATURE_1250_112x
-#define M_ATRAP_INDEX     _SB_MAKEMASK(4, 0)
-#define M_ATRAP_ADDRESS     _SB_MAKEMASK(40, 0)
+#define M_ATRAP_INDEX		  _SB_MAKEMASK(4, 0)
+#define M_ATRAP_ADDRESS		  _SB_MAKEMASK(40, 0)
 
 #define S_ATRAP_CFG_CNT            0
 #define M_ATRAP_CFG_CNT            _SB_MAKEMASK(3, S_ATRAP_CFG_CNT)
 #define V_ATRAP_CFG_CNT(x)         _SB_MAKEVALUE(x, S_ATRAP_CFG_CNT)
 #define G_ATRAP_CFG_CNT(x)         _SB_GETVALUE(x, S_ATRAP_CFG_CNT, M_ATRAP_CFG_CNT)
 
-#define M_ATRAP_CFG_WRITE    _SB_MAKEMASK1(3)
-#define M_ATRAP_CFG_ALL        _SB_MAKEMASK1(4)
-#define M_ATRAP_CFG_INV        _SB_MAKEMASK1(5)
-#define M_ATRAP_CFG_USESRC     _SB_MAKEMASK1(6)
-#define M_ATRAP_CFG_SRCINV     _SB_MAKEMASK1(7)
+#define M_ATRAP_CFG_WRITE	   _SB_MAKEMASK1(3)
+#define M_ATRAP_CFG_ALL	  	   _SB_MAKEMASK1(4)
+#define M_ATRAP_CFG_INV	   	   _SB_MAKEMASK1(5)
+#define M_ATRAP_CFG_USESRC	   _SB_MAKEMASK1(6)
+#define M_ATRAP_CFG_SRCINV	   _SB_MAKEMASK1(7)
 
 #define S_ATRAP_CFG_AGENTID     8
 #define M_ATRAP_CFG_AGENTID     _SB_MAKEMASK(4, S_ATRAP_CFG_AGENTID)
 #define V_ATRAP_CFG_AGENTID(x)  _SB_MAKEVALUE(x, S_ATRAP_CFG_AGENTID)
 #define G_ATRAP_CFG_AGENTID(x)  _SB_GETVALUE(x, S_ATRAP_CFG_AGENTID, M_ATRAP_CFG_AGENTID)
 
-#define K_BUS_AGENT_CPU0  0
-#define K_BUS_AGENT_CPU1  1
-#define K_BUS_AGENT_IOB0  2
-#define K_BUS_AGENT_IOB1  3
-#define K_BUS_AGENT_SCD 4
-#define K_BUS_AGENT_L2C 6
-#define K_BUS_AGENT_MC  7
+#define K_BUS_AGENT_CPU0	0
+#define K_BUS_AGENT_CPU1	1
+#define K_BUS_AGENT_IOB0	2
+#define K_BUS_AGENT_IOB1	3
+#define K_BUS_AGENT_SCD	4
+#define K_BUS_AGENT_L2C	6
+#define K_BUS_AGENT_MC	7
 
 #define S_ATRAP_CFG_CATTR     12
 #define M_ATRAP_CFG_CATTR     _SB_MAKEMASK(3, S_ATRAP_CFG_CATTR)
 #define V_ATRAP_CFG_CATTR(x)  _SB_MAKEVALUE(x, S_ATRAP_CFG_CATTR)
 #define G_ATRAP_CFG_CATTR(x)  _SB_GETVALUE(x, S_ATRAP_CFG_CATTR, M_ATRAP_CFG_CATTR)
 
-#define K_ATRAP_CFG_CATTR_IGNORE  0
-#define K_ATRAP_CFG_CATTR_UNC     1
-#define K_ATRAP_CFG_CATTR_CACHEABLE 2
-#define K_ATRAP_CFG_CATTR_NONCOH    3
-#define K_ATRAP_CFG_CATTR_COHERENT  4
-#define K_ATRAP_CFG_CATTR_NOTUNC  5
-#define K_ATRAP_CFG_CATTR_NOTNONCOH 6
+#define K_ATRAP_CFG_CATTR_IGNORE	0
+#define K_ATRAP_CFG_CATTR_UNC    	1
+#define K_ATRAP_CFG_CATTR_CACHEABLE	2
+#define K_ATRAP_CFG_CATTR_NONCOH  	3
+#define K_ATRAP_CFG_CATTR_COHERENT	4
+#define K_ATRAP_CFG_CATTR_NOTUNC	5
+#define K_ATRAP_CFG_CATTR_NOTNONCOH	6
 #define K_ATRAP_CFG_CATTR_NOTCOHERENT   7
 
-#endif  /* 1250/112x */
+#endif	/* 1250/112x */
 
 /*
  * Trace Buffer Config register
@@ -538,7 +538,7 @@
 #else
 #if SIBYTE_HDR_FEATURE_CHIP(1480)
 #define S_SCD_TRACE_CFG_CUR_ADDR        24
-#endif  /* 1480 */
+#endif	/* 1480 */
 #endif  /* 1250/112x */
 
 #define M_SCD_TRACE_CFG_CUR_ADDR        _SB_MAKEMASK(8, S_SCD_TRACE_CFG_CUR_ADDR)
@@ -624,9 +624,9 @@
 #define K_SCD_TRSEQ_IGNORED             15
 
 #define K_SCD_TRSEQ_TRIGGER_ALL         (V_SCD_TRSEQ_EVENT1(K_SCD_TRSEQ_IGNORED) | \
-    V_SCD_TRSEQ_EVENT2(K_SCD_TRSEQ_IGNORED) | \
-    V_SCD_TRSEQ_EVENT3(K_SCD_TRSEQ_IGNORED) | \
-    V_SCD_TRSEQ_EVENT4(K_SCD_TRSEQ_IGNORED))
+                                         V_SCD_TRSEQ_EVENT2(K_SCD_TRSEQ_IGNORED) | \
+                                         V_SCD_TRSEQ_EVENT3(K_SCD_TRSEQ_IGNORED) | \
+                                         V_SCD_TRSEQ_EVENT4(K_SCD_TRSEQ_IGNORED))
 
 #define S_SCD_TRSEQ_FUNCTION            16
 #define M_SCD_TRSEQ_FUNCTION            _SB_MAKEMASK(4, S_SCD_TRSEQ_FUNCTION)

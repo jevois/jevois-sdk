@@ -24,24 +24,24 @@
 #include <linux/sh_clk.h>
 #include <linux/export.h>
 
-int __init shmobile_clk_init (void)
+int __init shmobile_clk_init(void)
 {
-  /* Kick the child clocks.. */
-  recalculate_root_clocks();
-  
-  /* Enable the necessary init clocks */
-  clk_enable_init_clocks();
-  
-  return 0;
+	/* Kick the child clocks.. */
+	recalculate_root_clocks();
+
+	/* Enable the necessary init clocks */
+	clk_enable_init_clocks();
+
+	return 0;
 }
 
-int __clk_get (struct clk * clk)
+int __clk_get(struct clk *clk)
 {
-  return 1;
+	return 1;
 }
-EXPORT_SYMBOL (__clk_get);
+EXPORT_SYMBOL(__clk_get);
 
-void __clk_put (struct clk * clk)
+void __clk_put(struct clk *clk)
 {
 }
-EXPORT_SYMBOL (__clk_put);
+EXPORT_SYMBOL(__clk_put);

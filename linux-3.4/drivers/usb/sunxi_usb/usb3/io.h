@@ -20,14 +20,14 @@
 
 #include <linux/io.h>
 
-static inline u32 sunxi_readl (void __iomem * base, u32 offset)
+static inline u32 sunxi_readl(void __iomem *base, u32 offset)
 {
-  return readl (base + offset);
+	return readl(base + offset);
 }
 
-static inline void sunxi_writel (void __iomem * base, u32 offset, u32 value)
+static inline void sunxi_writel(void __iomem *base, u32 offset, u32 value)
 {
-  writel (value, base + offset);
+	writel(value, base + offset);
 }
 
 #endif /* __DRIVERS_USB_SUNXI_IO_H */

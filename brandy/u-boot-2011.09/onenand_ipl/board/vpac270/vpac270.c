@@ -33,10 +33,10 @@
 
 int board_init (void)
 {
-  return 0;
+	return 0;
 }
 
-int s_init (int skip)
+int s_init(int skip)
 {
-  return 0;
+	return 0;
 }

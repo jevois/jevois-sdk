@@ -1,7 +1,7 @@
 /* linux/arch/arm/mach-s5pv210/include/mach/memory.h
  *
  * Copyright (c) 2010 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com/
+ *		http://www.samsung.com/
  *
  * S5PV210 - Memory definitions
  *
@@ -13,7 +13,7 @@
 #ifndef __ASM_ARCH_MEMORY_H
 #define __ASM_ARCH_MEMORY_H
 
-#define PLAT_PHYS_OFFSET    UL(0x20000000)
+#define PLAT_PHYS_OFFSET		UL(0x20000000)
 
 /*
  * Sparsemem support
@@ -21,7 +21,7 @@
  * so MAX_PHYSMEM_BITS is 31.
  */
 
-#define MAX_PHYSMEM_BITS  31
-#define SECTION_SIZE_BITS 28
+#define MAX_PHYSMEM_BITS	31
+#define SECTION_SIZE_BITS	28
 
 #endif /* __ASM_ARCH_MEMORY_H */

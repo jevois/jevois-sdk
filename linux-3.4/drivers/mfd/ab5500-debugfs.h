@@ -6,16 +6,16 @@
 
 #ifdef CONFIG_DEBUG_FS
 
-void ab5500_setup_debugfs (struct ab5500 * ab);
-void ab5500_remove_debugfs (void);
+void ab5500_setup_debugfs(struct ab5500 *ab);
+void ab5500_remove_debugfs(void);
 
 #else /* !CONFIG_DEBUG_FS */
 
-static inline void ab5500_setup_debugfs (struct ab5500 * ab)
+static inline void ab5500_setup_debugfs(struct ab5500 *ab)
 {
 }
 
-static inline void ab5500_remove_debugfs (void)
+static inline void ab5500_remove_debugfs(void)
 {
 }
 

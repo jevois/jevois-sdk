@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -24,11 +24,11 @@
 #ifndef _FPGA_SERIAL_H_
 #define _FPGA_SERIAL_H_
 
-extern void fpga_serial_init  (int);
-extern void fpga_serial_putc  (char);
-extern void fpga_serial_puts  (const char *);
-extern int  fpga_serial_getc  (void);
-extern int  fpga_serial_tstc  (void);
-extern void fpga_serial_setbrg  (void);
+extern void	fpga_serial_init	(int);
+extern void	fpga_serial_putc	(char);
+extern void	fpga_serial_puts	(const char *);
+extern int	fpga_serial_getc	(void);
+extern int	fpga_serial_tstc	(void);
+extern void	fpga_serial_setbrg	(void);
 
 #endif

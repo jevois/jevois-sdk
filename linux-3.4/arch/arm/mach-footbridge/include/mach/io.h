@@ -8,16 +8,16 @@
  * published by the Free Software Foundation.
  *
  *  Modifications:
- *   06-12-1997 RMK Created.
- *   07-04-1999 RMK Major cleanup
+ *   06-12-1997	RMK	Created.
+ *   07-04-1999	RMK	Major cleanup
  */
 #ifndef __ASM_ARM_ARCH_IO_H
 #define __ASM_ARM_ARCH_IO_H
 
 #ifdef CONFIG_MMU
-#define MMU_IO(a, b)  (a)
+#define MMU_IO(a, b)	(a)
 #else
-#define MMU_IO(a, b)  (b)
+#define MMU_IO(a, b)	(b)
 #endif
 
 #define PCIO_SIZE       0x00100000
@@ -26,6 +26,6 @@
 /*
  * Translation of various region addresses to virtual addresses
  */
-#define __io(a)     ((void __iomem *)(PCIO_BASE + (a)))
+#define __io(a)			((void __iomem *)(PCIO_BASE + (a)))
 
 #endif

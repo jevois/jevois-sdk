@@ -19,27 +19,27 @@
 #define ARCH_NEEDS_WEAK_PER_CPU
 #endif
 
-#define arch_this_cpu_to_op(pcp, val, op)       \
-  do {                  \
-    typedef typeof(pcp) pcp_op_T__;         \
-    pcp_op_T__ old__, new__, prev__;        \
-    pcp_op_T__ *ptr__;            \
-    preempt_disable();            \
-    ptr__ = __this_cpu_ptr(&(pcp));         \
-    prev__ = *ptr__;            \
-    do {                \
-      old__ = prev__;           \
-      new__ = old__ op (val);         \
-      switch (sizeof(*ptr__)) {       \
-      case 8:             \
-        prev__ = cmpxchg64(ptr__, old__, new__);  \
-        break;            \
-      default:            \
-        prev__ = cmpxchg(ptr__, old__, new__);    \
-      }             \
-    } while (prev__ != old__);          \
-    preempt_enable();           \
-  } while (0)
+#define arch_this_cpu_to_op(pcp, val, op)				\
+do {									\
+	typedef typeof(pcp) pcp_op_T__;					\
+	pcp_op_T__ old__, new__, prev__;				\
+	pcp_op_T__ *ptr__;						\
+	preempt_disable();						\
+	ptr__ = __this_cpu_ptr(&(pcp));					\
+	prev__ = *ptr__;						\
+	do {								\
+		old__ = prev__;						\
+		new__ = old__ op (val);					\
+		switch (sizeof(*ptr__)) {				\
+		case 8:							\
+			prev__ = cmpxchg64(ptr__, old__, new__);	\
+			break;						\
+		default:						\
+			prev__ = cmpxchg(ptr__, old__, new__);		\
+		}							\
+	} while (prev__ != old__);					\
+	preempt_enable();						\
+} while (0)
 
 #define this_cpu_add_1(pcp, val) arch_this_cpu_to_op(pcp, val, +)
 #define this_cpu_add_2(pcp, val) arch_this_cpu_to_op(pcp, val, +)
@@ -61,23 +61,23 @@
 #define this_cpu_xor_4(pcp, val) arch_this_cpu_to_op(pcp, val, ^)
 #define this_cpu_xor_8(pcp, val) arch_this_cpu_to_op(pcp, val, ^)
 
-#define arch_this_cpu_cmpxchg(pcp, oval, nval)      \
-  ({                  \
-    typedef typeof(pcp) pcp_op_T__;         \
-    pcp_op_T__ ret__;           \
-    pcp_op_T__ *ptr__;            \
-    preempt_disable();            \
-    ptr__ = __this_cpu_ptr(&(pcp));         \
-    switch (sizeof(*ptr__)) {         \
-    case 8:               \
-      ret__ = cmpxchg64(ptr__, oval, nval);     \
-      break;              \
-    default:              \
-      ret__ = cmpxchg(ptr__, oval, nval);     \
-    }               \
-    preempt_enable();           \
-    ret__;                \
-  })
+#define arch_this_cpu_cmpxchg(pcp, oval, nval)			\
+({									\
+	typedef typeof(pcp) pcp_op_T__;					\
+	pcp_op_T__ ret__;						\
+	pcp_op_T__ *ptr__;						\
+	preempt_disable();						\
+	ptr__ = __this_cpu_ptr(&(pcp));					\
+	switch (sizeof(*ptr__)) {					\
+	case 8:								\
+		ret__ = cmpxchg64(ptr__, oval, nval);			\
+		break;							\
+	default:							\
+		ret__ = cmpxchg(ptr__, oval, nval);			\
+	}								\
+	preempt_enable();						\
+	ret__;								\
+})
 
 #define this_cpu_cmpxchg_1(pcp, oval, nval) arch_this_cpu_cmpxchg(pcp, oval, nval)
 #define this_cpu_cmpxchg_2(pcp, oval, nval) arch_this_cpu_cmpxchg(pcp, oval, nval)

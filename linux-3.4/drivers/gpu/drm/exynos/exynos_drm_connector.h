@@ -1,9 +1,9 @@
 /*
  * Copyright (c) 2011 Samsung Electronics Co., Ltd.
  * Authors:
- *  Inki Dae <inki.dae@samsung.com>
- *  Joonyoung Shim <jy0922.shim@samsung.com>
- *  Seung-Woo Kim <sw0312.kim@samsung.com>
+ *	Inki Dae <inki.dae@samsung.com>
+ *	Joonyoung Shim <jy0922.shim@samsung.com>
+ *	Seung-Woo Kim <sw0312.kim@samsung.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -28,7 +28,7 @@
 #ifndef _EXYNOS_DRM_CONNECTOR_H_
 #define _EXYNOS_DRM_CONNECTOR_H_
 
-struct drm_connector * exynos_drm_connector_create (struct drm_device * dev,
-    struct drm_encoder * encoder);
+struct drm_connector *exynos_drm_connector_create(struct drm_device *dev,
+						   struct drm_encoder *encoder);
 
 #endif

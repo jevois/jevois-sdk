@@ -31,15 +31,15 @@
 
 /* List of all the enabled modules */
 enum d_module {
-  D_SUBMODULE_DECLARE (control),
-  D_SUBMODULE_DECLARE (driver),
-  D_SUBMODULE_DECLARE (debugfs),
-  D_SUBMODULE_DECLARE (fw),
-  D_SUBMODULE_DECLARE (netdev),
-  D_SUBMODULE_DECLARE (rfkill),
-  D_SUBMODULE_DECLARE (rx),
-  D_SUBMODULE_DECLARE (sysfs),
-  D_SUBMODULE_DECLARE (tx),
+	D_SUBMODULE_DECLARE(control),
+	D_SUBMODULE_DECLARE(driver),
+	D_SUBMODULE_DECLARE(debugfs),
+	D_SUBMODULE_DECLARE(fw),
+	D_SUBMODULE_DECLARE(netdev),
+	D_SUBMODULE_DECLARE(rfkill),
+	D_SUBMODULE_DECLARE(rx),
+	D_SUBMODULE_DECLARE(sysfs),
+	D_SUBMODULE_DECLARE(tx),
 };
 
 

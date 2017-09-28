@@ -35,6 +35,6 @@
 struct kobject;
 
 #define TTM_PFX "[TTM] "
-extern struct kobject * ttm_get_kobj (void);
+extern struct kobject *ttm_get_kobj(void);
 
 #endif /* _TTM_MODULE_H_ */

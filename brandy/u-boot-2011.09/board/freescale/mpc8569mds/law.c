@@ -37,8 +37,8 @@
  *3)   0xc000_0000   0xdfff_ffff     SRIO                    512MB
  *4.a) 0xf000_0000   0xf3ff_ffff     SDRAM                   64MB
  *4.b) 0xf800_0000   0xf800_7fff     BCSR                    32KB
- *4.c) 0xf800_8000   0xf800_ffff     PIB (CS4)         32KB
- *4.d) 0xf801_0000   0xf801_7fff     PIB (CS5)         32KB
+ *4.c) 0xf800_8000   0xf800_ffff     PIB (CS4)		     32KB
+ *4.d) 0xf801_0000   0xf801_7fff     PIB (CS5)		     32KB
  *4.e) 0xfe00_0000   0xffff_ffff     Flash                   32MB
  *
  *Notes:
@@ -48,10 +48,10 @@
  */
 
 struct law_entry law_table[] = {
-  #ifndef CONFIG_SPD_EEPROM
-  SET_LAW (CONFIG_SYS_DDR_SDRAM_BASE, LAW_SIZE_1G, LAW_TRGT_IF_DDR),
-  #endif
-  SET_LAW (CONFIG_SYS_BCSR_BASE_PHYS, LAW_SIZE_128M, LAW_TRGT_IF_LBC),
+#ifndef CONFIG_SPD_EEPROM
+	SET_LAW(CONFIG_SYS_DDR_SDRAM_BASE, LAW_SIZE_1G, LAW_TRGT_IF_DDR),
+#endif
+	SET_LAW(CONFIG_SYS_BCSR_BASE_PHYS, LAW_SIZE_128M, LAW_TRGT_IF_LBC),
 };
 
-int num_law_entries = ARRAY_SIZE (law_table);
+int num_law_entries = ARRAY_SIZE(law_table);

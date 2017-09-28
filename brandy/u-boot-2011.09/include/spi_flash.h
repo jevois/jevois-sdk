@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -27,45 +27,45 @@
 #include <linux/types.h>
 
 struct spi_flash {
-  struct spi_slave * spi;
-  
-  const char * name;
-  
-  /* Total flash size */
-  u32   size;
-  /* Write (page) size */
-  u32   page_size;
-  /* Erase (sector) size */
-  u32   sector_size;
-  
-  int   (*read) (struct spi_flash * flash, u32 offset,
-                 size_t len, void * buf);
-  int   (*write) (struct spi_flash * flash, u32 offset,
-                  size_t len, const void * buf);
-  int   (*erase) (struct spi_flash * flash, u32 offset,
-                  size_t len);
+	struct spi_slave *spi;
+
+	const char	*name;
+
+	/* Total flash size */
+	u32		size;
+	/* Write (page) size */
+	u32		page_size;
+	/* Erase (sector) size */
+	u32		sector_size;
+
+	int		(*read)(struct spi_flash *flash, u32 offset,
+				size_t len, void *buf);
+	int		(*write)(struct spi_flash *flash, u32 offset,
+				size_t len, const void *buf);
+	int		(*erase)(struct spi_flash *flash, u32 offset,
+				size_t len);
 };
 
-struct spi_flash * spi_flash_probe (unsigned int bus, unsigned int cs,
-                                    unsigned int max_hz, unsigned int spi_mode);
-void spi_flash_free (struct spi_flash * flash);
+struct spi_flash *spi_flash_probe(unsigned int bus, unsigned int cs,
+		unsigned int max_hz, unsigned int spi_mode);
+void spi_flash_free(struct spi_flash *flash);
 
-static inline int spi_flash_read (struct spi_flash * flash, u32 offset,
-                                  size_t len, void * buf)
+static inline int spi_flash_read(struct spi_flash *flash, u32 offset,
+		size_t len, void *buf)
 {
-  return flash->read (flash, offset, len, buf);
+	return flash->read(flash, offset, len, buf);
 }
 
-static inline int spi_flash_write (struct spi_flash * flash, u32 offset,
-                                   size_t len, const void * buf)
+static inline int spi_flash_write(struct spi_flash *flash, u32 offset,
+		size_t len, const void *buf)
 {
-  return flash->write (flash, offset, len, buf);
+	return flash->write(flash, offset, len, buf);
 }
 
-static inline int spi_flash_erase (struct spi_flash * flash, u32 offset,
-                                   size_t len)
+static inline int spi_flash_erase(struct spi_flash *flash, u32 offset,
+		size_t len)
 {
-  return flash->erase (flash, offset, len);
+	return flash->erase(flash, offset, len);
 }
 
 #endif /* _SPI_FLASH_H_ */

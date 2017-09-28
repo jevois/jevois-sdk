@@ -12,13 +12,13 @@
 struct device_node;
 
 struct dev_archdata {
-  /* DMA operations on that device */
-  struct dma_map_ops * dma_ops;
-  void          *          dma_data;
+	/* DMA operations on that device */
+	struct dma_map_ops	*dma_ops;
+	void                    *dma_data;
 };
 
 struct pdev_archdata {
-  u64 dma_mask;
+	u64 dma_mask;
 };
 
 #endif /* _ASM_MICROBLAZE_DEVICE_H */

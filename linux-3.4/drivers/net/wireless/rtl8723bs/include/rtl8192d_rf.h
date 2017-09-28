@@ -1,7 +1,7 @@
 /******************************************************************************
  *
  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
- *
+ *                                        
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of version 2 of the GNU General Public License as
  * published by the Free Software Foundation.
@@ -21,23 +21,23 @@
 #define _RTL8192D_RF_H_
 
 
-void    rtl8192d_RF_ChangeTxPath ( IN  PADAPTER  Adapter,
-                                   IN  u16   DataRate);
-void    rtl8192d_PHY_RF6052SetBandwidth (
-  IN  PADAPTER        Adapter,
-  IN  CHANNEL_WIDTH   Bandwidth);
-VOID  rtl8192d_PHY_RF6052SetCckTxPower (
-  IN  PADAPTER  Adapter,
-  IN  u8  * pPowerlevel);
-VOID  rtl8192d_PHY_RF6052SetOFDMTxPower (
-  IN  PADAPTER  Adapter,
-  IN  u8  * pPowerLevel,
-  IN  u8    Channel);
-int PHY_RF6052_Config8192D ( IN  PADAPTER    Adapter );
+void		rtl8192d_RF_ChangeTxPath(	IN	PADAPTER	Adapter, 
+										IN	u16		DataRate);
+void		rtl8192d_PHY_RF6052SetBandwidth(	
+										IN	PADAPTER				Adapter,
+										IN	CHANNEL_WIDTH		Bandwidth);	
+VOID	rtl8192d_PHY_RF6052SetCckTxPower(
+										IN	PADAPTER	Adapter,
+										IN	u8*		pPowerlevel);
+VOID	rtl8192d_PHY_RF6052SetOFDMTxPower(
+										IN	PADAPTER	Adapter,
+										IN	u8*		pPowerLevel,
+										IN	u8		Channel);
+int	PHY_RF6052_Config8192D(	IN	PADAPTER		Adapter	);
 
-BOOLEAN rtl8192d_PHY_EnableAnotherPHY (IN  PADAPTER Adapter, IN  BOOLEAN  bMac0);
+BOOLEAN	rtl8192d_PHY_EnableAnotherPHY(IN	PADAPTER Adapter, IN	BOOLEAN	 bMac0);
 
-void  rtl8192d_PHY_PowerDownAnotherPHY (IN PADAPTER Adapter, IN BOOLEAN bMac0);
+void	rtl8192d_PHY_PowerDownAnotherPHY(IN PADAPTER Adapter, IN BOOLEAN bMac0);
 
 
 /*--------------------------Exported Function prototype---------------------*/

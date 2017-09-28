@@ -20,8 +20,8 @@ extern unsigned int INTERNAL_REG_BASE_ADDR;
 /*
  * GT-6426x variants
  */
-#define GT_64260  0  /* includes both 64260A and 64260B */
-#define GT_64261  1
+#define GT_64260	0  /* includes both 64260A and 64260B */
+#define GT_64261	1
 
 #if (CONFIG_SYS_GT_6426x == GT_64260)
 #ifdef CONFIG_ETHER_PORT_MII
@@ -32,11 +32,11 @@ extern unsigned int INTERNAL_REG_BASE_ADDR;
 #elif (CONFIG_SYS_GT_6426x == GT_64261)
 #define GAL_ETH_DEVS 2
 #else
-#define GAL_ETH_DEVS 3  /* default to a 64260 */
+#define GAL_ETH_DEVS 3	/* default to a 64260 */
 #endif
 
 /****************************************/
-/*          GENERAL Definitions     */
+/*          GENERAL Definitions			*/
 /****************************************/
 
 #define NO_BIT          0x00000000
@@ -110,9 +110,9 @@ extern unsigned int INTERNAL_REG_BASE_ADDR;
 #define _1G             0x40000000
 #define _2G             0x80000000
 
-#ifndef BOOL_WAS_DEFINED
+#ifndef	BOOL_WAS_DEFINED
 #define BOOL_WAS_DEFINED
-typedef enum _bool {false, true} bool;
+typedef enum _bool{false,true} bool;
 #endif
 
 /* Little to Big endian conversion macros */
@@ -126,18 +126,18 @@ typedef enum _bool {false, true} bool;
 #define SHORT_SWAP(X) ((X <<8 ) | (X >> 8))
 
 #define WORD_SWAP(X) (((X)&0xff)<<24)+      \
-  (((X)&0xff00)<<8)+      \
-  (((X)&0xff0000)>>8)+    \
-  (((X)&0xff000000)>>24)
+		    (((X)&0xff00)<<8)+      \
+		    (((X)&0xff0000)>>8)+    \
+		    (((X)&0xff000000)>>24)
 
 #define LONG_SWAP(X) ( (l64) (((X)&0xffULL)<<56)+               \
-                       (((X)&0xff00ULL)<<40)+              \
-                       (((X)&0xff0000ULL)<<24)+            \
-                       (((X)&0xff000000ULL)<<8)+           \
-                       (((X)&0xff00000000ULL)>>8)+         \
-                       (((X)&0xff0000000000ULL)>>24)+      \
-                       (((X)&0xff000000000000ULL)>>40)+    \
-                       (((X)&0xff00000000000000ULL)>>56))
+			    (((X)&0xff00ULL)<<40)+              \
+			    (((X)&0xff0000ULL)<<24)+            \
+			    (((X)&0xff000000ULL)<<8)+           \
+			    (((X)&0xff00000000ULL)>>8)+         \
+			    (((X)&0xff0000000000ULL)>>24)+      \
+			    (((X)&0xff000000000000ULL)>>40)+    \
+			    (((X)&0xff00000000000000ULL)>>56))
 
 #endif
 
@@ -146,8 +146,8 @@ typedef enum _bool {false, true} bool;
 #endif
 
 /* Those two definitions were defined to be compatible with MIPS */
-#define NONE_CACHEABLE    0x00000000
-#define CACHEABLE     0x00000000
+#define NONE_CACHEABLE		0x00000000
+#define CACHEABLE			0x00000000
 
 /* 750 cache line */
 #define CACHE_LINE_SIZE 32
@@ -156,45 +156,45 @@ typedef enum _bool {false, true} bool;
 
 /* Read/Write to/from GT`s internal registers */
 #define GT_REG_READ(offset, pData)                                          \
-  *pData = ( *((volatile unsigned int *)(NONE_CACHEABLE |                     \
-                                         INTERNAL_REG_BASE_ADDR | (offset))) ) ;                                              \
-  *pData = WORD_SWAP(*pData)
+*pData = ( *((volatile unsigned int *)(NONE_CACHEABLE |                     \
+		INTERNAL_REG_BASE_ADDR | (offset))) ) ;                                              \
+*pData = WORD_SWAP(*pData)
 
 #define GTREGREAD(offset)                                                   \
-  (WORD_SWAP( *((volatile unsigned int *)(NONE_CACHEABLE |            \
-                                          INTERNAL_REG_BASE_ADDR | (offset))) ))
+	 (WORD_SWAP( *((volatile unsigned int *)(NONE_CACHEABLE |            \
+		   INTERNAL_REG_BASE_ADDR | (offset))) ))
 
 #define GT_REG_WRITE(offset, data)                                          \
-  *((unsigned int *)( INTERNAL_REG_BASE_ADDR | (offset))) =                   \
-      WORD_SWAP(data)
+*((unsigned int *)( INTERNAL_REG_BASE_ADDR | (offset))) =                   \
+		    WORD_SWAP(data)
 
 /* Write 32/16/8 bit */
 #define WRITE_CHAR(address, data)                                           \
-  *((unsigned char *)(address)) = data
+	*((unsigned char *)(address)) = data
 #define WRITE_SHORT(address, data)                                          \
-  *((unsigned short *)(address)) = data
+	*((unsigned short *)(address)) = data
 #define WRITE_WORD(address, data)                                           \
-  *((unsigned int *)(address)) = data
+	*((unsigned int *)(address)) = data
 
 /* Read 32/16/8 bits - returns data in variable. */
 #define READ_CHAR(address, pData)                                           \
-  *pData = *((volatile unsigned char *)(address))
+	*pData = *((volatile unsigned char *)(address))
 
 #define READ_SHORT(address, pData)                                          \
-  *pData = *((volatile unsigned short *)(address))
+	*pData = *((volatile unsigned short *)(address))
 
 #define READ_WORD(address, pData)                                           \
-  *pData = *((volatile unsigned int *)(address))
+	*pData = *((volatile unsigned int *)(address))
 
 /* Read 32/16/8 bit - returns data direct. */
 #define READCHAR(address)                                                   \
-  *((volatile unsigned char *)((address) | NONE_CACHEABLE))
+	*((volatile unsigned char *)((address) | NONE_CACHEABLE))
 
 #define READSHORT(address)                                                  \
-  *((volatile unsigned short *)((address) | NONE_CACHEABLE))
+	*((volatile unsigned short *)((address) | NONE_CACHEABLE))
 
 #define READWORD(address)                                                   \
-  *((volatile unsigned int *)((address) | NONE_CACHEABLE))
+	*((volatile unsigned int *)((address) | NONE_CACHEABLE))
 
 /* Those two Macros were defined to be compatible with MIPS */
 #define VIRTUAL_TO_PHY(x)    (((unsigned int)x) & 0xffffffff)
@@ -206,8 +206,8 @@ typedef enum _bool {false, true} bool;
    SET_REG_BITS(0x840,BIT3 | BIT24 | BIT30) - set bits: 3,24 and 30 to logic
    '1' in register 0x840 while the other bits stays as is. */
 #define SET_REG_BITS(regOffset,bits) \
-  *(unsigned int*)(NONE_CACHEABLE | INTERNAL_REG_BASE_ADDR |  \
-                   regOffset) |= (unsigned int)WORD_SWAP(bits)
+	*(unsigned int*)(NONE_CACHEABLE | INTERNAL_REG_BASE_ADDR |  \
+	regOffset) |= (unsigned int)WORD_SWAP(bits)
 
 /*  RESET_REG_BITS(regOffset,bits) -
    gets register offset and bits: a 32bit value. It set to logic '0' in the
@@ -215,7 +215,7 @@ typedef enum _bool {false, true} bool;
    RESET_REG_BITS(0x840,BIT3 | BIT24 | BIT30) - set bits: 3,24 and 30 to logic
    '0' in register 0x840 while the other bits stays as is. */
 #define RESET_REG_BITS(regOffset,bits) \
-  *(unsigned int*)(NONE_CACHEABLE | INTERNAL_REG_BASE_ADDR   \
-                   | regOffset) &= ~( (unsigned int)WORD_SWAP(bits) )
+	*(unsigned int*)(NONE_CACHEABLE | INTERNAL_REG_BASE_ADDR   \
+	| regOffset) &= ~( (unsigned int)WORD_SWAP(bits) )
 
 #endif /* __INCcoreh */

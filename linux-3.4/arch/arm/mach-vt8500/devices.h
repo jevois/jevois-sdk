@@ -19,15 +19,15 @@
 #include <linux/platform_device.h>
 #include <asm/mach/map.h>
 
-void __init vt8500_init_irq (void);
-void __init wm8505_init_irq (void);
-void __init vt8500_map_io (void);
-void __init wm8505_map_io (void);
-void __init vt8500_reserve_mem (void);
-void __init wm8505_reserve_mem (void);
-void __init vt8500_gpio_init (void);
-void __init vt8500_set_resources (void);
-void __init wm8505_set_resources (void);
+void __init vt8500_init_irq(void);
+void __init wm8505_init_irq(void);
+void __init vt8500_map_io(void);
+void __init wm8505_map_io(void);
+void __init vt8500_reserve_mem(void);
+void __init wm8505_reserve_mem(void);
+void __init vt8500_gpio_init(void);
+void __init vt8500_set_resources(void);
+void __init wm8505_set_resources(void);
 
 extern unsigned long wmt_ic_base __initdata;
 extern unsigned long wmt_sic_base __initdata;
@@ -40,33 +40,33 @@ extern int wmt_gpio_ext_irq[8] __initdata;
 
 extern struct map_desc wmt_io_desc[2] __initdata;
 
-static inline struct resource wmt_mmio_res (u32 start, u32 size)
+static inline struct resource wmt_mmio_res(u32 start, u32 size)
 {
-  struct resource tmp = {
-    .flags = IORESOURCE_MEM,
-    .start = start,
-    .end = start + size - 1,
-  };
-  
-  return tmp;
+	struct resource tmp = {
+		.flags = IORESOURCE_MEM,
+		.start = start,
+		.end = start + size - 1,
+	};
+
+	return tmp;
 }
 
-static inline struct resource wmt_irq_res (int irq)
+static inline struct resource wmt_irq_res(int irq)
 {
-  struct resource tmp = {
-    .flags = IORESOURCE_IRQ,
-    .start = irq,
-    .end = irq,
-  };
-  
-  return tmp;
+	struct resource tmp = {
+		.flags = IORESOURCE_IRQ,
+		.start = irq,
+		.end = irq,
+	};
+
+	return tmp;
 }
 
-static inline void wmt_res_add (struct platform_device * pdev,
-                                const struct resource * res, unsigned int num)
+static inline void wmt_res_add(struct platform_device *pdev,
+			       const struct resource *res, unsigned int num)
 {
-  if (unlikely (platform_device_add_resources (pdev, res, num) ) )
-  { pr_err ("Failed to assign resources\n"); }
+	if (unlikely(platform_device_add_resources(pdev, res, num)))
+		pr_err("Failed to assign resources\n");
 }
 
 extern struct sys_timer vt8500_timer;

@@ -1,6 +1,6 @@
 /*
- * File:  mca_drv.h
- * Purpose: Define helpers for Generic MCA handling
+ * File:	mca_drv.h
+ * Purpose:	Define helpers for Generic MCA handling
  *
  * Copyright (C) 2004 FUJITSU LIMITED
  * Copyright (C) 2004 Hidetoshi Seto <seto.hidetoshi@jp.fujitsu.com>
@@ -34,9 +34,9 @@
 
 /* peidx: index of processor error section */
 typedef struct peidx_table {
-  sal_log_processor_info_t    *    info;
-  struct sal_cpuid_info      *     id;
-  sal_processor_static_info_t   *  regs;
+	sal_log_processor_info_t        *info;
+	struct sal_cpuid_info           *id;
+	sal_processor_static_info_t     *regs;
 } peidx_table_t;
 
 #define peidx_head(p)   (((p)->info))
@@ -60,11 +60,11 @@ typedef struct peidx_table {
 #define peidx_ms_check_idx(p, n)       (peidx_reg_file_check_idx(p, peidx_reg_file_check_num(p)) + n)
 
 #define peidx_mod_error_info(p, name, n) \
-  ({  int __idx = peidx_##name##_idx(p, n); \
-    sal_log_mod_error_info_t *__ret = NULL; \
-    if (peidx_##name##_num(p) > n) /*BUG*/ \
-      __ret = &(peidx_head(p)->info[__idx]); \
-    __ret; })
+({	int __idx = peidx_##name##_idx(p, n); \
+	sal_log_mod_error_info_t *__ret = NULL; \
+	if (peidx_##name##_num(p) > n) /*BUG*/ \
+		__ret = &(peidx_head(p)->info[__idx]); \
+	__ret; })
 
 #define peidx_cache_check(p, n)    peidx_mod_error_info(p, cache_check, n)
 #define peidx_tlb_check(p, n)      peidx_mod_error_info(p, tlb_check, n)
@@ -73,50 +73,50 @@ typedef struct peidx_table {
 #define peidx_ms_check(p, n)       peidx_mod_error_info(p, ms_check, n)
 
 #define peidx_check_info(proc, name, n) \
-  ({ \
-    sal_log_mod_error_info_t *__info = peidx_mod_error_info(proc, name, n);\
-    u64 __temp = __info && __info->valid.check_info \
-                 ? __info->check_info : 0; \
-    __temp; })
+({ \
+	sal_log_mod_error_info_t *__info = peidx_mod_error_info(proc, name, n);\
+	u64 __temp = __info && __info->valid.check_info \
+		? __info->check_info : 0; \
+	__temp; })
 
 /* slidx: index of SAL log error record */
 
 typedef struct slidx_list {
-  struct list_head list;
-  sal_log_section_hdr_t * hdr;
+	struct list_head list;
+	sal_log_section_hdr_t *hdr;
 } slidx_list_t;
 
 typedef struct slidx_table {
-  sal_log_record_header_t * header;
-  int n_sections;     /* # of section headers */
-  struct list_head proc_err;
-  struct list_head mem_dev_err;
-  struct list_head sel_dev_err;
-  struct list_head pci_bus_err;
-  struct list_head smbios_dev_err;
-  struct list_head pci_comp_err;
-  struct list_head plat_specific_err;
-  struct list_head host_ctlr_err;
-  struct list_head plat_bus_err;
-  struct list_head unsupported; /* list of unsupported sections */
+	sal_log_record_header_t *header;
+	int n_sections;			/* # of section headers */
+	struct list_head proc_err;
+	struct list_head mem_dev_err;
+	struct list_head sel_dev_err;
+	struct list_head pci_bus_err;
+	struct list_head smbios_dev_err;
+	struct list_head pci_comp_err;
+	struct list_head plat_specific_err;
+	struct list_head host_ctlr_err;
+	struct list_head plat_bus_err;
+	struct list_head unsupported;	/* list of unsupported sections */
 } slidx_table_t;
 
 #define slidx_foreach_entry(pos, head) \
-  list_for_each_entry(pos, head, list)
+	list_for_each_entry(pos, head, list)
 #define slidx_first_entry(head) \
-  (((head)->next != (head)) ? list_entry((head)->next, typeof(slidx_list_t), list) : NULL)
+	(((head)->next != (head)) ? list_entry((head)->next, typeof(slidx_list_t), list) : NULL)
 #define slidx_count(slidx, sec) \
-  ({  int __count = 0; \
-    slidx_list_t *__pos; \
-    slidx_foreach_entry(__pos, &((slidx)->sec)) { __count++; }\
-    __count; })
+({	int __count = 0; \
+	slidx_list_t *__pos; \
+	slidx_foreach_entry(__pos, &((slidx)->sec)) { __count++; }\
+	__count; })
 
 struct mca_table_entry {
-  int start_addr; /* location-relative starting address of MCA recoverable range */
-  int end_addr; /* location-relative ending address of MCA recoverable range */
+	int start_addr;	/* location-relative starting address of MCA recoverable range */
+	int end_addr;	/* location-relative ending address of MCA recoverable range */
 };
 
-extern const struct mca_table_entry * search_mca_tables (unsigned long addr);
-extern int mca_recover_range (unsigned long);
-extern void ia64_mlogbuf_dump (void);
+extern const struct mca_table_entry *search_mca_tables (unsigned long addr);
+extern int mca_recover_range(unsigned long);
+extern void ia64_mlogbuf_dump(void);
 

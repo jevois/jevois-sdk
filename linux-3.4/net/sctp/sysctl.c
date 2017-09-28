@@ -55,242 +55,242 @@ static int addr_scope_max = 3; /* check sctp_scope_policy_t in include/net/sctp/
 static int rwnd_scale_max = 16;
 static unsigned long max_autoclose_min = 0;
 static unsigned long max_autoclose_max =
-  (MAX_SCHEDULE_TIMEOUT / HZ > UINT_MAX)
-  ? UINT_MAX : MAX_SCHEDULE_TIMEOUT / HZ;
+	(MAX_SCHEDULE_TIMEOUT / HZ > UINT_MAX)
+	? UINT_MAX : MAX_SCHEDULE_TIMEOUT / HZ;
 
 extern long sysctl_sctp_mem[3];
 extern int sysctl_sctp_rmem[3];
 extern int sysctl_sctp_wmem[3];
 
 static ctl_table sctp_table[] = {
-  {
-    .procname = "rto_initial",
-    .data   = &sctp_rto_initial,
-    .maxlen   = sizeof (unsigned int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1         = &one,
-    .extra2         = &timer_max
-  },
-  {
-    .procname = "rto_min",
-    .data   = &sctp_rto_min,
-    .maxlen   = sizeof (unsigned int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1         = &one,
-    .extra2         = &timer_max
-  },
-  {
-    .procname = "rto_max",
-    .data   = &sctp_rto_max,
-    .maxlen   = sizeof (unsigned int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1         = &one,
-    .extra2         = &timer_max
-  },
-  {
-    .procname = "valid_cookie_life",
-    .data   = &sctp_valid_cookie_life,
-    .maxlen   = sizeof (unsigned int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1         = &one,
-    .extra2         = &timer_max
-  },
-  {
-    .procname = "max_burst",
-    .data   = &sctp_max_burst,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1   = &zero,
-    .extra2   = &int_max
-  },
-  {
-    .procname = "association_max_retrans",
-    .data   = &sctp_max_retrans_association,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1   = &one,
-    .extra2   = &int_max
-  },
-  {
-    .procname = "sndbuf_policy",
-    .data   = &sctp_sndbuf_policy,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec,
-  },
-  {
-    .procname = "rcvbuf_policy",
-    .data   = &sctp_rcvbuf_policy,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec,
-  },
-  {
-    .procname = "path_max_retrans",
-    .data   = &sctp_max_retrans_path,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1   = &one,
-    .extra2   = &int_max
-  },
-  {
-    .procname = "max_init_retransmits",
-    .data   = &sctp_max_retrans_init,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1   = &one,
-    .extra2   = &int_max
-  },
-  {
-    .procname = "hb_interval",
-    .data   = &sctp_hb_interval,
-    .maxlen   = sizeof (unsigned int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1         = &one,
-    .extra2         = &timer_max
-  },
-  {
-    .procname = "cookie_preserve_enable",
-    .data   = &sctp_cookie_preserve_enable,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec,
-  },
-  {
-    .procname = "rto_alpha_exp_divisor",
-    .data   = &sctp_rto_alpha,
-    .maxlen   = sizeof (int),
-    .mode   = 0444,
-    .proc_handler = proc_dointvec,
-  },
-  {
-    .procname = "rto_beta_exp_divisor",
-    .data   = &sctp_rto_beta,
-    .maxlen   = sizeof (int),
-    .mode   = 0444,
-    .proc_handler = proc_dointvec,
-  },
-  {
-    .procname = "addip_enable",
-    .data   = &sctp_addip_enable,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec,
-  },
-  {
-    .procname = "default_auto_asconf",
-    .data   = &sctp_default_auto_asconf,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec,
-  },
-  {
-    .procname = "prsctp_enable",
-    .data   = &sctp_prsctp_enable,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec,
-  },
-  {
-    .procname = "sack_timeout",
-    .data   = &sctp_sack_timeout,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1         = &sack_timer_min,
-    .extra2         = &sack_timer_max,
-  },
-  {
-    .procname = "sctp_mem",
-    .data   = &sysctl_sctp_mem,
-    .maxlen   = sizeof (sysctl_sctp_mem),
-    .mode   = 0644,
-    .proc_handler = proc_doulongvec_minmax
-  },
-  {
-    .procname = "sctp_rmem",
-    .data   = &sysctl_sctp_rmem,
-    .maxlen   = sizeof (sysctl_sctp_rmem),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec,
-  },
-  {
-    .procname = "sctp_wmem",
-    .data   = &sysctl_sctp_wmem,
-    .maxlen   = sizeof (sysctl_sctp_wmem),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec,
-  },
-  {
-    .procname = "auth_enable",
-    .data   = &sctp_auth_enable,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec,
-  },
-  {
-    .procname = "addip_noauth_enable",
-    .data   = &sctp_addip_noauth,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec,
-  },
-  {
-    .procname = "addr_scope_policy",
-    .data   = &sctp_scope_policy,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1   = &zero,
-    .extra2   = &addr_scope_max,
-  },
-  {
-    .procname = "rwnd_update_shift",
-    .data   = &sctp_rwnd_upd_shift,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = &proc_dointvec_minmax,
-    .extra1   = &one,
-    .extra2   = &rwnd_scale_max,
-  },
-  {
-    .procname = "max_autoclose",
-    .data   = &sctp_max_autoclose,
-    .maxlen   = sizeof (unsigned long),
-    .mode   = 0644,
-    .proc_handler = &proc_doulongvec_minmax,
-    .extra1   = &max_autoclose_min,
-    .extra2   = &max_autoclose_max,
-  },
-  
-  { /* sentinel */ }
+	{
+		.procname	= "rto_initial",
+		.data		= &sctp_rto_initial,
+		.maxlen		= sizeof(unsigned int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1         = &one,
+		.extra2         = &timer_max
+	},
+	{
+		.procname	= "rto_min",
+		.data		= &sctp_rto_min,
+		.maxlen		= sizeof(unsigned int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1         = &one,
+		.extra2         = &timer_max
+	},
+	{
+		.procname	= "rto_max",
+		.data		= &sctp_rto_max,
+		.maxlen		= sizeof(unsigned int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1         = &one,
+		.extra2         = &timer_max
+	},
+	{
+		.procname	= "valid_cookie_life",
+		.data		= &sctp_valid_cookie_life,
+		.maxlen		= sizeof(unsigned int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1         = &one,
+		.extra2         = &timer_max
+	},
+	{
+		.procname	= "max_burst",
+		.data		= &sctp_max_burst,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= &zero,
+		.extra2		= &int_max
+	},
+	{
+		.procname	= "association_max_retrans",
+		.data		= &sctp_max_retrans_association,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= &one,
+		.extra2		= &int_max
+	},
+	{
+		.procname	= "sndbuf_policy",
+		.data		= &sctp_sndbuf_policy,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec,
+	},
+	{
+		.procname	= "rcvbuf_policy",
+		.data		= &sctp_rcvbuf_policy,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec,
+	},
+	{
+		.procname	= "path_max_retrans",
+		.data		= &sctp_max_retrans_path,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= &one,
+		.extra2		= &int_max
+	},
+	{
+		.procname	= "max_init_retransmits",
+		.data		= &sctp_max_retrans_init,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= &one,
+		.extra2		= &int_max
+	},
+	{
+		.procname	= "hb_interval",
+		.data		= &sctp_hb_interval,
+		.maxlen		= sizeof(unsigned int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1         = &one,
+		.extra2         = &timer_max
+	},
+	{
+		.procname	= "cookie_preserve_enable",
+		.data		= &sctp_cookie_preserve_enable,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec,
+	},
+	{
+		.procname	= "rto_alpha_exp_divisor",
+		.data		= &sctp_rto_alpha,
+		.maxlen		= sizeof(int),
+		.mode		= 0444,
+		.proc_handler	= proc_dointvec,
+	},
+	{
+		.procname	= "rto_beta_exp_divisor",
+		.data		= &sctp_rto_beta,
+		.maxlen		= sizeof(int),
+		.mode		= 0444,
+		.proc_handler	= proc_dointvec,
+	},
+	{
+		.procname	= "addip_enable",
+		.data		= &sctp_addip_enable,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec,
+	},
+	{
+		.procname	= "default_auto_asconf",
+		.data		= &sctp_default_auto_asconf,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec,
+	},
+	{
+		.procname	= "prsctp_enable",
+		.data		= &sctp_prsctp_enable,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec,
+	},
+	{
+		.procname	= "sack_timeout",
+		.data		= &sctp_sack_timeout,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1         = &sack_timer_min,
+		.extra2         = &sack_timer_max,
+	},
+	{
+		.procname	= "sctp_mem",
+		.data		= &sysctl_sctp_mem,
+		.maxlen		= sizeof(sysctl_sctp_mem),
+		.mode		= 0644,
+		.proc_handler	= proc_doulongvec_minmax
+	},
+	{
+		.procname	= "sctp_rmem",
+		.data		= &sysctl_sctp_rmem,
+		.maxlen		= sizeof(sysctl_sctp_rmem),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec,
+	},
+	{
+		.procname	= "sctp_wmem",
+		.data		= &sysctl_sctp_wmem,
+		.maxlen		= sizeof(sysctl_sctp_wmem),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec,
+	},
+	{
+		.procname	= "auth_enable",
+		.data		= &sctp_auth_enable,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec,
+	},
+	{
+		.procname	= "addip_noauth_enable",
+		.data		= &sctp_addip_noauth,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec,
+	},
+	{
+		.procname	= "addr_scope_policy",
+		.data		= &sctp_scope_policy,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= &zero,
+		.extra2		= &addr_scope_max,
+	},
+	{
+		.procname	= "rwnd_update_shift",
+		.data		= &sctp_rwnd_upd_shift,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= &proc_dointvec_minmax,
+		.extra1		= &one,
+		.extra2		= &rwnd_scale_max,
+	},
+	{
+		.procname	= "max_autoclose",
+		.data		= &sctp_max_autoclose,
+		.maxlen		= sizeof(unsigned long),
+		.mode		= 0644,
+		.proc_handler	= &proc_doulongvec_minmax,
+		.extra1		= &max_autoclose_min,
+		.extra2		= &max_autoclose_max,
+	},
+
+	{ /* sentinel */ }
 };
 
 static struct ctl_path sctp_path[] = {
-  { .procname = "net", },
-  { .procname = "sctp", },
-  { }
+	{ .procname = "net", },
+	{ .procname = "sctp", },
+	{ }
 };
 
 static struct ctl_table_header * sctp_sysctl_header;
 
 /* Sysctl registration.  */
-void sctp_sysctl_register (void)
+void sctp_sysctl_register(void)
 {
-  sctp_sysctl_header = register_sysctl_paths (sctp_path, sctp_table);
+	sctp_sysctl_header = register_sysctl_paths(sctp_path, sctp_table);
 }
 
 /* Sysctl deregistration.  */
-void sctp_sysctl_unregister (void)
+void sctp_sysctl_unregister(void)
 {
-  unregister_sysctl_table (sctp_sysctl_header);
+	unregister_sysctl_table(sctp_sysctl_header);
 }

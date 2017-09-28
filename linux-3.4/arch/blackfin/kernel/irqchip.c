@@ -16,15 +16,15 @@
 #include <asm/pda.h>
 
 static atomic_t irq_err_count;
-void ack_bad_irq (unsigned int irq)
+void ack_bad_irq(unsigned int irq)
 {
-  atomic_inc (&irq_err_count);
-  printk (KERN_ERR "IRQ: spurious interrupt %d\n", irq);
+	atomic_inc(&irq_err_count);
+	printk(KERN_ERR "IRQ: spurious interrupt %d\n", irq);
 }
 
 static struct irq_desc bad_irq_desc = {
-  .handle_irq = handle_bad_irq,
-  .lock = __RAW_SPIN_LOCK_UNLOCKED (bad_irq_desc.lock),
+	.handle_irq = handle_bad_irq,
+	.lock = __RAW_SPIN_LOCK_UNLOCKED(bad_irq_desc.lock),
 };
 
 #ifdef CONFIG_CPUMASK_OFFSTACK
@@ -33,80 +33,78 @@ static struct irq_desc bad_irq_desc = {
 #endif
 
 #ifdef CONFIG_PROC_FS
-int show_interrupts (struct seq_file * p, void * v)
+int show_interrupts(struct seq_file *p, void *v)
 {
-  int i = * (loff_t *) v, j;
-  struct irqaction * action;
-  unsigned long flags;
-  
-  if (i < NR_IRQS) {
-    struct irq_desc * desc = irq_to_desc (i);
-    
-    raw_spin_lock_irqsave (&desc->lock, flags);
-    action = desc->action;
-    if (!action)
-    { goto skip; }
-    seq_printf (p, "%3d: ", i);
-    for_each_online_cpu (j)
-    seq_printf (p, "%10u ", kstat_irqs_cpu (i, j) );
-    seq_printf (p, " %8s", irq_desc_get_chip (desc)->name);
-    seq_printf (p, "  %s", action->name);
-    for (action = action->next; action; action = action->next)
-    { seq_printf (p, "  %s", action->name); }
-    
-    seq_putc (p, '\n');
-skip:
-    raw_spin_unlock_irqrestore (&desc->lock, flags);
-  }
-  else
-    if (i == NR_IRQS) {
-      seq_printf (p, "NMI: ");
-      for_each_online_cpu (j)
-      seq_printf (p, "%10u ", cpu_pda[j].__nmi_count);
-      seq_printf (p, "     CORE  Non Maskable Interrupt\n");
-      seq_printf (p, "Err: %10u\n",  atomic_read (&irq_err_count) );
-    }
-  return 0;
+	int i = *(loff_t *) v, j;
+	struct irqaction *action;
+	unsigned long flags;
+
+	if (i < NR_IRQS) {
+		struct irq_desc *desc = irq_to_desc(i);
+
+		raw_spin_lock_irqsave(&desc->lock, flags);
+		action = desc->action;
+		if (!action)
+			goto skip;
+		seq_printf(p, "%3d: ", i);
+		for_each_online_cpu(j)
+			seq_printf(p, "%10u ", kstat_irqs_cpu(i, j));
+		seq_printf(p, " %8s", irq_desc_get_chip(desc)->name);
+		seq_printf(p, "  %s", action->name);
+		for (action = action->next; action; action = action->next)
+			seq_printf(p, "  %s", action->name);
+
+		seq_putc(p, '\n');
+ skip:
+		raw_spin_unlock_irqrestore(&desc->lock, flags);
+	} else if (i == NR_IRQS) {
+		seq_printf(p, "NMI: ");
+		for_each_online_cpu(j)
+			seq_printf(p, "%10u ", cpu_pda[j].__nmi_count);
+		seq_printf(p, "     CORE  Non Maskable Interrupt\n");
+		seq_printf(p, "Err: %10u\n",  atomic_read(&irq_err_count));
+	}
+	return 0;
 }
 #endif
 
 #ifdef CONFIG_DEBUG_STACKOVERFLOW
-static void check_stack_overflow (int irq)
+static void check_stack_overflow(int irq)
 {
-  /* Debugging check for stack overflow: is there less than STACK_WARN free? */
-  long sp = __get_SP() & (THREAD_SIZE - 1);
-  
-  if (unlikely (sp < (sizeof (struct thread_info) + STACK_WARN) ) ) {
-    dump_stack();
-    pr_emerg ("irq%i: possible stack overflow only %ld bytes free\n",
-              irq, sp - sizeof (struct thread_info) );
-  }
+	/* Debugging check for stack overflow: is there less than STACK_WARN free? */
+	long sp = __get_SP() & (THREAD_SIZE - 1);
+
+	if (unlikely(sp < (sizeof(struct thread_info) + STACK_WARN))) {
+		dump_stack();
+		pr_emerg("irq%i: possible stack overflow only %ld bytes free\n",
+			irq, sp - sizeof(struct thread_info));
+	}
 }
 #else
-static inline void check_stack_overflow (int irq) { }
+static inline void check_stack_overflow(int irq) { }
 #endif
 
 #ifndef CONFIG_IPIPE
-static void maybe_lower_to_irq14 (void)
+static void maybe_lower_to_irq14(void)
 {
-  unsigned short pending, other_ints;
-  
-  /*
-   * If we're the only interrupt running (ignoring IRQ15 which
-   * is for syscalls), lower our priority to IRQ14 so that
-   * softirqs run at that level.  If there's another,
-   * lower-level interrupt, irq_exit will defer softirqs to
-   * that. If the interrupt pipeline is enabled, we are already
-   * running at IRQ14 priority, so we don't need this code.
-   */
-  CSYNC();
-  pending = bfin_read_IPEND() & ~0x8000;
-  other_ints = pending & (pending - 1);
-  if (other_ints == 0)
-  { lower_to_irq14(); }
+	unsigned short pending, other_ints;
+
+	/*
+	 * If we're the only interrupt running (ignoring IRQ15 which
+	 * is for syscalls), lower our priority to IRQ14 so that
+	 * softirqs run at that level.  If there's another,
+	 * lower-level interrupt, irq_exit will defer softirqs to
+	 * that. If the interrupt pipeline is enabled, we are already
+	 * running at IRQ14 priority, so we don't need this code.
+	 */
+	CSYNC();
+	pending = bfin_read_IPEND() & ~0x8000;
+	other_ints = pending & (pending - 1);
+	if (other_ints == 0)
+		lower_to_irq14();
 }
 #else
-static inline void maybe_lower_to_irq14 (void) { }
+static inline void maybe_lower_to_irq14(void) { }
 #endif
 
 /*
@@ -115,41 +113,41 @@ static inline void maybe_lower_to_irq14 (void) { }
  * own 'handler'
  */
 #ifdef CONFIG_DO_IRQ_L1
-__attribute__ ( (l1_text) )
+__attribute__((l1_text))
 #endif
-asmlinkage void asm_do_IRQ (unsigned int irq, struct pt_regs * regs)
+asmlinkage void asm_do_IRQ(unsigned int irq, struct pt_regs *regs)
 {
-  struct pt_regs * old_regs = set_irq_regs (regs);
-  
-  irq_enter();
-  
-  check_stack_overflow (irq);
-  
-  /*
-   * Some hardware gives randomly wrong interrupts.  Rather
-   * than crashing, do something sensible.
-   */
-  if (irq >= NR_IRQS)
-  { handle_bad_irq (irq, &bad_irq_desc); }
-  else
-  { generic_handle_irq (irq); }
-  
-  maybe_lower_to_irq14();
-  
-  irq_exit();
-  
-  set_irq_regs (old_regs);
+	struct pt_regs *old_regs = set_irq_regs(regs);
+
+	irq_enter();
+
+	check_stack_overflow(irq);
+
+	/*
+	 * Some hardware gives randomly wrong interrupts.  Rather
+	 * than crashing, do something sensible.
+	 */
+	if (irq >= NR_IRQS)
+		handle_bad_irq(irq, &bad_irq_desc);
+	else
+		generic_handle_irq(irq);
+
+	maybe_lower_to_irq14();
+
+	irq_exit();
+
+	set_irq_regs(old_regs);
 }
 
-void __init init_IRQ (void)
+void __init init_IRQ(void)
 {
-  init_arch_irq();
-  
-  #ifdef CONFIG_DEBUG_BFIN_HWTRACE_EXPAND
-  /* Now that evt_ivhw is set up, turn this on */
-  trace_buff_offset = 0;
-  bfin_write_TBUFCTL (BFIN_TRACE_ON);
-  printk (KERN_INFO "Hardware Trace expanded to %ik\n",
-          1 << CONFIG_DEBUG_BFIN_HWTRACE_EXPAND_LEN);
-  #endif
+	init_arch_irq();
+
+#ifdef CONFIG_DEBUG_BFIN_HWTRACE_EXPAND
+	/* Now that evt_ivhw is set up, turn this on */
+	trace_buff_offset = 0;
+	bfin_write_TBUFCTL(BFIN_TRACE_ON);
+	printk(KERN_INFO "Hardware Trace expanded to %ik\n",
+	  1 << CONFIG_DEBUG_BFIN_HWTRACE_EXPAND_LEN);
+#endif
 }

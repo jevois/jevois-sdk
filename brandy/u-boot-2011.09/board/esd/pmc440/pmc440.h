@@ -61,8 +61,8 @@
 #define FPGA_CLRBITS(p,v) out_be32(((void*)(p)), in_be32((void*)(p)) & ~(v))
 
 struct pmc440_fifo_s {
-  u32 data;
-  u32 ctrl;
+	u32 data;
+	u32 ctrl;
 };
 
 /* fifo ctrl register */
@@ -75,19 +75,19 @@ struct pmc440_fifo_s {
 #define FIFO_COUNT           4
 
 struct pmc440_fpga_s {
-  u32 ctrla;
-  u32 status;
-  u32 ctrlb;
-  u32 pad1[0x40 / sizeof (u32) - 3];
-  u32 irig_time;                  /* offset: 0x0040 */
-  u32 irig_tod;
-  u32 irig_cf;
-  u32 pad2;
-  u32 irig_rx_time;               /* offset: 0x0050 */
-  u32 pad3[3];
-  u32 hostctrl;                   /* offset: 0x0060 */
-  u32 pad4[0x20 / sizeof (u32) - 1];
-  struct pmc440_fifo_s fifo[FIFO_COUNT]; /* 0x0080..0x009f */
+	u32 ctrla;
+	u32 status;
+	u32 ctrlb;
+	u32 pad1[0x40 / sizeof(u32) - 3];
+	u32 irig_time;                  /* offset: 0x0040 */
+	u32 irig_tod;
+	u32 irig_cf;
+	u32 pad2;
+	u32 irig_rx_time;               /* offset: 0x0050 */
+	u32 pad3[3];
+	u32 hostctrl;                   /* offset: 0x0060 */
+	u32 pad4[0x20 / sizeof(u32) - 1];
+	struct pmc440_fifo_s fifo[FIFO_COUNT]; /* 0x0080..0x009f */
 };
 
 typedef struct pmc440_fpga_s pmc440_fpga_t;

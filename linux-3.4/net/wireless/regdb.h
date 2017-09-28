@@ -17,7 +17,7 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-extern const struct ieee80211_regdomain * reg_regdb[];
+extern const struct ieee80211_regdomain *reg_regdb[];
 extern int reg_regdb_size;
 
 #endif /* __REGDB_H__ */

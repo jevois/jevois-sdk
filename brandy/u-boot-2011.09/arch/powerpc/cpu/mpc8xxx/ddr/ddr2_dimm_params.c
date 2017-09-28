@@ -16,33 +16,33 @@
  *
  * Study these table from Byte 31 of JEDEC SPD Spec.
  *
- *    DDR I DDR II
- *  Bit Size  Size
- *  --- ----- ------
- *  7 high  512MB 512MB
- *  6 256MB 256MB
- *  5 128MB 128MB
- *  4  64MB  16GB
- *  3  32MB   8GB
- *  2  16MB   4GB
- *  1   2GB   2GB
- *  0 low   1GB   1GB
+ *		DDR I	DDR II
+ *	Bit	Size	Size
+ *	---	-----	------
+ *	7 high	512MB	512MB
+ *	6	256MB	256MB
+ *	5	128MB	128MB
+ *	4	 64MB	 16GB
+ *	3	 32MB	  8GB
+ *	2	 16MB	  4GB
+ *	1	  2GB	  2GB
+ *	0 low	  1GB	  1GB
  *
  * Reorder Table to be linear by stripping the bottom
  * 2 or 5 bits off and shifting them up to the top.
  *
  */
 static unsigned long long
-compute_ranksize (unsigned int mem_type, unsigned char row_dens)
+compute_ranksize(unsigned int mem_type, unsigned char row_dens)
 {
-  unsigned long long bsize;
-  
-  /* Bottom 5 bits up to the top. */
-  bsize = ( (row_dens >> 5) | ( (row_dens & 31) << 3) );
-  bsize <<= 27ULL;
-  debug ("DDR: DDR II rank density = 0x%08x\n", bsize);
-  
-  return bsize;
+	unsigned long long bsize;
+
+	/* Bottom 5 bits up to the top. */
+	bsize = ((row_dens >> 5) | ((row_dens & 31) << 3));
+	bsize <<= 27ULL;
+	debug("DDR: DDR II rank density = 0x%08x\n", bsize);
+
+	return bsize;
 }
 
 /*
@@ -56,75 +56,75 @@ compute_ranksize (unsigned int mem_type, unsigned char row_dens)
  * allowed for both DDR II and I.)
  */
 static unsigned int
-convert_bcd_tenths_to_cycle_time_ps (unsigned int spd_val)
+convert_bcd_tenths_to_cycle_time_ps(unsigned int spd_val)
 {
-  /* Table look up the lower nibble, allow DDR I & II. */
-  unsigned int tenths_ps[16] = {
-    0,
-    100,
-    200,
-    300,
-    400,
-    500,
-    600,
-    700,
-    800,
-    900,
-    250,  /* This and the next 3 entries valid ... */
-    330,  /* ...  only for tCK calculations. */
-    660,
-    750,
-    0,  /* undefined */
-    0 /* undefined */
-  };
-  
-  unsigned int whole_ns = (spd_val & 0xF0) >> 4;
-  unsigned int tenth_ns = spd_val & 0x0F;
-  unsigned int ps = whole_ns * 1000 + tenths_ps[tenth_ns];
-  
-  return ps;
+	/* Table look up the lower nibble, allow DDR I & II. */
+	unsigned int tenths_ps[16] = {
+		0,
+		100,
+		200,
+		300,
+		400,
+		500,
+		600,
+		700,
+		800,
+		900,
+		250,	/* This and the next 3 entries valid ... */
+		330,	/* ...  only for tCK calculations. */
+		660,
+		750,
+		0,	/* undefined */
+		0	/* undefined */
+	};
+
+	unsigned int whole_ns = (spd_val & 0xF0) >> 4;
+	unsigned int tenth_ns = spd_val & 0x0F;
+	unsigned int ps = whole_ns * 1000 + tenths_ps[tenth_ns];
+
+	return ps;
 }
 
 static unsigned int
-convert_bcd_hundredths_to_cycle_time_ps (unsigned int spd_val)
+convert_bcd_hundredths_to_cycle_time_ps(unsigned int spd_val)
 {
-  unsigned int tenth_ns = (spd_val & 0xF0) >> 4;
-  unsigned int hundredth_ns = spd_val & 0x0F;
-  unsigned int ps = tenth_ns * 100 + hundredth_ns * 10;
-  
-  return ps;
+	unsigned int tenth_ns = (spd_val & 0xF0) >> 4;
+	unsigned int hundredth_ns = spd_val & 0x0F;
+	unsigned int ps = tenth_ns * 100 + hundredth_ns * 10;
+
+	return ps;
 }
 
 static unsigned int byte40_table_ps[8] = {
-  0,
-  250,
-  330,
-  500,
-  660,
-  750,
-  0,  /* supposed to be RFC, but not sure what that means */
-  0 /* Undefined */
+	0,
+	250,
+	330,
+	500,
+	660,
+	750,
+	0,	/* supposed to be RFC, but not sure what that means */
+	0	/* Undefined */
 };
 
 static unsigned int
-compute_trfc_ps_from_spd (unsigned char trctrfc_ext, unsigned char trfc)
+compute_trfc_ps_from_spd(unsigned char trctrfc_ext, unsigned char trfc)
 {
-  unsigned int trfc_ps;
-  
-  trfc_ps = ( ( (trctrfc_ext & 0x1) * 256) + trfc) * 1000
-            + byte40_table_ps[ (trctrfc_ext >> 1) & 0x7];
-            
-  return trfc_ps;
+	unsigned int trfc_ps;
+
+	trfc_ps = (((trctrfc_ext & 0x1) * 256) + trfc) * 1000
+		+ byte40_table_ps[(trctrfc_ext >> 1) & 0x7];
+
+	return trfc_ps;
 }
 
 static unsigned int
-compute_trc_ps_from_spd (unsigned char trctrfc_ext, unsigned char trc)
+compute_trc_ps_from_spd(unsigned char trctrfc_ext, unsigned char trc)
 {
-  unsigned int trc_ps;
-  
-  trc_ps = trc * 1000 + byte40_table_ps[ (trctrfc_ext >> 4) & 0x7];
-  
-  return trc_ps;
+	unsigned int trc_ps;
+
+	trc_ps = trc * 1000 + byte40_table_ps[(trctrfc_ext >> 4) & 0x7];
+
+	return trc_ps;
 }
 
 /*
@@ -133,20 +133,20 @@ compute_trc_ps_from_spd (unsigned char trctrfc_ext, unsigned char trc)
  * filled in with "default" normal values.
  */
 static unsigned int
-determine_refresh_rate_ps (const unsigned int spd_refresh)
+determine_refresh_rate_ps(const unsigned int spd_refresh)
 {
-  unsigned int refresh_time_ps[8] = {
-    15625000, /* 0 Normal    1.00x */
-    3900000,  /* 1 Reduced    .25x */
-    7800000,  /* 2 Extended   .50x */
-    31300000, /* 3 Extended  2.00x */
-    62500000, /* 4 Extended  4.00x */
-    125000000,  /* 5 Extended  8.00x */
-    15625000, /* 6 Normal    1.00x  filler */
-    15625000, /* 7 Normal    1.00x  filler */
-  };
-  
-  return refresh_time_ps[spd_refresh & 0x7];
+	unsigned int refresh_time_ps[8] = {
+		15625000,	/* 0 Normal    1.00x */
+		3900000,	/* 1 Reduced    .25x */
+		7800000,	/* 2 Extended   .50x */
+		31300000,	/* 3 Extended  2.00x */
+		62500000,	/* 4 Extended  4.00x */
+		125000000,	/* 5 Extended  8.00x */
+		15625000,	/* 6 Normal    1.00x  filler */
+		15625000,	/* 7 Normal    1.00x  filler */
+	};
+
+	return refresh_time_ps[spd_refresh & 0x7];
 }
 
 /*
@@ -175,32 +175,32 @@ determine_refresh_rate_ps (const unsigned int spd_refresh)
  * ordinal 2, ddr2_speed_bins[1] contains tCK for CL=3
  * Not certain if any good value exists for CL=2
  */
-/* CL2   CL3   CL4   CL5   CL6  CL7*/
+				 /* CL2   CL3   CL4   CL5   CL6  CL7*/
 unsigned short ddr2_speed_bins[] = {   0, 5000, 3750, 3000, 2500, 1875 };
 
 unsigned int
-compute_derated_DDR2_CAS_latency (unsigned int mclk_ps)
+compute_derated_DDR2_CAS_latency(unsigned int mclk_ps)
 {
-  const unsigned int num_speed_bins = ARRAY_SIZE (ddr2_speed_bins);
-  unsigned int lowest_tCKmin_found = 0;
-  unsigned int lowest_tCKmin_CL = 0;
-  unsigned int i;
-  
-  debug ("mclk_ps = %u\n", mclk_ps);
-  
-  for (i = 0; i < num_speed_bins; i++) {
-    unsigned int x = ddr2_speed_bins[i];
-    debug ("i=%u, x = %u, lowest_tCKmin_found = %u\n",
-           i, x, lowest_tCKmin_found);
-    if (x && x <= mclk_ps && x >= lowest_tCKmin_found ) {
-      lowest_tCKmin_found = x;
-      lowest_tCKmin_CL = i + 2;
-    }
-  }
-  
-  debug ("lowest_tCKmin_CL = %u\n", lowest_tCKmin_CL);
-  
-  return lowest_tCKmin_CL;
+	const unsigned int num_speed_bins = ARRAY_SIZE(ddr2_speed_bins);
+	unsigned int lowest_tCKmin_found = 0;
+	unsigned int lowest_tCKmin_CL = 0;
+	unsigned int i;
+
+	debug("mclk_ps = %u\n", mclk_ps);
+
+	for (i = 0; i < num_speed_bins; i++) {
+		unsigned int x = ddr2_speed_bins[i];
+		debug("i=%u, x = %u, lowest_tCKmin_found = %u\n",
+		      i, x, lowest_tCKmin_found);
+		if (x && x <= mclk_ps && x >= lowest_tCKmin_found ) {
+			lowest_tCKmin_found = x;
+			lowest_tCKmin_CL = i + 2;
+		}
+	}
+
+	debug("lowest_tCKmin_CL = %u\n", lowest_tCKmin_CL);
+
+	return lowest_tCKmin_CL;
 }
 
 /*
@@ -212,132 +212,131 @@ compute_derated_DDR2_CAS_latency (unsigned int mclk_ps)
  * FIXME: use #define for the retvals
  */
 unsigned int
-ddr_compute_dimm_parameters (const ddr2_spd_eeprom_t * spd,
-                             dimm_params_t * pdimm,
-                             unsigned int dimm_number)
+ddr_compute_dimm_parameters(const ddr2_spd_eeprom_t *spd,
+			     dimm_params_t *pdimm,
+			     unsigned int dimm_number)
 {
-  unsigned int retval;
-  
-  if (spd->mem_type) {
-    if (spd->mem_type != SPD_MEMTYPE_DDR2) {
-      printf ("DIMM %u: is not a DDR2 SPD.\n", dimm_number);
-      return 1;
-    }
-  }
-  else {
-    memset (pdimm, 0, sizeof (dimm_params_t) );
-    return 1;
-  }
-  
-  retval = ddr2_spd_check (spd);
-  if (retval) {
-    printf ("DIMM %u: failed checksum\n", dimm_number);
-    return 2;
-  }
-  
-  /*
-   * The part name in ASCII in the SPD EEPROM is not null terminated.
-   * Guarantee null termination here by presetting all bytes to 0
-   * and copying the part name in ASCII from the SPD onto it
-   */
-  memset (pdimm->mpart, 0, sizeof (pdimm->mpart) );
-  memcpy (pdimm->mpart, spd->mpart, sizeof (pdimm->mpart) - 1);
-  
-  /* DIMM organization parameters */
-  pdimm->n_ranks = (spd->mod_ranks & 0x7) + 1;
-  pdimm->rank_density = compute_ranksize (spd->mem_type, spd->rank_dens);
-  pdimm->capacity = pdimm->n_ranks * pdimm->rank_density;
-  pdimm->data_width = spd->dataw;
-  pdimm->primary_sdram_width = spd->primw;
-  pdimm->ec_sdram_width = spd->ecw;
-  
-  /* These are all the types defined by the JEDEC DDR2 SPD 1.3 spec */
-  switch (spd->dimm_type) {
-  case DDR2_SPD_DIMMTYPE_RDIMM:
-  case DDR2_SPD_DIMMTYPE_72B_SO_RDIMM:
-  case DDR2_SPD_DIMMTYPE_MINI_RDIMM:
-    /* Registered/buffered DIMMs */
-    pdimm->registered_dimm = 1;
-    break;
-    
-  case DDR2_SPD_DIMMTYPE_UDIMM:
-  case DDR2_SPD_DIMMTYPE_SO_DIMM:
-  case DDR2_SPD_DIMMTYPE_MICRO_DIMM:
-  case DDR2_SPD_DIMMTYPE_MINI_UDIMM:
-    /* Unbuffered DIMMs */
-    pdimm->registered_dimm = 0;
-    break;
-    
-  case DDR2_SPD_DIMMTYPE_72B_SO_CDIMM:
-  default:
-    printf ("unknown dimm_type 0x%02X\n", spd->dimm_type);
-    return 1;
-  }
-  
-  /* SDRAM device parameters */
-  pdimm->n_row_addr = spd->nrow_addr;
-  pdimm->n_col_addr = spd->ncol_addr;
-  pdimm->n_banks_per_sdram_device = spd->nbanks;
-  pdimm->edc_config = spd->config;
-  pdimm->burst_lengths_bitmask = spd->burstl;
-  pdimm->row_density = spd->rank_dens;
-  
-  /*
-   * Calculate the Maximum Data Rate based on the Minimum Cycle time.
-   * The SPD clk_cycle field (tCKmin) is measured in tenths of
-   * nanoseconds and represented as BCD.
-   */
-  pdimm->tCKmin_X_ps
-    = convert_bcd_tenths_to_cycle_time_ps (spd->clk_cycle);
-  pdimm->tCKmin_X_minus_1_ps
-    = convert_bcd_tenths_to_cycle_time_ps (spd->clk_cycle2);
-  pdimm->tCKmin_X_minus_2_ps
-    = convert_bcd_tenths_to_cycle_time_ps (spd->clk_cycle3);
-    
-  pdimm->tCKmax_ps = convert_bcd_tenths_to_cycle_time_ps (spd->tckmax);
-  
-  /*
-   * Compute CAS latencies defined by SPD
-   * The SPD caslat_X should have at least 1 and at most 3 bits set.
-   *
-   * If cas_lat after masking is 0, the __ilog2 function returns
-   * 255 into the variable.   This behavior is abused once.
-   */
-  pdimm->caslat_X  = __ilog2 (spd->cas_lat);
-  pdimm->caslat_X_minus_1 = __ilog2 (spd->cas_lat
-                                     & ~ (1 << pdimm->caslat_X) );
-  pdimm->caslat_X_minus_2 = __ilog2 (spd->cas_lat
-                                     & ~ (1 << pdimm->caslat_X)
-                                     & ~ (1 << pdimm->caslat_X_minus_1) );
-                                     
-  /* Compute CAS latencies below that defined by SPD */
-  pdimm->caslat_lowest_derated
-    = compute_derated_DDR2_CAS_latency (get_memory_clk_period_ps() );
-    
-  /* Compute timing parameters */
-  pdimm->tRCD_ps = spd->trcd * 250;
-  pdimm->tRP_ps = spd->trp * 250;
-  pdimm->tRAS_ps = spd->tras * 1000;
-  
-  pdimm->tWR_ps = spd->twr * 250;
-  pdimm->tWTR_ps = spd->twtr * 250;
-  pdimm->tRFC_ps = compute_trfc_ps_from_spd (spd->trctrfc_ext, spd->trfc);
-  
-  pdimm->tRRD_ps = spd->trrd * 250;
-  pdimm->tRC_ps = compute_trc_ps_from_spd (spd->trctrfc_ext, spd->trc);
-  
-  pdimm->refresh_rate_ps = determine_refresh_rate_ps (spd->refresh);
-  
-  pdimm->tIS_ps = convert_bcd_hundredths_to_cycle_time_ps (spd->ca_setup);
-  pdimm->tIH_ps = convert_bcd_hundredths_to_cycle_time_ps (spd->ca_hold);
-  pdimm->tDS_ps
-    = convert_bcd_hundredths_to_cycle_time_ps (spd->data_setup);
-  pdimm->tDH_ps
-    = convert_bcd_hundredths_to_cycle_time_ps (spd->data_hold);
-    
-  pdimm->tRTP_ps = spd->trtp * 250;
-  pdimm->tDQSQ_max_ps = spd->tdqsq * 10;
-  pdimm->tQHS_ps = spd->tqhs * 10;
-  
-  return 0;
+	unsigned int retval;
+
+	if (spd->mem_type) {
+		if (spd->mem_type != SPD_MEMTYPE_DDR2) {
+			printf("DIMM %u: is not a DDR2 SPD.\n", dimm_number);
+			return 1;
+		}
+	} else {
+		memset(pdimm, 0, sizeof(dimm_params_t));
+		return 1;
+	}
+
+	retval = ddr2_spd_check(spd);
+	if (retval) {
+		printf("DIMM %u: failed checksum\n", dimm_number);
+		return 2;
+	}
+
+	/*
+	 * The part name in ASCII in the SPD EEPROM is not null terminated.
+	 * Guarantee null termination here by presetting all bytes to 0
+	 * and copying the part name in ASCII from the SPD onto it
+	 */
+	memset(pdimm->mpart, 0, sizeof(pdimm->mpart));
+	memcpy(pdimm->mpart, spd->mpart, sizeof(pdimm->mpart) - 1);
+
+	/* DIMM organization parameters */
+	pdimm->n_ranks = (spd->mod_ranks & 0x7) + 1;
+	pdimm->rank_density = compute_ranksize(spd->mem_type, spd->rank_dens);
+	pdimm->capacity = pdimm->n_ranks * pdimm->rank_density;
+	pdimm->data_width = spd->dataw;
+	pdimm->primary_sdram_width = spd->primw;
+	pdimm->ec_sdram_width = spd->ecw;
+
+	/* These are all the types defined by the JEDEC DDR2 SPD 1.3 spec */
+	switch (spd->dimm_type) {
+	case DDR2_SPD_DIMMTYPE_RDIMM:
+	case DDR2_SPD_DIMMTYPE_72B_SO_RDIMM:
+	case DDR2_SPD_DIMMTYPE_MINI_RDIMM:
+		/* Registered/buffered DIMMs */
+		pdimm->registered_dimm = 1;
+		break;
+
+	case DDR2_SPD_DIMMTYPE_UDIMM:
+	case DDR2_SPD_DIMMTYPE_SO_DIMM:
+	case DDR2_SPD_DIMMTYPE_MICRO_DIMM:
+	case DDR2_SPD_DIMMTYPE_MINI_UDIMM:
+		/* Unbuffered DIMMs */
+		pdimm->registered_dimm = 0;
+		break;
+
+	case DDR2_SPD_DIMMTYPE_72B_SO_CDIMM:
+	default:
+		printf("unknown dimm_type 0x%02X\n", spd->dimm_type);
+		return 1;
+	}
+
+	/* SDRAM device parameters */
+	pdimm->n_row_addr = spd->nrow_addr;
+	pdimm->n_col_addr = spd->ncol_addr;
+	pdimm->n_banks_per_sdram_device = spd->nbanks;
+	pdimm->edc_config = spd->config;
+	pdimm->burst_lengths_bitmask = spd->burstl;
+	pdimm->row_density = spd->rank_dens;
+
+	/*
+	 * Calculate the Maximum Data Rate based on the Minimum Cycle time.
+	 * The SPD clk_cycle field (tCKmin) is measured in tenths of
+	 * nanoseconds and represented as BCD.
+	 */
+	pdimm->tCKmin_X_ps
+		= convert_bcd_tenths_to_cycle_time_ps(spd->clk_cycle);
+	pdimm->tCKmin_X_minus_1_ps
+		= convert_bcd_tenths_to_cycle_time_ps(spd->clk_cycle2);
+	pdimm->tCKmin_X_minus_2_ps
+		= convert_bcd_tenths_to_cycle_time_ps(spd->clk_cycle3);
+
+	pdimm->tCKmax_ps = convert_bcd_tenths_to_cycle_time_ps(spd->tckmax);
+
+	/*
+	 * Compute CAS latencies defined by SPD
+	 * The SPD caslat_X should have at least 1 and at most 3 bits set.
+	 *
+	 * If cas_lat after masking is 0, the __ilog2 function returns
+	 * 255 into the variable.   This behavior is abused once.
+	 */
+	pdimm->caslat_X  = __ilog2(spd->cas_lat);
+	pdimm->caslat_X_minus_1 = __ilog2(spd->cas_lat
+					  & ~(1 << pdimm->caslat_X));
+	pdimm->caslat_X_minus_2 = __ilog2(spd->cas_lat
+					  & ~(1 << pdimm->caslat_X)
+					  & ~(1 << pdimm->caslat_X_minus_1));
+
+	/* Compute CAS latencies below that defined by SPD */
+	pdimm->caslat_lowest_derated
+		= compute_derated_DDR2_CAS_latency(get_memory_clk_period_ps());
+
+	/* Compute timing parameters */
+	pdimm->tRCD_ps = spd->trcd * 250;
+	pdimm->tRP_ps = spd->trp * 250;
+	pdimm->tRAS_ps = spd->tras * 1000;
+
+	pdimm->tWR_ps = spd->twr * 250;
+	pdimm->tWTR_ps = spd->twtr * 250;
+	pdimm->tRFC_ps = compute_trfc_ps_from_spd(spd->trctrfc_ext, spd->trfc);
+
+	pdimm->tRRD_ps = spd->trrd * 250;
+	pdimm->tRC_ps = compute_trc_ps_from_spd(spd->trctrfc_ext, spd->trc);
+
+	pdimm->refresh_rate_ps = determine_refresh_rate_ps(spd->refresh);
+
+	pdimm->tIS_ps = convert_bcd_hundredths_to_cycle_time_ps(spd->ca_setup);
+	pdimm->tIH_ps = convert_bcd_hundredths_to_cycle_time_ps(spd->ca_hold);
+	pdimm->tDS_ps
+		= convert_bcd_hundredths_to_cycle_time_ps(spd->data_setup);
+	pdimm->tDH_ps
+		= convert_bcd_hundredths_to_cycle_time_ps(spd->data_hold);
+
+	pdimm->tRTP_ps = spd->trtp * 250;
+	pdimm->tDQSQ_max_ps = spd->tdqsq * 10;
+	pdimm->tQHS_ps = spd->tqhs * 10;
+
+	return 0;
 }

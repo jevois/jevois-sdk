@@ -18,50 +18,50 @@
  * Copyright IBM Corporation, 2008
  *
  * Author: Dipankar Sarma <dipankar@in.ibm.com>
- *     Paul E. McKenney <paulmck@linux.vnet.ibm.com> Hierarchical algorithm
+ *	   Paul E. McKenney <paulmck@linux.vnet.ibm.com> Hierarchical algorithm
  *
  * Based on the original work by Paul McKenney <paulmck@us.ibm.com>
  * and inputs from Rusty Russell, Andrea Arcangeli and Andi Kleen.
  *
  * For detailed explanation of Read-Copy Update mechanism see -
- *  Documentation/RCU
+ *	Documentation/RCU
  */
 
 #ifndef __LINUX_RCUTREE_H
 #define __LINUX_RCUTREE_H
 
-extern void rcu_init (void);
-extern void rcu_note_context_switch (int cpu);
-extern int rcu_needs_cpu (int cpu);
-extern void rcu_cpu_stall_reset (void);
+extern void rcu_init(void);
+extern void rcu_note_context_switch(int cpu);
+extern int rcu_needs_cpu(int cpu);
+extern void rcu_cpu_stall_reset(void);
 
 /*
  * Note a virtualization-based context switch.  This is simply a
  * wrapper around rcu_note_context_switch(), which allows TINY_RCU
  * to save a few bytes.
  */
-static inline void rcu_virt_note_context_switch (int cpu)
+static inline void rcu_virt_note_context_switch(int cpu)
 {
-  rcu_note_context_switch (cpu);
+	rcu_note_context_switch(cpu);
 }
 
 #ifdef CONFIG_TREE_PREEMPT_RCU
 
-extern void exit_rcu (void);
+extern void exit_rcu(void);
 
 #else /* #ifdef CONFIG_TREE_PREEMPT_RCU */
 
-static inline void exit_rcu (void)
+static inline void exit_rcu(void)
 {
 }
 
 #endif /* #else #ifdef CONFIG_TREE_PREEMPT_RCU */
 
-extern void synchronize_rcu_bh (void);
-extern void synchronize_sched_expedited (void);
-extern void synchronize_rcu_expedited (void);
+extern void synchronize_rcu_bh(void);
+extern void synchronize_sched_expedited(void);
+extern void synchronize_rcu_expedited(void);
 
-void kfree_call_rcu (struct rcu_head * head, void (*func) (struct rcu_head * rcu) );
+void kfree_call_rcu(struct rcu_head *head, void (*func)(struct rcu_head *rcu));
 
 /**
  * synchronize_rcu_bh_expedited - Brute-force RCU-bh grace period
@@ -79,33 +79,33 @@ void kfree_call_rcu (struct rcu_head * head, void (*func) (struct rcu_head * rcu
  * to call this function from a CPU-hotplug notifier.  Failing to observe
  * these restriction will result in deadlock.
  */
-static inline void synchronize_rcu_bh_expedited (void)
+static inline void synchronize_rcu_bh_expedited(void)
 {
-  synchronize_sched_expedited();
+	synchronize_sched_expedited();
 }
 
-extern void rcu_barrier (void);
-extern void rcu_barrier_bh (void);
-extern void rcu_barrier_sched (void);
+extern void rcu_barrier(void);
+extern void rcu_barrier_bh(void);
+extern void rcu_barrier_sched(void);
 
 extern unsigned long rcutorture_testseq;
 extern unsigned long rcutorture_vernum;
-extern long rcu_batches_completed (void);
-extern long rcu_batches_completed_bh (void);
-extern long rcu_batches_completed_sched (void);
+extern long rcu_batches_completed(void);
+extern long rcu_batches_completed_bh(void);
+extern long rcu_batches_completed_sched(void);
 
-extern void rcu_force_quiescent_state (void);
-extern void rcu_bh_force_quiescent_state (void);
-extern void rcu_sched_force_quiescent_state (void);
+extern void rcu_force_quiescent_state(void);
+extern void rcu_bh_force_quiescent_state(void);
+extern void rcu_sched_force_quiescent_state(void);
 
 /* A context switch is a grace period for RCU-sched and RCU-bh. */
-static inline int rcu_blocking_is_gp (void)
+static inline int rcu_blocking_is_gp(void)
 {
-  might_sleep();  /* Check for RCU read-side critical section. */
-  return num_online_cpus() == 1;
+	might_sleep();  /* Check for RCU read-side critical section. */
+	return num_online_cpus() == 1;
 }
 
-extern void rcu_scheduler_starting (void);
+extern void rcu_scheduler_starting(void);
 extern int rcu_scheduler_active __read_mostly;
 
 #endif /* __LINUX_RCUTREE_H */

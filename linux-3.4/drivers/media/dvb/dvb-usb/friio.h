@@ -37,19 +37,19 @@ extern int dvb_usb_friio_debug;
 #define deb_fe(args...)   dprintk(dvb_usb_friio_debug, 0x08, args)
 
 /* Vendor requests */
-#define GL861_WRITE   0x40
-#define GL861_READ    0xc0
+#define GL861_WRITE		0x40
+#define GL861_READ		0xc0
 
 /* command bytes */
-#define GL861_REQ_I2C_WRITE 0x01
-#define GL861_REQ_I2C_READ  0x02
+#define GL861_REQ_I2C_WRITE	0x01
+#define GL861_REQ_I2C_READ	0x02
 /* For control msg with data argument */
 /* Used for accessing the PLL on the secondary I2C bus of FE via GL861 */
-#define GL861_REQ_I2C_DATA_CTRL_WRITE 0x03
+#define GL861_REQ_I2C_DATA_CTRL_WRITE	0x03
 
-#define GL861_ALTSETTING_COUNT  2
-#define FRIIO_BULK_ALTSETTING 0
-#define FRIIO_ISOC_ALTSETTING 1
+#define GL861_ALTSETTING_COUNT	2
+#define FRIIO_BULK_ALTSETTING	0
+#define FRIIO_ISOC_ALTSETTING	1
 
 /* LED & LNB control via PIC. */
 /* basically, it's serial control with clock and strobe. */
@@ -65,8 +65,8 @@ extern int dvb_usb_friio_debug;
 #define FRIIO_DEMOD_ADDR  (0x30 >> 1)
 #define FRIIO_PLL_ADDR  (0xC0 >> 1)
 
-#define JDVBT90502_PLL_CLK  4000000
-#define JDVBT90502_PLL_DIVIDER  28
+#define JDVBT90502_PLL_CLK	4000000
+#define JDVBT90502_PLL_DIVIDER	28
 
 #define JDVBT90502_2ND_I2C_REG 0xFE
 
@@ -86,14 +86,14 @@ extern int dvb_usb_friio_debug;
 #define PLL_STATUS_LOCKED     0x40 /* 1: locked */
 #define PLL_STATUS_AGC_ACTIVE 0x08 /* 1:active */
 #define PLL_STATUS_TESTMODE   0x07 /* digital output level (5 level) */
-/* 0.15Vcc step   0x00: < 0.15Vcc, ..., 0x04: >= 0.6Vcc (<= 1Vcc) */
+  /* 0.15Vcc step   0x00: < 0.15Vcc, ..., 0x04: >= 0.6Vcc (<= 1Vcc) */
 
 
 struct jdvbt90502_config {
-  u8 demod_address; /* i2c addr for demodulator IC */
-  u8 pll_address;   /* PLL addr on the secondary i2c*/
+	u8 demod_address; /* i2c addr for demodulator IC */
+	u8 pll_address;   /* PLL addr on the secondary i2c*/
 };
 extern struct jdvbt90502_config friio_fe_config;
 
-extern struct dvb_frontend * jdvbt90502_attach (struct dvb_usb_device * d);
+extern struct dvb_frontend *jdvbt90502_attach(struct dvb_usb_device *d);
 #endif

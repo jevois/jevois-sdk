@@ -33,19 +33,19 @@
 #endif
 
 
-u8 mc9sdz60_reg_read (enum mc9sdz60_reg reg)
+u8 mc9sdz60_reg_read(enum mc9sdz60_reg reg)
 {
-  u8 val;
-  
-  if (i2c_read (CONFIG_SYS_FSL_MC9SDZ60_I2C_ADDR, reg, 1, &val, 1) ) {
-    puts ("Error reading MC9SDZ60 register\n");
-    return -1;
-  }
-  
-  return val;
+	u8 val;
+
+	if (i2c_read(CONFIG_SYS_FSL_MC9SDZ60_I2C_ADDR, reg, 1, &val, 1)) {
+		puts("Error reading MC9SDZ60 register\n");
+		return -1;
+	}
+
+	return val;
 }
 
-void mc9sdz60_reg_write (enum mc9sdz60_reg reg, u8 val)
+void mc9sdz60_reg_write(enum mc9sdz60_reg reg, u8 val)
 {
-  i2c_write (CONFIG_SYS_FSL_MC9SDZ60_I2C_ADDR, reg, 1, &val, 1);
+	i2c_write(CONFIG_SYS_FSL_MC9SDZ60_I2C_ADDR, reg, 1, &val, 1);
 }

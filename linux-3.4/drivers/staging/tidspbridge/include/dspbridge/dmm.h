@@ -26,7 +26,7 @@ struct dmm_object;
 
 /* DMM attributes used in dmm_create() */
 struct dmm_mgrattrs {
-  u32 reserved;
+	u32 reserved;
 };
 
 #define DMMPOOLSIZE      0x4000000
@@ -38,34 +38,34 @@ struct dmm_mgrattrs {
  *      This is typically called from the client process.
  */
 
-extern int dmm_get_handle (void * hprocessor,
-                           struct dmm_object ** dmm_manager);
+extern int dmm_get_handle(void *hprocessor,
+				 struct dmm_object **dmm_manager);
 
-extern int dmm_reserve_memory (struct dmm_object * dmm_mgr,
-                               u32 size, u32 * prsv_addr);
+extern int dmm_reserve_memory(struct dmm_object *dmm_mgr,
+				     u32 size, u32 *prsv_addr);
 
-extern int dmm_un_reserve_memory (struct dmm_object * dmm_mgr,
-                                  u32 rsv_addr);
+extern int dmm_un_reserve_memory(struct dmm_object *dmm_mgr,
+					u32 rsv_addr);
 
-extern int dmm_map_memory (struct dmm_object * dmm_mgr, u32 addr,
-                           u32 size);
+extern int dmm_map_memory(struct dmm_object *dmm_mgr, u32 addr,
+				 u32 size);
 
-extern int dmm_un_map_memory (struct dmm_object * dmm_mgr,
-                              u32 addr, u32 * psize);
+extern int dmm_un_map_memory(struct dmm_object *dmm_mgr,
+				    u32 addr, u32 *psize);
 
-extern int dmm_destroy (struct dmm_object * dmm_mgr);
+extern int dmm_destroy(struct dmm_object *dmm_mgr);
 
-extern int dmm_delete_tables (struct dmm_object * dmm_mgr);
+extern int dmm_delete_tables(struct dmm_object *dmm_mgr);
 
-extern int dmm_create (struct dmm_object ** dmm_manager,
-                       struct dev_object * hdev_obj,
-                       const struct dmm_mgrattrs * mgr_attrts);
+extern int dmm_create(struct dmm_object **dmm_manager,
+			     struct dev_object *hdev_obj,
+			     const struct dmm_mgrattrs *mgr_attrts);
 
-extern int dmm_create_tables (struct dmm_object * dmm_mgr,
-                              u32 addr, u32 size);
+extern int dmm_create_tables(struct dmm_object *dmm_mgr,
+				    u32 addr, u32 size);
 
 #ifdef DSP_DMM_DEBUG
-u32 dmm_mem_map_dump (struct dmm_object * dmm_mgr);
+u32 dmm_mem_map_dump(struct dmm_object *dmm_mgr);
 #endif
 
 #endif /* DMM_ */

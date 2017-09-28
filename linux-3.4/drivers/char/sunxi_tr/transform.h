@@ -37,19 +37,19 @@
 #include <linux/debugfs.h>
 #include <linux/sunxi_tr.h>
 
-int de_tr_set_base (unsigned int reg_base);
-int de_tr_irq_enable (void);
-int de_tr_irq_query (void);
-int de_tr_init (void);
-int de_tr_exit (void);
-int de_tr_set_cfg (tr_info * info);
-int de_tr_reset (void);
-int de_tr_exception (void);
+int de_tr_set_base(unsigned int reg_base);
+int de_tr_irq_enable(void);
+int de_tr_irq_query(void);
+int de_tr_init(void);
+int de_tr_exit(void);
+int de_tr_set_cfg(tr_info *info);
+int de_tr_reset(void);
+int de_tr_exception(void);
 
-int sunxi_tr_request (void);
-int sunxi_tr_release (int hdl);
-int sunxi_tr_commit (int hdl, tr_info * info);
-int sunxi_tr_query (int hdl);
-int sunxi_tr_set_timeout (int hdl, unsigned long timeout /* ms */);
+int sunxi_tr_request(void);
+int sunxi_tr_release(int hdl);
+int sunxi_tr_commit(int hdl, tr_info *info);
+int sunxi_tr_query(int hdl);
+int sunxi_tr_set_timeout(int hdl, unsigned long timeout /* ms */);
 
 #endif

@@ -17,6 +17,6 @@
 /*
  * Shorthands
  */
-#define signalled()   (signal_pending(current))
+#define signalled()		(signal_pending(current))
 
 #endif /* _LINUX_SUNRPC_TYPES_H_ */

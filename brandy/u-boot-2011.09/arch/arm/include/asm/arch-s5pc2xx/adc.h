@@ -27,15 +27,15 @@
 
 #ifndef __ASSEMBLY__
 struct s5p_adc {
-  unsigned int adccon;
-  unsigned int adctsc;
-  unsigned int adcdly;
-  unsigned int adcdat0;
-  unsigned int adcdat1;
-  unsigned int adcupdn;
-  unsigned int adcclrint;
-  unsigned int adcmux;
-  unsigned int adcclrintpndnup;
+	unsigned int adccon;
+	unsigned int adctsc;
+	unsigned int adcdly;
+	unsigned int adcdat0;
+	unsigned int adcdat1;
+	unsigned int adcupdn;
+	unsigned int adcclrint;
+	unsigned int adcmux;
+	unsigned int adcclrintpndnup;
 };
 #endif
 

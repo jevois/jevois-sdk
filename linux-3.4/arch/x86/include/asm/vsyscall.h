@@ -2,9 +2,9 @@
 #define _ASM_X86_VSYSCALL_H
 
 enum vsyscall_num {
-  __NR_vgettimeofday,
-  __NR_vtime,
-  __NR_vgetcpu,
+	__NR_vgettimeofday,
+	__NR_vtime,
+	__NR_vgetcpu,
 };
 
 #define VSYSCALL_START (-10UL << 20)
@@ -16,8 +16,8 @@ enum vsyscall_num {
 #ifdef __KERNEL__
 #include <linux/seqlock.h>
 
-#define VGETCPU_RDTSCP  1
-#define VGETCPU_LSL 2
+#define VGETCPU_RDTSCP	1
+#define VGETCPU_LSL	2
 
 /* kernel space (writeable) */
 extern int vgetcpu_mode;
@@ -25,13 +25,13 @@ extern struct timezone sys_tz;
 
 #include <asm/vvar.h>
 
-extern void map_vsyscall (void);
+extern void map_vsyscall(void);
 
 /*
  * Called on instruction fetch fault in vsyscall page.
  * Returns true if handled.
  */
-extern bool emulate_vsyscall (struct pt_regs * regs, unsigned long address);
+extern bool emulate_vsyscall(struct pt_regs *regs, unsigned long address);
 
 #endif /* __KERNEL__ */
 

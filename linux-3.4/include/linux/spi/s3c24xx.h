@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2006 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * S3C2410 - SPI Controller platform_device info
  *
@@ -13,14 +13,14 @@
 #define __LINUX_SPI_S3C24XX_H __FILE__
 
 struct s3c2410_spi_info {
-  int      pin_cs;  /* simple gpio cs */
-  unsigned int     num_cs;  /* total chipselects */
-  int      bus_num;       /* bus number to use. */
-  
-  unsigned int     use_fiq: 1; /* use fiq */
-  
-  void (*gpio_setup) (struct s3c2410_spi_info * spi, int enable);
-  void (*set_cs) (struct s3c2410_spi_info * spi, int cs, int pol);
+	int			 pin_cs;	/* simple gpio cs */
+	unsigned int		 num_cs;	/* total chipselects */
+	int			 bus_num;       /* bus number to use. */
+
+	unsigned int		 use_fiq:1;	/* use fiq */
+
+	void (*gpio_setup)(struct s3c2410_spi_info *spi, int enable);
+	void (*set_cs)(struct s3c2410_spi_info *spi, int cs, int pol);
 };
 
 #endif /* __LINUX_SPI_S3C24XX_H */

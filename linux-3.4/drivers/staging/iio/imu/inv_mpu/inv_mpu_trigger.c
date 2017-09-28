@@ -46,50 +46,50 @@
 /**
  * inv_mpu_data_rdy_trigger_set_state() set data ready interrupt state
  **/
-static int inv_mpu_data_rdy_trigger_set_state (struct iio_trigger * trig,
-    bool state)
+static int inv_mpu_data_rdy_trigger_set_state(struct iio_trigger *trig,
+						bool state)
 {
-  struct iio_dev * indio_dev = trig->private_data;
-  
-  dev_dbg (&indio_dev->dev, "%s (%d)\n", __func__, state);
-  return set_inv_enable (indio_dev, state);
+	struct iio_dev *indio_dev = trig->private_data;
+
+	dev_dbg(&indio_dev->dev, "%s (%d)\n", __func__, state);
+	return set_inv_enable(indio_dev, state);
 }
 
 static const struct iio_trigger_ops inv_mpu_trigger_ops = {
-  .owner = THIS_MODULE,
-  .set_trigger_state = &inv_mpu_data_rdy_trigger_set_state,
+	.owner = THIS_MODULE,
+	.set_trigger_state = &inv_mpu_data_rdy_trigger_set_state,
 };
 
-int inv_mpu_probe_trigger (struct iio_dev * indio_dev)
+int inv_mpu_probe_trigger(struct iio_dev *indio_dev)
 {
-  int ret;
-  struct inv_mpu_iio_s * st = iio_priv (indio_dev);
-  
-  st->trig = iio_allocate_trigger ("%s-dev%d",
-                                   indio_dev->name,
-                                   indio_dev->id);
-  if (st->trig == NULL)
-  { return -ENOMEM; }
-  st->trig->dev.parent = &st->client->dev;
-  st->trig->private_data = indio_dev;
-  st->trig->ops = &inv_mpu_trigger_ops;
-  ret = iio_trigger_register (st->trig);
-  
-  if (ret) {
-    iio_free_trigger (st->trig);
-    return -EPERM;
-  }
-  indio_dev->trig = st->trig;
-  
-  return 0;
+	int ret;
+	struct inv_mpu_iio_s *st = iio_priv(indio_dev);
+
+	st->trig = iio_allocate_trigger("%s-dev%d",
+					indio_dev->name,
+					indio_dev->id);
+	if (st->trig == NULL)
+		return -ENOMEM;
+	st->trig->dev.parent = &st->client->dev;
+	st->trig->private_data = indio_dev;
+	st->trig->ops = &inv_mpu_trigger_ops;
+	ret = iio_trigger_register(st->trig);
+
+	if (ret) {
+		iio_free_trigger(st->trig);
+		return -EPERM;
+	}
+	indio_dev->trig = st->trig;
+
+	return 0;
 }
 
-void inv_mpu_remove_trigger (struct iio_dev * indio_dev)
+void inv_mpu_remove_trigger(struct iio_dev *indio_dev)
 {
-  struct inv_mpu_iio_s * st = iio_priv (indio_dev);
-  
-  iio_trigger_unregister (st->trig);
-  iio_free_trigger (st->trig);
+	struct inv_mpu_iio_s *st = iio_priv(indio_dev);
+
+	iio_trigger_unregister(st->trig);
+	iio_free_trigger(st->trig);
 }
 /**
  *  @}

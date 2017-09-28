@@ -26,7 +26,7 @@
 /* Maximum address we can use for the control code buffer. */
 #define KEXEC_CONTROL_MEMORY_LIMIT TASK_SIZE
 
-#define KEXEC_CONTROL_PAGE_SIZE PAGE_SIZE
+#define KEXEC_CONTROL_PAGE_SIZE	PAGE_SIZE
 
 /*
  * We don't bother to provide a unique identifier, since we can only
@@ -35,7 +35,7 @@
 #define KEXEC_ARCH KEXEC_ARCH_DEFAULT
 
 /* Use the tile override for the page allocator. */
-struct page * kimage_alloc_pages_arch (gfp_t gfp_mask, unsigned int order);
+struct page *kimage_alloc_pages_arch(gfp_t gfp_mask, unsigned int order);
 #define kimage_alloc_pages_arch kimage_alloc_pages_arch
 
 #define MAX_NOTE_BYTES 1024
@@ -43,10 +43,10 @@ struct page * kimage_alloc_pages_arch (gfp_t gfp_mask, unsigned int order);
 /* Defined in arch/tile/kernel/relocate_kernel.S */
 extern const unsigned char relocate_new_kernel[];
 extern const unsigned long relocate_new_kernel_size;
-extern void relocate_new_kernel_end (void);
+extern void relocate_new_kernel_end(void);
 
 /* Provide a dummy definition to avoid build failures. */
-static inline void crash_setup_regs (struct pt_regs * n, struct pt_regs * o)
+static inline void crash_setup_regs(struct pt_regs *n, struct pt_regs *o)
 {
 }
 

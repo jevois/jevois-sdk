@@ -20,12 +20,12 @@
 /*
  * Initialize IRQ setting
  */
-void __init init_lboxre2_IRQ (void)
+void __init init_lboxre2_IRQ(void)
 {
-  make_imask_irq (IRQ_CF1);
-  make_imask_irq (IRQ_CF0);
-  make_imask_irq (IRQ_INTD);
-  make_imask_irq (IRQ_ETH1);
-  make_imask_irq (IRQ_ETH0);
-  make_imask_irq (IRQ_INTA);
+	make_imask_irq(IRQ_CF1);
+	make_imask_irq(IRQ_CF0);
+	make_imask_irq(IRQ_INTD);
+	make_imask_irq(IRQ_ETH1);
+	make_imask_irq(IRQ_ETH0);
+	make_imask_irq(IRQ_INTA);
 }

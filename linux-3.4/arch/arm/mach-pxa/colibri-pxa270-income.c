@@ -48,19 +48,19 @@
  ******************************************************************************/
 #if defined(CONFIG_MMC_PXA) || defined(CONFIG_MMC_PXA_MODULE)
 static struct pxamci_platform_data income_mci_platform_data = {
-  .ocr_mask   = MMC_VDD_32_33 | MMC_VDD_33_34,
-  .gpio_power   = -1,
-  .gpio_card_detect = GPIO0_INCOME_SD_DETECT,
-  .gpio_card_ro   = GPIO0_INCOME_SD_RO,
-  .detect_delay_ms  = 200,
+	.ocr_mask		= MMC_VDD_32_33 | MMC_VDD_33_34,
+	.gpio_power		= -1,
+	.gpio_card_detect	= GPIO0_INCOME_SD_DETECT,
+	.gpio_card_ro		= GPIO0_INCOME_SD_RO,
+	.detect_delay_ms	= 200,
 };
 
-static void __init income_mmc_init (void)
+static void __init income_mmc_init(void)
 {
-  pxa_set_mci_info (&income_mci_platform_data);
+	pxa_set_mci_info(&income_mci_platform_data);
 }
 #else
-static inline void income_mmc_init (void) {}
+static inline void income_mmc_init(void) {}
 #endif
 
 /******************************************************************************
@@ -68,16 +68,16 @@ static inline void income_mmc_init (void) {}
  ******************************************************************************/
 #if defined(CONFIG_USB_OHCI_HCD) || defined(CONFIG_USB_OHCI_HCD_MODULE)
 static struct pxaohci_platform_data income_ohci_info = {
-  .port_mode  = PMM_PERPORT_MODE,
-  .flags    = ENABLE_PORT1 | POWER_CONTROL_LOW | POWER_SENSE_LOW,
+	.port_mode	= PMM_PERPORT_MODE,
+	.flags		= ENABLE_PORT1 | POWER_CONTROL_LOW | POWER_SENSE_LOW,
 };
 
-static void __init income_uhc_init (void)
+static void __init income_uhc_init(void)
 {
-  pxa_set_ohci_info (&income_ohci_info);
+	pxa_set_ohci_info(&income_ohci_info);
 }
 #else
-static inline void income_uhc_init (void) {}
+static inline void income_uhc_init(void) {}
 #endif
 
 /******************************************************************************
@@ -85,39 +85,39 @@ static inline void income_uhc_init (void) {}
  ******************************************************************************/
 #if defined(CONFIG_LEDS_GPIO) || defined(CONFIG_LEDS_GPIO_MODULE)
 struct gpio_led income_gpio_leds[] = {
-  {
-    .name     = "income:green:leda",
-    .default_trigger  = "none",
-    .gpio     = GPIO54_INCOME_LED_A,
-    .active_low   = 1,
-  },
-  {
-    .name     = "income:green:ledb",
-    .default_trigger  = "none",
-    .gpio     = GPIO55_INCOME_LED_B,
-    .active_low   = 1,
-  }
+	{
+		.name			= "income:green:leda",
+		.default_trigger	= "none",
+		.gpio			= GPIO54_INCOME_LED_A,
+		.active_low		= 1,
+	},
+	{
+		.name			= "income:green:ledb",
+		.default_trigger	= "none",
+		.gpio			= GPIO55_INCOME_LED_B,
+		.active_low		= 1,
+	}
 };
 
 static struct gpio_led_platform_data income_gpio_led_info = {
-  .leds   = income_gpio_leds,
-  .num_leds = ARRAY_SIZE (income_gpio_leds),
+	.leds		= income_gpio_leds,
+	.num_leds	= ARRAY_SIZE(income_gpio_leds),
 };
 
 static struct platform_device income_leds = {
-  .name = "leds-gpio",
-  .id = -1,
-  .dev  = {
-    .platform_data  = &income_gpio_led_info,
-  }
+	.name	= "leds-gpio",
+	.id	= -1,
+	.dev	= {
+		.platform_data	= &income_gpio_led_info,
+	}
 };
 
-static void __init income_led_init (void)
+static void __init income_led_init(void)
 {
-  platform_device_register (&income_leds);
+	platform_device_register(&income_leds);
 }
 #else
-static inline void income_led_init (void) {}
+static inline void income_led_init(void) {}
 #endif
 
 /******************************************************************************
@@ -125,21 +125,21 @@ static inline void income_led_init (void) {}
  ******************************************************************************/
 #if defined(CONFIG_I2C_PXA) || defined(CONFIG_I2C_PXA_MODULE)
 static struct i2c_board_info __initdata income_i2c_devs[] = {
-  {
-    I2C_BOARD_INFO ("ds1340", 0x68),
-  }, {
-    I2C_BOARD_INFO ("lm75", 0x4f),
-  },
+	{
+		I2C_BOARD_INFO("ds1340", 0x68),
+	}, {
+		I2C_BOARD_INFO("lm75", 0x4f),
+	},
 };
 
-static void __init income_i2c_init (void)
+static void __init income_i2c_init(void)
 {
-  pxa_set_i2c_info (NULL);
-  pxa27x_set_i2c_power_info (NULL);
-  i2c_register_board_info (0, ARRAY_AND_SIZE (income_i2c_devs) );
+	pxa_set_i2c_info(NULL);
+	pxa27x_set_i2c_power_info(NULL);
+	i2c_register_board_info(0, ARRAY_AND_SIZE(income_i2c_devs));
 }
 #else
-static inline void income_i2c_init (void) {}
+static inline void income_i2c_init(void) {}
 #endif
 
 /******************************************************************************
@@ -147,37 +147,37 @@ static inline void income_i2c_init (void) {}
  ******************************************************************************/
 #if defined(CONFIG_FB_PXA) || defined(CONFIG_FB_PXA_MODULE)
 static struct pxafb_mode_info income_lcd_modes[] = {
-  {
-    .pixclock = 144700,
-    .xres   = 320,
-    .yres   = 240,
-    .bpp    = 32,
-    .depth    = 18,
-    
-    .left_margin  = 10,
-    .right_margin = 10,
-    .upper_margin = 7,
-    .lower_margin = 8,
-    
-    .hsync_len  = 20,
-    .vsync_len  = 2,
-    
-    .sync   = FB_SYNC_VERT_HIGH_ACT,
-  },
+{
+	.pixclock	= 144700,
+	.xres		= 320,
+	.yres		= 240,
+	.bpp		= 32,
+	.depth		= 18,
+
+	.left_margin	= 10,
+	.right_margin	= 10,
+	.upper_margin	= 7,
+	.lower_margin	= 8,
+
+	.hsync_len	= 20,
+	.vsync_len	= 2,
+
+	.sync		= FB_SYNC_VERT_HIGH_ACT,
+},
 };
 
 static struct pxafb_mach_info income_lcd_screen = {
-  .modes    = income_lcd_modes,
-  .num_modes  = ARRAY_SIZE (income_lcd_modes),
-  .lcd_conn = LCD_COLOR_TFT_18BPP | LCD_PCLK_EDGE_FALL,
+	.modes		= income_lcd_modes,
+	.num_modes	= ARRAY_SIZE(income_lcd_modes),
+	.lcd_conn	= LCD_COLOR_TFT_18BPP | LCD_PCLK_EDGE_FALL,
 };
 
-static void __init income_lcd_init (void)
+static void __init income_lcd_init(void)
 {
-  pxa_set_fb_info (NULL, &income_lcd_screen);
+	pxa_set_fb_info(NULL, &income_lcd_screen);
 }
 #else
-static inline void income_lcd_init (void) {}
+static inline void income_lcd_init(void) {}
 #endif
 
 /******************************************************************************
@@ -185,39 +185,39 @@ static inline void income_lcd_init (void) {}
  ******************************************************************************/
 #if defined(CONFIG_BACKLIGHT_PWM) || defined(CONFIG_BACKLIGHT_PWM_MODULE)
 static struct platform_pwm_backlight_data income_backlight_data = {
-  .pwm_id   = 0,
-  .max_brightness = 0x3ff,
-  .dft_brightness = 0x1ff,
-  .pwm_period_ns  = 1000000,
+	.pwm_id		= 0,
+	.max_brightness	= 0x3ff,
+	.dft_brightness	= 0x1ff,
+	.pwm_period_ns	= 1000000,
 };
 
 static struct platform_device income_backlight = {
-  .name = "pwm-backlight",
-  .dev  = {
-    .parent   = &pxa27x_device_pwm0.dev,
-    .platform_data  = &income_backlight_data,
-  },
+	.name	= "pwm-backlight",
+	.dev	= {
+		.parent		= &pxa27x_device_pwm0.dev,
+		.platform_data	= &income_backlight_data,
+	},
 };
 
-static void __init income_pwm_init (void)
+static void __init income_pwm_init(void)
 {
-  platform_device_register (&income_backlight);
+	platform_device_register(&income_backlight);
 }
 #else
-static inline void income_pwm_init (void) {}
+static inline void income_pwm_init(void) {}
 #endif
 
-void __init colibri_pxa270_income_boardinit (void)
+void __init colibri_pxa270_income_boardinit(void)
 {
-  pxa_set_ffuart_info (NULL);
-  pxa_set_btuart_info (NULL);
-  pxa_set_stuart_info (NULL);
-  
-  income_mmc_init();
-  income_uhc_init();
-  income_led_init();
-  income_i2c_init();
-  income_lcd_init();
-  income_pwm_init();
+	pxa_set_ffuart_info(NULL);
+	pxa_set_btuart_info(NULL);
+	pxa_set_stuart_info(NULL);
+
+	income_mmc_init();
+	income_uhc_init();
+	income_led_init();
+	income_i2c_init();
+	income_lcd_init();
+	income_pwm_init();
 }
 

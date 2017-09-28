@@ -29,7 +29,7 @@
 #define bfin_write_SIC_IMASK0(val)     bfin_write32(SIC_IMASK0, val)
 #define bfin_read_SIC_IMASK1()         bfin_read32(SIC_IMASK1)
 #define bfin_write_SIC_IMASK1(val)     bfin_write32(SIC_IMASK1, val)
-#define bfin_read_SIC_IMASK(x)         bfin_read32(SIC_IMASK0 + x * (SIC_IMASK1 - SIC_IMASK0))
+#define bfin_read_SIC_IMASK(x)	       bfin_read32(SIC_IMASK0 + x * (SIC_IMASK1 - SIC_IMASK0))
 #define bfin_write_SIC_IMASK(x, val)   bfin_write32(SIC_IMASK0 + x * (SIC_IMASK1 - SIC_IMASK0), val)
 #define bfin_read_SIC_ISR0()           bfin_read32(SIC_ISR0)
 #define bfin_write_SIC_ISR0(val)       bfin_write32(SIC_ISR0, val)

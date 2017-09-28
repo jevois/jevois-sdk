@@ -34,24 +34,24 @@
  * M48 T59Y -Timekeeping Battery backed SRAM.
  */
 
-int m48_tod_init (void);
+int m48_tod_init(void);
 
-int m48_tod_set (int year,
-                 int month,
-                 int day,
-                 int hour,
-                 int minute,
-                 int second);
+int m48_tod_set(int year,
+		int month,
+		int day,
+		int hour,
+		int minute,
+		int second);
 
-int m48_tod_get (int * year,
-                 int * month,
-                 int * day,
-                 int * hour,
-                 int * minute,
-                 int * second);
+int m48_tod_get(int *year,
+		int *month,
+		int *day,
+		int *hour,
+		int *minute,
+		int *second);
 
-int m48_tod_get_second (void);
+int m48_tod_get_second(void);
 
-void m48_watchdog_arm (int usec);
+void m48_watchdog_arm(int usec);
 
 #endif /*!__M48_T59_Y_H */

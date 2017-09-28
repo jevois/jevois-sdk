@@ -46,4 +46,4 @@ extern struct platform_device pxa_device_asoc_ssp2;
 extern struct platform_device pxa_device_asoc_ssp3;
 extern struct platform_device pxa_device_asoc_ssp4;
 
-void __init pxa_register_device (struct platform_device * dev, void * data);
+void __init pxa_register_device(struct platform_device *dev, void *data);

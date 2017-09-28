@@ -54,13 +54,13 @@
  *      0:            IsValidNode(*ph_node).
  *      error:              *noderes == NULL.
  */
-extern int node_allocate (struct proc_object * hprocessor,
-                          const struct dsp_uuid * node_uuid,
-                          const struct dsp_cbdata
-                          *pargs, const struct dsp_nodeattrin
-                          *attr_in,
-                          struct node_res_object ** noderes,
-                          struct process_context * pr_ctxt);
+extern int node_allocate(struct proc_object *hprocessor,
+				const struct dsp_uuid *node_uuid,
+				const struct dsp_cbdata
+				*pargs, const struct dsp_nodeattrin
+				*attr_in,
+				struct node_res_object **noderes,
+				struct process_context *pr_ctxt);
 
 /*
  *  ======== node_alloc_msg_buf ========
@@ -83,9 +83,9 @@ extern int node_allocate (struct proc_object * hprocessor,
  *      pbuffer != NULL.
  *  Ensures:
  */
-extern int node_alloc_msg_buf (struct node_object * hnode,
-                               u32 usize, struct dsp_bufferattr
-                               *pattr, u8 ** pbuffer);
+extern int node_alloc_msg_buf(struct node_object *hnode,
+				     u32 usize, struct dsp_bufferattr
+				     *pattr, u8 **pbuffer);
 
 /*
  *  ======== node_change_priority ========
@@ -107,7 +107,7 @@ extern int node_alloc_msg_buf (struct node_object * hnode,
  *  Ensures:
  *      0 && (Node's current priority == prio)
  */
-extern int node_change_priority (struct node_object * hnode, s32 prio);
+extern int node_change_priority(struct node_object *hnode, s32 prio);
 
 /*
  *  ======== node_connect ========
@@ -156,13 +156,13 @@ extern int node_change_priority (struct node_object * hnode, s32 prio);
  *  Requires:
  *  Ensures:
  */
-extern int node_connect (struct node_object * node1,
-                         u32 stream1,
-                         struct node_object * node2,
-                         u32 stream2,
-                         struct dsp_strmattr * pattrs,
-                         struct dsp_cbdata
-                         *conn_param);
+extern int node_connect(struct node_object *node1,
+			       u32 stream1,
+			       struct node_object *node2,
+			       u32 stream2,
+			       struct dsp_strmattr *pattrs,
+			       struct dsp_cbdata
+			       *conn_param);
 
 /*
  *  ======== node_create ========
@@ -183,7 +183,7 @@ extern int node_connect (struct node_object * node1,
  *  Requires:
  *  Ensures:
  */
-extern int node_create (struct node_object * hnode);
+extern int node_create(struct node_object *hnode);
 
 /*
  *  ======== node_create_mgr ========
@@ -207,8 +207,8 @@ extern int node_create (struct node_object * hnode);
  *      0:        Valide *node_man.
  *      error:          *node_man == NULL.
  */
-extern int node_create_mgr (struct node_mgr ** node_man,
-                            struct dev_object * hdev_obj);
+extern int node_create_mgr(struct node_mgr **node_man,
+				  struct dev_object *hdev_obj);
 
 /*
  *  ======== node_delete ========
@@ -231,8 +231,8 @@ extern int node_create_mgr (struct node_mgr ** node_man,
  *  Ensures:
  *      0:            hnode is invalid.
  */
-extern int node_delete (struct node_res_object * noderes,
-                        struct process_context * pr_ctxt);
+extern int node_delete(struct node_res_object *noderes,
+			      struct process_context *pr_ctxt);
 
 /*
  *  ======== node_delete_mgr ========
@@ -246,7 +246,7 @@ extern int node_delete (struct node_res_object * noderes,
  *      Valid hnode_mgr.
  *  Ensures:
  */
-extern int node_delete_mgr (struct node_mgr * hnode_mgr);
+extern int node_delete_mgr(struct node_mgr *hnode_mgr);
 
 /*
  *  ======== node_enum_nodes ========
@@ -272,11 +272,11 @@ extern int node_delete_mgr (struct node_mgr * hnode_mgr);
  *      - || (0 && *pu_num_nodes <= node_tab_size)  &&
  *        (*pu_allocated == *pu_num_nodes)
  */
-extern int node_enum_nodes (struct node_mgr * hnode_mgr,
-                            void ** node_tab,
-                            u32 node_tab_size,
-                            u32 * pu_num_nodes,
-                            u32 * pu_allocated);
+extern int node_enum_nodes(struct node_mgr *hnode_mgr,
+				  void **node_tab,
+				  u32 node_tab_size,
+				  u32 *pu_num_nodes,
+				  u32 *pu_allocated);
 
 /*
  *  ======== node_free_msg_buf ========
@@ -294,10 +294,10 @@ extern int node_enum_nodes (struct node_mgr * hnode_mgr,
  *      pbuffer != NULL.
  *  Ensures:
  */
-extern int node_free_msg_buf (struct node_object * hnode,
-                              u8 * pbuffer,
-                              struct dsp_bufferattr
-                              *pattr);
+extern int node_free_msg_buf(struct node_object *hnode,
+				    u8 *pbuffer,
+				    struct dsp_bufferattr
+				    *pattr);
 
 /*
  *  ======== node_get_attr ========
@@ -317,8 +317,8 @@ extern int node_free_msg_buf (struct node_object * hnode,
  *  Ensures:
  *      0:        *pattrs contains the node's current attributes.
  */
-extern int node_get_attr (struct node_object * hnode,
-                          struct dsp_nodeattr * pattr, u32 attr_size);
+extern int node_get_attr(struct node_object *hnode,
+				struct dsp_nodeattr *pattr, u32 attr_size);
 
 /*
  *  ======== node_get_message ========
@@ -342,8 +342,8 @@ extern int node_get_attr (struct node_object * hnode,
  *      message != NULL.
  *  Ensures:
  */
-extern int node_get_message (struct node_object * hnode,
-                             struct dsp_msg * message, u32 utimeout);
+extern int node_get_message(struct node_object *hnode,
+				   struct dsp_msg *message, u32 utimeout);
 
 /*
  *  ======== node_get_nldr_obj ========
@@ -357,8 +357,8 @@ extern int node_get_message (struct node_object * hnode,
  *      -EFAULT:    Invalid hnode.
  *  Ensures:
  */
-extern int node_get_nldr_obj (struct node_mgr * hnode_mgr,
-                              struct nldr_object ** nldr_ovlyobj);
+extern int node_get_nldr_obj(struct node_mgr *hnode_mgr,
+				    struct nldr_object **nldr_ovlyobj);
 
 /*
  *  ======== node_on_exit ========
@@ -372,7 +372,7 @@ extern int node_get_nldr_obj (struct node_mgr * hnode_mgr,
  *  Returns:
  *  Ensures:
  */
-void node_on_exit (struct node_object * hnode, s32 node_status);
+void node_on_exit(struct node_object *hnode, s32 node_status);
 
 /*
  *  ======== node_pause ========
@@ -391,7 +391,7 @@ void node_on_exit (struct node_object * hnode, s32 node_status);
  *  Requires:
  *  Ensures:
  */
-extern int node_pause (struct node_object * hnode);
+extern int node_pause(struct node_object *hnode);
 
 /*
  *  ======== node_put_message ========
@@ -415,8 +415,8 @@ extern int node_pause (struct node_object * hnode);
  *      pmsg != NULL.
  *  Ensures:
  */
-extern int node_put_message (struct node_object * hnode,
-                             const struct dsp_msg * pmsg, u32 utimeout);
+extern int node_put_message(struct node_object *hnode,
+				   const struct dsp_msg *pmsg, u32 utimeout);
 
 /*
  *  ======== node_register_notify ========
@@ -438,10 +438,10 @@ extern int node_put_message (struct node_object * hnode,
  *      hnotification != NULL.
  *  Ensures:
  */
-extern int node_register_notify (struct node_object * hnode,
-                                 u32 event_mask, u32 notify_type,
-                                 struct dsp_notification
-                                 *hnotification);
+extern int node_register_notify(struct node_object *hnode,
+				       u32 event_mask, u32 notify_type,
+				       struct dsp_notification
+				       *hnotification);
 
 /*
  *  ======== node_run ========
@@ -463,7 +463,7 @@ extern int node_register_notify (struct node_object * hnode,
  *  Requires:
  *  Ensures:
  */
-extern int node_run (struct node_object * hnode);
+extern int node_run(struct node_object *hnode);
 
 /*
  *  ======== node_terminate ========
@@ -486,8 +486,8 @@ extern int node_run (struct node_object * hnode);
  *      pstatus != NULL.
  *  Ensures:
  */
-extern int node_terminate (struct node_object * hnode,
-                           int * pstatus);
+extern int node_terminate(struct node_object *hnode,
+				 int *pstatus);
 
 /*
  *  ======== node_get_uuid_props ========
@@ -496,29 +496,29 @@ extern int node_terminate (struct node_object * hnode,
  *  Parameters:
  *
  */
-extern int node_get_uuid_props (void * hprocessor,
-                                const struct dsp_uuid * node_uuid,
-                                struct dsp_ndbprops
-                                *node_props);
+extern int node_get_uuid_props(void *hprocessor,
+				      const struct dsp_uuid *node_uuid,
+				      struct dsp_ndbprops
+				      *node_props);
 
 #ifdef CONFIG_TIDSPBRIDGE_BACKTRACE
 /**
  * node_find_addr() - Find the closest symbol to the given address.
  *
- * @node_mgr:   Node manager handle
- * @sym_addr:   Given address to find the closest symbol
- * @offset_range:   offset range to look fo the closest symbol
- * @sym_addr_output:  Symbol Output address
- * @sym_name:   String with the symbol name of the closest symbol
+ * @node_mgr:		Node manager handle
+ * @sym_addr:		Given address to find the closest symbol
+ * @offset_range:		offset range to look fo the closest symbol
+ * @sym_addr_output:	Symbol Output address
+ * @sym_name:		String with the symbol name of the closest symbol
  *
- *  This function finds the closest symbol to the address where a MMU
- *  Fault occurred on the DSP side.
+ * 	This function finds the closest symbol to the address where a MMU
+ *	Fault occurred on the DSP side.
  */
-int node_find_addr (struct node_mgr * node_mgr, u32 sym_addr,
-                    u32 offset_range, void * sym_addr_output,
-                    char * sym_name);
+int node_find_addr(struct node_mgr *node_mgr, u32 sym_addr,
+				u32 offset_range, void *sym_addr_output,
+				char *sym_name);
 
-enum node_state node_get_state (void * hnode);
+enum node_state node_get_state(void *hnode);
 #endif
 
 #endif /* NODE_ */

@@ -25,14 +25,14 @@
 #endif
 #ifdef NO_ERRNO_H
 #   ifdef _WIN32_WCE
-/* The Microsoft C Run-Time Library for Windows CE doesn't have
- * errno.  We define it as a global variable to simplify porting.
- * Its value is always 0 and should not be used.  We rename it to
- * avoid conflict with other libraries that use the same workaround.
- */
+      /* The Microsoft C Run-Time Library for Windows CE doesn't have
+       * errno.  We define it as a global variable to simplify porting.
+       * Its value is always 0 and should not be used.  We rename it to
+       * avoid conflict with other libraries that use the same workaround.
+       */
 #     define errno z_errno
 #   endif
-extern int errno;
+    extern int errno;
 #else
 #  ifndef _WIN32_WCE
 #    include <errno.h>
@@ -59,7 +59,7 @@ extern const char * const z_errmsg[10]; /* indexed by 2-zlib_error */
   return (strm->msg = (char*)ERR_MSG(err), (err))
 /* To be used only when the state is known to be valid */
 
-/* common constants */
+        /* common constants */
 
 #ifndef DEF_WBITS
 #  define DEF_WBITS MAX_WBITS
@@ -82,7 +82,7 @@ extern const char * const z_errmsg[10]; /* indexed by 2-zlib_error */
 #define MAX_MATCH  258
 /* The minimum and maximum match lengths */
 
-/* functions */
+	 /* functions */
 
 #include <linux/string.h>
 #define zmemcpy memcpy
@@ -93,8 +93,8 @@ extern const char * const z_errmsg[10]; /* indexed by 2-zlib_error */
 #ifdef DEBUG
 /* Not valid for U-boot
 #  include <stdio.h> */
-extern int z_verbose;
-extern void z_error    OF ( (char * m) );
+   extern int z_verbose;
+   extern void z_error    OF((char *m));
 #  define Assert(cond,msg) {if(!(cond)) z_error(msg);}
 #  define Trace(x) {if (z_verbose>=0) fprintf x ;}
 #  define Tracev(x) {if (z_verbose>0) fprintf x ;}
@@ -111,11 +111,11 @@ extern void z_error    OF ( (char * m) );
 #endif
 
 
-voidpf zcalloc OF ( (voidpf opaque, unsigned items, unsigned size) );
-void   zcfree  OF ( (voidpf opaque, voidpf ptr, unsigned size) );
+voidpf zcalloc OF((voidpf opaque, unsigned items, unsigned size));
+void   zcfree  OF((voidpf opaque, voidpf ptr, unsigned size));
 
 #define ZALLOC(strm, items, size) \
-  (*((strm)->zalloc))((strm)->opaque, (items), (size))
+           (*((strm)->zalloc))((strm)->opaque, (items), (size))
 #define ZFREE(strm, addr)  (*((strm)->zfree))((strm)->opaque, (voidpf)(addr), 0)
 #define TRY_FREE(s, p) {if (p) ZFREE(s, p);}
 

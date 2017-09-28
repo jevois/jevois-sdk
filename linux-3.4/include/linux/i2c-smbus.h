@@ -28,9 +28,9 @@
 /**
  * i2c_smbus_alert_setup - platform data for the smbus_alert i2c client
  * @alert_edge_triggered: whether the alert interrupt is edge (1) or level (0)
- *    triggered
+ *		triggered
  * @irq: IRQ number, if the smbus_alert driver should take care of interrupt
- *    handling
+ *		handling
  *
  * If irq is not specified, the smbus_alert driver doesn't take care of
  * interrupt handling. In that case it is up to the I2C bus driver to either
@@ -40,12 +40,12 @@
  * properly set.
  */
 struct i2c_smbus_alert_setup {
-  unsigned int    alert_edge_triggered: 1;
-  int     irq;
+	unsigned int		alert_edge_triggered:1;
+	int			irq;
 };
 
-struct i2c_client * i2c_setup_smbus_alert (struct i2c_adapter * adapter,
-    struct i2c_smbus_alert_setup * setup);
-int i2c_handle_smbus_alert (struct i2c_client * ara);
+struct i2c_client *i2c_setup_smbus_alert(struct i2c_adapter *adapter,
+					 struct i2c_smbus_alert_setup *setup);
+int i2c_handle_smbus_alert(struct i2c_client *ara);
 
 #endif /* _LINUX_I2C_SMBUS_H */

@@ -59,90 +59,90 @@
 #include "cryptlib.h"
 #include "bn_lcl.h"
 
-void BN_free (BIGNUM * a)
-{
-  if (a == NULL) { return; }
-  bn_check_top (a);
-  if ( (a->d != NULL) && ! (BN_get_flags (a, BN_FLG_STATIC_DATA) ) )
-  { OPENSSL_free (a->d); }
-  if (a->flags & BN_FLG_MALLOCED)
-  { OPENSSL_free (a); }
-  else
-  {
-    a->d = NULL;
-  }
-}
+void BN_free(BIGNUM *a)
+	{
+	if (a == NULL) return;
+	bn_check_top(a);
+	if ((a->d != NULL) && !(BN_get_flags(a,BN_FLG_STATIC_DATA)))
+		OPENSSL_free(a->d);
+	if (a->flags & BN_FLG_MALLOCED)
+		OPENSSL_free(a);
+	else
+		{
+		a->d = NULL;
+		}
+	}
 
-BIGNUM * BN_dup (const BIGNUM * a)
-{
-  BIGNUM * t;
-  
-  if (a == NULL) { return NULL; }
-  bn_check_top (a);
-  
-  t = BN_new();
-  if (t == NULL) { return NULL; }
-  if (!BN_copy (t, a) )
-  {
-    BN_free (t);
-    return NULL;
-  }
-  bn_check_top (t);
-  return t;
-}
+BIGNUM *BN_dup(const BIGNUM *a)
+	{
+	BIGNUM *t;
 
-BIGNUM * BN_copy (BIGNUM * a, const BIGNUM * b)
-{
-  int i;
-  BN_ULONG * A;
-  const BN_ULONG * B;
-  
-  bn_check_top (b);
-  
-  if (a == b) { return (a); }
-  if (bn_wexpand (a, b->top) == NULL) { return (NULL); }
-  
-  #if 1
-  A = a->d;
-  B = b->d;
-  for (i = b->top >> 2; i > 0; i--, A += 4, B += 4)
-  {
-    BN_ULONG a0, a1, a2, a3;
-    a0 = B[0]; a1 = B[1]; a2 = B[2]; a3 = B[3];
-    A[0] = a0; A[1] = a1; A[2] = a2; A[3] = a3;
-  }
-  switch (b->top & 3)
-  {
-  case 3: A[2] = B[2];
-  case 2: A[1] = B[1];
-  case 1: A[0] = B[0];
-  case 0: ; /* ultrix cc workaround, see comments in bn_expand_internal */
-  }
-  #else
-  memcpy (a->d, b->d, sizeof (b->d[0]) *b->top);
-  #endif
-  
-  a->top = b->top;
-  a->neg = b->neg;
-  bn_check_top (a);
-  return (a);
-}
+	if (a == NULL) return NULL;
+	bn_check_top(a);
 
-int BN_set_word (BIGNUM * a, BN_ULONG w)
-{
-  bn_check_top (a);
-  if (bn_expand (a, (int) sizeof (BN_ULONG) * 8) == NULL) { return (0); }
-  a->neg = 0;
-  a->d[0] = w;
-  a->top = (w ? 1 : 0);
-  bn_check_top (a);
-  return (1);
-}
+	t = BN_new();
+	if (t == NULL) return NULL;
+	if(!BN_copy(t, a))
+		{
+		BN_free(t);
+		return NULL;
+		}
+	bn_check_top(t);
+	return t;
+	}
 
-void BN_set_negative (BIGNUM * a, int b)
-{
-  if (b && !BN_is_zero (a) )
-  { a->neg = 1; }
-  else
-  { a->neg = 0; }
-}
+BIGNUM *BN_copy(BIGNUM *a, const BIGNUM *b)
+	{
+	int i;
+	BN_ULONG *A;
+	const BN_ULONG *B;
+
+	bn_check_top(b);
+
+	if (a == b) return(a);
+	if (bn_wexpand(a,b->top) == NULL) return(NULL);
+
+#if 1
+	A=a->d;
+	B=b->d;
+	for (i=b->top>>2; i>0; i--,A+=4,B+=4)
+		{
+		BN_ULONG a0,a1,a2,a3;
+		a0=B[0]; a1=B[1]; a2=B[2]; a3=B[3];
+		A[0]=a0; A[1]=a1; A[2]=a2; A[3]=a3;
+		}
+	switch (b->top&3)
+		{
+		case 3: A[2]=B[2];
+		case 2: A[1]=B[1];
+		case 1: A[0]=B[0];
+		case 0: ; /* ultrix cc workaround, see comments in bn_expand_internal */
+		}
+#else
+	memcpy(a->d,b->d,sizeof(b->d[0])*b->top);
+#endif
+
+	a->top=b->top;
+	a->neg=b->neg;
+	bn_check_top(a);
+	return(a);
+	}
+
+int BN_set_word(BIGNUM *a, BN_ULONG w)
+	{
+	bn_check_top(a);
+	if (bn_expand(a,(int)sizeof(BN_ULONG)*8) == NULL) return(0);
+	a->neg = 0;
+	a->d[0] = w;
+	a->top = (w ? 1 : 0);
+	bn_check_top(a);
+	return(1);
+	}
+
+void BN_set_negative(BIGNUM *a, int b)
+	{
+	if (b && !BN_is_zero(a))
+		a->neg = 1;
+	else
+		a->neg = 0;
+	}

@@ -30,9 +30,9 @@
 /*
  * FC Transport Message Types
  */
-/* kernel -> user */
-#define FC_NL_ASYNC_EVENT     0x0100
-/* user -> kernel */
+	/* kernel -> user */
+#define FC_NL_ASYNC_EVENT			0x0100
+	/* user -> kernel */
 /* none */
 
 
@@ -41,7 +41,7 @@
  */
 
 /* macro to round up message lengths to 8byte boundary */
-#define FC_NL_MSGALIGN(len)   (((len) + 7) & ~7)
+#define FC_NL_MSGALIGN(len)		(((len) + 7) & ~7)
 
 
 /*
@@ -49,22 +49,22 @@
  *   FC_NL_ASYNC_EVENT
  *
  * Note: if Vendor Unique message, &event_data will be  start of
- *   vendor unique payload, and the length of the payload is
+ * 	 vendor unique payload, and the length of the payload is
  *       per event_datalen
  *
  * Note: When specifying vendor_id, be sure to read the Vendor Type and ID
  *   formatting requirements specified in scsi_netlink.h
  */
 struct fc_nl_event {
-  struct scsi_nl_hdr snlh;    /* must be 1st element ! */
-  uint64_t seconds;
-  uint64_t vendor_id;
-  uint16_t host_no;
-  uint16_t event_datalen;
-  uint32_t event_num;
-  uint32_t event_code;
-  uint32_t event_data;
-} __attribute__ ( (aligned (sizeof (uint64_t) ) ) );
+	struct scsi_nl_hdr snlh;		/* must be 1st element ! */
+	uint64_t seconds;
+	uint64_t vendor_id;
+	uint16_t host_no;
+	uint16_t event_datalen;
+	uint32_t event_num;
+	uint32_t event_code;
+	uint32_t event_data;
+} __attribute__((aligned(sizeof(uint64_t))));
 
 
 #endif /* SCSI_NETLINK_FC_H */

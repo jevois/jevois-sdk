@@ -33,23 +33,23 @@
 
 /* SATA port registers */
 struct mvsata_port_registers {
-  u32 reserved0[10];
-  u32 edma_cmd;
-  u32 reserved1[181];
-  /* offset 0x300 : ATA Interface registers */
-  u32 sstatus;
-  u32 serror;
-  u32 scontrol;
-  u32 ltmode;
-  u32 phymode3;
-  u32 phymode4;
-  u32 reserved2[5];
-  u32 phymode1;
-  u32 phymode2;
-  u32 bist_cr;
-  u32 bist_dw1;
-  u32 bist_dw2;
-  u32 serrorintrmask;
+	u32 reserved0[10];
+	u32 edma_cmd;
+	u32 reserved1[181];
+	/* offset 0x300 : ATA Interface registers */
+	u32 sstatus;
+	u32 serror;
+	u32 scontrol;
+	u32 ltmode;
+	u32 phymode3;
+	u32 phymode4;
+	u32 reserved2[5];
+	u32 phymode1;
+	u32 phymode2;
+	u32 bist_cr;
+	u32 bist_dw1;
+	u32 bist_dw2;
+	u32 serrorintrmask;
 };
 
 /*
@@ -66,9 +66,9 @@ struct mvsata_port_registers {
 #if !defined(CONFIG_SYS_ATA_BASE_ADDR)
 #error CONFIG_SYS_ATA_BASE_ADDR must be defined
 #elif !defined(CONFIG_SYS_ATA_IDE0_OFFSET) \
-&& !defined(CONFIG_SYS_ATA_IDE1_OFFSET)
+   && !defined(CONFIG_SYS_ATA_IDE1_OFFSET)
 #error CONFIG_SYS_ATA_IDE0_OFFSET or CONFIG_SYS_ATA_IDE1_OFFSET \
-must be defined
+   must be defined
 #elif !defined(CONFIG_IDE_PREINIT)
 #error CONFIG_IDE_PREINIT must be defined
 #endif
@@ -78,20 +78,20 @@ must be defined
  * and for SStatus DETection.
  */
 
-#define MVSATA_EDMA_CMD_ATA_RST   0x00000004
-#define MVSATA_SCONTROL_DET_MASK    0x0000000F
-#define MVSATA_SCONTROL_DET_NONE    0x00000000
-#define MVSATA_SCONTROL_DET_INIT    0x00000001
-#define MVSATA_SCONTROL_IPM_MASK    0x00000F00
-#define MVSATA_SCONTROL_IPM_NO_LP_ALLOWED 0x00000300
+#define MVSATA_EDMA_CMD_ATA_RST		0x00000004
+#define MVSATA_SCONTROL_DET_MASK		0x0000000F
+#define MVSATA_SCONTROL_DET_NONE		0x00000000
+#define MVSATA_SCONTROL_DET_INIT		0x00000001
+#define MVSATA_SCONTROL_IPM_MASK		0x00000F00
+#define MVSATA_SCONTROL_IPM_NO_LP_ALLOWED	0x00000300
 #define MVSATA_SCONTROL_MASK \
-  (MVSATA_SCONTROL_DET_MASK|MVSATA_SCONTROL_IPM_MASK)
+	(MVSATA_SCONTROL_DET_MASK|MVSATA_SCONTROL_IPM_MASK)
 #define MVSATA_PORT_INIT \
-  (MVSATA_SCONTROL_DET_INIT|MVSATA_SCONTROL_IPM_NO_LP_ALLOWED)
+	(MVSATA_SCONTROL_DET_INIT|MVSATA_SCONTROL_IPM_NO_LP_ALLOWED)
 #define MVSATA_PORT_USE \
-  (MVSATA_SCONTROL_DET_NONE|MVSATA_SCONTROL_IPM_NO_LP_ALLOWED)
-#define MVSATA_SSTATUS_DET_MASK     0x0000000F
-#define MVSATA_SSTATUS_DET_DEVCOMM    0x00000003
+	(MVSATA_SCONTROL_DET_NONE|MVSATA_SCONTROL_IPM_NO_LP_ALLOWED)
+#define MVSATA_SSTATUS_DET_MASK			0x0000000F
+#define MVSATA_SSTATUS_DET_DEVCOMM		0x00000003
 
 /*
  * Status codes to return to client callers. Currently, callers ignore
@@ -102,8 +102,8 @@ must be defined
  * of status codes.
  */
 
-#define MVSATA_STATUS_OK  0
-#define MVSATA_STATUS_TIMEOUT -1
+#define MVSATA_STATUS_OK	0
+#define MVSATA_STATUS_TIMEOUT	-1
 
 /*
  * Initialize one MVSATAHC port: set SControl's IPM to "always active"
@@ -112,35 +112,35 @@ must be defined
  * DET back to "no action".
  */
 
-static int mvsata_ide_initialize_port (struct mvsata_port_registers * port)
+static int mvsata_ide_initialize_port(struct mvsata_port_registers *port)
 {
-  u32 control;
-  u32 status;
-  u32 timeleft = 10000; /* wait at most 10 ms for SATA reset to complete */
-  
-  /* Hard reset */
-  writel (MVSATA_EDMA_CMD_ATA_RST, &port->edma_cmd);
-  udelay (25); /* taken from original marvell port */
-  writel (0, &port->edma_cmd);
-  
-  /* Set control IPM to 3 (no low power) and DET to 1 (initialize) */
-  control = readl (&port->scontrol);
-  control = (control & ~MVSATA_SCONTROL_MASK) | MVSATA_PORT_INIT;
-  writel (control, &port->scontrol);
-  /* Toggle control DET back to 0 (normal operation) */
-  control = (control & ~MVSATA_SCONTROL_MASK) | MVSATA_PORT_USE;
-  writel (control, &port->scontrol);
-  /* wait for status DET to become 3 (device and communication OK) */
-  while (--timeleft) {
-    status = readl (&port->sstatus) & MVSATA_SSTATUS_DET_MASK;
-    if (status == MVSATA_SSTATUS_DET_DEVCOMM)
-    { break; }
-    udelay (1);
-  }
-  /* return success or time-out error depending on time left */
-  if (!timeleft)
-  { return MVSATA_STATUS_TIMEOUT; }
-  return MVSATA_STATUS_OK;
+	u32 control;
+	u32 status;
+	u32 timeleft = 10000; /* wait at most 10 ms for SATA reset to complete */
+
+	/* Hard reset */
+	writel(MVSATA_EDMA_CMD_ATA_RST, &port->edma_cmd);
+	udelay(25); /* taken from original marvell port */
+	writel(0, &port->edma_cmd);
+
+	/* Set control IPM to 3 (no low power) and DET to 1 (initialize) */
+	control = readl(&port->scontrol);
+	control = (control & ~MVSATA_SCONTROL_MASK) | MVSATA_PORT_INIT;
+	writel(control, &port->scontrol);
+	/* Toggle control DET back to 0 (normal operation) */
+	control = (control & ~MVSATA_SCONTROL_MASK) | MVSATA_PORT_USE;
+	writel(control, &port->scontrol);
+	/* wait for status DET to become 3 (device and communication OK) */
+	while (--timeleft) {
+		status = readl(&port->sstatus) & MVSATA_SSTATUS_DET_MASK;
+		if (status == MVSATA_SSTATUS_DET_DEVCOMM)
+			break;
+		udelay(1);
+	}
+	/* return success or time-out error depending on time left */
+	if (!timeleft)
+		return MVSATA_STATUS_TIMEOUT;
+	return MVSATA_STATUS_OK;
 }
 
 /*
@@ -148,25 +148,25 @@ static int mvsata_ide_initialize_port (struct mvsata_port_registers * port)
  * reset the MVSTATHC ports needed by the board.
  */
 
-int ide_preinit (void)
+int ide_preinit(void)
 {
-  int status;
-  /* Enable ATA port 0 (could be SATA port 0 or 1) if declared */
-  #if defined(CONFIG_SYS_ATA_IDE0_OFFSET)
-  status = mvsata_ide_initialize_port (
-             (struct mvsata_port_registers *)
-             (CONFIG_SYS_ATA_BASE_ADDR + CONFIG_SYS_ATA_IDE0_OFFSET) );
-  if (status)
-  { return status; }
-  #endif
-  /* Enable ATA port 1 (could be SATA port 0 or 1) if declared */
-  #if defined(CONFIG_SYS_ATA_IDE1_OFFSET)
-  status = mvsata_ide_initialize_port (
-             (struct mvsata_port_registers *)
-             (CONFIG_SYS_ATA_BASE_ADDR + CONFIG_SYS_ATA_IDE1_OFFSET) );
-  if (status)
-  { return status; }
-  #endif
-  /* return success if all ports initializations succeeded */
-  return MVSATA_STATUS_OK;
+	int status;
+	/* Enable ATA port 0 (could be SATA port 0 or 1) if declared */
+#if defined(CONFIG_SYS_ATA_IDE0_OFFSET)
+	status = mvsata_ide_initialize_port(
+		(struct mvsata_port_registers *)
+		(CONFIG_SYS_ATA_BASE_ADDR + CONFIG_SYS_ATA_IDE0_OFFSET));
+	if (status)
+		return status;
+#endif
+	/* Enable ATA port 1 (could be SATA port 0 or 1) if declared */
+#if defined(CONFIG_SYS_ATA_IDE1_OFFSET)
+	status = mvsata_ide_initialize_port(
+		(struct mvsata_port_registers *)
+		(CONFIG_SYS_ATA_BASE_ADDR + CONFIG_SYS_ATA_IDE1_OFFSET));
+	if (status)
+		return status;
+#endif
+	/* return success if all ports initializations succeeded */
+	return MVSATA_STATUS_OK;
 }

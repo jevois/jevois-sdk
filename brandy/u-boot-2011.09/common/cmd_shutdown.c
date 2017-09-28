@@ -5,13 +5,13 @@
  */
 #include <common.h>
 #include <axp_power.h>
-int do_shutdown (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
+int do_shutdown(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
-  return sunxi_board_shutdown();
+	return sunxi_board_shutdown();
 }
 
-U_BOOT_CMD (
-  shutdown, 2,  1,  do_shutdown,
-  "shutdown the system",
-  "power off the power supply"
+U_BOOT_CMD(
+	shutdown,	2,	1,	do_shutdown,
+	"shutdown the system",
+	"power off the power supply"
 );

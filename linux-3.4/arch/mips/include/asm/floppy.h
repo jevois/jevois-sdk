@@ -12,9 +12,9 @@
 
 #include <linux/dma-mapping.h>
 
-static inline void fd_cacheflush (char * addr, long size)
+static inline void fd_cacheflush(char * addr, long size)
 {
-  dma_cache_sync (NULL, addr, size, DMA_BIDIRECTIONAL);
+	dma_cache_sync(NULL, addr, size, DMA_BIDIRECTIONAL);
 }
 
 #define MAX_BUFFER_SECTORS 24
@@ -26,12 +26,12 @@ static inline void fd_cacheflush (char * addr, long size)
  * FIXME: This information should come from the ARC configuration tree
  *        or wherever a particular machine has stored this ...
  */
-#define FLOPPY0_TYPE    fd_drive_type(0)
-#define FLOPPY1_TYPE    fd_drive_type(1)
+#define FLOPPY0_TYPE 		fd_drive_type(0)
+#define FLOPPY1_TYPE		fd_drive_type(1)
 
-#define FDC1      fd_getfdaddr1()
+#define FDC1			fd_getfdaddr1()
 
-#define N_FDC 1     /* do you *really* want a second controller? */
+#define N_FDC 1			/* do you *really* want a second controller? */
 #define N_DRIVE 8
 
 /*

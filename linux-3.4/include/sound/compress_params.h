@@ -3,7 +3,7 @@
  *  streaming interface
  *
  *  Copyright (C) 2011 Intel Corporation
- *  Authors:  Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+ *  Authors:	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
  *              Vinod Koul <vinod.koul@linux.intel.com>
  *
  *  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -94,7 +94,7 @@
 #define SND_AUDIOMODE_AMR_VAD1               ((__u32) 0x00000002)
 #define SND_AUDIOMODE_AMR_VAD2               ((__u32) 0x00000004)
 
-#define SND_AUDIOSTREAMFORMAT_UNDEFINED      ((__u32) 0x00000000)
+#define SND_AUDIOSTREAMFORMAT_UNDEFINED	     ((__u32) 0x00000000)
 #define SND_AUDIOSTREAMFORMAT_CONFORMANCE    ((__u32) 0x00000001)
 #define SND_AUDIOSTREAMFORMAT_IF1            ((__u32) 0x00000002)
 #define SND_AUDIOSTREAMFORMAT_IF2            ((__u32) 0x00000004)
@@ -196,24 +196,24 @@
  * not be used, the PCM codec should be used instead.
  */
 #define SND_AUDIOMODE_IEC_REF_STREAM_HEADER  ((__u32) 0x00000000)
-#define SND_AUDIOMODE_IEC_LPCM         ((__u32) 0x00000001)
-#define SND_AUDIOMODE_IEC_AC3        ((__u32) 0x00000002)
-#define SND_AUDIOMODE_IEC_MPEG1        ((__u32) 0x00000004)
-#define SND_AUDIOMODE_IEC_MP3        ((__u32) 0x00000008)
-#define SND_AUDIOMODE_IEC_MPEG2        ((__u32) 0x00000010)
-#define SND_AUDIOMODE_IEC_AACLC        ((__u32) 0x00000020)
-#define SND_AUDIOMODE_IEC_DTS        ((__u32) 0x00000040)
-#define SND_AUDIOMODE_IEC_ATRAC        ((__u32) 0x00000080)
-#define SND_AUDIOMODE_IEC_SACD         ((__u32) 0x00000100)
-#define SND_AUDIOMODE_IEC_EAC3         ((__u32) 0x00000200)
-#define SND_AUDIOMODE_IEC_DTS_HD       ((__u32) 0x00000400)
-#define SND_AUDIOMODE_IEC_MLP        ((__u32) 0x00000800)
-#define SND_AUDIOMODE_IEC_DST        ((__u32) 0x00001000)
-#define SND_AUDIOMODE_IEC_WMAPRO       ((__u32) 0x00002000)
+#define SND_AUDIOMODE_IEC_LPCM		     ((__u32) 0x00000001)
+#define SND_AUDIOMODE_IEC_AC3		     ((__u32) 0x00000002)
+#define SND_AUDIOMODE_IEC_MPEG1		     ((__u32) 0x00000004)
+#define SND_AUDIOMODE_IEC_MP3		     ((__u32) 0x00000008)
+#define SND_AUDIOMODE_IEC_MPEG2		     ((__u32) 0x00000010)
+#define SND_AUDIOMODE_IEC_AACLC		     ((__u32) 0x00000020)
+#define SND_AUDIOMODE_IEC_DTS		     ((__u32) 0x00000040)
+#define SND_AUDIOMODE_IEC_ATRAC		     ((__u32) 0x00000080)
+#define SND_AUDIOMODE_IEC_SACD		     ((__u32) 0x00000100)
+#define SND_AUDIOMODE_IEC_EAC3		     ((__u32) 0x00000200)
+#define SND_AUDIOMODE_IEC_DTS_HD	     ((__u32) 0x00000400)
+#define SND_AUDIOMODE_IEC_MLP		     ((__u32) 0x00000800)
+#define SND_AUDIOMODE_IEC_DST		     ((__u32) 0x00001000)
+#define SND_AUDIOMODE_IEC_WMAPRO	     ((__u32) 0x00002000)
 #define SND_AUDIOMODE_IEC_REF_CXT            ((__u32) 0x00004000)
-#define SND_AUDIOMODE_IEC_HE_AAC       ((__u32) 0x00008000)
-#define SND_AUDIOMODE_IEC_HE_AAC2      ((__u32) 0x00010000)
-#define SND_AUDIOMODE_IEC_MPEG_SURROUND      ((__u32) 0x00020000)
+#define SND_AUDIOMODE_IEC_HE_AAC	     ((__u32) 0x00008000)
+#define SND_AUDIOMODE_IEC_HE_AAC2	     ((__u32) 0x00010000)
+#define SND_AUDIOMODE_IEC_MPEG_SURROUND	     ((__u32) 0x00020000)
 
 #define SND_AUDIOPROFILE_G723_1              ((__u32) 0x00000001)
 
@@ -236,7 +236,7 @@
 /* Encoder options */
 
 struct snd_enc_wma {
-  __u32 super_block_align; /* WMA Type-specific data */
+	__u32 super_block_align; /* WMA Type-specific data */
 };
 
 
@@ -261,11 +261,11 @@ struct snd_enc_wma {
  */
 
 struct snd_enc_vorbis {
-  __s32 quality;
-  __u32 managed;
-  __u32 max_bit_rate;
-  __u32 min_bit_rate;
-  __u32 downmix;
+	__s32 quality;
+	__u32 managed;
+	__u32 max_bit_rate;
+	__u32 min_bit_rate;
+	__u32 downmix;
 };
 
 
@@ -279,15 +279,15 @@ struct snd_enc_vorbis {
  */
 
 struct snd_enc_real {
-  __u32 quant_bits;
-  __u32 start_region;
-  __u32 num_regions;
+	__u32 quant_bits;
+	__u32 start_region;
+	__u32 num_regions;
 };
 
 /**
  * struct snd_enc_flac
  * @num: serial number, valid only for OGG formats
- *  needs to be set by application
+ *	needs to be set by application
  * @gain: Add replay gain tags
  *
  * These options were extracted from the FLAC online documentation
@@ -304,21 +304,21 @@ struct snd_enc_real {
  */
 
 struct snd_enc_flac {
-  __u32 num;
-  __u32 gain;
+	__u32 num;
+	__u32 gain;
 };
 
 struct snd_enc_generic {
-  __u32 bw; /* encoder bandwidth */
-  __s32 reserved[15];
+	__u32 bw;	/* encoder bandwidth */
+	__s32 reserved[15];
 };
 
 union snd_codec_options {
-  struct snd_enc_wma wma;
-  struct snd_enc_vorbis vorbis;
-  struct snd_enc_real real;
-  struct snd_enc_flac flac;
-  struct snd_enc_generic generic;
+	struct snd_enc_wma wma;
+	struct snd_enc_vorbis vorbis;
+	struct snd_enc_real real;
+	struct snd_enc_flac flac;
+	struct snd_enc_generic generic;
 };
 
 /** struct snd_codec_desc - description of codec capabilities
@@ -344,56 +344,56 @@ union snd_codec_options {
  */
 
 struct snd_codec_desc {
-  __u32 max_ch;
-  __u32 sample_rates;
-  __u32 bit_rate[MAX_NUM_BITRATES];
-  __u32 num_bitrates;
-  __u32 rate_control;
-  __u32 profiles;
-  __u32 modes;
-  __u32 formats;
-  __u32 min_buffer;
-  __u32 reserved[15];
+	__u32 max_ch;
+	__u32 sample_rates;
+	__u32 bit_rate[MAX_NUM_BITRATES];
+	__u32 num_bitrates;
+	__u32 rate_control;
+	__u32 profiles;
+	__u32 modes;
+	__u32 formats;
+	__u32 min_buffer;
+	__u32 reserved[15];
 };
 
 /** struct snd_codec
  * @id: Identifies the supported audio encoder/decoder.
- *    See SND_AUDIOCODEC macros.
+ *		See SND_AUDIOCODEC macros.
  * @ch_in: Number of input audio channels
  * @ch_out: Number of output channels. In case of contradiction between
- *    this field and the channelMode field, the channelMode field
- *    overrides.
+ *		this field and the channelMode field, the channelMode field
+ *		overrides.
  * @sample_rate: Audio sample rate of input data
  * @bit_rate: Bitrate of encoded data. May be ignored by decoders
  * @rate_control: Encoding rate control. See SND_RATECONTROLMODE defines.
  *               Encoders may rely on profiles for quality levels.
- *     May be ignored by decoders.
+ *		 May be ignored by decoders.
  * @profile: Mandatory for encoders, can be mandatory for specific
- *    decoders as well. See SND_AUDIOPROFILE defines.
+ *		decoders as well. See SND_AUDIOPROFILE defines.
  * @level: Supported level (Only used by WMA at the moment)
  * @ch_mode: Channel mode for encoder. See SND_AUDIOCHANMODE defines
  * @format: Format of encoded bistream. Mandatory when defined.
- *    See SND_AUDIOSTREAMFORMAT defines.
+ *		See SND_AUDIOSTREAMFORMAT defines.
  * @align: Block alignment in bytes of an audio sample.
- *    Only required for PCM or IEC formats.
+ *		Only required for PCM or IEC formats.
  * @options: encoder-specific settings
  * @reserved: reserved for future use
  */
 
 struct snd_codec {
-  __u32 id;
-  __u32 ch_in;
-  __u32 ch_out;
-  __u32 sample_rate;
-  __u32 bit_rate;
-  __u32 rate_control;
-  __u32 profile;
-  __u32 level;
-  __u32 ch_mode;
-  __u32 format;
-  __u32 align;
-  union snd_codec_options options;
-  __u32 reserved[3];
+	__u32 id;
+	__u32 ch_in;
+	__u32 ch_out;
+	__u32 sample_rate;
+	__u32 bit_rate;
+	__u32 rate_control;
+	__u32 profile;
+	__u32 level;
+	__u32 ch_mode;
+	__u32 format;
+	__u32 align;
+	union snd_codec_options options;
+	__u32 reserved[3];
 };
 
 #endif

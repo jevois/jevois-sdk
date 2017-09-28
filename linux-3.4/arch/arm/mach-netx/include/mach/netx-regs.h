@@ -425,8 +425,8 @@
 /*******************************
  * I2C                         *
  *******************************/
-#define NETX_I2C_REG(ofs) IOMEM(NETX_VA_I2C, (ofs))
-#define NETX_I2C_CTRL NETX_I2C_REG(0x0)
-#define NETX_I2C_DATA NETX_I2C_REG(0x4)
+#define NETX_I2C_REG(ofs)	IOMEM(NETX_VA_I2C, (ofs))
+#define NETX_I2C_CTRL	NETX_I2C_REG(0x0)
+#define NETX_I2C_DATA	NETX_I2C_REG(0x4)
 
 #endif /* __ASM_ARCH_NETX_REGS_H */

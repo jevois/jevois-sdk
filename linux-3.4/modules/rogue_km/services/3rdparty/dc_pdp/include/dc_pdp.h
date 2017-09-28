@@ -44,7 +44,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "img_types.h"
 #include "pvrsrv_error.h"
 
-#define DRVNAME "dc_pdp"
+#define DRVNAME	"dc_pdp"
 
 #if !defined(SUPPORT_SYSTEM_INTERRUPT_HANDLING)
 #error PDP requires that SUPPORT_SYSTEM_INTERRUPT_HANDLING be enabled in the build
@@ -54,10 +54,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  PCI Device Information
 */ /**************************************************************************/
 
-#define DCPDP_VENDOR_ID_POWERVR     (0x1010)
+#define DCPDP_VENDOR_ID_POWERVR			(0x1010)
 
-#define DCPDP_DEVICE_ID_PCI_APOLLO_FPGA   (0x1CF1)
-#define DCPDP_DEVICE_ID_PCIE_APOLLO_FPGA  (0x1CF2)
+#define DCPDP_DEVICE_ID_PCI_APOLLO_FPGA		(0x1CF1)
+#define DCPDP_DEVICE_ID_PCIE_APOLLO_FPGA	(0x1CF2)
 
 
 /*************************************************************************/ /*!
@@ -65,13 +65,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */ /**************************************************************************/
 
 /* PLL and PDP registers on base address register 0 */
-#define DCPDP_REG_PCI_BASENUM     (0)
+#define DCPDP_REG_PCI_BASENUM			(0)
 
-#define DCPDP_PCI_PLL_REG_OFFSET    (0x1000)
-#define DCPDP_PCI_PLL_REG_SIZE      (0x0400)
+#define DCPDP_PCI_PLL_REG_OFFSET		(0x1000)
+#define DCPDP_PCI_PLL_REG_SIZE			(0x0400)
 
-#define DCPDP_PCI_PDP_REG_OFFSET    (0xC000)
-#define DCPDP_PCI_PDP_REG_SIZE      (0x2000)
+#define DCPDP_PCI_PDP_REG_OFFSET		(0xC000)
+#define DCPDP_PCI_PDP_REG_SIZE			(0x2000)
 
 
 /*************************************************************************/ /*!
@@ -79,9 +79,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */ /**************************************************************************/
 
 /* This information isn't captured in tcf_rgbpdp_regs.h so define it here */
-#define DCPDP_STR1SURF_FORMAT_ARGB8888    (0xE)
-#define DCPDP_STR1ADDRCTRL_BASE_ADDR_SHIFT  (4)
-#define DCPDP_STR1POSN_STRIDE_SHIFT   (4)
+#define DCPDP_STR1SURF_FORMAT_ARGB8888		(0xE)
+#define DCPDP_STR1ADDRCTRL_BASE_ADDR_SHIFT	(4)
+#define DCPDP_STR1POSN_STRIDE_SHIFT		(4)
 
 
 /*************************************************************************/ /*!
@@ -90,12 +90,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 typedef struct DCPDP_MODULE_PARAMETERS_TAG
 {
-  IMG_UINT32  ui32PDPEnabled;
-  IMG_UINT32  ui32PDPWidth;
-  IMG_UINT32  ui32PDPHeight;
+	IMG_UINT32  ui32PDPEnabled;
+	IMG_UINT32  ui32PDPWidth;
+	IMG_UINT32  ui32PDPHeight;
 } DCPDP_MODULE_PARAMETERS;
 
-const DCPDP_MODULE_PARAMETERS * DCPDPGetModuleParameters (IMG_VOID);
+const DCPDP_MODULE_PARAMETERS *DCPDPGetModuleParameters(IMG_VOID);
 
 
 /*******************************************************************************
@@ -104,9 +104,9 @@ const DCPDP_MODULE_PARAMETERS * DCPDPGetModuleParameters (IMG_VOID);
 
 typedef struct DCPDP_DEVICE_TAG DCPDP_DEVICE;
 
-PVRSRV_ERROR DCPDPInit (IMG_VOID * pvDevice, DCPDP_DEVICE ** ppsDeviceData);
-IMG_VOID DCPDPDeInit (DCPDP_DEVICE * psDeviceData, IMG_VOID ** ppvDevice);
+PVRSRV_ERROR DCPDPInit(IMG_VOID *pvDevice, DCPDP_DEVICE **ppsDeviceData);
+IMG_VOID DCPDPDeInit(DCPDP_DEVICE *psDeviceData, IMG_VOID **ppvDevice);
 
-void DCPDPEnableMemoryRequest (DCPDP_DEVICE * psDeviceData, IMG_BOOL bEnable);
+void DCPDPEnableMemoryRequest(DCPDP_DEVICE *psDeviceData, IMG_BOOL bEnable);
 
 #endif /* !defined(__DC_PDP_H__) */

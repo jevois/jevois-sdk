@@ -6,7 +6,7 @@
 
 #ifdef CONFIG_SMP
 #include <asm/spinlock.h>
-#include <asm/cache.h>    /* we use L1_CACHE_BYTES */
+#include <asm/cache.h>		/* we use L1_CACHE_BYTES */
 
 /* Use an array of spinlocks for our atomic_ts.
  * Hash function to index into a different SPINLOCK.
@@ -19,17 +19,17 @@ extern arch_spinlock_t __atomic_hash[ATOMIC_HASH_SIZE] __lock_aligned;
 
 /* Can't use raw_spin_lock_irq because of #include problems, so
  * this is the substitute */
-#define _atomic_spin_lock_irqsave(l,f) do { \
-    arch_spinlock_t *s = ATOMIC_HASH(l);  \
-    local_irq_save(f);      \
-    arch_spin_lock(s);      \
-  } while(0)
+#define _atomic_spin_lock_irqsave(l,f) do {	\
+	arch_spinlock_t *s = ATOMIC_HASH(l);	\
+	local_irq_save(f);			\
+	arch_spin_lock(s);			\
+} while(0)
 
-#define _atomic_spin_unlock_irqrestore(l,f) do {  \
-    arch_spinlock_t *s = ATOMIC_HASH(l);    \
-    arch_spin_unlock(s);        \
-    local_irq_restore(f);       \
-  } while(0)
+#define _atomic_spin_unlock_irqrestore(l,f) do {	\
+	arch_spinlock_t *s = ATOMIC_HASH(l);		\
+	arch_spin_unlock(s);				\
+	local_irq_restore(f);				\
+} while(0)
 
 
 #else
@@ -62,15 +62,15 @@ extern arch_spinlock_t __atomic_hash[ATOMIC_HASH_SIZE] __lock_aligned;
  * Note that @nr may be almost arbitrarily large; this function is not
  * restricted to acting on a single-word quantity.
  */
-static inline void set_bit (int nr, volatile unsigned long * addr)
+static inline void set_bit(int nr, volatile unsigned long *addr)
 {
-  unsigned long mask = BIT_MASK (nr);
-  unsigned long * p = ( (unsigned long *) addr) + BIT_WORD (nr);
-  unsigned long flags;
-  
-  _atomic_spin_lock_irqsave (p, flags);
-  *p  |= mask;
-  _atomic_spin_unlock_irqrestore (p, flags);
+	unsigned long mask = BIT_MASK(nr);
+	unsigned long *p = ((unsigned long *)addr) + BIT_WORD(nr);
+	unsigned long flags;
+
+	_atomic_spin_lock_irqsave(p, flags);
+	*p  |= mask;
+	_atomic_spin_unlock_irqrestore(p, flags);
 }
 
 /**
@@ -83,15 +83,15 @@ static inline void set_bit (int nr, volatile unsigned long * addr)
  * you should call smp_mb__before_clear_bit() and/or smp_mb__after_clear_bit()
  * in order to ensure changes are visible on other processors.
  */
-static inline void clear_bit (int nr, volatile unsigned long * addr)
+static inline void clear_bit(int nr, volatile unsigned long *addr)
 {
-  unsigned long mask = BIT_MASK (nr);
-  unsigned long * p = ( (unsigned long *) addr) + BIT_WORD (nr);
-  unsigned long flags;
-  
-  _atomic_spin_lock_irqsave (p, flags);
-  *p &= ~mask;
-  _atomic_spin_unlock_irqrestore (p, flags);
+	unsigned long mask = BIT_MASK(nr);
+	unsigned long *p = ((unsigned long *)addr) + BIT_WORD(nr);
+	unsigned long flags;
+
+	_atomic_spin_lock_irqsave(p, flags);
+	*p &= ~mask;
+	_atomic_spin_unlock_irqrestore(p, flags);
 }
 
 /**
@@ -104,15 +104,15 @@ static inline void clear_bit (int nr, volatile unsigned long * addr)
  * Note that @nr may be almost arbitrarily large; this function is not
  * restricted to acting on a single-word quantity.
  */
-static inline void change_bit (int nr, volatile unsigned long * addr)
+static inline void change_bit(int nr, volatile unsigned long *addr)
 {
-  unsigned long mask = BIT_MASK (nr);
-  unsigned long * p = ( (unsigned long *) addr) + BIT_WORD (nr);
-  unsigned long flags;
-  
-  _atomic_spin_lock_irqsave (p, flags);
-  *p ^= mask;
-  _atomic_spin_unlock_irqrestore (p, flags);
+	unsigned long mask = BIT_MASK(nr);
+	unsigned long *p = ((unsigned long *)addr) + BIT_WORD(nr);
+	unsigned long flags;
+
+	_atomic_spin_lock_irqsave(p, flags);
+	*p ^= mask;
+	_atomic_spin_unlock_irqrestore(p, flags);
 }
 
 /**
@@ -124,19 +124,19 @@ static inline void change_bit (int nr, volatile unsigned long * addr)
  * It may be reordered on other architectures than x86.
  * It also implies a memory barrier.
  */
-static inline int test_and_set_bit (int nr, volatile unsigned long * addr)
+static inline int test_and_set_bit(int nr, volatile unsigned long *addr)
 {
-  unsigned long mask = BIT_MASK (nr);
-  unsigned long * p = ( (unsigned long *) addr) + BIT_WORD (nr);
-  unsigned long old;
-  unsigned long flags;
-  
-  _atomic_spin_lock_irqsave (p, flags);
-  old = *p;
-  *p = old | mask;
-  _atomic_spin_unlock_irqrestore (p, flags);
-  
-  return (old & mask) != 0;
+	unsigned long mask = BIT_MASK(nr);
+	unsigned long *p = ((unsigned long *)addr) + BIT_WORD(nr);
+	unsigned long old;
+	unsigned long flags;
+
+	_atomic_spin_lock_irqsave(p, flags);
+	old = *p;
+	*p = old | mask;
+	_atomic_spin_unlock_irqrestore(p, flags);
+
+	return (old & mask) != 0;
 }
 
 /**
@@ -148,19 +148,19 @@ static inline int test_and_set_bit (int nr, volatile unsigned long * addr)
  * It can be reorderdered on other architectures other than x86.
  * It also implies a memory barrier.
  */
-static inline int test_and_clear_bit (int nr, volatile unsigned long * addr)
+static inline int test_and_clear_bit(int nr, volatile unsigned long *addr)
 {
-  unsigned long mask = BIT_MASK (nr);
-  unsigned long * p = ( (unsigned long *) addr) + BIT_WORD (nr);
-  unsigned long old;
-  unsigned long flags;
-  
-  _atomic_spin_lock_irqsave (p, flags);
-  old = *p;
-  *p = old & ~mask;
-  _atomic_spin_unlock_irqrestore (p, flags);
-  
-  return (old & mask) != 0;
+	unsigned long mask = BIT_MASK(nr);
+	unsigned long *p = ((unsigned long *)addr) + BIT_WORD(nr);
+	unsigned long old;
+	unsigned long flags;
+
+	_atomic_spin_lock_irqsave(p, flags);
+	old = *p;
+	*p = old & ~mask;
+	_atomic_spin_unlock_irqrestore(p, flags);
+
+	return (old & mask) != 0;
 }
 
 /**
@@ -171,19 +171,19 @@ static inline int test_and_clear_bit (int nr, volatile unsigned long * addr)
  * This operation is atomic and cannot be reordered.
  * It also implies a memory barrier.
  */
-static inline int test_and_change_bit (int nr, volatile unsigned long * addr)
+static inline int test_and_change_bit(int nr, volatile unsigned long *addr)
 {
-  unsigned long mask = BIT_MASK (nr);
-  unsigned long * p = ( (unsigned long *) addr) + BIT_WORD (nr);
-  unsigned long old;
-  unsigned long flags;
-  
-  _atomic_spin_lock_irqsave (p, flags);
-  old = *p;
-  *p = old ^ mask;
-  _atomic_spin_unlock_irqrestore (p, flags);
-  
-  return (old & mask) != 0;
+	unsigned long mask = BIT_MASK(nr);
+	unsigned long *p = ((unsigned long *)addr) + BIT_WORD(nr);
+	unsigned long old;
+	unsigned long flags;
+
+	_atomic_spin_lock_irqsave(p, flags);
+	old = *p;
+	*p = old ^ mask;
+	_atomic_spin_unlock_irqrestore(p, flags);
+
+	return (old & mask) != 0;
 }
 
 #endif /* _ASM_GENERIC_BITOPS_ATOMIC_H */

@@ -26,9 +26,9 @@ enum gpio_type {
 };
 
 enum gpio_fun {
-  GPIO_INPUT = 0,
-  GPIO_OUTPUT = 1,
-  GPIO_DISABLE = 7,
+	GPIO_INPUT = 0,
+	GPIO_OUTPUT = 1,
+	GPIO_DISABLE = 7,
 };
 enum on_off {
   OFF,
@@ -36,10 +36,10 @@ enum on_off {
 };
 
 enum standby_mode {
-  NORM_STBY,
-  POWER_OFF,
-  HW_STBY,
-  SW_STBY,
+	NORM_STBY,
+	POWER_OFF,
+	HW_STBY,
+	SW_STBY,
 };
 
 enum power_seq_cmd
@@ -55,12 +55,12 @@ enum power_seq_cmd
   CSI_SUBDEV_PWR_OFF = 0x09,
 };
 
-extern int vfe_set_pmu_channel (struct v4l2_subdev * sd, enum pmic_channel pmic_ch, enum on_off on_off);
-extern int vfe_set_mclk (struct v4l2_subdev * sd, enum on_off on_off);
-extern int vfe_set_mclk_freq (struct v4l2_subdev * sd, unsigned long freq);
-extern int vfe_gpio_write (struct v4l2_subdev * sd, enum gpio_type gpio_type, unsigned int status);
-extern int vfe_gpio_set_status (struct v4l2_subdev * sd, enum gpio_type gpio_type, unsigned int status);
-extern void vfe_get_standby_mode (struct v4l2_subdev * sd, enum standby_mode * stby_mode);
+extern int vfe_set_pmu_channel(struct v4l2_subdev *sd, enum pmic_channel pmic_ch, enum on_off on_off);
+extern int vfe_set_mclk(struct v4l2_subdev *sd, enum on_off on_off);
+extern int vfe_set_mclk_freq(struct v4l2_subdev *sd, unsigned long freq);
+extern int vfe_gpio_write(struct v4l2_subdev *sd, enum gpio_type gpio_type, unsigned int status);
+extern int vfe_gpio_set_status(struct v4l2_subdev *sd, enum gpio_type gpio_type, unsigned int status);
+extern void vfe_get_standby_mode(struct v4l2_subdev *sd, enum standby_mode *stby_mode);
 
 
 #endif

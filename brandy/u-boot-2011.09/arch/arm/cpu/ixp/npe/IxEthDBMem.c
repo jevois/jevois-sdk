@@ -2,16 +2,16 @@
  * @file IxEthDBDBMem.c
  *
  * @brief Memory handling routines for the MAC address database
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,7 +24,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -37,7 +37,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  */
@@ -45,9 +45,9 @@
 
 #include "IxEthDB_p.h"
 
-IX_ETH_DB_PRIVATE HashNode * nodePool     = NULL;
-IX_ETH_DB_PRIVATE MacDescriptor * macPool = NULL;
-IX_ETH_DB_PRIVATE MacTreeNode * treePool  = NULL;
+IX_ETH_DB_PRIVATE HashNode *nodePool     = NULL;
+IX_ETH_DB_PRIVATE MacDescriptor *macPool = NULL;
+IX_ETH_DB_PRIVATE MacTreeNode *treePool  = NULL;
 
 IX_ETH_DB_PRIVATE HashNode nodePoolArea[NODE_POOL_SIZE];
 IX_ETH_DB_PRIVATE MacDescriptor macPoolArea[MAC_POOL_SIZE];
@@ -67,8 +67,8 @@ IX_ETH_DB_PRIVATE IxOsalMutex treePoolLock;
 #define UNLOCK_TREE_POOL { ixOsalMutexUnlock(&treePoolLock); }
 
 /* private function prototypes */
-IX_ETH_DB_PRIVATE MacDescriptor * ixEthDBPoolAllocMacDescriptor (void);
-IX_ETH_DB_PRIVATE void ixEthDBPoolFreeMacDescriptor (MacDescriptor * macDescriptor);
+IX_ETH_DB_PRIVATE MacDescriptor* ixEthDBPoolAllocMacDescriptor(void);
+IX_ETH_DB_PRIVATE void ixEthDBPoolFreeMacDescriptor(MacDescriptor *macDescriptor);
 
 /**
  * @addtogroup EthMemoryManagement
@@ -85,42 +85,42 @@ IX_ETH_DB_PRIVATE void ixEthDBPoolFreeMacDescriptor (MacDescriptor * macDescript
  * @internal
  */
 IX_ETH_DB_PUBLIC
-void ixEthDBInitMemoryPools (void)
+void ixEthDBInitMemoryPools(void)
 {
-  int local_index;
-  
-  /* HashNode pool */
-  ixOsalMutexInit (&nodePoolLock);
-  
-  for (local_index = 0 ; local_index < NODE_POOL_SIZE ; local_index++)
-  {
-    HashNode * freeNode = &nodePoolArea[local_index];
-    
-    freeNode->nextFree = nodePool;
-    nodePool           = freeNode;
-  }
-  
-  /* MacDescriptor pool */
-  ixOsalMutexInit (&macPoolLock);
-  
-  for (local_index = 0 ; local_index < MAC_POOL_SIZE ; local_index++)
-  {
-    MacDescriptor * freeDescriptor = &macPoolArea[local_index];
-    
-    freeDescriptor->nextFree = macPool;
-    macPool                  = freeDescriptor;
-  }
-  
-  /* MacTreeNode pool */
-  ixOsalMutexInit (&treePoolLock);
-  
-  for (local_index = 0 ; local_index < TREE_POOL_SIZE ; local_index++)
-  {
-    MacTreeNode * freeNode = &treePoolArea[local_index];
-    
-    freeNode->nextFree = treePool;
-    treePool           = freeNode;
-  }
+    int local_index;
+
+    /* HashNode pool */
+    ixOsalMutexInit(&nodePoolLock);
+
+    for (local_index = 0 ; local_index < NODE_POOL_SIZE ; local_index++)
+    {
+        HashNode *freeNode = &nodePoolArea[local_index];
+
+        freeNode->nextFree = nodePool;
+        nodePool           = freeNode;
+    }
+
+    /* MacDescriptor pool */
+    ixOsalMutexInit(&macPoolLock);
+
+    for (local_index = 0 ; local_index < MAC_POOL_SIZE ; local_index++)
+    {
+        MacDescriptor *freeDescriptor = &macPoolArea[local_index];
+
+        freeDescriptor->nextFree = macPool;
+        macPool                  = freeDescriptor;
+    }
+
+    /* MacTreeNode pool */
+    ixOsalMutexInit(&treePoolLock);
+
+    for (local_index = 0 ; local_index < TREE_POOL_SIZE ; local_index++)
+    {
+        MacTreeNode *freeNode = &treePoolArea[local_index];
+
+        freeNode->nextFree = treePool;
+        treePool           = freeNode;
+    }
 }
 
 /**
@@ -133,23 +133,23 @@ void ixEthDBInitMemoryPools (void)
  * @internal
  */
 IX_ETH_DB_PUBLIC
-HashNode * ixEthDBAllocHashNode (void)
+HashNode* ixEthDBAllocHashNode(void)
 {
-  HashNode * allocatedNode = NULL;
-  
-  if (nodePool != NULL)
-  {
-    LOCK_NODE_POOL;
-    
-    allocatedNode = nodePool;
-    nodePool      = nodePool->nextFree;
-    
-    UNLOCK_NODE_POOL;
-    
-    memset (allocatedNode, 0, sizeof (HashNode) );
-  }
-  
-  return allocatedNode;
+    HashNode *allocatedNode = NULL;
+
+    if (nodePool != NULL)
+    {
+        LOCK_NODE_POOL;
+
+        allocatedNode = nodePool;
+        nodePool      = nodePool->nextFree;
+
+        UNLOCK_NODE_POOL;
+
+        memset(allocatedNode, 0, sizeof(HashNode));
+    }
+
+    return allocatedNode;
 }
 
 /**
@@ -160,17 +160,17 @@ HashNode * ixEthDBAllocHashNode (void)
  * @internal
  */
 IX_ETH_DB_PUBLIC
-void ixEthDBFreeHashNode (HashNode * hashNode)
+void ixEthDBFreeHashNode(HashNode *hashNode)
 {
-  if (hashNode != NULL)
-  {
-    LOCK_NODE_POOL;
-    
-    hashNode->nextFree = nodePool;
-    nodePool           = hashNode;
-    
-    UNLOCK_NODE_POOL;
-  }
+    if (hashNode != NULL)
+    {
+        LOCK_NODE_POOL;
+
+        hashNode->nextFree = nodePool;
+        nodePool           = hashNode;
+
+        UNLOCK_NODE_POOL;
+    }
 }
 
 /**
@@ -181,7 +181,7 @@ void ixEthDBFreeHashNode (HashNode * hashNode)
  * is used, which keeps track of the pointer reference count.
  *
  * @see ixEthDBAllocMacDescriptor()
- *
+ * 
  * @warning this function is not used directly by any other function
  * apart from ixEthDBAllocMacDescriptor()
  *
@@ -190,23 +190,23 @@ void ixEthDBFreeHashNode (HashNode * hashNode)
  * @internal
  */
 IX_ETH_DB_PRIVATE
-MacDescriptor * ixEthDBPoolAllocMacDescriptor (void)
+MacDescriptor* ixEthDBPoolAllocMacDescriptor(void)
 {
-  MacDescriptor * allocatedDescriptor = NULL;
-  
-  if (macPool != NULL)
-  {
-    LOCK_MAC_POOL;
-    
-    allocatedDescriptor = macPool;
-    macPool             = macPool->nextFree;
-    
-    UNLOCK_MAC_POOL;
-    
-    memset (allocatedDescriptor, 0, sizeof (MacDescriptor) );
-  }
-  
-  return allocatedDescriptor;
+    MacDescriptor *allocatedDescriptor = NULL;
+
+    if (macPool != NULL)
+    {
+        LOCK_MAC_POOL;
+
+        allocatedDescriptor = macPool;
+        macPool             = macPool->nextFree;
+
+        UNLOCK_MAC_POOL;
+
+        memset(allocatedDescriptor, 0, sizeof(MacDescriptor));
+    }
+
+    return allocatedDescriptor;
 }
 
 /**
@@ -222,20 +222,20 @@ MacDescriptor * ixEthDBPoolAllocMacDescriptor (void)
  * @internal
  */
 IX_ETH_DB_PUBLIC
-MacDescriptor * ixEthDBAllocMacDescriptor (void)
+MacDescriptor* ixEthDBAllocMacDescriptor(void)
 {
-  MacDescriptor * allocatedDescriptor = ixEthDBPoolAllocMacDescriptor();
-  
-  if (allocatedDescriptor != NULL)
-  {
-    LOCK_MAC_POOL;
-    
-    allocatedDescriptor->refCount++;
-    
-    UNLOCK_MAC_POOL;
-  }
-  
-  return allocatedDescriptor;
+    MacDescriptor *allocatedDescriptor = ixEthDBPoolAllocMacDescriptor();
+
+    if (allocatedDescriptor != NULL)
+    {
+        LOCK_MAC_POOL;
+
+        allocatedDescriptor->refCount++;
+
+        UNLOCK_MAC_POOL;
+    }
+
+    return allocatedDescriptor;
 }
 
 /**
@@ -251,14 +251,14 @@ MacDescriptor * ixEthDBAllocMacDescriptor (void)
  * @internal
  */
 IX_ETH_DB_PRIVATE
-void ixEthDBPoolFreeMacDescriptor (MacDescriptor * macDescriptor)
+void ixEthDBPoolFreeMacDescriptor(MacDescriptor *macDescriptor)
 {
-  LOCK_MAC_POOL;
-  
-  macDescriptor->nextFree = macPool;
-  macPool                 = macDescriptor;
-  
-  UNLOCK_MAC_POOL;
+    LOCK_MAC_POOL;
+
+    macDescriptor->nextFree = macPool;
+    macPool                 = macDescriptor;
+
+    UNLOCK_MAC_POOL;
 }
 
 /**
@@ -272,32 +272,32 @@ void ixEthDBPoolFreeMacDescriptor (MacDescriptor * macDescriptor)
  * @internal
  */
 IX_ETH_DB_PUBLIC
-void ixEthDBFreeMacDescriptor (MacDescriptor * macDescriptor)
+void ixEthDBFreeMacDescriptor(MacDescriptor *macDescriptor)
 {
-  if (macDescriptor != NULL)
-  {
-    LOCK_MAC_POOL;
-    
-    if (macDescriptor->refCount > 0)
+    if (macDescriptor != NULL)
     {
-      macDescriptor->refCount--;
-      
-      if (macDescriptor->refCount == 0)
-      {
-        UNLOCK_MAC_POOL;
-        
-        ixEthDBPoolFreeMacDescriptor (macDescriptor);
-      }
-      else
-      {
-        UNLOCK_MAC_POOL;
-      }
+        LOCK_MAC_POOL;
+
+        if (macDescriptor->refCount > 0)
+        {
+            macDescriptor->refCount--;
+
+            if (macDescriptor->refCount == 0)
+            {
+                UNLOCK_MAC_POOL;
+
+                ixEthDBPoolFreeMacDescriptor(macDescriptor);
+            }
+            else
+            {
+                UNLOCK_MAC_POOL;
+            }
+        }
+        else
+        {
+            UNLOCK_MAC_POOL;
+        }
     }
-    else
-    {
-      UNLOCK_MAC_POOL;
-    }
-  }
 }
 
 /**
@@ -312,22 +312,22 @@ void ixEthDBFreeMacDescriptor (MacDescriptor * macDescriptor)
  * @internal
  */
 IX_ETH_DB_PUBLIC
-MacDescriptor * ixEthDBCloneMacDescriptor (MacDescriptor * macDescriptor)
+MacDescriptor* ixEthDBCloneMacDescriptor(MacDescriptor *macDescriptor)
 {
-  LOCK_MAC_POOL;
-  
-  if (macDescriptor->refCount == 0)
-  {
+    LOCK_MAC_POOL;
+
+    if (macDescriptor->refCount == 0)
+    {
+        UNLOCK_MAC_POOL;
+
+        return NULL;
+    }
+
+    macDescriptor->refCount++;
+
     UNLOCK_MAC_POOL;
-    
-    return NULL;
-  }
-  
-  macDescriptor->refCount++;
-  
-  UNLOCK_MAC_POOL;
-  
-  return macDescriptor;
+
+    return macDescriptor;
 }
 
 /**
@@ -340,23 +340,23 @@ MacDescriptor * ixEthDBCloneMacDescriptor (MacDescriptor * macDescriptor)
  * @internal
  */
 IX_ETH_DB_PUBLIC
-MacTreeNode * ixEthDBAllocMacTreeNode (void)
+MacTreeNode* ixEthDBAllocMacTreeNode(void)
 {
-  MacTreeNode * allocatedNode = NULL;
-  
-  if (treePool != NULL)
-  {
-    LOCK_TREE_POOL;
-    
-    allocatedNode = treePool;
-    treePool      = treePool->nextFree;
-    
-    UNLOCK_TREE_POOL;
-    
-    memset (allocatedNode, 0, sizeof (MacTreeNode) );
-  }
-  
-  return allocatedNode;
+    MacTreeNode *allocatedNode = NULL;
+
+    if (treePool != NULL)
+    {
+        LOCK_TREE_POOL;
+
+        allocatedNode = treePool;
+        treePool      = treePool->nextFree;
+
+        UNLOCK_TREE_POOL;
+
+        memset(allocatedNode, 0, sizeof(MacTreeNode));
+    }
+
+    return allocatedNode;
 }
 
 /**
@@ -370,17 +370,17 @@ MacTreeNode * ixEthDBAllocMacTreeNode (void)
  *
  * @internal
  */
-void ixEthDBPoolFreeMacTreeNode (MacTreeNode * macNode)
+void ixEthDBPoolFreeMacTreeNode(MacTreeNode *macNode)
 {
-  if (macNode != NULL)
-  {
-    LOCK_TREE_POOL;
-    
-    macNode->nextFree = treePool;
-    treePool          = macNode;
-    
-    UNLOCK_TREE_POOL;
-  }
+    if (macNode != NULL)
+    {
+        LOCK_TREE_POOL;
+
+        macNode->nextFree = treePool;
+        treePool          = macNode;
+
+        UNLOCK_TREE_POOL;
+    }
 }
 
 /**
@@ -394,24 +394,24 @@ void ixEthDBPoolFreeMacTreeNode (MacTreeNode * macNode)
  * @internal
  */
 IX_ETH_DB_PUBLIC
-void ixEthDBFreeMacTreeNode (MacTreeNode * macNode)
+void ixEthDBFreeMacTreeNode(MacTreeNode *macNode)
 {
-  if (macNode->descriptor != NULL)
-  {
-    ixEthDBFreeMacDescriptor (macNode->descriptor);
-  }
-  
-  if (macNode->left != NULL)
-  {
-    ixEthDBFreeMacTreeNode (macNode->left);
-  }
-  
-  if (macNode->right != NULL)
-  {
-    ixEthDBFreeMacTreeNode (macNode->right);
-  }
-  
-  ixEthDBPoolFreeMacTreeNode (macNode);
+    if (macNode->descriptor != NULL)
+    {
+        ixEthDBFreeMacDescriptor(macNode->descriptor);
+    }
+
+    if (macNode->left != NULL)
+    {
+        ixEthDBFreeMacTreeNode(macNode->left);
+    }
+
+    if (macNode->right != NULL)
+    {
+        ixEthDBFreeMacTreeNode(macNode->right);
+    }
+
+    ixEthDBPoolFreeMacTreeNode(macNode);
 }
 
 /**
@@ -419,7 +419,7 @@ void ixEthDBFreeMacTreeNode (MacTreeNode * macNode)
  *
  * @param macNode mac tree node to be cloned
  *
- * Increments the usage count of the node, <i>its associated descriptor
+ * Increments the usage count of the node, <i>its associated descriptor 
  * and <b>recursively</b> of all its child nodes</i>.
  *
  * @warning this function is recursive and clones whole trees/subtrees, use only for
@@ -428,218 +428,218 @@ void ixEthDBFreeMacTreeNode (MacTreeNode * macNode)
  * @internal
  */
 IX_ETH_DB_PUBLIC
-MacTreeNode * ixEthDBCloneMacTreeNode (MacTreeNode * macNode)
+MacTreeNode* ixEthDBCloneMacTreeNode(MacTreeNode *macNode)
 {
-  if (macNode != NULL)
-  {
-    MacTreeNode * clonedMacNode = ixEthDBAllocMacTreeNode();
-    
-    if (clonedMacNode != NULL)
+    if (macNode != NULL)
     {
-      if (macNode->right != NULL)
-      {
-        clonedMacNode->right = ixEthDBCloneMacTreeNode (macNode->right);
-      }
-      
-      if (macNode->left != NULL)
-      {
-        clonedMacNode->left = ixEthDBCloneMacTreeNode (macNode->left);
-      }
-      
-      if (macNode->descriptor != NULL)
-      {
-        clonedMacNode->descriptor = ixEthDBCloneMacDescriptor (macNode->descriptor);
-      }
+        MacTreeNode *clonedMacNode = ixEthDBAllocMacTreeNode();
+
+        if (clonedMacNode != NULL)
+        {
+            if (macNode->right != NULL)
+            {
+                clonedMacNode->right = ixEthDBCloneMacTreeNode(macNode->right);
+            }
+
+            if (macNode->left != NULL)
+            {
+                clonedMacNode->left = ixEthDBCloneMacTreeNode(macNode->left);
+            }
+
+            if (macNode->descriptor != NULL)
+            {
+                clonedMacNode->descriptor = ixEthDBCloneMacDescriptor(macNode->descriptor);
+            }
+        }
+
+        return clonedMacNode;
     }
-    
-    return clonedMacNode;
-  }
-  else
-  {
-    return NULL;
-  }
+    else
+    {
+        return NULL;
+    }
 }
 
 #ifndef NDEBUG
 /* Debug statistical functions for memory usage */
 
 extern HashTable dbHashtable;
-int ixEthDBNumHashElements (void);
+int ixEthDBNumHashElements(void);
 
-int ixEthDBNumHashElements (void)
-{
-  UINT32 bucketIndex;
-  int numElements = 0;
-  HashTable * hashTable = &dbHashtable;
-  
-  for (bucketIndex = 0 ; bucketIndex < hashTable->numBuckets ; bucketIndex++)
-  {
-    if (hashTable->hashBuckets[bucketIndex] != NULL)
-    {
-      HashNode * node = hashTable->hashBuckets[bucketIndex];
-      
-      while (node != NULL)
-      {
-        numElements++;
-        
-        node = node->next;
-      }
-    }
-  }
-  
-  return numElements;
-}
+int ixEthDBNumHashElements(void)
+{   
+    UINT32 bucketIndex;
+    int numElements = 0;
+    HashTable *hashTable = &dbHashtable;
 
-UINT32 ixEthDBSearchTreeUsageGet (MacTreeNode * tree)
-{
-  if (tree == NULL)
-  {
-    return 0;
-  }
-  else
-  {
-    return 1 /* this node */ + ixEthDBSearchTreeUsageGet (tree->left) + ixEthDBSearchTreeUsageGet (tree->right);
-  }
-}
-
-int ixEthDBShowMemoryStatus (void)
-{
-  MacDescriptor * mac;
-  MacTreeNode * tree;
-  HashNode * node;
-  
-  int macCounter  = 0;
-  int treeCounter = 0;
-  int nodeCounter = 0;
-  
-  int totalTreeUsage            = 0;
-  int totalDescriptorUsage      = 0;
-  int totalCloneDescriptorUsage = 0;
-  int totalNodeUsage            = 0;
-  
-  UINT32 portIndex;
-  
-  LOCK_NODE_POOL;
-  LOCK_MAC_POOL;
-  LOCK_TREE_POOL;
-  
-  mac  = macPool;
-  tree = treePool;
-  node = nodePool;
-  
-  while (mac != NULL)
-  {
-    macCounter++;
-    
-    mac = mac->nextFree;
-    
-    if (macCounter > MAC_POOL_SIZE)
+    for (bucketIndex = 0 ; bucketIndex < hashTable->numBuckets ; bucketIndex++)
     {
-      break;
-    }
-  }
-  
-  while (tree != NULL)
-  {
-    treeCounter++;
-    
-    tree = tree->nextFree;
-    
-    if (treeCounter > TREE_POOL_SIZE)
-    {
-      break;
-    }
-  }
-  
-  while (node != NULL)
-  {
-    nodeCounter++;
-    
-    node = node->nextFree;
-    
-    if (nodeCounter > NODE_POOL_SIZE)
-    {
-      break;
-    }
-  }
-  
-  for (portIndex = 0 ; portIndex < IX_ETH_DB_NUMBER_OF_PORTS ; portIndex++)
-  {
-    int treeUsage = ixEthDBSearchTreeUsageGet (ixEthDBPortInfo[portIndex].updateMethod.searchTree);
-    
-    totalTreeUsage            += treeUsage;
-    totalCloneDescriptorUsage += treeUsage; /* each tree node contains a descriptor */
-  }
-  
-  totalNodeUsage        = ixEthDBNumHashElements();
-  totalDescriptorUsage += totalNodeUsage; /* each hash table entry contains a descriptor */
-  
-  UNLOCK_NODE_POOL;
-  UNLOCK_MAC_POOL;
-  UNLOCK_TREE_POOL;
-  
-  printf ("Ethernet database memory usage stats:\n\n");
-  
-  if (macCounter <= MAC_POOL_SIZE)
-  {
-    printf ("\tMAC descriptor pool  : %d free out of %d entries (%d%%)\n", macCounter, MAC_POOL_SIZE, macCounter * 100 / MAC_POOL_SIZE);
-  }
-  else
-  {
-    printf ("\tMAC descriptor pool  : invalid state (ring within the pool), normally %d entries\n", MAC_POOL_SIZE);
-  }
-  
-  if (treeCounter <= TREE_POOL_SIZE)
-  {
-    printf ("\tTree node pool       : %d free out of %d entries (%d%%)\n", treeCounter, TREE_POOL_SIZE, treeCounter * 100 / TREE_POOL_SIZE);
-  }
-  else
-  {
-    printf ("\tTREE descriptor pool  : invalid state (ring within the pool), normally %d entries\n", TREE_POOL_SIZE);
-  }
-  
-  if (nodeCounter <= NODE_POOL_SIZE)
-  {
-    printf ("\tHash node pool       : %d free out of %d entries (%d%%)\n", nodeCounter, NODE_POOL_SIZE, nodeCounter * 100 / NODE_POOL_SIZE);
-  }
-  else
-  {
-    printf ("\tNODE descriptor pool  : invalid state (ring within the pool), normally %d entries\n", NODE_POOL_SIZE);
-  }
-  
-  printf ("\n");
-  printf ("\tMAC descriptor usage : %d entries, %d cloned\n", totalDescriptorUsage, totalCloneDescriptorUsage);
-  printf ("\tTree node usage      : %d entries\n", totalTreeUsage);
-  printf ("\tHash node usage      : %d entries\n", totalNodeUsage);
-  printf ("\n");
-  
-  /* search for duplicate nodes in the mac pool */
-  {
-    MacDescriptor * reference = macPool;
-    
-    while (reference != NULL)
-    {
-      MacDescriptor * comparison = reference->nextFree;
-      
-      while (comparison != NULL)
-      {
-        if (reference == comparison)
+        if (hashTable->hashBuckets[bucketIndex] != NULL)
         {
-          printf ("Warning: reached a duplicate (%p), invalid MAC pool state\n", reference);
-          
-          return 1;
+            HashNode *node = hashTable->hashBuckets[bucketIndex];
+
+            while (node != NULL)
+            {
+                numElements++;
+
+                node = node->next;
+            }
         }
-        
-        comparison = comparison->nextFree;
-      }
-      
-      reference = reference->nextFree;
     }
-  }
-  
-  printf ("No duplicates found in the MAC pool (sanity check ok)\n");
-  
-  return 0;
+
+    return numElements;
+}
+
+UINT32 ixEthDBSearchTreeUsageGet(MacTreeNode *tree)
+{
+    if (tree == NULL)
+    {
+        return 0;
+    }
+    else
+    {
+        return 1 /* this node */ + ixEthDBSearchTreeUsageGet(tree->left) + ixEthDBSearchTreeUsageGet(tree->right);
+    }
+}
+
+int ixEthDBShowMemoryStatus(void)
+{
+    MacDescriptor *mac;
+    MacTreeNode *tree;
+    HashNode *node;
+
+    int macCounter  = 0;
+    int treeCounter = 0;
+    int nodeCounter = 0;
+
+    int totalTreeUsage            = 0;
+    int totalDescriptorUsage      = 0;
+    int totalCloneDescriptorUsage = 0;
+    int totalNodeUsage            = 0;
+
+    UINT32 portIndex;
+
+    LOCK_NODE_POOL;
+    LOCK_MAC_POOL;
+    LOCK_TREE_POOL;
+
+    mac  = macPool;
+    tree = treePool;
+    node = nodePool;
+
+    while (mac != NULL)
+    {
+        macCounter++;
+
+        mac = mac->nextFree;
+
+        if (macCounter > MAC_POOL_SIZE)
+        {
+            break;
+        }
+    }
+
+    while (tree != NULL)
+    {
+        treeCounter++;
+
+        tree = tree->nextFree;
+
+        if (treeCounter > TREE_POOL_SIZE)
+        {
+            break;
+        }
+    }
+
+    while (node != NULL)
+    {
+        nodeCounter++;
+
+        node = node->nextFree;
+
+        if (nodeCounter > NODE_POOL_SIZE)
+        {
+            break;
+        }
+    }
+
+    for (portIndex = 0 ; portIndex < IX_ETH_DB_NUMBER_OF_PORTS ; portIndex++)
+    {
+        int treeUsage = ixEthDBSearchTreeUsageGet(ixEthDBPortInfo[portIndex].updateMethod.searchTree);
+
+        totalTreeUsage            += treeUsage;
+        totalCloneDescriptorUsage += treeUsage; /* each tree node contains a descriptor */
+    }
+
+    totalNodeUsage        = ixEthDBNumHashElements();
+    totalDescriptorUsage += totalNodeUsage; /* each hash table entry contains a descriptor */
+
+    UNLOCK_NODE_POOL;
+    UNLOCK_MAC_POOL;
+    UNLOCK_TREE_POOL;
+
+    printf("Ethernet database memory usage stats:\n\n");
+
+    if (macCounter <= MAC_POOL_SIZE)
+    {
+        printf("\tMAC descriptor pool  : %d free out of %d entries (%d%%)\n", macCounter, MAC_POOL_SIZE, macCounter * 100 / MAC_POOL_SIZE);
+    }
+    else
+    {
+        printf("\tMAC descriptor pool  : invalid state (ring within the pool), normally %d entries\n", MAC_POOL_SIZE);
+    }
+
+    if (treeCounter <= TREE_POOL_SIZE)
+    {
+	printf("\tTree node pool       : %d free out of %d entries (%d%%)\n", treeCounter, TREE_POOL_SIZE, treeCounter * 100 / TREE_POOL_SIZE);
+    }
+    else
+    {
+        printf("\tTREE descriptor pool  : invalid state (ring within the pool), normally %d entries\n", TREE_POOL_SIZE);
+    }
+
+    if (nodeCounter <= NODE_POOL_SIZE)
+    {
+	printf("\tHash node pool       : %d free out of %d entries (%d%%)\n", nodeCounter, NODE_POOL_SIZE, nodeCounter * 100 / NODE_POOL_SIZE);
+    }
+    else
+    {
+        printf("\tNODE descriptor pool  : invalid state (ring within the pool), normally %d entries\n", NODE_POOL_SIZE);
+    }
+
+    printf("\n");
+    printf("\tMAC descriptor usage : %d entries, %d cloned\n", totalDescriptorUsage, totalCloneDescriptorUsage);
+    printf("\tTree node usage      : %d entries\n", totalTreeUsage);
+    printf("\tHash node usage      : %d entries\n", totalNodeUsage);
+    printf("\n");
+
+    /* search for duplicate nodes in the mac pool */
+    {
+        MacDescriptor *reference = macPool;
+
+        while (reference != NULL)
+        {
+            MacDescriptor *comparison = reference->nextFree;
+
+            while (comparison != NULL)
+            {
+                if (reference == comparison)
+                {
+                    printf("Warning: reached a duplicate (%p), invalid MAC pool state\n", reference);
+
+                    return 1;
+                }
+
+                comparison = comparison->nextFree;
+            }
+
+            reference = reference->nextFree;
+        }
+    }
+
+    printf("No duplicates found in the MAC pool (sanity check ok)\n");
+
+    return 0;
 }
 
 #endif /* NDEBUG */

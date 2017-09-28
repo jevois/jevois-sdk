@@ -15,18 +15,18 @@
 #include <linux/uaccess.h>
 #include <linux/module.h>
 
-int __range_ok (unsigned long addr, unsigned long size)
+int __range_ok(unsigned long addr, unsigned long size)
 {
-  unsigned long limit = current_thread_info()->addr_limit.seg;
-  return ! ( (addr < limit && size <= limit - addr) ||
-             is_arch_mappable_range (addr, size) );
+	unsigned long limit = current_thread_info()->addr_limit.seg;
+	return !((addr < limit && size <= limit - addr) ||
+		 is_arch_mappable_range(addr, size));
 }
-EXPORT_SYMBOL (__range_ok);
+EXPORT_SYMBOL(__range_ok);
 
 #ifdef CONFIG_DEBUG_COPY_FROM_USER
-void copy_from_user_overflow (void)
+void copy_from_user_overflow(void)
 {
-  WARN (1, "Buffer overflow detected!\n");
+       WARN(1, "Buffer overflow detected!\n");
 }
-EXPORT_SYMBOL (copy_from_user_overflow);
+EXPORT_SYMBOL(copy_from_user_overflow);
 #endif

@@ -15,26 +15,26 @@
 
 #ifdef CONFIG_CPU_MIPSR2
 
-static inline __attribute_const__ __u16 __arch_swab16 (__u16 x)
+static inline __attribute_const__ __u16 __arch_swab16(__u16 x)
 {
-  __asm__ (
-    "	wsbh	%0, %1			\n"
-    : "=r" (x)
-    : "r" (x) );
-    
-  return x;
+	__asm__(
+	"	wsbh	%0, %1			\n"
+	: "=r" (x)
+	: "r" (x));
+
+	return x;
 }
 #define __arch_swab16 __arch_swab16
 
-static inline __attribute_const__ __u32 __arch_swab32 (__u32 x)
+static inline __attribute_const__ __u32 __arch_swab32(__u32 x)
 {
-  __asm__ (
-    "	wsbh	%0, %1			\n"
-    "	rotr	%0, %0, 16		\n"
-    : "=r" (x)
-    : "r" (x) );
-    
-  return x;
+	__asm__(
+	"	wsbh	%0, %1			\n"
+	"	rotr	%0, %0, 16		\n"
+	: "=r" (x)
+	: "r" (x));
+
+	return x;
 }
 #define __arch_swab32 __arch_swab32
 
@@ -43,15 +43,15 @@ static inline __attribute_const__ __u32 __arch_swab32 (__u32 x)
  * optimized version for 64-bit kernel on r2 CPUs.
  */
 #ifdef CONFIG_64BIT
-static inline __attribute_const__ __u64 __arch_swab64 (__u64 x)
+static inline __attribute_const__ __u64 __arch_swab64(__u64 x)
 {
-  __asm__ (
-    "	dsbh	%0, %1\n"
-    "	dshd	%0, %0"
-    : "=r" (x)
-    : "r" (x) );
-    
-  return x;
+	__asm__(
+	"	dsbh	%0, %1\n"
+	"	dshd	%0, %0"
+	: "=r" (x)
+	: "r" (x));
+
+	return x;
 }
 #define __arch_swab64 __arch_swab64
 #endif /* CONFIG_64BIT */

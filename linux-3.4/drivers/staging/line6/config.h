@@ -3,9 +3,9 @@
  *
  * Copyright (C) 2004-2009 Markus Grabner (grabner@icg.tugraz.at)
  *
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU General Public License as
- *  published by the Free Software Foundation, version 2.
+ *	This program is free software; you can redistribute it and/or
+ *	modify it under the terms of the GNU General Public License as
+ *	published by the Free Software Foundation, version 2.
  *
  */
 
@@ -29,13 +29,13 @@
 #define DO_DUMP_MIDI_SEND    DO_DEBUG_MESSAGES
 #define DO_DUMP_MIDI_RECEIVE DO_DEBUG_MESSAGES
 #define DO_DUMP_ANY          (DO_DUMP_URB_SEND || DO_DUMP_URB_RECEIVE || \
-                              DO_DUMP_PCM_SEND || DO_DUMP_PCM_RECEIVE || \
-                              DO_DUMP_MIDI_SEND || DO_DUMP_MIDI_RECEIVE)
+			      DO_DUMP_PCM_SEND || DO_DUMP_PCM_RECEIVE || \
+			      DO_DUMP_MIDI_SEND || DO_DUMP_MIDI_RECEIVE)
 #define CREATE_RAW_FILE      0
 
 #if DO_DEBUG_MESSAGES
 #define CHECKPOINT printk(KERN_INFO "line6usb: %s (%s:%d)\n", \
-                          __func__, __FILE__, __LINE__)
+			  __func__, __FILE__, __LINE__)
 #endif
 
 #if DO_DEBUG_MESSAGES

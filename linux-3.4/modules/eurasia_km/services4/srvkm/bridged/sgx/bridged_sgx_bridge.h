@@ -48,7 +48,7 @@ extern "C" {
 #endif
 
 
-IMG_VOID SetSGXDispatchTableEntry (IMG_VOID);
+IMG_VOID SetSGXDispatchTableEntry(IMG_VOID);
 
 #if defined (__cplusplus)
 }

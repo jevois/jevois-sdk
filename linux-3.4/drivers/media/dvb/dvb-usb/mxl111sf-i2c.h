@@ -23,8 +23,8 @@
 
 #include <linux/i2c.h>
 
-int mxl111sf_i2c_xfer (struct i2c_adapter * adap,
-                       struct i2c_msg msg[], int num);
+int mxl111sf_i2c_xfer(struct i2c_adapter *adap,
+		      struct i2c_msg msg[], int num);
 
 #endif /* _DVB_USB_MXL111SF_I2C_H_ */
 

@@ -1,15 +1,15 @@
 /*
- * lib/ts_kmp.c   Knuth-Morris-Pratt text search implementation
+ * lib/ts_kmp.c		Knuth-Morris-Pratt text search implementation
  *
- *    This program is free software; you can redistribute it and/or
- *    modify it under the terms of the GNU General Public License
- *    as published by the Free Software Foundation; either version
- *    2 of the License, or (at your option) any later version.
+ *		This program is free software; you can redistribute it and/or
+ *		modify it under the terms of the GNU General Public License
+ *		as published by the Free Software Foundation; either version
+ *		2 of the License, or (at your option) any later version.
  *
- * Authors: Thomas Graf <tgraf@suug.ch>
+ * Authors:	Thomas Graf <tgraf@suug.ch>
  *
  * ==========================================================================
- *
+ * 
  *   Implements a linear-time string-matching algorithm due to Knuth,
  *   Morris, and Pratt [1]. Their algorithm avoids the explicit
  *   computation of the transition function DELTA altogether. Its
@@ -38,120 +38,120 @@
 
 struct ts_kmp
 {
-  u8   *  pattern;
-  unsigned int  pattern_len;
-  unsigned int  prefix_tbl[0];
+	u8 *		pattern;
+	unsigned int	pattern_len;
+	unsigned int 	prefix_tbl[0];
 };
 
-static unsigned int kmp_find (struct ts_config * conf, struct ts_state * state)
+static unsigned int kmp_find(struct ts_config *conf, struct ts_state *state)
 {
-  struct ts_kmp * kmp = ts_config_priv (conf);
-  unsigned int i, q = 0, text_len, consumed = state->offset;
-  const u8 * text;
-  const int icase = conf->flags & TS_IGNORECASE;
-  
-  for (;;) {
-    text_len = conf->get_next_block (consumed, &text, conf, state);
-    
-    if (unlikely (text_len == 0) )
-    { break; }
-    
-    for (i = 0; i < text_len; i++) {
-      while (q > 0 && kmp->pattern[q]
-             != (icase ? toupper (text[i]) : text[i]) )
-      { q = kmp->prefix_tbl[q - 1]; }
-      if (kmp->pattern[q]
-          == (icase ? toupper (text[i]) : text[i]) )
-      { q++; }
-      if (unlikely (q == kmp->pattern_len) ) {
-        state->offset = consumed + i + 1;
-        return state->offset - kmp->pattern_len;
-      }
-    }
-    
-    consumed += text_len;
-  }
-  
-  return UINT_MAX;
+	struct ts_kmp *kmp = ts_config_priv(conf);
+	unsigned int i, q = 0, text_len, consumed = state->offset;
+	const u8 *text;
+	const int icase = conf->flags & TS_IGNORECASE;
+
+	for (;;) {
+		text_len = conf->get_next_block(consumed, &text, conf, state);
+
+		if (unlikely(text_len == 0))
+			break;
+
+		for (i = 0; i < text_len; i++) {
+			while (q > 0 && kmp->pattern[q]
+			    != (icase ? toupper(text[i]) : text[i]))
+				q = kmp->prefix_tbl[q - 1];
+			if (kmp->pattern[q]
+			    == (icase ? toupper(text[i]) : text[i]))
+				q++;
+			if (unlikely(q == kmp->pattern_len)) {
+				state->offset = consumed + i + 1;
+				return state->offset - kmp->pattern_len;
+			}
+		}
+
+		consumed += text_len;
+	}
+
+	return UINT_MAX;
 }
 
-static inline void compute_prefix_tbl (const u8 * pattern, unsigned int len,
-                                       unsigned int * prefix_tbl, int flags)
+static inline void compute_prefix_tbl(const u8 *pattern, unsigned int len,
+				      unsigned int *prefix_tbl, int flags)
 {
-  unsigned int k, q;
-  const u8 icase = flags & TS_IGNORECASE;
-  
-  for (k = 0, q = 1; q < len; q++) {
-    while (k > 0 && (icase ? toupper (pattern[k]) : pattern[k])
-           != (icase ? toupper (pattern[q]) : pattern[q]) )
-    { k = prefix_tbl[k - 1]; }
-    if ( (icase ? toupper (pattern[k]) : pattern[k])
-         == (icase ? toupper (pattern[q]) : pattern[q]) )
-    { k++; }
-    prefix_tbl[q] = k;
-  }
+	unsigned int k, q;
+	const u8 icase = flags & TS_IGNORECASE;
+
+	for (k = 0, q = 1; q < len; q++) {
+		while (k > 0 && (icase ? toupper(pattern[k]) : pattern[k])
+		    != (icase ? toupper(pattern[q]) : pattern[q]))
+			k = prefix_tbl[k-1];
+		if ((icase ? toupper(pattern[k]) : pattern[k])
+		    == (icase ? toupper(pattern[q]) : pattern[q]))
+			k++;
+		prefix_tbl[q] = k;
+	}
 }
 
-static struct ts_config * kmp_init (const void * pattern, unsigned int len,
-                                    gfp_t gfp_mask, int flags)
+static struct ts_config *kmp_init(const void *pattern, unsigned int len,
+				  gfp_t gfp_mask, int flags)
 {
-  struct ts_config * conf;
-  struct ts_kmp * kmp;
-  int i;
-  unsigned int prefix_tbl_len = len * sizeof (unsigned int);
-  size_t priv_size = sizeof (*kmp) + len + prefix_tbl_len;
-  
-  conf = alloc_ts_config (priv_size, gfp_mask);
-  if (IS_ERR (conf) )
-  { return conf; }
-  
-  conf->flags = flags;
-  kmp = ts_config_priv (conf);
-  kmp->pattern_len = len;
-  compute_prefix_tbl (pattern, len, kmp->prefix_tbl, flags);
-  kmp->pattern = (u8 *) kmp->prefix_tbl + prefix_tbl_len;
-  if (flags & TS_IGNORECASE)
-    for (i = 0; i < len; i++)
-    { kmp->pattern[i] = toupper ( ( (u8 *) pattern) [i]); }
-  else
-  { memcpy (kmp->pattern, pattern, len); }
-  
-  return conf;
+	struct ts_config *conf;
+	struct ts_kmp *kmp;
+	int i;
+	unsigned int prefix_tbl_len = len * sizeof(unsigned int);
+	size_t priv_size = sizeof(*kmp) + len + prefix_tbl_len;
+
+	conf = alloc_ts_config(priv_size, gfp_mask);
+	if (IS_ERR(conf))
+		return conf;
+
+	conf->flags = flags;
+	kmp = ts_config_priv(conf);
+	kmp->pattern_len = len;
+	compute_prefix_tbl(pattern, len, kmp->prefix_tbl, flags);
+	kmp->pattern = (u8 *) kmp->prefix_tbl + prefix_tbl_len;
+	if (flags & TS_IGNORECASE)
+		for (i = 0; i < len; i++)
+			kmp->pattern[i] = toupper(((u8 *)pattern)[i]);
+	else
+		memcpy(kmp->pattern, pattern, len);
+
+	return conf;
 }
 
-static void * kmp_get_pattern (struct ts_config * conf)
+static void *kmp_get_pattern(struct ts_config *conf)
 {
-  struct ts_kmp * kmp = ts_config_priv (conf);
-  return kmp->pattern;
+	struct ts_kmp *kmp = ts_config_priv(conf);
+	return kmp->pattern;
 }
 
-static unsigned int kmp_get_pattern_len (struct ts_config * conf)
+static unsigned int kmp_get_pattern_len(struct ts_config *conf)
 {
-  struct ts_kmp * kmp = ts_config_priv (conf);
-  return kmp->pattern_len;
+	struct ts_kmp *kmp = ts_config_priv(conf);
+	return kmp->pattern_len;
 }
 
 static struct ts_ops kmp_ops = {
-  .name     = "kmp",
-  .find     = kmp_find,
-  .init     = kmp_init,
-  .get_pattern    = kmp_get_pattern,
-  .get_pattern_len  = kmp_get_pattern_len,
-  .owner      = THIS_MODULE,
-  .list     = LIST_HEAD_INIT (kmp_ops.list)
+	.name		  = "kmp",
+	.find		  = kmp_find,
+	.init		  = kmp_init,
+	.get_pattern	  = kmp_get_pattern,
+	.get_pattern_len  = kmp_get_pattern_len,
+	.owner		  = THIS_MODULE,
+	.list		  = LIST_HEAD_INIT(kmp_ops.list)
 };
 
-static int __init init_kmp (void)
+static int __init init_kmp(void)
 {
-  return textsearch_register (&kmp_ops);
+	return textsearch_register(&kmp_ops);
 }
 
-static void __exit exit_kmp (void)
+static void __exit exit_kmp(void)
 {
-  textsearch_unregister (&kmp_ops);
+	textsearch_unregister(&kmp_ops);
 }
 
-MODULE_LICENSE ("GPL");
+MODULE_LICENSE("GPL");
 
-module_init (init_kmp);
-module_exit (exit_kmp);
+module_init(init_kmp);
+module_exit(exit_kmp);

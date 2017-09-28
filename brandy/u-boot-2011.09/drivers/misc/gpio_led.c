@@ -9,18 +9,18 @@
 #include <status_led.h>
 #include <asm/gpio.h>
 
-void __led_init (led_id_t mask, int state)
+void __led_init(led_id_t mask, int state)
 {
-  gpio_request (mask, "gpio_led");
-  gpio_direction_output (mask, state == STATUS_LED_ON);
+	gpio_request(mask, "gpio_led");
+	gpio_direction_output(mask, state == STATUS_LED_ON);
 }
 
-void __led_set (led_id_t mask, int state)
+void __led_set(led_id_t mask, int state)
 {
-  gpio_set_value (mask, state == STATUS_LED_ON);
+	gpio_set_value(mask, state == STATUS_LED_ON);
 }
 
-void __led_toggle (led_id_t mask)
+void __led_toggle(led_id_t mask)
 {
-  gpio_set_value (mask, !gpio_get_value (mask) );
+	gpio_set_value(mask, !gpio_get_value(mask));
 }

@@ -1,7 +1,7 @@
 /*
- *  Access to VGA videoram
+ *	Access to VGA videoram
  *
- *  (c) 1998 Martin Mares <mj@ucw.cz>
+ *	(c) 1998 Martin Mares <mj@ucw.cz>
  */
 #ifndef _ASM_VGA_H
 #define _ASM_VGA_H
@@ -9,14 +9,14 @@
 #include <asm/byteorder.h>
 
 /*
- *  On the PC, we can just recalculate addresses and then
- *  access the videoram directly without any black magic.
+ *	On the PC, we can just recalculate addresses and then
+ *	access the videoram directly without any black magic.
  */
 
-#define VGA_MAP_MEM(x, s) (0xb0000000L + (unsigned long)(x))
+#define VGA_MAP_MEM(x, s)	(0xb0000000L + (unsigned long)(x))
 
-#define vga_readb(x)  (*(x))
-#define vga_writeb(x, y)  (*(y) = (x))
+#define vga_readb(x)	(*(x))
+#define vga_writeb(x, y)	(*(y) = (x))
 
 #define VT_BUF_HAVE_RW
 /*
@@ -29,14 +29,14 @@
 #undef scr_writew
 #undef scr_readw
 
-static inline void scr_writew (u16 val, volatile u16 * addr)
+static inline void scr_writew(u16 val, volatile u16 *addr)
 {
-  *addr = cpu_to_le16 (val);
+	*addr = cpu_to_le16(val);
 }
 
-static inline u16 scr_readw (volatile const u16 * addr)
+static inline u16 scr_readw(volatile const u16 *addr)
 {
-  return le16_to_cpu (*addr);
+	return le16_to_cpu(*addr);
 }
 
 #define scr_memcpyw(d, s, c) memcpy(d, s, c)

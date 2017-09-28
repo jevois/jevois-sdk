@@ -21,15 +21,15 @@
 ** The __asm__ op below simple prevents gcc/ld from reordering
 ** instructions across the mb() "call".
 */
-#define mb()    __asm__ __volatile__("":::"memory") /* barrier() */
-#define rmb()   mb()
-#define wmb()   mb()
-#define smp_mb()  mb()
-#define smp_rmb() mb()
-#define smp_wmb() mb()
-#define smp_read_barrier_depends()  do { } while(0)
-#define read_barrier_depends()    do { } while(0)
+#define mb()		__asm__ __volatile__("":::"memory")	/* barrier() */
+#define rmb()		mb()
+#define wmb()		mb()
+#define smp_mb()	mb()
+#define smp_rmb()	mb()
+#define smp_wmb()	mb()
+#define smp_read_barrier_depends()	do { } while(0)
+#define read_barrier_depends()		do { } while(0)
 
-#define set_mb(var, value)    do { var = value; mb(); } while (0)
+#define set_mb(var, value)		do { var = value; mb(); } while (0)
 
 #endif /* __PARISC_BARRIER_H */

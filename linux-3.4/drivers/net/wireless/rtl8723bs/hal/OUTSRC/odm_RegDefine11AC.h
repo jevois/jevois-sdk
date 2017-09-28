@@ -1,7 +1,7 @@
 /******************************************************************************
  *
  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
- *
+ *                                        
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of version 2 of the GNU General Public License as
  * published by the Free Software Foundation.
@@ -17,31 +17,31 @@
  *
  *
  ******************************************************************************/
-
-#ifndef __ODM_REGDEFINE11AC_H__
+ 
+#ifndef	__ODM_REGDEFINE11AC_H__
 #define __ODM_REGDEFINE11AC_H__
 
 
 
 
-#define ODM_REG_CCK_RPT_FORMAT_11AC 0x804
-#define ODM_REG_BB_RX_PATH_11AC     0x808
-#define ODM_REG_OFDM_FA_RST_11AC    0x9A4
-#define ODM_REG_CCK_CCA_11AC      0xA0A
-#define ODM_REG_CCK_FA_RST_11AC     0xA2C
-#define ODM_REG_CCK_FA_11AC       0xA5C
-#define ODM_REG_IGI_A_11AC        0xC50
-#define ODM_REG_IGI_B_11AC        0xE50
-#define ODM_REG_OFDM_FA_11AC      0xF48
+#define	ODM_REG_CCK_RPT_FORMAT_11AC	0x804
+#define	ODM_REG_BB_RX_PATH_11AC			0x808
+#define	ODM_REG_OFDM_FA_RST_11AC		0x9A4
+#define	ODM_REG_CCK_CCA_11AC			0xA0A
+#define	ODM_REG_CCK_FA_RST_11AC			0xA2C
+#define	ODM_REG_CCK_FA_11AC				0xA5C
+#define	ODM_REG_IGI_A_11AC				0xC50
+#define	ODM_REG_IGI_B_11AC				0xE50
+#define	ODM_REG_OFDM_FA_11AC			0xF48
 
 
-#define ODM_REG_RESP_TX_11AC        0x6D8
+#define	ODM_REG_RESP_TX_11AC				0x6D8
 
 
 
-#define ODM_BIT_IGI_11AC          0xFFFFFFFF
-#define ODM_BIT_CCK_RPT_FORMAT_11AC   BIT16
-#define ODM_BIT_BB_RX_PATH_11AC     0xF
+#define	ODM_BIT_IGI_11AC					0xFFFFFFFF
+#define	ODM_BIT_CCK_RPT_FORMAT_11AC		BIT16
+#define	ODM_BIT_BB_RX_PATH_11AC			0xF
 
 #endif
 

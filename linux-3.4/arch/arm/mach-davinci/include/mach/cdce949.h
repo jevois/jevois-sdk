@@ -14,6 +14,6 @@
 
 #include <mach/clock.h>
 
-int cdce_set_rate (struct clk * clk, unsigned long rate);
+int cdce_set_rate(struct clk *clk, unsigned long rate);
 
 #endif

@@ -24,7 +24,7 @@
 #include <dspbridge/host_os.h>
 
 #include <dspbridge/io.h>
-#include <dspbridge/mbx_sh.h> /* shared mailbox codes */
+#include <dspbridge/mbx_sh.h>	/* shared mailbox codes */
 
 /* Magic code used to determine if DSP signaled exception. */
 #define DEH_BASE        MBX_DEH_BASE
@@ -53,7 +53,7 @@ extern u32 vdd1_dsp_freq[6][4];
  *      Valid hio_mgr.
  *  Ensures:
  */
-extern void io_cancel_chnl (struct io_mgr * hio_mgr, u32 chnl);
+extern void io_cancel_chnl(struct io_mgr *hio_mgr, u32 chnl);
 
 /*
  *  ======== io_dpc ========
@@ -71,22 +71,22 @@ extern void io_cancel_chnl (struct io_mgr * hio_mgr, u32 chnl);
  *  Ensures:
  *      Non-preemptible (but interruptible).
  */
-extern void io_dpc (unsigned long ref_data);
+extern void io_dpc(unsigned long ref_data);
 
 /*
  *  ======== io_mbox_msg ========
  *  Purpose:
- *  Main message handler for the shared memory Bridge channel manager.
- *  Determine if this message is ours, then schedules a DPC to
- *  dispatch I/O.
+ *	Main message handler for the shared memory Bridge channel manager.
+ *	Determine if this message is ours, then schedules a DPC to
+ *	dispatch I/O.
  *  Parameters:
- *  self: Pointer to its own notifier_block struct.
- *  len:  Length of message.
- *  msg:  Message code received.
+ *	self:	Pointer to its own notifier_block struct.
+ *	len:	Length of message.
+ *	msg:	Message code received.
  *  Returns:
- *  NOTIFY_OK if handled; NOTIFY_BAD otherwise.
+ *	NOTIFY_OK if handled; NOTIFY_BAD otherwise.
  */
-int io_mbox_msg (struct notifier_block * self, unsigned long len, void * msg);
+int io_mbox_msg(struct notifier_block *self, unsigned long len, void *msg);
 
 /*
  *  ======== io_request_chnl ========
@@ -102,9 +102,9 @@ int io_mbox_msg (struct notifier_block * self, unsigned long len, void * msg);
  *      pchnl != NULL
  *  Ensures:
  */
-extern void io_request_chnl (struct io_mgr * io_manager,
-                             struct chnl_object * pchnl,
-                             u8 io_mode, u16 * mbx_val);
+extern void io_request_chnl(struct io_mgr *io_manager,
+			    struct chnl_object *pchnl,
+			    u8 io_mode, u16 *mbx_val);
 
 /*
  *  ======== iosm_schedule ========
@@ -117,7 +117,7 @@ extern void io_request_chnl (struct io_mgr * io_manager,
  *      pchnl != NULL
  *  Ensures:
  */
-extern void iosm_schedule (struct io_mgr * io_manager);
+extern void iosm_schedule(struct io_mgr *io_manager);
 
 /*
  *  ======== io_sh_msetting ========
@@ -133,28 +133,28 @@ extern void iosm_schedule (struct io_mgr * io_manager);
  *      pargs != NULL
  *  Ensures:
  */
-extern int io_sh_msetting (struct io_mgr * hio_mgr, u8 desc, void * pargs);
+extern int io_sh_msetting(struct io_mgr *hio_mgr, u8 desc, void *pargs);
 
 /*
  *  Misc functions for the CHNL_IO shared memory library:
  */
 
 /* Maximum channel bufsize that can be used. */
-extern u32 io_buf_size (struct io_mgr * hio_mgr);
+extern u32 io_buf_size(struct io_mgr *hio_mgr);
 
 #ifdef CONFIG_TIDSPBRIDGE_BACKTRACE
 /*
  *  ========print_dsp_trace_buffer ========
  *      Print DSP tracebuffer.
  */
-extern int print_dsp_trace_buffer (struct bridge_dev_context
-                                   *hbridge_context);
+extern int print_dsp_trace_buffer(struct bridge_dev_context
+					 *hbridge_context);
 
-int dump_dsp_stack (struct bridge_dev_context * bridge_context);
+int dump_dsp_stack(struct bridge_dev_context *bridge_context);
 
-void dump_dl_modules (struct bridge_dev_context * bridge_context);
+void dump_dl_modules(struct bridge_dev_context *bridge_context);
 
-void print_dsp_debug_trace (struct io_mgr * hio_mgr);
+void print_dsp_debug_trace(struct io_mgr *hio_mgr);
 #endif
 
 #endif /* IOSM_ */

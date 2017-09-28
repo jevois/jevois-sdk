@@ -29,19 +29,19 @@
  * perfectly legal to run concurrently with the _rcu list-traversal
  * primitives, such as hlist_nulls_for_each_entry_rcu().
  */
-static inline void hlist_nulls_del_init_rcu (struct hlist_nulls_node * n)
+static inline void hlist_nulls_del_init_rcu(struct hlist_nulls_node *n)
 {
-  if (!hlist_nulls_unhashed (n) ) {
-    __hlist_nulls_del (n);
-    n->pprev = NULL;
-  }
+	if (!hlist_nulls_unhashed(n)) {
+		__hlist_nulls_del(n);
+		n->pprev = NULL;
+	}
 }
 
 #define hlist_nulls_first_rcu(head) \
-  (*((struct hlist_nulls_node __rcu __force **)&(head)->first))
+	(*((struct hlist_nulls_node __rcu __force **)&(head)->first))
 
 #define hlist_nulls_next_rcu(node) \
-  (*((struct hlist_nulls_node __rcu __force **)&(node)->next))
+	(*((struct hlist_nulls_node __rcu __force **)&(node)->next))
 
 /**
  * hlist_nulls_del_rcu - deletes entry from hash list without re-initialization
@@ -62,10 +62,10 @@ static inline void hlist_nulls_del_init_rcu (struct hlist_nulls_node * n)
  * the _rcu list-traversal primitives, such as
  * hlist_nulls_for_each_entry().
  */
-static inline void hlist_nulls_del_rcu (struct hlist_nulls_node * n)
+static inline void hlist_nulls_del_rcu(struct hlist_nulls_node *n)
 {
-  __hlist_nulls_del (n);
-  n->pprev = LIST_POISON2;
+	__hlist_nulls_del(n);
+	n->pprev = LIST_POISON2;
 }
 
 /**
@@ -87,30 +87,30 @@ static inline void hlist_nulls_del_rcu (struct hlist_nulls_node * n)
  * problems on Alpha CPUs.  Regardless of the type of CPU, the
  * list-traversal primitive must be guarded by rcu_read_lock().
  */
-static inline void hlist_nulls_add_head_rcu (struct hlist_nulls_node * n,
-    struct hlist_nulls_head * h)
+static inline void hlist_nulls_add_head_rcu(struct hlist_nulls_node *n,
+					struct hlist_nulls_head *h)
 {
-  struct hlist_nulls_node * first = h->first;
-  
-  n->next = first;
-  n->pprev = &h->first;
-  rcu_assign_pointer (hlist_nulls_first_rcu (h), n);
-  if (!is_a_nulls (first) )
-  { first->pprev = &n->next; }
+	struct hlist_nulls_node *first = h->first;
+
+	n->next = first;
+	n->pprev = &h->first;
+	rcu_assign_pointer(hlist_nulls_first_rcu(h), n);
+	if (!is_a_nulls(first))
+		first->pprev = &n->next;
 }
 /**
  * hlist_nulls_for_each_entry_rcu - iterate over rcu list of given type
- * @tpos: the type * to use as a loop cursor.
- * @pos:  the &struct hlist_nulls_node to use as a loop cursor.
- * @head: the head for your list.
- * @member: the name of the hlist_nulls_node within the struct.
+ * @tpos:	the type * to use as a loop cursor.
+ * @pos:	the &struct hlist_nulls_node to use as a loop cursor.
+ * @head:	the head for your list.
+ * @member:	the name of the hlist_nulls_node within the struct.
  *
  */
-#define hlist_nulls_for_each_entry_rcu(tpos, pos, head, member)     \
-  for (pos = rcu_dereference_raw(hlist_nulls_first_rcu(head));    \
-       (!is_a_nulls(pos)) &&           \
-  ({ tpos = hlist_nulls_entry(pos, typeof(*tpos), member); 1; }); \
-  pos = rcu_dereference_raw(hlist_nulls_next_rcu(pos)))
+#define hlist_nulls_for_each_entry_rcu(tpos, pos, head, member)			\
+	for (pos = rcu_dereference_raw(hlist_nulls_first_rcu(head));		\
+		(!is_a_nulls(pos)) &&						\
+		({ tpos = hlist_nulls_entry(pos, typeof(*tpos), member); 1; }); \
+		pos = rcu_dereference_raw(hlist_nulls_next_rcu(pos)))
 
 #endif
 #endif

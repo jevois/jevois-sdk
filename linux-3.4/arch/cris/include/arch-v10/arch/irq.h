@@ -67,19 +67,19 @@
 
 /* our fine, global, etrax irq vector! the pointer lives in the head.S file. */
 
-typedef void (*irqvectptr) (void);
+typedef void (*irqvectptr)(void);
 
 struct etrax_interrupt_vector {
-  irqvectptr v[256];
+	irqvectptr v[256];
 };
 
-extern struct etrax_interrupt_vector * etrax_irv;
-void set_int_vector (int n, irqvectptr addr);
-void set_break_vector (int n, irqvectptr addr);
+extern struct etrax_interrupt_vector *etrax_irv;
+void set_int_vector(int n, irqvectptr addr);
+void set_break_vector(int n, irqvectptr addr);
 
 #define __STR(x) #x
 #define STR(x) __STR(x)
-
+ 
 /* SAVE_ALL saves registers so they match pt_regs */
 
 #define SAVE_ALL \
@@ -109,53 +109,53 @@ void set_break_vector (int n, irqvectptr addr);
 #define sIRQ_NAME(nr) IRQ_NAME2(sIRQ##nr)
 #define BAD_IRQ_NAME(nr) IRQ_NAME2(bad_IRQ##nr)
 
-/* the asm IRQ handler makes sure the causing IRQ is blocked, then it calls
- * do_IRQ (with irq disabled still). after that it unblocks and jumps to
- * ret_from_intr (entry.S)
- *
- * The reason the IRQ is blocked is to allow an sti() before the handler which
- * will acknowledge the interrupt is run.
- */
+  /* the asm IRQ handler makes sure the causing IRQ is blocked, then it calls
+   * do_IRQ (with irq disabled still). after that it unblocks and jumps to
+   * ret_from_intr (entry.S)
+   *
+   * The reason the IRQ is blocked is to allow an sti() before the handler which
+   * will acknowledge the interrupt is run.
+   */
 
 #define BUILD_IRQ(nr,mask) \
-  void IRQ_NAME(nr); \
-  __asm__ ( \
-            ".text\n\t" \
-            "IRQ" #nr "_interrupt:\n\t" \
-            SAVE_ALL \
-            BLOCK_IRQ(mask,nr) /* this must be done to prevent irq loops when we ei later */ \
-            "moveq "#nr",$r10\n\t" \
-            "move.d $sp,$r11\n\t" \
-            "jsr do_IRQ\n\t" /* irq.c, r10 and r11 are arguments */ \
-            UNBLOCK_IRQ(mask) \
-            "moveq 0,$r9\n\t" /* make ret_from_intr realise we came from an irq */ \
-            "jump ret_from_intr\n\t");
+void IRQ_NAME(nr); \
+__asm__ ( \
+          ".text\n\t" \
+          "IRQ" #nr "_interrupt:\n\t" \
+	  SAVE_ALL \
+	  BLOCK_IRQ(mask,nr) /* this must be done to prevent irq loops when we ei later */ \
+	  "moveq "#nr",$r10\n\t" \
+	  "move.d $sp,$r11\n\t" \
+	  "jsr do_IRQ\n\t" /* irq.c, r10 and r11 are arguments */ \
+	  UNBLOCK_IRQ(mask) \
+	  "moveq 0,$r9\n\t" /* make ret_from_intr realise we came from an irq */ \
+	  "jump ret_from_intr\n\t");
 
-/* This is subtle. The timer interrupt is crucial and it should not be disabled for
+/* This is subtle. The timer interrupt is crucial and it should not be disabled for 
  * too long. However, if it had been a normal interrupt as per BUILD_IRQ, it would
  * have been BLOCK'ed, and then softirq's are run before we return here to UNBLOCK.
- * If the softirq's take too much time to run, the timer irq won't run and the
+ * If the softirq's take too much time to run, the timer irq won't run and the 
  * watchdog will kill us.
  *
  * Furthermore, if a lot of other irq's occur before we return here, the multiple_irq
  * handler is run and it prioritizes the timer interrupt. However if we had BLOCK'ed
  * it here, we would not get the multiple_irq at all.
  *
- * The non-blocking here is based on the knowledge that the timer interrupt is
+ * The non-blocking here is based on the knowledge that the timer interrupt is 
  * registred as a fast interrupt (IRQF_DISABLED) so that we _know_ there will not
  * be an sti() before the timer irq handler is run to acknowledge the interrupt.
  */
 
 #define BUILD_TIMER_IRQ(nr,mask) \
-  void IRQ_NAME(nr); \
-  __asm__ ( \
-            ".text\n\t" \
-            "IRQ" #nr "_interrupt:\n\t" \
-            SAVE_ALL \
-            "moveq "#nr",$r10\n\t" \
-            "move.d $sp,$r11\n\t" \
-            "jsr do_IRQ\n\t" /* irq.c, r10 and r11 are arguments */ \
-            "moveq 0,$r9\n\t" /* make ret_from_intr realise we came from an irq */ \
-            "jump ret_from_intr\n\t");
+void IRQ_NAME(nr); \
+__asm__ ( \
+          ".text\n\t" \
+          "IRQ" #nr "_interrupt:\n\t" \
+	  SAVE_ALL \
+	  "moveq "#nr",$r10\n\t" \
+	  "move.d $sp,$r11\n\t" \
+	  "jsr do_IRQ\n\t" /* irq.c, r10 and r11 are arguments */ \
+	  "moveq 0,$r9\n\t" /* make ret_from_intr realise we came from an irq */ \
+	  "jump ret_from_intr\n\t");
 
 #endif

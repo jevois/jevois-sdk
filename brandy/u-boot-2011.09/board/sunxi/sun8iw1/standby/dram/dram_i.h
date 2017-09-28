@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -21,8 +21,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston,
  * MA 02111-1307 USA
  */
-#ifndef __DRAM_I_H__
-#define __DRAM_I_H__
+#ifndef	__DRAM_I_H__
+#define	__DRAM_I_H__
 
 #include "../standby_i.h"
 #include <asm/arch/dram.h>
@@ -30,4 +30,4 @@
 #include "mctl_hal.h"
 #include "mctl_sys.h"
 
-#endif 
+#endif

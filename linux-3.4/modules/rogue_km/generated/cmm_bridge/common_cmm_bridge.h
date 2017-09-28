@@ -50,129 +50,129 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "pvr_bridge.h"
 
-#define PVRSRV_BRIDGE_CMM_CMD_FIRST     (PVRSRV_BRIDGE_CMM_START)
-#define PVRSRV_BRIDGE_CMM_PMRWRITEPMPAGELIST      PVRSRV_IOWR(PVRSRV_BRIDGE_CMM_CMD_FIRST+0)
-#define PVRSRV_BRIDGE_CMM_PMRWRITEVFPPAGELIST     PVRSRV_IOWR(PVRSRV_BRIDGE_CMM_CMD_FIRST+1)
-#define PVRSRV_BRIDGE_CMM_PMRUNWRITEPMPAGELIST      PVRSRV_IOWR(PVRSRV_BRIDGE_CMM_CMD_FIRST+2)
-#define PVRSRV_BRIDGE_CMM_DEVMEMINTCTXEXPORT      PVRSRV_IOWR(PVRSRV_BRIDGE_CMM_CMD_FIRST+3)
-#define PVRSRV_BRIDGE_CMM_DEVMEMINTCTXUNEXPORT      PVRSRV_IOWR(PVRSRV_BRIDGE_CMM_CMD_FIRST+4)
-#define PVRSRV_BRIDGE_CMM_DEVMEMINTCTXIMPORT      PVRSRV_IOWR(PVRSRV_BRIDGE_CMM_CMD_FIRST+5)
-#define PVRSRV_BRIDGE_CMM_CMD_LAST      (PVRSRV_BRIDGE_CMM_CMD_FIRST+5)
+#define PVRSRV_BRIDGE_CMM_CMD_FIRST			(PVRSRV_BRIDGE_CMM_START)
+#define PVRSRV_BRIDGE_CMM_PMRWRITEPMPAGELIST			PVRSRV_IOWR(PVRSRV_BRIDGE_CMM_CMD_FIRST+0)
+#define PVRSRV_BRIDGE_CMM_PMRWRITEVFPPAGELIST			PVRSRV_IOWR(PVRSRV_BRIDGE_CMM_CMD_FIRST+1)
+#define PVRSRV_BRIDGE_CMM_PMRUNWRITEPMPAGELIST			PVRSRV_IOWR(PVRSRV_BRIDGE_CMM_CMD_FIRST+2)
+#define PVRSRV_BRIDGE_CMM_DEVMEMINTCTXEXPORT			PVRSRV_IOWR(PVRSRV_BRIDGE_CMM_CMD_FIRST+3)
+#define PVRSRV_BRIDGE_CMM_DEVMEMINTCTXUNEXPORT			PVRSRV_IOWR(PVRSRV_BRIDGE_CMM_CMD_FIRST+4)
+#define PVRSRV_BRIDGE_CMM_DEVMEMINTCTXIMPORT			PVRSRV_IOWR(PVRSRV_BRIDGE_CMM_CMD_FIRST+5)
+#define PVRSRV_BRIDGE_CMM_CMD_LAST			(PVRSRV_BRIDGE_CMM_CMD_FIRST+5)
 
 
 /*******************************************
-            PMRWritePMPageList
+            PMRWritePMPageList          
  *******************************************/
 
 /* Bridge in structure for PMRWritePMPageList */
 typedef struct PVRSRV_BRIDGE_IN_PMRWRITEPMPAGELIST_TAG
 {
-  IMG_HANDLE hPageListPMR;
-  IMG_DEVMEM_OFFSET_T uiTableOffset;
-  IMG_DEVMEM_SIZE_T uiTableLength;
-  IMG_HANDLE hReferencePMR;
-  IMG_UINT32 ui32Log2PageSize;
+	IMG_HANDLE hPageListPMR;
+	IMG_DEVMEM_OFFSET_T uiTableOffset;
+	IMG_DEVMEM_SIZE_T uiTableLength;
+	IMG_HANDLE hReferencePMR;
+	IMG_UINT32 ui32Log2PageSize;
 } PVRSRV_BRIDGE_IN_PMRWRITEPMPAGELIST;
 
 
 /* Bridge out structure for PMRWritePMPageList */
 typedef struct PVRSRV_BRIDGE_OUT_PMRWRITEPMPAGELIST_TAG
 {
-  IMG_HANDLE hPageList;
-  IMG_UINT64 ui64CheckSum;
-  PVRSRV_ERROR eError;
+	IMG_HANDLE hPageList;
+	IMG_UINT64 ui64CheckSum;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_PMRWRITEPMPAGELIST;
 
 /*******************************************
-            PMRWriteVFPPageList
+            PMRWriteVFPPageList          
  *******************************************/
 
 /* Bridge in structure for PMRWriteVFPPageList */
 typedef struct PVRSRV_BRIDGE_IN_PMRWRITEVFPPAGELIST_TAG
 {
-  IMG_HANDLE hFreeListPMR;
-  IMG_DEVMEM_OFFSET_T uiTableOffset;
-  IMG_DEVMEM_SIZE_T uiTableLength;
-  IMG_UINT32 ui32TableBase;
-  IMG_UINT32 ui32Log2PageSize;
+	IMG_HANDLE hFreeListPMR;
+	IMG_DEVMEM_OFFSET_T uiTableOffset;
+	IMG_DEVMEM_SIZE_T uiTableLength;
+	IMG_UINT32 ui32TableBase;
+	IMG_UINT32 ui32Log2PageSize;
 } PVRSRV_BRIDGE_IN_PMRWRITEVFPPAGELIST;
 
 
 /* Bridge out structure for PMRWriteVFPPageList */
 typedef struct PVRSRV_BRIDGE_OUT_PMRWRITEVFPPAGELIST_TAG
 {
-  PVRSRV_ERROR eError;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_PMRWRITEVFPPAGELIST;
 
 /*******************************************
-            PMRUnwritePMPageList
+            PMRUnwritePMPageList          
  *******************************************/
 
 /* Bridge in structure for PMRUnwritePMPageList */
 typedef struct PVRSRV_BRIDGE_IN_PMRUNWRITEPMPAGELIST_TAG
 {
-  IMG_HANDLE hPageList;
+	IMG_HANDLE hPageList;
 } PVRSRV_BRIDGE_IN_PMRUNWRITEPMPAGELIST;
 
 
 /* Bridge out structure for PMRUnwritePMPageList */
 typedef struct PVRSRV_BRIDGE_OUT_PMRUNWRITEPMPAGELIST_TAG
 {
-  PVRSRV_ERROR eError;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_PMRUNWRITEPMPAGELIST;
 
 /*******************************************
-            DevmemIntCtxExport
+            DevmemIntCtxExport          
  *******************************************/
 
 /* Bridge in structure for DevmemIntCtxExport */
 typedef struct PVRSRV_BRIDGE_IN_DEVMEMINTCTXEXPORT_TAG
 {
-  IMG_HANDLE hDevMemServerContext;
+	IMG_HANDLE hDevMemServerContext;
 } PVRSRV_BRIDGE_IN_DEVMEMINTCTXEXPORT;
 
 
 /* Bridge out structure for DevmemIntCtxExport */
 typedef struct PVRSRV_BRIDGE_OUT_DEVMEMINTCTXEXPORT_TAG
 {
-  IMG_HANDLE hDevMemIntCtxExport;
-  PVRSRV_ERROR eError;
+	IMG_HANDLE hDevMemIntCtxExport;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_DEVMEMINTCTXEXPORT;
 
 /*******************************************
-            DevmemIntCtxUnexport
+            DevmemIntCtxUnexport          
  *******************************************/
 
 /* Bridge in structure for DevmemIntCtxUnexport */
 typedef struct PVRSRV_BRIDGE_IN_DEVMEMINTCTXUNEXPORT_TAG
 {
-  IMG_HANDLE hDevMemIntCtxExport;
+	IMG_HANDLE hDevMemIntCtxExport;
 } PVRSRV_BRIDGE_IN_DEVMEMINTCTXUNEXPORT;
 
 
 /* Bridge out structure for DevmemIntCtxUnexport */
 typedef struct PVRSRV_BRIDGE_OUT_DEVMEMINTCTXUNEXPORT_TAG
 {
-  PVRSRV_ERROR eError;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_DEVMEMINTCTXUNEXPORT;
 
 /*******************************************
-            DevmemIntCtxImport
+            DevmemIntCtxImport          
  *******************************************/
 
 /* Bridge in structure for DevmemIntCtxImport */
 typedef struct PVRSRV_BRIDGE_IN_DEVMEMINTCTXIMPORT_TAG
 {
-  IMG_HANDLE hDevMemIntCtxExport;
+	IMG_HANDLE hDevMemIntCtxExport;
 } PVRSRV_BRIDGE_IN_DEVMEMINTCTXIMPORT;
 
 
 /* Bridge out structure for DevmemIntCtxImport */
 typedef struct PVRSRV_BRIDGE_OUT_DEVMEMINTCTXIMPORT_TAG
 {
-  IMG_HANDLE hDevMemServerContext;
-  IMG_HANDLE hPrivData;
-  PVRSRV_ERROR eError;
+	IMG_HANDLE hDevMemServerContext;
+	IMG_HANDLE hPrivData;
+	PVRSRV_ERROR eError;
 } PVRSRV_BRIDGE_OUT_DEVMEMINTCTXIMPORT;
 
 #endif /* COMMON_CMM_BRIDGE_H */

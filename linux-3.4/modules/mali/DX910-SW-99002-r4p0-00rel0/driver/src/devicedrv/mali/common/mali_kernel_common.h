@@ -1,9 +1,9 @@
 /*
  * Copyright (C) 2010, 2012-2013 ARM Limited. All rights reserved.
- *
+ * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- *
+ * 
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -58,30 +58,30 @@
 #define MALI_SUCCESS MALI_ERROR(_MALI_OSK_ERR_OK)
 
 /**
- *  Basic error macro. This checks whether the given condition is true, and if not returns
- *  from this function with the supplied error code. This is a macro so that we can override it
- *  for stress testing.
+ *	Basic error macro. This checks whether the given condition is true, and if not returns
+ *	from this function with the supplied error code. This is a macro so that we can override it
+ *	for stress testing.
  *
- *  Note that this uses the do-while-0 wrapping to ensure that we don't get problems with dangling
- *  else clauses. Note also no closing semicolon - this is supplied in typical usage:
+ *	Note that this uses the do-while-0 wrapping to ensure that we don't get problems with dangling
+ *	else clauses. Note also no closing semicolon - this is supplied in typical usage:
  *
- *  MALI_CHECK((p!=NULL), ERROR_NO_OBJECT);
+ *	MALI_CHECK((p!=NULL), ERROR_NO_OBJECT);
  */
 #define MALI_CHECK(condition, error_code) do { if(!(condition)) MALI_ERROR(error_code); } while(0)
 
 /**
- *  Error propagation macro. If the expression given is anything other than _MALI_OSK_NO_ERROR,
- *  then the value is returned from the enclosing function as an error code. This effectively
- *  acts as a guard clause, and propagates error values up the call stack. This uses a
- *  temporary value to ensure that the error expression is not evaluated twice.
+ *	Error propagation macro. If the expression given is anything other than _MALI_OSK_NO_ERROR,
+ *	then the value is returned from the enclosing function as an error code. This effectively
+ *	acts as a guard clause, and propagates error values up the call stack. This uses a
+ *	temporary value to ensure that the error expression is not evaluated twice.
  *  If the counter for forcing a failure has been set using _mali_force_error, this error will be
  *  returned without evaluating the expression in MALI_CHECK_NO_ERROR
  */
 #define MALI_CHECK_NO_ERROR(expression) \
-  do { _mali_osk_errcode_t _check_no_error_result=(expression); \
-    if(_check_no_error_result != _MALI_OSK_ERR_OK) \
-      MALI_ERROR(_check_no_error_result); \
-  } while(0)
+    do { _mali_osk_errcode_t _check_no_error_result=(expression); \
+         if(_check_no_error_result != _MALI_OSK_ERR_OK) \
+         MALI_ERROR(_check_no_error_result); \
+    } while(0)
 
 /**
  *  Pointer check macro. Checks non-null pointer.
@@ -89,13 +89,13 @@
 #define MALI_CHECK_NON_NULL(pointer, error_code) MALI_CHECK( ((pointer)!=NULL), (error_code) )
 
 /**
- *  Error macro with goto. This checks whether the given condition is true, and if not jumps
- *  to the specified label using a goto. The label must therefore be local to the function in
- *  which this macro appears. This is most usually used to execute some clean-up code before
- *  exiting with a call to ERROR.
+ *	Error macro with goto. This checks whether the given condition is true, and if not jumps
+ *	to the specified label using a goto. The label must therefore be local to the function in
+ *	which this macro appears. This is most usually used to execute some clean-up code before
+ *	exiting with a call to ERROR.
  *
- *  Like the other macros, this is a macro to allow us to override the condition if we wish,
- *  e.g. to force an error during stress testing.
+ *	Like the other macros, this is a macro to allow us to override the condition if we wish,
+ *	e.g. to force an error during stress testing.
  */
 #define MALI_CHECK_GOTO(condition, label) do { if(!(condition)) goto label; } while(0)
 
@@ -108,16 +108,16 @@
 #define MALI_PRINTF(args) _mali_osk_dbgmsg args;
 
 #define MALI_PRINT_ERROR(args) do{ \
-    MALI_PRINTF(("Mali: ERR: %s\n" ,__FILE__)); \
-    MALI_PRINTF(("           %s()%4d\n           ", __FUNCTION__, __LINE__)) ; \
-    MALI_PRINTF(args); \
-    MALI_PRINTF(("\n")); \
-  } while(0)
+	MALI_PRINTF(("Mali: ERR: %s\n" ,__FILE__)); \
+	MALI_PRINTF(("           %s()%4d\n           ", __FUNCTION__, __LINE__)) ; \
+	MALI_PRINTF(args); \
+	MALI_PRINTF(("\n")); \
+	} while(0)
 
 #define MALI_PRINT(args) do{ \
-    MALI_PRINTF(("Mali: ")); \
-    MALI_PRINTF(args); \
-  } while (0)
+	MALI_PRINTF(("Mali: ")); \
+	MALI_PRINTF(args); \
+	} while (0)
 
 #ifdef DEBUG
 #ifndef mali_debug_level
@@ -126,19 +126,19 @@ extern int mali_debug_level;
 
 #define MALI_DEBUG_CODE(code) code
 #define MALI_DEBUG_PRINT(level, args)  do { \
-    if((level) <=  mali_debug_level)\
-    {MALI_PRINTF(("Mali<" #level ">: ")); MALI_PRINTF(args); } \
-  } while (0)
+	if((level) <=  mali_debug_level)\
+        {MALI_PRINTF(("Mali<" #level ">: ")); MALI_PRINTF(args); } \
+	} while (0)
 
 #define MALI_DEBUG_PRINT_ERROR(args) MALI_PRINT_ERROR(args)
 
 #define MALI_DEBUG_PRINT_IF(level,condition,args)  \
-  if((condition)&&((level) <=  mali_debug_level))\
-  {MALI_PRINTF(("Mali<" #level ">: ")); MALI_PRINTF(args); }
+	if((condition)&&((level) <=  mali_debug_level))\
+        {MALI_PRINTF(("Mali<" #level ">: ")); MALI_PRINTF(args); }
 
 #define MALI_DEBUG_PRINT_ELSE(level, args)\
-  else if((level) <=  mali_debug_level)\
-  { MALI_PRINTF(("Mali<" #level ">: ")); MALI_PRINTF(args); }
+	else if((level) <=  mali_debug_level)\
+    { MALI_PRINTF(("Mali<" #level ">: ")); MALI_PRINTF(args); }
 
 /**
  * @note these variants of DEBUG ASSERTS will cause a debugger breakpoint

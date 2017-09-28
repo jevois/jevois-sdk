@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -25,13 +25,13 @@
 #define __SPRITE_PRIVATEDATA_H__
 
 
-extern int sunxi_sprite_store_part_data (void * mbr);
+extern int sunxi_sprite_store_part_data(void  *mbr);
 
-extern int sunxi_sprite_restore_part_data (void * mbr);
+extern int sunxi_sprite_restore_part_data(void  *mbr);
 
-extern int sunxi_sprite_probe_prvt (void * mbr);
+extern int sunxi_sprite_probe_prvt(void  *mbr);
 
-extern int sunxi_sprite_erase_private_key (void * buffer);
+extern int sunxi_sprite_erase_private_key(void *buffer);
 #endif
 
 

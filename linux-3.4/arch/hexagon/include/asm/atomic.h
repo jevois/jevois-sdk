@@ -25,8 +25,8 @@
 #include <linux/types.h>
 #include <asm/cmpxchg.h>
 
-#define ATOMIC_INIT(i)    { (i) }
-#define atomic_set(v, i)  ((v)->counter = (i))
+#define ATOMIC_INIT(i)		{ (i) }
+#define atomic_set(v, i)	((v)->counter = (i))
 
 /**
  * atomic_read - reads a word, atomically
@@ -34,14 +34,14 @@
  *
  * Assumes all word reads on our architecture are atomic.
  */
-#define atomic_read(v)    ((v)->counter)
+#define atomic_read(v)		((v)->counter)
 
 /**
  * atomic_xchg - atomic
  * @v: pointer to memory to change
  * @new: new value (technically passed in a register -- see xchg)
  */
-#define atomic_xchg(v, new) (xchg(&((v)->counter), (new)))
+#define atomic_xchg(v, new)	(xchg(&((v)->counter), (new)))
 
 
 /**
@@ -61,57 +61,57 @@
  *
  * "old" is "expected" old val, __oldval is actual old value
  */
-static inline int atomic_cmpxchg (atomic_t * v, int old, int new)
+static inline int atomic_cmpxchg(atomic_t *v, int old, int new)
 {
-  int __oldval;
-  
-  asm volatile (
-    "1:	%0 = memw_locked(%1);\n"
-    "	{ P0 = cmp.eq(%0,%2);\n"
-    "	  if (!P0.new) jump:nt 2f; }\n"
-    "	memw_locked(%1,P0) = %3;\n"
-    "	if (!P0) jump 1b;\n"
-    "2:\n"
-    : "=&r" (__oldval)
-    : "r" (&v->counter), "r" (old), "r" (new)
-    : "memory", "p0"
-  );
-  
-  return __oldval;
+	int __oldval;
+
+	asm volatile(
+		"1:	%0 = memw_locked(%1);\n"
+		"	{ P0 = cmp.eq(%0,%2);\n"
+		"	  if (!P0.new) jump:nt 2f; }\n"
+		"	memw_locked(%1,P0) = %3;\n"
+		"	if (!P0) jump 1b;\n"
+		"2:\n"
+		: "=&r" (__oldval)
+		: "r" (&v->counter), "r" (old), "r" (new)
+		: "memory", "p0"
+	);
+
+	return __oldval;
 }
 
-static inline int atomic_add_return (int i, atomic_t * v)
+static inline int atomic_add_return(int i, atomic_t *v)
 {
-  int output;
-  
-  __asm__ __volatile__ (
-    "1:	%0 = memw_locked(%1);\n"
-    "	%0 = add(%0,%2);\n"
-    "	memw_locked(%1,P3)=%0;\n"
-    "	if !P3 jump 1b;\n"
-    : "=&r" (output)
-    : "r" (&v->counter), "r" (i)
-    : "memory", "p3"
-  );
-  return output;
-  
+	int output;
+
+	__asm__ __volatile__ (
+		"1:	%0 = memw_locked(%1);\n"
+		"	%0 = add(%0,%2);\n"
+		"	memw_locked(%1,P3)=%0;\n"
+		"	if !P3 jump 1b;\n"
+		: "=&r" (output)
+		: "r" (&v->counter), "r" (i)
+		: "memory", "p3"
+	);
+	return output;
+
 }
 
 #define atomic_add(i, v) atomic_add_return(i, (v))
 
-static inline int atomic_sub_return (int i, atomic_t * v)
+static inline int atomic_sub_return(int i, atomic_t *v)
 {
-  int output;
-  __asm__ __volatile__ (
-    "1:	%0 = memw_locked(%1);\n"
-    "	%0 = sub(%0,%2);\n"
-    "	memw_locked(%1,P3)=%0\n"
-    "	if !P3 jump 1b;\n"
-    : "=&r" (output)
-    : "r" (&v->counter), "r" (i)
-    : "memory", "p3"
-  );
-  return output;
+	int output;
+	__asm__ __volatile__ (
+		"1:	%0 = memw_locked(%1);\n"
+		"	%0 = sub(%0,%2);\n"
+		"	memw_locked(%1,P3)=%0\n"
+		"	if !P3 jump 1b;\n"
+		: "=&r" (output)
+		: "r" (&v->counter), "r" (i)
+		: "memory", "p3"
+	);
+	return output;
 }
 
 #define atomic_sub(i, v) atomic_sub_return(i, (v))
@@ -124,28 +124,28 @@ static inline int atomic_sub_return (int i, atomic_t * v)
  *
  * Returns 1 if the add happened, 0 if it didn't.
  */
-static inline int __atomic_add_unless (atomic_t * v, int a, int u)
+static inline int __atomic_add_unless(atomic_t *v, int a, int u)
 {
-  int output, __oldval;
-  asm volatile (
-    "1:	%0 = memw_locked(%2);"
-    "	{"
-    "		p3 = cmp.eq(%0, %4);"
-    "		if (p3.new) jump:nt 2f;"
-    "		%0 = add(%0, %3);"
-    "		%1 = #0;"
-    "	}"
-    "	memw_locked(%2, p3) = %0;"
-    "	{"
-    "		if !p3 jump 1b;"
-    "		%1 = #1;"
-    "	}"
-    "2:"
-    : "=&r" (__oldval), "=&r" (output)
-    : "r" (v), "r" (a), "r" (u)
-    : "memory", "p3"
-  );
-  return output;
+	int output, __oldval;
+	asm volatile(
+		"1:	%0 = memw_locked(%2);"
+		"	{"
+		"		p3 = cmp.eq(%0, %4);"
+		"		if (p3.new) jump:nt 2f;"
+		"		%0 = add(%0, %3);"
+		"		%1 = #0;"
+		"	}"
+		"	memw_locked(%2, p3) = %0;"
+		"	{"
+		"		if !p3 jump 1b;"
+		"		%1 = #1;"
+		"	}"
+		"2:"
+		: "=&r" (__oldval), "=&r" (output)
+		: "r" (v), "r" (a), "r" (u)
+		: "memory", "p3"
+	);
+	return output;
 }
 
 #define atomic_inc_not_zero(v) atomic_add_unless((v), 1, 0)

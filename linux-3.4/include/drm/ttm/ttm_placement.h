@@ -74,8 +74,8 @@
 #define TTM_PL_FLAG_NO_EVICT    (1 << 21)
 
 #define TTM_PL_MASK_CACHING     (TTM_PL_FLAG_CACHED | \
-                                 TTM_PL_FLAG_UNCACHED | \
-                                 TTM_PL_FLAG_WC)
+				 TTM_PL_FLAG_UNCACHED | \
+				 TTM_PL_FLAG_WC)
 
 #define TTM_PL_MASK_MEMTYPE     (TTM_PL_MASK_MEM | TTM_PL_MASK_CACHING)
 

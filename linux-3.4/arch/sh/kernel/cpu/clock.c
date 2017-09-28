@@ -5,8 +5,8 @@
  *
  * This clock framework is derived from the OMAP version by:
  *
- *  Copyright (C) 2004 - 2008 Nokia Corporation
- *  Written by Tuukka Tikkanen <tuukka.tikkanen@elektrobit.com>
+ *	Copyright (C) 2004 - 2008 Nokia Corporation
+ *	Written by Tuukka Tikkanen <tuukka.tikkanen@elektrobit.com>
  *
  *  Modified for omap shared clock framework by Tony Lindgren <tony@atomide.com>
  *
@@ -20,32 +20,32 @@
 #include <asm/clock.h>
 #include <asm/machvec.h>
 
-int __init clk_init (void)
+int __init clk_init(void)
 {
-  int ret;
-  
-  ret = arch_clk_init();
-  if (unlikely (ret) ) {
-    pr_err ("%s: CPU clock registration failed.\n", __func__);
-    return ret;
-  }
-  
-  if (sh_mv.mv_clk_init) {
-    ret = sh_mv.mv_clk_init();
-    if (unlikely (ret) ) {
-      pr_err ("%s: machvec clock initialization failed.\n",
-              __func__);
-      return ret;
-    }
-  }
-  
-  /* Kick the child clocks.. */
-  recalculate_root_clocks();
-  
-  /* Enable the necessary init clocks */
-  clk_enable_init_clocks();
-  
-  return ret;
+	int ret;
+
+	ret = arch_clk_init();
+	if (unlikely(ret)) {
+		pr_err("%s: CPU clock registration failed.\n", __func__);
+		return ret;
+	}
+
+	if (sh_mv.mv_clk_init) {
+		ret = sh_mv.mv_clk_init();
+		if (unlikely(ret)) {
+			pr_err("%s: machvec clock initialization failed.\n",
+			       __func__);
+			return ret;
+		}
+	}
+
+	/* Kick the child clocks.. */
+	recalculate_root_clocks();
+
+	/* Enable the necessary init clocks */
+	clk_enable_init_clocks();
+
+	return ret;
 }
 
 

@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -24,12 +24,12 @@
 #ifndef MCTL_SYS_H_
 #define MCTL_SYS_H_
 
-extern void mctl_self_refresh_entry (unsigned int ch_index);
-extern void mctl_self_refresh_exit (unsigned int ch_index);
-extern unsigned int mctl_selfrefesh_test (void);
-extern unsigned int mctl_deep_sleep_test (void);
-extern void mctl_deep_sleep_entry (void);
-extern void mctl_deep_sleep_exit (boot_dram_para_t * para);
+extern void mctl_self_refresh_entry(unsigned int ch_index);
+extern void mctl_self_refresh_exit(unsigned int ch_index);
+extern unsigned int mctl_selfrefesh_test(void);
+extern unsigned int mctl_deep_sleep_test(void);
+extern void mctl_deep_sleep_entry(void);
+extern void mctl_deep_sleep_exit(boot_dram_para_t *para);
 
 #endif
 

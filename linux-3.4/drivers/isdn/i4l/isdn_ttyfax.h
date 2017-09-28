@@ -12,6 +12,6 @@
  */
 
 
-#define XON 0x11
-#define XOFF  0x13
-#define DC2 0x12
+#define XON	0x11
+#define XOFF	0x13
+#define DC2	0x12

@@ -8,4 +8,4 @@
  * warranty of any kind, whether express or implied.
  */
 
-extern void __init feroceon_l2_init (int l2_wt_override);
+extern void __init feroceon_l2_init(int l2_wt_override);

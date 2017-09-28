@@ -15,8 +15,8 @@
 #ifndef __MFD_WM831X_OTP_H__
 #define __MFD_WM831X_OTP_H__
 
-int wm831x_otp_init (struct wm831x * wm831x);
-void wm831x_otp_exit (struct wm831x * wm831x);
+int wm831x_otp_init(struct wm831x *wm831x);
+void wm831x_otp_exit(struct wm831x *wm831x);
 
 /*
  * R30720 (0x7800) - Unique ID 1

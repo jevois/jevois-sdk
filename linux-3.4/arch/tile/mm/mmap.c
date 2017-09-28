@@ -29,49 +29,47 @@
 #define MIN_GAP (128*1024*1024)
 #define MAX_GAP (TASK_SIZE/6*5)
 
-static inline unsigned long mmap_base (struct mm_struct * mm)
+static inline unsigned long mmap_base(struct mm_struct *mm)
 {
-  unsigned long gap = rlimit (RLIMIT_STACK);
-  unsigned long random_factor = 0;
-  
-  if (current->flags & PF_RANDOMIZE)
-  { random_factor = get_random_int() % (1024 * 1024); }
-  
-  if (gap < MIN_GAP)
-  { gap = MIN_GAP; }
-  else
-    if (gap > MAX_GAP)
-    { gap = MAX_GAP; }
-    
-  return PAGE_ALIGN (TASK_SIZE - gap - random_factor);
+	unsigned long gap = rlimit(RLIMIT_STACK);
+	unsigned long random_factor = 0;
+
+	if (current->flags & PF_RANDOMIZE)
+		random_factor = get_random_int() % (1024*1024);
+
+	if (gap < MIN_GAP)
+		gap = MIN_GAP;
+	else if (gap > MAX_GAP)
+		gap = MAX_GAP;
+
+	return PAGE_ALIGN(TASK_SIZE - gap - random_factor);
 }
 
 /*
  * This function, called very early during the creation of a new
  * process VM image, sets up which VM layout function to use:
  */
-void arch_pick_mmap_layout (struct mm_struct * mm)
+void arch_pick_mmap_layout(struct mm_struct *mm)
 {
-  #if !defined(__tilegx__)
-  int is_32bit = 1;
-  #elif defined(CONFIG_COMPAT)
-  int is_32bit = is_compat_task();
-  #else
-  int is_32bit = 0;
-  #endif
-  
-  /*
-   * Use standard layout if the expected stack growth is unlimited
-   * or we are running native 64 bits.
-   */
-  if (!is_32bit || rlimit (RLIMIT_STACK) == RLIM_INFINITY) {
-    mm->mmap_base = TASK_UNMAPPED_BASE;
-    mm->get_unmapped_area = arch_get_unmapped_area;
-    mm->unmap_area = arch_unmap_area;
-  }
-  else {
-    mm->mmap_base = mmap_base (mm);
-    mm->get_unmapped_area = arch_get_unmapped_area_topdown;
-    mm->unmap_area = arch_unmap_area_topdown;
-  }
+#if !defined(__tilegx__)
+	int is_32bit = 1;
+#elif defined(CONFIG_COMPAT)
+	int is_32bit = is_compat_task();
+#else
+	int is_32bit = 0;
+#endif
+
+	/*
+	 * Use standard layout if the expected stack growth is unlimited
+	 * or we are running native 64 bits.
+	 */
+	if (!is_32bit || rlimit(RLIMIT_STACK) == RLIM_INFINITY) {
+		mm->mmap_base = TASK_UNMAPPED_BASE;
+		mm->get_unmapped_area = arch_get_unmapped_area;
+		mm->unmap_area = arch_unmap_area;
+	} else {
+		mm->mmap_base = mmap_base(mm);
+		mm->get_unmapped_area = arch_get_unmapped_area_topdown;
+		mm->unmap_area = arch_unmap_area_topdown;
+	}
 }

@@ -5,8 +5,8 @@
 #ifndef __hook_h__
 #define __hook_h__
 
-int hook_call (unsigned id, unsigned pcnt, ...);
-int hook_call_str (unsigned id, unsigned size, const char * str);
+int hook_call(unsigned id, unsigned pcnt, ...);
+int hook_call_str(unsigned id, unsigned size, const char *str);
 
 enum hook_ids {
   hook_debug_on = 1,

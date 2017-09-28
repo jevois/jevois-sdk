@@ -41,8 +41,8 @@
  *
  * Returns Number of ports on the interface. Zero to disable.
  */
-extern int __cvmx_helper_spi_probe (int interface);
-extern int __cvmx_helper_spi_enumerate (int interface);
+extern int __cvmx_helper_spi_probe(int interface);
+extern int __cvmx_helper_spi_enumerate(int interface);
 
 /**
  * Bringup and enable a SPI interface. After this call packet I/O
@@ -53,7 +53,7 @@ extern int __cvmx_helper_spi_enumerate (int interface);
  *
  * Returns Zero on success, negative on failure
  */
-extern int __cvmx_helper_spi_enable (int interface);
+extern int __cvmx_helper_spi_enable(int interface);
 
 /**
  * Return the link state of an IPD/PKO port as returned by
@@ -65,7 +65,7 @@ extern int __cvmx_helper_spi_enable (int interface);
  *
  * Returns Link state
  */
-extern cvmx_helper_link_info_t __cvmx_helper_spi_link_get (int ipd_port);
+extern cvmx_helper_link_info_t __cvmx_helper_spi_link_get(int ipd_port);
 
 /**
  * Configure an IPD/PKO port for the specified link state. This
@@ -79,7 +79,7 @@ extern cvmx_helper_link_info_t __cvmx_helper_spi_link_get (int ipd_port);
  *
  * Returns Zero on success, negative on failure
  */
-extern int __cvmx_helper_spi_link_set (int ipd_port,
-                                       cvmx_helper_link_info_t link_info);
+extern int __cvmx_helper_spi_link_set(int ipd_port,
+				      cvmx_helper_link_info_t link_info);
 
 #endif

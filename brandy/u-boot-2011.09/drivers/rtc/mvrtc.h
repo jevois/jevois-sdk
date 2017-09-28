@@ -33,33 +33,33 @@
 
 /* RTC registers */
 struct mvrtc_registers {
-  u32 time;
-  u32 date;
+	u32 time;
+	u32 date;
 };
 
 /* time register */
-#define MVRTC_SEC_SFT   0
-#define MVRTC_SEC_MSK   0x7f
-#define MVRTC_MIN_SFT   8
-#define MVRTC_MIN_MSK   0x7f
-#define MVRTC_HOUR_SFT    16
-#define MVRTC_HOUR_MSK    0x3f
-#define MVRTC_DAY_SFT   24
-#define MVRTC_DAY_MSK   0x7
+#define MVRTC_SEC_SFT		0
+#define MVRTC_SEC_MSK		0x7f
+#define MVRTC_MIN_SFT		8
+#define MVRTC_MIN_MSK		0x7f
+#define MVRTC_HOUR_SFT		16
+#define MVRTC_HOUR_MSK		0x3f
+#define MVRTC_DAY_SFT		24
+#define MVRTC_DAY_MSK		0x7
 
 /*
  * Hour format bit
  *   1 = 12 hour clock
  *   0 = 24 hour clock
  */
-#define MVRTC_HRFMT_MSK   0x00400000
+#define MVRTC_HRFMT_MSK		0x00400000
 
 /* date register */
-#define MVRTC_DATE_SFT    0
-#define MVRTC_DATE_MSK    0x3f
-#define MVRTC_MON_SFT   8
-#define MVRTC_MON_MSK   0x1f
-#define MVRTC_YEAR_SFT    16
-#define MVRTC_YEAR_MSK    0xff
+#define MVRTC_DATE_SFT		0
+#define MVRTC_DATE_MSK		0x3f
+#define MVRTC_MON_SFT		8
+#define MVRTC_MON_MSK		0x1f
+#define MVRTC_YEAR_SFT		16
+#define MVRTC_YEAR_MSK		0xff
 
 #endif

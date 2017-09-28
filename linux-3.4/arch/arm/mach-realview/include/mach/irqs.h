@@ -28,10 +28,10 @@
 #include <mach/irqs-pba8.h>
 #include <mach/irqs-pbx.h>
 
-#define IRQ_LOCALTIMER    29
-#define IRQ_LOCALWDOG   30
+#define IRQ_LOCALTIMER		29
+#define IRQ_LOCALWDOG		30
 
-#define IRQ_GIC_START   32
+#define IRQ_GIC_START		32
 
 #ifndef NR_IRQS
 #error "NR_IRQS not defined by the board-specific files"

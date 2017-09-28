@@ -51,10 +51,10 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /*!
 *******************************************************************************
- @Function  PVRSRVRGXSetBreakpointKM
+ @Function	PVRSRVRGXSetBreakpointKM
 
  @Description
-  Server-side implementation of RGXSetBreakpoint
+	Server-side implementation of RGXSetBreakpoint
 
  @Input psDeviceNode - RGX Device node
  @Input eDataMaster - Data Master to schedule command for
@@ -65,72 +65,72 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
  @Return   PVRSRV_ERROR
 ******************************************************************************/
-PVRSRV_ERROR PVRSRVRGXSetBreakpointKM (PVRSRV_DEVICE_NODE * psDeviceNode,
-                                       IMG_HANDLE    hMemCtxPrivData,
-                                       RGXFWIF_DM    eFWDataMaster,
-                                       IMG_UINT32    ui32BPAddr,
-                                       IMG_UINT32    ui32HandlerAddr,
-                                       IMG_UINT32    ui32DataMaster);
+PVRSRV_ERROR PVRSRVRGXSetBreakpointKM(PVRSRV_DEVICE_NODE	*psDeviceNode,
+					IMG_HANDLE		hMemCtxPrivData,
+					RGXFWIF_DM		eFWDataMaster,
+					IMG_UINT32		ui32BPAddr,
+					IMG_UINT32		ui32HandlerAddr,
+					IMG_UINT32		ui32DataMaster);
 
 /*!
 *******************************************************************************
- @Function  PVRSRVRGXClearBreakpointKM
+ @Function	PVRSRVRGXClearBreakpointKM
 
  @Description
-  Server-side implementation of RGXClearBreakpoint
+	Server-side implementation of RGXClearBreakpoint
 
  @Input psDeviceNode - RGX Device node
  @Input hMemCtxPrivData - memory context private data
 
  @Return   PVRSRV_ERROR
 ******************************************************************************/
-PVRSRV_ERROR PVRSRVRGXClearBreakpointKM (PVRSRV_DEVICE_NODE * psDeviceNode,
-    IMG_HANDLE    hMemCtxPrivData);
+PVRSRV_ERROR PVRSRVRGXClearBreakpointKM(PVRSRV_DEVICE_NODE	*psDeviceNode,
+					IMG_HANDLE		hMemCtxPrivData);
 
 /*!
 *******************************************************************************
- @Function  PVRSRVRGXEnableBreakpointKM
+ @Function	PVRSRVRGXEnableBreakpointKM
 
  @Description
-  Server-side implementation of RGXEnableBreakpoint
+	Server-side implementation of RGXEnableBreakpoint
 
  @Input psDeviceNode - RGX Device node
  @Input hMemCtxPrivData - memory context private data
 
  @Return   PVRSRV_ERROR
 ******************************************************************************/
-PVRSRV_ERROR PVRSRVRGXEnableBreakpointKM (PVRSRV_DEVICE_NODE * psDeviceNode,
-    IMG_HANDLE    hMemCtxPrivData);
+PVRSRV_ERROR PVRSRVRGXEnableBreakpointKM(PVRSRV_DEVICE_NODE	*psDeviceNode,
+					IMG_HANDLE		hMemCtxPrivData);
 
 /*!
 *******************************************************************************
- @Function  PVRSRVRGXDisableBreakpointKM
+ @Function	PVRSRVRGXDisableBreakpointKM
 
  @Description
-  Server-side implementation of RGXDisableBreakpoint
+	Server-side implementation of RGXDisableBreakpoint
 
  @Input psDeviceNode - RGX Device node
  @Input hMemCtxPrivData - memory context private data
 
  @Return   PVRSRV_ERROR
 ******************************************************************************/
-PVRSRV_ERROR PVRSRVRGXDisableBreakpointKM (PVRSRV_DEVICE_NODE * psDeviceNode,
-    IMG_HANDLE    hMemCtxPrivData);
+PVRSRV_ERROR PVRSRVRGXDisableBreakpointKM(PVRSRV_DEVICE_NODE	*psDeviceNode,
+					IMG_HANDLE		hMemCtxPrivData);
 
 /*!
 *******************************************************************************
- @Function  PVRSRVRGXOverallocateBPRegistersKM
+ @Function	PVRSRVRGXOverallocateBPRegistersKM
 
  @Description
-  Server-side implementation of RGXOverallocateBPRegisters
+	Server-side implementation of RGXOverallocateBPRegisters
 
  @Input psDeviceNode - RGX Device node
  @Input ui32TempRegs - Number of temporary registers to overallocate
  @Input ui32SharedRegs - Number of shared registers to overallocate
 
  @Return   PVRSRV_ERROR
-******************************************************************************/
-PVRSRV_ERROR PVRSRVRGXOverallocateBPRegistersKM (PVRSRV_DEVICE_NODE * psDeviceNode,
-    IMG_UINT32    ui32TempRegs,
-    IMG_UINT32    ui32SharedRegs);
+******************************************************************************/					
+PVRSRV_ERROR PVRSRVRGXOverallocateBPRegistersKM(PVRSRV_DEVICE_NODE	*psDeviceNode,
+					IMG_UINT32		ui32TempRegs,
+					IMG_UINT32		ui32SharedRegs);
 #endif /* __RGXBREAKPOINT_H__ */

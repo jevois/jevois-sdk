@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -32,29 +32,29 @@
 #include <asm/arch/spinor.h>
 #endif
 static int
-sunxi_null_op (unsigned int start_block, unsigned int nblock, void * buffer) {
-  return 0;
+sunxi_null_op(unsigned int start_block, unsigned int nblock, void *buffer){
+	return 0;
 }
 
 
 static uint
-sunxi_null_size (void) {
-  return 0;
+sunxi_null_size(void){
+	return 0;
 }
 
 static int
-sunxi_null_init (int flag) {
-  return -1;
+sunxi_null_init(int flag){
+	return -1;
 }
 
 static int
-sunxi_null_exit (int force) {
-  return -1;
+sunxi_null_exit(int force){
+	return -1;
 }
 
 static int
-sunxi_null_flush (void) {
-  return 0;
+sunxi_null_flush(void){
+	return 0;
 }
 
 
@@ -73,13 +73,13 @@ sunxi_null_flush (void) {
 ************************************************************************************************************
 */
 
-int (* sunxi_flash_init_pt) (int stage) = sunxi_null_init;
-int (* sunxi_flash_read_pt) (uint start_block, uint nblock, void * buffer) = sunxi_null_op;
-int (* sunxi_flash_write_pt) (uint start_block, uint nblock, void * buffer) = sunxi_null_op;
-uint (* sunxi_flash_size_pt) (void) = sunxi_null_size;
+int (* sunxi_flash_init_pt)(int stage) = sunxi_null_init;
+int (* sunxi_flash_read_pt) (uint start_block, uint nblock, void *buffer) = sunxi_null_op;
+int (* sunxi_flash_write_pt)(uint start_block, uint nblock, void *buffer) = sunxi_null_op;
+uint (* sunxi_flash_size_pt)(void) = sunxi_null_size;
 int (* sunxi_flash_exit_pt) (int force) = sunxi_null_exit;
 int (* sunxi_flash_flush_pt) (void) = sunxi_null_flush;
-int (* sunxi_flash_phyread_pt) (unsigned int start_block, unsigned int nblock, void * buffer) = sunxi_null_op;
+int (* sunxi_flash_phyread_pt) (unsigned int start_block, unsigned int nblock, void *buffer) = sunxi_null_op;
 
 /*
 ************************************************************************************************************
@@ -95,54 +95,54 @@ int (* sunxi_flash_phyread_pt) (unsigned int start_block, unsigned int nblock, v
 *
 ************************************************************************************************************
 */
-int sunxi_flash_phyread (uint start_block, uint nblock, void * buffer)
+int sunxi_flash_phyread (uint start_block, uint nblock, void *buffer)
 {
-  return sunxi_flash_phyread_pt (start_block, nblock, buffer);
+	return sunxi_flash_phyread_pt(start_block, nblock, buffer);
 }
 
 
 static int
-sunxi_flash_spinor_read (unsigned int start_block, unsigned int nblock, void * buffer)
+sunxi_flash_spinor_read(unsigned int start_block, unsigned int nblock, void *buffer)
 {
-  debug ("spinor read: start 0x%x, sector 0x%x\n", start_block, nblock);
-  
-  return spinor_read (start_block + CONFIG_SPINOR_LOGICAL_OFFSET, nblock, buffer);
+	debug("spinor read: start 0x%x, sector 0x%x\n", start_block, nblock);
+
+    return spinor_read(start_block + CONFIG_SPINOR_LOGICAL_OFFSET, nblock, buffer);
 }
 
 static int
-sunxi_flash_spinor_write (unsigned int start_block, unsigned int nblock, void * buffer)
+sunxi_flash_spinor_write(unsigned int start_block, unsigned int nblock, void *buffer)
 {
-  debug ("spinor write: start 0x%x, sector 0x%x\n", start_block, nblock);
-  
-  return spinor_write (start_block + CONFIG_SPINOR_LOGICAL_OFFSET, nblock, buffer);
+	debug("spinor write: start 0x%x, sector 0x%x\n", start_block, nblock);
+
+	return spinor_write(start_block + CONFIG_SPINOR_LOGICAL_OFFSET, nblock, buffer);
 }
 
 
 static uint
-sunxi_flash_spinor_size (void) {
+sunxi_flash_spinor_size(void){
 
-  return spinor_size();
+	return spinor_size();
 }
 
 
 
 static int
-sunxi_flash_spinor_exit (int force)
+sunxi_flash_spinor_exit(int force)
 {
-  return spinor_exit (force);
+	return spinor_exit(force);
 }
 
 
 static int
-sunxi_flash_spinor_flush (void)
+sunxi_flash_spinor_flush(void)
 {
-  return spinor_flush_cache();
+	return spinor_flush_cache();
 }
 
 /*
 ************************************************************************************************************
 *
-*                       function
+*											  function
 *
 *
 *
@@ -154,42 +154,42 @@ sunxi_flash_spinor_flush (void)
 ************************************************************************************************************
 */
 
-int sunxi_flash_read (uint start_block, uint nblock, void * buffer)
+int sunxi_flash_read (uint start_block, uint nblock, void *buffer)
 {
-  debug ("sunxi flash read : start %d, sector %d\n", start_block, nblock);
-  return sunxi_flash_read_pt (start_block, nblock, buffer);
+	debug("sunxi flash read : start %d, sector %d\n", start_block, nblock);
+	return sunxi_flash_read_pt(start_block, nblock, buffer);
 }
 
-int sunxi_flash_write (uint start_block, uint nblock, void * buffer)
+int sunxi_flash_write(uint start_block, uint nblock, void *buffer)
 {
-  debug ("sunxi flash write : start %d, sector %d\n", start_block, nblock);
-  return sunxi_flash_write_pt (start_block, nblock, buffer);
+	debug("sunxi flash write : start %d, sector %d\n", start_block, nblock);
+	return sunxi_flash_write_pt(start_block, nblock, buffer);
 }
 
-uint sunxi_flash_size (void)
+uint sunxi_flash_size(void)
 {
-  return sunxi_flash_size_pt();
+	return sunxi_flash_size_pt();
 }
 
-int sunxi_flash_exit (int force)
+int sunxi_flash_exit(int force)
 {
-  return sunxi_flash_exit_pt (force);
+    return sunxi_flash_exit_pt(force);
 }
 
 int
-sunxi_flash_flush (void)
+sunxi_flash_flush(void)
 {
-  return sunxi_flash_flush_pt();
+	return sunxi_flash_flush_pt();
 }
 
-int sunxi_sprite_exit (int force)
+int sunxi_sprite_exit(int force)
 {
-  return 0;
+    return 0;
 }
 /*
 ************************************************************************************************************
 *
-*                       function
+*											  function
 *
 *
 *
@@ -200,34 +200,33 @@ int sunxi_sprite_exit (int force)
 *
 ************************************************************************************************************
 */
-int sunxi_flash_handle_init (void)
+int sunxi_flash_handle_init(void)
 {
-  int workmode;
-  
-  workmode = uboot_spare_head.boot_data.work_mode;
-  #if 1
-  printf ("workmode = %d\n", workmode);
-  debug ("storage type = %d\n", uboot_spare_head.boot_data.storage_type);
-  #endif
-  
-  if (workmode == WORK_MODE_BOOT)
-  {
-    sunxi_flash_exit_pt  = sunxi_flash_spinor_exit;
-    sunxi_flash_read_pt  = sunxi_flash_spinor_read;
-    sunxi_flash_write_pt = sunxi_flash_spinor_write;
-    sunxi_flash_size_pt  = sunxi_flash_spinor_size;
-    sunxi_flash_flush_pt = sunxi_flash_spinor_flush;
-    
-    spinor_init (0);
-    tick_printf ("sunxi flash init ok\n");
-  }
-  else
-    if (workmode & WORK_MODE_UPDATE)   /* 升级模式 */
-    {
-    }
-    else   /* undefined mode */
-    {
-    }
-    
-  return 0;
+    int workmode;
+
+    workmode = uboot_spare_head.boot_data.work_mode;
+#if 1	
+    printf("workmode = %d\n", workmode);
+    debug("storage type = %d\n", uboot_spare_head.boot_data.storage_type);
+#endif
+
+	if(workmode == WORK_MODE_BOOT)
+	{
+        sunxi_flash_exit_pt  = sunxi_flash_spinor_exit;
+		sunxi_flash_read_pt  = sunxi_flash_spinor_read;
+		sunxi_flash_write_pt = sunxi_flash_spinor_write;
+		sunxi_flash_size_pt  = sunxi_flash_spinor_size;
+		sunxi_flash_flush_pt = sunxi_flash_spinor_flush;
+
+		spinor_init(0);
+		tick_printf("sunxi flash init ok\n");
+	}
+	else if(workmode & WORK_MODE_UPDATE)		/* 升级模式 */
+	{
+	}
+	else   /* undefined mode */
+	{
+	}
+
+	return 0;
 }

@@ -44,8 +44,8 @@
  *
  * Returns Number of ports on the interface. Zero to disable.
  */
-extern int __cvmx_helper_sgmii_probe (int interface);
-extern int __cvmx_helper_sgmii_enumerate (int interface);
+extern int __cvmx_helper_sgmii_probe(int interface);
+extern int __cvmx_helper_sgmii_enumerate(int interface);
 
 /**
  * Bringup and enable a SGMII interface. After this call packet
@@ -56,7 +56,7 @@ extern int __cvmx_helper_sgmii_enumerate (int interface);
  *
  * Returns Zero on success, negative on failure
  */
-extern int __cvmx_helper_sgmii_enable (int interface);
+extern int __cvmx_helper_sgmii_enable(int interface);
 
 /**
  * Return the link state of an IPD/PKO port as returned by
@@ -68,7 +68,7 @@ extern int __cvmx_helper_sgmii_enable (int interface);
  *
  * Returns Link state
  */
-extern cvmx_helper_link_info_t __cvmx_helper_sgmii_link_get (int ipd_port);
+extern cvmx_helper_link_info_t __cvmx_helper_sgmii_link_get(int ipd_port);
 
 /**
  * Configure an IPD/PKO port for the specified link state. This
@@ -82,8 +82,8 @@ extern cvmx_helper_link_info_t __cvmx_helper_sgmii_link_get (int ipd_port);
  *
  * Returns Zero on success, negative on failure
  */
-extern int __cvmx_helper_sgmii_link_set (int ipd_port,
-    cvmx_helper_link_info_t link_info);
+extern int __cvmx_helper_sgmii_link_set(int ipd_port,
+					cvmx_helper_link_info_t link_info);
 
 /**
  * Configure a port for internal and/or external loopback. Internal loopback
@@ -98,8 +98,8 @@ extern int __cvmx_helper_sgmii_link_set (int ipd_port,
  *
  * Returns Zero on success, negative on failure.
  */
-extern int __cvmx_helper_sgmii_configure_loopback (int ipd_port,
-    int enable_internal,
-    int enable_external);
+extern int __cvmx_helper_sgmii_configure_loopback(int ipd_port,
+						  int enable_internal,
+						  int enable_external);
 
 #endif

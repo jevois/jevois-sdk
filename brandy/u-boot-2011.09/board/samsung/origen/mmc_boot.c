@@ -28,31 +28,31 @@
 * COPY_BL2_FNPTR_ADDR: Address in iRAM, which Contains
 * Pointer to API (Data transfer from mmc to ram)
 */
-void copy_uboot_to_ram (void)
+void copy_uboot_to_ram(void)
 {
-  u32 (*copy_bl2) (u32, u32, u32)  = (void *) * (u32 *) COPY_BL2_FNPTR_ADDR;
-  
-  copy_bl2 (BL2_START_OFFSET, BL2_SIZE_BLOC_COUNT, CONFIG_SYS_TEXT_BASE);
+	u32 (*copy_bl2)(u32, u32, u32)  = (void *) *(u32 *)COPY_BL2_FNPTR_ADDR;
+
+	copy_bl2(BL2_START_OFFSET, BL2_SIZE_BLOC_COUNT, CONFIG_SYS_TEXT_BASE);
 }
 
-void board_init_f (unsigned long bootflag)
+void board_init_f(unsigned long bootflag)
 {
-  __attribute__ ( (noreturn) ) void (*uboot) (void);
-  copy_uboot_to_ram();
-  
-  /* Jump to U-Boot image */
-  uboot = (void *) CONFIG_SYS_TEXT_BASE;
-  (*uboot) ();
-  /* Never returns Here */
+	__attribute__((noreturn)) void (*uboot)(void);
+	copy_uboot_to_ram();
+
+	/* Jump to U-Boot image */
+	uboot = (void *)CONFIG_SYS_TEXT_BASE;
+	(*uboot)();
+	/* Never returns Here */
 }
 
 /* Place Holders */
-void board_init_r (gd_t * id, ulong dest_addr)
+void board_init_r(gd_t *id, ulong dest_addr)
 {
-  /* Function attribute is no-return */
-  /* This Function never executes */
-  while (1)
-    ;
+	/* Function attribute is no-return */
+	/* This Function never executes */
+	while (1)
+		;
 }
 
-void save_boot_params (u32 r0, u32 r1, u32 r2, u32 r3) {}
+void save_boot_params(u32 r0, u32 r1, u32 r2, u32 r3) {}

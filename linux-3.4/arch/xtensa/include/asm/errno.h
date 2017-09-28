@@ -13,4 +13,4 @@
 
 #include <asm-generic/errno.h>
 
-#endif  /* _XTENSA_ERRNO_H */
+#endif	/* _XTENSA_ERRNO_H */

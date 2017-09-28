@@ -45,7 +45,7 @@
 /*(18) is pcmcia ready */
 /*(19) is dreq1 */
 /*(20) is dreq0 */
-#define H5000_GPIO_OE_RD_NWR  (21)       /* output enable on rd/nwr signal to companion asic */
+#define H5000_GPIO_OE_RD_NWR	(21)       /* output enable on rd/nwr signal to companion asic */
 /*(22) is not connected */
 #define H5000_GPIO_OPT_SPI_CLK  (23)       /* to extension pack */
 #define H5000_GPIO_OPT_SPI_CS_N (24)       /* to extension pack */
@@ -89,8 +89,8 @@
 #define H5000_GPIO_IRDA_SD      (58)       /* to hsdl3002 sd */
 /*(59) not connected */
 #define H5000_GPIO_POWER_SD_N   (60)       /* controls power to SD */
-#define H5000_GPIO_POWER_RS232_N  (61)       /* inverted FORCEON to rs232 transceiver */
-#define H5000_GPIO_POWER_ACCEL_N  (62)       /* controls power to accel */
+#define H5000_GPIO_POWER_RS232_N	(61)       /* inverted FORCEON to rs232 transceiver */
+#define H5000_GPIO_POWER_ACCEL_N	(62)       /* controls power to accel */
 /*(63) is not connected */
 #define H5000_GPIO_OPT_NVRAM    (64)       /* controls power to expansion pack */
 #define H5000_GPIO_CHG_EN       (65)       /* to sc801 en */
@@ -99,12 +99,12 @@
 #define H5000_GPIO_EXT_CHG_RATE (68)       /* enables external charging rate */
 /*(69) is not connected */
 #define H5000_GPIO_CIR_RESET    (70)       /* consumer IR reset */
-#define H5000_GPIO_POWER_LIGHT_SENSOR_N (71)
+#define H5000_GPIO_POWER_LIGHT_SENSOR_N	(71)
 #define H5000_GPIO_BT_M_RESET   (72)
 #define H5000_GPIO_STD_CHG_RATE (73)
 #define H5000_GPIO_SD_WP_N      (74)
 #define H5000_GPIO_MOTOR_ON_N   (75)       /* external pullup on this */
-#define H5000_GPIO_HEADPHONE_DETECT (76)
+#define H5000_GPIO_HEADPHONE_DETECT	(76)
 #define H5000_GPIO_USB_CHG_RATE (77)       /* select rate for charging via usb */
 /*(78) is CS2# */
 /*(79) is CS3# */

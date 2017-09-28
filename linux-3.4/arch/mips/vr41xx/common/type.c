@@ -18,7 +18,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-const char * get_system_type (void)
+const char *get_system_type(void)
 {
-  return "NEC VR4100 series";
+	return "NEC VR4100 series";
 }

@@ -1,6 +1,6 @@
-extern void __cmx2xx_pci_init_irq (int irq_gpio);
-extern void __cmx2xx_pci_suspend (void);
-extern void __cmx2xx_pci_resume (void);
+extern void __cmx2xx_pci_init_irq(int irq_gpio);
+extern void __cmx2xx_pci_suspend(void);
+extern void __cmx2xx_pci_resume(void);
 
 #ifdef CONFIG_PCI
 #define cmx2xx_pci_init_irq(x) __cmx2xx_pci_init_irq(x)

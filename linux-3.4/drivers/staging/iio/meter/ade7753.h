@@ -51,24 +51,24 @@
 #define ADE7753_MAX_RX    4
 #define ADE7753_STARTUP_DELAY 1
 
-#define ADE7753_SPI_SLOW  (u32)(300 * 1000)
-#define ADE7753_SPI_BURST (u32)(1000 * 1000)
-#define ADE7753_SPI_FAST  (u32)(2000 * 1000)
+#define ADE7753_SPI_SLOW	(u32)(300 * 1000)
+#define ADE7753_SPI_BURST	(u32)(1000 * 1000)
+#define ADE7753_SPI_FAST	(u32)(2000 * 1000)
 
-#define DRIVER_NAME   "ade7753"
+#define DRIVER_NAME		"ade7753"
 
 /**
  * struct ade7753_state - device instance specific data
- * @us:     actual spi_device
- * @tx:     transmit buffer
- * @rx:     receive buffer
- * @buf_lock:   mutex to protect tx and rx
+ * @us:			actual spi_device
+ * @tx:			transmit buffer
+ * @rx:			receive buffer
+ * @buf_lock:		mutex to protect tx and rx
  **/
 struct ade7753_state {
-  struct spi_device * us;
-  struct mutex    buf_lock;
-  u8      tx[ADE7753_MAX_TX] ____cacheline_aligned;
-  u8      rx[ADE7753_MAX_RX];
+	struct spi_device	*us;
+	struct mutex		buf_lock;
+	u8			tx[ADE7753_MAX_TX] ____cacheline_aligned;
+	u8			rx[ADE7753_MAX_RX];
 };
 
 #endif

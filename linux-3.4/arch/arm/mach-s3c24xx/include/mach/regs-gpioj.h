@@ -1,7 +1,7 @@
 /* arch/arm/mach-s3c2410/include/mach/regs-gpioj.h
  *
  * Copyright (c) 2004 Simtec Electronics <linux@simtec.co.uk>
- *          http://www.simtec.co.uk/products/SWLINUX/
+ *		      http://www.simtec.co.uk/products/SWLINUX/
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -22,10 +22,10 @@
  * pull up works like all other ports.
 */
 
-#define S3C2413_GPJCON    S3C2410_GPIOREG(0x80)
-#define S3C2413_GPJDAT    S3C2410_GPIOREG(0x84)
-#define S3C2413_GPJUP   S3C2410_GPIOREG(0x88)
-#define S3C2413_GPJSLPCON S3C2410_GPIOREG(0x8C)
+#define S3C2413_GPJCON		S3C2410_GPIOREG(0x80)
+#define S3C2413_GPJDAT		S3C2410_GPIOREG(0x84)
+#define S3C2413_GPJUP		S3C2410_GPIOREG(0x88)
+#define S3C2413_GPJSLPCON	S3C2410_GPIOREG(0x8C)
 
 #define S3C2440_GPJ0_OUTP       (0x01 << 0)
 #define S3C2440_GPJ0_CAMDATA0   (0x02 << 0)
@@ -66,5 +66,5 @@
 #define S3C2440_GPJ12_OUTP      (0x01 << 24)
 #define S3C2440_GPJ12_CAMRESET  (0x02 << 24)
 
-#endif  /* __ASM_ARCH_REGS_GPIOJ_H */
+#endif	/* __ASM_ARCH_REGS_GPIOJ_H */
 

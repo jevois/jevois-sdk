@@ -20,6 +20,6 @@
  * In the case of OMAP4 this is the max duration in microseconds for the
  * module to reach the functionnal state from an inactive state.
  */
-#define MAX_MODULE_READY_TIME   2000
+#define MAX_MODULE_READY_TIME		2000
 
 #endif

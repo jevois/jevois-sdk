@@ -4,7 +4,7 @@
 #include <net/netns/generic.h>
 
 struct lockd_net {
-  unsigned int nlmsvc_users;
+	unsigned int nlmsvc_users;
 };
 
 extern int lockd_net_id;

@@ -153,28 +153,28 @@
 #define DMA2_WORD0_CMP_VALUE              0xb20
 #define DMA3_WORD0_CMP_VALUE              0xb30
 #define DMA4_WORD0_CMP_VALUE              0xb40
-#define DMA_WORD0_CMP_VALUE(chan) (DMA_SREG(DMA0_WORD0_CMP_VALUE, chan))
+#define DMA_WORD0_CMP_VALUE(chan)	(DMA_SREG(DMA0_WORD0_CMP_VALUE, chan))
 
 #define DMA0_WORD0_CMP_ENABLE             0xb04
 #define DMA1_WORD0_CMP_ENABLE             0xb14
 #define DMA2_WORD0_CMP_ENABLE             0xb24
 #define DMA3_WORD0_CMP_ENABLE             0xb34
 #define DMA4_WORD0_CMP_ENABLE             0xb44
-#define DMA_WORD0_CMP_ENABLE(chan)  (DMA_SREG(DMA0_WORD0_CMP_ENABLE, chan))
+#define DMA_WORD0_CMP_ENABLE(chan)	(DMA_SREG(DMA0_WORD0_CMP_ENABLE, chan))
 
 #define DMA0_WORD1_CMP_VALUE              0xb08
 #define DMA1_WORD1_CMP_VALUE              0xb18
 #define DMA2_WORD1_CMP_VALUE              0xb28
 #define DMA3_WORD1_CMP_VALUE              0xb38
 #define DMA4_WORD1_CMP_VALUE              0xb48
-#define DMA_WORD1_CMP_VALUE(chan) (DMA_SREG(DMA0_WORD1_CMP_VALUE, chan))
+#define DMA_WORD1_CMP_VALUE(chan)	(DMA_SREG(DMA0_WORD1_CMP_VALUE, chan))
 
 #define DMA0_WORD1_CMP_ENABLE             0xb0c
 #define DMA1_WORD1_CMP_ENABLE             0xb1c
 #define DMA2_WORD1_CMP_ENABLE             0xb2c
 #define DMA3_WORD1_CMP_ENABLE             0xb3c
 #define DMA4_WORD1_CMP_ENABLE             0xb4c
-#define DMA_WORD1_CMP_ENABLE(chan)  (DMA_SREG(DMA0_WORD1_CMP_ENABLE, chan))
+#define DMA_WORD1_CMP_ENABLE(chan)	(DMA_SREG(DMA0_WORD1_CMP_ENABLE, chan))
 /* word 1 compare enable flags */
 #define DMA_WORD1_CMP_MATCH_OTHERBUS      (1<<15)
 #define DMA_WORD1_CMP_MATCH_BROADCAST     (1<<14)

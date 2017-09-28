@@ -3,7 +3,7 @@
 
 /* Currently we assume that HZ=100 is good for CRIS. */
 
-#define EXEC_PAGESIZE 8192
+#define EXEC_PAGESIZE	8192
 
 #include <asm-generic/param.h>
 

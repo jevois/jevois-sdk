@@ -26,20 +26,19 @@
 #include <asm/arch/timer.h>
 
 #ifndef CONFIG_WD_PERIOD
-# define CONFIG_WD_PERIOD (10 * 1000 * 1000)  /* 10 seconds default*/
+# define CONFIG_WD_PERIOD	(10 * 1000 * 1000)	/* 10 seconds default*/
 #endif
 
 /* ------------------------------------------------------------------------- */
 
-void udelay (unsigned long usec)
+void udelay(unsigned long usec)
 {
-  ulong kv;
-  
-  do {
-    WATCHDOG_RESET();
-    kv = usec > CONFIG_WD_PERIOD ? CONFIG_WD_PERIOD : usec;
-    __usdelay (kv);
-    usec -= kv;
-  }
-  while (usec);
+	ulong kv;
+
+	do {
+		WATCHDOG_RESET();
+		kv = usec > CONFIG_WD_PERIOD ? CONFIG_WD_PERIOD : usec;
+		__usdelay (kv);
+		usec -= kv;
+	} while(usec);
 }

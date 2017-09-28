@@ -28,12 +28,12 @@
 #define MIF_CONFIG_REG 0xFFFECC0C
 #define FLASH_GLOBAL_CTRL_NWP 1
 
-void archflashwp (void * archdata, int wp)
+void archflashwp (void *archdata, int wp)
 {
-  ulong * fgc = (ulong *) MIF_CONFIG_REG;
-  
-  if (wp == 1)
-  { *fgc &= ~FLASH_GLOBAL_CTRL_NWP; }
-  else
-  { *fgc |= FLASH_GLOBAL_CTRL_NWP; }
+	ulong *fgc = (ulong *) MIF_CONFIG_REG;
+
+	if (wp == 1)
+		*fgc &= ~FLASH_GLOBAL_CTRL_NWP;
+	else
+		*fgc |= FLASH_GLOBAL_CTRL_NWP;
 }

@@ -25,25 +25,25 @@
 #ifndef __SECURE_STORAGE_H__
 #define __SECURE_STORAGE_H__
 
-extern int sunxi_secure_storage_init (void);
-extern int sunxi_secure_storage_exit (void);
+extern int sunxi_secure_storage_init(void);
+extern int sunxi_secure_storage_exit(void);
 
-extern int sunxi_secure_storage_list (void);
-extern int sunxi_secure_storage_probe (const char * item_name);
-extern int sunxi_secure_storage_read (const char * item_name, char * buffer, int length, int * data_len);
+extern int sunxi_secure_storage_list(void);
+extern int sunxi_secure_storage_probe(const char *item_name);
+extern int sunxi_secure_storage_read(const char *item_name, char *buffer, int length, int *data_len);
 
-extern int sunxi_secure_storage_write (const char * item_name, char * buffer, int length);
-extern int sunxi_secure_storage_erase (const char * item_name);
-extern int sunxi_secure_storage_erase_all (void);
+extern int sunxi_secure_storage_write(const char *item_name, char *buffer, int length);
+extern int sunxi_secure_storage_erase(const char *item_name);
+extern int sunxi_secure_storage_erase_all(void);
 
-extern int sunxi_secure_object_write (const char * item_name, char * buffer, int length);
-extern int sunxi_secure_object_read (const char * item_name, char * buffer, int buffer_len, int * data_len);
+extern int sunxi_secure_object_write(const char *item_name, char *buffer, int length);
+extern int sunxi_secure_object_read(const char *item_name, char *buffer, int buffer_len, int *data_len);
 
-extern int smc_load_sst_decrypt (char * name, char * in, unsigned int len);
+extern int smc_load_sst_decrypt(char *name, char *in, unsigned int len);
 
-extern int smc_load_sst_encrypt (
-  char * name,
-  char * in, unsigned int len,
-  char * out, unsigned int * outLen);
+extern int smc_load_sst_encrypt(
+		char *name,
+		char *in, unsigned int len,
+		char *out, unsigned int *outLen);
 
 #endif

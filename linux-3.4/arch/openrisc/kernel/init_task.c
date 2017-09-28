@@ -19,8 +19,8 @@
 #include <linux/mqueue.h>
 #include <linux/export.h>
 
-static struct signal_struct init_signals = INIT_SIGNALS (init_signals);
-static struct sighand_struct init_sighand = INIT_SIGHAND (init_sighand);
+static struct signal_struct init_signals = INIT_SIGNALS(init_signals);
+static struct sighand_struct init_sighand = INIT_SIGHAND(init_sighand);
 
 /*
  * Initial thread structure.
@@ -30,7 +30,7 @@ static struct sighand_struct init_sighand = INIT_SIGHAND (init_sighand);
  * "init_task" linker map entry..
  */
 union thread_union init_thread_union __init_task_data = {
-  INIT_THREAD_INFO (init_task)
+	INIT_THREAD_INFO(init_task)
 };
 
 /*
@@ -38,5 +38,5 @@ union thread_union init_thread_union __init_task_data = {
  *
  * All other task structs will be allocated on slabs in fork.c
  */
-struct task_struct init_task = INIT_TASK (init_task);
-EXPORT_SYMBOL (init_task);
+struct task_struct init_task = INIT_TASK(init_task);
+EXPORT_SYMBOL(init_task);

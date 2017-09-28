@@ -56,22 +56,22 @@
 
 struct geode_aes_op {
 
-  void * src;
-  void * dst;
-  
-  u32 mode;
-  u32 dir;
-  u32 flags;
-  int len;
-  
-  u8 key[AES_KEY_LENGTH];
-  u8 * iv;
-  
-  union {
-    struct crypto_blkcipher * blk;
-    struct crypto_cipher * cip;
-  } fallback;
-  u32 keylen;
+	void *src;
+	void *dst;
+
+	u32 mode;
+	u32 dir;
+	u32 flags;
+	int len;
+
+	u8 key[AES_KEY_LENGTH];
+	u8 *iv;
+
+	union {
+		struct crypto_blkcipher *blk;
+		struct crypto_cipher *cip;
+	} fallback;
+	u32 keylen;
 };
 
 #endif

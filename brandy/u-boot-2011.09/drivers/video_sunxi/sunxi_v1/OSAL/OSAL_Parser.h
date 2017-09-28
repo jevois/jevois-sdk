@@ -3,7 +3,7 @@
 
 #include "OSAL.h"
 
-int OSAL_Script_FetchParser_Data (char * main_name, char * sub_name, int value[], int count);
-int OSAL_sw_get_ic_ver (void);
+int OSAL_Script_FetchParser_Data(char *main_name, char *sub_name, int value[], int count);
+int OSAL_sw_get_ic_ver(void);
 
 #endif

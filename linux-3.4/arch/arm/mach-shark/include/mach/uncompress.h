@@ -9,38 +9,38 @@
 
 #define SERIAL_BASE ((volatile unsigned char *)0x400003f8)
 
-static inline void putc (int c)
+static inline void putc(int c)
 {
-  volatile int t;
-  
-  SERIAL_BASE[0] = c;
-  t = 0x10000;
-  while (t--);
+	volatile int t;
+
+	SERIAL_BASE[0] = c;
+	t=0x10000;
+	while (t--);
 }
 
-static inline void flush (void)
+static inline void flush(void)
 {
 }
 
 #ifdef DEBUG
-static void putn (unsigned long z)
+static void putn(unsigned long z)
 {
-  int i;
-  char x;
-  
-  putc ('0');
-  putc ('x');
-  for (i = 0; i < 8; i++) {
-    x = '0' + ( (z >> ( (7 - i) * 4) ) & 0xf);
-    if (x > '9') { x = x - '0' + 'A' - 10; }
-    putc (x);
-  }
+	int i;
+	char x;
+
+	putc('0');
+	putc('x');
+	for (i=0;i<8;i++) {
+		x='0'+((z>>((7-i)*4))&0xf);
+		if (x>'9') x=x-'0'+'A'-10;
+		putc(x);
+	}
 }
 
 static void putr()
 {
-  putc ('\n');
-  putc ('\r');
+	putc('\n');
+	putc('\r');
 }
 #endif
 

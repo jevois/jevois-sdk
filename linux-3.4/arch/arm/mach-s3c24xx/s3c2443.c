@@ -45,48 +45,48 @@
 #include <plat/rtc-core.h>
 
 static struct map_desc s3c2443_iodesc[] __initdata = {
-  IODESC_ENT (WATCHDOG),
-  IODESC_ENT (CLKPWR),
-  IODESC_ENT (TIMER),
+	IODESC_ENT(WATCHDOG),
+	IODESC_ENT(CLKPWR),
+	IODESC_ENT(TIMER),
 };
 
 struct bus_type s3c2443_subsys = {
-  .name = "s3c2443-core",
-  .dev_name = "s3c2443-core",
+	.name = "s3c2443-core",
+	.dev_name = "s3c2443-core",
 };
 
 static struct device s3c2443_dev = {
-  .bus    = &s3c2443_subsys,
+	.bus		= &s3c2443_subsys,
 };
 
-void s3c2443_restart (char mode, const char * cmd)
+void s3c2443_restart(char mode, const char *cmd)
 {
-  if (mode == 's')
-  { soft_restart (0); }
-  
-  __raw_writel (S3C2443_SWRST_RESET, S3C2443_SWRST);
+	if (mode == 's')
+		soft_restart(0);
+
+	__raw_writel(S3C2443_SWRST_RESET, S3C2443_SWRST);
 }
 
-int __init s3c2443_init (void)
+int __init s3c2443_init(void)
 {
-  printk ("S3C2443: Initialising architecture\n");
-  
-  s3c_nand_setname ("s3c2412-nand");
-  s3c_fb_setname ("s3c2443-fb");
-  
-  s3c_adc_setname ("s3c2443-adc");
-  s3c_rtc_setname ("s3c2443-rtc");
-  
-  /* change WDT IRQ number */
-  s3c_device_wdt.resource[1].start = IRQ_S3C2443_WDT;
-  s3c_device_wdt.resource[1].end   = IRQ_S3C2443_WDT;
-  
-  return device_register (&s3c2443_dev);
+	printk("S3C2443: Initialising architecture\n");
+
+	s3c_nand_setname("s3c2412-nand");
+	s3c_fb_setname("s3c2443-fb");
+
+	s3c_adc_setname("s3c2443-adc");
+	s3c_rtc_setname("s3c2443-rtc");
+
+	/* change WDT IRQ number */
+	s3c_device_wdt.resource[1].start = IRQ_S3C2443_WDT;
+	s3c_device_wdt.resource[1].end   = IRQ_S3C2443_WDT;
+
+	return device_register(&s3c2443_dev);
 }
 
-void __init s3c2443_init_uarts (struct s3c2410_uartcfg * cfg, int no)
+void __init s3c2443_init_uarts(struct s3c2410_uartcfg *cfg, int no)
 {
-  s3c24xx_init_uartdevs ("s3c2440-uart", s3c2410_uart_resources, cfg, no);
+	s3c24xx_init_uartdevs("s3c2440-uart", s3c2410_uart_resources, cfg, no);
 }
 
 /* s3c2443_map_io
@@ -95,12 +95,12 @@ void __init s3c2443_init_uarts (struct s3c2410_uartcfg * cfg, int no)
  * machine specific initialisation.
  */
 
-void __init s3c2443_map_io (void)
+void __init s3c2443_map_io(void)
 {
-  s3c24xx_gpiocfg_default.set_pull = s3c2443_gpio_setpull;
-  s3c24xx_gpiocfg_default.get_pull = s3c2443_gpio_getpull;
-  
-  iotable_init (s3c2443_iodesc, ARRAY_SIZE (s3c2443_iodesc) );
+	s3c24xx_gpiocfg_default.set_pull = s3c2443_gpio_setpull;
+	s3c24xx_gpiocfg_default.get_pull = s3c2443_gpio_getpull;
+
+	iotable_init(s3c2443_iodesc, ARRAY_SIZE(s3c2443_iodesc));
 }
 
 /* need to register the subsystem before we actually register the device, and
@@ -109,9 +109,9 @@ void __init s3c2443_map_io (void)
  * as a driver which may support both 2443 and 2440 may try and use it.
 */
 
-static int __init s3c2443_core_init (void)
+static int __init s3c2443_core_init(void)
 {
-  return subsys_system_register (&s3c2443_subsys, NULL);
+	return subsys_system_register(&s3c2443_subsys, NULL);
 }
 
-core_initcall (s3c2443_core_init);
+core_initcall(s3c2443_core_init);

@@ -23,7 +23,7 @@
 #include <dspbridge/devdefs.h>
 #include <dspbridge/drv.h>
 
-extern char * iva_img;
+extern char *iva_img;
 
 /*
  *  ======== proc_attach ========
@@ -31,15 +31,15 @@ extern char * iva_img;
  *      Prepare for communication with a particular DSP processor, and return
  *      a handle to the processor object. The PROC Object gets created
  *  Parameters:
- *      processor_id  :    The processor index (zero-based).
- *      hmgr_obj  :    Handle to the Manager Object
- *      attr_in     :    Ptr to the dsp_processorattrin structure.
- *            A NULL value means use default values.
- *      ph_processor :     Ptr to location to store processor handle.
+ *      processor_id  :	   The processor index (zero-based).
+ *      hmgr_obj  :	   Handle to the Manager Object
+ *      attr_in     :	   Ptr to the dsp_processorattrin structure.
+ *			      A NULL value means use default values.
+ *      ph_processor :	   Ptr to location to store processor handle.
  *  Returns:
- *      0     :    Success.
- *      -EPERM   :     General failure.
- *      -EFAULT :    Invalid processor handle.
+ *      0     :	   Success.
+ *      -EPERM   :	   General failure.
+ *      -EFAULT :	   Invalid processor handle.
  *      0:   Success; Processor already attached.
  *  Requires:
  *      ph_processor != NULL.
@@ -51,10 +51,10 @@ extern char * iva_img;
  *  Details:
  *      When attr_in is NULL, the default timeout value is 10 seconds.
  */
-extern int proc_attach (u32 processor_id,
-                        const struct dsp_processorattrin
-                        *attr_in, void ** ph_processor,
-                        struct process_context * pr_ctxt);
+extern int proc_attach(u32 processor_id,
+			      const struct dsp_processorattrin
+			      *attr_in, void **ph_processor,
+			      struct process_context *pr_ctxt);
 
 /*
  *  ======== proc_auto_start =========
@@ -73,8 +73,8 @@ extern int proc_attach (u32 processor_id,
  *      PROC Initialized.
  *  Ensures:
  */
-extern int proc_auto_start (struct cfg_devnode * dev_node_obj,
-                            struct dev_object * hdev_obj);
+extern int proc_auto_start(struct cfg_devnode *dev_node_obj,
+				  struct dev_object *hdev_obj);
 
 /*
  *  ======== proc_ctrl ========
@@ -90,7 +90,7 @@ extern int proc_auto_start (struct cfg_devnode * dev_node_obj,
  *      0     :       SUCCESS
  *      -EFAULT :       Invalid processor handle.
  *      -ETIME:       A Timeout Occurred before the Control information
- *        could be sent.
+ *			  could be sent.
  *      -EPERM   :       General Failure.
  *  Requires:
  *      PROC Initialized.
@@ -98,8 +98,8 @@ extern int proc_auto_start (struct cfg_devnode * dev_node_obj,
  *  Details:
  *      This function Calls bridge_dev_ctrl.
  */
-extern int proc_ctrl (void * hprocessor,
-                      u32 dw_cmd, struct dsp_cbdata * arg);
+extern int proc_ctrl(void *hprocessor,
+			    u32 dw_cmd, struct dsp_cbdata *arg);
 
 /*
  *  ======== proc_detach ========
@@ -117,7 +117,7 @@ extern int proc_ctrl (void * hprocessor,
  *  Ensures:
  *      PROC Object is destroyed.
  */
-extern int proc_detach (struct process_context * pr_ctxt);
+extern int proc_detach(struct process_context *pr_ctxt);
 
 /*
  *  ======== proc_enum_nodes ========
@@ -126,20 +126,20 @@ extern int proc_detach (struct process_context * pr_ctxt);
  *  Parameters:
  *      hprocessor  :   The processor handle.
  *      node_tab    :   The first Location of an array allocated for node
- *          handles.
+ *		      handles.
  *      node_tab_size:   The number of (DSP_HNODE) handles that can be held
- *          to the memory the client has allocated for node_tab
+ *		      to the memory the client has allocated for node_tab
  *      pu_num_nodes  :   Location where DSPProcessor_EnumNodes will return
- *          the number of valid handles written to node_tab
+ *		      the number of valid handles written to node_tab
  *      pu_allocated :   Location where DSPProcessor_EnumNodes will return
- *          the number of nodes that are allocated on the DSP.
+ *		      the number of nodes that are allocated on the DSP.
  *  Returns:
  *      0     :   Success.
  *      -EFAULT :   Invalid processor handle.
  *      -EINVAL   :   The amount of memory allocated for node_tab is
- *          insufficent. That is the number of nodes actually
- *          allocated on the DSP is greater than the value
- *          specified for node_tab_size.
+ *		      insufficent. That is the number of nodes actually
+ *		      allocated on the DSP is greater than the value
+ *		      specified for node_tab_size.
  *      -EPERM   :   Unable to get Resource Information.
  *  Details:
  *  Requires
@@ -150,11 +150,11 @@ extern int proc_detach (struct process_context * pr_ctxt);
  *  Ensures:
  *  Details:
  */
-extern int proc_enum_nodes (void * hprocessor,
-                            void ** node_tab,
-                            u32 node_tab_size,
-                            u32 * pu_num_nodes,
-                            u32 * pu_allocated);
+extern int proc_enum_nodes(void *hprocessor,
+				  void **node_tab,
+				  u32 node_tab_size,
+				  u32 *pu_num_nodes,
+				  u32 *pu_allocated);
 
 /*
  *  ======== proc_get_resource_info ========
@@ -170,7 +170,7 @@ extern int proc_enum_nodes (void * hprocessor,
  *      -EFAULT :       Invalid processor handle.
  *      -EBADR:    The processor is not in the PROC_RUNNING state.
  *      -ETIME:       A timeout occurred before the DSP responded to the
- *        querry.
+ *			  querry.
  *      -EPERM   :       Unable to get Resource Information
  *  Requires:
  *      resource_info is not NULL.
@@ -182,11 +182,11 @@ extern int proc_enum_nodes (void * hprocessor,
  *      This function currently returns
  *      -ENOSYS, and does not write any data to the resource_info struct.
  */
-extern int proc_get_resource_info (void * hprocessor,
-                                   u32 resource_type,
-                                   struct dsp_resourceinfo
-                                   *resource_info,
-                                   u32 resource_info_size);
+extern int proc_get_resource_info(void *hprocessor,
+					 u32 resource_type,
+					 struct dsp_resourceinfo
+					 *resource_info,
+					 u32 resource_info_size);
 
 /*
  * ======== proc_get_dev_object =========
@@ -205,8 +205,8 @@ extern int proc_get_resource_info (void * hprocessor,
  *      0     :   *device_obj is not NULL
  *      -EPERM   :   *device_obj is NULL.
  */
-extern int proc_get_dev_object (void * hprocessor,
-                                struct dev_object ** device_obj);
+extern int proc_get_dev_object(void *hprocessor,
+				      struct dev_object **device_obj);
 
 /*
  *  ======== proc_get_state ========
@@ -215,7 +215,7 @@ extern int proc_get_dev_object (void * hprocessor,
  *  Parameters:
  *      hprocessor  :   The processor handle.
  *      proc_state_obj :   Ptr to location to store the dsp_processorstate
- *          structure.
+ *		      structure.
  *      state_info_size: Size of dsp_processorstate.
  *  Returns:
  *      0     :   Success.
@@ -228,8 +228,8 @@ extern int proc_get_dev_object (void * hprocessor,
  *  Ensures:
  *  Details:
  */
-extern int proc_get_state (void * hprocessor, struct dsp_processorstate
-                           *proc_state_obj, u32 state_info_size);
+extern int proc_get_state(void *hprocessor, struct dsp_processorstate
+				 *proc_state_obj, u32 state_info_size);
 
 /*
  *  ======== PROC_GetProcessorID ========
@@ -250,7 +250,7 @@ extern int proc_get_state (void * hprocessor, struct dsp_processorstate
  *  Ensures:
  *  Details:
  */
-extern int proc_get_processor_id (void * proc, u32 * proc_id);
+extern int proc_get_processor_id(void *proc, u32 * proc_id);
 
 /*
  *  ======== proc_get_trace ========
@@ -258,13 +258,13 @@ extern int proc_get_processor_id (void * proc, u32 * proc_id);
  *      Retrieve the trace buffer from the specified DSP processor.
  *  Parameters:
  *      hprocessor  :   The processor handle.
- *      pbuf  :   Ptr to buffer to hold trace output.
+ *      pbuf	:   Ptr to buffer to hold trace output.
  *      max_size    :   Maximum size of the output buffer.
  *  Returns:
  *      0     :   Success.
  *      -EFAULT :   Invalid processor handle.
  *      -EPERM   :   General failure while retireving processor trace
- *          Buffer.
+ *		      Buffer.
  *  Requires:
  *      pbuf is not NULL
  *      max_size is > 0.
@@ -272,7 +272,7 @@ extern int proc_get_processor_id (void * proc, u32 * proc_id);
  *  Ensures:
  *  Details:
  */
-extern int proc_get_trace (void * hprocessor, u8 * pbuf, u32 max_size);
+extern int proc_get_trace(void *hprocessor, u8 * pbuf, u32 max_size);
 
 /*
  *  ======== proc_load ========
@@ -300,9 +300,9 @@ extern int proc_get_trace (void * hprocessor, u8 * pbuf, u32 max_size);
  *      Does not implement access rights to control which GPP application
  *      can load the processor.
  */
-extern int proc_load (void * hprocessor,
-                      const s32 argc_index, const char ** user_args,
-                      const char ** user_envp);
+extern int proc_load(void *hprocessor,
+			    const s32 argc_index, const char **user_args,
+			    const char **user_envp);
 
 /*
  *  ======== proc_register_notify ========
@@ -318,7 +318,7 @@ extern int proc_load (void * hprocessor,
  *      -EFAULT :   Invalid processor handle or hnotification.
  *      -EINVAL  :   Parameter event_mask is Invalid
  *      DSP_ENOTIMP :   The notification type specified in uNotifyMask
- *          is not supported.
+ *		      is not supported.
  *      -EPERM   :   Unable to register for notification.
  *  Requires:
  *      hnotification is not NULL
@@ -326,10 +326,10 @@ extern int proc_load (void * hprocessor,
  *  Ensures:
  *  Details:
  */
-extern int proc_register_notify (void * hprocessor,
-                                 u32 event_mask, u32 notify_type,
-                                 struct dsp_notification
-                                 *hnotification);
+extern int proc_register_notify(void *hprocessor,
+				       u32 event_mask, u32 notify_type,
+				       struct dsp_notification
+				       *hnotification);
 
 /*
  *  ======== proc_notify_clients ========
@@ -348,7 +348,7 @@ extern int proc_register_notify (void * hprocessor,
  *      PROC Initialized.
  *  Ensures:
  */
-extern int proc_notify_clients (void * proc, u32 events);
+extern int proc_notify_clients(void *proc, u32 events);
 
 /*
  *  ======== proc_notify_all_clients ========
@@ -370,7 +370,7 @@ extern int proc_notify_clients (void * proc, u32 events);
  *      NODE And STRM would use this function to notify their clients
  *      about the state changes in NODE or STRM.
  */
-extern int proc_notify_all_clients (void * proc, u32 events);
+extern int proc_notify_all_clients(void *proc, u32 events);
 
 /*
  *  ======== proc_start ========
@@ -392,7 +392,7 @@ extern int proc_notify_all_clients (void * proc, u32 events);
  *      Success and ProcState == PROC_RUNNING or DSP_FAILED status.
  *  Details:
  */
-extern int proc_start (void * hprocessor);
+extern int proc_start(void *hprocessor);
 
 /*
  *  ======== proc_stop ========
@@ -414,7 +414,7 @@ extern int proc_start (void * hprocessor);
  *      Success and ProcState == PROC_RUNNING or DSP_FAILED status.
  *  Details:
  */
-extern int proc_stop (void * hprocessor);
+extern int proc_stop(void *hprocessor);
 
 /*
  *  ======== proc_end_dma ========
@@ -422,28 +422,28 @@ extern int proc_stop (void * hprocessor);
  *      Begin a DMA transfer
  *  Parameters:
  *      hprocessor      :   The processor handle.
- *      pmpu_addr :   Buffer start address
- *      ul_size   :   Buffer size
- *      dir   :   The direction of the transfer
+ *      pmpu_addr	:   Buffer start address
+ *      ul_size		:   Buffer size
+ *      dir		:   The direction of the transfer
  *  Requires:
  *      Memory was previously mapped.
  */
-extern int proc_end_dma (void * hprocessor, void * pmpu_addr, u32 ul_size,
-                         enum dma_data_direction dir);
+extern int proc_end_dma(void *hprocessor, void *pmpu_addr, u32 ul_size,
+						enum dma_data_direction dir);
 /*
  *  ======== proc_begin_dma ========
  *  Purpose:
  *      Begin a DMA transfer
  *  Parameters:
  *      hprocessor      :   The processor handle.
- *      pmpu_addr :   Buffer start address
- *      ul_size   :   Buffer size
- *      dir   :   The direction of the transfer
+ *      pmpu_addr	:   Buffer start address
+ *      ul_size		:   Buffer size
+ *      dir		:   The direction of the transfer
  *  Requires:
  *      Memory was previously mapped.
  */
-extern int proc_begin_dma (void * hprocessor, void * pmpu_addr, u32 ul_size,
-                           enum dma_data_direction dir);
+extern int proc_begin_dma(void *hprocessor, void *pmpu_addr, u32 ul_size,
+						enum dma_data_direction dir);
 
 /*
  *  ======== proc_flush_memory ========
@@ -451,11 +451,11 @@ extern int proc_begin_dma (void * hprocessor, void * pmpu_addr, u32 ul_size,
  *      Flushes a buffer from the MPU data cache.
  *  Parameters:
  *      hprocessor      :   The processor handle.
- *      pmpu_addr :   Buffer start address
- *      ul_size   :   Buffer size
- *      ul_flags   :   Reserved.
+ *      pmpu_addr	:   Buffer start address
+ *      ul_size	  :   Buffer size
+ *      ul_flags	 :   Reserved.
  *  Returns:
- *      0  :   Success.
+ *      0	 :   Success.
  *      -EFAULT     :   Invalid processor handle.
  *      -EPERM       :   General failure.
  *  Requires:
@@ -464,8 +464,8 @@ extern int proc_begin_dma (void * hprocessor, void * pmpu_addr, u32 ul_size,
  *  Details:
  *      All the arguments are currently ignored.
  */
-extern int proc_flush_memory (void * hprocessor,
-                              void * pmpu_addr, u32 ul_size, u32 ul_flags);
+extern int proc_flush_memory(void *hprocessor,
+				    void *pmpu_addr, u32 ul_size, u32 ul_flags);
 
 /*
  *  ======== proc_invalidate_memory ========
@@ -473,10 +473,10 @@ extern int proc_flush_memory (void * hprocessor,
  *      Invalidates a buffer from the MPU data cache.
  *  Parameters:
  *      hprocessor      :   The processor handle.
- *      pmpu_addr :   Buffer start address
- *      ul_size   :   Buffer size
+ *      pmpu_addr	:   Buffer start address
+ *      ul_size	  :   Buffer size
  *  Returns:
- *      0  :   Success.
+ *      0	 :   Success.
  *      -EFAULT     :   Invalid processor handle.
  *      -EPERM       :   General failure.
  *  Requires:
@@ -485,8 +485,8 @@ extern int proc_flush_memory (void * hprocessor,
  *  Details:
  *      All the arguments are currently ignored.
  */
-extern int proc_invalidate_memory (void * hprocessor,
-                                   void * pmpu_addr, u32 ul_size);
+extern int proc_invalidate_memory(void *hprocessor,
+					 void *pmpu_addr, u32 ul_size);
 
 /*
  *  ======== proc_map ========
@@ -494,19 +494,19 @@ extern int proc_invalidate_memory (void * hprocessor,
  *      Maps a MPU buffer to DSP address space.
  *  Parameters:
  *      hprocessor      :   The processor handle.
- *      pmpu_addr :   Starting address of the memory region to map.
- *      ul_size   :   Size of the memory region to map.
- *      req_addr  :   Requested DSP start address. Offset-adjusted actual
- *        mapped address is in the last argument.
+ *      pmpu_addr	:   Starting address of the memory region to map.
+ *      ul_size	  :   Size of the memory region to map.
+ *      req_addr	:   Requested DSP start address. Offset-adjusted actual
+ *			  mapped address is in the last argument.
  *      pp_map_addr       :   Ptr to DSP side mapped u8 address.
  *      ul_map_attr       :   Optional endianness attributes, virt to phys flag.
  *  Returns:
- *      0  :   Success.
+ *      0	 :   Success.
  *      -EFAULT     :   Invalid processor handle.
  *      -EPERM       :   General failure.
  *      -ENOMEM     :   MPU side memory allocation error.
  *      -ENOENT   :   Cannot find a reserved region starting with this
- *          :   address.
+ *		      :   address.
  *  Requires:
  *      pmpu_addr is not NULL
  *      ul_size is not zero
@@ -515,12 +515,12 @@ extern int proc_invalidate_memory (void * hprocessor,
  *  Ensures:
  *  Details:
  */
-extern int proc_map (void * hprocessor,
-                     void * pmpu_addr,
-                     u32 ul_size,
-                     void * req_addr,
-                     void ** pp_map_addr, u32 ul_map_attr,
-                     struct process_context * pr_ctxt);
+extern int proc_map(void *hprocessor,
+			   void *pmpu_addr,
+			   u32 ul_size,
+			   void *req_addr,
+			   void **pp_map_addr, u32 ul_map_attr,
+			   struct process_context *pr_ctxt);
 
 /*
  *  ======== proc_reserve_memory ========
@@ -528,10 +528,10 @@ extern int proc_map (void * hprocessor,
  *      Reserve a virtually contiguous region of DSP address space.
  *  Parameters:
  *      hprocessor      :   The processor handle.
- *      ul_size   :   Size of the address space to reserve.
+ *      ul_size	  :   Size of the address space to reserve.
  *      pp_rsv_addr       :   Ptr to DSP side reserved u8 address.
  *  Returns:
- *      0  :   Success.
+ *      0	 :   Success.
  *      -EFAULT     :   Invalid processor handle.
  *      -EPERM       :   General failure.
  *      -ENOMEM     :   Cannot reserve chunk of this size.
@@ -541,9 +541,9 @@ extern int proc_map (void * hprocessor,
  *  Ensures:
  *  Details:
  */
-extern int proc_reserve_memory (void * hprocessor,
-                                u32 ul_size, void ** pp_rsv_addr,
-                                struct process_context * pr_ctxt);
+extern int proc_reserve_memory(void *hprocessor,
+				      u32 ul_size, void **pp_rsv_addr,
+				      struct process_context *pr_ctxt);
 
 /*
  *  ======== proc_un_map ========
@@ -551,21 +551,21 @@ extern int proc_reserve_memory (void * hprocessor,
  *      Removes a MPU buffer mapping from the DSP address space.
  *  Parameters:
  *      hprocessor      :   The processor handle.
- *      map_addr  :   Starting address of the mapped memory region.
+ *      map_addr	:   Starting address of the mapped memory region.
  *  Returns:
- *      0  :   Success.
+ *      0	 :   Success.
  *      -EFAULT     :   Invalid processor handle.
  *      -EPERM       :   General failure.
  *      -ENOENT   :   Cannot find a mapped region starting with this
- *          :   address.
+ *		      :   address.
  *  Requires:
  *      map_addr is not NULL
  *      PROC Initialized.
  *  Ensures:
  *  Details:
  */
-extern int proc_un_map (void * hprocessor, void * map_addr,
-                        struct process_context * pr_ctxt);
+extern int proc_un_map(void *hprocessor, void *map_addr,
+			      struct process_context *pr_ctxt);
 
 /*
  *  ======== proc_un_reserve_memory ========
@@ -573,21 +573,21 @@ extern int proc_un_map (void * hprocessor, void * map_addr,
  *      Frees a previously reserved region of DSP address space.
  *  Parameters:
  *      hprocessor      :   The processor handle.
- *      prsv_addr :   Ptr to DSP side reservedBYTE address.
+ *      prsv_addr	:   Ptr to DSP side reservedBYTE address.
  *  Returns:
- *      0  :   Success.
+ *      0	 :   Success.
  *      -EFAULT     :   Invalid processor handle.
  *      -EPERM       :   General failure.
  *      -ENOENT   :   Cannot find a reserved region starting with this
- *          :   address.
+ *		      :   address.
  *  Requires:
  *      prsv_addr is not NULL
  *      PROC Initialized.
  *  Ensures:
  *  Details:
  */
-extern int proc_un_reserve_memory (void * hprocessor,
-                                   void * prsv_addr,
-                                   struct process_context * pr_ctxt);
+extern int proc_un_reserve_memory(void *hprocessor,
+					 void *prsv_addr,
+					 struct process_context *pr_ctxt);
 
 #endif /* PROC_ */

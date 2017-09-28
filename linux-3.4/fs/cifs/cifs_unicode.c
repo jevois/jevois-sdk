@@ -37,28 +37,28 @@
  * termination required. Don't walk past maxbytes in the source buffer.
  */
 int
-cifs_utf16_bytes (const __le16 * from, int maxbytes,
-                  const struct nls_table * codepage)
+cifs_utf16_bytes(const __le16 *from, int maxbytes,
+		const struct nls_table *codepage)
 {
-  int i;
-  int charlen, outlen = 0;
-  int maxwords = maxbytes / 2;
-  char tmp[NLS_MAX_CHARSET_SIZE];
-  __u16 ftmp;
-  
-  for (i = 0; i < maxwords; i++) {
-    ftmp = get_unaligned_le16 (&from[i]);
-    if (ftmp == 0)
-    { break; }
-    
-    charlen = codepage->uni2char (ftmp, tmp, NLS_MAX_CHARSET_SIZE);
-    if (charlen > 0)
-    { outlen += charlen; }
-    else
-    { outlen++; }
-  }
-  
-  return outlen;
+	int i;
+	int charlen, outlen = 0;
+	int maxwords = maxbytes / 2;
+	char tmp[NLS_MAX_CHARSET_SIZE];
+	__u16 ftmp;
+
+	for (i = 0; i < maxwords; i++) {
+		ftmp = get_unaligned_le16(&from[i]);
+		if (ftmp == 0)
+			break;
+
+		charlen = codepage->uni2char(ftmp, tmp, NLS_MAX_CHARSET_SIZE);
+		if (charlen > 0)
+			outlen += charlen;
+		else
+			outlen++;
+	}
+
+	return outlen;
 }
 
 /*
@@ -73,52 +73,52 @@ cifs_utf16_bytes (const __le16 * from, int maxbytes,
  * enough to hold the result of the conversion (at least NLS_MAX_CHARSET_SIZE).
  */
 static int
-cifs_mapchar (char * target, const __u16 src_char, const struct nls_table * cp,
-              bool mapchar)
+cifs_mapchar(char *target, const __u16 src_char, const struct nls_table *cp,
+	     bool mapchar)
 {
-  int len = 1;
-  
-  if (!mapchar)
-  { goto cp_convert; }
-  
-  /*
-   * BB: Cannot handle remapping UNI_SLASH until all the calls to
-   *     build_path_from_dentry are modified, as they use slash as
-   *     separator.
-   */
-  switch (src_char) {
-  case UNI_COLON:
-    *target = ':';
-    break;
-  case UNI_ASTERISK:
-    *target = '*';
-    break;
-  case UNI_QUESTION:
-    *target = '?';
-    break;
-  case UNI_PIPE:
-    *target = '|';
-    break;
-  case UNI_GRTRTHAN:
-    *target = '>';
-    break;
-  case UNI_LESSTHAN:
-    *target = '<';
-    break;
-  default:
-    goto cp_convert;
-  }
-  
+	int len = 1;
+
+	if (!mapchar)
+		goto cp_convert;
+
+	/*
+	 * BB: Cannot handle remapping UNI_SLASH until all the calls to
+	 *     build_path_from_dentry are modified, as they use slash as
+	 *     separator.
+	 */
+	switch (src_char) {
+	case UNI_COLON:
+		*target = ':';
+		break;
+	case UNI_ASTERISK:
+		*target = '*';
+		break;
+	case UNI_QUESTION:
+		*target = '?';
+		break;
+	case UNI_PIPE:
+		*target = '|';
+		break;
+	case UNI_GRTRTHAN:
+		*target = '>';
+		break;
+	case UNI_LESSTHAN:
+		*target = '<';
+		break;
+	default:
+		goto cp_convert;
+	}
+
 out:
-  return len;
-  
+	return len;
+
 cp_convert:
-  len = cp->uni2char (src_char, target, NLS_MAX_CHARSET_SIZE);
-  if (len <= 0) {
-    *target = '?';
-    len = 1;
-  }
-  goto out;
+	len = cp->uni2char(src_char, target, NLS_MAX_CHARSET_SIZE);
+	if (len <= 0) {
+		*target = '?';
+		len = 1;
+	}
+	goto out;
 }
 
 /*
@@ -144,101 +144,101 @@ cp_convert:
  * those characters, they won't be translated properly.
  */
 int
-cifs_from_utf16 (char * to, const __le16 * from, int tolen, int fromlen,
-                 const struct nls_table * codepage, bool mapchar)
+cifs_from_utf16(char *to, const __le16 *from, int tolen, int fromlen,
+		 const struct nls_table *codepage, bool mapchar)
 {
-  int i, charlen, safelen;
-  int outlen = 0;
-  int nullsize = nls_nullsize (codepage);
-  int fromwords = fromlen / 2;
-  char tmp[NLS_MAX_CHARSET_SIZE];
-  __u16 ftmp;
-  
-  /*
-   * because the chars can be of varying widths, we need to take care
-   * not to overflow the destination buffer when we get close to the
-   * end of it. Until we get to this offset, we don't need to check
-   * for overflow however.
-   */
-  safelen = tolen - (NLS_MAX_CHARSET_SIZE + nullsize);
-  
-  for (i = 0; i < fromwords; i++) {
-    ftmp = get_unaligned_le16 (&from[i]);
-    if (ftmp == 0)
-    { break; }
-    
-    /*
-     * check to see if converting this character might make the
-     * conversion bleed into the null terminator
-     */
-    if (outlen >= safelen) {
-      charlen = cifs_mapchar (tmp, ftmp, codepage, mapchar);
-      if ( (outlen + charlen) > (tolen - nullsize) )
-      { break; }
-    }
-    
-    /* put converted char into 'to' buffer */
-    charlen = cifs_mapchar (&to[outlen], ftmp, codepage, mapchar);
-    outlen += charlen;
-  }
-  
-  /* properly null-terminate string */
-  for (i = 0; i < nullsize; i++)
-  { to[outlen++] = 0; }
-  
-  return outlen;
+	int i, charlen, safelen;
+	int outlen = 0;
+	int nullsize = nls_nullsize(codepage);
+	int fromwords = fromlen / 2;
+	char tmp[NLS_MAX_CHARSET_SIZE];
+	__u16 ftmp;
+
+	/*
+	 * because the chars can be of varying widths, we need to take care
+	 * not to overflow the destination buffer when we get close to the
+	 * end of it. Until we get to this offset, we don't need to check
+	 * for overflow however.
+	 */
+	safelen = tolen - (NLS_MAX_CHARSET_SIZE + nullsize);
+
+	for (i = 0; i < fromwords; i++) {
+		ftmp = get_unaligned_le16(&from[i]);
+		if (ftmp == 0)
+			break;
+
+		/*
+		 * check to see if converting this character might make the
+		 * conversion bleed into the null terminator
+		 */
+		if (outlen >= safelen) {
+			charlen = cifs_mapchar(tmp, ftmp, codepage, mapchar);
+			if ((outlen + charlen) > (tolen - nullsize))
+				break;
+		}
+
+		/* put converted char into 'to' buffer */
+		charlen = cifs_mapchar(&to[outlen], ftmp, codepage, mapchar);
+		outlen += charlen;
+	}
+
+	/* properly null-terminate string */
+	for (i = 0; i < nullsize; i++)
+		to[outlen++] = 0;
+
+	return outlen;
 }
 
 /*
- * NAME:  cifs_strtoUTF16()
+ * NAME:	cifs_strtoUTF16()
  *
- * FUNCTION:  Convert character string to unicode string
+ * FUNCTION:	Convert character string to unicode string
  *
  */
 int
-cifs_strtoUTF16 (__le16 * to, const char * from, int len,
-                 const struct nls_table * codepage)
+cifs_strtoUTF16(__le16 *to, const char *from, int len,
+	      const struct nls_table *codepage)
 {
-  int charlen;
-  int i;
-  wchar_t wchar_to; /* needed to quiet sparse */
-  
-  /* special case for utf8 to handle no plane0 chars */
-  if (!strcmp (codepage->charset, "utf8") ) {
-    /*
-     * convert utf8 -> utf16, we assume we have enough space
-     * as caller should have assumed conversion does not overflow
-     * in destination len is length in wchar_t units (16bits)
-     */
-    i  = utf8s_to_utf16s (from, len, UTF16_LITTLE_ENDIAN,
-                          (wchar_t *) to, len);
-                          
-    /* if success terminate and exit */
-    if (i >= 0)
-    { goto success; }
-    /*
-     * if fails fall back to UCS encoding as this
-     * function should not return negative values
-     * currently can fail only if source contains
-     * invalid encoded characters
-     */
-  }
-  
-  for (i = 0; len && *from; i++, from += charlen, len -= charlen) {
-    charlen = codepage->char2uni (from, len, &wchar_to);
-    if (charlen < 1) {
-      cERROR (1, "strtoUTF16: char2uni of 0x%x returned %d",
-              *from, charlen);
-      /* A question mark */
-      wchar_to = 0x003f;
-      charlen = 1;
-    }
-    put_unaligned_le16 (wchar_to, &to[i]);
-  }
-  
+	int charlen;
+	int i;
+	wchar_t wchar_to; /* needed to quiet sparse */
+
+	/* special case for utf8 to handle no plane0 chars */
+	if (!strcmp(codepage->charset, "utf8")) {
+		/*
+		 * convert utf8 -> utf16, we assume we have enough space
+		 * as caller should have assumed conversion does not overflow
+		 * in destination len is length in wchar_t units (16bits)
+		 */
+		i  = utf8s_to_utf16s(from, len, UTF16_LITTLE_ENDIAN,
+				       (wchar_t *) to, len);
+
+		/* if success terminate and exit */
+		if (i >= 0)
+			goto success;
+		/*
+		 * if fails fall back to UCS encoding as this
+		 * function should not return negative values
+		 * currently can fail only if source contains
+		 * invalid encoded characters
+		 */
+	}
+
+	for (i = 0; len && *from; i++, from += charlen, len -= charlen) {
+		charlen = codepage->char2uni(from, len, &wchar_to);
+		if (charlen < 1) {
+			cERROR(1, "strtoUTF16: char2uni of 0x%x returned %d",
+				*from, charlen);
+			/* A question mark */
+			wchar_to = 0x003f;
+			charlen = 1;
+		}
+		put_unaligned_le16(wchar_to, &to[i]);
+	}
+
 success:
-  put_unaligned_le16 (0, &to[i]);
-  return i;
+	put_unaligned_le16(0, &to[i]);
+	return i;
 }
 
 /*
@@ -254,31 +254,30 @@ success:
  * error.
  */
 char *
-cifs_strndup_from_utf16 (const char * src, const int maxlen,
-                         const bool is_unicode, const struct nls_table * codepage)
+cifs_strndup_from_utf16(const char *src, const int maxlen,
+			const bool is_unicode, const struct nls_table *codepage)
 {
-  int len;
-  char * dst;
-  
-  if (is_unicode) {
-    len = cifs_utf16_bytes ( (__le16 *) src, maxlen, codepage);
-    len += nls_nullsize (codepage);
-    dst = kmalloc (len, GFP_KERNEL);
-    if (!dst)
-    { return NULL; }
-    cifs_from_utf16 (dst, (__le16 *) src, len, maxlen, codepage,
-                     false);
-  }
-  else {
-    len = strnlen (src, maxlen);
-    len++;
-    dst = kmalloc (len, GFP_KERNEL);
-    if (!dst)
-    { return NULL; }
-    strlcpy (dst, src, len);
-  }
-  
-  return dst;
+	int len;
+	char *dst;
+
+	if (is_unicode) {
+		len = cifs_utf16_bytes((__le16 *) src, maxlen, codepage);
+		len += nls_nullsize(codepage);
+		dst = kmalloc(len, GFP_KERNEL);
+		if (!dst)
+			return NULL;
+		cifs_from_utf16(dst, (__le16 *) src, len, maxlen, codepage,
+			       false);
+	} else {
+		len = strnlen(src, maxlen);
+		len++;
+		dst = kmalloc(len, GFP_KERNEL);
+		if (!dst)
+			return NULL;
+		strlcpy(dst, src, len);
+	}
+
+	return dst;
 }
 
 /*
@@ -288,69 +287,69 @@ cifs_strndup_from_utf16 (const char * src, const int maxlen,
  * names are little endian 16 bit Unicode on the wire
  */
 int
-cifsConvertToUTF16 (__le16 * target, const char * source, int srclen,
-                    const struct nls_table * cp, int mapChars)
+cifsConvertToUTF16(__le16 *target, const char *source, int srclen,
+		 const struct nls_table *cp, int mapChars)
 {
-  int i, j, charlen;
-  char src_char;
-  __le16 dst_char;
-  wchar_t tmp;
-  
-  if (!mapChars)
-  { return cifs_strtoUTF16 (target, source, PATH_MAX, cp); }
-  
-  for (i = 0, j = 0; i < srclen; j++) {
-    src_char = source[i];
-    charlen = 1;
-    switch (src_char) {
-    case 0:
-      put_unaligned (0, &target[j]);
-      goto ctoUTF16_out;
-    case ':':
-      dst_char = cpu_to_le16 (UNI_COLON);
-      break;
-    case '*':
-      dst_char = cpu_to_le16 (UNI_ASTERISK);
-      break;
-    case '?':
-      dst_char = cpu_to_le16 (UNI_QUESTION);
-      break;
-    case '<':
-      dst_char = cpu_to_le16 (UNI_LESSTHAN);
-      break;
-    case '>':
-      dst_char = cpu_to_le16 (UNI_GRTRTHAN);
-      break;
-    case '|':
-      dst_char = cpu_to_le16 (UNI_PIPE);
-      break;
-    /*
-     * FIXME: We can not handle remapping backslash (UNI_SLASH)
-     * until all the calls to build_path_from_dentry are modified,
-     * as they use backslash as separator.
-     */
-    default:
-      charlen = cp->char2uni (source + i, srclen - i, &tmp);
-      dst_char = cpu_to_le16 (tmp);
-      
-      /*
-       * if no match, use question mark, which at least in
-       * some cases serves as wild card
-       */
-      if (charlen < 1) {
-        dst_char = cpu_to_le16 (0x003f);
-        charlen = 1;
-      }
-    }
-    /*
-     * character may take more than one byte in the source string,
-     * but will take exactly two bytes in the target string
-     */
-    i += charlen;
-    put_unaligned (dst_char, &target[j]);
-  }
-  
+	int i, j, charlen;
+	char src_char;
+	__le16 dst_char;
+	wchar_t tmp;
+
+	if (!mapChars)
+		return cifs_strtoUTF16(target, source, PATH_MAX, cp);
+
+	for (i = 0, j = 0; i < srclen; j++) {
+		src_char = source[i];
+		charlen = 1;
+		switch (src_char) {
+		case 0:
+			put_unaligned(0, &target[j]);
+			goto ctoUTF16_out;
+		case ':':
+			dst_char = cpu_to_le16(UNI_COLON);
+			break;
+		case '*':
+			dst_char = cpu_to_le16(UNI_ASTERISK);
+			break;
+		case '?':
+			dst_char = cpu_to_le16(UNI_QUESTION);
+			break;
+		case '<':
+			dst_char = cpu_to_le16(UNI_LESSTHAN);
+			break;
+		case '>':
+			dst_char = cpu_to_le16(UNI_GRTRTHAN);
+			break;
+		case '|':
+			dst_char = cpu_to_le16(UNI_PIPE);
+			break;
+		/*
+		 * FIXME: We can not handle remapping backslash (UNI_SLASH)
+		 * until all the calls to build_path_from_dentry are modified,
+		 * as they use backslash as separator.
+		 */
+		default:
+			charlen = cp->char2uni(source + i, srclen - i, &tmp);
+			dst_char = cpu_to_le16(tmp);
+
+			/*
+			 * if no match, use question mark, which at least in
+			 * some cases serves as wild card
+			 */
+			if (charlen < 1) {
+				dst_char = cpu_to_le16(0x003f);
+				charlen = 1;
+			}
+		}
+		/*
+		 * character may take more than one byte in the source string,
+		 * but will take exactly two bytes in the target string
+		 */
+		i += charlen;
+		put_unaligned(dst_char, &target[j]);
+	}
+
 ctoUTF16_out:
-  return j;
+	return j;
 }
 

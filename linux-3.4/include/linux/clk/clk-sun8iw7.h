@@ -1,7 +1,7 @@
 #ifndef __CLK_SUN8IW7_H
 #define __CLK_SUN8IW7_H
-
-
+ 
+ 
 #define LOSC_CLK "losc"
 #define HOSC_CLK "hosc"
 #define PLL_AUDIOX8_CLK "pll_audiox8"
@@ -87,6 +87,6 @@
 #define UART3_CLK "uart3"
 #define LOSC_OUT_CLK "losc_out"
 #define CPURCIR_CLK "cpurcir"
-
-
+ 
+ 
 #endif

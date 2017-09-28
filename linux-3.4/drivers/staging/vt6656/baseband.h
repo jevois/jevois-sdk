@@ -92,39 +92,39 @@
 /*---------------------  Export Functions  --------------------------*/
 
 unsigned int
-BBuGetFrameTime (
-  BYTE byPreambleType,
-  BYTE byFreqType,
-  unsigned int cbFrameLength,
-  WORD wRate
-);
+BBuGetFrameTime(
+     BYTE byPreambleType,
+     BYTE byFreqType,
+     unsigned int cbFrameLength,
+     WORD wRate
+    );
 
-void BBvCaculateParameter (PSDevice pDevice,
-                           unsigned int cbFrameLength,
-                           WORD wRate,
-                           BYTE byPacketType,
-                           PWORD pwPhyLen,
-                           PBYTE pbyPhySrv,
-                           PBYTE pbyPhySgn);
+void BBvCaculateParameter(PSDevice pDevice,
+			  unsigned int cbFrameLength,
+			  WORD wRate,
+			  BYTE byPacketType,
+			  PWORD pwPhyLen,
+			  PBYTE pbyPhySrv,
+			  PBYTE pbyPhySgn);
 
 
-void TimerSQ3CallBack (void * hDeviceContext);
-void TimerSQ3Tmax3CallBack (void * hDeviceContext);
+void TimerSQ3CallBack(void *hDeviceContext);
+void TimerSQ3Tmax3CallBack(void *hDeviceContext);
 
-void BBvAntennaDiversity (PSDevice pDevice, BYTE byRxRate, BYTE bySQ3);
-void BBvLoopbackOn (PSDevice pDevice);
-void BBvLoopbackOff (PSDevice pDevice);
-void BBvSoftwareReset (PSDevice pDevice);
+void BBvAntennaDiversity(PSDevice pDevice, BYTE byRxRate, BYTE bySQ3);
+void BBvLoopbackOn(PSDevice pDevice);
+void BBvLoopbackOff(PSDevice pDevice);
+void BBvSoftwareReset(PSDevice pDevice);
 
-void BBvSetShortSlotTime (PSDevice pDevice);
-void BBvSetVGAGainOffset (PSDevice pDevice, BYTE byData);
-void BBvSetAntennaMode (PSDevice pDevice, BYTE byAntennaMode);
-BOOL BBbVT3184Init (PSDevice pDevice);
-void BBvSetDeepSleep (PSDevice pDevice);
-void BBvExitDeepSleep (PSDevice pDevice);
-void BBvUpdatePreEDThreshold (
-  PSDevice    pDevice,
-  BOOL        bScanning
-);
+void BBvSetShortSlotTime(PSDevice pDevice);
+void BBvSetVGAGainOffset(PSDevice pDevice, BYTE byData);
+void BBvSetAntennaMode(PSDevice pDevice, BYTE byAntennaMode);
+BOOL BBbVT3184Init(PSDevice pDevice);
+void BBvSetDeepSleep(PSDevice pDevice);
+void BBvExitDeepSleep(PSDevice pDevice);
+void BBvUpdatePreEDThreshold(
+       PSDevice    pDevice,
+       BOOL        bScanning
+     );
 
 #endif /* __BASEBAND_H__ */

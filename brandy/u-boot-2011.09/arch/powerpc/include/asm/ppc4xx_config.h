@@ -31,9 +31,9 @@
 #include <common.h>
 
 struct ppc4xx_config {
-  char label[16];
-  char description[64];
-  u8 val[CONFIG_4xx_CONFIG_BLOCKSIZE];
+	char label[16];
+	char description[64];
+	u8 val[CONFIG_4xx_CONFIG_BLOCKSIZE];
 };
 
 extern struct ppc4xx_config ppc4xx_config_val[];

@@ -1,1 +1,1 @@
-void alarm_handler (int, mcontext_t *);
+void alarm_handler(int, mcontext_t *);

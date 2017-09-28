@@ -30,11 +30,11 @@
  * @reglock: spinlock for register read/write
  */
 struct anatop {
-  void * ioreg;
-  spinlock_t reglock;
+	void *ioreg;
+	spinlock_t reglock;
 };
 
-extern u32 anatop_get_bits (struct anatop *, u32, int, int);
-extern void anatop_set_bits (struct anatop *, u32, int, int, u32);
+extern u32 anatop_get_bits(struct anatop *, u32, int, int);
+extern void anatop_set_bits(struct anatop *, u32, int, int, u32);
 
 #endif /*  __LINUX_MFD_ANATOP_H */

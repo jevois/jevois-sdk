@@ -113,7 +113,7 @@ typedef struct {
    *  packet on the queue, sizeof (netio_pkt_t) for the second packet on the
    *  queue, etc. */
   volatile uint32_t __packet_write;
-  
+
   /** Offset of the packet after the last valid packet (i.e., when any
    *  pointer is incremented to this value, it wraps back to zero). */
   uint32_t __last_packet_plus_one;
@@ -180,7 +180,7 @@ typedef struct
   /** Ordinal number of the next buffer to be written: 0 for the first slot in
    *  the queue, 1 for the second slot in the queue, etc. */
   volatile uint32_t __buffer_write;
-  
+
   /** Ordinal number of the last buffer (i.e., when any pointer is decremented
    *  below zero, it is reloaded with this value). */
   uint32_t __last_buffer;
@@ -211,9 +211,9 @@ typedef struct __netio_queue_impl_t
   /** Number of packets allowed to be outstanding. */
   uint32_t __max_outstanding;
   /** First VA available for packets. */
-  void * __va_0;
+  void* __va_0;
   /** First VA in second range available for packets. */
-  void * __va_1;
+  void* __va_1;
   /** Padding to align the "__packets" field to the size of a netio_pkt_t. */
   uint32_t __padding[3];
   /** The packets themselves. */

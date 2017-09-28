@@ -26,6 +26,6 @@
 
 #include "rtsx.h"
 
-int bit1cnt_long (u32 data);
+int bit1cnt_long(u32 data);
 
 #endif /* __RTSX_GENERAL_H */

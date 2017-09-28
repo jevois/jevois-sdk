@@ -65,68 +65,68 @@
 #define AF9015_EEPROM_OFFSET (AF9015_EEPROM_SAW_BW2 - AF9015_EEPROM_SAW_BW1)
 
 struct req_t {
-  u8  cmd;       /* [0] */
-  /*  seq */     /* [1] */
-  u8  i2c_addr;  /* [2] */
-  u16 addr;      /* [3|4] */
-  u8  mbox;      /* [5] */
-  u8  addr_len;  /* [6] */
-  u8  data_len;  /* [7] */
-  u8 * data;
+	u8  cmd;       /* [0] */
+	/*  seq */     /* [1] */
+	u8  i2c_addr;  /* [2] */
+	u16 addr;      /* [3|4] */
+	u8  mbox;      /* [5] */
+	u8  addr_len;  /* [6] */
+	u8  data_len;  /* [7] */
+	u8  *data;
 };
 
 enum af9015_cmd {
-  GET_CONFIG           = 0x10,
-  DOWNLOAD_FIRMWARE    = 0x11,
-  BOOT                 = 0x13,
-  READ_MEMORY          = 0x20,
-  WRITE_MEMORY         = 0x21,
-  READ_WRITE_I2C       = 0x22,
-  COPY_FIRMWARE        = 0x23,
-  RECONNECT_USB        = 0x5a,
-  WRITE_VIRTUAL_MEMORY = 0x26,
-  GET_IR_CODE          = 0x27,
-  READ_I2C,
-  WRITE_I2C,
+	GET_CONFIG           = 0x10,
+	DOWNLOAD_FIRMWARE    = 0x11,
+	BOOT                 = 0x13,
+	READ_MEMORY          = 0x20,
+	WRITE_MEMORY         = 0x21,
+	READ_WRITE_I2C       = 0x22,
+	COPY_FIRMWARE        = 0x23,
+	RECONNECT_USB        = 0x5a,
+	WRITE_VIRTUAL_MEMORY = 0x26,
+	GET_IR_CODE          = 0x27,
+	READ_I2C,
+	WRITE_I2C,
 };
 
 enum af9015_ir_mode {
-  AF9015_IR_MODE_DISABLED = 0,
-  AF9015_IR_MODE_HID,
-  AF9015_IR_MODE_RLC,
-  AF9015_IR_MODE_RC6,
-  AF9015_IR_MODE_POLLING, /* just guess */
+	AF9015_IR_MODE_DISABLED = 0,
+	AF9015_IR_MODE_HID,
+	AF9015_IR_MODE_RLC,
+	AF9015_IR_MODE_RC6,
+	AF9015_IR_MODE_POLLING, /* just guess */
 };
 
 struct af9015_state {
-  u8 rc_repeat;
-  u32 rc_keycode;
-  u8 rc_last[4];
-  
-  /* for demod callback override */
-  int (*set_frontend[2]) (struct dvb_frontend * fe);
-  int (*read_status[2]) (struct dvb_frontend * fe, fe_status_t * status);
-  int (*init[2]) (struct dvb_frontend * fe);
-  int (*sleep[2]) (struct dvb_frontend * fe);
-  int (*tuner_init[2]) (struct dvb_frontend * fe);
-  int (*tuner_sleep[2]) (struct dvb_frontend * fe);
+	u8 rc_repeat;
+	u32 rc_keycode;
+	u8 rc_last[4];
+
+	/* for demod callback override */
+	int (*set_frontend[2]) (struct dvb_frontend *fe);
+	int (*read_status[2]) (struct dvb_frontend *fe, fe_status_t *status);
+	int (*init[2]) (struct dvb_frontend *fe);
+	int (*sleep[2]) (struct dvb_frontend *fe);
+	int (*tuner_init[2]) (struct dvb_frontend *fe);
+	int (*tuner_sleep[2]) (struct dvb_frontend *fe);
 };
 
 struct af9015_config {
-  u8  dual_mode: 1;
-  u16 mt2060_if1[2];
-  u16 firmware_size;
-  u16 firmware_checksum;
-  u32 eeprom_sum;
+	u8  dual_mode:1;
+	u16 mt2060_if1[2];
+	u16 firmware_size;
+	u16 firmware_checksum;
+	u32 eeprom_sum;
 };
 
 enum af9015_remote {
-  AF9015_REMOTE_NONE                    = 0,
-  /* 1 */ AF9015_REMOTE_A_LINK_DTU_M,
-  AF9015_REMOTE_MSI_DIGIVOX_MINI_II_V3,
-  AF9015_REMOTE_MYGICTV_U718,
-  AF9015_REMOTE_DIGITTRADE_DVB_T,
-  /* 5 */ AF9015_REMOTE_AVERMEDIA_KS,
+	AF9015_REMOTE_NONE                    = 0,
+/* 1 */	AF9015_REMOTE_A_LINK_DTU_M,
+	AF9015_REMOTE_MSI_DIGIVOX_MINI_II_V3,
+	AF9015_REMOTE_MYGICTV_U718,
+	AF9015_REMOTE_DIGITTRADE_DVB_T,
+/* 5 */	AF9015_REMOTE_AVERMEDIA_KS,
 };
 
 #endif

@@ -2,7 +2,7 @@
  * Copyright (C) 2011 Google, Inc.
  *
  * Author:
- *  Colin Cross <ccross@android.com>
+ *	Colin Cross <ccross@android.com>
  *
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
@@ -18,7 +18,7 @@
 #ifndef __MACH_TEGRA_TEGRA2_EMC_H_
 #define __MACH_TEGRA_TEGRA2_EMC_H
 
-int tegra_emc_set_rate (unsigned long rate);
-long tegra_emc_round_rate (unsigned long rate);
+int tegra_emc_set_rate(unsigned long rate);
+long tegra_emc_round_rate(unsigned long rate);
 
 #endif

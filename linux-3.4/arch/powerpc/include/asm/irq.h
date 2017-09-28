@@ -21,24 +21,24 @@
 extern atomic_t ppc_n_lost_interrupts;
 
 /* This number is used when no interrupt has been assigned */
-#define NO_IRQ      (0)
+#define NO_IRQ			(0)
 
 /* Total number of virq in the platform */
-#define NR_IRQS   CONFIG_NR_IRQS
+#define NR_IRQS		CONFIG_NR_IRQS
 
 /* Same thing, used by the generic IRQ code */
-#define NR_IRQS_LEGACY    NUM_ISA_INTERRUPTS
+#define NR_IRQS_LEGACY		NUM_ISA_INTERRUPTS
 
-extern irq_hw_number_t virq_to_hw (unsigned int virq);
+extern irq_hw_number_t virq_to_hw(unsigned int virq);
 
 /**
  * irq_early_init - Init irq remapping subsystem
  */
-extern void irq_early_init (void);
+extern void irq_early_init(void);
 
-static __inline__ int irq_canonicalize (int irq)
+static __inline__ int irq_canonicalize(int irq)
 {
-  return irq;
+	return irq;
 }
 
 extern int distribute_irqs;
@@ -53,10 +53,10 @@ struct pt_regs;
  * Per-cpu stacks for handling critical, debug and machine check
  * level interrupts.
  */
-extern struct thread_info * critirq_ctx[NR_CPUS];
-extern struct thread_info * dbgirq_ctx[NR_CPUS];
-extern struct thread_info * mcheckirq_ctx[NR_CPUS];
-extern void exc_lvl_ctx_init (void);
+extern struct thread_info *critirq_ctx[NR_CPUS];
+extern struct thread_info *dbgirq_ctx[NR_CPUS];
+extern struct thread_info *mcheckirq_ctx[NR_CPUS];
+extern void exc_lvl_ctx_init(void);
 #else
 #define exc_lvl_ctx_init()
 #endif
@@ -64,16 +64,16 @@ extern void exc_lvl_ctx_init (void);
 /*
  * Per-cpu stacks for handling hard and soft interrupts.
  */
-extern struct thread_info * hardirq_ctx[NR_CPUS];
-extern struct thread_info * softirq_ctx[NR_CPUS];
+extern struct thread_info *hardirq_ctx[NR_CPUS];
+extern struct thread_info *softirq_ctx[NR_CPUS];
 
-extern void irq_ctx_init (void);
-extern void call_do_softirq (struct thread_info * tp);
-extern int call_handle_irq (int irq, void * p1,
-                            struct thread_info * tp, void * func);
-extern void do_IRQ (struct pt_regs * regs);
+extern void irq_ctx_init(void);
+extern void call_do_softirq(struct thread_info *tp);
+extern int call_handle_irq(int irq, void *p1,
+			   struct thread_info *tp, void *func);
+extern void do_IRQ(struct pt_regs *regs);
 
-int irq_choose_cpu (const struct cpumask * mask);
+int irq_choose_cpu(const struct cpumask *mask);
 
 #endif /* _ASM_IRQ_H */
 #endif /* __KERNEL__ */

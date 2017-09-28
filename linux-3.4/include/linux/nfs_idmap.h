@@ -54,11 +54,11 @@
 #define IDMAP_STATUS_SUCCESS    0x08
 
 struct idmap_msg {
-  __u8  im_type;
-  __u8  im_conv;
-  char  im_name[IDMAP_NAMESZ];
-  __u32 im_id;
-  __u8  im_status;
+	__u8  im_type;
+	__u8  im_conv;
+	char  im_name[IDMAP_NAMESZ];
+	__u32 im_id;
+	__u8  im_status;
 };
 
 #ifdef __KERNEL__
@@ -70,31 +70,31 @@ struct nfs_fattr;
 struct nfs4_string;
 
 #ifdef CONFIG_NFS_V4
-int nfs_idmap_init (void);
-void nfs_idmap_quit (void);
+int nfs_idmap_init(void);
+void nfs_idmap_quit(void);
 #else
-static inline int nfs_idmap_init (void)
+static inline int nfs_idmap_init(void)
 {
-  return 0;
+	return 0;
 }
 
-static inline void nfs_idmap_quit (void)
+static inline void nfs_idmap_quit(void)
 {}
 #endif
 
-int nfs_idmap_new (struct nfs_client *);
-void nfs_idmap_delete (struct nfs_client *);
+int nfs_idmap_new(struct nfs_client *);
+void nfs_idmap_delete(struct nfs_client *);
 
-void nfs_fattr_init_names (struct nfs_fattr * fattr,
-                           struct nfs4_string * owner_name,
-                           struct nfs4_string * group_name);
-void nfs_fattr_free_names (struct nfs_fattr *);
-void nfs_fattr_map_and_free_names (struct nfs_server *, struct nfs_fattr *);
+void nfs_fattr_init_names(struct nfs_fattr *fattr,
+		struct nfs4_string *owner_name,
+		struct nfs4_string *group_name);
+void nfs_fattr_free_names(struct nfs_fattr *);
+void nfs_fattr_map_and_free_names(struct nfs_server *, struct nfs_fattr *);
 
-int nfs_map_name_to_uid (const struct nfs_server *, const char *, size_t, __u32 *);
-int nfs_map_group_to_gid (const struct nfs_server *, const char *, size_t, __u32 *);
-int nfs_map_uid_to_name (const struct nfs_server *, __u32, char *, size_t);
-int nfs_map_gid_to_group (const struct nfs_server *, __u32, char *, size_t);
+int nfs_map_name_to_uid(const struct nfs_server *, const char *, size_t, __u32 *);
+int nfs_map_group_to_gid(const struct nfs_server *, const char *, size_t, __u32 *);
+int nfs_map_uid_to_name(const struct nfs_server *, __u32, char *, size_t);
+int nfs_map_gid_to_group(const struct nfs_server *, __u32, char *, size_t);
 
 extern unsigned int nfs_idmap_cache_timeout;
 #endif /* __KERNEL__ */

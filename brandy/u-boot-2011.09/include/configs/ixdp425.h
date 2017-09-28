@@ -33,17 +33,17 @@
 #define CONFIG_IXP425           1       /* This is an IXP425 CPU    */
 #define CONFIG_IXDP425          1       /* on an IXDP425 Board      */
 
-#define CONFIG_DISPLAY_CPUINFO  1 /* display cpu info (and speed) */
-#define CONFIG_DISPLAY_BOARDINFO 1  /* display board info   */
+#define CONFIG_DISPLAY_CPUINFO	1	/* display cpu info (and speed)	*/
+#define CONFIG_DISPLAY_BOARDINFO 1	/* display board info		*/
 
 /*
  * select serial console configuration
  */
 #define CONFIG_IXP_SERIAL
-#define CONFIG_SYS_IXP425_CONSOLE IXP425_UART1
+#define CONFIG_SYS_IXP425_CONSOLE	IXP425_UART1
 #define CONFIG_BAUDRATE         115200
 
-#define CONFIG_BOARD_EARLY_INIT_F 1
+#define CONFIG_BOARD_EARLY_INIT_F	1
 
 /***************************************************************
  * U-boot generic defines start here.
@@ -80,11 +80,11 @@
 #define CONFIG_EEPRO100
 #endif
 
-#define CONFIG_BOOTCOMMAND    "run boot_flash"
+#define CONFIG_BOOTCOMMAND		"run boot_flash"
 /* enable passing of ATAGs */
-#define CONFIG_CMDLINE_TAG    1
-#define CONFIG_SETUP_MEMORY_TAGS  1
-#define CONFIG_INITRD_TAG   1
+#define CONFIG_CMDLINE_TAG		1
+#define CONFIG_SETUP_MEMORY_TAGS	1
+#define CONFIG_INITRD_TAG		1
 
 #if defined(CONFIG_CMD_KGDB)
 #define CONFIG_KGDB_BAUDRATE    230400          /* speed to run kgdb serial port */
@@ -104,10 +104,10 @@
 
 /* timer clock - 2* OSC_IN system clock */
 #define CONFIG_IXP425_TIMER_CLK                 66666666
-#define CONFIG_SYS_HZ       1000
+#define CONFIG_SYS_HZ				1000
 
 /* default load address */
-#define CONFIG_SYS_LOAD_ADDR      0x00010000
+#define CONFIG_SYS_LOAD_ADDR			0x00010000
 
 #define CONFIG_SYS_BAUDRATE_TABLE      { 9600, 19200, 38400, 57600, 115200 }
 
@@ -129,7 +129,7 @@
 /*
  * Physical Memory Map
  */
-#define CONFIG_SYS_TEXT_BASE  0x50000000
+#define CONFIG_SYS_TEXT_BASE	0x50000000
 
 #define PHYS_FLASH_1            0x50000000 /* Flash Bank #1 */
 #define PHYS_FLASH_SIZE         0x00800000 /* 8 MB */
@@ -137,62 +137,62 @@
 #define PHYS_FLASH_SECT_SIZE    0x00020000 /* 128 KB sectors (x1) */
 
 #define CONFIG_SYS_FLASH_BASE          PHYS_FLASH_1
-#define CONFIG_SYS_MONITOR_BASE CONFIG_SYS_FLASH_BASE
-#define CONFIG_SYS_MONITOR_LEN    (256 << 10) /* Reserve 256 kB for Monitor */
-#define CONFIG_BOARD_SIZE_LIMIT   262144
+#define CONFIG_SYS_MONITOR_BASE	CONFIG_SYS_FLASH_BASE
+#define CONFIG_SYS_MONITOR_LEN		(256 << 10)	/* Reserve 256 kB for Monitor	*/
+#define CONFIG_BOARD_SIZE_LIMIT		262144
 
 /* Expansion bus settings */
-#define CONFIG_SYS_EXP_CS0  0xbcd23c42
+#define CONFIG_SYS_EXP_CS0	0xbcd23c42
 
 /* SDRAM settings */
 #define CONFIG_NR_DRAM_BANKS    1          /* we have 2 banks of DRAM */
 #define PHYS_SDRAM_1            0x00000000 /* SDRAM Bank #1 */
-#define CONFIG_SYS_SDRAM_BASE 0x00000000
+#define CONFIG_SYS_SDRAM_BASE	0x00000000
 
-#define CONFIG_SYS_SDR_CONFIG   0xd
-#define CONFIG_SYS_SDR_MODE_CONFIG  0x1
-#define CONFIG_SYS_SDRAM_REFRESH_CNT  0x81a
+#define CONFIG_SYS_SDR_CONFIG		0xd
+#define CONFIG_SYS_SDR_MODE_CONFIG	0x1
+#define CONFIG_SYS_SDRAM_REFRESH_CNT	0x81a
 
 /*
  * FLASH and environment organization
  */
 #define CONFIG_SYS_MAX_FLASH_BANKS     1       /* max number of memory banks           */
-#define CONFIG_SYS_MAX_FLASH_SECT      128  /* max number of sectors on one chip    */
+#define CONFIG_SYS_MAX_FLASH_SECT      128	/* max number of sectors on one chip    */
 
-#define CONFIG_ENV_IS_IN_FLASH  1
+#define	CONFIG_ENV_IS_IN_FLASH	1
 
-#define CONFIG_SYS_FLASH_BANKS_LIST { PHYS_FLASH_1 }
+#define CONFIG_SYS_FLASH_BANKS_LIST	{ PHYS_FLASH_1 }
 
-#define CONFIG_SYS_FLASH_ERASE_TOUT 120000  /* Timeout for Flash Erase (in ms)  */
-#define CONFIG_SYS_FLASH_WRITE_TOUT 500 /* Timeout for Flash Write (in ms)  */
+#define CONFIG_SYS_FLASH_ERASE_TOUT	120000	/* Timeout for Flash Erase (in ms)	*/
+#define CONFIG_SYS_FLASH_WRITE_TOUT	500	/* Timeout for Flash Write (in ms)	*/
 
-#define CONFIG_ENV_SECT_SIZE  0x20000 /* size of one complete sector  */
-#define CONFIG_ENV_ADDR   (PHYS_FLASH_1 + 0x40000)
-#define CONFIG_ENV_SIZE   0x2000  /* Total Size of Environment Sector */
+#define CONFIG_ENV_SECT_SIZE	0x20000	/* size of one complete sector	*/
+#define CONFIG_ENV_ADDR		(PHYS_FLASH_1 + 0x40000)
+#define	CONFIG_ENV_SIZE		0x2000	/* Total Size of Environment Sector	*/
 
 /* Use common CFI driver */
 #define CONFIG_SYS_FLASH_CFI
 #define CONFIG_FLASH_CFI_DRIVER
 /* no byte writes on IXP4xx */
-#define CONFIG_SYS_FLASH_CFI_WIDTH    FLASH_CFI_16BIT
+#define CONFIG_SYS_FLASH_CFI_WIDTH		FLASH_CFI_16BIT
 /* print 'E' for empty sector on flinfo */
 #define CONFIG_SYS_FLASH_EMPTY_INFO
 
 /* Ethernet */
 
 /* include IXP4xx NPE support */
-#define CONFIG_IXP4XX_NPE   1
-#define CONFIG_NET_MULTI    1
+#define CONFIG_IXP4XX_NPE		1
+#define CONFIG_NET_MULTI		1
 /* NPE0 PHY address */
-#define CONFIG_PHY_ADDR     0
+#define	CONFIG_PHY_ADDR			0
 /* NPE1 PHY address (HW Release E only) */
-#define CONFIG_PHY1_ADDR    1
+#define	CONFIG_PHY1_ADDR		1
 /* MII PHY management */
-#define CONFIG_MII      1
+#define CONFIG_MII			1
 /* Number of ethernet rx buffers & descriptors */
-#define CONFIG_SYS_RX_ETH_BUFFER    16
+#define CONFIG_SYS_RX_ETH_BUFFER		16
 
-#define CONFIG_HAS_ETH1     1
+#define CONFIG_HAS_ETH1			1
 
 #define CONFIG_CMD_DHCP
 #define CONFIG_CMD_NET
@@ -201,49 +201,49 @@
 #undef  CONFIG_CMD_NFS
 
 /* Cache Configuration */
-#define CONFIG_SYS_CACHELINE_SIZE   32
+#define CONFIG_SYS_CACHELINE_SIZE		32
 
-#define CONFIG_EXTRA_ENV_SETTINGS         \
-  "npe_ucode=50060000\0"            \
-  "mtd=IXP4XX-Flash.0:256k(uboot),128k(env),128k(ucode),2048k(linux),-(root)\0" \
-  "kerneladdr=50080000\0"           \
-  "kernelfile=ixdp425/uImage\0"         \
-  "rootfile=ixdp425/rootfs\0"         \
-  "rootaddr=50280000\0"           \
-  "loadaddr=10000\0"            \
-  "updateboot_ser=mw.b 10000 ff 40000;"       \
-  " loady ${loadaddr};"           \
-  " run eraseboot writeboot\0"          \
-  "updateboot_net=mw.b 10000 ff 40000;"       \
-  " tftp ${loadaddr} ixdp425/u-boot.bin;"       \
-  " run eraseboot writeboot\0"          \
-  "eraseboot=protect off 50000000 5003ffff;"      \
-  " erase 50000000 5003ffff\0"          \
-  "writeboot=cp.b 10000 50000000 ${filesize}\0"     \
-  "updateucode=loady;"            \
-  " era ${npe_ucode} +${filesize};"       \
-  " cp.b ${loadaddr} ${npe_ucode} ${filesize}\0"      \
-  "updateroot=tftp ${loadaddr} ${rootfile};"      \
-  " era ${rootaddr} +${filesize};"        \
-  " cp.b ${loadaddr} ${rootaddr} ${filesize}\0"     \
-  "updatekern=tftp ${loadaddr} ${kernelfile};"      \
-  " era ${kerneladdr} +${filesize};"        \
-  " cp.b ${loadaddr} ${kerneladdr} ${filesize}\0"     \
-  "flashargs=setenv bootargs mtdparts=${mtd} root=/dev/mtdblock4" \
-  " rootfstype=squashfs,jffs2 init=/etc/preinit\0"    \
-  "netargs=setenv bootargs mtdparts=${mtd} root=/dev/mtdblock4" \
-  " rootfstype=squashfs,jffs2 init=/etc/preinit\0"    \
-  "addtty=setenv bootargs ${bootargs} console=ttyS0,${baudrate}\0" \
-  "addeth=setenv bootargs ${bootargs} ethaddr=${ethaddr}\0" \
-  "boot_flash=run flashargs addtty addeth;"     \
-  " bootm ${kerneladdr}\0"          \
-  "boot_net=run netargs addtty addeth;"       \
-  " tftpboot ${loadaddr} ${kernelfile};"        \
-  " bootm\0"
+#define CONFIG_EXTRA_ENV_SETTINGS					\
+	"npe_ucode=50060000\0"						\
+	"mtd=IXP4XX-Flash.0:256k(uboot),128k(env),128k(ucode),2048k(linux),-(root)\0" \
+	"kerneladdr=50080000\0"						\
+	"kernelfile=ixdp425/uImage\0"					\
+	"rootfile=ixdp425/rootfs\0"					\
+	"rootaddr=50280000\0"						\
+	"loadaddr=10000\0"						\
+	"updateboot_ser=mw.b 10000 ff 40000;"				\
+	" loady ${loadaddr};"						\
+	" run eraseboot writeboot\0"					\
+	"updateboot_net=mw.b 10000 ff 40000;"				\
+	" tftp ${loadaddr} ixdp425/u-boot.bin;"				\
+	" run eraseboot writeboot\0"					\
+	"eraseboot=protect off 50000000 5003ffff;"			\
+	" erase 50000000 5003ffff\0"					\
+	"writeboot=cp.b 10000 50000000 ${filesize}\0"			\
+	"updateucode=loady;"						\
+	" era ${npe_ucode} +${filesize};"				\
+	" cp.b ${loadaddr} ${npe_ucode} ${filesize}\0"			\
+	"updateroot=tftp ${loadaddr} ${rootfile};"			\
+	" era ${rootaddr} +${filesize};"				\
+	" cp.b ${loadaddr} ${rootaddr} ${filesize}\0"			\
+	"updatekern=tftp ${loadaddr} ${kernelfile};"			\
+	" era ${kerneladdr} +${filesize};"				\
+	" cp.b ${loadaddr} ${kerneladdr} ${filesize}\0"			\
+	"flashargs=setenv bootargs mtdparts=${mtd} root=/dev/mtdblock4"	\
+	" rootfstype=squashfs,jffs2 init=/etc/preinit\0"		\
+	"netargs=setenv bootargs mtdparts=${mtd} root=/dev/mtdblock4"	\
+	" rootfstype=squashfs,jffs2 init=/etc/preinit\0"		\
+	"addtty=setenv bootargs ${bootargs} console=ttyS0,${baudrate}\0" \
+	"addeth=setenv bootargs ${bootargs} ethaddr=${ethaddr}\0"	\
+	"boot_flash=run flashargs addtty addeth;"			\
+	" bootm ${kerneladdr}\0"					\
+	"boot_net=run netargs addtty addeth;"				\
+	" tftpboot ${loadaddr} ${kernelfile};"				\
+	" bootm\0"
 
 /* additions for new relocation code, must be added to all boards */
-#define CONFIG_SYS_INIT_SP_ADDR           \
-  (CONFIG_SYS_SDRAM_BASE + 0x1000 - GENERATED_GBL_DATA_SIZE)
+#define CONFIG_SYS_INIT_SP_ADDR						\
+	(CONFIG_SYS_SDRAM_BASE + 0x1000 - GENERATED_GBL_DATA_SIZE)
 
 /*
  * GPIO settings
@@ -254,15 +254,15 @@
 #define CONFIG_SYS_GPIO_HSS0_IRQ_N      3
 #define CONFIG_SYS_GPIO_ETH0_IRQ_N      4
 #define CONFIG_SYS_GPIO_ETH1_IRQ_N      5
-#define CONFIG_SYS_GPIO_I2C_SCL         6
-#define CONFIG_SYS_GPIO_I2C_SDA         7
-#define CONFIG_SYS_GPIO_PCI_INTD_N  8
-#define CONFIG_SYS_GPIO_PCI_INTC_N  9
-#define CONFIG_SYS_GPIO_PCI_INTB_N  10
-#define CONFIG_SYS_GPIO_PCI_INTA_N  11
-#define CONFIG_SYS_GPIO_UTOPIA_GPIO0  12
-#define CONFIG_SYS_GPIO_PCI_RESET_N 13
-#define CONFIG_SYS_GPIO_PCI_CLK         14
-#define CONFIG_SYS_GPIO_EXTBUS_CLK  15
+#define CONFIG_SYS_GPIO_I2C_SCL	        6
+#define CONFIG_SYS_GPIO_I2C_SDA	        7
+#define CONFIG_SYS_GPIO_PCI_INTD_N	8
+#define CONFIG_SYS_GPIO_PCI_INTC_N	9
+#define CONFIG_SYS_GPIO_PCI_INTB_N	10
+#define CONFIG_SYS_GPIO_PCI_INTA_N	11
+#define CONFIG_SYS_GPIO_UTOPIA_GPIO0	12
+#define CONFIG_SYS_GPIO_PCI_RESET_N	13
+#define CONFIG_SYS_GPIO_PCI_CLK	        14
+#define CONFIG_SYS_GPIO_EXTBUS_CLK	15
 
 #endif  /* __CONFIG_H */

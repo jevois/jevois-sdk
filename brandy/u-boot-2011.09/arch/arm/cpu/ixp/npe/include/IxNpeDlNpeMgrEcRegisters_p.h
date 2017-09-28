@@ -4,16 +4,16 @@
  * @author Intel Corporation
  * @date 14 December 2001
 
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,7 +26,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -39,7 +39,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
 */
@@ -80,7 +80,7 @@
 
 
 /*
- * Instruction Memory Size (in words) for each NPE
+ * Instruction Memory Size (in words) for each NPE 
  */
 
 /**
@@ -103,7 +103,7 @@
 
 
 /*
- * Data Memory Size (in words) for each NPE
+ * Data Memory Size (in words) for each NPE 
  */
 
 /**
@@ -134,7 +134,7 @@
  * @brief Offset (in bytes) of EXAD (Execution Address) register from NPE Base
  *        Address
  */
-#define IX_NPEDL_REG_OFFSET_EXAD             0x00000000
+#define IX_NPEDL_REG_OFFSET_EXAD             0x00000000		
 
 /**
  * @def IX_NPEDL_REG_OFFSET_EXDATA
@@ -148,42 +148,42 @@
  * @brief Offset (in bytes) of EXCTL (Execution Control) register from NPE Base
  *        Address
  */
-#define IX_NPEDL_REG_OFFSET_EXCTL            0x00000008
+#define IX_NPEDL_REG_OFFSET_EXCTL            0x00000008		
 
 /**
  * @def IX_NPEDL_REG_OFFSET_EXCT
  * @brief Offset (in bytes) of EXCT (Execution Count) register from NPE Base
  *        Address
  */
-#define IX_NPEDL_REG_OFFSET_EXCT       0x0000000C
+#define IX_NPEDL_REG_OFFSET_EXCT 	     0x0000000C		
 
 /**
  * @def IX_NPEDL_REG_OFFSET_AP0
  * @brief Offset (in bytes) of AP0 (Action Point 0) register from NPE Base
  *        Address
  */
-#define IX_NPEDL_REG_OFFSET_AP0              0x00000010
+#define IX_NPEDL_REG_OFFSET_AP0	             0x00000010		
 
 /**
  * @def IX_NPEDL_REG_OFFSET_AP1
  * @brief Offset (in bytes) of AP1 (Action Point 1) register from NPE Base
  *        Address
  */
-#define IX_NPEDL_REG_OFFSET_AP1              0x00000014
+#define IX_NPEDL_REG_OFFSET_AP1	             0x00000014		
 
 /**
  * @def IX_NPEDL_REG_OFFSET_AP2
  * @brief Offset (in bytes) of AP2 (Action Point 2) register from NPE Base
  *        Address
  */
-#define IX_NPEDL_REG_OFFSET_AP2              0x00000018
+#define IX_NPEDL_REG_OFFSET_AP2	             0x00000018		
 
 /**
  * @def IX_NPEDL_REG_OFFSET_AP3
  * @brief Offset (in bytes) of AP3 (Action Point 3) register from NPE Base
  *        Address
  */
-#define IX_NPEDL_REG_OFFSET_AP3              0x0000001C
+#define IX_NPEDL_REG_OFFSET_AP3	             0x0000001C		
 
 /**
  * @def IX_NPEDL_REG_OFFSET_WFIFO
@@ -197,42 +197,42 @@
  * @brief Offset (in bytes) of WC (Watch Count) register from NPE Base
  *        Address
  */
-#define IX_NPEDL_REG_OFFSET_WC               0x00000024
+#define IX_NPEDL_REG_OFFSET_WC	             0x00000024 		
 
 /**
  * @def IX_NPEDL_REG_OFFSET_PROFCT
  * @brief Offset (in bytes) of PROFCT (Profile Count) register from NPE Base
  *        Address
  */
-#define IX_NPEDL_REG_OFFSET_PROFCT           0x00000028
+#define IX_NPEDL_REG_OFFSET_PROFCT           0x00000028		
 
 /**
  * @def IX_NPEDL_REG_OFFSET_STAT
  * @brief Offset (in bytes) of STAT (Messaging Status) register from NPE Base
  *        Address
  */
-#define IX_NPEDL_REG_OFFSET_STAT       0x0000002C
+#define IX_NPEDL_REG_OFFSET_STAT	     0x0000002C		
 
 /**
  * @def IX_NPEDL_REG_OFFSET_CTL
  * @brief Offset (in bytes) of CTL (Messaging Control) register from NPE Base
  *        Address
  */
-#define IX_NPEDL_REG_OFFSET_CTL              0x00000030
+#define IX_NPEDL_REG_OFFSET_CTL	             0x00000030		
 
 /**
  * @def IX_NPEDL_REG_OFFSET_MBST
  * @brief Offset (in bytes) of MBST (Mailbox Status) register from NPE Base
  *        Address
  */
-#define IX_NPEDL_REG_OFFSET_MBST       0x00000034
+#define IX_NPEDL_REG_OFFSET_MBST	     0x00000034		
 
 /**
  * @def IX_NPEDL_REG_OFFSET_FIFO
  * @brief Offset (in bytes) of FIFO (messaging in/out FIFO) register from NPE
  *        Base Address
  */
-#define IX_NPEDL_REG_OFFSET_FIFO       0x00000038
+#define IX_NPEDL_REG_OFFSET_FIFO	     0x00000038		
 
 
 /*
@@ -272,7 +272,7 @@
 
 
 /*
- * EXCTL (Execution Control) Register commands
+ * EXCTL (Execution Control) Register commands 
 */
 
 /**
@@ -379,26 +379,26 @@
 
 
 /*
- * Executing Context Stack (ECS) level registers
+ * Executing Context Stack (ECS) level registers 
  */
 
 /**
  * @def IX_NPEDL_ECS_BG_CTXT_REG_0
- * @brief Execution Access register address for register 0 at Backgound
+ * @brief Execution Access register address for register 0 at Backgound 
  *        Executing Context Stack level
  */
 #define IX_NPEDL_ECS_BG_CTXT_REG_0           0x00
 
 /**
  * @def IX_NPEDL_ECS_BG_CTXT_REG_1
- * @brief Execution Access register address for register 1 at Backgound
+ * @brief Execution Access register address for register 1 at Backgound 
  *        Executing Context Stack level
  */
 #define IX_NPEDL_ECS_BG_CTXT_REG_1           0x01
 
 /**
  * @def IX_NPEDL_ECS_BG_CTXT_REG_2
- * @brief Execution Access register address for register 2 at Backgound
+ * @brief Execution Access register address for register 2 at Backgound 
  *        Executing Context Stack level
  */
 #define IX_NPEDL_ECS_BG_CTXT_REG_2           0x02
@@ -454,21 +454,21 @@
 
 /**
  * @def IX_NPEDL_ECS_DBG_CTXT_REG_1
- * @brief Execution Access register address for register 1 at Debug
+ * @brief Execution Access register address for register 1 at Debug 
  *        Executing Context Stack level
  */
 #define IX_NPEDL_ECS_DBG_CTXT_REG_1          0x0D
 
 /**
  * @def IX_NPEDL_ECS_DBG_CTXT_REG_2
- * @brief Execution Access register address for register 2 at Debug
+ * @brief Execution Access register address for register 2 at Debug 
  *        Executing Context Stack level
  */
 #define IX_NPEDL_ECS_DBG_CTXT_REG_2          0x0E
 
 /**
  * @def IX_NPEDL_ECS_INSTRUCT_REG
- * @brief Execution Access register address for NPE Instruction Register
+ * @brief Execution Access register address for NPE Instruction Register 
  */
 #define IX_NPEDL_ECS_INSTRUCT_REG            0x11
 
@@ -614,7 +614,7 @@
  * @brief LSB-offset of NextPC field in Execution Access Register 0 of all ECS
  *        levels (except Debug ECS level)
  */
-#define IX_NPEDL_OFFSET_ECS_REG_0_NEXTPC     16
+#define IX_NPEDL_OFFSET_ECS_REG_0_NEXTPC     16 
 
 /**
  * @def IX_NPEDL_OFFSET_ECS_REG_0_LDUR
@@ -639,7 +639,7 @@
 
 
 /*
- * NPE core & co-processor instruction templates to load into NPE Instruction
+ * NPE core & co-processor instruction templates to load into NPE Instruction 
  * Register, for read/write of NPE register file registers
  */
 
@@ -689,7 +689,7 @@
  *        logical register.
  *        NPE Assembler instruction:  "cprd32 d0    &&& DBG_RdInFIFO"
  */
-#define IX_NPEDL_INSTR_RD_FIFO        0x0F888220
+#define IX_NPEDL_INSTR_RD_FIFO        0x0F888220    
 
 /**
  * @def IX_NPEDL_INSTR_RESET_MBOX
@@ -732,7 +732,7 @@
  * @brief Mask the bits of 16-bit data value (least-sig 5 bits) to be used in
  *        SRC field of immediate-mode NPE instruction
  */
-#define IX_NPEDL_MASK_IMMED_INSTR_SRC_DATA         0x1F
+#define IX_NPEDL_MASK_IMMED_INSTR_SRC_DATA         0x1F 
 
 /**
  * @def IX_NPEDL_MASK_IMMED_INSTR_COPROC_DATA
@@ -754,7 +754,7 @@
  *        data value into COPROC field of immediate-mode NPE instruction
  */
 #define IX_NPEDL_DISPLACE_IMMED_INSTR_COPROC_DATA \
-  (IX_NPEDL_OFFSET_INSTR_COPROC - IX_NPEDL_OFFSET_IMMED_INSTR_COPROC_DATA)
+     (IX_NPEDL_OFFSET_INSTR_COPROC - IX_NPEDL_OFFSET_IMMED_INSTR_COPROC_DATA)
 
 /**
  * @def IX_NPEDL_WR_INSTR_LDUR
@@ -777,11 +777,11 @@
  */
 typedef enum
 {
-  IX_NPEDL_CTXT_REG_STEVT = 0,  /**< identifies STEVT   */
-  IX_NPEDL_CTXT_REG_STARTPC,    /**< identifies STARTPC */
-  IX_NPEDL_CTXT_REG_REGMAP,     /**< identifies REGMAP  */
-  IX_NPEDL_CTXT_REG_CINDEX,     /**< identifies CINDEX  */
-  IX_NPEDL_CTXT_REG_MAX         /**< Total number of Context Store registers */
+    IX_NPEDL_CTXT_REG_STEVT = 0,  /**< identifies STEVT   */
+    IX_NPEDL_CTXT_REG_STARTPC,    /**< identifies STARTPC */
+    IX_NPEDL_CTXT_REG_REGMAP,     /**< identifies REGMAP  */
+    IX_NPEDL_CTXT_REG_CINDEX,     /**< identifies CINDEX  */
+    IX_NPEDL_CTXT_REG_MAX         /**< Total number of Context Store registers */
 } IxNpeDlCtxtRegNum;
 
 

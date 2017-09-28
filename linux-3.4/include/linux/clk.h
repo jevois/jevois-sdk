@@ -40,9 +40,9 @@ struct clk;
  *     completed.  Callbacks must always return NOTIFY_DONE.
  *
  */
-#define PRE_RATE_CHANGE     BIT(0)
-#define POST_RATE_CHANGE    BIT(1)
-#define ABORT_RATE_CHANGE   BIT(2)
+#define PRE_RATE_CHANGE			BIT(0)
+#define POST_RATE_CHANGE		BIT(1)
+#define ABORT_RATE_CHANGE		BIT(2)
 
 /**
  * struct clk_notifier - associate a clk with a notifier
@@ -56,9 +56,9 @@ struct clk;
  * @notifier_head.
  */
 struct clk_notifier {
-  struct clk   *   clk;
-  struct srcu_notifier_head notifier_head;
-  struct list_head    node;
+	struct clk			*clk;
+	struct srcu_notifier_head	notifier_head;
+	struct list_head		node;
 };
 
 /**
@@ -73,14 +73,14 @@ struct clk_notifier {
  * current rate (this was done to optimize the implementation).
  */
 struct clk_notifier_data {
-  struct clk  *  clk;
-  unsigned long   old_rate;
-  unsigned long   new_rate;
+	struct clk		*clk;
+	unsigned long		old_rate;
+	unsigned long		new_rate;
 };
 
-int clk_notifier_register (struct clk * clk, struct notifier_block * nb);
+int clk_notifier_register(struct clk *clk, struct notifier_block *nb);
 
-int clk_notifier_unregister (struct clk * clk, struct notifier_block * nb);
+int clk_notifier_unregister(struct clk *clk, struct notifier_block *nb);
 
 #endif /* !CONFIG_COMMON_CLK */
 
@@ -99,7 +99,7 @@ int clk_notifier_unregister (struct clk * clk, struct notifier_block * nb);
  *
  * clk_get should not be called from within interrupt context.
  */
-struct clk * clk_get (struct device * dev, const char * id);
+struct clk *clk_get(struct device *dev, const char *id);
 
 /**
  * clk_prepare - prepare a clock source
@@ -110,12 +110,12 @@ struct clk * clk_get (struct device * dev, const char * id);
  * Must not be called from within atomic context.
  */
 #ifdef CONFIG_HAVE_CLK_PREPARE
-int clk_prepare (struct clk * clk);
+int clk_prepare(struct clk *clk);
 #else
-static inline int clk_prepare (struct clk * clk)
+static inline int clk_prepare(struct clk *clk)
 {
-  might_sleep();
-  return 0;
+	might_sleep();
+	return 0;
 }
 #endif
 /**
@@ -136,7 +136,7 @@ static inline int clk_prepare (struct clk * clk)
  * The clock will automatically be freed when the device is unbound
  * from the bus.
  */
-struct clk * devm_clk_get (struct device * dev, const char * id);
+struct clk *devm_clk_get(struct device *dev, const char *id);
 
 /**
  * clk_enable - inform the system when the clock source should be running.
@@ -148,7 +148,7 @@ struct clk * devm_clk_get (struct device * dev, const char * id);
  *
  * Returns success (0) or negative errno.
  */
-int clk_enable (struct clk * clk);
+int clk_enable(struct clk *clk);
 
 /**
  * clk_disable - inform the system when the clock source is no longer required.
@@ -164,7 +164,7 @@ int clk_enable (struct clk * clk);
  * same number of clk_disable() calls for the clock source to be
  * disabled.
  */
-void clk_disable (struct clk * clk);
+void clk_disable(struct clk *clk);
 
 
 /**
@@ -177,45 +177,45 @@ void clk_disable (struct clk * clk);
  * Must not be called from within atomic context.
  */
 #ifdef CONFIG_HAVE_CLK_PREPARE
-void clk_unprepare (struct clk * clk);
+void clk_unprepare(struct clk *clk);
 #else
-static inline void clk_unprepare (struct clk * clk)
+static inline void clk_unprepare(struct clk *clk)
 {
-  might_sleep();
+	might_sleep();
 }
 #endif
 
 /* clk_prepare_enable helps cases using clk_enable in non-atomic context. */
-static inline int clk_prepare_enable (struct clk * clk)
+static inline int clk_prepare_enable(struct clk *clk)
 {
-  int ret;
-  
-  ret = clk_prepare (clk);
-  if (ret)
-  { return ret; }
-  ret = clk_enable (clk);
-  if (ret)
-  { clk_unprepare (clk); }
-  
-  return ret;
+	int ret;
+
+	ret = clk_prepare(clk);
+	if (ret)
+		return ret;
+	ret = clk_enable(clk);
+	if (ret)
+		clk_unprepare(clk);
+
+	return ret;
 }
 
 /* clk_disable_unprepare helps cases using clk_disable in non-atomic context. */
-static inline void clk_disable_unprepare (struct clk * clk)
+static inline void clk_disable_unprepare(struct clk *clk)
 {
-  clk_disable (clk);
-  clk_unprepare (clk);
+	clk_disable(clk);
+	clk_unprepare(clk);
 }
 
 /**
  * clk_get_rate - obtain the current clock rate (in Hz) for a clock source.
- *      This is only valid once the clock source has been enabled.
+ *		  This is only valid once the clock source has been enabled.
  * @clk: clock source
  */
-unsigned long clk_get_rate (struct clk * clk);
+unsigned long clk_get_rate(struct clk *clk);
 
 /**
- * clk_put  - "free" the clock source
+ * clk_put	- "free" the clock source
  * @clk: clock source
  *
  * Note: drivers must ensure that all clk_enable calls made on this
@@ -224,9 +224,9 @@ unsigned long clk_get_rate (struct clk * clk);
  *
  * clk_put should not be called from within interrupt context.
  */
-void clk_put (struct clk * clk);
+void clk_put(struct clk *clk);
 /**
- * devm_clk_put - "free" a managed clock source
+ * devm_clk_put	- "free" a managed clock source
  * @dev: device used to acuqire the clock
  * @clk: clock source acquired with devm_clk_get()
  *
@@ -236,7 +236,7 @@ void clk_put (struct clk * clk);
  *
  * clk_put should not be called from within interrupt context.
  */
-void devm_clk_put (struct device * dev, struct clk * clk);
+void devm_clk_put(struct device *dev, struct clk *clk);
 
 
 /*
@@ -251,8 +251,8 @@ void devm_clk_put (struct device * dev, struct clk * clk);
  *
  * Returns rounded clock rate in Hz, or negative errno.
  */
-long clk_round_rate (struct clk * clk, unsigned long rate);
-
+long clk_round_rate(struct clk *clk, unsigned long rate);
+ 
 /**
  * clk_set_rate - set the clock rate for a clock source
  * @clk: clock source
@@ -260,8 +260,8 @@ long clk_round_rate (struct clk * clk, unsigned long rate);
  *
  * Returns success (0) or negative errno.
  */
-int clk_set_rate (struct clk * clk, unsigned long rate);
-
+int clk_set_rate(struct clk *clk, unsigned long rate);
+ 
 /**
  * clk_set_parent - set the parent clock source for this clock
  * @clk: clock source
@@ -269,7 +269,7 @@ int clk_set_rate (struct clk * clk, unsigned long rate);
  *
  * Returns success (0) or negative errno.
  */
-int clk_set_parent (struct clk * clk, struct clk * parent);
+int clk_set_parent(struct clk *clk, struct clk *parent);
 
 /**
  * clk_get_parent - get the parent clock source for this clock
@@ -278,7 +278,7 @@ int clk_set_parent (struct clk * clk, struct clk * parent);
  * Returns struct clk corresponding to parent clock source, or
  * valid IS_ERR() condition containing errno.
  */
-struct clk * clk_get_parent (struct clk * clk);
+struct clk *clk_get_parent(struct clk *clk);
 
 /**
  * clk_get_sys - get a clock based upon the device name
@@ -295,7 +295,7 @@ struct clk * clk_get_parent (struct clk * clk);
  *
  * clk_get_sys should not be called from within interrupt context.
  */
-struct clk * clk_get_sys (const char * dev_id, const char * con_id);
+struct clk *clk_get_sys(const char *dev_id, const char *con_id);
 
 /**
  * clk_add_alias - add a new clock alias
@@ -307,7 +307,7 @@ struct clk * clk_get_sys (const char * dev_id, const char * con_id);
  * Allows using generic clock names for drivers by adding a new alias.
  * Assumes clkdev, see clkdev.h for more info.
  */
-int clk_add_alias (const char * alias, const char * alias_dev_name, char * id,
-                   struct device * dev);
+int clk_add_alias(const char *alias, const char *alias_dev_name, char *id,
+			struct device *dev);
 
 #endif

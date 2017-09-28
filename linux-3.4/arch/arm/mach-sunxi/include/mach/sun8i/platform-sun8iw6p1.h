@@ -108,7 +108,7 @@
 #define SUNXI_GIC_CPU_PBASE              0x01c82000
 #define SUNXI_CSI_PBASE                  0x01cb0000
 #define SUNXI_VEMEM_PBASE                0x01d00000
-#define SUNXI_HDMI_PBASE                 0x01ee0000
+#define SUNXI_HDMI_PBASE                 0x01ee0000 
 #define SUNXI_R_TIMER_PBASE              0x01f00800
 #define SUNXI_R_INTC_PBASE               0x01f00c00
 #define SUNXI_R_WDOG_PBASE               0x01f01000
@@ -188,7 +188,7 @@
 #define SUNXI_R_WDOG_VBASE               IO_ADDRESS(SUNXI_R_WDOG_PBASE       )
 #define SUNXI_R_PRCM_VBASE               IO_ADDRESS(SUNXI_R_PRCM_PBASE       )
 #define SUNXI_R_CPUCFG_VBASE             IO_ADDRESS(SUNXI_R_CPUCFG_PBASE    )
-#define SUNXI_CPUXCFG_VBASE              IO_ADDRESS(SUNXI_CPUXCFG_PBASE     )
+#define SUNXI_CPUXCFG_VBASE              IO_ADDRESS(SUNXI_CPUXCFG_PBASE     )   
 #define SUNXI_R_TWI_VBASE                IO_ADDRESS(SUNXI_R_TWI_PBASE        )
 #define SUNXI_R_UART_VBASE               IO_ADDRESS(SUNXI_R_UART_PBASE       )
 #define SUNXI_R_PIO_VBASE                IO_ADDRESS(SUNXI_R_PIO_PBASE        )
@@ -268,8 +268,8 @@
 #define SUNXI_UART_LOG(fmt, args...) do {} while(0)
 
 #define SUNXI_R_UART_LOG(fmt, args...)      \
-  do {                             \
-    aw_printk((u32)SUNXI_R_UART_PBASE, "[%s]"fmt"\n", __FUNCTION__, ##args); \
-  } while (0)
+        do {                             \
+                aw_printk((u32)SUNXI_R_UART_PBASE, "[%s]"fmt"\n", __FUNCTION__, ##args); \
+        } while (0)
 
 #endif    /* __PLATFORM_SUN8I_W6P1_H */

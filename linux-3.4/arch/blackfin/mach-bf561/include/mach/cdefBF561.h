@@ -1457,4 +1457,4 @@
 #define bfin_read_IMDMA_S1_IRQ_STATUS()      bfin_read16(IMDMA_S1_IRQ_STATUS)
 #define bfin_write_IMDMA_S1_IRQ_STATUS(val)  bfin_write16(IMDMA_S1_IRQ_STATUS,val)
 
-#endif        /* _CDEF_BF561_H */
+#endif				/* _CDEF_BF561_H */

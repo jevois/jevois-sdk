@@ -231,42 +231,42 @@
 
 typedef struct __DRAM_PARA
 {
-  unsigned int dram_clk;
-  unsigned int dram_type;    
-  unsigned int dram_zq;      
-  unsigned int dram_odt_en;
-  unsigned int dram_para1;   
-  unsigned int dram_para2;   
-  unsigned int dram_mr0;
-  unsigned int dram_mr1;
-  unsigned int dram_mr2;
-  unsigned int dram_mr3;
-  unsigned int dram_tpr0;
-  unsigned int dram_tpr1;
-  unsigned int dram_tpr2;
-  unsigned int dram_tpr3;
-  unsigned int dram_tpr4;    
-  unsigned int dram_tpr5;
-  unsigned int dram_tpr6;    
-  unsigned int dram_tpr7;
-  unsigned int dram_tpr8;
-  unsigned int dram_tpr9;
-  unsigned int dram_tpr10;
-  unsigned int dram_tpr11;
-  unsigned int dram_tpr12;
-  unsigned int dram_tpr13;
-  #ifdef CONFIG_ARCH_SUN8IW3P1
-  unsigned int high_freq;
-  #endif
+	unsigned int dram_clk;
+	unsigned int dram_type;    
+	unsigned int dram_zq;      
+	unsigned int dram_odt_en;
+	unsigned int dram_para1;   
+	unsigned int dram_para2;   
+	unsigned int dram_mr0;
+	unsigned int dram_mr1;
+	unsigned int dram_mr2;
+	unsigned int dram_mr3;
+	unsigned int dram_tpr0;
+	unsigned int dram_tpr1;
+	unsigned int dram_tpr2;
+	unsigned int dram_tpr3;
+	unsigned int dram_tpr4;    
+	unsigned int dram_tpr5;
+	unsigned int dram_tpr6;    
+	unsigned int dram_tpr7;
+	unsigned int dram_tpr8;
+	unsigned int dram_tpr9;
+	unsigned int dram_tpr10;
+	unsigned int dram_tpr11;
+	unsigned int dram_tpr12;
+	unsigned int dram_tpr13;
+#ifdef CONFIG_ARCH_SUN8IW3P1
+	unsigned int high_freq;
+#endif
 } __dram_para_t;
 
-static inline unsigned long ddr_save_sp (unsigned long new_sp)
+static inline unsigned long ddr_save_sp(unsigned long new_sp)
 {
-  unsigned long old_sp;
-  
-  asm volatile ("mov %0, sp" : "=r" (old_sp) );
-  asm volatile ("mov sp, %0" :: "r" (new_sp) );
-  return old_sp;
+	unsigned long old_sp;
+
+	asm volatile ("mov %0, sp" : "=r" (old_sp));
+	asm volatile ("mov sp, %0" :: "r" (new_sp));
+	return old_sp;
 }
 
 /* sp define */
@@ -276,19 +276,19 @@ static inline unsigned long ddr_save_sp (unsigned long new_sp)
 
 #define mctl_read_w(n)      (*((volatile unsigned int *)(n)))
 #ifdef CONFIG_ARCH_SUN8IW3P1
-#define mctl_write_w(n,c)   (*((volatile unsigned int *)(n)) = (c))
+	#define mctl_write_w(n,c)   (*((volatile unsigned int *)(n)) = (c))
 #else
-#define mctl_write_w(c,n)   (*((volatile unsigned int *)(n)) = (c))
+	#define mctl_write_w(c,n)   (*((volatile unsigned int *)(n)) = (c))
 #endif
 
 #if defined(CONFIG_ARCH_SUN9IW1P1) || defined(CONFIG_ARCH_SUN8IW7P1) || defined(CONFIG_DEVFREQ_DRAM_FREQ_LOW_POWER_SW) || defined(CONFIG_DEVFREQ_DRAM_FREQ_CFS_SW)
-extern int __sram mdfs_main (unsigned int jump, __dram_para_t * dram_para,
-                             unsigned int pll_para_from_dram, unsigned int div);
+extern int __sram mdfs_main(unsigned int jump, __dram_para_t *dram_para,
+				unsigned int pll_para_from_dram, unsigned int div);
 #endif
 
 #ifdef CONFIG_ARCH_SUN9IW1P1
-extern void prefetch_and_prediction_disable (void);
-extern void prefetch_and_prediction_enable (void);
+extern void prefetch_and_prediction_disable(void);
+extern void prefetch_and_prediction_enable(void);
 #endif
 
 #endif /* __MDFS_H__ */

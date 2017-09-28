@@ -19,7 +19,7 @@
 #include <proc/irq.h>
 
 /* this number is used when no interrupt has been assigned */
-#define NO_IRQ    INT_MAX
+#define NO_IRQ		INT_MAX
 
 /*
  * hardware irq numbers
@@ -28,12 +28,12 @@
 #ifdef CONFIG_MN10300_UNIT_ASB2364
 #include <unit/irq.h>
 #else
-#define NR_CPU_IRQS GxICR_NUM_IRQS
-#define NR_IRQS   NR_CPU_IRQS
+#define NR_CPU_IRQS	GxICR_NUM_IRQS
+#define NR_IRQS		NR_CPU_IRQS
 #endif
 
 /* external hardware irq numbers */
-#define NR_XIRQS  GxICR_NUM_XIRQS
+#define NR_XIRQS	GxICR_NUM_XIRQS
 
 #define irq_canonicalize(IRQ) (IRQ)
 

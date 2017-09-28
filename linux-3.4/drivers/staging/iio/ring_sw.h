@@ -25,6 +25,6 @@
 #define _IIO_RING_SW_H_
 #include "buffer.h"
 
-struct iio_buffer * iio_sw_rb_allocate (struct iio_dev * indio_dev);
-void iio_sw_rb_free (struct iio_buffer * ring);
+struct iio_buffer *iio_sw_rb_allocate(struct iio_dev *indio_dev);
+void iio_sw_rb_free(struct iio_buffer *ring);
 #endif /* _IIO_RING_SW_H_ */

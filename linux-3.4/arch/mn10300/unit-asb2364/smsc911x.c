@@ -18,41 +18,41 @@
 #include <unit/smsc911x.h>
 
 static struct smsc911x_platform_config smsc911x_config = {
-  .irq_polarity = SMSC911X_IRQ_POLARITY_ACTIVE_LOW,
-  .irq_type = SMSC911X_IRQ_TYPE_OPEN_DRAIN,
-  .flags    = SMSC911X_USE_32BIT,
+	.irq_polarity	= SMSC911X_IRQ_POLARITY_ACTIVE_LOW,
+	.irq_type	= SMSC911X_IRQ_TYPE_OPEN_DRAIN,
+	.flags		= SMSC911X_USE_32BIT,
 };
 
 static struct resource smsc911x_resources[] = {
-  [0] = {
-    .start  = SMSC911X_BASE,
-    .end  = SMSC911X_BASE_END,
-    .flags  = IORESOURCE_MEM,
-  },
-  [1] = {
-    .start  = SMSC911X_IRQ,
-    .end  = SMSC911X_IRQ,
-    .flags  = IORESOURCE_IRQ,
-  },
+	[0] = {
+		.start	= SMSC911X_BASE,
+		.end	= SMSC911X_BASE_END,
+		.flags	= IORESOURCE_MEM,
+	},
+	[1] = {
+		.start	= SMSC911X_IRQ,
+		.end	= SMSC911X_IRQ,
+		.flags	= IORESOURCE_IRQ,
+	},
 };
 
 static struct platform_device smsc911x_device = {
-  .name   = "smsc911x",
-  .id   = 0,
-  .num_resources  = ARRAY_SIZE (smsc911x_resources),
-  .resource = smsc911x_resources,
-  .dev    = {
-    .platform_data = &smsc911x_config,
-  }
+	.name		= "smsc911x",
+	.id		= 0,
+	.num_resources	= ARRAY_SIZE(smsc911x_resources),
+	.resource	= smsc911x_resources,
+	.dev		= {
+		.platform_data = &smsc911x_config,
+	}
 };
 
 /*
  * add platform devices
  */
-static int __init unit_device_init (void)
+static int __init unit_device_init(void)
 {
-  platform_device_register (&smsc911x_device);
-  return 0;
+	platform_device_register(&smsc911x_device);
+	return 0;
 }
 
-device_initcall (unit_device_init);
+device_initcall(unit_device_init);

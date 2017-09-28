@@ -99,21 +99,21 @@
 
 typedef struct _MSG_SMP_PASSTHROUGH_REQUEST
 {
-  U8                      PassthroughFlags;   /* 00h */
-  U8                      PhysicalPort;       /* 01h */
-  U8                      ChainOffset;        /* 02h */
-  U8                      Function;           /* 03h */
-  U16                     RequestDataLength;  /* 04h */
-  U8                      ConnectionRate;     /* 06h */
-  U8                      MsgFlags;           /* 07h */
-  U32                     MsgContext;         /* 08h */
-  U32                     Reserved1;          /* 0Ch */
-  U64                     SASAddress;         /* 10h */
-  U32                     Reserved2;          /* 18h */
-  U32                     Reserved3;          /* 1Ch */
-  SGE_SIMPLE_UNION        SGL;                /* 20h */
+    U8                      PassthroughFlags;   /* 00h */
+    U8                      PhysicalPort;       /* 01h */
+    U8                      ChainOffset;        /* 02h */
+    U8                      Function;           /* 03h */
+    U16                     RequestDataLength;  /* 04h */
+    U8                      ConnectionRate;     /* 06h */
+    U8                      MsgFlags;           /* 07h */
+    U32                     MsgContext;         /* 08h */
+    U32                     Reserved1;          /* 0Ch */
+    U64                     SASAddress;         /* 10h */
+    U32                     Reserved2;          /* 18h */
+    U32                     Reserved3;          /* 1Ch */
+    SGE_SIMPLE_UNION        SGL;                /* 20h */
 } MSG_SMP_PASSTHROUGH_REQUEST, MPI_POINTER PTR_MSG_SMP_PASSTHROUGH_REQUEST,
-SmpPassthroughRequest_t, MPI_POINTER pSmpPassthroughRequest_t;
+  SmpPassthroughRequest_t, MPI_POINTER pSmpPassthroughRequest_t;
 
 /* values for PassthroughFlags field */
 #define MPI_SMP_PT_REQ_PT_FLAGS_IMMEDIATE       (0x80)
@@ -127,22 +127,22 @@ SmpPassthroughRequest_t, MPI_POINTER pSmpPassthroughRequest_t;
 /* Serial Management Protocol Passthrough Reply */
 typedef struct _MSG_SMP_PASSTHROUGH_REPLY
 {
-  U8                      PassthroughFlags;   /* 00h */
-  U8                      PhysicalPort;       /* 01h */
-  U8                      MsgLength;          /* 02h */
-  U8                      Function;           /* 03h */
-  U16                     ResponseDataLength; /* 04h */
-  U8                      Reserved1;          /* 06h */
-  U8                      MsgFlags;           /* 07h */
-  U32                     MsgContext;         /* 08h */
-  U8                      Reserved2;          /* 0Ch */
-  U8                      SASStatus;          /* 0Dh */
-  U16                     IOCStatus;          /* 0Eh */
-  U32                     IOCLogInfo;         /* 10h */
-  U32                     Reserved3;          /* 14h */
-  U8                      ResponseData[4];    /* 18h */
+    U8                      PassthroughFlags;   /* 00h */
+    U8                      PhysicalPort;       /* 01h */
+    U8                      MsgLength;          /* 02h */
+    U8                      Function;           /* 03h */
+    U16                     ResponseDataLength; /* 04h */
+    U8                      Reserved1;          /* 06h */
+    U8                      MsgFlags;           /* 07h */
+    U32                     MsgContext;         /* 08h */
+    U8                      Reserved2;          /* 0Ch */
+    U8                      SASStatus;          /* 0Dh */
+    U16                     IOCStatus;          /* 0Eh */
+    U32                     IOCLogInfo;         /* 10h */
+    U32                     Reserved3;          /* 14h */
+    U8                      ResponseData[4];    /* 18h */
 } MSG_SMP_PASSTHROUGH_REPLY, MPI_POINTER PTR_MSG_SMP_PASSTHROUGH_REPLY,
-SmpPassthroughReply_t, MPI_POINTER pSmpPassthroughReply_t;
+  SmpPassthroughReply_t, MPI_POINTER pSmpPassthroughReply_t;
 
 #define MPI_SMP_PT_REPLY_PT_FLAGS_IMMEDIATE     (0x80)
 
@@ -153,22 +153,22 @@ SmpPassthroughReply_t, MPI_POINTER pSmpPassthroughReply_t;
 
 typedef struct _MSG_SATA_PASSTHROUGH_REQUEST
 {
-  U8                      TargetID;           /* 00h */
-  U8                      Bus;                /* 01h */
-  U8                      ChainOffset;        /* 02h */
-  U8                      Function;           /* 03h */
-  U16                     PassthroughFlags;   /* 04h */
-  U8                      ConnectionRate;     /* 06h */
-  U8                      MsgFlags;           /* 07h */
-  U32                     MsgContext;         /* 08h */
-  U32                     Reserved1;          /* 0Ch */
-  U32                     Reserved2;          /* 10h */
-  U32                     Reserved3;          /* 14h */
-  U32                     DataLength;         /* 18h */
-  U8                      CommandFIS[20];     /* 1Ch */
-  SGE_SIMPLE_UNION        SGL;                /* 30h */
+    U8                      TargetID;           /* 00h */
+    U8                      Bus;                /* 01h */
+    U8                      ChainOffset;        /* 02h */
+    U8                      Function;           /* 03h */
+    U16                     PassthroughFlags;   /* 04h */
+    U8                      ConnectionRate;     /* 06h */
+    U8                      MsgFlags;           /* 07h */
+    U32                     MsgContext;         /* 08h */
+    U32                     Reserved1;          /* 0Ch */
+    U32                     Reserved2;          /* 10h */
+    U32                     Reserved3;          /* 14h */
+    U32                     DataLength;         /* 18h */
+    U8                      CommandFIS[20];     /* 1Ch */
+    SGE_SIMPLE_UNION        SGL;                /* 30h */
 } MSG_SATA_PASSTHROUGH_REQUEST, MPI_POINTER PTR_MSG_SATA_PASSTHROUGH_REQUEST,
-SataPassthroughRequest_t, MPI_POINTER pSataPassthroughRequest_t;
+  SataPassthroughRequest_t, MPI_POINTER pSataPassthroughRequest_t;
 
 /* values for PassthroughFlags field */
 #define MPI_SATA_PT_REQ_PT_FLAGS_RESET_DEVICE   (0x0200)
@@ -190,23 +190,23 @@ SataPassthroughRequest_t, MPI_POINTER pSataPassthroughRequest_t;
 /* SATA Passthrough Reply */
 typedef struct _MSG_SATA_PASSTHROUGH_REPLY
 {
-  U8                      TargetID;           /* 00h */
-  U8                      Bus;                /* 01h */
-  U8                      MsgLength;          /* 02h */
-  U8                      Function;           /* 03h */
-  U16                     PassthroughFlags;   /* 04h */
-  U8                      Reserved1;          /* 06h */
-  U8                      MsgFlags;           /* 07h */
-  U32                     MsgContext;         /* 08h */
-  U8                      Reserved2;          /* 0Ch */
-  U8                      SASStatus;          /* 0Dh */
-  U16                     IOCStatus;          /* 0Eh */
-  U32                     IOCLogInfo;         /* 10h */
-  U8                      StatusFIS[20];      /* 14h */
-  U32                     StatusControlRegisters; /* 28h */
-  U32                     TransferCount;      /* 2Ch */
+    U8                      TargetID;           /* 00h */
+    U8                      Bus;                /* 01h */
+    U8                      MsgLength;          /* 02h */
+    U8                      Function;           /* 03h */
+    U16                     PassthroughFlags;   /* 04h */
+    U8                      Reserved1;          /* 06h */
+    U8                      MsgFlags;           /* 07h */
+    U32                     MsgContext;         /* 08h */
+    U8                      Reserved2;          /* 0Ch */
+    U8                      SASStatus;          /* 0Dh */
+    U16                     IOCStatus;          /* 0Eh */
+    U32                     IOCLogInfo;         /* 10h */
+    U8                      StatusFIS[20];      /* 14h */
+    U32                     StatusControlRegisters; /* 28h */
+    U32                     TransferCount;      /* 2Ch */
 } MSG_SATA_PASSTHROUGH_REPLY, MPI_POINTER PTR_MSG_SATA_PASSTHROUGH_REPLY,
-SataPassthroughReply_t, MPI_POINTER pSataPassthroughReply_t;
+  SataPassthroughReply_t, MPI_POINTER pSataPassthroughReply_t;
 
 
 
@@ -217,23 +217,23 @@ SataPassthroughReply_t, MPI_POINTER pSataPassthroughReply_t;
 
 typedef struct _MSG_SAS_IOUNIT_CONTROL_REQUEST
 {
-  U8                      Operation;          /* 00h */
-  U8                      Reserved1;          /* 01h */
-  U8                      ChainOffset;        /* 02h */
-  U8                      Function;           /* 03h */
-  U16                     DevHandle;          /* 04h */
-  U8                      IOCParameter;       /* 06h */
-  U8                      MsgFlags;           /* 07h */
-  U32                     MsgContext;         /* 08h */
-  U8                      TargetID;           /* 0Ch */
-  U8                      Bus;                /* 0Dh */
-  U8                      PhyNum;             /* 0Eh */
-  U8                      PrimFlags;          /* 0Fh */
-  U32                     Primitive;          /* 10h */
-  U64                     SASAddress;         /* 14h */
-  U32                     IOCParameterValue;  /* 1Ch */
+    U8                      Operation;          /* 00h */
+    U8                      Reserved1;          /* 01h */
+    U8                      ChainOffset;        /* 02h */
+    U8                      Function;           /* 03h */
+    U16                     DevHandle;          /* 04h */
+    U8                      IOCParameter;       /* 06h */
+    U8                      MsgFlags;           /* 07h */
+    U32                     MsgContext;         /* 08h */
+    U8                      TargetID;           /* 0Ch */
+    U8                      Bus;                /* 0Dh */
+    U8                      PhyNum;             /* 0Eh */
+    U8                      PrimFlags;          /* 0Fh */
+    U32                     Primitive;          /* 10h */
+    U64                     SASAddress;         /* 14h */
+    U32                     IOCParameterValue;  /* 1Ch */
 } MSG_SAS_IOUNIT_CONTROL_REQUEST, MPI_POINTER PTR_MSG_SAS_IOUNIT_CONTROL_REQUEST,
-SasIoUnitControlRequest_t, MPI_POINTER pSasIoUnitControlRequest_t;
+  SasIoUnitControlRequest_t, MPI_POINTER pSasIoUnitControlRequest_t;
 
 /* values for the Operation field */
 #define MPI_SAS_OP_CLEAR_NOT_PRESENT            (0x01)
@@ -259,19 +259,19 @@ SasIoUnitControlRequest_t, MPI_POINTER pSasIoUnitControlRequest_t;
 /* SAS IO Unit Control Reply */
 typedef struct _MSG_SAS_IOUNIT_CONTROL_REPLY
 {
-  U8                      Operation;          /* 00h */
-  U8                      Reserved1;          /* 01h */
-  U8                      MsgLength;          /* 02h */
-  U8                      Function;           /* 03h */
-  U16                     DevHandle;          /* 04h */
-  U8                      IOCParameter;       /* 06h */
-  U8                      MsgFlags;           /* 07h */
-  U32                     MsgContext;         /* 08h */
-  U16                     Reserved4;          /* 0Ch */
-  U16                     IOCStatus;          /* 0Eh */
-  U32                     IOCLogInfo;         /* 10h */
+    U8                      Operation;          /* 00h */
+    U8                      Reserved1;          /* 01h */
+    U8                      MsgLength;          /* 02h */
+    U8                      Function;           /* 03h */
+    U16                     DevHandle;          /* 04h */
+    U8                      IOCParameter;       /* 06h */
+    U8                      MsgFlags;           /* 07h */
+    U32                     MsgContext;         /* 08h */
+    U16                     Reserved4;          /* 0Ch */
+    U16                     IOCStatus;          /* 0Eh */
+    U32                     IOCLogInfo;         /* 10h */
 } MSG_SAS_IOUNIT_CONTROL_REPLY, MPI_POINTER PTR_MSG_SAS_IOUNIT_CONTROL_REPLY,
-SasIoUnitControlReply_t, MPI_POINTER pSasIoUnitControlReply_t;
+  SasIoUnitControlReply_t, MPI_POINTER pSasIoUnitControlReply_t;
 
 #endif
 

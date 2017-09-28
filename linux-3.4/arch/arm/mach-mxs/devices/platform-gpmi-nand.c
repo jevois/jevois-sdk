@@ -23,59 +23,59 @@
 
 #ifdef CONFIG_SOC_IMX23
 const struct mxs_gpmi_nand_data mx23_gpmi_nand_data __initconst = {
-  .devid = "imx23-gpmi-nand",
-  .res = {
-    /* GPMI */
-    DEFINE_RES_MEM_NAMED (MX23_GPMI_BASE_ADDR, SZ_8K,
-    GPMI_NAND_GPMI_REGS_ADDR_RES_NAME),
-    DEFINE_RES_IRQ_NAMED (MX23_INT_GPMI_ATTENTION,
-    GPMI_NAND_GPMI_INTERRUPT_RES_NAME),
-    /* BCH */
-    DEFINE_RES_MEM_NAMED (MX23_BCH_BASE_ADDR, SZ_8K,
-    GPMI_NAND_BCH_REGS_ADDR_RES_NAME),
-    DEFINE_RES_IRQ_NAMED (MX23_INT_BCH,
-    GPMI_NAND_BCH_INTERRUPT_RES_NAME),
-    /* DMA */
-    DEFINE_RES_NAMED (MX23_DMA_GPMI0,
-    MX23_DMA_GPMI3 - MX23_DMA_GPMI0 + 1,
-    GPMI_NAND_DMA_CHANNELS_RES_NAME,
-    IORESOURCE_DMA),
-    DEFINE_RES_IRQ_NAMED (MX23_INT_GPMI_DMA,
-    GPMI_NAND_DMA_INTERRUPT_RES_NAME),
-  },
+	.devid = "imx23-gpmi-nand",
+	.res = {
+		/* GPMI */
+		DEFINE_RES_MEM_NAMED(MX23_GPMI_BASE_ADDR, SZ_8K,
+					GPMI_NAND_GPMI_REGS_ADDR_RES_NAME),
+		DEFINE_RES_IRQ_NAMED(MX23_INT_GPMI_ATTENTION,
+					GPMI_NAND_GPMI_INTERRUPT_RES_NAME),
+		/* BCH */
+		DEFINE_RES_MEM_NAMED(MX23_BCH_BASE_ADDR, SZ_8K,
+					GPMI_NAND_BCH_REGS_ADDR_RES_NAME),
+		DEFINE_RES_IRQ_NAMED(MX23_INT_BCH,
+					GPMI_NAND_BCH_INTERRUPT_RES_NAME),
+		/* DMA */
+		DEFINE_RES_NAMED(MX23_DMA_GPMI0,
+					MX23_DMA_GPMI3 - MX23_DMA_GPMI0 + 1,
+					GPMI_NAND_DMA_CHANNELS_RES_NAME,
+					IORESOURCE_DMA),
+		DEFINE_RES_IRQ_NAMED(MX23_INT_GPMI_DMA,
+					GPMI_NAND_DMA_INTERRUPT_RES_NAME),
+	},
 };
 #endif
 
 #ifdef CONFIG_SOC_IMX28
 const struct mxs_gpmi_nand_data mx28_gpmi_nand_data __initconst = {
-  .devid = "imx28-gpmi-nand",
-  .res = {
-    /* GPMI */
-    DEFINE_RES_MEM_NAMED (MX28_GPMI_BASE_ADDR, SZ_8K,
-    GPMI_NAND_GPMI_REGS_ADDR_RES_NAME),
-    DEFINE_RES_IRQ_NAMED (MX28_INT_GPMI,
-    GPMI_NAND_GPMI_INTERRUPT_RES_NAME),
-    /* BCH */
-    DEFINE_RES_MEM_NAMED (MX28_BCH_BASE_ADDR, SZ_8K,
-    GPMI_NAND_BCH_REGS_ADDR_RES_NAME),
-    DEFINE_RES_IRQ_NAMED (MX28_INT_BCH,
-    GPMI_NAND_BCH_INTERRUPT_RES_NAME),
-    /* DMA */
-    DEFINE_RES_NAMED (MX28_DMA_GPMI0,
-    MX28_DMA_GPMI7 - MX28_DMA_GPMI0 + 1,
-    GPMI_NAND_DMA_CHANNELS_RES_NAME,
-    IORESOURCE_DMA),
-    DEFINE_RES_IRQ_NAMED (MX28_INT_GPMI_DMA,
-    GPMI_NAND_DMA_INTERRUPT_RES_NAME),
-  },
+	.devid = "imx28-gpmi-nand",
+	.res = {
+		/* GPMI */
+		DEFINE_RES_MEM_NAMED(MX28_GPMI_BASE_ADDR, SZ_8K,
+					GPMI_NAND_GPMI_REGS_ADDR_RES_NAME),
+		DEFINE_RES_IRQ_NAMED(MX28_INT_GPMI,
+					GPMI_NAND_GPMI_INTERRUPT_RES_NAME),
+		/* BCH */
+		DEFINE_RES_MEM_NAMED(MX28_BCH_BASE_ADDR, SZ_8K,
+					GPMI_NAND_BCH_REGS_ADDR_RES_NAME),
+		DEFINE_RES_IRQ_NAMED(MX28_INT_BCH,
+					GPMI_NAND_BCH_INTERRUPT_RES_NAME),
+		/* DMA */
+		DEFINE_RES_NAMED(MX28_DMA_GPMI0,
+					MX28_DMA_GPMI7 - MX28_DMA_GPMI0 + 1,
+					GPMI_NAND_DMA_CHANNELS_RES_NAME,
+					IORESOURCE_DMA),
+		DEFINE_RES_IRQ_NAMED(MX28_INT_GPMI_DMA,
+					GPMI_NAND_DMA_INTERRUPT_RES_NAME),
+	},
 };
 #endif
 
-struct platform_device * __init
-mxs_add_gpmi_nand (const struct gpmi_nand_platform_data * pdata,
-                   const struct mxs_gpmi_nand_data * data)
+struct platform_device *__init
+mxs_add_gpmi_nand(const struct gpmi_nand_platform_data *pdata,
+		const struct mxs_gpmi_nand_data *data)
 {
-  return mxs_add_platform_device_dmamask (data->devid, -1,
-                                          data->res, GPMI_NAND_RES_SIZE,
-                                          pdata, sizeof (*pdata), DMA_BIT_MASK (32) );
+	return mxs_add_platform_device_dmamask(data->devid, -1,
+				data->res, GPMI_NAND_RES_SIZE,
+				pdata, sizeof(*pdata), DMA_BIT_MASK(32));
 }

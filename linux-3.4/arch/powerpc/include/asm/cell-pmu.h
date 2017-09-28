@@ -65,39 +65,39 @@
 #define CBE_PM_CTR_OVERFLOW_INTR(ctr)      (1 << (31 - ((ctr) & 7)))
 
 enum pm_reg_name {
-  group_control,
-  debug_bus_control,
-  trace_address,
-  ext_tr_timer,
-  pm_status,
-  pm_control,
-  pm_interval,
-  pm_start_stop,
+	group_control,
+	debug_bus_control,
+	trace_address,
+	ext_tr_timer,
+	pm_status,
+	pm_control,
+	pm_interval,
+	pm_start_stop,
 };
 
 /* Routines for reading/writing the PMU registers. */
-extern u32  cbe_read_phys_ctr (u32 cpu, u32 phys_ctr);
-extern void cbe_write_phys_ctr (u32 cpu, u32 phys_ctr, u32 val);
-extern u32  cbe_read_ctr (u32 cpu, u32 ctr);
-extern void cbe_write_ctr (u32 cpu, u32 ctr, u32 val);
+extern u32  cbe_read_phys_ctr(u32 cpu, u32 phys_ctr);
+extern void cbe_write_phys_ctr(u32 cpu, u32 phys_ctr, u32 val);
+extern u32  cbe_read_ctr(u32 cpu, u32 ctr);
+extern void cbe_write_ctr(u32 cpu, u32 ctr, u32 val);
 
-extern u32  cbe_read_pm07_control (u32 cpu, u32 ctr);
-extern void cbe_write_pm07_control (u32 cpu, u32 ctr, u32 val);
-extern u32  cbe_read_pm (u32 cpu, enum pm_reg_name reg);
-extern void cbe_write_pm (u32 cpu, enum pm_reg_name reg, u32 val);
+extern u32  cbe_read_pm07_control(u32 cpu, u32 ctr);
+extern void cbe_write_pm07_control(u32 cpu, u32 ctr, u32 val);
+extern u32  cbe_read_pm(u32 cpu, enum pm_reg_name reg);
+extern void cbe_write_pm(u32 cpu, enum pm_reg_name reg, u32 val);
 
-extern u32  cbe_get_ctr_size (u32 cpu, u32 phys_ctr);
-extern void cbe_set_ctr_size (u32 cpu, u32 phys_ctr, u32 ctr_size);
+extern u32  cbe_get_ctr_size(u32 cpu, u32 phys_ctr);
+extern void cbe_set_ctr_size(u32 cpu, u32 phys_ctr, u32 ctr_size);
 
-extern void cbe_enable_pm (u32 cpu);
-extern void cbe_disable_pm (u32 cpu);
+extern void cbe_enable_pm(u32 cpu);
+extern void cbe_disable_pm(u32 cpu);
 
-extern void cbe_read_trace_buffer (u32 cpu, u64 * buf);
+extern void cbe_read_trace_buffer(u32 cpu, u64 *buf);
 
-extern void cbe_enable_pm_interrupts (u32 cpu, u32 thread, u32 mask);
-extern void cbe_disable_pm_interrupts (u32 cpu);
-extern u32  cbe_get_and_clear_pm_interrupts (u32 cpu);
-extern void cbe_sync_irq (int node);
+extern void cbe_enable_pm_interrupts(u32 cpu, u32 thread, u32 mask);
+extern void cbe_disable_pm_interrupts(u32 cpu);
+extern u32  cbe_get_and_clear_pm_interrupts(u32 cpu);
+extern void cbe_sync_irq(int node);
 
 #define CBE_COUNT_SUPERVISOR_MODE       0
 #define CBE_COUNT_HYPERVISOR_MODE       1

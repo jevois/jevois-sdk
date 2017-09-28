@@ -40,104 +40,104 @@
 #include "generic.h"
 
 
-static void __init csb637_init_early (void)
+static void __init csb637_init_early(void)
 {
-  /* Initialize processor: 3.6864 MHz crystal */
-  at91_initialize (3686400);
-  
-  /* DBGU on ttyS0. (Rx & Tx only) */
-  at91_register_uart (0, 0, 0);
-  
-  /* make console=ttyS0 (ie, DBGU) the default */
-  at91_set_serial_console (0);
+	/* Initialize processor: 3.6864 MHz crystal */
+	at91_initialize(3686400);
+
+	/* DBGU on ttyS0. (Rx & Tx only) */
+	at91_register_uart(0, 0, 0);
+
+	/* make console=ttyS0 (ie, DBGU) the default */
+	at91_set_serial_console(0);
 }
 
 static struct macb_platform_data __initdata csb637_eth_data = {
-  .phy_irq_pin  = AT91_PIN_PC0,
-  .is_rmii  = 0,
+	.phy_irq_pin	= AT91_PIN_PC0,
+	.is_rmii	= 0,
 };
 
 static struct at91_usbh_data __initdata csb637_usbh_data = {
-  .ports    = 2,
-  .vbus_pin = { -EINVAL, -EINVAL},
-  .overcurrent_pin = { -EINVAL, -EINVAL},
+	.ports		= 2,
+	.vbus_pin	= {-EINVAL, -EINVAL},
+	.overcurrent_pin= {-EINVAL, -EINVAL},
 };
 
 static struct at91_udc_data __initdata csb637_udc_data = {
-  .vbus_pin     = AT91_PIN_PB28,
-  .pullup_pin   = AT91_PIN_PB1,
+	.vbus_pin     = AT91_PIN_PB28,
+	.pullup_pin   = AT91_PIN_PB1,
 };
 
-#define CSB_FLASH_BASE  AT91_CHIPSELECT_0
-#define CSB_FLASH_SIZE  SZ_16M
+#define CSB_FLASH_BASE	AT91_CHIPSELECT_0
+#define CSB_FLASH_SIZE	SZ_16M
 
 static struct mtd_partition csb_flash_partitions[] = {
-  {
-    .name   = "uMON flash",
-    .offset   = 0,
-    .size   = MTDPART_SIZ_FULL,
-    .mask_flags = MTD_WRITEABLE,  /* read only */
-  }
+	{
+		.name		= "uMON flash",
+		.offset		= 0,
+		.size		= MTDPART_SIZ_FULL,
+		.mask_flags	= MTD_WRITEABLE,	/* read only */
+	}
 };
 
 static struct physmap_flash_data csb_flash_data = {
-  .width    = 2,
-  .parts    = csb_flash_partitions,
-  .nr_parts = ARRAY_SIZE (csb_flash_partitions),
+	.width		= 2,
+	.parts		= csb_flash_partitions,
+	.nr_parts	= ARRAY_SIZE(csb_flash_partitions),
 };
 
 static struct resource csb_flash_resources[] = {
-  {
-    .start  = CSB_FLASH_BASE,
-    .end  = CSB_FLASH_BASE + CSB_FLASH_SIZE - 1,
-    .flags  = IORESOURCE_MEM,
-  }
+	{
+		.start	= CSB_FLASH_BASE,
+		.end	= CSB_FLASH_BASE + CSB_FLASH_SIZE - 1,
+		.flags	= IORESOURCE_MEM,
+	}
 };
 
 static struct platform_device csb_flash = {
-  .name   = "physmap-flash",
-  .id   = 0,
-  .dev    = {
-    .platform_data = &csb_flash_data,
-  },
-  .resource = csb_flash_resources,
-  .num_resources  = ARRAY_SIZE (csb_flash_resources),
+	.name		= "physmap-flash",
+	.id		= 0,
+	.dev		= {
+				.platform_data = &csb_flash_data,
+			},
+	.resource	= csb_flash_resources,
+	.num_resources	= ARRAY_SIZE(csb_flash_resources),
 };
 
 static struct gpio_led csb_leds[] = {
-  { /* "d1", red */
-    .name     = "d1",
-    .gpio     = AT91_PIN_PB2,
-    .active_low   = 1,
-    .default_trigger  = "heartbeat",
-  },
+	{	/* "d1", red */
+		.name			= "d1",
+		.gpio			= AT91_PIN_PB2,
+		.active_low		= 1,
+		.default_trigger	= "heartbeat",
+	},
 };
 
-static void __init csb637_board_init (void)
+static void __init csb637_board_init(void)
 {
-  /* LED(s) */
-  at91_gpio_leds (csb_leds, ARRAY_SIZE (csb_leds) );
-  /* Serial */
-  at91_add_device_serial();
-  /* Ethernet */
-  at91_add_device_eth (&csb637_eth_data);
-  /* USB Host */
-  at91_add_device_usbh (&csb637_usbh_data);
-  /* USB Device */
-  at91_add_device_udc (&csb637_udc_data);
-  /* I2C */
-  at91_add_device_i2c (NULL, 0);
-  /* SPI */
-  at91_add_device_spi (NULL, 0);
-  /* NOR flash */
-  platform_device_register (&csb_flash);
+	/* LED(s) */
+	at91_gpio_leds(csb_leds, ARRAY_SIZE(csb_leds));
+	/* Serial */
+	at91_add_device_serial();
+	/* Ethernet */
+	at91_add_device_eth(&csb637_eth_data);
+	/* USB Host */
+	at91_add_device_usbh(&csb637_usbh_data);
+	/* USB Device */
+	at91_add_device_udc(&csb637_udc_data);
+	/* I2C */
+	at91_add_device_i2c(NULL, 0);
+	/* SPI */
+	at91_add_device_spi(NULL, 0);
+	/* NOR flash */
+	platform_device_register(&csb_flash);
 }
 
-MACHINE_START (CSB637, "Cogent CSB637")
-/* Maintainer: Bill Gatliff */
-.timer    = &at91rm9200_timer,
- .map_io   = at91_map_io,
-  .init_early = csb637_init_early,
-   .init_irq = at91_init_irq_default,
-    .init_machine = csb637_board_init,
-     MACHINE_END
+MACHINE_START(CSB637, "Cogent CSB637")
+	/* Maintainer: Bill Gatliff */
+	.timer		= &at91rm9200_timer,
+	.map_io		= at91_map_io,
+	.init_early	= csb637_init_early,
+	.init_irq	= at91_init_irq_default,
+	.init_machine	= csb637_board_init,
+MACHINE_END

@@ -28,7 +28,7 @@
 #define  ARMV7_FIQ_MODE           0x11
 #define  ARMV7_IRQ_MODE           0x12
 #define  ARMV7_SVC_MODE           0x13
-#define  ARMV7_MON_MODE           0x16
+#define  ARMV7_MON_MODE        	  0x16
 #define  ARMV7_ABT_MODE           0x17
 #define  ARMV7_UND_MODE           0x1b
 #define  ARMV7_SYSTEM_MODE        0x1f

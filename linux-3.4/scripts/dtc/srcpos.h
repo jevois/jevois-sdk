@@ -23,46 +23,46 @@
 #include <stdio.h>
 
 struct srcfile_state {
-  FILE * f;
-  char * name;
-  char * dir;
-  int lineno, colno;
-  struct srcfile_state * prev;
+	FILE *f;
+	char *name;
+	char *dir;
+	int lineno, colno;
+	struct srcfile_state *prev;
 };
 
-extern FILE * depfile; /* = NULL */
-extern struct srcfile_state * current_srcfile; /* = NULL */
+extern FILE *depfile; /* = NULL */
+extern struct srcfile_state *current_srcfile; /* = NULL */
 
-FILE * srcfile_relative_open (const char * fname, char ** fullnamep);
-void srcfile_push (const char * fname);
-int srcfile_pop (void);
+FILE *srcfile_relative_open(const char *fname, char **fullnamep);
+void srcfile_push(const char *fname);
+int srcfile_pop(void);
 
 struct srcpos {
-  int first_line;
-  int first_column;
-  int last_line;
-  int last_column;
-  struct srcfile_state * file;
+    int first_line;
+    int first_column;
+    int last_line;
+    int last_column;
+    struct srcfile_state *file;
 };
 
 #define YYLTYPE struct srcpos
 
-#define YYLLOC_DEFAULT(Current, Rhs, N)           \
-  do {                  \
-    if (N) {              \
-      (Current).first_line = YYRHSLOC(Rhs, 1).first_line; \
-      (Current).first_column = YYRHSLOC(Rhs, 1).first_column; \
-      (Current).last_line = YYRHSLOC(Rhs, N).last_line; \
-      (Current).last_column  = YYRHSLOC (Rhs, N).last_column; \
-      (Current).file = YYRHSLOC(Rhs, N).file;     \
-    } else {              \
-      (Current).first_line = (Current).last_line =    \
-                             YYRHSLOC(Rhs, 0).last_line;     \
-      (Current).first_column = (Current).last_column =  \
-                               YYRHSLOC(Rhs, 0).last_column;     \
-      (Current).file = YYRHSLOC (Rhs, 0).file;    \
-    }               \
-  } while (0)
+#define YYLLOC_DEFAULT(Current, Rhs, N)						\
+	do {									\
+		if (N) {							\
+			(Current).first_line = YYRHSLOC(Rhs, 1).first_line;	\
+			(Current).first_column = YYRHSLOC(Rhs, 1).first_column;	\
+			(Current).last_line = YYRHSLOC(Rhs, N).last_line;	\
+			(Current).last_column  = YYRHSLOC (Rhs, N).last_column;	\
+			(Current).file = YYRHSLOC(Rhs, N).file;			\
+		} else {							\
+			(Current).first_line = (Current).last_line =		\
+				YYRHSLOC(Rhs, 0).last_line;			\
+			(Current).first_column = (Current).last_column =	\
+				YYRHSLOC(Rhs, 0).last_column;			\
+			(Current).file = YYRHSLOC (Rhs, 0).file;		\
+		}								\
+	} while (0)
 
 
 /*
@@ -72,16 +72,16 @@ struct srcpos {
  */
 extern struct srcpos srcpos_empty;
 
-extern void srcpos_update (struct srcpos * pos, const char * text, int len);
-extern struct srcpos * srcpos_copy (struct srcpos * pos);
-extern char * srcpos_string (struct srcpos * pos);
-extern void srcpos_dump (struct srcpos * pos);
+extern void srcpos_update(struct srcpos *pos, const char *text, int len);
+extern struct srcpos *srcpos_copy(struct srcpos *pos);
+extern char *srcpos_string(struct srcpos *pos);
+extern void srcpos_dump(struct srcpos *pos);
 
-extern void srcpos_verror (struct srcpos * pos, char const *, va_list va)
-__attribute__ ( (format (printf, 2, 0) ) );
-extern void srcpos_error (struct srcpos * pos, char const *, ...)
-__attribute__ ( (format (printf, 2, 3) ) );
-extern void srcpos_warn (struct srcpos * pos, char const *, ...)
-__attribute__ ( (format (printf, 2, 3) ) );
+extern void srcpos_verror(struct srcpos *pos, char const *, va_list va)
+     __attribute__((format(printf, 2, 0)));
+extern void srcpos_error(struct srcpos *pos, char const *, ...)
+     __attribute__((format(printf, 2, 3)));
+extern void srcpos_warn(struct srcpos *pos, char const *, ...)
+     __attribute__((format(printf, 2, 3)));
 
 #endif /* _SRCPOS_H_ */

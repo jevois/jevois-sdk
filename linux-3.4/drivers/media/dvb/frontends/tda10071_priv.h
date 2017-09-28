@@ -29,8 +29,8 @@
 
 #undef dbg
 #define dbg(f, arg...) \
-  if (tda10071_debug) \
-    printk(KERN_INFO   LOG_PREFIX": " f "\n" , ## arg)
+	if (tda10071_debug) \
+		printk(KERN_INFO   LOG_PREFIX": " f "\n" , ## arg)
 #undef err
 #define err(f, arg...)  printk(KERN_ERR     LOG_PREFIX": " f "\n" , ## arg)
 #undef info
@@ -39,54 +39,54 @@
 #define warn(f, arg...) printk(KERN_WARNING LOG_PREFIX": " f "\n" , ## arg)
 
 struct tda10071_priv {
-  struct i2c_adapter * i2c;
-  struct dvb_frontend fe;
-  struct tda10071_config cfg;
-  
-  u8 meas_count[2];
-  u32 ber;
-  u32 ucb;
-  fe_status_t fe_status;
-  fe_delivery_system_t delivery_system;
-  bool warm; /* FW running */
+	struct i2c_adapter *i2c;
+	struct dvb_frontend fe;
+	struct tda10071_config cfg;
+
+	u8 meas_count[2];
+	u32 ber;
+	u32 ucb;
+	fe_status_t fe_status;
+	fe_delivery_system_t delivery_system;
+	bool warm; /* FW running */
 };
 
 static struct tda10071_modcod {
-  fe_delivery_system_t delivery_system;
-  fe_modulation_t modulation;
-  fe_code_rate_t fec;
-  u8 val;
+	fe_delivery_system_t delivery_system;
+	fe_modulation_t modulation;
+	fe_code_rate_t fec;
+	u8 val;
 } TDA10071_MODCOD[] = {
-  /* NBC-QPSK */
-  { SYS_DVBS2, QPSK,  FEC_AUTO, 0x00 },
-  { SYS_DVBS2, QPSK,  FEC_1_2,  0x04 },
-  { SYS_DVBS2, QPSK,  FEC_3_5,  0x05 },
-  { SYS_DVBS2, QPSK,  FEC_2_3,  0x06 },
-  { SYS_DVBS2, QPSK,  FEC_3_4,  0x07 },
-  { SYS_DVBS2, QPSK,  FEC_4_5,  0x08 },
-  { SYS_DVBS2, QPSK,  FEC_5_6,  0x09 },
-  { SYS_DVBS2, QPSK,  FEC_8_9,  0x0a },
-  { SYS_DVBS2, QPSK,  FEC_9_10, 0x0b },
-  /* 8PSK */
-  { SYS_DVBS2, PSK_8, FEC_3_5,  0x0c },
-  { SYS_DVBS2, PSK_8, FEC_2_3,  0x0d },
-  { SYS_DVBS2, PSK_8, FEC_3_4,  0x0e },
-  { SYS_DVBS2, PSK_8, FEC_5_6,  0x0f },
-  { SYS_DVBS2, PSK_8, FEC_8_9,  0x10 },
-  { SYS_DVBS2, PSK_8, FEC_9_10, 0x11 },
-  /* QPSK */
-  { SYS_DVBS,  QPSK,  FEC_AUTO, 0x2d },
-  { SYS_DVBS,  QPSK,  FEC_1_2,  0x2e },
-  { SYS_DVBS,  QPSK,  FEC_2_3,  0x2f },
-  { SYS_DVBS,  QPSK,  FEC_3_4,  0x30 },
-  { SYS_DVBS,  QPSK,  FEC_5_6,  0x31 },
-  { SYS_DVBS,  QPSK,  FEC_7_8,  0x32 },
+	/* NBC-QPSK */
+	{ SYS_DVBS2, QPSK,  FEC_AUTO, 0x00 },
+	{ SYS_DVBS2, QPSK,  FEC_1_2,  0x04 },
+	{ SYS_DVBS2, QPSK,  FEC_3_5,  0x05 },
+	{ SYS_DVBS2, QPSK,  FEC_2_3,  0x06 },
+	{ SYS_DVBS2, QPSK,  FEC_3_4,  0x07 },
+	{ SYS_DVBS2, QPSK,  FEC_4_5,  0x08 },
+	{ SYS_DVBS2, QPSK,  FEC_5_6,  0x09 },
+	{ SYS_DVBS2, QPSK,  FEC_8_9,  0x0a },
+	{ SYS_DVBS2, QPSK,  FEC_9_10, 0x0b },
+	/* 8PSK */
+	{ SYS_DVBS2, PSK_8, FEC_3_5,  0x0c },
+	{ SYS_DVBS2, PSK_8, FEC_2_3,  0x0d },
+	{ SYS_DVBS2, PSK_8, FEC_3_4,  0x0e },
+	{ SYS_DVBS2, PSK_8, FEC_5_6,  0x0f },
+	{ SYS_DVBS2, PSK_8, FEC_8_9,  0x10 },
+	{ SYS_DVBS2, PSK_8, FEC_9_10, 0x11 },
+	/* QPSK */
+	{ SYS_DVBS,  QPSK,  FEC_AUTO, 0x2d },
+	{ SYS_DVBS,  QPSK,  FEC_1_2,  0x2e },
+	{ SYS_DVBS,  QPSK,  FEC_2_3,  0x2f },
+	{ SYS_DVBS,  QPSK,  FEC_3_4,  0x30 },
+	{ SYS_DVBS,  QPSK,  FEC_5_6,  0x31 },
+	{ SYS_DVBS,  QPSK,  FEC_7_8,  0x32 },
 };
 
 struct tda10071_reg_val_mask {
-  u8 reg;
-  u8 val;
-  u8 mask;
+	u8 reg;
+	u8 val;
+	u8 mask;
 };
 
 /* firmware filename */
@@ -114,8 +114,8 @@ struct tda10071_reg_val_mask {
 /* firmare command struct */
 #define TDA10071_ARGLEN      0x1e
 struct tda10071_cmd {
-  u8 args[TDA10071_ARGLEN];
-  u8 len;
+	u8 args[TDA10071_ARGLEN];
+	u8 len;
 };
 
 

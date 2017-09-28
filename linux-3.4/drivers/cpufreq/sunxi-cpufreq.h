@@ -39,26 +39,26 @@
 #endif
 
 struct sunxi_clk_div_t {
-  __u32   cpu_div: 4;     /* division of cpu clock, divide core_pll */
-  __u32   axi_div: 4;     /* division of axi clock, divide cpu clock*/
-  __u32   ahb_div: 4;     /* division of ahb clock, divide axi clock*/
-  __u32   apb_div: 4;     /* division of apb clock, divide ahb clock*/
-  __u32   reserved: 16;
+    __u32   cpu_div:4;      /* division of cpu clock, divide core_pll */
+    __u32   axi_div:4;      /* division of axi clock, divide cpu clock*/
+    __u32   ahb_div:4;      /* division of ahb clock, divide axi clock*/
+    __u32   apb_div:4;      /* division of apb clock, divide ahb clock*/
+    __u32   reserved:16;
 };
 
 struct cpufreq_dvfs {
-  unsigned int freq;   /* cpu frequency */
-  unsigned int volt;   /* voltage for the frequency */
+    unsigned int freq;   /* cpu frequency */
+    unsigned int volt;   /* voltage for the frequency */
 };
 
 struct sunxi_cpu_freq_t {
-  __u32                   pll;    /* core pll frequency value */
-  struct sunxi_clk_div_t  div;    /* division configuration   */
+    __u32                   pll;    /* core pll frequency value */
+    struct sunxi_clk_div_t  div;    /* division configuration   */
 };
 
 
 #define SUNXI_CLK_DIV(cpu_div, axi_div, ahb_div, apb_div)       \
-  ((cpu_div<<0)|(axi_div<<4)|(ahb_div<<8)|(apb_div<<12))
+                ((cpu_div<<0)|(axi_div<<4)|(ahb_div<<8)|(apb_div<<12))
 
 #endif  /* #ifndef __sunxi_CPU_FREQ_H__ */
 

@@ -14,22 +14,22 @@
 #define __ASM_ARCH_MSM_SIRC_H
 
 struct sirc_regs_t {
-  void  *  int_enable;
-  void  *  int_enable_clear;
-  void  *  int_enable_set;
-  void  *  int_type;
-  void  *  int_polarity;
-  void  *  int_clear;
+	void    *int_enable;
+	void    *int_enable_clear;
+	void    *int_enable_set;
+	void    *int_type;
+	void    *int_polarity;
+	void    *int_clear;
 };
 
 struct sirc_cascade_regs {
-  void  *  int_status;
-  unsigned int    cascade_irq;
+	void    *int_status;
+	unsigned int    cascade_irq;
 };
 
-void msm_init_sirc (void);
-void msm_sirc_enter_sleep (void);
-void msm_sirc_exit_sleep (void);
+void msm_init_sirc(void);
+void msm_sirc_enter_sleep(void);
+void msm_sirc_exit_sleep(void);
 
 #if defined(CONFIG_ARCH_MSM_SCORPION)
 

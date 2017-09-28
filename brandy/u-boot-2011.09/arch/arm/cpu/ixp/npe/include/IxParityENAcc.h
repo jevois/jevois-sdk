@@ -4,18 +4,18 @@
  * @author Intel Corporation
  * @date 24 Mar 2004
  *
- * @brief This file contains the public API for the IXP400 Parity Error
+ * @brief This file contains the public API for the IXP400 Parity Error 
  * Notifier access component.
  *
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,7 +28,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -41,7 +41,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  */
@@ -49,8 +49,8 @@
 /**
  * @defgroup IxParityENAcc IXP400 Parity Error Notifier (IxParityENAcc) API
  *
- * @brief The public API for the Parity Error Notifier
- *
+ * @brief The public API for the Parity Error Notifier 
+ * 
  * @{
  */
 
@@ -77,7 +77,7 @@ typedef enum /**< IxParityENAccStatus */
   IX_PARITYENACC_SUCCESS = IX_SUCCESS, /**< The request is successful */
   IX_PARITYENACC_INVALID_PARAMETERS,   /**< Invalid or NULL parameters passed */
   IX_PARITYENACC_NOT_INITIALISED,      /**< Access layer has not been initialised before accessing the APIs */
-  IX_PARITYENACC_ALREADY_INITIALISED,  /**< Access layer has already been initialised */
+  IX_PARITYENACC_ALREADY_INITIALISED,  /**< Access layer has already been initialised */ 
   IX_PARITYENACC_OPERATION_FAILED,     /**< Operation did not succeed due to hardware failure */
   IX_PARITYENACC_NO_PARITY             /**< No parity condition exits or has already been cleared */
 } IxParityENAccStatus;
@@ -86,7 +86,7 @@ typedef enum /**< IxParityENAccStatus */
  * @ingroup IxParityENAcc
  *
  * @enum IxParityENAccParityType
- *
+ * 
  * @brief Odd or Even Parity Type
  */
 typedef enum  /**< IxParityENAccParityType */
@@ -129,7 +129,7 @@ typedef struct /**< IxParityENAccNpeConfig */
  *
  * @brief MCU pairty detection is to be enabled/disabled
  */
-typedef struct /**< IxParityENAccMcuConfig */
+typedef struct /**< IxParityENAccMcuConfig */ 
 {
   IxParityENAccConfigOption singlebitDetectEnabled;      /**< Single-bit parity error detection */
   IxParityENAccConfigOption singlebitCorrectionEnabled;  /**< Single-bit parity error correction */
@@ -142,7 +142,7 @@ typedef struct /**< IxParityENAccMcuConfig */
  *
  * @struct IxParityENAccEbcConfig
  *
- * @brief Expansion Bus Controller parity detection is to be enabled or disabled
+ * @brief Expansion Bus Controller parity detection is to be enabled or disabled 
  *
  * Note: All the Chip Select(s) and External Masters will have the same parity
  */
@@ -168,7 +168,7 @@ typedef struct /**< IxParityENAccEbcConfig */
  * @brief Parity error configuration of the Hardware Blocks
  */
 typedef struct /**< IxParityENAccHWParityConfig */
-{
+{ 
   IxParityENAccNpeConfig npeAConfig;     /**< NPE A parity detection is to be enabled/disabled */
   IxParityENAccNpeConfig npeBConfig;     /**< NPE B parity detection is to be enabled/disabled */
   IxParityENAccNpeConfig npeCConfig;     /**< NPE C parity detection is to be enabled/disabled */
@@ -199,7 +199,7 @@ typedef struct  /* IxParityENAccNpeParityErrorStats */
  * @struct IxParityENAccMcuParityErrorStats
  *
  * @brief DDR Memory Control Unit parity error statistics
- *
+ * 
  * Note: There could be two outstanding parity errors at any given time whose address
  * details captured. If there is no room for the new interrupt then it would be treated
  * as overflow parity condition.
@@ -247,7 +247,7 @@ typedef struct  /**< IxParityENAccParityErrorStats */
  *
  * @enum IxParityENAccParityErrorSource
  *
- * @brief The source of the parity error notification
+ * @brief The source of the parity error notification 
  */
 typedef enum  /**< IxParityENAccParityErrorSource  */
 {
@@ -305,7 +305,7 @@ typedef UINT32 IxParityENAccParityErrorData;
  *
  * @enum IxParityENAccParityErrorRequester
  *
- * @brief The requester interface through which the SDRAM memory access
+ * @brief The requester interface through which the SDRAM memory access 
  * resulted in the parity error.
  */
 typedef enum  /**< IxParityENAccParityErrorRequester  */
@@ -319,7 +319,7 @@ typedef enum  /**< IxParityENAccParityErrorRequester  */
  *
  * @enum IxParityENAccAHBErrorMaster
  *
- * @brief The Master on the AHB bus interface whose transaction might have
+ * @brief The Master on the AHB bus interface whose transaction might have 
  * resulted in the parity error notification to XScale.
  */
 typedef enum  /**< IxParityENAccAHBErrorMaster */
@@ -339,7 +339,7 @@ typedef enum  /**< IxParityENAccAHBErrorMaster */
  *
  * @enum IxParityENAccAHBErrorSlave
  *
- * @brief The Slave on the AHB bus interface whose transaction might have
+ * @brief The Slave on the AHB bus interface whose transaction might have 
  * resulted in the parity error notification to XScale.
  */
 typedef enum  /**< IxParityENAccAHBErrorSlave */
@@ -387,10 +387,10 @@ typedef struct /**< IxParityENAccParityErrorContextMessage */
                                                            Read  - NPE, SWCP, AQM, DDR MCU,
                                                                    Exp Bus Ctrlr (Outbound)
                                                            Write - DDR MCU,
-                                                                   Exp Bus Ctrlr (Inbound
+                                                                   Exp Bus Ctrlr (Inbound 
                                                                    i.e., External Master) */
   IxParityENAccParityErrorAddress    pecAddress;      /**< Address faulty location
-                                                           Valid only for AQM, DDR MCU,
+                                                           Valid only for AQM, DDR MCU, 
                                                            Exp Bus Ctrlr */
   IxParityENAccParityErrorData       pecData;         /**< Data read from the faulty location
                                                            Valid only for AQM and DDR MCU
@@ -433,21 +433,21 @@ typedef void (*IxParityENAccCallback) (void);
  * This function will initialise the IxParityENAcc component. It should only be
  * called once, prior to using the IxParityENAcc component.
  *
- * <OL><LI>It initialises the internal data structures, registers the ISR that
+ * <OL><LI>It initialises the internal data structures, registers the ISR that 
  * will be triggered when a parity error occurs in IXP4xx silicon.</LI></OL>
  *
  * @li Re-entrant   : No
  * @li ISR Callable : No
- *
+ * 
  * @return @li IX_PARITYENACC_SUCCESS - Initialization is successful
- *         @li IX_PARITYENACC_ALREADY_INITIALISED - The access layer has already
+ *         @li IX_PARITYENACC_ALREADY_INITIALISED - The access layer has already 
  *             been initialized
- *         @li IX_PARITYENACC_OPERATION_FAILED - The request failed because the
+ *         @li IX_PARITYENACC_OPERATION_FAILED - The request failed because the 
  *             operation didn't succeed on the hardware. Refer to error trace/log
  *             for details.
  */
 
-PUBLIC IxParityENAccStatus ixParityENAccInit (void);
+PUBLIC IxParityENAccStatus ixParityENAccInit(void);
 
 /**
  * @ingroup IxParityENAcc
@@ -455,7 +455,7 @@ PUBLIC IxParityENAccStatus ixParityENAccInit (void);
  * @fn IxParityENAccStatus ixParityENAccCallbackRegister (
            IxParityENAccCallback parityErrNfyCallBack)
  *
- * @brief This function will register a new callback with IxParityENAcc component.
+ * @brief This function will register a new callback with IxParityENAcc component. 
  * It can also reregister a new callback replacing the old callback.
  *
  * @param parityErrNfyCallBack [in] - This parameter will specify the call-back
@@ -464,7 +464,7 @@ PUBLIC IxParityENAccStatus ixParityENAccInit (void);
  * This interface registers the user application supplied call-back handler with
  * the parity error handling access component after the init.
  *
- * The callback function will be called from an ISR that will be triggered by the
+ * The callback function will be called from an ISR that will be triggered by the 
  * parity error in the IXP400 silicon.
  *
  * The following actions will be performed by this function:
@@ -476,18 +476,18 @@ PUBLIC IxParityENAccStatus ixParityENAccInit (void);
  * @li   Re-entrant   : No
  * @li   ISR Callable : No
  *
- * @return @li IX_PARITYENACC_SUCCESS - The parameters check passed and the
+ * @return @li IX_PARITYENACC_SUCCESS - The parameters check passed and the 
  *             registration is successful.
- *         @li IX_PARITYENACC_INVALID_PARAMETERS - Request failed due to NULL
+ *         @li IX_PARITYENACC_INVALID_PARAMETERS - Request failed due to NULL 
  *             parameter passed.
- *         @li IX_PARITYENACC_OPERATION_FAILED - The request failed because the
+ *         @li IX_PARITYENACC_OPERATION_FAILED - The request failed because the 
  *             parity error detection not yet disabled.
  *         @li IX_PARITYENACC_NOT_INITIALISED - The operation requested prior to
  *             the initialisation of the access layer.
  */
 
 PUBLIC IxParityENAccStatus ixParityENAccCallbackRegister (
-  IxParityENAccCallback parityErrNfyCallBack);
+           IxParityENAccCallback parityErrNfyCallBack);
 
 /**
  * @ingroup IxParityENAcc
@@ -495,10 +495,10 @@ PUBLIC IxParityENAccStatus ixParityENAccCallbackRegister (
  * @fn IxParityENAccStatus ixParityENAccParityDetectionConfigure (
            const IxParityENAccHWParityConfig *hwParityConfig)
  *
- * @brief This interface allows the client application to enable the parity
+ * @brief This interface allows the client application to enable the parity 
  * error detection on the underlying hardware block.
  *
- * @param hwParityConfig [in] - Hardware blocks for which the parity error
+ * @param hwParityConfig [in] - Hardware blocks for which the parity error 
  * detection is to be enabled or disabled.
  *
  * The client application allocates and provides the reference to the buffer.
@@ -506,8 +506,8 @@ PUBLIC IxParityENAccStatus ixParityENAccCallbackRegister (
  * It will also verify whether the specific hardware block is functional or not.
  *
  * NOTE: Failure in enabling or disabling of one or more components result in
- * trace message but still returns IX_PARITYENACC_SUCCESS. Refer to the function
- * @ref ixParityENAccParityDetectionQuery on how to verify the failures while
+ * trace message but still returns IX_PARITYENACC_SUCCESS. Refer to the function 
+ * @ref ixParityENAccParityDetectionQuery on how to verify the failures while 
  * enabling/disabling paritys error detection.
  *
  * It shall be invoked after the Init and CallbackRegister functions but before
@@ -516,18 +516,18 @@ PUBLIC IxParityENAccStatus ixParityENAccCallbackRegister (
  * @li   Re-entrant   : No
  * @li   ISR Callable : No
  *
- * @return @li IX_PARITYENACC_SUCCESS - The parameters check passed and the
+ * @return @li IX_PARITYENACC_SUCCESS - The parameters check passed and the 
  *             request to enable/disable is successful.
- *         @li IX_PARITYENACC_INVALID_PARAMETERS-The request failed due to
+ *         @li IX_PARITYENACC_INVALID_PARAMETERS-The request failed due to  
  *             NULL parameter supplied.
- *         @li IX_PARITYENACC_OPERATION_FAILED - The request failed because the
+ *         @li IX_PARITYENACC_OPERATION_FAILED - The request failed because the 
  *             operation didn't succeed on the hardware.
  *         @li IX_PARITYENACC_NOT_INITIALISED - The operation requested prior to
  *             the initialisation of the access layer.
  */
 
 PUBLIC IxParityENAccStatus ixParityENAccParityDetectionConfigure (
-  const IxParityENAccHWParityConfig * hwParityConfig);
+           const IxParityENAccHWParityConfig *hwParityConfig);
 
 /**
  * @ingroup IxParityENAcc
@@ -535,10 +535,10 @@ PUBLIC IxParityENAccStatus ixParityENAccParityDetectionConfigure (
  * @fn IxParityENAccStatus ixParityENAccParityDetectionQuery (
            IxParityENAccHWParityConfig * const hwParityConfig)
  *
- * @brief This interface allows the client application to determine the
+ * @brief This interface allows the client application to determine the 
  * status of the parity error detection on the specified hardware blocks
  *
- * @param hwParityConfig [out] - Hardware blocks whose parity error detection
+ * @param hwParityConfig [out] - Hardware blocks whose parity error detection 
  * has been enabled or disabled.
  *
  * The client application allocates and provides the reference to the buffer.
@@ -551,25 +551,25 @@ PUBLIC IxParityENAccStatus ixParityENAccParityDetectionConfigure (
  * @li   Re-entrant   : No
  * @li   ISR Callable : No
  *
- * @return @li IX_PARITYENACC_SUCCESS - The parameters check passed and the
+ * @return @li IX_PARITYENACC_SUCCESS - The parameters check passed and the 
  *             request to query on whether the hardware parity error detection
  *             is enabled or disabled is successful.
- *         @li IX_PARITYENACC_INVALID_PARAMETERS-The request failed due to
+ *         @li IX_PARITYENACC_INVALID_PARAMETERS-The request failed due to  
  *             NULL parameter or invalid values supplied.
- *         @li IX_PARITYENACC_NOT_INITIALISED - The operation requested prior
+ *         @li IX_PARITYENACC_NOT_INITIALISED - The operation requested prior 
  *             to the initialisation of the access layer.
  */
 
-PUBLIC IxParityENAccStatus ixParityENAccParityDetectionQuery (
-  IxParityENAccHWParityConfig * const hwParityConfig);
+PUBLIC IxParityENAccStatus ixParityENAccParityDetectionQuery(
+           IxParityENAccHWParityConfig * const hwParityConfig);
 
 /**
  * @ingroup IxParityENAcc
  *
- * @fn IxParityENAccStatus ixParityENAccParityErrorContextGet(
+ * @fn IxParityENAccStatus ixParityENAccParityErrorContextGet( 
            IxParityENAccParityErrorContextMessage * const pecMessage)
  *
- * @brief This interface allows the client application to determine the
+ * @brief This interface allows the client application to determine the 
  * status of the parity error context on hardware block for which the
  * current parity error interrupt triggered.
  *
@@ -583,7 +583,7 @@ PUBLIC IxParityENAccStatus ixParityENAccParityDetectionQuery (
  *
  * The routine will will fetch the parity error context in the following
  * priority, if multiple parity errors observed.
- *
+ * 
  * <pre>
  * 0 - MCU (Multi-bit and single-bit in that order)
  * 1 - NPE-A
@@ -594,7 +594,7 @@ PUBLIC IxParityENAccStatus ixParityENAccParityDetectionQuery (
  * 6 - EXP
  *
  * NOTE: The information provided in the @ref IxParityENAccAHBErrorTransaction
- * may be of help for the client application to decide on the course of action
+ * may be of help for the client application to decide on the course of action 
  * to take. This info is taken from the Performance Monitoring Unit register
  * which records most recent error observed on the AHB bus. This information
  * might have been overwritten by some other error by the time it is retrieved.
@@ -603,20 +603,20 @@ PUBLIC IxParityENAccStatus ixParityENAccParityDetectionQuery (
  * @li   Re-entrant   : No
  * @li   ISR Callable : Yes
  *
- * @return @li IX_PARITYENACC_SUCCESS-The parameters check passed and the
+ * @return @li IX_PARITYENACC_SUCCESS-The parameters check passed and the 
  *             request to get the parity error context information is successful.
- *         @li IX_PARITYENACC_INVALID_PARAMETERS-The request failed due to
+ *         @li IX_PARITYENACC_INVALID_PARAMETERS-The request failed due to  
  *             NULL parameter is passed
- *         @li IX_PARITYENACC_OPERATION_FAILED - The request failed because
+ *         @li IX_PARITYENACC_OPERATION_FAILED - The request failed because 
  *             the operation didn't succeed on the hardware.
  *         @li IX_PARITYENACC_NOT_INITIALISED - The operation requested prior
  *             to the initialisation of the access layer.
- *         @li IX_PARITYENACC_NO_PARITY - No parity condition exits or has
+ *         @li IX_PARITYENACC_NO_PARITY - No parity condition exits or has 
  *             already been cleared
  */
 
-PUBLIC IxParityENAccStatus ixParityENAccParityErrorContextGet (
-  IxParityENAccParityErrorContextMessage * const pecMessage);
+PUBLIC IxParityENAccStatus ixParityENAccParityErrorContextGet( 
+           IxParityENAccParityErrorContextMessage * const pecMessage);
 
 /**
  * @ingroup IxParityENAcc
@@ -628,7 +628,7 @@ PUBLIC IxParityENAccStatus ixParityENAccParityErrorContextGet (
  * interrupt condition on the hardware block identified in the parity
  * error context message.  Please refer to the table below as the operation
  * varies depending on the interrupt source.
- *
+ * 
  * @param pecMessage [in] - The parity error context information of the
  * hardware block whose parity error interrupt condition is to disabled.
  *
@@ -638,56 +638,56 @@ PUBLIC IxParityENAccStatus ixParityENAccParityErrorContextGet (
  * ****************************************************************************
  * Following actions will be taken during the interrupt clear for respective
  * hardware blocks.
- *
- *  Parity Source     Actions taken during Interrupt clear
+ * 
+ *  Parity Source     Actions taken during Interrupt clear 
  *  -------------     -------------------------------------------------------
- *  NPE-A             Interrupt will be masked off at the interrupt controller
+ *  NPE-A             Interrupt will be masked off at the interrupt controller 
  *                    so that it will not trigger continuously.
- *                      Client application has to take appropriate action and
- *                      re-configure the parity error detection subsequently.
+ *                      Client application has to take appropriate action and 
+ *                      re-configure the parity error detection subsequently. 
+ *                      The client application will not be notified of further 
+ *                      interrupts, until the re-configuration is done using
+ *                      @ref ixParityENAccParityDetectionConfigure.
+ *
+ *  NPE-B             Interrupt will be masked off at the interrupt controller 
+ *                    so that it will not trigger continuously.
+ *                      Client application has to take appropriate action and 
+ *                      re-configure the parity error detection subsequently. 
  *                      The client application will not be notified of further
  *                      interrupts, until the re-configuration is done using
  *                      @ref ixParityENAccParityDetectionConfigure.
  *
- *  NPE-B             Interrupt will be masked off at the interrupt controller
- *                    so that it will not trigger continuously.
- *                      Client application has to take appropriate action and
- *                      re-configure the parity error detection subsequently.
- *                      The client application will not be notified of further
- *                      interrupts, until the re-configuration is done using
- *                      @ref ixParityENAccParityDetectionConfigure.
- *
- *  NPE-C             Interrupt will be masked off at the interrupt controller
- *                      Client application has to take appropriate action and
- *                      re-configure the parity error detection subsequently.
+ *  NPE-C             Interrupt will be masked off at the interrupt controller 
+ *                      Client application has to take appropriate action and 
+ *                      re-configure the parity error detection subsequently. 
  *                      The client application will not be notified of further
  *                      interrupts, until the re-configuration is done using
  *                      @ref ixParityENAccParityDetectionConfigure.
  *
  *  SWCP              Interrupt will be masked off at the interrupt controller.
- *                      Client application has to take appropriate action and
- *                      re-configure the parity error detection subsequently.
+ *                      Client application has to take appropriate action and 
+ *                      re-configure the parity error detection subsequently. 
  *                      The client application will not be notified of further
  *                      interrupts, until the re-configuration is done using
  *                      @ref ixParityENAccParityDetectionConfigure.
  *
  *  AQM               Interrupt will be masked off at the interrupt controller.
- *                         Client application has to take appropriate action and
- *                         re-configure the parity error detection subsequently.
+ *                         Client application has to take appropriate action and 
+ *                         re-configure the parity error detection subsequently. 
  *                         The client application will not be notified of further
  *                         interrupts, until the re-configuration is done using
  *                         @ref ixParityENAccParityDetectionConfigure.
  *
- *  MCU               Parity interrupt condition is cleared at the SDRAM MCU for
+ *  MCU               Parity interrupt condition is cleared at the SDRAM MCU for 
  *                    the following:
  *                    1. Single-bit
  *                    2. Multi-bit
- *                    3. Overflow condition i.e., more than two parity conditions
+ *                    3. Overflow condition i.e., more than two parity conditions 
  *                       occurred
  *                    Note that single-parity errors do not result in data abort
  *                    and not all data aborts caused by multi-bit parity error.
  *
- *  EXP               Parity interrupt condition is cleared at the expansion bus
+ *  EXP               Parity interrupt condition is cleared at the expansion bus 
  *                    controller for the following:
  *                    1. External master initiated Inbound write
  *                    2. Internal master (IXP400) initiated Outbound read
@@ -698,17 +698,17 @@ PUBLIC IxParityENAccStatus ixParityENAccParityErrorContextGet (
  *
  * @return @li IX_PARITYENACC_SUCCESS-The parameters check passed and the request
  *             to clear the parity error interrupt condition is successful.
- *         @li IX_PARITYENACC_INVALID_PARAMETERS-The request failed due to
+ *         @li IX_PARITYENACC_INVALID_PARAMETERS-The request failed due to 
  *             NULL parameters have been passed or contents have been
  *             supplied with invalid values.
- *         @li IX_PARITYENACC_OPERATION_FAILED - The request failed because
+ *         @li IX_PARITYENACC_OPERATION_FAILED - The request failed because 
  *             the operation didn't succeed on the hardware.
  *         @li IX_PARITYENACC_NOT_INITIALISED - The operation requested prior
  *             to the initialisation of the access layer.
  */
 
 PUBLIC IxParityENAccStatus ixParityENAccParityErrorInterruptClear (
-  const IxParityENAccParityErrorContextMessage * pecMessage);
+          const IxParityENAccParityErrorContextMessage *pecMessage);
 
 /**
  * @ingroup IxParityENAcc
@@ -716,8 +716,8 @@ PUBLIC IxParityENAccStatus ixParityENAccParityErrorInterruptClear (
  * @fn IxParityENAccStatus ixParityENAccStatsGet (
             IxParityENAccParityErrorStats * const ixParityErrorStats)
  *
- * @brief This interface allows the client application to retrieve parity
- * error statistics for all the hardware blocks
+ * @brief This interface allows the client application to retrieve parity 
+ * error statistics for all the hardware blocks 
  *
  * @param ixParityErrorStats - [out] The statistics for all the hardware blocks.
  *
@@ -726,7 +726,7 @@ PUBLIC IxParityENAccStatus ixParityENAccParityErrorInterruptClear (
  * @li   Re-entrant   : No
  * @li   ISR Callable : Yes
  *
- * @return @li IX_PARITYENACC_SUCCESS-The parameters check passed and the
+ * @return @li IX_PARITYENACC_SUCCESS-The parameters check passed and the 
  *             request to retrieve parity error statistics for the hardware
  *             block is successful.
  *         @li IX_PARITYENACC_INVALID_PARAMETERS-The request failed due to a
@@ -736,7 +736,7 @@ PUBLIC IxParityENAccStatus ixParityENAccParityErrorInterruptClear (
  */
 
 PUBLIC IxParityENAccStatus ixParityENAccStatsGet (
-  IxParityENAccParityErrorStats * const ixParityErrorStats);
+            IxParityENAccParityErrorStats * const ixParityErrorStats);
 
 /**
  * @ingroup IxParityENAcc
@@ -749,7 +749,7 @@ PUBLIC IxParityENAccStatus ixParityENAccStatsGet (
  * @li   Re-entrant   : No
  * @li   ISR Callable : No
  *
- * @return @li IX_PARITYENACC_SUCCESS - The request to show the pairty
+ * @return @li IX_PARITYENACC_SUCCESS - The request to show the pairty 
  *             error statistics is successful.
  *         @li IX_PARITYENACC_NOT_INITIALISED - The operation requested
  *             prior to the initialisation of the access layer.
@@ -762,15 +762,15 @@ PUBLIC IxParityENAccStatus ixParityENAccStatsShow (void);
  *
  * @fn IxParityENAccStatus ixParityENAccStatsReset (void)
  *
- * @brief This interface allows the client application to reset all the
+ * @brief This interface allows the client application to reset all the 
  * parity error statistics.
  *
  * @li   Re-entrant   : No
  * @li   ISR Callable : No
  *
- * @return @li IX_PARITYENACC_SUCCESS - The request to reset the parity
+ * @return @li IX_PARITYENACC_SUCCESS - The request to reset the parity 
  *             error statistics is successful.
- *         @li IX_PARITYENACC_NOT_INITIALISED - The operation requested
+ *         @li IX_PARITYENACC_NOT_INITIALISED - The operation requested 
  *             prior to the initialisation of the access layer.
  */
 

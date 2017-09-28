@@ -10,13 +10,13 @@
 #ifndef _NATFEAT_H
 #define _NATFEAT_H
 
-long nf_get_id (const char * feature_name);
-long nf_call (long id, ...);
+long nf_get_id(const char *feature_name);
+long nf_call(long id, ...);
 
-void nf_init (void);
-void nf_shutdown (void);
+void nf_init(void);
+void nf_shutdown(void);
 
-void nfprint (const char * fmt, ...)
-__attribute__ ( (format (printf, 1, 2) ) );
+void nfprint(const char *fmt, ...)
+	__attribute__ ((format (printf, 1, 2)));
 
 # endif /* _NATFEAT_H */

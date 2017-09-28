@@ -73,7 +73,7 @@
 #include <linux/interrupt.h>
 
 #define REG_LOCAL_IRQ_SAVE      HW_DECLARE_SPINLOCK(reg32) \
-  unsigned long flags; HW_IRQ_SAVE(reg32, flags)
+	unsigned long flags; HW_IRQ_SAVE(reg32, flags)
 
 #define REG_LOCAL_IRQ_RESTORE   HW_IRQ_RESTORE(reg32, flags)
 
@@ -84,31 +84,31 @@
 
 #endif
 
-static inline void reg32_modify_and (volatile uint32_t * reg, uint32_t value)
+static inline void reg32_modify_and(volatile uint32_t *reg, uint32_t value)
 {
-  REG_LOCAL_IRQ_SAVE;
-  *reg &= value;
-  REG_LOCAL_IRQ_RESTORE;
+	REG_LOCAL_IRQ_SAVE;
+	*reg &= value;
+	REG_LOCAL_IRQ_RESTORE;
 }
 
-static inline void reg32_modify_or (volatile uint32_t * reg, uint32_t value)
+static inline void reg32_modify_or(volatile uint32_t *reg, uint32_t value)
 {
-  REG_LOCAL_IRQ_SAVE;
-  *reg |= value;
-  REG_LOCAL_IRQ_RESTORE;
+	REG_LOCAL_IRQ_SAVE;
+	*reg |= value;
+	REG_LOCAL_IRQ_RESTORE;
 }
 
-static inline void reg32_modify_mask (volatile uint32_t * reg, uint32_t mask,
-                                      uint32_t value)
+static inline void reg32_modify_mask(volatile uint32_t *reg, uint32_t mask,
+				     uint32_t value)
 {
-  REG_LOCAL_IRQ_SAVE;
-  *reg = (*reg & mask) | value;
-  REG_LOCAL_IRQ_RESTORE;
+	REG_LOCAL_IRQ_SAVE;
+	*reg = (*reg & mask) | value;
+	REG_LOCAL_IRQ_RESTORE;
 }
 
-static inline void reg32_write (volatile uint32_t * reg, uint32_t value)
+static inline void reg32_write(volatile uint32_t *reg, uint32_t value)
 {
-  *reg = value;
+	*reg = value;
 }
 
 #endif /* CSP_REG_H */

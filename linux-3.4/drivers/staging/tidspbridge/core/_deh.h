@@ -25,11 +25,11 @@
 
 /* DEH Manager: only one created per board: */
 struct deh_mgr {
-  struct bridge_dev_context * bridge_context; /* Bridge context. */
-  struct ntfy_object * ntfy_obj; /* NTFY object */
-  
-  /* MMU Fault DPC */
-  struct tasklet_struct dpc_tasklet;
+	struct bridge_dev_context *bridge_context;	/* Bridge context. */
+	struct ntfy_object *ntfy_obj;	/* NTFY object */
+
+	/* MMU Fault DPC */
+	struct tasklet_struct dpc_tasklet;
 };
 
 #endif /* _DEH_ */

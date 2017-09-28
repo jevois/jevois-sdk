@@ -32,44 +32,44 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-extern void _reset_reloc (void);
+extern void _reset_reloc(void);
 
-int checkcpu (void)
+int checkcpu(void)
 {
-  /* check LEON version here */
-  printf ("CPU: LEON3\n");
-  return 0;
+	/* check LEON version here */
+	printf("CPU: LEON3\n");
+	return 0;
 }
 
 /* ------------------------------------------------------------------------- */
 
-void cpu_reset (void)
+void cpu_reset(void)
 {
-  /* Interrupts off */
-  disable_interrupts();
-  
-  /* jump to restart in flash */
-  _reset_reloc();
+	/* Interrupts off */
+	disable_interrupts();
+
+	/* jump to restart in flash */
+	_reset_reloc();
 }
 
-int do_reset (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
+int do_reset(cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
 {
-  cpu_reset();
-  
-  return 1;
-  
+	cpu_reset();
+
+	return 1;
+
 }
 
-u64 flash_read64 (void * addr)
+u64 flash_read64(void *addr)
 {
-  return __raw_readq (addr);
+	return __raw_readq(addr);
 }
 
 /* ------------------------------------------------------------------------- */
 
 #ifdef CONFIG_GRETH
-int cpu_eth_init (bd_t * bis)
+int cpu_eth_init(bd_t *bis)
 {
-  return greth_initialize (bis);
+	return greth_initialize(bis);
 }
 #endif

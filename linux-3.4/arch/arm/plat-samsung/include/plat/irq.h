@@ -1,7 +1,7 @@
 /* linux/arch/arm/plat-samsung/include/plat/irq.h
  *
  * Copyright (c) 2004-2005 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * Header file for S3C24XX CPU IRQ support
  *
@@ -25,92 +25,92 @@
 extern struct irq_chip s3c_irq_level_chip;
 extern struct irq_chip s3c_irq_chip;
 
-static inline void s3c_irqsub_mask (unsigned int irqno,
-                                    unsigned int parentbit,
-                                    int subcheck)
+static inline void s3c_irqsub_mask(unsigned int irqno,
+				   unsigned int parentbit,
+				   int subcheck)
 {
-  unsigned long mask;
-  unsigned long submask;
-  
-  submask = __raw_readl (S3C2410_INTSUBMSK);
-  mask = __raw_readl (S3C2410_INTMSK);
-  
-  submask |= (1UL << (irqno - IRQ_S3CUART_RX0) );
-  
-  /* check to see if we need to mask the parent IRQ */
-  
-  if ( (submask  & subcheck) == subcheck)
-  { __raw_writel (mask | parentbit, S3C2410_INTMSK); }
-  
-  /* write back masks */
-  __raw_writel (submask, S3C2410_INTSUBMSK);
-  
+	unsigned long mask;
+	unsigned long submask;
+
+	submask = __raw_readl(S3C2410_INTSUBMSK);
+	mask = __raw_readl(S3C2410_INTMSK);
+
+	submask |= (1UL << (irqno - IRQ_S3CUART_RX0));
+
+	/* check to see if we need to mask the parent IRQ */
+
+	if ((submask  & subcheck) == subcheck)
+		__raw_writel(mask | parentbit, S3C2410_INTMSK);
+
+	/* write back masks */
+	__raw_writel(submask, S3C2410_INTSUBMSK);
+
 }
 
-static inline void s3c_irqsub_unmask (unsigned int irqno,
-                                      unsigned int parentbit)
+static inline void s3c_irqsub_unmask(unsigned int irqno,
+				     unsigned int parentbit)
 {
-  unsigned long mask;
-  unsigned long submask;
-  
-  submask = __raw_readl (S3C2410_INTSUBMSK);
-  mask = __raw_readl (S3C2410_INTMSK);
-  
-  submask &= ~ (1UL << (irqno - IRQ_S3CUART_RX0) );
-  mask &= ~parentbit;
-  
-  /* write back masks */
-  __raw_writel (submask, S3C2410_INTSUBMSK);
-  __raw_writel (mask, S3C2410_INTMSK);
+	unsigned long mask;
+	unsigned long submask;
+
+	submask = __raw_readl(S3C2410_INTSUBMSK);
+	mask = __raw_readl(S3C2410_INTMSK);
+
+	submask &= ~(1UL << (irqno - IRQ_S3CUART_RX0));
+	mask &= ~parentbit;
+
+	/* write back masks */
+	__raw_writel(submask, S3C2410_INTSUBMSK);
+	__raw_writel(mask, S3C2410_INTMSK);
 }
 
 
-static inline void s3c_irqsub_maskack (unsigned int irqno,
-                                       unsigned int parentmask,
-                                       unsigned int group)
+static inline void s3c_irqsub_maskack(unsigned int irqno,
+				      unsigned int parentmask,
+				      unsigned int group)
 {
-  unsigned int bit = 1UL << (irqno - IRQ_S3CUART_RX0);
-  
-  s3c_irqsub_mask (irqno, parentmask, group);
-  
-  __raw_writel (bit, S3C2410_SUBSRCPND);
-  
-  /* only ack parent if we've got all the irqs (seems we must
-   * ack, all and hope that the irq system retriggers ok when
-   * the interrupt goes off again)
-   */
-  
-  if (1) {
-    __raw_writel (parentmask, S3C2410_SRCPND);
-    __raw_writel (parentmask, S3C2410_INTPND);
-  }
+	unsigned int bit = 1UL << (irqno - IRQ_S3CUART_RX0);
+
+	s3c_irqsub_mask(irqno, parentmask, group);
+
+	__raw_writel(bit, S3C2410_SUBSRCPND);
+
+	/* only ack parent if we've got all the irqs (seems we must
+	 * ack, all and hope that the irq system retriggers ok when
+	 * the interrupt goes off again)
+	 */
+
+	if (1) {
+		__raw_writel(parentmask, S3C2410_SRCPND);
+		__raw_writel(parentmask, S3C2410_INTPND);
+	}
 }
 
-static inline void s3c_irqsub_ack (unsigned int irqno,
-                                   unsigned int parentmask,
-                                   unsigned int group)
+static inline void s3c_irqsub_ack(unsigned int irqno,
+				  unsigned int parentmask,
+				  unsigned int group)
 {
-  unsigned int bit = 1UL << (irqno - IRQ_S3CUART_RX0);
-  
-  __raw_writel (bit, S3C2410_SUBSRCPND);
-  
-  /* only ack parent if we've got all the irqs (seems we must
-   * ack, all and hope that the irq system retriggers ok when
-   * the interrupt goes off again)
-   */
-  
-  if (1) {
-    __raw_writel (parentmask, S3C2410_SRCPND);
-    __raw_writel (parentmask, S3C2410_INTPND);
-  }
+	unsigned int bit = 1UL << (irqno - IRQ_S3CUART_RX0);
+
+	__raw_writel(bit, S3C2410_SUBSRCPND);
+
+	/* only ack parent if we've got all the irqs (seems we must
+	 * ack, all and hope that the irq system retriggers ok when
+	 * the interrupt goes off again)
+	 */
+
+	if (1) {
+		__raw_writel(parentmask, S3C2410_SRCPND);
+		__raw_writel(parentmask, S3C2410_INTPND);
+	}
 }
 
 /* exported for use in arch/arm/mach-s3c2410 */
 
 #ifdef CONFIG_PM
-extern int s3c_irq_wake (struct irq_data * data, unsigned int state);
+extern int s3c_irq_wake(struct irq_data *data, unsigned int state);
 #else
 #define s3c_irq_wake NULL
 #endif
 
-extern int s3c_irqext_type (struct irq_data * d, unsigned int type);
+extern int s3c_irqext_type(struct irq_data *d, unsigned int type);

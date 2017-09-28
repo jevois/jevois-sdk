@@ -15,12 +15,12 @@
 #endif
 
 typedef struct {
-  unsigned char * data;
-  int   width;
-  int   height;
-  int   bpp;
-  int   pixel_size;
-  int   size;
+	unsigned char	*data;
+	int		width;
+	int		height;
+	int		bpp;
+	int		pixel_size;
+	int		size;
 } fastimage_t ;
 
-#endif  /* _EASYLOGO_H_ */
+#endif	/* _EASYLOGO_H_ */

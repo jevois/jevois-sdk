@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -31,279 +31,279 @@
 
 struct pci_controller local_hose, cpci_hose;
 
-static u32  cpc710_mapped_ram;
+static u32	cpc710_mapped_ram;
 
-/* Enable PCI retry timeouts
- */
+  /* Enable PCI retry timeouts
+   */
 void cpc710_pci_enable_timeout (void)
 {
-  out32 (BRIDGE (LOCAL, CFGADDR), 0x50000080);
+  out32(BRIDGE(LOCAL, CFGADDR), 0x50000080);
   iobarrier_rw();
-  out32 (BRIDGE (LOCAL, CFGDATA), 0x32000000);
+  out32(BRIDGE(LOCAL, CFGDATA), 0x32000000);
   iobarrier_rw();
-  
-  out32 (BRIDGE (CPCI, CFGADDR), 0x50000180);
+
+  out32(BRIDGE(CPCI, CFGADDR), 0x50000180);
   iobarrier_rw();
-  out32 (BRIDGE (CPCI, CFGDATA), 0x32000000);
+  out32(BRIDGE(CPCI, CFGDATA), 0x32000000);
   iobarrier_rw();
 }
 
 void cpc710_pci_init (void)
 {
-  u32     sdram_size = pcippc2_sdram_size();
-  
+  u32			sdram_size = pcippc2_sdram_size();
+
   cpc710_mapped_ram = sdram_size < PCI_MEMORY_MAXSIZE ?
-                      sdram_size : PCI_MEMORY_MAXSIZE;
-                      
-  /* Select the local PCI
-   */
-  out32 (REG (CPC0, PCICNFR), 0x80000002);
+		      sdram_size : PCI_MEMORY_MAXSIZE;
+
+    /* Select the local PCI
+     */
+  out32(REG(CPC0, PCICNFR), 0x80000002);
   iobarrier_rw();
-  
-  out32 (REG (CPC0, PCIBAR), BRIDGE_LOCAL_PHYS);
+
+  out32(REG(CPC0, PCIBAR), BRIDGE_LOCAL_PHYS);
   iobarrier_rw();
-  
-  /* Enable PCI bridge address decoding
-   */
-  out32 (REG (CPC0, PCIENB), 0x80000000);
+
+    /* Enable PCI bridge address decoding
+     */
+  out32(REG(CPC0, PCIENB), 0x80000000);
   iobarrier_rw();
-  
-  /* Select the CPCI bridge
-   */
-  out32 (REG (CPC0, PCICNFR), 0x80000003);
+
+    /* Select the CPCI bridge
+     */
+  out32(REG(CPC0, PCICNFR), 0x80000003);
   iobarrier_rw();
-  
-  out32 (REG (CPC0, PCIBAR), BRIDGE_CPCI_PHYS);
+
+  out32(REG(CPC0, PCIBAR), BRIDGE_CPCI_PHYS);
   iobarrier_rw();
-  
-  /* Enable PCI bridge address decoding
-   */
-  out32 (REG (CPC0, PCIENB), 0x80000000);
+
+    /* Enable PCI bridge address decoding
+     */
+  out32(REG(CPC0, PCIENB), 0x80000000);
   iobarrier_rw();
-  
-  /* Disable configuration accesses
-   */
-  out32 (REG (CPC0, PCICNFR), 0x80000000);
+
+    /* Disable configuration accesses
+     */
+  out32(REG(CPC0, PCICNFR), 0x80000000);
   iobarrier_rw();
-  
-  /* Initialise the local PCI
-   */
-  out32 (BRIDGE (LOCAL, CRR), 0x7c000000);
+
+    /* Initialise the local PCI
+     */
+  out32(BRIDGE(LOCAL, CRR), 0x7c000000);
   iobarrier_rw();
-  out32 (BRIDGE (LOCAL, PCIDG), 0x40000000);
+  out32(BRIDGE(LOCAL, PCIDG), 0x40000000);
   iobarrier_rw();
-  out32 (BRIDGE (LOCAL, PIBAR), BRIDGE_LOCAL_IO_BUS);
-  out32 (BRIDGE (LOCAL, SIBAR), BRIDGE_LOCAL_IO_PHYS);
-  out32 (BRIDGE (LOCAL, IOSIZE), -BRIDGE_LOCAL_IO_SIZE);
+  out32(BRIDGE(LOCAL, PIBAR), BRIDGE_LOCAL_IO_BUS);
+  out32(BRIDGE(LOCAL, SIBAR), BRIDGE_LOCAL_IO_PHYS);
+  out32(BRIDGE(LOCAL, IOSIZE), -BRIDGE_LOCAL_IO_SIZE);
   iobarrier_rw();
-  out32 (BRIDGE (LOCAL, PMBAR), BRIDGE_LOCAL_MEM_BUS);
-  out32 (BRIDGE (LOCAL, SMBAR), BRIDGE_LOCAL_MEM_PHYS);
-  out32 (BRIDGE (LOCAL, MSIZE), -BRIDGE_LOCAL_MEM_SIZE);
+  out32(BRIDGE(LOCAL, PMBAR), BRIDGE_LOCAL_MEM_BUS);
+  out32(BRIDGE(LOCAL, SMBAR), BRIDGE_LOCAL_MEM_PHYS);
+  out32(BRIDGE(LOCAL, MSIZE), -BRIDGE_LOCAL_MEM_SIZE);
   iobarrier_rw();
-  out32 (BRIDGE (LOCAL, PR), 0x00ffe000);
+  out32(BRIDGE(LOCAL, PR), 0x00ffe000);
   iobarrier_rw();
-  out32 (BRIDGE (LOCAL, ACR), 0xfe000000);
+  out32(BRIDGE(LOCAL, ACR), 0xfe000000);
   iobarrier_rw();
-  out32 (BRIDGE (LOCAL, PSBAR), PCI_MEMORY_BUS >> 24);
-  out32 (BRIDGE (LOCAL, BARPS), PCI_MEMORY_PHYS >> 24);
-  out32 (BRIDGE (LOCAL, PSSIZE), 256 - (cpc710_mapped_ram >> 24) );
+  out32(BRIDGE(LOCAL, PSBAR), PCI_MEMORY_BUS >> 24);
+  out32(BRIDGE(LOCAL, BARPS), PCI_MEMORY_PHYS >> 24);
+  out32(BRIDGE(LOCAL, PSSIZE), 256 - (cpc710_mapped_ram >> 24));
   iobarrier_rw();
-  
-  /* Initialise the CPCI bridge
-   */
-  out32 (BRIDGE (CPCI, CRR), 0x7c000000);
+
+    /* Initialise the CPCI bridge
+     */
+  out32(BRIDGE(CPCI, CRR), 0x7c000000);
   iobarrier_rw();
-  out32 (BRIDGE (CPCI, PCIDG), 0xC0000000);
+  out32(BRIDGE(CPCI, PCIDG), 0xC0000000);
   iobarrier_rw();
-  out32 (BRIDGE (CPCI, PIBAR), BRIDGE_CPCI_IO_BUS);
-  out32 (BRIDGE (CPCI, SIBAR), BRIDGE_CPCI_IO_PHYS);
-  out32 (BRIDGE (CPCI, IOSIZE), -BRIDGE_CPCI_IO_SIZE);
+  out32(BRIDGE(CPCI, PIBAR), BRIDGE_CPCI_IO_BUS);
+  out32(BRIDGE(CPCI, SIBAR), BRIDGE_CPCI_IO_PHYS);
+  out32(BRIDGE(CPCI, IOSIZE), -BRIDGE_CPCI_IO_SIZE);
   iobarrier_rw();
-  out32 (BRIDGE (CPCI, PMBAR), BRIDGE_CPCI_MEM_BUS);
-  out32 (BRIDGE (CPCI, SMBAR), BRIDGE_CPCI_MEM_PHYS);
-  out32 (BRIDGE (CPCI, MSIZE), -BRIDGE_CPCI_MEM_SIZE);
+  out32(BRIDGE(CPCI, PMBAR), BRIDGE_CPCI_MEM_BUS);
+  out32(BRIDGE(CPCI, SMBAR), BRIDGE_CPCI_MEM_PHYS);
+  out32(BRIDGE(CPCI, MSIZE), -BRIDGE_CPCI_MEM_SIZE);
   iobarrier_rw();
-  out32 (BRIDGE (CPCI, PR), 0x80ffe000);
+  out32(BRIDGE(CPCI, PR), 0x80ffe000);
   iobarrier_rw();
-  out32 (BRIDGE (CPCI, ACR), 0xdf000000);
+  out32(BRIDGE(CPCI, ACR), 0xdf000000);
   iobarrier_rw();
-  out32 (BRIDGE (CPCI, PSBAR), PCI_MEMORY_BUS >> 24);
-  out32 (BRIDGE (CPCI, BARPS), PCI_MEMORY_PHYS >> 24);
-  out32 (BRIDGE (CPCI, PSSIZE), 256 - (cpc710_mapped_ram >> 24) );
+  out32(BRIDGE(CPCI, PSBAR), PCI_MEMORY_BUS >> 24);
+  out32(BRIDGE(CPCI, BARPS), PCI_MEMORY_PHYS >> 24);
+  out32(BRIDGE(CPCI, PSSIZE), 256 - (cpc710_mapped_ram >> 24));
   iobarrier_rw();
-  
-  /* Local PCI
-   */
-  
-  out32 (BRIDGE (LOCAL, CFGADDR), 0x04000080);
+
+    /* Local PCI
+     */
+
+  out32(BRIDGE(LOCAL, CFGADDR), 0x04000080);
   iobarrier_rw();
-  out32 (BRIDGE (LOCAL, CFGDATA), 0x56010000);
+  out32(BRIDGE(LOCAL, CFGDATA), 0x56010000);
   iobarrier_rw();
-  
-  out32 (BRIDGE (LOCAL, CFGADDR), 0x0c000080);
+
+  out32(BRIDGE(LOCAL, CFGADDR), 0x0c000080);
   iobarrier_rw();
-  out32 (BRIDGE (LOCAL, CFGDATA), PCI_LATENCY_TIMER_VAL << 16);
+  out32(BRIDGE(LOCAL, CFGDATA), PCI_LATENCY_TIMER_VAL << 16);
   iobarrier_rw();
-  
-  /* Set bus and subbus numbers
-   */
-  out32 (BRIDGE (LOCAL, CFGADDR), 0x40000080);
+
+    /* Set bus and subbus numbers
+     */
+  out32(BRIDGE(LOCAL, CFGADDR), 0x40000080);
   iobarrier_rw();
-  out32 (BRIDGE (LOCAL, CFGDATA), 0x00000000);
+  out32(BRIDGE(LOCAL, CFGDATA), 0x00000000);
   iobarrier_rw();
-  
-  out32 (BRIDGE (LOCAL, CFGADDR), 0x50000080);
+
+  out32(BRIDGE(LOCAL, CFGADDR), 0x50000080);
   iobarrier_rw();
-  /* PCI retry timeouts will be enabled later
-   */
-  out32 (BRIDGE (LOCAL, CFGDATA), 0x00000000);
+    /* PCI retry timeouts will be enabled later
+     */
+  out32(BRIDGE(LOCAL, CFGDATA), 0x00000000);
   iobarrier_rw();
-  
-  /* CPCI
-   */
-  
-  /* Set bus and subbus numbers
-   */
-  out32 (BRIDGE (CPCI, CFGADDR), 0x40000080);
+
+    /* CPCI
+     */
+
+    /* Set bus and subbus numbers
+     */
+  out32(BRIDGE(CPCI, CFGADDR), 0x40000080);
   iobarrier_rw();
-  out32 (BRIDGE (CPCI, CFGDATA), 0x01010000);
+  out32(BRIDGE(CPCI, CFGDATA), 0x01010000);
   iobarrier_rw();
-  
-  out32 (BRIDGE (CPCI, CFGADDR), 0x04000180);
+
+  out32(BRIDGE(CPCI, CFGADDR), 0x04000180);
   iobarrier_rw();
-  out32 (BRIDGE (CPCI, CFGDATA), 0x56010000);
+  out32(BRIDGE(CPCI, CFGDATA), 0x56010000);
   iobarrier_rw();
-  
-  out32 (BRIDGE (CPCI, CFGADDR), 0x0c000180);
+
+  out32(BRIDGE(CPCI, CFGADDR), 0x0c000180);
   iobarrier_rw();
-  out32 (BRIDGE (CPCI, CFGDATA), PCI_LATENCY_TIMER_VAL << 16);
+  out32(BRIDGE(CPCI, CFGDATA), PCI_LATENCY_TIMER_VAL << 16);
   iobarrier_rw();
-  
-  /* Write to the PSBAR */
-  out32 (BRIDGE (CPCI, CFGADDR), 0x10000180);
+
+    /* Write to the PSBAR */
+  out32(BRIDGE(CPCI, CFGADDR), 0x10000180);
   iobarrier_rw();
-  out32 (BRIDGE (CPCI, CFGDATA), cpu_to_le32 (PCI_MEMORY_BUS) );
+  out32(BRIDGE(CPCI, CFGDATA), cpu_to_le32(PCI_MEMORY_BUS));
   iobarrier_rw();
-  
-  /* Set bus and subbus numbers
-   */
-  out32 (BRIDGE (CPCI, CFGADDR), 0x40000180);
+
+    /* Set bus and subbus numbers
+     */
+  out32(BRIDGE(CPCI, CFGADDR), 0x40000180);
   iobarrier_rw();
-  out32 (BRIDGE (CPCI, CFGDATA), 0x01ff0000);
+  out32(BRIDGE(CPCI, CFGDATA), 0x01ff0000);
   iobarrier_rw();
-  
-  out32 (BRIDGE (CPCI, CFGADDR), 0x50000180);
+
+  out32(BRIDGE(CPCI, CFGADDR), 0x50000180);
   iobarrier_rw();
-  out32 (BRIDGE (CPCI, CFGDATA), 0x32000000);
-  /* PCI retry timeouts will be enabled later
-   */
-  out32 (BRIDGE (CPCI, CFGDATA), 0x00000000);
+  out32(BRIDGE(CPCI, CFGDATA), 0x32000000);
+    /* PCI retry timeouts will be enabled later
+     */
+  out32(BRIDGE(CPCI, CFGDATA), 0x00000000);
   iobarrier_rw();
-  
-  /* Remove reset on the PCI buses
-   */
-  out32 (BRIDGE (LOCAL, CRR), 0xfc000000);
+
+    /* Remove reset on the PCI buses
+     */
+  out32(BRIDGE(LOCAL, CRR), 0xfc000000);
   iobarrier_rw();
-  out32 (BRIDGE (CPCI, CRR), 0xfc000000);
+  out32(BRIDGE(CPCI, CRR), 0xfc000000);
   iobarrier_rw();
-  
+
   local_hose.first_busno = 0;
   local_hose.last_busno = 0xff;
-  
+
   /* System memory space */
-  pci_set_region (local_hose.regions + 0,
-                  PCI_MEMORY_BUS,
-                  PCI_MEMORY_PHYS,
-                  PCI_MEMORY_MAXSIZE,
-                  PCI_REGION_MEM | PCI_REGION_SYS_MEMORY);
-                  
+  pci_set_region(local_hose.regions + 0,
+		 PCI_MEMORY_BUS,
+		 PCI_MEMORY_PHYS,
+		 PCI_MEMORY_MAXSIZE,
+		 PCI_REGION_MEM | PCI_REGION_SYS_MEMORY);
+
   /* PCI memory space */
-  pci_set_region (local_hose.regions + 1,
-                  BRIDGE_LOCAL_MEM_BUS,
-                  BRIDGE_LOCAL_MEM_PHYS,
-                  BRIDGE_LOCAL_MEM_SIZE,
-                  PCI_REGION_MEM);
-                  
+  pci_set_region(local_hose.regions + 1,
+		 BRIDGE_LOCAL_MEM_BUS,
+		 BRIDGE_LOCAL_MEM_PHYS,
+		 BRIDGE_LOCAL_MEM_SIZE,
+		 PCI_REGION_MEM);
+
   /* PCI I/O space */
-  pci_set_region (local_hose.regions + 2,
-                  BRIDGE_LOCAL_IO_BUS,
-                  BRIDGE_LOCAL_IO_PHYS,
-                  BRIDGE_LOCAL_IO_SIZE,
-                  PCI_REGION_IO);
-                  
+  pci_set_region(local_hose.regions + 2,
+		 BRIDGE_LOCAL_IO_BUS,
+		 BRIDGE_LOCAL_IO_PHYS,
+		 BRIDGE_LOCAL_IO_SIZE,
+		 PCI_REGION_IO);
+
   local_hose.region_count = 3;
-  
-  pci_setup_indirect (&local_hose,
-                      BRIDGE_LOCAL_PHYS + HW_BRIDGE_CFGADDR,
-                      BRIDGE_LOCAL_PHYS + HW_BRIDGE_CFGDATA);
-                      
-  pci_register_hose (&local_hose);
-  
+
+  pci_setup_indirect(&local_hose,
+		     BRIDGE_LOCAL_PHYS + HW_BRIDGE_CFGADDR,
+		     BRIDGE_LOCAL_PHYS + HW_BRIDGE_CFGDATA);
+
+  pci_register_hose(&local_hose);
+
   /* Initialize PCI32 bus registers */
-  pci_hose_write_config_byte (&local_hose,
-                              PCI_BDF (local_hose.first_busno, 0, 0),
-                              CPC710_BUS_NUMBER,
-                              local_hose.first_busno);
-  pci_hose_write_config_byte (&local_hose,
-                              PCI_BDF (local_hose.first_busno, 0, 0),
-                              CPC710_SUB_BUS_NUMBER,
-                              local_hose.last_busno);
-                              
-  local_hose.last_busno = pci_hose_scan (&local_hose);
-  
+  pci_hose_write_config_byte(&local_hose,
+			  PCI_BDF(local_hose.first_busno,0,0),
+			  CPC710_BUS_NUMBER,
+			  local_hose.first_busno);
+  pci_hose_write_config_byte(&local_hose,
+			  PCI_BDF(local_hose.first_busno,0,0),
+			  CPC710_SUB_BUS_NUMBER,
+			  local_hose.last_busno);
+
+  local_hose.last_busno = pci_hose_scan(&local_hose);
+
   /* Write out correct max subordinate bus number for local hose */
-  pci_hose_write_config_byte (&local_hose,
-                              PCI_BDF (local_hose.first_busno, 0, 0),
-                              CPC710_SUB_BUS_NUMBER,
-                              local_hose.last_busno);
-                              
+  pci_hose_write_config_byte(&local_hose,
+			  PCI_BDF(local_hose.first_busno,0,0),
+			  CPC710_SUB_BUS_NUMBER,
+			  local_hose.last_busno);
+
   cpci_hose.first_busno = local_hose.last_busno + 1;
   cpci_hose.last_busno = 0xff;
-  
+
   /* System memory space */
-  pci_set_region (cpci_hose.regions + 0,
-                  PCI_MEMORY_BUS,
-                  PCI_MEMORY_PHYS,
-                  PCI_MEMORY_MAXSIZE,
-                  PCI_REGION_SYS_MEMORY);
-                  
+  pci_set_region(cpci_hose.regions + 0,
+		 PCI_MEMORY_BUS,
+		 PCI_MEMORY_PHYS,
+		 PCI_MEMORY_MAXSIZE,
+		 PCI_REGION_SYS_MEMORY);
+
   /* PCI memory space */
-  pci_set_region (cpci_hose.regions + 1,
-                  BRIDGE_CPCI_MEM_BUS,
-                  BRIDGE_CPCI_MEM_PHYS,
-                  BRIDGE_CPCI_MEM_SIZE,
-                  PCI_REGION_MEM);
-                  
+  pci_set_region(cpci_hose.regions + 1,
+		 BRIDGE_CPCI_MEM_BUS,
+		 BRIDGE_CPCI_MEM_PHYS,
+		 BRIDGE_CPCI_MEM_SIZE,
+		 PCI_REGION_MEM);
+
   /* PCI I/O space */
-  pci_set_region (cpci_hose.regions + 2,
-                  BRIDGE_CPCI_IO_BUS,
-                  BRIDGE_CPCI_IO_PHYS,
-                  BRIDGE_CPCI_IO_SIZE,
-                  PCI_REGION_IO);
-                  
+  pci_set_region(cpci_hose.regions + 2,
+		 BRIDGE_CPCI_IO_BUS,
+		 BRIDGE_CPCI_IO_PHYS,
+		 BRIDGE_CPCI_IO_SIZE,
+		 PCI_REGION_IO);
+
   cpci_hose.region_count = 3;
-  
-  pci_setup_indirect (&cpci_hose,
-                      BRIDGE_CPCI_PHYS + HW_BRIDGE_CFGADDR,
-                      BRIDGE_CPCI_PHYS + HW_BRIDGE_CFGDATA);
-                      
-  pci_register_hose (&cpci_hose);
-  
+
+  pci_setup_indirect(&cpci_hose,
+		     BRIDGE_CPCI_PHYS + HW_BRIDGE_CFGADDR,
+		     BRIDGE_CPCI_PHYS + HW_BRIDGE_CFGDATA);
+
+  pci_register_hose(&cpci_hose);
+
   /* Initialize PCI64 bus registers */
-  pci_hose_write_config_byte (&cpci_hose,
-                              PCI_BDF (cpci_hose.first_busno, 0, 0),
-                              CPC710_BUS_NUMBER,
-                              cpci_hose.first_busno);
-  pci_hose_write_config_byte (&cpci_hose,
-                              PCI_BDF (cpci_hose.first_busno, 0, 0),
-                              CPC710_SUB_BUS_NUMBER,
-                              cpci_hose.last_busno);
-                              
-  cpci_hose.last_busno = pci_hose_scan (&cpci_hose);
-  
+  pci_hose_write_config_byte(&cpci_hose,
+			  PCI_BDF(cpci_hose.first_busno,0,0),
+			  CPC710_BUS_NUMBER,
+			  cpci_hose.first_busno);
+  pci_hose_write_config_byte(&cpci_hose,
+			  PCI_BDF(cpci_hose.first_busno,0,0),
+			  CPC710_SUB_BUS_NUMBER,
+			  cpci_hose.last_busno);
+
+  cpci_hose.last_busno = pci_hose_scan(&cpci_hose);
+
   /* Write out correct max subordinate bus number for cpci hose */
-  pci_hose_write_config_byte (&cpci_hose,
-                              PCI_BDF (cpci_hose.first_busno, 0, 0),
-                              CPC710_SUB_BUS_NUMBER,
-                              cpci_hose.last_busno);
+  pci_hose_write_config_byte(&cpci_hose,
+			  PCI_BDF(cpci_hose.first_busno,0,0),
+			  CPC710_SUB_BUS_NUMBER,
+			  cpci_hose.last_busno);
 }

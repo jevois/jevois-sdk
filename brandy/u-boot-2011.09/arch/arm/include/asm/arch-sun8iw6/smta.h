@@ -1,10 +1,10 @@
 /*
 **********************************************************************************************************************
 *
-*                      the Embedded Secure Bootloader System
+*						           the Embedded Secure Bootloader System
 *
 *
-*                  Copyright(C), 2006-2014, Allwinnertech Co., Ltd.
+*						       Copyright(C), 2006-2014, Allwinnertech Co., Ltd.
 *                                           All Rights Reserved
 *
 * File    :
@@ -13,7 +13,7 @@
 *
 * Version : V2.00
 *
-* Date    :
+* Date	  :
 *
 * Descript:
 **********************************************************************************************************************
@@ -50,8 +50,8 @@
 #define SMTA_CLEAR_REG(n)       (SMTA_BASE + (n) * 0x0C + 0x0C)
 
 
-void sunxi_smta_set_to_ns (uint type);
-void sunxi_smta_set_to_s (uint type);
-uint sunxi_smta_probe_status (uint type);
+void sunxi_smta_set_to_ns(uint type);
+void sunxi_smta_set_to_s(uint type);
+uint sunxi_smta_probe_status(uint type);
 
 #endif /* __SMTA_H__ */

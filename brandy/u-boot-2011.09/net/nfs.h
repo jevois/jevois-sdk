@@ -50,29 +50,29 @@
 #define NFS_MAXLINKDEPTH 16
 
 struct rpc_t {
-  union {
-    uint8_t data[2048];
-    struct {
-      uint32_t id;
-      uint32_t type;
-      uint32_t rpcvers;
-      uint32_t prog;
-      uint32_t vers;
-      uint32_t proc;
-      uint32_t data[1];
-    } call;
-    struct {
-      uint32_t id;
-      uint32_t type;
-      uint32_t rstatus;
-      uint32_t verifier;
-      uint32_t v2;
-      uint32_t astatus;
-      uint32_t data[19];
-    } reply;
-  } u;
+	union {
+		uint8_t data[2048];
+		struct {
+			uint32_t id;
+			uint32_t type;
+			uint32_t rpcvers;
+			uint32_t prog;
+			uint32_t vers;
+			uint32_t proc;
+			uint32_t data[1];
+		} call;
+		struct {
+			uint32_t id;
+			uint32_t type;
+			uint32_t rstatus;
+			uint32_t verifier;
+			uint32_t v2;
+			uint32_t astatus;
+			uint32_t data[19];
+		} reply;
+	} u;
 };
-extern void NfsStart (void);  /* Begin NFS */
+extern void	NfsStart (void);	/* Begin NFS */
 
 
 /**********************************************************************/

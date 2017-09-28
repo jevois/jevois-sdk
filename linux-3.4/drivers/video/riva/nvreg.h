@@ -35,7 +35,7 @@
 #define GetBF(var,mask) (((unsigned)((var) & MASKEXPAND(mask))) >> (0?mask) )
 
 #define MaskAndSetBF(var,mask,value) (var)=(((var)&(~MASKEXPAND(mask)) \
-    | SetBF(mask,value)))
+                                             | SetBF(mask,value)))
 
 #define DEVICE_BASE(device) (0?NV##_##device)
 #define DEVICE_SIZE(device) ((1?NV##_##device) - DEVICE_BASE(device)+1)
@@ -156,13 +156,13 @@
 
 #define PDAC_ReadExt(reg) \
   ((PDAC_Write(INDEX_LO,(NV_PDAC_EXT_##reg) & 0xff)),\
-   (PDAC_Write(INDEX_HI,((NV_PDAC_EXT_##reg) >> 8) & 0xff)),\
-   (PDAC_Read(INDEX_DATA)))
+  (PDAC_Write(INDEX_HI,((NV_PDAC_EXT_##reg) >> 8) & 0xff)),\
+  (PDAC_Read(INDEX_DATA)))
 
 #define PDAC_WriteExt(reg,value)\
   ((PDAC_Write(INDEX_LO,(NV_PDAC_EXT_##reg) & 0xff)),\
-   (PDAC_Write(INDEX_HI,((NV_PDAC_EXT_##reg) >> 8) & 0xff)),\
-   (PDAC_Write(INDEX_DATA,(value))))
+  (PDAC_Write(INDEX_HI,((NV_PDAC_EXT_##reg) >> 8) & 0xff)),\
+  (PDAC_Write(INDEX_DATA,(value))))
 
 #define CRTC_Write(index,value) outb((index), 0x3d4); outb(value, 0x3d5)
 #define CRTC_Read(index) (outb(index, 0x3d4),inb(0x3d5))
@@ -177,11 +177,11 @@
 #define SR_Write(index,value) outb(0x3c4,(index));outb(0x3c5,value)
 #define SR_Read(index) (outb(0x3c4,index),inb(0x3c5))
 
-extern volatile unsigned * nvCONTROL;
+extern volatile unsigned  *nvCONTROL;
 
-typedef enum {NV1, NV3, NV4, NumNVChips} NVChipType;
+typedef enum {NV1,NV3,NV4,NumNVChips} NVChipType;
 
-NVChipType GetChipType (void);
+NVChipType GetChipType(void);
 
 #endif
 

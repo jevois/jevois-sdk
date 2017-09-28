@@ -43,99 +43,95 @@ DECLARE_GLOBAL_DATA_PTR;
 
 int timer_init (void)
 {
-  int32_t val;
-  
-  /* Start the counter ticking up */
-  * ( (int32_t *) (CONFIG_SYS_TIMERBASE + TLDR) ) = TIMER_LOAD_VAL; /* reload value on overflow*/
-  val = (CONFIG_SYS_PTV << 2) | BIT5 | BIT1 | BIT0;   /* mask to enable timer*/
-  * ( (int32_t *) (CONFIG_SYS_TIMERBASE + TCLR) ) = val; /* start timer */
-  
-  /* reset time */
-  gd->lastinc = READ_TIMER; /* capture current incrementer value */
-  gd->tbl = 0;      /* start "advancing" time stamp */
-  
-  return (0);
+	int32_t val;
+
+	/* Start the counter ticking up */
+	*((int32_t *) (CONFIG_SYS_TIMERBASE + TLDR)) = TIMER_LOAD_VAL;	/* reload value on overflow*/
+	val = (CONFIG_SYS_PTV << 2) | BIT5 | BIT1 | BIT0;		/* mask to enable timer*/
+	*((int32_t *) (CONFIG_SYS_TIMERBASE + TCLR)) = val;	/* start timer */
+
+	/* reset time */
+	gd->lastinc = READ_TIMER;	/* capture current incrementer value */
+	gd->tbl = 0;			/* start "advancing" time stamp */
+
+	return(0);
 }
 /*
  * timer without interrupts
  */
 ulong get_timer (ulong base)
 {
-  return get_timer_masked () - base;
+	return get_timer_masked () - base;
 }
 
 /* delay x useconds AND preserve advance timestamp value */
 void __udelay (unsigned long usec)
 {
-  ulong tmo, tmp;
-  
-  if (usec >= 1000) {   /* if "big" number, spread normalization to seconds */
-    tmo = usec / 1000;  /* start to normalize for usec to ticks per sec */
-    tmo *= CONFIG_SYS_HZ; /* find number of "ticks" to wait to achieve target */
-    tmo /= 1000;    /* finish normalize. */
-  }
-  else {        /* else small number, don't kill it prior to HZ multiply */
-    tmo = usec * CONFIG_SYS_HZ;
-    tmo /= (1000 * 1000);
-  }
-  
-  tmp = get_timer (0);    /* get current timestamp */
-  if ( (tmo + tmp + 1) < tmp) { /* if setting this forward will roll */
-    /* time stamp, then reset time */
-    gd->lastinc = READ_TIMER; /* capture incrementer value */
-    gd->tbl = 0;      /* start time stamp */
-  }
-  else {
-    tmo += tmp;   /* else, set advancing stamp wake up time */
-  }
-  while (get_timer_masked () < tmo) /* loop till event */
-    /*NOP*/;
+	ulong tmo, tmp;
+
+	if (usec >= 1000) {		/* if "big" number, spread normalization to seconds */
+		tmo = usec / 1000;	/* start to normalize for usec to ticks per sec */
+		tmo *= CONFIG_SYS_HZ;	/* find number of "ticks" to wait to achieve target */
+		tmo /= 1000;		/* finish normalize. */
+	} else {			/* else small number, don't kill it prior to HZ multiply */
+		tmo = usec * CONFIG_SYS_HZ;
+		tmo /= (1000*1000);
+	}
+
+	tmp = get_timer (0);		/* get current timestamp */
+	if ((tmo + tmp + 1) < tmp) {	/* if setting this forward will roll */
+					/* time stamp, then reset time */
+		gd->lastinc = READ_TIMER;	/* capture incrementer value */
+		gd->tbl = 0;			/* start time stamp */
+	} else {
+		tmo	+= tmp;		/* else, set advancing stamp wake up time */
+	}
+	while (get_timer_masked () < tmo)/* loop till event */
+		/*NOP*/;
 }
 
 ulong get_timer_masked (void)
 {
-  ulong now = READ_TIMER;   /* current tick value */
-  
-  if (now >= gd->lastinc)   /* normal mode (non roll) */
-  { gd->tbl += (now - gd->lastinc); } /* move stamp fordward with absoulte diff ticks */
-  else        /* we have rollover of incrementer */
-  { gd->tbl += (0xFFFFFFFF - gd->lastinc) + now; }
-  gd->lastinc = now;
-  return gd->tbl;
+	ulong now = READ_TIMER;		/* current tick value */
+
+	if (now >= gd->lastinc)		/* normal mode (non roll) */
+		gd->tbl += (now - gd->lastinc); /* move stamp fordward with absoulte diff ticks */
+	else				/* we have rollover of incrementer */
+		gd->tbl += (0xFFFFFFFF - gd->lastinc) + now;
+	gd->lastinc = now;
+	return gd->tbl;
 }
 
 /* waits specified delay value and resets timestamp */
 void udelay_masked (unsigned long usec)
 {
-  ulong tmo;
-  ulong endtime;
-  signed long diff;
-  
-  if (usec >= 1000) {     /* if "big" number, spread normalization to seconds */
-    tmo = usec / 1000;    /* start to normalize for usec to ticks per sec */
-    tmo *= CONFIG_SYS_HZ;     /* find number of "ticks" to wait to achieve target */
-    tmo /= 1000;      /* finish normalize. */
-  }
-  else {            /* else small number, don't kill it prior to HZ multiply */
-    tmo = usec * CONFIG_SYS_HZ;
-    tmo /= (1000 * 1000);
-  }
-  endtime = get_timer_masked () + tmo;
-  
-  do {
-    ulong now = get_timer_masked ();
-    diff = endtime - now;
-  }
-  while (diff >= 0);
+	ulong tmo;
+	ulong endtime;
+	signed long diff;
+
+	if (usec >= 1000) {			/* if "big" number, spread normalization to seconds */
+		tmo = usec / 1000;		/* start to normalize for usec to ticks per sec */
+		tmo *= CONFIG_SYS_HZ;			/* find number of "ticks" to wait to achieve target */
+		tmo /= 1000;			/* finish normalize. */
+	} else {					/* else small number, don't kill it prior to HZ multiply */
+		tmo = usec * CONFIG_SYS_HZ;
+		tmo /= (1000*1000);
+	}
+	endtime = get_timer_masked () + tmo;
+
+	do {
+		ulong now = get_timer_masked ();
+		diff = endtime - now;
+	} while (diff >= 0);
 }
 
 /*
  * This function is derived from PowerPC code (read timebase as long long).
  * On ARM it just returns the timer value.
  */
-unsigned long long get_ticks (void)
+unsigned long long get_ticks(void)
 {
-  return get_timer (0);
+	return get_timer(0);
 }
 /*
  * This function is derived from PowerPC code (timebase clock frequency).
@@ -143,7 +139,7 @@ unsigned long long get_ticks (void)
  */
 ulong get_tbclk (void)
 {
-  ulong tbclk;
-  tbclk = CONFIG_SYS_HZ;
-  return tbclk;
+	ulong tbclk;
+	tbclk = CONFIG_SYS_HZ;
+	return tbclk;
 }

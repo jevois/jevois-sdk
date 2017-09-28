@@ -44,8 +44,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 typedef struct
 {
-  ion_phys_addr_t uiHeapBase;
-  size_t uiHeapSize;
-  IMG_UINT32 ui32IonPhysHeapID;
-  IMG_CPU_PHYADDR sPCIAddrRangeStart;
+	ion_phys_addr_t uiHeapBase;
+	size_t uiHeapSize;
+	IMG_UINT32 ui32IonPhysHeapID;
+	IMG_CPU_PHYADDR sPCIAddrRangeStart;
 } ION_TC_PRIVATE_DATA;

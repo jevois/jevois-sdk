@@ -47,9 +47,9 @@
  */
 #define SCHEDOP_shutdown    2
 struct sched_shutdown {
-  unsigned int reason; /* SHUTDOWN_* */
+    unsigned int reason; /* SHUTDOWN_* */
 };
-DEFINE_GUEST_HANDLE_STRUCT (sched_shutdown);
+DEFINE_GUEST_HANDLE_STRUCT(sched_shutdown);
 
 /*
  * Poll a set of event-channel ports. Return when one or more are pending. An
@@ -58,11 +58,11 @@ DEFINE_GUEST_HANDLE_STRUCT (sched_shutdown);
  */
 #define SCHEDOP_poll        3
 struct sched_poll {
-  GUEST_HANDLE (evtchn_port_t) ports;
-  unsigned int nr_ports;
-  uint64_t timeout;
+    GUEST_HANDLE(evtchn_port_t) ports;
+    unsigned int nr_ports;
+    uint64_t timeout;
 };
-DEFINE_GUEST_HANDLE_STRUCT (sched_poll);
+DEFINE_GUEST_HANDLE_STRUCT(sched_poll);
 
 /*
  * Declare a shutdown for another domain. The main use of this function is
@@ -72,8 +72,8 @@ DEFINE_GUEST_HANDLE_STRUCT (sched_poll);
  */
 #define SCHEDOP_remote_shutdown        4
 struct sched_remote_shutdown {
-  domid_t domain_id;         /* Remote domain ID */
-  unsigned int reason;       /* SHUTDOWN_xxx reason */
+    domid_t domain_id;         /* Remote domain ID */
+    unsigned int reason;       /* SHUTDOWN_xxx reason */
 };
 
 /*
@@ -93,8 +93,8 @@ struct sched_remote_shutdown {
  */
 #define SCHEDOP_watchdog    6
 struct sched_watchdog {
-  uint32_t id;                /* watchdog ID */
-  uint32_t timeout;           /* timeout */
+    uint32_t id;                /* watchdog ID */
+    uint32_t timeout;           /* timeout */
 };
 
 /*

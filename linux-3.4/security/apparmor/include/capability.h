@@ -27,19 +27,19 @@ struct aa_profile;
  * @extended: caps that are subject finer grained mediation
  */
 struct aa_caps {
-  kernel_cap_t allow;
-  kernel_cap_t audit;
-  kernel_cap_t quiet;
-  kernel_cap_t kill;
-  kernel_cap_t extended;
+	kernel_cap_t allow;
+	kernel_cap_t audit;
+	kernel_cap_t quiet;
+	kernel_cap_t kill;
+	kernel_cap_t extended;
 };
 
-int aa_capable (struct task_struct * task, struct aa_profile * profile, int cap,
-                int audit);
+int aa_capable(struct task_struct *task, struct aa_profile *profile, int cap,
+	       int audit);
 
-static inline void aa_free_cap_rules (struct aa_caps * caps)
+static inline void aa_free_cap_rules(struct aa_caps *caps)
 {
-  /* NOP */
+	/* NOP */
 }
 
 #endif /* __AA_CAPBILITY_H */

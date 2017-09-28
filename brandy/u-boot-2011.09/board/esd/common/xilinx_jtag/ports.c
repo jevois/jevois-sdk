@@ -42,69 +42,66 @@ static int oldstate = 0;
 static int newstate = 0;
 static int readptr = 0;
 
-extern const unsigned char * xsvfdata;
+extern const unsigned char *xsvfdata;
 
 /* if in debugging mode, then just set the variables */
-void setPort (short p, short val)
+void setPort(short p,short val)
 {
-  if (p == TMS) {
-    if (val) {
-      output |= JTAG_TMS;
-    }
-    else {
-      output &= ~JTAG_TMS;
-    }
-  }
-  if (p == TDI) {
-    if (val) {
-      output |= JTAG_TDI;
-    }
-    else {
-      output &= ~JTAG_TDI;
-    }
-  }
-  if (p == TCK) {
-    if (val) {
-      output |= JTAG_TCK;
-    }
-    else {
-      output &= ~JTAG_TCK;
-    }
-    out_be32 ( (void *) GPIO0_OR, output);
-  }
+	if (p==TMS) {
+		if (val) {
+			output |= JTAG_TMS;
+		} else {
+			output &= ~JTAG_TMS;
+		}
+	}
+	if (p==TDI) {
+		if (val) {
+			output |= JTAG_TDI;
+		} else {
+			output &= ~JTAG_TDI;
+		}
+	}
+	if (p==TCK) {
+		if (val) {
+			output |= JTAG_TCK;
+		} else {
+			output &= ~JTAG_TCK;
+		}
+		out_be32((void *)GPIO0_OR, output);
+	}
 }
 
 
 /* toggle tck LH */
-void pulseClock (void)
+void pulseClock(void)
 {
-  setPort (TCK, 0); /* set the TCK port to low  */
-  setPort (TCK, 1); /* set the TCK port to high */
+	setPort(TCK,0);  /* set the TCK port to low  */
+	setPort(TCK,1);  /* set the TCK port to high */
 }
 
 
 /* read in a byte of data from the prom */
-void readByte (unsigned char * data)
+void readByte(unsigned char *data)
 {
-  /* pretend reading using a file */
-  *data = xsvfdata[readptr++];
-  newstate = filepos++ >> 10;
-  if (newstate != oldstate) {
-    printf ("%4d kB\r\r\r\r", newstate);
-    oldstate = newstate;
-  }
+	/* pretend reading using a file */
+	*data = xsvfdata[readptr++];
+	newstate = filepos++ >> 10;
+	if (newstate != oldstate) {
+		printf("%4d kB\r\r\r\r", newstate);
+		oldstate = newstate;
+	}
 }
 
 /* read the TDO bit from port */
-unsigned char readTDOBit (void)
+unsigned char readTDOBit(void)
 {
-  unsigned long inputs;
-  
-  inputs = in_be32 ( (void *) GPIO0_IR);
-  if (inputs & JTAG_TDO)
-  { return 1; }
-  else
-  { return 0; }
+	unsigned long inputs;
+
+	inputs = in_be32((void *)GPIO0_IR);
+	if (inputs & JTAG_TDO)
+		return 1;
+	else
+		return 0;
 }
 
 
@@ -112,7 +109,7 @@ unsigned char readTDOBit (void)
 /* Use a timer if possible; otherwise estimate the number of instructions    */
 /* necessary to be run based on the microcontroller speed.  For this example */
 /* we pulse the TCK port a number of times based on the processor speed.     */
-void waitTime (long microsec)
+void waitTime(long microsec)
 {
-  udelay (microsec); /* esd */
+	udelay(microsec); /* esd */
 }

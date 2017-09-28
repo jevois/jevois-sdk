@@ -15,7 +15,7 @@
  *
  * This program is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
- * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+ * or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU General Public License
  * for more details.
  *
  * You should have received a copy of the GNU General Public License along
@@ -28,24 +28,24 @@
 #include <asm/io.h>
 
 /* We reset the CPU by generating a 1-->0 transition on DeviceCfg bit 31. */
-extern void reset_cpu (ulong addr)
+extern void reset_cpu(ulong addr)
 {
-  struct syscon_regs * syscon = (struct syscon_regs *) SYSCON_BASE;
-  uint32_t value;
-  
-  /* Unlock DeviceCfg and set SWRST */
-  writel (0xAA, &syscon->sysswlock);
-  value = readl (&syscon->devicecfg);
-  value |= SYSCON_DEVICECFG_SWRST;
-  writel (value, &syscon->devicecfg);
-  
-  /* Unlock DeviceCfg and clear SWRST */
-  writel (0xAA, &syscon->sysswlock);
-  value = readl (&syscon->devicecfg);
-  value &= ~SYSCON_DEVICECFG_SWRST;
-  writel (value, &syscon->devicecfg);
-  
-  /* Dying... */
-  while (1)
-    ; /* noop */
+	struct syscon_regs *syscon = (struct syscon_regs *)SYSCON_BASE;
+	uint32_t value;
+
+	/* Unlock DeviceCfg and set SWRST */
+	writel(0xAA, &syscon->sysswlock);
+	value = readl(&syscon->devicecfg);
+	value |= SYSCON_DEVICECFG_SWRST;
+	writel(value, &syscon->devicecfg);
+
+	/* Unlock DeviceCfg and clear SWRST */
+	writel(0xAA, &syscon->sysswlock);
+	value = readl(&syscon->devicecfg);
+	value &= ~SYSCON_DEVICECFG_SWRST;
+	writel(value, &syscon->devicecfg);
+
+	/* Dying... */
+	while (1)
+		; /* noop */
 }

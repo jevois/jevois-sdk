@@ -20,24 +20,24 @@ struct platform_device;
  * @alignment: data alignment in bits
  * @hs_settle: HS-RX settle time
  * @fixed_phy_vdd: false to enable external D-PHY regulator management in the
- *       driver or true in case this regulator has no enable function
+ *		   driver or true in case this regulator has no enable function
  * @phy_enable: pointer to a callback controlling D-PHY enable/reset
  */
 struct s5p_platform_mipi_csis {
-  unsigned long clk_rate;
-  u8 lanes;
-  u8 alignment;
-  u8 hs_settle;
-  bool fixed_phy_vdd;
-  int (*phy_enable) (struct platform_device * pdev, bool on);
+	unsigned long clk_rate;
+	u8 lanes;
+	u8 alignment;
+	u8 hs_settle;
+	bool fixed_phy_vdd;
+	int (*phy_enable)(struct platform_device *pdev, bool on);
 };
 
 /**
  * s5p_csis_phy_enable - global MIPI-CSI receiver D-PHY control
  * @pdev: MIPI-CSIS platform device
  * @on: true to enable D-PHY and deassert its reset
- *  false to disable D-PHY
+ *	false to disable D-PHY
  */
-int s5p_csis_phy_enable (struct platform_device * pdev, bool on);
+int s5p_csis_phy_enable(struct platform_device *pdev, bool on);
 
 #endif /* __PLAT_SAMSUNG_MIPI_CSIS_H_ */

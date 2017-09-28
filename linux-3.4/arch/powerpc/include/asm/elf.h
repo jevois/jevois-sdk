@@ -2,7 +2,7 @@
 #define _ASM_POWERPC_ELF_H
 
 #ifdef __KERNEL__
-#include <linux/sched.h>  /* for task_struct */
+#include <linux/sched.h>	/* for task_struct */
 #include <asm/page.h>
 #include <asm/string.h>
 #endif
@@ -14,76 +14,76 @@
 #include <asm/auxvec.h>
 
 /* PowerPC relocations defined by the ABIs */
-#define R_PPC_NONE    0
-#define R_PPC_ADDR32    1 /* 32bit absolute address */
-#define R_PPC_ADDR24    2 /* 26bit address, 2 bits ignored.  */
-#define R_PPC_ADDR16    3 /* 16bit absolute address */
-#define R_PPC_ADDR16_LO   4 /* lower 16bit of absolute address */
-#define R_PPC_ADDR16_HI   5 /* high 16bit of absolute address */
-#define R_PPC_ADDR16_HA   6 /* adjusted high 16bit */
-#define R_PPC_ADDR14    7 /* 16bit address, 2 bits ignored */
-#define R_PPC_ADDR14_BRTAKEN  8
-#define R_PPC_ADDR14_BRNTAKEN 9
-#define R_PPC_REL24   10  /* PC relative 26 bit */
-#define R_PPC_REL14   11  /* PC relative 16 bit */
-#define R_PPC_REL14_BRTAKEN 12
-#define R_PPC_REL14_BRNTAKEN  13
-#define R_PPC_GOT16   14
-#define R_PPC_GOT16_LO    15
-#define R_PPC_GOT16_HI    16
-#define R_PPC_GOT16_HA    17
-#define R_PPC_PLTREL24    18
-#define R_PPC_COPY    19
-#define R_PPC_GLOB_DAT    20
-#define R_PPC_JMP_SLOT    21
-#define R_PPC_RELATIVE    22
-#define R_PPC_LOCAL24PC   23
-#define R_PPC_UADDR32   24
-#define R_PPC_UADDR16   25
-#define R_PPC_REL32   26
-#define R_PPC_PLT32   27
-#define R_PPC_PLTREL32    28
-#define R_PPC_PLT16_LO    29
-#define R_PPC_PLT16_HI    30
-#define R_PPC_PLT16_HA    31
-#define R_PPC_SDAREL16    32
-#define R_PPC_SECTOFF   33
-#define R_PPC_SECTOFF_LO  34
-#define R_PPC_SECTOFF_HI  35
-#define R_PPC_SECTOFF_HA  36
+#define R_PPC_NONE		0
+#define R_PPC_ADDR32		1	/* 32bit absolute address */
+#define R_PPC_ADDR24		2	/* 26bit address, 2 bits ignored.  */
+#define R_PPC_ADDR16		3	/* 16bit absolute address */
+#define R_PPC_ADDR16_LO		4	/* lower 16bit of absolute address */
+#define R_PPC_ADDR16_HI		5	/* high 16bit of absolute address */
+#define R_PPC_ADDR16_HA		6	/* adjusted high 16bit */
+#define R_PPC_ADDR14		7	/* 16bit address, 2 bits ignored */
+#define R_PPC_ADDR14_BRTAKEN	8
+#define R_PPC_ADDR14_BRNTAKEN	9
+#define R_PPC_REL24		10	/* PC relative 26 bit */
+#define R_PPC_REL14		11	/* PC relative 16 bit */
+#define R_PPC_REL14_BRTAKEN	12
+#define R_PPC_REL14_BRNTAKEN	13
+#define R_PPC_GOT16		14
+#define R_PPC_GOT16_LO		15
+#define R_PPC_GOT16_HI		16
+#define R_PPC_GOT16_HA		17
+#define R_PPC_PLTREL24		18
+#define R_PPC_COPY		19
+#define R_PPC_GLOB_DAT		20
+#define R_PPC_JMP_SLOT		21
+#define R_PPC_RELATIVE		22
+#define R_PPC_LOCAL24PC		23
+#define R_PPC_UADDR32		24
+#define R_PPC_UADDR16		25
+#define R_PPC_REL32		26
+#define R_PPC_PLT32		27
+#define R_PPC_PLTREL32		28
+#define R_PPC_PLT16_LO		29
+#define R_PPC_PLT16_HI		30
+#define R_PPC_PLT16_HA		31
+#define R_PPC_SDAREL16		32
+#define R_PPC_SECTOFF		33
+#define R_PPC_SECTOFF_LO	34
+#define R_PPC_SECTOFF_HI	35
+#define R_PPC_SECTOFF_HA	36
 
 /* PowerPC relocations defined for the TLS access ABI.  */
-#define R_PPC_TLS   67 /* none  (sym+add)@tls */
-#define R_PPC_DTPMOD32    68 /* word32  (sym+add)@dtpmod */
-#define R_PPC_TPREL16   69 /* half16* (sym+add)@tprel */
-#define R_PPC_TPREL16_LO  70 /* half16  (sym+add)@tprel@l */
-#define R_PPC_TPREL16_HI  71 /* half16  (sym+add)@tprel@h */
-#define R_PPC_TPREL16_HA  72 /* half16  (sym+add)@tprel@ha */
-#define R_PPC_TPREL32   73 /* word32  (sym+add)@tprel */
-#define R_PPC_DTPREL16    74 /* half16* (sym+add)@dtprel */
-#define R_PPC_DTPREL16_LO 75 /* half16  (sym+add)@dtprel@l */
-#define R_PPC_DTPREL16_HI 76 /* half16  (sym+add)@dtprel@h */
-#define R_PPC_DTPREL16_HA 77 /* half16  (sym+add)@dtprel@ha */
-#define R_PPC_DTPREL32    78 /* word32  (sym+add)@dtprel */
-#define R_PPC_GOT_TLSGD16 79 /* half16* (sym+add)@got@tlsgd */
-#define R_PPC_GOT_TLSGD16_LO  80 /* half16  (sym+add)@got@tlsgd@l */
-#define R_PPC_GOT_TLSGD16_HI  81 /* half16  (sym+add)@got@tlsgd@h */
-#define R_PPC_GOT_TLSGD16_HA  82 /* half16  (sym+add)@got@tlsgd@ha */
-#define R_PPC_GOT_TLSLD16 83 /* half16* (sym+add)@got@tlsld */
-#define R_PPC_GOT_TLSLD16_LO  84 /* half16  (sym+add)@got@tlsld@l */
-#define R_PPC_GOT_TLSLD16_HI  85 /* half16  (sym+add)@got@tlsld@h */
-#define R_PPC_GOT_TLSLD16_HA  86 /* half16  (sym+add)@got@tlsld@ha */
-#define R_PPC_GOT_TPREL16 87 /* half16* (sym+add)@got@tprel */
-#define R_PPC_GOT_TPREL16_LO  88 /* half16  (sym+add)@got@tprel@l */
-#define R_PPC_GOT_TPREL16_HI  89 /* half16  (sym+add)@got@tprel@h */
-#define R_PPC_GOT_TPREL16_HA  90 /* half16  (sym+add)@got@tprel@ha */
-#define R_PPC_GOT_DTPREL16  91 /* half16* (sym+add)@got@dtprel */
-#define R_PPC_GOT_DTPREL16_LO 92 /* half16* (sym+add)@got@dtprel@l */
-#define R_PPC_GOT_DTPREL16_HI 93 /* half16* (sym+add)@got@dtprel@h */
-#define R_PPC_GOT_DTPREL16_HA 94 /* half16* (sym+add)@got@dtprel@ha */
+#define R_PPC_TLS		67 /* none	(sym+add)@tls */
+#define R_PPC_DTPMOD32		68 /* word32	(sym+add)@dtpmod */
+#define R_PPC_TPREL16		69 /* half16*	(sym+add)@tprel */
+#define R_PPC_TPREL16_LO	70 /* half16	(sym+add)@tprel@l */
+#define R_PPC_TPREL16_HI	71 /* half16	(sym+add)@tprel@h */
+#define R_PPC_TPREL16_HA	72 /* half16	(sym+add)@tprel@ha */
+#define R_PPC_TPREL32		73 /* word32	(sym+add)@tprel */
+#define R_PPC_DTPREL16		74 /* half16*	(sym+add)@dtprel */
+#define R_PPC_DTPREL16_LO	75 /* half16	(sym+add)@dtprel@l */
+#define R_PPC_DTPREL16_HI	76 /* half16	(sym+add)@dtprel@h */
+#define R_PPC_DTPREL16_HA	77 /* half16	(sym+add)@dtprel@ha */
+#define R_PPC_DTPREL32		78 /* word32	(sym+add)@dtprel */
+#define R_PPC_GOT_TLSGD16	79 /* half16*	(sym+add)@got@tlsgd */
+#define R_PPC_GOT_TLSGD16_LO	80 /* half16	(sym+add)@got@tlsgd@l */
+#define R_PPC_GOT_TLSGD16_HI	81 /* half16	(sym+add)@got@tlsgd@h */
+#define R_PPC_GOT_TLSGD16_HA	82 /* half16	(sym+add)@got@tlsgd@ha */
+#define R_PPC_GOT_TLSLD16	83 /* half16*	(sym+add)@got@tlsld */
+#define R_PPC_GOT_TLSLD16_LO	84 /* half16	(sym+add)@got@tlsld@l */
+#define R_PPC_GOT_TLSLD16_HI	85 /* half16	(sym+add)@got@tlsld@h */
+#define R_PPC_GOT_TLSLD16_HA	86 /* half16	(sym+add)@got@tlsld@ha */
+#define R_PPC_GOT_TPREL16	87 /* half16*	(sym+add)@got@tprel */
+#define R_PPC_GOT_TPREL16_LO	88 /* half16	(sym+add)@got@tprel@l */
+#define R_PPC_GOT_TPREL16_HI	89 /* half16	(sym+add)@got@tprel@h */
+#define R_PPC_GOT_TPREL16_HA	90 /* half16	(sym+add)@got@tprel@ha */
+#define R_PPC_GOT_DTPREL16	91 /* half16*	(sym+add)@got@dtprel */
+#define R_PPC_GOT_DTPREL16_LO	92 /* half16*	(sym+add)@got@dtprel@l */
+#define R_PPC_GOT_DTPREL16_HI	93 /* half16*	(sym+add)@got@dtprel@h */
+#define R_PPC_GOT_DTPREL16_HA	94 /* half16*	(sym+add)@got@dtprel@ha */
 
 /* keep this the last entry. */
-#define R_PPC_NUM   95
+#define R_PPC_NUM		95
 
 /*
  * ELF register definitions..
@@ -94,8 +94,8 @@
  * 2 of the License, or (at your option) any later version.
  */
 
-#define ELF_NGREG 48  /* includes nip, msr, lr, etc. */
-#define ELF_NFPREG  33  /* includes fpscr */
+#define ELF_NGREG	48	/* includes nip, msr, lr, etc. */
+#define ELF_NFPREG	33	/* includes fpscr */
 
 typedef unsigned long elf_greg_t64;
 typedef elf_greg_t64 elf_gregset_t64[ELF_NGREG];
@@ -108,29 +108,29 @@ typedef elf_gregset_t32 compat_elf_gregset_t;
  * ELF_ARCH, CLASS, and DATA are used to set parameters in the core dumps.
  */
 #ifdef __powerpc64__
-# define ELF_NVRREG32 33  /* includes vscr & vrsave stuffed together */
-# define ELF_NVRREG 34  /* includes vscr & vrsave in split vectors */
-# define ELF_NVSRHALFREG 32 /* Half the vsx registers */
-# define ELF_GREG_TYPE  elf_greg_t64
+# define ELF_NVRREG32	33	/* includes vscr & vrsave stuffed together */
+# define ELF_NVRREG	34	/* includes vscr & vrsave in split vectors */
+# define ELF_NVSRHALFREG 32	/* Half the vsx registers */
+# define ELF_GREG_TYPE	elf_greg_t64
 #else
-# define ELF_NEVRREG  34  /* includes acc (as 2) */
-# define ELF_NVRREG 33  /* includes vscr */
-# define ELF_GREG_TYPE  elf_greg_t32
-# define ELF_ARCH EM_PPC
-# define ELF_CLASS  ELFCLASS32
-# define ELF_DATA ELFDATA2MSB
+# define ELF_NEVRREG	34	/* includes acc (as 2) */
+# define ELF_NVRREG	33	/* includes vscr */
+# define ELF_GREG_TYPE	elf_greg_t32
+# define ELF_ARCH	EM_PPC
+# define ELF_CLASS	ELFCLASS32
+# define ELF_DATA	ELFDATA2MSB
 #endif /* __powerpc64__ */
 
 #ifndef ELF_ARCH
-# define ELF_ARCH EM_PPC64
-# define ELF_CLASS  ELFCLASS64
-# define ELF_DATA ELFDATA2MSB
-typedef elf_greg_t64 elf_greg_t;
-typedef elf_gregset_t64 elf_gregset_t;
+# define ELF_ARCH	EM_PPC64
+# define ELF_CLASS	ELFCLASS64
+# define ELF_DATA	ELFDATA2MSB
+  typedef elf_greg_t64 elf_greg_t;
+  typedef elf_gregset_t64 elf_gregset_t;
 #else
-/* Assumption: ELF_ARCH == EM_PPC and ELF_CLASS == ELFCLASS32 */
-typedef elf_greg_t32 elf_greg_t;
-typedef elf_gregset_t32 elf_gregset_t;
+  /* Assumption: ELF_ARCH == EM_PPC and ELF_CLASS == ELFCLASS32 */
+  typedef elf_greg_t32 elf_greg_t;
+  typedef elf_gregset_t32 elf_gregset_t;
 #endif /* ELF_ARCH */
 
 /* Floating point registers */
@@ -139,18 +139,18 @@ typedef elf_fpreg_t elf_fpregset_t[ELF_NFPREG];
 
 /* Altivec registers */
 /*
- * The entries with indexes 0-31 contain the corresponding vector registers.
- * The entry with index 32 contains the vscr as the last word (offset 12)
- * within the quadword.  This allows the vscr to be stored as either a
- * quadword (since it must be copied via a vector register to/from storage)
- * or as a word.
+ * The entries with indexes 0-31 contain the corresponding vector registers. 
+ * The entry with index 32 contains the vscr as the last word (offset 12) 
+ * within the quadword.  This allows the vscr to be stored as either a 
+ * quadword (since it must be copied via a vector register to/from storage) 
+ * or as a word.  
  *
- * 64-bit kernel notes: The entry at index 33 contains the vrsave as the first
+ * 64-bit kernel notes: The entry at index 33 contains the vrsave as the first  
  * word (offset 0) within the quadword.
  *
- * This definition of the VMX state is compatible with the current PPC32
- * ptrace interface.  This allows signal handling and ptrace to use the same
- * structures.  This also simplifies the implementation of a bi-arch
+ * This definition of the VMX state is compatible with the current PPC32 
+ * ptrace interface.  This allows signal handling and ptrace to use the same 
+ * structures.  This also simplifies the implementation of a bi-arch 
  * (combined (32- and 64-bit) gdb.
  *
  * Note that it's _not_ compatible with 32 bits ucontext which stuffs the
@@ -168,18 +168,18 @@ typedef elf_fpreg_t elf_vsrreghalf_t32[ELF_NVSRHALFREG];
  * This is used to ensure we don't load something for the wrong architecture.
  */
 #define elf_check_arch(x) ((x)->e_machine == ELF_ARCH)
-#define compat_elf_check_arch(x)  ((x)->e_machine == EM_PPC)
+#define compat_elf_check_arch(x)	((x)->e_machine == EM_PPC)
 
 #define CORE_DUMP_USE_REGSET
-#define ELF_EXEC_PAGESIZE PAGE_SIZE
+#define ELF_EXEC_PAGESIZE	PAGE_SIZE
 
 /* This is the location that an ET_DYN program is loaded if exec'ed.  Typical
    use of this is to invoke "./ld.so someprog" to test out a new version of
    the loader.  We need to make sure that it is out of the way of the program
    that it will "exec", and that there is sufficient room for the brk.  */
 
-extern unsigned long randomize_et_dyn (unsigned long base);
-#define ELF_ET_DYN_BASE   (randomize_et_dyn(0x20000000))
+extern unsigned long randomize_et_dyn(unsigned long base);
+#define ELF_ET_DYN_BASE		(randomize_et_dyn(0x20000000))
 
 /*
  * Our registers are always unsigned longs, whether we're a 32 bit
@@ -191,17 +191,17 @@ extern unsigned long randomize_et_dyn (unsigned long base);
  * the 32-bit one with elf_gregset_t32 elf_regs.
  */
 #define PPC_ELF_CORE_COPY_REGS(elf_regs, regs) \
-  int i, nregs = min(sizeof(*regs) / sizeof(unsigned long), \
-                     (size_t)ELF_NGREG);        \
-  for (i = 0; i < nregs; i++) \
-    elf_regs[i] = ((unsigned long *) regs)[i]; \
-  memset(&elf_regs[i], 0, (ELF_NGREG - i) * sizeof(elf_regs[0]))
+	int i, nregs = min(sizeof(*regs) / sizeof(unsigned long), \
+			   (size_t)ELF_NGREG);			  \
+	for (i = 0; i < nregs; i++) \
+		elf_regs[i] = ((unsigned long *) regs)[i]; \
+	memset(&elf_regs[i], 0, (ELF_NGREG - i) * sizeof(elf_regs[0]))
 
 /* Common routine for both 32-bit and 64-bit native processes */
-static inline void ppc_elf_core_copy_regs (elf_gregset_t elf_regs,
-    struct pt_regs * regs)
+static inline void ppc_elf_core_copy_regs(elf_gregset_t elf_regs,
+					  struct pt_regs *regs)
 {
-  PPC_ELF_CORE_COPY_REGS (elf_regs, regs);
+	PPC_ELF_CORE_COPY_REGS(elf_regs, regs);
 }
 #define ELF_CORE_COPY_REGS(gregs, regs) ppc_elf_core_copy_regs(gregs, regs);
 
@@ -210,13 +210,13 @@ typedef elf_vrregset_t elf_fpxregset_t;
 /* ELF_HWCAP yields a mask that user programs can use to figure out what
    instruction set this cpu supports.  This could be done in userspace,
    but it's not easy, and we've already done it here.  */
-# define ELF_HWCAP  (cur_cpu_spec->cpu_user_features)
+# define ELF_HWCAP	(cur_cpu_spec->cpu_user_features)
 
 /* This yields a string that ld.so will use to load implementation
    specific libraries for optimization.  This is more specific in
    intent than poking at uname or /proc/cpuinfo.  */
 
-#define ELF_PLATFORM  (cur_cpu_spec->platform)
+#define ELF_PLATFORM	(cur_cpu_spec->platform)
 
 /* While ELF_PLATFORM indicates the ISA supported by the platform, it
  * may not accurately reflect the underlying behavior of the hardware
@@ -227,22 +227,22 @@ typedef elf_vrregset_t elf_fpxregset_t;
 #define ELF_BASE_PLATFORM (powerpc_base_platform)
 
 #ifdef __powerpc64__
-# define ELF_PLAT_INIT(_r, load_addr) do {  \
-    _r->gpr[2] = load_addr;     \
-  } while (0)
+# define ELF_PLAT_INIT(_r, load_addr)	do {	\
+	_r->gpr[2] = load_addr; 		\
+} while (0)
 #endif /* __powerpc64__ */
 
 #ifdef __powerpc64__
-# define SET_PERSONALITY(ex)          \
-  do {                \
-    if ((ex).e_ident[EI_CLASS] == ELFCLASS32)   \
-      set_thread_flag(TIF_32BIT);     \
-    else              \
-      clear_thread_flag(TIF_32BIT);     \
-    if (personality(current->personality) != PER_LINUX32) \
-      set_personality(PER_LINUX |     \
-                      (current->personality & (~PER_MASK)));  \
-  } while (0)
+# define SET_PERSONALITY(ex)					\
+do {								\
+	if ((ex).e_ident[EI_CLASS] == ELFCLASS32)		\
+		set_thread_flag(TIF_32BIT);			\
+	else							\
+		clear_thread_flag(TIF_32BIT);			\
+	if (personality(current->personality) != PER_LINUX32)	\
+		set_personality(PER_LINUX |			\
+			(current->personality & (~PER_MASK)));	\
+} while (0)
 /*
  * An executable for which elf_read_implies_exec() returns TRUE will
  * have the READ_IMPLIES_EXEC personality flag set automatically. This
@@ -251,8 +251,8 @@ typedef elf_vrregset_t elf_fpxregset_t;
  * even if we have an executable stack.
  */
 # define elf_read_implies_exec(ex, exec_stk) (is_32bit_task() ? \
-    (exec_stk == EXSTACK_DEFAULT) : 0)
-#else
+		(exec_stk == EXSTACK_DEFAULT) : 0)
+#else 
 # define SET_PERSONALITY(ex) \
   set_personality(PER_LINUX | (current->personality & (~PER_MASK)))
 # define elf_read_implies_exec(ex, exec_stk) (exec_stk == EXSTACK_DEFAULT)
@@ -265,16 +265,16 @@ extern int ucache_bsize;
 /* vDSO has arch_setup_additional_pages */
 #define ARCH_HAS_SETUP_ADDITIONAL_PAGES
 struct linux_binprm;
-extern int arch_setup_additional_pages (struct linux_binprm * bprm,
-                                        int uses_interp);
+extern int arch_setup_additional_pages(struct linux_binprm *bprm,
+				       int uses_interp);
 #define VDSO_AUX_ENT(a,b) NEW_AUX_ENT(a,b)
 
 /* 1GB for 64bit, 8MB for 32bit */
 #define STACK_RND_MASK (is_32bit_task() ? \
-                        (0x7ff >> (PAGE_SHIFT - 12)) : \
-                        (0x3ffff >> (PAGE_SHIFT - 12)))
+	(0x7ff >> (PAGE_SHIFT - 12)) : \
+	(0x3ffff >> (PAGE_SHIFT - 12)))
 
-extern unsigned long arch_randomize_brk (struct mm_struct * mm);
+extern unsigned long arch_randomize_brk(struct mm_struct *mm);
 #define arch_randomize_brk arch_randomize_brk
 
 #endif /* __KERNEL__ */
@@ -289,17 +289,17 @@ extern unsigned long arch_randomize_brk (struct mm_struct * mm);
  *   even if DLINFO_ARCH_ITEMS goes to zero or is undefined.
  * update AT_VECTOR_SIZE_ARCH if the number of NEW_AUX_ENT entries changes
  */
-#define ARCH_DLINFO             \
-  do {                  \
-    /* Handle glibc compatibility. */       \
-    NEW_AUX_ENT(AT_IGNOREPPC, AT_IGNOREPPC);      \
-    NEW_AUX_ENT(AT_IGNOREPPC, AT_IGNOREPPC);      \
-    /* Cache size items */            \
-    NEW_AUX_ENT(AT_DCACHEBSIZE, dcache_bsize);      \
-    NEW_AUX_ENT(AT_ICACHEBSIZE, icache_bsize);      \
-    NEW_AUX_ENT(AT_UCACHEBSIZE, ucache_bsize);      \
-    VDSO_AUX_ENT(AT_SYSINFO_EHDR, current->mm->context.vdso_base);  \
-  } while (0)
+#define ARCH_DLINFO							\
+do {									\
+	/* Handle glibc compatibility. */				\
+	NEW_AUX_ENT(AT_IGNOREPPC, AT_IGNOREPPC);			\
+	NEW_AUX_ENT(AT_IGNOREPPC, AT_IGNOREPPC);			\
+	/* Cache size items */						\
+	NEW_AUX_ENT(AT_DCACHEBSIZE, dcache_bsize);			\
+	NEW_AUX_ENT(AT_ICACHEBSIZE, icache_bsize);			\
+	NEW_AUX_ENT(AT_UCACHEBSIZE, ucache_bsize);			\
+	VDSO_AUX_ENT(AT_SYSINFO_EHDR, current->mm->context.vdso_base);	\
+} while (0)
 
 /* PowerPC64 relocations defined by the ABIs */
 #define R_PPC64_NONE    R_PPC_NONE
@@ -372,62 +372,62 @@ extern unsigned long arch_randomize_brk (struct mm_struct * mm);
 #define R_PPC64_PLTGOT16_LO_DS 66 /* half16ds  #lo(M + A) >> 2.  */
 
 /* PowerPC64 relocations defined for the TLS access ABI.  */
-#define R_PPC64_TLS   67 /* none  (sym+add)@tls */
-#define R_PPC64_DTPMOD64  68 /* doubleword64 (sym+add)@dtpmod */
-#define R_PPC64_TPREL16   69 /* half16* (sym+add)@tprel */
-#define R_PPC64_TPREL16_LO  70 /* half16  (sym+add)@tprel@l */
-#define R_PPC64_TPREL16_HI  71 /* half16  (sym+add)@tprel@h */
-#define R_PPC64_TPREL16_HA  72 /* half16  (sym+add)@tprel@ha */
-#define R_PPC64_TPREL64   73 /* doubleword64 (sym+add)@tprel */
-#define R_PPC64_DTPREL16  74 /* half16* (sym+add)@dtprel */
-#define R_PPC64_DTPREL16_LO 75 /* half16  (sym+add)@dtprel@l */
-#define R_PPC64_DTPREL16_HI 76 /* half16  (sym+add)@dtprel@h */
-#define R_PPC64_DTPREL16_HA 77 /* half16  (sym+add)@dtprel@ha */
-#define R_PPC64_DTPREL64  78 /* doubleword64 (sym+add)@dtprel */
-#define R_PPC64_GOT_TLSGD16 79 /* half16* (sym+add)@got@tlsgd */
-#define R_PPC64_GOT_TLSGD16_LO  80 /* half16  (sym+add)@got@tlsgd@l */
-#define R_PPC64_GOT_TLSGD16_HI  81 /* half16  (sym+add)@got@tlsgd@h */
-#define R_PPC64_GOT_TLSGD16_HA  82 /* half16  (sym+add)@got@tlsgd@ha */
-#define R_PPC64_GOT_TLSLD16 83 /* half16* (sym+add)@got@tlsld */
-#define R_PPC64_GOT_TLSLD16_LO  84 /* half16  (sym+add)@got@tlsld@l */
-#define R_PPC64_GOT_TLSLD16_HI  85 /* half16  (sym+add)@got@tlsld@h */
-#define R_PPC64_GOT_TLSLD16_HA  86 /* half16  (sym+add)@got@tlsld@ha */
-#define R_PPC64_GOT_TPREL16_DS  87 /* half16ds* (sym+add)@got@tprel */
+#define R_PPC64_TLS		67 /* none	(sym+add)@tls */
+#define R_PPC64_DTPMOD64	68 /* doubleword64 (sym+add)@dtpmod */
+#define R_PPC64_TPREL16		69 /* half16*	(sym+add)@tprel */
+#define R_PPC64_TPREL16_LO	70 /* half16	(sym+add)@tprel@l */
+#define R_PPC64_TPREL16_HI	71 /* half16	(sym+add)@tprel@h */
+#define R_PPC64_TPREL16_HA	72 /* half16	(sym+add)@tprel@ha */
+#define R_PPC64_TPREL64		73 /* doubleword64 (sym+add)@tprel */
+#define R_PPC64_DTPREL16	74 /* half16*	(sym+add)@dtprel */
+#define R_PPC64_DTPREL16_LO	75 /* half16	(sym+add)@dtprel@l */
+#define R_PPC64_DTPREL16_HI	76 /* half16	(sym+add)@dtprel@h */
+#define R_PPC64_DTPREL16_HA	77 /* half16	(sym+add)@dtprel@ha */
+#define R_PPC64_DTPREL64	78 /* doubleword64 (sym+add)@dtprel */
+#define R_PPC64_GOT_TLSGD16	79 /* half16*	(sym+add)@got@tlsgd */
+#define R_PPC64_GOT_TLSGD16_LO	80 /* half16	(sym+add)@got@tlsgd@l */
+#define R_PPC64_GOT_TLSGD16_HI	81 /* half16	(sym+add)@got@tlsgd@h */
+#define R_PPC64_GOT_TLSGD16_HA	82 /* half16	(sym+add)@got@tlsgd@ha */
+#define R_PPC64_GOT_TLSLD16	83 /* half16*	(sym+add)@got@tlsld */
+#define R_PPC64_GOT_TLSLD16_LO	84 /* half16	(sym+add)@got@tlsld@l */
+#define R_PPC64_GOT_TLSLD16_HI	85 /* half16	(sym+add)@got@tlsld@h */
+#define R_PPC64_GOT_TLSLD16_HA	86 /* half16	(sym+add)@got@tlsld@ha */
+#define R_PPC64_GOT_TPREL16_DS	87 /* half16ds*	(sym+add)@got@tprel */
 #define R_PPC64_GOT_TPREL16_LO_DS 88 /* half16ds (sym+add)@got@tprel@l */
-#define R_PPC64_GOT_TPREL16_HI  89 /* half16  (sym+add)@got@tprel@h */
-#define R_PPC64_GOT_TPREL16_HA  90 /* half16  (sym+add)@got@tprel@ha */
-#define R_PPC64_GOT_DTPREL16_DS 91 /* half16ds* (sym+add)@got@dtprel */
+#define R_PPC64_GOT_TPREL16_HI	89 /* half16	(sym+add)@got@tprel@h */
+#define R_PPC64_GOT_TPREL16_HA	90 /* half16	(sym+add)@got@tprel@ha */
+#define R_PPC64_GOT_DTPREL16_DS	91 /* half16ds*	(sym+add)@got@dtprel */
 #define R_PPC64_GOT_DTPREL16_LO_DS 92 /* half16ds (sym+add)@got@dtprel@l */
-#define R_PPC64_GOT_DTPREL16_HI 93 /* half16  (sym+add)@got@dtprel@h */
-#define R_PPC64_GOT_DTPREL16_HA 94 /* half16  (sym+add)@got@dtprel@ha */
-#define R_PPC64_TPREL16_DS  95 /* half16ds* (sym+add)@tprel */
-#define R_PPC64_TPREL16_LO_DS 96 /* half16ds  (sym+add)@tprel@l */
-#define R_PPC64_TPREL16_HIGHER  97 /* half16  (sym+add)@tprel@higher */
-#define R_PPC64_TPREL16_HIGHERA 98 /* half16  (sym+add)@tprel@highera */
-#define R_PPC64_TPREL16_HIGHEST 99 /* half16  (sym+add)@tprel@highest */
-#define R_PPC64_TPREL16_HIGHESTA 100 /* half16  (sym+add)@tprel@highesta */
-#define R_PPC64_DTPREL16_DS 101 /* half16ds* (sym+add)@dtprel */
-#define R_PPC64_DTPREL16_LO_DS  102 /* half16ds (sym+add)@dtprel@l */
-#define R_PPC64_DTPREL16_HIGHER 103 /* half16 (sym+add)@dtprel@higher */
-#define R_PPC64_DTPREL16_HIGHERA 104 /* half16  (sym+add)@dtprel@highera */
-#define R_PPC64_DTPREL16_HIGHEST 105 /* half16  (sym+add)@dtprel@highest */
-#define R_PPC64_DTPREL16_HIGHESTA 106 /* half16 (sym+add)@dtprel@highesta */
+#define R_PPC64_GOT_DTPREL16_HI	93 /* half16	(sym+add)@got@dtprel@h */
+#define R_PPC64_GOT_DTPREL16_HA	94 /* half16	(sym+add)@got@dtprel@ha */
+#define R_PPC64_TPREL16_DS	95 /* half16ds*	(sym+add)@tprel */
+#define R_PPC64_TPREL16_LO_DS	96 /* half16ds	(sym+add)@tprel@l */
+#define R_PPC64_TPREL16_HIGHER	97 /* half16	(sym+add)@tprel@higher */
+#define R_PPC64_TPREL16_HIGHERA	98 /* half16	(sym+add)@tprel@highera */
+#define R_PPC64_TPREL16_HIGHEST	99 /* half16	(sym+add)@tprel@highest */
+#define R_PPC64_TPREL16_HIGHESTA 100 /* half16	(sym+add)@tprel@highesta */
+#define R_PPC64_DTPREL16_DS	101 /* half16ds* (sym+add)@dtprel */
+#define R_PPC64_DTPREL16_LO_DS	102 /* half16ds	(sym+add)@dtprel@l */
+#define R_PPC64_DTPREL16_HIGHER	103 /* half16	(sym+add)@dtprel@higher */
+#define R_PPC64_DTPREL16_HIGHERA 104 /* half16	(sym+add)@dtprel@highera */
+#define R_PPC64_DTPREL16_HIGHEST 105 /* half16	(sym+add)@dtprel@highest */
+#define R_PPC64_DTPREL16_HIGHESTA 106 /* half16	(sym+add)@dtprel@highesta */
 
 /* Keep this the last entry.  */
-#define R_PPC64_NUM   107
+#define R_PPC64_NUM		107
 
 /* There's actually a third entry here, but it's unused */
 struct ppc64_opd_entry
 {
-  unsigned long funcaddr;
-  unsigned long r2;
+	unsigned long funcaddr;
+	unsigned long r2;
 };
 
 #ifdef  __KERNEL__
 
 #ifdef CONFIG_SPU_BASE
 /* Notes used in ET_CORE. Note name is "SPU/<fd>/<filename>". */
-#define NT_SPU    1
+#define NT_SPU		1
 
 #define ARCH_HAVE_EXTRA_ELF_NOTES
 

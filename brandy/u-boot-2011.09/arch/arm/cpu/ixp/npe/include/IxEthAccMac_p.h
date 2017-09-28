@@ -1,14 +1,14 @@
 /*
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -21,7 +21,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -34,7 +34,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
 */
@@ -52,7 +52,7 @@
 #define IX_ETH_ACC_MAX_FRAME_SIZE_LOWER_RANGE 64
 
 /*
- *
+ * 
  * MAC register definitions
  *
  */
@@ -145,7 +145,7 @@
 #define IX_ETH_ACC_CORE_MDC_EN             BIT(4)
 
 /* 1st bit of 1st MAC octet */
-#define IX_ETH_ACC_ETH_MAC_BCAST_MCAST_BIT ( 1)
+#define IX_ETH_ACC_ETH_MAC_BCAST_MCAST_BIT ( 1) 
 
 
 /*
@@ -156,15 +156,15 @@
 
 
 #define IX_ETH_ACC_TX_CNTRL1_DEFAULT  (IX_ETH_ACC_TX_CNTRL1_TX_EN | \
-                                       IX_ETH_ACC_TX_CNTRL1_RETRY  | \
-                                       IX_ETH_ACC_TX_CNTRL1_FCS_EN | \
-                                       IX_ETH_ACC_TX_CNTRL1_2DEFER | \
-                                       IX_ETH_ACC_TX_CNTRL1_PAD_EN)
+ IX_ETH_ACC_TX_CNTRL1_RETRY  | \
+ IX_ETH_ACC_TX_CNTRL1_FCS_EN | \
+ IX_ETH_ACC_TX_CNTRL1_2DEFER | \
+ IX_ETH_ACC_TX_CNTRL1_PAD_EN)
 
-#define IX_ETH_ACC_TX_MAX_RETRIES_DEFAULT      0x0f
+#define IX_ETH_ACC_TX_MAX_RETRIES_DEFAULT      0x0f 
 
 #define IX_ETH_ACC_RX_CNTRL1_DEFAULT    (IX_ETH_ACC_RX_CNTRL1_CRC_EN    \
-    | IX_ETH_ACC_RX_CNTRL1_RX_EN)
+					 | IX_ETH_ACC_RX_CNTRL1_RX_EN)
 
 #define IX_ETH_ACC_RX_CNTRL2_DEFAULT           0x0
 
@@ -196,7 +196,7 @@
 /*The following is a value chosen at random*/
 #define IX_ETH_ACC_RANDOM_SEED_DEFAULT         0x8
 
-/*By default we must configure the MAC to generate the
+/*By default we must configure the MAC to generate the 
   MDC clock*/
 #define IX_ETH_ACC_CORE_DEFAULT                (IX_ETH_ACC_CORE_MDC_EN)
 
@@ -211,7 +211,7 @@
 #define IX_ETH_ACC_PORT_DISABLE_DELAY_MSECS 20
 #define IX_ETH_ACC_PORT_DISABLE_DELAY_COUNT 200  /* 4 seconds timeout */
 #define IX_ETH_ACC_PORT_DISABLE_RETRY_COUNT 3
-#define IX_ETH_ACC_MIB_STATS_DELAY_MSECS 2000 /* 2 seconds delay for ethernet stats */
+#define IX_ETH_ACC_MIB_STATS_DELAY_MSECS 2000 /* 2 seconds delay for ethernet stats */ 
 
 /*Register access macros*/
 #if  (CPU == SIMSPARCSOLARIS)
@@ -226,23 +226,23 @@ extern UINT32 registerReadStub (UINT32 base, UINT32 offset);
 
 #endif
 
-void ixEthAccMacUnload (void);
-IxEthAccStatus ixEthAccMacMemInit (void);
+void ixEthAccMacUnload(void);
+IxEthAccStatus ixEthAccMacMemInit(void);
 
 /* MAC core loopback */
-IxEthAccStatus ixEthAccPortLoopbackEnable (IxEthAccPortId portId);
-IxEthAccStatus ixEthAccPortLoopbackDisable (IxEthAccPortId portId);
+IxEthAccStatus ixEthAccPortLoopbackEnable(IxEthAccPortId portId);
+IxEthAccStatus ixEthAccPortLoopbackDisable(IxEthAccPortId portId);
 
 /* MAC core traffic control */
-IxEthAccStatus ixEthAccPortTxEnablePriv (IxEthAccPortId portId);
-IxEthAccStatus ixEthAccPortTxDisablePriv (IxEthAccPortId portId);
-IxEthAccStatus ixEthAccPortRxEnablePriv (IxEthAccPortId portId);
-IxEthAccStatus ixEthAccPortRxDisablePriv (IxEthAccPortId portId);
-IxEthAccStatus ixEthAccPortMacResetPriv (IxEthAccPortId portId);
+IxEthAccStatus ixEthAccPortTxEnablePriv(IxEthAccPortId portId);
+IxEthAccStatus ixEthAccPortTxDisablePriv(IxEthAccPortId portId);
+IxEthAccStatus ixEthAccPortRxEnablePriv(IxEthAccPortId portId);
+IxEthAccStatus ixEthAccPortRxDisablePriv(IxEthAccPortId portId);
+IxEthAccStatus ixEthAccPortMacResetPriv(IxEthAccPortId portId);
 
 /* NPE software loopback */
-IxEthAccStatus ixEthAccNpeLoopbackDisablePriv (IxEthAccPortId portId);
-IxEthAccStatus ixEthAccNpeLoopbackEnablePriv (IxEthAccPortId portId);
+IxEthAccStatus ixEthAccNpeLoopbackDisablePriv(IxEthAccPortId portId);
+IxEthAccStatus ixEthAccNpeLoopbackEnablePriv(IxEthAccPortId portId);
 
 #endif /*IxEthAccMac_p_H*/
 

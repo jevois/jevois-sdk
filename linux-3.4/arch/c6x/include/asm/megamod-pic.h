@@ -3,7 +3,7 @@
 
 #ifdef __KERNEL__
 
-extern void __init megamod_pic_init (void);
+extern void __init megamod_pic_init(void);
 
 #endif /* __KERNEL__ */
 #endif /* _C6X_MEGAMOD_PIC_H */

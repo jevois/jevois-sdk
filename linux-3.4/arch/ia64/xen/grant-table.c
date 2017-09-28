@@ -36,62 +36,59 @@
  * cmd: GNTTABOP_xxx
  */
 
-int arch_gnttab_map_shared (unsigned long * frames, unsigned long nr_gframes,
-                            unsigned long max_nr_gframes,
-                            struct grant_entry ** __shared)
+int arch_gnttab_map_shared(unsigned long *frames, unsigned long nr_gframes,
+			   unsigned long max_nr_gframes,
+			   struct grant_entry **__shared)
 {
-  *__shared = __va (frames[0] << PAGE_SHIFT);
-  return 0;
+	*__shared = __va(frames[0] << PAGE_SHIFT);
+	return 0;
 }
 
-void arch_gnttab_unmap_shared (struct grant_entry * shared,
-                               unsigned long nr_gframes)
+void arch_gnttab_unmap_shared(struct grant_entry *shared,
+			      unsigned long nr_gframes)
 {
-  /* nothing */
+	/* nothing */
 }
 
 static void
-gnttab_map_grant_ref_pre (struct gnttab_map_grant_ref * uop)
+gnttab_map_grant_ref_pre(struct gnttab_map_grant_ref *uop)
 {
-  uint32_t flags;
-  
-  flags = uop->flags;
-  
-  if (flags & GNTMAP_host_map) {
-    if (flags & GNTMAP_application_map) {
-      printk (KERN_DEBUG
-              "GNTMAP_application_map is not supported yet: "
-              "flags 0x%x\n", flags);
-      BUG();
-    }
-    if (flags & GNTMAP_contains_pte) {
-      printk (KERN_DEBUG
-              "GNTMAP_contains_pte is not supported yet: "
-              "flags 0x%x\n", flags);
-      BUG();
-    }
-  }
-  else
-    if (flags & GNTMAP_device_map) {
-      printk ("GNTMAP_device_map is not supported yet 0x%x\n", flags);
-      BUG();  /* not yet. actually this flag is not used. */
-    }
-    else {
-      BUG();
-    }
+	uint32_t flags;
+
+	flags = uop->flags;
+
+	if (flags & GNTMAP_host_map) {
+		if (flags & GNTMAP_application_map) {
+			printk(KERN_DEBUG
+			       "GNTMAP_application_map is not supported yet: "
+			       "flags 0x%x\n", flags);
+			BUG();
+		}
+		if (flags & GNTMAP_contains_pte) {
+			printk(KERN_DEBUG
+			       "GNTMAP_contains_pte is not supported yet: "
+			       "flags 0x%x\n", flags);
+			BUG();
+		}
+	} else if (flags & GNTMAP_device_map) {
+		printk("GNTMAP_device_map is not supported yet 0x%x\n", flags);
+		BUG();	/* not yet. actually this flag is not used. */
+	} else {
+		BUG();
+	}
 }
 
 int
-HYPERVISOR_grant_table_op (unsigned int cmd, void * uop, unsigned int count)
+HYPERVISOR_grant_table_op(unsigned int cmd, void *uop, unsigned int count)
 {
-  if (cmd == GNTTABOP_map_grant_ref) {
-    unsigned int i;
-    for (i = 0; i < count; i++) {
-      gnttab_map_grant_ref_pre (
-        (struct gnttab_map_grant_ref *) uop + i);
-    }
-  }
-  return xencomm_hypercall_grant_table_op (cmd, uop, count);
+	if (cmd == GNTTABOP_map_grant_ref) {
+		unsigned int i;
+		for (i = 0; i < count; i++) {
+			gnttab_map_grant_ref_pre(
+				(struct gnttab_map_grant_ref *)uop + i);
+		}
+	}
+	return xencomm_hypercall_grant_table_op(cmd, uop, count);
 }
 
-EXPORT_SYMBOL (HYPERVISOR_grant_table_op);
+EXPORT_SYMBOL(HYPERVISOR_grant_table_op);

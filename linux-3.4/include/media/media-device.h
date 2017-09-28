@@ -4,7 +4,7 @@
  * Copyright (C) 2010 Nokia Corporation
  *
  * Contacts: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
- *       Sakari Ailus <sakari.ailus@iki.fi>
+ *	     Sakari Ailus <sakari.ailus@iki.fi>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -34,16 +34,16 @@ struct device;
 
 /**
  * struct media_device - Media device
- * @dev:  Parent device
- * @devnode:  Media device node
- * @model:  Device model name
- * @serial: Device serial number (optional)
- * @bus_info: Unique and stable device location identifier
+ * @dev:	Parent device
+ * @devnode:	Media device node
+ * @model:	Device model name
+ * @serial:	Device serial number (optional)
+ * @bus_info:	Unique and stable device location identifier
  * @hw_revision: Hardware device revision
  * @driver_version: Device driver version
- * @entity_id:  ID of the next entity to be registered
- * @entities: List of registered entities
- * @lock: Entities list lock
+ * @entity_id:	ID of the next entity to be registered
+ * @entities:	List of registered entities
+ * @lock:	Entities list lock
  * @graph_mutex: Entities graph operation lock
  *
  * This structure represents an abstract high-level media device. It allows easy
@@ -57,40 +57,40 @@ struct device;
  * be unique.
  */
 struct media_device {
-  /* dev->driver_data points to this struct. */
-  struct device * dev;
-  struct media_devnode devnode;
-  
-  char model[32];
-  char serial[40];
-  char bus_info[32];
-  u32 hw_revision;
-  u32 driver_version;
-  
-  u32 entity_id;
-  struct list_head entities;
-  
-  /* Protects the entities list */
-  spinlock_t lock;
-  /* Serializes graph operations. */
-  struct mutex graph_mutex;
-  
-  int (*link_notify) (struct media_pad * source,
-                      struct media_pad * sink, u32 flags);
+	/* dev->driver_data points to this struct. */
+	struct device *dev;
+	struct media_devnode devnode;
+
+	char model[32];
+	char serial[40];
+	char bus_info[32];
+	u32 hw_revision;
+	u32 driver_version;
+
+	u32 entity_id;
+	struct list_head entities;
+
+	/* Protects the entities list */
+	spinlock_t lock;
+	/* Serializes graph operations. */
+	struct mutex graph_mutex;
+
+	int (*link_notify)(struct media_pad *source,
+			   struct media_pad *sink, u32 flags);
 };
 
 /* media_devnode to media_device */
 #define to_media_device(node) container_of(node, struct media_device, devnode)
 
-int __must_check media_device_register (struct media_device * mdev);
-void media_device_unregister (struct media_device * mdev);
+int __must_check media_device_register(struct media_device *mdev);
+void media_device_unregister(struct media_device *mdev);
 
-int __must_check media_device_register_entity (struct media_device * mdev,
-    struct media_entity * entity);
-void media_device_unregister_entity (struct media_entity * entity);
+int __must_check media_device_register_entity(struct media_device *mdev,
+					      struct media_entity *entity);
+void media_device_unregister_entity(struct media_entity *entity);
 
 /* Iterate over all entities. */
-#define media_device_for_each_entity(entity, mdev)      \
-  list_for_each_entry(entity, &(mdev)->entities, list)
+#define media_device_for_each_entity(entity, mdev)			\
+	list_for_each_entry(entity, &(mdev)->entities, list)
 
 #endif

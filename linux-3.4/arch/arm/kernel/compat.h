@@ -8,4 +8,4 @@
  * published by the Free Software Foundation.
 */
 
-extern void convert_to_tag_list (struct tag * tags);
+extern void convert_to_tag_list(struct tag *tags);

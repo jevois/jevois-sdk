@@ -32,6 +32,6 @@
 #define dbug(a)
 #endif
 #if !defined USE_EXTENDED_DEBUGS
-extern void (*dprintf) (char *, ...);
+extern void (*dprintf)(char*, ...);
 #endif
 #endif

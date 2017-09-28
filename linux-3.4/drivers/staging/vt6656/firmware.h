@@ -42,18 +42,18 @@
 /*---------------------  Export Functions  --------------------------*/
 
 BOOL
-FIRMWAREbDownload (
-  PSDevice pDevice
-);
+FIRMWAREbDownload(
+     PSDevice pDevice
+    );
 
 BOOL
-FIRMWAREbBrach2Sram (
-  PSDevice pDevice
-);
+FIRMWAREbBrach2Sram(
+     PSDevice pDevice
+    );
 
 BOOL
-FIRMWAREbCheckVersion (
-  PSDevice pDevice
-);
+FIRMWAREbCheckVersion(
+     PSDevice pDevice
+    );
 
 #endif /* __FIRMWARE_H__ */

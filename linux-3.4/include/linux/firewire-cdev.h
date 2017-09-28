@@ -31,25 +31,25 @@
 #include <linux/firewire-constants.h>
 
 /* available since kernel version 2.6.22 */
-#define FW_CDEV_EVENT_BUS_RESET       0x00
-#define FW_CDEV_EVENT_RESPONSE        0x01
-#define FW_CDEV_EVENT_REQUEST       0x02
-#define FW_CDEV_EVENT_ISO_INTERRUPT     0x03
+#define FW_CDEV_EVENT_BUS_RESET				0x00
+#define FW_CDEV_EVENT_RESPONSE				0x01
+#define FW_CDEV_EVENT_REQUEST				0x02
+#define FW_CDEV_EVENT_ISO_INTERRUPT			0x03
 
 /* available since kernel version 2.6.30 */
-#define FW_CDEV_EVENT_ISO_RESOURCE_ALLOCATED    0x04
-#define FW_CDEV_EVENT_ISO_RESOURCE_DEALLOCATED    0x05
+#define FW_CDEV_EVENT_ISO_RESOURCE_ALLOCATED		0x04
+#define FW_CDEV_EVENT_ISO_RESOURCE_DEALLOCATED		0x05
 
 /* available since kernel version 2.6.36 */
-#define FW_CDEV_EVENT_REQUEST2        0x06
-#define FW_CDEV_EVENT_PHY_PACKET_SENT     0x07
-#define FW_CDEV_EVENT_PHY_PACKET_RECEIVED   0x08
-#define FW_CDEV_EVENT_ISO_INTERRUPT_MULTICHANNEL  0x09
+#define FW_CDEV_EVENT_REQUEST2				0x06
+#define FW_CDEV_EVENT_PHY_PACKET_SENT			0x07
+#define FW_CDEV_EVENT_PHY_PACKET_RECEIVED		0x08
+#define FW_CDEV_EVENT_ISO_INTERRUPT_MULTICHANNEL	0x09
 
 /**
  * struct fw_cdev_event_common - Common part of all fw_cdev_event_ types
- * @closure:  For arbitrary use by userspace
- * @type: Discriminates the fw_cdev_event_ types
+ * @closure:	For arbitrary use by userspace
+ * @type:	Discriminates the fw_cdev_event_ types
  *
  * This struct may be used to access generic members of all fw_cdev_event_
  * types regardless of the specific type.
@@ -59,14 +59,14 @@
  * The ioctl used to set @closure depends on the @type of event.
  */
 struct fw_cdev_event_common {
-  __u64 closure;
-  __u32 type;
+	__u64 closure;
+	__u32 type;
 };
 
 /**
  * struct fw_cdev_event_bus_reset - Sent when a bus reset occurred
- * @closure:  See &fw_cdev_event_common; set by %FW_CDEV_IOC_GET_INFO ioctl
- * @type: See &fw_cdev_event_common; always %FW_CDEV_EVENT_BUS_RESET
+ * @closure:	See &fw_cdev_event_common; set by %FW_CDEV_IOC_GET_INFO ioctl
+ * @type:	See &fw_cdev_event_common; always %FW_CDEV_EVENT_BUS_RESET
  * @node_id:       New node ID of this node
  * @local_node_id: Node ID of the local node, i.e. of the controller
  * @bm_node_id:    Node ID of the bus manager
@@ -83,25 +83,25 @@ struct fw_cdev_event_common {
  * Kernels with ABI version < 4 do not set @bm_node_id.
  */
 struct fw_cdev_event_bus_reset {
-  __u64 closure;
-  __u32 type;
-  __u32 node_id;
-  __u32 local_node_id;
-  __u32 bm_node_id;
-  __u32 irm_node_id;
-  __u32 root_node_id;
-  __u32 generation;
+	__u64 closure;
+	__u32 type;
+	__u32 node_id;
+	__u32 local_node_id;
+	__u32 bm_node_id;
+	__u32 irm_node_id;
+	__u32 root_node_id;
+	__u32 generation;
 };
 
 /**
  * struct fw_cdev_event_response - Sent when a response packet was received
- * @closure:  See &fw_cdev_event_common; set by %FW_CDEV_IOC_SEND_REQUEST
- *    or %FW_CDEV_IOC_SEND_BROADCAST_REQUEST
- *    or %FW_CDEV_IOC_SEND_STREAM_PACKET ioctl
- * @type: See &fw_cdev_event_common; always %FW_CDEV_EVENT_RESPONSE
- * @rcode:  Response code returned by the remote node
- * @length: Data length, i.e. the response's payload size in bytes
- * @data: Payload data, if any
+ * @closure:	See &fw_cdev_event_common; set by %FW_CDEV_IOC_SEND_REQUEST
+ *		or %FW_CDEV_IOC_SEND_BROADCAST_REQUEST
+ *		or %FW_CDEV_IOC_SEND_STREAM_PACKET ioctl
+ * @type:	See &fw_cdev_event_common; always %FW_CDEV_EVENT_RESPONSE
+ * @rcode:	Response code returned by the remote node
+ * @length:	Data length, i.e. the response's payload size in bytes
+ * @data:	Payload data, if any
  *
  * This event is sent when the stack receives a response to an outgoing request
  * sent by %FW_CDEV_IOC_SEND_REQUEST ioctl.  The payload data for responses
@@ -114,44 +114,44 @@ struct fw_cdev_event_bus_reset {
  * packets.  @rcode indicates success or failure of such transmissions.
  */
 struct fw_cdev_event_response {
-  __u64 closure;
-  __u32 type;
-  __u32 rcode;
-  __u32 length;
-  __u32 data[0];
+	__u64 closure;
+	__u32 type;
+	__u32 rcode;
+	__u32 length;
+	__u32 data[0];
 };
 
 /**
  * struct fw_cdev_event_request - Old version of &fw_cdev_event_request2
- * @type: See &fw_cdev_event_common; always %FW_CDEV_EVENT_REQUEST
+ * @type:	See &fw_cdev_event_common; always %FW_CDEV_EVENT_REQUEST
  *
  * This event is sent instead of &fw_cdev_event_request2 if the kernel or
  * the client implements ABI version <= 3.  &fw_cdev_event_request lacks
  * essential information; use &fw_cdev_event_request2 instead.
  */
 struct fw_cdev_event_request {
-  __u64 closure;
-  __u32 type;
-  __u32 tcode;
-  __u64 offset;
-  __u32 handle;
-  __u32 length;
-  __u32 data[0];
+	__u64 closure;
+	__u32 type;
+	__u32 tcode;
+	__u64 offset;
+	__u32 handle;
+	__u32 length;
+	__u32 data[0];
 };
 
 /**
  * struct fw_cdev_event_request2 - Sent on incoming request to an address region
- * @closure:  See &fw_cdev_event_common; set by %FW_CDEV_IOC_ALLOCATE ioctl
- * @type: See &fw_cdev_event_common; always %FW_CDEV_EVENT_REQUEST2
- * @tcode:  Transaction code of the incoming request
- * @offset: The offset into the 48-bit per-node address space
+ * @closure:	See &fw_cdev_event_common; set by %FW_CDEV_IOC_ALLOCATE ioctl
+ * @type:	See &fw_cdev_event_common; always %FW_CDEV_EVENT_REQUEST2
+ * @tcode:	Transaction code of the incoming request
+ * @offset:	The offset into the 48-bit per-node address space
  * @source_node_id: Sender node ID
  * @destination_node_id: Destination node ID
- * @card: The index of the card from which the request came
- * @generation: Bus generation in which the request is valid
- * @handle: Reference to the kernel-side pending request
- * @length: Data length, i.e. the request's payload size in bytes
- * @data: Incoming data, if any
+ * @card:	The index of the card from which the request came
+ * @generation:	Bus generation in which the request is valid
+ * @handle:	Reference to the kernel-side pending request
+ * @length:	Data length, i.e. the request's payload size in bytes
+ * @data:	Incoming data, if any
  *
  * This event is sent when the stack receives an incoming request to an address
  * region registered using the %FW_CDEV_IOC_ALLOCATE ioctl.  The request is
@@ -189,27 +189,27 @@ struct fw_cdev_event_request {
  * card index, node ID, and generation for outbound requests.
  */
 struct fw_cdev_event_request2 {
-  __u64 closure;
-  __u32 type;
-  __u32 tcode;
-  __u64 offset;
-  __u32 source_node_id;
-  __u32 destination_node_id;
-  __u32 card;
-  __u32 generation;
-  __u32 handle;
-  __u32 length;
-  __u32 data[0];
+	__u64 closure;
+	__u32 type;
+	__u32 tcode;
+	__u64 offset;
+	__u32 source_node_id;
+	__u32 destination_node_id;
+	__u32 card;
+	__u32 generation;
+	__u32 handle;
+	__u32 length;
+	__u32 data[0];
 };
 
 /**
  * struct fw_cdev_event_iso_interrupt - Sent when an iso packet was completed
- * @closure:  See &fw_cdev_event_common;
- *    set by %FW_CDEV_CREATE_ISO_CONTEXT ioctl
- * @type: See &fw_cdev_event_common; always %FW_CDEV_EVENT_ISO_INTERRUPT
- * @cycle:  Cycle counter of the last completed packet
+ * @closure:	See &fw_cdev_event_common;
+ *		set by %FW_CDEV_CREATE_ISO_CONTEXT ioctl
+ * @type:	See &fw_cdev_event_common; always %FW_CDEV_EVENT_ISO_INTERRUPT
+ * @cycle:	Cycle counter of the last completed packet
  * @header_length: Total length of following headers, in bytes
- * @header: Stripped headers, if any
+ * @header:	Stripped headers, if any
  *
  * This event is sent when the controller has completed an &fw_cdev_iso_packet
  * with the %FW_CDEV_ISO_INTERRUPT bit set, when explicitly requested with
@@ -255,19 +255,19 @@ struct fw_cdev_event_request2 {
  * Behaviour of ver. 1 of this ABI is no longer available since ABI ver. 2.
  */
 struct fw_cdev_event_iso_interrupt {
-  __u64 closure;
-  __u32 type;
-  __u32 cycle;
-  __u32 header_length;
-  __u32 header[0];
+	__u64 closure;
+	__u32 type;
+	__u32 cycle;
+	__u32 header_length;
+	__u32 header[0];
 };
 
 /**
  * struct fw_cdev_event_iso_interrupt_mc - An iso buffer chunk was completed
- * @closure:  See &fw_cdev_event_common;
- *    set by %FW_CDEV_CREATE_ISO_CONTEXT ioctl
- * @type: %FW_CDEV_EVENT_ISO_INTERRUPT_MULTICHANNEL
- * @completed:  Offset into the receive buffer; data before this offset is valid
+ * @closure:	See &fw_cdev_event_common;
+ *		set by %FW_CDEV_CREATE_ISO_CONTEXT ioctl
+ * @type:	%FW_CDEV_EVENT_ISO_INTERRUPT_MULTICHANNEL
+ * @completed:	Offset into the receive buffer; data before this offset is valid
  *
  * This event is sent in multichannel contexts (context type
  * %FW_CDEV_ISO_CONTEXT_RECEIVE_MULTICHANNEL) for &fw_cdev_iso_packet buffer
@@ -294,20 +294,20 @@ struct fw_cdev_event_iso_interrupt {
  * re-queue any buffer chunks in which as yet unread packet parts reside.
  */
 struct fw_cdev_event_iso_interrupt_mc {
-  __u64 closure;
-  __u32 type;
-  __u32 completed;
+	__u64 closure;
+	__u32 type;
+	__u32 completed;
 };
 
 /**
  * struct fw_cdev_event_iso_resource - Iso resources were allocated or freed
- * @closure:  See &fw_cdev_event_common;
- *    set by %FW_CDEV_IOC_(DE)ALLOCATE_ISO_RESOURCE(_ONCE) ioctl
- * @type: %FW_CDEV_EVENT_ISO_RESOURCE_ALLOCATED or
- *    %FW_CDEV_EVENT_ISO_RESOURCE_DEALLOCATED
- * @handle: Reference by which an allocated resource can be deallocated
- * @channel:  Isochronous channel which was (de)allocated, if any
- * @bandwidth:  Bandwidth allocation units which were (de)allocated, if any
+ * @closure:	See &fw_cdev_event_common;
+ *		set by %FW_CDEV_IOC_(DE)ALLOCATE_ISO_RESOURCE(_ONCE) ioctl
+ * @type:	%FW_CDEV_EVENT_ISO_RESOURCE_ALLOCATED or
+ *		%FW_CDEV_EVENT_ISO_RESOURCE_DEALLOCATED
+ * @handle:	Reference by which an allocated resource can be deallocated
+ * @channel:	Isochronous channel which was (de)allocated, if any
+ * @bandwidth:	Bandwidth allocation units which were (de)allocated, if any
  *
  * An %FW_CDEV_EVENT_ISO_RESOURCE_ALLOCATED event is sent after an isochronous
  * resource was allocated at the IRM.  The client has to check @channel and
@@ -321,21 +321,21 @@ struct fw_cdev_event_iso_interrupt_mc {
  * @bandwidth is 0 if no bandwidth was (de)allocated or if reallocation failed.
  */
 struct fw_cdev_event_iso_resource {
-  __u64 closure;
-  __u32 type;
-  __u32 handle;
-  __s32 channel;
-  __s32 bandwidth;
+	__u64 closure;
+	__u32 type;
+	__u32 handle;
+	__s32 channel;
+	__s32 bandwidth;
 };
 
 /**
  * struct fw_cdev_event_phy_packet - A PHY packet was transmitted or received
- * @closure:  See &fw_cdev_event_common; set by %FW_CDEV_IOC_SEND_PHY_PACKET
- *    or %FW_CDEV_IOC_RECEIVE_PHY_PACKETS ioctl
- * @type: %FW_CDEV_EVENT_PHY_PACKET_SENT or %..._RECEIVED
- * @rcode:  %RCODE_..., indicates success or failure of transmission
- * @length: Data length in bytes
- * @data: Incoming data
+ * @closure:	See &fw_cdev_event_common; set by %FW_CDEV_IOC_SEND_PHY_PACKET
+ *		or %FW_CDEV_IOC_RECEIVE_PHY_PACKETS ioctl
+ * @type:	%FW_CDEV_EVENT_PHY_PACKET_SENT or %..._RECEIVED
+ * @rcode:	%RCODE_..., indicates success or failure of transmission
+ * @length:	Data length in bytes
+ * @data:	Incoming data
  *
  * If @type is %FW_CDEV_EVENT_PHY_PACKET_SENT, @length is 0 and @data empty,
  * except in case of a ping packet:  Then, @length is 4, and @data[0] is the
@@ -345,29 +345,29 @@ struct fw_cdev_event_iso_resource {
  * consists of the two PHY packet quadlets, in host byte order.
  */
 struct fw_cdev_event_phy_packet {
-  __u64 closure;
-  __u32 type;
-  __u32 rcode;
-  __u32 length;
-  __u32 data[0];
+	__u64 closure;
+	__u32 type;
+	__u32 rcode;
+	__u32 length;
+	__u32 data[0];
 };
 
 /**
  * union fw_cdev_event - Convenience union of fw_cdev_event_ types
- * @common:   Valid for all types
- * @bus_reset:    Valid if @common.type == %FW_CDEV_EVENT_BUS_RESET
- * @response:   Valid if @common.type == %FW_CDEV_EVENT_RESPONSE
- * @request:    Valid if @common.type == %FW_CDEV_EVENT_REQUEST
- * @request2:   Valid if @common.type == %FW_CDEV_EVENT_REQUEST2
- * @iso_interrupt:  Valid if @common.type == %FW_CDEV_EVENT_ISO_INTERRUPT
- * @iso_interrupt_mc: Valid if @common.type ==
- *        %FW_CDEV_EVENT_ISO_INTERRUPT_MULTICHANNEL
- * @iso_resource: Valid if @common.type ==
- *        %FW_CDEV_EVENT_ISO_RESOURCE_ALLOCATED or
- *        %FW_CDEV_EVENT_ISO_RESOURCE_DEALLOCATED
- * @phy_packet:   Valid if @common.type ==
- *        %FW_CDEV_EVENT_PHY_PACKET_SENT or
- *        %FW_CDEV_EVENT_PHY_PACKET_RECEIVED
+ * @common:		Valid for all types
+ * @bus_reset:		Valid if @common.type == %FW_CDEV_EVENT_BUS_RESET
+ * @response:		Valid if @common.type == %FW_CDEV_EVENT_RESPONSE
+ * @request:		Valid if @common.type == %FW_CDEV_EVENT_REQUEST
+ * @request2:		Valid if @common.type == %FW_CDEV_EVENT_REQUEST2
+ * @iso_interrupt:	Valid if @common.type == %FW_CDEV_EVENT_ISO_INTERRUPT
+ * @iso_interrupt_mc:	Valid if @common.type ==
+ *				%FW_CDEV_EVENT_ISO_INTERRUPT_MULTICHANNEL
+ * @iso_resource:	Valid if @common.type ==
+ *				%FW_CDEV_EVENT_ISO_RESOURCE_ALLOCATED or
+ *				%FW_CDEV_EVENT_ISO_RESOURCE_DEALLOCATED
+ * @phy_packet:		Valid if @common.type ==
+ *				%FW_CDEV_EVENT_PHY_PACKET_SENT or
+ *				%FW_CDEV_EVENT_PHY_PACKET_RECEIVED
  *
  * Convenience union for userspace use.  Events could be read(2) into an
  * appropriately aligned char buffer and then cast to this union for further
@@ -378,15 +378,15 @@ struct fw_cdev_event_phy_packet {
  * not fit will be discarded so that the next read(2) will return a new event.
  */
 union fw_cdev_event {
-  struct fw_cdev_event_common   common;
-  struct fw_cdev_event_bus_reset    bus_reset;
-  struct fw_cdev_event_response   response;
-  struct fw_cdev_event_request    request;
-  struct fw_cdev_event_request2   request2;   /* added in 2.6.36 */
-  struct fw_cdev_event_iso_interrupt  iso_interrupt;
-  struct fw_cdev_event_iso_interrupt_mc iso_interrupt_mc; /* added in 2.6.36 */
-  struct fw_cdev_event_iso_resource iso_resource;   /* added in 2.6.30 */
-  struct fw_cdev_event_phy_packet   phy_packet;   /* added in 2.6.36 */
+	struct fw_cdev_event_common		common;
+	struct fw_cdev_event_bus_reset		bus_reset;
+	struct fw_cdev_event_response		response;
+	struct fw_cdev_event_request		request;
+	struct fw_cdev_event_request2		request2;		/* added in 2.6.36 */
+	struct fw_cdev_event_iso_interrupt	iso_interrupt;
+	struct fw_cdev_event_iso_interrupt_mc	iso_interrupt_mc;	/* added in 2.6.36 */
+	struct fw_cdev_event_iso_resource	iso_resource;		/* added in 2.6.30 */
+	struct fw_cdev_event_phy_packet		phy_packet;		/* added in 2.6.36 */
 };
 
 /* available since kernel version 2.6.22 */
@@ -455,22 +455,22 @@ union fw_cdev_event {
 
 /**
  * struct fw_cdev_get_info - General purpose information ioctl
- * @version:  The version field is just a running serial number.  Both an
- *    input parameter (ABI version implemented by the client) and
- *    output parameter (ABI version implemented by the kernel).
- *    A client shall fill in the ABI @version for which the client
- *    was implemented.  This is necessary for forward compatibility.
- * @rom_length: If @rom is non-zero, up to @rom_length bytes of Configuration
- *    ROM will be copied into that user space address.  In either
- *    case, @rom_length is updated with the actual length of the
- *    Configuration ROM.
- * @rom:  If non-zero, address of a buffer to be filled by a copy of the
- *    device's Configuration ROM
- * @bus_reset:  If non-zero, address of a buffer to be filled by a
- *    &struct fw_cdev_event_bus_reset with the current state
- *    of the bus.  This does not cause a bus reset to happen.
+ * @version:	The version field is just a running serial number.  Both an
+ *		input parameter (ABI version implemented by the client) and
+ *		output parameter (ABI version implemented by the kernel).
+ *		A client shall fill in the ABI @version for which the client
+ *		was implemented.  This is necessary for forward compatibility.
+ * @rom_length:	If @rom is non-zero, up to @rom_length bytes of Configuration
+ *		ROM will be copied into that user space address.  In either
+ *		case, @rom_length is updated with the actual length of the
+ *		Configuration ROM.
+ * @rom:	If non-zero, address of a buffer to be filled by a copy of the
+ *		device's Configuration ROM
+ * @bus_reset:	If non-zero, address of a buffer to be filled by a
+ *		&struct fw_cdev_event_bus_reset with the current state
+ *		of the bus.  This does not cause a bus reset to happen.
  * @bus_reset_closure: Value of &closure in this and subsequent bus reset events
- * @card: The index of the card this device belongs to
+ * @card:	The index of the card this device belongs to
  *
  * The %FW_CDEV_IOC_GET_INFO ioctl is usually the very first one which a client
  * performs right after it opened a /dev/fw* file.
@@ -479,22 +479,22 @@ union fw_cdev_event {
  * is started by this ioctl.
  */
 struct fw_cdev_get_info {
-  __u32 version;
-  __u32 rom_length;
-  __u64 rom;
-  __u64 bus_reset;
-  __u64 bus_reset_closure;
-  __u32 card;
+	__u32 version;
+	__u32 rom_length;
+	__u64 rom;
+	__u64 bus_reset;
+	__u64 bus_reset_closure;
+	__u32 card;
 };
 
 /**
  * struct fw_cdev_send_request - Send an asynchronous request packet
- * @tcode:  Transaction code of the request
- * @length: Length of outgoing payload, in bytes
- * @offset: 48-bit offset at destination node
- * @closure:  Passed back to userspace in the response event
- * @data: Userspace pointer to payload
- * @generation: The bus generation where packet is valid
+ * @tcode:	Transaction code of the request
+ * @length:	Length of outgoing payload, in bytes
+ * @offset:	48-bit offset at destination node
+ * @closure:	Passed back to userspace in the response event
+ * @data:	Userspace pointer to payload
+ * @generation:	The bus generation where packet is valid
  *
  * Send a request to the device.  This ioctl implements all outgoing requests.
  * Both quadlet and block request specify the payload as a pointer to the data
@@ -503,20 +503,20 @@ struct fw_cdev_get_info {
  * user space in the response event.
  */
 struct fw_cdev_send_request {
-  __u32 tcode;
-  __u32 length;
-  __u64 offset;
-  __u64 closure;
-  __u64 data;
-  __u32 generation;
+	__u32 tcode;
+	__u32 length;
+	__u64 offset;
+	__u64 closure;
+	__u64 data;
+	__u32 generation;
 };
 
 /**
  * struct fw_cdev_send_response - Send an asynchronous response packet
- * @rcode:  Response code as determined by the userspace handler
- * @length: Length of outgoing payload, in bytes
- * @data: Userspace pointer to payload
- * @handle: The handle from the &fw_cdev_event_request
+ * @rcode:	Response code as determined by the userspace handler
+ * @length:	Length of outgoing payload, in bytes
+ * @data:	Userspace pointer to payload
+ * @handle:	The handle from the &fw_cdev_event_request
  *
  * Send a response to an incoming request.  By setting up an address range using
  * the %FW_CDEV_IOC_ALLOCATE ioctl, userspace can listen for incoming requests.  An
@@ -525,19 +525,19 @@ struct fw_cdev_send_request {
  * pending transaction, which should be used with this ioctl.
  */
 struct fw_cdev_send_response {
-  __u32 rcode;
-  __u32 length;
-  __u64 data;
-  __u32 handle;
+	__u32 rcode;
+	__u32 length;
+	__u64 data;
+	__u32 handle;
 };
 
 /**
  * struct fw_cdev_allocate - Allocate a CSR in an address range
- * @offset: Start offset of the address range
- * @closure:  To be passed back to userspace in request events
- * @length: Length of the CSR, in bytes
- * @handle: Handle to the allocation, written by the kernel
- * @region_end: First address above the address range (added in ABI v4, 2.6.36)
+ * @offset:	Start offset of the address range
+ * @closure:	To be passed back to userspace in request events
+ * @length:	Length of the CSR, in bytes
+ * @handle:	Handle to the allocation, written by the kernel
+ * @region_end:	First address above the address range (added in ABI v4, 2.6.36)
  *
  * Allocate an address range in the 48-bit address space on the local node
  * (the controller).  This allows userspace to listen for requests with an
@@ -569,28 +569,28 @@ struct fw_cdev_send_response {
  * this can for example be tested by #ifdef FW_CDEV_EVENT_REQUEST2.
  */
 struct fw_cdev_allocate {
-  __u64 offset;
-  __u64 closure;
-  __u32 length;
-  __u32 handle;
-  __u64 region_end; /* available since kernel version 2.6.36 */
+	__u64 offset;
+	__u64 closure;
+	__u32 length;
+	__u32 handle;
+	__u64 region_end;	/* available since kernel version 2.6.36 */
 };
 
 /**
  * struct fw_cdev_deallocate - Free a CSR address range or isochronous resource
- * @handle: Handle to the address range or iso resource, as returned by the
- *    kernel when the range or resource was allocated
+ * @handle:	Handle to the address range or iso resource, as returned by the
+ *		kernel when the range or resource was allocated
  */
 struct fw_cdev_deallocate {
-  __u32 handle;
+	__u32 handle;
 };
 
-#define FW_CDEV_LONG_RESET  0
-#define FW_CDEV_SHORT_RESET 1
+#define FW_CDEV_LONG_RESET	0
+#define FW_CDEV_SHORT_RESET	1
 
 /**
  * struct fw_cdev_initiate_bus_reset - Initiate a bus reset
- * @type: %FW_CDEV_SHORT_RESET or %FW_CDEV_LONG_RESET
+ * @type:	%FW_CDEV_SHORT_RESET or %FW_CDEV_LONG_RESET
  *
  * Initiate a bus reset for the bus this device is on.  The bus reset can be
  * either the original (long) bus reset or the arbitrated (short) bus reset
@@ -602,16 +602,16 @@ struct fw_cdev_deallocate {
  * between subsequent bus resets as per IEEE 1394 bus management specification.
  */
 struct fw_cdev_initiate_bus_reset {
-  __u32 type;
+	__u32 type;
 };
 
 /**
  * struct fw_cdev_add_descriptor - Add contents to the local node's config ROM
- * @immediate:  If non-zero, immediate key to insert before pointer
- * @key:  Upper 8 bits of root directory pointer
- * @data: Userspace pointer to contents of descriptor block
- * @length: Length of descriptor block data, in quadlets
- * @handle: Handle to the descriptor, written by the kernel
+ * @immediate:	If non-zero, immediate key to insert before pointer
+ * @key:	Upper 8 bits of root directory pointer
+ * @data:	Userspace pointer to contents of descriptor block
+ * @length:	Length of descriptor block data, in quadlets
+ * @handle:	Handle to the descriptor, written by the kernel
  *
  * Add a descriptor block and optionally a preceding immediate key to the local
  * node's Configuration ROM.
@@ -635,40 +635,40 @@ struct fw_cdev_initiate_bus_reset {
  * The ioctl only succeeds on device files which represent a local node.
  */
 struct fw_cdev_add_descriptor {
-  __u32 immediate;
-  __u32 key;
-  __u64 data;
-  __u32 length;
-  __u32 handle;
+	__u32 immediate;
+	__u32 key;
+	__u64 data;
+	__u32 length;
+	__u32 handle;
 };
 
 /**
  * struct fw_cdev_remove_descriptor - Remove contents from the Configuration ROM
- * @handle: Handle to the descriptor, as returned by the kernel when the
- *    descriptor was added
+ * @handle:	Handle to the descriptor, as returned by the kernel when the
+ *		descriptor was added
  *
  * Remove a descriptor block and accompanying immediate key from the local
  * nodes' Configuration ROMs.  The kernel will also generate a bus reset to
  * signal the change of the Configuration ROM to other nodes.
  */
 struct fw_cdev_remove_descriptor {
-  __u32 handle;
+	__u32 handle;
 };
 
-#define FW_CDEV_ISO_CONTEXT_TRANSMIT      0
-#define FW_CDEV_ISO_CONTEXT_RECEIVE     1
-#define FW_CDEV_ISO_CONTEXT_RECEIVE_MULTICHANNEL  2 /* added in 2.6.36 */
+#define FW_CDEV_ISO_CONTEXT_TRANSMIT			0
+#define FW_CDEV_ISO_CONTEXT_RECEIVE			1
+#define FW_CDEV_ISO_CONTEXT_RECEIVE_MULTICHANNEL	2 /* added in 2.6.36 */
 
 /**
  * struct fw_cdev_create_iso_context - Create a context for isochronous I/O
- * @type: %FW_CDEV_ISO_CONTEXT_TRANSMIT or %FW_CDEV_ISO_CONTEXT_RECEIVE or
- *    %FW_CDEV_ISO_CONTEXT_RECEIVE_MULTICHANNEL
+ * @type:	%FW_CDEV_ISO_CONTEXT_TRANSMIT or %FW_CDEV_ISO_CONTEXT_RECEIVE or
+ *		%FW_CDEV_ISO_CONTEXT_RECEIVE_MULTICHANNEL
  * @header_size: Header size to strip in single-channel reception
- * @channel:  Channel to bind to in single-channel reception or transmission
- * @speed:  Transmission speed
- * @closure:  To be returned in &fw_cdev_event_iso_interrupt or
- *    &fw_cdev_event_iso_interrupt_multichannel
- * @handle: Handle to context, written back by kernel
+ * @channel:	Channel to bind to in single-channel reception or transmission
+ * @speed:	Transmission speed
+ * @closure:	To be returned in &fw_cdev_event_iso_interrupt or
+ *		&fw_cdev_event_iso_interrupt_multichannel
+ * @handle:	Handle to context, written back by kernel
  *
  * Prior to sending or receiving isochronous I/O, a context must be created.
  * The context records information about the transmit or receive configuration
@@ -694,18 +694,18 @@ struct fw_cdev_remove_descriptor {
  * direction, and of them at most one multichannel receive context.
  */
 struct fw_cdev_create_iso_context {
-  __u32 type;
-  __u32 header_size;
-  __u32 channel;
-  __u32 speed;
-  __u64 closure;
-  __u32 handle;
+	__u32 type;
+	__u32 header_size;
+	__u32 channel;
+	__u32 speed;
+	__u64 closure;
+	__u32 handle;
 };
 
 /**
  * struct fw_cdev_set_iso_channels - Select channels in multichannel reception
- * @channels: Bitmask of channels to listen to
- * @handle: Handle of the mutichannel receive context
+ * @channels:	Bitmask of channels to listen to
+ * @handle:	Handle of the mutichannel receive context
  *
  * @channels is the bitwise or of 1ULL << n for each channel n to listen to.
  *
@@ -714,25 +714,25 @@ struct fw_cdev_create_iso_context {
  * channels is returned in @channels.
  */
 struct fw_cdev_set_iso_channels {
-  __u64 channels;
-  __u32 handle;
+	__u64 channels;
+	__u32 handle;
 };
 
-#define FW_CDEV_ISO_PAYLOAD_LENGTH(v) (v)
-#define FW_CDEV_ISO_INTERRUPT   (1 << 16)
-#define FW_CDEV_ISO_SKIP    (1 << 17)
-#define FW_CDEV_ISO_SYNC    (1 << 17)
-#define FW_CDEV_ISO_TAG(v)    ((v) << 18)
-#define FW_CDEV_ISO_SY(v)   ((v) << 20)
-#define FW_CDEV_ISO_HEADER_LENGTH(v)  ((v) << 24)
+#define FW_CDEV_ISO_PAYLOAD_LENGTH(v)	(v)
+#define FW_CDEV_ISO_INTERRUPT		(1 << 16)
+#define FW_CDEV_ISO_SKIP		(1 << 17)
+#define FW_CDEV_ISO_SYNC		(1 << 17)
+#define FW_CDEV_ISO_TAG(v)		((v) << 18)
+#define FW_CDEV_ISO_SY(v)		((v) << 20)
+#define FW_CDEV_ISO_HEADER_LENGTH(v)	((v) << 24)
 
 /**
  * struct fw_cdev_iso_packet - Isochronous packet
- * @control:  Contains the header length (8 uppermost bits),
- *    the sy field (4 bits), the tag field (2 bits), a sync flag
- *    or a skip flag (1 bit), an interrupt flag (1 bit), and the
- *    payload length (16 lowermost bits)
- * @header: Header and payload in case of a transmit context.
+ * @control:	Contains the header length (8 uppermost bits),
+ *		the sy field (4 bits), the tag field (2 bits), a sync flag
+ *		or a skip flag (1 bit), an interrupt flag (1 bit), and the
+ *		payload length (16 lowermost bits)
+ * @header:	Header and payload in case of a transmit context.
  *
  * &struct fw_cdev_iso_packet is used to describe isochronous packet queues.
  * Use the FW_CDEV_ISO_ macros to fill in @control.
@@ -796,16 +796,16 @@ struct fw_cdev_set_iso_channels {
  * entirely, an &fw_cdev_event_iso_interrupt_mc event will be sent.
  */
 struct fw_cdev_iso_packet {
-  __u32 control;
-  __u32 header[0];
+	__u32 control;
+	__u32 header[0];
 };
 
 /**
  * struct fw_cdev_queue_iso - Queue isochronous packets for I/O
- * @packets:  Userspace pointer to an array of &fw_cdev_iso_packet
- * @data: Pointer into mmap()'ed payload buffer
- * @size: Size of the @packets array, in bytes
- * @handle: Isochronous context handle
+ * @packets:	Userspace pointer to an array of &fw_cdev_iso_packet
+ * @data:	Pointer into mmap()'ed payload buffer
+ * @size:	Size of the @packets array, in bytes
+ * @handle:	Isochronous context handle
  *
  * Queue a number of isochronous packets for reception or transmission.
  * This ioctl takes a pointer to an array of &fw_cdev_iso_packet structs,
@@ -822,47 +822,47 @@ struct fw_cdev_iso_packet {
  * relative to the buffer start.
  */
 struct fw_cdev_queue_iso {
-  __u64 packets;
-  __u64 data;
-  __u32 size;
-  __u32 handle;
+	__u64 packets;
+	__u64 data;
+	__u32 size;
+	__u32 handle;
 };
 
-#define FW_CDEV_ISO_CONTEXT_MATCH_TAG0     1
-#define FW_CDEV_ISO_CONTEXT_MATCH_TAG1     2
-#define FW_CDEV_ISO_CONTEXT_MATCH_TAG2     4
-#define FW_CDEV_ISO_CONTEXT_MATCH_TAG3     8
-#define FW_CDEV_ISO_CONTEXT_MATCH_ALL_TAGS  15
+#define FW_CDEV_ISO_CONTEXT_MATCH_TAG0		 1
+#define FW_CDEV_ISO_CONTEXT_MATCH_TAG1		 2
+#define FW_CDEV_ISO_CONTEXT_MATCH_TAG2		 4
+#define FW_CDEV_ISO_CONTEXT_MATCH_TAG3		 8
+#define FW_CDEV_ISO_CONTEXT_MATCH_ALL_TAGS	15
 
 /**
  * struct fw_cdev_start_iso - Start an isochronous transmission or reception
- * @cycle:  Cycle in which to start I/O.  If @cycle is greater than or
- *    equal to 0, the I/O will start on that cycle.
- * @sync: Determines the value to wait for for receive packets that have
- *    the %FW_CDEV_ISO_SYNC bit set
- * @tags: Tag filter bit mask.  Only valid for isochronous reception.
- *    Determines the tag values for which packets will be accepted.
- *    Use FW_CDEV_ISO_CONTEXT_MATCH_ macros to set @tags.
- * @handle: Isochronous context handle within which to transmit or receive
+ * @cycle:	Cycle in which to start I/O.  If @cycle is greater than or
+ *		equal to 0, the I/O will start on that cycle.
+ * @sync:	Determines the value to wait for for receive packets that have
+ *		the %FW_CDEV_ISO_SYNC bit set
+ * @tags:	Tag filter bit mask.  Only valid for isochronous reception.
+ *		Determines the tag values for which packets will be accepted.
+ *		Use FW_CDEV_ISO_CONTEXT_MATCH_ macros to set @tags.
+ * @handle:	Isochronous context handle within which to transmit or receive
  */
 struct fw_cdev_start_iso {
-  __s32 cycle;
-  __u32 sync;
-  __u32 tags;
-  __u32 handle;
+	__s32 cycle;
+	__u32 sync;
+	__u32 tags;
+	__u32 handle;
 };
 
 /**
  * struct fw_cdev_stop_iso - Stop an isochronous transmission or reception
- * @handle: Handle of isochronous context to stop
+ * @handle:	Handle of isochronous context to stop
  */
 struct fw_cdev_stop_iso {
-  __u32 handle;
+	__u32 handle;
 };
 
 /**
  * struct fw_cdev_flush_iso - flush completed iso packets
- * @handle: handle of isochronous context to flush
+ * @handle:	handle of isochronous context to flush
  *
  * For %FW_CDEV_ISO_CONTEXT_TRANSMIT or %FW_CDEV_ISO_CONTEXT_RECEIVE contexts,
  * report any completed packets.
@@ -876,7 +876,7 @@ struct fw_cdev_stop_iso {
  * for reading from the file descriptor when this ioctl returns.
  */
 struct fw_cdev_flush_iso {
-  __u32 handle;
+	__u32 handle;
 };
 
 /**
@@ -891,8 +891,8 @@ struct fw_cdev_flush_iso {
  * monotonic) @cycle_timer values on certain controllers.
  */
 struct fw_cdev_get_cycle_timer {
-  __u64 local_time;
-  __u32 cycle_timer;
+	__u64 local_time;
+	__u32 cycle_timer;
 };
 
 /**
@@ -915,19 +915,19 @@ struct fw_cdev_get_cycle_timer {
  * per IEEE 1394 or Isochronous Cycle Timer register per OHCI-1394.
  */
 struct fw_cdev_get_cycle_timer2 {
-  __s64 tv_sec;
-  __s32 tv_nsec;
-  __s32 clk_id;
-  __u32 cycle_timer;
+	__s64 tv_sec;
+	__s32 tv_nsec;
+	__s32 clk_id;
+	__u32 cycle_timer;
 };
 
 /**
  * struct fw_cdev_allocate_iso_resource - (De)allocate a channel or bandwidth
- * @closure:  Passed back to userspace in corresponding iso resource events
- * @channels: Isochronous channels of which one is to be (de)allocated
- * @bandwidth:  Isochronous bandwidth units to be (de)allocated
- * @handle: Handle to the allocation, written by the kernel (only valid in
- *    case of %FW_CDEV_IOC_ALLOCATE_ISO_RESOURCE ioctls)
+ * @closure:	Passed back to userspace in corresponding iso resource events
+ * @channels:	Isochronous channels of which one is to be (de)allocated
+ * @bandwidth:	Isochronous bandwidth units to be (de)allocated
+ * @handle:	Handle to the allocation, written by the kernel (only valid in
+ *		case of %FW_CDEV_IOC_ALLOCATE_ISO_RESOURCE ioctls)
  *
  * The %FW_CDEV_IOC_ALLOCATE_ISO_RESOURCE ioctl initiates allocation of an
  * isochronous channel and/or of isochronous bandwidth at the isochronous
@@ -966,22 +966,22 @@ struct fw_cdev_get_cycle_timer2 {
  * one quadlet of data (payload or header data) at speed S1600.
  */
 struct fw_cdev_allocate_iso_resource {
-  __u64 closure;
-  __u64 channels;
-  __u32 bandwidth;
-  __u32 handle;
+	__u64 closure;
+	__u64 channels;
+	__u32 bandwidth;
+	__u32 handle;
 };
 
 /**
  * struct fw_cdev_send_stream_packet - send an asynchronous stream packet
- * @length: Length of outgoing payload, in bytes
- * @tag:  Data format tag
- * @channel:  Isochronous channel to transmit to
- * @sy:   Synchronization code
- * @closure:  Passed back to userspace in the response event
- * @data: Userspace pointer to payload
- * @generation: The bus generation where packet is valid
- * @speed:  Speed to transmit at
+ * @length:	Length of outgoing payload, in bytes
+ * @tag:	Data format tag
+ * @channel:	Isochronous channel to transmit to
+ * @sy:		Synchronization code
+ * @closure:	Passed back to userspace in the response event
+ * @data:	Userspace pointer to payload
+ * @generation:	The bus generation where packet is valid
+ * @speed:	Speed to transmit at
  *
  * The %FW_CDEV_IOC_SEND_STREAM_PACKET ioctl sends an asynchronous stream packet
  * to every device which is listening to the specified channel.  The kernel
@@ -989,21 +989,21 @@ struct fw_cdev_allocate_iso_resource {
  * the transmission.
  */
 struct fw_cdev_send_stream_packet {
-  __u32 length;
-  __u32 tag;
-  __u32 channel;
-  __u32 sy;
-  __u64 closure;
-  __u64 data;
-  __u32 generation;
-  __u32 speed;
+	__u32 length;
+	__u32 tag;
+	__u32 channel;
+	__u32 sy;
+	__u64 closure;
+	__u64 data;
+	__u32 generation;
+	__u32 speed;
 };
 
 /**
  * struct fw_cdev_send_phy_packet - send a PHY packet
- * @closure:  Passed back to userspace in the PHY-packet-sent event
- * @data: First and second quadlet of the PHY packet
- * @generation: The bus generation where packet is valid
+ * @closure:	Passed back to userspace in the PHY-packet-sent event
+ * @data:	First and second quadlet of the PHY packet
+ * @generation:	The bus generation where packet is valid
  *
  * The %FW_CDEV_IOC_SEND_PHY_PACKET ioctl sends a PHY packet to all nodes
  * on the same card as this device.  After transmission, an
@@ -1016,9 +1016,9 @@ struct fw_cdev_send_stream_packet {
  * The ioctl is only permitted on device files which represent a local node.
  */
 struct fw_cdev_send_phy_packet {
-  __u64 closure;
-  __u32 data[2];
-  __u32 generation;
+	__u64 closure;
+	__u32 data[2];
+	__u32 generation;
 };
 
 /**
@@ -1031,7 +1031,7 @@ struct fw_cdev_send_phy_packet {
  * The ioctl is only permitted on device files which represent a local node.
  */
 struct fw_cdev_receive_phy_packets {
-  __u64 closure;
+	__u64 closure;
 };
 
 #define FW_CDEV_VERSION 3 /* Meaningless legacy macro; don't use it. */

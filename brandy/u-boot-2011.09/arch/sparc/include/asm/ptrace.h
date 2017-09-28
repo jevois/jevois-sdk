@@ -11,7 +11,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -33,11 +33,11 @@
 #ifndef __ASSEMBLY__
 
 struct pt_regs {
-  unsigned long psr;
-  unsigned long pc;
-  unsigned long npc;
-  unsigned long y;
-  unsigned long u_regs[16]; /* globals and ins */
+	unsigned long psr;
+	unsigned long pc;
+	unsigned long npc;
+	unsigned long y;
+	unsigned long u_regs[16];	/* globals and ins */
 };
 
 #define UREG_G0        0
@@ -63,25 +63,25 @@ struct pt_regs {
 
 /* A register window */
 struct reg_window {
-  unsigned long locals[8];
-  unsigned long ins[8];
+	unsigned long locals[8];
+	unsigned long ins[8];
 };
 
 /* A Sparc stack frame */
 struct sparc_stackf {
-  unsigned long locals[8];
-  unsigned long ins[6];
-  struct sparc_stackf * fp;
-  unsigned long callers_pc;
-  char * structptr;
-  unsigned long xargs[6];
-  unsigned long xxargs[1];
+	unsigned long locals[8];
+	unsigned long ins[6];
+	struct sparc_stackf *fp;
+	unsigned long callers_pc;
+	char *structptr;
+	unsigned long xargs[6];
+	unsigned long xxargs[1];
 };
 
 #define TRACEREG_SZ   sizeof(struct pt_regs)
 #define STACKFRAME_SZ sizeof(struct sparc_stackf)
 
-#else       /* __ASSEMBLY__ */
+#else				/* __ASSEMBLY__ */
 /* For assembly code. */
 #define TRACEREG_SZ       0x50
 #define STACKFRAME_SZ     0x60
@@ -176,6 +176,6 @@ struct sparc_stackf {
 #define PTRACE_GETFPAREGS         20
 #define PTRACE_SETFPAREGS         21
 
-#define PTRACE_GETUCODE           29  /* stupid bsd-ism */
+#define PTRACE_GETUCODE           29	/* stupid bsd-ism */
 
-#endif        /* !(_SPARC_PTRACE_H) */
+#endif				/* !(_SPARC_PTRACE_H) */

@@ -40,7 +40,7 @@
 
 /*---------------------  Export Functions  --------------------------*/
 
-int private_ioctl (PSDevice pDevice, struct ifreq * rq);
+int private_ioctl(PSDevice pDevice, struct ifreq *rq);
 
 /*
 void vConfigWEPKey (

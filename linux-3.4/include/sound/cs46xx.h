@@ -3,7 +3,7 @@
 
 /*
  *  Copyright (c) by Jaroslav Kysela <perex@perex.cz>,
- *         Cirrus Logic, Inc.
+ *		     Cirrus Logic, Inc.
  *  Definitions for Cirrus Logic CS46xx chips
  *
  *
@@ -37,7 +37,7 @@
  *  The following define the offsets of the registers accessed via base address
  *  register zero on the CS46xx part.
  */
-#define BA0_HISR        0x00000000
+#define BA0_HISR				0x00000000
 #define BA0_HSR0                                0x00000004
 #define BA0_HICR                                0x00000008
 #define BA0_DMSR                                0x00000100
@@ -68,7 +68,7 @@
 #define BA0_CLKCR2                              0x00000404
 #define BA0_PLLM                                0x00000408
 #define BA0_PLLCC                               0x0000040C
-#define BA0_FRR                                 0x00000410
+#define BA0_FRR                                 0x00000410 
 #define BA0_CFL1                                0x00000414
 #define BA0_CFL2                                0x00000418
 #define BA0_SERMC1                              0x00000420
@@ -168,7 +168,7 @@
 #define BA1_SP_DMEM0                            0x00000000
 #define BA1_SP_DMEM1                            0x00010000
 #define BA1_SP_PMEM                             0x00020000
-#define BA1_SP_REG        0x00030000
+#define BA1_SP_REG				0x00030000
 #define BA1_SPCR                                0x00030000
 #define BA1_DREG                                0x00030004
 #define BA1_DSRWP                               0x00030008
@@ -747,18 +747,18 @@
 /*
  *  The following defines are for the flags in the MIDI control register.
  */
-#define MIDCR_TXE                               0x00000001  /* Enable transmitting. */
-#define MIDCR_RXE                               0x00000002  /* Enable receiving. */
-#define MIDCR_RIE                               0x00000004  /* Interrupt upon tx ready. */
-#define MIDCR_TIE                               0x00000008  /* Interrupt upon rx ready. */
-#define MIDCR_MLB                               0x00000010  /* Enable midi loopback. */
-#define MIDCR_MRST                              0x00000020  /* Reset interface. */
+#define MIDCR_TXE                               0x00000001	/* Enable transmitting. */
+#define MIDCR_RXE                               0x00000002	/* Enable receiving. */
+#define MIDCR_RIE                               0x00000004	/* Interrupt upon tx ready. */
+#define MIDCR_TIE                               0x00000008	/* Interrupt upon rx ready. */
+#define MIDCR_MLB                               0x00000010	/* Enable midi loopback. */
+#define MIDCR_MRST                              0x00000020	/* Reset interface. */
 
 /*
  *  The following defines are for the flags in the MIDI status register.
  */
-#define MIDSR_TBF                               0x00000001  /* Tx FIFO is full. */
-#define MIDSR_RBE                               0x00000002  /* Rx FIFO is empty. */
+#define MIDSR_TBF                               0x00000001	/* Tx FIFO is full. */
+#define MIDSR_RBE                               0x00000002	/* Rx FIFO is empty. */
 
 /*
  *  The following defines are for the flags in the MIDI write port register.
@@ -984,7 +984,7 @@
  */
 #ifndef NO_CS4612
 #define ACCDA2_CD_MASK                          0x0000FFFF
-#define ACCDA2_CD_SHIFT                         0
+#define ACCDA2_CD_SHIFT                         0  
 #endif
 
 /*
@@ -1142,7 +1142,7 @@
 
 /*
  *  The following defines are for the flags in the PC/PCI grant register.
- */
+ */ 
 #ifndef NO_CS4612
 #define PCPCIG_GDC_MASK                         0x00000007
 #define PCPCIG_VL                               0x00008000
@@ -1164,7 +1164,7 @@
 #ifndef NO_CS4612
 #define EPCIPMC_GWU                             0x00000001
 #define EPCIPMC_FSPC                            0x00000002
-#endif
+#endif 
 
 /*
  *  The following defines are for the flags in the SP control register.
@@ -1607,8 +1607,8 @@
  *
  */
 
-#define CS46XX_MODE_OUTPUT  (1<<0)   /* MIDI UART - output */
-#define CS46XX_MODE_INPUT (1<<1)   /* MIDI UART - input */
+#define CS46XX_MODE_OUTPUT	(1<<0)	 /* MIDI UART - output */ 
+#define CS46XX_MODE_INPUT	(1<<1)	 /* MIDI UART - input */
 
 /*
  *
@@ -1618,10 +1618,10 @@
 #define POWER_DOWN_ALL         0x7f0f
 
 /* maxinum number of AC97 codecs connected, AC97 2.0 defined 4 */
-#define MAX_NR_AC97                   4
+#define MAX_NR_AC97				            4
 #define CS46XX_PRIMARY_CODEC_INDEX          0
-#define CS46XX_SECONDARY_CODEC_INDEX    1
-#define CS46XX_SECONDARY_CODEC_OFFSET   0x80
+#define CS46XX_SECONDARY_CODEC_INDEX		1
+#define CS46XX_SECONDARY_CODEC_OFFSET		0x80
 #define CS46XX_DSP_CAPTURE_CHANNEL          1
 
 /* capture */
@@ -1633,113 +1633,113 @@
 
 
 struct snd_cs46xx_pcm {
-  struct snd_dma_buffer hw_buf;
+	struct snd_dma_buffer hw_buf;
   
-  unsigned int ctl;
-  unsigned int shift; /* Shift count to trasform frames in bytes */
-  struct snd_pcm_indirect pcm_rec;
-  struct snd_pcm_substream * substream;
-  
-  struct dsp_pcm_channel_descriptor * pcm_channel;
-  
-  int pcm_channel_id;    /* Fron Rear, Center Lfe  ... */
+	unsigned int ctl;
+	unsigned int shift;	/* Shift count to trasform frames in bytes */
+	struct snd_pcm_indirect pcm_rec;
+	struct snd_pcm_substream *substream;
+
+	struct dsp_pcm_channel_descriptor * pcm_channel;
+
+	int pcm_channel_id;    /* Fron Rear, Center Lfe  ... */
 };
 
 struct snd_cs46xx_region {
-  char name[24];
-  unsigned long base;
-  void __iomem * remap_addr;
-  unsigned long size;
-  struct resource * resource;
+	char name[24];
+	unsigned long base;
+	void __iomem *remap_addr;
+	unsigned long size;
+	struct resource *resource;
 };
 
 struct snd_cs46xx {
-  int irq;
-  unsigned long ba0_addr;
-  unsigned long ba1_addr;
-  union {
-    struct {
-      struct snd_cs46xx_region ba0;
-      struct snd_cs46xx_region data0;
-      struct snd_cs46xx_region data1;
-      struct snd_cs46xx_region pmem;
-      struct snd_cs46xx_region reg;
-    } name;
-    struct snd_cs46xx_region idx[5];
-  } region;
-  
-  unsigned int mode;
-  
-  struct {
-    struct snd_dma_buffer hw_buf;
-    
-    unsigned int ctl;
-    unsigned int shift; /* Shift count to trasform frames in bytes */
-    struct snd_pcm_indirect pcm_rec;
-    struct snd_pcm_substream * substream;
-  } capt;
-  
-  
-  int nr_ac97_codecs;
-  struct snd_ac97_bus * ac97_bus;
-  struct snd_ac97 * ac97[MAX_NR_AC97];
-  
-  struct pci_dev * pci;
-  struct snd_card * card;
-  struct snd_pcm * pcm;
-  
-  struct snd_rawmidi * rmidi;
-  struct snd_rawmidi_substream * midi_input;
-  struct snd_rawmidi_substream * midi_output;
-  
-  spinlock_t reg_lock;
-  unsigned int midcr;
-  unsigned int uartm;
-  
-  int amplifier;
-  void (*amplifier_ctrl) (struct snd_cs46xx *, int);
-  void (*active_ctrl) (struct snd_cs46xx *, int);
-  void (*mixer_init) (struct snd_cs46xx *);
-  
-  int acpi_port;
-  struct snd_kcontrol * eapd_switch; /* for amplifier hack */
-  int accept_valid; /* accept mmap valid (for OSS) */
-  int in_suspend;
-  
-  struct gameport * gameport;
-  
-  #ifdef CONFIG_SND_CS46XX_NEW_DSP
-  struct mutex spos_mutex;
-  
-  struct dsp_spos_instance * dsp_spos_instance;
-  
-  struct snd_pcm * pcm_rear;
-  struct snd_pcm * pcm_center_lfe;
-  struct snd_pcm * pcm_iec958;
-  #else /* for compatibility */
-  struct snd_cs46xx_pcm * playback_pcm;
-  unsigned int play_ctl;
-  #endif
-  
-  #ifdef CONFIG_PM
-  u32 * saved_regs;
-  #endif
+	int irq;
+	unsigned long ba0_addr;
+	unsigned long ba1_addr;
+	union {
+		struct {
+			struct snd_cs46xx_region ba0;
+			struct snd_cs46xx_region data0;
+			struct snd_cs46xx_region data1;
+			struct snd_cs46xx_region pmem;
+			struct snd_cs46xx_region reg;
+		} name;
+		struct snd_cs46xx_region idx[5];
+	} region;
+
+	unsigned int mode;
+	
+	struct {
+		struct snd_dma_buffer hw_buf;
+
+		unsigned int ctl;
+		unsigned int shift;	/* Shift count to trasform frames in bytes */
+		struct snd_pcm_indirect pcm_rec;
+		struct snd_pcm_substream *substream;
+	} capt;
+
+
+	int nr_ac97_codecs;
+	struct snd_ac97_bus *ac97_bus;
+	struct snd_ac97 *ac97[MAX_NR_AC97];
+
+	struct pci_dev *pci;
+	struct snd_card *card;
+	struct snd_pcm *pcm;
+
+	struct snd_rawmidi *rmidi;
+	struct snd_rawmidi_substream *midi_input;
+	struct snd_rawmidi_substream *midi_output;
+
+	spinlock_t reg_lock;
+	unsigned int midcr;
+	unsigned int uartm;
+
+	int amplifier;
+	void (*amplifier_ctrl)(struct snd_cs46xx *, int);
+	void (*active_ctrl)(struct snd_cs46xx *, int);
+  	void (*mixer_init)(struct snd_cs46xx *);
+
+	int acpi_port;
+	struct snd_kcontrol *eapd_switch; /* for amplifier hack */
+	int accept_valid;	/* accept mmap valid (for OSS) */
+	int in_suspend;
+
+	struct gameport *gameport;
+
+#ifdef CONFIG_SND_CS46XX_NEW_DSP
+	struct mutex spos_mutex;
+
+	struct dsp_spos_instance * dsp_spos_instance;
+
+	struct snd_pcm *pcm_rear;
+	struct snd_pcm *pcm_center_lfe;
+	struct snd_pcm *pcm_iec958;
+#else /* for compatibility */
+	struct snd_cs46xx_pcm *playback_pcm;
+	unsigned int play_ctl;
+#endif
+
+#ifdef CONFIG_PM
+	u32 *saved_regs;
+#endif
 };
 
-int snd_cs46xx_create (struct snd_card * card,
-                       struct pci_dev * pci,
-                       int external_amp, int thinkpad,
-                       struct snd_cs46xx ** rcodec);
-int snd_cs46xx_suspend (struct pci_dev * pci, pm_message_t state);
-int snd_cs46xx_resume (struct pci_dev * pci);
+int snd_cs46xx_create(struct snd_card *card,
+		      struct pci_dev *pci,
+		      int external_amp, int thinkpad,
+		      struct snd_cs46xx **rcodec);
+int snd_cs46xx_suspend(struct pci_dev *pci, pm_message_t state);
+int snd_cs46xx_resume(struct pci_dev *pci);
 
-int snd_cs46xx_pcm (struct snd_cs46xx * chip, int device, struct snd_pcm ** rpcm);
-int snd_cs46xx_pcm_rear (struct snd_cs46xx * chip, int device, struct snd_pcm ** rpcm);
-int snd_cs46xx_pcm_iec958 (struct snd_cs46xx * chip, int device, struct snd_pcm ** rpcm);
-int snd_cs46xx_pcm_center_lfe (struct snd_cs46xx * chip, int device, struct snd_pcm ** rpcm);
-int snd_cs46xx_mixer (struct snd_cs46xx * chip, int spdif_device);
-int snd_cs46xx_midi (struct snd_cs46xx * chip, int device, struct snd_rawmidi ** rmidi);
-int snd_cs46xx_start_dsp (struct snd_cs46xx * chip);
-int snd_cs46xx_gameport (struct snd_cs46xx * chip);
+int snd_cs46xx_pcm(struct snd_cs46xx *chip, int device, struct snd_pcm **rpcm);
+int snd_cs46xx_pcm_rear(struct snd_cs46xx *chip, int device, struct snd_pcm **rpcm);
+int snd_cs46xx_pcm_iec958(struct snd_cs46xx *chip, int device, struct snd_pcm **rpcm);
+int snd_cs46xx_pcm_center_lfe(struct snd_cs46xx *chip, int device, struct snd_pcm **rpcm);
+int snd_cs46xx_mixer(struct snd_cs46xx *chip, int spdif_device);
+int snd_cs46xx_midi(struct snd_cs46xx *chip, int device, struct snd_rawmidi **rmidi);
+int snd_cs46xx_start_dsp(struct snd_cs46xx *chip);
+int snd_cs46xx_gameport(struct snd_cs46xx *chip);
 
 #endif /* __SOUND_CS46XX_H */

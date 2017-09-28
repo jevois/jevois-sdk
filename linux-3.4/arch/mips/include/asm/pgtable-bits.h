@@ -77,64 +77,64 @@
  */
 
 /* implemented in software */
-#define _PAGE_PRESENT_SHIFT (0)
-#define _PAGE_PRESENT   (1 << _PAGE_PRESENT_SHIFT)
+#define _PAGE_PRESENT_SHIFT	(0)
+#define _PAGE_PRESENT		(1 << _PAGE_PRESENT_SHIFT)
 /* implemented in software, should be unused if kernel_uses_smartmips_rixi. */
-#define _PAGE_READ_SHIFT  (kernel_uses_smartmips_rixi ? _PAGE_PRESENT_SHIFT : _PAGE_PRESENT_SHIFT + 1)
+#define _PAGE_READ_SHIFT	(kernel_uses_smartmips_rixi ? _PAGE_PRESENT_SHIFT : _PAGE_PRESENT_SHIFT + 1)
 #define _PAGE_READ ({if (kernel_uses_smartmips_rixi) BUG(); 1 << _PAGE_READ_SHIFT; })
 /* implemented in software */
-#define _PAGE_WRITE_SHIFT (_PAGE_READ_SHIFT + 1)
-#define _PAGE_WRITE   (1 << _PAGE_WRITE_SHIFT)
+#define _PAGE_WRITE_SHIFT	(_PAGE_READ_SHIFT + 1)
+#define _PAGE_WRITE		(1 << _PAGE_WRITE_SHIFT)
 /* implemented in software */
-#define _PAGE_ACCESSED_SHIFT  (_PAGE_WRITE_SHIFT + 1)
-#define _PAGE_ACCESSED    (1 << _PAGE_ACCESSED_SHIFT)
+#define _PAGE_ACCESSED_SHIFT	(_PAGE_WRITE_SHIFT + 1)
+#define _PAGE_ACCESSED		(1 << _PAGE_ACCESSED_SHIFT)
 /* implemented in software */
-#define _PAGE_MODIFIED_SHIFT  (_PAGE_ACCESSED_SHIFT + 1)
-#define _PAGE_MODIFIED    (1 << _PAGE_MODIFIED_SHIFT)
+#define _PAGE_MODIFIED_SHIFT	(_PAGE_ACCESSED_SHIFT + 1)
+#define _PAGE_MODIFIED		(1 << _PAGE_MODIFIED_SHIFT)
 /* set:pagecache unset:swap */
-#define _PAGE_FILE    (_PAGE_MODIFIED)
+#define _PAGE_FILE		(_PAGE_MODIFIED)
 
 #ifdef CONFIG_HUGETLB_PAGE
 /* huge tlb page */
-#define _PAGE_HUGE_SHIFT  (_PAGE_MODIFIED_SHIFT + 1)
-#define _PAGE_HUGE    (1 << _PAGE_HUGE_SHIFT)
+#define _PAGE_HUGE_SHIFT	(_PAGE_MODIFIED_SHIFT + 1)
+#define _PAGE_HUGE		(1 << _PAGE_HUGE_SHIFT)
 #else
-#define _PAGE_HUGE_SHIFT  (_PAGE_MODIFIED_SHIFT)
-#define _PAGE_HUGE    ({BUG(); 1; })  /* Dummy value */
+#define _PAGE_HUGE_SHIFT	(_PAGE_MODIFIED_SHIFT)
+#define _PAGE_HUGE		({BUG(); 1; })  /* Dummy value */
 #endif
 
 /* Page cannot be executed */
-#define _PAGE_NO_EXEC_SHIFT (kernel_uses_smartmips_rixi ? _PAGE_HUGE_SHIFT + 1 : _PAGE_HUGE_SHIFT)
-#define _PAGE_NO_EXEC   ({if (!kernel_uses_smartmips_rixi) BUG(); 1 << _PAGE_NO_EXEC_SHIFT; })
+#define _PAGE_NO_EXEC_SHIFT	(kernel_uses_smartmips_rixi ? _PAGE_HUGE_SHIFT + 1 : _PAGE_HUGE_SHIFT)
+#define _PAGE_NO_EXEC		({if (!kernel_uses_smartmips_rixi) BUG(); 1 << _PAGE_NO_EXEC_SHIFT; })
 
 /* Page cannot be read */
-#define _PAGE_NO_READ_SHIFT (kernel_uses_smartmips_rixi ? _PAGE_NO_EXEC_SHIFT + 1 : _PAGE_NO_EXEC_SHIFT)
-#define _PAGE_NO_READ   ({if (!kernel_uses_smartmips_rixi) BUG(); 1 << _PAGE_NO_READ_SHIFT; })
+#define _PAGE_NO_READ_SHIFT	(kernel_uses_smartmips_rixi ? _PAGE_NO_EXEC_SHIFT + 1 : _PAGE_NO_EXEC_SHIFT)
+#define _PAGE_NO_READ		({if (!kernel_uses_smartmips_rixi) BUG(); 1 << _PAGE_NO_READ_SHIFT; })
 
-#define _PAGE_GLOBAL_SHIFT  (_PAGE_NO_READ_SHIFT + 1)
-#define _PAGE_GLOBAL    (1 << _PAGE_GLOBAL_SHIFT)
+#define _PAGE_GLOBAL_SHIFT	(_PAGE_NO_READ_SHIFT + 1)
+#define _PAGE_GLOBAL		(1 << _PAGE_GLOBAL_SHIFT)
 
-#define _PAGE_VALID_SHIFT (_PAGE_GLOBAL_SHIFT + 1)
-#define _PAGE_VALID   (1 << _PAGE_VALID_SHIFT)
+#define _PAGE_VALID_SHIFT	(_PAGE_GLOBAL_SHIFT + 1)
+#define _PAGE_VALID		(1 << _PAGE_VALID_SHIFT)
 /* synonym                 */
-#define _PAGE_SILENT_READ (_PAGE_VALID)
+#define _PAGE_SILENT_READ	(_PAGE_VALID)
 
 /* The MIPS dirty bit      */
-#define _PAGE_DIRTY_SHIFT (_PAGE_VALID_SHIFT + 1)
-#define _PAGE_DIRTY   (1 << _PAGE_DIRTY_SHIFT)
-#define _PAGE_SILENT_WRITE  (_PAGE_DIRTY)
+#define _PAGE_DIRTY_SHIFT	(_PAGE_VALID_SHIFT + 1)
+#define _PAGE_DIRTY		(1 << _PAGE_DIRTY_SHIFT)
+#define _PAGE_SILENT_WRITE	(_PAGE_DIRTY)
 
-#define _CACHE_SHIFT    (_PAGE_DIRTY_SHIFT + 1)
-#define _CACHE_MASK   (7 << _CACHE_SHIFT)
+#define _CACHE_SHIFT		(_PAGE_DIRTY_SHIFT + 1)
+#define _CACHE_MASK		(7 << _CACHE_SHIFT)
 
-#define _PFN_SHIFT    (PAGE_SHIFT - 12 + _CACHE_SHIFT + 3)
+#define _PFN_SHIFT		(PAGE_SHIFT - 12 + _CACHE_SHIFT + 3)
 
 #endif /* defined(CONFIG_64BIT_PHYS_ADDR && defined(CONFIG_CPU_MIPS32) */
 
 #ifndef _PFN_SHIFT
 #define _PFN_SHIFT                  PAGE_SHIFT
 #endif
-#define _PFN_MASK   (~((1 << (_PFN_SHIFT)) - 1))
+#define _PFN_MASK		(~((1 << (_PFN_SHIFT)) - 1))
 
 #ifndef _PAGE_NO_READ
 #define _PAGE_NO_READ ({BUG(); 0; })
@@ -153,25 +153,25 @@
  * pte_to_entrylo converts a page table entry (PTE) into a Mips
  * entrylo0/1 value.
  */
-static inline uint64_t pte_to_entrylo (unsigned long pte_val)
+static inline uint64_t pte_to_entrylo(unsigned long pte_val)
 {
-  if (kernel_uses_smartmips_rixi) {
-    int sa;
-    #ifdef CONFIG_32BIT
-    sa = 31 - _PAGE_NO_READ_SHIFT;
-    #else
-    sa = 63 - _PAGE_NO_READ_SHIFT;
-    #endif
-    /*
-     * C has no way to express that this is a DSRL
-     * _PAGE_NO_EXEC_SHIFT followed by a ROTR 2.  Luckily
-     * in the fast path this is done in assembly
-     */
-    return (pte_val >> _PAGE_GLOBAL_SHIFT) |
-           ( (pte_val & (_PAGE_NO_EXEC | _PAGE_NO_READ) ) << sa);
-  }
-  
-  return pte_val >> _PAGE_GLOBAL_SHIFT;
+	if (kernel_uses_smartmips_rixi) {
+		int sa;
+#ifdef CONFIG_32BIT
+		sa = 31 - _PAGE_NO_READ_SHIFT;
+#else
+		sa = 63 - _PAGE_NO_READ_SHIFT;
+#endif
+		/*
+		 * C has no way to express that this is a DSRL
+		 * _PAGE_NO_EXEC_SHIFT followed by a ROTR 2.  Luckily
+		 * in the fast path this is done in assembly
+		 */
+		return (pte_val >> _PAGE_GLOBAL_SHIFT) |
+			((pte_val & (_PAGE_NO_EXEC | _PAGE_NO_READ)) << sa);
+	}
+
+	return pte_val >> _PAGE_GLOBAL_SHIFT;
 }
 #endif
 
@@ -194,22 +194,22 @@ static inline uint64_t pte_to_entrylo (unsigned long pte_val)
 
 #elif defined(CONFIG_CPU_RM9000)
 
-#define _CACHE_WT       (0<<_CACHE_SHIFT)
-#define _CACHE_WTWA       (1<<_CACHE_SHIFT)
-#define _CACHE_UC_B       (2<<_CACHE_SHIFT)
-#define _CACHE_WB       (3<<_CACHE_SHIFT)
-#define _CACHE_CWBEA        (4<<_CACHE_SHIFT)
-#define _CACHE_CWB        (5<<_CACHE_SHIFT)
-#define _CACHE_UCNB       (6<<_CACHE_SHIFT)
-#define _CACHE_FPC        (7<<_CACHE_SHIFT)
+#define _CACHE_WT		    (0<<_CACHE_SHIFT)
+#define _CACHE_WTWA		    (1<<_CACHE_SHIFT)
+#define _CACHE_UC_B		    (2<<_CACHE_SHIFT)
+#define _CACHE_WB		    (3<<_CACHE_SHIFT)
+#define _CACHE_CWBEA		    (4<<_CACHE_SHIFT)
+#define _CACHE_CWB		    (5<<_CACHE_SHIFT)
+#define _CACHE_UCNB		    (6<<_CACHE_SHIFT)
+#define _CACHE_FPC		    (7<<_CACHE_SHIFT)
 
-#define _CACHE_UNCACHED       _CACHE_UC_B
+#define _CACHE_UNCACHED		    _CACHE_UC_B
 #define _CACHE_CACHABLE_NONCOHERENT _CACHE_WB
 
 #else
 
-#define _CACHE_CACHABLE_NO_WA     (0<<_CACHE_SHIFT)  /* R4600 only      */
-#define _CACHE_CACHABLE_WA      (1<<_CACHE_SHIFT)  /* R4600 only      */
+#define _CACHE_CACHABLE_NO_WA	    (0<<_CACHE_SHIFT)  /* R4600 only      */
+#define _CACHE_CACHABLE_WA	    (1<<_CACHE_SHIFT)  /* R4600 only      */
 #define _CACHE_UNCACHED             (2<<_CACHE_SHIFT)  /* R4[0246]00      */
 #define _CACHE_CACHABLE_NONCOHERENT (3<<_CACHE_SHIFT)  /* R4[0246]00      */
 #define _CACHE_CACHABLE_CE          (4<<_CACHE_SHIFT)  /* R4[04]00MC only */
@@ -220,8 +220,8 @@ static inline uint64_t pte_to_entrylo (unsigned long pte_val)
 
 #endif
 
-#define __READABLE  (_PAGE_SILENT_READ | _PAGE_ACCESSED | (kernel_uses_smartmips_rixi ? 0 : _PAGE_READ))
-#define __WRITEABLE (_PAGE_WRITE | _PAGE_SILENT_WRITE | _PAGE_MODIFIED)
+#define __READABLE	(_PAGE_SILENT_READ | _PAGE_ACCESSED | (kernel_uses_smartmips_rixi ? 0 : _PAGE_READ))
+#define __WRITEABLE	(_PAGE_WRITE | _PAGE_SILENT_WRITE | _PAGE_MODIFIED)
 
 #define _PAGE_CHG_MASK  (_PFN_MASK | _PAGE_ACCESSED | _PAGE_MODIFIED | _CACHE_MASK)
 

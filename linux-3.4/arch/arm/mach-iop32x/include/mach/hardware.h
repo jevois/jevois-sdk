@@ -20,7 +20,7 @@
  */
 
 #ifndef __ASSEMBLY__
-void iop32x_init_irq (void);
+void iop32x_init_irq(void);
 #endif
 
 

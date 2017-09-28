@@ -128,12 +128,12 @@
 
 /* SCSI transfer count */
 #define GETSTCNT() ( (GETPORT(STCNT2)<<16) \
-                     + (GETPORT(STCNT1)<< 8) \
-                     + GETPORT(STCNT0) )
+                   + (GETPORT(STCNT1)<< 8) \
+                   + GETPORT(STCNT0) )
 
 #define SETSTCNT(X) { SETPORT(STCNT2, ((X) & 0xFF0000) >> 16); \
-    SETPORT(STCNT1, ((X) & 0x00FF00) >>  8); \
-    SETPORT(STCNT0, ((X) & 0x0000FF) ); }
+                      SETPORT(STCNT1, ((X) & 0x00FF00) >>  8); \
+                      SETPORT(STCNT0, ((X) & 0x0000FF) ); }
 
 /* SCSI interrupt status */
 #define TARGET       0x80
@@ -253,21 +253,21 @@
    some information about the board's configuration. */
 typedef union {
   struct {
-    unsigned reserved: 2;   /* reserved */
-    unsigned tardisc: 1;    /* Target disconnect: 0=disabled, 1=enabled */
-    unsigned syncneg: 1;    /* Initial sync neg: 0=disabled, 1=enabled */
-    unsigned msgclasses: 2;  /* Message classes
+    unsigned reserved:2;    /* reserved */
+    unsigned tardisc:1;     /* Target disconnect: 0=disabled, 1=enabled */
+    unsigned syncneg:1;     /* Initial sync neg: 0=disabled, 1=enabled */
+    unsigned msgclasses:2;  /* Message classes
                                  0=#4
                                  1=#0, #1, #2, #3, #4
                                  2=#0, #3, #4
                                  3=#0, #4
                              */
-    unsigned boot: 1;       /* boot: 0=disabled, 1=enabled */
-    unsigned dma: 1;        /* Transfer mode: 0=PIO; 1=DMA */
-    unsigned id: 3;         /* SCSI-id */
-    unsigned irq: 2;        /* IRQ-Channel: 0,3=12, 1=10, 2=11 */
-    unsigned dmachan: 2;    /* DMA-Channel: 0=0, 1=5, 2=6, 3=7 */
-    unsigned parity: 1;     /* SCSI-parity: 1=enabled 0=disabled */
+    unsigned boot:1;        /* boot: 0=disabled, 1=enabled */
+    unsigned dma:1;         /* Transfer mode: 0=PIO; 1=DMA */
+    unsigned id:3;          /* SCSI-id */
+    unsigned irq:2;         /* IRQ-Channel: 0,3=12, 1=10, 2=11 */
+    unsigned dmachan:2;     /* DMA-Channel: 0=0, 1=5, 2=6, 3=7 */
+    unsigned parity:1;      /* SCSI-parity: 1=enabled 0=disabled */
   } fields;
   unsigned short port;
 } aha152x_config ;
@@ -285,14 +285,14 @@ typedef union {
 
 /* Some macros to manipulate ports and their bits */
 
-#define SETPORT(PORT, VAL)  outb( (VAL), (PORT) )
-#define GETPORT(PORT)   inb( PORT )
-#define SETBITS(PORT, BITS) outb( (inb(PORT) | (BITS)), (PORT) )
-#define CLRBITS(PORT, BITS) outb( (inb(PORT) & ~(BITS)), (PORT) )
-#define TESTHI(PORT, BITS)  ((inb(PORT) & (BITS)) == (BITS))
-#define TESTLO(PORT, BITS)  ((inb(PORT) & (BITS)) == 0)
+#define SETPORT(PORT, VAL)	outb( (VAL), (PORT) )
+#define GETPORT(PORT)		inb( PORT )
+#define SETBITS(PORT, BITS)	outb( (inb(PORT) | (BITS)), (PORT) )
+#define CLRBITS(PORT, BITS)	outb( (inb(PORT) & ~(BITS)), (PORT) )
+#define TESTHI(PORT, BITS)	((inb(PORT) & (BITS)) == (BITS))
+#define TESTLO(PORT, BITS)	((inb(PORT) & (BITS)) == 0)
 
-#define SETRATE(RATE)   SETPORT(SCSIRATE,(RATE) & 0x7f)
+#define SETRATE(RATE)		SETPORT(SCSIRATE,(RATE) & 0x7f)
 
 #if defined(AHA152X_DEBUG)
 enum {
@@ -307,7 +307,7 @@ enum {
   debug_cmd       = 0x0100,
   debug_datai     = 0x0200,
   debug_datao     = 0x0400,
-  debug_eh    = 0x0800,
+  debug_eh	  = 0x0800,
   debug_done      = 0x1000,
   debug_phases    = 0x2000,
 };
@@ -315,23 +315,23 @@ enum {
 
 /* for the pcmcia stub */
 struct aha152x_setup {
-  int io_port;
-  int irq;
-  int scsiid;
-  int reconnect;
-  int parity;
-  int synchronous;
-  int delay;
-  int ext_trans;
-  int tc1550;
-  #if defined(AHA152X_DEBUG)
-  int debug;
-  #endif
-  char * conf;
+	int io_port;
+	int irq;
+	int scsiid;
+	int reconnect;
+	int parity;
+	int synchronous;
+	int delay;
+	int ext_trans;
+	int tc1550;
+#if defined(AHA152X_DEBUG)
+	int debug;
+#endif
+	char *conf;
 };
 
-struct Scsi_Host * aha152x_probe_one (struct aha152x_setup *);
-void aha152x_release (struct Scsi_Host *);
-int aha152x_host_reset_host (struct Scsi_Host *);
+struct Scsi_Host *aha152x_probe_one(struct aha152x_setup *);
+void aha152x_release(struct Scsi_Host *);
+int aha152x_host_reset_host(struct Scsi_Host *);
 
 #endif /* _AHA152X_H */

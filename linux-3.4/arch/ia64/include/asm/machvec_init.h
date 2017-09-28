@@ -26,10 +26,10 @@ extern ia64_mv_readw_t __ia64_readw_relaxed;
 extern ia64_mv_readl_t __ia64_readl_relaxed;
 extern ia64_mv_readq_t __ia64_readq_relaxed;
 
-#define MACHVEC_HELPER(name)                  \
-  struct ia64_machine_vector machvec_##name __attribute__ ((unused, __section__ (".machvec"))) \
-    = MACHVEC_INIT(name);
+#define MACHVEC_HELPER(name)									\
+ struct ia64_machine_vector machvec_##name __attribute__ ((unused, __section__ (".machvec")))	\
+	= MACHVEC_INIT(name);
 
-#define MACHVEC_DEFINE(name)  MACHVEC_HELPER(name)
+#define MACHVEC_DEFINE(name)	MACHVEC_HELPER(name)
 
-MACHVEC_DEFINE (MACHVEC_PLATFORM_NAME)
+MACHVEC_DEFINE(MACHVEC_PLATFORM_NAME)

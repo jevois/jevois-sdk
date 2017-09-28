@@ -6,4 +6,4 @@
  * Licensed under the GPL-2 or later.
  */
 
-int init_smsc9303i_mii (void);
+int init_smsc9303i_mii(void);

@@ -25,39 +25,39 @@
 typedef  unsigned char uint8;
 typedef  unsigned int uint32;
 
-void muxSetupSDRC (void);
-void muxSetupGPMC (void);
-void muxSetupUsb0 (void);
-void muxSetupUsbHost (void);
-void muxSetupUart3 (void);
-void muxSetupI2C1 (void);
-void muxSetupUART1 (void);
-void muxSetupLCD (void);
-void muxSetupCamera (void);
-void muxSetupMMCSD (void) ;
-void muxSetupTouchScreen (void) ;
-void muxSetupHDQ (void);
+void muxSetupSDRC(void);
+void muxSetupGPMC(void);
+void muxSetupUsb0(void);
+void muxSetupUsbHost(void);
+void muxSetupUart3(void);
+void muxSetupI2C1(void);
+void muxSetupUART1(void);
+void muxSetupLCD(void);
+void muxSetupCamera(void);
+void muxSetupMMCSD(void) ;
+void muxSetupTouchScreen(void) ;
+void muxSetupHDQ(void);
 #endif
 
-#define USB_OTG_CTRL              ((volatile uint32 *)0x4805E30C)
+#define USB_OTG_CTRL			        ((volatile uint32 *)0x4805E30C)
 
 /* Pin Muxing registers used for HDQ (Smart battery) */
 #define CONTROL_PADCONF_HDQ_SIO         ((volatile unsigned char *)0x48000115)
 
 /* Pin Muxing registers used for GPMC */
-#define CONTROL_PADCONF_GPMC_D2_BYTE0 ((volatile unsigned char *)0x48000088)
-#define CONTROL_PADCONF_GPMC_D2_BYTE1 ((volatile unsigned char *)0x48000089)
-#define CONTROL_PADCONF_GPMC_D2_BYTE2 ((volatile unsigned char *)0x4800008A)
-#define CONTROL_PADCONF_GPMC_D2_BYTE3 ((volatile unsigned char *)0x4800008B)
+#define CONTROL_PADCONF_GPMC_D2_BYTE0	((volatile unsigned char *)0x48000088)
+#define CONTROL_PADCONF_GPMC_D2_BYTE1	((volatile unsigned char *)0x48000089)
+#define CONTROL_PADCONF_GPMC_D2_BYTE2	((volatile unsigned char *)0x4800008A)
+#define CONTROL_PADCONF_GPMC_D2_BYTE3	((volatile unsigned char *)0x4800008B)
 
-#define CONTROL_PADCONF_GPMC_NCS0_BYTE0 ((volatile unsigned char *)0x4800008C)
-#define CONTROL_PADCONF_GPMC_NCS0_BYTE1 ((volatile unsigned char *)0x4800008D)
-#define CONTROL_PADCONF_GPMC_NCS0_BYTE2 ((volatile unsigned char *)0x4800008E)
-#define CONTROL_PADCONF_GPMC_NCS0_BYTE3 ((volatile unsigned char *)0x4800008F)
-#define CONTROL_PADCONF_GPMC_NCS0_BYTE4 (0x48000090)
-#define CONTROL_PADCONF_GPMC_NCS0_BYTE5 (0x48000091)
-#define CONTROL_PADCONF_GPMC_NCS0_BYTE6 (0x48000092)
-#define CONTROL_PADCONF_GPMC_NCS0_BYTE7 (0x48000093)
+#define CONTROL_PADCONF_GPMC_NCS0_BYTE0	((volatile unsigned char *)0x4800008C)
+#define CONTROL_PADCONF_GPMC_NCS0_BYTE1	((volatile unsigned char *)0x4800008D)
+#define CONTROL_PADCONF_GPMC_NCS0_BYTE2	((volatile unsigned char *)0x4800008E)
+#define CONTROL_PADCONF_GPMC_NCS0_BYTE3	((volatile unsigned char *)0x4800008F)
+#define CONTROL_PADCONF_GPMC_NCS0_BYTE4	(0x48000090)
+#define CONTROL_PADCONF_GPMC_NCS0_BYTE5	(0x48000091)
+#define CONTROL_PADCONF_GPMC_NCS0_BYTE6	(0x48000092)
+#define CONTROL_PADCONF_GPMC_NCS0_BYTE7	(0x48000093)
 
 /* Pin Muxing registers used for SDRC */
 #define CONTROL_PADCONF_SDRC_NCS0_BYTE0 ((volatile unsigned char *)0x480000A0)
@@ -65,10 +65,10 @@ void muxSetupHDQ (void);
 #define CONTROL_PADCONF_SDRC_NCS0_BYTE2 ((volatile unsigned char *)0x480000A2)
 #define CONTROL_PADCONF_SDRC_NCS0_BYTE3 ((volatile unsigned char *)0x480000A3)
 
-#define CONTROL_PADCONF_SDRC_A14_BYTE0  ((volatile unsigned char *)0x48000030)
-#define CONTROL_PADCONF_SDRC_A14_BYTE1  ((volatile unsigned char *)0x48000031)
-#define CONTROL_PADCONF_SDRC_A14_BYTE2  ((volatile unsigned char *)0x48000032)
-#define CONTROL_PADCONF_SDRC_A14_BYTE3  ((volatile unsigned char *)0x48000033)
+#define CONTROL_PADCONF_SDRC_A14_BYTE0	((volatile unsigned char *)0x48000030)
+#define CONTROL_PADCONF_SDRC_A14_BYTE1	((volatile unsigned char *)0x48000031)
+#define CONTROL_PADCONF_SDRC_A14_BYTE2	((volatile unsigned char *)0x48000032)
+#define CONTROL_PADCONF_SDRC_A14_BYTE3	((volatile unsigned char *)0x48000033)
 
 /* Pin Muxing registers used for Touch Screen (SPI) */
 #define CONTROL_PADCONF_SPI1_CLK        ((volatile unsigned char *)0x480000FF)
@@ -149,28 +149,28 @@ void muxSetupHDQ (void);
 #define CONTROL_PADCONF_I2C1_SDA        ((volatile unsigned char *)0x48000112)
 
 /* Pin Muxing registres used for USB0. */
-#define CONTROL_PADCONF_USB0_PUEN   ((volatile uint8 *)0x4800011D)
-#define CONTROL_PADCONF_USB0_VP     ((volatile uint8 *)0x4800011E)
-#define CONTROL_PADCONF_USB0_VM     ((volatile uint8 *)0x4800011F)
-#define CONTROL_PADCONF_USB0_RCV    ((volatile uint8 *)0x48000120)
-#define CONTROL_PADCONF_USB0_TXEN   ((volatile uint8 *)0x48000121)
-#define CONTROL_PADCONF_USB0_SE0    ((volatile uint8 *)0x48000122)
-#define CONTROL_PADCONF_USB0_DAT    ((volatile uint8 *)0x48000123)
+#define CONTROL_PADCONF_USB0_PUEN		((volatile uint8 *)0x4800011D)
+#define CONTROL_PADCONF_USB0_VP			((volatile uint8 *)0x4800011E)
+#define CONTROL_PADCONF_USB0_VM			((volatile uint8 *)0x4800011F)
+#define CONTROL_PADCONF_USB0_RCV		((volatile uint8 *)0x48000120)
+#define CONTROL_PADCONF_USB0_TXEN		((volatile uint8 *)0x48000121)
+#define CONTROL_PADCONF_USB0_SE0		((volatile uint8 *)0x48000122)
+#define CONTROL_PADCONF_USB0_DAT		((volatile uint8 *)0x48000123)
 
 /* Pin Muxing registres used for USB1. */
-#define CONTROL_PADCONF_USB1_RCV  (0x480000EB)
-#define CONTROL_PADCONF_USB1_TXEN (0x480000EC)
+#define CONTROL_PADCONF_USB1_RCV	(0x480000EB)
+#define CONTROL_PADCONF_USB1_TXEN	(0x480000EC)
 
 /* Pin Muxing registers used for UART3/IRDA */
-#define CONTROL_PADCONF_UART3_TX_IRTX ((volatile uint8 *)0x48000118)
-#define CONTROL_PADCONF_UART3_RX_IRRX ((volatile uint8 *)0x48000119)
+#define CONTROL_PADCONF_UART3_TX_IRTX	((volatile uint8 *)0x48000118)
+#define CONTROL_PADCONF_UART3_RX_IRRX	((volatile uint8 *)0x48000119)
 
 /* Pin Muxing registers used for GPIO */
-#define CONTROL_PADCONF_GPIO69    (0x480000ED)
-#define CONTROL_PADCONF_GPIO70    (0x480000EE)
-#define CONTROL_PADCONF_GPIO102   (0x48000116)
-#define CONTROL_PADCONF_GPIO103   (0x48000117)
-#define CONTROL_PADCONF_GPIO104   (0x48000118)
-#define CONTROL_PADCONF_GPIO105   (0x48000119)
+#define CONTROL_PADCONF_GPIO69		(0x480000ED)
+#define CONTROL_PADCONF_GPIO70		(0x480000EE)
+#define CONTROL_PADCONF_GPIO102		(0x48000116)
+#define CONTROL_PADCONF_GPIO103		(0x48000117)
+#define CONTROL_PADCONF_GPIO104		(0x48000118)
+#define CONTROL_PADCONF_GPIO105		(0x48000119)
 
 #endif

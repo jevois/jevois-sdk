@@ -27,36 +27,36 @@
 #include "flowctrl.h"
 
 u8 flowctrl_offset_halt_cpu[] = {
-  FLOW_CTRL_HALT_CPU0_EVENTS,
-  FLOW_CTRL_HALT_CPU1_EVENTS,
-  FLOW_CTRL_HALT_CPU1_EVENTS + 8,
-  FLOW_CTRL_HALT_CPU1_EVENTS + 16,
+	FLOW_CTRL_HALT_CPU0_EVENTS,
+	FLOW_CTRL_HALT_CPU1_EVENTS,
+	FLOW_CTRL_HALT_CPU1_EVENTS + 8,
+	FLOW_CTRL_HALT_CPU1_EVENTS + 16,
 };
 
 u8 flowctrl_offset_cpu_csr[] = {
-  FLOW_CTRL_CPU0_CSR,
-  FLOW_CTRL_CPU1_CSR,
-  FLOW_CTRL_CPU1_CSR + 8,
-  FLOW_CTRL_CPU1_CSR + 16,
+	FLOW_CTRL_CPU0_CSR,
+	FLOW_CTRL_CPU1_CSR,
+	FLOW_CTRL_CPU1_CSR + 8,
+	FLOW_CTRL_CPU1_CSR + 16,
 };
 
-static void flowctrl_update (u8 offset, u32 value)
+static void flowctrl_update(u8 offset, u32 value)
 {
-  void __iomem * addr = IO_ADDRESS (TEGRA_FLOW_CTRL_BASE) + offset;
-  
-  writel (value, addr);
-  
-  /* ensure the update has reached the flow controller */
-  wmb();
-  readl_relaxed (addr);
+	void __iomem *addr = IO_ADDRESS(TEGRA_FLOW_CTRL_BASE) + offset;
+
+	writel(value, addr);
+
+	/* ensure the update has reached the flow controller */
+	wmb();
+	readl_relaxed(addr);
 }
 
-void flowctrl_write_cpu_csr (unsigned int cpuid, u32 value)
+void flowctrl_write_cpu_csr(unsigned int cpuid, u32 value)
 {
-  return flowctrl_update (flowctrl_offset_cpu_csr[cpuid], value);
+	return flowctrl_update(flowctrl_offset_cpu_csr[cpuid], value);
 }
 
-void flowctrl_write_cpu_halt (unsigned int cpuid, u32 value)
+void flowctrl_write_cpu_halt(unsigned int cpuid, u32 value)
 {
-  return flowctrl_update (flowctrl_offset_halt_cpu[cpuid], value);
+	return flowctrl_update(flowctrl_offset_halt_cpu[cpuid], value);
 }

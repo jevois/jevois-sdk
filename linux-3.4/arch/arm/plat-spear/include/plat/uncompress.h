@@ -20,17 +20,17 @@
 /*
  * This does not append a newline
  */
-static inline void putc (int c)
+static inline void putc(int c)
 {
-  void __iomem * base = (void __iomem *) SPEAR_DBG_UART_BASE;
-  
-  while (readl_relaxed (base + UART01x_FR) & UART01x_FR_TXFF)
-  { barrier(); }
-  
-  writel_relaxed (c, base + UART01x_DR);
+	void __iomem *base = (void __iomem *)SPEAR_DBG_UART_BASE;
+
+	while (readl_relaxed(base + UART01x_FR) & UART01x_FR_TXFF)
+		barrier();
+
+	writel_relaxed(c, base + UART01x_DR);
 }
 
-static inline void flush (void)
+static inline void flush(void)
 {
 }
 

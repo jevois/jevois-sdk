@@ -13,7 +13,7 @@
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.   See the
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
@@ -55,46 +55,46 @@
 #define EGON2_EMOD_TYPE_DRV_MP                0x18
 
 
-#define MOD_ENTER_STANDBY         0x0
-#define MOD_EXIT_STANDBY          0x1
+#define MOD_ENTER_STANDBY				  0x0
+#define MOD_EXIT_STANDBY				  0x1
 
 
 
 #define EMOD_COUNT_MAX                        64
 typedef struct _boot_core_para_t
 {
-  __u32 user_set_clock; /*the unit of frequency is M*/
-  __u32 user_set_core_vol; /*mV*/
-  __u32 vol_threshold; /*on the threashold voltage*/
-} boot_core_para_t;
+    __u32 user_set_clock; /*the unit of frequency is M*/
+    __u32 user_set_core_vol; /*mV*/
+    __u32 vol_threshold; /*on the threashold voltage*/
+}boot_core_para_t;
 
-extern  int standby_int_init (void);
-extern  int standby_int_exit (void);
-extern  int standby_int_query (void);
-extern int standby_axp_probe_usb (void);
+extern  int standby_int_init(void);
+extern  int standby_int_exit(void);
+extern  int standby_int_query(void);
+extern int standby_axp_probe_usb(void);
 
-extern  int  standby_clock_store (void);
-extern  int  standby_clock_restore (void);
-extern  int  standby_clock_to_source (int clock_source);
-extern  void standby_clock_plldisable (void);
-extern  void standby_clock_divsetto0 (void);
-extern  void standby_clock_divsetback (void);
-extern  void standby_clock_drampll_ouput (int op);
+extern  int  standby_clock_store(void);
+extern  int  standby_clock_restore(void);
+extern  int  standby_clock_to_source(int clock_source);
+extern  void standby_clock_plldisable(void);
+extern  void standby_clock_divsetto0(void);
+extern  void standby_clock_divsetback(void);
+extern  void standby_clock_drampll_ouput(int op);
 
-extern  void standby_clock_apb1_to_source (int clock);
-extern  void standby_clock_24m_op (int op);
+extern  void standby_clock_apb1_to_source(int clock);
+extern  void standby_clock_24m_op(int op);
 
-extern  void  boot_store_sp (void);
-extern  void  boot_restore_sp (void);
-extern  void  boot_set_sp (void);
-extern  void  boot_halt (void);
+extern  void  boot_store_sp(void);
+extern  void  boot_restore_sp(void);
+extern  void  boot_set_sp(void);
+extern  void  boot_halt(void);
 
 
-extern  __s32  dram_power_save_process (boot_dram_para_t * standby_dram_para);
-extern  __u32 dram_power_up_process (boot_dram_para_t * standby_dram_para);
+extern  __s32  dram_power_save_process(boot_dram_para_t* standby_dram_para);
+extern  __u32 dram_power_up_process(boot_dram_para_t* standby_dram_para);
 
-extern  void standby_tmr_enable_watchdog (void);
-extern  void standby_tmr_disable_watchdog (void);
+extern  void standby_tmr_enable_watchdog(void);
+extern  void standby_tmr_disable_watchdog(void);
 
 #endif 
 

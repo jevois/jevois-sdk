@@ -6,16 +6,16 @@
  *
  * @brief This file contains the macros for the IxNpeMh component.
  *
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,7 +28,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -41,7 +41,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
 */
@@ -50,7 +50,7 @@
  * @defgroup IxNpeMhMacros_p IxNpeMhMacros_p
  *
  * @brief Macros for the IxNpeMh component.
- *
+ * 
  * @{
  */
 
@@ -78,8 +78,8 @@
  */
 
 #define IX_NPEMH_SHOW(TEXT, STAT) \
-  ixOsalLog (IX_OSAL_LOG_LVL_USER, IX_OSAL_LOG_DEV_STDOUT, \
-             "%-40s: %10d\n", (int) TEXT, (int) STAT, 0, 0, 0, 0)
+    ixOsalLog (IX_OSAL_LOG_LVL_USER, IX_OSAL_LOG_DEV_STDOUT, \
+               "%-40s: %10d\n", (int) TEXT, (int) STAT, 0, 0, 0, 0)
 
 /*
  * Prototypes for interface functions.
@@ -93,10 +93,10 @@
 
 typedef enum
 {
-  IX_NPEMH_TRACE_OFF     = IX_OSAL_LOG_LVL_NONE,    /**< no trace */
-  IX_NPEMH_WARNING       = IX_OSAL_LOG_LVL_WARNING, /**< warning */
-  IX_NPEMH_DEBUG         = IX_OSAL_LOG_LVL_MESSAGE, /**< debug */
-  IX_NPEMH_FN_ENTRY_EXIT = IX_OSAL_LOG_LVL_DEBUG3   /**< function entry/exit */
+    IX_NPEMH_TRACE_OFF     = IX_OSAL_LOG_LVL_NONE,    /**< no trace */
+    IX_NPEMH_WARNING       = IX_OSAL_LOG_LVL_WARNING, /**< warning */
+    IX_NPEMH_DEBUG         = IX_OSAL_LOG_LVL_MESSAGE, /**< debug */
+    IX_NPEMH_FN_ENTRY_EXIT = IX_OSAL_LOG_LVL_DEBUG3   /**< function entry/exit */
 } IxNpeMhTraceTypes;
 
 #ifdef IX_UNIT_TEST
@@ -112,7 +112,7 @@ typedef enum
  */
 
 #define IX_NPEMH_TRACE0(LEVEL, STR) \
-  IX_NPEMH_TRACE6(LEVEL, STR, 0, 0, 0, 0, 0, 0)
+    IX_NPEMH_TRACE6(LEVEL, STR, 0, 0, 0, 0, 0, 0)
 
 /**
  * @def IX_NPEMH_TRACE1
@@ -121,7 +121,7 @@ typedef enum
  */
 
 #define IX_NPEMH_TRACE1(LEVEL, STR, ARG1) \
-  IX_NPEMH_TRACE6(LEVEL, STR, ARG1, 0, 0, 0, 0, 0)
+    IX_NPEMH_TRACE6(LEVEL, STR, ARG1, 0, 0, 0, 0, 0)
 
 /**
  * @def IX_NPEMH_TRACE2
@@ -130,7 +130,7 @@ typedef enum
  */
 
 #define IX_NPEMH_TRACE2(LEVEL, STR, ARG1, ARG2) \
-  IX_NPEMH_TRACE6(LEVEL, STR, ARG1, ARG2, 0, 0, 0, 0)
+    IX_NPEMH_TRACE6(LEVEL, STR, ARG1, ARG2, 0, 0, 0, 0)
 
 /**
  * @def IX_NPEMH_TRACE3
@@ -139,7 +139,7 @@ typedef enum
  */
 
 #define IX_NPEMH_TRACE3(LEVEL, STR, ARG1, ARG2, ARG3) \
-  IX_NPEMH_TRACE6(LEVEL, STR, ARG1, ARG2, ARG3, 0, 0, 0)
+    IX_NPEMH_TRACE6(LEVEL, STR, ARG1, ARG2, ARG3, 0, 0, 0)
 
 /**
  * @def IX_NPEMH_TRACE4
@@ -148,7 +148,7 @@ typedef enum
  */
 
 #define IX_NPEMH_TRACE4(LEVEL, STR, ARG1, ARG2, ARG3, ARG4) \
-  IX_NPEMH_TRACE6(LEVEL, STR, ARG1, ARG2, ARG3, ARG4, 0, 0)
+    IX_NPEMH_TRACE6(LEVEL, STR, ARG1, ARG2, ARG3, ARG4, 0, 0)
 
 /**
  * @def IX_NPEMH_TRACE5
@@ -157,7 +157,7 @@ typedef enum
  */
 
 #define IX_NPEMH_TRACE5(LEVEL, STR, ARG1, ARG2, ARG3, ARG4, ARG5) \
-  IX_NPEMH_TRACE6(LEVEL, STR, ARG1, ARG2, ARG3, ARG4, ARG5, 0)
+    IX_NPEMH_TRACE6(LEVEL, STR, ARG1, ARG2, ARG3, ARG4, ARG5, 0)
 
 /**
  * @def IX_NPEMH_TRACE6
@@ -166,14 +166,14 @@ typedef enum
  */
 
 #define IX_NPEMH_TRACE6(LEVEL, STR, ARG1, ARG2, ARG3, ARG4, ARG5, ARG6) \
-  { \
+{ \
     if (LEVEL <= IX_NPEMH_TRACE_LEVEL) \
     { \
-      (void) ixOsalLog (LEVEL, IX_OSAL_LOG_DEV_STDOUT, (STR), \
-                        (int)(ARG1), (int)(ARG2), (int)(ARG3), \
-                        (int)(ARG4), (int)(ARG5), (int)(ARG6)); \
+        (void) ixOsalLog (LEVEL, IX_OSAL_LOG_DEV_STDOUT, (STR), \
+                          (int)(ARG1), (int)(ARG2), (int)(ARG3), \
+                          (int)(ARG4), (int)(ARG5), (int)(ARG6)); \
     } \
-  }
+}
 
 /**
  * @def IX_NPEMH_ERROR_REPORT
@@ -182,10 +182,10 @@ typedef enum
  */
 
 #define IX_NPEMH_ERROR_REPORT(STR) \
-  { \
+{ \
     (void) ixOsalLog (IX_OSAL_LOG_LVL_ERROR, IX_OSAL_LOG_DEV_STDERR, \
-                      (STR), 0, 0, 0, 0, 0, 0); \
-  }
+		      (STR), 0, 0, 0, 0, 0, 0); \
+}
 
 /* if we are running on XScale, i.e. real environment */
 #if CPU==XSCALE
@@ -197,9 +197,9 @@ typedef enum
  */
 
 #define IX_NPEMH_REGISTER_READ(registerAddress, value) \
-  { \
+{ \
     *value = IX_OSAL_READ_LONG(registerAddress); \
-  }
+}
 
 /**
  * @def IX_NPEMH_REGISTER_READ_BITS
@@ -208,9 +208,9 @@ typedef enum
  */
 
 #define IX_NPEMH_REGISTER_READ_BITS(registerAddress, value, mask) \
-  { \
+{ \
     *value = (IX_OSAL_READ_LONG(registerAddress) & mask); \
-  }
+}
 
 /**
  * @def IX_NPEMH_REGISTER_WRITE
@@ -219,9 +219,9 @@ typedef enum
  */
 
 #define IX_NPEMH_REGISTER_WRITE(registerAddress, value) \
-  { \
+{ \
     IX_OSAL_WRITE_LONG(registerAddress, value); \
-  }
+}
 
 /**
  * @def IX_NPEMH_REGISTER_WRITE_BITS
@@ -230,12 +230,12 @@ typedef enum
  */
 
 #define IX_NPEMH_REGISTER_WRITE_BITS(registerAddress, value, mask) \
-  { \
+{ \
     UINT32 orig = IX_OSAL_READ_LONG(registerAddress); \
     orig &= (~mask); \
     orig |= (value & mask); \
     IX_OSAL_WRITE_LONG(registerAddress, orig); \
-  }
+}
 
 
 /* if we are running as a unit test */
@@ -250,9 +250,9 @@ typedef enum
  */
 
 #define IX_NPEMH_REGISTER_READ(registerAddress, value) \
-  { \
+{ \
     ixNpeMhTestRegisterRead (registerAddress, value); \
-  }
+}
 
 /**
  * @def IX_NPEMH_REGISTER_READ_BITS
@@ -261,9 +261,9 @@ typedef enum
  */
 
 #define IX_NPEMH_REGISTER_READ_BITS(registerAddress, value, mask) \
-  { \
+{ \
     ixNpeMhTestRegisterReadBits (registerAddress, value, mask); \
-  }
+}
 
 /**
  * @def IX_NPEMH_REGISTER_WRITE
@@ -272,9 +272,9 @@ typedef enum
  */
 
 #define IX_NPEMH_REGISTER_WRITE(registerAddress, value) \
-  { \
+{ \
     ixNpeMhTestRegisterWrite (registerAddress, value); \
-  }
+}
 
 /**
  * @def IX_NPEMH_REGISTER_WRITE_BITS
@@ -283,9 +283,9 @@ typedef enum
  */
 
 #define IX_NPEMH_REGISTER_WRITE_BITS(registerAddress, value, mask) \
-  { \
+{ \
     ixNpeMhTestRegisterWriteBits (registerAddress, value, mask); \
-  }
+}
 
 #endif /* #if CPU==XSCALE */
 

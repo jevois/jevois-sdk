@@ -21,54 +21,54 @@
 #include "devices.h"
 
 static struct mtd_partition easy50712_partitions[] = {
-  {
-    .name = "uboot",
-    .offset = 0x0,
-    .size = 0x10000,
-  },
-  {
-    .name = "uboot_env",
-    .offset = 0x10000,
-    .size = 0x10000,
-  },
-  {
-    .name = "linux",
-    .offset = 0x20000,
-    .size = 0xe0000,
-  },
-  {
-    .name = "rootfs",
-    .offset = 0x100000,
-    .size = 0x300000,
-  },
+	{
+		.name	= "uboot",
+		.offset	= 0x0,
+		.size	= 0x10000,
+	},
+	{
+		.name	= "uboot_env",
+		.offset	= 0x10000,
+		.size	= 0x10000,
+	},
+	{
+		.name	= "linux",
+		.offset	= 0x20000,
+		.size	= 0xe0000,
+	},
+	{
+		.name	= "rootfs",
+		.offset	= 0x100000,
+		.size	= 0x300000,
+	},
 };
 
 static struct physmap_flash_data easy50712_flash_data = {
-  .nr_parts = ARRAY_SIZE (easy50712_partitions),
-  .parts    = easy50712_partitions,
+	.nr_parts	= ARRAY_SIZE(easy50712_partitions),
+	.parts		= easy50712_partitions,
 };
 
 static struct ltq_pci_data ltq_pci_data = {
-  .clock  = PCI_CLOCK_INT,
-  .gpio = PCI_GNT1 | PCI_REQ1,
-  .irq  = {
-    [14] = INT_NUM_IM0_IRL0 + 22,
-  },
+	.clock	= PCI_CLOCK_INT,
+	.gpio	= PCI_GNT1 | PCI_REQ1,
+	.irq	= {
+		[14] = INT_NUM_IM0_IRL0 + 22,
+	},
 };
 
 static struct ltq_eth_data ltq_eth_data = {
-  .mii_mode = PHY_INTERFACE_MODE_MII,
+	.mii_mode = PHY_INTERFACE_MODE_MII,
 };
 
-static void __init easy50712_init (void)
+static void __init easy50712_init(void)
 {
-  ltq_register_gpio_stp();
-  ltq_register_nor (&easy50712_flash_data);
-  ltq_register_pci (&ltq_pci_data);
-  ltq_register_etop (&ltq_eth_data);
+	ltq_register_gpio_stp();
+	ltq_register_nor(&easy50712_flash_data);
+	ltq_register_pci(&ltq_pci_data);
+	ltq_register_etop(&ltq_eth_data);
 }
 
-MIPS_MACHINE (LTQ_MACH_EASY50712,
-              "EASY50712",
-              "EASY50712 Eval Board",
-              easy50712_init);
+MIPS_MACHINE(LTQ_MACH_EASY50712,
+	     "EASY50712",
+	     "EASY50712 Eval Board",
+	      easy50712_init);

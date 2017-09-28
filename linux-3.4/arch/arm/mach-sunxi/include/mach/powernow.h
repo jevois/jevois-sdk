@@ -23,30 +23,30 @@
 #define SW_POWERNOW_USB                 4
 #define SW_POWERNOW_MAXPOWER            5
 
-#define SW_POWERNOW_USBSTAT_INACTIVE    0
-#define SW_POWERNOW_USBSTAT_ACTIVE      1
+#define SW_POWERNOW_USBSTAT_INACTIVE    0               
+#define SW_POWERNOW_USBSTAT_ACTIVE      1               
 
 #ifdef CONFIG_SW_POWERNOW
-int register_sw_powernow_notifier (struct notifier_block * nb);
-int unregister_sw_powernow_notifier (struct notifier_block * nb);
-void sw_powernow_switch_to (int mode);
-void sw_powernow_set_usb (int status);
+int register_sw_powernow_notifier(struct notifier_block *nb);
+int unregister_sw_powernow_notifier(struct notifier_block *nb);
+void sw_powernow_switch_to(int mode);
+void sw_powernow_set_usb(int status);
 #else
-int register_sw_powernow_notifier (struct notifier_block * nb)
+int register_sw_powernow_notifier(struct notifier_block *nb)
 {
-  return 0;
+       return 0;
 }
 
-int unregister_sw_powernow_notifier (struct notifier_block * nb)
+int unregister_sw_powernow_notifier(struct notifier_block *nb)
 {
-  return 0;
+       return 0;
 }
 
-void sw_powernow_switch_to (int mode)
+void sw_powernow_switch_to(int mode)
 {
 }
 
-void sw_powernow_set_usb (int status)
+void sw_powernow_set_usb(int status)
 {
 }
 #endif

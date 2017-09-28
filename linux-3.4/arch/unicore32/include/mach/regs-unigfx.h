@@ -176,7 +176,7 @@
 #define UGE_P30       (UGE_BASE + 0x00B8)
 #define UGE_P31       (UGE_BASE + 0x00BC)
 
-#define UDE_CFG_DST_MASK  FMASK(2, 8)
+#define UDE_CFG_DST_MASK	FMASK(2, 8)
 #define UDE_CFG_DST8            FIELD(0x0, 2, 8)
 #define UDE_CFG_DST16           FIELD(0x1, 2, 8)
 #define UDE_CFG_DST24           FIELD(0x2, 2, 8)

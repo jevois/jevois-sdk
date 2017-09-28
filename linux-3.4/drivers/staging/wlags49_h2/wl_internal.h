@@ -102,7 +102,7 @@
 #define MAX_SCAN_TIME_SEC   8
 #define MAX_NAPS            32
 
-#define CFG_MB_INFO         0x0820   
+#define CFG_MB_INFO         0x0820	
 
 #define NUM_WDS_PORTS       6
 
@@ -123,7 +123,7 @@
 /* The following definitions pertain to module and profile parameters */
 
 #define PARM_AUTHENTICATION                     Authentication
-#define PARM_NAME_AUTHENTICATION        TEXT("Authentication")
+#define PARM_NAME_AUTHENTICATION				TEXT("Authentication")
 #define PARM_MIN_AUTHENTICATION                 1
 #define PARM_MAX_AUTHENTICATION                 2
 #define PARM_DEFAULT_AUTHENTICATION             1
@@ -151,7 +151,7 @@
 #define PARM_DEFAULT_COEXISTENCE                0x0000
 
 #define PARM_CONFIGURED                         Configured
-#define PARM_NAME_CONFIGURED          TEXT("Configured")
+#define PARM_NAME_CONFIGURED					TEXT("Configured")
 
 #define PARM_CONNECTION_CONTROL                 ConnectionControl
 #define PARM_NAME_CONNECTION_CONTROL            TEXT("ConnectionControl")
@@ -164,11 +164,11 @@
 #define PARM_DEFAULT_CREATE_IBSS                FALSE
 #define PARM_DEFAULT_CREATE_IBSS_STR            "N"
 
-#define PARM_DEBUG_FLAG                     DebugFlag
-#define PARM_NAME_DEBUG_FLAG                TEXT("DebugFlag")
-#define PARM_MIN_DEBUG_FLAG                 0
-#define PARM_MAX_DEBUG_FLAG                 0xFFFF
-#define PARM_DEFAULT_DEBUG_FLAG             0xFFFF
+#define PARM_DEBUG_FLAG             	    	DebugFlag
+#define PARM_NAME_DEBUG_FLAG            		TEXT("DebugFlag")
+#define PARM_MIN_DEBUG_FLAG             		0
+#define PARM_MAX_DEBUG_FLAG             		0xFFFF
+#define PARM_DEFAULT_DEBUG_FLAG         		0xFFFF
 
 #define PARM_DESIRED_SSID                       DesiredSSID
 #define PARM_NAME_DESIRED_SSID                  TEXT("DesiredSSID")
@@ -177,8 +177,8 @@
 #define PARM_NAME_DOWNLOAD_FIRMWARE             TEXT("DownloadFirmware")
 
 #define PARM_DRIVER_ENABLE                      DriverEnable
-#define PARM_NAME_DRIVER_ENABLE         TEXT("DriverEnable")
-#define PARM_DEFAULT_DRIVER_ENABLE        TRUE
+#define PARM_NAME_DRIVER_ENABLE					TEXT("DriverEnable")
+#define PARM_DEFAULT_DRIVER_ENABLE				TRUE
 
 #define PARM_ENABLE_ENCRYPTION                  EnableEncryption
 #define PARM_NAME_ENABLE_ENCRYPTION             TEXT("EnableEncryption")
@@ -215,11 +215,11 @@
 #define PARM_DEFAULT_LOAD_BALANCING_STR         "Y"
 
 #define PARM_MAX_DATA_LENGTH                    MaxDataLength
-#define PARM_NAME_MAX_DATA_LENGTH       TEXT("MaxDataLength")
+#define PARM_NAME_MAX_DATA_LENGTH				TEXT("MaxDataLength")
 
 #define PARM_MAX_SLEEP                          MaxSleepDuration
 #define PARM_NAME_MAX_SLEEP                     TEXT("MaxSleepDuration")
-#define PARM_MIN_MAX_PM_SLEEP                   1              
+#define PARM_MIN_MAX_PM_SLEEP                   1							
 #define PARM_MAX_MAX_PM_SLEEP                   65535
 #define PARM_DEFAULT_MAX_PM_SLEEP               100
 
@@ -234,7 +234,7 @@
 #define PARM_DEFAULT_MICROWAVE_ROBUSTNESS_STR   "N"
 
 #define PARM_MULTICAST_PM_BUFFERING             MulticastPMBuffering
-#define PARM_NAME_MULTICAST_PM_BUFFERING      TEXT("MulticastPMBuffering")
+#define PARM_NAME_MULTICAST_PM_BUFFERING	    TEXT("MulticastPMBuffering")
 #define PARM_DEFAULT_MULTICAST_PM_BUFFERING     TRUE
 #define PARM_DEFAULT_MULTICAST_PM_BUFFERING_STR "Y"
 
@@ -262,11 +262,11 @@
 #define PARM_DEFAULT_NETWORK_ADDR               { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF }
 
 #define PARM_NETWORK_TYPE                       NetworkType
-#define PARM_NAME_NETWORK_TYPE          TEXT("NetworkType")
-#define PARM_DEFAULT_NETWORK_TYPE         0
+#define PARM_NAME_NETWORK_TYPE					TEXT("NetworkType")
+#define PARM_DEFAULT_NETWORK_TYPE   			0
 
 #define PARM_OWN_ATIM_WINDOW                    OwnATIMWindow
-#define PARM_NAME_OWN_ATIM_WINDOW       TEXT("OwnATIMWindow")
+#define PARM_NAME_OWN_ATIM_WINDOW				TEXT("OwnATIMWindow")
 #define PARM_MIN_OWN_ATIM_WINDOW                0
 #define PARM_MAX_OWN_ATIM_WINDOW                100
 #define PARM_DEFAULT_OWN_ATIM_WINDOW            0
@@ -284,7 +284,7 @@
 #define PARM_DEFAULT_OWN_CHANNEL                10
 
 #define PARM_OWN_DTIM_PERIOD                    OwnDTIMPeriod
-#define PARM_NAME_OWN_DTIM_PERIOD             TEXT("OwnDTIMPeriod")
+#define PARM_NAME_OWN_DTIM_PERIOD	            TEXT("OwnDTIMPeriod")
 #define PARM_MIN_OWN_DTIM_PERIOD                1
 #define PARM_MAX_OWN_DTIM_PERIOD                65535
 #define PARM_DEFAULT_OWN_DTIM_PERIOD            1
@@ -298,7 +298,7 @@
 
 #define PARM_PM_ENABLED                         PMEnabled
 #define PARM_NAME_PM_ENABLED                    TEXT("PMEnabled")
-#define PARM_MAX_PM_ENABLED           3
+#define PARM_MAX_PM_ENABLED						3
 
 #define PARM_PMEPS                              PMEPS
 #define PARM_NAME_PMEPS                         TEXT("PMEPS")
@@ -324,7 +324,7 @@
 #define PARM_DEFAULT_PROMISCUOUS_MODE_STR       "N"
 
 #define PARM_REJECT_ANY                         RejectANY
-#define PARM_NAME_REJECT_ANY            TEXT("RejectANY")
+#define PARM_NAME_REJECT_ANY				    TEXT("RejectANY")
 #define PARM_DEFAULT_REJECT_ANY                 FALSE
 #define PARM_DEFAULT_REJECT_ANY_STR             "N"
 
@@ -402,23 +402,23 @@
 #define PARM_NAME_TX_RATE6                      TEXT("TxRateControl6")
 
 #define PARM_VENDORDESCRIPTION                  VendorDescription
-#define PARM_NAME_VENDORDESCRIPTION       TEXT("VendorDescription")
+#define PARM_NAME_VENDORDESCRIPTION				TEXT("VendorDescription")
 
 #define PARM_WDS_ADDRESS                        WDSAddress
-#define PARM_NAME_WDS_ADDRESS         TEXT("WDSAddress")
+#define PARM_NAME_WDS_ADDRESS					TEXT("WDSAddress")
 
 #define PARM_WDS_ADDRESS1                       WDSAddress1
-#define PARM_NAME_WDS_ADDRESS1          TEXT("WDSAddress1")
+#define PARM_NAME_WDS_ADDRESS1					TEXT("WDSAddress1")
 #define PARM_WDS_ADDRESS2                       WDSAddress2
-#define PARM_NAME_WDS_ADDRESS2          TEXT("WDSAddress2")
+#define PARM_NAME_WDS_ADDRESS2					TEXT("WDSAddress2")
 #define PARM_WDS_ADDRESS3                       WDSAddress3
-#define PARM_NAME_WDS_ADDRESS3          TEXT("WDSAddress3")
+#define PARM_NAME_WDS_ADDRESS3					TEXT("WDSAddress3")
 #define PARM_WDS_ADDRESS4                       WDSAddress4
-#define PARM_NAME_WDS_ADDRESS4          TEXT("WDSAddress4")
+#define PARM_NAME_WDS_ADDRESS4					TEXT("WDSAddress4")
 #define PARM_WDS_ADDRESS5                       WDSAddress5
-#define PARM_NAME_WDS_ADDRESS5          TEXT("WDSAddress5")
+#define PARM_NAME_WDS_ADDRESS5					TEXT("WDSAddress5")
 #define PARM_WDS_ADDRESS6                       WDSAddress6
-#define PARM_NAME_WDS_ADDRESS6          TEXT("WDSAddress6")
+#define PARM_NAME_WDS_ADDRESS6					TEXT("WDSAddress6")
 
 /*
 #define PARM_LONG_RETRY_LIMIT                   LongRetryLimit
@@ -449,7 +449,7 @@
  ******************************************************************************/
 /* The following constants are used to track state the device */
 #define WL_FRIMWARE_PRESENT     1
-#define WL_FRIMWARE_NOT_PRESENT 0
+#define WL_FRIMWARE_NOT_PRESENT	0
 #define WL_HANDLING_INT         1
 #define WL_NOT_HANDLING_INT     0
 
@@ -462,7 +462,7 @@
 #define NELEM(arr) (sizeof(arr) / sizeof(arr[0]))
 
 #define WVLAN_VALID_MAC_ADDRESS( x ) \
-  ((x[0]!=0xFF) && (x[1]!=0xFF) && (x[2]!=0xFF) && (x[3]!=0xFF) && (x[4]!=0xFF) && (x[5]!=0xFF))
+((x[0]!=0xFF) && (x[1]!=0xFF) && (x[2]!=0xFF) && (x[3]!=0xFF) && (x[4]!=0xFF) && (x[5]!=0xFF))
 
 
 
@@ -475,48 +475,48 @@
 
 typedef enum
 {
-  FALSE = 0,
-  TRUE  = 1
+	FALSE = 0,
+	TRUE  = 1
 }
 bool_t;
 
 
 typedef struct _ScanResult
 {
-  int             scan_complete;
-  int             num_aps;
-  SCAN_RS_STRCT   APTable [MAX_NAPS];
+	int             scan_complete;
+	int             num_aps;
+	SCAN_RS_STRCT   APTable [MAX_NAPS];
 }
 ScanResult;
 
 
 typedef struct _LINK_STATUS_STRCT
 {
-  hcf_16  len;
-  hcf_16  typ;
-  hcf_16  linkStatus;     /* 1..5 */
+	hcf_16  len;
+	hcf_16  typ;
+	hcf_16  linkStatus;     /* 1..5 */
 }
 LINK_STATUS_STRCT;
 
 
 typedef struct _ASSOC_STATUS_STRCT
 {
-  hcf_16  len;
-  hcf_16  typ;
-  hcf_16  assocStatus;            /* 1..3 */
-  hcf_8   staAddr[ETH_ALEN];
-  hcf_8   oldApAddr[ETH_ALEN];
+	hcf_16  len;
+	hcf_16  typ;
+	hcf_16  assocStatus;            /* 1..3 */
+	hcf_8   staAddr[ETH_ALEN];
+	hcf_8   oldApAddr[ETH_ALEN];
 }
 ASSOC_STATUS_STRCT;
 
 
 typedef struct _SECURITY_STATUS_STRCT
 {
-  hcf_16  len;
-  hcf_16  typ;
-  hcf_16  securityStatus;     /* 1..3 */
-  hcf_8   staAddr[ETH_ALEN];
-  hcf_16  reason;
+	hcf_16  len;
+	hcf_16  typ;
+	hcf_16  securityStatus;     /* 1..3 */
+	hcf_8   staAddr[ETH_ALEN];
+	hcf_16  reason;
 }
 SECURITY_STATUS_STRCT;
 
@@ -527,36 +527,36 @@ SECURITY_STATUS_STRCT;
 
 typedef struct wvlan_eth_hdr
 {
-  unsigned char   dst[ETH_ALEN];           /* Destination address. */
-  unsigned char   src[ETH_ALEN];           /* Source address. */
-  unsigned short  len;                    /* Length of the PDU. */
+	unsigned char   dst[ETH_ALEN];           /* Destination address. */
+	unsigned char   src[ETH_ALEN];           /* Source address. */
+	unsigned short  len;                    /* Length of the PDU. */
 }
 WVLAN_ETH_HDR, *PWVLAN_ETH_HDR;
 
 typedef struct wvlan_llc_snap
 {
-  unsigned char   dsap;                   /* DSAP (0xAA) */
-  unsigned char   ssap;                   /* SSAP (0xAA) */
-  unsigned char   ctrl;                   /* Control (0x03) */
-  unsigned char   oui[3];                 /* Organization Unique ID (00-60-1d). */
-  unsigned char   specid[2];              /* Specific ID code (00-01). */
+	unsigned char   dsap;                   /* DSAP (0xAA) */
+	unsigned char   ssap;                   /* SSAP (0xAA) */
+	unsigned char   ctrl;                   /* Control (0x03) */
+	unsigned char   oui[3];                 /* Organization Unique ID (00-60-1d). */
+	unsigned char   specid[2];              /* Specific ID code (00-01). */
 }
 WVLAN_LLC_SNAP, *PWVLAN_LLC_SNAP;
 
 
 typedef struct wvlan_lt_hdr
 {
-  unsigned char   version;                /* Version (0x00) */
-  unsigned char   type;                   /* PDU type: 0-req/1-resp. */
-  unsigned short  id;                     /* Identifier to associate resp to req. */
+	unsigned char   version;                /* Version (0x00) */
+	unsigned char   type;                   /* PDU type: 0-req/1-resp. */
+	unsigned short  id;                     /* Identifier to associate resp to req. */
 }
 WVLAN_LT_HDR, *PWVLAN_LT_HDR;
 
 
 typedef struct wvlan_wmp_hdr
 {
-  unsigned char   version;                /* Version  */
-  unsigned char   type;                   /* PDU type */
+	unsigned char   version;                /* Version  */
+	unsigned char   type;                   /* PDU type */
 }
 WVLAN_WMP_HDR, *PWVLAN_WMP_HDR;
 
@@ -567,153 +567,153 @@ WVLAN_WMP_HDR, *PWVLAN_WMP_HDR;
 
 typedef struct wvlan_lt_req
 {
-  unsigned char   Filler[TEST_PATTERN_SIZE];   /* minimal length of 54 bytes */
+	unsigned char   Filler[TEST_PATTERN_SIZE];   /* minimal length of 54 bytes */
 }
 WVLAN_LT_REQ, *PWVLAN_LT_REQ;
 
 
 typedef struct wvlan_lt_rsp
 {
-  char           name[32];
-  /* Measured Data */
-  unsigned char  signal;
-  unsigned char  noise;
-  unsigned char  rxFlow;
-  unsigned char  dataRate;
-  unsigned short protocol;
-  /* Capabilities */
-  unsigned char  station;
-  unsigned char  dataRateCap;
-  unsigned char  powerMgmt[4];
-  unsigned char  robustness[4];
-  unsigned char  scaling;
-  unsigned char  reserved[5];
+	char           name[32];
+	/* Measured Data */
+	unsigned char  signal;
+	unsigned char  noise;
+	unsigned char  rxFlow;
+	unsigned char  dataRate;
+	unsigned short protocol;
+	/* Capabilities */
+	unsigned char  station;
+	unsigned char  dataRateCap;
+	unsigned char  powerMgmt[4];
+	unsigned char  robustness[4];
+	unsigned char  scaling;
+	unsigned char  reserved[5];
 }
 WVLAN_LT_RSP, *PWVLAN_LT_RSP;
 
 
 typedef struct wvlan_rx_wmp_hdr
 {
-  unsigned short status;
-  unsigned short reserved1[2];
-  unsigned char  silence;
-  unsigned char  signal;
-  unsigned char  rate;
-  unsigned char  rxFlow;
-  unsigned short reserved2[2];
-  unsigned short frameControl;
-  unsigned short duration;
-  unsigned short address1[3];
-  unsigned short address2[3];
-  unsigned short address3[3];
-  unsigned short sequenceControl;
-  unsigned short address4[3];
-  #ifndef HERMES25 
-  unsigned short seems_to_be_unused_reserved3[5]; 
-  unsigned short seems_to_be_unused_reserved4;  
-  #endif
-  unsigned short HeaderDataLen;
+	unsigned short status;
+	unsigned short reserved1[2];
+	unsigned char  silence;
+	unsigned char  signal;
+	unsigned char  rate;
+	unsigned char  rxFlow;
+	unsigned short reserved2[2];
+	unsigned short frameControl;
+	unsigned short duration;
+	unsigned short address1[3];
+	unsigned short address2[3];
+	unsigned short address3[3];
+	unsigned short sequenceControl;
+	unsigned short address4[3];
+#ifndef HERMES25
+	unsigned short seems_to_be_unused_reserved3[5]; 
+	unsigned short seems_to_be_unused_reserved4;	
+#endif
+	unsigned short HeaderDataLen;
 }
 WVLAN_RX_WMP_HDR, *PWVLAN_RX_WMP_HDR;
 
 
 typedef struct wvlan_linktest_req_pdu
 {
-  WVLAN_ETH_HDR     ethHdr;
-  WVLAN_LLC_SNAP    llcSnap;
-  WVLAN_LT_HDR      ltHdr;
-  WVLAN_LT_REQ      ltReq;
+	WVLAN_ETH_HDR     ethHdr;
+	WVLAN_LLC_SNAP    llcSnap;
+	WVLAN_LT_HDR      ltHdr;
+	WVLAN_LT_REQ      ltReq;
 }
 WVLAN_LINKTEST_REQ_PDU, *PWVLAN_LINKTEST_REQ_PDU;
 
 
 typedef struct wvlan_linktest_rsp_pdu
 {
-  WVLAN_RX_WMP_HDR  wmpRxHdr;
-  WVLAN_ETH_HDR     ethHdr;
-  WVLAN_LLC_SNAP    llcSnap;
-  WVLAN_LT_HDR      ltHdr;
-  WVLAN_LT_RSP      ltRsp;
+	WVLAN_RX_WMP_HDR  wmpRxHdr;
+	WVLAN_ETH_HDR     ethHdr;
+	WVLAN_LLC_SNAP    llcSnap;
+	WVLAN_LT_HDR      ltHdr;
+	WVLAN_LT_RSP      ltRsp;
 }
 WVLAN_LINKTEST_RSP_PDU, *PWVLAN_LINKTEST_RSP_PDU;
 
 
 typedef struct _LINKTEST_RSP_STRCT
 {
-  hcf_16                   len;
-  hcf_16                   typ;
-  WVLAN_LINKTEST_RSP_PDU   ltRsp;
+	hcf_16                   len;
+	hcf_16                   typ;
+	WVLAN_LINKTEST_RSP_PDU   ltRsp;
 }
 LINKTEST_RSP_STRCT;
 
 
 typedef struct wvlan_wmp_rsp_pdu
 {
-  WVLAN_RX_WMP_HDR  wmpRxHdr;
-  WVLAN_ETH_HDR     ethHdr;
-  WVLAN_LLC_SNAP    llcSnap;
-  WVLAN_WMP_HDR     wmpHdr;
+	WVLAN_RX_WMP_HDR  wmpRxHdr;
+	WVLAN_ETH_HDR     ethHdr;
+	WVLAN_LLC_SNAP    llcSnap;
+	WVLAN_WMP_HDR     wmpHdr;
 }
 WVLAN_WMP_RSP_PDU, *PWVLAN_WMP_RSP_PDU;
 
 
 typedef struct _WMP_RSP_STRCT
 {
-  hcf_16              len;
-  hcf_16              typ;
-  WVLAN_WMP_RSP_PDU   wmpRsp;
+	hcf_16              len;
+	hcf_16              typ;
+	WVLAN_WMP_RSP_PDU   wmpRsp;
 }
 WMP_RSP_STRCT;
 
 
 typedef struct _PROBE_RESP
 {
-  hcf_16  length;
-  hcf_16  infoType;
-  hcf_16  reserved0;
-  hcf_8 silence;
-  hcf_8 signal;    
-  hcf_8 rxFlow;
-  hcf_8 rate;
-  hcf_16  reserved1[2];
-  
-  hcf_16  frameControl;
-  hcf_16  durID;
-  hcf_8 address1[6];
-  hcf_8 address2[6];
-  hcf_8 BSSID[6];        
-  hcf_16  sequence;
-  hcf_8 address4[6];
-  
-  #ifndef WARP
-  hcf_8 reserved2[12];
-  #endif
-  
-  hcf_16  dataLength;
-  hcf_8 DA[6];
-  hcf_8 SA[6];
-  
-  #ifdef WARP
-  hcf_8   channel;
-  hcf_8   band;
-  #else
-  hcf_16  lenType;
-  #endif 
-  
-  hcf_8 timeStamp[8];
-  hcf_16  beaconInterval;
-  hcf_16  capability;
-  hcf_8 rawData[200];      
-  hcf_16  flags;
+	hcf_16	length;
+	hcf_16	infoType;
+	hcf_16	reserved0;
+	hcf_8	silence;
+	hcf_8	signal;    
+	hcf_8	rxFlow;
+	hcf_8	rate;
+	hcf_16	reserved1[2];
+
+	hcf_16	frameControl;
+	hcf_16	durID;
+	hcf_8	address1[6];
+	hcf_8	address2[6];
+	hcf_8	BSSID[6];				
+	hcf_16	sequence;
+	hcf_8	address4[6];
+
+#ifndef WARP
+	hcf_8	reserved2[12];
+#endif
+
+	hcf_16	dataLength;
+	hcf_8	DA[6];
+	hcf_8	SA[6];
+
+#ifdef WARP
+	hcf_8   channel;
+	hcf_8   band;
+#else
+	hcf_16	lenType;
+#endif 
+
+	hcf_8	timeStamp[8];
+	hcf_16	beaconInterval;
+	hcf_16	capability;
+	hcf_8	rawData[200];			
+	hcf_16	flags;
 }
 PROBE_RESP, *PPROBE_RESP;
 
 
 typedef struct _ProbeResult
 {
-  int         scan_complete;
-  int         num_aps;
-  PROBE_RESP  ProbeTable[MAX_NAPS];
+	int         scan_complete;
+	int         num_aps;
+	PROBE_RESP  ProbeTable[MAX_NAPS];
 }
 ProbeResult;
 
@@ -740,54 +740,54 @@ ProbeResult;
 
 typedef enum wvlan_drv_mode
 {
-  WVLAN_DRV_MODE_NO_DOWNLOAD,     /* this is the same as STA for Hermes 1    */
-  /* it is also only applicable for Hermes 1 */
-  WVLAN_DRV_MODE_STA,
-  WVLAN_DRV_MODE_AP,
-  WVLAN_DRV_MODE_MAX
+	WVLAN_DRV_MODE_NO_DOWNLOAD,     /* this is the same as STA for Hermes 1    */
+				                    /* it is also only applicable for Hermes 1 */
+	WVLAN_DRV_MODE_STA,
+	WVLAN_DRV_MODE_AP,
+	WVLAN_DRV_MODE_MAX
 }
 WVLAN_DRV_MODE, *PWVLAN_DRV_MODE;
 
 
 typedef enum wvlan_port_state
 {
-  WVLAN_PORT_STATE_ENABLED,
-  WVLAN_PORT_STATE_DISABLED,
-  WVLAN_PORT_STATE_CONNECTED
+	WVLAN_PORT_STATE_ENABLED,
+	WVLAN_PORT_STATE_DISABLED,
+	WVLAN_PORT_STATE_CONNECTED
 }
 WVLAN_PORT_STATE, *PWVLAN_PORT_STATE;
 
 /*
 typedef enum wvlan_connect_state
 {
-  WVLAN_CONNECT_STATE_CONNECTED,
-  WVLAN_CONNECT_STATE_DISCONNECTED
+	WVLAN_CONNECT_STATE_CONNECTED,
+	WVLAN_CONNECT_STATE_DISCONNECTED
 }
 WVLAN_CONNECT_STATE, *PWVLAN_CONNECT_STATE;
 */
 
 typedef enum wvlan_pm_state
 {
-  WVLAN_PM_STATE_DISABLED,
-  WVLAN_PM_STATE_ENHANCED,
-  WVLAN_PM_STATE_STANDARD
+	WVLAN_PM_STATE_DISABLED,
+	WVLAN_PM_STATE_ENHANCED,
+	WVLAN_PM_STATE_STANDARD
 }
 WVLAN_PM_STATE, *PWVLAN_PM_STATE;
 
 
 typedef struct wvlan_frame
 {
-  struct sk_buff * skb;       /* sk_buff for frame. */
-  hcf_16          port;       /* MAC port for the frame. */
-  hcf_16          len;        /* Length of the frame. */
+	struct sk_buff  *skb;       /* sk_buff for frame. */
+	hcf_16          port;       /* MAC port for the frame. */
+	hcf_16          len;        /* Length of the frame. */
 }
 WVLAN_FRAME, *PWVLAN_FRAME;
 
 
 typedef struct wvlan_lframe
 {
-  struct list_head    node;   /* Node in the list */
-  WVLAN_FRAME         frame;  /* Frame. */
+	struct list_head    node;   /* Node in the list */
+	WVLAN_FRAME	        frame;  /* Frame. */
 }
 WVLAN_LFRAME, *PWVLAN_LFRAME;
 
@@ -803,13 +803,13 @@ WVLAN_LFRAME, *PWVLAN_LFRAME;
 
 typedef struct wvlan_wds_if
 {
-  struct net_device      *     dev;
-  int                         is_registered;
-  int                         netif_queue_on;
-  struct net_device_stats     stats;
-  hcf_16                      rtsThreshold;
-  hcf_16                      txRateCntl;
-  hcf_8                       wdsAddress[ETH_ALEN];
+	struct net_device           *dev;
+	int                         is_registered;
+	int                         netif_queue_on;
+	struct net_device_stats     stats;
+	hcf_16                      rtsThreshold;
+	hcf_16                      txRateCntl;
+	hcf_8                       wdsAddress[ETH_ALEN];
 } WVLAN_WDS_IF, *PWVLAN_WDS_IF;
 
 #endif 
@@ -821,149 +821,149 @@ typedef struct wvlan_wds_if
 
 typedef struct dma_strct
 {
-  DESC_STRCT * tx_packet[NUM_TX_DESC];
-  DESC_STRCT * rx_packet[NUM_RX_DESC];
-  DESC_STRCT * rx_reclaim_desc, *tx_reclaim_desc;
-  int         tx_rsc_ind;
-  int         rx_rsc_ind;
-  int         status;
+	DESC_STRCT  *tx_packet[NUM_TX_DESC];
+	DESC_STRCT  *rx_packet[NUM_RX_DESC];
+	DESC_STRCT  *rx_reclaim_desc, *tx_reclaim_desc;
+	int         tx_rsc_ind;
+	int         rx_rsc_ind;
+	int         status;
 } DMA_STRCT;
 
 
 /* Macros used in DMA support */
 /* get bus address of {rx,tx}dma structure member, in little-endian byte order */
 #define WL_DMA_BUS_ADDR_LE(str, i, mem) \
-  cpu_to_le32(str##_dma_addr[(i)] + ((hcf_8 *)&str[(i)]->mem - (hcf_8 *)str[(i)]))
+	cpu_to_le32(str##_dma_addr[(i)] + ((hcf_8 *)&str[(i)]->mem - (hcf_8 *)str[(i)]))
 
 
 struct wl_private
 {
 
-  #ifdef BUS_PCMCIA
-  struct pcmcia_device   *   link;
-  #endif
-  
-  
-  struct net_device      *     dev;
-  spinlock_t                  slock;
-  struct tasklet_struct       task;
-  struct net_device_stats     stats;
-  
-  
-  #ifdef WIRELESS_EXT
-  struct iw_statistics        wstats;
-  struct iw_spy_data          spy_data;
-  struct iw_public_data wireless_data;
-  #endif
-  
-  
-  IFB_STRCT                   hcfCtx;
-  u_long            wlags49_type;  
-  u_long                      flags;
-  hcf_16            DebugFlag;
-  int                         is_registered;
-  int                         is_handling_int;
-  int                         firmware_present;
-  bool                        sysfsCreated;
-  CFG_DRV_INFO_STRCT          driverInfo;
-  CFG_IDENTITY_STRCT          driverIdentity;
-  CFG_FW_IDENTITY_STRCT       StationIdentity;
-  CFG_PRI_IDENTITY_STRCT      PrimaryIdentity;
-  CFG_PRI_IDENTITY_STRCT      NICIdentity;
-  
-  ltv_t                       ltvRecord;
-  u_long                      txBytes;
-  hcf_16                      maxPort;        /* 0 for STA, 6 for AP */
-  
-  /* Elements used for async notification from hardware */
-  RID_LOG_STRCT       RidList[10];
-  ltv_t                       updatedRecord;
-  PROBE_RESP            ProbeResp;
-  ASSOC_STATUS_STRCT          assoc_stat;
-  SECURITY_STATUS_STRCT       sec_stat;
-  
-  u_char                      lookAheadBuf[WVLAN_MAX_LOOKAHEAD];
-  
-  hcf_8                       PortType;          
-  hcf_16                      Channel;           
-  hcf_16                      TxRateControl[2];
-  hcf_8                       DistanceBetweenAPs;
-  hcf_16                      RTSThreshold;      
-  hcf_16                      PMEnabled;         
-  hcf_8                       MicrowaveRobustness;// 0 - 1 (0)
-  hcf_8                       CreateIBSS;        
-  hcf_8                       MulticastReceive;  
-  hcf_16                      MaxSleepDuration;  
-  hcf_8                       MACAddress[ETH_ALEN];
-  char                        NetworkName[HCF_MAX_NAME_LEN + 1];
-  char                        StationName[HCF_MAX_NAME_LEN + 1];
-  hcf_8                       EnableEncryption;  
-  char                        Key1[MAX_KEY_LEN + 1];
-  char                        Key2[MAX_KEY_LEN + 1];
-  char                        Key3[MAX_KEY_LEN + 1];
-  char                        Key4[MAX_KEY_LEN + 1];
-  hcf_8                       TransmitKeyID;     
-  CFG_DEFAULT_KEYS_STRCT      DefaultKeys;
-  u_char                      mailbox[MB_SIZE];
-  char                        szEncryption[MAX_ENC_LEN];
-  
-  hcf_16                      driverEnable;
-  hcf_16                      wolasEnable;
-  hcf_16                      atimWindow;
-  hcf_16                      holdoverDuration;
-  hcf_16                      MulticastRate[2];
-  
-  hcf_16                      authentication;
-  hcf_16                      promiscuousMode;
-  WVLAN_DRV_MODE              DownloadFirmware;  
-  
-  char            fw_image_filename[MAX_LINE_SIZE + 1];
-  
-  hcf_16                      AuthKeyMgmtSuite;
-  
-  hcf_16                      loadBalancing;
-  hcf_16                      mediumDistribution;
-  hcf_16                      txPowLevel;
-  hcf_16                      srsc[2];
-  hcf_16                      brsc[2];
-  hcf_16                      connectionControl;
-  hcf_16                      ownBeaconInterval;
-  hcf_16                      coexistence;
-  
-  WVLAN_FRAME                 txF;
-  WVLAN_LFRAME                txList[DEFAULT_NUM_TX_FRAMES];
-  struct list_head            txFree;
-  struct list_head            txQ[WVLAN_MAX_TX_QUEUES];
-  int                         netif_queue_on;
-  int                         txQ_count;
-  DESC_STRCT                  desc_rx;
-  DESC_STRCT                  desc_tx;
-  
-  WVLAN_PORT_STATE            portState;
-  
-  ScanResult                  scan_results;
-  ProbeResult                 probe_results;
-  int                         probe_num_aps;
-  
-  int                         use_dma;
-  DMA_STRCT                   dma;
-  #ifdef USE_RTS
-  int                         useRTS;
-  #endif 
-  hcf_8                       DTIMPeriod;        
-  hcf_16                      multicastPMBuffering;
-  hcf_8                       RejectAny;         
-  hcf_8                       ExcludeUnencrypted;
-  hcf_16                      intraBSSRelay;
-  #ifdef USE_WDS
-  WVLAN_WDS_IF                wds_port[NUM_WDS_PORTS];
-  #endif
-  
-  /* Track whether the card is using WEP encryption or WPA
-   * so we know what to disable next time through.
-   *  IW_ENCODE_ALG_NONE, IW_ENCODE_ALG_WEP, IW_ENCODE_ALG_TKIP
-   */
-  int wext_enc;
+#ifdef BUS_PCMCIA
+	struct pcmcia_device	    *link;
+#endif
+
+
+	struct net_device           *dev;
+	spinlock_t                  slock;
+	struct tasklet_struct       task;
+	struct net_device_stats     stats;
+
+
+#ifdef WIRELESS_EXT
+	struct iw_statistics        wstats;
+	struct iw_spy_data          spy_data;
+	struct iw_public_data	wireless_data;
+#endif
+
+
+	IFB_STRCT                   hcfCtx;
+	u_long						wlags49_type;	
+	u_long                      flags;
+	hcf_16						DebugFlag;
+	int                         is_registered;
+	int                         is_handling_int;
+	int                         firmware_present;
+	bool                        sysfsCreated;
+	CFG_DRV_INFO_STRCT          driverInfo;
+	CFG_IDENTITY_STRCT          driverIdentity;
+	CFG_FW_IDENTITY_STRCT       StationIdentity;
+	CFG_PRI_IDENTITY_STRCT      PrimaryIdentity;
+	CFG_PRI_IDENTITY_STRCT      NICIdentity;
+
+	ltv_t                       ltvRecord;
+	u_long                      txBytes;
+	hcf_16                      maxPort;        /* 0 for STA, 6 for AP */
+
+	/* Elements used for async notification from hardware */
+	RID_LOG_STRCT				RidList[10];
+	ltv_t                       updatedRecord;
+	PROBE_RESP				    ProbeResp;
+	ASSOC_STATUS_STRCT          assoc_stat;
+	SECURITY_STATUS_STRCT       sec_stat;
+
+	u_char                      lookAheadBuf[WVLAN_MAX_LOOKAHEAD];
+
+	hcf_8                       PortType;          
+	hcf_16                      Channel;           
+	hcf_16                      TxRateControl[2];
+	hcf_8                       DistanceBetweenAPs;
+	hcf_16                      RTSThreshold;      
+	hcf_16                      PMEnabled;         
+	hcf_8                       MicrowaveRobustness;// 0 - 1 (0)
+	hcf_8                       CreateIBSS;        
+	hcf_8                       MulticastReceive;  
+	hcf_16                      MaxSleepDuration;  
+	hcf_8                       MACAddress[ETH_ALEN];
+	char                        NetworkName[HCF_MAX_NAME_LEN+1];
+	char                        StationName[HCF_MAX_NAME_LEN+1];
+	hcf_8                       EnableEncryption;  
+	char                        Key1[MAX_KEY_LEN+1];
+	char                        Key2[MAX_KEY_LEN+1];
+	char                        Key3[MAX_KEY_LEN+1];
+	char                        Key4[MAX_KEY_LEN+1];
+	hcf_8                       TransmitKeyID;     
+	CFG_DEFAULT_KEYS_STRCT	    DefaultKeys;
+	u_char                      mailbox[MB_SIZE];
+	char                        szEncryption[MAX_ENC_LEN];
+
+	hcf_16                      driverEnable;
+	hcf_16                      wolasEnable;
+	hcf_16                      atimWindow;
+	hcf_16                      holdoverDuration;
+	hcf_16                      MulticastRate[2];
+
+	hcf_16                      authentication;
+	hcf_16                      promiscuousMode;
+	WVLAN_DRV_MODE              DownloadFirmware;  
+
+	char						fw_image_filename[MAX_LINE_SIZE+1];
+
+	hcf_16                      AuthKeyMgmtSuite;
+
+	hcf_16                      loadBalancing;
+	hcf_16                      mediumDistribution;
+	hcf_16                      txPowLevel;
+	hcf_16                      srsc[2];
+	hcf_16                      brsc[2];
+	hcf_16                      connectionControl;
+	hcf_16                      ownBeaconInterval;
+	hcf_16                      coexistence;
+
+	WVLAN_FRAME                 txF;
+	WVLAN_LFRAME                txList[DEFAULT_NUM_TX_FRAMES];
+	struct list_head            txFree;
+	struct list_head            txQ[WVLAN_MAX_TX_QUEUES];
+	int                         netif_queue_on;
+	int                         txQ_count;
+	DESC_STRCT                  desc_rx;
+	DESC_STRCT                  desc_tx;
+
+	WVLAN_PORT_STATE            portState;
+
+	ScanResult                  scan_results;
+	ProbeResult                 probe_results;
+	int                         probe_num_aps;
+
+	int                         use_dma;
+	DMA_STRCT                   dma;
+#ifdef USE_RTS
+	int                         useRTS;
+#endif 
+	hcf_8                       DTIMPeriod;        
+	hcf_16                      multicastPMBuffering;
+	hcf_8                       RejectAny;         
+	hcf_8                       ExcludeUnencrypted;
+	hcf_16                      intraBSSRelay;
+#ifdef USE_WDS
+	WVLAN_WDS_IF                wds_port[NUM_WDS_PORTS];
+#endif
+
+	/* Track whether the card is using WEP encryption or WPA
+	 * so we know what to disable next time through.
+	 *  IW_ENCODE_ALG_NONE, IW_ENCODE_ALG_WEP, IW_ENCODE_ALG_TKIP
+	 */
+	int wext_enc;
 };
 
 #define wl_priv(dev) ((struct wl_private *) netdev_priv(dev))
@@ -976,44 +976,44 @@ struct wl_private
  * SPARC, due to its weird semantics for save/restore flags. extern
  * inline should prevent the kernel from linking or module from
  * loading if they are not inlined. */
-static inline void wl_lock (struct wl_private * lp,
-                            unsigned long * flags)
+static inline void wl_lock(struct wl_private *lp,
+	                       unsigned long *flags)
 {
-  spin_lock_irqsave (&lp->slock, *flags);
+	spin_lock_irqsave(&lp->slock, *flags);
 }
 
-static inline void wl_unlock (struct wl_private * lp,
-                              unsigned long * flags)
+static inline void wl_unlock(struct wl_private *lp,
+	                          unsigned long *flags)
 {
-  spin_unlock_irqrestore (&lp->slock, *flags);
+	spin_unlock_irqrestore(&lp->slock, *flags);
 }
 
 /********************************************************************/
 /* Interrupt enable disable functions                               */
 /********************************************************************/
 
-extern inline void wl_act_int_on (struct wl_private * lp)
+extern inline void wl_act_int_on(struct wl_private *lp)
 {
-  /*
-   * Only do something when the driver is handling
-   * interrupts. Handling starts at wl_open and
-   * ends at wl_close when not in RTS mode
-   */
-  if (lp->is_handling_int == WL_HANDLING_INT) {
-    hcf_action ( &lp->hcfCtx, HCF_ACT_INT_ON );
-  }
+	/*
+	 * Only do something when the driver is handling
+	 * interrupts. Handling starts at wl_open and
+	 * ends at wl_close when not in RTS mode
+	 */
+	if(lp->is_handling_int == WL_HANDLING_INT) {
+		hcf_action( &lp->hcfCtx, HCF_ACT_INT_ON );
+	}
 }
 
-extern inline void wl_act_int_off (struct wl_private * lp)
+extern inline void wl_act_int_off(struct wl_private *lp)
 {
-  /*
-   * Only do something when the driver is handling
-   * interrupts. Handling starts at wl_open and
-   * ends at wl_close when not in RTS mode
-   */
-  if (lp->is_handling_int == WL_HANDLING_INT) {
-    hcf_action ( &lp->hcfCtx, HCF_ACT_INT_OFF );
-  }
+	/*
+	 * Only do something when the driver is handling
+	 * interrupts. Handling starts at wl_open and
+	 * ends at wl_close when not in RTS mode
+	 */
+	if(lp->is_handling_int == WL_HANDLING_INT) {
+		hcf_action( &lp->hcfCtx, HCF_ACT_INT_OFF );
+	}
 }
 
 #endif 

@@ -1,8 +1,8 @@
 /*
  *  ebtables
  *
- *  Authors:
- *  Bart De Schuymer    <bdschuym@pandora.be>
+ *	Authors:
+ *	Bart De Schuymer		<bdschuym@pandora.be>
  *
  *  ebtables.c,v 2.0, April, 2002
  *
@@ -35,57 +35,57 @@ struct xt_match;
 struct xt_target;
 
 struct ebt_counter {
-  uint64_t pcnt;
-  uint64_t bcnt;
+	uint64_t pcnt;
+	uint64_t bcnt;
 };
 
 struct ebt_replace {
-  char name[EBT_TABLE_MAXNAMELEN];
-  unsigned int valid_hooks;
-  /* nr of rules in the table */
-  unsigned int nentries;
-  /* total size of the entries */
-  unsigned int entries_size;
-  /* start of the chains */
-  struct ebt_entries __user * hook_entry[NF_BR_NUMHOOKS];
-  /* nr of counters userspace expects back */
-  unsigned int num_counters;
-  /* where the kernel will put the old counters */
-  struct ebt_counter __user * counters;
-  char __user * entries;
+	char name[EBT_TABLE_MAXNAMELEN];
+	unsigned int valid_hooks;
+	/* nr of rules in the table */
+	unsigned int nentries;
+	/* total size of the entries */
+	unsigned int entries_size;
+	/* start of the chains */
+	struct ebt_entries __user *hook_entry[NF_BR_NUMHOOKS];
+	/* nr of counters userspace expects back */
+	unsigned int num_counters;
+	/* where the kernel will put the old counters */
+	struct ebt_counter __user *counters;
+	char __user *entries;
 };
 
 struct ebt_replace_kernel {
-  char name[EBT_TABLE_MAXNAMELEN];
-  unsigned int valid_hooks;
-  /* nr of rules in the table */
-  unsigned int nentries;
-  /* total size of the entries */
-  unsigned int entries_size;
-  /* start of the chains */
-  struct ebt_entries * hook_entry[NF_BR_NUMHOOKS];
-  /* nr of counters userspace expects back */
-  unsigned int num_counters;
-  /* where the kernel will put the old counters */
-  struct ebt_counter * counters;
-  char * entries;
+	char name[EBT_TABLE_MAXNAMELEN];
+	unsigned int valid_hooks;
+	/* nr of rules in the table */
+	unsigned int nentries;
+	/* total size of the entries */
+	unsigned int entries_size;
+	/* start of the chains */
+	struct ebt_entries *hook_entry[NF_BR_NUMHOOKS];
+	/* nr of counters userspace expects back */
+	unsigned int num_counters;
+	/* where the kernel will put the old counters */
+	struct ebt_counter *counters;
+	char *entries;
 };
 
 struct ebt_entries {
-  /* this field is always set to zero
-   * See EBT_ENTRY_OR_ENTRIES.
-   * Must be same size as ebt_entry.bitmask */
-  unsigned int distinguisher;
-  /* the chain name */
-  char name[EBT_CHAIN_MAXNAMELEN];
-  /* counter offset for this chain */
-  unsigned int counter_offset;
-  /* one standard (accept, drop, return) per hook */
-  int policy;
-  /* nr. of entries */
-  unsigned int nentries;
-  /* entry list */
-  char data[0] __attribute__ ( (aligned (__alignof__ (struct ebt_replace) ) ) );
+	/* this field is always set to zero
+	 * See EBT_ENTRY_OR_ENTRIES.
+	 * Must be same size as ebt_entry.bitmask */
+	unsigned int distinguisher;
+	/* the chain name */
+	char name[EBT_CHAIN_MAXNAMELEN];
+	/* counter offset for this chain */
+	unsigned int counter_offset;
+	/* one standard (accept, drop, return) per hook */
+	int policy;
+	/* nr. of entries */
+	unsigned int nentries;
+	/* entry list */
+	char data[0] __attribute__ ((aligned (__alignof__(struct ebt_replace))));
 };
 
 /* used for the bitmask of struct ebt_entry */
@@ -105,7 +105,7 @@ struct ebt_entries {
 #define EBT_SOURCEMAC 0x08
 #define EBT_DESTMAC 0x10
 #define EBT_F_MASK (EBT_NOPROTO | EBT_802_3 | EBT_SOURCEMAC | EBT_DESTMAC \
-                    | EBT_ENTRY_OR_ENTRIES)
+   | EBT_ENTRY_OR_ENTRIES)
 
 #define EBT_IPROTO 0x01
 #define EBT_IIN 0x02
@@ -115,69 +115,69 @@ struct ebt_entries {
 #define EBT_ILOGICALIN 0x20
 #define EBT_ILOGICALOUT 0x40
 #define EBT_INV_MASK (EBT_IPROTO | EBT_IIN | EBT_IOUT | EBT_ILOGICALIN \
-                      | EBT_ILOGICALOUT | EBT_ISOURCE | EBT_IDEST)
+   | EBT_ILOGICALOUT | EBT_ISOURCE | EBT_IDEST)
 
 struct ebt_entry_match {
-  union {
-    char name[EBT_FUNCTION_MAXNAMELEN];
-    struct xt_match * match;
-  } u;
-  /* size of data */
-  unsigned int match_size;
-  unsigned char data[0] __attribute__ ( (aligned (__alignof__ (struct ebt_replace) ) ) );
+	union {
+		char name[EBT_FUNCTION_MAXNAMELEN];
+		struct xt_match *match;
+	} u;
+	/* size of data */
+	unsigned int match_size;
+	unsigned char data[0] __attribute__ ((aligned (__alignof__(struct ebt_replace))));
 };
 
 struct ebt_entry_watcher {
-  union {
-    char name[EBT_FUNCTION_MAXNAMELEN];
-    struct xt_target * watcher;
-  } u;
-  /* size of data */
-  unsigned int watcher_size;
-  unsigned char data[0] __attribute__ ( (aligned (__alignof__ (struct ebt_replace) ) ) );
+	union {
+		char name[EBT_FUNCTION_MAXNAMELEN];
+		struct xt_target *watcher;
+	} u;
+	/* size of data */
+	unsigned int watcher_size;
+	unsigned char data[0] __attribute__ ((aligned (__alignof__(struct ebt_replace))));
 };
 
 struct ebt_entry_target {
-  union {
-    char name[EBT_FUNCTION_MAXNAMELEN];
-    struct xt_target * target;
-  } u;
-  /* size of data */
-  unsigned int target_size;
-  unsigned char data[0] __attribute__ ( (aligned (__alignof__ (struct ebt_replace) ) ) );
+	union {
+		char name[EBT_FUNCTION_MAXNAMELEN];
+		struct xt_target *target;
+	} u;
+	/* size of data */
+	unsigned int target_size;
+	unsigned char data[0] __attribute__ ((aligned (__alignof__(struct ebt_replace))));
 };
 
 #define EBT_STANDARD_TARGET "standard"
 struct ebt_standard_target {
-  struct ebt_entry_target target;
-  int verdict;
+	struct ebt_entry_target target;
+	int verdict;
 };
 
 /* one entry */
 struct ebt_entry {
-  /* this needs to be the first field */
-  unsigned int bitmask;
-  unsigned int invflags;
-  __be16 ethproto;
-  /* the physical in-dev */
-  char in[IFNAMSIZ];
-  /* the logical in-dev */
-  char logical_in[IFNAMSIZ];
-  /* the physical out-dev */
-  char out[IFNAMSIZ];
-  /* the logical out-dev */
-  char logical_out[IFNAMSIZ];
-  unsigned char sourcemac[ETH_ALEN];
-  unsigned char sourcemsk[ETH_ALEN];
-  unsigned char destmac[ETH_ALEN];
-  unsigned char destmsk[ETH_ALEN];
-  /* sizeof ebt_entry + matches */
-  unsigned int watchers_offset;
-  /* sizeof ebt_entry + matches + watchers */
-  unsigned int target_offset;
-  /* sizeof ebt_entry + matches + watchers + target */
-  unsigned int next_offset;
-  unsigned char elems[0] __attribute__ ( (aligned (__alignof__ (struct ebt_replace) ) ) );
+	/* this needs to be the first field */
+	unsigned int bitmask;
+	unsigned int invflags;
+	__be16 ethproto;
+	/* the physical in-dev */
+	char in[IFNAMSIZ];
+	/* the logical in-dev */
+	char logical_in[IFNAMSIZ];
+	/* the physical out-dev */
+	char out[IFNAMSIZ];
+	/* the logical out-dev */
+	char logical_out[IFNAMSIZ];
+	unsigned char sourcemac[ETH_ALEN];
+	unsigned char sourcemsk[ETH_ALEN];
+	unsigned char destmac[ETH_ALEN];
+	unsigned char destmsk[ETH_ALEN];
+	/* sizeof ebt_entry + matches */
+	unsigned int watchers_offset;
+	/* sizeof ebt_entry + matches + watchers */
+	unsigned int target_offset;
+	/* sizeof ebt_entry + matches + watchers + target */
+	unsigned int next_offset;
+	unsigned char elems[0] __attribute__ ((aligned (__alignof__(struct ebt_replace))));
 };
 
 /* {g,s}etsockopt numbers */
@@ -200,99 +200,99 @@ struct ebt_entry {
 #define EBT_NOMATCH 1
 
 struct ebt_match {
-  struct list_head list;
-  const char name[EBT_FUNCTION_MAXNAMELEN];
-  bool (*match) (const struct sk_buff * skb, const struct net_device * in,
-                 const struct net_device * out, const struct xt_match * match,
-                 const void * matchinfo, int offset, unsigned int protoff,
-                 bool * hotdrop);
-  bool (*checkentry) (const char * table, const void * entry,
-                      const struct xt_match * match, void * matchinfo,
-                      unsigned int hook_mask);
-  void (*destroy) (const struct xt_match * match, void * matchinfo);
-  unsigned int matchsize;
-  u_int8_t revision;
-  u_int8_t family;
-  struct module * me;
+	struct list_head list;
+	const char name[EBT_FUNCTION_MAXNAMELEN];
+	bool (*match)(const struct sk_buff *skb, const struct net_device *in,
+		const struct net_device *out, const struct xt_match *match,
+		const void *matchinfo, int offset, unsigned int protoff,
+		bool *hotdrop);
+	bool (*checkentry)(const char *table, const void *entry,
+		const struct xt_match *match, void *matchinfo,
+		unsigned int hook_mask);
+	void (*destroy)(const struct xt_match *match, void *matchinfo);
+	unsigned int matchsize;
+	u_int8_t revision;
+	u_int8_t family;
+	struct module *me;
 };
 
 struct ebt_watcher {
-  struct list_head list;
-  const char name[EBT_FUNCTION_MAXNAMELEN];
-  unsigned int (*target) (struct sk_buff * skb,
-                          const struct net_device * in, const struct net_device * out,
-                          unsigned int hook_num, const struct xt_target * target,
-                          const void * targinfo);
-  bool (*checkentry) (const char * table, const void * entry,
-                      const struct xt_target * target, void * targinfo,
-                      unsigned int hook_mask);
-  void (*destroy) (const struct xt_target * target, void * targinfo);
-  unsigned int targetsize;
-  u_int8_t revision;
-  u_int8_t family;
-  struct module * me;
+	struct list_head list;
+	const char name[EBT_FUNCTION_MAXNAMELEN];
+	unsigned int (*target)(struct sk_buff *skb,
+		const struct net_device *in, const struct net_device *out,
+		unsigned int hook_num, const struct xt_target *target,
+		const void *targinfo);
+	bool (*checkentry)(const char *table, const void *entry,
+		const struct xt_target *target, void *targinfo,
+		unsigned int hook_mask);
+	void (*destroy)(const struct xt_target *target, void *targinfo);
+	unsigned int targetsize;
+	u_int8_t revision;
+	u_int8_t family;
+	struct module *me;
 };
 
 struct ebt_target {
-  struct list_head list;
-  const char name[EBT_FUNCTION_MAXNAMELEN];
-  /* returns one of the standard EBT_* verdicts */
-  unsigned int (*target) (struct sk_buff * skb,
-                          const struct net_device * in, const struct net_device * out,
-                          unsigned int hook_num, const struct xt_target * target,
-                          const void * targinfo);
-  bool (*checkentry) (const char * table, const void * entry,
-                      const struct xt_target * target, void * targinfo,
-                      unsigned int hook_mask);
-  void (*destroy) (const struct xt_target * target, void * targinfo);
-  unsigned int targetsize;
-  u_int8_t revision;
-  u_int8_t family;
-  struct module * me;
+	struct list_head list;
+	const char name[EBT_FUNCTION_MAXNAMELEN];
+	/* returns one of the standard EBT_* verdicts */
+	unsigned int (*target)(struct sk_buff *skb,
+		const struct net_device *in, const struct net_device *out,
+		unsigned int hook_num, const struct xt_target *target,
+		const void *targinfo);
+	bool (*checkentry)(const char *table, const void *entry,
+		const struct xt_target *target, void *targinfo,
+		unsigned int hook_mask);
+	void (*destroy)(const struct xt_target *target, void *targinfo);
+	unsigned int targetsize;
+	u_int8_t revision;
+	u_int8_t family;
+	struct module *me;
 };
 
 /* used for jumping from and into user defined chains (udc) */
 struct ebt_chainstack {
-  struct ebt_entries * chaininfo; /* pointer to chain data */
-  struct ebt_entry * e; /* pointer to entry data */
-  unsigned int n; /* n'th entry */
+	struct ebt_entries *chaininfo; /* pointer to chain data */
+	struct ebt_entry *e; /* pointer to entry data */
+	unsigned int n; /* n'th entry */
 };
 
 struct ebt_table_info {
-  /* total size of the entries */
-  unsigned int entries_size;
-  unsigned int nentries;
-  /* pointers to the start of the chains */
-  struct ebt_entries * hook_entry[NF_BR_NUMHOOKS];
-  /* room to maintain the stack used for jumping from and into udc */
-  struct ebt_chainstack ** chainstack;
-  char * entries;
-  struct ebt_counter counters[0] ____cacheline_aligned;
+	/* total size of the entries */
+	unsigned int entries_size;
+	unsigned int nentries;
+	/* pointers to the start of the chains */
+	struct ebt_entries *hook_entry[NF_BR_NUMHOOKS];
+	/* room to maintain the stack used for jumping from and into udc */
+	struct ebt_chainstack **chainstack;
+	char *entries;
+	struct ebt_counter counters[0] ____cacheline_aligned;
 };
 
 struct ebt_table {
-    struct list_head list;
-    char name[EBT_TABLE_MAXNAMELEN];
-    struct ebt_replace_kernel * table;
-    unsigned int valid_hooks;
-    rwlock_t lock;
-    /* e.g. could be the table explicitly only allows certain
-     * matches, targets, ... 0 == let it in */
-    int (*check) (const struct ebt_table_info * info,
-                  unsigned int valid_hooks);
-    /* the data used by the kernel */
-    struct ebt_table_info * private;
-    struct module * me;
+	struct list_head list;
+	char name[EBT_TABLE_MAXNAMELEN];
+	struct ebt_replace_kernel *table;
+	unsigned int valid_hooks;
+	rwlock_t lock;
+	/* e.g. could be the table explicitly only allows certain
+	 * matches, targets, ... 0 == let it in */
+	int (*check)(const struct ebt_table_info *info,
+	   unsigned int valid_hooks);
+	/* the data used by the kernel */
+	struct ebt_table_info *private;
+	struct module *me;
 };
 
 #define EBT_ALIGN(s) (((s) + (__alignof__(struct _xt_align)-1)) & \
-                      ~(__alignof__(struct _xt_align)-1))
-extern struct ebt_table * ebt_register_table (struct net * net,
-    const struct ebt_table * table);
-extern void ebt_unregister_table (struct net * net, struct ebt_table * table);
-extern unsigned int ebt_do_table (unsigned int hook, struct sk_buff * skb,
-                                  const struct net_device * in, const struct net_device * out,
-                                  struct ebt_table * table);
+		     ~(__alignof__(struct _xt_align)-1))
+extern struct ebt_table *ebt_register_table(struct net *net,
+					    const struct ebt_table *table);
+extern void ebt_unregister_table(struct net *net, struct ebt_table *table);
+extern unsigned int ebt_do_table(unsigned int hook, struct sk_buff *skb,
+   const struct net_device *in, const struct net_device *out,
+   struct ebt_table *table);
 
 /* Used in the kernel match() functions */
 #define FWINV(bool,invflg) ((bool) ^ !!(info->invflags & invflg))
@@ -309,72 +309,72 @@ extern unsigned int ebt_do_table (unsigned int hook, struct sk_buff * skb,
 /* blatently stolen from ip_tables.h
  * fn returns 0 to continue iteration */
 #define EBT_MATCH_ITERATE(e, fn, args...)                   \
-  ({                                                          \
-    unsigned int __i;                                   \
-    int __ret = 0;                                      \
-    struct ebt_entry_match *__match;                    \
-    \
-    for (__i = sizeof(struct ebt_entry);                \
-         __i < (e)->watchers_offset;                    \
-         __i += __match->match_size +                   \
-                sizeof(struct ebt_entry_match)) {              \
-      __match = (void *)(e) + __i;                \
-      \
-      __ret = fn(__match , ## args);              \
-      if (__ret != 0)                             \
-        break;                              \
-    }                                                   \
-    if (__ret == 0) {                                   \
-      if (__i != (e)->watchers_offset)            \
-        __ret = -EINVAL;                    \
-    }                                                   \
-    __ret;                                              \
-  })
+({                                                          \
+	unsigned int __i;                                   \
+	int __ret = 0;                                      \
+	struct ebt_entry_match *__match;                    \
+	                                                    \
+	for (__i = sizeof(struct ebt_entry);                \
+	     __i < (e)->watchers_offset;                    \
+	     __i += __match->match_size +                   \
+	     sizeof(struct ebt_entry_match)) {              \
+		__match = (void *)(e) + __i;                \
+		                                            \
+		__ret = fn(__match , ## args);              \
+		if (__ret != 0)                             \
+			break;                              \
+	}                                                   \
+	if (__ret == 0) {                                   \
+		if (__i != (e)->watchers_offset)            \
+			__ret = -EINVAL;                    \
+	}                                                   \
+	__ret;                                              \
+})
 
 #define EBT_WATCHER_ITERATE(e, fn, args...)                 \
-  ({                                                          \
-    unsigned int __i;                                   \
-    int __ret = 0;                                      \
-    struct ebt_entry_watcher *__watcher;                \
-    \
-    for (__i = e->watchers_offset;                      \
-         __i < (e)->target_offset;                      \
-         __i += __watcher->watcher_size +               \
-                sizeof(struct ebt_entry_watcher)) {            \
-      __watcher = (void *)(e) + __i;              \
-      \
-      __ret = fn(__watcher , ## args);            \
-      if (__ret != 0)                             \
-        break;                              \
-    }                                                   \
-    if (__ret == 0) {                                   \
-      if (__i != (e)->target_offset)              \
-        __ret = -EINVAL;                    \
-    }                                                   \
-    __ret;                                              \
-  })
+({                                                          \
+	unsigned int __i;                                   \
+	int __ret = 0;                                      \
+	struct ebt_entry_watcher *__watcher;                \
+	                                                    \
+	for (__i = e->watchers_offset;                      \
+	     __i < (e)->target_offset;                      \
+	     __i += __watcher->watcher_size +               \
+	     sizeof(struct ebt_entry_watcher)) {            \
+		__watcher = (void *)(e) + __i;              \
+		                                            \
+		__ret = fn(__watcher , ## args);            \
+		if (__ret != 0)                             \
+			break;                              \
+	}                                                   \
+	if (__ret == 0) {                                   \
+		if (__i != (e)->target_offset)              \
+			__ret = -EINVAL;                    \
+	}                                                   \
+	__ret;                                              \
+})
 
 #define EBT_ENTRY_ITERATE(entries, size, fn, args...)       \
-  ({                                                          \
-    unsigned int __i;                                   \
-    int __ret = 0;                                      \
-    struct ebt_entry *__entry;                          \
-    \
-    for (__i = 0; __i < (size);) {                      \
-      __entry = (void *)(entries) + __i;          \
-      __ret = fn(__entry , ## args);              \
-      if (__ret != 0)                             \
-        break;                              \
-      if (__entry->bitmask != 0)                  \
-        __i += __entry->next_offset;        \
-      else                                        \
-        __i += sizeof(struct ebt_entries);  \
-    }                                                   \
-    if (__ret == 0) {                                   \
-      if (__i != (size))                          \
-        __ret = -EINVAL;                    \
-    }                                                   \
-    __ret;                                              \
-  })
+({                                                          \
+	unsigned int __i;                                   \
+	int __ret = 0;                                      \
+	struct ebt_entry *__entry;                          \
+	                                                    \
+	for (__i = 0; __i < (size);) {                      \
+		__entry = (void *)(entries) + __i;          \
+		__ret = fn(__entry , ## args);              \
+		if (__ret != 0)                             \
+			break;                              \
+		if (__entry->bitmask != 0)                  \
+			__i += __entry->next_offset;        \
+		else                                        \
+			__i += sizeof(struct ebt_entries);  \
+	}                                                   \
+	if (__ret == 0) {                                   \
+		if (__i != (size))                          \
+			__ret = -EINVAL;                    \
+	}                                                   \
+	__ret;                                              \
+})
 
 #endif

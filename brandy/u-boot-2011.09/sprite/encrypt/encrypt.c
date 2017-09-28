@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -37,24 +37,24 @@ HTF    handle = NULL;
 * Parameters:
 *     void
 * Return value:
-*     0   :   success
+*     0		:   success
 *     !0    :   fail
 * History:
 *
 ***************************************************************
 */
-int  get_code_key (uint * key_new, uint keylen)
+int  get_code_key(uint * key_new, uint keylen)
 {
-  uint  i = 0;
-  
+    uint  i = 0;
 
-  key_new[0] = 5;
-  key_new[1] = 4;
-  for (i = 2; i < keylen; i++) {
-    key_new[i] = key_new[i - 1] + key_new[i - 2];
-  }
-  
-  return 0;
+
+    key_new[0] = 5;
+	key_new[1] = 4;
+	for(i = 2; i < keylen; i++){
+		key_new[i] = key_new[i-1] + key_new[i-2];
+	}
+
+    return 0;
 }
 
 /*
@@ -66,33 +66,33 @@ int  get_code_key (uint * key_new, uint keylen)
 * Parameters:
 *     void
 * Return value:
-*     0   :   success
+*     0		:   success
 *     !0    :   fail
 * History:
 *
 ***************************************************************
 */
-int  init_code (void)
+int  init_code(void)
 {
-  int  ret = 0;
-  uint  key_new[CODE_KEY_LEN];
-  
-  memset ( (void *) key_new, 0, CODE_KEY_LEN * sizeof (uint) );
-  
-  ret = get_code_key (key_new, CODE_KEY_LEN);
-  if (ret != 0) {
-    printf ("ERR: init_code, get_code_key failed\n");
-    return -1;
-  }
-  
-  handle = TFInitial (key_new, CODE_KEY_LEN);
-  if (handle == NULL)
-  {
-    printf ("ERR: init_code, TFInitial failed\n");
-    return -1;
-  }
-  
-  return 0;
+    int  ret = 0;
+	uint  key_new[CODE_KEY_LEN];
+
+	memset((void *)key_new, 0, CODE_KEY_LEN * sizeof(uint));
+
+	ret = get_code_key(key_new, CODE_KEY_LEN);
+    if(ret != 0){
+		printf("ERR: init_code, get_code_key failed\n");
+		return -1;
+	}
+
+    handle = TFInitial(key_new, CODE_KEY_LEN);
+	if(handle == NULL)
+	{
+		printf("ERR: init_code, TFInitial failed\n");
+		return -1;
+	}
+
+    return 0;
 }
 
 /*
@@ -106,17 +106,17 @@ int  init_code (void)
 *     obuf  :  output. cryptograph buffer
 *     len   :  input.  buffer lenght
 * Return value:
-*     0   :   success
+*     0		:   success
 *     !0    :   fail
 * History:
 *
 ***************************************************************
 */
-uint  encode (void * ibuf, void * obuf, uint len)
+uint  encode(void * ibuf, void * obuf, uint len)
 {
-  printf ("ERR: encode not support\n");
-  
-  return 0;
+    printf("ERR: encode not support\n");
+
+    return 0;
 }
 
 /*
@@ -130,17 +130,17 @@ uint  encode (void * ibuf, void * obuf, uint len)
 *     obuf  :  output. cryptograph buffer
 *     len   :  input.  buffer lenght
 * Return value:
-*     0   :   success
+*     0		:   success
 *     !0    :   fail
 * History:
 *
 ***************************************************************
 */
-uint  decode (void * ibuf, void * obuf, uint len)
+uint  decode(void * ibuf, void * obuf, uint len)
 {
-  TFDecode (handle, ibuf, len, obuf);
-  
-  return (uint) obuf;
+	TFDecode(handle, ibuf, len, obuf);
+
+	return (uint)obuf;
 }
 
 /*
@@ -152,13 +152,13 @@ uint  decode (void * ibuf, void * obuf, uint len)
 * Parameters:
 *     void
 * Return value:
-*     0   :   success
+*     0		:   success
 *     !0    :   fail
 * History:
 *
 ***************************************************************
 */
-int  exit_code (void)
+int  exit_code(void)
 {
-  return 0;
+    return 0;
 }

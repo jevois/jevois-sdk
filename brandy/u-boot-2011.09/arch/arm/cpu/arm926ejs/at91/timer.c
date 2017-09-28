@@ -47,69 +47,69 @@ DECLARE_GLOBAL_DATA_PTR;
  * Those registers increment at 1/16 the main clock rate.
  */
 
-#define TIMER_LOAD_VAL  0xfffff
+#define TIMER_LOAD_VAL	0xfffff
 
-static inline unsigned long long tick_to_time (unsigned long long tick)
+static inline unsigned long long tick_to_time(unsigned long long tick)
 {
-  tick *= CONFIG_SYS_HZ;
-  do_div (tick, gd->timer_rate_hz);
-  
-  return tick;
+	tick *= CONFIG_SYS_HZ;
+	do_div(tick, gd->timer_rate_hz);
+
+	return tick;
 }
 
-static inline unsigned long long usec_to_tick (unsigned long long usec)
+static inline unsigned long long usec_to_tick(unsigned long long usec)
 {
-  usec *= gd->timer_rate_hz;
-  do_div (usec, 1000000);
-  
-  return usec;
+	usec *= gd->timer_rate_hz;
+	do_div(usec, 1000000);
+
+	return usec;
 }
 
 /*
  * Use the PITC in full 32 bit incrementing mode
  */
-int timer_init (void)
+int timer_init(void)
 {
-  at91_pmc_t * pmc = (at91_pmc_t *) ATMEL_BASE_PMC;
-  at91_pit_t * pit = (at91_pit_t *) ATMEL_BASE_PIT;
-  
-  /* Enable PITC Clock */
-  writel (1 << ATMEL_ID_SYS, &pmc->pcer);
-  
-  /* Enable PITC */
-  writel (TIMER_LOAD_VAL | AT91_PIT_MR_EN , &pit->mr);
-  
-  gd->timer_rate_hz = gd->mck_rate_hz / 16;
-  gd->tbu = gd->tbl = 0;
-  
-  return 0;
+	at91_pmc_t *pmc = (at91_pmc_t *) ATMEL_BASE_PMC;
+	at91_pit_t *pit = (at91_pit_t *) ATMEL_BASE_PIT;
+
+	/* Enable PITC Clock */
+	writel(1 << ATMEL_ID_SYS, &pmc->pcer);
+
+	/* Enable PITC */
+	writel(TIMER_LOAD_VAL | AT91_PIT_MR_EN , &pit->mr);
+
+	gd->timer_rate_hz = gd->mck_rate_hz / 16;
+	gd->tbu = gd->tbl = 0;
+
+	return 0;
 }
 
 /*
  * Get the current 64 bit timer tick count
  */
-unsigned long long get_ticks (void)
+unsigned long long get_ticks(void)
 {
-  at91_pit_t * pit = (at91_pit_t *) ATMEL_BASE_PIT;
-  
-  ulong now = readl (&pit->piir);
-  
-  /* increment tbu if tbl has rolled over */
-  if (now < gd->tbl)
-  { gd->tbu++; }
-  gd->tbl = now;
-  return ( ( (unsigned long long) gd->tbu) << 32) | gd->tbl;
+	at91_pit_t *pit = (at91_pit_t *) ATMEL_BASE_PIT;
+
+	ulong now = readl(&pit->piir);
+
+	/* increment tbu if tbl has rolled over */
+	if (now < gd->tbl)
+		gd->tbu++;
+	gd->tbl = now;
+	return (((unsigned long long)gd->tbu) << 32) | gd->tbl;
 }
 
-void __udelay (unsigned long usec)
+void __udelay(unsigned long usec)
 {
-  unsigned long long start;
-  ulong tmo;
-  
-  start = get_ticks();    /* get current timestamp */
-  tmo = usec_to_tick (usec); /* convert usecs to ticks */
-  while ( (get_ticks() - start) < tmo)
-    ;     /* loop till time has passed */
+	unsigned long long start;
+	ulong tmo;
+
+	start = get_ticks();		/* get current timestamp */
+	tmo = usec_to_tick(usec);	/* convert usecs to ticks */
+	while ((get_ticks() - start) < tmo)
+		;			/* loop till time has passed */
 }
 
 /*
@@ -122,15 +122,15 @@ void __udelay (unsigned long usec)
  *
  * The time is used in CONFIG_SYS_HZ units!
  */
-ulong get_timer (ulong base)
+ulong get_timer(ulong base)
 {
-  return tick_to_time (get_ticks() ) - base;
+	return tick_to_time(get_ticks()) - base;
 }
 
 /*
  * Return the number of timer ticks per second.
  */
-ulong get_tbclk (void)
+ulong get_tbclk(void)
 {
-  return gd->timer_rate_hz;
+	return gd->timer_rate_hz;
 }

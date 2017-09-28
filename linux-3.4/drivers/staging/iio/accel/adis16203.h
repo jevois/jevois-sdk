@@ -1,7 +1,7 @@
 #ifndef SPI_ADIS16203_H_
 #define SPI_ADIS16203_H_
 
-#define ADIS16203_STARTUP_DELAY 220 /* ms */
+#define ADIS16203_STARTUP_DELAY	220 /* ms */
 
 #define ADIS16203_READ_REG(a)    a
 #define ADIS16203_WRITE_REG(a) ((a) | 0x80)
@@ -30,26 +30,26 @@
 #define ADIS16203_OUTPUTS        5
 
 /* MSC_CTRL */
-#define ADIS16203_MSC_CTRL_PWRUP_SELF_TEST  (1 << 10) /* Self-test at power-on: 1 = disabled, 0 = enabled */
-#define ADIS16203_MSC_CTRL_REVERSE_ROT_EN (1 << 9)  /* Reverses rotation of both inclination outputs */
-#define ADIS16203_MSC_CTRL_SELF_TEST_EN         (1 << 8)  /* Self-test enable */
-#define ADIS16203_MSC_CTRL_DATA_RDY_EN          (1 << 2)  /* Data-ready enable: 1 = enabled, 0 = disabled */
-#define ADIS16203_MSC_CTRL_ACTIVE_HIGH          (1 << 1)  /* Data-ready polarity: 1 = active high, 0 = active low */
-#define ADIS16203_MSC_CTRL_DATA_RDY_DIO1  (1 << 0)  /* Data-ready line selection: 1 = DIO1, 0 = DIO0 */
+#define ADIS16203_MSC_CTRL_PWRUP_SELF_TEST	(1 << 10) /* Self-test at power-on: 1 = disabled, 0 = enabled */
+#define ADIS16203_MSC_CTRL_REVERSE_ROT_EN	(1 << 9)  /* Reverses rotation of both inclination outputs */
+#define ADIS16203_MSC_CTRL_SELF_TEST_EN	        (1 << 8)  /* Self-test enable */
+#define ADIS16203_MSC_CTRL_DATA_RDY_EN	        (1 << 2)  /* Data-ready enable: 1 = enabled, 0 = disabled */
+#define ADIS16203_MSC_CTRL_ACTIVE_HIGH	        (1 << 1)  /* Data-ready polarity: 1 = active high, 0 = active low */
+#define ADIS16203_MSC_CTRL_DATA_RDY_DIO1	(1 << 0)  /* Data-ready line selection: 1 = DIO1, 0 = DIO0 */
 
 /* DIAG_STAT */
 #define ADIS16203_DIAG_STAT_ALARM2        (1<<9) /* Alarm 2 status: 1 = alarm active, 0 = alarm inactive */
 #define ADIS16203_DIAG_STAT_ALARM1        (1<<8) /* Alarm 1 status: 1 = alarm active, 0 = alarm inactive */
 #define ADIS16203_DIAG_STAT_SELFTEST_FAIL (1<<5) /* Self-test diagnostic error flag */
-#define ADIS16203_DIAG_STAT_SPI_FAIL    (1<<3) /* SPI communications failure */
-#define ADIS16203_DIAG_STAT_FLASH_UPT   (1<<2) /* Flash update failure */
-#define ADIS16203_DIAG_STAT_POWER_HIGH    (1<<1) /* Power supply above 3.625 V */
-#define ADIS16203_DIAG_STAT_POWER_LOW   (1<<0) /* Power supply below 3.15 V */
+#define ADIS16203_DIAG_STAT_SPI_FAIL	  (1<<3) /* SPI communications failure */
+#define ADIS16203_DIAG_STAT_FLASH_UPT	  (1<<2) /* Flash update failure */
+#define ADIS16203_DIAG_STAT_POWER_HIGH	  (1<<1) /* Power supply above 3.625 V */
+#define ADIS16203_DIAG_STAT_POWER_LOW	  (1<<0) /* Power supply below 3.15 V */
 
 /* GLOB_CMD */
-#define ADIS16203_GLOB_CMD_SW_RESET (1<<7)
-#define ADIS16203_GLOB_CMD_CLEAR_STAT (1<<4)
-#define ADIS16203_GLOB_CMD_FACTORY_CAL  (1<<1)
+#define ADIS16203_GLOB_CMD_SW_RESET	(1<<7)
+#define ADIS16203_GLOB_CMD_CLEAR_STAT	(1<<4)
+#define ADIS16203_GLOB_CMD_FACTORY_CAL	(1<<1)
 
 #define ADIS16203_MAX_TX 12
 #define ADIS16203_MAX_RX 10
@@ -58,66 +58,66 @@
 
 /**
  * struct adis16203_state - device instance specific data
- * @us:     actual spi_device
- * @trig:   data ready trigger registered with iio
- * @tx:     transmit buffer
- * @rx:     receive buffer
- * @buf_lock:   mutex to protect tx and rx
+ * @us:			actual spi_device
+ * @trig:		data ready trigger registered with iio
+ * @tx:			transmit buffer
+ * @rx:			receive buffer
+ * @buf_lock:		mutex to protect tx and rx
  **/
 struct adis16203_state {
-  struct spi_device * us;
-  struct iio_trigger * trig;
-  struct mutex    buf_lock;
-  u8      tx[ADIS16203_MAX_TX] ____cacheline_aligned;
-  u8      rx[ADIS16203_MAX_RX];
+	struct spi_device	*us;
+	struct iio_trigger	*trig;
+	struct mutex		buf_lock;
+	u8			tx[ADIS16203_MAX_TX] ____cacheline_aligned;
+	u8			rx[ADIS16203_MAX_RX];
 };
 
-int adis16203_set_irq (struct iio_dev * indio_dev, bool enable);
+int adis16203_set_irq(struct iio_dev *indio_dev, bool enable);
 
 enum adis16203_scan {
-  ADIS16203_SCAN_SUPPLY,
-  ADIS16203_SCAN_AUX_ADC,
-  ADIS16203_SCAN_TEMP,
-  ADIS16203_SCAN_INCLI_X,
-  ADIS16203_SCAN_INCLI_Y,
+	ADIS16203_SCAN_SUPPLY,
+	ADIS16203_SCAN_AUX_ADC,
+	ADIS16203_SCAN_TEMP,
+	ADIS16203_SCAN_INCLI_X,
+	ADIS16203_SCAN_INCLI_Y,
 };
 
 #ifdef CONFIG_IIO_BUFFER
-void adis16203_remove_trigger (struct iio_dev * indio_dev);
-int adis16203_probe_trigger (struct iio_dev * indio_dev);
+void adis16203_remove_trigger(struct iio_dev *indio_dev);
+int adis16203_probe_trigger(struct iio_dev *indio_dev);
 
-ssize_t adis16203_read_data_from_ring (struct device * dev,
-                                       struct device_attribute * attr,
-                                       char * buf);
+ssize_t adis16203_read_data_from_ring(struct device *dev,
+				      struct device_attribute *attr,
+				      char *buf);
 
-int adis16203_configure_ring (struct iio_dev * indio_dev);
-void adis16203_unconfigure_ring (struct iio_dev * indio_dev);
+int adis16203_configure_ring(struct iio_dev *indio_dev);
+void adis16203_unconfigure_ring(struct iio_dev *indio_dev);
 
 #else /* CONFIG_IIO_BUFFER */
 
-static inline void adis16203_remove_trigger (struct iio_dev * indio_dev)
+static inline void adis16203_remove_trigger(struct iio_dev *indio_dev)
 {
 }
 
-static inline int adis16203_probe_trigger (struct iio_dev * indio_dev)
+static inline int adis16203_probe_trigger(struct iio_dev *indio_dev)
 {
-  return 0;
+	return 0;
 }
 
 static inline ssize_t
-adis16203_read_data_from_ring (struct device * dev,
-                               struct device_attribute * attr,
-                               char * buf)
+adis16203_read_data_from_ring(struct device *dev,
+			      struct device_attribute *attr,
+			      char *buf)
 {
-  return 0;
+	return 0;
 }
 
-static int adis16203_configure_ring (struct iio_dev * indio_dev)
+static int adis16203_configure_ring(struct iio_dev *indio_dev)
 {
-  return 0;
+	return 0;
 }
 
-static inline void adis16203_unconfigure_ring (struct iio_dev * indio_dev)
+static inline void adis16203_unconfigure_ring(struct iio_dev *indio_dev)
 {
 }
 

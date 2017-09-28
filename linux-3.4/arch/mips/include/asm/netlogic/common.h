@@ -38,36 +38,36 @@
 /*
  * Common SMP definitions
  */
-#define RESET_VEC_PHYS    0x1fc00000
-#define RESET_DATA_PHYS   (RESET_VEC_PHYS + (1<<10))
-#define BOOT_THREAD_MODE  0
-#define BOOT_NMI_LOCK   4
-#define BOOT_NMI_HANDLER  8
+#define	RESET_VEC_PHYS		0x1fc00000
+#define	RESET_DATA_PHYS		(RESET_VEC_PHYS + (1<<10))
+#define	BOOT_THREAD_MODE	0
+#define	BOOT_NMI_LOCK		4
+#define	BOOT_NMI_HANDLER	8
 
 #ifndef __ASSEMBLY__
 struct irq_desc;
 extern struct plat_smp_ops nlm_smp_ops;
 extern char nlm_reset_entry[], nlm_reset_entry_end[];
-void nlm_smp_function_ipi_handler (unsigned int irq, struct irq_desc * desc);
-void nlm_smp_resched_ipi_handler (unsigned int irq, struct irq_desc * desc);
-void nlm_smp_irq_init (void);
-void nlm_boot_secondary_cpus (void);
-int nlm_wakeup_secondary_cpus (u32 wakeup_mask);
-void nlm_rmiboot_preboot (void);
+void nlm_smp_function_ipi_handler(unsigned int irq, struct irq_desc *desc);
+void nlm_smp_resched_ipi_handler(unsigned int irq, struct irq_desc *desc);
+void nlm_smp_irq_init(void);
+void nlm_boot_secondary_cpus(void);
+int nlm_wakeup_secondary_cpus(u32 wakeup_mask);
+void nlm_rmiboot_preboot(void);
 
 static inline void
-nlm_set_nmi_handler (void * handler)
+nlm_set_nmi_handler(void *handler)
 {
-  char * reset_data;
-  
-  reset_data = (char *) CKSEG1ADDR (RESET_DATA_PHYS);
-  * (int64_t *) (reset_data + BOOT_NMI_HANDLER) = (long) handler;
+	char *reset_data;
+
+	reset_data = (char *)CKSEG1ADDR(RESET_DATA_PHYS);
+	*(int64_t *)(reset_data + BOOT_NMI_HANDLER) = (long)handler;
 }
 
 /*
  * Misc.
  */
-unsigned int nlm_get_cpu_frequency (void);
+unsigned int nlm_get_cpu_frequency(void);
 
 extern unsigned long nlm_common_ebase;
 extern int nlm_threads_per_core;

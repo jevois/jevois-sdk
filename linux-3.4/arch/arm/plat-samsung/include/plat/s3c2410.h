@@ -1,7 +1,7 @@
 /* linux/arch/arm/plat-samsung/include/plat/s3c2410.h
  *
  * Copyright (c) 2004 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * Header file for s3c2410 machine directory
  *
@@ -13,14 +13,14 @@
 
 #ifdef CONFIG_CPU_S3C2410
 
-extern  int s3c2410_init (void);
-extern  int s3c2410a_init (void);
+extern  int s3c2410_init(void);
+extern  int s3c2410a_init(void);
 
-extern void s3c2410_map_io (void);
+extern void s3c2410_map_io(void);
 
-extern void s3c2410_init_uarts (struct s3c2410_uartcfg * cfg, int no);
+extern void s3c2410_init_uarts(struct s3c2410_uartcfg *cfg, int no);
 
-extern void s3c2410_init_clocks (int xtal);
+extern void s3c2410_init_clocks(int xtal);
 
 #else
 #define s3c2410_init_clocks NULL

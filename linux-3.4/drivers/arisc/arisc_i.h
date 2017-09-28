@@ -71,14 +71,14 @@ extern unsigned int arisc_debug_level;
 extern unsigned int arisc_debug_dram_crc_en;
 extern struct standby_info_para arisc_powchk_back;
 
-extern void * arisc_version_store (const void * src, size_t count);
-extern void sunxi_arisc_sysfs (struct platform_device * pdev);
+extern void *arisc_version_store(const void *src, size_t count);
+extern void sunxi_arisc_sysfs(struct platform_device *pdev);
 
-extern int arisc_config_dram_paras (void);
-extern int arisc_sysconfig_ir_paras (void);
-extern int arisc_config_pmu_paras (void);
-extern int arisc_suspend_flag_query (void);
+extern int arisc_config_dram_paras(void);
+extern int arisc_sysconfig_ir_paras(void);
+extern int arisc_config_pmu_paras(void);
+extern int arisc_suspend_flag_query(void);
 #if (defined CONFIG_ARCH_SUN8IW7P1)
-extern void arisc_power_off (void);
+extern void arisc_power_off(void);
 #endif
 #endif 

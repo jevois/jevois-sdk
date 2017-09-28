@@ -15,14 +15,14 @@
 #include <asm/user.h>
 
 /* Processor specific flags for the ELF header e_flags field.  */
-#define EF_BFIN_PIC   0x00000001  /* -fpic */
-#define EF_BFIN_FDPIC   0x00000002  /* -mfdpic */
-#define EF_BFIN_CODE_IN_L1  0x00000010  /* --code-in-l1 */
-#define EF_BFIN_DATA_IN_L1  0x00000020  /* --data-in-l1 */
-#define EF_BFIN_CODE_IN_L2  0x00000040  /* --code-in-l2 */
-#define EF_BFIN_DATA_IN_L2  0x00000080  /* --data-in-l2 */
+#define EF_BFIN_PIC		0x00000001	/* -fpic */
+#define EF_BFIN_FDPIC		0x00000002	/* -mfdpic */
+#define EF_BFIN_CODE_IN_L1	0x00000010	/* --code-in-l1 */
+#define EF_BFIN_DATA_IN_L1	0x00000020	/* --data-in-l1 */
+#define EF_BFIN_CODE_IN_L2	0x00000040	/* --code-in-l2 */
+#define EF_BFIN_DATA_IN_L2	0x00000080	/* --data-in-l2 */
 
-#if 1 /* core dumps not supported, but linux/elfcore.h needs these */
+#if 1	/* core dumps not supported, but linux/elfcore.h needs these */
 typedef unsigned long elf_greg_t;
 
 #define ELF_NGREG (sizeof(struct pt_regs) / sizeof(elf_greg_t))
@@ -39,30 +39,30 @@ typedef struct { } elf_fpregset_t;
 #define elf_check_fdpic(x) ((x)->e_flags & EF_BFIN_FDPIC /* && !((x)->e_flags & EF_FRV_NON_PIC_RELOCS) */)
 #define elf_check_const_displacement(x) ((x)->e_flags & EF_BFIN_PIC)
 
-/* EM_BLACKFIN defined in linux/elf.h */
+/* EM_BLACKFIN defined in linux/elf.h	*/
 
 /*
  * These are used to set parameters in the core dumps.
  */
-#define ELF_CLASS ELFCLASS32
-#define ELF_DATA  ELFDATA2LSB
-#define ELF_ARCH  EM_BLACKFIN
+#define ELF_CLASS	ELFCLASS32
+#define ELF_DATA	ELFDATA2LSB
+#define ELF_ARCH	EM_BLACKFIN
 
-#define ELF_PLAT_INIT(_r) _r->p1 = 0
+#define ELF_PLAT_INIT(_r)	_r->p1 = 0
 
-#define ELF_FDPIC_PLAT_INIT(_regs, _exec_map_addr, _interp_map_addr, _dynamic_addr) \
-  do {                      \
-    _regs->r7 = 0;            \
-    _regs->p0 = _exec_map_addr;       \
-    _regs->p1 = _interp_map_addr;       \
-    _regs->p2 = _dynamic_addr;        \
-  } while(0)
+#define ELF_FDPIC_PLAT_INIT(_regs, _exec_map_addr, _interp_map_addr, _dynamic_addr)	\
+do {											\
+	_regs->r7	= 0;						\
+	_regs->p0	= _exec_map_addr;				\
+	_regs->p1	= _interp_map_addr;				\
+	_regs->p2	= _dynamic_addr;				\
+} while(0)
 
 #if 0
 #define CORE_DUMP_USE_REGSET
 #endif
-#define ELF_FDPIC_CORE_EFLAGS EF_BFIN_FDPIC
-#define ELF_EXEC_PAGESIZE 4096
+#define ELF_FDPIC_CORE_EFLAGS	EF_BFIN_FDPIC
+#define ELF_EXEC_PAGESIZE	4096
 
 #define R_BFIN_UNUSED0         0   /* relocation type 0 is not defined */
 #define R_BFIN_PCREL5M2        1   /* LSETUP part a */
@@ -116,15 +116,15 @@ typedef struct { } elf_fpregset_t;
 
 #define ELF_ET_DYN_BASE         0xD0000000UL
 
-#define ELF_CORE_COPY_REGS(pr_reg, regs)  \
-  memcpy((char *) &pr_reg, (char *)regs,  \
-         sizeof(struct pt_regs));
-#define ELF_CORE_COPY_FPREGS(...) 0 /* Blackfin has no FPU */
+#define ELF_CORE_COPY_REGS(pr_reg, regs)	\
+        memcpy((char *) &pr_reg, (char *)regs,  \
+               sizeof(struct pt_regs));
+#define ELF_CORE_COPY_FPREGS(...) 0	/* Blackfin has no FPU */
 
 /* This yields a mask that user programs can use to figure out what
    instruction set this cpu supports.  */
 
-#define ELF_HWCAP (0)
+#define ELF_HWCAP	(0)
 
 /* This yields a string that ld.so will use to load implementation
    specific libraries for optimization.  This is more specific in

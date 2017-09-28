@@ -19,14 +19,14 @@
 
 #include <linux/kbuild.h>
 
-int main (void)
+int main(void)
 {
-  /* Round up to make sure size gives nice stack alignment */
-  DEFINE (GENERATED_GBL_DATA_SIZE,
-          (sizeof (struct global_data) + 15) & ~15);
-          
-  DEFINE (GENERATED_BD_INFO_SIZE,
-          (sizeof (struct bd_info) + 15) & ~15);
-          
-  return 0;
+	/* Round up to make sure size gives nice stack alignment */
+	DEFINE(GENERATED_GBL_DATA_SIZE,
+		(sizeof(struct global_data) + 15) & ~15);
+
+	DEFINE(GENERATED_BD_INFO_SIZE,
+		(sizeof(struct bd_info) + 15) & ~15);
+
+	return 0;
 }

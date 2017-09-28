@@ -13,12 +13,12 @@
 #define _S3C_AUDIO_H
 
 struct s3c_dma_params {
-  struct s3c2410_dma_client * client; /* stream identifier */
-  int channel;        /* Channel ID */
-  dma_addr_t dma_addr;
-  int dma_size;     /* Size of the DMA transfer */
-  unsigned ch;
-  struct samsung_dma_ops * ops;
+	struct s3c2410_dma_client *client;	/* stream identifier */
+	int channel;				/* Channel ID */
+	dma_addr_t dma_addr;
+	int dma_size;			/* Size of the DMA transfer */
+	unsigned ch;
+	struct samsung_dma_ops *ops;
 };
 
 #endif

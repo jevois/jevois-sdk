@@ -1,7 +1,7 @@
 #ifndef __CONFIG_H
 #define __CONFIG_H
 
-#define CONFIG_SYS_TEXT_BASE  0x80F00000
+#define	CONFIG_SYS_TEXT_BASE	0x80F00000
 
 /*****************************************************************************
  *
@@ -9,7 +9,7 @@
  *
  *****************************************************************************/
 /* for the AY-Revision which does not use the HRCW */
-#define CONFIG_SYS_DEFAULT_IMMR 0x00010000
+#define CONFIG_SYS_DEFAULT_IMMR	0x00010000
 
 /* What is the oscillator's (UX2) frequency in Hz? */
 #define CONFIG_8260_CLKIN  (66 * 1000 * 1000)
@@ -31,7 +31,7 @@
  */
 #define CONFIG_SYS_SBC_MODCK_H 0x06
 
-#define CONFIG_SYS_SBC_BOOT_LOW 1 /* only for HRCW */
+#define CONFIG_SYS_SBC_BOOT_LOW 1	/* only for HRCW */
 #undef CONFIG_SYS_SBC_BOOT_LOW
 
 /* What should the base address of the main FLASH be and how big is
@@ -107,19 +107,19 @@
  * - RAM for BD/Buffers is on the 60x Bus (see 28-13)
  * - Enable Half Duplex in FSMR
  */
-# define CONFIG_SYS_CMXFCR_MASK (CMXFCR_FC3|CMXFCR_RF3CS_MSK|CMXFCR_TF3CS_MSK)
-# define CONFIG_SYS_CMXFCR_VALUE  (CMXFCR_RF3CS_CLK15|CMXFCR_TF3CS_CLK16)
-# define CONFIG_SYS_CPMFCR_RAMTYPE  0
-/*#define CONFIG_SYS_FCC_PSMR   (FCC_PSMR_FDE|FCC_PSMR_LPB) */
-# define CONFIG_SYS_FCC_PSMR    0
+# define CONFIG_SYS_CMXFCR_MASK	(CMXFCR_FC3|CMXFCR_RF3CS_MSK|CMXFCR_TF3CS_MSK)
+# define CONFIG_SYS_CMXFCR_VALUE	(CMXFCR_RF3CS_CLK15|CMXFCR_TF3CS_CLK16)
+# define CONFIG_SYS_CPMFCR_RAMTYPE	0
+/*#define CONFIG_SYS_FCC_PSMR		(FCC_PSMR_FDE|FCC_PSMR_LPB) */
+# define CONFIG_SYS_FCC_PSMR		0
 
 #else /* CONFIG_ETHER_INDEX */
 # error "on RPX Super ethernet must be FCC3"
 #endif /* CONFIG_ETHER_INDEX */
 
-#define CONFIG_HARD_I2C         1 /* I2C with hardware support  */
-#define CONFIG_SYS_I2C_SPEED    400000  /* I2C speed and slave address  */
-#define CONFIG_SYS_I2C_SLAVE    0x7F
+#define CONFIG_HARD_I2C         1	/* I2C with hardware support	*/
+#define CONFIG_SYS_I2C_SPEED		400000	/* I2C speed and slave address	*/
+#define CONFIG_SYS_I2C_SLAVE		0x7F
 
 
 /* Define this to reserve an entire FLASH sector (256 KB) for
@@ -138,7 +138,7 @@
 /* Ethernet MAC address */
 #define CONFIG_ETHADDR          08:00:22:50:70:63
 
-#define CONFIG_IPADDR   192.168.1.99
+#define CONFIG_IPADDR		192.168.1.99
 #define CONFIG_SERVERIP         192.168.1.3
 
 /* Set to a positive value to delay for running BOOTCOMMAND */
@@ -187,10 +187,10 @@
 
 #define CONFIG_MPC8260          1       /* This is an MPC8260 CPU   */
 #define CONFIG_RPXSUPER         1       /* on an Embedded Planet RPX Super Board  */
-#define CONFIG_CPM2   1 /* Has a CPM2 */
+#define CONFIG_CPM2		1	/* Has a CPM2 */
 
-#define CONFIG_BOARD_EARLY_INIT_F 1 /* Call board_early_init_f  */
-#define CONFIG_RESET_PHY_R  1 /* Call reset_phy()   */
+#define CONFIG_BOARD_EARLY_INIT_F 1	/* Call board_early_init_f	*/
+#define CONFIG_RESET_PHY_R	1	/* Call reset_phy()		*/
 
 /*
  * Miscellaneous configurable options
@@ -211,7 +211,7 @@
 #define CONFIG_SYS_MEMTEST_START 0x04000000   /* memtest works on  */
 #define CONFIG_SYS_MEMTEST_END   0x06000000   /* 64-96 MB in SDRAM */
 
-#define CONFIG_CLOCKS_IN_MHZ  1 /* clocks passsed to Linux in MHz */
+#define	CONFIG_CLOCKS_IN_MHZ	1	/* clocks passsed to Linux in MHz */
 
 #define CONFIG_SYS_LOAD_ADDR     0x100000     /* default load address */
 #define CONFIG_SYS_HZ            1000         /* decrementer freq: 1 ms ticks */
@@ -239,18 +239,18 @@
 
 /* get the HRCW ISB field from CONFIG_SYS_IMMR */
 #define CONFIG_SYS_SBC_HRCW_IMMR ( ((CONFIG_SYS_IMMR & 0x10000000) >> 10) |\
-                                   ((CONFIG_SYS_IMMR & 0x01000000) >> 7)  |\
-                                   ((CONFIG_SYS_IMMR & 0x00100000) >> 4) )
+			    ((CONFIG_SYS_IMMR & 0x01000000) >> 7)  |\
+			    ((CONFIG_SYS_IMMR & 0x00100000) >> 4) )
 
 #define CONFIG_SYS_HRCW_MASTER (HRCW_BPS11                           |\
-                                HRCW_DPPC11                          |\
-                                CONFIG_SYS_SBC_HRCW_IMMR                    |\
-                                HRCW_MMR00                           |\
-                                HRCW_LBPC11                          |\
-                                HRCW_APPC10                          |\
-                                HRCW_CS10PC00                        |\
-                                (CONFIG_SYS_SBC_MODCK_H & HRCW_MODCK_H1111) |\
-                                CONFIG_SYS_SBC_HRCW_BOOT_FLAGS)
+			 HRCW_DPPC11                          |\
+			 CONFIG_SYS_SBC_HRCW_IMMR                    |\
+			 HRCW_MMR00                           |\
+			 HRCW_LBPC11                          |\
+			 HRCW_APPC10                          |\
+			 HRCW_CS10PC00                        |\
+			 (CONFIG_SYS_SBC_MODCK_H & HRCW_MODCK_H1111) |\
+			 CONFIG_SYS_SBC_HRCW_BOOT_FLAGS)
 
 /* no slaves */
 #define CONFIG_SYS_HRCW_SLAVE1 0
@@ -337,16 +337,16 @@
  * HID1 has only read-only information - nothing to set.
  */
 #define CONFIG_SYS_HID0_INIT   (/*HID0_ICE  |*/\
-    /*HID0_DCE  |*/\
-    HID0_ICFI |\
-    HID0_DCI  |\
-    HID0_IFEM |\
-    HID0_ABE)
+			 /*HID0_DCE  |*/\
+			 HID0_ICFI |\
+			 HID0_DCI  |\
+			 HID0_IFEM |\
+			 HID0_ABE)
 
 #define CONFIG_SYS_HID0_FINAL  (/*HID0_ICE  |*/\
-    HID0_IFEM |\
-    HID0_ABE  |\
-    HID0_EMCP)
+			 HID0_IFEM |\
+			 HID0_ABE  |\
+			 HID0_EMCP)
 #define CONFIG_SYS_HID2        0
 
 /*-----------------------------------------------------------------------
@@ -360,9 +360,9 @@
  *-----------------------------------------------------------------------
  */
 #define CONFIG_SYS_BCR         (BCR_EBM   |\
-                                BCR_PLDP  |\
-                                BCR_EAV   |\
-                                BCR_NPQM0)
+			 BCR_PLDP  |\
+			 BCR_EAV   |\
+			 BCR_NPQM0)
 
 /*-----------------------------------------------------------------------
  * SIUMCR - SIU Module Configuration                             4-31
@@ -370,8 +370,8 @@
  */
 
 #define CONFIG_SYS_SIUMCR      (SIUMCR_L2CPC01 |\
-                                SIUMCR_APPC10  |\
-                                SIUMCR_CS10PC01)
+			 SIUMCR_APPC10  |\
+			 SIUMCR_CS10PC01)
 
 
 /*-----------------------------------------------------------------------
@@ -381,11 +381,11 @@
  * Watchdog & Bus Monitor Timer max, 60x Bus Monitor enable
  */
 #define CONFIG_SYS_SYPCR       (SYPCR_SWTC |\
-                                SYPCR_BMT  |\
-                                SYPCR_PBME |\
-                                SYPCR_LBME |\
-                                SYPCR_SWRI |\
-                                SYPCR_SWP)
+			 SYPCR_BMT  |\
+			 SYPCR_PBME |\
+			 SYPCR_LBME |\
+			 SYPCR_SWRI |\
+			 SYPCR_SWP)
 
 /*-----------------------------------------------------------------------
  * TMCNTSC - Time Counter Status and Control                     4-40
@@ -394,9 +394,9 @@
  * and enable Time Counter
  */
 #define CONFIG_SYS_TMCNTSC     (TMCNTSC_SEC |\
-                                TMCNTSC_ALR |\
-                                TMCNTSC_TCF |\
-                                TMCNTSC_TCE)
+			 TMCNTSC_ALR |\
+			 TMCNTSC_TCF |\
+			 TMCNTSC_TCE)
 
 /*-----------------------------------------------------------------------
  * PISCR - Periodic Interrupt Status and Control                 4-42
@@ -405,8 +405,8 @@
  * Periodic timer
  */
 #define CONFIG_SYS_PISCR       (PISCR_PS  |\
-                                PISCR_PTF |\
-                                PISCR_PTE)
+			 PISCR_PTF |\
+			 PISCR_PTE)
 
 /*-----------------------------------------------------------------------
  * SCCR - System Clock Control                                   9-8
@@ -443,65 +443,65 @@
  *
  */
 #define CONFIG_SYS_BR0_PRELIM  ((CONFIG_SYS_FLASH0_BASE & BRx_BA_MSK) |\
-                                BRx_PS_64                      |\
-                                BRx_DECC_NONE                  |\
-                                BRx_MS_GPCM_P                  |\
-                                BRx_V)
+			 BRx_PS_64                      |\
+			 BRx_DECC_NONE                  |\
+			 BRx_MS_GPCM_P                  |\
+			 BRx_V)
 
 #define CONFIG_SYS_OR0_PRELIM  (MEG_TO_AM(CONFIG_SYS_FLASH0_SIZE)     |\
-                                ORxG_CSNT                      |\
-                                ORxG_ACS_DIV1                  |\
-                                ORxG_SCY_6_CLK                 |\
-                                ORxG_EHTR)
+			 ORxG_CSNT                      |\
+			 ORxG_ACS_DIV1                  |\
+			 ORxG_SCY_6_CLK                 |\
+			 ORxG_EHTR)
 
 /* Bank 1 - SDRAM
  *
  */
 #define CONFIG_SYS_BR1_PRELIM  ((CONFIG_SYS_SDRAM0_BASE & BRx_BA_MSK) |\
-                                BRx_PS_64                      |\
-                                BRx_MS_SDRAM_P                 |\
-                                BRx_V)
+			 BRx_PS_64                      |\
+			 BRx_MS_SDRAM_P                 |\
+			 BRx_V)
 
 #define CONFIG_SYS_OR1_PRELIM  (MEG_TO_AM(CONFIG_SYS_SDRAM0_SIZE)     |\
-                                ORxS_BPD_4                     |\
-                                ORxS_ROWST_PBI0_A8             |\
-                                ORxS_NUMR_12                   |\
-                                ORxS_IBID)
+			 ORxS_BPD_4                     |\
+			 ORxS_ROWST_PBI0_A8             |\
+			 ORxS_NUMR_12                   |\
+			 ORxS_IBID)
 
 #define CONFIG_SYS_PSDMR       0x014DA412
-#define CONFIG_SYS_PSRT 0x79
+#define CONFIG_SYS_PSRT	0x79
 
 
 /* Bank 2 - SDRAM
  *
  */
 #define CONFIG_SYS_BR2_PRELIM  ((CONFIG_SYS_SDRAM1_BASE & BRx_BA_MSK) |\
-                                BRx_PS_32                      |\
-                                BRx_MS_SDRAM_L                 |\
-                                BRx_V)
+			 BRx_PS_32                      |\
+			 BRx_MS_SDRAM_L                 |\
+			 BRx_V)
 
 #define CONFIG_SYS_OR2_PRELIM  (MEG_TO_AM(CONFIG_SYS_SDRAM1_SIZE)     |\
-                                ORxS_BPD_4                     |\
-                                ORxS_ROWST_PBI0_A9             |\
-                                ORxS_NUMR_12)
+			 ORxS_BPD_4                     |\
+			 ORxS_ROWST_PBI0_A9             |\
+			 ORxS_NUMR_12)
 
 #define CONFIG_SYS_LSDMR       0x0169A512
-#define CONFIG_SYS_LSRT 0x79
+#define CONFIG_SYS_LSRT	0x79
 
-#define CONFIG_SYS_MPTPR  (0x0800 & MPTPR_PTP_MSK)
+#define CONFIG_SYS_MPTPR	(0x0800 & MPTPR_PTP_MSK)
 
 /* Bank 4 - On board registers
  *
  */
 #define CONFIG_SYS_BR4_PRELIM   ((CONFIG_SYS_REGS_BASE & BRx_BA_MSK)  |\
-                                 BRx_PS_8                     |\
-                                 BRx_MS_GPCM_P                |\
-                                 BRx_V)
+			   BRx_PS_8                     |\
+			   BRx_MS_GPCM_P                |\
+			   BRx_V)
 
 #define CONFIG_SYS_OR4_PRELIM    (ORxG_AM_MSK                 |\
-                                  ORxG_CSNT                   |\
-                                  ORxG_ACS_DIV1               |\
-                                  ORxG_SCY_5_CLK              |\
-                                  ORxG_TRLX)
+			   ORxG_CSNT                   |\
+			   ORxG_ACS_DIV1               |\
+			   ORxG_SCY_5_CLK              |\
+			   ORxG_TRLX)
 
 #endif  /* __CONFIG_H */

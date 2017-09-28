@@ -70,7 +70,7 @@
 #include <asm/io.h>
 #include <asm/i387.h>
 #include <asm/stackprotector.h>
-#include <asm/reboot.h>   /* for struct machine_ops */
+#include <asm/reboot.h>		/* for struct machine_ops */
 #include <asm/kvm_para.h>
 
 /*G:010
@@ -82,12 +82,12 @@
 :*/
 
 struct lguest_data lguest_data = {
-  .hcall_status = { [0 ... LHCALL_RING_SIZE - 1] = 0xFF },
-  .noirq_start = (u32) lguest_noirq_start,
-  .noirq_end = (u32) lguest_noirq_end,
-  .kernel_address = PAGE_OFFSET,
-  .blocked_interrupts = { 1 }, /* Block timer interrupts */
-  .syscall_vec = SYSCALL_VECTOR,
+	.hcall_status = { [0 ... LHCALL_RING_SIZE-1] = 0xFF },
+	.noirq_start = (u32)lguest_noirq_start,
+	.noirq_end = (u32)lguest_noirq_end,
+	.kernel_address = PAGE_OFFSET,
+	.blocked_interrupts = { 1 }, /* Block timer interrupts */
+	.syscall_vec = SYSCALL_VECTOR,
 };
 
 /*G:037
@@ -102,37 +102,36 @@ struct lguest_data lguest_data = {
  * effect of causing the Host to run all the stored calls in the ring buffer
  * which empties it for next time!
  */
-static void async_hcall (unsigned long call, unsigned long arg1,
-                         unsigned long arg2, unsigned long arg3,
-                         unsigned long arg4)
+static void async_hcall(unsigned long call, unsigned long arg1,
+			unsigned long arg2, unsigned long arg3,
+			unsigned long arg4)
 {
-  /* Note: This code assumes we're uniprocessor. */
-  static unsigned int next_call;
-  unsigned long flags;
-  
-  /*
-   * Disable interrupts if not already disabled: we don't want an
-   * interrupt handler making a hypercall while we're already doing
-   * one!
-   */
-  local_irq_save (flags);
-  if (lguest_data.hcall_status[next_call] != 0xFF) {
-    /* Table full, so do normal hcall which will flush table. */
-    hcall (call, arg1, arg2, arg3, arg4);
-  }
-  else {
-    lguest_data.hcalls[next_call].arg0 = call;
-    lguest_data.hcalls[next_call].arg1 = arg1;
-    lguest_data.hcalls[next_call].arg2 = arg2;
-    lguest_data.hcalls[next_call].arg3 = arg3;
-    lguest_data.hcalls[next_call].arg4 = arg4;
-    /* Arguments must all be written before we mark it to go */
-    wmb();
-    lguest_data.hcall_status[next_call] = 0;
-    if (++next_call == LHCALL_RING_SIZE)
-    { next_call = 0; }
-  }
-  local_irq_restore (flags);
+	/* Note: This code assumes we're uniprocessor. */
+	static unsigned int next_call;
+	unsigned long flags;
+
+	/*
+	 * Disable interrupts if not already disabled: we don't want an
+	 * interrupt handler making a hypercall while we're already doing
+	 * one!
+	 */
+	local_irq_save(flags);
+	if (lguest_data.hcall_status[next_call] != 0xFF) {
+		/* Table full, so do normal hcall which will flush table. */
+		hcall(call, arg1, arg2, arg3, arg4);
+	} else {
+		lguest_data.hcalls[next_call].arg0 = call;
+		lguest_data.hcalls[next_call].arg1 = arg1;
+		lguest_data.hcalls[next_call].arg2 = arg2;
+		lguest_data.hcalls[next_call].arg3 = arg3;
+		lguest_data.hcalls[next_call].arg4 = arg4;
+		/* Arguments must all be written before we mark it to go */
+		wmb();
+		lguest_data.hcall_status[next_call] = 0;
+		if (++next_call == LHCALL_RING_SIZE)
+			next_call = 0;
+	}
+	local_irq_restore(flags);
 }
 
 /*G:035
@@ -149,47 +148,47 @@ static void async_hcall (unsigned long call, unsigned long arg1,
  * So, when we're in lazy mode, we call async_hcall() to store the call for
  * future processing:
  */
-static void lazy_hcall1 (unsigned long call, unsigned long arg1)
+static void lazy_hcall1(unsigned long call, unsigned long arg1)
 {
-  if (paravirt_get_lazy_mode() == PARAVIRT_LAZY_NONE)
-  { hcall (call, arg1, 0, 0, 0); }
-  else
-  { async_hcall (call, arg1, 0, 0, 0); }
+	if (paravirt_get_lazy_mode() == PARAVIRT_LAZY_NONE)
+		hcall(call, arg1, 0, 0, 0);
+	else
+		async_hcall(call, arg1, 0, 0, 0);
 }
 
 /* You can imagine what lazy_hcall2, 3 and 4 look like. :*/
-static void lazy_hcall2 (unsigned long call,
-                         unsigned long arg1,
-                         unsigned long arg2)
+static void lazy_hcall2(unsigned long call,
+			unsigned long arg1,
+			unsigned long arg2)
 {
-  if (paravirt_get_lazy_mode() == PARAVIRT_LAZY_NONE)
-  { hcall (call, arg1, arg2, 0, 0); }
-  else
-  { async_hcall (call, arg1, arg2, 0, 0); }
+	if (paravirt_get_lazy_mode() == PARAVIRT_LAZY_NONE)
+		hcall(call, arg1, arg2, 0, 0);
+	else
+		async_hcall(call, arg1, arg2, 0, 0);
 }
 
-static void lazy_hcall3 (unsigned long call,
-                         unsigned long arg1,
-                         unsigned long arg2,
-                         unsigned long arg3)
+static void lazy_hcall3(unsigned long call,
+			unsigned long arg1,
+			unsigned long arg2,
+			unsigned long arg3)
 {
-  if (paravirt_get_lazy_mode() == PARAVIRT_LAZY_NONE)
-  { hcall (call, arg1, arg2, arg3, 0); }
-  else
-  { async_hcall (call, arg1, arg2, arg3, 0); }
+	if (paravirt_get_lazy_mode() == PARAVIRT_LAZY_NONE)
+		hcall(call, arg1, arg2, arg3, 0);
+	else
+		async_hcall(call, arg1, arg2, arg3, 0);
 }
 
 #ifdef CONFIG_X86_PAE
-static void lazy_hcall4 (unsigned long call,
-                         unsigned long arg1,
-                         unsigned long arg2,
-                         unsigned long arg3,
-                         unsigned long arg4)
+static void lazy_hcall4(unsigned long call,
+			unsigned long arg1,
+			unsigned long arg2,
+			unsigned long arg3,
+			unsigned long arg4)
 {
-  if (paravirt_get_lazy_mode() == PARAVIRT_LAZY_NONE)
-  { hcall (call, arg1, arg2, arg3, arg4); }
-  else
-  { async_hcall (call, arg1, arg2, arg3, arg4); }
+	if (paravirt_get_lazy_mode() == PARAVIRT_LAZY_NONE)
+		hcall(call, arg1, arg2, arg3, arg4);
+	else
+		async_hcall(call, arg1, arg2, arg3, arg4);
 }
 #endif
 
@@ -198,10 +197,10 @@ static void lazy_hcall4 (unsigned long call,
  * flush any stored calls, and call the generic helper to reset the
  * per-cpu lazy mode variable.
  */
-static void lguest_leave_lazy_mmu_mode (void)
+static void lguest_leave_lazy_mmu_mode(void)
 {
-  hcall (LHCALL_FLUSH_ASYNC, 0, 0, 0, 0);
-  paravirt_leave_lazy_mmu();
+	hcall(LHCALL_FLUSH_ASYNC, 0, 0, 0, 0);
+	paravirt_leave_lazy_mmu();
 }
 
 /*
@@ -211,10 +210,10 @@ static void lguest_leave_lazy_mmu_mode (void)
  * (Technically, this is lazy CPU mode, and normally we're in lazy MMU
  * mode, but unlike Xen, lguest doesn't care about the difference).
  */
-static void lguest_end_context_switch (struct task_struct * next)
+static void lguest_end_context_switch(struct task_struct *next)
 {
-  hcall (LHCALL_FLUSH_ASYNC, 0, 0, 0, 0);
-  paravirt_end_context_switch (next);
+	hcall(LHCALL_FLUSH_ASYNC, 0, 0, 0, 0);
+	paravirt_end_context_switch(next);
 }
 
 /*G:032
@@ -235,15 +234,15 @@ static void lguest_end_context_switch (struct task_struct * next)
  * flags word contains all kind of stuff, but in practice Linux only cares
  * about the interrupt flag.  Our "save_flags()" just returns that.
  */
-static unsigned long save_fl (void)
+static unsigned long save_fl(void)
 {
-  return lguest_data.irq_enabled;
+	return lguest_data.irq_enabled;
 }
 
 /* Interrupts go off... */
-static void irq_disable (void)
+static void irq_disable(void)
 {
-  lguest_data.irq_enabled = 0;
+	lguest_data.irq_enabled = 0;
 }
 
 /*
@@ -255,13 +254,13 @@ static void irq_disable (void)
  * PV_CALLEE_SAVE_REGS_THUNK(), which pushes %eax onto the stack, calls the
  * C function, then restores it.
  */
-PV_CALLEE_SAVE_REGS_THUNK (save_fl);
-PV_CALLEE_SAVE_REGS_THUNK (irq_disable);
+PV_CALLEE_SAVE_REGS_THUNK(save_fl);
+PV_CALLEE_SAVE_REGS_THUNK(irq_disable);
 /*:*/
 
 /* These are in i386_head.S */
-extern void lg_irq_enable (void);
-extern void lg_restore_fl (unsigned long flags);
+extern void lg_irq_enable(void);
+extern void lg_restore_fl(unsigned long flags);
 
 /*M:003
  * We could be more efficient in our checking of outstanding interrupts, rather
@@ -284,20 +283,20 @@ extern void lg_restore_fl (unsigned long flags);
  * address of the handler, and... well, who cares?  The Guest just asks the
  * Host to make the change anyway, because the Host controls the real IDT.
  */
-static void lguest_write_idt_entry (gate_desc * dt,
-                                    int entrynum, const gate_desc * g)
+static void lguest_write_idt_entry(gate_desc *dt,
+				   int entrynum, const gate_desc *g)
 {
-  /*
-   * The gate_desc structure is 8 bytes long: we hand it to the Host in
-   * two 32-bit chunks.  The whole 32-bit kernel used to hand descriptors
-   * around like this; typesafety wasn't a big concern in Linux's early
-   * years.
-   */
-  u32 * desc = (u32 *) g;
-  /* Keep the local copy up to date. */
-  native_write_idt_entry (dt, entrynum, g);
-  /* Tell Host about this new entry. */
-  hcall (LHCALL_LOAD_IDT_ENTRY, entrynum, desc[0], desc[1], 0);
+	/*
+	 * The gate_desc structure is 8 bytes long: we hand it to the Host in
+	 * two 32-bit chunks.  The whole 32-bit kernel used to hand descriptors
+	 * around like this; typesafety wasn't a big concern in Linux's early
+	 * years.
+	 */
+	u32 *desc = (u32 *)g;
+	/* Keep the local copy up to date. */
+	native_write_idt_entry(dt, entrynum, g);
+	/* Tell Host about this new entry. */
+	hcall(LHCALL_LOAD_IDT_ENTRY, entrynum, desc[0], desc[1], 0);
 }
 
 /*
@@ -305,13 +304,13 @@ static void lguest_write_idt_entry (gate_desc * dt,
  * time it is written, so we can simply loop through all entries and tell the
  * Host about them.
  */
-static void lguest_load_idt (const struct desc_ptr * desc)
+static void lguest_load_idt(const struct desc_ptr *desc)
 {
-  unsigned int i;
-  struct desc_struct * idt = (void *) desc->address;
-  
-  for (i = 0; i < (desc->size + 1) / 8; i++)
-  { hcall (LHCALL_LOAD_IDT_ENTRY, i, idt[i].a, idt[i].b, 0); }
+	unsigned int i;
+	struct desc_struct *idt = (void *)desc->address;
+
+	for (i = 0; i < (desc->size+1)/8; i++)
+		hcall(LHCALL_LOAD_IDT_ENTRY, i, idt[i].a, idt[i].b, 0);
 }
 
 /*
@@ -326,26 +325,26 @@ static void lguest_load_idt (const struct desc_ptr * desc)
  *
  * This is the exactly like the IDT code.
  */
-static void lguest_load_gdt (const struct desc_ptr * desc)
+static void lguest_load_gdt(const struct desc_ptr *desc)
 {
-  unsigned int i;
-  struct desc_struct * gdt = (void *) desc->address;
-  
-  for (i = 0; i < (desc->size + 1) / 8; i++)
-  { hcall (LHCALL_LOAD_GDT_ENTRY, i, gdt[i].a, gdt[i].b, 0); }
+	unsigned int i;
+	struct desc_struct *gdt = (void *)desc->address;
+
+	for (i = 0; i < (desc->size+1)/8; i++)
+		hcall(LHCALL_LOAD_GDT_ENTRY, i, gdt[i].a, gdt[i].b, 0);
 }
 
 /*
  * For a single GDT entry which changes, we simply change our copy and
  * then tell the host about it.
  */
-static void lguest_write_gdt_entry (struct desc_struct * dt, int entrynum,
-                                    const void * desc, int type)
+static void lguest_write_gdt_entry(struct desc_struct *dt, int entrynum,
+				   const void *desc, int type)
 {
-  native_write_gdt_entry (dt, entrynum, desc, type);
-  /* Tell Host about this new entry. */
-  hcall (LHCALL_LOAD_GDT_ENTRY, entrynum,
-         dt[entrynum].a, dt[entrynum].b, 0);
+	native_write_gdt_entry(dt, entrynum, desc, type);
+	/* Tell Host about this new entry. */
+	hcall(LHCALL_LOAD_GDT_ENTRY, entrynum,
+	      dt[entrynum].a, dt[entrynum].b, 0);
 }
 
 /*
@@ -357,15 +356,15 @@ static void lguest_write_gdt_entry (struct desc_struct * dt, int entrynum,
  * Wouldn't it be nicer to have a general LOAD_GDT_ENTRIES hypercall
  * which took a range of entries?
  */
-static void lguest_load_tls (struct thread_struct * t, unsigned int cpu)
+static void lguest_load_tls(struct thread_struct *t, unsigned int cpu)
 {
-  /*
-   * There's one problem which normal hardware doesn't have: the Host
-   * can't handle us removing entries we're currently using.  So we clear
-   * the GS register here: if it's needed it'll be reloaded anyway.
-   */
-  lazy_load_gs (0);
-  lazy_hcall2 (LHCALL_LOAD_TLS, __pa (&t->tls_array), cpu);
+	/*
+	 * There's one problem which normal hardware doesn't have: the Host
+	 * can't handle us removing entries we're currently using.  So we clear
+	 * the GS register here: if it's needed it'll be reloaded anyway.
+	 */
+	lazy_load_gs(0);
+	lazy_hcall2(LHCALL_LOAD_TLS, __pa(&t->tls_array), cpu);
 }
 
 /*G:038
@@ -376,7 +375,7 @@ static void lguest_load_tls (struct thread_struct * t, unsigned int cpu)
  * uses this for some strange applications like Wine.  We don't do anything
  * here, so they'll get an informative and friendly Segmentation Fault.
  */
-static void lguest_set_ldt (const void * addr, unsigned entries)
+static void lguest_set_ldt(const void *addr, unsigned entries)
 {
 }
 
@@ -391,7 +390,7 @@ static void lguest_set_ldt (const void * addr, unsigned entries)
  * complain to the Guest about a Segmentation Fault and it'll oops.  So we
  * override the native version with a do-nothing version.
  */
-static void lguest_load_tr_desc (void)
+static void lguest_load_tr_desc(void)
 {
 }
 
@@ -417,75 +416,75 @@ static void lguest_load_tr_desc (void)
  * the Host won't even notice since it isn't privileged.  So we try not to get
  * too worked up about it.
  */
-static void lguest_cpuid (unsigned int * ax, unsigned int * bx,
-                          unsigned int * cx, unsigned int * dx)
+static void lguest_cpuid(unsigned int *ax, unsigned int *bx,
+			 unsigned int *cx, unsigned int *dx)
 {
-  int function = *ax;
-  
-  native_cpuid (ax, bx, cx, dx);
-  switch (function) {
-  /*
-   * CPUID 0 gives the highest legal CPUID number (and the ID string).
-   * We futureproof our code a little by sticking to known CPUID values.
-   */
-  case 0:
-    if (*ax > 5)
-    { *ax = 5; }
-    break;
-    
-  /*
-   * CPUID 1 is a basic feature request.
-   *
-   * CX: we only allow kernel to see SSE3, CMPXCHG16B and SSSE3
-   * DX: SSE, SSE2, FXSR, MMX, CMOV, CMPXCHG8B, TSC, FPU and PAE.
-   */
-  case 1:
-    *cx &= 0x00002201;
-    *dx &= 0x07808151;
-    /*
-     * The Host can do a nice optimization if it knows that the
-     * kernel mappings (addresses above 0xC0000000 or whatever
-     * PAGE_OFFSET is set to) haven't changed.  But Linux calls
-     * flush_tlb_user() for both user and kernel mappings unless
-     * the Page Global Enable (PGE) feature bit is set.
-     */
-    *dx |= 0x00002000;
-    /*
-     * We also lie, and say we're family id 5.  6 or greater
-     * leads to a rdmsr in early_init_intel which we can't handle.
-     * Family ID is returned as bits 8-12 in ax.
-     */
-    *ax &= 0xFFFFF0FF;
-    *ax |= 0x00000500;
-    break;
-    
-  /*
-   * This is used to detect if we're running under KVM.  We might be,
-   * but that's a Host matter, not us.  So say we're not.
-   */
-  case KVM_CPUID_SIGNATURE:
-    *bx = *cx = *dx = 0;
-    break;
-    
-  /*
-   * 0x80000000 returns the highest Extended Function, so we futureproof
-   * like we do above by limiting it to known fields.
-   */
-  case 0x80000000:
-    if (*ax > 0x80000008)
-    { *ax = 0x80000008; }
-    break;
-    
-  /*
-   * PAE systems can mark pages as non-executable.  Linux calls this the
-   * NX bit.  Intel calls it XD (eXecute Disable), AMD EVP (Enhanced
-   * Virus Protection).  We just switch it off here, since we don't
-   * support it.
-   */
-  case 0x80000001:
-    *dx &= ~ (1 << 20);
-    break;
-  }
+	int function = *ax;
+
+	native_cpuid(ax, bx, cx, dx);
+	switch (function) {
+	/*
+	 * CPUID 0 gives the highest legal CPUID number (and the ID string).
+	 * We futureproof our code a little by sticking to known CPUID values.
+	 */
+	case 0:
+		if (*ax > 5)
+			*ax = 5;
+		break;
+
+	/*
+	 * CPUID 1 is a basic feature request.
+	 *
+	 * CX: we only allow kernel to see SSE3, CMPXCHG16B and SSSE3
+	 * DX: SSE, SSE2, FXSR, MMX, CMOV, CMPXCHG8B, TSC, FPU and PAE.
+	 */
+	case 1:
+		*cx &= 0x00002201;
+		*dx &= 0x07808151;
+		/*
+		 * The Host can do a nice optimization if it knows that the
+		 * kernel mappings (addresses above 0xC0000000 or whatever
+		 * PAGE_OFFSET is set to) haven't changed.  But Linux calls
+		 * flush_tlb_user() for both user and kernel mappings unless
+		 * the Page Global Enable (PGE) feature bit is set.
+		 */
+		*dx |= 0x00002000;
+		/*
+		 * We also lie, and say we're family id 5.  6 or greater
+		 * leads to a rdmsr in early_init_intel which we can't handle.
+		 * Family ID is returned as bits 8-12 in ax.
+		 */
+		*ax &= 0xFFFFF0FF;
+		*ax |= 0x00000500;
+		break;
+
+	/*
+	 * This is used to detect if we're running under KVM.  We might be,
+	 * but that's a Host matter, not us.  So say we're not.
+	 */
+	case KVM_CPUID_SIGNATURE:
+		*bx = *cx = *dx = 0;
+		break;
+
+	/*
+	 * 0x80000000 returns the highest Extended Function, so we futureproof
+	 * like we do above by limiting it to known fields.
+	 */
+	case 0x80000000:
+		if (*ax > 0x80000008)
+			*ax = 0x80000008;
+		break;
+
+	/*
+	 * PAE systems can mark pages as non-executable.  Linux calls this the
+	 * NX bit.  Intel calls it XD (eXecute Disable), AMD EVP (Enhanced
+	 * Virus Protection).  We just switch it off here, since we don't
+	 * support it.
+	 */
+	case 0x80000001:
+		*dx &= ~(1 << 20);
+		break;
+	}
 }
 
 /*
@@ -507,15 +506,15 @@ static void lguest_cpuid (unsigned int * ax, unsigned int * bx,
  * wants to read it and we'd prefer not to bother the Host unnecessarily.
  */
 static unsigned long current_cr0;
-static void lguest_write_cr0 (unsigned long val)
+static void lguest_write_cr0(unsigned long val)
 {
-  lazy_hcall1 (LHCALL_TS, val & X86_CR0_TS);
-  current_cr0 = val;
+	lazy_hcall1(LHCALL_TS, val & X86_CR0_TS);
+	current_cr0 = val;
 }
 
-static unsigned long lguest_read_cr0 (void)
+static unsigned long lguest_read_cr0(void)
 {
-  return current_cr0;
+	return current_cr0;
 }
 
 /*
@@ -523,10 +522,10 @@ static unsigned long lguest_read_cr0 (void)
  * to use write_cr0() to do it.  This "clts" instruction is faster, because all
  * the vowels have been optimized out.
  */
-static void lguest_clts (void)
+static void lguest_clts(void)
 {
-  lazy_hcall1 (LHCALL_TS, 0);
-  current_cr0 &= ~X86_CR0_TS;
+	lazy_hcall1(LHCALL_TS, 0);
+	current_cr0 &= ~X86_CR0_TS;
 }
 
 /*
@@ -534,9 +533,9 @@ static void lguest_clts (void)
  * reads.  The Host kindly writes this into our "struct lguest_data", so we
  * just read it out of there.
  */
-static unsigned long lguest_read_cr2 (void)
+static unsigned long lguest_read_cr2(void)
 {
-  return lguest_data.cr2;
+	return lguest_data.cr2;
 }
 
 /* See lguest_set_pte() below. */
@@ -547,28 +546,28 @@ static unsigned long current_cr3;
  * cr3 is the current toplevel pagetable page: the principle is the same as
  * cr0.  Keep a local copy, and tell the Host when it changes.
  */
-static void lguest_write_cr3 (unsigned long cr3)
+static void lguest_write_cr3(unsigned long cr3)
 {
-  lazy_hcall1 (LHCALL_NEW_PGTABLE, cr3);
-  current_cr3 = cr3;
-  
-  /* These two page tables are simple, linear, and used during boot */
-  if (cr3 != __pa (swapper_pg_dir) && cr3 != __pa (initial_page_table) )
-  { cr3_changed = true; }
+	lazy_hcall1(LHCALL_NEW_PGTABLE, cr3);
+	current_cr3 = cr3;
+
+	/* These two page tables are simple, linear, and used during boot */
+	if (cr3 != __pa(swapper_pg_dir) && cr3 != __pa(initial_page_table))
+		cr3_changed = true;
 }
 
-static unsigned long lguest_read_cr3 (void)
+static unsigned long lguest_read_cr3(void)
 {
-  return current_cr3;
+	return current_cr3;
 }
 
 /* cr4 is used to enable and disable PGE, but we don't care. */
-static unsigned long lguest_read_cr4 (void)
+static unsigned long lguest_read_cr4(void)
 {
-  return 0;
+	return 0;
 }
 
-static void lguest_write_cr4 (unsigned long val)
+static void lguest_write_cr4(unsigned long val)
 {
 }
 
@@ -592,14 +591,14 @@ static void lguest_write_cr4 (unsigned long val)
  * Here's a diagram, where arrows indicate physical addresses:
  *
  * cr3 ---> +---------+
- *      |      --------->+---------+
- *      |       |      | PADDR1  |
- *    Mid-level   |      | PADDR2  |
- *    (PMD) page  |      |         |
- *      |       |    Lower-level |
- *      |       |    (PTE) page  |
- *      |       |      |         |
- *        ....             ....
+ *	    |  	   --------->+---------+
+ *	    |	      |	     | PADDR1  |
+ *	  Mid-level   |	     | PADDR2  |
+ *	  (PMD) page  |	     | 	       |
+ *	    |	      |	   Lower-level |
+ *	    |	      |	   (PTE) page  |
+ *	    |	      |	     |	       |
+ *	      ....    	     	 ....
  *
  * So to convert a virtual address to a physical address, we look up the top
  * level, which points us to the second level, which gives us the physical
@@ -622,17 +621,17 @@ static void lguest_write_cr4 (unsigned long val)
  * The result is a four level page table:
  *
  * cr3 --> [ 4 Upper  ]
- *     [   Level  ]
- *     [  Entries ]
- *     [(PUD Page)]---> +---------+
- *          |      --------->+---------+
- *          |       |      | PADDR1  |
- *        Mid-level   |      | PADDR2  |
- *        (PMD) page  |      |         |
- *          |       |    Lower-level |
- *          |       |    (PTE) page  |
- *          |       |      |         |
- *            ....             ....
+ *	   [   Level  ]
+ *	   [  Entries ]
+ *	   [(PUD Page)]---> +---------+
+ *	 		    |  	   --------->+---------+
+ *	 		    |	      |	     | PADDR1  |
+ *	 		  Mid-level   |	     | PADDR2  |
+ *	 		  (PMD) page  |	     | 	       |
+ *	 		    |	      |	   Lower-level |
+ *	 		    |	      |	   (PTE) page  |
+ *	 		    |	      |	     |	       |
+ *	 		      ....    	     	 ....
  *
  *
  * And the virtual address is decoded as:
@@ -665,24 +664,24 @@ static void lguest_write_cr4 (unsigned long val)
  * address this corresponds to.  The Guest uses one pagetable per process, so
  * we need to tell the Host which one we're changing (mm->pgd).
  */
-static void lguest_pte_update (struct mm_struct * mm, unsigned long addr,
-                               pte_t * ptep)
+static void lguest_pte_update(struct mm_struct *mm, unsigned long addr,
+			       pte_t *ptep)
 {
-  #ifdef CONFIG_X86_PAE
-  /* PAE needs to hand a 64 bit page table entry, so it uses two args. */
-  lazy_hcall4 (LHCALL_SET_PTE, __pa (mm->pgd), addr,
-               ptep->pte_low, ptep->pte_high);
-  #else
-  lazy_hcall3 (LHCALL_SET_PTE, __pa (mm->pgd), addr, ptep->pte_low);
-  #endif
+#ifdef CONFIG_X86_PAE
+	/* PAE needs to hand a 64 bit page table entry, so it uses two args. */
+	lazy_hcall4(LHCALL_SET_PTE, __pa(mm->pgd), addr,
+		    ptep->pte_low, ptep->pte_high);
+#else
+	lazy_hcall3(LHCALL_SET_PTE, __pa(mm->pgd), addr, ptep->pte_low);
+#endif
 }
 
 /* This is the "set and update" combo-meal-deal version. */
-static void lguest_set_pte_at (struct mm_struct * mm, unsigned long addr,
-                               pte_t * ptep, pte_t pteval)
+static void lguest_set_pte_at(struct mm_struct *mm, unsigned long addr,
+			      pte_t *ptep, pte_t pteval)
 {
-  native_set_pte (ptep, pteval);
-  lguest_pte_update (mm, addr, ptep);
+	native_set_pte(ptep, pteval);
+	lguest_pte_update(mm, addr, ptep);
 }
 
 /*
@@ -693,29 +692,29 @@ static void lguest_set_pte_at (struct mm_struct * mm, unsigned long addr,
  * and the index of the entry we changed.
  */
 #ifdef CONFIG_X86_PAE
-static void lguest_set_pud (pud_t * pudp, pud_t pudval)
+static void lguest_set_pud(pud_t *pudp, pud_t pudval)
 {
-  native_set_pud (pudp, pudval);
-  
-  /* 32 bytes aligned pdpt address and the index. */
-  lazy_hcall2 (LHCALL_SET_PGD, __pa (pudp) & 0xFFFFFFE0,
-               (__pa (pudp) & 0x1F) / sizeof (pud_t) );
+	native_set_pud(pudp, pudval);
+
+	/* 32 bytes aligned pdpt address and the index. */
+	lazy_hcall2(LHCALL_SET_PGD, __pa(pudp) & 0xFFFFFFE0,
+		   (__pa(pudp) & 0x1F) / sizeof(pud_t));
 }
 
-static void lguest_set_pmd (pmd_t * pmdp, pmd_t pmdval)
+static void lguest_set_pmd(pmd_t *pmdp, pmd_t pmdval)
 {
-  native_set_pmd (pmdp, pmdval);
-  lazy_hcall2 (LHCALL_SET_PMD, __pa (pmdp) & PAGE_MASK,
-               (__pa (pmdp) & (PAGE_SIZE - 1) ) / sizeof (pmd_t) );
+	native_set_pmd(pmdp, pmdval);
+	lazy_hcall2(LHCALL_SET_PMD, __pa(pmdp) & PAGE_MASK,
+		   (__pa(pmdp) & (PAGE_SIZE - 1)) / sizeof(pmd_t));
 }
 #else
 
 /* The Guest calls lguest_set_pmd to set a top-level entry when !PAE. */
-static void lguest_set_pmd (pmd_t * pmdp, pmd_t pmdval)
+static void lguest_set_pmd(pmd_t *pmdp, pmd_t pmdval)
 {
-  native_set_pmd (pmdp, pmdval);
-  lazy_hcall2 (LHCALL_SET_PGD, __pa (pmdp) & PAGE_MASK,
-               (__pa (pmdp) & (PAGE_SIZE - 1) ) / sizeof (pmd_t) );
+	native_set_pmd(pmdp, pmdval);
+	lazy_hcall2(LHCALL_SET_PGD, __pa(pmdp) & PAGE_MASK,
+		   (__pa(pmdp) & (PAGE_SIZE - 1)) / sizeof(pmd_t));
 }
 #endif
 
@@ -730,11 +729,11 @@ static void lguest_set_pmd (pmd_t * pmdp, pmd_t pmdval)
  * the Host anything changed until we've done the first real page table switch,
  * which brings boot back to 4.3 seconds.
  */
-static void lguest_set_pte (pte_t * ptep, pte_t pteval)
+static void lguest_set_pte(pte_t *ptep, pte_t pteval)
 {
-  native_set_pte (ptep, pteval);
-  if (cr3_changed)
-  { lazy_hcall1 (LHCALL_FLUSH_TLB, 1); }
+	native_set_pte(ptep, pteval);
+	if (cr3_changed)
+		lazy_hcall1(LHCALL_FLUSH_TLB, 1);
 }
 
 #ifdef CONFIG_X86_PAE
@@ -743,23 +742,23 @@ static void lguest_set_pte (pte_t * ptep, pte_t pteval)
  * bits at a time, the hardware could see a weird half-set entry.  These
  * versions ensure we update all 64 bits at once.
  */
-static void lguest_set_pte_atomic (pte_t * ptep, pte_t pte)
+static void lguest_set_pte_atomic(pte_t *ptep, pte_t pte)
 {
-  native_set_pte_atomic (ptep, pte);
-  if (cr3_changed)
-  { lazy_hcall1 (LHCALL_FLUSH_TLB, 1); }
+	native_set_pte_atomic(ptep, pte);
+	if (cr3_changed)
+		lazy_hcall1(LHCALL_FLUSH_TLB, 1);
 }
 
-static void lguest_pte_clear (struct mm_struct * mm, unsigned long addr,
-                              pte_t * ptep)
+static void lguest_pte_clear(struct mm_struct *mm, unsigned long addr,
+			     pte_t *ptep)
 {
-  native_pte_clear (mm, addr, ptep);
-  lguest_pte_update (mm, addr, ptep);
+	native_pte_clear(mm, addr, ptep);
+	lguest_pte_update(mm, addr, ptep);
 }
 
-static void lguest_pmd_clear (pmd_t * pmdp)
+static void lguest_pmd_clear(pmd_t *pmdp)
 {
-  lguest_set_pmd (pmdp, __pmd (0) );
+	lguest_set_pmd(pmdp, __pmd(0));
 }
 #endif
 
@@ -775,10 +774,10 @@ static void lguest_pmd_clear (pmd_t * pmdp)
  * page table entry: we tell the Host to set that entry to 0 (ie. the present
  * bit is zero).
  */
-static void lguest_flush_tlb_single (unsigned long addr)
+static void lguest_flush_tlb_single(unsigned long addr)
 {
-  /* Simply set it to zero: if it was not, it will fault back in. */
-  lazy_hcall3 (LHCALL_SET_PTE, current_cr3, addr, 0);
+	/* Simply set it to zero: if it was not, it will fault back in. */
+	lazy_hcall3(LHCALL_SET_PTE, current_cr3, addr, 0);
 }
 
 /*
@@ -786,9 +785,9 @@ static void lguest_flush_tlb_single (unsigned long addr)
  * This tells the Host that any of the page table entries for userspace might
  * have changed, ie. virtual addresses below PAGE_OFFSET.
  */
-static void lguest_flush_tlb_user (void)
+static void lguest_flush_tlb_user(void)
 {
-  lazy_hcall1 (LHCALL_FLUSH_TLB, 0);
+	lazy_hcall1(LHCALL_FLUSH_TLB, 0);
 }
 
 /*
@@ -796,9 +795,9 @@ static void lguest_flush_tlb_user (void)
  * common (unless the Guest is using highmem, which makes the Guest extremely
  * slow), so it's worth separating this from the user flushing above.
  */
-static void lguest_flush_tlb_kernel (void)
+static void lguest_flush_tlb_kernel(void)
 {
-  lazy_hcall1 (LHCALL_FLUSH_TLB, 1);
+	lazy_hcall1(LHCALL_FLUSH_TLB, 1);
 }
 
 /*
@@ -814,22 +813,22 @@ static void lguest_flush_tlb_kernel (void)
  * simple as setting a bit.  We don't actually "ack" interrupts as such, we
  * just mask and unmask them.  I wonder if we should be cleverer?
  */
-static void disable_lguest_irq (struct irq_data * data)
+static void disable_lguest_irq(struct irq_data *data)
 {
-  set_bit (data->irq, lguest_data.blocked_interrupts);
+	set_bit(data->irq, lguest_data.blocked_interrupts);
 }
 
-static void enable_lguest_irq (struct irq_data * data)
+static void enable_lguest_irq(struct irq_data *data)
 {
-  clear_bit (data->irq, lguest_data.blocked_interrupts);
+	clear_bit(data->irq, lguest_data.blocked_interrupts);
 }
 
 /* This structure describes the lguest IRQ controller. */
 static struct irq_chip lguest_irq_controller = {
-  .name   = "lguest",
-  .irq_mask = disable_lguest_irq,
-  .irq_mask_ack = disable_lguest_irq,
-  .irq_unmask = enable_lguest_irq,
+	.name		= "lguest",
+	.irq_mask	= disable_lguest_irq,
+	.irq_mask_ack	= disable_lguest_irq,
+	.irq_unmask	= enable_lguest_irq,
 };
 
 /*
@@ -838,22 +837,22 @@ static struct irq_chip lguest_irq_controller = {
  * Linux infrastructure that each interrupt is controlled by our level-based
  * lguest interrupt controller.
  */
-static void __init lguest_init_IRQ (void)
+static void __init lguest_init_IRQ(void)
 {
-  unsigned int i;
-  
-  for (i = FIRST_EXTERNAL_VECTOR; i < NR_VECTORS; i++) {
-    /* Some systems map "vectors" to interrupts weirdly.  Not us! */
-    __this_cpu_write (vector_irq[i], i - FIRST_EXTERNAL_VECTOR);
-    if (i != SYSCALL_VECTOR)
-    { set_intr_gate (i, interrupt[i - FIRST_EXTERNAL_VECTOR]); }
-  }
-  
-  /*
-   * This call is required to set up for 4k stacks, where we have
-   * separate stacks for hard and soft interrupts.
-   */
-  irq_ctx_init (smp_processor_id() );
+	unsigned int i;
+
+	for (i = FIRST_EXTERNAL_VECTOR; i < NR_VECTORS; i++) {
+		/* Some systems map "vectors" to interrupts weirdly.  Not us! */
+		__this_cpu_write(vector_irq[i], i - FIRST_EXTERNAL_VECTOR);
+		if (i != SYSCALL_VECTOR)
+			set_intr_gate(i, interrupt[i - FIRST_EXTERNAL_VECTOR]);
+	}
+
+	/*
+	 * This call is required to set up for 4k stacks, where we have
+	 * separate stacks for hard and soft interrupts.
+	 */
+	irq_ctx_init(smp_processor_id());
 }
 
 /*
@@ -862,18 +861,18 @@ static void __init lguest_init_IRQ (void)
  * tells us the irq is already used: other errors (ie. ENOMEM) we take
  * seriously.
  */
-int lguest_setup_irq (unsigned int irq)
+int lguest_setup_irq(unsigned int irq)
 {
-  int err;
-  
-  /* Returns -ve error or vector number. */
-  err = irq_alloc_desc_at (irq, 0);
-  if (err < 0 && err != -EEXIST)
-  { return err; }
-  
-  irq_set_chip_and_handler_name (irq, &lguest_irq_controller,
-                                 handle_level_irq, "level");
-  return 0;
+	int err;
+
+	/* Returns -ve error or vector number. */
+	err = irq_alloc_desc_at(irq, 0);
+	if (err < 0 && err != -EEXIST)
+		return err;
+
+	irq_set_chip_and_handler_name(irq, &lguest_irq_controller,
+				      handle_level_irq, "level");
+	return 0;
 }
 
 /*
@@ -882,9 +881,9 @@ int lguest_setup_irq (unsigned int irq)
  * It would be far better for everyone if the Guest had its own clock, but
  * until then the Host gives us the time on every interrupt.
  */
-static unsigned long lguest_get_wallclock (void)
+static unsigned long lguest_get_wallclock(void)
 {
-  return lguest_data.time.tv_sec;
+	return lguest_data.time.tv_sec;
 }
 
 /*
@@ -893,53 +892,52 @@ static unsigned long lguest_get_wallclock (void)
  * This matches what we want here: if we return 0 from this function, the x86
  * TSC clock will give up and not register itself.
  */
-static unsigned long lguest_tsc_khz (void)
+static unsigned long lguest_tsc_khz(void)
 {
-  return lguest_data.tsc_khz;
+	return lguest_data.tsc_khz;
 }
 
 /*
  * If we can't use the TSC, the kernel falls back to our lower-priority
  * "lguest_clock", where we read the time value given to us by the Host.
  */
-static cycle_t lguest_clock_read (struct clocksource * cs)
+static cycle_t lguest_clock_read(struct clocksource *cs)
 {
-  unsigned long sec, nsec;
-  
-  /*
-   * Since the time is in two parts (seconds and nanoseconds), we risk
-   * reading it just as it's changing from 99 & 0.999999999 to 100 and 0,
-   * and getting 99 and 0.  As Linux tends to come apart under the stress
-   * of time travel, we must be careful:
-   */
-  do {
-    /* First we read the seconds part. */
-    sec = lguest_data.time.tv_sec;
-    /*
-     * This read memory barrier tells the compiler and the CPU that
-     * this can't be reordered: we have to complete the above
-     * before going on.
-     */
-    rmb();
-    /* Now we read the nanoseconds part. */
-    nsec = lguest_data.time.tv_nsec;
-    /* Make sure we've done that. */
-    rmb();
-    /* Now if the seconds part has changed, try again. */
-  }
-  while (unlikely (lguest_data.time.tv_sec != sec) );
-  
-  /* Our lguest clock is in real nanoseconds. */
-  return sec * 1000000000ULL + nsec;
+	unsigned long sec, nsec;
+
+	/*
+	 * Since the time is in two parts (seconds and nanoseconds), we risk
+	 * reading it just as it's changing from 99 & 0.999999999 to 100 and 0,
+	 * and getting 99 and 0.  As Linux tends to come apart under the stress
+	 * of time travel, we must be careful:
+	 */
+	do {
+		/* First we read the seconds part. */
+		sec = lguest_data.time.tv_sec;
+		/*
+		 * This read memory barrier tells the compiler and the CPU that
+		 * this can't be reordered: we have to complete the above
+		 * before going on.
+		 */
+		rmb();
+		/* Now we read the nanoseconds part. */
+		nsec = lguest_data.time.tv_nsec;
+		/* Make sure we've done that. */
+		rmb();
+		/* Now if the seconds part has changed, try again. */
+	} while (unlikely(lguest_data.time.tv_sec != sec));
+
+	/* Our lguest clock is in real nanoseconds. */
+	return sec*1000000000ULL + nsec;
 }
 
 /* This is the fallback clocksource: lower priority than the TSC clocksource. */
 static struct clocksource lguest_clock = {
-  .name   = "lguest",
-  .rating   = 200,
-  .read   = lguest_clock_read,
-  .mask   = CLOCKSOURCE_MASK (64),
-  .flags    = CLOCK_SOURCE_IS_CONTINUOUS,
+	.name		= "lguest",
+	.rating		= 200,
+	.read		= lguest_clock_read,
+	.mask		= CLOCKSOURCE_MASK(64),
+	.flags		= CLOCK_SOURCE_IS_CONTINUOUS,
 };
 
 /*
@@ -947,67 +945,67 @@ static struct clocksource lguest_clock = {
  * off some time in the future.  Actually, James Morris figured all this out, I
  * just applied the patch.
  */
-static int lguest_clockevent_set_next_event (unsigned long delta,
-    struct clock_event_device * evt)
+static int lguest_clockevent_set_next_event(unsigned long delta,
+                                           struct clock_event_device *evt)
 {
-  /* FIXME: I don't think this can ever happen, but James tells me he had
-   * to put this code in.  Maybe we should remove it now.  Anyone? */
-  if (delta < LG_CLOCK_MIN_DELTA) {
-    if (printk_ratelimit() )
-      printk (KERN_DEBUG "%s: small delta %lu ns\n",
-              __func__, delta);
-    return -ETIME;
-  }
-  
-  /* Please wake us this far in the future. */
-  hcall (LHCALL_SET_CLOCKEVENT, delta, 0, 0, 0);
-  return 0;
+	/* FIXME: I don't think this can ever happen, but James tells me he had
+	 * to put this code in.  Maybe we should remove it now.  Anyone? */
+	if (delta < LG_CLOCK_MIN_DELTA) {
+		if (printk_ratelimit())
+			printk(KERN_DEBUG "%s: small delta %lu ns\n",
+			       __func__, delta);
+		return -ETIME;
+	}
+
+	/* Please wake us this far in the future. */
+	hcall(LHCALL_SET_CLOCKEVENT, delta, 0, 0, 0);
+	return 0;
 }
 
-static void lguest_clockevent_set_mode (enum clock_event_mode mode,
-                                        struct clock_event_device * evt)
+static void lguest_clockevent_set_mode(enum clock_event_mode mode,
+                                      struct clock_event_device *evt)
 {
-  switch (mode) {
-  case CLOCK_EVT_MODE_UNUSED:
-  case CLOCK_EVT_MODE_SHUTDOWN:
-    /* A 0 argument shuts the clock down. */
-    hcall (LHCALL_SET_CLOCKEVENT, 0, 0, 0, 0);
-    break;
-  case CLOCK_EVT_MODE_ONESHOT:
-    /* This is what we expect. */
-    break;
-  case CLOCK_EVT_MODE_PERIODIC:
-    BUG();
-  case CLOCK_EVT_MODE_RESUME:
-    break;
-  }
+	switch (mode) {
+	case CLOCK_EVT_MODE_UNUSED:
+	case CLOCK_EVT_MODE_SHUTDOWN:
+		/* A 0 argument shuts the clock down. */
+		hcall(LHCALL_SET_CLOCKEVENT, 0, 0, 0, 0);
+		break;
+	case CLOCK_EVT_MODE_ONESHOT:
+		/* This is what we expect. */
+		break;
+	case CLOCK_EVT_MODE_PERIODIC:
+		BUG();
+	case CLOCK_EVT_MODE_RESUME:
+		break;
+	}
 }
 
 /* This describes our primitive timer chip. */
 static struct clock_event_device lguest_clockevent = {
-  .name                   = "lguest",
-  .features               = CLOCK_EVT_FEAT_ONESHOT,
-  .set_next_event         = lguest_clockevent_set_next_event,
-  .set_mode               = lguest_clockevent_set_mode,
-  .rating                 = INT_MAX,
-  .mult                   = 1,
-  .shift                  = 0,
-  .min_delta_ns           = LG_CLOCK_MIN_DELTA,
-  .max_delta_ns           = LG_CLOCK_MAX_DELTA,
+	.name                   = "lguest",
+	.features               = CLOCK_EVT_FEAT_ONESHOT,
+	.set_next_event         = lguest_clockevent_set_next_event,
+	.set_mode               = lguest_clockevent_set_mode,
+	.rating                 = INT_MAX,
+	.mult                   = 1,
+	.shift                  = 0,
+	.min_delta_ns           = LG_CLOCK_MIN_DELTA,
+	.max_delta_ns           = LG_CLOCK_MAX_DELTA,
 };
 
 /*
  * This is the Guest timer interrupt handler (hardware interrupt 0).  We just
  * call the clockevent infrastructure and it does whatever needs doing.
  */
-static void lguest_time_irq (unsigned int irq, struct irq_desc * desc)
+static void lguest_time_irq(unsigned int irq, struct irq_desc *desc)
 {
-  unsigned long flags;
-  
-  /* Don't interrupt us while this is running. */
-  local_irq_save (flags);
-  lguest_clockevent.event_handler (&lguest_clockevent);
-  local_irq_restore (flags);
+	unsigned long flags;
+
+	/* Don't interrupt us while this is running. */
+	local_irq_save(flags);
+	lguest_clockevent.event_handler(&lguest_clockevent);
+	local_irq_restore(flags);
 }
 
 /*
@@ -1016,21 +1014,21 @@ static void lguest_time_irq (unsigned int irq, struct irq_desc * desc)
  * we cleverly initialized the "blocked_interrupts" field of "struct
  * lguest_data" so that timer interrupts were blocked until now.
  */
-static void lguest_time_init (void)
+static void lguest_time_init(void)
 {
-  /* Set up the timer interrupt (0) to go to our simple timer routine */
-  lguest_setup_irq (0);
-  irq_set_handler (0, lguest_time_irq);
-  
-  clocksource_register_hz (&lguest_clock, NSEC_PER_SEC);
-  
-  /* We can't set cpumask in the initializer: damn C limitations!  Set it
-   * here and register our timer device. */
-  lguest_clockevent.cpumask = cpumask_of (0);
-  clockevents_register_device (&lguest_clockevent);
-  
-  /* Finally, we unblock the timer interrupt. */
-  clear_bit (0, lguest_data.blocked_interrupts);
+	/* Set up the timer interrupt (0) to go to our simple timer routine */
+	lguest_setup_irq(0);
+	irq_set_handler(0, lguest_time_irq);
+
+	clocksource_register_hz(&lguest_clock, NSEC_PER_SEC);
+
+	/* We can't set cpumask in the initializer: damn C limitations!  Set it
+	 * here and register our timer device. */
+	lguest_clockevent.cpumask = cpumask_of(0);
+	clockevents_register_device(&lguest_clockevent);
+
+	/* Finally, we unblock the timer interrupt. */
+	clear_bit(0, lguest_data.blocked_interrupts);
 }
 
 /*
@@ -1050,17 +1048,17 @@ static void lguest_time_init (void)
  * will not tolerate us trying to use that), the stack pointer, and the number
  * of pages in the stack.
  */
-static void lguest_load_sp0 (struct tss_struct * tss,
-                             struct thread_struct * thread)
+static void lguest_load_sp0(struct tss_struct *tss,
+			    struct thread_struct *thread)
 {
-  lazy_hcall3 (LHCALL_SET_STACK, __KERNEL_DS | 0x1, thread->sp0,
-               THREAD_SIZE / PAGE_SIZE);
+	lazy_hcall3(LHCALL_SET_STACK, __KERNEL_DS | 0x1, thread->sp0,
+		   THREAD_SIZE / PAGE_SIZE);
 }
 
 /* Let's just say, I wouldn't do debugging under a Guest. */
-static void lguest_set_debugreg (int regno, unsigned long value)
+static void lguest_set_debugreg(int regno, unsigned long value)
 {
-  /* FIXME: Implement */
+	/* FIXME: Implement */
 }
 
 /*
@@ -1074,7 +1072,7 @@ static void lguest_set_debugreg (int regno, unsigned long value)
  * Unlike clflush, wbinvd can only be run at privilege level 0.  So we can
  * ignore clflush, but replace wbinvd.
  */
-static void lguest_wbinvd (void)
+static void lguest_wbinvd(void)
 {
 }
 
@@ -1086,51 +1084,51 @@ static void lguest_wbinvd (void)
  * does, however, allow us to get through the Linux boot code.
  */
 #ifdef CONFIG_X86_LOCAL_APIC
-static void lguest_apic_write (u32 reg, u32 v)
+static void lguest_apic_write(u32 reg, u32 v)
 {
 }
 
-static u32 lguest_apic_read (u32 reg)
+static u32 lguest_apic_read(u32 reg)
 {
-  return 0;
+	return 0;
 }
 
-static u64 lguest_apic_icr_read (void)
+static u64 lguest_apic_icr_read(void)
 {
-  return 0;
+	return 0;
 }
 
-static void lguest_apic_icr_write (u32 low, u32 id)
+static void lguest_apic_icr_write(u32 low, u32 id)
 {
-  /* Warn to see if there's any stray references */
-  WARN_ON (1);
+	/* Warn to see if there's any stray references */
+	WARN_ON(1);
 }
 
-static void lguest_apic_wait_icr_idle (void)
+static void lguest_apic_wait_icr_idle(void)
 {
-  return;
+	return;
 }
 
-static u32 lguest_apic_safe_wait_icr_idle (void)
+static u32 lguest_apic_safe_wait_icr_idle(void)
 {
-  return 0;
+	return 0;
 }
 
-static void set_lguest_basic_apic_ops (void)
+static void set_lguest_basic_apic_ops(void)
 {
-  apic->read = lguest_apic_read;
-  apic->write = lguest_apic_write;
-  apic->icr_read = lguest_apic_icr_read;
-  apic->icr_write = lguest_apic_icr_write;
-  apic->wait_icr_idle = lguest_apic_wait_icr_idle;
-  apic->safe_wait_icr_idle = lguest_apic_safe_wait_icr_idle;
+	apic->read = lguest_apic_read;
+	apic->write = lguest_apic_write;
+	apic->icr_read = lguest_apic_icr_read;
+	apic->icr_write = lguest_apic_icr_write;
+	apic->wait_icr_idle = lguest_apic_wait_icr_idle;
+	apic->safe_wait_icr_idle = lguest_apic_safe_wait_icr_idle;
 };
 #endif
 
 /* STOP!  Until an interrupt comes in. */
-static void lguest_safe_halt (void)
+static void lguest_safe_halt(void)
 {
-  hcall (LHCALL_HALT, 0, 0, 0, 0);
+	hcall(LHCALL_HALT, 0, 0, 0, 0);
 }
 
 /*
@@ -1140,10 +1138,10 @@ static void lguest_safe_halt (void)
  * Note that the Host always prefers that the Guest speak in physical addresses
  * rather than virtual addresses, so we use __pa() here.
  */
-static void lguest_power_off (void)
+static void lguest_power_off(void)
 {
-  hcall (LHCALL_SHUTDOWN, __pa ("Power down"),
-         LGUEST_SHUTDOWN_POWEROFF, 0, 0);
+	hcall(LHCALL_SHUTDOWN, __pa("Power down"),
+	      LGUEST_SHUTDOWN_POWEROFF, 0, 0);
 }
 
 /*
@@ -1151,30 +1149,30 @@ static void lguest_power_off (void)
  *
  * Don't.  But if you did, this is what happens.
  */
-static int lguest_panic (struct notifier_block * nb, unsigned long l, void * p)
+static int lguest_panic(struct notifier_block *nb, unsigned long l, void *p)
 {
-  hcall (LHCALL_SHUTDOWN, __pa (p), LGUEST_SHUTDOWN_POWEROFF, 0, 0);
-  /* The hcall won't return, but to keep gcc happy, we're "done". */
-  return NOTIFY_DONE;
+	hcall(LHCALL_SHUTDOWN, __pa(p), LGUEST_SHUTDOWN_POWEROFF, 0, 0);
+	/* The hcall won't return, but to keep gcc happy, we're "done". */
+	return NOTIFY_DONE;
 }
 
 static struct notifier_block paniced = {
-  .notifier_call = lguest_panic
+	.notifier_call = lguest_panic
 };
 
 /* Setting up memory is fairly easy. */
-static __init char * lguest_memory_setup (void)
+static __init char *lguest_memory_setup(void)
 {
-  /*
-   * The Linux bootloader header contains an "e820" memory map: the
-   * Launcher populated the first entry with our memory limit.
-   */
-  e820_add_region (boot_params.e820_map[0].addr,
-                   boot_params.e820_map[0].size,
-                   boot_params.e820_map[0].type);
-                   
-  /* This string is for the boot messages. */
-  return "LGUEST";
+	/*
+	 * The Linux bootloader header contains an "e820" memory map: the
+	 * Launcher populated the first entry with our memory limit.
+	 */
+	e820_add_region(boot_params.e820_map[0].addr,
+			  boot_params.e820_map[0].size,
+			  boot_params.e820_map[0].type);
+
+	/* This string is for the boot messages. */
+	return "LGUEST";
 }
 
 /*
@@ -1182,29 +1180,29 @@ static __init char * lguest_memory_setup (void)
  * but before that is set up we use LHCALL_NOTIFY on normal memory to produce
  * console output.
  */
-static __init int early_put_chars (u32 vtermno, const char * buf, int count)
+static __init int early_put_chars(u32 vtermno, const char *buf, int count)
 {
-  char scratch[17];
-  unsigned int len = count;
-  
-  /* We use a nul-terminated string, so we make a copy.  Icky, huh? */
-  if (len > sizeof (scratch) - 1)
-  { len = sizeof (scratch) - 1; }
-  scratch[len] = '\0';
-  memcpy (scratch, buf, len);
-  hcall (LHCALL_NOTIFY, __pa (scratch), 0, 0, 0);
-  
-  /* This routine returns the number of bytes actually written. */
-  return len;
+	char scratch[17];
+	unsigned int len = count;
+
+	/* We use a nul-terminated string, so we make a copy.  Icky, huh? */
+	if (len > sizeof(scratch) - 1)
+		len = sizeof(scratch) - 1;
+	scratch[len] = '\0';
+	memcpy(scratch, buf, len);
+	hcall(LHCALL_NOTIFY, __pa(scratch), 0, 0, 0);
+
+	/* This routine returns the number of bytes actually written. */
+	return len;
 }
 
 /*
  * Rebooting also tells the Host we're finished, but the RESTART flag tells the
  * Launcher to reboot us.
  */
-static void lguest_restart (char * reason)
+static void lguest_restart(char *reason)
 {
-  hcall (LHCALL_SHUTDOWN, __pa (reason), LGUEST_SHUTDOWN_RESTART, 0, 0);
+	hcall(LHCALL_SHUTDOWN, __pa(reason), LGUEST_SHUTDOWN_RESTART, 0, 0);
 }
 
 /*G:050
@@ -1234,10 +1232,10 @@ static void lguest_restart (char * reason)
 /*G:060 We construct a table from the assembler templates: */
 static const struct lguest_insns
 {
-  const char * start, *end;
+	const char *start, *end;
 } lguest_insns[] = {
-  [PARAVIRT_PATCH (pv_irq_ops.irq_disable)] = { lgstart_cli, lgend_cli },
-  [PARAVIRT_PATCH (pv_irq_ops.save_fl)] = { lgstart_pushf, lgend_pushf },
+	[PARAVIRT_PATCH(pv_irq_ops.irq_disable)] = { lgstart_cli, lgend_cli },
+	[PARAVIRT_PATCH(pv_irq_ops.save_fl)] = { lgstart_pushf, lgend_pushf },
 };
 
 /*
@@ -1245,24 +1243,24 @@ static const struct lguest_insns
  * paravirt.c).  If we have a replacement, we copy it in and return how much of
  * the available space we used.
  */
-static unsigned lguest_patch (u8 type, u16 clobber, void * ibuf,
-                              unsigned long addr, unsigned len)
+static unsigned lguest_patch(u8 type, u16 clobber, void *ibuf,
+			     unsigned long addr, unsigned len)
 {
-  unsigned int insn_len;
-  
-  /* Don't do anything special if we don't have a replacement */
-  if (type >= ARRAY_SIZE (lguest_insns) || !lguest_insns[type].start)
-  { return paravirt_patch_default (type, clobber, ibuf, addr, len); }
-  
-  insn_len = lguest_insns[type].end - lguest_insns[type].start;
-  
-  /* Similarly if it can't fit (doesn't happen, but let's be thorough). */
-  if (len < insn_len)
-  { return paravirt_patch_default (type, clobber, ibuf, addr, len); }
-  
-  /* Copy in our instructions. */
-  memcpy (ibuf, lguest_insns[type].start, insn_len);
-  return insn_len;
+	unsigned int insn_len;
+
+	/* Don't do anything special if we don't have a replacement */
+	if (type >= ARRAY_SIZE(lguest_insns) || !lguest_insns[type].start)
+		return paravirt_patch_default(type, clobber, ibuf, addr, len);
+
+	insn_len = lguest_insns[type].end - lguest_insns[type].start;
+
+	/* Similarly if it can't fit (doesn't happen, but let's be thorough). */
+	if (len < insn_len)
+		return paravirt_patch_default(type, clobber, ibuf, addr, len);
+
+	/* Copy in our instructions. */
+	memcpy(ibuf, lguest_insns[type].start, insn_len);
+	return insn_len;
 }
 
 /*G:029
@@ -1270,179 +1268,179 @@ static unsigned lguest_patch (u8 type, u16 clobber, void * ibuf,
  * pv_ops structures in the kernel provide points for (almost) every routine we
  * have to override to avoid privileged instructions.
  */
-__init void lguest_init (void)
+__init void lguest_init(void)
 {
-  /* We're under lguest. */
-  pv_info.name = "lguest";
-  /* Paravirt is enabled. */
-  pv_info.paravirt_enabled = 1;
-  /* We're running at privilege level 1, not 0 as normal. */
-  pv_info.kernel_rpl = 1;
-  /* Everyone except Xen runs with this set. */
-  pv_info.shared_kernel_pmd = 1;
-  
-  /*
-   * We set up all the lguest overrides for sensitive operations.  These
-   * are detailed with the operations themselves.
-   */
-  
-  /* Interrupt-related operations */
-  pv_irq_ops.save_fl = PV_CALLEE_SAVE (save_fl);
-  pv_irq_ops.restore_fl = __PV_IS_CALLEE_SAVE (lg_restore_fl);
-  pv_irq_ops.irq_disable = PV_CALLEE_SAVE (irq_disable);
-  pv_irq_ops.irq_enable = __PV_IS_CALLEE_SAVE (lg_irq_enable);
-  pv_irq_ops.safe_halt = lguest_safe_halt;
-  
-  /* Setup operations */
-  pv_init_ops.patch = lguest_patch;
-  
-  /* Intercepts of various CPU instructions */
-  pv_cpu_ops.load_gdt = lguest_load_gdt;
-  pv_cpu_ops.cpuid = lguest_cpuid;
-  pv_cpu_ops.load_idt = lguest_load_idt;
-  pv_cpu_ops.iret = lguest_iret;
-  pv_cpu_ops.load_sp0 = lguest_load_sp0;
-  pv_cpu_ops.load_tr_desc = lguest_load_tr_desc;
-  pv_cpu_ops.set_ldt = lguest_set_ldt;
-  pv_cpu_ops.load_tls = lguest_load_tls;
-  pv_cpu_ops.set_debugreg = lguest_set_debugreg;
-  pv_cpu_ops.clts = lguest_clts;
-  pv_cpu_ops.read_cr0 = lguest_read_cr0;
-  pv_cpu_ops.write_cr0 = lguest_write_cr0;
-  pv_cpu_ops.read_cr4 = lguest_read_cr4;
-  pv_cpu_ops.write_cr4 = lguest_write_cr4;
-  pv_cpu_ops.write_gdt_entry = lguest_write_gdt_entry;
-  pv_cpu_ops.write_idt_entry = lguest_write_idt_entry;
-  pv_cpu_ops.wbinvd = lguest_wbinvd;
-  pv_cpu_ops.start_context_switch = paravirt_start_context_switch;
-  pv_cpu_ops.end_context_switch = lguest_end_context_switch;
-  
-  /* Pagetable management */
-  pv_mmu_ops.write_cr3 = lguest_write_cr3;
-  pv_mmu_ops.flush_tlb_user = lguest_flush_tlb_user;
-  pv_mmu_ops.flush_tlb_single = lguest_flush_tlb_single;
-  pv_mmu_ops.flush_tlb_kernel = lguest_flush_tlb_kernel;
-  pv_mmu_ops.set_pte = lguest_set_pte;
-  pv_mmu_ops.set_pte_at = lguest_set_pte_at;
-  pv_mmu_ops.set_pmd = lguest_set_pmd;
-  #ifdef CONFIG_X86_PAE
-  pv_mmu_ops.set_pte_atomic = lguest_set_pte_atomic;
-  pv_mmu_ops.pte_clear = lguest_pte_clear;
-  pv_mmu_ops.pmd_clear = lguest_pmd_clear;
-  pv_mmu_ops.set_pud = lguest_set_pud;
-  #endif
-  pv_mmu_ops.read_cr2 = lguest_read_cr2;
-  pv_mmu_ops.read_cr3 = lguest_read_cr3;
-  pv_mmu_ops.lazy_mode.enter = paravirt_enter_lazy_mmu;
-  pv_mmu_ops.lazy_mode.leave = lguest_leave_lazy_mmu_mode;
-  pv_mmu_ops.pte_update = lguest_pte_update;
-  pv_mmu_ops.pte_update_defer = lguest_pte_update;
-  
-  #ifdef CONFIG_X86_LOCAL_APIC
-  /* APIC read/write intercepts */
-  set_lguest_basic_apic_ops();
-  #endif
-  
-  x86_init.resources.memory_setup = lguest_memory_setup;
-  x86_init.irqs.intr_init = lguest_init_IRQ;
-  x86_init.timers.timer_init = lguest_time_init;
-  x86_platform.calibrate_tsc = lguest_tsc_khz;
-  x86_platform.get_wallclock =  lguest_get_wallclock;
-  
-  /*
-   * Now is a good time to look at the implementations of these functions
-   * before returning to the rest of lguest_init().
-   */
-  
-  /*G:070
-   * Now we've seen all the paravirt_ops, we return to
-   * lguest_init() where the rest of the fairly chaotic boot setup
-   * occurs.
-   */
-  
-  /*
-   * The stack protector is a weird thing where gcc places a canary
-   * value on the stack and then checks it on return.  This file is
-   * compiled with -fno-stack-protector it, so we got this far without
-   * problems.  The value of the canary is kept at offset 20 from the
-   * %gs register, so we need to set that up before calling C functions
-   * in other files.
-   */
-  setup_stack_canary_segment (0);
-  
-  /*
-   * We could just call load_stack_canary_segment(), but we might as well
-   * call switch_to_new_gdt() which loads the whole table and sets up the
-   * per-cpu segment descriptor register %fs as well.
-   */
-  switch_to_new_gdt (0);
-  
-  /*
-   * The Host<->Guest Switcher lives at the top of our address space, and
-   * the Host told us how big it is when we made LGUEST_INIT hypercall:
-   * it put the answer in lguest_data.reserve_mem
-   */
-  reserve_top_address (lguest_data.reserve_mem);
-  
-  /*
-   * If we don't initialize the lock dependency checker now, it crashes
-   * atomic_notifier_chain_register, then paravirt_disable_iospace.
-   */
-  lockdep_init();
-  
-  /* Hook in our special panic hypercall code. */
-  atomic_notifier_chain_register (&panic_notifier_list, &paniced);
-  
-  /*
-   * The IDE code spends about 3 seconds probing for disks: if we reserve
-   * all the I/O ports up front it can't get them and so doesn't probe.
-   * Other device drivers are similar (but less severe).  This cuts the
-   * kernel boot time on my machine from 4.1 seconds to 0.45 seconds.
-   */
-  paravirt_disable_iospace();
-  
-  /*
-   * This is messy CPU setup stuff which the native boot code does before
-   * start_kernel, so we have to do, too:
-   */
-  cpu_detect (&new_cpu_data);
-  /* head.S usually sets up the first capability word, so do it here. */
-  new_cpu_data.x86_capability[0] = cpuid_edx (1);
-  
-  /* Math is always hard! */
-  new_cpu_data.hard_math = 1;
-  
-  /* We don't have features.  We have puppies!  Puppies! */
-  #ifdef CONFIG_X86_MCE
-  mce_disabled = 1;
-  #endif
-  #ifdef CONFIG_ACPI
-  acpi_disabled = 1;
-  #endif
-  
-  /*
-   * We set the preferred console to "hvc".  This is the "hypervisor
-   * virtual console" driver written by the PowerPC people, which we also
-   * adapted for lguest's use.
-   */
-  add_preferred_console ("hvc", 0, NULL);
-  
-  /* Register our very early console. */
-  virtio_cons_early_init (early_put_chars);
-  
-  /*
-   * Last of all, we set the power management poweroff hook to point to
-   * the Guest routine to power off, and the reboot hook to our restart
-   * routine.
-   */
-  pm_power_off = lguest_power_off;
-  machine_ops.restart = lguest_restart;
-  
-  /*
-   * Now we're set up, call i386_start_kernel() in head32.c and we proceed
-   * to boot as normal.  It never returns.
-   */
-  i386_start_kernel();
+	/* We're under lguest. */
+	pv_info.name = "lguest";
+	/* Paravirt is enabled. */
+	pv_info.paravirt_enabled = 1;
+	/* We're running at privilege level 1, not 0 as normal. */
+	pv_info.kernel_rpl = 1;
+	/* Everyone except Xen runs with this set. */
+	pv_info.shared_kernel_pmd = 1;
+
+	/*
+	 * We set up all the lguest overrides for sensitive operations.  These
+	 * are detailed with the operations themselves.
+	 */
+
+	/* Interrupt-related operations */
+	pv_irq_ops.save_fl = PV_CALLEE_SAVE(save_fl);
+	pv_irq_ops.restore_fl = __PV_IS_CALLEE_SAVE(lg_restore_fl);
+	pv_irq_ops.irq_disable = PV_CALLEE_SAVE(irq_disable);
+	pv_irq_ops.irq_enable = __PV_IS_CALLEE_SAVE(lg_irq_enable);
+	pv_irq_ops.safe_halt = lguest_safe_halt;
+
+	/* Setup operations */
+	pv_init_ops.patch = lguest_patch;
+
+	/* Intercepts of various CPU instructions */
+	pv_cpu_ops.load_gdt = lguest_load_gdt;
+	pv_cpu_ops.cpuid = lguest_cpuid;
+	pv_cpu_ops.load_idt = lguest_load_idt;
+	pv_cpu_ops.iret = lguest_iret;
+	pv_cpu_ops.load_sp0 = lguest_load_sp0;
+	pv_cpu_ops.load_tr_desc = lguest_load_tr_desc;
+	pv_cpu_ops.set_ldt = lguest_set_ldt;
+	pv_cpu_ops.load_tls = lguest_load_tls;
+	pv_cpu_ops.set_debugreg = lguest_set_debugreg;
+	pv_cpu_ops.clts = lguest_clts;
+	pv_cpu_ops.read_cr0 = lguest_read_cr0;
+	pv_cpu_ops.write_cr0 = lguest_write_cr0;
+	pv_cpu_ops.read_cr4 = lguest_read_cr4;
+	pv_cpu_ops.write_cr4 = lguest_write_cr4;
+	pv_cpu_ops.write_gdt_entry = lguest_write_gdt_entry;
+	pv_cpu_ops.write_idt_entry = lguest_write_idt_entry;
+	pv_cpu_ops.wbinvd = lguest_wbinvd;
+	pv_cpu_ops.start_context_switch = paravirt_start_context_switch;
+	pv_cpu_ops.end_context_switch = lguest_end_context_switch;
+
+	/* Pagetable management */
+	pv_mmu_ops.write_cr3 = lguest_write_cr3;
+	pv_mmu_ops.flush_tlb_user = lguest_flush_tlb_user;
+	pv_mmu_ops.flush_tlb_single = lguest_flush_tlb_single;
+	pv_mmu_ops.flush_tlb_kernel = lguest_flush_tlb_kernel;
+	pv_mmu_ops.set_pte = lguest_set_pte;
+	pv_mmu_ops.set_pte_at = lguest_set_pte_at;
+	pv_mmu_ops.set_pmd = lguest_set_pmd;
+#ifdef CONFIG_X86_PAE
+	pv_mmu_ops.set_pte_atomic = lguest_set_pte_atomic;
+	pv_mmu_ops.pte_clear = lguest_pte_clear;
+	pv_mmu_ops.pmd_clear = lguest_pmd_clear;
+	pv_mmu_ops.set_pud = lguest_set_pud;
+#endif
+	pv_mmu_ops.read_cr2 = lguest_read_cr2;
+	pv_mmu_ops.read_cr3 = lguest_read_cr3;
+	pv_mmu_ops.lazy_mode.enter = paravirt_enter_lazy_mmu;
+	pv_mmu_ops.lazy_mode.leave = lguest_leave_lazy_mmu_mode;
+	pv_mmu_ops.pte_update = lguest_pte_update;
+	pv_mmu_ops.pte_update_defer = lguest_pte_update;
+
+#ifdef CONFIG_X86_LOCAL_APIC
+	/* APIC read/write intercepts */
+	set_lguest_basic_apic_ops();
+#endif
+
+	x86_init.resources.memory_setup = lguest_memory_setup;
+	x86_init.irqs.intr_init = lguest_init_IRQ;
+	x86_init.timers.timer_init = lguest_time_init;
+	x86_platform.calibrate_tsc = lguest_tsc_khz;
+	x86_platform.get_wallclock =  lguest_get_wallclock;
+
+	/*
+	 * Now is a good time to look at the implementations of these functions
+	 * before returning to the rest of lguest_init().
+	 */
+
+	/*G:070
+	 * Now we've seen all the paravirt_ops, we return to
+	 * lguest_init() where the rest of the fairly chaotic boot setup
+	 * occurs.
+	 */
+
+	/*
+	 * The stack protector is a weird thing where gcc places a canary
+	 * value on the stack and then checks it on return.  This file is
+	 * compiled with -fno-stack-protector it, so we got this far without
+	 * problems.  The value of the canary is kept at offset 20 from the
+	 * %gs register, so we need to set that up before calling C functions
+	 * in other files.
+	 */
+	setup_stack_canary_segment(0);
+
+	/*
+	 * We could just call load_stack_canary_segment(), but we might as well
+	 * call switch_to_new_gdt() which loads the whole table and sets up the
+	 * per-cpu segment descriptor register %fs as well.
+	 */
+	switch_to_new_gdt(0);
+
+	/*
+	 * The Host<->Guest Switcher lives at the top of our address space, and
+	 * the Host told us how big it is when we made LGUEST_INIT hypercall:
+	 * it put the answer in lguest_data.reserve_mem
+	 */
+	reserve_top_address(lguest_data.reserve_mem);
+
+	/*
+	 * If we don't initialize the lock dependency checker now, it crashes
+	 * atomic_notifier_chain_register, then paravirt_disable_iospace.
+	 */
+	lockdep_init();
+
+	/* Hook in our special panic hypercall code. */
+	atomic_notifier_chain_register(&panic_notifier_list, &paniced);
+
+	/*
+	 * The IDE code spends about 3 seconds probing for disks: if we reserve
+	 * all the I/O ports up front it can't get them and so doesn't probe.
+	 * Other device drivers are similar (but less severe).  This cuts the
+	 * kernel boot time on my machine from 4.1 seconds to 0.45 seconds.
+	 */
+	paravirt_disable_iospace();
+
+	/*
+	 * This is messy CPU setup stuff which the native boot code does before
+	 * start_kernel, so we have to do, too:
+	 */
+	cpu_detect(&new_cpu_data);
+	/* head.S usually sets up the first capability word, so do it here. */
+	new_cpu_data.x86_capability[0] = cpuid_edx(1);
+
+	/* Math is always hard! */
+	new_cpu_data.hard_math = 1;
+
+	/* We don't have features.  We have puppies!  Puppies! */
+#ifdef CONFIG_X86_MCE
+	mce_disabled = 1;
+#endif
+#ifdef CONFIG_ACPI
+	acpi_disabled = 1;
+#endif
+
+	/*
+	 * We set the preferred console to "hvc".  This is the "hypervisor
+	 * virtual console" driver written by the PowerPC people, which we also
+	 * adapted for lguest's use.
+	 */
+	add_preferred_console("hvc", 0, NULL);
+
+	/* Register our very early console. */
+	virtio_cons_early_init(early_put_chars);
+
+	/*
+	 * Last of all, we set the power management poweroff hook to point to
+	 * the Guest routine to power off, and the reboot hook to our restart
+	 * routine.
+	 */
+	pm_power_off = lguest_power_off;
+	machine_ops.restart = lguest_restart;
+
+	/*
+	 * Now we're set up, call i386_start_kernel() in head32.c and we proceed
+	 * to boot as normal.  It never returns.
+	 */
+	i386_start_kernel();
 }
 /*
  * This marks the end of stage II of our journey, The Guest.

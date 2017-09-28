@@ -27,10 +27,10 @@
 
 #define ARCH_HAS_READ_CURRENT_TIMER
 
-static inline int read_current_timer (unsigned long * timer_val)
+static inline int read_current_timer(unsigned long *timer_val)
 {
-  *timer_val = (unsigned long) __vmgettime();
-  return 0;
+	*timer_val = (unsigned long) __vmgettime();
+	return 0;
 }
 
 #endif

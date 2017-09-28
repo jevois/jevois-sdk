@@ -5,6 +5,6 @@
 typedef unsigned long mm_context_t;
 
 /* mm/srmmu.c */
-extern ctxd_t * srmmu_ctx_table_phys;
+extern ctxd_t *srmmu_ctx_table_phys;
 
 #endif

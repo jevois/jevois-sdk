@@ -16,8 +16,8 @@
 #define IIO_ITTE_WIDGET_MASK    ((1<<IIO_ITTE_WIDGET_BITS)-1)
 #define IIO_ITTE_WIDGET_SHIFT   8
 
-#define IIO_ITTE_WIDGET(itte) \
-  (((itte) >> IIO_ITTE_WIDGET_SHIFT) & IIO_ITTE_WIDGET_MASK)
+#define IIO_ITTE_WIDGET(itte)	\
+	(((itte) >> IIO_ITTE_WIDGET_SHIFT) & IIO_ITTE_WIDGET_MASK)
 
 /*
  * Use the top big window as a surrogate for the first small window
@@ -30,25 +30,25 @@
  * Changes to this struct will require corresponding changes to the kernel.
  */
 struct sn_flush_device_common {
-  int sfdl_bus;
-  int sfdl_slot;
-  int sfdl_pin;
-  struct common_bar_list {
-    unsigned long start;
-    unsigned long end;
-  } sfdl_bar_list[6];
-  unsigned long sfdl_force_int_addr;
-  unsigned long sfdl_flush_value;
-  volatile unsigned long * sfdl_flush_addr;
-  u32 sfdl_persistent_busnum;
-  u32 sfdl_persistent_segment;
-  struct pcibus_info * sfdl_pcibus_info;
+	int sfdl_bus;
+	int sfdl_slot;
+	int sfdl_pin;
+	struct common_bar_list {
+		unsigned long start;
+		unsigned long end;
+	} sfdl_bar_list[6];
+	unsigned long sfdl_force_int_addr;
+	unsigned long sfdl_flush_value;
+	volatile unsigned long *sfdl_flush_addr;
+	u32 sfdl_persistent_busnum;
+	u32 sfdl_persistent_segment;
+	struct pcibus_info *sfdl_pcibus_info;
 };
 
 /* This struct is kernel only and is not used by the PROM */
 struct sn_flush_device_kernel {
-  spinlock_t sfdl_flush_lock;
-  struct sn_flush_device_common * common;
+	spinlock_t sfdl_flush_lock;
+	struct sn_flush_device_common *common;
 };
 
 /* 01/16/06 This struct is the old PROM/kernel struct and needs to be included
@@ -56,36 +56,36 @@ struct sn_flush_device_kernel {
  * will be removed when the next official PROM release occurs. */
 
 struct sn_flush_device_war {
-  struct sn_flush_device_common common;
-  u32 filler; /* older PROMs expect the default size of a spinlock_t */
+	struct sn_flush_device_common common;
+	u32 filler; /* older PROMs expect the default size of a spinlock_t */
 };
 
 /*
  * **widget_p - Used as an array[wid_num][device] of sn_flush_device_kernel.
  */
 struct sn_flush_nasid_entry  {
-  struct sn_flush_device_kernel ** widget_p;
-  u64 iio_itte[8];
+	struct sn_flush_device_kernel **widget_p;
+	u64 iio_itte[8];
 };
 
 struct hubdev_info {
-  geoid_t       hdi_geoid;
-  short       hdi_nasid;
-  short       hdi_peer_nasid;   /* Dual Porting Peer */
-  
-  struct sn_flush_nasid_entry hdi_flush_nasid_list;
-  struct xwidget_info   hdi_xwidget_info[HUB_WIDGET_ID_MAX + 1];
-  
-  
-  void    *    hdi_nodepda;
-  void    *    hdi_node_vertex;
-  u32       max_segment_number;
-  u32       max_pcibus_number;
+	geoid_t				hdi_geoid;
+	short				hdi_nasid;
+	short				hdi_peer_nasid;   /* Dual Porting Peer */
+
+	struct sn_flush_nasid_entry	hdi_flush_nasid_list;
+	struct xwidget_info		hdi_xwidget_info[HUB_WIDGET_ID_MAX + 1];
+
+
+	void				*hdi_nodepda;
+	void				*hdi_node_vertex;
+	u32				max_segment_number;
+	u32				max_pcibus_number;
 };
 
-extern void hubdev_init_node (nodepda_t *, cnodeid_t);
-extern void hub_error_init (struct hubdev_info *);
-extern void ice_error_init (struct hubdev_info *);
+extern void hubdev_init_node(nodepda_t *, cnodeid_t);
+extern void hub_error_init(struct hubdev_info *);
+extern void ice_error_init(struct hubdev_info *);
 
 
 #endif /* _ASM_IA64_SN_XTALK_HUBDEV_H */

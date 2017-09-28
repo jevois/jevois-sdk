@@ -16,48 +16,48 @@
 #include <linux/init.h>
 
 
-static int cpufreq_governor_performance (struct cpufreq_policy * policy,
-    unsigned int event)
+static int cpufreq_governor_performance(struct cpufreq_policy *policy,
+					unsigned int event)
 {
-  switch (event) {
-  case CPUFREQ_GOV_START:
-  case CPUFREQ_GOV_LIMITS:
-    pr_debug ("setting to %u kHz because of event %u\n",
-              policy->max, event);
-    __cpufreq_driver_target (policy, policy->max,
-                             CPUFREQ_RELATION_H);
-    break;
-  default:
-    break;
-  }
-  return 0;
+	switch (event) {
+	case CPUFREQ_GOV_START:
+	case CPUFREQ_GOV_LIMITS:
+		pr_debug("setting to %u kHz because of event %u\n",
+						policy->max, event);
+		__cpufreq_driver_target(policy, policy->max,
+						CPUFREQ_RELATION_H);
+		break;
+	default:
+		break;
+	}
+	return 0;
 }
 
 #ifdef CONFIG_CPU_FREQ_GOV_PERFORMANCE_MODULE
 static
 #endif
 struct cpufreq_governor cpufreq_gov_performance = {
-  .name   = "performance",
-  .governor = cpufreq_governor_performance,
-  .owner    = THIS_MODULE,
+	.name		= "performance",
+	.governor	= cpufreq_governor_performance,
+	.owner		= THIS_MODULE,
 };
 
 
-static int __init cpufreq_gov_performance_init (void)
+static int __init cpufreq_gov_performance_init(void)
 {
-  return cpufreq_register_governor (&cpufreq_gov_performance);
+	return cpufreq_register_governor(&cpufreq_gov_performance);
 }
 
 
-static void __exit cpufreq_gov_performance_exit (void)
+static void __exit cpufreq_gov_performance_exit(void)
 {
-  cpufreq_unregister_governor (&cpufreq_gov_performance);
+	cpufreq_unregister_governor(&cpufreq_gov_performance);
 }
 
 
-MODULE_AUTHOR ("Dominik Brodowski <linux@brodo.de>");
-MODULE_DESCRIPTION ("CPUfreq policy governor 'performance'");
-MODULE_LICENSE ("GPL");
+MODULE_AUTHOR("Dominik Brodowski <linux@brodo.de>");
+MODULE_DESCRIPTION("CPUfreq policy governor 'performance'");
+MODULE_LICENSE("GPL");
 
-fs_initcall (cpufreq_gov_performance_init);
-module_exit (cpufreq_gov_performance_exit);
+fs_initcall(cpufreq_gov_performance_init);
+module_exit(cpufreq_gov_performance_exit);

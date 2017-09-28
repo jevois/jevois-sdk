@@ -26,15 +26,15 @@
 #include <asm/reboot.h>
 #include <glb.h>
 
-void pnx8550_machine_restart (char * command)
+void pnx8550_machine_restart(char *command)
 {
-  PNX8550_RST_CTL = PNX8550_RST_DO_SW_RST;
+	PNX8550_RST_CTL = PNX8550_RST_DO_SW_RST;
 }
 
-void pnx8550_machine_halt (void)
+void pnx8550_machine_halt(void)
 {
-  while (1) {
-    if (cpu_wait)
-    { cpu_wait(); }
-  }
+	while (1) {
+		if (cpu_wait)
+			cpu_wait();
+	}
 }

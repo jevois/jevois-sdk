@@ -17,30 +17,30 @@
  * assume GCC is being used.
  */
 
-typedef unsigned short  __kernel_mode_t;
+typedef unsigned short	__kernel_mode_t;
 #define __kernel_mode_t __kernel_mode_t
 
-typedef unsigned short  __kernel_nlink_t;
+typedef unsigned short	__kernel_nlink_t;
 #define __kernel_nlink_t __kernel_nlink_t
 
-typedef unsigned short  __kernel_ipc_pid_t;
+typedef unsigned short	__kernel_ipc_pid_t;
 #define __kernel_ipc_pid_t __kernel_ipc_pid_t
 
-typedef unsigned short  __kernel_uid_t;
-typedef unsigned short  __kernel_gid_t;
+typedef unsigned short	__kernel_uid_t;
+typedef unsigned short	__kernel_gid_t;
 #define __kernel_uid_t __kernel_uid_t
 
 #if __GNUC__ == 4
-typedef unsigned int  __kernel_size_t;
-typedef signed int  __kernel_ssize_t;
+typedef unsigned int	__kernel_size_t;
+typedef signed int	__kernel_ssize_t;
 #else
-typedef unsigned long __kernel_size_t;
-typedef signed long __kernel_ssize_t;
+typedef unsigned long	__kernel_size_t;
+typedef signed long	__kernel_ssize_t;
 #endif
-typedef int   __kernel_ptrdiff_t;
+typedef int		__kernel_ptrdiff_t;
 #define __kernel_size_t __kernel_size_t
 
-typedef unsigned short  __kernel_old_dev_t;
+typedef unsigned short	__kernel_old_dev_t;
 #define __kernel_old_dev_t __kernel_old_dev_t
 
 #include <asm-generic/posix_types.h>

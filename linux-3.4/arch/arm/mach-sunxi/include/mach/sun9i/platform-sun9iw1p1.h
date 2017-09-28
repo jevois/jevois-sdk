@@ -450,8 +450,8 @@
 #define UART_FORCE_UPDATE                         (1 << 2)
 
 #define SUNXI_R_UART_LOG(fmt, args...)            \
-  do {                                              \
-    printk("[%s]"fmt"\n", __func__, ##args);  \
-  }while(0)
+do {                                              \
+	printk("[%s]"fmt"\n", __func__, ##args);  \
+}while(0)
 
 #endif /* __PLATFORM_SUN9I_W1P1_H */

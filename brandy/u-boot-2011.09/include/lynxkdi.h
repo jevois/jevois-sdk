@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -28,14 +28,14 @@
 /* Boot parameter struct passed to kernel
  */
 typedef struct lynxos_bootparms_t {
-  uint8_t   rsvd1[2]; /* Reserved     */
-  uint8_t   ethaddr[6]; /* Ethernet address   */
-  uint16_t  flags;    /* Boot flags     */
-  uint32_t  rate;   /* System frequency   */
-  uint32_t  clock_ref;  /* Time reference   */
-  uint32_t  dramsz;   /* DRAM size      */
-  uint32_t  rsvd2;    /* Reserved     */
+	uint8_t		rsvd1[2];	/* Reserved			*/
+	uint8_t		ethaddr[6];	/* Ethernet address		*/
+	uint16_t	flags;		/* Boot flags			*/
+	uint32_t	rate;		/* System frequency		*/
+	uint32_t	clock_ref;	/* Time reference		*/
+	uint32_t	dramsz;		/* DRAM size			*/
+	uint32_t	rsvd2;		/* Reserved			*/
 } lynxos_bootparms_t;
 
 
-#endif  /* __LYNXKDI_H__ */
+#endif	/* __LYNXKDI_H__ */

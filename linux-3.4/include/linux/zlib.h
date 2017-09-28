@@ -49,7 +49,7 @@
       zlib_inflate itself to inflate the data.
 */
 
-/*
+/* 
      The 'zlib' compression library provides in-memory compression and
   decompression functions, including integrity checks of the uncompressed
   data.  This version of the library supports only one compression method
@@ -82,25 +82,25 @@
 struct internal_state;
 
 typedef struct z_stream_s {
-  const Byte * next_in;  /* next input byte */
-  uInt     avail_in;  /* number of bytes available at next_in */
-  uLong    total_in;  /* total nb of input bytes read so far */
-  
-  Byte  *  next_out;  /* next output byte should be put there */
-  uInt     avail_out; /* remaining free space at next_out */
-  uLong    total_out; /* total nb of bytes output so far */
-  
-  char   *  msg;      /* last error message, NULL if no error */
-  struct internal_state * state; /* not visible by applications */
-  
-  void   *  workspace; /* memory allocated for this stream */
-  
-  int     data_type;  /* best guess about the data type: ascii or binary */
-  uLong   adler;      /* adler32 value of the uncompressed data */
-  uLong   reserved;   /* reserved for future use */
+    const Byte *next_in;   /* next input byte */
+    uInt     avail_in;  /* number of bytes available at next_in */
+    uLong    total_in;  /* total nb of input bytes read so far */
+
+    Byte    *next_out;  /* next output byte should be put there */
+    uInt     avail_out; /* remaining free space at next_out */
+    uLong    total_out; /* total nb of bytes output so far */
+
+    char     *msg;      /* last error message, NULL if no error */
+    struct internal_state *state; /* not visible by applications */
+
+    void     *workspace; /* memory allocated for this stream */
+
+    int     data_type;  /* best guess about the data type: ascii or binary */
+    uLong   adler;      /* adler32 value of the uncompressed data */
+    uLong   reserved;   /* reserved for future use */
 } z_stream;
 
-typedef z_stream * z_streamp;
+typedef z_stream *z_streamp;
 
 /*
    The application must update next_in and avail_in when avail_in has
@@ -134,7 +134,7 @@ typedef z_stream * z_streamp;
    a single step).
 */
 
-/* constants */
+                        /* constants */
 
 #define Z_NO_FLUSH      0
 #define Z_PARTIAL_FLUSH 1 /* will be removed, use Z_SYNC_FLUSH instead */
@@ -177,7 +177,7 @@ typedef z_stream * z_streamp;
 #define Z_DEFLATED   8
 /* The deflate compression method (the only one supported in this version) */
 
-/* basic functions */
+                        /* basic functions */
 
 extern int zlib_deflate_workspacesize (int windowBits, int memLevel);
 /*
@@ -191,7 +191,7 @@ extern int zlib_deflate_workspacesize (int windowBits, int memLevel);
    exceed those passed here.
 */
 
-/*
+/* 
 extern int deflateInit (z_streamp strm, int level);
 
      Initializes the internal stream state for compression. The fields
@@ -269,7 +269,7 @@ extern int zlib_deflate (z_streamp strm, int flush);
   more input data, until it returns with Z_STREAM_END or an error. After
   deflate has returned Z_STREAM_END, the only possible operations on the
   stream are deflateReset or deflateEnd.
-
+  
     Z_FINISH can be used immediately after deflateInit if all the compression
   is to be done in a single step. In this case, avail_out must be at least
   0.1% larger than avail_in plus 12 bytes.  If deflate does not return
@@ -313,7 +313,7 @@ extern int zlib_inflate_workspacesize (void);
    returned in stream->workspace before calling zlib_inflateInit().
 */
 
-/*
+/* 
 extern int zlib_inflateInit (z_streamp strm);
 
      Initializes the internal stream state for decompression. The fields
@@ -444,13 +444,13 @@ extern int zlib_inflateEnd (z_streamp strm);
    static string (which must not be deallocated).
 */
 
-/* Advanced functions */
+                        /* Advanced functions */
 
 /*
     The following functions are needed only in some special applications.
 */
 
-/*
+/*   
 extern int deflateInit2 (z_streamp strm,
                                      int  level,
                                      int  method,
@@ -493,11 +493,11 @@ extern int deflateInit2 (z_streamp strm,
    method). msg is set to null if there is no error message.  deflateInit2 does
    not perform any compression: this will be done by deflate().
 */
-
+                            
 #if 0
 extern int zlib_deflateSetDictionary (z_streamp strm,
-                                      const Byte * dictionary,
-                                      uInt  dictLength);
+						     const Byte *dictionary,
+						     uInt  dictLength);
 #endif
 /*
      Initializes the compression dictionary from the given byte sequence
@@ -563,9 +563,9 @@ extern int zlib_deflateReset (z_streamp strm);
    stream state was inconsistent (such as zalloc or state being NULL).
 */
 
-static inline unsigned long deflateBound (unsigned long s)
+static inline unsigned long deflateBound(unsigned long s)
 {
-  return s + ( (s + 7) >> 3) + ( (s + 63) >> 6) + 11;
+	return s + ((s + 7) >> 3) + ((s + 63) >> 6) + 11;
 }
 
 #if 0
@@ -589,7 +589,7 @@ extern int zlib_deflateParams (z_streamp strm, int level, int strategy);
    if strm->avail_out was zero.
 */
 
-/*
+/*   
 extern int inflateInit2 (z_streamp strm, int  windowBits);
 
      This is another version of inflateInit with an extra parameter. The
@@ -632,8 +632,8 @@ extern int inflateInit2 (z_streamp strm, int  windowBits);
 */
 
 extern int zlib_inflateSetDictionary (z_streamp strm,
-                                      const Byte * dictionary,
-                                      uInt  dictLength);
+						     const Byte *dictionary,
+						     uInt  dictLength);
 /*
      Initializes the decompression dictionary from the given uncompressed byte
    sequence. This function must be called immediately after a call of inflate,
@@ -656,7 +656,7 @@ extern int zlib_inflateSetDictionary (z_streamp strm,
 #if 0
 extern int zlib_inflateSync (z_streamp strm);
 #endif
-/*
+/* 
     Skips invalid compressed data until a full flush point (see above the
   description of deflate with Z_FULL_FLUSH) can be found, or until all
   available input is skipped. No output is provided.
@@ -680,7 +680,7 @@ extern int zlib_inflateReset (z_streamp strm);
    stream state was inconsistent (such as zalloc or state being NULL).
 */
 
-extern int zlib_inflateIncomp (z_stream * strm);
+extern int zlib_inflateIncomp (z_stream *strm);
 /*
      This function adds the data at next_in (avail_in bytes) to the output
    history without performing any output.  There must be no pending output,
@@ -690,22 +690,22 @@ extern int zlib_inflateIncomp (z_stream * strm);
 */
 
 #define zlib_deflateInit(strm, level) \
-  zlib_deflateInit2((strm), (level), Z_DEFLATED, MAX_WBITS, \
-                    DEF_MEM_LEVEL, Z_DEFAULT_STRATEGY)
+	zlib_deflateInit2((strm), (level), Z_DEFLATED, MAX_WBITS, \
+			      DEF_MEM_LEVEL, Z_DEFAULT_STRATEGY)
 #define zlib_inflateInit(strm) \
-  zlib_inflateInit2((strm), DEF_WBITS)
+	zlib_inflateInit2((strm), DEF_WBITS)
 
-extern int zlib_deflateInit2 (z_streamp strm, int  level, int  method,
-                              int windowBits, int memLevel,
-                              int strategy);
-extern int zlib_inflateInit2 (z_streamp strm, int  windowBits);
+extern int zlib_deflateInit2(z_streamp strm, int  level, int  method,
+                                      int windowBits, int memLevel,
+                                      int strategy);
+extern int zlib_inflateInit2(z_streamp strm, int  windowBits);
 
 #if !defined(_Z_UTIL_H) && !defined(NO_DUMMY_DECL)
-struct internal_state {int dummy;}; /* hack for buggy compilers */
+    struct internal_state {int dummy;}; /* hack for buggy compilers */
 #endif
 
 /* Utility function: initialize zlib, unpack binary blob, clean up zlib,
  * return len or negative error code. */
-extern int zlib_inflate_blob (void * dst, unsigned dst_sz, const void * src, unsigned src_sz);
+extern int zlib_inflate_blob(void *dst, unsigned dst_sz, const void *src, unsigned src_sz);
 
 #endif /* _ZLIB_H */

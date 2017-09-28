@@ -54,9 +54,9 @@
  *      host_buf != NULL
  *  Ensures:
  */
-extern u32 dev_brd_write_fxn (void * arb,
-                              u32 dsp_add,
-                              void * host_buf, u32 ul_num_bytes, u32 mem_space);
+extern u32 dev_brd_write_fxn(void *arb,
+			     u32 dsp_add,
+			     void *host_buf, u32 ul_num_bytes, u32 mem_space);
 
 /*
  *  ======== dev_create_device ========
@@ -89,10 +89,10 @@ extern u32 dev_brd_write_fxn (void * arb,
  *      Otherwise, does not create the device object, ensures the Bridge driver
  *      module is unloaded, and sets *device_obj to NULL.
  */
-extern int dev_create_device (struct dev_object
-                              ** device_obj,
-                              const char * driver_file_name,
-                              struct cfg_devnode * dev_node_obj);
+extern int dev_create_device(struct dev_object
+				    **device_obj,
+				    const char *driver_file_name,
+				    struct cfg_devnode *dev_node_obj);
 
 /*
  *  ======== dev_create2 ========
@@ -112,7 +112,7 @@ extern int dev_create_device (struct dev_object
  *      0 and hdev_obj->node_mgr != NULL
  *      else    hdev_obj->node_mgr == NULL
  */
-extern int dev_create2 (struct dev_object * hdev_obj);
+extern int dev_create2(struct dev_object *hdev_obj);
 
 /*
  *  ======== dev_destroy2 ========
@@ -130,7 +130,7 @@ extern int dev_create2 (struct dev_object * hdev_obj);
  *      0 and hdev_obj->node_mgr == NULL
  *      else    -EPERM.
  */
-extern int dev_destroy2 (struct dev_object * hdev_obj);
+extern int dev_destroy2(struct dev_object *hdev_obj);
 
 /*
  *  ======== dev_destroy_device ========
@@ -148,8 +148,8 @@ extern int dev_destroy2 (struct dev_object * hdev_obj);
  *      DEV Initialized.
  *  Ensures:
  */
-extern int dev_destroy_device (struct dev_object
-                               *hdev_obj);
+extern int dev_destroy_device(struct dev_object
+				     *hdev_obj);
 
 /*
  *  ======== dev_get_chnl_mgr ========
@@ -170,8 +170,8 @@ extern int dev_destroy_device (struct dev_object
  *                      or NULL.
  *      else:           *mgr is NULL.
  */
-extern int dev_get_chnl_mgr (struct dev_object * hdev_obj,
-                             struct chnl_mgr ** mgr);
+extern int dev_get_chnl_mgr(struct dev_object *hdev_obj,
+				   struct chnl_mgr **mgr);
 
 /*
  *  ======== dev_get_cmm_mgr ========
@@ -193,8 +193,8 @@ extern int dev_get_chnl_mgr (struct dev_object * hdev_obj,
  *                      or NULL.
  *      else:           *mgr is NULL.
  */
-extern int dev_get_cmm_mgr (struct dev_object * hdev_obj,
-                            struct cmm_object ** mgr);
+extern int dev_get_cmm_mgr(struct dev_object *hdev_obj,
+				  struct cmm_object **mgr);
 
 /*
  *  ======== dev_get_dmm_mgr ========
@@ -216,8 +216,8 @@ extern int dev_get_cmm_mgr (struct dev_object * hdev_obj,
  *                      or NULL.
  *      else:           *mgr is NULL.
  */
-extern int dev_get_dmm_mgr (struct dev_object * hdev_obj,
-                            struct dmm_object ** mgr);
+extern int dev_get_dmm_mgr(struct dev_object *hdev_obj,
+				  struct dmm_object **mgr);
 
 /*
  *  ======== dev_get_cod_mgr ========
@@ -237,8 +237,8 @@ extern int dev_get_dmm_mgr (struct dev_object * hdev_obj,
  *      0:        *cod_mgr contains a handle to a COD manager object.
  *      else:           *cod_mgr is NULL.
  */
-extern int dev_get_cod_mgr (struct dev_object * hdev_obj,
-                            struct cod_manager ** cod_mgr);
+extern int dev_get_cod_mgr(struct dev_object *hdev_obj,
+				  struct cod_manager **cod_mgr);
 
 /*
  *  ======== dev_get_deh_mgr ========
@@ -257,8 +257,8 @@ extern int dev_get_cod_mgr (struct dev_object * hdev_obj,
  *      0:    *deh_manager contains a handle to a DEH manager object.
  *      else:       *deh_manager is NULL.
  */
-extern int dev_get_deh_mgr (struct dev_object * hdev_obj,
-                            struct deh_mgr ** deh_manager);
+extern int dev_get_deh_mgr(struct dev_object *hdev_obj,
+				  struct deh_mgr **deh_manager);
 
 /*
  *  ======== dev_get_dev_node ========
@@ -278,8 +278,8 @@ extern int dev_get_deh_mgr (struct dev_object * hdev_obj,
  *      0:        *dev_nde contains a platform specific device ID;
  *      else:           *dev_nde is NULL.
  */
-extern int dev_get_dev_node (struct dev_object * hdev_obj,
-                             struct cfg_devnode ** dev_nde);
+extern int dev_get_dev_node(struct dev_object *hdev_obj,
+				   struct cfg_devnode **dev_nde);
 
 /*
  *  ======== dev_get_dev_type ========
@@ -299,8 +299,8 @@ extern int dev_get_dev_node (struct dev_object * hdev_obj,
  *      0:        *dev_nde contains a platform specific device ID;
  *      else:           *dev_nde is NULL.
  */
-extern int dev_get_dev_type (struct dev_object * device_obj,
-                             u8 * dev_type);
+extern int dev_get_dev_type(struct dev_object *device_obj,
+					u8 *dev_type);
 
 /*
  *  ======== dev_get_first ========
@@ -320,7 +320,7 @@ extern int dev_get_dev_type (struct dev_object * device_obj,
  *      A subsequent call to dev_get_next will return the next device object in
  *      the list.
  */
-extern struct dev_object * dev_get_first (void);
+extern struct dev_object *dev_get_first(void);
 
 /*
  *  ======== dev_get_intf_fxns ========
@@ -342,8 +342,8 @@ extern struct dev_object * dev_get_first (void);
  *                      driver interface;
  *      else:           *if_fxns is NULL.
  */
-extern int dev_get_intf_fxns (struct dev_object * hdev_obj,
-                              struct bridge_drv_interface ** if_fxns);
+extern int dev_get_intf_fxns(struct dev_object *hdev_obj,
+			    struct bridge_drv_interface **if_fxns);
 
 /*
  *  ======== dev_get_io_mgr ========
@@ -363,8 +363,8 @@ extern int dev_get_intf_fxns (struct dev_object * hdev_obj,
  *      0:        *mgr contains a handle to an IO manager object.
  *      else:           *mgr is NULL.
  */
-extern int dev_get_io_mgr (struct dev_object * hdev_obj,
-                           struct io_mgr ** mgr);
+extern int dev_get_io_mgr(struct dev_object *hdev_obj,
+				 struct io_mgr **mgr);
 
 /*
  *  ======== dev_get_next ========
@@ -388,8 +388,8 @@ extern int dev_get_io_mgr (struct dev_object * hdev_obj,
  *      A subsequent call to dev_get_next will return the next device object in
  *      the list.
  */
-extern struct dev_object * dev_get_next (struct dev_object
-    *hdev_obj);
+extern struct dev_object *dev_get_next(struct dev_object
+				       *hdev_obj);
 
 /*
  *  ========= dev_get_msg_mgr ========
@@ -405,8 +405,8 @@ extern struct dev_object * dev_get_next (struct dev_object
  *      node_man != NULL.
  *  Ensures:
  */
-extern void dev_get_msg_mgr (struct dev_object * hdev_obj,
-                             struct msg_mgr ** msg_man);
+extern void dev_get_msg_mgr(struct dev_object *hdev_obj,
+			    struct msg_mgr **msg_man);
 
 /*
  *  ========= dev_get_node_manager ========
@@ -427,9 +427,9 @@ extern void dev_get_msg_mgr (struct dev_object * hdev_obj,
  *      0:        *node_man contains a handle to a Node manager object.
  *      else:           *node_man is NULL.
  */
-extern int dev_get_node_manager (struct dev_object
-                                 *hdev_obj,
-                                 struct node_mgr ** node_man);
+extern int dev_get_node_manager(struct dev_object
+				       *hdev_obj,
+				       struct node_mgr **node_man);
 
 /*
  *  ======== dev_get_symbol ========
@@ -452,8 +452,8 @@ extern int dev_get_node_manager (struct dev_object
  *  Ensures:
  *      0:        *pul_value contains the symbol value;
  */
-extern int dev_get_symbol (struct dev_object * hdev_obj,
-                           const char * str_sym, u32 * pul_value);
+extern int dev_get_symbol(struct dev_object *hdev_obj,
+				 const char *str_sym, u32 * pul_value);
 
 /*
  *  ======== dev_get_bridge_context ========
@@ -473,9 +473,9 @@ extern int dev_get_symbol (struct dev_object * hdev_obj,
  *      0:        *phbridge_context contains context handle;
  *      else:           *phbridge_context is NULL;
  */
-extern int dev_get_bridge_context (struct dev_object * hdev_obj,
-                                   struct bridge_dev_context
-                                   ** phbridge_context);
+extern int dev_get_bridge_context(struct dev_object *hdev_obj,
+				      struct bridge_dev_context
+				      **phbridge_context);
 
 /*
  *  ======== dev_insert_proc_object ========
@@ -500,10 +500,10 @@ extern int dev_get_bridge_context (struct dev_object * hdev_obj,
  *      this is the first Processor attaching.
  *      If it is False, there are already processors attached.
  */
-extern int dev_insert_proc_object (struct dev_object
-                                   *hdev_obj,
-                                   u32 proc_obj,
-                                   bool * already_attached);
+extern int dev_insert_proc_object(struct dev_object
+					 *hdev_obj,
+					 u32 proc_obj,
+					 bool *already_attached);
 
 /*
  *  ======== dev_remove_proc_object ========
@@ -528,8 +528,8 @@ extern int dev_insert_proc_object (struct dev_object
  *      List will be deleted when the DEV is destroyed.
  *
  */
-extern int dev_remove_proc_object (struct dev_object
-                                   *hdev_obj, u32 proc_obj);
+extern int dev_remove_proc_object(struct dev_object
+					 *hdev_obj, u32 proc_obj);
 
 /*
  *  ======== dev_notify_clients ========
@@ -551,7 +551,7 @@ extern int dev_remove_proc_object (struct dev_object
  *      delivered to clients.  This function does not ensure that
  *      the notifications will ever be delivered.
  */
-extern int dev_notify_clients (struct dev_object * hdev_obj, u32 ret);
+extern int dev_notify_clients(struct dev_object *hdev_obj, u32 ret);
 
 /*
  *  ======== dev_remove_device ========
@@ -565,7 +565,7 @@ extern int dev_notify_clients (struct dev_object * hdev_obj, u32 ret);
  *  Requires:
  *  Ensures:
  */
-extern int dev_remove_device (struct cfg_devnode * dev_node_obj);
+extern int dev_remove_device(struct cfg_devnode *dev_node_obj);
 
 /*
  *  ======== dev_set_chnl_mgr ========
@@ -582,8 +582,8 @@ extern int dev_remove_device (struct cfg_devnode * dev_node_obj);
  *      DEV Initialized.
  *  Ensures:
  */
-extern int dev_set_chnl_mgr (struct dev_object * hdev_obj,
-                             struct chnl_mgr * hmgr);
+extern int dev_set_chnl_mgr(struct dev_object *hdev_obj,
+				   struct chnl_mgr *hmgr);
 
 /*
  *  ======== dev_set_msg_mgr ========
@@ -597,7 +597,7 @@ extern int dev_set_chnl_mgr (struct dev_object * hdev_obj,
  *      DEV Initialized.
  *  Ensures:
  */
-extern void dev_set_msg_mgr (struct dev_object * hdev_obj, struct msg_mgr * hmgr);
+extern void dev_set_msg_mgr(struct dev_object *hdev_obj, struct msg_mgr *hmgr);
 
 /*
  *  ======== dev_start_device ========
@@ -615,6 +615,6 @@ extern void dev_set_msg_mgr (struct dev_object * hdev_obj, struct msg_mgr * hmgr
  *      DEV initialized.
  *  Ensures:
  */
-extern int dev_start_device (struct cfg_devnode * dev_node_obj);
+extern int dev_start_device(struct cfg_devnode *dev_node_obj);
 
 #endif /* DEV_ */

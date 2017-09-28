@@ -61,49 +61,49 @@ typedef struct _RGX_SERVER_COMPUTE_CONTEXT_ RGX_SERVER_COMPUTE_CONTEXT;
 
 /*!
 *******************************************************************************
- @Function  PVRSRVRGXCreateComputeContextKM
+ @Function	PVRSRVRGXCreateComputeContextKM
 
  @Description
+	
 
-
- @Input pvDeviceNode
- @Input psCmpCCBMemDesc -
- @Input psCmpCCBCtlMemDesc -
- @Output ppsFWComputeContextMemDesc -
+ @Input pvDeviceNode 
+ @Input psCmpCCBMemDesc - 
+ @Input psCmpCCBCtlMemDesc - 
+ @Output ppsFWComputeContextMemDesc - 
 
  @Return   PVRSRV_ERROR
 ******************************************************************************/
 IMG_EXPORT
-PVRSRV_ERROR PVRSRVRGXCreateComputeContextKM (CONNECTION_DATA   *   psConnection,
-    PVRSRV_DEVICE_NODE   *  psDeviceNode,
-    IMG_UINT32         ui32Priority,
-    IMG_DEV_VIRTADDR     sMCUFenceAddr,
-    IMG_UINT32         ui32FrameworkRegisterSize,
-    IMG_PBYTE          pbyFrameworkRegisters,
-    IMG_HANDLE         hMemCtxPrivData,
-    RGX_SERVER_COMPUTE_CONTEXT ** ppsComputeContext);
-    
-/*!
+PVRSRV_ERROR PVRSRVRGXCreateComputeContextKM(CONNECTION_DATA			*psConnection,
+											 PVRSRV_DEVICE_NODE			*psDeviceNode,
+											 IMG_UINT32					ui32Priority,
+											 IMG_DEV_VIRTADDR			sMCUFenceAddr,
+											 IMG_UINT32					ui32FrameworkRegisterSize,
+											 IMG_PBYTE					pbyFrameworkRegisters,
+											 IMG_HANDLE					hMemCtxPrivData,
+											 RGX_SERVER_COMPUTE_CONTEXT	**ppsComputeContext);
+
+/*! 
 *******************************************************************************
- @Function  PVRSRVRGXDestroyComputeContextKM
+ @Function	PVRSRVRGXDestroyComputeContextKM
 
  @Description
-  Server-side implementation of RGXDestroyComputeContext
+	Server-side implementation of RGXDestroyComputeContext
 
- @Input psCleanupData -
+ @Input psCleanupData - 
 
  @Return   PVRSRV_ERROR
 ******************************************************************************/
 IMG_EXPORT
-PVRSRV_ERROR PVRSRVRGXDestroyComputeContextKM (RGX_SERVER_COMPUTE_CONTEXT * psComputeContext);
+PVRSRV_ERROR PVRSRVRGXDestroyComputeContextKM(RGX_SERVER_COMPUTE_CONTEXT *psComputeContext);
 
 
 /*!
 *******************************************************************************
- @Function  PVRSRVRGXKickCDMKM
+ @Function	PVRSRVRGXKickCDMKM
 
  @Description
-  Server-side implementation of RGXKickCDM
+	Server-side implementation of RGXKickCDM
 
  @Input psDeviceNode - RGX Device node
  @Input psFWComputeContextMemDesc - Mem desc for firmware compute context
@@ -112,39 +112,39 @@ PVRSRV_ERROR PVRSRVRGXDestroyComputeContextKM (RGX_SERVER_COMPUTE_CONTEXT * psCo
  @Return   PVRSRV_ERROR
 ******************************************************************************/
 IMG_EXPORT
-PVRSRV_ERROR PVRSRVRGXKickCDMKM (RGX_SERVER_COMPUTE_CONTEXT * psComputeContext,
-                                 IMG_UINT32          ui32ClientFenceCount,
-                                 PRGXFWIF_UFO_ADDR   *  pauiClientFenceUFOAddress,
-                                 IMG_UINT32     *     paui32ClientFenceValue,
-                                 IMG_UINT32          ui32ClientUpdateCount,
-                                 PRGXFWIF_UFO_ADDR   *  pauiClientUpdateUFOAddress,
-                                 IMG_UINT32     *     paui32ClientUpdateValue,
-                                 IMG_UINT32          ui32ServerSyncPrims,
-                                 IMG_UINT32     *     paui32ServerSyncFlags,
-                                 SERVER_SYNC_PRIMITIVE   **  pasServerSyncs,
-                                 IMG_UINT32          ui32CmdSize,
-                                 IMG_PBYTE         pui8DMCmd,
-                                 IMG_BOOL          bPDumpContinuous);
-                                 
+PVRSRV_ERROR PVRSRVRGXKickCDMKM(RGX_SERVER_COMPUTE_CONTEXT	*psComputeContext,
+								IMG_UINT32					ui32ClientFenceCount,
+								PRGXFWIF_UFO_ADDR			*pauiClientFenceUFOAddress,
+								IMG_UINT32					*paui32ClientFenceValue,
+								IMG_UINT32					ui32ClientUpdateCount,
+								PRGXFWIF_UFO_ADDR			*pauiClientUpdateUFOAddress,
+								IMG_UINT32					*paui32ClientUpdateValue,
+								IMG_UINT32					ui32ServerSyncPrims,
+								IMG_UINT32					*paui32ServerSyncFlags,
+								SERVER_SYNC_PRIMITIVE 		**pasServerSyncs,
+								IMG_UINT32					ui32CmdSize,
+								IMG_PBYTE					pui8DMCmd,
+								IMG_BOOL					bPDumpContinuous);
+								
 /*!
 *******************************************************************************
- @Function  PVRSRVRGXFlushComputeDataKM
+ @Function	PVRSRVRGXFlushComputeDataKM
 
  @Description
-  Server-side implementation of RGXFlushComputeData
+	Server-side implementation of RGXFlushComputeData
 
  @Input psComputeContext - Compute context to flush
 
  @Return   PVRSRV_ERROR
 ******************************************************************************/
 IMG_EXPORT
-PVRSRV_ERROR PVRSRVRGXFlushComputeDataKM (RGX_SERVER_COMPUTE_CONTEXT * psComputeContext);
+PVRSRV_ERROR PVRSRVRGXFlushComputeDataKM(RGX_SERVER_COMPUTE_CONTEXT *psComputeContext);
 
-PVRSRV_ERROR PVRSRVRGXSetComputeContextPriorityKM (CONNECTION_DATA * psConnection,
-    RGX_SERVER_COMPUTE_CONTEXT * psComputeContext,
-    IMG_UINT32 ui32Priority);
-    
+PVRSRV_ERROR PVRSRVRGXSetComputeContextPriorityKM(CONNECTION_DATA *psConnection,
+												  RGX_SERVER_COMPUTE_CONTEXT *psComputeContext,
+												  IMG_UINT32 ui32Priority);
+
 /* Debug - check if compute context is waiting on a fence */
-IMG_VOID CheckForStalledComputeCtxt (PVRSRV_RGXDEV_INFO * psDevInfo);
+IMG_VOID CheckForStalledComputeCtxt(PVRSRV_RGXDEV_INFO *psDevInfo);
 
 #endif /* __RGXCOMPUTE_H__ */

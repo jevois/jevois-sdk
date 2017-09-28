@@ -8,50 +8,50 @@
  * Interrupt control:
  */
 
-static inline unsigned long native_save_fl (void)
+static inline unsigned long native_save_fl(void)
 {
-  unsigned long flags;
-  
-  /*
-   * "=rm" is safe here, because "pop" adjusts the stack before
-   * it evaluates its effective address -- this is part of the
-   * documented behavior of the "pop" instruction.
-   */
-  asm volatile ("# __raw_save_flags\n\t"
-                "pushf ; pop %0"
-                : "=rm" (flags)
-                : /* no input */
-                : "memory");
-                
-  return flags;
+	unsigned long flags;
+
+	/*
+	 * "=rm" is safe here, because "pop" adjusts the stack before
+	 * it evaluates its effective address -- this is part of the
+	 * documented behavior of the "pop" instruction.
+	 */
+	asm volatile("# __raw_save_flags\n\t"
+		     "pushf ; pop %0"
+		     : "=rm" (flags)
+		     : /* no input */
+		     : "memory");
+
+	return flags;
 }
 
-static inline void native_restore_fl (unsigned long flags)
+static inline void native_restore_fl(unsigned long flags)
 {
-  asm volatile ("push %0 ; popf"
-                : /* no output */
-                :"g" (flags)
-                :"memory", "cc");
+	asm volatile("push %0 ; popf"
+		     : /* no output */
+		     :"g" (flags)
+		     :"memory", "cc");
 }
 
-static inline void native_irq_disable (void)
+static inline void native_irq_disable(void)
 {
-  asm volatile ("cli": : :"memory");
+	asm volatile("cli": : :"memory");
 }
 
-static inline void native_irq_enable (void)
+static inline void native_irq_enable(void)
 {
-  asm volatile ("sti": : :"memory");
+	asm volatile("sti": : :"memory");
 }
 
-static inline void native_safe_halt (void)
+static inline void native_safe_halt(void)
 {
-  asm volatile ("sti; hlt": : :"memory");
+	asm volatile("sti; hlt": : :"memory");
 }
 
-static inline void native_halt (void)
+static inline void native_halt(void)
 {
-  asm volatile ("hlt": : :"memory");
+	asm volatile("hlt": : :"memory");
 }
 
 #endif
@@ -62,60 +62,60 @@ static inline void native_halt (void)
 #ifndef __ASSEMBLY__
 #include <linux/types.h>
 
-static inline notrace unsigned long arch_local_save_flags (void)
+static inline notrace unsigned long arch_local_save_flags(void)
 {
-  return native_save_fl();
+	return native_save_fl();
 }
 
-static inline notrace void arch_local_irq_restore (unsigned long flags)
+static inline notrace void arch_local_irq_restore(unsigned long flags)
 {
-  native_restore_fl (flags);
+	native_restore_fl(flags);
 }
 
-static inline notrace void arch_local_irq_disable (void)
+static inline notrace void arch_local_irq_disable(void)
 {
-  native_irq_disable();
+	native_irq_disable();
 }
 
-static inline notrace void arch_local_irq_enable (void)
+static inline notrace void arch_local_irq_enable(void)
 {
-  native_irq_enable();
+	native_irq_enable();
 }
 
 /*
  * Used in the idle loop; sti takes one instruction cycle
  * to complete:
  */
-static inline void arch_safe_halt (void)
+static inline void arch_safe_halt(void)
 {
-  native_safe_halt();
+	native_safe_halt();
 }
 
 /*
  * Used when interrupts are already enabled or to
  * shutdown the processor:
  */
-static inline void halt (void)
+static inline void halt(void)
 {
-  native_halt();
+	native_halt();
 }
 
 /*
  * For spinlocks, etc:
  */
-static inline notrace unsigned long arch_local_irq_save (void)
+static inline notrace unsigned long arch_local_irq_save(void)
 {
-  unsigned long flags = arch_local_save_flags();
-  arch_local_irq_disable();
-  return flags;
+	unsigned long flags = arch_local_save_flags();
+	arch_local_irq_disable();
+	return flags;
 }
 #else
 
-#define ENABLE_INTERRUPTS(x)  sti
-#define DISABLE_INTERRUPTS(x) cli
+#define ENABLE_INTERRUPTS(x)	sti
+#define DISABLE_INTERRUPTS(x)	cli
 
 #ifdef CONFIG_X86_64
-#define SWAPGS  swapgs
+#define SWAPGS	swapgs
 /*
  * Currently paravirt can't handle swapgs nicely when we
  * don't have a stack we can rely on (such as a user space
@@ -125,26 +125,26 @@ static inline notrace unsigned long arch_local_irq_save (void)
  * Either way, this is a good way to document that we don't
  * have a reliable stack. x86_64 only.
  */
-#define SWAPGS_UNSAFE_STACK swapgs
+#define SWAPGS_UNSAFE_STACK	swapgs
 
-#define PARAVIRT_ADJUST_EXCEPTION_FRAME /*  */
+#define PARAVIRT_ADJUST_EXCEPTION_FRAME	/*  */
 
-#define INTERRUPT_RETURN  iretq
-#define USERGS_SYSRET64       \
-  swapgs;         \
-  sysretq;
-#define USERGS_SYSRET32       \
-  swapgs;         \
-  sysretl
-#define ENABLE_INTERRUPTS_SYSEXIT32   \
-  swapgs;         \
-  sti;          \
-  sysexit
+#define INTERRUPT_RETURN	iretq
+#define USERGS_SYSRET64				\
+	swapgs;					\
+	sysretq;
+#define USERGS_SYSRET32				\
+	swapgs;					\
+	sysretl
+#define ENABLE_INTERRUPTS_SYSEXIT32		\
+	swapgs;					\
+	sti;					\
+	sysexit
 
 #else
-#define INTERRUPT_RETURN    iret
-#define ENABLE_INTERRUPTS_SYSEXIT sti; sysexit
-#define GET_CR0_INTO_EAX    movl %cr0, %eax
+#define INTERRUPT_RETURN		iret
+#define ENABLE_INTERRUPTS_SYSEXIT	sti; sysexit
+#define GET_CR0_INTO_EAX		movl %cr0, %eax
 #endif
 
 
@@ -152,54 +152,54 @@ static inline notrace unsigned long arch_local_irq_save (void)
 #endif /* CONFIG_PARAVIRT */
 
 #ifndef __ASSEMBLY__
-static inline int arch_irqs_disabled_flags (unsigned long flags)
+static inline int arch_irqs_disabled_flags(unsigned long flags)
 {
-  return ! (flags & X86_EFLAGS_IF);
+	return !(flags & X86_EFLAGS_IF);
 }
 
-static inline int arch_irqs_disabled (void)
+static inline int arch_irqs_disabled(void)
 {
-  unsigned long flags = arch_local_save_flags();
-  
-  return arch_irqs_disabled_flags (flags);
+	unsigned long flags = arch_local_save_flags();
+
+	return arch_irqs_disabled_flags(flags);
 }
 
 #else
 
 #ifdef CONFIG_X86_64
-#define ARCH_LOCKDEP_SYS_EXIT   call lockdep_sys_exit_thunk
-#define ARCH_LOCKDEP_SYS_EXIT_IRQ \
-  TRACE_IRQS_ON; \
-  sti; \
-  SAVE_REST; \
-  LOCKDEP_SYS_EXIT; \
-  RESTORE_REST; \
-  cli; \
-  TRACE_IRQS_OFF;
+#define ARCH_LOCKDEP_SYS_EXIT		call lockdep_sys_exit_thunk
+#define ARCH_LOCKDEP_SYS_EXIT_IRQ	\
+	TRACE_IRQS_ON; \
+	sti; \
+	SAVE_REST; \
+	LOCKDEP_SYS_EXIT; \
+	RESTORE_REST; \
+	cli; \
+	TRACE_IRQS_OFF;
 
 #else
-#define ARCH_LOCKDEP_SYS_EXIT     \
-  pushl %eax;       \
-  pushl %ecx;       \
-  pushl %edx;       \
-  call lockdep_sys_exit;      \
-  popl %edx;        \
-  popl %ecx;        \
-  popl %eax;
+#define ARCH_LOCKDEP_SYS_EXIT			\
+	pushl %eax;				\
+	pushl %ecx;				\
+	pushl %edx;				\
+	call lockdep_sys_exit;			\
+	popl %edx;				\
+	popl %ecx;				\
+	popl %eax;
 
 #define ARCH_LOCKDEP_SYS_EXIT_IRQ
 #endif
 
 #ifdef CONFIG_TRACE_IRQFLAGS
-#  define TRACE_IRQS_ON   call trace_hardirqs_on_thunk;
-#  define TRACE_IRQS_OFF  call trace_hardirqs_off_thunk;
+#  define TRACE_IRQS_ON		call trace_hardirqs_on_thunk;
+#  define TRACE_IRQS_OFF	call trace_hardirqs_off_thunk;
 #else
 #  define TRACE_IRQS_ON
 #  define TRACE_IRQS_OFF
 #endif
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
-#  define LOCKDEP_SYS_EXIT  ARCH_LOCKDEP_SYS_EXIT
-#  define LOCKDEP_SYS_EXIT_IRQ  ARCH_LOCKDEP_SYS_EXIT_IRQ
+#  define LOCKDEP_SYS_EXIT	ARCH_LOCKDEP_SYS_EXIT
+#  define LOCKDEP_SYS_EXIT_IRQ	ARCH_LOCKDEP_SYS_EXIT_IRQ
 # else
 #  define LOCKDEP_SYS_EXIT
 #  define LOCKDEP_SYS_EXIT_IRQ

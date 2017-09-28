@@ -20,49 +20,49 @@
 #include <asm/bios_ebda.h>
 #include <asm/tlbflush.h>
 
-static void __init i386_default_early_setup (void)
+static void __init i386_default_early_setup(void)
 {
-  /* Initialize 32bit specific setup functions */
-  x86_init.resources.reserve_resources = i386_reserve_resources;
-  x86_init.mpparse.setup_ioapic_ids = setup_ioapic_ids_from_mpc;
-  
-  reserve_ebda_region();
+	/* Initialize 32bit specific setup functions */
+	x86_init.resources.reserve_resources = i386_reserve_resources;
+	x86_init.mpparse.setup_ioapic_ids = setup_ioapic_ids_from_mpc;
+
+	reserve_ebda_region();
 }
 
-void __init i386_start_kernel (void)
+void __init i386_start_kernel(void)
 {
-  memblock_reserve (__pa_symbol (&_text),
-                    __pa_symbol (&__bss_stop) - __pa_symbol (&_text) );
-                    
-  #ifdef CONFIG_BLK_DEV_INITRD
-  /* Reserve INITRD */
-  if (boot_params.hdr.type_of_loader && boot_params.hdr.ramdisk_image) {
-    /* Assume only end is not page aligned */
-    u64 ramdisk_image = boot_params.hdr.ramdisk_image;
-    u64 ramdisk_size  = boot_params.hdr.ramdisk_size;
-    u64 ramdisk_end   = PAGE_ALIGN (ramdisk_image + ramdisk_size);
-    memblock_reserve (ramdisk_image, ramdisk_end - ramdisk_image);
-  }
-  #endif
-  
-  /* Call the subarch specific early setup function */
-  switch (boot_params.hdr.hardware_subarch) {
-  case X86_SUBARCH_MRST:
-    x86_mrst_early_setup();
-    break;
-  case X86_SUBARCH_CE4100:
-    x86_ce4100_early_setup();
-    break;
-  default:
-    i386_default_early_setup();
-    break;
-  }
-  
-  /*
-   * At this point everything still needed from the boot loader
-   * or BIOS or kernel text should be early reserved or marked not
-   * RAM in e820. All other memory is free game.
-   */
-  
-  start_kernel();
+	memblock_reserve(__pa_symbol(&_text),
+			 __pa_symbol(&__bss_stop) - __pa_symbol(&_text));
+
+#ifdef CONFIG_BLK_DEV_INITRD
+	/* Reserve INITRD */
+	if (boot_params.hdr.type_of_loader && boot_params.hdr.ramdisk_image) {
+		/* Assume only end is not page aligned */
+		u64 ramdisk_image = boot_params.hdr.ramdisk_image;
+		u64 ramdisk_size  = boot_params.hdr.ramdisk_size;
+		u64 ramdisk_end   = PAGE_ALIGN(ramdisk_image + ramdisk_size);
+		memblock_reserve(ramdisk_image, ramdisk_end - ramdisk_image);
+	}
+#endif
+
+	/* Call the subarch specific early setup function */
+	switch (boot_params.hdr.hardware_subarch) {
+	case X86_SUBARCH_MRST:
+		x86_mrst_early_setup();
+		break;
+	case X86_SUBARCH_CE4100:
+		x86_ce4100_early_setup();
+		break;
+	default:
+		i386_default_early_setup();
+		break;
+	}
+
+	/*
+	 * At this point everything still needed from the boot loader
+	 * or BIOS or kernel text should be early reserved or marked not
+	 * RAM in e820. All other memory is free game.
+	 */
+
+	start_kernel();
 }

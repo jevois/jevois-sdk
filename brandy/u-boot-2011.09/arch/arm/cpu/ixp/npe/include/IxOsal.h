@@ -1,18 +1,18 @@
 /**
  * @file IxOsal.h
  *
- * @brief Top include file for OSAL
- *
- *
+ * @brief Top include file for OSAL 
+ * 
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -25,7 +25,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -38,7 +38,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  */
@@ -52,9 +52,9 @@
 /* Include assert */
 #include "IxOsalAssert.h"
 
-/*
- * Config header gives users option to choose IO MEM
- * and buffer management modules
+/* 
+ * Config header gives users option to choose IO MEM 
+ * and buffer management modules 
  */
 
 #include "IxOsalConfig.h"
@@ -71,87 +71,87 @@
 /**
  * @defgroup IxOsal Operating System Abstraction Layer (IxOsal) API
  *
- * @brief This service provides a thin layer of OS dependency services.
+ * @brief This service provides a thin layer of OS dependency services. 
  *
  * This file contains the API to the functions which are some what OS dependant and would
- * require porting to a particular OS.
+ * require porting to a particular OS. 
  * A primary focus of the component development is to make them as OS independent as possible.
  * All other components should abstract their OS dependency to this module.
  * Services overview
- *  -# Data types, constants, defines
- *  -# Interrupts
+ *	-# Data types, constants, defines
+ *	-# Interrupts
  *              - bind interrupts to handlers
  *              - unbind interrupts from handlers
- *              - disables all interrupts
- *              - enables all interrupts
- *              - selectively disables interrupts
- *              - enables an interrupt level
- *              - disables an interrupt level
+ *             	- disables all interrupts 
+ *              - enables all interrupts 
+ *              - selectively disables interrupts 
+ *              - enables an interrupt level 
+ *              - disables an interrupt level 
  *      -# Memory
  *              - allocates memory
- *              - frees memory
- *              - copies memory zones
- *              - fills a memory zone
- *              - allocates cache-safe memory
- *              - frees cache-safe memory
- *              - physical to virtual address translation
- *              - virtual to physical address translation
- *              - cache to memory flush
- *              - cache line invalidate
+ *              - frees memory 
+ *              - copies memory zones 
+ *              - fills a memory zone 
+ *              - allocates cache-safe memory 
+ *              - frees cache-safe memory 
+ *              - physical to virtual address translation 
+ *              - virtual to physical address translation 
+ *              - cache to memory flush 
+ *              - cache line invalidate 
  *      -# Threads
- *              - creates a new thread
- *              - starts a newly created thread
- *              - kills an existing thread
- *              - exits a running thread
- *              - sets the priority of an existing thread
- *              - suspends thread execution
- *              - resumes thread execution
+ *              - creates a new thread 
+ *              - starts a newly created thread 
+ *              - kills an existing thread 
+ *              - exits a running thread 
+ *              - sets the priority of an existing thread 
+ *              - suspends thread execution 
+ *              - resumes thread execution 
  *      -# IPC
- *              - creates a message queue
- *              - deletes a message queue
- *              - sends a message to a message queue
+ *              - creates a message queue 
+ *              - deletes a message queue 
+ *              - sends a message to a message queue 
  *              - receives a message from a message queue
  *      -# Thread Synchronisation
- *              - initializes a mutex
- *              - locks a mutex
- *              - unlocks a mutex
- *              - non-blocking attempt to lock a mutex
- *              - destroys a mutex object
- *              - initializes a fast mutex
- *              - non-blocking attempt to lock a fast mutex
- *              - unlocks a fast mutex
- *              - destroys a fast mutex object
- *              - initializes a semaphore
- *              - posts to (increments) a semaphore
- *              - waits on (decrements) a semaphore
- *              - non-blocking wait on semaphore
- *              - gets semaphore value
- *              - destroys a semaphore object
- *              - yields execution of current thread
+ *              - initializes a mutex 
+ *              - locks a mutex 
+ *              - unlocks a mutex 
+ *              - non-blocking attempt to lock a mutex 
+ *              - destroys a mutex object 
+ *              - initializes a fast mutex 
+ *              - non-blocking attempt to lock a fast mutex 
+ *              - unlocks a fast mutex 
+ *              - destroys a fast mutex object 
+ *              - initializes a semaphore 
+ *              - posts to (increments) a semaphore 
+ *              - waits on (decrements) a semaphore 
+ *              - non-blocking wait on semaphore 
+ *              - gets semaphore value 
+ *              - destroys a semaphore object 
+ *              - yields execution of current thread 
  *      -# Time functions
- *              - yielding sleep for a number of milliseconds
- *              - busy sleep for a number of microseconds
- *              - value of the timestamp counter
- *              - resolution of the timestamp counter
- *              - system clock rate, in ticks
- *              - current system time
- *              - converts ixOsalTimeVal into ticks
- *              - converts ticks into ixOsalTimeVal
- *              - converts ixOsalTimeVal to milliseconds
- *              - converts milliseconds to IxOsalTimeval
- *              - "equal" comparison for IxOsalTimeval
- *              - "less than" comparison for IxOsalTimeval
- *              - "greater than" comparison for IxOsalTimeval
- *              - "add" operator for IxOsalTimeval
- *              - "subtract" operator for IxOsalTimeval
+ *              - yielding sleep for a number of milliseconds 
+ *              - busy sleep for a number of microseconds 
+ *              - value of the timestamp counter 
+ *              - resolution of the timestamp counter 
+ *              - system clock rate, in ticks 
+ *              - current system time 
+ *              - converts ixOsalTimeVal into ticks 
+ *              - converts ticks into ixOsalTimeVal 
+ *              - converts ixOsalTimeVal to milliseconds 
+ *              - converts milliseconds to IxOsalTimeval 
+ *              - "equal" comparison for IxOsalTimeval 
+ *              - "less than" comparison for IxOsalTimeval 
+ *              - "greater than" comparison for IxOsalTimeval 
+ *              - "add" operator for IxOsalTimeval 
+ *              - "subtract" operator for IxOsalTimeval 
  *      -# Logging
- *              - sets the current logging verbosity level
- *              - interrupt-safe logging function
+ *              - sets the current logging verbosity level 
+ *              - interrupt-safe logging function 
  *      -# Timer services
- *              - schedules a repeating timer
- *              - schedules a single-shot timer
- *              - cancels a running timer
- *              - displays all the running timers
+ *              - schedules a repeating timer 
+ *              - schedules a single-shot timer 
+ *              - cancels a running timer 
+ *              - displays all the running timers 
  *      -# Optional Modules
  *              - Buffer management module
  *              - I/O memory and endianess support module
@@ -165,10 +165,10 @@
  */
 
 /* ==========================  Interrupts  ================================
- *
+ * 
  */
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Binds an interrupt handler to an interrupt level
@@ -190,10 +190,10 @@
  * @return IX_SUCCESS if the operation succeeded or IX_FAIL otherwise
  */
 PUBLIC IX_STATUS ixOsalIrqBind (UINT32 irqLevel,
-                                IxOsalVoidFnVoidPtr irqHandler,
-                                void * parameter);
+				IxOsalVoidFnVoidPtr irqHandler,
+				void *parameter);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Unbinds an interrupt handler from an interrupt level
@@ -201,7 +201,7 @@ PUBLIC IX_STATUS ixOsalIrqBind (UINT32 irqLevel,
  * @param irqLevel (in)   - interrupt level
  *
  * Unbinds the selected interrupt level from any previously registered
- * handler
+ * handler 
  *
  * @li Reentrant: no
  * @li IRQ safe:  no
@@ -211,14 +211,14 @@ PUBLIC IX_STATUS ixOsalIrqBind (UINT32 irqLevel,
 PUBLIC IX_STATUS ixOsalIrqUnbind (UINT32 irqLevel);
 
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Disables all interrupts
  *
  * @param - none
  *
- * Disables all the interrupts and prevents tasks scheduling
+ * Disables all the interrupts and prevents tasks scheduling 
  *
  * @li Reentrant: no
  * @li IRQ safe:  yes
@@ -227,16 +227,16 @@ PUBLIC IX_STATUS ixOsalIrqUnbind (UINT32 irqLevel);
  */
 PUBLIC UINT32 ixOsalIrqLock (void);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Enables all interrupts
  *
  * @param irqEnable (in) - interrupt enable status, prior to interrupt
- *                         locking
+ *                         locking 
  *
  * Enables the interrupts and task scheduling, cancelling the effect
- * of ixOsalIrqLock()
+ * of ixOsalIrqLock() 
  *
  * @li Reentrant: no
  * @li IRQ safe:  yes
@@ -245,26 +245,26 @@ PUBLIC UINT32 ixOsalIrqLock (void);
  */
 PUBLIC void ixOsalIrqUnlock (UINT32 irqEnable);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Selectively disables interrupts
  *
  * @param irqLevel - new interrupt level
  *
- * Disables the interrupts below the specified interrupt level
- *
+ * Disables the interrupts below the specified interrupt level 
+ * 
  * @li Reentrant: no
  * @li IRQ safe:  yes
  *
  * @note Depending on the implementation this function can disable all
- *       the interrupts
+ *       the interrupts 
  *
  * @return previous interrupt level
  */
 PUBLIC UINT32 ixOsalIrqLevelSet (UINT32 irqLevel);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Enables an interrupt level
@@ -280,7 +280,7 @@ PUBLIC UINT32 ixOsalIrqLevelSet (UINT32 irqLevel);
  */
 PUBLIC void ixOsalIrqEnable (UINT32 irqLevel);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Disables an interrupt level
@@ -298,10 +298,10 @@ PUBLIC void ixOsalIrqDisable (UINT32 irqLevel);
 
 
 /* =============================  Memory  =================================
- *
+ * 
  */
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Allocates memory
@@ -315,9 +315,9 @@ PUBLIC void ixOsalIrqDisable (UINT32 irqLevel);
  *
  * @return Pointer to the allocated zone or NULL if the allocation failed
  */
-PUBLIC void * ixOsalMemAlloc (UINT32 size);
+PUBLIC void *ixOsalMemAlloc (UINT32 size);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Frees memory
@@ -331,9 +331,9 @@ PUBLIC void * ixOsalMemAlloc (UINT32 size);
  *
  * @return - none
  */
-PUBLIC void ixOsalMemFree (void * ptr);
+PUBLIC void ixOsalMemFree (void *ptr);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Copies memory zones
@@ -350,9 +350,9 @@ PUBLIC void ixOsalMemFree (void * ptr);
  *
  * @return Pointer to the destination memory zone
  */
-PUBLIC void * ixOsalMemCopy (void * dest, void * src, UINT32 count);
+PUBLIC void *ixOsalMemCopy (void *dest, void *src, UINT32 count);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Fills a memory zone
@@ -368,9 +368,9 @@ PUBLIC void * ixOsalMemCopy (void * dest, void * src, UINT32 count);
  *
  * @return Pointer to the memory zone
  */
-PUBLIC void * ixOsalMemSet (void * ptr, UINT8 filler, UINT32 count);
+PUBLIC void *ixOsalMemSet (void *ptr, UINT8 filler, UINT32 count);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Allocates cache-safe memory
@@ -393,12 +393,12 @@ PUBLIC void * ixOsalMemSet (void * ptr, UINT8 filler, UINT32 count);
  * software by using the IX_OSAL_CACHE_FLUSH and IX_OSAL_CACHE_INVALIDATE
  * macros to maintain consistency between cache and external memory.
  */
-PUBLIC void * ixOsalCacheDmaMalloc (UINT32 size);
+PUBLIC void *ixOsalCacheDmaMalloc (UINT32 size);
 
 /* Macros for ixOsalCacheDmaMalloc*/
 #define IX_OSAL_CACHE_DMA_MALLOC(size) ixOsalCacheDmaMalloc(size)
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Frees cache-safe memory
@@ -412,11 +412,11 @@ PUBLIC void * ixOsalCacheDmaMalloc (UINT32 size);
  *
  * @return - none
  */
-PUBLIC void ixOsalCacheDmaFree (void * ptr);
+PUBLIC void ixOsalCacheDmaFree (void *ptr);
 
-#define IX_OSAL_CACHE_DMA_FREE(ptr)   ixOsalCacheDmaFree(ptr)
+#define IX_OSAL_CACHE_DMA_FREE(ptr)		ixOsalCacheDmaFree(ptr)
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief physical to virtual address translation
@@ -431,10 +431,10 @@ PUBLIC void ixOsalCacheDmaFree (void * ptr);
  * @return Corresponding virtual address, as UINT32
  */
 #define IX_OSAL_MMU_PHYS_TO_VIRT(physAddr) \
-  IX_OSAL_OS_MMU_PHYS_TO_VIRT(physAddr)
+    IX_OSAL_OS_MMU_PHYS_TO_VIRT(physAddr)
 
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief virtual to physical address translation
@@ -449,11 +449,11 @@ PUBLIC void ixOsalCacheDmaFree (void * ptr);
  * @return Corresponding physical address, as UINT32
  */
 #define IX_OSAL_MMU_VIRT_TO_PHYS(virtAddr)  \
-  IX_OSAL_OS_MMU_VIRT_TO_PHYS(virtAddr)
+    IX_OSAL_OS_MMU_VIRT_TO_PHYS(virtAddr)
 
 
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief cache to memory flush
@@ -474,7 +474,7 @@ PUBLIC void ixOsalCacheDmaFree (void * ptr);
 
 
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief cache line invalidate
@@ -496,10 +496,10 @@ PUBLIC void ixOsalCacheDmaFree (void * ptr);
 
 
 /* =============================  Threads  =================================
- *
+ * 
  */
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Creates a new thread
@@ -520,11 +520,11 @@ PUBLIC void ixOsalCacheDmaFree (void * ptr);
  * @return - IX_SUCCESS/IX_FAIL
  */
 PUBLIC IX_STATUS ixOsalThreadCreate (IxOsalThread * thread,
-                                     IxOsalThreadAttr * threadAttr,
-                                     IxOsalVoidFnVoidPtr startRoutine,
-                                     void * arg);
+				     IxOsalThreadAttr * threadAttr,
+				     IxOsalVoidFnVoidPtr startRoutine,
+				     void *arg);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Starts a newly created thread
@@ -541,7 +541,7 @@ PUBLIC IX_STATUS ixOsalThreadCreate (IxOsalThread * thread,
  */
 PUBLIC IX_STATUS ixOsalThreadStart (IxOsalThread * thread);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Kills an existing thread
@@ -553,7 +553,7 @@ PUBLIC IX_STATUS ixOsalThreadStart (IxOsalThread * thread);
  * @li Reentrant: no
  * @li IRQ safe:  no
  *
- * @note It is not possible to kill threads in Linux kernel mode. This
+ * @note It is not possible to kill threads in Linux kernel mode. This 
  * function will only send a SIGTERM signal, and it is the responsibility
  * of the thread to check for the presence of this signal with
  * signal_pending().
@@ -562,7 +562,7 @@ PUBLIC IX_STATUS ixOsalThreadStart (IxOsalThread * thread);
  */
 PUBLIC IX_STATUS ixOsalThreadKill (IxOsalThread * thread);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Exits a running thread
@@ -576,7 +576,7 @@ PUBLIC IX_STATUS ixOsalThreadKill (IxOsalThread * thread);
  */
 PUBLIC void ixOsalThreadExit (void);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Sets the priority of an existing thread
@@ -592,9 +592,9 @@ PUBLIC void ixOsalThreadExit (void);
  * @return - IX_SUCCESS/IX_FAIL
  */
 PUBLIC IX_STATUS ixOsalThreadPrioritySet (IxOsalThread * thread,
-    UINT32 priority);
+					  UINT32 priority);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Suspends thread execution
@@ -610,7 +610,7 @@ PUBLIC IX_STATUS ixOsalThreadPrioritySet (IxOsalThread * thread,
  */
 PUBLIC IX_STATUS ixOsalThreadSuspend (IxOsalThread * thread);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Resumes thread execution
@@ -628,10 +628,10 @@ PUBLIC IX_STATUS ixOsalThreadResume (IxOsalThread * thread);
 
 
 /* =======================  Message Queues (IPC) ==========================
- *
+ * 
  */
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Creates a message queue
@@ -648,9 +648,9 @@ PUBLIC IX_STATUS ixOsalThreadResume (IxOsalThread * thread);
  * @return - IX_SUCCESS/IX_FAIL
  */
 PUBLIC IX_STATUS ixOsalMessageQueueCreate (IxOsalMessageQueue * queue,
-    UINT32 msgCount, UINT32 msgLen);
+					   UINT32 msgCount, UINT32 msgLen);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Deletes a message queue
@@ -666,7 +666,7 @@ PUBLIC IX_STATUS ixOsalMessageQueueCreate (IxOsalMessageQueue * queue,
  */
 PUBLIC IX_STATUS ixOsalMessageQueueDelete (IxOsalMessageQueue * queue);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Sends a message to a message queue
@@ -683,9 +683,9 @@ PUBLIC IX_STATUS ixOsalMessageQueueDelete (IxOsalMessageQueue * queue);
  * @return - IX_SUCCESS/IX_FAIL
  */
 PUBLIC IX_STATUS ixOsalMessageQueueSend (IxOsalMessageQueue * queue,
-    UINT8 * message);
+					 UINT8 * message);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Receives a message from a message queue
@@ -701,14 +701,14 @@ PUBLIC IX_STATUS ixOsalMessageQueueSend (IxOsalMessageQueue * queue,
  * @return - IX_SUCCESS/IX_FAIL
  */
 PUBLIC IX_STATUS ixOsalMessageQueueReceive (IxOsalMessageQueue * queue,
-    UINT8 * message);
+					    UINT8 * message);
 
 
 /* =======================  Thread Synchronisation ========================
- *
+ * 
  */
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief initializes a mutex
@@ -724,7 +724,7 @@ PUBLIC IX_STATUS ixOsalMessageQueueReceive (IxOsalMessageQueue * queue,
  */
 PUBLIC IX_STATUS ixOsalMutexInit (IxOsalMutex * mutex);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief locks a mutex
@@ -742,7 +742,7 @@ PUBLIC IX_STATUS ixOsalMutexInit (IxOsalMutex * mutex);
  */
 PUBLIC IX_STATUS ixOsalMutexLock (IxOsalMutex * mutex, INT32 timeout);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Unlocks a mutex
@@ -758,7 +758,7 @@ PUBLIC IX_STATUS ixOsalMutexLock (IxOsalMutex * mutex, INT32 timeout);
  */
 PUBLIC IX_STATUS ixOsalMutexUnlock (IxOsalMutex * mutex);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Non-blocking attempt to lock a mutex
@@ -775,7 +775,7 @@ PUBLIC IX_STATUS ixOsalMutexUnlock (IxOsalMutex * mutex);
  */
 PUBLIC IX_STATUS ixOsalMutexTryLock (IxOsalMutex * mutex);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Destroys a mutex object
@@ -793,7 +793,7 @@ PUBLIC IX_STATUS ixOsalMutexTryLock (IxOsalMutex * mutex);
  */
 PUBLIC IX_STATUS ixOsalMutexDestroy (IxOsalMutex * mutex);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Initializes a fast mutex
@@ -809,7 +809,7 @@ PUBLIC IX_STATUS ixOsalMutexDestroy (IxOsalMutex * mutex);
  */
 PUBLIC IX_STATUS ixOsalFastMutexInit (IxOsalFastMutex * mutex);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Non-blocking attempt to lock a fast mutex
@@ -826,7 +826,7 @@ PUBLIC IX_STATUS ixOsalFastMutexInit (IxOsalFastMutex * mutex);
  */
 PUBLIC IX_STATUS ixOsalFastMutexTryLock (IxOsalFastMutex * mutex);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Unlocks a fast mutex
@@ -842,7 +842,7 @@ PUBLIC IX_STATUS ixOsalFastMutexTryLock (IxOsalFastMutex * mutex);
  */
 PUBLIC IX_STATUS ixOsalFastMutexUnlock (IxOsalFastMutex * mutex);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Destroys a fast mutex object
@@ -858,7 +858,7 @@ PUBLIC IX_STATUS ixOsalFastMutexUnlock (IxOsalFastMutex * mutex);
  */
 PUBLIC IX_STATUS ixOsalFastMutexDestroy (IxOsalFastMutex * mutex);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Initializes a semaphore
@@ -874,9 +874,9 @@ PUBLIC IX_STATUS ixOsalFastMutexDestroy (IxOsalFastMutex * mutex);
  * @return - IX_SUCCESS/IX_FAIL
  */
 PUBLIC IX_STATUS ixOsalSemaphoreInit (IxOsalSemaphore * semaphore,
-                                      UINT32 value);
+				      UINT32 value);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Posts to (increments) a semaphore
@@ -892,7 +892,7 @@ PUBLIC IX_STATUS ixOsalSemaphoreInit (IxOsalSemaphore * semaphore,
  */
 PUBLIC IX_STATUS ixOsalSemaphorePost (IxOsalSemaphore * semaphore);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Waits on (decrements) a semaphore
@@ -911,9 +911,9 @@ PUBLIC IX_STATUS ixOsalSemaphorePost (IxOsalSemaphore * semaphore);
  * @return - IX_SUCCESS/IX_FAIL
  */
 PUBLIC IX_STATUS ixOsalSemaphoreWait (IxOsalSemaphore * semaphore,
-                                      INT32 timeout);
+				      INT32 timeout);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Non-blocking wait on semaphore
@@ -930,7 +930,7 @@ PUBLIC IX_STATUS ixOsalSemaphoreWait (IxOsalSemaphore * semaphore,
  */
 PUBLIC IX_STATUS ixOsalSemaphoreTryWait (IxOsalSemaphore * semaphore);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Gets semaphore value
@@ -946,9 +946,9 @@ PUBLIC IX_STATUS ixOsalSemaphoreTryWait (IxOsalSemaphore * semaphore);
  * @return - IX_SUCCESS/IX_FAIL
  */
 PUBLIC IX_STATUS ixOsalSemaphoreGetValue (IxOsalSemaphore * semaphore,
-    UINT32 * value);
+					  UINT32 * value);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Destroys a semaphore object
@@ -965,7 +965,7 @@ PUBLIC IX_STATUS ixOsalSemaphoreGetValue (IxOsalSemaphore * semaphore,
  */
 PUBLIC IX_STATUS ixOsalSemaphoreDestroy (IxOsalSemaphore * semaphore);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Yields execution of current thread
@@ -981,10 +981,10 @@ PUBLIC void ixOsalYield (void);
 
 
 /* ========================== Time functions  ===========================
- *
+ * 
  */
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Yielding sleep for a number of milliseconds
@@ -1004,7 +1004,7 @@ PUBLIC void ixOsalYield (void);
  */
 PUBLIC void ixOsalSleep (UINT32 milliseconds);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Busy sleep for a number of microseconds
@@ -1021,7 +1021,7 @@ PUBLIC void ixOsalSleep (UINT32 milliseconds);
  */
 PUBLIC void ixOsalBusySleep (UINT32 microseconds);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief XXX
@@ -1038,7 +1038,7 @@ PUBLIC void ixOsalBusySleep (UINT32 microseconds);
  */
 PUBLIC UINT32 ixOsalTimestampGet (void);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Resolution of the timestamp counter
@@ -1055,7 +1055,7 @@ PUBLIC UINT32 ixOsalTimestampGet (void);
  */
 PUBLIC UINT32 ixOsalTimestampResolutionGet (void);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief System clock rate, in ticks
@@ -1073,7 +1073,7 @@ PUBLIC UINT32 ixOsalTimestampResolutionGet (void);
  */
 PUBLIC UINT32 ixOsalSysClockRateGet (void);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Current system time
@@ -1097,13 +1097,13 @@ PUBLIC void ixOsalTimeGet (IxOsalTimeval * tv);
 
 /* Internal function to convert timer val to ticks.
  * NOTE - This should not be called by the user.
- * Use the macro IX_OSAL_TIMEVAL_TO_TICKS
+ * Use the macro IX_OSAL_TIMEVAL_TO_TICKS 
  * OS-independent, implemented in framework.
  */
 PUBLIC UINT32 ixOsalTimevalToTicks (IxOsalTimeval tv);
 
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Converts ixOsalTimeVal into ticks
@@ -1116,7 +1116,7 @@ PUBLIC UINT32 ixOsalTimevalToTicks (IxOsalTimeval tv);
  * @li IRQ safe:  yes
  *
  * @return - Corresponding number of ticks
- *
+ * 
  * Note: This function is OS-independent. Implemented by core.
  */
 #define IX_OSAL_TIMEVAL_TO_TICKS(tv)  ixOsalTimevalToTicks(tv)
@@ -1125,16 +1125,16 @@ PUBLIC UINT32 ixOsalTimevalToTicks (IxOsalTimeval tv);
 
 /* Internal function to convert ticks to timer val
  * NOTE - This should not be called by the user.
- * Use the macro IX_OSAL_TICKS_TO_TIMEVAL
+ * Use the macro IX_OSAL_TICKS_TO_TIMEVAL 
  */
 
 PUBLIC void ixOsalTicksToTimeval (UINT32 ticks, IxOsalTimeval * pTv);
 
 
-/**
+/** 
  * @ingroup IxOsal
  *
- * @brief Converts ticks into ixOsalTimeVal
+ * @brief Converts ticks into ixOsalTimeVal 
  *
  * @param ticks - number of ticks
  * @param pTv - pointer to the destination structure
@@ -1148,12 +1148,12 @@ PUBLIC void ixOsalTicksToTimeval (UINT32 ticks, IxOsalTimeval * pTv);
  * Note: This function is OS-independent. Implemented by core.
  */
 #define IX_OSAL_TICKS_TO_TIMEVAL(ticks, pTv)  \
-  ixOsalTicksToTimeval(ticks, pTv)
+    ixOsalTicksToTimeval(ticks, pTv)
 
 
 
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Converts ixOsalTimeVal to milliseconds
@@ -1171,7 +1171,7 @@ PUBLIC void ixOsalTicksToTimeval (UINT32 ticks, IxOsalTimeval * pTv);
 #define IX_OSAL_TIMEVAL_TO_MS(tv)     ((tv.secs * 1000) + (tv.nsecs / 1000000))
 
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Converts milliseconds to IxOsalTimeval
@@ -1188,11 +1188,11 @@ PUBLIC void ixOsalTicksToTimeval (UINT32 ticks, IxOsalTimeval * pTv);
  * Note: This function is OS-independent. Implemented by core.
  */
 #define IX_OSAL_MS_TO_TIMEVAL(milliseconds, pTv)  \
-  ((IxOsalTimeval *) pTv)->secs = milliseconds / 1000;        \
-  ((IxOsalTimeval *) pTv)->nsecs = (milliseconds % 1000) * 1000000
+   	    ((IxOsalTimeval *) pTv)->secs = milliseconds / 1000;			  \
+        ((IxOsalTimeval *) pTv)->nsecs = (milliseconds % 1000) * 1000000
 
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief "equal" comparison for IxOsalTimeval
@@ -1209,10 +1209,10 @@ PUBLIC void ixOsalTicksToTimeval (UINT32 ticks, IxOsalTimeval * pTv);
  * Note: This function is OS-independant
  */
 #define IX_OSAL_TIME_EQ(tvA, tvB)        \
-  ((tvA).secs == (tvB).secs && (tvA).nsecs == (tvB).nsecs)
+        ((tvA).secs == (tvB).secs && (tvA).nsecs == (tvB).nsecs)
 
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief "less than" comparison for IxOsalTimeval
@@ -1230,11 +1230,11 @@ PUBLIC void ixOsalTicksToTimeval (UINT32 ticks, IxOsalTimeval * pTv);
  * Note: This function is OS-independent. Implemented by core.
  */
 #define IX_OSAL_TIME_LT(tvA,tvB) \
-  ((tvA).secs  < (tvB).secs ||  \
-   ((tvA).secs == (tvB).secs && (tvA).nsecs < (tvB).nsecs))
+        ((tvA).secs  < (tvB).secs ||	\
+        ((tvA).secs == (tvB).secs && (tvA).nsecs < (tvB).nsecs))
 
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief "greater than" comparison for IxOsalTimeval
@@ -1252,11 +1252,11 @@ PUBLIC void ixOsalTicksToTimeval (UINT32 ticks, IxOsalTimeval * pTv);
  * Note: This function is OS-independent.
  */
 #define IX_OSAL_TIME_GT(tvA, tvB)  \
-  ((tvA).secs  > (tvB).secs ||  \
-   ((tvA).secs == (tvB).secs && (tvA).nsecs > (tvB).nsecs))
+        ((tvA).secs  > (tvB).secs ||	\
+        ((tvA).secs == (tvB).secs && (tvA).nsecs > (tvB).nsecs))
 
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief "add" operator for IxOsalTimeval
@@ -1273,15 +1273,15 @@ PUBLIC void ixOsalTicksToTimeval (UINT32 ticks, IxOsalTimeval * pTv);
  * Note: This function is OS-independent.
  */
 #define IX_OSAL_TIME_ADD(tvA, tvB)  \
-  (tvA).secs += (tvB).secs;   \
-  (tvA).nsecs += (tvB).nsecs; \
-  if ((tvA).nsecs >= IX_OSAL_BILLION) \
-  { \
-    (tvA).secs++; \
-    (tvA).nsecs -= IX_OSAL_BILLION; }
+        (tvA).secs += (tvB).secs;   \
+        (tvA).nsecs += (tvB).nsecs; \
+        if ((tvA).nsecs >= IX_OSAL_BILLION) \
+    	{ \
+        (tvA).secs++; \
+        (tvA).nsecs -= IX_OSAL_BILLION; }
 
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief "subtract" operator for IxOsalTimeval
@@ -1298,23 +1298,23 @@ PUBLIC void ixOsalTicksToTimeval (UINT32 ticks, IxOsalTimeval * pTv);
  * Note: This function is OS-independent. Implemented by core.
  */
 #define IX_OSAL_TIME_SUB(tvA, tvB)   \
-  if ((tvA).nsecs >= (tvB).nsecs) \
-  { \
-    (tvA).secs -= (tvB).secs; \
-    (tvA).nsecs -= (tvB).nsecs; \
-  } \
-  else \
-  { \
-    (tvA).secs -= ((tvB).secs + 1); \
-    (tvA).nsecs += IX_OSAL_BILLION - (tvB).nsecs; \
-  }
+        if ((tvA).nsecs >= (tvB).nsecs) \
+        { \
+          (tvA).secs -= (tvB).secs; \
+          (tvA).nsecs -= (tvB).nsecs; \
+        } \
+        else \
+        { \
+          (tvA).secs -= ((tvB).secs + 1); \
+          (tvA).nsecs += IX_OSAL_BILLION - (tvB).nsecs; \
+        }
 
 
 /* ============================= Logging  ==============================
- *
+ * 
  */
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Interrupt-safe logging function
@@ -1342,18 +1342,18 @@ PUBLIC void ixOsalTicksToTimeval (UINT32 ticks, IxOsalTimeval * pTv);
  * if the specified level is greater than 1 and less or equal than 9.
  * WinCE: If compiled for EBOOT then the return value is always 0.
  *
- * @note The given print format should take into account the specified
+ * @note The given print format should take into account the specified 
  * output device. IX_OSAL_STDOUT supports all the usual print formats,
  * however a custom hex display specified by IX_OSAL_HEX would support
  * only a fixed number of hexadecimal digits.
  */
 PUBLIC INT32 ixOsalLog (IxOsalLogLevel level,
-                        IxOsalLogDevice device,
-                        char * format,
-                        int arg1,
-                        int arg2, int arg3, int arg4, int arg5, int arg6);
+			IxOsalLogDevice device,
+			char *format,
+			int arg1,
+			int arg2, int arg3, int arg4, int arg5, int arg6);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief sets the current logging verbosity level
@@ -1371,10 +1371,10 @@ PUBLIC UINT32 ixOsalLogLevelSet (UINT32 level);
 
 
 /* ============================= Logging  ==============================
- *
+ * 
  */
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Schedules a repeating timer
@@ -1397,12 +1397,12 @@ PUBLIC UINT32 ixOsalLogLevelSet (UINT32 level);
  * @return - IX_SUCCESS/IX_FAIL
  */
 PUBLIC IX_STATUS ixOsalRepeatingTimerSchedule (IxOsalTimer * timer,
-    UINT32 period,
-    UINT32 priority,
-    IxOsalVoidFnVoidPtr callback,
-    void * param);
+					       UINT32 period,
+					       UINT32 priority,
+					       IxOsalVoidFnVoidPtr callback,
+					       void *param);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Schedules a single-shot timer
@@ -1426,11 +1426,11 @@ PUBLIC IX_STATUS ixOsalRepeatingTimerSchedule (IxOsalTimer * timer,
  */
 PUBLIC IX_STATUS
 ixOsalSingleShotTimerSchedule (IxOsalTimer * timer,
-                               UINT32 period,
-                               UINT32 priority,
-                               IxOsalVoidFnVoidPtr callback, void * param);
+			       UINT32 period,
+			       UINT32 priority,
+			       IxOsalVoidFnVoidPtr callback, void *param);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief Cancels a running timer
@@ -1446,7 +1446,7 @@ ixOsalSingleShotTimerSchedule (IxOsalTimer * timer,
  */
 PUBLIC IX_STATUS ixOsalTimerCancel (IxOsalTimer * timer);
 
-/**
+/** 
  * @ingroup IxOsal
  *
  * @brief displays all the running timers
@@ -1463,7 +1463,7 @@ PUBLIC void ixOsalTimersShow (void);
 
 
 /* ============================= Version  ==============================
- *
+ * 
  */
 
 /**
@@ -1485,7 +1485,7 @@ PUBLIC void ixOsalTimersShow (void);
  * return - IX_SUCCESS for successful retrieval
  *        - IX_FAIL if (osType == NULL | maxSize =< 0)
  */
-PUBLIC IX_STATUS ixOsalOsNameGet (INT8 * osName, INT32 maxSize);
+PUBLIC IX_STATUS ixOsalOsNameGet (INT8* osName, INT32 maxSize);
 
 /**
  * @ingroup IxOsal
@@ -1506,7 +1506,7 @@ PUBLIC IX_STATUS ixOsalOsNameGet (INT8 * osName, INT32 maxSize);
  * return - IX_SUCCESS for successful retrieval
  *        - IX_FAIL if (osVersion == NULL | maxSize =< 0)
  */
-PUBLIC IX_STATUS ixOsalOsVersionGet (INT8 * osVersion, INT32 maxSize);
+PUBLIC IX_STATUS ixOsalOsVersionGet(INT8* osVersion, INT32 maxSize);
 
 
 

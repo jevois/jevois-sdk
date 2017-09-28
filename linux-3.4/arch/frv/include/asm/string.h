@@ -17,14 +17,14 @@
 #define __HAVE_ARCH_MEMSET 1
 #define __HAVE_ARCH_MEMCPY 1
 
-extern void * memset (void *, int, __kernel_size_t);
-extern void * memcpy (void *, const void *, __kernel_size_t);
+extern void *memset(void *, int, __kernel_size_t);
+extern void *memcpy(void *, const void *, __kernel_size_t);
 
 #else /* KERNEL */
 
 /*
- *  let user libraries deal with these,
- *  IMHO the kernel has no place defining these functions for user apps
+ *	let user libraries deal with these,
+ *	IMHO the kernel has no place defining these functions for user apps
  */
 
 #define __HAVE_ARCH_STRCPY 1

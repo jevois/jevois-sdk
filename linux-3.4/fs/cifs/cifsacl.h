@@ -33,11 +33,11 @@
 #define WRITE_BIT       0x2
 #define EXEC_BIT        0x1
 
-#define UBITSHIFT 6
-#define GBITSHIFT 3
+#define UBITSHIFT	6
+#define GBITSHIFT	3
 
-#define ACCESS_ALLOWED  0
-#define ACCESS_DENIED 1
+#define ACCESS_ALLOWED	0
+#define ACCESS_DENIED	1
 
 #define SIDOWNER 1
 #define SIDGROUP 2
@@ -49,55 +49,55 @@
 #define SID_MAP_RETRY (300 * HZ)   /* wait 5 minutes for next attempt to map */
 
 struct cifs_ntsd {
-  __le16 revision; /* revision level */
-  __le16 type;
-  __le32 osidoffset;
-  __le32 gsidoffset;
-  __le32 sacloffset;
-  __le32 dacloffset;
-} __attribute__ ( (packed) );
+	__le16 revision; /* revision level */
+	__le16 type;
+	__le32 osidoffset;
+	__le32 gsidoffset;
+	__le32 sacloffset;
+	__le32 dacloffset;
+} __attribute__((packed));
 
 struct cifs_sid {
-  __u8 revision; /* revision level */
-  __u8 num_subauth;
-  __u8 authority[6];
-  __le32 sub_auth[5]; /* sub_auth[num_subauth] */
-} __attribute__ ( (packed) );
+	__u8 revision; /* revision level */
+	__u8 num_subauth;
+	__u8 authority[6];
+	__le32 sub_auth[5]; /* sub_auth[num_subauth] */
+} __attribute__((packed));
 
 struct cifs_acl {
-  __le16 revision; /* revision level */
-  __le16 size;
-  __le32 num_aces;
-} __attribute__ ( (packed) );
+	__le16 revision; /* revision level */
+	__le16 size;
+	__le32 num_aces;
+} __attribute__((packed));
 
 struct cifs_ace {
-  __u8 type;
-  __u8 flags;
-  __le16 size;
-  __le32 access_req;
-  struct cifs_sid sid; /* ie UUID of user or group who gets these perms */
-} __attribute__ ( (packed) );
+	__u8 type;
+	__u8 flags;
+	__le16 size;
+	__le32 access_req;
+	struct cifs_sid sid; /* ie UUID of user or group who gets these perms */
+} __attribute__((packed));
 
 struct cifs_wksid {
-  struct cifs_sid cifssid;
-  char sidname[SIDNAMELENGTH];
-} __attribute__ ( (packed) );
+	struct cifs_sid cifssid;
+	char sidname[SIDNAMELENGTH];
+} __attribute__((packed));
 
 struct cifs_sid_id {
-  unsigned int refcount; /* increment with spinlock, decrement without */
-  unsigned long id;
-  unsigned long time;
-  unsigned long state;
-  char * sidstr;
-  struct rb_node rbnode;
-  struct cifs_sid sid;
+	unsigned int refcount; /* increment with spinlock, decrement without */
+	unsigned long id;
+	unsigned long time;
+	unsigned long state;
+	char *sidstr;
+	struct rb_node rbnode;
+	struct cifs_sid sid;
 };
 
 #ifdef __KERNEL__
 extern struct key_type cifs_idmap_key_type;
-extern const struct cred * root_cred;
+extern const struct cred *root_cred;
 #endif /* KERNEL */
 
-extern int compare_sids (const struct cifs_sid *, const struct cifs_sid *);
+extern int compare_sids(const struct cifs_sid *, const struct cifs_sid *);
 
 #endif /* _CIFSACL_H */

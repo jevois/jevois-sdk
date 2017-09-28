@@ -1,13 +1,13 @@
 /*
  * Copyright (C) 2004,2005  ADDI-DATA GmbH for the source code of this module.
  *
- *  ADDI-DATA GmbH
- *  Dieselstrasse 3
- *  D-77833 Ottersweier
- *  Tel: +19(0)7223/9493-0
- *  Fax: +49(0)7223/9493-92
- *  http://www.addi-data.com
- *  info@addi-data.com
+ *	ADDI-DATA GmbH
+ *	Dieselstrasse 3
+ *	D-77833 Ottersweier
+ *	Tel: +19(0)7223/9493-0
+ *	Fax: +49(0)7223/9493-92
+ *	http://www.addi-data.com
+ *	info@addi-data.com
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -33,9 +33,9 @@
 #define MODE1                                     1
 /* ANALOG OUTPUT RANGE */
 static struct comedi_lrange range_apci3501_ao = { 2, {
-    BIP_RANGE (10),
-    UNI_RANGE (10)
-  }
+					BIP_RANGE(10),
+					UNI_RANGE(10)
+					}
 };
 
 /* Watchdog Related Defines */
@@ -55,10 +55,10 @@ static struct comedi_lrange range_apci3501_ao = { 2, {
 /* Hardware Layer  functions for Apci3501 */
 
 /* AO */
-int i_APCI3501_ConfigAnalogOutput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                   struct comedi_insn * insn, unsigned int * data);
-int i_APCI3501_WriteAnalogOutput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                  struct comedi_insn * insn, unsigned int * data);
+int i_APCI3501_ConfigAnalogOutput(struct comedi_device *dev, struct comedi_subdevice *s,
+				  struct comedi_insn *insn, unsigned int *data);
+int i_APCI3501_WriteAnalogOutput(struct comedi_device *dev, struct comedi_subdevice *s,
+				 struct comedi_insn *insn, unsigned int *data);
 
 /*
 * DI for di read INT i_APCI3501_ReadDigitalInput(struct
@@ -66,33 +66,33 @@ int i_APCI3501_WriteAnalogOutput (struct comedi_device * dev, struct comedi_subd
 * *insn,unsigned int *data);
 */
 
-int i_APCI3501_ReadDigitalInput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                 struct comedi_insn * insn, unsigned int * data);
+int i_APCI3501_ReadDigitalInput(struct comedi_device *dev, struct comedi_subdevice *s,
+				struct comedi_insn *insn, unsigned int *data);
 
 /* DO */
-int i_APCI3501_ConfigDigitalOutput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                    struct comedi_insn * insn, unsigned int * data);
-int i_APCI3501_WriteDigitalOutput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                   struct comedi_insn * insn, unsigned int * data);
-int i_APCI3501_ReadDigitalOutput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                  struct comedi_insn * insn, unsigned int * data);
+int i_APCI3501_ConfigDigitalOutput(struct comedi_device *dev, struct comedi_subdevice *s,
+				   struct comedi_insn *insn, unsigned int *data);
+int i_APCI3501_WriteDigitalOutput(struct comedi_device *dev, struct comedi_subdevice *s,
+				  struct comedi_insn *insn, unsigned int *data);
+int i_APCI3501_ReadDigitalOutput(struct comedi_device *dev, struct comedi_subdevice *s,
+				 struct comedi_insn *insn, unsigned int *data);
 
 /* TIMER
  * timer value is passed as u seconds
  */
 
-int i_APCI3501_ConfigTimerCounterWatchdog (struct comedi_device * dev,
-    struct comedi_subdevice * s,
-    struct comedi_insn * insn, unsigned int * data);
-int i_APCI3501_StartStopWriteTimerCounterWatchdog (struct comedi_device * dev,
-    struct comedi_subdevice * s,
-    struct comedi_insn * insn,
-    unsigned int * data);
-int i_APCI3501_ReadTimerCounterWatchdog (struct comedi_device * dev,
-    struct comedi_subdevice * s,
-    struct comedi_insn * insn, unsigned int * data);
+int i_APCI3501_ConfigTimerCounterWatchdog(struct comedi_device *dev,
+					  struct comedi_subdevice *s,
+					  struct comedi_insn *insn, unsigned int *data);
+int i_APCI3501_StartStopWriteTimerCounterWatchdog(struct comedi_device *dev,
+						  struct comedi_subdevice *s,
+						  struct comedi_insn *insn,
+						  unsigned int *data);
+int i_APCI3501_ReadTimerCounterWatchdog(struct comedi_device *dev,
+					struct comedi_subdevice *s,
+					struct comedi_insn *insn, unsigned int *data);
 /* Interrupt */
-void v_APCI3501_Interrupt (int irq, void * d);
+void v_APCI3501_Interrupt(int irq, void *d);
 
 /* Reset functions */
-int i_APCI3501_Reset (struct comedi_device * dev);
+int i_APCI3501_Reset(struct comedi_device *dev);

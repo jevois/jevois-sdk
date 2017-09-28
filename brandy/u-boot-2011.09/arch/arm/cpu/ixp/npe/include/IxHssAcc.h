@@ -1,21 +1,21 @@
 /**
  * @file IxHssAcc.h
- *
+ * 
  * @date 07-DEC-2001
  *
  * @brief This file contains the public API of the IXP400 HSS Access
  * component
  *
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,7 +28,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -41,11 +41,11 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
 */
-
+ 
 /* ------------------------------------------------------
    Doxygen group definitions
    ------------------------------------------------------ */
@@ -56,18 +56,18 @@
  *
  * IxHssAcc is the access layer to the HSS packetised and channelised
  * services
- *
+ * 
  * <b> Design Notes </b><br>
  * <UL>
- * <LI>When a packet-pipe is configured for 56Kbps RAW mode, byte alignment of
- *     the transmitted data is not preserved. All raw data that is transmitted
- *     will be received in proper order by the receiver, but the first bit of
- *     the packet may be seen at any offset within a byte; all subsequent bytes
- *     will have the same offset for the duration of the packet. The same offset
- *     also applies to all subsequent packets received on the packet-pipe too.
- *     (Similar results will occur for data received from remote end.) While
- *     this behavior will also occur for 56Kbps HDLC mode, the HDLC
- *     encoding/decoding will preserve the original byte alignment at the
+ * <LI>When a packet-pipe is configured for 56Kbps RAW mode, byte alignment of 
+ *     the transmitted data is not preserved. All raw data that is transmitted 
+ *     will be received in proper order by the receiver, but the first bit of 
+ *     the packet may be seen at any offset within a byte; all subsequent bytes 
+ *     will have the same offset for the duration of the packet. The same offset 
+ *     also applies to all subsequent packets received on the packet-pipe too. 
+ *     (Similar results will occur for data received from remote end.) While 
+ *     this behavior will also occur for 56Kbps HDLC mode, the HDLC 
+ *     encoding/decoding will preserve the original byte alignment at the 
  *     receiver end.
  * </UL>
  *
@@ -76,8 +76,8 @@
  * <LI>IxHssAcc supports 56Kbps packetised service at a maximum aggregate rate
  *     for all HSS ports/HDLC channels of 12.288Mbps[1] in each direction, i.e.
  *     it supports 56Kbps packetised service on up to 8 T1 trunks. It does
- *     not support 56Kbps packetised service on 8 E1 trunks (i.e. 4 trunks per
- *     HSS port) unless those trunks are running 'fractional E1' with maximum
+ *     not support 56Kbps packetised service on 8 E1 trunks (i.e. 4 trunks per 
+ *     HSS port) unless those trunks are running 'fractional E1' with maximum 
  *     aggregate rate of 12.288 Mbps in each direction.<br>
  *     [1] 12.288Mbps = 1.536Mbp * 8 T1
  * </UL>
@@ -96,12 +96,12 @@
  * @def IX_HSSACC_TSLOTS_PER_HSS_PORT
  *
  * @brief The max number of TDM timeslots supported per HSS port - 4E1's =
- *  32x4 = 128
+ *  32x4 = 128 
  */
 #define IX_HSSACC_TSLOTS_PER_HSS_PORT 128
 
 /* -----------------------------------------------------------
-   The following are HssAccess return values returned through
+   The following are HssAccess return values returned through 
    service interfaces. The globally defined IX_SUCCESS (0) and
    IX_FAIL (1) in IxOsalTypes.h are also used.
    ----------------------------------------------------------- */
@@ -122,7 +122,7 @@
 /**
  * @def IX_HSSACC_PKT_DISCONNECTING
  *
- * @brief Indicates that a disconnect call is progressing and will
+ * @brief Indicates that a disconnect call is progressing and will 
  * disconnect soon
  */
 #define IX_HSSACC_PKT_DISCONNECTING 4
@@ -130,8 +130,8 @@
 /**
  * @def IX_HSSACC_Q_WRITE_OVERFLOW
  *
- * @brief Indicates that an attempt to Tx or to replenish an
- * RxFree Q failed due to Q overflow.
+ * @brief Indicates that an attempt to Tx or to replenish an 
+ * RxFree Q failed due to Q overflow.  
  */
 #define IX_HSSACC_Q_WRITE_OVERFLOW 5
 
@@ -208,8 +208,8 @@
 /**
  * @def IX_HSSACC_PKT_MIN_RX_MBUF_SIZE
  *
- * @brief Minimum size of the Rx mbuf in bytes which the client must supply
- * to the component.
+ * @brief Minimum size of the Rx mbuf in bytes which the client must supply 
+ * to the component. 
  */
 #define IX_HSSACC_PKT_MIN_RX_MBUF_SIZE 64
 
@@ -219,29 +219,29 @@
    -------------------------------------------------------------------- */
 /**
  * @enum IxHssAccHssPort
- * @brief The HSS port ID - There are two identical ports (0-1).
- *
+ * @brief The HSS port ID - There are two identical ports (0-1). 
+ * 
  */
 typedef enum
 {
-  IX_HSSACC_HSS_PORT_0,   /**< HSS Port 0 */
-  IX_HSSACC_HSS_PORT_1,   /**< HSS Port 1 */
-  IX_HSSACC_HSS_PORT_MAX  /**< Delimiter for error checks */
+    IX_HSSACC_HSS_PORT_0,   /**< HSS Port 0 */
+    IX_HSSACC_HSS_PORT_1,   /**< HSS Port 1 */
+    IX_HSSACC_HSS_PORT_MAX  /**< Delimiter for error checks */
 } IxHssAccHssPort;
 
 /**
  * @enum IxHssAccHdlcPort
- * @brief The HDLC port ID - There are four identical HDLC ports (0-3) per
+ * @brief The HDLC port ID - There are four identical HDLC ports (0-3) per 
  * HSS port and they correspond to the 4 E1/T1 trunks.
- *
+ * 
  */
 typedef enum
 {
-  IX_HSSACC_HDLC_PORT_0,   /**< HDLC Port 0 */
-  IX_HSSACC_HDLC_PORT_1,   /**< HDLC Port 1 */
-  IX_HSSACC_HDLC_PORT_2,   /**< HDLC Port 2 */
-  IX_HSSACC_HDLC_PORT_3,   /**< HDLC Port 3 */
-  IX_HSSACC_HDLC_PORT_MAX  /**< Delimiter for error checks */
+   IX_HSSACC_HDLC_PORT_0,   /**< HDLC Port 0 */
+   IX_HSSACC_HDLC_PORT_1,   /**< HDLC Port 1 */
+   IX_HSSACC_HDLC_PORT_2,   /**< HDLC Port 2 */
+   IX_HSSACC_HDLC_PORT_3,   /**< HDLC Port 3 */
+   IX_HSSACC_HDLC_PORT_MAX  /**< Delimiter for error checks */
 } IxHssAccHdlcPort;
 
 /**
@@ -251,11 +251,11 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_TDMMAP_UNASSIGNED,    /**< Unassigned */
-  IX_HSSACC_TDMMAP_HDLC,          /**< HDLC - packetised */
-  IX_HSSACC_TDMMAP_VOICE56K,      /**< Voice56K - channelised */
-  IX_HSSACC_TDMMAP_VOICE64K,      /**< Voice64K - channelised */
-  IX_HSSACC_TDMMAP_MAX            /**< Delimiter for error checks */
+    IX_HSSACC_TDMMAP_UNASSIGNED,    /**< Unassigned */
+    IX_HSSACC_TDMMAP_HDLC,          /**< HDLC - packetised */
+    IX_HSSACC_TDMMAP_VOICE56K,      /**< Voice56K - channelised */
+    IX_HSSACC_TDMMAP_VOICE64K,      /**< Voice64K - channelised */
+    IX_HSSACC_TDMMAP_MAX            /**< Delimiter for error checks */
 } IxHssAccTdmSlotUsage;
 
 /**
@@ -265,11 +265,11 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_FRM_SYNC_ACTIVE_LOW,   /**< Frame sync is sampled low */
-  IX_HSSACC_FRM_SYNC_ACTIVE_HIGH,  /**< sampled high */
-  IX_HSSACC_FRM_SYNC_FALLINGEDGE,  /**< sampled on a falling edge */
-  IX_HSSACC_FRM_SYNC_RISINGEDGE,   /**< sampled on a rising edge */
-  IX_HSSACC_FRM_SYNC_TYPE_MAX      /**< Delimiter for error checks */
+    IX_HSSACC_FRM_SYNC_ACTIVE_LOW,   /**< Frame sync is sampled low */
+    IX_HSSACC_FRM_SYNC_ACTIVE_HIGH,  /**< sampled high */
+    IX_HSSACC_FRM_SYNC_FALLINGEDGE,  /**< sampled on a falling edge */
+    IX_HSSACC_FRM_SYNC_RISINGEDGE,   /**< sampled on a rising edge */
+    IX_HSSACC_FRM_SYNC_TYPE_MAX      /**< Delimiter for error checks */
 } IxHssAccFrmSyncType;
 
 /**
@@ -279,26 +279,26 @@ typedef enum
  * */
 typedef enum
 {
-  IX_HSSACC_FRM_SYNC_INPUT,          /**< Frame sync is sampled as an input */
-  IX_HSSACC_FRM_SYNC_INVALID_VALUE,  /**< 1 is not used */
-  IX_HSSACC_FRM_SYNC_OUTPUT_FALLING, /**< Frame sync is an output generated
-            off a falling clock edge */
-  IX_HSSACC_FRM_SYNC_OUTPUT_RISING,  /**< Frame sync is an output generated
-            off a rising clock edge */
-  IX_HSSACC_FRM_SYNC_ENABLE_MAX      /**< Delimiter for error checks */
+    IX_HSSACC_FRM_SYNC_INPUT,          /**< Frame sync is sampled as an input */
+    IX_HSSACC_FRM_SYNC_INVALID_VALUE,  /**< 1 is not used */
+    IX_HSSACC_FRM_SYNC_OUTPUT_FALLING, /**< Frame sync is an output generated 
+					  off a falling clock edge */
+    IX_HSSACC_FRM_SYNC_OUTPUT_RISING,  /**< Frame sync is an output generated 
+					  off a rising clock edge */
+    IX_HSSACC_FRM_SYNC_ENABLE_MAX      /**< Delimiter for error checks */
 } IxHssAccFrmSyncEnable;
 
 /**
  * @enum IxHssAccClkEdge
- * @brief IxHssAccClkEdge is used to determine the clk edge to use for
+ * @brief IxHssAccClkEdge is used to determine the clk edge to use for 
  * framing and data
  *
  */
 typedef enum
 {
-  IX_HSSACC_CLK_EDGE_FALLING,  /**< Clock sampled off a falling edge */
-  IX_HSSACC_CLK_EDGE_RISING,   /**< Clock sampled off a rising edge */
-  IX_HSSACC_CLK_EDGE_MAX       /**< Delimiter for error checks */
+    IX_HSSACC_CLK_EDGE_FALLING,  /**< Clock sampled off a falling edge */
+    IX_HSSACC_CLK_EDGE_RISING,   /**< Clock sampled off a rising edge */
+    IX_HSSACC_CLK_EDGE_MAX       /**< Delimiter for error checks */
 } IxHssAccClkEdge;
 
 /**
@@ -308,9 +308,9 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_SYNC_CLK_DIR_INPUT,    /**< Clock is an input */
-  IX_HSSACC_SYNC_CLK_DIR_OUTPUT,   /**< Clock is an output */
-  IX_HSSACC_SYNC_CLK_DIR_MAX       /**< Delimiter for error checks */
+    IX_HSSACC_SYNC_CLK_DIR_INPUT,    /**< Clock is an input */
+    IX_HSSACC_SYNC_CLK_DIR_OUTPUT,   /**< Clock is an output */
+    IX_HSSACC_SYNC_CLK_DIR_MAX       /**< Delimiter for error checks */
 } IxHssAccClkDir;
 
 /**
@@ -320,9 +320,9 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_FRM_PULSE_ENABLED,     /**< Generate/Receive frame pulses */
-  IX_HSSACC_FRM_PULSE_DISABLED,    /**< Disregard frame pulses */
-  IX_HSSACC_FRM_PULSE_MAX          /**< Delimiter for error checks */
+    IX_HSSACC_FRM_PULSE_ENABLED,     /**< Generate/Receive frame pulses */
+    IX_HSSACC_FRM_PULSE_DISABLED,    /**< Disregard frame pulses */
+    IX_HSSACC_FRM_PULSE_MAX          /**< Delimiter for error checks */
 } IxHssAccFrmPulseUsage;
 
 /**
@@ -332,9 +332,9 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_CLK_RATE,      /**< Data rate is at the configured clk speed */
-  IX_HSSACC_HALF_CLK_RATE, /**< Data rate is half the configured clk speed */
-  IX_HSSACC_DATA_RATE_MAX  /**< Delimiter for error checks */
+    IX_HSSACC_CLK_RATE,      /**< Data rate is at the configured clk speed */
+    IX_HSSACC_HALF_CLK_RATE, /**< Data rate is half the configured clk speed */
+    IX_HSSACC_DATA_RATE_MAX  /**< Delimiter for error checks */
 } IxHssAccDataRate;
 
 /**
@@ -344,11 +344,11 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_DATA_POLARITY_SAME,   /**< Don't invert data between NPE and
-               HSS FIFOs */
-  IX_HSSACC_DATA_POLARITY_INVERT, /**< Invert data between NPE and HSS
-               FIFOs */
-  IX_HSSACC_DATA_POLARITY_MAX     /**< Delimiter for error checks */
+    IX_HSSACC_DATA_POLARITY_SAME,   /**< Don't invert data between NPE and 
+				       HSS FIFOs */
+    IX_HSSACC_DATA_POLARITY_INVERT, /**< Invert data between NPE and HSS 
+				       FIFOs */
+    IX_HSSACC_DATA_POLARITY_MAX     /**< Delimiter for error checks */
 } IxHssAccDataPolarity;
 
 /**
@@ -358,9 +358,9 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_LSB_ENDIAN,    /**< TX/RX Least Significant Bit first */
-  IX_HSSACC_MSB_ENDIAN,    /**< TX/RX Most Significant Bit first */
-  IX_HSSACC_ENDIAN_MAX     /**< Delimiter for the purposes of error checks */
+    IX_HSSACC_LSB_ENDIAN,    /**< TX/RX Least Significant Bit first */
+    IX_HSSACC_MSB_ENDIAN,    /**< TX/RX Most Significant Bit first */
+    IX_HSSACC_ENDIAN_MAX     /**< Delimiter for the purposes of error checks */
 } IxHssAccBitEndian;
 
 
@@ -371,9 +371,9 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_TX_PINS_NORMAL,       /**< Normal mode */
-  IX_HSSACC_TX_PINS_OPEN_DRAIN,   /**< Open Drain mode */
-  IX_HSSACC_TX_PINS_MAX           /**< Delimiter for error checks */
+    IX_HSSACC_TX_PINS_NORMAL,       /**< Normal mode */
+    IX_HSSACC_TX_PINS_OPEN_DRAIN,   /**< Open Drain mode */
+    IX_HSSACC_TX_PINS_MAX           /**< Delimiter for error checks */
 } IxHssAccDrainMode;
 
 /**
@@ -383,22 +383,22 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_SOF_FBIT,  /**< Framing bit transmitted and expected on rx */
-  IX_HSSACC_SOF_DATA,  /**< Framing bit not transmitted nor expected on rx */
-  IX_HSSACC_SOF_MAX    /**< Delimiter for error checks */
+    IX_HSSACC_SOF_FBIT,  /**< Framing bit transmitted and expected on rx */
+    IX_HSSACC_SOF_DATA,  /**< Framing bit not transmitted nor expected on rx */
+    IX_HSSACC_SOF_MAX    /**< Delimiter for error checks */
 } IxHssAccSOFType;
 
 /**
  * @enum IxHssAccDataEnable
- * @brief IxHssAccDataEnable is used to determine whether or not to drive
+ * @brief IxHssAccDataEnable is used to determine whether or not to drive 
  * the data pins
  *
  */
 typedef enum
 {
-  IX_HSSACC_DE_TRI_STATE,   /**< TRI-State the data pins */
-  IX_HSSACC_DE_DATA,        /**< Push data out the data pins */
-  IX_HSSACC_DE_MAX          /**< Delimiter for error checks */
+    IX_HSSACC_DE_TRI_STATE,   /**< TRI-State the data pins */
+    IX_HSSACC_DE_DATA,        /**< Push data out the data pins */
+    IX_HSSACC_DE_MAX          /**< Delimiter for error checks */
 } IxHssAccDataEnable;
 
 /**
@@ -408,10 +408,10 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_TXSIG_LOW,        /**< Drive the data pins low */
-  IX_HSSACC_TXSIG_HIGH,       /**< Drive the data pins high */
-  IX_HSSACC_TXSIG_HIGH_IMP,   /**< Drive the data pins with high impedance */
-  IX_HSSACC_TXSIG_MAX         /**< Delimiter for error checks */
+    IX_HSSACC_TXSIG_LOW,        /**< Drive the data pins low */
+    IX_HSSACC_TXSIG_HIGH,       /**< Drive the data pins high */
+    IX_HSSACC_TXSIG_HIGH_IMP,   /**< Drive the data pins with high impedance */
+    IX_HSSACC_TXSIG_MAX         /**< Delimiter for error checks */
 } IxHssAccTxSigType;
 
 /**
@@ -423,9 +423,9 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_FB_FIFO,        /**< Fbit is dictated in FIFO */
-  IX_HSSACC_FB_HIGH_IMP,    /**< Fbit is high impedance */
-  IX_HSSACC_FB_MAX          /**< Delimiter for error checks */
+    IX_HSSACC_FB_FIFO,        /**< Fbit is dictated in FIFO */
+    IX_HSSACC_FB_HIGH_IMP,    /**< Fbit is high impedance */
+    IX_HSSACC_FB_MAX          /**< Delimiter for error checks */
 } IxHssAccFbType;
 
 /**
@@ -435,9 +435,9 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_56KE_BIT_7_UNUSED,  /**< High bit is unused */
-  IX_HSSACC_56KE_BIT_0_UNUSED,  /**< Low bit is unused */
-  IX_HSSACC_56KE_MAX            /**< Delimiter for error checks */
+    IX_HSSACC_56KE_BIT_7_UNUSED,  /**< High bit is unused */
+    IX_HSSACC_56KE_BIT_0_UNUSED,  /**< Low bit is unused */
+    IX_HSSACC_56KE_MAX            /**< Delimiter for error checks */
 } IxHssAcc56kEndianness;
 
 /**
@@ -447,9 +447,9 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_56KS_32_8_DATA,  /**< 32/8 bit data */
-  IX_HSSACC_56KS_56K_DATA,   /**< 56K data */
-  IX_HSSACC_56KS_MAX         /**< Delimiter for error checks */
+    IX_HSSACC_56KS_32_8_DATA,  /**< 32/8 bit data */
+    IX_HSSACC_56KS_56K_DATA,   /**< 56K data */
+    IX_HSSACC_56KS_MAX         /**< Delimiter for error checks */
 } IxHssAcc56kSel;
 
 
@@ -460,13 +460,13 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_CLK_SPEED_512KHZ,     /**< 512KHz */
-  IX_HSSACC_CLK_SPEED_1536KHZ,    /**< 1.536MHz */
-  IX_HSSACC_CLK_SPEED_1544KHZ,    /**< 1.544MHz */
-  IX_HSSACC_CLK_SPEED_2048KHZ,    /**< 2.048MHz */
-  IX_HSSACC_CLK_SPEED_4096KHZ,    /**< 4.096MHz */
-  IX_HSSACC_CLK_SPEED_8192KHZ,    /**< 8.192MHz */
-  IX_HSSACC_CLK_SPEED_MAX      /**< Delimiter for error checking */
+    IX_HSSACC_CLK_SPEED_512KHZ,     /**< 512KHz */
+    IX_HSSACC_CLK_SPEED_1536KHZ,    /**< 1.536MHz */
+    IX_HSSACC_CLK_SPEED_1544KHZ,    /**< 1.544MHz */
+    IX_HSSACC_CLK_SPEED_2048KHZ,    /**< 2.048MHz */
+    IX_HSSACC_CLK_SPEED_4096KHZ,    /**< 4.096MHz */
+    IX_HSSACC_CLK_SPEED_8192KHZ,    /**< 8.192MHz */
+    IX_HSSACC_CLK_SPEED_MAX      /**< Delimiter for error checking */
 } IxHssAccClkSpeed;
 
 /**
@@ -476,20 +476,20 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_PKT_OK,              /**< Error free.*/
-  IX_HSSACC_STOP_SHUTDOWN_ERROR, /**< Errored due to stop or shutdown
-              occurrance.*/
-  IX_HSSACC_HDLC_ALN_ERROR,      /**< HDLC alignment error */
-  IX_HSSACC_HDLC_FCS_ERROR,       /**< HDLC Frame Check Sum error.*/
-  IX_HSSACC_RXFREE_Q_EMPTY_ERROR,       /**< RxFree Q became empty
-               while receiving this packet.*/
-  IX_HSSACC_HDLC_MAX_FRAME_SIZE_EXCEEDED,      /**< HDLC frame size
-               received is greater than
-               max specified at connect.*/
-  IX_HSSACC_HDLC_ABORT_ERROR,   /**< HDLC frame received is invalid due to an
-           abort sequence received.*/
-  IX_HSSACC_DISCONNECT_IN_PROGRESS     /**< Packet returned
-              because a disconnect is in progress */
+    IX_HSSACC_PKT_OK,              /**< Error free.*/
+    IX_HSSACC_STOP_SHUTDOWN_ERROR, /**< Errored due to stop or shutdown 
+				      occurrance.*/
+    IX_HSSACC_HDLC_ALN_ERROR,      /**< HDLC alignment error */
+    IX_HSSACC_HDLC_FCS_ERROR,       /**< HDLC Frame Check Sum error.*/
+    IX_HSSACC_RXFREE_Q_EMPTY_ERROR,       /**< RxFree Q became empty 
+					     while receiving this packet.*/
+    IX_HSSACC_HDLC_MAX_FRAME_SIZE_EXCEEDED,      /**< HDLC frame size 
+						   received is greater than
+						   max specified at connect.*/
+    IX_HSSACC_HDLC_ABORT_ERROR,   /**< HDLC frame received is invalid due to an 
+				   abort sequence received.*/
+    IX_HSSACC_DISCONNECT_IN_PROGRESS     /**< Packet returned
+					    because a disconnect is in progress */
 } IxHssAccPktStatus;
 
 
@@ -500,8 +500,8 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_PKT_16_BIT_CRC = 16,  /**< 16 bit CRC is being used */
-  IX_HSSACC_PKT_32_BIT_CRC = 32   /**< 32 bit CRC is being used */
+    IX_HSSACC_PKT_16_BIT_CRC = 16,  /**< 16 bit CRC is being used */
+    IX_HSSACC_PKT_32_BIT_CRC = 32   /**< 32 bit CRC is being used */
 } IxHssAccPktCrcType;
 
 /**
@@ -511,8 +511,8 @@ typedef enum
  */
 typedef enum
 {
-  IX_HSSACC_HDLC_IDLE_ONES,    /**< idle tx/rx will be a succession of ones */
-  IX_HSSACC_HDLC_IDLE_FLAGS    /**< idle tx/rx will be repeated flags */
+    IX_HSSACC_HDLC_IDLE_ONES,    /**< idle tx/rx will be a succession of ones */
+    IX_HSSACC_HDLC_IDLE_FLAGS    /**< idle tx/rx will be repeated flags */
 } IxHssAccPktHdlcIdleType;
 
 /**
@@ -523,36 +523,36 @@ typedef enum
  */
 typedef struct
 {
-  IxHssAccFrmSyncType frmSyncType;     /**< frame sync pulse type (tx/rx) */
-  IxHssAccFrmSyncEnable frmSyncIO;     /**< how the frame sync pulse is
-              used (tx/rx) */
-  IxHssAccClkEdge frmSyncClkEdge;      /**< frame sync clock edge type
-              (tx/rx) */
-  IxHssAccClkEdge dataClkEdge;         /**< data clock edge type (tx/rx) */
-  IxHssAccClkDir clkDirection;         /**< clock direction (tx/rx) */
-  IxHssAccFrmPulseUsage frmPulseUsage; /**< whether to use the frame sync
-              pulse or not (tx/rx) */
-  IxHssAccDataRate dataRate;           /**< data rate in relation to the
-              clock (tx/rx) */
-  IxHssAccDataPolarity dataPolarity;   /**< data polarity type (tx/rx) */
-  IxHssAccBitEndian dataEndianness;    /**< data endianness (tx/rx) */
-  IxHssAccDrainMode drainMode;         /**< tx pin open drain mode (tx) */
-  IxHssAccSOFType fBitUsage;           /**< start of frame types (tx/rx) */
-  IxHssAccDataEnable dataEnable;       /**< whether or not to drive the data
-              pins (tx) */
-  IxHssAccTxSigType voice56kType;      /**< how to drive the data pins for
-              voice56k type (tx) */
-  IxHssAccTxSigType unassignedType;    /**< how to drive the data pins for
-              unassigned type (tx) */
-  IxHssAccFbType fBitType;             /**< how to drive the Fbit (tx) */
-  IxHssAcc56kEndianness voice56kEndian;/**< 56k data endianness when using
-              the 56k type (tx) */
-  IxHssAcc56kSel voice56kSel;          /**< 56k data transmission type when
-              using the 56k type (tx) */
-  unsigned frmOffset;                  /**< frame pulse offset in bits wrt
-              the first timeslot (0-1023) (tx/rx) */
-  unsigned maxFrmSize;                 /**< frame size in bits (1-1024)
-              (tx/rx) */
+    IxHssAccFrmSyncType frmSyncType;     /**< frame sync pulse type (tx/rx) */
+    IxHssAccFrmSyncEnable frmSyncIO;     /**< how the frame sync pulse is 
+					    used (tx/rx) */
+    IxHssAccClkEdge frmSyncClkEdge;      /**< frame sync clock edge type 
+					    (tx/rx) */
+    IxHssAccClkEdge dataClkEdge;         /**< data clock edge type (tx/rx) */
+    IxHssAccClkDir clkDirection;         /**< clock direction (tx/rx) */
+    IxHssAccFrmPulseUsage frmPulseUsage; /**< whether to use the frame sync 
+					    pulse or not (tx/rx) */
+    IxHssAccDataRate dataRate;           /**< data rate in relation to the 
+					    clock (tx/rx) */
+    IxHssAccDataPolarity dataPolarity;   /**< data polarity type (tx/rx) */
+    IxHssAccBitEndian dataEndianness;    /**< data endianness (tx/rx) */
+    IxHssAccDrainMode drainMode;         /**< tx pin open drain mode (tx) */
+    IxHssAccSOFType fBitUsage;           /**< start of frame types (tx/rx) */
+    IxHssAccDataEnable dataEnable;       /**< whether or not to drive the data 
+					    pins (tx) */
+    IxHssAccTxSigType voice56kType;      /**< how to drive the data pins for 
+					    voice56k type (tx) */
+    IxHssAccTxSigType unassignedType;    /**< how to drive the data pins for 
+					    unassigned type (tx) */
+    IxHssAccFbType fBitType;             /**< how to drive the Fbit (tx) */
+    IxHssAcc56kEndianness voice56kEndian;/**< 56k data endianness when using 
+					    the 56k type (tx) */
+    IxHssAcc56kSel voice56kSel;          /**< 56k data transmission type when 
+					    using the 56k type (tx) */
+    unsigned frmOffset;                  /**< frame pulse offset in bits wrt 
+					    the first timeslot (0-1023) (tx/rx) */
+    unsigned maxFrmSize;                 /**< frame size in bits (1-1024) 
+					    (tx/rx) */
 } IxHssAccPortConfig;
 
 /**
@@ -561,20 +561,20 @@ typedef struct
  */
 typedef struct
 {
-  IxHssAccPortConfig txPortConfig; /**< HSS tx port configuration */
-  IxHssAccPortConfig rxPortConfig; /**< HSS rx port configuration */
-  unsigned numChannelised;         /**< The number of channelised
-          timeslots (0-32) */
-  unsigned hssPktChannelCount;     /**< The number of packetised
-          clients (0 - 4) */
-  UINT8 channelisedIdlePattern;    /**< The byte to be transmitted on
-          channelised service when there
-          is no client data to tx */
-  BOOL loopback;                   /**< The HSS loopback state */
-  unsigned packetizedIdlePattern;  /**< The data to be transmitted on
-          packetised service when there is
-          no client data to tx */
-  IxHssAccClkSpeed clkSpeed;       /**< The HSS clock speed */
+    IxHssAccPortConfig txPortConfig; /**< HSS tx port configuration */
+    IxHssAccPortConfig rxPortConfig; /**< HSS rx port configuration */
+    unsigned numChannelised;         /**< The number of channelised 
+					timeslots (0-32) */
+    unsigned hssPktChannelCount;     /**< The number of packetised 
+					clients (0 - 4) */
+    UINT8 channelisedIdlePattern;    /**< The byte to be transmitted on 
+					channelised service when there 
+					is no client data to tx */
+    BOOL loopback;                   /**< The HSS loopback state */
+    unsigned packetizedIdlePattern;  /**< The data to be transmitted on 
+					packetised service when there is 
+					no client data to tx */
+    IxHssAccClkSpeed clkSpeed;       /**< The HSS clock speed */
 } IxHssAccConfigParams;
 
 /**
@@ -583,24 +583,24 @@ typedef struct
  */
 typedef struct
 {
-  BOOL hdlc56kMode;                    /**< 56kbps(TRUE)/64kbps(FALSE) HDLC */
-  IxHssAcc56kEndianness hdlc56kEndian; /**< 56kbps data endianness
-              - ignored if hdlc56kMode is FALSE*/
-  BOOL hdlc56kUnusedBitPolarity0;      /**< The polarity '0'(TRUE)/'1'(FALSE) of the unused
-             bit while in 56kbps mode
-             - ignored if hdlc56kMode is FALSE*/
+    BOOL hdlc56kMode;                    /**< 56kbps(TRUE)/64kbps(FALSE) HDLC */
+    IxHssAcc56kEndianness hdlc56kEndian; /**< 56kbps data endianness 
+					    - ignored if hdlc56kMode is FALSE*/
+    BOOL hdlc56kUnusedBitPolarity0;      /**< The polarity '0'(TRUE)/'1'(FALSE) of the unused
+					   bit while in 56kbps mode
+					   - ignored if hdlc56kMode is FALSE*/
 } IxHssAccHdlcMode;
 
 /**
- * @brief This structure contains information required by the NPE to
+ * @brief This structure contains information required by the NPE to 
  * configure the HDLC co-processor
  *
  */
 typedef struct
 {
-  IxHssAccPktHdlcIdleType hdlcIdleType;   /**< What to transmit when a HDLC port is idle */
-  IxHssAccBitEndian dataEndian;           /**< The HDLC data endianness */
-  IxHssAccPktCrcType crcType;             /**< The CRC type to be used for this HDLC port */
+    IxHssAccPktHdlcIdleType hdlcIdleType;   /**< What to transmit when a HDLC port is idle */
+    IxHssAccBitEndian dataEndian;           /**< The HDLC data endianness */
+    IxHssAccPktCrcType crcType;             /**< The CRC type to be used for this HDLC port */
 } IxHssAccPktHdlcFraming;
 
 /**
@@ -611,7 +611,7 @@ typedef struct
  *
  * This value will be passed into the ixHssAccPktPortConnect function once each
  * with given callbacks.  This value will then be passed back to the client
- * as one of the parameters to each of these callbacks,
+ * as one of the parameters to each of these callbacks, 
  * when these callbacks are called.
  */
 typedef UINT32 IxHssAccPktUserId;
@@ -619,7 +619,7 @@ typedef UINT32 IxHssAccPktUserId;
 
 /**
  * @typedef IxHssAccLastErrorCallback
- * @brief Prototype of the clients function to accept notification of the
+ * @brief Prototype of the clients function to accept notification of the 
  * last error
  *
  * This function is registered through the config. The client will initiate
@@ -632,51 +632,51 @@ typedef UINT32 IxHssAccPktUserId;
  *
  * @param lastHssError unsigned [in] - The last Hss error registered that
  *                                      has been registered.
- * @param servicePort unsigned [in] - This is the service port number.
- *                                     (packetised 0-3, channelised 0)
- *
+ * @param servicePort unsigned [in] - This is the service port number.  
+ *                                     (packetised 0-3, channelised 0) 
+ * 
  * @return void
  */
-typedef void (*IxHssAccLastErrorCallback) (unsigned lastHssError,
-    unsigned servicePort);
+typedef void (*IxHssAccLastErrorCallback) (unsigned lastHssError, 
+					   unsigned servicePort);
 
 /**
  * @typedef IxHssAccPktRxCallback
- * @brief  Prototype of the clients function to accept notification of
+ * @brief  Prototype of the clients function to accept notification of 
  * packetised rx
  *
  * This function is registered through the ixHssAccPktPortConnect. hssPktAcc will pass
  * received data in the form of mbufs to the client.  The mbuf passed back
  * to the client could contain a chain of buffers, depending on the packet
- * size received.
- *
- * @param *buffer @ref IX_OSAL_MBUF [in] - This is the mbuf which contains the
+ * size received. 
+ * 
+ * @param *buffer @ref IX_OSAL_MBUF [in] - This is the mbuf which contains the 
  * payload received.
- * @param numHssErrs unsigned [in] - This is the number of hssErrors
+ * @param numHssErrs unsigned [in] - This is the number of hssErrors 
  * the Npe has received
- * @param pktStatus @ref IxHssAccPktStatus [in] - This is the status of the
+ * @param pktStatus @ref IxHssAccPktStatus [in] - This is the status of the 
  * mbuf that has been received.
- * @param rxUserId @ref IxHssAccPktUserId [in] - This is the client supplied value
- * passed in at ixHssAccPktPortConnect time which is now returned to the client.
- *
+ * @param rxUserId @ref IxHssAccPktUserId [in] - This is the client supplied value 
+ * passed in at ixHssAccPktPortConnect time which is now returned to the client.			       
+ * 
  * @return void
  */
-typedef void (*IxHssAccPktRxCallback) (IX_OSAL_MBUF * buffer,
-                                       unsigned numHssErrs,
-                                       IxHssAccPktStatus pktStatus,
-                                       IxHssAccPktUserId rxUserId);
+typedef void (*IxHssAccPktRxCallback) (IX_OSAL_MBUF *buffer, 
+				       unsigned numHssErrs, 
+				       IxHssAccPktStatus pktStatus, 
+				       IxHssAccPktUserId rxUserId);
 
 /**
  * @typedef IxHssAccPktRxFreeLowCallback
- * @brief Prototype of the clients function to accept notification of
+ * @brief Prototype of the clients function to accept notification of 
  * requirement of more Rx Free buffers
  *
  * The client can choose to register a callback of this type when
- * calling a connecting. This function is registered through the ixHssAccPktPortConnect.
+ * calling a connecting. This function is registered through the ixHssAccPktPortConnect. 
  * If defined, the access layer will provide the trigger for
  * this callback. The callback will be responsible for supplying mbufs to
  * the access layer for use on the receive path from the HSS using
- * ixHssPktAccFreeBufReplenish.
+ * ixHssPktAccFreeBufReplenish. 
  *
  * @return void
  */
@@ -684,32 +684,32 @@ typedef void (*IxHssAccPktRxFreeLowCallback) (IxHssAccPktUserId rxFreeLowUserId)
 
 /**
  * @typedef IxHssAccPktTxDoneCallback
- * @brief  Prototype of the clients function to accept notification of
+ * @brief  Prototype of the clients function to accept notification of 
  * completion with Tx buffers
  *
  * This function is registered through the ixHssAccPktPortConnect.  It enables
  * the hssPktAcc to pass buffers back to the client
  * when transmission is complete.
  *
- * @param *buffer @ref IX_OSAL_MBUF [in] - This is the mbuf which contained
+ * @param *buffer @ref IX_OSAL_MBUF [in] - This is the mbuf which contained 
  * the payload that was for Tx.
- * @param numHssErrs unsigned [in] - This is the number of hssErrors
+ * @param numHssErrs unsigned [in] - This is the number of hssErrors 
  * the Npe has received
- * @param pktStatus @ref IxHssAccPktStatus [in] - This is the status of the
+ * @param pktStatus @ref IxHssAccPktStatus [in] - This is the status of the 
  * mbuf that has been transmitted.
- * @param txDoneUserId @ref IxHssAccPktUserId [in] - This is the client supplied value
- * passed in at ixHssAccPktPortConnect time which is now returned to the client.
+ * @param txDoneUserId @ref IxHssAccPktUserId [in] - This is the client supplied value 
+ * passed in at ixHssAccPktPortConnect time which is now returned to the client.	 
  *
  * @return void
  */
-typedef void (*IxHssAccPktTxDoneCallback) (IX_OSAL_MBUF * buffer,
-    unsigned numHssErrs,
-    IxHssAccPktStatus pktStatus,
-    IxHssAccPktUserId txDoneUserId);
+typedef void (*IxHssAccPktTxDoneCallback) (IX_OSAL_MBUF *buffer, 
+					   unsigned numHssErrs,
+					   IxHssAccPktStatus pktStatus, 
+					   IxHssAccPktUserId txDoneUserId);
 
 /**
  * @typedef IxHssAccChanRxCallback
- * @brief Prototype of the clients function to accept notification of
+ * @brief Prototype of the clients function to accept notification of 
  * channelised rx
  *
  * This callback, if defined by the client in the connect, will get called
@@ -723,15 +723,15 @@ typedef void (*IxHssAccPktTxDoneCallback) (IX_OSAL_MBUF * buffer,
  * the txPtrList the NPE is currently transmitting from.
  * @param rxOffset unsigned [in] - an offset indicating where within the
  * receive buffers the NPE has just written the received data to.
- * @param numHssErrs unsigned [in] - This is the number of hssErrors
+ * @param numHssErrs unsigned [in] - This is the number of hssErrors 
  * the Npe has received
  *
  * @return void
  */
 typedef void (*IxHssAccChanRxCallback) (IxHssAccHssPort hssPortId,
-                                        unsigned rxOffset,
-                                        unsigned txOffset,
-                                        unsigned numHssErrs);
+					unsigned rxOffset, 
+					unsigned txOffset, 
+					unsigned numHssErrs);
 
 /*
  * Prototypes for interface functions.
@@ -741,34 +741,34 @@ typedef void (*IxHssAccChanRxCallback) (IxHssAccHssPort hssPortId,
  *
  * @ingroup IxHssAccAPI
  *
- * @fn IX_STATUS ixHssAccPortInit (IxHssAccHssPort hssPortId,
-               IxHssAccConfigParams *configParams,
-               IxHssAccTdmSlotUsage *tdmMap,
+ * @fn IX_STATUS ixHssAccPortInit (IxHssAccHssPort hssPortId, 
+               IxHssAccConfigParams *configParams, 
+               IxHssAccTdmSlotUsage *tdmMap, 
                IxHssAccLastErrorCallback lastHssErrorCallback)
  *
  * @brief Initialise a HSS port. No channelised or packetised connections
  * should exist in the HssAccess layer while this interface is being called.
  *
  * @param hssPortId @ref IxHssAccHssPort [in] - The HSS port Id. There are two
- * identical ports (0-1).
- * @param *configParams @ref IxHssAccConfigParams [in] - A pointer to the HSS
+ * identical ports (0-1). 
+ * @param *configParams @ref IxHssAccConfigParams [in] - A pointer to the HSS 
  * configuration structure
  * @param *tdmMap @ref IxHssAccTdmSlotUsage [in] - A pointer to an array of size
  * IX_HSSACC_TSLOTS_PER_HSS_PORT, defining the slot usage over the HSS port
- * @param lastHssErrorCallback @ref IxHssAccLastErrorCallback [in] - Client
+ * @param lastHssErrorCallback @ref IxHssAccLastErrorCallback [in] - Client 
  * callback to report last error
  *
- * @return
+ * @return 
  *         - IX_SUCCESS The function executed successfully
  *         - IX_FAIL The function did not execute successfully
  *         - IX_HSSACC_PARAM_ERR The function did not execute successfully due to a
  *                          parameter error
  */
-PUBLIC IX_STATUS
-ixHssAccPortInit (IxHssAccHssPort hssPortId,
-                  IxHssAccConfigParams * configParams,
-                  IxHssAccTdmSlotUsage * tdmMap,
-                  IxHssAccLastErrorCallback lastHssErrorCallback);
+PUBLIC IX_STATUS 
+ixHssAccPortInit (IxHssAccHssPort hssPortId, 
+		  IxHssAccConfigParams *configParams, 
+		  IxHssAccTdmSlotUsage *tdmMap, 
+		  IxHssAccLastErrorCallback lastHssErrorCallback);
 
 /**
  *
@@ -782,13 +782,13 @@ ixHssAccPortInit (IxHssAccHssPort hssPortId,
  *
  * @param hssPortId @ref IxHssAccHssPort [in] - the HSS port ID
  *
- * @return
+ * @return 
  *         - IX_SUCCESS The function executed successfully
  *         - IX_FAIL The function did not execute successfully
  *         - IX_HSSACC_PARAM_ERR The function did not execute successfully due to a
  *                          parameter error
  */
-PUBLIC IX_STATUS
+PUBLIC IX_STATUS 
 ixHssAccLastErrorRetrievalInitiate (IxHssAccHssPort hssPortId);
 
 
@@ -799,19 +799,19 @@ ixHssAccLastErrorRetrievalInitiate (IxHssAccHssPort hssPortId);
  * @fn IX_STATUS ixHssAccInit ()
  *
  * @brief This function is responsible for initialising resources for use
- * by the packetised and channelised clients. It should be called after
+ * by the packetised and channelised clients. It should be called after 
  * HSS NPE image has been downloaded into NPE-A and before any other
- * HssAccess interface is called.
+ * HssAccess interface is called. 
  * No other HssAccPacketised interface should be called while this interface
  * is being processed.
  *
- * @return
+ * @return 
  *         - IX_SUCCESS The function executed successfully
  *         - IX_FAIL The function did not execute successfully
  *         - IX_HSSACC_RESOURCE_ERR The function did not execute successfully due
- *                          to a resource error
+ *                          to a resource error 
  */
-PUBLIC IX_STATUS
+PUBLIC IX_STATUS 
 ixHssAccInit (void);
 
 
@@ -819,33 +819,33 @@ ixHssAccInit (void);
  *
  * @ingroup IxHssAccAPI
  *
- * @fn ixHssAccPktPortConnect (IxHssAccHssPort hssPortId,
-      IxHssAccHdlcPort hdlcPortId,
-      BOOL hdlcFraming,
-      IxHssAccHdlcMode hdlcMode,
-      BOOL hdlcBitInvert,
-      unsigned blockSizeInWords,
-      UINT32 rawIdleBlockPattern,
-      IxHssAccPktHdlcFraming hdlcTxFraming,
-      IxHssAccPktHdlcFraming hdlcRxFraming,
-      unsigned frmFlagStart,
-      IxHssAccPktRxCallback rxCallback,
-      IxHssAccPktUserId rxUserId,
-      IxHssAccPktRxFreeLowCallback rxFreeLowCallback,
-      IxHssAccPktUserId rxFreeLowUserId,
-      IxHssAccPktTxDoneCallback txDoneCallback,
-      IxHssAccPktUserId txDoneUserId)
+ * @fn ixHssAccPktPortConnect (IxHssAccHssPort hssPortId, 
+			IxHssAccHdlcPort hdlcPortId, 
+			BOOL hdlcFraming, 
+			IxHssAccHdlcMode hdlcMode,
+			BOOL hdlcBitInvert,
+			unsigned blockSizeInWords,
+			UINT32 rawIdleBlockPattern,
+			IxHssAccPktHdlcFraming hdlcTxFraming, 
+			IxHssAccPktHdlcFraming hdlcRxFraming, 
+			unsigned frmFlagStart, 
+			IxHssAccPktRxCallback rxCallback,
+			IxHssAccPktUserId rxUserId, 
+			IxHssAccPktRxFreeLowCallback rxFreeLowCallback, 
+			IxHssAccPktUserId rxFreeLowUserId,
+			IxHssAccPktTxDoneCallback txDoneCallback,
+			IxHssAccPktUserId txDoneUserId) 
  *
- * @brief This function is responsible for connecting a client to one of
- * the 4 available HDLC ports. The HSS port should be configured before
+ * @brief This function is responsible for connecting a client to one of 
+ * the 4 available HDLC ports. The HSS port should be configured before 
  * attempting a connect. No other HssAccPacketised interface should be
  * called while this connect is being processed.
  *
  * @param hssPortId @ref IxHssAccHssPort [in] - The HSS port Id. There are two
- * identical ports (0-1).
- * @param hdlcPortId @ref IxHssAccHdlcPort [in] - This is the number of the HDLC port and
- * it corresponds to the physical E1/T1 trunk i.e. 0, 1, 2, 3
- * @param hdlcFraming BOOL [in] - This value determines whether the service
+ * identical ports (0-1). 
+ * @param hdlcPortId @ref IxHssAccHdlcPort [in] - This is the number of the HDLC port and 
+ * it corresponds to the physical E1/T1 trunk i.e. 0, 1, 2, 3 
+ * @param hdlcFraming BOOL [in] - This value determines whether the service 
  * will use HDLC data or the debug, raw data type i.e. no HDLC processing
  * @param hdlcMode @ref IxHssAccHdlcMode [in] - This structure contains 56Kbps, HDLC-mode
  * configuration parameters
@@ -853,31 +853,31 @@ ixHssAccInit (void);
  * will occur between HDLC and HSS co-processors i.e. post-HDLC processing for
  * transmit and pre-HDLC processing for receive, for the specified HDLC Termination
  * Point
- * @param blockSizeInWords unsigned [in] -  The max tx/rx block size
- * @param rawIdleBlockPattern UINT32 [in] -  Tx idle pattern in raw mode
- * @param hdlcTxFraming @ref IxHssAccPktHdlcFraming [in] - This structure contains
- * the following information required by the NPE to configure the HDLC
+ * @param blockSizeInWords unsigned [in] -  The max tx/rx block size 
+ * @param rawIdleBlockPattern UINT32 [in] -  Tx idle pattern in raw mode 
+ * @param hdlcTxFraming @ref IxHssAccPktHdlcFraming [in] - This structure contains 
+ * the following information required by the NPE to configure the HDLC 
  * co-processor for TX
- * @param hdlcRxFraming @ref IxHssAccPktHdlcFraming [in] -  This structure contains
- * the following information required by the NPE to configure the HDLC
+ * @param hdlcRxFraming @ref IxHssAccPktHdlcFraming [in] -  This structure contains 
+ * the following information required by the NPE to configure the HDLC 
  * co-processor for RX
- * @param frmFlagStart unsigned - Number of flags to precede to
+ * @param frmFlagStart unsigned - Number of flags to precede to 
  * transmitted flags (0-2).
- * @param rxCallback @ref IxHssAccPktRxCallback [in] - Pointer to
+ * @param rxCallback @ref IxHssAccPktRxCallback [in] - Pointer to 
  * the clients packet receive function.
  * @param rxUserId @ref IxHssAccPktUserId [in] - The client supplied rx value
  * to be passed back as an argument to the supplied rxCallback
- * @param rxFreeLowCallback @ref IxHssAccPktRxFreeLowCallback [in] - Pointer to
- * the clients Rx free buffer request function.  If NULL, assume client will
+ * @param rxFreeLowCallback @ref IxHssAccPktRxFreeLowCallback [in] - Pointer to 
+ * the clients Rx free buffer request function.  If NULL, assume client will 
  * trigger independently.
  * @param rxFreeLowUserId @ref IxHssAccPktUserId [in] - The client supplied RxFreeLow value
  * to be passed back as an argument to the supplied rxFreeLowCallback
- * @param txDoneCallback @ref IxHssAccPktTxDoneCallback [in] - Pointer to the
+ * @param txDoneCallback @ref IxHssAccPktTxDoneCallback [in] - Pointer to the 
  * clients Tx done callback function
  * @param txDoneUserId @ref IxHssAccPktUserId [in] - The client supplied txDone value
  * to be passed back as an argument to the supplied txDoneCallback
  *
- * @return
+ * @return 
  *         - IX_SUCCESS The function executed successfully
  *         - IX_FAIL The function did not execute successfully
  *         - IX_HSSACC_PARAM_ERR The function did not execute successfully due to a
@@ -885,157 +885,157 @@ ixHssAccInit (void);
  *         - IX_HSSACC_RESOURCE_ERR The function did not execute successfully due
  *                          to a resource error
  */
-PUBLIC IX_STATUS
-ixHssAccPktPortConnect (IxHssAccHssPort hssPortId,
-                        IxHssAccHdlcPort hdlcPortId,
-                        BOOL hdlcFraming,
-                        IxHssAccHdlcMode hdlcMode,
-                        BOOL hdlcBitInvert,
-                        unsigned blockSizeInWords,
-                        UINT32 rawIdleBlockPattern,
-                        IxHssAccPktHdlcFraming hdlcTxFraming,
-                        IxHssAccPktHdlcFraming hdlcRxFraming,
-                        unsigned frmFlagStart,
-                        IxHssAccPktRxCallback rxCallback,
-                        IxHssAccPktUserId rxUserId,
-                        IxHssAccPktRxFreeLowCallback rxFreeLowCallback,
-                        IxHssAccPktUserId rxFreeLowUserId,
-                        IxHssAccPktTxDoneCallback txDoneCallback,
-                        IxHssAccPktUserId txDoneUserId);
+PUBLIC IX_STATUS 
+ixHssAccPktPortConnect (IxHssAccHssPort hssPortId, 
+			IxHssAccHdlcPort hdlcPortId, 
+			BOOL hdlcFraming, 
+			IxHssAccHdlcMode hdlcMode,
+			BOOL hdlcBitInvert,
+			unsigned blockSizeInWords,
+			UINT32 rawIdleBlockPattern,
+			IxHssAccPktHdlcFraming hdlcTxFraming, 
+			IxHssAccPktHdlcFraming hdlcRxFraming, 
+			unsigned frmFlagStart, 
+			IxHssAccPktRxCallback rxCallback,
+			IxHssAccPktUserId rxUserId, 
+			IxHssAccPktRxFreeLowCallback rxFreeLowCallback, 
+			IxHssAccPktUserId rxFreeLowUserId,
+			IxHssAccPktTxDoneCallback txDoneCallback,
+			IxHssAccPktUserId txDoneUserId);
 
 /**
  *
  * @ingroup IxHssAccAPI
  *
- * @fn IX_STATUS ixHssAccPktPortEnable (IxHssAccHssPort hssPortId,
+ * @fn IX_STATUS ixHssAccPktPortEnable (IxHssAccHssPort hssPortId, 
            IxHssAccHdlcPort hdlcPortId)
  *
  * @brief This function is responsible for enabling a packetised service
  * for the specified HSS/HDLC port combination. It enables the RX flow. The
- * client must have already connected to a packetised service and is responsible
+ * client must have already connected to a packetised service and is responsible 
  * for ensuring an adequate amount of RX mbufs have been supplied to the access
  * component before enabling the packetised service. This function must be called
- * on a given port before any call to ixHssAccPktPortTx on the same port.
- * No other HssAccPacketised interface should be called while this interface is
+ * on a given port before any call to ixHssAccPktPortTx on the same port. 
+ * No other HssAccPacketised interface should be called while this interface is 
  * being processed.
  *
  * @param hssPortId @ref IxHssAccHssPort [in] - The HSS port Id. There are two
- * identical ports (0-1).
+ * identical ports (0-1).   
  * @param hdlcPortId @ref IxHssAccHdlcPort [in] - The port id (0,1,2,3) to enable the service
  * on.
  *
- * @return
+ * @return 
  *         - IX_SUCCESS The function executed successfully
  *         - IX_FAIL The function did not execute successfully
  *         - IX_HSSACC_PARAM_ERR The function did not execute successfully due to a
  *                          parameter error
  */
-PUBLIC IX_STATUS
-ixHssAccPktPortEnable (IxHssAccHssPort hssPortId,
-                       IxHssAccHdlcPort hdlcPortId);
+PUBLIC IX_STATUS 
+ixHssAccPktPortEnable (IxHssAccHssPort hssPortId, 
+		       IxHssAccHdlcPort hdlcPortId);
 
 /**
- * @fn IX_STATUS ixHssAccPktPortDisable (IxHssAccHssPort hssPortId,
+ * @fn IX_STATUS ixHssAccPktPortDisable (IxHssAccHssPort hssPortId, 
            IxHssAccHdlcPort hdlcPortId)
  *
  * @brief This function is responsible for disabling a packetised service
- * for the specified HSS/HDLC port combination. It disables the RX flow.
- * The client must have already connected to and enabled a packetised service
+ * for the specified HSS/HDLC port combination. It disables the RX flow. 
+ * The client must have already connected to and enabled a packetised service 
  * for the specified HDLC port. This disable interface can be called before a
  * disconnect, but is not required to.
  *
  * @param hssPortId @ref IxHssAccHssPort [in] - The HSS port Id. There are two
- * identical ports (0-1).
- * @param hdlcPortId @ref IxHssAccHdlcPort [in] - The port id (0,1,2,3) to disable
+ * identical ports (0-1). 
+ * @param hdlcPortId @ref IxHssAccHdlcPort [in] - The port id (0,1,2,3) to disable 
  * the service on.
  *
- * @return
+ * @return 
  *         - IX_SUCCESS The function executed successfully
  *         - IX_FAIL The function did not execute successfully
  *         - IX_HSSACC_PARAM_ERR The function did not execute successfully due to a
  *                          parameter error
  */
-PUBLIC IX_STATUS
-ixHssAccPktPortDisable (IxHssAccHssPort hssPortId,
-                        IxHssAccHdlcPort hdlcPortId);
+PUBLIC IX_STATUS 
+ixHssAccPktPortDisable (IxHssAccHssPort hssPortId, 
+			IxHssAccHdlcPort hdlcPortId);
 
 /**
  *
  * @ingroup IxHssAccAPI
  *
- * @fn IX_STATUS ixHssAccPktPortDisconnect (IxHssAccHssPort hssPortId,
+ * @fn IX_STATUS ixHssAccPktPortDisconnect (IxHssAccHssPort hssPortId, 
            IxHssAccHdlcPort hdlcPortId)
  *
  * @brief This function is responsible for disconnecting a client from one
- * of the 4 available HDLC ports. It is not required that the Rx Flow
+ * of the 4 available HDLC ports. It is not required that the Rx Flow 
  * has been disabled before calling this function.  If the RX Flow has not been
  * disabled, the disconnect will disable it before proceeding with the
- * disconnect.  No other HssAccPacketised
+ * disconnect.  No other HssAccPacketised 
  * interface should be called while this interface is being processed.
  *
  * @param hssPortId @ref IxHssAccHssPort [in] - The HSS port Id. There are two
- * identical ports (0-1).
+ * identical ports (0-1). 
  * @param hdlcPortId @ref IxHssAccHdlcPort [in] - This is the number of the HDLC port
  * to disconnect and it corresponds to the physical E1/T1 trunk i.e. 0, 1, 2, 3
  *
- * @return
+ * @return 
  *         - IX_SUCCESS The function executed successfully
- *         - IX_FAIL The function did not execute successfully
+ *         - IX_FAIL The function did not execute successfully 
  *         - IX_HSSACC_PKT_DISCONNECTING The function has initiated the disconnecting
  *                             procedure but it has not completed yet.
  */
-PUBLIC IX_STATUS
-ixHssAccPktPortDisconnect (IxHssAccHssPort hssPortId,
-                           IxHssAccHdlcPort hdlcPortId);
+PUBLIC IX_STATUS 
+ixHssAccPktPortDisconnect (IxHssAccHssPort hssPortId, 
+			   IxHssAccHdlcPort hdlcPortId);
 
 /**
  *
  * @ingroup IxHssAccAPI
  *
- * @fn BOOL ixHssAccPktPortIsDisconnectComplete (IxHssAccHssPort hssPortId,
+ * @fn BOOL ixHssAccPktPortIsDisconnectComplete (IxHssAccHssPort hssPortId, 
            IxHssAccHdlcPort hdlcPortId)
  *
- * @brief This function is called to check if a given HSS/HDLC port
- * combination is in a connected state or not. This function may be called
- * at any time to determine a ports state.  No other HssAccPacketised
+ * @brief This function is called to check if a given HSS/HDLC port 
+ * combination is in a connected state or not. This function may be called 
+ * at any time to determine a ports state.  No other HssAccPacketised 
  * interface should be called while this interface is being processed.
  *
  * @param hssPortId @ref IxHssAccHssPort [in] - The HSS port Id. There are two
- * identical ports (0-1).
+ * identical ports (0-1). 
  * @param hdlcPortId @ref IxHssAccHdlcPort [in] - This is the number of the HDLC port
  * to disconnect and it corresponds to the physical E1/T1 trunk i.e. 0, 1, 2, 3
  *
- * @return
+ * @return 
  *         - TRUE The state of this HSS/HDLC port combination is disconnected,
  *                so if a disconnect was called, it is now completed.
  *         - FALSE The state of this HSS/HDLC port combination is connected,
  *                so if a disconnect was called, it is not yet completed.
  */
-PUBLIC BOOL
-ixHssAccPktPortIsDisconnectComplete (IxHssAccHssPort hssPortId,
-                                     IxHssAccHdlcPort hdlcPortId);
+PUBLIC BOOL 
+ixHssAccPktPortIsDisconnectComplete (IxHssAccHssPort hssPortId, 
+				     IxHssAccHdlcPort hdlcPortId);
 
 
 /**
  *
  * @ingroup IxHssAccAPI
  *
- * @fn IX_STATUS ixHssAccPktPortRxFreeReplenish (IxHssAccHssPort hssPortId,
-              IxHssAccHdlcPort hdlcPortId,
-        IX_OSAL_MBUF *buffer)
+ * @fn IX_STATUS ixHssAccPktPortRxFreeReplenish (IxHssAccHssPort hssPortId, 
+              IxHssAccHdlcPort hdlcPortId, 
+	      IX_OSAL_MBUF *buffer)
  *
  * @brief Function which the client calls at regular intervals to provide
  * mbufs to the access component for RX. A connection should exist for
- * the specified hssPortId/hdlcPortId combination before attempting to call this
+ * the specified hssPortId/hdlcPortId combination before attempting to call this 
  * interface. Also, the connection should not be in a disconnecting state.
  *
  * @param hssPortId @ref IxHssAccHssPort [in] - The HSS port Id. There are two
- * identical ports (0-1).
+ * identical ports (0-1). 
  * @param hdlcPortId @ref IxHssAccHdlcPort [in] - This is the number of the HDLC port
  * and it corresponds to the physical E1/T1 trunk i.e. 0, 1, 2, 3
  * @param *buffer @ref IX_OSAL_MBUF [in] - A pointer to a free mbuf to filled with payload.
  *
- * @return
+ * @return 
  *         - IX_SUCCESS The function executed successfully
  *         - IX_FAIL The function did not execute successfully
  *         - IX_HSSACC_PARAM_ERR The function did not execute successfully due to a
@@ -1045,33 +1045,33 @@ ixHssAccPktPortIsDisconnectComplete (IxHssAccHssPort hssPortId,
  *         - IX_HSSACC_Q_WRITE_OVERFLOW The function did not succeed due to a Q
  *                                      overflow
  */
-PUBLIC IX_STATUS
-ixHssAccPktPortRxFreeReplenish (IxHssAccHssPort hssPortId,
-                                IxHssAccHdlcPort hdlcPortId,
-                                IX_OSAL_MBUF * buffer);
+PUBLIC IX_STATUS 
+ixHssAccPktPortRxFreeReplenish (IxHssAccHssPort hssPortId, 
+				IxHssAccHdlcPort hdlcPortId, 
+				IX_OSAL_MBUF *buffer);
 
 /**
  *
  * @ingroup IxHssAccAPI
  *
- * @fn IX_STATUS ixHssAccPktPortTx (IxHssAccHssPort hssPortId,
-    IxHssAccHdlcPort hdlcPortId,
+ * @fn IX_STATUS ixHssAccPktPortTx (IxHssAccHssPort hssPortId, 
+    IxHssAccHdlcPort hdlcPortId, 
     IX_OSAL_MBUF *buffer)
  *
  * @brief Function which the client calls when it wants to transmit
  * packetised data. An enabled connection should exist on the specified
  * hssPortId/hdlcPortId combination before attempting to call this interface.
- * No other HssAccPacketised
+ * No other HssAccPacketised 
  * interface should be called while this interface is being processed.
  *
  * @param hssPortId @ref IxHssAccHssPort [in] - The HSS port Id. There are two
- * identical ports (0-1).
+ * identical ports (0-1). 
  * @param hdlcPortId @ref IxHssAccHdlcPort [in] - This is the number of the HDLC port
  * and it corresponds to the physical E1/T1 trunk i.e. 0, 1, 2, 3
  * @param *buffer @ref IX_OSAL_MBUF [in] - A pointer to a chain of mbufs which the
  * client has filled with the payload
  *
- * @return
+ * @return 
  *         - IX_SUCCESS The function executed successfully
  *         - IX_FAIL The function did not execute successfully
  *         - IX_HSSACC_PARAM_ERR The function did not execute successfully due to a
@@ -1089,34 +1089,34 @@ ixHssAccPktPortRxFreeReplenish (IxHssAccHssPort hssPortId,
  * and the packet is successfully transmitted.
  * Alternatively, the user could wait until the next IxHssAccPktTxDoneCallback
  * callback is triggered, and then retry, as it is this event that causes a
- * transmit descriptor to be freed.
+ * transmit descriptor to be freed. 
  */
-PUBLIC IX_STATUS
-ixHssAccPktPortTx (IxHssAccHssPort hssPortId,
-                   IxHssAccHdlcPort hdlcPortId,
-                   IX_OSAL_MBUF * buffer);
+PUBLIC IX_STATUS 
+ixHssAccPktPortTx (IxHssAccHssPort hssPortId, 
+		   IxHssAccHdlcPort hdlcPortId, 
+		   IX_OSAL_MBUF *buffer);
 
 /**
  *
  * @ingroup IxHssAccAPI
  *
- * @fn IX_STATUS ixHssAccChanConnect (IxHssAccHssPort hssPortId,
-           unsigned bytesPerTSTrigger,
-     UINT8 *rxCircular,
-     unsigned numRxBytesPerTS,
-     UINT32 *txPtrList,
-     unsigned numTxPtrLists,
-     unsigned numTxBytesPerBlk,
-     IxHssAccChanRxCallback rxCallback)
+ * @fn IX_STATUS ixHssAccChanConnect (IxHssAccHssPort hssPortId, 
+           unsigned bytesPerTSTrigger, 
+	   UINT8 *rxCircular, 
+	   unsigned numRxBytesPerTS, 
+	   UINT32 *txPtrList, 
+	   unsigned numTxPtrLists, 
+	   unsigned numTxBytesPerBlk, 
+	   IxHssAccChanRxCallback rxCallback)
  *
  * @brief This function allows the client to connect to the Tx/Rx NPE
  * Channelised Service. There can only be one client per HSS port. The
  * client is responsible for ensuring that the HSS port is configured
- * appropriately before its connect request. No other HssAccChannelised
+ * appropriately before its connect request. No other HssAccChannelised 
  * interface should be called while this interface is being processed.
  *
  * @param hssPortId @ref IxHssAccHssPort [in] - The HSS port Id. There are two
- * identical ports (0-1).
+ * identical ports (0-1). 
  * @param bytesPerTSTrigger unsigned [in] - The NPE will trigger the access
  * component after bytesPerTSTrigger have been received for all trunk
  * timeslots. This figure is a multiple of 8 e.g. 8 for 1ms trigger, 16 for
@@ -1154,16 +1154,16 @@ ixHssAccPktPortTx (IxHssAccHssPort hssPortId,
  *         - IX_HSSACC_PARAM_ERR The function did not execute successfully due to a
  *                          parameter error
  */
-
-PUBLIC IX_STATUS
-ixHssAccChanConnect (IxHssAccHssPort hssPortId,
-                     unsigned bytesPerTSTrigger,
-                     UINT8 * rxCircular,
-                     unsigned numRxBytesPerTS,
-                     UINT32 * txPtrList,
-                     unsigned numTxPtrLists,
-                     unsigned numTxBytesPerBlk,
-                     IxHssAccChanRxCallback rxCallback);
+ 
+PUBLIC IX_STATUS 
+ixHssAccChanConnect (IxHssAccHssPort hssPortId, 
+		     unsigned bytesPerTSTrigger, 
+		     UINT8 *rxCircular, 
+		     unsigned numRxBytesPerTS, 
+		     UINT32 *txPtrList, 
+		     unsigned numTxPtrLists, 
+		     unsigned numTxBytesPerBlk, 
+		     IxHssAccChanRxCallback rxCallback);
 
 /**
  *
@@ -1174,11 +1174,11 @@ ixHssAccChanConnect (IxHssAccHssPort hssPortId,
  * @brief This function is responsible for enabling a channelised service
  * for the specified HSS port. It enables the NPE RX flow. The client must
  * have already connected to a channelised service before enabling the
- * channelised service. No other HssAccChannelised
+ * channelised service. No other HssAccChannelised 
  * interface should be called while this interface is being processed.
  *
  * @param hssPortId @ref IxHssAccHssPort [in] - The HSS port Id. There are two
- * identical ports (0-1).
+ * identical ports (0-1). 
  *
  * @return
  *         - IX_SUCCESS The function executed successfully
@@ -1186,7 +1186,7 @@ ixHssAccChanConnect (IxHssAccHssPort hssPortId,
  *         - IX_HSSACC_PARAM_ERR The function did not execute successfully due to a
  *                          parameter error
  */
-PUBLIC IX_STATUS
+PUBLIC IX_STATUS 
 ixHssAccChanPortEnable (IxHssAccHssPort hssPortId);
 
 /**
@@ -1199,19 +1199,19 @@ ixHssAccChanPortEnable (IxHssAccHssPort hssPortId);
  * for the specified HSS port. It disables the NPE RX flow. The client must
  * have already connected to and enabled a channelised service for the
  * specified HSS port. This disable interface can be called before a
- * disconnect, but is not required to. No other HssAccChannelised
+ * disconnect, but is not required to. No other HssAccChannelised 
  * interface should be called while this interface is being processed.
  *
  * @param hssPortId @ref IxHssAccHssPort [in] - The HSS port Id. There are two
- * identical ports (0-1).
+ * identical ports (0-1). 
  *
- * @return
+ * @return 
  *         - IX_SUCCESS The function executed successfully
  *         - IX_FAIL The function did not execute successfully
  *         - IX_HSSACC_PARAM_ERR The function did not execute successfully due to a
  *                          parameter error
  */
-PUBLIC IX_STATUS
+PUBLIC IX_STATUS 
 ixHssAccChanPortDisable (IxHssAccHssPort hssPortId);
 
 /**
@@ -1223,40 +1223,40 @@ ixHssAccChanPortDisable (IxHssAccHssPort hssPortId);
  * @brief This function allows the client to Disconnect from a channelised
  * service. If the NPE RX Flow has not been disabled, the disconnect will
  * disable it before proceeding with other disconnect functionality.
- * No other HssAccChannelised interface should be called while this
+ * No other HssAccChannelised interface should be called while this 
  * interface is being processed.
  *
  * @param hssPortId @ref IxHssAccHssPort [in] - The HSS port Id. There are two
- * identical ports (0-1).
+ * identical ports (0-1). 
  *
- * @return
+ * @return 
  *         - IX_SUCCESS The function executed successfully
  *         - IX_FAIL The function did not execute successfully
  *         - IX_HSSACC_PARAM_ERR The function did not execute successfully due to a
  *                          parameter error
  */
-PUBLIC IX_STATUS
+PUBLIC IX_STATUS 
 ixHssAccChanDisconnect (IxHssAccHssPort hssPortId);
 
 /**
  *
  * @ingroup IxHssAccAPI
  *
- * @fn IX_STATUS ixHssAccChanStatusQuery (IxHssAccHssPort hssPortId,
-           BOOL *dataRecvd,
-     unsigned *rxOffset,
-     unsigned *txOffset,
-     unsigned *numHssErrs)
+ * @fn IX_STATUS ixHssAccChanStatusQuery (IxHssAccHssPort hssPortId, 
+           BOOL *dataRecvd, 
+	   unsigned *rxOffset, 
+	   unsigned *txOffset, 
+	   unsigned *numHssErrs)
  *
  * @brief This function is called by the client to query whether or not
  * channelised data has been received. If there is, hssChanAcc will return
  * the details in the output parameters. An enabled connection should
- * exist on the specified hssPortId before attempting to call this interface.
- * No other HssAccChannelised interface should be called while this
+ * exist on the specified hssPortId before attempting to call this interface.  
+ * No other HssAccChannelised interface should be called while this 
  * interface is being processed.
  *
  * @param hssPortId @ref IxHssAccHssPort [in] - The HSS port Id. There are two
- * identical ports (0-1).
+ * identical ports (0-1). 
  * @param *dataRecvd BOOL [out] - This BOOL indicates to the client whether
  * or not the access component has read any data for the client. If
  * FALSE, the other output parameters will not have been written to.
@@ -1269,18 +1269,18 @@ ixHssAccChanDisconnect (IxHssAccHssPort hssPortId);
  * since initial port configuration
  *
  *
- * @return
+ * @return 
  *         - IX_SUCCESS The function executed successfully
  *         - IX_FAIL The function did not execute successfully
  *         - IX_HSSACC_PARAM_ERR The function did not execute successfully due to a
  *                          parameter error
  */
-PUBLIC IX_STATUS
-ixHssAccChanStatusQuery (IxHssAccHssPort hssPortId,
-                         BOOL * dataRecvd,
-                         unsigned * rxOffset,
-                         unsigned * txOffset,
-                         unsigned * numHssErrs);
+PUBLIC IX_STATUS 
+ixHssAccChanStatusQuery (IxHssAccHssPort hssPortId, 
+			 BOOL *dataRecvd, 
+			 unsigned *rxOffset, 
+			 unsigned *txOffset, 
+			 unsigned *numHssErrs);
 
 /**
  *
@@ -1293,7 +1293,7 @@ ixHssAccChanStatusQuery (IxHssAccHssPort hssPortId,
  *
  * @return void
  */
-PUBLIC void
+PUBLIC void 
 ixHssAccShow (void);
 
 /**
@@ -1306,7 +1306,7 @@ ixHssAccShow (void);
  *
  * @return void
  */
-PUBLIC void
+PUBLIC void 
 ixHssAccStatsInit (void);
 
 #endif /* IXHSSACC_H */

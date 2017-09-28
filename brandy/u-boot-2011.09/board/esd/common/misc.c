@@ -29,12 +29,12 @@
 
 
 #ifdef CONFIG_LXT971_NO_SLEEP
-void lxt971_no_sleep (void)
+void lxt971_no_sleep(void)
 {
-  unsigned short reg;
-  
-  miiphy_read ("ppc_4xx_eth0", CONFIG_PHY_ADDR, 0x10, &reg);
-  reg &= ~0x0040;                  /* disable sleep mode */
-  miiphy_write ("ppc_4xx_eth0", CONFIG_PHY_ADDR, 0x10, reg);
+	unsigned short reg;
+
+	miiphy_read("ppc_4xx_eth0", CONFIG_PHY_ADDR, 0x10, &reg);
+	reg &= ~0x0040;                  /* disable sleep mode */
+	miiphy_write("ppc_4xx_eth0", CONFIG_PHY_ADDR, 0x10, reg);
 }
 #endif /* CONFIG_LXT971_NO_SLEEP */

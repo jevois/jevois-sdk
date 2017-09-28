@@ -38,14 +38,14 @@
 #include <asm/netlogic/interrupt.h>
 #include <asm/netlogic/common.h>
 
-unsigned int __cpuinit get_c0_compare_int (void)
+unsigned int __cpuinit get_c0_compare_int(void)
 {
-  return IRQ_TIMER;
+	return IRQ_TIMER;
 }
 
-void __init plat_time_init (void)
+void __init plat_time_init(void)
 {
-  mips_hpt_frequency = nlm_get_cpu_frequency();
-  pr_info ("MIPS counter frequency [%ld]\n",
-           (unsigned long) mips_hpt_frequency);
+	mips_hpt_frequency = nlm_get_cpu_frequency();
+	pr_info("MIPS counter frequency [%ld]\n",
+			(unsigned long)mips_hpt_frequency);
 }

@@ -46,7 +46,7 @@
 #define ADK_WORDSYNC    (1<<10)     /* enable DSKSYNC auto DMA */
 #define ADK_MSBSYNC     (1<<9)      /* when 1, enable sync on MSbit (for GCR) */
 #define ADK_FAST        (1<<8)      /* bit cell: 0=2us (GCR), 1=1us (MFM) */
-
+ 
 /*
 ** DSKLEN bits
 */
@@ -63,19 +63,19 @@
 /*
 ** Misc
 */
-
+ 
 #define MFM_SYNC    0x4489          /* standard MFM sync value */
 
 /* Values for FD_COMMAND */
-#define FD_RECALIBRATE    0x07  /* move to track 0 */
-#define FD_SEEK     0x0F  /* seek track */
-#define FD_READ     0xE6  /* read with MT, MFM, SKip deleted */
-#define FD_WRITE    0xC5  /* write with MT, MFM */
-#define FD_SENSEI   0x08  /* Sense Interrupt Status */
-#define FD_SPECIFY    0x03  /* specify HUT etc */
-#define FD_FORMAT   0x4D  /* format one track */
-#define FD_VERSION    0x10  /* get version code */
-#define FD_CONFIGURE    0x13  /* configure FIFO operation */
-#define FD_PERPENDICULAR  0x12  /* perpendicular r/w mode */
+#define FD_RECALIBRATE		0x07	/* move to track 0 */
+#define FD_SEEK			0x0F	/* seek track */
+#define FD_READ			0xE6	/* read with MT, MFM, SKip deleted */
+#define FD_WRITE		0xC5	/* write with MT, MFM */
+#define FD_SENSEI		0x08	/* Sense Interrupt Status */
+#define FD_SPECIFY		0x03	/* specify HUT etc */
+#define FD_FORMAT		0x4D	/* format one track */
+#define FD_VERSION		0x10	/* get version code */
+#define FD_CONFIGURE		0x13	/* configure FIFO operation */
+#define FD_PERPENDICULAR	0x12	/* perpendicular r/w mode */
 
 #endif /* _LINUX_AMIFDREG_H */

@@ -13,23 +13,23 @@
 static char mipsnet_string[] = "mipsnet";
 
 static struct platform_device eth1_device = {
-  .name   = mipsnet_string,
-  .id   = 0,
+	.name		= mipsnet_string,
+	.id		= 0,
 };
 
 /*
  * Create a platform device for the GPI port that receives the
  * image data from the embedded camera.
  */
-static int __init mipsnet_devinit (void)
+static int __init mipsnet_devinit(void)
 {
-  int err;
-  
-  err = platform_device_register (&eth1_device);
-  if (err)
-  { printk (KERN_ERR "%s: registration failed\n", mipsnet_string); }
-  
-  return err;
+	int err;
+
+	err = platform_device_register(&eth1_device);
+	if (err)
+		printk(KERN_ERR "%s: registration failed\n", mipsnet_string);
+
+	return err;
 }
 
-device_initcall (mipsnet_devinit);
+device_initcall(mipsnet_devinit);

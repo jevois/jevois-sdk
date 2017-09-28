@@ -2,9 +2,9 @@
     Retrieve encoded MAC address from ATMEL ttpci_eeprom serial 2-wire EEPROM,
     decode it and store it in associated adapter net device
 
-    Robert Schlabbach GMX
-    Michael Glaum KVH Industries
-    Holger Waechtler  Convergence
+    Robert Schlabbach	GMX
+    Michael Glaum	KVH Industries
+    Holger Waechtler	Convergence
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 #include <linux/types.h>
 #include <linux/i2c.h>
 
-extern int ttpci_eeprom_decode_mac (u8 * decodedMAC, u8 * encodedMAC);
-extern int ttpci_eeprom_parse_mac (struct i2c_adapter * adapter, u8 * propsed_mac);
+extern int ttpci_eeprom_decode_mac(u8 *decodedMAC, u8 *encodedMAC);
+extern int ttpci_eeprom_parse_mac(struct i2c_adapter *adapter, u8 *propsed_mac);
 
 #endif

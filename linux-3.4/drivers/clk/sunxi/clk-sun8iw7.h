@@ -78,14 +78,14 @@
 
 #define PLL_LOCK            0x0200
 #define CPU_LOCK            0x0204
-#define PLL_CPUPAT      0x0280
-#define PLL_AUDIOPAT    0x0284
+#define PLL_CPUPAT			0x0280
+#define PLL_AUDIOPAT		0x0284
 #define PLL_VIDEOPAT        0x0288
-#define PLL_VEPAT     0x028C
-#define PLL_DDRPAT      0x0290
-#define PLL_GPUPAT      0x029C
-#define PLL_PERIPH1PAT    0x02A4
-#define PLL_DEPAT     0x02A8
+#define PLL_VEPAT			0x028C
+#define PLL_DDRPAT			0x0290
+#define PLL_GPUPAT			0x029C
+#define PLL_PERIPH1PAT		0x02A4
+#define PLL_DEPAT			0x02A8
 
 #define BUS_RST0           0x02C0
 #define BUS_RST1           0x02C4
@@ -106,11 +106,11 @@
 #define F_N8X6(nv) FACTOR_ALL(nv,8,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
 #define F_N8X5_K4X2_M0X2(nv,kv,mv) FACTOR_ALL(nv,8,5,kv,4,2,mv,0,2,0,0,0,0,0,0,0,0,0)
 #define F_N8X5_K4X2_M0X2_P16x2(nv,kv,mv,pv) \
-  FACTOR_ALL(nv,8,5, \
-             kv,4,2, \
-             mv,0,2, \
-             pv,16,2, \
-             0,0,0,0,0,0)
+               FACTOR_ALL(nv,8,5, \
+                          kv,4,2, \
+                          mv,0,2, \
+                          pv,16,2, \
+                          0,0,0,0,0,0)
 #define PLLCPU(n,k,m,p,freq)  {F_N8X5_K4X2_M0X2_P16x2(n, k, m, p),  freq}
 #define PLLVIDEO(n,m,freq)  {F_N8X7_M0X4( n, m),  freq}
 #define PLLVE(n,m,freq)  {F_N8X7_M0X4( n, m),  freq}
@@ -120,8 +120,8 @@
 #define PLLHSIC(n,m,freq)  {F_N8X7_M0X4( n, m),  freq}
 #define PLLDE(n,m,freq) {F_N8X7_M0X4( n, m),  freq}
 
-struct sun8iw3_factor_config {
-  u32   factor;
-  u32   freq;
+struct sun8iw3_factor_config{
+		u32		factor;
+    u32   freq;
 };
 #endif

@@ -33,30 +33,30 @@
 #define BFIN_BOOT_NAND        13      /* boot ldr from nand flash */
 
 #ifndef __ASSEMBLY__
-static inline const char * get_bfin_boot_mode (int bfin_boot)
+static inline const char *get_bfin_boot_mode(int bfin_boot)
 {
-  switch (bfin_boot) {
-  case BFIN_BOOT_BYPASS:     return "bypass";
-  case BFIN_BOOT_PARA:       return "parallel flash";
-  case BFIN_BOOT_SPI_MASTER: return "spi flash";
-  case BFIN_BOOT_SPI_SLAVE:  return "spi slave";
-  case BFIN_BOOT_TWI_MASTER: return "i2c flash";
-  case BFIN_BOOT_TWI_SLAVE:  return "i2c slave";
-  case BFIN_BOOT_UART:       return "uart";
-  case BFIN_BOOT_IDLE:       return "idle";
-  case BFIN_BOOT_FIFO:       return "fifo";
-  case BFIN_BOOT_MEM:        return "memory";
-  case BFIN_BOOT_16HOST_DMA: return "16bit dma";
-  case BFIN_BOOT_8HOST_DMA:  return "8bit dma";
-  case BFIN_BOOT_NAND:       return "nand flash";
-  default:                   return "INVALID";
-  }
+	switch (bfin_boot) {
+	case BFIN_BOOT_BYPASS:     return "bypass";
+	case BFIN_BOOT_PARA:       return "parallel flash";
+	case BFIN_BOOT_SPI_MASTER: return "spi flash";
+	case BFIN_BOOT_SPI_SLAVE:  return "spi slave";
+	case BFIN_BOOT_TWI_MASTER: return "i2c flash";
+	case BFIN_BOOT_TWI_SLAVE:  return "i2c slave";
+	case BFIN_BOOT_UART:       return "uart";
+	case BFIN_BOOT_IDLE:       return "idle";
+	case BFIN_BOOT_FIFO:       return "fifo";
+	case BFIN_BOOT_MEM:        return "memory";
+	case BFIN_BOOT_16HOST_DMA: return "16bit dma";
+	case BFIN_BOOT_8HOST_DMA:  return "8bit dma";
+	case BFIN_BOOT_NAND:       return "nand flash";
+	default:                   return "INVALID";
+	}
 }
 #endif
 
 /* Most bootroms allow for EVT1 redirection */
 #if ((defined(__ADSPBF531__) || defined(__ADSPBF532__) || defined(__ADSPBF533__)) \
-&& __SILICON_REVISION__ < 3) || defined(__ADSPBF561__)
+     && __SILICON_REVISION__ < 3) || defined(__ADSPBF561__)
 # undef CONFIG_BFIN_BOOTROM_USES_EVT1
 #else
 # define CONFIG_BFIN_BOOTROM_USES_EVT1
@@ -64,8 +64,8 @@ static inline const char * get_bfin_boot_mode (int bfin_boot)
 
 /* Define the default SPI CS used when booting out of SPI */
 #if defined(__ADSPBF531__) || defined(__ADSPBF532__) || defined(__ADSPBF533__) || \
-defined(__ADSPBF538__) || defined(__ADSPBF539__) || defined(__ADSPBF561__) || \
-defined(__ADSPBF51x__)
+    defined(__ADSPBF538__) || defined(__ADSPBF539__) || defined(__ADSPBF561__) || \
+    defined(__ADSPBF51x__)
 # define BFIN_BOOT_SPI_SSEL 2
 #else
 # define BFIN_BOOT_SPI_SSEL 1

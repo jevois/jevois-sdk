@@ -25,24 +25,24 @@
 #include <asm-generic/mm_hooks.h>
 
 static inline int
-init_new_context (struct task_struct * tsk, struct mm_struct * mm)
+init_new_context(struct task_struct *tsk, struct mm_struct *mm)
 {
-  return 0;
+	return 0;
 }
 
 /* Note that arch/tile/kernel/head.S also calls hv_install_context() */
-static inline void __install_page_table (pgd_t * pgdir, int asid, pgprot_t prot)
+static inline void __install_page_table(pgd_t *pgdir, int asid, pgprot_t prot)
 {
-  /* FIXME: DIRECTIO should not always be set. FIXME. */
-  int rc = hv_install_context (__pa (pgdir), prot, asid, HV_CTX_DIRECTIO);
-  if (rc < 0)
-  { panic ("hv_install_context failed: %d", rc); }
+	/* FIXME: DIRECTIO should not always be set. FIXME. */
+	int rc = hv_install_context(__pa(pgdir), prot, asid, HV_CTX_DIRECTIO);
+	if (rc < 0)
+		panic("hv_install_context failed: %d", rc);
 }
 
-static inline void install_page_table (pgd_t * pgdir, int asid)
+static inline void install_page_table(pgd_t *pgdir, int asid)
 {
-  pte_t * ptep = virt_to_pte (NULL, (unsigned long) pgdir);
-  __install_page_table (pgdir, asid, *ptep);
+	pte_t *ptep = virt_to_pte(NULL, (unsigned long)pgdir);
+	__install_page_table(pgdir, asid, *ptep);
 }
 
 /*
@@ -72,60 +72,60 @@ static inline void install_page_table (pgd_t * pgdir, int asid)
  * an example of where it's important for TLB shootdowns to complete
  * even when interrupts are disabled at the Linux level.
  */
-static inline void enter_lazy_tlb (struct mm_struct * mm, struct task_struct * t)
+static inline void enter_lazy_tlb(struct mm_struct *mm, struct task_struct *t)
 {
-  #if CHIP_HAS_TILE_DMA()
-  /*
-   * We have to do an "identity" page table switch in order to
-   * clear any pending DMA interrupts.
-   */
-  if (current->thread.tile_dma_state.enabled)
-  { install_page_table (mm->pgd, __get_cpu_var (current_asid) ); }
-  #endif
+#if CHIP_HAS_TILE_DMA()
+	/*
+	 * We have to do an "identity" page table switch in order to
+	 * clear any pending DMA interrupts.
+	 */
+	if (current->thread.tile_dma_state.enabled)
+		install_page_table(mm->pgd, __get_cpu_var(current_asid));
+#endif
 }
 
-static inline void switch_mm (struct mm_struct * prev, struct mm_struct * next,
-                              struct task_struct * tsk)
+static inline void switch_mm(struct mm_struct *prev, struct mm_struct *next,
+			     struct task_struct *tsk)
 {
-  if (likely (prev != next) ) {
-  
-    int cpu = smp_processor_id();
-    
-    /* Pick new ASID. */
-    int asid = __get_cpu_var (current_asid) + 1;
-    if (asid > max_asid) {
-      asid = min_asid;
-      local_flush_tlb();
-    }
-    __get_cpu_var (current_asid) = asid;
-    
-    /* Clear cpu from the old mm, and set it in the new one. */
-    cpumask_clear_cpu (cpu, mm_cpumask (prev) );
-    cpumask_set_cpu (cpu, mm_cpumask (next) );
-    
-    /* Re-load page tables */
-    install_page_table (next->pgd, asid);
-    
-    /* See how we should set the red/black cache info */
-    check_mm_caching (prev, next);
-    
-    /*
-     * Since we're changing to a new mm, we have to flush
-     * the icache in case some physical page now being mapped
-     * has subsequently been repurposed and has new code.
-     */
-    __flush_icache();
-    
-  }
+	if (likely(prev != next)) {
+
+		int cpu = smp_processor_id();
+
+		/* Pick new ASID. */
+		int asid = __get_cpu_var(current_asid) + 1;
+		if (asid > max_asid) {
+			asid = min_asid;
+			local_flush_tlb();
+		}
+		__get_cpu_var(current_asid) = asid;
+
+		/* Clear cpu from the old mm, and set it in the new one. */
+		cpumask_clear_cpu(cpu, mm_cpumask(prev));
+		cpumask_set_cpu(cpu, mm_cpumask(next));
+
+		/* Re-load page tables */
+		install_page_table(next->pgd, asid);
+
+		/* See how we should set the red/black cache info */
+		check_mm_caching(prev, next);
+
+		/*
+		 * Since we're changing to a new mm, we have to flush
+		 * the icache in case some physical page now being mapped
+		 * has subsequently been repurposed and has new code.
+		 */
+		__flush_icache();
+
+	}
 }
 
-static inline void activate_mm (struct mm_struct * prev_mm,
-                                struct mm_struct * next_mm)
+static inline void activate_mm(struct mm_struct *prev_mm,
+			       struct mm_struct *next_mm)
 {
-  switch_mm (prev_mm, next_mm, NULL);
+	switch_mm(prev_mm, next_mm, NULL);
 }
 
-#define destroy_context(mm)   do { } while (0)
+#define destroy_context(mm)		do { } while (0)
 #define deactivate_mm(tsk, mm)          do { } while (0)
 
 #endif /* _ASM_TILE_MMU_CONTEXT_H */

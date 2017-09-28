@@ -45,51 +45,51 @@ extern __u32 hdmi_hpd_mask;//0x10: force unplug; 0x11: force plug
 #define __here__            do{if(hdmi_print){printk(KERN_WARNING "[HDMI] file:%s,line:%d\n",__FILE__,__LINE__);}}while(0)
 
 
-__s32 Hdmi_init (void);
-__s32 Hdmi_exit (void);
-__u32 IsHdcpDriver (void);
-__u32 Hdmi_hdcp_enable (__u32 hdcp_en);
-__s32 Hdmi_open (void);
-__s32 Hdmi_close (void);
-__s32 Hdmi_set_display_mode (disp_tv_mode mode);
-__s32 Hdmi_mode_support (disp_tv_mode mode);
-__s32 Hdmi_get_HPD_status (void);
-__s32 Hdmi_Audio_Enable (__u8 mode, __u8 channel);
-__s32 Hdmi_Set_Audio_Para (hdmi_audio_t * audio_para);
-__s32 Hdmi_Is_Playback (void);
-__s32 Hdmi_set_pll (__u32 pll, __u32 clk);
-__s32 Hdmi_dvi_enable (__u32 mode);
-__s32 Hdmi_dvi_support (void);
-__s32 Hdmi_get_hdcp_enable (void);
-__s32 Hdmi_get_video_timming_info (disp_video_timing ** video_info);
-int Hdmi_get_video_info_index (u32 mode_id);
-__s32 Hdmi_get_input_csc (void);
+__s32 Hdmi_init(void);
+__s32 Hdmi_exit(void);
+__u32 IsHdcpDriver(void);
+__u32 Hdmi_hdcp_enable(__u32 hdcp_en);
+__s32 Hdmi_open(void);
+__s32 Hdmi_close(void);
+__s32 Hdmi_set_display_mode(disp_tv_mode mode);
+__s32 Hdmi_mode_support(disp_tv_mode mode);
+__s32 Hdmi_get_HPD_status(void);
+__s32 Hdmi_Audio_Enable(__u8 mode, __u8 channel);
+__s32 Hdmi_Set_Audio_Para(hdmi_audio_t * audio_para);
+__s32 Hdmi_Is_Playback(void);
+__s32 Hdmi_set_pll(__u32 pll, __u32 clk);
+__s32 Hdmi_dvi_enable(__u32 mode);
+__s32 Hdmi_dvi_support(void);
+__s32 Hdmi_get_hdcp_enable(void);
+__s32 Hdmi_get_video_timming_info(disp_video_timing **video_info);
+int Hdmi_get_video_info_index(u32 mode_id);
+__s32 Hdmi_get_input_csc(void);
 
-extern __s32 hdmi_i2c_add_driver (void);
-extern __s32 hdmi_i2c_del_driver (void);
+extern __s32 hdmi_i2c_add_driver(void);
+extern __s32 hdmi_i2c_del_driver(void);
 
 #define sys_get_wvalue(n)   (*((volatile __u32 *)(n)))          /* word input */
 #define sys_put_wvalue(n,c) (*((volatile __u32 *)(n))  = (c))   /* word output */
 
 typedef struct
 {
-  char  gpio_name[32];
-  int port;
-  int port_num;
-  int mul_sel;
-  int pull;
-  int drv_level;
-  int data;
-  int gpio;
+	char  gpio_name[32];
+	int port;
+	int port_num;
+	int mul_sel;
+	int pull;
+	int drv_level;
+	int data;
+	int gpio;
 } disp_gpio_set_t;
-extern int OSAL_Script_FetchParser_Data (char * main_name, char * sub_name, int value[], int count);
-extern int OSAL_GPIO_Request (disp_gpio_set_t * gpio_list, u32 group_count_max);
-extern s32 OSAL_GPIO_Release (int p_handler, s32 if_release_to_default_status);
+extern int OSAL_Script_FetchParser_Data(char *main_name, char *sub_name, int value[], int count);
+extern int OSAL_GPIO_Request(disp_gpio_set_t *gpio_list, u32 group_count_max);
+extern s32 OSAL_GPIO_Release(int p_handler, s32 if_release_to_default_status);
 
 struct disp_hdmi_mode
 {
-  disp_tv_mode mode;
-  int hdmi_mode;
+	disp_tv_mode mode;
+	int hdmi_mode;
 };
 
 #endif

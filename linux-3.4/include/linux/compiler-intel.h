@@ -18,9 +18,9 @@
 
 #define barrier() __memory_barrier()
 
-#define RELOC_HIDE(ptr, off)          \
-  ({ unsigned long __ptr;         \
-    __ptr = (unsigned long) (ptr);       \
+#define RELOC_HIDE(ptr, off)					\
+  ({ unsigned long __ptr;					\
+     __ptr = (unsigned long) (ptr);				\
     (typeof(ptr)) (__ptr + (off)); })
 
 /* Intel ECC compiler doesn't support __builtin_types_compatible_p() */

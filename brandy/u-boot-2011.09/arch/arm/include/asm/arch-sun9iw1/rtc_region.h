@@ -1,10 +1,10 @@
 /*
 **********************************************************************************************************************
 *
-*                      the Embedded Secure Bootloader System
+*						           the Embedded Secure Bootloader System
 *
 *
-*                  Copyright(C), 2006-2014, Allwinnertech Co., Ltd.
+*						       Copyright(C), 2006-2014, Allwinnertech Co., Ltd.
 *                                           All Rights Reserved
 *
 * File    :
@@ -13,7 +13,7 @@
 *
 * Version : V2.00
 *
-* Date    :
+* Date	  :
 *
 * Descript:
 **********************************************************************************************************************
@@ -24,8 +24,8 @@
 
 
 
-uint rtc_region_probe_fel_flag (void);
-void rtc_region_clear_fel_flag (void);
+uint rtc_region_probe_fel_flag(void);
+void rtc_region_clear_fel_flag(void);
 
 
 #endif    /*  #ifndef __RTC_REGION_H__  */

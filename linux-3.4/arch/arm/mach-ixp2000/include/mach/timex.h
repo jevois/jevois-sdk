@@ -8,6 +8,6 @@
 /*
  * Default clock is 50MHz APB, but platform code can override this
  */
-#define CLOCK_TICK_RATE 50000000
+#define CLOCK_TICK_RATE	50000000
 
 

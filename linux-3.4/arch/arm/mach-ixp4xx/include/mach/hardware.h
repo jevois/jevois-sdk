@@ -1,5 +1,5 @@
 /*
- * arch/arm/mach-ixp4xx/include/mach/hardware.h
+ * arch/arm/mach-ixp4xx/include/mach/hardware.h 
  *
  * Copyright (C) 2002 Intel Corporation.
  * Copyright (C) 2003-2004 MontaVista Software, Inc.
@@ -18,9 +18,9 @@
 #define __ASM_ARCH_HARDWARE_H__
 
 #ifdef CONFIG_IXP4XX_INDIRECT_PCI
-#define PCIBIOS_MAX_MEM   0x4FFFFFFF
+#define PCIBIOS_MAX_MEM		0x4FFFFFFF
 #else
-#define PCIBIOS_MAX_MEM   0x4BFFFFFF
+#define PCIBIOS_MAX_MEM		0x4BFFFFFF
 #endif
 
 /* Register locations and bits */

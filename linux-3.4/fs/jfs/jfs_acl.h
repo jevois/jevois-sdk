@@ -20,22 +20,22 @@
 
 #ifdef CONFIG_JFS_POSIX_ACL
 
-struct posix_acl * jfs_get_acl (struct inode * inode, int type);
-int jfs_init_acl (tid_t, struct inode *, struct inode *);
-int jfs_acl_chmod (struct inode * inode);
+struct posix_acl *jfs_get_acl(struct inode *inode, int type);
+int jfs_init_acl(tid_t, struct inode *, struct inode *);
+int jfs_acl_chmod(struct inode *inode);
 
 #else
 
-static inline int jfs_init_acl (tid_t tid, struct inode * inode,
-                                struct inode * dir)
+static inline int jfs_init_acl(tid_t tid, struct inode *inode,
+			       struct inode *dir)
 {
-  return 0;
+	return 0;
 }
 
-static inline int jfs_acl_chmod (struct inode * inode)
+static inline int jfs_acl_chmod(struct inode *inode)
 {
-  return 0;
+	return 0;
 }
 
 #endif
-#endif    /* _H_JFS_ACL */
+#endif		/* _H_JFS_ACL */

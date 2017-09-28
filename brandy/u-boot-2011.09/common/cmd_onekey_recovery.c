@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -41,19 +41,19 @@
 *
 ************************************************************************************************************
 */
-int do_onekey_sprite_recovery (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
+int do_onekey_sprite_recovery (cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
-  int ret = 0;
-  if (argc == 1) {
-    sprite_led_init();
-    ret = sprite_form_sysrecovery();
-    sprite_led_exit (ret);
-  }
-  return ret;
+	int ret = 0;
+	if (argc == 1) {
+		sprite_led_init();
+		ret = sprite_form_sysrecovery();
+		sprite_led_exit(ret);
+	}
+	return ret;
 }
 
-U_BOOT_CMD (
-  sprite_recovery, 1, 1, do_onekey_sprite_recovery,
-  "one key sprite recovery\n",
-  "<commond>\n"
+U_BOOT_CMD(
+	sprite_recovery, 1,	1, do_onekey_sprite_recovery,
+	"one key sprite recovery\n",
+	"<commond>\n"
 );

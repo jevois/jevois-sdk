@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -23,33 +23,33 @@
  */
 
 #ifndef __IMAGE_DECODE_H____
-#define __IMAGE_DECODE_H____  1
+#define __IMAGE_DECODE_H____	1
 
-#define PLUGIN_TYPE       IMGDECODE_PLUGIN_TYPE
-#define PLUGIN_NAME       "imgDecode"      
-#define PLUGIN_VERSION      0x0100
-#define PLUGIN_AUTHOR     "scottyu"
-#define PLUGIN_COPYRIGHT    "scottyu"
+#define PLUGIN_TYPE				IMGDECODE_PLUGIN_TYPE
+#define PLUGIN_NAME				"imgDecode"			
+#define PLUGIN_VERSION			0x0100
+#define PLUGIN_AUTHOR			"scottyu"
+#define PLUGIN_COPYRIGHT		"scottyu"
 
-typedef void   *  HIMAGE;
+typedef void * 		HIMAGE;
 
-typedef void   *  HIMAGEITEM;
+typedef void * 		HIMAGEITEM;
 
-extern   HIMAGE     Img_Open    (char * ImageFile);
+extern   HIMAGE 		Img_Open		(char * ImageFile);
 
-extern   long long      Img_GetSize     (HIMAGE hImage);
+extern   long long      Img_GetSize	    (HIMAGE hImage);
 
-extern   HIMAGEITEM   Img_OpenItem  (HIMAGE hImage, char * MainType, char * subType);
+extern   HIMAGEITEM 	Img_OpenItem	(HIMAGE hImage, char * MainType, char * subType);
 
-extern   long long    Img_GetItemSize (HIMAGE hImage, HIMAGEITEM hItem);
+extern   long long 		Img_GetItemSize	(HIMAGE hImage, HIMAGEITEM hItem);
 
-extern   uint       Img_GetItemStart (HIMAGE hImage, HIMAGEITEM hItem);
+extern   uint 			Img_GetItemStart(HIMAGE hImage, HIMAGEITEM hItem);
 
-extern   uint       Img_ReadItem  (HIMAGE hImage, HIMAGEITEM hItem, void * buffer, uint buffer_size);
+extern   uint 			Img_ReadItem	(HIMAGE hImage, HIMAGEITEM hItem, void *buffer, uint buffer_size);
 
-extern   int      Img_CloseItem (HIMAGE hImage, HIMAGEITEM hItem);
+extern   int 			Img_CloseItem	(HIMAGE hImage, HIMAGEITEM hItem);
 
-extern   void       Img_Close   (HIMAGE hImage);
+extern   void 	 		Img_Close		(HIMAGE hImage);
 
 
 #endif

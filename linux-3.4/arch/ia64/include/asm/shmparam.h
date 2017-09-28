@@ -7,6 +7,6 @@
  * performance degradation when there are virtual aliases within 1MB.
  * To reduce the chance of this, we set SHMLBA to 1MB. --davidm 00/12/20
  */
-#define SHMLBA  (1024*1024)
+#define	SHMLBA	(1024*1024)
 
 #endif /* _ASM_IA64_SHMPARAM_H */

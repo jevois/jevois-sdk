@@ -30,27 +30,27 @@ unsigned int s5p_cpu_id = 0xC100;
 unsigned int s5p_cpu_rev = 1;
 
 #ifdef CONFIG_ARCH_CPU_INIT
-int arch_cpu_init (void)
+int arch_cpu_init(void)
 {
-  s5p_set_cpu_id();
-  
-  return 0;
+	s5p_set_cpu_id();
+
+	return 0;
 }
 #endif
 
-u32 get_device_type (void)
+u32 get_device_type(void)
 {
-  return s5p_cpu_id;
+	return s5p_cpu_id;
 }
 
 #ifdef CONFIG_DISPLAY_CPUINFO
-int print_cpuinfo (void)
+int print_cpuinfo(void)
 {
-  char buf[32];
-  
-  printf ("CPU:\tS5P%X@%sMHz\n",
-          s5p_cpu_id, strmhz (buf, get_arm_clk() ) );
-          
-  return 0;
+	char buf[32];
+
+	printf("CPU:\tS5P%X@%sMHz\n",
+			s5p_cpu_id, strmhz(buf, get_arm_clk()));
+
+	return 0;
 }
 #endif

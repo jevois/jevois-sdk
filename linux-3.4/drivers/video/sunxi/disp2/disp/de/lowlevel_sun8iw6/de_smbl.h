@@ -5,17 +5,17 @@
 #include "../disp_private.h"
 #include "de_smbl_type.h"
 
-int de_smbl_tasklet (unsigned int sel);
-int de_smbl_apply (unsigned int sel, struct disp_smbl_info * info);
-int de_smbl_update_regs (unsigned int sel);
-int de_smbl_set_reg_base (unsigned int sel, unsigned int base);
-int de_smbl_enable (unsigned int sel, unsigned int en);
-int de_smbl_set_window (unsigned int sel, unsigned int win_enable, disp_rect window);
-int de_smbl_set_para (unsigned int sel, unsigned int width, unsigned int height);
-int de_smbl_set_lut (unsigned int sel, unsigned short * lut);
-int de_smbl_get_hist (unsigned int sel, unsigned int * cnt);
-int de_smbl_get_status (unsigned int sel);
-int de_smbl_init (unsigned int sel, unsigned int reg_base);
+int de_smbl_tasklet(unsigned int sel);
+int de_smbl_apply(unsigned int sel, struct disp_smbl_info *info);
+int de_smbl_update_regs(unsigned int sel);
+int de_smbl_set_reg_base(unsigned int sel, unsigned int base);
+int de_smbl_enable(unsigned int sel, unsigned int en);
+int de_smbl_set_window(unsigned int sel, unsigned int win_enable, disp_rect window);
+int de_smbl_set_para(unsigned int sel, unsigned int width, unsigned int height);
+int de_smbl_set_lut(unsigned int sel, unsigned short *lut);
+int de_smbl_get_hist(unsigned int sel, unsigned int *cnt);
+int de_smbl_get_status(unsigned int sel);
+int de_smbl_init(unsigned int sel, unsigned int reg_base);
 
 extern __u16 pwrsv_lgc_tab[1408][256];
 extern __u8 smbl_filter_coeff[272];

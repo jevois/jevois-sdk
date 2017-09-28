@@ -86,9 +86,9 @@
 /*
  * ethernet specific parameters
  */
-#define CRC_WORD 4          /* Length in bytes of CRC */
+#define CRC_WORD 4          /* Length in bytes of CRC */               
 #define C_PRES   0xffffffff /* preform 32 bit CRC */
-#define C_MASK   0xdebb20e3 /* comply with 32 bit CRC */
+#define C_MASK   0xdebb20e3 /* comply with 32 bit CRC */       
 #define CRCEC    0x00000000
 #define ALEC     0x00000000
 #define DISFC    0x00000000
@@ -98,18 +98,18 @@
 #define MINFLR   0x0040     /* Minimum frame size 64 */
 #define MAXD1    0x05ee     /* Max dma count 1518 */
 #define MAXD2    0x05ee
-#define GADDR1   0x00000000 /* Clear group address */
+#define GADDR1   0x00000000 /* Clear group address */  
 #define GADDR2   0x00000000
-#define GADDR3   0x00000000
-#define GADDR4   0x00000000
-#define P_PER    0x00000000 /*not used */
-#define IADDR1   0x00000000 /* Individual hash table not used */
+#define GADDR3   0x00000000    
+#define GADDR4   0x00000000    
+#define P_PER    0x00000000 /*not used */              
+#define IADDR1   0x00000000 /* Individual hash table not used */       
 #define IADDR2   0x00000000
-#define IADDR3   0x00000000
-#define IADDR4   0x00000000
-#define TADDR_H  0x00000000 /* clear this regs */
-#define TADDR_M  0x00000000
-#define TADDR_L  0x00000000
+#define IADDR3   0x00000000    
+#define IADDR4   0x00000000            
+#define TADDR_H  0x00000000 /* clear this regs */              
+#define TADDR_M  0x00000000            
+#define TADDR_L  0x00000000            
 
 /*       SCC Parameter Ram */
 #define RFCR    0x18 /* normal operation */
@@ -120,42 +120,42 @@
  * ethernet specific structure
  */
 typedef union {
-  unsigned char b[6];
-  struct {
-    unsigned short high;
-    unsigned short middl;
-    unsigned short low;
-  } w;
+        unsigned char b[6];
+        struct {
+            unsigned short high;
+            unsigned short middl;
+            unsigned short low;
+        } w;
 } ETHER_ADDR;
 
 typedef struct {
-  int        max_frame_length;
-  int        promisc_mode;
-  int        reject_broadcast;
-  ETHER_ADDR phys_adr;
+    int        max_frame_length;
+    int        promisc_mode;
+    int        reject_broadcast;
+    ETHER_ADDR phys_adr;
 } ETHER_SPECIFIC;
 
 typedef struct {
-  ETHER_ADDR     dst_addr;
-  ETHER_ADDR     src_addr;
-  unsigned short type_or_len;
-  unsigned char  data[1];
+    ETHER_ADDR     dst_addr;
+    ETHER_ADDR     src_addr;
+    unsigned short type_or_len;
+    unsigned char  data[1];
 } ETHER_FRAME;
 
 #define MAX_DATALEN 1500
 typedef struct {
-  ETHER_ADDR     dst_addr;
-  ETHER_ADDR     src_addr;
-  unsigned short type_or_len;
-  unsigned char  data[MAX_DATALEN];
-  unsigned char  fcs[CRC_WORD];
+    ETHER_ADDR     dst_addr;
+    ETHER_ADDR     src_addr;
+    unsigned short type_or_len;
+    unsigned char  data[MAX_DATALEN];
+    unsigned char  fcs[CRC_WORD];
 } ETHER_MAX_FRAME;
 
 
 /*
  * Internal ethernet function prototypes
  */
-void        ether_interrupt (int scc_num);
+void        ether_interrupt(int scc_num);
 /* mleslie: debug */
 /* static void ethernet_rx_internal(int scc_num); */
 /* static void ethernet_tx_internal(int scc_num); */
@@ -163,15 +163,15 @@ void        ether_interrupt (int scc_num);
 /*
  * User callable routines prototypes (ethernet specific)
  */
-void ethernet_init (int                       scc_number,
-                    alloc_routine       *      alloc_buffer,
-                    free_routine       *       free_buffer,
-                    store_rx_buffer_routine  * store_rx_buffer,
-                    handle_tx_error_routine  * handle_tx_error,
-                    handle_rx_error_routine  * handle_rx_error,
-                    handle_lost_error_routine * handle_lost_error,
-                    ETHER_SPECIFIC      *      ether_spec);
-int  ethernet_tx (int scc_number, void * buf, int length);
+void ethernet_init(int                       scc_number,
+                   alloc_routine             *alloc_buffer,
+                   free_routine              *free_buffer,
+                   store_rx_buffer_routine   *store_rx_buffer,
+                   handle_tx_error_routine   *handle_tx_error,
+                   handle_rx_error_routine   *handle_rx_error,
+                   handle_lost_error_routine *handle_lost_error,
+                   ETHER_SPECIFIC            *ether_spec);
+int  ethernet_tx(int scc_number, void *buf, int length);
 
 #endif
 

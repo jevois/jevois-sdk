@@ -9,16 +9,16 @@
  * This file contains the public API of IxAtmdAcc, related to the
  * data functions of the component
  *
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -31,7 +31,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -44,7 +44,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  */
@@ -202,27 +202,27 @@
 #define IX_ATMDACC_OAM_TX_VCI 0
 
 
-/**
-* @ingroup IxAtmdAccAPI
-*
-* @def IX_ATMDACC_OAM_RX_PORT
-*
-* @brief The reserved dummy PORT used for all dedicated OAM
-* Rx connections. Note that this is not a real port but must
-* have a value that lies within the valid range of port values.
-*/
+ /**
+ * @ingroup IxAtmdAccAPI
+ *
+ * @def IX_ATMDACC_OAM_RX_PORT
+ *
+ * @brief The reserved dummy PORT used for all dedicated OAM
+ * Rx connections. Note that this is not a real port but must
+ * have a value that lies within the valid range of port values.
+ */
 #define IX_ATMDACC_OAM_RX_PORT IX_UTOPIA_PORT_0
 
-/**
-* @ingroup IxAtmdAccAPI
-*
-* @def IX_ATMDACC_OAM_RX_VPI
-*
-* @brief The reserved value value used for the dedicated OAM
-* Rx connection. This value should be chosen so that it does not
-* coencide with the VPI value used in an AAL0/AAL5 connection.
-* Any attempt to connect a service type other than OAM on this VPI will fail.
-*/
+ /**
+ * @ingroup IxAtmdAccAPI
+ *
+ * @def IX_ATMDACC_OAM_RX_VPI
+ *
+ * @brief The reserved value value used for the dedicated OAM
+ * Rx connection. This value should be chosen so that it does not
+ * coencide with the VPI value used in an AAL0/AAL5 connection.
+ * Any attempt to connect a service type other than OAM on this VPI will fail.
+ */
 #define IX_ATMDACC_OAM_RX_VPI 0
 
 /**
@@ -252,13 +252,13 @@
 
 typedef enum
 {
-  IX_ATMDACC_AAL0_VALID = 0,    /**< aal0 pdu */
-  IX_ATMDACC_OAM_VALID,         /**< OAM pdu */
-  IX_ATMDACC_AAL2_VALID,        /**< aal2 pdu @b reserved for future use */
-  IX_ATMDACC_AAL5_VALID,        /**< aal5 pdu complete and trailer is valid */
-  IX_ATMDACC_AAL5_PARTIAL,      /**< aal5 pdu not complete, trailer is missing */
-  IX_ATMDACC_AAL5_CRC_ERROR,    /**< aal5 pdu not complete, crc error/length error */
-  IX_ATMDACC_MBUF_RETURN        /**< empty buffer returned to the user */
+    IX_ATMDACC_AAL0_VALID = 0,    /**< aal0 pdu */
+    IX_ATMDACC_OAM_VALID,         /**< OAM pdu */
+    IX_ATMDACC_AAL2_VALID,        /**< aal2 pdu @b reserved for future use */
+    IX_ATMDACC_AAL5_VALID,        /**< aal5 pdu complete and trailer is valid */
+    IX_ATMDACC_AAL5_PARTIAL,      /**< aal5 pdu not complete, trailer is missing */
+    IX_ATMDACC_AAL5_CRC_ERROR,    /**< aal5 pdu not complete, crc error/length error */
+    IX_ATMDACC_MBUF_RETURN        /**< empty buffer returned to the user */
 } IxAtmdAccPduStatus;
 
 
@@ -275,12 +275,12 @@ typedef enum
  */
 typedef enum
 {
-  IX_ATMDACC_AAL5,                /**< ITU-T AAL5 */
-  IX_ATMDACC_AAL2,                /**< ITU-T AAL2 @b reserved for future use */
-  IX_ATMDACC_AAL0_48,             /**< AAL0 48 byte payloads (cell header is added by NPE)*/
-  IX_ATMDACC_AAL0_52,             /**< AAL0 52 byte cell data (HEC is added by NPE) */
-  IX_ATMDACC_OAM,                 /**< OAM cell transport service (HEC is added by NPE)*/
-  IX_ATMDACC_MAX_SERVICE_TYPE     /**< not a service, used for parameter validation */
+    IX_ATMDACC_AAL5,                /**< ITU-T AAL5 */
+    IX_ATMDACC_AAL2,                /**< ITU-T AAL2 @b reserved for future use */
+    IX_ATMDACC_AAL0_48,             /**< AAL0 48 byte payloads (cell header is added by NPE)*/
+    IX_ATMDACC_AAL0_52,             /**< AAL0 52 byte cell data (HEC is added by NPE) */
+    IX_ATMDACC_OAM,                 /**< OAM cell transport service (HEC is added by NPE)*/
+    IX_ATMDACC_MAX_SERVICE_TYPE     /**< not a service, used for parameter validation */
 } IxAtmdAccAalType;
 
 /**
@@ -296,8 +296,8 @@ typedef enum
  */
 typedef enum
 {
-  IX_ATMDACC_CLP_NOT_SET = 0,     /**< CLP indication is not set */
-  IX_ATMDACC_CLP_SET = 1     /**< CLP indication is set */
+    IX_ATMDACC_CLP_NOT_SET = 0,     /**< CLP indication is not set */
+    IX_ATMDACC_CLP_SET = 1     /**< CLP indication is set */
 } IxAtmdAccClpStatus;
 
 /**
@@ -367,10 +367,10 @@ typedef unsigned int IxAtmdAccUserId;
  *
  */
 typedef void (*IxAtmdAccRxVcRxCallback) (IxAtmLogicalPort port,
-    IxAtmdAccUserId userId,
-    IxAtmdAccPduStatus status,
-    IxAtmdAccClpStatus clp,
-    IX_OSAL_MBUF * mbufPtr);
+                       IxAtmdAccUserId userId,
+                       IxAtmdAccPduStatus status,
+                       IxAtmdAccClpStatus clp,
+                       IX_OSAL_MBUF * mbufPtr);
 
 /**
  *
@@ -430,7 +430,7 @@ typedef void (*IxAtmdAccRxVcFreeLowCallback) (IxAtmdAccUserId userId);
  *
  */
 typedef void (*IxAtmdAccTxVcBufferReturnCallback) (IxAtmdAccUserId userId,
-    IX_OSAL_MBUF * mbufPtr);
+                        IX_OSAL_MBUF * mbufPtr);
 
 /* ------------------------------------------------------
    Part of the IxAtmdAcc interface related to Initialisation
@@ -455,7 +455,7 @@ typedef void (*IxAtmdAccTxVcBufferReturnCallback) (IxAtmdAccUserId userId,
  *
  * Failing to initilialize the IxAtmdAcc API before any use of it will
  * result in a failed status.
- * If the specified component is not present, a success status will still be
+ * If the specified component is not present, a success status will still be 
  * returned, however, a warning indicating the NPE to download to is not
  * present will be issued.
  *
@@ -487,7 +487,7 @@ ixAtmdAccShow (void);
 /**
  *
  * @ingroup IxAtmdAccAPI
- *
+ * 
  * @fn ixAtmdAccStatsShow (void)
  *
  * @brief Show all IxAtmdAcc stats
@@ -644,20 +644,20 @@ ixAtmdAccStatsReset (void);
  *
  */
 PUBLIC IX_STATUS ixAtmdAccRxVcConnect (IxAtmLogicalPort port,
-                                       unsigned int vpi,
-                                       unsigned int vci,
-                                       IxAtmdAccAalType aalServiceType,
-                                       IxAtmRxQueueId rxQueueId,
-                                       IxAtmdAccUserId userCallbackId,
-                                       IxAtmdAccRxVcRxCallback rxCallback,
-                                       unsigned int minimumReplenishCount,
-                                       IxAtmConnId * connIdPtr,
-                                       IxAtmNpeRxVcId * npeVcIdPtr );
+                      unsigned int vpi,
+                      unsigned int vci,
+                      IxAtmdAccAalType aalServiceType,
+                      IxAtmRxQueueId rxQueueId,
+                      IxAtmdAccUserId userCallbackId,
+                      IxAtmdAccRxVcRxCallback rxCallback,
+                      unsigned int minimumReplenishCount,
+                      IxAtmConnId * connIdPtr,
+                      IxAtmNpeRxVcId * npeVcIdPtr );
 
 /**
  *
  * @ingroup IxAtmdAccAPI
- *
+ * 
  * @fn ixAtmdAccRxVcFreeReplenish (IxAtmConnId connId,
                         IX_OSAL_MBUF * mbufPtr)
  *
@@ -738,12 +738,12 @@ PUBLIC IX_STATUS ixAtmdAccRxVcConnect (IxAtmLogicalPort port,
  *
  */
 PUBLIC IX_STATUS ixAtmdAccRxVcFreeReplenish (IxAtmConnId connId,
-    IX_OSAL_MBUF * mbufPtr);
+                        IX_OSAL_MBUF * mbufPtr);
 
 /**
  *
  * @ingroup IxAtmdAccAPI
- *
+ * 
  * @fn ixAtmdAccRxVcFreeLowCallbackRegister (IxAtmConnId connId,
                                     unsigned int numberOfMbufs,
                                     IxAtmdAccRxVcFreeLowCallback callback)
@@ -822,7 +822,7 @@ PUBLIC IX_STATUS ixAtmdAccRxVcFreeLowCallbackRegister (IxAtmConnId connId,
  *
  */
 PUBLIC IX_STATUS ixAtmdAccRxVcFreeEntriesQuery (IxAtmConnId connId,
-    unsigned int * numberOfMbufsPtr);
+                         unsigned int *numberOfMbufsPtr);
 
 /**
  *
@@ -874,7 +874,7 @@ PUBLIC IX_STATUS ixAtmdAccRxVcEnable (IxAtmConnId connId);
 /**
  *
  * @ingroup IxAtmdAccAPI
- *
+ * 
  * @fn ixAtmdAccRxVcDisable (IxAtmConnId connId)
  *
  * @brief Stop the RX service on a VC.
@@ -914,7 +914,7 @@ PUBLIC IX_STATUS ixAtmdAccRxVcDisable (IxAtmConnId connId);
 /**
  *
  * @ingroup IxAtmdAccAPI
- *
+ * 
  * @fn ixAtmdAccRxVcTryDisconnect (IxAtmConnId connId)
  *
  * @brief Disconnect a VC from the RX service.
@@ -949,7 +949,7 @@ PUBLIC IX_STATUS ixAtmdAccRxVcTryDisconnect (IxAtmConnId connId);
 /**
  *
  * @ingroup IxAtmdAccAPI
- *
+ * 
  * @fn ixAtmdAccTxVcConnect (IxAtmLogicalPort port,
                       unsigned int vpi,
                       unsigned int vci,
@@ -1042,12 +1042,12 @@ PUBLIC IX_STATUS ixAtmdAccRxVcTryDisconnect (IxAtmConnId connId);
  *       for this port before any establishing a Tx Connection
  */
 PUBLIC IX_STATUS ixAtmdAccTxVcConnect (IxAtmLogicalPort port,
-                                       unsigned int vpi,
-                                       unsigned int vci,
-                                       IxAtmdAccAalType aalServiceType,
-                                       IxAtmdAccUserId userId,
-                                       IxAtmdAccTxVcBufferReturnCallback bufferFreeCallback,
-                                       IxAtmConnId * connIdPtr);
+                      unsigned int vpi,
+                      unsigned int vci,
+                      IxAtmdAccAalType aalServiceType,
+                      IxAtmdAccUserId userId,
+                      IxAtmdAccTxVcBufferReturnCallback bufferFreeCallback,
+                      IxAtmConnId * connIdPtr);
 
 /**
  *
@@ -1138,9 +1138,9 @@ PUBLIC IX_STATUS ixAtmdAccTxVcConnect (IxAtmLogicalPort port,
  *         inside an interrupt context
  */
 PUBLIC IX_STATUS ixAtmdAccTxVcPduSubmit (IxAtmConnId connId,
-    IX_OSAL_MBUF * mbufPtr,
-    IxAtmdAccClpStatus clp,
-    unsigned int numberOfCells);
+                    IX_OSAL_MBUF * mbufPtr,
+                    IxAtmdAccClpStatus clp,
+                    unsigned int numberOfCells);
 
 /**
  *

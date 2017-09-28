@@ -5,8 +5,8 @@
 #include <asm/hyperv.h>
 
 struct ms_hyperv_info {
-  u32 features;
-  u32 hints;
+	u32 features;
+	u32 hints;
 };
 
 extern struct ms_hyperv_info ms_hyperv;

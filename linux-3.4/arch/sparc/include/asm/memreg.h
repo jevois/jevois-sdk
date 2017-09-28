@@ -21,8 +21,8 @@
 #define SUN4C_SYNC_BADWRITE  0x8000  /* while writing something went bogus */
 
 #define SUN4C_SYNC_BOLIXED  \
-  (SUN4C_SYNC_WDRESET | SUN4C_SYNC_SIZE | SUN4C_SYNC_SBUS | \
-   SUN4C_SYNC_NOMEM | SUN4C_SYNC_PARITY)
+        (SUN4C_SYNC_WDRESET | SUN4C_SYNC_SIZE | SUN4C_SYNC_SBUS | \
+         SUN4C_SYNC_NOMEM | SUN4C_SYNC_PARITY)
 
 /* Now the asynchronous error codes, these are almost always produced
  * by the cache writing things back to memory and getting a bad translation.
@@ -35,17 +35,17 @@
 
 /* Memory parity error register with associated bit constants. */
 #ifndef __ASSEMBLY__
-extern __volatile__ unsigned long __iomem * sun4c_memerr_reg;
+extern __volatile__ unsigned long __iomem *sun4c_memerr_reg;
 #endif
 
-#define SUN4C_MPE_ERROR 0x80  /* Parity error detected. (ro) */
-#define SUN4C_MPE_MULTI 0x40  /* Multiple parity errors detected. (ro) */
-#define SUN4C_MPE_TEST  0x20  /* Write inverse parity. (rw) */
-#define SUN4C_MPE_CHECK 0x10  /* Enable parity checking. (rw) */
-#define SUN4C_MPE_ERR00 0x08  /* Parity error in bits 0-7. (ro) */
-#define SUN4C_MPE_ERR08 0x04  /* Parity error in bits 8-15. (ro) */
-#define SUN4C_MPE_ERR16 0x02  /* Parity error in bits 16-23. (ro) */
-#define SUN4C_MPE_ERR24 0x01  /* Parity error in bits 24-31. (ro) */
-#define SUN4C_MPE_ERRS  0x0F  /* Bit mask for the error bits. (ro) */
+#define	SUN4C_MPE_ERROR	0x80	/* Parity error detected. (ro) */
+#define	SUN4C_MPE_MULTI	0x40	/* Multiple parity errors detected. (ro) */
+#define	SUN4C_MPE_TEST	0x20	/* Write inverse parity. (rw) */
+#define	SUN4C_MPE_CHECK	0x10	/* Enable parity checking. (rw) */
+#define	SUN4C_MPE_ERR00	0x08	/* Parity error in bits 0-7. (ro) */
+#define	SUN4C_MPE_ERR08	0x04	/* Parity error in bits 8-15. (ro) */
+#define	SUN4C_MPE_ERR16	0x02	/* Parity error in bits 16-23. (ro) */
+#define	SUN4C_MPE_ERR24	0x01	/* Parity error in bits 24-31. (ro) */
+#define	SUN4C_MPE_ERRS	0x0F	/* Bit mask for the error bits. (ro) */
 
 #endif /* !(_SPARC_MEMREG_H) */

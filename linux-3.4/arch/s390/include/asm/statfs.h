@@ -19,52 +19,52 @@
 
 #ifndef __KERNEL_STRICT_NAMES
 #include <linux/types.h>
-typedef __kernel_fsid_t fsid_t;
+typedef __kernel_fsid_t	fsid_t;
 #endif
 
 struct statfs {
-  int  f_type;
-  int  f_bsize;
-  long f_blocks;
-  long f_bfree;
-  long f_bavail;
-  long f_files;
-  long f_ffree;
-  __kernel_fsid_t f_fsid;
-  int  f_namelen;
-  int  f_frsize;
-  int  f_flags;
-  int  f_spare[4];
+	int  f_type;
+	int  f_bsize;
+	long f_blocks;
+	long f_bfree;
+	long f_bavail;
+	long f_files;
+	long f_ffree;
+	__kernel_fsid_t f_fsid;
+	int  f_namelen;
+	int  f_frsize;
+	int  f_flags;
+	int  f_spare[4];
 };
 
 struct statfs64 {
-  int  f_type;
-  int  f_bsize;
-  long f_blocks;
-  long f_bfree;
-  long f_bavail;
-  long f_files;
-  long f_ffree;
-  __kernel_fsid_t f_fsid;
-  int  f_namelen;
-  int  f_frsize;
-  int  f_flags;
-  int  f_spare[4];
+	int  f_type;
+	int  f_bsize;
+	long f_blocks;
+	long f_bfree;
+	long f_bavail;
+	long f_files;
+	long f_ffree;
+	__kernel_fsid_t f_fsid;
+	int  f_namelen;
+	int  f_frsize;
+	int  f_flags;
+	int  f_spare[4];
 };
 
 struct compat_statfs64 {
-  __u32 f_type;
-  __u32 f_bsize;
-  __u64 f_blocks;
-  __u64 f_bfree;
-  __u64 f_bavail;
-  __u64 f_files;
-  __u64 f_ffree;
-  __kernel_fsid_t f_fsid;
-  __u32 f_namelen;
-  __u32 f_frsize;
-  __u32 f_flags;
-  __u32 f_spare[4];
+	__u32 f_type;
+	__u32 f_bsize;
+	__u64 f_blocks;
+	__u64 f_bfree;
+	__u64 f_bavail;
+	__u64 f_files;
+	__u64 f_ffree;
+	__kernel_fsid_t f_fsid;
+	__u32 f_namelen;
+	__u32 f_frsize;
+	__u32 f_flags;
+	__u32 f_spare[4];
 };
 
 #endif /* __s390x__ */

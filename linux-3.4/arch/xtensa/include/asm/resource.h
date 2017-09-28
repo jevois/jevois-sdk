@@ -13,4 +13,4 @@
 
 #include <asm-generic/resource.h>
 
-#endif  /* _XTENSA_RESOURCE_H */
+#endif	/* _XTENSA_RESOURCE_H */

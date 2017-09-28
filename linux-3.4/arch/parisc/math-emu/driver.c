@@ -21,10 +21,10 @@
 /*
  *  linux/arch/math-emu/driver.c.c
  *
- *  decodes and dispatches unimplemented FPU instructions
+ *	decodes and dispatches unimplemented FPU instructions
  *
  *  Copyright (C) 1999, 2000  Philipp Rumpf <prumpf@tux.org>
- *  Copyright (C) 2001        Hewlett-Packard <bame@debian.org>
+ *  Copyright (C) 2001	      Hewlett-Packard <bame@debian.org>
  */
 
 #include <linux/sched.h>
@@ -40,8 +40,8 @@
 
 /* Format of the floating-point exception registers. */
 struct exc_reg {
-  unsigned int exception : 6;
-  unsigned int ei : 26;
+	unsigned int exception : 6;
+	unsigned int ei : 26;
 };
 
 /* Macros for grabbing bits of the instruction format from the 'ei'
@@ -77,52 +77,52 @@ struct exc_reg {
 /* Handle a floating point exception.  Return zero if the faulting
    instruction can be completed successfully. */
 int
-handle_fpe (struct pt_regs * regs)
+handle_fpe(struct pt_regs *regs)
 {
-  extern void printbinary (unsigned long x, int nbits);
-  struct siginfo si;
-  unsigned int orig_sw, sw;
-  int signalcode;
-  /* need an intermediate copy of float regs because FPU emulation
-   * code expects an artificial last entry which contains zero
-   *
-   * also, the passed in fr registers contain one word that defines
-   * the fpu type. the fpu type information is constructed
-   * inside the emulation code
-   */
-  __u64 frcopy[36];
-  
-  memcpy (frcopy, regs->fr, sizeof regs->fr);
-  frcopy[32] = 0;
-  
-  memcpy (&orig_sw, frcopy, sizeof (orig_sw) );
-  
-  if (FPUDEBUG) {
-    printk (KERN_DEBUG "FP VZOUICxxxxCQCQCQCQCQCRMxxTDVZOUI ->\n   ");
-    printbinary (orig_sw, 32);
-    printk (KERN_DEBUG "\n");
-  }
-  
-  signalcode = decode_fpu (frcopy, 0x666);
-  
-  /* Status word = FR0L. */
-  memcpy (&sw, frcopy, sizeof (sw) );
-  if (FPUDEBUG) {
-    printk (KERN_DEBUG "VZOUICxxxxCQCQCQCQCQCRMxxTDVZOUI decode_fpu returns %d|0x%x\n",
-            signalcode >> 24, signalcode & 0xffffff);
-    printbinary (sw, 32);
-    printk (KERN_DEBUG "\n");
-  }
-  
-  memcpy (regs->fr, frcopy, sizeof regs->fr);
-  if (signalcode != 0) {
-    si.si_signo = signalcode >> 24;
-    si.si_errno = 0;
-    si.si_code = signalcode & 0xffffff;
-    si.si_addr = (void __user *) regs->iaoq[0];
-    force_sig_info (si.si_signo, &si, current);
-    return -1;
-  }
-  
-  return signalcode ? -1 : 0;
+	extern void printbinary(unsigned long x, int nbits);
+	struct siginfo si;
+	unsigned int orig_sw, sw;
+	int signalcode;
+	/* need an intermediate copy of float regs because FPU emulation
+	 * code expects an artificial last entry which contains zero
+	 *
+	 * also, the passed in fr registers contain one word that defines
+	 * the fpu type. the fpu type information is constructed 
+	 * inside the emulation code
+	 */
+	__u64 frcopy[36];
+
+	memcpy(frcopy, regs->fr, sizeof regs->fr);
+	frcopy[32] = 0;
+
+	memcpy(&orig_sw, frcopy, sizeof(orig_sw));
+
+	if (FPUDEBUG) {
+		printk(KERN_DEBUG "FP VZOUICxxxxCQCQCQCQCQCRMxxTDVZOUI ->\n   ");
+		printbinary(orig_sw, 32);
+		printk(KERN_DEBUG "\n");
+	}
+
+	signalcode = decode_fpu(frcopy, 0x666);
+
+	/* Status word = FR0L. */
+	memcpy(&sw, frcopy, sizeof(sw));
+	if (FPUDEBUG) {
+		printk(KERN_DEBUG "VZOUICxxxxCQCQCQCQCQCRMxxTDVZOUI decode_fpu returns %d|0x%x\n",
+			signalcode >> 24, signalcode & 0xffffff);
+		printbinary(sw, 32);
+		printk(KERN_DEBUG "\n");
+	}
+
+	memcpy(regs->fr, frcopy, sizeof regs->fr);
+	if (signalcode != 0) {
+	    si.si_signo = signalcode >> 24;
+	    si.si_errno = 0;
+	    si.si_code = signalcode & 0xffffff;
+	    si.si_addr = (void __user *) regs->iaoq[0];
+	    force_sig_info(si.si_signo, &si, current);
+	    return -1;
+	}
+
+	return signalcode ? -1 : 0;
 }

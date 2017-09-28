@@ -32,41 +32,40 @@
 #include <asm/mach-ar7/ar7.h>
 #include <asm/mips-boards/prom.h>
 
-static int __init memsize (void)
+static int __init memsize(void)
 {
-  u32 size = (64 << 20);
-  u32 * addr = (u32 *) KSEG1ADDR (AR7_SDRAM_BASE + size - 4);
-  u32 * kernel_end = (u32 *) KSEG1ADDR (CPHYSADDR ( (u32) &_end) );
-  u32 * tmpaddr = addr;
-  
-  while (tmpaddr > kernel_end) {
-    *tmpaddr = (u32) tmpaddr;
-    size >>= 1;
-    tmpaddr -= size >> 2;
-  }
-  
-  do {
-    tmpaddr += size >> 2;
-    if (*tmpaddr != (u32) tmpaddr)
-    { break; }
-    size <<= 1;
-  }
-  while (size < (64 << 20) );
-  
-  writel ( (u32) tmpaddr, &addr);
-  
-  return size;
+	u32 size = (64 << 20);
+	u32 *addr = (u32 *)KSEG1ADDR(AR7_SDRAM_BASE + size - 4);
+	u32 *kernel_end = (u32 *)KSEG1ADDR(CPHYSADDR((u32)&_end));
+	u32 *tmpaddr = addr;
+
+	while (tmpaddr > kernel_end) {
+		*tmpaddr = (u32)tmpaddr;
+		size >>= 1;
+		tmpaddr -= size >> 2;
+	}
+
+	do {
+		tmpaddr += size >> 2;
+		if (*tmpaddr != (u32)tmpaddr)
+			break;
+		size <<= 1;
+	} while (size < (64 << 20));
+
+	writel((u32)tmpaddr, &addr);
+
+	return size;
 }
 
-void __init prom_meminit (void)
+void __init prom_meminit(void)
 {
-  unsigned long pages;
-  
-  pages = memsize() >> PAGE_SHIFT;
-  add_memory_region (PHYS_OFFSET, pages << PAGE_SHIFT, BOOT_MEM_RAM);
+	unsigned long pages;
+
+	pages = memsize() >> PAGE_SHIFT;
+	add_memory_region(PHYS_OFFSET, pages << PAGE_SHIFT, BOOT_MEM_RAM);
 }
 
-void __init prom_free_prom_memory (void)
+void __init prom_free_prom_memory(void)
 {
-  /* Nothing to free */
+	/* Nothing to free */
 }

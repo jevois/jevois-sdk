@@ -3,11 +3,11 @@
 
 #ifdef CONFIG_ARCH_SUN8IW1
 #include "clk-sun8iw1.h"
-#endif
+#endif 
 
 #ifdef CONFIG_ARCH_SUN8IW3
 #include "clk-sun8iw3.h"
-#endif
+#endif 
 
 #ifdef CONFIG_ARCH_SUN8IW5
 #include "clk-sun8iw5.h"
@@ -31,6 +31,6 @@
 
 #ifdef CONFIG_ARCH_SUN9IW1
 #include "clk-sun9iw1.h"
-#endif
-
+#endif  
+ 
 #endif

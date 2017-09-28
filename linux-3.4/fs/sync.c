@@ -20,7 +20,7 @@
 #include <linux/blkdev.h>
 
 #define VALID_FLAGS (SYNC_FILE_RANGE_WAIT_BEFORE|SYNC_FILE_RANGE_WRITE| \
-                     SYNC_FILE_RANGE_WAIT_AFTER)
+			SYNC_FILE_RANGE_WAIT_AFTER)
 
 /*
  * Do the filesystem syncing work. For simple filesystems
@@ -29,26 +29,26 @@
  * wait == 1 case since in that case write_inode() functions do
  * sync_dirty_buffer() and thus effectively write one block at a time.
  */
-static int __sync_filesystem (struct super_block * sb, int wait)
+static int __sync_filesystem(struct super_block *sb, int wait)
 {
-  /*
-   * This should be safe, as we require bdi backing to actually
-   * write out data in the first place
-   */
-  if (sb->s_bdi == &noop_backing_dev_info)
-  { return 0; }
-  
-  if (sb->s_qcop && sb->s_qcop->quota_sync)
-  { sb->s_qcop->quota_sync (sb, -1, wait); }
-  
-  if (wait)
-  { sync_inodes_sb (sb); }
-  else
-  { writeback_inodes_sb (sb, WB_REASON_SYNC); }
-  
-  if (sb->s_op->sync_fs)
-  { sb->s_op->sync_fs (sb, wait); }
-  return __sync_blockdev (sb->s_bdev, wait);
+	/*
+	 * This should be safe, as we require bdi backing to actually
+	 * write out data in the first place
+	 */
+	if (sb->s_bdi == &noop_backing_dev_info)
+		return 0;
+
+	if (sb->s_qcop && sb->s_qcop->quota_sync)
+		sb->s_qcop->quota_sync(sb, -1, wait);
+
+	if (wait)
+		sync_inodes_sb(sb);
+	else
+		writeback_inodes_sb(sb, WB_REASON_SYNC);
+
+	if (sb->s_op->sync_fs)
+		sb->s_op->sync_fs(sb, wait);
+	return __sync_blockdev(sb->s_bdev, wait);
 }
 
 /*
@@ -56,205 +56,205 @@ static int __sync_filesystem (struct super_block * sb, int wait)
  * superblock.  Filesystem data as well as the underlying block
  * device.  Takes the superblock lock.
  */
-int sync_filesystem (struct super_block * sb)
+int sync_filesystem(struct super_block *sb)
 {
-  int ret;
-  
-  /*
-   * We need to be protected against the filesystem going from
-   * r/o to r/w or vice versa.
-   */
-  WARN_ON (!rwsem_is_locked (&sb->s_umount) );
-  
-  /*
-   * No point in syncing out anything if the filesystem is read-only.
-   */
-  if (sb->s_flags & MS_RDONLY)
-  { return 0; }
-  
-  ret = __sync_filesystem (sb, 0);
-  if (ret < 0)
-  { return ret; }
-  return __sync_filesystem (sb, 1);
-}
-EXPORT_SYMBOL_GPL (sync_filesystem);
+	int ret;
 
-static void sync_one_sb (struct super_block * sb, void * arg)
+	/*
+	 * We need to be protected against the filesystem going from
+	 * r/o to r/w or vice versa.
+	 */
+	WARN_ON(!rwsem_is_locked(&sb->s_umount));
+
+	/*
+	 * No point in syncing out anything if the filesystem is read-only.
+	 */
+	if (sb->s_flags & MS_RDONLY)
+		return 0;
+
+	ret = __sync_filesystem(sb, 0);
+	if (ret < 0)
+		return ret;
+	return __sync_filesystem(sb, 1);
+}
+EXPORT_SYMBOL_GPL(sync_filesystem);
+
+static void sync_one_sb(struct super_block *sb, void *arg)
 {
-  if (! (sb->s_flags & MS_RDONLY) )
-  { __sync_filesystem (sb, * (int *) arg); }
+	if (!(sb->s_flags & MS_RDONLY))
+		__sync_filesystem(sb, *(int *)arg);
 }
 /*
  * Sync all the data for all the filesystems (called by sys_sync() and
  * emergency sync)
  */
-static void sync_filesystems (int wait)
+static void sync_filesystems(int wait)
 {
-  iterate_supers (sync_one_sb, &wait);
+	iterate_supers(sync_one_sb, &wait);
 }
 
 /*
  * sync everything.  Start out by waking pdflush, because that writes back
  * all queues in parallel.
  */
-SYSCALL_DEFINE0 (sync)
+SYSCALL_DEFINE0(sync)
 {
-  wakeup_flusher_threads (0, WB_REASON_SYNC);
-  sync_filesystems (0);
-  sync_filesystems (1);
-  if (unlikely (laptop_mode) )
-  { laptop_sync_completion(); }
-  return 0;
+	wakeup_flusher_threads(0, WB_REASON_SYNC);
+	sync_filesystems(0);
+	sync_filesystems(1);
+	if (unlikely(laptop_mode))
+		laptop_sync_completion();
+	return 0;
 }
 
-static void do_sync_work (struct work_struct * work)
+static void do_sync_work(struct work_struct *work)
 {
-  /*
-   * Sync twice to reduce the possibility we skipped some inodes / pages
-   * because they were temporarily locked
-   */
-  sync_filesystems (0);
-  sync_filesystems (0);
-  printk ("Emergency Sync complete\n");
-  kfree (work);
+	/*
+	 * Sync twice to reduce the possibility we skipped some inodes / pages
+	 * because they were temporarily locked
+	 */
+	sync_filesystems(0);
+	sync_filesystems(0);
+	printk("Emergency Sync complete\n");
+	kfree(work);
 }
 
-void emergency_sync (void)
+void emergency_sync(void)
 {
-  struct work_struct * work;
-  
-  work = kmalloc (sizeof (*work), GFP_ATOMIC);
-  if (work) {
-    INIT_WORK (work, do_sync_work);
-    schedule_work (work);
-  }
+	struct work_struct *work;
+
+	work = kmalloc(sizeof(*work), GFP_ATOMIC);
+	if (work) {
+		INIT_WORK(work, do_sync_work);
+		schedule_work(work);
+	}
 }
 
 /*
  * sync a single super
  */
-SYSCALL_DEFINE1 (syncfs, int, fd)
+SYSCALL_DEFINE1(syncfs, int, fd)
 {
-  struct file * file;
-  struct super_block * sb;
-  int ret;
-  int fput_needed;
-  
-  file = fget_light (fd, &fput_needed);
-  if (!file)
-  { return -EBADF; }
-  sb = file->f_dentry->d_sb;
-  
-  down_read (&sb->s_umount);
-  ret = sync_filesystem (sb);
-  up_read (&sb->s_umount);
-  
-  fput_light (file, fput_needed);
-  return ret;
+	struct file *file;
+	struct super_block *sb;
+	int ret;
+	int fput_needed;
+
+	file = fget_light(fd, &fput_needed);
+	if (!file)
+		return -EBADF;
+	sb = file->f_dentry->d_sb;
+
+	down_read(&sb->s_umount);
+	ret = sync_filesystem(sb);
+	up_read(&sb->s_umount);
+
+	fput_light(file, fput_needed);
+	return ret;
 }
 
 /**
  * vfs_fsync_range - helper to sync a range of data & metadata to disk
- * @file:   file to sync
- * @start:    offset in bytes of the beginning of data range to sync
- * @end:    offset in bytes of the end of data range (inclusive)
- * @datasync:   perform only datasync
+ * @file:		file to sync
+ * @start:		offset in bytes of the beginning of data range to sync
+ * @end:		offset in bytes of the end of data range (inclusive)
+ * @datasync:		perform only datasync
  *
  * Write back data in range @start..@end and metadata for @file to disk.  If
  * @datasync is set only metadata needed to access modified file data is
  * written.
  */
 
-/**
- * date : 2013.8.21
- * modify the vfs_fsync_range method
- * add the __blkdev_driver_ioctl call at the end of vfs_fsync_range,
- * to ensure that after sync system call, all the relative data will be in
- * the nand device
- **/
+ /**
+  * date : 2013.8.21
+  * modify the vfs_fsync_range method
+  * add the __blkdev_driver_ioctl call at the end of vfs_fsync_range,
+  * to ensure that after sync system call, all the relative data will be in
+  * the nand device
+  **/
 
 #ifndef CONFIG_SYNC_FOR_BLKDEV
-int vfs_fsync_range (struct file * file, loff_t start, loff_t end, int datasync)
+int vfs_fsync_range(struct file *file, loff_t start, loff_t end, int datasync)
 {
-  if (!file->f_op || !file->f_op->fsync)
-  { return -EINVAL; }
-  return file->f_op->fsync (file, start, end, datasync);
+	if (!file->f_op || !file->f_op->fsync)
+		return -EINVAL;
+	return file->f_op->fsync(file, start, end, datasync);
 }
 #else
-int vfs_fsync_range (struct file * file, loff_t start, loff_t end, int datasync)
+int vfs_fsync_range(struct file *file, loff_t start, loff_t end, int datasync)
 {
-  int err;
-  struct super_block * sb = file->f_dentry->d_sb;
-  struct block_device * bdev = sb->s_bdev;
-  if (!file->f_op || !file->f_op->fsync)
-  { return -EINVAL; }
-  err = file->f_op->fsync (file, start, end, datasync);
-  if (err)
-  { return err; }
-  /*
-   *2013.09.30: fix the bug that system cannot start up when storage
-   *device is emmc, ioctl chanel only for nand flash
-   */
-  if (bdev != NULL && MAJOR (bdev->bd_dev) == 93)
-  { __blkdev_driver_ioctl (bdev, O_RDONLY, BLKFLSBUF, 0); }
-  return err;
+	int err;
+	struct super_block *sb = file->f_dentry->d_sb;
+	struct block_device *bdev = sb->s_bdev;
+	if (!file->f_op || !file->f_op->fsync)
+		return -EINVAL;
+	err = file->f_op->fsync(file, start, end, datasync);
+	if(err)
+		return err;
+	/*
+	 *2013.09.30: fix the bug that system cannot start up when storage
+	 *device is emmc, ioctl chanel only for nand flash
+	 */
+	if (bdev != NULL && MAJOR(bdev->bd_dev) == 93) 
+		__blkdev_driver_ioctl(bdev, O_RDONLY, BLKFLSBUF, 0);
+	return err;
 }
 #endif
-EXPORT_SYMBOL (vfs_fsync_range);
+EXPORT_SYMBOL(vfs_fsync_range);
 
 /**
  * vfs_fsync - perform a fsync or fdatasync on a file
- * @file:   file to sync
- * @datasync:   only perform a fdatasync operation
+ * @file:		file to sync
+ * @datasync:		only perform a fdatasync operation
  *
  * Write back data and metadata for @file to disk.  If @datasync is
  * set only metadata needed to access modified file data is written.
  */
-int vfs_fsync (struct file * file, int datasync)
+int vfs_fsync(struct file *file, int datasync)
 {
-  return vfs_fsync_range (file, 0, LLONG_MAX, datasync);
+	return vfs_fsync_range(file, 0, LLONG_MAX, datasync);
 }
-EXPORT_SYMBOL (vfs_fsync);
+EXPORT_SYMBOL(vfs_fsync);
 
-static int do_fsync (unsigned int fd, int datasync)
+static int do_fsync(unsigned int fd, int datasync)
 {
-  struct file * file;
-  int ret = -EBADF;
-  
-  file = fget (fd);
-  if (file) {
-    ret = vfs_fsync (file, datasync);
-    fput (file);
-  }
-  return ret;
-}
+	struct file *file;
+	int ret = -EBADF;
 
-SYSCALL_DEFINE1 (fsync, unsigned int, fd)
-{
-  return do_fsync (fd, 0);
+	file = fget(fd);
+	if (file) {
+		ret = vfs_fsync(file, datasync);
+		fput(file);
+	}
+	return ret;
 }
 
-SYSCALL_DEFINE1 (fdatasync, unsigned int, fd)
+SYSCALL_DEFINE1(fsync, unsigned int, fd)
 {
-  return do_fsync (fd, 1);
+	return do_fsync(fd, 0);
+}
+
+SYSCALL_DEFINE1(fdatasync, unsigned int, fd)
+{
+	return do_fsync(fd, 1);
 }
 
 /**
  * generic_write_sync - perform syncing after a write if file / inode is sync
- * @file: file to which the write happened
- * @pos:  offset where the write started
- * @count:  length of the write
+ * @file:	file to which the write happened
+ * @pos:	offset where the write started
+ * @count:	length of the write
  *
  * This is just a simple wrapper about our general syncing function.
  */
-int generic_write_sync (struct file * file, loff_t pos, loff_t count)
+int generic_write_sync(struct file *file, loff_t pos, loff_t count)
 {
-  if (! (file->f_flags & O_DSYNC) && !IS_SYNC (file->f_mapping->host) )
-  { return 0; }
-  return vfs_fsync_range (file, pos, pos + count - 1,
-                          (file->f_flags & __O_SYNC) ? 0 : 1);
+	if (!(file->f_flags & O_DSYNC) && !IS_SYNC(file->f_mapping->host))
+		return 0;
+	return vfs_fsync_range(file, pos, pos + count - 1,
+			       (file->f_flags & __O_SYNC) ? 0 : 1);
 }
-EXPORT_SYMBOL (generic_write_sync);
+EXPORT_SYMBOL(generic_write_sync);
 
 /*
  * sys_sync_file_range() permits finely controlled syncing over a segment of
@@ -303,112 +303,112 @@ EXPORT_SYMBOL (generic_write_sync);
  * already-instantiated disk blocks, there are no guarantees here that the data
  * will be available after a crash.
  */
-SYSCALL_DEFINE (sync_file_range) (int fd, loff_t offset, loff_t nbytes,
-                                  unsigned int flags)
+SYSCALL_DEFINE(sync_file_range)(int fd, loff_t offset, loff_t nbytes,
+				unsigned int flags)
 {
-  int ret;
-  struct file * file;
-  struct address_space * mapping;
-  loff_t endbyte;     /* inclusive */
-  int fput_needed;
-  umode_t i_mode;
-  
-  ret = -EINVAL;
-  if (flags & ~VALID_FLAGS)
-  { goto out; }
-  
-  endbyte = offset + nbytes;
-  
-  if ( (s64) offset < 0)
-  { goto out; }
-  if ( (s64) endbyte < 0)
-  { goto out; }
-  if (endbyte < offset)
-  { goto out; }
-  
-  if (sizeof (pgoff_t) == 4) {
-    if (offset >= (0x100000000ULL << PAGE_CACHE_SHIFT) ) {
-      /*
-       * The range starts outside a 32 bit machine's
-       * pagecache addressing capabilities.  Let it "succeed"
-       */
-      ret = 0;
-      goto out;
-    }
-    if (endbyte >= (0x100000000ULL << PAGE_CACHE_SHIFT) ) {
-      /*
-       * Out to EOF
-       */
-      nbytes = 0;
-    }
-  }
-  
-  if (nbytes == 0)
-  { endbyte = LLONG_MAX; }
-  else
-  { endbyte--; }    /* inclusive */
-  
-  ret = -EBADF;
-  file = fget_light (fd, &fput_needed);
-  if (!file)
-  { goto out; }
-  
-  i_mode = file->f_path.dentry->d_inode->i_mode;
-  ret = -ESPIPE;
-  if (!S_ISREG (i_mode) && !S_ISBLK (i_mode) && !S_ISDIR (i_mode) &&
-      !S_ISLNK (i_mode) )
-  { goto out_put; }
-  
-  mapping = file->f_mapping;
-  if (!mapping) {
-    ret = -EINVAL;
-    goto out_put;
-  }
-  
-  ret = 0;
-  if (flags & SYNC_FILE_RANGE_WAIT_BEFORE) {
-    ret = filemap_fdatawait_range (mapping, offset, endbyte);
-    if (ret < 0)
-    { goto out_put; }
-  }
-  
-  if (flags & SYNC_FILE_RANGE_WRITE) {
-    ret = filemap_fdatawrite_range (mapping, offset, endbyte);
-    if (ret < 0)
-    { goto out_put; }
-  }
-  
-  if (flags & SYNC_FILE_RANGE_WAIT_AFTER)
-  { ret = filemap_fdatawait_range (mapping, offset, endbyte); }
-  
+	int ret;
+	struct file *file;
+	struct address_space *mapping;
+	loff_t endbyte;			/* inclusive */
+	int fput_needed;
+	umode_t i_mode;
+
+	ret = -EINVAL;
+	if (flags & ~VALID_FLAGS)
+		goto out;
+
+	endbyte = offset + nbytes;
+
+	if ((s64)offset < 0)
+		goto out;
+	if ((s64)endbyte < 0)
+		goto out;
+	if (endbyte < offset)
+		goto out;
+
+	if (sizeof(pgoff_t) == 4) {
+		if (offset >= (0x100000000ULL << PAGE_CACHE_SHIFT)) {
+			/*
+			 * The range starts outside a 32 bit machine's
+			 * pagecache addressing capabilities.  Let it "succeed"
+			 */
+			ret = 0;
+			goto out;
+		}
+		if (endbyte >= (0x100000000ULL << PAGE_CACHE_SHIFT)) {
+			/*
+			 * Out to EOF
+			 */
+			nbytes = 0;
+		}
+	}
+
+	if (nbytes == 0)
+		endbyte = LLONG_MAX;
+	else
+		endbyte--;		/* inclusive */
+
+	ret = -EBADF;
+	file = fget_light(fd, &fput_needed);
+	if (!file)
+		goto out;
+
+	i_mode = file->f_path.dentry->d_inode->i_mode;
+	ret = -ESPIPE;
+	if (!S_ISREG(i_mode) && !S_ISBLK(i_mode) && !S_ISDIR(i_mode) &&
+			!S_ISLNK(i_mode))
+		goto out_put;
+
+	mapping = file->f_mapping;
+	if (!mapping) {
+		ret = -EINVAL;
+		goto out_put;
+	}
+
+	ret = 0;
+	if (flags & SYNC_FILE_RANGE_WAIT_BEFORE) {
+		ret = filemap_fdatawait_range(mapping, offset, endbyte);
+		if (ret < 0)
+			goto out_put;
+	}
+
+	if (flags & SYNC_FILE_RANGE_WRITE) {
+		ret = filemap_fdatawrite_range(mapping, offset, endbyte);
+		if (ret < 0)
+			goto out_put;
+	}
+
+	if (flags & SYNC_FILE_RANGE_WAIT_AFTER)
+		ret = filemap_fdatawait_range(mapping, offset, endbyte);
+
 out_put:
-  fput_light (file, fput_needed);
+	fput_light(file, fput_needed);
 out:
-  return ret;
+	return ret;
 }
 #ifdef CONFIG_HAVE_SYSCALL_WRAPPERS
-asmlinkage long SyS_sync_file_range (long fd, loff_t offset, loff_t nbytes,
-                                     long flags)
+asmlinkage long SyS_sync_file_range(long fd, loff_t offset, loff_t nbytes,
+				    long flags)
 {
-  return SYSC_sync_file_range ( (int) fd, offset, nbytes,
-                                (unsigned int) flags);
+	return SYSC_sync_file_range((int) fd, offset, nbytes,
+				    (unsigned int) flags);
 }
-SYSCALL_ALIAS (sys_sync_file_range, SyS_sync_file_range);
+SYSCALL_ALIAS(sys_sync_file_range, SyS_sync_file_range);
 #endif
 
 /* It would be nice if people remember that not all the world's an i386
    when they introduce new system calls */
-SYSCALL_DEFINE (sync_file_range2) (int fd, unsigned int flags,
-                                   loff_t offset, loff_t nbytes)
+SYSCALL_DEFINE(sync_file_range2)(int fd, unsigned int flags,
+				 loff_t offset, loff_t nbytes)
 {
-  return sys_sync_file_range (fd, offset, nbytes, flags);
+	return sys_sync_file_range(fd, offset, nbytes, flags);
 }
 #ifdef CONFIG_HAVE_SYSCALL_WRAPPERS
-asmlinkage long SyS_sync_file_range2 (long fd, long flags,
-                                      loff_t offset, loff_t nbytes)
+asmlinkage long SyS_sync_file_range2(long fd, long flags,
+				     loff_t offset, loff_t nbytes)
 {
-  return SYSC_sync_file_range2 ( (int) fd, (unsigned int) flags,
-                                 offset, nbytes);
+	return SYSC_sync_file_range2((int) fd, (unsigned int) flags,
+				     offset, nbytes);
 }
-SYSCALL_ALIAS (sys_sync_file_range2, SyS_sync_file_range2);
+SYSCALL_ALIAS(sys_sync_file_range2, SyS_sync_file_range2);
 #endif

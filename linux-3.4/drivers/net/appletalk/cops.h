@@ -10,7 +10,7 @@
 #ifdef __KERNEL__
 
 /* Max LLAP size we will accept. */
-#define MAX_LLAP_SIZE   603
+#define MAX_LLAP_SIZE		603
 
 /* Tangent */
 #define TANG_CARD_STATUS        1
@@ -46,12 +46,12 @@
 #endif
 
 /*
- *  Structure to hold the firmware information.
+ *	Structure to hold the firmware information.
  */
 struct ltfirmware
 {
-  unsigned int length;
-  const unsigned char * data;
+        unsigned int length;
+        const unsigned char *data;
 };
 
 #define DAYNA 1

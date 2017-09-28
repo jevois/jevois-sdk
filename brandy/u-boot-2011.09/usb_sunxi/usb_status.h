@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -25,13 +25,13 @@
 #define  __USB_STATUS_H__
 
 
-#define  SUNXI_USB_REQ_SUCCESSED        (0)
-#define  SUNXI_USB_REQ_DEVICE_NOT_SUPPORTED   (-1)
-#define  SUNXI_USB_REQ_UNKNOWN_COMMAND      (-2)
-#define  SUNXI_USB_REQ_UNMATCHED_COMMAND    (-3)
+#define  SUNXI_USB_REQ_SUCCESSED				(0)
+#define  SUNXI_USB_REQ_DEVICE_NOT_SUPPORTED		(-1)
+#define  SUNXI_USB_REQ_UNKNOWN_COMMAND			(-2)
+#define  SUNXI_USB_REQ_UNMATCHED_COMMAND		(-3)
 
-#define  SUNXI_USB_REQ_DATA_HUNGRY        (-4)
+#define  SUNXI_USB_REQ_DATA_HUNGRY				(-4)
 
-#define  SUNXI_USB_REQ_OP_ERR         (-5)
+#define  SUNXI_USB_REQ_OP_ERR					(-5)
 
 #endif

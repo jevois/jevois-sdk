@@ -13,4 +13,4 @@
 
 /* Nothing to do here ... */
 
-#endif  /* _XTENSA_LINKAGE_H */
+#endif	/* _XTENSA_LINKAGE_H */

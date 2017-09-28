@@ -1,21 +1,21 @@
 /*
 *************************************************************************************
-*                               eBsp
-*            Operation System Adapter Layer
+*                         			eBsp
+*					   Operation System Adapter Layer
 *
-*       (c) Copyright 2006-2010, All winners Co,Ld.
-*             All Rights Reserved
+*				(c) Copyright 2006-2010, All winners Co,Ld.
+*							All	Rights Reserved
 *
-* File Name   : OSAL_Dma.h
+* File Name 	: OSAL_Dma.h
 *
-* Author    : javen
+* Author 		: javen
 *
-* Description   : Dma操作
+* Description 	: Dma操作
 *
-* History     :
-*      <author>       <time>        <version >        <desc>
-*       javen           2010-09-07          1.0         create this word
-*   holi      2010-12-04      1.1     调整的参数部分，完全走CSP_para这条路
+* History 		:
+*      <author>    		<time>       	<version >    		<desc>
+*       javen     	   	2010-09-07          1.0         create this word
+*		holi			2010-12-04			1.1			调整的参数部分，完全走CSP_para这条路
 *************************************************************************************
 */
 #ifndef  __OSAL_DMA_H__
@@ -24,7 +24,7 @@
 
 
 
-typedef s32 (*DmaCallback) ( void * pArg);
+typedef s32 (*DmaCallback)( void *pArg);
 
 /*
 *******************************************************************************
@@ -34,9 +34,9 @@ typedef s32 (*DmaCallback) ( void * pArg);
 *    申请DMA通道。
 *
 * Parameters:
-*  user_name  : 模块名，方便统计
-*    DmaType    :   input. DMA类型。Normal or Dedicated
-*
+*	 user_name 	:	模块名，方便统计
+*    DmaType  	:  	input. DMA类型。Normal or Dedicated
+* 
 * Return value:
 *    成功返回DMA句柄，失败返回NULL。
 *
@@ -45,7 +45,7 @@ typedef s32 (*DmaCallback) ( void * pArg);
 *
 *******************************************************************************
 */
-__hdle OSAL_DmaRequest (u8 * user_name , u32 DmaType);
+__hdle OSAL_DmaRequest(u8 * user_name ,u32 DmaType);
 
 /*
 *******************************************************************************
@@ -56,7 +56,7 @@ __hdle OSAL_DmaRequest (u8 * user_name , u32 DmaType);
 *
 * Parameters:
 *    hDMA ： input. cspRequestDma申请的句柄。
-*
+* 
 * Return value:
 *    成功返回EBSP_OK，失败返回EBSP_FAIL。
 *
@@ -65,7 +65,7 @@ __hdle OSAL_DmaRequest (u8 * user_name , u32 DmaType);
 *
 *******************************************************************************
 */
-s32 OSAL_DmaRelease (__hdle hDMA);
+s32 OSAL_DmaRelease(__hdle hDMA);
 
 
 /*
@@ -76,9 +76,9 @@ s32 OSAL_DmaRelease (__hdle hDMA);
 *    使能DMA中断
 *
 * Parameters:
-*    hDMA       :  input. cspRequestDma申请的句柄。
+*    hDMA 	    :  input. cspRequestDma申请的句柄。
 *    IrqType    :  input. 传输类型。end_irq or half_irq。
-*
+* 
 * Return value:
 *    void
 *
@@ -87,7 +87,7 @@ s32 OSAL_DmaRelease (__hdle hDMA);
 *
 *******************************************************************************
 */
-s32 OSAL_DmaEnableINT (__hdle hDMA, s32 IrqType);
+s32 OSAL_DmaEnableINT(__hdle hDMA, s32 IrqType);
 
 /*
 *******************************************************************************
@@ -97,9 +97,9 @@ s32 OSAL_DmaEnableINT (__hdle hDMA, s32 IrqType);
 *    禁止DMA中断
 *
 * Parameters:
-*    hDMA       :  input. cspRequestDma申请的句柄。
+*    hDMA 	    :  input. cspRequestDma申请的句柄。
 *    IrqType    :  input. 传输类型。end_irq or half_irq。
-*
+* 
 * Return value:
 *    void
 *
@@ -108,7 +108,7 @@ s32 OSAL_DmaEnableINT (__hdle hDMA, s32 IrqType);
 *
 *******************************************************************************
 */
-s32 OSAL_DmaDisableINT (__hdle hDMA, s32 IrqType);
+s32 OSAL_DmaDisableINT(__hdle hDMA, s32 IrqType);
 
 /*
 *******************************************************************************
@@ -118,11 +118,11 @@ s32 OSAL_DmaDisableINT (__hdle hDMA, s32 IrqType);
 *    注册中断处理函数。
 *
 * Parameters:
-*    hDMA       :  input. cspRequestDma申请的句柄。
+*    hDMA 	    :  input. cspRequestDma申请的句柄。
 *    IrqType    :  input. 中断类型。end_irq or half_irq。
 *    pCallBack  :  input. 中断回调函数。
-*    pArg   :  input. 中断回调函数的参数。
-*
+*    pArg		:  input. 中断回调函数的参数。
+* 
 * Return value:
 *    成功返回DMA句柄，失败返回NULL。
 *
@@ -131,7 +131,7 @@ s32 OSAL_DmaDisableINT (__hdle hDMA, s32 IrqType);
 *
 *******************************************************************************
 */
-s32 OSAL_DmaRegIrq (__hdle hDMA, u32 IrqType, DmaCallback pCallBack, void * pArg);
+s32 OSAL_DmaRegIrq(__hdle hDMA, u32 IrqType, DmaCallback pCallBack, void *pArg); 
 
 /*
 *******************************************************************************
@@ -141,10 +141,10 @@ s32 OSAL_DmaRegIrq (__hdle hDMA, u32 IrqType, DmaCallback pCallBack, void * pArg
 *    注销中断处理函数。
 *
 * Parameters:
-*    hDMA       :  input. cspRequestDma申请的句柄。
+*    hDMA 	    :  input. cspRequestDma申请的句柄。
 *    IrqType    :  input. 传输类型。end_irq or half_irq。
 *    pCallBack  :  input. 中断回调函数。
-*
+* 
 * Return value:
 *    成功返回DMA句柄，失败返回NULL。
 *
@@ -153,7 +153,7 @@ s32 OSAL_DmaRegIrq (__hdle hDMA, u32 IrqType, DmaCallback pCallBack, void * pArg
 *
 *******************************************************************************
 */
-s32 OSAL_DmaUnRegIrq (__hdle hDMA, u32 IrqType, DmaCallback pCallBack);
+s32 OSAL_DmaUnRegIrq(__hdle hDMA, u32 IrqType, DmaCallback pCallBack);
 
 /*
 *******************************************************************************
@@ -163,9 +163,9 @@ s32 OSAL_DmaUnRegIrq (__hdle hDMA, u32 IrqType, DmaCallback pCallBack);
 *    配置DMA 通道，常用配置。
 *
 * Parameters:
-*    hDMA        :  input. cspRequestDma申请的句柄。
+*    hDMA 	     :  input. cspRequestDma申请的句柄。
 *    p_cfg       :  input.  DMA配置。,实际数据结构请参数struct CSP_dma_config{}
-*
+* 
 * Return value:
 *    成功返回EBSP_OK，失败返回EBSP_FAIL。
 *
@@ -174,7 +174,7 @@ s32 OSAL_DmaUnRegIrq (__hdle hDMA, u32 IrqType, DmaCallback pCallBack);
 *
 *******************************************************************************
 */
-s32 OSAL_DmaConfig (__hdle hDMA, void * p_cfg);
+s32 OSAL_DmaConfig(__hdle hDMA, void * p_cfg);
 
 /*
 *******************************************************************************
@@ -184,11 +184,11 @@ s32 OSAL_DmaConfig (__hdle hDMA, void * p_cfg);
 *    开始 DMA 传输。
 *
 * Parameters:
-*    hDMA        :  input. cspRequestDma申请的句柄。
-*    SrcAddr     :  input. 源地址
-*    DestAddr    :  input. 目标地址
+*    hDMA 	 		 :  input. cspRequestDma申请的句柄。
+*    SrcAddr		 :  input. 源地址
+*    DestAddr		 :  input. 目标地址
 *    TransferLength  :  input. 传输长度
-*
+* 
 * Return value:
 *    成功返回EBSP_OK，失败返回EBSP_FAIL。
 *
@@ -197,7 +197,7 @@ s32 OSAL_DmaConfig (__hdle hDMA, void * p_cfg);
 *
 *******************************************************************************
 */
-s32 OSAL_DmaStart (__hdle hDMA, u32 SrcAddr, u32 DestAddr, u32 TransferLength);
+s32 OSAL_DmaStart(__hdle hDMA, u32 SrcAddr, u32 DestAddr, u32 TransferLength);
 
 /*
 *******************************************************************************
@@ -208,7 +208,7 @@ s32 OSAL_DmaStart (__hdle hDMA, u32 SrcAddr, u32 DestAddr, u32 TransferLength);
 *
 * Parameters:
 *    hDMA ： input. cspRequestDma申请的句柄。
-*
+* 
 * Return value:
 *    成功返回EBSP_OK，失败返回EBSP_FAIL。
 *
@@ -217,7 +217,7 @@ s32 OSAL_DmaStart (__hdle hDMA, u32 SrcAddr, u32 DestAddr, u32 TransferLength);
 *
 *******************************************************************************
 */
-s32 OSAL_DmaStop (__hdle hDMA);
+s32 OSAL_DmaStop(__hdle hDMA);
 
 /*
 *******************************************************************************
@@ -227,8 +227,8 @@ s32 OSAL_DmaStop (__hdle hDMA);
 *    重新上一次DMA传输。
 *
 * Parameters:
-*    hDMA   ： input. cspRequestDma申请的句柄。
-*
+*    hDMA 	： input. cspRequestDma申请的句柄。
+* 
 * Return value:
 *    成功返回EBSP_OK，失败返回EBSP_FAIL。
 *
@@ -237,7 +237,7 @@ s32 OSAL_DmaStop (__hdle hDMA);
 *
 *******************************************************************************
 */
-s32 OSAL_DmaRestart (__hdle hDMA);
+s32 OSAL_DmaRestart(__hdle hDMA);
 
 /*
 *******************************************************************************
@@ -248,7 +248,7 @@ s32 OSAL_DmaRestart (__hdle hDMA);
 *
 * Parameters:
 *    hDMA  ： input. cspRequestDma申请的句柄。
-*
+* 
 * Return value:
 *    返回DMA通道号。
 *
@@ -257,7 +257,7 @@ s32 OSAL_DmaRestart (__hdle hDMA);
 *
 *******************************************************************************
 */
-u32 OSAL_DmaQueryChannelNo (__hdle hDMA);
+u32 OSAL_DmaQueryChannelNo(__hdle hDMA);
 
 /*
 *******************************************************************************
@@ -268,7 +268,7 @@ u32 OSAL_DmaQueryChannelNo (__hdle hDMA);
 *
 * Parameters:
 *    hDMA ： input. cspRequestDma申请的句柄。
-*
+* 
 * Return value:
 *    返回当前DMA通道的状态。1：busy，0：idle。
 *
@@ -277,7 +277,7 @@ u32 OSAL_DmaQueryChannelNo (__hdle hDMA);
 *
 *******************************************************************************
 */
-u32 OSAL_DmaQueryStatus (__hdle hDMA);
+u32 OSAL_DmaQueryStatus(__hdle hDMA);
 
 /*
 *******************************************************************************
@@ -288,7 +288,7 @@ u32 OSAL_DmaQueryStatus (__hdle hDMA);
 *
 * Parameters:
 *    hDMA  :  input. cspRequestDma申请的句柄。
-*
+* 
 * Return value:
 *    返回当前DMA的剩余字节数。
 *
@@ -297,7 +297,7 @@ u32 OSAL_DmaQueryStatus (__hdle hDMA);
 *
 *******************************************************************************
 */
-u32 OSAL_DmaQueryLeftCount (__hdle hDMA);
+u32 OSAL_DmaQueryLeftCount(__hdle hDMA);
 
 /*
 *******************************************************************************
@@ -307,11 +307,11 @@ u32 OSAL_DmaQueryLeftCount (__hdle hDMA);
 *    查询DMA通道的配置。
 *
 * Parameters:
-*    hDMA      :  input. cspRequestDma申请的句柄。
+*    hDMA 	   :  input. cspRequestDma申请的句柄。
 *    RegAddr   :  input. 寄存器地址
 *    RegWidth  :  input. 寄存器宽度
 *    RegValue  :  output. 寄存器值
-*
+* 
 * Return value:
 *    成功返回EBSP_OK，失败返回EBSP_FAIL。
 *
@@ -320,7 +320,7 @@ u32 OSAL_DmaQueryLeftCount (__hdle hDMA);
 *
 *******************************************************************************
 */
-s32 OSAL_DmaQueryConfig (__hdle hDMA, u32 RegAddr, u32 RegWidth, u32 * RegValue);
+s32 OSAL_DmaQueryConfig(__hdle hDMA, u32 RegAddr, u32 RegWidth, u32 *RegValue);
 
 /*
 *******************************************************************************
@@ -331,7 +331,7 @@ s32 OSAL_DmaQueryConfig (__hdle hDMA, u32 RegAddr, u32 RegWidth, u32 * RegValue)
 *
 * Parameters:
 *    hDMA  ： input. cspRequestDma申请的句柄。
-*
+* 
 * Return value:
 *    成功返回EBSP_OK，失败返回EBSP_FAIL。
 *
@@ -340,7 +340,7 @@ s32 OSAL_DmaQueryConfig (__hdle hDMA, u32 RegAddr, u32 RegWidth, u32 * RegValue)
 *
 *******************************************************************************
 */
-s32 OSAL_DmaPause (__hdle hDMA);
+s32 OSAL_DmaPause(__hdle hDMA);
 
 /*
 *******************************************************************************
@@ -351,7 +351,7 @@ s32 OSAL_DmaPause (__hdle hDMA);
 *
 * Parameters:
 *    hDMA  ： input. cspRequestDma申请的句柄。
-*
+* 
 * Return value:
 *    成功返回EBSP_OK，失败返回EBSP_FAIL。
 *
@@ -360,7 +360,7 @@ s32 OSAL_DmaPause (__hdle hDMA);
 *
 *******************************************************************************
 */
-s32 OSAL_DmaProceed (__hdle hDMA);
+s32 OSAL_DmaProceed(__hdle hDMA);
 
 /*
 *******************************************************************************
@@ -372,7 +372,7 @@ s32 OSAL_DmaProceed (__hdle hDMA);
 * Parameters:
 *    hDMA  ： input. cspRequestDma申请的句柄。
 *    mode  :  input. 传输模式
-*
+* 
 * Return value:
 *    void
 *
@@ -381,7 +381,7 @@ s32 OSAL_DmaProceed (__hdle hDMA);
 *
 *******************************************************************************
 */
-s32 OSAL_DmaChangeMode (__hdle hDMA, s32 mode);
+s32 OSAL_DmaChangeMode(__hdle hDMA, s32 mode);
 
 #endif  
 

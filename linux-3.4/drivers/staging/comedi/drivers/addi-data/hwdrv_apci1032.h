@@ -1,13 +1,13 @@
 /*
  * Copyright (C) 2004,2005  ADDI-DATA GmbH for the source code of this module.
  *
- *  ADDI-DATA GmbH
- *  Dieselstrasse 3
- *  D-77833 Ottersweier
- *  Tel: +19(0)7223/9493-0
- *  Fax: +49(0)7223/9493-92
- *  http://www.addi-data.com
- *  info@addi-data.com
+ *	ADDI-DATA GmbH
+ *	Dieselstrasse 3
+ *	D-77833 Ottersweier
+ *	Tel: +19(0)7223/9493-0
+ *	Fax: +49(0)7223/9493-92
+ *	http://www.addi-data.com
+ *	info@addi-data.com
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -48,17 +48,17 @@
 * DI for di read
 */
 
-int i_APCI1032_ConfigDigitalInput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                   struct comedi_insn * insn, unsigned int * data);
+int i_APCI1032_ConfigDigitalInput(struct comedi_device *dev, struct comedi_subdevice *s,
+				  struct comedi_insn *insn, unsigned int *data);
 
-int i_APCI1032_Read1DigitalInput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                  struct comedi_insn * insn, unsigned int * data);
+int i_APCI1032_Read1DigitalInput(struct comedi_device *dev, struct comedi_subdevice *s,
+				 struct comedi_insn *insn, unsigned int *data);
 
-int i_APCI1032_ReadMoreDigitalInput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                     struct comedi_insn * insn, unsigned int * data);
+int i_APCI1032_ReadMoreDigitalInput(struct comedi_device *dev, struct comedi_subdevice *s,
+				    struct comedi_insn *insn, unsigned int *data);
 
 /* Interrupt functions..... */
 
-static void v_APCI1032_Interrupt (int irq, void * d);
+static void v_APCI1032_Interrupt(int irq, void *d);
 /* Reset */
-int i_APCI1032_Reset (struct comedi_device * dev);
+int i_APCI1032_Reset(struct comedi_device *dev);

@@ -31,19 +31,19 @@ extern void display_sysid (void);
 
 int checkcpu (void)
 {
-  printf ("CPU   : Nios-II\n");
-  #if !defined(CONFIG_SYS_NIOS_SYSID_BASE)
-  printf ("SYSID : <unknown>\n");
-  #else
-  display_sysid ();
-  #endif
-  return (0);
+	printf ("CPU   : Nios-II\n");
+#if !defined(CONFIG_SYS_NIOS_SYSID_BASE)
+	printf ("SYSID : <unknown>\n");
+#else
+	display_sysid ();
+#endif
+	return (0);
 }
 
-int do_reset (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
+int do_reset(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
-  disable_interrupts();
-  /* indirect call to go beyond 256MB limitation of toolchain */
-  nios2_callr (CONFIG_SYS_RESET_ADDR);
-  return 0;
+	disable_interrupts();
+	/* indirect call to go beyond 256MB limitation of toolchain */
+	nios2_callr(CONFIG_SYS_RESET_ADDR);
+	return 0;
 }

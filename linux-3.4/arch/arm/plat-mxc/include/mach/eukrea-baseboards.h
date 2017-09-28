@@ -39,11 +39,11 @@
  * mach-mx5/eukrea_mbimxsd-baseboard.c for cpuimx51sd
  */
 
-extern void eukrea_mbimxsd25_baseboard_init (void);
-extern void eukrea_mbimx27_baseboard_init (void);
-extern void eukrea_mbimxsd35_baseboard_init (void);
-extern void eukrea_mbimx51_baseboard_init (void);
-extern void eukrea_mbimxsd51_baseboard_init (void);
+extern void eukrea_mbimxsd25_baseboard_init(void);
+extern void eukrea_mbimx27_baseboard_init(void);
+extern void eukrea_mbimxsd35_baseboard_init(void);
+extern void eukrea_mbimx51_baseboard_init(void);
+extern void eukrea_mbimxsd51_baseboard_init(void);
 
 #endif
 

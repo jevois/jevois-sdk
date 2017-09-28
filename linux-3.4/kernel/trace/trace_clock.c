@@ -29,20 +29,20 @@
  * Useful for tracing that does not cross to other CPUs nor
  * does it go through idle events.
  */
-u64 notrace trace_clock_local (void)
+u64 notrace trace_clock_local(void)
 {
-  u64 clock;
-  
-  /*
-   * sched_clock() is an architecture implemented, fast, scalable,
-   * lockless clock. It is not guaranteed to be coherent across
-   * CPUs, nor across CPU idle events.
-   */
-  preempt_disable_notrace();
-  clock = sched_clock();
-  preempt_enable_notrace();
-  
-  return clock;
+	u64 clock;
+
+	/*
+	 * sched_clock() is an architecture implemented, fast, scalable,
+	 * lockless clock. It is not guaranteed to be coherent across
+	 * CPUs, nor across CPU idle events.
+	 */
+	preempt_disable_notrace();
+	clock = sched_clock();
+	preempt_enable_notrace();
+
+	return clock;
 }
 
 /*
@@ -53,9 +53,9 @@ u64 notrace trace_clock_local (void)
  * jitter between CPUs. So it's a pretty scalable clock, but there
  * can be offsets in the trace data.
  */
-u64 notrace trace_clock (void)
+u64 notrace trace_clock(void)
 {
-  return local_clock();
+	return local_clock();
 }
 
 
@@ -70,48 +70,48 @@ u64 notrace trace_clock (void)
 
 /* keep prev_time and lock in the same cacheline. */
 static struct {
-  u64 prev_time;
-  arch_spinlock_t lock;
+	u64 prev_time;
+	arch_spinlock_t lock;
 } trace_clock_struct ____cacheline_aligned_in_smp =
-{
-  .lock = (arch_spinlock_t) __ARCH_SPIN_LOCK_UNLOCKED,
-};
+	{
+		.lock = (arch_spinlock_t)__ARCH_SPIN_LOCK_UNLOCKED,
+	};
 
-u64 notrace trace_clock_global (void)
+u64 notrace trace_clock_global(void)
 {
-  unsigned long flags;
-  int this_cpu;
-  u64 now;
-  
-  local_irq_save (flags);
-  
-  this_cpu = raw_smp_processor_id();
-  now = cpu_clock (this_cpu);
-  /*
-   * If in an NMI context then dont risk lockups and return the
-   * cpu_clock() time:
-   */
-  if (unlikely (in_nmi() ) )
-  { goto out; }
-  
-  arch_spin_lock (&trace_clock_struct.lock);
-  
-  /*
-   * TODO: if this happens often then maybe we should reset
-   * my_scd->clock to prev_time+1, to make sure
-   * we start ticking with the local clock from now on?
-   */
-  if ( (s64) (now - trace_clock_struct.prev_time) < 0)
-  { now = trace_clock_struct.prev_time + 1; }
-  
-  trace_clock_struct.prev_time = now;
-  
-  arch_spin_unlock (&trace_clock_struct.lock);
-  
-out:
-  local_irq_restore (flags);
-  
-  return now;
+	unsigned long flags;
+	int this_cpu;
+	u64 now;
+
+	local_irq_save(flags);
+
+	this_cpu = raw_smp_processor_id();
+	now = cpu_clock(this_cpu);
+	/*
+	 * If in an NMI context then dont risk lockups and return the
+	 * cpu_clock() time:
+	 */
+	if (unlikely(in_nmi()))
+		goto out;
+
+	arch_spin_lock(&trace_clock_struct.lock);
+
+	/*
+	 * TODO: if this happens often then maybe we should reset
+	 * my_scd->clock to prev_time+1, to make sure
+	 * we start ticking with the local clock from now on?
+	 */
+	if ((s64)(now - trace_clock_struct.prev_time) < 0)
+		now = trace_clock_struct.prev_time + 1;
+
+	trace_clock_struct.prev_time = now;
+
+	arch_spin_unlock(&trace_clock_struct.lock);
+
+ out:
+	local_irq_restore(flags);
+
+	return now;
 }
 
 static atomic64_t trace_counter;
@@ -121,7 +121,7 @@ static atomic64_t trace_counter;
  * Use the trace_counter "counter" for cases where you do not care
  * about timings, but are interested in strict ordering.
  */
-u64 notrace trace_clock_counter (void)
+u64 notrace trace_clock_counter(void)
 {
-  return atomic64_add_return (1, &trace_counter);
+	return atomic64_add_return(1, &trace_counter);
 }

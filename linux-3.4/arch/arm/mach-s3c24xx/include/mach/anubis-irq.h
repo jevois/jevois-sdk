@@ -1,8 +1,8 @@
 /* arch/arm/mach-s3c2410/include/mach/anubis-irq.h
  *
  * Copyright (c) 2005 Simtec Electronics
- *  http://www.simtec.co.uk/products/
- *  Ben Dooks <ben@simtec.co.uk>
+ *	http://www.simtec.co.uk/products/
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  *  ANUBIS - IRQ Number definitions
  *

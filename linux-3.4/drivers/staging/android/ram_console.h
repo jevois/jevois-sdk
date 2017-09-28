@@ -16,7 +16,7 @@
 #define _INCLUDE_LINUX_PLATFORM_DATA_RAM_CONSOLE_H_
 
 struct ram_console_platform_data {
-  const char * bootinfo;
+	const char *bootinfo;
 };
 
 #endif /* _INCLUDE_LINUX_PLATFORM_DATA_RAM_CONSOLE_H_ */

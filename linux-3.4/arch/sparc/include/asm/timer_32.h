@@ -11,11 +11,11 @@
 #include <asm/cpu_type.h>  /* For SUN4M_NCPUS */
 #include <asm/btfixup.h>
 
-extern __volatile__ unsigned int * master_l10_counter;
+extern __volatile__ unsigned int *master_l10_counter;
 
 /* FIXME: Make do_[gs]ettimeofday btfixup calls */
 struct timespec;
-BTFIXUPDEF_CALL (int, bus_do_settimeofday, struct timespec * tv)
+BTFIXUPDEF_CALL(int, bus_do_settimeofday, struct timespec *tv)
 #define bus_do_settimeofday(tv) BTFIXUP_CALL(bus_do_settimeofday)(tv)
 
 #endif /* !(_SPARC_TIMER_H) */

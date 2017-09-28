@@ -14,16 +14,16 @@
  * This component models the ATM ports and VCs and is capable of producing
  * a schedule of ATM cells per port which can be supplied to IxAtmdAcc
  * for execution on the data path.
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -36,7 +36,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -49,7 +49,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  *
@@ -77,7 +77,7 @@
 
 /* Return codes */
 
-/**
+/** 
  * @ingroup IxAtmSch
  *
  * @def IX_ATMSCH_RET_NOT_ADMITTED
@@ -86,7 +86,7 @@
 */
 #define IX_ATMSCH_RET_NOT_ADMITTED 2
 
-/**
+/**  
  * @ingroup IxAtmSch
  *
  * @def IX_ATMSCH_RET_QUEUE_FULL
@@ -95,7 +95,7 @@
  */
 #define IX_ATMSCH_RET_QUEUE_FULL 3
 
-/**
+/**  
  * @ingroup IxAtmSch
  *
  *  @def IX_ATMSCH_RET_QUEUE_EMPTY
@@ -108,7 +108,7 @@
  * Function declarations
  */
 
-/**
+/**  
  * @ingroup IxAtmSch
  *
  * @fn ixAtmSchInit(void)
@@ -126,9 +126,9 @@
  *          from initialising.
  */
 PUBLIC IX_STATUS
-ixAtmSchInit (void);
+ixAtmSchInit(void);
 
-/**
+/**  
  * @ingroup IxAtmSch
  *
  * @fn ixAtmSchPortModelInitialize( IxAtmLogicalPort port,
@@ -139,13 +139,13 @@ ixAtmSchInit (void);
  *         any other ixAtmSch API calls may be made for that port.
  *
  * @param port @ref IxAtmLogicalPort [in] - The specific port to initialize.  Valid
- *          values range from 0 to IX_UTOPIA_MAX_PORTS - 1, representing a
+ *          values range from 0 to IX_UTOPIA_MAX_PORTS - 1, representing a 
  *          maximum of IX_UTOPIA_MAX_PORTS possible ports.
  *
  * @param portRate unsigned int [in] - Value indicating the upstream capacity
  *          of the indicated port.  The value should be supplied in
  *          units of ATM (53 bytes) cells per second.
- *          A port rate of 800Kbits/s is the equivalent
+ *          A port rate of 800Kbits/s is the equivalent 
  *          of 1886 cells per second
  *
  * @param minCellsToSchedule unsigned int [in] - This parameter specifies the minimum
@@ -161,11 +161,11 @@ ixAtmSchInit (void);
  *    - <b>IX_FAIL :</b> indicates the requested port could not be
  * initialized.  */
 PUBLIC IX_STATUS
-ixAtmSchPortModelInitialize ( IxAtmLogicalPort port,
-                              unsigned int portRate,
-                              unsigned int minCellsToSchedule);
+ixAtmSchPortModelInitialize( IxAtmLogicalPort port,
+                                       unsigned int portRate,
+                                       unsigned int minCellsToSchedule);
 
-/**
+/**  
  * @ingroup IxAtmSch
  *
  * @fn ixAtmSchPortRateModify( IxAtmLogicalPort port,
@@ -180,7 +180,7 @@ ixAtmSchPortModelInitialize ( IxAtmLogicalPort port,
  *
  * @param portRate unsigned int [in] - Value indicating the new upstream
  *          capacity for this port in cells/second.
- *          A port rate of 800Kbits/s is the equivalent
+ *          A port rate of 800Kbits/s is the equivalent 
  *          of 1886 cells per second
  *
  * @return
@@ -201,11 +201,11 @@ ixAtmSchPortModelInitialize ( IxAtmLogicalPort port,
  *
  * @sa ixAtmSchVcModelRemove() */
 PUBLIC IX_STATUS
-ixAtmSchPortRateModify ( IxAtmLogicalPort port,
-                         unsigned int portRate);
+ixAtmSchPortRateModify( IxAtmLogicalPort port,
+                        unsigned int portRate);
 
 
-/**
+/**  
  * @ingroup IxAtmSch
  *
  * @fn ixAtmSchVcModelSetup( IxAtmLogicalPort port,
@@ -241,11 +241,11 @@ ixAtmSchPortRateModify ( IxAtmLogicalPort port,
  *      established.
  */
 PUBLIC IX_STATUS
-ixAtmSchVcModelSetup ( IxAtmLogicalPort port,
-                       IxAtmTrafficDescriptor * trafficDesc,
-                       IxAtmSchedulerVcId * vcId);
+ixAtmSchVcModelSetup( IxAtmLogicalPort port,
+                      IxAtmTrafficDescriptor *trafficDesc,
+                      IxAtmSchedulerVcId *vcId);
 
-/**
+/**  
  * @ingroup IxAtmSch
  *
  * @fn ixAtmSchVcConnIdSet( IxAtmLogicalPort port,
@@ -275,11 +275,11 @@ ixAtmSchVcModelSetup ( IxAtmLogicalPort port,
  * - <b>IX_FAIL :</b>Input data are invalid. connId id is not established.
  */
 PUBLIC IX_STATUS
-ixAtmSchVcConnIdSet ( IxAtmLogicalPort port,
-                      IxAtmSchedulerVcId vcId,
-                      IxAtmConnId vcUserConnId);
+ixAtmSchVcConnIdSet( IxAtmLogicalPort port,
+                     IxAtmSchedulerVcId vcId,
+                     IxAtmConnId vcUserConnId);
 
-/**
+/**  
  * @ingroup IxAtmSch
  *
  * @fn ixAtmSchVcModelRemove( IxAtmLogicalPort port,
@@ -301,13 +301,13 @@ ixAtmSchVcConnIdSet ( IxAtmLogicalPort port,
  * - <b>IX_FAIL :</b>Input data are invalid. The VC is still being modeled
  *      by the traffic shaper.
  *
- * @sa ixAtmSchVcModelSetup()
+ * @sa ixAtmSchVcModelSetup() 
  */
 PUBLIC IX_STATUS
-ixAtmSchVcModelRemove ( IxAtmLogicalPort port,
-                        IxAtmSchedulerVcId vcId);
+ixAtmSchVcModelRemove( IxAtmLogicalPort port,
+                       IxAtmSchedulerVcId vcId);
 
-/**
+/**  
  * @ingroup IxAtmSch
  *
  * @fn ixAtmSchVcQueueUpdate( IxAtmLogicalPort port,
@@ -362,11 +362,11 @@ ixAtmSchVcModelRemove ( IxAtmLogicalPort port,
  *
  * @sa ixAtmSchVcQueueUpdate(), ixAtmSchVcQueueClear(), ixAtmSchTableUpdate().  */
 PUBLIC IX_STATUS
-ixAtmSchVcQueueUpdate ( IxAtmLogicalPort port,
-                        IxAtmSchedulerVcId vcId,
-                        unsigned int numberOfCells);
+ixAtmSchVcQueueUpdate( IxAtmLogicalPort port,
+                       IxAtmSchedulerVcId vcId,
+                       unsigned int numberOfCells);
 
-/**
+/**  
  * @ingroup IxAtmSch
  *
  * @fn ixAtmSchVcQueueClear( IxAtmLogicalPort port,
@@ -398,10 +398,10 @@ ixAtmSchVcQueueUpdate ( IxAtmLogicalPort port,
  *
  * @sa ixAtmSchVcQueueUpdate(), ixAtmSchVcQueueClear(), ixAtmSchTableUpdate().  */
 PUBLIC IX_STATUS
-ixAtmSchVcQueueClear ( IxAtmLogicalPort port,
-                       IxAtmSchedulerVcId vcId);
+ixAtmSchVcQueueClear( IxAtmLogicalPort port,
+                      IxAtmSchedulerVcId vcId);
 
-/**
+/**  
  * @ingroup IxAtmSch
  *
  * @fn ixAtmSchTableUpdate( IxAtmLogicalPort port,
@@ -464,11 +464,11 @@ ixAtmSchVcQueueClear ( IxAtmLogicalPort port,
  *
  * @sa ixAtmSchVcQueueUpdate(), ixAtmSchVcQueueClear(), ixAtmSchTableUpdate().  */
 PUBLIC IX_STATUS
-ixAtmSchTableUpdate ( IxAtmLogicalPort port,
-                      unsigned int maxCells,
-                      IxAtmScheduleTable ** rettable);
+ixAtmSchTableUpdate( IxAtmLogicalPort port,
+                     unsigned int maxCells,
+                     IxAtmScheduleTable **rettable);
 
-/**
+/**  
  * @ingroup IxAtmSch
  *
  * @fn ixAtmSchShow(void)
@@ -482,9 +482,9 @@ ixAtmSchTableUpdate ( IxAtmLogicalPort port,
  * @return none
  */
 PUBLIC void
-ixAtmSchShow (void);
+ixAtmSchShow(void);
 
-/**
+/**  
  * @ingroup IxAtmSch
  *
  * @fn ixAtmSchStatsClear(void)
@@ -496,7 +496,7 @@ ixAtmSchShow (void);
  * @return none
  */
 PUBLIC void
-ixAtmSchStatsClear (void);
+ixAtmSchStatsClear(void);
 
 #endif
 /* IXATMSCH_H */

@@ -28,15 +28,15 @@ extern int input_len;
 extern char _text, _end;
 extern char _bss, _ebss;
 
-static void error (char * m);
+static void error(char *m);
 
 static unsigned long free_mem_ptr;
 static unsigned long free_mem_end_ptr;
 
 #ifdef CONFIG_HAVE_KERNEL_BZIP2
-#define HEAP_SIZE 0x400000
+#define HEAP_SIZE	0x400000
 #else
-#define HEAP_SIZE 0x10000
+#define HEAP_SIZE	0x10000
 #endif
 
 #ifdef CONFIG_KERNEL_GZIP
@@ -59,58 +59,57 @@ static unsigned long free_mem_end_ptr;
 #include "../../../../lib/decompress_unxz.c"
 #endif
 
-extern _sclp_print_early (const char *);
+extern _sclp_print_early(const char *);
 
-static int puts (const char * s)
+static int puts(const char *s)
 {
-  _sclp_print_early (s);
-  return 0;
+	_sclp_print_early(s);
+	return 0;
 }
 
-void * memset (void * s, int c, size_t n)
+void *memset(void *s, int c, size_t n)
 {
-  char * xs;
-  
-  if (c == 0)
-  { return __builtin_memset (s, 0, n); }
-  
-  xs = (char *) s;
-  if (n > 0)
-    do {
-      *xs++ = c;
-    }
-    while (--n > 0);
-  return s;
+	char *xs;
+
+	if (c == 0)
+		return __builtin_memset(s, 0, n);
+
+	xs = (char *) s;
+	if (n > 0)
+		do {
+			*xs++ = c;
+		} while (--n > 0);
+	return s;
 }
 
-void * memcpy (void * __dest, __const void * __src, size_t __n)
+void *memcpy(void *__dest, __const void *__src, size_t __n)
 {
-  return __builtin_memcpy (__dest, __src, __n);
+	return __builtin_memcpy(__dest, __src, __n);
 }
 
-void * memmove (void * __dest, __const void * __src, size_t __n)
+void *memmove(void *__dest, __const void *__src, size_t __n)
 {
-  char * d;
-  const char * s;
-  
-  if (__dest <= __src)
-  { return __builtin_memcpy (__dest, __src, __n); }
-  d = __dest + __n;
-  s = __src + __n;
-  while (__n--)
-  { *--d = *--s; }
-  return __dest;
+	char *d;
+	const char *s;
+
+	if (__dest <= __src)
+		return __builtin_memcpy(__dest, __src, __n);
+	d = __dest + __n;
+	s = __src + __n;
+	while (__n--)
+		*--d = *--s;
+	return __dest;
 }
 
-static void error (char * x)
+static void error(char *x)
 {
-  unsigned long long psw = 0x000a0000deadbeefULL;
-  
-  puts ("\n\n");
-  puts (x);
-  puts ("\n\n -- System halted");
-  
-  asm volatile ("lpsw %0" : : "Q" (psw) );
+	unsigned long long psw = 0x000a0000deadbeefULL;
+
+	puts("\n\n");
+	puts(x);
+	puts("\n\n -- System halted");
+
+	asm volatile("lpsw %0" : : "Q" (psw));
 }
 
 /*
@@ -122,48 +121,48 @@ static void error (char * x)
  * the memory to IPL_PARMBLOCK_ORIGIN even if there is no ipl parameter
  * block.
  */
-static void check_ipl_parmblock (void * start, unsigned long size)
+static void check_ipl_parmblock(void *start, unsigned long size)
 {
-  void * src, *dst;
-  
-  src = (void *) (unsigned long) S390_lowcore.ipl_parmblock_ptr;
-  if (src + PAGE_SIZE <= start || src >= start + size)
-  { return; }
-  dst = (void *) IPL_PARMBLOCK_ORIGIN;
-  memmove (dst, src, PAGE_SIZE);
-  S390_lowcore.ipl_parmblock_ptr = IPL_PARMBLOCK_ORIGIN;
+	void *src, *dst;
+
+	src = (void *)(unsigned long) S390_lowcore.ipl_parmblock_ptr;
+	if (src + PAGE_SIZE <= start || src >= start + size)
+		return;
+	dst = (void *) IPL_PARMBLOCK_ORIGIN;
+	memmove(dst, src, PAGE_SIZE);
+	S390_lowcore.ipl_parmblock_ptr = IPL_PARMBLOCK_ORIGIN;
 }
 
-unsigned long decompress_kernel (void)
+unsigned long decompress_kernel(void)
 {
-  unsigned long output_addr;
-  unsigned char * output;
-  
-  output_addr = ( (unsigned long) &_end + HEAP_SIZE + 4095UL) & -4096UL;
-  check_ipl_parmblock ( (void *) 0, output_addr + SZ__bss_start);
-  memset (&_bss, 0, &_ebss - &_bss);
-  free_mem_ptr = (unsigned long) &_end;
-  free_mem_end_ptr = free_mem_ptr + HEAP_SIZE;
-  output = (unsigned char *) output_addr;
-  
-  #ifdef CONFIG_BLK_DEV_INITRD
-  /*
-   * Move the initrd right behind the end of the decompressed
-   * kernel image.
-   */
-  if (INITRD_START && INITRD_SIZE &&
-      INITRD_START < (unsigned long) output + SZ__bss_start) {
-    check_ipl_parmblock (output + SZ__bss_start,
-                         INITRD_START + INITRD_SIZE);
-    memmove (output + SZ__bss_start,
-             (void *) INITRD_START, INITRD_SIZE);
-    INITRD_START = (unsigned long) output + SZ__bss_start;
-  }
-  #endif
-  
-  puts ("Uncompressing Linux... ");
-  decompress (input_data, input_len, NULL, NULL, output, NULL, error);
-  puts ("Ok, booting the kernel.\n");
-  return (unsigned long) output;
+	unsigned long output_addr;
+	unsigned char *output;
+
+	output_addr = ((unsigned long) &_end + HEAP_SIZE + 4095UL) & -4096UL;
+	check_ipl_parmblock((void *) 0, output_addr + SZ__bss_start);
+	memset(&_bss, 0, &_ebss - &_bss);
+	free_mem_ptr = (unsigned long)&_end;
+	free_mem_end_ptr = free_mem_ptr + HEAP_SIZE;
+	output = (unsigned char *) output_addr;
+
+#ifdef CONFIG_BLK_DEV_INITRD
+	/*
+	 * Move the initrd right behind the end of the decompressed
+	 * kernel image.
+	 */
+	if (INITRD_START && INITRD_SIZE &&
+	    INITRD_START < (unsigned long) output + SZ__bss_start) {
+		check_ipl_parmblock(output + SZ__bss_start,
+				    INITRD_START + INITRD_SIZE);
+		memmove(output + SZ__bss_start,
+			(void *) INITRD_START, INITRD_SIZE);
+		INITRD_START = (unsigned long) output + SZ__bss_start;
+	}
+#endif
+
+	puts("Uncompressing Linux... ");
+	decompress(input_data, input_len, NULL, NULL, output, NULL, error);
+	puts("Ok, booting the kernel.\n");
+	return (unsigned long) output;
 }
 

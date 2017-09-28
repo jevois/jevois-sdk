@@ -1,7 +1,7 @@
 /* linux/arch/arm/plat-samsung/include/plat/pwm-clock.h
  *
  * Copyright (c) 2010-2011 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com
+ *		http://www.samsung.com
  *
  * Copyright 2008 Openmoko, Inc.
  * Copyright 2008 Simtec Electronics
@@ -25,18 +25,16 @@
  * Return true if the given configuration from TCFG1 is a TCLK instead
  * any of the TDIV clocks.
  */
-static inline int pwm_cfg_src_is_tclk (unsigned long tcfg)
+static inline int pwm_cfg_src_is_tclk(unsigned long tcfg)
 {
-  if (soc_is_s3c24xx() )
-  { return tcfg == S3C2410_TCFG1_MUX_TCLK; }
-  else
-    if (soc_is_s3c64xx() || soc_is_s5pc100() )
-    { return tcfg >= S3C64XX_TCFG1_MUX_TCLK; }
-    else
-      if (soc_is_s5p6440() || soc_is_s5p6450() )
-      { return 0; }
-      else
-      { return tcfg == S3C64XX_TCFG1_MUX_TCLK; }
+	if (soc_is_s3c24xx())
+		return tcfg == S3C2410_TCFG1_MUX_TCLK;
+	else if (soc_is_s3c64xx() || soc_is_s5pc100())
+		return tcfg >= S3C64XX_TCFG1_MUX_TCLK;
+	else if (soc_is_s5p6440() || soc_is_s5p6450())
+		return 0;
+	else
+		return tcfg == S3C64XX_TCFG1_MUX_TCLK;
 }
 
 /**
@@ -46,12 +44,12 @@ static inline int pwm_cfg_src_is_tclk (unsigned long tcfg)
  * Get the divisor value for the given tcfg1 setting. We assume the
  * caller has already checked to see if this is not a TCLK source.
  */
-static inline unsigned long tcfg_to_divisor (unsigned long tcfg1)
+static inline unsigned long tcfg_to_divisor(unsigned long tcfg1)
 {
-  if (soc_is_s3c24xx() )
-  { return 1 << (tcfg1 + 1); }
-  else
-  { return 1 << tcfg1; }
+	if (soc_is_s3c24xx())
+		return 1 << (tcfg1 + 1);
+	else
+		return 1 << tcfg1;
 }
 
 /**
@@ -59,12 +57,12 @@ static inline unsigned long tcfg_to_divisor (unsigned long tcfg1)
  *
  * Return true if we have a /1 in the tdiv setting.
  */
-static inline unsigned int pwm_tdiv_has_div1 (void)
+static inline unsigned int pwm_tdiv_has_div1(void)
 {
-  if (soc_is_s3c24xx() )
-  { return 0; }
-  else
-  { return 1; }
+	if (soc_is_s3c24xx())
+		return 0;
+	else
+		return 1;
 }
 
 /**
@@ -73,11 +71,11 @@ static inline unsigned int pwm_tdiv_has_div1 (void)
  *
  * Turn a divisor into the necessary bit field for TCFG1.
  */
-static inline unsigned long pwm_tdiv_div_bits (unsigned int div)
+static inline unsigned long pwm_tdiv_div_bits(unsigned int div)
 {
-  if (soc_is_s3c24xx() )
-  { return ilog2 (div) - 1; }
-  else
-  { return ilog2 (div); }
+	if (soc_is_s3c24xx())
+		return ilog2(div) - 1;
+	else
+		return ilog2(div);
 }
 #endif /* __ASM_PLAT_PWM_CLOCK_H */

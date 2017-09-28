@@ -2,16 +2,16 @@
  * @file IxEthDBLog_p.h
  *
  * @brief definitions of log macros and log configuration
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,7 +24,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -37,7 +37,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  */
@@ -90,31 +90,31 @@
 
 #ifdef HAS_ERROR_LOG
 
-#define ERROR_LOG printf
+    #define ERROR_LOG printf
 
 #else
 
-#define ERROR_LOG NULL_PRINT_ROUTINE
+    #define ERROR_LOG NULL_PRINT_ROUTINE
 
 #endif
 
 #ifdef HAS_ERROR_IRQ_LOG
 
-#define ERROR_IRQ_LOG(format, arg1, arg2, arg3, arg4, arg5, arg6) ixOsalLog(IX_OSAL_LOG_LVL_ERROR, IX_OSAL_LOG_DEV_STDOUT, format, arg1, arg2, arg3, arg4, arg5, arg6)
+    #define ERROR_IRQ_LOG(format, arg1, arg2, arg3, arg4, arg5, arg6) ixOsalLog(IX_OSAL_LOG_LVL_ERROR, IX_OSAL_LOG_DEV_STDOUT, format, arg1, arg2, arg3, arg4, arg5, arg6)
 
 #else
 
-#define ERROR_IRQ_LOG(format, arg1, arg2, arg3, arg4, arg5, arg6) /* nothing */
+    #define ERROR_IRQ_LOG(format, arg1, arg2, arg3, arg4, arg5, arg6) /* nothing */
 
 #endif
 
 #ifdef HAS_WARNING_LOG
 
-#define WARNING_LOG printf
+    #define WARNING_LOG printf
 
 #else
 
-#define WARNING_LOG NULL_PRINT_ROUTINE
+    #define WARNING_LOG NULL_PRINT_ROUTINE
 
 #endif
 
@@ -122,24 +122,24 @@
 
 #ifdef HAS_EVENTS_TRACE
 
-#define IX_ETH_DB_EVENTS_TRACE     printf
-#define IX_ETH_DB_IRQ_EVENTS_TRACE(format, arg1, arg2, arg3, arg4, arg5, arg6) ixOsalLog(IX_OSAL_LOG_LVL_MESSAGE, IX_OSAL_LOG_DEV_STDOUT, format, arg1, arg2, arg3, arg4, arg5, arg6)
+    #define IX_ETH_DB_EVENTS_TRACE     printf
+    #define IX_ETH_DB_IRQ_EVENTS_TRACE(format, arg1, arg2, arg3, arg4, arg5, arg6) ixOsalLog(IX_OSAL_LOG_LVL_MESSAGE, IX_OSAL_LOG_DEV_STDOUT, format, arg1, arg2, arg3, arg4, arg5, arg6)
 
-#ifdef HAS_EVENTS_VERBOSE_TRACE
+    #ifdef HAS_EVENTS_VERBOSE_TRACE
 
-#define IX_ETH_DB_EVENTS_VERBOSE_TRACE printf
+        #define IX_ETH_DB_EVENTS_VERBOSE_TRACE printf
+    
+    #else
+
+        #define IX_ETH_DB_EVENTS_VERBOSE_TRACE NULL_PRINT_ROUTINE
+
+    #endif /* HAS_EVENTS_VERBOSE_TRACE */
 
 #else
 
-#define IX_ETH_DB_EVENTS_VERBOSE_TRACE NULL_PRINT_ROUTINE
-
-#endif /* HAS_EVENTS_VERBOSE_TRACE */
-
-#else
-
-#define IX_ETH_DB_EVENTS_TRACE         NULL_PRINT_ROUTINE
-#define IX_ETH_DB_EVENTS_VERBOSE_TRACE NULL_PRINT_ROUTINE
-#define IX_ETH_DB_IRQ_EVENTS_TRACE(format, arg1, arg2, arg3, arg4, arg5, arg6) /* nothing */
+    #define IX_ETH_DB_EVENTS_TRACE         NULL_PRINT_ROUTINE
+    #define IX_ETH_DB_EVENTS_VERBOSE_TRACE NULL_PRINT_ROUTINE
+    #define IX_ETH_DB_IRQ_EVENTS_TRACE(format, arg1, arg2, arg3, arg4, arg5, arg6) /* nothing */
 
 #endif /* HAS_EVENTS_TRACE */
 
@@ -147,24 +147,24 @@
 
 #ifdef HAS_SUPPORT_TRACE
 
-#define IX_ETH_DB_SUPPORT_TRACE     printf
-#define IX_ETH_DB_SUPPORT_IRQ_TRACE(format, arg1, arg2, arg3, arg4, arg5, arg6) ixOsalLog(IX_OSAL_LOG_LVL_MESSAGE, IX_OSAL_LOG_DEV_STDOUT, format, arg1, arg2, arg3, arg4, arg5, arg6)
+    #define IX_ETH_DB_SUPPORT_TRACE     printf
+    #define IX_ETH_DB_SUPPORT_IRQ_TRACE(format, arg1, arg2, arg3, arg4, arg5, arg6) ixOsalLog(IX_OSAL_LOG_LVL_MESSAGE, IX_OSAL_LOG_DEV_STDOUT, format, arg1, arg2, arg3, arg4, arg5, arg6)
 
-#ifdef HAS_SUPPORT_VERBOSE_TRACE
+    #ifdef HAS_SUPPORT_VERBOSE_TRACE
 
-#define IX_ETH_DB_SUPPORT_VERBOSE_TRACE printf
+        #define IX_ETH_DB_SUPPORT_VERBOSE_TRACE printf
+
+    #else
+
+        #define IX_ETH_DB_SUPPORT_VERBOSE_TRACE NULL_PRINT_ROUTINE
+
+    #endif /* HAS_SUPPORT_VERBOSE_TRACE */
 
 #else
 
-#define IX_ETH_DB_SUPPORT_VERBOSE_TRACE NULL_PRINT_ROUTINE
-
-#endif /* HAS_SUPPORT_VERBOSE_TRACE */
-
-#else
-
-#define IX_ETH_DB_SUPPORT_TRACE         NULL_PRINT_ROUTINE
-#define IX_ETH_DB_SUPPORT_VERBOSE_TRACE NULL_PRINT_ROUTINE
-#define IX_ETH_DB_SUPPORT_IRQ_TRACE(format, arg1, arg2, arg3, arg4, arg5, arg6) /* nothing */
+    #define IX_ETH_DB_SUPPORT_TRACE         NULL_PRINT_ROUTINE
+    #define IX_ETH_DB_SUPPORT_VERBOSE_TRACE NULL_PRINT_ROUTINE
+    #define IX_ETH_DB_SUPPORT_IRQ_TRACE(format, arg1, arg2, arg3, arg4, arg5, arg6) /* nothing */
 
 #endif /* HAS_SUPPORT_TRACE */
 
@@ -172,24 +172,24 @@
 
 #ifdef HAS_NPE_TRACE
 
-#define IX_ETH_DB_NPE_TRACE     printf
-#define IX_ETH_DB_NPE_IRQ_TRACE(format, arg1, arg2, arg3, arg4, arg5, arg6) ixOsalLog(IX_OSAL_LOG_LVL_MESSAGE, IX_OSAL_LOG_DEV_STDOUT, format, arg1, arg2, arg3, arg4, arg5, arg6)
+    #define IX_ETH_DB_NPE_TRACE     printf
+    #define IX_ETH_DB_NPE_IRQ_TRACE(format, arg1, arg2, arg3, arg4, arg5, arg6) ixOsalLog(IX_OSAL_LOG_LVL_MESSAGE, IX_OSAL_LOG_DEV_STDOUT, format, arg1, arg2, arg3, arg4, arg5, arg6)
 
-#ifdef HAS_NPE_VERBOSE_TRACE
+    #ifdef HAS_NPE_VERBOSE_TRACE
 
-#define IX_ETH_DB_NPE_VERBOSE_TRACE printf
+        #define IX_ETH_DB_NPE_VERBOSE_TRACE printf
+
+    #else
+
+        #define IX_ETH_DB_NPE_VERBOSE_TRACE NULL_PRINT_ROUTINE
+
+    #endif /* HAS_NPE_VERBOSE_TRACE */
 
 #else
 
-#define IX_ETH_DB_NPE_VERBOSE_TRACE NULL_PRINT_ROUTINE
-
-#endif /* HAS_NPE_VERBOSE_TRACE */
-
-#else
-
-#define IX_ETH_DB_NPE_TRACE         NULL_PRINT_ROUTINE
-#define IX_ETH_DB_NPE_VERBOSE_TRACE NULL_PRINT_ROUTINE
-#define IX_ETH_DB_NPE_IRQ_TRACE(format, arg1, arg2, arg3, arg4, arg5, arg6) /* nothing */
+    #define IX_ETH_DB_NPE_TRACE         NULL_PRINT_ROUTINE
+    #define IX_ETH_DB_NPE_VERBOSE_TRACE NULL_PRINT_ROUTINE
+    #define IX_ETH_DB_NPE_IRQ_TRACE(format, arg1, arg2, arg3, arg4, arg5, arg6) /* nothing */
 
 #endif /* HAS_NPE_TRACE */
 
@@ -207,21 +207,21 @@
 
 #ifdef HAS_UPDATE_TRACE
 
-#define IX_ETH_DB_UPDATE_TRACE printf
+    #define IX_ETH_DB_UPDATE_TRACE printf
 
-#ifdef HAS_UPDATE_VERBOSE_TRACE
+    #ifdef HAS_UPDATE_VERBOSE_TRACE
 
-#define IX_ETH_DB_UPDATE_VERBOSE_TRACE printf
+        #define IX_ETH_DB_UPDATE_VERBOSE_TRACE printf
 
-#else
+    #else
 
-#define IX_ETH_DB_UPDATE_VERBOSE_TRACE NULL_PRINT_ROUTINE
+        #define IX_ETH_DB_UPDATE_VERBOSE_TRACE NULL_PRINT_ROUTINE
 
-#endif
+    #endif
 
 #else /* HAS_UPDATE_VERBOSE_TRACE */
 
-#define IX_ETH_DB_UPDATE_TRACE         NULL_PRINT_ROUTINE
-#define IX_ETH_DB_UPDATE_VERBOSE_TRACE NULL_PRINT_ROUTINE
+    #define IX_ETH_DB_UPDATE_TRACE         NULL_PRINT_ROUTINE
+    #define IX_ETH_DB_UPDATE_VERBOSE_TRACE NULL_PRINT_ROUTINE
 
 #endif /* HAS_UPDATE_TRACE */

@@ -41,69 +41,69 @@ DECLARE_GLOBAL_DATA_PTR;
  * Miscelaneous platform dependent initialisations
  */
 
-static void tny_a9260_nand_hw_init (void)
+static void tny_a9260_nand_hw_init(void)
 {
-  struct at91_pmc * pmc = (struct at91_pmc *) ATMEL_BASE_PMC;
-  struct at91_smc * smc = (struct at91_smc *) ATMEL_BASE_SMC;
-  struct at91_matrix * matrix = (struct at91_matrix *) ATMEL_BASE_MATRIX;
-  unsigned long csa;
-  
-  /* Assign CS3 to NAND/SmartMedia Interface */
-  csa = readl (&matrix->ebicsa);
-  csa |= AT91_MATRIX_CS3A_SMC_SMARTMEDIA;
-  writel (csa, &matrix->ebicsa);
-  
-  /* Configure SMC CS3 for NAND/SmartMedia */
-  writel (AT91_SMC_SETUP_NWE (1) | AT91_SMC_SETUP_NCS_WR (0) |
-          AT91_SMC_SETUP_NRD (1) | AT91_SMC_SETUP_NCS_RD (0),
-          &smc->cs[3].setup);
-  writel (AT91_SMC_PULSE_NWE (3) | AT91_SMC_PULSE_NCS_WR (3) |
-          AT91_SMC_PULSE_NRD (3) | AT91_SMC_PULSE_NCS_RD (3),
-          &smc->cs[3].pulse);
-  writel (AT91_SMC_CYCLE_NWE (5) | AT91_SMC_CYCLE_NRD (5),
-          &smc->cs[3].cycle);
-  writel (AT91_SMC_MODE_RM_NRD | AT91_SMC_MODE_WM_NWE |
-          AT91_SMC_MODE_EXNW_DISABLE |
-          #ifdef CONFIG_SYS_NAND_DBW_16
-          AT91_SMC_MODE_DBW_16 |
-          #else /* CONFIG_SYS_NAND_DBW_8 */
-          AT91_SMC_MODE_DBW_8 |
-          #endif
-          AT91_SMC_MODE_TDF_CYCLE (2),
-          &smc->cs[3].mode);
-          
-  writel (1 << ATMEL_ID_PIOC, &pmc->pcer);
-  
-  /* Configure RDY/BSY */
-  at91_set_gpio_input (CONFIG_SYS_NAND_READY_PIN, 1);
-  
-  /* Enable NandFlash */
-  at91_set_gpio_output (CONFIG_SYS_NAND_ENABLE_PIN, 1);
+	struct at91_pmc *pmc = (struct at91_pmc *)ATMEL_BASE_PMC;
+	struct at91_smc *smc = (struct at91_smc *)ATMEL_BASE_SMC;
+	struct at91_matrix *matrix = (struct at91_matrix *)ATMEL_BASE_MATRIX;
+	unsigned long csa;
+
+	/* Assign CS3 to NAND/SmartMedia Interface */
+	csa = readl(&matrix->ebicsa);
+	csa |= AT91_MATRIX_CS3A_SMC_SMARTMEDIA;
+	writel(csa, &matrix->ebicsa);
+
+	/* Configure SMC CS3 for NAND/SmartMedia */
+	writel(AT91_SMC_SETUP_NWE(1) | AT91_SMC_SETUP_NCS_WR(0) |
+		AT91_SMC_SETUP_NRD(1) | AT91_SMC_SETUP_NCS_RD(0),
+		&smc->cs[3].setup);
+	writel(AT91_SMC_PULSE_NWE(3) | AT91_SMC_PULSE_NCS_WR(3) |
+		AT91_SMC_PULSE_NRD(3) | AT91_SMC_PULSE_NCS_RD(3),
+		&smc->cs[3].pulse);
+	writel(AT91_SMC_CYCLE_NWE(5) | AT91_SMC_CYCLE_NRD(5),
+		&smc->cs[3].cycle);
+	writel(AT91_SMC_MODE_RM_NRD | AT91_SMC_MODE_WM_NWE |
+		AT91_SMC_MODE_EXNW_DISABLE |
+#ifdef CONFIG_SYS_NAND_DBW_16
+		AT91_SMC_MODE_DBW_16 |
+#else /* CONFIG_SYS_NAND_DBW_8 */
+		AT91_SMC_MODE_DBW_8 |
+#endif
+		AT91_SMC_MODE_TDF_CYCLE(2),
+		&smc->cs[3].mode);
+
+	writel(1 << ATMEL_ID_PIOC, &pmc->pcer);
+
+	/* Configure RDY/BSY */
+	at91_set_gpio_input(CONFIG_SYS_NAND_READY_PIN, 1);
+
+	/* Enable NandFlash */
+	at91_set_gpio_output(CONFIG_SYS_NAND_ENABLE_PIN, 1);
 }
 
-int board_init (void)
+int board_init(void)
 {
-  /* Enable Ctrlc */
-  console_init_f();
-  
-  #if defined(CONFIG_TNY_A9260)
-  gd->bd->bi_arch_number = MACH_TYPE_TNY_A9260;
-  #elif defined(CONFIG_TNY_A9G20)
-  gd->bd->bi_arch_number = MACH_TYPE_TNY_A9G20;
-  #endif
-  /* adress of boot parameters */
-  gd->bd->bi_boot_params = CONFIG_SYS_SDRAM_BASE + 0x100;
-  
-  at91_seriald_hw_init();
-  tny_a9260_nand_hw_init();
-  at91_spi0_hw_init (1 << 5);
-  return 0;
+	/* Enable Ctrlc */
+	console_init_f();
+
+#if defined(CONFIG_TNY_A9260)
+	gd->bd->bi_arch_number = MACH_TYPE_TNY_A9260;
+#elif defined(CONFIG_TNY_A9G20)
+	gd->bd->bi_arch_number = MACH_TYPE_TNY_A9G20;
+#endif
+	/* adress of boot parameters */
+	gd->bd->bi_boot_params = CONFIG_SYS_SDRAM_BASE + 0x100;
+
+	at91_seriald_hw_init();
+	tny_a9260_nand_hw_init();
+	at91_spi0_hw_init(1 << 5);
+	return 0;
 }
 
-int dram_init (void)
+int dram_init(void)
 {
-  gd->ram_size = get_ram_size (
-                   (void *) CONFIG_SYS_SDRAM_BASE,
-                   CONFIG_SYS_SDRAM_SIZE);
-  return 0;
+	gd->ram_size = get_ram_size(
+		(void *)CONFIG_SYS_SDRAM_BASE,
+		CONFIG_SYS_SDRAM_SIZE);
+	return 0;
 }

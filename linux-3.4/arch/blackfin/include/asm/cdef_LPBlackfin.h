@@ -306,4 +306,4 @@
 #define bfin_read_PFCNTR1()                  bfin_read32(PFCNTR1)
 #define bfin_write_PFCNTR1(val)              bfin_write32(PFCNTR1,val)
 
-#endif        /* _CDEF_LPBLACKFIN_H */
+#endif				/* _CDEF_LPBLACKFIN_H */

@@ -14,8 +14,8 @@
 #define SR030PC30_H
 
 struct sr030pc30_platform_data {
-  unsigned long clk_rate; /* master clock frequency in Hz */
-  int (*set_power) (struct device * dev, int on);
+	unsigned long clk_rate;	/* master clock frequency in Hz */
+	int (*set_power)(struct device *dev, int on);
 };
 
 #endif /* SR030PC30_H */

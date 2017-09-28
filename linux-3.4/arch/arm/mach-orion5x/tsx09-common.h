@@ -4,12 +4,12 @@
 /*
  * QNAP TS-x09 Boards power-off function
  */
-extern void qnap_tsx09_power_off (void);
+extern void qnap_tsx09_power_off(void);
 
 /*
  * QNAP TS-x09 Boards function to find Ethernet MAC address in flash memory
  */
-extern void __init qnap_tsx09_find_mac_addr (u32 mem_base, u32 size);
+extern void __init qnap_tsx09_find_mac_addr(u32 mem_base, u32 size);
 
 /*
  * QNAP TS-x09 Boards ethernet declaration

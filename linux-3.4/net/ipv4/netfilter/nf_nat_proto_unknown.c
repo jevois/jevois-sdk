@@ -18,35 +18,35 @@
 #include <net/netfilter/nf_nat_rule.h>
 #include <net/netfilter/nf_nat_protocol.h>
 
-static bool unknown_in_range (const struct nf_conntrack_tuple * tuple,
-                              enum nf_nat_manip_type manip_type,
-                              const union nf_conntrack_man_proto * min,
-                              const union nf_conntrack_man_proto * max)
+static bool unknown_in_range(const struct nf_conntrack_tuple *tuple,
+			     enum nf_nat_manip_type manip_type,
+			     const union nf_conntrack_man_proto *min,
+			     const union nf_conntrack_man_proto *max)
 {
-  return true;
+	return true;
 }
 
-static void unknown_unique_tuple (struct nf_conntrack_tuple * tuple,
-                                  const struct nf_nat_ipv4_range * range,
-                                  enum nf_nat_manip_type maniptype,
-                                  const struct nf_conn * ct)
+static void unknown_unique_tuple(struct nf_conntrack_tuple *tuple,
+				 const struct nf_nat_ipv4_range *range,
+				 enum nf_nat_manip_type maniptype,
+				 const struct nf_conn *ct)
 {
-  /* Sorry: we can't help you; if it's not unique, we can't frob
-     anything. */
-  return;
+	/* Sorry: we can't help you; if it's not unique, we can't frob
+	   anything. */
+	return;
 }
 
 static bool
-unknown_manip_pkt (struct sk_buff * skb,
-                   unsigned int iphdroff,
-                   const struct nf_conntrack_tuple * tuple,
-                   enum nf_nat_manip_type maniptype)
+unknown_manip_pkt(struct sk_buff *skb,
+		  unsigned int iphdroff,
+		  const struct nf_conntrack_tuple *tuple,
+		  enum nf_nat_manip_type maniptype)
 {
-  return true;
+	return true;
 }
 
 const struct nf_nat_protocol nf_nat_unknown_protocol = {
-  .manip_pkt    = unknown_manip_pkt,
-  .in_range   = unknown_in_range,
-  .unique_tuple   = unknown_unique_tuple,
+	.manip_pkt		= unknown_manip_pkt,
+	.in_range		= unknown_in_range,
+	.unique_tuple		= unknown_unique_tuple,
 };

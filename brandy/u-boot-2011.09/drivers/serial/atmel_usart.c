@@ -29,69 +29,69 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-void serial_setbrg (void)
+void serial_setbrg(void)
 {
-  atmel_usart3_t * usart = (atmel_usart3_t *) CONFIG_USART_BASE;
-  unsigned long divisor;
-  unsigned long usart_hz;
-  
-  /*
-   *              Master Clock
-   * Baud Rate = --------------
-   *                16 * CD
-   */
-  usart_hz = get_usart_clk_rate (CONFIG_USART_ID);
-  divisor = (usart_hz / 16 + gd->baudrate / 2) / gd->baudrate;
-  writel (USART3_BF (CD, divisor), &usart->brgr);
+	atmel_usart3_t *usart = (atmel_usart3_t *)CONFIG_USART_BASE;
+	unsigned long divisor;
+	unsigned long usart_hz;
+
+	/*
+	 *              Master Clock
+	 * Baud Rate = --------------
+	 *                16 * CD
+	 */
+	usart_hz = get_usart_clk_rate(CONFIG_USART_ID);
+	divisor = (usart_hz / 16 + gd->baudrate / 2) / gd->baudrate;
+	writel(USART3_BF(CD, divisor), &usart->brgr);
 }
 
-int serial_init (void)
+int serial_init(void)
 {
-  atmel_usart3_t * usart = (atmel_usart3_t *) CONFIG_USART_BASE;
-  
-  writel (USART3_BIT (RSTRX) | USART3_BIT (RSTTX), &usart->cr);
-  
-  serial_setbrg();
-  
-  writel (USART3_BIT (RXEN) | USART3_BIT (TXEN), &usart->cr);
-  writel ( (USART3_BF (USART_MODE, USART3_USART_MODE_NORMAL)
-            | USART3_BF (USCLKS, USART3_USCLKS_MCK)
-            | USART3_BF (CHRL, USART3_CHRL_8)
-            | USART3_BF (PAR, USART3_PAR_NONE)
-            | USART3_BF (NBSTOP, USART3_NBSTOP_1) ),
-           &usart->mr);
-           
-  return 0;
+	atmel_usart3_t *usart = (atmel_usart3_t *)CONFIG_USART_BASE;
+
+	writel(USART3_BIT(RSTRX) | USART3_BIT(RSTTX), &usart->cr);
+
+	serial_setbrg();
+
+	writel(USART3_BIT(RXEN) | USART3_BIT(TXEN), &usart->cr);
+	writel((USART3_BF(USART_MODE, USART3_USART_MODE_NORMAL)
+			   | USART3_BF(USCLKS, USART3_USCLKS_MCK)
+			   | USART3_BF(CHRL, USART3_CHRL_8)
+			   | USART3_BF(PAR, USART3_PAR_NONE)
+			   | USART3_BF(NBSTOP, USART3_NBSTOP_1)),
+			   &usart->mr);
+
+	return 0;
 }
 
-void serial_putc (char c)
+void serial_putc(char c)
 {
-  atmel_usart3_t * usart = (atmel_usart3_t *) CONFIG_USART_BASE;
-  
-  if (c == '\n')
-  { serial_putc ('\r'); }
-  
-  while (! (readl (&usart->csr) & USART3_BIT (TXRDY) ) );
-  writel (c, &usart->thr);
+	atmel_usart3_t *usart = (atmel_usart3_t *)CONFIG_USART_BASE;
+
+	if (c == '\n')
+		serial_putc('\r');
+
+	while (!(readl(&usart->csr) & USART3_BIT(TXRDY)));
+	writel(c, &usart->thr);
 }
 
-void serial_puts (const char * s)
+void serial_puts(const char *s)
 {
-  while (*s)
-  { serial_putc (*s++); }
+	while (*s)
+		serial_putc(*s++);
 }
 
-int serial_getc (void)
+int serial_getc(void)
 {
-  atmel_usart3_t * usart = (atmel_usart3_t *) CONFIG_USART_BASE;
-  
-  while (! (readl (&usart->csr) & USART3_BIT (RXRDY) ) )
-  { WATCHDOG_RESET(); }
-  return readl (&usart->rhr);
+	atmel_usart3_t *usart = (atmel_usart3_t *)CONFIG_USART_BASE;
+
+	while (!(readl(&usart->csr) & USART3_BIT(RXRDY)))
+		 WATCHDOG_RESET();
+	return readl(&usart->rhr);
 }
 
-int serial_tstc (void)
+int serial_tstc(void)
 {
-  atmel_usart3_t * usart = (atmel_usart3_t *) CONFIG_USART_BASE;
-  return (readl (&usart->csr) & USART3_BIT (RXRDY) ) != 0;
+	atmel_usart3_t *usart = (atmel_usart3_t *)CONFIG_USART_BASE;
+	return (readl(&usart->csr) & USART3_BIT(RXRDY)) != 0;
 }

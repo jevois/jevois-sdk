@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -35,23 +35,23 @@
 
 
 
-int sunxi_queue_init (void);
+int sunxi_queue_init(void);
 
-void sunxi_queue_destroy (void);
+void sunxi_queue_destroy(void);
 
-void sunxi_queue_reset (void);
+void sunxi_queue_reset(void);
 
-int sunxi_queue_isempty (void);
+int sunxi_queue_isempty(void);
 
-int sunxi_queue_isfull (void);
+int sunxi_queue_isfull(void);
 
-int sunxi_inqueue_query (queue_data * qdata);
+int sunxi_inqueue_query(queue_data *qdata);
 
-int sunxi_queue_in (void);
+int sunxi_queue_in(void);
 
-int sunxi_outqueue_query (queue_data * qdata, queue_data * next_qdata);
+int sunxi_outqueue_query(queue_data *qdata, queue_data *next_qdata);
 
-int sunxi_queue_out (void);
+int sunxi_queue_out(void);
 
 
 #endif

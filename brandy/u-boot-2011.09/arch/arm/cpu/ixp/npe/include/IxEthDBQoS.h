@@ -2,16 +2,16 @@
  * @file IxEthDBQoS.h
  *
  * @brief Public definitions for QoS traffic classes
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,7 +24,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -37,7 +37,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  */
@@ -71,13 +71,13 @@
  * @brief array containing all the supported traffic class configurations
  */
 static const
-UINT8 ixEthDBQueueAssignments[][IX_IEEE802_1Q_QOS_PRIORITY_COUNT] =
+UINT8 ixEthDBQueueAssignments[][IX_IEEE802_1Q_QOS_PRIORITY_COUNT] = 
 {
-  { 4, 5, 6, 7, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE },
-  { 15, 16, 17, 18, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE },
-  { 11, 23, 26, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE,  IX_ETH_DB_QUEUE_UNAVAILABLE },
-  { 4, 5, 6, 7, 8, 9, 10, 11 }
-  /* add here all other cases of queue configuration structures and update ixEthDBTrafficClassDefinitions to use them */
+    { 4, 5, 6, 7, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE },
+    { 15, 16, 17, 18, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE },
+    { 11, 23, 26, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE, IX_ETH_DB_QUEUE_UNAVAILABLE,  IX_ETH_DB_QUEUE_UNAVAILABLE },
+    { 4, 5, 6, 7, 8, 9, 10, 11 }
+    /* add here all other cases of queue configuration structures and update ixEthDBTrafficClassDefinitions to use them */
 };
 
 /**
@@ -105,15 +105,15 @@ UINT8 ixEthDBQueueAssignments[][IX_IEEE802_1Q_QOS_PRIORITY_COUNT] =
  * components will assert a fatal failure on initialization).
  */
 static const
-UINT8 ixEthDBTrafficClassDefinitions[][3] =
+UINT8 ixEthDBTrafficClassDefinitions[][3] = 
 {
-  /* NPE A functionality ID | traffic class count | queue assignment index (points to the queue enumeration in ixEthDBQueueAssignments) */
-  {            0x00,                      4,                    0 }, /* default case - DO NOT REMOVE */
-  {            0x04,                      4,                    1 }, /* NPE A image ID 0.4.0.0 */
-  {            0x09,                      3,                    2 }, /* NPE A image ID 0.9.0.0 */
-  {            0x80,                      8,                    3 }, /* NPE A image ID 10.80.02.0 */
-  {            0x81,                      8,                    3 }, /* NPE A image ID 10.81.02.0 */
-  {            0x82,                      8,                    3 }  /* NPE A image ID 10.82.02.0 */
+    /* NPE A functionality ID | traffic class count | queue assignment index (points to the queue enumeration in ixEthDBQueueAssignments) */
+    {            0x00,                      4,                    0 }, /* default case - DO NOT REMOVE */
+    {            0x04,                      4,                    1 }, /* NPE A image ID 0.4.0.0 */
+    {            0x09,                      3,                    2 }, /* NPE A image ID 0.9.0.0 */
+    {            0x80,                      8,                    3 }, /* NPE A image ID 10.80.02.0 */
+    {            0x81,                      8,                    3 }, /* NPE A image ID 10.81.02.0 */
+    {            0x82,                      8,                    3 }  /* NPE A image ID 10.82.02.0 */
 };
 
 /**
@@ -135,17 +135,17 @@ UINT8 ixEthDBTrafficClassDefinitions[][3] =
     @endverbatim
  */
 static const
-UINT8 ixEthIEEE802_1QUserPriorityToTrafficClassMapping[IX_IEEE802_1Q_QOS_PRIORITY_COUNT][IX_IEEE802_1Q_QOS_PRIORITY_COUNT] =
-{
-  { 0, 0, 0, 0, 0, 0, 0, 0 }, /* 1 traffic class available */
-  { 0, 0, 0, 0, 1, 1, 1, 1 }, /* 2 traffic classes available */
-  { 0, 0, 0, 0, 1, 1, 2, 2 }, /* 3 traffic classes available */
-  { 1, 0, 0, 1, 2, 2, 3, 3 }, /* 4 traffic classes available */
-  { 1, 0, 0, 1, 2, 3, 4, 4 }, /* 5 traffic classes available */
-  { 1, 0, 0, 2, 3, 4, 5, 5 }, /* 6 traffic classes available */
-  { 1, 0, 0, 2, 3, 4, 5, 6 }, /* 7 traffic classes available */
-  { 2, 0, 1, 3, 4, 5, 6, 7 }  /* 8 traffic classes available */
-};
+UINT8 ixEthIEEE802_1QUserPriorityToTrafficClassMapping[IX_IEEE802_1Q_QOS_PRIORITY_COUNT][IX_IEEE802_1Q_QOS_PRIORITY_COUNT] = 
+ {
+     { 0, 0, 0, 0, 0, 0, 0, 0 }, /* 1 traffic class available */
+     { 0, 0, 0, 0, 1, 1, 1, 1 }, /* 2 traffic classes available */
+     { 0, 0, 0, 0, 1, 1, 2, 2 }, /* 3 traffic classes available */
+     { 1, 0, 0, 1, 2, 2, 3, 3 }, /* 4 traffic classes available */
+     { 1, 0, 0, 1, 2, 3, 4, 4 }, /* 5 traffic classes available */
+     { 1, 0, 0, 2, 3, 4, 5, 5 }, /* 6 traffic classes available */
+     { 1, 0, 0, 2, 3, 4, 5, 6 }, /* 7 traffic classes available */
+     { 2, 0, 1, 3, 4, 5, 6, 7 }  /* 8 traffic classes available */
+ };
 
 #endif /* IxEthDBQoS_H */
 

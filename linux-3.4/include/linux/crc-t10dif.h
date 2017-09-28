@@ -3,6 +3,6 @@
 
 #include <linux/types.h>
 
-__u16 crc_t10dif (unsigned char const *, size_t);
+__u16 crc_t10dif(unsigned char const *, size_t);
 
 #endif

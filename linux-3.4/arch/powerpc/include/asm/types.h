@@ -31,8 +31,8 @@
  */
 
 typedef struct {
-  __u32 u[4];
-} __attribute__ ( (aligned (16) ) ) __vector128;
+	__u32 u[4];
+} __attribute__((aligned(16))) __vector128;
 
 #endif /* __ASSEMBLY__ */
 
@@ -42,9 +42,9 @@ typedef struct {
 typedef __vector128 vector128;
 
 typedef struct {
-  unsigned long entry;
-  unsigned long toc;
-  unsigned long env;
+	unsigned long entry;
+	unsigned long toc;
+	unsigned long env;
 } func_descr_t;
 
 #endif /* __ASSEMBLY__ */

@@ -94,13 +94,13 @@
 #define LLONG long long
 
 static void fmtstr     (char **, char **, size_t *, size_t *,
-                        const char *, int, int, int);
+			const char *, int, int, int);
 static void fmtint     (char **, char **, size_t *, size_t *,
-                        LLONG, int, int, int, int);
+			LLONG, int, int, int, int);
 static void doapr_outch (char **, char **, size_t *, size_t *, int);
-static void _dopr (char ** sbuffer, char ** buffer,
-                   size_t * maxlen, size_t * retlen, int * truncated,
-                   const char * format, va_list args);
+static void _dopr(char **sbuffer, char **buffer,
+		  size_t *maxlen, size_t *retlen, int *truncated,
+		  const char *format, va_list args);
 
 /* format read states */
 #define DP_S_DEFAULT    0
@@ -133,529 +133,511 @@ static void _dopr (char ** sbuffer, char ** buffer,
 
 
 
-static int __isdigit (char c)
+static int __isdigit(char c)
 {
-  if ( (c >= '0') && (c <= '9') )
-  { return 1; }
-  return 0;
+	if((c>='0') && (c<='9'))
+		return 1;
+	return 0;
 }
 
 static void
-_dopr (
-  char ** sbuffer,
-  char ** buffer,
-  size_t * maxlen,
-  size_t * retlen,
-  int * truncated,
-  const char * format,
-  va_list args)
+_dopr(
+    char **sbuffer,
+    char **buffer,
+    size_t *maxlen,
+    size_t *retlen,
+    int *truncated,
+    const char *format,
+    va_list args)
 {
-  char ch;
-  LLONG value;
-  char * strvalue;
-  int min;
-  int max;
-  int state;
-  int flags;
-  int cflags;
-  size_t currlen;
-  
-  state = DP_S_DEFAULT;
-  flags = currlen = cflags = min = 0;
-  max = -1;
-  ch = *format++;
-  
-  while (state != DP_S_DONE) {
-    if (ch == '\0' || (buffer == NULL && currlen >= *maxlen) )
-    { state = DP_S_DONE; }
-    
-    switch (state) {
-    case DP_S_DEFAULT:
-      if (ch == '%')
-      { state = DP_S_FLAGS; }
-      else
-      { doapr_outch (sbuffer, buffer, &currlen, maxlen, ch); }
-      ch = *format++;
-      break;
-    case DP_S_FLAGS:
-      switch (ch) {
-      case '-':
-        flags |= DP_F_MINUS;
-        ch = *format++;
-        break;
-      case '+':
-        flags |= DP_F_PLUS;
-        ch = *format++;
-        break;
-      case ' ':
-        flags |= DP_F_SPACE;
-        ch = *format++;
-        break;
-      case '#':
-        flags |= DP_F_NUM;
-        ch = *format++;
-        break;
-      case '0':
-        flags |= DP_F_ZERO;
-        ch = *format++;
-        break;
-      default:
-        state = DP_S_MIN;
-        break;
-      }
-      break;
-    case DP_S_MIN:
-      if (__isdigit ( (unsigned char) ch) ) {
-        min = 10 * min + char_to_int (ch);
-        ch = *format++;
-      }
-      else
-        if (ch == '*') {
-          min = va_arg (args, int);
-          ch = *format++;
-          state = DP_S_DOT;
-        }
-        else
-        { state = DP_S_DOT; }
-      break;
-    case DP_S_DOT:
-      if (ch == '.') {
-        state = DP_S_MAX;
-        ch = *format++;
-      }
-      else
-      { state = DP_S_MOD; }
-      break;
-    case DP_S_MAX:
-      if (__isdigit ( (unsigned char) ch) ) {
-        if (max < 0)
-        { max = 0; }
-        max = 10 * max + char_to_int (ch);
-        ch = *format++;
-      }
-      else
-        if (ch == '*') {
-          max = va_arg (args, int);
-          ch = *format++;
-          state = DP_S_MOD;
-        }
-        else
-        { state = DP_S_MOD; }
-      break;
-    case DP_S_MOD:
-      switch (ch) {
-      case 'h':
-        cflags = DP_C_SHORT;
-        ch = *format++;
-        break;
-      case 'l':
-        if (*format == 'l') {
-          cflags = DP_C_LLONG;
-          format++;
-        }
-        else
-        { cflags = DP_C_LONG; }
-        ch = *format++;
-        break;
-      case 'q':
-        cflags = DP_C_LLONG;
-        ch = *format++;
-        break;
-      case 'L':
-        cflags = DP_C_LDOUBLE;
-        ch = *format++;
-        break;
-      default:
-        break;
-      }
-      state = DP_S_CONV;
-      break;
-    case DP_S_CONV:
-      switch (ch) {
-      case 'd':
-      case 'i':
-        switch (cflags) {
-        case DP_C_SHORT:
-          value = (short int) va_arg (args, int);
-          break;
-        case DP_C_LONG:
-          value = va_arg (args, long int);
-          break;
-        case DP_C_LLONG:
-          value = va_arg (args, LLONG);
-          break;
-        default:
-          value = va_arg (args, int);
-          break;
-        }
-        fmtint (sbuffer, buffer, &currlen, maxlen,
-                value, 10, min, max, flags);
-        break;
-      case 'X':
-        flags |= DP_F_UP;
-      /* FALLTHROUGH */
-      case 'x':
-      case 'o':
-      case 'u':
-        flags |= DP_F_UNSIGNED;
-        switch (cflags) {
-        case DP_C_SHORT:
-          value = (unsigned short int) va_arg (args, unsigned int);
-          break;
-        case DP_C_LONG:
-          value = (LLONG) va_arg (args,
-                                  unsigned long int);
-          break;
-        case DP_C_LLONG:
-          value = va_arg (args, unsigned LLONG);
-          break;
-        default:
-          value = (LLONG) va_arg (args,
-                                  unsigned int);
-          break;
-        }
-        fmtint (sbuffer, buffer, &currlen, maxlen, value,
-                ch == 'o' ? 8 : (ch == 'u' ? 10 : 16),
-                min, max, flags);
-        break;
-      case 'E':
-        flags |= DP_F_UP;
-      case 'G':
-        flags |= DP_F_UP;
-      case 'c':
-        doapr_outch (sbuffer, buffer, &currlen, maxlen,
-                     va_arg (args, int) );
-        break;
-      case 's':
-        strvalue = va_arg (args, char *);
-        if (max < 0) {
-          if (buffer)
-          { max = INT_MAX; }
-          else
-          { max = *maxlen; }
-        }
-        fmtstr (sbuffer, buffer, &currlen, maxlen, strvalue,
-                flags, min, max);
-        break;
-      case 'p':
-        value = (long) va_arg (args, void *);
-        fmtint (sbuffer, buffer, &currlen, maxlen,
-                value, 16, min, max, flags | DP_F_NUM);
-        break;
-      case 'n': /* XXX */
-        if (cflags == DP_C_SHORT) {
-          short int * num;
-          num = va_arg (args, short int *);
-          *num = currlen;
-        }
-        else
-          if (cflags == DP_C_LONG) { /* XXX */
-            long int * num;
-            num = va_arg (args, long int *);
-            *num = (long int) currlen;
-          }
-          else
-            if (cflags == DP_C_LLONG) { /* XXX */
-              LLONG * num;
-              num = va_arg (args, LLONG *);
-              *num = (LLONG) currlen;
+    char ch;
+    LLONG value;
+    char *strvalue;
+    int min;
+    int max;
+    int state;
+    int flags;
+    int cflags;
+    size_t currlen;
+
+    state = DP_S_DEFAULT;
+    flags = currlen = cflags = min = 0;
+    max = -1;
+    ch = *format++;
+
+    while (state != DP_S_DONE) {
+        if (ch == '\0' || (buffer == NULL && currlen >= *maxlen))
+            state = DP_S_DONE;
+
+        switch (state) {
+        case DP_S_DEFAULT:
+            if (ch == '%')
+                state = DP_S_FLAGS;
+            else
+                doapr_outch(sbuffer,buffer, &currlen, maxlen, ch);
+            ch = *format++;
+            break;
+        case DP_S_FLAGS:
+            switch (ch) {
+            case '-':
+                flags |= DP_F_MINUS;
+                ch = *format++;
+                break;
+            case '+':
+                flags |= DP_F_PLUS;
+                ch = *format++;
+                break;
+            case ' ':
+                flags |= DP_F_SPACE;
+                ch = *format++;
+                break;
+            case '#':
+                flags |= DP_F_NUM;
+                ch = *format++;
+                break;
+            case '0':
+                flags |= DP_F_ZERO;
+                ch = *format++;
+                break;
+            default:
+                state = DP_S_MIN;
+                break;
             }
-            else {
-              int  *  num;
-              num = va_arg (args, int *);
-              *num = currlen;
+            break;
+        case DP_S_MIN:
+            if (__isdigit((unsigned char)ch)){
+                min = 10 * min + char_to_int(ch);
+                ch = *format++;
+            } else if (ch == '*') {
+                min = va_arg(args, int);
+                ch = *format++;
+                state = DP_S_DOT;
+            } else
+                state = DP_S_DOT;
+            break;
+        case DP_S_DOT:
+            if (ch == '.') {
+                state = DP_S_MAX;
+                ch = *format++;
+            } else
+                state = DP_S_MOD;
+            break;
+        case DP_S_MAX:
+            if (__isdigit((unsigned char)ch)) {
+                if (max < 0)
+                    max = 0;
+                max = 10 * max + char_to_int(ch);
+                ch = *format++;
+            } else if (ch == '*') {
+                max = va_arg(args, int);
+                ch = *format++;
+                state = DP_S_MOD;
+            } else
+                state = DP_S_MOD;
+            break;
+        case DP_S_MOD:
+            switch (ch) {
+            case 'h':
+                cflags = DP_C_SHORT;
+                ch = *format++;
+                break;
+            case 'l':
+                if (*format == 'l') {
+                    cflags = DP_C_LLONG;
+                    format++;
+                } else
+                    cflags = DP_C_LONG;
+                ch = *format++;
+                break;
+            case 'q':
+                cflags = DP_C_LLONG;
+                ch = *format++;
+                break;
+            case 'L':
+                cflags = DP_C_LDOUBLE;
+                ch = *format++;
+                break;
+            default:
+                break;
             }
-        break;
-      case '%':
-        doapr_outch (sbuffer, buffer, &currlen, maxlen, ch);
-        break;
-      case 'w':
-        /* not supported yet, treat as next char */
-        ch = *format++;
-        break;
-      default:
-        /* unknown, skip */
-        break;
-      }
-      ch = *format++;
-      state = DP_S_DEFAULT;
-      flags = cflags = min = 0;
-      max = -1;
-      break;
-    case DP_S_DONE:
-      break;
-    default:
-      break;
-    }
-  }
-  *truncated = (currlen > *maxlen - 1);
-  if (*truncated)
-  { currlen = *maxlen - 1; }
-  doapr_outch (sbuffer, buffer, &currlen, maxlen, '\0');
-  *retlen = currlen - 1;
-  return;
-}
-
-static void
-fmtstr (
-  char ** sbuffer,
-  char ** buffer,
-  size_t * currlen,
-  size_t * maxlen,
-  const char * value,
-  int flags,
-  int min,
-  int max)
-{
-  int padlen, strln;
-  int cnt = 0;
-  
-  if (value == 0)
-  { value = "<NULL>"; }
-  for (strln = 0; value[strln]; ++strln)
-    ;
-  padlen = min - strln;
-  if (padlen < 0)
-  { padlen = 0; }
-  if (flags & DP_F_MINUS)
-  { padlen = -padlen; }
-  
-  while ( (padlen > 0) && (cnt < max) ) {
-    doapr_outch (sbuffer, buffer, currlen, maxlen, ' ');
-    --padlen;
-    ++cnt;
-  }
-  while (*value && (cnt < max) ) {
-    doapr_outch (sbuffer, buffer, currlen, maxlen, *value++);
-    ++cnt;
-  }
-  while ( (padlen < 0) && (cnt < max) ) {
-    doapr_outch (sbuffer, buffer, currlen, maxlen, ' ');
-    ++padlen;
-    ++cnt;
-  }
-}
-
-static void
-fmtint (
-  char ** sbuffer,
-  char ** buffer,
-  size_t * currlen,
-  size_t * maxlen,
-  LLONG value,
-  int base,
-  int min,
-  int max,
-  int flags)
-{
-  int signvalue = 0;
-  const char * prefix = "";
-  unsigned LLONG uvalue;
-  char convert[DECIMAL_SIZE (value) + 3];
-  int place = 0;
-  int spadlen = 0;
-  int zpadlen = 0;
-  int caps = 0;
-  
-  if (max < 0)
-  { max = 0; }
-  uvalue = value;
-  if (! (flags & DP_F_UNSIGNED) ) {
-    if (value < 0) {
-      signvalue = '-';
-      uvalue = -value;
-    }
-    else
-      if (flags & DP_F_PLUS)
-      { signvalue = '+'; }
-      else
-        if (flags & DP_F_SPACE)
-        { signvalue = ' '; }
-  }
-  if (flags & DP_F_NUM) {
-    if (base == 8) { prefix = "0"; }
-    if (base == 16) { prefix = "0x"; }
-  }
-  if (flags & DP_F_UP)
-  { caps = 1; }
-  do {
-    convert[place++] =
-      (caps ? "0123456789ABCDEF" : "0123456789abcdef")
-      [uvalue % (unsigned) base];
-    uvalue = (uvalue / (unsigned) base);
-  }
-  while (uvalue && (place < (int) sizeof (convert) ) );
-  if (place == sizeof (convert) )
-  { place--; }
-  convert[place] = 0;
-  
-  zpadlen = max - place;
-  spadlen = min - OSSL_MAX (max, place) - (signvalue ? 1 : 0) - strlen (prefix);
-  if (zpadlen < 0)
-  { zpadlen = 0; }
-  if (spadlen < 0)
-  { spadlen = 0; }
-  if (flags & DP_F_ZERO) {
-    zpadlen = OSSL_MAX (zpadlen, spadlen);
-    spadlen = 0;
-  }
-  if (flags & DP_F_MINUS)
-  { spadlen = -spadlen; }
-  
-  /* spaces */
-  while (spadlen > 0) {
-    doapr_outch (sbuffer, buffer, currlen, maxlen, ' ');
-    --spadlen;
-  }
-  
-  /* sign */
-  if (signvalue)
-  { doapr_outch (sbuffer, buffer, currlen, maxlen, signvalue); }
-  
-  /* prefix */
-  while (*prefix) {
-    doapr_outch (sbuffer, buffer, currlen, maxlen, *prefix);
-    prefix++;
-  }
-  
-  /* zeros */
-  if (zpadlen > 0) {
-    while (zpadlen > 0) {
-      doapr_outch (sbuffer, buffer, currlen, maxlen, '0');
-      --zpadlen;
-    }
-  }
-  /* digits */
-  while (place > 0)
-  { doapr_outch (sbuffer, buffer, currlen, maxlen, convert[--place]); }
-  
-  /* left justified spaces */
-  while (spadlen < 0) {
-    doapr_outch (sbuffer, buffer, currlen, maxlen, ' ');
-    ++spadlen;
-  }
-  return;
-}
-
-
-
-
-
-static void
-doapr_outch (
-  char ** sbuffer,
-  char ** buffer,
-  size_t * currlen,
-  size_t * maxlen,
-  int c)
-{
-  /* If we haven't at least one buffer, someone has doe a big booboo */
-  assert (*sbuffer != NULL || buffer != NULL);
-  
-  if (buffer) {
-    while (*currlen >= *maxlen) {
-      if (*buffer == NULL) {
-        if (*maxlen == 0)
-        { *maxlen = 1024; }
-        *buffer = OPENSSL_malloc (*maxlen);
-        if (*currlen > 0) {
-          assert (*sbuffer != NULL);
-          memcpy (*buffer, *sbuffer, *currlen);
+            state = DP_S_CONV;
+            break;
+        case DP_S_CONV:
+            switch (ch) {
+            case 'd':
+            case 'i':
+                switch (cflags) {
+                case DP_C_SHORT:
+                    value = (short int)va_arg(args, int);
+                    break;
+                case DP_C_LONG:
+                    value = va_arg(args, long int);
+                    break;
+                case DP_C_LLONG:
+                    value = va_arg(args, LLONG);
+                    break;
+                default:
+                    value = va_arg(args, int);
+                    break;
+                }
+                fmtint(sbuffer, buffer, &currlen, maxlen,
+                       value, 10, min, max, flags);
+                break;
+            case 'X':
+                flags |= DP_F_UP;
+                /* FALLTHROUGH */
+            case 'x':
+            case 'o':
+            case 'u':
+                flags |= DP_F_UNSIGNED;
+                switch (cflags) {
+                case DP_C_SHORT:
+                    value = (unsigned short int)va_arg(args, unsigned int);
+                    break;
+                case DP_C_LONG:
+                    value = (LLONG) va_arg(args,
+                        unsigned long int);
+                    break;
+                case DP_C_LLONG:
+                    value = va_arg(args, unsigned LLONG);
+                    break;
+                default:
+                    value = (LLONG) va_arg(args,
+                        unsigned int);
+                    break;
+                }
+                fmtint(sbuffer, buffer, &currlen, maxlen, value,
+                       ch == 'o' ? 8 : (ch == 'u' ? 10 : 16),
+                       min, max, flags);
+                break;
+            case 'E':
+                flags |= DP_F_UP;
+            case 'G':
+                flags |= DP_F_UP;
+            case 'c':
+                doapr_outch(sbuffer, buffer, &currlen, maxlen,
+                    va_arg(args, int));
+                break;
+            case 's':
+                strvalue = va_arg(args, char *);
+                if (max < 0) {
+		    if (buffer)
+			max = INT_MAX;
+		    else
+			max = *maxlen;
+		}
+                fmtstr(sbuffer, buffer, &currlen, maxlen, strvalue,
+                       flags, min, max);
+                break;
+            case 'p':
+                value = (long)va_arg(args, void *);
+                fmtint(sbuffer, buffer, &currlen, maxlen,
+                    value, 16, min, max, flags|DP_F_NUM);
+                break;
+            case 'n': /* XXX */
+                if (cflags == DP_C_SHORT) {
+                    short int *num;
+                    num = va_arg(args, short int *);
+                    *num = currlen;
+                } else if (cflags == DP_C_LONG) { /* XXX */
+                    long int *num;
+                    num = va_arg(args, long int *);
+                    *num = (long int) currlen;
+                } else if (cflags == DP_C_LLONG) { /* XXX */
+                    LLONG *num;
+                    num = va_arg(args, LLONG *);
+                    *num = (LLONG) currlen;
+                } else {
+                    int    *num;
+                    num = va_arg(args, int *);
+                    *num = currlen;
+                }
+                break;
+            case '%':
+                doapr_outch(sbuffer, buffer, &currlen, maxlen, ch);
+                break;
+            case 'w':
+                /* not supported yet, treat as next char */
+                ch = *format++;
+                break;
+            default:
+                /* unknown, skip */
+                break;
+            }
+            ch = *format++;
+            state = DP_S_DEFAULT;
+            flags = cflags = min = 0;
+            max = -1;
+            break;
+        case DP_S_DONE:
+            break;
+        default:
+            break;
         }
-        *sbuffer = NULL;
-      }
-      else {
-        *maxlen += 1024;
-        *buffer = OPENSSL_realloc (*buffer, *maxlen);
-      }
     }
-    /* What to do if *buffer is NULL? */
-    assert (*sbuffer != NULL || *buffer != NULL);
-  }
-  
-  if (*currlen < *maxlen) {
-    if (*sbuffer)
-    { (*sbuffer) [ (*currlen)++] = (char) c; }
-    else
-    { (*buffer) [ (*currlen)++] = (char) c; }
-  }
-  
-  return;
+    *truncated = (currlen > *maxlen - 1);
+    if (*truncated)
+        currlen = *maxlen - 1;
+    doapr_outch(sbuffer, buffer, &currlen, maxlen, '\0');
+    *retlen = currlen - 1;
+    return;
+}
+
+static void
+fmtstr(
+    char **sbuffer,
+    char **buffer,
+    size_t *currlen,
+    size_t *maxlen,
+    const char *value,
+    int flags,
+    int min,
+    int max)
+{
+    int padlen, strln;
+    int cnt = 0;
+
+    if (value == 0)
+        value = "<NULL>";
+    for (strln = 0; value[strln]; ++strln)
+        ;
+    padlen = min - strln;
+    if (padlen < 0)
+        padlen = 0;
+    if (flags & DP_F_MINUS)
+        padlen = -padlen;
+
+    while ((padlen > 0) && (cnt < max)) {
+        doapr_outch(sbuffer, buffer, currlen, maxlen, ' ');
+        --padlen;
+        ++cnt;
+    }
+    while (*value && (cnt < max)) {
+        doapr_outch(sbuffer, buffer, currlen, maxlen, *value++);
+        ++cnt;
+    }
+    while ((padlen < 0) && (cnt < max)) {
+        doapr_outch(sbuffer, buffer, currlen, maxlen, ' ');
+        ++padlen;
+        ++cnt;
+    }
+}
+
+static void
+fmtint(
+    char **sbuffer,
+    char **buffer,
+    size_t *currlen,
+    size_t *maxlen,
+    LLONG value,
+    int base,
+    int min,
+    int max,
+    int flags)
+{
+    int signvalue = 0;
+    const char *prefix = "";
+    unsigned LLONG uvalue;
+    char convert[DECIMAL_SIZE(value)+3];
+    int place = 0;
+    int spadlen = 0;
+    int zpadlen = 0;
+    int caps = 0;
+
+    if (max < 0)
+        max = 0;
+    uvalue = value;
+    if (!(flags & DP_F_UNSIGNED)) {
+        if (value < 0) {
+            signvalue = '-';
+            uvalue = -value;
+        } else if (flags & DP_F_PLUS)
+            signvalue = '+';
+        else if (flags & DP_F_SPACE)
+            signvalue = ' ';
+    }
+    if (flags & DP_F_NUM) {
+	if (base == 8) prefix = "0";
+	if (base == 16) prefix = "0x";
+    }
+    if (flags & DP_F_UP)
+        caps = 1;
+    do {
+        convert[place++] =
+            (caps ? "0123456789ABCDEF" : "0123456789abcdef")
+            [uvalue % (unsigned) base];
+        uvalue = (uvalue / (unsigned) base);
+    } while (uvalue && (place < (int)sizeof(convert)));
+    if (place == sizeof(convert))
+        place--;
+    convert[place] = 0;
+
+    zpadlen = max - place;
+    spadlen = min - OSSL_MAX(max, place) - (signvalue ? 1 : 0) - strlen(prefix);
+    if (zpadlen < 0)
+        zpadlen = 0;
+    if (spadlen < 0)
+        spadlen = 0;
+    if (flags & DP_F_ZERO) {
+        zpadlen = OSSL_MAX(zpadlen, spadlen);
+        spadlen = 0;
+    }
+    if (flags & DP_F_MINUS)
+        spadlen = -spadlen;
+
+    /* spaces */
+    while (spadlen > 0) {
+        doapr_outch(sbuffer, buffer, currlen, maxlen, ' ');
+        --spadlen;
+    }
+
+    /* sign */
+    if (signvalue)
+        doapr_outch(sbuffer, buffer, currlen, maxlen, signvalue);
+
+    /* prefix */
+    while (*prefix) {
+	doapr_outch(sbuffer, buffer, currlen, maxlen, *prefix);
+	prefix++;
+    }
+
+    /* zeros */
+    if (zpadlen > 0) {
+        while (zpadlen > 0) {
+            doapr_outch(sbuffer, buffer, currlen, maxlen, '0');
+            --zpadlen;
+        }
+    }
+    /* digits */
+    while (place > 0)
+        doapr_outch(sbuffer, buffer, currlen, maxlen, convert[--place]);
+
+    /* left justified spaces */
+    while (spadlen < 0) {
+        doapr_outch(sbuffer, buffer, currlen, maxlen, ' ');
+        ++spadlen;
+    }
+    return;
+}
+
+
+
+
+
+static void
+doapr_outch(
+    char **sbuffer,
+    char **buffer,
+    size_t *currlen,
+    size_t *maxlen,
+    int c)
+{
+    /* If we haven't at least one buffer, someone has doe a big booboo */
+    assert(*sbuffer != NULL || buffer != NULL);
+
+    if (buffer) {
+	while (*currlen >= *maxlen) {
+	    if (*buffer == NULL) {
+		if (*maxlen == 0)
+		    *maxlen = 1024;
+		*buffer = OPENSSL_malloc(*maxlen);
+		if (*currlen > 0) {
+		    assert(*sbuffer != NULL);
+		    memcpy(*buffer, *sbuffer, *currlen);
+		}
+		*sbuffer = NULL;
+	    } else {
+		*maxlen += 1024;
+		*buffer = OPENSSL_realloc(*buffer, *maxlen);
+	    }
+	}
+	/* What to do if *buffer is NULL? */
+	assert(*sbuffer != NULL || *buffer != NULL);
+    }
+
+    if (*currlen < *maxlen) {
+	if (*sbuffer)
+	    (*sbuffer)[(*currlen)++] = (char)c;
+	else
+	    (*buffer)[(*currlen)++] = (char)c;
+    }
+
+    return;
 }
 
 /***************************************************************************/
 
-int BIO_vprintf (BIO * bio, const char * format, va_list args)
-{
-  int ret;
-  size_t retlen;
-  char hugebuf[1024 * 2]; /* Was previously 10k, which is unreasonable
-           in small-stack environments, like threads
-           or DOS programs. */
-  char * hugebufp = hugebuf;
-  size_t hugebufsize = sizeof (hugebuf);
-  char * dynbuf = NULL;
-  int ignored;
-  
-  dynbuf = NULL;
-  _dopr (&hugebufp, &dynbuf, &hugebufsize,
-         &retlen, &ignored, format, args);
-  if (dynbuf)
-  {
-    ret = BIO_write (bio, dynbuf, (int) retlen);
-    OPENSSL_free (dynbuf);
-  }
-  else
-  {
-    ret = BIO_write (bio, hugebuf, (int) retlen);
-  }
-  
-  return (ret);
-}
+int BIO_vprintf (BIO *bio, const char *format, va_list args)
+	{
+	int ret;
+	size_t retlen;
+	char hugebuf[1024*2];	/* Was previously 10k, which is unreasonable
+				   in small-stack environments, like threads
+				   or DOS programs. */
+	char *hugebufp = hugebuf;
+	size_t hugebufsize = sizeof(hugebuf);
+	char *dynbuf = NULL;
+	int ignored;
 
-int BIO_printf (BIO * bio, const char * format, ...)
-{
-  va_list args;
-  int ret;
-  
-  va_start (args, format);
-  
-  ret = BIO_vprintf (bio, format, args);
-  
-  va_end (args);
-  return (ret);
-}
+	dynbuf = NULL;
+	_dopr(&hugebufp, &dynbuf, &hugebufsize,
+		&retlen, &ignored, format, args);
+	if (dynbuf)
+		{
+		ret=BIO_write(bio, dynbuf, (int)retlen);
+		OPENSSL_free(dynbuf);
+		}
+	else
+		{
+		ret=BIO_write(bio, hugebuf, (int)retlen);
+		}
 
-int BIO_vsnprintf (char * buf, size_t n, const char * format, va_list args)
-{
-  size_t retlen;
-  int truncated;
-  
-  _dopr (&buf, NULL, &n, &retlen, &truncated, format, args);
-  
-  if (truncated)
-    /* In case of truncation, return -1 like traditional snprintf.
-     * (Current drafts for ISO/IEC 9899 say snprintf should return
-     * the number of characters that would have been written,
-     * had the buffer been large enough.) */
-  { return -1; }
-  else
-  { return (retlen <= INT_MAX) ? (int) retlen : -1; }
-}
+	return(ret);
+	}
+
+int BIO_printf (BIO *bio, const char *format, ...)
+	{
+	va_list args;
+	int ret;
+
+	va_start(args, format);
+
+	ret = BIO_vprintf(bio, format, args);
+
+	va_end(args);
+	return(ret);
+	}
+
+int BIO_vsnprintf(char *buf, size_t n, const char *format, va_list args)
+	{
+	size_t retlen;
+	int truncated;
+
+	_dopr(&buf, NULL, &n, &retlen, &truncated, format, args);
+
+	if (truncated)
+		/* In case of truncation, return -1 like traditional snprintf.
+		 * (Current drafts for ISO/IEC 9899 say snprintf should return
+		 * the number of characters that would have been written,
+		 * had the buffer been large enough.) */
+		return -1;
+	else
+		return (retlen <= INT_MAX) ? (int)retlen : -1;
+	}
 
 /* As snprintf is not available everywhere, we provide our own implementation.
  * This function has nothing to do with BIOs, but it's closely related
  * to BIO_printf, and we need *some* name prefix ...
  * (XXX  the function should be renamed, but to what?) */
-int BIO_snprintf (char * buf, size_t n, const char * format, ...)
-{
-  va_list args;
-  int ret;
-  
-  va_start (args, format);
-  
-  ret = BIO_vsnprintf (buf, n, format, args);
-  
-  va_end (args);
-  return (ret);
-}
+int BIO_snprintf(char *buf, size_t n, const char *format, ...)
+	{
+	va_list args;
+	int ret;
+
+	va_start(args, format);
+
+	ret = BIO_vsnprintf(buf, n, format, args);
+
+	va_end(args);
+	return(ret);
+	}

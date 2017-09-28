@@ -65,14 +65,14 @@
 
 #if defined(CONFIG_USB_EPSON2888) || defined(CONFIG_USB_ARMLINUX)
 /* PDA style devices are always connected if present */
-static int always_connected (struct usbnet * dev)
+static int always_connected (struct usbnet *dev)
 {
-  return 0;
+	return 0;
 }
 #endif
 
-#ifdef  CONFIG_USB_ALI_M5632
-#define HAVE_HARDWARE
+#ifdef	CONFIG_USB_ALI_M5632
+#define	HAVE_HARDWARE
 
 /*-------------------------------------------------------------------------
  *
@@ -87,16 +87,16 @@ static int always_connected (struct usbnet * dev)
  *
  *-------------------------------------------------------------------------*/
 
-static const struct driver_info ali_m5632_info = {
-  .description =  "ALi M5632",
-  .flags       = FLAG_POINTTOPOINT,
+static const struct driver_info	ali_m5632_info = {
+	.description =	"ALi M5632",
+	.flags       = FLAG_POINTTOPOINT,
 };
 
 #endif
 
 
-#ifdef  CONFIG_USB_AN2720
-#define HAVE_HARDWARE
+#ifdef	CONFIG_USB_AN2720
+#define	HAVE_HARDWARE
 
 /*-------------------------------------------------------------------------
  *
@@ -109,18 +109,18 @@ static const struct driver_info ali_m5632_info = {
  *
  *-------------------------------------------------------------------------*/
 
-static const struct driver_info an2720_info = {
-  .description =  "AnchorChips/Cypress 2720",
-  .flags       = FLAG_POINTTOPOINT,
-  
-  .in = 2, .out = 2,   
+static const struct driver_info	an2720_info = {
+	.description =	"AnchorChips/Cypress 2720",
+	.flags       = FLAG_POINTTOPOINT,
+
+	.in = 2, .out = 2,	
 };
 
-#endif  /* CONFIG_USB_AN2720 */
+#endif	/* CONFIG_USB_AN2720 */
 
 
-#ifdef  CONFIG_USB_BELKIN
-#define HAVE_HARDWARE
+#ifdef	CONFIG_USB_BELKIN
+#define	HAVE_HARDWARE
 
 /*-------------------------------------------------------------------------
  *
@@ -130,17 +130,17 @@ static const struct driver_info an2720_info = {
  *
  *-------------------------------------------------------------------------*/
 
-static const struct driver_info belkin_info = {
-  .description =  "Belkin, eTEK, or compatible",
-  .flags       = FLAG_POINTTOPOINT,
+static const struct driver_info	belkin_info = {
+	.description =	"Belkin, eTEK, or compatible",
+	.flags       = FLAG_POINTTOPOINT,
 };
 
-#endif  /* CONFIG_USB_BELKIN */
+#endif	/* CONFIG_USB_BELKIN */
 
 
 
-#ifdef  CONFIG_USB_EPSON2888
-#define HAVE_HARDWARE
+#ifdef	CONFIG_USB_EPSON2888
+#define	HAVE_HARDWARE
 
 /*-------------------------------------------------------------------------
  *
@@ -155,15 +155,15 @@ static const struct driver_info belkin_info = {
  *
  *-------------------------------------------------------------------------*/
 
-static const struct driver_info epson2888_info = {
-  .description =  "Epson USB Device",
-  .check_connect = always_connected,
-  .flags = FLAG_POINTTOPOINT,
-  
-  .in = 4, .out = 3,
+static const struct driver_info	epson2888_info = {
+	.description =	"Epson USB Device",
+	.check_connect = always_connected,
+	.flags = FLAG_POINTTOPOINT,
+
+	.in = 4, .out = 3,
 };
 
-#endif  /* CONFIG_USB_EPSON2888 */
+#endif	/* CONFIG_USB_EPSON2888 */
 
 
 /*-------------------------------------------------------------------------
@@ -174,14 +174,14 @@ static const struct driver_info epson2888_info = {
 #ifdef CONFIG_USB_KC2190
 #define HAVE_HARDWARE
 static const struct driver_info kc2190_info = {
-  .description =  "KC Technology KC-190",
-  .flags = FLAG_POINTTOPOINT,
+	.description =  "KC Technology KC-190",
+	.flags = FLAG_POINTTOPOINT,
 };
 #endif /* CONFIG_USB_KC2190 */
 
 
-#ifdef  CONFIG_USB_ARMLINUX
-#define HAVE_HARDWARE
+#ifdef	CONFIG_USB_ARMLINUX
+#define	HAVE_HARDWARE
 
 /*-------------------------------------------------------------------------
  *
@@ -200,30 +200,30 @@ static const struct driver_info kc2190_info = {
  *
  *-------------------------------------------------------------------------*/
 
-static const struct driver_info linuxdev_info = {
-  .description =  "Linux Device",
-  .check_connect = always_connected,
-  .flags = FLAG_POINTTOPOINT,
+static const struct driver_info	linuxdev_info = {
+	.description =	"Linux Device",
+	.check_connect = always_connected,
+	.flags = FLAG_POINTTOPOINT,
 };
 
-static const struct driver_info yopy_info = {
-  .description =  "Yopy",
-  .check_connect = always_connected,
-  .flags = FLAG_POINTTOPOINT,
+static const struct driver_info	yopy_info = {
+	.description =	"Yopy",
+	.check_connect = always_connected,
+	.flags = FLAG_POINTTOPOINT,
 };
 
-static const struct driver_info blob_info = {
-  .description =  "Boot Loader OBject",
-  .check_connect = always_connected,
-  .flags = FLAG_POINTTOPOINT,
+static const struct driver_info	blob_info = {
+	.description =	"Boot Loader OBject",
+	.check_connect = always_connected,
+	.flags = FLAG_POINTTOPOINT,
 };
 
-#endif  /* CONFIG_USB_ARMLINUX */
+#endif	/* CONFIG_USB_ARMLINUX */
 
 
 /*-------------------------------------------------------------------------*/
 
-#ifndef HAVE_HARDWARE
+#ifndef	HAVE_HARDWARE
 #warning You need to configure some hardware for this driver
 #endif
 
@@ -232,107 +232,107 @@ static const struct driver_info blob_info = {
  * may not be on the device.
  */
 
-static const struct usb_device_id products [] = {
+static const struct usb_device_id	products [] = {
 
-  #ifdef  CONFIG_USB_ALI_M5632
-  {
-    USB_DEVICE (0x0402, 0x5632), 
-    .driver_info =  (unsigned long) & ali_m5632_info,
-  },
-  {
-    USB_DEVICE (0x182d, 0x207c),
-    .driver_info =  (unsigned long) & ali_m5632_info,
-  },
-  #endif
-  
-  #ifdef  CONFIG_USB_AN2720
-  {
-    USB_DEVICE (0x0547, 0x2720), 
-    .driver_info =  (unsigned long) & an2720_info,
-  }, {
-    USB_DEVICE (0x0547, 0x2727), 
-    .driver_info =  (unsigned long) & an2720_info,
-  },
-  #endif
-  
-  #ifdef  CONFIG_USB_BELKIN
-  {
-    USB_DEVICE (0x050d, 0x0004), 
-    .driver_info =  (unsigned long) & belkin_info,
-  }, {
-    USB_DEVICE (0x056c, 0x8100), 
-    .driver_info =  (unsigned long) & belkin_info,
-  }, {
-    USB_DEVICE (0x0525, 0x9901), 
-    .driver_info =  (unsigned long) & belkin_info,
-  },
-  #endif
-  
-  #ifdef  CONFIG_USB_EPSON2888
-  {
-    USB_DEVICE (0x0525, 0x2888), 
-    .driver_info  = (unsigned long) & epson2888_info,
-  },
-  #endif
-  
-  #ifdef CONFIG_USB_KC2190
-  {
-    USB_DEVICE (0x050f, 0x0190), 
-    .driver_info =  (unsigned long) & kc2190_info,
-  },
-  #endif
-  
-  #ifdef  CONFIG_USB_ARMLINUX
-  /*
-   * SA-1100 using standard ARM Linux kernels, or compatible.
-   * Often used when talking to Linux PDAs (iPaq, Yopy, etc).
-   * The sa-1100 "usb-eth" driver handles the basic framing.
-   *
-   * PXA25x or PXA210 ...  these use a "usb-eth" driver much like
-   * the sa1100 one, but hardware uses different endpoint numbers.
-   *
-   * Or the Linux "Ethernet" gadget on hardware that can't talk
-   * CDC Ethernet (e.g., no altsettings), in either of two modes:
-   *  - acting just like the old "usb-eth" firmware, though
-   *    the implementation is different
-   *  - supporting RNDIS as the first/default configuration for
-   *    MS-Windows interop; Linux needs to use the other config
-   */
-  {
-    USB_DEVICE (0x049F, 0x505A), 
-    .driver_info =  (unsigned long) & linuxdev_info,
-  }, {
-    USB_DEVICE (0x0E7E, 0x1001), 
-    .driver_info =  (unsigned long) & yopy_info,
-  }, {
-    USB_DEVICE (0x8086, 0x07d3), 
-    .driver_info =  (unsigned long) & blob_info,
-  }, {
-    USB_DEVICE (0x1286, 0x8001),   
-    .driver_info =  (unsigned long) & blob_info,
-  }, {
-    USB_DEVICE (0x0525, 0xa4a2),
-    .driver_info =  (unsigned long) & linuxdev_info,
-  },
-  #endif
-  
-  { },   
+#ifdef	CONFIG_USB_ALI_M5632
+{
+	USB_DEVICE (0x0402, 0x5632),
+	.driver_info =	(unsigned long) &ali_m5632_info,
+},
+{
+	USB_DEVICE (0x182d,0x207c),
+	.driver_info =	(unsigned long) &ali_m5632_info,
+},
+#endif
+
+#ifdef	CONFIG_USB_AN2720
+{
+	USB_DEVICE (0x0547, 0x2720),
+	.driver_info =	(unsigned long) &an2720_info,
+}, {
+	USB_DEVICE (0x0547, 0x2727),
+	.driver_info =	(unsigned long) &an2720_info,
+},
+#endif
+
+#ifdef	CONFIG_USB_BELKIN
+{
+	USB_DEVICE (0x050d, 0x0004),
+	.driver_info =	(unsigned long) &belkin_info,
+}, {
+	USB_DEVICE (0x056c, 0x8100),
+	.driver_info =	(unsigned long) &belkin_info,
+}, {
+	USB_DEVICE (0x0525, 0x9901),
+	.driver_info =	(unsigned long) &belkin_info,
+},
+#endif
+
+#ifdef	CONFIG_USB_EPSON2888
+{
+	USB_DEVICE (0x0525, 0x2888),
+	.driver_info	= (unsigned long) &epson2888_info,
+},
+#endif
+
+#ifdef CONFIG_USB_KC2190
+{
+	USB_DEVICE (0x050f, 0x0190),
+	.driver_info =	(unsigned long) &kc2190_info,
+},
+#endif
+
+#ifdef	CONFIG_USB_ARMLINUX
+/*
+ * SA-1100 using standard ARM Linux kernels, or compatible.
+ * Often used when talking to Linux PDAs (iPaq, Yopy, etc).
+ * The sa-1100 "usb-eth" driver handles the basic framing.
+ *
+ * PXA25x or PXA210 ...  these use a "usb-eth" driver much like
+ * the sa1100 one, but hardware uses different endpoint numbers.
+ *
+ * Or the Linux "Ethernet" gadget on hardware that can't talk
+ * CDC Ethernet (e.g., no altsettings), in either of two modes:
+ *  - acting just like the old "usb-eth" firmware, though
+ *    the implementation is different
+ *  - supporting RNDIS as the first/default configuration for
+ *    MS-Windows interop; Linux needs to use the other config
+ */
+{
+	USB_DEVICE (0x049F, 0x505A),
+	.driver_info =	(unsigned long) &linuxdev_info,
+}, {
+	USB_DEVICE (0x0E7E, 0x1001),
+	.driver_info =	(unsigned long) &yopy_info,
+}, {
+	USB_DEVICE (0x8086, 0x07d3),
+	.driver_info =	(unsigned long) &blob_info,
+}, {
+	USB_DEVICE (0x1286, 0x8001),   
+	.driver_info =  (unsigned long) &blob_info,
+}, {
+	USB_DEVICE (0x0525, 0xa4a2),
+	.driver_info =	(unsigned long) &linuxdev_info,
+},
+#endif
+
+	{ },	
 };
-MODULE_DEVICE_TABLE (usb, products);
+MODULE_DEVICE_TABLE(usb, products);
 
 /*-------------------------------------------------------------------------*/
 
 static struct usb_driver cdc_subset_driver = {
-  .name =   "cdc_subset",
-  .probe =  usbnet_probe,
-  .suspend =  usbnet_suspend,
-  .resume = usbnet_resume,
-  .disconnect = usbnet_disconnect,
-  .id_table = products,
+	.name =		"cdc_subset",
+	.probe =	usbnet_probe,
+	.suspend =	usbnet_suspend,
+	.resume =	usbnet_resume,
+	.disconnect =	usbnet_disconnect,
+	.id_table =	products,
 };
 
-module_usb_driver (cdc_subset_driver);
+module_usb_driver(cdc_subset_driver);
 
-MODULE_AUTHOR ("David Brownell");
-MODULE_DESCRIPTION ("Simple 'CDC Subset' USB networking links");
-MODULE_LICENSE ("GPL");
+MODULE_AUTHOR("David Brownell");
+MODULE_DESCRIPTION("Simple 'CDC Subset' USB networking links");
+MODULE_LICENSE("GPL");

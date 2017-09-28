@@ -15,8 +15,8 @@
 #include <linux/platform_device.h>
 #include <linux/leds.h>
 
-extern void pasic3_write_register (struct device * dev, u32 reg, u8 val);
-extern u8 pasic3_read_register (struct device * dev, u32 reg);
+extern void pasic3_write_register(struct device *dev, u32 reg, u8 val);
+extern u8 pasic3_read_register(struct device *dev, u32 reg);
 
 /*
  * mask for registers 0x20,0x21,0x22
@@ -33,22 +33,22 @@ extern u8 pasic3_read_register (struct device * dev, u32 reg);
 #define PASIC3_BIT2_LED2 0x20
 
 struct pasic3_led {
-  struct led_classdev         led;
-  unsigned int                hw_num;
-  unsigned int                bit2;
-  unsigned int                mask;
-  struct pasic3_leds_machinfo * pdata;
+	struct led_classdev         led;
+	unsigned int                hw_num;
+	unsigned int                bit2;
+	unsigned int                mask;
+	struct pasic3_leds_machinfo *pdata;
 };
 
 struct pasic3_leds_machinfo {
-  unsigned int      num_leds;
-  unsigned int      power_gpio;
-  struct pasic3_led * leds;
+	unsigned int      num_leds;
+	unsigned int      power_gpio;
+	struct pasic3_led *leds;
 };
 
 struct pasic3_platform_data {
-  struct pasic3_leds_machinfo * led_pdata;
-  unsigned int                 clock_rate;
+	struct pasic3_leds_machinfo *led_pdata;
+	unsigned int                 clock_rate;
 };
 
 #endif

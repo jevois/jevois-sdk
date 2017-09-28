@@ -23,9 +23,9 @@
  * The call will copy the platform data, so the board definitions can
  * make the structure itself __initdata.
  */
-extern void samsung_keypad_set_platdata (struct samsung_keypad_platdata * pd);
+extern void samsung_keypad_set_platdata(struct samsung_keypad_platdata *pd);
 
 /* defined by architecture to configure gpio. */
-extern void samsung_keypad_cfg_gpio (unsigned int rows, unsigned int cols);
+extern void samsung_keypad_cfg_gpio(unsigned int rows, unsigned int cols);
 
 #endif /* __PLAT_SAMSUNG_KEYPAD_H */

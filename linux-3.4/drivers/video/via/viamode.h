@@ -25,15 +25,15 @@
 #include "global.h"
 
 struct VPITTable {
-  unsigned char Misc;
-  unsigned char SR[StdSR];
-  unsigned char GR[StdGR];
-  unsigned char AR[StdAR];
+	unsigned char Misc;
+	unsigned char SR[StdSR];
+	unsigned char GR[StdGR];
+	unsigned char AR[StdAR];
 };
 
 struct patch_table {
-  int table_length;
-  struct io_reg * io_reg_table;
+	int table_length;
+	struct io_reg *io_reg_table;
 };
 
 extern int NUM_TOTAL_CN400_ModeXregs;
@@ -55,9 +55,9 @@ extern struct io_reg PM1024x768[];
 extern struct patch_table res_patch_table[];
 extern struct VPITTable VPIT;
 
-const struct fb_videomode * viafb_get_best_mode (int hres, int vres,
-    int refresh);
-const struct fb_videomode * viafb_get_best_rb_mode (int hres, int vres,
-    int refresh);
+const struct fb_videomode *viafb_get_best_mode(int hres, int vres,
+	int refresh);
+const struct fb_videomode *viafb_get_best_rb_mode(int hres, int vres,
+	int refresh);
 
 #endif /* __VIAMODE_H__ */

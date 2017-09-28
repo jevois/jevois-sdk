@@ -43,14 +43,14 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
-void flash__init ( void );
-void ether__init ( void );
+void flash__init( void );
+void ether__init( void );
 
-static inline void delay ( unsigned long loops )
+static inline void delay( unsigned long loops )
 {
-  __asm__ volatile ("1:\n"
-                    "subs %0, %1, #1\n"
-                    "bne 1b":"=r" (loops) :"0" (loops) );
+	__asm__ volatile ("1:\n"
+		"subs %0, %1, #1\n"
+		"bne 1b":"=r" (loops):"0" (loops));
 }
 
 
@@ -60,36 +60,36 @@ static inline void delay ( unsigned long loops )
  * @Descr: Enables BBUS modules and other devices
  ***********************************************************************/
 
-int board_init ( void )
+int board_init( void )
 {
-  /* Active BBUS modules */
-  *get_bbus_reg_addr ( NS9750_BBUS_MASTER_RESET ) = 0;
-  
+	/* Active BBUS modules */
+	*get_bbus_reg_addr( NS9750_BBUS_MASTER_RESET ) = 0;
+
 #warning Please register your machine at http://www.arm.linux.org.uk/developer/machines/?action=new
-  /* arch number of OMAP 1510-Board */
-  /* to be changed for OMAP 1610 Board */
-  gd->bd->bi_arch_number = 234;
-  
-  /* adress of boot parameters */
-  gd->bd->bi_boot_params = 0x10000100;
-  
-  
-  /* this speeds up your boot a quite a bit.  However to make it
-   *  work, you need make sure your kernel startup flush bug is fixed.
-   *  ... rkw ...
-   */
-  icache_enable();
-  
-  flash__init();
-  ether__init();
-  return 0;
+	/* arch number of OMAP 1510-Board */
+	/* to be changed for OMAP 1610 Board */
+	gd->bd->bi_arch_number = 234;
+
+	/* adress of boot parameters */
+	gd->bd->bi_boot_params = 0x10000100;
+
+
+/* this speeds up your boot a quite a bit.  However to make it
+ *  work, you need make sure your kernel startup flush bug is fixed.
+ *  ... rkw ...
+ */
+	icache_enable();
+
+	flash__init();
+	ether__init();
+	return 0;
 }
 
 
 int misc_init_r (void)
 {
-  /* currently empty */
-  return (0);
+	/* currently empty */
+	return (0);
 }
 
 /******************************
@@ -102,7 +102,7 @@ void flash__init (void)
 /*************************************************************
  Routine:ether__init
  Description: take the Ethernet controller out of reset and wait
-         for the EEPROM load to complete.
+			   for the EEPROM load to complete.
 *************************************************************/
 void ether__init (void)
 {
@@ -114,12 +114,12 @@ void ether__init (void)
 ******************************/
 int dram_init (void)
 {
-  gd->bd->bi_dram[0].start = PHYS_SDRAM_1;
-  gd->bd->bi_dram[0].size = PHYS_SDRAM_1_SIZE;
-  
-  #if CONFIG_NR_DRAM_BANKS > 1
-  gd->bd->bi_dram[1].start = PHYS_SDRAM_2;
-  gd->bd->bi_dram[1].size = PHYS_SDRAM_2_SIZE;
-  #endif
-  return 0;
+	gd->bd->bi_dram[0].start = PHYS_SDRAM_1;
+	gd->bd->bi_dram[0].size = PHYS_SDRAM_1_SIZE;
+
+#if CONFIG_NR_DRAM_BANKS > 1
+	gd->bd->bi_dram[1].start = PHYS_SDRAM_2;
+	gd->bd->bi_dram[1].size = PHYS_SDRAM_2_SIZE;
+#endif
+	return 0;
 }

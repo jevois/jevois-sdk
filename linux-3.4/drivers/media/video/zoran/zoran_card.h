@@ -33,22 +33,22 @@
 extern int zr36067_debug;
 
 #define dprintk(num, format, args...) \
-  do { \
-    if (zr36067_debug >= num) \
-      printk(format, ##args); \
-  } while (0)
+	do { \
+		if (zr36067_debug >= num) \
+			printk(format, ##args); \
+	} while (0)
 
 /* Anybody who uses more than four? */
 #define BUZ_MAX 4
 
 extern struct video_device zoran_template;
 
-extern int zoran_check_jpg_settings (struct zoran * zr,
-                                     struct zoran_jpg_settings * settings,
-                                     int try);
-extern void zoran_open_init_params (struct zoran * zr);
-extern void zoran_vdev_release (struct video_device * vdev);
+extern int zoran_check_jpg_settings(struct zoran *zr,
+				    struct zoran_jpg_settings *settings,
+				    int try);
+extern void zoran_open_init_params(struct zoran *zr);
+extern void zoran_vdev_release(struct video_device *vdev);
 
-void zr36016_write (struct videocodec * codec, u16 reg, u32 val);
+void zr36016_write(struct videocodec *codec, u16 reg, u32 val);
 
-#endif        /* __ZORAN_CARD_H__ */
+#endif				/* __ZORAN_CARD_H__ */

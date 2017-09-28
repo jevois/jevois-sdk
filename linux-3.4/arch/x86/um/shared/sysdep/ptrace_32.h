@@ -12,7 +12,7 @@
 #define MAX_REG_NR (UM_FRAME_SIZE / sizeof(unsigned long))
 #define MAX_REG_OFFSET (UM_FRAME_SIZE)
 
-static inline void update_debugregs (int seq) {}
+static inline void update_debugregs(int seq) {}
 
 /* syscall emulation path in ptrace */
 
@@ -20,8 +20,8 @@ static inline void update_debugregs (int seq) {}
 #define PTRACE_SYSEMU 31
 #endif
 
-void set_using_sysemu (int value);
-int get_using_sysemu (void);
+void set_using_sysemu(int value);
+int get_using_sysemu(void);
 extern int sysemu_supported;
 
 #define REGS_IP(r) ((r)[HOST_IP])
@@ -51,11 +51,11 @@ extern int sysemu_supported;
 #endif
 
 struct uml_pt_regs {
-  unsigned long gp[MAX_REG_NR];
-  unsigned long fp[HOST_FPX_SIZE];
-  struct faultinfo faultinfo;
-  long syscall;
-  int is_user;
+	unsigned long gp[MAX_REG_NR];
+	unsigned long fp[HOST_FPX_SIZE];
+	struct faultinfo faultinfo;
+	long syscall;
+	int is_user;
 };
 
 #define EMPTY_UML_PT_REGS { }
@@ -85,21 +85,21 @@ struct uml_pt_regs {
 #define UPT_SYSCALL_ARG5(r) UPT_EDI(r)
 #define UPT_SYSCALL_ARG6(r) UPT_EBP(r)
 
-extern int user_context (unsigned long sp);
+extern int user_context(unsigned long sp);
 
 #define UPT_IS_USER(r) ((r)->is_user)
 
 struct syscall_args {
-  unsigned long args[6];
+	unsigned long args[6];
 };
 
 #define SYSCALL_ARGS(r) ((struct syscall_args) \
-{ .args = { UPT_SYSCALL_ARG1(r), \
-            UPT_SYSCALL_ARG2(r), \
-            UPT_SYSCALL_ARG3(r), \
-            UPT_SYSCALL_ARG4(r), \
-            UPT_SYSCALL_ARG5(r), \
-            UPT_SYSCALL_ARG6(r) } } )
+			 { .args = { UPT_SYSCALL_ARG1(r),	\
+				     UPT_SYSCALL_ARG2(r),	\
+				     UPT_SYSCALL_ARG3(r),	\
+				     UPT_SYSCALL_ARG4(r),	\
+				     UPT_SYSCALL_ARG5(r),	\
+				     UPT_SYSCALL_ARG6(r) } } )
 
 #define UPT_RESTART_SYSCALL(r) REGS_RESTART_SYSCALL((r)->gp)
 
@@ -109,6 +109,6 @@ struct syscall_args {
 
 #define UPT_FAULTINFO(r) (&(r)->faultinfo)
 
-extern void arch_init_registers (int pid);
+extern void arch_init_registers(int pid);
 
 #endif

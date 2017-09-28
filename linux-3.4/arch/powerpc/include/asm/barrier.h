@@ -16,7 +16,7 @@
  * rmb() prevents loads being reordered across this point.
  * wmb() prevents stores being reordered across this point.
  * read_barrier_depends() prevents data-dependent loads being reordered
- *  across this point (nop on PPC).
+ *	across this point (nop on PPC).
  *
  * *mb() variants without smp_ prefix must order all types of memory
  * operations with one another. sync is the only instruction sufficient
@@ -35,7 +35,7 @@
 #define wmb()  __asm__ __volatile__ ("sync" : : : "memory")
 #define read_barrier_depends()  do { } while(0)
 
-#define set_mb(var, value)  do { var = value; mb(); } while (0)
+#define set_mb(var, value)	do { var = value; mb(); } while (0)
 
 #ifdef CONFIG_SMP
 
@@ -45,15 +45,15 @@
 #    define SMPWMB      eieio
 #endif
 
-#define smp_mb()  mb()
-#define smp_rmb() __asm__ __volatile__ (stringify_in_c(LWSYNC) : : :"memory")
-#define smp_wmb() __asm__ __volatile__ (stringify_in_c(SMPWMB) : : :"memory")
-#define smp_read_barrier_depends()  read_barrier_depends()
+#define smp_mb()	mb()
+#define smp_rmb()	__asm__ __volatile__ (stringify_in_c(LWSYNC) : : :"memory")
+#define smp_wmb()	__asm__ __volatile__ (stringify_in_c(SMPWMB) : : :"memory")
+#define smp_read_barrier_depends()	read_barrier_depends()
 #else
-#define smp_mb()  barrier()
-#define smp_rmb() barrier()
-#define smp_wmb() barrier()
-#define smp_read_barrier_depends()  do { } while(0)
+#define smp_mb()	barrier()
+#define smp_rmb()	barrier()
+#define smp_wmb()	barrier()
+#define smp_read_barrier_depends()	do { } while(0)
 #endif /* CONFIG_SMP */
 
 /*
@@ -62,7 +62,7 @@
  * x is a variable loaded from memory, this prevents following
  * instructions from being executed until the load has been performed.
  */
-#define data_barrier(x) \
-  asm volatile("twi 0,%0,0; isync" : : "r" (x) : "memory");
+#define data_barrier(x)	\
+	asm volatile("twi 0,%0,0; isync" : : "r" (x) : "memory");
 
 #endif /* _ASM_POWERPC_BARRIER_H */

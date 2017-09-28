@@ -1,20 +1,20 @@
 /*
 *************************************************************************************
-*                               eBsp
-*            Operation System Adapter Layer
+*                         			eBsp
+*					   Operation System Adapter Layer
 *
-*       (c) Copyright 2006-2010, All winners Co,Ld.
-*             All Rights Reserved
+*				(c) Copyright 2006-2010, All winners Co,Ld.
+*							All	Rights Reserved
 *
-* File Name   : OSAL_time.h
+* File Name 	: OSAL_time.h
 *
-* Author    : javen
+* Author 		: javen
 *
-* Description   : Time操作
+* Description 	: Time操作
 *
-* History     :
-*      <author>       <time>        <version >        <desc>
-*       javen          2010-09-07          1.0         create this word
+* History 		:
+*      <author>    		<time>       	<version >    		<desc>
+*       javen     	   2010-09-07          1.0         create this word
 *
 *************************************************************************************
 */
@@ -25,7 +25,7 @@
 #define  OSAL_TIMER_EVENT_TYPE_ONCE       0   /* 一次触发     */
 #define  OSAL_TIMER_EVENT_TYPE_PERIOD     1   /* 周期性触发   */
 
-typedef void (* TIMECALLBACK) (void * pArg);
+typedef void (* TIMECALLBACK)(void *pArg);
 
 /*
 *******************************************************************************
@@ -39,7 +39,7 @@ typedef void (* TIMECALLBACK) (void * pArg);
 *    EventType  :  input. 事件触发的类型，一次还是多次。
 *    CallBack   :  input. 回调函数
 *    pArg       :  input. 回调函数的参数
-*
+* 
 * Return value:
 *    返回timer句柄
 *
@@ -48,7 +48,7 @@ typedef void (* TIMECALLBACK) (void * pArg);
 *
 *******************************************************************************
 */
-__hdle OSAL_CreateTimer (u32 Period, u32 EventType, TIMECALLBACK CallBack, void * pArg);
+__hdle OSAL_CreateTimer(u32 Period, u32 EventType, TIMECALLBACK CallBack, void *pArg);
 
 /*
 *******************************************************************************
@@ -59,7 +59,7 @@ __hdle OSAL_CreateTimer (u32 Period, u32 EventType, TIMECALLBACK CallBack, void 
 *
 * Parameters:
 *    HTimer  :  input. OSAL_InitTimer申请timer句柄
-*
+* 
 * Return value:
 *    返回成功或者失败
 *
@@ -68,7 +68,7 @@ __hdle OSAL_CreateTimer (u32 Period, u32 EventType, TIMECALLBACK CallBack, void 
 *
 *******************************************************************************
 */
-s32 OSAL_DelTimer (__hdle HTimer);
+s32 OSAL_DelTimer(__hdle HTimer);
 
 /*
 *******************************************************************************
@@ -79,7 +79,7 @@ s32 OSAL_DelTimer (__hdle HTimer);
 *
 * Parameters:
 *    HTimer  :  input. OSAL_InitTimer申请timer句柄
-*
+* 
 * Return value:
 *    返回成功或者失败
 *
@@ -88,10 +88,10 @@ s32 OSAL_DelTimer (__hdle HTimer);
 *
 *******************************************************************************
 */
-s32 OSAL_StartTimer (__hdle HTimer);
+s32 OSAL_StartTimer(__hdle HTimer);
 
 /* 睡眠 */
-void OSAL_Sleep (u32 Milliseconds); /* 单位：毫秒 */
+void OSAL_Sleep(u32 Milliseconds);	/* 单位：毫秒 */
 
 #endif  
 

@@ -51,111 +51,111 @@
  * The prefix the ServiceName field must start with in the device management
  * ServiceEntries attribute pair. See also the SRP specification.
  */
-#define SRP_SERVICE_NAME_PREFIX   "SRP.T10:"
+#define SRP_SERVICE_NAME_PREFIX		"SRP.T10:"
 
 enum {
-  /*
-   * SRP IOControllerProfile attributes for SRP target ports that have
-   * not been defined in <scsi/srp.h>. Source: section B.7, table B.7
-   * in the SRP specification.
-   */
-  SRP_PROTOCOL = 0x0108,
-  SRP_PROTOCOL_VERSION = 0x0001,
-  SRP_IO_SUBCLASS = 0x609e,
-  SRP_SEND_TO_IOC = 0x01,
-  SRP_SEND_FROM_IOC = 0x02,
-  SRP_RDMA_READ_FROM_IOC = 0x08,
-  SRP_RDMA_WRITE_FROM_IOC = 0x20,
-  
-  /*
-   * srp_login_cmd.req_flags bitmasks. See also table 9 in the SRP
-   * specification.
-   */
-  SRP_MTCH_ACTION = 0x03, /* MULTI-CHANNEL ACTION */
-  SRP_LOSOLNT = 0x10, /* logout solicited notification */
-  SRP_CRSOLNT = 0x20, /* credit request solicited notification */
-  SRP_AESOLNT = 0x40, /* asynchronous event solicited notification */
-  
-  /*
-   * srp_cmd.sol_nt / srp_tsk_mgmt.sol_not bitmasks. See also tables
-   * 18 and 20 in the SRP specification.
-   */
-  SRP_SCSOLNT = 0x02, /* SCSOLNT = successful solicited notification */
-  SRP_UCSOLNT = 0x04, /* UCSOLNT = unsuccessful solicited notification */
-  
-  /*
-   * srp_rsp.sol_not / srp_t_logout.sol_not bitmasks. See also tables
-   * 16 and 22 in the SRP specification.
-   */
-  SRP_SOLNT = 0x01, /* SOLNT = solicited notification */
-  
-  /* See also table 24 in the SRP specification. */
-  SRP_TSK_MGMT_SUCCESS = 0x00,
-  SRP_TSK_MGMT_FUNC_NOT_SUPP = 0x04,
-  SRP_TSK_MGMT_FAILED = 0x05,
-  
-  /* See also table 21 in the SRP specification. */
-  SRP_CMD_SIMPLE_Q = 0x0,
-  SRP_CMD_HEAD_OF_Q = 0x1,
-  SRP_CMD_ORDERED_Q = 0x2,
-  SRP_CMD_ACA = 0x4,
-  
-  SRP_LOGIN_RSP_MULTICHAN_NO_CHAN = 0x0,
-  SRP_LOGIN_RSP_MULTICHAN_TERMINATED = 0x1,
-  SRP_LOGIN_RSP_MULTICHAN_MAINTAINED = 0x2,
-  
-  SRPT_DEF_SG_TABLESIZE = 128,
-  SRPT_DEF_SG_PER_WQE = 16,
-  
-  MIN_SRPT_SQ_SIZE = 16,
-  DEF_SRPT_SQ_SIZE = 4096,
-  SRPT_RQ_SIZE = 128,
-  MIN_SRPT_SRQ_SIZE = 4,
-  DEFAULT_SRPT_SRQ_SIZE = 4095,
-  MAX_SRPT_SRQ_SIZE = 65535,
-  MAX_SRPT_RDMA_SIZE = 1U << 24,
-  MAX_SRPT_RSP_SIZE = 1024,
-  
-  MIN_MAX_REQ_SIZE = 996,
-  DEFAULT_MAX_REQ_SIZE
-    = sizeof (struct srp_cmd) /*48*/
-      + sizeof (struct srp_indirect_buf) /*20*/
-      + 128 * sizeof (struct srp_direct_buf) /*16*/,
-      
-  MIN_MAX_RSP_SIZE = sizeof (struct srp_rsp) /*36*/ + 4,
-  DEFAULT_MAX_RSP_SIZE = 256, /* leaves 220 bytes for sense data */
-  
-  DEFAULT_MAX_RDMA_SIZE = 65536,
+	/*
+	 * SRP IOControllerProfile attributes for SRP target ports that have
+	 * not been defined in <scsi/srp.h>. Source: section B.7, table B.7
+	 * in the SRP specification.
+	 */
+	SRP_PROTOCOL = 0x0108,
+	SRP_PROTOCOL_VERSION = 0x0001,
+	SRP_IO_SUBCLASS = 0x609e,
+	SRP_SEND_TO_IOC = 0x01,
+	SRP_SEND_FROM_IOC = 0x02,
+	SRP_RDMA_READ_FROM_IOC = 0x08,
+	SRP_RDMA_WRITE_FROM_IOC = 0x20,
+
+	/*
+	 * srp_login_cmd.req_flags bitmasks. See also table 9 in the SRP
+	 * specification.
+	 */
+	SRP_MTCH_ACTION = 0x03, /* MULTI-CHANNEL ACTION */
+	SRP_LOSOLNT = 0x10, /* logout solicited notification */
+	SRP_CRSOLNT = 0x20, /* credit request solicited notification */
+	SRP_AESOLNT = 0x40, /* asynchronous event solicited notification */
+
+	/*
+	 * srp_cmd.sol_nt / srp_tsk_mgmt.sol_not bitmasks. See also tables
+	 * 18 and 20 in the SRP specification.
+	 */
+	SRP_SCSOLNT = 0x02, /* SCSOLNT = successful solicited notification */
+	SRP_UCSOLNT = 0x04, /* UCSOLNT = unsuccessful solicited notification */
+
+	/*
+	 * srp_rsp.sol_not / srp_t_logout.sol_not bitmasks. See also tables
+	 * 16 and 22 in the SRP specification.
+	 */
+	SRP_SOLNT = 0x01, /* SOLNT = solicited notification */
+
+	/* See also table 24 in the SRP specification. */
+	SRP_TSK_MGMT_SUCCESS = 0x00,
+	SRP_TSK_MGMT_FUNC_NOT_SUPP = 0x04,
+	SRP_TSK_MGMT_FAILED = 0x05,
+
+	/* See also table 21 in the SRP specification. */
+	SRP_CMD_SIMPLE_Q = 0x0,
+	SRP_CMD_HEAD_OF_Q = 0x1,
+	SRP_CMD_ORDERED_Q = 0x2,
+	SRP_CMD_ACA = 0x4,
+
+	SRP_LOGIN_RSP_MULTICHAN_NO_CHAN = 0x0,
+	SRP_LOGIN_RSP_MULTICHAN_TERMINATED = 0x1,
+	SRP_LOGIN_RSP_MULTICHAN_MAINTAINED = 0x2,
+
+	SRPT_DEF_SG_TABLESIZE = 128,
+	SRPT_DEF_SG_PER_WQE = 16,
+
+	MIN_SRPT_SQ_SIZE = 16,
+	DEF_SRPT_SQ_SIZE = 4096,
+	SRPT_RQ_SIZE = 128,
+	MIN_SRPT_SRQ_SIZE = 4,
+	DEFAULT_SRPT_SRQ_SIZE = 4095,
+	MAX_SRPT_SRQ_SIZE = 65535,
+	MAX_SRPT_RDMA_SIZE = 1U << 24,
+	MAX_SRPT_RSP_SIZE = 1024,
+
+	MIN_MAX_REQ_SIZE = 996,
+	DEFAULT_MAX_REQ_SIZE
+		= sizeof(struct srp_cmd)/*48*/
+		+ sizeof(struct srp_indirect_buf)/*20*/
+		+ 128 * sizeof(struct srp_direct_buf)/*16*/,
+
+	MIN_MAX_RSP_SIZE = sizeof(struct srp_rsp)/*36*/ + 4,
+	DEFAULT_MAX_RSP_SIZE = 256, /* leaves 220 bytes for sense data */
+
+	DEFAULT_MAX_RDMA_SIZE = 65536,
 };
 
 enum srpt_opcode {
-  SRPT_RECV,
-  SRPT_SEND,
-  SRPT_RDMA_MID,
-  SRPT_RDMA_ABORT,
-  SRPT_RDMA_READ_LAST,
-  SRPT_RDMA_WRITE_LAST,
+	SRPT_RECV,
+	SRPT_SEND,
+	SRPT_RDMA_MID,
+	SRPT_RDMA_ABORT,
+	SRPT_RDMA_READ_LAST,
+	SRPT_RDMA_WRITE_LAST,
 };
 
-static inline u64 encode_wr_id (u8 opcode, u32 idx)
+static inline u64 encode_wr_id(u8 opcode, u32 idx)
 {
-  return ( (u64) opcode << 32) | idx;
+	return ((u64)opcode << 32) | idx;
 }
-static inline enum srpt_opcode opcode_from_wr_id (u64 wr_id)
+static inline enum srpt_opcode opcode_from_wr_id(u64 wr_id)
 {
-  return wr_id >> 32;
+	return wr_id >> 32;
 }
-static inline u32 idx_from_wr_id (u64 wr_id)
+static inline u32 idx_from_wr_id(u64 wr_id)
 {
-  return (u32) wr_id;
+	return (u32)wr_id;
 }
 
 struct rdma_iu {
-  u64   raddr;
-  u32   rkey;
-  struct ib_sge * sge;
-  u32   sge_cnt;
-  int   mem_id;
+	u64		raddr;
+	u32		rkey;
+	struct ib_sge	*sge;
+	u32		sge_cnt;
+	int		mem_id;
 };
 
 /**
@@ -173,13 +173,13 @@ struct rdma_iu {
  *                            failed.
  */
 enum srpt_command_state {
-  SRPT_STATE_NEW     = 0,
-  SRPT_STATE_NEED_DATA   = 1,
-  SRPT_STATE_DATA_IN   = 2,
-  SRPT_STATE_CMD_RSP_SENT  = 3,
-  SRPT_STATE_MGMT    = 4,
-  SRPT_STATE_MGMT_RSP_SENT = 5,
-  SRPT_STATE_DONE    = 6,
+	SRPT_STATE_NEW		 = 0,
+	SRPT_STATE_NEED_DATA	 = 1,
+	SRPT_STATE_DATA_IN	 = 2,
+	SRPT_STATE_CMD_RSP_SENT	 = 3,
+	SRPT_STATE_MGMT		 = 4,
+	SRPT_STATE_MGMT_RSP_SENT = 5,
+	SRPT_STATE_DONE		 = 6,
 };
 
 /**
@@ -189,9 +189,9 @@ enum srpt_command_state {
  * @index: Index of the I/O context in its ioctx_ring array.
  */
 struct srpt_ioctx {
-  void   *   buf;
-  dma_addr_t    dma;
-  uint32_t    index;
+	void			*buf;
+	dma_addr_t		dma;
+	uint32_t		index;
 };
 
 /**
@@ -200,8 +200,8 @@ struct srpt_ioctx {
  * @wait_list: Node for insertion in srpt_rdma_ch.cmd_wait_list.
  */
 struct srpt_recv_ioctx {
-  struct srpt_ioctx ioctx;
-  struct list_head  wait_list;
+	struct srpt_ioctx	ioctx;
+	struct list_head	wait_list;
 };
 
 /**
@@ -221,50 +221,50 @@ struct srpt_recv_ioctx {
  * @spinlock:    Protects 'state'.
  * @state:       I/O context state.
  * @rdma_aborted: If initiating a multipart RDMA transfer failed, whether
- *     the already initiated transfers have finished.
+ * 		 the already initiated transfers have finished.
  * @cmd:         Target core command data structure.
  * @sense_data:  SCSI sense data.
  */
 struct srpt_send_ioctx {
-  struct srpt_ioctx ioctx;
-  struct srpt_rdma_ch * ch;
-  struct kref    kref;
-  struct rdma_iu  *  rdma_ius;
-  struct srp_direct_buf * rbufs;
-  struct srp_direct_buf single_rbuf;
-  struct scatterlist * sg;
-  struct list_head  free_list;
-  spinlock_t    spinlock;
-  enum srpt_command_state state;
-  bool      rdma_aborted;
-  struct se_cmd   cmd;
-  struct completion tx_done;
-  u64     tag;
-  int     sg_cnt;
-  int     mapped_sg_count;
-  u16     n_rdma_ius;
-  u8      n_rdma;
-  u8      n_rbuf;
-  bool      queue_status_only;
-  u8      sense_data[SCSI_SENSE_BUFFERSIZE];
+	struct srpt_ioctx	ioctx;
+	struct srpt_rdma_ch	*ch;
+	struct kref		 kref;
+	struct rdma_iu		*rdma_ius;
+	struct srp_direct_buf	*rbufs;
+	struct srp_direct_buf	single_rbuf;
+	struct scatterlist	*sg;
+	struct list_head	free_list;
+	spinlock_t		spinlock;
+	enum srpt_command_state	state;
+	bool			rdma_aborted;
+	struct se_cmd		cmd;
+	struct completion	tx_done;
+	u64			tag;
+	int			sg_cnt;
+	int			mapped_sg_count;
+	u16			n_rdma_ius;
+	u8			n_rdma;
+	u8			n_rbuf;
+	bool			queue_status_only;
+	u8			sense_data[SCSI_SENSE_BUFFERSIZE];
 };
 
 /**
  * enum rdma_ch_state - SRP channel state.
- * @CH_CONNECTING:   QP is in RTR state; waiting for RTU.
- * @CH_LIVE:     QP is in RTS state.
+ * @CH_CONNECTING:	 QP is in RTR state; waiting for RTU.
+ * @CH_LIVE:		 QP is in RTS state.
  * @CH_DISCONNECTING:    DREQ has been received; waiting for DREP
  *                       or DREQ has been send and waiting for DREP
  *                       or .
- * @CH_DRAINING:   QP is in ERR state; waiting for last WQE event.
- * @CH_RELEASING:  Last WQE event has been received; releasing resources.
+ * @CH_DRAINING:	 QP is in ERR state; waiting for last WQE event.
+ * @CH_RELEASING:	 Last WQE event has been received; releasing resources.
  */
 enum rdma_ch_state {
-  CH_CONNECTING,
-  CH_LIVE,
-  CH_DISCONNECTING,
-  CH_DRAINING,
-  CH_RELEASING
+	CH_CONNECTING,
+	CH_LIVE,
+	CH_DISCONNECTING,
+	CH_DRAINING,
+	CH_RELEASING
 };
 
 /**
@@ -276,7 +276,7 @@ enum rdma_ch_state {
  * @qp:            IB queue pair used for communicating over this channel.
  * @cq:            IB completion queue for this channel.
  * @rq_size:       IB receive queue size.
- * @rsp_size     IB response message size in bytes.
+ * @rsp_size	   IB response message size in bytes.
  * @sq_wr_avail:   number of work requests available in the send queue.
  * @sport:         pointer to the information of the HCA port used by this
  *                 channel.
@@ -301,31 +301,31 @@ enum rdma_ch_state {
  * @release_done:  Enables waiting for srpt_release_channel() completion.
  */
 struct srpt_rdma_ch {
-  wait_queue_head_t wait_queue;
-  struct task_struct * thread;
-  struct ib_cm_id  * cm_id;
-  struct ib_qp  *  qp;
-  struct ib_cq  *  cq;
-  int     rq_size;
-  u32     rsp_size;
-  atomic_t    sq_wr_avail;
-  struct srpt_port * sport;
-  u8      i_port_id[16];
-  u8      t_port_id[16];
-  int     max_ti_iu_len;
-  atomic_t    req_lim;
-  atomic_t    req_lim_delta;
-  spinlock_t    spinlock;
-  struct list_head  free_list;
-  enum rdma_ch_state  state;
-  struct srpt_send_ioctx ** ioctx_ring;
-  struct ib_wc    wc[16];
-  struct list_head  list;
-  struct list_head  cmd_wait_list;
-  struct se_session * sess;
-  u8      sess_name[36];
-  struct work_struct  release_work;
-  struct completion * release_done;
+	wait_queue_head_t	wait_queue;
+	struct task_struct	*thread;
+	struct ib_cm_id		*cm_id;
+	struct ib_qp		*qp;
+	struct ib_cq		*cq;
+	int			rq_size;
+	u32			rsp_size;
+	atomic_t		sq_wr_avail;
+	struct srpt_port	*sport;
+	u8			i_port_id[16];
+	u8			t_port_id[16];
+	int			max_ti_iu_len;
+	atomic_t		req_lim;
+	atomic_t		req_lim_delta;
+	spinlock_t		spinlock;
+	struct list_head	free_list;
+	enum rdma_ch_state	state;
+	struct srpt_send_ioctx	**ioctx_ring;
+	struct ib_wc		wc[16];
+	struct list_head	list;
+	struct list_head	cmd_wait_list;
+	struct se_session	*sess;
+	u8			sess_name[36];
+	struct work_struct	release_work;
+	struct completion	*release_done;
 };
 
 /**
@@ -335,9 +335,9 @@ struct srpt_rdma_ch {
  * @srp_sq_size: Shared receive queue (SRQ) size.
  */
 struct srpt_port_attrib {
-  u32     srp_max_rdma_size;
-  u32     srp_max_rsp_size;
-  u32     srp_sq_size;
+	u32			srp_max_rdma_size;
+	u32			srp_max_rsp_size;
+	u32			srp_sq_size;
 };
 
 /**
@@ -357,20 +357,20 @@ struct srpt_port_attrib {
  * @port_acl_list: Head of the list with all node ACLs for this port.
  */
 struct srpt_port {
-  struct srpt_device * sdev;
-  struct ib_mad_agent * mad_agent;
-  bool      enabled;
-  u8      port_guid[64];
-  u8      port;
-  u16     sm_lid;
-  u16     lid;
-  union ib_gid    gid;
-  spinlock_t    port_acl_lock;
-  struct work_struct  work;
-  struct se_portal_group  port_tpg_1;
-  struct se_wwn   port_wwn;
-  struct list_head  port_acl_list;
-  struct srpt_port_attrib port_attrib;
+	struct srpt_device	*sdev;
+	struct ib_mad_agent	*mad_agent;
+	bool			enabled;
+	u8			port_guid[64];
+	u8			port;
+	u16			sm_lid;
+	u16			lid;
+	union ib_gid		gid;
+	spinlock_t		port_acl_lock;
+	struct work_struct	work;
+	struct se_portal_group	port_tpg_1;
+	struct se_wwn		port_wwn;
+	struct list_head	port_acl_list;
+	struct srpt_port_attrib port_attrib;
 };
 
 /**
@@ -392,20 +392,20 @@ struct srpt_port {
  * @list:          Node in srpt_dev_list.
  */
 struct srpt_device {
-  struct ib_device * device;
-  struct ib_pd  *  pd;
-  struct ib_mr  *  mr;
-  struct ib_srq  * srq;
-  struct ib_cm_id  * cm_id;
-  struct ib_device_attr dev_attr;
-  int     srq_size;
-  struct srpt_recv_ioctx ** ioctx_ring;
-  struct list_head  rch_list;
-  wait_queue_head_t ch_releaseQ;
-  spinlock_t    spinlock;
-  struct srpt_port  port[2];
-  struct ib_event_handler event_handler;
-  struct list_head  list;
+	struct ib_device	*device;
+	struct ib_pd		*pd;
+	struct ib_mr		*mr;
+	struct ib_srq		*srq;
+	struct ib_cm_id		*cm_id;
+	struct ib_device_attr	dev_attr;
+	int			srq_size;
+	struct srpt_recv_ioctx	**ioctx_ring;
+	struct list_head	rch_list;
+	wait_queue_head_t	ch_releaseQ;
+	spinlock_t		spinlock;
+	struct srpt_port	port[2];
+	struct ib_event_handler	event_handler;
+	struct list_head	list;
 };
 
 /**
@@ -416,10 +416,10 @@ struct srpt_device {
  * @list:      Element of the per-HCA ACL list.
  */
 struct srpt_node_acl {
-  u8      i_port_id[16];
-  struct srpt_port * sport;
-  struct se_node_acl  nacl;
-  struct list_head  list;
+	u8			i_port_id[16];
+	struct srpt_port	*sport;
+	struct se_node_acl	nacl;
+	struct list_head	list;
 };
 
 /*
@@ -431,13 +431,13 @@ struct srpt_node_acl {
  */
 
 enum {
-  SCSI_TRANSPORTID_PROTOCOLID_SRP = 4,
+	SCSI_TRANSPORTID_PROTOCOLID_SRP	= 4,
 };
 
 struct spc_rdma_transport_id {
-  uint8_t protocol_identifier;
-  uint8_t reserved[7];
-  uint8_t i_port_id[16];
+	uint8_t protocol_identifier;
+	uint8_t reserved[7];
+	uint8_t i_port_id[16];
 };
 
-#endif        /* IB_SRPT_H */
+#endif				/* IB_SRPT_H */

@@ -10,9 +10,9 @@
 #ifndef __ASM_AVR32_AT32AP_INIT_H__
 #define __ASM_AVR32_AT32AP_INIT_H__
 
-void setup_platform (void);
-void setup_board (void);
+void setup_platform(void);
+void setup_board(void);
 
-void at32_setup_serial_console (unsigned int usart_id);
+void at32_setup_serial_console(unsigned int usart_id);
 
 #endif /* __ASM_AVR32_AT32AP_INIT_H__ */

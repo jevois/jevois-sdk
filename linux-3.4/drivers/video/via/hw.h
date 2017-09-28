@@ -28,28 +28,28 @@
 #include "global.h"
 #include "via_modesetting.h"
 
-#define viafb_read_reg(p, i)      via_read_reg(p, i)
-#define viafb_write_reg(i, p, d)    via_write_reg(p, i, d)
-#define viafb_write_reg_mask(i, p, d, m)  via_write_reg_mask(p, i, d, m)
+#define viafb_read_reg(p, i)			via_read_reg(p, i)
+#define viafb_write_reg(i, p, d)		via_write_reg(p, i, d)
+#define viafb_write_reg_mask(i, p, d, m)	via_write_reg_mask(p, i, d, m)
 
 /* VIA output devices */
-#define VIA_LDVP0 0x00000001
-#define VIA_LDVP1 0x00000002
-#define VIA_DVP0  0x00000004
-#define VIA_CRT   0x00000010
-#define VIA_DVP1  0x00000020
-#define VIA_LVDS1 0x00000040
-#define VIA_LVDS2 0x00000080
+#define VIA_LDVP0	0x00000001
+#define VIA_LDVP1	0x00000002
+#define VIA_DVP0	0x00000004
+#define VIA_CRT		0x00000010
+#define VIA_DVP1	0x00000020
+#define VIA_LVDS1	0x00000040
+#define VIA_LVDS2	0x00000080
 
 /* VIA output device power states */
-#define VIA_STATE_ON    0
-#define VIA_STATE_STANDBY 1
-#define VIA_STATE_SUSPEND 2
-#define VIA_STATE_OFF   3
+#define VIA_STATE_ON		0
+#define VIA_STATE_STANDBY	1
+#define VIA_STATE_SUSPEND	2
+#define VIA_STATE_OFF		3
 
 /* VIA output device sync polarity */
-#define VIA_HSYNC_NEGATIVE  0x01
-#define VIA_VSYNC_NEGATIVE  0x02
+#define VIA_HSYNC_NEGATIVE	0x01
+#define VIA_VSYNC_NEGATIVE	0x02
 
 /**********************************************************/
 /* Definition IGA2 Design Method of CRTC Shadow Registers */
@@ -91,14 +91,14 @@
 /* x: H resolution, y: color depth */
 #define IGA1_FETCH_COUNT_PATCH_VALUE    4
 #define IGA1_FETCH_COUNT_FORMULA(x, y)   \
-  (((x*y)/IGA1_FETCH_COUNT_ALIGN_BYTE) + IGA1_FETCH_COUNT_PATCH_VALUE)
+	(((x*y)/IGA1_FETCH_COUNT_ALIGN_BYTE) + IGA1_FETCH_COUNT_PATCH_VALUE)
 
 /* location: {CR65,0,7},{CR67,2,3} */
 #define IGA2_FETCH_COUNT_REG_NUM        2
 #define IGA2_FETCH_COUNT_ALIGN_BYTE     16
 #define IGA2_FETCH_COUNT_PATCH_VALUE    0
 #define IGA2_FETCH_COUNT_FORMULA(x, y)   \
-  (((x*y)/IGA2_FETCH_COUNT_ALIGN_BYTE) + IGA2_FETCH_COUNT_PATCH_VALUE)
+	(((x*y)/IGA2_FETCH_COUNT_ALIGN_BYTE) + IGA2_FETCH_COUNT_PATCH_VALUE)
 
 /* Staring Address*/
 
@@ -116,7 +116,7 @@
 /* location: {SR18,0,5},{SR18,7,7} */
 #define K800_IGA1_FIFO_HIGH_THRESHOLD           296
 /* location: {SR22,0,4}. (128/4) =64, K800 must be set zero, */
-/* because HW only 5 bits */
+				/* because HW only 5 bits */
 #define K800_IGA1_DISPLAY_QUEUE_EXPIRE_NUM      0
 
 /* location: {CR68,4,7},{CR94,7,7},{CR95,7,7} */
@@ -135,7 +135,7 @@
 /* location: {SR18,0,5},{SR18,7,7} */
 #define P880_IGA1_FIFO_HIGH_THRESHOLD           64
 /* location: {SR22,0,4}. (128/4) =64, K800 must be set zero, */
-/* because HW only 5 bits */
+				/* because HW only 5 bits */
 #define P880_IGA1_DISPLAY_QUEUE_EXPIRE_NUM      0
 
 /* location: {CR68,4,7},{CR94,7,7},{CR95,7,7} */
@@ -156,7 +156,7 @@
 /* location: {SR18,0,5},{SR18,7,7} */
 #define CN700_IGA1_FIFO_HIGH_THRESHOLD          64
 /* location: {SR22,0,4}. (128/4) =64, P800 must be set zero,
-        because HW only 5 bits */
+				because HW only 5 bits */
 #define CN700_IGA1_DISPLAY_QUEUE_EXPIRE_NUM     0
 /* location: {CR68,4,7},{CR94,7,7},{CR95,7,7} */
 #define CN700_IGA2_FIFO_MAX_DEPTH               96
@@ -355,9 +355,9 @@
 #define LCD_VER_SCALING_FACTOR_REG_NUM_CLE  2
 
 struct io_register {
-  u8 io_addr;
-  u8 start_bit;
-  u8 end_bit;
+	u8 io_addr;
+	u8 start_bit;
+	u8 end_bit;
 };
 
 /*****************************************************
@@ -366,223 +366,223 @@ struct io_register {
 
 /* IGA2 Shadow Horizontal Total */
 struct iga2_shadow_hor_total {
-  int reg_num;
-  struct io_register reg[IGA2_SHADOW_HOR_TOTAL_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA2_SHADOW_HOR_TOTAL_REG_NUM];
 };
 
 /* IGA2 Shadow Horizontal Blank End */
 struct iga2_shadow_hor_blank_end {
-  int reg_num;
-  struct io_register reg[IGA2_SHADOW_HOR_BLANK_END_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA2_SHADOW_HOR_BLANK_END_REG_NUM];
 };
 
 /* IGA2 Shadow Vertical Total */
 struct iga2_shadow_ver_total {
-  int reg_num;
-  struct io_register reg[IGA2_SHADOW_VER_TOTAL_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA2_SHADOW_VER_TOTAL_REG_NUM];
 };
 
 /* IGA2 Shadow Vertical Addressable Video */
 struct iga2_shadow_ver_addr {
-  int reg_num;
-  struct io_register reg[IGA2_SHADOW_VER_ADDR_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA2_SHADOW_VER_ADDR_REG_NUM];
 };
 
 /* IGA2 Shadow Vertical Blank Start */
 struct iga2_shadow_ver_blank_start {
-  int reg_num;
-  struct io_register reg[IGA2_SHADOW_VER_BLANK_START_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA2_SHADOW_VER_BLANK_START_REG_NUM];
 };
 
 /* IGA2 Shadow Vertical Blank End */
 struct iga2_shadow_ver_blank_end {
-  int reg_num;
-  struct io_register reg[IGA2_SHADOW_VER_BLANK_END_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA2_SHADOW_VER_BLANK_END_REG_NUM];
 };
 
 /* IGA2 Shadow Vertical Sync Start */
 struct iga2_shadow_ver_sync_start {
-  int reg_num;
-  struct io_register reg[IGA2_SHADOW_VER_SYNC_START_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA2_SHADOW_VER_SYNC_START_REG_NUM];
 };
 
 /* IGA2 Shadow Vertical Sync End */
 struct iga2_shadow_ver_sync_end {
-  int reg_num;
-  struct io_register reg[IGA2_SHADOW_VER_SYNC_END_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA2_SHADOW_VER_SYNC_END_REG_NUM];
 };
 
 /* IGA1 Fetch Count Register */
 struct iga1_fetch_count {
-  int reg_num;
-  struct io_register reg[IGA1_FETCH_COUNT_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA1_FETCH_COUNT_REG_NUM];
 };
 
 /* IGA2 Fetch Count Register */
 struct iga2_fetch_count {
-  int reg_num;
-  struct io_register reg[IGA2_FETCH_COUNT_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA2_FETCH_COUNT_REG_NUM];
 };
 
 struct fetch_count {
-  struct iga1_fetch_count iga1_fetch_count_reg;
-  struct iga2_fetch_count iga2_fetch_count_reg;
+	struct iga1_fetch_count iga1_fetch_count_reg;
+	struct iga2_fetch_count iga2_fetch_count_reg;
 };
 
 /* Starting Address Register */
 struct iga1_starting_addr {
-  int reg_num;
-  struct io_register reg[IGA1_STARTING_ADDR_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA1_STARTING_ADDR_REG_NUM];
 };
 
 struct iga2_starting_addr {
-  int reg_num;
-  struct io_register reg[IGA2_STARTING_ADDR_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA2_STARTING_ADDR_REG_NUM];
 };
 
 struct starting_addr {
-  struct iga1_starting_addr iga1_starting_addr_reg;
-  struct iga2_starting_addr iga2_starting_addr_reg;
+	struct iga1_starting_addr iga1_starting_addr_reg;
+	struct iga2_starting_addr iga2_starting_addr_reg;
 };
 
 /* LCD Power Sequence Timer */
 struct lcd_pwd_seq_td0 {
-  int reg_num;
-  struct io_register reg[LCD_POWER_SEQ_TD0_REG_NUM];
+	int reg_num;
+	struct io_register reg[LCD_POWER_SEQ_TD0_REG_NUM];
 };
 
 struct lcd_pwd_seq_td1 {
-  int reg_num;
-  struct io_register reg[LCD_POWER_SEQ_TD1_REG_NUM];
+	int reg_num;
+	struct io_register reg[LCD_POWER_SEQ_TD1_REG_NUM];
 };
 
 struct lcd_pwd_seq_td2 {
-  int reg_num;
-  struct io_register reg[LCD_POWER_SEQ_TD2_REG_NUM];
+	int reg_num;
+	struct io_register reg[LCD_POWER_SEQ_TD2_REG_NUM];
 };
 
 struct lcd_pwd_seq_td3 {
-  int reg_num;
-  struct io_register reg[LCD_POWER_SEQ_TD3_REG_NUM];
+	int reg_num;
+	struct io_register reg[LCD_POWER_SEQ_TD3_REG_NUM];
 };
 
 struct _lcd_pwd_seq_timer {
-  struct lcd_pwd_seq_td0 td0;
-  struct lcd_pwd_seq_td1 td1;
-  struct lcd_pwd_seq_td2 td2;
-  struct lcd_pwd_seq_td3 td3;
+	struct lcd_pwd_seq_td0 td0;
+	struct lcd_pwd_seq_td1 td1;
+	struct lcd_pwd_seq_td2 td2;
+	struct lcd_pwd_seq_td3 td3;
 };
 
 /* LCD Scaling Factor */
 struct _lcd_hor_scaling_factor {
-  int reg_num;
-  struct io_register reg[LCD_HOR_SCALING_FACTOR_REG_NUM];
+	int reg_num;
+	struct io_register reg[LCD_HOR_SCALING_FACTOR_REG_NUM];
 };
 
 struct _lcd_ver_scaling_factor {
-  int reg_num;
-  struct io_register reg[LCD_VER_SCALING_FACTOR_REG_NUM];
+	int reg_num;
+	struct io_register reg[LCD_VER_SCALING_FACTOR_REG_NUM];
 };
 
 struct _lcd_scaling_factor {
-  struct _lcd_hor_scaling_factor lcd_hor_scaling_factor;
-  struct _lcd_ver_scaling_factor lcd_ver_scaling_factor;
+	struct _lcd_hor_scaling_factor lcd_hor_scaling_factor;
+	struct _lcd_ver_scaling_factor lcd_ver_scaling_factor;
 };
 
 struct pll_limit {
-  u16 multiplier_min;
-  u16 multiplier_max;
-  u8 divisor;
-  u8 rshift;
+	u16 multiplier_min;
+	u16 multiplier_max;
+	u8 divisor;
+	u8 rshift;
 };
 
 struct rgbLUT {
-  u8 red;
-  u8 green;
-  u8 blue;
+	u8 red;
+	u8 green;
+	u8 blue;
 };
 
 struct lcd_pwd_seq_timer {
-  u16 td0;
-  u16 td1;
-  u16 td2;
-  u16 td3;
+	u16 td0;
+	u16 td1;
+	u16 td2;
+	u16 td3;
 };
 
 /* Display FIFO Relation Registers*/
 struct iga1_fifo_depth_select {
-  int reg_num;
-  struct io_register reg[IGA1_FIFO_DEPTH_SELECT_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA1_FIFO_DEPTH_SELECT_REG_NUM];
 };
 
 struct iga1_fifo_threshold_select {
-  int reg_num;
-  struct io_register reg[IGA1_FIFO_THRESHOLD_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA1_FIFO_THRESHOLD_REG_NUM];
 };
 
 struct iga1_fifo_high_threshold_select {
-  int reg_num;
-  struct io_register reg[IGA1_FIFO_HIGH_THRESHOLD_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA1_FIFO_HIGH_THRESHOLD_REG_NUM];
 };
 
 struct iga1_display_queue_expire_num {
-  int reg_num;
-  struct io_register reg[IGA1_DISPLAY_QUEUE_EXPIRE_NUM_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA1_DISPLAY_QUEUE_EXPIRE_NUM_REG_NUM];
 };
 
 struct iga2_fifo_depth_select {
-  int reg_num;
-  struct io_register reg[IGA2_FIFO_DEPTH_SELECT_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA2_FIFO_DEPTH_SELECT_REG_NUM];
 };
 
 struct iga2_fifo_threshold_select {
-  int reg_num;
-  struct io_register reg[IGA2_FIFO_THRESHOLD_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA2_FIFO_THRESHOLD_REG_NUM];
 };
 
 struct iga2_fifo_high_threshold_select {
-  int reg_num;
-  struct io_register reg[IGA2_FIFO_HIGH_THRESHOLD_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA2_FIFO_HIGH_THRESHOLD_REG_NUM];
 };
 
 struct iga2_display_queue_expire_num {
-  int reg_num;
-  struct io_register reg[IGA2_DISPLAY_QUEUE_EXPIRE_NUM_REG_NUM];
+	int reg_num;
+	struct io_register reg[IGA2_DISPLAY_QUEUE_EXPIRE_NUM_REG_NUM];
 };
 
 struct fifo_depth_select {
-  struct iga1_fifo_depth_select iga1_fifo_depth_select_reg;
-  struct iga2_fifo_depth_select iga2_fifo_depth_select_reg;
+	struct iga1_fifo_depth_select iga1_fifo_depth_select_reg;
+	struct iga2_fifo_depth_select iga2_fifo_depth_select_reg;
 };
 
 struct fifo_threshold_select {
-  struct iga1_fifo_threshold_select iga1_fifo_threshold_select_reg;
-  struct iga2_fifo_threshold_select iga2_fifo_threshold_select_reg;
+	struct iga1_fifo_threshold_select iga1_fifo_threshold_select_reg;
+	struct iga2_fifo_threshold_select iga2_fifo_threshold_select_reg;
 };
 
 struct fifo_high_threshold_select {
-  struct iga1_fifo_high_threshold_select
-      iga1_fifo_high_threshold_select_reg;
-  struct iga2_fifo_high_threshold_select
-      iga2_fifo_high_threshold_select_reg;
+	struct iga1_fifo_high_threshold_select
+	 iga1_fifo_high_threshold_select_reg;
+	struct iga2_fifo_high_threshold_select
+	 iga2_fifo_high_threshold_select_reg;
 };
 
 struct display_queue_expire_num {
-  struct iga1_display_queue_expire_num
-      iga1_display_queue_expire_num_reg;
-  struct iga2_display_queue_expire_num
-      iga2_display_queue_expire_num_reg;
+	struct iga1_display_queue_expire_num
+	 iga1_display_queue_expire_num_reg;
+	struct iga2_display_queue_expire_num
+	 iga2_display_queue_expire_num_reg;
 };
 
 struct iga2_shadow_crtc_timing {
-  struct iga2_shadow_hor_total hor_total_shadow;
-  struct iga2_shadow_hor_blank_end hor_blank_end_shadow;
-  struct iga2_shadow_ver_total ver_total_shadow;
-  struct iga2_shadow_ver_addr ver_addr_shadow;
-  struct iga2_shadow_ver_blank_start ver_blank_start_shadow;
-  struct iga2_shadow_ver_blank_end ver_blank_end_shadow;
-  struct iga2_shadow_ver_sync_start ver_sync_start_shadow;
-  struct iga2_shadow_ver_sync_end ver_sync_end_shadow;
+	struct iga2_shadow_hor_total hor_total_shadow;
+	struct iga2_shadow_hor_blank_end hor_blank_end_shadow;
+	struct iga2_shadow_ver_total ver_total_shadow;
+	struct iga2_shadow_ver_addr ver_addr_shadow;
+	struct iga2_shadow_ver_blank_start ver_blank_start_shadow;
+	struct iga2_shadow_ver_blank_end ver_blank_end_shadow;
+	struct iga2_shadow_ver_sync_start ver_sync_start_shadow;
+	struct iga2_shadow_ver_sync_end ver_sync_end_shadow;
 };
 
 /* device ID */
@@ -614,20 +614,20 @@ struct iga2_shadow_crtc_timing {
 #define VX900_FUNCTION3     0x3410
 
 struct IODATA {
-  u8 Index;
-  u8 Mask;
-  u8 Data;
+	u8 Index;
+	u8 Mask;
+	u8 Data;
 };
 
 struct pci_device_id_info {
-  u32 vendor;
-  u32 device;
-  u32 chip_index;
+	u32 vendor;
+	u32 device;
+	u32 chip_index;
 };
 
 struct via_device_mapping {
-  u32 device;
-  const char * name;
+	u32 device;
+	const char *name;
 };
 
 extern int viafb_SAMM_ON;
@@ -637,40 +637,40 @@ extern int viafb_LCD_ON;
 extern int viafb_DVI_ON;
 extern int viafb_hotplug;
 
-struct display_timing var_to_timing (const struct fb_var_screeninfo * var,
-                                     u16 cxres, u16 cyres);
-void viafb_fill_crtc_timing (const struct fb_var_screeninfo * var,
-                             u16 cxres, u16 cyres, int iga);
-void viafb_set_vclock (u32 CLK, int set_iga);
-void viafb_load_reg (int timing_value, int viafb_load_reg_num,
-                     struct io_register * reg,
-                     int io_type);
-void via_set_source (u32 devices, u8 iga);
-void via_set_state (u32 devices, u8 state);
-void via_set_sync_polarity (u32 devices, u8 polarity);
-u32 via_parse_odev (char * input, char ** end);
-void via_odev_to_seq (struct seq_file * m, u32 odev);
-void init_ad9389 (void);
+struct display_timing var_to_timing(const struct fb_var_screeninfo *var,
+	u16 cxres, u16 cyres);
+void viafb_fill_crtc_timing(const struct fb_var_screeninfo *var,
+	u16 cxres, u16 cyres, int iga);
+void viafb_set_vclock(u32 CLK, int set_iga);
+void viafb_load_reg(int timing_value, int viafb_load_reg_num,
+	struct io_register *reg,
+	      int io_type);
+void via_set_source(u32 devices, u8 iga);
+void via_set_state(u32 devices, u8 state);
+void via_set_sync_polarity(u32 devices, u8 polarity);
+u32 via_parse_odev(char *input, char **end);
+void via_odev_to_seq(struct seq_file *m, u32 odev);
+void init_ad9389(void);
 /* Access I/O Function */
-void viafb_lock_crt (void);
-void viafb_unlock_crt (void);
-void viafb_load_fetch_count_reg (int h_addr, int bpp_byte, int set_iga);
-void viafb_write_regx (struct io_reg RegTable[], int ItemNum);
-void viafb_load_FIFO_reg (int set_iga, int hor_active, int ver_active);
-void viafb_set_dpa_gfx (int output_interface, struct GFX_DPA_SETTING\
-                        *p_gfx_dpa_setting);
+void viafb_lock_crt(void);
+void viafb_unlock_crt(void);
+void viafb_load_fetch_count_reg(int h_addr, int bpp_byte, int set_iga);
+void viafb_write_regx(struct io_reg RegTable[], int ItemNum);
+void viafb_load_FIFO_reg(int set_iga, int hor_active, int ver_active);
+void viafb_set_dpa_gfx(int output_interface, struct GFX_DPA_SETTING\
+					*p_gfx_dpa_setting);
 
-int viafb_setmode (void);
-void viafb_fill_var_timing_info (struct fb_var_screeninfo * var,
-                                 const struct fb_videomode * mode);
-void __devinit viafb_init_chip_info (int chip_type);
-void __devinit viafb_init_dac (int set_iga);
-int viafb_get_refresh (int hres, int vres, u32 float_refresh);
-void viafb_update_device_setting (int hres, int vres, int bpp, int flag);
+int viafb_setmode(void);
+void viafb_fill_var_timing_info(struct fb_var_screeninfo *var,
+	const struct fb_videomode *mode);
+void __devinit viafb_init_chip_info(int chip_type);
+void __devinit viafb_init_dac(int set_iga);
+int viafb_get_refresh(int hres, int vres, u32 float_refresh);
+void viafb_update_device_setting(int hres, int vres, int bpp, int flag);
 
-void viafb_set_iga_path (void);
-void viafb_set_primary_color_register (u8 index, u8 red, u8 green, u8 blue);
-void viafb_set_secondary_color_register (u8 index, u8 red, u8 green, u8 blue);
-void viafb_get_fb_info (unsigned int * fb_base, unsigned int * fb_len);
+void viafb_set_iga_path(void);
+void viafb_set_primary_color_register(u8 index, u8 red, u8 green, u8 blue);
+void viafb_set_secondary_color_register(u8 index, u8 red, u8 green, u8 blue);
+void viafb_get_fb_info(unsigned int *fb_base, unsigned int *fb_len);
 
 #endif /* __HW_H__ */

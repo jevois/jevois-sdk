@@ -25,35 +25,35 @@
 #define TICKS_NS_SHIFT 4
 
 struct ixp46x_channel_ctl {
-  u32 ch_control;  /* 0x40 Time Synchronization Channel Control */
-  u32 ch_event;    /* 0x44 Time Synchronization Channel Event */
-  u32 tx_snap_lo;  /* 0x48 Transmit Snapshot Low Register */
-  u32 tx_snap_hi;  /* 0x4C Transmit Snapshot High Register */
-  u32 rx_snap_lo;  /* 0x50 Receive Snapshot Low Register */
-  u32 rx_snap_hi;  /* 0x54 Receive Snapshot High Register */
-  u32 src_uuid_lo; /* 0x58 Source UUID0 Low Register */
-  u32 src_uuid_hi; /* 0x5C Sequence Identifier/Source UUID0 High */
+	u32 ch_control;  /* 0x40 Time Synchronization Channel Control */
+	u32 ch_event;    /* 0x44 Time Synchronization Channel Event */
+	u32 tx_snap_lo;  /* 0x48 Transmit Snapshot Low Register */
+	u32 tx_snap_hi;  /* 0x4C Transmit Snapshot High Register */
+	u32 rx_snap_lo;  /* 0x50 Receive Snapshot Low Register */
+	u32 rx_snap_hi;  /* 0x54 Receive Snapshot High Register */
+	u32 src_uuid_lo; /* 0x58 Source UUID0 Low Register */
+	u32 src_uuid_hi; /* 0x5C Sequence Identifier/Source UUID0 High */
 };
 
 struct ixp46x_ts_regs {
-  u32 control;     /* 0x00 Time Sync Control Register */
-  u32 event;       /* 0x04 Time Sync Event Register */
-  u32 addend;      /* 0x08 Time Sync Addend Register */
-  u32 accum;       /* 0x0C Time Sync Accumulator Register */
-  u32 test;        /* 0x10 Time Sync Test Register */
-  u32 unused;      /* 0x14 */
-  u32 rsystime_lo; /* 0x18 RawSystemTime_Low Register */
-  u32 rsystime_hi; /* 0x1C RawSystemTime_High Register */
-  u32 systime_lo;  /* 0x20 SystemTime_Low Register */
-  u32 systime_hi;  /* 0x24 SystemTime_High Register */
-  u32 trgt_lo;     /* 0x28 TargetTime_Low Register */
-  u32 trgt_hi;     /* 0x2C TargetTime_High Register */
-  u32 asms_lo;     /* 0x30 Auxiliary Slave Mode Snapshot Low  */
-  u32 asms_hi;     /* 0x34 Auxiliary Slave Mode Snapshot High */
-  u32 amms_lo;     /* 0x38 Auxiliary Master Mode Snapshot Low */
-  u32 amms_hi;     /* 0x3C Auxiliary Master Mode Snapshot High */
-  
-  struct ixp46x_channel_ctl channel[3];
+	u32 control;     /* 0x00 Time Sync Control Register */
+	u32 event;       /* 0x04 Time Sync Event Register */
+	u32 addend;      /* 0x08 Time Sync Addend Register */
+	u32 accum;       /* 0x0C Time Sync Accumulator Register */
+	u32 test;        /* 0x10 Time Sync Test Register */
+	u32 unused;      /* 0x14 */
+	u32 rsystime_lo; /* 0x18 RawSystemTime_Low Register */
+	u32 rsystime_hi; /* 0x1C RawSystemTime_High Register */
+	u32 systime_lo;  /* 0x20 SystemTime_Low Register */
+	u32 systime_hi;  /* 0x24 SystemTime_High Register */
+	u32 trgt_lo;     /* 0x28 TargetTime_Low Register */
+	u32 trgt_hi;     /* 0x2C TargetTime_High Register */
+	u32 asms_lo;     /* 0x30 Auxiliary Slave Mode Snapshot Low  */
+	u32 asms_hi;     /* 0x34 Auxiliary Slave Mode Snapshot High */
+	u32 amms_lo;     /* 0x38 Auxiliary Master Mode Snapshot Low */
+	u32 amms_hi;     /* 0x3C Auxiliary Master Mode Snapshot High */
+
+	struct ixp46x_channel_ctl channel[3];
 };
 
 /* 0x00 Time Sync Control Register Bits */

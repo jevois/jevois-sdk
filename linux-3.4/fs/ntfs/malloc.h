@@ -28,8 +28,8 @@
 
 /**
  * __ntfs_malloc - allocate memory in multiples of pages
- * @size: number of bytes to allocate
- * @gfp_mask: extra flags for the allocator
+ * @size:	number of bytes to allocate
+ * @gfp_mask:	extra flags for the allocator
  *
  * Internal function.  You probably want ntfs_malloc_nofs()...
  *
@@ -39,36 +39,36 @@
  * If there was insufficient memory to complete the request, return NULL.
  * Depending on @gfp_mask the allocation may be guaranteed to succeed.
  */
-static inline void * __ntfs_malloc (unsigned long size, gfp_t gfp_mask)
+static inline void *__ntfs_malloc(unsigned long size, gfp_t gfp_mask)
 {
-  if (likely (size <= PAGE_SIZE) ) {
-    BUG_ON (!size);
-    /* kmalloc() has per-CPU caches so is faster for now. */
-    return kmalloc (PAGE_SIZE, gfp_mask & ~__GFP_HIGHMEM);
-    /* return (void *)__get_free_page(gfp_mask); */
-  }
-  if (likely ( (size >> PAGE_SHIFT) < totalram_pages) )
-  { return __vmalloc (size, gfp_mask, PAGE_KERNEL); }
-  return NULL;
+	if (likely(size <= PAGE_SIZE)) {
+		BUG_ON(!size);
+		/* kmalloc() has per-CPU caches so is faster for now. */
+		return kmalloc(PAGE_SIZE, gfp_mask & ~__GFP_HIGHMEM);
+		/* return (void *)__get_free_page(gfp_mask); */
+	}
+	if (likely((size >> PAGE_SHIFT) < totalram_pages))
+		return __vmalloc(size, gfp_mask, PAGE_KERNEL);
+	return NULL;
 }
 
 /**
  * ntfs_malloc_nofs - allocate memory in multiples of pages
- * @size: number of bytes to allocate
+ * @size:	number of bytes to allocate
  *
  * Allocates @size bytes of memory, rounded up to multiples of PAGE_SIZE and
  * returns a pointer to the allocated memory.
  *
  * If there was insufficient memory to complete the request, return NULL.
  */
-static inline void * ntfs_malloc_nofs (unsigned long size)
+static inline void *ntfs_malloc_nofs(unsigned long size)
 {
-  return __ntfs_malloc (size, GFP_NOFS | __GFP_HIGHMEM);
+	return __ntfs_malloc(size, GFP_NOFS | __GFP_HIGHMEM);
 }
 
 /**
  * ntfs_malloc_nofs_nofail - allocate memory in multiples of pages
- * @size: number of bytes to allocate
+ * @size:	number of bytes to allocate
  *
  * Allocates @size bytes of memory, rounded up to multiples of PAGE_SIZE and
  * returns a pointer to the allocated memory.
@@ -78,19 +78,19 @@ static inline void * ntfs_malloc_nofs (unsigned long size)
  *
  * If there was insufficient memory to complete the request, return NULL.
  */
-static inline void * ntfs_malloc_nofs_nofail (unsigned long size)
+static inline void *ntfs_malloc_nofs_nofail(unsigned long size)
 {
-  return __ntfs_malloc (size, GFP_NOFS | __GFP_HIGHMEM | __GFP_NOFAIL);
+	return __ntfs_malloc(size, GFP_NOFS | __GFP_HIGHMEM | __GFP_NOFAIL);
 }
 
-static inline void ntfs_free (void * addr)
+static inline void ntfs_free(void *addr)
 {
-  if (!is_vmalloc_addr (addr) ) {
-    kfree (addr);
-    /* free_page((unsigned long)addr); */
-    return;
-  }
-  vfree (addr);
+	if (!is_vmalloc_addr(addr)) {
+		kfree(addr);
+		/* free_page((unsigned long)addr); */
+		return;
+	}
+	vfree(addr);
 }
 
 #endif /* _LINUX_NTFS_MALLOC_H */

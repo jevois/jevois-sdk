@@ -53,18 +53,18 @@ extern "C" {
 
 
 /******************************************************************************
- * Function prototypes
+ * Function prototypes 
  *****************************************************************************/
 
-PVRSRV_ERROR OpenServices (IMG_HANDLE * phServices, IMG_UINT32 ui32SrvFlags);
-PVRSRV_ERROR CloseServices (IMG_HANDLE hServices);
-PVRSRV_ERROR PVRSRVBridgeCall (IMG_HANDLE hServices,
-                               IMG_UINT32 ui32FunctionID,
-                               IMG_VOID * pvParamIn,
-                               IMG_UINT32 ui32InBufferSize,
-                               IMG_VOID * pvParamOut,
-                               IMG_UINT32 ui32OutBufferSize);
-                               
+PVRSRV_ERROR OpenServices(IMG_HANDLE *phServices, IMG_UINT32 ui32SrvFlags);
+PVRSRV_ERROR CloseServices(IMG_HANDLE hServices);
+PVRSRV_ERROR PVRSRVBridgeCall(IMG_HANDLE hServices,
+							  IMG_UINT32 ui32FunctionID,
+							  IMG_VOID *pvParamIn,
+							  IMG_UINT32 ui32InBufferSize,
+							  IMG_VOID *pvParamOut,
+							  IMG_UINT32 ui32OutBufferSize);
+
 #if defined (__cplusplus)
 }
 #endif

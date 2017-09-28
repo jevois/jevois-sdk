@@ -9,14 +9,14 @@
 #define IO_ADDRESS(x) ((x) | IMX_IO_BASE)
 
 # ifndef __ASSEMBLY__
-# define __REG(x) (*((volatile u32 *)IO_ADDRESS(x)))
+# define __REG(x)	(*((volatile u32 *)IO_ADDRESS(x)))
 # define __REG2(x,y)        (*(volatile u32 *)((u32)&__REG(x) + (y)))
 # else
 #  define __REG(x) (x)
 #  define __REG2(x,y) ((x)+(y))
 #endif
 
-#define IMX_IO_BASE   0x00200000
+#define IMX_IO_BASE		0x00200000
 
 /*
  *  Register BASEs, based on OFFSETs
@@ -59,7 +59,7 @@
 #define WSTR __REG(IMX_WDT_BASE + 0x08) /* Watchdog Status Register  */
 
 /* SYSCTRL Registers */
-#define SIDR   __REG(IMX_SYSCTRL_BASE + 0x4) /* Silicon ID Register       */
+#define SIDR   __REG(IMX_SYSCTRL_BASE + 0x4) /* Silicon ID Register		    */
 #define FMCR   __REG(IMX_SYSCTRL_BASE + 0x8) /* Function Multiplex Control Register */
 #define GPCR   __REG(IMX_SYSCTRL_BASE + 0xC) /* Function Multiplex Control Register */
 
@@ -87,13 +87,13 @@
 
 /* PLL registers */
 #define CSCR   __REG(IMX_PLL_BASE)        /* Clock Source Control Register */
-#define CSCR_SPLL_RESTART (1<<22)
-#define CSCR_MPLL_RESTART (1<<21)
-#define CSCR_SYSTEM_SEL   (1<<16)
-#define CSCR_BCLK_DIV   (0xf<<10)
-#define CSCR_MPU_PRESC    (1<<15)
-#define CSCR_SPEN   (1<<1)
-#define CSCR_MPEN   (1<<0)
+#define CSCR_SPLL_RESTART	(1<<22)
+#define CSCR_MPLL_RESTART	(1<<21)
+#define CSCR_SYSTEM_SEL		(1<<16)
+#define CSCR_BCLK_DIV		(0xf<<10)
+#define CSCR_MPU_PRESC		(1<<15)
+#define CSCR_SPEN		(1<<1)
+#define CSCR_MPEN		(1<<0)
 
 #define MPCTL0 __REG(IMX_PLL_BASE + 0x4)  /* MCU PLL Control Register 0 */
 #define MPCTL1 __REG(IMX_PLL_BASE + 0x8)  /* MCU PLL and System Clock Register 1 */
@@ -304,52 +304,52 @@
 /*
  * PWM controller
  */
-#define PWMC  __REG(IMX_PWM_BASE + 0x00)  /* PWM Control Register   */
-#define PWMS  __REG(IMX_PWM_BASE + 0x04)  /* PWM Sample Register    */
-#define PWMP  __REG(IMX_PWM_BASE + 0x08)  /* PWM Period Register    */
-#define PWMCNT  __REG(IMX_PWM_BASE + 0x0C)  /* PWM Counter Register   */
+#define PWMC	__REG(IMX_PWM_BASE + 0x00)	/* PWM Control Register		*/
+#define PWMS	__REG(IMX_PWM_BASE + 0x04)	/* PWM Sample Register		*/
+#define PWMP	__REG(IMX_PWM_BASE + 0x08)	/* PWM Period Register		*/
+#define PWMCNT	__REG(IMX_PWM_BASE + 0x0C)	/* PWM Counter Register		*/
 
-#define PWMC_HCTR   (0x01<<18)    /* Halfword FIFO Data Swapping  */
-#define PWMC_BCTR   (0x01<<17)    /* Byte FIFO Data Swapping  */
-#define PWMC_SWR    (0x01<<16)    /* Software Reset   */
-#define PWMC_CLKSRC   (0x01<<15)    /* Clock Source     */
-#define PWMC_PRESCALER(x) (((x-1) & 0x7F) << 8) /* PRESCALER      */
-#define PWMC_IRQ    (0x01<< 7)    /* Interrupt Request    */
-#define PWMC_IRQEN    (0x01<< 6)    /* Interrupt Request Enable */
-#define PWMC_FIFOAV   (0x01<< 5)    /* FIFO Available   */
-#define PWMC_EN     (0x01<< 4)    /* Enables/Disables the PWM */
-#define PWMC_REPEAT(x)    (((x) & 0x03) << 2) /* Sample Repeats   */
-#define PWMC_CLKSEL(x)    (((x) & 0x03) << 0) /* Clock Selection    */
+#define PWMC_HCTR		(0x01<<18)		/* Halfword FIFO Data Swapping	*/
+#define PWMC_BCTR		(0x01<<17)		/* Byte FIFO Data Swapping	*/
+#define PWMC_SWR		(0x01<<16)		/* Software Reset		*/
+#define PWMC_CLKSRC		(0x01<<15)		/* Clock Source			*/
+#define PWMC_PRESCALER(x)	(((x-1) & 0x7F) << 8)	/* PRESCALER			*/
+#define PWMC_IRQ		(0x01<< 7)		/* Interrupt Request		*/
+#define PWMC_IRQEN		(0x01<< 6)		/* Interrupt Request Enable	*/
+#define PWMC_FIFOAV		(0x01<< 5)		/* FIFO Available		*/
+#define PWMC_EN			(0x01<< 4)		/* Enables/Disables the PWM	*/
+#define PWMC_REPEAT(x)		(((x) & 0x03) << 2)	/* Sample Repeats		*/
+#define PWMC_CLKSEL(x)		(((x) & 0x03) << 0)	/* Clock Selection		*/
 
-#define PWMS_SAMPLE(x)    ((x) & 0xFFFF)    /* Contains a two-sample word */
-#define PWMP_PERIOD(x)    ((x) & 0xFFFF)    /* Represents the PWM's period  */
-#define PWMC_COUNTER(x)   ((x) & 0xFFFF)    /* Represents the current count value */
+#define PWMS_SAMPLE(x)		((x) & 0xFFFF)		/* Contains a two-sample word	*/
+#define PWMP_PERIOD(x)		((x) & 0xFFFF)		/* Represents the PWM's period	*/
+#define PWMC_COUNTER(x)		((x) & 0xFFFF)		/* Represents the current count value	*/
 
 /*
  *  DMA Controller
  */
-#define DCR     __REG(IMX_DMAC_BASE +0x00)  /* DMA Control Register */
-#define DISR    __REG(IMX_DMAC_BASE +0x04)  /* DMA Interrupt status Register */
-#define DIMR    __REG(IMX_DMAC_BASE +0x08)  /* DMA Interrupt mask Register */
-#define DBTOSR  __REG(IMX_DMAC_BASE +0x0c)  /* DMA Burst timeout status Register */
-#define DRTOSR  __REG(IMX_DMAC_BASE +0x10)  /* DMA Request timeout Register */
-#define DSESR   __REG(IMX_DMAC_BASE +0x14)  /* DMA Transfer Error Status Register */
-#define DBOSR   __REG(IMX_DMAC_BASE +0x18)  /* DMA Buffer overflow status Register */
-#define DBTOCR  __REG(IMX_DMAC_BASE +0x1c)  /* DMA Burst timeout control Register */
-#define WSRA    __REG(IMX_DMAC_BASE +0x40)  /* W-Size Register A */
-#define XSRA    __REG(IMX_DMAC_BASE +0x44)  /* X-Size Register A */
-#define YSRA    __REG(IMX_DMAC_BASE +0x48)  /* Y-Size Register A */
-#define WSRB    __REG(IMX_DMAC_BASE +0x4c)  /* W-Size Register B */
-#define XSRB    __REG(IMX_DMAC_BASE +0x50)  /* X-Size Register B */
-#define YSRB    __REG(IMX_DMAC_BASE +0x54)  /* Y-Size Register B */
-#define SAR(x)  __REG2( IMX_DMAC_BASE + 0x80, (x) << 6) /* Source Address Registers */
-#define DAR(x)  __REG2( IMX_DMAC_BASE + 0x84, (x) << 6) /* Destination Address Registers */
-#define CNTR(x) __REG2( IMX_DMAC_BASE + 0x88, (x) << 6) /* Count Registers */
-#define CCR(x)  __REG2( IMX_DMAC_BASE + 0x8c, (x) << 6) /* Control Registers */
-#define RSSR(x) __REG2( IMX_DMAC_BASE + 0x90, (x) << 6) /* Request source select Registers */
-#define BLR(x)  __REG2( IMX_DMAC_BASE + 0x94, (x) << 6) /* Burst length Registers */
-#define RTOR(x) __REG2( IMX_DMAC_BASE + 0x98, (x) << 6) /* Request timeout Registers */
-#define BUCR(x) __REG2( IMX_DMAC_BASE + 0x98, (x) << 6) /* Bus Utilization Registers */
+#define DCR     __REG(IMX_DMAC_BASE +0x00)	/* DMA Control Register */
+#define DISR    __REG(IMX_DMAC_BASE +0x04)	/* DMA Interrupt status Register */
+#define DIMR    __REG(IMX_DMAC_BASE +0x08)	/* DMA Interrupt mask Register */
+#define DBTOSR  __REG(IMX_DMAC_BASE +0x0c)	/* DMA Burst timeout status Register */
+#define DRTOSR  __REG(IMX_DMAC_BASE +0x10)	/* DMA Request timeout Register */
+#define DSESR   __REG(IMX_DMAC_BASE +0x14)	/* DMA Transfer Error Status Register */
+#define DBOSR   __REG(IMX_DMAC_BASE +0x18)	/* DMA Buffer overflow status Register */
+#define DBTOCR  __REG(IMX_DMAC_BASE +0x1c)	/* DMA Burst timeout control Register */
+#define WSRA    __REG(IMX_DMAC_BASE +0x40)	/* W-Size Register A */
+#define XSRA    __REG(IMX_DMAC_BASE +0x44)	/* X-Size Register A */
+#define YSRA    __REG(IMX_DMAC_BASE +0x48)	/* Y-Size Register A */
+#define WSRB    __REG(IMX_DMAC_BASE +0x4c)	/* W-Size Register B */
+#define XSRB    __REG(IMX_DMAC_BASE +0x50)	/* X-Size Register B */
+#define YSRB    __REG(IMX_DMAC_BASE +0x54)	/* Y-Size Register B */
+#define SAR(x)  __REG2( IMX_DMAC_BASE + 0x80, (x) << 6)	/* Source Address Registers */
+#define DAR(x)  __REG2( IMX_DMAC_BASE + 0x84, (x) << 6)	/* Destination Address Registers */
+#define CNTR(x) __REG2( IMX_DMAC_BASE + 0x88, (x) << 6)	/* Count Registers */
+#define CCR(x)  __REG2( IMX_DMAC_BASE + 0x8c, (x) << 6)	/* Control Registers */
+#define RSSR(x) __REG2( IMX_DMAC_BASE + 0x90, (x) << 6)	/* Request source select Registers */
+#define BLR(x)  __REG2( IMX_DMAC_BASE + 0x94, (x) << 6)	/* Burst length Registers */
+#define RTOR(x) __REG2( IMX_DMAC_BASE + 0x98, (x) << 6)	/* Request timeout Registers */
+#define BUCR(x) __REG2( IMX_DMAC_BASE + 0x98, (x) << 6)	/* Bus Utilization Registers */
 
 /* TODO: define DMA_REQ lines */
 
@@ -386,34 +386,34 @@
  * LCD Controller
  */
 
-#define LCDC_SSA  __REG(IMX_LCDC_BASE+0x00)
+#define LCDC_SSA	__REG(IMX_LCDC_BASE+0x00)
 
-#define LCDC_SIZE __REG(IMX_LCDC_BASE+0x04)
-#define SIZE_XMAX(x)  ((((x) >> 4) & 0x3f) << 20)
+#define LCDC_SIZE	__REG(IMX_LCDC_BASE+0x04)
+#define SIZE_XMAX(x)	((((x) >> 4) & 0x3f) << 20)
 #define SIZE_YMAX(y)    ( (y) & 0x1ff )
 
-#define LCDC_VPW  __REG(IMX_LCDC_BASE+0x08)
-#define VPW_VPW(x)  ( (x) & 0x3ff )
+#define LCDC_VPW	__REG(IMX_LCDC_BASE+0x08)
+#define VPW_VPW(x)	( (x) & 0x3ff )
 
-#define LCDC_CPOS __REG(IMX_LCDC_BASE+0x0C)
+#define LCDC_CPOS	__REG(IMX_LCDC_BASE+0x0C)
 #define CPOS_CC1        (1<<31)
 #define CPOS_CC0        (1<<30)
 #define CPOS_OP         (1<<28)
 #define CPOS_CXP(x)     (((x) & 3ff) << 16)
 #define CPOS_CYP(y)     ((y) & 0x1ff)
 
-#define LCDC_LCWHB  __REG(IMX_LCDC_BASE+0x10)
+#define LCDC_LCWHB	__REG(IMX_LCDC_BASE+0x10)
 #define LCWHB_BK_EN     (1<<31)
 #define LCWHB_CW(w)     (((w) & 0x1f) << 24)
 #define LCWHB_CH(h)     (((h) & 0x1f) << 16)
 #define LCWHB_BD(x)     ((x) & 0xff)
 
-#define LCDC_LCHCC  __REG(IMX_LCDC_BASE+0x14)
+#define LCDC_LCHCC	__REG(IMX_LCDC_BASE+0x14)
 #define LCHCC_CUR_COL_R(r) (((r) & 0x1f) << 11)
 #define LCHCC_CUR_COL_G(g) (((g) & 0x3f) << 5)
 #define LCHCC_CUR_COL_B(b) ((b) & 0x1f)
 
-#define LCDC_PCR  __REG(IMX_LCDC_BASE+0x18)
+#define LCDC_PCR	__REG(IMX_LCDC_BASE+0x18)
 #define PCR_TFT         (1<<31)
 #define PCR_COLOR       (1<<30)
 #define PCR_PBSIZ_1     (0<<28)
@@ -441,27 +441,27 @@
 #define PCR_SHARP       (1<<6)
 #define PCR_PCD(x)      ((x) & 0x3f)
 
-#define LCDC_HCR  __REG(IMX_LCDC_BASE+0x1C)
+#define LCDC_HCR	__REG(IMX_LCDC_BASE+0x1C)
 #define HCR_H_WIDTH(x)  (((x) & 0x3f) << 26)
 #define HCR_H_WAIT_1(x) (((x) & 0xff) << 8)
 #define HCR_H_WAIT_2(x) ((x) & 0xff)
 
-#define LCDC_VCR  __REG(IMX_LCDC_BASE+0x20)
+#define LCDC_VCR	__REG(IMX_LCDC_BASE+0x20)
 #define VCR_V_WIDTH(x)  (((x) & 0x3f) << 26)
 #define VCR_V_WAIT_1(x) (((x) & 0xff) << 8)
 #define VCR_V_WAIT_2(x) ((x) & 0xff)
 
-#define LCDC_POS  __REG(IMX_LCDC_BASE+0x24)
+#define LCDC_POS	__REG(IMX_LCDC_BASE+0x24)
 #define POS_POS(x)      ((x) & 1f)
 
-#define LCDC_LSCR1  __REG(IMX_LCDC_BASE+0x28)
+#define LCDC_LSCR1	__REG(IMX_LCDC_BASE+0x28)
 #define LSCR1_PS_RISE_DELAY(x)    (((x) & 0x7f) << 26)
 #define LSCR1_CLS_RISE_DELAY(x)   (((x) & 0x3f) << 16)
 #define LSCR1_REV_TOGGLE_DELAY(x) (((x) & 0xf) << 8)
 #define LSCR1_GRAY2(x)            (((x) & 0xf) << 4)
 #define LSCR1_GRAY1(x)            (((x) & 0xf))
 
-#define LCDC_PWMR __REG(IMX_LCDC_BASE+0x2C)
+#define LCDC_PWMR	__REG(IMX_LCDC_BASE+0x2C)
 #define PWMR_CLS(x)     (((x) & 0x1ff) << 16)
 #define PWMR_LDMSK      (1<<15)
 #define PWMR_SCR1       (1<<10)
@@ -469,20 +469,20 @@
 #define PWMR_CC_EN      (1<<8)
 #define PWMR_PW(x)      ((x) & 0xff)
 
-#define LCDC_DMACR  __REG(IMX_LCDC_BASE+0x30)
+#define LCDC_DMACR	__REG(IMX_LCDC_BASE+0x30)
 #define DMACR_BURST     (1<<31)
 #define DMACR_HM(x)     (((x) & 0xf) << 16)
 #define DMACR_TM(x)     ((x) &0xf)
 
-#define LCDC_RMCR __REG(IMX_LCDC_BASE+0x34)
-#define RMCR_LCDC_EN    (1<<1)
-#define RMCR_SELF_REF   (1<<0)
+#define LCDC_RMCR	__REG(IMX_LCDC_BASE+0x34)
+#define RMCR_LCDC_EN		(1<<1)
+#define RMCR_SELF_REF		(1<<0)
 
-#define LCDC_LCDICR __REG(IMX_LCDC_BASE+0x38)
+#define LCDC_LCDICR	__REG(IMX_LCDC_BASE+0x38)
 #define LCDICR_INT_SYN  (1<<2)
 #define LCDICR_INT_CON  (1)
 
-#define LCDC_LCDISR __REG(IMX_LCDC_BASE+0x40)
+#define LCDC_LCDISR	__REG(IMX_LCDC_BASE+0x40)
 #define LCDISR_UDR_ERR (1<<3)
 #define LCDISR_ERR_RES (1<<2)
 #define LCDISR_EOF     (1<<1)
@@ -490,29 +490,29 @@
 /*
  *  UART Module
  */
-#define URXD0(x) __REG2( IMX_UART1_BASE + 0x0, ((x) & 1) << 12) /* Receiver Register */
-#define URTX0(x) __REG2( IMX_UART1_BASE + 0x40, ((x) & 1) << 12)  /* Transmitter Register */
-#define UCR1(x)  __REG2( IMX_UART1_BASE + 0x80, ((x) & 1) << 12)  /* Control Register 1 */
-#define UCR2(x)  __REG2( IMX_UART1_BASE + 0x84, ((x) & 1) << 12)  /* Control Register 2 */
-#define UCR3(x)  __REG2( IMX_UART1_BASE + 0x88, ((x) & 1) << 12)  /* Control Register 3 */
-#define UCR4(x)  __REG2( IMX_UART1_BASE + 0x8c, ((x) & 1) << 12)  /* Control Register 4 */
-#define UFCR(x)  __REG2( IMX_UART1_BASE + 0x90, ((x) & 1) << 12)  /* FIFO Control Register */
-#define USR1(x)  __REG2( IMX_UART1_BASE + 0x94, ((x) & 1) << 12)  /* Status Register 1 */
-#define USR2(x)  __REG2( IMX_UART1_BASE + 0x98, ((x) & 1) << 12)  /* Status Register 2 */
-#define UESC(x)  __REG2( IMX_UART1_BASE + 0x9c, ((x) & 1) << 12)  /* Escape Character Register */
-#define UTIM(x)  __REG2( IMX_UART1_BASE + 0xa0, ((x) & 1) << 12)  /* Escape Timer Register */
-#define UBIR(x)  __REG2( IMX_UART1_BASE + 0xa4, ((x) & 1) << 12)  /* BRM Incremental Register */
-#define UBMR(x)  __REG2( IMX_UART1_BASE + 0xa8, ((x) & 1) << 12)  /* BRM Modulator Register */
-#define UBRC(x)  __REG2( IMX_UART1_BASE + 0xac, ((x) & 1) << 12)  /* Baud Rate Count Register */
-#define BIPR1(x) __REG2( IMX_UART1_BASE + 0xb0, ((x) & 1) << 12)  /* Incremental Preset Register 1 */
-#define BIPR2(x) __REG2( IMX_UART1_BASE + 0xb4, ((x) & 1) << 12)  /* Incremental Preset Register 2 */
-#define BIPR3(x) __REG2( IMX_UART1_BASE + 0xb8, ((x) & 1) << 12)  /* Incremental Preset Register 3 */
-#define BIPR4(x) __REG2( IMX_UART1_BASE + 0xbc, ((x) & 1) << 12)  /* Incremental Preset Register 4 */
-#define BMPR1(x) __REG2( IMX_UART1_BASE + 0xc0, ((x) & 1) << 12)  /* BRM Modulator Register 1 */
-#define BMPR2(x) __REG2( IMX_UART1_BASE + 0xc4, ((x) & 1) << 12)  /* BRM Modulator Register 2 */
-#define BMPR3(x) __REG2( IMX_UART1_BASE + 0xc8, ((x) & 1) << 12)  /* BRM Modulator Register 3 */
-#define BMPR4(x) __REG2( IMX_UART1_BASE + 0xcc, ((x) & 1) << 12)  /* BRM Modulator Register 4 */
-#define UTS(x)   __REG2( IMX_UART1_BASE + 0xd0, ((x) & 1) << 12)  /* UART Test Register */
+#define URXD0(x) __REG2( IMX_UART1_BASE + 0x0, ((x) & 1) << 12)	/* Receiver Register */
+#define URTX0(x) __REG2( IMX_UART1_BASE + 0x40, ((x) & 1) << 12)	/* Transmitter Register */
+#define UCR1(x)  __REG2( IMX_UART1_BASE + 0x80, ((x) & 1) << 12)	/* Control Register 1 */
+#define UCR2(x)  __REG2( IMX_UART1_BASE + 0x84, ((x) & 1) << 12)	/* Control Register 2 */
+#define UCR3(x)  __REG2( IMX_UART1_BASE + 0x88, ((x) & 1) << 12)	/* Control Register 3 */
+#define UCR4(x)  __REG2( IMX_UART1_BASE + 0x8c, ((x) & 1) << 12)	/* Control Register 4 */
+#define UFCR(x)  __REG2( IMX_UART1_BASE + 0x90, ((x) & 1) << 12)	/* FIFO Control Register */
+#define USR1(x)  __REG2( IMX_UART1_BASE + 0x94, ((x) & 1) << 12)	/* Status Register 1 */
+#define USR2(x)  __REG2( IMX_UART1_BASE + 0x98, ((x) & 1) << 12)	/* Status Register 2 */
+#define UESC(x)  __REG2( IMX_UART1_BASE + 0x9c, ((x) & 1) << 12)	/* Escape Character Register */
+#define UTIM(x)  __REG2( IMX_UART1_BASE + 0xa0, ((x) & 1) << 12)	/* Escape Timer Register */
+#define UBIR(x)  __REG2( IMX_UART1_BASE + 0xa4, ((x) & 1) << 12)	/* BRM Incremental Register */
+#define UBMR(x)  __REG2( IMX_UART1_BASE + 0xa8, ((x) & 1) << 12)	/* BRM Modulator Register */
+#define UBRC(x)  __REG2( IMX_UART1_BASE + 0xac, ((x) & 1) << 12)	/* Baud Rate Count Register */
+#define BIPR1(x) __REG2( IMX_UART1_BASE + 0xb0, ((x) & 1) << 12)	/* Incremental Preset Register 1 */
+#define BIPR2(x) __REG2( IMX_UART1_BASE + 0xb4, ((x) & 1) << 12)	/* Incremental Preset Register 2 */
+#define BIPR3(x) __REG2( IMX_UART1_BASE + 0xb8, ((x) & 1) << 12)	/* Incremental Preset Register 3 */
+#define BIPR4(x) __REG2( IMX_UART1_BASE + 0xbc, ((x) & 1) << 12)	/* Incremental Preset Register 4 */
+#define BMPR1(x) __REG2( IMX_UART1_BASE + 0xc0, ((x) & 1) << 12)	/* BRM Modulator Register 1 */
+#define BMPR2(x) __REG2( IMX_UART1_BASE + 0xc4, ((x) & 1) << 12)	/* BRM Modulator Register 2 */
+#define BMPR3(x) __REG2( IMX_UART1_BASE + 0xc8, ((x) & 1) << 12)	/* BRM Modulator Register 3 */
+#define BMPR4(x) __REG2( IMX_UART1_BASE + 0xcc, ((x) & 1) << 12)	/* BRM Modulator Register 4 */
+#define UTS(x)   __REG2( IMX_UART1_BASE + 0xd0, ((x) & 1) << 12)	/* UART Test Register */
 
 /* UART Control Register Bit Fields.*/
 #define  URXD_CHARRDY    (1<<15)
@@ -525,85 +525,85 @@
 #define  UCR1_ADBR       (1<<14) /* Auto detect baud rate */
 #define  UCR1_TRDYEN     (1<<13) /* Transmitter ready interrupt enable */
 #define  UCR1_IDEN       (1<<12) /* Idle condition interrupt */
-#define  UCR1_RRDYEN     (1<<9)  /* Recv ready interrupt enable */
-#define  UCR1_RDMAEN     (1<<8)  /* Recv ready DMA enable */
-#define  UCR1_IREN       (1<<7)  /* Infrared interface enable */
-#define  UCR1_TXMPTYEN   (1<<6)  /* Transimitter empty interrupt enable */
-#define  UCR1_RTSDEN     (1<<5)  /* RTS delta interrupt enable */
-#define  UCR1_SNDBRK     (1<<4)  /* Send break */
-#define  UCR1_TDMAEN     (1<<3)  /* Transmitter ready DMA enable */
-#define  UCR1_UARTCLKEN  (1<<2)  /* UART clock enabled */
-#define  UCR1_DOZE       (1<<1)  /* Doze */
-#define  UCR1_UARTEN     (1<<0)  /* UART enabled */
-#define  UCR2_ESCI   (1<<15) /* Escape seq interrupt enable */
-#define  UCR2_IRTS   (1<<14) /* Ignore RTS pin */
-#define  UCR2_CTSC   (1<<13) /* CTS pin control */
+#define  UCR1_RRDYEN     (1<<9)	 /* Recv ready interrupt enable */
+#define  UCR1_RDMAEN     (1<<8)	 /* Recv ready DMA enable */
+#define  UCR1_IREN       (1<<7)	 /* Infrared interface enable */
+#define  UCR1_TXMPTYEN   (1<<6)	 /* Transimitter empty interrupt enable */
+#define  UCR1_RTSDEN     (1<<5)	 /* RTS delta interrupt enable */
+#define  UCR1_SNDBRK     (1<<4)	 /* Send break */
+#define  UCR1_TDMAEN     (1<<3)	 /* Transmitter ready DMA enable */
+#define  UCR1_UARTCLKEN  (1<<2)	 /* UART clock enabled */
+#define  UCR1_DOZE       (1<<1)	 /* Doze */
+#define  UCR1_UARTEN     (1<<0)	 /* UART enabled */
+#define  UCR2_ESCI	 (1<<15) /* Escape seq interrupt enable */
+#define  UCR2_IRTS	 (1<<14) /* Ignore RTS pin */
+#define  UCR2_CTSC	 (1<<13) /* CTS pin control */
 #define  UCR2_CTS        (1<<12) /* Clear to send */
 #define  UCR2_ESCEN      (1<<11) /* Escape enable */
 #define  UCR2_PREN       (1<<8) /* Parity enable */
 #define  UCR2_PROE       (1<<7) /* Parity odd/even */
-#define  UCR2_STPB       (1<<6) /* Stop */
-#define  UCR2_WS         (1<<5) /* Word size */
-#define  UCR2_RTSEN      (1<<4) /* Request to send interrupt enable */
-#define  UCR2_TXEN       (1<<2) /* Transmitter enabled */
-#define  UCR2_RXEN       (1<<1) /* Receiver enabled */
-#define  UCR2_SRST   (1<<0) /* SW reset */
-#define  UCR3_DTREN  (1<<13) /* DTR interrupt enable */
+#define  UCR2_STPB       (1<<6)	/* Stop */
+#define  UCR2_WS         (1<<5)	/* Word size */
+#define  UCR2_RTSEN      (1<<4)	/* Request to send interrupt enable */
+#define  UCR2_TXEN       (1<<2)	/* Transmitter enabled */
+#define  UCR2_RXEN       (1<<1)	/* Receiver enabled */
+#define  UCR2_SRST	 (1<<0)	/* SW reset */
+#define  UCR3_DTREN	 (1<<13) /* DTR interrupt enable */
 #define  UCR3_PARERREN   (1<<12) /* Parity enable */
 #define  UCR3_FRAERREN   (1<<11) /* Frame error interrupt enable */
 #define  UCR3_DSR        (1<<10) /* Data set ready */
 #define  UCR3_DCD        (1<<9)  /* Data carrier detect */
 #define  UCR3_RI         (1<<8)  /* Ring indicator */
 #define  UCR3_TIMEOUTEN  (1<<7)  /* Timeout interrupt enable */
-#define  UCR3_RXDSEN   (1<<6)  /* Receive status interrupt enable */
+#define  UCR3_RXDSEN	 (1<<6)  /* Receive status interrupt enable */
 #define  UCR3_AIRINTEN   (1<<5)  /* Async IR wake interrupt enable */
-#define  UCR3_AWAKEN   (1<<4)  /* Async wake interrupt enable */
-#define  UCR3_REF25  (1<<3)  /* Ref freq 25 MHz */
-#define  UCR3_REF30  (1<<2)  /* Ref Freq 30 MHz */
-#define  UCR3_INVT   (1<<1)  /* Inverted Infrared transmission */
-#define  UCR3_BPEN   (1<<0)  /* Preset registers enable */
+#define  UCR3_AWAKEN	 (1<<4)  /* Async wake interrupt enable */
+#define  UCR3_REF25	 (1<<3)  /* Ref freq 25 MHz */
+#define  UCR3_REF30	 (1<<2)  /* Ref Freq 30 MHz */
+#define  UCR3_INVT	 (1<<1)  /* Inverted Infrared transmission */
+#define  UCR3_BPEN	 (1<<0)  /* Preset registers enable */
 #define  UCR4_CTSTL_32   (32<<10) /* CTS trigger level (32 chars) */
-#define  UCR4_INVR   (1<<9)  /* Inverted infrared reception */
-#define  UCR4_ENIRI  (1<<8)  /* Serial infrared interrupt enable */
-#define  UCR4_WKEN   (1<<7)  /* Wake interrupt enable */
-#define  UCR4_REF16  (1<<6)  /* Ref freq 16 MHz */
-#define  UCR4_IRSC   (1<<5) /* IR special case */
-#define  UCR4_TCEN   (1<<3) /* Transmit complete interrupt enable */
-#define  UCR4_BKEN   (1<<2) /* Break condition interrupt enable */
-#define  UCR4_OREN   (1<<1) /* Receiver overrun interrupt enable */
-#define  UCR4_DREN   (1<<0) /* Recv data ready interrupt enable */
+#define  UCR4_INVR	 (1<<9)  /* Inverted infrared reception */
+#define  UCR4_ENIRI	 (1<<8)  /* Serial infrared interrupt enable */
+#define  UCR4_WKEN	 (1<<7)  /* Wake interrupt enable */
+#define  UCR4_REF16	 (1<<6)  /* Ref freq 16 MHz */
+#define  UCR4_IRSC	 (1<<5) /* IR special case */
+#define  UCR4_TCEN	 (1<<3) /* Transmit complete interrupt enable */
+#define  UCR4_BKEN	 (1<<2) /* Break condition interrupt enable */
+#define  UCR4_OREN	 (1<<1) /* Receiver overrun interrupt enable */
+#define  UCR4_DREN	 (1<<0) /* Recv data ready interrupt enable */
 #define  UFCR_RXTL_SHF   0      /* Receiver trigger level shift */
 #define  UFCR_RFDIV      (7<<7) /* Reference freq divider mask */
 #define  UFCR_TXTL_SHF   10     /* Transmitter trigger level shift */
 #define  USR1_PARITYERR  (1<<15) /* Parity error interrupt flag */
-#define  USR1_RTSS   (1<<14) /* RTS pin status */
-#define  USR1_TRDY   (1<<13) /* Transmitter ready interrupt/dma flag */
-#define  USR1_RTSD   (1<<12) /* RTS delta */
-#define  USR1_ESCF   (1<<11) /* Escape seq interrupt flag */
+#define  USR1_RTSS	 (1<<14) /* RTS pin status */
+#define  USR1_TRDY	 (1<<13) /* Transmitter ready interrupt/dma flag */
+#define  USR1_RTSD	 (1<<12) /* RTS delta */
+#define  USR1_ESCF	 (1<<11) /* Escape seq interrupt flag */
 #define  USR1_FRAMERR    (1<<10) /* Frame error interrupt flag */
-#define  USR1_RRDY       (1<<9) /* Receiver ready interrupt/dma flag */
-#define  USR1_TIMEOUT    (1<<7) /* Receive timeout interrupt status */
-#define  USR1_RXDS   (1<<6) /* Receiver idle interrupt flag */
-#define  USR1_AIRINT   (1<<5) /* Async IR wake interrupt flag */
-#define  USR1_AWAKE  (1<<4) /* Aysnc wake interrupt flag */
-#define  USR2_ADET   (1<<15) /* Auto baud rate detect complete */
-#define  USR2_TXFE   (1<<14) /* Transmit buffer FIFO empty */
-#define  USR2_DTRF   (1<<13) /* DTR edge interrupt flag */
-#define  USR2_IDLE   (1<<12) /* Idle condition */
-#define  USR2_IRINT  (1<<8) /* Serial infrared interrupt flag */
-#define  USR2_WAKE   (1<<7) /* Wake */
-#define  USR2_RTSF   (1<<4) /* RTS edge interrupt flag */
-#define  USR2_TXDC   (1<<3) /* Transmitter complete */
-#define  USR2_BRCD   (1<<2) /* Break condition */
-#define  USR2_ORE        (1<<1) /* Overrun error */
-#define  USR2_RDR        (1<<0) /* Recv data ready */
-#define  UTS_FRCPERR   (1<<13) /* Force parity error */
+#define  USR1_RRDY       (1<<9)	/* Receiver ready interrupt/dma flag */
+#define  USR1_TIMEOUT    (1<<7)	/* Receive timeout interrupt status */
+#define  USR1_RXDS	 (1<<6)	/* Receiver idle interrupt flag */
+#define  USR1_AIRINT	 (1<<5)	/* Async IR wake interrupt flag */
+#define  USR1_AWAKE	 (1<<4)	/* Aysnc wake interrupt flag */
+#define  USR2_ADET	 (1<<15) /* Auto baud rate detect complete */
+#define  USR2_TXFE	 (1<<14) /* Transmit buffer FIFO empty */
+#define  USR2_DTRF	 (1<<13) /* DTR edge interrupt flag */
+#define  USR2_IDLE	 (1<<12) /* Idle condition */
+#define  USR2_IRINT	 (1<<8)	/* Serial infrared interrupt flag */
+#define  USR2_WAKE	 (1<<7)	/* Wake */
+#define  USR2_RTSF	 (1<<4)	/* RTS edge interrupt flag */
+#define  USR2_TXDC	 (1<<3)	/* Transmitter complete */
+#define  USR2_BRCD	 (1<<2)	/* Break condition */
+#define  USR2_ORE        (1<<1)	/* Overrun error */
+#define  USR2_RDR        (1<<0)	/* Recv data ready */
+#define  UTS_FRCPERR	 (1<<13) /* Force parity error */
 #define  UTS_LOOP        (1<<12) /* Loop tx and rx */
-#define  UTS_TXEMPTY   (1<<6) /* TxFIFO empty */
-#define  UTS_RXEMPTY   (1<<5) /* RxFIFO empty */
-#define  UTS_TXFULL  (1<<4) /* TxFIFO full */
-#define  UTS_RXFULL  (1<<3) /* RxFIFO full */
-#define  UTS_SOFTRST   (1<<0) /* Software reset */
+#define  UTS_TXEMPTY	 (1<<6)	/* TxFIFO empty */
+#define  UTS_RXEMPTY	 (1<<5)	/* RxFIFO empty */
+#define  UTS_TXFULL	 (1<<4)	/* TxFIFO full */
+#define  UTS_RXFULL	 (1<<3)	/* RxFIFO full */
+#define  UTS_SOFTRST	 (1<<0)	/* Software reset */
 
 /* General purpose timers registers */
 #define TCTL1   __REG(IMX_TIM1_BASE)
@@ -631,4 +631,4 @@
 #define TSTAT_CAPT     (1<<1)  /* Capture event */
 #define TSTAT_COMP     (1)     /* Compare event */
 
-#endif        /* _IMX_REGS_H */
+#endif				/* _IMX_REGS_H */

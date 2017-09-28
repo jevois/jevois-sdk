@@ -35,7 +35,7 @@
 
 struct vfe_device_info {
   unsigned long mclk;       /* the mclk frequency for sensor module in HZ unit*/
-  unsigned int  stby_mode;
+  unsigned int  stby_mode;      
 };
 
 struct vfe_fmt {
@@ -69,7 +69,7 @@ struct vfe_channel {
 /* buffer for one video frame */
 struct vfe_buffer {
   struct videobuf_buffer    vb;
-  struct vfe_fmt      *      fmt;
+  struct vfe_fmt            *fmt;
   int image_quality;
 };
 
@@ -84,8 +84,8 @@ struct vfe_isp_stat_buf {
   unsigned int              id;
   struct list_head          queue;
   struct isp_stat_buffer    isp_stat_buf;
-  void           *           paddr;
-  void      *      dma_addr;
+  void                      *paddr;  
+  void						*dma_addr;  
 };
 
 struct vfe_isp_stat_buf_queue {
@@ -139,14 +139,14 @@ struct vfe_ctrl_para {
   unsigned int                            vflip_thumb;
   unsigned int                            hflip_thumb;
   unsigned int                            af_win_num;
-  struct isp_h3a_coor_win                 af_coor[MAX_AF_WIN_NUM];//pointer
+  struct isp_h3a_coor_win 								af_coor[MAX_AF_WIN_NUM];//pointer
   unsigned int                            ae_win_num;
-  struct isp_h3a_coor_win                 ae_coor[MAX_AE_WIN_NUM];//pointer
+  struct isp_h3a_coor_win 								ae_coor[MAX_AE_WIN_NUM];//pointer
   unsigned int                            gsensor_rot;
-  unsigned int                prev_exp_line;
-  unsigned int                        prev_ana_gain;
-  unsigned int                        prev_focus_pos;
-  unsigned int                        prev_exp_gain;
+  unsigned int							  prev_exp_line;
+  unsigned int			                  prev_ana_gain;  
+  unsigned int			                  prev_focus_pos;
+  unsigned int			                  prev_exp_gain;
   
 };
 
@@ -168,92 +168,92 @@ struct vfe_gpio {
 };
 
 struct vfe_regs {
-  void __iomem   *   csi_regs;
-  struct resource  * csi_regs_res;
-  void __iomem   *   isp_regs;
-  struct resource  * isp_regs_res;
-  void __iomem   *   isp_load_regs;
-  void __iomem   *   isp_saved_regs;
-  void       *       isp_load_regs_paddr;
-  void       *       isp_saved_regs_paddr;
-  void       *       isp_load_regs_dma_addr;
-  void       *       isp_saved_regs_dma_addr;
+  void __iomem      *csi_regs;
+  struct resource   *csi_regs_res;
+  void __iomem      *isp_regs;
+  struct resource   *isp_regs_res;
+  void __iomem      *isp_load_regs;
+  void __iomem      *isp_saved_regs;
+  void              *isp_load_regs_paddr;
+  void              *isp_saved_regs_paddr;
+  void              *isp_load_regs_dma_addr;
+  void              *isp_saved_regs_dma_addr;
 };
 
 struct vfe_clk {
-  struct clk    *    vfe_core_clk_src;
-  struct clk    *    vfe_master_clk_24M_src;
-  struct clk    *    vfe_master_clk_pll_src;
-  struct clk    *    vfe_dphy_clk_src;
-  struct clk    *    vfe_ahb_clk;
-  struct clk    *    vfe_core_clk;
-  struct clk    *    vfe_master_clk;
-  struct clk    *    vfe_dram_clk;
-  struct clk    *    vfe_dphy_clk;
-  struct clk    *    vfe_misc_clk;
-  struct clk    *    vfe_mipi_csi_clk;
-  struct clk    *    vfe_vpu_clk;
+  struct clk        *vfe_core_clk_src;
+  struct clk        *vfe_master_clk_24M_src;
+  struct clk        *vfe_master_clk_pll_src;
+  struct clk        *vfe_dphy_clk_src;
+  struct clk        *vfe_ahb_clk;
+  struct clk        *vfe_core_clk;
+  struct clk        *vfe_master_clk;
+  struct clk        *vfe_dram_clk;
+  struct clk        *vfe_dphy_clk;
+  struct clk        *vfe_misc_clk;
+  struct clk        *vfe_mipi_csi_clk;
+  struct clk        *vfe_vpu_clk;
 };
 
 struct vfe_clk_freq {
-  unsigned long     master_clk_freq;
-  unsigned long     core_clk_freq;
-  unsigned long     dphy_clk_freq;
+	unsigned long			master_clk_freq;
+  unsigned long			core_clk_freq;
+  unsigned long			dphy_clk_freq;
 };
 
 enum vfe_regulator
 {
-  ENUM_ISP_REGULATOR,
-  ENUM_CSI_REGULATOR,
+	ENUM_ISP_REGULATOR,
+	ENUM_CSI_REGULATOR,
 };
 enum vfe_sub_device_regulator
 {
-  ENUM_IOVDD,
-  ENUM_AVDD,
-  ENUM_DVDD,
-  ENUM_AFVDD,
-  ENUM_MAX_REGU,
+	ENUM_IOVDD,
+	ENUM_AVDD,
+	ENUM_DVDD,
+	ENUM_AFVDD,
+	ENUM_MAX_REGU,
 };
 
 struct vfe_power {
   /*power issue*/
   enum standby_mode  stby_mode; /* standby mode */
-  struct regulator  * iovdd;    /* interface voltage source of sensor module */
-  struct regulator  * avdd;     /* analog voltage source of sensor module */
-  struct regulator  * dvdd;     /* core voltage source of sensor module */
-  struct regulator  * afvdd;    /* vcm sink voltage source of sensor module */
-  unsigned int       iovdd_vol; /* voltage of sensor module for interface */
-  unsigned int       avdd_vol;  /* voltage of sensor module for analog */
-  unsigned int       dvdd_vol;  /* voltage of sensor module for core */
-  unsigned int       afvdd_vol; /* voltage of sensor module for vcm sink */
+  struct regulator   *iovdd;    /* interface voltage source of sensor module */
+  struct regulator   *avdd;     /* analog voltage source of sensor module */
+  struct regulator   *dvdd;     /* core voltage source of sensor module */
+  struct regulator   *afvdd;    /* vcm sink voltage source of sensor module */
+  unsigned int			 iovdd_vol; /* voltage of sensor module for interface */
+  unsigned int			 avdd_vol;  /* voltage of sensor module for analog */
+  unsigned int			 dvdd_vol;	/* voltage of sensor module for core */
+  unsigned int			 afvdd_vol; /* voltage of sensor module for vcm sink */
 };
 struct camera_instance {
-  char name[I2C_NAME_SIZE];
-  int i2c_addr;
-  int sensor_type;
-  int stdby_mode;
-  int vflip;
-  int hflip;
-  char act_name[I2C_NAME_SIZE];
-  int act_i2c_addr;
-  char isp_cfg_name[I2C_NAME_SIZE];
+	char name[I2C_NAME_SIZE];
+	int i2c_addr;
+	int sensor_type;
+	int stdby_mode;
+	int vflip;
+	int hflip;
+	char act_name[I2C_NAME_SIZE];
+	int act_i2c_addr;	
+	char isp_cfg_name[I2C_NAME_SIZE];
 };
 
 struct sensor_config_init {
-  int used;
-  int csi_sel;
-  int device_sel;
-  int twi_id;
-  int power_settings_enable;
-  int detect_sensor_num;
-  char sub_power_str[ENUM_MAX_REGU][32];
-  int sub_power_vol[ENUM_MAX_REGU];
-  struct camera_instance camera_inst[MAX_SENSOR_DETECT_NUM];
+	int used;
+	int csi_sel;
+	int device_sel;
+	int twi_id;
+	int power_settings_enable;
+	int detect_sensor_num;
+	char sub_power_str[ENUM_MAX_REGU][32];
+	int sub_power_vol[ENUM_MAX_REGU];
+	struct camera_instance camera_inst[MAX_SENSOR_DETECT_NUM];
 };
 
 struct ccm_config {
-  struct v4l2_subdev   *   sd;
-  struct sensor_config_init * sensor_cfg_ini;
+  struct v4l2_subdev      *sd;
+  struct sensor_config_init *sensor_cfg_ini;
   char                    sensor_pos[32];
   char                    ccm[I2C_NAME_SIZE];
   char                    isp_cfg_name[I2C_NAME_SIZE];
@@ -271,12 +271,12 @@ struct ccm_config {
   unsigned int            is_bayer_raw;
   struct vfe_gpio         gpio;
   struct vfe_power        power;
-  struct vfe_clk_freq     clk_freq;
+  struct vfe_clk_freq			clk_freq;
   int                     act_used;
   char                    act_name[I2C_NAME_SIZE];
   unsigned int            act_slave;
-  struct actuator_ctrl_t * act_ctrl;
-  struct v4l2_subdev   *   sd_act;
+  struct actuator_ctrl_t  *act_ctrl;
+  struct v4l2_subdev      *sd_act;
   int                     flash_used;
   __flash_driver_ic_type flash_type;
 };
@@ -285,39 +285,39 @@ struct sunxi_vip_platform_data {
   unsigned int mipi_sel;
   unsigned int vip_sel;
   unsigned int isp_sel;
-};
+}; 
 
 
 
-static LIST_HEAD (devlist);
+static LIST_HEAD(devlist);
 struct vfe_dev {
   struct list_head        devlist;
   struct v4l2_device      v4l2_dev;
-  struct v4l2_subdev   *   sd;
-  struct v4l2_subdev   *   sd_act;
+  struct v4l2_subdev      *sd;
+  struct v4l2_subdev	  	*sd_act;
   int                     flash_used;
   __flash_driver_ic_type flash_type;
   int                     vip_define_sensor_list;
-  struct platform_device * pdev;
+  struct platform_device  *pdev;
   int            id;
   spinlock_t              slock;
   struct mutex            stream_lock;
   
-  /* suspend */
-  struct mutex            standby_lock;
-  struct semaphore        standby_seq_sema;
-  #if defined(CONFIG_ES)
-  struct early_suspend early_suspend;
-  #endif
-  int early_suspend_valid_flag;
-  int vfe_standby_poweroff_flag;
-  
-  /* work queue */
-  struct work_struct resume_work;
-  struct delayed_work probe_work;
-  
+	/* suspend */
+	struct mutex						standby_lock;
+	struct semaphore        standby_seq_sema; 
+#if defined(CONFIG_ES)
+	struct early_suspend early_suspend;
+#endif
+	int early_suspend_valid_flag;
+	int vfe_standby_poweroff_flag;
+
+	/* work queue */
+	struct work_struct resume_work;
+	struct delayed_work probe_work;
+	
   /* various device info */
-  struct video_device   *  vfd;
+  struct video_device     *vfd;
   struct vfe_dmaqueue     vidq;
   struct vfe_isp_stat_buf_queue  isp_stat_bq;
   /* Several counters */
@@ -331,28 +331,28 @@ struct vfe_dev {
   unsigned long           opened;
   struct mutex            opened_lock;
   /* about system resource */
-  int                     irq;
-  #ifdef VFE_GPIO
-  struct pinctrl     *     pctrl;
-  struct pinctrl_state  *  pctrl_state;
-  #endif
+  int                     irq;  
+#ifdef VFE_GPIO
+  struct pinctrl		 			*pctrl;
+  struct pinctrl_state 		*pctrl_state;
+#endif  
   struct vfe_regs         regs;
-  struct vfe_gpio     *    gpio;
-  struct vfe_power    *    power;
-  struct regulator  * vfe_system_power[3];
+  struct vfe_gpio         *gpio;
+  struct vfe_power        *power;
+  struct regulator   *vfe_system_power[3];
   int vfe_sensor_power_cnt;
-  struct vfe_clk_freq   *  clk_freq;
+  struct vfe_clk_freq			*clk_freq;
   struct vfe_clk          clock;
-  
-  /* about vfe channel */
+
+  /* about vfe channel */ 
   unsigned char           total_bus_ch;
-  unsigned char           total_rx_ch;
+  unsigned char           total_rx_ch;  
   unsigned int            cur_ch;
   struct frame_arrange    arrange;
   struct vfe_channel      ch[MAX_CH_NUM];
   /* about some global info*/
   unsigned int            first_flag;       /* indicate the first time triggering irq */
-  long unsigned int       sec, usec;
+  long unsigned int       sec,usec;
   unsigned int            dev_qty;
   unsigned int            is_same_module;   /* the modules connected on the same bus are the same modle */
   unsigned int            input;
@@ -361,13 +361,13 @@ struct vfe_dev {
   unsigned int            vip_sel;
   unsigned int            isp_sel;
   struct ccm_config       ccm_cfg_content[MAX_INPUT_NUM];
-  struct ccm_config    *   ccm_cfg[MAX_INPUT_NUM];
+  struct ccm_config       *ccm_cfg[MAX_INPUT_NUM];
   struct i2c_board_info   dev_sensor[MAX_INPUT_NUM];
   struct i2c_board_info   dev_act[MAX_INPUT_NUM];
-  unsigned int        device_valid_flag[MAX_INPUT_NUM];
+ unsigned int   	   device_valid_flag[MAX_INPUT_NUM];
   unsigned int            is_isp_used;
   unsigned int            is_bayer_raw;
-  struct vfe_fmt     *     fmt;
+  struct vfe_fmt          *fmt;
   unsigned int            width;
   unsigned int            height;
   unsigned int            thumb_width;
@@ -379,24 +379,24 @@ struct vfe_dev {
   struct isp_frame_info   isp_frame_info;
   struct isp_init_para    isp_init_para;
   struct isp_table_addr   isp_tbl_addr[MAX_INPUT_NUM];
-  struct vfe_mm           isp_lut_tbl_buf_mm[MAX_INPUT_NUM];
-  struct vfe_mm           isp_drc_tbl_buf_mm[MAX_INPUT_NUM];
-  struct vfe_mm           isp_stat_buf_mm[MAX_ISP_STAT_BUF];
-  struct vfe_mm           isp_load_reg_mm;
-  struct vfe_mm           isp_save_reg_mm;
+  struct vfe_mm  					isp_lut_tbl_buf_mm[MAX_INPUT_NUM];
+  struct vfe_mm						isp_drc_tbl_buf_mm[MAX_INPUT_NUM];
+  struct vfe_mm						isp_stat_buf_mm[MAX_ISP_STAT_BUF];
+  struct vfe_mm						isp_load_reg_mm;
+  struct vfe_mm						isp_save_reg_mm;
   struct isp_gen_settings isp_gen_set[MAX_INPUT_NUM];
-  struct isp_gen_settings * isp_gen_set_pt;
+  struct isp_gen_settings *isp_gen_set_pt; 
   struct mutex            isp_3a_result_mutex;
   struct isp_3a_result    isp_3a_result[MAX_INPUT_NUM];
-  struct isp_3a_result  *  isp_3a_result_pt;
+  struct isp_3a_result    *isp_3a_result_pt;
   struct work_struct      isp_isr_bh_task;
   struct work_struct      isp_isr_set_sensor_task;
   struct mipi_para        mipi_para;
   struct mipi_fmt         mipi_fmt;
   struct vfe_ctrl_para    ctrl_para;
-  struct flash_dev_info          *         fl_dev_info;
-  unsigned int            platform_id;
-  unsigned int      vfe_s_input_flag;
+  struct flash_dev_info                   *fl_dev_info;
+  unsigned int						platform_id;
+  unsigned int 			vfe_s_input_flag;
 };
 
 #endif  /* __VFE__H__ */

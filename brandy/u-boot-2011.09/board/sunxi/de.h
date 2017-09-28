@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -24,26 +24,26 @@
 #ifndef  __SUNXI_DE_H__
 #define  __SUNXI_DE_H__
 
-extern int board_display_layer_request (void);
+extern int board_display_layer_request(void);
 
-extern int board_display_layer_release (void);
+extern int board_display_layer_release(void);
 
-extern int board_display_layer_open (void);
+extern int board_display_layer_open(void);
 
-extern int board_display_layer_close (void);
+extern int board_display_layer_close(void);
 
-extern int board_display_layer_para_set (void);
+extern int board_display_layer_para_set(void);
 
-extern int board_display_show (int display_source);
+extern int board_display_show(int display_source);
 
-extern int board_display_framebuffer_set (int width, int height, int bitcount, void * buffer);
+extern int board_display_framebuffer_set(int width, int height, int bitcount, void *buffer);
 
-extern int board_display_framebuffer_change (void * buffer);
+extern int board_display_framebuffer_change(void *buffer);
 
-extern int board_display_device_open (void);
+extern int board_display_device_open(void);
 
-extern int borad_display_get_screen_width (void);
+extern int borad_display_get_screen_width(void);
 
-extern int borad_display_get_screen_height (void);
+extern int borad_display_get_screen_height(void);
 
 #endif  

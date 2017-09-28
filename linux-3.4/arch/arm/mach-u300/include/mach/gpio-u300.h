@@ -13,9 +13,9 @@
  * enum u300_gpio_variant - the type of U300 GPIO employed
  */
 enum u300_gpio_variant {
-  U300_GPIO_COH901335,
-  U300_GPIO_COH901571_3_BS335,
-  U300_GPIO_COH901571_3_BS365,
+	U300_GPIO_COH901335,
+	U300_GPIO_COH901571_3_BS335,
+	U300_GPIO_COH901571_3_BS365,
 };
 
 /**
@@ -27,11 +27,11 @@ enum u300_gpio_variant {
  * @pinctrl_device: pin control device to spawn as child
  */
 struct u300_gpio_platform {
-  enum u300_gpio_variant variant;
-  u8 ports;
-  int gpio_base;
-  int gpio_irq_base;
-  struct platform_device * pinctrl_device;
+	enum u300_gpio_variant variant;
+	u8 ports;
+	int gpio_base;
+	int gpio_irq_base;
+	struct platform_device *pinctrl_device;
 };
 
 #endif /* __MACH_U300_GPIO_U300_H */

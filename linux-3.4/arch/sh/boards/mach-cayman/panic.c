@@ -13,37 +13,37 @@
 /* THIS IS A PHYSICAL ADDRESS */
 #define HDSP2534_ADDR (0x04002100)
 
-static void poor_mans_delay (void)
+static void poor_mans_delay(void)
 {
-  int i;
-  
-  for (i = 0; i < 2500000; i++)
-  { cpu_relax(); }
+	int i;
+
+	for (i = 0; i < 2500000; i++)
+		cpu_relax();
 }
 
-static void show_value (unsigned long x)
+static void show_value(unsigned long x)
 {
-  int i;
-  unsigned nibble;
-  for (i = 0; i < 8; i++) {
-    nibble = ( (x >> (i * 4) ) & 0xf);
-    
-    __raw_writeb (nibble + ( (nibble > 9) ? 55 : 48),
-                  HDSP2534_ADDR + 0xe0 + ( (7 - i) << 2) );
-  }
+	int i;
+	unsigned nibble;
+	for (i = 0; i < 8; i++) {
+		nibble = ((x >> (i * 4)) & 0xf);
+
+		__raw_writeb(nibble + ((nibble > 9) ? 55 : 48),
+			  HDSP2534_ADDR + 0xe0 + ((7 - i) << 2));
+	}
 }
 
 void
-panic_handler (unsigned long panicPC, unsigned long panicSSR,
-               unsigned long panicEXPEVT)
+panic_handler(unsigned long panicPC, unsigned long panicSSR,
+	      unsigned long panicEXPEVT)
 {
-  while (1) {
-    /* This piece of code displays the PC on the LED display */
-    show_value (panicPC);
-    poor_mans_delay();
-    show_value (panicSSR);
-    poor_mans_delay();
-    show_value (panicEXPEVT);
-    poor_mans_delay();
-  }
+	while (1) {
+		/* This piece of code displays the PC on the LED display */
+		show_value(panicPC);
+		poor_mans_delay();
+		show_value(panicSSR);
+		poor_mans_delay();
+		show_value(panicEXPEVT);
+		poor_mans_delay();
+	}
 }

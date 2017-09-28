@@ -1,7 +1,7 @@
 /* linux/arch/arm/plat-samsung/include/plat/s5p-clock.h
  *
  * Copyright (c) 2009-2010 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com
+ *		http://www.samsung.com
  *
  * Header file for s5p clock support
  *
@@ -47,15 +47,15 @@ extern struct clksrc_sources clk_src_mpll;
 extern struct clksrc_sources clk_src_epll;
 extern struct clksrc_sources clk_src_dpll;
 
-extern int s5p_gatectrl (void __iomem * reg, struct clk * clk, int enable);
+extern int s5p_gatectrl(void __iomem *reg, struct clk *clk, int enable);
 
 /* Common EPLL operations for S5P platform */
-extern int s5p_epll_enable (struct clk * clk, int enable);
-extern unsigned long s5p_epll_get_rate (struct clk * clk);
+extern int s5p_epll_enable(struct clk *clk, int enable);
+extern unsigned long s5p_epll_get_rate(struct clk *clk);
 
 /* SPDIF clk operations common for S5PC100/V210/C110 and Exynos4 */
-extern int s5p_spdif_set_rate (struct clk * clk, unsigned long rate);
-extern unsigned long s5p_spdif_get_rate (struct clk * clk);
+extern int s5p_spdif_set_rate(struct clk *clk, unsigned long rate);
+extern unsigned long s5p_spdif_get_rate(struct clk *clk);
 
 extern struct clk_ops s5p_sclk_spdif_ops;
 #endif /* __ASM_PLAT_S5P_CLOCK_H */

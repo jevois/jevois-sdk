@@ -3,7 +3,7 @@
 
 struct mod_arch_specific
 {
-  unsigned int gotsecindex;
+	unsigned int gotsecindex;
 };
 
 #define Elf_Sym Elf64_Sym
@@ -17,7 +17,7 @@ struct mod_arch_specific
 #define ARCH_SHF_SMALL SHF_ALPHA_GPREL
 
 #ifdef MODULE
-asm (".section .got,\"aws\",@progbits; .align 3; .previous");
+asm(".section .got,\"aws\",@progbits; .align 3; .previous");
 #endif
 
 #endif /*_ALPHA_MODULE_H*/

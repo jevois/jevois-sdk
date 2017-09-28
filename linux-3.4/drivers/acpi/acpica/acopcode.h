@@ -324,4 +324,4 @@
 #define ARGI_WORD_OP                    ARGI_INVALID_OPCODE
 #define ARGI_ZERO_OP                    ARG_NONE
 
-#endif        /* __ACOPCODE_H__ */
+#endif				/* __ACOPCODE_H__ */

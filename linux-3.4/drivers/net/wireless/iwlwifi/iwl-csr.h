@@ -92,7 +92,7 @@
 #define CSR_GP_CNTRL            (CSR_BASE+0x024)
 
 /* 2nd byte of CSR_INT_COALESCING, not accessible via iwl_write32()! */
-#define CSR_INT_PERIODIC_REG  (CSR_BASE+0x005)
+#define CSR_INT_PERIODIC_REG	(CSR_BASE+0x005)
 
 /*
  * Hardware revision info
@@ -115,11 +115,11 @@
  */
 #define CSR_EEPROM_REG          (CSR_BASE+0x02c)
 #define CSR_EEPROM_GP           (CSR_BASE+0x030)
-#define CSR_OTP_GP_REG    (CSR_BASE+0x034)
+#define CSR_OTP_GP_REG   	(CSR_BASE+0x034)
 
-#define CSR_GIO_REG   (CSR_BASE+0x03C)
-#define CSR_GP_UCODE_REG  (CSR_BASE+0x048)
-#define CSR_GP_DRIVER_REG (CSR_BASE+0x050)
+#define CSR_GIO_REG		(CSR_BASE+0x03C)
+#define CSR_GP_UCODE_REG	(CSR_BASE+0x048)
+#define CSR_GP_DRIVER_REG	(CSR_BASE+0x050)
 
 /*
  * UCODE-DRIVER GP (general purpose) mailbox registers.
@@ -131,8 +131,8 @@
 #define CSR_UCODE_DRV_GP2       (CSR_BASE+0x060)
 
 #define CSR_LED_REG             (CSR_BASE+0x094)
-#define CSR_DRAM_INT_TBL_REG  (CSR_BASE+0x0A0)
-#define CSR_MAC_SHADOW_REG_CTRL (CSR_BASE+0x0A8) /* 6000 and up */
+#define CSR_DRAM_INT_TBL_REG	(CSR_BASE+0x0A0)
+#define CSR_MAC_SHADOW_REG_CTRL	(CSR_BASE+0x0A8) /* 6000 and up */
 
 
 /* GIO Chicken Bits (PCI Express bus link power management) */
@@ -149,30 +149,30 @@
  *  3-2:  0 = A, 1 = B, 2 = C, 3 = D step
  *  1-0:  "Dash" (-) value, as in C-1, etc.
  */
-#define CSR_HW_REV_WA_REG   (CSR_BASE+0x22C)
+#define CSR_HW_REV_WA_REG		(CSR_BASE+0x22C)
 
-#define CSR_DBG_HPET_MEM_REG    (CSR_BASE+0x240)
-#define CSR_DBG_LINK_PWR_MGMT_REG (CSR_BASE+0x250)
+#define CSR_DBG_HPET_MEM_REG		(CSR_BASE+0x240)
+#define CSR_DBG_LINK_PWR_MGMT_REG	(CSR_BASE+0x250)
 
 /* Bits for CSR_HW_IF_CONFIG_REG */
-#define CSR_HW_IF_CONFIG_REG_MSK_BOARD_VER  (0x00000C00)
-#define CSR_HW_IF_CONFIG_REG_BIT_MAC_SI   (0x00000100)
-#define CSR_HW_IF_CONFIG_REG_BIT_RADIO_SI (0x00000200)
+#define CSR_HW_IF_CONFIG_REG_MSK_BOARD_VER	(0x00000C00)
+#define CSR_HW_IF_CONFIG_REG_BIT_MAC_SI 	(0x00000100)
+#define CSR_HW_IF_CONFIG_REG_BIT_RADIO_SI	(0x00000200)
 
-#define CSR_HW_IF_CONFIG_REG_BIT_HAP_WAKE_L1A (0x00080000)
-#define CSR_HW_IF_CONFIG_REG_BIT_EEPROM_OWN_SEM (0x00200000)
-#define CSR_HW_IF_CONFIG_REG_BIT_NIC_READY  (0x00400000) /* PCI_OWN_SEM */
+#define CSR_HW_IF_CONFIG_REG_BIT_HAP_WAKE_L1A	(0x00080000)
+#define CSR_HW_IF_CONFIG_REG_BIT_EEPROM_OWN_SEM	(0x00200000)
+#define CSR_HW_IF_CONFIG_REG_BIT_NIC_READY	(0x00400000) /* PCI_OWN_SEM */
 #define CSR_HW_IF_CONFIG_REG_BIT_NIC_PREPARE_DONE (0x02000000) /* ME_OWN */
-#define CSR_HW_IF_CONFIG_REG_PREPARE      (0x08000000) /* WAKE_ME */
+#define CSR_HW_IF_CONFIG_REG_PREPARE		  (0x08000000) /* WAKE_ME */
 
-#define CSR_INT_PERIODIC_DIS      (0x00) /* disable periodic int*/
-#define CSR_INT_PERIODIC_ENA      (0xFF) /* 255*32 usec ~ 8 msec*/
+#define CSR_INT_PERIODIC_DIS			(0x00) /* disable periodic int*/
+#define CSR_INT_PERIODIC_ENA			(0xFF) /* 255*32 usec ~ 8 msec*/
 
 /* interrupt flags in INTA, set by uCode or hardware (e.g. dma),
  * acknowledged (reset) by host writing "1" to flagged bits. */
 #define CSR_INT_BIT_FH_RX        (1 << 31) /* Rx DMA, cmd responses, FH_INT[17:16] */
 #define CSR_INT_BIT_HW_ERR       (1 << 29) /* DMA hardware error FH_INT[31] */
-#define CSR_INT_BIT_RX_PERIODIC  (1 << 28) /* Rx periodic */
+#define CSR_INT_BIT_RX_PERIODIC	 (1 << 28) /* Rx periodic */
 #define CSR_INT_BIT_FH_TX        (1 << 27) /* Tx DMA FH_INT[1:0] */
 #define CSR_INT_BIT_SCD          (1 << 26) /* TXQ pointer advanced */
 #define CSR_INT_BIT_SW_ERR       (1 << 25) /* uCode error */
@@ -182,14 +182,14 @@
 #define CSR_INT_BIT_WAKEUP       (1 << 1)  /* NIC controller waking up (pwr mgmt) */
 #define CSR_INT_BIT_ALIVE        (1 << 0)  /* uCode interrupts once it initializes */
 
-#define CSR_INI_SET_MASK  (CSR_INT_BIT_FH_RX   | \
-                           CSR_INT_BIT_HW_ERR  | \
-                           CSR_INT_BIT_FH_TX   | \
-                           CSR_INT_BIT_SW_ERR  | \
-                           CSR_INT_BIT_RF_KILL | \
-                           CSR_INT_BIT_SW_RX   | \
-                           CSR_INT_BIT_WAKEUP  | \
-                           CSR_INT_BIT_ALIVE)
+#define CSR_INI_SET_MASK	(CSR_INT_BIT_FH_RX   | \
+				 CSR_INT_BIT_HW_ERR  | \
+				 CSR_INT_BIT_FH_TX   | \
+				 CSR_INT_BIT_SW_ERR  | \
+				 CSR_INT_BIT_RF_KILL | \
+				 CSR_INT_BIT_SW_RX   | \
+				 CSR_INT_BIT_WAKEUP  | \
+				 CSR_INT_BIT_ALIVE)
 
 /* interrupt flags in FH (flow handler) (PCI busmaster DMA) */
 #define CSR_FH_INT_BIT_ERR       (1 << 31) /* Error */
@@ -199,12 +199,12 @@
 #define CSR_FH_INT_BIT_TX_CHNL1  (1 << 1)  /* Tx channel 1 */
 #define CSR_FH_INT_BIT_TX_CHNL0  (1 << 0)  /* Tx channel 0 */
 
-#define CSR_FH_INT_RX_MASK  (CSR_FH_INT_BIT_HI_PRIOR | \
-                             CSR_FH_INT_BIT_RX_CHNL1 | \
-                             CSR_FH_INT_BIT_RX_CHNL0)
+#define CSR_FH_INT_RX_MASK	(CSR_FH_INT_BIT_HI_PRIOR | \
+				CSR_FH_INT_BIT_RX_CHNL1 | \
+				CSR_FH_INT_BIT_RX_CHNL0)
 
-#define CSR_FH_INT_TX_MASK  (CSR_FH_INT_BIT_TX_CHNL1 | \
-                             CSR_FH_INT_BIT_TX_CHNL0)
+#define CSR_FH_INT_TX_MASK	(CSR_FH_INT_BIT_TX_CHNL1 | \
+				CSR_FH_INT_BIT_TX_CHNL0)
 
 /* GPIO */
 #define CSR_GPIO_IN_BIT_AUX_POWER                   (0x00000200)
@@ -279,32 +279,32 @@
 #define CSR_HW_REV_TYPE_6x00           (0x0000070)
 #define CSR_HW_REV_TYPE_6x50           (0x0000080)
 #define CSR_HW_REV_TYPE_6150           (0x0000084)
-#define CSR_HW_REV_TYPE_6x05         (0x00000B0)
-#define CSR_HW_REV_TYPE_6x30         CSR_HW_REV_TYPE_6x05
-#define CSR_HW_REV_TYPE_6x35         CSR_HW_REV_TYPE_6x05
-#define CSR_HW_REV_TYPE_2x30         (0x00000C0)
-#define CSR_HW_REV_TYPE_2x00         (0x0000100)
-#define CSR_HW_REV_TYPE_105        (0x0000110)
-#define CSR_HW_REV_TYPE_135        (0x0000120)
+#define CSR_HW_REV_TYPE_6x05	       (0x00000B0)
+#define CSR_HW_REV_TYPE_6x30	       CSR_HW_REV_TYPE_6x05
+#define CSR_HW_REV_TYPE_6x35	       CSR_HW_REV_TYPE_6x05
+#define CSR_HW_REV_TYPE_2x30	       (0x00000C0)
+#define CSR_HW_REV_TYPE_2x00	       (0x0000100)
+#define CSR_HW_REV_TYPE_105	       (0x0000110)
+#define CSR_HW_REV_TYPE_135	       (0x0000120)
 #define CSR_HW_REV_TYPE_NONE           (0x00001F0)
 
 /* EEPROM REG */
-#define CSR_EEPROM_REG_READ_VALID_MSK (0x00000001)
-#define CSR_EEPROM_REG_BIT_CMD    (0x00000002)
-#define CSR_EEPROM_REG_MSK_ADDR   (0x0000FFFC)
-#define CSR_EEPROM_REG_MSK_DATA   (0xFFFF0000)
+#define CSR_EEPROM_REG_READ_VALID_MSK	(0x00000001)
+#define CSR_EEPROM_REG_BIT_CMD		(0x00000002)
+#define CSR_EEPROM_REG_MSK_ADDR		(0x0000FFFC)
+#define CSR_EEPROM_REG_MSK_DATA		(0xFFFF0000)
 
 /* EEPROM GP */
-#define CSR_EEPROM_GP_VALID_MSK   (0x00000007) /* signature */
-#define CSR_EEPROM_GP_IF_OWNER_MSK  (0x00000180)
-#define CSR_EEPROM_GP_BAD_SIGNATURE_BOTH_EEP_AND_OTP  (0x00000000)
-#define CSR_EEPROM_GP_BAD_SIG_EEP_GOOD_SIG_OTP    (0x00000001)
-#define CSR_EEPROM_GP_GOOD_SIG_EEP_LESS_THAN_4K   (0x00000002)
-#define CSR_EEPROM_GP_GOOD_SIG_EEP_MORE_THAN_4K   (0x00000004)
+#define CSR_EEPROM_GP_VALID_MSK		(0x00000007) /* signature */
+#define CSR_EEPROM_GP_IF_OWNER_MSK	(0x00000180)
+#define CSR_EEPROM_GP_BAD_SIGNATURE_BOTH_EEP_AND_OTP	(0x00000000)
+#define CSR_EEPROM_GP_BAD_SIG_EEP_GOOD_SIG_OTP		(0x00000001)
+#define CSR_EEPROM_GP_GOOD_SIG_EEP_LESS_THAN_4K		(0x00000002)
+#define CSR_EEPROM_GP_GOOD_SIG_EEP_MORE_THAN_4K		(0x00000004)
 
 /* One-time-programmable memory general purpose reg */
-#define CSR_OTP_GP_REG_DEVICE_SELECT  (0x00010000) /* 0 - EEPROM, 1 - OTP */
-#define CSR_OTP_GP_REG_OTP_ACCESS_MODE  (0x00020000) /* 0 - absolute, 1 - relative */
+#define CSR_OTP_GP_REG_DEVICE_SELECT	(0x00010000) /* 0 - EEPROM, 1 - OTP */
+#define CSR_OTP_GP_REG_OTP_ACCESS_MODE	(0x00020000) /* 0 - absolute, 1 - relative */
 #define CSR_OTP_GP_REG_ECC_CORR_STATUS_MSK          (0x00100000) /* bit 20 */
 #define CSR_OTP_GP_REG_ECC_UNCORR_STATUS_MSK        (0x00200000) /* bit 21 */
 
@@ -317,7 +317,7 @@
 
 
 /* CSR GIO */
-#define CSR_GIO_REG_VAL_L0S_ENABLED (0x00000002)
+#define CSR_GIO_REG_VAL_L0S_ENABLED	(0x00000002)
 
 /*
  * UCODE-DRIVER GP (general purpose) mailbox register 1
@@ -354,14 +354,14 @@
 #define CSR_UCODE_DRV_GP1_BIT_D3_CFG_COMPLETE       (0x00000020)
 
 /* GP Driver */
-#define CSR_GP_DRIVER_REG_BIT_RADIO_SKU_MSK     (0x00000003)
-#define CSR_GP_DRIVER_REG_BIT_RADIO_SKU_3x3_HYB     (0x00000000)
-#define CSR_GP_DRIVER_REG_BIT_RADIO_SKU_2x2_HYB     (0x00000001)
-#define CSR_GP_DRIVER_REG_BIT_RADIO_SKU_2x2_IPA     (0x00000002)
-#define CSR_GP_DRIVER_REG_BIT_CALIB_VERSION6      (0x00000004)
-#define CSR_GP_DRIVER_REG_BIT_6050_1x2        (0x00000008)
+#define CSR_GP_DRIVER_REG_BIT_RADIO_SKU_MSK	    (0x00000003)
+#define CSR_GP_DRIVER_REG_BIT_RADIO_SKU_3x3_HYB	    (0x00000000)
+#define CSR_GP_DRIVER_REG_BIT_RADIO_SKU_2x2_HYB	    (0x00000001)
+#define CSR_GP_DRIVER_REG_BIT_RADIO_SKU_2x2_IPA	    (0x00000002)
+#define CSR_GP_DRIVER_REG_BIT_CALIB_VERSION6	    (0x00000004)
+#define CSR_GP_DRIVER_REG_BIT_6050_1x2		    (0x00000008)
 
-#define CSR_GP_DRIVER_REG_BIT_RADIO_IQ_INVER      (0x00000080)
+#define CSR_GP_DRIVER_REG_BIT_RADIO_IQ_INVER	    (0x00000080)
 
 /* GIO Chicken Bits (PCI Express bus link power management) */
 #define CSR_GIO_CHICKEN_BITS_REG_BIT_L1A_NO_L0S_RX  (0x00800000)
@@ -376,11 +376,11 @@
 #define CSR50_ANA_PLL_CFG_VAL        (0x00880300)
 
 /* HPET MEM debug */
-#define CSR_DBG_HPET_MEM_REG_VAL  (0xFFFF0000)
+#define CSR_DBG_HPET_MEM_REG_VAL	(0xFFFF0000)
 
 /* DRAM INT TABLE */
-#define CSR_DRAM_INT_TBL_ENABLE   (1 << 31)
-#define CSR_DRAM_INIT_TBL_WRAP_CHECK  (1 << 27)
+#define CSR_DRAM_INT_TBL_ENABLE		(1 << 31)
+#define CSR_DRAM_INIT_TBL_WRAP_CHECK	(1 << 27)
 
 /*
  * HBUS (Host-side Bus)
@@ -397,7 +397,7 @@
  * Do not use iwl_write32()/iwl_read32() family to access these registers;
  * these provide only simple PCI bus access, without waking up the MAC.
  */
-#define HBUS_BASE (0x400)
+#define HBUS_BASE	(0x400)
 
 /*
  * Registers for accessing device's internal SRAM memory (e.g. SCD SRAM
@@ -442,19 +442,19 @@
 /**********************************************************
  * CSR values
  **********************************************************/
-/*
-* host interrupt timeout value
-* used with setting interrupt coalescing timer
-* the CSR_INT_COALESCING is an 8 bit register in 32-usec unit
-*
-* default interrupt coalescing timer is 64 x 32 = 2048 usecs
-* default interrupt coalescing calibration timer is 16 x 32 = 512 usecs
-*/
-#define IWL_HOST_INT_TIMEOUT_MAX  (0xFF)
-#define IWL_HOST_INT_TIMEOUT_DEF  (0x40)
-#define IWL_HOST_INT_TIMEOUT_MIN  (0x0)
-#define IWL_HOST_INT_CALIB_TIMEOUT_MAX  (0xFF)
-#define IWL_HOST_INT_CALIB_TIMEOUT_DEF  (0x10)
-#define IWL_HOST_INT_CALIB_TIMEOUT_MIN  (0x0)
+ /*
+ * host interrupt timeout value
+ * used with setting interrupt coalescing timer
+ * the CSR_INT_COALESCING is an 8 bit register in 32-usec unit
+ *
+ * default interrupt coalescing timer is 64 x 32 = 2048 usecs
+ * default interrupt coalescing calibration timer is 16 x 32 = 512 usecs
+ */
+#define IWL_HOST_INT_TIMEOUT_MAX	(0xFF)
+#define IWL_HOST_INT_TIMEOUT_DEF	(0x40)
+#define IWL_HOST_INT_TIMEOUT_MIN	(0x0)
+#define IWL_HOST_INT_CALIB_TIMEOUT_MAX	(0xFF)
+#define IWL_HOST_INT_CALIB_TIMEOUT_DEF	(0x10)
+#define IWL_HOST_INT_CALIB_TIMEOUT_MIN	(0x0)
 
 #endif /* !__iwl_csr_h__ */

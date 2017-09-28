@@ -28,48 +28,48 @@
 #include <asm/alternative.h>
 #include <asm/nops.h>
 
-#define RDRAND_RETRY_LOOPS  10
+#define RDRAND_RETRY_LOOPS	10
 
-#define RDRAND_INT  ".byte 0x0f,0xc7,0xf0"
+#define RDRAND_INT	".byte 0x0f,0xc7,0xf0"
 #ifdef CONFIG_X86_64
-# define RDRAND_LONG  ".byte 0x48,0x0f,0xc7,0xf0"
+# define RDRAND_LONG	".byte 0x48,0x0f,0xc7,0xf0"
 #else
-# define RDRAND_LONG  RDRAND_INT
+# define RDRAND_LONG	RDRAND_INT
 #endif
 
 #ifdef CONFIG_ARCH_RANDOM
 
-#define GET_RANDOM(name, type, rdrand, nop)     \
-  static inline int name(type *v)         \
-  {               \
-    int ok;             \
-    alternative_io("movl $0, %0\n\t"      \
-                   nop,         \
-                   "\n1: " rdrand "\n\t"      \
-                   "jc 2f\n\t"        \
-                   "decl %0\n\t"                            \
-                   "jnz 1b\n\t"                             \
-                   "2:",                                    \
-                   X86_FEATURE_RDRAND,                      \
-                   ASM_OUTPUT2("=r" (ok), "=a" (*v)),       \
-                   "0" (RDRAND_RETRY_LOOPS));   \
-    return ok;            \
-  }
+#define GET_RANDOM(name, type, rdrand, nop)			\
+static inline int name(type *v)					\
+{								\
+	int ok;							\
+	alternative_io("movl $0, %0\n\t"			\
+		       nop,					\
+		       "\n1: " rdrand "\n\t"			\
+		       "jc 2f\n\t"				\
+		       "decl %0\n\t"                            \
+		       "jnz 1b\n\t"                             \
+		       "2:",                                    \
+		       X86_FEATURE_RDRAND,                      \
+		       ASM_OUTPUT2("=r" (ok), "=a" (*v)),       \
+		       "0" (RDRAND_RETRY_LOOPS));		\
+	return ok;						\
+}
 
 #ifdef CONFIG_X86_64
 
-GET_RANDOM (arch_get_random_long, unsigned long, RDRAND_LONG, ASM_NOP5);
-GET_RANDOM (arch_get_random_int, unsigned int, RDRAND_INT, ASM_NOP4);
+GET_RANDOM(arch_get_random_long, unsigned long, RDRAND_LONG, ASM_NOP5);
+GET_RANDOM(arch_get_random_int, unsigned int, RDRAND_INT, ASM_NOP4);
 
 #else
 
-GET_RANDOM (arch_get_random_long, unsigned long, RDRAND_LONG, ASM_NOP3);
-GET_RANDOM (arch_get_random_int, unsigned int, RDRAND_INT, ASM_NOP3);
+GET_RANDOM(arch_get_random_long, unsigned long, RDRAND_LONG, ASM_NOP3);
+GET_RANDOM(arch_get_random_int, unsigned int, RDRAND_INT, ASM_NOP3);
 
 #endif /* CONFIG_X86_64 */
 
 #endif  /* CONFIG_ARCH_RANDOM */
 
-extern void x86_init_rdrand (struct cpuinfo_x86 * c);
+extern void x86_init_rdrand(struct cpuinfo_x86 *c);
 
 #endif /* ASM_X86_ARCHRANDOM_H */

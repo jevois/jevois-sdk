@@ -1,7 +1,7 @@
 /* linux/arch/arm/mach-exynos4/include/mach/pm-core.h
  *
  * Copyright (c) 2011 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com
+ *		http://www.samsung.com
  *
  * Based on arch/arm/mach-s3c2410/include/mach/pm-core.h,
  * Copyright 2008 Simtec Electronics
@@ -20,46 +20,46 @@
 
 #include <mach/regs-pmu.h>
 
-static inline void s3c_pm_debug_init_uart (void)
+static inline void s3c_pm_debug_init_uart(void)
 {
-  /* nothing here yet */
+	/* nothing here yet */
 }
 
-static inline void s3c_pm_arch_prepare_irqs (void)
+static inline void s3c_pm_arch_prepare_irqs(void)
 {
-  unsigned int tmp;
-  tmp = __raw_readl (S5P_WAKEUP_MASK);
-  tmp &= ~ (1 << 31);
-  __raw_writel (tmp, S5P_WAKEUP_MASK);
-  
-  __raw_writel (s3c_irqwake_intmask, S5P_WAKEUP_MASK);
-  __raw_writel (s3c_irqwake_eintmask, S5P_EINT_WAKEUP_MASK);
+	unsigned int tmp;
+	tmp = __raw_readl(S5P_WAKEUP_MASK);
+	tmp &= ~(1 << 31);
+	__raw_writel(tmp, S5P_WAKEUP_MASK);
+
+	__raw_writel(s3c_irqwake_intmask, S5P_WAKEUP_MASK);
+	__raw_writel(s3c_irqwake_eintmask, S5P_EINT_WAKEUP_MASK);
 }
 
-static inline void s3c_pm_arch_stop_clocks (void)
+static inline void s3c_pm_arch_stop_clocks(void)
 {
-  /* nothing here yet */
+	/* nothing here yet */
 }
 
-static inline void s3c_pm_arch_show_resume_irqs (void)
+static inline void s3c_pm_arch_show_resume_irqs(void)
 {
-  /* nothing here yet */
+	/* nothing here yet */
 }
 
-static inline void s3c_pm_arch_update_uart (void __iomem * regs,
-    struct pm_uart_save * save)
+static inline void s3c_pm_arch_update_uart(void __iomem *regs,
+					   struct pm_uart_save *save)
 {
-  /* nothing here yet */
+	/* nothing here yet */
 }
 
-static inline void s3c_pm_restored_gpios (void)
+static inline void s3c_pm_restored_gpios(void)
 {
-  /* nothing here yet */
+	/* nothing here yet */
 }
 
-static inline void samsung_pm_saved_gpios (void)
+static inline void samsung_pm_saved_gpios(void)
 {
-  /* nothing here yet */
+	/* nothing here yet */
 }
 
 #endif /* __ASM_ARCH_PM_CORE_H */

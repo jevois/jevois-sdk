@@ -12,15 +12,15 @@
 #define __MACH_LEDS_NS2_H
 
 struct ns2_led {
-  const char * name;
-  const char * default_trigger;
-  unsigned  cmd;
-  unsigned  slow;
+	const char	*name;
+	const char	*default_trigger;
+	unsigned	cmd;
+	unsigned	slow;
 };
 
 struct ns2_led_platform_data {
-  int   num_leds;
-  struct ns2_led * leds;
+	int		num_leds;
+	struct ns2_led	*leds;
 };
 
 #endif /* __MACH_LEDS_NS2_H */

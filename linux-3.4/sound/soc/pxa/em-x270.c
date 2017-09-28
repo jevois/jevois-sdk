@@ -34,63 +34,63 @@
 #include "pxa2xx-ac97.h"
 
 static struct snd_soc_dai_link em_x270_dai[] = {
-  {
-    .name = "AC97",
-    .stream_name = "AC97 HiFi",
-    .cpu_dai_name = "pxa2xx-ac97",
-    .codec_dai_name = "wm9712-hifi",
-    .platform_name = "pxa-pcm-audio",
-    .codec_name = "wm9712-codec",
-  },
-  {
-    .name = "AC97 Aux",
-    .stream_name = "AC97 Aux",
-    .cpu_dai_name = "pxa2xx-ac97-aux",
-    .codec_dai_name = "wm9712-aux",
-    .platform_name = "pxa-pcm-audio",
-    .codec_name = "wm9712-codec",
-  },
+	{
+		.name = "AC97",
+		.stream_name = "AC97 HiFi",
+		.cpu_dai_name = "pxa2xx-ac97",
+		.codec_dai_name = "wm9712-hifi",
+		.platform_name = "pxa-pcm-audio",
+		.codec_name = "wm9712-codec",
+	},
+	{
+		.name = "AC97 Aux",
+		.stream_name = "AC97 Aux",
+		.cpu_dai_name = "pxa2xx-ac97-aux",
+		.codec_dai_name ="wm9712-aux",
+		.platform_name = "pxa-pcm-audio",
+		.codec_name = "wm9712-codec",
+	},
 };
 
 static struct snd_soc_card em_x270 = {
-  .name = "EM-X270",
-  .owner = THIS_MODULE,
-  .dai_link = em_x270_dai,
-  .num_links = ARRAY_SIZE (em_x270_dai),
+	.name = "EM-X270",
+	.owner = THIS_MODULE,
+	.dai_link = em_x270_dai,
+	.num_links = ARRAY_SIZE(em_x270_dai),
 };
 
-static struct platform_device * em_x270_snd_device;
+static struct platform_device *em_x270_snd_device;
 
-static int __init em_x270_init (void)
+static int __init em_x270_init(void)
 {
-  int ret;
-  
-  if (! (machine_is_em_x270() || machine_is_exeda()
-         || machine_is_cm_x300() ) )
-  { return -ENODEV; }
-  
-  em_x270_snd_device = platform_device_alloc ("soc-audio", -1);
-  if (!em_x270_snd_device)
-  { return -ENOMEM; }
-  
-  platform_set_drvdata (em_x270_snd_device, &em_x270);
-  ret = platform_device_add (em_x270_snd_device);
-  
-  if (ret)
-  { platform_device_put (em_x270_snd_device); }
-  
-  return ret;
+	int ret;
+
+	if (!(machine_is_em_x270() || machine_is_exeda()
+	      || machine_is_cm_x300()))
+		return -ENODEV;
+
+	em_x270_snd_device = platform_device_alloc("soc-audio", -1);
+	if (!em_x270_snd_device)
+		return -ENOMEM;
+
+	platform_set_drvdata(em_x270_snd_device, &em_x270);
+	ret = platform_device_add(em_x270_snd_device);
+
+	if (ret)
+		platform_device_put(em_x270_snd_device);
+
+	return ret;
 }
 
-static void __exit em_x270_exit (void)
+static void __exit em_x270_exit(void)
 {
-  platform_device_unregister (em_x270_snd_device);
+	platform_device_unregister(em_x270_snd_device);
 }
 
-module_init (em_x270_init);
-module_exit (em_x270_exit);
+module_init(em_x270_init);
+module_exit(em_x270_exit);
 
 /* Module information */
-MODULE_AUTHOR ("Mike Rapoport");
-MODULE_DESCRIPTION ("ALSA SoC EM-X270, eXeda and CM-X300");
-MODULE_LICENSE ("GPL");
+MODULE_AUTHOR("Mike Rapoport");
+MODULE_DESCRIPTION("ALSA SoC EM-X270, eXeda and CM-X300");
+MODULE_LICENSE("GPL");

@@ -45,22 +45,22 @@
 
 /* Reserved 1Fh-27h */
 
-#define VIDEO_STD_MASK       (0x07 >> 1)
+#define VIDEO_STD_MASK			 (0x07 >> 1)
 #define TVP5150_VIDEO_STD                0x28 /* Video standard */
-#define VIDEO_STD_AUTO_SWITCH_BIT  0x00
-#define VIDEO_STD_NTSC_MJ_BIT    0x02
-#define VIDEO_STD_PAL_BDGHIN_BIT   0x04
-#define VIDEO_STD_PAL_M_BIT    0x06
-#define VIDEO_STD_PAL_COMBINATION_N_BIT  0x08
-#define VIDEO_STD_NTSC_4_43_BIT    0x0a
-#define VIDEO_STD_SECAM_BIT    0x0c
+#define VIDEO_STD_AUTO_SWITCH_BIT	 0x00
+#define VIDEO_STD_NTSC_MJ_BIT		 0x02
+#define VIDEO_STD_PAL_BDGHIN_BIT	 0x04
+#define VIDEO_STD_PAL_M_BIT		 0x06
+#define VIDEO_STD_PAL_COMBINATION_N_BIT	 0x08
+#define VIDEO_STD_NTSC_4_43_BIT		 0x0a
+#define VIDEO_STD_SECAM_BIT		 0x0c
 
 #define VIDEO_STD_NTSC_MJ_BIT_AS                 0x01
 #define VIDEO_STD_PAL_BDGHIN_BIT_AS              0x03
-#define VIDEO_STD_PAL_M_BIT_AS             0x05
-#define VIDEO_STD_PAL_COMBINATION_N_BIT_AS   0x07
-#define VIDEO_STD_NTSC_4_43_BIT_AS     0x09
-#define VIDEO_STD_SECAM_BIT_AS             0x0b
+#define VIDEO_STD_PAL_M_BIT_AS		         0x05
+#define VIDEO_STD_PAL_COMBINATION_N_BIT_AS	 0x07
+#define VIDEO_STD_NTSC_4_43_BIT_AS		 0x09
+#define VIDEO_STD_SECAM_BIT_AS		         0x0b
 
 /* Reserved 29h-2bh */
 
@@ -70,7 +70,7 @@
 #define TVP5150_MACROVISION_OFF_CTR 0x2f /* Macrovision off counter */
 #define TVP5150_REV_SELECT          0x30 /* revision select (TVP5150AM1 only) */
 
-/* Reserved 31h-7Fh */
+/* Reserved	31h-7Fh */
 
 #define TVP5150_MSB_DEV_ID          0x80 /* MSB of device ID */
 #define TVP5150_LSB_DEV_ID          0x81 /* LSB of device ID */
@@ -85,12 +85,12 @@
 #define TVP5150_STATUS_REG_3        0x8a /* Status register #3 */
 #define TVP5150_STATUS_REG_4        0x8b /* Status register #4 */
 #define TVP5150_STATUS_REG_5        0x8c /* Status register #5 */
-/* Reserved 8Dh-8Fh */
-/* Closed caption data registers */
+/* Reserved	8Dh-8Fh */
+ /* Closed caption data registers */
 #define TVP5150_CC_DATA_INI         0x90
 #define TVP5150_CC_DATA_END         0x93
 
-/* WSS data registers */
+ /* WSS data registers */
 #define TVP5150_WSS_DATA_INI        0x94
 #define TVP5150_WSS_DATA_END        0x99
 
@@ -113,7 +113,7 @@
 #define TVP5150_TELETEXT_FIL2_END  0xba
 
 #define TVP5150_TELETEXT_FIL_ENA    0xbb /* Teletext filter enable */
-/* Reserved BCh-BFh */
+/* Reserved	BCh-BFh */
 #define TVP5150_INT_STATUS_REG_A    0xc0 /* Interrupt status register A */
 #define TVP5150_INT_ENABLE_REG_A    0xc1 /* Interrupt enable register A */
 #define TVP5150_INT_CONF            0xc2 /* Interrupt configuration */
@@ -128,7 +128,7 @@
 #define TVP5150_PIX_ALIGN_REG_LOW   0xcb /* Pixel alignment register low byte */
 #define TVP5150_PIX_ALIGN_REG_HIGH  0xcc /* Pixel alignment register high byte */
 #define TVP5150_FIFO_OUT_CTRL       0xcd /* FIFO output control */
-/* Reserved CEh */
+/* Reserved	CEh */
 #define TVP5150_FULL_FIELD_ENA      0xcf /* Full field enable 1 */
 
 /* Line mode registers */
@@ -136,4 +136,4 @@
 #define TVP5150_LINE_MODE_END       0xfb
 
 #define TVP5150_FULL_FIELD_MODE_REG 0xfc /* Full field mode register */
-/* Reserved FDh-FFh */
+/* Reserved	FDh-FFh */

@@ -1,7 +1,7 @@
 
-/*  Driver for the Iomega MatchMaker parallel port SCSI HBA embedded in
+/*  Driver for the Iomega MatchMaker parallel port SCSI HBA embedded in 
  * the Iomega ZIP Plus drive
- *
+ * 
  * (c) 1998     David Campbell
  *
  * Please note that I live in Perth, Western Australia. GMT+0800
@@ -12,7 +12,7 @@
 
 #define   IMM_VERSION   "2.05 (for Linux 2.4.0)"
 
-/*
+/* 
  * 10 Apr 1998 (Good Friday) - Received EN144302 by email from Iomega.
  * Scarry thing is the level of support from one of their managers.
  * The onus is now on us (the developers) to shut up and start coding.
@@ -59,10 +59,10 @@
  *    CONFIG_SCSI_PPA_HAVE_PEDANTIC => CONFIG_SCSI_IZIP_EPP16
  *    added CONFIG_SCSI_IZIP_SLOW_CTR option
  *                                                      [2.03]
- *  Fix kernel panic on scsi timeout.   20Aug00 [2.04]
+ *  Fix kernel panic on scsi timeout.		20Aug00 [2.04]
  *
  *  Avoid io_request_lock problems.
- *  John Cavan <johncavan@home.com>   16Nov00 [2.05]
+ *  John Cavan <johncavan@home.com>		16Nov00 [2.05]
  */
 /* ------ END OF USER CONFIGURABLE PARAMETERS ----- */
 
@@ -82,36 +82,36 @@
 /* batteries not included :-) */
 
 /*
- * modes in which the driver can operate
+ * modes in which the driver can operate 
  */
-#define   IMM_AUTODETECT        0 /* Autodetect mode                */
-#define   IMM_NIBBLE            1 /* work in standard 4 bit mode    */
-#define   IMM_PS2               2 /* PS/2 byte mode         */
-#define   IMM_EPP_8             3 /* EPP mode, 8 bit                */
-#define   IMM_EPP_16            4 /* EPP mode, 16 bit               */
-#define   IMM_EPP_32            5 /* EPP mode, 32 bit               */
-#define   IMM_UNKNOWN           6 /* Just in case...                */
+#define   IMM_AUTODETECT        0	/* Autodetect mode                */
+#define   IMM_NIBBLE            1	/* work in standard 4 bit mode    */
+#define   IMM_PS2               2	/* PS/2 byte mode         */
+#define   IMM_EPP_8             3	/* EPP mode, 8 bit                */
+#define   IMM_EPP_16            4	/* EPP mode, 16 bit               */
+#define   IMM_EPP_32            5	/* EPP mode, 32 bit               */
+#define   IMM_UNKNOWN           6	/* Just in case...                */
 
-static char * IMM_MODE_STRING[] =
+static char *IMM_MODE_STRING[] =
 {
-  [IMM_AUTODETECT] = "Autodetect",
-  [IMM_NIBBLE]   = "SPP",
-  [IMM_PS2]  = "PS/2",
-  [IMM_EPP_8]  = "EPP 8 bit",
-  [IMM_EPP_16]   = "EPP 16 bit",
-  #ifdef CONFIG_SCSI_IZIP_EPP16
-  [IMM_EPP_32]   = "EPP 16 bit",
-  #else
-  [IMM_EPP_32]   = "EPP 32 bit",
-  #endif
-  [IMM_UNKNOWN]  = "Unknown",
+	[IMM_AUTODETECT] = "Autodetect",
+	[IMM_NIBBLE]	 = "SPP",
+	[IMM_PS2]	 = "PS/2",
+	[IMM_EPP_8]	 = "EPP 8 bit",
+	[IMM_EPP_16]	 = "EPP 16 bit",
+#ifdef CONFIG_SCSI_IZIP_EPP16
+	[IMM_EPP_32]	 = "EPP 16 bit",
+#else
+	[IMM_EPP_32]	 = "EPP 32 bit",
+#endif
+	[IMM_UNKNOWN]	 = "Unknown",
 };
 
 /* other options */
-#define IMM_BURST_SIZE  512 /* data burst size */
-#define IMM_SELECT_TMO  500 /* 500 how long to wait for target ? */
-#define IMM_SPIN_TMO    5000  /* 50000 imm_wait loop limiter */
-#define IMM_DEBUG 0 /* debugging option */
+#define IMM_BURST_SIZE	512	/* data burst size */
+#define IMM_SELECT_TMO  500	/* 500 how long to wait for target ? */
+#define IMM_SPIN_TMO    5000	/* 50000 imm_wait loop limiter */
+#define IMM_DEBUG	0	/* debugging option */
 #define IN_EPP_MODE(x) (x == IMM_EPP_8 || x == IMM_EPP_16 || x == IMM_EPP_32)
 
 /* args to imm_connect */
@@ -123,7 +123,7 @@ static char * IMM_MODE_STRING[] =
 #define r_ctr(x)        (unsigned char)inb((x)+2)
 #define r_epp(x)        (unsigned char)inb((x)+4)
 #define r_fifo(x)       (unsigned char)inb((x))   /* x must be base_hi */
-/* On PCI is: base+0x400 != base_hi */
+					/* On PCI is: base+0x400 != base_hi */
 #define r_ecr(x)        (unsigned char)inb((x)+2) /* x must be base_hi */
 
 #define w_dtr(x,y)      outb(y, (x))
@@ -138,6 +138,6 @@ static char * IMM_MODE_STRING[] =
 #define w_ctr(x,y)      outb(y, (x)+2)
 #endif
 
-static int imm_engine (imm_struct *, struct scsi_cmnd *);
+static int imm_engine(imm_struct *, struct scsi_cmnd *);
 
-#endif        /* _IMM_H */
+#endif				/* _IMM_H */

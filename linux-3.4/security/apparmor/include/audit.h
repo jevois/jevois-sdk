@@ -25,124 +25,124 @@
 
 struct aa_profile;
 
-extern const char * const audit_mode_names[];
+extern const char *const audit_mode_names[];
 #define AUDIT_MAX_INDEX 5
 
 enum audit_mode {
-  AUDIT_NORMAL,   /* follow normal auditing of accesses */
-  AUDIT_QUIET_DENIED, /* quiet all denied access messages */
-  AUDIT_QUIET,    /* quiet all messages */
-  AUDIT_NOQUIET,    /* do not quiet audit messages */
-  AUDIT_ALL   /* audit all accesses */
+	AUDIT_NORMAL,		/* follow normal auditing of accesses */
+	AUDIT_QUIET_DENIED,	/* quiet all denied access messages */
+	AUDIT_QUIET,		/* quiet all messages */
+	AUDIT_NOQUIET,		/* do not quiet audit messages */
+	AUDIT_ALL		/* audit all accesses */
 };
 
 enum audit_type {
-  AUDIT_APPARMOR_AUDIT,
-  AUDIT_APPARMOR_ALLOWED,
-  AUDIT_APPARMOR_DENIED,
-  AUDIT_APPARMOR_HINT,
-  AUDIT_APPARMOR_STATUS,
-  AUDIT_APPARMOR_ERROR,
-  AUDIT_APPARMOR_KILL,
-  AUDIT_APPARMOR_AUTO
+	AUDIT_APPARMOR_AUDIT,
+	AUDIT_APPARMOR_ALLOWED,
+	AUDIT_APPARMOR_DENIED,
+	AUDIT_APPARMOR_HINT,
+	AUDIT_APPARMOR_STATUS,
+	AUDIT_APPARMOR_ERROR,
+	AUDIT_APPARMOR_KILL,
+	AUDIT_APPARMOR_AUTO
 };
 
-extern const char * const op_table[];
+extern const char *const op_table[];
 enum aa_ops {
-  OP_NULL,
-  
-  OP_SYSCTL,
-  OP_CAPABLE,
-  
-  OP_UNLINK,
-  OP_MKDIR,
-  OP_RMDIR,
-  OP_MKNOD,
-  OP_TRUNC,
-  OP_LINK,
-  OP_SYMLINK,
-  OP_RENAME_SRC,
-  OP_RENAME_DEST,
-  OP_CHMOD,
-  OP_CHOWN,
-  OP_GETATTR,
-  OP_OPEN,
-  
-  OP_FPERM,
-  OP_FLOCK,
-  OP_FMMAP,
-  OP_FMPROT,
-  
-  OP_CREATE,
-  OP_POST_CREATE,
-  OP_BIND,
-  OP_CONNECT,
-  OP_LISTEN,
-  OP_ACCEPT,
-  OP_SENDMSG,
-  OP_RECVMSG,
-  OP_GETSOCKNAME,
-  OP_GETPEERNAME,
-  OP_GETSOCKOPT,
-  OP_SETSOCKOPT,
-  OP_SOCK_SHUTDOWN,
-  
-  OP_PTRACE,
-  
-  OP_EXEC,
-  OP_CHANGE_HAT,
-  OP_CHANGE_PROFILE,
-  OP_CHANGE_ONEXEC,
-  
-  OP_SETPROCATTR,
-  OP_SETRLIMIT,
-  
-  OP_PROF_REPL,
-  OP_PROF_LOAD,
-  OP_PROF_RM,
+	OP_NULL,
+
+	OP_SYSCTL,
+	OP_CAPABLE,
+
+	OP_UNLINK,
+	OP_MKDIR,
+	OP_RMDIR,
+	OP_MKNOD,
+	OP_TRUNC,
+	OP_LINK,
+	OP_SYMLINK,
+	OP_RENAME_SRC,
+	OP_RENAME_DEST,
+	OP_CHMOD,
+	OP_CHOWN,
+	OP_GETATTR,
+	OP_OPEN,
+
+	OP_FPERM,
+	OP_FLOCK,
+	OP_FMMAP,
+	OP_FMPROT,
+
+	OP_CREATE,
+	OP_POST_CREATE,
+	OP_BIND,
+	OP_CONNECT,
+	OP_LISTEN,
+	OP_ACCEPT,
+	OP_SENDMSG,
+	OP_RECVMSG,
+	OP_GETSOCKNAME,
+	OP_GETPEERNAME,
+	OP_GETSOCKOPT,
+	OP_SETSOCKOPT,
+	OP_SOCK_SHUTDOWN,
+
+	OP_PTRACE,
+
+	OP_EXEC,
+	OP_CHANGE_HAT,
+	OP_CHANGE_PROFILE,
+	OP_CHANGE_ONEXEC,
+
+	OP_SETPROCATTR,
+	OP_SETRLIMIT,
+
+	OP_PROF_REPL,
+	OP_PROF_LOAD,
+	OP_PROF_RM,
 };
 
 
 struct apparmor_audit_data {
-  int error;
-  int op;
-  int type;
-  void * profile;
-  const char * name;
-  const char * info;
-  union {
-    void * target;
-    struct {
-      long pos;
-      void * target;
-    } iface;
-    struct {
-      int rlim;
-      unsigned long max;
-    } rlim;
-    struct {
-      const char * target;
-      u32 request;
-      u32 denied;
-      uid_t ouid;
-    } fs;
-  };
+	int error;
+	int op;
+	int type;
+	void *profile;
+	const char *name;
+	const char *info;
+	union {
+		void *target;
+		struct {
+			long pos;
+			void *target;
+		} iface;
+		struct {
+			int rlim;
+			unsigned long max;
+		} rlim;
+		struct {
+			const char *target;
+			u32 request;
+			u32 denied;
+			uid_t ouid;
+		} fs;
+	};
 };
 
 /* define a short hand for apparmor_audit_data structure */
 #define aad apparmor_audit_data
 
-void aa_audit_msg (int type, struct common_audit_data * sa,
-                   void (*cb) (struct audit_buffer *, void *) );
-int aa_audit (int type, struct aa_profile * profile, gfp_t gfp,
-              struct common_audit_data * sa,
-              void (*cb) (struct audit_buffer *, void *) );
+void aa_audit_msg(int type, struct common_audit_data *sa,
+		  void (*cb) (struct audit_buffer *, void *));
+int aa_audit(int type, struct aa_profile *profile, gfp_t gfp,
+	     struct common_audit_data *sa,
+	     void (*cb) (struct audit_buffer *, void *));
 
-static inline int complain_error (int error)
+static inline int complain_error(int error)
 {
-  if (error == -EPERM || error == -EACCES)
-  { return 0; }
-  return error;
+	if (error == -EPERM || error == -EACCES)
+		return 0;
+	return error;
 }
 
 #endif /* __AA_AUDIT_H */

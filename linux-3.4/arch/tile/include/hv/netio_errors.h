@@ -41,34 +41,34 @@ typedef enum
 {
   /** Operation successfully completed. */
   NETIO_NO_ERROR        = 0,
-  
+
   /** A packet was successfully retrieved from an input queue. */
   NETIO_PKT             = 0,
-  
+
   /** Largest NetIO error number. */
   NETIO_ERR_MAX         = -701,
-  
+
   /** The tile is not registered with the IPP. */
   NETIO_NOT_REGISTERED  = -701,
-  
+
   /** No packet was available to retrieve from the input queue. */
   NETIO_NOPKT           = -702,
-  
+
   /** The requested function is not implemented. */
   NETIO_NOT_IMPLEMENTED = -703,
-  
+
   /** On a registration operation, the target queue already has the maximum
    *  number of tiles registered for it, and no more may be added.  On a
    *  packet send operation, the output queue is full and nothing more can
    *  be queued until some of the queued packets are actually transmitted. */
   NETIO_QUEUE_FULL      = -704,
-  
+
   /** The calling process or thread is not bound to exactly one CPU. */
   NETIO_BAD_AFFINITY    = -705,
-  
+
   /** Cannot allocate memory on requested controllers. */
   NETIO_CANNOT_HOME     = -706,
-  
+
   /** On a registration operation, the IPP specified is not configured
    *  to support the options requested; for instance, the application
    *  wants a specific type of tagged headers which the configured IPP
@@ -80,20 +80,20 @@ typedef enum
    *  out of range.
    */
   NETIO_BAD_CONFIG      = -707,
-  
+
   /** Too many tiles have registered to transmit packets. */
   NETIO_TOOMANY_XMIT    = -708,
-  
+
   /** Packet transmission was attempted on a queue which was registered
       with transmit disabled. */
   NETIO_UNREG_XMIT      = -709,
-  
+
   /** This tile is already registered with the IPP. */
   NETIO_ALREADY_REGISTERED = -710,
-  
+
   /** The Ethernet link is down. The application should try again later. */
   NETIO_LINK_DOWN       = -711,
-  
+
   /** An invalid memory buffer has been specified.  This may be an unmapped
    * virtual address, or one which does not meet alignment requirements.
    * For netio_input_register(), this error may be returned when multiple
@@ -103,18 +103,18 @@ typedef enum
    * has not been called by a common ancestor of the processes.
    */
   NETIO_FAULT           = -712,
-  
+
   /** Cannot combine user-managed shared memory and cache coherence. */
   NETIO_BAD_CACHE_CONFIG = -713,
-  
+
   /** Smallest NetIO error number. */
   NETIO_ERR_MIN         = -713,
-  
-  #ifndef __DOXYGEN__
+
+#ifndef __DOXYGEN__
   /** Used internally to mean that no response is needed; never returned to
    *  an application. */
   NETIO_NO_RESPONSE     = 1
-  #endif
+#endif
 } netio_error_t;
 
 /** @} */

@@ -6,8 +6,8 @@
 #ifndef CONFIG_AW_AXP22
 #endif
 
-int OSAL_Power_Enable (char * name);
+int OSAL_Power_Enable(char *name);
 
-int OSAL_Power_Disable (char * name);
+int OSAL_Power_Disable(char *name);
 
 #endif

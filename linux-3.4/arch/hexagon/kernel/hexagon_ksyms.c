@@ -21,20 +21,20 @@
 #include <asm/hexagon_vm.h>
 #include <asm/uaccess.h>
 
-EXPORT_SYMBOL (__copy_from_user_hexagon);
-EXPORT_SYMBOL (__copy_to_user_hexagon);
-EXPORT_SYMBOL (__vmgetie);
-EXPORT_SYMBOL (__vmsetie);
-EXPORT_SYMBOL (memcpy);
-EXPORT_SYMBOL (memset);
+EXPORT_SYMBOL(__copy_from_user_hexagon);
+EXPORT_SYMBOL(__copy_to_user_hexagon);
+EXPORT_SYMBOL(__vmgetie);
+EXPORT_SYMBOL(__vmsetie);
+EXPORT_SYMBOL(memcpy);
+EXPORT_SYMBOL(memset);
 
 #define DECLARE_EXPORT(name)     \
-  extern void name(void); EXPORT_SYMBOL(name)
+	extern void name(void); EXPORT_SYMBOL(name)
 
 /* Symbols found in libgcc that assorted kernel modules need */
-DECLARE_EXPORT (__hexagon_memcpy_likely_aligned_min32bytes_mult8bytes);
+DECLARE_EXPORT(__hexagon_memcpy_likely_aligned_min32bytes_mult8bytes);
 
-DECLARE_EXPORT (__hexagon_divsi3);
-DECLARE_EXPORT (__hexagon_modsi3);
-DECLARE_EXPORT (__hexagon_udivsi3);
-DECLARE_EXPORT (__hexagon_umodsi3);
+DECLARE_EXPORT(__hexagon_divsi3);
+DECLARE_EXPORT(__hexagon_modsi3);
+DECLARE_EXPORT(__hexagon_udivsi3);
+DECLARE_EXPORT(__hexagon_umodsi3);

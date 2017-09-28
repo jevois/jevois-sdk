@@ -2,8 +2,8 @@
  *
  * Copyright (c) 2011 Samsung Electronics Co., Ltd.
  * Authors:
- *  Inki Dae <inki.dae@samsung.com>
- *  Seung-Woo Kim <sw0312.kim@samsung.com>
+ *	Inki Dae <inki.dae@samsung.com>
+ *	Seung-Woo Kim <sw0312.kim@samsung.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -28,8 +28,8 @@
 #ifndef _EXYNOS_HDMI_H_
 #define _EXYNOS_HDMI_H_
 
-void hdmi_attach_ddc_client (struct i2c_client * ddc);
-void hdmi_attach_hdmiphy_client (struct i2c_client * hdmiphy);
+void hdmi_attach_ddc_client(struct i2c_client *ddc);
+void hdmi_attach_hdmiphy_client(struct i2c_client *hdmiphy);
 
 extern struct i2c_driver hdmiphy_driver;
 extern struct i2c_driver ddc_driver;

@@ -258,7 +258,7 @@
 #ifdef IX_NPE_MICROCODE_FIRMWARE_INCLUDED
 #ifdef IX_NPEDL_READ_MICROCODE_FROM_FILE
 
-extern UINT32 * ixNpeMicrocode_binaryArray;
+extern UINT32* ixNpeMicrocode_binaryArray;
 
 #else
 

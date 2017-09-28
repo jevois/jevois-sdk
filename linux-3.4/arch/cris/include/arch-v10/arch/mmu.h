@@ -47,20 +47,20 @@ typedef struct
  *
  */
 
-#define _PAGE_WE     (1<<0) /* page is write-enabled */
+#define _PAGE_WE	   (1<<0) /* page is write-enabled */
 #define _PAGE_SILENT_WRITE (1<<0) /* synonym */
-#define _PAGE_KERNEL     (1<<1) /* page is kernel only */
-#define _PAGE_VALID    (1<<2) /* page is valid */
+#define _PAGE_KERNEL	   (1<<1) /* page is kernel only */
+#define _PAGE_VALID	   (1<<2) /* page is valid */
 #define _PAGE_SILENT_READ  (1<<2) /* synonym */
 #define _PAGE_GLOBAL       (1<<3) /* global page - context is ignored */
-#define _PAGE_NO_CACHE     (1<<31) /* part of the uncached memory map */
+#define _PAGE_NO_CACHE	   (1<<31) /* part of the uncached memory map */
 
 /* Bits the HW doesn't care about but the kernel uses them in SW */
 
 #define _PAGE_PRESENT   (1<<4)  /* page present in memory */
 #define _PAGE_FILE      (1<<5)  /* set: pagecache, unset: swap (when !PRESENT) */
-#define _PAGE_ACCESSED  (1<<5)  /* simulated in software using valid bit */
-#define _PAGE_MODIFIED  (1<<6)  /* simulated in software using we bit */
+#define _PAGE_ACCESSED	(1<<5)  /* simulated in software using valid bit */
+#define _PAGE_MODIFIED	(1<<6)  /* simulated in software using we bit */
 #define _PAGE_READ      (1<<7)  /* read-enabled */
 #define _PAGE_WRITE     (1<<8)  /* write-enabled */
 
@@ -74,11 +74,11 @@ typedef struct
 
 #define PAGE_NONE       __pgprot(_PAGE_PRESENT | _PAGE_ACCESSED)
 #define PAGE_SHARED     __pgprot(_PAGE_PRESENT | __READABLE | _PAGE_WRITE | \
-                                 _PAGE_ACCESSED)
+				 _PAGE_ACCESSED)
 #define PAGE_COPY       __pgprot(_PAGE_PRESENT | __READABLE) 
 #define PAGE_READONLY   __pgprot(_PAGE_PRESENT | __READABLE)
 #define PAGE_KERNEL     __pgprot(_PAGE_GLOBAL | _PAGE_KERNEL | \
-                                 _PAGE_PRESENT | __READABLE | __WRITEABLE)
+				 _PAGE_PRESENT | __READABLE | __WRITEABLE)
 #define _KERNPG_TABLE   (_PAGE_TABLE | _PAGE_KERNEL)
 
 /*
@@ -87,24 +87,24 @@ typedef struct
  * get..
  */
 
-#define __P000  PAGE_NONE
-#define __P001  PAGE_READONLY
-#define __P010  PAGE_COPY
-#define __P011  PAGE_COPY
-#define __P100  PAGE_READONLY
-#define __P101  PAGE_READONLY
-#define __P110  PAGE_COPY
-#define __P111  PAGE_COPY
+#define __P000	PAGE_NONE
+#define __P001	PAGE_READONLY
+#define __P010	PAGE_COPY
+#define __P011	PAGE_COPY
+#define __P100	PAGE_READONLY
+#define __P101	PAGE_READONLY
+#define __P110	PAGE_COPY
+#define __P111	PAGE_COPY
 
-#define __S000  PAGE_NONE
-#define __S001  PAGE_READONLY
-#define __S010  PAGE_SHARED
-#define __S011  PAGE_SHARED
-#define __S100  PAGE_READONLY
-#define __S101  PAGE_READONLY
-#define __S110  PAGE_SHARED
-#define __S111  PAGE_SHARED
+#define __S000	PAGE_NONE
+#define __S001	PAGE_READONLY
+#define __S010	PAGE_SHARED
+#define __S011	PAGE_SHARED
+#define __S100	PAGE_READONLY
+#define __S101	PAGE_READONLY
+#define __S110	PAGE_SHARED
+#define __S111	PAGE_SHARED
 
-#define PTE_FILE_MAX_BITS 26
+#define PTE_FILE_MAX_BITS	26
 
 #endif

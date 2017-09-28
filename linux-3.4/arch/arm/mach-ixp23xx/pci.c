@@ -36,42 +36,41 @@ extern int (*external_fault) (unsigned long, struct pt_regs *);
 static volatile int pci_master_aborts = 0;
 
 #ifdef DEBUG
-#define DBG(x...) printk(x)
+#define DBG(x...)	printk(x)
 #else
 #define DBG(x...)
 #endif
 
-int clear_master_aborts (void);
+int clear_master_aborts(void);
 
 static u32
-* ixp23xx_pci_config_addr (unsigned int bus_nr, unsigned int devfn, int where)
+*ixp23xx_pci_config_addr(unsigned int bus_nr, unsigned int devfn, int where)
 {
-  u32 * paddress;
-  
-  /*
-   * Must be dword aligned
-   */
-  where &= ~3;
-  
-  /*
-   * For top bus, generate type 0, else type 1
-   */
-  if (!bus_nr) {
-    if (PCI_SLOT (devfn) >= 8)
-    { return 0; }
-    
-    paddress = (u32 *) (IXP23XX_PCI_CFG0_VIRT
-                        | (1 << (PCI_SLOT (devfn) + 16) )
-                        | (PCI_FUNC (devfn) << 8) | where);
-  }
-  else {
-    paddress = (u32 *) (IXP23XX_PCI_CFG1_VIRT
-                        | (bus_nr << 16)
-                        | (PCI_SLOT (devfn) << 11)
-                        | (PCI_FUNC (devfn) << 8) | where);
-  }
-  
-  return paddress;
+	u32 *paddress;
+
+	/*
+	 * Must be dword aligned
+	 */
+	where &= ~3;
+
+	/*
+	 * For top bus, generate type 0, else type 1
+	 */
+	if (!bus_nr) {
+		if (PCI_SLOT(devfn) >= 8)
+			return 0;
+
+		paddress = (u32 *) (IXP23XX_PCI_CFG0_VIRT
+				    | (1 << (PCI_SLOT(devfn) + 16))
+				    | (PCI_FUNC(devfn) << 8) | where);
+	} else {
+		paddress = (u32 *) (IXP23XX_PCI_CFG1_VIRT
+				    | (bus_nr << 16)
+				    | (PCI_SLOT(devfn) << 11)
+				    | (PCI_FUNC(devfn) << 8) | where);
+	}
+
+	return paddress;
 }
 
 /*
@@ -79,37 +78,37 @@ static u32
  * 0 and 3 are not valid indexes...
  */
 static u32 bytemask[] = {
-  /*0*/ 0,
-  /*1*/ 0xff,
-  /*2*/ 0xffff,
-  /*3*/ 0,
-  /*4*/ 0xffffffff,
+	/*0*/	0,
+	/*1*/	0xff,
+	/*2*/	0xffff,
+	/*3*/	0,
+	/*4*/	0xffffffff,
 };
 
-static int ixp23xx_pci_read_config (struct pci_bus * bus, unsigned int devfn,
-                                    int where, int size, u32 * value)
+static int ixp23xx_pci_read_config(struct pci_bus *bus, unsigned int devfn,
+				int where, int size, u32 *value)
 {
-  u32 n;
-  u32 * addr;
-  
-  n = where % 4;
-  
-  DBG ("In config_read(%d) %d from dev %d:%d:%d\n", size, where,
-       bus->number, PCI_SLOT (devfn), PCI_FUNC (devfn) );
-       
-  addr = ixp23xx_pci_config_addr (bus->number, devfn, where);
-  if (!addr)
-  { return PCIBIOS_DEVICE_NOT_FOUND; }
-  
-  pci_master_aborts = 0;
-  *value = (*addr >> (8 * n) ) & bytemask[size];
-  if (pci_master_aborts) {
-    pci_master_aborts = 0;
-    *value = 0xffffffff;
-    return PCIBIOS_DEVICE_NOT_FOUND;
-  }
-  
-  return PCIBIOS_SUCCESSFUL;
+	u32 n;
+	u32 *addr;
+
+	n = where % 4;
+
+	DBG("In config_read(%d) %d from dev %d:%d:%d\n", size, where,
+		bus->number, PCI_SLOT(devfn), PCI_FUNC(devfn));
+
+	addr = ixp23xx_pci_config_addr(bus->number, devfn, where);
+	if (!addr)
+		return PCIBIOS_DEVICE_NOT_FOUND;
+
+	pci_master_aborts = 0;
+	*value = (*addr >> (8*n)) & bytemask[size];
+	if (pci_master_aborts) {
+			pci_master_aborts = 0;
+			*value = 0xffffffff;
+			return PCIBIOS_DEVICE_NOT_FOUND;
+		}
+
+	return PCIBIOS_SUCCESSFUL;
 }
 
 /*
@@ -117,180 +116,179 @@ static int ixp23xx_pci_read_config (struct pci_bus * bus, unsigned int devfn,
  * It's assumed that the user checked for the device existing first
  * by doing a read first.
  */
-static int ixp23xx_pci_write_config (struct pci_bus * bus, unsigned int devfn,
-                                     int where, int size, u32 value)
+static int ixp23xx_pci_write_config(struct pci_bus *bus, unsigned int devfn,
+					int where, int size, u32 value)
 {
-  u32 mask;
-  u32 * addr;
-  u32 temp;
-  
-  mask = ~ (bytemask[size] << ( (where % 0x4) * 8) );
-  addr = ixp23xx_pci_config_addr (bus->number, devfn, where);
-  if (!addr)
-  { return PCIBIOS_DEVICE_NOT_FOUND; }
-  temp = (u32) (value) << ( (where % 0x4) * 8);
-  *addr = (*addr & mask) | temp;
-  
-  clear_master_aborts();
-  
-  return PCIBIOS_SUCCESSFUL;
+	u32 mask;
+	u32 *addr;
+	u32 temp;
+
+	mask = ~(bytemask[size] << ((where % 0x4) * 8));
+	addr = ixp23xx_pci_config_addr(bus->number, devfn, where);
+	if (!addr)
+		return PCIBIOS_DEVICE_NOT_FOUND;
+	temp = (u32) (value) << ((where % 0x4) * 8);
+	*addr = (*addr & mask) | temp;
+
+	clear_master_aborts();
+
+	return PCIBIOS_SUCCESSFUL;
 }
 
 struct pci_ops ixp23xx_pci_ops = {
-  .read = ixp23xx_pci_read_config,
-  .write  = ixp23xx_pci_write_config,
+	.read	= ixp23xx_pci_read_config,
+	.write	= ixp23xx_pci_write_config,
 };
 
-struct pci_bus * ixp23xx_pci_scan_bus (int nr, struct pci_sys_data * sysdata)
+struct pci_bus *ixp23xx_pci_scan_bus(int nr, struct pci_sys_data *sysdata)
 {
-  return pci_scan_root_bus (NULL, sysdata->busnr, &ixp23xx_pci_ops,
-                            sysdata, &sysdata->resources);
+	return pci_scan_root_bus(NULL, sysdata->busnr, &ixp23xx_pci_ops,
+				 sysdata, &sysdata->resources);
 }
 
-int ixp23xx_pci_abort_handler (unsigned long addr, unsigned int fsr, struct pt_regs * regs)
+int ixp23xx_pci_abort_handler(unsigned long addr, unsigned int fsr, struct pt_regs *regs)
 {
-  volatile unsigned long temp;
-  unsigned long flags;
-  
-  pci_master_aborts = 1;
-  
-  local_irq_save (flags);
-  temp = *IXP23XX_PCI_CONTROL;
-  
-  /*
-   * master abort and cmd tgt err
-   */
-  if (temp & ( (1 << 8) | (1 << 5) ) )
-  { *IXP23XX_PCI_CONTROL = temp; }
-  
-  temp = *IXP23XX_PCI_CMDSTAT;
-  
-  if (temp & (1 << 29) )
-  { *IXP23XX_PCI_CMDSTAT = temp; }
-  local_irq_restore (flags);
-  
-  /*
-   * If it was an imprecise abort, then we need to correct the
-   * return address to be _after_ the instruction.
-   */
-  if (fsr & (1 << 10) )
-  { regs->ARM_pc += 4; }
-  
-  return 0;
+	volatile unsigned long temp;
+	unsigned long flags;
+
+	pci_master_aborts = 1;
+
+	local_irq_save(flags);
+	temp = *IXP23XX_PCI_CONTROL;
+
+	/*
+	 * master abort and cmd tgt err
+	 */
+	if (temp & ((1 << 8) | (1 << 5)))
+		*IXP23XX_PCI_CONTROL = temp;
+
+	temp = *IXP23XX_PCI_CMDSTAT;
+
+	if (temp & (1 << 29))
+		*IXP23XX_PCI_CMDSTAT = temp;
+	local_irq_restore(flags);
+
+	/*
+	 * If it was an imprecise abort, then we need to correct the
+	 * return address to be _after_ the instruction.
+	 */
+	if (fsr & (1 << 10))
+		regs->ARM_pc += 4;
+
+	return 0;
 }
 
-int clear_master_aborts (void)
+int clear_master_aborts(void)
 {
-  volatile u32 temp;
-  
-  temp = *IXP23XX_PCI_CONTROL;
-  
-  /*
-   * master abort and cmd tgt err
-   */
-  if (temp & ( (1 << 8) | (1 << 5) ) )
-  { *IXP23XX_PCI_CONTROL = temp; }
-  
-  temp = *IXP23XX_PCI_CMDSTAT;
-  
-  if (temp & (1 << 29) )
-  { *IXP23XX_PCI_CMDSTAT = temp; }
-  
-  return 0;
+	volatile u32 temp;
+
+	temp = *IXP23XX_PCI_CONTROL;
+
+	/*
+	 * master abort and cmd tgt err
+	 */
+	if (temp & ((1 << 8) | (1 << 5)))
+		*IXP23XX_PCI_CONTROL = temp;
+
+	temp = *IXP23XX_PCI_CMDSTAT;
+
+	if (temp & (1 << 29))
+		*IXP23XX_PCI_CMDSTAT = temp;
+
+	return 0;
 }
 
-static void __init ixp23xx_pci_common_init (void)
+static void __init ixp23xx_pci_common_init(void)
 {
-  #ifdef __ARMEB__
-  *IXP23XX_PCI_CONTROL |= 0x20000;  /* set I/O swapping */
-  #endif
-  /*
-   * ADDR_31 needs to be clear for PCI memory access to CPP memory
-   */
-  *IXP23XX_CPP2XSI_CURR_XFER_REG3 &= ~IXP23XX_CPP2XSI_ADDR_31;
-  *IXP23XX_CPP2XSI_CURR_XFER_REG3 |= IXP23XX_CPP2XSI_PSH_OFF;
-  
-  /*
-   * Select correct memory for PCI inbound transactions
-   */
-  if (ixp23xx_cpp_boot() ) {
-    *IXP23XX_PCI_CPP_ADDR_BITS &= ~ (1 << 1);
-  }
-  else {
-    *IXP23XX_PCI_CPP_ADDR_BITS |= (1 << 1);
-    
-    /*
-     * Enable coherency on A2 silicon.
-     */
-    if (arch_is_coherent() )
-    { *IXP23XX_CPP2XSI_CURR_XFER_REG3 &= ~IXP23XX_CPP2XSI_COH_OFF; }
-  }
+#ifdef __ARMEB__
+	*IXP23XX_PCI_CONTROL |= 0x20000;	/* set I/O swapping */
+#endif
+	/*
+	 * ADDR_31 needs to be clear for PCI memory access to CPP memory
+	 */
+	*IXP23XX_CPP2XSI_CURR_XFER_REG3 &= ~IXP23XX_CPP2XSI_ADDR_31;
+	*IXP23XX_CPP2XSI_CURR_XFER_REG3 |= IXP23XX_CPP2XSI_PSH_OFF;
+
+	/*
+	 * Select correct memory for PCI inbound transactions
+	 */
+	if (ixp23xx_cpp_boot()) {
+		*IXP23XX_PCI_CPP_ADDR_BITS &= ~(1 << 1);
+	} else {
+		*IXP23XX_PCI_CPP_ADDR_BITS |= (1 << 1);
+
+		/*
+		 * Enable coherency on A2 silicon.
+		 */
+		if (arch_is_coherent())
+			*IXP23XX_CPP2XSI_CURR_XFER_REG3 &= ~IXP23XX_CPP2XSI_COH_OFF;
+	}
 }
 
-void __init ixp23xx_pci_preinit (void)
+void __init ixp23xx_pci_preinit(void)
 {
-  pcibios_min_io = 0;
-  pcibios_min_mem = 0xe0000000;
-  
-  pci_set_flags (0);
-  
-  ixp23xx_pci_common_init();
-  
-  hook_fault_code (16 + 6, ixp23xx_pci_abort_handler, SIGBUS, 0,
-                   "PCI config cycle to non-existent device");
-                   
-  *IXP23XX_PCI_ADDR_EXT = 0x0000e000;
+	pcibios_min_io = 0;
+	pcibios_min_mem = 0xe0000000;
+
+	pci_set_flags(0);
+
+	ixp23xx_pci_common_init();
+
+	hook_fault_code(16+6, ixp23xx_pci_abort_handler, SIGBUS, 0,
+			"PCI config cycle to non-existent device");
+
+	*IXP23XX_PCI_ADDR_EXT = 0x0000e000;
 }
 
 /*
  * Prevent PCI layer from seeing the inbound host-bridge resources
  */
-static void __devinit pci_fixup_ixp23xx (struct pci_dev * dev)
+static void __devinit pci_fixup_ixp23xx(struct pci_dev *dev)
 {
-  int i;
-  
-  dev->class &= 0xff;
-  dev->class |= PCI_CLASS_BRIDGE_HOST << 8;
-  for (i = 0; i < PCI_NUM_RESOURCES; i++) {
-    dev->resource[i].start = 0;
-    dev->resource[i].end   = 0;
-    dev->resource[i].flags = 0;
-  }
+	int i;
+
+	dev->class &= 0xff;
+	dev->class |= PCI_CLASS_BRIDGE_HOST << 8;
+	for (i = 0; i < PCI_NUM_RESOURCES; i++) {
+		dev->resource[i].start = 0;
+		dev->resource[i].end   = 0;
+		dev->resource[i].flags = 0;
+	}
 }
-DECLARE_PCI_FIXUP_HEADER (PCI_VENDOR_ID_INTEL, 0x9002, pci_fixup_ixp23xx);
+DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_INTEL, 0x9002, pci_fixup_ixp23xx);
 
 /*
  * IXP2300 systems often have large resource requirements, so we just
  * use our own resource space.
  */
 static struct resource ixp23xx_pci_mem_space = {
-  .start  = IXP23XX_PCI_MEM_START,
-  .end  = IXP23XX_PCI_MEM_START + IXP23XX_PCI_MEM_SIZE - 1,
-  .flags  = IORESOURCE_MEM,
-  .name = "PCI Mem Space"
+	.start	= IXP23XX_PCI_MEM_START,
+	.end	= IXP23XX_PCI_MEM_START + IXP23XX_PCI_MEM_SIZE - 1,
+	.flags	= IORESOURCE_MEM,
+	.name	= "PCI Mem Space"
 };
 
 static struct resource ixp23xx_pci_io_space = {
-  .start  = 0x00000100,
-  .end  = 0x01ffffff,
-  .flags  = IORESOURCE_IO,
-  .name = "PCI I/O Space"
+	.start	= 0x00000100,
+	.end	= 0x01ffffff,
+	.flags	= IORESOURCE_IO,
+	.name	= "PCI I/O Space"
 };
 
-int ixp23xx_pci_setup (int nr, struct pci_sys_data * sys)
+int ixp23xx_pci_setup(int nr, struct pci_sys_data *sys)
 {
-  if (nr >= 1)
-  { return 0; }
-  
-  pci_add_resource_offset (&sys->resources,
-                           &ixp23xx_pci_io_space, sys->io_offset);
-  pci_add_resource_offset (&sys->resources,
-                           &ixp23xx_pci_mem_space, sys->mem_offset);
-                           
-  return 1;
+	if (nr >= 1)
+		return 0;
+
+	pci_add_resource_offset(&sys->resources,
+				&ixp23xx_pci_io_space, sys->io_offset);
+	pci_add_resource_offset(&sys->resources,
+				&ixp23xx_pci_mem_space, sys->mem_offset);
+
+	return 1;
 }
 
-void __init ixp23xx_pci_slave_init (void)
+void __init ixp23xx_pci_slave_init(void)
 {
-  ixp23xx_pci_common_init();
+	ixp23xx_pci_common_init();
 }

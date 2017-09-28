@@ -5,21 +5,21 @@
  *
  * Copyright (C) 2004 MPC-Data Limited. (http://www.mpc-data.co.uk)
  * Author: MPC-Data Limited
- *     Dave Peverley
+ *	   Dave Peverley
  *
- *  This program is free software; you can redistribute  it and/or modify it
- *  under  the terms of  the GNU General  Public License as published by the
- *  Free Software Foundation;  either version 2 of the  License, or (at your
+ *  This program is free software; you can redistribute	 it and/or modify it
+ *  under  the terms of	 the GNU General  Public License as published by the
+ *  Free Software Foundation;  either version 2 of the	License, or (at your
  *  option) any later version.
  *
- *  THIS  SOFTWARE  IS PROVIDED   ``AS  IS'' AND   ANY  EXPRESS OR IMPLIED
- *  WARRANTIES,   INCLUDING, BUT NOT  LIMITED  TO, THE IMPLIED WARRANTIES OF
+ *  THIS  SOFTWARE  IS PROVIDED	  ``AS	IS'' AND   ANY	EXPRESS OR IMPLIED
+ *  WARRANTIES,	  INCLUDING, BUT NOT  LIMITED  TO, THE IMPLIED WARRANTIES OF
  *  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN
- *  NO  EVENT  SHALL   THE AUTHOR  BE  LIABLE FOR ANY   DIRECT, INDIRECT,
+ *  NO	EVENT  SHALL   THE AUTHOR  BE	 LIABLE FOR ANY	  DIRECT, INDIRECT,
  *  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
- *  NOT LIMITED   TO, PROCUREMENT OF  SUBSTITUTE GOODS  OR SERVICES; LOSS OF
- *  USE, DATA,  OR PROFITS; OR  BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- *  ANY THEORY OF LIABILITY, WHETHER IN  CONTRACT, STRICT LIABILITY, OR TORT
+ *  NOT LIMITED	  TO, PROCUREMENT OF  SUBSTITUTE GOODS	OR SERVICES; LOSS OF
+ *  USE, DATA,	OR PROFITS; OR	BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ *  ANY THEORY OF LIABILITY, WHETHER IN	 CONTRACT, STRICT LIABILITY, OR TORT
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
@@ -111,7 +111,7 @@
  * OMAP730 Interrupt handlers
  **************************************************************************/
 
-#define OMAP_IH1_BASE   0xFFFECB00     /* MPU Level 1 IRQ handler */
+#define OMAP_IH1_BASE		0xFFFECB00     /* MPU Level 1 IRQ handler */
 #define OMAP_IH2_BASE           0xfffe0000
 
 /***************************************************************************
@@ -135,17 +135,17 @@
 #define TIMER32k_ARL              (1<<3)
 
 /* MPU Timer base addresses  */
-#define OMAP730_MPUTIMER_BASE 0xfffec500
-#define OMAP730_MPUTIMER_OFF  0x00000100
+#define OMAP730_MPUTIMER_BASE	0xfffec500
+#define OMAP730_MPUTIMER_OFF	0x00000100
 
-#define OMAP730_TIMER1_BASE 0xFFFEC500
-#define OMAP730_TIMER2_BASE 0xFFFEC600
-#define OMAP730_TIMER3_BASE 0xFFFEC700
+#define OMAP730_TIMER1_BASE	0xFFFEC500
+#define OMAP730_TIMER2_BASE	0xFFFEC600
+#define OMAP730_TIMER3_BASE	0xFFFEC700
 
 /* MPU Timer Register offsets */
-#define CNTL_TIMER             0x00   /* MPU_CNTL_TIMER */
-#define LOAD_TIM             0x04   /* MPU_LOAD_TIMER */
-#define READ_TIM             0x08   /* MPU_READ_TIMER */
+#define CNTL_TIMER	           0x00   /* MPU_CNTL_TIMER */
+#define LOAD_TIM	           0x04   /* MPU_LOAD_TIMER */
+#define READ_TIM	           0x08   /* MPU_READ_TIMER */
 
 /* MPU_CNTL_TIMER register bits */
 #define MPUTIM_FREE               (1<<6)

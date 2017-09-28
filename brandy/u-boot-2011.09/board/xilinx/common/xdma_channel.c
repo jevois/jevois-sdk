@@ -98,40 +98,40 @@
 *
 ******************************************************************************/
 XStatus
-XDmaChannel_Initialize (XDmaChannel * InstancePtr, u32 BaseAddress)
+XDmaChannel_Initialize(XDmaChannel * InstancePtr, u32 BaseAddress)
 {
-  /* assert to verify input arguments, don't assert base address */
-  
-  XASSERT_NONVOID (InstancePtr != NULL);
-  
-  /* setup the base address of the registers for the DMA channel such
-   * that register accesses can be done
-   */
-  InstancePtr->RegBaseAddress = BaseAddress;
-  
-  /* initialize the scatter gather list such that it indicates it has not
-   * been created yet and the DMA channel is ready to use (initialized)
-   */
-  InstancePtr->GetPtr = NULL;
-  InstancePtr->PutPtr = NULL;
-  InstancePtr->CommitPtr = NULL;
-  InstancePtr->LastPtr = NULL;
-  
-  InstancePtr->TotalDescriptorCount = 0;
-  InstancePtr->ActiveDescriptorCount = 0;
-  InstancePtr->IsReady = XCOMPONENT_IS_READY;
-  
-  /* initialize the version of the component
-   */
-  XVersion_FromString (&InstancePtr->Version, (s8 *) "1.00a");
-  
-  /* reset the DMA channel such that it's in a known state and ready
-   * and indicate the initialization occured with no errors, note that
-   * the is ready variable must be set before this call or reset will assert
-   */
-  XDmaChannel_Reset (InstancePtr);
-  
-  return XST_SUCCESS;
+	/* assert to verify input arguments, don't assert base address */
+
+	XASSERT_NONVOID(InstancePtr != NULL);
+
+	/* setup the base address of the registers for the DMA channel such
+	 * that register accesses can be done
+	 */
+	InstancePtr->RegBaseAddress = BaseAddress;
+
+	/* initialize the scatter gather list such that it indicates it has not
+	 * been created yet and the DMA channel is ready to use (initialized)
+	 */
+	InstancePtr->GetPtr = NULL;
+	InstancePtr->PutPtr = NULL;
+	InstancePtr->CommitPtr = NULL;
+	InstancePtr->LastPtr = NULL;
+
+	InstancePtr->TotalDescriptorCount = 0;
+	InstancePtr->ActiveDescriptorCount = 0;
+	InstancePtr->IsReady = XCOMPONENT_IS_READY;
+
+	/* initialize the version of the component
+	 */
+	XVersion_FromString(&InstancePtr->Version, (s8 *)"1.00a");
+
+	/* reset the DMA channel such that it's in a known state and ready
+	 * and indicate the initialization occured with no errors, note that
+	 * the is ready variable must be set before this call or reset will assert
+	 */
+	XDmaChannel_Reset(InstancePtr);
+
+	return XST_SUCCESS;
 }
 
 /******************************************************************************
@@ -159,13 +159,13 @@ XDmaChannel_Initialize (XDmaChannel * InstancePtr, u32 BaseAddress)
 *
 ******************************************************************************/
 u32
-XDmaChannel_IsReady (XDmaChannel * InstancePtr)
+XDmaChannel_IsReady(XDmaChannel * InstancePtr)
 {
-  /* assert to verify input arguments used by the base component */
-  
-  XASSERT_NONVOID (InstancePtr != NULL);
-  
-  return InstancePtr->IsReady == XCOMPONENT_IS_READY;
+	/* assert to verify input arguments used by the base component */
+
+	XASSERT_NONVOID(InstancePtr != NULL);
+
+	return InstancePtr->IsReady == XCOMPONENT_IS_READY;
 }
 
 /******************************************************************************
@@ -193,16 +193,16 @@ XDmaChannel_IsReady (XDmaChannel * InstancePtr)
 *
 ******************************************************************************/
 XVersion *
-XDmaChannel_GetVersion (XDmaChannel * InstancePtr)
+XDmaChannel_GetVersion(XDmaChannel * InstancePtr)
 {
-  /* assert to verify input arguments */
-  
-  XASSERT_NONVOID (InstancePtr != NULL);
-  XASSERT_NONVOID (InstancePtr->IsReady == XCOMPONENT_IS_READY);
-  
-  /* return a pointer to the version of the DMA channel */
-  
-  return &InstancePtr->Version;
+	/* assert to verify input arguments */
+
+	XASSERT_NONVOID(InstancePtr != NULL);
+	XASSERT_NONVOID(InstancePtr->IsReady == XCOMPONENT_IS_READY);
+
+	/* return a pointer to the version of the DMA channel */
+
+	return &InstancePtr->Version;
 }
 
 /******************************************************************************
@@ -226,8 +226,8 @@ XDmaChannel_GetVersion (XDmaChannel * InstancePtr)
 * XST_SUCCESS is returned if the self test is successful, or one of the
 * following errors.
 *
-* XST_DMA_RESET_REGISTER_ERROR    Indicates the control register value
-*                   after a reset was not correct
+*	XST_DMA_RESET_REGISTER_ERROR		Indicates the control register value
+*										after a reset was not correct
 *
 * NOTES:
 *
@@ -238,33 +238,33 @@ XDmaChannel_GetVersion (XDmaChannel * InstancePtr)
 *
 ******************************************************************************/
 
-#define XDC_CONTROL_REG_RESET_MASK  0x98000000UL  /* control reg reset value */
+#define XDC_CONTROL_REG_RESET_MASK  0x98000000UL	/* control reg reset value */
 
 XStatus
-XDmaChannel_SelfTest (XDmaChannel * InstancePtr)
+XDmaChannel_SelfTest(XDmaChannel * InstancePtr)
 {
-  u32 ControlReg;
-  
-  /* assert to verify input arguments */
-  
-  XASSERT_NONVOID (InstancePtr != NULL);
-  XASSERT_NONVOID (InstancePtr->IsReady == XCOMPONENT_IS_READY);
-  
-  /* reset the DMA channel such that it's in a known state before the test
-   * it resets to no interrupts enabled, the desired state for the test
-   */
-  XDmaChannel_Reset (InstancePtr);
-  
-  /* this should be the first test to help prevent a lock up with the polling
-   * loop that occurs later in the test, check the reset value of the DMA
-   * control register to make sure it's correct, return with an error if not
-   */
-  ControlReg = XDmaChannel_GetControl (InstancePtr);
-  if (ControlReg != XDC_CONTROL_REG_RESET_MASK) {
-    return XST_DMA_RESET_REGISTER_ERROR;
-  }
-  
-  return XST_SUCCESS;
+	u32 ControlReg;
+
+	/* assert to verify input arguments */
+
+	XASSERT_NONVOID(InstancePtr != NULL);
+	XASSERT_NONVOID(InstancePtr->IsReady == XCOMPONENT_IS_READY);
+
+	/* reset the DMA channel such that it's in a known state before the test
+	 * it resets to no interrupts enabled, the desired state for the test
+	 */
+	XDmaChannel_Reset(InstancePtr);
+
+	/* this should be the first test to help prevent a lock up with the polling
+	 * loop that occurs later in the test, check the reset value of the DMA
+	 * control register to make sure it's correct, return with an error if not
+	 */
+	ControlReg = XDmaChannel_GetControl(InstancePtr);
+	if (ControlReg != XDC_CONTROL_REG_RESET_MASK) {
+		return XST_DMA_RESET_REGISTER_ERROR;
+	}
+
+	return XST_SUCCESS;
 }
 
 /******************************************************************************
@@ -296,18 +296,18 @@ XDmaChannel_SelfTest (XDmaChannel * InstancePtr)
 *
 ******************************************************************************/
 void
-XDmaChannel_Reset (XDmaChannel * InstancePtr)
+XDmaChannel_Reset(XDmaChannel * InstancePtr)
 {
-  /* assert to verify input arguments */
-  
-  XASSERT_VOID (InstancePtr != NULL);
-  XASSERT_VOID (InstancePtr->IsReady == XCOMPONENT_IS_READY);
-  
-  /* reset the DMA channel such that it's in a known state, the reset
-   * register is self clearing such that it only has to be set
-   */
-  XIo_Out32 (InstancePtr->RegBaseAddress + XDC_RST_REG_OFFSET,
-             XDC_RESET_MASK);
+	/* assert to verify input arguments */
+
+	XASSERT_VOID(InstancePtr != NULL);
+	XASSERT_VOID(InstancePtr->IsReady == XCOMPONENT_IS_READY);
+
+	/* reset the DMA channel such that it's in a known state, the reset
+	 * register is self clearing such that it only has to be set
+	 */
+	XIo_Out32(InstancePtr->RegBaseAddress + XDC_RST_REG_OFFSET,
+		  XDC_RESET_MASK);
 }
 
 /******************************************************************************
@@ -330,13 +330,13 @@ XDmaChannel_Reset (XDmaChannel * InstancePtr)
 * following values may be contained the register.  Each of the values are
 * unique bit masks.
 *
-* XDC_DMACR_SOURCE_INCR_MASK  Increment the source address
-* XDC_DMACR_DEST_INCR_MASK  Increment the destination address
-* XDC_DMACR_SOURCE_LOCAL_MASK Local source address
-* XDC_DMACR_DEST_LOCAL_MASK Local destination address
-* XDC_DMACR_SG_ENABLE_MASK  Scatter gather enable
-* XDC_DMACR_GEN_BD_INTR_MASK  Individual buffer descriptor interrupt
-* XDC_DMACR_LAST_BD_MASK    Last buffer descriptor in a packet
+*	XDC_DMACR_SOURCE_INCR_MASK	Increment the source address
+*	XDC_DMACR_DEST_INCR_MASK	Increment the destination address
+*	XDC_DMACR_SOURCE_LOCAL_MASK Local source address
+*	XDC_DMACR_DEST_LOCAL_MASK	Local destination address
+*	XDC_DMACR_SG_ENABLE_MASK	Scatter gather enable
+*	XDC_DMACR_GEN_BD_INTR_MASK	Individual buffer descriptor interrupt
+*	XDC_DMACR_LAST_BD_MASK		Last buffer descriptor in a packet
 *
 * NOTES:
 *
@@ -344,16 +344,16 @@ XDmaChannel_Reset (XDmaChannel * InstancePtr)
 *
 ******************************************************************************/
 u32
-XDmaChannel_GetControl (XDmaChannel * InstancePtr)
+XDmaChannel_GetControl(XDmaChannel * InstancePtr)
 {
-  /* assert to verify input arguments */
-  
-  XASSERT_NONVOID (InstancePtr != NULL);
-  XASSERT_NONVOID (InstancePtr->IsReady == XCOMPONENT_IS_READY);
-  
-  /* return the contents of the DMA control register */
-  
-  return XIo_In32 (InstancePtr->RegBaseAddress + XDC_DMAC_REG_OFFSET);
+	/* assert to verify input arguments */
+
+	XASSERT_NONVOID(InstancePtr != NULL);
+	XASSERT_NONVOID(InstancePtr->IsReady == XCOMPONENT_IS_READY);
+
+	/* return the contents of the DMA control register */
+
+	return XIo_In32(InstancePtr->RegBaseAddress + XDC_DMAC_REG_OFFSET);
 }
 
 /******************************************************************************
@@ -375,13 +375,13 @@ XDmaChannel_GetControl (XDmaChannel * InstancePtr)
 * Each of the values are unique bit masks such that they may be ORed together
 * to enable multiple bits or inverted and ANDed to disable multiple bits.
 *
-* XDC_DMACR_SOURCE_INCR_MASK  Increment the source address
-* XDC_DMACR_DEST_INCR_MASK  Increment the destination address
-* XDC_DMACR_SOURCE_LOCAL_MASK Local source address
-* XDC_DMACR_DEST_LOCAL_MASK Local destination address
-* XDC_DMACR_SG_ENABLE_MASK  Scatter gather enable
-* XDC_DMACR_GEN_BD_INTR_MASK  Individual buffer descriptor interrupt
-* XDC_DMACR_LAST_BD_MASK    Last buffer descriptor in a packet
+*	XDC_DMACR_SOURCE_INCR_MASK	Increment the source address
+*	XDC_DMACR_DEST_INCR_MASK	Increment the destination address
+*	XDC_DMACR_SOURCE_LOCAL_MASK Local source address
+*	XDC_DMACR_DEST_LOCAL_MASK	Local destination address
+*	XDC_DMACR_SG_ENABLE_MASK	Scatter gather enable
+*	XDC_DMACR_GEN_BD_INTR_MASK	Individual buffer descriptor interrupt
+*	XDC_DMACR_LAST_BD_MASK		Last buffer descriptor in a packet
 *
 * RETURN VALUE:
 *
@@ -393,17 +393,17 @@ XDmaChannel_GetControl (XDmaChannel * InstancePtr)
 *
 ******************************************************************************/
 void
-XDmaChannel_SetControl (XDmaChannel * InstancePtr, u32 Control)
+XDmaChannel_SetControl(XDmaChannel * InstancePtr, u32 Control)
 {
-  /* assert to verify input arguments except the control which can't be
-   * asserted since all values are valid
-   */
-  XASSERT_VOID (InstancePtr != NULL);
-  XASSERT_VOID (InstancePtr->IsReady == XCOMPONENT_IS_READY);
-  
-  /* set the DMA control register to the specified value */
-  
-  XIo_Out32 (InstancePtr->RegBaseAddress + XDC_DMAC_REG_OFFSET, Control);
+	/* assert to verify input arguments except the control which can't be
+	 * asserted since all values are valid
+	 */
+	XASSERT_VOID(InstancePtr != NULL);
+	XASSERT_VOID(InstancePtr->IsReady == XCOMPONENT_IS_READY);
+
+	/* set the DMA control register to the specified value */
+
+	XIo_Out32(InstancePtr->RegBaseAddress + XDC_DMAC_REG_OFFSET, Control);
 }
 
 /******************************************************************************
@@ -426,10 +426,10 @@ XDmaChannel_SetControl (XDmaChannel * InstancePtr, u32 Control)
 * following values may be contained the register. Each of the values are
 * unique bit masks.
 *
-* XDC_DMASR_BUSY_MASK     The DMA channel is busy
-* XDC_DMASR_BUS_ERROR_MASK  A bus error occurred
-* XDC_DMASR_BUS_TIMEOUT_MASK  A bus timeout occurred
-* XDC_DMASR_LAST_BD_MASK    The last buffer descriptor of a packet
+*	XDC_DMASR_BUSY_MASK			The DMA channel is busy
+*	XDC_DMASR_BUS_ERROR_MASK	A bus error occurred
+*	XDC_DMASR_BUS_TIMEOUT_MASK	A bus timeout occurred
+*	XDC_DMASR_LAST_BD_MASK		The last buffer descriptor of a packet
 *
 * NOTES:
 *
@@ -437,16 +437,16 @@ XDmaChannel_SetControl (XDmaChannel * InstancePtr, u32 Control)
 *
 ******************************************************************************/
 u32
-XDmaChannel_GetStatus (XDmaChannel * InstancePtr)
+XDmaChannel_GetStatus(XDmaChannel * InstancePtr)
 {
-  /* assert to verify input arguments */
-  
-  XASSERT_NONVOID (InstancePtr != NULL);
-  XASSERT_NONVOID (InstancePtr->IsReady == XCOMPONENT_IS_READY);
-  
-  /* return the contents of the DMA status register */
-  
-  return XIo_In32 (InstancePtr->RegBaseAddress + XDC_DMAS_REG_OFFSET);
+	/* assert to verify input arguments */
+
+	XASSERT_NONVOID(InstancePtr != NULL);
+	XASSERT_NONVOID(InstancePtr->IsReady == XCOMPONENT_IS_READY);
+
+	/* return the contents of the DMA status register */
+
+	return XIo_In32(InstancePtr->RegBaseAddress + XDC_DMAS_REG_OFFSET);
 }
 
 /******************************************************************************
@@ -472,13 +472,13 @@ XDmaChannel_GetStatus (XDmaChannel * InstancePtr)
 * Each of the values are unique bit masks such that they may be ORed together
 * to enable multiple bits or inverted and ANDed to disable multiple bits.
 *
-* XDC_IXR_DMA_DONE_MASK   The dma operation is done
-* XDC_IXR_DMA_ERROR_MASK      The dma operation had an error
-* XDC_IXR_PKT_DONE_MASK     A packet is complete
-* XDC_IXR_PKT_THRESHOLD_MASK  The packet count threshold reached
-* XDC_IXR_PKT_WAIT_BOUND_MASK The packet wait bound reached
-* XDC_IXR_SG_DISABLE_ACK_MASK The scatter gather disable completed
-* XDC_IXR_BD_MASK       A buffer descriptor is done
+*	XDC_IXR_DMA_DONE_MASK		The dma operation is done
+*	XDC_IXR_DMA_ERROR_MASK	    The dma operation had an error
+*	XDC_IXR_PKT_DONE_MASK	    A packet is complete
+*	XDC_IXR_PKT_THRESHOLD_MASK	The packet count threshold reached
+*	XDC_IXR_PKT_WAIT_BOUND_MASK The packet wait bound reached
+*	XDC_IXR_SG_DISABLE_ACK_MASK The scatter gather disable completed
+*	XDC_IXR_BD_MASK				A buffer descriptor is done
 *
 * RETURN VALUE:
 *
@@ -490,19 +490,19 @@ XDmaChannel_GetStatus (XDmaChannel * InstancePtr)
 *
 ******************************************************************************/
 void
-XDmaChannel_SetIntrStatus (XDmaChannel * InstancePtr, u32 Status)
+XDmaChannel_SetIntrStatus(XDmaChannel * InstancePtr, u32 Status)
 {
-  /* assert to verify input arguments except the status which can't be
-   * asserted since all values are valid
-   */
-  XASSERT_VOID (InstancePtr != NULL);
-  XASSERT_VOID (InstancePtr->IsReady == XCOMPONENT_IS_READY);
-  
-  /* set the interrupt status register with the specified value such that
-   * all bits which are set in the register are cleared effectively clearing
-   * any active interrupts
-   */
-  XIo_Out32 (InstancePtr->RegBaseAddress + XDC_IS_REG_OFFSET, Status);
+	/* assert to verify input arguments except the status which can't be
+	 * asserted since all values are valid
+	 */
+	XASSERT_VOID(InstancePtr != NULL);
+	XASSERT_VOID(InstancePtr->IsReady == XCOMPONENT_IS_READY);
+
+	/* set the interrupt status register with the specified value such that
+	 * all bits which are set in the register are cleared effectively clearing
+	 * any active interrupts
+	 */
+	XIo_Out32(InstancePtr->RegBaseAddress + XDC_IS_REG_OFFSET, Status);
 }
 
 /******************************************************************************
@@ -530,14 +530,14 @@ XDmaChannel_SetIntrStatus (XDmaChannel * InstancePtr, u32 Status)
 * One or more of the following values may be contained the register.
 * Each of the values are unique bit masks.
 *
-* XDC_IXR_DMA_DONE_MASK   The dma operation is done
-* XDC_IXR_DMA_ERROR_MASK      The dma operation had an error
-* XDC_IXR_PKT_DONE_MASK     A packet is complete
-* XDC_IXR_PKT_THRESHOLD_MASK  The packet count threshold reached
-* XDC_IXR_PKT_WAIT_BOUND_MASK The packet wait bound reached
-* XDC_IXR_SG_DISABLE_ACK_MASK The scatter gather disable completed
-* XDC_IXR_SG_END_MASK     Current descriptor was the end of the list
-* XDC_IXR_BD_MASK       A buffer descriptor is done
+*	XDC_IXR_DMA_DONE_MASK		The dma operation is done
+*	XDC_IXR_DMA_ERROR_MASK	    The dma operation had an error
+*	XDC_IXR_PKT_DONE_MASK	    A packet is complete
+*	XDC_IXR_PKT_THRESHOLD_MASK	The packet count threshold reached
+*	XDC_IXR_PKT_WAIT_BOUND_MASK The packet wait bound reached
+*	XDC_IXR_SG_DISABLE_ACK_MASK The scatter gather disable completed
+*	XDC_IXR_SG_END_MASK			Current descriptor was the end of the list
+*	XDC_IXR_BD_MASK				A buffer descriptor is done
 *
 * NOTES:
 *
@@ -545,16 +545,16 @@ XDmaChannel_SetIntrStatus (XDmaChannel * InstancePtr, u32 Status)
 *
 ******************************************************************************/
 u32
-XDmaChannel_GetIntrStatus (XDmaChannel * InstancePtr)
+XDmaChannel_GetIntrStatus(XDmaChannel * InstancePtr)
 {
-  /* assert to verify input arguments */
-  
-  XASSERT_NONVOID (InstancePtr != NULL);
-  XASSERT_NONVOID (InstancePtr->IsReady == XCOMPONENT_IS_READY);
-  
-  /* return the contents of the interrupt status register */
-  
-  return XIo_In32 (InstancePtr->RegBaseAddress + XDC_IS_REG_OFFSET);
+	/* assert to verify input arguments */
+
+	XASSERT_NONVOID(InstancePtr != NULL);
+	XASSERT_NONVOID(InstancePtr->IsReady == XCOMPONENT_IS_READY);
+
+	/* return the contents of the interrupt status register */
+
+	return XIo_In32(InstancePtr->RegBaseAddress + XDC_IS_REG_OFFSET);
 }
 
 /******************************************************************************
@@ -581,14 +581,14 @@ XDmaChannel_GetIntrStatus (XDmaChannel * InstancePtr)
 * ORed together to enable multiple bits or inverted and ANDed to disable
 * multiple bits.
 *
-* XDC_IXR_DMA_DONE_MASK   The dma operation is done
-* XDC_IXR_DMA_ERROR_MASK      The dma operation had an error
-* XDC_IXR_PKT_DONE_MASK     A packet is complete
-* XDC_IXR_PKT_THRESHOLD_MASK  The packet count threshold reached
-* XDC_IXR_PKT_WAIT_BOUND_MASK The packet wait bound reached
-* XDC_IXR_SG_DISABLE_ACK_MASK The scatter gather disable completed
-* XDC_IXR_SG_END_MASK     Current descriptor was the end of the list
-* XDC_IXR_BD_MASK       A buffer descriptor is done
+*	XDC_IXR_DMA_DONE_MASK		The dma operation is done
+*	XDC_IXR_DMA_ERROR_MASK	    The dma operation had an error
+*	XDC_IXR_PKT_DONE_MASK	    A packet is complete
+*	XDC_IXR_PKT_THRESHOLD_MASK	The packet count threshold reached
+*	XDC_IXR_PKT_WAIT_BOUND_MASK The packet wait bound reached
+*	XDC_IXR_SG_DISABLE_ACK_MASK The scatter gather disable completed
+*	XDC_IXR_SG_END_MASK			Current descriptor was the end of the list
+*	XDC_IXR_BD_MASK				A buffer descriptor is done
 *
 * RETURN VALUE:
 *
@@ -600,17 +600,17 @@ XDmaChannel_GetIntrStatus (XDmaChannel * InstancePtr)
 *
 ******************************************************************************/
 void
-XDmaChannel_SetIntrEnable (XDmaChannel * InstancePtr, u32 Enable)
+XDmaChannel_SetIntrEnable(XDmaChannel * InstancePtr, u32 Enable)
 {
-  /* assert to verify input arguments except the enable which can't be
-   * asserted since all values are valid
-   */
-  XASSERT_VOID (InstancePtr != NULL);
-  XASSERT_VOID (InstancePtr->IsReady == XCOMPONENT_IS_READY);
-  
-  /* set the interrupt enable register to the specified value */
-  
-  XIo_Out32 (InstancePtr->RegBaseAddress + XDC_IE_REG_OFFSET, Enable);
+	/* assert to verify input arguments except the enable which can't be
+	 * asserted since all values are valid
+	 */
+	XASSERT_VOID(InstancePtr != NULL);
+	XASSERT_VOID(InstancePtr->IsReady == XCOMPONENT_IS_READY);
+
+	/* set the interrupt enable register to the specified value */
+
+	XIo_Out32(InstancePtr->RegBaseAddress + XDC_IE_REG_OFFSET, Enable);
 }
 
 /******************************************************************************
@@ -635,13 +635,13 @@ XDmaChannel_SetIntrEnable (XDmaChannel * InstancePtr, u32 Enable)
 * The interrupt enable of the DMA channel.  One or more of the following values
 * may be contained the register. Each of the values are unique bit masks.
 *
-* XDC_IXR_DMA_DONE_MASK   The dma operation is done
-* XDC_IXR_DMA_ERROR_MASK      The dma operation had an error
-* XDC_IXR_PKT_DONE_MASK     A packet is complete
-* XDC_IXR_PKT_THRESHOLD_MASK  The packet count threshold reached
-* XDC_IXR_PKT_WAIT_BOUND_MASK The packet wait bound reached
-* XDC_IXR_SG_DISABLE_ACK_MASK The scatter gather disable completed
-* XDC_IXR_BD_MASK       A buffer descriptor is done
+*	XDC_IXR_DMA_DONE_MASK		The dma operation is done
+*	XDC_IXR_DMA_ERROR_MASK	    The dma operation had an error
+*	XDC_IXR_PKT_DONE_MASK	    A packet is complete
+*	XDC_IXR_PKT_THRESHOLD_MASK	The packet count threshold reached
+*	XDC_IXR_PKT_WAIT_BOUND_MASK The packet wait bound reached
+*	XDC_IXR_SG_DISABLE_ACK_MASK The scatter gather disable completed
+*	XDC_IXR_BD_MASK				A buffer descriptor is done
 *
 * NOTES:
 *
@@ -649,16 +649,16 @@ XDmaChannel_SetIntrEnable (XDmaChannel * InstancePtr, u32 Enable)
 *
 ******************************************************************************/
 u32
-XDmaChannel_GetIntrEnable (XDmaChannel * InstancePtr)
+XDmaChannel_GetIntrEnable(XDmaChannel * InstancePtr)
 {
-  /* assert to verify input arguments */
-  
-  XASSERT_NONVOID (InstancePtr != NULL);
-  XASSERT_NONVOID (InstancePtr->IsReady == XCOMPONENT_IS_READY);
-  
-  /* return the contents of the interrupt enable register */
-  
-  return XIo_In32 (InstancePtr->RegBaseAddress + XDC_IE_REG_OFFSET);
+	/* assert to verify input arguments */
+
+	XASSERT_NONVOID(InstancePtr != NULL);
+	XASSERT_NONVOID(InstancePtr->IsReady == XCOMPONENT_IS_READY);
+
+	/* return the contents of the interrupt enable register */
+
+	return XIo_In32(InstancePtr->RegBaseAddress + XDC_IE_REG_OFFSET);
 }
 
 /******************************************************************************
@@ -709,30 +709,30 @@ XDmaChannel_GetIntrEnable (XDmaChannel * InstancePtr)
 *
 ******************************************************************************/
 void
-XDmaChannel_Transfer (XDmaChannel * InstancePtr,
-                      u32 * SourcePtr, u32 * DestinationPtr, u32 ByteCount)
+XDmaChannel_Transfer(XDmaChannel * InstancePtr,
+		     u32 * SourcePtr, u32 * DestinationPtr, u32 ByteCount)
 {
-  /* assert to verify input arguments and the alignment of any arguments
-   * which have expected alignments
-   */
-  XASSERT_VOID (InstancePtr != NULL);
-  XASSERT_VOID (SourcePtr != NULL);
-  XASSERT_VOID ( ( (u32) SourcePtr & 3) == 0);
-  XASSERT_VOID (DestinationPtr != NULL);
-  XASSERT_VOID ( ( (u32) DestinationPtr & 3) == 0);
-  XASSERT_VOID (ByteCount != 0);
-  XASSERT_VOID (InstancePtr->IsReady == XCOMPONENT_IS_READY);
-  
-  /* setup the source and destination address registers for the transfer */
-  
-  XIo_Out32 (InstancePtr->RegBaseAddress + XDC_SA_REG_OFFSET,
-             (u32) SourcePtr);
-             
-  XIo_Out32 (InstancePtr->RegBaseAddress + XDC_DA_REG_OFFSET,
-             (u32) DestinationPtr);
-             
-  /* start the DMA transfer to copy from the source buffer to the
-   * destination buffer by writing the length to the length register
-   */
-  XIo_Out32 (InstancePtr->RegBaseAddress + XDC_LEN_REG_OFFSET, ByteCount);
+	/* assert to verify input arguments and the alignment of any arguments
+	 * which have expected alignments
+	 */
+	XASSERT_VOID(InstancePtr != NULL);
+	XASSERT_VOID(SourcePtr != NULL);
+	XASSERT_VOID(((u32) SourcePtr & 3) == 0);
+	XASSERT_VOID(DestinationPtr != NULL);
+	XASSERT_VOID(((u32) DestinationPtr & 3) == 0);
+	XASSERT_VOID(ByteCount != 0);
+	XASSERT_VOID(InstancePtr->IsReady == XCOMPONENT_IS_READY);
+
+	/* setup the source and destination address registers for the transfer */
+
+	XIo_Out32(InstancePtr->RegBaseAddress + XDC_SA_REG_OFFSET,
+		  (u32) SourcePtr);
+
+	XIo_Out32(InstancePtr->RegBaseAddress + XDC_DA_REG_OFFSET,
+		  (u32) DestinationPtr);
+
+	/* start the DMA transfer to copy from the source buffer to the
+	 * destination buffer by writing the length to the length register
+	 */
+	XIo_Out32(InstancePtr->RegBaseAddress + XDC_LEN_REG_OFFSET, ByteCount);
 }

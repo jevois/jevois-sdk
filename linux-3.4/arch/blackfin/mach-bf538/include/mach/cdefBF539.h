@@ -7,7 +7,7 @@
 #ifndef _CDEF_BF539_H
 #define _CDEF_BF539_H
 
-/* Include MMRs Common to BF538                 */
+/* Include MMRs Common to BF538 								*/
 #include "cdefBF538.h"
 
 #define bfin_read_MXVR_CONFIG()        bfin_read16(MXVR_CONFIG)

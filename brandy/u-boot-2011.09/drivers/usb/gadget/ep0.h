@@ -9,9 +9,9 @@
  * Copyright (c) 2001 Hewlett Packard
  *
  * By:
- *  Stuart Lynne <sl@lineo.com>,
- *  Tom Rushworth <tbr@lineo.com>,
- *  Bruce Balden <balden@lineo.com>
+ *	Stuart Lynne <sl@lineo.com>,
+ *	Tom Rushworth <tbr@lineo.com>,
+ *	Bruce Balden <balden@lineo.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -33,7 +33,7 @@
 #define __USBDCORE_EP0_H__
 
 
-int ep0_recv_setup (struct urb * urb);
+int ep0_recv_setup (struct urb *urb);
 
 
 #endif

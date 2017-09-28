@@ -50,13 +50,13 @@
  * sd_new_chan() used to create the channel which the data arrived on
  */
 
-void sd_recv_consume (void * token, size_t len, void * user);
+void sd_recv_consume(void *token, size_t len, void *user);
 
-void        sd_disable_xmit (void * user);
-void        sd_enable_xmit (void * user);
-int         sd_line_is_ok (void * user);
-void        sd_line_is_up (void * user);
-void        sd_line_is_down (void * user);
-int         sd_queue_stopped (void * user);
+void        sd_disable_xmit (void *user);
+void        sd_enable_xmit (void *user);
+int         sd_line_is_ok (void *user);
+void        sd_line_is_up (void *user);
+void        sd_line_is_down (void *user);
+int         sd_queue_stopped (void *user);
 
 #endif                          /*** _INC_PMCC4_SYSDEP_H_ ***/

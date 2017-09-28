@@ -40,7 +40,7 @@
 #define SSM2602_IFACE    0x07
 #define SSM2602_SRATE    0x08
 #define SSM2602_ACTIVE   0x09
-#define SSM2602_RESET  0x0f
+#define SSM2602_RESET	 0x0f
 
 /*SSM2602 Codec Register Field definitions
  *(Mask value to extract the corresponding Register field)
@@ -114,12 +114,12 @@
 
 /*********************************************************************/
 
-#define SSM2602_CACHEREGNUM   10
+#define SSM2602_CACHEREGNUM 	10
 
 enum ssm2602_clk {
-  SSM2602_SYSCLK,
-  SSM2602_CLK_CLKOUT,
-  SSM2602_CLK_XTO
+	SSM2602_SYSCLK,
+	SSM2602_CLK_CLKOUT,
+	SSM2602_CLK_XTO
 };
 
 #endif

@@ -1,8 +1,8 @@
 /*
  * ad73311.c  --  ALSA Soc AD73311 codec support
  *
- * Copyright: Analog Device Inc.
- * Author:  Cliff Cai <cliff.cai@analog.com>
+ * Copyright:	Analog Device Inc.
+ * Author:	Cliff Cai <cliff.cai@analog.com>
  *
  *  This program is free software; you can redistribute  it and/or modify it
  *  under  the terms of  the GNU General  Public License as published by the
@@ -24,49 +24,47 @@
 #include "ad73311.h"
 
 static struct snd_soc_dai_driver ad73311_dai = {
-  .name = "ad73311-hifi",
-  .playback = {
-    .stream_name = "Playback",
-    .channels_min = 1,
-    .channels_max = 1,
-    .rates = SNDRV_PCM_RATE_8000,
-    .formats = SNDRV_PCM_FMTBIT_S16_LE,
-  },
-  .capture = {
-    .stream_name = "Capture",
-    .channels_min = 1,
-    .channels_max = 1,
-    .rates = SNDRV_PCM_RATE_8000,
-    .formats = SNDRV_PCM_FMTBIT_S16_LE,
-  },
+	.name = "ad73311-hifi",
+	.playback = {
+		.stream_name = "Playback",
+		.channels_min = 1,
+		.channels_max = 1,
+		.rates = SNDRV_PCM_RATE_8000,
+		.formats = SNDRV_PCM_FMTBIT_S16_LE, },
+	.capture = {
+		.stream_name = "Capture",
+		.channels_min = 1,
+		.channels_max = 1,
+		.rates = SNDRV_PCM_RATE_8000,
+		.formats = SNDRV_PCM_FMTBIT_S16_LE, },
 };
 
 static struct snd_soc_codec_driver soc_codec_dev_ad73311;
 
-static int ad73311_probe (struct platform_device * pdev)
+static int ad73311_probe(struct platform_device *pdev)
 {
-  return snd_soc_register_codec (&pdev->dev,
-                                 &soc_codec_dev_ad73311, &ad73311_dai, 1);
+	return snd_soc_register_codec(&pdev->dev,
+			&soc_codec_dev_ad73311, &ad73311_dai, 1);
 }
 
-static int __devexit ad73311_remove (struct platform_device * pdev)
+static int __devexit ad73311_remove(struct platform_device *pdev)
 {
-  snd_soc_unregister_codec (&pdev->dev);
-  return 0;
+	snd_soc_unregister_codec(&pdev->dev);
+	return 0;
 }
 
 static struct platform_driver ad73311_codec_driver = {
-  .driver = {
-    .name = "ad73311",
-    .owner = THIS_MODULE,
-  },
-  
-  .probe = ad73311_probe,
-  .remove = __devexit_p (ad73311_remove),
+	.driver = {
+			.name = "ad73311",
+			.owner = THIS_MODULE,
+	},
+
+	.probe = ad73311_probe,
+	.remove = __devexit_p(ad73311_remove),
 };
 
-module_platform_driver (ad73311_codec_driver);
+module_platform_driver(ad73311_codec_driver);
 
-MODULE_DESCRIPTION ("ASoC ad73311 driver");
-MODULE_AUTHOR ("Cliff Cai ");
-MODULE_LICENSE ("GPL");
+MODULE_DESCRIPTION("ASoC ad73311 driver");
+MODULE_AUTHOR("Cliff Cai ");
+MODULE_LICENSE("GPL");

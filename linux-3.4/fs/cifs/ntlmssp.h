@@ -63,17 +63,17 @@
 
 /* Define AV Pair Field IDs */
 enum av_field_type {
-  NTLMSSP_AV_EOL = 0,
-  NTLMSSP_AV_NB_COMPUTER_NAME,
-  NTLMSSP_AV_NB_DOMAIN_NAME,
-  NTLMSSP_AV_DNS_COMPUTER_NAME,
-  NTLMSSP_AV_DNS_DOMAIN_NAME,
-  NTLMSSP_AV_DNS_TREE_NAME,
-  NTLMSSP_AV_FLAGS,
-  NTLMSSP_AV_TIMESTAMP,
-  NTLMSSP_AV_RESTRICTION,
-  NTLMSSP_AV_TARGET_NAME,
-  NTLMSSP_AV_CHANNEL_BINDINGS
+	NTLMSSP_AV_EOL = 0,
+	NTLMSSP_AV_NB_COMPUTER_NAME,
+	NTLMSSP_AV_NB_DOMAIN_NAME,
+	NTLMSSP_AV_DNS_COMPUTER_NAME,
+	NTLMSSP_AV_DNS_DOMAIN_NAME,
+	NTLMSSP_AV_DNS_TREE_NAME,
+	NTLMSSP_AV_FLAGS,
+	NTLMSSP_AV_TIMESTAMP,
+	NTLMSSP_AV_RESTRICTION,
+	NTLMSSP_AV_TARGET_NAME,
+	NTLMSSP_AV_CHANNEL_BINDINGS
 };
 
 /* Although typedefs are not commonly used for structure definitions */
@@ -83,46 +83,46 @@ enum av_field_type {
 /* appearance */
 
 typedef struct _SECURITY_BUFFER {
-  __le16 Length;
-  __le16 MaximumLength;
-  __le32 BufferOffset;  /* offset to buffer */
-} __attribute__ ( (packed) ) SECURITY_BUFFER;
+	__le16 Length;
+	__le16 MaximumLength;
+	__le32 BufferOffset;	/* offset to buffer */
+} __attribute__((packed)) SECURITY_BUFFER;
 
 typedef struct _NEGOTIATE_MESSAGE {
-  __u8 Signature[sizeof (NTLMSSP_SIGNATURE)];
-  __le32 MessageType;     /* NtLmNegotiate = 1 */
-  __le32 NegotiateFlags;
-  SECURITY_BUFFER DomainName; /* RFC 1001 style and ASCII */
-  SECURITY_BUFFER WorkstationName;  /* RFC 1001 and ASCII */
-  /* SECURITY_BUFFER for version info not present since we
-     do not set the version is present flag */
-  char DomainString[0];
-  /* followed by WorkstationString */
-} __attribute__ ( (packed) ) NEGOTIATE_MESSAGE, *PNEGOTIATE_MESSAGE;
+	__u8 Signature[sizeof(NTLMSSP_SIGNATURE)];
+	__le32 MessageType;     /* NtLmNegotiate = 1 */
+	__le32 NegotiateFlags;
+	SECURITY_BUFFER DomainName;	/* RFC 1001 style and ASCII */
+	SECURITY_BUFFER WorkstationName;	/* RFC 1001 and ASCII */
+	/* SECURITY_BUFFER for version info not present since we
+	   do not set the version is present flag */
+	char DomainString[0];
+	/* followed by WorkstationString */
+} __attribute__((packed)) NEGOTIATE_MESSAGE, *PNEGOTIATE_MESSAGE;
 
 typedef struct _CHALLENGE_MESSAGE {
-  __u8 Signature[sizeof (NTLMSSP_SIGNATURE)];
-  __le32 MessageType;   /* NtLmChallenge = 2 */
-  SECURITY_BUFFER TargetName;
-  __le32 NegotiateFlags;
-  __u8 Challenge[CIFS_CRYPTO_KEY_SIZE];
-  __u8 Reserved[8];
-  SECURITY_BUFFER TargetInfoArray;
-  /* SECURITY_BUFFER for version info not present since we
-     do not set the version is present flag */
-} __attribute__ ( (packed) ) CHALLENGE_MESSAGE, *PCHALLENGE_MESSAGE;
+	__u8 Signature[sizeof(NTLMSSP_SIGNATURE)];
+	__le32 MessageType;   /* NtLmChallenge = 2 */
+	SECURITY_BUFFER TargetName;
+	__le32 NegotiateFlags;
+	__u8 Challenge[CIFS_CRYPTO_KEY_SIZE];
+	__u8 Reserved[8];
+	SECURITY_BUFFER TargetInfoArray;
+	/* SECURITY_BUFFER for version info not present since we
+	   do not set the version is present flag */
+} __attribute__((packed)) CHALLENGE_MESSAGE, *PCHALLENGE_MESSAGE;
 
 typedef struct _AUTHENTICATE_MESSAGE {
-  __u8 Signature[sizeof (NTLMSSP_SIGNATURE)];
-  __le32 MessageType;  /* NtLmsAuthenticate = 3 */
-  SECURITY_BUFFER LmChallengeResponse;
-  SECURITY_BUFFER NtChallengeResponse;
-  SECURITY_BUFFER DomainName;
-  SECURITY_BUFFER UserName;
-  SECURITY_BUFFER WorkstationName;
-  SECURITY_BUFFER SessionKey;
-  __le32 NegotiateFlags;
-  /* SECURITY_BUFFER for version info not present since we
-     do not set the version is present flag */
-  char UserString[0];
-} __attribute__ ( (packed) ) AUTHENTICATE_MESSAGE, *PAUTHENTICATE_MESSAGE;
+	__u8 Signature[sizeof(NTLMSSP_SIGNATURE)];
+	__le32 MessageType;  /* NtLmsAuthenticate = 3 */
+	SECURITY_BUFFER LmChallengeResponse;
+	SECURITY_BUFFER NtChallengeResponse;
+	SECURITY_BUFFER DomainName;
+	SECURITY_BUFFER UserName;
+	SECURITY_BUFFER WorkstationName;
+	SECURITY_BUFFER SessionKey;
+	__le32 NegotiateFlags;
+	/* SECURITY_BUFFER for version info not present since we
+	   do not set the version is present flag */
+	char UserString[0];
+} __attribute__((packed)) AUTHENTICATE_MESSAGE, *PAUTHENTICATE_MESSAGE;

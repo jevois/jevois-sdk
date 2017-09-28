@@ -23,20 +23,20 @@
 #include <asm/pgtable.h>
 
 /* Must be called before any hypercall.  */
-extern void xencomm_initialize (void);
-extern int xencomm_is_initialized (void);
+extern void xencomm_initialize(void);
+extern int xencomm_is_initialized(void);
 
 /* Check if virtual contiguity means physical contiguity
  * where the passed address is a pointer value in virtual address.
  * On ia64, identity mapping area in region 7 or the piece of region 5
  * that is mapped by itr[IA64_TR_KERNEL]/dtr[IA64_TR_KERNEL]
  */
-static inline int xencomm_is_phys_contiguous (unsigned long addr)
+static inline int xencomm_is_phys_contiguous(unsigned long addr)
 {
-  return (PAGE_OFFSET <= addr &&
-          addr < (PAGE_OFFSET + (1UL << IA64_MAX_PHYS_BITS) ) ) ||
-         (KERNEL_START <= addr &&
-          addr < KERNEL_START + KERNEL_TR_PAGE_SIZE);
+	return (PAGE_OFFSET <= addr &&
+		addr < (PAGE_OFFSET + (1UL << IA64_MAX_PHYS_BITS))) ||
+		(KERNEL_START <= addr &&
+		 addr < KERNEL_START + KERNEL_TR_PAGE_SIZE);
 }
 
 #endif /* _ASM_IA64_XEN_XENCOMM_H */

@@ -20,11 +20,11 @@
  * MA 02111-1307 USA
  */
 #ifndef __ICS_CLK_H_
-#define __ICS_CLK_H_  1
+#define __ICS_CLK_H_	1
 
 #ifndef __ASSEMBLY__
-extern unsigned long get_board_sys_clk (void);
-extern unsigned long get_board_ddr_clk (void);
+extern unsigned long get_board_sys_clk(void);
+extern unsigned long get_board_ddr_clk(void);
 #endif
 
-#endif  /* __ICS_CLK_H_ */
+#endif	/* __ICS_CLK_H_ */

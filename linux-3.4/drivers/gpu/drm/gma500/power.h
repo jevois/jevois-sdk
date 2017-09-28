@@ -33,21 +33,21 @@
 #include <linux/pci.h>
 #include <drm/drmP.h>
 
-void gma_power_init (struct drm_device * dev);
-void gma_power_uninit (struct drm_device * dev);
+void gma_power_init(struct drm_device *dev);
+void gma_power_uninit(struct drm_device *dev);
 
 /*
  * The kernel bus power management  will call these functions
  */
-int gma_power_suspend (struct device * dev);
-int gma_power_resume (struct device * dev);
+int gma_power_suspend(struct device *dev);
+int gma_power_resume(struct device *dev);
 
 /*
  * These are the functions the driver should use to wrap all hw access
  * (i.e. register reads and writes)
  */
-bool gma_power_begin (struct drm_device * dev, bool force);
-void gma_power_end (struct drm_device * dev);
+bool gma_power_begin(struct drm_device *dev, bool force);
+void gma_power_end(struct drm_device *dev);
 
 /*
  * Use this function to do an instantaneous check for if the hw is on.
@@ -55,13 +55,13 @@ void gma_power_end (struct drm_device * dev);
  * as in irq install/uninstall and you need to
  * prevent a deadlock situation.  Otherwise use gma_power_begin().
  */
-bool gma_power_is_on (struct drm_device * dev);
+bool gma_power_is_on(struct drm_device *dev);
 
 /*
  * GFX-Runtime PM callbacks
  */
-int psb_runtime_suspend (struct device * dev);
-int psb_runtime_resume (struct device * dev);
-int psb_runtime_idle (struct device * dev);
+int psb_runtime_suspend(struct device *dev);
+int psb_runtime_resume(struct device *dev);
+int psb_runtime_idle(struct device *dev);
 
 #endif /*_PSB_POWERMGMT_H_*/

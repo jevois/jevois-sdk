@@ -37,17 +37,17 @@ DECLARE_GLOBAL_DATA_PTR;
 
 #define SPU_BASE         0x40000000
 
-#define spu_LineStat_rc  0x00 /* Line Status Register (Read/Clear) */
-#define spu_LineStat_w   0x04 /* Line Status Register (Set) */
-#define spu_Handshk_rc   0x08 /* Handshake Status Register (Read/Clear) */
-#define spu_Handshk_w    0x0c /* Handshake Status Register (Set) */
-#define spu_BRateDivh    0x10 /* Baud rate divisor high */
-#define spu_BRateDivl    0x14 /* Baud rate divisor low */
-#define spu_CtlReg       0x18 /* Control Register */
-#define spu_RxCmd        0x1c /* Rx Command Register */
-#define spu_TxCmd        0x20 /* Tx Command Register */
-#define spu_RxBuff       0x24 /* Rx data buffer */
-#define spu_TxBuff       0x24 /* Tx data buffer */
+#define spu_LineStat_rc  0x00	/* Line Status Register (Read/Clear) */
+#define spu_LineStat_w   0x04	/* Line Status Register (Set) */
+#define spu_Handshk_rc   0x08	/* Handshake Status Register (Read/Clear) */
+#define spu_Handshk_w    0x0c	/* Handshake Status Register (Set) */
+#define spu_BRateDivh    0x10	/* Baud rate divisor high */
+#define spu_BRateDivl    0x14	/* Baud rate divisor low */
+#define spu_CtlReg       0x18	/* Control Register */
+#define spu_RxCmd        0x1c	/* Rx Command Register */
+#define spu_TxCmd        0x20	/* Tx Command Register */
+#define spu_RxBuff       0x24	/* Rx data buffer */
+#define spu_TxBuff       0x24	/* Tx data buffer */
 
 /*-----------------------------------------------------------------------------+
   | Line Status Register.
@@ -134,104 +134,104 @@ DECLARE_GLOBAL_DATA_PTR;
 
 int serial_init (void)
 {
-  volatile char val;
-  unsigned short br_reg;
-  
-  br_reg = ( ( ( (CONFIG_CPUCLOCK * 1000000) / 16) / gd->baudrate) - 1);
-  
-  /*
-   * Init onboard UART
-   */
-  out_8 ( (u8 *) SPU_BASE + spu_LineStat_rc, 0x78); /* Clear all bits in Line Status Reg */
-  out_8 ( (u8 *) SPU_BASE + spu_BRateDivl, (br_reg & 0x00ff) ); /* Set baud rate divisor... */
-  out_8 ( (u8 *) SPU_BASE + spu_BRateDivh, ( (br_reg & 0xff00) >> 8) ); /* ... */
-  out_8 ( (u8 *) SPU_BASE + spu_CtlReg, 0x08); /* Set 8 bits, no parity and 1 stop bit */
-  out_8 ( (u8 *) SPU_BASE + spu_RxCmd, 0xb0); /* Enable Rx */
-  out_8 ( (u8 *) SPU_BASE + spu_TxCmd, 0x9c); /* Enable Tx */
-  out_8 ( (u8 *) SPU_BASE + spu_Handshk_rc, 0xff); /* Clear Handshake */
-  val = in_8 ( (u8 *) SPU_BASE + spu_RxBuff); /* Dummy read, to clear receiver */
-  
-  return (0);
+	volatile char val;
+	unsigned short br_reg;
+
+	br_reg = ((((CONFIG_CPUCLOCK * 1000000) / 16) / gd->baudrate) - 1);
+
+	/*
+	 * Init onboard UART
+	 */
+	out_8((u8 *)SPU_BASE + spu_LineStat_rc, 0x78); /* Clear all bits in Line Status Reg */
+	out_8((u8 *)SPU_BASE + spu_BRateDivl, (br_reg & 0x00ff)); /* Set baud rate divisor... */
+	out_8((u8 *)SPU_BASE + spu_BRateDivh, ((br_reg & 0xff00) >> 8)); /* ... */
+	out_8((u8 *)SPU_BASE + spu_CtlReg, 0x08);	/* Set 8 bits, no parity and 1 stop bit */
+	out_8((u8 *)SPU_BASE + spu_RxCmd, 0xb0);	/* Enable Rx */
+	out_8((u8 *)SPU_BASE + spu_TxCmd, 0x9c);	/* Enable Tx */
+	out_8((u8 *)SPU_BASE + spu_Handshk_rc, 0xff);	/* Clear Handshake */
+	val = in_8((u8 *)SPU_BASE + spu_RxBuff);	/* Dummy read, to clear receiver */
+
+	return (0);
 }
 
 void serial_setbrg (void)
 {
-  unsigned short br_reg;
-  
-  br_reg = ( ( ( (CONFIG_CPUCLOCK * 1000000) / 16) / gd->baudrate) - 1);
-  
-  out_8 ( (u8 *) SPU_BASE + spu_BRateDivl,
-          (br_reg & 0x00ff) ); /* Set baud rate divisor... */
-  out_8 ( (u8 *) SPU_BASE + spu_BRateDivh,
-          ( (br_reg & 0xff00) >> 8) ); /* ... */
+	unsigned short br_reg;
+
+	br_reg = ((((CONFIG_CPUCLOCK * 1000000) / 16) / gd->baudrate) - 1);
+
+	out_8((u8 *)SPU_BASE + spu_BRateDivl,
+	      (br_reg & 0x00ff)); /* Set baud rate divisor... */
+	out_8((u8 *)SPU_BASE + spu_BRateDivh,
+	      ((br_reg & 0xff00) >> 8)); /* ... */
 }
 
 void serial_putc (const char c)
 {
-  if (c == '\n')
-  { serial_putc ('\r'); }
-  
-  /* load status from handshake register */
-  if (in_8 ( (u8 *) SPU_BASE + spu_Handshk_rc) != 00)
-  { out_8 ( (u8 *) SPU_BASE + spu_Handshk_rc, 0xff); } /* Clear Handshake */
-  
-  out_8 ( (u8 *) SPU_BASE + spu_TxBuff, c); /* Put char */
-  
-  while ( (in_8 ( (u8 *) SPU_BASE + spu_LineStat_rc) & 04) != 04) {
-    if (in_8 ( (u8 *) SPU_BASE + spu_Handshk_rc) != 00)
-    { out_8 ( (u8 *) SPU_BASE + spu_Handshk_rc, 0xff); } /* Clear Handshake */
-  }
+	if (c == '\n')
+		serial_putc ('\r');
+
+	/* load status from handshake register */
+	if (in_8((u8 *)SPU_BASE + spu_Handshk_rc) != 00)
+		out_8((u8 *)SPU_BASE + spu_Handshk_rc, 0xff);	/* Clear Handshake */
+
+	out_8((u8 *)SPU_BASE + spu_TxBuff, c);	/* Put char */
+
+	while ((in_8((u8 *)SPU_BASE + spu_LineStat_rc) & 04) != 04) {
+		if (in_8((u8 *)SPU_BASE + spu_Handshk_rc) != 00)
+			out_8((u8 *)SPU_BASE + spu_Handshk_rc, 0xff);	/* Clear Handshake */
+	}
 }
 
-void serial_puts (const char * s)
+void serial_puts (const char *s)
 {
-  while (*s) {
-    serial_putc (*s++);
-  }
+	while (*s) {
+		serial_putc (*s++);
+	}
 }
 
 int serial_getc ()
 {
-  unsigned char status = 0;
-  
-  while (1) {
-    status = in_8 ( (u8 *) asyncLSRport1);
-    if ( (status & asyncLSRDataReady) != 0x0) {
-      break;
-    }
-    if ( (status & ( asyncLSRFramingError |
-                     asyncLSROverrunError |
-                     asyncLSRParityError  |
-                     asyncLSRBreakInterrupt ) ) != 0) {
-      (void) out_8 ( (u8 *) asyncLSRport1,
-                     asyncLSRFramingError |
-                     asyncLSROverrunError |
-                     asyncLSRParityError  |
-                     asyncLSRBreakInterrupt );
-    }
-  }
-  return (0x000000ff & (int) in_8 ( (u8 *) asyncRxBufferport1) );
+	unsigned char status = 0;
+
+	while (1) {
+		status = in_8((u8 *)asyncLSRport1);
+		if ((status & asyncLSRDataReady) != 0x0) {
+			break;
+		}
+		if ((status & ( asyncLSRFramingError |
+				asyncLSROverrunError |
+				asyncLSRParityError  |
+				asyncLSRBreakInterrupt )) != 0) {
+			(void) out_8((u8 *)asyncLSRport1,
+				     asyncLSRFramingError |
+				     asyncLSROverrunError |
+				     asyncLSRParityError  |
+				     asyncLSRBreakInterrupt );
+		}
+	}
+	return (0x000000ff & (int) in_8((u8 *)asyncRxBufferport1));
 }
 
 int serial_tstc ()
 {
-  unsigned char status;
-  
-  status = in_8 ( (u8 *) asyncLSRport1);
-  if ( (status & asyncLSRDataReady) != 0x0) {
-    return (1);
-  }
-  if ( (status & ( asyncLSRFramingError |
-                   asyncLSROverrunError |
-                   asyncLSRParityError  |
-                   asyncLSRBreakInterrupt ) ) != 0) {
-    (void) out_8 ( (u8 *) asyncLSRport1,
-                   asyncLSRFramingError |
-                   asyncLSROverrunError |
-                   asyncLSRParityError  |
-                   asyncLSRBreakInterrupt);
-  }
-  return 0;
+	unsigned char status;
+
+	status = in_8((u8 *)asyncLSRport1);
+	if ((status & asyncLSRDataReady) != 0x0) {
+		return (1);
+	}
+	if ((status & ( asyncLSRFramingError |
+			asyncLSROverrunError |
+			asyncLSRParityError  |
+			asyncLSRBreakInterrupt )) != 0) {
+		(void) out_8((u8 *)asyncLSRport1,
+			     asyncLSRFramingError |
+			     asyncLSROverrunError |
+			     asyncLSRParityError  |
+			     asyncLSRBreakInterrupt);
+	}
+	return 0;
 }
 
-#endif  /* CONFIG_IOP480 */
+#endif	/* CONFIG_IOP480 */

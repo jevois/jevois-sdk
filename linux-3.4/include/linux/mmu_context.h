@@ -3,7 +3,7 @@
 
 struct mm_struct;
 
-void use_mm (struct mm_struct * mm);
-void unuse_mm (struct mm_struct * mm);
+void use_mm(struct mm_struct *mm);
+void unuse_mm(struct mm_struct *mm);
 
 #endif

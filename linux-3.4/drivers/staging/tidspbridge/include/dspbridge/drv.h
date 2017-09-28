@@ -62,88 +62,88 @@ struct drv_object;
 
 /* New structure (member of process context) abstracts NODE resource info */
 struct node_res_object {
-  void * node;
-  s32 node_allocated; /* Node status */
-  s32 heap_allocated; /* Heap status */
-  s32 streams_allocated;  /* Streams status */
-  int id;
+	void *node;
+	s32 node_allocated;	/* Node status */
+	s32 heap_allocated;	/* Heap status */
+	s32 streams_allocated;	/* Streams status */
+	int id;
 };
 
 /* used to cache dma mapping information */
 struct bridge_dma_map_info {
-  /* direction of DMA in action, or DMA_NONE */
-  enum dma_data_direction dir;
-  /* number of elements requested by us */
-  int num_pages;
-  /* number of elements returned from dma_map_sg */
-  int sg_num;
-  /* list of buffers used in this DMA action */
-  struct scatterlist * sg;
+	/* direction of DMA in action, or DMA_NONE */
+	enum dma_data_direction dir;
+	/* number of elements requested by us */
+	int num_pages;
+	/* number of elements returned from dma_map_sg */
+	int sg_num;
+	/* list of buffers used in this DMA action */
+	struct scatterlist *sg;
 };
 
 /* Used for DMM mapped memory accounting */
 struct dmm_map_object {
-  struct list_head link;
-  u32 dsp_addr;
-  u32 mpu_addr;
-  u32 size;
-  u32 num_usr_pgs;
-  struct page ** pages;
-  struct bridge_dma_map_info dma_info;
+	struct list_head link;
+	u32 dsp_addr;
+	u32 mpu_addr;
+	u32 size;
+	u32 num_usr_pgs;
+	struct page **pages;
+	struct bridge_dma_map_info dma_info;
 };
 
 /* Used for DMM reserved memory accounting */
 struct dmm_rsv_object {
-  struct list_head link;
-  u32 dsp_reserved_addr;
+	struct list_head link;
+	u32 dsp_reserved_addr;
 };
 
 /* New structure (member of process context) abstracts stream resource info */
 struct strm_res_object {
-  s32 stream_allocated; /* Stream status */
-  void * stream;
-  u32 num_bufs;
-  u32 dir;
-  int id;
+	s32 stream_allocated;	/* Stream status */
+	void *stream;
+	u32 num_bufs;
+	u32 dir;
+	int id;
 };
 
 /* Overall Bridge process resource usage state */
 enum gpp_proc_res_state {
-  PROC_RES_ALLOCATED,
-  PROC_RES_FREED
+	PROC_RES_ALLOCATED,
+	PROC_RES_FREED
 };
 
 /* Bridge Data */
 struct drv_data {
-  char * base_img;
-  s32 shm_size;
-  int tc_wordswapon;
-  void * drv_object;
-  void * dev_object;
-  void * mgr_object;
+	char *base_img;
+	s32 shm_size;
+	int tc_wordswapon;
+	void *drv_object;
+	void *dev_object;
+	void *mgr_object;
 };
 
 /* Process Context */
 struct process_context {
-  /* Process State */
-  enum gpp_proc_res_state res_state;
-  
-  /* Handle to Processor */
-  void * processor;
-  
-  /* DSP Node resources */
-  struct idr * node_id;
-  
-  /* DMM mapped memory resources */
-  struct list_head dmm_map_list;
-  spinlock_t dmm_map_lock;
-  
-  /* DMM reserved memory resources */
-  struct list_head dmm_rsv_list;
-  spinlock_t dmm_rsv_lock;
-  
-  /* Stream resources */
-  struct idr * stream_id;
+	/* Process State */
+	enum gpp_proc_res_state res_state;
+
+	/* Handle to Processor */
+	void *processor;
+
+	/* DSP Node resources */
+	struct idr *node_id;
+
+	/* DMM mapped memory resources */
+	struct list_head dmm_map_list;
+	spinlock_t dmm_map_lock;
+
+	/* DMM reserved memory resources */
+	struct list_head dmm_rsv_list;
+	spinlock_t dmm_rsv_lock;
+
+	/* Stream resources */
+	struct idr *stream_id;
 };
 
 /*
@@ -173,7 +173,7 @@ struct process_context {
  *      Also it can hold other necessary
  *      information in its storage area.
  */
-extern int drv_create (struct drv_object ** drv_obj);
+extern int drv_create(struct drv_object **drv_obj);
 
 /*
  *  ======== drv_destroy ========
@@ -196,7 +196,7 @@ extern int drv_create (struct drv_object ** drv_obj);
  *                        DRV handle.
  *                      - Registry is updated with "0" as the DRV Object.
  */
-extern int drv_destroy (struct drv_object * driver_obj);
+extern int drv_destroy(struct drv_object *driver_obj);
 
 /*
  *  ======== drv_get_first_dev_object ========
@@ -210,7 +210,7 @@ extern int drv_destroy (struct drv_object * driver_obj);
  *      0 if it fails to retrieve the First Dev Object
  *  Ensures:
  */
-extern u32 drv_get_first_dev_object (void);
+extern u32 drv_get_first_dev_object(void);
 
 /*
  *  ======== drv_get_first_dev_extension ========
@@ -224,7 +224,7 @@ extern u32 drv_get_first_dev_object (void);
  *      0:                  Failed to Get the Device Extension
  *  Ensures:
  */
-extern u32 drv_get_first_dev_extension (void);
+extern u32 drv_get_first_dev_extension(void);
 
 /*
  *  ======== drv_get_dev_object ========
@@ -246,9 +246,9 @@ extern u32 drv_get_first_dev_extension (void);
  *      0:        *device_obj != NULL
  *      -EPERM:      *device_obj = NULL
  */
-extern int drv_get_dev_object (u32 index,
-                               struct drv_object * hdrv_obj,
-                               struct dev_object ** device_obj);
+extern int drv_get_dev_object(u32 index,
+				     struct drv_object *hdrv_obj,
+				     struct dev_object **device_obj);
 
 /*
  *  ======== drv_get_next_dev_object ========
@@ -264,7 +264,7 @@ extern int drv_get_dev_object (u32 index,
  *      0:              If it fail to get the next Dev Object.
  *  Ensures:
  */
-extern u32 drv_get_next_dev_object (u32 hdev_obj);
+extern u32 drv_get_next_dev_object(u32 hdev_obj);
 
 /*
  *  ======== drv_get_next_dev_extension ========
@@ -280,7 +280,7 @@ extern u32 drv_get_next_dev_object (u32 hdev_obj);
  *      0:                  If it fail to Get the next Dev Extension
  *  Ensures:
  */
-extern u32 drv_get_next_dev_extension (u32 dev_extension);
+extern u32 drv_get_next_dev_extension(u32 dev_extension);
 
 /*
  *  ======== drv_insert_dev_object ========
@@ -298,8 +298,8 @@ extern u32 drv_get_next_dev_extension (u32 dev_extension);
  *  Ensures:
  *      0:        Device Object is inserted and the List is not empty.
  */
-extern int drv_insert_dev_object (struct drv_object * driver_obj,
-                                  struct dev_object * hdev_obj);
+extern int drv_insert_dev_object(struct drv_object *driver_obj,
+					struct dev_object *hdev_obj);
 
 /*
  *  ======== drv_remove_dev_object ========
@@ -319,8 +319,8 @@ extern int drv_insert_dev_object (struct drv_object * driver_obj,
  *  Ensures:
  *      List either does not exist (NULL), or is not empty if it does exist.
  */
-extern int drv_remove_dev_object (struct drv_object * driver_obj,
-                                  struct dev_object * hdev_obj);
+extern int drv_remove_dev_object(struct drv_object *driver_obj,
+					struct dev_object *hdev_obj);
 
 /*
  *  ======== drv_request_resources ========
@@ -339,8 +339,8 @@ extern int drv_remove_dev_object (struct drv_object * driver_obj,
  *      Resource structure is stored in the registry which will be
  *      later used by the CFG module.
  */
-extern int drv_request_resources (u32 dw_context,
-                                  u32 * dev_node_strg);
+extern int drv_request_resources(u32 dw_context,
+					u32 *dev_node_strg);
 
 /*
  *  ======== drv_release_resources ========
@@ -356,17 +356,17 @@ extern int drv_request_resources (u32 dw_context,
  *      The Resources are released based on Bus type.
  *      Resource structure is deleted from the registry
  */
-extern int drv_release_resources (u32 dw_context,
-                                  struct drv_object * hdrv_obj);
+extern int drv_release_resources(u32 dw_context,
+					struct drv_object *hdrv_obj);
 
 /**
  * drv_request_bridge_res_dsp() - Reserves shared memory for bridge.
  * @phost_resources:  pointer to host resources.
  */
-int drv_request_bridge_res_dsp (void ** phost_resources);
+int drv_request_bridge_res_dsp(void **phost_resources);
 
 #ifdef CONFIG_TIDSPBRIDGE_RECOVERY
-void bridge_recover_schedule (void);
+void bridge_recover_schedule(void);
 #endif
 
 /*
@@ -384,12 +384,12 @@ void bridge_recover_schedule (void);
  *      - MEM initialized.
  *      - valid physical address for the base and size > 0
  */
-extern void mem_ext_phys_pool_init (u32 pool_phys_base, u32 pool_size);
+extern void mem_ext_phys_pool_init(u32 pool_phys_base, u32 pool_size);
 
 /*
  *  ======== mem_ext_phys_pool_release ========
  */
-extern void mem_ext_phys_pool_release (void);
+extern void mem_ext_phys_pool_release(void);
 
 /*  ======== mem_alloc_phys_mem ========
  *  Purpose:
@@ -408,8 +408,8 @@ extern void mem_ext_phys_pool_release (void);
  *      the size requested.  Returned physical address refers to physical
  *      location of memory.
  */
-extern void * mem_alloc_phys_mem (u32 byte_size,
-                                  u32 align_mask, u32 * physical_address);
+extern void *mem_alloc_phys_mem(u32 byte_size,
+				u32 align_mask, u32 *physical_address);
 
 /*
  *  ======== mem_free_phys_mem ========
@@ -429,8 +429,8 @@ extern void * mem_alloc_phys_mem (u32 byte_size,
  *  Ensures:
  *      virtual_address is no longer a valid pointer to memory.
  */
-extern void mem_free_phys_mem (void * virtual_address,
-                               u32 physical_address, u32 byte_size);
+extern void mem_free_phys_mem(void *virtual_address,
+			      u32 physical_address, u32 byte_size);
 
 /*
  *  ======== MEM_LINEAR_ADDRESS ========

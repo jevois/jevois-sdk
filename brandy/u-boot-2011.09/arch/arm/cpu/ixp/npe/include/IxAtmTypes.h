@@ -4,16 +4,16 @@
  * @date 24-MAR-2002
  *
  * @brief This file contains Atm types common to a number of Atm components.
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,7 +26,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -39,7 +39,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
  */
@@ -70,21 +70,21 @@
  */
 typedef enum
 {
-  IX_UTOPIA_PORT_0 = 0,  /**< Port 0 */
-  #ifdef IX_NPE_MPHYMULTIPORT
-  IX_UTOPIA_PORT_1,      /**< Port 1 */
-  IX_UTOPIA_PORT_2,      /**< Port 2 */
-  IX_UTOPIA_PORT_3,      /**< Port 3 */
-  IX_UTOPIA_PORT_4,      /**< Port 4 */
-  IX_UTOPIA_PORT_5,      /**< Port 5 */
-  IX_UTOPIA_PORT_6,      /**< Port 6 */
-  IX_UTOPIA_PORT_7,      /**< Port 7 */
-  IX_UTOPIA_PORT_8,      /**< Port 8 */
-  IX_UTOPIA_PORT_9,      /**< Port 9 */
-  IX_UTOPIA_PORT_10,     /**< Port 10 */
-  IX_UTOPIA_PORT_11,     /**< Port 11 */
-  #endif /* IX_NPE_MPHY */
-  IX_UTOPIA_MAX_PORTS    /**< Not a port - just a definition for the
+    IX_UTOPIA_PORT_0 = 0,  /**< Port 0 */
+#ifdef IX_NPE_MPHYMULTIPORT
+    IX_UTOPIA_PORT_1,      /**< Port 1 */
+    IX_UTOPIA_PORT_2,      /**< Port 2 */
+    IX_UTOPIA_PORT_3,      /**< Port 3 */
+    IX_UTOPIA_PORT_4,      /**< Port 4 */
+    IX_UTOPIA_PORT_5,      /**< Port 5 */
+    IX_UTOPIA_PORT_6,      /**< Port 6 */
+    IX_UTOPIA_PORT_7,      /**< Port 7 */
+    IX_UTOPIA_PORT_8,      /**< Port 8 */
+    IX_UTOPIA_PORT_9,      /**< Port 9 */
+    IX_UTOPIA_PORT_10,     /**< Port 10 */
+    IX_UTOPIA_PORT_11,     /**< Port 11 */
+#endif /* IX_NPE_MPHY */
+    IX_UTOPIA_MAX_PORTS    /**< Not a port - just a definition for the
                            * maximum possible ports
                            */
 } IxAtmLogicalPort;
@@ -144,10 +144,10 @@ typedef enum
  */
 #define IX_ATM_MAX_VCI 65535
 
-/**
-* @def IX_ATM_MAX_NUM_AAL_VCS
-* @brief Maximum number of active AAL5/AAL0 VCs in the system
-*/
+ /**
+ * @def IX_ATM_MAX_NUM_AAL_VCS
+ * @brief Maximum number of active AAL5/AAL0 VCs in the system
+ */
 #define IX_ATM_MAX_NUM_AAL_VCS 32
 
 /**
@@ -163,14 +163,14 @@ typedef enum
 
 /**
  * @def IX_ATM_MAX_NUM_OAM_TX_VCS
- * @brief Maximum number of active OAM Tx VCs in the system,
+ * @brief Maximum number of active OAM Tx VCs in the system, 
  *        1 OAM VC per port
  */
 #define IX_ATM_MAX_NUM_OAM_TX_VCS IX_UTOPIA_MAX_PORTS
 
 /**
  * @def IX_ATM_MAX_NUM_OAM_RX_VCS
- * @brief Maximum number of active OAM Rx VCs in the system,
+ * @brief Maximum number of active OAM Rx VCs in the system, 
  *        1 OAM VC shared accross all ports
  */
 #define IX_ATM_MAX_NUM_OAM_RX_VCS 1
@@ -199,26 +199,26 @@ typedef enum
  *  @brief get the VCI field from a cell header
  */
 #define IX_ATM_CELL_HEADER_VCI_GET(cellHeader) \
-  (((cellHeader) >> 4) & IX_OAM_VCI_BITS_MASK);
+    (((cellHeader) >> 4) & IX_OAM_VCI_BITS_MASK);
 
 /**
  *  @def IX_ATM_CELL_HEADER_VPI_GET
  *  @brief get the VPI field from a cell header
  */
 #define IX_ATM_CELL_HEADER_VPI_GET(cellHeader) \
-  (((cellHeader) >> 20) & IX_OAM_VPI_BITS_MASK);
+    (((cellHeader) >> 20) & IX_OAM_VPI_BITS_MASK);
 
 /**
  *  @def IX_ATM_CELL_HEADER_PTI_GET
  *  @brief get the PTI field from a cell header
  */
 #define IX_ATM_CELL_HEADER_PTI_GET(cellHeader) \
-  ((cellHeader) >> 1) & IX_OAM_PTI_BITS_MASK;
+    ((cellHeader) >> 1) & IX_OAM_PTI_BITS_MASK;
 
 /**
  * @typedef IxAtmCellHeader
  *
- * @brief ATM Cell Header, does not contain 4 byte HEC, added by NPE-A
+ * @brief ATM Cell Header, does not contain 4 byte HEC, added by NPE-A 
  */
 typedef unsigned int IxAtmCellHeader;
 
@@ -233,12 +233,12 @@ typedef unsigned int IxAtmCellHeader;
  */
 typedef enum
 {
-  IX_ATM_CBR,    /**< Constant Bit Rate */
-  IX_ATM_RTVBR,  /**< Real Time Variable Bit Rate */
-  IX_ATM_VBR,    /**< Variable Bit Rate */
-  IX_ATM_UBR,    /**< Unspecified Bit Rate */
-  IX_ATM_ABR     /**< Available Bit Rate (not supported) */
-  
+    IX_ATM_CBR,    /**< Constant Bit Rate */
+    IX_ATM_RTVBR,  /**< Real Time Variable Bit Rate */
+    IX_ATM_VBR,    /**< Variable Bit Rate */
+    IX_ATM_UBR,    /**< Unspecified Bit Rate */
+    IX_ATM_ABR     /**< Available Bit Rate (not supported) */
+
 } IxAtmServiceCategory;
 
 /**
@@ -259,9 +259,9 @@ typedef enum
  */
 typedef enum
 {
-  IX_ATM_RX_A = 0,      /**< RX queue A */
-  IX_ATM_RX_B,          /**< RX queue B */
-  IX_ATM_MAX_RX_STREAMS /**< Maximum number of RX streams */
+    IX_ATM_RX_A = 0,      /**< RX queue A */
+    IX_ATM_RX_B,          /**< RX queue B */
+    IX_ATM_MAX_RX_STREAMS /**< Maximum number of RX streams */
 } IxAtmRxQueueId;
 
 /**
@@ -289,13 +289,13 @@ typedef enum
  */
 typedef struct
 {
-  IxAtmServiceCategory atmService; /**< ATM service category */
-  unsigned pcr;   /**< Peak Cell Rate - cells per second */
-  unsigned cdvt;  /**< Cell Delay Variation Tolerance - in nanoseconds */
-  unsigned scr;   /**< Sustained Cell Rate - cells per second */
-  unsigned mbs;   /**< Max Burst Size - cells */
-  unsigned mcr;   /**< Minimum Cell Rate - cells per second */
-  unsigned mfs;   /**< Max Frame Size - cells */
+    IxAtmServiceCategory atmService; /**< ATM service category */
+    unsigned pcr;   /**< Peak Cell Rate - cells per second */
+    unsigned cdvt;  /**< Cell Delay Variation Tolerance - in nanoseconds */
+    unsigned scr;   /**< Sustained Cell Rate - cells per second */
+    unsigned mbs;   /**< Max Burst Size - cells */
+    unsigned mcr;   /**< Minimum Cell Rate - cells per second */
+    unsigned mfs;   /**< Max Frame Size - cells */
 } IxAtmTrafficDescriptor;
 
 /**
@@ -350,7 +350,7 @@ typedef unsigned int IxAtmNpeRxVcId;
  */
 typedef struct
 {
-  IxAtmConnId connId; /**< connection Id
+    IxAtmConnId connId; /**< connection Id
                  *
                  * Identifier of VC from which cells are to be transmitted.
                  * When this valus is IX_ATM_IDLE_CELLS_CONNID, this indicates
@@ -358,7 +358,7 @@ typedef struct
                  * of idle cells. Unknown connIds result in the transmission
                  * idle cells.
                  */
-  unsigned int numberOfCells; /**< number of cells to transmit
+    unsigned int numberOfCells; /**< number of cells to transmit
                  *
                  * The number of contiguous cells to schedule from this VC
                  * at this point. The valid range is from 1 to
@@ -382,18 +382,18 @@ typedef struct
  */
 typedef struct
 {
-  unsigned tableSize;      /**< Number of entries
+    unsigned tableSize;      /**< Number of entries
                               *
                               * Indicates the total number of
                               *   entries in the table.
                               */
-  unsigned totalCellSlots; /**< Number of cells
+    unsigned totalCellSlots; /**< Number of cells
                               *
                               * Indicates the total number of ATM
                               *   cells which are scheduled by all the
                               *   entries in the table.
                               */
-  IxAtmScheduleTableEntry * table; /**< Pointer to schedule entries
+    IxAtmScheduleTableEntry *table; /**< Pointer to schedule entries
                                      *
                                      * Pointer to an array
                                      *   containing tableSize entries

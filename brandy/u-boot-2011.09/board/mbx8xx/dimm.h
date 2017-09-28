@@ -32,25 +32,25 @@
  */
 typedef struct dimm
 {
-  uchar n_bytes; /* 00 number of bytes written/used */
-  uchar t_bytes; /* 01 total number of bytes in serial PD device */
-  uchar fmt; /* 02 fundamental memory type (FPM/EDO/SDRAM) */
-  uchar n_row; /* 03 number of rows */
-  uchar n_col; /* 04 number of columns */
-  uchar n_banks; /* 05 number of banks */
-  uchar data_w_lo; /* 06 data width */
-  uchar data_w_hi; /* 07 data width */
-  uchar ifl; /* 08 interface levels */
-  uchar a_ras; /* 09 RAS access */
-  uchar a_cas; /* 0A CAS access */
-  uchar ct; /* 0B configuration type (non-parity/parity/ECC) */
-  uchar refresh_rt; /* 0C refresh rate/type */
-  uchar p_dram_o; /* 0D primary DRAM organization */
-  uchar s_dram_o; /* 0E secondary DRAM organization (parity/ECC-checkbits) */
-  uchar reserved[17]; /* 0F reserved fields for future offerings */
-  uchar ss_info[32]; /* 20 superset information (may be used in the future) */
-  uchar m_info[64]; /* 40 manufacturer information (optional) */
-  uchar unused[128]; /* 80 unused storage locations */
+	uchar n_bytes; /* 00 number of bytes written/used */
+	uchar t_bytes; /* 01 total number of bytes in serial PD device */
+	uchar fmt; /* 02 fundamental memory type (FPM/EDO/SDRAM) */
+	uchar n_row; /* 03 number of rows */
+	uchar n_col; /* 04 number of columns */
+	uchar n_banks; /* 05 number of banks */
+	uchar data_w_lo; /* 06 data width */
+	uchar data_w_hi; /* 07 data width */
+	uchar ifl; /* 08 interface levels */
+	uchar a_ras; /* 09 RAS access */
+	uchar a_cas; /* 0A CAS access */
+	uchar ct; /* 0B configuration type (non-parity/parity/ECC) */
+	uchar refresh_rt; /* 0C refresh rate/type */
+	uchar p_dram_o; /* 0D primary DRAM organization */
+	uchar s_dram_o; /* 0E secondary DRAM organization (parity/ECC-checkbits) */
+	uchar reserved[17]; /* 0F reserved fields for future offerings */
+	uchar ss_info[32]; /* 20 superset information (may be used in the future) */
+	uchar m_info[64]; /* 40 manufacturer information (optional) */
+	uchar unused[128]; /* 80 unused storage locations */
 } dimm_t;
 
 /*

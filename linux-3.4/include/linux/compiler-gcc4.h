@@ -9,8 +9,8 @@
 # endif
 #endif
 
-#define __used      __attribute__((__used__))
-#define __must_check    __attribute__((warn_unused_result))
+#define __used			__attribute__((__used__))
+#define __must_check 		__attribute__((warn_unused_result))
 #define __compiler_offsetof(a,b) __builtin_offsetof(a,b)
 
 #if __GNUC_MINOR__ >= 3
@@ -27,7 +27,7 @@
    gcc also has a __attribute__((__hot__)) to move hot functions into
    a special section, but I don't see any sense in this right now in
    the kernel context */
-#define __cold      __attribute__((__cold__))
+#define __cold			__attribute__((__cold__))
 
 #define __linktime_error(message) __attribute__((__error__(message)))
 
@@ -44,7 +44,7 @@
 #define unreachable() __builtin_unreachable()
 
 /* Mark a function definition as prohibited from being cloned. */
-#define __noclone __attribute__((__noclone__))
+#define __noclone	__attribute__((__noclone__))
 
 #endif
 #endif

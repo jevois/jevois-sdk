@@ -1,11 +1,11 @@
 #ifndef __LINUX_AXP_MFD_81X_H_
 #define __LINUX_AXP_MFD_81X_H_
 
-/*For AXP81X*/
+/*For AXP81X*/ 
 #define AXP81X                     (28)
 #define AXP81X_STATUS              (0x00)
 #define AXP81X_MODE_CHGSTATUS      (0x01)
-#define AXP81X_IC_TYPE      (0x03)
+#define AXP81X_IC_TYPE		  (0x03)
 #define AXP81X_BUFFER1             (0x04)
 #define AXP81X_BUFFER2             (0x05)
 #define AXP81X_BUFFER3             (0x06)
@@ -91,16 +91,16 @@
 
 /* bit definitions for AXP events ,irq event */
 /*  AXP81X  */
-#define AXP81X_IRQ_USBRE                 ( 1 <<  2)
-#define AXP81X_IRQ_USBIN                 ( 1 <<  3)
-#define AXP81X_IRQ_USBOV                 ( 1 <<  4)
-#define AXP81X_IRQ_ACRE                  ( 1 <<  5)
-#define AXP81X_IRQ_ACIN                  ( 1 <<  6)
-#define AXP81X_IRQ_ACOV                  ( 1 <<  7)
-#define AXP81X_IRQ_CHAOV                 ( 1 << 10)
-#define AXP81X_IRQ_CHAST                 ( 1 << 11)
-#define AXP81X_IRQ_BATATOU               ( 1 << 12)
-#define AXP81X_IRQ_BATATIN               ( 1 << 13)
+#define	AXP81X_IRQ_USBRE                 ( 1 <<  2)
+#define	AXP81X_IRQ_USBIN                 ( 1 <<  3)
+#define	AXP81X_IRQ_USBOV                 ( 1 <<  4)
+#define	AXP81X_IRQ_ACRE                  ( 1 <<  5)
+#define	AXP81X_IRQ_ACIN                  ( 1 <<  6)
+#define	AXP81X_IRQ_ACOV                  ( 1 <<  7)
+#define	AXP81X_IRQ_CHAOV                 ( 1 << 10)
+#define	AXP81X_IRQ_CHAST                 ( 1 << 11)
+#define	AXP81X_IRQ_BATATOU               ( 1 << 12)
+#define	AXP81X_IRQ_BATATIN               ( 1 << 13)
 #define AXP81X_IRQ_BATRE                 ( 1 << 14)
 #define AXP81X_IRQ_BATIN                 ( 1 << 15)
 #define AXP81X_IRQ_QBATINWORK            ( 1 << 16)
@@ -130,19 +130,19 @@
 /* Status Query Interface */
 /*  AXP81X  */
 #define AXP81X_STATUS_SOURCE     ( 1 <<  0)
-#define AXP81X_STATUS_ACUSBSH   ( 1 <<  1)
-#define AXP81X_STATUS_BATCURDIR   ( 1 <<  2)
-#define AXP81X_STATUS_USBLAVHO  ( 1 <<  3)
-#define AXP81X_STATUS_USBVA     ( 1 <<  4)
-#define AXP81X_STATUS_USBEN     ( 1 <<  5)
-#define AXP81X_STATUS_ACVA  ( 1 <<  6)
-#define AXP81X_STATUS_ACEN  ( 1 <<  7)
+#define AXP81X_STATUS_ACUSBSH 	( 1 <<  1)
+#define AXP81X_STATUS_BATCURDIR 	( 1 <<  2)
+#define AXP81X_STATUS_USBLAVHO 	( 1 <<  3)
+#define AXP81X_STATUS_USBVA    	( 1 <<  4)
+#define AXP81X_STATUS_USBEN    	( 1 <<  5)
+#define AXP81X_STATUS_ACVA	( 1 <<  6)
+#define AXP81X_STATUS_ACEN	( 1 <<  7)
 
-#define AXP81X_STATUS_BATINACT    ( 1 << 11)
+#define AXP81X_STATUS_BATINACT  	( 1 << 11)
+                               	
+#define AXP81X_STATUS_BATEN     	( 1 << 13)
+#define AXP81X_STATUS_INCHAR    	( 1 << 14)
+#define AXP81X_STATUS_ICTEMOV   	( 1 << 15)
 
-#define AXP81X_STATUS_BATEN       ( 1 << 13)
-#define AXP81X_STATUS_INCHAR      ( 1 << 14)
-#define AXP81X_STATUS_ICTEMOV     ( 1 << 15)
-
-#define AXP81X_VOL_MAX    1  
+#define AXP81X_VOL_MAX		1	
 #endif /* __LINUX_AXP_MFD_23_H_ */

@@ -57,35 +57,35 @@
 
 typedef struct tagSKeyItem
 {
-  bool bKeyValid;
-  unsigned long uKeyLength;
-  unsigned char abyKey[MAX_KEY_LEN];
-  QWORD       KeyRSC;
-  unsigned long dwTSC47_16;
-  unsigned short wTSC15_0;
-  unsigned char byCipherSuite;
-  unsigned char byReserved0;
-  unsigned long dwKeyIndex;
-  void * pvKeyTable;
+    bool bKeyValid;
+    unsigned long uKeyLength;
+    unsigned char abyKey[MAX_KEY_LEN];
+    QWORD       KeyRSC;
+    unsigned long dwTSC47_16;
+    unsigned short wTSC15_0;
+    unsigned char byCipherSuite;
+    unsigned char byReserved0;
+    unsigned long dwKeyIndex;
+    void *pvKeyTable;
 } SKeyItem, *PSKeyItem;
 
 typedef struct tagSKeyTable
 {
-  unsigned char abyBSSID[ETH_ALEN]; 
-  unsigned char byReserved0[2];             
-  SKeyItem    PairwiseKey;
-  SKeyItem    GroupKey[MAX_GROUP_KEY];
-  unsigned long dwGTKeyIndex;           
-  bool bInUse;
-  bool bSoftWEP;
-  unsigned short wKeyCtl;     
-  
-  unsigned char byReserved1[6];
+    unsigned char abyBSSID[ETH_ALEN]; 
+    unsigned char byReserved0[2];             
+    SKeyItem    PairwiseKey;
+    SKeyItem    GroupKey[MAX_GROUP_KEY];
+    unsigned long dwGTKeyIndex;           
+    bool bInUse;
+    bool bSoftWEP;
+    unsigned short wKeyCtl;     
+
+    unsigned char byReserved1[6];
 } SKeyTable, *PSKeyTable;
 
 typedef struct tagSKeyManagement
 {
-  SKeyTable   KeyTable[MAX_KEY_TABLE];
+    SKeyTable   KeyTable[MAX_KEY_TABLE];
 } SKeyManagement, * PSKeyManagement;
 
 /*---------------------  Export Types  ------------------------------*/
@@ -98,84 +98,84 @@ typedef struct tagSKeyManagement
 
 /*---------------------  Export Functions  --------------------------*/
 
-void KeyvInitTable (PSKeyManagement pTable, unsigned long dwIoBase);
+void KeyvInitTable(PSKeyManagement pTable, unsigned long dwIoBase);
 
-bool KeybGetKey (
-  PSKeyManagement pTable,
-  unsigned char * pbyBSSID,
-  unsigned long dwKeyIndex,
-  PSKeyItem    *   pKey
-);
+bool KeybGetKey(
+    PSKeyManagement pTable,
+    unsigned char *pbyBSSID,
+    unsigned long dwKeyIndex,
+    PSKeyItem       *pKey
+    );
 
-bool KeybSetKey (
-  PSKeyManagement pTable,
-  unsigned char * pbyBSSID,
-  unsigned long dwKeyIndex,
-  unsigned long uKeyLength,
-  PQWORD          pKeyRSC,
-  unsigned char * pbyKey,
-  unsigned char byKeyDecMode,
-  unsigned long dwIoBase,
-  unsigned char byLocalID
-);
+bool KeybSetKey(
+    PSKeyManagement pTable,
+    unsigned char *pbyBSSID,
+    unsigned long dwKeyIndex,
+    unsigned long uKeyLength,
+    PQWORD          pKeyRSC,
+    unsigned char *pbyKey,
+    unsigned char byKeyDecMode,
+    unsigned long dwIoBase,
+    unsigned char byLocalID
+    );
 
-bool KeybSetDefaultKey (
-  PSKeyManagement pTable,
-  unsigned long dwKeyIndex,
-  unsigned long uKeyLength,
-  PQWORD          pKeyRSC,
-  unsigned char * pbyKey,
-  unsigned char byKeyDecMode,
-  unsigned long dwIoBase,
-  unsigned char byLocalID
-);
+bool KeybSetDefaultKey(
+    PSKeyManagement pTable,
+    unsigned long dwKeyIndex,
+    unsigned long uKeyLength,
+    PQWORD          pKeyRSC,
+    unsigned char *pbyKey,
+    unsigned char byKeyDecMode,
+    unsigned long dwIoBase,
+    unsigned char byLocalID
+    );
 
-bool KeybRemoveKey (
-  PSKeyManagement pTable,
-  unsigned char * pbyBSSID,
-  unsigned long dwKeyIndex,
-  unsigned long dwIoBase
-);
+bool KeybRemoveKey(
+    PSKeyManagement pTable,
+    unsigned char *pbyBSSID,
+    unsigned long dwKeyIndex,
+    unsigned long dwIoBase
+    );
 
-bool KeybGetTransmitKey (
-  PSKeyManagement pTable,
-  unsigned char * pbyBSSID,
-  unsigned long dwKeyType,
-  PSKeyItem    *   pKey
-);
+bool KeybGetTransmitKey(
+    PSKeyManagement pTable,
+    unsigned char *pbyBSSID,
+    unsigned long dwKeyType,
+    PSKeyItem       *pKey
+    );
 
-bool KeybCheckPairewiseKey (
-  PSKeyManagement pTable,
-  PSKeyItem    *   pKey
-);
+bool KeybCheckPairewiseKey(
+    PSKeyManagement pTable,
+    PSKeyItem       *pKey
+    );
 
-bool KeybRemoveAllKey (
-  PSKeyManagement pTable,
-  unsigned char * pbyBSSID,
-  unsigned long dwIoBase
-);
+bool KeybRemoveAllKey(
+    PSKeyManagement pTable,
+    unsigned char *pbyBSSID,
+    unsigned long dwIoBase
+    );
 
-void KeyvRemoveWEPKey (
-  PSKeyManagement pTable,
-  unsigned long dwKeyIndex,
-  unsigned long dwIoBase
-);
+void KeyvRemoveWEPKey(
+    PSKeyManagement pTable,
+    unsigned long dwKeyIndex,
+    unsigned long dwIoBase
+    );
 
-void KeyvRemoveAllWEPKey (
-  PSKeyManagement pTable,
-  unsigned long dwIoBase
-);
+void KeyvRemoveAllWEPKey(
+    PSKeyManagement pTable,
+    unsigned long dwIoBase
+    );
 
 bool KeybSetAllGroupKey (
-  PSKeyManagement pTable,
-  unsigned long dwKeyIndex,
-  unsigned long uKeyLength,
-  PQWORD          pKeyRSC,
-  unsigned char * pbyKey,
-  unsigned char byKeyDecMode,
-  unsigned long dwIoBase,
-  unsigned char byLocalID
-);
+    PSKeyManagement pTable,
+    unsigned long dwKeyIndex,
+    unsigned long uKeyLength,
+    PQWORD          pKeyRSC,
+    unsigned char *pbyKey,
+    unsigned char byKeyDecMode,
+    unsigned long dwIoBase,
+    unsigned char byLocalID
+    );
 
 #endif
 

@@ -1,7 +1,7 @@
 /* linux/arch/arm/plat-samsung/include/plat/sysmmu.h
  *
  * Copyright (c) 2010-2011 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com
+ *		http://www.samsung.com
  *
  * Samsung System MMU driver for S5P platform
  *
@@ -14,15 +14,15 @@
 #define __PLAT_SAMSUNG_SYSMMU_H __FILE__
 
 enum S5P_SYSMMU_INTERRUPT_TYPE {
-  SYSMMU_PAGEFAULT,
-  SYSMMU_AR_MULTIHIT,
-  SYSMMU_AW_MULTIHIT,
-  SYSMMU_BUSERROR,
-  SYSMMU_AR_SECURITY,
-  SYSMMU_AR_ACCESS,
-  SYSMMU_AW_SECURITY,
-  SYSMMU_AW_PROTECTION, /* 7 */
-  SYSMMU_FAULTS_NUM
+	SYSMMU_PAGEFAULT,
+	SYSMMU_AR_MULTIHIT,
+	SYSMMU_AW_MULTIHIT,
+	SYSMMU_BUSERROR,
+	SYSMMU_AR_SECURITY,
+	SYSMMU_AR_ACCESS,
+	SYSMMU_AW_SECURITY,
+	SYSMMU_AW_PROTECTION, /* 7 */
+	SYSMMU_FAULTS_NUM
 };
 
 #ifdef CONFIG_S5P_SYSTEM_MMU
@@ -37,7 +37,7 @@ enum S5P_SYSMMU_INTERRUPT_TYPE {
  * This function enable system mmu to transfer address
  * from virtual address to physical address
  */
-void s5p_sysmmu_enable (sysmmu_ips ips, unsigned long pgd);
+void s5p_sysmmu_enable(sysmmu_ips ips, unsigned long pgd);
 
 /**
  * s5p_sysmmu_disable() - disable sysmmu mmu of ip
@@ -46,7 +46,7 @@ void s5p_sysmmu_enable (sysmmu_ips ips, unsigned long pgd);
  * This function disable system mmu to transfer address
  * from virtual address to physical address
  */
-void s5p_sysmmu_disable (sysmmu_ips ips);
+void s5p_sysmmu_disable(sysmmu_ips ips);
 
 /**
  * s5p_sysmmu_set_tablebase_pgd() - set page table base address to refer page table
@@ -57,7 +57,7 @@ void s5p_sysmmu_disable (sysmmu_ips ips);
  * When system mmu transfer address from virtaul address to physical address,
  * system mmu refer address information from page table
  */
-void s5p_sysmmu_set_tablebase_pgd (sysmmu_ips ips, unsigned long pgd);
+void s5p_sysmmu_set_tablebase_pgd(sysmmu_ips ips, unsigned long pgd);
 
 /**
  * s5p_sysmmu_tlb_invalidate() - flush all TLB entry in system mmu
@@ -65,7 +65,7 @@ void s5p_sysmmu_set_tablebase_pgd (sysmmu_ips ips, unsigned long pgd);
  *
  * This function flush all TLB entry in system mmu
  */
-void s5p_sysmmu_tlb_invalidate (sysmmu_ips ips);
+void s5p_sysmmu_tlb_invalidate(sysmmu_ips ips);
 
 /** s5p_sysmmu_set_fault_handler() - Fault handler for System MMUs
  * @itype: type of fault.
@@ -81,10 +81,10 @@ void s5p_sysmmu_tlb_invalidate (sysmmu_ips ips);
  * return value: non-zero if the fault is correctly resolved.
  *         zero if the fault is not handled.
  */
-void s5p_sysmmu_set_fault_handler (sysmmu_ips ips,
-                                   int (*handler) (enum S5P_SYSMMU_INTERRUPT_TYPE itype,
-                                       unsigned long pgtable_base,
-                                       unsigned long fault_addr) );
+void s5p_sysmmu_set_fault_handler(sysmmu_ips ips,
+			int (*handler)(enum S5P_SYSMMU_INTERRUPT_TYPE itype,
+					unsigned long pgtable_base,
+					unsigned long fault_addr));
 #else
 #define s5p_sysmmu_enable(ips, pgd) do { } while (0)
 #define s5p_sysmmu_disable(ips) do { } while (0)

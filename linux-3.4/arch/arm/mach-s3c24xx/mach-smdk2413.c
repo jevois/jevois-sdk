@@ -1,7 +1,7 @@
 /* linux/arch/arm/mach-s3c2412/mach-smdk2413.c
  *
  * Copyright (c) 2006 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * Thanks to Dimity Andric (TomTom) and Steven Ryu (Samsung) for the
  * loans of SMDK2413 to work with.
@@ -53,109 +53,109 @@ static struct map_desc smdk2413_iodesc[] __initdata = {
 };
 
 static struct s3c2410_uartcfg smdk2413_uartcfgs[] __initdata = {
-  [0] = {
-    .hwport      = 0,
-    .flags       = 0,
-    .ucon      = 0x3c5,
-    .ulcon       = 0x03,
-    .ufcon       = 0x51,
-  },
-  [1] = {
-    .hwport      = 1,
-    .flags       = 0,
-    .ucon      = 0x3c5,
-    .ulcon       = 0x03,
-    .ufcon       = 0x51,
-  },
-  /* IR port */
-  [2] = {
-    .hwport      = 2,
-    .flags       = 0,
-    .ucon      = 0x3c5,
-    .ulcon       = 0x43,
-    .ufcon       = 0x51,
-  }
+	[0] = {
+		.hwport	     = 0,
+		.flags	     = 0,
+		.ucon	     = 0x3c5,
+		.ulcon	     = 0x03,
+		.ufcon	     = 0x51,
+	},
+	[1] = {
+		.hwport	     = 1,
+		.flags	     = 0,
+		.ucon	     = 0x3c5,
+		.ulcon	     = 0x03,
+		.ufcon	     = 0x51,
+	},
+	/* IR port */
+	[2] = {
+		.hwport	     = 2,
+		.flags	     = 0,
+		.ucon	     = 0x3c5,
+		.ulcon	     = 0x43,
+		.ufcon	     = 0x51,
+	}
 };
 
 
 static struct s3c2410_udc_mach_info smdk2413_udc_cfg __initdata = {
-  .pullup_pin = S3C2410_GPF (2),
+	.pullup_pin = S3C2410_GPF(2),
 };
 
 
-static struct platform_device * smdk2413_devices[] __initdata = {
-  &s3c_device_ohci,
-  &s3c_device_wdt,
-  &s3c_device_i2c0,
-  &s3c_device_iis,
-  &s3c_device_usbgadget,
+static struct platform_device *smdk2413_devices[] __initdata = {
+	&s3c_device_ohci,
+	&s3c_device_wdt,
+	&s3c_device_i2c0,
+	&s3c_device_iis,
+	&s3c_device_usbgadget,
 };
 
-static void __init smdk2413_fixup (struct tag * tags, char ** cmdline,
-                                   struct meminfo * mi)
+static void __init smdk2413_fixup(struct tag *tags, char **cmdline,
+				  struct meminfo *mi)
 {
-  if (tags != phys_to_virt (S3C2410_SDRAM_PA + 0x100) ) {
-    mi->nr_banks = 1;
-    mi->bank[0].start = 0x30000000;
-    mi->bank[0].size = SZ_64M;
-  }
+	if (tags != phys_to_virt(S3C2410_SDRAM_PA + 0x100)) {
+		mi->nr_banks=1;
+		mi->bank[0].start = 0x30000000;
+		mi->bank[0].size = SZ_64M;
+	}
 }
 
-static void __init smdk2413_map_io (void)
+static void __init smdk2413_map_io(void)
 {
-  s3c24xx_init_io (smdk2413_iodesc, ARRAY_SIZE (smdk2413_iodesc) );
-  s3c24xx_init_clocks (12000000);
-  s3c24xx_init_uarts (smdk2413_uartcfgs, ARRAY_SIZE (smdk2413_uartcfgs) );
+	s3c24xx_init_io(smdk2413_iodesc, ARRAY_SIZE(smdk2413_iodesc));
+	s3c24xx_init_clocks(12000000);
+	s3c24xx_init_uarts(smdk2413_uartcfgs, ARRAY_SIZE(smdk2413_uartcfgs));
 }
 
-static void __init smdk2413_machine_init (void)
-{ /* Turn off suspend on both USB ports, and switch the
-   * selectable USB port to USB device mode. */
-  
-  s3c2410_modify_misccr (S3C2410_MISCCR_USBHOST |
-                         S3C2410_MISCCR_USBSUSPND0 |
-                         S3C2410_MISCCR_USBSUSPND1, 0x0);
-                         
-                         
-  s3c24xx_udc_set_platdata (&smdk2413_udc_cfg);
-  s3c_i2c0_set_platdata (NULL);
-  
-  platform_add_devices (smdk2413_devices, ARRAY_SIZE (smdk2413_devices) );
-  smdk_machine_init();
+static void __init smdk2413_machine_init(void)
+{	/* Turn off suspend on both USB ports, and switch the
+	 * selectable USB port to USB device mode. */
+
+	s3c2410_modify_misccr(S3C2410_MISCCR_USBHOST |
+			      S3C2410_MISCCR_USBSUSPND0 |
+			      S3C2410_MISCCR_USBSUSPND1, 0x0);
+
+
+ 	s3c24xx_udc_set_platdata(&smdk2413_udc_cfg);
+	s3c_i2c0_set_platdata(NULL);
+
+	platform_add_devices(smdk2413_devices, ARRAY_SIZE(smdk2413_devices));
+	smdk_machine_init();
 }
 
-MACHINE_START (S3C2413, "S3C2413")
-/* Maintainer: Ben Dooks <ben-linux@fluff.org> */
-.atag_offset  = 0x100,
+MACHINE_START(S3C2413, "S3C2413")
+	/* Maintainer: Ben Dooks <ben-linux@fluff.org> */
+	.atag_offset	= 0x100,
 
- .fixup    = smdk2413_fixup,
-  .init_irq = s3c24xx_init_irq,
-   .map_io   = smdk2413_map_io,
-    .init_machine = smdk2413_machine_init,
-     .timer    = &s3c24xx_timer,
-      .restart  = s3c2412_restart,
-       MACHINE_END
+	.fixup		= smdk2413_fixup,
+	.init_irq	= s3c24xx_init_irq,
+	.map_io		= smdk2413_map_io,
+	.init_machine	= smdk2413_machine_init,
+	.timer		= &s3c24xx_timer,
+	.restart	= s3c2412_restart,
+MACHINE_END
 
-       MACHINE_START (SMDK2412, "SMDK2412")
-       /* Maintainer: Ben Dooks <ben-linux@fluff.org> */
-       .atag_offset  = 0x100,
+MACHINE_START(SMDK2412, "SMDK2412")
+	/* Maintainer: Ben Dooks <ben-linux@fluff.org> */
+	.atag_offset	= 0x100,
 
-        .fixup    = smdk2413_fixup,
-         .init_irq = s3c24xx_init_irq,
-          .map_io   = smdk2413_map_io,
-           .init_machine = smdk2413_machine_init,
-            .timer    = &s3c24xx_timer,
-             .restart  = s3c2412_restart,
-              MACHINE_END
+	.fixup		= smdk2413_fixup,
+	.init_irq	= s3c24xx_init_irq,
+	.map_io		= smdk2413_map_io,
+	.init_machine	= smdk2413_machine_init,
+	.timer		= &s3c24xx_timer,
+	.restart	= s3c2412_restart,
+MACHINE_END
 
-              MACHINE_START (SMDK2413, "SMDK2413")
-              /* Maintainer: Ben Dooks <ben-linux@fluff.org> */
-              .atag_offset  = 0x100,
+MACHINE_START(SMDK2413, "SMDK2413")
+	/* Maintainer: Ben Dooks <ben-linux@fluff.org> */
+	.atag_offset	= 0x100,
 
-               .fixup    = smdk2413_fixup,
-                .init_irq = s3c24xx_init_irq,
-                 .map_io   = smdk2413_map_io,
-                  .init_machine = smdk2413_machine_init,
-                   .timer    = &s3c24xx_timer,
-                    .restart  = s3c2412_restart,
-                     MACHINE_END
+	.fixup		= smdk2413_fixup,
+	.init_irq	= s3c24xx_init_irq,
+	.map_io		= smdk2413_map_io,
+	.init_machine	= smdk2413_machine_init,
+	.timer		= &s3c24xx_timer,
+	.restart	= s3c2412_restart,
+MACHINE_END

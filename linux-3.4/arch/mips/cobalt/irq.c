@@ -20,49 +20,43 @@
 
 #include <irq.h>
 
-asmlinkage void plat_irq_dispatch (void)
+asmlinkage void plat_irq_dispatch(void)
 {
-  unsigned pending = read_c0_status() & read_c0_cause() & ST0_IM;
-  int irq;
-  
-  if (pending & CAUSEF_IP2)
-  { gt641xx_irq_dispatch(); }
-  else
-    if (pending & CAUSEF_IP6) {
-      irq = i8259_irq();
-      if (irq < 0)
-      { spurious_interrupt(); }
-      else
-      { do_IRQ (irq); }
-    }
-    else
-      if (pending & CAUSEF_IP3)
-      { do_IRQ (MIPS_CPU_IRQ_BASE + 3); }
-      else
-        if (pending & CAUSEF_IP4)
-        { do_IRQ (MIPS_CPU_IRQ_BASE + 4); }
-        else
-          if (pending & CAUSEF_IP5)
-          { do_IRQ (MIPS_CPU_IRQ_BASE + 5); }
-          else
-            if (pending & CAUSEF_IP7)
-            { do_IRQ (MIPS_CPU_IRQ_BASE + 7); }
-            else
-            { spurious_interrupt(); }
+	unsigned pending = read_c0_status() & read_c0_cause() & ST0_IM;
+	int irq;
+
+	if (pending & CAUSEF_IP2)
+		gt641xx_irq_dispatch();
+	else if (pending & CAUSEF_IP6) {
+		irq = i8259_irq();
+		if (irq < 0)
+			spurious_interrupt();
+		else
+			do_IRQ(irq);
+	} else if (pending & CAUSEF_IP3)
+		do_IRQ(MIPS_CPU_IRQ_BASE + 3);
+	else if (pending & CAUSEF_IP4)
+		do_IRQ(MIPS_CPU_IRQ_BASE + 4);
+	else if (pending & CAUSEF_IP5)
+		do_IRQ(MIPS_CPU_IRQ_BASE + 5);
+	else if (pending & CAUSEF_IP7)
+		do_IRQ(MIPS_CPU_IRQ_BASE + 7);
+	else
+		spurious_interrupt();
 }
 
 static struct irqaction cascade = {
-  .handler  = no_action,
-  .name   = "cascade",
-  .flags    = IRQF_NO_THREAD,
+	.handler	= no_action,
+	.name		= "cascade",
+	.flags		= IRQF_NO_THREAD,
 };
 
-void __init arch_init_irq (void)
+void __init arch_init_irq(void)
 {
-  mips_cpu_irq_init();
-  gt641xx_irq_init();
-  init_i8259_irqs();
-  
-  setup_irq (GT641XX_CASCADE_IRQ, &cascade);
-  setup_irq (I8259_CASCADE_IRQ, &cascade);
+	mips_cpu_irq_init();
+	gt641xx_irq_init();
+	init_i8259_irqs();
+
+	setup_irq(GT641XX_CASCADE_IRQ, &cascade);
+	setup_irq(I8259_CASCADE_IRQ, &cascade);
 }

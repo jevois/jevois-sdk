@@ -39,158 +39,158 @@
 #include <rdma/rdma_netlink.h>
 
 struct ibnl_client {
-  struct list_head    list;
-  int       index;
-  int       nops;
-  const struct ibnl_client_cbs  * cb_table;
+	struct list_head		list;
+	int				index;
+	int				nops;
+	const struct ibnl_client_cbs   *cb_table;
 };
 
-static DEFINE_MUTEX (ibnl_mutex);
-static struct sock * nls;
-static LIST_HEAD (client_list);
+static DEFINE_MUTEX(ibnl_mutex);
+static struct sock *nls;
+static LIST_HEAD(client_list);
 
-int ibnl_add_client (int index, int nops,
-                     const struct ibnl_client_cbs cb_table[])
+int ibnl_add_client(int index, int nops,
+		    const struct ibnl_client_cbs cb_table[])
 {
-  struct ibnl_client * cur;
-  struct ibnl_client * nl_client;
-  
-  nl_client = kmalloc (sizeof * nl_client, GFP_KERNEL);
-  if (!nl_client)
-  { return -ENOMEM; }
-  
-  nl_client->index  = index;
-  nl_client->nops   = nops;
-  nl_client->cb_table = cb_table;
-  
-  mutex_lock (&ibnl_mutex);
-  
-  list_for_each_entry (cur, &client_list, list) {
-    if (cur->index == index) {
-      pr_warn ("Client for %d already exists\n", index);
-      mutex_unlock (&ibnl_mutex);
-      kfree (nl_client);
-      return -EINVAL;
-    }
-  }
-  
-  list_add_tail (&nl_client->list, &client_list);
-  
-  mutex_unlock (&ibnl_mutex);
-  
-  return 0;
+	struct ibnl_client *cur;
+	struct ibnl_client *nl_client;
+
+	nl_client = kmalloc(sizeof *nl_client, GFP_KERNEL);
+	if (!nl_client)
+		return -ENOMEM;
+
+	nl_client->index	= index;
+	nl_client->nops		= nops;
+	nl_client->cb_table	= cb_table;
+
+	mutex_lock(&ibnl_mutex);
+
+	list_for_each_entry(cur, &client_list, list) {
+		if (cur->index == index) {
+			pr_warn("Client for %d already exists\n", index);
+			mutex_unlock(&ibnl_mutex);
+			kfree(nl_client);
+			return -EINVAL;
+		}
+	}
+
+	list_add_tail(&nl_client->list, &client_list);
+
+	mutex_unlock(&ibnl_mutex);
+
+	return 0;
 }
-EXPORT_SYMBOL (ibnl_add_client);
+EXPORT_SYMBOL(ibnl_add_client);
 
-int ibnl_remove_client (int index)
+int ibnl_remove_client(int index)
 {
-  struct ibnl_client * cur, *next;
-  
-  mutex_lock (&ibnl_mutex);
-  list_for_each_entry_safe (cur, next, &client_list, list) {
-    if (cur->index == index) {
-      list_del (& (cur->list) );
-      mutex_unlock (&ibnl_mutex);
-      kfree (cur);
-      return 0;
-    }
-  }
-  pr_warn ("Can't remove callback for client idx %d. Not found\n", index);
-  mutex_unlock (&ibnl_mutex);
-  
-  return -EINVAL;
+	struct ibnl_client *cur, *next;
+
+	mutex_lock(&ibnl_mutex);
+	list_for_each_entry_safe(cur, next, &client_list, list) {
+		if (cur->index == index) {
+			list_del(&(cur->list));
+			mutex_unlock(&ibnl_mutex);
+			kfree(cur);
+			return 0;
+		}
+	}
+	pr_warn("Can't remove callback for client idx %d. Not found\n", index);
+	mutex_unlock(&ibnl_mutex);
+
+	return -EINVAL;
 }
-EXPORT_SYMBOL (ibnl_remove_client);
+EXPORT_SYMBOL(ibnl_remove_client);
 
-void * ibnl_put_msg (struct sk_buff * skb, struct nlmsghdr ** nlh, int seq,
-                     int len, int client, int op)
+void *ibnl_put_msg(struct sk_buff *skb, struct nlmsghdr **nlh, int seq,
+		   int len, int client, int op)
 {
-  unsigned char * prev_tail;
-  
-  prev_tail = skb_tail_pointer (skb);
-  *nlh = NLMSG_NEW (skb, 0, seq, RDMA_NL_GET_TYPE (client, op),
-                    len, NLM_F_MULTI);
-  (*nlh)->nlmsg_len = skb_tail_pointer (skb) - prev_tail;
-  return NLMSG_DATA (*nlh);
-  
+	unsigned char *prev_tail;
+
+	prev_tail = skb_tail_pointer(skb);
+	*nlh = NLMSG_NEW(skb, 0, seq, RDMA_NL_GET_TYPE(client, op),
+			len, NLM_F_MULTI);
+	(*nlh)->nlmsg_len = skb_tail_pointer(skb) - prev_tail;
+	return NLMSG_DATA(*nlh);
+
 nlmsg_failure:
-  nlmsg_trim (skb, prev_tail);
-  return NULL;
+	nlmsg_trim(skb, prev_tail);
+	return NULL;
 }
-EXPORT_SYMBOL (ibnl_put_msg);
+EXPORT_SYMBOL(ibnl_put_msg);
 
-int ibnl_put_attr (struct sk_buff * skb, struct nlmsghdr * nlh,
-                   int len, void * data, int type)
+int ibnl_put_attr(struct sk_buff *skb, struct nlmsghdr *nlh,
+		  int len, void *data, int type)
 {
-  unsigned char * prev_tail;
-  
-  prev_tail = skb_tail_pointer (skb);
-  NLA_PUT (skb, type, len, data);
-  nlh->nlmsg_len += skb_tail_pointer (skb) - prev_tail;
-  return 0;
-  
+	unsigned char *prev_tail;
+
+	prev_tail = skb_tail_pointer(skb);
+	NLA_PUT(skb, type, len, data);
+	nlh->nlmsg_len += skb_tail_pointer(skb) - prev_tail;
+	return 0;
+
 nla_put_failure:
-  nlmsg_trim (skb, prev_tail - nlh->nlmsg_len);
-  return -EMSGSIZE;
+	nlmsg_trim(skb, prev_tail - nlh->nlmsg_len);
+	return -EMSGSIZE;
 }
-EXPORT_SYMBOL (ibnl_put_attr);
+EXPORT_SYMBOL(ibnl_put_attr);
 
-static int ibnl_rcv_msg (struct sk_buff * skb, struct nlmsghdr * nlh)
+static int ibnl_rcv_msg(struct sk_buff *skb, struct nlmsghdr *nlh)
 {
-  struct ibnl_client * client;
-  int type = nlh->nlmsg_type;
-  int index = RDMA_NL_GET_CLIENT (type);
-  int op = RDMA_NL_GET_OP (type);
-  
-  list_for_each_entry (client, &client_list, list) {
-    if (client->index == index) {
-      if (op < 0 || op >= client->nops ||
-          !client->cb_table[RDMA_NL_GET_OP (op)].dump)
-      { return -EINVAL; }
-      
-      {
-        struct netlink_dump_control c = {
-          .dump = client->cb_table[op].dump,
-          .module = client->cb_table[op].module,
-        };
-        return netlink_dump_start (nls, skb, nlh, &c);
-      }
-    }
-  }
-  
-  pr_info ("Index %d wasn't found in client list\n", index);
-  return -EINVAL;
-}
+	struct ibnl_client *client;
+	int type = nlh->nlmsg_type;
+	int index = RDMA_NL_GET_CLIENT(type);
+	int op = RDMA_NL_GET_OP(type);
 
-static void ibnl_rcv (struct sk_buff * skb)
-{
-  mutex_lock (&ibnl_mutex);
-  netlink_rcv_skb (skb, &ibnl_rcv_msg);
-  mutex_unlock (&ibnl_mutex);
+	list_for_each_entry(client, &client_list, list) {
+		if (client->index == index) {
+			if (op < 0 || op >= client->nops ||
+			    !client->cb_table[RDMA_NL_GET_OP(op)].dump)
+				return -EINVAL;
+
+			{
+				struct netlink_dump_control c = {
+					.dump = client->cb_table[op].dump,
+					.module = client->cb_table[op].module,
+				};
+				return netlink_dump_start(nls, skb, nlh, &c);
+			}
+		}
+	}
+
+	pr_info("Index %d wasn't found in client list\n", index);
+	return -EINVAL;
 }
 
-int __init ibnl_init (void)
+static void ibnl_rcv(struct sk_buff *skb)
 {
-  nls = netlink_kernel_create (&init_net, NETLINK_RDMA, 0, ibnl_rcv,
-                               NULL, THIS_MODULE);
-  if (!nls) {
-    pr_warn ("Failed to create netlink socket\n");
-    return -ENOMEM;
-  }
-  
-  return 0;
+	mutex_lock(&ibnl_mutex);
+	netlink_rcv_skb(skb, &ibnl_rcv_msg);
+	mutex_unlock(&ibnl_mutex);
 }
 
-void ibnl_cleanup (void)
+int __init ibnl_init(void)
 {
-  struct ibnl_client * cur, *next;
-  
-  mutex_lock (&ibnl_mutex);
-  list_for_each_entry_safe (cur, next, &client_list, list) {
-    list_del (& (cur->list) );
-    kfree (cur);
-  }
-  mutex_unlock (&ibnl_mutex);
-  
-  netlink_kernel_release (nls);
+	nls = netlink_kernel_create(&init_net, NETLINK_RDMA, 0, ibnl_rcv,
+				    NULL, THIS_MODULE);
+	if (!nls) {
+		pr_warn("Failed to create netlink socket\n");
+		return -ENOMEM;
+	}
+
+	return 0;
+}
+
+void ibnl_cleanup(void)
+{
+	struct ibnl_client *cur, *next;
+
+	mutex_lock(&ibnl_mutex);
+	list_for_each_entry_safe(cur, next, &client_list, list) {
+		list_del(&(cur->list));
+		kfree(cur);
+	}
+	mutex_unlock(&ibnl_mutex);
+
+	netlink_kernel_release(nls);
 }

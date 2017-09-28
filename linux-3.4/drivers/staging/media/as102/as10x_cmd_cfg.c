@@ -34,56 +34,55 @@
  *
  * Return 0 on success or negative value in case of error.
  */
-int as10x_cmd_get_context (struct as10x_bus_adapter_t * adap, uint16_t tag,
-                           uint32_t * pvalue)
+int as10x_cmd_get_context(struct as10x_bus_adapter_t *adap, uint16_t tag,
+			  uint32_t *pvalue)
 {
-  int  error;
-  struct as10x_cmd_t * pcmd, *prsp;
-  
-  ENTER();
-  
-  pcmd = adap->cmd;
-  prsp = adap->rsp;
-  
-  /* prepare command */
-  as10x_cmd_build (pcmd, (++adap->cmd_xid),
-                   sizeof (pcmd->body.context.req) );
-                   
-  /* fill command */
-  pcmd->body.context.req.proc_id = cpu_to_le16 (CONTROL_PROC_CONTEXT);
-  pcmd->body.context.req.tag = cpu_to_le16 (tag);
-  pcmd->body.context.req.type = cpu_to_le16 (GET_CONTEXT_DATA);
-  
-  /* send command */
-  if (adap->ops->xfer_cmd) {
-    error  = adap->ops->xfer_cmd (adap,
-                                  (uint8_t *) pcmd,
-                                  sizeof (pcmd->body.context.req)
-                                  + HEADER_SIZE,
-                                  (uint8_t *) prsp,
-                                  sizeof (prsp->body.context.rsp)
-                                  + HEADER_SIZE);
-  }
-  else {
-    error = AS10X_CMD_ERROR;
-  }
-  
-  if (error < 0)
-  { goto out; }
-  
-  /* parse response: context command do not follow the common response */
-  /* structure -> specific handling response parse required            */
-  error = as10x_context_rsp_parse (prsp, CONTROL_PROC_CONTEXT_RSP);
-  
-  if (error == 0) {
-    /* Response OK -> get response data */
-    *pvalue = le32_to_cpu (prsp->body.context.rsp.reg_val.u.value32);
-    /* value returned is always a 32-bit value */
-  }
-  
+	int  error;
+	struct as10x_cmd_t *pcmd, *prsp;
+
+	ENTER();
+
+	pcmd = adap->cmd;
+	prsp = adap->rsp;
+
+	/* prepare command */
+	as10x_cmd_build(pcmd, (++adap->cmd_xid),
+			sizeof(pcmd->body.context.req));
+
+	/* fill command */
+	pcmd->body.context.req.proc_id = cpu_to_le16(CONTROL_PROC_CONTEXT);
+	pcmd->body.context.req.tag = cpu_to_le16(tag);
+	pcmd->body.context.req.type = cpu_to_le16(GET_CONTEXT_DATA);
+
+	/* send command */
+	if (adap->ops->xfer_cmd) {
+		error  = adap->ops->xfer_cmd(adap,
+					     (uint8_t *) pcmd,
+					     sizeof(pcmd->body.context.req)
+					     + HEADER_SIZE,
+					     (uint8_t *) prsp,
+					     sizeof(prsp->body.context.rsp)
+					     + HEADER_SIZE);
+	} else {
+		error = AS10X_CMD_ERROR;
+	}
+
+	if (error < 0)
+		goto out;
+
+	/* parse response: context command do not follow the common response */
+	/* structure -> specific handling response parse required            */
+	error = as10x_context_rsp_parse(prsp, CONTROL_PROC_CONTEXT_RSP);
+
+	if (error == 0) {
+		/* Response OK -> get response data */
+		*pvalue = le32_to_cpu(prsp->body.context.rsp.reg_val.u.value32);
+		/* value returned is always a 32-bit value */
+	}
+
 out:
-  LEAVE();
-  return error;
+	LEAVE();
+	return error;
 }
 
 /**
@@ -94,105 +93,103 @@ out:
  *
  * Return 0 on success or negative value in case of error.
  */
-int as10x_cmd_set_context (struct as10x_bus_adapter_t * adap, uint16_t tag,
-                           uint32_t value)
+int as10x_cmd_set_context(struct as10x_bus_adapter_t *adap, uint16_t tag,
+			  uint32_t value)
 {
-  int error;
-  struct as10x_cmd_t * pcmd, *prsp;
-  
-  ENTER();
-  
-  pcmd = adap->cmd;
-  prsp = adap->rsp;
-  
-  /* prepare command */
-  as10x_cmd_build (pcmd, (++adap->cmd_xid),
-                   sizeof (pcmd->body.context.req) );
-                   
-  /* fill command */
-  pcmd->body.context.req.proc_id = cpu_to_le16 (CONTROL_PROC_CONTEXT);
-  /* pcmd->body.context.req.reg_val.mode initialization is not required */
-  pcmd->body.context.req.reg_val.u.value32 = cpu_to_le32 (value);
-  pcmd->body.context.req.tag = cpu_to_le16 (tag);
-  pcmd->body.context.req.type = cpu_to_le16 (SET_CONTEXT_DATA);
-  
-  /* send command */
-  if (adap->ops->xfer_cmd) {
-    error  = adap->ops->xfer_cmd (adap,
-                                  (uint8_t *) pcmd,
-                                  sizeof (pcmd->body.context.req)
-                                  + HEADER_SIZE,
-                                  (uint8_t *) prsp,
-                                  sizeof (prsp->body.context.rsp)
-                                  + HEADER_SIZE);
-  }
-  else {
-    error = AS10X_CMD_ERROR;
-  }
-  
-  if (error < 0)
-  { goto out; }
-  
-  /* parse response: context command do not follow the common response */
-  /* structure -> specific handling response parse required            */
-  error = as10x_context_rsp_parse (prsp, CONTROL_PROC_CONTEXT_RSP);
-  
+	int error;
+	struct as10x_cmd_t *pcmd, *prsp;
+
+	ENTER();
+
+	pcmd = adap->cmd;
+	prsp = adap->rsp;
+
+	/* prepare command */
+	as10x_cmd_build(pcmd, (++adap->cmd_xid),
+			sizeof(pcmd->body.context.req));
+
+	/* fill command */
+	pcmd->body.context.req.proc_id = cpu_to_le16(CONTROL_PROC_CONTEXT);
+	/* pcmd->body.context.req.reg_val.mode initialization is not required */
+	pcmd->body.context.req.reg_val.u.value32 = cpu_to_le32(value);
+	pcmd->body.context.req.tag = cpu_to_le16(tag);
+	pcmd->body.context.req.type = cpu_to_le16(SET_CONTEXT_DATA);
+
+	/* send command */
+	if (adap->ops->xfer_cmd) {
+		error  = adap->ops->xfer_cmd(adap,
+					     (uint8_t *) pcmd,
+					     sizeof(pcmd->body.context.req)
+					     + HEADER_SIZE,
+					     (uint8_t *) prsp,
+					     sizeof(prsp->body.context.rsp)
+					     + HEADER_SIZE);
+	} else {
+		error = AS10X_CMD_ERROR;
+	}
+
+	if (error < 0)
+		goto out;
+
+	/* parse response: context command do not follow the common response */
+	/* structure -> specific handling response parse required            */
+	error = as10x_context_rsp_parse(prsp, CONTROL_PROC_CONTEXT_RSP);
+
 out:
-  LEAVE();
-  return error;
+	LEAVE();
+	return error;
 }
 
 /**
  * as10x_cmd_eLNA_change_mode - send eLNA change mode command to AS10x
  * @adap:      pointer to AS10x bus adapter
  * @mode:      mode selected:
- *          - ON    : 0x0 => eLNA always ON
- *          - OFF   : 0x1 => eLNA always OFF
- *          - AUTO  : 0x2 => eLNA follow hysteresis parameters
- *         to be ON or OFF
+ *	        - ON    : 0x0 => eLNA always ON
+ *	        - OFF   : 0x1 => eLNA always OFF
+ *	        - AUTO  : 0x2 => eLNA follow hysteresis parameters
+ *				 to be ON or OFF
  *
  * Return 0 on success or negative value in case of error.
  */
-int as10x_cmd_eLNA_change_mode (struct as10x_bus_adapter_t * adap, uint8_t mode)
+int as10x_cmd_eLNA_change_mode(struct as10x_bus_adapter_t *adap, uint8_t mode)
 {
-  int error;
-  struct as10x_cmd_t * pcmd, *prsp;
-  
-  ENTER();
-  
-  pcmd = adap->cmd;
-  prsp = adap->rsp;
-  
-  /* prepare command */
-  as10x_cmd_build (pcmd, (++adap->cmd_xid),
-                   sizeof (pcmd->body.cfg_change_mode.req) );
-                   
-  /* fill command */
-  pcmd->body.cfg_change_mode.req.proc_id =
-    cpu_to_le16 (CONTROL_PROC_ELNA_CHANGE_MODE);
-  pcmd->body.cfg_change_mode.req.mode = mode;
-  
-  /* send command */
-  if (adap->ops->xfer_cmd) {
-    error  = adap->ops->xfer_cmd (adap, (uint8_t *) pcmd,
-                                  sizeof (pcmd->body.cfg_change_mode.req)
-                                  + HEADER_SIZE, (uint8_t *) prsp,
-                                  sizeof (prsp->body.cfg_change_mode.rsp)
-                                  + HEADER_SIZE);
-  }
-  else {
-    error = AS10X_CMD_ERROR;
-  }
-  
-  if (error < 0)
-  { goto out; }
-  
-  /* parse response */
-  error = as10x_rsp_parse (prsp, CONTROL_PROC_ELNA_CHANGE_MODE_RSP);
-  
+	int error;
+	struct as10x_cmd_t *pcmd, *prsp;
+
+	ENTER();
+
+	pcmd = adap->cmd;
+	prsp = adap->rsp;
+
+	/* prepare command */
+	as10x_cmd_build(pcmd, (++adap->cmd_xid),
+			sizeof(pcmd->body.cfg_change_mode.req));
+
+	/* fill command */
+	pcmd->body.cfg_change_mode.req.proc_id =
+		cpu_to_le16(CONTROL_PROC_ELNA_CHANGE_MODE);
+	pcmd->body.cfg_change_mode.req.mode = mode;
+
+	/* send command */
+	if (adap->ops->xfer_cmd) {
+		error  = adap->ops->xfer_cmd(adap, (uint8_t *) pcmd,
+				sizeof(pcmd->body.cfg_change_mode.req)
+				+ HEADER_SIZE, (uint8_t *) prsp,
+				sizeof(prsp->body.cfg_change_mode.rsp)
+				+ HEADER_SIZE);
+	} else {
+		error = AS10X_CMD_ERROR;
+	}
+
+	if (error < 0)
+		goto out;
+
+	/* parse response */
+	error = as10x_rsp_parse(prsp, CONTROL_PROC_ELNA_CHANGE_MODE_RSP);
+
 out:
-  LEAVE();
-  return error;
+	LEAVE();
+	return error;
 }
 
 /**
@@ -204,15 +201,15 @@ out:
  * response, a specific parse function is required.
  * Return 0 on success or negative value in case of error.
  */
-int as10x_context_rsp_parse (struct as10x_cmd_t * prsp, uint16_t proc_id)
+int as10x_context_rsp_parse(struct as10x_cmd_t *prsp, uint16_t proc_id)
 {
-  int err;
-  
-  err = prsp->body.context.rsp.error;
-  
-  if ( (err == 0) &&
-       (le16_to_cpu (prsp->body.context.rsp.proc_id) == proc_id) ) {
-    return 0;
-  }
-  return AS10X_CMD_ERROR;
+	int err;
+
+	err = prsp->body.context.rsp.error;
+
+	if ((err == 0) &&
+	    (le16_to_cpu(prsp->body.context.rsp.proc_id) == proc_id)) {
+		return 0;
+	}
+	return AS10X_CMD_ERROR;
 }

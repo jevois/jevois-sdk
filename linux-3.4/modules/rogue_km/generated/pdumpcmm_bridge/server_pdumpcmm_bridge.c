@@ -74,125 +74,125 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /* ***************************************************************************
  * Server-side bridge entry points
  */
-
+ 
 static IMG_INT
-PVRSRVBridgeDevmemPDumpBitmap (IMG_UINT32 ui32BridgeID,
-                               PVRSRV_BRIDGE_IN_DEVMEMPDUMPBITMAP * psDevmemPDumpBitmapIN,
-                               PVRSRV_BRIDGE_OUT_DEVMEMPDUMPBITMAP * psDevmemPDumpBitmapOUT,
-                               CONNECTION_DATA * psConnection)
+PVRSRVBridgeDevmemPDumpBitmap(IMG_UINT32 ui32BridgeID,
+					 PVRSRV_BRIDGE_IN_DEVMEMPDUMPBITMAP *psDevmemPDumpBitmapIN,
+					 PVRSRV_BRIDGE_OUT_DEVMEMPDUMPBITMAP *psDevmemPDumpBitmapOUT,
+					 CONNECTION_DATA *psConnection)
 {
-  IMG_HANDLE hDeviceNodeInt = IMG_NULL;
-  IMG_CHAR * uiFileNameInt = IMG_NULL;
-  DEVMEMINT_CTX * psDevmemCtxInt = IMG_NULL;
-  IMG_HANDLE hDevmemCtxInt2 = IMG_NULL;
-  
-  PVRSRV_BRIDGE_ASSERT_CMD (ui32BridgeID, PVRSRV_BRIDGE_PDUMPCMM_DEVMEMPDUMPBITMAP);
-  
-  
-  
-  
-  
-  {
-    uiFileNameInt = OSAllocMem (PVRSRV_PDUMP_MAX_FILENAME_SIZE * sizeof (IMG_CHAR) );
-    if (!uiFileNameInt)
-    {
-      psDevmemPDumpBitmapOUT->eError = PVRSRV_ERROR_OUT_OF_MEMORY;
-      
-      goto DevmemPDumpBitmap_exit;
-    }
-  }
-  
-  /* Copy the data over */
-  if ( !OSAccessOK (PVR_VERIFY_READ, (IMG_VOID *) psDevmemPDumpBitmapIN->puiFileName, PVRSRV_PDUMP_MAX_FILENAME_SIZE * sizeof (IMG_CHAR) )
-       || (OSCopyFromUser (NULL, uiFileNameInt, psDevmemPDumpBitmapIN->puiFileName,
-                           PVRSRV_PDUMP_MAX_FILENAME_SIZE * sizeof (IMG_CHAR) ) != PVRSRV_OK) )
-  {
-    psDevmemPDumpBitmapOUT->eError = PVRSRV_ERROR_INVALID_PARAMS;
-    
-    goto DevmemPDumpBitmap_exit;
-  }
-  
-  {
-    /* Look up the address from the handle */
-    psDevmemPDumpBitmapOUT->eError =
-      PVRSRVLookupHandle (psConnection->psHandleBase,
-                          (IMG_HANDLE *) &hDeviceNodeInt,
-                          psDevmemPDumpBitmapIN->hDeviceNode,
-                          PVRSRV_HANDLE_TYPE_DEV_NODE);
-    if (psDevmemPDumpBitmapOUT->eError != PVRSRV_OK)
-    {
-      goto DevmemPDumpBitmap_exit;
-    }
-    
-  }
-  
-  {
-    /* Look up the address from the handle */
-    psDevmemPDumpBitmapOUT->eError =
-      PVRSRVLookupHandle (psConnection->psHandleBase,
-                          (IMG_HANDLE *) &hDevmemCtxInt2,
-                          psDevmemPDumpBitmapIN->hDevmemCtx,
-                          PVRSRV_HANDLE_TYPE_DEVMEMINT_CTX);
-    if (psDevmemPDumpBitmapOUT->eError != PVRSRV_OK)
-    {
-      goto DevmemPDumpBitmap_exit;
-    }
-    
-    /* Look up the data from the resman address */
-    psDevmemPDumpBitmapOUT->eError = ResManFindPrivateDataByPtr (hDevmemCtxInt2, (IMG_VOID **) &psDevmemCtxInt);
-    
-    if (psDevmemPDumpBitmapOUT->eError != PVRSRV_OK)
-    {
-      goto DevmemPDumpBitmap_exit;
-    }
-  }
-  
-  psDevmemPDumpBitmapOUT->eError =
-    DevmemIntPDumpBitmap (
-      hDeviceNodeInt,
-      uiFileNameInt,
-      psDevmemPDumpBitmapIN->ui32FileOffset,
-      psDevmemPDumpBitmapIN->ui32Width,
-      psDevmemPDumpBitmapIN->ui32Height,
-      psDevmemPDumpBitmapIN->ui32StrideInBytes,
-      psDevmemPDumpBitmapIN->sDevBaseAddr,
-      psDevmemCtxInt,
-      psDevmemPDumpBitmapIN->ui32Size,
-      psDevmemPDumpBitmapIN->ePixelFormat,
-      psDevmemPDumpBitmapIN->ui32AddrMode,
-      psDevmemPDumpBitmapIN->ui32PDumpFlags);
-      
-      
-      
+	IMG_HANDLE hDeviceNodeInt = IMG_NULL;
+	IMG_CHAR *uiFileNameInt = IMG_NULL;
+	DEVMEMINT_CTX * psDevmemCtxInt = IMG_NULL;
+	IMG_HANDLE hDevmemCtxInt2 = IMG_NULL;
+
+	PVRSRV_BRIDGE_ASSERT_CMD(ui32BridgeID, PVRSRV_BRIDGE_PDUMPCMM_DEVMEMPDUMPBITMAP);
+
+
+
+
+	
+	{
+		uiFileNameInt = OSAllocMem(PVRSRV_PDUMP_MAX_FILENAME_SIZE * sizeof(IMG_CHAR));
+		if (!uiFileNameInt)
+		{
+			psDevmemPDumpBitmapOUT->eError = PVRSRV_ERROR_OUT_OF_MEMORY;
+	
+			goto DevmemPDumpBitmap_exit;
+		}
+	}
+
+			/* Copy the data over */
+			if ( !OSAccessOK(PVR_VERIFY_READ, (IMG_VOID*) psDevmemPDumpBitmapIN->puiFileName, PVRSRV_PDUMP_MAX_FILENAME_SIZE * sizeof(IMG_CHAR))
+				|| (OSCopyFromUser(NULL, uiFileNameInt, psDevmemPDumpBitmapIN->puiFileName,
+				PVRSRV_PDUMP_MAX_FILENAME_SIZE * sizeof(IMG_CHAR)) != PVRSRV_OK) )
+			{
+				psDevmemPDumpBitmapOUT->eError = PVRSRV_ERROR_INVALID_PARAMS;
+
+				goto DevmemPDumpBitmap_exit;
+			}
+
+				{
+					/* Look up the address from the handle */
+					psDevmemPDumpBitmapOUT->eError =
+						PVRSRVLookupHandle(psConnection->psHandleBase,
+											(IMG_HANDLE *) &hDeviceNodeInt,
+											psDevmemPDumpBitmapIN->hDeviceNode,
+											PVRSRV_HANDLE_TYPE_DEV_NODE);
+					if(psDevmemPDumpBitmapOUT->eError != PVRSRV_OK)
+					{
+						goto DevmemPDumpBitmap_exit;
+					}
+
+				}
+
+				{
+					/* Look up the address from the handle */
+					psDevmemPDumpBitmapOUT->eError =
+						PVRSRVLookupHandle(psConnection->psHandleBase,
+											(IMG_HANDLE *) &hDevmemCtxInt2,
+											psDevmemPDumpBitmapIN->hDevmemCtx,
+											PVRSRV_HANDLE_TYPE_DEVMEMINT_CTX);
+					if(psDevmemPDumpBitmapOUT->eError != PVRSRV_OK)
+					{
+						goto DevmemPDumpBitmap_exit;
+					}
+
+					/* Look up the data from the resman address */
+					psDevmemPDumpBitmapOUT->eError = ResManFindPrivateDataByPtr(hDevmemCtxInt2, (IMG_VOID **) &psDevmemCtxInt);
+
+					if(psDevmemPDumpBitmapOUT->eError != PVRSRV_OK)
+					{
+						goto DevmemPDumpBitmap_exit;
+					}
+				}
+
+	psDevmemPDumpBitmapOUT->eError =
+		DevmemIntPDumpBitmap(
+					hDeviceNodeInt,
+					uiFileNameInt,
+					psDevmemPDumpBitmapIN->ui32FileOffset,
+					psDevmemPDumpBitmapIN->ui32Width,
+					psDevmemPDumpBitmapIN->ui32Height,
+					psDevmemPDumpBitmapIN->ui32StrideInBytes,
+					psDevmemPDumpBitmapIN->sDevBaseAddr,
+					psDevmemCtxInt,
+					psDevmemPDumpBitmapIN->ui32Size,
+					psDevmemPDumpBitmapIN->ePixelFormat,
+					psDevmemPDumpBitmapIN->ui32AddrMode,
+					psDevmemPDumpBitmapIN->ui32PDumpFlags);
+
+
+
 DevmemPDumpBitmap_exit:
-  if (uiFileNameInt)
-  { OSFreeMem (uiFileNameInt); }
-  
-  return 0;
+	if (uiFileNameInt)
+		OSFreeMem(uiFileNameInt);
+
+	return 0;
 }
 
 
 
-/* ***************************************************************************
- * Server bridge dispatch related glue
+/* *************************************************************************** 
+ * Server bridge dispatch related glue 
  */
-
-PVRSRV_ERROR RegisterPDUMPCMMFunctions (IMG_VOID);
-IMG_VOID UnregisterPDUMPCMMFunctions (IMG_VOID);
+ 
+PVRSRV_ERROR RegisterPDUMPCMMFunctions(IMG_VOID);
+IMG_VOID UnregisterPDUMPCMMFunctions(IMG_VOID);
 
 /*
  * Register all PDUMPCMM functions with services
  */
-PVRSRV_ERROR RegisterPDUMPCMMFunctions (IMG_VOID)
+PVRSRV_ERROR RegisterPDUMPCMMFunctions(IMG_VOID)
 {
-  SetDispatchTableEntry (PVRSRV_BRIDGE_PDUMPCMM_DEVMEMPDUMPBITMAP, PVRSRVBridgeDevmemPDumpBitmap);
-  
-  return PVRSRV_OK;
+	SetDispatchTableEntry(PVRSRV_BRIDGE_PDUMPCMM_DEVMEMPDUMPBITMAP, PVRSRVBridgeDevmemPDumpBitmap);
+
+	return PVRSRV_OK;
 }
 
 /*
  * Unregister all pdumpcmm functions with services
  */
-IMG_VOID UnregisterPDUMPCMMFunctions (IMG_VOID)
+IMG_VOID UnregisterPDUMPCMMFunctions(IMG_VOID)
 {
 }

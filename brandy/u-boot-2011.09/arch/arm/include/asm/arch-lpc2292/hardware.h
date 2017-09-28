@@ -2,7 +2,7 @@
 #define __ASM_ARCH_HARDWARE_H
 
 /*
- * Copyright (c) 2004 Cucy Systems (http://www.cucy.com)
+ * Copyright (c) 2004	Cucy Systems (http://www.cucy.com)
  * Curt Brune <curt@cucy.com>
  *
  * See file CREDITS for list of people who contributed to this

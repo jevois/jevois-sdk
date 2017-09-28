@@ -7,13 +7,13 @@
 #define _ASMPARISC_TIMEX_H
 
 
-#define CLOCK_TICK_RATE 1193180 /* Underlying HZ */
+#define CLOCK_TICK_RATE	1193180 /* Underlying HZ */
 
 typedef unsigned long cycles_t;
 
 static inline cycles_t get_cycles (void)
 {
-  return mfctl (16);
+	return mfctl(16);
 }
 
 #endif

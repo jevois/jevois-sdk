@@ -18,7 +18,7 @@
 /* For IDE on PCI */
 #define MAX_HWIFS       10
 
-#define ide_default_io_ctl(base)  (0)
+#define ide_default_io_ctl(base)	(0)
 
 #include <asm-generic/ide_iops.h>
 

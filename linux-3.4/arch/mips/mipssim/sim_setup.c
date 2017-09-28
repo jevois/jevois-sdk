@@ -37,63 +37,63 @@
 #include <asm/smp-ops.h>
 
 
-static void __init serial_init (void);
+static void __init serial_init(void);
 unsigned int _isbonito;
 
-const char * get_system_type (void)
+const char *get_system_type(void)
 {
-  return "MIPSsim";
+	return "MIPSsim";
 }
 
-void __init plat_mem_setup (void)
+void __init plat_mem_setup(void)
 {
-  set_io_port_base (0xbfd00000);
-  
-  serial_init();
+	set_io_port_base(0xbfd00000);
+
+	serial_init();
 }
 
 extern struct plat_smp_ops ssmtc_smp_ops;
 
-void __init prom_init (void)
+void __init prom_init(void)
 {
-  set_io_port_base (0xbfd00000);
-  
-  prom_meminit();
-  
-  if (cpu_has_mipsmt) {
-    if (!register_vsmp_smp_ops() )
-    { return; }
-    
-    #ifdef CONFIG_MIPS_MT_SMTC
-    register_smp_ops (&ssmtc_smp_ops);
-    return;
-    #endif
-  }
-  
-  register_up_smp_ops();
+	set_io_port_base(0xbfd00000);
+
+	prom_meminit();
+
+	if (cpu_has_mipsmt) {
+		if (!register_vsmp_smp_ops())
+			return;
+
+#ifdef CONFIG_MIPS_MT_SMTC
+		register_smp_ops(&ssmtc_smp_ops);
+			return;
+#endif
+	}
+
+	register_up_smp_ops();
 }
 
-static void __init serial_init (void)
+static void __init serial_init(void)
 {
-  #ifdef CONFIG_SERIAL_8250
-  struct uart_port s;
-  
-  memset (&s, 0, sizeof (s) );
-  
-  s.iobase = 0x3f8;
-  
-  /* hardware int 4 - the serial int, is CPU int 6
-   but poll for now */
-  s.irq =  0;
-  s.uartclk = 1843200;
-  s.flags = UPF_BOOT_AUTOCONF | UPF_SKIP_TEST;
-  s.iotype = UPIO_PORT;
-  s.regshift = 0;
-  s.timeout = 4;
-  
-  if (early_serial_setup (&s) != 0) {
-    printk (KERN_ERR "Serial setup failed!\n");
-  }
-  
-  #endif
+#ifdef CONFIG_SERIAL_8250
+	struct uart_port s;
+
+	memset(&s, 0, sizeof(s));
+
+	s.iobase = 0x3f8;
+
+	/* hardware int 4 - the serial int, is CPU int 6
+	 but poll for now */
+	s.irq =  0;
+	s.uartclk = 1843200;
+	s.flags = UPF_BOOT_AUTOCONF | UPF_SKIP_TEST;
+	s.iotype = UPIO_PORT;
+	s.regshift = 0;
+	s.timeout = 4;
+
+	if (early_serial_setup(&s) != 0) {
+		printk(KERN_ERR "Serial setup failed!\n");
+	}
+
+#endif
 }

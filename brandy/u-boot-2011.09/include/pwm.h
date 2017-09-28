@@ -22,11 +22,11 @@
 
 
 enum pwm_polarity {
-  PWM_POLARITY_NORMAL,
-  PWM_POLARITY_INVERSED,
+	PWM_POLARITY_NORMAL,
+	PWM_POLARITY_INVERSED,
 };
 
-int sunxi_pwm_set_polarity (int pwm, enum pwm_polarity polarity);
+int sunxi_pwm_set_polarity(int pwm, enum pwm_polarity polarity);
 int sunxi_pwm_config      (int pwm, int duty_ns, int period_ns);
 int sunxi_pwm_enable      (int pwm);
 void sunxi_pwm_disable    (int pwm);

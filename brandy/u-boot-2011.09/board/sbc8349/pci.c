@@ -36,24 +36,24 @@
 DECLARE_GLOBAL_DATA_PTR;
 
 static struct pci_region pci1_regions[] = {
-  {
-bus_start: CONFIG_SYS_PCI1_MEM_BASE,
-phys_start: CONFIG_SYS_PCI1_MEM_PHYS,
-size: CONFIG_SYS_PCI1_MEM_SIZE,
-flags: PCI_REGION_MEM | PCI_REGION_PREFETCH
-  },
-  {
-bus_start: CONFIG_SYS_PCI1_IO_BASE,
-phys_start: CONFIG_SYS_PCI1_IO_PHYS,
-size: CONFIG_SYS_PCI1_IO_SIZE,
-flags: PCI_REGION_IO
-  },
-  {
-bus_start: CONFIG_SYS_PCI1_MMIO_BASE,
-phys_start: CONFIG_SYS_PCI1_MMIO_PHYS,
-size: CONFIG_SYS_PCI1_MMIO_SIZE,
-flags: PCI_REGION_MEM
-  },
+	{
+		bus_start: CONFIG_SYS_PCI1_MEM_BASE,
+		phys_start: CONFIG_SYS_PCI1_MEM_PHYS,
+		size: CONFIG_SYS_PCI1_MEM_SIZE,
+		flags: PCI_REGION_MEM | PCI_REGION_PREFETCH
+	},
+	{
+		bus_start: CONFIG_SYS_PCI1_IO_BASE,
+		phys_start: CONFIG_SYS_PCI1_IO_PHYS,
+		size: CONFIG_SYS_PCI1_IO_SIZE,
+		flags: PCI_REGION_IO
+	},
+	{
+		bus_start: CONFIG_SYS_PCI1_MMIO_BASE,
+		phys_start: CONFIG_SYS_PCI1_MMIO_PHYS,
+		size: CONFIG_SYS_PCI1_MMIO_SIZE,
+		flags: PCI_REGION_MEM
+	},
 };
 
 /*
@@ -64,25 +64,25 @@ flags: PCI_REGION_MEM
  *
  */
 void
-pci_init_board (void)
+pci_init_board(void)
 {
-  volatile immap_t * immr = (volatile immap_t *) CONFIG_SYS_IMMR;
-  volatile clk83xx_t * clk = (volatile clk83xx_t *) &immr->clk;
-  volatile law83xx_t * pci_law = immr->sysconf.pcilaw;
-  struct pci_region * reg[] = { pci1_regions };
-  
-  /* Enable all 8 PCI_CLK_OUTPUTS */
-  clk->occr = 0xff000000;
-  udelay (2000);
-  
-  /* Configure PCI Local Access Windows */
-  pci_law[0].bar = CONFIG_SYS_PCI1_MEM_PHYS & LAWBAR_BAR;
-  pci_law[0].ar = LAWAR_EN | LAWAR_SIZE_1G;
-  
-  pci_law[1].bar = CONFIG_SYS_PCI1_IO_PHYS & LAWBAR_BAR;
-  pci_law[1].ar = LAWAR_EN | LAWAR_SIZE_4M;
-  
-  udelay (2000);
-  
-  mpc83xx_pci_init (1, reg);
+	volatile immap_t *immr = (volatile immap_t *)CONFIG_SYS_IMMR;
+	volatile clk83xx_t *clk = (volatile clk83xx_t *)&immr->clk;
+	volatile law83xx_t *pci_law = immr->sysconf.pcilaw;
+	struct pci_region *reg[] = { pci1_regions };
+
+	/* Enable all 8 PCI_CLK_OUTPUTS */
+	clk->occr = 0xff000000;
+	udelay(2000);
+
+	/* Configure PCI Local Access Windows */
+	pci_law[0].bar = CONFIG_SYS_PCI1_MEM_PHYS & LAWBAR_BAR;
+	pci_law[0].ar = LAWAR_EN | LAWAR_SIZE_1G;
+
+	pci_law[1].bar = CONFIG_SYS_PCI1_IO_PHYS & LAWBAR_BAR;
+	pci_law[1].ar = LAWAR_EN | LAWAR_SIZE_4M;
+
+	udelay(2000);
+
+	mpc83xx_pci_init(1, reg);
 }

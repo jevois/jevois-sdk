@@ -51,12 +51,12 @@
 #include <config.h>
 #include <common.h>
 
-#define __ixp42X      /* sr: U-Boot needs this define */
-#define IXP425_EXP_CFG_BASE 0xC4000000
-#define diag_printf   debug
+#define __ixp42X			/* sr: U-Boot needs this define */
+#define IXP425_EXP_CFG_BASE	0xC4000000
+#define diag_printf		debug
 
 #undef SIMSPARCSOLARIS
-#define SIMSPARCSOLARIS   0xaffe  /* sr: U-Boot gets confused with this solaris define */
+#define SIMSPARCSOLARIS		0xaffe	/* sr: U-Boot gets confused with this solaris define */
 
 /*
  * Include the OS-specific type definitions
@@ -154,9 +154,9 @@ typedef volatile INT32 VINT32;
 
 #ifndef PRIVATE
 #ifdef IX_PRIVATE_OFF
-#define PRIVATE     /* nothing */
+#define PRIVATE			/* nothing */
 #else
-#define PRIVATE static  /**< #defined as static, except for debug builds */
+#define PRIVATE static	/**< #defined as static, except for debug builds */
 #endif /* IX_PRIVATE_OFF */
 #endif /* PRIVATE */
 
@@ -175,7 +175,7 @@ typedef volatile INT32 VINT32;
 
 
 #ifndef __inline__
-#define __inline__  IX_OSAL_INLINE
+#define __inline__	IX_OSAL_INLINE
 #endif
 
 
@@ -204,10 +204,10 @@ typedef volatile INT32 VINT32;
  */
 typedef enum
 {
-  IX_OSAL_LOG_DEV_STDOUT = 0,        /**< standard output (implemented by default) */
-  IX_OSAL_LOG_DEV_STDERR = 1,        /**< standard error (implemented */
-  IX_OSAL_LOG_DEV_HEX_DISPLAY = 2,   /**< hexadecimal display (not implemented) */
-  IX_OSAL_LOG_DEV_ASCII_DISPLAY = 3  /**< ASCII-capable display (not implemented) */
+    IX_OSAL_LOG_DEV_STDOUT = 0,	       /**< standard output (implemented by default) */
+    IX_OSAL_LOG_DEV_STDERR = 1,	       /**< standard error (implemented */
+    IX_OSAL_LOG_DEV_HEX_DISPLAY = 2,   /**< hexadecimal display (not implemented) */
+    IX_OSAL_LOG_DEV_ASCII_DISPLAY = 3  /**< ASCII-capable display (not implemented) */
 } IxOsalLogDevice;
 
 
@@ -228,16 +228,16 @@ typedef enum
  */
 typedef enum
 {
-  IX_OSAL_LOG_LVL_NONE = 0,  /**<No trace level */
-  IX_OSAL_LOG_LVL_USER = 1,  /**<Set trace level to user */
-  IX_OSAL_LOG_LVL_FATAL = 2,   /**<Set trace level to fatal */
-  IX_OSAL_LOG_LVL_ERROR = 3,   /**<Set trace level to error */
-  IX_OSAL_LOG_LVL_WARNING = 4, /**<Set trace level to warning */
-  IX_OSAL_LOG_LVL_MESSAGE = 5, /**<Set trace level to message */
-  IX_OSAL_LOG_LVL_DEBUG1 = 6,  /**<Set trace level to debug1 */
-  IX_OSAL_LOG_LVL_DEBUG2 = 7,  /**<Set trace level to debug2 */
-  IX_OSAL_LOG_LVL_DEBUG3 = 8,  /**<Set trace level to debug3 */
-  IX_OSAL_LOG_LVL_ALL /**<Set trace level to all */
+    IX_OSAL_LOG_LVL_NONE = 0,	 /**<No trace level */
+    IX_OSAL_LOG_LVL_USER = 1,	 /**<Set trace level to user */
+    IX_OSAL_LOG_LVL_FATAL = 2,	 /**<Set trace level to fatal */
+    IX_OSAL_LOG_LVL_ERROR = 3,	 /**<Set trace level to error */
+    IX_OSAL_LOG_LVL_WARNING = 4, /**<Set trace level to warning */
+    IX_OSAL_LOG_LVL_MESSAGE = 5, /**<Set trace level to message */
+    IX_OSAL_LOG_LVL_DEBUG1 = 6,	 /**<Set trace level to debug1 */
+    IX_OSAL_LOG_LVL_DEBUG2 = 7,	 /**<Set trace level to debug2 */
+    IX_OSAL_LOG_LVL_DEBUG3 = 8,	 /**<Set trace level to debug3 */
+    IX_OSAL_LOG_LVL_ALL	/**<Set trace level to all */
 } IxOsalLogLevel;
 
 
@@ -260,8 +260,8 @@ typedef void (*IxOsalVoidFnPtr) (void);
  */
 typedef struct
 {
-  UINT32 secs;    /**< seconds */
-  UINT32 nsecs;   /**< nanoseconds */
+    UINT32 secs;		/**< seconds */
+    UINT32 nsecs;		/**< nanoseconds */
 } IxOsalTimeval;
 
 
@@ -348,9 +348,9 @@ typedef IxOsalOsMessageQueue IxOsalMessageQueue;
  */
 typedef struct
 {
-  char * name;       /**< name */
-  UINT32 stackSize;  /**< stack size */
-  UINT32 priority;   /**< priority */
+    char *name;        /**< name */
+    UINT32 stackSize;  /**< stack size */
+    UINT32 priority;   /**< priority */
 } IxOsalThreadAttr;
 
 /**

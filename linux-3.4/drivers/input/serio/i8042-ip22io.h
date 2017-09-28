@@ -29,48 +29,48 @@
  * Register numbers.
  */
 
-#define I8042_COMMAND_REG ((unsigned long)&sgioc->kbdmouse.command)
-#define I8042_STATUS_REG  ((unsigned long)&sgioc->kbdmouse.command)
-#define I8042_DATA_REG    ((unsigned long)&sgioc->kbdmouse.data)
+#define I8042_COMMAND_REG	((unsigned long)&sgioc->kbdmouse.command)
+#define I8042_STATUS_REG	((unsigned long)&sgioc->kbdmouse.command)
+#define I8042_DATA_REG		((unsigned long)&sgioc->kbdmouse.data)
 
-static inline int i8042_read_data (void)
+static inline int i8042_read_data(void)
 {
-  return sgioc->kbdmouse.data;
+	return sgioc->kbdmouse.data;
 }
 
-static inline int i8042_read_status (void)
+static inline int i8042_read_status(void)
 {
-  return sgioc->kbdmouse.command;
+	return sgioc->kbdmouse.command;
 }
 
-static inline void i8042_write_data (int val)
+static inline void i8042_write_data(int val)
 {
-  sgioc->kbdmouse.data = val;
+	sgioc->kbdmouse.data = val;
 }
 
-static inline void i8042_write_command (int val)
+static inline void i8042_write_command(int val)
 {
-  sgioc->kbdmouse.command = val;
+	sgioc->kbdmouse.command = val;
 }
 
-static inline int i8042_platform_init (void)
+static inline int i8042_platform_init(void)
 {
-  #if 0
-  /* XXX sgi_kh is a virtual address */
-  if (!request_mem_region (sgi_kh, sizeof (struct hpc_keyb), "i8042") )
-  { return -EBUSY; }
-  #endif
-  
-  i8042_reset = 1;
-  
-  return 0;
+#if 0
+	/* XXX sgi_kh is a virtual address */
+	if (!request_mem_region(sgi_kh, sizeof(struct hpc_keyb), "i8042"))
+		return -EBUSY;
+#endif
+
+	i8042_reset = 1;
+
+	return 0;
 }
 
-static inline void i8042_platform_exit (void)
+static inline void i8042_platform_exit(void)
 {
-  #if 0
-  release_mem_region (JAZZ_KEYBOARD_ADDRESS, sizeof (struct hpc_keyb) );
-  #endif
+#if 0
+	release_mem_region(JAZZ_KEYBOARD_ADDRESS, sizeof(struct hpc_keyb));
+#endif
 }
 
 #endif /* _I8042_IP22_H */

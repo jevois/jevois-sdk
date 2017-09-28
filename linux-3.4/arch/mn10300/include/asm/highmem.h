@@ -26,42 +26,42 @@
 /* declarations for highmem.c */
 extern unsigned long highstart_pfn, highend_pfn;
 
-extern pte_t * kmap_pte;
+extern pte_t *kmap_pte;
 extern pgprot_t kmap_prot;
-extern pte_t * pkmap_page_table;
+extern pte_t *pkmap_page_table;
 
-extern void __init kmap_init (void);
+extern void __init kmap_init(void);
 
 /*
  * Right now we initialize only a single pte table. It can be extended
  * easily, subsequent pte tables have to be allocated in one physical
  * chunk of RAM.
  */
-#define PKMAP_BASE  0xfe000000UL
-#define LAST_PKMAP  1024
+#define PKMAP_BASE	0xfe000000UL
+#define LAST_PKMAP	1024
 #define LAST_PKMAP_MASK (LAST_PKMAP - 1)
 #define PKMAP_NR(virt)  ((virt - PKMAP_BASE) >> PAGE_SHIFT)
 #define PKMAP_ADDR(nr)  (PKMAP_BASE + ((nr) << PAGE_SHIFT))
 
-extern unsigned long kmap_high (struct page * page);
-extern void kunmap_high (struct page * page);
+extern unsigned long kmap_high(struct page *page);
+extern void kunmap_high(struct page *page);
 
-static inline unsigned long kmap (struct page * page)
+static inline unsigned long kmap(struct page *page)
 {
-  if (in_interrupt() )
-  { BUG(); }
-  if (page < highmem_start_page)
-  { return page_address (page); }
-  return kmap_high (page);
+	if (in_interrupt())
+		BUG();
+	if (page < highmem_start_page)
+		return page_address(page);
+	return kmap_high(page);
 }
 
-static inline void kunmap (struct page * page)
+static inline void kunmap(struct page *page)
 {
-  if (in_interrupt() )
-  { BUG(); }
-  if (page < highmem_start_page)
-  { return; }
-  kunmap_high (page);
+	if (in_interrupt())
+		BUG();
+	if (page < highmem_start_page)
+		return;
+	kunmap_high(page);
 }
 
 /*
@@ -70,58 +70,58 @@ static inline void kunmap (struct page * page)
  * be used in IRQ contexts, so in some (very limited) cases we need
  * it.
  */
-static inline unsigned long kmap_atomic (struct page * page)
+static inline unsigned long kmap_atomic(struct page *page)
 {
-  unsigned long vaddr;
-  int idx, type;
-  
-  pagefault_disable();
-  if (page < highmem_start_page)
-  { return page_address (page); }
-  
-  type = kmap_atomic_idx_push();
-  idx = type + KM_TYPE_NR * smp_processor_id();
-  vaddr = __fix_to_virt (FIX_KMAP_BEGIN + idx);
-  #if HIGHMEM_DEBUG
-  if (!pte_none (* (kmap_pte - idx) ) )
-  { BUG(); }
-  #endif
-  set_pte (kmap_pte - idx, mk_pte (page, kmap_prot) );
-  local_flush_tlb_one (vaddr);
-  
-  return vaddr;
+	unsigned long vaddr;
+	int idx, type;
+
+	pagefault_disable();
+	if (page < highmem_start_page)
+		return page_address(page);
+
+	type = kmap_atomic_idx_push();
+	idx = type + KM_TYPE_NR * smp_processor_id();
+	vaddr = __fix_to_virt(FIX_KMAP_BEGIN + idx);
+#if HIGHMEM_DEBUG
+	if (!pte_none(*(kmap_pte - idx)))
+		BUG();
+#endif
+	set_pte(kmap_pte - idx, mk_pte(page, kmap_prot));
+	local_flush_tlb_one(vaddr);
+
+	return vaddr;
 }
 
-static inline void __kunmap_atomic (unsigned long vaddr)
+static inline void __kunmap_atomic(unsigned long vaddr)
 {
-  int type;
-  
-  if (vaddr < FIXADDR_START) { /* FIXME */
-    pagefault_enable();
-    return;
-  }
-  
-  type = kmap_atomic_idx();
-  
-  #if HIGHMEM_DEBUG
-  {
-    unsigned int idx;
-    idx = type + KM_TYPE_NR * smp_processor_id();
-    
-    if (vaddr != __fix_to_virt (FIX_KMAP_BEGIN + idx) )
-    { BUG(); }
-    
-    /*
-     * force other mappings to Oops if they'll try to access
-     * this pte without first remap it
-     */
-    pte_clear (kmap_pte - idx);
-    local_flush_tlb_one (vaddr);
-  }
-  #endif
-  
-  kmap_atomic_idx_pop();
-  pagefault_enable();
+	int type;
+
+	if (vaddr < FIXADDR_START) { /* FIXME */
+		pagefault_enable();
+		return;
+	}
+
+	type = kmap_atomic_idx();
+
+#if HIGHMEM_DEBUG
+	{
+		unsigned int idx;
+		idx = type + KM_TYPE_NR * smp_processor_id();
+
+		if (vaddr != __fix_to_virt(FIX_KMAP_BEGIN + idx))
+			BUG();
+
+		/*
+		 * force other mappings to Oops if they'll try to access
+		 * this pte without first remap it
+		 */
+		pte_clear(kmap_pte - idx);
+		local_flush_tlb_one(vaddr);
+	}
+#endif
+
+	kmap_atomic_idx_pop();
+	pagefault_enable();
 }
 #endif /* __KERNEL__ */
 

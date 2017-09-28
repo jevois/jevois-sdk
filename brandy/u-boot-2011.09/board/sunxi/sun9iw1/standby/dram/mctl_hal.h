@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -33,17 +33,17 @@
 #define DDR3_32B
 #define TEST_MEM 0x40000000
 
-extern unsigned int DRAMC_init (__dram_para_t * para);
-extern unsigned int DRAMC_init_auto (__dram_para_t * para);
-extern unsigned int mctl_sys_init (__dram_para_t * para);
-extern unsigned int mctl_reset_release (void);
-extern unsigned int mctl_dll_init (unsigned int ch_index, __dram_para_t * para);
-extern unsigned int mctl_channel_init (unsigned int ch_index, __dram_para_t * para);
-extern unsigned int mctl_com_init (__dram_para_t * para);
-extern unsigned int mctl_port_cfg (void);
-extern signed int init_DRAM (int type, __dram_para_t * para);
-extern unsigned int ss_bonding_id (void);
-extern void paraconfig (unsigned int * para, unsigned int mask, unsigned int value);
+extern unsigned int DRAMC_init(__dram_para_t *para);
+extern unsigned int DRAMC_init_auto(__dram_para_t *para);
+extern unsigned int mctl_sys_init(__dram_para_t *para);
+extern unsigned int mctl_reset_release(void);
+extern unsigned int mctl_dll_init(unsigned int ch_index, __dram_para_t *para);
+extern unsigned int mctl_channel_init(unsigned int ch_index, __dram_para_t *para);
+extern unsigned int mctl_com_init(__dram_para_t *para);
+extern unsigned int mctl_port_cfg(void);
+extern signed int init_DRAM(int type, __dram_para_t *para);
+extern unsigned int ss_bonding_id(void);
+extern void paraconfig(unsigned int *para, unsigned int mask, unsigned int value);
 
 #endif 
 

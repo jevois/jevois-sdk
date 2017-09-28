@@ -18,10 +18,10 @@
 #include <arch/chip.h>
 
 /* mm/fault.c */
-void do_page_fault (struct pt_regs *, int fault_num,
-                    unsigned long address, unsigned long write);
+void do_page_fault(struct pt_regs *, int fault_num,
+		   unsigned long address, unsigned long write);
 #if CHIP_HAS_TILE_DMA() || CHIP_HAS_SN_PROC()
-void do_async_page_fault (struct pt_regs *);
+void do_async_page_fault(struct pt_regs *);
 #endif
 
 #ifndef __tilegx__
@@ -30,45 +30,45 @@ void do_async_page_fault (struct pt_regs *);
  * additional save/restore code in the intvec.S caller.
  */
 struct intvec_state {
-  void * handler;
-  unsigned long vecnum;
-  unsigned long fault_num;
-  unsigned long info;
-  unsigned long retval;
+	void *handler;
+	unsigned long vecnum;
+	unsigned long fault_num;
+	unsigned long info;
+	unsigned long retval;
 };
-struct intvec_state do_page_fault_ics (struct pt_regs * regs, int fault_num,
-                                       unsigned long address,
-                                       unsigned long info);
+struct intvec_state do_page_fault_ics(struct pt_regs *regs, int fault_num,
+				      unsigned long address,
+				      unsigned long info);
 #endif
 
 /* kernel/traps.c */
-void do_trap (struct pt_regs *, int fault_num, unsigned long reason);
-void kernel_double_fault (int dummy, ulong pc, ulong lr, ulong sp, ulong r52);
+void do_trap(struct pt_regs *, int fault_num, unsigned long reason);
+void kernel_double_fault(int dummy, ulong pc, ulong lr, ulong sp, ulong r52);
 
 /* kernel/time.c */
-void do_timer_interrupt (struct pt_regs *, int fault_num);
+void do_timer_interrupt(struct pt_regs *, int fault_num);
 
 /* kernel/messaging.c */
-void hv_message_intr (struct pt_regs *, int intnum);
+void hv_message_intr(struct pt_regs *, int intnum);
 
 /* kernel/irq.c */
-void tile_dev_intr (struct pt_regs *, int intnum);
+void tile_dev_intr(struct pt_regs *, int intnum);
 
 #ifdef CONFIG_HARDWALL
 /* kernel/hardwall.c */
-void do_hardwall_trap (struct pt_regs *, int fault_num);
+void do_hardwall_trap(struct pt_regs *, int fault_num);
 #endif
 
 /* kernel/ptrace.c */
-void do_breakpoint (struct pt_regs *, int fault_num);
+void do_breakpoint(struct pt_regs *, int fault_num);
 
 
 #ifdef __tilegx__
 /* kernel/single_step.c */
-void gx_singlestep_handle (struct pt_regs *, int fault_num);
+void gx_singlestep_handle(struct pt_regs *, int fault_num);
 
 /* kernel/intvec_64.S */
-void fill_ra_stack (void);
+void fill_ra_stack(void);
 #endif
 
 #endif /* _ASM_TILE_TRAPS_H */

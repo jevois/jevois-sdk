@@ -31,43 +31,43 @@
 #define DT3155_VER_MAJ 1
 #define DT3155_VER_MIN 1
 #define DT3155_VER_EXT 0
-#define DT3155_VERSION  __stringify(DT3155_VER_MAJ) "."   \
-  __stringify(DT3155_VER_MIN) "."   \
-  __stringify(DT3155_VER_EXT)
+#define DT3155_VERSION  __stringify(DT3155_VER_MAJ)	"."		\
+			__stringify(DT3155_VER_MIN)	"."		\
+			__stringify(DT3155_VER_EXT)
 
 /* DT3155 Base Register offsets (memory mapped) */
-#define EVEN_DMA_START   0x00
-#define ODD_DMA_START  0x0C
+#define EVEN_DMA_START	 0x00
+#define ODD_DMA_START	 0x0C
 #define EVEN_DMA_STRIDE  0x18
-#define ODD_DMA_STRIDE   0x24
-#define EVEN_PIXEL_FMT   0x30
-#define ODD_PIXEL_FMT  0x34
-#define FIFO_TRIGER  0x38
-#define XFER_MODE  0x3C
-#define CSR1     0x40
-#define RETRY_WAIT_CNT   0x44
-#define INT_CSR    0x48
-#define EVEN_FLD_MASK  0x4C
-#define ODD_FLD_MASK   0x50
-#define MASK_LENGTH  0x54
-#define FIFO_FLAG_CNT  0x58
-#define IIC_CLK_DUR  0x5C
-#define IIC_CSR1   0x60
-#define IIC_CSR2   0x64
+#define ODD_DMA_STRIDE	 0x24
+#define EVEN_PIXEL_FMT	 0x30
+#define ODD_PIXEL_FMT	 0x34
+#define FIFO_TRIGER	 0x38
+#define XFER_MODE	 0x3C
+#define CSR1		 0x40
+#define RETRY_WAIT_CNT	 0x44
+#define INT_CSR		 0x48
+#define EVEN_FLD_MASK	 0x4C
+#define ODD_FLD_MASK	 0x50
+#define MASK_LENGTH	 0x54
+#define FIFO_FLAG_CNT	 0x58
+#define IIC_CLK_DUR	 0x5C
+#define IIC_CSR1	 0x60
+#define IIC_CSR2	 0x64
 
 /*  DT3155 Internal Registers indexes (i2c/IIC mapped) */
-#define CSR2       0x10
+#define CSR2	     0x10
 #define EVEN_CSR     0x11
 #define ODD_CSR      0x12
-#define CONFIG       0x13
-#define DT_ID      0x1F
+#define CONFIG	     0x13
+#define DT_ID	     0x1F
 #define X_CLIP_START 0x20
 #define Y_CLIP_START 0x22
 #define X_CLIP_END   0x24
 #define Y_CLIP_END   0x26
 #define AD_ADDR      0x30
-#define AD_LUT       0x31
-#define AD_CMD       0x32
+#define AD_LUT	     0x31
+#define AD_CMD	     0x32
 #define DIG_OUT      0x40
 #define PM_LUT_ADDR  0x50
 #define PM_LUT_DATA  0x51
@@ -82,7 +82,7 @@
 #define FLD_CRPT_ODD   0x00000200
 #define FLD_CRPT_EVEN  0x00000100
 #define FIFO_EN        0x00000080
-#define SRST         0x00000040
+#define SRST	       0x00000040
 #define FLD_DN_ODD     0x00000020
 #define FLD_DN_EVEN    0x00000010
 /*   These should not be used.
@@ -94,19 +94,19 @@
 #define CAP_CONT_EVEN  0x00000001
 
 /*  INT_CSR bit masks */
-#define FLD_START_EN   0x00000400
-#define FLD_END_ODD_EN   0x00000200
+#define FLD_START_EN	 0x00000400
+#define FLD_END_ODD_EN	 0x00000200
 #define FLD_END_EVEN_EN  0x00000100
-#define FLD_START  0x00000004
-#define FLD_END_ODD  0x00000002
-#define FLD_END_EVEN   0x00000001
+#define FLD_START	 0x00000004
+#define FLD_END_ODD	 0x00000002
+#define FLD_END_EVEN	 0x00000001
 
 /* IIC_CSR1 bit masks */
-#define DIRECT_ABORT   0x00000200
+#define DIRECT_ABORT	 0x00000200
 
 /* IIC_CSR2 bit masks */
 #define NEW_CYCLE   0x01000000
-#define DIR_RD      0x00010000
+#define DIR_RD	    0x00010000
 #define IIC_READ    0x01010000
 #define IIC_WRITE   0x01000000
 
@@ -121,9 +121,9 @@
 #define VT_60HZ       0x00
 
 /* CSR_EVEN/ODD bit masks */
-#define CSR_ERROR 0x04
-#define CSR_SNGL  0x02
-#define CSR_DONE  0x01
+#define CSR_ERROR	0x04
+#define CSR_SNGL	0x02
+#define CSR_DONE	0x01
 
 /* CONFIG bit masks */
 #define PM_LUT_PGM     0x80
@@ -162,49 +162,49 @@
 /**
  * struct dt3155_stats - statistics structure
  *
- * @free_bufs_empty:  no free image buffers
- * @corrupted_fields: corrupted fields
- * @dma_map_failed: dma mapping failed
- * @start_before_end: new started before old ended
+ * @free_bufs_empty:	no free image buffers
+ * @corrupted_fields:	corrupted fields
+ * @dma_map_failed:	dma mapping failed
+ * @start_before_end:	new started before old ended
  */
 struct dt3155_stats {
-  int free_bufs_empty;
-  int corrupted_fields;
-  int dma_map_failed;
-  int start_before_end;
+	int free_bufs_empty;
+	int corrupted_fields;
+	int dma_map_failed;
+	int start_before_end;
 };
 
 /*    per board private data structure   */
 /**
  * struct dt3155_priv - private data structure
  *
- * @vdev:   pointer to video_device structure
- * @pdev:   pointer to pci_dev structure
- * @q     pointer to vb2_queue structure
- * @curr_buf:   pointer to curren buffer
- * @mux:    mutex to protect the instance
- * @dmaq    queue for dma buffers
- * @lock    spinlock for dma queue
- * @field_count   fields counter
- * @stats:    statistics structure
- * @users   open count
- * @regs:   local copy of mmio base register
- * @csr2:   local copy of csr2 register
- * @config:   local copy of config register
+ * @vdev:		pointer to video_device structure
+ * @pdev:		pointer to pci_dev structure
+ * @q			pointer to vb2_queue structure
+ * @curr_buf:		pointer to curren buffer
+ * @mux:		mutex to protect the instance
+ * @dmaq		queue for dma buffers
+ * @lock		spinlock for dma queue
+ * @field_count		fields counter
+ * @stats:		statistics structure
+ * @users		open count
+ * @regs:		local copy of mmio base register
+ * @csr2:		local copy of csr2 register
+ * @config:		local copy of config register
  */
 struct dt3155_priv {
-  struct video_device * vdev;
-  struct pci_dev * pdev;
-  struct vb2_queue * q;
-  struct vb2_buffer * curr_buf;
-  struct mutex mux;
-  struct list_head dmaq;
-  spinlock_t lock;
-  unsigned int field_count;
-  struct dt3155_stats stats;
-  void __iomem * regs;
-  int users;
-  u8 csr2, config;
+	struct video_device *vdev;
+	struct pci_dev *pdev;
+	struct vb2_queue *q;
+	struct vb2_buffer *curr_buf;
+	struct mutex mux;
+	struct list_head dmaq;
+	spinlock_t lock;
+	unsigned int field_count;
+	struct dt3155_stats stats;
+	void __iomem *regs;
+	int users;
+	u8 csr2, config;
 };
 
 #endif /*  __KERNEL__  */

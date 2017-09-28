@@ -65,12 +65,12 @@
  * drop_cop() to release the coprocessor PID.
  */
 
-void switch_cop (struct mm_struct * next)
+void switch_cop(struct mm_struct *next)
 {
-  #ifdef CONFIG_ICSWX_PID
-  mtspr (SPRN_PID, next->context.cop_pid);
-  #endif
-  mtspr (SPRN_ACOP, next->context.acop);
+#ifdef CONFIG_ICSWX_PID
+	mtspr(SPRN_PID, next->context.cop_pid);
+#endif
+	mtspr(SPRN_ACOP, next->context.acop);
 }
 
 /**
@@ -82,212 +82,211 @@ void switch_cop (struct mm_struct * next)
  * The returned PID will be fed to the coprocessor to determine if an
  * icswx transaction is authenticated.
  */
-int use_cop (unsigned long acop, struct mm_struct * mm)
+int use_cop(unsigned long acop, struct mm_struct *mm)
 {
-  int ret;
-  
-  if (!cpu_has_feature (CPU_FTR_ICSWX) )
-  { return -ENODEV; }
-  
-  if (!mm || !acop)
-  { return -EINVAL; }
-  
-  /* The page_table_lock ensures mm_users won't change under us */
-  spin_lock (&mm->page_table_lock);
-  spin_lock (mm->context.cop_lockp);
-  
-  ret = get_cop_pid (mm);
-  if (ret < 0)
-  { goto out; }
-  
-  /* update acop */
-  mm->context.acop |= acop;
-  
-  sync_cop (mm);
-  
-  /*
-   * If this is a threaded process then there might be other threads
-   * running. We need to send an IPI to force them to pick up any
-   * change in PID and ACOP.
-   */
-  if (atomic_read (&mm->mm_users) > 1)
-  { smp_call_function (sync_cop, mm, 1); }
-  
+	int ret;
+
+	if (!cpu_has_feature(CPU_FTR_ICSWX))
+		return -ENODEV;
+
+	if (!mm || !acop)
+		return -EINVAL;
+
+	/* The page_table_lock ensures mm_users won't change under us */
+	spin_lock(&mm->page_table_lock);
+	spin_lock(mm->context.cop_lockp);
+
+	ret = get_cop_pid(mm);
+	if (ret < 0)
+		goto out;
+
+	/* update acop */
+	mm->context.acop |= acop;
+
+	sync_cop(mm);
+
+	/*
+	 * If this is a threaded process then there might be other threads
+	 * running. We need to send an IPI to force them to pick up any
+	 * change in PID and ACOP.
+	 */
+	if (atomic_read(&mm->mm_users) > 1)
+		smp_call_function(sync_cop, mm, 1);
+
 out:
-  spin_unlock (mm->context.cop_lockp);
-  spin_unlock (&mm->page_table_lock);
-  
-  return ret;
+	spin_unlock(mm->context.cop_lockp);
+	spin_unlock(&mm->page_table_lock);
+
+	return ret;
 }
-EXPORT_SYMBOL_GPL (use_cop);
+EXPORT_SYMBOL_GPL(use_cop);
 
 /**
  * Stop using a coprocessor.
  * @acop: mask of coprocessor to be stopped.
  * @mm: The mm the coprocessor associated with.
  */
-void drop_cop (unsigned long acop, struct mm_struct * mm)
+void drop_cop(unsigned long acop, struct mm_struct *mm)
 {
-  int free_pid;
-  
-  if (!cpu_has_feature (CPU_FTR_ICSWX) )
-  { return; }
-  
-  if (WARN_ON_ONCE (!mm) )
-  { return; }
-  
-  /* The page_table_lock ensures mm_users won't change under us */
-  spin_lock (&mm->page_table_lock);
-  spin_lock (mm->context.cop_lockp);
-  
-  mm->context.acop &= ~acop;
-  
-  free_pid = disable_cop_pid (mm);
-  sync_cop (mm);
-  
-  /*
-   * If this is a threaded process then there might be other threads
-   * running. We need to send an IPI to force them to pick up any
-   * change in PID and ACOP.
-   */
-  if (atomic_read (&mm->mm_users) > 1)
-  { smp_call_function (sync_cop, mm, 1); }
-  
-  if (free_pid != COP_PID_NONE)
-  { free_cop_pid (free_pid); }
-  
-  spin_unlock (mm->context.cop_lockp);
-  spin_unlock (&mm->page_table_lock);
-}
-EXPORT_SYMBOL_GPL (drop_cop);
+	int free_pid;
 
-static int acop_use_cop (int ct)
+	if (!cpu_has_feature(CPU_FTR_ICSWX))
+		return;
+
+	if (WARN_ON_ONCE(!mm))
+		return;
+
+	/* The page_table_lock ensures mm_users won't change under us */
+	spin_lock(&mm->page_table_lock);
+	spin_lock(mm->context.cop_lockp);
+
+	mm->context.acop &= ~acop;
+
+	free_pid = disable_cop_pid(mm);
+	sync_cop(mm);
+
+	/*
+	 * If this is a threaded process then there might be other threads
+	 * running. We need to send an IPI to force them to pick up any
+	 * change in PID and ACOP.
+	 */
+	if (atomic_read(&mm->mm_users) > 1)
+		smp_call_function(sync_cop, mm, 1);
+
+	if (free_pid != COP_PID_NONE)
+		free_cop_pid(free_pid);
+
+	spin_unlock(mm->context.cop_lockp);
+	spin_unlock(&mm->page_table_lock);
+}
+EXPORT_SYMBOL_GPL(drop_cop);
+
+static int acop_use_cop(int ct)
 {
-  /* There is no alternate policy, yet */
-  return -1;
+	/* There is no alternate policy, yet */
+	return -1;
 }
 
 /*
  * Get the instruction word at the NIP
  */
-static u32 acop_get_inst (struct pt_regs * regs)
+static u32 acop_get_inst(struct pt_regs *regs)
 {
-  u32 inst;
-  u32 __user * p;
-  
-  p = (u32 __user *) regs->nip;
-  if (!access_ok (VERIFY_READ, p, sizeof (*p) ) )
-  { return 0; }
-  
-  if (__get_user (inst, p) )
-  { return 0; }
-  
-  return inst;
+	u32 inst;
+	u32 __user *p;
+
+	p = (u32 __user *)regs->nip;
+	if (!access_ok(VERIFY_READ, p, sizeof(*p)))
+		return 0;
+
+	if (__get_user(inst, p))
+		return 0;
+
+	return inst;
 }
 
 /**
  * @regs: regsiters at time of interrupt
  * @address: storage address
  * @error_code: Fault code, usually the DSISR or ESR depending on
- *    processor type
+ *		processor type
  *
  * Return 0 if we are able to resolve the data storage fault that
  * results from a CT miss in the ACOP register.
  */
-int acop_handle_fault (struct pt_regs * regs, unsigned long address,
-                       unsigned long error_code)
+int acop_handle_fault(struct pt_regs *regs, unsigned long address,
+		      unsigned long error_code)
 {
-  int ct;
-  u32 inst = 0;
-  
-  if (!cpu_has_feature (CPU_FTR_ICSWX) ) {
-    pr_info ("No coprocessors available");
-    _exception (SIGILL, regs, ILL_ILLOPN, address);
-  }
-  
-  if (!user_mode (regs) ) {
-    /* this could happen if the HV denies the
-     * kernel access, for now we just die */
-    die ("ICSWX from kernel failed", regs, SIGSEGV);
-  }
-  
-  /* Some implementations leave us a hint for the CT */
-  ct = ICSWX_GET_CT_HINT (error_code);
-  if (ct < 0) {
-    /* we have to peek at the instruction word to figure out CT */
-    u32 ccw;
-    u32 rs;
-    
-    inst = acop_get_inst (regs);
-    if (inst == 0)
-    { return -1; }
-    
-    rs = (inst >> (31 - 10) ) & 0x1f;
-    ccw = regs->gpr[rs];
-    ct = (ccw >> 16) & 0x3f;
-  }
-  
-  /*
-   * We could be here because another thread has enabled acop
-   * but the ACOP register has yet to be updated.
-   *
-   * This should have been taken care of by the IPI to sync all
-   * the threads (see smp_call_function(sync_cop, mm, 1)), but
-   * that could take forever if there are a significant amount
-   * of threads.
-   *
-   * Given the number of threads on some of these systems,
-   * perhaps this is the best way to sync ACOP rather than whack
-   * every thread with an IPI.
-   */
-  if ( (acop_copro_type_bit (ct) & current->active_mm->context.acop) != 0) {
-    sync_cop (current->active_mm);
-    return 0;
-  }
-  
-  /* check for alternate policy */
-  if (!acop_use_cop (ct) )
-  { return 0; }
-  
-  /* at this point the CT is unknown to the system */
-  pr_warn ("%s[%d]: Coprocessor %d is unavailable\n",
-           current->comm, current->pid, ct);
-           
-  /* get inst if we don't already have it */
-  if (inst == 0) {
-    inst = acop_get_inst (regs);
-    if (inst == 0)
-    { return -1; }
-  }
-  
-  /* Check if the instruction is the "record form" */
-  if (inst & 1) {
-    /*
-     * the instruction is "record" form so we can reject
-     * using CR0
-     */
-    regs->ccr &= ~ (0xful << 28);
-    regs->ccr |= ICSWX_RC_NOT_FOUND << 28;
-    
-    /* Move on to the next instruction */
-    regs->nip += 4;
-  }
-  else {
-    /*
-     * There is no architected mechanism to report a bad
-     * CT so we could either SIGILL or report nothing.
-     * Since the non-record version should only bu used
-     * for "hints" or "don't care" we should probably do
-     * nothing.  However, I could see how some people
-     * might want an SIGILL so it here if you want it.
-     */
-    #ifdef CONFIG_PPC_ICSWX_USE_SIGILL
-    _exception (SIGILL, regs, ILL_ILLOPN, address);
-    #else
-    regs->nip += 4;
-    #endif
-  }
-  
-  return 0;
+	int ct;
+	u32 inst = 0;
+
+	if (!cpu_has_feature(CPU_FTR_ICSWX)) {
+		pr_info("No coprocessors available");
+		_exception(SIGILL, regs, ILL_ILLOPN, address);
+	}
+
+	if (!user_mode(regs)) {
+		/* this could happen if the HV denies the
+		 * kernel access, for now we just die */
+		die("ICSWX from kernel failed", regs, SIGSEGV);
+	}
+
+	/* Some implementations leave us a hint for the CT */
+	ct = ICSWX_GET_CT_HINT(error_code);
+	if (ct < 0) {
+		/* we have to peek at the instruction word to figure out CT */
+		u32 ccw;
+		u32 rs;
+
+		inst = acop_get_inst(regs);
+		if (inst == 0)
+			return -1;
+
+		rs = (inst >> (31 - 10)) & 0x1f;
+		ccw = regs->gpr[rs];
+		ct = (ccw >> 16) & 0x3f;
+	}
+
+	/*
+	 * We could be here because another thread has enabled acop
+	 * but the ACOP register has yet to be updated.
+	 *
+	 * This should have been taken care of by the IPI to sync all
+	 * the threads (see smp_call_function(sync_cop, mm, 1)), but
+	 * that could take forever if there are a significant amount
+	 * of threads.
+	 *
+	 * Given the number of threads on some of these systems,
+	 * perhaps this is the best way to sync ACOP rather than whack
+	 * every thread with an IPI.
+	 */
+	if ((acop_copro_type_bit(ct) & current->active_mm->context.acop) != 0) {
+		sync_cop(current->active_mm);
+		return 0;
+	}
+
+	/* check for alternate policy */
+	if (!acop_use_cop(ct))
+		return 0;
+
+	/* at this point the CT is unknown to the system */
+	pr_warn("%s[%d]: Coprocessor %d is unavailable\n",
+		current->comm, current->pid, ct);
+
+	/* get inst if we don't already have it */
+	if (inst == 0) {
+		inst = acop_get_inst(regs);
+		if (inst == 0)
+			return -1;
+	}
+
+	/* Check if the instruction is the "record form" */
+	if (inst & 1) {
+		/*
+		 * the instruction is "record" form so we can reject
+		 * using CR0
+		 */
+		regs->ccr &= ~(0xful << 28);
+		regs->ccr |= ICSWX_RC_NOT_FOUND << 28;
+
+		/* Move on to the next instruction */
+		regs->nip += 4;
+	} else {
+		/*
+		 * There is no architected mechanism to report a bad
+		 * CT so we could either SIGILL or report nothing.
+		 * Since the non-record version should only bu used
+		 * for "hints" or "don't care" we should probably do
+		 * nothing.  However, I could see how some people
+		 * might want an SIGILL so it here if you want it.
+		 */
+#ifdef CONFIG_PPC_ICSWX_USE_SIGILL
+		_exception(SIGILL, regs, ILL_ILLOPN, address);
+#else
+		regs->nip += 4;
+#endif
+	}
+
+	return 0;
 }
-EXPORT_SYMBOL_GPL (acop_handle_fault);
+EXPORT_SYMBOL_GPL(acop_handle_fault);

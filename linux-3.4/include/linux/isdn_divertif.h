@@ -32,20 +32,20 @@
 
 /***************************************************************/
 /* structure exchanging data between isdn hl and divert module */
-/***************************************************************/
+/***************************************************************/ 
 typedef struct
-{ ulong if_magic; /* magic info and version */
-  int cmd; /* command */
-  int (*stat_callback) (isdn_ctrl *); /* supplied by divert module when calling */
-  int (*ll_cmd) (isdn_ctrl *); /* supplied by hl on return */
-  char * (*drv_to_name) (int); /* map a driver id to name, supplied by hl */
-  int (*name_to_drv) (char *); /* map a driver id to name, supplied by hl */
-} isdn_divert_if;
+  { ulong if_magic; /* magic info and version */
+    int cmd; /* command */
+    int (*stat_callback)(isdn_ctrl *); /* supplied by divert module when calling */
+    int (*ll_cmd)(isdn_ctrl *); /* supplied by hl on return */
+    char * (*drv_to_name)(int); /* map a driver id to name, supplied by hl */
+    int (*name_to_drv)(char *); /* map a driver id to name, supplied by hl */
+  } isdn_divert_if;
 
 /*********************/
 /* function register */
 /*********************/
-extern int DIVERT_REG_NAME (isdn_divert_if *);
+extern int DIVERT_REG_NAME(isdn_divert_if *);
 #endif
 
 #endif /* _LINUX_ISDN_DIVERTIF_H */

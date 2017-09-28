@@ -21,11 +21,11 @@
 #define __RTL8723A_DM_H__
 
 
-void rtl8723a_init_dm_priv (PADAPTER padapter);
-void rtl8723a_deinit_dm_priv (PADAPTER padapter);
-
-void rtl8723a_InitHalDm (PADAPTER padapter);
-void rtl8723a_HalDmWatchDog (PADAPTER padapter);
+void rtl8723a_init_dm_priv(PADAPTER padapter);
+void rtl8723a_deinit_dm_priv(PADAPTER padapter);
+	
+void rtl8723a_InitHalDm(PADAPTER padapter);
+void rtl8723a_HalDmWatchDog(PADAPTER padapter);
 
 
 

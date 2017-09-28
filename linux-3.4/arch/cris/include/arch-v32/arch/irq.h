@@ -15,39 +15,39 @@
 
 #ifndef __ASSEMBLY__
 /* Global IRQ vector. */
-typedef void (*irqvectptr) (void);
+typedef void (*irqvectptr)(void);
 
 struct etrax_interrupt_vector {
-  irqvectptr v[256];
+	irqvectptr v[256];
 };
 
-extern struct etrax_interrupt_vector * etrax_irv; /* head.S */
+extern struct etrax_interrupt_vector *etrax_irv;	/* head.S */
 
-void crisv32_mask_irq (int irq);
-void crisv32_unmask_irq (int irq);
+void crisv32_mask_irq(int irq);
+void crisv32_unmask_irq(int irq);
 
-void set_exception_vector (int n, irqvectptr addr);
+void set_exception_vector(int n, irqvectptr addr);
 
 /* Save registers so that they match pt_regs. */
 #define SAVE_ALL \
-  "subq 12,$sp\n\t" \
-  "move $erp,[$sp]\n\t" \
-  "subq 4,$sp\n\t"  \
-  "move $srp,[$sp]\n\t" \
-  "subq 4,$sp\n\t"  \
-  "move $ccs,[$sp]\n\t" \
-  "subq 4,$sp\n\t"  \
-  "move $spc,[$sp]\n\t" \
-  "subq 4,$sp\n\t"  \
-  "move $mof,[$sp]\n\t" \
-  "subq 4,$sp\n\t"  \
-  "move $srs,[$sp]\n\t" \
-  "subq 4,$sp\n\t"  \
-  "move.d $acr,[$sp]\n\t" \
-  "subq 14*4,$sp\n\t" \
-  "movem $r13,[$sp]\n\t"  \
-  "subq 4,$sp\n\t"  \
-  "move.d $r10,[$sp]\n"
+	"subq 12,$sp\n\t"	\
+	"move $erp,[$sp]\n\t"	\
+	"subq 4,$sp\n\t"	\
+	"move $srp,[$sp]\n\t"	\
+	"subq 4,$sp\n\t"	\
+	"move $ccs,[$sp]\n\t"	\
+	"subq 4,$sp\n\t"	\
+	"move $spc,[$sp]\n\t"	\
+	"subq 4,$sp\n\t"	\
+	"move $mof,[$sp]\n\t"	\
+	"subq 4,$sp\n\t"	\
+	"move $srs,[$sp]\n\t"	\
+	"subq 4,$sp\n\t"	\
+	"move.d $acr,[$sp]\n\t"	\
+	"subq 14*4,$sp\n\t"	\
+	"movem $r13,[$sp]\n\t"	\
+	"subq 4,$sp\n\t"	\
+	"move.d $r10,[$sp]\n"
 
 #define STR2(x) #x
 #define STR(x) STR2(x)
@@ -63,9 +63,9 @@ void set_exception_vector (int n, irqvectptr addr);
  */
 #ifdef CONFIG_ETRAX_KGDB
 #define KGDB_FIXUP \
-  "move $ccs, $r10\n\t"   \
-  "or.d (1<<9), $r10\n\t"   \
-  "move $r10, $ccs\n\t"
+	"move $ccs, $r10\n\t"		\
+	"or.d (1<<9), $r10\n\t"		\
+	"move $r10, $ccs\n\t"
 #else
 #define KGDB_FIXUP ""
 #endif
@@ -78,19 +78,19 @@ void set_exception_vector (int n, irqvectptr addr);
  * which will acknowledge the interrupt, is run. The actual blocking is made
  * by crisv32_do_IRQ.
  */
-#define BUILD_IRQ(nr)           \
-  void IRQ_NAME(nr);      \
-  __asm__ (       \
-                  ".text\n\t"     \
-                  "IRQ" #nr "_interrupt:\n\t"   \
-                  SAVE_ALL      \
-                  KGDB_FIXUP                      \
-                  "move.d "#nr",$r10\n\t"   \
-                  "move.d $sp, $r12\n\t"          \
-                  "jsr crisv32_do_IRQ\n\t"        \
-                  "moveq 1, $r11\n\t"   \
-                  "jump ret_from_intr\n\t"  \
-                  "nop\n\t");
+#define BUILD_IRQ(nr)		        \
+void IRQ_NAME(nr);			\
+__asm__ (				\
+	".text\n\t"			\
+	"IRQ" #nr "_interrupt:\n\t" 	\
+	SAVE_ALL			\
+	KGDB_FIXUP                      \
+	"move.d "#nr",$r10\n\t"		\
+	"move.d $sp, $r12\n\t"          \
+	"jsr crisv32_do_IRQ\n\t"       	\
+	"moveq 1, $r11\n\t"		\
+	"jump ret_from_intr\n\t"	\
+	"nop\n\t");
 /*
  * This is subtle. The timer interrupt is crucial and it should not be disabled
  * for too long. However, if it had been a normal interrupt as per BUILD_IRQ, it
@@ -106,19 +106,19 @@ void set_exception_vector (int n, irqvectptr addr);
  * registred as a fast interrupt (IRQF_DISABLED) so that we _know_ there will not
  * be an sti() before the timer irq handler is run to acknowledge the interrupt.
  */
-#define BUILD_TIMER_IRQ(nr, mask)   \
-  void IRQ_NAME(nr);      \
-  __asm__ (       \
-                  ".text\n\t"     \
-                  "IRQ" #nr "_interrupt:\n\t" \
-                  SAVE_ALL      \
-                  KGDB_FIXUP                      \
-                  "move.d "#nr",$r10\n\t"   \
-                  "move.d $sp,$r12\n\t"   \
-                  "jsr crisv32_do_IRQ\n\t"  \
-                  "moveq 0,$r11\n\t"    \
-                  "jump ret_from_intr\n\t"  \
-                  "nop\n\t");
+#define BUILD_TIMER_IRQ(nr, mask) 	\
+void IRQ_NAME(nr);			\
+__asm__ (				\
+	".text\n\t"			\
+	"IRQ" #nr "_interrupt:\n\t"	\
+	SAVE_ALL			\
+        KGDB_FIXUP                      \
+	"move.d "#nr",$r10\n\t"		\
+	"move.d $sp,$r12\n\t"		\
+	"jsr crisv32_do_IRQ\n\t"	\
+	"moveq 0,$r11\n\t"		\
+	"jump ret_from_intr\n\t"	\
+	"nop\n\t");
 
 #endif /* __ASSEMBLY__ */
 #endif /* _ASM_ARCH_IRQ_H */

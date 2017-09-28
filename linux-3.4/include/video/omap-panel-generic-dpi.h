@@ -29,9 +29,9 @@ struct omap_dss_device;
  * @platform_disable: platform specific panel disable function
  */
 struct panel_generic_dpi_data {
-  const char * name;
-  int (*platform_enable) (struct omap_dss_device * dssdev);
-  void (*platform_disable) (struct omap_dss_device * dssdev);
+	const char *name;
+	int (*platform_enable)(struct omap_dss_device *dssdev);
+	void (*platform_disable)(struct omap_dss_device *dssdev);
 };
 
 #endif /* __OMAP_PANEL_GENERIC_DPI_H */

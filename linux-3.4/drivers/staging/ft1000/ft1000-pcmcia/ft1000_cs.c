@@ -35,47 +35,47 @@
 
 /*====================================================================*/
 
-MODULE_AUTHOR ("Wai Chan");
-MODULE_DESCRIPTION ("FT1000 PCMCIA driver");
-MODULE_LICENSE ("GPL");
+MODULE_AUTHOR("Wai Chan");
+MODULE_DESCRIPTION("FT1000 PCMCIA driver");
+MODULE_LICENSE("GPL");
 
 /*====================================================================*/
 
-static int ft1000_config (struct pcmcia_device * link);
-static void ft1000_detach (struct pcmcia_device * link);
-static int ft1000_attach (struct pcmcia_device * link);
+static int ft1000_config(struct pcmcia_device *link);
+static void ft1000_detach(struct pcmcia_device *link);
+static int ft1000_attach(struct pcmcia_device *link);
 
 #include "ft1000.h"
 
 /*====================================================================*/
 
-static void ft1000_reset (struct pcmcia_device * link)
+static void ft1000_reset(struct pcmcia_device *link)
 {
-  pcmcia_reset_card (link->socket);
+	pcmcia_reset_card(link->socket);
 }
 
-static int ft1000_attach (struct pcmcia_device * link)
+static int ft1000_attach(struct pcmcia_device *link)
 {
-  link->priv = NULL;
-  link->config_flags |= CONF_ENABLE_IRQ | CONF_AUTO_SET_IO;
-  
-  return ft1000_config (link);
+	link->priv = NULL;
+	link->config_flags |= CONF_ENABLE_IRQ | CONF_AUTO_SET_IO;
+
+	return ft1000_config(link);
 }
 
-static void ft1000_detach (struct pcmcia_device * link)
+static void ft1000_detach(struct pcmcia_device *link)
 {
-  struct net_device * dev = link->priv;
-  
-  if (dev)
-  { stop_ft1000_card (dev); }
-  
-  pcmcia_disable_device (link);
-  free_netdev (dev);
+	struct net_device *dev = link->priv;
+
+	if (dev)
+		stop_ft1000_card(dev);
+
+	pcmcia_disable_device(link);
+	free_netdev(dev);
 }
 
-static int ft1000_confcheck (struct pcmcia_device * link, void * priv_data)
+static int ft1000_confcheck(struct pcmcia_device *link, void *priv_data)
 {
-  return pcmcia_request_io (link);
+	return pcmcia_request_io(link);
 }
 
 /*======================================================================
@@ -86,84 +86,84 @@ static int ft1000_confcheck (struct pcmcia_device * link, void * priv_data)
 
 ======================================================================*/
 
-static int ft1000_config (struct pcmcia_device * link)
+static int ft1000_config(struct pcmcia_device *link)
 {
-  int ret;
-  
-  dev_dbg (&link->dev, "ft1000_cs: ft1000_config(0x%p)\n", link);
-  
-  /* setup IO window */
-  ret = pcmcia_loop_config (link, ft1000_confcheck, NULL);
-  if (ret) {
-    printk (KERN_INFO "ft1000: Could not configure pcmcia\n");
-    return -ENODEV;
-  }
-  
-  /* configure device */
-  ret = pcmcia_enable_device (link);
-  if (ret) {
-    printk (KERN_INFO "ft1000: could not enable pcmcia\n");
-    goto failed;
-  }
-  
-  link->priv = init_ft1000_card (link, &ft1000_reset);
-  if (!link->priv) {
-    printk (KERN_INFO "ft1000: Could not register as network device\n");
-    goto failed;
-  }
-  
-  /* Finally, report what we've done */
-  
-  return 0;
+	int ret;
+
+	dev_dbg(&link->dev, "ft1000_cs: ft1000_config(0x%p)\n", link);
+
+	/* setup IO window */
+	ret = pcmcia_loop_config(link, ft1000_confcheck, NULL);
+	if (ret) {
+		printk(KERN_INFO "ft1000: Could not configure pcmcia\n");
+		return -ENODEV;
+	}
+
+	/* configure device */
+	ret = pcmcia_enable_device(link);
+	if (ret) {
+		printk(KERN_INFO "ft1000: could not enable pcmcia\n");
+		goto failed;
+	}
+
+	link->priv = init_ft1000_card(link, &ft1000_reset);
+	if (!link->priv) {
+		printk(KERN_INFO "ft1000: Could not register as network device\n");
+		goto failed;
+	}
+
+	/* Finally, report what we've done */
+
+	return 0;
 failed:
-  pcmcia_disable_device (link);
-  return -ENODEV;
+	pcmcia_disable_device(link);
+	return -ENODEV;
 }
 
-static int ft1000_suspend (struct pcmcia_device * link)
+static int ft1000_suspend(struct pcmcia_device *link)
 {
-  struct net_device * dev = link->priv;
-  
-  if (link->open)
-  { netif_device_detach (dev); }
-  return 0;
+	struct net_device *dev = link->priv;
+
+	if (link->open)
+		netif_device_detach(dev);
+	return 0;
 }
 
-static int ft1000_resume (struct pcmcia_device * link)
+static int ft1000_resume(struct pcmcia_device *link)
 {
-  return 0;
+	return 0;
 }
 
 /*====================================================================*/
 
 static const struct pcmcia_device_id ft1000_ids[] = {
-  PCMCIA_DEVICE_MANF_CARD (0x02cc, 0x0100),
-  PCMCIA_DEVICE_MANF_CARD (0x02cc, 0x1000),
-  PCMCIA_DEVICE_MANF_CARD (0x02cc, 0x1300),
-  PCMCIA_DEVICE_NULL,
+	PCMCIA_DEVICE_MANF_CARD(0x02cc, 0x0100),
+	PCMCIA_DEVICE_MANF_CARD(0x02cc, 0x1000),
+	PCMCIA_DEVICE_MANF_CARD(0x02cc, 0x1300),
+	PCMCIA_DEVICE_NULL,
 };
 
-MODULE_DEVICE_TABLE (pcmcia, ft1000_ids);
+MODULE_DEVICE_TABLE(pcmcia, ft1000_ids);
 
 static struct pcmcia_driver ft1000_cs_driver = {
-  .owner    = THIS_MODULE,
-  .name   = "ft1000_cs",
-  .probe    = ft1000_attach,
-  .remove   = ft1000_detach,
-  .id_table = ft1000_ids,
-  .suspend  = ft1000_suspend,
-  .resume   = ft1000_resume,
+	.owner		= THIS_MODULE,
+	.name		= "ft1000_cs",
+	.probe		= ft1000_attach,
+	.remove		= ft1000_detach,
+	.id_table	= ft1000_ids,
+	.suspend	= ft1000_suspend,
+	.resume		= ft1000_resume,
 };
 
-static int __init init_ft1000_cs (void)
+static int __init init_ft1000_cs(void)
 {
-  return pcmcia_register_driver (&ft1000_cs_driver);
+	return pcmcia_register_driver(&ft1000_cs_driver);
 }
 
-static void __exit exit_ft1000_cs (void)
+static void __exit exit_ft1000_cs(void)
 {
-  pcmcia_unregister_driver (&ft1000_cs_driver);
+	pcmcia_unregister_driver(&ft1000_cs_driver);
 }
 
-module_init (init_ft1000_cs);
-module_exit (exit_ft1000_cs);
+module_init(init_ft1000_cs);
+module_exit(exit_ft1000_cs);

@@ -25,26 +25,26 @@
 
 #include <scsi/scsicam.h> /* possibly irrelevant, since we don't show disks */
 
-/* the scsi id of the adapter... */
+		/* the scsi id of the adapter... */
 #define SELF_SCSI_ID 15
-/* 15 is somewhat arbitrary, since the scsi-2 bus
-   that's presented by the driver to the OS is
-   fabricated.  The "real" scsi-3 bus the
-   hardware presents is fabricated too.
-   The actual, honest-to-goodness physical
-   bus that the devices are attached to is not
-   addressible natively, and may in fact turn
-   out to be not scsi at all. */
+		/* 15 is somewhat arbitrary, since the scsi-2 bus
+		   that's presented by the driver to the OS is
+		   fabricated.  The "real" scsi-3 bus the
+		   hardware presents is fabricated too.
+		   The actual, honest-to-goodness physical
+		   bus that the devices are attached to is not
+		   addressible natively, and may in fact turn
+		   out to be not scsi at all. */
 
 
-/*
+/* 
 
-If the upper scsi layer tries to track how many commands we have
+If the upper scsi layer tries to track how many commands we have 
 outstanding, it will be operating under the misapprehension that it is
 the only one sending us requests.  We also have the block interface,
 which is where most requests must surely come from, so the upper layer's
 notion of how many requests we have outstanding will be wrong most or
-all of the time.
+all of the time. 
 
 Note, the normal SCSI mid-layer error handling doesn't work well
 for this driver because 1) it takes the io_request_lock before
@@ -59,20 +59,20 @@ driver, I suppose.
 */
 
 struct cciss_scsi_dev_t {
-  int devtype;
-  int bus, target, lun;   /* as presented to the OS */
-  unsigned char scsi3addr[8]; /* as presented to the HW */
-  unsigned char device_id[16];  /* from inquiry pg. 0x83 */
-  unsigned char vendor[8];  /* bytes 8-15 of inquiry data */
-  unsigned char model[16];  /* bytes 16-31 of inquiry data */
-  unsigned char revision[4];  /* bytes 32-35 of inquiry data */
+	int devtype;
+	int bus, target, lun;		/* as presented to the OS */
+	unsigned char scsi3addr[8];	/* as presented to the HW */
+	unsigned char device_id[16];	/* from inquiry pg. 0x83 */
+	unsigned char vendor[8];	/* bytes 8-15 of inquiry data */
+	unsigned char model[16];	/* bytes 16-31 of inquiry data */
+	unsigned char revision[4];	/* bytes 32-35 of inquiry data */
 };
 
 struct cciss_scsi_hba_t {
-  char * name;
-  int ndevices;
+	char *name;
+	int ndevices;
 #define CCISS_MAX_SCSI_DEVS_PER_HBA 16
-  struct cciss_scsi_dev_t dev[CCISS_MAX_SCSI_DEVS_PER_HBA];
+	struct cciss_scsi_dev_t dev[CCISS_MAX_SCSI_DEVS_PER_HBA];
 };
 
 #endif /* _CCISS_SCSI_H_ */

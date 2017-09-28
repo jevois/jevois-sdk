@@ -18,15 +18,15 @@
 #define UART0_PHYS 0xd8200000
 #include <asm/io.h>
 
-static void putc (const char c)
+static void putc(const char c)
 {
-  while (readb (UART0_PHYS + 0x1c) & 0x2)
-    /* Tx busy, wait and poll */;
-    
-  writeb (c, UART0_PHYS);
+	while (readb(UART0_PHYS + 0x1c) & 0x2)
+		/* Tx busy, wait and poll */;
+
+	writeb(c, UART0_PHYS);
 }
 
-static void flush (void)
+static void flush(void)
 {
 }
 

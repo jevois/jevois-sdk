@@ -1,4 +1,4 @@
-/*
+/* 
  * Licensed under the GPL
  */
 
@@ -15,26 +15,26 @@
 #define PPC_REG unsigned long
 #endif
 struct sys_pt_regs_s {
-  PPC_REG gpr[32];
-  PPC_REG nip;
-  PPC_REG msr;
-  PPC_REG orig_gpr3;  /* Used for restarting system calls */
-  PPC_REG ctr;
-  PPC_REG link;
-  PPC_REG xer;
-  PPC_REG ccr;
-  PPC_REG mq;   /* 601 only (not used at present) */
-  /* Used on APUS to hold IPL value. */
-  PPC_REG trap;   /* Reason for being here */
-  PPC_REG dar;    /* Fault registers */
-  PPC_REG dsisr;
-  PPC_REG result;   /* Result of a system call */
+	PPC_REG gpr[32];
+	PPC_REG nip;
+	PPC_REG msr;
+	PPC_REG orig_gpr3;	/* Used for restarting system calls */
+	PPC_REG ctr;
+	PPC_REG link;
+	PPC_REG xer;
+	PPC_REG ccr;
+	PPC_REG mq;		/* 601 only (not used at present) */
+				/* Used on APUS to hold IPL value. */
+	PPC_REG trap;		/* Reason for being here */
+	PPC_REG dar;		/* Fault registers */
+	PPC_REG dsisr;
+	PPC_REG result; 	/* Result of a system call */
 };
 
 #define NUM_REGS (sizeof(struct sys_pt_regs_s) / sizeof(PPC_REG))
 
 struct sys_pt_regs {
-  PPC_REG regs[sizeof (struct sys_pt_regs_s) / sizeof (PPC_REG)];
+    PPC_REG regs[sizeof(struct sys_pt_regs_s) / sizeof(PPC_REG)];
 };
 
 #define UM_MAX_REG (PT_FPR0)
@@ -68,17 +68,17 @@ struct sys_pt_regs {
 #define UM_IP_OFFSET (PT_NIP * sizeof(PPC_REG))
 #define UM_ELF_ZERO_OFFSET (PT_R3 * sizeof(PPC_REG))
 
-#define UM_SET_SYSCALL_RETURN(_regs, result)          \
-  do {                                                    \
-    if (result < 0) {       \
-      (_regs)->regs[PT_CCR] |= 0x10000000;  \
-      UM_SYSCALL_RET((_regs)) = -result;  \
-    } else {          \
-      UM_SYSCALL_RET((_regs)) = result; \
-    }                                               \
-  } while(0)
+#define UM_SET_SYSCALL_RETURN(_regs, result)	        \
+do {                                                    \
+        if (result < 0) {				\
+		(_regs)->regs[PT_CCR] |= 0x10000000;	\
+		UM_SYSCALL_RET((_regs)) = -result;	\
+        } else {					\
+		UM_SYSCALL_RET((_regs)) = result;	\
+        }                                               \
+} while(0)
 
-extern void shove_aux_table (unsigned long sp);
+extern void shove_aux_table(unsigned long sp);
 #define UM_FIX_EXEC_STACK(sp) shove_aux_table(sp);
 
 /* These aren't actually defined.  The undefs are just to make sure

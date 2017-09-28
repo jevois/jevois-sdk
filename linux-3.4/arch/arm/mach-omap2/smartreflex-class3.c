@@ -13,48 +13,48 @@
 
 #include "smartreflex.h"
 
-static int sr_class3_enable (struct voltagedomain * voltdm)
+static int sr_class3_enable(struct voltagedomain *voltdm)
 {
-  unsigned long volt = voltdm_get_voltage (voltdm);
-  
-  if (!volt) {
-    pr_warning ("%s: Curr voltage unknown. Cannot enable sr_%s\n",
-                __func__, voltdm->name);
-    return -ENODATA;
-  }
-  
-  omap_vp_enable (voltdm);
-  return sr_enable (voltdm, volt);
+	unsigned long volt = voltdm_get_voltage(voltdm);
+
+	if (!volt) {
+		pr_warning("%s: Curr voltage unknown. Cannot enable sr_%s\n",
+				__func__, voltdm->name);
+		return -ENODATA;
+	}
+
+	omap_vp_enable(voltdm);
+	return sr_enable(voltdm, volt);
 }
 
-static int sr_class3_disable (struct voltagedomain * voltdm, int is_volt_reset)
+static int sr_class3_disable(struct voltagedomain *voltdm, int is_volt_reset)
 {
-  sr_disable_errgen (voltdm);
-  omap_vp_disable (voltdm);
-  sr_disable (voltdm);
-  if (is_volt_reset)
-  { voltdm_reset (voltdm); }
-  
-  return 0;
+	sr_disable_errgen(voltdm);
+	omap_vp_disable(voltdm);
+	sr_disable(voltdm);
+	if (is_volt_reset)
+		voltdm_reset(voltdm);
+
+	return 0;
 }
 
-static int sr_class3_configure (struct voltagedomain * voltdm)
+static int sr_class3_configure(struct voltagedomain *voltdm)
 {
-  return sr_configure_errgen (voltdm);
+	return sr_configure_errgen(voltdm);
 }
 
 /* SR class3 structure */
 static struct omap_sr_class_data class3_data = {
-  .enable = sr_class3_enable,
-  .disable = sr_class3_disable,
-  .configure = sr_class3_configure,
-  .class_type = SR_CLASS3,
+	.enable = sr_class3_enable,
+	.disable = sr_class3_disable,
+	.configure = sr_class3_configure,
+	.class_type = SR_CLASS3,
 };
 
 /* Smartreflex Class3 init API to be called from board file */
-static int __init sr_class3_init (void)
+static int __init sr_class3_init(void)
 {
-  pr_info ("SmartReflex Class3 initialized\n");
-  return sr_register_class (&class3_data);
+	pr_info("SmartReflex Class3 initialized\n");
+	return sr_register_class(&class3_data);
 }
-late_initcall (sr_class3_init);
+late_initcall(sr_class3_init);

@@ -40,68 +40,68 @@ typedef struct get_para_s GET_PARA;
 /* --------------------------------------------------------
    IDI_CALL
    -------------------------------------------------------- */
-typedef void (IDI_CALL_LINK_T * IDI_CALL) (ENTITY IDI_CALL_ENTITY_T *);
+typedef void (IDI_CALL_LINK_T *IDI_CALL)(ENTITY IDI_CALL_ENTITY_T *);
 typedef struct {
-  word length;          /* length of data/parameter field           */
-  byte P[270];          /* data/parameter field                     */
+	word length;          /* length of data/parameter field           */
+	byte P[270];          /* data/parameter field                     */
 } DBUFFER;
 struct get_name_s {
-  word command;         /* command = 0x0100 */
-  byte name[BOARD_NAME_LENGTH];
+	word command;         /* command = 0x0100 */
+	byte name[BOARD_NAME_LENGTH];
 };
 struct postcall_s {
-  word      command;                           /* command = 0x0300 */
-  word      dummy;                             /* not used */
-  void      (*callback) (void *);     /* call back */
-  void   *   context;                          /* context pointer */
+	word      command;                           /* command = 0x0300 */
+	word      dummy;                             /* not used */
+	void      (*callback)(void *);      /* call back */
+	void      *context;                          /* context pointer */
 };
 #define REQ_PARA            0x0600   /* request command line parameters */
 #define REQ_PARA_LEN             1   /* number of data bytes */
 #define L1_STARTUP_DOWN_POS      0   /* '-y' command line parameter in......*/
 #define L1_STARTUP_DOWN_MSK   0x01   /* first byte position (index 0) with value 0x01 */
 struct get_para_s {
-  word  command;            /* command = 0x0600 */
-  byte  len;                /* max length of para field in bytes */
-  byte  para[REQ_PARA_LEN]; /* parameter field */
+	word  command;            /* command = 0x0600 */
+	byte  len;                /* max length of para field in bytes */
+	byte  para[REQ_PARA_LEN]; /* parameter field */
 };
 struct buffers_s {
-  word PLength;
-  byte * P;
+	word PLength;
+	byte *P;
 };
 struct entity_s {
-  byte                  Req;            /* pending request          */
-  byte                  Rc;             /* return code received     */
-  byte                  Ind;            /* indication received      */
-  byte                  ReqCh;          /* channel of current Req   */
-  byte                  RcCh;           /* channel of current Rc    */
-  byte                  IndCh;          /* channel of current Ind   */
-  byte                  Id;             /* ID used by this entity   */
-  byte                  GlobalId;       /* reserved field           */
-  byte                  XNum;           /* number of X-buffers      */
-  byte                  RNum;           /* number of R-buffers      */
-  BUFFERS        *       X;             /* pointer to X-buffer list */
-  BUFFERS        *       R;             /* pointer to R-buffer list */
-  word                  RLength;        /* length of current R-data */
-  DBUFFER        *       RBuffer;       /* buffer of current R-data */
-  byte                  RNR;            /* receive not ready flag   */
-  byte                  complete;       /* receive complete status  */
-  IDI_CALL              callback;
-  word                  user[2];
-  /* fields used by the driver internally                     */
-  byte                  No;             /* entity number            */
-  byte                  reserved2;      /* reserved field           */
-  byte                  More;           /* R/X More flags           */
-  byte                  MInd;           /* MDATA coding for this ID */
-  byte                  XCurrent;       /* current transmit buffer  */
-  byte                  RCurrent;       /* current receive buffer   */
-  word                  XOffset;        /* offset in x-buffer       */
-  word                  ROffset;        /* offset in r-buffer       */
+	byte                  Req;            /* pending request          */
+	byte                  Rc;             /* return code received     */
+	byte                  Ind;            /* indication received      */
+	byte                  ReqCh;          /* channel of current Req   */
+	byte                  RcCh;           /* channel of current Rc    */
+	byte                  IndCh;          /* channel of current Ind   */
+	byte                  Id;             /* ID used by this entity   */
+	byte                  GlobalId;       /* reserved field           */
+	byte                  XNum;           /* number of X-buffers      */
+	byte                  RNum;           /* number of R-buffers      */
+	BUFFERS               *X;             /* pointer to X-buffer list */
+	BUFFERS               *R;             /* pointer to R-buffer list */
+	word                  RLength;        /* length of current R-data */
+	DBUFFER               *RBuffer;       /* buffer of current R-data */
+	byte                  RNR;            /* receive not ready flag   */
+	byte                  complete;       /* receive complete status  */
+	IDI_CALL              callback;
+	word                  user[2];
+	/* fields used by the driver internally                     */
+	byte                  No;             /* entity number            */
+	byte                  reserved2;      /* reserved field           */
+	byte                  More;           /* R/X More flags           */
+	byte                  MInd;           /* MDATA coding for this ID */
+	byte                  XCurrent;       /* current transmit buffer  */
+	byte                  RCurrent;       /* current receive buffer   */
+	word                  XOffset;        /* offset in x-buffer       */
+	word                  ROffset;        /* offset in r-buffer       */
 };
 typedef struct {
-  byte                  type;
-  byte                  channels;
-  word                  features;
-  IDI_CALL              request;
+	byte                  type;
+	byte                  channels;
+	word                  features;
+	IDI_CALL              request;
 } DESCRIPTOR;
 /* descriptor type field coding */
 #define IDI_ADAPTER_S           1
@@ -162,7 +162,7 @@ typedef struct {
 /* --------------------------------------------------------------------------
    Adapter array change notification framework
    -------------------------------------------------------------------------- */
-typedef void (IDI_CALL_LINK_T * didd_adapter_change_callback_t) (void IDI_CALL_ENTITY_T * context, DESCRIPTOR * adapter, int removal);
+typedef void (IDI_CALL_LINK_T *didd_adapter_change_callback_t)(void IDI_CALL_ENTITY_T *context, DESCRIPTOR *adapter, int removal);
 /* -------------------------------------------------------------------------- */
 #define DI_VOICE          0x0 /* obsolete define */
 #define DI_FAX3           0x1
@@ -177,5 +177,5 @@ typedef void (IDI_CALL_LINK_T * didd_adapter_change_callback_t) (void IDI_CALL_E
 #define DI_EXTD_FAX       0x0200 /* Extended FAX (ECM, 2D, T.6, Polling) */
 #define DI_AT_PARSER      0x0400 /* Build-in AT Parser in the L2 */
 #define DI_VOICE_OVER_IP  0x0800 /* Voice over IP support */
-typedef void (IDI_CALL_LINK_T * _IDI_CALL) (void *, ENTITY *);
+typedef void (IDI_CALL_LINK_T *_IDI_CALL)(void *, ENTITY *);
 #endif

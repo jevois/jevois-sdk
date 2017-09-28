@@ -35,70 +35,70 @@
 #include "generic.h"
 
 static struct netxeth_platform_data eth0_platform_data = {
-  .xcno = 0,
+	.xcno = 0,
 };
 
 static struct platform_device nxdkn_eth0_device = {
-  .name   = "netx-eth",
-  .id   = 0,
-  .num_resources  = 0,
-  .resource = NULL,
-  .dev = {
-    .platform_data = &eth0_platform_data,
-  }
+	.name		= "netx-eth",
+	.id		= 0,
+	.num_resources	= 0,
+	.resource	= NULL,
+	.dev = {
+		.platform_data = &eth0_platform_data,
+	}
 };
 
 static struct netxeth_platform_data eth1_platform_data = {
-  .xcno = 1,
+	.xcno = 1,
 };
 
 static struct platform_device nxdkn_eth1_device = {
-  .name   = "netx-eth",
-  .id   = 1,
-  .num_resources  = 0,
-  .resource = NULL,
-  .dev = {
-    .platform_data = &eth1_platform_data,
-  }
+	.name		= "netx-eth",
+	.id		= 1,
+	.num_resources	= 0,
+	.resource	= NULL,
+	.dev = {
+		.platform_data = &eth1_platform_data,
+	}
 };
 
 static struct resource netx_uart0_resources[] = {
-  [0] = {
-    .start  = 0x00100A00,
-    .end  = 0x00100A3F,
-    .flags  = IORESOURCE_MEM,
-  },
-  [1] = {
-    .start  = (NETX_IRQ_UART0),
-    .end  = (NETX_IRQ_UART0),
-    .flags  = IORESOURCE_IRQ,
-  },
+	[0] = {
+		.start	= 0x00100A00,
+		.end	= 0x00100A3F,
+		.flags	= IORESOURCE_MEM,
+	},
+	[1] = {
+		.start	= (NETX_IRQ_UART0),
+		.end	= (NETX_IRQ_UART0),
+		.flags	= IORESOURCE_IRQ,
+	},
 };
 
 static struct platform_device netx_uart0_device = {
-  .name   = "netx-uart",
-  .id   = 0,
-  .num_resources  = ARRAY_SIZE (netx_uart0_resources),
-  .resource = netx_uart0_resources,
+	.name		= "netx-uart",
+	.id		= 0,
+	.num_resources	= ARRAY_SIZE(netx_uart0_resources),
+	.resource	= netx_uart0_resources,
 };
 
-static struct platform_device * devices[] __initdata = {
-  &nxdkn_eth0_device,
-  &nxdkn_eth1_device,
-  &netx_uart0_device,
+static struct platform_device *devices[] __initdata = {
+	&nxdkn_eth0_device,
+	&nxdkn_eth1_device,
+	&netx_uart0_device,
 };
 
-static void __init nxdkn_init (void)
+static void __init nxdkn_init(void)
 {
-  platform_add_devices (devices, ARRAY_SIZE (devices) );
+	platform_add_devices(devices, ARRAY_SIZE(devices));
 }
 
-MACHINE_START (NXDKN, "Hilscher nxdkn")
-.atag_offset  = 0x100,
- .map_io   = netx_map_io,
-  .init_irq = netx_init_irq,
-   .handle_irq = vic_handle_irq,
-    .timer    = &netx_timer,
-     .init_machine = nxdkn_init,
-      .restart  = netx_restart,
-       MACHINE_END
+MACHINE_START(NXDKN, "Hilscher nxdkn")
+	.atag_offset	= 0x100,
+	.map_io		= netx_map_io,
+	.init_irq	= netx_init_irq,
+	.handle_irq	= vic_handle_irq,
+	.timer		= &netx_timer,
+	.init_machine	= nxdkn_init,
+	.restart	= netx_restart,
+MACHINE_END

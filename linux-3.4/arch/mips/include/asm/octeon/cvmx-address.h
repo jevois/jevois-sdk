@@ -34,48 +34,48 @@
 
 #if 0
 typedef enum {
-  CVMX_MIPS_SPACE_XKSEG = 3LL,
-  CVMX_MIPS_SPACE_XKPHYS = 2LL,
-  CVMX_MIPS_SPACE_XSSEG = 1LL,
-  CVMX_MIPS_SPACE_XUSEG = 0LL
+	CVMX_MIPS_SPACE_XKSEG = 3LL,
+	CVMX_MIPS_SPACE_XKPHYS = 2LL,
+	CVMX_MIPS_SPACE_XSSEG = 1LL,
+	CVMX_MIPS_SPACE_XUSEG = 0LL
 } cvmx_mips_space_t;
 #endif
 
 typedef enum {
-  CVMX_MIPS_XKSEG_SPACE_KSEG0 = 0LL,
-  CVMX_MIPS_XKSEG_SPACE_KSEG1 = 1LL,
-  CVMX_MIPS_XKSEG_SPACE_SSEG = 2LL,
-  CVMX_MIPS_XKSEG_SPACE_KSEG3 = 3LL
+	CVMX_MIPS_XKSEG_SPACE_KSEG0 = 0LL,
+	CVMX_MIPS_XKSEG_SPACE_KSEG1 = 1LL,
+	CVMX_MIPS_XKSEG_SPACE_SSEG = 2LL,
+	CVMX_MIPS_XKSEG_SPACE_KSEG3 = 3LL
 } cvmx_mips_xkseg_space_t;
 
 /* decodes <14:13> of a kseg3 window address */
 typedef enum {
-  CVMX_ADD_WIN_SCR = 0L,
-  /* see cvmx_add_win_dma_dec_t for further decode */
-  CVMX_ADD_WIN_DMA = 1L,
-  CVMX_ADD_WIN_UNUSED = 2L,
-  CVMX_ADD_WIN_UNUSED2 = 3L
+	CVMX_ADD_WIN_SCR = 0L,
+	/* see cvmx_add_win_dma_dec_t for further decode */
+	CVMX_ADD_WIN_DMA = 1L,
+	CVMX_ADD_WIN_UNUSED = 2L,
+	CVMX_ADD_WIN_UNUSED2 = 3L
 } cvmx_add_win_dec_t;
 
 /* decode within DMA space */
 typedef enum {
-  /*
-   * Add store data to the write buffer entry, allocating it if
-   * necessary.
-   */
-  CVMX_ADD_WIN_DMA_ADD = 0L,
-  /* send out the write buffer entry to DRAM */
-  CVMX_ADD_WIN_DMA_SENDMEM = 1L,
-  /* store data must be normal DRAM memory space address in this case */
-  /* send out the write buffer entry as an IOBDMA command */
-  CVMX_ADD_WIN_DMA_SENDDMA = 2L,
-  /* see CVMX_ADD_WIN_DMA_SEND_DEC for data contents */
-  /* send out the write buffer entry as an IO write */
-  CVMX_ADD_WIN_DMA_SENDIO = 3L,
-  /* store data must be normal IO space address in this case */
-  /* send out a single-tick command on the NCB bus */
-  CVMX_ADD_WIN_DMA_SENDSINGLE = 4L,
-  /* no write buffer data needed/used */
+	/*
+	 * Add store data to the write buffer entry, allocating it if
+	 * necessary.
+	 */
+	CVMX_ADD_WIN_DMA_ADD = 0L,
+	/* send out the write buffer entry to DRAM */
+	CVMX_ADD_WIN_DMA_SENDMEM = 1L,
+	/* store data must be normal DRAM memory space address in this case */
+	/* send out the write buffer entry as an IOBDMA command */
+	CVMX_ADD_WIN_DMA_SENDDMA = 2L,
+	/* see CVMX_ADD_WIN_DMA_SEND_DEC for data contents */
+	/* send out the write buffer entry as an IO write */
+	CVMX_ADD_WIN_DMA_SENDIO = 3L,
+	/* store data must be normal IO space address in this case */
+	/* send out a single-tick command on the NCB bus */
+	CVMX_ADD_WIN_DMA_SENDSINGLE = 4L,
+	/* no write buffer data needed/used */
 } cvmx_add_win_dma_dec_t;
 
 /*
@@ -103,113 +103,113 @@ typedef enum {
  */
 typedef union {
 
-  uint64_t u64;
-  /* mapped or unmapped virtual address */
-  struct {
-    uint64_t R: 2;
-    uint64_t offset: 62;
-  } sva;
-  
-  /* mapped USEG virtual addresses (typically) */
-  struct {
-    uint64_t zeroes: 33;
-    uint64_t offset: 31;
-  } suseg;
-  
-  /* mapped or unmapped virtual address */
-  struct {
-    uint64_t ones: 33;
-    uint64_t sp: 2;
-    uint64_t offset: 29;
-  } sxkseg;
-  
-  /*
-   * physical address accessed through xkphys unmapped virtual
-   * address.
-   */
-  struct {
-    uint64_t R: 2; /* CVMX_MIPS_SPACE_XKPHYS in this case */
-    uint64_t cca: 3; /* ignored by octeon */
-    uint64_t mbz: 10;
-    uint64_t pa: 49; /* physical address */
-  } sxkphys;
-  
-  /* physical address */
-  struct {
-    uint64_t mbz: 15;
-    /* if set, the address is uncached and resides on MCB bus */
-    uint64_t is_io: 1;
-    /*
-     * the hardware ignores this field when is_io==0, else
-     * device ID.
-     */
-    uint64_t did: 8;
-    /* the hardware ignores <39:36> in Octeon I */
-    uint64_t unaddr: 4;
-    uint64_t offset: 36;
-  } sphys;
-  
-  /* physical mem address */
-  struct {
-    /* techically, <47:40> are dont-cares */
-    uint64_t zeroes: 24;
-    /* the hardware ignores <39:36> in Octeon I */
-    uint64_t unaddr: 4;
-    uint64_t offset: 36;
-  } smem;
-  
-  /* physical IO address */
-  struct {
-    uint64_t mem_region: 2;
-    uint64_t mbz: 13;
-    /* 1 in this case */
-    uint64_t is_io: 1;
-    /*
-     * The hardware ignores this field when is_io==0, else
-     * device ID.
-     */
-    uint64_t did: 8;
-    /* the hardware ignores <39:36> in Octeon I */
-    uint64_t unaddr: 4;
-    uint64_t offset: 36;
-  } sio;
-  
-  /*
-   * Scratchpad virtual address - accessed through a window at
-   * the end of kseg3
-   */
-  struct {
-    uint64_t ones: 49;
-    /* CVMX_ADD_WIN_SCR (0) in this case */
-    cvmx_add_win_dec_t csrdec: 2;
-    uint64_t addr: 13;
-  } sscr;
-  
-  /* there should only be stores to IOBDMA space, no loads */
-  /*
-   * IOBDMA virtual address - accessed through a window at the
-   * end of kseg3
-   */
-  struct {
-    uint64_t ones: 49;
-    uint64_t csrdec: 2; /* CVMX_ADD_WIN_DMA (1) in this case */
-    uint64_t unused2: 3;
-    uint64_t type: 3;
-    uint64_t addr: 7;
-  } sdma;
-  
-  struct {
-    uint64_t didspace: 24;
-    uint64_t unused: 40;
-  } sfilldidspace;
-  
+	uint64_t u64;
+	/* mapped or unmapped virtual address */
+	struct {
+		uint64_t R:2;
+		uint64_t offset:62;
+	} sva;
+
+	/* mapped USEG virtual addresses (typically) */
+	struct {
+		uint64_t zeroes:33;
+		uint64_t offset:31;
+	} suseg;
+
+	/* mapped or unmapped virtual address */
+	struct {
+		uint64_t ones:33;
+		uint64_t sp:2;
+		uint64_t offset:29;
+	} sxkseg;
+
+	/*
+	 * physical address accessed through xkphys unmapped virtual
+	 * address.
+	 */
+	struct {
+		uint64_t R:2;	/* CVMX_MIPS_SPACE_XKPHYS in this case */
+		uint64_t cca:3;	/* ignored by octeon */
+		uint64_t mbz:10;
+		uint64_t pa:49;	/* physical address */
+	} sxkphys;
+
+	/* physical address */
+	struct {
+		uint64_t mbz:15;
+		/* if set, the address is uncached and resides on MCB bus */
+		uint64_t is_io:1;
+		/*
+		 * the hardware ignores this field when is_io==0, else
+		 * device ID.
+		 */
+		uint64_t did:8;
+		/* the hardware ignores <39:36> in Octeon I */
+		uint64_t unaddr:4;
+		uint64_t offset:36;
+	} sphys;
+
+	/* physical mem address */
+	struct {
+		/* techically, <47:40> are dont-cares */
+		uint64_t zeroes:24;
+		/* the hardware ignores <39:36> in Octeon I */
+		uint64_t unaddr:4;
+		uint64_t offset:36;
+	} smem;
+
+	/* physical IO address */
+	struct {
+		uint64_t mem_region:2;
+		uint64_t mbz:13;
+		/* 1 in this case */
+		uint64_t is_io:1;
+		/*
+		 * The hardware ignores this field when is_io==0, else
+		 * device ID.
+		 */
+		uint64_t did:8;
+		/* the hardware ignores <39:36> in Octeon I */
+		uint64_t unaddr:4;
+		uint64_t offset:36;
+	} sio;
+
+	/*
+	 * Scratchpad virtual address - accessed through a window at
+	 * the end of kseg3
+	 */
+	struct {
+		uint64_t ones:49;
+		/* CVMX_ADD_WIN_SCR (0) in this case */
+		cvmx_add_win_dec_t csrdec:2;
+		uint64_t addr:13;
+	} sscr;
+
+	/* there should only be stores to IOBDMA space, no loads */
+	/*
+	 * IOBDMA virtual address - accessed through a window at the
+	 * end of kseg3
+	 */
+	struct {
+		uint64_t ones:49;
+		uint64_t csrdec:2;	/* CVMX_ADD_WIN_DMA (1) in this case */
+		uint64_t unused2:3;
+		uint64_t type:3;
+		uint64_t addr:7;
+	} sdma;
+
+	struct {
+		uint64_t didspace:24;
+		uint64_t unused:40;
+	} sfilldidspace;
+
 } cvmx_addr_t;
 
 /* These macros for used by 32 bit applications */
 
 #define CVMX_MIPS32_SPACE_KSEG0 1l
 #define CVMX_ADD_SEG32(segment, add) \
-  (((int32_t)segment << 31) | (int32_t)(add))
+	(((int32_t)segment << 31) | (int32_t)(add))
 
 /*
  * Currently all IOs are performed using XKPHYS addressing. Linux uses
@@ -229,8 +229,8 @@ typedef union {
 #define CVMX_ADDR_DID(did) (CVMX_ADDR_DIDSPACE(did) << 40)
 #define CVMX_FULL_DID(did, subdid) (((did) << 3) | (subdid))
 
-/* from include/ncb_rsl_id.v */
-#define CVMX_OCT_DID_MIS 0ULL /* misc stuff */
+  /* from include/ncb_rsl_id.v */
+#define CVMX_OCT_DID_MIS 0ULL	/* misc stuff */
 #define CVMX_OCT_DID_GMX0 1ULL
 #define CVMX_OCT_DID_GMX1 2ULL
 #define CVMX_OCT_DID_PCI 3ULL
@@ -243,7 +243,7 @@ typedef union {
 #define CVMX_OCT_DID_PKT 10ULL
 #define CVMX_OCT_DID_TIM 11ULL
 #define CVMX_OCT_DID_TAG 12ULL
-/* the rest are not on the IO bus */
+  /* the rest are not on the IO bus */
 #define CVMX_OCT_DID_L2C 16ULL
 #define CVMX_OCT_DID_LMC 17ULL
 #define CVMX_OCT_DID_SPX0 18ULL

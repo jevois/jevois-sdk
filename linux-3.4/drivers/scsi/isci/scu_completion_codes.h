@@ -72,7 +72,7 @@
  * This macro constructs an SCU completion type
  */
 #define SCU_COMPLETION_TYPE(type) \
-  ((u32)(type) << SCU_COMPLETION_TYPE_SHIFT)
+	((u32)(type) << SCU_COMPLETION_TYPE_SHIFT)
 
 /**
  * SCU_COMPLETION_TYPE() -
@@ -107,7 +107,7 @@
  * This macro returns the SCU completion type.
  */
 #define SCU_GET_COMPLETION_TYPE(completion_code) \
-  ((completion_code) & SCU_COMPLETION_TYPE_MASK)
+	((completion_code) & SCU_COMPLETION_TYPE_MASK)
 
 /**
  * SCU_GET_COMPLETION_STATUS() -
@@ -115,7 +115,7 @@
  * This macro returns the SCU completion status.
  */
 #define SCU_GET_COMPLETION_STATUS(completion_code) \
-  ((completion_code) & SCU_COMPLETION_STATUS_MASK)
+	((completion_code) & SCU_COMPLETION_STATUS_MASK)
 
 /**
  * SCU_GET_COMPLETION_TL_STATUS() -
@@ -123,7 +123,7 @@
  * This macro returns the transport layer completion status.
  */
 #define SCU_GET_COMPLETION_TL_STATUS(completion_code) \
-  ((completion_code) & SCU_COMPLETION_TL_STATUS_MASK)
+	((completion_code) & SCU_COMPLETION_TL_STATUS_MASK)
 
 /**
  * SCU_MAKE_COMPLETION_STATUS() -
@@ -133,7 +133,7 @@
  * SCU_GET_COMPLETION_TL_STATUS.
  */
 #define SCU_MAKE_COMPLETION_STATUS(completion_code) \
-  ((u32)(completion_code) << SCU_COMPLETION_TL_STATUS_SHIFT)
+	((u32)(completion_code) << SCU_COMPLETION_TL_STATUS_SHIFT)
 
 /**
  * SCU_NORMALIZE_COMPLETION_STATUS() -
@@ -142,26 +142,26 @@
  * return code.
  */
 #define SCU_NORMALIZE_COMPLETION_STATUS(completion_code) \
-  (\
-   ((completion_code) & SCU_COMPLETION_TL_STATUS_MASK) \
-   >> SCU_COMPLETION_TL_STATUS_SHIFT \
-  )
+	(\
+		((completion_code) & SCU_COMPLETION_TL_STATUS_MASK) \
+		>> SCU_COMPLETION_TL_STATUS_SHIFT \
+	)
 
 /**
  * SCU_GET_COMPLETION_SDMA_STATUS() -
  *
  * This macro returns the SDMA completion status.
  */
-#define SCU_GET_COMPLETION_SDMA_STATUS(completion_code) \
-  ((completion_code) & SCU_COMPLETION_SDMA_STATUS_MASK)
+#define SCU_GET_COMPLETION_SDMA_STATUS(completion_code)	\
+	((completion_code) & SCU_COMPLETION_SDMA_STATUS_MASK)
 
 /**
  * SCU_GET_COMPLETION_PEG() -
  *
  * This macro returns the Protocol Engine Group from the completion code.
  */
-#define SCU_GET_COMPLETION_PEG(completion_code) \
-  ((completion_code) & SCU_COMPLETION_PEG_MASK)
+#define SCU_GET_COMPLETION_PEG(completion_code)	\
+	((completion_code) & SCU_COMPLETION_PEG_MASK)
 
 /**
  * SCU_GET_COMPLETION_PORT() -
@@ -169,7 +169,7 @@
  * This macro reuturns the logical port index from the completion code.
  */
 #define SCU_GET_COMPLETION_PORT(completion_code) \
-  ((completion_code) & SCU_COMPLETION_PORT_MASK)
+	((completion_code) & SCU_COMPLETION_PORT_MASK)
 
 /**
  * SCU_GET_PROTOCOL_ENGINE_INDEX() -
@@ -177,7 +177,7 @@
  * This macro returns the PE index from the completion code.
  */
 #define SCU_GET_PROTOCOL_ENGINE_INDEX(completion_code) \
-  (((completion_code) & SCU_COMPLETION_PE_MASK) >> SCU_COMPLETION_PE_SHIFT)
+	(((completion_code) & SCU_COMPLETION_PE_MASK) >> SCU_COMPLETION_PE_SHIFT)
 
 /**
  * SCU_GET_COMPLETION_INDEX() -
@@ -186,7 +186,7 @@
  * RNi depending on the completion type.
  */
 #define SCU_GET_COMPLETION_INDEX(completion_code) \
-  ((completion_code) & SCU_COMPLETION_INDEX_MASK)
+	((completion_code) & SCU_COMPLETION_INDEX_MASK)
 
 #define SCU_UNSOLICITED_FRAME_MASK     0x0FFF0000
 #define SCU_UNSOLICITED_FRAME_SHIFT    16
@@ -198,10 +198,10 @@
  * completion.
  */
 #define SCU_GET_FRAME_INDEX(completion_code) \
-  (\
-   ((completion_code) & SCU_UNSOLICITED_FRAME_MASK) \
-   >> SCU_UNSOLICITED_FRAME_SHIFT \
-  )
+	(\
+		((completion_code) & SCU_UNSOLICITED_FRAME_MASK) \
+		>> SCU_UNSOLICITED_FRAME_SHIFT \
+	)
 
 #define SCU_UNSOLICITED_FRAME_ERROR_MASK  0x00008000
 
@@ -212,7 +212,7 @@
  * returns non-zero (!0).
  */
 #define SCU_GET_FRAME_ERROR(completion_code) \
-  ((completion_code) & SCU_UNSOLICITED_FRAME_ERROR_MASK)
+	((completion_code) & SCU_UNSOLICITED_FRAME_ERROR_MASK)
 
 /**
  *

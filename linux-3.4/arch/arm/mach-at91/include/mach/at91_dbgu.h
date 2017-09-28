@@ -17,25 +17,25 @@
 #define AT91_DBGU_H
 
 #define dbgu_readl(dbgu, field) \
-  __raw_readl(AT91_VA_BASE_SYS + dbgu + AT91_DBGU_ ## field)
+	__raw_readl(AT91_VA_BASE_SYS + dbgu + AT91_DBGU_ ## field)
 
 #if !defined(CONFIG_ARCH_AT91X40)
-#define AT91_DBGU_CR    (0x00)  /* Control Register */
-#define AT91_DBGU_MR    (0x04)  /* Mode Register */
-#define AT91_DBGU_IER   (0x08)  /* Interrupt Enable Register */
-#define   AT91_DBGU_TXRDY   (1 << 1)    /* Transmitter Ready */
-#define   AT91_DBGU_TXEMPTY (1 << 9)    /* Transmitter Empty */
-#define AT91_DBGU_IDR   (0x0c)  /* Interrupt Disable Register */
-#define AT91_DBGU_IMR   (0x10)  /* Interrupt Mask Register */
-#define AT91_DBGU_SR    (0x14)  /* Status Register */
-#define AT91_DBGU_RHR   (0x18)  /* Receiver Holding Register */
-#define AT91_DBGU_THR   (0x1c)  /* Transmitter Holding Register */
-#define AT91_DBGU_BRGR    (0x20)  /* Baud Rate Generator Register */
+#define AT91_DBGU_CR		(0x00)	/* Control Register */
+#define AT91_DBGU_MR		(0x04)	/* Mode Register */
+#define AT91_DBGU_IER		(0x08)	/* Interrupt Enable Register */
+#define		AT91_DBGU_TXRDY		(1 << 1)		/* Transmitter Ready */
+#define		AT91_DBGU_TXEMPTY	(1 << 9)		/* Transmitter Empty */
+#define AT91_DBGU_IDR		(0x0c)	/* Interrupt Disable Register */
+#define AT91_DBGU_IMR		(0x10)	/* Interrupt Mask Register */
+#define AT91_DBGU_SR		(0x14)	/* Status Register */
+#define AT91_DBGU_RHR		(0x18)	/* Receiver Holding Register */
+#define AT91_DBGU_THR		(0x1c)	/* Transmitter Holding Register */
+#define AT91_DBGU_BRGR		(0x20)	/* Baud Rate Generator Register */
 
-#define AT91_DBGU_CIDR    (0x40)  /* Chip ID Register */
-#define AT91_DBGU_EXID    (0x44)  /* Chip ID Extension Register */
-#define AT91_DBGU_FNR   (0x48)  /* Force NTRST Register [SAM9 only] */
-#define   AT91_DBGU_FNTRST  (1 << 0)    /* Force NTRST */
+#define AT91_DBGU_CIDR		(0x40)	/* Chip ID Register */
+#define AT91_DBGU_EXID		(0x44)	/* Chip ID Extension Register */
+#define AT91_DBGU_FNR		(0x48)	/* Force NTRST Register [SAM9 only] */
+#define		AT91_DBGU_FNTRST	(1 << 0)		/* Force NTRST */
 
 #endif /* AT91_DBGU */
 
@@ -43,27 +43,27 @@
  * Some AT91 parts that don't have full DEBUG units still support the ID
  * and extensions register.
  */
-#define   AT91_CIDR_VERSION (0x1f << 0)   /* Version of the Device */
-#define   AT91_CIDR_EPROC   (7    << 5)   /* Embedded Processor */
-#define   AT91_CIDR_NVPSIZ  (0xf  << 8)   /* Nonvolatile Program Memory Size */
-#define   AT91_CIDR_NVPSIZ2 (0xf  << 12)    /* Second Nonvolatile Program Memory Size */
-#define   AT91_CIDR_SRAMSIZ (0xf  << 16)    /* Internal SRAM Size */
-#define     AT91_CIDR_SRAMSIZ_1K  (1 << 16)
-#define     AT91_CIDR_SRAMSIZ_2K  (2 << 16)
-#define     AT91_CIDR_SRAMSIZ_112K  (4 << 16)
-#define     AT91_CIDR_SRAMSIZ_4K  (5 << 16)
-#define     AT91_CIDR_SRAMSIZ_80K (6 << 16)
-#define     AT91_CIDR_SRAMSIZ_160K  (7 << 16)
-#define     AT91_CIDR_SRAMSIZ_8K  (8 << 16)
-#define     AT91_CIDR_SRAMSIZ_16K (9 << 16)
-#define     AT91_CIDR_SRAMSIZ_32K (10 << 16)
-#define     AT91_CIDR_SRAMSIZ_64K (11 << 16)
-#define     AT91_CIDR_SRAMSIZ_128K  (12 << 16)
-#define     AT91_CIDR_SRAMSIZ_256K  (13 << 16)
-#define     AT91_CIDR_SRAMSIZ_96K (14 << 16)
-#define     AT91_CIDR_SRAMSIZ_512K  (15 << 16)
-#define   AT91_CIDR_ARCH    (0xff << 20)    /* Architecture Identifier */
-#define   AT91_CIDR_NVPTYP  (7    << 28)    /* Nonvolatile Program Memory Type */
-#define   AT91_CIDR_EXT   (1    << 31)    /* Extension Flag */
+#define		AT91_CIDR_VERSION	(0x1f << 0)		/* Version of the Device */
+#define		AT91_CIDR_EPROC		(7    << 5)		/* Embedded Processor */
+#define		AT91_CIDR_NVPSIZ	(0xf  << 8)		/* Nonvolatile Program Memory Size */
+#define		AT91_CIDR_NVPSIZ2	(0xf  << 12)		/* Second Nonvolatile Program Memory Size */
+#define		AT91_CIDR_SRAMSIZ	(0xf  << 16)		/* Internal SRAM Size */
+#define			AT91_CIDR_SRAMSIZ_1K	(1 << 16)
+#define			AT91_CIDR_SRAMSIZ_2K	(2 << 16)
+#define			AT91_CIDR_SRAMSIZ_112K	(4 << 16)
+#define			AT91_CIDR_SRAMSIZ_4K	(5 << 16)
+#define			AT91_CIDR_SRAMSIZ_80K	(6 << 16)
+#define			AT91_CIDR_SRAMSIZ_160K	(7 << 16)
+#define			AT91_CIDR_SRAMSIZ_8K	(8 << 16)
+#define			AT91_CIDR_SRAMSIZ_16K	(9 << 16)
+#define			AT91_CIDR_SRAMSIZ_32K	(10 << 16)
+#define			AT91_CIDR_SRAMSIZ_64K	(11 << 16)
+#define			AT91_CIDR_SRAMSIZ_128K	(12 << 16)
+#define			AT91_CIDR_SRAMSIZ_256K	(13 << 16)
+#define			AT91_CIDR_SRAMSIZ_96K	(14 << 16)
+#define			AT91_CIDR_SRAMSIZ_512K	(15 << 16)
+#define		AT91_CIDR_ARCH		(0xff << 20)		/* Architecture Identifier */
+#define		AT91_CIDR_NVPTYP	(7    << 28)		/* Nonvolatile Program Memory Type */
+#define		AT91_CIDR_EXT		(1    << 31)		/* Extension Flag */
 
 #endif

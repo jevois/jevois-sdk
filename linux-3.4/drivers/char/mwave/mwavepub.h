@@ -44,7 +44,7 @@
 *
 *
 * 10/23/2000 - Alpha Release
-* First release to the public
+*	First release to the public
 */
 
 #ifndef _LINUX_MWAVEPUB_H
@@ -54,22 +54,22 @@
 
 
 typedef struct _MW_ABILITIES {
-  unsigned long instr_per_sec;
-  unsigned long data_size;
-  unsigned long inst_size;
-  unsigned long bus_dma_bw;
-  unsigned short uart_enable;
-  short component_count;
-  unsigned long component_list[7];
-  char mwave_os_name[16];
-  char bios_task_name[16];
+	unsigned long instr_per_sec;
+	unsigned long data_size;
+	unsigned long inst_size;
+	unsigned long bus_dma_bw;
+	unsigned short uart_enable;
+	short component_count;
+	unsigned long component_list[7];
+	char mwave_os_name[16];
+	char bios_task_name[16];
 } MW_ABILITIES, *pMW_ABILITIES;
 
 
 typedef struct _MW_READWRITE {
-  unsigned short usDspAddress;  /* The dsp address */
-  unsigned long ulDataLength; /* The size in bytes of the data or user buffer */
-  void __user * pBuf;   /* Input:variable sized buffer */
+	unsigned short usDspAddress;	/* The dsp address */
+	unsigned long ulDataLength;	/* The size in bytes of the data or user buffer */
+	void __user *pBuf;		/* Input:variable sized buffer */
 } MW_READWRITE, *pMW_READWRITE;
 
 #define IOCTL_MW_RESET           _IO(MWAVE_MINOR,1)

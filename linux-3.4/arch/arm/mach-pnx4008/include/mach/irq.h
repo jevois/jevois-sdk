@@ -37,6 +37,6 @@
 #define START_INT_SR_REG(irq)     IO_ADDRESS((PNX4008_PWRMAN_BASE + 0x28 + (((irq)&(0x1<<5))>>1)))
 #define START_INT_APR_REG(irq)    IO_ADDRESS((PNX4008_PWRMAN_BASE + 0x2C + (((irq)&(0x1<<5))>>1)))
 
-extern void __init pnx4008_init_irq (void);
+extern void __init pnx4008_init_irq(void);
 
 #endif /* __PNX4008_IRQ_H__ */

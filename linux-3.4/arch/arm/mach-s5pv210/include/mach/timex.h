@@ -1,10 +1,10 @@
 /* linux/arch/arm/mach-s5pv210/include/mach/timex.h
  *
  * Copyright (c) 2003-2010 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * Copyright (c) 2010 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com/
+ *		http://www.samsung.com/
  *
  * Based on arch/arm/mach-s5p6442/include/mach/timex.h
  *

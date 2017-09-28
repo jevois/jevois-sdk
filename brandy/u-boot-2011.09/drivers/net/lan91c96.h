@@ -31,12 +31,12 @@
  * information under www.smsc.com.
  *
  * Authors
- *  Erik Stahlman       ( erik@vt.edu )
- *  Daris A Nevil       ( dnevil@snmc.com )
+ *	Erik Stahlman				( erik@vt.edu )
+ *	Daris A Nevil				( dnevil@snmc.com )
  *
  * History
- * 04/30/03 Mathijs Haarman   Modified smc91111.h (u-boot version)
- *                            for lan91c96
+ * 04/30/03	Mathijs Haarman		Modified smc91111.h (u-boot version)
+ *		                        for lan91c96
  *-------------------------------------------------------------------------
  */
 #ifndef _LAN91C96_H_
@@ -48,9 +48,9 @@
 
 /* I want some simple types */
 
-typedef unsigned char     byte;
-typedef unsigned short      word;
-typedef unsigned long int   dword;
+typedef unsigned char			byte;
+typedef unsigned short			word;
+typedef unsigned long int		dword;
 
 /*
  * DEBUGGING LEVELS
@@ -66,85 +66,85 @@ typedef unsigned long int   dword;
 
 /* Because of bank switching, the LAN91xxx uses only 16 I/O ports */
 
-#define SMC_IO_EXTENT 16
+#define	SMC_IO_EXTENT	16
 
 #ifdef CONFIG_PXA250
 
-#ifdef  CONFIG_LUBBOCK
-#define SMC_IO_SHIFT  2
-#undef  USE_32_BIT
+#ifdef	CONFIG_LUBBOCK
+#define	SMC_IO_SHIFT	2
+#undef	USE_32_BIT
 
 #else
-#define SMC_IO_SHIFT  0
+#define	SMC_IO_SHIFT	0
 #endif
 
-#define SMCREG(edev, r) ((edev)->iobase+((r)<<SMC_IO_SHIFT))
+#define	SMCREG(edev, r)	((edev)->iobase+((r)<<SMC_IO_SHIFT))
 
-#define SMC_inl(edev, r)  (*((volatile dword *)SMCREG(edev, r)))
-#define SMC_inw(edev, r)  (*((volatile word *)SMCREG(edev, r)))
+#define	SMC_inl(edev, r)	(*((volatile dword *)SMCREG(edev, r)))
+#define	SMC_inw(edev, r)	(*((volatile word *)SMCREG(edev, r)))
 #define SMC_inb(edev, p) ({ \
-    unsigned int __p = p; \
-    unsigned int __v = SMC_inw(edev, __p & ~1); \
-    if (__p & 1) __v >>= 8; \
-    else __v &= 0xff; \
-    __v; })
+	unsigned int __p = p; \
+	unsigned int __v = SMC_inw(edev, __p & ~1); \
+	if (__p & 1) __v >>= 8; \
+	else __v &= 0xff; \
+	__v; })
 
-#define SMC_outl(edev, d, r)  (*((volatile dword *)SMCREG(edev, r)) = d)
-#define SMC_outw(edev, d, r)  (*((volatile word *)SMCREG(edev, r)) = d)
-#define SMC_outb(edev, d, r)  ({  word __d = (byte)(d);  \
-    word __w = SMC_inw(edev, (r)&~1);  \
-    __w &= ((r)&1) ? 0x00FF : 0xFF00;  \
-    __w |= ((r)&1) ? __d<<8 : __d;  \
-    SMC_outw(edev, __w, (r)&~1);  \
-  })
+#define	SMC_outl(edev, d, r)	(*((volatile dword *)SMCREG(edev, r)) = d)
+#define	SMC_outw(edev, d, r)	(*((volatile word *)SMCREG(edev, r)) = d)
+#define	SMC_outb(edev, d, r)	({	word __d = (byte)(d);  \
+				word __w = SMC_inw(edev, (r)&~1);  \
+				__w &= ((r)&1) ? 0x00FF : 0xFF00;  \
+				__w |= ((r)&1) ? __d<<8 : __d;  \
+				SMC_outw(edev, __w, (r)&~1);  \
+			})
 
-#define SMC_outsl(edev, r, b, l)  ({  int __i; \
-    dword *__b2; \
-    __b2 = (dword *) b; \
-    for (__i = 0; __i < l; __i++) { \
-      SMC_outl(edev, *(__b2 + __i),\
-               r); \
-    } \
-  })
+#define SMC_outsl(edev, r, b, l)	({	int __i; \
+					dword *__b2; \
+					__b2 = (dword *) b; \
+					for (__i = 0; __i < l; __i++) { \
+						SMC_outl(edev, *(__b2 + __i),\
+							r); \
+					} \
+				})
 
-#define SMC_outsw(edev, r, b, l)  ({  int __i; \
-    word *__b2; \
-    __b2 = (word *) b; \
-    for (__i = 0; __i < l; __i++) { \
-      SMC_outw(edev, *(__b2 + __i),\
-               r); \
-    } \
-  })
+#define SMC_outsw(edev, r, b, l)	({	int __i; \
+					word *__b2; \
+					__b2 = (word *) b; \
+					for (__i = 0; __i < l; __i++) { \
+						SMC_outw(edev, *(__b2 + __i),\
+							r); \
+					} \
+				})
 
-#define SMC_insl(edev, r, b, l)   ({  int __i ;  \
-    dword *__b2;  \
-    __b2 = (dword *) b;  \
-    for (__i = 0; __i < l; __i++) {  \
-      *(__b2 + __i) = SMC_inl(edev,\
-                              r);  \
-      SMC_inl(edev, 0);  \
-    };  \
-  })
+#define SMC_insl(edev, r, b, l)		({	int __i ;  \
+					dword *__b2;  \
+					__b2 = (dword *) b;  \
+					for (__i = 0; __i < l; __i++) {  \
+						*(__b2 + __i) = SMC_inl(edev,\
+							r);  \
+						SMC_inl(edev, 0);  \
+					};  \
+				})
 
-#define SMC_insw(edev, r, b, l)   ({  int __i ;  \
-    word *__b2;  \
-    __b2 = (word *) b;  \
-    for (__i = 0; __i < l; __i++) {  \
-      *(__b2 + __i) = SMC_inw(edev,\
-                              r);  \
-      SMC_inw(edev, 0);  \
-    };  \
-  })
+#define SMC_insw(edev, r, b, l)		({	int __i ;  \
+					word *__b2;  \
+					__b2 = (word *) b;  \
+					for (__i = 0; __i < l; __i++) {  \
+						*(__b2 + __i) = SMC_inw(edev,\
+							r);  \
+						SMC_inw(edev, 0);  \
+					};  \
+				})
 
-#define SMC_insb(edev, r, b, l)   ({  int __i ;  \
-    byte *__b2;  \
-    __b2 = (byte *) b;  \
-    for (__i = 0; __i < l; __i++) {  \
-      *(__b2 + __i) = SMC_inb(edev,\
-                              r);  \
-      SMC_inb(edev, 0);  \
-    };  \
-  })
+#define SMC_insb(edev, r, b, l)		({	int __i ;  \
+					byte *__b2;  \
+					__b2 = (byte *) b;  \
+					for (__i = 0; __i < l; __i++) {  \
+						*(__b2 + __i) = SMC_inb(edev,\
+							r);  \
+						SMC_inb(edev, 0);  \
+					};  \
+				})
 
 #else /* if not CONFIG_PXA250 */
 
@@ -152,41 +152,41 @@ typedef unsigned long int   dword;
  * We have only 16 Bit PCMCIA access on Socket 0
  */
 
-#define SMC_inw(edev, r)  (*((volatile word *)((edev)->iobase+(r))))
-#define  SMC_inb(edev, r) (((r)&1) ? SMC_inw(edev, (r)&~1)>>8 :\
-                           SMC_inw(edev, r)&0xFF)
+#define	SMC_inw(edev, r)	(*((volatile word *)((edev)->iobase+(r))))
+#define  SMC_inb(edev, r)	(((r)&1) ? SMC_inw(edev, (r)&~1)>>8 :\
+					SMC_inw(edev, r)&0xFF)
 
-#define SMC_outw(edev, d, r)  (*((volatile word *)((edev)->iobase+(r))) = d)
-#define SMC_outb(edev, d, r)  ({  word __d = (byte)(d);  \
-    word __w = SMC_inw(edev, (r)&~1);  \
-    __w &= ((r)&1) ? 0x00FF : 0xFF00;  \
-    __w |= ((r)&1) ? __d<<8 : __d;  \
-    SMC_outw(edev, __w, (r)&~1);  \
-  })
-#define SMC_outsw(edev, r, b, l)  ({  int __i; \
-    word *__b2; \
-    __b2 = (word *) b; \
-    for (__i = 0; __i < l; __i++) { \
-      SMC_outw(edev, *(__b2 + __i),\
-               r); \
-    } \
-  })
+#define	SMC_outw(edev, d, r)	(*((volatile word *)((edev)->iobase+(r))) = d)
+#define	SMC_outb(edev, d, r)	({	word __d = (byte)(d);  \
+				word __w = SMC_inw(edev, (r)&~1);  \
+				__w &= ((r)&1) ? 0x00FF : 0xFF00;  \
+				__w |= ((r)&1) ? __d<<8 : __d;  \
+				SMC_outw(edev, __w, (r)&~1);  \
+			})
+#define SMC_outsw(edev, r, b, l)	({	int __i; \
+					word *__b2; \
+					__b2 = (word *) b; \
+					for (__i = 0; __i < l; __i++) { \
+						SMC_outw(edev, *(__b2 + __i),\
+							r); \
+					} \
+				})
 
-#define SMC_insw(edev, r, b, l) ({  int __i ;  \
-    word *__b2;  \
-    __b2 = (word *) b;  \
-    for (__i = 0; __i < l; __i++) {  \
-      *(__b2 + __i) = SMC_inw(edev,\
-                              r);  \
-      SMC_inw(edev, 0);  \
-    };  \
-  })
+#define SMC_insw(edev, r, b, l)	({	int __i ;  \
+					word *__b2;  \
+					__b2 = (word *) b;  \
+					for (__i = 0; __i < l; __i++) {  \
+						*(__b2 + __i) = SMC_inw(edev,\
+							r);  \
+						SMC_inw(edev, 0);  \
+					};  \
+				})
 
 #endif
 
 /*
  ****************************************************************************
- *  Bank Select Field
+ *	Bank Select Field
  ****************************************************************************
  */
 #define LAN91C96_BANK_SELECT  14       /* Bank Select Register */
@@ -199,7 +199,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  EEPROM Addresses.
+ *	EEPROM Addresses.
  ****************************************************************************
  */
 #define EEPROM_MAC_OFFSET_1    0x6020
@@ -208,7 +208,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Bank 0 Register Map in I/O Space
+ *	Bank 0 Register Map in I/O Space
  ****************************************************************************
  */
 #define LAN91C96_TCR          0        /* Transmit Control Register */
@@ -220,7 +220,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Transmit Control Register - Bank 0 - Offset 0
+ *	Transmit Control Register - Bank 0 - Offset 0
  ****************************************************************************
  */
 #define LAN91C96_TCR_TXENA        (0x1U << 0)
@@ -238,7 +238,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  EPH Status Register - Bank 0 - Offset 2
+ *	EPH Status Register - Bank 0 - Offset 2
  ****************************************************************************
  */
 #define LAN91C96_EPHSR_TX_SUC     (0x1U << 0)
@@ -259,19 +259,19 @@ typedef unsigned long int   dword;
 #define LAN91C96_EPHSR_TX_UNRN    (0x1U << 15)
 
 #define LAN91C96_EPHSR_ERRORS     (LAN91C96_EPHSR_SNGL_COL  |    \
-                                   LAN91C96_EPHSR_MUL_COL   |    \
-                                   LAN91C96_EPHSR_16COL     |    \
-                                   LAN91C96_EPHSR_SQET      |    \
-                                   LAN91C96_EPHSR_TX_DEFR   |    \
-                                   LAN91C96_EPHSR_LATCOL    |    \
-                                   LAN91C96_EPHSR_LOST_CARR |    \
-                                   LAN91C96_EPHSR_EXC_DEF   |    \
-                                   LAN91C96_EPHSR_LINK_OK   |    \
-                                   LAN91C96_EPHSR_TX_UNRN)
+				   LAN91C96_EPHSR_MUL_COL   |    \
+				   LAN91C96_EPHSR_16COL     |    \
+				   LAN91C96_EPHSR_SQET      |    \
+				   LAN91C96_EPHSR_TX_DEFR   |    \
+				   LAN91C96_EPHSR_LATCOL    |    \
+				   LAN91C96_EPHSR_LOST_CARR |    \
+				   LAN91C96_EPHSR_EXC_DEF   |    \
+				   LAN91C96_EPHSR_LINK_OK   |    \
+				   LAN91C96_EPHSR_TX_UNRN)
 
 /*
  ****************************************************************************
- *  Receive Control Register - Bank 0 - Offset 4
+ *	Receive Control Register - Bank 0 - Offset 4
  ****************************************************************************
  */
 #define LAN91C96_RCR_RX_ABORT     (0x1U << 0)
@@ -284,7 +284,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Counter Register - Bank 0 - Offset 6
+ *	Counter Register - Bank 0 - Offset 6
  ****************************************************************************
  */
 #define LAN91C96_ECR_SNGL_COL     (0xFU << 0)
@@ -294,14 +294,14 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Memory Information Register - Bank 0 - OFfset 8
+ *	Memory Information Register - Bank 0 - OFfset 8
  ****************************************************************************
  */
 #define LAN91C96_MIR_SIZE        (0x18 << 0)    /* 6144 bytes */
 
 /*
  ****************************************************************************
- *  Memory Configuration Register - Bank 0 - Offset 10
+ *	Memory Configuration Register - Bank 0 - Offset 10
  ****************************************************************************
  */
 #define LAN91C96_MCR_MEM_RES      (0xFFU << 0)
@@ -312,7 +312,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Bank 1 Register Map in I/O Space
+ *	Bank 1 Register Map in I/O Space
  ****************************************************************************
  */
 #define LAN91C96_CONFIG       0        /* Configuration Register */
@@ -328,7 +328,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Configuration Register - Bank 1 - Offset 0
+ *	Configuration Register - Bank 1 - Offset 0
  ****************************************************************************
  */
 #define LAN91C96_CR_INT_SEL0      (0x1U << 1)
@@ -343,7 +343,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Base Address Register - Bank 1 - Offset 2
+ *	Base Address Register - Bank 1 - Offset 2
  ****************************************************************************
  */
 #define LAN91C96_BAR_RA_BITS      (0x27U << 0)
@@ -352,7 +352,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Control Register - Bank 1 - Offset 12
+ *	Control Register - Bank 1 - Offset 12
  ****************************************************************************
  */
 #define LAN91C96_CTR_STORE        (0x1U << 0)
@@ -369,7 +369,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Bank 2 Register Map in I/O Space
+ *	Bank 2 Register Map in I/O Space
  ****************************************************************************
  */
 #define LAN91C96_MMU            0      /* MMU Command Register */
@@ -386,7 +386,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  MMU Command Register - Bank 2 - Offset 0
+ *	MMU Command Register - Bank 2 - Offset 0
  ****************************************************************************
  */
 #define LAN91C96_MMUCR_NO_BUSY    (0x1U << 0)
@@ -404,21 +404,21 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Auto Tx Start Register - Bank 2 - Offset 1
+ *	Auto Tx Start Register - Bank 2 - Offset 1
  ****************************************************************************
  */
 #define LAN91C96_AUTOTX           (0xFFU << 0)
 
 /*
  ****************************************************************************
- *  Packet Number Register - Bank 2 - Offset 2
+ *	Packet Number Register - Bank 2 - Offset 2
  ****************************************************************************
  */
 #define LAN91C96_PNR_TX           (0x1FU << 0)
 
 /*
  ****************************************************************************
- *  Allocation Result Register - Bank 2 - Offset 3
+ *	Allocation Result Register - Bank 2 - Offset 3
  ****************************************************************************
  */
 #define LAN91C96_ARR_ALLOC_PN     (0x7FU << 0)
@@ -426,7 +426,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  FIFO Ports Register - Bank 2 - Offset 4
+ *	FIFO Ports Register - Bank 2 - Offset 4
  ****************************************************************************
  */
 #define LAN91C96_FIFO_TX_DONE_PN  (0x1FU << 0)
@@ -436,7 +436,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Pointer Register - Bank 2 - Offset 6
+ *	Pointer Register - Bank 2 - Offset 6
  ****************************************************************************
  */
 #define LAN91C96_PTR_LOW          (0xFFU << 0)
@@ -448,12 +448,12 @@ typedef unsigned long int   dword;
 #define LAN91C96_PTR_RCV          (0x1U << 15)
 
 #define LAN91C96_PTR_RX_FRAME     (LAN91C96_PTR_RCV       |    \
-                                   LAN91C96_PTR_AUTO_INCR |    \
-                                   LAN91C96_PTR_READ)
+				   LAN91C96_PTR_AUTO_INCR |    \
+				   LAN91C96_PTR_READ)
 
 /*
  ****************************************************************************
- *  Data Register - Bank 2 - Offset 8
+ *	Data Register - Bank 2 - Offset 8
  ****************************************************************************
  */
 #define LAN91C96_CONTROL_CRC      (0x1U << 4)    /* CRC bit */
@@ -461,7 +461,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Interrupt Status Register - Bank 2 - Offset 12
+ *	Interrupt Status Register - Bank 2 - Offset 12
  ****************************************************************************
  */
 #define LAN91C96_IST_RCV_INT      (0x1U << 0)
@@ -475,7 +475,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Interrupt Acknowledge Register - Bank 2 - Offset 12
+ *	Interrupt Acknowledge Register - Bank 2 - Offset 12
  ****************************************************************************
  */
 #define LAN91C96_ACK_TX_INT       (0x1U << 1)
@@ -485,7 +485,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Interrupt Mask Register - Bank 2 - Offset 13
+ *	Interrupt Mask Register - Bank 2 - Offset 13
  ****************************************************************************
  */
 #define LAN91C96_MSK_RCV_INT      (0x1U << 0)
@@ -499,7 +499,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Bank 3 Register Map in I/O Space
+ *	Bank 3 Register Map in I/O Space
  **************************************************************************
  */
 #define LAN91C96_MGMT_MDO         (0x1U << 0)
@@ -515,7 +515,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Revision Register - Bank 3 - Offset 10
+ *	Revision Register - Bank 3 - Offset 10
  ****************************************************************************
  */
 #define LAN91C96_REV_REVID        (0xFU << 0)
@@ -523,7 +523,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Early RCV Register - Bank 3 - Offset 12
+ *	Early RCV Register - Bank 3 - Offset 12
  ****************************************************************************
  */
 #define LAN91C96_ERCV_THRESHOLD   (0x1FU << 0)
@@ -531,7 +531,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  PCMCIA Configuration Registers
+ *	PCMCIA Configuration Registers
  ****************************************************************************
  */
 #define LAN91C96_ECOR    0x8000        /* Ethernet Configuration Register */
@@ -539,7 +539,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  PCMCIA Ethernet Configuration Option Register (ECOR)
+ *	PCMCIA Ethernet Configuration Option Register (ECOR)
  ****************************************************************************
  */
 #define LAN91C96_ECOR_ENABLE       (0x1U << 0)
@@ -549,7 +549,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  PCMCIA Ethernet Configuration and Status Register (ECSR)
+ *	PCMCIA Ethernet Configuration and Status Register (ECSR)
  ****************************************************************************
  */
 #define LAN91C96_ECSR_INTR        (0x1U << 1)
@@ -558,7 +558,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Receive Frame Status Word - See page 38 of the LAN91C96 specification.
+ *	Receive Frame Status Word - See page 38 of the LAN91C96 specification.
  ****************************************************************************
  */
 #define LAN91C96_TOO_SHORT        (0x1U << 10)
@@ -572,7 +572,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Default MAC Address
+ *	Default MAC Address
  ****************************************************************************
  */
 #define MAC_DEF_HI  0x0800
@@ -581,7 +581,7 @@ typedef unsigned long int   dword;
 
 /*
  ****************************************************************************
- *  Default I/O Signature - 0x33
+ *	Default I/O Signature - 0x33
  ****************************************************************************
  */
 #define LAN91C96_LOW_SIGNATURE        (0x33U << 0)
@@ -604,22 +604,22 @@ typedef unsigned long int   dword;
 
 /* this enables an interrupt in the interrupt mask register */
 #define SMC_ENABLE_INT(edev, x) {\
-    unsigned char mask;\
-    SMC_SELECT_BANK(edev, 2);\
-    mask = SMC_inb(edev, LAN91C96_INT_MASK);\
-    mask |= (x);\
-    SMC_outb(edev, mask, LAN91C96_INT_MASK); \
-  }
+		unsigned char mask;\
+		SMC_SELECT_BANK(edev, 2);\
+		mask = SMC_inb(edev, LAN91C96_INT_MASK);\
+		mask |= (x);\
+		SMC_outb(edev, mask, LAN91C96_INT_MASK); \
+}
 
 /* this disables an interrupt from the interrupt mask register */
 
 #define SMC_DISABLE_INT(edev, x) {\
-    unsigned char mask;\
-    SMC_SELECT_BANK(edev, 2);\
-    mask = SMC_inb(edev, LAN91C96_INT_MASK);\
-    mask &= ~(x);\
-    SMC_outb(edev, mask, LAN91C96_INT_MASK); \
-  }
+		unsigned char mask;\
+		SMC_SELECT_BANK(edev, 2);\
+		mask = SMC_inb(edev, LAN91C96_INT_MASK);\
+		mask &= ~(x);\
+		SMC_outb(edev, mask, LAN91C96_INT_MASK); \
+}
 
 /*----------------------------------------------------------------------
  * Define the interrupts that I want to receive from the card

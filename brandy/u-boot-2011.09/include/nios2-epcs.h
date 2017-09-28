@@ -29,14 +29,14 @@
 #define __NIOS2_EPCS_H__
 
 typedef struct epcs_devinfo_t {
-  const char * name;    /* Device name */
-  unsigned char id;   /* Device silicon id */
-  unsigned char size;   /* Total size log2(bytes)*/
-  unsigned char num_sects;  /* Number of sectors */
-  unsigned char sz_sect;  /* Sector size log2(bytes) */
-  unsigned char sz_page;  /* Page size log2(bytes) */
-  unsigned char   prot_mask;  /* Protection mask */
-} epcs_devinfo_t;
+	const char	*name;		/* Device name */
+	unsigned char	id;		/* Device silicon id */
+	unsigned char	size;		/* Total size log2(bytes)*/
+	unsigned char	num_sects;	/* Number of sectors */
+	unsigned char	sz_sect;	/* Sector size log2(bytes) */
+	unsigned char	sz_page;	/* Page size log2(bytes) */
+	unsigned char   prot_mask;	/* Protection mask */
+}epcs_devinfo_t;
 
 /* Resets the epcs controller -- to prevent (potential) soft-reset
  * problems when booting from the epcs controller
@@ -46,7 +46,7 @@ extern int epcs_reset (void);
 /* Returns the devinfo struct if EPCS device is found;
  * NULL otherwise.
  */
-extern epcs_devinfo_t * epcs_dev_find (void);
+extern epcs_devinfo_t *epcs_dev_find (void);
 
 /* Returns the number of bytes used by config data.
  * Negative on error.
@@ -71,6 +71,6 @@ extern int epcs_write (ulong addr, ulong off, ulong cnt);
  * at 'addr'. On failure, write first invalid offset to *err.
  * Zero return on success
  */
-extern int epcs_verify (ulong addr, ulong off, ulong cnt, ulong * err);
+extern int epcs_verify (ulong addr, ulong off, ulong cnt, ulong *err);
 
 #endif /* __NIOS2_EPCS_H__ */

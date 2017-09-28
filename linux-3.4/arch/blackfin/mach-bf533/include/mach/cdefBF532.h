@@ -99,28 +99,28 @@
 #if ANOMALY_05000311
 /* Keep at the CPP expansion to avoid circular header dependency loops */
 #define BFIN_WRITE_FIO_FLAG(name, val) \
-  do { \
-    unsigned long __flags; \
-    __flags = hard_local_irq_save(); \
-    bfin_write16(FIO_FLAG_##name, val); \
-    bfin_read_CHIPID(); \
-    hard_local_irq_restore(__flags); \
-  } while (0)
+	do { \
+		unsigned long __flags; \
+		__flags = hard_local_irq_save(); \
+		bfin_write16(FIO_FLAG_##name, val); \
+		bfin_read_CHIPID(); \
+		hard_local_irq_restore(__flags); \
+	} while (0)
 #define bfin_write_FIO_FLAG_D(val)           BFIN_WRITE_FIO_FLAG(D, val)
 #define bfin_write_FIO_FLAG_C(val)           BFIN_WRITE_FIO_FLAG(C, val)
 #define bfin_write_FIO_FLAG_S(val)           BFIN_WRITE_FIO_FLAG(S, val)
 #define bfin_write_FIO_FLAG_T(val)           BFIN_WRITE_FIO_FLAG(T, val)
 
 #define BFIN_READ_FIO_FLAG(name) \
-  ({ \
-    unsigned long __flags; \
-    u16 __ret; \
-    __flags = hard_local_irq_save(); \
-    __ret = bfin_read16(FIO_FLAG_##name); \
-    bfin_read_CHIPID(); \
-    hard_local_irq_restore(__flags); \
-    __ret; \
-  })
+	({ \
+		unsigned long __flags; \
+		u16 __ret; \
+		__flags = hard_local_irq_save(); \
+		__ret = bfin_read16(FIO_FLAG_##name); \
+		bfin_read_CHIPID(); \
+		hard_local_irq_restore(__flags); \
+		__ret; \
+	})
 #define bfin_read_FIO_FLAG_D()               BFIN_READ_FIO_FLAG(D)
 #define bfin_read_FIO_FLAG_C()               BFIN_READ_FIO_FLAG(C)
 #define bfin_read_FIO_FLAG_S()               BFIN_READ_FIO_FLAG(S)
@@ -679,4 +679,4 @@
 #define bfin_read_PPI_FRAME()                bfin_read16(PPI_FRAME)
 #define bfin_write_PPI_FRAME(val)            bfin_write16(PPI_FRAME,val)
 
-#endif        /* _CDEF_BF532_H */
+#endif				/* _CDEF_BF532_H */

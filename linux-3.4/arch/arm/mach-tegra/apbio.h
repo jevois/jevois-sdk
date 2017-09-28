@@ -18,21 +18,21 @@
 
 #ifdef CONFIG_TEGRA_SYSTEM_DMA
 
-u32 tegra_apb_readl (unsigned long offset);
-void tegra_apb_writel (u32 value, unsigned long offset);
+u32 tegra_apb_readl(unsigned long offset);
+void tegra_apb_writel(u32 value, unsigned long offset);
 
 #else
 #include <asm/io.h>
 #include <mach/io.h>
 
-static inline u32 tegra_apb_readl (unsigned long offset)
+static inline u32 tegra_apb_readl(unsigned long offset)
 {
-  return readl (IO_TO_VIRT (offset) );
+        return readl(IO_TO_VIRT(offset));
 }
 
-static inline void tegra_apb_writel (u32 value, unsigned long offset)
+static inline void tegra_apb_writel(u32 value, unsigned long offset)
 {
-  writel (value, IO_TO_VIRT (offset) );
+        writel(value, IO_TO_VIRT(offset));
 }
 #endif
 

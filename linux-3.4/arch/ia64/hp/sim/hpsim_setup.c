@@ -2,7 +2,7 @@
  * Platform dependent support for HP simulator.
  *
  * Copyright (C) 1998, 1999, 2002 Hewlett-Packard Co
- *  David Mosberger-Tang <davidm@hpl.hp.com>
+ *	David Mosberger-Tang <davidm@hpl.hp.com>
  * Copyright (C) 1999 Vijay Chander <vijay@engr.sgi.com>
  */
 #include <linux/console.h>
@@ -28,13 +28,13 @@
 void
 ia64_ctl_trace (long on)
 {
-  ia64_ssc (on, 0, 0, 0, SSC_CTL_TRACE);
+	ia64_ssc(on, 0, 0, 0, SSC_CTL_TRACE);
 }
 
 void __init
-hpsim_setup (char ** cmdline_p)
+hpsim_setup (char **cmdline_p)
 {
-  ROOT_DEV = Root_SDA1;   /* default to first SCSI drive */
-  
-  simcons_register();
+	ROOT_DEV = Root_SDA1;		/* default to first SCSI drive */
+
+	simcons_register();
 }

@@ -44,7 +44,7 @@
  */
 
 #ifndef _LINUX_TRACEHOOK_H
-#define _LINUX_TRACEHOOK_H  1
+#define _LINUX_TRACEHOOK_H	1
 
 #include <linux/sched.h>
 #include <linux/ptrace.h>
@@ -54,31 +54,31 @@ struct linux_binprm;
 /*
  * ptrace report for syscall entry and exit looks identical.
  */
-static inline int ptrace_report_syscall (struct pt_regs * regs)
+static inline int ptrace_report_syscall(struct pt_regs *regs)
 {
-  int ptrace = current->ptrace;
-  
-  if (! (ptrace & PT_PTRACED) )
-  { return 0; }
-  
-  ptrace_notify (SIGTRAP | ( (ptrace & PT_TRACESYSGOOD) ? 0x80 : 0) );
-  
-  /*
-   * this isn't the same as continuing with a signal, but it will do
-   * for normal use.  strace only continues with a signal if the
-   * stopping signal is not SIGTRAP.  -brl
-   */
-  if (current->exit_code) {
-    send_sig (current->exit_code, current, 1);
-    current->exit_code = 0;
-  }
-  
-  return fatal_signal_pending (current);
+	int ptrace = current->ptrace;
+
+	if (!(ptrace & PT_PTRACED))
+		return 0;
+
+	ptrace_notify(SIGTRAP | ((ptrace & PT_TRACESYSGOOD) ? 0x80 : 0));
+
+	/*
+	 * this isn't the same as continuing with a signal, but it will do
+	 * for normal use.  strace only continues with a signal if the
+	 * stopping signal is not SIGTRAP.  -brl
+	 */
+	if (current->exit_code) {
+		send_sig(current->exit_code, current, 1);
+		current->exit_code = 0;
+	}
+
+	return fatal_signal_pending(current);
 }
 
 /**
  * tracehook_report_syscall_entry - task is about to attempt a system call
- * @regs:   user register state of current task
+ * @regs:		user register state of current task
  *
  * This will be called if %TIF_SYSCALL_TRACE has been set, when the
  * current task has just entered the kernel for a system call.
@@ -95,16 +95,16 @@ static inline int ptrace_report_syscall (struct pt_regs * regs)
  *
  * Called without locks, just after entering kernel mode.
  */
-static inline __must_check int tracehook_report_syscall_entry (
-  struct pt_regs * regs)
+static inline __must_check int tracehook_report_syscall_entry(
+	struct pt_regs *regs)
 {
-  return ptrace_report_syscall (regs);
+	return ptrace_report_syscall(regs);
 }
 
 /**
  * tracehook_report_syscall_exit - task has just finished a system call
- * @regs:   user register state of current task
- * @step:   nonzero if simulating single-step or block-step
+ * @regs:		user register state of current task
+ * @step:		nonzero if simulating single-step or block-step
  *
  * This will be called if %TIF_SYSCALL_TRACE has been set, when the
  * current task has just finished an attempted system call.  Full
@@ -118,25 +118,25 @@ static inline __must_check int tracehook_report_syscall_entry (
  *
  * Called without locks, just before checking for pending signals.
  */
-static inline void tracehook_report_syscall_exit (struct pt_regs * regs, int step)
+static inline void tracehook_report_syscall_exit(struct pt_regs *regs, int step)
 {
-  if (step) {
-    siginfo_t info;
-    user_single_step_siginfo (current, regs, &info);
-    force_sig_info (SIGTRAP, &info, current);
-    return;
-  }
-  
-  ptrace_report_syscall (regs);
+	if (step) {
+		siginfo_t info;
+		user_single_step_siginfo(current, regs, &info);
+		force_sig_info(SIGTRAP, &info, current);
+		return;
+	}
+
+	ptrace_report_syscall(regs);
 }
 
 /**
  * tracehook_signal_handler - signal handler setup is complete
- * @sig:    number of signal being delivered
- * @info:   siginfo_t of signal being delivered
- * @ka:     sigaction setting that chose the handler
- * @regs:   user register state
- * @stepping:   nonzero if debugger single-step or block-step in use
+ * @sig:		number of signal being delivered
+ * @info:		siginfo_t of signal being delivered
+ * @ka:			sigaction setting that chose the handler
+ * @regs:		user register state
+ * @stepping:		nonzero if debugger single-step or block-step in use
  *
  * Called by the arch code after a signal handler has been set up.
  * Register and stack state reflects the user handler about to run.
@@ -145,33 +145,33 @@ static inline void tracehook_report_syscall_exit (struct pt_regs * regs, int ste
  * Called without locks, shortly before returning to user mode
  * (or handling more signals).
  */
-static inline void tracehook_signal_handler (int sig, siginfo_t * info,
-    const struct k_sigaction * ka,
-    struct pt_regs * regs, int stepping)
+static inline void tracehook_signal_handler(int sig, siginfo_t *info,
+					    const struct k_sigaction *ka,
+					    struct pt_regs *regs, int stepping)
 {
-  if (stepping)
-  { ptrace_notify (SIGTRAP); }
+	if (stepping)
+		ptrace_notify(SIGTRAP);
 }
 
 #ifdef TIF_NOTIFY_RESUME
 /**
  * set_notify_resume - cause tracehook_notify_resume() to be called
- * @task:   task that will call tracehook_notify_resume()
+ * @task:		task that will call tracehook_notify_resume()
  *
  * Calling this arranges that @task will call tracehook_notify_resume()
  * before returning to user mode.  If it's already running in user mode,
  * it will enter the kernel and call tracehook_notify_resume() soon.
  * If it's blocked, it will not be woken.
  */
-static inline void set_notify_resume (struct task_struct * task)
+static inline void set_notify_resume(struct task_struct *task)
 {
-  if (!test_and_set_tsk_thread_flag (task, TIF_NOTIFY_RESUME) )
-  { kick_process (task); }
+	if (!test_and_set_tsk_thread_flag(task, TIF_NOTIFY_RESUME))
+		kick_process(task);
 }
 
 /**
  * tracehook_notify_resume - report when about to return to user mode
- * @regs:   user-mode registers of @current task
+ * @regs:		user-mode registers of @current task
  *
  * This is called when %TIF_NOTIFY_RESUME has been set.  Now we are
  * about to return to user mode, and the user state in @regs can be
@@ -182,9 +182,9 @@ static inline void set_notify_resume (struct task_struct * task)
  *
  * Called without locks.
  */
-static inline void tracehook_notify_resume (struct pt_regs * regs)
+static inline void tracehook_notify_resume(struct pt_regs *regs)
 {
 }
-#endif  /* TIF_NOTIFY_RESUME */
+#endif	/* TIF_NOTIFY_RESUME */
 
-#endif  /* <linux/tracehook.h> */
+#endif	/* <linux/tracehook.h> */

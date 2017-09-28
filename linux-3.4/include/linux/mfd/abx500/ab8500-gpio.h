@@ -15,9 +15,9 @@
  */
 
 struct ab8500_gpio_platform_data {
-  int gpio_base;
-  u32 irq_base;
-  u8  config_reg[8];
+	int gpio_base;
+	u32 irq_base;
+	u8  config_reg[8];
 };
 
 #endif /* _AB8500_GPIO_H */

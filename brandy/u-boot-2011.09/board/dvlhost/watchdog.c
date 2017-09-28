@@ -32,12 +32,12 @@ DECLARE_GLOBAL_DATA_PTR;
 #include <watchdog.h>
 #include <asm/arch/ixp425.h>
 
-void hw_watchdog_reset (void)
+void hw_watchdog_reset(void)
 {
-  unsigned int x;
-  x = readl (IXP425_GPIO_GPOUTR);
-  x ^= (1 << (CONFIG_SYS_GPIO_WDGTRIGGER) );
-  writel (x, IXP425_GPIO_GPOUTR);
+	unsigned int x;
+	x = readl(IXP425_GPIO_GPOUTR);
+	x ^= (1 << (CONFIG_SYS_GPIO_WDGTRIGGER));
+	writel(x, IXP425_GPIO_GPOUTR);
 }
 
 #endif /* CONFIG_HW_WATCHDOG */

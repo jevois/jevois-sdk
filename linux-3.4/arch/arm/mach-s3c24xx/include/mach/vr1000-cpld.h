@@ -1,7 +1,7 @@
 /* arch/arm/mach-s3c2410/include/mach/vr1000-cpld.h
  *
  * Copyright (c) 2003 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * VR1000 - CPLD control constants
  *

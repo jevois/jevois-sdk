@@ -71,10 +71,10 @@ extern const char raid6_empty_zero_page[PAGE_SIZE];
 
 /* Routine choices */
 struct raid6_calls {
-  void (*gen_syndrome) (int, size_t, void **);
-  int  (*valid) (void); /* Returns 1 if this routine set is usable */
-  const char * name; /* Name of this routine set */
-  int prefer;   /* Has special performance attribute */
+	void (*gen_syndrome)(int, size_t, void **);
+	int  (*valid)(void);	/* Returns 1 if this routine set is usable */
+	const char *name;	/* Name of this routine set */
+	int prefer;		/* Has special performance attribute */
 };
 
 /* Selected algorithm */
@@ -101,51 +101,51 @@ extern const struct raid6_calls raid6_altivec8;
 
 /* Algorithm list */
 extern const struct raid6_calls * const raid6_algos[];
-int raid6_select_algo (void);
+int raid6_select_algo(void);
 
 /* Return values from chk_syndrome */
-#define RAID6_OK  0
-#define RAID6_P_BAD 1
-#define RAID6_Q_BAD 2
-#define RAID6_PQ_BAD  3
+#define RAID6_OK	0
+#define RAID6_P_BAD	1
+#define RAID6_Q_BAD	2
+#define RAID6_PQ_BAD	3
 
 /* Galois field tables */
-extern const u8 raid6_gfmul[256][256] __attribute__ ( (aligned (256) ) );
-extern const u8 raid6_gfexp[256]      __attribute__ ( (aligned (256) ) );
-extern const u8 raid6_gfinv[256]      __attribute__ ( (aligned (256) ) );
-extern const u8 raid6_gfexi[256]      __attribute__ ( (aligned (256) ) );
+extern const u8 raid6_gfmul[256][256] __attribute__((aligned(256)));
+extern const u8 raid6_gfexp[256]      __attribute__((aligned(256)));
+extern const u8 raid6_gfinv[256]      __attribute__((aligned(256)));
+extern const u8 raid6_gfexi[256]      __attribute__((aligned(256)));
 
 /* Recovery routines */
-void raid6_2data_recov (int disks, size_t bytes, int faila, int failb,
-                        void ** ptrs);
-void raid6_datap_recov (int disks, size_t bytes, int faila, void ** ptrs);
-void raid6_dual_recov (int disks, size_t bytes, int faila, int failb,
-                       void ** ptrs);
+void raid6_2data_recov(int disks, size_t bytes, int faila, int failb,
+		       void **ptrs);
+void raid6_datap_recov(int disks, size_t bytes, int faila, void **ptrs);
+void raid6_dual_recov(int disks, size_t bytes, int faila, int failb,
+		      void **ptrs);
 
 /* Some definitions to allow code to be compiled for testing in userspace */
 #ifndef __KERNEL__
 
-# define jiffies  raid6_jiffies()
-# define printk   printf
-# define GFP_KERNEL 0
-# define __get_free_pages(x, y) ((unsigned long)mmap(NULL, PAGE_SIZE << (y), \
-                                 PROT_READ|PROT_WRITE,   \
-                                 MAP_PRIVATE|MAP_ANONYMOUS,\
-                                 0, 0))
-# define free_pages(x, y) munmap((void *)(x), PAGE_SIZE << (y))
+# define jiffies	raid6_jiffies()
+# define printk 	printf
+# define GFP_KERNEL	0
+# define __get_free_pages(x, y)	((unsigned long)mmap(NULL, PAGE_SIZE << (y), \
+						     PROT_READ|PROT_WRITE,   \
+						     MAP_PRIVATE|MAP_ANONYMOUS,\
+						     0, 0))
+# define free_pages(x, y)	munmap((void *)(x), PAGE_SIZE << (y))
 
-static inline void cpu_relax (void)
+static inline void cpu_relax(void)
 {
-  /* Nothing */
+	/* Nothing */
 }
 
 #undef  HZ
 #define HZ 1000
-static inline uint32_t raid6_jiffies (void)
+static inline uint32_t raid6_jiffies(void)
 {
-  struct timeval tv;
-  gettimeofday (&tv, NULL);
-  return tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return tv.tv_sec*1000 + tv.tv_usec/1000;
 }
 
 #endif /* ! __KERNEL__ */

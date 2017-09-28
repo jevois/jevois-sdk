@@ -1,7 +1,7 @@
 /* arch/arm/plat-samsung/include/plat/devs.h
  *
  * Copyright (c) 2011 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com
+ *		http://www.samsung.com
  *
  * Copyright (c) 2004 Simtec Electronics
  * Ben Dooks <ben@simtec.co.uk>
@@ -19,8 +19,8 @@
 #include <linux/platform_device.h>
 
 struct s3c24xx_uart_resources {
-  struct resource  * resources;
-  unsigned long    nr_resources;
+	struct resource		*resources;
+	unsigned long		 nr_resources;
 };
 
 extern struct s3c24xx_uart_resources s3c2410_uart_resources[];
@@ -29,8 +29,8 @@ extern struct s3c24xx_uart_resources s5p_uart_resources[];
 extern struct s3c24xx_uart_resources exynos4_uart_resources[];
 extern struct s3c24xx_uart_resources exynos5_uart_resources[];
 
-extern struct platform_device * s3c24xx_uart_devs[];
-extern struct platform_device * s3c24xx_uart_src[];
+extern struct platform_device *s3c24xx_uart_devs[];
+extern struct platform_device *s3c24xx_uart_src[];
 
 extern struct platform_device s3c64xx_device_ac97;
 extern struct platform_device s3c64xx_device_iis0;
@@ -157,7 +157,7 @@ extern struct platform_device s3c_device_ac97;
  * This helper replaces a number of calls that copy and then set the
  * platform data of the device.
  */
-extern void * s3c_set_platdata (void * pd, size_t pdsize,
-                                struct platform_device * pdev);
+extern void *s3c_set_platdata(void *pd, size_t pdsize,
+			      struct platform_device *pdev);
 
 #endif /* __PLAT_DEVS_H */

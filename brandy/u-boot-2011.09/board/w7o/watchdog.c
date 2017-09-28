@@ -30,18 +30,18 @@
 #ifdef CONFIG_HW_WATCHDOG
 #include <watchdog.h>
 
-void hw_watchdog_reset (void)
+void hw_watchdog_reset(void)
 {
-  volatile ushort * hwd = (ushort *) (CONFIG_SYS_W7O_EBC_PB7CR & 0xfff00000);
-  
-  /*
-   * Read the LMG's hwd register and toggle the
-   * watchdog bit to reset it.   On the LMC, just
-   * reading it is enough, but toggling the bit
-   * doen't hurt either.
-   */
-  *hwd = *hwd ^ 0x8000;
-  
+    volatile ushort *hwd = (ushort *)(CONFIG_SYS_W7O_EBC_PB7CR & 0xfff00000);
+
+    /*
+     * Read the LMG's hwd register and toggle the
+     * watchdog bit to reset it.   On the LMC, just
+     * reading it is enough, but toggling the bit
+     * doen't hurt either.
+     */
+    *hwd = *hwd ^ 0x8000;
+
 } /* hw_watchdog_reset() */
 
 #endif /* CONFIG_HW_WATCHDOG */

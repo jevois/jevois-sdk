@@ -18,9 +18,9 @@
 
 #include  "sunxi_hcd_core.h"
 
-void print_sunxi_hcd_config (struct sunxi_hcd_config * config, char * str);
-void print_sunxi_hcd_list (struct list_head * list_head, char * str);
-void print_urb_list (struct usb_host_endpoint * hep, char * str);
+void print_sunxi_hcd_config(struct sunxi_hcd_config *config, char *str);
+void print_sunxi_hcd_list(struct list_head *list_head, char *str);
+void print_urb_list(struct usb_host_endpoint *hep, char *str);
 
 #endif  
 

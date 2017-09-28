@@ -63,7 +63,7 @@
 /*
  * NetEffect PCI vendor id and NE010 PCI device id.
  */
-#ifndef PCI_VENDOR_ID_NETEFFECT /* not in pci.ids yet */
+#ifndef PCI_VENDOR_ID_NETEFFECT	/* not in pci.ids yet */
 #define PCI_VENDOR_ID_NETEFFECT          0x1678
 #define PCI_DEVICE_ID_NETEFFECT_NE020    0x0100
 #define PCI_DEVICE_ID_NETEFFECT_NE020_KR 0x0110
@@ -138,18 +138,18 @@
 
 #ifdef CONFIG_INFINIBAND_NES_DEBUG
 #define nes_debug(level, fmt, args...) \
-  do { \
-    if (level & nes_debug_level) \
-      printk(KERN_ERR PFX "%s[%u]: " fmt, __func__, __LINE__, ##args); \
-  } while (0)
+do { \
+	if (level & nes_debug_level) \
+		printk(KERN_ERR PFX "%s[%u]: " fmt, __func__, __LINE__, ##args); \
+} while (0)
 
 #define assert(expr) \
-  do { \
-    if (!(expr)) { \
-      printk(KERN_ERR PFX "Assertion failed! %s, %s, %s, line %d\n", \
-             #expr, __FILE__, __func__, __LINE__); \
-    } \
-  } while (0)
+do { \
+	if (!(expr)) { \
+		printk(KERN_ERR PFX "Assertion failed! %s, %s, %s, line %d\n", \
+			   #expr, __FILE__, __func__, __LINE__); \
+	} \
+} while (0)
 
 #define NES_EVENT_TIMEOUT   1200000
 #else
@@ -218,354 +218,354 @@ extern u32 int_mod_cq_depth_4;
 extern u32 int_mod_cq_depth_1;
 
 struct nes_device {
-  struct nes_adapter   *  nesadapter;
-  void __iomem      *     regs;
-  void __iomem      *     index_reg;
-  struct pci_dev     *    pcidev;
-  struct net_device   *   netdev[NES_NIC_MAX_NICS];
-  u64                    link_status_interrupts;
-  struct tasklet_struct  dpc_tasklet;
-  spinlock_t             indexed_regs_lock;
-  unsigned long          csr_start;
-  unsigned long          doorbell_region;
-  unsigned long          doorbell_start;
-  unsigned long          mac_tx_errors;
-  unsigned long          mac_pause_frames_sent;
-  unsigned long          mac_pause_frames_received;
-  unsigned long          mac_rx_errors;
-  unsigned long          mac_rx_crc_errors;
-  unsigned long          mac_rx_symbol_err_frames;
-  unsigned long          mac_rx_jabber_frames;
-  unsigned long          mac_rx_oversized_frames;
-  unsigned long          mac_rx_short_frames;
-  unsigned long          port_rx_discards;
-  unsigned long          port_tx_discards;
-  unsigned int           mac_index;
-  unsigned int           nes_stack_start;
-  
-  /* Control Structures */
-  void          *         cqp_vbase;
-  dma_addr_t             cqp_pbase;
-  u32                    cqp_mem_size;
-  u8                     ceq_index;
-  u8                     nic_ceq_index;
-  struct nes_hw_cqp      cqp;
-  struct nes_hw_cq       ccq;
-  struct list_head       cqp_avail_reqs;
-  struct list_head       cqp_pending_reqs;
-  struct nes_cqp_request * nes_cqp_requests;
-  
-  u32                    int_req;
-  u32                    int_stat;
-  u32                    timer_int_req;
-  u32                    timer_only_int_count;
-  u32                    intf_int_req;
-  u32                    last_mac_tx_pauses;
-  u32                    last_used_chunks_tx;
-  struct list_head       list;
-  
-  u16                    base_doorbell_index;
-  u16                    currcq_count;
-  u16                    deepcq_count;
-  u8                     iw_status;
-  u8                     msi_enabled;
-  u8                     netdev_count;
-  u8                     napi_isr_ran;
-  u8                     disable_rx_flow_control;
-  u8                     disable_tx_flow_control;
-  
-  struct delayed_work    work;
-  u8                     link_recheck;
+	struct nes_adapter	   *nesadapter;
+	void __iomem           *regs;
+	void __iomem           *index_reg;
+	struct pci_dev         *pcidev;
+	struct net_device      *netdev[NES_NIC_MAX_NICS];
+	u64                    link_status_interrupts;
+	struct tasklet_struct  dpc_tasklet;
+	spinlock_t             indexed_regs_lock;
+	unsigned long          csr_start;
+	unsigned long          doorbell_region;
+	unsigned long          doorbell_start;
+	unsigned long          mac_tx_errors;
+	unsigned long          mac_pause_frames_sent;
+	unsigned long          mac_pause_frames_received;
+	unsigned long          mac_rx_errors;
+	unsigned long          mac_rx_crc_errors;
+	unsigned long          mac_rx_symbol_err_frames;
+	unsigned long          mac_rx_jabber_frames;
+	unsigned long          mac_rx_oversized_frames;
+	unsigned long          mac_rx_short_frames;
+	unsigned long          port_rx_discards;
+	unsigned long          port_tx_discards;
+	unsigned int           mac_index;
+	unsigned int           nes_stack_start;
+
+	/* Control Structures */
+	void                   *cqp_vbase;
+	dma_addr_t             cqp_pbase;
+	u32                    cqp_mem_size;
+	u8                     ceq_index;
+	u8                     nic_ceq_index;
+	struct nes_hw_cqp      cqp;
+	struct nes_hw_cq       ccq;
+	struct list_head       cqp_avail_reqs;
+	struct list_head       cqp_pending_reqs;
+	struct nes_cqp_request *nes_cqp_requests;
+
+	u32                    int_req;
+	u32                    int_stat;
+	u32                    timer_int_req;
+	u32                    timer_only_int_count;
+	u32                    intf_int_req;
+	u32                    last_mac_tx_pauses;
+	u32                    last_used_chunks_tx;
+	struct list_head       list;
+
+	u16                    base_doorbell_index;
+	u16                    currcq_count;
+	u16                    deepcq_count;
+	u8                     iw_status;
+	u8                     msi_enabled;
+	u8                     netdev_count;
+	u8                     napi_isr_ran;
+	u8                     disable_rx_flow_control;
+	u8                     disable_tx_flow_control;
+
+	struct delayed_work    work;
+	u8                     link_recheck;
 };
 
 /* Receive skb private area - must fit in skb->cb area */
 struct nes_rskb_cb {
-  u64                    busaddr;
-  u32                    maplen;
-  u32                    seqnum;
-  u8           *          data_start;
-  struct nes_qp     *     nesqp;
+	u64                    busaddr;
+	u32                    maplen;
+	u32                    seqnum;
+	u8                     *data_start;
+	struct nes_qp          *nesqp;
 };
 
-static inline __le32 get_crc_value (struct nes_v4_quad * nes_quad)
+static inline __le32 get_crc_value(struct nes_v4_quad *nes_quad)
 {
-  u32 crc_value;
-  crc_value = crc32c (~0, (void *) nes_quad, sizeof (struct nes_v4_quad) );
-  
-  /*
-   * With commit ef19454b ("[LIB] crc32c: Keep intermediate crc
-   * state in cpu order"), behavior of crc32c changes on
-   * big-endian platforms.  Our algorithm expects the previous
-   * behavior; otherwise we have RDMA connection establishment
-   * issue on big-endian.
-   */
-  return cpu_to_le32 (crc_value);
+	u32 crc_value;
+	crc_value = crc32c(~0, (void *)nes_quad, sizeof (struct nes_v4_quad));
+
+	/*
+	 * With commit ef19454b ("[LIB] crc32c: Keep intermediate crc
+	 * state in cpu order"), behavior of crc32c changes on
+	 * big-endian platforms.  Our algorithm expects the previous
+	 * behavior; otherwise we have RDMA connection establishment
+	 * issue on big-endian.
+	 */
+	return cpu_to_le32(crc_value);
 }
 
 static inline void
-set_wqe_64bit_value (__le32 * wqe_words, u32 index, u64 value)
+set_wqe_64bit_value(__le32 *wqe_words, u32 index, u64 value)
 {
-  wqe_words[index]     = cpu_to_le32 ( (u32) value);
-  wqe_words[index + 1] = cpu_to_le32 (upper_32_bits (value) );
+	wqe_words[index]     = cpu_to_le32((u32) value);
+	wqe_words[index + 1] = cpu_to_le32(upper_32_bits(value));
 }
 
 static inline void
-set_wqe_32bit_value (__le32 * wqe_words, u32 index, u32 value)
+set_wqe_32bit_value(__le32 *wqe_words, u32 index, u32 value)
 {
-  wqe_words[index] = cpu_to_le32 (value);
+	wqe_words[index] = cpu_to_le32(value);
 }
 
 static inline void
-nes_fill_init_cqp_wqe (struct nes_hw_cqp_wqe * cqp_wqe, struct nes_device * nesdev)
+nes_fill_init_cqp_wqe(struct nes_hw_cqp_wqe *cqp_wqe, struct nes_device *nesdev)
 {
-  cqp_wqe->wqe_words[NES_CQP_WQE_COMP_CTX_LOW_IDX]       = 0;
-  cqp_wqe->wqe_words[NES_CQP_WQE_COMP_CTX_HIGH_IDX]      = 0;
-  cqp_wqe->wqe_words[NES_CQP_WQE_COMP_SCRATCH_LOW_IDX]   = 0;
-  cqp_wqe->wqe_words[NES_CQP_WQE_COMP_SCRATCH_HIGH_IDX]  = 0;
-  cqp_wqe->wqe_words[NES_CQP_STAG_WQE_PBL_BLK_COUNT_IDX] = 0;
-  cqp_wqe->wqe_words[NES_CQP_STAG_WQE_PBL_LEN_IDX]       = 0;
-  cqp_wqe->wqe_words[NES_CQP_STAG_WQE_LEN_LOW_IDX]       = 0;
-  cqp_wqe->wqe_words[NES_CQP_STAG_WQE_PA_LOW_IDX]        = 0;
-  cqp_wqe->wqe_words[NES_CQP_STAG_WQE_PA_HIGH_IDX]       = 0;
+	cqp_wqe->wqe_words[NES_CQP_WQE_COMP_CTX_LOW_IDX]       = 0;
+	cqp_wqe->wqe_words[NES_CQP_WQE_COMP_CTX_HIGH_IDX]      = 0;
+	cqp_wqe->wqe_words[NES_CQP_WQE_COMP_SCRATCH_LOW_IDX]   = 0;
+	cqp_wqe->wqe_words[NES_CQP_WQE_COMP_SCRATCH_HIGH_IDX]  = 0;
+	cqp_wqe->wqe_words[NES_CQP_STAG_WQE_PBL_BLK_COUNT_IDX] = 0;
+	cqp_wqe->wqe_words[NES_CQP_STAG_WQE_PBL_LEN_IDX]       = 0;
+	cqp_wqe->wqe_words[NES_CQP_STAG_WQE_LEN_LOW_IDX]       = 0;
+	cqp_wqe->wqe_words[NES_CQP_STAG_WQE_PA_LOW_IDX]        = 0;
+	cqp_wqe->wqe_words[NES_CQP_STAG_WQE_PA_HIGH_IDX]       = 0;
 }
 
 static inline void
-nes_fill_init_qp_wqe (struct nes_hw_qp_wqe * wqe, struct nes_qp * nesqp, u32 head)
+nes_fill_init_qp_wqe(struct nes_hw_qp_wqe *wqe, struct nes_qp *nesqp, u32 head)
 {
-  u32 value;
-  value = ( (u32) ( (unsigned long) nesqp) ) | head;
-  set_wqe_32bit_value (wqe->wqe_words, NES_IWARP_SQ_WQE_COMP_CTX_HIGH_IDX,
-                       (u32) (upper_32_bits ( (unsigned long) (nesqp) ) ) );
-  set_wqe_32bit_value (wqe->wqe_words, NES_IWARP_SQ_WQE_COMP_CTX_LOW_IDX, value);
+	u32 value;
+	value = ((u32)((unsigned long) nesqp)) | head;
+	set_wqe_32bit_value(wqe->wqe_words, NES_IWARP_SQ_WQE_COMP_CTX_HIGH_IDX,
+			(u32)(upper_32_bits((unsigned long)(nesqp))));
+	set_wqe_32bit_value(wqe->wqe_words, NES_IWARP_SQ_WQE_COMP_CTX_LOW_IDX, value);
 }
 
 /* Read from memory-mapped device */
-static inline u32 nes_read_indexed (struct nes_device * nesdev, u32 reg_index)
+static inline u32 nes_read_indexed(struct nes_device *nesdev, u32 reg_index)
 {
-  unsigned long flags;
-  void __iomem * addr = nesdev->index_reg;
-  u32 value;
-  
-  spin_lock_irqsave (&nesdev->indexed_regs_lock, flags);
-  
-  writel (reg_index, addr);
-  value = readl ( (void __iomem *) addr + 4);
-  
-  spin_unlock_irqrestore (&nesdev->indexed_regs_lock, flags);
-  return value;
+	unsigned long flags;
+	void __iomem *addr = nesdev->index_reg;
+	u32 value;
+
+	spin_lock_irqsave(&nesdev->indexed_regs_lock, flags);
+
+	writel(reg_index, addr);
+	value = readl((void __iomem *)addr + 4);
+
+	spin_unlock_irqrestore(&nesdev->indexed_regs_lock, flags);
+	return value;
 }
 
-static inline u32 nes_read32 (const void __iomem * addr)
+static inline u32 nes_read32(const void __iomem *addr)
 {
-  return readl (addr);
+	return readl(addr);
 }
 
-static inline u16 nes_read16 (const void __iomem * addr)
+static inline u16 nes_read16(const void __iomem *addr)
 {
-  return readw (addr);
+	return readw(addr);
 }
 
-static inline u8 nes_read8 (const void __iomem * addr)
+static inline u8 nes_read8(const void __iomem *addr)
 {
-  return readb (addr);
+	return readb(addr);
 }
 
 /* Write to memory-mapped device */
-static inline void nes_write_indexed (struct nes_device * nesdev, u32 reg_index, u32 val)
+static inline void nes_write_indexed(struct nes_device *nesdev, u32 reg_index, u32 val)
 {
-  unsigned long flags;
-  void __iomem * addr = nesdev->index_reg;
-  
-  spin_lock_irqsave (&nesdev->indexed_regs_lock, flags);
-  
-  writel (reg_index, addr);
-  writel (val, (void __iomem *) addr + 4);
-  
-  spin_unlock_irqrestore (&nesdev->indexed_regs_lock, flags);
+	unsigned long flags;
+	void __iomem *addr = nesdev->index_reg;
+
+	spin_lock_irqsave(&nesdev->indexed_regs_lock, flags);
+
+	writel(reg_index, addr);
+	writel(val, (void __iomem *)addr + 4);
+
+	spin_unlock_irqrestore(&nesdev->indexed_regs_lock, flags);
 }
 
-static inline void nes_write32 (void __iomem * addr, u32 val)
+static inline void nes_write32(void __iomem *addr, u32 val)
 {
-  writel (val, addr);
+	writel(val, addr);
 }
 
-static inline void nes_write16 (void __iomem * addr, u16 val)
+static inline void nes_write16(void __iomem *addr, u16 val)
 {
-  writew (val, addr);
+	writew(val, addr);
 }
 
-static inline void nes_write8 (void __iomem * addr, u8 val)
+static inline void nes_write8(void __iomem *addr, u8 val)
 {
-  writeb (val, addr);
+	writeb(val, addr);
 }
 
 
 
-static inline int nes_alloc_resource (struct nes_adapter * nesadapter,
-                                      unsigned long * resource_array, u32 max_resources,
-                                      u32 * req_resource_num, u32 * next)
+static inline int nes_alloc_resource(struct nes_adapter *nesadapter,
+		unsigned long *resource_array, u32 max_resources,
+		u32 *req_resource_num, u32 *next)
 {
-  unsigned long flags;
-  u32 resource_num;
-  
-  spin_lock_irqsave (&nesadapter->resource_lock, flags);
-  
-  resource_num = find_next_zero_bit (resource_array, max_resources, *next);
-  if (resource_num >= max_resources) {
-    resource_num = find_first_zero_bit (resource_array, max_resources);
-    if (resource_num >= max_resources) {
-      printk (KERN_ERR PFX "%s: No available resourcess.\n", __func__);
-      spin_unlock_irqrestore (&nesadapter->resource_lock, flags);
-      return -EMFILE;
-    }
-  }
-  set_bit (resource_num, resource_array);
-  *next = resource_num + 1;
-  if (*next == max_resources) {
-    *next = 0;
-  }
-  spin_unlock_irqrestore (&nesadapter->resource_lock, flags);
-  *req_resource_num = resource_num;
-  
-  return 0;
+	unsigned long flags;
+	u32 resource_num;
+
+	spin_lock_irqsave(&nesadapter->resource_lock, flags);
+
+	resource_num = find_next_zero_bit(resource_array, max_resources, *next);
+	if (resource_num >= max_resources) {
+		resource_num = find_first_zero_bit(resource_array, max_resources);
+		if (resource_num >= max_resources) {
+			printk(KERN_ERR PFX "%s: No available resourcess.\n", __func__);
+			spin_unlock_irqrestore(&nesadapter->resource_lock, flags);
+			return -EMFILE;
+		}
+	}
+	set_bit(resource_num, resource_array);
+	*next = resource_num+1;
+	if (*next == max_resources) {
+		*next = 0;
+	}
+	spin_unlock_irqrestore(&nesadapter->resource_lock, flags);
+	*req_resource_num = resource_num;
+
+	return 0;
 }
 
-static inline int nes_is_resource_allocated (struct nes_adapter * nesadapter,
-    unsigned long * resource_array, u32 resource_num)
+static inline int nes_is_resource_allocated(struct nes_adapter *nesadapter,
+		unsigned long *resource_array, u32 resource_num)
 {
-  unsigned long flags;
-  int bit_is_set;
-  
-  spin_lock_irqsave (&nesadapter->resource_lock, flags);
-  
-  bit_is_set = test_bit (resource_num, resource_array);
-  nes_debug (NES_DBG_HW, "resource_num %u is%s allocated.\n",
-             resource_num, (bit_is_set ? "" : " not") );
-  spin_unlock_irqrestore (&nesadapter->resource_lock, flags);
-  
-  return bit_is_set;
+	unsigned long flags;
+	int bit_is_set;
+
+	spin_lock_irqsave(&nesadapter->resource_lock, flags);
+
+	bit_is_set = test_bit(resource_num, resource_array);
+	nes_debug(NES_DBG_HW, "resource_num %u is%s allocated.\n",
+			resource_num, (bit_is_set ? "": " not"));
+	spin_unlock_irqrestore(&nesadapter->resource_lock, flags);
+
+	return bit_is_set;
 }
 
-static inline void nes_free_resource (struct nes_adapter * nesadapter,
-                                      unsigned long * resource_array, u32 resource_num)
+static inline void nes_free_resource(struct nes_adapter *nesadapter,
+		unsigned long *resource_array, u32 resource_num)
 {
-  unsigned long flags;
-  
-  spin_lock_irqsave (&nesadapter->resource_lock, flags);
-  clear_bit (resource_num, resource_array);
-  spin_unlock_irqrestore (&nesadapter->resource_lock, flags);
+	unsigned long flags;
+
+	spin_lock_irqsave(&nesadapter->resource_lock, flags);
+	clear_bit(resource_num, resource_array);
+	spin_unlock_irqrestore(&nesadapter->resource_lock, flags);
 }
 
-static inline struct nes_vnic * to_nesvnic (struct ib_device * ibdev)
+static inline struct nes_vnic *to_nesvnic(struct ib_device *ibdev)
 {
-  return container_of (ibdev, struct nes_ib_device, ibdev)->nesvnic;
+	return container_of(ibdev, struct nes_ib_device, ibdev)->nesvnic;
 }
 
-static inline struct nes_pd * to_nespd (struct ib_pd * ibpd)
+static inline struct nes_pd *to_nespd(struct ib_pd *ibpd)
 {
-  return container_of (ibpd, struct nes_pd, ibpd);
+	return container_of(ibpd, struct nes_pd, ibpd);
 }
 
-static inline struct nes_ucontext * to_nesucontext (struct ib_ucontext * ibucontext)
+static inline struct nes_ucontext *to_nesucontext(struct ib_ucontext *ibucontext)
 {
-  return container_of (ibucontext, struct nes_ucontext, ibucontext);
+	return container_of(ibucontext, struct nes_ucontext, ibucontext);
 }
 
-static inline struct nes_mr * to_nesmr (struct ib_mr * ibmr)
+static inline struct nes_mr *to_nesmr(struct ib_mr *ibmr)
 {
-  return container_of (ibmr, struct nes_mr, ibmr);
+	return container_of(ibmr, struct nes_mr, ibmr);
 }
 
-static inline struct nes_mr * to_nesmr_from_ibfmr (struct ib_fmr * ibfmr)
+static inline struct nes_mr *to_nesmr_from_ibfmr(struct ib_fmr *ibfmr)
 {
-  return container_of (ibfmr, struct nes_mr, ibfmr);
+	return container_of(ibfmr, struct nes_mr, ibfmr);
 }
 
-static inline struct nes_mr * to_nesmw (struct ib_mw * ibmw)
+static inline struct nes_mr *to_nesmw(struct ib_mw *ibmw)
 {
-  return container_of (ibmw, struct nes_mr, ibmw);
+	return container_of(ibmw, struct nes_mr, ibmw);
 }
 
-static inline struct nes_fmr * to_nesfmr (struct nes_mr * nesmr)
+static inline struct nes_fmr *to_nesfmr(struct nes_mr *nesmr)
 {
-  return container_of (nesmr, struct nes_fmr, nesmr);
+	return container_of(nesmr, struct nes_fmr, nesmr);
 }
 
-static inline struct nes_cq * to_nescq (struct ib_cq * ibcq)
+static inline struct nes_cq *to_nescq(struct ib_cq *ibcq)
 {
-  return container_of (ibcq, struct nes_cq, ibcq);
+	return container_of(ibcq, struct nes_cq, ibcq);
 }
 
-static inline struct nes_qp * to_nesqp (struct ib_qp * ibqp)
+static inline struct nes_qp *to_nesqp(struct ib_qp *ibqp)
 {
-  return container_of (ibqp, struct nes_qp, ibqp);
+	return container_of(ibqp, struct nes_qp, ibqp);
 }
 
 
 
 /* nes.c */
-void nes_add_ref (struct ib_qp *);
-void nes_rem_ref (struct ib_qp *);
-struct ib_qp * nes_get_qp (struct ib_device *, int);
+void nes_add_ref(struct ib_qp *);
+void nes_rem_ref(struct ib_qp *);
+struct ib_qp *nes_get_qp(struct ib_device *, int);
 
 
 /* nes_hw.c */
-struct nes_adapter * nes_init_adapter (struct nes_device *, u8);
-void  nes_nic_init_timer_defaults (struct nes_device *, u8);
-void nes_destroy_adapter (struct nes_adapter *);
-int nes_init_cqp (struct nes_device *);
-int nes_init_phy (struct nes_device *);
-int nes_init_nic_qp (struct nes_device *, struct net_device *);
-void nes_destroy_nic_qp (struct nes_vnic *);
-int nes_napi_isr (struct nes_device *);
-void nes_dpc (unsigned long);
-void nes_nic_ce_handler (struct nes_device *, struct nes_hw_nic_cq *);
-void nes_iwarp_ce_handler (struct nes_device *, struct nes_hw_cq *);
-int nes_destroy_cqp (struct nes_device *);
-int nes_nic_cm_xmit (struct sk_buff *, struct net_device *);
-void nes_recheck_link_status (struct work_struct * work);
-void nes_terminate_timeout (unsigned long context);
+struct nes_adapter *nes_init_adapter(struct nes_device *, u8);
+void  nes_nic_init_timer_defaults(struct nes_device *, u8);
+void nes_destroy_adapter(struct nes_adapter *);
+int nes_init_cqp(struct nes_device *);
+int nes_init_phy(struct nes_device *);
+int nes_init_nic_qp(struct nes_device *, struct net_device *);
+void nes_destroy_nic_qp(struct nes_vnic *);
+int nes_napi_isr(struct nes_device *);
+void nes_dpc(unsigned long);
+void nes_nic_ce_handler(struct nes_device *, struct nes_hw_nic_cq *);
+void nes_iwarp_ce_handler(struct nes_device *, struct nes_hw_cq *);
+int nes_destroy_cqp(struct nes_device *);
+int nes_nic_cm_xmit(struct sk_buff *, struct net_device *);
+void nes_recheck_link_status(struct work_struct *work);
+void nes_terminate_timeout(unsigned long context);
 
 /* nes_nic.c */
-struct net_device * nes_netdev_init (struct nes_device *, void __iomem *);
-void nes_netdev_destroy (struct net_device *);
-int nes_nic_cm_xmit (struct sk_buff *, struct net_device *);
+struct net_device *nes_netdev_init(struct nes_device *, void __iomem *);
+void nes_netdev_destroy(struct net_device *);
+int nes_nic_cm_xmit(struct sk_buff *, struct net_device *);
 
 /* nes_cm.c */
-void * nes_cm_create (struct net_device *);
-int nes_cm_recv (struct sk_buff *, struct net_device *);
-void nes_update_arp (unsigned char *, u32, u32, u16, u16);
-void nes_manage_arp_cache (struct net_device *, unsigned char *, u32, u32);
-void nes_sock_release (struct nes_qp *, unsigned long *);
-void flush_wqes (struct nes_device * nesdev, struct nes_qp *, u32, u32);
-int nes_manage_apbvt (struct nes_vnic *, u32, u32, u32);
-int nes_cm_disconn (struct nes_qp *);
-void nes_cm_disconn_worker (void *);
+void *nes_cm_create(struct net_device *);
+int nes_cm_recv(struct sk_buff *, struct net_device *);
+void nes_update_arp(unsigned char *, u32, u32, u16, u16);
+void nes_manage_arp_cache(struct net_device *, unsigned char *, u32, u32);
+void nes_sock_release(struct nes_qp *, unsigned long *);
+void flush_wqes(struct nes_device *nesdev, struct nes_qp *, u32, u32);
+int nes_manage_apbvt(struct nes_vnic *, u32, u32, u32);
+int nes_cm_disconn(struct nes_qp *);
+void nes_cm_disconn_worker(void *);
 
 /* nes_verbs.c */
-int nes_hw_modify_qp (struct nes_device *, struct nes_qp *, u32, u32, u32);
-int nes_modify_qp (struct ib_qp *, struct ib_qp_attr *, int, struct ib_udata *);
-struct nes_ib_device * nes_init_ofa_device (struct net_device *);
-void  nes_port_ibevent (struct nes_vnic * nesvnic);
-void nes_destroy_ofa_device (struct nes_ib_device *);
-int nes_register_ofa_device (struct nes_ib_device *);
+int nes_hw_modify_qp(struct nes_device *, struct nes_qp *, u32, u32, u32);
+int nes_modify_qp(struct ib_qp *, struct ib_qp_attr *, int, struct ib_udata *);
+struct nes_ib_device *nes_init_ofa_device(struct net_device *);
+void  nes_port_ibevent(struct nes_vnic *nesvnic);
+void nes_destroy_ofa_device(struct nes_ib_device *);
+int nes_register_ofa_device(struct nes_ib_device *);
 
 /* nes_util.c */
-int nes_read_eeprom_values (struct nes_device *, struct nes_adapter *);
-void nes_write_1G_phy_reg (struct nes_device *, u8, u8, u16);
-void nes_read_1G_phy_reg (struct nes_device *, u8, u8, u16 *);
-void nes_write_10G_phy_reg (struct nes_device *, u16, u8, u16, u16);
-void nes_read_10G_phy_reg (struct nes_device *, u8, u8, u16);
-struct nes_cqp_request * nes_get_cqp_request (struct nes_device *);
-void nes_free_cqp_request (struct nes_device * nesdev,
-                           struct nes_cqp_request * cqp_request);
-void nes_put_cqp_request (struct nes_device * nesdev,
-                          struct nes_cqp_request * cqp_request);
-void nes_post_cqp_request (struct nes_device *, struct nes_cqp_request *);
-int nes_arp_table (struct nes_device *, u32, u8 *, u32);
-void nes_mh_fix (unsigned long);
-void nes_clc (unsigned long);
-void nes_dump_mem (unsigned int, void *, int);
-u32 nes_crc32 (u32, u32, u32, u32, u8 *, u32, u32, u32);
+int nes_read_eeprom_values(struct nes_device *, struct nes_adapter *);
+void nes_write_1G_phy_reg(struct nes_device *, u8, u8, u16);
+void nes_read_1G_phy_reg(struct nes_device *, u8, u8, u16 *);
+void nes_write_10G_phy_reg(struct nes_device *, u16, u8, u16, u16);
+void nes_read_10G_phy_reg(struct nes_device *, u8, u8, u16);
+struct nes_cqp_request *nes_get_cqp_request(struct nes_device *);
+void nes_free_cqp_request(struct nes_device *nesdev,
+			  struct nes_cqp_request *cqp_request);
+void nes_put_cqp_request(struct nes_device *nesdev,
+			 struct nes_cqp_request *cqp_request);
+void nes_post_cqp_request(struct nes_device *, struct nes_cqp_request *);
+int nes_arp_table(struct nes_device *, u32, u8 *, u32);
+void nes_mh_fix(unsigned long);
+void nes_clc(unsigned long);
+void nes_dump_mem(unsigned int, void *, int);
+u32 nes_crc32(u32, u32, u32, u32, u8 *, u32, u32, u32);
 
-#endif  /* __NES_H */
+#endif	/* __NES_H */

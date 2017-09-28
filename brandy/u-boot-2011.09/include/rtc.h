@@ -40,32 +40,32 @@
  * Note that there are small but significant differences to the
  * common "struct time":
  *
- *    struct time:    struct rtc_time:
- * tm_mon 0 ... 11    1 ... 12
- * tm_year  years since 1900  years since 0
+ *		struct time:		struct rtc_time:
+ * tm_mon	0 ... 11		1 ... 12
+ * tm_year	years since 1900	years since 0
  */
 
 struct rtc_time {
-  int tm_sec;
-  int tm_min;
-  int tm_hour;
-  int tm_mday;
-  int tm_mon;
-  int tm_year;
-  int tm_wday;
-  int tm_yday;
-  int tm_isdst;
+	int tm_sec;
+	int tm_min;
+	int tm_hour;
+	int tm_mday;
+	int tm_mon;
+	int tm_year;
+	int tm_wday;
+	int tm_yday;
+	int tm_isdst;
 };
 
 int rtc_get (struct rtc_time *);
 int rtc_set (struct rtc_time *);
 void rtc_reset (void);
 
-void rtc_disable (void);
+void rtc_disable(void);
 
 void GregorianDay (struct rtc_time *);
 void to_tm (int, struct rtc_time *);
 unsigned long mktime (unsigned int, unsigned int, unsigned int,
-                      unsigned int, unsigned int, unsigned int);
+		      unsigned int, unsigned int, unsigned int);
 
-#endif  /* _RTC_H_ */
+#endif	/* _RTC_H_ */

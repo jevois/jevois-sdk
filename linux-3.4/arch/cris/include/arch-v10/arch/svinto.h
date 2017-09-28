@@ -8,16 +8,16 @@ extern unsigned int genconfig_shadow; /* defined and set in head.S */
 /* dma stuff */
 
 enum {                          /* Available in:  */
-  d_eol      = (1 << 0),  /* flags          */
-  d_eop      = (1 << 1),  /* flags & status */
-  d_wait     = (1 << 2),  /* flags          */
-  d_int      = (1 << 3),  /* flags          */
-  d_txerr    = (1 << 4),  /* flags          */
-  d_stop     = (1 << 4),  /*         status */
-  d_ecp      = (1 << 4),  /* flags & status */
-  d_pri      = (1 << 5),  /* flags & status */
-  d_alignerr = (1 << 6),  /*         status */
-  d_crcerr   = (1 << 7)   /*         status */
+	d_eol      = (1 << 0),  /* flags          */
+	d_eop      = (1 << 1),  /* flags & status */
+	d_wait     = (1 << 2),  /* flags          */
+	d_int      = (1 << 3),  /* flags          */
+	d_txerr    = (1 << 4),  /* flags          */
+	d_stop     = (1 << 4),  /*         status */
+	d_ecp      = (1 << 4),  /* flags & status */
+	d_pri      = (1 << 5),  /* flags & status */
+	d_alignerr = (1 << 6),  /*         status */
+	d_crcerr   = (1 << 7)   /*         status */
 };
 
 /* Do remember that DMA does not go through the MMU and needs
@@ -28,13 +28,13 @@ enum {                          /* Available in:  */
  */
 
 typedef struct etrax_dma_descr {
-  unsigned short sw_len;                /* 0-1 */
-  unsigned short ctrl;                  /* 2-3 */
-  unsigned long  next;                  /* 4-7 */
-  unsigned long  buf;                   /* 8-11 */
-  unsigned short hw_len;                /* 12-13 */
-  unsigned char  status;                /* 14 */
-  unsigned char  fifo_len;              /* 15 */
+	unsigned short sw_len;                /* 0-1 */
+	unsigned short ctrl;                  /* 2-3 */
+	unsigned long  next;                  /* 4-7 */
+	unsigned long  buf;                   /* 8-11 */
+	unsigned short hw_len;                /* 12-13 */
+	unsigned char  status;                /* 14 */
+	unsigned char  fifo_len;              /* 15 */
 } etrax_dma_descr;
 
 
@@ -42,8 +42,8 @@ typedef struct etrax_dma_descr {
 #define RESET_DMA_NUM( n ) \
   *R_DMA_CH##n##_CMD = IO_STATE( R_DMA_CH0_CMD, cmd, reset )
 
-/* Use this for constant numbers or symbols,
- * having two macros makes it possible to use constant expressions.
+/* Use this for constant numbers or symbols, 
+ * having two macros makes it possible to use constant expressions. 
  */
 #define RESET_DMA( n ) RESET_DMA_NUM( n )
 
@@ -53,12 +53,12 @@ typedef struct etrax_dma_descr {
   while( (*R_DMA_CH##n##_CMD & IO_MASK( R_DMA_CH0_CMD, cmd )) != \
          IO_STATE( R_DMA_CH0_CMD, cmd, hold ) )
 
-/* Use this for constant numbers or symbols
- * having two macros makes it possible to use constant expressions.
+/* Use this for constant numbers or symbols 
+ * having two macros makes it possible to use constant expressions. 
  */
 #define WAIT_DMA( n ) WAIT_DMA_NUM( n )
 
-extern void prepare_rx_descriptor (struct etrax_dma_descr * desc);
-extern void flush_etrax_cache (void);
+extern void prepare_rx_descriptor(struct etrax_dma_descr *desc);
+extern void flush_etrax_cache(void);
 
 #endif

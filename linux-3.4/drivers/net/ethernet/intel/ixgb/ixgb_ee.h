@@ -29,14 +29,14 @@
 #ifndef _IXGB_EE_H_
 #define _IXGB_EE_H_
 
-#define IXGB_EEPROM_SIZE    64  /* Size in words */
+#define IXGB_EEPROM_SIZE    64	/* Size in words */
 
 /* EEPROM Commands */
-#define EEPROM_READ_OPCODE  0x6 /* EEPROM read opcode */
-#define EEPROM_WRITE_OPCODE 0x5 /* EEPROM write opcode */
-#define EEPROM_ERASE_OPCODE 0x7 /* EEPROM erase opcode */
-#define EEPROM_EWEN_OPCODE  0x13  /* EEPROM erase/write enable */
-#define EEPROM_EWDS_OPCODE  0x10  /* EEPROM erase/write disable */
+#define EEPROM_READ_OPCODE  0x6	/* EEPROM read opcode */
+#define EEPROM_WRITE_OPCODE 0x5	/* EEPROM write opcode */
+#define EEPROM_ERASE_OPCODE 0x7	/* EEPROM erase opcode */
+#define EEPROM_EWEN_OPCODE  0x13	/* EEPROM erase/write enable */
+#define EEPROM_EWDS_OPCODE  0x10	/* EEPROM erase/write disable */
 
 /* EEPROM MAP (Word Offsets) */
 #define EEPROM_IA_1_2_REG        0x0000
@@ -73,32 +73,32 @@
 
 /* EEPROM structure */
 struct ixgb_ee_map_type {
-  u8 mac_addr[ETH_ALEN];
-  __le16 compatibility;
-  __le16 reserved1[4];
-  __le32 pba_number;
-  __le16 init_ctrl_reg_1;
-  __le16 subsystem_id;
-  __le16 subvendor_id;
-  __le16 device_id;
-  __le16 vendor_id;
-  __le16 init_ctrl_reg_2;
-  __le16 oem_reserved[16];
-  __le16 swdpins_reg;
-  __le16 circuit_ctrl_reg;
-  u8 d3_power;
-  u8 d0_power;
-  __le16 reserved2[28];
-  __le16 checksum;
+	u8 mac_addr[ETH_ALEN];
+	__le16 compatibility;
+	__le16 reserved1[4];
+	__le32 pba_number;
+	__le16 init_ctrl_reg_1;
+	__le16 subsystem_id;
+	__le16 subvendor_id;
+	__le16 device_id;
+	__le16 vendor_id;
+	__le16 init_ctrl_reg_2;
+	__le16 oem_reserved[16];
+	__le16 swdpins_reg;
+	__le16 circuit_ctrl_reg;
+	u8 d3_power;
+	u8 d0_power;
+	__le16 reserved2[28];
+	__le16 checksum;
 };
 
 /* EEPROM Functions */
-u16 ixgb_read_eeprom (struct ixgb_hw * hw, u16 reg);
+u16 ixgb_read_eeprom(struct ixgb_hw *hw, u16 reg);
 
-bool ixgb_validate_eeprom_checksum (struct ixgb_hw * hw);
+bool ixgb_validate_eeprom_checksum(struct ixgb_hw *hw);
 
-void ixgb_update_eeprom_checksum (struct ixgb_hw * hw);
+void ixgb_update_eeprom_checksum(struct ixgb_hw *hw);
 
-void ixgb_write_eeprom (struct ixgb_hw * hw, u16 reg, u16 data);
+void ixgb_write_eeprom(struct ixgb_hw *hw, u16 reg, u16 data);
 
-#endif        /* IXGB_EE_H */
+#endif				/* IXGB_EE_H */

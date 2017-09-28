@@ -9,9 +9,9 @@
 #include <linux/init.h>
 #include <linux/of_platform.h>
 
-static int __init c6x_device_probe (void)
+static int __init c6x_device_probe(void)
 {
-  of_platform_populate (NULL, of_default_bus_match_table, NULL, NULL);
-  return 0;
+	of_platform_populate(NULL, of_default_bus_match_table, NULL, NULL);
+	return 0;
 }
-core_initcall (c6x_device_probe);
+core_initcall(c6x_device_probe);

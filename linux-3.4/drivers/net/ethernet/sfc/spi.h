@@ -19,64 +19,64 @@
  *
  *************************************************************************/
 
-#define SPI_WRSR 0x01   /* Write status register */
-#define SPI_WRITE 0x02    /* Write data to memory array */
-#define SPI_READ 0x03   /* Read data from memory array */
-#define SPI_WRDI 0x04   /* Reset write enable latch */
-#define SPI_RDSR 0x05   /* Read status register */
-#define SPI_WREN 0x06   /* Set write enable latch */
-#define SPI_SST_EWSR 0x50 /* SST: Enable write to status register */
+#define SPI_WRSR 0x01		/* Write status register */
+#define SPI_WRITE 0x02		/* Write data to memory array */
+#define SPI_READ 0x03		/* Read data from memory array */
+#define SPI_WRDI 0x04		/* Reset write enable latch */
+#define SPI_RDSR 0x05		/* Read status register */
+#define SPI_WREN 0x06		/* Set write enable latch */
+#define SPI_SST_EWSR 0x50	/* SST: Enable write to status register */
 
-#define SPI_STATUS_WPEN 0x80  /* Write-protect pin enabled */
-#define SPI_STATUS_BP2 0x10 /* Block protection bit 2 */
-#define SPI_STATUS_BP1 0x08 /* Block protection bit 1 */
-#define SPI_STATUS_BP0 0x04 /* Block protection bit 0 */
-#define SPI_STATUS_WEN 0x02 /* State of the write enable latch */
-#define SPI_STATUS_NRDY 0x01  /* Device busy flag */
+#define SPI_STATUS_WPEN 0x80	/* Write-protect pin enabled */
+#define SPI_STATUS_BP2 0x10	/* Block protection bit 2 */
+#define SPI_STATUS_BP1 0x08	/* Block protection bit 1 */
+#define SPI_STATUS_BP0 0x04	/* Block protection bit 0 */
+#define SPI_STATUS_WEN 0x02	/* State of the write enable latch */
+#define SPI_STATUS_NRDY 0x01	/* Device busy flag */
 
 /**
  * struct efx_spi_device - an Efx SPI (Serial Peripheral Interface) device
- * @device_id:    Controller's id for the device
- * @size:   Size (in bytes)
- * @addr_len:   Number of address bytes in read/write commands
- * @munge_address:  Flag whether addresses should be munged.
- *  Some devices with 9-bit addresses (e.g. AT25040A EEPROM)
- *  use bit 3 of the command byte as address bit A8, rather
- *  than having a two-byte address.  If this flag is set, then
- *  commands should be munged in this way.
- * @erase_command:  Erase command (or 0 if sector erase not needed).
- * @erase_size:   Erase sector size (in bytes)
- *  Erase commands affect sectors with this size and alignment.
- *  This must be a power of two.
- * @block_size:   Write block size (in bytes).
- *  Write commands are limited to blocks with this size and alignment.
+ * @device_id:		Controller's id for the device
+ * @size:		Size (in bytes)
+ * @addr_len:		Number of address bytes in read/write commands
+ * @munge_address:	Flag whether addresses should be munged.
+ *	Some devices with 9-bit addresses (e.g. AT25040A EEPROM)
+ *	use bit 3 of the command byte as address bit A8, rather
+ *	than having a two-byte address.  If this flag is set, then
+ *	commands should be munged in this way.
+ * @erase_command:	Erase command (or 0 if sector erase not needed).
+ * @erase_size:		Erase sector size (in bytes)
+ *	Erase commands affect sectors with this size and alignment.
+ *	This must be a power of two.
+ * @block_size:		Write block size (in bytes).
+ *	Write commands are limited to blocks with this size and alignment.
  */
 struct efx_spi_device {
-  int device_id;
-  unsigned int size;
-  unsigned int addr_len;
-  unsigned int munge_address: 1;
-  u8 erase_command;
-  unsigned int erase_size;
-  unsigned int block_size;
+	int device_id;
+	unsigned int size;
+	unsigned int addr_len;
+	unsigned int munge_address:1;
+	u8 erase_command;
+	unsigned int erase_size;
+	unsigned int block_size;
 };
 
-static inline bool efx_spi_present (const struct efx_spi_device * spi)
+static inline bool efx_spi_present(const struct efx_spi_device *spi)
 {
-  return spi->size != 0;
+	return spi->size != 0;
 }
 
-int falcon_spi_cmd (struct efx_nic * efx,
-                    const struct efx_spi_device * spi, unsigned int command,
-                    int address, const void * in, void * out, size_t len);
-int falcon_spi_wait_write (struct efx_nic * efx,
-                           const struct efx_spi_device * spi);
-int falcon_spi_read (struct efx_nic * efx,
-                     const struct efx_spi_device * spi, loff_t start,
-                     size_t len, size_t * retlen, u8 * buffer);
-int falcon_spi_write (struct efx_nic * efx,
-                      const struct efx_spi_device * spi, loff_t start,
-                      size_t len, size_t * retlen, const u8 * buffer);
+int falcon_spi_cmd(struct efx_nic *efx,
+		   const struct efx_spi_device *spi, unsigned int command,
+		   int address, const void *in, void *out, size_t len);
+int falcon_spi_wait_write(struct efx_nic *efx,
+			  const struct efx_spi_device *spi);
+int falcon_spi_read(struct efx_nic *efx,
+		    const struct efx_spi_device *spi, loff_t start,
+		    size_t len, size_t *retlen, u8 *buffer);
+int falcon_spi_write(struct efx_nic *efx,
+		     const struct efx_spi_device *spi, loff_t start,
+		     size_t len, size_t *retlen, const u8 *buffer);
 
 /*
  * SFC4000 flash is partitioned into:

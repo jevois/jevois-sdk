@@ -18,9 +18,9 @@
 /*Codec Register*/
 #define baseaddr                               SUNXI_AUDIO_VBASE
 #define CODEC_BASSADDRESS         (0x01c22c00)
-#define SUNXI_DA_CTL                      (0x00)
-#define SUNXI_DA_FAT0                       (0x04)
-#define SUNXI_DA_FAT1                     (0x08)
+#define SUNXI_DA_CTL                			(0x00)
+#define SUNXI_DA_FAT0                  			(0x04)
+#define SUNXI_DA_FAT1               			(0x08)
 #define SUNXI_DA_TXFIFO                         (0x0c)
 #define SUNXI_DA_RXFIFO                         (0x10)
 #define SUNXI_DA_FCTL                          (0x14)
@@ -1300,59 +1300,59 @@
 
 #define codec_rdreg(reg)         readl((baseaddr+(reg)))
 #define codec_wrreg(reg,val)  writel((val),(baseaddr+(reg)))
-int codec_wrreg_bits (unsigned short reg, unsigned int  mask,   unsigned int value);
+int codec_wrreg_bits(unsigned short reg, unsigned int  mask,   unsigned int value);
 
-int codec_wr_control (u32 reg, u32 mask, u32 shift, u32 val);
-
-
-extern int snd_codec_info_volsw (struct snd_kcontrol * kcontrol,
-                                 struct  snd_ctl_elem_info    *   uinfo);
-extern int snd_codec_get_volsw (struct snd_kcontrol   *  kcontrol,
-                                struct  snd_ctl_elem_value   *   ucontrol);
-extern int snd_codec_put_volsw (struct  snd_kcontrol  *  kcontrol,
-                                struct  snd_ctl_elem_value   *   ucontrol);
+int codec_wr_control(u32 reg, u32 mask, u32 shift, u32 val);
 
 
-int snd_codec_get_volsw_digital (struct snd_kcontrol  *  kcontrol,
-                                 struct  snd_ctl_elem_value   *   ucontrol);
+extern int snd_codec_info_volsw(struct snd_kcontrol *kcontrol,
+               struct  snd_ctl_elem_info       *uinfo);
+extern int snd_codec_get_volsw(struct snd_kcontrol     *kcontrol,
+               struct  snd_ctl_elem_value      *ucontrol);
+extern int snd_codec_put_volsw(struct  snd_kcontrol    *kcontrol,
+       struct  snd_ctl_elem_value      *ucontrol);
 
-int snd_codec_put_volsw_digital (struct snd_kcontrol  *  kcontrol,
-                                 struct  snd_ctl_elem_value   *   ucontrol);
+
+int snd_codec_get_volsw_digital(struct snd_kcontrol    *kcontrol,
+               struct  snd_ctl_elem_value      *ucontrol);
+
+int snd_codec_put_volsw_digital(struct snd_kcontrol    *kcontrol,
+       struct  snd_ctl_elem_value      *ucontrol);
 
 /*
 * Convenience kcontrol builders
 */
 #define CODEC_SINGLE_VALUE(xreg, xshift, xmax, xinvert)\
-  ((unsigned long)&(struct codec_mixer_control)\
-  {.reg   =       xreg,   .shift  =       xshift, .rshift =       xshift, .max    =       xmax,\
-                                          .invert =       xinvert})
+               ((unsigned long)&(struct codec_mixer_control)\
+               {.reg   =       xreg,   .shift  =       xshift, .rshift =       xshift, .max    =       xmax,\
+       .invert =       xinvert})
 
 #define CODEC_SINGLE(xname,    reg,    shift,  max,    invert)\
-  {      .iface  = SNDRV_CTL_ELEM_IFACE_MIXER, .name = xname,\
-                   .info   = snd_codec_info_volsw, .get = snd_codec_get_volsw,\
-                             .put    = snd_codec_put_volsw,\
-                                       .private_value  = CODEC_SINGLE_VALUE(reg, shift, max, invert)}
+{      .iface  = SNDRV_CTL_ELEM_IFACE_MIXER, .name = xname,\
+       .info   = snd_codec_info_volsw, .get = snd_codec_get_volsw,\
+       .put    = snd_codec_put_volsw,\
+       .private_value  = CODEC_SINGLE_VALUE(reg, shift, max, invert)}
 
 /*     mixer control*/
-struct codec_mixer_control {
-  int             min;
-  int     max;
-  int     where;
-  unsigned int mask;
-  unsigned int reg;
-  unsigned int rreg;
-  unsigned int shift;
-  unsigned int rshift;
-  unsigned int invert;
-  unsigned int value;
+struct codec_mixer_control{
+       int             min;
+       int     max;
+       int     where;
+       unsigned int mask;
+       unsigned int reg;
+       unsigned int rreg;
+       unsigned int shift;
+       unsigned int rshift;
+       unsigned int invert;
+       unsigned int value;
 };
 
 
 #define CODEC_SINGLE_DIGITAL(xname,    reg,    shift,  max,    invert)\
-  {      .iface  = SNDRV_CTL_ELEM_IFACE_MIXER, .name = xname,\
-                   .info   = snd_codec_info_volsw, .get = snd_codec_get_volsw_digital,\
-                             .put    = snd_codec_put_volsw_digital,\
-                                       .private_value  = CODEC_SINGLE_VALUE(reg, shift, max, invert)}
+{      .iface  = SNDRV_CTL_ELEM_IFACE_MIXER, .name = xname,\
+       .info   = snd_codec_info_volsw, .get = snd_codec_get_volsw_digital,\
+       .put    = snd_codec_put_volsw_digital,\
+       .private_value  = CODEC_SINGLE_VALUE(reg, shift, max, invert)}
 
 #define    DAC_Digital_Part_Control 0x00
 #define    DAC_FIFO_Control        0x04
@@ -1391,8 +1391,8 @@ struct codec_mixer_control {
 
 
 struct label {
-  const char * name;
-  int value;
+    const char *name;
+    int value;
 };
 
 #define LABEL(constant) { #constant, constant }

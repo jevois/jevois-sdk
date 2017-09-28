@@ -32,9 +32,9 @@ struct nldr_nodeobject;
  *  Load types for a node. Must match values in node.h55.
  */
 enum nldr_loadtype {
-  NLDR_STATICLOAD,  /* Linked in base image, not overlay */
-  NLDR_DYNAMICLOAD, /* Dynamically loaded node */
-  NLDR_OVLYLOAD   /* Linked in base image, overlay node */
+	NLDR_STATICLOAD,	/* Linked in base image, not overlay */
+	NLDR_DYNAMICLOAD,	/* Dynamically loaded node */
+	NLDR_OVLYLOAD		/* Linked in base image, overlay node */
 };
 
 /*
@@ -55,8 +55,8 @@ enum nldr_loadtype {
  *  Requires:
  *  Ensures:
  */
-typedef u32 (*nldr_ovlyfxn) (void * priv_ref, u32 dsp_run_addr,
-                             u32 dsp_load_addr, u32 ul_num_bytes, u32 mem_space);
+typedef u32(*nldr_ovlyfxn) (void *priv_ref, u32 dsp_run_addr,
+			    u32 dsp_load_addr, u32 ul_num_bytes, u32 mem_space);
 
 /*
  *  ======== nldr_writefxn ========
@@ -73,19 +73,19 @@ typedef u32 (*nldr_ovlyfxn) (void * priv_ref, u32 dsp_run_addr,
  *  Requires:
  *  Ensures:
  */
-typedef u32 (*nldr_writefxn) (void * priv_ref,
-                              u32 dsp_add, void * pbuf,
-                              u32 ul_num_bytes, u32 mem_space);
+typedef u32(*nldr_writefxn) (void *priv_ref,
+			     u32 dsp_add, void *pbuf,
+			     u32 ul_num_bytes, u32 mem_space);
 
 /*
  *  ======== nldr_attrs ========
  *  Attributes passed to nldr_create function.
  */
 struct nldr_attrs {
-  nldr_ovlyfxn ovly;
-  nldr_writefxn write;
-  u16 dsp_word_size;
-  u16 dsp_mau_size;
+	nldr_ovlyfxn ovly;
+	nldr_writefxn write;
+	u16 dsp_word_size;
+	u16 dsp_mau_size;
 };
 
 /*
@@ -93,10 +93,10 @@ struct nldr_attrs {
  *  Indicates node create, delete, or execute phase function.
  */
 enum nldr_phase {
-  NLDR_CREATE,
-  NLDR_DELETE,
-  NLDR_EXECUTE,
-  NLDR_NOPHASE
+	NLDR_CREATE,
+	NLDR_DELETE,
+	NLDR_EXECUTE,
+	NLDR_NOPHASE
 };
 
 /*
@@ -126,13 +126,13 @@ enum nldr_phase {
  *      0:        IsValidNode(*nldr_nodeobj).
  *      error:          *nldr_nodeobj == NULL.
  */
-typedef int (*nldr_allocatefxn) (struct nldr_object * nldr_obj,
-                                 void * priv_ref,
-                                 const struct dcd_nodeprops
-                                 * node_props,
-                                 struct nldr_nodeobject
-                                 ** nldr_nodeobj,
-                                 bool * pf_phase_split);
+typedef int(*nldr_allocatefxn) (struct nldr_object *nldr_obj,
+				       void *priv_ref,
+				       const struct dcd_nodeprops
+				       * node_props,
+				       struct nldr_nodeobject
+				       **nldr_nodeobj,
+				       bool *pf_phase_split);
 
 /*
  *  ======== nldr_create ========
@@ -149,14 +149,14 @@ typedef int (*nldr_allocatefxn) (struct nldr_object * nldr_obj,
  *  Requires:
  *      nldr != NULL.
  *      hdev_obj != NULL.
- *  pattrs != NULL.
+ *	pattrs != NULL.
  *  Ensures:
  *      0:        Valid *nldr.
  *      error:          *nldr == NULL.
  */
-typedef int (*nldr_createfxn) (struct nldr_object ** nldr,
-                               struct dev_object * hdev_obj,
-                               const struct nldr_attrs * pattrs);
+typedef int(*nldr_createfxn) (struct nldr_object **nldr,
+				     struct dev_object *hdev_obj,
+				     const struct nldr_attrs *pattrs);
 
 /*
  *  ======== nldr_delete ========
@@ -168,9 +168,9 @@ typedef int (*nldr_createfxn) (struct nldr_object ** nldr,
  *  Requires:
  *      Valid nldr_obj.
  *  Ensures:
- *  nldr_obj invalid
+ *	nldr_obj invalid
  */
-typedef void (*nldr_deletefxn) (struct nldr_object * nldr_obj);
+typedef void (*nldr_deletefxn) (struct nldr_object *nldr_obj);
 
 /*
  *  ======== NLDR_Free ========
@@ -183,7 +183,7 @@ typedef void (*nldr_deletefxn) (struct nldr_object * nldr_obj);
  *      Valid nldr_node_obj.
  *  Ensures:
  */
-typedef void (*nldr_freefxn) (struct nldr_nodeobject * nldr_node_obj);
+typedef void (*nldr_freefxn) (struct nldr_nodeobject *nldr_node_obj);
 
 /*
  *  ======== nldr_get_fxn_addr ========
@@ -203,9 +203,9 @@ typedef void (*nldr_freefxn) (struct nldr_nodeobject * nldr_node_obj);
  *      str_fxn != NULL;
  *  Ensures:
  */
-typedef int (*nldr_getfxnaddrfxn) (struct nldr_nodeobject
-                                   * nldr_node_obj,
-                                   char * str_fxn, u32 * addr);
+typedef int(*nldr_getfxnaddrfxn) (struct nldr_nodeobject
+					 * nldr_node_obj,
+					 char *str_fxn, u32 * addr);
 
 /*
  *  ======== nldr_load ========
@@ -224,8 +224,8 @@ typedef int (*nldr_getfxnaddrfxn) (struct nldr_nodeobject
  *      Valid nldr_node_obj.
  *  Ensures:
  */
-typedef int (*nldr_loadfxn) (struct nldr_nodeobject * nldr_node_obj,
-                             enum nldr_phase phase);
+typedef int(*nldr_loadfxn) (struct nldr_nodeobject *nldr_node_obj,
+				   enum nldr_phase phase);
 
 /*
  *  ======== nldr_unload ========
@@ -241,19 +241,19 @@ typedef int (*nldr_loadfxn) (struct nldr_nodeobject * nldr_node_obj,
  *      Valid nldr_node_obj.
  *  Ensures:
  */
-typedef int (*nldr_unloadfxn) (struct nldr_nodeobject * nldr_node_obj,
-                               enum nldr_phase phase);
+typedef int(*nldr_unloadfxn) (struct nldr_nodeobject *nldr_node_obj,
+				     enum nldr_phase phase);
 
 /*
  *  ======== node_ldr_fxns ========
  */
 struct node_ldr_fxns {
-  nldr_allocatefxn allocate;
-  nldr_createfxn create;
-  nldr_deletefxn delete;
-  nldr_getfxnaddrfxn get_fxn_addr;
-  nldr_loadfxn load;
-  nldr_unloadfxn unload;
+	nldr_allocatefxn allocate;
+	nldr_createfxn create;
+	nldr_deletefxn delete;
+	nldr_getfxnaddrfxn get_fxn_addr;
+	nldr_loadfxn load;
+	nldr_unloadfxn unload;
 };
 
 #endif /* NLDRDEFS_ */

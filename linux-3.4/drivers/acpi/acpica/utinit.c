@@ -48,19 +48,19 @@
 #include "actables.h"
 
 #define _COMPONENT          ACPI_UTILITIES
-ACPI_MODULE_NAME ("utinit")
+ACPI_MODULE_NAME("utinit")
 
 /* Local prototypes */
-static void acpi_ut_terminate (void);
+static void acpi_ut_terminate(void);
 
 #if (!ACPI_REDUCED_HARDWARE)
 
-static void acpi_ut_free_gpe_lists (void);
+static void acpi_ut_free_gpe_lists(void);
 
 #else
 
 #define acpi_ut_free_gpe_lists()
-#endif        /* !ACPI_REDUCED_HARDWARE */
+#endif				/* !ACPI_REDUCED_HARDWARE */
 
 #if (!ACPI_REDUCED_HARDWARE)
 /******************************************************************************
@@ -75,32 +75,32 @@ static void acpi_ut_free_gpe_lists (void);
  *
  ******************************************************************************/
 
-static void acpi_ut_free_gpe_lists (void)
+static void acpi_ut_free_gpe_lists(void)
 {
-  struct acpi_gpe_block_info * gpe_block;
-  struct acpi_gpe_block_info * next_gpe_block;
-  struct acpi_gpe_xrupt_info * gpe_xrupt_info;
-  struct acpi_gpe_xrupt_info * next_gpe_xrupt_info;
-  
-  /* Free global GPE blocks and related info structures */
-  
-  gpe_xrupt_info = acpi_gbl_gpe_xrupt_list_head;
-  while (gpe_xrupt_info) {
-    gpe_block = gpe_xrupt_info->gpe_block_list_head;
-    while (gpe_block) {
-      next_gpe_block = gpe_block->next;
-      ACPI_FREE (gpe_block->event_info);
-      ACPI_FREE (gpe_block->register_info);
-      ACPI_FREE (gpe_block);
-      
-      gpe_block = next_gpe_block;
-    }
-    next_gpe_xrupt_info = gpe_xrupt_info->next;
-    ACPI_FREE (gpe_xrupt_info);
-    gpe_xrupt_info = next_gpe_xrupt_info;
-  }
+	struct acpi_gpe_block_info *gpe_block;
+	struct acpi_gpe_block_info *next_gpe_block;
+	struct acpi_gpe_xrupt_info *gpe_xrupt_info;
+	struct acpi_gpe_xrupt_info *next_gpe_xrupt_info;
+
+	/* Free global GPE blocks and related info structures */
+
+	gpe_xrupt_info = acpi_gbl_gpe_xrupt_list_head;
+	while (gpe_xrupt_info) {
+		gpe_block = gpe_xrupt_info->gpe_block_list_head;
+		while (gpe_block) {
+			next_gpe_block = gpe_block->next;
+			ACPI_FREE(gpe_block->event_info);
+			ACPI_FREE(gpe_block->register_info);
+			ACPI_FREE(gpe_block);
+
+			gpe_block = next_gpe_block;
+		}
+		next_gpe_xrupt_info = gpe_xrupt_info->next;
+		ACPI_FREE(gpe_xrupt_info);
+		gpe_xrupt_info = next_gpe_xrupt_info;
+	}
 }
-#endif        /* !ACPI_REDUCED_HARDWARE */
+#endif				/* !ACPI_REDUCED_HARDWARE */
 
 /******************************************************************************
  *
@@ -114,13 +114,13 @@ static void acpi_ut_free_gpe_lists (void)
  *
  ******************************************************************************/
 
-static void acpi_ut_terminate (void)
+static void acpi_ut_terminate(void)
 {
-  ACPI_FUNCTION_TRACE (ut_terminate);
-  
-  acpi_ut_free_gpe_lists();
-  acpi_ut_delete_address_lists();
-  return_VOID;
+	ACPI_FUNCTION_TRACE(ut_terminate);
+
+	acpi_ut_free_gpe_lists();
+	acpi_ut_delete_address_lists();
+	return_VOID;
 }
 
 /*******************************************************************************
@@ -136,35 +136,35 @@ static void acpi_ut_terminate (void)
  *
  ******************************************************************************/
 
-void acpi_ut_subsystem_shutdown (void)
+void acpi_ut_subsystem_shutdown(void)
 {
-  ACPI_FUNCTION_TRACE (ut_subsystem_shutdown);
-  
-  #ifndef ACPI_ASL_COMPILER
-  
-  /* Close the acpi_event Handling */
-  
-  acpi_ev_terminate();
-  
-  /* Delete any dynamic _OSI interfaces */
-  
-  acpi_ut_interface_terminate();
-  #endif
-  
-  /* Close the Namespace */
-  
-  acpi_ns_terminate();
-  
-  /* Delete the ACPI tables */
-  
-  acpi_tb_terminate();
-  
-  /* Close the globals */
-  
-  acpi_ut_terminate();
-  
-  /* Purge the local caches */
-  
-  (void) acpi_ut_delete_caches();
-  return_VOID;
+	ACPI_FUNCTION_TRACE(ut_subsystem_shutdown);
+
+#ifndef ACPI_ASL_COMPILER
+
+	/* Close the acpi_event Handling */
+
+	acpi_ev_terminate();
+
+	/* Delete any dynamic _OSI interfaces */
+
+	acpi_ut_interface_terminate();
+#endif
+
+	/* Close the Namespace */
+
+	acpi_ns_terminate();
+
+	/* Delete the ACPI tables */
+
+	acpi_tb_terminate();
+
+	/* Close the globals */
+
+	acpi_ut_terminate();
+
+	/* Purge the local caches */
+
+	(void)acpi_ut_delete_caches();
+	return_VOID;
 }

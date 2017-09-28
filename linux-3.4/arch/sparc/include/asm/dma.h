@@ -14,10 +14,10 @@
 #define SIZE_64K       (64*1024)
 
 /* SBUS DMA controller reg offsets */
-#define DMA_CSR   0x00UL    /* rw  DMA control/status register    0x00   */
-#define DMA_ADDR  0x04UL    /* rw  DMA transfer address register  0x04   */
-#define DMA_COUNT 0x08UL    /* rw  DMA transfer count register    0x08   */
-#define DMA_TEST  0x0cUL    /* rw  DMA test/debug register        0x0c   */
+#define DMA_CSR		0x00UL		/* rw  DMA control/status register    0x00   */
+#define DMA_ADDR	0x04UL		/* rw  DMA transfer address register  0x04   */
+#define DMA_COUNT	0x08UL		/* rw  DMA transfer count register    0x08   */
+#define DMA_TEST	0x0cUL		/* rw  DMA test/debug register        0x0c   */
 
 /* Fields in the cond_reg register */
 /* First, the version identification bits */
@@ -51,9 +51,9 @@
 #define DMA_SCSI_DISAB   0x00020000        /* No FIFO drains during reg */
 #define DMA_DSBL_WR_INV  0x00020000        /* No EC inval. on slave writes */
 #define DMA_ADD_ENABLE   0x00040000        /* Special ESC DVMA optimization */
-#define DMA_E_BURSTS   0x000c0000    /* ENET: SBUS r/w burst mask */
-#define DMA_E_BURST32  0x00040000    /* ENET: SBUS 32 byte r/w burst */
-#define DMA_E_BURST16  0x00000000    /* ENET: SBUS 16 byte r/w burst */
+#define DMA_E_BURSTS	 0x000c0000	   /* ENET: SBUS r/w burst mask */
+#define DMA_E_BURST32	 0x00040000	   /* ENET: SBUS 32 byte r/w burst */
+#define DMA_E_BURST16	 0x00000000	   /* ENET: SBUS 16 byte r/w burst */
 #define DMA_BRST_SZ      0x000c0000        /* SCSI: SBUS r/w burst size */
 #define DMA_BRST64       0x000c0000        /* SCSI: 64byte bursts (HME on UltraSparc only) */
 #define DMA_BRST32       0x00040000        /* SCSI: 32byte bursts */
@@ -86,14 +86,14 @@
 #ifdef CONFIG_PCI
 extern int isa_dma_bridge_buggy;
 #else
-#define isa_dma_bridge_buggy  (0)
+#define isa_dma_bridge_buggy 	(0)
 #endif
 
 #ifdef CONFIG_SPARC32
 
 /* Routines for data transfer buffers. */
-BTFIXUPDEF_CALL (char *, mmu_lockarea, char *, unsigned long)
-BTFIXUPDEF_CALL (void,   mmu_unlockarea, char *, unsigned long)
+BTFIXUPDEF_CALL(char *, mmu_lockarea, char *, unsigned long)
+BTFIXUPDEF_CALL(void,   mmu_unlockarea, char *, unsigned long)
 
 #define mmu_lockarea(vaddr,len) BTFIXUP_CALL(mmu_lockarea)(vaddr,len)
 #define mmu_unlockarea(vaddr,len) BTFIXUP_CALL(mmu_unlockarea)(vaddr,len)
@@ -103,10 +103,10 @@ struct device;
 struct scatterlist;
 
 /* These are implementations for sbus_map_sg/sbus_unmap_sg... collapse later */
-BTFIXUPDEF_CALL (__u32, mmu_get_scsi_one, struct device *, char *, unsigned long)
-BTFIXUPDEF_CALL (void,  mmu_get_scsi_sgl, struct device *, struct scatterlist *, int)
-BTFIXUPDEF_CALL (void,  mmu_release_scsi_one, struct device *, __u32, unsigned long)
-BTFIXUPDEF_CALL (void,  mmu_release_scsi_sgl, struct device *, struct scatterlist *, int)
+BTFIXUPDEF_CALL(__u32, mmu_get_scsi_one, struct device *, char *, unsigned long)
+BTFIXUPDEF_CALL(void,  mmu_get_scsi_sgl, struct device *, struct scatterlist *, int)
+BTFIXUPDEF_CALL(void,  mmu_release_scsi_one, struct device *, __u32, unsigned long)
+BTFIXUPDEF_CALL(void,  mmu_release_scsi_sgl, struct device *, struct scatterlist *, int)
 
 #define mmu_get_scsi_one(dev,vaddr,len) BTFIXUP_CALL(mmu_get_scsi_one)(dev,vaddr,len)
 #define mmu_get_scsi_sgl(dev,sg,sz) BTFIXUP_CALL(mmu_get_scsi_sgl)(dev,sg,sz)
@@ -129,8 +129,8 @@ BTFIXUPDEF_CALL (void,  mmu_release_scsi_sgl, struct device *, struct scatterlis
  * know if we are mapping RAM or I/O, so it has to be an additional argument
  * to a separate mapping function for CPU visible mappings.
  */
-BTFIXUPDEF_CALL (int, mmu_map_dma_area, struct device *, dma_addr_t *, unsigned long, unsigned long, int len)
-BTFIXUPDEF_CALL (void, mmu_unmap_dma_area, struct device *, unsigned long busa, int len)
+BTFIXUPDEF_CALL(int, mmu_map_dma_area, struct device *, dma_addr_t *, unsigned long, unsigned long, int len)
+BTFIXUPDEF_CALL(void, mmu_unmap_dma_area, struct device *, unsigned long busa, int len)
 
 #define mmu_map_dma_area(dev,pba,va,a,len) BTFIXUP_CALL(mmu_map_dma_area)(dev,pba,va,a,len)
 #define mmu_unmap_dma_area(dev,ba,len) BTFIXUP_CALL(mmu_unmap_dma_area)(dev,ba,len)

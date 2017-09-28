@@ -16,6 +16,6 @@
 
 /* extern file from nuc960.c */
 
-extern void nuc960_board_init (void);
-extern void nuc960_init_clocks (void);
-extern void nuc960_map_io (void);
+extern void nuc960_board_init(void);
+extern void nuc960_init_clocks(void);
+extern void nuc960_map_io(void);

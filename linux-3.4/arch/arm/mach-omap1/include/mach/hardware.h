@@ -9,12 +9,12 @@
 /*
  * NOTE: Please use ioremap + __raw_read/write where possible instead of these
  */
-extern u8 omap_readb (u32 pa);
-extern u16 omap_readw (u32 pa);
-extern u32 omap_readl (u32 pa);
-extern void omap_writeb (u8 v, u32 pa);
-extern void omap_writew (u16 v, u32 pa);
-extern void omap_writel (u32 v, u32 pa);
+extern u8 omap_readb(u32 pa);
+extern u16 omap_readw(u32 pa);
+extern u32 omap_readl(u32 pa);
+extern void omap_writeb(u8 v, u32 pa);
+extern void omap_writew(u16 v, u32 pa);
+extern void omap_writel(u32 v, u32 pa);
 
 #include <plat/tc.h>
 
@@ -23,16 +23,16 @@ extern void omap_writel (u32 v, u32 pa);
  * from NOR flash (using external chipselect 3) rather than mask ROM,
  * which uses BM to interchange the physical CS0 and CS3 addresses.
  */
-static inline u32 omap_cs0m_phys (void)
+static inline u32 omap_cs0m_phys(void)
 {
-  return (omap_readl (EMIFS_CONFIG) & OMAP_EMIFS_CONFIG_BM)
-         ?  OMAP_CS3_PHYS : 0;
+	return (omap_readl(EMIFS_CONFIG) & OMAP_EMIFS_CONFIG_BM)
+			?  OMAP_CS3_PHYS : 0;
 }
 
-static inline u32 omap_cs3_phys (void)
+static inline u32 omap_cs3_phys(void)
 {
-  return (omap_readl (EMIFS_CONFIG) & OMAP_EMIFS_CONFIG_BM)
-         ? 0 : OMAP_CS3_PHYS;
+	return (omap_readl(EMIFS_CONFIG) & OMAP_EMIFS_CONFIG_BM)
+			? 0 : OMAP_CS3_PHYS;
 }
 
 #endif

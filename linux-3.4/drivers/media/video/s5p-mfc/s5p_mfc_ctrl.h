@@ -2,7 +2,7 @@
  * linux/drivers/media/video/s5p-mfc/s5p_mfc_ctrl.h
  *
  * Copyright (c) 2010 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com/
+ *		http://www.samsung.com/
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,15 +15,15 @@
 
 #include "s5p_mfc_common.h"
 
-int s5p_mfc_release_firmware (struct s5p_mfc_dev * dev);
-int s5p_mfc_alloc_and_load_firmware (struct s5p_mfc_dev * dev);
-int s5p_mfc_reload_firmware (struct s5p_mfc_dev * dev);
+int s5p_mfc_release_firmware(struct s5p_mfc_dev *dev);
+int s5p_mfc_alloc_and_load_firmware(struct s5p_mfc_dev *dev);
+int s5p_mfc_reload_firmware(struct s5p_mfc_dev *dev);
 
-int s5p_mfc_init_hw (struct s5p_mfc_dev * dev);
+int s5p_mfc_init_hw(struct s5p_mfc_dev *dev);
 
-int s5p_mfc_sleep (struct s5p_mfc_dev * dev);
-int s5p_mfc_wakeup (struct s5p_mfc_dev * dev);
+int s5p_mfc_sleep(struct s5p_mfc_dev *dev);
+int s5p_mfc_wakeup(struct s5p_mfc_dev *dev);
 
-int s5p_mfc_reset (struct s5p_mfc_dev * dev);
+int s5p_mfc_reset(struct s5p_mfc_dev *dev);
 
 #endif /* S5P_MFC_CTRL_H */

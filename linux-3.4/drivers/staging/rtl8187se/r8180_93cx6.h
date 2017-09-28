@@ -1,13 +1,13 @@
 /*
-  This is part of rtl8180 OpenSource driver
-  Copyright (C) Andrea Merello 2004-2005  <andreamrl@tiscali.it>
-  Released under the terms of GPL (General Public Licence)
+	This is part of rtl8180 OpenSource driver
+	Copyright (C) Andrea Merello 2004-2005  <andreamrl@tiscali.it>
+	Released under the terms of GPL (General Public Licence)
 
-  Parts of this driver are based on the GPL part of the official realtek driver
-  Parts of this driver are based on the rtl8180 driver skeleton from Patric Schenke & Andres Salomon
-  Parts of this driver are based on the Intel Pro Wireless 2100 GPL driver
+	Parts of this driver are based on the GPL part of the official realtek driver
+	Parts of this driver are based on the rtl8180 driver skeleton from Patric Schenke & Andres Salomon
+	Parts of this driver are based on the Intel Pro Wireless 2100 GPL driver
 
-  We want to tanks the Authors of such projects and the Ndiswrapper project Authors.
+	We want to tanks the Authors of such projects and the Ndiswrapper project Authors.
 */
 
 /*This files contains card eeprom (93c46 or 93c56) programming routines*/
@@ -22,11 +22,11 @@
 #define EPROM_ANAPARAM_ADDRHWORD 0xe
 
 #define RFCHIPID 0x6
-#define RFCHIPID_INTERSIL 1
-#define RFCHIPID_RFMD 2
-#define RFCHIPID_PHILIPS 3
-#define RFCHIPID_MAXIM 4
-#define RFCHIPID_GCT 5
+#define	RFCHIPID_INTERSIL 1
+#define	RFCHIPID_RFMD 2
+#define	RFCHIPID_PHILIPS 3
+#define	RFCHIPID_MAXIM 4
+#define	RFCHIPID_GCT 5
 #define RFCHIPID_RTL8225 9
 #define RF_ZEBRA2 11
 #define EPROM_TXPW_BASE 0x05
@@ -43,12 +43,12 @@
 
 #define CIS 0x18
 
-#define EPROM_TXPW_OFDM_CH1_2 0x20
+#define	EPROM_TXPW_OFDM_CH1_2 0x20
 
-#define EPROM_TXPW_CH1_2 0x30
+#define	EPROM_TXPW_CH1_2 0x30
 
-#define RTL818X_EEPROM_CMD_READ   (1 << 0)
-#define RTL818X_EEPROM_CMD_WRITE  (1 << 1)
-#define RTL818X_EEPROM_CMD_CK   (1 << 2)
-#define RTL818X_EEPROM_CMD_CS   (1 << 3)
+#define RTL818X_EEPROM_CMD_READ		(1 << 0)
+#define RTL818X_EEPROM_CMD_WRITE	(1 << 1)
+#define RTL818X_EEPROM_CMD_CK		(1 << 2)
+#define RTL818X_EEPROM_CMD_CS		(1 << 3)
 

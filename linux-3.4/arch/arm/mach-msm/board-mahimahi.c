@@ -38,46 +38,46 @@
 
 static uint debug_uart;
 
-module_param_named (debug_uart, debug_uart, uint, 0);
+module_param_named(debug_uart, debug_uart, uint, 0);
 
-static struct platform_device * devices[] __initdata = {
-  #if !defined(CONFIG_MSM_SERIAL_DEBUGGER)
-  & msm_device_uart1,
-  #endif
-  & msm_device_uart_dm1,
-  &msm_device_nand,
+static struct platform_device *devices[] __initdata = {
+#if !defined(CONFIG_MSM_SERIAL_DEBUGGER)
+	&msm_device_uart1,
+#endif
+	&msm_device_uart_dm1,
+	&msm_device_nand,
 };
 
-static void __init mahimahi_init (void)
+static void __init mahimahi_init(void)
 {
-  platform_add_devices (devices, ARRAY_SIZE (devices) );
+	platform_add_devices(devices, ARRAY_SIZE(devices));
 }
 
-static void __init mahimahi_fixup (struct tag * tags, char ** cmdline,
-                                   struct meminfo * mi)
+static void __init mahimahi_fixup(struct tag *tags, char **cmdline,
+				  struct meminfo *mi)
 {
-  mi->nr_banks = 2;
-  mi->bank[0].start = PHYS_OFFSET;
-  mi->bank[0].node = PHYS_TO_NID (PHYS_OFFSET);
-  mi->bank[0].size = (219 * 1024 * 1024);
-  mi->bank[1].start = MSM_HIGHMEM_BASE;
-  mi->bank[1].node = PHYS_TO_NID (MSM_HIGHMEM_BASE);
-  mi->bank[1].size = MSM_HIGHMEM_SIZE;
+	mi->nr_banks = 2;
+	mi->bank[0].start = PHYS_OFFSET;
+	mi->bank[0].node = PHYS_TO_NID(PHYS_OFFSET);
+	mi->bank[0].size = (219*1024*1024);
+	mi->bank[1].start = MSM_HIGHMEM_BASE;
+	mi->bank[1].node = PHYS_TO_NID(MSM_HIGHMEM_BASE);
+	mi->bank[1].size = MSM_HIGHMEM_SIZE;
 }
 
-static void __init mahimahi_map_io (void)
+static void __init mahimahi_map_io(void)
 {
-  msm_map_common_io();
-  msm_clock_init();
+	msm_map_common_io();
+	msm_clock_init();
 }
 
 extern struct sys_timer msm_timer;
 
-MACHINE_START (MAHIMAHI, "mahimahi")
-.atag_offset  = 0x100,
- .fixup    = mahimahi_fixup,
-  .map_io   = mahimahi_map_io,
-   .init_irq = msm_init_irq,
-    .init_machine = mahimahi_init,
-     .timer    = &msm_timer,
-      MACHINE_END
+MACHINE_START(MAHIMAHI, "mahimahi")
+	.atag_offset	= 0x100,
+	.fixup		= mahimahi_fixup,
+	.map_io		= mahimahi_map_io,
+	.init_irq	= msm_init_irq,
+	.init_machine	= mahimahi_init,
+	.timer		= &msm_timer,
+MACHINE_END

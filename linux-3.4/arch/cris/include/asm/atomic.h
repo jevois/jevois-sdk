@@ -20,135 +20,135 @@
 
 /* These should be written in asm but we do it in C for now. */
 
-static inline void atomic_add (int i, volatile atomic_t * v)
+static inline void atomic_add(int i, volatile atomic_t *v)
 {
-  unsigned long flags;
-  cris_atomic_save (v, flags);
-  v->counter += i;
-  cris_atomic_restore (v, flags);
+	unsigned long flags;
+	cris_atomic_save(v, flags);
+	v->counter += i;
+	cris_atomic_restore(v, flags);
 }
 
-static inline void atomic_sub (int i, volatile atomic_t * v)
+static inline void atomic_sub(int i, volatile atomic_t *v)
 {
-  unsigned long flags;
-  cris_atomic_save (v, flags);
-  v->counter -= i;
-  cris_atomic_restore (v, flags);
+	unsigned long flags;
+	cris_atomic_save(v, flags);
+	v->counter -= i;
+	cris_atomic_restore(v, flags);
 }
 
-static inline int atomic_add_return (int i, volatile atomic_t * v)
+static inline int atomic_add_return(int i, volatile atomic_t *v)
 {
-  unsigned long flags;
-  int retval;
-  cris_atomic_save (v, flags);
-  retval = (v->counter += i);
-  cris_atomic_restore (v, flags);
-  return retval;
+	unsigned long flags;
+	int retval;
+	cris_atomic_save(v, flags);
+	retval = (v->counter += i);
+	cris_atomic_restore(v, flags);
+	return retval;
 }
 
-#define atomic_add_negative(a, v) (atomic_add_return((a), (v)) < 0)
+#define atomic_add_negative(a, v)	(atomic_add_return((a), (v)) < 0)
 
-static inline int atomic_sub_return (int i, volatile atomic_t * v)
+static inline int atomic_sub_return(int i, volatile atomic_t *v)
 {
-  unsigned long flags;
-  int retval;
-  cris_atomic_save (v, flags);
-  retval = (v->counter -= i);
-  cris_atomic_restore (v, flags);
-  return retval;
+	unsigned long flags;
+	int retval;
+	cris_atomic_save(v, flags);
+	retval = (v->counter -= i);
+	cris_atomic_restore(v, flags);
+	return retval;
 }
 
-static inline int atomic_sub_and_test (int i, volatile atomic_t * v)
+static inline int atomic_sub_and_test(int i, volatile atomic_t *v)
 {
-  int retval;
-  unsigned long flags;
-  cris_atomic_save (v, flags);
-  retval = (v->counter -= i) == 0;
-  cris_atomic_restore (v, flags);
-  return retval;
+	int retval;
+	unsigned long flags;
+	cris_atomic_save(v, flags);
+	retval = (v->counter -= i) == 0;
+	cris_atomic_restore(v, flags);
+	return retval;
 }
 
-static inline void atomic_inc (volatile atomic_t * v)
+static inline void atomic_inc(volatile atomic_t *v)
 {
-  unsigned long flags;
-  cris_atomic_save (v, flags);
-  (v->counter)++;
-  cris_atomic_restore (v, flags);
+	unsigned long flags;
+	cris_atomic_save(v, flags);
+	(v->counter)++;
+	cris_atomic_restore(v, flags);
 }
 
-static inline void atomic_dec (volatile atomic_t * v)
+static inline void atomic_dec(volatile atomic_t *v)
 {
-  unsigned long flags;
-  cris_atomic_save (v, flags);
-  (v->counter)--;
-  cris_atomic_restore (v, flags);
+	unsigned long flags;
+	cris_atomic_save(v, flags);
+	(v->counter)--;
+	cris_atomic_restore(v, flags);
 }
 
-static inline int atomic_inc_return (volatile atomic_t * v)
+static inline int atomic_inc_return(volatile atomic_t *v)
 {
-  unsigned long flags;
-  int retval;
-  cris_atomic_save (v, flags);
-  retval = ++ (v->counter);
-  cris_atomic_restore (v, flags);
-  return retval;
+	unsigned long flags;
+	int retval;
+	cris_atomic_save(v, flags);
+	retval = ++(v->counter);
+	cris_atomic_restore(v, flags);
+	return retval;
 }
 
-static inline int atomic_dec_return (volatile atomic_t * v)
+static inline int atomic_dec_return(volatile atomic_t *v)
 {
-  unsigned long flags;
-  int retval;
-  cris_atomic_save (v, flags);
-  retval = -- (v->counter);
-  cris_atomic_restore (v, flags);
-  return retval;
+	unsigned long flags;
+	int retval;
+	cris_atomic_save(v, flags);
+	retval = --(v->counter);
+	cris_atomic_restore(v, flags);
+	return retval;
 }
-static inline int atomic_dec_and_test (volatile atomic_t * v)
+static inline int atomic_dec_and_test(volatile atomic_t *v)
 {
-  int retval;
-  unsigned long flags;
-  cris_atomic_save (v, flags);
-  retval = -- (v->counter) == 0;
-  cris_atomic_restore (v, flags);
-  return retval;
-}
-
-static inline int atomic_inc_and_test (volatile atomic_t * v)
-{
-  int retval;
-  unsigned long flags;
-  cris_atomic_save (v, flags);
-  retval = ++ (v->counter) == 0;
-  cris_atomic_restore (v, flags);
-  return retval;
+	int retval;
+	unsigned long flags;
+	cris_atomic_save(v, flags);
+	retval = --(v->counter) == 0;
+	cris_atomic_restore(v, flags);
+	return retval;
 }
 
-static inline int atomic_cmpxchg (atomic_t * v, int old, int new)
+static inline int atomic_inc_and_test(volatile atomic_t *v)
 {
-  int ret;
-  unsigned long flags;
-  
-  cris_atomic_save (v, flags);
-  ret = v->counter;
-  if (likely (ret == old) )
-  { v->counter = new; }
-  cris_atomic_restore (v, flags);
-  return ret;
+	int retval;
+	unsigned long flags;
+	cris_atomic_save(v, flags);
+	retval = ++(v->counter) == 0;
+	cris_atomic_restore(v, flags);
+	return retval;
+}
+
+static inline int atomic_cmpxchg(atomic_t *v, int old, int new)
+{
+	int ret;
+	unsigned long flags;
+
+	cris_atomic_save(v, flags);
+	ret = v->counter;
+	if (likely(ret == old))
+		v->counter = new;
+	cris_atomic_restore(v, flags);
+	return ret;
 }
 
 #define atomic_xchg(v, new) (xchg(&((v)->counter), new))
 
-static inline int __atomic_add_unless (atomic_t * v, int a, int u)
+static inline int __atomic_add_unless(atomic_t *v, int a, int u)
 {
-  int ret;
-  unsigned long flags;
-  
-  cris_atomic_save (v, flags);
-  ret = v->counter;
-  if (ret != u)
-  { v->counter += a; }
-  cris_atomic_restore (v, flags);
-  return ret;
+	int ret;
+	unsigned long flags;
+
+	cris_atomic_save(v, flags);
+	ret = v->counter;
+	if (ret != u)
+		v->counter += a;
+	cris_atomic_restore(v, flags);
+	return ret;
 }
 
 /* Atomic operations are already serializing */

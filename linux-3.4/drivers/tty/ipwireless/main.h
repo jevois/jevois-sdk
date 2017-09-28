@@ -26,10 +26,10 @@
 
 #include "hardware.h"
 
-#define IPWIRELESS_PCCARD_NAME    "ipwireless"
-#define IPWIRELESS_PCMCIA_VERSION "1.1"
+#define IPWIRELESS_PCCARD_NAME		"ipwireless"
+#define IPWIRELESS_PCMCIA_VERSION	"1.1"
 #define IPWIRELESS_PCMCIA_AUTHOR        \
-  "Stephen Blackheath, Ben Martel, Jiri Kosina and David Sterba"
+	"Stephen Blackheath, Ben Martel, Jiri Kosina and David Sterba"
 
 #define IPWIRELESS_TX_QUEUE_SIZE  262144
 #define IPWIRELESS_RX_QUEUE_SIZE  262144
@@ -41,23 +41,23 @@ struct ipw_network;
 struct ipw_tty;
 
 struct ipw_dev {
-  struct pcmcia_device * link;
-  int is_v2_card;
-  
-  void __iomem * attr_memory;
-  
-  void __iomem * common_memory;
-  
-  /* Reference to attribute memory, containing CIS data */
-  void * attribute_memory;
-  
-  /* Hardware context */
-  struct ipw_hardware * hardware;
-  /* Network layer context */
-  struct ipw_network * network;
-  /* TTY device context */
-  struct ipw_tty * tty;
-  struct work_struct work_reboot;
+	struct pcmcia_device *link;
+	int is_v2_card;
+
+	void __iomem *attr_memory;
+
+	void __iomem *common_memory;
+
+	/* Reference to attribute memory, containing CIS data */
+	void *attribute_memory;
+
+	/* Hardware context */
+	struct ipw_hardware *hardware;
+	/* Network layer context */
+	struct ipw_network *network;
+	/* TTY device context */
+	struct ipw_tty *tty;
+	struct work_struct work_reboot;
 };
 
 /* Module parametres */

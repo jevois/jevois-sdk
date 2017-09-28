@@ -28,57 +28,57 @@
 #include <command.h>
 #include <asm/processor.h>
 
-int checkcpu (void)
+int checkcpu(void)
 {
-  puts ("CPU: SH3\n");
-  return 0;
+	puts("CPU: SH3\n");
+	return 0;
 }
 
-int cpu_init (void)
+int cpu_init(void)
 {
-  return 0;
+	return 0;
 }
 
-int cleanup_before_linux (void)
+int cleanup_before_linux(void)
 {
-  disable_interrupts();
-  return 0;
+	disable_interrupts();
+	return 0;
 }
 
-int do_reset (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
+int do_reset(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
-  disable_interrupts();
-  reset_cpu (0);
-  return 0;
+	disable_interrupts();
+	reset_cpu(0);
+	return 0;
 }
 
-void flush_cache (unsigned long addr, unsigned long size)
+void flush_cache(unsigned long addr, unsigned long size)
 {
 
 }
 
-void icache_enable (void)
-{
-}
-
-void icache_disable (void)
+void icache_enable(void)
 {
 }
 
-int icache_status (void)
-{
-  return 0;
-}
-
-void dcache_enable (void)
+void icache_disable(void)
 {
 }
 
-void dcache_disable (void)
+int icache_status(void)
+{
+	return 0;
+}
+
+void dcache_enable(void)
 {
 }
 
-int dcache_status (void)
+void dcache_disable(void)
 {
-  return 0;
+}
+
+int dcache_status(void)
+{
+	return 0;
 }

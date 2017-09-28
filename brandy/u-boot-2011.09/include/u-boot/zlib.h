@@ -5,12 +5,12 @@
  * decompression for PPP packets.
  */
 
-/*
- * ==FILEVERSION 960122==
- *
- * This marker is used by the Linux installation script to determine
- * whether an up-to-date version of this file is already installed.
- */
+ /*
+  * ==FILEVERSION 960122==
+  *
+  * This marker is used by the Linux installation script to determine
+  * whether an up-to-date version of this file is already installed.
+  */
 
 /* zlib.h -- interface of the 'zlib' general purpose compression library
   version 1.2.3, July 18th, 2005
@@ -212,7 +212,7 @@ extern "C" {
  for small objects.
 */
 
-/* Type declarations */
+                        /* Type declarations */
 
 #ifndef OF /* function prototypes */
 #  ifdef STDC
@@ -230,7 +230,7 @@ extern "C" {
  */
 #ifdef SYS16BIT
 #  if defined(M_I86SM) || defined(M_I86MM)
-/* MSC small or medium model */
+     /* MSC small or medium model */
 #    define SMALL_MEDIUM
 #    ifdef _MSC_VER
 #      define FAR _far
@@ -239,7 +239,7 @@ extern "C" {
 #    endif
 #  endif
 #  if (defined(__SMALL__) || defined(__MEDIUM__))
-/* Turbo C small or medium model */
+     /* Turbo C small or medium model */
 #    define SMALL_MEDIUM
 #    ifdef __BORLANDC__
 #      define FAR _far
@@ -250,9 +250,9 @@ extern "C" {
 #endif
 
 #if defined(WINDOWS) || defined(WIN32)
-/* If building or using zlib as a DLL, define ZLIB_DLL.
- * This is not mandatory, but it offers a little performance increase.
- */
+   /* If building or using zlib as a DLL, define ZLIB_DLL.
+    * This is not mandatory, but it offers a little performance increase.
+    */
 #  ifdef ZLIB_DLL
 #    if defined(WIN32) && (!defined(__BORLANDC__) || (__BORLANDC__ >= 0x500))
 #      ifdef ZLIB_INTERNAL
@@ -262,17 +262,17 @@ extern "C" {
 #      endif
 #    endif
 #  endif  /* ZLIB_DLL */
-/* If building or using zlib with the WINAPI/WINAPIV calling convention,
- * define ZLIB_WINAPI.
- * Caution: the standard ZLIB1.DLL is NOT compiled using ZLIB_WINAPI.
- */
+   /* If building or using zlib with the WINAPI/WINAPIV calling convention,
+    * define ZLIB_WINAPI.
+    * Caution: the standard ZLIB1.DLL is NOT compiled using ZLIB_WINAPI.
+    */
 #  ifdef ZLIB_WINAPI
 #    ifdef FAR
 #      undef FAR
 #    endif
 #    include <windows.h>
-/* No need for _export, use ZLIB.DEF instead. */
-/* For complete Windows compatibility, use WINAPI, not __stdcall. */
+     /* No need for _export, use ZLIB.DEF instead. */
+     /* For complete Windows compatibility, use WINAPI, not __stdcall. */
 #    define ZEXPORT WINAPI
 #    ifdef WIN32
 #      define ZEXPORTVA WINAPIV
@@ -315,10 +315,10 @@ typedef unsigned int   uInt;  /* 16 bits or more */
 typedef unsigned long  uLong; /* 32 bits or more */
 
 #ifdef SMALL_MEDIUM
-/* Borland C/C++ and some old MSC versions ignore FAR inside typedef */
+   /* Borland C/C++ and some old MSC versions ignore FAR inside typedef */
 #  define Bytef Byte FAR
 #else
-typedef Byte  FAR Bytef;
+   typedef Byte  FAR Bytef;
 #endif
 typedef char  FAR charf;
 typedef int   FAR intf;
@@ -326,13 +326,13 @@ typedef uInt  FAR uIntf;
 typedef uLong FAR uLongf;
 
 #ifdef STDC
-typedef void const * voidpc;
-typedef void FAR  * voidpf;
-typedef void    *   voidp;
+   typedef void const *voidpc;
+   typedef void FAR   *voidpf;
+   typedef void       *voidp;
 #else
-typedef Byte const * voidpc;
-typedef Byte FAR  * voidpf;
-typedef Byte    *   voidp;
+   typedef Byte const *voidpc;
+   typedef Byte FAR   *voidpf;
+   typedef Byte       *voidp;
 #endif
 
 #  ifdef VMS
@@ -411,57 +411,57 @@ typedef Byte    *   voidp;
   crash even in case of corrupted input.
 */
 
-typedef voidpf (*alloc_func) OF ( (voidpf opaque, uInt items, uInt size) );
-typedef void   (*free_func)  OF ( (voidpf opaque, voidpf address, uInt size) );
-typedef void   (*cb_func)    OF ( (Bytef * buf, uInt len) );
+typedef voidpf (*alloc_func) OF((voidpf opaque, uInt items, uInt size));
+typedef void   (*free_func)  OF((voidpf opaque, voidpf address, uInt size));
+typedef void   (*cb_func)    OF((Bytef *buf, uInt len));
 
 struct internal_state;
 
 typedef struct z_stream_s {
-  Bytef * next_in; /* next input byte */
-  uInt  avail_in; /* number of bytes available at next_in */
-  uLong total_in; /* total nb of input bytes read so far */
-  Bytef * next_out; /* next output byte should be put there */
-  uInt  avail_out; /* remaining free space at next_out */
-  uLong total_out; /* total nb of bytes output so far */
-  char * msg; /* last error message, NULL if no error */
-  struct  internal_state FAR * state; /* not visible by applications */
-  alloc_func  zalloc; /* used to allocate the internal state */
-  free_func zfree;  /* used to free the internal state */
-  voidpf  opaque; /* private data object passed to zalloc and zfree */
-  int data_type;  /* best guess about the data type:
-          binary or text */
-  cb_func outcb;  /* called regularly just before blocks of output */
-  uLong adler;  /* adler32 value of the uncompressed data */
-  uLong reserved; /* reserved for future use */
+	Bytef	*next_in; /* next input byte */
+	uInt	avail_in; /* number of bytes available at next_in */
+	uLong	total_in; /* total nb of input bytes read so far */
+	Bytef	*next_out; /* next output byte should be put there */
+	uInt	avail_out; /* remaining free space at next_out */
+	uLong	total_out; /* total nb of bytes output so far */
+	char	*msg;	/* last error message, NULL if no error */
+	struct	internal_state FAR *state; /* not visible by applications */
+	alloc_func	zalloc;	/* used to allocate the internal state */
+	free_func	zfree;	/* used to free the internal state */
+	voidpf	opaque;	/* private data object passed to zalloc and zfree */
+	int	data_type;	/* best guess about the data type:
+					binary or text */
+	cb_func	outcb;	/* called regularly just before blocks of output */
+	uLong	adler;	/* adler32 value of the uncompressed data */
+	uLong	reserved;	/* reserved for future use */
 } z_stream;
 
-typedef z_stream FAR * z_streamp;
+typedef z_stream FAR *z_streamp;
 
 /*
      gzip header information passed to and from zlib routines.  See RFC 1952
   for more details on the meanings of these fields.
 */
 typedef struct gz_header_s {
-  int text; /* true if compressed data believed to be text */
-  uLong time; /* modification time */
-  int xflags; /* extra flags (not used when writing a gzip file) */
-  int os; /* operating system */
-  Bytef * extra; /* pointer to extra field or Z_NULL if none */
-  uInt  extra_len; /* extra field length (valid if extra != Z_NULL) */
-  uInt  extra_max; /* space at extra (only when reading header) */
-  Bytef * name; /* pointer to zero-terminated file name or Z_NULL */
-  uInt  name_max; /* space at name (only when reading header) */
-  Bytef * comment; /* pointer to zero-terminated comment or Z_NULL */
-  uInt  comm_max; /* space at comment (only when reading header) */
-  int hcrc; /* true if there was or will be a header crc */
-  int done; /* true when done reading gzip header (not used
-      when writing a gzip file) */
+	int	text;	/* true if compressed data believed to be text */
+	uLong	time;	/* modification time */
+	int	xflags;	/* extra flags (not used when writing a gzip file) */
+	int	os;	/* operating system */
+	Bytef	*extra;	/* pointer to extra field or Z_NULL if none */
+	uInt	extra_len; /* extra field length (valid if extra != Z_NULL) */
+	uInt	extra_max; /* space at extra (only when reading header) */
+	Bytef	*name; /* pointer to zero-terminated file name or Z_NULL */
+	uInt	name_max; /* space at name (only when reading header) */
+	Bytef	*comment; /* pointer to zero-terminated comment or Z_NULL */
+	uInt	comm_max; /* space at comment (only when reading header) */
+	int	hcrc; /* true if there was or will be a header crc */
+	int	done; /* true when done reading gzip header (not used
+			when writing a gzip file) */
 } gz_header;
 
-typedef gz_header FAR * gz_headerp;
+typedef gz_header FAR *gz_headerp;
 
-/* constants */
+                        /* constants */
 #define Z_NO_FLUSH      0
 #define Z_PARTIAL_FLUSH 1 /* will be removed, use Z_SYNC_FLUSH instead */
 #define Z_SYNC_FLUSH    2
@@ -507,7 +507,7 @@ typedef gz_header FAR * gz_headerp;
 
 #define Z_NULL  0  /* for initializing zalloc, zfree, opaque */
 
-/* basic functions */
+                        /* basic functions */
 
 /* The application can compare zlibVersion and ZLIB_VERSION for consistency.
    If the first character differs, the library code actually used is
@@ -515,10 +515,10 @@ typedef gz_header FAR * gz_headerp;
    This check is automatically made by deflateInit and inflateInit.
  */
 
-ZEXTERN int ZEXPORT inflateInit_ OF ( (z_streamp strm, const char * version,
-                                       int stream_size) );
-                                       
-ZEXTERN int ZEXPORT inflate OF ( (z_streamp strm, int flush) );
+ZEXTERN int ZEXPORT inflateInit_ OF((z_streamp strm, const char *version,
+				int stream_size));
+
+ZEXTERN int ZEXPORT inflate OF((z_streamp strm, int flush));
 /*
     inflate decompresses as much data as possible, and stops when the input
   buffer becomes empty or the output buffer becomes full. It may introduce
@@ -616,7 +616,7 @@ ZEXTERN int ZEXPORT inflate OF ( (z_streamp strm, int flush) );
   of the data is desired.
 */
 
-ZEXTERN int ZEXPORT inflateEnd OF ( (z_streamp strm) );
+ZEXTERN int ZEXPORT inflateEnd OF((z_streamp strm));
 /*
      All dynamically allocated data structures for this stream are freed.
    This function discards any unprocessed input and does not flush any
@@ -627,11 +627,11 @@ ZEXTERN int ZEXPORT inflateEnd OF ( (z_streamp strm) );
    static string (which must not be deallocated).
 */
 
-/* Advanced functions */
+                        /* Advanced functions */
 
-ZEXTERN int ZEXPORT inflateReset OF ( (z_streamp strm) );
+ZEXTERN int ZEXPORT inflateReset OF((z_streamp strm));
 
-/* utility functions */
+                        /* utility functions */
 
 /*
      The following utility functions are implemented on top of the
@@ -641,7 +641,7 @@ ZEXTERN int ZEXPORT inflateReset OF ( (z_streamp strm) );
    utility functions can easily be modified if you need special options.
 */
 
-ZEXTERN uLong ZEXPORT adler32 OF ( (uLong adler, const Bytef * buf, uInt len) );
+ZEXTERN uLong ZEXPORT adler32 OF((uLong adler, const Bytef *buf, uInt len));
 /*
      Update a running Adler-32 checksum with the bytes buf[0..len-1] and
    return the updated checksum. If buf is NULL, this function returns
@@ -664,7 +664,7 @@ ZEXTERN uLong ZEXPORT adler32 OF ( (uLong adler, const Bytef * buf, uInt len) );
    seq1 and seq2 concatenated, requiring only adler1, adler2, and len2.
 */
 
-ZEXTERN  uInt ZEXPORT crc32  OF ( (uInt crc, const Bytef * buf, uInt len) );
+ZEXTERN  uInt ZEXPORT crc32  OF((uInt crc, const Bytef *buf, uInt len));
 /*
      Update a running CRC-32 with the bytes buf[0..len-1] and return the
    updated CRC-32. If buf is NULL, this function returns the required initial
@@ -680,15 +680,15 @@ ZEXTERN  uInt ZEXPORT crc32  OF ( (uInt crc, const Bytef * buf, uInt len) );
      if (crc != original_crc) error();
 */
 
-ZEXTERN int ZEXPORT inflateInit2_ OF ( (z_streamp strm, int  windowBits,
-                                        const char * version, int stream_size) );
+ZEXTERN int ZEXPORT inflateInit2_ OF((z_streamp strm, int  windowBits,
+                                      const char *version, int stream_size));
 #define inflateInit(strm) \
-  inflateInit_((strm), ZLIB_VERSION, sizeof(z_stream))
+	inflateInit_((strm), ZLIB_VERSION, sizeof(z_stream))
 #define inflateInit2(strm, windowBits) \
-  inflateInit2_((strm), (windowBits), ZLIB_VERSION, sizeof(z_stream))
-                                        
+	inflateInit2_((strm), (windowBits), ZLIB_VERSION, sizeof(z_stream))
+
 #if !defined(ZUTIL_H) && !defined(NO_DUMMY_DECL)
-struct internal_state {int dummy;}; /* hack for buggy compilers */
+	struct internal_state {int dummy;}; /* hack for buggy compilers */
 #endif
 
 #ifdef __cplusplus

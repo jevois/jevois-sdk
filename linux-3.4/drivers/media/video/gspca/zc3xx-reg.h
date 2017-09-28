@@ -4,7 +4,7 @@
  * Copyright (c) 2008 Mauro Carvalho Chehab <mchehab@infradead.org>
  *
  * The register aliases used here came from this driver:
- *  http://zc0302.sourceforge.net/zc0302.php
+ *	http://zc0302.sourceforge.net/zc0302.php
  *
  * This code is placed under the terms of the GNU General Public License v2
  */

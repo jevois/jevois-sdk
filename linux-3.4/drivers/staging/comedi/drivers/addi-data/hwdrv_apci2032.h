@@ -1,13 +1,13 @@
 /*
  * Copyright (C) 2004,2005  ADDI-DATA GmbH for the source code of this module.
  *
- *  ADDI-DATA GmbH
- *  Dieselstrasse 3
- *  D-77833 Ottersweier
- *  Tel: +19(0)7223/9493-0
- *  Fax: +49(0)7223/9493-92
- *  http://www.addi-data.com
- *  info@addi-data.com
+ *	ADDI-DATA GmbH
+ *	Dieselstrasse 3
+ *	D-77833 Ottersweier
+ *	Tel: +19(0)7223/9493-0
+ *	Fax: +49(0)7223/9493-92
+ *	http://www.addi-data.com
+ *	info@addi-data.com
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
@@ -23,8 +23,8 @@
 
 /* DIGITAL INPUT-OUTPUT DEFINE */
 
-#define APCI2032_DIGITAL_OP                   0
-#define APCI2032_DIGITAL_OP_RW                  0
+#define APCI2032_DIGITAL_OP                 	0
+#define APCI2032_DIGITAL_OP_RW                 	0
 #define APCI2032_DIGITAL_OP_INTERRUPT           4
 #define APCI2032_DIGITAL_OP_IRQ                 12
 
@@ -55,29 +55,29 @@
 /* Hardware Layer  functions for Apci2032 */
 
 /* DO */
-int i_APCI2032_ConfigDigitalOutput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                    struct comedi_insn * insn, unsigned int * data);
-int i_APCI2032_WriteDigitalOutput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                   struct comedi_insn * insn, unsigned int * data);
-int i_APCI2032_ReadDigitalOutput (struct comedi_device * dev, struct comedi_subdevice * s,
-                                  struct comedi_insn * insn, unsigned int * data);
-int i_APCI2032_ReadInterruptStatus (struct comedi_device * dev, struct comedi_subdevice * s,
-                                    struct comedi_insn * insn, unsigned int * data);
+int i_APCI2032_ConfigDigitalOutput(struct comedi_device *dev, struct comedi_subdevice *s,
+				   struct comedi_insn *insn, unsigned int *data);
+int i_APCI2032_WriteDigitalOutput(struct comedi_device *dev, struct comedi_subdevice *s,
+				  struct comedi_insn *insn, unsigned int *data);
+int i_APCI2032_ReadDigitalOutput(struct comedi_device *dev, struct comedi_subdevice *s,
+				 struct comedi_insn *insn, unsigned int *data);
+int i_APCI2032_ReadInterruptStatus(struct comedi_device *dev, struct comedi_subdevice *s,
+				   struct comedi_insn *insn, unsigned int *data);
 
 /* TIMER
  * timer value is passed as u seconds
 */
 
-int i_APCI2032_ConfigWatchdog (struct comedi_device * dev, struct comedi_subdevice * s,
-                               struct comedi_insn * insn, unsigned int * data);
-int i_APCI2032_StartStopWriteWatchdog (struct comedi_device * dev, struct comedi_subdevice * s,
-                                       struct comedi_insn * insn, unsigned int * data);
-int i_APCI2032_ReadWatchdog (struct comedi_device * dev, struct comedi_subdevice * s,
-                             struct comedi_insn * insn, unsigned int * data);
+int i_APCI2032_ConfigWatchdog(struct comedi_device *dev, struct comedi_subdevice *s,
+			      struct comedi_insn *insn, unsigned int *data);
+int i_APCI2032_StartStopWriteWatchdog(struct comedi_device *dev, struct comedi_subdevice *s,
+				      struct comedi_insn *insn, unsigned int *data);
+int i_APCI2032_ReadWatchdog(struct comedi_device *dev, struct comedi_subdevice *s,
+			    struct comedi_insn *insn, unsigned int *data);
 
 /* Interrupt functions..... */
 
-void v_APCI2032_Interrupt (int irq, void * d);
+void v_APCI2032_Interrupt(int irq, void *d);
 
 /* Reset functions */
-int i_APCI2032_Reset (struct comedi_device * dev);
+int i_APCI2032_Reset(struct comedi_device *dev);

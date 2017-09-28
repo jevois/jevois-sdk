@@ -1,4 +1,4 @@
-/*  BSDI sys_info.h,v 1.6 1998/06/03 19:14:59 karels Exp  */
+/*	BSDI sys_info.h,v 1.6 1998/06/03 19:14:59 karels Exp	*/
 
 /*
  * Copyright (c) 1996-1999 Distributed Processing Technology Corporation
@@ -74,26 +74,26 @@
  *---------------------------------------------------------------------------*/
 
 #ifdef  __cplusplus
-struct driveParam_S {
+   struct driveParam_S {
 #else
-typedef struct  {
+   typedef struct  {
 #endif
 
-  uSHORT       cylinders;      /* Up to 1024 */
-  uCHAR        heads;          /* Up to 255 */
-  uCHAR        sectors;        /* Up to 63 */
-  
-  #ifdef  __cplusplus
-  
-  #ifdef DPT_PORTABLE
-  uSHORT    netInsert (dptBuffer_S * buffer);
-  uSHORT    netExtract (dptBuffer_S * buffer);
-  #endif
+   uSHORT       cylinders;      /* Up to 1024 */
+   uCHAR        heads;          /* Up to 255 */
+   uCHAR        sectors;        /* Up to 63 */
 
-};
-  #else
-} driveParam_S;
-  #endif
+#ifdef  __cplusplus
+
+#ifdef DPT_PORTABLE
+	uSHORT		netInsert(dptBuffer_S *buffer);
+	uSHORT		netExtract(dptBuffer_S *buffer);
+#endif
+
+   };
+#else
+   } driveParam_S;
+#endif
 /*driveParam_S - end */
 
 
@@ -128,48 +128,48 @@ typedef struct  {
 #define SI_PCI_BUS      0x04
 
 #ifdef  __cplusplus
-struct sysInfo_S {
+   struct sysInfo_S {
 #else
-typedef struct  {
+   typedef struct  {
 #endif
 
-  uCHAR        drive0CMOS;             /* CMOS Drive 0 Type */
-  uCHAR        drive1CMOS;             /* CMOS Drive 1 Type */
-  uCHAR        numDrives;              /* 0040:0075 contents */
-  uCHAR        processorFamily;        /* Same as DPTSIG's definition */
-  uCHAR        processorType;          /* Same as DPTSIG's definition */
-  uCHAR        smartROMMajorVersion;
-  uCHAR        smartROMMinorVersion;   /* SmartROM version */
-  uCHAR        smartROMRevision;
-  uSHORT       flags;                  /* See bit definitions above */
-  uSHORT       conventionalMemSize;    /* in KB */
-  uINT         extendedMemSize;        /* in KB */
-  uINT         osType;                 /* Same as DPTSIG's definition */
-  uCHAR        osMajorVersion;
-  uCHAR        osMinorVersion;         /* The OS version */
-  uCHAR        osRevision;
-  #ifdef _SINIX_ADDON
-  uCHAR        busType;                /* See defininitions above */
-  uSHORT       osSubRevision;
-  uCHAR        pad[2];                 /* For alignment */
-  #else
-  uCHAR        osSubRevision;
-  uCHAR        busType;                /* See defininitions above */
-  uCHAR        pad[3];                 /* For alignment */
-  #endif
-  driveParam_S drives[16];             /* SmartROM Logical Drives */
-  
-  #ifdef  __cplusplus
-  
-  #ifdef DPT_PORTABLE
-  uSHORT    netInsert (dptBuffer_S * buffer);
-  uSHORT    netExtract (dptBuffer_S * buffer);
-  #endif
+   uCHAR        drive0CMOS;             /* CMOS Drive 0 Type */
+   uCHAR        drive1CMOS;             /* CMOS Drive 1 Type */
+   uCHAR        numDrives;              /* 0040:0075 contents */
+   uCHAR        processorFamily;        /* Same as DPTSIG's definition */
+   uCHAR        processorType;          /* Same as DPTSIG's definition */
+   uCHAR        smartROMMajorVersion;
+   uCHAR        smartROMMinorVersion;   /* SmartROM version */
+   uCHAR        smartROMRevision;
+   uSHORT       flags;                  /* See bit definitions above */
+   uSHORT       conventionalMemSize;    /* in KB */
+   uINT         extendedMemSize;        /* in KB */
+   uINT         osType;                 /* Same as DPTSIG's definition */
+   uCHAR        osMajorVersion;
+   uCHAR        osMinorVersion;         /* The OS version */
+   uCHAR        osRevision;
+#ifdef _SINIX_ADDON
+   uCHAR        busType;                /* See defininitions above */
+   uSHORT       osSubRevision;
+   uCHAR        pad[2];                 /* For alignment */
+#else
+   uCHAR        osSubRevision;
+   uCHAR        busType;                /* See defininitions above */
+   uCHAR        pad[3];                 /* For alignment */
+#endif
+   driveParam_S drives[16];             /* SmartROM Logical Drives */
 
-};
-  #else
-} sysInfo_S;
-  #endif
+#ifdef  __cplusplus
+
+#ifdef DPT_PORTABLE
+	uSHORT		netInsert(dptBuffer_S *buffer);
+	uSHORT		netExtract(dptBuffer_S *buffer);
+#endif
+
+   };
+#else
+   } sysInfo_S;
+#endif
 /*sysInfo_S - end */
 
 
@@ -188,27 +188,27 @@ typedef struct  {
 #define DI_DPMI_VALID           0x02    /* DPMI version is valid */
 
 #ifdef  __cplusplus
-struct DOS_Info_S {
+   struct DOS_Info_S {
 #else
-typedef struct {
+   typedef struct {
 #endif
 
-  uCHAR        flags;          /* See bit definitions above */
-  uSHORT       driverLocation; /* SmartROM BIOS address */
-  uSHORT       DOS_version;
-  uSHORT       DPMI_version;
-  
-  #ifdef  __cplusplus
-  
-  #ifdef DPT_PORTABLE
-  uSHORT    netInsert (dptBuffer_S * buffer);
-  uSHORT    netExtract (dptBuffer_S * buffer);
-  #endif
+   uCHAR        flags;          /* See bit definitions above */
+   uSHORT       driverLocation; /* SmartROM BIOS address */
+   uSHORT       DOS_version;
+   uSHORT       DPMI_version;
 
-};
-  #else
-} DOS_Info_S;
-  #endif
+#ifdef  __cplusplus
+
+#ifdef DPT_PORTABLE
+	uSHORT		netInsert(dptBuffer_S *buffer);
+	uSHORT		netExtract(dptBuffer_S *buffer);
+#endif
+
+   };
+#else
+   } DOS_Info_S;
+#endif
 /*DOS_Info_S - end */
 
 
@@ -223,38 +223,38 @@ typedef struct {
  *---------------------------------------------------------------------------*/
 
 #ifdef  __cplusplus
-struct Netware_Info_S {
+   struct Netware_Info_S {
 #else
-typedef struct {
+   typedef struct {
 #endif
 
-  uCHAR        driverName[13];         /* ie PM12NW31.DSK */
-  uCHAR        serverName[48];
-  uCHAR        netwareVersion;         /* The Netware OS version */
-  uCHAR        netwareSubVersion;
-  uCHAR        netwareRevision;
-  uSHORT       maxConnections;         /* Probably  250 or 1000 */
-  uSHORT       connectionsInUse;
-  uSHORT       maxVolumes;
-  uCHAR        unused;
-  uCHAR        SFTlevel;
-  uCHAR        TTSlevel;
-  
-  uCHAR        clibMajorVersion;       /* The CLIB.NLM version */
-  uCHAR        clibMinorVersion;
-  uCHAR        clibRevision;
-  
-  #ifdef  __cplusplus
-  
-  #ifdef DPT_PORTABLE
-  uSHORT    netInsert (dptBuffer_S * buffer);
-  uSHORT    netExtract (dptBuffer_S * buffer);
-  #endif
+   uCHAR        driverName[13];         /* ie PM12NW31.DSK */
+   uCHAR        serverName[48];
+   uCHAR        netwareVersion;         /* The Netware OS version */
+   uCHAR        netwareSubVersion;
+   uCHAR        netwareRevision;
+   uSHORT       maxConnections;         /* Probably  250 or 1000 */
+   uSHORT       connectionsInUse;
+   uSHORT       maxVolumes;
+   uCHAR        unused;
+   uCHAR        SFTlevel;
+   uCHAR        TTSlevel;
 
-};
-  #else
-} Netware_Info_S;
-  #endif
+   uCHAR        clibMajorVersion;       /* The CLIB.NLM version */
+   uCHAR        clibMinorVersion;
+   uCHAR        clibRevision;
+
+#ifdef  __cplusplus
+
+#ifdef DPT_PORTABLE
+	uSHORT		netInsert(dptBuffer_S *buffer);
+	uSHORT		netExtract(dptBuffer_S *buffer);
+#endif
+
+   };
+#else
+   } Netware_Info_S;
+#endif
 /*Netware_Info_S - end */
 
 
@@ -269,24 +269,24 @@ typedef struct {
  *---------------------------------------------------------------------------*/
 
 #ifdef  __cplusplus
-struct OS2_Info_S {
+   struct OS2_Info_S {
 #else
-typedef struct {
+   typedef struct {
 #endif
 
-  uCHAR        something;
-  
-  #ifdef  __cplusplus
-  
-  #ifdef DPT_PORTABLE
-  uSHORT    netInsert (dptBuffer_S * buffer);
-  uSHORT    netExtract (dptBuffer_S * buffer);
-  #endif
+   uCHAR        something;
 
-};
-  #else
-} OS2_Info_S;
-  #endif
+#ifdef  __cplusplus
+
+#ifdef DPT_PORTABLE
+	uSHORT		netInsert(dptBuffer_S *buffer);
+	uSHORT		netExtract(dptBuffer_S *buffer);
+#endif
+
+   };
+#else
+   } OS2_Info_S;
+#endif
 /*OS2_Info_S - end */
 
 
@@ -301,24 +301,24 @@ typedef struct {
  *---------------------------------------------------------------------------*/
 
 #ifdef  __cplusplus
-struct WinNT_Info_S {
+   struct WinNT_Info_S {
 #else
-typedef struct {
+   typedef struct {
 #endif
 
-  uCHAR        something;
-  
-  #ifdef  __cplusplus
-  
-  #ifdef DPT_PORTABLE
-  uSHORT    netInsert (dptBuffer_S * buffer);
-  uSHORT    netExtract (dptBuffer_S * buffer);
-  #endif
+   uCHAR        something;
 
-};
-  #else
-} WinNT_Info_S;
-  #endif
+#ifdef  __cplusplus
+
+#ifdef DPT_PORTABLE
+	uSHORT		netInsert(dptBuffer_S *buffer);
+	uSHORT		netExtract(dptBuffer_S *buffer);
+#endif
+
+   };
+#else
+   } WinNT_Info_S;
+#endif
 /*WinNT_Info_S - end */
 
 
@@ -333,24 +333,24 @@ typedef struct {
  *---------------------------------------------------------------------------*/
 
 #ifdef  __cplusplus
-struct SCO_Info_S {
+   struct SCO_Info_S {
 #else
-typedef struct {
+   typedef struct {
 #endif
 
-  uCHAR        something;
-  
-  #ifdef  __cplusplus
-  
-  #ifdef DPT_PORTABLE
-  uSHORT    netInsert (dptBuffer_S * buffer);
-  uSHORT    netExtract (dptBuffer_S * buffer);
-  #endif
+   uCHAR        something;
 
-};
-  #else
-} SCO_Info_S;
-  #endif
+#ifdef  __cplusplus
+
+#ifdef DPT_PORTABLE
+	uSHORT		netInsert(dptBuffer_S *buffer);
+	uSHORT		netExtract(dptBuffer_S *buffer);
+#endif
+
+   };
+#else
+   } SCO_Info_S;
+#endif
 /*SCO_Info_S - end */
 
 
@@ -365,28 +365,28 @@ typedef struct {
  *---------------------------------------------------------------------------*/
 
 #ifdef  __cplusplus
-struct USL_Info_S {
+   struct USL_Info_S {
 #else
-typedef struct {
+   typedef struct {
 #endif
 
-  uCHAR        something;
-  
-  #ifdef  __cplusplus
-  
-  #ifdef DPT_PORTABLE
-  uSHORT    netInsert (dptBuffer_S * buffer);
-  uSHORT    netExtract (dptBuffer_S * buffer);
-  #endif
+   uCHAR        something;
 
-};
-  #else
-} USL_Info_S;
-  #endif
+#ifdef  __cplusplus
+
+#ifdef DPT_PORTABLE
+	uSHORT		netInsert(dptBuffer_S *buffer);
+	uSHORT		netExtract(dptBuffer_S *buffer);
+#endif
+
+   };
+#else
+   } USL_Info_S;
+#endif
 /*USL_Info_S - end */
 
 
-/* Restore default structure packing */
+  /* Restore default structure packing */
 #ifndef NO_UNPACK
 #if defined (_DPT_AIX)
 #pragma options align=reset

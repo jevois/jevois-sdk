@@ -43,7 +43,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #ifndef RGXHWPERF_H_
 #define RGXHWPERF_H_
-
+  
 #include "img_types.h"
 #include "img_defs.h"
 #include "pvrsrv_error.h"
@@ -57,32 +57,32 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * RGX HW Performance Data Transport Routines
  *****************************************************************************/
 
-PVRSRV_ERROR RGXHWPerfDataStoreCB (PVRSRV_DEVICE_NODE * psDevInfo);
+PVRSRV_ERROR RGXHWPerfDataStoreCB(PVRSRV_DEVICE_NODE* psDevInfo);
 
-PVRSRV_ERROR RGXHWPerfInit (PVRSRV_DEVICE_NODE * psRgxDevInfo, IMG_BOOL bEnable);
-IMG_VOID RGXHWPerfDeinit (void);
+PVRSRV_ERROR RGXHWPerfInit(PVRSRV_DEVICE_NODE *psRgxDevInfo, IMG_BOOL bEnable);
+IMG_VOID RGXHWPerfDeinit(void);
 
 
 /******************************************************************************
  * RGX HW Performance Profiling API(s)
  *****************************************************************************/
 
-PVRSRV_ERROR PVRSRVRGXCtrlHWPerfKM (
-  PVRSRV_DEVICE_NODE * psDeviceNode,
-  IMG_BOOL      bEnable,
-  IMG_UINT64      ui64Mask);
+PVRSRV_ERROR PVRSRVRGXCtrlHWPerfKM(
+		PVRSRV_DEVICE_NODE*	psDeviceNode,
+		IMG_BOOL			bEnable,
+		IMG_UINT64 			ui64Mask);
 
 
-PVRSRV_ERROR PVRSRVRGXConfigEnableHWPerfCountersKM (
-  PVRSRV_DEVICE_NODE   *  psDeviceNode,
-  IMG_UINT32          ui32ArrayLen,
-  RGX_HWPERF_CONFIG_CNTBLK  * psBlockConfigs);
+PVRSRV_ERROR PVRSRVRGXConfigEnableHWPerfCountersKM(
+		PVRSRV_DEVICE_NODE* 		psDeviceNode,
+		IMG_UINT32 					ui32ArrayLen,
+		RGX_HWPERF_CONFIG_CNTBLK* 	psBlockConfigs);
 
-PVRSRV_ERROR PVRSRVRGXCtrlHWPerfCountersKM (
-  PVRSRV_DEVICE_NODE  * psDeviceNode,
-  IMG_BOOL        bEnable,
-  IMG_UINT32        ui32ArrayLen,
-  IMG_UINT8    *    psBlockIDs);
+PVRSRV_ERROR PVRSRVRGXCtrlHWPerfCountersKM(
+		PVRSRV_DEVICE_NODE*		psDeviceNode,
+		IMG_BOOL				bEnable,
+	    IMG_UINT32 				ui32ArrayLen,
+	    IMG_UINT8*				psBlockIDs);
 
 /******************************************************************************
  * RGX HW Performance To FTrace Profiling API(s)
@@ -90,17 +90,17 @@ PVRSRV_ERROR PVRSRVRGXCtrlHWPerfCountersKM (
 
 #if defined(SUPPORT_GPUTRACE_EVENTS)
 
-PVRSRV_ERROR RGXHWPerfFTraceGPUInit (PVRSRV_RGXDEV_INFO * psDevInfo);
-IMG_VOID RGXHWPerfFTraceGPUDeInit (PVRSRV_RGXDEV_INFO * psDevInfo);
+PVRSRV_ERROR RGXHWPerfFTraceGPUInit(PVRSRV_RGXDEV_INFO *psDevInfo);
+IMG_VOID RGXHWPerfFTraceGPUDeInit(PVRSRV_RGXDEV_INFO *psDevInfo);
 
-IMG_VOID RGXHWPerfFTraceGPUEnqueueEvent (PVRSRV_RGXDEV_INFO * psDevInfo,
-    IMG_UINT32 ui32FrameNum, IMG_UINT32 ui32RTData,
-    const IMG_CHAR * pszJobType);
+IMG_VOID RGXHWPerfFTraceGPUEnqueueEvent(PVRSRV_RGXDEV_INFO *psDevInfo,
+		IMG_UINT32 ui32FrameNum, IMG_UINT32 ui32RTData,
+		const IMG_CHAR* pszJobType);
 
-IMG_VOID RGXHWPerfFTraceGPUEventsEnabledSet (IMG_BOOL bNewValue);
-IMG_BOOL RGXHWPerfFTraceGPUEventsEnabled (IMG_VOID);
+IMG_VOID RGXHWPerfFTraceGPUEventsEnabledSet(IMG_BOOL bNewValue);
+IMG_BOOL RGXHWPerfFTraceGPUEventsEnabled(IMG_VOID);
 
-IMG_VOID RGXHWPerfFTraceGPUThread (IMG_PVOID pvData);
+IMG_VOID RGXHWPerfFTraceGPUThread(IMG_PVOID pvData);
 
 #endif
 

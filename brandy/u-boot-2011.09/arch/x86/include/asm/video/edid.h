@@ -4,7 +4,7 @@
 #if !defined(__KERNEL__) || defined(CONFIG_X86)
 
 struct edid_info {
-  unsigned char dummy[128];
+	unsigned char dummy[128];
 };
 
 #ifdef __KERNEL__

@@ -33,21 +33,21 @@
  * Refer Datasheet Appendix A.2
  */
 struct armd1cpu_registers {
-  u32 chip_id;    /* Chip Id Reg */
-  u32 pad;
-  u32 cpu_conf;   /* CPU Conf Reg */
-  u32 pad1;
-  u32 cpu_sram_spd; /* CPU SRAM Speed Reg */
-  u32 pad2;
-  u32 cpu_l2c_spd;  /* CPU L2cache Speed Conf */
-  u32 mcb_conf;   /* MCB Conf Reg */
-  u32 sys_boot_ctl; /* Sytem Boot Control */
+	u32 chip_id;		/* Chip Id Reg */
+	u32 pad;
+	u32 cpu_conf;		/* CPU Conf Reg */
+	u32 pad1;
+	u32 cpu_sram_spd;	/* CPU SRAM Speed Reg */
+	u32 pad2;
+	u32 cpu_l2c_spd;	/* CPU L2cache Speed Conf */
+	u32 mcb_conf;		/* MCB Conf Reg */
+	u32 sys_boot_ctl;	/* Sytem Boot Control */
 };
 
 /*
  * Functions
  */
-u32 armd1_sdram_base (int);
-u32 armd1_sdram_size (int);
+u32 armd1_sdram_base(int);
+u32 armd1_sdram_size(int);
 
 #endif /* _ARMADA100CPU_H */

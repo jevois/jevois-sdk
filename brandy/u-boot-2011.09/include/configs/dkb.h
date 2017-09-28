@@ -28,23 +28,23 @@
 /*
  * Version number information
  */
-#define CONFIG_IDENT_STRING "\nMarvell-TTC DKB"
+#define CONFIG_IDENT_STRING	"\nMarvell-TTC DKB"
 
 /*
  * High Level Configuration Options
  */
-#define CONFIG_SHEEVA_88SV331xV5  1 /* CPU Core subversion */
-#define CONFIG_PANTHEON     1 /* SOC Family Name */
-#define CONFIG_MACH_TTC_DKB   1 /* Machine type */
-#define CONFIG_SKIP_LOWLEVEL_INIT /* disable board lowlevel_init */
+#define CONFIG_SHEEVA_88SV331xV5	1	/* CPU Core subversion */
+#define CONFIG_PANTHEON			1	/* SOC Family Name */
+#define CONFIG_MACH_TTC_DKB		1	/* Machine type */
+#define CONFIG_SKIP_LOWLEVEL_INIT	/* disable board lowlevel_init */
 
-#define CONFIG_SYS_INIT_SP_ADDR   (CONFIG_SYS_TEXT_BASE - 0x00200000)
-#define CONFIG_NR_DRAM_BANKS_MAX  2
+#define CONFIG_SYS_INIT_SP_ADDR		(CONFIG_SYS_TEXT_BASE - 0x00200000)
+#define CONFIG_NR_DRAM_BANKS_MAX	2
 
 /*
  * Commands configuration
  */
-#define CONFIG_SYS_NO_FLASH   /* Declare no flash (NOR/SPI) */
+#define CONFIG_SYS_NO_FLASH		/* Declare no flash (NOR/SPI) */
 #include <config_cmd_default.h>
 #define CONFIG_CMD_I2C
 #undef CONFIG_CMD_NET
@@ -60,7 +60,7 @@
 /*
  * Environment variables configurations
  */
-#define CONFIG_ENV_IS_NOWHERE 1 /* if env in SDRAM */
-#define CONFIG_ENV_SIZE 0x20000 /* 64k */
+#define CONFIG_ENV_IS_NOWHERE	1	/* if env in SDRAM */
+#define CONFIG_ENV_SIZE	0x20000	/* 64k */
 
-#endif  /* __CONFIG_DKB_H */
+#endif	/* __CONFIG_DKB_H */

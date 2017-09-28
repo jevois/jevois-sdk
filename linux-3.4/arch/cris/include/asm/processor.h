@@ -17,8 +17,8 @@
 
 struct task_struct;
 
-#define STACK_TOP TASK_SIZE
-#define STACK_TOP_MAX STACK_TOP
+#define STACK_TOP	TASK_SIZE
+#define STACK_TOP_MAX	STACK_TOP
 
 /* This decides where the kernel will search for a free chunk of vm
  * space during mmap's.
@@ -50,22 +50,22 @@ struct task_struct;
 #define task_pt_regs(task) user_regs(task_thread_info(task))
 #define current_regs() task_pt_regs(current)
 
-static inline void prepare_to_copy (struct task_struct * tsk)
+static inline void prepare_to_copy(struct task_struct *tsk)
 {
 }
 
-extern int kernel_thread (int (*fn) (void *), void * arg, unsigned long flags);
+extern int kernel_thread(int (*fn)(void *), void * arg, unsigned long flags);
 
-unsigned long get_wchan (struct task_struct * p);
+unsigned long get_wchan(struct task_struct *p);
 
 #define KSTK_ESP(tsk)   ((tsk) == current ? rdusp() : (tsk)->thread.usp)
 
-extern unsigned long thread_saved_pc (struct task_struct * tsk);
+extern unsigned long thread_saved_pc(struct task_struct *tsk);
 
 /* Free all resources held by a thread. */
-static inline void release_thread (struct task_struct * dead_task)
+static inline void release_thread(struct task_struct *dead_task)
 {
-  /* Nothing needs to be done.  */
+        /* Nothing needs to be done.  */
 }
 
 #define init_stack      (init_thread_union.stack)
@@ -76,9 +76,9 @@ static inline void release_thread (struct task_struct * dead_task)
  * disable hlt during certain critical i/o operations
  */
 #define HAVE_DISABLE_HLT
-void disable_hlt (void);
-void enable_hlt (void);
+void disable_hlt(void);
+void enable_hlt(void);
 
-void default_idle (void);
+void default_idle(void);
 
 #endif /* __ASM_CRIS_PROCESSOR_H */

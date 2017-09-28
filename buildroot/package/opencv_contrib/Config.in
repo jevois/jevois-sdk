@@ -1,7 +1,8 @@
 config BR2_PACKAGE_OPENCV_CONTRIB
         bool "opencv_contrib"
+	select BR2_PACKAGE_TESSERACT_OCR
 	help
-          Contrib packages for OpenCV 3.2+
+          Contrib packages for OpenCV 3.3+
 
           https://github.com/opencv/opencv_contrib
 

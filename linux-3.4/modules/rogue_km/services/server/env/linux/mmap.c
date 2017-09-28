@@ -70,7 +70,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * when using gPVRSRVLock.
  * The Linux kernel takes the mm->mmap_sem before calling the mmap
  * entry points (PVRMMap, MMapVOpen, MMapVClose), but the ioctl
- * entry point may take mm->mmap_sem during fault handling, or
+ * entry point may take mm->mmap_sem during fault handling, or 
  * before calling get_user_pages.  If gPVRSRVLock was used in the
  * mmap entry points, a deadlock could result, due to the ioctl
  * and mmap code taking the two locks in different orders.
@@ -84,33 +84,33 @@ static PVRSRV_LINUX_MUTEX g_sMMapMutex;
 #include "process_stats.h"
 #endif
 
-static void MMapPMROpen (struct vm_area_struct * ps_vma)
+static void MMapPMROpen(struct vm_area_struct* ps_vma)
 {
-  /* Our VM flags should ensure this function never gets called */
-  PVR_ASSERT (0);
+	/* Our VM flags should ensure this function never gets called */
+	PVR_ASSERT(0);
 }
 
-static void MMapPMRClose (struct vm_area_struct * ps_vma)
+static void MMapPMRClose(struct vm_area_struct *ps_vma)
 {
-  PMR * psPMR;
-  IMG_UINTPTR_T  vAddr = ps_vma->vm_start;
-  IMG_SIZE_T pageSize = OSGetPageSize();
-  
-  psPMR = ps_vma->vm_private_data;
-  while (vAddr < ps_vma->vm_end)
-  {
-    #if defined(PVRSRV_ENABLE_PROCESS_STATS) && defined(PVRSRV_ENABLE_MEMORY_STATS)
-    #if defined(PVRSRV_MEMORY_STATS_LITE)
-    PVRSRVStatsDecrMemAllocStat (PVRSRV_MEM_ALLOC_TYPE_MAP_UMA_LMA_PAGES, PAGE_SIZE);
-    #else
-    PVRSRVStatsRemoveMemAllocRecord (PVRSRV_MEM_ALLOC_TYPE_MAP_UMA_LMA_PAGES, (IMG_UINT64) vAddr);
-    #endif
-    #endif
-    vAddr += pageSize;
-  }
-  
-  PMRUnlockSysPhysAddresses (psPMR);
-  PMRUnrefPMR (psPMR);
+    PMR *psPMR;
+    IMG_UINTPTR_T  vAddr = ps_vma->vm_start;
+    IMG_SIZE_T pageSize = OSGetPageSize();
+
+    psPMR = ps_vma->vm_private_data;
+    while (vAddr < ps_vma->vm_end)
+    {
+#if defined(PVRSRV_ENABLE_PROCESS_STATS) && defined(PVRSRV_ENABLE_MEMORY_STATS)
+#if defined(PVRSRV_MEMORY_STATS_LITE)
+    PVRSRVStatsDecrMemAllocStat(PVRSRV_MEM_ALLOC_TYPE_MAP_UMA_LMA_PAGES, PAGE_SIZE);
+#else
+	PVRSRVStatsRemoveMemAllocRecord(PVRSRV_MEM_ALLOC_TYPE_MAP_UMA_LMA_PAGES, (IMG_UINT64)vAddr);
+#endif
+#endif
+    	vAddr += pageSize;
+    }
+
+    PMRUnlockSysPhysAddresses(psPMR);
+    PMRUnrefPMR(psPMR);
 }
 
 /*
@@ -118,380 +118,380 @@ static void MMapPMRClose (struct vm_area_struct * ps_vma)
  * by access_process_vm, which is called to handle PTRACE_PEEKDATA ptrace
  * requests and reads from /proc/<pid>/mem.
  */
-static int MMapVAccess (struct vm_area_struct * ps_vma, unsigned long addr,
-                        void * buf, int len, int write)
+static int MMapVAccess(struct vm_area_struct *ps_vma, unsigned long addr,
+					   void *buf, int len, int write)
 {
-  PMR * psPMR;
-  unsigned long ulOffset;
-  IMG_SIZE_T uiBytesCopied;
-  PVRSRV_ERROR eError;
-  int iRetVal = -EINVAL;
-  
-  psPMR = ps_vma->vm_private_data;
-  
-  ulOffset = addr - ps_vma->vm_start;
-  
-  if (write)
-  {
-    eError = PMR_WriteBytes (psPMR,
-                             (IMG_DEVMEM_OFFSET_T) ulOffset,
-                             buf,
-                             len,
-                             &uiBytesCopied);
-  }
-  else
-  {
-    eError = PMR_ReadBytes (psPMR,
-                            (IMG_DEVMEM_OFFSET_T) ulOffset,
-                            buf,
-                            len,
-                            &uiBytesCopied);
-  }
-  
-  if (eError != PVRSRV_OK)
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "%s: Error from %s (%d)",
-               __FUNCTION__,
-               write ? "PMR_WriteBytes" : "PMR_ReadBytes",
-               eError) );
-  }
-  else
-  {
-    iRetVal = uiBytesCopied;
-  }
-  
-  return iRetVal;
+    PMR *psPMR;
+    unsigned long ulOffset;
+    IMG_SIZE_T uiBytesCopied;
+    PVRSRV_ERROR eError;
+    int iRetVal = -EINVAL;
+
+    psPMR = ps_vma->vm_private_data;
+
+    ulOffset = addr - ps_vma->vm_start;
+
+	if (write)
+	{
+		eError = PMR_WriteBytes(psPMR,
+								(IMG_DEVMEM_OFFSET_T) ulOffset,
+								buf,
+								len,
+								&uiBytesCopied);
+	}
+	else
+	{
+		eError = PMR_ReadBytes(psPMR,
+							   (IMG_DEVMEM_OFFSET_T) ulOffset,
+							   buf,
+							   len,
+							   &uiBytesCopied);
+	}
+
+	if (eError != PVRSRV_OK)
+	{
+		PVR_DPF((PVR_DBG_ERROR, "%s: Error from %s (%d)",
+				 __FUNCTION__,
+				 write?"PMR_WriteBytes":"PMR_ReadBytes",
+				 eError));
+	}
+	else
+	{
+		iRetVal = uiBytesCopied;
+	}
+
+	return iRetVal;
 }
 
 static struct vm_operations_struct gsMMapOps =
 {
-  .open = &MMapPMROpen,
-  .close = &MMapPMRClose,
-  .access = MMapVAccess,
+	.open=&MMapPMROpen,
+	.close=&MMapPMRClose,
+	.access=MMapVAccess,
 };
 
 #if defined(SUPPORT_DRM)
 #define DRM_PRIVATE_DATA(pFile) ((pFile)->driver_priv)
 
-static int MMapGEM (struct file * pFile, struct vm_area_struct * ps_vma)
+static int MMapGEM(struct file* pFile, struct vm_area_struct* ps_vma)
 {
-  extern struct drm_device * gpsPVRDRMDev;
-  uint32_t uHandle = (uint32_t) ps_vma->vm_pgoff;
-  struct drm_file * pDRMFile = PVR_DRM_FILE_FROM_FILE (pFile);
-  struct drm_gem_object * pObj = drm_gem_object_lookup (gpsPVRDRMDev, pDRMFile, uHandle);
-  int ret;
-  
-  if (pObj == NULL)
-  {
-    return -EEXIST;
-  }
-  
-  if (ps_vma->vm_file != NULL)
-  {
-    fput (ps_vma->vm_file);
-    
-    ps_vma->vm_file = pObj->filp;
-    get_file (pObj->filp);
-  }
-  
-  ps_vma->vm_pgoff = 0;
-  
-  ret = pObj->filp->f_op->mmap (pObj->filp, ps_vma);
-  
-  drm_gem_object_unreference_unlocked (pObj);
-  
-  return ret;
+	extern struct drm_device *gpsPVRDRMDev;
+	uint32_t uHandle = (uint32_t)ps_vma->vm_pgoff;
+	struct drm_file *pDRMFile = PVR_DRM_FILE_FROM_FILE(pFile);
+	struct drm_gem_object *pObj = drm_gem_object_lookup(gpsPVRDRMDev, pDRMFile, uHandle); 
+	int ret;
+
+	if (pObj == NULL)
+	{
+		return -EEXIST;
+	}
+
+	if (ps_vma->vm_file != NULL)
+	{
+		fput(ps_vma->vm_file);
+
+		ps_vma->vm_file = pObj->filp;
+		get_file(pObj->filp);
+	}
+
+	ps_vma->vm_pgoff = 0;
+
+	ret = pObj->filp->f_op->mmap(pObj->filp, ps_vma);
+
+	drm_gem_object_unreference_unlocked(pObj);
+
+	return ret;
 }
 #endif
 
-int MMapPMR (struct file * pFile, struct vm_area_struct * ps_vma)
+int MMapPMR(struct file* pFile, struct vm_area_struct* ps_vma)
 {
-  PVRSRV_ERROR eError;
-  IMG_HANDLE hSecurePMRHandle;
-  IMG_SIZE_T uiLength;
-  IMG_DEVMEM_OFFSET_T uiOffset;
-  unsigned long uiPFN;
-  IMG_HANDLE hPMRResmanHandle;
-  PMR * psPMR;
-  PMR_FLAGS_T ulPMRFlags;
-  IMG_UINT32 ui32CPUCacheFlags;
-  unsigned long ulNewFlags = 0;
-  pgprot_t sPageProt;
-  #if defined(SUPPORT_DRM)
-  CONNECTION_DATA * psConnection = LinuxConnectionFromFile (PVR_DRM_FILE_FROM_FILE (pFile) );
-  
-  if (ps_vma->vm_pgoff > INT_MAX)
-  {
-    ps_vma->vm_pgoff -= ( (unsigned int) INT_MAX + 1);
-    
-    return MMapGEM (pFile, ps_vma);
-  }
-  #else
-  CONNECTION_DATA * psConnection = LinuxConnectionFromFile (pFile);
-  #endif
-  /*
-   * Both PVRSRVLookupHandle and ResManFindPrivateDataByPtr
-   * require the bridge mutex to be held for thread safety.
-   */
-  LinuxLockMutex (&gPVRSRVLock);
-  LinuxLockMutex (&g_sMMapMutex);
-  
-  hSecurePMRHandle = (IMG_HANDLE) ( (IMG_UINTPTR_T) ps_vma->vm_pgoff);
-  
-  eError = PVRSRVLookupHandle (psConnection->psHandleBase,
-                               (IMG_HANDLE *) &hPMRResmanHandle,
-                               hSecurePMRHandle,
-                               PVRSRV_HANDLE_TYPE_PHYSMEM_PMR);
-  if (eError != PVRSRV_OK)
-  {
-    goto e0;
-  }
-  
-  eError = ResManFindPrivateDataByPtr (hPMRResmanHandle,
-                                       (IMG_VOID **) &psPMR);
-  if (eError != PVRSRV_OK)
-  {
-    goto e0;
-  }
-  
-  /*
-    Take a reference on the PMR, make's sure that it can't be freed
-    while it's mapped into the user process
-  */
-  PMRRefPMR (psPMR);
-  
-  LinuxUnLockMutex (&gPVRSRVLock);
-  
-  eError = PMRLockSysPhysAddresses (psPMR, PAGE_SHIFT);
-  if (eError != PVRSRV_OK)
-  {
-    goto e1;
-  }
-  
-  if ( ( (ps_vma->vm_flags & VM_WRITE) != 0) &&
-       ( (ps_vma->vm_flags & VM_SHARED) == 0) )
-  {
-    eError = PVRSRV_ERROR_INVALID_PARAMS;
-    goto e1;
-  }
-  
-  /*
-    we ought to call PMR_Flags() here to check the permissions
-    against the requested mode, and possibly to set up the cache
-    control protflags
-  */
-  eError = PMR_Flags (psPMR, &ulPMRFlags);
-  if (eError != PVRSRV_OK)
-  {
-    goto e1;
-  }
-  
-  ulNewFlags = ps_vma->vm_flags;
-  #if 0
-  /* Discard user read/write request, we will pull these flags from the PMR */
-  ulNewFlags &= ~ (VM_READ | VM_WRITE);
-  
-  if (ulPMRFlags & PVRSRV_MEMALLOCFLAG_CPU_READABLE)
-  {
-    ulNewFlags |= VM_READ;
-  }
-  if (ulPMRFlags & PVRSRV_MEMALLOCFLAG_CPU_WRITEABLE)
-  {
-    ulNewFlags |= VM_WRITE;
-  }
-  #endif
-  
-  ps_vma->vm_flags = ulNewFlags;
-  
-  #if defined(__arm__)
-  sPageProt = __pgprot_modify (ps_vma->vm_page_prot, L_PTE_MT_MASK, vm_get_page_prot (ulNewFlags) );
-  #elif defined(__i386__) || defined(__x86_64)
-  sPageProt = pgprot_modify (ps_vma->vm_page_prot,
-                             vm_get_page_prot (ulNewFlags) );
-  #elif defined(__metag__) || defined(__mips__)
-  sPageProt = vm_get_page_prot (ulNewFlags);
-  #else
-#error Please add pgprot_modify equivalent for your system
-  #endif
-  ui32CPUCacheFlags = DevmemCPUCacheMode (ulPMRFlags);
-  switch (ui32CPUCacheFlags)
-  {
-  case PVRSRV_MEMALLOCFLAG_CPU_UNCACHED:
-    sPageProt = pgprot_noncached (sPageProt);
-    break;
-    
-  case PVRSRV_MEMALLOCFLAG_CPU_WRITE_COMBINE:
-    sPageProt = pgprot_writecombine (sPageProt);
-    break;
-    
-  case PVRSRV_MEMALLOCFLAG_CPU_CACHED:
-    break;
-    
-  default:
-    eError = PVRSRV_ERROR_INVALID_PARAMS;
-    goto e1;
-  }
-  ps_vma->vm_page_prot = sPageProt;
-  
-  uiLength = ps_vma->vm_end - ps_vma->vm_start;
-  
-  ps_vma->vm_flags |= VM_IO;
-  
-  /* Don't include the mapping in core dumps */
-  #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,7,0))
-  ps_vma->vm_flags |= VM_DONTDUMP;
-  #else
-  ps_vma->vm_flags |= VM_RESERVED;
-  #endif
-  
-  /*
-   * Disable mremap because our nopage handler assumes all
-   * page requests have already been validated.
-   */
-  ps_vma->vm_flags |= VM_DONTEXPAND;
-  
-  /* Don't allow mapping to be inherited across a process fork */
-  ps_vma->vm_flags |= VM_DONTCOPY;
-  
-  #if defined(PVR_MMAP_USE_VM_INSERT)
-  {
-    IMG_BOOL bMixedMap = IMG_FALSE;
-    
-    /* Scan the map range for pfns without struct page* handling. If we find
-     * one, this is a mixed map, and we can't use vm_insert_page().
-     */
-    for (uiOffset = 0; uiOffset < uiLength; uiOffset += 1ULL << PAGE_SHIFT)
+    PVRSRV_ERROR eError;
+    IMG_HANDLE hSecurePMRHandle;
+    IMG_SIZE_T uiLength;
+    IMG_DEVMEM_OFFSET_T uiOffset;
+    unsigned long uiPFN;
+    IMG_HANDLE hPMRResmanHandle;
+    PMR *psPMR;
+    PMR_FLAGS_T ulPMRFlags;
+    IMG_UINT32 ui32CPUCacheFlags;
+    unsigned long ulNewFlags = 0;
+    pgprot_t sPageProt;
+#if defined(SUPPORT_DRM)
+    CONNECTION_DATA *psConnection = LinuxConnectionFromFile(PVR_DRM_FILE_FROM_FILE(pFile));
+
+	if (ps_vma->vm_pgoff > INT_MAX)
+	{
+		ps_vma->vm_pgoff -= ((unsigned int)INT_MAX + 1);
+
+		return MMapGEM(pFile, ps_vma);
+	}
+#else
+    CONNECTION_DATA *psConnection = LinuxConnectionFromFile(pFile);
+#endif
+	/*
+	 * Both PVRSRVLookupHandle and ResManFindPrivateDataByPtr
+	 * require the bridge mutex to be held for thread safety.
+	 */
+	LinuxLockMutex(&gPVRSRVLock);
+	LinuxLockMutex(&g_sMMapMutex);
+
+	hSecurePMRHandle=(IMG_HANDLE)((IMG_UINTPTR_T)ps_vma->vm_pgoff);
+
+	eError = PVRSRVLookupHandle(psConnection->psHandleBase,
+                                (IMG_HANDLE *) &hPMRResmanHandle,
+                                hSecurePMRHandle,
+                                PVRSRV_HANDLE_TYPE_PHYSMEM_PMR);
+	if (eError != PVRSRV_OK)
+	{
+        goto e0;
+	}
+
+    eError = ResManFindPrivateDataByPtr(hPMRResmanHandle,
+                                        (IMG_VOID **)&psPMR);
+	if (eError != PVRSRV_OK)
+	{
+        goto e0;
+	}
+
+	/*
+		Take a reference on the PMR, make's sure that it can't be freed
+		while it's mapped into the user process
+	*/
+	PMRRefPMR(psPMR);
+
+	LinuxUnLockMutex(&gPVRSRVLock);
+
+    eError = PMRLockSysPhysAddresses(psPMR, PAGE_SHIFT);
+	if (eError != PVRSRV_OK)
+	{
+        goto e1;
+	}
+
+    if (((ps_vma->vm_flags & VM_WRITE) != 0) &&
+	((ps_vma->vm_flags & VM_SHARED) == 0))
     {
-      IMG_CPU_PHYADDR sCpuPAddr;
-      IMG_BOOL bValid;
-      
-      eError = PMR_CpuPhysAddr (psPMR, uiOffset, &sCpuPAddr, &bValid);
-      PVR_ASSERT (eError == PVRSRV_OK);
-      if (eError)
-      {
-        goto e2;
-      }
-      
-      if (bValid)
-      {
-        uiPFN = sCpuPAddr.uiAddr >> PAGE_SHIFT;
-        PVR_ASSERT ( ( (IMG_UINT64) uiPFN << PAGE_SHIFT) == sCpuPAddr.uiAddr);
-        
-        if (!pfn_valid (uiPFN) || page_count (pfn_to_page (uiPFN) ) == 0)
-        {
-          bMixedMap = IMG_TRUE;
-        }
-      }
+	eError = PVRSRV_ERROR_INVALID_PARAMS;
+	goto e1;
     }
-    
-    if (bMixedMap)
-    {
-      ps_vma->vm_flags |= VM_MIXEDMAP;
-    }
-  }
-  #endif /* defined(PVR_MMAP_USE_VM_INSERT) */
-  
-  for (uiOffset = 0; uiOffset < uiLength; uiOffset += 1ULL << PAGE_SHIFT)
-  {
-    IMG_SIZE_T uiNumContiguousBytes;
-    IMG_INT32 iStatus;
-    IMG_CPU_PHYADDR sCpuPAddr;
-    IMG_BOOL bValid;
-    
-    uiNumContiguousBytes = 1ULL << PAGE_SHIFT;
-    eError = PMR_CpuPhysAddr (psPMR,
-                              uiOffset,
-                              &sCpuPAddr,
-                              &bValid);
-    PVR_ASSERT (eError == PVRSRV_OK);
-    if (eError)
-    {
-      goto e2;
-    }
-    
+
     /*
-      Only map in pages that are valid, any that aren't will be picked up
-      by the nopage handler which will return a zeroed page for us
+      we ought to call PMR_Flags() here to check the permissions
+      against the requested mode, and possibly to set up the cache
+      control protflags
     */
-    if (bValid)
+	eError = PMR_Flags(psPMR, &ulPMRFlags);
+	if (eError != PVRSRV_OK)
+	{
+        goto e1;
+	}
+
+	ulNewFlags = ps_vma->vm_flags;
+#if 0
+	/* Discard user read/write request, we will pull these flags from the PMR */
+	ulNewFlags &= ~(VM_READ | VM_WRITE);
+
+	if (ulPMRFlags & PVRSRV_MEMALLOCFLAG_CPU_READABLE)
+	{
+		ulNewFlags |= VM_READ;
+	}
+	if (ulPMRFlags & PVRSRV_MEMALLOCFLAG_CPU_WRITEABLE)
+	{
+		ulNewFlags |= VM_WRITE;
+	}
+#endif
+
+	ps_vma->vm_flags = ulNewFlags;
+
+#if defined(__arm__)
+	sPageProt = __pgprot_modify(ps_vma->vm_page_prot, L_PTE_MT_MASK, vm_get_page_prot(ulNewFlags));
+#elif defined(__i386__) || defined(__x86_64)
+	sPageProt = pgprot_modify(ps_vma->vm_page_prot,
+							   vm_get_page_prot(ulNewFlags));
+#elif defined(__metag__) || defined(__mips__)
+	sPageProt = vm_get_page_prot(ulNewFlags);
+#else
+#error Please add pgprot_modify equivalent for your system
+#endif
+	ui32CPUCacheFlags = DevmemCPUCacheMode(ulPMRFlags);
+	switch (ui32CPUCacheFlags)
+	{
+		case PVRSRV_MEMALLOCFLAG_CPU_UNCACHED:
+				sPageProt = pgprot_noncached(sPageProt);
+				break;
+
+		case PVRSRV_MEMALLOCFLAG_CPU_WRITE_COMBINE:
+				sPageProt = pgprot_writecombine(sPageProt);
+				break;
+
+		case PVRSRV_MEMALLOCFLAG_CPU_CACHED:
+				break;
+
+		default:
+				eError = PVRSRV_ERROR_INVALID_PARAMS;
+				goto e1;
+	}
+	ps_vma->vm_page_prot = sPageProt;
+
+    uiLength = ps_vma->vm_end - ps_vma->vm_start;
+
+    ps_vma->vm_flags |= VM_IO;
+
+/* Don't include the mapping in core dumps */
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,7,0))
+    ps_vma->vm_flags |= VM_DONTDUMP;
+#else
+    ps_vma->vm_flags |= VM_RESERVED;
+#endif
+
+    /*
+     * Disable mremap because our nopage handler assumes all
+     * page requests have already been validated.
+     */
+    ps_vma->vm_flags |= VM_DONTEXPAND;
+    
+    /* Don't allow mapping to be inherited across a process fork */
+    ps_vma->vm_flags |= VM_DONTCOPY;
+
+#if defined(PVR_MMAP_USE_VM_INSERT)
+	{
+		IMG_BOOL bMixedMap = IMG_FALSE;
+
+		/* Scan the map range for pfns without struct page* handling. If we find
+		 * one, this is a mixed map, and we can't use vm_insert_page().
+		 */
+		for (uiOffset = 0; uiOffset < uiLength; uiOffset += 1ULL<<PAGE_SHIFT)
+		{
+			IMG_CPU_PHYADDR sCpuPAddr;
+			IMG_BOOL bValid;
+
+			eError = PMR_CpuPhysAddr(psPMR, uiOffset, &sCpuPAddr, &bValid);
+			PVR_ASSERT(eError == PVRSRV_OK);
+			if (eError)
+			{
+				goto e2;
+			}
+
+			if (bValid)
+			{
+				uiPFN = sCpuPAddr.uiAddr >> PAGE_SHIFT;
+				PVR_ASSERT(((IMG_UINT64)uiPFN << PAGE_SHIFT) == sCpuPAddr.uiAddr);
+
+				if (!pfn_valid(uiPFN) || page_count(pfn_to_page(uiPFN)) == 0)
+				{
+					bMixedMap = IMG_TRUE;
+				}
+			}
+		}
+
+		if (bMixedMap)
+		{
+		    ps_vma->vm_flags |= VM_MIXEDMAP;
+		}
+	}
+#endif /* defined(PVR_MMAP_USE_VM_INSERT) */
+
+    for (uiOffset = 0; uiOffset < uiLength; uiOffset += 1ULL<<PAGE_SHIFT)
     {
-      uiPFN = sCpuPAddr.uiAddr >> PAGE_SHIFT;
-      PVR_ASSERT ( ( (IMG_UINT64) uiPFN << PAGE_SHIFT) == sCpuPAddr.uiAddr);
-      
-      #if defined(PVR_MMAP_USE_VM_INSERT)
-      if (ps_vma->vm_flags & VM_MIXEDMAP)
-      {
-        /* This path is just for debugging. It should be equivalent
-         * to the remap_pfn_range() path.
-         */
-        iStatus = vm_insert_mixed (ps_vma,
-                                   ps_vma->vm_start + uiOffset,
-                                   uiPFN);
-      }
-      else
-      {
-        iStatus = vm_insert_page (ps_vma,
-                                  ps_vma->vm_start + uiOffset,
-                                  pfn_to_page (uiPFN) );
-      }
-      #else /* defined(PVR_MMAP_USE_VM_INSERT) */
-      iStatus = remap_pfn_range (ps_vma,
-                                 ps_vma->vm_start + uiOffset,
-                                 uiPFN,
-                                 uiNumContiguousBytes,
-                                 ps_vma->vm_page_prot);
-      #endif /* defined(PVR_MMAP_USE_VM_INSERT) */
-      
-      PVR_ASSERT (iStatus == 0);
-      if (iStatus)
-      {
-        eError = PVRSRV_ERROR_OUT_OF_MEMORY;
-        
-        goto e2;
-      }
-      #if defined(PVRSRV_ENABLE_PROCESS_STATS) && defined(PVRSRV_ENABLE_MEMORY_STATS)
-      /* USER MAPPING*/
-      #if defined(PVRSRV_MEMORY_STATS_LITE)
-      PVRSRVStatsIncrMemAllocStat (PVRSRV_MEM_ALLOC_TYPE_MAP_UMA_LMA_PAGES, PAGE_SIZE);
-      #else
-      PVRSRVStatsAddMemAllocRecord (PVRSRV_MEM_ALLOC_TYPE_MAP_UMA_LMA_PAGES,
-                                    (IMG_VOID *) (IMG_UINTPTR_T) (ps_vma->vm_start + uiOffset),
-                                    sCpuPAddr,
-                                    PAGE_SIZE,
-                                    IMG_NULL);
-      #endif
-      #endif
+        IMG_SIZE_T uiNumContiguousBytes;
+        IMG_INT32 iStatus;
+        IMG_CPU_PHYADDR sCpuPAddr;
+        IMG_BOOL bValid;
+
+        uiNumContiguousBytes = 1ULL<<PAGE_SHIFT;
+        eError = PMR_CpuPhysAddr(psPMR,
+                                 uiOffset,
+                                 &sCpuPAddr,
+                                 &bValid);
+        PVR_ASSERT(eError == PVRSRV_OK);
+        if (eError)
+        {
+            goto e2;
+        }
+
+		/*
+			Only map in pages that are valid, any that aren't will be picked up
+			by the nopage handler which will return a zeroed page for us
+		*/
+		if (bValid)
+		{
+	        uiPFN = sCpuPAddr.uiAddr >> PAGE_SHIFT;
+	        PVR_ASSERT(((IMG_UINT64)uiPFN << PAGE_SHIFT) == sCpuPAddr.uiAddr);
+
+#if defined(PVR_MMAP_USE_VM_INSERT)
+			if (ps_vma->vm_flags & VM_MIXEDMAP)
+			{
+				/* This path is just for debugging. It should be equivalent
+				 * to the remap_pfn_range() path.
+				 */
+				iStatus = vm_insert_mixed(ps_vma,
+										  ps_vma->vm_start + uiOffset,
+										  uiPFN);
+			}
+			else
+			{
+				iStatus = vm_insert_page(ps_vma,
+										 ps_vma->vm_start + uiOffset,
+										 pfn_to_page(uiPFN));
+			}
+#else /* defined(PVR_MMAP_USE_VM_INSERT) */
+	        iStatus = remap_pfn_range(ps_vma,
+	                                  ps_vma->vm_start + uiOffset,
+	                                  uiPFN,
+	                                  uiNumContiguousBytes,
+	                                  ps_vma->vm_page_prot);
+#endif /* defined(PVR_MMAP_USE_VM_INSERT) */
+
+	        PVR_ASSERT(iStatus == 0);
+	        if(iStatus)
+	        {
+	            eError = PVRSRV_ERROR_OUT_OF_MEMORY;
+	
+	            goto e2;
+	        }
+#if defined(PVRSRV_ENABLE_PROCESS_STATS) && defined(PVRSRV_ENABLE_MEMORY_STATS)
+    /* USER MAPPING*/
+#if defined(PVRSRV_MEMORY_STATS_LITE)
+	    PVRSRVStatsIncrMemAllocStat(PVRSRV_MEM_ALLOC_TYPE_MAP_UMA_LMA_PAGES, PAGE_SIZE);
+#else
+    	PVRSRVStatsAddMemAllocRecord(PVRSRV_MEM_ALLOC_TYPE_MAP_UMA_LMA_PAGES,
+    			 	 	 	 	 (IMG_VOID*)(IMG_UINTPTR_T)(ps_vma->vm_start + uiOffset),
+								 sCpuPAddr,
+								 PAGE_SIZE,
+								 IMG_NULL);
+#endif
+#endif
+		}
+        (void)pFile;
     }
-    (void) pFile;
-  }
-  
-  /* let us see the PMR so we can unlock it later */
-  ps_vma->vm_private_data = psPMR;
-  
-  /* Install open and close handlers for ref-counting */
-  ps_vma->vm_ops = &gsMMapOps;
-  
-  LinuxUnLockMutex (&g_sMMapMutex);
-  
-  return 0;
-  
-  /*
-    error exit paths follow
-  */
-e2:
-  PVR_DPF ( (PVR_DBG_ERROR, "don't know how to handle this error.  Abort!") );
-  PMRUnlockSysPhysAddresses (psPMR);
-e1:
-  PMRUnrefPMR (psPMR);
-  goto em1;
-e0:
-  LinuxUnLockMutex (&gPVRSRVLock);
-em1:
-  PVR_ASSERT (eError != PVRSRV_OK);
-  PVR_DPF ( (PVR_DBG_ERROR, "unable to translate error %d", eError) );
-  LinuxUnLockMutex (&g_sMMapMutex);
-  
-  return -ENOENT;
+
+    /* let us see the PMR so we can unlock it later */
+    ps_vma->vm_private_data = psPMR;
+
+    /* Install open and close handlers for ref-counting */
+    ps_vma->vm_ops = &gsMMapOps;
+
+	LinuxUnLockMutex(&g_sMMapMutex);
+
+    return 0;
+
+    /*
+      error exit paths follow
+    */
+ e2:
+    PVR_DPF((PVR_DBG_ERROR, "don't know how to handle this error.  Abort!"));
+    PMRUnlockSysPhysAddresses(psPMR);
+ e1:
+	PMRUnrefPMR(psPMR);
+	goto em1;
+ e0:
+	LinuxUnLockMutex(&gPVRSRVLock);
+ em1:
+    PVR_ASSERT(eError != PVRSRV_OK);
+    PVR_DPF((PVR_DBG_ERROR, "unable to translate error %d", eError));
+	LinuxUnLockMutex(&g_sMMapMutex);
+
+    return -ENOENT;
 }
 
 /*!
@@ -505,10 +505,10 @@ em1:
 
  ******************************************************************************/
 IMG_VOID
-PVRMMapInit (IMG_VOID)
+PVRMMapInit(IMG_VOID)
 {
-  LinuxInitMutex (&g_sMMapMutex);
-  return;
+    LinuxInitMutex(&g_sMMapMutex);
+    return;
 }
 
 /*!
@@ -522,6 +522,6 @@ PVRMMapInit (IMG_VOID)
 
  ******************************************************************************/
 IMG_VOID
-PVRMMapCleanup (IMG_VOID)
+PVRMMapCleanup(IMG_VOID)
 {
 }

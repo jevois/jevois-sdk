@@ -32,36 +32,36 @@ struct vport_parms;
 
 /* The following definitions are for users of the vport subsytem: */
 
-int ovs_vport_init (void);
-void ovs_vport_exit (void);
+int ovs_vport_init(void);
+void ovs_vport_exit(void);
 
-struct vport * ovs_vport_add (const struct vport_parms *);
-void ovs_vport_del (struct vport *);
+struct vport *ovs_vport_add(const struct vport_parms *);
+void ovs_vport_del(struct vport *);
 
-struct vport * ovs_vport_locate (const char * name);
+struct vport *ovs_vport_locate(const char *name);
 
-void ovs_vport_get_stats (struct vport *, struct ovs_vport_stats *);
+void ovs_vport_get_stats(struct vport *, struct ovs_vport_stats *);
 
-int ovs_vport_set_options (struct vport *, struct nlattr * options);
-int ovs_vport_get_options (const struct vport *, struct sk_buff *);
+int ovs_vport_set_options(struct vport *, struct nlattr *options);
+int ovs_vport_get_options(const struct vport *, struct sk_buff *);
 
-int ovs_vport_send (struct vport *, struct sk_buff *);
+int ovs_vport_send(struct vport *, struct sk_buff *);
 
 /* The following definitions are for implementers of vport devices: */
 
 struct vport_percpu_stats {
-  u64 rx_bytes;
-  u64 rx_packets;
-  u64 tx_bytes;
-  u64 tx_packets;
-  struct u64_stats_sync sync;
+	u64 rx_bytes;
+	u64 rx_packets;
+	u64 tx_bytes;
+	u64 tx_packets;
+	struct u64_stats_sync sync;
 };
 
 struct vport_err_stats {
-  u64 rx_dropped;
-  u64 rx_errors;
-  u64 tx_dropped;
-  u64 tx_errors;
+	u64 rx_dropped;
+	u64 rx_errors;
+	u64 tx_dropped;
+	u64 tx_errors;
 };
 
 /**
@@ -79,19 +79,19 @@ struct vport_err_stats {
  * @err_stats: Points to error statistics used and maintained by vport
  */
 struct vport {
-  struct rcu_head rcu;
-  u16 port_no;
-  struct datapath * dp;
-  struct list_head node;
-  u32 upcall_pid;
-  
-  struct hlist_node hash_node;
-  const struct vport_ops * ops;
-  
-  struct vport_percpu_stats __percpu * percpu_stats;
-  
-  spinlock_t stats_lock;
-  struct vport_err_stats err_stats;
+	struct rcu_head rcu;
+	u16 port_no;
+	struct datapath	*dp;
+	struct list_head node;
+	u32 upcall_pid;
+
+	struct hlist_node hash_node;
+	const struct vport_ops *ops;
+
+	struct vport_percpu_stats __percpu *percpu_stats;
+
+	spinlock_t stats_lock;
+	struct vport_err_stats err_stats;
 };
 
 /**
@@ -105,14 +105,14 @@ struct vport {
  * @port_no: New vport's port number.
  */
 struct vport_parms {
-  const char * name;
-  enum ovs_vport_type type;
-  struct nlattr * options;
-  
-  /* For ovs_vport_alloc(). */
-  struct datapath * dp;
-  u16 port_no;
-  u32 upcall_pid;
+	const char *name;
+	enum ovs_vport_type type;
+	struct nlattr *options;
+
+	/* For ovs_vport_alloc(). */
+	struct datapath *dp;
+	u16 port_no;
+	u32 upcall_pid;
 };
 
 /**
@@ -135,38 +135,38 @@ struct vport_parms {
  * @send: Send a packet on the device.  Returns the length of the packet sent.
  */
 struct vport_ops {
-  enum ovs_vport_type type;
-  
-  /* Called with RTNL lock. */
-  struct vport * (*create) (const struct vport_parms *);
-  void (*destroy) (struct vport *);
-  
-  int (*set_options) (struct vport *, struct nlattr *);
-  int (*get_options) (const struct vport *, struct sk_buff *);
-  
-  /* Called with rcu_read_lock or RTNL lock. */
-  const char * (*get_name) (const struct vport *);
-  void (*get_config) (const struct vport *, void *);
-  int (*get_ifindex) (const struct vport *);
-  
-  int (*send) (struct vport *, struct sk_buff *);
+	enum ovs_vport_type type;
+
+	/* Called with RTNL lock. */
+	struct vport *(*create)(const struct vport_parms *);
+	void (*destroy)(struct vport *);
+
+	int (*set_options)(struct vport *, struct nlattr *);
+	int (*get_options)(const struct vport *, struct sk_buff *);
+
+	/* Called with rcu_read_lock or RTNL lock. */
+	const char *(*get_name)(const struct vport *);
+	void (*get_config)(const struct vport *, void *);
+	int (*get_ifindex)(const struct vport *);
+
+	int (*send)(struct vport *, struct sk_buff *);
 };
 
 enum vport_err_type {
-  VPORT_E_RX_DROPPED,
-  VPORT_E_RX_ERROR,
-  VPORT_E_TX_DROPPED,
-  VPORT_E_TX_ERROR,
+	VPORT_E_RX_DROPPED,
+	VPORT_E_RX_ERROR,
+	VPORT_E_TX_DROPPED,
+	VPORT_E_TX_ERROR,
 };
 
-struct vport * ovs_vport_alloc (int priv_size, const struct vport_ops *,
-                                const struct vport_parms *);
-void ovs_vport_free (struct vport *);
+struct vport *ovs_vport_alloc(int priv_size, const struct vport_ops *,
+			      const struct vport_parms *);
+void ovs_vport_free(struct vport *);
 
 #define VPORT_ALIGN 8
 
 /**
- *  vport_priv - access private data area of vport
+ *	vport_priv - access private data area of vport
  *
  * @vport: vport to access
  *
@@ -174,13 +174,13 @@ void ovs_vport_free (struct vport *);
  * area was allocated on creation.  This allows that area to be accessed and
  * used for any purpose needed by the vport implementer.
  */
-static inline void * vport_priv (const struct vport * vport)
+static inline void *vport_priv(const struct vport *vport)
 {
-  return (u8 *) vport + ALIGN (sizeof (struct vport), VPORT_ALIGN);
+	return (u8 *)vport + ALIGN(sizeof(struct vport), VPORT_ALIGN);
 }
 
 /**
- *  vport_from_priv - lookup vport from private data pointer
+ *	vport_from_priv - lookup vport from private data pointer
  *
  * @priv: Start of private data area.
  *
@@ -189,13 +189,13 @@ static inline void * vport_priv (const struct vport * vport)
  * the result of a hash table lookup.  @priv must point to the start of the
  * private data area.
  */
-static inline struct vport * vport_from_priv (const void * priv)
+static inline struct vport *vport_from_priv(const void *priv)
 {
-  return (struct vport *) (priv - ALIGN (sizeof (struct vport), VPORT_ALIGN) );
+	return (struct vport *)(priv - ALIGN(sizeof(struct vport), VPORT_ALIGN));
 }
 
-void ovs_vport_receive (struct vport *, struct sk_buff *);
-void ovs_vport_record_error (struct vport *, enum vport_err_type err_type);
+void ovs_vport_receive(struct vport *, struct sk_buff *);
+void ovs_vport_record_error(struct vport *, enum vport_err_type err_type);
 
 /* List of statically compiled vport implementations.  Don't forget to also
  * add yours to the list at the top of vport.c. */

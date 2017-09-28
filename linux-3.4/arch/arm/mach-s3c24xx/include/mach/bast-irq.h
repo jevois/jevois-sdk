@@ -1,7 +1,7 @@
 /* arch/arm/mach-s3c2410/include/mach/bast-irq.h
  *
  * Copyright (c) 2003-2004 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * Machine BAST - IRQ Number definitions
  *
@@ -23,7 +23,7 @@
 #define IRQ_PCPARALLEL IRQ_EINT13
 #define IRQ_ASIX       IRQ_EINT11
 #define IRQ_DM9000     IRQ_EINT10
-#define IRQ_ISA        IRQ_EINT9
+#define IRQ_ISA	       IRQ_EINT9
 #define IRQ_SMALERT    IRQ_EINT8
 
 #endif /* __ASM_ARCH_BASTIRQ_H */

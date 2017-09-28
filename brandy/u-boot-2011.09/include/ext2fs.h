@@ -26,8 +26,8 @@
  */
 
 
-#define SECTOR_SIZE   0x200
-#define SECTOR_BITS   9
+#define SECTOR_SIZE		0x200
+#define SECTOR_BITS		9
 
 /* Error codes */
 typedef enum
@@ -68,14 +68,14 @@ typedef enum
   ERR_DEV_NEED_INIT,
   ERR_NO_DISK_SPACE,
   ERR_NUMBER_OVERFLOW,
-  
+
   MAX_ERR_NUM
 } ext2fs_error_t;
 
 
-extern int ext2fs_set_blk_dev (block_dev_desc_t * rbdd, int part);
-extern int ext2fs_ls (const char * dirname);
-extern int ext2fs_open (const char * filename);
-extern int ext2fs_read (char * buf, unsigned len);
+extern int ext2fs_set_blk_dev(block_dev_desc_t *rbdd, int part);
+extern int ext2fs_ls (const char *dirname);
+extern int ext2fs_open (const char *filename);
+extern int ext2fs_read (char *buf, unsigned len);
 extern int ext2fs_mount (unsigned part_length);
-extern int ext2fs_close (void);
+extern int ext2fs_close(void);

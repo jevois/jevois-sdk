@@ -30,46 +30,46 @@
 
 struct atbm8830_config {
 
-  /* product type */
-  u8 prod;
-  
-  /* the demodulator's i2c address */
-  u8 demod_address;
-  
-  /* parallel or serial transport stream */
-  u8 serial_ts;
-  
-  /* transport stream clock output only when receiving valid stream */
-  u8 ts_clk_gated;
-  
-  /* Decoder sample TS data at rising edge of clock */
-  u8 ts_sampling_edge;
-  
-  /* Oscillator clock frequency */
-  u32 osc_clk_freq; /* in kHz */
-  
-  /* IF frequency */
-  u32 if_freq; /* in kHz */
-  
-  /* Swap I/Q for zero IF */
-  u8 zif_swap_iq;
-  
-  /* Tuner AGC settings */
-  u8 agc_min;
-  u8 agc_max;
-  u8 agc_hold_loop;
+	/* product type */
+	u8 prod;
+
+	/* the demodulator's i2c address */
+	u8 demod_address;
+
+	/* parallel or serial transport stream */
+	u8 serial_ts;
+
+	/* transport stream clock output only when receiving valid stream */
+	u8 ts_clk_gated;
+
+	/* Decoder sample TS data at rising edge of clock */
+	u8 ts_sampling_edge;
+
+	/* Oscillator clock frequency */
+	u32 osc_clk_freq; /* in kHz */
+
+	/* IF frequency */
+	u32 if_freq; /* in kHz */
+
+	/* Swap I/Q for zero IF */
+	u8 zif_swap_iq;
+
+	/* Tuner AGC settings */
+	u8 agc_min;
+	u8 agc_max;
+	u8 agc_hold_loop;
 };
 
 #if defined(CONFIG_DVB_ATBM8830) || \
-(defined(CONFIG_DVB_ATBM8830_MODULE) && defined(MODULE))
-extern struct dvb_frontend * atbm8830_attach (const struct atbm8830_config * config,
-    struct i2c_adapter * i2c);
+	(defined(CONFIG_DVB_ATBM8830_MODULE) && defined(MODULE))
+extern struct dvb_frontend *atbm8830_attach(const struct atbm8830_config *config,
+		struct i2c_adapter *i2c);
 #else
 static inline
-struct dvb_frontend * atbm8830_attach (const struct atbm8830_config * config,
-                                       struct i2c_adapter * i2c) {
-  printk (KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
-  return NULL;
+struct dvb_frontend *atbm8830_attach(const struct atbm8830_config *config,
+		struct i2c_adapter *i2c) {
+	printk(KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
+	return NULL;
 }
 #endif /* CONFIG_DVB_ATBM8830 */
 

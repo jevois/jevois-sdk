@@ -49,25 +49,25 @@
  * per-inode layout
  */
 struct objlayout {
-  struct pnfs_layout_hdr pnfs_layout;
-  
-  /* for layout_commit */
-  enum osd_delta_space_valid_enum {
-    OBJ_DSU_INIT = 0,
-    OBJ_DSU_VALID,
-    OBJ_DSU_INVALID,
-  } delta_space_valid;
-  s64 delta_space_used;  /* consumed by write ops */
-  
-  /* for layout_return */
-  spinlock_t lock;
-  struct list_head err_list;
+	struct pnfs_layout_hdr pnfs_layout;
+
+	 /* for layout_commit */
+	enum osd_delta_space_valid_enum {
+		OBJ_DSU_INIT = 0,
+		OBJ_DSU_VALID,
+		OBJ_DSU_INVALID,
+	} delta_space_valid;
+	s64 delta_space_used;  /* consumed by write ops */
+
+	 /* for layout_return */
+	spinlock_t lock;
+	struct list_head err_list;
 };
 
 static inline struct objlayout *
-OBJLAYOUT (struct pnfs_layout_hdr * lo)
+OBJLAYOUT(struct pnfs_layout_hdr *lo)
 {
-  return container_of (lo, struct objlayout, pnfs_layout);
+	return container_of(lo, struct objlayout, pnfs_layout);
 }
 
 /*
@@ -75,115 +75,115 @@ OBJLAYOUT (struct pnfs_layout_hdr * lo)
  * embedded in objects provider io_state data structure
  */
 struct objlayout_io_res {
-  struct objlayout * objlay;
-  
-  void * rpcdata;
-  int status;             /* res */
-  int committed;          /* res */
-  
-  /* Error reporting (layout_return) */
-  struct list_head err_list;
-  unsigned num_comps;
-  /* Pointer to array of error descriptors of size num_comps.
-   * It should contain as many entries as devices in the osd_layout
-   * that participate in the I/O. It is up to the io_engine to allocate
-   * needed space and set num_comps.
-   */
-  struct pnfs_osd_ioerr * ioerrs;
+	struct objlayout *objlay;
+
+	void *rpcdata;
+	int status;             /* res */
+	int committed;          /* res */
+
+	/* Error reporting (layout_return) */
+	struct list_head err_list;
+	unsigned num_comps;
+	/* Pointer to array of error descriptors of size num_comps.
+	 * It should contain as many entries as devices in the osd_layout
+	 * that participate in the I/O. It is up to the io_engine to allocate
+	 * needed space and set num_comps.
+	 */
+	struct pnfs_osd_ioerr *ioerrs;
 };
 
 static inline
-void objlayout_init_ioerrs (struct objlayout_io_res * oir, unsigned num_comps,
-                            struct pnfs_osd_ioerr * ioerrs, void * rpcdata,
-                            struct pnfs_layout_hdr * pnfs_layout_type)
+void objlayout_init_ioerrs(struct objlayout_io_res *oir, unsigned num_comps,
+			struct pnfs_osd_ioerr *ioerrs, void *rpcdata,
+			struct pnfs_layout_hdr *pnfs_layout_type)
 {
-  oir->objlay = OBJLAYOUT (pnfs_layout_type);
-  oir->rpcdata = rpcdata;
-  INIT_LIST_HEAD (&oir->err_list);
-  oir->num_comps = num_comps;
-  oir->ioerrs = ioerrs;
+	oir->objlay = OBJLAYOUT(pnfs_layout_type);
+	oir->rpcdata = rpcdata;
+	INIT_LIST_HEAD(&oir->err_list);
+	oir->num_comps = num_comps;
+	oir->ioerrs = ioerrs;
 }
 
 /*
  * Raid engine I/O API
  */
-extern int objio_alloc_lseg (struct pnfs_layout_segment ** outp,
-                             struct pnfs_layout_hdr * pnfslay,
-                             struct pnfs_layout_range * range,
-                             struct xdr_stream * xdr,
-                             gfp_t gfp_flags);
-extern void objio_free_lseg (struct pnfs_layout_segment * lseg);
+extern int objio_alloc_lseg(struct pnfs_layout_segment **outp,
+	struct pnfs_layout_hdr *pnfslay,
+	struct pnfs_layout_range *range,
+	struct xdr_stream *xdr,
+	gfp_t gfp_flags);
+extern void objio_free_lseg(struct pnfs_layout_segment *lseg);
 
 /* objio_free_result will free these @oir structs recieved from
  * objlayout_{read,write}_done
  */
-extern void objio_free_result (struct objlayout_io_res * oir);
+extern void objio_free_result(struct objlayout_io_res *oir);
 
-extern int objio_read_pagelist (struct nfs_read_data * rdata);
-extern int objio_write_pagelist (struct nfs_write_data * wdata, int how);
+extern int objio_read_pagelist(struct nfs_read_data *rdata);
+extern int objio_write_pagelist(struct nfs_write_data *wdata, int how);
 
 /*
  * callback API
  */
-extern void objlayout_io_set_result (struct objlayout_io_res * oir,
-                                     unsigned index, struct pnfs_osd_objid * pooid,
-                                     int osd_error, u64 offset, u64 length, bool is_write);
+extern void objlayout_io_set_result(struct objlayout_io_res *oir,
+			unsigned index, struct pnfs_osd_objid *pooid,
+			int osd_error, u64 offset, u64 length, bool is_write);
 
 static inline void
-objlayout_add_delta_space_used (struct objlayout * objlay, s64 space_used)
+objlayout_add_delta_space_used(struct objlayout *objlay, s64 space_used)
 {
-  /* If one of the I/Os errored out and the delta_space_used was
-   * invalid we render the complete report as invalid. Protocol mandate
-   * the DSU be accurate or not reported.
-   */
-  spin_lock (&objlay->lock);
-  if (objlay->delta_space_valid != OBJ_DSU_INVALID) {
-    objlay->delta_space_valid = OBJ_DSU_VALID;
-    objlay->delta_space_used += space_used;
-  }
-  spin_unlock (&objlay->lock);
+	/* If one of the I/Os errored out and the delta_space_used was
+	 * invalid we render the complete report as invalid. Protocol mandate
+	 * the DSU be accurate or not reported.
+	 */
+	spin_lock(&objlay->lock);
+	if (objlay->delta_space_valid != OBJ_DSU_INVALID) {
+		objlay->delta_space_valid = OBJ_DSU_VALID;
+		objlay->delta_space_used += space_used;
+	}
+	spin_unlock(&objlay->lock);
 }
 
-extern void objlayout_read_done (struct objlayout_io_res * oir,
-                                 ssize_t status, bool sync);
-extern void objlayout_write_done (struct objlayout_io_res * oir,
-                                  ssize_t status, bool sync);
+extern void objlayout_read_done(struct objlayout_io_res *oir,
+				ssize_t status, bool sync);
+extern void objlayout_write_done(struct objlayout_io_res *oir,
+				 ssize_t status, bool sync);
 
-extern int objlayout_get_deviceinfo (struct pnfs_layout_hdr * pnfslay,
-                                     struct nfs4_deviceid * d_id, struct pnfs_osd_deviceaddr ** deviceaddr,
-                                     gfp_t gfp_flags);
-extern void objlayout_put_deviceinfo (struct pnfs_osd_deviceaddr * deviceaddr);
+extern int objlayout_get_deviceinfo(struct pnfs_layout_hdr *pnfslay,
+	struct nfs4_deviceid *d_id, struct pnfs_osd_deviceaddr **deviceaddr,
+	gfp_t gfp_flags);
+extern void objlayout_put_deviceinfo(struct pnfs_osd_deviceaddr *deviceaddr);
 
 /*
  * exported generic objects function vectors
  */
 
-extern struct pnfs_layout_hdr * objlayout_alloc_layout_hdr (struct inode *, gfp_t gfp_flags);
-extern void objlayout_free_layout_hdr (struct pnfs_layout_hdr *);
+extern struct pnfs_layout_hdr *objlayout_alloc_layout_hdr(struct inode *, gfp_t gfp_flags);
+extern void objlayout_free_layout_hdr(struct pnfs_layout_hdr *);
 
-extern struct pnfs_layout_segment * objlayout_alloc_lseg (
-  struct pnfs_layout_hdr *,
-  struct nfs4_layoutget_res *,
-  gfp_t gfp_flags);
-extern void objlayout_free_lseg (struct pnfs_layout_segment *);
+extern struct pnfs_layout_segment *objlayout_alloc_lseg(
+	struct pnfs_layout_hdr *,
+	struct nfs4_layoutget_res *,
+	gfp_t gfp_flags);
+extern void objlayout_free_lseg(struct pnfs_layout_segment *);
 
-extern enum pnfs_try_status objlayout_read_pagelist (
-  struct nfs_read_data *);
+extern enum pnfs_try_status objlayout_read_pagelist(
+	struct nfs_read_data *);
 
-extern enum pnfs_try_status objlayout_write_pagelist (
-  struct nfs_write_data *,
-  int how);
+extern enum pnfs_try_status objlayout_write_pagelist(
+	struct nfs_write_data *,
+	int how);
 
-extern void objlayout_encode_layoutcommit (
-  struct pnfs_layout_hdr *,
-  struct xdr_stream *,
-  const struct nfs4_layoutcommit_args *);
+extern void objlayout_encode_layoutcommit(
+	struct pnfs_layout_hdr *,
+	struct xdr_stream *,
+	const struct nfs4_layoutcommit_args *);
 
-extern void objlayout_encode_layoutreturn (
-  struct pnfs_layout_hdr *,
-  struct xdr_stream *,
-  const struct nfs4_layoutreturn_args *);
+extern void objlayout_encode_layoutreturn(
+	struct pnfs_layout_hdr *,
+	struct xdr_stream *,
+	const struct nfs4_layoutreturn_args *);
 
-extern int objlayout_autologin (struct pnfs_osd_deviceaddr * deviceaddr);
+extern int objlayout_autologin(struct pnfs_osd_deviceaddr *deviceaddr);
 
 #endif /* _OBJLAYOUT_H */

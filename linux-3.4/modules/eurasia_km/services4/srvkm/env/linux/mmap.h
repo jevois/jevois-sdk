@@ -52,7 +52,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * freedom in choosing the mmap offset for mappings.  Mixed maps also
  * allow both the mmap and the wrap code to be simplified somewhat.
  */
-#define PVR_MAKE_ALL_PFNS_SPECIAL
+#define	PVR_MAKE_ALL_PFNS_SPECIAL
 #endif
 
 #include "perproc.h"
@@ -64,62 +64,62 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 typedef struct KV_OFFSET_STRUCT_TAG
 {
-  /*
-   * Mapping count.  Incremented when the mapping is created, and
-   * if the mapping is inherited across a process fork.
-   */
-  IMG_UINT32      ui32Mapped;
-  
-  /*
-   * Offset to be passed to mmap2 to map the associated memory area
-   * into user space.  The offset may represent the page frame number
-   * of the first page in the area (if the area is physically
-   * contiguous), or it may represent the secure handle associated
-   * with the area.
-   */
-  IMG_UINTPTR_T       uiMMapOffset;
-  
-  IMG_SIZE_T      uiRealByteSize;
-  
-  /* Memory area associated with this offset structure */
-  LinuxMemArea        *        psLinuxMemArea;
-  
-  #if !defined(PVR_MAKE_ALL_PFNS_SPECIAL)
-  /* ID of the thread that owns this structure */
-  IMG_UINT32      ui32TID;
-  #endif
-  
-  /* ID of the process that owns this structure */
-  IMG_UINT32      ui32PID;
-  
-  /*
-   * For offsets that represent actual page frame numbers, this structure
-   * is temporarily put on a list so that it can be found from the
-   * driver mmap entry point.  This flag indicates the structure is
-   * on the list.
-   */
-  IMG_BOOL      bOnMMapList;
-  
-  /* Reference count for this structure */
-  IMG_UINT32      ui32RefCount;
-  
-  /*
-   * User mode address of start of mapping.  This is not necessarily the
-   * first user mode address of the memory area.
-   */
-  IMG_UINTPTR_T   uiUserVAddr;
-  
-  /* Extra entries to support proc filesystem debug info */
-  #if defined(DEBUG_LINUX_MMAP_AREAS)
-  const IMG_CHAR  *  pszName;
-  #endif
-  
-  /* List entry field for MMap list */
-  struct list_head   sMMapItem;
-  
-  /* List entry field for per-memory area list */
-  struct list_head   sAreaItem;
-} KV_OFFSET_STRUCT, *PKV_OFFSET_STRUCT;
+    /*
+     * Mapping count.  Incremented when the mapping is created, and
+     * if the mapping is inherited across a process fork.
+     */
+    IMG_UINT32			ui32Mapped;
+
+    /*
+     * Offset to be passed to mmap2 to map the associated memory area
+     * into user space.  The offset may represent the page frame number
+     * of the first page in the area (if the area is physically
+     * contiguous), or it may represent the secure handle associated
+     * with the area.
+     */
+    IMG_UINTPTR_T       uiMMapOffset;
+
+    IMG_SIZE_T			uiRealByteSize;
+
+    /* Memory area associated with this offset structure */
+    LinuxMemArea                *psLinuxMemArea;
+    
+#if !defined(PVR_MAKE_ALL_PFNS_SPECIAL)
+    /* ID of the thread that owns this structure */
+    IMG_UINT32			ui32TID;
+#endif
+
+    /* ID of the process that owns this structure */
+    IMG_UINT32			ui32PID;
+
+    /*
+     * For offsets that represent actual page frame numbers, this structure
+     * is temporarily put on a list so that it can be found from the
+     * driver mmap entry point.  This flag indicates the structure is
+     * on the list.
+     */
+    IMG_BOOL			bOnMMapList;
+
+    /* Reference count for this structure */
+    IMG_UINT32			ui32RefCount;
+
+    /*
+     * User mode address of start of mapping.  This is not necessarily the
+     * first user mode address of the memory area.
+     */
+    IMG_UINTPTR_T		uiUserVAddr;
+
+    /* Extra entries to support proc filesystem debug info */
+#if defined(DEBUG_LINUX_MMAP_AREAS)
+    const IMG_CHAR		*pszName;
+#endif
+    
+   /* List entry field for MMap list */
+   struct list_head		sMMapItem;
+
+   /* List entry field for per-memory area list */
+   struct list_head		sAreaItem;
+}KV_OFFSET_STRUCT, *PKV_OFFSET_STRUCT;
 
 
 
@@ -127,25 +127,25 @@ typedef struct KV_OFFSET_STRUCT_TAG
  *******************************************************************************
  * @Function Mmap initialisation code
  ******************************************************************************/
-IMG_VOID PVRMMapInit (IMG_VOID);
+IMG_VOID PVRMMapInit(IMG_VOID);
 
 
 /*!
  *******************************************************************************
  * @Function Mmap de-initialisation code
  ******************************************************************************/
-IMG_VOID PVRMMapCleanup (IMG_VOID);
+IMG_VOID PVRMMapCleanup(IMG_VOID);
 
 
 /*!
  *******************************************************************************
  * @Function Registers a memory area with the mmap code
- *
+ *          
  * @Input psLinuxMemArea
  *
  * @Return PVRSRV_ERROR status
  ******************************************************************************/
-PVRSRV_ERROR PVRMMapRegisterArea (LinuxMemArea * psLinuxMemArea);
+PVRSRV_ERROR PVRMMapRegisterArea(LinuxMemArea *psLinuxMemArea);
 
 
 /*!
@@ -156,7 +156,7 @@ PVRSRV_ERROR PVRMMapRegisterArea (LinuxMemArea * psLinuxMemArea);
  *
  * @Return PVRSRV_ERROR status
  ******************************************************************************/
-PVRSRV_ERROR PVRMMapRemoveRegisteredArea (LinuxMemArea * psLinuxMemArea);
+PVRSRV_ERROR PVRMMapRemoveRegisteredArea(LinuxMemArea *psLinuxMemArea);
 
 
 /*!
@@ -165,33 +165,33 @@ PVRSRV_ERROR PVRMMapRemoveRegisteredArea (LinuxMemArea * psLinuxMemArea);
  *           area to userspace, this function validates the request and
  *           returns the details that the client must use when calling mmap(2).
  *
- * @Input psPerProc   Per process data.
+ * @Input psPerProc		Per process data.
  * @Input hMHandle              Handle associated with the memory to map.
- *        This is a (secure) handle to the OS specific
- *        memory handle structure (hOSMemHandle), or
- *        a handle to a structure that contains the
- *        memory handle.
+ *				This is a (secure) handle to the OS specific
+ *				memory handle structure (hOSMemHandle), or
+ *				a handle to a structure that contains the 
+ *				memory handle.
  * @Output pui32MMapOffset      The page aligned offset that the client must
- *        pass to the mmap2 system call.
+ *				pass to the mmap2 system call.
  * @Output pui32ByteOffset       The real mapping that will be created for the
- *        services client may have a different
- *        size/alignment from it request. This offset
- *        is returned to the client and should be added
- *        to virtual address returned from mmap2 to get
- *        the first address corresponding to its request.
+ *				services client may have a different
+ *				size/alignment from it request. This offset
+ *				is returned to the client and should be added
+ *				to virtual address returned from mmap2 to get
+ *				the first address corresponding to its request.
  * @Output pui32RealByteOffset   The size that the mapping will really be,
- *        that the client must also pass to mmap/munmap.
+ *				that the client must also pass to mmap/munmap.
  *
- * @Output pui32UserVAddr Pointer to returned user mode address of
- *        mapping.
+ * @Output pui32UserVAddr	Pointer to returned user mode address of 
+ * 				mapping.
  * @Return PVRSRV_ERROR
  ******************************************************************************/
-PVRSRV_ERROR PVRMMapOSMemHandleToMMapData (PVRSRV_PER_PROCESS_DATA * psPerProc,
-    IMG_HANDLE hMHandle,
-    IMG_UINTPTR_T * puiMMapOffset,
-    IMG_UINTPTR_T * puiByteOffset,
-    IMG_SIZE_T * puiRealByteSize,
-    IMG_UINTPTR_T * puiUserVAddr);
+PVRSRV_ERROR PVRMMapOSMemHandleToMMapData(PVRSRV_PER_PROCESS_DATA *psPerProc,
+                                          IMG_HANDLE hMHandle,
+                                          IMG_UINTPTR_T *puiMMapOffset,
+                                          IMG_UINTPTR_T *puiByteOffset,
+                                          IMG_SIZE_T *puiRealByteSize,
+                                          IMG_UINTPTR_T *puiUserVAddr);
 
 /*!
  *******************************************************************************
@@ -202,31 +202,31 @@ PVRSRV_ERROR PVRMMapOSMemHandleToMMapData (PVRSRV_PER_PROCESS_DATA * psPerProc,
  @Input hMHandle             Memory handle.
 
  @Output pbMUnmap            Flag that indicates whether an munmap is
-                 required.
+		             required.
  @Output pui32RealByteSize   Location for size of mapping.
  @Output pui32UserVAddr      User mode address to munmap.
 
  @Return PVRSRV_ERROR
  ******************************************************************************/
 PVRSRV_ERROR
-PVRMMapReleaseMMapData (PVRSRV_PER_PROCESS_DATA * psPerProc,
-                        IMG_HANDLE hMHandle,
-                        IMG_BOOL * pbMUnmap,
-                        IMG_SIZE_T * puiRealByteSize,
-                        IMG_UINTPTR_T * puiUserVAddr);
+PVRMMapReleaseMMapData(PVRSRV_PER_PROCESS_DATA *psPerProc,
+				IMG_HANDLE hMHandle,
+				IMG_BOOL *pbMUnmap,
+				IMG_SIZE_T *puiRealByteSize,
+                IMG_UINTPTR_T *puiUserVAddr);
 
 /*!
  *******************************************************************************
  * @Function driver mmap entry point
- *
+ * 
  * @Input pFile : user file structure
  *
  * @Input ps_vma : vm area structure
- *
+ * 
  * @Return 0 for success, -errno for failure.
  ******************************************************************************/
-int PVRMMap (struct file * pFile, struct vm_area_struct * ps_vma);
+int PVRMMap(struct file* pFile, struct vm_area_struct* ps_vma);
 
 
-#endif  /* __MMAP_H__ */
+#endif	/* __MMAP_H__ */
 

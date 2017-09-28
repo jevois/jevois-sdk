@@ -29,7 +29,7 @@
  * This example here is for the development board. Refer pcm970-baseboard.c
  */
 
-extern void pcm970_baseboard_init (void);
+extern void pcm970_baseboard_init(void);
 
 #endif
 

@@ -50,39 +50,39 @@ struct sync_fence;
  * @pt_value_str:       fill str with the value of the sync_pt
  */
 struct sync_timeline_ops {
-  const char * driver_name;
-  
-  /* required */
-  struct sync_pt * (*dup) (struct sync_pt * pt);
-  
-  /* required */
-  int (*has_signaled) (struct sync_pt * pt);
-  
-  /* required */
-  int (*compare) (struct sync_pt * a, struct sync_pt * b);
-  
-  /* optional */
-  void (*free_pt) (struct sync_pt * sync_pt);
-  
-  /* optional */
-  void (*release_obj) (struct sync_timeline * sync_timeline);
-  
-  /* deprecated */
-  void (*print_obj) (struct seq_file * s,
-                     struct sync_timeline * sync_timeline);
-                     
-  /* deprecated */
-  void (*print_pt) (struct seq_file * s, struct sync_pt * sync_pt);
-  
-  /* optional */
-  int (*fill_driver_data) (struct sync_pt * syncpt, void * data, int size);
-  
-  /* optional */
-  void (*timeline_value_str) (struct sync_timeline * timeline, char * str,
-                              int size);
-                              
-  /* optional */
-  void (*pt_value_str) (struct sync_pt * pt, char * str, int size);
+        const char *driver_name;
+
+        /* required */
+        struct sync_pt *(*dup)(struct sync_pt *pt);
+
+        /* required */
+        int (*has_signaled)(struct sync_pt *pt);
+
+        /* required */
+        int (*compare)(struct sync_pt *a, struct sync_pt *b);
+
+        /* optional */
+        void (*free_pt)(struct sync_pt *sync_pt);
+
+        /* optional */
+        void (*release_obj)(struct sync_timeline *sync_timeline);
+
+        /* deprecated */
+        void (*print_obj)(struct seq_file *s,
+                          struct sync_timeline *sync_timeline);
+
+        /* deprecated */
+        void (*print_pt)(struct seq_file *s, struct sync_pt *sync_pt);
+
+        /* optional */
+        int (*fill_driver_data)(struct sync_pt *syncpt, void *data, int size);
+
+        /* optional */
+        void (*timeline_value_str)(struct sync_timeline *timeline, char *str,
+                                   int size);
+
+        /* optional */
+        void (*pt_value_str)(struct sync_pt *pt, char *str, int size);
 };
 
 /**
@@ -98,20 +98,20 @@ struct sync_timeline_ops {
  * @sync_timeline_list: membership in global sync_timeline_list
  */
 struct sync_timeline {
-  struct kref             kref;
-  const struct sync_timeline_ops * ops;
-  char                    name[32];
-  
-  /* protected by child_list_lock */
-  bool                    destroyed;
-  
-  struct list_head        child_list_head;
-  spinlock_t              child_list_lock;
-  
-  struct list_head        active_list_head;
-  spinlock_t              active_list_lock;
-  
-  struct list_head        sync_timeline_list;
+        struct kref             kref;
+        const struct sync_timeline_ops  *ops;
+        char                    name[32];
+
+        /* protected by child_list_lock */
+        bool                    destroyed;
+
+        struct list_head        child_list_head;
+        spinlock_t              child_list_lock;
+
+        struct list_head        active_list_head;
+        spinlock_t              active_list_lock;
+
+        struct list_head        sync_timeline_list;
 };
 
 /**
@@ -127,19 +127,19 @@ struct sync_timeline {
  *                        singaled or error.
  */
 struct sync_pt {
-  struct sync_timeline      *      parent;
-  struct list_head        child_list;
-  
-  struct list_head        active_list;
-  struct list_head        signaled_list;
-  
-  struct sync_fence    *   fence;
-  struct list_head        pt_list;
-  
-  /* protected by parent->active_list_lock */
-  int                     status;
-  
-  ktime_t                 timestamp;
+        struct sync_timeline            *parent;
+        struct list_head        child_list;
+
+        struct list_head        active_list;
+        struct list_head        signaled_list;
+
+        struct sync_fence       *fence;
+        struct list_head        pt_list;
+
+        /* protected by parent->active_list_lock */
+        int                     status;
+
+        ktime_t                 timestamp;
 };
 
 /**
@@ -157,25 +157,25 @@ struct sync_pt {
  * @sync_fence_list:    membership in global fence list
  */
 struct sync_fence {
-  struct file       *      file;
-  struct kref             kref;
-  char                    name[32];
-  
-  /* this list is immutable once the fence is created */
-  struct list_head        pt_list_head;
-  
-  struct list_head        waiter_list_head;
-  spinlock_t              waiter_list_lock; /* also protects status */
-  int                     status;
-  
-  wait_queue_head_t       wq;
-  
-  struct list_head        sync_fence_list;
+        struct file             *file;
+        struct kref             kref;
+        char                    name[32];
+
+        /* this list is immutable once the fence is created */
+        struct list_head        pt_list_head;
+
+        struct list_head        waiter_list_head;
+        spinlock_t              waiter_list_lock; /* also protects status */
+        int                     status;
+
+        wait_queue_head_t       wq;
+
+        struct list_head        sync_fence_list;
 };
 
 struct sync_fence_waiter;
-typedef void (*sync_callback_t) (struct sync_fence * fence,
-                                 struct sync_fence_waiter * waiter);
+typedef void (*sync_callback_t)(struct sync_fence *fence,
+                                struct sync_fence_waiter *waiter);
 
 /**
  * struct sync_fence_waiter - metadata for asynchronous waiter on a fence
@@ -184,15 +184,15 @@ typedef void (*sync_callback_t) (struct sync_fence * fence,
  * @callback_data:      pointer to pass to @callback
  */
 struct sync_fence_waiter {
-  struct list_head        waiter_list;
-  
-  sync_callback_t         callback;
+        struct list_head        waiter_list;
+
+        sync_callback_t         callback;
 };
 
-static inline void sync_fence_waiter_init (struct sync_fence_waiter * waiter,
-    sync_callback_t callback)
+static inline void sync_fence_waiter_init(struct sync_fence_waiter *waiter,
+                                          sync_callback_t callback)
 {
-  waiter->callback = callback;
+        waiter->callback = callback;
 }
 
 /*
@@ -209,8 +209,8 @@ static inline void sync_fence_waiter_init (struct sync_fence_waiter * waiter,
  * @ops.  @size bytes will be allocated allowing for implemntation specific
  * data to be kept after the generic sync_timeline stuct.
  */
-struct sync_timeline * sync_timeline_create (const struct sync_timeline_ops * ops,
-    int size, const char * name);
+struct sync_timeline *sync_timeline_create(const struct sync_timeline_ops *ops,
+                                           int size, const char *name);
 
 /**
  * sync_timeline_destory() - destorys a sync object
@@ -220,7 +220,7 @@ struct sync_timeline * sync_timeline_create (const struct sync_timeline_ops * op
  * (i.e. module unload.)  @obj won't actually be freed until all its childern
  * sync_pts are freed.
  */
-void sync_timeline_destroy (struct sync_timeline * obj);
+void sync_timeline_destroy(struct sync_timeline *obj);
 
 /**
  * sync_timeline_signal() - signal a status change on a sync_timeline
@@ -229,7 +229,7 @@ void sync_timeline_destroy (struct sync_timeline * obj);
  * A sync implemntation should call this any time one of it's sync_pts
  * has signaled or has an error condition.
  */
-void sync_timeline_signal (struct sync_timeline * obj);
+void sync_timeline_signal(struct sync_timeline *obj);
 
 /**
  * sync_pt_create() - creates a sync pt
@@ -240,7 +240,7 @@ void sync_timeline_signal (struct sync_timeline * obj);
  * allocated allowing for implemntation specific data to be kept after
  * the generic sync_timeline struct.
  */
-struct sync_pt * sync_pt_create (struct sync_timeline * parent, int size);
+struct sync_pt *sync_pt_create(struct sync_timeline *parent, int size);
 
 /**
  * sync_pt_free() - frees a sync pt
@@ -249,7 +249,7 @@ struct sync_pt * sync_pt_create (struct sync_timeline * parent, int size);
  * This should only be called on sync_pts which have been created but
  * not added to a fence.
  */
-void sync_pt_free (struct sync_pt * pt);
+void sync_pt_free(struct sync_pt *pt);
 
 /**
  * sync_fence_create() - creates a sync fence
@@ -259,7 +259,7 @@ void sync_pt_free (struct sync_pt * pt);
  * Creates a fence containg @pt.  Once this is called, the fence takes
  * ownership of @pt.
  */
-struct sync_fence * sync_fence_create (const char * name, struct sync_pt * pt);
+struct sync_fence *sync_fence_create(const char *name, struct sync_pt *pt);
 
 /*
  * API for sync_fence consumers
@@ -274,8 +274,8 @@ struct sync_fence * sync_fence_create (const char * name, struct sync_pt * pt);
  * Creates a new fence which contains copies of all the sync_pts in both
  * @a and @b.  @a and @b remain valid, independent fences.
  */
-struct sync_fence * sync_fence_merge (const char * name,
-                                      struct sync_fence * a, struct sync_fence * b);
+struct sync_fence *sync_fence_merge(const char *name,
+                                    struct sync_fence *a, struct sync_fence *b);
 
 /**
  * sync_fence_fdget() - get a fence from an fd
@@ -284,7 +284,7 @@ struct sync_fence * sync_fence_merge (const char * name,
  * Ensures @fd references a valid fence, increments the refcount of the backing
  * file, and returns the fence.
  */
-struct sync_fence * sync_fence_fdget (int fd);
+struct sync_fence *sync_fence_fdget(int fd);
 
 /**
  * sync_fence_put() - puts a refernnce of a sync fence
@@ -293,7 +293,7 @@ struct sync_fence * sync_fence_fdget (int fd);
  * Puts a reference on @fence.  If this is the last reference, the fence and
  * all it's sync_pts will be freed
  */
-void sync_fence_put (struct sync_fence * fence);
+void sync_fence_put(struct sync_fence *fence);
 
 /**
  * sync_fence_install() - installs a fence into a file descriptor
@@ -302,7 +302,7 @@ void sync_fence_put (struct sync_fence * fence);
  *
  * Installs @fence into @fd.  @fd's should be acquired through get_unused_fd().
  */
-void sync_fence_install (struct sync_fence * fence, int fd);
+void sync_fence_install(struct sync_fence *fence, int fd);
 
 /**
  * sync_fence_wait_async() - registers and async wait on the fence
@@ -314,8 +314,8 @@ void sync_fence_install (struct sync_fence * fence, int fd);
  * Registers a callback to be called when @fence signals or has an error.
  * @waiter should be initialized with sync_fence_waiter_init().
  */
-int sync_fence_wait_async (struct sync_fence * fence,
-                           struct sync_fence_waiter * waiter);
+int sync_fence_wait_async(struct sync_fence *fence,
+                          struct sync_fence_waiter *waiter);
 
 /**
  * sync_fence_cancel_async() - cancels an async wait
@@ -328,8 +328,8 @@ int sync_fence_wait_async (struct sync_fence * fence,
  * Cancels a previously registered async wait.  Will fail gracefully if
  * @waiter was never registered or if @fence has already signaled @waiter.
  */
-int sync_fence_cancel_async (struct sync_fence * fence,
-                             struct sync_fence_waiter * waiter);
+int sync_fence_cancel_async(struct sync_fence *fence,
+                            struct sync_fence_waiter *waiter);
 
 /**
  * sync_fence_wait() - wait on fence
@@ -339,7 +339,7 @@ int sync_fence_cancel_async (struct sync_fence * fence,
  * Wait for @fence to be signaled or have an error.  Waits indefinitely
  * if @timeout < 0
  */
-int sync_fence_wait (struct sync_fence * fence, long timeout);
+int sync_fence_wait(struct sync_fence *fence, long timeout);
 
 #endif /* __KERNEL__ */
 
@@ -350,9 +350,9 @@ int sync_fence_wait (struct sync_fence * fence, long timeout);
  * @fence:      returns the fd of the new fence to userspace
  */
 struct sync_merge_data {
-  __s32   fd2; /* fd of second fence */
-  char    name[32]; /* name of new fence */
-  __s32   fence; /* fd on newly created fence */
+        __s32   fd2; /* fd of second fence */
+        char    name[32]; /* name of new fence */
+        __s32   fence; /* fd on newly created fence */
 };
 
 /**
@@ -365,13 +365,13 @@ struct sync_merge_data {
  * @driver_data:        any driver dependant data
  */
 struct sync_pt_info {
-  __u32   len;
-  char    obj_name[32];
-  char    driver_name[32];
-  __s32   status;
-  __u64   timestamp_ns;
-  
-  __u8    driver_data[0];
+        __u32   len;
+        char    obj_name[32];
+        char    driver_name[32];
+        __s32   status;
+        __u64   timestamp_ns;
+
+        __u8    driver_data[0];
 };
 
 /**
@@ -384,11 +384,11 @@ struct sync_pt_info {
  * @pt_info:    a sync_pt_info struct for every sync_pt in the fence
  */
 struct sync_fence_info_data {
-  __u32   len;
-  char    name[32];
-  __s32   status;
-  
-  __u8    pt_info[0];
+        __u32   len;
+        char    name[32];
+        __s32   status;
+
+        __u8    pt_info[0];
 };
 
 #define SYNC_IOC_MAGIC          '>'
@@ -421,6 +421,6 @@ struct sync_fence_info_data {
  * To itterate over the sync_pt_infos, use the sync_pt_info.len field.
  */
 #define SYNC_IOC_FENCE_INFO     _IOWR(SYNC_IOC_MAGIC, 2,\
-                                      struct sync_fence_info_data)
+        struct sync_fence_info_data)
 
 #endif /* _LINUX_SYNC_H */

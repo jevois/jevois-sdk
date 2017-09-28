@@ -33,9 +33,9 @@
  * HT Bus fixup for the Titan
  * XXX IRQ values need to change based on the board layout
  */
-void __init titan_ht_pcibios_fixup_bus (struct pci_bus * bus)
+void __init titan_ht_pcibios_fixup_bus(struct pci_bus *bus)
 {
-  /*
-   * PLX and SPKT related changes go here
-   */
+	/*
+	 * PLX and SPKT related changes go here
+	 */
 }

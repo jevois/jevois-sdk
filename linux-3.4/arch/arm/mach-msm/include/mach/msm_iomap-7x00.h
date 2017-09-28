@@ -99,16 +99,16 @@
 #define MSM_MDP_PHYS          0xAA200000
 #define MSM_MDP_SIZE          0x000F0000
 
-#define MSM_MDC_PHYS        0xAA500000
-#define MSM_MDC_SIZE        SZ_1M
+#define MSM_MDC_PHYS	      0xAA500000
+#define MSM_MDC_SIZE	      SZ_1M
 
 #define MSM_AD5_PHYS          0xAC000000
 #define MSM_AD5_SIZE          (SZ_1M*13)
 
 #ifndef __ASSEMBLY__
 
-extern void __iomem * __msm_ioremap_caller (unsigned long phys_addr, size_t size,
-    unsigned int mtype, void * caller);
+extern void __iomem *__msm_ioremap_caller(unsigned long phys_addr, size_t size,
+					  unsigned int mtype, void *caller);
 
 #endif
 

@@ -55,9 +55,9 @@
  *                              board without an intervening call to
  *                              chnl_destroy() will fail.
  */
-extern int chnl_create (struct chnl_mgr ** channel_mgr,
-                        struct dev_object * hdev_obj,
-                        const struct chnl_mgrattrs * mgr_attrts);
+extern int chnl_create(struct chnl_mgr **channel_mgr,
+			      struct dev_object *hdev_obj,
+			      const struct chnl_mgrattrs *mgr_attrts);
 
 /*
  *  ======== chnl_destroy ========
@@ -75,6 +75,6 @@ extern int chnl_create (struct chnl_mgr ** channel_mgr,
  *                          chnl_create may subsequently be called for the
  *                          same board.
  */
-extern int chnl_destroy (struct chnl_mgr * hchnl_mgr);
+extern int chnl_destroy(struct chnl_mgr *hchnl_mgr);
 
 #endif /* CHNL_ */

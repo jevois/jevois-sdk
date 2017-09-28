@@ -28,43 +28,43 @@
 #define NOUVEAU_DRM_HEADER_PATCHLEVEL 16
 
 struct drm_nouveau_channel_alloc {
-  uint32_t     fb_ctxdma_handle;
-  uint32_t     tt_ctxdma_handle;
-  
-  int          channel;
-  uint32_t     pushbuf_domains;
-  
-  /* Notifier memory */
-  uint32_t     notifier_handle;
-  
-  /* DRM-enforced subchannel assignments */
-  struct {
-    uint32_t handle;
-    uint32_t grclass;
-  } subchan[8];
-  uint32_t nr_subchan;
+	uint32_t     fb_ctxdma_handle;
+	uint32_t     tt_ctxdma_handle;
+
+	int          channel;
+	uint32_t     pushbuf_domains;
+
+	/* Notifier memory */
+	uint32_t     notifier_handle;
+
+	/* DRM-enforced subchannel assignments */
+	struct {
+		uint32_t handle;
+		uint32_t grclass;
+	} subchan[8];
+	uint32_t nr_subchan;
 };
 
 struct drm_nouveau_channel_free {
-  int channel;
+	int channel;
 };
 
 struct drm_nouveau_grobj_alloc {
-  int      channel;
-  uint32_t handle;
-  int      class;
+	int      channel;
+	uint32_t handle;
+	int      class;
 };
 
 struct drm_nouveau_notifierobj_alloc {
-  uint32_t channel;
-  uint32_t handle;
-  uint32_t size;
-  uint32_t offset;
+	uint32_t channel;
+	uint32_t handle;
+	uint32_t size;
+	uint32_t offset;
 };
 
 struct drm_nouveau_gpuobj_free {
-  int      channel;
-  uint32_t handle;
+	int      channel;
+	uint32_t handle;
 };
 
 /* FIXME : maybe unify {GET,SET}PARAMs */
@@ -80,13 +80,13 @@ struct drm_nouveau_gpuobj_free {
 #define NOUVEAU_GETPARAM_HAS_BO_USAGE    15
 #define NOUVEAU_GETPARAM_HAS_PAGEFLIP    16
 struct drm_nouveau_getparam {
-  uint64_t param;
-  uint64_t value;
+	uint64_t param;
+	uint64_t value;
 };
 
 struct drm_nouveau_setparam {
-  uint64_t param;
-  uint64_t value;
+	uint64_t param;
+	uint64_t value;
 };
 
 #define NOUVEAU_GEM_DOMAIN_CPU       (1 << 0)
@@ -102,35 +102,35 @@ struct drm_nouveau_setparam {
 #define NOUVEAU_GEM_TILE_NONCONTIG   0x00000008
 
 struct drm_nouveau_gem_info {
-  uint32_t handle;
-  uint32_t domain;
-  uint64_t size;
-  uint64_t offset;
-  uint64_t map_handle;
-  uint32_t tile_mode;
-  uint32_t tile_flags;
+	uint32_t handle;
+	uint32_t domain;
+	uint64_t size;
+	uint64_t offset;
+	uint64_t map_handle;
+	uint32_t tile_mode;
+	uint32_t tile_flags;
 };
 
 struct drm_nouveau_gem_new {
-  struct drm_nouveau_gem_info info;
-  uint32_t channel_hint;
-  uint32_t align;
+	struct drm_nouveau_gem_info info;
+	uint32_t channel_hint;
+	uint32_t align;
 };
 
 #define NOUVEAU_GEM_MAX_BUFFERS 1024
 struct drm_nouveau_gem_pushbuf_bo_presumed {
-  uint32_t valid;
-  uint32_t domain;
-  uint64_t offset;
+	uint32_t valid;
+	uint32_t domain;
+	uint64_t offset;
 };
 
 struct drm_nouveau_gem_pushbuf_bo {
-  uint64_t user_priv;
-  uint32_t handle;
-  uint32_t read_domains;
-  uint32_t write_domains;
-  uint32_t valid_domains;
-  struct drm_nouveau_gem_pushbuf_bo_presumed presumed;
+	uint64_t user_priv;
+	uint32_t handle;
+	uint32_t read_domains;
+	uint32_t write_domains;
+	uint32_t valid_domains;
+	struct drm_nouveau_gem_pushbuf_bo_presumed presumed;
 };
 
 #define NOUVEAU_GEM_RELOC_LOW  (1 << 0)
@@ -138,52 +138,52 @@ struct drm_nouveau_gem_pushbuf_bo {
 #define NOUVEAU_GEM_RELOC_OR   (1 << 2)
 #define NOUVEAU_GEM_MAX_RELOCS 1024
 struct drm_nouveau_gem_pushbuf_reloc {
-  uint32_t reloc_bo_index;
-  uint32_t reloc_bo_offset;
-  uint32_t bo_index;
-  uint32_t flags;
-  uint32_t data;
-  uint32_t vor;
-  uint32_t tor;
+	uint32_t reloc_bo_index;
+	uint32_t reloc_bo_offset;
+	uint32_t bo_index;
+	uint32_t flags;
+	uint32_t data;
+	uint32_t vor;
+	uint32_t tor;
 };
 
 #define NOUVEAU_GEM_MAX_PUSH 512
 struct drm_nouveau_gem_pushbuf_push {
-  uint32_t bo_index;
-  uint32_t pad;
-  uint64_t offset;
-  uint64_t length;
+	uint32_t bo_index;
+	uint32_t pad;
+	uint64_t offset;
+	uint64_t length;
 };
 
 struct drm_nouveau_gem_pushbuf {
-  uint32_t channel;
-  uint32_t nr_buffers;
-  uint64_t buffers;
-  uint32_t nr_relocs;
-  uint32_t nr_push;
-  uint64_t relocs;
-  uint64_t push;
-  uint32_t suffix0;
-  uint32_t suffix1;
-  uint64_t vram_available;
-  uint64_t gart_available;
+	uint32_t channel;
+	uint32_t nr_buffers;
+	uint64_t buffers;
+	uint32_t nr_relocs;
+	uint32_t nr_push;
+	uint64_t relocs;
+	uint64_t push;
+	uint32_t suffix0;
+	uint32_t suffix1;
+	uint64_t vram_available;
+	uint64_t gart_available;
 };
 
 #define NOUVEAU_GEM_CPU_PREP_NOWAIT                                  0x00000001
 #define NOUVEAU_GEM_CPU_PREP_WRITE                                   0x00000004
 struct drm_nouveau_gem_cpu_prep {
-  uint32_t handle;
-  uint32_t flags;
+	uint32_t handle;
+	uint32_t flags;
 };
 
 struct drm_nouveau_gem_cpu_fini {
-  uint32_t handle;
+	uint32_t handle;
 };
 
 enum nouveau_bus_type {
-  NV_AGP     = 0,
-  NV_PCI     = 1,
-  NV_PCIE    = 2,
+	NV_AGP     = 0,
+	NV_PCI     = 1,
+	NV_PCIE    = 2,
 };
 
 struct drm_nouveau_sarea {

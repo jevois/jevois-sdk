@@ -22,6 +22,6 @@
  * Cobalt uses GT64111. GT64111 is almost the same as GT64120.
  */
 
-#define GT64120_BASE  CKSEG1ADDR(GT_DEF_BASE)
+#define GT64120_BASE	CKSEG1ADDR(GT_DEF_BASE)
 
 #endif /* _COBALT_MACH_GT64120_H */

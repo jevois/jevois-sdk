@@ -15,13 +15,13 @@
 
 #include "base.h"
 
-struct kobject * firmware_kobj;
-EXPORT_SYMBOL_GPL (firmware_kobj);
+struct kobject *firmware_kobj;
+EXPORT_SYMBOL_GPL(firmware_kobj);
 
-int __init firmware_init (void)
+int __init firmware_init(void)
 {
-  firmware_kobj = kobject_create_and_add ("firmware", NULL);
-  if (!firmware_kobj)
-  { return -ENOMEM; }
-  return 0;
+	firmware_kobj = kobject_create_and_add("firmware", NULL);
+	if (!firmware_kobj)
+		return -ENOMEM;
+	return 0;
 }

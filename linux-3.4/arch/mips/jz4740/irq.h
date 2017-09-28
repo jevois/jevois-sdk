@@ -17,7 +17,7 @@
 
 #include <linux/irq.h>
 
-extern void jz4740_irq_suspend (struct irq_data * data);
-extern void jz4740_irq_resume (struct irq_data * data);
+extern void jz4740_irq_suspend(struct irq_data *data);
+extern void jz4740_irq_resume(struct irq_data *data);
 
 #endif

@@ -24,18 +24,18 @@
 #include <asm/sched_clock.h>
 #include <plat/sched_clock.h>
 
-static void __iomem * ctr;
+static void __iomem *ctr;
 
-static u32 notrace versatile_read_sched_clock (void)
+static u32 notrace versatile_read_sched_clock(void)
 {
-  if (ctr)
-  { return readl (ctr); }
-  
-  return 0;
+	if (ctr)
+		return readl(ctr);
+
+	return 0;
 }
 
-void __init versatile_sched_clock_init (void __iomem * reg, unsigned long rate)
+void __init versatile_sched_clock_init(void __iomem *reg, unsigned long rate)
 {
-  ctr = reg;
-  setup_sched_clock (versatile_read_sched_clock, 32, rate);
+	ctr = reg;
+	setup_sched_clock(versatile_read_sched_clock, 32, rate);
 }

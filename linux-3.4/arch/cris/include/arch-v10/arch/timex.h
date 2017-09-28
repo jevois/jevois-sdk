@@ -1,7 +1,7 @@
 /*
- * Use prescale timer at 25000 Hz instead of the baudrate timer at
- * 19200 to get rid of the 64ppm to fast timer (and we get better
- * resolution within a jiffie as well.
+ * Use prescale timer at 25000 Hz instead of the baudrate timer at 
+ * 19200 to get rid of the 64ppm to fast timer (and we get better 
+ * resolution within a jiffie as well. 
  */
 #ifndef _ASM_CRIS_ARCH_TIMEX_H
 #define _ASM_CRIS_ARCH_TIMEX_H
@@ -20,11 +20,11 @@
 #define GET_JIFFIES_USEC() \
   ( (TIMER0_DIV - *R_TIMER0_DATA) * (1000000/HZ)/TIMER0_DIV )
 
-unsigned long get_ns_in_jiffie (void);
+unsigned long get_ns_in_jiffie(void);
 
-static inline unsigned long get_us_in_jiffie_highres (void)
+static inline unsigned long get_us_in_jiffie_highres(void)
 {
-  return get_ns_in_jiffie() / 1000;
+	return get_ns_in_jiffie()/1000;
 }
 
 #endif

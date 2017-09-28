@@ -66,7 +66,7 @@ struct bcmstrbuf;
  * instrumentation/debugging.
  */
 struct bcm_mpm_mgr;
-typedef struct bcm_mpm_mgr * bcm_mpm_mgr_h;
+typedef struct bcm_mpm_mgr *bcm_mpm_mgr_h;
 
 /*
  * Opaque type definition for an instance of a pool. This handle is used for allocating
@@ -74,7 +74,7 @@ typedef struct bcm_mpm_mgr * bcm_mpm_mgr_h;
  * specific pool.
  */
 struct bcm_mp_pool;
-typedef struct bcm_mp_pool * bcm_mp_pool_h;
+typedef struct bcm_mp_pool *bcm_mp_pool_h;
 
 
 /*
@@ -89,12 +89,12 @@ typedef struct bcm_mp_pool * bcm_mp_pool_h;
  * Type definition for pool statistics.
  */
 typedef struct bcm_mp_stats {
-  char name[BCM_MP_NAMELEN];  /* Name of this pool. */
-  unsigned int objsz;         /* Object size allocated in this pool */
-  uint16 nobj;                /* Total number of objects in this pool */
-  uint16 num_alloc;           /* Number of objects currently allocated */
-  uint16 high_water;          /* Max number of allocated objects. */
-  uint16 failed_alloc;        /* Failed allocations. */
+	char name[BCM_MP_NAMELEN];  /* Name of this pool. */
+	unsigned int objsz;         /* Object size allocated in this pool */
+	uint16 nobj;                /* Total number of objects in this pool */
+	uint16 num_alloc;           /* Number of objects currently allocated */
+	uint16 high_water;          /* Max number of allocated objects. */
+	uint16 failed_alloc;        /* Failed allocations. */
 } bcm_mp_stats_t;
 
 
@@ -118,7 +118,7 @@ typedef struct bcm_mp_stats {
  *    BCME_OK     Object initialized successfully. May be used.
  *    BCME_NOMEM  Initialization failed due to no memory. Object must not be used.
  */
-int bcm_mpm_init (struct osl_info * osh, int max_pools, bcm_mpm_mgr_h * mgrp);
+int bcm_mpm_init(struct osl_info *osh, int max_pools, bcm_mpm_mgr_h *mgrp);
 
 
 /*
@@ -131,7 +131,7 @@ int bcm_mpm_init (struct osl_info * osh, int max_pools, bcm_mpm_mgr_h * mgrp);
  *    BCME_OK  Memory pool manager successfully de-initialized.
  *    other    Indicated error occured during de-initialization.
  */
-int bcm_mpm_deinit (bcm_mpm_mgr_h * mgrp);
+int bcm_mpm_deinit(bcm_mpm_mgr_h *mgrp);
 
 /*
  * bcm_mpm_create_prealloc_pool() - Create a new pool for fixed size objects. The
@@ -157,13 +157,13 @@ int bcm_mpm_deinit (bcm_mpm_mgr_h * mgrp);
  *
  *
  */
-int bcm_mpm_create_prealloc_pool (bcm_mpm_mgr_h mgr,
-                                  unsigned int obj_sz,
-                                  int nobj,
-                                  void * memstart,
-                                  unsigned int memsize,
-                                  char poolname[BCM_MP_NAMELEN],
-                                  bcm_mp_pool_h * newp);
+int bcm_mpm_create_prealloc_pool(bcm_mpm_mgr_h mgr,
+                                 unsigned int obj_sz,
+                                 int nobj,
+                                 void *memstart,
+                                 unsigned int memsize,
+                                 char poolname[BCM_MP_NAMELEN],
+                                 bcm_mp_pool_h *newp);
 
 
 /*
@@ -179,7 +179,7 @@ int bcm_mpm_create_prealloc_pool (bcm_mpm_mgr_h mgr,
  *    other     Pool not deleted due to indicated error.
  *
  */
-int bcm_mpm_delete_prealloc_pool (bcm_mpm_mgr_h mgr, bcm_mp_pool_h * poolp);
+int bcm_mpm_delete_prealloc_pool(bcm_mpm_mgr_h mgr, bcm_mp_pool_h *poolp);
 
 /*
  * bcm_mpm_create_heap_pool() - Create a new pool for fixed size objects. The memory
@@ -200,9 +200,9 @@ int bcm_mpm_delete_prealloc_pool (bcm_mpm_mgr_h mgr, bcm_mp_pool_h * poolp);
  *
  *
  */
-int bcm_mpm_create_heap_pool (bcm_mpm_mgr_h mgr, unsigned int obj_sz,
-                              char poolname[BCM_MP_NAMELEN],
-                              bcm_mp_pool_h * newp);
+int bcm_mpm_create_heap_pool(bcm_mpm_mgr_h mgr, unsigned int obj_sz,
+                             char poolname[BCM_MP_NAMELEN],
+                             bcm_mp_pool_h *newp);
 
 
 /*
@@ -218,7 +218,7 @@ int bcm_mpm_create_heap_pool (bcm_mpm_mgr_h mgr, unsigned int obj_sz,
  *    other     Pool not deleted due to indicated error.
  *
  */
-int bcm_mpm_delete_heap_pool (bcm_mpm_mgr_h mgr, bcm_mp_pool_h * poolp);
+int bcm_mpm_delete_heap_pool(bcm_mpm_mgr_h mgr, bcm_mp_pool_h *poolp);
 
 
 /*
@@ -235,7 +235,7 @@ int bcm_mpm_delete_heap_pool (bcm_mpm_mgr_h mgr, bcm_mp_pool_h * poolp);
  *    other     Error getting stats.
  *
  */
-int bcm_mpm_stats (bcm_mpm_mgr_h mgr, bcm_mp_stats_t * stats, int * nentries);
+int bcm_mpm_stats(bcm_mpm_mgr_h mgr, bcm_mp_stats_t *stats, int *nentries);
 
 
 /*
@@ -250,7 +250,7 @@ int bcm_mpm_stats (bcm_mpm_mgr_h mgr, bcm_mp_stats_t * stats, int * nentries);
  *    other     Error during dump.
  *
  */
-int bcm_mpm_dump (bcm_mpm_mgr_h mgr, struct bcmstrbuf * b);
+int bcm_mpm_dump(bcm_mpm_mgr_h mgr, struct bcmstrbuf *b);
 
 
 /*
@@ -272,7 +272,7 @@ int bcm_mpm_dump (bcm_mpm_mgr_h mgr, struct bcmstrbuf * b);
  *    BCME_BADARG  Bad arguments.
  *
  */
-int bcm_mpm_get_obj_size (bcm_mpm_mgr_h mgr, unsigned int obj_sz, unsigned int * padded_obj_sz);
+int bcm_mpm_get_obj_size(bcm_mpm_mgr_h mgr, unsigned int obj_sz, unsigned int *padded_obj_sz);
 
 
 /*
@@ -294,7 +294,7 @@ int bcm_mpm_get_obj_size (bcm_mpm_mgr_h mgr, unsigned int obj_sz, unsigned int *
  *    A pointer to the new object. NULL on error.
  *
  */
-void * bcm_mp_alloc (bcm_mp_pool_h pool);
+void* bcm_mp_alloc(bcm_mp_pool_h pool);
 
 /*
  * bcm_mp_free() - Free a memory pool object.
@@ -308,7 +308,7 @@ void * bcm_mp_alloc (bcm_mp_pool_h pool);
  *    other     Error during free.
  *
  */
-int bcm_mp_free (bcm_mp_pool_h pool, void * objp);
+int bcm_mp_free(bcm_mp_pool_h pool, void *objp);
 
 /*
  * bcm_mp_stats() - Return stats for this pool
@@ -322,7 +322,7 @@ int bcm_mp_free (bcm_mp_pool_h pool, void * objp);
  *    other     Error getting statistics.
  *
  */
-int bcm_mp_stats (bcm_mp_pool_h pool, bcm_mp_stats_t * stats);
+int bcm_mp_stats(bcm_mp_pool_h pool, bcm_mp_stats_t *stats);
 
 
 /*
@@ -337,7 +337,7 @@ int bcm_mp_stats (bcm_mp_pool_h pool, bcm_mp_stats_t * stats);
  *    other     Error during dump.
  *
  */
-int bcm_mp_dump (bcm_mp_pool_h pool, struct bcmstrbuf * b);
+int bcm_mp_dump(bcm_mp_pool_h pool, struct bcmstrbuf *b);
 
 
 #endif /* _BCM_MPOOL_PUB_H */

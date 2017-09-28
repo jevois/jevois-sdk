@@ -25,18 +25,18 @@
  * 'invalid' partition in case someone forgets to add a
  * .prcm_partition field.
  */
-#define OMAP4430_INVALID_PRCM_PARTITION   0
-#define OMAP4430_PRM_PARTITION      1
-#define OMAP4430_CM1_PARTITION      2
-#define OMAP4430_CM2_PARTITION      3
-#define OMAP4430_SCRM_PARTITION     4
-#define OMAP4430_PRCM_MPU_PARTITION   5
+#define OMAP4430_INVALID_PRCM_PARTITION		0
+#define OMAP4430_PRM_PARTITION			1
+#define OMAP4430_CM1_PARTITION			2
+#define OMAP4430_CM2_PARTITION			3
+#define OMAP4430_SCRM_PARTITION			4
+#define OMAP4430_PRCM_MPU_PARTITION		5
 
 /*
  * OMAP4_MAX_PRCM_PARTITIONS: set to the highest value of the PRCM partition
  * IDs, plus one
  */
-#define OMAP4_MAX_PRCM_PARTITIONS   6
+#define OMAP4_MAX_PRCM_PARTITIONS		6
 
 
 #endif

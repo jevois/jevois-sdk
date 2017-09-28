@@ -35,4 +35,4 @@
 #define __SWAB_64_THRU_32__
 #endif
 #include <linux/byteorder/big_endian.h>
-#endif        /* _SPARC_BYTEORDER_H */
+#endif				/* _SPARC_BYTEORDER_H */

@@ -1,38 +1,38 @@
 struct alphatrack_icmd {
-  unsigned char cmd[12];
+	unsigned char cmd[12];
 };
 
 struct alphatrack_ocmd {
-  unsigned char cmd[8];
+	unsigned char cmd[8];
 };
 
 /* These are unused by the present driver but provide documentation for the
  * userspace API.
  */
 enum LightID {
-  LIGHT_EQ = 0,
-  LIGHT_OUT,
-  LIGHT_F2,
-  LIGHT_SEND,
-  LIGHT_IN,
-  LIGHT_F1,
-  LIGHT_PAN,
-  LIGHT_UNDEF1,
-  LIGHT_UNDEF2,
-  LIGHT_SHIFT,
-  LIGHT_TRACKMUTE,
-  LIGHT_TRACKSOLO,
-  LIGHT_TRACKREC,
-  LIGHT_READ,
-  LIGHT_WRITE,
-  LIGHT_ANYSOLO,
-  LIGHT_AUTO,
-  LIGHT_F4,
-  LIGHT_RECORD,
-  LIGHT_WINDOW,
-  LIGHT_PLUGIN,
-  LIGHT_F3,
-  LIGHT_LOOP
+	LIGHT_EQ = 0,
+	LIGHT_OUT,
+	LIGHT_F2,
+	LIGHT_SEND,
+	LIGHT_IN,
+	LIGHT_F1,
+	LIGHT_PAN,
+	LIGHT_UNDEF1,
+	LIGHT_UNDEF2,
+	LIGHT_SHIFT,
+	LIGHT_TRACKMUTE,
+	LIGHT_TRACKSOLO,
+	LIGHT_TRACKREC,
+	LIGHT_READ,
+	LIGHT_WRITE,
+	LIGHT_ANYSOLO,
+	LIGHT_AUTO,
+	LIGHT_F4,
+	LIGHT_RECORD,
+	LIGHT_WINDOW,
+	LIGHT_PLUGIN,
+	LIGHT_F3,
+	LIGHT_LOOP
 };
 
 #define BUTTONMASK_BATTERY     0x00004000

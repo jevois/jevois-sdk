@@ -1,7 +1,7 @@
 /*************************************************************************/ /*!
 @Title          OS specific per process data interface
 @Copyright      Copyright (c) Imagination Technologies Ltd. All Rights Reserved
-@Description  OS specific per process data interface
+@Description	OS specific per process data interface
 @License        Dual MIT/GPLv2
 
 The contents of this file are subject to the MIT license as set out below.
@@ -47,41 +47,41 @@ extern "C" {
 #endif
 
 #if defined(__linux__) || defined(__QNXNTO__)
-PVRSRV_ERROR OSPerProcessPrivateDataInit (IMG_HANDLE * phOsPrivateData);
-PVRSRV_ERROR OSPerProcessPrivateDataDeInit (IMG_HANDLE hOsPrivateData);
+PVRSRV_ERROR OSPerProcessPrivateDataInit(IMG_HANDLE *phOsPrivateData);
+PVRSRV_ERROR OSPerProcessPrivateDataDeInit(IMG_HANDLE hOsPrivateData);
 
-PVRSRV_ERROR OSPerProcessSetHandleOptions (PVRSRV_HANDLE_BASE * psHandleBase);
-#else /* defined(__linux__) */
+PVRSRV_ERROR OSPerProcessSetHandleOptions(PVRSRV_HANDLE_BASE *psHandleBase);
+#else	/* defined(__linux__) */
 #ifdef INLINE_IS_PRAGMA
 #pragma inline(OSPerProcessPrivateDataInit)
 #endif
-static INLINE PVRSRV_ERROR OSPerProcessPrivateDataInit (IMG_HANDLE * phOsPrivateData)
+static INLINE PVRSRV_ERROR OSPerProcessPrivateDataInit(IMG_HANDLE *phOsPrivateData)
 {
-  PVR_UNREFERENCED_PARAMETER (phOsPrivateData);
+	PVR_UNREFERENCED_PARAMETER(phOsPrivateData);
 
-  return PVRSRV_OK;
+	return PVRSRV_OK;
 }
 
 #ifdef INLINE_IS_PRAGMA
 #pragma inline(OSPerProcessPrivateDataDeInit)
 #endif
-static INLINE PVRSRV_ERROR OSPerProcessPrivateDataDeInit (IMG_HANDLE hOsPrivateData)
+static INLINE PVRSRV_ERROR OSPerProcessPrivateDataDeInit(IMG_HANDLE hOsPrivateData)
 {
-  PVR_UNREFERENCED_PARAMETER (hOsPrivateData);
+	PVR_UNREFERENCED_PARAMETER(hOsPrivateData);
 
-  return PVRSRV_OK;
+	return PVRSRV_OK;
 }
 
 #ifdef INLINE_IS_PRAGMA
 #pragma inline(OSPerProcessSetHandleOptions)
 #endif
-static INLINE PVRSRV_ERROR OSPerProcessSetHandleOptions (PVRSRV_HANDLE_BASE * psHandleBase)
+static INLINE PVRSRV_ERROR OSPerProcessSetHandleOptions(PVRSRV_HANDLE_BASE *psHandleBase)
 {
-  PVR_UNREFERENCED_PARAMETER (psHandleBase);
+	PVR_UNREFERENCED_PARAMETER(psHandleBase);
 
-  return PVRSRV_OK;
+	return PVRSRV_OK;
 }
-#endif  /* defined(__linux__) */
+#endif	/* defined(__linux__) */
 
 #if defined (__cplusplus)
 }

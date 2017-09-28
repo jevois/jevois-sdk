@@ -9,8 +9,8 @@
 
 /**
  * struct bu21013_platform_device - Handle the platform data
- * @cs_en:  pointer to the cs enable function
- * @cs_dis: pointer to the cs disable function
+ * @cs_en:	pointer to the cs enable function
+ * @cs_dis:	pointer to the cs disable function
  * @irq_read_val:    pointer to read the pen irq value function
  * @touch_x_max: touch x max
  * @touch_y_max: touch y max
@@ -24,17 +24,17 @@
  * This is used to handle the platform data
  */
 struct bu21013_platform_device {
-  int (*cs_en) (int reset_pin);
-  int (*cs_dis) (int reset_pin);
-  int (*irq_read_val) (void);
-  int touch_x_max;
-  int touch_y_max;
-  unsigned int cs_pin;
-  unsigned int irq;
-  bool ext_clk;
-  bool x_flip;
-  bool y_flip;
-  bool wakeup;
+	int (*cs_en)(int reset_pin);
+	int (*cs_dis)(int reset_pin);
+	int (*irq_read_val)(void);
+	int touch_x_max;
+	int touch_y_max;
+	unsigned int cs_pin;
+	unsigned int irq;
+	bool ext_clk;
+	bool x_flip;
+	bool y_flip;
+	bool wakeup;
 };
 
 #endif

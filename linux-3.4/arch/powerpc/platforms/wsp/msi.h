@@ -11,9 +11,9 @@
 #define __WSP_MSI_H
 
 #ifdef CONFIG_PCI_MSI
-extern void wsp_setup_phb_msi (struct pci_controller * phb);
+extern void wsp_setup_phb_msi(struct pci_controller *phb);
 #else
-static inline void wsp_setup_phb_msi (struct pci_controller * phb) { }
+static inline void wsp_setup_phb_msi(struct pci_controller *phb) { }
 #endif
 
 #endif /* __WSP_MSI_H */

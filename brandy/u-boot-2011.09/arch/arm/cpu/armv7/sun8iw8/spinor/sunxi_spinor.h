@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -24,11 +24,11 @@
 #ifndef   __SPI_H__
 #define   __SPI_H__
 
-int   spinor_init (void);
+int   spinor_init(void);
 
-int   spinor_exit (void);
+int   spinor_exit(void);
 
-int   spinor_read (unsigned int start, unsigned int nblock, void * buffer);
+int   spinor_read(unsigned int start, unsigned int nblock, void *buffer);
 
 
 #endif

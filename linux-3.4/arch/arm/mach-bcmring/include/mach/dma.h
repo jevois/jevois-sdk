@@ -38,46 +38,46 @@
 #define DMA_DEBUG_TRACK_RESERVATION   1
 
 #define DMA_NUM_CONTROLLERS     2
-#define DMA_NUM_CHANNELS        8 /* per controller */
+#define DMA_NUM_CHANNELS        8	/* per controller */
 
 typedef enum {
-  DMA_DEVICE_MEM_TO_MEM,  /* For memory to memory transfers */
-  DMA_DEVICE_I2S0_DEV_TO_MEM,
-  DMA_DEVICE_I2S0_MEM_TO_DEV,
-  DMA_DEVICE_I2S1_DEV_TO_MEM,
-  DMA_DEVICE_I2S1_MEM_TO_DEV,
-  DMA_DEVICE_APM_CODEC_A_DEV_TO_MEM,
-  DMA_DEVICE_APM_CODEC_A_MEM_TO_DEV,
-  DMA_DEVICE_APM_CODEC_B_DEV_TO_MEM,
-  DMA_DEVICE_APM_CODEC_B_MEM_TO_DEV,
-  DMA_DEVICE_APM_CODEC_C_DEV_TO_MEM,  /* Additional mic input for beam-forming */
-  DMA_DEVICE_APM_PCM0_DEV_TO_MEM,
-  DMA_DEVICE_APM_PCM0_MEM_TO_DEV,
-  DMA_DEVICE_APM_PCM1_DEV_TO_MEM,
-  DMA_DEVICE_APM_PCM1_MEM_TO_DEV,
-  DMA_DEVICE_SPUM_DEV_TO_MEM,
-  DMA_DEVICE_SPUM_MEM_TO_DEV,
-  DMA_DEVICE_SPIH_DEV_TO_MEM,
-  DMA_DEVICE_SPIH_MEM_TO_DEV,
-  DMA_DEVICE_UART_A_DEV_TO_MEM,
-  DMA_DEVICE_UART_A_MEM_TO_DEV,
-  DMA_DEVICE_UART_B_DEV_TO_MEM,
-  DMA_DEVICE_UART_B_MEM_TO_DEV,
-  DMA_DEVICE_PIF_MEM_TO_DEV,
-  DMA_DEVICE_PIF_DEV_TO_MEM,
-  DMA_DEVICE_ESW_DEV_TO_MEM,
-  DMA_DEVICE_ESW_MEM_TO_DEV,
-  DMA_DEVICE_VPM_MEM_TO_MEM,
-  DMA_DEVICE_CLCD_MEM_TO_MEM,
-  DMA_DEVICE_NAND_MEM_TO_MEM,
-  DMA_DEVICE_MEM_TO_VRAM,
-  DMA_DEVICE_VRAM_TO_MEM,
-  
-  /* Add new entries before this line. */
-  
-  DMA_NUM_DEVICE_ENTRIES,
-  DMA_DEVICE_NONE = 0xff, /* Special value to indicate that no device is currently assigned. */
-  
+	DMA_DEVICE_MEM_TO_MEM,	/* For memory to memory transfers */
+	DMA_DEVICE_I2S0_DEV_TO_MEM,
+	DMA_DEVICE_I2S0_MEM_TO_DEV,
+	DMA_DEVICE_I2S1_DEV_TO_MEM,
+	DMA_DEVICE_I2S1_MEM_TO_DEV,
+	DMA_DEVICE_APM_CODEC_A_DEV_TO_MEM,
+	DMA_DEVICE_APM_CODEC_A_MEM_TO_DEV,
+	DMA_DEVICE_APM_CODEC_B_DEV_TO_MEM,
+	DMA_DEVICE_APM_CODEC_B_MEM_TO_DEV,
+	DMA_DEVICE_APM_CODEC_C_DEV_TO_MEM,	/* Additional mic input for beam-forming */
+	DMA_DEVICE_APM_PCM0_DEV_TO_MEM,
+	DMA_DEVICE_APM_PCM0_MEM_TO_DEV,
+	DMA_DEVICE_APM_PCM1_DEV_TO_MEM,
+	DMA_DEVICE_APM_PCM1_MEM_TO_DEV,
+	DMA_DEVICE_SPUM_DEV_TO_MEM,
+	DMA_DEVICE_SPUM_MEM_TO_DEV,
+	DMA_DEVICE_SPIH_DEV_TO_MEM,
+	DMA_DEVICE_SPIH_MEM_TO_DEV,
+	DMA_DEVICE_UART_A_DEV_TO_MEM,
+	DMA_DEVICE_UART_A_MEM_TO_DEV,
+	DMA_DEVICE_UART_B_DEV_TO_MEM,
+	DMA_DEVICE_UART_B_MEM_TO_DEV,
+	DMA_DEVICE_PIF_MEM_TO_DEV,
+	DMA_DEVICE_PIF_DEV_TO_MEM,
+	DMA_DEVICE_ESW_DEV_TO_MEM,
+	DMA_DEVICE_ESW_MEM_TO_DEV,
+	DMA_DEVICE_VPM_MEM_TO_MEM,
+	DMA_DEVICE_CLCD_MEM_TO_MEM,
+	DMA_DEVICE_NAND_MEM_TO_MEM,
+	DMA_DEVICE_MEM_TO_VRAM,
+	DMA_DEVICE_VRAM_TO_MEM,
+
+	/* Add new entries before this line. */
+
+	DMA_NUM_DEVICE_ENTRIES,
+	DMA_DEVICE_NONE = 0xff,	/* Special value to indicate that no device is currently assigned. */
+
 } DMA_Device_t;
 
 /****************************************************************************
@@ -98,11 +98,11 @@ typedef int DMA_Handle_t;
 *****************************************************************************/
 
 typedef struct {
-  void * virtAddr;  /* Virtual Address of the descriptor ring */
-  dma_addr_t physAddr;  /* Physical address of the descriptor ring */
-  int descriptorsAllocated; /* Number of descriptors allocated in the descriptor ring */
-  size_t bytesAllocated;  /* Number of bytes allocated in the descriptor ring */
-  
+	void *virtAddr;		/* Virtual Address of the descriptor ring */
+	dma_addr_t physAddr;	/* Physical address of the descriptor ring */
+	int descriptorsAllocated;	/* Number of descriptors allocated in the descriptor ring */
+	size_t bytesAllocated;	/* Number of bytes allocated in the descriptor ring */
+
 } DMA_DescriptorRing_t;
 
 /****************************************************************************
@@ -124,60 +124,60 @@ typedef struct {
 #define DMA_HANDLER_REASON_ERROR                dmacHw_INTERRUPT_STATUS_ERROR
 
 typedef void (*DMA_DeviceHandler_t) (DMA_Device_t dev, int reason,
-                                     void * userData);
+				     void *userData);
 
 #define DMA_DEVICE_FLAG_ON_DMA0             0x00000001
 #define DMA_DEVICE_FLAG_ON_DMA1             0x00000002
-#define DMA_DEVICE_FLAG_PORT_PER_DMAC       0x00000004  /* If set, it means that the port used on DMAC0 is different from the port used on DMAC1 */
-#define DMA_DEVICE_FLAG_ALLOC_DMA1_FIRST    0x00000008  /* If set, allocate from DMA1 before allocating from DMA0 */
+#define DMA_DEVICE_FLAG_PORT_PER_DMAC       0x00000004	/* If set, it means that the port used on DMAC0 is different from the port used on DMAC1 */
+#define DMA_DEVICE_FLAG_ALLOC_DMA1_FIRST    0x00000008	/* If set, allocate from DMA1 before allocating from DMA0 */
 #define DMA_DEVICE_FLAG_IS_DEDICATED        0x00000100
 #define DMA_DEVICE_FLAG_NO_ISR              0x00000200
 #define DMA_DEVICE_FLAG_ALLOW_LARGE_FIFO    0x00000400
-#define DMA_DEVICE_FLAG_IN_USE              0x00000800  /* If set, device is in use on a channel */
+#define DMA_DEVICE_FLAG_IN_USE              0x00000800	/* If set, device is in use on a channel */
 
 /* Note: Some DMA devices can be used from multiple DMA Controllers. The bitmask is used to */
 /*       determine which DMA controllers a given device can be used from, and the interface */
 /*       array determeines the actual interface number to use for a given controller. */
 
 typedef struct {
-  uint32_t flags;   /* Bitmask of DMA_DEVICE_FLAG_xxx constants */
-  uint8_t dedicatedController;  /* Controller number to use if DMA_DEVICE_FLAG_IS_DEDICATED is set. */
-  uint8_t dedicatedChannel; /* Channel number to use if DMA_DEVICE_FLAG_IS_DEDICATED is set. */
-  const char * name; /* Will show up in the /proc entry */
-  
-  uint32_t dmacPort[DMA_NUM_CONTROLLERS]; /* Specifies the port number when DMA_DEVICE_FLAG_PORT_PER_DMAC flag is set */
-  
-  dmacHw_CONFIG_t config; /* Configuration to use when DMA'ing using this device */
-  
-  void * userData;  /* Passed to the devHandler */
-  DMA_DeviceHandler_t devHandler; /* Called when DMA operations finish. */
-  
-  timer_tick_count_t transferStartTime; /* Time the current transfer was started */
-  
-  /* The following statistical information will be collected and presented in a proc entry. */
-  /* Note: With a contiuous bandwidth of 1 Gb/sec, it would take 584 years to overflow */
-  /*       a 64 bit counter. */
-  
-  uint64_t numTransfers;  /* Number of DMA transfers performed */
-  uint64_t transferTicks; /* Total time spent doing DMA transfers (measured in timer_tick_count_t's) */
-  uint64_t transferBytes; /* Total bytes transferred */
-  uint32_t timesBlocked;  /* Number of times a channel was unavailable */
-  uint32_t numBytes;  /* Last transfer size */
-  
-  /* It's not possible to free memory which is allocated for the descriptors from within */
-  /* the ISR. So make the presumption that a given device will tend to use the */
-  /* same sized buffers over and over again, and we keep them around. */
-  
-  DMA_DescriptorRing_t ring;  /* Ring of descriptors allocated for this device */
-  
-  /* We stash away some of the information from the previous transfer. If back-to-back */
-  /* transfers are performed from the same buffer, then we don't have to keep re-initializing */
-  /* the descriptor buffers. */
-  
-  uint32_t prevNumBytes;
-  dma_addr_t prevSrcData;
-  dma_addr_t prevDstData;
-  
+	uint32_t flags;		/* Bitmask of DMA_DEVICE_FLAG_xxx constants */
+	uint8_t dedicatedController;	/* Controller number to use if DMA_DEVICE_FLAG_IS_DEDICATED is set. */
+	uint8_t dedicatedChannel;	/* Channel number to use if DMA_DEVICE_FLAG_IS_DEDICATED is set. */
+	const char *name;	/* Will show up in the /proc entry */
+
+	uint32_t dmacPort[DMA_NUM_CONTROLLERS];	/* Specifies the port number when DMA_DEVICE_FLAG_PORT_PER_DMAC flag is set */
+
+	dmacHw_CONFIG_t config;	/* Configuration to use when DMA'ing using this device */
+
+	void *userData;		/* Passed to the devHandler */
+	DMA_DeviceHandler_t devHandler;	/* Called when DMA operations finish. */
+
+	timer_tick_count_t transferStartTime;	/* Time the current transfer was started */
+
+	/* The following statistical information will be collected and presented in a proc entry. */
+	/* Note: With a contiuous bandwidth of 1 Gb/sec, it would take 584 years to overflow */
+	/*       a 64 bit counter. */
+
+	uint64_t numTransfers;	/* Number of DMA transfers performed */
+	uint64_t transferTicks;	/* Total time spent doing DMA transfers (measured in timer_tick_count_t's) */
+	uint64_t transferBytes;	/* Total bytes transferred */
+	uint32_t timesBlocked;	/* Number of times a channel was unavailable */
+	uint32_t numBytes;	/* Last transfer size */
+
+	/* It's not possible to free memory which is allocated for the descriptors from within */
+	/* the ISR. So make the presumption that a given device will tend to use the */
+	/* same sized buffers over and over again, and we keep them around. */
+
+	DMA_DescriptorRing_t ring;	/* Ring of descriptors allocated for this device */
+
+	/* We stash away some of the information from the previous transfer. If back-to-back */
+	/* transfers are performed from the same buffer, then we don't have to keep re-initializing */
+	/* the descriptor buffers. */
+
+	uint32_t prevNumBytes;
+	dma_addr_t prevSrcData;
+	dma_addr_t prevDstData;
+
 } DMA_DeviceAttribute_t;
 
 /****************************************************************************
@@ -205,17 +205,17 @@ typedef struct {
 #define DMA_CHANNEL_FLAG_LARGE_FIFO     0x00000008
 
 typedef struct {
-  uint32_t flags;   /* bitmask of DMA_CHANNEL_FLAG_xxx constants */
-  DMA_Device_t devType; /* Device this channel is currently reserved for */
-  DMA_Device_t lastDevType; /* Device type that used this previously */
-  char name[20];    /* Name passed onto request_irq */
-  
-  #if (DMA_DEBUG_TRACK_RESERVATION)
-  const char * fileName; /* Place where channel reservation took place */
-  int lineNum;    /* Place where channel reservation took place */
-  #endif
-  dmacHw_HANDLE_t dmacHwHandle; /* low level channel handle. */
-  
+	uint32_t flags;		/* bitmask of DMA_CHANNEL_FLAG_xxx constants */
+	DMA_Device_t devType;	/* Device this channel is currently reserved for */
+	DMA_Device_t lastDevType;	/* Device type that used this previously */
+	char name[20];		/* Name passed onto request_irq */
+
+#if (DMA_DEBUG_TRACK_RESERVATION)
+	const char *fileName;	/* Place where channel reservation took place */
+	int lineNum;		/* Place where channel reservation took place */
+#endif
+	dmacHw_HANDLE_t dmacHwHandle;	/* low level channel handle. */
+
 } DMA_Channel_t;
 
 /****************************************************************************
@@ -230,8 +230,8 @@ typedef struct {
 *****************************************************************************/
 
 typedef struct {
-  DMA_Channel_t channel[DMA_NUM_CHANNELS];
-  
+	DMA_Channel_t channel[DMA_NUM_CHANNELS];
+
 } DMA_Controller_t;
 
 /****************************************************************************
@@ -245,11 +245,11 @@ typedef struct {
 *****************************************************************************/
 
 typedef struct {
-  struct semaphore lock;  /* acquired when manipulating table entries */
-  wait_queue_head_t freeChannelQ;
-  
-  DMA_Controller_t controller[DMA_NUM_CONTROLLERS];
-  
+	struct semaphore lock;	/* acquired when manipulating table entries */
+	wait_queue_head_t freeChannelQ;
+
+	DMA_Controller_t controller[DMA_NUM_CONTROLLERS];
+
 } DMA_Global_t;
 
 /* ---- Variable Externs ------------------------------------------------- */
@@ -270,11 +270,11 @@ extern DMA_DeviceAttribute_t DMA_gDeviceAttribute[DMA_NUM_DEVICE_ENTRIES];
 */
 /****************************************************************************/
 
-int dma_init (void);
+int dma_init(void);
 
 #if (DMA_DEBUG_TRACK_RESERVATION)
-DMA_Handle_t dma_request_channel_dbg (DMA_Device_t dev, const char * fileName,
-                                      int lineNum);
+DMA_Handle_t dma_request_channel_dbg(DMA_Device_t dev, const char *fileName,
+				     int lineNum);
 #define dma_request_channel(dev)  dma_request_channel_dbg(dev, __FILE__, __LINE__)
 #else
 
@@ -291,8 +291,8 @@ DMA_Handle_t dma_request_channel_dbg (DMA_Device_t dev, const char * fileName,
 */
 /****************************************************************************/
 
-DMA_Handle_t dma_request_channel (DMA_Device_t dev /* Device to use with the allocated channel. */
-                                 );
+DMA_Handle_t dma_request_channel(DMA_Device_t dev	/* Device to use with the allocated channel. */
+    );
 #endif
 
 /****************************************************************************/
@@ -305,8 +305,8 @@ DMA_Handle_t dma_request_channel (DMA_Device_t dev /* Device to use with the all
 */
 /****************************************************************************/
 
-int dma_free_channel (DMA_Handle_t channel /* DMA handle. */
-                     );
+int dma_free_channel(DMA_Handle_t channel	/* DMA handle. */
+    );
 
 /****************************************************************************/
 /**
@@ -319,8 +319,8 @@ int dma_free_channel (DMA_Handle_t channel /* DMA handle. */
 */
 /****************************************************************************/
 
-int dma_device_is_channel_shared (DMA_Device_t dev /* Device to check. */
-                                 );
+int dma_device_is_channel_shared(DMA_Device_t dev	/* Device to check. */
+    );
 
 /****************************************************************************/
 /**
@@ -336,9 +336,9 @@ int dma_device_is_channel_shared (DMA_Device_t dev /* Device to check. */
 */
 /****************************************************************************/
 
-int dma_alloc_descriptor_ring (DMA_DescriptorRing_t * ring, /* Descriptor ring to populate */
-                               int numDescriptors  /* Number of descriptors that need to be allocated. */
-                              );
+int dma_alloc_descriptor_ring(DMA_DescriptorRing_t *ring,	/* Descriptor ring to populate */
+			      int numDescriptors	/* Number of descriptors that need to be allocated. */
+    );
 
 /****************************************************************************/
 /**
@@ -346,8 +346,8 @@ int dma_alloc_descriptor_ring (DMA_DescriptorRing_t * ring, /* Descriptor ring t
 */
 /****************************************************************************/
 
-void dma_free_descriptor_ring (DMA_DescriptorRing_t * ring /* Descriptor to release */
-                              );
+void dma_free_descriptor_ring(DMA_DescriptorRing_t *ring	/* Descriptor to release */
+    );
 
 /****************************************************************************/
 /**
@@ -367,9 +367,9 @@ void dma_free_descriptor_ring (DMA_DescriptorRing_t * ring /* Descriptor to rele
 */
 /****************************************************************************/
 
-int dma_init_descriptor_ring (DMA_DescriptorRing_t * ring, /* Descriptor ring to initialize */
-                              int numDescriptors /* Number of descriptors to initialize. */
-                             );
+int dma_init_descriptor_ring(DMA_DescriptorRing_t *ring,	/* Descriptor ring to initialize */
+			     int numDescriptors	/* Number of descriptors to initialize. */
+    );
 
 /****************************************************************************/
 /**
@@ -390,11 +390,11 @@ int dma_init_descriptor_ring (DMA_DescriptorRing_t * ring, /* Descriptor ring to
 */
 /****************************************************************************/
 
-int dma_calculate_descriptor_count (DMA_Device_t device, /* DMA Device that this will be associated with */
-                                    dma_addr_t srcData,  /* Place to get data to write to device */
-                                    dma_addr_t dstData,  /* Pointer to device data address */
-                                    size_t numBytes  /* Number of bytes to transfer to the device */
-                                   );
+int dma_calculate_descriptor_count(DMA_Device_t device,	/* DMA Device that this will be associated with */
+				   dma_addr_t srcData,	/* Place to get data to write to device */
+				   dma_addr_t dstData,	/* Pointer to device data address */
+				   size_t numBytes	/* Number of bytes to transfer to the device */
+    );
 
 /****************************************************************************/
 /**
@@ -410,12 +410,12 @@ int dma_calculate_descriptor_count (DMA_Device_t device, /* DMA Device that this
 */
 /****************************************************************************/
 
-int dma_add_descriptors (DMA_DescriptorRing_t * ring, /* Descriptor ring to add descriptors to */
-                         DMA_Device_t device,  /* DMA Device that descriptors are for */
-                         dma_addr_t srcData, /* Place to get data (memory or device) */
-                         dma_addr_t dstData, /* Place to put data (memory or device) */
-                         size_t numBytes /* Number of bytes to transfer to the device */
-                        );
+int dma_add_descriptors(DMA_DescriptorRing_t *ring,	/* Descriptor ring to add descriptors to */
+			DMA_Device_t device,	/* DMA Device that descriptors are for */
+			dma_addr_t srcData,	/* Place to get data (memory or device) */
+			dma_addr_t dstData,	/* Place to put data (memory or device) */
+			size_t numBytes	/* Number of bytes to transfer to the device */
+    );
 
 /****************************************************************************/
 /**
@@ -433,9 +433,9 @@ int dma_add_descriptors (DMA_DescriptorRing_t * ring, /* Descriptor ring to add 
 */
 /****************************************************************************/
 
-int dma_set_device_descriptor_ring (DMA_Device_t device, /* Device to update the descriptor ring for. */
-                                    DMA_DescriptorRing_t * ring /* Descriptor ring to add descriptors to */
-                                   );
+int dma_set_device_descriptor_ring(DMA_Device_t device,	/* Device to update the descriptor ring for. */
+				   DMA_DescriptorRing_t *ring	/* Descriptor ring to add descriptors to */
+    );
 
 /****************************************************************************/
 /**
@@ -443,9 +443,9 @@ int dma_set_device_descriptor_ring (DMA_Device_t device, /* Device to update the
 */
 /****************************************************************************/
 
-int dma_get_device_descriptor_ring (DMA_Device_t device, /* Device to retrieve the descriptor ring for. */
-                                    DMA_DescriptorRing_t * ring /* Place to store retrieved ring */
-                                   );
+int dma_get_device_descriptor_ring(DMA_Device_t device,	/* Device to retrieve the descriptor ring for. */
+				   DMA_DescriptorRing_t *ring	/* Place to store retrieved ring */
+    );
 
 /****************************************************************************/
 /**
@@ -461,12 +461,12 @@ int dma_get_device_descriptor_ring (DMA_Device_t device, /* Device to retrieve t
 */
 /****************************************************************************/
 
-int dma_alloc_descriptors (DMA_Handle_t handle, /* DMA Handle */
-                           dmacHw_TRANSFER_TYPE_e transferType,  /* Type of transfer being performed */
-                           dma_addr_t srcData, /* Place to get data to write to device */
-                           dma_addr_t dstData, /* Pointer to device data address */
-                           size_t numBytes /* Number of bytes to transfer to the device */
-                          );
+int dma_alloc_descriptors(DMA_Handle_t handle,	/* DMA Handle */
+			  dmacHw_TRANSFER_TYPE_e transferType,	/* Type of transfer being performed */
+			  dma_addr_t srcData,	/* Place to get data to write to device */
+			  dma_addr_t dstData,	/* Pointer to device data address */
+			  size_t numBytes	/* Number of bytes to transfer to the device */
+    );
 
 /****************************************************************************/
 /**
@@ -483,12 +483,12 @@ int dma_alloc_descriptors (DMA_Handle_t handle, /* DMA Handle */
 */
 /****************************************************************************/
 
-int dma_alloc_double_dst_descriptors (DMA_Handle_t handle, /* DMA Handle */
-                                      dma_addr_t srcData,  /* Physical address of source data */
-                                      dma_addr_t dstData1, /* Physical address of first destination buffer */
-                                      dma_addr_t dstData2, /* Physical address of second destination buffer */
-                                      size_t numBytes  /* Number of bytes in each destination buffer */
-                                     );
+int dma_alloc_double_dst_descriptors(DMA_Handle_t handle,	/* DMA Handle */
+				     dma_addr_t srcData,	/* Physical address of source data */
+				     dma_addr_t dstData1,	/* Physical address of first destination buffer */
+				     dma_addr_t dstData2,	/* Physical address of second destination buffer */
+				     size_t numBytes	/* Number of bytes in each destination buffer */
+    );
 
 /****************************************************************************/
 /**
@@ -503,7 +503,7 @@ int dma_alloc_double_dst_descriptors (DMA_Handle_t handle, /* DMA Handle */
 */
 /****************************************************************************/
 
-int dma_start_transfer (DMA_Handle_t handle);
+int dma_start_transfer(DMA_Handle_t handle);
 
 /****************************************************************************/
 /**
@@ -515,7 +515,7 @@ int dma_start_transfer (DMA_Handle_t handle);
 */
 /****************************************************************************/
 
-int dma_stop_transfer (DMA_Handle_t handle);
+int dma_stop_transfer(DMA_Handle_t handle);
 
 /****************************************************************************/
 /**
@@ -524,7 +524,7 @@ int dma_stop_transfer (DMA_Handle_t handle);
 */
 /****************************************************************************/
 
-int dma_wait_transfer_done (DMA_Handle_t handle);
+int dma_wait_transfer_done(DMA_Handle_t handle);
 
 /****************************************************************************/
 /**
@@ -537,12 +537,12 @@ int dma_wait_transfer_done (DMA_Handle_t handle);
 */
 /****************************************************************************/
 
-int dma_transfer (DMA_Handle_t handle, /* DMA Handle */
-                  dmacHw_TRANSFER_TYPE_e transferType, /* Type of transfer being performed */
-                  dma_addr_t srcData,  /* Place to get data to write to device */
-                  dma_addr_t dstData,  /* Pointer to device data address */
-                  size_t numBytes  /* Number of bytes to transfer to the device */
-                 );
+int dma_transfer(DMA_Handle_t handle,	/* DMA Handle */
+		 dmacHw_TRANSFER_TYPE_e transferType,	/* Type of transfer being performed */
+		 dma_addr_t srcData,	/* Place to get data to write to device */
+		 dma_addr_t dstData,	/* Pointer to device data address */
+		 size_t numBytes	/* Number of bytes to transfer to the device */
+    );
 
 /****************************************************************************/
 /**
@@ -555,14 +555,14 @@ int dma_transfer (DMA_Handle_t handle, /* DMA Handle */
 */
 /****************************************************************************/
 
-static inline int dma_transfer_to_device (DMA_Handle_t handle, /* DMA Handle */
-    dma_addr_t srcData,  /* Place to get data to write to device (physical address) */
-    dma_addr_t dstData,  /* Pointer to device data address (physical address) */
-    size_t numBytes  /* Number of bytes to transfer to the device */
-                                         ) {
-  return dma_transfer (handle,
-                       dmacHw_TRANSFER_TYPE_MEM_TO_PERIPHERAL,
-                       srcData, dstData, numBytes);
+static inline int dma_transfer_to_device(DMA_Handle_t handle,	/* DMA Handle */
+					 dma_addr_t srcData,	/* Place to get data to write to device (physical address) */
+					 dma_addr_t dstData,	/* Pointer to device data address (physical address) */
+					 size_t numBytes	/* Number of bytes to transfer to the device */
+    ) {
+	return dma_transfer(handle,
+			    dmacHw_TRANSFER_TYPE_MEM_TO_PERIPHERAL,
+			    srcData, dstData, numBytes);
 }
 
 /****************************************************************************/
@@ -576,14 +576,14 @@ static inline int dma_transfer_to_device (DMA_Handle_t handle, /* DMA Handle */
 */
 /****************************************************************************/
 
-static inline int dma_transfer_from_device (DMA_Handle_t handle, /* DMA Handle */
-    dma_addr_t srcData,  /* Pointer to the device data address (physical address) */
-    dma_addr_t dstData,  /* Place to store data retrieved from the device (physical address) */
-    size_t numBytes  /* Number of bytes to retrieve from the device */
-                                           ) {
-  return dma_transfer (handle,
-                       dmacHw_TRANSFER_TYPE_PERIPHERAL_TO_MEM,
-                       srcData, dstData, numBytes);
+static inline int dma_transfer_from_device(DMA_Handle_t handle,	/* DMA Handle */
+					   dma_addr_t srcData,	/* Pointer to the device data address (physical address) */
+					   dma_addr_t dstData,	/* Place to store data retrieved from the device (physical address) */
+					   size_t numBytes	/* Number of bytes to retrieve from the device */
+    ) {
+	return dma_transfer(handle,
+			    dmacHw_TRANSFER_TYPE_PERIPHERAL_TO_MEM,
+			    srcData, dstData, numBytes);
 }
 
 /****************************************************************************/
@@ -597,14 +597,14 @@ static inline int dma_transfer_from_device (DMA_Handle_t handle, /* DMA Handle *
 */
 /****************************************************************************/
 
-static inline int dma_transfer_mem_to_mem (DMA_Handle_t handle, /* DMA Handle */
-    dma_addr_t srcData, /* Place to transfer data from (physical address) */
-    dma_addr_t dstData, /* Place to transfer data to (physical address) */
-    size_t numBytes /* Number of bytes to transfer */
-                                          ) {
-  return dma_transfer (handle,
-                       dmacHw_TRANSFER_TYPE_MEM_TO_MEM,
-                       srcData, dstData, numBytes);
+static inline int dma_transfer_mem_to_mem(DMA_Handle_t handle,	/* DMA Handle */
+					  dma_addr_t srcData,	/* Place to transfer data from (physical address) */
+					  dma_addr_t dstData,	/* Place to transfer data to (physical address) */
+					  size_t numBytes	/* Number of bytes to transfer */
+    ) {
+	return dma_transfer(handle,
+			    dmacHw_TRANSFER_TYPE_MEM_TO_MEM,
+			    srcData, dstData, numBytes);
 }
 
 /****************************************************************************/
@@ -620,10 +620,10 @@ static inline int dma_transfer_mem_to_mem (DMA_Handle_t handle, /* DMA Handle */
 */
 /****************************************************************************/
 
-int dma_set_device_handler (DMA_Device_t dev, /* Device to set the callback for. */
-                            DMA_DeviceHandler_t devHandler,  /* Function to call when the DMA completes */
-                            void * userData /* Pointer which will be passed to devHandler. */
-                           );
+int dma_set_device_handler(DMA_Device_t dev,	/* Device to set the callback for. */
+			   DMA_DeviceHandler_t devHandler,	/* Function to call when the DMA completes */
+			   void *userData	/* Pointer which will be passed to devHandler. */
+    );
 
 #endif
 

@@ -22,13 +22,13 @@
 
 
 
-void rtl8723b_init_dm_priv (PADAPTER padapter);
-void rtl8723b_deinit_dm_priv (PADAPTER padapter);
+void rtl8723b_init_dm_priv(PADAPTER padapter);
+void rtl8723b_deinit_dm_priv(PADAPTER padapter);
 
-void rtl8723b_InitHalDm (PADAPTER padapter);
-void rtl8723b_HalDmWatchDog (PADAPTER padapter);
-void rtl8723b_HalDmWatchDog_in_LPS (PADAPTER padapter);
-void rtl8723b_hal_dm_in_lps (PADAPTER padapter);
+void rtl8723b_InitHalDm(PADAPTER padapter);
+void rtl8723b_HalDmWatchDog(PADAPTER padapter);
+void rtl8723b_HalDmWatchDog_in_LPS(PADAPTER padapter);
+void rtl8723b_hal_dm_in_lps(PADAPTER padapter);
 
 
 #endif

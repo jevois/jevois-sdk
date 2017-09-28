@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -41,35 +41,35 @@
 *
 ************************************************************************************************************
 */
-int initqueue (queue * q, int each_size, int buffer_count)
+int initqueue(queue *q, int each_size, int buffer_count)
 {
-  int i;
-  
-  if (!q)
-  {
-    printf ("initqueue: queue element is null\n");
-    
-    return -1;
-  }
-  memset (q, 0, sizeof (queue) );
-  q->count = buffer_count;    //多使用一个buffer
-  q->size  = each_size;
-  q->base_addr = (void *) malloc (buffer_count * each_size * 2);
-  if (!q->base_addr)
-  {
-    printf ("create buffer memory failed\n");
-    
-    return -2;
-  }
-  q->front = q->rear = 0;
-  q->element[0].data = (char *) q->base_addr + each_size;
-  for (i = 1; i < buffer_count; i++)
-  {
-    q->element[i].data = q->element[i - 1].data + each_size * 2;
-    q->element[i].len  = 0;
-  }
-  
-  return 0;
+	int i;
+
+    if(!q)
+    {
+    	printf("initqueue: queue element is null\n");
+
+    	return -1;
+    }
+	memset(q, 0, sizeof(queue));
+    q->count = buffer_count;    //多使用一个buffer
+    q->size  = each_size;
+    q->base_addr = (void *)malloc(buffer_count * each_size * 2);
+    if(!q->base_addr)
+    {
+    	printf("create buffer memory failed\n");
+
+    	return -2;
+    }
+    q->front = q->rear = 0;
+    q->element[0].data = (char *)q->base_addr + each_size;
+    for(i=1;i<buffer_count;i++)
+    {
+    	q->element[i].data = q->element[i-1].data + each_size * 2;
+    	q->element[i].len  = 0;
+    }
+
+    return 0;
 }
 /*
 ************************************************************************************************************
@@ -87,17 +87,17 @@ int initqueue (queue * q, int each_size, int buffer_count)
 *
 ************************************************************************************************************
 */
-int destroyqueue (queue * q)
+int destroyqueue(queue *q)
 {
-  if (!q)
-  {
-    printf ("destroyqueue: queue element is null\n");
-    
-    return -1;
-  }
-  free (q->base_addr);
-  
-  return 0;
+    if(!q)
+    {
+    	printf("destroyqueue: queue element is null\n");
+
+    	return -1;
+    }
+	free(q->base_addr);
+
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -115,17 +115,17 @@ int destroyqueue (queue * q)
 *
 ************************************************************************************************************
 */
-void resetqueue (queue * q)
+void resetqueue(queue *q)
 {
-  int i;
-  
-  q->front = q->rear = 0;
-  q->element[0].data = (char *) q->base_addr + q->size;
-  for (i = 1; i < q->count; i++)
-  {
-    q->element[i].data = q->element[i - 1].data + q->size * 2;
-    q->element[i].len  = 0;
-  }
+	int i;
+
+	q->front = q->rear = 0;
+	q->element[0].data = (char *)q->base_addr + q->size;
+    for(i=1;i<q->count;i++)
+    {
+    	q->element[i].data = q->element[i-1].data + q->size * 2;
+    	q->element[i].len  = 0;
+    }
 }
 /*
 ************************************************************************************************************
@@ -143,9 +143,9 @@ void resetqueue (queue * q)
 *
 ************************************************************************************************************
 */
-void enqueue (queue * q, int element)
+void enqueue(queue *q, int element)
 {
-  ;
+	;
 }
 /*
 ************************************************************************************************************
@@ -163,9 +163,9 @@ void enqueue (queue * q, int element)
 *
 ************************************************************************************************************
 */
-void outqueue (queue * q, int * element)
+void outqueue(queue *q, int *element)
 {
-  ;
+	;
 }
 /*
 ************************************************************************************************************
@@ -183,9 +183,9 @@ void outqueue (queue * q, int * element)
 *
 ************************************************************************************************************
 */
-int isqueueempty (queue * q)
+int isqueueempty(queue *q)
 {
-  return (q->front == q->rear) ? 1 : 0;
+	return (q->front == q->rear)? 1:0;
 }
 /*
 ************************************************************************************************************
@@ -203,16 +203,16 @@ int isqueueempty (queue * q)
 *
 ************************************************************************************************************
 */
-int isqueuefull (queue * q)
+int isqueuefull(queue *q)
 {
-  int tmp_rear;
-  
-  tmp_rear = q->rear + 1;
-  if (tmp_rear > q->count)
-  {
-    tmp_rear = 0;
-  }
-  return (q->front == tmp_rear) ? 1 : 0;
+	int tmp_rear;
+
+	tmp_rear = q->rear + 1;
+	if(tmp_rear > q->count)
+	{
+		tmp_rear = 0;
+	}
+	return (q->front == tmp_rear)? 1:0;
 }
 /*
 ************************************************************************************************************
@@ -230,23 +230,23 @@ int isqueuefull (queue * q)
 *
 ************************************************************************************************************
 */
-int inqueue_query (queue * q, queue_data * qdata)
+int inqueue_query(queue *q, queue_data *qdata)
 {
-  int   tmp_rear;
-  
-  tmp_rear = q->rear + 1;
-  if (tmp_rear > q->count)
-  {
-    tmp_rear = 0;
-  }
-  if (q->front == tmp_rear)  //满足时，queue满
-  {
-    return -1;
-  }
-  
-  qdata = &q->element[q->rear];
-  
-  return 0;
+	int   tmp_rear;
+
+	tmp_rear = q->rear + 1;
+	if(tmp_rear > q->count)
+	{
+		tmp_rear = 0;
+	}
+	if(q->front == tmp_rear)   //满足时，queue满
+	{
+		return -1;
+	}
+
+    qdata = &q->element[q->rear];
+
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -265,22 +265,22 @@ int inqueue_query (queue * q, queue_data * qdata)
 *
 ************************************************************************************************************
 */
-int inqueue_ex (queue * q)
+int inqueue_ex(queue *q)
 {
-  int tmp_rear;
-  
-  tmp_rear = q->rear + 1;
-  if (tmp_rear > q->count)
-  {
-    tmp_rear = 0;
-  }
-  if (q->front == tmp_rear)  //队列已满
-  {
-    return -1;
-  }
-  q->rear = tmp_rear;
-  
-  return 0;
+	int tmp_rear;
+
+	tmp_rear = q->rear + 1;
+	if(tmp_rear > q->count)
+	{
+		tmp_rear = 0;
+	}
+	if(q->front == tmp_rear)   //队列已满
+	{
+		return -1;
+	}
+	q->rear = tmp_rear;
+
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -298,23 +298,23 @@ int inqueue_ex (queue * q)
 *
 ************************************************************************************************************
 */
-int outqueue_query (queue * q, queue_data * qdata, queue_data * next_qdata)
+int outqueue_query(queue *q, queue_data *qdata, queue_data *next_qdata)
 {
-  int next;
-  
-  if (q->front == q->rear)  //满足时，queue空
-  {
-    return -1;
-  }
-  next = q->front + 1;
-  if (next > q->count)
-  {
-    next = 0;
-  }
-  qdata  = &q->element[q->front];
-  next_qdata = &q->element[next];
-  
-  return 0;
+	int next;
+
+	if(q->front == q->rear)   //满足时，queue空
+	{
+		return -1;
+	}
+	next = q->front + 1;
+	if(next > q->count)
+	{
+		next = 0;
+	}
+    qdata  = &q->element[q->front];
+    next_qdata = &q->element[next];
+
+	return 0;
 }
 /*
 ************************************************************************************************************
@@ -332,21 +332,21 @@ int outqueue_query (queue * q, queue_data * qdata, queue_data * next_qdata)
 *
 ************************************************************************************************************
 */
-int outqueue_ex (queue * q)
+int outqueue_ex(queue *q)
 {
-  int tmp_front;
-  
-  if (q->front == q->rear)  //满足时，queue空，无法退出当前buffer
-  {
-    return -1;
-  }
-  tmp_front = q->front + 1;
-  if (tmp_front > q->count)
-  {
-    tmp_front = 0;
-  }
-  q->front = tmp_front;
-  
-  return 0;
+	int tmp_front;
+
+	if(q->front == q->rear)   //满足时，queue空，无法退出当前buffer
+	{
+		return -1;
+	}
+	tmp_front = q->front + 1;
+	if(tmp_front > q->count)
+	{
+		tmp_front = 0;
+	}
+	q->front = tmp_front;
+
+    return 0;
 }
 

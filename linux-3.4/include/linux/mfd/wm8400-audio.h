@@ -196,17 +196,17 @@
 #define WM8400_AIF_WL_MASK                      0x0060  /* AIF_WL - [6:5] */
 #define WM8400_AIF_WL_SHIFT                          5  /* AIF_WL - [6:5] */
 #define WM8400_AIF_WL_WIDTH                          2  /* AIF_WL - [6:5] */
-#define WM8400_AIF_WL_16BITS      (0 << 5)
-#define WM8400_AIF_WL_20BITS      (1 << 5)
-#define WM8400_AIF_WL_24BITS      (2 << 5)
-#define WM8400_AIF_WL_32BITS      (3 << 5)
+#define WM8400_AIF_WL_16BITS			(0 << 5)
+#define WM8400_AIF_WL_20BITS			(1 << 5)
+#define WM8400_AIF_WL_24BITS			(2 << 5)
+#define WM8400_AIF_WL_32BITS			(3 << 5)
 #define WM8400_AIF_FMT_MASK                     0x0018  /* AIF_FMT - [4:3] */
 #define WM8400_AIF_FMT_SHIFT                         3  /* AIF_FMT - [4:3] */
 #define WM8400_AIF_FMT_WIDTH                         2  /* AIF_FMT - [4:3] */
-#define WM8400_AIF_FMT_RIGHTJ     (0 << 3)
-#define WM8400_AIF_FMT_LEFTJ      (1 << 3)
-#define WM8400_AIF_FMT_I2S      (2 << 3)
-#define WM8400_AIF_FMT_DSP      (3 << 3)
+#define WM8400_AIF_FMT_RIGHTJ			(0 << 3)
+#define WM8400_AIF_FMT_LEFTJ			(1 << 3)
+#define WM8400_AIF_FMT_I2S			(2 << 3)
+#define WM8400_AIF_FMT_DSP			(3 << 3)
 
 /*
  * R6 (0x06) - Audio Interface (2)
@@ -1182,6 +1182,6 @@
 #define WM8400_FLL_OUTDIV_WIDTH                      3  /* FLL_OUTDIV - [2:0] */
 
 struct wm8400;
-void wm8400_reset_codec_reg_cache (struct wm8400 * wm8400);
+void wm8400_reset_codec_reg_cache(struct wm8400 *wm8400);
 
 #endif

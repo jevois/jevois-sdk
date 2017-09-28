@@ -58,8 +58,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,15))
 
 typedef struct {
-  struct mutex sMutex;
-  pid_t        hHeldBy;
+	struct mutex sMutex;
+	pid_t        hHeldBy;
 } PVRSRV_LINUX_MUTEX;
 
 
@@ -67,31 +67,31 @@ typedef struct {
 
 
 typedef struct {
-  struct semaphore sSemaphore;
-  /* since Linux's struct semaphore is intended to be
-   * opaque we don't poke inside for the count and
-   * instead we track it outselves. (So we can implement
-   * LinuxIsLockedMutex)
-   */
-  atomic_t Count;
-} PVRSRV_LINUX_MUTEX;
+    struct semaphore sSemaphore;
+    /* since Linux's struct semaphore is intended to be
+     * opaque we don't poke inside for the count and
+     * instead we track it outselves. (So we can implement
+     * LinuxIsLockedMutex)
+     */
+    atomic_t Count;
+}PVRSRV_LINUX_MUTEX;
 
 #endif
 
 
-extern IMG_VOID LinuxInitMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex);
+extern IMG_VOID LinuxInitMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex);
 
-extern IMG_VOID LinuxLockMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex);
+extern IMG_VOID LinuxLockMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex);
 
-extern PVRSRV_ERROR LinuxLockMutexInterruptible (PVRSRV_LINUX_MUTEX * psPVRSRVMutex);
+extern PVRSRV_ERROR LinuxLockMutexInterruptible(PVRSRV_LINUX_MUTEX *psPVRSRVMutex);
 
-extern IMG_INT32 LinuxTryLockMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex);
+extern IMG_INT32 LinuxTryLockMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex);
 
-extern IMG_VOID LinuxUnLockMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex);
+extern IMG_VOID LinuxUnLockMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex);
 
-extern IMG_BOOL LinuxIsLockedMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex);
+extern IMG_BOOL LinuxIsLockedMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex);
 
-extern IMG_BOOL LinuxIsLockedByMeMutex (PVRSRV_LINUX_MUTEX * psPVRSRVMutex);
+extern IMG_BOOL LinuxIsLockedByMeMutex(PVRSRV_LINUX_MUTEX *psPVRSRVMutex);
 
 #endif /* __INCLUDED_LINUX_MUTEX_H_ */
 

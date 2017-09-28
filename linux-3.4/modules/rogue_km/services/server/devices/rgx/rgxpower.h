@@ -56,115 +56,115 @@ extern "C" {
 /*!
 ******************************************************************************
 
- @Function  RGXPrePowerState
+ @Function	RGXPrePowerState
 
  @Description
 
  does necessary preparation before power state transition
 
- @Input    hDevHandle : RGX Device Node
- @Input    eNewPowerState : New power state
- @Input    eCurrentPowerState : Current power state
+ @Input	   hDevHandle : RGX Device Node
+ @Input	   eNewPowerState : New power state
+ @Input	   eCurrentPowerState : Current power state
 
  @Return   PVRSRV_ERROR :
 
 ******************************************************************************/
-PVRSRV_ERROR RGXPrePowerState (IMG_HANDLE        hDevHandle,
-                               PVRSRV_DEV_POWER_STATE  eNewPowerState,
-                               PVRSRV_DEV_POWER_STATE  eCurrentPowerState,
-                               IMG_BOOL          bForced);
-                               
+PVRSRV_ERROR RGXPrePowerState(IMG_HANDLE				hDevHandle, 
+							  PVRSRV_DEV_POWER_STATE	eNewPowerState, 
+							  PVRSRV_DEV_POWER_STATE	eCurrentPowerState,
+							  IMG_BOOL					bForced);
+
 /*!
 ******************************************************************************
 
- @Function  RGXPostPowerState
+ @Function	RGXPostPowerState
 
  @Description
 
  does necessary preparation after power state transition
 
- @Input    hDevHandle : RGX Device Node
- @Input    eNewPowerState : New power state
- @Input    eCurrentPowerState : Current power state
+ @Input	   hDevHandle : RGX Device Node
+ @Input	   eNewPowerState : New power state
+ @Input	   eCurrentPowerState : Current power state
 
  @Return   PVRSRV_ERROR :
 
 ******************************************************************************/
-PVRSRV_ERROR RGXPostPowerState (IMG_HANDLE       hDevHandle,
-                                PVRSRV_DEV_POWER_STATE eNewPowerState,
-                                PVRSRV_DEV_POWER_STATE eCurrentPowerState,
-                                IMG_BOOL          bForced);
-                                
-                                
+PVRSRV_ERROR RGXPostPowerState(IMG_HANDLE				hDevHandle, 
+							   PVRSRV_DEV_POWER_STATE	eNewPowerState, 
+							   PVRSRV_DEV_POWER_STATE	eCurrentPowerState,
+							  IMG_BOOL					bForced);
+
+
 /*!
 ******************************************************************************
 
- @Function  RGXPreClockSpeedChange
+ @Function	RGXPreClockSpeedChange
 
  @Description
 
-  Does processing required before an RGX clock speed change.
+	Does processing required before an RGX clock speed change.
 
- @Input    hDevHandle : RGX Device Node
- @Input    bIdleDevice : Whether the firmware needs to be idled
- @Input    eCurrentPowerState : Power state of the device
+ @Input	   hDevHandle : RGX Device Node
+ @Input	   bIdleDevice : Whether the firmware needs to be idled
+ @Input	   eCurrentPowerState : Power state of the device
 
  @Return   PVRSRV_ERROR :
 
 ******************************************************************************/
-PVRSRV_ERROR RGXPreClockSpeedChange (IMG_HANDLE        hDevHandle,
-                                     IMG_BOOL        bIdleDevice,
-                                     PVRSRV_DEV_POWER_STATE  eCurrentPowerState);
-                                     
+PVRSRV_ERROR RGXPreClockSpeedChange(IMG_HANDLE				hDevHandle,
+									IMG_BOOL				bIdleDevice,
+									PVRSRV_DEV_POWER_STATE	eCurrentPowerState);
+
 /*!
 ******************************************************************************
 
- @Function  RGXPostClockSpeedChange
+ @Function	RGXPostClockSpeedChange
 
  @Description
 
-  Does processing required after an RGX clock speed change.
+	Does processing required after an RGX clock speed change.
 
- @Input    hDevHandle : RGX Device Node
- @Input    bIdleDevice : Whether the firmware had been idled previously
- @Input    eCurrentPowerState : Power state of the device
+ @Input	   hDevHandle : RGX Device Node
+ @Input	   bIdleDevice : Whether the firmware had been idled previously
+ @Input	   eCurrentPowerState : Power state of the device
 
  @Return   PVRSRV_ERROR :
 
 ******************************************************************************/
-PVRSRV_ERROR RGXPostClockSpeedChange (IMG_HANDLE       hDevHandle,
-                                      IMG_BOOL       bIdleDevice,
-                                      PVRSRV_DEV_POWER_STATE eCurrentPowerState);
-                                      
-                                      
+PVRSRV_ERROR RGXPostClockSpeedChange(IMG_HANDLE				hDevHandle,
+									 IMG_BOOL				bIdleDevice,
+									 PVRSRV_DEV_POWER_STATE	eCurrentPowerState);
+
+
 /*!
 ******************************************************************************
 
- @Function  RGXDustCountChange
+ @Function	RGXDustCountChange
 
  @Description Change of number of DUSTs
 
- @Input    hDevHandle : RGX Device Node
- @Input    ui32NumberOfDusts : Number of DUSTs to make transition to
+ @Input	   hDevHandle : RGX Device Node
+ @Input	   ui32NumberOfDusts : Number of DUSTs to make transition to
 
  @Return   PVRSRV_ERROR :
 
 ******************************************************************************/
-PVRSRV_ERROR RGXDustCountChange (IMG_HANDLE        hDevHandle,
-                                 IMG_UINT32        ui32NumberOfDusts);
-                                 
+PVRSRV_ERROR RGXDustCountChange(IMG_HANDLE				hDevHandle,
+								IMG_UINT32				ui32NumberOfDusts);
+
 /*!
 ******************************************************************************
 
- @Function  RGXActivePowerRequest
+ @Function	RGXActivePowerRequest
 
  @Description Initiate a handshake with the FW to power off the GPU
 
- @Input    hDevHandle : RGX Device Node
+ @Input	   hDevHandle : RGX Device Node
 
  @Return   PVRSRV_ERROR :
 
 ******************************************************************************/
-PVRSRV_ERROR RGXActivePowerRequest (IMG_HANDLE hDevHandle);
+PVRSRV_ERROR RGXActivePowerRequest(IMG_HANDLE hDevHandle);
 
 #endif /* __RGXPOWER_H__ */

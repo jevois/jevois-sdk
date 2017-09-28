@@ -1,5 +1,5 @@
 /*!**************************************************************************
-*!
+*!                                                            
 *! MACROS:
 *!   IO_MASK(reg,field)
 *!   IO_STATE(reg,field,state)
@@ -27,24 +27,24 @@
    Note that this macro doesn't work when field width is 32 bits. */
 #define IO_MASK(reg, field) IO_MASK_ (reg##_, field##_)
 #define IO_MASK_(reg_, field_) \
-  ( ( ( 1 << reg_##_##field_##_WIDTH ) - 1 ) << reg_##_##field_##_BITNR )
+    ( ( ( 1 << reg_##_##field_##_WIDTH ) - 1 ) << reg_##_##field_##_BITNR )
 
 /* IO_STATE returns a constant corresponding to a one of the symbolic
    states that the bitfield can have. (Shifted to correct position)  */
 #define IO_STATE(reg, field, state) IO_STATE_ (reg##_, field##_, _##state)
 #define IO_STATE_(reg_, field_, _state) \
-  ( reg_##_##field_##_state << reg_##_##field_##_BITNR )
+    ( reg_##_##field_##_state << reg_##_##field_##_BITNR )
 
 /* IO_EXTRACT returns the masked and shifted value corresponding to the
    bitfield can have. */
 #define IO_EXTRACT(reg, field, val) IO_EXTRACT_ (reg##_, field##_, val)
 #define IO_EXTRACT_(reg_, field_, val) ( (( ( ( 1 << reg_##_##field_##_WIDTH ) \
-    - 1 ) << reg_##_##field_##_BITNR ) & (val)) >> reg_##_##field_##_BITNR )
+     - 1 ) << reg_##_##field_##_BITNR ) & (val)) >> reg_##_##field_##_BITNR )
 
 /* IO_STATE_VALUE returns a constant corresponding to a one of the symbolic
    states that the bitfield can have. (Not shifted)  */
 #define IO_STATE_VALUE(reg, field, state) \
-  IO_STATE_VALUE_ (reg##_, field##_, _##state)
+    IO_STATE_VALUE_ (reg##_, field##_, _##state)
 #define IO_STATE_VALUE_(reg_, field_, _state) ( reg_##_##field_##_state )
 
 /* IO_FIELD shifts the val parameter to be aligned with the bitfield
@@ -118,20 +118,20 @@
 
 #if __test_sv_addr__
 /* IO_MASK( R_BUS_CONFIG , CE ) */
-IO_MASK ( R_WAITSTATES , SRAM_WS )
-IO_MASK ( R_TEST , W32 )
+IO_MASK( R_WAITSTATES , SRAM_WS )
+IO_MASK( R_TEST , W32 )
 
-IO_STATE ( R_BUS_CONFIG, CE, DISABLE )
-IO_STATE ( R_BUS_CONFIG, CE, ENABLE )
+IO_STATE( R_BUS_CONFIG, CE, DISABLE )
+IO_STATE( R_BUS_CONFIG, CE, ENABLE )
 
-IO_STATE ( R_DRAM_TIMING, REF, IVAL2 )
+IO_STATE( R_DRAM_TIMING, REF, IVAL2 )
 
-IO_MASK ( R_DRAM_TIMING, REF )
+IO_MASK( R_DRAM_TIMING, REF )
 
-IO_MASK ( R_EXT_DMA_0_STAT, TFR_COUNT ) >> IO_BITNR ( R_EXT_DMA_0_STAT, TFR_COUNT )
+IO_MASK( R_EXT_DMA_0_STAT, TFR_COUNT ) >> IO_BITNR( R_EXT_DMA_0_STAT, TFR_COUNT )
 
-                                        IO_RD (R_EXT_DMA_0_STAT) & IO_MASK ( R_EXT_DMA_0_STAT, S )
-                                        == IO_STATE ( R_EXT_DMA_0_STAT, S, STARTED )
+IO_RD(R_EXT_DMA_0_STAT) & IO_MASK( R_EXT_DMA_0_STAT, S ) 
+   == IO_STATE( R_EXT_DMA_0_STAT, S, STARTED )
 #endif
 
 

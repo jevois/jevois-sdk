@@ -69,24 +69,24 @@
 #define ADE7754_MAX_RX    4
 #define ADE7754_STARTUP_DELAY 1
 
-#define ADE7754_SPI_SLOW  (u32)(300 * 1000)
-#define ADE7754_SPI_BURST (u32)(1000 * 1000)
-#define ADE7754_SPI_FAST  (u32)(2000 * 1000)
+#define ADE7754_SPI_SLOW	(u32)(300 * 1000)
+#define ADE7754_SPI_BURST	(u32)(1000 * 1000)
+#define ADE7754_SPI_FAST	(u32)(2000 * 1000)
 
-#define DRIVER_NAME   "ade7754"
+#define DRIVER_NAME		"ade7754"
 
 /**
  * struct ade7754_state - device instance specific data
- * @us:     actual spi_device
- * @buf_lock:   mutex to protect tx and rx
- * @tx:     transmit buffer
- * @rx:     receive buffer
+ * @us:			actual spi_device
+ * @buf_lock:		mutex to protect tx and rx
+ * @tx:			transmit buffer
+ * @rx:			receive buffer
  **/
 struct ade7754_state {
-  struct spi_device * us;
-  struct mutex    buf_lock;
-  u8      tx[ADE7754_MAX_TX] ____cacheline_aligned;
-  u8      rx[ADE7754_MAX_RX];
+	struct spi_device	*us;
+	struct mutex		buf_lock;
+	u8			tx[ADE7754_MAX_TX] ____cacheline_aligned;
+	u8			rx[ADE7754_MAX_RX];
 };
 
 #endif

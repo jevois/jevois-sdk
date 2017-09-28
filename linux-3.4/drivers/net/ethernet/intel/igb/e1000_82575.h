@@ -28,10 +28,10 @@
 #ifndef _E1000_82575_H_
 #define _E1000_82575_H_
 
-extern void igb_shutdown_serdes_link_82575 (struct e1000_hw * hw);
-extern void igb_power_up_serdes_link_82575 (struct e1000_hw * hw);
-extern void igb_power_down_phy_copper_82575 (struct e1000_hw * hw);
-extern void igb_rx_fifo_flush_82575 (struct e1000_hw * hw);
+extern void igb_shutdown_serdes_link_82575(struct e1000_hw *hw);
+extern void igb_power_up_serdes_link_82575(struct e1000_hw *hw);
+extern void igb_power_down_phy_copper_82575(struct e1000_hw *hw);
+extern void igb_rx_fifo_flush_82575(struct e1000_hw *hw);
 
 #define ID_LED_DEFAULT_82575_SERDES ((ID_LED_DEF1_DEF2 << 12) | \
                                      (ID_LED_DEF1_DEF2 <<  8) | \
@@ -63,16 +63,16 @@ extern void igb_rx_fifo_flush_82575 (struct e1000_hw * hw);
 #define E1000_MRQC_RSS_FIELD_IPV6_UDP_EX    0x01000000
 
 #define E1000_EICR_TX_QUEUE ( \
-                              E1000_EICR_TX_QUEUE0 |    \
-                              E1000_EICR_TX_QUEUE1 |    \
-                              E1000_EICR_TX_QUEUE2 |    \
-                              E1000_EICR_TX_QUEUE3)
+    E1000_EICR_TX_QUEUE0 |    \
+    E1000_EICR_TX_QUEUE1 |    \
+    E1000_EICR_TX_QUEUE2 |    \
+    E1000_EICR_TX_QUEUE3)
 
 #define E1000_EICR_RX_QUEUE ( \
-                              E1000_EICR_RX_QUEUE0 |    \
-                              E1000_EICR_RX_QUEUE1 |    \
-                              E1000_EICR_RX_QUEUE2 |    \
-                              E1000_EICR_RX_QUEUE3)
+    E1000_EICR_RX_QUEUE0 |    \
+    E1000_EICR_RX_QUEUE1 |    \
+    E1000_EICR_RX_QUEUE2 |    \
+    E1000_EICR_RX_QUEUE3)
 
 /* Immediate Interrupt Rx (A.K.A. Low Latency Interrupt) */
 #define E1000_IMIREXT_SIZE_BP     0x00001000  /* Packet size bypass */
@@ -80,31 +80,31 @@ extern void igb_rx_fifo_flush_82575 (struct e1000_hw * hw);
 
 /* Receive Descriptor - Advanced */
 union e1000_adv_rx_desc {
-  struct {
-    __le64 pkt_addr;             /* Packet buffer address */
-    __le64 hdr_addr;             /* Header buffer address */
-  } read;
-  struct {
-    struct {
-      struct {
-        __le16 pkt_info;   /* RSS type, Packet type */
-        __le16 hdr_info;   /* Split Header,
-                * header buffer length */
-      } lo_dword;
-      union {
-        __le32 rss;          /* RSS Hash */
-        struct {
-          __le16 ip_id;    /* IP id */
-          __le16 csum;     /* Packet Checksum */
-        } csum_ip;
-      } hi_dword;
-    } lower;
-    struct {
-      __le32 status_error;     /* ext status/error */
-      __le16 length;           /* Packet length */
-      __le16 vlan;             /* VLAN tag */
-    } upper;
-  } wb;  /* writeback */
+	struct {
+		__le64 pkt_addr;             /* Packet buffer address */
+		__le64 hdr_addr;             /* Header buffer address */
+	} read;
+	struct {
+		struct {
+			struct {
+				__le16 pkt_info;   /* RSS type, Packet type */
+				__le16 hdr_info;   /* Split Header,
+						    * header buffer length */
+			} lo_dword;
+			union {
+				__le32 rss;          /* RSS Hash */
+				struct {
+					__le16 ip_id;    /* IP id */
+					__le16 csum;     /* Packet Checksum */
+				} csum_ip;
+			} hi_dword;
+		} lower;
+		struct {
+			__le32 status_error;     /* ext status/error */
+			__le16 length;           /* Packet length */
+			__le16 vlan;             /* VLAN tag */
+		} upper;
+	} wb;  /* writeback */
 };
 
 #define E1000_RXDADV_HDRBUFLEN_MASK      0x7FE0
@@ -114,16 +114,16 @@ union e1000_adv_rx_desc {
 
 /* Transmit Descriptor - Advanced */
 union e1000_adv_tx_desc {
-  struct {
-    __le64 buffer_addr;    /* Address of descriptor's data buf */
-    __le32 cmd_type_len;
-    __le32 olinfo_status;
-  } read;
-  struct {
-    __le64 rsvd;       /* Reserved */
-    __le32 nxtseq_seed;
-    __le32 status;
-  } wb;
+	struct {
+		__le64 buffer_addr;    /* Address of descriptor's data buf */
+		__le32 cmd_type_len;
+		__le32 olinfo_status;
+	} read;
+	struct {
+		__le64 rsvd;       /* Reserved */
+		__le32 nxtseq_seed;
+		__le32 status;
+	} wb;
 };
 
 /* Adv Transmit Descriptor Config Masks */
@@ -140,10 +140,10 @@ union e1000_adv_tx_desc {
 
 /* Context descriptors */
 struct e1000_adv_tx_context_desc {
-  __le32 vlan_macip_lens;
-  __le32 seqnum_seed;
-  __le32 type_tucmd_mlhl;
-  __le32 mss_l4len_idx;
+	__le32 vlan_macip_lens;
+	__le32 seqnum_seed;
+	__le32 type_tucmd_mlhl;
+	__le32 mss_l4len_idx;
 };
 
 #define E1000_ADVTXD_MACLEN_SHIFT    9  /* Adv ctxt desc mac len shift */
@@ -245,16 +245,16 @@ struct e1000_adv_tx_context_desc {
 #define E1000_DTXCTL_MDP_EN     0x0020
 #define E1000_DTXCTL_SPOOF_INT  0x0040
 
-#define E1000_EEPROM_PCS_AUTONEG_DISABLE_BIT  (1 << 14)
+#define E1000_EEPROM_PCS_AUTONEG_DISABLE_BIT	(1 << 14)
 
 #define ALL_QUEUES   0xFFFF
 
 /* RX packet buffer size defines */
 #define E1000_RXPBS_SIZE_MASK_82576  0x0000007F
-void igb_vmdq_set_anti_spoofing_pf (struct e1000_hw *, bool, int);
-void igb_vmdq_set_loopback_pf (struct e1000_hw *, bool);
-void igb_vmdq_set_replication_pf (struct e1000_hw *, bool);
-u16 igb_rxpbs_adjust_82580 (u32 data);
-s32 igb_set_eee_i350 (struct e1000_hw *);
+void igb_vmdq_set_anti_spoofing_pf(struct e1000_hw *, bool, int);
+void igb_vmdq_set_loopback_pf(struct e1000_hw *, bool);
+void igb_vmdq_set_replication_pf(struct e1000_hw *, bool);
+u16 igb_rxpbs_adjust_82580(u32 data);
+s32 igb_set_eee_i350(struct e1000_hw *);
 
 #endif

@@ -25,22 +25,22 @@
  * XXX_MIKE - potential sign-extension bugs lurk here...
  */
 #define NIBBLE_SWAPPING_32_BIT(X) ( (((X) & 0xf0f0f0f0) >> 4) \
-                                    | (((X) & 0x0f0f0f0f) << 4) )
+				  | (((X) & 0x0f0f0f0f) << 4) )
 
 #define NIBBLE_SWAPPING_16_BIT(X) ( (((X) & 0x0000f0f0) >> 4) \
-                                    | (((X) & 0x00000f0f) << 4) )
+				  | (((X) & 0x00000f0f) << 4) )
 
 #define FLIP_4_BITS(X)  ( (((X) & 0x01) << 3) | (((X) & 0x002) << 1) \
-                          | (((X) & 0x04) >> 1) | (((X) & 0x008) >> 3) )
+			| (((X) & 0x04) >> 1) | (((X) & 0x008) >> 3) )
 
 #define FLIP_6_BITS(X)  ( (((X) & 0x01) << 5) | (((X) & 0x020) >> 5) \
-                          | (((X) & 0x02) << 3) | (((X) & 0x010) >> 3) \
-                          | (((X) & 0x04) << 1) | (((X) & 0x008) >> 1) )
+			| (((X) & 0x02) << 3) | (((X) & 0x010) >> 3) \
+			| (((X) & 0x04) << 1) | (((X) & 0x008) >> 1) )
 
 #define FLIP_9_BITS(X)  ( (((X) & 0x01) << 8) | (((X) & 0x100) >> 8) \
-                          | (((X) & 0x02) << 6) | (((X) & 0x080) >> 6) \
-                          | (((X) & 0x04) << 4) | (((X) & 0x040) >> 4) \
-                          | ((X) & 0x10) | (((X) & 0x08) << 2) | (((X) & 0x020) >> 2) )
+			| (((X) & 0x02) << 6) | (((X) & 0x080) >> 6) \
+			| (((X) & 0x04) << 4) | (((X) & 0x040) >> 4) \
+	 | ((X) & 0x10) | (((X) & 0x08) << 2) | (((X) & 0x020) >> 2) )
 
 /*
  * V: value we're operating on
@@ -65,19 +65,19 @@
 
 
 typedef struct addressTableEntryStruct  {
-  u32 hi;
-  u32 lo;
+    u32 hi;
+    u32 lo;
 } addrTblEntry;
 
 u32
-uncachedPages ( u32 pages  );
+uncachedPages( u32 pages  );
 u32
-hashTableFunction ( u32 macH, u32 macL, u32 HashSize, u32 hash_mode );
+hashTableFunction( u32 macH, u32 macL, u32 HashSize, u32 hash_mode );
 
 unsigned int
-initAddressTable ( u32 port, u32 hashMode, u32 hashSize );
+initAddressTable( u32 port, u32 hashMode, u32 hashSize );
 
 int
-addAddressTableEntry ( u32 port, u32 macH, u32 macL, u32 rd, u32 skip          );
+addAddressTableEntry( u32 port, u32 macH, u32 macL, u32 rd, u32 skip          );
 
 #endif                                           /* #ifndef _ADDRESS_TABLE_H */

@@ -33,20 +33,20 @@
  */
 
 struct zl10036_config {
-  u8 tuner_address;
-  int rf_loop_enable;
+	u8 tuner_address;
+	int rf_loop_enable;
 };
 
 #if defined(CONFIG_DVB_ZL10036) || \
-(defined(CONFIG_DVB_ZL10036_MODULE) && defined(MODULE))
-extern struct dvb_frontend * zl10036_attach (struct dvb_frontend * fe,
-    const struct zl10036_config * config, struct i2c_adapter * i2c);
+	(defined(CONFIG_DVB_ZL10036_MODULE) && defined(MODULE))
+extern struct dvb_frontend *zl10036_attach(struct dvb_frontend *fe,
+	const struct zl10036_config *config, struct i2c_adapter *i2c);
 #else
-static inline struct dvb_frontend * zl10036_attach (struct dvb_frontend * fe,
-    const struct zl10036_config * config, struct i2c_adapter * i2c)
+static inline struct dvb_frontend *zl10036_attach(struct dvb_frontend *fe,
+	const struct zl10036_config *config, struct i2c_adapter *i2c)
 {
-  printk (KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
-  return NULL;
+	printk(KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
+	return NULL;
 }
 #endif
 

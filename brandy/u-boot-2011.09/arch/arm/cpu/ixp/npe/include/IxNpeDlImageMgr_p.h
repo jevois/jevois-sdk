@@ -6,16 +6,16 @@
 
  * @brief This file contains the private API for the ImageMgr module
  *
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,7 +28,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -41,7 +41,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
 */
@@ -50,7 +50,7 @@
  * @defgroup IxNpeDlImageMgr_p IxNpeDlImageMgr_p
  *
  * @brief The private API for the IxNpeDl ImageMgr module
- *
+ * 
  * @{
  */
 
@@ -125,8 +125,8 @@
  * @brief Macro to extract NPE ID field from Image ID
  */
 #define IX_NPEDL_NPEID_FROM_IMAGEID_GET(imageId) \
-  (((imageId) >> IX_NPEDL_IMAGEID_NPEID_OFFSET) & \
-   IX_NPEDL_NPEIMAGE_NPEID_MASK)
+    (((imageId) >> IX_NPEDL_IMAGEID_NPEID_OFFSET) & \
+     IX_NPEDL_NPEIMAGE_NPEID_MASK)
 
 /**
  * @def IX_NPEDL_DEVICEID_FROM_IMAGEID_GET
@@ -134,8 +134,8 @@
  * @brief Macro to extract NPE ID field from Image ID
  */
 #define IX_NPEDL_DEVICEID_FROM_IMAGEID_GET(imageId) \
-  (((imageId) >> IX_NPEDL_IMAGEID_DEVICEID_OFFSET) & \
-   IX_NPEDL_NPEIMAGE_DEVICEID_MASK)
+    (((imageId) >> IX_NPEDL_IMAGEID_DEVICEID_OFFSET) & \
+     IX_NPEDL_NPEIMAGE_DEVICEID_MASK)
 
 /**
  * @def IX_NPEDL_FUNCTIONID_FROM_IMAGEID_GET
@@ -143,8 +143,8 @@
  * @brief Macro to extract Functionality ID field from Image ID
  */
 #define IX_NPEDL_FUNCTIONID_FROM_IMAGEID_GET(imageId) \
-  (((imageId) >> IX_NPEDL_IMAGEID_FUNCTIONID_OFFSET) & \
-   IX_NPEDL_NPEIMAGE_FIELD_MASK)
+    (((imageId) >> IX_NPEDL_IMAGEID_FUNCTIONID_OFFSET) & \
+     IX_NPEDL_NPEIMAGE_FIELD_MASK)
 
 /**
  * @def IX_NPEDL_MAJOR_FROM_IMAGEID_GET
@@ -152,8 +152,8 @@
  * @brief Macro to extract Major revision field from Image ID
  */
 #define IX_NPEDL_MAJOR_FROM_IMAGEID_GET(imageId) \
-  (((imageId) >> IX_NPEDL_IMAGEID_MAJOR_OFFSET) & \
-   IX_NPEDL_NPEIMAGE_FIELD_MASK)
+    (((imageId) >> IX_NPEDL_IMAGEID_MAJOR_OFFSET) & \
+     IX_NPEDL_NPEIMAGE_FIELD_MASK)
 
 /**
  * @def IX_NPEDL_MINOR_FROM_IMAGEID_GET
@@ -161,8 +161,8 @@
  * @brief Macro to extract Minor revision field from Image ID
  */
 #define IX_NPEDL_MINOR_FROM_IMAGEID_GET(imageId) \
-  (((imageId) >> IX_NPEDL_IMAGEID_MINOR_OFFSET) & \
-   IX_NPEDL_NPEIMAGE_FIELD_MASK)
+    (((imageId) >> IX_NPEDL_IMAGEID_MINOR_OFFSET) & \
+     IX_NPEDL_NPEIMAGE_FIELD_MASK)
 
 
 /*
@@ -171,15 +171,15 @@
 
 /**
  * @fn IX_STATUS ixNpeDlImageMgrMicrocodeImageLibraryOverride (UINT32 *clientImageLibrary)
- *
+ * 
  * @brief This instructs NPE Downloader to use client-supplied microcode image library.
  *
  * This function sets NPE Downloader to use a client-supplied microcode image library
  * instead of the standard image library which is included by the NPE Downloader.
- *
+ * 
  * @note THIS FUNCTION HAS BEEN DEPRECATED AND SHOULD NOT BE USED.
  *       It will be removed in a future release.
- *       See API header file IxNpeDl.h for more information.
+ *       See API header file IxNpeDl.h for more information.             
  *
  * @pre
  *    - <i>clientImageLibrary</i> should point to a microcode image library valid for use
@@ -192,20 +192,20 @@
  * @return
  *      - IX_SUCCESS if the operation was successful
  *      - IX_FAIL if the client-supplied image library did not contain a valid signature
- */
+ */ 
 IX_STATUS
-ixNpeDlImageMgrMicrocodeImageLibraryOverride (UINT32 * clientImageLibrary);
+ixNpeDlImageMgrMicrocodeImageLibraryOverride (UINT32 *clientImageLibrary);
 
 
 /**
  * @fn IX_STATUS ixNpeDlImageMgrImageListExtract (IxNpeDlImageId *imageListPtr,
                                                     UINT32 *numImages)
- *
+ * 
  * @brief Extracts a list of images available in the NPE microcode image library.
  *
  * @param IxNpeDlImageId* [out] imageListPtr - pointer to array to contain
  *                                                 a list of images. If NULL,
- *                                                 only the number of images
+ *                                                 only the number of images 
  *                                                 is returned (in
  *                                                 <i>numImages</i>)
  * @param UINT32* [inout] numImages - As input, it points to a variable
@@ -216,14 +216,14 @@ ixNpeDlImageMgrMicrocodeImageLibraryOverride (UINT32 * clientImageLibrary);
  *                                      <i>imageListPtr</i> is NULL. As an
  *                                      output, it will contain number of
  *                                      images in the image library.
- *
+ * 
  * This function reads the header of the microcode image library and extracts a list of the
  * images available in the image library.  It can also be used to find the number of
  * images in the image library.
- *
+ * 
  * @note THIS FUNCTION HAS BEEN DEPRECATED AND SHOULD NOT BE USED.
  *       It will be removed in a future release.
- *       See API header file IxNpeDl.h for more information.
+ *       See API header file IxNpeDl.h for more information.             
  *
  * @pre
  *    - if <i>imageListPtr</i> != NULL, <i>numImages</i> should reflect the
@@ -236,67 +236,67 @@ ixNpeDlImageMgrMicrocodeImageLibraryOverride (UINT32 * clientImageLibrary);
  * @return
  *      - IX_SUCCESS if the operation was successful
  *      - IX_FAIL otherwise
- */
+ */ 
 IX_STATUS
-ixNpeDlImageMgrImageListExtract (IxNpeDlImageId * imageListPtr,
-                                 UINT32 * numImages);
+ixNpeDlImageMgrImageListExtract (IxNpeDlImageId *imageListPtr,
+				   UINT32 *numImages);
 
 
 /**
  * @fn IX_STATUS ixNpeDlImageMgrImageLocate (IxNpeDlImageId *imageId,
                                                UINT32 **imagePtr,
                                                UINT32 *imageSize)
- *
- * @brief Finds a image block in the NPE microcode image library.
+ * 
+ * @brief Finds a image block in the NPE microcode image library. 
  *
  * @param IxNpeDlImageId* [in] imageId - the id of the image to locate
  * @param UINT32** [out] imagePtr        - pointer to the image in memory
  * @param UINT32* [out] imageSize        - size (in 32-bit words) of image
- *
+ * 
  * This function examines the header of the microcode image library for the location
  * and size of the specified image.
- *
+ * 
  * @note THIS FUNCTION HAS BEEN DEPRECATED AND SHOULD NOT BE USED.
  *       It will be removed in a future release.
- *       See API header file IxNpeDl.h for more information.
+ *       See API header file IxNpeDl.h for more information.             
  *
  * @pre
  *
  * @post
  *
- * @return
+ * @return 
  *      - IX_SUCCESS if the operation was successful
  *      - IX_FAIL otherwise
- */
+ */ 
 IX_STATUS
-ixNpeDlImageMgrImageLocate (IxNpeDlImageId * imageId,
-                            UINT32 ** imagePtr,
-                            UINT32 * imageSize);
+ixNpeDlImageMgrImageLocate (IxNpeDlImageId *imageId,
+			      UINT32 **imagePtr,
+			      UINT32 *imageSize);
 
 /**
  * @fn IX_STATUS ixNpeDlImageMgrLatestImageExtract (IxNpeDlImageId *imageId)
+ * 
+ * @brief Finds the most recent version of an image in the NPE image library. 
  *
- * @brief Finds the most recent version of an image in the NPE image library.
- *
- * @param IxNpeDlImageId* [inout] imageId - the id of the image
- *
- * This function determines the most recent version of a specified image by its
+ * @param IxNpeDlImageId* [inout] imageId - the id of the image 
+ * 
+ * This function determines the most recent version of a specified image by its 
  * higest major release and minor revision numbers
- *
+ * 
  * @note THIS FUNCTION HAS BEEN DEPRECATED AND SHOULD NOT BE USED.
  *       It will be removed in a future release.
- *       See API header file IxNpeDl.h for more information.
+ *       See API header file IxNpeDl.h for more information.             
  *
  * @pre
  *
  * @post
  *
- * @return
+ * @return 
  *      - IX_SUCCESS if the operation was successful
  *      - IX_FAIL otherwise
- */
+ */ 
 IX_STATUS
-ixNpeDlImageMgrLatestImageExtract (IxNpeDlImageId * imageId);
+ixNpeDlImageMgrLatestImageExtract (IxNpeDlImageId *imageId);
 
 /**
  * @fn void ixNpeDlImageMgrStatsShow (void)
@@ -327,33 +327,33 @@ ixNpeDlImageMgrStatsReset (void);
                                           UINT32 imageId,
                                           UINT32 **imagePtr,
                                           UINT32 *imageSize)
- *
- * @brief Finds a image block in the NPE microcode image library.
+ * 
+ * @brief Finds a image block in the NPE microcode image library. 
  *
  * @param UINT32*  [in]  imageLibrary - the image library to use
  * @param UINT32   [in]  imageId      - the id of the image to locate
  * @param UINT32** [out] imagePtr     - pointer to the image in memory
  * @param UINT32*  [out] imageSize    - size (in 32-bit words) of image
- *
+ * 
  * This function examines the header of the specified microcode image library
  * for the location and size of the specified image.  It returns a pointer to
  * the image in the <i>imagePtr</i> parameter.
  * If no image library is specified (imageLibrary == NULL), then the default
  * built-in image library will be used.
- *
+ * 
  * @pre
  *
  * @post
  *
- * @return
+ * @return 
  *      - IX_SUCCESS if the operation was successful
  *      - IX_FAIL otherwise
- */
+ */ 
 IX_STATUS
-ixNpeDlImageMgrImageFind (UINT32 * imageLibrary,
+ixNpeDlImageMgrImageFind (UINT32 *imageLibrary,
                           UINT32 imageId,
-                          UINT32 ** imagePtr,
-                          UINT32 * imageSize);
+			  UINT32 **imagePtr,
+			  UINT32 *imageSize);
 
 
 #endif /* IXNPEDLIMAGEMGR_P_H */

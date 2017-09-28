@@ -25,10 +25,10 @@
 #define _SYS_PROTO_H_
 
 struct tegra2_sysinfo {
-  char * board_string;
+	char *board_string;
 };
 
-void invalidate_dcache (void);
+void invalidate_dcache(void);
 
 extern const struct tegra2_sysinfo sysinfo;
 

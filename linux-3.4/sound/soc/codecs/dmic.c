@@ -28,69 +28,69 @@
 #include <sound/soc-dapm.h>
 
 static struct snd_soc_dai_driver dmic_dai = {
-  .name = "dmic-hifi",
-  .capture = {
-    .stream_name = "Capture",
-    .channels_min = 1,
-    .channels_max = 8,
-    .rates = SNDRV_PCM_RATE_CONTINUOUS,
-    .formats = SNDRV_PCM_FMTBIT_S32_LE
-    | SNDRV_PCM_FMTBIT_S24_LE
-    | SNDRV_PCM_FMTBIT_S16_LE,
-  },
+	.name = "dmic-hifi",
+	.capture = {
+		.stream_name = "Capture",
+		.channels_min = 1,
+		.channels_max = 8,
+		.rates = SNDRV_PCM_RATE_CONTINUOUS,
+		.formats = SNDRV_PCM_FMTBIT_S32_LE
+			| SNDRV_PCM_FMTBIT_S24_LE
+			| SNDRV_PCM_FMTBIT_S16_LE,
+	},
 };
 
 static const struct snd_soc_dapm_widget dmic_dapm_widgets[] = {
-  SND_SOC_DAPM_AIF_OUT ("DMIC AIF", "Capture", 0,
-  SND_SOC_NOPM, 0, 0),
-  SND_SOC_DAPM_INPUT ("DMic"),
+	SND_SOC_DAPM_AIF_OUT("DMIC AIF", "Capture", 0,
+			     SND_SOC_NOPM, 0, 0),
+	SND_SOC_DAPM_INPUT("DMic"),
 };
 
 static const struct snd_soc_dapm_route intercon[] = {
-  {"DMIC AIF", NULL, "DMic"},
+	{"DMIC AIF", NULL, "DMic"},
 };
 
-static int dmic_probe (struct snd_soc_codec * codec)
+static int dmic_probe(struct snd_soc_codec *codec)
 {
-  struct snd_soc_dapm_context * dapm = &codec->dapm;
-  
-  snd_soc_dapm_new_controls (dapm, dmic_dapm_widgets,
-                             ARRAY_SIZE (dmic_dapm_widgets) );
-  snd_soc_dapm_add_routes (dapm, intercon, ARRAY_SIZE (intercon) );
-  snd_soc_dapm_new_widgets (dapm);
-  
-  return 0;
+	struct snd_soc_dapm_context *dapm = &codec->dapm;
+
+	snd_soc_dapm_new_controls(dapm, dmic_dapm_widgets,
+				  ARRAY_SIZE(dmic_dapm_widgets));
+        snd_soc_dapm_add_routes(dapm, intercon, ARRAY_SIZE(intercon));
+	snd_soc_dapm_new_widgets(dapm);
+
+	return 0;
 }
 
 static struct snd_soc_codec_driver soc_dmic = {
-  .probe  = dmic_probe,
+	.probe	= dmic_probe,
 };
 
-static int __devinit dmic_dev_probe (struct platform_device * pdev)
+static int __devinit dmic_dev_probe(struct platform_device *pdev)
 {
-  return snd_soc_register_codec (&pdev->dev,
-                                 &soc_dmic, &dmic_dai, 1);
+	return snd_soc_register_codec(&pdev->dev,
+			&soc_dmic, &dmic_dai, 1);
 }
 
-static int __devexit dmic_dev_remove (struct platform_device * pdev)
+static int __devexit dmic_dev_remove(struct platform_device *pdev)
 {
-  snd_soc_unregister_codec (&pdev->dev);
-  return 0;
+	snd_soc_unregister_codec(&pdev->dev);
+	return 0;
 }
 
-MODULE_ALIAS ("platform:dmic-codec");
+MODULE_ALIAS("platform:dmic-codec");
 
 static struct platform_driver dmic_driver = {
-  .driver = {
-    .name = "dmic-codec",
-    .owner = THIS_MODULE,
-  },
-  .probe = dmic_dev_probe,
-  .remove = __devexit_p (dmic_dev_remove),
+	.driver = {
+		.name = "dmic-codec",
+		.owner = THIS_MODULE,
+	},
+	.probe = dmic_dev_probe,
+	.remove = __devexit_p(dmic_dev_remove),
 };
 
-module_platform_driver (dmic_driver);
+module_platform_driver(dmic_driver);
 
-MODULE_DESCRIPTION ("Generic DMIC driver");
-MODULE_AUTHOR ("Liam Girdwood <lrg@slimlogic.co.uk>");
-MODULE_LICENSE ("GPL");
+MODULE_DESCRIPTION("Generic DMIC driver");
+MODULE_AUTHOR("Liam Girdwood <lrg@slimlogic.co.uk>");
+MODULE_LICENSE("GPL");

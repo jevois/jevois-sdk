@@ -6,14 +6,14 @@
 #include <linux/proc_fs.h>
 #include <linux/elf.h>
 
-#define ELFCORE_ADDR_MAX  (-1ULL)
-#define ELFCORE_ADDR_ERR  (-2ULL)
+#define ELFCORE_ADDR_MAX	(-1ULL)
+#define ELFCORE_ADDR_ERR	(-2ULL)
 
 extern unsigned long long elfcorehdr_addr;
 extern unsigned long long elfcorehdr_size;
 
-extern ssize_t copy_oldmem_page (unsigned long, char *, size_t,
-                                 unsigned long, int);
+extern ssize_t copy_oldmem_page(unsigned long, char *, size_t,
+						unsigned long, int);
 
 /* Architecture code defines this if there are other possible ELF
  * machine types, e.g. on bi-arch capable hardware. */
@@ -40,9 +40,9 @@ extern ssize_t copy_oldmem_page (unsigned long, char *, size_t,
  * previous kernel.
  */
 
-static inline int is_kdump_kernel (void)
+static inline int is_kdump_kernel(void)
 {
-  return (elfcorehdr_addr != ELFCORE_ADDR_MAX) ? 1 : 0;
+	return (elfcorehdr_addr != ELFCORE_ADDR_MAX) ? 1 : 0;
 }
 
 /* is_vmcore_usable() checks if the kernel is booting after a panic and
@@ -53,27 +53,27 @@ static inline int is_kdump_kernel (void)
  * dealing directly with an unsigned long long rather than a pointer.
  */
 
-static inline int is_vmcore_usable (void)
+static inline int is_vmcore_usable(void)
 {
-  return is_kdump_kernel() && elfcorehdr_addr != ELFCORE_ADDR_ERR ? 1 : 0;
+	return is_kdump_kernel() && elfcorehdr_addr != ELFCORE_ADDR_ERR ? 1 : 0;
 }
 
 /* vmcore_unusable() marks the vmcore as unusable,
  * without disturbing the logic of is_kdump_kernel()
  */
 
-static inline void vmcore_unusable (void)
+static inline void vmcore_unusable(void)
 {
-  if (is_kdump_kernel() )
-  { elfcorehdr_addr = ELFCORE_ADDR_ERR; }
+	if (is_kdump_kernel())
+		elfcorehdr_addr = ELFCORE_ADDR_ERR;
 }
 
 #define HAVE_OLDMEM_PFN_IS_RAM 1
-extern int register_oldmem_pfn_is_ram (int (*fn) (unsigned long pfn) );
-extern void unregister_oldmem_pfn_is_ram (void);
+extern int register_oldmem_pfn_is_ram(int (*fn)(unsigned long pfn));
+extern void unregister_oldmem_pfn_is_ram(void);
 
 #else /* !CONFIG_CRASH_DUMP */
-static inline int is_kdump_kernel (void) { return 0; }
+static inline int is_kdump_kernel(void) { return 0; }
 #endif /* CONFIG_CRASH_DUMP */
 
 extern unsigned long saved_max_pfn;

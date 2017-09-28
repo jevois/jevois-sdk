@@ -1,9 +1,9 @@
 /*
  * Linux driver for TerraTec DMX 6Fire USB
  *
- * Author:  Torsten Schenk <torsten.schenk@zoho.com>
- * Created: Jan 01, 2011
- * Copyright: (C) Torsten Schenk
+ * Author:	Torsten Schenk <torsten.schenk@zoho.com>
+ * Created:	Jan 01, 2011
+ * Copyright:	(C) Torsten Schenk
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

@@ -12,9 +12,9 @@
 #include <linux/io.h>
 
 #ifdef CONFIG_CLKSRC_DBX500_PRCMU
-void __init clksrc_dbx500_prcmu_init (void __iomem * base);
+void __init clksrc_dbx500_prcmu_init(void __iomem *base);
 #else
-static inline void __init clksrc_dbx500_prcmu_init (void __iomem * base) {}
+static inline void __init clksrc_dbx500_prcmu_init(void __iomem *base) {}
 #endif
 
 #endif

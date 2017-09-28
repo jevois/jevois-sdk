@@ -22,80 +22,80 @@
 #ifdef __KERNEL__
 
 struct pcbit_chan {
-  unsigned short id;
-  unsigned short callref;                   /* Call Reference */
-  unsigned char  proto;                     /* layer2protocol  */
-  unsigned char  queued;                    /* unacked data messages */
-  unsigned char  layer2link;                /* used in TData */
-  unsigned char  snum;                      /* used in TData */
-  unsigned short s_refnum;
-  unsigned short r_refnum;
-  unsigned short fsm_state;
-  struct timer_list fsm_timer;
-  #ifdef BLOCK_TIMER
-  struct timer_list block_timer;
-  #endif
+	unsigned short id;
+	unsigned short callref;                   /* Call Reference */
+	unsigned char  proto;                     /* layer2protocol  */
+	unsigned char  queued;                    /* unacked data messages */
+	unsigned char  layer2link;                /* used in TData */
+	unsigned char  snum;                      /* used in TData */
+	unsigned short s_refnum;
+	unsigned short r_refnum;
+	unsigned short fsm_state;
+	struct timer_list fsm_timer;
+#ifdef BLOCK_TIMER
+	struct timer_list block_timer;
+#endif
 };
 
 struct msn_entry {
-  char * msn;
-  struct msn_entry * next;
+	char *msn;
+	struct msn_entry *next;
 };
 
 struct pcbit_dev {
-  /* board */
-  
-  volatile unsigned char __iomem * sh_mem;  /* RDP address  */
-  unsigned long ph_mem;
-  unsigned int irq;
-  unsigned int id;
-  unsigned int interrupt;     /* set during interrupt
-               processing */
-  spinlock_t lock;
-  /* isdn4linux */
-  
-  struct msn_entry * msn_list;  /* ISDN address list */
-  
-  isdn_if * dev_if;
-  
-  ushort ll_hdrlen;
-  ushort hl_hdrlen;
-  
-  /* link layer */
-  unsigned char l2_state;
-  
-  struct frame_buf * read_queue;
-  struct frame_buf * read_frame;
-  struct frame_buf * write_queue;
-  
-  /* Protocol start */
-  wait_queue_head_t set_running_wq;
-  struct timer_list set_running_timer;
-  
-  struct timer_list error_recover_timer;
-  
-  struct work_struct qdelivery;
-  
-  u_char w_busy;
-  u_char r_busy;
-  
-  volatile unsigned char __iomem * readptr;
-  volatile unsigned char __iomem * writeptr;
-  
-  ushort loadptr;
-  
-  unsigned short fsize[8];    /* sent layer2 frames size */
-  
-  unsigned char send_seq;
-  unsigned char rcv_seq;
-  unsigned char unack_seq;
-  
-  unsigned short free;
-  
-  /* channels */
-  
-  struct pcbit_chan * b1;
-  struct pcbit_chan * b2;
+	/* board */
+
+	volatile unsigned char __iomem *sh_mem;		/* RDP address	*/
+	unsigned long ph_mem;
+	unsigned int irq;
+	unsigned int id;
+	unsigned int interrupt;			/* set during interrupt
+						   processing */
+	spinlock_t lock;
+	/* isdn4linux */
+
+	struct msn_entry *msn_list;		/* ISDN address list */
+
+	isdn_if *dev_if;
+
+	ushort ll_hdrlen;
+	ushort hl_hdrlen;
+
+	/* link layer */
+	unsigned char l2_state;
+
+	struct frame_buf *read_queue;
+	struct frame_buf *read_frame;
+	struct frame_buf *write_queue;
+
+	/* Protocol start */
+	wait_queue_head_t set_running_wq;
+	struct timer_list set_running_timer;
+
+	struct timer_list error_recover_timer;
+
+	struct work_struct qdelivery;
+
+	u_char w_busy;
+	u_char r_busy;
+
+	volatile unsigned char __iomem *readptr;
+	volatile unsigned char __iomem *writeptr;
+
+	ushort loadptr;
+
+	unsigned short fsize[8];		/* sent layer2 frames size */
+
+	unsigned char send_seq;
+	unsigned char rcv_seq;
+	unsigned char unack_seq;
+
+	unsigned short free;
+
+	/* channels */
+
+	struct pcbit_chan *b1;
+	struct pcbit_chan *b2;
 };
 
 #define STATS_TIMER (10 * HZ)
@@ -115,13 +115,13 @@ struct pcbit_dev {
 /* isdn_ctrl only allows a long sized argument */
 
 struct pcbit_ioctl {
-  union {
-    struct byte_op {
-      ushort addr;
-      ushort value;
-    } rdp_byte;
-    unsigned long l2_status;
-  } info;
+	union {
+		struct byte_op {
+			ushort addr;
+			ushort value;
+		} rdp_byte;
+		unsigned long l2_status;
+	} info;
 };
 
 
@@ -166,12 +166,12 @@ struct pcbit_ioctl {
 #define L2_RUNNING  5
 #define L2_ERROR    6
 
-void pcbit_deliver (struct work_struct * work);
-int pcbit_init_dev (int board, int mem_base, int irq);
-void pcbit_terminate (int board);
-void pcbit_l3_receive (struct pcbit_dev * dev, ulong msg, struct sk_buff * skb,
-                       ushort hdr_len, ushort refnum);
-void pcbit_state_change (struct pcbit_dev * dev, struct pcbit_chan * chan,
-                         unsigned short i, unsigned short ev, unsigned short f);
+void pcbit_deliver(struct work_struct *work);
+int pcbit_init_dev(int board, int mem_base, int irq);
+void pcbit_terminate(int board);
+void pcbit_l3_receive(struct pcbit_dev *dev, ulong msg, struct sk_buff *skb,
+		      ushort hdr_len, ushort refnum);
+void pcbit_state_change(struct pcbit_dev *dev, struct pcbit_chan *chan,
+			unsigned short i, unsigned short ev, unsigned short f);
 
 #endif

@@ -41,28 +41,28 @@
  *
  * Returns zero if successful, or a negative error code on failure.
  */
-int snd_device_new (struct snd_card * card, snd_device_type_t type,
-                    void * device_data, struct snd_device_ops * ops)
+int snd_device_new(struct snd_card *card, snd_device_type_t type,
+		   void *device_data, struct snd_device_ops *ops)
 {
-  struct snd_device * dev;
-  
-  if (snd_BUG_ON (!card || !device_data || !ops) )
-  { return -ENXIO; }
-  dev = kzalloc (sizeof (*dev), GFP_KERNEL);
-  if (dev == NULL) {
-    snd_printk (KERN_ERR "Cannot allocate device\n");
-    return -ENOMEM;
-  }
-  dev->card = card;
-  dev->type = type;
-  dev->state = SNDRV_DEV_BUILD;
-  dev->device_data = device_data;
-  dev->ops = ops;
-  list_add (&dev->list, &card->devices); /* add to the head of list */
-  return 0;
+	struct snd_device *dev;
+
+	if (snd_BUG_ON(!card || !device_data || !ops))
+		return -ENXIO;
+	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
+	if (dev == NULL) {
+		snd_printk(KERN_ERR "Cannot allocate device\n");
+		return -ENOMEM;
+	}
+	dev->card = card;
+	dev->type = type;
+	dev->state = SNDRV_DEV_BUILD;
+	dev->device_data = device_data;
+	dev->ops = ops;
+	list_add(&dev->list, &card->devices);	/* add to the head of list */
+	return 0;
 }
 
-EXPORT_SYMBOL (snd_device_new);
+EXPORT_SYMBOL(snd_device_new);
 
 /**
  * snd_device_free - release the device from the card
@@ -76,35 +76,35 @@ EXPORT_SYMBOL (snd_device_new);
  * Returns zero if successful, or a negative error code on failure or if the
  * device not found.
  */
-int snd_device_free (struct snd_card * card, void * device_data)
+int snd_device_free(struct snd_card *card, void *device_data)
 {
-  struct snd_device * dev;
-  
-  if (snd_BUG_ON (!card || !device_data) )
-  { return -ENXIO; }
-  list_for_each_entry (dev, &card->devices, list) {
-    if (dev->device_data != device_data)
-    { continue; }
-    /* unlink */
-    list_del (&dev->list);
-    if (dev->state == SNDRV_DEV_REGISTERED &&
-        dev->ops->dev_disconnect)
-      if (dev->ops->dev_disconnect (dev) )
-        snd_printk (KERN_ERR
-                    "device disconnect failure\n");
-    if (dev->ops->dev_free) {
-      if (dev->ops->dev_free (dev) )
-      { snd_printk (KERN_ERR "device free failure\n"); }
-    }
-    kfree (dev);
-    return 0;
-  }
-  snd_printd ("device free %p (from %pF), not found\n", device_data,
-              __builtin_return_address (0) );
-  return -ENXIO;
+	struct snd_device *dev;
+	
+	if (snd_BUG_ON(!card || !device_data))
+		return -ENXIO;
+	list_for_each_entry(dev, &card->devices, list) {
+		if (dev->device_data != device_data)
+			continue;
+		/* unlink */
+		list_del(&dev->list);
+		if (dev->state == SNDRV_DEV_REGISTERED &&
+		    dev->ops->dev_disconnect)
+			if (dev->ops->dev_disconnect(dev))
+				snd_printk(KERN_ERR
+					   "device disconnect failure\n");
+		if (dev->ops->dev_free) {
+			if (dev->ops->dev_free(dev))
+				snd_printk(KERN_ERR "device free failure\n");
+		}
+		kfree(dev);
+		return 0;
+	}
+	snd_printd("device free %p (from %pF), not found\n", device_data,
+		   __builtin_return_address(0));
+	return -ENXIO;
 }
 
-EXPORT_SYMBOL (snd_device_free);
+EXPORT_SYMBOL(snd_device_free);
 
 /**
  * snd_device_disconnect - disconnect the device
@@ -119,26 +119,26 @@ EXPORT_SYMBOL (snd_device_free);
  * Returns zero if successful, or a negative error code on failure or if the
  * device not found.
  */
-int snd_device_disconnect (struct snd_card * card, void * device_data)
+int snd_device_disconnect(struct snd_card *card, void *device_data)
 {
-  struct snd_device * dev;
-  
-  if (snd_BUG_ON (!card || !device_data) )
-  { return -ENXIO; }
-  list_for_each_entry (dev, &card->devices, list) {
-    if (dev->device_data != device_data)
-    { continue; }
-    if (dev->state == SNDRV_DEV_REGISTERED &&
-        dev->ops->dev_disconnect) {
-      if (dev->ops->dev_disconnect (dev) )
-      { snd_printk (KERN_ERR "device disconnect failure\n"); }
-      dev->state = SNDRV_DEV_DISCONNECTED;
-    }
-    return 0;
-  }
-  snd_printd ("device disconnect %p (from %pF), not found\n", device_data,
-              __builtin_return_address (0) );
-  return -ENXIO;
+	struct snd_device *dev;
+
+	if (snd_BUG_ON(!card || !device_data))
+		return -ENXIO;
+	list_for_each_entry(dev, &card->devices, list) {
+		if (dev->device_data != device_data)
+			continue;
+		if (dev->state == SNDRV_DEV_REGISTERED &&
+		    dev->ops->dev_disconnect) {
+			if (dev->ops->dev_disconnect(dev))
+				snd_printk(KERN_ERR "device disconnect failure\n");
+			dev->state = SNDRV_DEV_DISCONNECTED;
+		}
+		return 0;
+	}
+	snd_printd("device disconnect %p (from %pF), not found\n", device_data,
+		   __builtin_return_address(0));
+	return -ENXIO;
 }
 
 /**
@@ -154,92 +154,92 @@ int snd_device_disconnect (struct snd_card * card, void * device_data)
  * Returns zero if successful, or a negative error code on failure or if the
  * device not found.
  */
-int snd_device_register (struct snd_card * card, void * device_data)
+int snd_device_register(struct snd_card *card, void *device_data)
 {
-  struct snd_device * dev;
-  int err;
-  
-  if (snd_BUG_ON (!card || !device_data) )
-  { return -ENXIO; }
-  list_for_each_entry (dev, &card->devices, list) {
-    if (dev->device_data != device_data)
-    { continue; }
-    if (dev->state == SNDRV_DEV_BUILD && dev->ops->dev_register) {
-      if ( (err = dev->ops->dev_register (dev) ) < 0)
-      { return err; }
-      dev->state = SNDRV_DEV_REGISTERED;
-      return 0;
-    }
-    snd_printd ("snd_device_register busy\n");
-    return -EBUSY;
-  }
-  snd_BUG();
-  return -ENXIO;
+	struct snd_device *dev;
+	int err;
+
+	if (snd_BUG_ON(!card || !device_data))
+		return -ENXIO;
+	list_for_each_entry(dev, &card->devices, list) {
+		if (dev->device_data != device_data)
+			continue;
+		if (dev->state == SNDRV_DEV_BUILD && dev->ops->dev_register) {
+			if ((err = dev->ops->dev_register(dev)) < 0)
+				return err;
+			dev->state = SNDRV_DEV_REGISTERED;
+			return 0;
+		}
+		snd_printd("snd_device_register busy\n");
+		return -EBUSY;
+	}
+	snd_BUG();
+	return -ENXIO;
 }
 
-EXPORT_SYMBOL (snd_device_register);
+EXPORT_SYMBOL(snd_device_register);
 
 /*
  * register all the devices on the card.
  * called from init.c
  */
-int snd_device_register_all (struct snd_card * card)
+int snd_device_register_all(struct snd_card *card)
 {
-  struct snd_device * dev;
-  int err;
-  
-  if (snd_BUG_ON (!card) )
-  { return -ENXIO; }
-  list_for_each_entry (dev, &card->devices, list) {
-    if (dev->state == SNDRV_DEV_BUILD && dev->ops->dev_register) {
-      if ( (err = dev->ops->dev_register (dev) ) < 0)
-      { return err; }
-      dev->state = SNDRV_DEV_REGISTERED;
-    }
-  }
-  return 0;
+	struct snd_device *dev;
+	int err;
+	
+	if (snd_BUG_ON(!card))
+		return -ENXIO;
+	list_for_each_entry(dev, &card->devices, list) {
+		if (dev->state == SNDRV_DEV_BUILD && dev->ops->dev_register) {
+			if ((err = dev->ops->dev_register(dev)) < 0)
+				return err;
+			dev->state = SNDRV_DEV_REGISTERED;
+		}
+	}
+	return 0;
 }
 
 /*
  * disconnect all the devices on the card.
  * called from init.c
  */
-int snd_device_disconnect_all (struct snd_card * card)
+int snd_device_disconnect_all(struct snd_card *card)
 {
-  struct snd_device * dev;
-  int err = 0;
-  
-  if (snd_BUG_ON (!card) )
-  { return -ENXIO; }
-  list_for_each_entry (dev, &card->devices, list) {
-    if (snd_device_disconnect (card, dev->device_data) < 0)
-    { err = -ENXIO; }
-  }
-  return err;
+	struct snd_device *dev;
+	int err = 0;
+
+	if (snd_BUG_ON(!card))
+		return -ENXIO;
+	list_for_each_entry(dev, &card->devices, list) {
+		if (snd_device_disconnect(card, dev->device_data) < 0)
+			err = -ENXIO;
+	}
+	return err;
 }
 
 /*
  * release all the devices on the card.
  * called from init.c
  */
-int snd_device_free_all (struct snd_card * card, snd_device_cmd_t cmd)
+int snd_device_free_all(struct snd_card *card, snd_device_cmd_t cmd)
 {
-  struct snd_device * dev;
-  int err;
-  unsigned int range_low, range_high, type;
-  
-  if (snd_BUG_ON (!card) )
-  { return -ENXIO; }
-  range_low = (__force unsigned int) cmd * SNDRV_DEV_TYPE_RANGE_SIZE;
-  range_high = range_low + SNDRV_DEV_TYPE_RANGE_SIZE - 1;
-__again:
-  list_for_each_entry (dev, &card->devices, list) {
-    type = (__force unsigned int) dev->type;
-    if (type >= range_low && type <= range_high) {
-      if ( (err = snd_device_free (card, dev->device_data) ) < 0)
-      { return err; }
-      goto __again;
-    }
-  }
-  return 0;
+	struct snd_device *dev;
+	int err;
+	unsigned int range_low, range_high, type;
+
+	if (snd_BUG_ON(!card))
+		return -ENXIO;
+	range_low = (__force unsigned int)cmd * SNDRV_DEV_TYPE_RANGE_SIZE;
+	range_high = range_low + SNDRV_DEV_TYPE_RANGE_SIZE - 1;
+      __again:
+	list_for_each_entry(dev, &card->devices, list) {
+		type = (__force unsigned int)dev->type;
+		if (type >= range_low && type <= range_high) {
+			if ((err = snd_device_free(card, dev->device_data)) < 0)
+				return err;
+			goto __again;
+		}
+	}
+	return 0;
 }

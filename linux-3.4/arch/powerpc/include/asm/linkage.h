@@ -3,4 +3,4 @@
 
 /* Nothing to see here... */
 
-#endif  /* _ASM_POWERPC_LINKAGE_H */
+#endif	/* _ASM_POWERPC_LINKAGE_H */

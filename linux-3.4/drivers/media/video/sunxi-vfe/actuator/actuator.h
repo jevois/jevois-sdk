@@ -1,4 +1,4 @@
-/*
+/* 
  * sunxi actuator driver
  */
 
@@ -48,8 +48,8 @@ struct actuator_ctrl_t;
 #define ACT_DEV_MIN_CODE 0  
 #define ACT_DEV_MAX_CODE 1023//normally code range from 0~1023
 
-#define MOVE_NEAR 0
-#define MOVE_FAR  1
+#define MOVE_NEAR	0
+#define MOVE_FAR	1
 
 typedef enum tag_ACT_SUBDEV_CMD {
   ACT_INIT            , 
@@ -72,126 +72,126 @@ typedef enum tag_ACT_SUBDEV_CMD {
   ACT_MOV_FAR         , 
   ACT_MOV_NEAREST     , 
   ACT_MOV_FARTHEST    , 
-} __act_subdev_cmd_t;
+}__act_subdev_cmd_t;
 
 struct actuator_para_t {
-  unsigned short active_min;
-  unsigned short active_max;
-  unsigned short ext_tbl_en;//0-disable 1- en
-  unsigned short ext_tbl_steps;
-  unsigned short * ext_tbl;
+	unsigned short active_min;
+	unsigned short active_max;
+	unsigned short ext_tbl_en;//0-disable 1- en
+	unsigned short ext_tbl_steps;
+	unsigned short * ext_tbl;
 };
 
 struct actuator_ctrl_word_t {
-  unsigned short pwdn;
-  unsigned short code;
-  unsigned short sr;
+	unsigned short pwdn;
+	unsigned short code;
+	unsigned short sr;
 };
 
 struct actuator_ctrl_step_t {
-  unsigned short step;
-  unsigned short dir;
+	unsigned short step;
+	unsigned short dir;
 };
 
 struct actuator_set_info_t {
-  unsigned int total_steps;
-  unsigned short gross_steps;
-  unsigned short fine_steps;
+	unsigned int total_steps;
+	unsigned short gross_steps;
+	unsigned short fine_steps;
 };
 
 struct actuator_get_info_t {
-  unsigned int focal_length_num;
-  unsigned int focal_length_den;
-  unsigned int f_number_num;
-  unsigned int f_number_den;
-  unsigned int f_pix_num;
-  unsigned int f_pix_den;
-  unsigned int total_f_dist_num;
-  unsigned int total_f_dist_den;
-  unsigned int hor_view_angle_num;
-  unsigned int hor_view_angle_den;
-  unsigned int ver_view_angle_num;
-  unsigned int ver_view_angle_den;
+	unsigned int focal_length_num;
+	unsigned int focal_length_den;
+	unsigned int f_number_num;
+	unsigned int f_number_den;
+	unsigned int f_pix_num;
+	unsigned int f_pix_den;
+	unsigned int total_f_dist_num;
+	unsigned int total_f_dist_den;
+	unsigned int hor_view_angle_num;
+	unsigned int hor_view_angle_den;
+	unsigned int ver_view_angle_num;
+	unsigned int ver_view_angle_den;
 };
 
 struct actuator_move_params_t {
-  char dir;
-  int num_steps;
+	char dir;
+	int num_steps;
 };
 
 struct actuator_cfg_data {
-  int cfgtype;
-  unsigned char is_af_supported;
-  union {
-    struct actuator_move_params_t move;
-    struct actuator_set_info_t set_info;
-    struct actuator_get_info_t get_info;
-  } cfg;
+	int cfgtype;
+	unsigned char is_af_supported;
+	union {
+		struct actuator_move_params_t move;
+		struct actuator_set_info_t set_info;
+		struct actuator_get_info_t get_info;
+	} cfg;
 };
 
 struct actuator_func_tbl {
-  int (*actuator_init) (struct actuator_ctrl_t *,
-                        struct actuator_para_t *);
-  int (*actuator_pwdn) (struct actuator_ctrl_t *,
-                        unsigned short);
-  int (*actuator_init_table) (struct actuator_ctrl_t *,
-                              unsigned short,
-                              unsigned short,
-                              unsigned short *);
-  int (*actuator_release) (struct actuator_ctrl_t *,
-                           struct actuator_ctrl_word_t *);
-  int (*actuator_move_pos) (struct actuator_ctrl_t *,
-                            unsigned short,
-                            unsigned short);
-  int (*actuator_set_pos) (struct actuator_ctrl_t *,
-                           unsigned short);
-  int (*actuator_set_code) (struct actuator_ctrl_t *,
-                            unsigned short,
-                            unsigned short);
-  int (*actuator_i2c_write) (struct actuator_ctrl_t *,
-                             unsigned short, void *);
+	int (*actuator_init) (struct actuator_ctrl_t *,
+												struct actuator_para_t *);
+	int (*actuator_pwdn) (struct actuator_ctrl_t *,
+												unsigned short);
+	int (*actuator_init_table)(struct actuator_ctrl_t *,
+														 unsigned short,
+														 unsigned short,
+														 unsigned short *);
+	int (*actuator_release)(struct actuator_ctrl_t *,
+	                           	 struct actuator_ctrl_word_t *);
+	int (*actuator_move_pos) (struct actuator_ctrl_t *,
+			unsigned short,
+			unsigned short);
+	int (*actuator_set_pos) (struct actuator_ctrl_t *,
+			unsigned short);
+	int (*actuator_set_code) (struct actuator_ctrl_t *,
+			unsigned short,
+			unsigned short);
+	int (*actuator_i2c_write)(struct actuator_ctrl_t *,
+			unsigned short, void *);
 };
 
 typedef enum tag_ACT_STA {
-  ACT_STA_HW_PWDN,
-  ACT_STA_SOFT_PWDN,
-  ACT_STA_IDLE, 
-  ACT_STA_BUSY,
-  ACT_STA_ERR,
-  ACT_STA_SCANNING,
-  ACT_STA_HALT, 
-} __act_sta_t;
+	ACT_STA_HW_PWDN,
+	ACT_STA_SOFT_PWDN,
+	ACT_STA_IDLE, 
+	ACT_STA_BUSY,
+	ACT_STA_ERR,
+	ACT_STA_SCANNING,
+	ACT_STA_HALT, 
+}__act_sta_t;
 
 struct actuator_ctrl_t {
-  unsigned int i2c_addr;
-  struct i2c_driver * i2c_driver;
-  struct i2c_client * i2c_client;
-  struct mutex * actuator_mutex;
-  struct actuator_func_tbl func_tbl;
-  struct v4l2_subdev sdev;
-  struct v4l2_subdev_ops * sdev_ops;
-  struct actuator_set_info_t set_info;
-  struct actuator_get_info_t get_info;
-  
-  int work_status;
-  
-  unsigned short active_min;
-  unsigned short active_max;
-  unsigned short total_steps;
-  
-  unsigned short curr_pos;
-  unsigned short curr_code;
-  
-  unsigned short * step_position_table;
-  
+	unsigned int i2c_addr;
+	struct i2c_driver *i2c_driver;
+	struct i2c_client *i2c_client;
+	struct mutex *actuator_mutex;
+	struct actuator_func_tbl func_tbl;
+	struct v4l2_subdev sdev;
+	struct v4l2_subdev_ops *sdev_ops;
+	struct actuator_set_info_t set_info;
+	struct actuator_get_info_t get_info;
+	
+	int work_status;
+	
+	unsigned short active_min;
+	unsigned short active_max;
+	unsigned short total_steps;
+	
+	unsigned short curr_pos;
+	unsigned short curr_code;
+	
+	unsigned short *step_position_table;
+	
 };
 
-int actuator_move_pos (struct actuator_ctrl_t * a_ctrl,
-                       int num_steps,
-                       int direction);
+int actuator_move_pos(struct actuator_ctrl_t *a_ctrl,
+		int num_steps,
+		int direction);
 
-int actuator_write_focus (struct actuator_ctrl_t * a_ctrl,
-                          unsigned short pos);
-long sunxi_actuator_ioctl (struct v4l2_subdev * sd, unsigned int cmd, void * arg);
+int actuator_write_focus(struct actuator_ctrl_t *a_ctrl,
+												 unsigned short pos);
+long sunxi_actuator_ioctl(struct v4l2_subdev *sd, unsigned int cmd, void *arg);
 
-#endif 
+#endif

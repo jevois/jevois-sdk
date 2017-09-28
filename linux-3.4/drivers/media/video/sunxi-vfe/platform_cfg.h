@@ -1,17 +1,17 @@
 
 /*
  ***************************************************************************************
- *
+ * 
  * platform_cfg.h
- *
+ * 
  * Hawkview ISP - platform_cfg.h module
- *
+ * 
  * Copyright (c) 2014 by Allwinnertech Co., Ltd.  http://www.allwinnertech.com
+ * 
+ * Version		  Author         Date		    Description
  *
- * Version      Author         Date       Description
- *
- *   2.0      Yang Feng     2014/07/24        Second Version
- *
+ *   2.0		  Yang Feng   	2014/07/24	      Second Version
+ * 
  ****************************************************************************************
  */
 
@@ -108,6 +108,6 @@
 
 
 #define VFE_CORE_CLK_RATE (500*1000*1000)
-#define VFE_CLK_NOT_EXIST NULL
+#define VFE_CLK_NOT_EXIST	NULL
 
 #endif

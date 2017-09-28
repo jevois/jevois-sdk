@@ -11,8 +11,8 @@
 #ifndef _XTENSA_SETUP_H
 #define _XTENSA_SETUP_H
 
-#define COMMAND_LINE_SIZE 256
+#define COMMAND_LINE_SIZE	256
 
-extern void set_except_vector (int n, void * addr);
+extern void set_except_vector(int n, void *addr);
 
 #endif

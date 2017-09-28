@@ -40,16 +40,16 @@
 *               < 0     analyze failed, can't recognize or some other error.
 ************************************************************************************************************************
 */
-__s32  SCN_AnalyzeNandSystem (void);
+__s32  SCN_AnalyzeNandSystem(void);
 
-__u32 NAND_GetValidBlkRatio (void);
-__s32 NAND_SetValidBlkRatio (__u32 ValidBlkRatio);
-__u32 NAND_GetFrequencePar (void);
-__s32 NAND_SetFrequencePar (__u32 FrequencePar);
-__u32 NAND_GetNandVersion (void);
-__s32 NAND_GetParam (boot_nand_para_t * nand_param);
-__u32 NAND_GetCurrentCH (void);
-__u32 NAND_SetCurrentCH (__u32 nand_index);
-__u32 NAND_GetChipConnect (void);
+__u32 NAND_GetValidBlkRatio(void);
+__s32 NAND_SetValidBlkRatio(__u32 ValidBlkRatio);
+__u32 NAND_GetFrequencePar(void);
+__s32 NAND_SetFrequencePar(__u32 FrequencePar);
+__u32 NAND_GetNandVersion(void);
+__s32 NAND_GetParam(boot_nand_para_t * nand_param);
+__u32 NAND_GetCurrentCH(void);
+__u32 NAND_SetCurrentCH(__u32 nand_index);
+__u32 NAND_GetChipConnect(void);
 
 #endif 

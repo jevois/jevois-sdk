@@ -6,16 +6,16 @@
  *
  * @brief Feature Control Public API Implementation
  *
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,7 +28,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -41,7 +41,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
 */
@@ -52,17 +52,17 @@
 
 /* Macro to read from the Feature Control Register */
 #define IX_FEATURE_CTRL_READ(result) \
-  do { \
-    ixFeatureCtrlExpMap(); \
-    (result) = IX_OSAL_READ_LONG(ixFeatureCtrlRegister); \
-  } while (0)
+do { \
+ixFeatureCtrlExpMap(); \
+(result) = IX_OSAL_READ_LONG(ixFeatureCtrlRegister); \
+} while (0)
 
 /* Macro to write to the Feature Control Register */
 #define IX_FEATURE_CTRL_WRITE(value) \
-  do { \
-    ixFeatureCtrlExpMap(); \
-    IX_OSAL_WRITE_LONG(ixFeatureCtrlRegister, (value)); \
-  } while (0)
+do { \
+ixFeatureCtrlExpMap(); \
+IX_OSAL_WRITE_LONG(ixFeatureCtrlRegister, (value)); \
+} while (0)
 
 /*
  * This is the offset of the feature register relative to the base of the
@@ -75,7 +75,7 @@
 PRIVATE BOOL ixFeatureCtrlExpCfgRegionMapped = FALSE;
 
 /* Pointer holding the virtual address of the Feature Control Register */
-PRIVATE VUINT32 * ixFeatureCtrlRegister = NULL;
+PRIVATE VUINT32 *ixFeatureCtrlRegister = NULL;
 
 /* Place holder to store the software configuration */
 PRIVATE BOOL swConfiguration[IX_FEATURECTRL_SWCONFIG_MAX];
@@ -86,56 +86,56 @@ PRIVATE BOOL swConfigurationFlag = FALSE ;
 /* Array containing component mask values */
 #ifdef __ixp42X
 UINT32 componentMask[IX_FEATURECTRL_MAX_COMPONENTS] = {
-  (0x1 << IX_FEATURECTRL_RCOMP),
-  (0x1 << IX_FEATURECTRL_USB),
-  (0x1 << IX_FEATURECTRL_HASH),
-  (0x1 << IX_FEATURECTRL_AES),
-  (0x1 << IX_FEATURECTRL_DES),
-  (0x1 << IX_FEATURECTRL_HDLC),
-  (0x1 << IX_FEATURECTRL_AAL),
-  (0x1 << IX_FEATURECTRL_HSS),
-  (0x1 << IX_FEATURECTRL_UTOPIA),
-  (0x1 << IX_FEATURECTRL_ETH0),
-  (0x1 << IX_FEATURECTRL_ETH1),
-  (0x1 << IX_FEATURECTRL_NPEA),
-  (0x1 << IX_FEATURECTRL_NPEB),
-  (0x1 << IX_FEATURECTRL_NPEC),
-  (0x1 << IX_FEATURECTRL_PCI),
-  IX_FEATURECTRL_COMPONENT_NOT_AVAILABLE,
-  (0x3 << IX_FEATURECTRL_UTOPIA_PHY_LIMIT),
-  (0x1 << IX_FEATURECTRL_UTOPIA_PHY_LIMIT_BIT2),
-  IX_FEATURECTRL_COMPONENT_NOT_AVAILABLE,
-  IX_FEATURECTRL_COMPONENT_NOT_AVAILABLE,
-  IX_FEATURECTRL_COMPONENT_NOT_AVAILABLE,
-  IX_FEATURECTRL_COMPONENT_NOT_AVAILABLE,
-  IX_FEATURECTRL_COMPONENT_NOT_AVAILABLE
+    (0x1<<IX_FEATURECTRL_RCOMP),
+    (0x1<<IX_FEATURECTRL_USB),
+    (0x1<<IX_FEATURECTRL_HASH),
+    (0x1<<IX_FEATURECTRL_AES),
+    (0x1<<IX_FEATURECTRL_DES),
+    (0x1<<IX_FEATURECTRL_HDLC),
+    (0x1<<IX_FEATURECTRL_AAL),
+    (0x1<<IX_FEATURECTRL_HSS),
+    (0x1<<IX_FEATURECTRL_UTOPIA),
+    (0x1<<IX_FEATURECTRL_ETH0),
+    (0x1<<IX_FEATURECTRL_ETH1),
+    (0x1<<IX_FEATURECTRL_NPEA),
+    (0x1<<IX_FEATURECTRL_NPEB),
+    (0x1<<IX_FEATURECTRL_NPEC),
+    (0x1<<IX_FEATURECTRL_PCI),
+    IX_FEATURECTRL_COMPONENT_NOT_AVAILABLE,
+    (0x3<<IX_FEATURECTRL_UTOPIA_PHY_LIMIT),
+    (0x1<<IX_FEATURECTRL_UTOPIA_PHY_LIMIT_BIT2),
+    IX_FEATURECTRL_COMPONENT_NOT_AVAILABLE,
+    IX_FEATURECTRL_COMPONENT_NOT_AVAILABLE,
+    IX_FEATURECTRL_COMPONENT_NOT_AVAILABLE,
+    IX_FEATURECTRL_COMPONENT_NOT_AVAILABLE,
+    IX_FEATURECTRL_COMPONENT_NOT_AVAILABLE
 };
 #elif defined (__ixp46X)
 UINT32 componentMask[IX_FEATURECTRL_MAX_COMPONENTS] = {
-  (0x1 << IX_FEATURECTRL_RCOMP),
-  (0x1 << IX_FEATURECTRL_USB),
-  (0x1 << IX_FEATURECTRL_HASH),
-  (0x1 << IX_FEATURECTRL_AES),
-  (0x1 << IX_FEATURECTRL_DES),
-  (0x1 << IX_FEATURECTRL_HDLC),
-  IX_FEATURECTRL_COMPONENT_ALWAYS_AVAILABLE,  /* AAL component is always on */
-  (0x1 << IX_FEATURECTRL_HSS),
-  (0x1 << IX_FEATURECTRL_UTOPIA),
-  (0x1 << IX_FEATURECTRL_ETH0),
-  (0x1 << IX_FEATURECTRL_ETH1),
-  (0x1 << IX_FEATURECTRL_NPEA),
-  (0x1 << IX_FEATURECTRL_NPEB),
-  (0x1 << IX_FEATURECTRL_NPEC),
-  (0x1 << IX_FEATURECTRL_PCI),
-  (0x1 << IX_FEATURECTRL_ECC_TIMESYNC),
-  (0x3 << IX_FEATURECTRL_UTOPIA_PHY_LIMIT),
-  (0x1 << IX_FEATURECTRL_UTOPIA_PHY_LIMIT_BIT2), /* NOT TO BE USED */
-  (0x1 << IX_FEATURECTRL_USB_HOST_CONTROLLER),
-  (0x1 << IX_FEATURECTRL_NPEA_ETH),
-  (0x1 << IX_FEATURECTRL_NPEB_ETH),
-  (0x1 << IX_FEATURECTRL_RSA),
-  (0x3 << IX_FEATURECTRL_XSCALE_MAX_FREQ),
-  (0x1 << IX_FEATURECTRL_XSCALE_MAX_FREQ_BIT2)
+    (0x1<<IX_FEATURECTRL_RCOMP),
+    (0x1<<IX_FEATURECTRL_USB),
+    (0x1<<IX_FEATURECTRL_HASH),
+    (0x1<<IX_FEATURECTRL_AES),
+    (0x1<<IX_FEATURECTRL_DES),
+    (0x1<<IX_FEATURECTRL_HDLC),
+    IX_FEATURECTRL_COMPONENT_ALWAYS_AVAILABLE,  /* AAL component is always on */
+    (0x1<<IX_FEATURECTRL_HSS),
+    (0x1<<IX_FEATURECTRL_UTOPIA),
+    (0x1<<IX_FEATURECTRL_ETH0),
+    (0x1<<IX_FEATURECTRL_ETH1),
+    (0x1<<IX_FEATURECTRL_NPEA),
+    (0x1<<IX_FEATURECTRL_NPEB),
+    (0x1<<IX_FEATURECTRL_NPEC),
+    (0x1<<IX_FEATURECTRL_PCI),
+    (0x1<<IX_FEATURECTRL_ECC_TIMESYNC),
+    (0x3<<IX_FEATURECTRL_UTOPIA_PHY_LIMIT),
+    (0x1<<IX_FEATURECTRL_UTOPIA_PHY_LIMIT_BIT2), /* NOT TO BE USED */
+    (0x1<<IX_FEATURECTRL_USB_HOST_CONTROLLER),
+    (0x1<<IX_FEATURECTRL_NPEA_ETH),
+    (0x1<<IX_FEATURECTRL_NPEB_ETH),
+    (0x1<<IX_FEATURECTRL_RSA),
+    (0x3<<IX_FEATURECTRL_XSCALE_MAX_FREQ),
+    (0x1<<IX_FEATURECTRL_XSCALE_MAX_FREQ_BIT2)
 };
 #endif /* __ixp42X */
 
@@ -143,78 +143,78 @@ UINT32 componentMask[IX_FEATURECTRL_MAX_COMPONENTS] = {
  * Forward declaration
  */
 PRIVATE
-void ixFeatureCtrlExpMap (void);
+void ixFeatureCtrlExpMap(void);
 
-PRIVATE
-void ixFeatureCtrlSwConfigurationInit (void);
+PRIVATE 
+void ixFeatureCtrlSwConfigurationInit(void);
 
 /**
  * Function to map EXP_CONFIG space
  */
 PRIVATE
-void ixFeatureCtrlExpMap (void)
+void ixFeatureCtrlExpMap(void)
 {
-  UINT32 expCfgBaseAddress = 0;
-  
-  /* If the EXP Configuration space has already been mapped then
-   * return */
-  if (ixFeatureCtrlExpCfgRegionMapped == TRUE)
-  {
-    return;
-  }
-  
-  /* Map (get virtual address) for the EXP_CONFIG space */
-  expCfgBaseAddress = (UINT32)
-                      (IX_OSAL_MEM_MAP (IX_OSAL_IXP400_EXP_BUS_REGS_PHYS_BASE,
-                                        IX_OSAL_IXP400_EXP_REG_MAP_SIZE) );
-                                        
-  /* Assert that the mapping operation succeeded */
-  IX_OSAL_ASSERT (expCfgBaseAddress);
-  
-  /* Set the address of the Feature register */
-  ixFeatureCtrlRegister =
-    (VUINT32 *) (expCfgBaseAddress + IX_FEATURE_CTRL_REG_OFFSET);
-    
-  /* Mark the fact that the EXP_CONFIG space has already been mapped */
-  ixFeatureCtrlExpCfgRegionMapped = TRUE;
+    UINT32 expCfgBaseAddress = 0;
+
+    /* If the EXP Configuration space has already been mapped then
+     * return */
+    if (ixFeatureCtrlExpCfgRegionMapped == TRUE)
+    {
+	return;
+    }
+
+    /* Map (get virtual address) for the EXP_CONFIG space */
+    expCfgBaseAddress = (UINT32)
+	(IX_OSAL_MEM_MAP(IX_OSAL_IXP400_EXP_BUS_REGS_PHYS_BASE,
+			   IX_OSAL_IXP400_EXP_REG_MAP_SIZE));
+
+    /* Assert that the mapping operation succeeded */
+    IX_OSAL_ASSERT(expCfgBaseAddress);
+
+    /* Set the address of the Feature register */
+    ixFeatureCtrlRegister =
+	(VUINT32 *) (expCfgBaseAddress + IX_FEATURE_CTRL_REG_OFFSET);
+
+    /* Mark the fact that the EXP_CONFIG space has already been mapped */
+    ixFeatureCtrlExpCfgRegionMapped = TRUE;
 }
 
 /**
  * Function definition: ixFeatureCtrlSwConfigurationInit
  * This function will only initialize software configuration once.
  */
-PRIVATE void ixFeatureCtrlSwConfigurationInit (void)
+PRIVATE void ixFeatureCtrlSwConfigurationInit(void)
 {
   UINT32 i;
   if (FALSE == swConfigurationFlag)
   {
-    for (i = 0; i < IX_FEATURECTRL_SWCONFIG_MAX ; i++)
+    for (i=0; i<IX_FEATURECTRL_SWCONFIG_MAX ; i++)
     {
-      /* By default, all software configuration are enabled */
-      swConfiguration[i] = TRUE ;
+        /* By default, all software configuration are enabled */
+        swConfiguration[i]= TRUE ;
     }
     /*Make sure this function only initializes swConfiguration[] once*/
     swConfigurationFlag = TRUE ;
-  }
+  }  
 }
 
 /**
  * Function definition: ixFeatureCtrlRead
  */
-IxFeatureCtrlReg
+IxFeatureCtrlReg 
 ixFeatureCtrlRead (void)
 {
-  IxFeatureCtrlReg result;
-  
-  #if CPU!=SIMSPARCSOLARIS
-  /* Read the feature control register */
-  IX_FEATURE_CTRL_READ (result);
-  return result;
-  #else
-  /* Return an invalid value for VxWorks simulation */
-  result = 0xFFFFFFFF;
-  return result;
-  #endif
+    IxFeatureCtrlReg result;
+
+#if CPU!=SIMSPARCSOLARIS
+    /* Read the feature control register */
+    IX_FEATURE_CTRL_READ(result);
+    return result;
+#else
+    /* Return an invalid value for VxWorks simulation */
+    result = 0xFFFFFFFF;
+    return result;
+#endif
 }
 
 /**
@@ -223,10 +223,10 @@ ixFeatureCtrlRead (void)
 void
 ixFeatureCtrlWrite (IxFeatureCtrlReg expUnitReg)
 {
-  #if CPU!=SIMSPARCSOLARIS
-  /* Write value to feature control register */
-  IX_FEATURE_CTRL_WRITE (expUnitReg);
-  #endif
+#if CPU!=SIMSPARCSOLARIS
+    /* Write value to feature control register */
+    IX_FEATURE_CTRL_WRITE(expUnitReg);
+#endif
 }
 
 
@@ -235,73 +235,73 @@ ixFeatureCtrlWrite (IxFeatureCtrlReg expUnitReg)
  */
 IxFeatureCtrlReg
 ixFeatureCtrlHwCapabilityRead (void)
-{
+{ 
   IxFeatureCtrlReg currentReg, hwCapability;
   
   /* Capture a copy of feature control register */
-  currentReg = ixFeatureCtrlRead();
-  
-  /* Try to enable all hardware components.
+  currentReg = ixFeatureCtrlRead(); 
+
+  /* Try to enable all hardware components. 
    * Only software disable hardware can be enabled again */
-  ixFeatureCtrlWrite (0);
+  ixFeatureCtrlWrite(0);
   
-  /* Read feature control register to know the hardware capability. */
+  /* Read feature control register to know the hardware capability. */ 
   hwCapability = ixFeatureCtrlRead();
-  
+     
   /* Restore initial feature control value */
-  ixFeatureCtrlWrite (currentReg);
-  
+  ixFeatureCtrlWrite(currentReg);
+
   /* return Hardware Capability */
-  return hwCapability;
+  return hwCapability;  
 }
 
 
 /**
  * Function definition: ixFeatureCtrlComponentCheck
  */
-IX_STATUS
+IX_STATUS 
 ixFeatureCtrlComponentCheck (IxFeatureCtrlComponentType componentType)
 {
-  IxFeatureCtrlReg expUnitReg;
+  IxFeatureCtrlReg expUnitReg; 
   UINT32 mask = 0;
-  
+
   /* Lookup mask of component */
-  mask = componentMask[componentType];
-  
+  mask=componentMask[componentType];
+
   /* Check if mask is available or not */
-  if (IX_FEATURECTRL_COMPONENT_NOT_AVAILABLE == mask)
+  if(IX_FEATURECTRL_COMPONENT_NOT_AVAILABLE == mask)
   {
-    return IX_FEATURE_CTRL_COMPONENT_DISABLED;
+      return IX_FEATURE_CTRL_COMPONENT_DISABLED;
   }
-  
-  if (IX_FEATURECTRL_COMPONENT_ALWAYS_AVAILABLE == mask)
+
+  if(IX_FEATURECTRL_COMPONENT_ALWAYS_AVAILABLE == mask)
   {
-    return IX_FEATURE_CTRL_COMPONENT_ENABLED;
+      return IX_FEATURE_CTRL_COMPONENT_ENABLED;
   }
-  
-  /* Read feature control register to know current hardware capability. */
+
+  /* Read feature control register to know current hardware capability. */ 
   expUnitReg = ixFeatureCtrlRead();
-  
-  /* For example: To check for Hashing Coprocessor (bit-2)
+
+  /* For example: To check for Hashing Coprocessor (bit-2) 
    *                   expUniteg    = 0x0010
-   *                  ~expUnitReg   = 0x1101
+   *                  ~expUnitReg   = 0x1101 
    *                  componentType = 0x0100
-   *    ~expUnitReg & componentType = 0x0100 (Not zero)
+   *    ~expUnitReg & componentType = 0x0100 (Not zero)                      
    */
-  
-  /*
-   * Inverse the bit value because available component is 0 in value
+ 
+  /* 
+   * Inverse the bit value because available component is 0 in value 
    */
   expUnitReg = ~expUnitReg ;
-  
+
   if (expUnitReg & mask)
   {
-    return (IX_FEATURE_CTRL_COMPONENT_ENABLED);
-  }
+     return (IX_FEATURE_CTRL_COMPONENT_ENABLED);
+  }   
   else
-  {
-    return (IX_FEATURE_CTRL_COMPONENT_DISABLED);
-  }
+  {  
+     return (IX_FEATURE_CTRL_COMPONENT_DISABLED);
+  } 
 }
 
 
@@ -311,34 +311,34 @@ ixFeatureCtrlComponentCheck (IxFeatureCtrlComponentType componentType)
 IxFeatureCtrlProductId
 ixFeatureCtrlProductIdRead ()
 {
-  #if CPU!=SIMSPARCSOLARIS
+#if CPU!=SIMSPARCSOLARIS
   IxFeatureCtrlProductId  pdId = 0 ;
-  
-  /* Use ARM instruction to move register0 from coprocessor to ARM register */
-  
-  #ifndef __wince
-  __asm__ ("mrc p15, 0, %0, cr0, cr0, 0;" : "=r" (pdId) :);
-  #else
-  
-  #ifndef IN_KERNEL
-  BOOL  mode;
-  #endif
-  extern  IxFeatureCtrlProductId AsmixFeatureCtrlProductIdRead();
-  
-  #ifndef IN_KERNEL
-  mode = SetKMode (TRUE);
-  #endif
-  pdId = AsmixFeatureCtrlProductIdRead();
-  #ifndef IN_KERNEL
-  SetKMode (mode);
-  #endif
-  
-  #endif
+   
+  /* Use ARM instruction to move register0 from coprocessor to ARM register */ 
+    
+#ifndef __wince
+    __asm__("mrc p15, 0, %0, cr0, cr0, 0;" : "=r"(pdId) :);
+#else
+      
+#ifndef IN_KERNEL
+        BOOL  mode;
+#endif
+    extern  IxFeatureCtrlProductId AsmixFeatureCtrlProductIdRead();
+    
+#ifndef IN_KERNEL
+    mode = SetKMode(TRUE);
+#endif
+    pdId = AsmixFeatureCtrlProductIdRead();
+#ifndef IN_KERNEL
+    SetKMode(mode);
+#endif
+
+#endif
   return (pdId);
-  #else
+#else
   /* Return an invalid value for VxWorks simulation */
   return 0xffffffff;
-  #endif
+#endif
 }
 
 /**
@@ -347,8 +347,8 @@ ixFeatureCtrlProductIdRead ()
 IxFeatureCtrlDeviceId
 ixFeatureCtrlDeviceRead ()
 {
-  return ( (ixFeatureCtrlProductIdRead() >> IX_FEATURE_CTRL_DEVICE_TYPE_OFFSET)
-           & IX_FEATURE_CTRL_DEVICE_TYPE_MASK);
+  return ((ixFeatureCtrlProductIdRead() >> IX_FEATURE_CTRL_DEVICE_TYPE_OFFSET) 
+             & IX_FEATURE_CTRL_DEVICE_TYPE_MASK);
 } /* End function ixFeatureCtrlDeviceRead */
 
 
@@ -358,21 +358,21 @@ ixFeatureCtrlDeviceRead ()
 IX_STATUS
 ixFeatureCtrlSwConfigurationCheck (IxFeatureCtrlSwConfig swConfigType)
 {
-  if (swConfigType >= IX_FEATURECTRL_SWCONFIG_MAX)
+  if (swConfigType >= IX_FEATURECTRL_SWCONFIG_MAX)  
   {
-    ixOsalLog (IX_OSAL_LOG_LVL_WARNING,
+     ixOsalLog(IX_OSAL_LOG_LVL_WARNING, 
                IX_OSAL_LOG_DEV_STDOUT,
                "FeatureCtrl: Invalid software configuraiton input.\n",
-               0, 0, 0, 0, 0, 0);
-               
-    return IX_FEATURE_CTRL_SWCONFIG_DISABLED;
+               0, 0, 0, 0, 0, 0);  
+
+     return IX_FEATURE_CTRL_SWCONFIG_DISABLED;
   }
-  
+
   /* The function will only initialize once. */
   ixFeatureCtrlSwConfigurationInit();
   
   /* Check and return software configuration */
-  return  ( (swConfiguration[ (UINT32) swConfigType] == TRUE) ? IX_FEATURE_CTRL_SWCONFIG_ENABLED : IX_FEATURE_CTRL_SWCONFIG_DISABLED);
+  return  ((swConfiguration[(UINT32)swConfigType] == TRUE) ? IX_FEATURE_CTRL_SWCONFIG_ENABLED: IX_FEATURE_CTRL_SWCONFIG_DISABLED);
 }
 
 /**
@@ -381,21 +381,21 @@ ixFeatureCtrlSwConfigurationCheck (IxFeatureCtrlSwConfig swConfigType)
 void
 ixFeatureCtrlSwConfigurationWrite (IxFeatureCtrlSwConfig swConfigType, BOOL enabled)
 {
-  if (swConfigType >= IX_FEATURECTRL_SWCONFIG_MAX)
+  if (swConfigType >= IX_FEATURECTRL_SWCONFIG_MAX)  
   {
-    ixOsalLog (IX_OSAL_LOG_LVL_WARNING,
+     ixOsalLog(IX_OSAL_LOG_LVL_WARNING, 
                IX_OSAL_LOG_DEV_STDOUT,
                "FeatureCtrl: Invalid software configuraiton input.\n",
-               0, 0, 0, 0, 0, 0);
-               
-    return;
+               0, 0, 0, 0, 0, 0);  
+
+     return;
   }
-  
+
   /* The function will only initialize once. */
   ixFeatureCtrlSwConfigurationInit();
   
   /* Write software configuration */
-  swConfiguration[ (UINT32) swConfigType] = enabled ;
+  swConfiguration[(UINT32)swConfigType]=enabled ;
 }
 
 /**
@@ -404,8 +404,8 @@ ixFeatureCtrlSwConfigurationWrite (IxFeatureCtrlSwConfig swConfigType, BOOL enab
 void
 ixFeatureCtrlIxp400SwVersionShow (void)
 {
-  printf ("\nIXP400 Software Release %s %s\n\n", IX_VERSION_ID, IX_VERSION_INTERNAL_ID);
-  
+    printf ("\nIXP400 Software Release %s %s\n\n", IX_VERSION_ID, IX_VERSION_INTERNAL_ID);
+
 }
 
 /**
@@ -414,9 +414,9 @@ ixFeatureCtrlIxp400SwVersionShow (void)
 IxFeatureCtrlBuildDevice
 ixFeatureCtrlSoftwareBuildGet (void)
 {
-  #ifdef __ixp42X
-  return IX_FEATURE_CTRL_SW_BUILD_IXP42X;
-  #else
-  return IX_FEATURE_CTRL_SW_BUILD_IXP46X;
-  #endif
+    #ifdef __ixp42X
+    return IX_FEATURE_CTRL_SW_BUILD_IXP42X;
+    #else
+    return IX_FEATURE_CTRL_SW_BUILD_IXP46X;
+    #endif
 }

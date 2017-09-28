@@ -60,23 +60,23 @@
  * the element associated with the supplied parent clock address.
  * Returns a pointer to the struct clksel on success or NULL on error.
  */
-static const struct clksel * _get_clksel_by_parent (struct clk * clk,
-    struct clk * src_clk)
+static const struct clksel *_get_clksel_by_parent(struct clk *clk,
+						  struct clk *src_clk)
 {
-  const struct clksel * clks;
-  
-  for (clks = clk->clksel; clks->parent; clks++)
-    if (clks->parent == src_clk)
-    { break; } /* Found the requested parent */
-    
-  if (!clks->parent) {
-    /* This indicates a data problem */
-    WARN (1, "clock: Could not find parent clock %s in clksel array "
-          "of clock %s\n", src_clk->name, clk->name);
-    return NULL;
-  }
-  
-  return clks;
+	const struct clksel *clks;
+
+	for (clks = clk->clksel; clks->parent; clks++)
+		if (clks->parent == src_clk)
+			break; /* Found the requested parent */
+
+	if (!clks->parent) {
+		/* This indicates a data problem */
+		WARN(1, "clock: Could not find parent clock %s in clksel array "
+		     "of clock %s\n", src_clk->name, clk->name);
+		return NULL;
+	}
+
+	return clks;
 }
 
 /**
@@ -94,46 +94,46 @@ static const struct clksel * _get_clksel_by_parent (struct clk * clk,
  * success (in this latter case, the corresponding register bitfield
  * value is passed back in the variable pointed to by @field_val)
  */
-static u8 _get_div_and_fieldval (struct clk * src_clk, struct clk * clk,
-                                 u32 * field_val)
+static u8 _get_div_and_fieldval(struct clk *src_clk, struct clk *clk,
+				u32 *field_val)
 {
-  const struct clksel * clks;
-  const struct clksel_rate * clkr, *max_clkr = NULL;
-  u8 max_div = 0;
-  
-  clks = _get_clksel_by_parent (clk, src_clk);
-  if (!clks)
-  { return 0; }
-  
-  /*
-   * Find the highest divisor (e.g., the one resulting in the
-   * lowest rate) to use as the default.  This should avoid
-   * clock rates that are too high for the device.  XXX A better
-   * solution here would be to try to determine if there is a
-   * divisor matching the original clock rate before the parent
-   * switch, and if it cannot be found, to fall back to the
-   * highest divisor.
-   */
-  for (clkr = clks->rates; clkr->div; clkr++) {
-    if (! (clkr->flags & cpu_mask) )
-    { continue; }
-    
-    if (clkr->div > max_div) {
-      max_div = clkr->div;
-      max_clkr = clkr;
-    }
-  }
-  
-  if (max_div == 0) {
-    /* This indicates an error in the clksel data */
-    WARN (1, "clock: Could not find divisor for clock %s parent %s"
-          "\n", clk->name, src_clk->parent->name);
-    return 0;
-  }
-  
-  *field_val = max_clkr->val;
-  
-  return max_div;
+	const struct clksel *clks;
+	const struct clksel_rate *clkr, *max_clkr = NULL;
+	u8 max_div = 0;
+
+	clks = _get_clksel_by_parent(clk, src_clk);
+	if (!clks)
+		return 0;
+
+	/*
+	 * Find the highest divisor (e.g., the one resulting in the
+	 * lowest rate) to use as the default.  This should avoid
+	 * clock rates that are too high for the device.  XXX A better
+	 * solution here would be to try to determine if there is a
+	 * divisor matching the original clock rate before the parent
+	 * switch, and if it cannot be found, to fall back to the
+	 * highest divisor.
+	 */
+	for (clkr = clks->rates; clkr->div; clkr++) {
+		if (!(clkr->flags & cpu_mask))
+			continue;
+
+		if (clkr->div > max_div) {
+			max_div = clkr->div;
+			max_clkr = clkr;
+		}
+	}
+
+	if (max_div == 0) {
+		/* This indicates an error in the clksel data */
+		WARN(1, "clock: Could not find divisor for clock %s parent %s"
+		     "\n", clk->name, src_clk->parent->name);
+		return 0;
+	}
+
+	*field_val = max_clkr->val;
+
+	return max_div;
 }
 
 /**
@@ -149,16 +149,16 @@ static u8 _get_div_and_fieldval (struct clk * src_clk, struct clk * clk,
  * take into account any time the hardware might take to switch the
  * clock source.
  */
-static void _write_clksel_reg (struct clk * clk, u32 field_val)
+static void _write_clksel_reg(struct clk *clk, u32 field_val)
 {
-  u32 v;
-  
-  v = __raw_readl (clk->clksel_reg);
-  v &= ~clk->clksel_mask;
-  v |= field_val << __ffs (clk->clksel_mask);
-  __raw_writel (v, clk->clksel_reg);
-  
-  v = __raw_readl (clk->clksel_reg); /* OCP barrier */
+	u32 v;
+
+	v = __raw_readl(clk->clksel_reg);
+	v &= ~clk->clksel_mask;
+	v |= field_val << __ffs(clk->clksel_mask);
+	__raw_writel(v, clk->clksel_reg);
+
+	v = __raw_readl(clk->clksel_reg); /* OCP barrier */
 }
 
 /**
@@ -172,31 +172,31 @@ static void _write_clksel_reg (struct clk * clk, u32 field_val)
  * before calling.  Returns 0 on error or returns the actual integer divisor
  * upon success.
  */
-static u32 _clksel_to_divisor (struct clk * clk, u32 field_val)
+static u32 _clksel_to_divisor(struct clk *clk, u32 field_val)
 {
-  const struct clksel * clks;
-  const struct clksel_rate * clkr;
-  
-  clks = _get_clksel_by_parent (clk, clk->parent);
-  if (!clks)
-  { return 0; }
-  
-  for (clkr = clks->rates; clkr->div; clkr++) {
-    if (! (clkr->flags & cpu_mask) )
-    { continue; }
-    
-    if (clkr->val == field_val)
-    { break; }
-  }
-  
-  if (!clkr->div) {
-    /* This indicates a data error */
-    WARN (1, "clock: Could not find fieldval %d for clock %s parent "
-          "%s\n", field_val, clk->name, clk->parent->name);
-    return 0;
-  }
-  
-  return clkr->div;
+	const struct clksel *clks;
+	const struct clksel_rate *clkr;
+
+	clks = _get_clksel_by_parent(clk, clk->parent);
+	if (!clks)
+		return 0;
+
+	for (clkr = clks->rates; clkr->div; clkr++) {
+		if (!(clkr->flags & cpu_mask))
+			continue;
+
+		if (clkr->val == field_val)
+			break;
+	}
+
+	if (!clkr->div) {
+		/* This indicates a data error */
+		WARN(1, "clock: Could not find fieldval %d for clock %s parent "
+		     "%s\n", field_val, clk->name, clk->parent->name);
+		return 0;
+	}
+
+	return clkr->div;
 }
 
 /**
@@ -209,33 +209,33 @@ static u32 _clksel_to_divisor (struct clk * clk, u32 field_val)
  * register field value _before_ left-shifting (i.e., LSB is at bit
  * 0); or returns 0xFFFFFFFF (~0) upon error.
  */
-static u32 _divisor_to_clksel (struct clk * clk, u32 div)
+static u32 _divisor_to_clksel(struct clk *clk, u32 div)
 {
-  const struct clksel * clks;
-  const struct clksel_rate * clkr;
-  
-  /* should never happen */
-  WARN_ON (div == 0);
-  
-  clks = _get_clksel_by_parent (clk, clk->parent);
-  if (!clks)
-  { return ~0; }
-  
-  for (clkr = clks->rates; clkr->div; clkr++) {
-    if (! (clkr->flags & cpu_mask) )
-    { continue; }
-    
-    if (clkr->div == div)
-    { break; }
-  }
-  
-  if (!clkr->div) {
-    pr_err ("clock: Could not find divisor %d for clock %s parent "
-            "%s\n", div, clk->name, clk->parent->name);
-    return ~0;
-  }
-  
-  return clkr->val;
+	const struct clksel *clks;
+	const struct clksel_rate *clkr;
+
+	/* should never happen */
+	WARN_ON(div == 0);
+
+	clks = _get_clksel_by_parent(clk, clk->parent);
+	if (!clks)
+		return ~0;
+
+	for (clkr = clks->rates; clkr->div; clkr++) {
+		if (!(clkr->flags & cpu_mask))
+			continue;
+
+		if (clkr->div == div)
+			break;
+	}
+
+	if (!clkr->div) {
+		pr_err("clock: Could not find divisor %d for clock %s parent "
+		       "%s\n", div, clk->name, clk->parent->name);
+		return ~0;
+	}
+
+	return clkr->val;
 }
 
 /**
@@ -246,18 +246,18 @@ static u32 _divisor_to_clksel (struct clk * clk, u32 div)
  * into the hardware, convert it into the actual divisor value, and
  * return it; or return 0 on error.
  */
-static u32 _read_divisor (struct clk * clk)
+static u32 _read_divisor(struct clk *clk)
 {
-  u32 v;
-  
-  if (!clk->clksel || !clk->clksel_mask)
-  { return 0; }
-  
-  v = __raw_readl (clk->clksel_reg);
-  v &= clk->clksel_mask;
-  v >>= __ffs (clk->clksel_mask);
-  
-  return _clksel_to_divisor (clk, v);
+	u32 v;
+
+	if (!clk->clksel || !clk->clksel_mask)
+		return 0;
+
+	v = __raw_readl(clk->clksel_reg);
+	v &= clk->clksel_mask;
+	v >>= __ffs(clk->clksel_mask);
+
+	return _clksel_to_divisor(clk, v);
 }
 
 /* Public functions */
@@ -274,56 +274,56 @@ static u32 _read_divisor (struct clk * clk)
  *
  * Returns the rounded clock rate or returns 0xffffffff on error.
  */
-u32 omap2_clksel_round_rate_div (struct clk * clk, unsigned long target_rate,
-                                 u32 * new_div)
+u32 omap2_clksel_round_rate_div(struct clk *clk, unsigned long target_rate,
+				u32 *new_div)
 {
-  unsigned long test_rate;
-  const struct clksel * clks;
-  const struct clksel_rate * clkr;
-  u32 last_div = 0;
-  
-  if (!clk->clksel || !clk->clksel_mask)
-  { return ~0; }
-  
-  pr_debug ("clock: clksel_round_rate_div: %s target_rate %ld\n",
-            clk->name, target_rate);
-            
-  *new_div = 1;
-  
-  clks = _get_clksel_by_parent (clk, clk->parent);
-  if (!clks)
-  { return ~0; }
-  
-  for (clkr = clks->rates; clkr->div; clkr++) {
-    if (! (clkr->flags & cpu_mask) )
-    { continue; }
-    
-    /* Sanity check */
-    if (clkr->div <= last_div)
-      pr_err ("clock: clksel_rate table not sorted "
-              "for clock %s", clk->name);
-              
-    last_div = clkr->div;
-    
-    test_rate = clk->parent->rate / clkr->div;
-    
-    if (test_rate <= target_rate)
-    { break; } /* found it */
-  }
-  
-  if (!clkr->div) {
-    pr_err ("clock: Could not find divisor for target "
-            "rate %ld for clock %s parent %s\n", target_rate,
-            clk->name, clk->parent->name);
-    return ~0;
-  }
-  
-  *new_div = clkr->div;
-  
-  pr_debug ("clock: new_div = %d, new_rate = %ld\n", *new_div,
-            (clk->parent->rate / clkr->div) );
-            
-  return clk->parent->rate / clkr->div;
+	unsigned long test_rate;
+	const struct clksel *clks;
+	const struct clksel_rate *clkr;
+	u32 last_div = 0;
+
+	if (!clk->clksel || !clk->clksel_mask)
+		return ~0;
+
+	pr_debug("clock: clksel_round_rate_div: %s target_rate %ld\n",
+		 clk->name, target_rate);
+
+	*new_div = 1;
+
+	clks = _get_clksel_by_parent(clk, clk->parent);
+	if (!clks)
+		return ~0;
+
+	for (clkr = clks->rates; clkr->div; clkr++) {
+		if (!(clkr->flags & cpu_mask))
+			continue;
+
+		/* Sanity check */
+		if (clkr->div <= last_div)
+			pr_err("clock: clksel_rate table not sorted "
+			       "for clock %s", clk->name);
+
+		last_div = clkr->div;
+
+		test_rate = clk->parent->rate / clkr->div;
+
+		if (test_rate <= target_rate)
+			break; /* found it */
+	}
+
+	if (!clkr->div) {
+		pr_err("clock: Could not find divisor for target "
+		       "rate %ld for clock %s parent %s\n", target_rate,
+		       clk->name, clk->parent->name);
+		return ~0;
+	}
+
+	*new_div = clkr->div;
+
+	pr_debug("clock: new_div = %d, new_rate = %ld\n", *new_div,
+		 (clk->parent->rate / clkr->div));
+
+	return clk->parent->rate / clkr->div;
 }
 
 /*
@@ -340,42 +340,42 @@ u32 omap2_clksel_round_rate_div (struct clk * clk, unsigned long target_rate,
  * to.  Update @clk's .parent field with the appropriate clk ptr.  No
  * return value.
  */
-void omap2_init_clksel_parent (struct clk * clk)
+void omap2_init_clksel_parent(struct clk *clk)
 {
-  const struct clksel * clks;
-  const struct clksel_rate * clkr;
-  u32 r, found = 0;
-  
-  if (!clk->clksel || !clk->clksel_mask)
-  { return; }
-  
-  r = __raw_readl (clk->clksel_reg) & clk->clksel_mask;
-  r >>= __ffs (clk->clksel_mask);
-  
-  for (clks = clk->clksel; clks->parent && !found; clks++) {
-    for (clkr = clks->rates; clkr->div && !found; clkr++) {
-      if (! (clkr->flags & cpu_mask) )
-      { continue; }
-      
-      if (clkr->val == r) {
-        if (clk->parent != clks->parent) {
-          pr_debug ("clock: inited %s parent "
-                    "to %s (was %s)\n",
-                    clk->name, clks->parent->name,
-                    ( (clk->parent) ?
-                      clk->parent->name : "NULL") );
-          clk_reparent (clk, clks->parent);
-        };
-        found = 1;
-      }
-    }
-  }
-  
-  /* This indicates a data error */
-  WARN (!found, "clock: %s: init parent: could not find regval %0x\n",
-        clk->name, r);
-        
-  return;
+	const struct clksel *clks;
+	const struct clksel_rate *clkr;
+	u32 r, found = 0;
+
+	if (!clk->clksel || !clk->clksel_mask)
+		return;
+
+	r = __raw_readl(clk->clksel_reg) & clk->clksel_mask;
+	r >>= __ffs(clk->clksel_mask);
+
+	for (clks = clk->clksel; clks->parent && !found; clks++) {
+		for (clkr = clks->rates; clkr->div && !found; clkr++) {
+			if (!(clkr->flags & cpu_mask))
+				continue;
+
+			if (clkr->val == r) {
+				if (clk->parent != clks->parent) {
+					pr_debug("clock: inited %s parent "
+						 "to %s (was %s)\n",
+						 clk->name, clks->parent->name,
+						 ((clk->parent) ?
+						  clk->parent->name : "NULL"));
+					clk_reparent(clk, clks->parent);
+				};
+				found = 1;
+			}
+		}
+	}
+
+	/* This indicates a data error */
+	WARN(!found, "clock: %s: init parent: could not find regval %0x\n",
+	     clk->name, r);
+
+	return;
 }
 
 /**
@@ -387,21 +387,21 @@ void omap2_init_clksel_parent (struct clk * clk)
  * function.  Returns the clock's current rate, based on its parent's rate
  * and its current divisor setting in the hardware.
  */
-unsigned long omap2_clksel_recalc (struct clk * clk)
+unsigned long omap2_clksel_recalc(struct clk *clk)
 {
-  unsigned long rate;
-  u32 div = 0;
-  
-  div = _read_divisor (clk);
-  if (div == 0)
-  { return clk->rate; }
-  
-  rate = clk->parent->rate / div;
-  
-  pr_debug ("clock: %s: recalc'd rate is %ld (div %d)\n", clk->name,
-            rate, div);
-            
-  return rate;
+	unsigned long rate;
+	u32 div = 0;
+
+	div = _read_divisor(clk);
+	if (div == 0)
+		return clk->rate;
+
+	rate = clk->parent->rate / div;
+
+	pr_debug("clock: %s: recalc'd rate is %ld (div %d)\n", clk->name,
+		 rate, div);
+
+	return rate;
 }
 
 /**
@@ -415,11 +415,11 @@ unsigned long omap2_clksel_recalc (struct clk * clk)
  *
  * Returns the rounded clock rate or returns 0xffffffff on error.
  */
-long omap2_clksel_round_rate (struct clk * clk, unsigned long target_rate)
+long omap2_clksel_round_rate(struct clk *clk, unsigned long target_rate)
 {
-  u32 new_div;
-  
-  return omap2_clksel_round_rate_div (clk, target_rate, &new_div);
+	u32 new_div;
+
+	return omap2_clksel_round_rate_div(clk, target_rate, &new_div);
 }
 
 /**
@@ -437,28 +437,28 @@ long omap2_clksel_round_rate (struct clk * clk, unsigned long target_rate)
  * is changed, they will all be affected without any notification.
  * Returns -EINVAL upon error, or 0 upon success.
  */
-int omap2_clksel_set_rate (struct clk * clk, unsigned long rate)
+int omap2_clksel_set_rate(struct clk *clk, unsigned long rate)
 {
-  u32 field_val, validrate, new_div = 0;
-  
-  if (!clk->clksel || !clk->clksel_mask)
-  { return -EINVAL; }
-  
-  validrate = omap2_clksel_round_rate_div (clk, rate, &new_div);
-  if (validrate != rate)
-  { return -EINVAL; }
-  
-  field_val = _divisor_to_clksel (clk, new_div);
-  if (field_val == ~0)
-  { return -EINVAL; }
-  
-  _write_clksel_reg (clk, field_val);
-  
-  clk->rate = clk->parent->rate / new_div;
-  
-  pr_debug ("clock: %s: set rate to %ld\n", clk->name, clk->rate);
-  
-  return 0;
+	u32 field_val, validrate, new_div = 0;
+
+	if (!clk->clksel || !clk->clksel_mask)
+		return -EINVAL;
+
+	validrate = omap2_clksel_round_rate_div(clk, rate, &new_div);
+	if (validrate != rate)
+		return -EINVAL;
+
+	field_val = _divisor_to_clksel(clk, new_div);
+	if (field_val == ~0)
+		return -EINVAL;
+
+	_write_clksel_reg(clk, field_val);
+
+	clk->rate = clk->parent->rate / new_div;
+
+	pr_debug("clock: %s: set rate to %ld\n", clk->name, clk->rate);
+
+	return 0;
 }
 
 /*
@@ -481,30 +481,30 @@ int omap2_clksel_set_rate (struct clk * clk, unsigned long rate)
  * affected without any notification.  Returns -EINVAL upon error, or
  * 0 upon success.
  */
-int omap2_clksel_set_parent (struct clk * clk, struct clk * new_parent)
+int omap2_clksel_set_parent(struct clk *clk, struct clk *new_parent)
 {
-  u32 field_val = 0;
-  u32 parent_div;
-  
-  if (!clk->clksel || !clk->clksel_mask)
-  { return -EINVAL; }
-  
-  parent_div = _get_div_and_fieldval (new_parent, clk, &field_val);
-  if (!parent_div)
-  { return -EINVAL; }
-  
-  _write_clksel_reg (clk, field_val);
-  
-  clk_reparent (clk, new_parent);
-  
-  /* CLKSEL clocks follow their parents' rates, divided by a divisor */
-  clk->rate = new_parent->rate;
-  
-  if (parent_div > 0)
-  { clk->rate /= parent_div; }
-  
-  pr_debug ("clock: %s: set parent to %s (new rate %ld)\n",
-            clk->name, clk->parent->name, clk->rate);
-            
-  return 0;
+	u32 field_val = 0;
+	u32 parent_div;
+
+	if (!clk->clksel || !clk->clksel_mask)
+		return -EINVAL;
+
+	parent_div = _get_div_and_fieldval(new_parent, clk, &field_val);
+	if (!parent_div)
+		return -EINVAL;
+
+	_write_clksel_reg(clk, field_val);
+
+	clk_reparent(clk, new_parent);
+
+	/* CLKSEL clocks follow their parents' rates, divided by a divisor */
+	clk->rate = new_parent->rate;
+
+	if (parent_div > 0)
+		clk->rate /= parent_div;
+
+	pr_debug("clock: %s: set parent to %s (new rate %ld)\n",
+		 clk->name, clk->parent->name, clk->rate);
+
+	return 0;
 }

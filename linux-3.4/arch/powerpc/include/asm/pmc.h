@@ -22,26 +22,26 @@
 
 #include <asm/ptrace.h>
 
-typedef void (*perf_irq_t) (struct pt_regs *);
+typedef void (*perf_irq_t)(struct pt_regs *);
 extern perf_irq_t perf_irq;
 
-int reserve_pmc_hardware (perf_irq_t new_perf_irq);
-void release_pmc_hardware (void);
-void ppc_enable_pmcs (void);
+int reserve_pmc_hardware(perf_irq_t new_perf_irq);
+void release_pmc_hardware(void);
+void ppc_enable_pmcs(void);
 
 #ifdef CONFIG_PPC_BOOK3S_64
 #include <asm/lppaca.h>
 
-static inline void ppc_set_pmu_inuse (int inuse)
+static inline void ppc_set_pmu_inuse(int inuse)
 {
-  get_lppaca()->pmcregs_in_use = inuse;
+	get_lppaca()->pmcregs_in_use = inuse;
 }
 
-extern void power4_enable_pmcs (void);
+extern void power4_enable_pmcs(void);
 
 #else /* CONFIG_PPC64 */
 
-static inline void ppc_set_pmu_inuse (int inuse) { }
+static inline void ppc_set_pmu_inuse(int inuse) { }
 
 #endif
 

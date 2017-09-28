@@ -1,2 +1,2 @@
 #define DEBUG 1
-#define BREAK asm volatile ("trap #3")
+#define	BREAK asm volatile ("trap #3")

@@ -46,20 +46,20 @@
  * the gpiomux framework only.
  */
 struct msm_gpiomux_config {
-  gpiomux_config_t active;
-  gpiomux_config_t suspended;
-  unsigned         ref;
+	gpiomux_config_t active;
+	gpiomux_config_t suspended;
+	unsigned         ref;
 };
 
 /**
- * @GPIOMUX_VALID:  If set, the config field contains 'good data'.
+ * @GPIOMUX_VALID:	If set, the config field contains 'good data'.
  *                      The absence of this bit will prevent the gpiomux
- *      system from applying the configuration under all
- *      circumstances.
+ *			system from applying the configuration under all
+ *			circumstances.
  */
 enum {
-  GPIOMUX_VALID  = BIT (sizeof (gpiomux_config_t) * BITS_PER_BYTE - 1),
-  GPIOMUX_CTL_MASK = GPIOMUX_VALID,
+	GPIOMUX_VALID	 = BIT(sizeof(gpiomux_config_t) * BITS_PER_BYTE - 1),
+	GPIOMUX_CTL_MASK = GPIOMUX_VALID,
 };
 
 #ifdef CONFIG_MSM_GPIOMUX
@@ -75,9 +75,9 @@ extern struct msm_gpiomux_config msm_gpiomux_configs[GPIOMUX_NGPIOS];
 /* Install a new configuration to the gpio line.  To avoid overwriting
  * a configuration, leave the VALID bit out.
  */
-int msm_gpiomux_write (unsigned gpio,
-                       gpiomux_config_t active,
-                       gpiomux_config_t suspended);
+int msm_gpiomux_write(unsigned gpio,
+		      gpiomux_config_t active,
+		      gpiomux_config_t suspended);
 
 /* Architecture-internal function for use by the framework only.
  * This function can assume the following:
@@ -87,13 +87,13 @@ int msm_gpiomux_write (unsigned gpio,
  * This function is not for public consumption.  External users
  * should use msm_gpiomux_write.
  */
-void __msm_gpiomux_write (unsigned gpio, gpiomux_config_t val);
+void __msm_gpiomux_write(unsigned gpio, gpiomux_config_t val);
 #else
-static inline int msm_gpiomux_write (unsigned gpio,
-                                     gpiomux_config_t active,
-                                     gpiomux_config_t suspended)
+static inline int msm_gpiomux_write(unsigned gpio,
+				    gpiomux_config_t active,
+				    gpiomux_config_t suspended)
 {
-  return -ENOSYS;
+	return -ENOSYS;
 }
 #endif
 #endif

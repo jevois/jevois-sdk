@@ -21,14 +21,14 @@
  * top of the list.
  */
 #if defined CONFIG_ARM_GIC
-#define MXC_INTERNAL_IRQS 160
+#define MXC_INTERNAL_IRQS	160
 #elif defined CONFIG_MXC_TZIC
-#define MXC_INTERNAL_IRQS 128
+#define MXC_INTERNAL_IRQS	128
 #else
-#define MXC_INTERNAL_IRQS 64
+#define MXC_INTERNAL_IRQS	64
 #endif
 
-#define MXC_GPIO_IRQ_START  MXC_INTERNAL_IRQS
+#define MXC_GPIO_IRQ_START	MXC_INTERNAL_IRQS
 
 /*
  * The next 16 interrupts are for board specific purposes.  Since
@@ -36,15 +36,15 @@
  * these.  If you need more, increase MXC_BOARD_IRQS, but keep it
  * within sensible limits.
  */
-#define MXC_BOARD_IRQ_START (MXC_INTERNAL_IRQS + ARCH_NR_GPIOS)
+#define MXC_BOARD_IRQ_START	(MXC_INTERNAL_IRQS + ARCH_NR_GPIOS)
 
 #ifdef CONFIG_MACH_MX31ADS_WM1133_EV1
 #define MXC_BOARD_IRQS  80
 #else
-#define MXC_BOARD_IRQS  16
+#define MXC_BOARD_IRQS	16
 #endif
 
-#define MXC_IPU_IRQ_START (MXC_BOARD_IRQ_START + MXC_BOARD_IRQS)
+#define MXC_IPU_IRQ_START	(MXC_BOARD_IRQ_START + MXC_BOARD_IRQS)
 
 #ifdef CONFIG_MX3_IPU_IRQS
 #define MX3_IPU_IRQS CONFIG_MX3_IPU_IRQS
@@ -53,13 +53,13 @@
 #endif
 /* REVISIT: Add IPU irqs on IMX51 */
 
-#define NR_IRQS     (MXC_IPU_IRQ_START + MX3_IPU_IRQS)
+#define NR_IRQS			(MXC_IPU_IRQ_START + MX3_IPU_IRQS)
 
-extern int imx_irq_set_priority (unsigned char irq, unsigned char prio);
+extern int imx_irq_set_priority(unsigned char irq, unsigned char prio);
 
 /* all normal IRQs can be FIQs */
-#define FIQ_START 0
+#define FIQ_START	0
 /* switch between IRQ and FIQ */
-extern int mxc_set_irq_fiq (unsigned int irq, unsigned int type);
+extern int mxc_set_irq_fiq(unsigned int irq, unsigned int type);
 
 #endif /* __ASM_ARCH_MXC_IRQS_H__ */

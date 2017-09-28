@@ -16,28 +16,28 @@ struct device_node;
  * drivers/macintosh/macio_asic.c
  */
 struct dev_archdata {
-  /* DMA operations on that device */
-  struct dma_map_ops * dma_ops;
-  
-  /*
-   * When an iommu is in use, dma_data is used as a ptr to the base of the
-   * iommu_table.  Otherwise, it is a simple numerical offset.
-   */
-  union {
-    dma_addr_t  dma_offset;
-    void  *  iommu_table_base;
-  } dma_data;
-  
-  #ifdef CONFIG_SWIOTLB
-  dma_addr_t    max_direct_dma_addr;
-  #endif
-  #ifdef CONFIG_EEH
-  struct eeh_dev  *  edev;
-  #endif
+	/* DMA operations on that device */
+	struct dma_map_ops	*dma_ops;
+
+	/*
+	 * When an iommu is in use, dma_data is used as a ptr to the base of the
+	 * iommu_table.  Otherwise, it is a simple numerical offset.
+	 */
+	union {
+		dma_addr_t	dma_offset;
+		void		*iommu_table_base;
+	} dma_data;
+
+#ifdef CONFIG_SWIOTLB
+	dma_addr_t		max_direct_dma_addr;
+#endif
+#ifdef CONFIG_EEH
+	struct eeh_dev		*edev;
+#endif
 };
 
 struct pdev_archdata {
-  u64 dma_mask;
+	u64 dma_mask;
 };
 
 #define ARCH_HAS_DMA_GET_REQUIRED_MASK

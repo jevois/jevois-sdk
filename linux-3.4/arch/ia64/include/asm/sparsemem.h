@@ -7,8 +7,8 @@
  * MAX_PHYSMEM_BITS             2^N: how much memory we can have in that space
  */
 
-#define SECTION_SIZE_BITS (30)
-#define MAX_PHYSMEM_BITS  (50)
+#define SECTION_SIZE_BITS	(30)
+#define MAX_PHYSMEM_BITS	(50)
 #ifdef CONFIG_FORCE_MAX_ZONEORDER
 #if ((CONFIG_FORCE_MAX_ZONEORDER - 1 + PAGE_SHIFT) > SECTION_SIZE_BITS)
 #undef SECTION_SIZE_BITS

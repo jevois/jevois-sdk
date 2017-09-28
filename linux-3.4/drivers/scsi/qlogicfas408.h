@@ -27,7 +27,7 @@
    Please set this for your card.  Most Qlogic cards are 40 Mhz.  The
    Control Concepts ISA (not VLB) is 24 Mhz */
 
-#define XTALFREQ  40
+#define XTALFREQ	40
 
 /**********/
 /* DANGER! modify these at your own risk */
@@ -50,40 +50,40 @@
 #define FASTSCSI 0
 
 /* This when set to 1 will set a faster sync transfer rate */
-#define FASTCLK 0 /*(XTALFREQ>25?1:0)*/
+#define FASTCLK 0	/*(XTALFREQ>25?1:0)*/
 
 /*****/
 /* offset 6 */
 /* This is the sync transfer divisor, XTALFREQ/X will be the maximum
    achievable data rate (assuming the rest of the system is capable
    and set properly) */
-#define SYNCXFRPD 5 /*(XTALFREQ/5)*/
+#define SYNCXFRPD 5	/*(XTALFREQ/5)*/
 
 /*****/
 /* offset 7 */
 /* This is the count of how many synchronous transfers can take place
-  i.e. how many reqs can occur before an ack is given.
-  The maximum value for this is 15, the upper bits can modify
-  REQ/ACK assertion and deassertion during synchronous transfers
-  If this is 0, the bus will only transfer asynchronously */
+	i.e. how many reqs can occur before an ack is given.
+	The maximum value for this is 15, the upper bits can modify
+	REQ/ACK assertion and deassertion during synchronous transfers
+	If this is 0, the bus will only transfer asynchronously */
 #define SYNCOFFST 0
 /* for the curious, bits 7&6 control the deassertion delay in 1/2 cycles
-  of the 40Mhz clock. If FASTCLK is 1, specifying 01 (1/2) will
-  cause the deassertion to be early by 1/2 clock.  Bits 5&4 control
-  the assertion delay, also in 1/2 clocks (FASTCLK is ignored here). */
+	of the 40Mhz clock. If FASTCLK is 1, specifying 01 (1/2) will
+	cause the deassertion to be early by 1/2 clock.  Bits 5&4 control
+	the assertion delay, also in 1/2 clocks (FASTCLK is ignored here). */
 
 /*----------------------------------------------------------------*/
 
 struct qlogicfas408_priv {
-  int qbase;    /* Port */
-  int qinitid;    /* initiator ID */
-  int qabort;   /* Flag to cause an abort */
-  int qlirq;    /* IRQ being used */
-  int int_type;   /* type of irq, 2 for ISA board, 0 for PCMCIA */
-  char qinfo[80];   /* description */
-  struct scsi_cmnd * qlcmd; /* current command being processed */
-  struct Scsi_Host * shost; /* pointer back to host */
-  struct qlogicfas408_priv * next; /* next private struct */
+	int qbase;		/* Port */
+	int qinitid;		/* initiator ID */
+	int qabort;		/* Flag to cause an abort */
+	int qlirq;		/* IRQ being used */
+	int int_type;		/* type of irq, 2 for ISA board, 0 for PCMCIA */
+	char qinfo[80];		/* description */
+	struct scsi_cmnd *qlcmd;	/* current command being processed */
+	struct Scsi_Host *shost;	/* pointer back to host */
+	struct qlogicfas408_priv *next; /* next private struct */
 };
 
 /* The qlogic card uses two register maps - These macros select which one */
@@ -102,17 +102,17 @@ struct qlogicfas408_priv {
 #define get_priv_by_cmd(x) (struct qlogicfas408_priv *)&((x)->device->host->hostdata[0])
 #define get_priv_by_host(x) (struct qlogicfas408_priv *)&((x)->hostdata[0])
 
-irqreturn_t qlogicfas408_ihandl (int irq, void * dev_id);
-int qlogicfas408_queuecommand (struct Scsi_Host * h, struct scsi_cmnd * cmd);
-int qlogicfas408_biosparam (struct scsi_device * disk,
-                            struct block_device * dev,
-                            sector_t capacity, int ip[]);
-int qlogicfas408_abort (struct scsi_cmnd * cmd);
-int qlogicfas408_bus_reset (struct scsi_cmnd * cmd);
-const char * qlogicfas408_info (struct Scsi_Host * host);
-int qlogicfas408_get_chip_type (int qbase, int int_type);
-void qlogicfas408_setup (int qbase, int id, int int_type);
-int qlogicfas408_detect (int qbase, int int_type);
-void qlogicfas408_disable_ints (struct qlogicfas408_priv * priv);
-#endif  /* __QLOGICFAS408_H */
+irqreturn_t qlogicfas408_ihandl(int irq, void *dev_id);
+int qlogicfas408_queuecommand(struct Scsi_Host *h, struct scsi_cmnd * cmd);
+int qlogicfas408_biosparam(struct scsi_device * disk,
+			   struct block_device *dev,
+			   sector_t capacity, int ip[]);
+int qlogicfas408_abort(struct scsi_cmnd * cmd);
+int qlogicfas408_bus_reset(struct scsi_cmnd * cmd);
+const char *qlogicfas408_info(struct Scsi_Host *host);
+int qlogicfas408_get_chip_type(int qbase, int int_type);
+void qlogicfas408_setup(int qbase, int id, int int_type);
+int qlogicfas408_detect(int qbase, int int_type);
+void qlogicfas408_disable_ints(struct qlogicfas408_priv *priv);
+#endif	/* __QLOGICFAS408_H */
 

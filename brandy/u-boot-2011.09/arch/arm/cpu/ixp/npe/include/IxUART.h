@@ -1,34 +1,34 @@
-/**
+/** 
  * @file IxUART.h
  *
  * @date 12-OCT-01
  *
  * @brief Public header for the Intel IXP400 internal UART, generic driver.
- *
+ * 
  * Design Notes:
- * This driver allows you to perform the following functions:
- *  Device Initialization,
- *  send/receive characters.
+ * This driver allows you to perform the following functions: 
+ *	Device Initialization,
+ *	send/receive characters.
  *
  * Perform Uart IOCTL for the following:
- *  Set/Get the current baud rate,
- *  set parity,
- *  set the number of Stop bits,
- *  set the character Length (5,6,7,8),
- *  enable/disable Hardware flow control.
+ *	Set/Get the current baud rate,
+ *	set parity,
+ *	set the number of Stop bits,
+ *	set the character Length (5,6,7,8),
+ *	enable/disable Hardware flow control.
  *
  * Only Polled mode is supported for now.
- *
- *
+ *    
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -41,7 +41,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -54,7 +54,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
 */
@@ -63,7 +63,7 @@
  * @defgroup IxUARTAccAPI IXP400 UART Access (IxUARTAcc) API
  *
  * @brief IXP400 UARTAcc Driver Public API
- *
+ * 
  * @{
  */
 
@@ -82,7 +82,7 @@
  * @def IX_UART_DEF_OPTS
  *
  * @brief The default hardware options to set the UART to -
- * no flow control, 8 bit word, 1 stop bit, no parity
+ * no flow control, 8 bit word, 1 stop bit, no parity 
  *
  * @ingroup DefaultDefines
  */
@@ -152,7 +152,7 @@
  *
  * @brief Set the baud rate
  */
-#define IX_BAUD_SET 0
+#define IX_BAUD_SET	0
 
 /**
  * @ingroup IoctlCommandDefines
@@ -161,14 +161,14 @@
  *
  * @brief Get the baud rate
  */
-#define IX_BAUD_GET 1
+#define IX_BAUD_GET	1
 
 /**
  * @ingroup IoctlCommandDefines
  * @def IX_MODE_SET
  * @brief Set the UART mode of operation
  */
-#define IX_MODE_SET 2
+#define IX_MODE_SET	2
 
 /**
  * @ingroup IoctlCommandDefines
@@ -177,7 +177,7 @@
  *
  * @brief Get the current UART mode of operation
  */
-#define IX_MODE_GET 3
+#define IX_MODE_GET	3
 
 /**
  * @ingroup IoctlCommandDefines
@@ -186,7 +186,7 @@
  *
  * @brief Set the UART device options
  */
-#define IX_OPTS_SET 4
+#define IX_OPTS_SET	4
 
 /**
  * @ingroup IoctlCommandDefines
@@ -195,7 +195,7 @@
  *
  * @brief Get the UART device options
  */
-#define IX_OPTS_GET 5
+#define IX_OPTS_GET	5
 
 /**
  * @ingroup IoctlCommandDefines
@@ -204,7 +204,7 @@
  *
  * @brief Get the UART statistics
  */
-#define IX_STATS_GET  6
+#define IX_STATS_GET	6
 
 
 /* POSIX style ioctl arguments */
@@ -229,7 +229,7 @@
 #ifdef CLOCAL
 #undef CLOCAL
 #endif
-#define CLOCAL    0x1
+#define CLOCAL		0x1
 
 /**
  * @ingroup IoctlArgDefines
@@ -241,7 +241,7 @@
 #ifdef CREAD
 #undef CREAD
 #endif
-#define CREAD   0x2
+#define CREAD		0x2
 
 /**
  * @ingroup IoctlArgDefines
@@ -253,7 +253,7 @@
 #ifdef CSIZE
 #undef CSIZE
 #endif
-#define CSIZE   0xc
+#define CSIZE		0xc
 
 /**
  * @ingroup IoctlArgDefines
@@ -265,7 +265,7 @@
 #ifdef CS5
 #undef CS5
 #endif
-#define CS5   0x0
+#define CS5		0x0
 
 /**
  * @ingroup IoctlArgDefines
@@ -277,7 +277,7 @@
 #ifdef CS6
 #undef CS6
 #endif
-#define CS6   0x4
+#define CS6		0x4
 
 /**
  * @ingroup IoctlArgDefines
@@ -289,7 +289,7 @@
 #ifdef CS7
 #undef CS7
 #endif
-#define CS7   0x8
+#define CS7		0x8
 
 /**
  * @ingroup IoctlArgDefines
@@ -301,7 +301,7 @@
 #ifdef CS8
 #undef CS8
 #endif
-#define CS8   0xc
+#define CS8		0xc
 
 /**
  * @ingroup IoctlArgDefines
@@ -310,7 +310,7 @@
  *
  * @brief Send two stop bits (else one)
  */
-#define STOPB   0x20
+#define STOPB		0x20
 
 /**
  * @ingroup IoctlArgDefines
@@ -322,7 +322,7 @@
 #ifdef PARENB
 #undef PARENB
 #endif
-#define PARENB    0x40
+#define PARENB		0x40
 
 /**
  * @ingroup IoctlArgDefines
@@ -334,7 +334,7 @@
 #ifdef PARODD
 #undef PARODD
 #endif
-#define PARODD    0x80
+#define PARODD		0x80
 
 /**
  * @enum ixUARTMode
@@ -342,9 +342,9 @@
  */
 typedef enum
 {
-  INTERRUPT = 0, /**< Interrupt mode */
-  POLLED,   /**< Polled mode */
-  LOOPBACK    /**< Loopback mode */
+    INTERRUPT=0,	/**< Interrupt mode */
+    POLLED,		/**< Polled mode */
+    LOOPBACK		/**< Loopback mode */
 } ixUARTMode;
 
 /**
@@ -353,12 +353,12 @@ typedef enum
  */
 typedef struct
 {
-  UINT32  rxCount;
-  UINT32  txCount;
-  UINT32  overrunErr;
-  UINT32  parityErr;
-  UINT32  framingErr;
-  UINT32  breakErr;
+    UINT32  rxCount;
+    UINT32  txCount;	
+    UINT32  overrunErr;
+    UINT32  parityErr;
+    UINT32  framingErr;
+    UINT32  breakErr;
 } ixUARTStats;
 
 /**
@@ -367,25 +367,25 @@ typedef struct
  */
 typedef struct
 {
-  UINT8 * addr; /**< device base address */
-  ixUARTMode mode;  /**< interrupt, polled or loopback */
-  int baudRate; /**< baud rate */
-  int freq;   /**< UART clock frequency */
-  int options;  /**< hardware options */
-  int fifoSize; /**< FIFO xmit size */
-  
-  ixUARTStats   stats;  /**< device statistics */
+    UINT8 *addr;	/**< device base address */
+    ixUARTMode mode;	/**< interrupt, polled or loopback */
+    int baudRate;	/**< baud rate */
+    int freq;		/**< UART clock frequency */     
+    int options;	/**< hardware options */
+    int fifoSize;	/**< FIFO xmit size */
+
+    ixUARTStats   stats;	/**< device statistics */
 } ixUARTDev;
 
 /**
  * @ingroup IxUARTAccAPI
  *
  * @fn IX_STATUS ixUARTInit(ixUARTDev* pUART)
- *
- * @param pUART @ref ixUARTDev [in] - pointer to UART structure describing our device.
- *
+ * 
+ * @param pUART	@ref ixUARTDev [in] - pointer to UART structure describing our device.
+ * 
  * @brief Initialise the UART. This puts the chip in a quiescent state.
- *
+ * 
  * @pre The base address for the UART must contain a valid value.
  *      Also the baud rate and hardware options must contain sensible values
  *      otherwise the defaults will be used as defined in ixUART.h
@@ -397,7 +397,7 @@ typedef struct
  * @retval IX_SUCCESS - UART device successfully initialised.
  * @retval IX_FAIL - Critical error, device not initialised.
  ***************************************************************************/
-PUBLIC IX_STATUS ixUARTInit (ixUARTDev * pUART);
+PUBLIC IX_STATUS ixUARTInit(ixUARTDev* pUART);
 
 /**
  * @ingroup IxUARTAccAPI
@@ -414,14 +414,14 @@ PUBLIC IX_STATUS ixUARTInit (ixUARTDev * pUART);
  * @retval IX_SUCCESS - character was successfully transmitted.
  * @retval IX_FAIL - output buffer is full (try again).
  ***************************************************************************/
-PUBLIC IX_STATUS ixUARTPollOutput (ixUARTDev * pUART, int outChar);
+PUBLIC IX_STATUS ixUARTPollOutput(ixUARTDev* pUART, int outChar);
 
 /**
  * @ingroup IxUARTAccAPI
  *
  * @fn IX_STATUS ixUARTPollInput(ixUARTDev* pUART, char *inChar)
  *
- * @param pUART @ref ixUARTDev [in] - pointer to UART structure describing our device.
+ * @param pUART	@ref ixUARTDev [in] - pointer to UART structure describing our device.
  * @param *inChar char [in] - character read from the device.
  *
  * @brief Receive a character in polled mode.
@@ -431,17 +431,17 @@ PUBLIC IX_STATUS ixUARTPollOutput (ixUARTDev * pUART, int outChar);
  * @retval IX_SUCCESS - character was successfully read.
  * @retval IX_FAIL - input buffer empty (try again).
  ***************************************************************************/
-PUBLIC IX_STATUS ixUARTPollInput (ixUARTDev * pUART, char * inChar);
+PUBLIC IX_STATUS ixUARTPollInput(ixUARTDev* pUART, char *inChar);
 
 /**
  * @ingroup IxUARTAccAPI
  *
  * @fn IX_STATUS ixUARTIoctl(ixUARTDev* pUART, int cmd, void* arg)
  *
- * @param pUART @ref ixUARTDev [in] - pointer to UART structure describing our device.
+ * @param pUART	@ref ixUARTDev [in] - pointer to UART structure describing our device.
  * @param cmd int [in] - an ioctl request code.
  * @param arg void* [in] - optional argument used to set the device mode,
- *   baud rate, and hardware options.
+ *	 baud rate, and hardware options.
  *
  * @brief Perform I/O control routines on the device.
  *
@@ -450,8 +450,8 @@ PUBLIC IX_STATUS ixUARTPollInput (ixUARTDev * pUART, char * inChar);
  *
  * @sa IoctlCommandDefines
  * @sa IoctlArgDefines
- ***************************************************************************/
-PUBLIC IX_STATUS ixUARTIoctl (ixUARTDev * pUART, int cmd, void * arg);
+ ***************************************************************************/    
+PUBLIC IX_STATUS ixUARTIoctl(ixUARTDev* pUART, int cmd, void* arg);
 
 /**
  * @} defgroup IxUARTAcc

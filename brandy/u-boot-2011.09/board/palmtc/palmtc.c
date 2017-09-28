@@ -30,41 +30,41 @@ DECLARE_GLOBAL_DATA_PTR;
  * Miscelaneous platform dependent initialisations
  */
 
-int board_init (void)
+int board_init(void)
 {
-  /* We have RAM, disable cache */
-  dcache_disable();
-  icache_disable();
-  
-  /* Arch number of Palm Tungsten|C */
-  gd->bd->bi_arch_number = MACH_TYPE_PALMTC;
-  
-  /* Adress of boot parameters */
-  gd->bd->bi_boot_params = 0xa0000100;
-  
-  /* Set PWM for LCD */
-  writel (0x5f, PWM_CTRL1);
-  writel (0x3ff, PWM_PERVAL1);
-  writel (892, PWM_PWDUTY1);
-  
-  return 0;
+	/* We have RAM, disable cache */
+	dcache_disable();
+	icache_disable();
+
+	/* Arch number of Palm Tungsten|C */
+	gd->bd->bi_arch_number = MACH_TYPE_PALMTC;
+
+	/* Adress of boot parameters */
+	gd->bd->bi_boot_params = 0xa0000100;
+
+	/* Set PWM for LCD */
+	writel(0x5f, PWM_CTRL1);
+	writel(0x3ff, PWM_PERVAL1);
+	writel(892, PWM_PWDUTY1);
+
+	return 0;
 }
 
-struct serial_device * default_serial_console (void)
+struct serial_device *default_serial_console(void)
 {
-  return &serial_ffuart_device;
+	return &serial_ffuart_device;
 }
 
-extern void pxa_dram_init (void);
-int dram_init (void)
+extern void pxa_dram_init(void);
+int dram_init(void)
 {
-  pxa_dram_init();
-  gd->ram_size = PHYS_SDRAM_1_SIZE;
-  return 0;
+	pxa_dram_init();
+	gd->ram_size = PHYS_SDRAM_1_SIZE;
+	return 0;
 }
 
-void dram_init_banksize (void)
+void dram_init_banksize(void)
 {
-  gd->bd->bi_dram[0].start = PHYS_SDRAM_1;
-  gd->bd->bi_dram[0].size = PHYS_SDRAM_1_SIZE;
+	gd->bd->bi_dram[0].start = PHYS_SDRAM_1;
+	gd->bd->bi_dram[0].size = PHYS_SDRAM_1_SIZE;
 }

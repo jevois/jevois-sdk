@@ -38,7 +38,7 @@ typedef struct
   HV_VirtAddr va;
   /** Size (in bytes) of the memory area. */
   int size;
-  
+
 }
 netio_ipp_address_t;
 
@@ -52,78 +52,78 @@ typedef enum
    *  to the Linux driver; it never makes it from there to the hypervisor.
    *  Write-only; takes a uint32_t specifying the VA address. */
   NETIO_FIXED_ADDR               = 0x5000000000000000ULL,
-  
+
   /** Inform the Linux driver of the size of the NetIO arena memory.
    *  This offset is actually only used to convey information from netio
    *  to the Linux driver; it never makes it from there to the hypervisor.
    *  Write-only; takes a uint32_t specifying the VA size. */
   NETIO_FIXED_SIZE               = 0x5100000000000000ULL,
-  
+
   /** Register current tile with IPP.  Write then read: write, takes a
    *  netio_input_config_t, read returns a pointer to a netio_queue_impl_t. */
   NETIO_IPP_INPUT_REGISTER_OFF   = 0x6000000000000000ULL,
-  
+
   /** Unregister current tile from IPP.  Write-only, takes a dummy argument. */
   NETIO_IPP_INPUT_UNREGISTER_OFF = 0x6100000000000000ULL,
-  
+
   /** Start packets flowing.  Write-only, takes a dummy argument. */
   NETIO_IPP_INPUT_INIT_OFF       = 0x6200000000000000ULL,
-  
+
   /** Stop packets flowing.  Write-only, takes a dummy argument. */
   NETIO_IPP_INPUT_UNINIT_OFF     = 0x6300000000000000ULL,
-  
+
   /** Configure group (typically we group on VLAN).  Write-only: takes an
    *  array of netio_group_t's, low 24 bits of the offset is the base group
    *  number times the size of a netio_group_t. */
   NETIO_IPP_INPUT_GROUP_CFG_OFF  = 0x6400000000000000ULL,
-  
+
   /** Configure bucket.  Write-only: takes an array of netio_bucket_t's, low
    *  24 bits of the offset is the base bucket number times the size of a
    *  netio_bucket_t. */
   NETIO_IPP_INPUT_BUCKET_CFG_OFF = 0x6500000000000000ULL,
-  
+
   /** Get/set a parameter.  Read or write: read or write data is the parameter
    *  value, low 32 bits of the offset is a __netio_getset_offset_t. */
   NETIO_IPP_PARAM_OFF            = 0x6600000000000000ULL,
-  
+
   /** Get fast I/O index.  Read-only; returns a 4-byte base index value. */
   NETIO_IPP_GET_FASTIO_OFF       = 0x6700000000000000ULL,
-  
+
   /** Configure hijack IP address.  Packets with this IPv4 dest address
    *  go to bucket NETIO_NUM_BUCKETS - 1.  Write-only: takes an IP address
    *  in some standard form.  FIXME: Define the form! */
   NETIO_IPP_INPUT_HIJACK_CFG_OFF  = 0x6800000000000000ULL,
-  
+
   /**
    * Offsets beyond this point are reserved for the supervisor (although that
    * enforcement must be done by the supervisor driver itself).
    */
   NETIO_IPP_USER_MAX_OFF         = 0x6FFFFFFFFFFFFFFFULL,
-  
+
   /** Register I/O memory.  Write-only, takes a netio_ipp_address_t. */
   NETIO_IPP_IOMEM_REGISTER_OFF   = 0x7000000000000000ULL,
-  
+
   /** Unregister I/O memory.  Write-only, takes a netio_ipp_address_t. */
   NETIO_IPP_IOMEM_UNREGISTER_OFF = 0x7100000000000000ULL,
-  
+
   /* Offsets greater than 0x7FFFFFFF can't be used directly from Linux
    * userspace code due to limitations in the pread/pwrite syscalls. */
-  
+
   /** Drain LIPP buffers. */
   NETIO_IPP_DRAIN_OFF              = 0xFA00000000000000ULL,
-  
+
   /** Supply a netio_ipp_address_t to be used as shared memory for the
    *  LEPP command queue. */
   NETIO_EPP_SHM_OFF              = 0xFB00000000000000ULL,
-  
+
   /* 0xFC... is currently unused. */
-  
+
   /** Stop IPP/EPP tiles.  Write-only, takes a dummy argument.  */
   NETIO_IPP_STOP_SHIM_OFF        = 0xFD00000000000000ULL,
-  
+
   /** Start IPP/EPP tiles.  Write-only, takes a dummy argument.  */
   NETIO_IPP_START_SHIM_OFF       = 0xFE00000000000000ULL,
-  
+
   /** Supply packet arena.  Write-only, takes an array of
     * netio_ipp_address_t values. */
   NETIO_IPP_ADDRESS_OFF          = 0xFF00000000000000ULL,
@@ -142,9 +142,9 @@ typedef union
 {
   struct
   {
-    uint64_t addr: 48;       /**< Class-specific address */
-    unsigned int class: 8;   /**< Class (e.g., NETIO_PARAM) */
-    unsigned int opcode: 8;  /**< High 8 bits of NETIO_IPP_PARAM_OFF */
+    uint64_t addr:48;        /**< Class-specific address */
+    unsigned int class:8;    /**< Class (e.g., NETIO_PARAM) */
+    unsigned int opcode:8;   /**< High 8 bits of NETIO_IPP_PARAM_OFF */
   }
   bits;                      /**< Bitfields */
   uint64_t word;             /**< Aggregated value to use as the offset */
@@ -175,22 +175,22 @@ typedef struct
 } netio_fastio_rv3_t;
 
 /** 0-argument fast I/O call */
-int __netio_fastio0 (uint32_t fastio_index);
+int __netio_fastio0(uint32_t fastio_index);
 /** 1-argument fast I/O call */
-int __netio_fastio1 (uint32_t fastio_index, uint32_t arg0);
+int __netio_fastio1(uint32_t fastio_index, uint32_t arg0);
 /** 3-argument fast I/O call, 2-word return value */
-netio_fastio_rv3_t __netio_fastio3_rv3 (uint32_t fastio_index, uint32_t arg0,
-                                        uint32_t arg1, uint32_t arg2);
+netio_fastio_rv3_t __netio_fastio3_rv3(uint32_t fastio_index, uint32_t arg0,
+                                       uint32_t arg1, uint32_t arg2);
 /** 4-argument fast I/O call */
-int __netio_fastio4 (uint32_t fastio_index, uint32_t arg0, uint32_t arg1,
-                     uint32_t arg2, uint32_t arg3);
+int __netio_fastio4(uint32_t fastio_index, uint32_t arg0, uint32_t arg1,
+                    uint32_t arg2, uint32_t arg3);
 /** 6-argument fast I/O call */
-int __netio_fastio6 (uint32_t fastio_index, uint32_t arg0, uint32_t arg1,
-                     uint32_t arg2, uint32_t arg3, uint32_t arg4, uint32_t arg5);
+int __netio_fastio6(uint32_t fastio_index, uint32_t arg0, uint32_t arg1,
+                    uint32_t arg2, uint32_t arg3, uint32_t arg4, uint32_t arg5);
 /** 9-argument fast I/O call */
-int __netio_fastio9 (uint32_t fastio_index, uint32_t arg0, uint32_t arg1,
-                     uint32_t arg2, uint32_t arg3, uint32_t arg4, uint32_t arg5,
-                     uint32_t arg6, uint32_t arg7, uint32_t arg8);
+int __netio_fastio9(uint32_t fastio_index, uint32_t arg0, uint32_t arg1,
+                    uint32_t arg2, uint32_t arg3, uint32_t arg4, uint32_t arg5,
+                    uint32_t arg6, uint32_t arg7, uint32_t arg8);
 
 /** Allocate an empty packet.
  * @param fastio_index Fast I/O index.
@@ -235,8 +235,8 @@ int __netio_fastio9 (uint32_t fastio_index, uint32_t arg0, uint32_t arg1,
  */
 #define __netio_fastio_send_pkt_ck(fastio_index, ackflag, size, va, handle, \
                                    csum0, csum1) \
-__netio_fastio6((fastio_index) + NETIO_FASTIO_SEND_PKT_CK, ackflag, \
-                size, va, handle, csum0, csum1)
+  __netio_fastio6((fastio_index) + NETIO_FASTIO_SEND_PKT_CK, ackflag, \
+                  size, va, handle, csum0, csum1)
 
 
 /** Format for the "csum0" argument to the __netio_fastio_send routines
@@ -247,10 +247,10 @@ typedef union
 {
   struct
   {
-    unsigned int start_byte: 7;      /**< The first byte to be checksummed */
-    unsigned int count: 14;          /**< Number of bytes to be checksummed. */
-    unsigned int destination_byte: 7; /**< The byte to write the checksum to. */
-    unsigned int reserved: 4;        /**< Reserved. */
+    unsigned int start_byte:7;       /**< The first byte to be checksummed */
+    unsigned int count:14;           /**< Number of bytes to be checksummed. */
+    unsigned int destination_byte:7; /**< The byte to write the checksum to. */
+    unsigned int reserved:4;         /**< Reserved. */
   } bits;                            /**< Decomposed method of access. */
   unsigned int word;                 /**< To send out the IDN. */
 } __netio_checksum_header_t;
@@ -269,8 +269,8 @@ typedef union
  */
 #define __netio_fastio_sendv_pkt_1_2(fastio_index, flags, confno, csum0, \
                                      va_F, va_L, len_F_L) \
-__netio_fastio6((fastio_index) + NETIO_FASTIO_SENDV_PKT, flags, confno, \
-                csum0, va_F, va_L, len_F_L)
+  __netio_fastio6((fastio_index) + NETIO_FASTIO_SENDV_PKT, flags, confno, \
+                  csum0, va_F, va_L, len_F_L)
 
 /** Send packet on PCIe interface.
  * @param fastio_index Fast I/O index.
@@ -283,8 +283,8 @@ __netio_fastio6((fastio_index) + NETIO_FASTIO_SENDV_PKT, flags, confno, \
  */
 #define __netio_fastio_send_pcie_pkt(fastio_index, flags, confno, csum0, \
                                      va_F, va_L, len_F_L) \
-__netio_fastio6((fastio_index) + PCIE_FASTIO_SENDV_PKT, flags, confno, \
-                csum0, va_F, va_L, len_F_L)
+  __netio_fastio6((fastio_index) + PCIE_FASTIO_SENDV_PKT, flags, confno, \
+                  csum0, va_F, va_L, len_F_L)
 
 /** Sendv packet with 3 or 4 segments.
  * @param fastio_index Fast I/O index.
@@ -306,8 +306,8 @@ __netio_fastio6((fastio_index) + PCIE_FASTIO_SENDV_PKT, flags, confno, \
  */
 #define __netio_fastio_sendv_pkt_3_4(fastio_index, flags, confno, csum0, va_F, \
                                      va_L, len_F_L, va_M0, va_M1, len_M0_M1) \
-__netio_fastio9((fastio_index) + NETIO_FASTIO_SENDV_PKT, flags, confno, \
-                csum0, va_F, va_L, len_F_L, va_M0, va_M1, len_M0_M1)
+  __netio_fastio9((fastio_index) + NETIO_FASTIO_SENDV_PKT, flags, confno, \
+                  csum0, va_F, va_L, len_F_L, va_M0, va_M1, len_M0_M1)
 
 /** Send vector of packets.
  * @param fastio_index Fast I/O index.
@@ -340,18 +340,18 @@ typedef struct
    * lepp_tso_cmd_t.  It must come first!
    */
   uint8_t tso               : 1;
-  
+
   /** Unused padding bits. */
   uint8_t _unused           : 3;
-  
+
   /** Should this packet be sent directly from caches instead of DRAM,
    * using hash-for-home to locate the packet data?
    */
   uint8_t hash_for_home     : 1;
-  
+
   /** Should we compute a checksum? */
   uint8_t compute_checksum  : 1;
-  
+
   /** Is this the final buffer for this packet?
    *
    * A single packet can be split over several input buffers (a "gather"
@@ -359,10 +359,10 @@ typedef struct
    * in a packet.
    */
   uint8_t end_of_packet     : 1;
-  
+
   /** Should LEPP advance 'comp_busy' when this DMA is fully finished? */
   uint8_t send_completion   : 1;
-  
+
   /** High bits of Client Physical Address of the start of the buffer
    *  to be egressed.
    *
@@ -370,18 +370,18 @@ typedef struct
    *  currently 38 bits.  So two bits could be scavenged from this.
    */
   uint8_t cpa_hi;
-  
+
   /** The number of bytes to be egressed. */
   uint16_t length;
-  
+
   /** Low 32 bits of Client Physical Address of the start of the buffer
    *  to be egressed.
    */
   uint32_t cpa_lo;
-  
+
   /** Checksum information (only used if 'compute_checksum'). */
   __netio_checksum_header_t checksum_data;
-  
+
 } lepp_cmd_t;
 
 
@@ -391,11 +391,11 @@ typedef struct
   /** The low bits of the CPA. */
   uint32_t cpa_lo;
   /** The high bits of the CPA. */
-  uint16_t cpa_hi   : 15;
+  uint16_t cpa_hi		: 15;
   /** Should this packet be sent directly from caches instead of DRAM,
    *  using hash-for-home to locate the packet data?
    */
-  uint16_t hash_for_home  : 1;
+  uint16_t hash_for_home	: 1;
   /** The length in bytes. */
   uint16_t length;
 } lepp_frag_t;
@@ -410,10 +410,10 @@ typedef struct
    *  lepp_cmd_t.  It must come first!
    */
   uint8_t tso             : 1;
-  
+
   /** Unused padding bits. */
   uint8_t _unused         : 7;
-  
+
   /** Size of the header[] array in bytes.  It must be in the range
    *  [40, 127], which are the smallest header for a TCP packet over
    *  Ethernet and the maximum possible prepend size supported by
@@ -422,38 +422,38 @@ typedef struct
    *  LEPP command is aligned properly.
    */
   uint8_t header_size;
-  
+
   /** Byte offset of the IP header in header[]. */
   uint8_t ip_offset;
-  
+
   /** Byte offset of the TCP header in header[]. */
   uint8_t tcp_offset;
-  
+
   /** The number of bytes to use for the payload of each packet,
    *  except of course the last one, which may not have enough bytes.
    *  This means that each Ethernet packet except the last will have a
    *  size of header_size + payload_size.
    */
   uint16_t payload_size;
-  
+
   /** The length of the 'frags' array that follows this struct. */
   uint16_t num_frags;
-  
+
   /** The actual frags. */
   lepp_frag_t frags[0 /* Variable-sized; num_frags entries. */];
-  
+
   /*
    * The packet header template logically follows frags[],
    * but you can't declare that in C.
    *
    * uint32_t header[header_size_in_words_rounded_up];
    */
-  
+
 } lepp_tso_cmd_t;
 
 
 /** An LEPP completion ring entry. */
-typedef void * lepp_comp_t;
+typedef void* lepp_comp_t;
 
 
 /** Maximum number of frags for one TSO command.  This is adapted from
@@ -470,8 +470,8 @@ typedef void * lepp_comp_t;
 
 /** The size of the lepp "cmd" queue. */
 #define LEPP_CMD_QUEUE_BYTES \
-  (((CHIP_L2_CACHE_SIZE() - 2 * CHIP_L2_LINE_SIZE()) / \
-    (sizeof(lepp_cmd_t) + sizeof(lepp_comp_t))) * sizeof(lepp_cmd_t))
+ (((CHIP_L2_CACHE_SIZE() - 2 * CHIP_L2_LINE_SIZE()) / \
+  (sizeof(lepp_cmd_t) + sizeof(lepp_comp_t))) * sizeof(lepp_cmd_t))
 
 /** The largest possible command that can go in lepp_queue_t::cmds[]. */
 #define LEPP_MAX_CMD_SIZE LEPP_TSO_CMD_SIZE(LEPP_MAX_FRAGS, 128)
@@ -498,7 +498,7 @@ typedef struct
    *  NOTE: This is only read/written by the user.
    */
   unsigned int comp_head;
-  
+
   /** Index of first completion record not yet completed.
    *  If this is equal to comp_tail, there are no such completions.
    *  This index gets advanced (modulo LEPP_QUEUE_SIZE) whenever
@@ -507,7 +507,7 @@ typedef struct
    *  NOTE: This is only written by LEPP, only read by the user.
    */
   volatile unsigned int comp_busy;
-  
+
   /** Index of the first empty slot in the completion ring.
    *  Entries from this up to but not including comp_head (in ring order)
    *  can be filled in with completion data.
@@ -515,7 +515,7 @@ typedef struct
    *  NOTE: This is only read/written by the user.
    */
   unsigned int comp_tail;
-  
+
   /** Byte index of first command enqueued for LEPP but not yet processed.
    *
    *  This is always divisible by sizeof(void*) and always <= LEPP_CMD_LIMIT.
@@ -530,7 +530,7 @@ typedef struct
    *  NOTE: This is only written by LEPP, only read by the user.
    */
   volatile unsigned int cmd_head;
-  
+
   /** Byte index of first empty slot in the command ring.  This field can
    *  be incremented up to but not equal to cmd_head (because that would
    *  mean the ring is empty).
@@ -540,19 +540,19 @@ typedef struct
    *  NOTE: This is read/written by the user, only read by LEPP.
    */
   volatile unsigned int cmd_tail;
-  
+
   /** A ring of variable-sized egress DMA commands.
    *
    *  NOTE: Only written by the user, only read by LEPP.
    */
   char cmds[LEPP_CMD_QUEUE_BYTES]
-  __attribute__ ( (aligned (CHIP_L2_LINE_SIZE() ) ) );
-  
+    __attribute__((aligned(CHIP_L2_LINE_SIZE())));
+
   /** A ring of user completion data.
    *  NOTE: Only read/written by the user.
    */
   lepp_comp_t comps[LEPP_COMP_QUEUE_SIZE]
-  __attribute__ ( (aligned (CHIP_L2_LINE_SIZE() ) ) );
+    __attribute__((aligned(CHIP_L2_LINE_SIZE())));
 } lepp_queue_t;
 
 
@@ -560,29 +560,29 @@ typedef struct
  *  available in a ring buffer, given that there is one sentinel.
  */
 static inline unsigned int
-_lepp_num_free_slots (unsigned int head, unsigned int tail)
+_lepp_num_free_slots(unsigned int head, unsigned int tail)
 {
   /*
    * One entry is reserved for use as a sentinel, to distinguish
    * "empty" from "full".  So we compute
    * (head - tail - 1) % LEPP_QUEUE_SIZE, but without using a slow % operation.
    */
-  return (head - tail - 1) + ( (head <= tail) ? LEPP_COMP_QUEUE_SIZE : 0);
+  return (head - tail - 1) + ((head <= tail) ? LEPP_COMP_QUEUE_SIZE : 0);
 }
 
 
 /** Returns how many new comp entries can be enqueued. */
 static inline unsigned int
-lepp_num_free_comp_slots (const lepp_queue_t * q)
+lepp_num_free_comp_slots(const lepp_queue_t* q)
 {
-  return _lepp_num_free_slots (q->comp_head, q->comp_tail);
+  return _lepp_num_free_slots(q->comp_head, q->comp_tail);
 }
 
 static inline int
-lepp_qsub (int v1, int v2)
+lepp_qsub(int v1, int v2)
 {
   int delta = v1 - v2;
-  return delta + ( (delta >> 31) & LEPP_COMP_QUEUE_SIZE);
+  return delta + ((delta >> 31) & LEPP_COMP_QUEUE_SIZE);
 }
 
 

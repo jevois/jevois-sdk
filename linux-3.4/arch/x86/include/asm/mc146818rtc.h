@@ -9,8 +9,8 @@
 #include <linux/mc146818rtc.h>
 
 #ifndef RTC_PORT
-#define RTC_PORT(x) (0x70 + (x))
-#define RTC_ALWAYS_BCD  1 /* RTC operates in binary mode */
+#define RTC_PORT(x)	(0x70 + (x))
+#define RTC_ALWAYS_BCD	1	/* RTC operates in binary mode */
 #endif
 
 #if defined(CONFIG_X86_32) && defined(__HAVE_ARCH_CMPXCHG)
@@ -38,45 +38,45 @@ extern volatile unsigned long cmos_lock;
  * disabled, etc.
  */
 
-static inline void lock_cmos (unsigned char reg)
+static inline void lock_cmos(unsigned char reg)
 {
-  unsigned long new;
-  new = ( (smp_processor_id() + 1) << 8) | reg;
-  for (;;) {
-    if (cmos_lock) {
-      cpu_relax();
-      continue;
-    }
-    if (__cmpxchg (&cmos_lock, 0, new, sizeof (cmos_lock) ) == 0)
-    { return; }
-  }
+	unsigned long new;
+	new = ((smp_processor_id() + 1) << 8) | reg;
+	for (;;) {
+		if (cmos_lock) {
+			cpu_relax();
+			continue;
+		}
+		if (__cmpxchg(&cmos_lock, 0, new, sizeof(cmos_lock)) == 0)
+			return;
+	}
 }
 
-static inline void unlock_cmos (void)
+static inline void unlock_cmos(void)
 {
-  cmos_lock = 0;
+	cmos_lock = 0;
 }
 
-static inline int do_i_have_lock_cmos (void)
+static inline int do_i_have_lock_cmos(void)
 {
-  return (cmos_lock >> 8) == (smp_processor_id() + 1);
+	return (cmos_lock >> 8) == (smp_processor_id() + 1);
 }
 
-static inline unsigned char current_lock_cmos_reg (void)
+static inline unsigned char current_lock_cmos_reg(void)
 {
-  return cmos_lock & 0xff;
+	return cmos_lock & 0xff;
 }
 
-#define lock_cmos_prefix(reg)     \
-  do {          \
-    unsigned long cmos_flags; \
-    local_irq_save(cmos_flags); \
-    lock_cmos(reg)
+#define lock_cmos_prefix(reg)			\
+	do {					\
+		unsigned long cmos_flags;	\
+		local_irq_save(cmos_flags);	\
+		lock_cmos(reg)
 
-#define lock_cmos_suffix(reg)     \
-  unlock_cmos();        \
-  local_irq_restore(cmos_flags);    \
-  } while (0)
+#define lock_cmos_suffix(reg)			\
+	unlock_cmos();				\
+	local_irq_restore(cmos_flags);		\
+	} while (0)
 #else
 #define lock_cmos_prefix(reg) do {} while (0)
 #define lock_cmos_suffix(reg) do {} while (0)
@@ -92,11 +92,11 @@ static inline unsigned char current_lock_cmos_reg (void)
  */
 #define CMOS_READ(addr) rtc_cmos_read(addr)
 #define CMOS_WRITE(val, addr) rtc_cmos_write(val, addr)
-unsigned char rtc_cmos_read (unsigned char addr);
-void rtc_cmos_write (unsigned char val, unsigned char addr);
+unsigned char rtc_cmos_read(unsigned char addr);
+void rtc_cmos_write(unsigned char val, unsigned char addr);
 
-extern int mach_set_rtc_mmss (unsigned long nowtime);
-extern unsigned long mach_get_cmos_time (void);
+extern int mach_set_rtc_mmss(unsigned long nowtime);
+extern unsigned long mach_get_cmos_time(void);
 
 #define RTC_IRQ 8
 

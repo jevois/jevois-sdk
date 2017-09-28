@@ -4,7 +4,7 @@
  *  Name: crystalhd_lnx . h
  *
  *  Description:
- *    BCM70012 Linux driver
+ *		BCM70012 Linux driver
  *
  *  HISTORY:
  *
@@ -49,46 +49,46 @@
 
 #include "crystalhd.h"
 
-#define CRYSTAL_HD_NAME   "Broadcom Crystal HD Decoder (BCM70012) Driver"
+#define CRYSTAL_HD_NAME		"Broadcom Crystal HD Decoder (BCM70012) Driver"
 
 /* OS specific PCI information structure and adapter information. */
 struct crystalhd_adp {
-  /* Hardware borad/PCI specifics */
-  char      name[32];
-  struct pci_dev  *  pdev;
-  
-  unsigned long   pci_mem_start;
-  uint32_t    pci_mem_len;
-  void   *   addr;
-  
-  unsigned long   pci_i2o_start;
-  uint32_t    pci_i2o_len;
-  void   *   i2o_addr;
-  
-  unsigned int    drv_data;
-  unsigned int    dmabits;  /* 32 | 64 */
-  unsigned int    registered;
-  unsigned int    present;
-  unsigned int    msi;
-  
-  spinlock_t    lock;
-  
-  /* API Related */
-  int   chd_dec_major;
-  unsigned int    cfg_users;
-  
-  struct crystalhd_ioctl_data * idata_free_head; /* ioctl data pool */
-  struct crystalhd_elem  * elem_pool_head;  /* Queue element pool */
-  
-  struct crystalhd_cmd  cmds;
-  
-  struct crystalhd_dio_req * ua_map_free_head;
-  struct pci_pool  * fill_byte_pool;
+	/* Hardware borad/PCI specifics */
+	char			name[32];
+	struct pci_dev		*pdev;
+
+	unsigned long		pci_mem_start;
+	uint32_t		pci_mem_len;
+	void			*addr;
+
+	unsigned long		pci_i2o_start;
+	uint32_t		pci_i2o_len;
+	void			*i2o_addr;
+
+	unsigned int		drv_data;
+	unsigned int		dmabits;	/* 32 | 64 */
+	unsigned int		registered;
+	unsigned int		present;
+	unsigned int		msi;
+
+	spinlock_t		lock;
+
+	/* API Related */
+	int		chd_dec_major;
+	unsigned int		cfg_users;
+
+	struct crystalhd_ioctl_data	*idata_free_head;	/* ioctl data pool */
+	struct crystalhd_elem		*elem_pool_head;	/* Queue element pool */
+
+	struct crystalhd_cmd	cmds;
+
+	struct crystalhd_dio_req	*ua_map_free_head;
+	struct pci_pool		*fill_byte_pool;
 };
 
 
-struct crystalhd_adp * chd_get_adp (void);
-void chd_set_log_level (struct crystalhd_adp * adp, char * arg);
+struct crystalhd_adp *chd_get_adp(void);
+void chd_set_log_level(struct crystalhd_adp *adp, char *arg);
 
 #endif
 

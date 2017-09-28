@@ -22,114 +22,114 @@ static int max_ftimer[] = {600 * HZ};
 static int min_maxvcs[] = {1}, max_maxvcs[] = {254};
 static int min_window[] = {1}, max_window[] = {7};
 
-static struct ctl_table_header * rose_table_header;
+static struct ctl_table_header *rose_table_header;
 
 static ctl_table rose_table[] = {
-  {
-    .procname = "restart_request_timeout",
-    .data   = &sysctl_rose_restart_request_timeout,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1   = &min_timer,
-    .extra2   = &max_timer
-  },
-  {
-    .procname = "call_request_timeout",
-    .data   = &sysctl_rose_call_request_timeout,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1   = &min_timer,
-    .extra2   = &max_timer
-  },
-  {
-    .procname = "reset_request_timeout",
-    .data   = &sysctl_rose_reset_request_timeout,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1   = &min_timer,
-    .extra2   = &max_timer
-  },
-  {
-    .procname = "clear_request_timeout",
-    .data   = &sysctl_rose_clear_request_timeout,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1   = &min_timer,
-    .extra2   = &max_timer
-  },
-  {
-    .procname = "no_activity_timeout",
-    .data   = &sysctl_rose_no_activity_timeout,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1   = &min_idle,
-    .extra2   = &max_idle
-  },
-  {
-    .procname = "acknowledge_hold_back_timeout",
-    .data   = &sysctl_rose_ack_hold_back_timeout,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1   = &min_timer,
-    .extra2   = &max_timer
-  },
-  {
-    .procname = "routing_control",
-    .data   = &sysctl_rose_routing_control,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1   = &min_route,
-    .extra2   = &max_route
-  },
-  {
-    .procname = "link_fail_timeout",
-    .data   = &sysctl_rose_link_fail_timeout,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1   = &min_ftimer,
-    .extra2   = &max_ftimer
-  },
-  {
-    .procname = "maximum_virtual_circuits",
-    .data   = &sysctl_rose_maximum_vcs,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1   = &min_maxvcs,
-    .extra2   = &max_maxvcs
-  },
-  {
-    .procname = "window_size",
-    .data   = &sysctl_rose_window_size,
-    .maxlen   = sizeof (int),
-    .mode   = 0644,
-    .proc_handler = proc_dointvec_minmax,
-    .extra1   = &min_window,
-    .extra2   = &max_window
-  },
-  { }
+	{
+		.procname	= "restart_request_timeout",
+		.data		= &sysctl_rose_restart_request_timeout,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= &min_timer,
+		.extra2		= &max_timer
+	},
+	{
+		.procname	= "call_request_timeout",
+		.data		= &sysctl_rose_call_request_timeout,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= &min_timer,
+		.extra2		= &max_timer
+	},
+	{
+		.procname	= "reset_request_timeout",
+		.data		= &sysctl_rose_reset_request_timeout,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= &min_timer,
+		.extra2		= &max_timer
+	},
+	{
+		.procname	= "clear_request_timeout",
+		.data		= &sysctl_rose_clear_request_timeout,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= &min_timer,
+		.extra2		= &max_timer
+	},
+	{
+		.procname	= "no_activity_timeout",
+		.data		= &sysctl_rose_no_activity_timeout,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= &min_idle,
+		.extra2		= &max_idle
+	},
+	{
+		.procname	= "acknowledge_hold_back_timeout",
+		.data		= &sysctl_rose_ack_hold_back_timeout,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= &min_timer,
+		.extra2		= &max_timer
+	},
+	{
+		.procname	= "routing_control",
+		.data		= &sysctl_rose_routing_control,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= &min_route,
+		.extra2		= &max_route
+	},
+	{
+		.procname	= "link_fail_timeout",
+		.data		= &sysctl_rose_link_fail_timeout,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= &min_ftimer,
+		.extra2		= &max_ftimer
+	},
+	{
+		.procname	= "maximum_virtual_circuits",
+		.data		= &sysctl_rose_maximum_vcs,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= &min_maxvcs,
+		.extra2		= &max_maxvcs
+	},
+	{
+		.procname	= "window_size",
+		.data		= &sysctl_rose_window_size,
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= &min_window,
+		.extra2		= &max_window
+	},
+	{ }
 };
 
 static struct ctl_path rose_path[] = {
-  { .procname = "net", },
-  { .procname = "rose", },
-  { }
+	{ .procname = "net", },
+	{ .procname = "rose", },
+	{ }
 };
 
-void __init rose_register_sysctl (void)
+void __init rose_register_sysctl(void)
 {
-  rose_table_header = register_sysctl_paths (rose_path, rose_table);
+	rose_table_header = register_sysctl_paths(rose_path, rose_table);
 }
 
-void rose_unregister_sysctl (void)
+void rose_unregister_sysctl(void)
 {
-  unregister_sysctl_table (rose_table_header);
+	unregister_sysctl_table(rose_table_header);
 }

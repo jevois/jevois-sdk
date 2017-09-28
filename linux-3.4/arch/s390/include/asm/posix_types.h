@@ -17,7 +17,7 @@
 typedef unsigned long   __kernel_size_t;
 #define __kernel_size_t __kernel_size_t
 
-typedef unsigned short  __kernel_old_dev_t;
+typedef unsigned short	__kernel_old_dev_t;
 #define __kernel_old_dev_t __kernel_old_dev_t
 
 #ifndef __s390x__

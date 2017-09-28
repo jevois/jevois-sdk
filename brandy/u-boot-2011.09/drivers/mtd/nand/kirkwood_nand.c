@@ -29,55 +29,54 @@
 
 /* NAND Flash Soc registers */
 struct kwnandf_registers {
-  u32 rd_params;  /* 0x10418 */
-  u32 wr_param; /* 0x1041c */
-  u8  pad[0x10470 - 0x1041c - 4];
-  u32 ctrl; /* 0x10470 */
+	u32 rd_params;	/* 0x10418 */
+	u32 wr_param;	/* 0x1041c */
+	u8  pad[0x10470 - 0x1041c - 4];
+	u32 ctrl;	/* 0x10470 */
 };
 
-static struct kwnandf_registers * nf_reg =
-  (struct kwnandf_registers *) KW_NANDF_BASE;
+static struct kwnandf_registers *nf_reg =
+	(struct kwnandf_registers *)KW_NANDF_BASE;
 
 /*
  * hardware specific access to control-lines/bits
  */
-#define NAND_ACTCEBOOT_BIT    0x02
+#define NAND_ACTCEBOOT_BIT		0x02
 
-static void kw_nand_hwcontrol (struct mtd_info * mtd, int cmd,
-                               unsigned int ctrl)
+static void kw_nand_hwcontrol(struct mtd_info *mtd, int cmd,
+			      unsigned int ctrl)
 {
-  struct nand_chip * nc = mtd->priv;
-  u32 offs;
-  
-  if (cmd == NAND_CMD_NONE)
-  { return; }
-  
-  if (ctrl & NAND_CLE)
-  { offs = (1 << 0); }  /* Commands with A[1:0] == 01 */
-  else
-    if (ctrl & NAND_ALE)
-    { offs = (1 << 1); }  /* Addresses with A[1:0] == 10 */
-    else
-    { return; }
-    
-  writeb (cmd, nc->IO_ADDR_W + offs);
+	struct nand_chip *nc = mtd->priv;
+	u32 offs;
+
+	if (cmd == NAND_CMD_NONE)
+		return;
+
+	if (ctrl & NAND_CLE)
+		offs = (1 << 0);	/* Commands with A[1:0] == 01 */
+	else if (ctrl & NAND_ALE)
+		offs = (1 << 1);	/* Addresses with A[1:0] == 10 */
+	else
+		return;
+
+	writeb(cmd, nc->IO_ADDR_W + offs);
 }
 
-void kw_nand_select_chip (struct mtd_info * mtd, int chip)
+void kw_nand_select_chip(struct mtd_info *mtd, int chip)
 {
-  u32 data;
-  
-  data = readl (&nf_reg->ctrl);
-  data |= NAND_ACTCEBOOT_BIT;
-  writel (data, &nf_reg->ctrl);
+	u32 data;
+
+	data = readl(&nf_reg->ctrl);
+	data |= NAND_ACTCEBOOT_BIT;
+	writel(data, &nf_reg->ctrl);
 }
 
-int board_nand_init (struct nand_chip * nand)
+int board_nand_init(struct nand_chip *nand)
 {
-  nand->options = NAND_COPYBACK | NAND_CACHEPRG | NAND_NO_PADDING;
-  nand->ecc.mode = NAND_ECC_SOFT;
-  nand->cmd_ctrl = kw_nand_hwcontrol;
-  nand->chip_delay = 30;
-  nand->select_chip = kw_nand_select_chip;
-  return 0;
+	nand->options = NAND_COPYBACK | NAND_CACHEPRG | NAND_NO_PADDING;
+	nand->ecc.mode = NAND_ECC_SOFT;
+	nand->cmd_ctrl = kw_nand_hwcontrol;
+	nand->chip_delay = 30;
+	nand->select_chip = kw_nand_select_chip;
+	return 0;
 }

@@ -37,7 +37,7 @@
 #include <linux/types.h>
 #include <linux/nls.h>
 
-#define  UNIUPR_NOLOWER   /* Example to not expand lower case tables */
+#define  UNIUPR_NOLOWER		/* Example to not expand lower case tables */
 
 /*
  * Windows maps these to the user defined 16 bit Unicode range since they are
@@ -55,35 +55,35 @@
 /* Just define what we want from uniupr.h.  We don't want to define the tables
  * in each source file.
  */
-#ifndef UNICASERANGE_DEFINED
+#ifndef	UNICASERANGE_DEFINED
 struct UniCaseRange {
-  wchar_t start;
-  wchar_t end;
-  signed char * table;
+	wchar_t start;
+	wchar_t end;
+	signed char *table;
 };
-#endif        /* UNICASERANGE_DEFINED */
+#endif				/* UNICASERANGE_DEFINED */
 
 #ifndef UNIUPR_NOUPPER
 extern signed char CifsUniUpperTable[512];
 extern const struct UniCaseRange CifsUniUpperRange[];
-#endif        /* UNIUPR_NOUPPER */
+#endif				/* UNIUPR_NOUPPER */
 
 #ifndef UNIUPR_NOLOWER
 extern signed char CifsUniLowerTable[512];
 extern const struct UniCaseRange CifsUniLowerRange[];
-#endif        /* UNIUPR_NOLOWER */
+#endif				/* UNIUPR_NOLOWER */
 
 #ifdef __KERNEL__
-int cifs_from_utf16 (char * to, const __le16 * from, int tolen, int fromlen,
-                     const struct nls_table * codepage, bool mapchar);
-int cifs_utf16_bytes (const __le16 * from, int maxbytes,
-                      const struct nls_table * codepage);
-int cifs_strtoUTF16 (__le16 *, const char *, int, const struct nls_table *);
-char * cifs_strndup_from_utf16 (const char * src, const int maxlen,
-                                const bool is_unicode,
-                                const struct nls_table * codepage);
-extern int cifsConvertToUTF16 (__le16 * target, const char * source, int maxlen,
-                               const struct nls_table * cp, int mapChars);
+int cifs_from_utf16(char *to, const __le16 *from, int tolen, int fromlen,
+		    const struct nls_table *codepage, bool mapchar);
+int cifs_utf16_bytes(const __le16 *from, int maxbytes,
+		     const struct nls_table *codepage);
+int cifs_strtoUTF16(__le16 *, const char *, int, const struct nls_table *);
+char *cifs_strndup_from_utf16(const char *src, const int maxlen,
+			      const bool is_unicode,
+			      const struct nls_table *codepage);
+extern int cifsConvertToUTF16(__le16 *target, const char *source, int maxlen,
+			      const struct nls_table *cp, int mapChars);
 
 #endif
 
@@ -94,14 +94,14 @@ extern int cifsConvertToUTF16 (__le16 * target, const char * source, int maxlen,
  *     Address of the first string
  */
 static inline wchar_t *
-UniStrcat (wchar_t * ucs1, const wchar_t * ucs2)
+UniStrcat(wchar_t *ucs1, const wchar_t *ucs2)
 {
-  wchar_t * anchor = ucs1; /* save a pointer to start of ucs1 */
-  
-  while (*ucs1++) ; /* To end of first string */
-  ucs1--;     /* Return to the null */
-  while ( (*ucs1++ = *ucs2++) ) ; /* copy string 2 over */
-  return anchor;
+	wchar_t *anchor = ucs1;	/* save a pointer to start of ucs1 */
+
+	while (*ucs1++) ;	/* To end of first string */
+	ucs1--;			/* Return to the null */
+	while ((*ucs1++ = *ucs2++)) ;	/* copy string 2 over */
+	return anchor;
 }
 
 /*
@@ -112,14 +112,14 @@ UniStrcat (wchar_t * ucs1, const wchar_t * ucs2)
  *     or NULL if the character is not in the string
  */
 static inline wchar_t *
-UniStrchr (const wchar_t * ucs, wchar_t uc)
+UniStrchr(const wchar_t *ucs, wchar_t uc)
 {
-  while ( (*ucs != uc) && *ucs)
-  { ucs++; }
-  
-  if (*ucs == uc)
-  { return (wchar_t *) ucs; }
-  return NULL;
+	while ((*ucs != uc) && *ucs)
+		ucs++;
+
+	if (*ucs == uc)
+		return (wchar_t *) ucs;
+	return NULL;
 }
 
 /*
@@ -131,137 +131,137 @@ UniStrchr (const wchar_t * ucs, wchar_t uc)
  *     > 0:  First string is greater than second
  */
 static inline int
-UniStrcmp (const wchar_t * ucs1, const wchar_t * ucs2)
+UniStrcmp(const wchar_t *ucs1, const wchar_t *ucs2)
 {
-  while ( (*ucs1 == *ucs2) && *ucs1) {
-    ucs1++;
-    ucs2++;
-  }
-  return (int) * ucs1 - (int) * ucs2;
+	while ((*ucs1 == *ucs2) && *ucs1) {
+		ucs1++;
+		ucs2++;
+	}
+	return (int) *ucs1 - (int) *ucs2;
 }
 
 /*
  * UniStrcpy:  Copy a string
  */
 static inline wchar_t *
-UniStrcpy (wchar_t * ucs1, const wchar_t * ucs2)
+UniStrcpy(wchar_t *ucs1, const wchar_t *ucs2)
 {
-  wchar_t * anchor = ucs1; /* save the start of result string */
-  
-  while ( (*ucs1++ = *ucs2++) ) ;
-  return anchor;
+	wchar_t *anchor = ucs1;	/* save the start of result string */
+
+	while ((*ucs1++ = *ucs2++)) ;
+	return anchor;
 }
 
 /*
  * UniStrlen:  Return the length of a string (in 16 bit Unicode chars not bytes)
  */
 static inline size_t
-UniStrlen (const wchar_t * ucs1)
+UniStrlen(const wchar_t *ucs1)
 {
-  int i = 0;
-  
-  while (*ucs1++)
-  { i++; }
-  return i;
+	int i = 0;
+
+	while (*ucs1++)
+		i++;
+	return i;
 }
 
 /*
  * UniStrnlen:  Return the length (in 16 bit Unicode chars not bytes) of a
- *    string (length limited)
+ *		string (length limited)
  */
 static inline size_t
-UniStrnlen (const wchar_t * ucs1, int maxlen)
+UniStrnlen(const wchar_t *ucs1, int maxlen)
 {
-  int i = 0;
-  
-  while (*ucs1++) {
-    i++;
-    if (i >= maxlen)
-    { break; }
-  }
-  return i;
+	int i = 0;
+
+	while (*ucs1++) {
+		i++;
+		if (i >= maxlen)
+			break;
+	}
+	return i;
 }
 
 /*
  * UniStrncat:  Concatenate length limited string
  */
 static inline wchar_t *
-UniStrncat (wchar_t * ucs1, const wchar_t * ucs2, size_t n)
+UniStrncat(wchar_t *ucs1, const wchar_t *ucs2, size_t n)
 {
-  wchar_t * anchor = ucs1; /* save pointer to string 1 */
-  
-  while (*ucs1++) ;
-  ucs1--;     /* point to null terminator of s1 */
-  while (n-- && (*ucs1 = *ucs2) ) { /* copy s2 after s1 */
-    ucs1++;
-    ucs2++;
-  }
-  *ucs1 = 0;    /* Null terminate the result */
-  return (anchor);
+	wchar_t *anchor = ucs1;	/* save pointer to string 1 */
+
+	while (*ucs1++) ;
+	ucs1--;			/* point to null terminator of s1 */
+	while (n-- && (*ucs1 = *ucs2)) {	/* copy s2 after s1 */
+		ucs1++;
+		ucs2++;
+	}
+	*ucs1 = 0;		/* Null terminate the result */
+	return (anchor);
 }
 
 /*
  * UniStrncmp:  Compare length limited string
  */
 static inline int
-UniStrncmp (const wchar_t * ucs1, const wchar_t * ucs2, size_t n)
+UniStrncmp(const wchar_t *ucs1, const wchar_t *ucs2, size_t n)
 {
-  if (!n)
-  { return 0; } /* Null strings are equal */
-  while ( (*ucs1 == *ucs2) && *ucs1 && --n) {
-    ucs1++;
-    ucs2++;
-  }
-  return (int) * ucs1 - (int) * ucs2;
+	if (!n)
+		return 0;	/* Null strings are equal */
+	while ((*ucs1 == *ucs2) && *ucs1 && --n) {
+		ucs1++;
+		ucs2++;
+	}
+	return (int) *ucs1 - (int) *ucs2;
 }
 
 /*
  * UniStrncmp_le:  Compare length limited string - native to little-endian
  */
 static inline int
-UniStrncmp_le (const wchar_t * ucs1, const wchar_t * ucs2, size_t n)
+UniStrncmp_le(const wchar_t *ucs1, const wchar_t *ucs2, size_t n)
 {
-  if (!n)
-  { return 0; } /* Null strings are equal */
-  while ( (*ucs1 == __le16_to_cpu (*ucs2) ) && *ucs1 && --n) {
-    ucs1++;
-    ucs2++;
-  }
-  return (int) * ucs1 - (int) __le16_to_cpu (*ucs2);
+	if (!n)
+		return 0;	/* Null strings are equal */
+	while ((*ucs1 == __le16_to_cpu(*ucs2)) && *ucs1 && --n) {
+		ucs1++;
+		ucs2++;
+	}
+	return (int) *ucs1 - (int) __le16_to_cpu(*ucs2);
 }
 
 /*
  * UniStrncpy:  Copy length limited string with pad
  */
 static inline wchar_t *
-UniStrncpy (wchar_t * ucs1, const wchar_t * ucs2, size_t n)
+UniStrncpy(wchar_t *ucs1, const wchar_t *ucs2, size_t n)
 {
-  wchar_t * anchor = ucs1;
-  
-  while (n-- && *ucs2)  /* Copy the strings */
-  { *ucs1++ = *ucs2++; }
-  
-  n++;
-  while (n--)   /* Pad with nulls */
-  { *ucs1++ = 0; }
-  return anchor;
+	wchar_t *anchor = ucs1;
+
+	while (n-- && *ucs2)	/* Copy the strings */
+		*ucs1++ = *ucs2++;
+
+	n++;
+	while (n--)		/* Pad with nulls */
+		*ucs1++ = 0;
+	return anchor;
 }
 
 /*
  * UniStrncpy_le:  Copy length limited string with pad to little-endian
  */
 static inline wchar_t *
-UniStrncpy_le (wchar_t * ucs1, const wchar_t * ucs2, size_t n)
+UniStrncpy_le(wchar_t *ucs1, const wchar_t *ucs2, size_t n)
 {
-  wchar_t * anchor = ucs1;
-  
-  while (n-- && *ucs2)  /* Copy the strings */
-  { *ucs1++ = __le16_to_cpu (*ucs2++); }
-  
-  n++;
-  while (n--)   /* Pad with nulls */
-  { *ucs1++ = 0; }
-  return anchor;
+	wchar_t *anchor = ucs1;
+
+	while (n-- && *ucs2)	/* Copy the strings */
+		*ucs1++ = __le16_to_cpu(*ucs2++);
+
+	n++;
+	while (n--)		/* Pad with nulls */
+		*ucs1++ = 0;
+	return anchor;
 }
 
 /*
@@ -272,28 +272,27 @@ UniStrncpy_le (wchar_t * ucs1, const wchar_t * ucs2, size_t n)
  *     NULL if no matching string is found
  */
 static inline wchar_t *
-UniStrstr (const wchar_t * ucs1, const wchar_t * ucs2)
+UniStrstr(const wchar_t *ucs1, const wchar_t *ucs2)
 {
-  const wchar_t * anchor1 = ucs1;
-  const wchar_t * anchor2 = ucs2;
-  
-  while (*ucs1) {
-    if (*ucs1 == *ucs2) {
-      /* Partial match found */
-      ucs1++;
-      ucs2++;
-    }
-    else {
-      if (!*ucs2) /* Match found */
-      { return (wchar_t *) anchor1; }
-      ucs1 = ++anchor1; /* No match */
-      ucs2 = anchor2;
-    }
-  }
-  
-  if (!*ucs2)   /* Both end together */
-  { return (wchar_t *) anchor1; } /* Match found */
-  return NULL;    /* No match */
+	const wchar_t *anchor1 = ucs1;
+	const wchar_t *anchor2 = ucs2;
+
+	while (*ucs1) {
+		if (*ucs1 == *ucs2) {
+			/* Partial match found */
+			ucs1++;
+			ucs2++;
+		} else {
+			if (!*ucs2)	/* Match found */
+				return (wchar_t *) anchor1;
+			ucs1 = ++anchor1;	/* No match */
+			ucs2 = anchor2;
+		}
+	}
+
+	if (!*ucs2)		/* Both end together */
+		return (wchar_t *) anchor1;	/* Match found */
+	return NULL;		/* No match */
 }
 
 #ifndef UNIUPR_NOUPPER
@@ -301,84 +300,82 @@ UniStrstr (const wchar_t * ucs1, const wchar_t * ucs2)
  * UniToupper:  Convert a unicode character to upper case
  */
 static inline wchar_t
-UniToupper (register wchar_t uc)
+UniToupper(register wchar_t uc)
 {
-  register const struct UniCaseRange * rp;
-  
-  if (uc < sizeof (CifsUniUpperTable) ) {
-    /* Latin characters */
-    return uc + CifsUniUpperTable[uc];  /* Use base tables */
-  }
-  else {
-    rp = CifsUniUpperRange; /* Use range tables */
-    while (rp->start) {
-      if (uc < rp->start) /* Before start of range */
-      { return uc; }  /* Uppercase = input */
-      if (uc <= rp->end)  /* In range */
-      { return uc + rp->table[uc - rp->start]; }
-      rp++; /* Try next range */
-    }
-  }
-  return uc;    /* Past last range */
+	register const struct UniCaseRange *rp;
+
+	if (uc < sizeof(CifsUniUpperTable)) {
+		/* Latin characters */
+		return uc + CifsUniUpperTable[uc];	/* Use base tables */
+	} else {
+		rp = CifsUniUpperRange;	/* Use range tables */
+		while (rp->start) {
+			if (uc < rp->start)	/* Before start of range */
+				return uc;	/* Uppercase = input */
+			if (uc <= rp->end)	/* In range */
+				return uc + rp->table[uc - rp->start];
+			rp++;	/* Try next range */
+		}
+	}
+	return uc;		/* Past last range */
 }
 
 /*
  * UniStrupr:  Upper case a unicode string
  */
 static inline wchar_t *
-UniStrupr (register wchar_t * upin)
+UniStrupr(register wchar_t *upin)
 {
-  register wchar_t * up;
-  
-  up = upin;
-  while (*up) {   /* For all characters */
-    *up = UniToupper (*up);
-    up++;
-  }
-  return upin;    /* Return input pointer */
+	register wchar_t *up;
+
+	up = upin;
+	while (*up) {		/* For all characters */
+		*up = UniToupper(*up);
+		up++;
+	}
+	return upin;		/* Return input pointer */
 }
-#endif        /* UNIUPR_NOUPPER */
+#endif				/* UNIUPR_NOUPPER */
 
 #ifndef UNIUPR_NOLOWER
 /*
  * UniTolower:  Convert a unicode character to lower case
  */
 static inline wchar_t
-UniTolower (register wchar_t uc)
+UniTolower(register wchar_t uc)
 {
-  register const struct UniCaseRange * rp;
-  
-  if (uc < sizeof (CifsUniLowerTable) ) {
-    /* Latin characters */
-    return uc + CifsUniLowerTable[uc];  /* Use base tables */
-  }
-  else {
-    rp = CifsUniLowerRange; /* Use range tables */
-    while (rp->start) {
-      if (uc < rp->start) /* Before start of range */
-      { return uc; }  /* Uppercase = input */
-      if (uc <= rp->end)  /* In range */
-      { return uc + rp->table[uc - rp->start]; }
-      rp++; /* Try next range */
-    }
-  }
-  return uc;    /* Past last range */
+	register const struct UniCaseRange *rp;
+
+	if (uc < sizeof(CifsUniLowerTable)) {
+		/* Latin characters */
+		return uc + CifsUniLowerTable[uc];	/* Use base tables */
+	} else {
+		rp = CifsUniLowerRange;	/* Use range tables */
+		while (rp->start) {
+			if (uc < rp->start)	/* Before start of range */
+				return uc;	/* Uppercase = input */
+			if (uc <= rp->end)	/* In range */
+				return uc + rp->table[uc - rp->start];
+			rp++;	/* Try next range */
+		}
+	}
+	return uc;		/* Past last range */
 }
 
 /*
  * UniStrlwr:  Lower case a unicode string
  */
 static inline wchar_t *
-UniStrlwr (register wchar_t * upin)
+UniStrlwr(register wchar_t *upin)
 {
-  register wchar_t * up;
-  
-  up = upin;
-  while (*up) {   /* For all characters */
-    *up = UniTolower (*up);
-    up++;
-  }
-  return upin;    /* Return input pointer */
+	register wchar_t *up;
+
+	up = upin;
+	while (*up) {		/* For all characters */
+		*up = UniTolower(*up);
+		up++;
+	}
+	return upin;		/* Return input pointer */
 }
 
 #endif

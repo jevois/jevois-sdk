@@ -31,10 +31,10 @@ extern unsigned int vfe_dbg_lv;
 typedef unsigned int __hdle;
 
 struct vfe_mm {
-  unsigned int size;
-  void * phy_addr;
-  void * vir_addr;
-  void * dma_addr;
+	unsigned int size;
+	void* phy_addr;
+	void* vir_addr;
+	void* dma_addr;
 };
 
 struct vfe_gpio_cfg {
@@ -48,24 +48,24 @@ struct vfe_gpio_cfg {
   int gpio;
 };
 
-extern struct clk * os_clk_get (struct device * dev, const char * id);
-extern void  os_clk_put (struct clk * clk);
-extern int os_clk_set_parent (struct clk * clk, struct clk * parent);
-extern int os_clk_set_rate (struct clk * clk, unsigned long rate);
-extern int os_clk_enable (struct clk * clk);
-extern int os_clk_prepare_enable (struct clk * clk);
-extern void os_clk_disable (struct clk * clk);
-extern void os_clk_disable_unprepare (struct clk * clk);
-extern int os_clk_reset_assert (struct clk * clk);
-extern int os_clk_reset_deassert (struct clk * clk);
-extern int os_request_irq (unsigned int irq, irq_handler_t handler, unsigned long flags, const char * name, void * dev);
-extern __hdle os_gpio_request (struct vfe_gpio_cfg * gpio_list, __u32 group_count_max);
-extern int os_gpio_set (struct vfe_gpio_cfg * gpio_list, __u32 group_count_max);
+extern struct clk *os_clk_get(struct device *dev, const char *id);
+extern void  os_clk_put(struct clk *clk);
+extern int os_clk_set_parent(struct clk *clk, struct clk *parent);
+extern int os_clk_set_rate(struct clk *clk, unsigned long rate);
+extern int os_clk_enable(struct clk *clk);
+extern int os_clk_prepare_enable(struct clk *clk);
+extern void os_clk_disable(struct clk *clk);
+extern void os_clk_disable_unprepare(struct clk *clk);
+extern int os_clk_reset_assert(struct clk *clk);
+extern int os_clk_reset_deassert(struct clk *clk); 
+extern int os_request_irq(unsigned int irq, irq_handler_t handler, unsigned long flags,const char *name, void *dev);
+extern __hdle os_gpio_request(struct vfe_gpio_cfg *gpio_list, __u32 group_count_max);
+extern int os_gpio_set(struct vfe_gpio_cfg *gpio_list, __u32 group_count_max);
 
-extern int os_gpio_release (__hdle p_handler, __s32 if_release_to_default_status);
-extern int os_gpio_write (u32 p_handler, __u32 value_to_gpio, const char * gpio_name, int force_value_flag);
-extern int os_gpio_set_status (u32 p_handler, __u32 if_set_to_output_status, const char * gpio_name);
-extern int os_mem_alloc (struct vfe_mm * mem_man);
-extern void os_mem_free (struct vfe_mm * mem_man);
+extern int os_gpio_release(__hdle p_handler, __s32 if_release_to_default_status); 
+extern int os_gpio_write(u32 p_handler, __u32 value_to_gpio, const char *gpio_name, int force_value_flag);
+extern int os_gpio_set_status(u32 p_handler, __u32 if_set_to_output_status, const char *gpio_name);
+extern int os_mem_alloc(struct vfe_mm *mem_man);
+extern void os_mem_free(struct vfe_mm *mem_man);
 
 #endif

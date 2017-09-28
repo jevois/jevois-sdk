@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -28,42 +28,42 @@
 #include <sys_partition.h>
 #include <securestorage.h>
 
-#define MAGIC   "sunxi"
-#define PART_NAME "private"
-#define USER_DATA_MAXSIZE       (8 * 1024)
-#define USER_DATA_PARAMETER_MAX_COUNT (30)
+#define MAGIC		"sunxi"
+#define PART_NAME	"private"
+#define USER_DATA_MAXSIZE				(8 * 1024)
+#define USER_DATA_PARAMETER_MAX_COUNT	(30)
 
 
-#define NAME_SIZE 32
-#define VALUE_SIZE  128
-
-typedef struct {
-  char magic_name[8];
-  int count;
-  int reserved[3];
-} USER_DATA_HEAR;
+#define	NAME_SIZE	32
+#define VALUE_SIZE	128
 
 typedef struct {
-  char name[NAME_SIZE];
-  char value[VALUE_SIZE];
-  int valid;         
-  int reserved[3];
-} USER_PRIVATE_DATA;
+	char magic_name[8];
+	int count;
+	int reserved[3];
+}USER_DATA_HEAR;
 
-char * IGNORE_ENV_VARIABLE[] = { "console",
-                                 "root",
-                                 "init",
-                                 "loglevel",
-                                 "partitions",
-                                 "vmalloc",
-                                 "earlyprintk",
-                                 "ion_reserve",
-                               };
+typedef struct {
+	char name[NAME_SIZE];
+	char value[VALUE_SIZE];
+	int valid;				
+	int reserved[3];
+}USER_PRIVATE_DATA;
 
-int USER_DATA_NUM;                 
-char USER_DATA_NAME[10][NAME_SIZE] = {{'\0'}};   
+char *IGNORE_ENV_VARIABLE[] = { "console",
+								"root",
+								"init",
+								"loglevel",
+								"partitions",
+								"vmalloc",
+								"earlyprintk",
+								"ion_reserve",
+							};
 
-void check_user_data (void);
+int USER_DATA_NUM;								
+char USER_DATA_NAME[10][NAME_SIZE] = {{'\0'}};	
+
+void check_user_data(void);
 /*
 ************************************************************************************************************
 *
@@ -80,93 +80,93 @@ void check_user_data (void);
 *
 ************************************************************************************************************
 */
-int save_user_private_data (char * name, char * data)
+int save_user_private_data(char *name, char *data)
 {
-  int j;
-  unsigned int part_offset;        
-  unsigned int part_size;          
-  unsigned int user_data_offset;       
-  char user_data_buffer[USER_DATA_MAXSIZE] = {0};
-  USER_PRIVATE_DATA * user_data_p = NULL;
-  USER_DATA_HEAR * user_data_head = NULL;
-  
-  if (!name || !data) {
-    printf ("error: the name (data) is null\n");
-    return 0;
-  }
-  
-  part_size = sunxi_partition_get_size_byname (PART_NAME);
-  if (part_size > 0)
-  {
-    part_offset = sunxi_partition_get_offset_byname (PART_NAME);
-    user_data_offset = part_offset + part_size - (USER_DATA_MAXSIZE >> 9);   
-    if (!sunxi_flash_read (user_data_offset, USER_DATA_MAXSIZE >> 9, user_data_buffer) ) {
-      printf ("read flash error\n");
-      return 0;
-    }
-    
-    user_data_head = (USER_DATA_HEAR *) user_data_buffer;
-    user_data_p = (USER_PRIVATE_DATA *) (user_data_buffer + sizeof (USER_DATA_HEAR) );
-    if (strncmp (user_data_head->magic_name, MAGIC, 5) ) {
-      memset (user_data_buffer, 0xff, USER_DATA_MAXSIZE);
-      strcpy (user_data_head->magic_name, MAGIC);
-      user_data_head->count = 0;
-      printf ("init the (user) private space\n");
-    }
-    
-    if (user_data_head->count > 0) {
-      for (j = 0; j < user_data_head->count && j < USER_DATA_PARAMETER_MAX_COUNT; j++) {
-        if (!strcmp (name, user_data_p->name) ) {      
-          strcpy (user_data_p->value, data);       
-          user_data_p->valid = 1;                
-          printf ("Saving Environment to \n");
-          break;
-        }
-        user_data_p++;
-      }
-      if (j == user_data_head->count) {
-        strcpy (user_data_p->name, name);        
-        strcpy (user_data_p->value, data);
-        user_data_p->valid = 1;
-        user_data_head->count++;
-        printf ("Saving Environment to \n");
-      }
-    }
-    else {
-      strcpy (user_data_p->name, name);        
-      strcpy (user_data_p->value, data);
-      user_data_p->valid = 1;
-      user_data_head->count++;
-      printf ("Saving Environment to \n");
-    }
-    
-    sunxi_flash_write (user_data_offset, USER_DATA_MAXSIZE >> 9, user_data_buffer);
-    sunxi_flash_flush();
-    
-    return 0;
-  }
-  printf ("the part isn't exist\n");
-  return 0;
+	int j;
+	unsigned int part_offset;				
+	unsigned int part_size;					
+	unsigned int user_data_offset;			
+	char user_data_buffer[USER_DATA_MAXSIZE] = {0};
+	USER_PRIVATE_DATA *user_data_p = NULL;
+	USER_DATA_HEAR *user_data_head = NULL;
+
+	if (!name || !data) {
+		printf("error: the name (data) is null\n");
+		return 0;
+	}
+
+	part_size = sunxi_partition_get_size_byname(PART_NAME);
+	if (part_size > 0)
+	{
+		part_offset = sunxi_partition_get_offset_byname(PART_NAME);
+		user_data_offset = part_offset + part_size - (USER_DATA_MAXSIZE >> 9);	
+		if (!sunxi_flash_read(user_data_offset, USER_DATA_MAXSIZE >> 9, user_data_buffer)) {
+			printf("read flash error\n");
+			return 0;
+		}
+
+		user_data_head = (USER_DATA_HEAR *)user_data_buffer;
+		user_data_p = (USER_PRIVATE_DATA *)(user_data_buffer + sizeof(USER_DATA_HEAR));
+		if (strncmp(user_data_head->magic_name, MAGIC, 5)) {
+			memset(user_data_buffer, 0xff, USER_DATA_MAXSIZE);
+			strcpy(user_data_head->magic_name, MAGIC);
+			user_data_head->count = 0;
+			printf("init the (user) private space\n");
+		}
+
+		if (user_data_head->count > 0) {
+			for (j = 0; j < user_data_head->count && j < USER_DATA_PARAMETER_MAX_COUNT; j++) {
+				if (!strcmp(name, user_data_p->name)) {				
+					strcpy(user_data_p->value, data);				
+					user_data_p->valid = 1;							   
+					printf("Saving Environment to \n");
+					break;
+				}
+				user_data_p++;
+			}
+			if (j == user_data_head->count) {
+					strcpy(user_data_p->name, name);				
+					strcpy(user_data_p->value, data);
+					user_data_p->valid = 1;
+					user_data_head->count++;
+					printf("Saving Environment to \n");
+			}
+		}
+		else {
+			strcpy(user_data_p->name, name);				
+			strcpy(user_data_p->value, data);
+			user_data_p->valid = 1;
+			user_data_head->count++;
+			printf("Saving Environment to \n");
+		}
+
+		sunxi_flash_write(user_data_offset, USER_DATA_MAXSIZE >> 9, user_data_buffer);
+		sunxi_flash_flush();
+
+		return 0;
+	}
+	printf("the part isn't exist\n");
+	return 0;
 }
 
 
-int do_save_user_data (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
+int do_save_user_data (cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
-  if (argc < 3) {
-    printf ("usage: saveud <name> <data>\n");
-    return 0;
-  }
-  if (argc == 3) {
-    save_user_private_data (argv[1], argv[2]);
-  }
-  
-  return 0;
+	if (argc < 3) {
+		printf("usage: saveud <name> <data>\n");
+		return 0;
+	}
+	if (argc == 3) {
+		save_user_private_data(argv[1], argv[2]);
+	}
+
+	return 0;
 }
 
-U_BOOT_CMD (
-  save_userdata,  3,  1,  do_save_user_data,
-  "save user data",
-  "<name> <data>\n"
+U_BOOT_CMD(
+	save_userdata,	3,	1,	do_save_user_data,
+	"save user data",
+	"<name> <data>\n"
 );
 
 /*
@@ -185,66 +185,66 @@ U_BOOT_CMD (
 *
 ************************************************************************************************************
 */
-int user_data_list (void)
+int user_data_list(void)
 {
-  int j;
-  unsigned int part_offset;        
-  unsigned int part_size;          
-  unsigned int user_data_offset;       
-  char user_data_buffer[USER_DATA_MAXSIZE];
-  USER_PRIVATE_DATA * user_data_p = NULL;
-  USER_DATA_HEAR * user_data_head = NULL;
-  
-  printf ("user_data_list\n");
-  part_size = sunxi_partition_get_size_byname (PART_NAME);
-  if (part_size > 0) {
-    part_offset = sunxi_partition_get_offset_byname (PART_NAME);
-    
-    user_data_offset = part_offset + part_size - (USER_DATA_MAXSIZE >> 9);   
-    if (!sunxi_flash_read (user_data_offset, USER_DATA_MAXSIZE >> 9, user_data_buffer) ) {
-      printf ("read flash error\n");
-      return 0;
-    }
-    
-    user_data_head = (USER_DATA_HEAR *) user_data_buffer;
-    user_data_p = (USER_PRIVATE_DATA *) (user_data_buffer + sizeof (USER_DATA_HEAR) );
-    
-    if (strncmp (user_data_head->magic_name, MAGIC, 5) ) {
-      printf ("the (user) private space\n");
-      return 0;
-    }
-    
-    if (user_data_head->count > 0) {
-      printf ("count = %d\n", user_data_head->count);
-      for (j = 0; j < user_data_head->count; j++) {
-        printf ("%s = %s\n", user_data_p->name, user_data_p->value);
-        user_data_p++;
-      }
-      return 0;
-    }
-    printf ("have not data\n");
-    return 0;
-    
-  }
-  printf ("the part isn't exist\n");
-  return 0;
+	int j;
+	unsigned int part_offset;				
+	unsigned int part_size;					
+	unsigned int user_data_offset;			
+	char user_data_buffer[USER_DATA_MAXSIZE];
+	USER_PRIVATE_DATA *user_data_p = NULL;
+	USER_DATA_HEAR *user_data_head = NULL;
+
+	printf("user_data_list\n");
+	part_size = sunxi_partition_get_size_byname(PART_NAME);
+	if (part_size > 0) {
+		part_offset = sunxi_partition_get_offset_byname(PART_NAME);
+
+		user_data_offset = part_offset + part_size - (USER_DATA_MAXSIZE >> 9);	
+		if (!sunxi_flash_read(user_data_offset, USER_DATA_MAXSIZE >> 9, user_data_buffer)) {
+			printf("read flash error\n");
+			return 0;
+		}
+
+		user_data_head = (USER_DATA_HEAR *)user_data_buffer;
+		user_data_p = (USER_PRIVATE_DATA *)(user_data_buffer + sizeof(USER_DATA_HEAR));
+		
+		if (strncmp(user_data_head->magic_name, MAGIC, 5)) {
+			printf("the (user) private space\n");
+			return 0;
+		}
+		
+		if (user_data_head->count > 0) {
+			printf("count = %d\n", user_data_head->count);
+			for (j = 0; j < user_data_head->count; j++) {
+				printf("%s = %s\n", user_data_p->name, user_data_p->value);
+				user_data_p++;
+			}
+			return 0;
+		}
+		printf("have not data\n");
+		return 0;
+
+	}
+	printf("the part isn't exist\n");
+	return 0;
 }
 
-int do_check_userdata (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
+int do_check_userdata (cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
-  if (argc > 1)
-  {
-    printf ("error: <command>\n");
-    return 0;
-  }
-  user_data_list();
-  return 0;
+	if (argc > 1)
+	{
+		printf("error: <command>\n");
+		return 0;
+	}
+	user_data_list();
+	return 0;
 }
 
-U_BOOT_CMD (
-  check_userdata, 1,  1,  do_check_userdata,
-  "check user data",
-  "<command>\n"
+U_BOOT_CMD(
+	check_userdata,	1,	1,	do_check_userdata,
+	"check user data",
+	"<command>\n"
 );
 
 /*
@@ -263,87 +263,87 @@ U_BOOT_CMD (
 *
 ************************************************************************************************************
 */
-int update_user_data (void)
+int update_user_data(void)
 {
-  int i, j;
-  unsigned int part_offset;        
-  unsigned int part_size;          
-  unsigned int user_data_offset;       
-  char user_data_buffer[USER_DATA_MAXSIZE];
-  USER_PRIVATE_DATA * user_data_p = NULL;
-  USER_DATA_HEAR * user_data_head = NULL;
-  #ifdef CONFIG_SUNXI_SECURE_STORAGE
-  int data_len;
-  int ret;
-  char buffer[512];
-  int updata_data_num = 0;
-  #endif
-  
-  if (uboot_spare_head.boot_data.work_mode != WORK_MODE_BOOT)
-  {
-    return 0;
-  }
-  
-  check_user_data();                     
-  
-  #ifdef CONFIG_SUNXI_SECURE_STORAGE
-  if (!sunxi_secure_storage_init() )
-  {
-    memset (buffer, 0, 512);
-    for (i = 0; i < USER_DATA_NUM; i++)
-    {
-      ret = sunxi_secure_object_read (USER_DATA_NAME[i], buffer, 512, &data_len);
-      if (!ret && data_len < 512)
-      {
-        setenv (USER_DATA_NAME[i], buffer);
-        printf ("updataed %s = %s\n", USER_DATA_NAME[i], buffer);
-        memset (buffer, 0, 512);
-        updata_data_num++;
-      }
-    }
-  }
-  if (updata_data_num)
-  {
-    return 0;
-  }
-  #endif
-  
-  part_size = sunxi_partition_get_size_byname (PART_NAME);
-  if (part_size > 0) {
-    part_offset = sunxi_partition_get_offset_byname (PART_NAME);
-    user_data_offset = part_offset + part_size - (USER_DATA_MAXSIZE >> 9);   
-    if (!sunxi_flash_read (user_data_offset, USER_DATA_MAXSIZE >> 9, user_data_buffer) ) {
-      printf ("read flash error\n");
-      return 0;
-    }
-    
-    user_data_head = (USER_DATA_HEAR *) user_data_buffer;
-    user_data_p = (USER_PRIVATE_DATA *) (user_data_buffer + sizeof (USER_DATA_HEAR) );
-    
-    if (strncmp (user_data_head->magic_name, MAGIC, 5) ) {     
-      printf ("the user data'magic is bad\n");
-      return 0;
-    }
-    
-    if (user_data_head->count > 0) {
-      for (i = 0; i < USER_DATA_NUM; i++) {
-        user_data_p = (USER_PRIVATE_DATA *) (user_data_buffer + sizeof (USER_DATA_HEAR) );
-        for (j = 0; j < user_data_head->count && j < USER_DATA_PARAMETER_MAX_COUNT; j++) {
-          if (!strcmp (USER_DATA_NAME[i], user_data_p->name) )
-          {
-            setenv (user_data_p->name, user_data_p->value);
-            printf ("updataed %s = %s\n", user_data_p->name, user_data_p->value);
-          }
-          user_data_p++;
-        }
-      }
-      return 0;
-    }
-    printf ("not the user data to updata\n");
-    return 0;
-  }
-  printf ("the %s part isn't exist\n", PART_NAME);
-  return 0;
+	int i, j;
+	unsigned int part_offset;				
+	unsigned int part_size;					
+	unsigned int user_data_offset;			
+	char user_data_buffer[USER_DATA_MAXSIZE];
+	USER_PRIVATE_DATA *user_data_p = NULL;
+	USER_DATA_HEAR *user_data_head = NULL;
+#ifdef CONFIG_SUNXI_SECURE_STORAGE
+	int data_len;
+	int ret;
+	char buffer[512];
+	int updata_data_num = 0;
+#endif
+
+	if(uboot_spare_head.boot_data.work_mode != WORK_MODE_BOOT)
+	{
+		return 0;
+	}
+	
+	check_user_data();										
+	
+#ifdef CONFIG_SUNXI_SECURE_STORAGE
+	if(!sunxi_secure_storage_init())
+	{	
+		memset(buffer, 0, 512);
+		for (i = 0; i < USER_DATA_NUM; i++) 
+		{	
+			ret = sunxi_secure_object_read(USER_DATA_NAME[i], buffer, 512, &data_len);
+			if(!ret && data_len < 512) 
+			{
+				setenv(USER_DATA_NAME[i], buffer);
+				printf("updataed %s = %s\n", USER_DATA_NAME[i], buffer);					
+				memset(buffer, 0, 512);
+				updata_data_num++;
+			}
+		}
+	}
+	if (updata_data_num)
+	{
+		return 0;	
+	}
+#endif
+		
+	part_size = sunxi_partition_get_size_byname(PART_NAME);
+	if (part_size > 0) {
+		part_offset = sunxi_partition_get_offset_byname(PART_NAME);
+		user_data_offset = part_offset + part_size - (USER_DATA_MAXSIZE >> 9);	
+		if (!sunxi_flash_read(user_data_offset, USER_DATA_MAXSIZE >> 9, user_data_buffer)) {
+			printf("read flash error\n");
+			return 0;
+		}
+		
+		user_data_head = (USER_DATA_HEAR *)user_data_buffer;
+		user_data_p = (USER_PRIVATE_DATA *)(user_data_buffer + sizeof(USER_DATA_HEAR));
+	
+		if (strncmp(user_data_head->magic_name, MAGIC, 5)) { 			
+			printf("the user data'magic is bad\n");
+			return 0;
+		}
+	
+		if (user_data_head->count > 0) {
+			for (i = 0; i < USER_DATA_NUM; i++) {
+				user_data_p = (USER_PRIVATE_DATA *)(user_data_buffer + sizeof(USER_DATA_HEAR));
+				for (j = 0; j < user_data_head->count && j < USER_DATA_PARAMETER_MAX_COUNT; j++) {
+					if (!strcmp(USER_DATA_NAME[i], user_data_p->name))
+					{
+						setenv(user_data_p->name, user_data_p->value);
+						printf("updataed %s = %s\n", user_data_p->name, user_data_p->value);
+					}
+					user_data_p++;
+				}
+			}
+			return 0;
+		}
+		printf("not the user data to updata\n");
+		return 0;
+	}
+	printf("the %s part isn't exist\n", PART_NAME);
+	return 0;
 }
 
 /*
@@ -357,81 +357,81 @@ int update_user_data (void)
 *
 *    return        :
 *
-*    note          :     得到用户的环境变量
+*    note          :		 得到用户的环境变量
 *
 *
 ************************************************************************************************************
 */
-void check_user_data (void)
+void check_user_data(void)
 {
-  char * command_p  = NULL;
-  char temp_name[32] = {'\0'};
-  int i, j;
-  
-  if ( (uboot_spare_head.boot_data.storage_type == 1) || (uboot_spare_head.boot_data.storage_type == 2) )
-  {
-    command_p = getenv ("setargs_mmc");
-  }
-  else
-  {
-    command_p = getenv ("setargs_nand");
-  }
-  if (!command_p) {
-    printf ("cann't get the boot_base from the env\n");
-    return ;
-  }
-  
-  while (*command_p != '\0' && *command_p != ' ') {  
-    command_p++;
-  }
-  command_p++;
-  while (*command_p == ' ') {              
-    command_p++;
-  }
-  while (*command_p != '\0' && *command_p != ' ') {    
-    command_p++;
-  }
-  command_p++;
-  while (*command_p == ' ') {
-    command_p++;
-  }
-  
-  USER_DATA_NUM = 0;
-  while (*command_p != '\0') {
-    i = 0;
-    while (*command_p != '=') {
-      temp_name[i++] = *command_p;
-      command_p++;
-    }
-    temp_name[i] = '\0';
-    if (i != 0) {
-      for (j = 0; j < sizeof (IGNORE_ENV_VARIABLE) / sizeof (int); j++) {
-        if (!strcmp (IGNORE_ENV_VARIABLE[j], temp_name) ) {  
-          break;
-        }
-      }
-      if (j >= sizeof (IGNORE_ENV_VARIABLE) / sizeof (int) ) {
-        if (!strcmp (temp_name, "mac_addr") ) {        
-          strcpy (USER_DATA_NAME[USER_DATA_NUM], "mac");
-        }
-        else {
-          strcpy (USER_DATA_NAME[USER_DATA_NUM], temp_name);
-        }
-        USER_DATA_NUM++;
-      }
-    }
-    while (*command_p != '\0' && *command_p != ' ') {        
-      command_p++;
-    }
-    while (*command_p == ' ') {
-      command_p++;
-    }
-  }
-  /*
-    printf("USER_DATA_NUM = %d\n", USER_DATA_NUM);
-    for (i = 0; i < USER_DATA_NUM; i++) {
-      printf("user data = %s\n", USER_DATA_NAME[i]);
-    }
-  */
+	char *command_p  =NULL;
+	char temp_name[32] = {'\0'};
+	int i, j;
+
+	if((uboot_spare_head.boot_data.storage_type == 1) || (uboot_spare_head.boot_data.storage_type == 2))
+	{
+		command_p = getenv("setargs_mmc");
+	}
+	else
+	{
+		command_p = getenv("setargs_nand");
+	}
+	if (!command_p) {
+		printf("cann't get the boot_base from the env\n");
+		return ;
+	}
+
+	while (*command_p != '\0' && *command_p != ' ') {	
+		command_p++;
+	}
+	command_p++;
+	while (*command_p == ' ') {							
+		command_p++;
+	}
+	while (*command_p != '\0' && *command_p != ' ') { 	
+		command_p++;
+	}
+	command_p++;
+	while (*command_p == ' ') {
+		command_p++;
+	}
+
+	USER_DATA_NUM =0;
+	while (*command_p != '\0') {
+		i = 0;
+		while (*command_p != '=') {
+			temp_name[i++] = *command_p;
+			command_p++;
+		}
+		temp_name[i] = '\0';
+		if (i != 0) {
+			for (j = 0; j < sizeof(IGNORE_ENV_VARIABLE) / sizeof(int); j++) {
+				if (!strcmp(IGNORE_ENV_VARIABLE[j], temp_name)) {		
+					break;
+				}
+			}
+			if (j >= sizeof(IGNORE_ENV_VARIABLE) / sizeof(int)) {
+				if (!strcmp(temp_name, "mac_addr")) {					
+					strcpy(USER_DATA_NAME[USER_DATA_NUM], "mac");
+				}
+				else {
+					strcpy(USER_DATA_NAME[USER_DATA_NUM], temp_name);
+				}
+				USER_DATA_NUM++;
+			}
+		}
+		while (*command_p != '\0' && *command_p != ' ') {				
+			command_p++;
+		}
+		while (*command_p == ' ') {
+			command_p++;
+		}
+	}
+/*
+	printf("USER_DATA_NUM = %d\n", USER_DATA_NUM);
+	for (i = 0; i < USER_DATA_NUM; i++) {
+		printf("user data = %s\n", USER_DATA_NAME[i]);
+	}
+*/
 }
 

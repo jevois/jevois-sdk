@@ -31,25 +31,25 @@ DECLARE_GLOBAL_DATA_PTR;
 
 int board_init (void)
 {
-  gd->bd->bi_arch_number = MACH_TYPE_SCB9328;
-  gd->bd->bi_boot_params = 0x08000100;
-  
-  return 0;
+	gd->bd->bi_arch_number = MACH_TYPE_SCB9328;
+	gd->bd->bi_boot_params = 0x08000100;
+
+	return 0;
 }
 
 int dram_init (void)
 {
-  /* dram_init must store complete ramsize in gd->ram_size */
-  gd->ram_size = get_ram_size ( (void *) SCB9328_SDRAM_1,
-                                SCB9328_SDRAM_1_SIZE);
-                                
-  return 0;
+	/* dram_init must store complete ramsize in gd->ram_size */
+	gd->ram_size = get_ram_size((void *)SCB9328_SDRAM_1,
+				    SCB9328_SDRAM_1_SIZE);
+
+	return 0;
 }
 
-void dram_init_banksize (void)
+void dram_init_banksize(void)
 {
-  gd->bd->bi_dram[0].start = SCB9328_SDRAM_1;
-  gd->bd->bi_dram[0].size = SCB9328_SDRAM_1_SIZE;
+	gd->bd->bi_dram[0].start = SCB9328_SDRAM_1;
+	gd->bd->bi_dram[0].size = SCB9328_SDRAM_1_SIZE;
 }
 
 /**
@@ -63,12 +63,12 @@ void dram_init_banksize (void)
 
 void show_boot_progress (int status)
 {
-  return;
+	return;
 }
 
 #ifdef CONFIG_DRIVER_DM9000
-int board_eth_init (bd_t * bis)
+int board_eth_init(bd_t *bis)
 {
-  return dm9000_initialize (bis);
+	return dm9000_initialize(bis);
 }
 #endif

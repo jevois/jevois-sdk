@@ -16,14 +16,14 @@
  * Any `call clobbered' register without a special meaning should be OK,
  * but check asm/microblaze/kernel/entry.S to be sure.
  */
-#define CURRENT_TASK  r31
+#define CURRENT_TASK	r31
 # ifndef __ASSEMBLY__
 /*
  * Dedicate r31 to keeping the current task pointer
  */
-register struct task_struct * current asm ("r31");
+register struct task_struct *current asm("r31");
 
-# define get_current()  current
+# define get_current()	current
 # endif /* __ASSEMBLY__ */
 
 #endif /* _ASM_MICROBLAZE_CURRENT_H */

@@ -8,8 +8,8 @@
 #define _SPARC_MACHINES_H
 
 struct Sun_Machine_Models {
-  char * name;
-  unsigned char id_machtype;
+	char *name;
+	unsigned char id_machtype;
 };
 
 /* Current number of machines we know about that has an IDPROM

@@ -46,82 +46,82 @@
 #define OCP_STATUS_RESP_ERROR 0x30000
 
 struct wl1271_partition_set wl12xx_part_table[PART_TABLE_LEN] = {
-  [PART_DOWN] = {
-    .mem = {
-      .start = 0x00000000,
-      .size  = 0x000177c0
-    },
-    .reg = {
-      .start = REGISTERS_BASE,
-      .size  = 0x00008800
-    },
-    .mem2 = {
-      .start = 0x00000000,
-      .size  = 0x00000000
-    },
-    .mem3 = {
-      .start = 0x00000000,
-      .size  = 0x00000000
-    },
-  },
-  
-  [PART_WORK] = {
-    .mem = {
-      .start = 0x00040000,
-      .size  = 0x00014fc0
-    },
-    .reg = {
-      .start = REGISTERS_BASE,
-      .size  = 0x0000a000
-    },
-    .mem2 = {
-      .start = 0x003004f8,
-      .size  = 0x00000004
-    },
-    .mem3 = {
-      .start = 0x00040404,
-      .size  = 0x00000000
-    },
-  },
-  
-  [PART_DRPW] = {
-    .mem = {
-      .start = 0x00040000,
-      .size  = 0x00014fc0
-    },
-    .reg = {
-      .start = DRPW_BASE,
-      .size  = 0x00006000
-    },
-    .mem2 = {
-      .start = 0x00000000,
-      .size  = 0x00000000
-    },
-    .mem3 = {
-      .start = 0x00000000,
-      .size  = 0x00000000
-    }
-  }
+	[PART_DOWN] = {
+		.mem = {
+			.start = 0x00000000,
+			.size  = 0x000177c0
+		},
+		.reg = {
+			.start = REGISTERS_BASE,
+			.size  = 0x00008800
+		},
+		.mem2 = {
+			.start = 0x00000000,
+			.size  = 0x00000000
+		},
+		.mem3 = {
+			.start = 0x00000000,
+			.size  = 0x00000000
+		},
+	},
+
+	[PART_WORK] = {
+		.mem = {
+			.start = 0x00040000,
+			.size  = 0x00014fc0
+		},
+		.reg = {
+			.start = REGISTERS_BASE,
+			.size  = 0x0000a000
+		},
+		.mem2 = {
+			.start = 0x003004f8,
+			.size  = 0x00000004
+		},
+		.mem3 = {
+			.start = 0x00040404,
+			.size  = 0x00000000
+		},
+	},
+
+	[PART_DRPW] = {
+		.mem = {
+			.start = 0x00040000,
+			.size  = 0x00014fc0
+		},
+		.reg = {
+			.start = DRPW_BASE,
+			.size  = 0x00006000
+		},
+		.mem2 = {
+			.start = 0x00000000,
+			.size  = 0x00000000
+		},
+		.mem3 = {
+			.start = 0x00000000,
+			.size  = 0x00000000
+		}
+	}
 };
 
-bool wl1271_set_block_size (struct wl1271 * wl)
+bool wl1271_set_block_size(struct wl1271 *wl)
 {
-  if (wl->if_ops->set_block_size) {
-    wl->if_ops->set_block_size (wl->dev, WL12XX_BUS_BLOCK_SIZE);
-    return true;
-  }
-  
-  return false;
+	if (wl->if_ops->set_block_size) {
+		wl->if_ops->set_block_size(wl->dev, WL12XX_BUS_BLOCK_SIZE);
+		return true;
+	}
+
+	return false;
 }
 
-void wl1271_disable_interrupts (struct wl1271 * wl)
+void wl1271_disable_interrupts(struct wl1271 *wl)
 {
-  disable_irq (wl->irq);
+	disable_irq(wl->irq);
 }
 
-void wl1271_enable_interrupts (struct wl1271 * wl)
+void wl1271_enable_interrupts(struct wl1271 *wl)
 {
-  enable_irq (wl->irq);
+	enable_irq(wl->irq);
 }
 
 /* Set the SPI partitions to access the chip addresses
@@ -158,88 +158,87 @@ void wl1271_enable_interrupts (struct wl1271 * wl)
  *                                    |    |
  *
  */
-int wl1271_set_partition (struct wl1271 * wl,
-                          struct wl1271_partition_set * p)
+int wl1271_set_partition(struct wl1271 *wl,
+			 struct wl1271_partition_set *p)
 {
-  /* copy partition info */
-  memcpy (&wl->part, p, sizeof (*p) );
-  
-  wl1271_debug (DEBUG_SPI, "mem_start %08X mem_size %08X",
-                p->mem.start, p->mem.size);
-  wl1271_debug (DEBUG_SPI, "reg_start %08X reg_size %08X",
-                p->reg.start, p->reg.size);
-  wl1271_debug (DEBUG_SPI, "mem2_start %08X mem2_size %08X",
-                p->mem2.start, p->mem2.size);
-  wl1271_debug (DEBUG_SPI, "mem3_start %08X mem3_size %08X",
-                p->mem3.start, p->mem3.size);
-                
-  /* write partition info to the chipset */
-  wl1271_raw_write32 (wl, HW_PART0_START_ADDR, p->mem.start);
-  wl1271_raw_write32 (wl, HW_PART0_SIZE_ADDR, p->mem.size);
-  wl1271_raw_write32 (wl, HW_PART1_START_ADDR, p->reg.start);
-  wl1271_raw_write32 (wl, HW_PART1_SIZE_ADDR, p->reg.size);
-  wl1271_raw_write32 (wl, HW_PART2_START_ADDR, p->mem2.start);
-  wl1271_raw_write32 (wl, HW_PART2_SIZE_ADDR, p->mem2.size);
-  wl1271_raw_write32 (wl, HW_PART3_START_ADDR, p->mem3.start);
-  
-  return 0;
-}
-EXPORT_SYMBOL_GPL (wl1271_set_partition);
+	/* copy partition info */
+	memcpy(&wl->part, p, sizeof(*p));
 
-void wl1271_io_reset (struct wl1271 * wl)
-{
-  if (wl->if_ops->reset)
-  { wl->if_ops->reset (wl->dev); }
-}
+	wl1271_debug(DEBUG_SPI, "mem_start %08X mem_size %08X",
+		     p->mem.start, p->mem.size);
+	wl1271_debug(DEBUG_SPI, "reg_start %08X reg_size %08X",
+		     p->reg.start, p->reg.size);
+	wl1271_debug(DEBUG_SPI, "mem2_start %08X mem2_size %08X",
+		     p->mem2.start, p->mem2.size);
+	wl1271_debug(DEBUG_SPI, "mem3_start %08X mem3_size %08X",
+		     p->mem3.start, p->mem3.size);
 
-void wl1271_io_init (struct wl1271 * wl)
+	/* write partition info to the chipset */
+	wl1271_raw_write32(wl, HW_PART0_START_ADDR, p->mem.start);
+	wl1271_raw_write32(wl, HW_PART0_SIZE_ADDR, p->mem.size);
+	wl1271_raw_write32(wl, HW_PART1_START_ADDR, p->reg.start);
+	wl1271_raw_write32(wl, HW_PART1_SIZE_ADDR, p->reg.size);
+	wl1271_raw_write32(wl, HW_PART2_START_ADDR, p->mem2.start);
+	wl1271_raw_write32(wl, HW_PART2_SIZE_ADDR, p->mem2.size);
+	wl1271_raw_write32(wl, HW_PART3_START_ADDR, p->mem3.start);
+
+	return 0;
+}
+EXPORT_SYMBOL_GPL(wl1271_set_partition);
+
+void wl1271_io_reset(struct wl1271 *wl)
 {
-  if (wl->if_ops->init)
-  { wl->if_ops->init (wl->dev); }
+	if (wl->if_ops->reset)
+		wl->if_ops->reset(wl->dev);
 }
 
-void wl1271_top_reg_write (struct wl1271 * wl, int addr, u16 val)
+void wl1271_io_init(struct wl1271 *wl)
 {
-  /* write address >> 1 + 0x30000 to OCP_POR_CTR */
-  addr = (addr >> 1) + 0x30000;
-  wl1271_write32 (wl, OCP_POR_CTR, addr);
-  
-  /* write value to OCP_POR_WDATA */
-  wl1271_write32 (wl, OCP_DATA_WRITE, val);
-  
-  /* write 1 to OCP_CMD */
-  wl1271_write32 (wl, OCP_CMD, OCP_CMD_WRITE);
+	if (wl->if_ops->init)
+		wl->if_ops->init(wl->dev);
 }
 
-u16 wl1271_top_reg_read (struct wl1271 * wl, int addr)
+void wl1271_top_reg_write(struct wl1271 *wl, int addr, u16 val)
 {
-  u32 val;
-  int timeout = OCP_CMD_LOOP;
-  
-  /* write address >> 1 + 0x30000 to OCP_POR_CTR */
-  addr = (addr >> 1) + 0x30000;
-  wl1271_write32 (wl, OCP_POR_CTR, addr);
-  
-  /* write 2 to OCP_CMD */
-  wl1271_write32 (wl, OCP_CMD, OCP_CMD_READ);
-  
-  /* poll for data ready */
-  do {
-    val = wl1271_read32 (wl, OCP_DATA_READ);
-  }
-  while (! (val & OCP_READY_MASK) && --timeout);
-  
-  if (!timeout) {
-    wl1271_warning ("Top register access timed out.");
-    return 0xffff;
-  }
-  
-  /* check data status and return if OK */
-  if ( (val & OCP_STATUS_MASK) == OCP_STATUS_OK)
-  { return val & 0xffff; }
-  else {
-    wl1271_warning ("Top register access returned error.");
-    return 0xffff;
-  }
+	/* write address >> 1 + 0x30000 to OCP_POR_CTR */
+	addr = (addr >> 1) + 0x30000;
+	wl1271_write32(wl, OCP_POR_CTR, addr);
+
+	/* write value to OCP_POR_WDATA */
+	wl1271_write32(wl, OCP_DATA_WRITE, val);
+
+	/* write 1 to OCP_CMD */
+	wl1271_write32(wl, OCP_CMD, OCP_CMD_WRITE);
+}
+
+u16 wl1271_top_reg_read(struct wl1271 *wl, int addr)
+{
+	u32 val;
+	int timeout = OCP_CMD_LOOP;
+
+	/* write address >> 1 + 0x30000 to OCP_POR_CTR */
+	addr = (addr >> 1) + 0x30000;
+	wl1271_write32(wl, OCP_POR_CTR, addr);
+
+	/* write 2 to OCP_CMD */
+	wl1271_write32(wl, OCP_CMD, OCP_CMD_READ);
+
+	/* poll for data ready */
+	do {
+		val = wl1271_read32(wl, OCP_DATA_READ);
+	} while (!(val & OCP_READY_MASK) && --timeout);
+
+	if (!timeout) {
+		wl1271_warning("Top register access timed out.");
+		return 0xffff;
+	}
+
+	/* check data status and return if OK */
+	if ((val & OCP_STATUS_MASK) == OCP_STATUS_OK)
+		return val & 0xffff;
+	else {
+		wl1271_warning("Top register access returned error.");
+		return 0xffff;
+	}
 }
 

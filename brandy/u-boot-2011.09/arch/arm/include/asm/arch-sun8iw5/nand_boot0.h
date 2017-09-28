@@ -4,7 +4,7 @@
 *                                         the Embedded GO-ON Bootloader System
 *
 *                             Copyright(C), 2006-2008, SoftWinners Microelectronic Co., Ltd.
-*                            All Rights Reserved
+*											       All Rights Reserved
 *
 * File Name : basic_nf_func.h
 *
@@ -58,17 +58,17 @@ extern __u32 page_with_bad_block;
 #define OOB_BUF_SIZE_PER_SECTOR         4
 
 
-#define   NF_OK                 0
-#define   NF_GOOD_BLOCK         0
-#define   NF_OVERTIME_ERR       1
-#define   NF_ECC_ERR            2
-#define   NF_BAD_BLOCK          3
-#define   NF_ERASE_ERR          4
-#define   NF_PROG_ERR           5
-#define   NF_NEW_BAD_BLOCK      6
-#define   NF_LACK_BLKS          7
-#define   NF_ERROR            -1
-#define   NF_ERR_COUNT                8
+#define 	NF_OK         				0
+#define 	NF_GOOD_BLOCK 				0
+#define 	NF_OVERTIME_ERR  			1
+#define 	NF_ECC_ERR       			2
+#define 	NF_BAD_BLOCK     			3
+#define 	NF_ERASE_ERR     			4
+#define 	NF_PROG_ERR      			5
+#define 	NF_NEW_BAD_BLOCK 			6
+#define 	NF_LACK_BLKS     			7
+#define 	NF_ERROR     				-1
+#define 	NF_ERR_COUNT                8
 
 
 
@@ -77,36 +77,36 @@ extern __u32 page_with_bad_block;
 
 typedef enum
 {
-  ADV_NF_OK               = 0,
-  ADV_NF_FIND_OK          = 0,
-  ADV_NF_NO_NEW_BAD_BLOCK = 0,
-  ADV_NF_ERROR              ,
-  ADV_NF_NO_FIND_ERR        ,
-  ADV_NF_OVERTIME_ERR       ,
-  ADV_NF_LACK_BLKS          ,
-  ADV_NF_NEW_BAD_BLOCK      ,
-} adv_nf_errer_e;
+	ADV_NF_OK               =0,
+	ADV_NF_FIND_OK          =0,
+	ADV_NF_NO_NEW_BAD_BLOCK =0,
+	ADV_NF_ERROR              ,
+	ADV_NF_NO_FIND_ERR        ,
+	ADV_NF_OVERTIME_ERR       ,
+	ADV_NF_LACK_BLKS          ,
+	ADV_NF_NEW_BAD_BLOCK      ,
+}adv_nf_errer_e;
 
-extern __s32 load_Boot1_from_nand ( void );
-extern __s32 load_and_check_in_one_blk ( __u32 blk_num, void * buf, __u32 size, __u32 blk_size);
+extern __s32 load_Boot1_from_nand( void );
+extern __s32 load_and_check_in_one_blk( __u32 blk_num, void *buf, __u32 size, __u32 blk_size);
 
-extern __s32 load_in_many_blks ( __u32 start_blk, __u32 last_blk_num, void * buf,
-                                 __u32 size, __u32 blk_size, __u32 * blks );
+extern __s32 load_in_many_blks( __u32 start_blk, __u32 last_blk_num, void *buf,
+						        __u32 size, __u32 blk_size, __u32 *blks );
 
-extern __s32 write_in_one_blk ( __u32 blk_num, void * buf, __u32 size, __u32 blk_size );
+extern __s32 write_in_one_blk( __u32 blk_num, void *buf, __u32 size, __u32 blk_size );
 
-extern __s32 write_in_many_blks ( __u32 start_blk, __u32 last_blk_num, void * buf,
-                                  __u32 size, __u32 blk_size, __u32 * blks );
+extern __s32 write_in_many_blks( __u32 start_blk, __u32 last_blk_num, void *buf,
+					             __u32 size, __u32 blk_size, __u32 * blks );
 
 extern __s32  NF_open ( void );
-extern __s32  NF_close ( void );
-extern __s32  NF_read ( __u32 sector_num, void * buffer, __u32 N );
-extern __s32  NF_write ( __u32 sector_num, void * buffer, __u32 N );
-extern __s32  NF_erase ( __u32 blk_num );
+extern __s32  NF_close( void );
+extern __s32  NF_read ( __u32 sector_num, void *buffer, __u32 N );
+extern __s32  NF_write( __u32 sector_num, void *buffer, __u32 N );
+extern __s32  NF_erase( __u32 blk_num );
 extern __s32  NF_read_status ( __u32 blk_num );
-extern __s32  NF_mark_bad_block ( __u32 blk_num );
-extern __s32  NF_verify_block ( __u32 blk_num );
-extern __u32 load_uboot_in_one_block_judge (__u32 length);
+extern __s32  NF_mark_bad_block( __u32 blk_num );
+extern __s32  NF_verify_block( __u32 blk_num );
+extern __u32 load_uboot_in_one_block_judge(__u32 length);
 
 
 

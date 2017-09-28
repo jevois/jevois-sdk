@@ -49,37 +49,37 @@
  * E1000_RDBAL_REG(current_rx_queue)
  */
 #define E1000_RDBAL(_n)      ((_n) < 4 ? (0x02800 + ((_n) * 0x100)) : \
-                              (0x0C000 + ((_n) * 0x40)))
+                                         (0x0C000 + ((_n) * 0x40)))
 #define E1000_RDBAH(_n)      ((_n) < 4 ? (0x02804 + ((_n) * 0x100)) : \
-                              (0x0C004 + ((_n) * 0x40)))
+                                         (0x0C004 + ((_n) * 0x40)))
 #define E1000_RDLEN(_n)      ((_n) < 4 ? (0x02808 + ((_n) * 0x100)) : \
-                              (0x0C008 + ((_n) * 0x40)))
+                                         (0x0C008 + ((_n) * 0x40)))
 #define E1000_SRRCTL(_n)     ((_n) < 4 ? (0x0280C + ((_n) * 0x100)) : \
-                              (0x0C00C + ((_n) * 0x40)))
+                                         (0x0C00C + ((_n) * 0x40)))
 #define E1000_RDH(_n)        ((_n) < 4 ? (0x02810 + ((_n) * 0x100)) : \
-                              (0x0C010 + ((_n) * 0x40)))
+                                         (0x0C010 + ((_n) * 0x40)))
 #define E1000_RDT(_n)        ((_n) < 4 ? (0x02818 + ((_n) * 0x100)) : \
-                              (0x0C018 + ((_n) * 0x40)))
+                                         (0x0C018 + ((_n) * 0x40)))
 #define E1000_RXDCTL(_n)     ((_n) < 4 ? (0x02828 + ((_n) * 0x100)) : \
-                              (0x0C028 + ((_n) * 0x40)))
+                                         (0x0C028 + ((_n) * 0x40)))
 #define E1000_TDBAL(_n)      ((_n) < 4 ? (0x03800 + ((_n) * 0x100)) : \
-                              (0x0E000 + ((_n) * 0x40)))
+                                         (0x0E000 + ((_n) * 0x40)))
 #define E1000_TDBAH(_n)      ((_n) < 4 ? (0x03804 + ((_n) * 0x100)) : \
-                              (0x0E004 + ((_n) * 0x40)))
+                                         (0x0E004 + ((_n) * 0x40)))
 #define E1000_TDLEN(_n)      ((_n) < 4 ? (0x03808 + ((_n) * 0x100)) : \
-                              (0x0E008 + ((_n) * 0x40)))
+                                         (0x0E008 + ((_n) * 0x40)))
 #define E1000_TDH(_n)        ((_n) < 4 ? (0x03810 + ((_n) * 0x100)) : \
-                              (0x0E010 + ((_n) * 0x40)))
+                                         (0x0E010 + ((_n) * 0x40)))
 #define E1000_TDT(_n)        ((_n) < 4 ? (0x03818 + ((_n) * 0x100)) : \
-                              (0x0E018 + ((_n) * 0x40)))
+                                         (0x0E018 + ((_n) * 0x40)))
 #define E1000_TXDCTL(_n)     ((_n) < 4 ? (0x03828 + ((_n) * 0x100)) : \
-                              (0x0E028 + ((_n) * 0x40)))
+                                         (0x0E028 + ((_n) * 0x40)))
 #define E1000_DCA_TXCTRL(_n) (0x03814 + (_n << 8))
 #define E1000_DCA_RXCTRL(_n) (0x02814 + (_n << 8))
 #define E1000_RAL(_i)  (((_i) <= 15) ? (0x05400 + ((_i) * 8)) : \
-                        (0x054E0 + ((_i - 16) * 8)))
+                                       (0x054E0 + ((_i - 16) * 8)))
 #define E1000_RAH(_i)  (((_i) <= 15) ? (0x05404 + ((_i) * 8)) : \
-                        (0x054E4 + ((_i - 16) * 8)))
+                                       (0x054E4 + ((_i - 16) * 8)))
 
 /* Statistics registers */
 #define E1000_VFGPRC    0x00F10
@@ -100,9 +100,9 @@
 #define er32(reg) readl(hw->hw_addr + E1000_##reg)
 #define ew32(reg, val) writel((val), hw->hw_addr +  E1000_##reg)
 #define array_er32(reg, offset) \
-  readl(hw->hw_addr + E1000_##reg + (offset << 2))
+	readl(hw->hw_addr + E1000_##reg + (offset << 2))
 #define array_ew32(reg, offset, val) \
-  writel((val), hw->hw_addr +  E1000_##reg + (offset << 2))
+	writel((val), hw->hw_addr +  E1000_##reg + (offset << 2))
 #define e1e_flush() er32(STATUS)
 
 #endif

@@ -137,7 +137,7 @@ extern int overflowEvent;
 
 /* check the above value, we rely on 4k */
 #if NPE_TREE_MEM_SIZE != 4096
-#error NPE_TREE_MEM_SIZE is not defined to 4096 bytes!
+    #error NPE_TREE_MEM_SIZE is not defined to 4096 bytes!
 #endif
 
 /* Size Filtering limits (Jumbo frame filtering) */
@@ -194,71 +194,71 @@ extern int overflowEvent;
 
 /* macros */
 #define IX_ETH_DB_CHECK_PORT_EXISTS(portID) \
-  { \
+{ \
     if ((portID) >= IX_ETH_DB_NUMBER_OF_PORTS) \
     { \
-      return IX_ETH_DB_INVALID_PORT; \
+        return IX_ETH_DB_INVALID_PORT; \
     } \
-  }
+}
 
 #define IX_ETH_DB_CHECK_PORT_INITIALIZED(portID) \
-  { \
+{ \
     if ((portID) >= IX_ETH_DB_NUMBER_OF_PORTS) \
     { \
-      return IX_ETH_DB_INVALID_PORT; \
+        return IX_ETH_DB_INVALID_PORT; \
     } \
     else \
     { \
-      if (!ixEthDBPortInfo[portID].initialized) \
-      { \
-        return IX_ETH_DB_PORT_UNINITIALIZED; \
-      } \
+        if (!ixEthDBPortInfo[portID].initialized) \
+        { \
+            return IX_ETH_DB_PORT_UNINITIALIZED; \
+        } \
     } \
-  }
+}
 
 /* single NPE check */
 #define IX_ETH_DB_CHECK_SINGLE_NPE(portID) \
-  if (ixEthDBSingleEthNpeCheck(portID) != IX_ETH_DB_SUCCESS) \
-  { \
-    WARNING_LOG("EthDB: port ID %d is unavailable\n",(UINT32) portID); \
-    \
-    return IX_ETH_DB_INVALID_PORT; \
-  }
+    if (ixEthDBSingleEthNpeCheck(portID) != IX_ETH_DB_SUCCESS) \
+    { \
+        WARNING_LOG("EthDB: port ID %d is unavailable\n",(UINT32) portID); \
+        \
+        return IX_ETH_DB_INVALID_PORT; \
+    }
 
 /* feature check */
 #define IX_ETH_DB_CHECK_FEATURE(portID, feature) \
-  if ((ixEthDBPortInfo[portID].featureStatus & feature) == 0) \
-  { \
-    return IX_ETH_DB_FEATURE_UNAVAILABLE; \
-  }
+    if ((ixEthDBPortInfo[portID].featureStatus & feature) == 0) \
+    { \
+        return IX_ETH_DB_FEATURE_UNAVAILABLE; \
+    }
 
 /* busy retrying */
 #define BUSY_RETRY(functionCall) \
-  { \
-    UINT32 retries = 0; \
-    IxEthDBStatus br_result; \
-    \
-    while ((br_result = functionCall) == IX_ETH_DB_BUSY \
-           && BUSY_RETRY_ENABLED && (FOREVER_RETRY || ++retries < MAX_RETRIES)) { ixOsalSleep(BUSY_RETRY_YIELD); }; \
-    \
-    if ((!FOREVER_RETRY && retries == MAX_RETRIES) || (br_result == IX_ETH_DB_FAIL)) \
-    {\
-      ERROR_LOG("Ethernet Learning Database Error: BUSY_RETRY failed at %s:%d\n", __FILE__, __LINE__); \
-    }\
-  }
+    { \
+        UINT32 retries = 0; \
+        IxEthDBStatus br_result; \
+        \
+        while ((br_result = functionCall) == IX_ETH_DB_BUSY \
+            && BUSY_RETRY_ENABLED && (FOREVER_RETRY || ++retries < MAX_RETRIES)) { ixOsalSleep(BUSY_RETRY_YIELD); }; \
+        \
+        if ((!FOREVER_RETRY && retries == MAX_RETRIES) || (br_result == IX_ETH_DB_FAIL)) \
+        {\
+            ERROR_LOG("Ethernet Learning Database Error: BUSY_RETRY failed at %s:%d\n", __FILE__, __LINE__); \
+        }\
+    }
 
 #define BUSY_RETRY_WITH_RESULT(functionCall, brwr_result) \
-  { \
-    UINT32 retries = 0; \
-    \
-    while ((brwr_result = functionCall) == IX_ETH_DB_BUSY \
-           && BUSY_RETRY_ENABLED && (FOREVER_RETRY || ++retries < MAX_RETRIES)) { ixOsalSleep(BUSY_RETRY_YIELD); }; \
-    \
-    if ((!FOREVER_RETRY && retries == MAX_RETRIES) || (brwr_result == IX_ETH_DB_FAIL)) \
-    {\
-      ERROR_LOG("Ethernet Learning Database Error: BUSY_RETRY_WITH_RESULT failed at %s:%d\n", __FILE__, __LINE__); \
-    }\
-  }
+    { \
+        UINT32 retries = 0; \
+        \
+        while ((brwr_result = functionCall) == IX_ETH_DB_BUSY \
+            && BUSY_RETRY_ENABLED && (FOREVER_RETRY || ++retries < MAX_RETRIES)) { ixOsalSleep(BUSY_RETRY_YIELD); }; \
+        \
+        if ((!FOREVER_RETRY && retries == MAX_RETRIES) || (brwr_result == IX_ETH_DB_FAIL)) \
+        {\
+            ERROR_LOG("Ethernet Learning Database Error: BUSY_RETRY_WITH_RESULT failed at %s:%d\n", __FILE__, __LINE__); \
+        }\
+    }
 
 /* iterators */
 #define IS_ITERATOR_VALID(iteratorPtr) ((iteratorPtr)->node != NULL)
@@ -337,16 +337,16 @@ extern int overflowEvent;
 #define PUSH_UPDATE_QUEUE(eventQueuePtr)    { (eventQueuePtr)->length++; }
 
 #define SHIFT_UPDATE_QUEUE(eventQueuePtr) \
-  { \
-    (eventQueuePtr)->base = EVENT_QUEUE_WRAP((eventQueuePtr)->base + 1); \
-    (eventQueuePtr)->length--; \
-  }
+        { \
+            (eventQueuePtr)->base = EVENT_QUEUE_WRAP((eventQueuePtr)->base + 1); \
+            (eventQueuePtr)->length--; \
+        }
 
 #define RESET_QUEUE(eventQueuePtr) \
-  { \
-    (eventQueuePtr)->base   = 0; \
-    (eventQueuePtr)->length = 0; \
-  }
+    { \
+        (eventQueuePtr)->base   = 0; \
+        (eventQueuePtr)->length = 0; \
+    }
 
 /* node stack macros - used to browse a tree without using a recursive function */
 #define NODE_STACK_INIT(stack)               { (stack)->nodeCount = 0; }
@@ -357,11 +357,11 @@ extern int overflowEvent;
 #ifndef IX_NDEBUG
 #define IX_ETH_DB_NPE_MSG_HISTORY_DEPTH (100)
 #define LOG_NPE_MSG(msg) \
-  do { \
-    UINT32 npeMsgHistoryIndex = (npeMsgHistoryLen++) % IX_ETH_DB_NPE_MSG_HISTORY_DEPTH; \
-    npeMsgHistory[npeMsgHistoryIndex][0] = msg.data[0]; \
-    npeMsgHistory[npeMsgHistoryIndex][1] = msg.data[1]; \
-  } while (0);
+    do { \
+        UINT32 npeMsgHistoryIndex = (npeMsgHistoryLen++) % IX_ETH_DB_NPE_MSG_HISTORY_DEPTH; \
+        npeMsgHistory[npeMsgHistoryIndex][0] = msg.data[0]; \
+        npeMsgHistory[npeMsgHistoryIndex][1] = msg.data[1]; \
+    } while (0);
 #else
 #define LOG_NPE_MSG() /* nothing */
 #endif
@@ -370,21 +370,21 @@ extern int overflowEvent;
 
 /* typedefs */
 
-typedef UINT32 (*HashFunction) (void * entity);
-typedef BOOL (*MatchFunction) (void * reference, void * entry);
-typedef void (*FreeFunction) (void * entry);
+typedef UINT32 (*HashFunction)(void *entity);
+typedef BOOL (*MatchFunction)(void *reference, void *entry);
+typedef void (*FreeFunction)(void *entry);
 
 /**
  * basic component of a hash table
  */
 typedef struct HashNode_t
 {
-  void * data;                                /**< specific data */
-  struct HashNode_t * next;                   /**< used for bucket chaining */
-  
-  __mempool__ struct HashNode_t * nextFree;   /**< memory pool management */
-  
-  __lock__ IxOsalFastMutex lock;              /**< node lock */
+    void *data;                                 /**< specific data */
+    struct HashNode_t *next;                    /**< used for bucket chaining */
+
+    __mempool__ struct HashNode_t *nextFree;    /**< memory pool management */
+
+    __lock__ IxOsalFastMutex lock;              /**< node lock */
 } HashNode;
 
 /**
@@ -395,9 +395,9 @@ typedef struct HashNode_t
  */
 typedef struct
 {
-  UINT32 bucketIndex;     /**< index of the currently iterated bucket */
-  HashNode * previousNode; /**< reference to the previously iterated node within the current bucket */
-  HashNode * node;        /**< reference to the currently iterated node */
+    UINT32 bucketIndex;     /**< index of the currently iterated bucket */
+    HashNode *previousNode; /**< reference to the previously iterated node within the current bucket */
+    HashNode *node;         /**< reference to the currently iterated node */
 } HashIterator;
 
 /**
@@ -406,53 +406,53 @@ typedef struct
 
 typedef enum
 {
-  IX_ETH_DB_WIFI_AP_TO_STA = 0x0,
-  IX_ETH_DB_WIFI_AP_TO_AP  = 0x1
+    IX_ETH_DB_WIFI_AP_TO_STA = 0x0,
+    IX_ETH_DB_WIFI_AP_TO_AP  = 0x1
 } IxEthDBWiFiRecordType;
 
 typedef union
 {
-  struct
-  {
-    UINT32 age;
-    BOOL staticEntry; /**< TRUE if this address is static (doesn't age) */
-  } filteringData;
-  
-  struct
-  {
-    UINT32 age;
-    BOOL staticEntry;
-    UINT32 ieee802_1qTag;
-  } filteringVlanData;
-  
-  struct
-  {
-    IxEthDBWiFiRecordType type;  /**< AP_TO_AP (0x1) or AP_TO_STA (0x0) */
-    UINT32 gwAddressIndex; /**< used only when linearizing the entries for NPE usage */
-    UINT8 gwMacAddress[IX_IEEE803_MAC_ADDRESS_SIZE];
-    
-    __alignment__ UINT8 reserved2[2];
-  } wifiData;
+    struct
+    {
+        UINT32 age;
+        BOOL staticEntry; /**< TRUE if this address is static (doesn't age) */
+    } filteringData;
+
+    struct
+    {
+        UINT32 age;
+        BOOL staticEntry;
+        UINT32 ieee802_1qTag;
+      } filteringVlanData;
+
+    struct
+    {
+        IxEthDBWiFiRecordType type;  /**< AP_TO_AP (0x1) or AP_TO_STA (0x0) */
+        UINT32 gwAddressIndex; /**< used only when linearizing the entries for NPE usage */
+        UINT8 gwMacAddress[IX_IEEE803_MAC_ADDRESS_SIZE];
+
+        __alignment__ UINT8 reserved2[2];
+    } wifiData;
 } IxEthDBRecordData;
 
 typedef struct MacDescriptor_t
 {
-  UINT8 macAddress[IX_IEEE803_MAC_ADDRESS_SIZE];
-  
-  __alignment__ UINT8 reserved1[2];
-  
-  UINT32 portID;
-  IxEthDBRecordType type;
-  IxEthDBRecordData recordData;
-  
-  /* used for internal operations, such as NPE linearization */
-  void * internal;
-  
-  /* custom user data */
-  void * user;
-  
-  __mempool__ struct MacDescriptor_t * nextFree;  /**< memory pool management */
-  __smartpointer__ UINT32 refCount;               /**< smart pointer reference counter */
+    UINT8 macAddress[IX_IEEE803_MAC_ADDRESS_SIZE];
+
+    __alignment__ UINT8 reserved1[2];
+
+    UINT32 portID;
+    IxEthDBRecordType type;
+    IxEthDBRecordData recordData;
+
+    /* used for internal operations, such as NPE linearization */
+    void *internal;
+
+    /* custom user data */
+    void *user;
+
+    __mempool__ struct MacDescriptor_t *nextFree;   /**< memory pool management */
+    __smartpointer__ UINT32 refCount;               /**< smart pointer reference counter */
 } MacDescriptor;
 
 /**
@@ -460,92 +460,92 @@ typedef struct MacDescriptor_t
  */
 typedef struct
 {
-  HashNode * hashBuckets[NUM_BUCKETS];
-  UINT32 numBuckets;
-  
-  __lock__ IxOsalFastMutex bucketLocks[NUM_BUCKETS];
-  
-  HashFunction entryHashFunction;
-  MatchFunction * matchFunctions;
-  FreeFunction freeFunction;
+    HashNode *hashBuckets[NUM_BUCKETS];
+    UINT32 numBuckets;
+
+    __lock__ IxOsalFastMutex bucketLocks[NUM_BUCKETS];
+
+    HashFunction entryHashFunction;
+    MatchFunction *matchFunctions;
+    FreeFunction freeFunction;
 } HashTable;
 
 typedef enum
 {
-  IX_ETH_DB_MAC_KEY       = 1,
-  IX_ETH_DB_MAC_PORT_KEY  = 2,
-  IX_ETH_DB_MAC_VLAN_KEY  = 3,
-  IX_ETH_DB_MAX_KEY_INDEX = 3
+    IX_ETH_DB_MAC_KEY       = 1,
+    IX_ETH_DB_MAC_PORT_KEY  = 2,
+    IX_ETH_DB_MAC_VLAN_KEY  = 3,
+    IX_ETH_DB_MAX_KEY_INDEX = 3
 } IxEthDBSearchKeyType;
 
 typedef struct MacTreeNode_t
 {
-  __smartpointer__  MacDescriptor * descriptor;
-  struct MacTreeNode_t * left, *right;
-  
-  __mempool__ struct MacTreeNode_t * nextFree;
+    __smartpointer__  MacDescriptor *descriptor;
+    struct MacTreeNode_t *left, *right;
+
+    __mempool__ struct MacTreeNode_t *nextFree;
 } MacTreeNode;
 
-typedef IxEthDBStatus (*IxEthDBPortUpdateHandler) (IxEthDBPortId portID, IxEthDBRecordType type);
+typedef IxEthDBStatus (*IxEthDBPortUpdateHandler)(IxEthDBPortId portID, IxEthDBRecordType type);
 
-typedef void (*IxEthDBNoteWriteFn) (void * address, MacTreeNode * node);
+typedef void (*IxEthDBNoteWriteFn)(void *address, MacTreeNode *node);
 
 typedef struct
 {
-  BOOL updateEnabled;                         /**< TRUE if updates are enabled for port */
-  BOOL userControlled;                        /**< TRUE if the user has manually used ixEthDBPortUpdateEnableSet */
-  BOOL treeInitialized;                       /**< TRUE if the NPE has received an initial tree */
-  IxEthDBPortUpdateHandler updateHandler;     /**< port update handler routine */
-  void * npeUpdateZone;                       /**< port update memory zone */
-  void * npeGwUpdateZone;                     /**< port update memory zone for gateways */
-  void * vlanUpdateZone;                      /**< port update memory zone for VLAN tables */
-  MacTreeNode * searchTree;                   /**< internal search tree, in MacTreeNode representation */
-  BOOL searchTreePendingWrite;                /**< TRUE if searchTree holds a tree pending write to the port */
+    BOOL updateEnabled;                         /**< TRUE if updates are enabled for port */
+    BOOL userControlled;                        /**< TRUE if the user has manually used ixEthDBPortUpdateEnableSet */
+    BOOL treeInitialized;                       /**< TRUE if the NPE has received an initial tree */
+    IxEthDBPortUpdateHandler updateHandler;     /**< port update handler routine */
+    void *npeUpdateZone;                        /**< port update memory zone */
+    void *npeGwUpdateZone;                      /**< port update memory zone for gateways */
+    void *vlanUpdateZone;                       /**< port update memory zone for VLAN tables */
+    MacTreeNode *searchTree;                    /**< internal search tree, in MacTreeNode representation */
+    BOOL searchTreePendingWrite;                /**< TRUE if searchTree holds a tree pending write to the port */
 } PortUpdateMethod;
 
 typedef struct
 {
-  IxEthDBPortId portID;                   /**< port ID */
-  BOOL enabled;                           /**< TRUE if the port is enabled */
-  BOOL agingEnabled;                      /**< TRUE if aging on this port is enabled */
-  BOOL initialized;
-  IxEthDBPortMap dependencyPortMap;       /**< dependency port map for this port */
-  PortUpdateMethod updateMethod;          /**< update method structure */
-  BOOL macAddressUploaded;                /**< TRUE if the MAC address was uploaded into the port */
-  UINT32 maxRxFrameSize;                  /**< maximum Rx frame size for this port */
-  UINT32 maxTxFrameSize;                  /**< maximum Rx frame size for this port */
-  
-  UINT8 bbsid[6];
-  __alignment__ UINT8 reserved[2];
-  UINT32 frameControlDurationID;          /**< Frame Control - Duration/ID WiFi control */
-  
-  IxEthDBVlanTag vlanTag;                  /**< default VLAN tag for port */
-  IxEthDBPriorityTable priorityTable;     /**< QoS <=> internal priority mapping */
-  IxEthDBVlanSet vlanMembership;
-  IxEthDBVlanSet transmitTaggingInfo;
-  IxEthDBFrameFilter frameFilter;
-  IxEthDBTaggingAction taggingAction;
-  
-  UINT32 npeFrameFilter;
-  UINT32 npeTaggingAction;
-  
-  IxEthDBFirewallMode firewallMode;
-  BOOL srcAddressFilterEnabled;
-  
-  BOOL stpBlocked;
-  
-  IxEthDBFeature featureCapability;
-  IxEthDBFeature featureStatus;
-  
-  UINT32 ixEthDBTrafficClassAQMAssignments[IX_IEEE802_1Q_QOS_PRIORITY_COUNT];
-  
-  UINT32 ixEthDBTrafficClassCount;
-  
-  UINT32 ixEthDBTrafficClassAvailable;
-  
-  
-  
-  __lock__ IxOsalMutex npeAckLock;
+    IxEthDBPortId portID;                   /**< port ID */
+    BOOL enabled;                           /**< TRUE if the port is enabled */
+    BOOL agingEnabled;                      /**< TRUE if aging on this port is enabled */
+    BOOL initialized;
+    IxEthDBPortMap dependencyPortMap;       /**< dependency port map for this port */
+    PortUpdateMethod updateMethod;          /**< update method structure */
+    BOOL macAddressUploaded;                /**< TRUE if the MAC address was uploaded into the port */
+    UINT32 maxRxFrameSize;                  /**< maximum Rx frame size for this port */
+    UINT32 maxTxFrameSize;                  /**< maximum Rx frame size for this port */
+
+    UINT8 bbsid[6];
+    __alignment__ UINT8 reserved[2];
+    UINT32 frameControlDurationID;          /**< Frame Control - Duration/ID WiFi control */
+
+    IxEthDBVlanTag vlanTag;                  /**< default VLAN tag for port */
+    IxEthDBPriorityTable priorityTable;     /**< QoS <=> internal priority mapping */
+    IxEthDBVlanSet vlanMembership;
+    IxEthDBVlanSet transmitTaggingInfo;
+    IxEthDBFrameFilter frameFilter;
+    IxEthDBTaggingAction taggingAction;
+
+    UINT32 npeFrameFilter;
+    UINT32 npeTaggingAction;
+
+    IxEthDBFirewallMode firewallMode;
+    BOOL srcAddressFilterEnabled;
+
+    BOOL stpBlocked;
+
+    IxEthDBFeature featureCapability;
+    IxEthDBFeature featureStatus;
+
+    UINT32 ixEthDBTrafficClassAQMAssignments[IX_IEEE802_1Q_QOS_PRIORITY_COUNT];
+
+    UINT32 ixEthDBTrafficClassCount;
+
+    UINT32 ixEthDBTrafficClassAvailable;
+
+
+
+    __lock__ IxOsalMutex npeAckLock;
 } PortInfo;
 
 /* list of port information structures indexed on port Ids */
@@ -553,158 +553,158 @@ extern IX_ETH_DB_PUBLIC PortInfo ixEthDBPortInfo[IX_ETH_DB_NUMBER_OF_PORTS];
 
 typedef enum
 {
-  IX_ETH_DB_ADD_FILTERING_RECORD    = 0xFF0001,
-  IX_ETH_DB_REMOVE_FILTERING_RECORD = 0xFF0002
+    IX_ETH_DB_ADD_FILTERING_RECORD    = 0xFF0001,
+    IX_ETH_DB_REMOVE_FILTERING_RECORD = 0xFF0002
 } PortEventType;
 
 typedef struct
 {
-  UINT32 eventType;
-  IxEthDBPortId portID;
-  IxEthDBMacAddr macAddr;
-  BOOL staticEntry;
+    UINT32 eventType;
+    IxEthDBPortId portID;
+    IxEthDBMacAddr macAddr;
+    BOOL staticEntry;
 } PortEvent;
 
 typedef struct
 {
-  PortEvent queue[EVENT_QUEUE_SIZE];
-  UINT32 base;
-  UINT32 length;
+    PortEvent queue[EVENT_QUEUE_SIZE];
+    UINT32 base;
+    UINT32 length;
 } PortEventQueue;
 
 typedef struct
 {
-  IxEthDBPortId portID; /**< originating port */
-  MacDescriptor * macDescriptors[MAX_ELT_SIZE]; /**< addresses to be synced into db */
-  UINT32 addressCount; /**< number of addresses */
+    IxEthDBPortId portID; /**< originating port */
+    MacDescriptor *macDescriptors[MAX_ELT_SIZE]; /**< addresses to be synced into db */
+    UINT32 addressCount; /**< number of addresses */
 } TreeSyncInfo;
 
 typedef struct
 {
-  MacTreeNode * nodes[MAX_ELT_SIZE];
-  UINT32 offsets[MAX_ELT_SIZE];
-  UINT32 nodeCount;
+    MacTreeNode *nodes[MAX_ELT_SIZE];
+    UINT32 offsets[MAX_ELT_SIZE];
+    UINT32 nodeCount;
 } MacTreeNodeStack;
 
 /* Prototypes */
 
 /* ----------- Memory management -------------- */
 
-IX_ETH_DB_PUBLIC void ixEthDBInitMemoryPools (void);
+IX_ETH_DB_PUBLIC void ixEthDBInitMemoryPools(void);
 
-IX_ETH_DB_PUBLIC HashNode * ixEthDBAllocHashNode (void);
-IX_ETH_DB_PUBLIC void ixEthDBFreeHashNode (HashNode *);
+IX_ETH_DB_PUBLIC HashNode* ixEthDBAllocHashNode(void);
+IX_ETH_DB_PUBLIC void ixEthDBFreeHashNode(HashNode *);
 
-IX_ETH_DB_PUBLIC __smartpointer__ MacDescriptor * ixEthDBAllocMacDescriptor (void);
-IX_ETH_DB_PUBLIC __smartpointer__ MacDescriptor * ixEthDBCloneMacDescriptor (MacDescriptor * macDescriptor);
-IX_ETH_DB_PUBLIC __smartpointer__ void ixEthDBFreeMacDescriptor (MacDescriptor *);
+IX_ETH_DB_PUBLIC __smartpointer__ MacDescriptor* ixEthDBAllocMacDescriptor(void);
+IX_ETH_DB_PUBLIC __smartpointer__ MacDescriptor* ixEthDBCloneMacDescriptor(MacDescriptor *macDescriptor);
+IX_ETH_DB_PUBLIC __smartpointer__ void ixEthDBFreeMacDescriptor(MacDescriptor *);
 
-IX_ETH_DB_PUBLIC __smartpointer__ MacTreeNode * ixEthDBAllocMacTreeNode (void);
-IX_ETH_DB_PUBLIC __smartpointer__ MacTreeNode * ixEthDBCloneMacTreeNode (MacTreeNode *);
-IX_ETH_DB_PUBLIC __smartpointer__ void ixEthDBFreeMacTreeNode (MacTreeNode *);
+IX_ETH_DB_PUBLIC __smartpointer__ MacTreeNode* ixEthDBAllocMacTreeNode(void);
+IX_ETH_DB_PUBLIC __smartpointer__ MacTreeNode* ixEthDBCloneMacTreeNode(MacTreeNode *);
+IX_ETH_DB_PUBLIC __smartpointer__ void ixEthDBFreeMacTreeNode(MacTreeNode *);
 
-IX_ETH_DB_PUBLIC void ixEthDBPoolFreeMacTreeNode (MacTreeNode *);
-IX_ETH_DB_PUBLIC UINT32 ixEthDBSearchTreeUsageGet (MacTreeNode * tree);
-IX_ETH_DB_PUBLIC int ixEthDBShowMemoryStatus (void);
+IX_ETH_DB_PUBLIC void ixEthDBPoolFreeMacTreeNode(MacTreeNode *);
+IX_ETH_DB_PUBLIC UINT32 ixEthDBSearchTreeUsageGet(MacTreeNode *tree);
+IX_ETH_DB_PUBLIC int ixEthDBShowMemoryStatus(void);
 
 /* Hash Table */
-IX_ETH_DB_PUBLIC void ixEthDBInitHash (HashTable * hashTable, UINT32 numBuckets, HashFunction entryHashFunction, MatchFunction * matchFunctions, FreeFunction freeFunction);
+IX_ETH_DB_PUBLIC void ixEthDBInitHash(HashTable *hashTable, UINT32 numBuckets, HashFunction entryHashFunction, MatchFunction *matchFunctions, FreeFunction freeFunction);
 
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBAddHashEntry (HashTable * hashTable, void * entry);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBRemoveHashEntry (HashTable * hashTable, int keyType, void * reference);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBSearchHashEntry (HashTable * hashTable, int keyType, void * reference, HashNode ** searchResult);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBPeekHashEntry (HashTable * hashTable, int keyType, void * reference);
-IX_ETH_DB_PUBLIC void ixEthDBReleaseHashNode (HashNode * node);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBAddHashEntry(HashTable *hashTable, void *entry);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBRemoveHashEntry(HashTable *hashTable, int keyType, void *reference);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBSearchHashEntry(HashTable *hashTable, int keyType, void *reference, HashNode **searchResult);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBPeekHashEntry(HashTable *hashTable, int keyType, void *reference);
+IX_ETH_DB_PUBLIC void ixEthDBReleaseHashNode(HashNode *node);
 
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBInitHashIterator (HashTable * hashTable, HashIterator * iterator);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBIncrementHashIterator (HashTable * hashTable, HashIterator * iterator);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBRemoveEntryAtHashIterator (HashTable * hashTable, HashIterator * iterator);
-IX_ETH_DB_PUBLIC void ixEthDBReleaseHashIterator (HashIterator * iterator);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBInitHashIterator(HashTable *hashTable, HashIterator *iterator);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBIncrementHashIterator(HashTable *hashTable, HashIterator *iterator);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBRemoveEntryAtHashIterator(HashTable *hashTable, HashIterator *iterator);
+IX_ETH_DB_PUBLIC void ixEthDBReleaseHashIterator(HashIterator *iterator);
 
 /* API Support */
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBPortAddressSet (IxEthDBPortId portID, IxEthDBMacAddr * macAddr);
-IX_ETH_DB_PUBLIC void ixEthDBMaximumFrameSizeAckCallback (IxNpeMhNpeId npeID, IxNpeMhMessage msg);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBPortAddressSet(IxEthDBPortId portID, IxEthDBMacAddr *macAddr);
+IX_ETH_DB_PUBLIC void ixEthDBMaximumFrameSizeAckCallback(IxNpeMhNpeId npeID, IxNpeMhMessage msg);
 
 /* DB Core functions */
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBInit (void);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBAdd (MacDescriptor * newRecordTemplate, IxEthDBPortMap updateTrigger);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBRemove (MacDescriptor * templateRecord, IxEthDBPortMap updateTrigger);
-IX_ETH_DB_PUBLIC HashNode * ixEthDBSearch (IxEthDBMacAddr * macAddress, IxEthDBRecordType typeFilter);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBPeek (IxEthDBMacAddr * macAddress, IxEthDBRecordType typeFilter);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBInit(void);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBAdd(MacDescriptor *newRecordTemplate, IxEthDBPortMap updateTrigger);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBRemove(MacDescriptor *templateRecord, IxEthDBPortMap updateTrigger);
+IX_ETH_DB_PUBLIC HashNode* ixEthDBSearch(IxEthDBMacAddr *macAddress, IxEthDBRecordType typeFilter);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBPeek(IxEthDBMacAddr *macAddress, IxEthDBRecordType typeFilter);
 
 /* Learning support */
-IX_ETH_DB_PUBLIC UINT32 ixEthDBAddressCompare (UINT8 * mac1, UINT8 * mac2);
-IX_ETH_DB_PUBLIC BOOL ixEthDBAddressMatch (void * reference, void * entry);
-IX_ETH_DB_PUBLIC UINT32 ixEthDBEntryXORHash (void * macDescriptor);
-IX_ETH_DB_PUBLIC UINT32 ixEthDBKeyXORHash (void * macAddress);
+IX_ETH_DB_PUBLIC UINT32 ixEthDBAddressCompare(UINT8 *mac1, UINT8 *mac2);
+IX_ETH_DB_PUBLIC BOOL ixEthDBAddressMatch(void *reference, void *entry);
+IX_ETH_DB_PUBLIC UINT32 ixEthDBEntryXORHash(void *macDescriptor);
+IX_ETH_DB_PUBLIC UINT32 ixEthDBKeyXORHash(void *macAddress);
 
 /* Port updates */
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBNPEUpdateHandler (IxEthDBPortId portID, IxEthDBRecordType type);
-IX_ETH_DB_PUBLIC void ixEthDBUpdatePortLearningTrees (IxEthDBPortMap triggerPorts);
-IX_ETH_DB_PUBLIC void ixEthDBNPEAccessRequest (IxEthDBPortId portID);
-IX_ETH_DB_PUBLIC void ixEthDBUpdateLock (void);
-IX_ETH_DB_PUBLIC void ixEthDBUpdateUnlock (void);
-IX_ETH_DB_PUBLIC MacTreeNode * ixEthDBQuery (MacTreeNode * searchTree, IxEthDBPortMap query, IxEthDBRecordType recordFilter, UINT32 maximumEntries);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBFirewallUpdate (IxEthDBPortId portID, void * address, UINT32 epDelta);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBNPEUpdateHandler(IxEthDBPortId portID, IxEthDBRecordType type);
+IX_ETH_DB_PUBLIC void ixEthDBUpdatePortLearningTrees(IxEthDBPortMap triggerPorts);
+IX_ETH_DB_PUBLIC void ixEthDBNPEAccessRequest(IxEthDBPortId portID);
+IX_ETH_DB_PUBLIC void ixEthDBUpdateLock(void);
+IX_ETH_DB_PUBLIC void ixEthDBUpdateUnlock(void);
+IX_ETH_DB_PUBLIC MacTreeNode* ixEthDBQuery(MacTreeNode *searchTree, IxEthDBPortMap query, IxEthDBRecordType recordFilter, UINT32 maximumEntries);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBFirewallUpdate(IxEthDBPortId portID, void *address, UINT32 epDelta);
 
 /* Init/unload */
-IX_ETH_DB_PUBLIC void ixEthDBPortSetAckCallback (IxNpeMhNpeId npeID, IxNpeMhMessage msg);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBEventProcessorInit (void);
-IX_ETH_DB_PUBLIC void ixEthDBPortInit (IxEthDBPortId portID);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBPortEnable (IxEthDBPortId portID);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBPortDisable (IxEthDBPortId portID);
-IX_ETH_DB_PUBLIC void ixEthDBNPEUpdateAreasInit (void);
-IX_ETH_DB_PUBLIC UINT32 ixEthDBMatchMethodsRegister (MatchFunction * matchFunctions);
-IX_ETH_DB_PUBLIC UINT32 ixEthDBRecordSerializeMethodsRegister (void);
-IX_ETH_DB_PUBLIC UINT32 ixEthDBUpdateTypeRegister (BOOL * typeArray);
-IX_ETH_DB_PUBLIC void ixEthDBNPEUpdateAreasUnload (void);
-IX_ETH_DB_PUBLIC void ixEthDBFeatureCapabilityScan (void);
-IX_ETH_DB_PUBLIC UINT32 ixEthDBKeyTypeRegister (UINT32 * keyType);
+IX_ETH_DB_PUBLIC void ixEthDBPortSetAckCallback(IxNpeMhNpeId npeID, IxNpeMhMessage msg);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBEventProcessorInit(void);
+IX_ETH_DB_PUBLIC void ixEthDBPortInit(IxEthDBPortId portID);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBPortEnable(IxEthDBPortId portID);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBPortDisable(IxEthDBPortId portID);
+IX_ETH_DB_PUBLIC void ixEthDBNPEUpdateAreasInit(void);
+IX_ETH_DB_PUBLIC UINT32 ixEthDBMatchMethodsRegister(MatchFunction *matchFunctions);
+IX_ETH_DB_PUBLIC UINT32 ixEthDBRecordSerializeMethodsRegister(void);
+IX_ETH_DB_PUBLIC UINT32 ixEthDBUpdateTypeRegister(BOOL *typeArray);
+IX_ETH_DB_PUBLIC void ixEthDBNPEUpdateAreasUnload(void);
+IX_ETH_DB_PUBLIC void ixEthDBFeatureCapabilityScan(void);
+IX_ETH_DB_PUBLIC UINT32 ixEthDBKeyTypeRegister(UINT32 *keyType);
 
 /* Event processing */
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBDefaultEventCallbackEnable (IxEthDBPortId portID, BOOL enable);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBTriggerAddPortUpdate (IxEthDBMacAddr * macAddr, IxEthDBPortId portID, BOOL staticEntry);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBTriggerRemovePortUpdate (IxEthDBMacAddr * macAddr, IxEthDBPortId portID);
-IX_ETH_DB_PUBLIC void ixEthDBNPEEventCallback (IxNpeMhNpeId npeID, IxNpeMhMessage msg);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBDefaultEventCallbackEnable(IxEthDBPortId portID, BOOL enable);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBTriggerAddPortUpdate(IxEthDBMacAddr *macAddr, IxEthDBPortId portID, BOOL staticEntry);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBTriggerRemovePortUpdate(IxEthDBMacAddr *macAddr, IxEthDBPortId portID);
+IX_ETH_DB_PUBLIC void ixEthDBNPEEventCallback(IxNpeMhNpeId npeID, IxNpeMhMessage msg);
 
 /* NPE adaptor */
-IX_ETH_DB_PUBLIC void ixEthDBGetMacDatabaseCbk (IxNpeMhNpeId npeID, IxNpeMhMessage msg);
-IX_ETH_DB_PUBLIC void ixEthDBNpeMsgAck (IxNpeMhNpeId npeID, IxNpeMhMessage msg);
-IX_ETH_DB_PUBLIC void ixEthDBNPESyncScan (IxEthDBPortId portID, void * eltBaseAddress, UINT32 eltSize);
-IX_ETH_DB_PUBLIC void ixEthDBNPETreeWrite (IxEthDBRecordType type, UINT32 totalSize, void * baseAddress, MacTreeNode * tree, UINT32 * blocks, UINT32 * startIndex);
-IX_ETH_DB_PUBLIC void ixEthDBNPEGatewayNodeWrite (void * address, MacTreeNode * node);
+IX_ETH_DB_PUBLIC void ixEthDBGetMacDatabaseCbk(IxNpeMhNpeId npeID, IxNpeMhMessage msg);
+IX_ETH_DB_PUBLIC void ixEthDBNpeMsgAck(IxNpeMhNpeId npeID, IxNpeMhMessage msg);
+IX_ETH_DB_PUBLIC void ixEthDBNPESyncScan(IxEthDBPortId portID, void *eltBaseAddress, UINT32 eltSize);
+IX_ETH_DB_PUBLIC void ixEthDBNPETreeWrite(IxEthDBRecordType type, UINT32 totalSize, void *baseAddress, MacTreeNode *tree, UINT32 *blocks, UINT32 *startIndex);
+IX_ETH_DB_PUBLIC void ixEthDBNPEGatewayNodeWrite(void *address, MacTreeNode *node);
 
 /* Other public API functions */
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBStartLearningFunction (void);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBStopLearningFunction (void);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBPortUpdateEnableSet (IxEthDBPortId portID, BOOL enableUpdate);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBStartLearningFunction(void);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBStopLearningFunction(void);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBPortUpdateEnableSet(IxEthDBPortId portID, BOOL enableUpdate);
 
 /* Maximum Tx/Rx public functions */
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBFilteringPortMaximumRxFrameSizeSet (IxEthDBPortId portID, UINT32 maximumRxFrameSize);
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBFilteringPortMaximumTxFrameSizeSet (IxEthDBPortId portID, UINT32 maximumTxFrameSize);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBFilteringPortMaximumRxFrameSizeSet(IxEthDBPortId portID, UINT32 maximumRxFrameSize);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBFilteringPortMaximumTxFrameSizeSet(IxEthDBPortId portID, UINT32 maximumTxFrameSize);
 
 /* VLAN-related */
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBPortVlanTableSet (IxEthDBPortId portID, IxEthDBVlanSet portVlanTable, IxEthDBVlanSet vlanSet);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBPortVlanTableSet(IxEthDBPortId portID, IxEthDBVlanSet portVlanTable, IxEthDBVlanSet vlanSet);
 
 /* Record search */
-IX_ETH_DB_PUBLIC BOOL ixEthDBAddressRecordMatch (void * untypedReference, void * untypedEntry);
-IX_ETH_DB_PUBLIC BOOL ixEthDBVlanRecordMatch (void * untypedReference, void * untypedEntry);
-IX_ETH_DB_PUBLIC BOOL ixEthDBPortRecordMatch (void * untypedReference, void * untypedEntry);
-IX_ETH_DB_PUBLIC BOOL ixEthDBNullMatch (void * reference, void * entry);
-IX_ETH_DB_PUBLIC HashNode * ixEthDBPortSearch (IxEthDBMacAddr * macAddress, IxEthDBPortId portID, IxEthDBRecordType typeFilter);
-IX_ETH_DB_PUBLIC HashNode * ixEthDBVlanSearch (IxEthDBMacAddr * macAddress, IxEthDBVlanId vlanID, IxEthDBRecordType typeFilter);
+IX_ETH_DB_PUBLIC BOOL ixEthDBAddressRecordMatch(void *untypedReference, void *untypedEntry);
+IX_ETH_DB_PUBLIC BOOL ixEthDBVlanRecordMatch(void *untypedReference, void *untypedEntry);
+IX_ETH_DB_PUBLIC BOOL ixEthDBPortRecordMatch(void *untypedReference, void *untypedEntry);
+IX_ETH_DB_PUBLIC BOOL ixEthDBNullMatch(void *reference, void *entry);
+IX_ETH_DB_PUBLIC HashNode* ixEthDBPortSearch(IxEthDBMacAddr *macAddress, IxEthDBPortId portID, IxEthDBRecordType typeFilter);
+IX_ETH_DB_PUBLIC HashNode* ixEthDBVlanSearch(IxEthDBMacAddr *macAddress, IxEthDBVlanId vlanID, IxEthDBRecordType typeFilter);
 
 /* Utilities */
-IX_ETH_DB_PUBLIC const char * mac2string (const unsigned char * mac);
-IX_ETH_DB_PUBLIC void showHashInfo (void);
-IX_ETH_DB_PUBLIC int ixEthDBAnalyzeHash (void);
-IX_ETH_DB_PUBLIC const char * errorString (IxEthDBStatus error);
-IX_ETH_DB_PUBLIC int numHashElements (void);
-IX_ETH_DB_PUBLIC void zapHashtable (void);
-IX_ETH_DB_PUBLIC BOOL ixEthDBCheckSingleBitValue (UINT32 value);
+IX_ETH_DB_PUBLIC const char* mac2string(const unsigned char *mac);
+IX_ETH_DB_PUBLIC void showHashInfo(void);
+IX_ETH_DB_PUBLIC int ixEthDBAnalyzeHash(void);
+IX_ETH_DB_PUBLIC const char* errorString(IxEthDBStatus error);
+IX_ETH_DB_PUBLIC int numHashElements(void);
+IX_ETH_DB_PUBLIC void zapHashtable(void);
+IX_ETH_DB_PUBLIC BOOL ixEthDBCheckSingleBitValue(UINT32 value);
 
 /* Single Eth NPE Check */
-IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBSingleEthNpeCheck (IxEthDBPortId portId);
+IX_ETH_DB_PUBLIC IxEthDBStatus ixEthDBSingleEthNpeCheck(IxEthDBPortId portId);
 
 #endif /* IxEthDB_p_H */
 

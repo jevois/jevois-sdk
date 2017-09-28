@@ -23,78 +23,78 @@
 #include <linux/types.h>
 #include <linux/kvm_host.h>
 
-static inline void kvmppc_set_gpr (struct kvm_vcpu * vcpu, int num, ulong val)
+static inline void kvmppc_set_gpr(struct kvm_vcpu *vcpu, int num, ulong val)
 {
-  vcpu->arch.gpr[num] = val;
+	vcpu->arch.gpr[num] = val;
 }
 
-static inline ulong kvmppc_get_gpr (struct kvm_vcpu * vcpu, int num)
+static inline ulong kvmppc_get_gpr(struct kvm_vcpu *vcpu, int num)
 {
-  return vcpu->arch.gpr[num];
+	return vcpu->arch.gpr[num];
 }
 
-static inline void kvmppc_set_cr (struct kvm_vcpu * vcpu, u32 val)
+static inline void kvmppc_set_cr(struct kvm_vcpu *vcpu, u32 val)
 {
-  vcpu->arch.cr = val;
+	vcpu->arch.cr = val;
 }
 
-static inline u32 kvmppc_get_cr (struct kvm_vcpu * vcpu)
+static inline u32 kvmppc_get_cr(struct kvm_vcpu *vcpu)
 {
-  return vcpu->arch.cr;
+	return vcpu->arch.cr;
 }
 
-static inline void kvmppc_set_xer (struct kvm_vcpu * vcpu, u32 val)
+static inline void kvmppc_set_xer(struct kvm_vcpu *vcpu, u32 val)
 {
-  vcpu->arch.xer = val;
+	vcpu->arch.xer = val;
 }
 
-static inline u32 kvmppc_get_xer (struct kvm_vcpu * vcpu)
+static inline u32 kvmppc_get_xer(struct kvm_vcpu *vcpu)
 {
-  return vcpu->arch.xer;
+	return vcpu->arch.xer;
 }
 
-static inline u32 kvmppc_get_last_inst (struct kvm_vcpu * vcpu)
+static inline u32 kvmppc_get_last_inst(struct kvm_vcpu *vcpu)
 {
-  return vcpu->arch.last_inst;
+	return vcpu->arch.last_inst;
 }
 
-static inline void kvmppc_set_ctr (struct kvm_vcpu * vcpu, ulong val)
+static inline void kvmppc_set_ctr(struct kvm_vcpu *vcpu, ulong val)
 {
-  vcpu->arch.ctr = val;
+	vcpu->arch.ctr = val;
 }
 
-static inline ulong kvmppc_get_ctr (struct kvm_vcpu * vcpu)
+static inline ulong kvmppc_get_ctr(struct kvm_vcpu *vcpu)
 {
-  return vcpu->arch.ctr;
+	return vcpu->arch.ctr;
 }
 
-static inline void kvmppc_set_lr (struct kvm_vcpu * vcpu, ulong val)
+static inline void kvmppc_set_lr(struct kvm_vcpu *vcpu, ulong val)
 {
-  vcpu->arch.lr = val;
+	vcpu->arch.lr = val;
 }
 
-static inline ulong kvmppc_get_lr (struct kvm_vcpu * vcpu)
+static inline ulong kvmppc_get_lr(struct kvm_vcpu *vcpu)
 {
-  return vcpu->arch.lr;
+	return vcpu->arch.lr;
 }
 
-static inline void kvmppc_set_pc (struct kvm_vcpu * vcpu, ulong val)
+static inline void kvmppc_set_pc(struct kvm_vcpu *vcpu, ulong val)
 {
-  vcpu->arch.pc = val;
+	vcpu->arch.pc = val;
 }
 
-static inline ulong kvmppc_get_pc (struct kvm_vcpu * vcpu)
+static inline ulong kvmppc_get_pc(struct kvm_vcpu *vcpu)
 {
-  return vcpu->arch.pc;
+	return vcpu->arch.pc;
 }
 
-static inline ulong kvmppc_get_fault_dar (struct kvm_vcpu * vcpu)
+static inline ulong kvmppc_get_fault_dar(struct kvm_vcpu *vcpu)
 {
-  return vcpu->arch.fault_dear;
+	return vcpu->arch.fault_dear;
 }
 
-static inline ulong kvmppc_get_msr (struct kvm_vcpu * vcpu)
+static inline ulong kvmppc_get_msr(struct kvm_vcpu *vcpu)
 {
-  return vcpu->arch.shared->msr;
+	return vcpu->arch.shared->msr;
 }
 #endif /* __ASM_KVM_BOOKE_H__ */

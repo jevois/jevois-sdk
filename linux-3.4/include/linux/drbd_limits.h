@@ -27,7 +27,7 @@
 #define DRBD_PORT_MAX 0xffff
 
 /* startup { */
-/* if you want more than 3.4 days, disable */
+  /* if you want more than 3.4 days, disable */
 #define DRBD_WFC_TIMEOUT_MIN 0
 #define DRBD_WFC_TIMEOUT_MAX 300000
 #define DRBD_WFC_TIMEOUT_DEF 0
@@ -42,33 +42,33 @@
 /* }*/
 
 /* net { */
-/* timeout, unit centi seconds
- * more than one minute timeout is not useful */
+  /* timeout, unit centi seconds
+   * more than one minute timeout is not useful */
 #define DRBD_TIMEOUT_MIN 1
 #define DRBD_TIMEOUT_MAX 600
 #define DRBD_TIMEOUT_DEF 60       /* 6 seconds */
 
-/* active connection retries when C_WF_CONNECTION */
+  /* active connection retries when C_WF_CONNECTION */
 #define DRBD_CONNECT_INT_MIN 1
 #define DRBD_CONNECT_INT_MAX 120
 #define DRBD_CONNECT_INT_DEF 10   /* seconds */
 
-/* keep-alive probes when idle */
+  /* keep-alive probes when idle */
 #define DRBD_PING_INT_MIN 1
 #define DRBD_PING_INT_MAX 120
 #define DRBD_PING_INT_DEF 10
 
-/* timeout for the ping packets.*/
+ /* timeout for the ping packets.*/
 #define DRBD_PING_TIMEO_MIN  1
 #define DRBD_PING_TIMEO_MAX  100
 #define DRBD_PING_TIMEO_DEF  5
 
-/* max number of write requests between write barriers */
+  /* max number of write requests between write barriers */
 #define DRBD_MAX_EPOCH_SIZE_MIN 1
 #define DRBD_MAX_EPOCH_SIZE_MAX 20000
 #define DRBD_MAX_EPOCH_SIZE_DEF 2048
 
-/* I don't think that a tcp send buffer of more than 10M is useful */
+  /* I don't think that a tcp send buffer of more than 10M is useful */
 #define DRBD_SNDBUF_SIZE_MIN  0
 #define DRBD_SNDBUF_SIZE_MAX  (10<<20)
 #define DRBD_SNDBUF_SIZE_DEF  0
@@ -77,33 +77,33 @@
 #define DRBD_RCVBUF_SIZE_MAX  (10<<20)
 #define DRBD_RCVBUF_SIZE_DEF  0
 
-/* @4k PageSize -> 128kB - 512MB */
+  /* @4k PageSize -> 128kB - 512MB */
 #define DRBD_MAX_BUFFERS_MIN  32
 #define DRBD_MAX_BUFFERS_MAX  131072
 #define DRBD_MAX_BUFFERS_DEF  2048
 
-/* @4k PageSize -> 4kB - 512MB */
+  /* @4k PageSize -> 4kB - 512MB */
 #define DRBD_UNPLUG_WATERMARK_MIN  1
 #define DRBD_UNPLUG_WATERMARK_MAX  131072
 #define DRBD_UNPLUG_WATERMARK_DEF (DRBD_MAX_BUFFERS_DEF/16)
 
-/* 0 is disabled.
- * 200 should be more than enough even for very short timeouts */
+  /* 0 is disabled.
+   * 200 should be more than enough even for very short timeouts */
 #define DRBD_KO_COUNT_MIN  0
 #define DRBD_KO_COUNT_MAX  200
 #define DRBD_KO_COUNT_DEF  0
 /* } */
 
 /* syncer { */
-/* FIXME allow rate to be zero? */
+  /* FIXME allow rate to be zero? */
 #define DRBD_RATE_MIN 1
 /* channel bonding 10 GbE, or other hardware */
 #define DRBD_RATE_MAX (4 << 20)
 #define DRBD_RATE_DEF 250  /* kb/second */
 
-/* less than 7 would hit performance unnecessarily.
- * 3833 is the largest prime that still does fit
- * into 64 sectors of activity log */
+  /* less than 7 would hit performance unnecessarily.
+   * 3833 is the largest prime that still does fit
+   * into 64 sectors of activity log */
 #define DRBD_AL_EXTENTS_MIN  7
 #define DRBD_AL_EXTENTS_MAX  3833
 #define DRBD_AL_EXTENTS_DEF  127
@@ -156,13 +156,13 @@
 #define DRBD_C_MIN_RATE_MAX     (4 << 20)
 #define DRBD_C_MIN_RATE_DEF     4096
 
-#define DRBD_CONG_FILL_MIN  0
-#define DRBD_CONG_FILL_MAX  (10<<21) /* 10GByte in sectors */
-#define DRBD_CONG_FILL_DEF  0
+#define DRBD_CONG_FILL_MIN	0
+#define DRBD_CONG_FILL_MAX	(10<<21) /* 10GByte in sectors */
+#define DRBD_CONG_FILL_DEF	0
 
-#define DRBD_CONG_EXTENTS_MIN DRBD_AL_EXTENTS_MIN
-#define DRBD_CONG_EXTENTS_MAX DRBD_AL_EXTENTS_MAX
-#define DRBD_CONG_EXTENTS_DEF DRBD_AL_EXTENTS_DEF
+#define DRBD_CONG_EXTENTS_MIN	DRBD_AL_EXTENTS_MIN
+#define DRBD_CONG_EXTENTS_MAX	DRBD_AL_EXTENTS_MAX
+#define DRBD_CONG_EXTENTS_DEF	DRBD_AL_EXTENTS_DEF
 
 #undef RANGE
 #endif

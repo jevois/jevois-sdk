@@ -24,28 +24,28 @@
 #include "dvb_frontend.h"
 
 struct tda18212_config {
-  u8 i2c_address;
-  
-  u16 if_dvbt_6;
-  u16 if_dvbt_7;
-  u16 if_dvbt_8;
-  u16 if_dvbt2_5;
-  u16 if_dvbt2_6;
-  u16 if_dvbt2_7;
-  u16 if_dvbt2_8;
-  u16 if_dvbc;
+	u8 i2c_address;
+
+	u16 if_dvbt_6;
+	u16 if_dvbt_7;
+	u16 if_dvbt_8;
+	u16 if_dvbt2_5;
+	u16 if_dvbt2_6;
+	u16 if_dvbt2_7;
+	u16 if_dvbt2_8;
+	u16 if_dvbc;
 };
 
 #if defined(CONFIG_MEDIA_TUNER_TDA18212) || \
-(defined(CONFIG_MEDIA_TUNER_TDA18212_MODULE) && defined(MODULE))
-extern struct dvb_frontend * tda18212_attach (struct dvb_frontend * fe,
-    struct i2c_adapter * i2c, struct tda18212_config * cfg);
+	(defined(CONFIG_MEDIA_TUNER_TDA18212_MODULE) && defined(MODULE))
+extern struct dvb_frontend *tda18212_attach(struct dvb_frontend *fe,
+	struct i2c_adapter *i2c, struct tda18212_config *cfg);
 #else
-static inline struct dvb_frontend * tda18212_attach (struct dvb_frontend * fe,
-    struct i2c_adapter * i2c, struct tda18212_config * cfg)
+static inline struct dvb_frontend *tda18212_attach(struct dvb_frontend *fe,
+	struct i2c_adapter *i2c, struct tda18212_config *cfg)
 {
-  printk (KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
-  return NULL;
+	printk(KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
+	return NULL;
 }
 #endif
 

@@ -29,28 +29,28 @@
 /* find correct data type for signed/unsigned 16 bit variables \
 by checking max of unsigned variant */
 #if USHRT_MAX == 0xFFFF
-/* 16 bit achieved with short */
-#define BMG160_U16 unsigned short
-#define BMG160_S16 signed short
+		/* 16 bit achieved with short */
+		#define BMG160_U16 unsigned short
+		#define BMG160_S16 signed short
 #elif UINT_MAX == 0xFFFF
-/* 16 bit achieved with int */
-#define BMG160_U16 unsigned int
-#define BMG160_S16 signed int
+		/* 16 bit achieved with int */
+		#define BMG160_U16 unsigned int
+		#define BMG160_S16 signed int
 #else
-#error BMG160_U16 and BMG160_S16 could not be
-#error defined automatically, please do so manually
+		#error BMG160_U16 and BMG160_S16 could not be
+		#error defined automatically, please do so manually
 #endif
 
 /* find correct data type for signed 32 bit variables */
 #if INT_MAX == 0x7FFFFFFF
-/* 32 bit achieved with int */
-#define BMG160_S32 signed int
+		/* 32 bit achieved with int */
+		#define BMG160_S32 signed int
 #elif LONG_MAX == 0x7FFFFFFF
-/* 32 bit achieved with long int */
-#define BMG160_S32 signed long int
+		/* 32 bit achieved with long int */
+		#define BMG160_S32 signed long int
 #else
-#error BMG160_S32 could not be
-#error defined automatically, please do so manually
+		#error BMG160_S32 could not be
+		#error defined automatically, please do so manually
 #endif
 #endif
 
@@ -60,68 +60,68 @@ by checking max of unsigned variant */
 /**\brief links the order of parameters defined in
 BMG160_BUS_WR_PARAM_TYPE to function calls used inside the API*/
 #define BMG160_BUS_WR_PARAM_TYPES unsigned char, unsigned char,\
-  unsigned char *, unsigned char
+unsigned char *, unsigned char
 
 /**\brief links the order of parameters defined in
 BMG160_BUS_WR_PARAM_TYPE to function calls used inside the API*/
 #define BMG160_BUS_WR_PARAM_ORDER(device_addr, register_addr,\
-                                  register_data, wr_len)
+register_data, wr_len)
 
 /* never change this line */
 #define BMG160_BUS_WRITE_FUNC(device_addr, register_addr,\
-                              register_data, wr_len) bus_write(device_addr, register_addr,\
-                                  register_data, wr_len)
+register_data, wr_len) bus_write(device_addr, register_addr,\
+register_data, wr_len)
 /**\brief defines the return parameter type of the BMG160_RD_FUNCTION
 */
 #define BMG160_BUS_RD_RETURN_TYPE char
 /**\brief defines the calling parameter types of the BMG160_RD_FUNCTION
 */
 #define BMG160_BUS_RD_PARAM_TYPES unsigned char, unsigned char,\
-  unsigned char *, unsigned char
+unsigned char *, unsigned char
 /**\brief links the order of parameters defined in \
 BMG160_BUS_RD_PARAM_TYPE to function calls used inside the API
 */
 #define BMG160_BUS_RD_PARAM_ORDER (device_addr, register_addr,\
-                                   register_data)
+register_data)
 /* never change this line */
 #define BMG160_BUS_READ_FUNC(device_addr, register_addr,\
-                             register_data, rd_len)bus_read(device_addr, register_addr,\
-                                 register_data, rd_len)
+register_data, rd_len)bus_read(device_addr, register_addr,\
+register_data, rd_len)
 /**\brief defines the return parameter type of the BMG160_RD_FUNCTION
 */
 #define BMG160_BURST_RD_RETURN_TYPE char
 /**\brief defines the calling parameter types of the BMG160_RD_FUNCTION
 */
 #define BMG160_BURST_RD_PARAM_TYPES unsigned char,\
-  unsigned char, unsigned char *, signed int
+unsigned char, unsigned char *, signed int
 /**\brief links the order of parameters defined in \
 BMG160_BURST_RD_PARAM_TYPE to function calls used inside the API
 */
 #define BMG160_BURST_RD_PARAM_ORDER (device_addr, register_addr,\
-                                     register_data)
+register_data)
 /* never change this line */
 #define BMG160_BURST_READ_FUNC(device_addr, register_addr,\
-                               register_data, rd_len)burst_read(device_addr, \
-                                   register_addr, register_data, rd_len)
+register_data, rd_len)burst_read(device_addr, \
+register_addr, register_data, rd_len)
 /**\brief defines the return parameter type of the BMG160_DELAY_FUNCTION
 */
 #define BMG160_DELAY_RETURN_TYPE void
 /* never change this line */
 #define BMG160_DELAY_FUNC(delay_in_msec)\
-  delay_func(delay_in_msec)
-#define BMG160_RETURN_FUNCTION_TYPE     int
+		delay_func(delay_in_msec)
+#define BMG160_RETURN_FUNCTION_TYPE			int
 /**< This refers BMG160 return type as char */
 
-#define BMG160_I2C_ADDR1        0x68
-#define BMG160_I2C_ADDR         BMG160_I2C_ADDR1
-#define BMG160_I2C_ADDR2        0x69
+#define	BMG160_I2C_ADDR1				0x68
+#define	BMG160_I2C_ADDR					BMG160_I2C_ADDR1
+#define	BMG160_I2C_ADDR2				0x69
 
 
 
 /*Define of registers*/
 
 /* Hard Wired */
-#define BMG160_CHIP_ID_ADDR           0x00
+#define BMG160_CHIP_ID_ADDR						0x00
 /**<Address of Chip ID Register*/
 
 
@@ -257,7 +257,7 @@ BMG160_BURST_RD_PARAM_TYPE to function calls used inside the API
 #define BMG160_RATE_Z_LSB_VALUEZ__REG        BMG160_RATE_Z_LSB_ADDR
 
 /* Interrupt status 0 Register */
-/**< 2th bit of Interrupt status 0 register */
+   /**< 2th bit of Interrupt status 0 register */
 #define BMG160_INT_STATUS0_ANY_INT__POS     2
 #define BMG160_INT_STATUS0_ANY_INT__LEN     1
 #define BMG160_INT_STATUS0_ANY_INT__MSK     0x04
@@ -269,7 +269,7 @@ BMG160_BURST_RD_PARAM_TYPE to function calls used inside the API
 #define BMG160_INT_STATUS0_HIGH_INT__MSK    0x02
 #define BMG160_INT_STATUS0_HIGH_INT__REG    BMG160_INT_STATUS0_ADDR
 
-/**< 1st and 2nd bit of Interrupt status 0 register */
+ /**< 1st and 2nd bit of Interrupt status 0 register */
 #define BMG160_INT_STATUSZERO__POS    1
 #define BMG160_INT_STATUSZERO__LEN    2
 #define BMG160_INT_STATUSZERO__MSK    0x06
@@ -282,7 +282,7 @@ BMG160_BURST_RD_PARAM_TYPE to function calls used inside the API
 #define BMG160_INT_STATUS1_DATA_INT__MSK           0x80
 #define BMG160_INT_STATUS1_DATA_INT__REG           BMG160_INT_STATUS1_ADDR
 
-/**< 6th bit of Interrupt status 1 register */
+ /**< 6th bit of Interrupt status 1 register */
 #define BMG160_INT_STATUS1_AUTO_OFFSET_INT__POS    6
 #define BMG160_INT_STATUS1_AUTO_OFFSET_INT__LEN    1
 #define BMG160_INT_STATUS1_AUTO_OFFSET_INT__MSK    0x40
@@ -788,84 +788,84 @@ BMG160_BURST_RD_PARAM_TYPE to function calls used inside the API
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_REMAIN__LEN        4
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_REMAIN__MSK        0xF0
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_REMAIN__REG        \
-  BMG160_TRIM_NVM_CTRL_ADDR
+BMG160_TRIM_NVM_CTRL_ADDR
 
 /**< 3rd bit of Trim NVM control Registers */
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_LOAD__POS          3
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_LOAD__LEN          1
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_LOAD__MSK          0x08
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_LOAD__REG          \
-  BMG160_TRIM_NVM_CTRL_ADDR
+BMG160_TRIM_NVM_CTRL_ADDR
 
 /**< 2nd bit of Trim NVM control Registers */
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_RDY__POS           2
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_RDY__LEN           1
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_RDY__MSK           0x04
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_RDY__REG           \
-  BMG160_TRIM_NVM_CTRL_ADDR
+BMG160_TRIM_NVM_CTRL_ADDR
 
-/**< 1st bit of Trim NVM control Registers */
+ /**< 1st bit of Trim NVM control Registers */
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_PROG_TRIG__POS     1
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_PROG_TRIG__LEN     1
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_PROG_TRIG__MSK     0x02
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_PROG_TRIG__REG     \
-  BMG160_TRIM_NVM_CTRL_ADDR
+BMG160_TRIM_NVM_CTRL_ADDR
 
 /**< 0th bit of Trim NVM control Registers */
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_PROG_MODE__POS     0
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_PROG_MODE__LEN     1
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_PROG_MODE__MSK     0x01
 #define BMG160_TRIM_NVM_CTRL_ADDR_NVM_PROG_MODE__REG     \
-  BMG160_TRIM_NVM_CTRL_ADDR
+BMG160_TRIM_NVM_CTRL_ADDR
 
-/**< 2nd bit of SPI3 WDT Registers */
+ /**< 2nd bit of SPI3 WDT Registers */
 #define BMG160_BGW_SPI3_WDT_ADDR_I2C_WDT_EN__POS      2
 #define BMG160_BGW_SPI3_WDT_ADDR_I2C_WDT_EN__LEN      1
 #define BMG160_BGW_SPI3_WDT_ADDR_I2C_WDT_EN__MSK      0x04
 #define BMG160_BGW_SPI3_WDT_ADDR_I2C_WDT_EN__REG      \
-  BMG160_BGW_SPI3_WDT_ADDR
+BMG160_BGW_SPI3_WDT_ADDR
 
-/**< 1st bit of SPI3 WDT Registers */
+ /**< 1st bit of SPI3 WDT Registers */
 #define BMG160_BGW_SPI3_WDT_ADDR_I2C_WDT_SEL__POS     1
 #define BMG160_BGW_SPI3_WDT_ADDR_I2C_WDT_SEL__LEN     1
 #define BMG160_BGW_SPI3_WDT_ADDR_I2C_WDT_SEL__MSK     0x02
 #define BMG160_BGW_SPI3_WDT_ADDR_I2C_WDT_SEL__REG     \
-  BMG160_BGW_SPI3_WDT_ADDR
+BMG160_BGW_SPI3_WDT_ADDR
 
 /**< 0th bit of SPI3 WDT Registers */
 #define BMG160_BGW_SPI3_WDT_ADDR_SPI3__POS            0
 #define BMG160_BGW_SPI3_WDT_ADDR_SPI3__LEN            1
 #define BMG160_BGW_SPI3_WDT_ADDR_SPI3__MSK            0x01
 #define BMG160_BGW_SPI3_WDT_ADDR_SPI3__REG            \
-  BMG160_BGW_SPI3_WDT_ADDR
+BMG160_BGW_SPI3_WDT_ADDR
 
 /**< 4th bit of Self test Registers */
 #define BMG160_SELF_TEST_ADDR_RATEOK__POS            4
 #define BMG160_SELF_TEST_ADDR_RATEOK__LEN            1
 #define BMG160_SELF_TEST_ADDR_RATEOK__MSK            0x10
 #define BMG160_SELF_TEST_ADDR_RATEOK__REG            \
-  BMG160_SELF_TEST_ADDR
+BMG160_SELF_TEST_ADDR
 
 /**< 2nd bit of Self test Registers */
 #define BMG160_SELF_TEST_ADDR_BISTFAIL__POS          2
 #define BMG160_SELF_TEST_ADDR_BISTFAIL__LEN          1
 #define BMG160_SELF_TEST_ADDR_BISTFAIL__MSK          0x04
 #define BMG160_SELF_TEST_ADDR_BISTFAIL__REG          \
-  BMG160_SELF_TEST_ADDR
+BMG160_SELF_TEST_ADDR
 
 /**< 1st bit of Self test Registers */
 #define BMG160_SELF_TEST_ADDR_BISTRDY__POS           1
 #define BMG160_SELF_TEST_ADDR_BISTRDY__LEN           1
 #define BMG160_SELF_TEST_ADDR_BISTRDY__MSK           0x02
 #define BMG160_SELF_TEST_ADDR_BISTRDY__REG           \
-  BMG160_SELF_TEST_ADDR
+BMG160_SELF_TEST_ADDR
 
 /**< 0th bit of Self test Registers */
 #define BMG160_SELF_TEST_ADDR_TRIGBIST__POS          0
 #define BMG160_SELF_TEST_ADDR_TRIGBIST__LEN          1
 #define BMG160_SELF_TEST_ADDR_TRIGBIST__MSK          0x01
 #define BMG160_SELF_TEST_ADDR_TRIGBIST__REG          \
-  BMG160_SELF_TEST_ADDR
+BMG160_SELF_TEST_ADDR
 
 /**< 7th bit of FIFO CGF1 Registers */
 #define BMG160_FIFO_CGF1_ADDR_TAG__POS     7
@@ -891,7 +891,7 @@ BMG160_BURST_RD_PARAM_TYPE to function calls used inside the API
 #define BMG160_FIFO_CGF0_ADDR_DATA_SEL__MSK     0x03
 #define BMG160_FIFO_CGF0_ADDR_DATA_SEL__REG     BMG160_FIFO_CGF0_ADDR
 
-/**< Last 2 bits of INL Offset MSB Registers */
+ /**< Last 2 bits of INL Offset MSB Registers */
 #define BMG160_OFC1_ADDR_OFFSET_X__POS       6
 #define BMG160_OFC1_ADDR_OFFSET_X__LEN       2
 #define BMG160_OFC1_ADDR_OFFSET_X__MSK       0xC0
@@ -945,16 +945,16 @@ BMG160_BURST_RD_PARAM_TYPE to function calls used inside the API
 #define BMG160_MODE_NORMAL              0
 #define BMG160_MODE_DEEPSUSPEND         1
 #define BMG160_MODE_SUSPEND             2
-#define BMG160_MODE_FASTPOWERUP     3
+#define BMG160_MODE_FASTPOWERUP			3
 #define BMG160_MODE_ADVANCEDPOWERSAVING 4
 
 /* get bit slice  */
 #define BMG160_GET_BITSLICE(regvar, bitname)\
-  ((regvar & bitname##__MSK) >> bitname##__POS)
+((regvar & bitname##__MSK) >> bitname##__POS)
 
 /* Set bit slice */
 #define BMG160_SET_BITSLICE(regvar, bitname, val)\
-  ((regvar&~bitname##__MSK)|((val<<bitname##__POS)&bitname##__MSK))
+((regvar&~bitname##__MSK)|((val<<bitname##__POS)&bitname##__MSK))
 /* Constants */
 
 #define BMG160_NULL                             0
@@ -1065,9 +1065,9 @@ BMG160_BURST_RD_PARAM_TYPE to function calls used inside the API
 /**< It refers BMG160 PI KI */
 
 
-#define C_BMG160_SUCCESS            0
+#define C_BMG160_SUCCESS						0
 /**< It refers BMG160 operation is success */
-#define C_BMG160_FAILURE            1
+#define C_BMG160_FAILURE						1
 /**< It refers BMG160 operation is Failure */
 
 #define BMG160_SPI_RD_MASK                      0x80
@@ -1126,33 +1126,33 @@ BMG160_BURST_RD_PARAM_TYPE to function calls used inside the API
 #define         E_BMG160_COMM_RES               (signed char)(-1)
 #define         E_BMG160_OUT_OF_RANGE           (signed char)(-2)
 
-#define C_BMG160_No_Filter_U8X      0
-#define C_BMG160_BW_230Hz_U8X     1
-#define C_BMG160_BW_116Hz_U8X     2
-#define C_BMG160_BW_47Hz_U8X      3
-#define C_BMG160_BW_23Hz_U8X      4
-#define C_BMG160_BW_12Hz_U8X      5
-#define C_BMG160_BW_64Hz_U8X      6
-#define C_BMG160_BW_32Hz_U8X      7
+#define	C_BMG160_No_Filter_U8X			0
+#define	C_BMG160_BW_230Hz_U8X			1
+#define	C_BMG160_BW_116Hz_U8X			2
+#define	C_BMG160_BW_47Hz_U8X			3
+#define	C_BMG160_BW_23Hz_U8X			4
+#define	C_BMG160_BW_12Hz_U8X			5
+#define	C_BMG160_BW_64Hz_U8X			6
+#define	C_BMG160_BW_32Hz_U8X			7
 
-#define C_BMG160_No_AutoSleepDur_U8X  0
-#define C_BMG160_4ms_AutoSleepDur_U8X 1
-#define C_BMG160_5ms_AutoSleepDur_U8X 2
-#define C_BMG160_8ms_AutoSleepDur_U8X 3
-#define C_BMG160_10ms_AutoSleepDur_U8X  4
-#define C_BMG160_15ms_AutoSleepDur_U8X  5
-#define C_BMG160_20ms_AutoSleepDur_U8X  6
-#define C_BMG160_40ms_AutoSleepDur_U8X  7
+#define C_BMG160_No_AutoSleepDur_U8X	0
+#define	C_BMG160_4ms_AutoSleepDur_U8X	1
+#define	C_BMG160_5ms_AutoSleepDur_U8X	2
+#define	C_BMG160_8ms_AutoSleepDur_U8X	3
+#define	C_BMG160_10ms_AutoSleepDur_U8X	4
+#define	C_BMG160_15ms_AutoSleepDur_U8X	5
+#define	C_BMG160_20ms_AutoSleepDur_U8X	6
+#define	C_BMG160_40ms_AutoSleepDur_U8X	7
 
 
 
 
 #define BMG160_WR_FUNC_PTR int (*bus_write)\
-  (unsigned char, unsigned char, unsigned char *, unsigned char)
+(unsigned char, unsigned char, unsigned char *, unsigned char)
 #define BMG160_RD_FUNC_PTR int (*bus_read)\
-  (unsigned char, unsigned char, unsigned char *, unsigned char)
+(unsigned char, unsigned char, unsigned char *, unsigned char)
 #define BMG160_BRD_FUNC_PTR int (*burst_read)\
-  (unsigned char, unsigned char, unsigned char *, BMG160_S32)
+(unsigned char, unsigned char, unsigned char *, BMG160_S32)
 #define BMG160_MDELAY_DATA_TYPE BMG160_U16
 
 
@@ -1160,27 +1160,27 @@ BMG160_BURST_RD_PARAM_TYPE to function calls used inside the API
 
 /*user defined Structures*/
 struct bmg160_data_t {
-  BMG160_S16 datax;
-  BMG160_S16 datay;
-  BMG160_S16 dataz;
-  char intstatus[5];
+		BMG160_S16 datax;
+		BMG160_S16 datay;
+		BMG160_S16 dataz;
+		char intstatus[5];
 };
 
 
 struct bmg160_offset_t {
-  BMG160_U16 datax;
-  BMG160_U16 datay;
-  BMG160_U16 dataz;
+		BMG160_U16 datax;
+		BMG160_U16 datay;
+		BMG160_U16 dataz;
 };
 
 
 struct bmg160_t {
-  unsigned char chip_id;
-  unsigned char dev_addr;
-  BMG160_BRD_FUNC_PTR;
-  BMG160_WR_FUNC_PTR;
-  BMG160_RD_FUNC_PTR;
-  void (*delay_msec) (BMG160_MDELAY_DATA_TYPE);
+		unsigned char chip_id;
+		unsigned char dev_addr;
+		BMG160_BRD_FUNC_PTR;
+		BMG160_WR_FUNC_PTR;
+		BMG160_RD_FUNC_PTR;
+		void(*delay_msec)(BMG160_MDELAY_DATA_TYPE);
 };
 
 /***************************************************************
@@ -1209,7 +1209,7 @@ struct bmg160_t {
  * Remarks:
  *
  ***************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_init (struct bmg160_t * p_bmg160);
+BMG160_RETURN_FUNCTION_TYPE bmg160_init(struct bmg160_t *p_bmg160);
 /***************************************************************
  * Description: *//**\brief
  *
@@ -1236,7 +1236,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_init (struct bmg160_t * p_bmg160);
  * Remarks:
  *
  ****************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_get_dataX (BMG160_S16 * data_x);
+BMG160_RETURN_FUNCTION_TYPE bmg160_get_dataX(BMG160_S16 *data_x);
 /****************************************************************
  * Description: *//**\brief
  *
@@ -1261,7 +1261,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_dataX (BMG160_S16 * data_x);
  * Remarks:
  *
  ***************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_get_dataY (BMG160_S16 * data_y);
+BMG160_RETURN_FUNCTION_TYPE bmg160_get_dataY(BMG160_S16 *data_y);
 /***************************************************************
  * Description: *//**\brief
  *
@@ -1286,7 +1286,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_dataY (BMG160_S16 * data_y);
  * Remarks:
  *
  *************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_get_dataZ (BMG160_S16 * data_z);
+BMG160_RETURN_FUNCTION_TYPE bmg160_get_dataZ(BMG160_S16 *data_z);
 /************************************************************
  * Description: *//**\brief
  *
@@ -1311,7 +1311,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_dataZ (BMG160_S16 * data_z);
  * Remarks:
  *
  ***************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_get_dataXYZ (struct bmg160_data_t * data);
+BMG160_RETURN_FUNCTION_TYPE bmg160_get_dataXYZ(struct bmg160_data_t *data);
 /***************************************************************************
  * Description: *//**\brief
  *
@@ -1336,7 +1336,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_dataXYZ (struct bmg160_data_t * data);
  * Remarks:
  *
  ********************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_get_dataXYZI (struct bmg160_data_t * data);
+BMG160_RETURN_FUNCTION_TYPE bmg160_get_dataXYZI(struct bmg160_data_t *data);
 /********************************************************************
  * Description: *//**\brief
  *
@@ -1361,7 +1361,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_dataXYZI (struct bmg160_data_t * data);
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_get_Temperature (unsigned char * temperature);
+BMG160_RETURN_FUNCTION_TYPE bmg160_get_Temperature(unsigned char *temperature);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1389,7 +1389,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_Temperature (unsigned char * temperature)
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_FIFO_data_reg
-(unsigned char * fifo_data);
+(unsigned char *fifo_data);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1413,8 +1413,8 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_FIFO_data_reg
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_read_register (unsigned char addr,
-    unsigned char * data, unsigned char len);
+BMG160_RETURN_FUNCTION_TYPE bmg160_read_register(unsigned char addr,
+unsigned char *data, unsigned char len);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1438,8 +1438,8 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_read_register (unsigned char addr,
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_burst_read (unsigned char addr,
-    unsigned char * data, BMG160_S32 len);
+BMG160_RETURN_FUNCTION_TYPE bmg160_burst_read(unsigned char addr,
+unsigned char *data, BMG160_S32 len);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1464,8 +1464,8 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_burst_read (unsigned char addr,
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_write_register (unsigned char addr,
-    unsigned char * data, unsigned char len);
+BMG160_RETURN_FUNCTION_TYPE bmg160_write_register(unsigned char addr,
+unsigned char *data, unsigned char len);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1492,7 +1492,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_write_register (unsigned char addr,
  ****************************************************************************/
 
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_interrupt_status_reg_0
-(unsigned char * status0_data);
+(unsigned char *status0_data);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1519,7 +1519,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_interrupt_status_reg_0
  ****************************************************************************/
 
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_interrupt_status_reg_1
-(unsigned char * status1_data);
+(unsigned char *status1_data);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1546,7 +1546,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_interrupt_status_reg_1
  ****************************************************************************/
 
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_interrupt_status_reg_2
-(unsigned char * status2_data);
+(unsigned char *status2_data);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1573,7 +1573,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_interrupt_status_reg_2
  ****************************************************************************/
 
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_interrupt_status_reg_3
-(unsigned char * status3_data);
+(unsigned char *status3_data);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1600,7 +1600,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_interrupt_status_reg_3
  ****************************************************************************/
 
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifostatus_reg
-(unsigned char * fifo_status);
+(unsigned char *fifo_status);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1626,7 +1626,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifostatus_reg
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_range_reg
-(unsigned char * range);
+(unsigned char *range);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1678,7 +1678,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_range_reg
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_high_res
-(unsigned char * high_res);
+(unsigned char *high_res);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1729,7 +1729,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_high_res
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_get_bw (unsigned char * bandwidth);
+BMG160_RETURN_FUNCTION_TYPE bmg160_get_bw(unsigned char *bandwidth);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1754,7 +1754,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_bw (unsigned char * bandwidth);
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_set_bw (unsigned char bandwidth);
+BMG160_RETURN_FUNCTION_TYPE bmg160_set_bw(unsigned char bandwidth);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1781,7 +1781,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_bw (unsigned char bandwidth);
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_pmu_ext_tri_sel
-(unsigned char * pwu_ext_tri_sel);
+(unsigned char *pwu_ext_tri_sel);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1833,7 +1833,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_pmu_ext_tri_sel
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_high_bw
-(unsigned char * high_bw);
+(unsigned char *high_bw);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1885,7 +1885,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_high_bw
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_shadow_dis
-(unsigned char * shadow_dis);
+(unsigned char *shadow_dis);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1936,7 +1936,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_shadow_dis
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_set_soft_reset (void);
+BMG160_RETURN_FUNCTION_TYPE bmg160_set_soft_reset(void);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1961,7 +1961,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_soft_reset (void);
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_get_data_enable (unsigned char * data_en);
+BMG160_RETURN_FUNCTION_TYPE bmg160_get_data_enable(unsigned char *data_en);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -1986,7 +1986,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_data_enable (unsigned char * data_en);
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_set_data_en (unsigned char data_en);
+BMG160_RETURN_FUNCTION_TYPE bmg160_set_data_en(unsigned char data_en);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2011,7 +2011,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_data_en (unsigned char data_en);
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifo_enable (unsigned char * fifo_en);
+BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifo_enable(unsigned char *fifo_en);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2036,7 +2036,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifo_enable (unsigned char * fifo_en);
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_set_fifo_enable (unsigned char fifo_en);
+BMG160_RETURN_FUNCTION_TYPE bmg160_set_fifo_enable(unsigned char fifo_en);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2062,7 +2062,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_fifo_enable (unsigned char fifo_en);
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_offset_enable
-(unsigned char mode, unsigned char * offset_en);
+(unsigned char mode, unsigned char *offset_en);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2114,7 +2114,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_offset_enable
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_int_od
-(unsigned char param, unsigned char * int_od);
+(unsigned char param, unsigned char *int_od);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2166,7 +2166,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_int_od
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_int_lvl
-(unsigned char param, unsigned char * int_lvl);
+(unsigned char param, unsigned char *int_lvl);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2218,7 +2218,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_int_lvl
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_int1_high
-(unsigned char * int1_high);
+(unsigned char *int1_high);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2270,7 +2270,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_int1_high
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_int1_any
-(unsigned char * int1_any);
+(unsigned char *int1_any);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2322,7 +2322,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_int1_any
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_int_data
-(unsigned char axis, unsigned char * int_data);
+(unsigned char axis, unsigned char *int_data);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2374,7 +2374,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_int_data
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_int2_offset
-(unsigned char axis, unsigned char * int2_offset);
+(unsigned char axis, unsigned char *int2_offset);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2426,7 +2426,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_int2_offset
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_int1_offset
-(unsigned char axis, unsigned char * int1_offset);
+(unsigned char axis, unsigned char *int1_offset);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2477,7 +2477,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_int1_offset
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_get_int_fifo (unsigned char * int_fifo);
+BMG160_RETURN_FUNCTION_TYPE bmg160_get_int_fifo(unsigned char *int_fifo);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2529,7 +2529,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_int_fifo
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_int2_high
-(unsigned char * int2_high);
+(unsigned char *int2_high);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2581,7 +2581,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_int2_high
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_int2_any
-(unsigned char * int2_any);
+(unsigned char *int2_any);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2633,7 +2633,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_int2_any
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_offset_unfilt
-(unsigned char param, unsigned char * offset_unfilt);
+(unsigned char param, unsigned char *offset_unfilt);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2685,7 +2685,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_offset_unfilt
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_unfilt_data
-(unsigned char param, unsigned char * unfilt_data);
+(unsigned char param, unsigned char *unfilt_data);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2737,7 +2737,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_unfilt_data
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_any_th
-(unsigned char * any_th);
+(unsigned char *any_th);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2789,7 +2789,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_any_th
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_awake_dur
-(unsigned char * awake_dur);
+(unsigned char *awake_dur);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2841,7 +2841,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_awake_dur
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_any_dursample
-(unsigned char * dursample);
+(unsigned char *dursample);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2893,7 +2893,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_any_dursample
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_any_en_ch
-(unsigned char channel, unsigned char * data);
+(unsigned char channel, unsigned char *data);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -2945,7 +2945,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_any_en_ch
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifo_watermark_enable
-(unsigned char * fifo_wn_en);
+(unsigned char *fifo_wn_en);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3049,7 +3049,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_offset_reset
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_latch_status
-(unsigned char * latch_status);
+(unsigned char *latch_status);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3101,7 +3101,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_latch_status
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_latch_int
-(unsigned char * latch_int);
+(unsigned char *latch_int);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3153,7 +3153,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_latch_int
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_high_hy
-(unsigned char channel, unsigned char * high_hy);
+(unsigned char channel, unsigned char *high_hy);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3205,7 +3205,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_high_hy
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_high_th
-(unsigned char channel, unsigned char * high_th);
+(unsigned char channel, unsigned char *high_th);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3257,7 +3257,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_high_th
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_high_en_ch
-(unsigned char channel, unsigned char * high_en);
+(unsigned char channel, unsigned char *high_en);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3309,7 +3309,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_high_en_ch
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_high_dur_ch
-(unsigned char channel, unsigned char * high_dur);
+(unsigned char channel, unsigned char *high_dur);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3361,7 +3361,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_high_dur_ch
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_slow_offset_th
-(unsigned char * offset_th);
+(unsigned char *offset_th);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3413,7 +3413,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_slow_offset_th
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_slow_offset_dur
-(unsigned char * offset_dur);
+(unsigned char *offset_dur);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3465,7 +3465,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_slow_offset_dur
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_slow_offset_en_ch
-(unsigned char channel, unsigned char * slow_offset);
+(unsigned char channel, unsigned char *slow_offset);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3518,7 +3518,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_slow_offset_en_ch
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_offset_wl
-(unsigned char channel, unsigned char * offset_wl);
+(unsigned char channel, unsigned char *offset_wl);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3596,7 +3596,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_fast_offset_en
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_fast_offset_en_ch
-(unsigned char * fast_offset);
+(unsigned char *fast_offset);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3647,7 +3647,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_fast_offset_en_ch
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_enable_fast_offset (void);
+BMG160_RETURN_FUNCTION_TYPE bmg160_enable_fast_offset(void);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3673,7 +3673,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_enable_fast_offset (void);
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_nvm_remain
-(unsigned char * nvm_remain);
+(unsigned char *nvm_remain);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3725,7 +3725,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_nvm_load
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_nvm_rdy
-(unsigned char * nvm_rdy);
+(unsigned char *nvm_rdy);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3777,7 +3777,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_nvm_prog_trig
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_nvm_prog_mode
-(unsigned char * prog_mode);
+(unsigned char *prog_mode);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3829,7 +3829,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_nvm_prog_mode
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_i2c_wdt
-(unsigned char i2c_wdt, unsigned char * prog_mode);
+(unsigned char i2c_wdt, unsigned char *prog_mode);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3880,7 +3880,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_i2c_wdt
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_get_spi3 (unsigned char * spi3);
+BMG160_RETURN_FUNCTION_TYPE bmg160_get_spi3(unsigned char *spi3);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3905,7 +3905,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_spi3 (unsigned char * spi3);
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_set_spi3 (unsigned char spi3);
+BMG160_RETURN_FUNCTION_TYPE bmg160_set_spi3(unsigned char spi3);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3930,7 +3930,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_spi3 (unsigned char spi3);
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifo_tag (unsigned char * tag);
+BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifo_tag(unsigned char *tag);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3955,7 +3955,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifo_tag (unsigned char * tag);
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_set_fifo_tag (unsigned char tag);
+BMG160_RETURN_FUNCTION_TYPE bmg160_set_fifo_tag(unsigned char tag);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -3981,7 +3981,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_fifo_tag (unsigned char tag);
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifo_watermarklevel
-(unsigned char * water_mark_level);
+(unsigned char *water_mark_level);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -4033,7 +4033,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_fifo_watermarklevel
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifo_mode
-(unsigned char * mode);
+(unsigned char *mode);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -4058,7 +4058,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifo_mode
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_set_fifo_mode (unsigned char mode);
+BMG160_RETURN_FUNCTION_TYPE bmg160_set_fifo_mode(unsigned char mode);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -4084,7 +4084,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_fifo_mode (unsigned char mode);
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifo_data_sel
-(unsigned char * data_sel);
+(unsigned char *data_sel);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -4136,7 +4136,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_fifo_data_sel
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_offset
-(unsigned char axis, BMG160_S16 * offset);
+(unsigned char axis, BMG160_S16 *offset);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -4188,7 +4188,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_offset
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_gp
-(unsigned char param, unsigned char * value);
+(unsigned char param, unsigned char *value);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -4240,7 +4240,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_gp
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifo_framecount
-(unsigned char * fifo_framecount);
+(unsigned char *fifo_framecount);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -4266,7 +4266,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifo_framecount
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifo_overrun
-(unsigned char * fifo_overrun);
+(unsigned char *fifo_overrun);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -4292,7 +4292,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_fifo_overrun
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_int2_fifo
-(unsigned char * int_fifo);
+(unsigned char *int_fifo);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -4318,7 +4318,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_int2_fifo
  *
  ****************************************************************************/
 BMG160_RETURN_FUNCTION_TYPE bmg160_get_int1_fifo
-(unsigned char * int_fifo);
+(unsigned char *int_fifo);
 /****************************************************************************
  * Description: *//**\brief
  *
@@ -4392,7 +4392,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_int1_fifo
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_get_mode (unsigned char * mode);
+BMG160_RETURN_FUNCTION_TYPE bmg160_get_mode(unsigned char *mode);
 /*****************************************************************************
  * Description: *//**\brief
  *
@@ -4416,7 +4416,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_mode (unsigned char * mode);
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_set_mode (unsigned char mode);
+BMG160_RETURN_FUNCTION_TYPE bmg160_set_mode(unsigned char mode);
 /*****************************************************************************
  * Description: *//**\brief
  *
@@ -4440,7 +4440,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_mode (unsigned char mode);
  * Remarks:
  *
  ****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_selftest (unsigned char * result);
+BMG160_RETURN_FUNCTION_TYPE bmg160_selftest(unsigned char *result);
 /*****************************************************************************
  * Description: *//**\brief  This API is used to get data auto sleep duration
  *
@@ -4466,7 +4466,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_selftest (unsigned char * result);
  * Remarks:
  *
  *****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_get_autosleepdur (unsigned char * duration);
+BMG160_RETURN_FUNCTION_TYPE bmg160_get_autosleepdur(unsigned char *duration);
 /*****************************************************************************
  * Description: *//**\brief This API is used to set duration
  *
@@ -4475,8 +4475,8 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_autosleepdur (unsigned char * duration);
  *
  *  \param unsigned char duration:
  *          Value to be written passed as a parameter
- *       unsigned char bandwidth:
- *      Value to be written passed as a parameter
+ *		   unsigned char bandwidth:
+ *			Value to be written passed as a parameter
  *
  *  \return communication results
  *
@@ -4492,8 +4492,8 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_autosleepdur (unsigned char * duration);
  * Remarks:
  *
  *****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_set_autosleepdur (unsigned char duration,
-    unsigned char bandwith);
+BMG160_RETURN_FUNCTION_TYPE bmg160_set_autosleepdur(unsigned char duration,
+unsigned char bandwith);
 /*****************************************************************************
  * Description: *//**\brief  This API is used to get data sleep duration
  *
@@ -4519,7 +4519,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_autosleepdur (unsigned char duration,
  * Remarks:
  *
  *****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_get_sleepdur (unsigned char * duration);
+BMG160_RETURN_FUNCTION_TYPE bmg160_get_sleepdur(unsigned char *duration);
 /*****************************************************************************
  * Description: *//**\brief This API is used to set duration
  *
@@ -4545,7 +4545,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_get_sleepdur (unsigned char * duration);
  * Remarks:
  *
  *****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_set_sleepdur (unsigned char duration);
+BMG160_RETURN_FUNCTION_TYPE bmg160_set_sleepdur(unsigned char duration);
 /*****************************************************************************
  * Description: *//**\brief This API is used to set auto offset
  *
@@ -4571,7 +4571,7 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_sleepdur (unsigned char duration);
  * Remarks:
  *
  *****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_set_auto_offset_en (unsigned char offset_en);
+BMG160_RETURN_FUNCTION_TYPE bmg160_set_auto_offset_en(unsigned char offset_en);
 /*****************************************************************************
  * Description: *//**\brief This API is used to get auto offset
  *
@@ -4597,6 +4597,6 @@ BMG160_RETURN_FUNCTION_TYPE bmg160_set_auto_offset_en (unsigned char offset_en);
  * Remarks:
  *
  *****************************************************************************/
-BMG160_RETURN_FUNCTION_TYPE bmg160_get_auto_offset_en (
-  unsigned char * offset_en);
+BMG160_RETURN_FUNCTION_TYPE bmg160_get_auto_offset_en(
+unsigned char *offset_en);
 #endif

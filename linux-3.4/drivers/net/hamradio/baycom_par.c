@@ -1,23 +1,23 @@
 /*****************************************************************************/
 
 /*
- *  baycom_par.c  -- baycom par96 and picpar radio modem driver.
+ *	baycom_par.c  -- baycom par96 and picpar radio modem driver.
  *
- *  Copyright (C) 1996-2000  Thomas Sailer (sailer@ife.ee.ethz.ch)
+ *	Copyright (C) 1996-2000  Thomas Sailer (sailer@ife.ee.ethz.ch)
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ *	This program is free software; you can redistribute it and/or modify
+ *	it under the terms of the GNU General Public License as published by
+ *	the Free Software Foundation; either version 2 of the License, or
+ *	(at your option) any later version.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ *	This program is distributed in the hope that it will be useful,
+ *	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *	GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *	You should have received a copy of the GNU General Public License
+ *	along with this program; if not, write to the Free Software
+ *	Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  *  Please note that the GPL allows you to use the driver, NOT the radio.
  *  In order to use the radio, you need a license from the communications
@@ -101,13 +101,13 @@
 
 static const char bc_drvname[] = "baycom_par";
 static const char bc_drvinfo[] = KERN_INFO "baycom_par: (C) 1996-2000 Thomas Sailer, HB9JNX/AE4WA\n"
-                                 "baycom_par: version 0.9\n";
+"baycom_par: version 0.9\n";
 
 /* --------------------------------------------------------------------- */
 
 #define NR_PORTS 4
 
-static struct net_device * baycom_device[NR_PORTS];
+static struct net_device *baycom_device[NR_PORTS];
 
 /* --------------------------------------------------------------------- */
 
@@ -126,52 +126,52 @@ static struct net_device * baycom_device[NR_PORTS];
  */
 
 struct baycom_state {
-  struct hdlcdrv_state hdrv;
-  
-  struct pardevice * pdev;
-  unsigned int options;
-  
-  struct modem_state {
-    short arb_divider;
-    unsigned char flags;
-    unsigned int shreg;
-    struct modem_state_par96 {
-      int dcd_count;
-      unsigned int dcd_shreg;
-      unsigned long descram;
-      unsigned long scram;
-    } par96;
-  } modem;
-  
-  #ifdef BAYCOM_DEBUG
-  struct debug_vals {
-    unsigned long last_jiffies;
-    unsigned cur_intcnt;
-    unsigned last_intcnt;
-    int cur_pllcorr;
-    int last_pllcorr;
-  } debug_vals;
-  #endif /* BAYCOM_DEBUG */
+	struct hdlcdrv_state hdrv;
+
+	struct pardevice *pdev;
+	unsigned int options;
+
+	struct modem_state {
+		short arb_divider;
+		unsigned char flags;
+		unsigned int shreg;
+		struct modem_state_par96 {
+			int dcd_count;
+			unsigned int dcd_shreg;
+			unsigned long descram;
+			unsigned long scram;
+		} par96;
+	} modem;
+
+#ifdef BAYCOM_DEBUG
+	struct debug_vals {
+		unsigned long last_jiffies;
+		unsigned cur_intcnt;
+		unsigned last_intcnt;
+		int cur_pllcorr;
+		int last_pllcorr;
+	} debug_vals;
+#endif /* BAYCOM_DEBUG */
 };
 
 /* --------------------------------------------------------------------- */
 
-static void __inline__ baycom_int_freq (struct baycom_state * bc)
+static void __inline__ baycom_int_freq(struct baycom_state *bc)
 {
-  #ifdef BAYCOM_DEBUG
-  unsigned long cur_jiffies = jiffies;
-  /*
-   * measure the interrupt frequency
-   */
-  bc->debug_vals.cur_intcnt++;
-  if (time_after_eq (cur_jiffies, bc->debug_vals.last_jiffies + HZ) ) {
-    bc->debug_vals.last_jiffies = cur_jiffies;
-    bc->debug_vals.last_intcnt = bc->debug_vals.cur_intcnt;
-    bc->debug_vals.cur_intcnt = 0;
-    bc->debug_vals.last_pllcorr = bc->debug_vals.cur_pllcorr;
-    bc->debug_vals.cur_pllcorr = 0;
-  }
-  #endif /* BAYCOM_DEBUG */
+#ifdef BAYCOM_DEBUG
+	unsigned long cur_jiffies = jiffies;
+	/*
+	 * measure the interrupt frequency
+	 */
+	bc->debug_vals.cur_intcnt++;
+	if (time_after_eq(cur_jiffies, bc->debug_vals.last_jiffies + HZ)) {
+		bc->debug_vals.last_jiffies = cur_jiffies;
+		bc->debug_vals.last_intcnt = bc->debug_vals.cur_intcnt;
+		bc->debug_vals.cur_intcnt = 0;
+		bc->debug_vals.last_pllcorr = bc->debug_vals.cur_pllcorr;
+		bc->debug_vals.cur_pllcorr = 0;
+	}
+#endif /* BAYCOM_DEBUG */
 }
 
 /* --------------------------------------------------------------------- */
@@ -192,189 +192,188 @@ static void __inline__ baycom_int_freq (struct baycom_state * bc)
 
 /* --------------------------------------------------------------------- */
 
-static __inline__ void par96_tx (struct net_device * dev, struct baycom_state * bc)
+static __inline__ void par96_tx(struct net_device *dev, struct baycom_state *bc)
 {
-  int i;
-  unsigned int data = hdlcdrv_getbits (&bc->hdrv);
-  struct parport * pp = bc->pdev->port;
-  
-  for (i = 0; i < PAR96_BURSTBITS; i++, data >>= 1) {
-    unsigned char val = PAR97_POWER;
-    bc->modem.par96.scram = ( (bc->modem.par96.scram << 1) |
-                              (bc->modem.par96.scram & 1) );
-    if (! (data & 1) )
-    { bc->modem.par96.scram ^= 1; }
-    if (bc->modem.par96.scram & (PAR96_SCRAM_TAP1 << 1) )
-      bc->modem.par96.scram ^=
-        (PAR96_SCRAM_TAPN << 1);
-    if (bc->modem.par96.scram & (PAR96_SCRAM_TAP1 << 2) )
-    { val |= PAR96_TXBIT; }
-    pp->ops->write_data (pp, val);
-    pp->ops->write_data (pp, val | PAR96_BURST);
-  }
+	int i;
+	unsigned int data = hdlcdrv_getbits(&bc->hdrv);
+	struct parport *pp = bc->pdev->port;
+
+	for(i = 0; i < PAR96_BURSTBITS; i++, data >>= 1) {
+		unsigned char val = PAR97_POWER;
+		bc->modem.par96.scram = ((bc->modem.par96.scram << 1) |
+					 (bc->modem.par96.scram & 1));
+		if (!(data & 1))
+			bc->modem.par96.scram ^= 1;
+		if (bc->modem.par96.scram & (PAR96_SCRAM_TAP1 << 1))
+			bc->modem.par96.scram ^=
+				(PAR96_SCRAM_TAPN << 1);
+		if (bc->modem.par96.scram & (PAR96_SCRAM_TAP1 << 2))
+			val |= PAR96_TXBIT;
+		pp->ops->write_data(pp, val);
+		pp->ops->write_data(pp, val | PAR96_BURST);
+	}
 }
 
 /* --------------------------------------------------------------------- */
 
-static __inline__ void par96_rx (struct net_device * dev, struct baycom_state * bc)
+static __inline__ void par96_rx(struct net_device *dev, struct baycom_state *bc)
 {
-  int i;
-  unsigned int data, mask, mask2, descx;
-  struct parport * pp = bc->pdev->port;
-  
-  /*
-   * do receiver; differential decode and descramble on the fly
-   */
-  for (data = i = 0; i < PAR96_BURSTBITS; i++) {
-    bc->modem.par96.descram = (bc->modem.par96.descram << 1);
-    if (pp->ops->read_status (pp) & PAR96_RXBIT)
-    { bc->modem.par96.descram |= 1; }
-    descx = bc->modem.par96.descram ^
-            (bc->modem.par96.descram >> 1);
-    /* now the diff decoded data is inverted in descram */
-    pp->ops->write_data (pp, PAR97_POWER | PAR96_PTT);
-    descx ^= ( (descx >> PAR96_DESCRAM_TAPSH1) ^
-               (descx >> PAR96_DESCRAM_TAPSH2) );
-    data >>= 1;
-    if (! (descx & 1) )
-    { data |= 0x8000; }
-    pp->ops->write_data (pp, PAR97_POWER | PAR96_PTT | PAR96_BURST);
-  }
-  hdlcdrv_putbits (&bc->hdrv, data);
-  /*
-   * do DCD algorithm
-   */
-  if (bc->options & BAYCOM_OPTIONS_SOFTDCD) {
-    bc->modem.par96.dcd_shreg = (bc->modem.par96.dcd_shreg >> 16)
-                                | (data << 16);
-    /* search for flags and set the dcd counter appropriately */
-    for (mask = 0x1fe00, mask2 = 0xfc00, i = 0;
-         i < PAR96_BURSTBITS; i++, mask <<= 1, mask2 <<= 1)
-      if ( (bc->modem.par96.dcd_shreg & mask) == mask2)
-      { bc->modem.par96.dcd_count = HDLCDRV_MAXFLEN + 4; }
-    /* check for abort/noise sequences */
-    for (mask = 0x1fe00, mask2 = 0x1fe00, i = 0;
-         i < PAR96_BURSTBITS; i++, mask <<= 1, mask2 <<= 1)
-      if ( ( (bc->modem.par96.dcd_shreg & mask) == mask2) &&
-           (bc->modem.par96.dcd_count >= 0) )
-      { bc->modem.par96.dcd_count -= HDLCDRV_MAXFLEN - 10; }
-    /* decrement and set the dcd variable */
-    if (bc->modem.par96.dcd_count >= 0)
-    { bc->modem.par96.dcd_count -= 2; }
-    hdlcdrv_setdcd (&bc->hdrv, bc->modem.par96.dcd_count > 0);
-  }
-  else {
-    hdlcdrv_setdcd (&bc->hdrv, !! (pp->ops->read_status (pp) & PAR96_DCD) );
-  }
+	int i;
+	unsigned int data, mask, mask2, descx;
+	struct parport *pp = bc->pdev->port;
+
+	/*
+	 * do receiver; differential decode and descramble on the fly
+	 */
+	for(data = i = 0; i < PAR96_BURSTBITS; i++) {
+		bc->modem.par96.descram = (bc->modem.par96.descram << 1);
+		if (pp->ops->read_status(pp) & PAR96_RXBIT)
+			bc->modem.par96.descram |= 1;
+		descx = bc->modem.par96.descram ^
+			(bc->modem.par96.descram >> 1);
+		/* now the diff decoded data is inverted in descram */
+		pp->ops->write_data(pp, PAR97_POWER | PAR96_PTT);
+		descx ^= ((descx >> PAR96_DESCRAM_TAPSH1) ^
+			  (descx >> PAR96_DESCRAM_TAPSH2));
+		data >>= 1;
+		if (!(descx & 1))
+			data |= 0x8000;
+		pp->ops->write_data(pp, PAR97_POWER | PAR96_PTT | PAR96_BURST);
+	}
+	hdlcdrv_putbits(&bc->hdrv, data);
+	/*
+	 * do DCD algorithm
+	 */
+	if (bc->options & BAYCOM_OPTIONS_SOFTDCD) {
+		bc->modem.par96.dcd_shreg = (bc->modem.par96.dcd_shreg >> 16)
+			| (data << 16);
+		/* search for flags and set the dcd counter appropriately */
+		for(mask = 0x1fe00, mask2 = 0xfc00, i = 0;
+		    i < PAR96_BURSTBITS; i++, mask <<= 1, mask2 <<= 1)
+			if ((bc->modem.par96.dcd_shreg & mask) == mask2)
+				bc->modem.par96.dcd_count = HDLCDRV_MAXFLEN+4;
+		/* check for abort/noise sequences */
+		for(mask = 0x1fe00, mask2 = 0x1fe00, i = 0;
+		    i < PAR96_BURSTBITS; i++, mask <<= 1, mask2 <<= 1)
+			if (((bc->modem.par96.dcd_shreg & mask) == mask2) &&
+			    (bc->modem.par96.dcd_count >= 0))
+				bc->modem.par96.dcd_count -= HDLCDRV_MAXFLEN-10;
+		/* decrement and set the dcd variable */
+		if (bc->modem.par96.dcd_count >= 0)
+			bc->modem.par96.dcd_count -= 2;
+		hdlcdrv_setdcd(&bc->hdrv, bc->modem.par96.dcd_count > 0);
+	} else {
+		hdlcdrv_setdcd(&bc->hdrv, !!(pp->ops->read_status(pp) & PAR96_DCD));
+	}
 }
 
 /* --------------------------------------------------------------------- */
 
-static void par96_interrupt (void * dev_id)
+static void par96_interrupt(void *dev_id)
 {
-  struct net_device * dev = dev_id;
-  struct baycom_state * bc = netdev_priv (dev);
-  
-  baycom_int_freq (bc);
-  /*
-   * check if transmitter active
-   */
-  if (hdlcdrv_ptt (&bc->hdrv) )
-  { par96_tx (dev, bc); }
-  else {
-    par96_rx (dev, bc);
-    if (--bc->modem.arb_divider <= 0) {
-      bc->modem.arb_divider = 6;
-      local_irq_enable();
-      hdlcdrv_arbitrate (dev, &bc->hdrv);
-    }
-  }
-  local_irq_enable();
-  hdlcdrv_transmitter (dev, &bc->hdrv);
-  hdlcdrv_receiver (dev, &bc->hdrv);
-  local_irq_disable();
+	struct net_device *dev = dev_id;
+	struct baycom_state *bc = netdev_priv(dev);
+
+	baycom_int_freq(bc);
+	/*
+	 * check if transmitter active
+	 */
+	if (hdlcdrv_ptt(&bc->hdrv))
+		par96_tx(dev, bc);
+	else {
+		par96_rx(dev, bc);
+		if (--bc->modem.arb_divider <= 0) {
+			bc->modem.arb_divider = 6;
+			local_irq_enable();
+			hdlcdrv_arbitrate(dev, &bc->hdrv);
+		}
+	}
+	local_irq_enable();
+	hdlcdrv_transmitter(dev, &bc->hdrv);
+	hdlcdrv_receiver(dev, &bc->hdrv);
+        local_irq_disable();
 }
 
 /* --------------------------------------------------------------------- */
 
-static void par96_wakeup (void * handle)
+static void par96_wakeup(void *handle)
 {
-  struct net_device * dev = (struct net_device *) handle;
-  struct baycom_state * bc = netdev_priv (dev);
-  
-  printk (KERN_DEBUG "baycom_par: %s: why am I being woken up?\n", dev->name);
-  if (!parport_claim (bc->pdev) )
-  { printk (KERN_DEBUG "baycom_par: %s: I'm broken.\n", dev->name); }
+        struct net_device *dev = (struct net_device *)handle;
+	struct baycom_state *bc = netdev_priv(dev);
+
+	printk(KERN_DEBUG "baycom_par: %s: why am I being woken up?\n", dev->name);
+	if (!parport_claim(bc->pdev))
+		printk(KERN_DEBUG "baycom_par: %s: I'm broken.\n", dev->name);
 }
 
 /* --------------------------------------------------------------------- */
 
-static int par96_open (struct net_device * dev)
+static int par96_open(struct net_device *dev)
 {
-  struct baycom_state * bc = netdev_priv (dev);
-  struct parport * pp;
-  
-  if (!dev || !bc)
-  { return -ENXIO; }
-  pp = parport_find_base (dev->base_addr);
-  if (!pp) {
-    printk (KERN_ERR "baycom_par: parport at 0x%lx unknown\n", dev->base_addr);
-    return -ENXIO;
-  }
-  if (pp->irq < 0) {
-    printk (KERN_ERR "baycom_par: parport at 0x%lx has no irq\n", pp->base);
-    parport_put_port (pp);
-    return -ENXIO;
-  }
-  if ( (~pp->modes) & (PARPORT_MODE_PCSPP | PARPORT_MODE_SAFEININT) ) {
-    printk (KERN_ERR "baycom_par: parport at 0x%lx cannot be used\n", pp->base);
-    parport_put_port (pp);
-    return -ENXIO;
-  }
-  memset (&bc->modem, 0, sizeof (bc->modem) );
-  bc->hdrv.par.bitrate = 9600;
-  bc->pdev = parport_register_device (pp, dev->name, NULL, par96_wakeup,
-                                      par96_interrupt, PARPORT_DEV_EXCL, dev);
-  parport_put_port (pp);
-  if (!bc->pdev) {
-    printk (KERN_ERR "baycom_par: cannot register parport at 0x%lx\n", dev->base_addr);
-    return -ENXIO;
-  }
-  if (parport_claim (bc->pdev) ) {
-    printk (KERN_ERR "baycom_par: parport at 0x%lx busy\n", pp->base);
-    parport_unregister_device (bc->pdev);
-    return -EBUSY;
-  }
-  pp = bc->pdev->port;
-  dev->irq = pp->irq;
-  pp->ops->data_forward (pp);
-  bc->hdrv.par.bitrate = 9600;
-  pp->ops->write_data (pp, PAR96_PTT | PAR97_POWER); /* switch off PTT */
-  pp->ops->enable_irq (pp);
-  printk (KERN_INFO "%s: par96 at iobase 0x%lx irq %u options 0x%x\n",
-          bc_drvname, dev->base_addr, dev->irq, bc->options);
-  return 0;
+	struct baycom_state *bc = netdev_priv(dev);
+	struct parport *pp;
+
+	if (!dev || !bc)
+		return -ENXIO;
+	pp = parport_find_base(dev->base_addr);
+	if (!pp) {
+		printk(KERN_ERR "baycom_par: parport at 0x%lx unknown\n", dev->base_addr);
+		return -ENXIO;
+	}
+	if (pp->irq < 0) {
+		printk(KERN_ERR "baycom_par: parport at 0x%lx has no irq\n", pp->base);
+		parport_put_port(pp);
+		return -ENXIO;
+	}
+	if ((~pp->modes) & (PARPORT_MODE_PCSPP | PARPORT_MODE_SAFEININT)) {
+		printk(KERN_ERR "baycom_par: parport at 0x%lx cannot be used\n", pp->base);
+		parport_put_port(pp);
+		return -ENXIO;
+	}
+	memset(&bc->modem, 0, sizeof(bc->modem));
+	bc->hdrv.par.bitrate = 9600;
+	bc->pdev = parport_register_device(pp, dev->name, NULL, par96_wakeup, 
+				 par96_interrupt, PARPORT_DEV_EXCL, dev);
+	parport_put_port(pp);
+	if (!bc->pdev) {
+		printk(KERN_ERR "baycom_par: cannot register parport at 0x%lx\n", dev->base_addr);
+		return -ENXIO;
+	}
+	if (parport_claim(bc->pdev)) {
+		printk(KERN_ERR "baycom_par: parport at 0x%lx busy\n", pp->base);
+		parport_unregister_device(bc->pdev);
+		return -EBUSY;
+	}
+	pp = bc->pdev->port;
+	dev->irq = pp->irq;
+	pp->ops->data_forward(pp);
+        bc->hdrv.par.bitrate = 9600;
+	pp->ops->write_data(pp, PAR96_PTT | PAR97_POWER); /* switch off PTT */
+	pp->ops->enable_irq(pp);
+	printk(KERN_INFO "%s: par96 at iobase 0x%lx irq %u options 0x%x\n",
+	       bc_drvname, dev->base_addr, dev->irq, bc->options);
+	return 0;
 }
 
 /* --------------------------------------------------------------------- */
 
-static int par96_close (struct net_device * dev)
+static int par96_close(struct net_device *dev)
 {
-  struct baycom_state * bc = netdev_priv (dev);
-  struct parport * pp;
-  
-  if (!dev || !bc)
-  { return -EINVAL; }
-  pp = bc->pdev->port;
-  /* disable interrupt */
-  pp->ops->disable_irq (pp);
-  /* switch off PTT */
-  pp->ops->write_data (pp, PAR96_PTT | PAR97_POWER);
-  parport_release (bc->pdev);
-  parport_unregister_device (bc->pdev);
-  printk (KERN_INFO "%s: close par96 at iobase 0x%lx irq %u\n",
-          bc_drvname, dev->base_addr, dev->irq);
-  return 0;
+	struct baycom_state *bc = netdev_priv(dev);
+	struct parport *pp;
+
+	if (!dev || !bc)
+		return -EINVAL;
+	pp = bc->pdev->port;
+	/* disable interrupt */
+	pp->ops->disable_irq(pp);
+	/* switch off PTT */
+	pp->ops->write_data(pp, PAR96_PTT | PAR97_POWER);
+	parport_release(bc->pdev);
+	parport_unregister_device(bc->pdev);
+	printk(KERN_INFO "%s: close par96 at iobase 0x%lx irq %u\n",
+	       bc_drvname, dev->base_addr, dev->irq);
+	return 0;
 }
 
 /* --------------------------------------------------------------------- */
@@ -382,95 +381,94 @@ static int par96_close (struct net_device * dev)
  * ===================== hdlcdrv driver interface =========================
  */
 
-static int baycom_ioctl (struct net_device * dev, struct ifreq * ifr,
-                         struct hdlcdrv_ioctl * hi, int cmd);
+static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
+			struct hdlcdrv_ioctl *hi, int cmd);
 
 /* --------------------------------------------------------------------- */
 
 static struct hdlcdrv_ops par96_ops = {
-  .drvname = bc_drvname,
-  .drvinfo = bc_drvinfo,
-  .open    = par96_open,
-  .close   = par96_close,
-  .ioctl   = baycom_ioctl
+	.drvname = bc_drvname,
+	.drvinfo = bc_drvinfo,
+	.open    = par96_open,
+	.close   = par96_close,
+	.ioctl   = baycom_ioctl
 };
 
 /* --------------------------------------------------------------------- */
 
-static int baycom_setmode (struct baycom_state * bc, const char * modestr)
+static int baycom_setmode(struct baycom_state *bc, const char *modestr)
 {
-  if (!strncmp (modestr, "picpar", 6) )
-  { bc->options = 0; }
-  else
-    if (!strncmp (modestr, "par96", 5) )
-    { bc->options = BAYCOM_OPTIONS_SOFTDCD; }
-    else
-    { bc->options = !!strchr (modestr, '*'); }
-  return 0;
+	if (!strncmp(modestr, "picpar", 6))
+		bc->options = 0;
+	else if (!strncmp(modestr, "par96", 5))
+		bc->options = BAYCOM_OPTIONS_SOFTDCD;
+	else
+		bc->options = !!strchr(modestr, '*');
+	return 0;
 }
 
 /* --------------------------------------------------------------------- */
 
-static int baycom_ioctl (struct net_device * dev, struct ifreq * ifr,
-                         struct hdlcdrv_ioctl * hi, int cmd)
+static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr,
+			struct hdlcdrv_ioctl *hi, int cmd)
 {
-  struct baycom_state * bc;
-  struct baycom_ioctl bi;
-  
-  if (!dev)
-  { return -EINVAL; }
-  
-  bc = netdev_priv (dev);
-  BUG_ON (bc->hdrv.magic != HDLCDRV_MAGIC);
-  
-  if (cmd != SIOCDEVPRIVATE)
-  { return -ENOIOCTLCMD; }
-  switch (hi->cmd) {
-  default:
-    break;
-    
-  case HDLCDRVCTL_GETMODE:
-    strcpy (hi->data.modename, bc->options ? "par96" : "picpar");
-    if (copy_to_user (ifr->ifr_data, hi, sizeof (struct hdlcdrv_ioctl) ) )
-    { return -EFAULT; }
-    return 0;
-    
-  case HDLCDRVCTL_SETMODE:
-    if (netif_running (dev) || !capable (CAP_NET_ADMIN) )
-    { return -EACCES; }
-    hi->data.modename[sizeof (hi->data.modename) - 1] = '\0';
-    return baycom_setmode (bc, hi->data.modename);
-    
-  case HDLCDRVCTL_MODELIST:
-    strcpy (hi->data.modename, "par96,picpar");
-    if (copy_to_user (ifr->ifr_data, hi, sizeof (struct hdlcdrv_ioctl) ) )
-    { return -EFAULT; }
-    return 0;
-    
-  case HDLCDRVCTL_MODEMPARMASK:
-    return HDLCDRV_PARMASK_IOBASE;
-    
-  }
-  
-  if (copy_from_user (&bi, ifr->ifr_data, sizeof (bi) ) )
-  { return -EFAULT; }
-  switch (bi.cmd) {
-  default:
-    return -ENOIOCTLCMD;
-    
-    #ifdef BAYCOM_DEBUG
-  case BAYCOMCTL_GETDEBUG:
-    bi.data.dbg.debug1 = bc->hdrv.ptt_keyed;
-    bi.data.dbg.debug2 = bc->debug_vals.last_intcnt;
-    bi.data.dbg.debug3 = bc->debug_vals.last_pllcorr;
-    break;
-    #endif /* BAYCOM_DEBUG */
-    
-  }
-  if (copy_to_user (ifr->ifr_data, &bi, sizeof (bi) ) )
-  { return -EFAULT; }
-  return 0;
-  
+	struct baycom_state *bc;
+	struct baycom_ioctl bi;
+
+	if (!dev)
+		return -EINVAL;
+
+	bc = netdev_priv(dev);
+	BUG_ON(bc->hdrv.magic != HDLCDRV_MAGIC);
+
+	if (cmd != SIOCDEVPRIVATE)
+		return -ENOIOCTLCMD;
+	switch (hi->cmd) {
+	default:
+		break;
+
+	case HDLCDRVCTL_GETMODE:
+		strcpy(hi->data.modename, bc->options ? "par96" : "picpar");
+		if (copy_to_user(ifr->ifr_data, hi, sizeof(struct hdlcdrv_ioctl)))
+			return -EFAULT;
+		return 0;
+
+	case HDLCDRVCTL_SETMODE:
+		if (netif_running(dev) || !capable(CAP_NET_ADMIN))
+			return -EACCES;
+		hi->data.modename[sizeof(hi->data.modename)-1] = '\0';
+		return baycom_setmode(bc, hi->data.modename);
+
+	case HDLCDRVCTL_MODELIST:
+		strcpy(hi->data.modename, "par96,picpar");
+		if (copy_to_user(ifr->ifr_data, hi, sizeof(struct hdlcdrv_ioctl)))
+			return -EFAULT;
+		return 0;
+
+	case HDLCDRVCTL_MODEMPARMASK:
+		return HDLCDRV_PARMASK_IOBASE;
+
+	}
+
+	if (copy_from_user(&bi, ifr->ifr_data, sizeof(bi)))
+		return -EFAULT;
+	switch (bi.cmd) {
+	default:
+		return -ENOIOCTLCMD;
+
+#ifdef BAYCOM_DEBUG
+	case BAYCOMCTL_GETDEBUG:
+		bi.data.dbg.debug1 = bc->hdrv.ptt_keyed;
+		bi.data.dbg.debug2 = bc->debug_vals.last_intcnt;
+		bi.data.dbg.debug3 = bc->debug_vals.last_pllcorr;
+		break;
+#endif /* BAYCOM_DEBUG */
+
+	}
+	if (copy_to_user(ifr->ifr_data, &bi, sizeof(bi)))
+		return -EFAULT;
+	return 0;
+
 }
 
 /* --------------------------------------------------------------------- */
@@ -478,73 +476,73 @@ static int baycom_ioctl (struct net_device * dev, struct ifreq * ifr,
 /*
  * command line settable parameters
  */
-static char * mode[NR_PORTS] = { "picpar", };
+static char *mode[NR_PORTS] = { "picpar", };
 static int iobase[NR_PORTS] = { 0x378, };
 
-module_param_array (mode, charp, NULL, 0);
-MODULE_PARM_DESC (mode, "baycom operating mode; eg. par96 or picpar");
-module_param_array (iobase, int, NULL, 0);
-MODULE_PARM_DESC (iobase, "baycom io base address");
+module_param_array(mode, charp, NULL, 0);
+MODULE_PARM_DESC(mode, "baycom operating mode; eg. par96 or picpar");
+module_param_array(iobase, int, NULL, 0);
+MODULE_PARM_DESC(iobase, "baycom io base address");
 
-MODULE_AUTHOR ("Thomas M. Sailer, sailer@ife.ee.ethz.ch, hb9jnx@hb9w.che.eu");
-MODULE_DESCRIPTION ("Baycom par96 and picpar amateur radio modem driver");
-MODULE_LICENSE ("GPL");
+MODULE_AUTHOR("Thomas M. Sailer, sailer@ife.ee.ethz.ch, hb9jnx@hb9w.che.eu");
+MODULE_DESCRIPTION("Baycom par96 and picpar amateur radio modem driver");
+MODULE_LICENSE("GPL");
 
 /* --------------------------------------------------------------------- */
 
-static int __init init_baycompar (void)
+static int __init init_baycompar(void)
 {
-  int i, found = 0;
-  char set_hw = 1;
-  
-  printk (bc_drvinfo);
-  /*
-   * register net devices
-   */
-  for (i = 0; i < NR_PORTS; i++) {
-    struct net_device * dev;
-    struct baycom_state * bc;
-    char ifname[IFNAMSIZ];
-    
-    sprintf (ifname, "bcp%d", i);
-    
-    if (!mode[i])
-    { set_hw = 0; }
-    if (!set_hw)
-    { iobase[i] = 0; }
-    
-    dev = hdlcdrv_register (&par96_ops,
-                            sizeof (struct baycom_state),
-                            ifname, iobase[i], 0, 0);
-    if (IS_ERR (dev) )
-    { break; }
-    
-    bc = netdev_priv (dev);
-    if (set_hw && baycom_setmode (bc, mode[i]) )
-    { set_hw = 0; }
-    found++;
-    baycom_device[i] = dev;
-  }
-  
-  if (!found)
-  { return -ENXIO; }
-  return 0;
+	int i, found = 0;
+	char set_hw = 1;
+
+	printk(bc_drvinfo);
+	/*
+	 * register net devices
+	 */
+	for (i = 0; i < NR_PORTS; i++) {
+		struct net_device *dev;
+		struct baycom_state *bc;
+		char ifname[IFNAMSIZ];
+
+		sprintf(ifname, "bcp%d", i);
+
+		if (!mode[i])
+			set_hw = 0;
+		if (!set_hw)
+			iobase[i] = 0;
+
+		dev = hdlcdrv_register(&par96_ops,
+				       sizeof(struct baycom_state),
+				       ifname, iobase[i], 0, 0);
+		if (IS_ERR(dev)) 
+			break;
+
+		bc = netdev_priv(dev);
+		if (set_hw && baycom_setmode(bc, mode[i]))
+			set_hw = 0;
+		found++;
+		baycom_device[i] = dev;
+	}
+
+	if (!found)
+		return -ENXIO;
+	return 0;
 }
 
-static void __exit cleanup_baycompar (void)
+static void __exit cleanup_baycompar(void)
 {
-  int i;
-  
-  for (i = 0; i < NR_PORTS; i++) {
-    struct net_device * dev = baycom_device[i];
-    
-    if (dev)
-    { hdlcdrv_unregister (dev); }
-  }
+	int i;
+
+	for(i = 0; i < NR_PORTS; i++) {
+		struct net_device *dev = baycom_device[i];
+
+		if (dev)
+			hdlcdrv_unregister(dev);
+	}
 }
 
-module_init (init_baycompar);
-module_exit (cleanup_baycompar);
+module_init(init_baycompar);
+module_exit(cleanup_baycompar);
 
 /* --------------------------------------------------------------------- */
 
@@ -555,23 +553,23 @@ module_exit (cleanup_baycompar);
  * mode: par96,picpar
  */
 
-static int __init baycom_par_setup (char * str)
+static int __init baycom_par_setup(char *str)
 {
-  static unsigned nr_dev;
-  int ints[2];
-  
-  if (nr_dev >= NR_PORTS)
-  { return 0; }
-  str = get_options (str, 2, ints);
-  if (ints[0] < 1)
-  { return 0; }
-  mode[nr_dev] = str;
-  iobase[nr_dev] = ints[1];
-  nr_dev++;
-  return 1;
+        static unsigned nr_dev;
+	int ints[2];
+
+        if (nr_dev >= NR_PORTS)
+                return 0;
+        str = get_options(str, 2, ints);
+        if (ints[0] < 1)
+                return 0;
+        mode[nr_dev] = str;
+        iobase[nr_dev] = ints[1];
+	nr_dev++;
+	return 1;
 }
 
-__setup ("baycom_par=", baycom_par_setup);
+__setup("baycom_par=", baycom_par_setup);
 
 #endif /* MODULE */
 /* --------------------------------------------------------------------- */

@@ -12,6 +12,6 @@
 #ifndef _ATH79_DEV_USB_H
 #define _ATH79_DEV_USB_H
 
-void ath79_register_usb (void);
+void ath79_register_usb(void);
 
 #endif /* _ATH79_DEV_USB_H */

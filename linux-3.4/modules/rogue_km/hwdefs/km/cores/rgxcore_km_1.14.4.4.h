@@ -48,7 +48,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 /******************************************************************************
- * BVNC = 1.14.4.4
+ * BVNC = 1.14.4.4 
  *****************************************************************************/
 #define RGX_BVNC_KM_B 1
 #define RGX_BVNC_KM_V 14
@@ -56,7 +56,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define RGX_BVNC_KM_C 4
 
 /******************************************************************************
- * Errata
+ * Errata 
  *****************************************************************************/
 
 #define FIX_HW_BRN_36492
@@ -65,9 +65,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define FIX_HW_BRN_38835
 
 
-
+ 
 /******************************************************************************
- * Enhancements
+ * Enhancements 
  *****************************************************************************/
 
 

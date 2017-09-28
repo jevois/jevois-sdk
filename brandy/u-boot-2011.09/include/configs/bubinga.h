@@ -12,7 +12,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -33,19 +33,19 @@
  * (easy to change)
  */
 
-#define CONFIG_405EP    1 /* This is a PPC405 CPU   */
-#define CONFIG_4xx    1 /* ...member of PPC4xx family   */
-#define CONFIG_BUBINGA          1 /* ...on a BUBINGA board  */
+#define CONFIG_405EP		1	/* This is a PPC405 CPU		*/
+#define CONFIG_4xx		1	/* ...member of PPC4xx family   */
+#define CONFIG_BUBINGA	        1	/* ...on a BUBINGA board	*/
 
-#define CONFIG_SYS_TEXT_BASE  0xFFFC0000
+#define	CONFIG_SYS_TEXT_BASE	0xFFFC0000
 
 /*
  * Include common defines/options for all AMCC eval boards
  */
-#define CONFIG_HOSTNAME   bubinga
+#define CONFIG_HOSTNAME		bubinga
 #include "amcc-common.h"
 
-#define CONFIG_BOARD_EARLY_INIT_F 1 /* Call board_early_init_f  */
+#define CONFIG_BOARD_EARLY_INIT_F 1	/* Call board_early_init_f	*/
 
 #define CONFIG_SYS_CLK_FREQ     33333333 /* external frequency to pll   */
 
@@ -83,28 +83,28 @@
  *       supported for backward compatibility.
  */
 #if 1
-#define CONFIG_ENV_IS_IN_FLASH     1  /* use FLASH for environment vars */
+#define CONFIG_ENV_IS_IN_FLASH     1	/* use FLASH for environment vars	*/
 #else
-#define CONFIG_ENV_IS_IN_NVRAM  1 /* use NVRAM for environment vars */
+#define CONFIG_ENV_IS_IN_NVRAM	1	/* use NVRAM for environment vars	*/
 #endif
 
 /*
  * Default environment variables
  */
-#define CONFIG_EXTRA_ENV_SETTINGS         \
-  CONFIG_AMCC_DEF_ENV           \
-  CONFIG_AMCC_DEF_ENV_PPC           \
-  CONFIG_AMCC_DEF_ENV_NOR_UPD         \
-  "kernel_addr=fff80000\0"          \
-  "ramdisk_addr=fff90000\0"         \
-  ""
+#define	CONFIG_EXTRA_ENV_SETTINGS					\
+	CONFIG_AMCC_DEF_ENV						\
+	CONFIG_AMCC_DEF_ENV_PPC						\
+	CONFIG_AMCC_DEF_ENV_NOR_UPD					\
+	"kernel_addr=fff80000\0"					\
+	"ramdisk_addr=fff90000\0"					\
+	""
 
-#define CONFIG_PHY_ADDR   1 /* PHY address      */
+#define	CONFIG_PHY_ADDR		1	/* PHY address			*/
 #define CONFIG_HAS_ETH0
 #define CONFIG_HAS_ETH1
-#define CONFIG_PHY1_ADDR  2 /* EMAC1 PHY address    */
+#define CONFIG_PHY1_ADDR	2	/* EMAC1 PHY address		*/
 
-#define CONFIG_RTC_DS174x 1 /* use DS1743 RTC in Bubinga  */
+#define CONFIG_RTC_DS174x	1	/* use DS1743 RTC in Bubinga	*/
 
 /*
  * Commands additional to the ones defined in amcc-common.h
@@ -125,7 +125,7 @@
  * If CONFIG_SYS_405_UART_ERRATA_59 and 200MHz CPU clock,
  * set Linux BASE_BAUD to 403200.
  */
-#define CONFIG_CONS_INDEX 1 /* Use UART0      */
+#define CONFIG_CONS_INDEX	1	/* Use UART0			*/
 #undef  CONFIG_SYS_EXT_SERIAL_CLOCK           /* external serial clock */
 #undef  CONFIG_SYS_405_UART_ERRATA_59         /* 405GP/CR Rev. D silicon */
 #define CONFIG_SYS_BASE_BAUD       691200
@@ -134,14 +134,14 @@
  * I2C stuff
  *-----------------------------------------------------------------------
  */
-#define CONFIG_SYS_I2C_SPEED    400000  /* I2C speed and slave address  */
+#define CONFIG_SYS_I2C_SPEED		400000	/* I2C speed and slave address	*/
 
-#define CONFIG_SYS_I2C_NOPROBES { 0x69 }  /* avoid i2c probe hangup (why?) */
-#define CONFIG_SYS_EEPROM_PAGE_WRITE_DELAY_MS 6 /* 24C02 requires 5ms delay */
+#define CONFIG_SYS_I2C_NOPROBES	{ 0x69 }	/* avoid i2c probe hangup (why?) */
+#define CONFIG_SYS_EEPROM_PAGE_WRITE_DELAY_MS	6	/* 24C02 requires 5ms delay */
 
 #if defined(CONFIG_CMD_EEPROM)
-#define CONFIG_SYS_I2C_EEPROM_ADDR  0x50  /* I2C boot EEPROM (24C02W) */
-#define CONFIG_SYS_I2C_EEPROM_ADDR_LEN  1 /* Bytes of address   */
+#define CONFIG_SYS_I2C_EEPROM_ADDR	0x50	/* I2C boot EEPROM (24C02W)	*/
+#define CONFIG_SYS_I2C_EEPROM_ADDR_LEN	1	/* Bytes of address		*/
 #endif
 
 /*-----------------------------------------------------------------------
@@ -152,14 +152,14 @@
 #define PCI_HOST_FORCE  1               /* configure as pci host        */
 #define PCI_HOST_AUTO   2               /* detected via arbiter enable  */
 
-#define CONFIG_PCI      /* include pci support          */
-#define CONFIG_PCI_HOST PCI_HOST_FORCE  /* select pci host function     */
-#define CONFIG_PCI_PNP      /* do pci plug-and-play         */
-/* resource configuration       */
+#define CONFIG_PCI			/* include pci support	        */
+#define CONFIG_PCI_HOST	PCI_HOST_FORCE  /* select pci host function     */
+#define CONFIG_PCI_PNP			/* do pci plug-and-play         */
+					/* resource configuration       */
 #define CONFIG_PCI_SCAN_SHOW            /* show pci devices on startup  */
 
-#define CONFIG_SYS_PCI_SUBSYS_VENDORID 0x10e8 /* AMCC */
-#define CONFIG_SYS_PCI_SUBSYS_DEVICEID 0xcafe /* Whatever */
+#define CONFIG_SYS_PCI_SUBSYS_VENDORID 0x10e8	/* AMCC */
+#define CONFIG_SYS_PCI_SUBSYS_DEVICEID 0xcafe	/* Whatever */
 #define CONFIG_SYS_PCI_CLASSCODE       0x0600  /* PCI Class Code: bridge/host  */
 #define CONFIG_SYS_PCI_PTM1LA  0x00000000      /* point to sdram               */
 #define CONFIG_SYS_PCI_PTM1MS  0x80000001      /* 2GB, enable hard-wired to 1  */
@@ -172,51 +172,51 @@
  * External peripheral base address
  *-----------------------------------------------------------------------
  */
-#define CONFIG_SYS_KEY_REG_BASE_ADDR  0xF0100000
-#define CONFIG_SYS_IR_REG_BASE_ADDR 0xF0200000
-#define CONFIG_SYS_FPGA_REG_BASE_ADDR 0xF0300000
+#define	CONFIG_SYS_KEY_REG_BASE_ADDR	0xF0100000
+#define	CONFIG_SYS_IR_REG_BASE_ADDR	0xF0200000
+#define	CONFIG_SYS_FPGA_REG_BASE_ADDR	0xF0300000
 
 /*-----------------------------------------------------------------------
  * Start addresses for the final memory configuration
  * (Set up by the startup code)
  */
-#define CONFIG_SYS_SRAM_BASE    0xFFF00000
-#define CONFIG_SYS_SRAM_SIZE    (256 << 10)
-#define CONFIG_SYS_FLASH_BASE   0xFFF80000
+#define CONFIG_SYS_SRAM_BASE		0xFFF00000
+#define CONFIG_SYS_SRAM_SIZE		(256 << 10)
+#define CONFIG_SYS_FLASH_BASE		0xFFF80000
 
 /*-----------------------------------------------------------------------
  * FLASH organization
  */
-#define CONFIG_SYS_MAX_FLASH_BANKS  1 /* max number of memory banks   */
-#define CONFIG_SYS_MAX_FLASH_SECT 256 /* max number of sectors on one chip  */
+#define CONFIG_SYS_MAX_FLASH_BANKS	1	/* max number of memory banks		*/
+#define CONFIG_SYS_MAX_FLASH_SECT	256	/* max number of sectors on one chip	*/
 
-#define CONFIG_SYS_FLASH_ERASE_TOUT 120000  /* Timeout for Flash Erase (in ms)  */
-#define CONFIG_SYS_FLASH_WRITE_TOUT 500 /* Timeout for Flash Write (in ms)  */
+#define CONFIG_SYS_FLASH_ERASE_TOUT	120000	/* Timeout for Flash Erase (in ms)	*/
+#define CONFIG_SYS_FLASH_WRITE_TOUT	500	/* Timeout for Flash Write (in ms)	*/
 
 #define CONFIG_SYS_FLASH_ADDR0         0x5555
 #define CONFIG_SYS_FLASH_ADDR1         0x2aaa
 #define CONFIG_SYS_FLASH_WORD_SIZE     unsigned char
 
 #ifdef CONFIG_ENV_IS_IN_FLASH
-#define CONFIG_ENV_SECT_SIZE  0x10000 /* size of one complete sector  */
-#define CONFIG_ENV_ADDR   (CONFIG_SYS_MONITOR_BASE-CONFIG_ENV_SECT_SIZE)
-#define CONFIG_ENV_SIZE   0x4000  /* Total Size of Environment Sector */
+#define CONFIG_ENV_SECT_SIZE	0x10000	/* size of one complete sector	*/
+#define CONFIG_ENV_ADDR		(CONFIG_SYS_MONITOR_BASE-CONFIG_ENV_SECT_SIZE)
+#define	CONFIG_ENV_SIZE		0x4000	/* Total Size of Environment Sector	*/
 
-/* Address and size of Redundant Environment Sector */
-#define CONFIG_ENV_ADDR_REDUND  (CONFIG_ENV_ADDR-CONFIG_ENV_SECT_SIZE)
-#define CONFIG_ENV_SIZE_REDUND  (CONFIG_ENV_SIZE)
+/* Address and size of Redundant Environment Sector	*/
+#define CONFIG_ENV_ADDR_REDUND	(CONFIG_ENV_ADDR-CONFIG_ENV_SECT_SIZE)
+#define CONFIG_ENV_SIZE_REDUND	(CONFIG_ENV_SIZE)
 #endif /* CONFIG_ENV_IS_IN_FLASH */
 
 /*-----------------------------------------------------------------------
  * NVRAM organization
  */
-#define CONFIG_SYS_NVRAM_BASE_ADDR  0xf0000000  /* NVRAM base address */
-#define CONFIG_SYS_NVRAM_SIZE   0x1ff8    /* NVRAM size */
+#define CONFIG_SYS_NVRAM_BASE_ADDR	0xf0000000	/* NVRAM base address	*/
+#define CONFIG_SYS_NVRAM_SIZE		0x1ff8		/* NVRAM size	*/
 
 #ifdef CONFIG_ENV_IS_IN_NVRAM
-#define CONFIG_ENV_SIZE   0x0ff8    /* Size of Environment vars */
-#define CONFIG_ENV_ADDR   \
-  (CONFIG_SYS_NVRAM_BASE_ADDR+CONFIG_SYS_NVRAM_SIZE-CONFIG_ENV_SIZE)  /* Env  */
+#define CONFIG_ENV_SIZE		0x0ff8		/* Size of Environment vars	*/
+#define CONFIG_ENV_ADDR		\
+	(CONFIG_SYS_NVRAM_BASE_ADDR+CONFIG_SYS_NVRAM_SIZE-CONFIG_ENV_SIZE)	/* Env	*/
 #endif
 
 /*
@@ -225,8 +225,8 @@
  * BR0/1 and OR0/1 (FLASH)
  */
 
-#define FLASH_BASE0_PRELIM  CONFIG_SYS_FLASH_BASE /* FLASH bank #0  */
-#define FLASH_BASE1_PRELIM  0   /* FLASH bank #1  */
+#define FLASH_BASE0_PRELIM	CONFIG_SYS_FLASH_BASE	/* FLASH bank #0	*/
+#define FLASH_BASE1_PRELIM	0		/* FLASH bank #1	*/
 
 /*-----------------------------------------------------------------------
  * Definitions for initial stack pointer and data area (in data cache)
@@ -235,10 +235,10 @@
 #define CONFIG_SYS_TEMP_STACK_OCM        1
 
 /* On Chip Memory location */
-#define CONFIG_SYS_OCM_DATA_ADDR  0xF8000000
-#define CONFIG_SYS_OCM_DATA_SIZE  0x1000
-#define CONFIG_SYS_INIT_RAM_ADDR  CONFIG_SYS_OCM_DATA_ADDR /* inside of SDRAM   */
-#define CONFIG_SYS_INIT_RAM_SIZE  CONFIG_SYS_OCM_DATA_SIZE /* Size of used area in RAM  */
+#define CONFIG_SYS_OCM_DATA_ADDR	0xF8000000
+#define CONFIG_SYS_OCM_DATA_SIZE	0x1000
+#define CONFIG_SYS_INIT_RAM_ADDR	CONFIG_SYS_OCM_DATA_ADDR /* inside of SDRAM		*/
+#define CONFIG_SYS_INIT_RAM_SIZE	CONFIG_SYS_OCM_DATA_SIZE /* Size of used area in RAM	*/
 
 #define CONFIG_SYS_GBL_DATA_OFFSET    (CONFIG_SYS_INIT_RAM_SIZE - GENERATED_GBL_DATA_SIZE)
 #define CONFIG_SYS_INIT_SP_OFFSET      CONFIG_SYS_GBL_DATA_OFFSET
@@ -318,4 +318,4 @@
 #define FPGA_REG1_OFFB_FLASH  0x02       /* Off board flash                   */
 #define FPGA_REG1_SRAM_BOOT   0x01       /* SRAM at 0xFFF80000 not Flash      */
 
-#endif  /* __CONFIG_H */
+#endif	/* __CONFIG_H */

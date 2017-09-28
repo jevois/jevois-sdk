@@ -54,8 +54,8 @@
 
 /* Used by application to set CODEC divider, word rate and frame rate */
 #define CODEC_VAL(freq, clk_per_sync, sync_per_frame) \
-  ((CODEC + ((freq & 0x10) >> 4)) | (freq << 8) | \
-   (clk_per_sync << 16) | (sync_per_frame << 28))
+	((CODEC + ((freq & 0x10) >> 4)) | (freq << 8) | \
+		   (clk_per_sync << 16) | (sync_per_frame << 28))
 
 /* Used by driver to extract speed */
 #define GET_SPEED(x) (x & 0xff)
@@ -123,10 +123,10 @@
  * data with timestamps.
  */
 struct ssp_request {
-  char __user * buf; /* Where to put the data. */
-  size_t len;   /* Size of buf. MUST be a multiple of */
-  /* SSP_INPUT_CHUNK_SIZE! */
-  struct timespec ts; /* The time the data was sampled. */
+	char __user *buf;	/* Where to put the data. */
+	size_t len;		/* Size of buf. MUST be a multiple of */
+				/* SSP_INPUT_CHUNK_SIZE! */
+	struct timespec ts;	/* The time the data was sampled. */
 };
 
 #endif

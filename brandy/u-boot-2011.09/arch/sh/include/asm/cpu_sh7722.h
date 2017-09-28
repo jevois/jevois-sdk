@@ -22,122 +22,122 @@
 #ifndef _ASM_CPU_SH7722_H_
 #define _ASM_CPU_SH7722_H_
 
-#define CACHE_OC_NUM_WAYS 4
-#define CCR_CACHE_INIT  0x0000090d
+#define CACHE_OC_NUM_WAYS	4
+#define CCR_CACHE_INIT	0x0000090d
 
-/*  EXP */
-#define TRA   0xFF000020
-#define EXPEVT    0xFF000024
-#define INTEVT    0xFF000028
+/*	EXP	*/
+#define TRA		0xFF000020
+#define EXPEVT		0xFF000024
+#define INTEVT		0xFF000028
 
-/*  MMU */
-#define PTEH    0xFF000000
-#define PTEL    0xFF000004
-#define TTB   0xFF000008
-#define TEA   0xFF00000C
-#define MMUCR   0xFF000010
-#define PASCR   0xFF000070
-#define IRMCR   0xFF000078
+/*	MMU	*/
+#define PTEH		0xFF000000
+#define PTEL		0xFF000004
+#define TTB		0xFF000008
+#define TEA		0xFF00000C
+#define MMUCR		0xFF000010
+#define PASCR		0xFF000070
+#define IRMCR		0xFF000078
 
-/*  CACHE */
-#define CCR   0xFF00001C
-#define RAMCR   0xFF000074
+/*	CACHE	*/
+#define CCR		0xFF00001C
+#define RAMCR		0xFF000074
 
-/*  XY MEMORY */
-#define XSA   0xFF000050
-#define YSA   0xFF000054
-#define XDA   0xFF000058
-#define YDA   0xFF00005C
-#define XPR   0xFF000060
-#define YPR   0xFF000064
-#define XEA   0xFF000068
-#define YEA   0xFF00006C
+/*	XY MEMORY	*/
+#define XSA		0xFF000050
+#define YSA		0xFF000054
+#define XDA		0xFF000058
+#define YDA		0xFF00005C
+#define XPR		0xFF000060
+#define YPR		0xFF000064
+#define XEA		0xFF000068
+#define YEA		0xFF00006C
 
-/*  INTC  */
-#define ICR0    0xA4140000
-#define ICR1    0xA414001C
-#define INTPRI0   0xA4140010
-#define INTREQ0   0xA4140024
-#define INTMSK0   0xA4140044
-#define INTMSKCLR0  0xA4140064
-#define NMIFCR    0xA41400C0
-#define USERIMASK 0xA4700000
-#define IPRA    0xA4080000
-#define IPRB    0xA4080004
-#define IPRC    0xA4080008
-#define IPRD    0xA408000C
-#define IPRE    0xA4080010
-#define IPRF    0xA4080014
-#define IPRG    0xA4080018
-#define IPRH    0xA408001C
-#define IPRI    0xA4080020
-#define IPRJ    0xA4080024
-#define IPRK    0xA4080028
-#define IPRL    0xA408002C
-#define IMR0    0xA4080080
-#define IMR1    0xA4080084
-#define IMR2    0xA4080088
-#define IMR3    0xA408008C
-#define IMR4    0xA4080090
-#define IMR5    0xA4080094
-#define IMR6    0xA4080098
-#define IMR7    0xA408009C
-#define IMR8    0xA40800A0
-#define IMR9    0xA40800A4
-#define IMR10   0xA40800A8
-#define IMR11   0xA40800AC
-#define IMCR0   0xA40800C0
-#define IMCR1   0xA40800C4
-#define IMCR2   0xA40800C8
-#define IMCR3   0xA40800CC
-#define IMCR4   0xA40800D0
-#define IMCR5   0xA40800D4
-#define IMCR6   0xA40800D8
-#define IMCR7   0xA40800DC
-#define IMCR8   0xA40800E0
-#define IMCR9   0xA40800E4
-#define IMCR10    0xA40800E8
-#define IMCR11    0xA40800EC
-#define MFI_IPRA  0xA40B0000
-#define MFI_IPRB  0xA40B0004
-#define MFI_IPRC  0xA40B0008
-#define MFI_IPRD  0xA40B000C
-#define MFI_IPRE  0xA40B0010
-#define MFI_IPRF  0xA40B0014
-#define MFI_IPRG  0xA40B0018
-#define MFI_IPRH  0xA40B001C
-#define MFI_IPRI  0xA40B0020
-#define MFI_IPRJ  0xA40B0024
-#define MFI_IPRK  0xA40B0028
-#define MFI_IPRL  0xA40B002C
-#define MFI_IMR0  0xA40B0080
-#define MFI_IMR1  0xA40B0084
-#define MFI_IMR2  0xA40B0088
-#define MFI_IMR3  0xA40B008C
-#define MFI_IMR4  0xA40B0090
-#define MFI_IMR5  0xA40B0094
-#define MFI_IMR6  0xA40B0098
-#define MFI_IMR7  0xA40B009C
-#define MFI_IMR8  0xA40B00A0
-#define MFI_IMR9  0xA40B00A4
-#define MFI_IMR10 0xA40B00A8
-#define MFI_IMR11 0xA40B00AC
-#define MFI_IMCR0 0xA40B00C0
-#define MFI_IMCR1 0xA40B00C4
-#define MFI_IMCR2 0xA40B00C8
-#define MFI_IMCR3 0xA40B00CC
-#define MFI_IMCR4 0xA40B00D0
-#define MFI_IMCR5 0xA40B00D4
-#define MFI_IMCR6 0xA40B00D8
-#define MFI_IMCR7 0xA40B00DC
-#define MFI_IMCR8 0xA40B00E0
-#define MFI_IMCR9 0xA40B00E4
-#define MFI_IMCR10  0xA40B00E8
-#define MFI_IMCR11  0xA40B00EC
+/*	INTC	*/
+#define ICR0		0xA4140000
+#define ICR1		0xA414001C
+#define INTPRI0		0xA4140010
+#define INTREQ0		0xA4140024
+#define INTMSK0		0xA4140044
+#define INTMSKCLR0	0xA4140064
+#define NMIFCR		0xA41400C0
+#define USERIMASK	0xA4700000
+#define IPRA		0xA4080000
+#define IPRB		0xA4080004
+#define IPRC		0xA4080008
+#define IPRD		0xA408000C
+#define IPRE		0xA4080010
+#define IPRF		0xA4080014
+#define IPRG		0xA4080018
+#define IPRH		0xA408001C
+#define IPRI		0xA4080020
+#define IPRJ		0xA4080024
+#define IPRK		0xA4080028
+#define IPRL		0xA408002C
+#define IMR0		0xA4080080
+#define IMR1		0xA4080084
+#define IMR2		0xA4080088
+#define IMR3		0xA408008C
+#define IMR4		0xA4080090
+#define IMR5		0xA4080094
+#define IMR6		0xA4080098
+#define IMR7		0xA408009C
+#define IMR8		0xA40800A0
+#define IMR9		0xA40800A4
+#define IMR10		0xA40800A8
+#define IMR11		0xA40800AC
+#define IMCR0		0xA40800C0
+#define IMCR1		0xA40800C4
+#define IMCR2		0xA40800C8
+#define IMCR3		0xA40800CC
+#define IMCR4		0xA40800D0
+#define IMCR5		0xA40800D4
+#define IMCR6		0xA40800D8
+#define IMCR7		0xA40800DC
+#define IMCR8		0xA40800E0
+#define IMCR9		0xA40800E4
+#define IMCR10		0xA40800E8
+#define IMCR11		0xA40800EC
+#define MFI_IPRA	0xA40B0000
+#define MFI_IPRB	0xA40B0004
+#define MFI_IPRC	0xA40B0008
+#define MFI_IPRD	0xA40B000C
+#define MFI_IPRE	0xA40B0010
+#define MFI_IPRF	0xA40B0014
+#define MFI_IPRG	0xA40B0018
+#define MFI_IPRH	0xA40B001C
+#define MFI_IPRI	0xA40B0020
+#define MFI_IPRJ	0xA40B0024
+#define MFI_IPRK	0xA40B0028
+#define MFI_IPRL	0xA40B002C
+#define MFI_IMR0	0xA40B0080
+#define MFI_IMR1	0xA40B0084
+#define MFI_IMR2	0xA40B0088
+#define MFI_IMR3	0xA40B008C
+#define MFI_IMR4	0xA40B0090
+#define MFI_IMR5	0xA40B0094
+#define MFI_IMR6	0xA40B0098
+#define MFI_IMR7	0xA40B009C
+#define MFI_IMR8	0xA40B00A0
+#define MFI_IMR9	0xA40B00A4
+#define MFI_IMR10	0xA40B00A8
+#define MFI_IMR11	0xA40B00AC
+#define MFI_IMCR0	0xA40B00C0
+#define MFI_IMCR1	0xA40B00C4
+#define MFI_IMCR2	0xA40B00C8
+#define MFI_IMCR3	0xA40B00CC
+#define MFI_IMCR4	0xA40B00D0
+#define MFI_IMCR5	0xA40B00D4
+#define MFI_IMCR6	0xA40B00D8
+#define MFI_IMCR7	0xA40B00DC
+#define MFI_IMCR8	0xA40B00E0
+#define MFI_IMCR9	0xA40B00E4
+#define MFI_IMCR10	0xA40B00E8
+#define MFI_IMCR11	0xA40B00EC
 
-/*  BSC */
-#define CMNCR     0xFEC10000
-#define CS0BCR      0xFEC10004
+/*	BSC	*/
+#define CMNCR	    0xFEC10000
+#define	CS0BCR	    0xFEC10004
 #define CS2BCR      0xFEC10008
 #define CS4BCR      0xFEC10010
 #define CS5ABCR     0xFEC10014
@@ -153,7 +153,7 @@
 #define CS6BWCR     0xFEC10040
 #define RBWTCNT     0xFEC10054
 
-/*  SBSC  */
+/*	SBSC	*/
 #define SBSC_SDCR   0xFE400008
 #define SBSC_SDWCR  0xFE40000C
 #define SBSC_SDPCR  0xFE400010
@@ -162,7 +162,7 @@
 #define SBSC_RTCOR  0xFE40001C
 #define SBSC_RFCR   0xFE400020
 
-/*  DMAC  */
+/*	DMAC	*/
 #define SAR_0       0xFE008020
 #define DAR_0       0xFE008024
 #define TCR_0       0xFE008028
@@ -204,7 +204,7 @@
 #define DMARS_1     0xFE009004
 #define DMARS_2     0xFE009008
 
-/*  CPG */
+/*	CPG	*/
 #define FRQCR       0xA4150000
 #define VCLKCR      0xA4150004
 #define SCLKACR     0xA4150008
@@ -212,20 +212,20 @@
 #define PLLCR       0xA4150024
 #define DLLFRQ      0xA4150050
 
-/*  LOW POWER MODE  */
+/*	LOW POWER MODE	*/
 #define STBCR       0xA4150020
 #define MSTPCR0     0xA4150030
 #define MSTPCR1     0xA4150034
 #define MSTPCR2     0xA4150038
 #define BAR         0xA4150040
 
-/*  RWDT  */
+/*	RWDT	*/
 #define RWTCNT      0xA4520000
 #define RWTCSR      0xA4520004
-#define WTCNT RWTCNT
+#define WTCNT	RWTCNT
 
 
-/*  TMU */
+/*	TMU	*/
 #define TSTR        0xFFD80004
 #define TCOR0       0xFFD80008
 #define TCNT0       0xFFD8000C
@@ -237,7 +237,7 @@
 #define TCNT2       0xFFD80024
 #define TCR2        0xFFD80028
 
-/*  TPU */
+/*	TPU	*/
 #define TPU_TSTR    0xA4C90000
 #define TPU_TCR0    0xA4C90010
 #define TPU_TMDR0   0xA4C90014
@@ -277,13 +277,13 @@
 #define TPU_TGR3C   0xA4C900F0
 #define TPU_TGR3D   0xA4C900F4
 
-/*  CMT */
+/*	CMT	*/
 #define CMSTR       0xA44A0000
 #define CMCSR       0xA44A0060
 #define CMCNT       0xA44A0064
 #define CMCOR       0xA44A0068
 
-/*  SIO */
+/*	SIO	*/
 #define SIOMDR      0xA4500000
 #define SIOCTR      0xA4500004
 #define SIOSTBCR0   0xA4500008
@@ -294,7 +294,7 @@
 #define SIOIER      0xA4500020
 #define SIOSCR      0xA4500024
 
-/*  SIOF  */
+/*	SIOF	*/
 #define SIMDR0      0xA4410000
 #define SISCR0      0xA4410002
 #define SITDAR0     0xA4410004
@@ -324,10 +324,10 @@
 #define SIRCR1      0xA442002C
 #define SPICR1      0xA4420030
 
-/*  SCIF  */
+/*	SCIF	*/
 #define SCIF0_BASE  0xFFE00000
 
-/*  SIM */
+/*	SIM	*/
 #define SIM_SCSMR       0xA4490000
 #define SIM_SCBRR       0xA4490002
 #define SIM_SCSCR       0xA4490004
@@ -341,7 +341,7 @@
 #define SIM_SCSMPL      0xA4490014
 #define SIM_SCDMAEN     0xA4490016
 
-/*  IrDA  */
+/*	IrDA	*/
 #define IRIF_INIT1      0xA45D0012
 #define IRIF_INIT2      0xA45D0014
 #define IRIF_RINTCLR    0xA45D0016
@@ -368,7 +368,7 @@
 #define IRIF_CRC3       0xA45D0046
 #define IRIF_CRC4       0xA45D0048
 
-/*  IIC */
+/*	IIC	*/
 #define ICDR0       0xA4470000
 #define ICCR0       0xA4470004
 #define ICSR0       0xA4470008
@@ -382,7 +382,7 @@
 #define ICCL1       0xA4750010
 #define ICCH1       0xA4750014
 
-/*  FLCTL */
+/*	FLCTL	*/
 #define FLCMNCR     0xA4530000
 #define FLCMDCR     0xA4530004
 #define FLCMCDR     0xA4530008
@@ -397,7 +397,7 @@
 #define FLTRCR      0xA453002C
 #define FLADR2      0xA453003C
 
-/*  MFI */
+/*	MFI	*/
 #define MFIIDX      0xA4C10000
 #define MFIGSR      0xA4C10004
 #define MFISCR      0xA4C10008
@@ -423,7 +423,7 @@
 #define MFIDEVCR    0xA4C10038
 #define MFISM4      0xA4C10080
 
-/*  VPU */
+/*	VPU	*/
 #define VP4_CTRL        0xFE900000
 #define VP4_VOL_CTRL    0xFE900004
 #define VP4_IMAGE_SIZE  0xFE900008
@@ -519,7 +519,7 @@
 #define VP4_RFY_ADDR    0xFE9022E4
 #define VP4_RFC_ADDR    0xFE9022E8
 
-/*  VIO(CEU)  */
+/*	VIO(CEU)	*/
 #define CAPSR       0xFE910000
 #define CAPCR       0xFE910004
 #define CAMCR       0xFE910008
@@ -552,7 +552,7 @@
 #define CDBYR2      0xFE910098
 #define CDBCR2      0xFE91009C
 
-/*  VIO(VEU)  */
+/*	VIO(VEU)	*/
 #define VESTR       0xFE920000
 #define VESWR       0xFE920010
 #define VESSR       0xFE920014
@@ -578,7 +578,7 @@
 #define VSTAR       0xFE9200B0
 #define VBSRR       0xFE9200B4
 
-/*  VIO(BEU)  */
+/*	VIO(BEU)	*/
 #define BESTR       0xFE930000
 #define BSMWR1      0xFE930010
 #define BSSZR1      0xFE930014
@@ -650,7 +650,7 @@
 #define BRCHR       0xFE9301A0
 #define CLUT        0xFE933000
 
-/*  JPU */
+/*	JPU	*/
 #define JCMOD       0xFEA00000
 #define JCCMD       0xFEA00004
 #define JCSTS       0xFEA00008
@@ -701,7 +701,7 @@
 #define JCHTBD1     0xFEA10200
 #define JCHTBA1     0xFEA10220
 
-/*  LCDC  */
+/*	LCDC	*/
 #define MLDDCKPAT1R 0xFE940400
 #define MLDDCKPAT2R 0xFE940404
 #define SLDDCKPAT1R 0xFE940408
@@ -791,7 +791,7 @@
 #define LDDRAR      0xFE940904
 #define LDPR00      0xFE940000
 
-/*  VOU */
+/*	VOU	*/
 #define VOUER       0xFE960000
 #define VOUCR       0xFE960004
 #define VOUSTR      0xFE960008
@@ -813,7 +813,7 @@
 #define VOURCR      0xFE960048
 #define VOURPR      0xFE960050
 
-/*  TSIF  */
+/*	TSIF	*/
 #define TSCTLR      0xA4C80000
 #define TSPIDR      0xA4C80004
 #define TSCMDR      0xA4C80008
@@ -828,7 +828,7 @@
 #define TSTRPCRADCR 0xA4C80030
 #define TSDPCRADCR  0xA4C80034
 
-/*  SIU */
+/*	SIU	*/
 #define IFCTL       0xA454C000
 #define SRCTL       0xA454C004
 #define SFORM       0xA454C008
@@ -871,7 +871,7 @@
 #define BRGBSEL     0xA454C108
 #define BRRB        0xA454C10C
 
-/*  USB */
+/*	USB	*/
 #define IFR0        0xA4480000
 #define ISR0        0xA4480010
 #define IER0        0xA4480020
@@ -903,13 +903,13 @@
 #define XVERCR      0xA44800D0
 #define STLMR       0xA44800D4
 
-/*  KEYSC */
+/*	KEYSC	*/
 #define KYCR1       0xA44B0000
 #define KYCR2       0xA44B0004
 #define KYINDR      0xA44B0008
 #define KYOUTDR     0xA44B000C
 
-/*  MMCIF */
+/*	MMCIF	*/
 #define CMDR0       0xA4448000
 #define CMDR1       0xA4448001
 #define CMDR2       0xA4448002
@@ -956,7 +956,7 @@
 #define INTCR2      0xA4448046
 #define INTSTR2     0xA4448048
 
-/*  Z3D3  */
+/*	Z3D3	*/
 #define DLBI        0xFD980000
 #define DLBD0       0xFD980080
 #define DLBD1       0xFD980100
@@ -1212,7 +1212,7 @@
 #define TCT2        0xFD9C1800
 #define TCT3        0xFD9C1C00
 
-/*  PFC */
+/*	PFC	*/
 #define PACR        0xA4050100
 #define PBCR        0xA4050102
 #define PCCR        0xA4050104
@@ -1244,14 +1244,14 @@
 #define HIZCRA      0xA4050158
 #define HIZCRB      0xA405015A
 #define HIZCRC      0xA405015C
-#define HIZCRC    0xA405015C
-#define MSELCRA   0xA4050180
-#define MSELCRB   0xA4050182
-#define PULCR   0xA4050184
-#define SBSCR   0xA4050186
-#define DRVCR   0xA405018A
+#define HIZCRC		0xA405015C
+#define MSELCRA		0xA4050180
+#define MSELCRB		0xA4050182
+#define PULCR		0xA4050184
+#define SBSCR		0xA4050186
+#define DRVCR		0xA405018A
 
-/*  I/O Port  */
+/*	I/O Port	*/
 #define PADR        0xA4050120
 #define PBDR        0xA4050122
 #define PCDR        0xA4050124
@@ -1275,7 +1275,7 @@
 #define PYDR        0xA4050168
 #define PZDR        0xA405016A
 
-/*  UBC */
+/*	UBC	*/
 #define CBR0        0xFF200000
 #define CRR0        0xFF200004
 #define CAR0        0xFF200008
@@ -1290,7 +1290,7 @@
 #define CCMFR       0xFF200600
 #define CBCR        0xFF200620
 
-/*  H-UDI */
+/*	H-UDI	*/
 #define SDIR        0xFC110000
 #define SDDRH       0xFC110008
 #define SDDRL       0xFC11000A

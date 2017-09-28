@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2011-2012 Samsung Electronics Co., Ltd.
- *    http://www.samsung.com
+ *		http://www.samsung.com
  *
  * EXYNOS4212 - Clock support
  *
@@ -32,54 +32,54 @@
 
 #ifdef CONFIG_PM_SLEEP
 static struct sleep_save exynos4212_clock_save[] = {
-  SAVE_ITEM (EXYNOS4_CLKSRC_IMAGE),
-  SAVE_ITEM (EXYNOS4_CLKDIV_IMAGE),
-  SAVE_ITEM (EXYNOS4212_CLKGATE_IP_IMAGE),
-  SAVE_ITEM (EXYNOS4212_CLKGATE_IP_PERIR),
+	SAVE_ITEM(EXYNOS4_CLKSRC_IMAGE),
+	SAVE_ITEM(EXYNOS4_CLKDIV_IMAGE),
+	SAVE_ITEM(EXYNOS4212_CLKGATE_IP_IMAGE),
+	SAVE_ITEM(EXYNOS4212_CLKGATE_IP_PERIR),
 };
 #endif
 
-static struct clk * clk_src_mpll_user_list[] = {
-  [0] = &clk_fin_mpll,
-  [1] = &exynos4_clk_mout_mpll.clk,
+static struct clk *clk_src_mpll_user_list[] = {
+	[0] = &clk_fin_mpll,
+	[1] = &exynos4_clk_mout_mpll.clk,
 };
 
 static struct clksrc_sources clk_src_mpll_user = {
-  .sources  = clk_src_mpll_user_list,
-  .nr_sources = ARRAY_SIZE (clk_src_mpll_user_list),
+	.sources	= clk_src_mpll_user_list,
+	.nr_sources	= ARRAY_SIZE(clk_src_mpll_user_list),
 };
 
 static struct clksrc_clk clk_mout_mpll_user = {
-  .clk = {
-    .name   = "mout_mpll_user",
-  },
-  .sources  = &clk_src_mpll_user,
-  .reg_src  = { .reg = EXYNOS4_CLKSRC_CPU, .shift = 24, .size = 1 },
+	.clk = {
+		.name		= "mout_mpll_user",
+	},
+	.sources	= &clk_src_mpll_user,
+	.reg_src	= { .reg = EXYNOS4_CLKSRC_CPU, .shift = 24, .size = 1 },
 };
 
-static struct clksrc_clk * sysclks[] = {
-  &clk_mout_mpll_user,
+static struct clksrc_clk *sysclks[] = {
+	&clk_mout_mpll_user,
 };
 
 static struct clksrc_clk clksrcs[] = {
-  /* nothing here yet */
+	/* nothing here yet */
 };
 
 static struct clk init_clocks_off[] = {
-  /* nothing here yet */
+	/* nothing here yet */
 };
 
 #ifdef CONFIG_PM_SLEEP
-static int exynos4212_clock_suspend (void)
+static int exynos4212_clock_suspend(void)
 {
-  s3c_pm_do_save (exynos4212_clock_save, ARRAY_SIZE (exynos4212_clock_save) );
-  
-  return 0;
+	s3c_pm_do_save(exynos4212_clock_save, ARRAY_SIZE(exynos4212_clock_save));
+
+	return 0;
 }
 
-static void exynos4212_clock_resume (void)
+static void exynos4212_clock_resume(void)
 {
-  s3c_pm_do_restore_core (exynos4212_clock_save, ARRAY_SIZE (exynos4212_clock_save) );
+	s3c_pm_do_restore_core(exynos4212_clock_save, ARRAY_SIZE(exynos4212_clock_save));
 }
 
 #else
@@ -88,32 +88,32 @@ static void exynos4212_clock_resume (void)
 #endif
 
 static struct syscore_ops exynos4212_clock_syscore_ops = {
-  .suspend  = exynos4212_clock_suspend,
-  .resume   = exynos4212_clock_resume,
+	.suspend	= exynos4212_clock_suspend,
+	.resume		= exynos4212_clock_resume,
 };
 
-void __init exynos4212_register_clocks (void)
+void __init exynos4212_register_clocks(void)
 {
-  int ptr;
-  
-  /* usbphy1 is removed */
-  exynos4_clkset_group_list[4] = NULL;
-  
-  /* mout_mpll_user is used */
-  exynos4_clkset_group_list[6] = &clk_mout_mpll_user.clk;
-  exynos4_clkset_aclk_top_list[0] = &clk_mout_mpll_user.clk;
-  
-  exynos4_clk_mout_mpll.reg_src.reg = EXYNOS4_CLKSRC_DMC;
-  exynos4_clk_mout_mpll.reg_src.shift = 12;
-  exynos4_clk_mout_mpll.reg_src.size = 1;
-  
-  for (ptr = 0; ptr < ARRAY_SIZE (sysclks); ptr++)
-  { s3c_register_clksrc (sysclks[ptr], 1); }
-  
-  s3c_register_clksrc (clksrcs, ARRAY_SIZE (clksrcs) );
-  
-  s3c_register_clocks (init_clocks_off, ARRAY_SIZE (init_clocks_off) );
-  s3c_disable_clocks (init_clocks_off, ARRAY_SIZE (init_clocks_off) );
-  
-  register_syscore_ops (&exynos4212_clock_syscore_ops);
+	int ptr;
+
+	/* usbphy1 is removed */
+	exynos4_clkset_group_list[4] = NULL;
+
+	/* mout_mpll_user is used */
+	exynos4_clkset_group_list[6] = &clk_mout_mpll_user.clk;
+	exynos4_clkset_aclk_top_list[0] = &clk_mout_mpll_user.clk;
+
+	exynos4_clk_mout_mpll.reg_src.reg = EXYNOS4_CLKSRC_DMC;
+	exynos4_clk_mout_mpll.reg_src.shift = 12;
+	exynos4_clk_mout_mpll.reg_src.size = 1;
+
+	for (ptr = 0; ptr < ARRAY_SIZE(sysclks); ptr++)
+		s3c_register_clksrc(sysclks[ptr], 1);
+
+	s3c_register_clksrc(clksrcs, ARRAY_SIZE(clksrcs));
+
+	s3c_register_clocks(init_clocks_off, ARRAY_SIZE(init_clocks_off));
+	s3c_disable_clocks(init_clocks_off, ARRAY_SIZE(init_clocks_off));
+
+	register_syscore_ops(&exynos4212_clock_syscore_ops);
 }

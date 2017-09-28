@@ -29,61 +29,61 @@
 # define CONFIG_MMC_SPI_MODE SPI_MODE_0
 #endif
 
-static int do_mmc_spi (cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
+static int do_mmc_spi(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
-  uint bus = CONFIG_MMC_SPI_BUS;
-  uint cs = CONFIG_MMC_SPI_CS;
-  uint speed = CONFIG_MMC_SPI_SPEED;
-  uint mode = CONFIG_MMC_SPI_MODE;
-  char * endp;
-  struct mmc * mmc;
-  
-  if (argc < 2)
-  { goto usage; }
-  
-  cs = simple_strtoul (argv[1], &endp, 0);
-  if (*argv[1] == 0 || (*endp != 0 && *endp != ':') )
-  { goto usage; }
-  if (*endp == ':') {
-    if (endp[1] == 0)
-    { goto usage; }
-    bus = cs;
-    cs = simple_strtoul (endp + 1, &endp, 0);
-    if (*endp != 0)
-    { goto usage; }
-  }
-  if (argc >= 3) {
-    speed = simple_strtoul (argv[2], &endp, 0);
-    if (*argv[2] == 0 || *endp != 0)
-    { goto usage; }
-  }
-  if (argc >= 4) {
-    mode = simple_strtoul (argv[3], &endp, 16);
-    if (*argv[3] == 0 || *endp != 0)
-    { goto usage; }
-  }
-  if (!spi_cs_is_valid (bus, cs) ) {
-    printf ("Invalid SPI bus %u cs %u\n", bus, cs);
-    return 1;
-  }
-  
-  mmc = mmc_spi_init (bus, cs, speed, mode);
-  if (!mmc) {
-    printf ("Failed to create MMC Device\n");
-    return 1;
-  }
-  printf ("%s: %d at %u:%u hz %u mode %u\n", mmc->name, mmc->block_dev.dev,
-          bus, cs, speed, mode);
-  mmc_init (mmc);
-  return 0;
-  
+	uint bus = CONFIG_MMC_SPI_BUS;
+	uint cs = CONFIG_MMC_SPI_CS;
+	uint speed = CONFIG_MMC_SPI_SPEED;
+	uint mode = CONFIG_MMC_SPI_MODE;
+	char *endp;
+	struct mmc *mmc;
+
+	if (argc < 2)
+		goto usage;
+
+	cs = simple_strtoul(argv[1], &endp, 0);
+	if (*argv[1] == 0 || (*endp != 0 && *endp != ':'))
+		goto usage;
+	if (*endp == ':') {
+		if (endp[1] == 0)
+			goto usage;
+		bus = cs;
+		cs = simple_strtoul(endp + 1, &endp, 0);
+		if (*endp != 0)
+			goto usage;
+	}
+	if (argc >= 3) {
+		speed = simple_strtoul(argv[2], &endp, 0);
+		if (*argv[2] == 0 || *endp != 0)
+			goto usage;
+	}
+	if (argc >= 4) {
+		mode = simple_strtoul(argv[3], &endp, 16);
+		if (*argv[3] == 0 || *endp != 0)
+			goto usage;
+	}
+	if (!spi_cs_is_valid(bus, cs)) {
+		printf("Invalid SPI bus %u cs %u\n", bus, cs);
+		return 1;
+	}
+
+	mmc = mmc_spi_init(bus, cs, speed, mode);
+	if (!mmc) {
+		printf("Failed to create MMC Device\n");
+		return 1;
+	}
+	printf("%s: %d at %u:%u hz %u mode %u\n", mmc->name, mmc->block_dev.dev,
+	       bus, cs, speed, mode);
+	mmc_init(mmc);
+	return 0;
+
 usage:
-  cmd_usage (cmdtp);
-  return 1;
+	cmd_usage(cmdtp);
+	return 1;
 }
 
-U_BOOT_CMD (
-  mmc_spi,  4,  0,  do_mmc_spi,
-  "mmc_spi setup",
-  "[bus:]cs [hz] [mode]	- setup mmc_spi device"
+U_BOOT_CMD(
+	mmc_spi,	4,	0,	do_mmc_spi,
+	"mmc_spi setup",
+	"[bus:]cs [hz] [mode]	- setup mmc_spi device"
 );

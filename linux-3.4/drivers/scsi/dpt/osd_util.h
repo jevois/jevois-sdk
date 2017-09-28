@@ -1,4 +1,4 @@
-/*  BSDI osd_util.h,v 1.8 1998/06/03 19:14:58 karels Exp  */
+/*	BSDI osd_util.h,v 1.8 1998/06/03 19:14:58 karels Exp	*/
 
 /*
  * Copyright (c) 1996-1999 Distributed Processing Technology Corporation
@@ -84,19 +84,19 @@
 #endif
 
 #ifndef DPT_UNALIGNED
-#define      DPT_UNALIGNED
+   #define      DPT_UNALIGNED
 #endif
 
 #ifndef DPT_EXPORT
-#define      DPT_EXPORT
+   #define      DPT_EXPORT
 #endif
 
 #ifndef DPT_IMPORT
-#define      DPT_IMPORT
+   #define      DPT_IMPORT
 #endif
 
 #ifndef DPT_RUNTIME_IMPORT
-#define      DPT_RUNTIME_IMPORT  DPT_IMPORT
+   #define      DPT_RUNTIME_IMPORT  DPT_IMPORT
 #endif
 
 /*--------------------- */
@@ -104,48 +104,48 @@
 /*--------------------- */
 
 #if defined (_DPT_MSDOS) || defined (_DPT_WIN_3X)
-#define      _DPT_16_BIT
+   #define      _DPT_16_BIT
 #else
-#define      _DPT_32_BIT
+   #define      _DPT_32_BIT
 #endif
 
 #if defined (_DPT_SCO) || defined (_DPT_UNIXWARE) || defined (_DPT_SOLARIS) || defined (_DPT_AIX) || defined (SNI_MIPS) || defined (_DPT_BSDI) || defined (_DPT_FREE_BSD) || defined(_DPT_LINUX)
-#define      _DPT_UNIX
+   #define      _DPT_UNIX
 #endif
 
 #if defined (_DPT_WIN_3x) || defined (_DPT_WIN_4X) || defined (_DPT_WIN_NT) \
-|| defined (_DPT_OS2)
-#define      _DPT_DLL_SUPPORT
+	    || defined (_DPT_OS2)
+   #define      _DPT_DLL_SUPPORT
 #endif
 
 #if !defined (_DPT_MSDOS) && !defined (_DPT_WIN_3X) && !defined (_DPT_NETWARE)
-#define      _DPT_PREEMPTIVE
+   #define      _DPT_PREEMPTIVE
 #endif
 
 #if !defined (_DPT_MSDOS) && !defined (_DPT_WIN_3X)
-#define      _DPT_MULTI_THREADED
+   #define      _DPT_MULTI_THREADED
 #endif
 
 #if !defined (_DPT_MSDOS)
-#define      _DPT_MULTI_TASKING
+   #define      _DPT_MULTI_TASKING
 #endif
 
-/* These exist for platforms that   */
-/* chunk when accessing mis-aligned */
-/* data                             */
+  /* These exist for platforms that   */
+  /* chunk when accessing mis-aligned */
+  /* data                             */
 #if defined (SNI_MIPS) || defined (_DPT_SOLARIS)
-#if defined (_DPT_BIG_ENDIAN)
-#if !defined (_DPT_STRICT_ALIGN)
-#define _DPT_STRICT_ALIGN
-#endif
-#endif
+   #if defined (_DPT_BIG_ENDIAN)
+	#if !defined (_DPT_STRICT_ALIGN)
+            #define _DPT_STRICT_ALIGN
+	#endif
+   #endif
 #endif
 
-/* Determine if in C or C++ mode */
+  /* Determine if in C or C++ mode */
 #ifdef  __cplusplus
-#define      _DPT_CPP
+   #define      _DPT_CPP
 #else
-#define      _DPT_C
+   #define      _DPT_C
 #endif
 
 /*-------------------------------------------------------------------*/
@@ -161,13 +161,13 @@
 /*                                                                   */
 /*-------------------------------------------------------------------*/
 #if !defined (DPTSQO)
-#if defined (_DPT_SOLARIS)
-#define DPTSQO
-#define DPTSQC
-#else
-#define DPTSQO {
-#define DPTSQC }
-#endif  /* solaris */
+   #if defined (_DPT_SOLARIS)
+      #define DPTSQO
+      #define DPTSQC
+   #else
+      #define DPTSQO {
+      #define DPTSQC }
+   #endif  /* solaris */
 #endif  /* DPTSQO */
 
 
@@ -176,71 +176,71 @@
 /*---------------------- */
 
 #if defined (_DPT_MSDOS) || defined (_DPT_SCO)
-#define BYTE unsigned char
-#define WORD unsigned short
+   #define BYTE unsigned char
+   #define WORD unsigned short
 #endif
 
 #ifndef _DPT_TYPEDEFS
-#define _DPT_TYPEDEFS
-typedef unsigned char   uCHAR;
-typedef unsigned short  uSHORT;
-typedef unsigned int    uINT;
-typedef unsigned long   uLONG;
+   #define _DPT_TYPEDEFS
+   typedef unsigned char   uCHAR;
+   typedef unsigned short  uSHORT;
+   typedef unsigned int    uINT;
+   typedef unsigned long   uLONG;
 
-typedef union {
-  uCHAR        u8[4];
-  uSHORT       u16[2];
-  uLONG        u32;
-} access_U;
+   typedef union {
+	 uCHAR        u8[4];
+	 uSHORT       u16[2];
+	 uLONG        u32;
+   } access_U;
 #endif
 
 #if !defined (NULL)
-#define      NULL    0
+   #define      NULL    0
 #endif
 
 
 /*Prototypes - function ----------------------------------------------------- */
 
 #ifdef  __cplusplus
-extern "C" {         /* Declare all these functions as "C" functions */
+   extern "C" {         /* Declare all these functions as "C" functions */
 #endif
 
 /*------------------------ */
 /* Byte reversal functions */
 /*------------------------ */
 
-/* Reverses the byte ordering of a 2 byte variable */
+  /* Reverses the byte ordering of a 2 byte variable */
 #if (!defined(osdSwap2))
-uSHORT       osdSwap2 (DPT_UNALIGNED uSHORT *);
+ uSHORT       osdSwap2(DPT_UNALIGNED uSHORT *);
 #endif 
 
-/* Reverses the byte ordering of a 4 byte variable and shifts left 8 bits */
+  /* Reverses the byte ordering of a 4 byte variable and shifts left 8 bits */
 #if (!defined(osdSwap3))
-uLONG        osdSwap3 (DPT_UNALIGNED uLONG *);
+ uLONG        osdSwap3(DPT_UNALIGNED uLONG *);
 #endif 
 
 
 #ifdef  _DPT_NETWARE
-#include "novpass.h" /* For DPT_Bswapl() prototype */
-/* Inline the byte swap */
-#ifdef __cplusplus
-inline uLONG osdSwap4 (uLONG * inLong) {
-  return *inLong = DPT_Bswapl (*inLong);
-}
+   #include "novpass.h" /* For DPT_Bswapl() prototype */
+	/* Inline the byte swap */
+   #ifdef __cplusplus
+	 inline uLONG osdSwap4(uLONG *inLong) {
+	 return *inLong = DPT_Bswapl(*inLong);
+	 }
+   #else
+	 #define osdSwap4(inLong)       DPT_Bswapl(inLong)
+   #endif 
 #else
-#define osdSwap4(inLong)       DPT_Bswapl(inLong)
-#endif 
-#else
-/* Reverses the byte ordering of a 4 byte variable */
+	/* Reverses the byte ordering of a 4 byte variable */
 # if (!defined(osdSwap4))
-uLONG        osdSwap4 (DPT_UNALIGNED uLONG *);
+   uLONG        osdSwap4(DPT_UNALIGNED uLONG *);
 # endif 
 
-/* The following functions ALWAYS swap regardless of the *
- * presence of DPT_BIG_ENDIAN                            */
+  /* The following functions ALWAYS swap regardless of the *
+   * presence of DPT_BIG_ENDIAN                            */
 
-uSHORT       trueSwap2 (DPT_UNALIGNED uSHORT *);
-uLONG        trueSwap4 (DPT_UNALIGNED uLONG *);
+   uSHORT       trueSwap2(DPT_UNALIGNED uSHORT *);
+   uLONG        trueSwap4(DPT_UNALIGNED uLONG *);
 
 #endif 
 
@@ -258,7 +258,7 @@ uLONG        trueSwap4 (DPT_UNALIGNED uLONG *);
  * will #define DPT_PORTABLE to begin  *
  * using the modifications.            *
  *-------------------------------------*/
-uLONG netSwap4 (uLONG val);
+uLONG	netSwap4(uLONG val);
 
 #if defined (_DPT_BIG_ENDIAN)
 
@@ -290,67 +290,67 @@ uLONG netSwap4 (uLONG val);
 /* Run-time loadable module functions */
 /*----------------------------------- */
 
-/* Loads the specified run-time loadable DLL */
-DLL_HANDLE_T    osdLoadModule (uCHAR *);
-/* Unloads the specified run-time loadable DLL */
-uSHORT          osdUnloadModule (DLL_HANDLE_T);
-/* Returns a pointer to a function inside a run-time loadable DLL */
-void      *     osdGetFnAddr (DLL_HANDLE_T, uCHAR *);
+  /* Loads the specified run-time loadable DLL */
+DLL_HANDLE_T    osdLoadModule(uCHAR *);
+  /* Unloads the specified run-time loadable DLL */
+uSHORT          osdUnloadModule(DLL_HANDLE_T);
+  /* Returns a pointer to a function inside a run-time loadable DLL */
+void *          osdGetFnAddr(DLL_HANDLE_T,uCHAR *);
 
 /*--------------------------------------- */
 /* Mutually exclusive semaphore functions */
 /*--------------------------------------- */
 
-/* Create a named semaphore */
-SEMAPHORE_T     osdCreateNamedSemaphore (char *);
-/* Create a mutually exlusive semaphore */
-SEMAPHORE_T     osdCreateSemaphore (void);
-/* create an event semaphore */
-SEMAPHORE_T              osdCreateEventSemaphore (void);
-/* create a named event semaphore */
-SEMAPHORE_T             osdCreateNamedEventSemaphore (char *);
+  /* Create a named semaphore */
+SEMAPHORE_T     osdCreateNamedSemaphore(char *);
+  /* Create a mutually exlusive semaphore */
+SEMAPHORE_T     osdCreateSemaphore(void);
+	/* create an event semaphore */
+SEMAPHORE_T              osdCreateEventSemaphore(void);
+	/* create a named event semaphore */
+SEMAPHORE_T             osdCreateNamedEventSemaphore(char *);
 
-/* Destroy the specified mutually exclusive semaphore object */
-uSHORT          osdDestroySemaphore (SEMAPHORE_T);
-/* Request access to the specified mutually exclusive semaphore */
-uLONG           osdRequestSemaphore (SEMAPHORE_T, uLONG);
-/* Release access to the specified mutually exclusive semaphore */
-uSHORT          osdReleaseSemaphore (SEMAPHORE_T);
-/* wait for a event to happen */
-uLONG                            osdWaitForEventSemaphore (SEMAPHORE_T, uLONG);
-/* signal an event */
-uLONG                            osdSignalEventSemaphore (SEMAPHORE_T);
-/* reset the event */
-uLONG                            osdResetEventSemaphore (SEMAPHORE_T);
+  /* Destroy the specified mutually exclusive semaphore object */
+uSHORT          osdDestroySemaphore(SEMAPHORE_T);
+  /* Request access to the specified mutually exclusive semaphore */
+uLONG           osdRequestSemaphore(SEMAPHORE_T,uLONG);
+  /* Release access to the specified mutually exclusive semaphore */
+uSHORT          osdReleaseSemaphore(SEMAPHORE_T);
+	/* wait for a event to happen */
+uLONG                            osdWaitForEventSemaphore(SEMAPHORE_T, uLONG);
+	/* signal an event */
+uLONG                            osdSignalEventSemaphore(SEMAPHORE_T);
+	/* reset the event */
+uLONG                            osdResetEventSemaphore(SEMAPHORE_T);
 
 /*----------------- */
 /* Thread functions */
 /*----------------- */
 
-/* Releases control to the task switcher in non-preemptive */
-/* multitasking operating systems. */
-void            osdSwitchThreads (void);
+  /* Releases control to the task switcher in non-preemptive */
+  /* multitasking operating systems. */
+void            osdSwitchThreads(void);
 
-/* Starts a thread function */
-uLONG   osdStartThread (void *, void *);
+  /* Starts a thread function */
+uLONG   osdStartThread(void *,void *);
 
 /* what is my thread id */
-uLONG osdGetThreadID (void);
+uLONG osdGetThreadID(void);
 
 /* wakes up the specifed thread */
-void osdWakeThread (uLONG);
+void osdWakeThread(uLONG);
 
 /* osd sleep for x milliseconds */
-void osdSleep (uLONG);
+void osdSleep(uLONG);
 
 #define DPT_THREAD_PRIORITY_LOWEST 0x00
 #define DPT_THREAD_PRIORITY_NORMAL 0x01
 #define DPT_THREAD_PRIORITY_HIGHEST 0x02
 
-uCHAR osdSetThreadPriority (uLONG tid, uCHAR priority);
+uCHAR osdSetThreadPriority(uLONG tid, uCHAR priority);
 
 #ifdef __cplusplus
-}    /* end the xtern "C" declaration */
+   }    /* end the xtern "C" declaration */
 #endif
 
 #endif  /* osd_util_h */

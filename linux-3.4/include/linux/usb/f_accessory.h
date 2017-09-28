@@ -38,11 +38,11 @@
 
 /* Control request for retrieving device's protocol version
  *
- *  requestType:    USB_DIR_IN | USB_TYPE_VENDOR
- *  request:        ACCESSORY_GET_PROTOCOL
- *  value:          0
- *  index:          0
- *  data            version number (16 bits little endian)
+ *	requestType:    USB_DIR_IN | USB_TYPE_VENDOR
+ *	request:        ACCESSORY_GET_PROTOCOL
+ *	value:          0
+ *	index:          0
+ *	data            version number (16 bits little endian)
  *                     1 for original accessory support
  *                     2 adds HID and device to host audio support
  */
@@ -50,11 +50,11 @@
 
 /* Control request for host to send a string to the device
  *
- *  requestType:    USB_DIR_OUT | USB_TYPE_VENDOR
- *  request:        ACCESSORY_SEND_STRING
- *  value:          0
- *  index:          string ID
- *  data            zero terminated UTF8 string
+ *	requestType:    USB_DIR_OUT | USB_TYPE_VENDOR
+ *	request:        ACCESSORY_SEND_STRING
+ *	value:          0
+ *	index:          string ID
+ *	data            zero terminated UTF8 string
  *
  *  The device can later retrieve these strings via the
  *  ACCESSORY_GET_STRING_* ioctls
@@ -64,11 +64,11 @@
 /* Control request for starting device in accessory mode.
  * The host sends this after setting all its strings to the device.
  *
- *  requestType:    USB_DIR_OUT | USB_TYPE_VENDOR
- *  request:        ACCESSORY_START
- *  value:          0
- *  index:          0
- *  data            none
+ *	requestType:    USB_DIR_OUT | USB_TYPE_VENDOR
+ *	request:        ACCESSORY_START
+ *	value:          0
+ *	index:          0
+ *	data            none
  */
 #define ACCESSORY_START         53
 
@@ -77,21 +77,21 @@
  * value parameter. This ID will be used for future commands for
  * the device
  *
- *  requestType:    USB_DIR_OUT | USB_TYPE_VENDOR
- *  request:        ACCESSORY_REGISTER_HID_DEVICE
- *  value:          Accessory assigned ID for the HID device
- *  index:          total length of the HID report descriptor
- *  data            none
+ *	requestType:    USB_DIR_OUT | USB_TYPE_VENDOR
+ *	request:        ACCESSORY_REGISTER_HID_DEVICE
+ *	value:          Accessory assigned ID for the HID device
+ *	index:          total length of the HID report descriptor
+ *	data            none
  */
 #define ACCESSORY_REGISTER_HID         54
 
 /* Control request for unregistering a HID device.
  *
- *  requestType:    USB_DIR_OUT | USB_TYPE_VENDOR
- *  request:        ACCESSORY_REGISTER_HID
- *  value:          Accessory assigned ID for the HID device
- *  index:          0
- *  data            none
+ *	requestType:    USB_DIR_OUT | USB_TYPE_VENDOR
+ *	request:        ACCESSORY_REGISTER_HID
+ *	value:          Accessory assigned ID for the HID device
+ *	index:          0
+ *	data            none
  */
 #define ACCESSORY_UNREGISTER_HID         55
 
@@ -101,33 +101,33 @@
  * commands. The data for the descriptor must be sent sequentially
  * if multiple packets are needed.
  *
- *  requestType:    USB_DIR_OUT | USB_TYPE_VENDOR
- *  request:        ACCESSORY_SET_HID_REPORT_DESC
- *  value:          Accessory assigned ID for the HID device
- *  index:          offset of data in descriptor
+ *	requestType:    USB_DIR_OUT | USB_TYPE_VENDOR
+ *	request:        ACCESSORY_SET_HID_REPORT_DESC
+ *	value:          Accessory assigned ID for the HID device
+ *	index:          offset of data in descriptor
  *                      (needed when HID descriptor is too big for one packet)
- *  data            the HID report descriptor
+ *	data            the HID report descriptor
  */
 #define ACCESSORY_SET_HID_REPORT_DESC         56
 
 /* Control request for sending HID events.
  *
- *  requestType:    USB_DIR_OUT | USB_TYPE_VENDOR
- *  request:        ACCESSORY_SEND_HID_EVENT
- *  value:          Accessory assigned ID for the HID device
- *  index:          0
- *  data            the HID report for the event
+ *	requestType:    USB_DIR_OUT | USB_TYPE_VENDOR
+ *	request:        ACCESSORY_SEND_HID_EVENT
+ *	value:          Accessory assigned ID for the HID device
+ *	index:          0
+ *	data            the HID report for the event
  */
 #define ACCESSORY_SEND_HID_EVENT         57
 
 /* Control request for setting the audio mode.
  *
- *  requestType:  USB_DIR_OUT | USB_TYPE_VENDOR
- *  request:        ACCESSORY_SET_AUDIO_MODE
- *  value:          0 - no audio
+ *	requestType:	USB_DIR_OUT | USB_TYPE_VENDOR
+ *	request:        ACCESSORY_SET_AUDIO_MODE
+ *	value:          0 - no audio
  *                     1 - device to host, 44100 16-bit stereo PCM
- *  index:          0
- *  data            none
+ *	index:          0
+ *	data            none
  */
 #define ACCESSORY_SET_AUDIO_MODE         58
 

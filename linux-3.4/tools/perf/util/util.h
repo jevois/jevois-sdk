@@ -37,7 +37,7 @@
 #define HAS_MULTI_BITS(i)  ((i) & ((i) - 1))  /* checks if an integer has more than 1 bit set */
 
 /* Approximation of the length of the decimal representation of this type. */
-#define decimal_length(x) ((int)(sizeof(x) * 2.56 + 0.5) + 1)
+#define decimal_length(x)	((int)(sizeof(x) * 2.56 + 0.5) + 1)
 
 #define _ALL_SOURCE 1
 #define _BSD_SOURCE 1
@@ -80,8 +80,8 @@
 #include "types.h"
 #include <sys/ttydefaults.h>
 
-extern const char * graph_line;
-extern const char * graph_dotted_line;
+extern const char *graph_line;
+extern const char *graph_dotted_line;
 extern char buildid_dir[];
 
 /* On most systems <limits.h> would have given us this, but
@@ -129,30 +129,30 @@ extern char buildid_dir[];
 #endif
 
 /* General helper functions */
-extern void usage (const char * err) NORETURN;
-extern void die (const char * err, ...) NORETURN __attribute__ ( (format (printf, 1, 2) ) );
-extern int error (const char * err, ...) __attribute__ ( (format (printf, 1, 2) ) );
-extern void warning (const char * err, ...) __attribute__ ( (format (printf, 1, 2) ) );
+extern void usage(const char *err) NORETURN;
+extern void die(const char *err, ...) NORETURN __attribute__((format (printf, 1, 2)));
+extern int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
+extern void warning(const char *err, ...) __attribute__((format (printf, 1, 2)));
 
 #include "../../../include/linux/stringify.h"
 
-#define DIE_IF(cnd) \
-  do { if (cnd) \
-      die(" at (" __FILE__ ":" __stringify(__LINE__) "): "  \
-          __stringify(cnd) "\n");       \
-  } while (0)
+#define DIE_IF(cnd)	\
+	do { if (cnd)	\
+		die(" at (" __FILE__ ":" __stringify(__LINE__) "): "	\
+		    __stringify(cnd) "\n");				\
+	} while (0)
 
 
-extern void set_die_routine (void (*routine) (const char * err, va_list params) NORETURN);
+extern void set_die_routine(void (*routine)(const char *err, va_list params) NORETURN);
 
-extern int prefixcmp (const char * str, const char * prefix);
-extern void set_buildid_dir (void);
-extern void disable_buildid_cache (void);
+extern int prefixcmp(const char *str, const char *prefix);
+extern void set_buildid_dir(void);
+extern void disable_buildid_cache(void);
 
-static inline const char * skip_prefix (const char * str, const char * prefix)
+static inline const char *skip_prefix(const char *str, const char *prefix)
 {
-  size_t len = strlen (prefix);
-  return strncmp (str, prefix, len) ? NULL : str + len;
+	size_t len = strlen(prefix);
+	return strncmp(str, prefix, len) ? NULL : str + len;
 }
 
 #ifdef __GLIBC_PREREQ
@@ -163,32 +163,32 @@ static inline const char * skip_prefix (const char * str, const char * prefix)
 
 #ifndef HAVE_STRCHRNUL
 #define strchrnul gitstrchrnul
-static inline char * gitstrchrnul (const char * s, int c)
+static inline char *gitstrchrnul(const char *s, int c)
 {
-  while (*s && *s != c)
-  { s++; }
-  return (char *) s;
+	while (*s && *s != c)
+		s++;
+	return (char *)s;
 }
 #endif
 
 /*
  * Wrappers:
  */
-extern char * xstrdup (const char * str);
-extern void * xrealloc (void * ptr, size_t size) __attribute__ ( (weak) );
+extern char *xstrdup(const char *str);
+extern void *xrealloc(void *ptr, size_t size) __attribute__((weak));
 
 
-static inline void * zalloc (size_t size)
+static inline void *zalloc(size_t size)
 {
-  return calloc (1, size);
+	return calloc(1, size);
 }
 
-static inline int has_extension (const char * filename, const char * ext)
+static inline int has_extension(const char *filename, const char *ext)
 {
-  size_t len = strlen (filename);
-  size_t extlen = strlen (ext);
-  
-  return len > extlen && !memcmp (filename + len - extlen, ext, extlen);
+	size_t len = strlen(filename);
+	size_t extlen = strlen(ext);
+
+	return len > extlen && !memcmp(filename + len - extlen, ext, extlen);
 }
 
 /* Sane ctype - no locale, and works with signed chars */
@@ -205,19 +205,19 @@ static inline int has_extension (const char * filename, const char * ext)
 #undef toupper
 
 extern unsigned char sane_ctype[256];
-#define GIT_SPACE   0x01
-#define GIT_DIGIT   0x02
-#define GIT_ALPHA   0x04
-#define GIT_GLOB_SPECIAL  0x08
-#define GIT_REGEX_SPECIAL 0x10
-#define GIT_PRINT_EXTRA   0x20
-#define GIT_PRINT   0x3E
+#define GIT_SPACE		0x01
+#define GIT_DIGIT		0x02
+#define GIT_ALPHA		0x04
+#define GIT_GLOB_SPECIAL	0x08
+#define GIT_REGEX_SPECIAL	0x10
+#define GIT_PRINT_EXTRA		0x20
+#define GIT_PRINT		0x3E
 #define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask)) != 0)
 #define isascii(x) (((x) & ~0x7f) == 0)
 #define isspace(x) sane_istest(x,GIT_SPACE)
 #define isdigit(x) sane_istest(x,GIT_DIGIT)
-#define isxdigit(x) \
-  (sane_istest(toupper(x), GIT_ALPHA | GIT_DIGIT) && toupper(x) < 'G')
+#define isxdigit(x)	\
+	(sane_istest(toupper(x), GIT_ALPHA | GIT_DIGIT) && toupper(x) < 'G')
 #define isalpha(x) sane_istest(x,GIT_ALPHA)
 #define isalnum(x) sane_istest(x,GIT_ALPHA | GIT_DIGIT)
 #define isprint(x) sane_istest(x,GIT_PRINT)
@@ -226,30 +226,30 @@ extern unsigned char sane_ctype[256];
 #define tolower(x) sane_case((unsigned char)(x), 0x20)
 #define toupper(x) sane_case((unsigned char)(x), 0)
 
-static inline int sane_case (int x, int high)
+static inline int sane_case(int x, int high)
 {
-  if (sane_istest (x, GIT_ALPHA) )
-  { x = (x & ~0x20) | high; }
-  return x;
+	if (sane_istest(x, GIT_ALPHA))
+		x = (x & ~0x20) | high;
+	return x;
 }
 
-int mkdir_p (char * path, mode_t mode);
-int copyfile (const char * from, const char * to);
+int mkdir_p(char *path, mode_t mode);
+int copyfile(const char *from, const char *to);
 
-s64 perf_atoll (const char * str);
-char ** argv_split (const char * str, int * argcp);
-void argv_free (char ** argv);
-bool strglobmatch (const char * str, const char * pat);
-bool strlazymatch (const char * str, const char * pat);
-int strtailcmp (const char * s1, const char * s2);
-unsigned long convert_unit (unsigned long value, char * unit);
-int readn (int fd, void * buf, size_t size);
+s64 perf_atoll(const char *str);
+char **argv_split(const char *str, int *argcp);
+void argv_free(char **argv);
+bool strglobmatch(const char *str, const char *pat);
+bool strlazymatch(const char *str, const char *pat);
+int strtailcmp(const char *s1, const char *s2);
+unsigned long convert_unit(unsigned long value, char *unit);
+int readn(int fd, void *buf, size_t size);
 
 struct perf_event_attr;
 
-void event_attr_init (struct perf_event_attr * attr);
+void event_attr_init(struct perf_event_attr *attr);
 
-uid_t parse_target_uid (const char * str, const char * tid, const char * pid);
+uid_t parse_target_uid(const char *str, const char *tid, const char *pid);
 
 #define _STR(x) #x
 #define STR(x) _STR(x)
@@ -259,10 +259,10 @@ uid_t parse_target_uid (const char * str, const char * tid, const char * pid);
  * *not* considered a power of two.
  */
 
-static inline __attribute__ ( (const) )
-bool is_power_of_2 (unsigned long n)
+static inline __attribute__((const))
+bool is_power_of_2(unsigned long n)
 {
-  return (n != 0 && ( (n & (n - 1) ) == 0) );
+	return (n != 0 && ((n & (n - 1)) == 0));
 }
 
 #endif

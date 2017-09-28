@@ -36,8 +36,8 @@
 #define   SUNXI_USB_FPGA
 #endif
 
-#define SUNXI_ENDPOINTS_NUM 32
-#define SUNXI_EVENT_BUFFERS_SIZE  PAGE_SIZE
+#define SUNXI_ENDPOINTS_NUM	32
+#define SUNXI_EVENT_BUFFERS_SIZE	PAGE_SIZE
 
 struct sunxi_otgc_trb;
 
@@ -50,23 +50,23 @@ struct sunxi_otgc_trb;
  * @otgc: pointer to OTG controller
  */
 struct sunxi_otgc_event_buffer {
-  void   *   buf;
-  unsigned    length;
-  unsigned int    lpos;
-  
-  dma_addr_t    dma;
-  
-  struct sunxi_otgc  * otgc;
+	void			*buf;
+	unsigned		length;
+	unsigned int		lpos;
+
+	dma_addr_t		dma;
+
+	struct sunxi_otgc		*otgc;
 };
 
-#define SUNXI_EP_FLAG_STALLED (1 << 0)
-#define SUNXI_EP_FLAG_WEDGED  (1 << 1)
+#define SUNXI_EP_FLAG_STALLED	(1 << 0)
+#define SUNXI_EP_FLAG_WEDGED	(1 << 1)
 
-#define SUNXI_EP_DIRECTION_TX true
-#define SUNXI_EP_DIRECTION_RX false
+#define SUNXI_EP_DIRECTION_TX	true
+#define SUNXI_EP_DIRECTION_RX	false
 
-#define SUNXI_TRB_NUM   32
-#define SUNXI_TRB_MASK    (SUNXI_TRB_NUM - 1)
+#define SUNXI_TRB_NUM		32
+#define SUNXI_TRB_MASK		(SUNXI_TRB_NUM - 1)
 
 /**
  * struct sunxi_otgc_ep - device side endpoint representation
@@ -90,81 +90,81 @@ struct sunxi_otgc_event_buffer {
  * @stream_capable: true when streams are enabled
  */
 struct sunxi_otgc_ep {
-  struct usb_ep   endpoint;
-  struct list_head  request_list;
-  struct list_head  req_queued;
-  
-  struct sunxi_otgc_trb  * trb_pool;
-  dma_addr_t    trb_pool_dma;
-  u32     free_slot;
-  u32     busy_slot;
-  const struct usb_endpoint_descriptor * desc;
-  const struct usb_ss_ep_comp_descriptor * comp_desc;
-  struct sunxi_otgc  * otgc;
-  
-  unsigned    flags;
-  unsigned    current_trb;
-  
-  u8      number;
-  u8      type;
-  u8      res_trans_idx;
-  u32     interval;
-  
-  char      name[20];
-  
-  unsigned    direction: 1;
-  unsigned    stream_capable: 1;
+	struct usb_ep		endpoint;
+	struct list_head	request_list;
+	struct list_head	req_queued;
+
+	struct sunxi_otgc_trb		*trb_pool;
+	dma_addr_t		trb_pool_dma;
+	u32			free_slot;
+	u32			busy_slot;
+	const struct usb_endpoint_descriptor *desc;
+	const struct usb_ss_ep_comp_descriptor *comp_desc;
+	struct sunxi_otgc		*otgc;
+
+	unsigned		flags;
+	unsigned		current_trb;
+
+	u8			number;
+	u8			type;
+	u8			res_trans_idx;
+	u32			interval;
+
+	char			name[20];
+
+	unsigned		direction:1;
+	unsigned		stream_capable:1;
 };
 
 enum sunxi_phy {
-  SUNXI_PHY_UNKNOWN = 0,
-  SUNXI_PHY_USB3,
-  SUNXI_PHY_USB2,
+	SUNXI_PHY_UNKNOWN = 0,
+	SUNXI_PHY_USB3,
+	SUNXI_PHY_USB2,
 };
 
 enum sunxi_ep0_next {
-  SUNXI_EP0_UNKNOWN = 0,
-  SUNXI_EP0_COMPLETE,
-  SUNXI_EP0_NRDY_SETUP,
-  SUNXI_EP0_NRDY_DATA,
-  SUNXI_EP0_NRDY_STATUS,
+	SUNXI_EP0_UNKNOWN = 0,
+	SUNXI_EP0_COMPLETE,
+	SUNXI_EP0_NRDY_SETUP,
+	SUNXI_EP0_NRDY_DATA,
+	SUNXI_EP0_NRDY_STATUS,
 };
 
 enum sunxi_ep0_state {
-  EP0_UNCONNECTED   = 0,
-  EP0_SETUP_PHASE,
-  EP0_DATA_PHASE,
-  EP0_STATUS_PHASE,
+	EP0_UNCONNECTED		= 0,
+	EP0_SETUP_PHASE,
+	EP0_DATA_PHASE,
+	EP0_STATUS_PHASE,
 };
 
 enum sunxi_link_state {
-  /* In SuperSpeed */
-  SUNXI_LINK_STATE_U0   = 0x00, /* in HS, means ON */
-  SUNXI_LINK_STATE_U1   = 0x01,
-  SUNXI_LINK_STATE_U2   = 0x02, /* in HS, means SLEEP */
-  SUNXI_LINK_STATE_U3   = 0x03, /* in HS, means SUSPEND */
-  SUNXI_LINK_STATE_SS_DIS   = 0x04,
-  SUNXI_LINK_STATE_RX_DET   = 0x05, /* in HS, means Early Suspend */
-  SUNXI_LINK_STATE_SS_INACT = 0x06,
-  SUNXI_LINK_STATE_POLL   = 0x07,
-  SUNXI_LINK_STATE_RECOV    = 0x08,
-  SUNXI_LINK_STATE_HRESET   = 0x09,
-  SUNXI_LINK_STATE_CMPLY    = 0x0a,
-  SUNXI_LINK_STATE_LPBK   = 0x0b,
-  SUNXI_LINK_STATE_MASK   = 0x0f,
+	/* In SuperSpeed */
+	SUNXI_LINK_STATE_U0		= 0x00, /* in HS, means ON */
+	SUNXI_LINK_STATE_U1		= 0x01,
+	SUNXI_LINK_STATE_U2		= 0x02, /* in HS, means SLEEP */
+	SUNXI_LINK_STATE_U3		= 0x03, /* in HS, means SUSPEND */
+	SUNXI_LINK_STATE_SS_DIS		= 0x04,
+	SUNXI_LINK_STATE_RX_DET		= 0x05, /* in HS, means Early Suspend */
+	SUNXI_LINK_STATE_SS_INACT	= 0x06,
+	SUNXI_LINK_STATE_POLL		= 0x07,
+	SUNXI_LINK_STATE_RECOV		= 0x08,
+	SUNXI_LINK_STATE_HRESET		= 0x09,
+	SUNXI_LINK_STATE_CMPLY		= 0x0a,
+	SUNXI_LINK_STATE_LPBK		= 0x0b,
+	SUNXI_LINK_STATE_MASK		= 0x0f,
 };
 
 enum sunxi_device_state {
-  SUNXI_DEFAULT_STATE,
-  SUNXI_ADDRESS_STATE,
-  SUNXI_CONFIGURED_STATE,
+	SUNXI_DEFAULT_STATE,
+	SUNXI_ADDRESS_STATE,
+	SUNXI_CONFIGURED_STATE,
 };
 
 struct sunxi_otgc_trb {
-  u32   bpl;
-  u32   bph;
-  u32   size;
-  u32   ctrl;
+	u32		bpl;
+	u32		bph;
+	u32		size;
+	u32		ctrl;
 } __packed;
 
 /**
@@ -180,47 +180,47 @@ struct sunxi_otgc_trb {
  * @hwparams8 - GHWPARAMS8
  */
 struct sunxi_otgc_hwparams {
-  u32 hwparams0;
-  u32 hwparams1;
-  u32 hwparams2;
-  u32 hwparams3;
-  u32 hwparams4;
-  u32 hwparams5;
-  u32 hwparams6;
-  u32 hwparams7;
-  u32 hwparams8;
+	u32	hwparams0;
+	u32	hwparams1;
+	u32	hwparams2;
+	u32	hwparams3;
+	u32	hwparams4;
+	u32	hwparams5;
+	u32	hwparams6;
+	u32	hwparams7;
+	u32	hwparams8;
 };
 
 struct sunxi_otgc_request {
-  struct usb_request  request;
-  struct list_head  list;
-  struct sunxi_otgc_ep  *  dep;
-  
-  u8      epnum;
-  struct sunxi_otgc_trb  * trb;
-  dma_addr_t    trb_dma;
-  
-  unsigned    direction: 1;
-  unsigned    mapped: 1;
-  unsigned    queued: 1;
+	struct usb_request	request;
+	struct list_head	list;
+	struct sunxi_otgc_ep		*dep;
+
+	u8			epnum;
+	struct sunxi_otgc_trb		*trb;
+	dma_addr_t		trb_dma;
+
+	unsigned		direction:1;
+	unsigned		mapped:1;
+	unsigned		queued:1;
 };
 
 /* pio info */
-typedef struct usb_gpio {
-  __u32 valid;        /* pio valid, 1 - valid, 0 - invalid */
-  script_item_u gpio_set;
-} usb_gpio_t;
+typedef struct usb_gpio{
+	__u32 valid;				/* pio valid, 1 - valid, 0 - invalid */
+	script_item_u gpio_set;
+}usb_gpio_t;
 
 struct sunxi_otgc_port_ctl {
-  struct clk * otg_clk;
-  struct clk * otg_phyclk;
-  
-  usb_gpio_t drv_vbus;      /* usb drv_vbus pin info  */
-  
-  char * regulator_io;
-  int   regulator_value;
-  struct regulator * regulator_io_hdle;
-  
+	struct clk	*otg_clk;
+	struct clk	*otg_phyclk;
+
+	usb_gpio_t drv_vbus;			/* usb drv_vbus pin info	*/
+
+	char* regulator_io;
+	int   regulator_value;
+	struct regulator* regulator_io_hdle;
+
 };
 
 /**
@@ -264,64 +264,64 @@ struct sunxi_otgc_port_ctl {
  * @root: debugfs root folder pointer
  */
 struct sunxi_otgc {
-  struct usb_ctrlrequest * ctrl_req;
-  struct sunxi_otgc_trb  * ep0_trb;
-  void   *   ep0_bounce;
-  u8   *   setup_buf;
-  dma_addr_t    ctrl_req_addr;
-  dma_addr_t    ep0_trb_addr;
-  dma_addr_t    ep0_bounce_addr;
-  struct sunxi_otgc_request ep0_usb_req;
-  /* device lock */
-  spinlock_t    lock;
-  struct device  * dev;
-  
-  struct platform_device * xhci;
-  struct resource  * res;
-  
-  struct sunxi_otgc_event_buffer ** ev_buffs;
-  struct sunxi_otgc_ep  *  eps[SUNXI_ENDPOINTS_NUM];
-  
-  struct usb_gadget gadget;
-  struct usb_gadget_driver * gadget_driver;
-  
-  void __iomem  *  regs;
-  size_t      regs_size;
-  
-  int     irq;
-  
-  u32     num_event_buffers;
-  u32     u1u2;
-  u32     maximum_speed;
-  u32     revision;
-  u32     mode;
-  /* used for suspend/resume */
-  u32     dcfg;
-  u32     gctl;
-  unsigned    is_selfpowered: 1;
-  unsigned    three_stage_setup: 1;
-  unsigned    ep0_bounced: 1;
-  unsigned    ep0_expect_in: 1;
-  unsigned    start_config_issued: 1;
-  unsigned    setup_packet_pending: 1;
-  unsigned    delayed_status: 1;
-  unsigned    needs_fifo_resize: 1;
-  unsigned    resize_fifos: 1;
-  
-  enum sunxi_ep0_next ep0_next_event;
-  enum sunxi_ep0_state  ep0state;
-  enum sunxi_link_state link_state;
-  enum sunxi_device_state dev_state;
-  
-  u8      speed;
-  void   *   mem;
-  
-  struct sunxi_otgc_hwparams  hwparams;
-  struct dentry  * root;
-  
-  u8      test_mode;
-  u8      test_mode_nr;
-  struct sunxi_otgc_port_ctl port_ctl;
+	struct usb_ctrlrequest	*ctrl_req;
+	struct sunxi_otgc_trb		*ep0_trb;
+	void			*ep0_bounce;
+	u8			*setup_buf;
+	dma_addr_t		ctrl_req_addr;
+	dma_addr_t		ep0_trb_addr;
+	dma_addr_t		ep0_bounce_addr;
+	struct sunxi_otgc_request	ep0_usb_req;
+	/* device lock */
+	spinlock_t		lock;
+	struct device		*dev;
+
+	struct platform_device	*xhci;
+	struct resource		*res;
+
+	struct sunxi_otgc_event_buffer **ev_buffs;
+	struct sunxi_otgc_ep		*eps[SUNXI_ENDPOINTS_NUM];
+
+	struct usb_gadget	gadget;
+	struct usb_gadget_driver *gadget_driver;
+
+	void __iomem		*regs;
+	size_t			regs_size;
+
+	int			irq;
+
+	u32			num_event_buffers;
+	u32			u1u2;
+	u32			maximum_speed;
+	u32			revision;
+	u32			mode;
+	/* used for suspend/resume */
+	u32			dcfg;
+	u32			gctl;
+	unsigned		is_selfpowered:1;
+	unsigned		three_stage_setup:1;
+	unsigned		ep0_bounced:1;
+	unsigned		ep0_expect_in:1;
+	unsigned		start_config_issued:1;
+	unsigned		setup_packet_pending:1;
+	unsigned		delayed_status:1;
+	unsigned		needs_fifo_resize:1;
+	unsigned		resize_fifos:1;
+
+	enum sunxi_ep0_next	ep0_next_event;
+	enum sunxi_ep0_state	ep0state;
+	enum sunxi_link_state	link_state;
+	enum sunxi_device_state	dev_state;
+
+	u8			speed;
+	void			*mem;
+
+	struct sunxi_otgc_hwparams	hwparams;
+	struct dentry		*root;
+
+	u8			test_mode;
+	u8			test_mode_nr;
+	struct sunxi_otgc_port_ctl port_ctl;
 };
 
 /* -------------------------------------------------------------------------- */
@@ -329,9 +329,9 @@ struct sunxi_otgc {
 /* -------------------------------------------------------------------------- */
 
 struct sunxi_otgc_event_type {
-  u32 is_devspec: 1;
-  u32 type: 6;
-  u32 reserved8_31: 25;
+	u32	is_devspec:1;
+	u32	type:6;
+	u32	reserved8_31:25;
 } __packed;
 
 
@@ -340,46 +340,46 @@ struct sunxi_otgc_event_type {
  * @one_bit: indicates this is an endpoint event (not used)
  * @endpoint_number: number of the endpoint
  * @endpoint_event: The event we have:
- *  0x00  - Reserved
- *  0x01  - XferComplete
- *  0x02  - XferInProgress
- *  0x03  - XferNotReady
- *  0x04  - RxTxFifoEvt (IN->Underrun, OUT->Overrun)
- *  0x05  - Reserved
- *  0x06  - StreamEvt
- *  0x07  - EPCmdCmplt
+ *	0x00	- Reserved
+ *	0x01	- XferComplete
+ *	0x02	- XferInProgress
+ *	0x03	- XferNotReady
+ *	0x04	- RxTxFifoEvt (IN->Underrun, OUT->Overrun)
+ *	0x05	- Reserved
+ *	0x06	- StreamEvt
+ *	0x07	- EPCmdCmplt
  * @reserved11_10: Reserved, don't use.
  * @status: Indicates the status of the event. Refer to databook for
- *  more information.
+ *	more information.
  * @parameters: Parameters of the current event. Refer to databook for
- *  more information.
+ *	more information.
  */
 struct sunxi_otgc_event_depevt {
-  u32 one_bit: 1;
-  u32 endpoint_number: 5;
-  u32 endpoint_event: 4;
-  u32 reserved11_10: 2;
-  u32 status: 4;
-  
-  /* Within XferNotReady */
-#define DEPEVT_STATUS_TRANSFER_ACTIVE (1 << 3)
-  
-  /* Within XferComplete */
-#define DEPEVT_STATUS_BUSERR  (1 << 0)
-#define DEPEVT_STATUS_SHORT (1 << 1)
-#define DEPEVT_STATUS_IOC (1 << 2)
-#define DEPEVT_STATUS_LST (1 << 3)
-  
-  /* Stream event only */
-#define DEPEVT_STREAMEVT_FOUND    1
-#define DEPEVT_STREAMEVT_NOTFOUND 2
-  
-  /* Control-only Status */
-#define DEPEVT_STATUS_CONTROL_SETUP 0
-#define DEPEVT_STATUS_CONTROL_DATA  1
-#define DEPEVT_STATUS_CONTROL_STATUS  2
-  
-  u32 parameters: 16;
+	u32	one_bit:1;
+	u32	endpoint_number:5;
+	u32	endpoint_event:4;
+	u32	reserved11_10:2;
+	u32	status:4;
+
+/* Within XferNotReady */
+#define DEPEVT_STATUS_TRANSFER_ACTIVE	(1 << 3)
+
+/* Within XferComplete */
+#define DEPEVT_STATUS_BUSERR	(1 << 0)
+#define DEPEVT_STATUS_SHORT	(1 << 1)
+#define DEPEVT_STATUS_IOC	(1 << 2)
+#define DEPEVT_STATUS_LST	(1 << 3)
+
+/* Stream event only */
+#define DEPEVT_STREAMEVT_FOUND		1
+#define DEPEVT_STREAMEVT_NOTFOUND	2
+
+/* Control-only Status */
+#define DEPEVT_STATUS_CONTROL_SETUP	0
+#define DEPEVT_STATUS_CONTROL_DATA	1
+#define DEPEVT_STATUS_CONTROL_STATUS	2
+
+	u32	parameters:16;
 } __packed;
 
 /**
@@ -387,30 +387,30 @@ struct sunxi_otgc_event_depevt {
  * @one_bit: indicates this is a non-endpoint event (not used)
  * @device_event: indicates it's a device event. Should read as 0x00
  * @type: indicates the type of device event.
- *  0 - DisconnEvt
- *  1 - USBRst
- *  2 - ConnectDone
- *  3 - ULStChng
- *  4 - WkUpEvt
- *  5 - Reserved
- *  6 - EOPF
- *  7 - SOF
- *  8 - Reserved
- *  9 - ErrticErr
- *  10  - CmdCmplt
- *  11  - EvntOverflow
- *  12  - VndrDevTstRcved
+ *	0	- DisconnEvt
+ *	1	- USBRst
+ *	2	- ConnectDone
+ *	3	- ULStChng
+ *	4	- WkUpEvt
+ *	5	- Reserved
+ *	6	- EOPF
+ *	7	- SOF
+ *	8	- Reserved
+ *	9	- ErrticErr
+ *	10	- CmdCmplt
+ *	11	- EvntOverflow
+ *	12	- VndrDevTstRcved
  * @reserved15_12: Reserved, not used
  * @event_info: Information about this event
  * @reserved31_24: Reserved, not used
  */
 struct sunxi_otgc_event_devt {
-  u32 one_bit: 1;
-  u32 device_event: 7;
-  u32 type: 4;
-  u32 reserved15_12: 4;
-  u32 event_info: 8;
-  u32 reserved31_24: 8;
+	u32	one_bit:1;
+	u32	device_event:7;
+	u32	type:4;
+	u32	reserved15_12:4;
+	u32	event_info:8;
+	u32	reserved31_24:8;
 } __packed;
 
 /**
@@ -421,10 +421,10 @@ struct sunxi_otgc_event_devt {
  * @reserved31_12: Reserved, not used.
  */
 struct sunxi_otgc_event_gevt {
-  u32 one_bit: 1;
-  u32 device_event: 7;
-  u32 phy_port_number: 4;
-  u32 reserved31_12: 20;
+	u32	one_bit:1;
+	u32	device_event:7;
+	u32	phy_port_number:4;
+	u32	reserved31_12:20;
 } __packed;
 
 /**
@@ -436,41 +436,41 @@ struct sunxi_otgc_event_gevt {
  * @gevt: Global Event
  */
 union sunxi_event {
-  u32       raw;
-  struct sunxi_otgc_event_type    type;
-  struct sunxi_otgc_event_depevt  depevt;
-  struct sunxi_otgc_event_devt    devt;
-  struct sunxi_otgc_event_gevt    gevt;
+	u32				raw;
+	struct sunxi_otgc_event_type		type;
+	struct sunxi_otgc_event_depevt	depevt;
+	struct sunxi_otgc_event_devt		devt;
+	struct sunxi_otgc_event_gevt		gevt;
 };
 
 
 /* prototypes */
-void sunxi_set_mode (struct sunxi_otgc * otgc, u32 mode);
-int sunxi_gadget_resize_tx_fifos (struct sunxi_otgc * otgc);
+void sunxi_set_mode(struct sunxi_otgc *otgc, u32 mode);
+int sunxi_gadget_resize_tx_fifos(struct sunxi_otgc *otgc);
 
-int sunxi_host_init (struct sunxi_otgc * otgc);
-void sunxi_host_exit (struct sunxi_otgc * otgc);
+int sunxi_host_init(struct sunxi_otgc *otgc);
+void sunxi_host_exit(struct sunxi_otgc *otgc);
 
-int sunxi_gadget_init (struct sunxi_otgc * otgc);
-void sunxi_gadget_exit (struct sunxi_otgc * otgc);
+int sunxi_gadget_init(struct sunxi_otgc *otgc);
+void sunxi_gadget_exit(struct sunxi_otgc *otgc);
 
-extern int sunxi_get_device_id (void);
-extern void sunxi_put_device_id (int id);
+extern int sunxi_get_device_id(void);
+extern void sunxi_put_device_id(int id);
 
-int sunxi_usb_device_enable (void);
-int sunxi_usb_device_disable (void);
-int sunxi_usb_host0_enable (void);
-int sunxi_usb_host0_disable (void);
+int sunxi_usb_device_enable(void);
+int sunxi_usb_device_disable(void);
+int sunxi_usb_host0_enable(void);
+int sunxi_usb_host0_disable(void);
 #ifdef CONFIG_USB_XHCI_ENHANCE
-int sunxi_usb_get_udev_connect (void);
-int switch_to_usb2 (void);
-int switch_to_usb3 (void);
-void sunxi_usb3_connect (void);
-void sunxi_usb3_disconnect (void);
+int sunxi_usb_get_udev_connect(void);
+int switch_to_usb2(void);
+int switch_to_usb3(void);
+void sunxi_usb3_connect(void);
+void sunxi_usb3_disconnect(void);
 #endif
-int sunxi_gadget_suspend (struct sunxi_otgc * otgc);
-int sunxi_gadget_resume (struct sunxi_otgc * otgc);
-int sunxi_gadget_enable (struct sunxi_otgc * otgc);
-int sunxi_gadget_disable (struct sunxi_otgc * otgc);
+int sunxi_gadget_suspend(struct sunxi_otgc *otgc);
+int sunxi_gadget_resume(struct sunxi_otgc *otgc);
+int sunxi_gadget_enable(struct sunxi_otgc *otgc);
+int sunxi_gadget_disable(struct sunxi_otgc *otgc);
 
 #endif /* __DRIVERS_USB_SUNXI_CORE_H */

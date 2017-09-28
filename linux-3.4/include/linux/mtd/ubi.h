@@ -33,9 +33,9 @@
  * UBI_EXCLUSIVE: exclusive mode
  */
 enum {
-  UBI_READONLY = 1,
-  UBI_READWRITE,
-  UBI_EXCLUSIVE
+	UBI_READONLY = 1,
+	UBI_READWRITE,
+	UBI_EXCLUSIVE
 };
 
 /**
@@ -87,7 +87,7 @@ enum {
  * physical eraseblock size and on how much bytes UBI headers consume. But
  * because of the volume alignment (@alignment), the usable size of logical
  * eraseblocks if a volume may be less. The following equation is true:
- *  @usable_leb_size = LEB size - (LEB size mod @alignment),
+ *	@usable_leb_size = LEB size - (LEB size mod @alignment),
  * where LEB size is the logical eraseblock size defined by the UBI device.
  *
  * The alignment is multiple to the minimal flash input/output unit size or %1
@@ -97,19 +97,19 @@ enum {
  * volume logical eraseblock sizes.
  */
 struct ubi_volume_info {
-  int ubi_num;
-  int vol_id;
-  int size;
-  long long used_bytes;
-  int used_ebs;
-  int vol_type;
-  int corrupted;
-  int upd_marker;
-  int alignment;
-  int usable_leb_size;
-  int name_len;
-  const char * name;
-  dev_t cdev;
+	int ubi_num;
+	int vol_id;
+	int size;
+	long long used_bytes;
+	int used_ebs;
+	int vol_type;
+	int corrupted;
+	int upd_marker;
+	int alignment;
+	int usable_leb_size;
+	int name_len;
+	const char *name;
+	dev_t cdev;
 };
 
 /**
@@ -145,13 +145,13 @@ struct ubi_volume_info {
  * page size.
  */
 struct ubi_device_info {
-  int ubi_num;
-  int leb_size;
-  int leb_start;
-  int min_io_size;
-  int max_write_size;
-  int ro_mode;
-  dev_t cdev;
+	int ubi_num;
+	int leb_size;
+	int leb_start;
+	int min_io_size;
+	int max_write_size;
+	int ro_mode;
+	dev_t cdev;
 };
 
 /*
@@ -159,7 +159,7 @@ struct ubi_device_info {
  * @UBI_VOLUME_ADDED: a volume has been added (an UBI device was attached or a
  *                    volume was created)
  * @UBI_VOLUME_REMOVED: a volume has been removed (an UBI device was detached
- *      or a volume was removed)
+ *			or a volume was removed)
  * @UBI_VOLUME_RESIZED: a volume has been re-sized
  * @UBI_VOLUME_RENAMED: a volume has been re-named
  * @UBI_VOLUME_UPDATED: data has been written to a volume
@@ -168,11 +168,11 @@ struct ubi_device_info {
  * notification function is invoked.
  */
 enum {
-  UBI_VOLUME_ADDED,
-  UBI_VOLUME_REMOVED,
-  UBI_VOLUME_RESIZED,
-  UBI_VOLUME_RENAMED,
-  UBI_VOLUME_UPDATED,
+	UBI_VOLUME_ADDED,
+	UBI_VOLUME_REMOVED,
+	UBI_VOLUME_RESIZED,
+	UBI_VOLUME_RENAMED,
+	UBI_VOLUME_UPDATED,
 };
 
 /*
@@ -185,66 +185,66 @@ enum {
  * UBI device and UBI volume the notification informs about.
  */
 struct ubi_notification {
-  struct ubi_device_info di;
-  struct ubi_volume_info vi;
+	struct ubi_device_info di;
+	struct ubi_volume_info vi;
 };
 
 /* UBI descriptor given to users when they open UBI volumes */
 struct ubi_volume_desc;
 
-int ubi_get_device_info (int ubi_num, struct ubi_device_info * di);
-void ubi_get_volume_info (struct ubi_volume_desc * desc,
-                          struct ubi_volume_info * vi);
-struct ubi_volume_desc * ubi_open_volume (int ubi_num, int vol_id, int mode);
-struct ubi_volume_desc * ubi_open_volume_nm (int ubi_num, const char * name,
-    int mode);
-struct ubi_volume_desc * ubi_open_volume_path (const char * pathname, int mode);
+int ubi_get_device_info(int ubi_num, struct ubi_device_info *di);
+void ubi_get_volume_info(struct ubi_volume_desc *desc,
+			 struct ubi_volume_info *vi);
+struct ubi_volume_desc *ubi_open_volume(int ubi_num, int vol_id, int mode);
+struct ubi_volume_desc *ubi_open_volume_nm(int ubi_num, const char *name,
+					   int mode);
+struct ubi_volume_desc *ubi_open_volume_path(const char *pathname, int mode);
 
-int ubi_register_volume_notifier (struct notifier_block * nb,
-                                  int ignore_existing);
-int ubi_unregister_volume_notifier (struct notifier_block * nb);
+int ubi_register_volume_notifier(struct notifier_block *nb,
+				 int ignore_existing);
+int ubi_unregister_volume_notifier(struct notifier_block *nb);
 
-void ubi_close_volume (struct ubi_volume_desc * desc);
-int ubi_leb_read (struct ubi_volume_desc * desc, int lnum, char * buf, int offset,
-                  int len, int check);
-int ubi_leb_write (struct ubi_volume_desc * desc, int lnum, const void * buf,
-                   int offset, int len, int dtype);
-int ubi_leb_change (struct ubi_volume_desc * desc, int lnum, const void * buf,
-                    int len, int dtype);
-int ubi_leb_erase (struct ubi_volume_desc * desc, int lnum);
-int ubi_leb_unmap (struct ubi_volume_desc * desc, int lnum);
-int ubi_leb_map (struct ubi_volume_desc * desc, int lnum, int dtype);
-int ubi_is_mapped (struct ubi_volume_desc * desc, int lnum);
-int ubi_sync (int ubi_num);
+void ubi_close_volume(struct ubi_volume_desc *desc);
+int ubi_leb_read(struct ubi_volume_desc *desc, int lnum, char *buf, int offset,
+		 int len, int check);
+int ubi_leb_write(struct ubi_volume_desc *desc, int lnum, const void *buf,
+		  int offset, int len, int dtype);
+int ubi_leb_change(struct ubi_volume_desc *desc, int lnum, const void *buf,
+		   int len, int dtype);
+int ubi_leb_erase(struct ubi_volume_desc *desc, int lnum);
+int ubi_leb_unmap(struct ubi_volume_desc *desc, int lnum);
+int ubi_leb_map(struct ubi_volume_desc *desc, int lnum, int dtype);
+int ubi_is_mapped(struct ubi_volume_desc *desc, int lnum);
+int ubi_sync(int ubi_num);
 
 /*
  * This function is the same as the 'ubi_leb_read()' function, but it does not
  * provide the checking capability.
  */
-static inline int ubi_read (struct ubi_volume_desc * desc, int lnum, char * buf,
-                            int offset, int len)
+static inline int ubi_read(struct ubi_volume_desc *desc, int lnum, char *buf,
+			   int offset, int len)
 {
-  return ubi_leb_read (desc, lnum, buf, offset, len, 0);
+	return ubi_leb_read(desc, lnum, buf, offset, len, 0);
 }
 
 /*
  * This function is the same as the 'ubi_leb_write()' functions, but it does
  * not have the data type argument.
  */
-static inline int ubi_write (struct ubi_volume_desc * desc, int lnum,
-                             const void * buf, int offset, int len)
+static inline int ubi_write(struct ubi_volume_desc *desc, int lnum,
+			    const void *buf, int offset, int len)
 {
-  return ubi_leb_write (desc, lnum, buf, offset, len, UBI_UNKNOWN);
+	return ubi_leb_write(desc, lnum, buf, offset, len, UBI_UNKNOWN);
 }
 
 /*
  * This function is the same as the 'ubi_leb_change()' functions, but it does
  * not have the data type argument.
  */
-static inline int ubi_change (struct ubi_volume_desc * desc, int lnum,
-                              const void * buf, int len)
+static inline int ubi_change(struct ubi_volume_desc *desc, int lnum,
+				    const void *buf, int len)
 {
-  return ubi_leb_change (desc, lnum, buf, len, UBI_UNKNOWN);
+	return ubi_leb_change(desc, lnum, buf, len, UBI_UNKNOWN);
 }
 
 #endif /* !__LINUX_UBI_H__ */

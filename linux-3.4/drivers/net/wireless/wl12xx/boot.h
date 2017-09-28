@@ -26,19 +26,19 @@
 
 #include "wl12xx.h"
 
-int wl1271_boot (struct wl1271 * wl);
-int wl1271_load_firmware (struct wl1271 * wl);
+int wl1271_boot(struct wl1271 *wl);
+int wl1271_load_firmware(struct wl1271 *wl);
 
 #define WL1271_NO_SUBBANDS 8
 #define WL1271_NO_POWER_LEVELS 4
 #define WL1271_FW_VERSION_MAX_LEN 20
 
 struct wl1271_static_data {
-  u8 mac_address[ETH_ALEN];
-  u8 padding[2];
-  u8 fw_version[WL1271_FW_VERSION_MAX_LEN];
-  u32 hw_version;
-  u8 tx_power_table[WL1271_NO_SUBBANDS][WL1271_NO_POWER_LEVELS];
+	u8 mac_address[ETH_ALEN];
+	u8 padding[2];
+	u8 fw_version[WL1271_FW_VERSION_MAX_LEN];
+	u32 hw_version;
+	u8 tx_power_table[WL1271_NO_SUBBANDS][WL1271_NO_POWER_LEVELS];
 };
 
 /* number of times we try to read the INIT interrupt */
@@ -109,10 +109,10 @@ struct wl1271_static_data {
 
 /* SDIO/wSPI DS configuration values */
 enum {
-  HCI_IO_DS_8MA = 0,
-  HCI_IO_DS_4MA = 1, /* default */
-  HCI_IO_DS_6MA = 2,
-  HCI_IO_DS_2MA = 3,
+	HCI_IO_DS_8MA = 0,
+	HCI_IO_DS_4MA = 1, /* default */
+	HCI_IO_DS_6MA = 2,
+	HCI_IO_DS_2MA = 3,
 };
 
 /* end PLL configuration algorithm for wl128x */

@@ -4,11 +4,11 @@
 
 /* Grossly misnamed. */
 enum die_val {
-  DIE_OOPS = 1,
-  DIE_IABR_MATCH,
-  DIE_DABR_MATCH,
-  DIE_BPT,
-  DIE_SSTEP,
+	DIE_OOPS = 1,
+	DIE_IABR_MATCH,
+	DIE_DABR_MATCH,
+	DIE_BPT,
+	DIE_SSTEP,
 };
 
 #endif /* __KERNEL__ */

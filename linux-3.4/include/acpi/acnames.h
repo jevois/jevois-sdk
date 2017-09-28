@@ -73,12 +73,12 @@
 
 /* Definitions of the predefined namespace names  */
 
-#define ACPI_UNKNOWN_NAME       (u32) 0x3F3F3F3F  /* Unknown name is "????" */
-#define ACPI_ROOT_NAME          (u32) 0x5F5F5F5C  /* Root name is    "\___" */
+#define ACPI_UNKNOWN_NAME       (u32) 0x3F3F3F3F	/* Unknown name is "????" */
+#define ACPI_ROOT_NAME          (u32) 0x5F5F5F5C	/* Root name is    "\___" */
 
-#define ACPI_PREFIX_MIXED       (u32) 0x69706341  /* "Acpi" */
-#define ACPI_PREFIX_LOWER       (u32) 0x69706361  /* "acpi" */
+#define ACPI_PREFIX_MIXED       (u32) 0x69706341	/* "Acpi" */
+#define ACPI_PREFIX_LOWER       (u32) 0x69706361	/* "acpi" */
 
 #define ACPI_NS_ROOT_PATH       "\\"
 
-#endif        /* __ACNAMES_H__  */
+#endif				/* __ACNAMES_H__  */

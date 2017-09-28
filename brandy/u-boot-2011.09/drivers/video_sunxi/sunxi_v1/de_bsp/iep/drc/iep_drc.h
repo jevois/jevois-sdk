@@ -35,53 +35,53 @@
 typedef struct
 {
   __u32       mod;
-  
-  __u32       drc_win_en;
-  __disp_rect_t   drc_win;
-  __u32           adjust_en;
-  __u32           lgc_autoload_dis;
-  __u32           waitframe;
-  __u32           runframe;
-  __u32           scn_width;
-  __u32           scn_height;
-  __u32           video_mode_en;
-  
-  __u32           lgc_base_add;
-  __u8            lh_thres_val[7];
-  
-  __u32           deflicker_win_en;
-  __disp_rect_t   deflicker_win;
-} __drc_t;
+
+	__u32       drc_win_en;
+	__disp_rect_t   drc_win;
+	__u32           adjust_en;
+	__u32           lgc_autoload_dis;
+	__u32           waitframe;
+	__u32           runframe;
+	__u32           scn_width;
+	__u32           scn_height;
+	__u32           video_mode_en;
+
+	__u32           lgc_base_add;
+	__u8            lh_thres_val[7];
+
+	__u32           deflicker_win_en;
+	__disp_rect_t   deflicker_win;
+}__drc_t;
 
 typedef struct
 {
-  __u8      min_adj_index_hist[IEP_LH_PWRSV_NUM];
-  __u32           user_bl;
-} __drc_pwrsv_t;
+	__u8      min_adj_index_hist[IEP_LH_PWRSV_NUM];
+	__u32           user_bl;
+}__drc_pwrsv_t;
 
 
-__s32 drc_clk_init (__u32 sel);
-__s32 drc_clk_exit (__u32 sel);
-__s32 drc_clk_open (__u32 sel, __u32 type);
-__s32 drc_clk_close (__u32 sel, __u32 type);
-__s32 drc_enable (__u32 sel, __u32 en);
-__s32 drc_init (__u32 sel);
-__s32 drc_proc (__u32 sel);
-__s32 drc_close_proc (__u32 sel);
+__s32 drc_clk_init(__u32 sel);
+__s32 drc_clk_exit(__u32 sel);
+__s32 drc_clk_open(__u32 sel, __u32 type);
+__s32 drc_clk_close(__u32 sel, __u32 type);
+__s32 drc_enable(__u32 sel, __u32 en);
+__s32 drc_init(__u32 sel);
+__s32 drc_proc(__u32 sel);
+__s32 drc_close_proc(__u32 sel);
 
-__s32 IEP_Drc_Init (__u32 sel);
-__s32 IEP_Drc_Exit (__u32 sel);
-__s32 IEP_Drc_Enable (__u32 sel, __u32 en);
-__s32 IEP_Drc_Operation_In_Vblanking (__u32 sel);
-__s32 IEP_Drc_Set_Reg_Base (__u32 sel, __u32 base);
-__s32 IEP_Drc_Get_Reg_Base (__u32 sel);
-__s32 IEP_Drc_Set_Winodw (__u32 sel, __disp_rect_t window);
-__s32 IEP_Drc_Set_Mode (__u32 sel, __iep_drc_mode_t mode);
-__s32 iep_drc_early_suspend (__u32 sel);
-__s32 iep_drc_suspend (__u32 sel);
+__s32 IEP_Drc_Init(__u32 sel);
+__s32 IEP_Drc_Exit(__u32 sel);
+__s32 IEP_Drc_Enable(__u32 sel, __u32 en);
+__s32 IEP_Drc_Operation_In_Vblanking(__u32 sel);
+__s32 IEP_Drc_Set_Reg_Base(__u32 sel, __u32 base);
+__s32 IEP_Drc_Get_Reg_Base(__u32 sel);
+__s32 IEP_Drc_Set_Winodw(__u32 sel, __disp_rect_t window);//full screen for default
+__s32 IEP_Drc_Set_Mode(__u32 sel, __iep_drc_mode_t mode);
+__s32 iep_drc_early_suspend(__u32 sel);//close clk
+__s32 iep_drc_suspend(__u32 sel);//save register
 __s32 iep_drc_resume (__u32 sel);//restore register
-__s32 iep_drc_late_resume (__u32 sel);
-__s32 IEP_Drc_Set_Imgsize (__u32 sel, __u32 width, __u32 height);
+__s32 iep_drc_late_resume(__u32 sel);//open clk
+__s32 IEP_Drc_Set_Imgsize(__u32 sel, __u32 width, __u32 height);
 
 
 #endif

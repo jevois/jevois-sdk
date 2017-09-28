@@ -1,9 +1,9 @@
 /**
  * Copyright (C) 2012 ARM Limited. All rights reserved.
- *
+ * 
  * This program is free software and is provided to you under the terms of the GNU General Public License version 2
  * as published by the Free Software Foundation, and any use by you of this program is subject to the terms of such GNU licence.
- *
+ * 
  * A copy of the licence is included with the program, and can also be obtained from Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
@@ -25,14 +25,14 @@ extern "C"
  * @param setting the setting to be changed
  * @param value the new value to set
  */
-void mali_set_user_setting (_mali_uk_user_setting_t setting, u32 value);
+void mali_set_user_setting(_mali_uk_user_setting_t setting, u32 value);
 
 /** @brief Get current Mali user setting value from DB
  *
  * @param setting the setting to extract
  * @return the value of the selected setting
  */
-u32 mali_get_user_setting (_mali_uk_user_setting_t setting);
+u32 mali_get_user_setting(_mali_uk_user_setting_t setting);
 
 #ifdef __cplusplus
 }

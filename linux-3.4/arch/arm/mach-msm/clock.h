@@ -21,39 +21,39 @@
 #include <linux/list.h>
 #include <mach/clk.h>
 
-#define CLKFLAG_INVERT      0x00000001
-#define CLKFLAG_NOINVERT    0x00000002
-#define CLKFLAG_NONEST      0x00000004
-#define CLKFLAG_NORESET     0x00000008
+#define CLKFLAG_INVERT			0x00000001
+#define CLKFLAG_NOINVERT		0x00000002
+#define CLKFLAG_NONEST			0x00000004
+#define CLKFLAG_NORESET			0x00000008
 
-#define CLK_FIRST_AVAILABLE_FLAG  0x00000100
-#define CLKFLAG_AUTO_OFF    0x00000200
-#define CLKFLAG_MIN     0x00000400
-#define CLKFLAG_MAX     0x00000800
+#define CLK_FIRST_AVAILABLE_FLAG	0x00000100
+#define CLKFLAG_AUTO_OFF		0x00000200
+#define CLKFLAG_MIN			0x00000400
+#define CLKFLAG_MAX			0x00000800
 
 struct clk_ops {
-  int (*enable) (unsigned id);
-  void (*disable) (unsigned id);
-  void (*auto_off) (unsigned id);
-  int (*reset) (unsigned id, enum clk_reset_action action);
-  int (*set_rate) (unsigned id, unsigned rate);
-  int (*set_min_rate) (unsigned id, unsigned rate);
-  int (*set_max_rate) (unsigned id, unsigned rate);
-  int (*set_flags) (unsigned id, unsigned flags);
-  unsigned (*get_rate) (unsigned id);
-  unsigned (*is_enabled) (unsigned id);
-  long (*round_rate) (unsigned id, unsigned rate);
-  bool (*is_local) (unsigned id);
+	int (*enable)(unsigned id);
+	void (*disable)(unsigned id);
+	void (*auto_off)(unsigned id);
+	int (*reset)(unsigned id, enum clk_reset_action action);
+	int (*set_rate)(unsigned id, unsigned rate);
+	int (*set_min_rate)(unsigned id, unsigned rate);
+	int (*set_max_rate)(unsigned id, unsigned rate);
+	int (*set_flags)(unsigned id, unsigned flags);
+	unsigned (*get_rate)(unsigned id);
+	unsigned (*is_enabled)(unsigned id);
+	long (*round_rate)(unsigned id, unsigned rate);
+	bool (*is_local)(unsigned id);
 };
 
 struct clk {
-  uint32_t id;
-  uint32_t remote_id;
-  uint32_t count;
-  uint32_t flags;
-  struct clk_ops * ops;
-  const char * dbg_name;
-  struct list_head list;
+	uint32_t id;
+	uint32_t remote_id;
+	uint32_t count;
+	uint32_t flags;
+	struct clk_ops *ops;
+	const char *dbg_name;
+	struct list_head list;
 };
 
 #define OFF CLKFLAG_AUTO_OFF
@@ -62,11 +62,11 @@ struct clk {
 #define CLK_MINMAX (CLK_MIN | CLK_MAX)
 
 #ifdef CONFIG_DEBUG_FS
-int __init clock_debug_init (void);
-int __init clock_debug_add (struct clk * clock);
+int __init clock_debug_init(void);
+int __init clock_debug_add(struct clk *clock);
 #else
-static inline int __init clock_debug_init (void) { return 0; }
-static inline int __init clock_debug_add (struct clk * clock) { return 0; }
+static inline int __init clock_debug_init(void) { return 0; }
+static inline int __init clock_debug_add(struct clk *clock) { return 0; }
 #endif
 
 #endif

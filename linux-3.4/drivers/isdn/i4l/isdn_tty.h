@@ -79,42 +79,42 @@
 #define BIT_CDN       4
 
 /* defines for result codes */
-#define RESULT_OK   0
-#define RESULT_CONNECT    1
-#define RESULT_RING   2
-#define RESULT_NO_CARRIER 3
-#define RESULT_ERROR    4
-#define RESULT_CONNECT64000 5
-#define RESULT_NO_DIALTONE  6
-#define RESULT_BUSY   7
-#define RESULT_NO_ANSWER  8
-#define RESULT_RINGING    9
-#define RESULT_NO_MSN_EAZ 10
-#define RESULT_VCON   11
-#define RESULT_RUNG   12
+#define RESULT_OK		0
+#define RESULT_CONNECT		1
+#define RESULT_RING		2
+#define RESULT_NO_CARRIER	3
+#define RESULT_ERROR		4
+#define RESULT_CONNECT64000	5
+#define RESULT_NO_DIALTONE	6
+#define RESULT_BUSY		7
+#define RESULT_NO_ANSWER	8
+#define RESULT_RINGING		9
+#define RESULT_NO_MSN_EAZ	10
+#define RESULT_VCON		11
+#define RESULT_RUNG		12
 
-#define TTY_IS_FCLASS1(info)            \
-  ((info->emu.mdmreg[REG_L2PROT] == ISDN_PROTO_L2_FAX) &&   \
-   (info->emu.mdmreg[REG_L3PROT] == ISDN_PROTO_L3_FCLASS1))
-#define TTY_IS_FCLASS2(info)            \
-  ((info->emu.mdmreg[REG_L2PROT] == ISDN_PROTO_L2_FAX) &&   \
-   (info->emu.mdmreg[REG_L3PROT] == ISDN_PROTO_L3_FCLASS2))
+#define TTY_IS_FCLASS1(info)						\
+	((info->emu.mdmreg[REG_L2PROT] == ISDN_PROTO_L2_FAX) &&		\
+	 (info->emu.mdmreg[REG_L3PROT] == ISDN_PROTO_L3_FCLASS1))
+#define TTY_IS_FCLASS2(info)						\
+	((info->emu.mdmreg[REG_L2PROT] == ISDN_PROTO_L2_FAX) &&		\
+	 (info->emu.mdmreg[REG_L3PROT] == ISDN_PROTO_L3_FCLASS2))
 
-extern void isdn_tty_modem_escape (void);
-extern void isdn_tty_modem_ring (void);
-extern void isdn_tty_carrier_timeout (void);
-extern void isdn_tty_modem_xmit (void);
-extern int  isdn_tty_modem_init (void);
-extern void isdn_tty_exit (void);
-extern void isdn_tty_readmodem (void);
-extern int  isdn_tty_find_icall (int, int, setup_parm *);
-extern int  isdn_tty_stat_callback (int, isdn_ctrl *);
-extern int  isdn_tty_rcv_skb (int, int, int, struct sk_buff *);
-extern int  isdn_tty_capi_facility (capi_msg * cm);
-extern void isdn_tty_at_cout (char *, modem_info *);
-extern void isdn_tty_modem_hup (modem_info *, int);
+extern void isdn_tty_modem_escape(void);
+extern void isdn_tty_modem_ring(void);
+extern void isdn_tty_carrier_timeout(void);
+extern void isdn_tty_modem_xmit(void);
+extern int  isdn_tty_modem_init(void);
+extern void isdn_tty_exit(void);
+extern void isdn_tty_readmodem(void);
+extern int  isdn_tty_find_icall(int, int, setup_parm *);
+extern int  isdn_tty_stat_callback(int, isdn_ctrl *);
+extern int  isdn_tty_rcv_skb(int, int, int, struct sk_buff *);
+extern int  isdn_tty_capi_facility(capi_msg *cm);
+extern void isdn_tty_at_cout(char *, modem_info *);
+extern void isdn_tty_modem_hup(modem_info *, int);
 #ifdef CONFIG_ISDN_TTY_FAX
-extern int  isdn_tty_cmd_PLUSF_FAX (char **, modem_info *);
-extern int  isdn_tty_fax_command (modem_info *, isdn_ctrl *);
-extern void isdn_tty_fax_bitorder (modem_info *, struct sk_buff *);
+extern int  isdn_tty_cmd_PLUSF_FAX(char **, modem_info *);
+extern int  isdn_tty_fax_command(modem_info *, isdn_ctrl *);
+extern void isdn_tty_fax_bitorder(modem_info *, struct sk_buff *);
 #endif

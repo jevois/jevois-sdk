@@ -51,24 +51,24 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /*!
 *******************************************************************************
- @Function  PVRSRVRGXSetRegConfigPIKM
+ @Function	PVRSRVRGXSetRegConfigPIKM
 
  @Description
-  Server-side implementation of RGXSetRegConfig
+	Server-side implementation of RGXSetRegConfig
 
  @Input psDeviceNode - RGX Device node
  @Input ui8RegPowerIsland - Reg configuration
 
  @Return   PVRSRV_ERROR
 ******************************************************************************/
-PVRSRV_ERROR PVRSRVRGXSetRegConfigPIKM (PVRSRV_DEVICE_NODE * psDeviceNode,
-                                        IMG_UINT8       ui8RegPowerIsland);
+PVRSRV_ERROR PVRSRVRGXSetRegConfigPIKM(PVRSRV_DEVICE_NODE	*psDeviceNode,
+					IMG_UINT8       ui8RegPowerIsland);
 /*!
 *******************************************************************************
- @Function  PVRSRVRGXSetRegConfigKM
+ @Function	PVRSRVRGXSetRegConfigKM
 
  @Description
-  Server-side implementation of RGXSetRegConfig
+	Server-side implementation of RGXSetRegConfig
 
  @Input psDeviceNode - RGX Device node
  @Input ui64RegAddr - Register address
@@ -77,47 +77,47 @@ PVRSRV_ERROR PVRSRVRGXSetRegConfigPIKM (PVRSRV_DEVICE_NODE * psDeviceNode,
  @Return   PVRSRV_ERROR
 ******************************************************************************/
 
-PVRSRV_ERROR PVRSRVRGXAddRegConfigKM (PVRSRV_DEVICE_NODE * psDeviceNode,
-                                      IMG_UINT32  ui64RegAddr,
-                                      IMG_UINT64  ui64RegValue);
+PVRSRV_ERROR PVRSRVRGXAddRegConfigKM(PVRSRV_DEVICE_NODE	*psDeviceNode,
+					IMG_UINT32	ui64RegAddr,
+					IMG_UINT64	ui64RegValue);
 
 /*!
 *******************************************************************************
- @Function  PVRSRVRGXClearRegConfigKM
+ @Function	PVRSRVRGXClearRegConfigKM
 
  @Description
-  Server-side implementation of RGXClearRegConfig
+	Server-side implementation of RGXClearRegConfig
 
  @Input psDeviceNode - RGX Device node
 
  @Return   PVRSRV_ERROR
 ******************************************************************************/
-PVRSRV_ERROR PVRSRVRGXClearRegConfigKM (PVRSRV_DEVICE_NODE * psDeviceNode);
+PVRSRV_ERROR PVRSRVRGXClearRegConfigKM(PVRSRV_DEVICE_NODE	*psDeviceNode);
 
 /*!
 *******************************************************************************
- @Function  PVRSRVRGXEnableRegConfigKM
+ @Function	PVRSRVRGXEnableRegConfigKM
 
  @Description
-  Server-side implementation of RGXEnableRegConfig
+	Server-side implementation of RGXEnableRegConfig
 
  @Input psDeviceNode - RGX Device node
 
  @Return   PVRSRV_ERROR
 ******************************************************************************/
-PVRSRV_ERROR PVRSRVRGXEnableRegConfigKM (PVRSRV_DEVICE_NODE * psDeviceNode);
+PVRSRV_ERROR PVRSRVRGXEnableRegConfigKM(PVRSRV_DEVICE_NODE	*psDeviceNode);
 
 /*!
 *******************************************************************************
- @Function  PVRSRVRGXDisableRegConfigKM
+ @Function	PVRSRVRGXDisableRegConfigKM
 
  @Description
-  Server-side implementation of RGXDisableRegConfig
+	Server-side implementation of RGXDisableRegConfig
 
  @Input psDeviceNode - RGX Device node
 
  @Return   PVRSRV_ERROR
 ******************************************************************************/
-PVRSRV_ERROR PVRSRVRGXDisableRegConfigKM (PVRSRV_DEVICE_NODE * psDeviceNode);
+PVRSRV_ERROR PVRSRVRGXDisableRegConfigKM(PVRSRV_DEVICE_NODE	*psDeviceNode);
 
 #endif /* __RGXREGCONFIG_H__ */

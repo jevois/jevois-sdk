@@ -30,7 +30,7 @@ unsigned long port_csp4_shadow;
  * These are initialized in arch/cris/mm/init.c using ioremap.
  */
 
-volatile unsigned long * port_cse1_addr;
-volatile unsigned long * port_csp0_addr;
-volatile unsigned long * port_csp4_addr;
+volatile unsigned long *port_cse1_addr;
+volatile unsigned long *port_csp0_addr;
+volatile unsigned long *port_csp4_addr;
 

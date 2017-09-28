@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -55,7 +55,7 @@
 #define CCMU_AVS_CLK_REG                    (CCM_BASE + 0x144)
 #define CCMU_PLL_C0CPUX_BIAS_REG            (CCM_BASE + 0x220)
 
-#define CCM_SS_SCLK_CTRL                (CCM_BASE + 0x9C)
+#define CCM_SS_SCLK_CTRL		            (CCM_BASE + 0x9C)
 
 #define CCMU_BUS_SOFT_RST_REG0              (CCM_BASE + 0x2C0)
 #define CCMU_BUS_SOFT_RST_REG1              (CCM_BASE + 0x2C4)
@@ -69,7 +69,7 @@
 #define CCM_SDC3_SCLK_CTRL                  (CCM_BASE+0x094)
 
 #define CCM_AVS_SCLK_CTRL                   (CCMU_AVS_CLK_REG)
-#define CCM_AHB1_GATE0_CTRL             (CCMU_BUS_CLK_GATING_REG0)
+#define CCM_AHB1_GATE0_CTRL			        (CCMU_BUS_CLK_GATING_REG0)
 #define CCM_AHB1_RST_REG0                   (CCMU_BUS_SOFT_RST_REG0)
 
 

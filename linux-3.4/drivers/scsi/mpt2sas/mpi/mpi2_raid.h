@@ -55,11 +55,11 @@
 /* ActionDataWord for MPI2_RAID_ACTION_SET_RAID_FUNCTION_RATE Action */
 typedef struct _MPI2_RAID_ACTION_RATE_DATA
 {
-  U8              RateToChange;               /* 0x00 */
-  U8              RateOrMode;                 /* 0x01 */
-  U16             DataScrubDuration;          /* 0x02 */
+    U8              RateToChange;               /* 0x00 */
+    U8              RateOrMode;                 /* 0x01 */
+    U16             DataScrubDuration;          /* 0x02 */
 } MPI2_RAID_ACTION_RATE_DATA, MPI2_POINTER PTR_MPI2_RAID_ACTION_RATE_DATA,
-Mpi2RaidActionRateData_t, MPI2_POINTER pMpi2RaidActionRateData_t;
+  Mpi2RaidActionRateData_t, MPI2_POINTER pMpi2RaidActionRateData_t;
 
 #define MPI2_RAID_ACTION_SET_RATE_RESYNC            (0x00)
 #define MPI2_RAID_ACTION_SET_RATE_DATA_SCRUB        (0x01)
@@ -68,13 +68,13 @@ Mpi2RaidActionRateData_t, MPI2_POINTER pMpi2RaidActionRateData_t;
 /* ActionDataWord for MPI2_RAID_ACTION_START_RAID_FUNCTION Action */
 typedef struct _MPI2_RAID_ACTION_START_RAID_FUNCTION
 {
-  U8              RAIDFunction;                       /* 0x00 */
-  U8              Flags;                              /* 0x01 */
-  U16             Reserved1;                          /* 0x02 */
+    U8              RAIDFunction;                       /* 0x00 */
+    U8              Flags;                              /* 0x01 */
+    U16             Reserved1;                          /* 0x02 */
 } MPI2_RAID_ACTION_START_RAID_FUNCTION,
-MPI2_POINTER PTR_MPI2_RAID_ACTION_START_RAID_FUNCTION,
-Mpi2RaidActionStartRaidFunction_t,
-MPI2_POINTER pMpi2RaidActionStartRaidFunction_t;
+  MPI2_POINTER PTR_MPI2_RAID_ACTION_START_RAID_FUNCTION,
+  Mpi2RaidActionStartRaidFunction_t,
+  MPI2_POINTER pMpi2RaidActionStartRaidFunction_t;
 
 /* defines for the RAIDFunction field */
 #define MPI2_RAID_ACTION_START_BACKGROUND_INIT      (0x00)
@@ -88,13 +88,13 @@ MPI2_POINTER pMpi2RaidActionStartRaidFunction_t;
 /* ActionDataWord for MPI2_RAID_ACTION_STOP_RAID_FUNCTION Action */
 typedef struct _MPI2_RAID_ACTION_STOP_RAID_FUNCTION
 {
-  U8              RAIDFunction;                       /* 0x00 */
-  U8              Flags;                              /* 0x01 */
-  U16             Reserved1;                          /* 0x02 */
+    U8              RAIDFunction;                       /* 0x00 */
+    U8              Flags;                              /* 0x01 */
+    U16             Reserved1;                          /* 0x02 */
 } MPI2_RAID_ACTION_STOP_RAID_FUNCTION,
-MPI2_POINTER PTR_MPI2_RAID_ACTION_STOP_RAID_FUNCTION,
-Mpi2RaidActionStopRaidFunction_t,
-MPI2_POINTER pMpi2RaidActionStopRaidFunction_t;
+  MPI2_POINTER PTR_MPI2_RAID_ACTION_STOP_RAID_FUNCTION,
+  Mpi2RaidActionStopRaidFunction_t,
+  MPI2_POINTER pMpi2RaidActionStopRaidFunction_t;
 
 /* defines for the RAIDFunction field */
 #define MPI2_RAID_ACTION_STOP_BACKGROUND_INIT       (0x00)
@@ -108,21 +108,21 @@ MPI2_POINTER pMpi2RaidActionStopRaidFunction_t;
 /* ActionDataWord for MPI2_RAID_ACTION_CREATE_HOT_SPARE Action */
 typedef struct _MPI2_RAID_ACTION_HOT_SPARE
 {
-  U8              HotSparePool;               /* 0x00 */
-  U8              Reserved1;                  /* 0x01 */
-  U16             DevHandle;                  /* 0x02 */
+    U8              HotSparePool;               /* 0x00 */
+    U8              Reserved1;                  /* 0x01 */
+    U16             DevHandle;                  /* 0x02 */
 } MPI2_RAID_ACTION_HOT_SPARE, MPI2_POINTER PTR_MPI2_RAID_ACTION_HOT_SPARE,
-Mpi2RaidActionHotSpare_t, MPI2_POINTER pMpi2RaidActionHotSpare_t;
+  Mpi2RaidActionHotSpare_t, MPI2_POINTER pMpi2RaidActionHotSpare_t;
 
 /* ActionDataWord for MPI2_RAID_ACTION_DEVICE_FW_UPDATE_MODE Action */
 typedef struct _MPI2_RAID_ACTION_FW_UPDATE_MODE
 {
-  U8              Flags;                              /* 0x00 */
-  U8              DeviceFirmwareUpdateModeTimeout;    /* 0x01 */
-  U16             Reserved1;                          /* 0x02 */
+    U8              Flags;                              /* 0x00 */
+    U8              DeviceFirmwareUpdateModeTimeout;    /* 0x01 */
+    U16             Reserved1;                          /* 0x02 */
 } MPI2_RAID_ACTION_FW_UPDATE_MODE,
-MPI2_POINTER PTR_MPI2_RAID_ACTION_FW_UPDATE_MODE,
-Mpi2RaidActionFwUpdateMode_t, MPI2_POINTER pMpi2RaidActionFwUpdateMode_t;
+  MPI2_POINTER PTR_MPI2_RAID_ACTION_FW_UPDATE_MODE,
+  Mpi2RaidActionFwUpdateMode_t, MPI2_POINTER pMpi2RaidActionFwUpdateMode_t;
 
 /* ActionDataWord defines for use with MPI2_RAID_ACTION_DEVICE_FW_UPDATE_MODE action */
 #define MPI2_RAID_ACTION_ADATA_DISABLE_FW_UPDATE        (0x00)
@@ -130,34 +130,34 @@ Mpi2RaidActionFwUpdateMode_t, MPI2_POINTER pMpi2RaidActionFwUpdateMode_t;
 
 typedef union _MPI2_RAID_ACTION_DATA
 {
-  U32                                     Word;
-  MPI2_RAID_ACTION_RATE_DATA              Rates;
-  MPI2_RAID_ACTION_START_RAID_FUNCTION    StartRaidFunction;
-  MPI2_RAID_ACTION_STOP_RAID_FUNCTION     StopRaidFunction;
-  MPI2_RAID_ACTION_HOT_SPARE              HotSpare;
-  MPI2_RAID_ACTION_FW_UPDATE_MODE         FwUpdateMode;
+    U32                                     Word;
+    MPI2_RAID_ACTION_RATE_DATA              Rates;
+    MPI2_RAID_ACTION_START_RAID_FUNCTION    StartRaidFunction;
+    MPI2_RAID_ACTION_STOP_RAID_FUNCTION     StopRaidFunction;
+    MPI2_RAID_ACTION_HOT_SPARE              HotSpare;
+    MPI2_RAID_ACTION_FW_UPDATE_MODE         FwUpdateMode;
 } MPI2_RAID_ACTION_DATA, MPI2_POINTER PTR_MPI2_RAID_ACTION_DATA,
-Mpi2RaidActionData_t, MPI2_POINTER pMpi2RaidActionData_t;
+  Mpi2RaidActionData_t, MPI2_POINTER pMpi2RaidActionData_t;
 
 
 /* RAID Action Request Message */
 typedef struct _MPI2_RAID_ACTION_REQUEST
 {
-  U8                      Action;                         /* 0x00 */
-  U8                      Reserved1;                      /* 0x01 */
-  U8                      ChainOffset;                    /* 0x02 */
-  U8                      Function;                       /* 0x03 */
-  U16                     VolDevHandle;                   /* 0x04 */
-  U8                      PhysDiskNum;                    /* 0x06 */
-  U8                      MsgFlags;                       /* 0x07 */
-  U8                      VP_ID;                          /* 0x08 */
-  U8                      VF_ID;                          /* 0x09 */
-  U16                     Reserved2;                      /* 0x0A */
-  U32                     Reserved3;                      /* 0x0C */
-  MPI2_RAID_ACTION_DATA   ActionDataWord;                 /* 0x10 */
-  MPI2_SGE_SIMPLE_UNION   ActionDataSGE;                  /* 0x14 */
+    U8                      Action;                         /* 0x00 */
+    U8                      Reserved1;                      /* 0x01 */
+    U8                      ChainOffset;                    /* 0x02 */
+    U8                      Function;                       /* 0x03 */
+    U16                     VolDevHandle;                   /* 0x04 */
+    U8                      PhysDiskNum;                    /* 0x06 */
+    U8                      MsgFlags;                       /* 0x07 */
+    U8                      VP_ID;                          /* 0x08 */
+    U8                      VF_ID;                          /* 0x09 */
+    U16                     Reserved2;                      /* 0x0A */
+    U32                     Reserved3;                      /* 0x0C */
+    MPI2_RAID_ACTION_DATA   ActionDataWord;                 /* 0x10 */
+    MPI2_SGE_SIMPLE_UNION   ActionDataSGE;                  /* 0x14 */
 } MPI2_RAID_ACTION_REQUEST, MPI2_POINTER PTR_MPI2_RAID_ACTION_REQUEST,
-Mpi2RaidActionRequest_t, MPI2_POINTER pMpi2RaidActionRequest_t;
+  Mpi2RaidActionRequest_t, MPI2_POINTER pMpi2RaidActionRequest_t;
 
 /* RAID Action request Action values */
 
@@ -195,11 +195,11 @@ Mpi2RaidActionRequest_t, MPI2_POINTER pMpi2RaidActionRequest_t;
 
 typedef struct _MPI2_RAID_VOLUME_PHYSDISK
 {
-  U8                      RAIDSetNum;                     /* 0x00 */
-  U8                      PhysDiskMap;                    /* 0x01 */
-  U16                     PhysDiskDevHandle;              /* 0x02 */
+    U8                      RAIDSetNum;                     /* 0x00 */
+    U8                      PhysDiskMap;                    /* 0x01 */
+    U16                     PhysDiskDevHandle;              /* 0x02 */
 } MPI2_RAID_VOLUME_PHYSDISK, MPI2_POINTER PTR_MPI2_RAID_VOLUME_PHYSDISK,
-Mpi2RaidVolumePhysDisk_t, MPI2_POINTER pMpi2RaidVolumePhysDisk_t;
+  Mpi2RaidVolumePhysDisk_t, MPI2_POINTER pMpi2RaidVolumePhysDisk_t;
 
 /* defines for the PhysDiskMap field */
 #define MPI2_RAIDACTION_PHYSDISK_PRIMARY            (0x01)
@@ -207,21 +207,21 @@ Mpi2RaidVolumePhysDisk_t, MPI2_POINTER pMpi2RaidVolumePhysDisk_t;
 
 typedef struct _MPI2_RAID_VOLUME_CREATION_STRUCT
 {
-  U8                          NumPhysDisks;               /* 0x00 */
-  U8                          VolumeType;                 /* 0x01 */
-  U16                         Reserved1;                  /* 0x02 */
-  U32                         VolumeCreationFlags;        /* 0x04 */
-  U32                         VolumeSettings;             /* 0x08 */
-  U8                          Reserved2;                  /* 0x0C */
-  U8                          ResyncRate;                 /* 0x0D */
-  U16                         DataScrubDuration;          /* 0x0E */
-  U64                         VolumeMaxLBA;               /* 0x10 */
-  U32                         StripeSize;                 /* 0x18 */
-  U8                          Name[16];                   /* 0x1C */
-  MPI2_RAID_VOLUME_PHYSDISK   PhysDisk[MPI2_RAID_VOL_CREATION_NUM_PHYSDISKS];/* 0x2C */
+    U8                          NumPhysDisks;               /* 0x00 */
+    U8                          VolumeType;                 /* 0x01 */
+    U16                         Reserved1;                  /* 0x02 */
+    U32                         VolumeCreationFlags;        /* 0x04 */
+    U32                         VolumeSettings;             /* 0x08 */
+    U8                          Reserved2;                  /* 0x0C */
+    U8                          ResyncRate;                 /* 0x0D */
+    U16                         DataScrubDuration;          /* 0x0E */
+    U64                         VolumeMaxLBA;               /* 0x10 */
+    U32                         StripeSize;                 /* 0x18 */
+    U8                          Name[16];                   /* 0x1C */
+    MPI2_RAID_VOLUME_PHYSDISK   PhysDisk[MPI2_RAID_VOL_CREATION_NUM_PHYSDISKS];/* 0x2C */
 } MPI2_RAID_VOLUME_CREATION_STRUCT,
-MPI2_POINTER PTR_MPI2_RAID_VOLUME_CREATION_STRUCT,
-Mpi2RaidVolumeCreationStruct_t, MPI2_POINTER pMpi2RaidVolumeCreationStruct_t;
+  MPI2_POINTER PTR_MPI2_RAID_VOLUME_CREATION_STRUCT,
+  Mpi2RaidVolumeCreationStruct_t, MPI2_POINTER pMpi2RaidVolumeCreationStruct_t;
 
 /* use MPI2_RAID_VOL_TYPE_ defines from mpi2_cnfg.h for VolumeType */
 
@@ -240,24 +240,24 @@ Mpi2RaidVolumeCreationStruct_t, MPI2_POINTER pMpi2RaidVolumeCreationStruct_t;
 
 typedef struct _MPI2_RAID_ONLINE_CAPACITY_EXPANSION
 {
-  U32                     Flags;                          /* 0x00 */
-  U16                     DevHandle0;                     /* 0x04 */
-  U16                     Reserved1;                      /* 0x06 */
-  U16                     DevHandle1;                     /* 0x08 */
-  U16                     Reserved2;                      /* 0x0A */
+    U32                     Flags;                          /* 0x00 */
+    U16                     DevHandle0;                     /* 0x04 */
+    U16                     Reserved1;                      /* 0x06 */
+    U16                     DevHandle1;                     /* 0x08 */
+    U16                     Reserved2;                      /* 0x0A */
 } MPI2_RAID_ONLINE_CAPACITY_EXPANSION,
-MPI2_POINTER PTR_MPI2_RAID_ONLINE_CAPACITY_EXPANSION,
-Mpi2RaidOnlineCapacityExpansion_t,
-MPI2_POINTER pMpi2RaidOnlineCapacityExpansion_t;
+  MPI2_POINTER PTR_MPI2_RAID_ONLINE_CAPACITY_EXPANSION,
+  Mpi2RaidOnlineCapacityExpansion_t,
+  MPI2_POINTER pMpi2RaidOnlineCapacityExpansion_t;
 
 /* RAID Compatibility Input Structure */
 
 typedef struct _MPI2_RAID_COMPATIBILITY_INPUT_STRUCT {
-  U16                     SourceDevHandle;               /* 0x00 */
-  U16                     CandidateDevHandle;             /* 0x02 */
-  U32                     Flags;                          /* 0x04 */
-  U32                     Reserved1;                      /* 0x08 */
-  U32                     Reserved2;                      /* 0x0C */
+	U16                     SourceDevHandle;               /* 0x00 */
+	U16                     CandidateDevHandle;             /* 0x02 */
+	U32                     Flags;                          /* 0x04 */
+	U32                     Reserved1;                      /* 0x08 */
+	U32                     Reserved2;                      /* 0x0C */
 } MPI2_RAID_COMPATIBILITY_INPUT_STRUCT,
 MPI2_POINTER PTR_MPI2_RAID_COMPATIBILITY_INPUT_STRUCT,
 Mpi2RaidCompatibilityInputStruct_t,
@@ -272,11 +272,11 @@ MPI2_POINTER pMpi2RaidCompatibilityInputStruct_t;
 
 typedef struct _MPI2_RAID_VOL_INDICATOR
 {
-  U64                     TotalBlocks;                    /* 0x00 */
-  U64                     BlocksRemaining;                /* 0x08 */
-  U32                     Flags;                          /* 0x10 */
+    U64                     TotalBlocks;                    /* 0x00 */
+    U64                     BlocksRemaining;                /* 0x08 */
+    U32                     Flags;                          /* 0x10 */
 } MPI2_RAID_VOL_INDICATOR, MPI2_POINTER PTR_MPI2_RAID_VOL_INDICATOR,
-Mpi2RaidVolIndicator_t, MPI2_POINTER pMpi2RaidVolIndicator_t;
+  Mpi2RaidVolIndicator_t, MPI2_POINTER pMpi2RaidVolIndicator_t;
 
 /* defines for RAID Volume Indicator Flags field */
 #define MPI2_RAID_VOL_FLAGS_OP_MASK                 (0x0000000F)
@@ -289,13 +289,13 @@ Mpi2RaidVolIndicator_t, MPI2_POINTER pMpi2RaidVolIndicator_t;
 /* RAID Compatibility Result Structure */
 
 typedef struct _MPI2_RAID_COMPATIBILITY_RESULT_STRUCT {
-  U8                      State;                          /* 0x00 */
-  U8                      Reserved1;                      /* 0x01 */
-  U16                     Reserved2;                      /* 0x02 */
-  U32                     GenericAttributes;              /* 0x04 */
-  U32                     OEMSpecificAttributes;          /* 0x08 */
-  U32                     Reserved3;                      /* 0x0C */
-  U32                     Reserved4;                      /* 0x10 */
+	U8                      State;                          /* 0x00 */
+	U8                      Reserved1;                      /* 0x01 */
+	U16                     Reserved2;                      /* 0x02 */
+	U32                     GenericAttributes;              /* 0x04 */
+	U32                     OEMSpecificAttributes;          /* 0x08 */
+	U32                     Reserved3;                      /* 0x0C */
+	U32                     Reserved4;                      /* 0x10 */
 } MPI2_RAID_COMPATIBILITY_RESULT_STRUCT,
 MPI2_POINTER PTR_MPI2_RAID_COMPATIBILITY_RESULT_STRUCT,
 Mpi2RaidCompatibilityResultStruct_t,
@@ -319,14 +319,14 @@ MPI2_POINTER pMpi2RaidCompatibilityResultStruct_t;
 /* RAID Action Reply ActionData union */
 typedef union _MPI2_RAID_ACTION_REPLY_DATA
 {
-  U32                                     Word[5];
-  MPI2_RAID_VOL_INDICATOR                 RaidVolumeIndicator;
-  U16                                     VolDevHandle;
-  U8                                      VolumeState;
-  U8                                      PhysDiskNum;
-  MPI2_RAID_COMPATIBILITY_RESULT_STRUCT   RaidCompatibilityResult;
+	U32                                     Word[5];
+	MPI2_RAID_VOL_INDICATOR                 RaidVolumeIndicator;
+	U16                                     VolDevHandle;
+	U8                                      VolumeState;
+	U8                                      PhysDiskNum;
+	MPI2_RAID_COMPATIBILITY_RESULT_STRUCT   RaidCompatibilityResult;
 } MPI2_RAID_ACTION_REPLY_DATA, MPI2_POINTER PTR_MPI2_RAID_ACTION_REPLY_DATA,
-Mpi2RaidActionReplyData_t, MPI2_POINTER pMpi2RaidActionReplyData_t;
+  Mpi2RaidActionReplyData_t, MPI2_POINTER pMpi2RaidActionReplyData_t;
 
 /* use MPI2_RAIDVOL0_SETTING_ defines from mpi2_cnfg.h for MPI2_RAID_ACTION_CHANGE_VOL_WRITE_CACHE action */
 
@@ -334,22 +334,22 @@ Mpi2RaidActionReplyData_t, MPI2_POINTER pMpi2RaidActionReplyData_t;
 /* RAID Action Reply Message */
 typedef struct _MPI2_RAID_ACTION_REPLY
 {
-  U8                          Action;                     /* 0x00 */
-  U8                          Reserved1;                  /* 0x01 */
-  U8                          MsgLength;                  /* 0x02 */
-  U8                          Function;                   /* 0x03 */
-  U16                         VolDevHandle;               /* 0x04 */
-  U8                          PhysDiskNum;                /* 0x06 */
-  U8                          MsgFlags;                   /* 0x07 */
-  U8                          VP_ID;                      /* 0x08 */
-  U8                          VF_ID;                      /* 0x09 */
-  U16                         Reserved2;                  /* 0x0A */
-  U16                         Reserved3;                  /* 0x0C */
-  U16                         IOCStatus;                  /* 0x0E */
-  U32                         IOCLogInfo;                 /* 0x10 */
-  MPI2_RAID_ACTION_REPLY_DATA ActionData;                 /* 0x14 */
+    U8                          Action;                     /* 0x00 */
+    U8                          Reserved1;                  /* 0x01 */
+    U8                          MsgLength;                  /* 0x02 */
+    U8                          Function;                   /* 0x03 */
+    U16                         VolDevHandle;               /* 0x04 */
+    U8                          PhysDiskNum;                /* 0x06 */
+    U8                          MsgFlags;                   /* 0x07 */
+    U8                          VP_ID;                      /* 0x08 */
+    U8                          VF_ID;                      /* 0x09 */
+    U16                         Reserved2;                  /* 0x0A */
+    U16                         Reserved3;                  /* 0x0C */
+    U16                         IOCStatus;                  /* 0x0E */
+    U32                         IOCLogInfo;                 /* 0x10 */
+    MPI2_RAID_ACTION_REPLY_DATA ActionData;                 /* 0x14 */
 } MPI2_RAID_ACTION_REPLY, MPI2_POINTER PTR_MPI2_RAID_ACTION_REPLY,
-Mpi2RaidActionReply_t, MPI2_POINTER pMpi2RaidActionReply_t;
+  Mpi2RaidActionReply_t, MPI2_POINTER pMpi2RaidActionReply_t;
 
 
 #endif

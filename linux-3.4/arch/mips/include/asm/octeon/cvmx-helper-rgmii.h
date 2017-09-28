@@ -42,7 +42,7 @@
  *
  * Returns Number of RGMII/GMII/MII ports (0-4).
  */
-extern int __cvmx_helper_rgmii_probe (int interface);
+extern int __cvmx_helper_rgmii_probe(int interface);
 #define __cvmx_helper_rgmii_enumerate __cvmx_helper_rgmii_probe
 
 /**
@@ -52,7 +52,7 @@ extern int __cvmx_helper_rgmii_probe (int interface);
  *
  * @port:   IPD port number to loop.
  */
-extern void cvmx_helper_rgmii_internal_loopback (int port);
+extern void cvmx_helper_rgmii_internal_loopback(int port);
 
 /**
  * Configure all of the ASX, GMX, and PKO regsiters required
@@ -62,7 +62,7 @@ extern void cvmx_helper_rgmii_internal_loopback (int port);
  *
  * Returns Zero on success
  */
-extern int __cvmx_helper_rgmii_enable (int interface);
+extern int __cvmx_helper_rgmii_enable(int interface);
 
 /**
  * Return the link state of an IPD/PKO port as returned by
@@ -74,7 +74,7 @@ extern int __cvmx_helper_rgmii_enable (int interface);
  *
  * Returns Link state
  */
-extern cvmx_helper_link_info_t __cvmx_helper_rgmii_link_get (int ipd_port);
+extern cvmx_helper_link_info_t __cvmx_helper_rgmii_link_get(int ipd_port);
 
 /**
  * Configure an IPD/PKO port for the specified link state. This
@@ -88,8 +88,8 @@ extern cvmx_helper_link_info_t __cvmx_helper_rgmii_link_get (int ipd_port);
  *
  * Returns Zero on success, negative on failure
  */
-extern int __cvmx_helper_rgmii_link_set (int ipd_port,
-    cvmx_helper_link_info_t link_info);
+extern int __cvmx_helper_rgmii_link_set(int ipd_port,
+					cvmx_helper_link_info_t link_info);
 
 /**
  * Configure a port for internal and/or external loopback. Internal loopback
@@ -104,8 +104,8 @@ extern int __cvmx_helper_rgmii_link_set (int ipd_port,
  *
  * Returns Zero on success, negative on failure.
  */
-extern int __cvmx_helper_rgmii_configure_loopback (int ipd_port,
-    int enable_internal,
-    int enable_external);
+extern int __cvmx_helper_rgmii_configure_loopback(int ipd_port,
+						  int enable_internal,
+						  int enable_external);
 
 #endif

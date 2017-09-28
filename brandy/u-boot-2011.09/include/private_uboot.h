@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -31,15 +31,15 @@
 /******************************************************************************/
 struct spare_boot_ctrl_head
 {
-  unsigned int  jump_instruction;  
-  unsigned char magic[MAGIC_SIZE]; 
-  unsigned int  check_sum;         
-  unsigned int  align_size;    
-  unsigned int  length;            
-  unsigned int  uboot_length;      
-  unsigned char version[8];        
-  unsigned char platform[8];       
-  int           reserved[1];       
+	unsigned int  jump_instruction;  
+	unsigned char magic[MAGIC_SIZE]; 
+	unsigned int  check_sum;         
+	unsigned int  align_size;		 
+	unsigned int  length;            
+	unsigned int  uboot_length;      
+	unsigned char version[8];        
+	unsigned char platform[8];       
+	int           reserved[1];       
 };
 
 /******************************************************************************/
@@ -47,29 +47,29 @@ struct spare_boot_ctrl_head
 /******************************************************************************/
 struct spare_boot_data_head
 {
-  unsigned int                dram_para[32];
-  int             run_clock;       
-  int             run_core_vol;    
-  int             uart_port;              // UART控制器编号
-  normal_gpio_cfg             uart_gpio[2];           // UART控制器(调试打印口)GPIO信息
-  int             twi_port;               // TWI控制器编号
-  normal_gpio_cfg             twi_gpio[2];            // TWI控制器GPIO信息，用于控制TWI
-  int                       work_mode;              // 工作模式
-  int                         storage_type;           // 存储介质类型  0：nand   1：sdcard    2: spinor
-  normal_gpio_cfg             nand_gpio[32];          // nand GPIO信息
-  char            nand_spare_data[256]; // nand 额外信息
-  normal_gpio_cfg             sdcard_gpio[32];    // sdcard GPIO信息
-  char                  sdcard_spare_data[256]; // sdcard 额外信息
-  int                         secureos_exist;
-  uint                        uboot_start_sector_in_mmc;
-  int             reserved[4];      // 保留数据位, 256bytes align
-  
+	unsigned int                dram_para[32];
+	int							run_clock;			
+	int							run_core_vol;		
+	int							uart_port;              // UART控制器编号
+	normal_gpio_cfg             uart_gpio[2];           // UART控制器(调试打印口)GPIO信息
+	int							twi_port;               // TWI控制器编号
+	normal_gpio_cfg             twi_gpio[2];            // TWI控制器GPIO信息，用于控制TWI
+	int		                    work_mode;              // 工作模式
+    int                         storage_type;           // 存储介质类型  0：nand   1：sdcard    2: spinor
+    normal_gpio_cfg             nand_gpio[32];          // nand GPIO信息
+    char						nand_spare_data[256];	// nand 额外信息
+    normal_gpio_cfg             sdcard_gpio[32];		// sdcard GPIO信息
+    char             			sdcard_spare_data[256];	// sdcard 额外信息
+    int                         secureos_exist;
+    uint                        uboot_start_sector_in_mmc;
+    int							reserved[4];			// 保留数据位, 256bytes align
+
 };
 
 struct spare_boot_head_t
 {
-  struct spare_boot_ctrl_head    boot_head;
-  struct spare_boot_data_head    boot_data;
+	struct spare_boot_ctrl_head    boot_head;
+	struct spare_boot_data_head    boot_data;
 };
 
 

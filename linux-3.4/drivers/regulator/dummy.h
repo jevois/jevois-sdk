@@ -20,8 +20,8 @@
 
 struct regulator_dev;
 
-extern struct regulator_dev * dummy_regulator_rdev;
+extern struct regulator_dev *dummy_regulator_rdev;
 
-void __init regulator_dummy_init (void);
+void __init regulator_dummy_init(void);
 
 #endif

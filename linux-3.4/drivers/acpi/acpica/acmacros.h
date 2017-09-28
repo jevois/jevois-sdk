@@ -84,50 +84,50 @@
 
 /* These macros reverse the bytes during the move, converting little-endian to big endian */
 
-/* Big Endian      <==        Little Endian */
-/*  Hi...Lo                     Lo...Hi     */
+			  /* Big Endian      <==        Little Endian */
+			  /*  Hi...Lo                     Lo...Hi     */
 /* 16-bit source, 16/32/64 destination */
 
 #define ACPI_MOVE_16_TO_16(d, s)        {((  u8 *)(void *)(d))[0] = ((u8 *)(void *)(s))[1];\
-    ((  u8 *)(void *)(d))[1] = ((u8 *)(void *)(s))[0];}
+					   ((  u8 *)(void *)(d))[1] = ((u8 *)(void *)(s))[0];}
 
 #define ACPI_MOVE_16_TO_32(d, s)        {(*(u32 *)(void *)(d))=0;\
-    ((u8 *)(void *)(d))[2] = ((u8 *)(void *)(s))[1];\
-    ((u8 *)(void *)(d))[3] = ((u8 *)(void *)(s))[0];}
+							   ((u8 *)(void *)(d))[2] = ((u8 *)(void *)(s))[1];\
+							   ((u8 *)(void *)(d))[3] = ((u8 *)(void *)(s))[0];}
 
 #define ACPI_MOVE_16_TO_64(d, s)        {(*(u64 *)(void *)(d))=0;\
-    ((u8 *)(void *)(d))[6] = ((u8 *)(void *)(s))[1];\
-    ((u8 *)(void *)(d))[7] = ((u8 *)(void *)(s))[0];}
+									 ((u8 *)(void *)(d))[6] = ((u8 *)(void *)(s))[1];\
+									 ((u8 *)(void *)(d))[7] = ((u8 *)(void *)(s))[0];}
 
 /* 32-bit source, 16/32/64 destination */
 
-#define ACPI_MOVE_32_TO_16(d, s)        ACPI_MOVE_16_TO_16(d, s)  /* Truncate to 16 */
+#define ACPI_MOVE_32_TO_16(d, s)        ACPI_MOVE_16_TO_16(d, s)	/* Truncate to 16 */
 
 #define ACPI_MOVE_32_TO_32(d, s)        {((  u8 *)(void *)(d))[0] = ((u8 *)(void *)(s))[3];\
-    ((  u8 *)(void *)(d))[1] = ((u8 *)(void *)(s))[2];\
-    ((  u8 *)(void *)(d))[2] = ((u8 *)(void *)(s))[1];\
-    ((  u8 *)(void *)(d))[3] = ((u8 *)(void *)(s))[0];}
+										 ((  u8 *)(void *)(d))[1] = ((u8 *)(void *)(s))[2];\
+										 ((  u8 *)(void *)(d))[2] = ((u8 *)(void *)(s))[1];\
+										 ((  u8 *)(void *)(d))[3] = ((u8 *)(void *)(s))[0];}
 
 #define ACPI_MOVE_32_TO_64(d, s)        {(*(u64 *)(void *)(d))=0;\
-    ((u8 *)(void *)(d))[4] = ((u8 *)(void *)(s))[3];\
-    ((u8 *)(void *)(d))[5] = ((u8 *)(void *)(s))[2];\
-    ((u8 *)(void *)(d))[6] = ((u8 *)(void *)(s))[1];\
-    ((u8 *)(void *)(d))[7] = ((u8 *)(void *)(s))[0];}
+										   ((u8 *)(void *)(d))[4] = ((u8 *)(void *)(s))[3];\
+										   ((u8 *)(void *)(d))[5] = ((u8 *)(void *)(s))[2];\
+										   ((u8 *)(void *)(d))[6] = ((u8 *)(void *)(s))[1];\
+										   ((u8 *)(void *)(d))[7] = ((u8 *)(void *)(s))[0];}
 
 /* 64-bit source, 16/32/64 destination */
 
-#define ACPI_MOVE_64_TO_16(d, s)        ACPI_MOVE_16_TO_16(d, s)  /* Truncate to 16 */
+#define ACPI_MOVE_64_TO_16(d, s)        ACPI_MOVE_16_TO_16(d, s)	/* Truncate to 16 */
 
-#define ACPI_MOVE_64_TO_32(d, s)        ACPI_MOVE_32_TO_32(d, s)  /* Truncate to 32 */
+#define ACPI_MOVE_64_TO_32(d, s)        ACPI_MOVE_32_TO_32(d, s)	/* Truncate to 32 */
 
 #define ACPI_MOVE_64_TO_64(d, s)        {((  u8 *)(void *)(d))[0] = ((u8 *)(void *)(s))[7];\
-    ((  u8 *)(void *)(d))[1] = ((u8 *)(void *)(s))[6];\
-    ((  u8 *)(void *)(d))[2] = ((u8 *)(void *)(s))[5];\
-    ((  u8 *)(void *)(d))[3] = ((u8 *)(void *)(s))[4];\
-    ((  u8 *)(void *)(d))[4] = ((u8 *)(void *)(s))[3];\
-    ((  u8 *)(void *)(d))[5] = ((u8 *)(void *)(s))[2];\
-    ((  u8 *)(void *)(d))[6] = ((u8 *)(void *)(s))[1];\
-    ((  u8 *)(void *)(d))[7] = ((u8 *)(void *)(s))[0];}
+										 ((  u8 *)(void *)(d))[1] = ((u8 *)(void *)(s))[6];\
+										 ((  u8 *)(void *)(d))[2] = ((u8 *)(void *)(s))[5];\
+										 ((  u8 *)(void *)(d))[3] = ((u8 *)(void *)(s))[4];\
+										 ((  u8 *)(void *)(d))[4] = ((u8 *)(void *)(s))[3];\
+										 ((  u8 *)(void *)(d))[5] = ((u8 *)(void *)(s))[2];\
+										 ((  u8 *)(void *)(d))[6] = ((u8 *)(void *)(s))[1];\
+										 ((  u8 *)(void *)(d))[7] = ((u8 *)(void *)(s))[0];}
 #else
 /*
  * Macros for little-endian machines
@@ -145,14 +145,14 @@
 
 /* 32-bit source, 16/32/64 destination */
 
-#define ACPI_MOVE_32_TO_16(d, s)        ACPI_MOVE_16_TO_16(d, s)  /* Truncate to 16 */
+#define ACPI_MOVE_32_TO_16(d, s)        ACPI_MOVE_16_TO_16(d, s)	/* Truncate to 16 */
 #define ACPI_MOVE_32_TO_32(d, s)        *(u32 *)(void *)(d) = *(u32 *)(void *)(s)
 #define ACPI_MOVE_32_TO_64(d, s)        *(u64 *)(void *)(d) = *(u32 *)(void *)(s)
 
 /* 64-bit source, 16/32/64 destination */
 
-#define ACPI_MOVE_64_TO_16(d, s)        ACPI_MOVE_16_TO_16(d, s)  /* Truncate to 16 */
-#define ACPI_MOVE_64_TO_32(d, s)        ACPI_MOVE_32_TO_32(d, s)  /* Truncate to 32 */
+#define ACPI_MOVE_64_TO_16(d, s)        ACPI_MOVE_16_TO_16(d, s)	/* Truncate to 16 */
+#define ACPI_MOVE_64_TO_32(d, s)        ACPI_MOVE_32_TO_32(d, s)	/* Truncate to 32 */
 #define ACPI_MOVE_64_TO_64(d, s)        *(u64 *)(void *)(d) = *(u64 *)(void *)(s)
 
 #else
@@ -165,34 +165,34 @@
 /* 16-bit source, 16/32/64 destination */
 
 #define ACPI_MOVE_16_TO_16(d, s)        {((  u8 *)(void *)(d))[0] = ((u8 *)(void *)(s))[0];\
-    ((  u8 *)(void *)(d))[1] = ((u8 *)(void *)(s))[1];}
+										 ((  u8 *)(void *)(d))[1] = ((u8 *)(void *)(s))[1];}
 
 #define ACPI_MOVE_16_TO_32(d, s)        {(*(u32 *)(void *)(d)) = 0; ACPI_MOVE_16_TO_16(d, s);}
 #define ACPI_MOVE_16_TO_64(d, s)        {(*(u64 *)(void *)(d)) = 0; ACPI_MOVE_16_TO_16(d, s);}
 
 /* 32-bit source, 16/32/64 destination */
 
-#define ACPI_MOVE_32_TO_16(d, s)        ACPI_MOVE_16_TO_16(d, s)  /* Truncate to 16 */
+#define ACPI_MOVE_32_TO_16(d, s)        ACPI_MOVE_16_TO_16(d, s)	/* Truncate to 16 */
 
 #define ACPI_MOVE_32_TO_32(d, s)        {((  u8 *)(void *)(d))[0] = ((u8 *)(void *)(s))[0];\
-    ((  u8 *)(void *)(d))[1] = ((u8 *)(void *)(s))[1];\
-    ((  u8 *)(void *)(d))[2] = ((u8 *)(void *)(s))[2];\
-    ((  u8 *)(void *)(d))[3] = ((u8 *)(void *)(s))[3];}
+										 ((  u8 *)(void *)(d))[1] = ((u8 *)(void *)(s))[1];\
+										 ((  u8 *)(void *)(d))[2] = ((u8 *)(void *)(s))[2];\
+										 ((  u8 *)(void *)(d))[3] = ((u8 *)(void *)(s))[3];}
 
 #define ACPI_MOVE_32_TO_64(d, s)        {(*(u64 *)(void *)(d)) = 0; ACPI_MOVE_32_TO_32(d, s);}
 
 /* 64-bit source, 16/32/64 destination */
 
-#define ACPI_MOVE_64_TO_16(d, s)        ACPI_MOVE_16_TO_16(d, s)  /* Truncate to 16 */
-#define ACPI_MOVE_64_TO_32(d, s)        ACPI_MOVE_32_TO_32(d, s)  /* Truncate to 32 */
+#define ACPI_MOVE_64_TO_16(d, s)        ACPI_MOVE_16_TO_16(d, s)	/* Truncate to 16 */
+#define ACPI_MOVE_64_TO_32(d, s)        ACPI_MOVE_32_TO_32(d, s)	/* Truncate to 32 */
 #define ACPI_MOVE_64_TO_64(d, s)        {((  u8 *)(void *)(d))[0] = ((u8 *)(void *)(s))[0];\
-    ((  u8 *)(void *)(d))[1] = ((u8 *)(void *)(s))[1];\
-    ((  u8 *)(void *)(d))[2] = ((u8 *)(void *)(s))[2];\
-    ((  u8 *)(void *)(d))[3] = ((u8 *)(void *)(s))[3];\
-    ((  u8 *)(void *)(d))[4] = ((u8 *)(void *)(s))[4];\
-    ((  u8 *)(void *)(d))[5] = ((u8 *)(void *)(s))[5];\
-    ((  u8 *)(void *)(d))[6] = ((u8 *)(void *)(s))[6];\
-    ((  u8 *)(void *)(d))[7] = ((u8 *)(void *)(s))[7];}
+										 ((  u8 *)(void *)(d))[1] = ((u8 *)(void *)(s))[1];\
+										 ((  u8 *)(void *)(d))[2] = ((u8 *)(void *)(s))[2];\
+										 ((  u8 *)(void *)(d))[3] = ((u8 *)(void *)(s))[3];\
+										 ((  u8 *)(void *)(d))[4] = ((u8 *)(void *)(s))[4];\
+										 ((  u8 *)(void *)(d))[5] = ((u8 *)(void *)(s))[5];\
+										 ((  u8 *)(void *)(d))[6] = ((u8 *)(void *)(s))[6];\
+										 ((  u8 *)(void *)(d))[7] = ((u8 *)(void *)(s))[7];}
 #endif
 #endif
 
@@ -239,11 +239,11 @@
  * Rounding macros (Power of two boundaries only)
  */
 #define ACPI_ROUND_DOWN(value, boundary)     (((acpi_size)(value)) & \
-    (~(((acpi_size) boundary)-1)))
+						(~(((acpi_size) boundary)-1)))
 
-#define ACPI_ROUND_UP(value, boundary)       ((((acpi_size)(value)) + \
-    (((acpi_size) boundary)-1)) & \
-    (~(((acpi_size) boundary)-1)))
+#define ACPI_ROUND_UP(value, boundary)	     ((((acpi_size)(value)) + \
+						(((acpi_size) boundary)-1)) & \
+						(~(((acpi_size) boundary)-1)))
 
 /* Note: sizeof(acpi_size) evaluates to either 4 or 8 (32- vs 64-bit mode) */
 
@@ -264,7 +264,7 @@
 
 #define ACPI_ROUND_UP_TO(value, boundary)   (((value) + ((boundary)-1)) / (boundary))
 
-#define ACPI_IS_MISALIGNED(value)     (((acpi_size) value) & (sizeof(acpi_size)-1))
+#define ACPI_IS_MISALIGNED(value)	    (((acpi_size) value) & (sizeof(acpi_size)-1))
 
 /*
  * Bitmask creation
@@ -297,10 +297,10 @@
  */
 #if defined (ACPI_DISASSEMBLER) || defined (ACPI_DEBUG_OUTPUT)
 #define ACPI_OP(name, Pargs, Iargs, obj_type, class, type, flags) \
-  {name, (u32)(Pargs), (u32)(Iargs), (u32)(flags), obj_type, class, type}
+	{name, (u32)(Pargs), (u32)(Iargs), (u32)(flags), obj_type, class, type}
 #else
 #define ACPI_OP(name, Pargs, Iargs, obj_type, class, type, flags) \
-  {(u32)(Pargs), (u32)(Iargs), (u32)(flags), obj_type, class, type}
+	{(u32)(Pargs), (u32)(Iargs), (u32)(flags), obj_type, class, type}
 #endif
 
 #define ARG_TYPE_WIDTH                  5
@@ -352,7 +352,7 @@
 #define ACPI_WARN_PREDEFINED(plist)
 #define ACPI_INFO_PREDEFINED(plist)
 
-#endif    /* ACPI_NO_ERROR_MESSAGES */
+#endif		/* ACPI_NO_ERROR_MESSAGES */
 
 /*
  * Debug macros that are conditionally compiled
@@ -365,13 +365,13 @@
 #ifdef CONFIG_ACPI_DEBUG_FUNC_TRACE
 
 #define ACPI_FUNCTION_TRACE(a)          ACPI_FUNCTION_NAME(a) \
-  acpi_ut_trace(ACPI_DEBUG_PARAMETERS)
+			  acpi_ut_trace(ACPI_DEBUG_PARAMETERS)
 #define ACPI_FUNCTION_TRACE_PTR(a, b)   ACPI_FUNCTION_NAME(a) \
-  acpi_ut_trace_ptr(ACPI_DEBUG_PARAMETERS, (void *)b)
+					   acpi_ut_trace_ptr(ACPI_DEBUG_PARAMETERS, (void *)b)
 #define ACPI_FUNCTION_TRACE_U32(a, b)   ACPI_FUNCTION_NAME(a) \
-  acpi_ut_trace_u32(ACPI_DEBUG_PARAMETERS, (u32)b)
+							 acpi_ut_trace_u32(ACPI_DEBUG_PARAMETERS, (u32)b)
 #define ACPI_FUNCTION_TRACE_STR(a, b)   ACPI_FUNCTION_NAME(a) \
-  acpi_ut_trace_str(ACPI_DEBUG_PARAMETERS, (char *)b)
+									  acpi_ut_trace_str(ACPI_DEBUG_PARAMETERS, (char *)b)
 
 #define ACPI_FUNCTION_ENTRY()           acpi_ut_track_stack_ptr()
 
@@ -392,8 +392,8 @@
 #endif
 
 #define return_VOID                     ACPI_DO_WHILE0 ({ \
-    acpi_ut_exit (ACPI_DEBUG_PARAMETERS); \
-    return;})
+											acpi_ut_exit (ACPI_DEBUG_PARAMETERS); \
+											return;})
 /*
  * There are two versions of most of the return macros. The default version is
  * safer, since it avoids side-effects by guaranteeing that the argument will
@@ -406,40 +406,40 @@
 #ifndef ACPI_SIMPLE_RETURN_MACROS
 
 #define return_ACPI_STATUS(s)           ACPI_DO_WHILE0 ({ \
-    register acpi_status _s = (s); \
-    acpi_ut_status_exit (ACPI_DEBUG_PARAMETERS, _s); \
-    return (_s); })
+											register acpi_status _s = (s); \
+											acpi_ut_status_exit (ACPI_DEBUG_PARAMETERS, _s); \
+											return (_s); })
 #define return_PTR(s)                   ACPI_DO_WHILE0 ({ \
-    register void *_s = (void *) (s); \
-    acpi_ut_ptr_exit (ACPI_DEBUG_PARAMETERS, (u8 *) _s); \
-    return (_s); })
+											register void *_s = (void *) (s); \
+											acpi_ut_ptr_exit (ACPI_DEBUG_PARAMETERS, (u8 *) _s); \
+											return (_s); })
 #define return_VALUE(s)                 ACPI_DO_WHILE0 ({ \
-    register u64 _s = (s); \
-    acpi_ut_value_exit (ACPI_DEBUG_PARAMETERS, _s); \
-    return (_s); })
+											register u64 _s = (s); \
+											acpi_ut_value_exit (ACPI_DEBUG_PARAMETERS, _s); \
+											return (_s); })
 #define return_UINT8(s)                 ACPI_DO_WHILE0 ({ \
-    register u8 _s = (u8) (s); \
-    acpi_ut_value_exit (ACPI_DEBUG_PARAMETERS, (u64) _s); \
-    return (_s); })
+											register u8 _s = (u8) (s); \
+											acpi_ut_value_exit (ACPI_DEBUG_PARAMETERS, (u64) _s); \
+											return (_s); })
 #define return_UINT32(s)                ACPI_DO_WHILE0 ({ \
-    register u32 _s = (u32) (s); \
-    acpi_ut_value_exit (ACPI_DEBUG_PARAMETERS, (u64) _s); \
-    return (_s); })
-#else       /* Use original less-safe macros */
+											register u32 _s = (u32) (s); \
+											acpi_ut_value_exit (ACPI_DEBUG_PARAMETERS, (u64) _s); \
+											return (_s); })
+#else				/* Use original less-safe macros */
 
 #define return_ACPI_STATUS(s)           ACPI_DO_WHILE0 ({ \
-    acpi_ut_status_exit (ACPI_DEBUG_PARAMETERS, (s)); \
-    return((s)); })
+											acpi_ut_status_exit (ACPI_DEBUG_PARAMETERS, (s)); \
+											return((s)); })
 #define return_PTR(s)                   ACPI_DO_WHILE0 ({ \
-    acpi_ut_ptr_exit (ACPI_DEBUG_PARAMETERS, (u8 *) (s)); \
-    return((s)); })
+											acpi_ut_ptr_exit (ACPI_DEBUG_PARAMETERS, (u8 *) (s)); \
+											return((s)); })
 #define return_VALUE(s)                 ACPI_DO_WHILE0 ({ \
-    acpi_ut_value_exit (ACPI_DEBUG_PARAMETERS, (u64) (s)); \
-    return((s)); })
+											acpi_ut_value_exit (ACPI_DEBUG_PARAMETERS, (u64) (s)); \
+											return((s)); })
 #define return_UINT8(s)                 return_VALUE(s)
 #define return_UINT32(s)                return_VALUE(s)
 
-#endif        /* ACPI_SIMPLE_RETURN_MACROS */
+#endif				/* ACPI_SIMPLE_RETURN_MACROS */
 
 #else /* !CONFIG_ACPI_DEBUG_FUNC_TRACE */
 
@@ -474,7 +474,7 @@
 /* Stack and buffer dumping */
 
 #define ACPI_DUMP_STACK_ENTRY(a)        acpi_ex_dump_operand((a), 0)
-#define ACPI_DUMP_OPERANDS(a, b, c) acpi_ex_dump_operands(a, b, c)
+#define ACPI_DUMP_OPERANDS(a, b, c)	acpi_ex_dump_operands(a, b, c)
 
 #define ACPI_DUMP_ENTRY(a, b)           acpi_ns_dump_entry (a, b)
 #define ACPI_DUMP_PATHNAME(a, b, c, d)  acpi_ns_dump_pathname(a, b, c, d)
@@ -489,23 +489,23 @@
 #define ACPI_DEBUG_EXEC(a)
 #define ACPI_NORMAL_EXEC(a)             a;
 
-#define ACPI_DEBUG_DEFINE(a)    do { } while(0)
-#define ACPI_DEBUG_ONLY_MEMBERS(a)  do { } while(0)
-#define ACPI_FUNCTION_TRACE(a)    do { } while(0)
-#define ACPI_FUNCTION_TRACE_PTR(a, b) do { } while(0)
-#define ACPI_FUNCTION_TRACE_U32(a, b) do { } while(0)
-#define ACPI_FUNCTION_TRACE_STR(a, b) do { } while(0)
-#define ACPI_FUNCTION_EXIT    do { } while(0)
-#define ACPI_FUNCTION_STATUS_EXIT(s)  do { } while(0)
-#define ACPI_FUNCTION_VALUE_EXIT(s) do { } while(0)
-#define ACPI_FUNCTION_ENTRY()   do { } while(0)
-#define ACPI_DUMP_STACK_ENTRY(a)  do { } while(0)
+#define ACPI_DEBUG_DEFINE(a)		do { } while(0)
+#define ACPI_DEBUG_ONLY_MEMBERS(a)	do { } while(0)
+#define ACPI_FUNCTION_TRACE(a)		do { } while(0)
+#define ACPI_FUNCTION_TRACE_PTR(a, b)	do { } while(0)
+#define ACPI_FUNCTION_TRACE_U32(a, b)	do { } while(0)
+#define ACPI_FUNCTION_TRACE_STR(a, b)	do { } while(0)
+#define ACPI_FUNCTION_EXIT		do { } while(0)
+#define ACPI_FUNCTION_STATUS_EXIT(s)	do { } while(0)
+#define ACPI_FUNCTION_VALUE_EXIT(s)	do { } while(0)
+#define ACPI_FUNCTION_ENTRY()		do { } while(0)
+#define ACPI_DUMP_STACK_ENTRY(a)	do { } while(0)
 #define ACPI_DUMP_OPERANDS(a, b, c)     do { } while(0)
-#define ACPI_DUMP_ENTRY(a, b)   do { } while(0)
-#define ACPI_DUMP_TABLES(a, b)    do { } while(0)
-#define ACPI_DUMP_PATHNAME(a, b, c, d)  do { } while(0)
-#define ACPI_DUMP_RESOURCE_LIST(a)  do { } while(0)
-#define ACPI_DUMP_BUFFER(a, b)    do { } while(0)
+#define ACPI_DUMP_ENTRY(a, b)		do { } while(0)
+#define ACPI_DUMP_TABLES(a, b)		do { } while(0)
+#define ACPI_DUMP_PATHNAME(a, b, c, d)	do { } while(0)
+#define ACPI_DUMP_RESOURCE_LIST(a)	do { } while(0)
+#define ACPI_DUMP_BUFFER(a, b)		do { } while(0)
 
 #define return_VOID                     return
 #define return_ACPI_STATUS(s)           return(s)
@@ -514,7 +514,7 @@
 #define return_UINT32(s)                return(s)
 #define return_PTR(s)                   return(s)
 
-#endif        /* ACPI_DEBUG_OUTPUT */
+#endif				/* ACPI_DEBUG_OUTPUT */
 
 #if (!ACPI_REDUCED_HARDWARE)
 #define ACPI_HW_OPTIONAL_FUNCTION(addr)     addr
@@ -539,7 +539,7 @@
  * 2) Copy the object name
  */
 #define ACPI_ADD_OBJECT_NAME(a,b)       ACPI_MEMSET (a->common.name, ' ', sizeof (a->common.name));\
-  ACPI_STRNCPY (a->common.name, acpi_gbl_ns_type_names[b], sizeof (a->common.name))
+										ACPI_STRNCPY (a->common.name, acpi_gbl_ns_type_names[b], sizeof (a->common.name))
 #else
 
 #define ACPI_ADD_OBJECT_NAME(a,b)
@@ -574,11 +574,11 @@
 #define ACPI_FREE(a)                acpi_ut_free_and_track(a, ACPI_MEM_PARAMETERS)
 #define ACPI_MEM_TRACKING(a)        a
 
-#endif        /* ACPI_DBG_TRACK_ALLOCATIONS */
+#endif				/* ACPI_DBG_TRACK_ALLOCATIONS */
 
 /* Preemption point */
 #ifndef ACPI_PREEMPTION_POINT
 #define ACPI_PREEMPTION_POINT() /* no preemption */
 #endif
 
-#endif        /* ACMACROS_H */
+#endif				/* ACMACROS_H */

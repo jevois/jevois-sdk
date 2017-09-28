@@ -36,20 +36,20 @@
 */
 
 struct af9013_config {
-  /*
-   * I2C address
-   */
-  u8 i2c_addr;
-  
-  /*
-   * clock
-   * 20480000, 25000000, 28000000, 28800000
-   */
-  u32 clock;
-  
-  /*
-   * tuner
-   */
+	/*
+	 * I2C address
+	 */
+	u8 i2c_addr;
+
+	/*
+	 * clock
+	 * 20480000, 25000000, 28000000, 28800000
+	 */
+	u32 clock;
+
+	/*
+	 * tuner
+	 */
 #define AF9013_TUNER_MXL5003D      3 /* MaxLinear */
 #define AF9013_TUNER_MXL5005D     13 /* MaxLinear */
 #define AF9013_TUNER_MXL5005R     30 /* MaxLinear */
@@ -63,34 +63,34 @@ struct af9013_config {
 #define AF9013_TUNER_QT1010A     162 /* Quantek */
 #define AF9013_TUNER_MXL5007T    177 /* MaxLinear */
 #define AF9013_TUNER_TDA18218    179 /* NXP */
-  u8 tuner;
-  
-  /*
-   * IF frequency
-   */
-  u32 if_frequency;
-  
-  /*
-   * TS settings
-   */
+	u8 tuner;
+
+	/*
+	 * IF frequency
+	 */
+	u32 if_frequency;
+
+	/*
+	 * TS settings
+	 */
 #define AF9013_TS_USB       0
 #define AF9013_TS_PARALLEL  1
 #define AF9013_TS_SERIAL    2
-  u8 ts_mode: 2;
-  
-  /*
-   * input spectrum inversion
-   */
-  bool spec_inv;
-  
-  /*
-   * firmware API version
-   */
-  u8 api_version[4];
-  
-  /*
-   * GPIOs
-   */
+	u8 ts_mode:2;
+
+	/*
+	 * input spectrum inversion
+	 */
+	bool spec_inv;
+
+	/*
+	 * firmware API version
+	 */
+	u8 api_version[4];
+
+	/*
+	 * GPIOs
+	 */
 #define AF9013_GPIO_ON (1 << 0)
 #define AF9013_GPIO_EN (1 << 1)
 #define AF9013_GPIO_O  (1 << 2)
@@ -99,19 +99,19 @@ struct af9013_config {
 #define AF9013_GPIO_HI (AF9013_GPIO_ON|AF9013_GPIO_EN|AF9013_GPIO_O)
 #define AF9013_GPIO_TUNER_ON  (AF9013_GPIO_ON|AF9013_GPIO_EN)
 #define AF9013_GPIO_TUNER_OFF (AF9013_GPIO_ON|AF9013_GPIO_EN|AF9013_GPIO_O)
-  u8 gpio[4];
+	u8 gpio[4];
 };
 
 #if defined(CONFIG_DVB_AF9013) || \
-(defined(CONFIG_DVB_AF9013_MODULE) && defined(MODULE))
-extern struct dvb_frontend * af9013_attach (const struct af9013_config * config,
-    struct i2c_adapter * i2c);
+	(defined(CONFIG_DVB_AF9013_MODULE) && defined(MODULE))
+extern struct dvb_frontend *af9013_attach(const struct af9013_config *config,
+	struct i2c_adapter *i2c);
 #else
-static inline struct dvb_frontend * af9013_attach (
-  const struct af9013_config * config, struct i2c_adapter * i2c)
+static inline struct dvb_frontend *af9013_attach(
+const struct af9013_config *config, struct i2c_adapter *i2c)
 {
-  printk (KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
-  return NULL;
+	printk(KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
+	return NULL;
 }
 #endif /* CONFIG_DVB_AF9013 */
 

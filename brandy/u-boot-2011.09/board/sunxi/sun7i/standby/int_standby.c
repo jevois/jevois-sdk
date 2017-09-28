@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -34,22 +34,22 @@
  *
  *    返回值  ：
  *
- *    说明    ：  进入standby
- *        1) 清除DMA PENDING，保存DMA enable
- *        2) 关闭DMA AHB
+ *    说明    ：	进入standby
+ *				1) 清除DMA PENDING，保存DMA enable
+ *				2) 关闭DMA AHB
  *
  ************************************************************************************************************
  */
 
-int standby_int_init (void)
+int standby_int_init(void)
 {
-  
-  asm ("mrs r0, cpsr");
-  asm ("orr r0, r0, #(0x40|0x80)");
-  asm ("msr cpsr_c, r0");
-  
-  
-  return 0;
+
+    asm("mrs r0, cpsr");
+    asm("orr r0, r0, #(0x40|0x80)");
+    asm("msr cpsr_c, r0");
+
+
+    return 0;
 }
 /*
  ************************************************************************************************************
@@ -64,28 +64,28 @@ int standby_int_init (void)
  *
  *    返回值  ：
  *
- *    说明    ：  退出standby
- *        1) 打开DMA AHB
- *        2) 清除DMA PENDING，恢复DMA enable
+ *    说明    ：	退出standby
+ *				1) 打开DMA AHB
+ *				2) 清除DMA PENDING，恢复DMA enable
  *
  *
  ************************************************************************************************************
  */
-int standby_int_exit (void)
+int standby_int_exit(void)
 {
-  
-  asm ("mrs r0, cpsr");
-  asm ("bic r0, r0, #(0x40|0x80)");
-  asm ("msr cpsr_c, r0");
-  
-  return 0;
+
+    asm("mrs r0, cpsr");
+    asm("bic r0, r0, #(0x40|0x80)");
+    asm("msr cpsr_c, r0");
+
+    return 0;
 }
 
 #if 0
-int standby_int_query (void)
+int standby_int_query(void)
 {
-  
-  return 0;
+
+    return 0;
 }
 
 #endif

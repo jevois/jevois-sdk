@@ -36,27 +36,27 @@ typedef int status_t;
 #define EEPROM_OFFSET   0xC0000
 #define CPLD_OFFSET     0xD0000
 
-struct pmcc4_timeslot_param
-{
-  u_int8_t    card;       /* the card number */
-  u_int8_t    port;       /* the port number */
-  u_int8_t    _reserved1;
-  u_int8_t    _reserved2;
-  
-  /*
-   * each byte in bitmask below represents one timeslot (bitmask[0] is
-   * for timeslot 0 and so on), each bit in the byte selects timeslot
-   * bits for this channel (0xff - whole timeslot, 0x7f - 56kbps mode)
-   */
-  u_int8_t    bitmask[32];
-};
+    struct pmcc4_timeslot_param
+    {
+        u_int8_t    card;       /* the card number */
+        u_int8_t    port;       /* the port number */
+        u_int8_t    _reserved1;
+        u_int8_t    _reserved2;
 
-struct c4_musycc_param
-{
-  u_int8_t    RWportnum;
-  u_int16_t offset;
-  u_int32_t   value;
-};
+        /*
+         * each byte in bitmask below represents one timeslot (bitmask[0] is
+         * for timeslot 0 and so on), each bit in the byte selects timeslot
+         * bits for this channel (0xff - whole timeslot, 0x7f - 56kbps mode)
+         */
+        u_int8_t    bitmask[32];
+    };
+
+    struct c4_musycc_param
+    {
+        u_int8_t    RWportnum;
+                    u_int16_t offset;
+        u_int32_t   value;
+    };
 
 /*Alarm values */
 #define sbeE1RMAI      0x100
@@ -75,7 +75,7 @@ struct c4_musycc_param
 
 #include "pmcc4_private.h"
 
-char    *   get_hdlc_name (hdlc_device *);
+char       *get_hdlc_name (hdlc_device *);
 
 /*
  * external interface
@@ -88,10 +88,10 @@ status_t    c4_del_chan (int channum);
 status_t    c4_get_iidinfo (ci_t * ci, struct sbe_iid_info * iip);
 int         c4_is_chan_up (int channum);
 
-void    *   getuserbychan (int channum);
+void       *getuserbychan (int channum);
 void        pci_flush_write (ci_t * ci);
 void        sbecom_set_loglevel (int debuglevel);
-char    *   sbeid_get_bdname (ci_t * ci);
+char       *sbeid_get_bdname (ci_t * ci);
 void        sbeid_set_bdtype (ci_t * ci);
 void        sbeid_set_hdwbid (ci_t * ci);
 u_int32_t   sbeCrc (u_int8_t *, u_int32_t, u_int32_t, u_int32_t *);

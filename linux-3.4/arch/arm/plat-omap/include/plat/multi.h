@@ -99,4 +99,4 @@
 # endif
 #endif
 
-#endif  /* __PLAT_OMAP_MULTI_H */
+#endif	/* __PLAT_OMAP_MULTI_H */

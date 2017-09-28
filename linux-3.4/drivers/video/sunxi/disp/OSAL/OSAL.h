@@ -1,20 +1,20 @@
 /*
 *************************************************************************************
-*                               eBsp
-*            Operation System Adapter Layer
+*                         			eBsp
+*					   Operation System Adapter Layer
 *
-*       (c) Copyright 2006-2010, All winners Co,Ld.
-*             All Rights Reserved
+*				(c) Copyright 2006-2010, All winners Co,Ld.
+*							All	Rights Reserved
 *
-* File Name   : OSAL.h
+* File Name 	: OSAL.h
 *
-* Author    : javen
+* Author 		: javen
 *
-* Description   : 操作系统适配层
+* Description 	: 操作系统适配层
 *
-* History     :
-*      <author>       <time>        <version >        <desc>
-*       javen          2010-09-07          1.0         create this word
+* History 		:
+*      <author>    		<time>       	<version >    		<desc>
+*       javen     	   2010-09-07          1.0         create this word
 *
 *************************************************************************************
 */
@@ -24,14 +24,14 @@
 
 typedef struct
 {
-  char  gpio_name[32];
-  int port;
-  int port_num;
-  int mul_sel;
-  int pull;
-  int drv_level;
-  int data;
-  int gpio;
+    char  gpio_name[32];
+    int port;
+    int port_num;
+    int mul_sel;
+    int pull;
+    int drv_level;
+    int data;
+    int gpio;
 } disp_gpio_set_t;
 
 

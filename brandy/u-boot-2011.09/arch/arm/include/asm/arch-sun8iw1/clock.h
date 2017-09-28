@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -26,11 +26,11 @@
 #define _SUNXI_CLOCK_H
 
 
-extern int sunxi_clock_get_corepll (void);
-extern int sunxi_clock_set_corepll (int frequency, int core_vol);
-extern int sunxi_clock_set_pll6 (void);
-extern int sunxi_clock_set_mbus (void);
-extern int sunxi_clock_get_pll6 (void);
+extern int sunxi_clock_get_corepll(void);
+extern int sunxi_clock_set_corepll(int frequency, int core_vol);
+extern int sunxi_clock_set_pll6(void);
+extern int sunxi_clock_set_mbus(void);
+extern int sunxi_clock_get_pll6(void);
 
 
 #endif /* _SUNXI_CLOCK_H */

@@ -26,55 +26,55 @@
  */
 
 /* DMA channels, n = 0 ... 6 */
-#define SAA7134_RS_BA1(n)     ((0x200 >> 2) + 4*n)
-#define SAA7134_RS_BA2(n)     ((0x204 >> 2) + 4*n)
-#define SAA7134_RS_PITCH(n)     ((0x208 >> 2) + 4*n)
-#define SAA7134_RS_CONTROL(n)     ((0x20c >> 2) + 4*n)
-#define   SAA7134_RS_CONTROL_WSWAP    (0x01 << 25)
-#define   SAA7134_RS_CONTROL_BSWAP    (0x01 << 24)
-#define   SAA7134_RS_CONTROL_BURST_2    (0x01 << 21)
-#define   SAA7134_RS_CONTROL_BURST_4    (0x02 << 21)
-#define   SAA7134_RS_CONTROL_BURST_8    (0x03 << 21)
-#define   SAA7134_RS_CONTROL_BURST_16   (0x04 << 21)
-#define   SAA7134_RS_CONTROL_BURST_32   (0x05 << 21)
-#define   SAA7134_RS_CONTROL_BURST_64   (0x06 << 21)
-#define   SAA7134_RS_CONTROL_BURST_MAX    (0x07 << 21)
-#define   SAA7134_RS_CONTROL_ME     (0x01 << 20)
+#define SAA7134_RS_BA1(n)			((0x200 >> 2) + 4*n)
+#define SAA7134_RS_BA2(n)			((0x204 >> 2) + 4*n)
+#define SAA7134_RS_PITCH(n)			((0x208 >> 2) + 4*n)
+#define SAA7134_RS_CONTROL(n)			((0x20c >> 2) + 4*n)
+#define   SAA7134_RS_CONTROL_WSWAP		(0x01 << 25)
+#define   SAA7134_RS_CONTROL_BSWAP		(0x01 << 24)
+#define   SAA7134_RS_CONTROL_BURST_2		(0x01 << 21)
+#define   SAA7134_RS_CONTROL_BURST_4		(0x02 << 21)
+#define   SAA7134_RS_CONTROL_BURST_8		(0x03 << 21)
+#define   SAA7134_RS_CONTROL_BURST_16		(0x04 << 21)
+#define   SAA7134_RS_CONTROL_BURST_32		(0x05 << 21)
+#define   SAA7134_RS_CONTROL_BURST_64		(0x06 << 21)
+#define   SAA7134_RS_CONTROL_BURST_MAX		(0x07 << 21)
+#define   SAA7134_RS_CONTROL_ME			(0x01 << 20)
 #define SAA7134_FIFO_SIZE                       (0x2a0 >> 2)
 #define SAA7134_THRESHOULD                      (0x2a4 >> 2)
 
-#define SAA7133_NUM_SAMPLES     (0x588 >> 2)
-#define SAA7133_AUDIO_CHANNEL     (0x58c >> 2)
-#define SAA7133_AUDIO_FORMAT      (0x58f >> 2)
-#define SAA7133_DIGITAL_OUTPUT_SEL1   (0x46c >> 2)
-#define SAA7133_DIGITAL_OUTPUT_SEL2   (0x470 >> 2)
-#define SAA7133_DIGITAL_INPUT_XBAR1   (0x464 >> 2)
+#define SAA7133_NUM_SAMPLES			(0x588 >> 2)
+#define SAA7133_AUDIO_CHANNEL			(0x58c >> 2)
+#define SAA7133_AUDIO_FORMAT			(0x58f >> 2)
+#define SAA7133_DIGITAL_OUTPUT_SEL1		(0x46c >> 2)
+#define SAA7133_DIGITAL_OUTPUT_SEL2		(0x470 >> 2)
+#define SAA7133_DIGITAL_INPUT_XBAR1		(0x464 >> 2)
 #define SAA7133_ANALOG_IO_SELECT                (0x594 >> 2)
 
 /* main control */
 #define SAA7134_MAIN_CTRL                       (0x2a8 >> 2)
-#define   SAA7134_MAIN_CTRL_VPLLE   (1 << 15)
-#define   SAA7134_MAIN_CTRL_APLLE   (1 << 14)
-#define   SAA7134_MAIN_CTRL_EXOSC   (1 << 13)
-#define   SAA7134_MAIN_CTRL_EVFE1   (1 << 12)
-#define   SAA7134_MAIN_CTRL_EVFE2   (1 << 11)
-#define   SAA7134_MAIN_CTRL_ESFE    (1 << 10)
-#define   SAA7134_MAIN_CTRL_EBADC   (1 << 9)
-#define   SAA7134_MAIN_CTRL_EBDAC   (1 << 8)
-#define   SAA7134_MAIN_CTRL_TE6     (1 << 6)
-#define   SAA7134_MAIN_CTRL_TE5     (1 << 5)
-#define   SAA7134_MAIN_CTRL_TE4     (1 << 4)
-#define   SAA7134_MAIN_CTRL_TE3     (1 << 3)
-#define   SAA7134_MAIN_CTRL_TE2     (1 << 2)
-#define   SAA7134_MAIN_CTRL_TE1     (1 << 1)
-#define   SAA7134_MAIN_CTRL_TE0     (1 << 0)
+#define   SAA7134_MAIN_CTRL_VPLLE		(1 << 15)
+#define   SAA7134_MAIN_CTRL_APLLE		(1 << 14)
+#define   SAA7134_MAIN_CTRL_EXOSC		(1 << 13)
+#define   SAA7134_MAIN_CTRL_EVFE1		(1 << 12)
+#define   SAA7134_MAIN_CTRL_EVFE2		(1 << 11)
+#define   SAA7134_MAIN_CTRL_ESFE		(1 << 10)
+#define   SAA7134_MAIN_CTRL_EBADC		(1 << 9)
+#define   SAA7134_MAIN_CTRL_EBDAC		(1 << 8)
+#define   SAA7134_MAIN_CTRL_TE6			(1 << 6)
+#define   SAA7134_MAIN_CTRL_TE5			(1 << 5)
+#define   SAA7134_MAIN_CTRL_TE4			(1 << 4)
+#define   SAA7134_MAIN_CTRL_TE3			(1 << 3)
+#define   SAA7134_MAIN_CTRL_TE2			(1 << 2)
+#define   SAA7134_MAIN_CTRL_TE1			(1 << 1)
+#define   SAA7134_MAIN_CTRL_TE0			(1 << 0)
 
 /* DMA status */
 #define SAA7134_DMA_STATUS                      (0x2ac >> 2)
 
 /* audio / video status */
-#define SAA7134_AV_STATUS     (0x2c0 >> 2)
-#define   SAA7134_AV_STATUS_STEREO    (1 << 17)
+#define SAA7134_AV_STATUS			(0x2c0 >> 2)
+#define   SAA7134_AV_STATUS_STEREO		(1 << 17)
 #define   SAA7134_AV_STATUS_DUAL                (1 << 16)
 #define   SAA7134_AV_STATUS_PILOT               (1 << 15)
 #define   SAA7134_AV_STATUS_SMB                 (1 << 14)
@@ -112,14 +112,14 @@
 #define   SAA7134_IRQ1_INTE_RA0_0               (1 <<  0)
 
 #define SAA7134_IRQ2                            (0x2c8 >> 2)
-#define   SAA7134_IRQ2_INTE_GPIO23_N             (1 << 17)  /* negative edge */
-#define   SAA7134_IRQ2_INTE_GPIO23_P             (1 << 16)  /* positive edge */
-#define   SAA7134_IRQ2_INTE_GPIO22_N             (1 << 15)  /* negative edge */
-#define   SAA7134_IRQ2_INTE_GPIO22_P             (1 << 14)  /* positive edge */
-#define   SAA7134_IRQ2_INTE_GPIO18_N             (1 << 13)  /* negative edge */
-#define   SAA7134_IRQ2_INTE_GPIO18_P             (1 << 12)  /* positive edge */
-#define   SAA7134_IRQ2_INTE_GPIO16_N             (1 << 11)  /* negative edge */
-#define   SAA7134_IRQ2_INTE_GPIO16_P             (1 << 10)  /* positive edge */
+#define   SAA7134_IRQ2_INTE_GPIO23_N             (1 << 17)	/* negative edge */
+#define   SAA7134_IRQ2_INTE_GPIO23_P             (1 << 16)	/* positive edge */
+#define   SAA7134_IRQ2_INTE_GPIO22_N             (1 << 15)	/* negative edge */
+#define   SAA7134_IRQ2_INTE_GPIO22_P             (1 << 14)	/* positive edge */
+#define   SAA7134_IRQ2_INTE_GPIO18_N             (1 << 13)	/* negative edge */
+#define   SAA7134_IRQ2_INTE_GPIO18_P             (1 << 12)	/* positive edge */
+#define   SAA7134_IRQ2_INTE_GPIO16_N             (1 << 11)	/* negative edge */
+#define   SAA7134_IRQ2_INTE_GPIO16_P             (1 << 10)	/* positive edge */
 #define   SAA7134_IRQ2_INTE_SC2                 (1 <<  9)
 #define   SAA7134_IRQ2_INTE_SC1                 (1 <<  8)
 #define   SAA7134_IRQ2_INTE_SC0                 (1 <<  7)
@@ -365,8 +365,8 @@
 #define SAA7135_DSP_RWSTATE_RDB                 (1 << 1)
 #define SAA7135_DSP_RWSTATE_WRR                 (1 << 0)
 
-#define SAA7135_DSP_RWCLEAR     0x586
-#define SAA7135_DSP_RWCLEAR_RERR        1
+#define SAA7135_DSP_RWCLEAR			0x586
+#define SAA7135_DSP_RWCLEAR_RERR		    1
 
 #define SAA7133_I2S_AUDIO_CONTROL               0x591
 /* ------------------------------------------------------------------ */

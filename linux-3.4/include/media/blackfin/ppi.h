@@ -31,44 +31,44 @@
 struct ppi_if;
 
 struct ppi_params {
-  int width;
-  int height;
-  int bpp;
-  unsigned long ppi_control;
-  u32 int_mask;
-  int blank_clocks;
+	int width;
+	int height;
+	int bpp;
+	unsigned long ppi_control;
+	u32 int_mask;
+	int blank_clocks;
 };
 
 struct ppi_ops {
-  int (*attach_irq) (struct ppi_if * ppi, irq_handler_t handler);
-  void (*detach_irq) (struct ppi_if * ppi);
-  int (*start) (struct ppi_if * ppi);
-  int (*stop) (struct ppi_if * ppi);
-  int (*set_params) (struct ppi_if * ppi, struct ppi_params * params);
-  void (*update_addr) (struct ppi_if * ppi, unsigned long addr);
+	int (*attach_irq)(struct ppi_if *ppi, irq_handler_t handler);
+	void (*detach_irq)(struct ppi_if *ppi);
+	int (*start)(struct ppi_if *ppi);
+	int (*stop)(struct ppi_if *ppi);
+	int (*set_params)(struct ppi_if *ppi, struct ppi_params *params);
+	void (*update_addr)(struct ppi_if *ppi, unsigned long addr);
 };
 
 enum ppi_type {
-  PPI_TYPE_PPI,
-  PPI_TYPE_EPPI,
+	PPI_TYPE_PPI,
+	PPI_TYPE_EPPI,
 };
 
 struct ppi_info {
-  enum ppi_type type;
-  int dma_ch;
-  int irq_err;
-  void __iomem * base;
-  const unsigned short * pin_req;
+	enum ppi_type type;
+	int dma_ch;
+	int irq_err;
+	void __iomem *base;
+	const unsigned short *pin_req;
 };
 
 struct ppi_if {
-  unsigned long ppi_control;
-  const struct ppi_ops * ops;
-  const struct ppi_info * info;
-  bool err_int;
-  void * priv;
+	unsigned long ppi_control;
+	const struct ppi_ops *ops;
+	const struct ppi_info *info;
+	bool err_int;
+	void *priv;
 };
 
-struct ppi_if * ppi_create_instance (const struct ppi_info * info);
-void ppi_delete_instance (struct ppi_if * ppi);
+struct ppi_if *ppi_create_instance(const struct ppi_info *info);
+void ppi_delete_instance(struct ppi_if *ppi);
 #endif

@@ -30,25 +30,25 @@
 
 #define __ARM_GPIOLIB_COMPLEX
 
-static inline int gpio_get_value (unsigned gpio)
+static inline int gpio_get_value(unsigned gpio)
 {
-  if (__builtin_constant_p (gpio) && (gpio <= GPIO_MAX) )
-  { return GPLR & GPIO_GPIO (gpio); }
-  else
-  { return __gpio_get_value (gpio); }
+	if (__builtin_constant_p(gpio) && (gpio <= GPIO_MAX))
+		return GPLR & GPIO_GPIO(gpio);
+	else
+		return __gpio_get_value(gpio);
 }
 
-static inline void gpio_set_value (unsigned gpio, int value)
+static inline void gpio_set_value(unsigned gpio, int value)
 {
-  if (__builtin_constant_p (gpio) && (gpio <= GPIO_MAX) )
-    if (value)
-    { GPSR = GPIO_GPIO (gpio); }
-    else
-    { GPCR = GPIO_GPIO (gpio); }
-  else
-  { __gpio_set_value (gpio, value); }
+	if (__builtin_constant_p(gpio) && (gpio <= GPIO_MAX))
+		if (value)
+			GPSR = GPIO_GPIO(gpio);
+		else
+			GPCR = GPIO_GPIO(gpio);
+	else
+		__gpio_set_value(gpio, value);
 }
 
-#define gpio_cansleep __gpio_cansleep
+#define gpio_cansleep	__gpio_cansleep
 
 #endif

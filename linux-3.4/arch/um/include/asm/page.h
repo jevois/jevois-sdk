@@ -10,9 +10,9 @@
 #include <linux/const.h>
 
 /* PAGE_SHIFT determines the page size */
-#define PAGE_SHIFT  12
-#define PAGE_SIZE (_AC(1, UL) << PAGE_SHIFT)
-#define PAGE_MASK (~(PAGE_SIZE-1))
+#define PAGE_SHIFT	12
+#define PAGE_SIZE	(_AC(1, UL) << PAGE_SHIFT)
+#define PAGE_MASK	(~(PAGE_SIZE-1))
 
 #ifndef __ASSEMBLY__
 
@@ -25,11 +25,11 @@ struct page;
  * These are used to make use of C type-checking..
  */
 
-#define clear_page(page)  memset((void *)(page), 0, PAGE_SIZE)
-#define copy_page(to,from)  memcpy((void *)(to), (void *)(from), PAGE_SIZE)
+#define clear_page(page)	memset((void *)(page), 0, PAGE_SIZE)
+#define copy_page(to,from)	memcpy((void *)(to), (void *)(from), PAGE_SIZE)
 
-#define clear_user_page(page, vaddr, pg)  clear_page(page)
-#define copy_user_page(to, from, vaddr, pg) copy_page(to, from)
+#define clear_user_page(page, vaddr, pg)	clear_page(page)
+#define copy_user_page(to, from, vaddr, pg)	copy_page(to, from)
 
 #if defined(CONFIG_3_LEVEL_PGTABLES) && !defined(CONFIG_64BIT)
 
@@ -42,14 +42,14 @@ typedef struct { unsigned long pgd; } pgd_t;
 #define pte_set_bits(pte, bits) ((pte).pte_low |= (bits))
 #define pte_clear_bits(pte, bits) ((pte).pte_low &= ~(bits))
 #define pte_copy(to, from) ({ (to).pte_high = (from).pte_high; \
-    smp_wmb(); \
-    (to).pte_low = (from).pte_low; })
+			      smp_wmb(); \
+			      (to).pte_low = (from).pte_low; })
 #define pte_is_zero(pte) (!((pte).pte_low & ~_PAGE_NEWPAGE) && !(pte).pte_high)
 #define pte_set_val(pte, phys, prot) \
-  ({ (pte).pte_high = (phys) >> 32; \
-    (pte).pte_low = (phys) | pgprot_val(prot); })
+	({ (pte).pte_high = (phys) >> 32; \
+	   (pte).pte_low = (phys) | pgprot_val(prot); })
 
-#define pmd_val(x)  ((x).pmd)
+#define pmd_val(x)	((x).pmd)
 #define __pmd(x) ((pmd_t) { (x) } )
 
 typedef unsigned long long pfn_t;
@@ -62,11 +62,11 @@ typedef struct { unsigned long pgd; } pgd_t;
 
 #ifdef CONFIG_3_LEVEL_PGTABLES
 typedef struct { unsigned long pmd; } pmd_t;
-#define pmd_val(x)  ((x).pmd)
+#define pmd_val(x)	((x).pmd)
 #define __pmd(x) ((pmd_t) { (x) } )
 #endif
 
-#define pte_val(x)  ((x).pte)
+#define pte_val(x)	((x).pte)
 
 
 #define pte_get_bits(p, bits) ((p).pte & (bits))
@@ -83,14 +83,14 @@ typedef unsigned long phys_t;
 
 typedef struct { unsigned long pgprot; } pgprot_t;
 
-typedef struct page * pgtable_t;
+typedef struct page *pgtable_t;
 
-#define pgd_val(x)  ((x).pgd)
-#define pgprot_val(x) ((x).pgprot)
+#define pgd_val(x)	((x).pgd)
+#define pgprot_val(x)	((x).pgprot)
 
 #define __pte(x) ((pte_t) { (x) } )
 #define __pgd(x) ((pgd_t) { (x) } )
-#define __pgprot(x) ((pgprot_t) { (x) } )
+#define __pgprot(x)	((pgprot_t) { (x) } )
 
 extern unsigned long uml_physmem;
 
@@ -118,5 +118,5 @@ extern unsigned long uml_physmem;
 #include <asm-generic/memory_model.h>
 #include <asm-generic/getorder.h>
 
-#endif  /* __ASSEMBLY__ */
-#endif  /* __UM_PAGE_H */
+#endif	/* __ASSEMBLY__ */
+#endif	/* __UM_PAGE_H */

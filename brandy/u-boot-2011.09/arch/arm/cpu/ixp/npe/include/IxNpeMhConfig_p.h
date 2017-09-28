@@ -6,16 +6,16 @@
  *
  * @brief This file contains the private API for the Configuration module.
  *
- *
+ * 
  * @par
  * IXP400 SW Release version 2.0
- *
+ * 
  * -- Copyright Notice --
- *
+ * 
  * @par
  * Copyright 2001-2005, Intel Corporation.
  * All rights reserved.
- *
+ * 
  * @par
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -28,7 +28,7 @@
  * 3. Neither the name of the Intel Corporation nor the names of its contributors
  *    may be used to endorse or promote products derived from this software
  *    without specific prior written permission.
- *
+ * 
  * @par
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS IS''
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -41,7 +41,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
+ * 
  * @par
  * -- End of Copyright Notice --
 */
@@ -50,7 +50,7 @@
  * @defgroup IxNpeMhConfig_p IxNpeMhConfig_p
  *
  * @brief The private API for the Configuration module.
- *
+ * 
  * @{
  */
 
@@ -67,30 +67,30 @@
  */
 /* enable function inlining for performances */
 #ifdef IXNPEMHSOLICITEDCBMGR_C
-/* Non-inline functions will be defined in this translation unit.
-   Reason is that in GNU Compiler, if the Optimization is turn off, all extern inline
-   functions will not be compiled.
+/* Non-inline functions will be defined in this translation unit. 
+	 Reason is that in GNU Compiler, if the Optimization is turn off, all extern inline
+	 functions will not be compiled.
 */
-#   ifndef __wince
-#     ifndef IXNPEMHCONFIG_INLINE
-#       define IXNPEMHCONFIG_INLINE
-#     endif
-#   else
-#     ifndef IXNPEMHCONFIG_INLINE
-#       define IXNPEMHCONFIG_INLINE IX_OSAL_INLINE_EXTERN
-#     endif
-#   endif /* __wince*/
+#		ifndef __wince
+#			ifndef IXNPEMHCONFIG_INLINE
+#				define IXNPEMHCONFIG_INLINE 
+#			endif
+#		else
+#			ifndef IXNPEMHCONFIG_INLINE
+#				define IXNPEMHCONFIG_INLINE IX_OSAL_INLINE_EXTERN
+#			endif
+#		endif /* __wince*/
 
 #else
 
-#   ifndef IXNPEMHCONFIG_INLINE
-#     define IXNPEMHCONFIG_INLINE IX_OSAL_INLINE_EXTERN
-#   endif /* IXNPEMHCONFIG_INLINE */
+#		ifndef IXNPEMHCONFIG_INLINE
+#			define IXNPEMHCONFIG_INLINE IX_OSAL_INLINE_EXTERN
+#		endif /* IXNPEMHCONFIG_INLINE */
 #endif /* IXNPEMHSOLICITEDCBMGR_C */
 /*
  * Typedefs and #defines, etc.
  */
-
+ 
 typedef void (*IxNpeMhConfigIsr) (int); /**< ISR function pointer */
 
 /**
@@ -102,15 +102,15 @@ typedef void (*IxNpeMhConfigIsr) (int); /**< ISR function pointer */
 
 typedef struct
 {
-  IxOsalMutex mutex;          /**< mutex */
-  UINT32 interruptId;     /**< interrupt ID */
-  UINT32 virtualRegisterBase; /**< register virtual base address */
-  UINT32 statusRegister;      /**< status register virtual address */
-  UINT32 controlRegister;     /**< control register virtual address */
-  UINT32 inFifoRegister;      /**< inFIFO register virutal address */
-  UINT32 outFifoRegister;     /**< outFIFO register virtual address */
-  IxNpeMhConfigIsr isr;   /**< isr routine for handling interrupt */
-  BOOL oldInterruptState; /**< old interrupt state (TRUE => enabled) */
+    IxOsalMutex mutex;          /**< mutex */
+    UINT32 interruptId;     /**< interrupt ID */
+    UINT32 virtualRegisterBase; /**< register virtual base address */
+    UINT32 statusRegister;      /**< status register virtual address */
+    UINT32 controlRegister;     /**< control register virtual address */
+    UINT32 inFifoRegister;      /**< inFIFO register virutal address */
+    UINT32 outFifoRegister;     /**< outFIFO register virtual address */
+    IxNpeMhConfigIsr isr;   /**< isr routine for handling interrupt */
+    BOOL oldInterruptState; /**< old interrupt state (TRUE => enabled) */
 } IxNpeMhConfigNpeInfo;
 
 
@@ -209,7 +209,7 @@ extern IxNpeMhConfigNpeInfo ixNpeMhConfigNpeInfo[IX_NPEMH_NUM_NPES];
  */
 
 void ixNpeMhConfigInitialize (
-  IxNpeMhNpeInterrupts npeInterrupts);
+    IxNpeMhNpeInterrupts npeInterrupts);
 
 /**
  * @fn void ixNpeMhConfigUninit (void)
@@ -238,8 +238,8 @@ void ixNpeMhConfigUninit (void);
  */
 
 void ixNpeMhConfigIsrRegister (
-  IxNpeMhNpeId npeId,
-  IxNpeMhConfigIsr isr);
+    IxNpeMhNpeId npeId,
+    IxNpeMhConfigIsr isr);
 
 /**
  * @fn BOOL ixNpeMhConfigNpeInterruptEnable (
@@ -254,7 +254,7 @@ void ixNpeMhConfigIsrRegister (
  */
 
 BOOL ixNpeMhConfigNpeInterruptEnable (
-  IxNpeMhNpeId npeId);
+    IxNpeMhNpeId npeId);
 
 /**
  * @fn BOOL ixNpeMhConfigNpeInterruptDisable (
@@ -269,7 +269,7 @@ BOOL ixNpeMhConfigNpeInterruptEnable (
  */
 
 BOOL ixNpeMhConfigNpeInterruptDisable (
-  IxNpeMhNpeId npeId);
+    IxNpeMhNpeId npeId);
 
 /**
  * @fn IxNpeMhMessageId ixNpeMhConfigMessageIdGet (
@@ -283,7 +283,7 @@ BOOL ixNpeMhConfigNpeInterruptDisable (
  */
 
 IxNpeMhMessageId ixNpeMhConfigMessageIdGet (
-  IxNpeMhMessage message);
+    IxNpeMhMessage message);
 
 /**
  * @fn BOOL ixNpeMhConfigNpeIdIsValid (
@@ -297,7 +297,7 @@ IxNpeMhMessageId ixNpeMhConfigMessageIdGet (
  */
 
 BOOL ixNpeMhConfigNpeIdIsValid (
-  IxNpeMhNpeId npeId);
+    IxNpeMhNpeId npeId);
 
 /**
  * @fn void ixNpeMhConfigLockGet (
@@ -313,7 +313,7 @@ BOOL ixNpeMhConfigNpeIdIsValid (
  */
 
 void ixNpeMhConfigLockGet (
-  IxNpeMhNpeId npeId);
+    IxNpeMhNpeId npeId);
 
 /**
  * @fn void ixNpeMhConfigLockRelease (
@@ -329,7 +329,7 @@ void ixNpeMhConfigLockGet (
  */
 
 void ixNpeMhConfigLockRelease (
-  IxNpeMhNpeId npeId);
+    IxNpeMhNpeId npeId);
 
 /**
  * @fn BOOL ixNpeMhConfigInFifoIsEmpty (
@@ -344,7 +344,7 @@ void ixNpeMhConfigLockRelease (
  */
 
 IXNPEMHCONFIG_INLINE BOOL ixNpeMhConfigInFifoIsEmpty (
-  IxNpeMhNpeId npeId);
+    IxNpeMhNpeId npeId);
 
 /**
  * @fn BOOL ixNpeMhConfigInFifoIsFull (
@@ -359,7 +359,7 @@ IXNPEMHCONFIG_INLINE BOOL ixNpeMhConfigInFifoIsEmpty (
  */
 
 IXNPEMHCONFIG_INLINE BOOL ixNpeMhConfigInFifoIsFull (
-  IxNpeMhNpeId npeId);
+    IxNpeMhNpeId npeId);
 
 /**
  * @fn BOOL ixNpeMhConfigOutFifoIsEmpty (
@@ -374,7 +374,7 @@ IXNPEMHCONFIG_INLINE BOOL ixNpeMhConfigInFifoIsFull (
  */
 
 IXNPEMHCONFIG_INLINE BOOL ixNpeMhConfigOutFifoIsEmpty (
-  IxNpeMhNpeId npeId);
+    IxNpeMhNpeId npeId);
 
 /**
  * @fn BOOL ixNpeMhConfigOutFifoIsFull (
@@ -389,7 +389,7 @@ IXNPEMHCONFIG_INLINE BOOL ixNpeMhConfigOutFifoIsEmpty (
  */
 
 IXNPEMHCONFIG_INLINE BOOL ixNpeMhConfigOutFifoIsFull (
-  IxNpeMhNpeId npeId);
+    IxNpeMhNpeId npeId);
 
 /**
  * @fn IX_STATUS ixNpeMhConfigInFifoWrite (
@@ -397,10 +397,10 @@ IXNPEMHCONFIG_INLINE BOOL ixNpeMhConfigOutFifoIsFull (
            IxNpeMhMessage message)
  *
  * @brief This function writes a message to a NPE's inFIFO.  The caller
- * must first check that the NPE's inFifo is not full. After writing the first
+ * must first check that the NPE's inFifo is not full. After writing the first 
  * word of the message, this function will keep polling NPE's inFIFO is not
- * full to write the second word. If inFIFO is not available after maximum
- * retries (IX_NPE_MH_MAX_NUM_OF_RETRIES), this function will return TIMEOUT
+ * full to write the second word. If inFIFO is not available after maximum 
+ * retries (IX_NPE_MH_MAX_NUM_OF_RETRIES), this function will return TIMEOUT 
  * status to indicate NPE hang / halt.
  *
  * @param IxNpeMhNpeId npeId (in) - The ID of the NPE for which the inFIFO
@@ -411,8 +411,8 @@ IXNPEMHCONFIG_INLINE BOOL ixNpeMhConfigOutFifoIsFull (
  */
 
 IX_STATUS ixNpeMhConfigInFifoWrite (
-  IxNpeMhNpeId npeId,
-  IxNpeMhMessage message);
+    IxNpeMhNpeId npeId,
+    IxNpeMhMessage message);
 
 /**
  * @fn IX_STATUS ixNpeMhConfigOutFifoRead (
@@ -420,10 +420,10 @@ IX_STATUS ixNpeMhConfigInFifoWrite (
            IxNpeMhMessage *message)
  *
  * @brief This function reads a message from a NPE's outFIFO.  The caller
- * must first check that the NPE's outFifo is not empty. After reading the first
+ * must first check that the NPE's outFifo is not empty. After reading the first 
  * word of the message, this function will keep polling NPE's outFIFO is not
- * empty to read the second word. If outFIFO is empty after maximum
- * retries (IX_NPE_MH_MAX_NUM_OF_RETRIES), this function will return TIMEOUT
+ * empty to read the second word. If outFIFO is empty after maximum 
+ * retries (IX_NPE_MH_MAX_NUM_OF_RETRIES), this function will return TIMEOUT 
  * status to indicate NPE hang / halt.
  *
  * @param IxNpeMhNpeId npeId (in) - The ID of the NPE for which the outFIFO
@@ -434,8 +434,8 @@ IX_STATUS ixNpeMhConfigInFifoWrite (
  */
 
 IX_STATUS ixNpeMhConfigOutFifoRead (
-  IxNpeMhNpeId npeId,
-  IxNpeMhMessage * message);
+    IxNpeMhNpeId npeId,
+    IxNpeMhMessage *message);
 
 /**
  * @fn void ixNpeMhConfigShow (
@@ -451,7 +451,7 @@ IX_STATUS ixNpeMhConfigOutFifoRead (
  */
 
 void ixNpeMhConfigShow (
-  IxNpeMhNpeId npeId);
+    IxNpeMhNpeId npeId);
 
 /**
  * @fn void ixNpeMhConfigShowReset (
@@ -467,29 +467,29 @@ void ixNpeMhConfigShow (
  */
 
 void ixNpeMhConfigShowReset (
-  IxNpeMhNpeId npeId);
+    IxNpeMhNpeId npeId);
 
 /*
  * Inline functions
  */
-
+ 
 /*
  * This inline function checks if a NPE's inFIFO is empty.
  */
 
 IXNPEMHCONFIG_INLINE
 BOOL ixNpeMhConfigInFifoIsEmpty (
-  IxNpeMhNpeId npeId)
+    IxNpeMhNpeId npeId)
 {
-  UINT32 ifne;
-  volatile UINT32 * statusReg =
-    (UINT32 *) ixNpeMhConfigNpeInfo[npeId].statusRegister;
-    
-  /* get the IFNE (InFifoNotEmpty) bit of the status register */
-  IX_NPEMH_REGISTER_READ_BITS (statusReg, &ifne, IX_NPEMH_NPE_STAT_IFNE);
-  
-  /* if the IFNE status bit is unset then the inFIFO is empty */
-  return (ifne == 0);
+    UINT32 ifne;
+    volatile UINT32 *statusReg =
+        (UINT32 *)ixNpeMhConfigNpeInfo[npeId].statusRegister;
+
+    /* get the IFNE (InFifoNotEmpty) bit of the status register */
+    IX_NPEMH_REGISTER_READ_BITS (statusReg, &ifne, IX_NPEMH_NPE_STAT_IFNE);
+
+    /* if the IFNE status bit is unset then the inFIFO is empty */
+    return (ifne == 0);
 }
 
 
@@ -498,17 +498,17 @@ BOOL ixNpeMhConfigInFifoIsEmpty (
  */
 IXNPEMHCONFIG_INLINE
 BOOL ixNpeMhConfigInFifoIsFull (
-  IxNpeMhNpeId npeId)
+    IxNpeMhNpeId npeId)
 {
-  UINT32 ifnf;
-  volatile UINT32 * statusReg =
-    (UINT32 *) ixNpeMhConfigNpeInfo[npeId].statusRegister;
-    
-  /* get the IFNF (InFifoNotFull) bit of the status register */
-  IX_NPEMH_REGISTER_READ_BITS (statusReg, &ifnf, IX_NPEMH_NPE_STAT_IFNF);
-  
-  /* if the IFNF status bit is unset then the inFIFO is full */
-  return (ifnf == 0);
+    UINT32 ifnf;
+    volatile UINT32 *statusReg =
+        (UINT32 *)ixNpeMhConfigNpeInfo[npeId].statusRegister;
+
+    /* get the IFNF (InFifoNotFull) bit of the status register */
+    IX_NPEMH_REGISTER_READ_BITS (statusReg, &ifnf, IX_NPEMH_NPE_STAT_IFNF);
+
+    /* if the IFNF status bit is unset then the inFIFO is full */
+    return (ifnf == 0);
 }
 
 
@@ -517,17 +517,17 @@ BOOL ixNpeMhConfigInFifoIsFull (
  */
 IXNPEMHCONFIG_INLINE
 BOOL ixNpeMhConfigOutFifoIsEmpty (
-  IxNpeMhNpeId npeId)
+    IxNpeMhNpeId npeId)
 {
-  UINT32 ofne;
-  volatile UINT32 * statusReg =
-    (UINT32 *) ixNpeMhConfigNpeInfo[npeId].statusRegister;
-    
-  /* get the OFNE (OutFifoNotEmpty) bit of the status register */
-  IX_NPEMH_REGISTER_READ_BITS (statusReg, &ofne, IX_NPEMH_NPE_STAT_OFNE);
-  
-  /* if the OFNE status bit is unset then the outFIFO is empty */
-  return (ofne == 0);
+    UINT32 ofne;
+    volatile UINT32 *statusReg =
+        (UINT32 *)ixNpeMhConfigNpeInfo[npeId].statusRegister;
+
+    /* get the OFNE (OutFifoNotEmpty) bit of the status register */
+    IX_NPEMH_REGISTER_READ_BITS (statusReg, &ofne, IX_NPEMH_NPE_STAT_OFNE);
+
+    /* if the OFNE status bit is unset then the outFIFO is empty */
+    return (ofne == 0);
 }
 
 /*
@@ -535,17 +535,17 @@ BOOL ixNpeMhConfigOutFifoIsEmpty (
  */
 IXNPEMHCONFIG_INLINE
 BOOL ixNpeMhConfigOutFifoIsFull (
-  IxNpeMhNpeId npeId)
+    IxNpeMhNpeId npeId)
 {
-  UINT32 ofnf;
-  volatile UINT32 * statusReg =
-    (UINT32 *) ixNpeMhConfigNpeInfo[npeId].statusRegister;
-    
-  /* get the OFNF (OutFifoNotFull) bit of the status register */
-  IX_NPEMH_REGISTER_READ_BITS (statusReg, &ofnf, IX_NPEMH_NPE_STAT_OFNF);
-  
-  /* if the OFNF status bit is unset then the outFIFO is full */
-  return (ofnf == 0);
+    UINT32 ofnf;
+    volatile UINT32 *statusReg =
+        (UINT32 *)ixNpeMhConfigNpeInfo[npeId].statusRegister;
+
+    /* get the OFNF (OutFifoNotFull) bit of the status register */
+    IX_NPEMH_REGISTER_READ_BITS (statusReg, &ofnf, IX_NPEMH_NPE_STAT_OFNF);
+
+    /* if the OFNF status bit is unset then the outFIFO is full */
+    return (ofnf == 0);
 }
 
 #endif /* IXNPEMHCONFIG_P_H */

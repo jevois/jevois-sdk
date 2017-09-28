@@ -10,10 +10,10 @@
 #define Explicit_Offset_Address_E_DDC_Read  6
 #define Implicit_Offset_Address_E_DDC_Read  7
 
-extern __u8 Device_Support_VIC[512];
-extern __s32 ParseEDID (void);
-extern __u32 GetIsHdmi (void);
-extern __u32 GetIsYUV (void);
+extern __u8	Device_Support_VIC[512];
+extern __s32 ParseEDID(void);
+extern __u32 GetIsHdmi(void);
+extern __u32 GetIsYUV(void);
 
 
 #endif

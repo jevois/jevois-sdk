@@ -6,12 +6,12 @@
 
 /* data for QUIRK_MIDI_FIXED_ENDPOINT */
 struct snd_usb_midi_endpoint_info {
-  int8_t   out_ep;  /* ep number, 0 autodetect */
-  uint8_t  out_interval;  /* interval for interrupt endpoints */
-  int8_t   in_ep;
-  uint8_t  in_interval;
-  uint16_t out_cables;  /* bitmask */
-  uint16_t in_cables; /* bitmask */
+	int8_t   out_ep;	/* ep number, 0 autodetect */
+	uint8_t  out_interval;	/* interval for interrupt endpoints */
+	int8_t   in_ep;
+	uint8_t  in_interval;
+	uint16_t out_cables;	/* bitmask */
+	uint16_t in_cables;	/* bitmask */
 };
 
 /* for QUIRK_MIDI_YAMAHA, data is NULL */
@@ -39,12 +39,12 @@ struct snd_usb_midi_endpoint_info {
 
 /* for QUIRK_MIDI_AKAI, data is NULL */
 
-int snd_usbmidi_create (struct snd_card * card,
-                        struct usb_interface * iface,
-                        struct list_head * midi_list,
-                        const struct snd_usb_audio_quirk * quirk);
-void snd_usbmidi_input_stop (struct list_head * p);
-void snd_usbmidi_input_start (struct list_head * p);
-void snd_usbmidi_disconnect (struct list_head * p);
+int snd_usbmidi_create(struct snd_card *card,
+		       struct usb_interface *iface,
+		       struct list_head *midi_list,
+		       const struct snd_usb_audio_quirk *quirk);
+void snd_usbmidi_input_stop(struct list_head* p);
+void snd_usbmidi_input_start(struct list_head* p);
+void snd_usbmidi_disconnect(struct list_head *p);
 
 #endif /* __USBMIDI_H */

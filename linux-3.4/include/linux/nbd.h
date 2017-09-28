@@ -17,21 +17,21 @@
 
 #include <linux/types.h>
 
-#define NBD_SET_SOCK  _IO( 0xab, 0 )
-#define NBD_SET_BLKSIZE _IO( 0xab, 1 )
-#define NBD_SET_SIZE  _IO( 0xab, 2 )
-#define NBD_DO_IT _IO( 0xab, 3 )
-#define NBD_CLEAR_SOCK  _IO( 0xab, 4 )
-#define NBD_CLEAR_QUE _IO( 0xab, 5 )
-#define NBD_PRINT_DEBUG _IO( 0xab, 6 )
-#define NBD_SET_SIZE_BLOCKS _IO( 0xab, 7 )
+#define NBD_SET_SOCK	_IO( 0xab, 0 )
+#define NBD_SET_BLKSIZE	_IO( 0xab, 1 )
+#define NBD_SET_SIZE	_IO( 0xab, 2 )
+#define NBD_DO_IT	_IO( 0xab, 3 )
+#define NBD_CLEAR_SOCK	_IO( 0xab, 4 )
+#define NBD_CLEAR_QUE	_IO( 0xab, 5 )
+#define NBD_PRINT_DEBUG	_IO( 0xab, 6 )
+#define NBD_SET_SIZE_BLOCKS	_IO( 0xab, 7 )
 #define NBD_DISCONNECT  _IO( 0xab, 8 )
 #define NBD_SET_TIMEOUT _IO( 0xab, 9 )
 
 enum {
-  NBD_CMD_READ = 0,
-  NBD_CMD_WRITE = 1,
-  NBD_CMD_DISC = 2
+	NBD_CMD_READ = 0,
+	NBD_CMD_WRITE = 1,
+	NBD_CMD_DISC = 2
 };
 
 #define nbd_cmd(req) ((req)->cmd[0])
@@ -49,25 +49,25 @@ enum {
 struct request;
 
 struct nbd_device {
-  int flags;
-  int harderror;    /* Code of hard error     */
-  struct socket * sock;
-  struct file * file;   /* If == NULL, device is not ready, yet */
-  int magic;
-  
-  spinlock_t queue_lock;
-  struct list_head queue_head;  /* Requests waiting result */
-  struct request * active_req;
-  wait_queue_head_t active_wq;
-  struct list_head waiting_queue; /* Requests to be sent */
-  wait_queue_head_t waiting_wq;
-  
-  struct mutex tx_lock;
-  struct gendisk * disk;
-  int blksize;
-  u64 bytesize;
-  pid_t pid; /* pid of nbd-client, if attached */
-  int xmit_timeout;
+	int flags;
+	int harderror;		/* Code of hard error			*/
+	struct socket * sock;
+	struct file * file; 	/* If == NULL, device is not ready, yet	*/
+	int magic;
+
+	spinlock_t queue_lock;
+	struct list_head queue_head;	/* Requests waiting result */
+	struct request *active_req;
+	wait_queue_head_t active_wq;
+	struct list_head waiting_queue;	/* Requests to be sent */
+	wait_queue_head_t waiting_wq;
+
+	struct mutex tx_lock;
+	struct gendisk *disk;
+	int blksize;
+	u64 bytesize;
+	pid_t pid; /* pid of nbd-client, if attached */
+	int xmit_timeout;
 };
 
 #endif
@@ -83,20 +83,20 @@ struct nbd_device {
  * server. All data are in network byte order.
  */
 struct nbd_request {
-  __be32 magic;
-  __be32 type;  /* == READ || == WRITE  */
-  char handle[8];
-  __be64 from;
-  __be32 len;
-} __attribute__ ( (packed) );
+	__be32 magic;
+	__be32 type;	/* == READ || == WRITE 	*/
+	char handle[8];
+	__be64 from;
+	__be32 len;
+} __attribute__((packed));
 
 /*
  * This is the reply packet that nbd-server sends back to the client after
  * it has completed an I/O request (or an error occurs).
  */
 struct nbd_reply {
-  __be32 magic;
-  __be32 error;   /* 0 = ok, else error */
-  char handle[8];   /* handle you got from request  */
+	__be32 magic;
+	__be32 error;		/* 0 = ok, else error	*/
+	char handle[8];		/* handle you got from request	*/
 };
 #endif

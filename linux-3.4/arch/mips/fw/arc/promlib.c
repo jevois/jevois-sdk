@@ -20,24 +20,24 @@
  * in some way. You should be careful with them.
  */
 
-void prom_putchar (char c)
+void prom_putchar(char c)
 {
-  ULONG cnt;
-  CHAR it = c;
-  
-  bc_disable();
-  ArcWrite (1, &it, 1, &cnt);
-  bc_enable();
+	ULONG cnt;
+	CHAR it = c;
+
+	bc_disable();
+	ArcWrite(1, &it, 1, &cnt);
+	bc_enable();
 }
 
-char prom_getchar (void)
+char prom_getchar(void)
 {
-  ULONG cnt;
-  CHAR c;
-  
-  bc_disable();
-  ArcRead (0, &c, 1, &cnt);
-  bc_enable();
-  
-  return c;
+	ULONG cnt;
+	CHAR c;
+
+	bc_disable();
+	ArcRead(0, &c, 1, &cnt);
+	bc_enable();
+
+	return c;
 }

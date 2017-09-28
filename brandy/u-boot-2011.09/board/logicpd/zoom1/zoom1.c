@@ -3,13 +3,13 @@
  * Texas Instruments, <www.ti.com>
  *
  * Author :
- *  Nishanth Menon <nm@ti.com>
+ *	Nishanth Menon <nm@ti.com>
  *
  * Derived from Beagle Board and 3430 SDP code by
- *  Sunil Kumar <sunilsaini05@gmail.com>
- *  Shashi Ranjan <shashiranjanmca05@gmail.com>
- *  Richard Woodruff <r-woodruff2@ti.com>
- *  Syed Mohammed Khasim <khasim@ti.com>
+ *	Sunil Kumar <sunilsaini05@gmail.com>
+ *	Shashi Ranjan <shashiranjanmca05@gmail.com>
+ *	Richard Woodruff <r-woodruff2@ti.com>
+ *	Syed Mohammed Khasim <khasim@ti.com>
  *
  *
  * See file CREDITS for list of people who contributed to this
@@ -46,64 +46,64 @@ DECLARE_GLOBAL_DATA_PTR;
  * Routine: board_init
  * Description: Early hardware init.
  */
-int board_init (void)
+int board_init(void)
 {
-  gpmc_init(); /* in SRAM or SDRAM, finish GPMC */
-  /* board id for Linux */
-  gd->bd->bi_arch_number = MACH_TYPE_OMAP_LDP;
-  /* boot param addr */
-  gd->bd->bi_boot_params = (OMAP34XX_SDRC_CS0 + 0x100);
-  
-  return 0;
+	gpmc_init(); /* in SRAM or SDRAM, finish GPMC */
+	/* board id for Linux */
+	gd->bd->bi_arch_number = MACH_TYPE_OMAP_LDP;
+	/* boot param addr */
+	gd->bd->bi_boot_params = (OMAP34XX_SDRC_CS0 + 0x100);
+
+	return 0;
 }
 
 /*
  * Routine: misc_init_r
  * Description: Configure zoom board specific configurations
  */
-int misc_init_r (void)
+int misc_init_r(void)
 {
-  twl4030_power_init();
-  twl4030_led_init (TWL4030_LED_LEDEN_LEDAON | TWL4030_LED_LEDEN_LEDBON);
-  dieid_num_r();
-  
-  /*
-   * Board Reset
-   * The board is reset by holding the red button on the
-   * top right front face for eight seconds.
-   */
-  twl4030_power_reset_init();
-  
-  return 0;
+	twl4030_power_init();
+	twl4030_led_init(TWL4030_LED_LEDEN_LEDAON | TWL4030_LED_LEDEN_LEDBON);
+	dieid_num_r();
+
+	/*
+	 * Board Reset
+	 * The board is reset by holding the red button on the
+	 * top right front face for eight seconds.
+	 */
+	twl4030_power_reset_init();
+
+	return 0;
 }
 
 /*
  * Routine: set_muxconf_regs
  * Description: Setting up the configuration Mux registers specific to the
- *    hardware. Many pins need to be moved from protect to primary
- *    mode.
+ *		hardware. Many pins need to be moved from protect to primary
+ *		mode.
  */
-void set_muxconf_regs (void)
+void set_muxconf_regs(void)
 {
-  /* platform specific muxes */
-  MUX_ZOOM1_MDK();
+	/* platform specific muxes */
+	MUX_ZOOM1_MDK();
 }
 
 #ifdef CONFIG_GENERIC_MMC
-int board_mmc_init (bd_t * bis)
+int board_mmc_init(bd_t *bis)
 {
-  omap_mmc_init (0);
-  return 0;
+	omap_mmc_init(0);
+	return 0;
 }
 #endif
 
 #ifdef CONFIG_CMD_NET
-int board_eth_init (bd_t * bis)
+int board_eth_init(bd_t *bis)
 {
-  int rc = 0;
-  #ifdef CONFIG_LAN91C96
-  rc = lan91c96_initialize (0, CONFIG_LAN91C96_BASE);
-  #endif
-  return rc;
+	int rc = 0;
+#ifdef CONFIG_LAN91C96
+	rc = lan91c96_initialize(0, CONFIG_LAN91C96_BASE);
+#endif
+	return rc;
 }
 #endif

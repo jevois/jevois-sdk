@@ -140,7 +140,7 @@
 #define TIMER_STATUS_TIMIL10 0x0004
 #define TIMER_STATUS_TIMIL11 0x0008
 
-#define TIMER_STATUS_TOVF0   0x0010 /* timer 0 overflow error */
+#define TIMER_STATUS_TOVF0   0x0010	/* timer 0 overflow error */
 #define TIMER_STATUS_TOVF1   0x0020
 #define TIMER_STATUS_TOVF2   0x0040
 #define TIMER_STATUS_TOVF3   0x00000080
@@ -172,35 +172,35 @@
 
 /* The actual gptimer API */
 
-void     set_gptimer_pwidth (unsigned int timer_id, uint32_t width);
-uint32_t get_gptimer_pwidth (unsigned int timer_id);
-void     set_gptimer_period (unsigned int timer_id, uint32_t period);
-uint32_t get_gptimer_period (unsigned int timer_id);
-uint32_t get_gptimer_count (unsigned int timer_id);
-int      get_gptimer_intr (unsigned int timer_id);
-void     clear_gptimer_intr (unsigned int timer_id);
-int      get_gptimer_over (unsigned int timer_id);
-void     clear_gptimer_over (unsigned int timer_id);
-void     set_gptimer_config (unsigned int timer_id, uint16_t config);
-uint16_t get_gptimer_config (unsigned int timer_id);
-int      get_gptimer_run (unsigned int timer_id);
-void     set_gptimer_pulse_hi (unsigned int timer_id);
-void     clear_gptimer_pulse_hi (unsigned int timer_id);
-void     enable_gptimers (uint16_t mask);
-void     disable_gptimers (uint16_t mask);
-void     disable_gptimers_sync (uint16_t mask);
-uint16_t get_enabled_gptimers (void);
-uint32_t get_gptimer_status (unsigned int group);
-void     set_gptimer_status (unsigned int group, uint32_t value);
+void     set_gptimer_pwidth(unsigned int timer_id, uint32_t width);
+uint32_t get_gptimer_pwidth(unsigned int timer_id);
+void     set_gptimer_period(unsigned int timer_id, uint32_t period);
+uint32_t get_gptimer_period(unsigned int timer_id);
+uint32_t get_gptimer_count(unsigned int timer_id);
+int      get_gptimer_intr(unsigned int timer_id);
+void     clear_gptimer_intr(unsigned int timer_id);
+int      get_gptimer_over(unsigned int timer_id);
+void     clear_gptimer_over(unsigned int timer_id);
+void     set_gptimer_config(unsigned int timer_id, uint16_t config);
+uint16_t get_gptimer_config(unsigned int timer_id);
+int      get_gptimer_run(unsigned int timer_id);
+void     set_gptimer_pulse_hi(unsigned int timer_id);
+void     clear_gptimer_pulse_hi(unsigned int timer_id);
+void     enable_gptimers(uint16_t mask);
+void     disable_gptimers(uint16_t mask);
+void     disable_gptimers_sync(uint16_t mask);
+uint16_t get_enabled_gptimers(void);
+uint32_t get_gptimer_status(unsigned int group);
+void     set_gptimer_status(unsigned int group, uint32_t value);
 
-static inline void enable_gptimer (unsigned int timer_id)
+static inline void enable_gptimer(unsigned int timer_id)
 {
-  enable_gptimers (1 << timer_id);
+	enable_gptimers(1 << timer_id);
 }
 
-static inline void disable_gptimer (unsigned int timer_id)
+static inline void disable_gptimer(unsigned int timer_id)
 {
-  disable_gptimers (1 << timer_id);
+	disable_gptimers(1 << timer_id);
 }
 
 /*
@@ -213,19 +213,19 @@ static inline void disable_gptimer (unsigned int timer_id)
  * bfin timer registers layout
  */
 struct bfin_gptimer_regs {
-  __BFP (config);
-  u32 counter;
-  u32 period;
-  u32 width;
+	__BFP(config);
+	u32 counter;
+	u32 period;
+	u32 width;
 };
 
 /*
  * bfin group timer registers layout
  */
 struct bfin_gptimer_group_regs {
-  __BFP (enable);
-  __BFP (disable);
-  u32 status;
+	__BFP(enable);
+	__BFP(disable);
+	u32 status;
 };
 
 #undef __BFP

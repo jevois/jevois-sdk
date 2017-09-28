@@ -20,7 +20,7 @@
  */
 
 #ifndef __ASSEMBLY__
-void iop33x_init_irq (void);
+void iop33x_init_irq(void);
 
 extern struct platform_device iop33x_uart0_device;
 extern struct platform_device iop33x_uart1_device;

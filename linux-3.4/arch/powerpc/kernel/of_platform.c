@@ -1,7 +1,7 @@
 /*
  *    Copyright (C) 2006 Benjamin Herrenschmidt, IBM Corp.
- *       <benh@kernel.crashing.org>
- *    and    Arnd Bergmann, IBM Corp.
+ *			 <benh@kernel.crashing.org>
+ *    and		 Arnd Bergmann, IBM Corp.
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -37,90 +37,90 @@
  * lacking some bits needed here.
  */
 
-static int __devinit of_pci_phb_probe (struct platform_device * dev)
+static int __devinit of_pci_phb_probe(struct platform_device *dev)
 {
-  struct pci_controller * phb;
-  
-  /* Check if we can do that ... */
-  if (ppc_md.pci_setup_phb == NULL)
-  { return -ENODEV; }
-  
-  pr_info ("Setting up PCI bus %s\n", dev->dev.of_node->full_name);
-  
-  /* Alloc and setup PHB data structure */
-  phb = pcibios_alloc_controller (dev->dev.of_node);
-  if (!phb)
-  { return -ENODEV; }
-  
-  /* Setup parent in sysfs */
-  phb->parent = &dev->dev;
-  
-  /* Setup the PHB using arch provided callback */
-  if (ppc_md.pci_setup_phb (phb) ) {
-    pcibios_free_controller (phb);
-    return -ENODEV;
-  }
-  
-  /* Process "ranges" property */
-  pci_process_bridge_OF_ranges (phb, dev->dev.of_node, 0);
-  
-  /* Init pci_dn data structures */
-  pci_devs_phb_init_dynamic (phb);
-  
-  /* Create EEH devices for the PHB */
-  eeh_dev_phb_init_dynamic (phb);
-  
-  /* Register devices with EEH */
-  #ifdef CONFIG_EEH
-  if (dev->dev.of_node->child)
-  { eeh_add_device_tree_early (dev->dev.of_node); }
-  #endif /* CONFIG_EEH */
-  
-  /* Scan the bus */
-  pcibios_scan_phb (phb);
-  if (phb->bus == NULL)
-  { return -ENXIO; }
-  
-  /* Claim resources. This might need some rework as well depending
-   * wether we are doing probe-only or not, like assigning unassigned
-   * resources etc...
-   */
-  pcibios_claim_one_bus (phb->bus);
-  
-  /* Finish EEH setup */
-  #ifdef CONFIG_EEH
-  eeh_add_device_tree_late (phb->bus);
-  #endif
-  
-  /* Add probed PCI devices to the device model */
-  pci_bus_add_devices (phb->bus);
-  
-  return 0;
+	struct pci_controller *phb;
+
+	/* Check if we can do that ... */
+	if (ppc_md.pci_setup_phb == NULL)
+		return -ENODEV;
+
+	pr_info("Setting up PCI bus %s\n", dev->dev.of_node->full_name);
+
+	/* Alloc and setup PHB data structure */
+	phb = pcibios_alloc_controller(dev->dev.of_node);
+	if (!phb)
+		return -ENODEV;
+
+	/* Setup parent in sysfs */
+	phb->parent = &dev->dev;
+
+	/* Setup the PHB using arch provided callback */
+	if (ppc_md.pci_setup_phb(phb)) {
+		pcibios_free_controller(phb);
+		return -ENODEV;
+	}
+
+	/* Process "ranges" property */
+	pci_process_bridge_OF_ranges(phb, dev->dev.of_node, 0);
+
+	/* Init pci_dn data structures */
+	pci_devs_phb_init_dynamic(phb);
+
+	/* Create EEH devices for the PHB */
+	eeh_dev_phb_init_dynamic(phb);
+
+	/* Register devices with EEH */
+#ifdef CONFIG_EEH
+	if (dev->dev.of_node->child)
+		eeh_add_device_tree_early(dev->dev.of_node);
+#endif /* CONFIG_EEH */
+
+	/* Scan the bus */
+	pcibios_scan_phb(phb);
+	if (phb->bus == NULL)
+		return -ENXIO;
+
+	/* Claim resources. This might need some rework as well depending
+	 * wether we are doing probe-only or not, like assigning unassigned
+	 * resources etc...
+	 */
+	pcibios_claim_one_bus(phb->bus);
+
+	/* Finish EEH setup */
+#ifdef CONFIG_EEH
+	eeh_add_device_tree_late(phb->bus);
+#endif
+
+	/* Add probed PCI devices to the device model */
+	pci_bus_add_devices(phb->bus);
+
+	return 0;
 }
 
 static struct of_device_id of_pci_phb_ids[] = {
-  { .type = "pci", },
-  { .type = "pcix", },
-  { .type = "pcie", },
-  { .type = "pciex", },
-  { .type = "ht", },
-  {}
+	{ .type = "pci", },
+	{ .type = "pcix", },
+	{ .type = "pcie", },
+	{ .type = "pciex", },
+	{ .type = "ht", },
+	{}
 };
 
 static struct platform_driver of_pci_phb_driver = {
-  .probe = of_pci_phb_probe,
-  .driver = {
-    .name = "of-pci",
-    .owner = THIS_MODULE,
-    .of_match_table = of_pci_phb_ids,
-  },
+	.probe = of_pci_phb_probe,
+	.driver = {
+		.name = "of-pci",
+		.owner = THIS_MODULE,
+		.of_match_table = of_pci_phb_ids,
+	},
 };
 
-static __init int of_pci_phb_init (void)
+static __init int of_pci_phb_init(void)
 {
-  return platform_driver_register (&of_pci_phb_driver);
+	return platform_driver_register(&of_pci_phb_driver);
 }
 
-device_initcall (of_pci_phb_init);
+device_initcall(of_pci_phb_init);
 
 #endif /* CONFIG_PPC_OF_PLATFORM_PCI */

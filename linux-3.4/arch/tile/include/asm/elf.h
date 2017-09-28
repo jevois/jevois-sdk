@@ -35,16 +35,16 @@ typedef elf_greg_t elf_gregset_t[ELF_NGREG];
 #define EM_TILEGX  191
 
 /* Provide a nominal data structure. */
-#define ELF_NFPREG  0
+#define ELF_NFPREG	0
 typedef double elf_fpreg_t;
 typedef elf_fpreg_t elf_fpregset_t[ELF_NFPREG];
 
 #ifdef __tilegx__
-#define ELF_CLASS ELFCLASS64
+#define ELF_CLASS	ELFCLASS64
 #else
-#define ELF_CLASS ELFCLASS32
+#define ELF_CLASS	ELFCLASS32
 #endif
-#define ELF_DATA  ELFDATA2LSB
+#define ELF_DATA	ELFDATA2LSB
 
 /*
  * There seems to be a bug in how compat_binfmt_elf.c works: it
@@ -58,8 +58,8 @@ enum { ELF_ARCH = CHIP_ELF_TYPE() };
  * This is used to ensure we don't load something for the wrong architecture.
  */
 #define elf_check_arch(x)  \
-  ((x)->e_ident[EI_CLASS] == ELF_CLASS && \
-   (x)->e_machine == CHIP_ELF_TYPE())
+	((x)->e_ident[EI_CLASS] == ELF_CLASS && \
+	 (x)->e_machine == CHIP_ELF_TYPE())
 
 /* The module loader only handles a few relocation types. */
 #ifndef __tilegx__
@@ -81,7 +81,7 @@ enum { ELF_ARCH = CHIP_ELF_TYPE() };
 #endif
 
 /* Use standard page size for core dumps. */
-#define ELF_EXEC_PAGESIZE PAGE_SIZE
+#define ELF_EXEC_PAGESIZE	PAGE_SIZE
 
 /*
  * This is the location that an ET_DYN program is loaded if exec'ed.  Typical
@@ -91,9 +91,9 @@ enum { ELF_ARCH = CHIP_ELF_TYPE() };
  */
 #define ELF_ET_DYN_BASE         (TASK_SIZE / 3 * 2)
 
-#define ELF_CORE_COPY_REGS(_dest, _regs)      \
-  memcpy((char *) &_dest, (char *) _regs,     \
-         sizeof(struct pt_regs));
+#define ELF_CORE_COPY_REGS(_dest, _regs)			\
+	memcpy((char *) &_dest, (char *) _regs,			\
+	       sizeof(struct pt_regs));
 
 /* No additional FP registers to copy. */
 #define ELF_CORE_COPY_FPREGS(t, fpu) 0
@@ -103,7 +103,7 @@ enum { ELF_ARCH = CHIP_ELF_TYPE() };
  * instruction set this CPU supports.  This could be done in user space,
  * but it's not easy, and we've already done it here.
  */
-#define ELF_HWCAP (0)
+#define ELF_HWCAP	(0)
 
 /*
  * This yields a string that ld.so will use to load implementation
@@ -112,11 +112,11 @@ enum { ELF_ARCH = CHIP_ELF_TYPE() };
  */
 #define ELF_PLATFORM  (NULL)
 
-extern void elf_plat_init (struct pt_regs * regs, unsigned long load_addr);
+extern void elf_plat_init(struct pt_regs *regs, unsigned long load_addr);
 
 #define ELF_PLAT_INIT(_r, load_addr) elf_plat_init(_r, load_addr)
 
-extern int dump_task_regs (struct task_struct *, elf_gregset_t *);
+extern int dump_task_regs(struct task_struct *, elf_gregset_t *);
 #define ELF_CORE_COPY_TASK_REGS(tsk, elf_regs) dump_task_regs(tsk, elf_regs)
 
 /* Tilera Linux has no personalities currently, so no need to do anything. */
@@ -125,8 +125,8 @@ extern int dump_task_regs (struct task_struct *, elf_gregset_t *);
 #define ARCH_HAS_SETUP_ADDITIONAL_PAGES
 /* Support auto-mapping of the user interrupt vectors. */
 struct linux_binprm;
-extern int arch_setup_additional_pages (struct linux_binprm * bprm,
-                                        int executable_stack);
+extern int arch_setup_additional_pages(struct linux_binprm *bprm,
+				       int executable_stack);
 #ifdef CONFIG_COMPAT
 
 #define COMPAT_ELF_PLATFORM "tilegx-m32"
@@ -137,28 +137,28 @@ extern int arch_setup_additional_pages (struct linux_binprm * bprm,
  * variant of the standard 64-bit architecture.
  */
 #define compat_elf_check_arch(x)  \
-  ((x)->e_ident[EI_CLASS] == ELFCLASS32 && \
-   (x)->e_machine == CHIP_ELF_TYPE())
+	((x)->e_ident[EI_CLASS] == ELFCLASS32 && \
+	 (x)->e_machine == CHIP_ELF_TYPE())
 
 #define compat_start_thread(regs, ip, usp) do { \
-    regs->pc = ptr_to_compat_reg((void *)(ip)); \
-    regs->sp = ptr_to_compat_reg((void *)(usp)); \
-  } while (0)
+		regs->pc = ptr_to_compat_reg((void *)(ip)); \
+		regs->sp = ptr_to_compat_reg((void *)(usp)); \
+	} while (0)
 
 /*
  * Use SET_PERSONALITY to indicate compatibility via TS_COMPAT.
  */
 #undef SET_PERSONALITY
 #define SET_PERSONALITY(ex) \
-  do { \
-    current->personality = PER_LINUX; \
-    current_thread_info()->status &= ~TS_COMPAT; \
-  } while (0)
+do { \
+	current->personality = PER_LINUX; \
+	current_thread_info()->status &= ~TS_COMPAT; \
+} while (0)
 #define COMPAT_SET_PERSONALITY(ex) \
-  do { \
-    current->personality = PER_LINUX_32BIT; \
-    current_thread_info()->status |= TS_COMPAT; \
-  } while (0)
+do { \
+	current->personality = PER_LINUX_32BIT; \
+	current_thread_info()->status |= TS_COMPAT; \
+} while (0)
 
 #define COMPAT_ELF_ET_DYN_BASE (0xffffffff / 3 * 2)
 

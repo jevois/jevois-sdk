@@ -2,7 +2,7 @@
 #define _CRIS_ARCH_PGTABLE_H
 
 /*
- * Kernels own virtual memory area.
+ * Kernels own virtual memory area. 
  */
 
 #ifdef CONFIG_CRIS_LOW_MAP

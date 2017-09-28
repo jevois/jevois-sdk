@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -39,152 +39,152 @@
  */
 DECLARE_GLOBAL_DATA_PTR;
 
-extern int sunxi_clock_get_axi (void);
-extern int sunxi_clock_get_ahb (void);
-extern int sunxi_clock_get_apb1 (void);
-extern int sunxi_clock_get_pll6 (void);
+extern int sunxi_clock_get_axi(void);
+extern int sunxi_clock_get_ahb(void);
+extern int sunxi_clock_get_apb1(void);
+extern int sunxi_clock_get_pll6(void);
 
 
-u32 get_base (void)
+u32 get_base(void)
 {
 
-  u32 val;
-  
-  __asm__ __volatile__ ("mov %0, pc \n":"=r" (val) ::"memory");
-  val &= 0xF0000000;
-  val >>= 28;
-  return val;
+	u32 val;
+
+	__asm__ __volatile__("mov %0, pc \n":"=r"(val)::"memory");
+	val &= 0xF0000000;
+	val >>= 28;
+	return val;
 }
 
 /* do some early init */
-void s_init (void)
+void s_init(void)
 {
-  watchdog_disable();
+	watchdog_disable();
 }
 
-void reset_cpu (ulong addr)
+void reset_cpu(ulong addr)
 {
-  watchdog_enable();
-  #ifndef CONFIG_A81_FPGA
+	watchdog_enable();
+#ifndef CONFIG_A81_FPGA
 loop_to_die:
-  goto loop_to_die;
-  #endif
+	goto loop_to_die;
+#endif
 }
 
-void v7_outer_cache_enable (void)
+void v7_outer_cache_enable(void)
 {
-  return ;
+	return ;
 }
 
-void v7_outer_cache_inval_all (void)
+void v7_outer_cache_inval_all(void)
 {
-  return ;
+	return ;
 }
 
-void v7_outer_cache_flush_range (u32 start, u32 stop)
+void v7_outer_cache_flush_range(u32 start, u32 stop)
 {
-  return ;
+	return ;
 }
 
-void enable_caches (void)
+void enable_caches(void)
 {
-  icache_enable();
-  dcache_enable();
+    icache_enable();
+    dcache_enable();
 }
 
-void disable_caches (void)
+void disable_caches(void)
 {
-  icache_disable();
-  dcache_disable();
+    icache_disable();
+	dcache_disable();
 }
 
-int display_inner (void)
+int display_inner(void)
 {
-  tick_printf ("version: %s\n", uboot_spare_head.boot_head.version);
-  
-  return 0;
+	tick_printf("version: %s\n", uboot_spare_head.boot_head.version);
+
+	return 0;
 }
 
-int script_init (void)
+int script_init(void)
 {
-  uint offset, length;
-  char * addr;
-  
-  offset = uboot_spare_head.boot_head.uboot_length;
-  length = uboot_spare_head.boot_head.length - uboot_spare_head.boot_head.uboot_length;
-  addr   = (char *) CONFIG_SYS_TEXT_BASE + offset;
-  
-  debug ("script offset=%x, length = %x\n", offset, length);
-  
-  if (length)
-  {
-    memcpy ( (void *) SYS_CONFIG_MEMBASE, addr, length);
-    script_parser_init ( (char *) SYS_CONFIG_MEMBASE);
-  }
-  else
-  {
-    script_parser_init (NULL);
-  }
-  #if defined(CONFIG_SUNXI_SCRIPT_REINIT)
-  {
-    void * tmp_target_buffer = (void *) (CONFIG_SYS_TEXT_BASE - 0x01000000);
-    
-    memset (tmp_target_buffer, 0, 1024 * 1024);
-    memcpy (tmp_target_buffer, (void *) CONFIG_SYS_TEXT_BASE, uboot_spare_head.boot_head.length);
-  }
-  #endif
-  return 0;
+    uint offset, length;
+	char *addr;
+
+	offset = uboot_spare_head.boot_head.uboot_length;
+	length = uboot_spare_head.boot_head.length - uboot_spare_head.boot_head.uboot_length;
+	addr   = (char *)CONFIG_SYS_TEXT_BASE + offset;
+
+    debug("script offset=%x, length = %x\n", offset, length);
+
+	if(length)
+	{
+		memcpy((void *)SYS_CONFIG_MEMBASE, addr, length);
+		script_parser_init((char *)SYS_CONFIG_MEMBASE);
+	}
+	else
+	{
+		script_parser_init(NULL);
+	}
+#if defined(CONFIG_SUNXI_SCRIPT_REINIT)
+	{
+		void *tmp_target_buffer = (void *)(CONFIG_SYS_TEXT_BASE - 0x01000000);
+
+		memset(tmp_target_buffer, 0, 1024 * 1024);
+		memcpy(tmp_target_buffer, (void *)CONFIG_SYS_TEXT_BASE, uboot_spare_head.boot_head.length);
+	}
+#endif
+	return 0;
 }
 
-int power_source_init (void)
+int power_source_init(void)
 {
-  int pll1;
-  int dcdc3_vol;
-  
-  if (script_parser_fetch ("power_sply", "dcdc3_vol", &dcdc3_vol, 1) )
-  {
-    dcdc3_vol = 1200;
-  }
-  if (axp_probe() > 0)
-  {
-    axp_probe_factory_mode();
-    if (!axp_probe_power_supply_condition() )
-    {
-      if (!axp_set_supply_status (0, PMU_SUPPLY_DCDC3, dcdc3_vol, -1) )
-      {
-        tick_printf ("PMU: dcdc3 %d\n", dcdc3_vol);
-        sunxi_clock_set_corepll (uboot_spare_head.boot_data.run_clock, 0);
-      }
-      else
-      {
-        printf ("axp_set_dcdc3 fail\n");
-      }
-    }
-    else
-    {
-      printf ("axp_probe_power_supply_condition error\n");
-    }
-  }
-  else
-  {
-    printf ("axp_probe error\n");
-  }
-  
-  pll1 = sunxi_clock_get_corepll();
-  
-  tick_printf ("PMU: pll1 %d Mhz,PLL6=%d Mhz\n", pll1, sunxi_clock_get_pll6() );
-  printf ("AXI=%d Mhz,AHB=%d Mhz, APB1=%d Mhz \n", sunxi_clock_get_axi(), sunxi_clock_get_ahb(), sunxi_clock_get_apb1() );
-  
-  
-  axp_set_charge_vol_limit();
-  axp_set_all_limit();
-  axp_set_hardware_poweron_vol();
-  
-  axp_set_power_supply_output();
-  
-  power_limit_init();
-  
-  return 0;
+	int pll1;
+	int dcdc3_vol;
+
+	if(script_parser_fetch("power_sply", "dcdc3_vol", &dcdc3_vol, 1))
+	{
+		dcdc3_vol = 1200;
+	}
+	if(axp_probe() > 0)
+	{
+		axp_probe_factory_mode();
+		if(!axp_probe_power_supply_condition())
+		{
+			if(!axp_set_supply_status(0, PMU_SUPPLY_DCDC3, dcdc3_vol, -1))
+			{
+				tick_printf("PMU: dcdc3 %d\n", dcdc3_vol);
+				sunxi_clock_set_corepll(uboot_spare_head.boot_data.run_clock, 0);
+			}
+			else
+			{
+				printf("axp_set_dcdc3 fail\n");
+			}
+		}
+		else
+		{
+			printf("axp_probe_power_supply_condition error\n");
+		}
+	}
+	else
+	{
+		printf("axp_probe error\n");
+	}
+
+	pll1 = sunxi_clock_get_corepll();
+
+	tick_printf("PMU: pll1 %d Mhz,PLL6=%d Mhz\n", pll1,sunxi_clock_get_pll6());
+    printf("AXI=%d Mhz,AHB=%d Mhz, APB1=%d Mhz \n", sunxi_clock_get_axi(),sunxi_clock_get_ahb(),sunxi_clock_get_apb1());
+
+
+    axp_set_charge_vol_limit();
+    axp_set_all_limit();
+    axp_set_hardware_poweron_vol();
+
+	axp_set_power_supply_output();
+
+	power_limit_init();
+
+	return 0;
 }
 
 

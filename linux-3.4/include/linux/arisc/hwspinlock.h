@@ -19,8 +19,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef __ASM_ARCH_HWSPINLOCK_H
-#define __ASM_ARCH_HWSPINLOCK_H
+#ifndef	__ASM_ARCH_HWSPINLOCK_H
+#define	__ASM_ARCH_HWSPINLOCK_H
 
 #include <linux/spinlock.h>
 
@@ -32,14 +32,14 @@
 /* spinlock max timeout, base on ms */
 #define ARISC_SPINLOCK_TIMEOUT          (100)
 
-#define AW_SPINLOCK_NOTTAKEN      (0)
-#define AW_SPINLOCK_TAKEN         (1)
+#define	AW_SPINLOCK_NOTTAKEN      (0)
+#define	AW_SPINLOCK_TAKEN         (1)
 
-#define AW_SPINLOCK_SYS_STATUS_REG    (SUNXI_SPINLOCK_PBASE + 0x0000)
-#define AW_SPINLOCK_STATUS_REG      (SUNXI_SPINLOCK_PBASE + 0x0010)
-#define AW_SPINLOCK_IRQ_EN_REG      (SUNXI_SPINLOCK_PBASE + 0x0020)
-#define AW_SPINLOCK_IRQ_PEND_REG    (SUNXI_SPINLOCK_PBASE + 0x0040)
-#define AW_SPINLOCK_LOCK_REG(id)    (SUNXI_SPINLOCK_PBASE + 0x0100 + id * 4)
+#define	AW_SPINLOCK_SYS_STATUS_REG		(SUNXI_SPINLOCK_PBASE + 0x0000)
+#define	AW_SPINLOCK_STATUS_REG			(SUNXI_SPINLOCK_PBASE + 0x0010)
+#define	AW_SPINLOCK_IRQ_EN_REG			(SUNXI_SPINLOCK_PBASE + 0x0020)
+#define AW_SPINLOCK_IRQ_PEND_REG		(SUNXI_SPINLOCK_PBASE + 0x0040)
+#define AW_SPINLOCK_LOCK_REG(id)		(SUNXI_SPINLOCK_PBASE + 0x0100 + id * 4)
 
 /**
  * lock an hwspinlock with timeout limit.
@@ -47,8 +47,8 @@
  *
  * returns:  0 if lock hwspinlock succeeded, other if failed.
  */
-int arisc_hwspin_lock_timeout (int hwid, unsigned int timeout, \
-                               spinlock_t * lock, unsigned long * flags);
+int arisc_hwspin_lock_timeout(int hwid, unsigned int timeout, \
+                              spinlock_t *lock, unsigned long *flags);
 
 /**
  * unlock a specific hwspinlock.
@@ -56,5 +56,5 @@ int arisc_hwspin_lock_timeout (int hwid, unsigned int timeout, \
  *
  * returns:  0 if unlock hwspinlock succeeded, other if failed.
  */
-int arisc_hwspin_unlock (int hwid, spinlock_t * lock, unsigned long * flags);
-#endif 
+int arisc_hwspin_unlock(int hwid, spinlock_t *lock, unsigned long *flags);
+#endif

@@ -24,15 +24,15 @@
 
 /* Siena MC shared memmory offsets */
 /* The 'doorbell' addresses are hard-wired to alert the MC when written */
-#define MC_SMEM_P0_DOORBELL_OFST  0x000
-#define MC_SMEM_P1_DOORBELL_OFST  0x004
+#define	MC_SMEM_P0_DOORBELL_OFST	0x000
+#define	MC_SMEM_P1_DOORBELL_OFST	0x004
 /* The rest of these are firmware-defined */
-#define MC_SMEM_P0_PDU_OFST   0x008
-#define MC_SMEM_P1_PDU_OFST   0x108
-#define MC_SMEM_PDU_LEN     0x100
-#define MC_SMEM_P0_PTP_TIME_OFST  0x7f0
-#define MC_SMEM_P0_STATUS_OFST    0x7f8
-#define MC_SMEM_P1_STATUS_OFST    0x7fc
+#define	MC_SMEM_P0_PDU_OFST		0x008
+#define	MC_SMEM_P1_PDU_OFST		0x108
+#define	MC_SMEM_PDU_LEN			0x100
+#define	MC_SMEM_P0_PTP_TIME_OFST	0x7f0
+#define	MC_SMEM_P0_STATUS_OFST		0x7f8
+#define	MC_SMEM_P1_STATUS_OFST		0x7fc
 
 /* Values to be written to the per-port status dword in shared
  * memory on reboot and assert */
@@ -168,14 +168,14 @@
 /* We define 8 "escape" commands to allow
    for command number space extension */
 
-#define MC_CMD_CMD_SPACE_ESCAPE_0       0x78
-#define MC_CMD_CMD_SPACE_ESCAPE_1       0x79
-#define MC_CMD_CMD_SPACE_ESCAPE_2       0x7A
-#define MC_CMD_CMD_SPACE_ESCAPE_3       0x7B
-#define MC_CMD_CMD_SPACE_ESCAPE_4       0x7C
-#define MC_CMD_CMD_SPACE_ESCAPE_5       0x7D
-#define MC_CMD_CMD_SPACE_ESCAPE_6       0x7E
-#define MC_CMD_CMD_SPACE_ESCAPE_7       0x7F
+#define MC_CMD_CMD_SPACE_ESCAPE_0	      0x78
+#define MC_CMD_CMD_SPACE_ESCAPE_1	      0x79
+#define MC_CMD_CMD_SPACE_ESCAPE_2	      0x7A
+#define MC_CMD_CMD_SPACE_ESCAPE_3	      0x7B
+#define MC_CMD_CMD_SPACE_ESCAPE_4	      0x7C
+#define MC_CMD_CMD_SPACE_ESCAPE_5	      0x7D
+#define MC_CMD_CMD_SPACE_ESCAPE_6	      0x7E
+#define MC_CMD_CMD_SPACE_ESCAPE_7	      0x7F
 
 /* Vectors in the boot ROM */
 /* Point to the copycode entry point. */
@@ -184,30 +184,30 @@
 #define MC_BOOTROM_NOFLASH_VEC (0x7f8)
 
 /* The command set exported by the boot ROM (MCDI v0) */
-#define MC_CMD_GET_VERSION_V0_SUPPORTED_FUNCS {   \
-    (1 << MC_CMD_READ32)  |     \
-    (1 << MC_CMD_WRITE32) |     \
-    (1 << MC_CMD_COPYCODE)  |     \
-    (1 << MC_CMD_GET_VERSION),      \
-    0, 0, 0 }
+#define MC_CMD_GET_VERSION_V0_SUPPORTED_FUNCS {		\
+	(1 << MC_CMD_READ32)	|			\
+	(1 << MC_CMD_WRITE32)	|			\
+	(1 << MC_CMD_COPYCODE)	|			\
+	(1 << MC_CMD_GET_VERSION),			\
+	0, 0, 0 }
 
-#define MC_CMD_SENSOR_INFO_OUT_OFFSET_OFST(_x)    \
-  (MC_CMD_SENSOR_ENTRY_OFST + (_x))
+#define MC_CMD_SENSOR_INFO_OUT_OFFSET_OFST(_x)		\
+	(MC_CMD_SENSOR_ENTRY_OFST + (_x))
 
-#define MC_CMD_DBI_WRITE_IN_ADDRESS_OFST(n)   \
-  (MC_CMD_DBI_WRITE_IN_DBIWROP_OFST +   \
-   MC_CMD_DBIWROP_TYPEDEF_ADDRESS_OFST +    \
-   (n) * MC_CMD_DBIWROP_TYPEDEF_LEN)
+#define MC_CMD_DBI_WRITE_IN_ADDRESS_OFST(n)		\
+	(MC_CMD_DBI_WRITE_IN_DBIWROP_OFST +		\
+	 MC_CMD_DBIWROP_TYPEDEF_ADDRESS_OFST +		\
+	 (n) * MC_CMD_DBIWROP_TYPEDEF_LEN)
 
-#define MC_CMD_DBI_WRITE_IN_BYTE_MASK_OFST(n)   \
-  (MC_CMD_DBI_WRITE_IN_DBIWROP_OFST +   \
-   MC_CMD_DBIWROP_TYPEDEF_BYTE_MASK_OFST +  \
-   (n) * MC_CMD_DBIWROP_TYPEDEF_LEN)
+#define MC_CMD_DBI_WRITE_IN_BYTE_MASK_OFST(n)		\
+	(MC_CMD_DBI_WRITE_IN_DBIWROP_OFST +		\
+	 MC_CMD_DBIWROP_TYPEDEF_BYTE_MASK_OFST +	\
+	 (n) * MC_CMD_DBIWROP_TYPEDEF_LEN)
 
-#define MC_CMD_DBI_WRITE_IN_VALUE_OFST(n)   \
-  (MC_CMD_DBI_WRITE_IN_DBIWROP_OFST +   \
-   MC_CMD_DBIWROP_TYPEDEF_VALUE_OFST +    \
-   (n) * MC_CMD_DBIWROP_TYPEDEF_LEN)
+#define MC_CMD_DBI_WRITE_IN_VALUE_OFST(n)		\
+	(MC_CMD_DBI_WRITE_IN_DBIWROP_OFST +		\
+	 MC_CMD_DBIWROP_TYPEDEF_VALUE_OFST +		\
+	 (n) * MC_CMD_DBIWROP_TYPEDEF_LEN)
 
 
 /* MCDI_EVENT structuredef */

@@ -52,58 +52,58 @@
 #define UFCON S3C2410_UFCON_RXTRIG8 | S3C2410_UFCON_FIFOMODE
 
 static struct s3c2410_uartcfg ncp_uartcfgs[] __initdata = {
-  /* REVISIT: NCP uses only serial 1, 2 */
-  [0] = {
-    .hwport      = 0,
-    .flags       = 0,
-    .ucon      = UCON,
-    .ulcon       = ULCON,
-    .ufcon       = UFCON,
-  },
-  [1] = {
-    .hwport      = 1,
-    .flags       = 0,
-    .ucon      = UCON,
-    .ulcon       = ULCON,
-    .ufcon       = UFCON,
-  },
-  [2] = {
-    .hwport      = 2,
-    .flags       = 0,
-    .ucon      = UCON,
-    .ulcon       = ULCON,
-    .ufcon       = UFCON,
-  },
+	/* REVISIT: NCP uses only serial 1, 2 */
+	[0] = {
+		.hwport	     = 0,
+		.flags	     = 0,
+		.ucon	     = UCON,
+		.ulcon	     = ULCON,
+		.ufcon	     = UFCON,
+	},
+	[1] = {
+		.hwport	     = 1,
+		.flags	     = 0,
+		.ucon	     = UCON,
+		.ulcon	     = ULCON,
+		.ufcon	     = UFCON,
+	},
+	[2] = {
+		.hwport	     = 2,
+		.flags	     = 0,
+		.ucon	     = UCON,
+		.ulcon	     = ULCON,
+		.ufcon	     = UFCON,
+	},
 };
 
-static struct platform_device * ncp_devices[] __initdata = {
-  &s3c_device_hsmmc1,
-  &s3c_device_i2c0,
+static struct platform_device *ncp_devices[] __initdata = {
+	&s3c_device_hsmmc1,
+	&s3c_device_i2c0,
 };
 
 static struct map_desc ncp_iodesc[] __initdata = {};
 
-static void __init ncp_map_io (void)
+static void __init ncp_map_io(void)
 {
-  s3c64xx_init_io (ncp_iodesc, ARRAY_SIZE (ncp_iodesc) );
-  s3c24xx_init_clocks (12000000);
-  s3c24xx_init_uarts (ncp_uartcfgs, ARRAY_SIZE (ncp_uartcfgs) );
+	s3c64xx_init_io(ncp_iodesc, ARRAY_SIZE(ncp_iodesc));
+	s3c24xx_init_clocks(12000000);
+	s3c24xx_init_uarts(ncp_uartcfgs, ARRAY_SIZE(ncp_uartcfgs));
 }
 
-static void __init ncp_machine_init (void)
+static void __init ncp_machine_init(void)
 {
-  s3c_i2c0_set_platdata (NULL);
-  
-  platform_add_devices (ncp_devices, ARRAY_SIZE (ncp_devices) );
+	s3c_i2c0_set_platdata(NULL);
+
+	platform_add_devices(ncp_devices, ARRAY_SIZE(ncp_devices));
 }
 
-MACHINE_START (NCP, "NCP")
-/* Maintainer: Samsung Electronics */
-.atag_offset  = 0x100,
- .init_irq = s3c6410_init_irq,
-  .handle_irq = vic_handle_irq,
-   .map_io   = ncp_map_io,
-    .init_machine = ncp_machine_init,
-     .timer    = &s3c24xx_timer,
-      .restart  = s3c64xx_restart,
-       MACHINE_END
+MACHINE_START(NCP, "NCP")
+	/* Maintainer: Samsung Electronics */
+	.atag_offset	= 0x100,
+	.init_irq	= s3c6410_init_irq,
+	.handle_irq	= vic_handle_irq,
+	.map_io		= ncp_map_io,
+	.init_machine	= ncp_machine_init,
+	.timer		= &s3c24xx_timer,
+	.restart	= s3c64xx_restart,
+MACHINE_END

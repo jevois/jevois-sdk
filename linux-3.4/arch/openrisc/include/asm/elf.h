@@ -27,15 +27,15 @@
 
 
 /* The OR1K relocation types... not all relevant for module loader */
-#define R_OR32_NONE 0
-#define R_OR32_32 1
-#define R_OR32_16 2
-#define R_OR32_8  3
-#define R_OR32_CONST  4
-#define R_OR32_CONSTH 5
-#define R_OR32_JUMPTARG 6
+#define R_OR32_NONE	0
+#define R_OR32_32	1
+#define R_OR32_16	2
+#define R_OR32_8	3
+#define R_OR32_CONST	4
+#define R_OR32_CONSTH	5
+#define R_OR32_JUMPTARG	6
 #define R_OR32_VTINHERIT 7
-#define R_OR32_VTENTRY  8
+#define R_OR32_VTENTRY	8
 
 typedef unsigned long elf_greg_t;
 
@@ -56,9 +56,9 @@ typedef unsigned long elf_fpregset_t;
 /*
  * These are used to set parameters in the core dumps.
  */
-#define ELF_ARCH  EM_OR32
-#define ELF_CLASS ELFCLASS32
-#define ELF_DATA  ELFDATA2MSB
+#define ELF_ARCH	EM_OR32
+#define ELF_CLASS	ELFCLASS32
+#define ELF_DATA	ELFDATA2MSB
 
 #ifdef __KERNEL__
 
@@ -67,7 +67,7 @@ typedef unsigned long elf_fpregset_t;
  */
 
 #define elf_check_arch(x) \
-  (((x)->e_machine == EM_OR32) || ((x)->e_machine == EM_OPENRISC))
+	(((x)->e_machine == EM_OR32) || ((x)->e_machine == EM_OPENRISC))
 
 /* This is the location that an ET_DYN program is loaded if exec'ed.  Typical
    use of this is to invoke "./ld.so someprog" to test out a new version of
@@ -82,16 +82,16 @@ typedef unsigned long elf_fpregset_t;
  */
 #define CORE_DUMP_USE_REGSET
 
-#define ELF_EXEC_PAGESIZE 8192
+#define ELF_EXEC_PAGESIZE	8192
 
-extern void dump_elf_thread (elf_greg_t * dest, struct pt_regs * pt);
+extern void dump_elf_thread(elf_greg_t *dest, struct pt_regs *pt);
 #define ELF_CORE_COPY_REGS(dest, regs) dump_elf_thread(dest, regs);
 
 /* This yields a mask that user programs can use to figure out what
    instruction set this cpu supports.  This could be done in userspace,
    but it's not easy, and we've already done it here.  */
 
-#define ELF_HWCAP (0)
+#define ELF_HWCAP	(0)
 
 /* This yields a string that ld.so will use to load implementation
    specific libraries for optimization.  This is more specific in
@@ -100,7 +100,7 @@ extern void dump_elf_thread (elf_greg_t * dest, struct pt_regs * pt);
    For the moment, we have only optimizations for the Intel generations,
    but that could change... */
 
-#define ELF_PLATFORM  (NULL)
+#define ELF_PLATFORM	(NULL)
 
 #define SET_PERSONALITY(ex) set_personality(PER_LINUX)
 

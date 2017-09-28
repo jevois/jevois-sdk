@@ -13,7 +13,7 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
@@ -24,9 +24,9 @@
 
 
 /* 有线性表的特性:分为链式队列与顺序队列
-  顺序队列:用一段地址连续的存储单元存储数据元素，定义两个游标:指向队头
-  的游标(front)、指向队尾的游标(rear),如果front == rear队列为空,如果
-  (rear + 1) % MAXSIZE == front队列满(此为循环队列),如普通队列rear==MAXSIZE队列满
+	顺序队列:用一段地址连续的存储单元存储数据元素，定义两个游标:指向队头
+	的游标(front)、指向队尾的游标(rear),如果front == rear队列为空,如果
+	(rear + 1) % MAXSIZE == front队列满(此为循环队列),如普通队列rear==MAXSIZE队列满
 */
 
 #ifndef __QUEUE_H__
@@ -38,38 +38,38 @@
 
 typedef struct
 {
-  char * data;
-  uint  len;
+	char *data;
+	uint  len;
 }
 queue_data;
 
 typedef struct
 {
-  queue_data element[QUEUE_MAX_BUFFER_SIZE];
-  int front;                    
-  int rear;                     
-  int size;                     
-  int count;                    
-  void * base_addr;
-} queue;
+	queue_data element[QUEUE_MAX_BUFFER_SIZE];
+	int front;                    
+	int rear;                     
+    int size;                     
+    int count;                    
+    void *base_addr;
+}queue;
 
-int  initqueue (queue * q, int each_size, int buffer_count);
+int  initqueue(queue *q, int each_size, int buffer_count); 
 
-int  destroyqueue (queue * q);      
+int  destroyqueue(queue *q);        
 
-void resetqueue (queue * q);
+void resetqueue(queue *q);
 
-int isqueueempty (queue * q);
+int isqueueempty(queue *q);
 
-int isqueuefull (queue * q);
+int isqueuefull(queue *q);
 
-int inqueue_query (queue * q, queue_data * qdata);
+int inqueue_query(queue *q, queue_data *qdata);
 
-int inqueue_ex (queue * q);
+int inqueue_ex(queue *q);
 
-int outqueue_query (queue * q, queue_data * qdata, queue_data * next_qdata);
+int outqueue_query(queue *q, queue_data *qdata, queue_data *next_qdata);
 
-int outqueue_ex (queue * q);
+int outqueue_ex(queue *q);
 
 
 

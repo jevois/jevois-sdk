@@ -46,7 +46,7 @@
 
 static char jazz_sonic_string[] = "jazzsonic";
 
-#define SONIC_MEM_SIZE  0x100
+#define SONIC_MEM_SIZE	0x100
 
 #include "sonic.h"
 
@@ -55,10 +55,10 @@ static char jazz_sonic_string[] = "jazzsonic";
  */
 #define SONIC_READ(reg) (*((volatile unsigned int *)dev->base_addr+reg))
 
-#define SONIC_WRITE(reg,val)            \
-  do {                  \
-    *((volatile unsigned int *)dev->base_addr+(reg)) = (val);   \
-  } while (0)
+#define SONIC_WRITE(reg,val)						\
+do {									\
+	*((volatile unsigned int *)dev->base_addr+(reg)) = (val);		\
+} while (0)
 
 
 /* use 0 for production, 1 for verification, >1 for debug */
@@ -75,222 +75,222 @@ static unsigned int sonic_debug = 1;
  */
 static unsigned short known_revisions[] =
 {
-  0x04,     /* Mips Magnum 4000 */
-  0xffff      /* end of list */
+	0x04,			/* Mips Magnum 4000 */
+	0xffff			/* end of list */
 };
 
-static int jazzsonic_open (struct net_device * dev)
+static int jazzsonic_open(struct net_device* dev)
 {
-  int retval;
-  
-  retval = request_irq (dev->irq, sonic_interrupt, IRQF_DISABLED,
-                        "sonic", dev);
-  if (retval) {
-    printk (KERN_ERR "%s: unable to get IRQ %d.\n",
-            dev->name, dev->irq);
-    return retval;
-  }
-  
-  retval = sonic_open (dev);
-  if (retval)
-  { free_irq (dev->irq, dev); }
-  return retval;
+	int retval;
+
+	retval = request_irq(dev->irq, sonic_interrupt, IRQF_DISABLED,
+				"sonic", dev);
+	if (retval) {
+		printk(KERN_ERR "%s: unable to get IRQ %d.\n",
+				dev->name, dev->irq);
+		return retval;
+	}
+
+	retval = sonic_open(dev);
+	if (retval)
+		free_irq(dev->irq, dev);
+	return retval;
 }
 
-static int jazzsonic_close (struct net_device * dev)
+static int jazzsonic_close(struct net_device* dev)
 {
-  int err;
-  err = sonic_close (dev);
-  free_irq (dev->irq, dev);
-  return err;
+	int err;
+	err = sonic_close(dev);
+	free_irq(dev->irq, dev);
+	return err;
 }
 
 static const struct net_device_ops sonic_netdev_ops = {
-  .ndo_open   = jazzsonic_open,
-  .ndo_stop   = jazzsonic_close,
-  .ndo_start_xmit   = sonic_send_packet,
-  .ndo_get_stats    = sonic_get_stats,
-  .ndo_set_rx_mode  = sonic_multicast_list,
-  .ndo_tx_timeout   = sonic_tx_timeout,
-  .ndo_change_mtu   = eth_change_mtu,
-  .ndo_validate_addr  = eth_validate_addr,
-  .ndo_set_mac_address  = eth_mac_addr,
+	.ndo_open		= jazzsonic_open,
+	.ndo_stop		= jazzsonic_close,
+	.ndo_start_xmit		= sonic_send_packet,
+	.ndo_get_stats		= sonic_get_stats,
+	.ndo_set_rx_mode	= sonic_multicast_list,
+	.ndo_tx_timeout		= sonic_tx_timeout,
+	.ndo_change_mtu		= eth_change_mtu,
+	.ndo_validate_addr	= eth_validate_addr,
+	.ndo_set_mac_address	= eth_mac_addr,
 };
 
-static int __devinit sonic_probe1 (struct net_device * dev)
+static int __devinit sonic_probe1(struct net_device *dev)
 {
-  static unsigned version_printed;
-  unsigned int silicon_revision;
-  unsigned int val;
-  struct sonic_local * lp = netdev_priv (dev);
-  int err = -ENODEV;
-  int i;
-  
-  if (!request_mem_region (dev->base_addr, SONIC_MEM_SIZE, jazz_sonic_string) )
-  { return -EBUSY; }
-  
-  /*
-   * get the Silicon Revision ID. If this is one of the known
-   * one assume that we found a SONIC ethernet controller at
-   * the expected location.
-   */
-  silicon_revision = SONIC_READ (SONIC_SR);
-  if (sonic_debug > 1)
-  { printk ("SONIC Silicon Revision = 0x%04x\n", silicon_revision); }
-  
-  i = 0;
-  while (known_revisions[i] != 0xffff &&
-         known_revisions[i] != silicon_revision)
-  { i++; }
-  
-  if (known_revisions[i] == 0xffff) {
-    printk ("SONIC ethernet controller not found (0x%4x)\n",
-            silicon_revision);
-    goto out;
-  }
-  
-  if (sonic_debug  &&  version_printed++ == 0)
-  { printk (version); }
-  
-  printk (KERN_INFO "%s: Sonic ethernet found at 0x%08lx, ",
-          dev_name (lp->device), dev->base_addr);
-          
-  /*
-   * Put the sonic into software reset, then
-   * retrieve and print the ethernet address.
-   */
-  SONIC_WRITE (SONIC_CMD, SONIC_CR_RST);
-  SONIC_WRITE (SONIC_CEP, 0);
-  for (i = 0; i < 3; i++) {
-    val = SONIC_READ (SONIC_CAP0 - i);
-    dev->dev_addr[i * 2] = val;
-    dev->dev_addr[i * 2 + 1] = val >> 8;
-  }
-  
-  err = -ENOMEM;
-  
-  /* Initialize the device structure. */
-  
-  lp->dma_bitmode = SONIC_BITMODE32;
-  
-  /* Allocate the entire chunk of memory for the descriptors.
+	static unsigned version_printed;
+	unsigned int silicon_revision;
+	unsigned int val;
+	struct sonic_local *lp = netdev_priv(dev);
+	int err = -ENODEV;
+	int i;
+
+	if (!request_mem_region(dev->base_addr, SONIC_MEM_SIZE, jazz_sonic_string))
+		return -EBUSY;
+
+	/*
+	 * get the Silicon Revision ID. If this is one of the known
+	 * one assume that we found a SONIC ethernet controller at
+	 * the expected location.
+	 */
+	silicon_revision = SONIC_READ(SONIC_SR);
+	if (sonic_debug > 1)
+		printk("SONIC Silicon Revision = 0x%04x\n",silicon_revision);
+
+	i = 0;
+	while (known_revisions[i] != 0xffff &&
+	       known_revisions[i] != silicon_revision)
+		i++;
+
+	if (known_revisions[i] == 0xffff) {
+		printk("SONIC ethernet controller not found (0x%4x)\n",
+		       silicon_revision);
+		goto out;
+	}
+
+	if (sonic_debug  &&  version_printed++ == 0)
+		printk(version);
+
+	printk(KERN_INFO "%s: Sonic ethernet found at 0x%08lx, ",
+	       dev_name(lp->device), dev->base_addr);
+
+	/*
+	 * Put the sonic into software reset, then
+	 * retrieve and print the ethernet address.
+	 */
+	SONIC_WRITE(SONIC_CMD,SONIC_CR_RST);
+	SONIC_WRITE(SONIC_CEP,0);
+	for (i=0; i<3; i++) {
+		val = SONIC_READ(SONIC_CAP0-i);
+		dev->dev_addr[i*2] = val;
+		dev->dev_addr[i*2+1] = val >> 8;
+	}
+
+	err = -ENOMEM;
+
+	/* Initialize the device structure. */
+
+	lp->dma_bitmode = SONIC_BITMODE32;
+
+	/* Allocate the entire chunk of memory for the descriptors.
            Note that this cannot cross a 64K boundary. */
-  if ( (lp->descriptors = dma_alloc_coherent (lp->device,
-                          SIZEOF_SONIC_DESC * SONIC_BUS_SCALE (lp->dma_bitmode),
-                          &lp->descriptors_laddr, GFP_KERNEL) ) == NULL) {
-    printk (KERN_ERR "%s: couldn't alloc DMA memory for descriptors.\n",
-            dev_name (lp->device) );
-    goto out;
-  }
-  
-  /* Now set up the pointers to point to the appropriate places */
-  lp->cda = lp->descriptors;
-  lp->tda = lp->cda + (SIZEOF_SONIC_CDA
-                       * SONIC_BUS_SCALE (lp->dma_bitmode) );
-  lp->rda = lp->tda + (SIZEOF_SONIC_TD * SONIC_NUM_TDS
-                       * SONIC_BUS_SCALE (lp->dma_bitmode) );
-  lp->rra = lp->rda + (SIZEOF_SONIC_RD * SONIC_NUM_RDS
-                       * SONIC_BUS_SCALE (lp->dma_bitmode) );
-                       
-  lp->cda_laddr = lp->descriptors_laddr;
-  lp->tda_laddr = lp->cda_laddr + (SIZEOF_SONIC_CDA
-                                   * SONIC_BUS_SCALE (lp->dma_bitmode) );
-  lp->rda_laddr = lp->tda_laddr + (SIZEOF_SONIC_TD * SONIC_NUM_TDS
-                                   * SONIC_BUS_SCALE (lp->dma_bitmode) );
-  lp->rra_laddr = lp->rda_laddr + (SIZEOF_SONIC_RD * SONIC_NUM_RDS
-                                   * SONIC_BUS_SCALE (lp->dma_bitmode) );
-                                   
-  dev->netdev_ops = &sonic_netdev_ops;
-  dev->watchdog_timeo = TX_TIMEOUT;
-  
-  /*
-   * clear tally counter
-   */
-  SONIC_WRITE (SONIC_CRCT, 0xffff);
-  SONIC_WRITE (SONIC_FAET, 0xffff);
-  SONIC_WRITE (SONIC_MPT, 0xffff);
-  
-  return 0;
+	if ((lp->descriptors = dma_alloc_coherent(lp->device,
+				SIZEOF_SONIC_DESC * SONIC_BUS_SCALE(lp->dma_bitmode),
+				&lp->descriptors_laddr, GFP_KERNEL)) == NULL) {
+		printk(KERN_ERR "%s: couldn't alloc DMA memory for descriptors.\n",
+		       dev_name(lp->device));
+		goto out;
+	}
+
+	/* Now set up the pointers to point to the appropriate places */
+	lp->cda = lp->descriptors;
+	lp->tda = lp->cda + (SIZEOF_SONIC_CDA
+	                     * SONIC_BUS_SCALE(lp->dma_bitmode));
+	lp->rda = lp->tda + (SIZEOF_SONIC_TD * SONIC_NUM_TDS
+	                     * SONIC_BUS_SCALE(lp->dma_bitmode));
+	lp->rra = lp->rda + (SIZEOF_SONIC_RD * SONIC_NUM_RDS
+	                     * SONIC_BUS_SCALE(lp->dma_bitmode));
+
+	lp->cda_laddr = lp->descriptors_laddr;
+	lp->tda_laddr = lp->cda_laddr + (SIZEOF_SONIC_CDA
+	                     * SONIC_BUS_SCALE(lp->dma_bitmode));
+	lp->rda_laddr = lp->tda_laddr + (SIZEOF_SONIC_TD * SONIC_NUM_TDS
+	                     * SONIC_BUS_SCALE(lp->dma_bitmode));
+	lp->rra_laddr = lp->rda_laddr + (SIZEOF_SONIC_RD * SONIC_NUM_RDS
+	                     * SONIC_BUS_SCALE(lp->dma_bitmode));
+
+	dev->netdev_ops = &sonic_netdev_ops;
+	dev->watchdog_timeo = TX_TIMEOUT;
+
+	/*
+	 * clear tally counter
+	 */
+	SONIC_WRITE(SONIC_CRCT,0xffff);
+	SONIC_WRITE(SONIC_FAET,0xffff);
+	SONIC_WRITE(SONIC_MPT,0xffff);
+
+	return 0;
 out:
-  release_mem_region (dev->base_addr, SONIC_MEM_SIZE);
-  return err;
+	release_mem_region(dev->base_addr, SONIC_MEM_SIZE);
+	return err;
 }
 
 /*
  * Probe for a SONIC ethernet controller on a Mips Jazz board.
  * Actually probing is superfluous but we're paranoid.
  */
-static int __devinit jazz_sonic_probe (struct platform_device * pdev)
+static int __devinit jazz_sonic_probe(struct platform_device *pdev)
 {
-  struct net_device * dev;
-  struct sonic_local * lp;
-  struct resource * res;
-  int err = 0;
-  
-  res = platform_get_resource (pdev, IORESOURCE_MEM, 0);
-  if (!res)
-  { return -ENODEV; }
-  
-  dev = alloc_etherdev (sizeof (struct sonic_local) );
-  if (!dev)
-  { return -ENOMEM; }
-  
-  lp = netdev_priv (dev);
-  lp->device = &pdev->dev;
-  SET_NETDEV_DEV (dev, &pdev->dev);
-  platform_set_drvdata (pdev, dev);
-  
-  netdev_boot_setup_check (dev);
-  
-  dev->base_addr = res->start;
-  dev->irq = platform_get_irq (pdev, 0);
-  err = sonic_probe1 (dev);
-  if (err)
-  { goto out; }
-  err = register_netdev (dev);
-  if (err)
-  { goto out1; }
-  
-  printk ("%s: MAC %pM IRQ %d\n", dev->name, dev->dev_addr, dev->irq);
-  
-  return 0;
-  
+	struct net_device *dev;
+	struct sonic_local *lp;
+	struct resource *res;
+	int err = 0;
+
+	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+	if (!res)
+		return -ENODEV;
+
+	dev = alloc_etherdev(sizeof(struct sonic_local));
+	if (!dev)
+		return -ENOMEM;
+
+	lp = netdev_priv(dev);
+	lp->device = &pdev->dev;
+	SET_NETDEV_DEV(dev, &pdev->dev);
+	platform_set_drvdata(pdev, dev);
+
+	netdev_boot_setup_check(dev);
+
+	dev->base_addr = res->start;
+	dev->irq = platform_get_irq(pdev, 0);
+	err = sonic_probe1(dev);
+	if (err)
+		goto out;
+	err = register_netdev(dev);
+	if (err)
+		goto out1;
+
+	printk("%s: MAC %pM IRQ %d\n", dev->name, dev->dev_addr, dev->irq);
+
+	return 0;
+
 out1:
-  release_mem_region (dev->base_addr, SONIC_MEM_SIZE);
+	release_mem_region(dev->base_addr, SONIC_MEM_SIZE);
 out:
-  free_netdev (dev);
-  
-  return err;
+	free_netdev(dev);
+
+	return err;
 }
 
-MODULE_DESCRIPTION ("Jazz SONIC ethernet driver");
-module_param (sonic_debug, int, 0);
-MODULE_PARM_DESC (sonic_debug, "jazzsonic debug level (1-4)");
-MODULE_ALIAS ("platform:jazzsonic");
+MODULE_DESCRIPTION("Jazz SONIC ethernet driver");
+module_param(sonic_debug, int, 0);
+MODULE_PARM_DESC(sonic_debug, "jazzsonic debug level (1-4)");
+MODULE_ALIAS("platform:jazzsonic");
 
 #include "sonic.c"
 
-static int __devexit jazz_sonic_device_remove (struct platform_device * pdev)
+static int __devexit jazz_sonic_device_remove (struct platform_device *pdev)
 {
-  struct net_device * dev = platform_get_drvdata (pdev);
-  struct sonic_local * lp = netdev_priv (dev);
-  
-  unregister_netdev (dev);
-  dma_free_coherent (lp->device, SIZEOF_SONIC_DESC * SONIC_BUS_SCALE (lp->dma_bitmode),
-                     lp->descriptors, lp->descriptors_laddr);
-  release_mem_region (dev->base_addr, SONIC_MEM_SIZE);
-  free_netdev (dev);
-  
-  return 0;
+	struct net_device *dev = platform_get_drvdata(pdev);
+	struct sonic_local* lp = netdev_priv(dev);
+
+	unregister_netdev(dev);
+	dma_free_coherent(lp->device, SIZEOF_SONIC_DESC * SONIC_BUS_SCALE(lp->dma_bitmode),
+	                  lp->descriptors, lp->descriptors_laddr);
+	release_mem_region(dev->base_addr, SONIC_MEM_SIZE);
+	free_netdev(dev);
+
+	return 0;
 }
 
 static struct platform_driver jazz_sonic_driver = {
-  .probe  = jazz_sonic_probe,
-  .remove = __devexit_p (jazz_sonic_device_remove),
-  .driver = {
-    .name = jazz_sonic_string,
-    .owner  = THIS_MODULE,
-  },
+	.probe	= jazz_sonic_probe,
+	.remove	= __devexit_p(jazz_sonic_device_remove),
+	.driver	= {
+		.name	= jazz_sonic_string,
+		.owner	= THIS_MODULE,
+	},
 };
 
-module_platform_driver (jazz_sonic_driver);
+module_platform_driver(jazz_sonic_driver);

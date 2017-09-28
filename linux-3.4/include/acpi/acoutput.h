@@ -225,7 +225,7 @@
 #define ACPI_ERROR(plist)
 #define ACPI_DEBUG_OBJECT(obj,l,i)
 
-#endif        /* ACPI_NO_ERROR_MESSAGES */
+#endif				/* ACPI_NO_ERROR_MESSAGES */
 
 /*
  * Debug macros that are conditionally compiled
@@ -252,7 +252,7 @@
 /* Compiler supports __FUNCTION__ (or equivalent) -- Ignore this macro */
 
 #define ACPI_FUNCTION_NAME(name)
-#endif        /* ACPI_GET_FUNCTION_NAME */
+#endif				/* ACPI_GET_FUNCTION_NAME */
 
 /*
  * Common parameters used for debug output functions:
@@ -278,6 +278,6 @@
 #define ACPI_DEBUG_PRINT(pl)
 #define ACPI_DEBUG_PRINT_RAW(pl)
 
-#endif        /* ACPI_DEBUG_OUTPUT */
+#endif				/* ACPI_DEBUG_OUTPUT */
 
-#endif        /* __ACOUTPUT_H__ */
+#endif				/* __ACOUTPUT_H__ */

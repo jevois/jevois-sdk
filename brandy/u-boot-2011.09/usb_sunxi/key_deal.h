@@ -13,17 +13,17 @@
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the
  * GNU General Public License for more details.
  *
- * SPDX-License-Identifier: GPL-2.0
+ * SPDX-License-Identifier:	GPL-2.0
  */
 
 #ifndef __SUNXI_KEY_DEAL_H__
 #define __SUNXI_KEY_DEAL_H__
 
 
-extern int sunxi_deal_hdcp_key (char * keydata, int keylen);
+extern int sunxi_deal_hdcp_key(char *keydata, int keylen);
 
 
 #endif

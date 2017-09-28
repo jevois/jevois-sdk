@@ -17,4 +17,4 @@
  * used for a.out file, which are not supported on Xtensa.
  */
 
-#endif  /* _XTENSA_USER_H */
+#endif	/* _XTENSA_USER_H */

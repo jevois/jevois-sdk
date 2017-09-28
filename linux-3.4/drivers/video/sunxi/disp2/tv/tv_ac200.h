@@ -35,14 +35,14 @@
 
 enum hpd_status
 {
-  STATUE_CLOSE = 0,
-  STATUE_OPEN  = 1,
-  
+	STATUE_CLOSE = 0,
+	STATUE_OPEN  = 1,
+
 };
 
 struct ac200_tv_priv {
-  struct acx00 * acx00;
-  struct mutex mlock;
+	struct acx00 *acx00;
+	struct mutex mlock;
 };
 
 extern struct ac200_tv_priv tv_priv;

@@ -61,402 +61,400 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "sgxinfokm.h"
 #include "syslocal.h"
 
-static struct clk * gpu_pll_clk         = NULL;
-static struct clk * gpu_core_clk        = NULL;
-static struct clk * gpu_mem_clk         = NULL;
-static struct clk * gpu_hyd_clk         = NULL;
-static struct regulator * sgx_regulator = NULL;
+static struct clk *gpu_pll_clk         = NULL;
+static struct clk *gpu_core_clk        = NULL;
+static struct clk *gpu_mem_clk         = NULL;
+static struct clk *gpu_hyd_clk         = NULL;
+static struct regulator *sgx_regulator = NULL;
 static u32    dvfs_level               = 4;
 static u32    normal_level             = 4;
 static u32    dvfs_enable              = 1;
 static u32    dvfs_max_level           = 8;
 static struct mutex  dvfs_lock;
-extern struct platform_device * gpsPVRLDMDev;
+extern struct platform_device *gpsPVRLDMDev;
 
 typedef struct
 {
-  u32 volt;
-  u32 freq;
+    u32 volt;
+    u32 freq;
 } volttable_t;
 
 static volttable_t vf_table[9] =
 {
-  {700, 252},
-  {740, 288},
-  {800, 456},
-  {840, 504},
-  {900, 624},
-  {940, 648},
-  {1000, 672},
-  {1040, 696},
-  {1100, 744},
+    {700, 252},
+    {740, 288},
+    {800, 456},
+    {840, 504},
+    {900, 624},
+    {940, 648},
+    {1000,672},
+    {1040,696},
+    {1100,744},
 };
 
-static int SetGpuVol (u32 vf_level)
+static int SetGpuVol(u32 vf_level)
 {
-  if (regulator_set_voltage (sgx_regulator, vf_table[vf_level].volt * 1000, vf_table[vf_level].volt * 1000) != 0)
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "Failed to set gpu power voltage!") );
-    return -1;
-  }
-  /* delay for gpu voltage stability */
-  udelay (20);
-  return 0;
-}
-
-static int SetGpuFreq (u32 vf_level)
-{
-  if (clk_set_rate (gpu_pll_clk, vf_table[vf_level].freq * 1000 * 1000) )
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "Failed to set gpu frequency!") );
-    return -1;
-  }
-  /* delay for gpu pll stability */
-  udelay (100);
-  return 0;
-}
-
-static void SGXDvfsChange (u32 vf_level)
-{
-  PVRSRV_ERROR err;
-  err = PVRSRVDevicePreClockSpeedChange (0, IMG_TRUE, NULL);
-  if (err == PVRSRV_OK)
-  {
-    if (vf_level < dvfs_level)
+	if(regulator_set_voltage(sgx_regulator, vf_table[vf_level].volt*1000, vf_table[vf_level].volt*1000) != 0)
     {
-      /* if changing to a lower level, reduce frequency firstly and then reduce voltage */
-      if (SetGpuFreq (vf_level) )
-      {
-        goto post;
-      }
-      if (SetGpuVol (vf_level) )
-      {
-        SetGpuFreq (dvfs_level);
-        goto post;
-      }
+		PVR_DPF((PVR_DBG_ERROR, "Failed to set gpu power voltage!"));
+		return -1;
     }
-    else
-      if (vf_level > dvfs_level)
-      {
-        /* if changing to a higher level, reduce voltage firstly and then reduce frequency */
-        if (SetGpuVol (vf_level) )
-        {
-          goto post;
-        }
-        if (SetGpuFreq (vf_level) )
-        {
-          SetGpuVol (dvfs_level);
-          goto post;
-        }
-      }
-      else
-      {
-        /* here means the level to be is the same as dvfs_level, just do noting */
-        goto post;
-      }
-      
-    dvfs_level = vf_level;
-post:
-    PVRSRVDevicePostClockSpeedChange (0, IMG_TRUE, NULL);
-  }
+	/* delay for gpu voltage stability */
+	udelay(20);
+	return 0;
+}
+
+static int SetGpuFreq(u32 vf_level)
+{
+	if(clk_set_rate(gpu_pll_clk, vf_table[vf_level].freq*1000*1000))
+    {
+		PVR_DPF((PVR_DBG_ERROR, "Failed to set gpu frequency!"));
+		return -1;
+    }
+	/* delay for gpu pll stability */
+	udelay(100);
+	return 0;
+}
+
+static void SGXDvfsChange(u32 vf_level)
+{
+	PVRSRV_ERROR err;
+	err = PVRSRVDevicePreClockSpeedChange(0, IMG_TRUE, NULL);
+	if(err == PVRSRV_OK)
+	{
+		if(vf_level < dvfs_level)
+		{
+			/* if changing to a lower level, reduce frequency firstly and then reduce voltage */
+			if(SetGpuFreq(vf_level))
+			{
+				goto post;
+			}
+			if(SetGpuVol(vf_level))
+			{
+				SetGpuFreq(dvfs_level);
+				goto post;
+			}
+		}
+		else if(vf_level > dvfs_level)
+		{
+			/* if changing to a higher level, reduce voltage firstly and then reduce frequency */
+			if(SetGpuVol(vf_level))
+			{
+				goto post;
+			}
+			if(SetGpuFreq(vf_level))
+			{
+				SetGpuVol(dvfs_level);
+				goto post;
+			}
+		}
+		else
+		{
+			/* here means the level to be is the same as dvfs_level, just do noting */
+			goto post;
+		}
+		
+		dvfs_level = vf_level;
+	post:
+		PVRSRVDevicePostClockSpeedChange(0, IMG_TRUE, NULL);		
+	}
 }
 
 #ifdef CONFIG_CPU_BUDGET_THERMAL
-static int sgx_throttle_notifier_call (struct notifier_block * nfb, unsigned long mode, void * cmd)
+static int sgx_throttle_notifier_call(struct notifier_block *nfb, unsigned long mode, void *cmd)
 {
-  int retval = NOTIFY_DONE;
-  
-  if (dvfs_enable == 0)
-  {
-    goto out;
-  }
-  
-  mutex_lock (&dvfs_lock);
-  if (mode == BUDGET_GPU_THROTTLE && dvfs_level > 0)
-  {
-    SGXDvfsChange (dvfs_level - 1);
-  }
-  else
-    if (cmd && (* (int *) cmd) == 0 && dvfs_level != normal_level)
+    int retval = NOTIFY_DONE;
+	
+	if(dvfs_enable == 0)
+	{
+		goto out;
+	}
+	
+	mutex_lock(&dvfs_lock);
+	if(mode == BUDGET_GPU_THROTTLE && dvfs_level > 0)
     {
-      SGXDvfsChange (normal_level);
+        SGXDvfsChange(dvfs_level-1);
     }
-  mutex_unlock (&dvfs_lock);
-  
+	else if(cmd && (*(int *)cmd) == 0 && dvfs_level != normal_level)
+	{
+        SGXDvfsChange(normal_level);
+    }
+	mutex_unlock(&dvfs_lock);
+	
 out:
-  return retval;
+    return retval;
 }
 static struct notifier_block sgx_throttle_notifier = {
-  .notifier_call = sgx_throttle_notifier_call,
+.notifier_call = sgx_throttle_notifier_call,
 };
 #endif /* CONFIG_CPU_BUDGET_THERMAL */
 
-static ssize_t android_dvfs_show (struct device * dev, struct device_attribute * attr, char * buf)
+static ssize_t android_dvfs_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
-  u32 cnt = 0, bufercnt = 0, ret = 0;
-  char s[2];
-  ret = sprintf (buf + bufercnt, "  vf_level voltage frequency\n");
-  while (cnt <= dvfs_max_level)
-  {
-    if (cnt == dvfs_level)
+    u32 cnt = 0,bufercnt = 0,ret = 0;
+    char s[2];
+    ret = sprintf(buf + bufercnt, "  vf_level voltage frequency\n");
+    while(cnt <= dvfs_max_level)
     {
-      sprintf (s, "->");
+        if(cnt == dvfs_level)
+        {
+           sprintf(s, "->");
+        }
+		else
+		{
+            sprintf(s, "  ");
+        }
+        bufercnt += ret;
+        ret = sprintf(buf+bufercnt, "%s   %1d     %4dmV   %3dMHz\n", s, cnt, vf_table[cnt].volt, vf_table[cnt].freq);
+        cnt++;
     }
-    else
+
+    return bufercnt+ret;
+}
+
+static ssize_t android_dvfs_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t count)
+{	
+    int err;
+    unsigned long vf_level;
+	
+	if(dvfs_enable == 0)
+	{
+		goto out;
+	}
+	
+    err = strict_strtoul(buf, 10, &vf_level);
+    if (err || vf_level > dvfs_max_level)
     {
-      sprintf (s, "  ");
-    }
-    bufercnt += ret;
-    ret = sprintf (buf + bufercnt, "%s   %1d     %4dmV   %3dMHz\n", s, cnt, vf_table[cnt].volt, vf_table[cnt].freq);
-    cnt++;
-  }
-  
-  return bufercnt + ret;
+		PVR_DPF((PVR_DBG_ERROR, "Invalid parameter!"));
+		return err;
+	}
+	mutex_lock(&dvfs_lock);
+	SGXDvfsChange((u32)vf_level);
+	mutex_unlock(&dvfs_lock);
+
+out:	
+	return count;
 }
 
-static ssize_t android_dvfs_store (struct device * dev, struct device_attribute * attr, const char * buf, size_t count)
+static ssize_t normal_dvfs_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
-  int err;
-  unsigned long vf_level;
-  
-  if (dvfs_enable == 0)
-  {
-    goto out;
-  }
-  
-  err = strict_strtoul (buf, 10, &vf_level);
-  if (err || vf_level > dvfs_max_level)
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "Invalid parameter!") );
-    return err;
-  }
-  mutex_lock (&dvfs_lock);
-  SGXDvfsChange ( (u32) vf_level);
-  mutex_unlock (&dvfs_lock);
-  
-out:
-  return count;
-}
-
-static ssize_t normal_dvfs_show (struct device * dev, struct device_attribute * attr, char * buf)
-{
-  u32 cnt = 0, bufercnt = 0, ret = 0;
-  char s[2];
-  ret = sprintf (buf + bufercnt, "  vf_level voltage frequency\n");
-  while (cnt <= dvfs_max_level)
-  {
-    if (cnt == normal_level)
+	u32 cnt = 0,bufercnt = 0,ret = 0;
+    char s[2];
+    ret = sprintf(buf + bufercnt, "  vf_level voltage frequency\n");
+    while(cnt <= dvfs_max_level)
     {
-      sprintf (s, "->");
+        if(cnt == normal_level)
+        {
+           sprintf(s, "->");
+        }
+		else
+		{
+            sprintf(s, "  ");
+        }
+        bufercnt += ret;
+        ret = sprintf(buf+bufercnt, "%s   %1d     %4dmV   %3dMHz\n", s, cnt, vf_table[cnt].volt, vf_table[cnt].freq);
+        cnt++;
     }
-    else
+
+	return bufercnt+ret;
+}
+
+static ssize_t normal_dvfs_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t count)
+{
+	int err;
+	unsigned long vf_level;	
+    err = strict_strtoul(buf, 10, &vf_level);
+    if (err || vf_level > dvfs_max_level)
     {
-      sprintf (s, "  ");
-    }
-    bufercnt += ret;
-    ret = sprintf (buf + bufercnt, "%s   %1d     %4dmV   %3dMHz\n", s, cnt, vf_table[cnt].volt, vf_table[cnt].freq);
-    cnt++;
-  }
-  
-  return bufercnt + ret;
+		PVR_DPF((PVR_DBG_ERROR, "Invalid parameter!"));
+		return err;
+	}
+	normal_level = (u32)vf_level;
+	
+	mutex_lock(&dvfs_lock);
+	SGXDvfsChange(normal_level);
+	mutex_unlock(&dvfs_lock);
+	
+	return count;
 }
 
-static ssize_t normal_dvfs_store (struct device * dev, struct device_attribute * attr, const char * buf, size_t count)
+static ssize_t enable_dvfs_show(struct device *dev, struct device_attribute *attr, char *buf)
 {
-  int err;
-  unsigned long vf_level;
-  err = strict_strtoul (buf, 10, &vf_level);
-  if (err || vf_level > dvfs_max_level)
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "Invalid parameter!") );
-    return err;
-  }
-  normal_level = (u32) vf_level;
-  
-  mutex_lock (&dvfs_lock);
-  SGXDvfsChange (normal_level);
-  mutex_unlock (&dvfs_lock);
-  
-  return count;
+	u32 ret = 0;
+	ret = sprintf(buf, "%d\n", dvfs_enable);
+	return ret;
 }
 
-static ssize_t enable_dvfs_show (struct device * dev, struct device_attribute * attr, char * buf)
+static ssize_t enable_dvfs_store(struct device *dev, struct device_attribute *attr, const char *buf, size_t count)
 {
-  u32 ret = 0;
-  ret = sprintf (buf, "%d\n", dvfs_enable);
-  return ret;
+	int err;
+	unsigned long tmp;
+	err = strict_strtoul(buf, 10, &tmp);
+	if (err)
+    {
+		PVR_DPF((PVR_DBG_ERROR, "Invalid parameter!"));
+		return err;
+	}
+	
+	dvfs_enable = (tmp == 0 ? 0 : 1);
+	
+	return count;
 }
 
-static ssize_t enable_dvfs_store (struct device * dev, struct device_attribute * attr, const char * buf, size_t count)
+static DEVICE_ATTR(android, S_IRUGO|S_IWUSR|S_IWGRP, android_dvfs_show, android_dvfs_store);
+
+static DEVICE_ATTR(normal, S_IRUGO|S_IWUSR|S_IWGRP, normal_dvfs_show, normal_dvfs_store);
+
+static DEVICE_ATTR(enable, S_IRUGO|S_IWUSR|S_IWGRP, enable_dvfs_show, enable_dvfs_store);
+
+static struct attribute *gpu_attributes[] =
 {
-  int err;
-  unsigned long tmp;
-  err = strict_strtoul (buf, 10, &tmp);
-  if (err)
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "Invalid parameter!") );
-    return err;
-  }
-  
-  dvfs_enable = (tmp == 0 ? 0 : 1);
-  
-  return count;
-}
-
-static DEVICE_ATTR (android, S_IRUGO | S_IWUSR | S_IWGRP, android_dvfs_show, android_dvfs_store);
-
-static DEVICE_ATTR (normal, S_IRUGO | S_IWUSR | S_IWGRP, normal_dvfs_show, normal_dvfs_store);
-
-static DEVICE_ATTR (enable, S_IRUGO | S_IWUSR | S_IWGRP, enable_dvfs_show, enable_dvfs_store);
-
-static struct attribute * gpu_attributes[] =
-{
-  &dev_attr_android.attr,
-  &dev_attr_normal.attr,
-  &dev_attr_enable.attr,
-  NULL
+	&dev_attr_android.attr,
+    &dev_attr_normal.attr,
+    &dev_attr_enable.attr,
+    NULL
 };
 
-struct attribute_group gpu_attribute_group = {
+ struct attribute_group gpu_attribute_group = {
   .name = "dvfs",
   .attrs = gpu_attributes
 };
 
-static void ParseSysconfigFex (void)
+static void ParseSysconfigFex(void)
 {
-  char vftbl_name[11] = {0};
-  u32 cnt, i = 0, numberoftable, tmp;
-  script_item_u val;
-  script_item_value_type_e type;
-  numberoftable = sizeof (vf_table) / sizeof (volttable_t);
-  
-  type = script_get_item ("gpu_dvfs_table", "G_dvfs_enable", &val);
-  if (SCIRPT_ITEM_VALUE_TYPE_INT == type)
-  {
-    dvfs_enable = (val.val == 0 ? 0 : 1);
-  }
-  
-  type = script_get_item ("gpu_dvfs_table", "G_LV_count", &val);
-  if (SCIRPT_ITEM_VALUE_TYPE_INT != type)
-  {
-    goto out;
-  }
-  cnt = val.val;
-  if (cnt <= 0 || cnt > numberoftable)
-  {
-    goto out;
-  }
-  for (i = 0; i < cnt; i++)
-  {
-    /* get frequency config from sysconfig.fex */
-    sprintf (vftbl_name, "G_LV%d_freq", i);
-    type = script_get_item ("gpu_dvfs_table", vftbl_name, &val);
+    char vftbl_name[11] = {0};
+    u32 cnt, i=0, numberoftable, tmp;
+    script_item_u val;
+    script_item_value_type_e type;
+    numberoftable = sizeof(vf_table)/sizeof(volttable_t);
+	
+	type = script_get_item("gpu_dvfs_table", "G_dvfs_enable", &val);
+	if (SCIRPT_ITEM_VALUE_TYPE_INT == type)
+    {
+        dvfs_enable = (val.val == 0 ? 0 : 1);
+    }	
+	
+    type = script_get_item("gpu_dvfs_table", "G_LV_count", &val);
     if (SCIRPT_ITEM_VALUE_TYPE_INT != type)
     {
-      PVR_DPF ( (PVR_DBG_WARNING, "Faile to get %s from sysconfig!", vftbl_name) );
-      goto out;
+        goto out;
     }
-    
-    if (val.val < 0 || val.val > vf_table[numberoftable - 1].freq)
+    cnt = val.val;
+    if (cnt <= 0 || cnt > numberoftable)
     {
-      goto out;
+        goto out;
     }
-    
-    tmp = val.val;
-    
-    /* get voltage config from sysconfig.fex */
-    sprintf (vftbl_name, "G_LV%d_volt", i);
-    type = script_get_item ("gpu_dvfs_table", vftbl_name, &val);
-    if (SCIRPT_ITEM_VALUE_TYPE_INT != type)
+    for(i=0;i<cnt;i++)
     {
-      PVR_DPF ( (PVR_DBG_WARNING, "Faile to get %s from sysconfig!", vftbl_name) );
-      goto out;
+		/* get frequency config from sysconfig.fex */
+        sprintf(vftbl_name, "G_LV%d_freq",i);
+        type = script_get_item("gpu_dvfs_table", vftbl_name, &val);
+        if (SCIRPT_ITEM_VALUE_TYPE_INT != type)
+        {
+			PVR_DPF((PVR_DBG_WARNING, "Faile to get %s from sysconfig!", vftbl_name));
+            goto out;
+        }
+		
+		if(val.val < 0 || val.val > vf_table[numberoftable-1].freq)
+		{
+			goto out;
+		}
+		
+		tmp = val.val;
+		
+		/* get voltage config from sysconfig.fex */
+        sprintf(vftbl_name, "G_LV%d_volt",i);
+        type = script_get_item("gpu_dvfs_table", vftbl_name, &val);
+        if (SCIRPT_ITEM_VALUE_TYPE_INT != type)
+        {
+			PVR_DPF((PVR_DBG_WARNING, "Faile to get %s from sysconfig!", vftbl_name));
+            goto out;
+        }
+		
+		if(val.val < 0 || val.val > vf_table[numberoftable-1].volt)
+		{
+			goto out;
+		}
+		
+		/* change the value of the frequency of vf_table */
+        vf_table[i].freq = tmp;
+		
+		/* change the value of the voltage of vf_table */
+        vf_table[i].volt = val.val;
     }
-    
-    if (val.val < 0 || val.val > vf_table[numberoftable - 1].volt)
-    {
-      goto out;
-    }
-    
-    /* change the value of the frequency of vf_table */
-    vf_table[i].freq = tmp;
-    
-    /* change the value of the voltage of vf_table */
-    vf_table[i].volt = val.val;
-  }
-  
+	
 out:
-  if (i == 0)
-  {
-    dvfs_max_level = i;
-  }
-  else
-  {
-    dvfs_max_level = i - 1;
-  }
-  
-  if (dvfs_level > dvfs_max_level)
-  {
-    dvfs_level = dvfs_max_level;
-  }
-  
-  type = script_get_item ("gpu_dvfs_table", "G_normal_level", &val);
-  if (SCIRPT_ITEM_VALUE_TYPE_INT != type)
-  {
-    return;
-  }
-  if (val.val >= 0 || val.val <= dvfs_max_level)
-  {
-    normal_level = val.val;
-    dvfs_level = normal_level;
-  }
-}
-
-static PVRSRV_ERROR PowerLockWrap (SYS_SPECIFIC_DATA * psSysSpecData, IMG_BOOL bTryLock)
-{
-  if (!in_interrupt() )
-  {
-    if (bTryLock)
+	if(i == 0)
+	{
+		dvfs_max_level = i;
+	}
+	else
+	{
+    	dvfs_max_level = i - 1;
+	}
+	
+	if(dvfs_level > dvfs_max_level)
+	{
+		dvfs_level = dvfs_max_level;
+	}
+	
+	type = script_get_item("gpu_dvfs_table", "G_normal_level", &val);
+	if (SCIRPT_ITEM_VALUE_TYPE_INT != type)
     {
-      int locked = mutex_trylock (&psSysSpecData->sPowerLock);
-      if (locked == 0)
-      {
-        return PVRSRV_ERROR_RETRY;
-      }
+        return;
     }
-    else
-    {
-      mutex_lock (&psSysSpecData->sPowerLock);
-    }
-  }
-  
-  return PVRSRV_OK;
+	if(val.val >= 0 || val.val <= dvfs_max_level)
+	{
+		normal_level = val.val;
+		dvfs_level = normal_level;
+	}
 }
 
-static IMG_VOID PowerLockUnwrap (SYS_SPECIFIC_DATA * psSysSpecData)
+static PVRSRV_ERROR PowerLockWrap(SYS_SPECIFIC_DATA *psSysSpecData, IMG_BOOL bTryLock)
 {
-  if (!in_interrupt() )
-  {
-    mutex_unlock (&psSysSpecData->sPowerLock);
-  }
+	if (!in_interrupt())
+	{
+		if (bTryLock)
+		{
+			int locked = mutex_trylock(&psSysSpecData->sPowerLock);
+			if (locked == 0)
+			{
+				return PVRSRV_ERROR_RETRY;
+			}
+		}
+		else
+		{
+			mutex_lock(&psSysSpecData->sPowerLock);
+		}
+	}
+
+	return PVRSRV_OK;
 }
 
-PVRSRV_ERROR SysPowerLockWrap (IMG_BOOL bTryLock)
+static IMG_VOID PowerLockUnwrap(SYS_SPECIFIC_DATA *psSysSpecData)
 {
-  SYS_DATA * psSysData;
-  
-  SysAcquireData (&psSysData);
-  
-  return PowerLockWrap (psSysData->pvSysSpecificData, bTryLock);
+	if (!in_interrupt())
+	{
+		mutex_unlock(&psSysSpecData->sPowerLock);
+	}
 }
 
-IMG_VOID SysPowerLockUnwrap (IMG_VOID)
+PVRSRV_ERROR SysPowerLockWrap(IMG_BOOL bTryLock)
 {
-  SYS_DATA * psSysData;
-  
-  SysAcquireData (&psSysData);
-  
-  PowerLockUnwrap (psSysData->pvSysSpecificData);
+	SYS_DATA	*psSysData;
+
+	SysAcquireData(&psSysData);
+
+	return PowerLockWrap(psSysData->pvSysSpecificData, bTryLock);
+}
+
+IMG_VOID SysPowerLockUnwrap(IMG_VOID)
+{
+	SYS_DATA	*psSysData;
+
+	SysAcquireData(&psSysData);
+
+	PowerLockUnwrap(psSysData->pvSysSpecificData);
 }
 
 /*
@@ -468,35 +466,35 @@ IMG_VOID SysPowerLockUnwrap (IMG_VOID)
  * If the function returns IMG_TRUE, UnwrapSystemPowerChange must be
  * called to rewrap the power lock, prior to returning to Services.
  */
-IMG_BOOL WrapSystemPowerChange (SYS_SPECIFIC_DATA * psSysSpecData)
+IMG_BOOL WrapSystemPowerChange(SYS_SPECIFIC_DATA *psSysSpecData)
 {
-
-  return IMG_TRUE;
+	
+	return IMG_TRUE;
 }
 
-IMG_VOID UnwrapSystemPowerChange (SYS_SPECIFIC_DATA * psSysSpecData)
+IMG_VOID UnwrapSystemPowerChange(SYS_SPECIFIC_DATA *psSysSpecData)
 {
-
+	
 }
 
 /*
  * Return SGX timining information to caller.
  */
-IMG_VOID SysGetSGXTimingInformation (SGX_TIMING_INFORMATION * psTimingInfo)
+IMG_VOID SysGetSGXTimingInformation(SGX_TIMING_INFORMATION *psTimingInfo)
 {
-  #if !defined(NO_HARDWARE)
-  PVR_ASSERT (atomic_read (&gpsSysSpecificData->sSGXClocksEnabled) != 0);
-  #endif
-  psTimingInfo->ui32CoreClockSpeed = (IMG_UINT32) clk_get_rate (gpu_core_clk);
-  
-  psTimingInfo->ui32HWRecoveryFreq = SYS_SGX_HWRECOVERY_TIMEOUT_FREQ;
-  psTimingInfo->ui32uKernelFreq = SYS_SGX_PDS_TIMER_FREQ;
-  #if defined(SUPPORT_ACTIVE_POWER_MANAGEMENT)
-  psTimingInfo->bEnableActivePM = IMG_TRUE;
-  #else
-  psTimingInfo->bEnableActivePM = IMG_FALSE;
-  #endif /* SUPPORT_ACTIVE_POWER_MANAGEMENT */
-  psTimingInfo->ui32ActivePowManLatencyms = SYS_SGX_ACTIVE_POWER_LATENCY_MS;
+#if !defined(NO_HARDWARE)
+	PVR_ASSERT(atomic_read(&gpsSysSpecificData->sSGXClocksEnabled) != 0);
+#endif
+	psTimingInfo->ui32CoreClockSpeed = (IMG_UINT32)clk_get_rate(gpu_core_clk);
+	
+	psTimingInfo->ui32HWRecoveryFreq = SYS_SGX_HWRECOVERY_TIMEOUT_FREQ;
+	psTimingInfo->ui32uKernelFreq = SYS_SGX_PDS_TIMER_FREQ;
+#if defined(SUPPORT_ACTIVE_POWER_MANAGEMENT)
+	psTimingInfo->bEnableActivePM = IMG_TRUE;
+#else
+	psTimingInfo->bEnableActivePM = IMG_FALSE;
+#endif /* SUPPORT_ACTIVE_POWER_MANAGEMENT */
+	psTimingInfo->ui32ActivePowManLatencyms = SYS_SGX_ACTIVE_POWER_LATENCY_MS;
 }
 
 /*!
@@ -509,29 +507,29 @@ IMG_VOID SysGetSGXTimingInformation (SGX_TIMING_INFORMATION * psTimingInfo)
  @Return   PVRSRV_ERROR
 
 ******************************************************************************/
-PVRSRV_ERROR EnableSGXClocks (SYS_DATA * psSysData, IMG_BOOL bNoDev)
+PVRSRV_ERROR EnableSGXClocks(SYS_DATA *psSysData, IMG_BOOL bNoDev)
 {
-  if (gpu_core_clk->enable_count == 0)
-  {
-    if (clk_prepare_enable (gpu_pll_clk) )
-    {
-      PVR_DPF ( (PVR_DBG_ERROR, "Failed to enable gpu pll clock!") );
-    }
-    if (clk_prepare_enable (gpu_core_clk) )
-    {
-      PVR_DPF ( (PVR_DBG_ERROR, "Failed to enable gpu core clock!") );
-    }
-    if (clk_prepare_enable (gpu_mem_clk) )
-    {
-      PVR_DPF ( (PVR_DBG_ERROR, "Failed to enable gpu mem clock!") );
-    }
-    if (clk_prepare_enable (gpu_hyd_clk) )
-    {
-      PVR_DPF ( (PVR_DBG_ERROR, "Failed to enable gpu hyd clock!") );
-    }
-  }
-  
-  return PVRSRV_OK;
+	if(gpu_core_clk->enable_count == 0)
+	{
+		if (clk_prepare_enable(gpu_pll_clk))
+		{
+			PVR_DPF((PVR_DBG_ERROR, "Failed to enable gpu pll clock!"));
+		}
+		if (clk_prepare_enable(gpu_core_clk))
+		{
+			PVR_DPF((PVR_DBG_ERROR, "Failed to enable gpu core clock!"));
+		}
+		if (clk_prepare_enable(gpu_mem_clk))
+		{
+			PVR_DPF((PVR_DBG_ERROR, "Failed to enable gpu mem clock!"));
+		}
+		if (clk_prepare_enable(gpu_hyd_clk))
+		{
+			PVR_DPF((PVR_DBG_ERROR, "Failed to enable gpu hyd clock!"));
+		}
+	}
+	
+	return PVRSRV_OK;
 }
 
 
@@ -545,15 +543,15 @@ PVRSRV_ERROR EnableSGXClocks (SYS_DATA * psSysData, IMG_BOOL bNoDev)
  @Return   none
 
 ******************************************************************************/
-IMG_VOID DisableSGXClocks (SYS_DATA * psSysData)
-{
-  if (gpu_core_clk->enable_count == 1)
-  {
-    clk_disable_unprepare (gpu_hyd_clk);
-    clk_disable_unprepare (gpu_mem_clk);
-    clk_disable_unprepare (gpu_core_clk);
-    clk_disable_unprepare (gpu_pll_clk);
-  }
+IMG_VOID DisableSGXClocks(SYS_DATA *psSysData)
+{	
+	if(gpu_core_clk->enable_count == 1)
+	{
+		clk_disable_unprepare(gpu_hyd_clk);
+		clk_disable_unprepare(gpu_mem_clk);	
+		clk_disable_unprepare(gpu_core_clk);
+		clk_disable_unprepare(gpu_pll_clk);
+	}
 }
 
 /*!
@@ -566,88 +564,88 @@ IMG_VOID DisableSGXClocks (SYS_DATA * psSysData)
  @Return   PVRSRV_ERROR
 
 ******************************************************************************/
-PVRSRV_ERROR EnableSystemClocks (SYS_DATA * psSysData)
+PVRSRV_ERROR EnableSystemClocks(SYS_DATA *psSysData)
 {
-  SYS_SPECIFIC_DATA * psSysSpecData = (SYS_SPECIFIC_DATA *) psSysData->pvSysSpecificData;
-  
-  if (!psSysSpecData->bSysClocksOneTimeInit)
-  {
-    sgx_regulator = regulator_get (NULL, "vdd-gpu");
-    if (IS_ERR (sgx_regulator) )
-    {
-      PVR_DPF ( (PVR_DBG_ERROR, "Failed to get sgx regulator!") );
-    }
-    
-    ParseSysconfigFex();
-    
-    /* Set up PLL and clock parents */
-    gpu_pll_clk = clk_get (NULL, PLL_GPU_CLK);
-    if (!gpu_pll_clk || IS_ERR (gpu_pll_clk) )
-    {
-      PVR_DPF ( (PVR_DBG_ERROR, "Failed to get gpu pll handle!") );
-    }
-    gpu_core_clk = clk_get (NULL, GPUCORE_CLK);
-    if (!gpu_core_clk || IS_ERR (gpu_core_clk) )
-    {
-      PVR_DPF ( (PVR_DBG_ERROR, "Failed to get gpu core clock handle!") );
-    }
-    gpu_mem_clk = clk_get (NULL, GPUMEM_CLK);
-    if (!gpu_mem_clk || IS_ERR (gpu_mem_clk) )
-    {
-      PVR_DPF ( (PVR_DBG_ERROR, "Failed to get gpu mem clock handle!") );
-    }
-    gpu_hyd_clk = clk_get (NULL, GPUHYD_CLK);
-    if (!gpu_hyd_clk || IS_ERR (gpu_hyd_clk) )
-    {
-      PVR_DPF ( (PVR_DBG_ERROR, "Failed to get gpu hyd clock handle!") );
-    }
-    
-    if (clk_set_parent (gpu_core_clk, gpu_pll_clk) )
-    {
-      PVR_DPF ( (PVR_DBG_ERROR, "Failed to set the parent of gpu core clock!") );
-    }
-    if (clk_set_parent (gpu_mem_clk, gpu_pll_clk) )
-    {
-      PVR_DPF ( (PVR_DBG_ERROR, "Failed to set the parent of gpu mem clock!") );
-    }
-    if (clk_set_parent (gpu_hyd_clk, gpu_pll_clk) )
-    {
-      PVR_DPF ( (PVR_DBG_ERROR, "Failed to set the parent of gpu hyd clock!") );
-    }
-    
-    /* set the frequency of gpu pll */
-    SetGpuFreq (dvfs_level);
-    
-    mutex_init (&psSysSpecData->sPowerLock);
-    psSysSpecData->bSysClocksOneTimeInit = IMG_TRUE;
-    
-    mutex_init (&dvfs_lock);
-    
-    #ifdef CONFIG_CPU_BUDGET_THERMAL
-    register_budget_cooling_notifier (&sgx_throttle_notifier);
-    #endif /* CONFIG_CPU_BUDGET_THERMAL */
-    
-    sysfs_create_group (&gpsPVRLDMDev->dev.kobj, &gpu_attribute_group);
-  }
-  
-  /* enable gpu power */
-  if (regulator_enable (sgx_regulator) )
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "Failed to enable gpu power!") );
-  }
-  
-  /* delay for gpu power stability */
-  mdelay (2);
-  
-  /* set gpu power off gating invalid */
-  sunxi_smc_writel (0, SUNXI_R_PRCM_VBASE + 0x118);
-  
-  if (sunxi_periph_reset_deassert (gpu_hyd_clk) )
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "Failed to release gpu reset!") );
-  }
-  
-  return PVRSRV_OK;
+	SYS_SPECIFIC_DATA *psSysSpecData = (SYS_SPECIFIC_DATA *) psSysData->pvSysSpecificData;
+
+	if (!psSysSpecData->bSysClocksOneTimeInit)
+	{
+		sgx_regulator = regulator_get(NULL,"vdd-gpu");
+		if (IS_ERR(sgx_regulator))
+		{
+			PVR_DPF((PVR_DBG_ERROR, "Failed to get sgx regulator!"));
+		}
+        
+		ParseSysconfigFex();
+		
+		/* Set up PLL and clock parents */	
+		gpu_pll_clk = clk_get(NULL,PLL_GPU_CLK);
+		if (!gpu_pll_clk || IS_ERR(gpu_pll_clk))
+		{
+			PVR_DPF((PVR_DBG_ERROR, "Failed to get gpu pll handle!"));
+		}
+		gpu_core_clk = clk_get(NULL, GPUCORE_CLK);
+		if (!gpu_core_clk || IS_ERR(gpu_core_clk))
+		{
+			PVR_DPF((PVR_DBG_ERROR, "Failed to get gpu core clock handle!"));
+		}
+		gpu_mem_clk = clk_get(NULL, GPUMEM_CLK);
+		if (!gpu_mem_clk || IS_ERR(gpu_mem_clk))
+		{
+			PVR_DPF((PVR_DBG_ERROR, "Failed to get gpu mem clock handle!"));
+		}
+		gpu_hyd_clk = clk_get(NULL, GPUHYD_CLK);
+		if (!gpu_hyd_clk || IS_ERR(gpu_hyd_clk))
+		{
+			PVR_DPF((PVR_DBG_ERROR, "Failed to get gpu hyd clock handle!"));
+		}
+		
+		if (clk_set_parent(gpu_core_clk, gpu_pll_clk))
+		{
+			PVR_DPF((PVR_DBG_ERROR, "Failed to set the parent of gpu core clock!"));
+		}
+		if (clk_set_parent(gpu_mem_clk, gpu_pll_clk))
+		{
+			PVR_DPF((PVR_DBG_ERROR, "Failed to set the parent of gpu mem clock!"));
+		}
+		if (clk_set_parent(gpu_hyd_clk, gpu_pll_clk))
+		{
+			PVR_DPF((PVR_DBG_ERROR, "Failed to set the parent of gpu hyd clock!"));
+		}
+		
+		/* set the frequency of gpu pll */
+		SetGpuFreq(dvfs_level);
+	
+		mutex_init(&psSysSpecData->sPowerLock);
+		psSysSpecData->bSysClocksOneTimeInit = IMG_TRUE;
+		
+		mutex_init(&dvfs_lock);
+		
+	#ifdef CONFIG_CPU_BUDGET_THERMAL
+		register_budget_cooling_notifier(&sgx_throttle_notifier);
+	#endif /* CONFIG_CPU_BUDGET_THERMAL */
+
+		sysfs_create_group(&gpsPVRLDMDev->dev.kobj, &gpu_attribute_group);
+	}
+
+	/* enable gpu power */
+	if (regulator_enable(sgx_regulator))
+	{
+		PVR_DPF((PVR_DBG_ERROR, "Failed to enable gpu power!"));
+	}
+	
+	/* delay for gpu power stability */
+	mdelay(2);
+	
+	/* set gpu power off gating invalid */
+	sunxi_smc_writel(0, SUNXI_R_PRCM_VBASE + 0x118);
+	
+	if(sunxi_periph_reset_deassert(gpu_hyd_clk))
+	{
+		PVR_DPF((PVR_DBG_ERROR, "Failed to release gpu reset!"));
+	}
+	
+	return PVRSRV_OK;
 }
 
 /*!
@@ -660,47 +658,47 @@ PVRSRV_ERROR EnableSystemClocks (SYS_DATA * psSysData)
  @Return  none
 
 ******************************************************************************/
-IMG_VOID DisableSystemClocks (SYS_DATA * psSysData)
+IMG_VOID DisableSystemClocks(SYS_DATA *psSysData)
 {
-  if (sunxi_periph_reset_assert (gpu_hyd_clk) )
-  {
-    PVR_DPF ( (PVR_DBG_ERROR, "Failed to pull down gpu reset!") );
-  }
-  
-  /* set gpu power off gating valid */
-  sunxi_smc_writel (1, SUNXI_R_PRCM_VBASE + 0x118);
-  
-  /* disable gpu power */
-  if (regulator_is_enabled (sgx_regulator) )
-  {
-    if (regulator_disable (sgx_regulator) )
-    {
-      PVR_DPF ( (PVR_DBG_ERROR, "Failed to disable gpu power!") );
-    }
-  }
+	if(sunxi_periph_reset_assert(gpu_hyd_clk))
+	{
+		PVR_DPF((PVR_DBG_ERROR, "Failed to pull down gpu reset!"));
+	}
+
+	/* set gpu power off gating valid */
+	sunxi_smc_writel(1, SUNXI_R_PRCM_VBASE + 0x118);
+	
+	/* disable gpu power */
+	if (regulator_is_enabled(sgx_regulator))
+	{
+		if (regulator_disable(sgx_regulator))
+		{
+			PVR_DPF((PVR_DBG_ERROR, "Failed to disable gpu power!"));
+		}
+	}
 }
 
-PVRSRV_ERROR SysPMRuntimeRegister (void)
+PVRSRV_ERROR SysPMRuntimeRegister(void)
 {
-  return PVRSRV_OK;
+	return PVRSRV_OK;
 }
 
-PVRSRV_ERROR SysPMRuntimeUnregister (void)
+PVRSRV_ERROR SysPMRuntimeUnregister(void)
 {
-  return PVRSRV_OK;
+	return PVRSRV_OK;
 }
 
-PVRSRV_ERROR SysDvfsInitialize (SYS_SPECIFIC_DATA * psSysSpecificData)
+PVRSRV_ERROR SysDvfsInitialize(SYS_SPECIFIC_DATA *psSysSpecificData)
 {
-  PVR_UNREFERENCED_PARAMETER (psSysSpecificData);
-  
-  return PVRSRV_OK;
+	PVR_UNREFERENCED_PARAMETER(psSysSpecificData);
+
+	return PVRSRV_OK;
 }
 
-PVRSRV_ERROR SysDvfsDeinitialize (SYS_SPECIFIC_DATA * psSysSpecificData)
+PVRSRV_ERROR SysDvfsDeinitialize(SYS_SPECIFIC_DATA *psSysSpecificData)
 {
-  PVR_UNREFERENCED_PARAMETER (psSysSpecificData);
-  
-  return PVRSRV_OK;
+	PVR_UNREFERENCED_PARAMETER(psSysSpecificData);
+
+	return PVRSRV_OK;
 }
 

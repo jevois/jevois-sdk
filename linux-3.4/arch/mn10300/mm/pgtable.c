@@ -32,55 +32,55 @@
  * vaddr is what the page gets mapped to - both must be properly aligned.
  * The pmd must already be instantiated. Assumes PAE mode.
  */
-void set_pmd_pfn (unsigned long vaddr, unsigned long pfn, pgprot_t flags)
+void set_pmd_pfn(unsigned long vaddr, unsigned long pfn, pgprot_t flags)
 {
-  pgd_t * pgd;
-  pud_t * pud;
-  pmd_t * pmd;
-  
-  if (vaddr & (PMD_SIZE - 1) ) { /* vaddr is misaligned */
-    printk (KERN_ERR "set_pmd_pfn: vaddr misaligned\n");
-    return; /* BUG(); */
-  }
-  if (pfn & (PTRS_PER_PTE - 1) ) { /* pfn is misaligned */
-    printk (KERN_ERR "set_pmd_pfn: pfn misaligned\n");
-    return; /* BUG(); */
-  }
-  pgd = swapper_pg_dir + pgd_index (vaddr);
-  if (pgd_none (*pgd) ) {
-    printk (KERN_ERR "set_pmd_pfn: pgd_none\n");
-    return; /* BUG(); */
-  }
-  pud = pud_offset (pgd, vaddr);
-  pmd = pmd_offset (pud, vaddr);
-  set_pmd (pmd, pfn_pmd (pfn, flags) );
-  /*
-   * It's enough to flush this one mapping.
-   * (PGE mappings get flushed as well)
-   */
-  local_flush_tlb_one (vaddr);
+	pgd_t *pgd;
+	pud_t *pud;
+	pmd_t *pmd;
+
+	if (vaddr & (PMD_SIZE-1)) {		/* vaddr is misaligned */
+		printk(KERN_ERR "set_pmd_pfn: vaddr misaligned\n");
+		return; /* BUG(); */
+	}
+	if (pfn & (PTRS_PER_PTE-1)) {		/* pfn is misaligned */
+		printk(KERN_ERR "set_pmd_pfn: pfn misaligned\n");
+		return; /* BUG(); */
+	}
+	pgd = swapper_pg_dir + pgd_index(vaddr);
+	if (pgd_none(*pgd)) {
+		printk(KERN_ERR "set_pmd_pfn: pgd_none\n");
+		return; /* BUG(); */
+	}
+	pud = pud_offset(pgd, vaddr);
+	pmd = pmd_offset(pud, vaddr);
+	set_pmd(pmd, pfn_pmd(pfn, flags));
+	/*
+	 * It's enough to flush this one mapping.
+	 * (PGE mappings get flushed as well)
+	 */
+	local_flush_tlb_one(vaddr);
 }
 
-pte_t * pte_alloc_one_kernel (struct mm_struct * mm, unsigned long address)
+pte_t *pte_alloc_one_kernel(struct mm_struct *mm, unsigned long address)
 {
-  pte_t * pte = (pte_t *) __get_free_page (GFP_KERNEL | __GFP_REPEAT);
-  if (pte)
-  { clear_page (pte); }
-  return pte;
+	pte_t *pte = (pte_t *)__get_free_page(GFP_KERNEL|__GFP_REPEAT);
+	if (pte)
+		clear_page(pte);
+	return pte;
 }
 
-struct page * pte_alloc_one (struct mm_struct * mm, unsigned long address)
+struct page *pte_alloc_one(struct mm_struct *mm, unsigned long address)
 {
-  struct page * pte;
-  
-  #ifdef CONFIG_HIGHPTE
-  pte = alloc_pages (GFP_KERNEL | __GFP_HIGHMEM | __GFP_REPEAT, 0);
-  #else
-  pte = alloc_pages (GFP_KERNEL | __GFP_REPEAT, 0);
-  #endif
-  if (pte)
-  { clear_highpage (pte); }
-  return pte;
+	struct page *pte;
+
+#ifdef CONFIG_HIGHPTE
+	pte = alloc_pages(GFP_KERNEL|__GFP_HIGHMEM|__GFP_REPEAT, 0);
+#else
+	pte = alloc_pages(GFP_KERNEL|__GFP_REPEAT, 0);
+#endif
+	if (pte)
+		clear_highpage(pte);
+	return pte;
 }
 
 /*
@@ -97,73 +97,73 @@ struct page * pte_alloc_one (struct mm_struct * mm, unsigned long address)
  * manfred's recommendations and having no core impact whatsoever.
  * -- wli
  */
-DEFINE_SPINLOCK (pgd_lock);
-struct page * pgd_list;
+DEFINE_SPINLOCK(pgd_lock);
+struct page *pgd_list;
 
-static inline void pgd_list_add (pgd_t * pgd)
+static inline void pgd_list_add(pgd_t *pgd)
 {
-  struct page * page = virt_to_page (pgd);
-  page->index = (unsigned long) pgd_list;
-  if (pgd_list)
-  { set_page_private (pgd_list, (unsigned long) &page->index); }
-  pgd_list = page;
-  set_page_private (page, (unsigned long) &pgd_list);
+	struct page *page = virt_to_page(pgd);
+	page->index = (unsigned long) pgd_list;
+	if (pgd_list)
+		set_page_private(pgd_list, (unsigned long) &page->index);
+	pgd_list = page;
+	set_page_private(page, (unsigned long) &pgd_list);
 }
 
-static inline void pgd_list_del (pgd_t * pgd)
+static inline void pgd_list_del(pgd_t *pgd)
 {
-  struct page * next, **pprev, *page = virt_to_page (pgd);
-  next = (struct page *) page->index;
-  pprev = (struct page **) page_private (page);
-  *pprev = next;
-  if (next)
-  { set_page_private (next, (unsigned long) pprev); }
+	struct page *next, **pprev, *page = virt_to_page(pgd);
+	next = (struct page *) page->index;
+	pprev = (struct page **) page_private(page);
+	*pprev = next;
+	if (next)
+		set_page_private(next, (unsigned long) pprev);
 }
 
-void pgd_ctor (void * pgd)
+void pgd_ctor(void *pgd)
 {
-  unsigned long flags;
-  
-  if (PTRS_PER_PMD == 1)
-  { spin_lock_irqsave (&pgd_lock, flags); }
-  
-  memcpy ( (pgd_t *) pgd + USER_PTRS_PER_PGD,
-           swapper_pg_dir + USER_PTRS_PER_PGD,
-           (PTRS_PER_PGD - USER_PTRS_PER_PGD) * sizeof (pgd_t) );
-           
-  if (PTRS_PER_PMD > 1)
-  { return; }
-  
-  pgd_list_add (pgd);
-  spin_unlock_irqrestore (&pgd_lock, flags);
-  memset (pgd, 0, USER_PTRS_PER_PGD * sizeof (pgd_t) );
+	unsigned long flags;
+
+	if (PTRS_PER_PMD == 1)
+		spin_lock_irqsave(&pgd_lock, flags);
+
+	memcpy((pgd_t *)pgd + USER_PTRS_PER_PGD,
+			swapper_pg_dir + USER_PTRS_PER_PGD,
+			(PTRS_PER_PGD - USER_PTRS_PER_PGD) * sizeof(pgd_t));
+
+	if (PTRS_PER_PMD > 1)
+		return;
+
+	pgd_list_add(pgd);
+	spin_unlock_irqrestore(&pgd_lock, flags);
+	memset(pgd, 0, USER_PTRS_PER_PGD * sizeof(pgd_t));
 }
 
 /* never called when PTRS_PER_PMD > 1 */
-void pgd_dtor (void * pgd)
+void pgd_dtor(void *pgd)
 {
-  unsigned long flags; /* can be called from interrupt context */
-  
-  spin_lock_irqsave (&pgd_lock, flags);
-  pgd_list_del (pgd);
-  spin_unlock_irqrestore (&pgd_lock, flags);
+	unsigned long flags; /* can be called from interrupt context */
+
+	spin_lock_irqsave(&pgd_lock, flags);
+	pgd_list_del(pgd);
+	spin_unlock_irqrestore(&pgd_lock, flags);
 }
 
-pgd_t * pgd_alloc (struct mm_struct * mm)
+pgd_t *pgd_alloc(struct mm_struct *mm)
 {
-  return quicklist_alloc (0, GFP_KERNEL, pgd_ctor);
+	return quicklist_alloc(0, GFP_KERNEL, pgd_ctor);
 }
 
-void pgd_free (struct mm_struct * mm, pgd_t * pgd)
+void pgd_free(struct mm_struct *mm, pgd_t *pgd)
 {
-  quicklist_free (0, pgd_dtor, pgd);
+	quicklist_free(0, pgd_dtor, pgd);
 }
 
-void __init pgtable_cache_init (void)
+void __init pgtable_cache_init(void)
 {
 }
 
-void check_pgt_cache (void)
+void check_pgt_cache(void)
 {
-  quicklist_trim (0, pgd_dtor, 25, 16);
+	quicklist_trim(0, pgd_dtor, 25, 16);
 }

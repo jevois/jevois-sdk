@@ -23,51 +23,51 @@
 
 #ifndef __ASSEMBLY__
 struct s5p_mmc {
-  unsigned int  sysad;
-  unsigned short  blksize;
-  unsigned short  blkcnt;
-  unsigned int  argument;
-  unsigned short  trnmod;
-  unsigned short  cmdreg;
-  unsigned int  rspreg0;
-  unsigned int  rspreg1;
-  unsigned int  rspreg2;
-  unsigned int  rspreg3;
-  unsigned int  bdata;
-  unsigned int  prnsts;
-  unsigned char hostctl;
-  unsigned char pwrcon;
-  unsigned char blkgap;
-  unsigned char wakcon;
-  unsigned short  clkcon;
-  unsigned char timeoutcon;
-  unsigned char swrst;
-  unsigned int  norintsts;  /* errintsts */
-  unsigned int  norintstsen;  /* errintstsen */
-  unsigned int  norintsigen;  /* errintsigen */
-  unsigned short  acmd12errsts;
-  unsigned char res1[2];
-  unsigned int  capareg;
-  unsigned char res2[4];
-  unsigned int  maxcurr;
-  unsigned char res3[0x34];
-  unsigned int  control2;
-  unsigned int  control3;
-  unsigned char res4[4];
-  unsigned int  control4;
-  unsigned char res5[0x6e];
-  unsigned short  hcver;
-  unsigned char res6[0xFF00];
+	unsigned int	sysad;
+	unsigned short	blksize;
+	unsigned short	blkcnt;
+	unsigned int	argument;
+	unsigned short	trnmod;
+	unsigned short	cmdreg;
+	unsigned int	rspreg0;
+	unsigned int	rspreg1;
+	unsigned int	rspreg2;
+	unsigned int	rspreg3;
+	unsigned int	bdata;
+	unsigned int	prnsts;
+	unsigned char	hostctl;
+	unsigned char	pwrcon;
+	unsigned char	blkgap;
+	unsigned char	wakcon;
+	unsigned short	clkcon;
+	unsigned char	timeoutcon;
+	unsigned char	swrst;
+	unsigned int	norintsts;	/* errintsts */
+	unsigned int	norintstsen;	/* errintstsen */
+	unsigned int	norintsigen;	/* errintsigen */
+	unsigned short	acmd12errsts;
+	unsigned char	res1[2];
+	unsigned int	capareg;
+	unsigned char	res2[4];
+	unsigned int	maxcurr;
+	unsigned char	res3[0x34];
+	unsigned int	control2;
+	unsigned int	control3;
+	unsigned char	res4[4];
+	unsigned int	control4;
+	unsigned char	res5[0x6e];
+	unsigned short	hcver;
+	unsigned char	res6[0xFF00];
 };
 
 struct mmc_host {
-  struct s5p_mmc * reg;
-  unsigned int version; /* SDHCI spec. version */
-  unsigned int clock; /* Current clock (MHz) */
-  int dev_index;
+	struct s5p_mmc *reg;
+	unsigned int version;	/* SDHCI spec. version */
+	unsigned int clock;	/* Current clock (MHz) */
+	int dev_index;
 };
 
-int s5p_mmc_init (int dev_index, int bus_width);
+int s5p_mmc_init(int dev_index, int bus_width);
 
-#endif  /* __ASSEMBLY__ */
+#endif	/* __ASSEMBLY__ */
 #endif

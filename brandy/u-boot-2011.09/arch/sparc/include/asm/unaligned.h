@@ -7,4 +7,4 @@
  */
 #include <asm-generic/unaligned.h>
 
-#endif  /* _ASM_SPARC_UNALIGNED_H */
+#endif	/* _ASM_SPARC_UNALIGNED_H */

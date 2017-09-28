@@ -48,13 +48,13 @@
  */
 
 struct ttm_validate_buffer {
-  struct list_head head;
-  struct ttm_buffer_object * bo;
-  void * new_sync_obj_arg;
-  bool reserved;
-  bool removed;
-  int put_count;
-  void * old_sync_obj;
+	struct list_head head;
+	struct ttm_buffer_object *bo;
+	void *new_sync_obj_arg;
+	bool reserved;
+	bool removed;
+	int put_count;
+	void *old_sync_obj;
 };
 
 /**
@@ -66,7 +66,7 @@ struct ttm_validate_buffer {
  * the list entries.
  */
 
-extern void ttm_eu_backoff_reservation (struct list_head * list);
+extern void ttm_eu_backoff_reservation(struct list_head *list);
 
 /**
  * function ttm_eu_reserve_buffers
@@ -93,7 +93,7 @@ extern void ttm_eu_backoff_reservation (struct list_head * list);
  * has failed.
  */
 
-extern int ttm_eu_reserve_buffers (struct list_head * list);
+extern int ttm_eu_reserve_buffers(struct list_head *list);
 
 /**
  * function ttm_eu_fence_buffer_objects.
@@ -107,6 +107,6 @@ extern int ttm_eu_reserve_buffers (struct list_head * list);
  *
  */
 
-extern void ttm_eu_fence_buffer_objects (struct list_head * list, void * sync_obj);
+extern void ttm_eu_fence_buffer_objects(struct list_head *list, void *sync_obj);
 
 #endif

@@ -5,6 +5,6 @@
  * architecture-dependent bugs.
  */
 
-static inline void check_bugs (void) { }
+static inline void check_bugs(void) { }
 
-#endif  /* __ASM_GENERIC_BUGS_H */
+#endif	/* __ASM_GENERIC_BUGS_H */

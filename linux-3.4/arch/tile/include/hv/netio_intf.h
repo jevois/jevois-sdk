@@ -39,7 +39,7 @@
  * environment where we have pthreads, so we'll enable locking.
  */
 #if !defined(__HV__) && !defined(__BOGUX__) && !defined(__KERNEL__) && \
-!defined(__NEWLIB__)
+    !defined(__NEWLIB__)
 #define _NETIO_PTHREAD       /**< Include a mutex in netio_queue_t below */
 
 /*
@@ -55,22 +55,22 @@
 typedef int _netio_percpu_mutex_t;
 
 static __inline int
-_netio_percpu_mutex_init (_netio_percpu_mutex_t * lock)
+_netio_percpu_mutex_init(_netio_percpu_mutex_t* lock)
 {
   *lock = 0;
   return 0;
 }
 
 static __inline int
-_netio_percpu_mutex_lock (_netio_percpu_mutex_t * lock)
+_netio_percpu_mutex_lock(_netio_percpu_mutex_t* lock)
 {
-  while (__builtin_expect (__insn_tns (lock), 0) )
-  { sched_yield(); }
+  while (__builtin_expect(__insn_tns(lock), 0))
+    sched_yield();
   return 0;
 }
 
 static __inline int
-_netio_percpu_mutex_unlock (_netio_percpu_mutex_t * lock)
+_netio_percpu_mutex_unlock(_netio_percpu_mutex_t* lock)
 {
   *lock = 0;
   return 0;
@@ -105,26 +105,26 @@ typedef int _netio_percpu_mutex_t;
 #define _NETIO_PKT_NO_L4_CSUM_SHIFT           0
 #define _NETIO_PKT_NO_L4_CSUM_RMASK           1
 #define _NETIO_PKT_NO_L4_CSUM_MASK \
-  (_NETIO_PKT_NO_L4_CSUM_RMASK << _NETIO_PKT_NO_L4_CSUM_SHIFT)
+         (_NETIO_PKT_NO_L4_CSUM_RMASK << _NETIO_PKT_NO_L4_CSUM_SHIFT)
 
 /** The L3 checksum has not been calculated. */
 #define _NETIO_PKT_NO_L3_CSUM_SHIFT           1
 #define _NETIO_PKT_NO_L3_CSUM_RMASK           1
 #define _NETIO_PKT_NO_L3_CSUM_MASK \
-  (_NETIO_PKT_NO_L3_CSUM_RMASK << _NETIO_PKT_NO_L3_CSUM_SHIFT)
+         (_NETIO_PKT_NO_L3_CSUM_RMASK << _NETIO_PKT_NO_L3_CSUM_SHIFT)
 
 /** The L3 checksum is incorrect (or perhaps has not been calculated). */
 #define _NETIO_PKT_BAD_L3_CSUM_SHIFT          2
 #define _NETIO_PKT_BAD_L3_CSUM_RMASK          1
 #define _NETIO_PKT_BAD_L3_CSUM_MASK \
-  (_NETIO_PKT_BAD_L3_CSUM_RMASK << _NETIO_PKT_BAD_L3_CSUM_SHIFT)
+         (_NETIO_PKT_BAD_L3_CSUM_RMASK << _NETIO_PKT_BAD_L3_CSUM_SHIFT)
 
 /** The Ethernet packet type is unrecognized. */
 #define _NETIO_PKT_TYPE_UNRECOGNIZED_SHIFT    3
 #define _NETIO_PKT_TYPE_UNRECOGNIZED_RMASK    1
 #define _NETIO_PKT_TYPE_UNRECOGNIZED_MASK \
-  (_NETIO_PKT_TYPE_UNRECOGNIZED_RMASK << \
-   _NETIO_PKT_TYPE_UNRECOGNIZED_SHIFT)
+         (_NETIO_PKT_TYPE_UNRECOGNIZED_RMASK << \
+          _NETIO_PKT_TYPE_UNRECOGNIZED_SHIFT)
 
 /* Metadata packet type flags. */
 
@@ -139,7 +139,7 @@ typedef int _netio_percpu_mutex_t;
 #define _NETIO_PKT_VLAN_SHIFT        4
 #define _NETIO_PKT_VLAN_RMASK        0x3
 #define _NETIO_PKT_VLAN_MASK \
-  (_NETIO_PKT_VLAN_RMASK << _NETIO_PKT_VLAN_SHIFT)
+         (_NETIO_PKT_VLAN_RMASK << _NETIO_PKT_VLAN_SHIFT)
 #define _NETIO_PKT_VLAN_NONE         0   /* No VLAN tag. */
 #define _NETIO_PKT_VLAN_ONE          1   /* One VLAN tag. */
 #define _NETIO_PKT_VLAN_TWO_OUTER    2   /* Two VLAN tags, outer one used. */
@@ -149,7 +149,7 @@ typedef int _netio_percpu_mutex_t;
 #define _NETIO_PKT_TAG_SHIFT         6
 #define _NETIO_PKT_TAG_RMASK         0x3
 #define _NETIO_PKT_TAG_MASK \
-  (_NETIO_PKT_TAG_RMASK << _NETIO_PKT_TAG_SHIFT)
+          (_NETIO_PKT_TAG_RMASK << _NETIO_PKT_TAG_SHIFT)
 #define _NETIO_PKT_TAG_NONE          0   /* No proprietary tags. */
 #define _NETIO_PKT_TAG_MRVL          1   /* Marvell HyperG.Stack tags. */
 #define _NETIO_PKT_TAG_MRVL_EXT      2   /* HyperG.Stack extended tags. */
@@ -159,7 +159,7 @@ typedef int _netio_percpu_mutex_t;
 #define _NETIO_PKT_SNAP_SHIFT        8
 #define _NETIO_PKT_SNAP_RMASK        0x1
 #define _NETIO_PKT_SNAP_MASK \
-  (_NETIO_PKT_SNAP_RMASK << _NETIO_PKT_SNAP_SHIFT)
+          (_NETIO_PKT_SNAP_RMASK << _NETIO_PKT_SNAP_SHIFT)
 
 /* NOTE: Bits 9 and 10 are unused. */
 
@@ -167,19 +167,19 @@ typedef int _netio_percpu_mutex_t;
 #define _NETIO_PKT_CUSTOM_LEN_SHIFT  11
 #define _NETIO_PKT_CUSTOM_LEN_RMASK  0x1F
 #define _NETIO_PKT_CUSTOM_LEN_MASK \
-  (_NETIO_PKT_CUSTOM_LEN_RMASK << _NETIO_PKT_CUSTOM_LEN_SHIFT)
+          (_NETIO_PKT_CUSTOM_LEN_RMASK << _NETIO_PKT_CUSTOM_LEN_SHIFT)
 
 /** The L4 checksum is incorrect (or perhaps has not been calculated). */
 #define _NETIO_PKT_BAD_L4_CSUM_SHIFT 16
 #define _NETIO_PKT_BAD_L4_CSUM_RMASK 0x1
 #define _NETIO_PKT_BAD_L4_CSUM_MASK \
-  (_NETIO_PKT_BAD_L4_CSUM_RMASK << _NETIO_PKT_BAD_L4_CSUM_SHIFT)
+          (_NETIO_PKT_BAD_L4_CSUM_RMASK << _NETIO_PKT_BAD_L4_CSUM_SHIFT)
 
 /** Length of the L2 header, in words. */
 #define _NETIO_PKT_L2_LEN_SHIFT  17
 #define _NETIO_PKT_L2_LEN_RMASK  0x1F
 #define _NETIO_PKT_L2_LEN_MASK \
-  (_NETIO_PKT_L2_LEN_RMASK << _NETIO_PKT_L2_LEN_SHIFT)
+          (_NETIO_PKT_L2_LEN_RMASK << _NETIO_PKT_L2_LEN_SHIFT)
 
 
 /* Flags in minimal packet metadata. */
@@ -188,7 +188,7 @@ typedef int _netio_percpu_mutex_t;
 #define _NETIO_PKT_NEED_EDMA_CSUM_SHIFT            0
 #define _NETIO_PKT_NEED_EDMA_CSUM_RMASK            1
 #define _NETIO_PKT_NEED_EDMA_CSUM_MASK \
-  (_NETIO_PKT_NEED_EDMA_CSUM_RMASK << _NETIO_PKT_NEED_EDMA_CSUM_SHIFT)
+         (_NETIO_PKT_NEED_EDMA_CSUM_RMASK << _NETIO_PKT_NEED_EDMA_CSUM_SHIFT)
 
 /* Data within the packet information table. */
 
@@ -278,21 +278,21 @@ typedef union {
   /** The header broken down into bits. */
   struct {
     /** Whether we should balance on L4, if available */
-    unsigned int __balance_on_l4: 1;
+    unsigned int __balance_on_l4:1;
     /** Whether we should balance on L3, if available */
-    unsigned int __balance_on_l3: 1;
+    unsigned int __balance_on_l3:1;
     /** Whether we should balance on L2, if available */
-    unsigned int __balance_on_l2: 1;
+    unsigned int __balance_on_l2:1;
     /** Reserved for future use */
-    unsigned int __reserved: 1;
+    unsigned int __reserved:1;
     /** The base bucket to use to send traffic */
-unsigned int __bucket_base: NETIO_LOG2_NUM_BUCKETS;
+    unsigned int __bucket_base:NETIO_LOG2_NUM_BUCKETS;
     /** The mask to apply to the balancing value. This must be one less
      * than a power of two, e.g. 0x3 or 0xFF.
      */
-unsigned int __bucket_mask: NETIO_LOG2_NUM_BUCKETS;
+    unsigned int __bucket_mask:NETIO_LOG2_NUM_BUCKETS;
     /** Pad to 32 bits */
-unsigned int __padding: (32 - 4 - 2 * NETIO_LOG2_NUM_BUCKETS);
+    unsigned int __padding:(32 - 4 - 2 * NETIO_LOG2_NUM_BUCKETS);
   } bits;
   /** To send out the IDN. */
   unsigned int word;
@@ -338,10 +338,10 @@ typedef unsigned int netio_size_t;
  */
 typedef struct
 {
-  #ifdef __DOXYGEN__
+#ifdef __DOXYGEN__
   /** This structure is opaque. */
   unsigned char opaque[24];
-  #else
+#else
   /** The overall ordinal of the packet */
   unsigned int __packet_ordinal;
   /** The ordinal of the packet within the group */
@@ -354,7 +354,7 @@ typedef struct
   unsigned int __user_data_0;
   /** The second word of "user data". */
   unsigned int __user_data_1;
-  #endif
+#endif
 }
 netio_pkt_metadata_t;
 
@@ -383,10 +383,10 @@ netio_pkt_metadata_t;
  */
 typedef struct
 {
-  #ifdef __DOXYGEN__
+#ifdef __DOXYGEN__
   /** This structure is opaque. */
   unsigned char opaque[14];
-  #else
+#else
   /** The offset of the L2 header from the start of the packet data. */
   unsigned short l2_offset;
   /** The offset of the L3 header from the start of the packet data. */
@@ -403,7 +403,7 @@ typedef struct
   unsigned short csum_seed;
   /** How much to checksum. */
   unsigned short csum_length;
-  #endif
+#endif
 }
 netio_pkt_minimal_metadata_t;
 
@@ -422,14 +422,14 @@ typedef union
   /** The various fields. */
   struct
   {
-    unsigned int __channel: 7;   /**< Resource channel. */
-    unsigned int __type: 4;      /**< Type. */
-    unsigned int __ack: 1;       /**< Whether an acknowledgement is needed. */
-    unsigned int __reserved: 1;  /**< Reserved. */
-    unsigned int __protocol: 1;  /**< A protocol-specific word is added. */
-    unsigned int __status: 2;    /**< Status of the transfer. */
-    unsigned int __framing: 2;   /**< Framing of the transfer. */
-    unsigned int __transfer_size: 14; /**< Transfer size in bytes (total). */
+    unsigned int __channel:7;    /**< Resource channel. */
+    unsigned int __type:4;       /**< Type. */
+    unsigned int __ack:1;        /**< Whether an acknowledgement is needed. */
+    unsigned int __reserved:1;   /**< Reserved. */
+    unsigned int __protocol:1;   /**< A protocol-specific word is added. */
+    unsigned int __status:2;     /**< Status of the transfer. */
+    unsigned int __framing:2;    /**< Framing of the transfer. */
+    unsigned int __transfer_size:14; /**< Transfer size in bytes (total). */
   } bits;
 }
 __netio_pkt_notif_t;
@@ -470,26 +470,26 @@ typedef union
   {
     /** Which queue the packet will be returned to once it is sent back to
         the IPP.  This is one of the SIZE_xxx values. */
-    unsigned int __queue: 2;
-    
+    unsigned int __queue:2;
+
     /** The IPP handle of the sending IPP. */
-    unsigned int __ipp_handle: 2;
-    
+    unsigned int __ipp_handle:2;
+
     /** Reserved for future use. */
-    unsigned int __reserved: 1;
-    
+    unsigned int __reserved:1;
+
     /** If 1, this packet has minimal (egress) metadata; otherwise, it
         has standard (ingress) metadata. */
-    unsigned int __minimal: 1;
-    
+    unsigned int __minimal:1;
+
     /** Offset of the metadata within the packet.  This value is multiplied
      *  by 64 and added to the base packet address to get the metadata
      *  address.  Note that this field is aligned within the word such that
      *  you can easily extract the metadata address with a 26-bit mask. */
-    unsigned int __offset: 2;
-    
+    unsigned int __offset:2;
+
     /** The top 24 bits of the packet's virtual address. */
-    unsigned int __addr: 24;
+    unsigned int __addr:24;
   } bits;
 }
 __netio_pkt_handle_t;
@@ -552,22 +552,22 @@ typedef struct
  */
 typedef struct
 {
-  #ifdef __DOXYGEN__
+#ifdef __DOXYGEN__
   /** This structure is opaque. */
   unsigned char opaque[32];
-  #else
+#else
   /** For an ingress packet (one with standard metadata), this is the
    *  notification header we got from the I/O shim.  For an egress packet
    *  (one with minimal metadata), this word is zero if the packet has not
    *  been populated, and nonzero if it has. */
   __netio_pkt_notif_t __notif_header;
-  
+
   /** Virtual address of the packet buffer, plus state flags. */
   __netio_pkt_handle_t __packet;
-  
+
   /** Metadata associated with the packet. */
   netio_pkt_metadata_t __metadata;
-  #endif
+#endif
 }
 netio_pkt_t;
 
@@ -613,10 +613,10 @@ extern const uint16_t _netio_pkt_info[];
  * @param[in] pkt Packet on which to operate.
  * @return A pointer to the packet's standard metadata.
  */
-static __inline netio_pkt_metadata_t *
-NETIO_PKT_METADATA (netio_pkt_t * pkt)
+static __inline netio_pkt_metadata_t*
+NETIO_PKT_METADATA(netio_pkt_t* pkt)
 {
-  netio_assert (!pkt->__packet.bits.__minimal);
+  netio_assert(!pkt->__packet.bits.__minimal);
   return &pkt->__metadata;
 }
 
@@ -634,11 +634,11 @@ NETIO_PKT_METADATA (netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  * @return A pointer to the packet's standard metadata.
  */
-static __inline netio_pkt_minimal_metadata_t *
-NETIO_PKT_MINIMAL_METADATA (netio_pkt_t * pkt)
+static __inline netio_pkt_minimal_metadata_t*
+NETIO_PKT_MINIMAL_METADATA(netio_pkt_t* pkt)
 {
-  netio_assert (pkt->__packet.bits.__minimal);
-  return (netio_pkt_minimal_metadata_t *) &pkt->__metadata;
+  netio_assert(pkt->__packet.bits.__minimal);
+  return (netio_pkt_minimal_metadata_t*) &pkt->__metadata;
 }
 
 
@@ -656,7 +656,7 @@ NETIO_PKT_MINIMAL_METADATA (netio_pkt_t * pkt)
  * @return Nonzero if the packet has minimal metadata.
  */
 static __inline unsigned int
-NETIO_PKT_IS_MINIMAL (netio_pkt_t * pkt)
+NETIO_PKT_IS_MINIMAL(netio_pkt_t* pkt)
 {
   return pkt->__packet.bits.__minimal;
 }
@@ -669,7 +669,7 @@ NETIO_PKT_IS_MINIMAL (netio_pkt_t * pkt)
  * @return A handle for the packet's storage.
  */
 static __inline netio_pkt_handle_t
-NETIO_PKT_HANDLE (netio_pkt_t * pkt)
+NETIO_PKT_HANDLE(netio_pkt_t* pkt)
 {
   netio_pkt_handle_t h;
   h.word = pkt->__packet.word;
@@ -696,7 +696,7 @@ NETIO_PKT_HANDLE (netio_pkt_t * pkt)
  * @return One if the packet handle is valid, else zero.
  */
 static __inline unsigned int
-NETIO_PKT_HANDLE_IS_VALID (netio_pkt_handle_t handle)
+NETIO_PKT_HANDLE_IS_VALID(netio_pkt_handle_t handle)
 {
   return handle.word != 0;
 }
@@ -713,10 +713,10 @@ NETIO_PKT_HANDLE_IS_VALID (netio_pkt_handle_t handle)
  * @param[in] handle Handle on which to operate.
  * @return A pointer to start of the packet.
  */
-static __inline unsigned char *
-NETIO_PKT_CUSTOM_DATA_H (netio_pkt_handle_t handle)
+static __inline unsigned char*
+NETIO_PKT_CUSTOM_DATA_H(netio_pkt_handle_t handle)
 {
-  return _NETIO_PKT_HANDLE_BASE (handle) + NETIO_PACKET_PADDING;
+  return _NETIO_PKT_HANDLE_BASE(handle) + NETIO_PACKET_PADDING;
 }
 
 
@@ -733,7 +733,7 @@ NETIO_PKT_CUSTOM_DATA_H (netio_pkt_handle_t handle)
  * @return The length of the packet's custom header, in bytes.
  */
 static __inline netio_size_t
-NETIO_PKT_CUSTOM_HEADER_LENGTH_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_CUSTOM_HEADER_LENGTH_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
   /*
    * Note that we effectively need to extract a quantity from the flags word
@@ -741,8 +741,8 @@ NETIO_PKT_CUSTOM_HEADER_LENGTH_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
    * it left by 2.  We do this all at once by just shifting right two less
    * bits, and shifting the mask up two bits.
    */
-  return ( (mda->__flags >> (_NETIO_PKT_CUSTOM_LEN_SHIFT - 2) ) &
-           (_NETIO_PKT_CUSTOM_LEN_RMASK << 2) );
+  return ((mda->__flags >> (_NETIO_PKT_CUSTOM_LEN_SHIFT - 2)) &
+          (_NETIO_PKT_CUSTOM_LEN_RMASK << 2));
 }
 
 
@@ -758,9 +758,9 @@ NETIO_PKT_CUSTOM_HEADER_LENGTH_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return The length of the packet, in bytes.
  */
 static __inline netio_size_t
-NETIO_PKT_CUSTOM_LENGTH_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_CUSTOM_LENGTH_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
-  return (__NETIO_PKT_NOTIF_HEADER (pkt).bits.__transfer_size -
+  return (__NETIO_PKT_NOTIF_HEADER(pkt).bits.__transfer_size -
           NETIO_PACKET_PADDING);
 }
 
@@ -776,10 +776,10 @@ NETIO_PKT_CUSTOM_LENGTH_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  * @return A pointer to start of the packet.
  */
-static __inline unsigned char *
-NETIO_PKT_CUSTOM_DATA_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+static __inline unsigned char*
+NETIO_PKT_CUSTOM_DATA_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
-  return NETIO_PKT_CUSTOM_DATA_H (NETIO_PKT_HANDLE (pkt) );
+  return NETIO_PKT_CUSTOM_DATA_H(NETIO_PKT_HANDLE(pkt));
 }
 
 
@@ -791,7 +791,7 @@ NETIO_PKT_CUSTOM_DATA_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return The length of the packet's L2 header, in bytes.
  */
 static __inline netio_size_t
-NETIO_PKT_L2_HEADER_LENGTH_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_L2_HEADER_LENGTH_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
   /*
    * Note that we effectively need to extract a quantity from the flags word
@@ -799,8 +799,8 @@ NETIO_PKT_L2_HEADER_LENGTH_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
    * it left by 2.  We do this all at once by just shifting right two less
    * bits, and shifting the mask up two bits.  We then add two bytes.
    */
-  return ( (mda->__flags >> (_NETIO_PKT_L2_LEN_SHIFT - 2) ) &
-           (_NETIO_PKT_L2_LEN_RMASK << 2) ) + 2;
+  return ((mda->__flags >> (_NETIO_PKT_L2_LEN_SHIFT - 2)) &
+          (_NETIO_PKT_L2_LEN_RMASK << 2)) + 2;
 }
 
 
@@ -812,10 +812,10 @@ NETIO_PKT_L2_HEADER_LENGTH_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return The length of the packet, in bytes.
  */
 static __inline netio_size_t
-NETIO_PKT_L2_LENGTH_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_L2_LENGTH_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
-  return (NETIO_PKT_CUSTOM_LENGTH_M (mda, pkt) -
-          NETIO_PKT_CUSTOM_HEADER_LENGTH_M (mda, pkt) );
+  return (NETIO_PKT_CUSTOM_LENGTH_M(mda, pkt) -
+          NETIO_PKT_CUSTOM_HEADER_LENGTH_M(mda,pkt));
 }
 
 
@@ -826,11 +826,11 @@ NETIO_PKT_L2_LENGTH_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  * @return A pointer to start of the packet.
  */
-static __inline unsigned char *
-NETIO_PKT_L2_DATA_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+static __inline unsigned char*
+NETIO_PKT_L2_DATA_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
-  return (NETIO_PKT_CUSTOM_DATA_M (mda, pkt) +
-          NETIO_PKT_CUSTOM_HEADER_LENGTH_M (mda, pkt) );
+  return (NETIO_PKT_CUSTOM_DATA_M(mda, pkt) +
+          NETIO_PKT_CUSTOM_HEADER_LENGTH_M(mda, pkt));
 }
 
 
@@ -843,10 +843,10 @@ NETIO_PKT_L2_DATA_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return Length of the packet's L3 header and data, in bytes.
  */
 static __inline netio_size_t
-NETIO_PKT_L3_LENGTH_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_L3_LENGTH_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
-  return (NETIO_PKT_L2_LENGTH_M (mda, pkt) -
-          NETIO_PKT_L2_HEADER_LENGTH_M (mda, pkt) );
+  return (NETIO_PKT_L2_LENGTH_M(mda, pkt) -
+          NETIO_PKT_L2_HEADER_LENGTH_M(mda,pkt));
 }
 
 
@@ -859,11 +859,11 @@ NETIO_PKT_L3_LENGTH_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  * @return A pointer to the packet's L3 header.
  */
-static __inline unsigned char *
-NETIO_PKT_L3_DATA_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+static __inline unsigned char*
+NETIO_PKT_L3_DATA_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
-  return (NETIO_PKT_L2_DATA_M (mda, pkt) +
-          NETIO_PKT_L2_HEADER_LENGTH_M (mda, pkt) );
+  return (NETIO_PKT_L2_DATA_M(mda, pkt) +
+          NETIO_PKT_L2_HEADER_LENGTH_M(mda, pkt));
 }
 
 
@@ -885,7 +885,7 @@ NETIO_PKT_L3_DATA_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return The packet's per-IPP packet ordinal.
  */
 static __inline unsigned int
-NETIO_PKT_ORDINAL_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_ORDINAL_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
   return mda->__packet_ordinal;
 }
@@ -913,7 +913,7 @@ NETIO_PKT_ORDINAL_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return The packet's per-IPP, per-group ordinal.
  */
 static __inline unsigned int
-NETIO_PKT_GROUP_ORDINAL_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_GROUP_ORDINAL_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
   return mda->__group_ordinal;
 }
@@ -932,27 +932,27 @@ NETIO_PKT_GROUP_ORDINAL_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return The packet's VLAN ID.
  */
 static __inline unsigned short
-NETIO_PKT_VLAN_ID_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_VLAN_ID_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
   int vl = (mda->__flags >> _NETIO_PKT_VLAN_SHIFT) & _NETIO_PKT_VLAN_RMASK;
-  unsigned short * pkt_p;
+  unsigned short* pkt_p;
   int index;
   unsigned short val;
-  
+
   if (vl == _NETIO_PKT_VLAN_NONE)
-  { return 0; }
-  
-  pkt_p = (unsigned short *) NETIO_PKT_L2_DATA_M (mda, pkt);
+    return 0;
+
+  pkt_p = (unsigned short*) NETIO_PKT_L2_DATA_M(mda, pkt);
   index = (mda->__flags >> _NETIO_PKT_TYPE_SHIFT) & _NETIO_PKT_TYPE_RMASK;
-  
-  val = pkt_p[ (_netio_pkt_info[index] >> _NETIO_PKT_INFO_VLAN_SHIFT) &
-               _NETIO_PKT_INFO_VLAN_RMASK];
-               
-  #ifdef __TILECC__
-  return (__insn_bytex (val) >> 16) & 0xFFF;
-  #else
-  return (__builtin_bswap32 (val) >> 16) & 0xFFF;
-  #endif
+
+  val = pkt_p[(_netio_pkt_info[index] >> _NETIO_PKT_INFO_VLAN_SHIFT) &
+              _NETIO_PKT_INFO_VLAN_RMASK];
+
+#ifdef __TILECC__
+  return (__insn_bytex(val) >> 16) & 0xFFF;
+#else
+  return (__builtin_bswap32(val) >> 16) & 0xFFF;
+#endif
 }
 
 
@@ -969,16 +969,16 @@ NETIO_PKT_VLAN_ID_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return The packet's ethertype.
  */
 static __inline unsigned short
-NETIO_PKT_ETHERTYPE_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_ETHERTYPE_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
-  unsigned short * pkt_p = (unsigned short *) NETIO_PKT_L2_DATA_M (mda, pkt);
+  unsigned short* pkt_p = (unsigned short*) NETIO_PKT_L2_DATA_M(mda, pkt);
   int index = (mda->__flags >> _NETIO_PKT_TYPE_SHIFT) & _NETIO_PKT_TYPE_RMASK;
-  
+
   unsigned short val =
-    pkt_p[ (_netio_pkt_info[index] >> _NETIO_PKT_INFO_ETYPE_SHIFT) &
-           _NETIO_PKT_INFO_ETYPE_RMASK];
-           
-  return __builtin_bswap32 (val) >> 16;
+    pkt_p[(_netio_pkt_info[index] >> _NETIO_PKT_INFO_ETYPE_SHIFT) &
+          _NETIO_PKT_INFO_ETYPE_RMASK];
+
+  return __builtin_bswap32(val) >> 16;
 }
 
 
@@ -1012,7 +1012,7 @@ NETIO_PKT_ETHERTYPE_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return The packet's 32-bit flow hash.
  */
 static __inline unsigned int
-NETIO_PKT_FLOW_HASH_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_FLOW_HASH_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
   return mda->__flow_hash;
 }
@@ -1035,7 +1035,7 @@ NETIO_PKT_FLOW_HASH_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return The packet's first word of "user data".
  */
 static __inline unsigned int
-NETIO_PKT_USER_DATA_0_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_USER_DATA_0_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
   return mda->__user_data_0;
 }
@@ -1058,7 +1058,7 @@ NETIO_PKT_USER_DATA_0_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return The packet's second word of "user data".
  */
 static __inline unsigned int
-NETIO_PKT_USER_DATA_1_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_USER_DATA_1_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
   return mda->__user_data_1;
 }
@@ -1072,9 +1072,9 @@ NETIO_PKT_USER_DATA_1_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return Nonzero if the L4 checksum was calculated.
  */
 static __inline unsigned int
-NETIO_PKT_L4_CSUM_CALCULATED_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_L4_CSUM_CALCULATED_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
-  return ! (mda->__flags & _NETIO_PKT_NO_L4_CSUM_MASK);
+  return !(mda->__flags & _NETIO_PKT_NO_L4_CSUM_MASK);
 }
 
 
@@ -1087,10 +1087,10 @@ NETIO_PKT_L4_CSUM_CALCULATED_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return Nonzero if the checksum was calculated and is correct.
  */
 static __inline unsigned int
-NETIO_PKT_L4_CSUM_CORRECT_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_L4_CSUM_CORRECT_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
-  return ! (mda->__flags &
-            (_NETIO_PKT_BAD_L4_CSUM_MASK | _NETIO_PKT_NO_L4_CSUM_MASK) );
+  return !(mda->__flags &
+           (_NETIO_PKT_BAD_L4_CSUM_MASK | _NETIO_PKT_NO_L4_CSUM_MASK));
 }
 
 
@@ -1102,9 +1102,9 @@ NETIO_PKT_L4_CSUM_CORRECT_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return Nonzero if the L3 (IP) checksum was calculated.
 */
 static __inline unsigned int
-NETIO_PKT_L3_CSUM_CALCULATED_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_L3_CSUM_CALCULATED_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
-  return ! (mda->__flags & _NETIO_PKT_NO_L3_CSUM_MASK);
+  return !(mda->__flags & _NETIO_PKT_NO_L3_CSUM_MASK);
 }
 
 
@@ -1117,10 +1117,10 @@ NETIO_PKT_L3_CSUM_CALCULATED_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return Nonzero if the checksum was calculated and is correct.
  */
 static __inline unsigned int
-NETIO_PKT_L3_CSUM_CORRECT_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_L3_CSUM_CORRECT_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
-  return ! (mda->__flags &
-            (_NETIO_PKT_BAD_L3_CSUM_MASK | _NETIO_PKT_NO_L3_CSUM_MASK) );
+  return !(mda->__flags &
+           (_NETIO_PKT_BAD_L3_CSUM_MASK | _NETIO_PKT_NO_L3_CSUM_MASK));
 }
 
 
@@ -1134,9 +1134,9 @@ NETIO_PKT_L3_CSUM_CORRECT_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  *   processed.
  */
 static __inline unsigned int
-NETIO_PKT_ETHERTYPE_RECOGNIZED_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_ETHERTYPE_RECOGNIZED_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
-  return ! (mda->__flags & _NETIO_PKT_TYPE_UNRECOGNIZED_MASK);
+  return !(mda->__flags & _NETIO_PKT_TYPE_UNRECOGNIZED_MASK);
 }
 
 
@@ -1155,9 +1155,9 @@ NETIO_PKT_ETHERTYPE_RECOGNIZED_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return The packet's status.
  */
 static __inline netio_pkt_status_t
-NETIO_PKT_STATUS_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_STATUS_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
-  return (netio_pkt_status_t) __NETIO_PKT_NOTIF_HEADER (pkt).bits.__status;
+  return (netio_pkt_status_t) __NETIO_PKT_NOTIF_HEADER(pkt).bits.__status;
 }
 
 
@@ -1172,11 +1172,11 @@ NETIO_PKT_STATUS_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return Nonzero if the packet is bad and should be discarded.
  */
 static __inline unsigned int
-NETIO_PKT_BAD_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_BAD_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
-  return ( (NETIO_PKT_STATUS_M (mda, pkt) & 1) &&
-           (NETIO_PKT_ETHERTYPE_RECOGNIZED_M (mda, pkt) ||
-            NETIO_PKT_STATUS_M (mda, pkt) == NETIO_PKT_STATUS_BAD) );
+  return ((NETIO_PKT_STATUS_M(mda, pkt) & 1) &&
+          (NETIO_PKT_ETHERTYPE_RECOGNIZED_M(mda, pkt) ||
+           NETIO_PKT_STATUS_M(mda, pkt) == NETIO_PKT_STATUS_BAD));
 }
 
 
@@ -1188,7 +1188,7 @@ NETIO_PKT_BAD_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @return The length of the packet, in bytes.
  */
 static __inline netio_size_t
-NETIO_PKT_L2_LENGTH_MM (netio_pkt_minimal_metadata_t * mmd, netio_pkt_t * pkt)
+NETIO_PKT_L2_LENGTH_MM(netio_pkt_minimal_metadata_t* mmd, netio_pkt_t* pkt)
 {
   return mmd->l2_length;
 }
@@ -1202,8 +1202,8 @@ NETIO_PKT_L2_LENGTH_MM (netio_pkt_minimal_metadata_t * mmd, netio_pkt_t * pkt)
  * @return The length of the packet's L2 header, in bytes.
  */
 static __inline netio_size_t
-NETIO_PKT_L2_HEADER_LENGTH_MM (netio_pkt_minimal_metadata_t * mmd,
-                               netio_pkt_t * pkt)
+NETIO_PKT_L2_HEADER_LENGTH_MM(netio_pkt_minimal_metadata_t* mmd,
+                              netio_pkt_t* pkt)
 {
   return mmd->l3_offset - mmd->l2_offset;
 }
@@ -1217,10 +1217,10 @@ NETIO_PKT_L2_HEADER_LENGTH_MM (netio_pkt_minimal_metadata_t * mmd,
  * @return Length of the packet's L3 header and data, in bytes.
  */
 static __inline netio_size_t
-NETIO_PKT_L3_LENGTH_MM (netio_pkt_minimal_metadata_t * mmd, netio_pkt_t * pkt)
+NETIO_PKT_L3_LENGTH_MM(netio_pkt_minimal_metadata_t* mmd, netio_pkt_t* pkt)
 {
-  return (NETIO_PKT_L2_LENGTH_MM (mmd, pkt) -
-          NETIO_PKT_L2_HEADER_LENGTH_MM (mmd, pkt) );
+  return (NETIO_PKT_L2_LENGTH_MM(mmd, pkt) -
+          NETIO_PKT_L2_HEADER_LENGTH_MM(mmd, pkt));
 }
 
 
@@ -1233,10 +1233,10 @@ NETIO_PKT_L3_LENGTH_MM (netio_pkt_minimal_metadata_t * mmd, netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  * @return A pointer to the packet's L3 header.
  */
-static __inline unsigned char *
-NETIO_PKT_L3_DATA_MM (netio_pkt_minimal_metadata_t * mmd, netio_pkt_t * pkt)
+static __inline unsigned char*
+NETIO_PKT_L3_DATA_MM(netio_pkt_minimal_metadata_t* mmd, netio_pkt_t* pkt)
 {
-  return _NETIO_PKT_BASE (pkt) + mmd->l3_offset;
+  return _NETIO_PKT_BASE(pkt) + mmd->l3_offset;
 }
 
 
@@ -1247,10 +1247,10 @@ NETIO_PKT_L3_DATA_MM (netio_pkt_minimal_metadata_t * mmd, netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  * @return A pointer to start of the packet.
  */
-static __inline unsigned char *
-NETIO_PKT_L2_DATA_MM (netio_pkt_minimal_metadata_t * mmd, netio_pkt_t * pkt)
+static __inline unsigned char*
+NETIO_PKT_L2_DATA_MM(netio_pkt_minimal_metadata_t* mmd, netio_pkt_t* pkt)
 {
-  return _NETIO_PKT_BASE (pkt) + mmd->l2_offset;
+  return _NETIO_PKT_BASE(pkt) + mmd->l2_offset;
 }
 
 
@@ -1268,11 +1268,11 @@ NETIO_PKT_L2_DATA_MM (netio_pkt_minimal_metadata_t * mmd, netio_pkt_t * pkt)
  * @return The packet's status.
  */
 static __inline netio_pkt_status_t
-NETIO_PKT_STATUS (netio_pkt_t * pkt)
+NETIO_PKT_STATUS(netio_pkt_t* pkt)
 {
-  netio_assert (!pkt->__packet.bits.__minimal);
-  
-  return (netio_pkt_status_t) __NETIO_PKT_NOTIF_HEADER (pkt).bits.__status;
+  netio_assert(!pkt->__packet.bits.__minimal);
+
+  return (netio_pkt_status_t) __NETIO_PKT_NOTIF_HEADER(pkt).bits.__status;
 }
 
 
@@ -1286,11 +1286,11 @@ NETIO_PKT_STATUS (netio_pkt_t * pkt)
  * @return Nonzero if the packet is bad and should be discarded.
  */
 static __inline unsigned int
-NETIO_PKT_BAD (netio_pkt_t * pkt)
+NETIO_PKT_BAD(netio_pkt_t* pkt)
 {
-  netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-  
-  return NETIO_PKT_BAD_M (mda, pkt);
+  netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+  return NETIO_PKT_BAD_M(mda, pkt);
 }
 
 
@@ -1305,11 +1305,11 @@ NETIO_PKT_BAD (netio_pkt_t * pkt)
  * @return The length of the packet's custom header, in bytes.
  */
 static __inline netio_size_t
-NETIO_PKT_CUSTOM_HEADER_LENGTH (netio_pkt_t * pkt)
+NETIO_PKT_CUSTOM_HEADER_LENGTH(netio_pkt_t* pkt)
 {
-  netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-  
-  return NETIO_PKT_CUSTOM_HEADER_LENGTH_M (mda, pkt);
+  netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+  return NETIO_PKT_CUSTOM_HEADER_LENGTH_M(mda, pkt);
 }
 
 
@@ -1324,11 +1324,11 @@ NETIO_PKT_CUSTOM_HEADER_LENGTH (netio_pkt_t * pkt)
  * @return  The length of the packet, in bytes.
  */
 static __inline netio_size_t
-NETIO_PKT_CUSTOM_LENGTH (netio_pkt_t * pkt)
+NETIO_PKT_CUSTOM_LENGTH(netio_pkt_t* pkt)
 {
-  netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-  
-  return NETIO_PKT_CUSTOM_LENGTH_M (mda, pkt);
+  netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+  return NETIO_PKT_CUSTOM_LENGTH_M(mda, pkt);
 }
 
 
@@ -1342,12 +1342,12 @@ NETIO_PKT_CUSTOM_LENGTH (netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  * @return A pointer to start of the packet.
  */
-static __inline unsigned char *
-NETIO_PKT_CUSTOM_DATA (netio_pkt_t * pkt)
+static __inline unsigned char*
+NETIO_PKT_CUSTOM_DATA(netio_pkt_t* pkt)
 {
-  netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-  
-  return NETIO_PKT_CUSTOM_DATA_M (mda, pkt);
+  netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+  return NETIO_PKT_CUSTOM_DATA_M(mda, pkt);
 }
 
 
@@ -1358,19 +1358,19 @@ NETIO_PKT_CUSTOM_DATA (netio_pkt_t * pkt)
  * @return The length of the packet's L2 header, in bytes.
  */
 static __inline netio_size_t
-NETIO_PKT_L2_HEADER_LENGTH (netio_pkt_t * pkt)
+NETIO_PKT_L2_HEADER_LENGTH(netio_pkt_t* pkt)
 {
-  if (NETIO_PKT_IS_MINIMAL (pkt) )
+  if (NETIO_PKT_IS_MINIMAL(pkt))
   {
-    netio_pkt_minimal_metadata_t * mmd = NETIO_PKT_MINIMAL_METADATA (pkt);
-    
-    return NETIO_PKT_L2_HEADER_LENGTH_MM (mmd, pkt);
+    netio_pkt_minimal_metadata_t* mmd = NETIO_PKT_MINIMAL_METADATA(pkt);
+
+    return NETIO_PKT_L2_HEADER_LENGTH_MM(mmd, pkt);
   }
   else
   {
-    netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-    
-    return NETIO_PKT_L2_HEADER_LENGTH_M (mda, pkt);
+    netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+    return NETIO_PKT_L2_HEADER_LENGTH_M(mda, pkt);
   }
 }
 
@@ -1382,19 +1382,19 @@ NETIO_PKT_L2_HEADER_LENGTH (netio_pkt_t * pkt)
  * @return  The length of the packet, in bytes.
  */
 static __inline netio_size_t
-NETIO_PKT_L2_LENGTH (netio_pkt_t * pkt)
+NETIO_PKT_L2_LENGTH(netio_pkt_t* pkt)
 {
-  if (NETIO_PKT_IS_MINIMAL (pkt) )
+  if (NETIO_PKT_IS_MINIMAL(pkt))
   {
-    netio_pkt_minimal_metadata_t * mmd = NETIO_PKT_MINIMAL_METADATA (pkt);
-    
-    return NETIO_PKT_L2_LENGTH_MM (mmd, pkt);
+    netio_pkt_minimal_metadata_t* mmd = NETIO_PKT_MINIMAL_METADATA(pkt);
+
+    return NETIO_PKT_L2_LENGTH_MM(mmd, pkt);
   }
   else
   {
-    netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-    
-    return NETIO_PKT_L2_LENGTH_M (mda, pkt);
+    netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+    return NETIO_PKT_L2_LENGTH_M(mda, pkt);
   }
 }
 
@@ -1405,20 +1405,20 @@ NETIO_PKT_L2_LENGTH (netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  * @return A pointer to start of the packet.
  */
-static __inline unsigned char *
-NETIO_PKT_L2_DATA (netio_pkt_t * pkt)
+static __inline unsigned char*
+NETIO_PKT_L2_DATA(netio_pkt_t* pkt)
 {
-  if (NETIO_PKT_IS_MINIMAL (pkt) )
+  if (NETIO_PKT_IS_MINIMAL(pkt))
   {
-    netio_pkt_minimal_metadata_t * mmd = NETIO_PKT_MINIMAL_METADATA (pkt);
-    
-    return NETIO_PKT_L2_DATA_MM (mmd, pkt);
+    netio_pkt_minimal_metadata_t* mmd = NETIO_PKT_MINIMAL_METADATA(pkt);
+
+    return NETIO_PKT_L2_DATA_MM(mmd, pkt);
   }
   else
   {
-    netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-    
-    return NETIO_PKT_L2_DATA_M (mda, pkt);
+    netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+    return NETIO_PKT_L2_DATA_M(mda, pkt);
   }
 }
 
@@ -1431,19 +1431,19 @@ NETIO_PKT_L2_DATA (netio_pkt_t * pkt)
  * @return Length of the packet's L3 header and data, in bytes.
  */
 static __inline netio_size_t
-NETIO_PKT_L3_LENGTH (netio_pkt_t * pkt)
+NETIO_PKT_L3_LENGTH(netio_pkt_t* pkt)
 {
-  if (NETIO_PKT_IS_MINIMAL (pkt) )
+  if (NETIO_PKT_IS_MINIMAL(pkt))
   {
-    netio_pkt_minimal_metadata_t * mmd = NETIO_PKT_MINIMAL_METADATA (pkt);
-    
-    return NETIO_PKT_L3_LENGTH_MM (mmd, pkt);
+    netio_pkt_minimal_metadata_t* mmd = NETIO_PKT_MINIMAL_METADATA(pkt);
+
+    return NETIO_PKT_L3_LENGTH_MM(mmd, pkt);
   }
   else
   {
-    netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-    
-    return NETIO_PKT_L3_LENGTH_M (mda, pkt);
+    netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+    return NETIO_PKT_L3_LENGTH_M(mda, pkt);
   }
 }
 
@@ -1456,20 +1456,20 @@ NETIO_PKT_L3_LENGTH (netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  * @return A pointer to the packet's L3 header.
  */
-static __inline unsigned char *
-NETIO_PKT_L3_DATA (netio_pkt_t * pkt)
+static __inline unsigned char*
+NETIO_PKT_L3_DATA(netio_pkt_t* pkt)
 {
-  if (NETIO_PKT_IS_MINIMAL (pkt) )
+  if (NETIO_PKT_IS_MINIMAL(pkt))
   {
-    netio_pkt_minimal_metadata_t * mmd = NETIO_PKT_MINIMAL_METADATA (pkt);
-    
-    return NETIO_PKT_L3_DATA_MM (mmd, pkt);
+    netio_pkt_minimal_metadata_t* mmd = NETIO_PKT_MINIMAL_METADATA(pkt);
+
+    return NETIO_PKT_L3_DATA_MM(mmd, pkt);
   }
   else
   {
-    netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-    
-    return NETIO_PKT_L3_DATA_M (mda, pkt);
+    netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+    return NETIO_PKT_L3_DATA_M(mda, pkt);
   }
 }
 
@@ -1492,11 +1492,11 @@ NETIO_PKT_L3_DATA (netio_pkt_t * pkt)
  * @return The packet's per-IPP packet ordinal.
  */
 static __inline unsigned int
-NETIO_PKT_ORDINAL (netio_pkt_t * pkt)
+NETIO_PKT_ORDINAL(netio_pkt_t* pkt)
 {
-  netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-  
-  return NETIO_PKT_ORDINAL_M (mda, pkt);
+  netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+  return NETIO_PKT_ORDINAL_M(mda, pkt);
 }
 
 
@@ -1521,11 +1521,11 @@ NETIO_PKT_ORDINAL (netio_pkt_t * pkt)
  * @return The packet's per-IPP, per-group ordinal.
  */
 static __inline unsigned int
-NETIO_PKT_GROUP_ORDINAL (netio_pkt_t * pkt)
+NETIO_PKT_GROUP_ORDINAL(netio_pkt_t* pkt)
 {
-  netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-  
-  return NETIO_PKT_GROUP_ORDINAL_M (mda, pkt);
+  netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+  return NETIO_PKT_GROUP_ORDINAL_M(mda, pkt);
 }
 
 
@@ -1539,11 +1539,11 @@ NETIO_PKT_GROUP_ORDINAL (netio_pkt_t * pkt)
  * @return The packet's VLAN ID.
  */
 static __inline unsigned short
-NETIO_PKT_VLAN_ID (netio_pkt_t * pkt)
+NETIO_PKT_VLAN_ID(netio_pkt_t* pkt)
 {
-  netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-  
-  return NETIO_PKT_VLAN_ID_M (mda, pkt);
+  netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+  return NETIO_PKT_VLAN_ID_M(mda, pkt);
 }
 
 
@@ -1557,11 +1557,11 @@ NETIO_PKT_VLAN_ID (netio_pkt_t * pkt)
  * @return The packet's ethertype.
  */
 static __inline unsigned short
-NETIO_PKT_ETHERTYPE (netio_pkt_t * pkt)
+NETIO_PKT_ETHERTYPE(netio_pkt_t* pkt)
 {
-  netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-  
-  return NETIO_PKT_ETHERTYPE_M (mda, pkt);
+  netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+  return NETIO_PKT_ETHERTYPE_M(mda, pkt);
 }
 
 
@@ -1594,11 +1594,11 @@ NETIO_PKT_ETHERTYPE (netio_pkt_t * pkt)
  * @return The packet's 32-bit flow hash.
  */
 static __inline unsigned int
-NETIO_PKT_FLOW_HASH (netio_pkt_t * pkt)
+NETIO_PKT_FLOW_HASH(netio_pkt_t* pkt)
 {
-  netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-  
-  return NETIO_PKT_FLOW_HASH_M (mda, pkt);
+  netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+  return NETIO_PKT_FLOW_HASH_M(mda, pkt);
 }
 
 
@@ -1618,11 +1618,11 @@ NETIO_PKT_FLOW_HASH (netio_pkt_t * pkt)
  * @return The packet's first word of "user data".
  */
 static __inline unsigned int
-NETIO_PKT_USER_DATA_0 (netio_pkt_t * pkt)
+NETIO_PKT_USER_DATA_0(netio_pkt_t* pkt)
 {
-  netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-  
-  return NETIO_PKT_USER_DATA_0_M (mda, pkt);
+  netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+  return NETIO_PKT_USER_DATA_0_M(mda, pkt);
 }
 
 
@@ -1642,11 +1642,11 @@ NETIO_PKT_USER_DATA_0 (netio_pkt_t * pkt)
  * @return The packet's second word of "user data".
  */
 static __inline unsigned int
-NETIO_PKT_USER_DATA_1 (netio_pkt_t * pkt)
+NETIO_PKT_USER_DATA_1(netio_pkt_t* pkt)
 {
-  netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-  
-  return NETIO_PKT_USER_DATA_1_M (mda, pkt);
+  netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+  return NETIO_PKT_USER_DATA_1_M(mda, pkt);
 }
 
 
@@ -1657,11 +1657,11 @@ NETIO_PKT_USER_DATA_1 (netio_pkt_t * pkt)
  * @return Nonzero if the L4 checksum was calculated.
  */
 static __inline unsigned int
-NETIO_PKT_L4_CSUM_CALCULATED (netio_pkt_t * pkt)
+NETIO_PKT_L4_CSUM_CALCULATED(netio_pkt_t* pkt)
 {
-  netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-  
-  return NETIO_PKT_L4_CSUM_CALCULATED_M (mda, pkt);
+  netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+  return NETIO_PKT_L4_CSUM_CALCULATED_M(mda, pkt);
 }
 
 
@@ -1673,11 +1673,11 @@ NETIO_PKT_L4_CSUM_CALCULATED (netio_pkt_t * pkt)
  * @return Nonzero if the checksum was calculated and is correct.
  */
 static __inline unsigned int
-NETIO_PKT_L4_CSUM_CORRECT (netio_pkt_t * pkt)
+NETIO_PKT_L4_CSUM_CORRECT(netio_pkt_t* pkt)
 {
-  netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-  
-  return NETIO_PKT_L4_CSUM_CORRECT_M (mda, pkt);
+  netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+  return NETIO_PKT_L4_CSUM_CORRECT_M(mda, pkt);
 }
 
 
@@ -1688,11 +1688,11 @@ NETIO_PKT_L4_CSUM_CORRECT (netio_pkt_t * pkt)
  * @return Nonzero if the L3 (IP) checksum was calculated.
 */
 static __inline unsigned int
-NETIO_PKT_L3_CSUM_CALCULATED (netio_pkt_t * pkt)
+NETIO_PKT_L3_CSUM_CALCULATED(netio_pkt_t* pkt)
 {
-  netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-  
-  return NETIO_PKT_L3_CSUM_CALCULATED_M (mda, pkt);
+  netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+  return NETIO_PKT_L3_CSUM_CALCULATED_M(mda, pkt);
 }
 
 
@@ -1704,11 +1704,11 @@ NETIO_PKT_L3_CSUM_CALCULATED (netio_pkt_t * pkt)
  * @return Nonzero if the checksum was calculated and is correct.
  */
 static __inline unsigned int
-NETIO_PKT_L3_CSUM_CORRECT (netio_pkt_t * pkt)
+NETIO_PKT_L3_CSUM_CORRECT(netio_pkt_t* pkt)
 {
-  netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-  
-  return NETIO_PKT_L3_CSUM_CORRECT_M (mda, pkt);
+  netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+  return NETIO_PKT_L3_CSUM_CORRECT_M(mda, pkt);
 }
 
 
@@ -1721,11 +1721,11 @@ NETIO_PKT_L3_CSUM_CORRECT (netio_pkt_t * pkt)
  *   processed.
  */
 static __inline unsigned int
-NETIO_PKT_ETHERTYPE_RECOGNIZED (netio_pkt_t * pkt)
+NETIO_PKT_ETHERTYPE_RECOGNIZED(netio_pkt_t* pkt)
 {
-  netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-  
-  return NETIO_PKT_ETHERTYPE_RECOGNIZED_M (mda, pkt);
+  netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+  return NETIO_PKT_ETHERTYPE_RECOGNIZED_M(mda, pkt);
 }
 
 
@@ -1738,8 +1738,8 @@ NETIO_PKT_ETHERTYPE_RECOGNIZED (netio_pkt_t * pkt)
  * @param[in] len Packet L2 length, in bytes.
  */
 static __inline void
-NETIO_PKT_SET_L2_LENGTH_MM (netio_pkt_minimal_metadata_t * mmd, netio_pkt_t * pkt,
-                            int len)
+NETIO_PKT_SET_L2_LENGTH_MM(netio_pkt_minimal_metadata_t* mmd, netio_pkt_t* pkt,
+                           int len)
 {
   mmd->l2_length = len;
 }
@@ -1752,11 +1752,11 @@ NETIO_PKT_SET_L2_LENGTH_MM (netio_pkt_minimal_metadata_t * mmd, netio_pkt_t * pk
  * @param[in] len Packet L2 length, in bytes.
  */
 static __inline void
-NETIO_PKT_SET_L2_LENGTH (netio_pkt_t * pkt, int len)
+NETIO_PKT_SET_L2_LENGTH(netio_pkt_t* pkt, int len)
 {
-  netio_pkt_minimal_metadata_t * mmd = NETIO_PKT_MINIMAL_METADATA (pkt);
-  
-  NETIO_PKT_SET_L2_LENGTH_MM (mmd, pkt, len);
+  netio_pkt_minimal_metadata_t* mmd = NETIO_PKT_MINIMAL_METADATA(pkt);
+
+  NETIO_PKT_SET_L2_LENGTH_MM(mmd, pkt, len);
 }
 
 
@@ -1774,8 +1774,8 @@ NETIO_PKT_SET_L2_LENGTH (netio_pkt_t * pkt, int len)
  * @param[in] len Packet L2 header length, in bytes.
  */
 static __inline void
-NETIO_PKT_SET_L2_HEADER_LENGTH_MM (netio_pkt_minimal_metadata_t * mmd,
-                                   netio_pkt_t * pkt, int len)
+NETIO_PKT_SET_L2_HEADER_LENGTH_MM(netio_pkt_minimal_metadata_t* mmd,
+                                  netio_pkt_t* pkt, int len)
 {
   mmd->l3_offset = mmd->l2_offset + len;
 }
@@ -1793,11 +1793,11 @@ NETIO_PKT_SET_L2_HEADER_LENGTH_MM (netio_pkt_minimal_metadata_t * mmd,
  * @param[in] len Packet L2 header length, in bytes.
  */
 static __inline void
-NETIO_PKT_SET_L2_HEADER_LENGTH (netio_pkt_t * pkt, int len)
+NETIO_PKT_SET_L2_HEADER_LENGTH(netio_pkt_t* pkt, int len)
 {
-  netio_pkt_minimal_metadata_t * mmd = NETIO_PKT_MINIMAL_METADATA (pkt);
-  
-  NETIO_PKT_SET_L2_HEADER_LENGTH_MM (mmd, pkt, len);
+  netio_pkt_minimal_metadata_t* mmd = NETIO_PKT_MINIMAL_METADATA(pkt);
+
+  NETIO_PKT_SET_L2_HEADER_LENGTH_MM(mmd, pkt, len);
 }
 
 
@@ -1839,9 +1839,9 @@ NETIO_PKT_SET_L2_HEADER_LENGTH (netio_pkt_t * pkt, int len)
  *   packet data is added.
  */
 static __inline void
-NETIO_PKT_DO_EGRESS_CSUM_MM (netio_pkt_minimal_metadata_t * mmd,
-                             netio_pkt_t * pkt, int start, int length,
-                             int location, uint16_t seed)
+NETIO_PKT_DO_EGRESS_CSUM_MM(netio_pkt_minimal_metadata_t* mmd,
+                            netio_pkt_t* pkt, int start, int length,
+                            int location, uint16_t seed)
 {
   mmd->csum_start = start;
   mmd->csum_length = length;
@@ -1887,12 +1887,12 @@ NETIO_PKT_DO_EGRESS_CSUM_MM (netio_pkt_minimal_metadata_t * mmd,
  *   packet data is added.
  */
 static __inline void
-NETIO_PKT_DO_EGRESS_CSUM (netio_pkt_t * pkt, int start, int length,
-                          int location, uint16_t seed)
+NETIO_PKT_DO_EGRESS_CSUM(netio_pkt_t* pkt, int start, int length,
+                         int location, uint16_t seed)
 {
-  netio_pkt_minimal_metadata_t * mmd = NETIO_PKT_MINIMAL_METADATA (pkt);
-  
-  NETIO_PKT_DO_EGRESS_CSUM_MM (mmd, pkt, start, length, location, seed);
+  netio_pkt_minimal_metadata_t* mmd = NETIO_PKT_MINIMAL_METADATA(pkt);
+
+  NETIO_PKT_DO_EGRESS_CSUM_MM(mmd, pkt, start, length, location, seed);
 }
 
 
@@ -1905,10 +1905,10 @@ NETIO_PKT_DO_EGRESS_CSUM (netio_pkt_t * pkt, int start, int length,
  * @param[in] pkt Packet on which to operate.
  */
 static __inline int
-NETIO_PKT_PREPEND_AVAIL_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_PREPEND_AVAIL_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
   return (pkt->__packet.bits.__offset << 6) +
-         NETIO_PKT_CUSTOM_HEADER_LENGTH_M (mda, pkt);
+         NETIO_PKT_CUSTOM_HEADER_LENGTH_M(mda, pkt);
 }
 
 
@@ -1922,7 +1922,7 @@ NETIO_PKT_PREPEND_AVAIL_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  */
 static __inline int
-NETIO_PKT_PREPEND_AVAIL_MM (netio_pkt_minimal_metadata_t * mmd, netio_pkt_t * pkt)
+NETIO_PKT_PREPEND_AVAIL_MM(netio_pkt_minimal_metadata_t* mmd, netio_pkt_t* pkt)
 {
   return (pkt->__packet.bits.__offset << 6) + mmd->l2_offset;
 }
@@ -1936,19 +1936,19 @@ NETIO_PKT_PREPEND_AVAIL_MM (netio_pkt_minimal_metadata_t * mmd, netio_pkt_t * pk
  * @param[in] pkt Packet on which to operate.
  */
 static __inline int
-NETIO_PKT_PREPEND_AVAIL (netio_pkt_t * pkt)
+NETIO_PKT_PREPEND_AVAIL(netio_pkt_t* pkt)
 {
-  if (NETIO_PKT_IS_MINIMAL (pkt) )
+  if (NETIO_PKT_IS_MINIMAL(pkt))
   {
-    netio_pkt_minimal_metadata_t * mmd = NETIO_PKT_MINIMAL_METADATA (pkt);
-    
-    return NETIO_PKT_PREPEND_AVAIL_MM (mmd, pkt);
+    netio_pkt_minimal_metadata_t* mmd = NETIO_PKT_MINIMAL_METADATA(pkt);
+
+    return NETIO_PKT_PREPEND_AVAIL_MM(mmd, pkt);
   }
   else
   {
-    netio_pkt_metadata_t * mda = NETIO_PKT_METADATA (pkt);
-    
-    return NETIO_PKT_PREPEND_AVAIL_M (mda, pkt);
+    netio_pkt_metadata_t* mda = NETIO_PKT_METADATA(pkt);
+
+    return NETIO_PKT_PREPEND_AVAIL_M(mda, pkt);
   }
 }
 
@@ -1961,8 +1961,8 @@ NETIO_PKT_PREPEND_AVAIL (netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  */
 static __inline void
-NETIO_PKT_FLUSH_MINIMAL_METADATA_MM (netio_pkt_minimal_metadata_t * mmd,
-                                     netio_pkt_t * pkt)
+NETIO_PKT_FLUSH_MINIMAL_METADATA_MM(netio_pkt_minimal_metadata_t* mmd,
+                                    netio_pkt_t* pkt)
 {
 }
 
@@ -1975,8 +1975,8 @@ NETIO_PKT_FLUSH_MINIMAL_METADATA_MM (netio_pkt_minimal_metadata_t * mmd,
  * @param[in] pkt Packet on which to operate.
  */
 static __inline void
-NETIO_PKT_INV_MINIMAL_METADATA_MM (netio_pkt_minimal_metadata_t * mmd,
-                                   netio_pkt_t * pkt)
+NETIO_PKT_INV_MINIMAL_METADATA_MM(netio_pkt_minimal_metadata_t* mmd,
+                                  netio_pkt_t* pkt)
 {
 }
 
@@ -1989,8 +1989,8 @@ NETIO_PKT_INV_MINIMAL_METADATA_MM (netio_pkt_minimal_metadata_t * mmd,
  * @param[in] pkt Packet on which to operate.
  */
 static __inline void
-NETIO_PKT_FLUSH_INV_MINIMAL_METADATA_MM (netio_pkt_minimal_metadata_t * mmd,
-    netio_pkt_t * pkt)
+NETIO_PKT_FLUSH_INV_MINIMAL_METADATA_MM(netio_pkt_minimal_metadata_t* mmd,
+                                        netio_pkt_t* pkt)
 {
 }
 
@@ -2003,7 +2003,7 @@ NETIO_PKT_FLUSH_INV_MINIMAL_METADATA_MM (netio_pkt_minimal_metadata_t * mmd,
  * @param[in] pkt Packet on which to operate.
  */
 static __inline void
-NETIO_PKT_FLUSH_METADATA_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_FLUSH_METADATA_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
 }
 
@@ -2016,7 +2016,7 @@ NETIO_PKT_FLUSH_METADATA_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  */
 static __inline void
-NETIO_PKT_INV_METADATA_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_INV_METADATA_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
 }
 
@@ -2029,7 +2029,7 @@ NETIO_PKT_INV_METADATA_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  */
 static __inline void
-NETIO_PKT_FLUSH_INV_METADATA_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
+NETIO_PKT_FLUSH_INV_METADATA_M(netio_pkt_metadata_t* mda, netio_pkt_t* pkt)
 {
 }
 
@@ -2040,7 +2040,7 @@ NETIO_PKT_FLUSH_INV_METADATA_M (netio_pkt_metadata_t * mda, netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  */
 static __inline void
-NETIO_PKT_FLUSH_MINIMAL_METADATA (netio_pkt_t * pkt)
+NETIO_PKT_FLUSH_MINIMAL_METADATA(netio_pkt_t* pkt)
 {
 }
 
@@ -2051,7 +2051,7 @@ NETIO_PKT_FLUSH_MINIMAL_METADATA (netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  */
 static __inline void
-NETIO_PKT_INV_MINIMAL_METADATA (netio_pkt_t * pkt)
+NETIO_PKT_INV_MINIMAL_METADATA(netio_pkt_t* pkt)
 {
 }
 
@@ -2062,7 +2062,7 @@ NETIO_PKT_INV_MINIMAL_METADATA (netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  */
 static __inline void
-NETIO_PKT_FLUSH_INV_MINIMAL_METADATA (netio_pkt_t * pkt)
+NETIO_PKT_FLUSH_INV_MINIMAL_METADATA(netio_pkt_t* pkt)
 {
 }
 
@@ -2073,7 +2073,7 @@ NETIO_PKT_FLUSH_INV_MINIMAL_METADATA (netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  */
 static __inline void
-NETIO_PKT_FLUSH_METADATA (netio_pkt_t * pkt)
+NETIO_PKT_FLUSH_METADATA(netio_pkt_t* pkt)
 {
 }
 
@@ -2084,7 +2084,7 @@ NETIO_PKT_FLUSH_METADATA (netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  */
 static __inline void
-NETIO_PKT_INV_METADATA (netio_pkt_t * pkt)
+NETIO_PKT_INV_METADATA(netio_pkt_t* pkt)
 {
 }
 
@@ -2095,7 +2095,7 @@ NETIO_PKT_INV_METADATA (netio_pkt_t * pkt)
  * @param[in] pkt Packet on which to operate.
  */
 static __inline void
-NETIO_PKT_FLUSH_INV_METADATA (netio_pkt_t * pkt)
+NETIO_PKT_FLUSH_INV_METADATA(netio_pkt_t* pkt)
 {
 }
 
@@ -2184,27 +2184,27 @@ NETIO_PKT_FLUSH_INV_METADATA (netio_pkt_t * pkt)
 typedef struct
 {
   /** Registration characteristics.
-  
+
       This value determines several characteristics of the registration;
       flags for different types of behavior are ORed together to make the
       final flag value.  Generally applications should specify exactly
       one flag from each of the following categories:
-  
+
       - Whether the application will be receiving packets on this queue
         (::NETIO_RECV or ::NETIO_NO_RECV).
-  
+
       - Whether the application will be transmitting packets on this queue,
         and if so, whether it will request egress checksum calculation
         (::NETIO_XMIT, ::NETIO_XMIT_CSUM, or ::NETIO_NO_XMIT).  It is
         legal to call netio_get_buffer() without one of the XMIT flags,
         as long as ::NETIO_RECV is specified; in this case, the retrieved
         buffers must be passed to another tile for transmission.
-  
+
       - Whether the application expects any vendor-specific tags in
         its packets' L2 headers (::NETIO_TAG_NONE, ::NETIO_TAG_BRCM,
         or ::NETIO_TAG_MRVL).  This must match the configuration of the
         target IPP.
-  
+
       To accommodate applications written to previous versions of the NetIO
       interface, none of the flags above are currently required; if omitted,
       NetIO behaves more or less as if ::NETIO_RECV | ::NETIO_XMIT_CSUM |
@@ -2213,7 +2213,7 @@ typedef struct
       allocation, allows earlier detection of certain configuration errors,
       and may enable advanced features or higher performance in the future,
       so their use is strongly recommended.
-  
+
       Note that specifying ::NETIO_NO_RECV along with ::NETIO_NO_XMIT
       is a special case, intended primarily for use by programs which
       retrieve network statistics or do link management operations.
@@ -2221,19 +2221,19 @@ typedef struct
       be used with NetIO routines other than netio_get(), netio_set(),
       and netio_input_unregister().  See @ref link for more information
       on link management.
-  
+
       Other flags are optional; their use is described below.
   */
   int flags;
-  
+
   /** Interface name.  This is a string which identifies the specific
       Ethernet controller hardware to be used.  The format of the string
       is a device type and a device index, separated by a slash; so,
       the first 10 Gigabit Ethernet controller is named "xgbe/0", while
       the second 10/100/1000 Megabit Ethernet controller is named "gbe/1".
    */
-  const char * interface;
-  
+  const char* interface;
+
   /** Receive packet queue size.  This specifies the maximum number
       of ingress packets that can be received on this queue without
       being retrieved by @ref netio_get_packet().  If the IPP's distribution
@@ -2246,7 +2246,7 @@ typedef struct
       interfaces.
    */
   int num_receive_packets;
-  
+
   /** The queue ID being requested.  Legal values for this range from 0
       to ::NETIO_MAX_QUEUE_ID, inclusive.  ::NETIO_MAX_QUEUE_ID is always
       greater than or equal to the number of tiles; this allows one queue
@@ -2256,7 +2256,7 @@ typedef struct
       registered are discarded.
    */
   unsigned int queue_id;
-  
+
   /** Maximum number of small send buffers to be held in the local empty
       buffer cache.  This specifies the size of the area which holds
       empty small egress buffers requested from the IPP but not yet
@@ -2267,7 +2267,7 @@ typedef struct
       buffer caching.
    */
   int num_send_buffers_small_total;
-  
+
   /** Number of small send buffers to be preallocated at registration.
       If this value is nonzero, the specified number of empty small egress
       buffers will be requested from the IPP during the netio_input_register
@@ -2276,7 +2276,7 @@ typedef struct
       epp for more details on empty buffer caching.
    */
   int num_send_buffers_small_prealloc;
-  
+
   /** Maximum number of large send buffers to be held in the local empty
       buffer cache.  This specifies the size of the area which holds empty
       large egress buffers requested from the IPP but not yet retrieved via
@@ -2286,7 +2286,7 @@ typedef struct
       See @ref epp for more details on empty buffer caching.
    */
   int num_send_buffers_large_total;
-  
+
   /** Number of large send buffers to be preallocated at registration.
       If this value is nonzero, the specified number of empty large egress
       buffers will be requested from the IPP during the netio_input_register
@@ -2295,7 +2295,7 @@ typedef struct
       epp for more details on empty buffer caching.
    */
   int num_send_buffers_large_prealloc;
-  
+
   /** Maximum number of jumbo send buffers to be held in the local empty
       buffer cache.  This specifies the size of the area which holds empty
       jumbo egress buffers requested from the IPP but not yet retrieved via
@@ -2305,7 +2305,7 @@ typedef struct
       See @ref epp for more details on empty buffer caching.
    */
   int num_send_buffers_jumbo_total;
-  
+
   /** Number of jumbo send buffers to be preallocated at registration.
       If this value is nonzero, the specified number of empty jumbo egress
       buffers will be requested from the IPP during the netio_input_register
@@ -2314,56 +2314,56 @@ typedef struct
       epp for more details on empty buffer caching.
    */
   int num_send_buffers_jumbo_prealloc;
-  
+
   /** Total packet buffer size.  This determines the total size, in bytes,
       of the NetIO buffer pool.  Note that the maximum number of available
       buffers of each size is determined during hypervisor configuration
       (see the <em>System Programmer's Guide</em> for details); this just
       influences how much host memory is allocated for those buffers.
-  
+
       The buffer pool is allocated from common memory, which will be
       automatically initialized if needed.  If your buffer pool is larger
       than 240 MB, you might need to explicitly call @c tmc_cmem_init(),
       as described in the Application Libraries Reference Manual (UG227).
-  
+
       Packet buffers are currently allocated in chunks of 16 MB; this
       value will be rounded up to the next larger multiple of 16 MB.
       If this value is zero, a default of 32 MB will be used; this was
       the value used by previous versions of NetIO.  Note that taking this
       default also affects the placement of buffers on Linux NUMA nodes.
       See @ref buffer_node_weights for an explanation of buffer placement.
-  
+
       In order to successfully allocate packet buffers, Linux must have
       available huge pages on the relevant Linux NUMA nodes.  See the
       <em>System Programmer's Guide</em> for information on configuring
       huge page support in Linux.
    */
   uint64_t total_buffer_size;
-  
+
   /** Buffer placement weighting factors.
-  
+
       This array specifies the relative amount of buffering to place
       on each of the available Linux NUMA nodes.  This array is
       indexed by the NUMA node, and the values in the array are
       proportional to the amount of buffer space to allocate on that
       node.
-  
+
       If memory striping is enabled in the Hypervisor, then there is
       only one logical NUMA node (node 0). In that case, NetIO will by
       default ignore the suggested buffer node weights, and buffers
       will be striped across the physical memory controllers. See
       UG209 System Programmer's Guide for a description of the
       hypervisor option that controls memory striping.
-  
+
       If memory striping is disabled, then there are up to four NUMA
       nodes, corresponding to the four DDRAM controllers in the TILE
       processor architecture.  See UG100 Tile Processor Architecture
       Overview for a diagram showing the location of each of the DDRAM
       controllers relative to the tile array.
-  
+
       For instance, if memory striping is disabled, the following
       configuration strucure:
-  
+
       @code
       netio_input_config_t config = {
             .
@@ -2373,44 +2373,44 @@ typedef struct
         .buffer_node_weights = { 1, 0, 1, 0 },
       },
       @endcode
-  
+
       would result in 32 MB of buffers being placed on controller 0, and
       32 MB on controller 2.  (Since buffers are allocated in units of
       16 MB, some sets of weights will not be able to be matched exactly.)
-  
+
       For the weights to be effective, @ref total_buffer_size must be
       nonzero.  If @ref total_buffer_size is zero, causing the default
       32 MB of buffer space to be used, then any specified weights will
       be ignored, and buffers will positioned as they were in previous
       versions of NetIO:
-  
+
       - For xgbe/0 and gbe/0, 16 MB of buffers will be placed on controller 1,
         and the other 16 MB will be placed on controller 2.
-  
+
       - For xgbe/1 and gbe/1, 16 MB of buffers will be placed on controller 2,
         and the other 16 MB will be placed on controller 3.
-  
+
       If @ref total_buffer_size is nonzero, but all weights are zero,
       then all buffer space will be allocated on Linux NUMA node zero.
-  
+
       By default, the specified buffer placement is treated as a hint;
       if sufficient free memory is not available on the specified
       controllers, the buffers will be allocated elsewhere.  However,
       if the ::NETIO_STRICT_HOMING flag is specified in @ref flags, then a
       failure to allocate buffer space exactly as requested will cause the
       registration operation to fail with an error of ::NETIO_CANNOT_HOME.
-  
+
       Note that maximal network performance cannot be achieved with
       only one memory controller.
    */
   uint8_t buffer_node_weights[NETIO_NUM_NODE_WEIGHTS];
-  
+
   /** Fixed virtual address for packet buffers.  Only valid when
       ::NETIO_FIXED_BUFFER_VA is specified in @ref flags; see the
       description of that flag for details.
    */
-  void * fixed_buffer_va;
-  
+  void* fixed_buffer_va;
+
   /**
       Maximum number of outstanding send packet requests.  This value is
       only relevant when an EPP is in use; it determines the number of
@@ -2422,13 +2422,13 @@ typedef struct
       allowing a single vector send operation to process more packets.
       Typically it is not specified, and the default, which divides the
       outgoing packet slots evenly between all tiles on the chip, is used.
-  
+
       If a registration asks for more outgoing packet queue slots than are
       available, ::NETIO_TOOMANY_XMIT will be returned.  The total number
       of packet queue slots which are available for all tiles for each EPP
       is subject to change, but is currently ::NETIO_TOTAL_SENDS_OUTSTANDING.
-  
-  
+
+
       This value is ignored if ::NETIO_XMIT is not specified in flags.
       If you want to specify a large value here for a specific tile, you are
       advised to specify NETIO_NO_XMIT on other, non-transmitting tiles so
@@ -2615,15 +2615,15 @@ struct __netio_queue_user_impl_t;
  */
 typedef struct
 {
-  #ifdef __DOXYGEN__
+#ifdef __DOXYGEN__
   uint8_t opaque[8];                 /**< This is an opaque structure. */
-  #else
-  struct __netio_queue_impl_t * __system_part;   /**< The system part. */
-  struct __netio_queue_user_impl_t * __user_part; /**< The user part. */
-  #ifdef _NETIO_PTHREAD
+#else
+  struct __netio_queue_impl_t* __system_part;    /**< The system part. */
+  struct __netio_queue_user_impl_t* __user_part; /**< The user part. */
+#ifdef _NETIO_PTHREAD
   _netio_percpu_mutex_t lock;                    /**< Queue lock. */
-  #endif
-  #endif
+#endif
+#endif
 }
 netio_queue_t;
 
@@ -2637,17 +2637,17 @@ netio_queue_t;
  */
 typedef struct
 {
-  #ifdef __DOXYGEN__
+#ifdef __DOXYGEN__
   uint8_t opaque[44];   /**< This is an opaque structure. */
-  #else
+#else
   uint8_t flags;        /**< Defined below */
   uint8_t datalen;      /**< Number of valid words pointed to by data. */
   uint32_t request[9];  /**< Request to be sent to the EPP or shim.  Note
                              that this is smaller than the 11-word maximum
                              request size, since some constant values are
                              not saved in the context. */
-  uint32_t * data;      /**< Data to be sent to the EPP or shim via IDN. */
-  #endif
+  uint32_t *data;       /**< Data to be sent to the EPP or shim via IDN. */
+#endif
 }
 netio_send_pkt_context_t;
 
@@ -2671,9 +2671,9 @@ netio_send_pkt_context_t;
  * bigger than one L2 cache line, and to be aligned modulo its size.
  */
 typedef struct
-    #ifndef __DOXYGEN__
-__attribute__ ( (aligned (8) ) )
-    #endif
+#ifndef __DOXYGEN__
+__attribute__((aligned(8)))
+#endif
 {
   /** Reserved for use by the user application.  When initialized with
    *  the netio_set_pkt_vector_entry() function, this field is guaranteed
@@ -2681,17 +2681,17 @@ __attribute__ ( (aligned (8) ) )
    *  visible.  This way it can be used as a valid flag or generation
    *  counter. */
   uint8_t user_data;
-  
+
   /* Structure members below this point should not be accessed directly by
    * applications, as they may change in the future. */
-  
+
   /** Low 8 bits of the packet address to send.  The high bits are
    *  acquired from the 'handle' field. */
   uint8_t buffer_address_low;
-  
+
   /** Number of bytes to transmit. */
   uint16_t size;
-  
+
   /** The raw handle from a netio_pkt_t.  If this is NETIO_PKT_HANDLE_NONE,
    *  this vector entry will be skipped and no packet will be transmitted. */
   netio_pkt_handle_t handle;
@@ -2719,23 +2719,23 @@ netio_pkt_vector_entry_t;
  *        by a polling reader without any locks or other synchronization.
  */
 static __inline void
-netio_pkt_vector_set (volatile netio_pkt_vector_entry_t * v, netio_pkt_t * pkt,
-                      uint8_t user_data)
+netio_pkt_vector_set(volatile netio_pkt_vector_entry_t* v, netio_pkt_t* pkt,
+                     uint8_t user_data)
 {
   if (pkt)
   {
-    if (NETIO_PKT_IS_MINIMAL (pkt) )
+    if (NETIO_PKT_IS_MINIMAL(pkt))
     {
-      netio_pkt_minimal_metadata_t * mmd =
-        (netio_pkt_minimal_metadata_t *) &pkt->__metadata;
-      v->buffer_address_low = (uintptr_t) NETIO_PKT_L2_DATA_MM (mmd, pkt) & 0xFF;
-      v->size = NETIO_PKT_L2_LENGTH_MM (mmd, pkt);
+      netio_pkt_minimal_metadata_t* mmd =
+        (netio_pkt_minimal_metadata_t*) &pkt->__metadata;
+      v->buffer_address_low = (uintptr_t) NETIO_PKT_L2_DATA_MM(mmd, pkt) & 0xFF;
+      v->size = NETIO_PKT_L2_LENGTH_MM(mmd, pkt);
     }
     else
     {
-      netio_pkt_metadata_t * mda = &pkt->__metadata;
-      v->buffer_address_low = (uintptr_t) NETIO_PKT_L2_DATA_M (mda, pkt) & 0xFF;
-      v->size = NETIO_PKT_L2_LENGTH_M (mda, pkt);
+      netio_pkt_metadata_t* mda = &pkt->__metadata;
+      v->buffer_address_low = (uintptr_t) NETIO_PKT_L2_DATA_M(mda, pkt) & 0xFF;
+      v->size = NETIO_PKT_L2_LENGTH_M(mda, pkt);
     }
     v->handle.word = pkt->__packet.word;
   }
@@ -2743,9 +2743,9 @@ netio_pkt_vector_set (volatile netio_pkt_vector_entry_t * v, netio_pkt_t * pkt,
   {
     v->handle.word = 0;   /* Set handle to NETIO_PKT_HANDLE_NONE. */
   }
-  
-  __asm__ ("" : : : "memory");
-  
+
+  __asm__("" : : : "memory");
+
   v->user_data = user_data;
 }
 
@@ -2862,7 +2862,7 @@ typedef struct
    *  to a tile's receive queue for processing.  This value wraps at its
    *  maximum, and is not cleared upon read. */
   uint32_t packets_received;
-  
+
   /** Number of packets which have been dropped by the IPP, because they could
    *  not be received, or could not be forwarded to a tile.  The former happens
    *  when the IPP does not have a free packet buffer of suitable size for an
@@ -2871,42 +2871,42 @@ typedef struct
    *  have full receive queues.   This value wraps at its maximum, and is not
    *  cleared upon read. */
   uint32_t packets_dropped;
-  
+
   /*
    * Note: the #defines after each of the following four one-byte values
    * denote their location within the third word of the netio_stat_t.  They
    * are intended for use only by the IPP implementation and are thus omitted
    * from the Doxygen output.
    */
-  
+
   /** Number of packets dropped because no worker was able to accept a new
    *  packet.  This value saturates at its maximum, and is cleared upon
    *  read. */
   uint8_t drops_no_worker;
-  #ifndef __DOXYGEN__
+#ifndef __DOXYGEN__
 #define NETIO_STAT_DROPS_NO_WORKER   0
-  #endif
-  
+#endif
+
   /** Number of packets dropped because no small buffers were available.
    *  This value saturates at its maximum, and is cleared upon read. */
   uint8_t drops_no_smallbuf;
-  #ifndef __DOXYGEN__
+#ifndef __DOXYGEN__
 #define NETIO_STAT_DROPS_NO_SMALLBUF 1
-  #endif
-  
+#endif
+
   /** Number of packets dropped because no large buffers were available.
    *  This value saturates at its maximum, and is cleared upon read. */
   uint8_t drops_no_largebuf;
-  #ifndef __DOXYGEN__
+#ifndef __DOXYGEN__
 #define NETIO_STAT_DROPS_NO_LARGEBUF 2
-  #endif
-  
+#endif
+
   /** Number of packets dropped because no jumbo buffers were available.
    *  This value saturates at its maximum, and is cleared upon read. */
   uint8_t drops_no_jumbobuf;
-  #ifndef __DOXYGEN__
+#ifndef __DOXYGEN__
 #define NETIO_STAT_DROPS_NO_JUMBOBUF 3
-  #endif
+#endif
 }
 netio_stat_t;
 
@@ -2957,10 +2957,10 @@ typedef union
 {
   struct
   {
-    unsigned int reg: 16;  /**< MDIO register offset.  For clause 22 access,
+    unsigned int reg:16;  /**< MDIO register offset.  For clause 22 access,
                                must be less than 32. */
-    unsigned int phy: 5;  /**< Which MDIO PHY to access. */
-    unsigned int dev: 5;   /**< Which MDIO device to access within that PHY.
+    unsigned int phy:5;   /**< Which MDIO PHY to access. */
+    unsigned int dev:5;   /**< Which MDIO device to access within that PHY.
                                Applicable for clause 45 access only; ignored
                                for clause 22 access. */
   }

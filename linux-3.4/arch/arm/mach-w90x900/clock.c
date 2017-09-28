@@ -27,66 +27,66 @@
 
 #define SUBCLK 0x24
 
-static DEFINE_SPINLOCK (clocks_lock);
+static DEFINE_SPINLOCK(clocks_lock);
 
-int clk_enable (struct clk * clk)
+int clk_enable(struct clk *clk)
 {
-  unsigned long flags;
-  
-  spin_lock_irqsave (&clocks_lock, flags);
-  if (clk->enabled++ == 0)
-  { (clk->enable) (clk, 1); }
-  spin_unlock_irqrestore (&clocks_lock, flags);
-  
-  return 0;
+	unsigned long flags;
+
+	spin_lock_irqsave(&clocks_lock, flags);
+	if (clk->enabled++ == 0)
+		(clk->enable)(clk, 1);
+	spin_unlock_irqrestore(&clocks_lock, flags);
+
+	return 0;
 }
-EXPORT_SYMBOL (clk_enable);
+EXPORT_SYMBOL(clk_enable);
 
-void clk_disable (struct clk * clk)
+void clk_disable(struct clk *clk)
 {
-  unsigned long flags;
-  
-  WARN_ON (clk->enabled == 0);
-  
-  spin_lock_irqsave (&clocks_lock, flags);
-  if (--clk->enabled == 0)
-  { (clk->enable) (clk, 0); }
-  spin_unlock_irqrestore (&clocks_lock, flags);
+	unsigned long flags;
+
+	WARN_ON(clk->enabled == 0);
+
+	spin_lock_irqsave(&clocks_lock, flags);
+	if (--clk->enabled == 0)
+		(clk->enable)(clk, 0);
+	spin_unlock_irqrestore(&clocks_lock, flags);
 }
-EXPORT_SYMBOL (clk_disable);
+EXPORT_SYMBOL(clk_disable);
 
-unsigned long clk_get_rate (struct clk * clk)
+unsigned long clk_get_rate(struct clk *clk)
 {
-  return 15000000;
+	return 15000000;
 }
-EXPORT_SYMBOL (clk_get_rate);
+EXPORT_SYMBOL(clk_get_rate);
 
-void nuc900_clk_enable (struct clk * clk, int enable)
+void nuc900_clk_enable(struct clk *clk, int enable)
 {
-  unsigned int clocks = clk->cken;
-  unsigned long clken;
-  
-  clken = __raw_readl (W90X900_VA_CLKPWR);
-  
-  if (enable)
-  { clken |= clocks; }
-  else
-  { clken &= ~clocks; }
-  
-  __raw_writel (clken, W90X900_VA_CLKPWR);
+	unsigned int clocks = clk->cken;
+	unsigned long clken;
+
+	clken = __raw_readl(W90X900_VA_CLKPWR);
+
+	if (enable)
+		clken |= clocks;
+	else
+		clken &= ~clocks;
+
+	__raw_writel(clken, W90X900_VA_CLKPWR);
 }
 
-void nuc900_subclk_enable (struct clk * clk, int enable)
+void nuc900_subclk_enable(struct clk *clk, int enable)
 {
-  unsigned int clocks = clk->cken;
-  unsigned long clken;
-  
-  clken = __raw_readl (W90X900_VA_CLKPWR + SUBCLK);
-  
-  if (enable)
-  { clken |= clocks; }
-  else
-  { clken &= ~clocks; }
-  
-  __raw_writel (clken, W90X900_VA_CLKPWR + SUBCLK);
+	unsigned int clocks = clk->cken;
+	unsigned long clken;
+
+	clken = __raw_readl(W90X900_VA_CLKPWR + SUBCLK);
+
+	if (enable)
+		clken |= clocks;
+	else
+		clken &= ~clocks;
+
+	__raw_writel(clken, W90X900_VA_CLKPWR + SUBCLK);
 }

@@ -1,1 +1,1 @@
-int getline (char ** lineptr, size_t * n, FILE * stream);
+int getline(char **lineptr, size_t *n, FILE *stream);

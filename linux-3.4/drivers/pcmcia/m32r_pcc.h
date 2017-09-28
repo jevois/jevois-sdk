@@ -2,7 +2,7 @@
  * Copyright (C) 2001 by Hiroyuki Kondo
  */
 
-#define M32R_MAX_PCC  2
+#define M32R_MAX_PCC	2
 
 /*
  * M32R PC Card Controller
@@ -46,12 +46,12 @@
 /*
  *
  */
-#define PCMOD_AS_ATTRIB (1UL<<(31-19))
-#define PCMOD_AS_IO (1UL<<(31-18))
+#define PCMOD_AS_ATTRIB	(1UL<<(31-19))
+#define PCMOD_AS_IO	(1UL<<(31-18))
 
-#define PCMOD_CBSZ  (1UL<<(31-23)) /* set for 8bit */
+#define PCMOD_CBSZ	(1UL<<(31-23)) /* set for 8bit */
 
-#define PCMOD_DBEX  (1UL<<(31-31)) /* set for excahnge */
+#define PCMOD_DBEX	(1UL<<(31-31)) /* set for excahnge */
 
 /*
  * M32R PCC Map addr
@@ -59,7 +59,7 @@
 #define M32R_PCC0_MAPBASE        0x14000000
 #define M32R_PCC1_MAPBASE        0x16000000
 
-#define M32R_PCC_MAPMAX    0x02000000
+#define M32R_PCC_MAPMAX		 0x02000000
 
-#define M32R_PCC_MAPSIZE   0x00001000 /* XXX */
-#define M32R_PCC_MAPMASK      (~(M32R_PCC_MAPMAX-1))
+#define M32R_PCC_MAPSIZE	 0x00001000 /* XXX */
+#define M32R_PCC_MAPMASK     	(~(M32R_PCC_MAPMAX-1))

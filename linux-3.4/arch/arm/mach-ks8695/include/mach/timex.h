@@ -2,7 +2,7 @@
  * arch/arm/mach-ks8695/include/mach/timex.h
  *
  * Copyright (C) 2006 Simtec Electronics
- *  Ben Dooks <ben@simtec.co.uk>
+ *	Ben Dooks <ben@simtec.co.uk>
  *
  * KS8695 - Time Parameters
  *
@@ -16,6 +16,6 @@
 
 #include <mach/hardware.h>
 
-#define CLOCK_TICK_RATE   KS8695_CLOCK_RATE
+#define CLOCK_TICK_RATE 	KS8695_CLOCK_RATE
 
 #endif

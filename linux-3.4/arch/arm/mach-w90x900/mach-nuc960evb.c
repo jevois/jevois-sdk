@@ -21,22 +21,22 @@
 
 #include "nuc960.h"
 
-static void __init nuc960evb_map_io (void)
+static void __init nuc960evb_map_io(void)
 {
-  nuc960_map_io();
-  nuc960_init_clocks();
+	nuc960_map_io();
+	nuc960_init_clocks();
 }
 
-static void __init nuc960evb_init (void)
+static void __init nuc960evb_init(void)
 {
-  nuc960_board_init();
+	nuc960_board_init();
 }
 
-MACHINE_START (W90N960EVB, "W90N960EVB")
-/* Maintainer: Wan ZongShun */
-.map_io   = nuc960evb_map_io,
- .init_irq = nuc900_init_irq,
-  .init_machine = nuc960evb_init,
-   .timer    = &nuc900_timer,
-    .restart  = nuc9xx_restart,
-     MACHINE_END
+MACHINE_START(W90N960EVB, "W90N960EVB")
+	/* Maintainer: Wan ZongShun */
+	.map_io		= nuc960evb_map_io,
+	.init_irq	= nuc900_init_irq,
+	.init_machine	= nuc960evb_init,
+	.timer		= &nuc900_timer,
+	.restart	= nuc9xx_restart,
+MACHINE_END

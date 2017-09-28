@@ -1,5 +1,5 @@
 /*
- *  linux/arch/alpha/kernel/pci_impl.h
+ *	linux/arch/alpha/kernel/pci_impl.h
  *
  * This file contains declarations and inline functions for interfacing
  * with the PCI initialization routines.
@@ -22,8 +22,8 @@ struct pci_iommu_arena;
  * VGA BIOS, and some cards, notably Adaptec 2940UW, take mortal offense.
  */
 
-#define EISA_DEFAULT_IO_BASE  0x9000  /* start above 8th slot */
-#define DEFAULT_IO_BASE   0x8000  /* start at 8th slot */
+#define EISA_DEFAULT_IO_BASE	0x9000	/* start above 8th slot */
+#define DEFAULT_IO_BASE		0x8000	/* start at 8th slot */
 
 /*
  * We try to make the DEFAULT_MEM_BASE addresses *always* have more than
@@ -71,23 +71,23 @@ struct pci_iommu_arena;
 
 #define IRONGATE_DEFAULT_MEM_BASE ((256*8-16)*1024*1024)
 
-#define DEFAULT_AGP_APER_SIZE (64*1024*1024)
+#define DEFAULT_AGP_APER_SIZE	(64*1024*1024)
 
-/*
+/* 
  * A small note about bridges and interrupts.  The DECchip 21050 (and
  * later) adheres to the PCI-PCI bridge specification.  This says that
  * the interrupts on the other side of a bridge are swizzled in the
  * following manner:
  *
- * Dev    Interrupt   Interrupt
- *        Pin on      Pin on
+ * Dev    Interrupt   Interrupt 
+ *        Pin on      Pin on 
  *        Device      Connector
  *
  *   4    A           A
  *        B           B
  *        C           C
  *        D           D
- *
+ * 
  *   5    A           B
  *        B           C
  *        C           D
@@ -115,11 +115,11 @@ struct pci_iommu_arena;
 /* The following macro is used to implement the table-based irq mapping
    function for all single-bus Alphas.  */
 
-#define COMMON_TABLE_LOOKUP           \
-  ({ long _ctl_ = -1;               \
-    if (slot >= min_idsel && slot <= max_idsel && pin < irqs_per_slot) \
-      _ctl_ = irq_tab[slot - min_idsel][pin];        \
-    _ctl_; })
+#define COMMON_TABLE_LOOKUP						\
+({ long _ctl_ = -1; 							\
+   if (slot >= min_idsel && slot <= max_idsel && pin < irqs_per_slot)	\
+     _ctl_ = irq_tab[slot - min_idsel][pin];				\
+   _ctl_; })
 
 
 /* A PCI IOMMU allocation arena.  There are typically two of these
@@ -131,19 +131,19 @@ struct pci_iommu_arena;
 
 struct pci_iommu_arena
 {
-  spinlock_t lock;
-  struct pci_controller * hose;
+	spinlock_t lock;
+	struct pci_controller *hose;
 #define IOMMU_INVALID_PTE 0x2 /* 32:63 bits MBZ */
 #define IOMMU_RESERVED_PTE 0xface
-  unsigned long * ptes;
-  dma_addr_t dma_base;
-  unsigned int size;
-  unsigned int next_entry;
-  unsigned int align_entry;
+	unsigned long *ptes;
+	dma_addr_t dma_base;
+	unsigned int size;
+	unsigned int next_entry;
+	unsigned int align_entry;
 };
 
 #if defined(CONFIG_ALPHA_SRM) && \
-(defined(CONFIG_ALPHA_CIA) || defined(CONFIG_ALPHA_LCA))
+    (defined(CONFIG_ALPHA_CIA) || defined(CONFIG_ALPHA_LCA))
 # define NEED_SRM_SAVE_RESTORE
 #else
 # undef NEED_SRM_SAVE_RESTORE
@@ -159,43 +159,43 @@ struct pci_iommu_arena
 /* Store PCI device configuration left by SRM here. */
 struct pdev_srm_saved_conf
 {
-  struct pdev_srm_saved_conf * next;
-  struct pci_dev * dev;
+	struct pdev_srm_saved_conf *next;
+	struct pci_dev *dev;
 };
 
-extern void pci_restore_srm_config (void);
+extern void pci_restore_srm_config(void);
 #else
-#define pdev_save_srm_config(dev) do {} while (0)
-#define pci_restore_srm_config()  do {} while (0)
+#define pdev_save_srm_config(dev)	do {} while (0)
+#define pci_restore_srm_config()	do {} while (0)
 #endif
 
 /* The hose list.  */
-extern struct pci_controller * hose_head, * * hose_tail;
-extern struct pci_controller * pci_isa_hose;
+extern struct pci_controller *hose_head, **hose_tail;
+extern struct pci_controller *pci_isa_hose;
 
 extern unsigned long alpha_agpgart_size;
 
-extern void common_init_pci (void);
+extern void common_init_pci(void);
 #define common_swizzle pci_common_swizzle
-extern struct pci_controller * alloc_pci_controller (void);
-extern struct resource * alloc_resource (void);
+extern struct pci_controller *alloc_pci_controller(void);
+extern struct resource *alloc_resource(void);
 
-extern struct pci_iommu_arena * iommu_arena_new_node (int,
-    struct pci_controller *,
-    dma_addr_t, unsigned long,
-    unsigned long);
-extern struct pci_iommu_arena * iommu_arena_new (struct pci_controller *,
-    dma_addr_t, unsigned long,
-    unsigned long);
-extern const char * const pci_io_names[];
-extern const char * const pci_mem_names[];
+extern struct pci_iommu_arena *iommu_arena_new_node(int,
+						    struct pci_controller *,
+					            dma_addr_t, unsigned long,
+					            unsigned long);
+extern struct pci_iommu_arena *iommu_arena_new(struct pci_controller *,
+					       dma_addr_t, unsigned long,
+					       unsigned long);
+extern const char *const pci_io_names[];
+extern const char *const pci_mem_names[];
 extern const char pci_hae0_name[];
 
-extern unsigned long size_for_memory (unsigned long max);
+extern unsigned long size_for_memory(unsigned long max);
 
-extern int iommu_reserve (struct pci_iommu_arena *, long, long);
-extern int iommu_release (struct pci_iommu_arena *, long, long);
-extern int iommu_bind (struct pci_iommu_arena *, long, long, struct page **);
-extern int iommu_unbind (struct pci_iommu_arena *, long, long);
+extern int iommu_reserve(struct pci_iommu_arena *, long, long);
+extern int iommu_release(struct pci_iommu_arena *, long, long);
+extern int iommu_bind(struct pci_iommu_arena *, long, long, struct page **);
+extern int iommu_unbind(struct pci_iommu_arena *, long, long);
 
 

@@ -15,7 +15,7 @@
 #ifndef __MACH_IRQS_H
 #define __MACH_IRQS_H
 
-#define ARCH_NR_GPIOS 118
-#define NR_IRQS   (128 + ARCH_NR_GPIOS)
+#define ARCH_NR_GPIOS	118
+#define NR_IRQS		(128 + ARCH_NR_GPIOS)
 
 #endif

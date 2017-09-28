@@ -21,7 +21,7 @@
 
 
 struct wm1250_ev1_pdata {
-  int gpios[WM1250_EV1_NUM_GPIOS];
+	int gpios[WM1250_EV1_NUM_GPIOS];
 };
 
 #endif

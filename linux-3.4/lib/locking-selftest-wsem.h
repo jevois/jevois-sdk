@@ -1,14 +1,14 @@
 #undef LOCK
-#define LOCK    WSL
+#define LOCK		WSL
 
 #undef UNLOCK
-#define UNLOCK    WSU
+#define UNLOCK		WSU
 
 #undef RLOCK
-#define RLOCK   RSL
+#define RLOCK		RSL
 
 #undef WLOCK
-#define WLOCK   WSL
+#define WLOCK		WSL
 
 #undef INIT
-#define INIT    RWSI
+#define INIT		RWSI

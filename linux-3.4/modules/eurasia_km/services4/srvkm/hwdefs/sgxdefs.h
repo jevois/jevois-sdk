@@ -40,7 +40,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */ /**************************************************************************/
 
 #ifndef _SGXDEFS_H_
-#define _SGXDEFS_H_
+#define	_SGXDEFS_H_
 
 #include "sgxerrata.h"
 #include "sgxfeaturedefs.h"

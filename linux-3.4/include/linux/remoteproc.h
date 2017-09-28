@@ -71,10 +71,10 @@
  * each of which begins with a resource entry header (as described below).
  */
 struct resource_table {
-  u32 ver;
-  u32 num;
-  u32 reserved[2];
-  u32 offset[0];
+	u32 ver;
+	u32 num;
+	u32 reserved[2];
+	u32 offset[0];
 } __packed;
 
 /**
@@ -87,20 +87,20 @@ struct resource_table {
  * this header, and it should be parsed according to the resource type.
  */
 struct fw_rsc_hdr {
-  u32 type;
-  u8 data[0];
+	u32 type;
+	u8 data[0];
 } __packed;
 
 /**
  * enum fw_resource_type - types of resource entries
  *
  * @RSC_CARVEOUT:   request for allocation of a physically contiguous
- *        memory region.
+ *		    memory region.
  * @RSC_DEVMEM:     request to iommu_map a memory-based peripheral.
- * @RSC_TRACE:      announces the availability of a trace buffer into which
- *        the remote processor will be writing logs.
+ * @RSC_TRACE:	    announces the availability of a trace buffer into which
+ *		    the remote processor will be writing logs.
  * @RSC_VDEV:       declare support for a virtio device, and serve as its
- *        virtio header.
+ *		    virtio header.
  * @RSC_LAST:       just keep this one at the end
  *
  * For more details regarding a specific resource type, please see its
@@ -112,11 +112,11 @@ struct fw_rsc_hdr {
  * please update it as needed.
  */
 enum fw_resource_type {
-  RSC_CARVEOUT  = 0,
-  RSC_DEVMEM  = 1,
-  RSC_TRACE = 2,
-  RSC_VDEV  = 3,
-  RSC_LAST  = 4,
+	RSC_CARVEOUT	= 0,
+	RSC_DEVMEM	= 1,
+	RSC_TRACE	= 2,
+	RSC_VDEV	= 3,
+	RSC_LAST	= 4,
 };
 
 #define FW_RSC_ADDR_ANY (0xFFFFFFFFFFFFFFFF)
@@ -165,12 +165,12 @@ enum fw_resource_type {
  * (mainly for debugging purposes).
  */
 struct fw_rsc_carveout {
-  u32 da;
-  u32 pa;
-  u32 len;
-  u32 flags;
-  u32 reserved;
-  u8 name[32];
+	u32 da;
+	u32 pa;
+	u32 len;
+	u32 flags;
+	u32 reserved;
+	u8 name[32];
 } __packed;
 
 /**
@@ -203,12 +203,12 @@ struct fw_rsc_carveout {
  * access to physical addresses that are outside those ranges.
  */
 struct fw_rsc_devmem {
-  u32 da;
-  u32 pa;
-  u32 len;
-  u32 flags;
-  u32 reserved;
-  u8 name[32];
+	u32 da;
+	u32 pa;
+	u32 len;
+	u32 flags;
+	u32 reserved;
+	u8 name[32];
 } __packed;
 
 /**
@@ -228,10 +228,10 @@ struct fw_rsc_devmem {
  * user via debugfs entries (called trace0, trace1, etc..).
  */
 struct fw_rsc_trace {
-  u32 da;
-  u32 len;
-  u32 reserved;
-  u8 name[32];
+	u32 da;
+	u32 len;
+	u32 reserved;
+	u8 name[32];
 } __packed;
 
 /**
@@ -252,11 +252,11 @@ struct fw_rsc_trace {
  * dynamically allocation of the vring's device address is supported.
  */
 struct fw_rsc_vdev_vring {
-  u32 da;
-  u32 align;
-  u32 num;
-  u32 notifyid;
-  u32 reserved;
+	u32 da;
+	u32 align;
+	u32 num;
+	u32 notifyid;
+	u32 reserved;
 } __packed;
 
 /**
@@ -295,20 +295,20 @@ struct fw_rsc_vdev_vring {
  * spec). the size of the config space is specified by @config_len.
  */
 struct fw_rsc_vdev {
-  u32 id;
-  u32 notifyid;
-  u32 dfeatures;
-  u32 gfeatures;
-  u32 config_len;
-  u8 status;
-  u8 num_of_vrings;
-  u8 reserved[2];
-  struct fw_rsc_vdev_vring vring[0];
+	u32 id;
+	u32 notifyid;
+	u32 dfeatures;
+	u32 gfeatures;
+	u32 config_len;
+	u8 status;
+	u8 num_of_vrings;
+	u8 reserved[2];
+	struct fw_rsc_vdev_vring vring[0];
 } __packed;
 
 /**
  * struct rproc_mem_entry - memory entry descriptor
- * @va: virtual address
+ * @va:	virtual address
  * @dma: dma address
  * @len: length, in bytes
  * @da: device address
@@ -316,36 +316,36 @@ struct fw_rsc_vdev {
  * @node: list node
  */
 struct rproc_mem_entry {
-  void * va;
-  dma_addr_t dma;
-  int len;
-  u32 da;
-  void * priv;
-  struct list_head node;
+	void *va;
+	dma_addr_t dma;
+	int len;
+	u32 da;
+	void *priv;
+	struct list_head node;
 };
 
 struct rproc;
 
 /**
  * struct rproc_ops - platform-specific device handlers
- * @start:  power on the device and boot it
- * @stop: power off the device
- * @kick: kick a virtqueue (virtqueue id given as a parameter)
+ * @start:	power on the device and boot it
+ * @stop:	power off the device
+ * @kick:	kick a virtqueue (virtqueue id given as a parameter)
  */
 struct rproc_ops {
-  int (*start) (struct rproc * rproc);
-  int (*stop) (struct rproc * rproc);
-  void (*kick) (struct rproc * rproc, int vqid);
+	int (*start)(struct rproc *rproc);
+	int (*stop)(struct rproc *rproc);
+	void (*kick)(struct rproc *rproc, int vqid);
 };
 
 /**
  * enum rproc_state - remote processor states
- * @RPROC_OFFLINE:  device is powered off
- * @RPROC_SUSPENDED:  device is suspended; needs to be woken up to receive
- *      a message.
- * @RPROC_RUNNING:  device is up and running
- * @RPROC_CRASHED:  device has crashed; need to start recovery
- * @RPROC_LAST:   just keep this one at the end
+ * @RPROC_OFFLINE:	device is powered off
+ * @RPROC_SUSPENDED:	device is suspended; needs to be woken up to receive
+ *			a message.
+ * @RPROC_RUNNING:	device is up and running
+ * @RPROC_CRASHED:	device has crashed; need to start recovery
+ * @RPROC_LAST:		just keep this one at the end
  *
  * Please note that the values of these states are used as indices
  * to rproc_state_string, a state-to-name lookup table,
@@ -354,11 +354,11 @@ struct rproc_ops {
  * please update it as needed too.
  */
 enum rproc_state {
-  RPROC_OFFLINE = 0,
-  RPROC_SUSPENDED = 1,
-  RPROC_RUNNING = 2,
-  RPROC_CRASHED = 3,
-  RPROC_LAST  = 4,
+	RPROC_OFFLINE	= 0,
+	RPROC_SUSPENDED	= 1,
+	RPROC_RUNNING	= 2,
+	RPROC_CRASHED	= 3,
+	RPROC_LAST	= 4,
 };
 
 /**
@@ -385,26 +385,26 @@ enum rproc_state {
  * @notifyids: idr for dynamically assigning rproc-wide unique notify ids
  */
 struct rproc {
-  struct klist_node node;
-  struct iommu_domain * domain;
-  const char * name;
-  const char * firmware;
-  void * priv;
-  const struct rproc_ops * ops;
-  struct device * dev;
-  struct kref refcount;
-  atomic_t power;
-  unsigned int state;
-  struct mutex lock;
-  struct dentry * dbg_dir;
-  struct list_head traces;
-  int num_traces;
-  struct list_head carveouts;
-  struct list_head mappings;
-  struct completion firmware_loading_complete;
-  u32 bootaddr;
-  struct list_head rvdevs;
-  struct idr notifyids;
+	struct klist_node node;
+	struct iommu_domain *domain;
+	const char *name;
+	const char *firmware;
+	void *priv;
+	const struct rproc_ops *ops;
+	struct device *dev;
+	struct kref refcount;
+	atomic_t power;
+	unsigned int state;
+	struct mutex lock;
+	struct dentry *dbg_dir;
+	struct list_head traces;
+	int num_traces;
+	struct list_head carveouts;
+	struct list_head mappings;
+	struct completion firmware_loading_complete;
+	u32 bootaddr;
+	struct list_head rvdevs;
+	struct idr notifyids;
 };
 
 /* we currently support only two vrings per rvdev */
@@ -412,7 +412,7 @@ struct rproc {
 
 /**
  * struct rproc_vring - remoteproc vring state
- * @va: virtual address
+ * @va:	virtual address
  * @dma: dma address
  * @len: length, in bytes
  * @da: device address
@@ -422,14 +422,14 @@ struct rproc {
  * @vq: the virtqueue of this vring
  */
 struct rproc_vring {
-  void * va;
-  dma_addr_t dma;
-  int len;
-  u32 da;
-  u32 align;
-  int notifyid;
-  struct rproc_vdev * rvdev;
-  struct virtqueue * vq;
+	void *va;
+	dma_addr_t dma;
+	int len;
+	u32 da;
+	u32 align;
+	int notifyid;
+	struct rproc_vdev *rvdev;
+	struct virtqueue *vq;
 };
 
 /**
@@ -442,37 +442,37 @@ struct rproc_vring {
  * @gfeatures: virtio guest features
  */
 struct rproc_vdev {
-  struct list_head node;
-  struct rproc * rproc;
-  struct virtio_device vdev;
-  struct rproc_vring vring[RVDEV_NUM_VRINGS];
-  unsigned long dfeatures;
-  unsigned long gfeatures;
+	struct list_head node;
+	struct rproc *rproc;
+	struct virtio_device vdev;
+	struct rproc_vring vring[RVDEV_NUM_VRINGS];
+	unsigned long dfeatures;
+	unsigned long gfeatures;
 };
 
-struct rproc * rproc_get_by_name (const char * name);
-void rproc_put (struct rproc * rproc);
+struct rproc *rproc_get_by_name(const char *name);
+void rproc_put(struct rproc *rproc);
 
-struct rproc * rproc_alloc (struct device * dev, const char * name,
-                            const struct rproc_ops * ops,
-                            const char * firmware, int len);
-void rproc_free (struct rproc * rproc);
-int rproc_register (struct rproc * rproc);
-int rproc_unregister (struct rproc * rproc);
+struct rproc *rproc_alloc(struct device *dev, const char *name,
+				const struct rproc_ops *ops,
+				const char *firmware, int len);
+void rproc_free(struct rproc *rproc);
+int rproc_register(struct rproc *rproc);
+int rproc_unregister(struct rproc *rproc);
 
-int rproc_boot (struct rproc * rproc);
-void rproc_shutdown (struct rproc * rproc);
+int rproc_boot(struct rproc *rproc);
+void rproc_shutdown(struct rproc *rproc);
 
-static inline struct rproc_vdev * vdev_to_rvdev (struct virtio_device * vdev)
+static inline struct rproc_vdev *vdev_to_rvdev(struct virtio_device *vdev)
 {
-  return container_of (vdev, struct rproc_vdev, vdev);
+	return container_of(vdev, struct rproc_vdev, vdev);
 }
 
-static inline struct rproc * vdev_to_rproc (struct virtio_device * vdev)
+static inline struct rproc *vdev_to_rproc(struct virtio_device *vdev)
 {
-  struct rproc_vdev * rvdev = vdev_to_rvdev (vdev);
-  
-  return rvdev->rproc;
+	struct rproc_vdev *rvdev = vdev_to_rvdev(vdev);
+
+	return rvdev->rproc;
 }
 
 #endif /* REMOTEPROC_H */

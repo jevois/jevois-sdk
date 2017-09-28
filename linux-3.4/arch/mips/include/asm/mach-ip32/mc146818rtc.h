@@ -13,16 +13,16 @@
 
 #include <asm/ip32/mace.h>
 
-#define RTC_PORT(x) (0x70 + (x))
+#define RTC_PORT(x)	(0x70 + (x))
 
-static unsigned char CMOS_READ (unsigned long addr)
+static unsigned char CMOS_READ(unsigned long addr)
 {
-  return mace->isa.rtc[addr << 8];
+	return mace->isa.rtc[addr << 8];
 }
 
-static inline void CMOS_WRITE (unsigned char data, unsigned long addr)
+static inline void CMOS_WRITE(unsigned char data, unsigned long addr)
 {
-  mace->isa.rtc[addr << 8] = data;
+	mace->isa.rtc[addr << 8] = data;
 }
 
 /*
@@ -31,6 +31,6 @@ static inline void CMOS_WRITE (unsigned char data, unsigned long addr)
  */
 #define mc146818_decode_year(year) ((year) + 2000)
 
-#define RTC_ALWAYS_BCD  0
+#define RTC_ALWAYS_BCD	0
 
 #endif /* __ASM_MACH_IP32_MC146818RTC_H */

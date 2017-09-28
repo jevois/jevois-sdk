@@ -2,13 +2,13 @@
  * arch/alpha/lib/dec_and_lock.c
  *
  * ll/sc version of atomic_dec_and_lock()
- *
+ * 
  */
 
 #include <linux/spinlock.h>
 #include <linux/atomic.h>
 
-asm (".text					\n\
+  asm (".text					\n\
 	.global _atomic_dec_and_lock		\n\
 	.ent _atomic_dec_and_lock		\n\
 	.align	4				\n\
@@ -30,12 +30,12 @@ _atomic_dec_and_lock:				\n\
 	.previous				\n\
 	.end _atomic_dec_and_lock");
 
-static int __used atomic_dec_and_lock_1 (atomic_t * atomic, spinlock_t * lock)
+static int __used atomic_dec_and_lock_1(atomic_t *atomic, spinlock_t *lock)
 {
-  /* Slow path */
-  spin_lock (lock);
-  if (atomic_dec_and_test (atomic) )
-  { return 1; }
-  spin_unlock (lock);
-  return 0;
+	/* Slow path */
+	spin_lock(lock);
+	if (atomic_dec_and_test(atomic))
+		return 1;
+	spin_unlock(lock);
+	return 0;
 }

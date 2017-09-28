@@ -6,4 +6,4 @@
  * warranty of any kind, whether express or implied.
  */
 
-#define CLOCK_TICK_RATE   (100 * HZ)
+#define CLOCK_TICK_RATE		(100 * HZ)

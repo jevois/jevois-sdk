@@ -13,35 +13,35 @@
 extern struct list_head atm_devs;
 extern struct mutex atm_dev_mutex;
 
-int atm_dev_ioctl (unsigned int cmd, void __user * arg, int compat);
+int atm_dev_ioctl(unsigned int cmd, void __user *arg, int compat);
 
 
 #ifdef CONFIG_PROC_FS
 
 #include <linux/proc_fs.h>
 
-void * atm_dev_seq_start (struct seq_file * seq, loff_t * pos);
-void atm_dev_seq_stop (struct seq_file * seq, void * v);
-void * atm_dev_seq_next (struct seq_file * seq, void * v, loff_t * pos);
+void *atm_dev_seq_start(struct seq_file *seq, loff_t *pos);
+void atm_dev_seq_stop(struct seq_file *seq, void *v);
+void *atm_dev_seq_next(struct seq_file *seq, void *v, loff_t *pos);
 
 
-int atm_proc_dev_register (struct atm_dev * dev);
-void atm_proc_dev_deregister (struct atm_dev * dev);
+int atm_proc_dev_register(struct atm_dev *dev);
+void atm_proc_dev_deregister(struct atm_dev *dev);
 
 #else
 
-static inline int atm_proc_dev_register (struct atm_dev * dev)
+static inline int atm_proc_dev_register(struct atm_dev *dev)
 {
-  return 0;
+	return 0;
 }
 
-static inline void atm_proc_dev_deregister (struct atm_dev * dev)
+static inline void atm_proc_dev_deregister(struct atm_dev *dev)
 {
-  /* nothing */
+	/* nothing */
 }
 
 #endif /* CONFIG_PROC_FS */
 
-int atm_register_sysfs (struct atm_dev * adev, struct device * parent);
-void atm_unregister_sysfs (struct atm_dev * adev);
+int atm_register_sysfs(struct atm_dev *adev, struct device *parent);
+void atm_unregister_sysfs(struct atm_dev *adev);
 #endif

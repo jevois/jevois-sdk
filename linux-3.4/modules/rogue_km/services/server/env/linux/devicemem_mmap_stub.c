@@ -61,73 +61,73 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "pmr.h"
 
 IMG_INTERNAL PVRSRV_ERROR
-OSMMapPMR (IMG_HANDLE hBridge,
-           IMG_HANDLE hPMR,
-           IMG_DEVMEM_SIZE_T uiPMRSize,
-           IMG_HANDLE * phOSMMapPrivDataOut,
-           IMG_VOID ** ppvMappingAddressOut,
-           IMG_SIZE_T * puiMappingLengthOut)
+OSMMapPMR(IMG_HANDLE hBridge,
+          IMG_HANDLE hPMR,
+          IMG_DEVMEM_SIZE_T uiPMRSize,
+          IMG_HANDLE *phOSMMapPrivDataOut,
+          IMG_VOID **ppvMappingAddressOut,
+          IMG_SIZE_T *puiMappingLengthOut)
 {
-  PVRSRV_ERROR eError;
-  PMR * psPMR;
-  IMG_VOID * pvKernelAddress;
-  IMG_SIZE_T uiLength;
-  IMG_HANDLE hPriv;
-  
-  PVR_UNREFERENCED_PARAMETER (hBridge);
-  
-  /*
-    Normally this function would mmap a PMR into the memory space of
-    user process, but in this case we're taking a PMR and mapping it
-    into kernel virtual space.  We keep the same function name for
-    symmetry as this allows the higher layers of the software stack
-    to not care whether they are user mode or kernel
-  */
-  
-  psPMR = hPMR;
-  
-  eError = PMRAcquireKernelMappingData (psPMR,
-                                        0,
-                                        0,
-                                        &pvKernelAddress,
-                                        &uiLength,
-                                        &hPriv);
-  if (eError != PVRSRV_OK)
-  {
-    goto e0;
-  }
-  
-  *phOSMMapPrivDataOut = hPriv;
-  *ppvMappingAddressOut = pvKernelAddress;
-  *puiMappingLengthOut = uiLength;
-  
-  PVR_ASSERT (*puiMappingLengthOut == uiPMRSize);
-  
-  return PVRSRV_OK;
-  
-  /*
-    error exit paths follow
-  */
-  
-e0:
-  PVR_ASSERT (eError != PVRSRV_OK);
-  return eError;
+    PVRSRV_ERROR eError;
+    PMR *psPMR;
+    IMG_VOID *pvKernelAddress;
+    IMG_SIZE_T uiLength;
+    IMG_HANDLE hPriv;
+
+    PVR_UNREFERENCED_PARAMETER(hBridge);
+
+    /*
+      Normally this function would mmap a PMR into the memory space of
+      user process, but in this case we're taking a PMR and mapping it
+      into kernel virtual space.  We keep the same function name for
+      symmetry as this allows the higher layers of the software stack
+      to not care whether they are user mode or kernel
+    */
+
+    psPMR = hPMR;
+
+    eError = PMRAcquireKernelMappingData(psPMR,
+                                         0,
+                                         0,
+                                         &pvKernelAddress,
+                                         &uiLength,
+                                         &hPriv);
+    if (eError != PVRSRV_OK)
+    {
+        goto e0;
+    }
+    
+    *phOSMMapPrivDataOut = hPriv;
+    *ppvMappingAddressOut = pvKernelAddress;
+    *puiMappingLengthOut = uiLength;
+
+    PVR_ASSERT(*puiMappingLengthOut == uiPMRSize);
+
+    return PVRSRV_OK;
+
+    /*
+      error exit paths follow
+    */
+
+ e0:
+    PVR_ASSERT(eError != PVRSRV_OK);
+    return eError;
 }
 
 IMG_INTERNAL IMG_VOID
-OSMUnmapPMR (IMG_HANDLE hBridge,
-             IMG_HANDLE hPMR,
-             IMG_HANDLE hOSMMapPrivData,
-             IMG_VOID * pvMappingAddress,
-             IMG_SIZE_T uiMappingLength)
+OSMUnmapPMR(IMG_HANDLE hBridge,
+            IMG_HANDLE hPMR,
+            IMG_HANDLE hOSMMapPrivData,
+            IMG_VOID *pvMappingAddress,
+            IMG_SIZE_T uiMappingLength)
 {
-  PMR * psPMR;
-  
-  PVR_UNREFERENCED_PARAMETER (hBridge);
-  PVR_UNREFERENCED_PARAMETER (pvMappingAddress);
-  PVR_UNREFERENCED_PARAMETER (uiMappingLength);
-  
-  psPMR = hPMR;
-  PMRReleaseKernelMappingData (psPMR,
-                               hOSMMapPrivData);
+    PMR *psPMR;
+
+    PVR_UNREFERENCED_PARAMETER(hBridge);
+    PVR_UNREFERENCED_PARAMETER(pvMappingAddress);
+    PVR_UNREFERENCED_PARAMETER(uiMappingLength);
+
+    psPMR = hPMR;
+    PMRReleaseKernelMappingData(psPMR,
+                                hOSMMapPrivData);
 }

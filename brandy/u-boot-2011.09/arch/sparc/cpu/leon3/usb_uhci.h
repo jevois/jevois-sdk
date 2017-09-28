@@ -27,55 +27,55 @@
 #define _USB_UHCI_H_
 
 /* Command register */
-#define USBCMD    0
-#define   USBCMD_RS       0x0001  /* Run/Stop */
-#define   USBCMD_HCRESET  0x0002  /* Host reset */
-#define   USBCMD_GRESET   0x0004  /* Global reset */
-#define   USBCMD_EGSM     0x0008  /* Global Suspend Mode */
-#define   USBCMD_FGR      0x0010  /* Force Global Resume */
-#define   USBCMD_SWDBG    0x0020  /* SW Debug mode */
-#define   USBCMD_CF       0x0040  /* Config Flag (sw only) */
-#define   USBCMD_MAXP     0x0080  /* Max Packet (0 = 32, 1 = 64) */
+#define USBCMD		0
+#define   USBCMD_RS       0x0001	/* Run/Stop */
+#define   USBCMD_HCRESET  0x0002	/* Host reset */
+#define   USBCMD_GRESET   0x0004	/* Global reset */
+#define   USBCMD_EGSM     0x0008	/* Global Suspend Mode */
+#define   USBCMD_FGR      0x0010	/* Force Global Resume */
+#define   USBCMD_SWDBG    0x0020	/* SW Debug mode */
+#define   USBCMD_CF       0x0040	/* Config Flag (sw only) */
+#define   USBCMD_MAXP     0x0080	/* Max Packet (0 = 32, 1 = 64) */
 
 /* Status register */
-#define USBSTS    2
-#define   USBSTS_USBINT   0x0001  /* Interrupt due to IOC */
-#define   USBSTS_ERROR    0x0002  /* Interrupt due to error */
-#define   USBSTS_RD       0x0004  /* Resume Detect */
-#define   USBSTS_HSE      0x0008  /* Host System Error - basically PCI problems */
-#define   USBSTS_HCPE     0x0010  /* Host Controller Process Error - the scripts were buggy */
-#define   USBSTS_HCH      0x0020  /* HC Halted */
+#define USBSTS		2
+#define   USBSTS_USBINT   0x0001	/* Interrupt due to IOC */
+#define   USBSTS_ERROR    0x0002	/* Interrupt due to error */
+#define   USBSTS_RD       0x0004	/* Resume Detect */
+#define   USBSTS_HSE      0x0008	/* Host System Error - basically PCI problems */
+#define   USBSTS_HCPE     0x0010	/* Host Controller Process Error - the scripts were buggy */
+#define   USBSTS_HCH      0x0020	/* HC Halted */
 
 /* Interrupt enable register */
-#define USBINTR   4
-#define   USBINTR_TIMEOUT 0x0001  /* Timeout/CRC error enable */
-#define   USBINTR_RESUME  0x0002  /* Resume interrupt enable */
-#define   USBINTR_IOC     0x0004  /* Interrupt On Complete enable */
-#define   USBINTR_SP      0x0008  /* Short packet interrupt enable */
+#define USBINTR		4
+#define   USBINTR_TIMEOUT 0x0001	/* Timeout/CRC error enable */
+#define   USBINTR_RESUME  0x0002	/* Resume interrupt enable */
+#define   USBINTR_IOC     0x0004	/* Interrupt On Complete enable */
+#define   USBINTR_SP      0x0008	/* Short packet interrupt enable */
 
 #define USBFRNUM      6
 #define USBFLBASEADD  8
 #define USBSOF        12
 
 /* USB port status and control registers */
-#define USBPORTSC1  16
-#define USBPORTSC2  18
-#define   USBPORTSC_CCS   0x0001  /* Current Connect Status ("device present") */
-#define   USBPORTSC_CSC   0x0002  /* Connect Status Change */
-#define   USBPORTSC_PE    0x0004  /* Port Enable */
-#define   USBPORTSC_PEC   0x0008  /* Port Enable Change */
-#define   USBPORTSC_LS    0x0030  /* Line Status */
-#define   USBPORTSC_RD    0x0040  /* Resume Detect */
-#define   USBPORTSC_LSDA  0x0100  /* Low Speed Device Attached */
-#define   USBPORTSC_PR    0x0200  /* Port Reset */
-#define   USBPORTSC_SUSP  0x1000  /* Suspend */
+#define USBPORTSC1	16
+#define USBPORTSC2	18
+#define   USBPORTSC_CCS   0x0001	/* Current Connect Status ("device present") */
+#define   USBPORTSC_CSC   0x0002	/* Connect Status Change */
+#define   USBPORTSC_PE    0x0004	/* Port Enable */
+#define   USBPORTSC_PEC   0x0008	/* Port Enable Change */
+#define   USBPORTSC_LS    0x0030	/* Line Status */
+#define   USBPORTSC_RD    0x0040	/* Resume Detect */
+#define   USBPORTSC_LSDA  0x0100	/* Low Speed Device Attached */
+#define   USBPORTSC_PR    0x0200	/* Port Reset */
+#define   USBPORTSC_SUSP  0x1000	/* Suspend */
 
 /* Legacy support register */
 #define USBLEGSUP 0xc0
-#define USBLEGSUP_DEFAULT 0x2000  /* only PIRQ enable set */
+#define USBLEGSUP_DEFAULT 0x2000	/* only PIRQ enable set */
 
-#define UHCI_NULL_DATA_SIZE 0x7ff /* for UHCI controller TD */
-#define UHCI_PID            0xff  /* PID MASK */
+#define UHCI_NULL_DATA_SIZE 0x7ff	/* for UHCI controller TD */
+#define UHCI_PID            0xff	/* PID MASK */
 
 #define UHCI_PTR_BITS       0x000F
 #define UHCI_PTR_TERM       0x0001
@@ -83,24 +83,24 @@
 #define UHCI_PTR_DEPTH      0x0004
 
 /* for TD <status>: */
-#define TD_CTRL_SPD         (1 << 29) /* Short Packet Detect */
-#define TD_CTRL_C_ERR_MASK  (3 << 27) /* Error Counter bits */
-#define TD_CTRL_LS          (1 << 26) /* Low Speed Device */
-#define TD_CTRL_IOS         (1 << 25) /* Isochronous Select */
-#define TD_CTRL_IOC         (1 << 24) /* Interrupt on Complete */
-#define TD_CTRL_ACTIVE      (1 << 23) /* TD Active */
-#define TD_CTRL_STALLED     (1 << 22) /* TD Stalled */
-#define TD_CTRL_DBUFERR     (1 << 21) /* Data Buffer Error */
-#define TD_CTRL_BABBLE      (1 << 20) /* Babble Detected */
-#define TD_CTRL_NAK         (1 << 19) /* NAK Received */
-#define TD_CTRL_CRCTIMEO    (1 << 18) /* CRC/Time Out Error */
-#define TD_CTRL_BITSTUFF    (1 << 17) /* Bit Stuff Error */
-#define TD_CTRL_ACTLEN_MASK 0x7ff /* actual length, encoded as n - 1 */
+#define TD_CTRL_SPD         (1 << 29)	/* Short Packet Detect */
+#define TD_CTRL_C_ERR_MASK  (3 << 27)	/* Error Counter bits */
+#define TD_CTRL_LS          (1 << 26)	/* Low Speed Device */
+#define TD_CTRL_IOS         (1 << 25)	/* Isochronous Select */
+#define TD_CTRL_IOC         (1 << 24)	/* Interrupt on Complete */
+#define TD_CTRL_ACTIVE      (1 << 23)	/* TD Active */
+#define TD_CTRL_STALLED     (1 << 22)	/* TD Stalled */
+#define TD_CTRL_DBUFERR     (1 << 21)	/* Data Buffer Error */
+#define TD_CTRL_BABBLE      (1 << 20)	/* Babble Detected */
+#define TD_CTRL_NAK         (1 << 19)	/* NAK Received */
+#define TD_CTRL_CRCTIMEO    (1 << 18)	/* CRC/Time Out Error */
+#define TD_CTRL_BITSTUFF    (1 << 17)	/* Bit Stuff Error */
+#define TD_CTRL_ACTLEN_MASK 0x7ff	/* actual length, encoded as n - 1 */
 
-#define TD_CTRL_ANY_ERROR (TD_CTRL_STALLED | TD_CTRL_DBUFERR | \
-                           TD_CTRL_BABBLE | TD_CTRL_CRCTIME | TD_CTRL_BITSTUFF)
+#define TD_CTRL_ANY_ERROR	(TD_CTRL_STALLED | TD_CTRL_DBUFERR | \
+				 TD_CTRL_BABBLE | TD_CTRL_CRCTIME | TD_CTRL_BITSTUFF)
 
-#define TD_TOKEN_TOGGLE   19
+#define TD_TOKEN_TOGGLE		19
 
 /* ------------------------------------------------------------------------------------
    Virtual Root HUB
@@ -159,26 +159,26 @@
 
 /* Transfer descriptor structure */
 typedef struct {
-  unsigned long link; /* next td/qh (LE) */
-  unsigned long status; /* status of the td */
-  unsigned long info; /* Max Lenght / Endpoint / device address and PID */
-  unsigned long buffer; /* pointer to data buffer (LE) */
-  unsigned long dev_ptr;  /* pointer to the assigned device (BE) */
-  unsigned long res[3]; /* reserved (TDs must be 8Byte aligned) */
+	unsigned long link;	/* next td/qh (LE) */
+	unsigned long status;	/* status of the td */
+	unsigned long info;	/* Max Lenght / Endpoint / device address and PID */
+	unsigned long buffer;	/* pointer to data buffer (LE) */
+	unsigned long dev_ptr;	/* pointer to the assigned device (BE) */
+	unsigned long res[3];	/* reserved (TDs must be 8Byte aligned) */
 } uhci_td_t, *puhci_td_t;
 
 /* Queue Header structure */
 typedef struct {
-  unsigned long head; /* Next QH (LE) */
-  unsigned long element;  /* Queue element pointer (LE) */
-  unsigned long res[5]; /* reserved */
-  unsigned long dev_ptr;  /* if 0 no tds have been assigned to this qh */
+	unsigned long head;	/* Next QH (LE) */
+	unsigned long element;	/* Queue element pointer (LE) */
+	unsigned long res[5];	/* reserved */
+	unsigned long dev_ptr;	/* if 0 no tds have been assigned to this qh */
 } uhci_qh_t, *puhci_qh_t;
 
 struct virt_root_hub {
-  int devnum;   /* Address of Root Hub endpoint */
-  int numports;   /* number of ports */
-  int c_p_r[8];   /* C_PORT_RESET */
+	int devnum;		/* Address of Root Hub endpoint */
+	int numports;		/* number of ports */
+	int c_p_r[8];		/* C_PORT_RESET */
 };
 
-#endif        /* _USB_UHCI_H_ */
+#endif				/* _USB_UHCI_H_ */

@@ -28,14 +28,14 @@
 #define _BOOTROM_RESET 0xEF000000
 
 #if defined(__ADSPBF531__) || defined(__ADSPBF532__) || defined(__ADSPBF533__) || \
-defined(__ADSPBF538__) || defined(__ADSPBF539__) || \
-defined(__ADSPBF561__)
+    defined(__ADSPBF538__) || defined(__ADSPBF539__) || \
+    defined(__ADSPBF561__)
 
-/* Nothing to export */
+	/* Nothing to export */
 
 #elif defined(__ADSPBF534__) || defined(__ADSPBF536__) || defined(__ADSPBF537__)
 
-/* The BF537 family */
+	/* The BF537 family */
 
 #define _BOOTROM_FINAL_INIT            0xEF000002
 /*       reserved                      0xEF000004 */
@@ -50,7 +50,7 @@ defined(__ADSPBF561__)
 /*       reserved                      0xEF000016 */
 /*       reserved                      0xEF000018 */
 
-/* Glue to newer Boot ROMs */
+	/* Glue to newer Boot ROMs */
 #define _BOOTROM_MDMA                  _BOOTROM_DO_MEMORY_DMA
 #define _BOOTROM_MEMBOOT               _BOOTROM_BOOT_DXE_FLASH
 #define _BOOTROM_SPIBOOT               _BOOTROM_BOOT_DXE_FLASH
@@ -58,7 +58,7 @@ defined(__ADSPBF561__)
 
 #else
 
-/* All the newer Boot ROMs */
+	/* All the newer Boot ROMs */
 
 #define _BOOTROM_FINAL_INIT            0xEF000002
 #define _BOOTROM_PDMA                  0xEF000004
@@ -126,78 +126,78 @@ defined(__ADSPBF561__)
 
 /* Structures for the syscontrol() function */
 typedef struct ADI_SYSCTRL_VALUES {
-  uint16_t uwVrCtl;
-  uint16_t uwPllCtl;
-  uint16_t uwPllDiv;
-  uint16_t uwPllLockCnt;
-  uint16_t uwPllStat;
+	uint16_t uwVrCtl;
+	uint16_t uwPllCtl;
+	uint16_t uwPllDiv;
+	uint16_t uwPllLockCnt;
+	uint16_t uwPllStat;
 } ADI_SYSCTRL_VALUES;
 
 #ifndef _BOOTROM_SYSCONTROL
 #define _BOOTROM_SYSCONTROL 0
 #endif
-static uint32_t (* const bfrom_SysControl) (uint32_t action_flags, ADI_SYSCTRL_VALUES * power_settings, void * reserved) = (void *) _BOOTROM_SYSCONTROL;
+static uint32_t (* const bfrom_SysControl)(uint32_t action_flags, ADI_SYSCTRL_VALUES *power_settings, void *reserved) = (void *)_BOOTROM_SYSCONTROL;
 
 /* We need a dedicated function since we need to screw with the stack pointer
  * when resetting.  The on-chip ROM will save/restore registers on the stack
  * when doing a system reset, so the stack cannot be outside of the chip.
  */
-__attribute__ ( (__noreturn__) )
-static inline void bfrom_SoftReset (void * new_stack)
+__attribute__((__noreturn__))
+static inline void bfrom_SoftReset(void *new_stack)
 {
-  while (1)
-    __asm__ __volatile__ (
-      "sp = %[stack];"
-      "jump (%[bfrom_syscontrol]);"
-      : : [bfrom_syscontrol] "p" (bfrom_SysControl),
-      "q0" (SYSCTRL_SOFTRESET),
-      "q1" (0),
-      "q2" (NULL),
-      [stack] "p" (new_stack)
-    );
+	while (1)
+		__asm__ __volatile__(
+			"sp = %[stack];"
+			"jump (%[bfrom_syscontrol]);"
+			: : [bfrom_syscontrol] "p"(bfrom_SysControl),
+				"q0"(SYSCTRL_SOFTRESET),
+				"q1"(0),
+				"q2"(NULL),
+				[stack] "p"(new_stack)
+		);
 }
 
 /* Structures for working with LDRs and boot rom callbacks */
 typedef struct ADI_BOOT_HEADER {
-  int32_t dBlockCode;
-  void  *  pTargetAddress;
-  int32_t dByteCount;
-  int32_t dArgument;
+	int32_t dBlockCode;
+	void    *pTargetAddress;
+	int32_t dByteCount;
+	int32_t dArgument;
 } ADI_BOOT_HEADER;
 
 typedef struct ADI_BOOT_BUFFER {
-  void  *  pSource;
-  int32_t dByteCount;
+	void    *pSource;
+	int32_t dByteCount;
 } ADI_BOOT_BUFFER;
 
 typedef struct ADI_BOOT_DATA {
-  void  *  pSource;
-  void  *  pDestination;
-  int16_t * pControlRegister;
-  int16_t * pDmaControlRegister;
-  int32_t dControlValue;
-  int32_t dByteCount;
-  int32_t dFlags;
-  int16_t uwDataWidth;
-  int16_t uwSrcModifyMult;
-  int16_t uwDstModifyMult;
-  int16_t uwHwait;
-  int16_t uwSsel;
-  int16_t uwUserShort;
-  int32_t dUserLong;
-  int32_t dReserved2;
-  void  *  pErrorFunction;
-  void  *  pLoadFunction;
-  void  *  pCallBackFunction;
-  ADI_BOOT_HEADER * pHeader;
-  void  *  pTempBuffer;
-  void  *  pTempCurrent;
-  int32_t dTempByteCount;
-  int32_t dBlockCount;
-  int32_t dClock;
-  void  *  pLogBuffer;
-  void  *  pLogCurrent;
-  int32_t dLogByteCount;
+	void    *pSource;
+	void    *pDestination;
+	int16_t *pControlRegister;
+	int16_t *pDmaControlRegister;
+	int32_t dControlValue;
+	int32_t dByteCount;
+	int32_t dFlags;
+	int16_t uwDataWidth;
+	int16_t uwSrcModifyMult;
+	int16_t uwDstModifyMult;
+	int16_t uwHwait;
+	int16_t uwSsel;
+	int16_t uwUserShort;
+	int32_t dUserLong;
+	int32_t dReserved2;
+	void    *pErrorFunction;
+	void    *pLoadFunction;
+	void    *pCallBackFunction;
+	ADI_BOOT_HEADER *pHeader;
+	void    *pTempBuffer;
+	void    *pTempCurrent;
+	int32_t dTempByteCount;
+	int32_t dBlockCount;
+	int32_t dClock;
+	void    *pLogBuffer;
+	void    *pLogCurrent;
+	int32_t dLogByteCount;
 } ADI_BOOT_DATA;
 
 typedef void ADI_BOOT_HOOK_FUNC (ADI_BOOT_DATA *);
@@ -205,27 +205,27 @@ typedef void ADI_BOOT_HOOK_FUNC (ADI_BOOT_DATA *);
 #ifndef _BOOTROM_MEMBOOT
 #define _BOOTROM_MEMBOOT 0
 #endif
-static uint32_t (* const bfrom_MemBoot) (void * pBootStream, int32_t dFlags, int32_t dBlockCount, ADI_BOOT_HOOK_FUNC * pCallHook) = (void *) _BOOTROM_MEMBOOT;
+static uint32_t (* const bfrom_MemBoot)(void *pBootStream, int32_t dFlags, int32_t dBlockCount, ADI_BOOT_HOOK_FUNC *pCallHook) = (void *)_BOOTROM_MEMBOOT;
 
 #ifndef _BOOTROM_TWIBOOT
 #define _BOOTROM_TWIBOOT 0
 #endif
-static uint32_t (* const bfrom_TwiBoot) (int32_t dTwiAddress, int32_t dFlags, int32_t dBlockCount, ADI_BOOT_HOOK_FUNC * pCallHook) = (void *) _BOOTROM_TWIBOOT;
+static uint32_t (* const bfrom_TwiBoot)(int32_t dTwiAddress, int32_t dFlags, int32_t dBlockCount, ADI_BOOT_HOOK_FUNC *pCallHook) = (void *)_BOOTROM_TWIBOOT;
 
 #ifndef _BOOTROM_SPIBOOT
 #define _BOOTROM_SPIBOOT 0
 #endif
-static uint32_t (* const bfrom_SpiBoot) (int32_t dSpiAddress, int32_t dFlags, int32_t dBlockCount, ADI_BOOT_HOOK_FUNC * pCallHook) = (void *) _BOOTROM_SPIBOOT;
+static uint32_t (* const bfrom_SpiBoot)(int32_t dSpiAddress, int32_t dFlags, int32_t dBlockCount, ADI_BOOT_HOOK_FUNC *pCallHook) = (void *)_BOOTROM_SPIBOOT;
 
 #ifndef _BOOTROM_OTPBOOT
 #define _BOOTROM_OTPBOOT 0
 #endif
-static uint32_t (* const bfrom_OtpBoot) (int32_t dOtpAddress, int32_t dFlags, int32_t dBlockCount, ADI_BOOT_HOOK_FUNC * pCallHook) = (void *) _BOOTROM_OTPBOOT;
+static uint32_t (* const bfrom_OtpBoot)(int32_t dOtpAddress, int32_t dFlags, int32_t dBlockCount, ADI_BOOT_HOOK_FUNC *pCallHook) = (void *)_BOOTROM_OTPBOOT;
 
 #ifndef _BOOTROM_NANDBOOT
 #define _BOOTROM_NANDBOOT 0
 #endif
-static uint32_t (* const bfrom_NandBoot) (int32_t dNandAddress, int32_t dFlags, int32_t dBlockCount, ADI_BOOT_HOOK_FUNC * pCallHook) = (void *) _BOOTROM_NANDBOOT;
+static uint32_t (* const bfrom_NandBoot)(int32_t dNandAddress, int32_t dFlags, int32_t dBlockCount, ADI_BOOT_HOOK_FUNC *pCallHook) = (void *)_BOOTROM_NANDBOOT;
 
 #endif /* __ASSEMBLY__ */
 

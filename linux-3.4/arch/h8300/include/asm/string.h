@@ -7,16 +7,16 @@
 #include <asm/page.h>
 
 #define __HAVE_ARCH_MEMSET
-extern void * memset (void * s, int c, size_t count);
+extern void * memset(void * s, int c, size_t count);
 
 #define __HAVE_ARCH_MEMCPY
-extern void * memcpy (void * d, const void * s, size_t count);
+extern void * memcpy(void *d, const void *s, size_t count);
 
 #else /* KERNEL */
 
 /*
- *  let user libraries deal with these,
- *  IMHO the kernel has no place defining these functions for user apps
+ *	let user libraries deal with these,
+ *	IMHO the kernel has no place defining these functions for user apps
  */
 
 #define __HAVE_ARCH_STRCPY 1

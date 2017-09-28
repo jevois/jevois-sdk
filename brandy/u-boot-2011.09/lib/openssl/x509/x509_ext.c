@@ -64,8 +64,8 @@
 #include <openssl/x509v3.h>
 
 
-int X509_get_ext_count (X509 * x)
-{
-  return (X509v3_get_ext_count (x->cert_info->extensions) );
-}
+int X509_get_ext_count(X509 *x)
+	{
+	return(X509v3_get_ext_count(x->cert_info->extensions));
+	}
 

@@ -47,6 +47,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "device.h"
 #include "pvrsrv_error.h"
 
-PVRSRV_ERROR CacheOpQueue (PVRSRV_CACHE_OP uiCacheOp);
+PVRSRV_ERROR CacheOpQueue(PVRSRV_CACHE_OP uiCacheOp);
 
-#endif  /* _CACHE_GENERIC_H_ */
+#endif	/* _CACHE_GENERIC_H_ */

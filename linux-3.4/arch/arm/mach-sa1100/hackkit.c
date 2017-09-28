@@ -43,11 +43,11 @@
  */
 
 /* init funcs */
-static void __init hackkit_map_io (void);
+static void __init hackkit_map_io(void);
 
-static u_int hackkit_get_mctrl (struct uart_port * port);
-static void hackkit_set_mctrl (struct uart_port * port, u_int mctrl);
-static void hackkit_uart_pm (struct uart_port * port, u_int state, u_int oldstate);
+static u_int hackkit_get_mctrl(struct uart_port *port);
+static void hackkit_set_mctrl(struct uart_port *port, u_int mctrl);
+static void hackkit_uart_pm(struct uart_port *port, u_int state, u_int oldstate);
 
 /**********************************************************************
  *  global data
@@ -58,146 +58,146 @@ static void hackkit_uart_pm (struct uart_port * port, u_int state, u_int oldstat
  */
 
 static struct map_desc hackkit_io_desc[] __initdata = {
-  { /* Flash bank 0 */
-    .virtual  =  0xe8000000,
-    .pfn    = __phys_to_pfn (0x00000000),
-    .length   = 0x01000000,
-    .type   = MT_DEVICE
-  },
+	{	/* Flash bank 0 */
+		.virtual	=  0xe8000000,
+		.pfn		= __phys_to_pfn(0x00000000),
+		.length		= 0x01000000,
+		.type		= MT_DEVICE
+	},
 };
 
 static struct sa1100_port_fns hackkit_port_fns __initdata = {
-  .set_mctrl  = hackkit_set_mctrl,
-  .get_mctrl  = hackkit_get_mctrl,
-  .pm   = hackkit_uart_pm,
+	.set_mctrl	= hackkit_set_mctrl,
+	.get_mctrl	= hackkit_get_mctrl,
+	.pm		= hackkit_uart_pm,
 };
 
 /**********************************************************************
  *  Static functions
  */
 
-static void __init hackkit_map_io (void)
+static void __init hackkit_map_io(void)
 {
-  sa1100_map_io();
-  iotable_init (hackkit_io_desc, ARRAY_SIZE (hackkit_io_desc) );
-  
-  sa1100_register_uart_fns (&hackkit_port_fns);
-  sa1100_register_uart (0, 1); /* com port */
-  sa1100_register_uart (1, 2);
-  sa1100_register_uart (2, 3); /* radio module */
-  
-  Ser1SDCR0 |= SDCR0_SUS;
+	sa1100_map_io();
+	iotable_init(hackkit_io_desc, ARRAY_SIZE(hackkit_io_desc));
+
+	sa1100_register_uart_fns(&hackkit_port_fns);
+	sa1100_register_uart(0, 1);	/* com port */
+	sa1100_register_uart(1, 2);
+	sa1100_register_uart(2, 3);	/* radio module */
+
+	Ser1SDCR0 |= SDCR0_SUS;
 }
 
 /**
- *  hackkit_uart_pm - powermgmt callback function for system 3 UART
- *  @port: uart port structure
- *  @state: pm state
- *  @oldstate: old pm state
+ *	hackkit_uart_pm - powermgmt callback function for system 3 UART
+ *	@port: uart port structure
+ *	@state: pm state
+ *	@oldstate: old pm state
  *
  */
-static void hackkit_uart_pm (struct uart_port * port, u_int state, u_int oldstate)
+static void hackkit_uart_pm(struct uart_port *port, u_int state, u_int oldstate)
 {
-  /* TODO: switch on/off uart in powersave mode */
+	/* TODO: switch on/off uart in powersave mode */
 }
 
 /*
  * Note! this can be called from IRQ context.
  * FIXME: No modem ctrl lines yet.
  */
-static void hackkit_set_mctrl (struct uart_port * port, u_int mctrl)
+static void hackkit_set_mctrl(struct uart_port *port, u_int mctrl)
 {
-  #if 0
-  if (port->mapbase == _Ser1UTCR0) {
-    u_int set = 0, clear = 0;
-    
-    if (mctrl & TIOCM_RTS)
-    { set |= PT_CTRL2_RS1_RTS; }
-    else
-    { clear |= PT_CTRL2_RS1_RTS; }
-    
-    if (mctrl & TIOCM_DTR)
-    { set |= PT_CTRL2_RS1_DTR; }
-    else
-    { clear |= PT_CTRL2_RS1_DTR; }
-    
-    PTCTRL2_clear (clear);
-    PTCTRL2_set (set);
-  }
-  #endif
+#if 0
+	if (port->mapbase == _Ser1UTCR0) {
+		u_int set = 0, clear = 0;
+
+		if (mctrl & TIOCM_RTS)
+			set |= PT_CTRL2_RS1_RTS;
+		else
+			clear |= PT_CTRL2_RS1_RTS;
+
+		if (mctrl & TIOCM_DTR)
+			set |= PT_CTRL2_RS1_DTR;
+		else
+			clear |= PT_CTRL2_RS1_DTR;
+
+		PTCTRL2_clear(clear);
+		PTCTRL2_set(set);
+	}
+#endif
 }
 
-static u_int hackkit_get_mctrl (struct uart_port * port)
+static u_int hackkit_get_mctrl(struct uart_port *port)
 {
-  u_int ret = 0;
-  #if 0
-  u_int irqsr = PT_IRQSR;
-  
-  /* need 2 reads to read current value */
-  irqsr = PT_IRQSR;
-  
-  /* TODO: check IRQ source register for modem/com
-   status lines and set them correctly. */
-  #endif
-  
-  ret = TIOCM_CD | TIOCM_CTS | TIOCM_DSR;
-  
-  return ret;
+	u_int ret = 0;
+#if 0
+	u_int irqsr = PT_IRQSR;
+
+	/* need 2 reads to read current value */
+	irqsr = PT_IRQSR;
+
+	/* TODO: check IRQ source register for modem/com
+	 status lines and set them correctly. */
+#endif
+
+	ret = TIOCM_CD | TIOCM_CTS | TIOCM_DSR;
+
+	return ret;
 }
 
 static struct mtd_partition hackkit_partitions[] = {
-  {
-    .name   = "BLOB",
-    .size   = 0x00040000,
-    .offset   = 0x00000000,
-    .mask_flags = MTD_WRITEABLE,  /* force read-only */
-  }, {
-    .name   = "config",
-    .size   = 0x00040000,
-    .offset   = MTDPART_OFS_APPEND,
-  }, {
-    .name   = "kernel",
-    .size   = 0x00100000,
-    .offset   = MTDPART_OFS_APPEND,
-  }, {
-    .name   = "initrd",
-    .size   = 0x00180000,
-    .offset   = MTDPART_OFS_APPEND,
-  }, {
-    .name   = "rootfs",
-    .size   = 0x700000,
-    .offset   = MTDPART_OFS_APPEND,
-  }, {
-    .name   = "data",
-    .size   = MTDPART_SIZ_FULL,
-    .offset   = MTDPART_OFS_APPEND,
-  }
+	{
+		.name		= "BLOB",
+		.size		= 0x00040000,
+		.offset		= 0x00000000,
+		.mask_flags	= MTD_WRITEABLE,  /* force read-only */
+	}, {
+		.name		= "config",
+		.size		= 0x00040000,
+		.offset		= MTDPART_OFS_APPEND,
+	}, {
+		.name		= "kernel",
+		.size		= 0x00100000,
+		.offset		= MTDPART_OFS_APPEND,
+	}, {
+		.name		= "initrd",
+		.size		= 0x00180000,
+		.offset		= MTDPART_OFS_APPEND,
+	}, {
+		.name		= "rootfs",
+		.size		= 0x700000,
+		.offset		= MTDPART_OFS_APPEND,
+	}, {
+		.name		= "data",
+		.size		= MTDPART_SIZ_FULL,
+		.offset		= MTDPART_OFS_APPEND,
+	}
 };
 
 static struct flash_platform_data hackkit_flash_data = {
-  .map_name = "cfi_probe",
-  .parts    = hackkit_partitions,
-  .nr_parts = ARRAY_SIZE (hackkit_partitions),
+	.map_name	= "cfi_probe",
+	.parts		= hackkit_partitions,
+	.nr_parts	= ARRAY_SIZE(hackkit_partitions),
 };
 
 static struct resource hackkit_flash_resource =
-  DEFINE_RES_MEM (SA1100_CS0_PHYS, SZ_32M);
+	DEFINE_RES_MEM(SA1100_CS0_PHYS, SZ_32M);
 
-static void __init hackkit_init (void)
+static void __init hackkit_init(void)
 {
-  sa11x0_register_mtd (&hackkit_flash_data, &hackkit_flash_resource, 1);
+	sa11x0_register_mtd(&hackkit_flash_data, &hackkit_flash_resource, 1);
 }
 
 /**********************************************************************
  *  Exported Functions
  */
 
-MACHINE_START (HACKKIT, "HackKit Cpu Board")
-.atag_offset  = 0x100,
- .map_io   = hackkit_map_io,
-  .nr_irqs  = SA1100_NR_IRQS,
-   .init_irq = sa1100_init_irq,
-    .timer    = &sa1100_timer,
-     .init_machine = hackkit_init,
-      .restart  = sa11x0_restart,
-       MACHINE_END
+MACHINE_START(HACKKIT, "HackKit Cpu Board")
+	.atag_offset	= 0x100,
+	.map_io		= hackkit_map_io,
+	.nr_irqs	= SA1100_NR_IRQS,
+	.init_irq	= sa1100_init_irq,
+	.timer		= &sa1100_timer,
+	.init_machine	= hackkit_init,
+	.restart	= sa11x0_restart,
+MACHINE_END

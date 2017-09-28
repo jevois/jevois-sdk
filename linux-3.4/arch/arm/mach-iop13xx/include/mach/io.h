@@ -23,6 +23,6 @@
 
 #define __io(a) __iop13xx_io(a)
 
-extern void __iomem * __iop13xx_io (unsigned long io_addr);
+extern void __iomem * __iop13xx_io(unsigned long io_addr);
 
 #endif

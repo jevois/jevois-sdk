@@ -37,38 +37,38 @@
  * arch/xtensa/kernel/sys.S for usage.
  */
 
-#define KERNEL_DS 0
-#define USER_DS   1
+#define KERNEL_DS	0
+#define USER_DS		1
 
-#define get_ds    (KERNEL_DS)
+#define get_ds		(KERNEL_DS)
 
 /*
  * get_fs reads current->thread.current_ds into a register.
  * On Entry:
- *  <ad>  anything
- *  <sp>  stack
+ * 	<ad>	anything
+ * 	<sp>	stack
  * On Exit:
- *  <ad>  contains current->thread.current_ds
+ * 	<ad>	contains current->thread.current_ds
  */
-.macro  get_fs  ad, sp
-GET_CURRENT (\ad, \sp)
-l32i  \ad, \ad, THREAD_CURRENT_DS
-.endm
+	.macro	get_fs	ad, sp
+	GET_CURRENT(\ad,\sp)
+	l32i	\ad, \ad, THREAD_CURRENT_DS
+	.endm
 
 /*
  * set_fs sets current->thread.current_ds to some value.
  * On Entry:
- *  <at>  anything (temp register)
- *  <av>  value to write
- *  <sp>  stack
+ *	<at>	anything (temp register)
+ *	<av>	value to write
+ *	<sp>	stack
  * On Exit:
- *  <at>  destroyed (actually, current)
- *  <av>  preserved, value to write
+ *	<at>	destroyed (actually, current)
+ *	<av>	preserved, value to write
  */
-.macro  set_fs  at, av, sp
-GET_CURRENT (\at, \sp)
-s32i  \av, \at, THREAD_CURRENT_DS
-.endm
+	.macro	set_fs	at, av, sp
+	GET_CURRENT(\at,\sp)
+	s32i	\av, \at, THREAD_CURRENT_DS
+	.endm
 
 /*
  * kernel_ok determines whether we should bypass addr/size checking.
@@ -82,21 +82,21 @@ s32i  \av, \at, THREAD_CURRENT_DS
  * through on error).
  *
  * On Entry:
- *  <at>    anything (temp register)
- *  <success> label to branch to on success; implies
- *      fall-through macro on error
- *  <sp>    stack pointer
+ * 	<at>		anything (temp register)
+ * 	<success>	label to branch to on success; implies
+ * 			fall-through macro on error
+ * 	<sp>		stack pointer
  * On Exit:
- *  <at>    destroyed (actually, current->thread.current_ds)
+ * 	<at>		destroyed (actually, current->thread.current_ds)
  */
 
 #if ((KERNEL_DS != 0) || (USER_DS == 0))
 # error Assembly macro kernel_ok fails
 #endif
-.macro  kernel_ok  at, sp, success
-get_fs  \at, \sp
-beqz  \at, \success
-.endm
+	.macro	kernel_ok  at, sp, success
+	get_fs	\at, \sp
+	beqz	\at, \success
+	.endm
 
 /*
  * user_ok determines whether the access to user-space memory is allowed.
@@ -111,22 +111,22 @@ beqz  \at, \success
  * through on success).
  *
  * On Entry:
- *  <aa>  register containing memory address
- *  <as>  register containing memory size
- *  <at>  temp register
- *  <error> label to branch to on error; implies fall-through
- *    macro on success
+ * 	<aa>	register containing memory address
+ * 	<as>	register containing memory size
+ * 	<at>	temp register
+ * 	<error>	label to branch to on error; implies fall-through
+ * 		macro on success
  * On Exit:
- *  <aa>  preserved
- *  <as>  preserved
- *  <at>  destroyed (actually, (TASK_SIZE + 1 - size))
+ * 	<aa>	preserved
+ * 	<as>	preserved
+ * 	<at>	destroyed (actually, (TASK_SIZE + 1 - size))
  */
-.macro  user_ok aa, as, at, error
-movi  \at, __XTENSA_UL_CONST (TASK_SIZE)
-bgeu  \as, \at, \error
-sub \at, \at, \as
-bgeu  \aa, \at, \error
-.endm
+	.macro	user_ok	aa, as, at, error
+	movi	\at, __XTENSA_UL_CONST(TASK_SIZE)
+	bgeu	\as, \at, \error
+	sub	\at, \at, \as
+	bgeu	\aa, \at, \error
+	.endm
 
 /*
  * access_ok determines whether a memory access is allowed.  See the
@@ -140,22 +140,22 @@ bgeu  \aa, \at, \error
  * branch fall-through case on success.
  *
  * On Entry:
- *  <aa>  register containing memory address
- *  <as>  register containing memory size
- *  <at>  temp register
- *  <sp>
- *  <error> label to branch to on error; implies fall-through
- *    macro on success
+ * 	<aa>	register containing memory address
+ * 	<as>	register containing memory size
+ * 	<at>	temp register
+ * 	<sp>
+ * 	<error>	label to branch to on error; implies fall-through
+ * 		macro on success
  * On Exit:
- *  <aa>  preserved
- *  <as>  preserved
- *  <at>  destroyed
+ * 	<aa>	preserved
+ * 	<as>	preserved
+ * 	<at>	destroyed
  */
-.macro  access_ok  aa, as, at, sp, error
-kernel_ok  \at, \sp, .Laccess_ok_\@
-user_ok    \aa, \as, \at, \error
+	.macro	access_ok  aa, as, at, sp, error
+	kernel_ok  \at, \sp, .Laccess_ok_\@
+	user_ok    \aa, \as, \at, \error
 .Laccess_ok_\@:
-.endm
+	.endm
 
 #else /* __ASSEMBLY__ not defined */
 
@@ -170,14 +170,14 @@ user_ok    \aa, \as, \at, \error
  * grossly misnamed.
  */
 
-#define KERNEL_DS ((mm_segment_t) { 0 })
-#define USER_DS   ((mm_segment_t) { 1 })
+#define KERNEL_DS	((mm_segment_t) { 0 })
+#define USER_DS		((mm_segment_t) { 1 })
 
-#define get_ds()  (KERNEL_DS)
-#define get_fs()  (current->thread.current_ds)
-#define set_fs(val) (current->thread.current_ds = (val))
+#define get_ds()	(KERNEL_DS)
+#define get_fs()	(current->thread.current_ds)
+#define set_fs(val)	(current->thread.current_ds = (val))
 
-#define segment_eq(a,b) ((a).seg == (b).seg)
+#define segment_eq(a,b)	((a).seg == (b).seg)
 
 #define __kernel_ok (segment_eq(get_fs(), KERNEL_DS))
 #define __user_ok(addr,size) (((size) <= TASK_SIZE)&&((addr) <= TASK_SIZE-(size)))
@@ -198,7 +198,7 @@ user_ok    \aa, \as, \at, \error
  * (a) re-use the arguments for side effects (sizeof is ok)
  * (b) require any knowledge of processes at this stage
  */
-#define put_user(x,ptr) __put_user_check((x),(ptr),sizeof(*(ptr)))
+#define put_user(x,ptr)	__put_user_check((x),(ptr),sizeof(*(ptr)))
 #define get_user(x,ptr) __get_user_check((x),(ptr),sizeof(*(ptr)))
 
 /*
@@ -211,40 +211,40 @@ user_ok    \aa, \as, \at, \error
 #define __get_user(x,ptr) __get_user_nocheck((x),(ptr),sizeof(*(ptr)))
 
 
-extern long __put_user_bad (void);
+extern long __put_user_bad(void);
 
-#define __put_user_nocheck(x,ptr,size)      \
-  ({              \
-    long __pu_err;          \
-    __put_user_size((x),(ptr),(size),__pu_err); \
-    __pu_err;         \
-  })
+#define __put_user_nocheck(x,ptr,size)			\
+({							\
+	long __pu_err;					\
+	__put_user_size((x),(ptr),(size),__pu_err);	\
+	__pu_err;					\
+})
 
-#define __put_user_check(x,ptr,size)        \
-  ({                \
-    long __pu_err = -EFAULT;        \
-    __typeof__(*(ptr)) *__pu_addr = (ptr);      \
-    if (access_ok(VERIFY_WRITE,__pu_addr,size))   \
-      __put_user_size((x),__pu_addr,(size),__pu_err); \
-    __pu_err;           \
-  })
+#define __put_user_check(x,ptr,size)				\
+({								\
+	long __pu_err = -EFAULT;				\
+	__typeof__(*(ptr)) *__pu_addr = (ptr);			\
+	if (access_ok(VERIFY_WRITE,__pu_addr,size))		\
+		__put_user_size((x),__pu_addr,(size),__pu_err);	\
+	__pu_err;						\
+})
 
-#define __put_user_size(x,ptr,size,retval)        \
-  do {                  \
-    int __cb;             \
-    retval = 0;             \
-    switch (size) {             \
-    case 1: __put_user_asm(x,ptr,retval,1,"s8i",__cb);  break;  \
-    case 2: __put_user_asm(x,ptr,retval,2,"s16i",__cb); break;  \
-    case 4: __put_user_asm(x,ptr,retval,4,"s32i",__cb); break;  \
-    case 8: {             \
-        __typeof__(*ptr) __v64 = x;      \
-        retval = __copy_to_user(ptr,&__v64,8);   \
-        break;           \
-      }             \
-    default: __put_user_bad();          \
-    }               \
-  } while (0)
+#define __put_user_size(x,ptr,size,retval)				\
+do {									\
+	int __cb;							\
+	retval = 0;							\
+	switch (size) {							\
+        case 1: __put_user_asm(x,ptr,retval,1,"s8i",__cb);  break;	\
+        case 2: __put_user_asm(x,ptr,retval,2,"s16i",__cb); break;	\
+        case 4: __put_user_asm(x,ptr,retval,4,"s32i",__cb); break;	\
+        case 8: {							\
+		     __typeof__(*ptr) __v64 = x;			\
+		     retval = __copy_to_user(ptr,&__v64,8);		\
+		     break;						\
+	        }							\
+	default: __put_user_bad();					\
+	}								\
+} while (0)
 
 
 /*
@@ -270,16 +270,16 @@ extern long __put_user_bad (void);
 
 #define __check_align_1  ""
 
-#define __check_align_2       \
-  "   _bbci.l %3,  0, 1f		\n" \
-  "   movi    %0, %4		\n" \
-  "   _j      2f			\n"
+#define __check_align_2				\
+	"   _bbci.l %3,  0, 1f		\n"	\
+	"   movi    %0, %4		\n"	\
+	"   _j      2f			\n"
 
-#define __check_align_4       \
-  "   _bbsi.l %3,  0, 0f		\n" \
-  "   _bbci.l %3,  1, 1f		\n" \
-  "0: movi    %0, %4		\n" \
-  "   _j      2f			\n"
+#define __check_align_4				\
+	"   _bbsi.l %3,  0, 0f		\n"	\
+	"   _bbci.l %3,  1, 1f		\n"	\
+	"0: movi    %0, %4		\n"	\
+	"   _j      2f			\n"
 
 
 /*
@@ -290,58 +290,58 @@ extern long __put_user_bad (void);
  * WARNING: If you modify this macro at all, verify that the
  * __check_align_* macros still work.
  */
-#define __put_user_asm(x, addr, err, align, insn, cb) \
-  __asm__ __volatile__(        \
-                               __check_align_##align       \
-                               "1: "insn"  %2, %3, 0		\n"    \
-                               "2:				\n"    \
-                               "   .section  .fixup,\"ax\"	\n"   \
-                               "   .align 4			\n"    \
-                               "4:				\n"    \
-                               "   .long  2b			\n"   \
-                               "5:				\n"    \
-                               "   l32r   %1, 4b		\n"    \
-                               "   movi   %0, %4		\n"    \
-                               "   jx     %1			\n"   \
-                               "   .previous			\n"   \
-                               "   .section  __ex_table,\"a\"	\n"    \
-                               "   .long	1b, 5b		\n"   \
-                               "   .previous"          \
-                               :"=r" (err), "=r" (cb)        \
-                               :"r" ((int)(x)), "r" (addr), "i" (-EFAULT), "0" (err))
+#define __put_user_asm(x, addr, err, align, insn, cb)	\
+   __asm__ __volatile__(				\
+	__check_align_##align				\
+	"1: "insn"  %2, %3, 0		\n"		\
+	"2:				\n"		\
+	"   .section  .fixup,\"ax\"	\n"		\
+	"   .align 4			\n"		\
+	"4:				\n"		\
+	"   .long  2b			\n"		\
+	"5:				\n"		\
+	"   l32r   %1, 4b		\n"		\
+        "   movi   %0, %4		\n"		\
+        "   jx     %1			\n"		\
+	"   .previous			\n"		\
+	"   .section  __ex_table,\"a\"	\n"		\
+	"   .long	1b, 5b		\n"		\
+	"   .previous"					\
+	:"=r" (err), "=r" (cb)				\
+	:"r" ((int)(x)), "r" (addr), "i" (-EFAULT), "0" (err))
 
-#define __get_user_nocheck(x,ptr,size)        \
-  ({                \
-    long __gu_err, __gu_val;        \
-    __get_user_size(__gu_val,(ptr),(size),__gu_err);  \
-    (x) = (__typeof__(*(ptr)))__gu_val;     \
-    __gu_err;           \
-  })
+#define __get_user_nocheck(x,ptr,size)				\
+({								\
+	long __gu_err, __gu_val;				\
+	__get_user_size(__gu_val,(ptr),(size),__gu_err);	\
+	(x) = (__typeof__(*(ptr)))__gu_val;			\
+	__gu_err;						\
+})
 
-#define __get_user_check(x,ptr,size)          \
-  ({                  \
-    long __gu_err = -EFAULT, __gu_val = 0;        \
-    const __typeof__(*(ptr)) *__gu_addr = (ptr);      \
-    if (access_ok(VERIFY_READ,__gu_addr,size))      \
-      __get_user_size(__gu_val,__gu_addr,(size),__gu_err);  \
-    (x) = (__typeof__(*(ptr)))__gu_val;       \
-    __gu_err;             \
-  })
+#define __get_user_check(x,ptr,size)					\
+({									\
+	long __gu_err = -EFAULT, __gu_val = 0;				\
+	const __typeof__(*(ptr)) *__gu_addr = (ptr);			\
+	if (access_ok(VERIFY_READ,__gu_addr,size))			\
+		__get_user_size(__gu_val,__gu_addr,(size),__gu_err);	\
+	(x) = (__typeof__(*(ptr)))__gu_val;				\
+	__gu_err;							\
+})
 
-extern long __get_user_bad (void);
+extern long __get_user_bad(void);
 
-#define __get_user_size(x,ptr,size,retval)        \
-  do {                  \
-    int __cb;             \
-    retval = 0;             \
-    switch (size) {             \
-    case 1: __get_user_asm(x,ptr,retval,1,"l8ui",__cb);  break; \
-    case 2: __get_user_asm(x,ptr,retval,2,"l16ui",__cb); break; \
-    case 4: __get_user_asm(x,ptr,retval,4,"l32i",__cb);  break; \
-    case 8: retval = __copy_from_user(&x,ptr,8);    break;  \
-    default: (x) = __get_user_bad();        \
-    }               \
-  } while (0)
+#define __get_user_size(x,ptr,size,retval)				\
+do {									\
+	int __cb;							\
+	retval = 0;							\
+        switch (size) {							\
+          case 1: __get_user_asm(x,ptr,retval,1,"l8ui",__cb);  break;	\
+          case 2: __get_user_asm(x,ptr,retval,2,"l16ui",__cb); break;	\
+          case 4: __get_user_asm(x,ptr,retval,4,"l32i",__cb);  break;	\
+          case 8: retval = __copy_from_user(&x,ptr,8);    break;	\
+          default: (x) = __get_user_bad();				\
+        }								\
+} while (0)
 
 
 /*
@@ -349,25 +349,25 @@ extern long __get_user_bad (void);
  * __check_align_* macros still work.
  */
 #define __get_user_asm(x, addr, err, align, insn, cb) \
-  __asm__ __volatile__(      \
-                             __check_align_##align     \
-                             "1: "insn"  %2, %3, 0		\n"  \
-                             "2:				\n"  \
-                             "   .section  .fixup,\"ax\"	\n" \
-                             "   .align 4			\n"  \
-                             "4:				\n"  \
-                             "   .long  2b			\n" \
-                             "5:				\n"  \
-                             "   l32r   %1, 4b		\n"  \
-                             "   movi   %2, 0		\n" \
-                             "   movi   %0, %4		\n"  \
-                             "   jx     %1			\n" \
-                             "   .previous			\n" \
-                             "   .section  __ex_table,\"a\"	\n"  \
-                             "   .long	1b, 5b		\n" \
-                             "   .previous"        \
-                             :"=r" (err), "=r" (cb), "=r" (x)  \
-                             :"r" (addr), "i" (-EFAULT), "0" (err))
+   __asm__ __volatile__(			\
+	__check_align_##align			\
+	"1: "insn"  %2, %3, 0		\n"	\
+	"2:				\n"	\
+	"   .section  .fixup,\"ax\"	\n"	\
+	"   .align 4			\n"	\
+	"4:				\n"	\
+	"   .long  2b			\n"	\
+	"5:				\n"	\
+	"   l32r   %1, 4b		\n"	\
+	"   movi   %2, 0		\n"	\
+        "   movi   %0, %4		\n"	\
+        "   jx     %1			\n"	\
+	"   .previous			\n"	\
+	"   .section  __ex_table,\"a\"	\n"	\
+	"   .long	1b, 5b		\n"	\
+	"   .previous"				\
+	:"=r" (err), "=r" (cb), "=r" (x)	\
+	:"r" (addr), "i" (-EFAULT), "0" (err))
 
 
 /*
@@ -383,40 +383,40 @@ extern long __get_user_bad (void);
  * X_zeroing equivalents for Xtensa.
  */
 
-extern unsigned __xtensa_copy_user (void * to, const void * from, unsigned n);
+extern unsigned __xtensa_copy_user(void *to, const void *from, unsigned n);
 #define __copy_user(to,from,size) __xtensa_copy_user(to,from,size)
 
 
 static inline unsigned long
-__generic_copy_from_user_nocheck (void * to, const void * from, unsigned long n)
+__generic_copy_from_user_nocheck(void *to, const void *from, unsigned long n)
 {
-  return __copy_user (to, from, n);
+	return __copy_user(to,from,n);
 }
 
 static inline unsigned long
-__generic_copy_to_user_nocheck (void * to, const void * from, unsigned long n)
+__generic_copy_to_user_nocheck(void *to, const void *from, unsigned long n)
 {
-  return __copy_user (to, from, n);
+	return __copy_user(to,from,n);
 }
 
 static inline unsigned long
-__generic_copy_to_user (void * to, const void * from, unsigned long n)
+__generic_copy_to_user(void *to, const void *from, unsigned long n)
 {
-  prefetch (from);
-  if (access_ok (VERIFY_WRITE, to, n) )
-  { return __copy_user (to, from, n); }
-  return n;
+	prefetch(from);
+	if (access_ok(VERIFY_WRITE, to, n))
+		return __copy_user(to,from,n);
+	return n;
 }
 
 static inline unsigned long
-__generic_copy_from_user (void * to, const void * from, unsigned long n)
+__generic_copy_from_user(void *to, const void *from, unsigned long n)
 {
-  prefetchw (to);
-  if (access_ok (VERIFY_READ, from, n) )
-  { return __copy_user (to, from, n); }
-  else
-  { memset (to, 0, n); }
-  return n;
+	prefetchw(to);
+	if (access_ok(VERIFY_READ, from, n))
+		return __copy_user(to,from,n);
+	else
+		memset(to, 0, n);
+	return n;
 }
 
 #define copy_to_user(to,from,n) __generic_copy_to_user((to),(from),(n))
@@ -435,33 +435,33 @@ __generic_copy_from_user (void * to, const void * from, unsigned long n)
  */
 
 static inline unsigned long
-__xtensa_clear_user (void * addr, unsigned long size)
+__xtensa_clear_user(void *addr, unsigned long size)
 {
-  if ( ! memset (addr, 0, size) )
-  { return size; }
-  return 0;
+	if ( ! memset(addr, 0, size) )
+		return size;
+	return 0;
 }
 
 static inline unsigned long
-clear_user (void * addr, unsigned long size)
+clear_user(void *addr, unsigned long size)
 {
-  if (access_ok (VERIFY_WRITE, addr, size) )
-  { return __xtensa_clear_user (addr, size); }
-  return size ? -EFAULT : 0;
+	if (access_ok(VERIFY_WRITE, addr, size))
+		return __xtensa_clear_user(addr, size);
+	return size ? -EFAULT : 0;
 }
 
 #define __clear_user  __xtensa_clear_user
 
 
-extern long __strncpy_user (char *, const char *, long);
+extern long __strncpy_user(char *, const char *, long);
 #define __strncpy_from_user __strncpy_user
 
 static inline long
-strncpy_from_user (char * dst, const char * src, long count)
+strncpy_from_user(char *dst, const char *src, long count)
 {
-  if (access_ok (VERIFY_READ, src, 1) )
-  { return __strncpy_from_user (dst, src, count); }
-  return -EFAULT;
+	if (access_ok(VERIFY_READ, src, 1))
+		return __strncpy_from_user(dst, src, count);
+	return -EFAULT;
 }
 
 
@@ -470,33 +470,33 @@ strncpy_from_user (char * dst, const char * src, long count)
 /*
  * Return the size of a string (including the ending 0!)
  */
-extern long __strnlen_user (const char *, long);
+extern long __strnlen_user(const char *, long);
 
-static inline long strnlen_user (const char * str, long len)
+static inline long strnlen_user(const char *str, long len)
 {
-  unsigned long top = __kernel_ok ? ~0UL : TASK_SIZE - 1;
+	unsigned long top = __kernel_ok ? ~0UL : TASK_SIZE - 1;
 
-  if ( (unsigned long) str > top)
-  { return 0; }
-  return __strnlen_user (str, len);
+	if ((unsigned long)str > top)
+		return 0;
+	return __strnlen_user(str, len);
 }
 
 
 struct exception_table_entry
 {
-  unsigned long insn, fixup;
+	unsigned long insn, fixup;
 };
 
 /* Returns 0 if exception not found and fixup.unit otherwise.  */
 
-extern unsigned long search_exception_table (unsigned long addr);
-extern void sort_exception_table (void);
+extern unsigned long search_exception_table(unsigned long addr);
+extern void sort_exception_table(void);
 
 /* Returns the new pc */
 #define fixup_exception(map_reg, fixup_unit, pc)                \
-  ({                                                              \
-    fixup_unit;                                             \
-  })
+({                                                              \
+	fixup_unit;                                             \
+})
 
-#endif  /* __ASSEMBLY__ */
-#endif  /* _XTENSA_UACCESS_H */
+#endif	/* __ASSEMBLY__ */
+#endif	/* _XTENSA_UACCESS_H */

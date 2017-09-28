@@ -30,60 +30,60 @@
 
 #ifdef CONFIG_SCSI_SAS_ATA
 
-static inline int dev_is_sata (struct domain_device * dev)
+static inline int dev_is_sata(struct domain_device *dev)
 {
-  return dev->dev_type == SATA_DEV || dev->dev_type == SATA_PM ||
-         dev->dev_type == SATA_PM_PORT || dev->dev_type == SATA_PENDING;
+	return dev->dev_type == SATA_DEV || dev->dev_type == SATA_PM ||
+	       dev->dev_type == SATA_PM_PORT || dev->dev_type == SATA_PENDING;
 }
 
-int sas_get_ata_info (struct domain_device * dev, struct ex_phy * phy);
-int sas_ata_init (struct domain_device * dev);
-void sas_ata_task_abort (struct sas_task * task);
-void sas_ata_strategy_handler (struct Scsi_Host * shost);
-void sas_ata_eh (struct Scsi_Host * shost, struct list_head * work_q,
-                 struct list_head * done_q);
-void sas_ata_schedule_reset (struct domain_device * dev);
-void sas_ata_wait_eh (struct domain_device * dev);
-void sas_probe_sata (struct asd_sas_port * port);
+int sas_get_ata_info(struct domain_device *dev, struct ex_phy *phy);
+int sas_ata_init(struct domain_device *dev);
+void sas_ata_task_abort(struct sas_task *task);
+void sas_ata_strategy_handler(struct Scsi_Host *shost);
+void sas_ata_eh(struct Scsi_Host *shost, struct list_head *work_q,
+		struct list_head *done_q);
+void sas_ata_schedule_reset(struct domain_device *dev);
+void sas_ata_wait_eh(struct domain_device *dev);
+void sas_probe_sata(struct asd_sas_port *port);
 #else
 
 
-static inline int dev_is_sata (struct domain_device * dev)
+static inline int dev_is_sata(struct domain_device *dev)
 {
-  return 0;
+	return 0;
 }
-static inline int sas_ata_init (struct domain_device * dev)
+static inline int sas_ata_init(struct domain_device *dev)
 {
-  return 0;
+	return 0;
 }
-static inline void sas_ata_task_abort (struct sas_task * task)
-{
-}
-
-static inline void sas_ata_strategy_handler (struct Scsi_Host * shost)
+static inline void sas_ata_task_abort(struct sas_task *task)
 {
 }
 
-static inline void sas_ata_eh (struct Scsi_Host * shost, struct list_head * work_q,
-                               struct list_head * done_q)
+static inline void sas_ata_strategy_handler(struct Scsi_Host *shost)
 {
 }
 
-static inline void sas_ata_schedule_reset (struct domain_device * dev)
+static inline void sas_ata_eh(struct Scsi_Host *shost, struct list_head *work_q,
+			      struct list_head *done_q)
 {
 }
 
-static inline void sas_ata_wait_eh (struct domain_device * dev)
+static inline void sas_ata_schedule_reset(struct domain_device *dev)
 {
 }
 
-static inline void sas_probe_sata (struct asd_sas_port * port)
+static inline void sas_ata_wait_eh(struct domain_device *dev)
 {
 }
 
-static inline int sas_get_ata_info (struct domain_device * dev, struct ex_phy * phy)
+static inline void sas_probe_sata(struct asd_sas_port *port)
 {
-  return 0;
+}
+
+static inline int sas_get_ata_info(struct domain_device *dev, struct ex_phy *phy)
+{
+	return 0;
 }
 #endif
 

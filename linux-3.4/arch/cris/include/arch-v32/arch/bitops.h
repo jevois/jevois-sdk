@@ -9,27 +9,27 @@
  */
 
 static inline unsigned long
-cris_swapnwbrlz (unsigned long w)
+cris_swapnwbrlz(unsigned long w)
 {
-  unsigned long res;
-  
-  __asm__ __volatile__ ("swapnwbr %0\n\t"
-                        "lz %0,%0"
-                        : "=r" (res) : "0" (w) );
-                        
-  return res;
+	unsigned long res;
+
+	__asm__ __volatile__ ("swapnwbr %0\n\t"
+			      "lz %0,%0"
+			      : "=r" (res) : "0" (w));
+
+	return res;
 }
 
 static inline unsigned long
-cris_swapwbrlz (unsigned long w)
+cris_swapwbrlz(unsigned long w)
 {
-  unsigned long res;
-  
-  __asm__ __volatile__ ("swapwbr %0\n\t"
-                        "lz %0,%0"
-                        : "=r" (res) : "0" (w) );
-                        
-  return res;
+	unsigned long res;
+
+	__asm__ __volatile__ ("swapwbr %0\n\t"
+			      "lz %0,%0"
+			      : "=r" (res) : "0" (w));
+
+	return res;
 }
 
 /*
@@ -37,9 +37,9 @@ cris_swapwbrlz (unsigned long w)
  * check against ~0 first.
  */
 static inline unsigned long
-ffz (unsigned long w)
+ffz(unsigned long w)
 {
-  return cris_swapnwbrlz (w);
+	return cris_swapnwbrlz(w);
 }
 
 /*
@@ -47,18 +47,18 @@ ffz (unsigned long w)
  * should check against 0 first.
  */
 static inline unsigned long
-__ffs (unsigned long w)
+__ffs(unsigned long w)
 {
-  return cris_swapnwbrlz (~w);
+	return cris_swapnwbrlz(~w);
 }
 
 /*
  * Find First Bit that is set.
  */
 static inline unsigned long
-kernel_ffs (unsigned long w)
+kernel_ffs(unsigned long w)
 {
-  return w ? cris_swapwbrlz (w) + 1 : 0;
+	return w ? cris_swapwbrlz (w) + 1 : 0;
 }
 
 #endif /* _ASM_CRIS_ARCH_BITOPS_H */

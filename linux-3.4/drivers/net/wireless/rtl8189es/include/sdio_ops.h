@@ -1,7 +1,7 @@
 /******************************************************************************
  *
  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
- *
+ *                                        
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of version 2 of the GNU General Public License as
  * published by the Free Software Foundation.
@@ -34,10 +34,10 @@
 #include <sdio_ops_xp.h>
 struct async_context
 {
-  PMDL pmdl;
-  PSDBUS_REQUEST_PACKET sdrp;
-  unsigned char * r_buf;
-  unsigned char * padapter;
+	PMDL pmdl;
+	PSDBUS_REQUEST_PACKET sdrp;
+	unsigned char* r_buf;
+	unsigned char* padapter;
 };
 #endif
 #ifdef PLATFORM_OS_CE
@@ -46,37 +46,37 @@ struct async_context
 #endif
 
 
-extern void sdio_set_intf_ops (struct _io_ops * pops);
+extern void sdio_set_intf_ops(struct _io_ops *pops);
+	
+extern u8 SdioLocalCmd52Read1Byte(PADAPTER padapter, u32 addr);
+extern void SdioLocalCmd52Write1Byte(PADAPTER padapter, u32 addr, u8 v);
+extern s32 _sdio_local_read(PADAPTER padapter, u32 addr, u32 cnt, u8 *pbuf);
+extern s32 sdio_local_read(PADAPTER padapter, u32 addr, u32 cnt, u8 *pbuf);
+extern s32 _sdio_local_write(PADAPTER padapter, u32 addr, u32 cnt, u8 *pbuf);
+extern s32 sdio_local_write(PADAPTER padapter, u32 addr, u32 cnt, u8 *pbuf);
 
-extern u8 SdioLocalCmd52Read1Byte (PADAPTER padapter, u32 addr);
-extern void SdioLocalCmd52Write1Byte (PADAPTER padapter, u32 addr, u8 v);
-extern s32 _sdio_local_read (PADAPTER padapter, u32 addr, u32 cnt, u8 * pbuf);
-extern s32 sdio_local_read (PADAPTER padapter, u32 addr, u32 cnt, u8 * pbuf);
-extern s32 _sdio_local_write (PADAPTER padapter, u32 addr, u32 cnt, u8 * pbuf);
-extern s32 sdio_local_write (PADAPTER padapter, u32 addr, u32 cnt, u8 * pbuf);
+u32 _sdio_read32(PADAPTER padapter, u32 addr);
+s32 _sdio_write32(PADAPTER padapter, u32 addr, u32 val);
 
-u32 _sdio_read32 (PADAPTER padapter, u32 addr);
-s32 _sdio_write32 (PADAPTER padapter, u32 addr, u32 val);
-
-extern void InitInterrupt8723ASdio (PADAPTER padapter);
-extern void InitSysInterrupt8723ASdio (PADAPTER padapter);
-extern void EnableInterrupt8723ASdio (PADAPTER padapter);
-extern void DisableInterrupt8723ASdio (PADAPTER padapter);
-extern void sd_int_hdl (PADAPTER padapter);
+extern void InitInterrupt8723ASdio(PADAPTER padapter);
+extern void InitSysInterrupt8723ASdio(PADAPTER padapter);
+extern void EnableInterrupt8723ASdio(PADAPTER padapter);
+extern void DisableInterrupt8723ASdio(PADAPTER padapter);
+extern void sd_int_hdl(PADAPTER padapter);
 #ifdef CONFIG_RTL8723A
-extern u8 HalQueryTxBufferStatus8723ASdio (PADAPTER padapter);
+extern u8 HalQueryTxBufferStatus8723ASdio(PADAPTER padapter);
 #endif
 #ifdef CONFIG_RTL8188E
-extern u8 HalQueryTxBufferStatus8189ESdio (PADAPTER padapter);
+extern u8 HalQueryTxBufferStatus8189ESdio(PADAPTER padapter);
 #endif
-extern void InitInterrupt8188ESdio (PADAPTER padapter);
-extern void EnableInterrupt8188ESdio (PADAPTER padapter);
-extern void DisableInterrupt8188ESdio (PADAPTER padapter);
-extern void UpdateInterruptMask8188ESdio (PADAPTER padapter, u32 AddMSR, u32 RemoveMSR);
+extern void InitInterrupt8188ESdio(PADAPTER padapter);
+extern void EnableInterrupt8188ESdio(PADAPTER padapter);
+extern void DisableInterrupt8188ESdio(PADAPTER padapter);
+extern void UpdateInterruptMask8188ESdio(PADAPTER padapter, u32 AddMSR, u32 RemoveMSR);
 
 #ifdef CONFIG_WOWLAN
-extern u8 RecvOnePkt (PADAPTER padapter, u32 size);
-extern void ClearInterrupt8189ESdio (PADAPTER padapter);
+extern u8 RecvOnePkt(PADAPTER padapter, u32 size);
+extern void ClearInterrupt8189ESdio(PADAPTER padapter);
 #endif
 #endif
 

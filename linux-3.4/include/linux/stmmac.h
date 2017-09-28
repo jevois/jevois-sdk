@@ -31,31 +31,31 @@
 /* Platfrom data for platform device structure's platform_data field */
 
 struct stmmac_mdio_bus_data {
-  int bus_id;
-  int (*phy_reset) (void * priv);
-  unsigned int phy_mask;
-  int * irqs;
-  int probed_phy_irq;
+	int bus_id;
+	int (*phy_reset)(void *priv);
+	unsigned int phy_mask;
+	int *irqs;
+	int probed_phy_irq;
 };
 
 struct plat_stmmacenet_data {
-  int bus_id;
-  int phy_addr;
-  int interface;
-  struct stmmac_mdio_bus_data * mdio_bus_data;
-  int pbl;
-  int clk_csr;
-  int has_gmac;
-  int enh_desc;
-  int tx_coe;
-  int bugged_jumbo;
-  int pmt;
-  int force_sf_dma_mode;
-  void (*fix_mac_speed) (void * priv, unsigned int speed);
-  void (*bus_setup) (void __iomem * ioaddr);
-  int (*init) (struct platform_device * pdev);
-  void (*exit) (struct platform_device * pdev);
-  void * custom_cfg;
-  void * bsp_priv;
+	int bus_id;
+	int phy_addr;
+	int interface;
+	struct stmmac_mdio_bus_data *mdio_bus_data;
+	int pbl;
+	int clk_csr;
+	int has_gmac;
+	int enh_desc;
+	int tx_coe;
+	int bugged_jumbo;
+	int pmt;
+	int force_sf_dma_mode;
+	void (*fix_mac_speed)(void *priv, unsigned int speed);
+	void (*bus_setup)(void __iomem *ioaddr);
+	int (*init)(struct platform_device *pdev);
+	void (*exit)(struct platform_device *pdev);
+	void *custom_cfg;
+	void *bsp_priv;
 };
 #endif

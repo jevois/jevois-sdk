@@ -54,121 +54,121 @@
 #include <libfdt_env.h>
 #include <fdt.h>
 
-#define FDT_FIRST_SUPPORTED_VERSION 0x10
-#define FDT_LAST_SUPPORTED_VERSION  0x11
+#define FDT_FIRST_SUPPORTED_VERSION	0x10
+#define FDT_LAST_SUPPORTED_VERSION	0x11
 
 /* Error codes: informative error codes */
-#define FDT_ERR_NOTFOUND  1
-/* FDT_ERR_NOTFOUND: The requested node or property does not exist */
-#define FDT_ERR_EXISTS    2
-/* FDT_ERR_EXISTS: Attempted to create a node or property which
- * already exists */
-#define FDT_ERR_NOSPACE   3
-/* FDT_ERR_NOSPACE: Operation needed to expand the device
- * tree, but its buffer did not have sufficient space to
- * contain the expanded tree. Use fdt_open_into() to move the
- * device tree to a buffer with more space. */
+#define FDT_ERR_NOTFOUND	1
+	/* FDT_ERR_NOTFOUND: The requested node or property does not exist */
+#define FDT_ERR_EXISTS		2
+	/* FDT_ERR_EXISTS: Attempted to create a node or property which
+	 * already exists */
+#define FDT_ERR_NOSPACE		3
+	/* FDT_ERR_NOSPACE: Operation needed to expand the device
+	 * tree, but its buffer did not have sufficient space to
+	 * contain the expanded tree. Use fdt_open_into() to move the
+	 * device tree to a buffer with more space. */
 
 /* Error codes: codes for bad parameters */
-#define FDT_ERR_BADOFFSET 4
-/* FDT_ERR_BADOFFSET: Function was passed a structure block
- * offset which is out-of-bounds, or which points to an
- * unsuitable part of the structure for the operation. */
-#define FDT_ERR_BADPATH   5
-/* FDT_ERR_BADPATH: Function was passed a badly formatted path
- * (e.g. missing a leading / for a function which requires an
- * absolute path) */
-#define FDT_ERR_BADPHANDLE  6
-/* FDT_ERR_BADPHANDLE: Function was passed an invalid phandle
- * value.  phandle values of 0 and -1 are not permitted. */
-#define FDT_ERR_BADSTATE  7
-/* FDT_ERR_BADSTATE: Function was passed an incomplete device
- * tree created by the sequential-write functions, which is
- * not sufficiently complete for the requested operation. */
+#define FDT_ERR_BADOFFSET	4
+	/* FDT_ERR_BADOFFSET: Function was passed a structure block
+	 * offset which is out-of-bounds, or which points to an
+	 * unsuitable part of the structure for the operation. */
+#define FDT_ERR_BADPATH		5
+	/* FDT_ERR_BADPATH: Function was passed a badly formatted path
+	 * (e.g. missing a leading / for a function which requires an
+	 * absolute path) */
+#define FDT_ERR_BADPHANDLE	6
+	/* FDT_ERR_BADPHANDLE: Function was passed an invalid phandle
+	 * value.  phandle values of 0 and -1 are not permitted. */
+#define FDT_ERR_BADSTATE	7
+	/* FDT_ERR_BADSTATE: Function was passed an incomplete device
+	 * tree created by the sequential-write functions, which is
+	 * not sufficiently complete for the requested operation. */
 
 /* Error codes: codes for bad device tree blobs */
-#define FDT_ERR_TRUNCATED 8
-/* FDT_ERR_TRUNCATED: Structure block of the given device tree
- * ends without an FDT_END tag. */
-#define FDT_ERR_BADMAGIC  9
-/* FDT_ERR_BADMAGIC: Given "device tree" appears not to be a
- * device tree at all - it is missing the flattened device
- * tree magic number. */
-#define FDT_ERR_BADVERSION  10
-/* FDT_ERR_BADVERSION: Given device tree has a version which
- * can't be handled by the requested operation.  For
- * read-write functions, this may mean that fdt_open_into() is
- * required to convert the tree to the expected version. */
-#define FDT_ERR_BADSTRUCTURE  11
-/* FDT_ERR_BADSTRUCTURE: Given device tree has a corrupt
- * structure block or other serious error (e.g. misnested
- * nodes, or subnodes preceding properties). */
-#define FDT_ERR_BADLAYOUT 12
-/* FDT_ERR_BADLAYOUT: For read-write functions, the given
- * device tree has it's sub-blocks in an order that the
- * function can't handle (memory reserve map, then structure,
- * then strings).  Use fdt_open_into() to reorganize the tree
- * into a form suitable for the read-write operations. */
+#define FDT_ERR_TRUNCATED	8
+	/* FDT_ERR_TRUNCATED: Structure block of the given device tree
+	 * ends without an FDT_END tag. */
+#define FDT_ERR_BADMAGIC	9
+	/* FDT_ERR_BADMAGIC: Given "device tree" appears not to be a
+	 * device tree at all - it is missing the flattened device
+	 * tree magic number. */
+#define FDT_ERR_BADVERSION	10
+	/* FDT_ERR_BADVERSION: Given device tree has a version which
+	 * can't be handled by the requested operation.  For
+	 * read-write functions, this may mean that fdt_open_into() is
+	 * required to convert the tree to the expected version. */
+#define FDT_ERR_BADSTRUCTURE	11
+	/* FDT_ERR_BADSTRUCTURE: Given device tree has a corrupt
+	 * structure block or other serious error (e.g. misnested
+	 * nodes, or subnodes preceding properties). */
+#define FDT_ERR_BADLAYOUT	12
+	/* FDT_ERR_BADLAYOUT: For read-write functions, the given
+	 * device tree has it's sub-blocks in an order that the
+	 * function can't handle (memory reserve map, then structure,
+	 * then strings).  Use fdt_open_into() to reorganize the tree
+	 * into a form suitable for the read-write operations. */
 
 /* "Can't happen" error indicating a bug in libfdt */
-#define FDT_ERR_INTERNAL  13
-/* FDT_ERR_INTERNAL: libfdt has failed an internal assertion.
- * Should never be returned, if it is, it indicates a bug in
- * libfdt itself. */
+#define FDT_ERR_INTERNAL	13
+	/* FDT_ERR_INTERNAL: libfdt has failed an internal assertion.
+	 * Should never be returned, if it is, it indicates a bug in
+	 * libfdt itself. */
 
-#define FDT_ERR_MAX   13
+#define FDT_ERR_MAX		13
 
 /**********************************************************************/
 /* Low-level functions (you probably don't need these)                */
 /**********************************************************************/
 
-const void * fdt_offset_ptr (const void * fdt, int offset, int checklen);
-static inline void * fdt_offset_ptr_w (void * fdt, int offset, int checklen)
+const void *fdt_offset_ptr(const void *fdt, int offset, int checklen);
+static inline void *fdt_offset_ptr_w(void *fdt, int offset, int checklen)
 {
-  return (void *) (uintptr_t) fdt_offset_ptr (fdt, offset, checklen);
+	return (void *)(uintptr_t)fdt_offset_ptr(fdt, offset, checklen);
 }
 
-uint32_t fdt_next_tag (const void * fdt, int offset, int * nextoffset);
+uint32_t fdt_next_tag(const void *fdt, int offset, int *nextoffset);
 
 /**********************************************************************/
 /* Traversal functions                                                */
 /**********************************************************************/
 
-int fdt_next_node (const void * fdt, int offset, int * depth);
+int fdt_next_node(const void *fdt, int offset, int *depth);
 
 /**********************************************************************/
 /* General functions                                                  */
 /**********************************************************************/
 
 #define fdt_get_header(fdt, field) \
-  (fdt32_to_cpu(((const struct fdt_header *)(fdt))->field))
-#define fdt_magic(fdt)      (fdt_get_header(fdt, magic))
-#define fdt_totalsize(fdt)    (fdt_get_header(fdt, totalsize))
-#define fdt_off_dt_struct(fdt)    (fdt_get_header(fdt, off_dt_struct))
-#define fdt_off_dt_strings(fdt)   (fdt_get_header(fdt, off_dt_strings))
-#define fdt_off_mem_rsvmap(fdt)   (fdt_get_header(fdt, off_mem_rsvmap))
-#define fdt_version(fdt)    (fdt_get_header(fdt, version))
-#define fdt_last_comp_version(fdt)  (fdt_get_header(fdt, last_comp_version))
-#define fdt_boot_cpuid_phys(fdt)  (fdt_get_header(fdt, boot_cpuid_phys))
-#define fdt_size_dt_strings(fdt)  (fdt_get_header(fdt, size_dt_strings))
-#define fdt_size_dt_struct(fdt)   (fdt_get_header(fdt, size_dt_struct))
+	(fdt32_to_cpu(((const struct fdt_header *)(fdt))->field))
+#define fdt_magic(fdt) 			(fdt_get_header(fdt, magic))
+#define fdt_totalsize(fdt)		(fdt_get_header(fdt, totalsize))
+#define fdt_off_dt_struct(fdt)		(fdt_get_header(fdt, off_dt_struct))
+#define fdt_off_dt_strings(fdt)		(fdt_get_header(fdt, off_dt_strings))
+#define fdt_off_mem_rsvmap(fdt)		(fdt_get_header(fdt, off_mem_rsvmap))
+#define fdt_version(fdt)		(fdt_get_header(fdt, version))
+#define fdt_last_comp_version(fdt) 	(fdt_get_header(fdt, last_comp_version))
+#define fdt_boot_cpuid_phys(fdt) 	(fdt_get_header(fdt, boot_cpuid_phys))
+#define fdt_size_dt_strings(fdt) 	(fdt_get_header(fdt, size_dt_strings))
+#define fdt_size_dt_struct(fdt)		(fdt_get_header(fdt, size_dt_struct))
 
 #define __fdt_set_hdr(name) \
-  static inline void fdt_set_##name(void *fdt, uint32_t val) \
-  { \
-    struct fdt_header *fdth = fdt; \
-    fdth->name = cpu_to_fdt32(val); \
-  }
-__fdt_set_hdr (magic);
-__fdt_set_hdr (totalsize);
-__fdt_set_hdr (off_dt_struct);
-__fdt_set_hdr (off_dt_strings);
-__fdt_set_hdr (off_mem_rsvmap);
-__fdt_set_hdr (version);
-__fdt_set_hdr (last_comp_version);
-__fdt_set_hdr (boot_cpuid_phys);
-__fdt_set_hdr (size_dt_strings);
-__fdt_set_hdr (size_dt_struct);
+	static inline void fdt_set_##name(void *fdt, uint32_t val) \
+	{ \
+		struct fdt_header *fdth = fdt; \
+		fdth->name = cpu_to_fdt32(val); \
+	}
+__fdt_set_hdr(magic);
+__fdt_set_hdr(totalsize);
+__fdt_set_hdr(off_dt_struct);
+__fdt_set_hdr(off_dt_strings);
+__fdt_set_hdr(off_mem_rsvmap);
+__fdt_set_hdr(version);
+__fdt_set_hdr(last_comp_version);
+__fdt_set_hdr(boot_cpuid_phys);
+__fdt_set_hdr(size_dt_strings);
+__fdt_set_hdr(size_dt_struct);
 #undef __fdt_set_hdr
 
 /**
@@ -185,7 +185,7 @@ __fdt_set_hdr (size_dt_struct);
  *     -FDT_ERR_BADVERSION,
  *     -FDT_ERR_BADSTATE, standard meanings, as above
  */
-int fdt_check_header (const void * fdt);
+int fdt_check_header(const void *fdt);
 
 /**
  * fdt_move - move a device tree around in memory
@@ -206,7 +206,7 @@ int fdt_check_header (const void * fdt);
  *     -FDT_ERR_BADVERSION,
  *     -FDT_ERR_BADSTATE, standard meanings
  */
-int fdt_move (const void * fdt, void * buf, int bufsize);
+int fdt_move(const void *fdt, void *buf, int bufsize);
 
 /**********************************************************************/
 /* Read-only functions                                                */
@@ -224,7 +224,7 @@ int fdt_move (const void * fdt, void * buf, int bufsize);
  *     a pointer to the string, on success
  *     NULL, if stroffset is out of bounds
  */
-const char * fdt_string (const void * fdt, int stroffset);
+const char *fdt_string(const void *fdt, int stroffset);
 
 /**
  * fdt_num_mem_rsv - retrieve the number of memory reserve map entries
@@ -237,7 +237,7 @@ const char * fdt_string (const void * fdt, int stroffset);
  * returns:
  *     the number of entries
  */
-int fdt_num_mem_rsv (const void * fdt);
+int fdt_num_mem_rsv(const void *fdt);
 
 /**
  * fdt_get_mem_rsv - retrieve one memory reserve map entry
@@ -254,7 +254,7 @@ int fdt_num_mem_rsv (const void * fdt);
  *     -FDT_ERR_BADVERSION,
  *     -FDT_ERR_BADSTATE, standard meanings
  */
-int fdt_get_mem_rsv (const void * fdt, int n, uint64_t * address, uint64_t * size);
+int fdt_get_mem_rsv(const void *fdt, int n, uint64_t *address, uint64_t *size);
 
 /**
  * fdt_subnode_offset_namelen - find a subnode based on substring
@@ -268,8 +268,8 @@ int fdt_get_mem_rsv (const void * fdt, int n, uint64_t * address, uint64_t * siz
  * useful for finding subnodes based on a portion of a larger string,
  * such as a full path.
  */
-int fdt_subnode_offset_namelen (const void * fdt, int parentoffset,
-                                const char * name, int namelen);
+int fdt_subnode_offset_namelen(const void *fdt, int parentoffset,
+			       const char *name, int namelen);
 /**
  * fdt_subnode_offset - find a subnode of a given node
  * @fdt: pointer to the device tree blob
@@ -284,16 +284,16 @@ int fdt_subnode_offset_namelen (const void * fdt, int parentoffset,
  * whose name excluding unit address matches the given name.
  *
  * returns:
- *  structure block offset of the requested subnode (>=0), on success
- *  -FDT_ERR_NOTFOUND, if the requested subnode does not exist
- *  -FDT_ERR_BADOFFSET, if parentoffset did not point to an FDT_BEGIN_NODE tag
+ *	structure block offset of the requested subnode (>=0), on success
+ *	-FDT_ERR_NOTFOUND, if the requested subnode does not exist
+ *	-FDT_ERR_BADOFFSET, if parentoffset did not point to an FDT_BEGIN_NODE tag
  *      -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE,
- *  -FDT_ERR_TRUNCATED, standard meanings.
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE,
+ *	-FDT_ERR_TRUNCATED, standard meanings.
  */
-int fdt_subnode_offset (const void * fdt, int parentoffset, const char * name);
+int fdt_subnode_offset(const void *fdt, int parentoffset, const char *name);
 
 /**
  * fdt_path_offset - find a tree node by its full path
@@ -308,16 +308,16 @@ int fdt_subnode_offset (const void * fdt, int parentoffset, const char * name);
  * address).
  *
  * returns:
- *  structure block offset of the node with the requested path (>=0), on success
- *  -FDT_ERR_BADPATH, given path does not begin with '/' or is invalid
- *  -FDT_ERR_NOTFOUND, if the requested node does not exist
+ *	structure block offset of the node with the requested path (>=0), on success
+ *	-FDT_ERR_BADPATH, given path does not begin with '/' or is invalid
+ *	-FDT_ERR_NOTFOUND, if the requested node does not exist
  *      -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE,
- *  -FDT_ERR_TRUNCATED, standard meanings.
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE,
+ *	-FDT_ERR_TRUNCATED, standard meanings.
  */
-int fdt_path_offset (const void * fdt, const char * path);
+int fdt_path_offset(const void *fdt, const char *path);
 
 /**
  * fdt_get_name - retrieve the name of a given node
@@ -331,16 +331,16 @@ int fdt_path_offset (const void * fdt, const char * path);
  * pointed to by lenp.
  *
  * returns:
- *  pointer to the node's name, on success
- *    If lenp is non-NULL, *lenp contains the length of that name (>=0)
- *  NULL, on error
- *    if lenp is non-NULL *lenp contains an error code (<0):
- *    -FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
- *    -FDT_ERR_BADMAGIC,
- *    -FDT_ERR_BADVERSION,
- *    -FDT_ERR_BADSTATE, standard meanings
+ *	pointer to the node's name, on success
+ *		If lenp is non-NULL, *lenp contains the length of that name (>=0)
+ *	NULL, on error
+ *		if lenp is non-NULL *lenp contains an error code (<0):
+ *		-FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
+ *		-FDT_ERR_BADMAGIC,
+ *		-FDT_ERR_BADVERSION,
+ *		-FDT_ERR_BADSTATE, standard meanings
  */
-const char * fdt_get_name (const void * fdt, int nodeoffset, int * lenp);
+const char *fdt_get_name(const void *fdt, int nodeoffset, int *lenp);
 
 /**
  * fdt_get_property - find a given property in a given node
@@ -356,27 +356,27 @@ const char * fdt_get_name (const void * fdt, int nodeoffset, int * lenp);
  * integer pointed to by lenp.
  *
  * returns:
- *  pointer to the structure representing the property
- *    if lenp is non-NULL, *lenp contains the length of the property
- *    value (>=0)
- *  NULL, on error
- *    if lenp is non-NULL, *lenp contains an error code (<0):
- *    -FDT_ERR_NOTFOUND, node does not have named property
- *    -FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
- *    -FDT_ERR_BADMAGIC,
- *    -FDT_ERR_BADVERSION,
- *    -FDT_ERR_BADSTATE,
- *    -FDT_ERR_BADSTRUCTURE,
- *    -FDT_ERR_TRUNCATED, standard meanings
+ *	pointer to the structure representing the property
+ *		if lenp is non-NULL, *lenp contains the length of the property
+ *		value (>=0)
+ *	NULL, on error
+ *		if lenp is non-NULL, *lenp contains an error code (<0):
+ *		-FDT_ERR_NOTFOUND, node does not have named property
+ *		-FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
+ *		-FDT_ERR_BADMAGIC,
+ *		-FDT_ERR_BADVERSION,
+ *		-FDT_ERR_BADSTATE,
+ *		-FDT_ERR_BADSTRUCTURE,
+ *		-FDT_ERR_TRUNCATED, standard meanings
  */
-const struct fdt_property * fdt_get_property (const void * fdt, int nodeoffset,
-    const char * name, int * lenp);
-static inline struct fdt_property * fdt_get_property_w (void * fdt, int nodeoffset,
-    const char * name,
-    int * lenp)
+const struct fdt_property *fdt_get_property(const void *fdt, int nodeoffset,
+					    const char *name, int *lenp);
+static inline struct fdt_property *fdt_get_property_w(void *fdt, int nodeoffset,
+						      const char *name,
+						      int *lenp)
 {
-  return (struct fdt_property *) (uintptr_t)
-         fdt_get_property (fdt, nodeoffset, name, lenp);
+	return (struct fdt_property *)(uintptr_t)
+		fdt_get_property(fdt, nodeoffset, name, lenp);
 }
 
 /**
@@ -393,25 +393,25 @@ static inline struct fdt_property * fdt_get_property_w (void * fdt, int nodeoffs
  * returned, in the integer pointed to by lenp.
  *
  * returns:
- *  pointer to the property's value
- *    if lenp is non-NULL, *lenp contains the length of the property
- *    value (>=0)
- *  NULL, on error
- *    if lenp is non-NULL, *lenp contains an error code (<0):
- *    -FDT_ERR_NOTFOUND, node does not have named property
- *    -FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
- *    -FDT_ERR_BADMAGIC,
- *    -FDT_ERR_BADVERSION,
- *    -FDT_ERR_BADSTATE,
- *    -FDT_ERR_BADSTRUCTURE,
- *    -FDT_ERR_TRUNCATED, standard meanings
+ *	pointer to the property's value
+ *		if lenp is non-NULL, *lenp contains the length of the property
+ *		value (>=0)
+ *	NULL, on error
+ *		if lenp is non-NULL, *lenp contains an error code (<0):
+ *		-FDT_ERR_NOTFOUND, node does not have named property
+ *		-FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
+ *		-FDT_ERR_BADMAGIC,
+ *		-FDT_ERR_BADVERSION,
+ *		-FDT_ERR_BADSTATE,
+ *		-FDT_ERR_BADSTRUCTURE,
+ *		-FDT_ERR_TRUNCATED, standard meanings
  */
-const void * fdt_getprop (const void * fdt, int nodeoffset,
-                          const char * name, int * lenp);
-static inline void * fdt_getprop_w (void * fdt, int nodeoffset,
-                                    const char * name, int * lenp)
+const void *fdt_getprop(const void *fdt, int nodeoffset,
+			const char *name, int *lenp);
+static inline void *fdt_getprop_w(void *fdt, int nodeoffset,
+				  const char *name, int *lenp)
 {
-  return (void *) (uintptr_t) fdt_getprop (fdt, nodeoffset, name, lenp);
+	return (void *)(uintptr_t)fdt_getprop(fdt, nodeoffset, name, lenp);
 }
 
 /**
@@ -423,10 +423,10 @@ static inline void * fdt_getprop_w (void * fdt, int nodeoffset,
  * structure block offset nodeoffset.
  *
  * returns:
- *  the phandle of the node at nodeoffset, on success (!= 0, != -1)
- *  0, if the node has no phandle, or another error occurs
+ *	the phandle of the node at nodeoffset, on success (!= 0, != -1)
+ *	0, if the node has no phandle, or another error occurs
  */
-uint32_t fdt_get_phandle (const void * fdt, int nodeoffset);
+uint32_t fdt_get_phandle(const void *fdt, int nodeoffset);
 
 /**
  * fdt_get_path - determine the full path of a node
@@ -442,18 +442,18 @@ uint32_t fdt_get_phandle (const void * fdt, int nodeoffset);
  * structure from the start to nodeoffset.
  *
  * returns:
- *  0, on success
- *    buf contains the absolute path of the node at
- *    nodeoffset, as a NUL-terminated string.
- *  -FDT_ERR_BADOFFSET, nodeoffset does not refer to a BEGIN_NODE tag
- *  -FDT_ERR_NOSPACE, the path of the given node is longer than (bufsize-1)
- *    characters and will not fit in the given buffer.
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE, standard meanings
+ *	0, on success
+ *		buf contains the absolute path of the node at
+ *		nodeoffset, as a NUL-terminated string.
+ * 	-FDT_ERR_BADOFFSET, nodeoffset does not refer to a BEGIN_NODE tag
+ *	-FDT_ERR_NOSPACE, the path of the given node is longer than (bufsize-1)
+ *		characters and will not fit in the given buffer.
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE, standard meanings
  */
-int fdt_get_path (const void * fdt, int nodeoffset, char * buf, int buflen);
+int fdt_get_path(const void *fdt, int nodeoffset, char *buf, int buflen);
 
 /**
  * fdt_supernode_atdepth_offset - find a specific ancestor of a node
@@ -465,10 +465,10 @@ int fdt_get_path (const void * fdt, int nodeoffset, char * buf, int buflen);
  * fdt_supernode_atdepth_offset() finds an ancestor of the given node
  * at a specific depth from the root (where the root itself has depth
  * 0, its immediate subnodes depth 1 and so forth).  So
- *  fdt_supernode_atdepth_offset(fdt, nodeoffset, 0, NULL);
+ *	fdt_supernode_atdepth_offset(fdt, nodeoffset, 0, NULL);
  * will always return 0, the offset of the root node.  If the node at
  * nodeoffset has depth D, then:
- *  fdt_supernode_atdepth_offset(fdt, nodeoffset, D, NULL);
+ *	fdt_supernode_atdepth_offset(fdt, nodeoffset, D, NULL);
  * will return nodeoffset itself.
  *
  * NOTE: This function is expensive, as it must scan the device tree
@@ -476,17 +476,17 @@ int fdt_get_path (const void * fdt, int nodeoffset, char * buf, int buflen);
  *
  * returns:
 
- *  structure block offset of the node at node offset's ancestor
- *    of depth supernodedepth (>=0), on success
- *  -FDT_ERR_BADOFFSET, nodeoffset does not refer to a BEGIN_NODE tag
-* -FDT_ERR_NOTFOUND, supernodedepth was greater than the depth of nodeoffset
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE, standard meanings
+ *	structure block offset of the node at node offset's ancestor
+ *		of depth supernodedepth (>=0), on success
+ * 	-FDT_ERR_BADOFFSET, nodeoffset does not refer to a BEGIN_NODE tag
+*	-FDT_ERR_NOTFOUND, supernodedepth was greater than the depth of nodeoffset
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE, standard meanings
  */
-int fdt_supernode_atdepth_offset (const void * fdt, int nodeoffset,
-                                  int supernodedepth, int * nodedepth);
+int fdt_supernode_atdepth_offset(const void *fdt, int nodeoffset,
+				 int supernodedepth, int *nodedepth);
 
 /**
  * fdt_node_depth - find the depth of a given node
@@ -500,14 +500,14 @@ int fdt_supernode_atdepth_offset (const void * fdt, int nodeoffset,
  * structure from the start to nodeoffset.
  *
  * returns:
- *  depth of the node at nodeoffset (>=0), on success
- *  -FDT_ERR_BADOFFSET, nodeoffset does not refer to a BEGIN_NODE tag
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE, standard meanings
+ *	depth of the node at nodeoffset (>=0), on success
+ * 	-FDT_ERR_BADOFFSET, nodeoffset does not refer to a BEGIN_NODE tag
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE, standard meanings
  */
-int fdt_node_depth (const void * fdt, int nodeoffset);
+int fdt_node_depth(const void *fdt, int nodeoffset);
 
 /**
  * fdt_parent_offset - find the parent of a given node
@@ -522,15 +522,15 @@ int fdt_node_depth (const void * fdt, int nodeoffset);
  * structure from the start to nodeoffset, *twice*.
  *
  * returns:
- *  structure block offset of the parent of the node at nodeoffset
- *    (>=0), on success
- *  -FDT_ERR_BADOFFSET, nodeoffset does not refer to a BEGIN_NODE tag
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE, standard meanings
+ *	structure block offset of the parent of the node at nodeoffset
+ *		(>=0), on success
+ * 	-FDT_ERR_BADOFFSET, nodeoffset does not refer to a BEGIN_NODE tag
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE, standard meanings
  */
-int fdt_parent_offset (const void * fdt, int nodeoffset);
+int fdt_parent_offset(const void *fdt, int nodeoffset);
 
 /**
  * fdt_node_offset_by_prop_value - find nodes with a given property value
@@ -547,32 +547,32 @@ int fdt_parent_offset (const void * fdt, int nodeoffset);
  *
  * To iterate through all nodes matching the criterion, the following
  * idiom can be used:
- *  offset = fdt_node_offset_by_prop_value(fdt, -1, propname,
- *                 propval, proplen);
- *  while (offset != -FDT_ERR_NOTFOUND) {
- *   
- *    offset = fdt_node_offset_by_prop_value(fdt, offset, propname,
- *                   propval, proplen);
- *  }
+ *	offset = fdt_node_offset_by_prop_value(fdt, -1, propname,
+ *					       propval, proplen);
+ *	while (offset != -FDT_ERR_NOTFOUND) {
+ *	
+ *		offset = fdt_node_offset_by_prop_value(fdt, offset, propname,
+ *						       propval, proplen);
+ *	}
  *
  * Note the -1 in the first call to the function, if 0 is used here
  * instead, the function will never locate the root node, even if it
  * matches the criterion.
  *
  * returns:
- *  structure block offset of the located node (>= 0, >startoffset),
- *     on success
- *  -FDT_ERR_NOTFOUND, no node matching the criterion exists in the
- *    tree after startoffset
- *  -FDT_ERR_BADOFFSET, nodeoffset does not refer to a BEGIN_NODE tag
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE, standard meanings
+ *	structure block offset of the located node (>= 0, >startoffset),
+ *		 on success
+ *	-FDT_ERR_NOTFOUND, no node matching the criterion exists in the
+ *		tree after startoffset
+ * 	-FDT_ERR_BADOFFSET, nodeoffset does not refer to a BEGIN_NODE tag
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE, standard meanings
  */
-int fdt_node_offset_by_prop_value (const void * fdt, int startoffset,
-                                   const char * propname,
-                                   const void * propval, int proplen);
+int fdt_node_offset_by_prop_value(const void *fdt, int startoffset,
+				  const char *propname,
+				  const void *propval, int proplen);
 
 /**
  * fdt_node_offset_by_phandle - find the node with a given phandle
@@ -585,15 +585,15 @@ int fdt_node_offset_by_prop_value (const void * fdt, int startoffset,
  * undefined.
  *
  * returns:
- *  structure block offset of the located node (>= 0), on success
- *  -FDT_ERR_NOTFOUND, no node with that phandle exists
- *  -FDT_ERR_BADPHANDLE, given phandle value was invalid (0 or -1)
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE, standard meanings
+ *	structure block offset of the located node (>= 0), on success
+ *	-FDT_ERR_NOTFOUND, no node with that phandle exists
+ *	-FDT_ERR_BADPHANDLE, given phandle value was invalid (0 or -1)
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE, standard meanings
  */
-int fdt_node_offset_by_phandle (const void * fdt, uint32_t phandle);
+int fdt_node_offset_by_phandle(const void *fdt, uint32_t phandle);
 
 /**
  * fdt_node_check_compatible: check a node's compatible property
@@ -607,18 +607,18 @@ int fdt_node_offset_by_phandle (const void * fdt, uint32_t phandle);
  * it returns non-zero otherwise, or on error.
  *
  * returns:
- *  0, if the node has a 'compatible' property listing the given string
- *  1, if the node has a 'compatible' property, but it does not list
- *    the given string
- *  -FDT_ERR_NOTFOUND, if the given node has no 'compatible' property
- *  -FDT_ERR_BADOFFSET, if nodeoffset does not refer to a BEGIN_NODE tag
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE, standard meanings
+ *	0, if the node has a 'compatible' property listing the given string
+ *	1, if the node has a 'compatible' property, but it does not list
+ *		the given string
+ *	-FDT_ERR_NOTFOUND, if the given node has no 'compatible' property
+ * 	-FDT_ERR_BADOFFSET, if nodeoffset does not refer to a BEGIN_NODE tag
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE, standard meanings
  */
-int fdt_node_check_compatible (const void * fdt, int nodeoffset,
-                               const char * compatible);
+int fdt_node_check_compatible(const void *fdt, int nodeoffset,
+			      const char *compatible);
 
 /**
  * fdt_node_offset_by_compatible - find nodes with a given 'compatible' value
@@ -633,29 +633,29 @@ int fdt_node_check_compatible (const void * fdt, int nodeoffset,
  *
  * To iterate through all nodes matching the criterion, the following
  * idiom can be used:
- *  offset = fdt_node_offset_by_compatible(fdt, -1, compatible);
- *  while (offset != -FDT_ERR_NOTFOUND) {
- *   
- *    offset = fdt_node_offset_by_compatible(fdt, offset, compatible);
- *  }
+ *	offset = fdt_node_offset_by_compatible(fdt, -1, compatible);
+ *	while (offset != -FDT_ERR_NOTFOUND) {
+ *	
+ *		offset = fdt_node_offset_by_compatible(fdt, offset, compatible);
+ *	}
  *
  * Note the -1 in the first call to the function, if 0 is used here
  * instead, the function will never locate the root node, even if it
  * matches the criterion.
  *
  * returns:
- *  structure block offset of the located node (>= 0, >startoffset),
- *     on success
- *  -FDT_ERR_NOTFOUND, no node matching the criterion exists in the
- *    tree after startoffset
- *  -FDT_ERR_BADOFFSET, nodeoffset does not refer to a BEGIN_NODE tag
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE, standard meanings
+ *	structure block offset of the located node (>= 0, >startoffset),
+ *		 on success
+ *	-FDT_ERR_NOTFOUND, no node matching the criterion exists in the
+ *		tree after startoffset
+ * 	-FDT_ERR_BADOFFSET, nodeoffset does not refer to a BEGIN_NODE tag
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE, standard meanings
  */
-int fdt_node_offset_by_compatible (const void * fdt, int startoffset,
-                                   const char * compatible);
+int fdt_node_offset_by_compatible(const void *fdt, int startoffset,
+				  const char *compatible);
 
 /**********************************************************************/
 /* Write-in-place functions                                           */
@@ -679,18 +679,18 @@ int fdt_node_offset_by_compatible (const void * fdt, int startoffset,
  * of the tree.
  *
  * returns:
- *  0, on success
- *  -FDT_ERR_NOSPACE, if len is not equal to the property's current length
- *  -FDT_ERR_NOTFOUND, node does not have the named property
- *  -FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE,
- *  -FDT_ERR_TRUNCATED, standard meanings
+ *	0, on success
+ *	-FDT_ERR_NOSPACE, if len is not equal to the property's current length
+ *	-FDT_ERR_NOTFOUND, node does not have the named property
+ *	-FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE,
+ *	-FDT_ERR_TRUNCATED, standard meanings
  */
-int fdt_setprop_inplace (void * fdt, int nodeoffset, const char * name,
-                         const void * val, int len);
+int fdt_setprop_inplace(void *fdt, int nodeoffset, const char *name,
+			const void *val, int len);
 
 /**
  * fdt_setprop_inplace_cell - change the value of a single-cell property
@@ -710,21 +710,21 @@ int fdt_setprop_inplace (void * fdt, int nodeoffset, const char * name,
  * of the tree.
  *
  * returns:
- *  0, on success
- *  -FDT_ERR_NOSPACE, if the property's length is not equal to 4
-  * -FDT_ERR_NOTFOUND, node does not have the named property
- *  -FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE,
- *  -FDT_ERR_TRUNCATED, standard meanings
+ *	0, on success
+ *	-FDT_ERR_NOSPACE, if the property's length is not equal to 4
+  *	-FDT_ERR_NOTFOUND, node does not have the named property
+ *	-FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE,
+ *	-FDT_ERR_TRUNCATED, standard meanings
  */
-static inline int fdt_setprop_inplace_cell (void * fdt, int nodeoffset,
-    const char * name, uint32_t val)
+static inline int fdt_setprop_inplace_cell(void *fdt, int nodeoffset,
+					   const char *name, uint32_t val)
 {
-  val = cpu_to_fdt32 (val);
-  return fdt_setprop_inplace (fdt, nodeoffset, name, &val, sizeof (val) );
+	val = cpu_to_fdt32(val);
+	return fdt_setprop_inplace(fdt, nodeoffset, name, &val, sizeof(val));
 }
 
 /**
@@ -742,16 +742,16 @@ static inline int fdt_setprop_inplace_cell (void * fdt, int nodeoffset,
  * tree.
  *
  * returns:
- *  0, on success
- *  -FDT_ERR_NOTFOUND, node does not have the named property
- *  -FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE,
- *  -FDT_ERR_TRUNCATED, standard meanings
+ *	0, on success
+ *	-FDT_ERR_NOTFOUND, node does not have the named property
+ *	-FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE,
+ *	-FDT_ERR_TRUNCATED, standard meanings
  */
-int fdt_nop_property (void * fdt, int nodeoffset, const char * name);
+int fdt_nop_property(void *fdt, int nodeoffset, const char *name);
 
 /**
  * fdt_nop_node - replace a node (subtree) with nop tags
@@ -767,41 +767,41 @@ int fdt_nop_property (void * fdt, int nodeoffset, const char * name);
  * move any other part of the tree.
  *
  * returns:
- *  0, on success
- *  -FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE,
- *  -FDT_ERR_TRUNCATED, standard meanings
+ *	0, on success
+ *	-FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE,
+ *	-FDT_ERR_TRUNCATED, standard meanings
  */
-int fdt_nop_node (void * fdt, int nodeoffset);
+int fdt_nop_node(void *fdt, int nodeoffset);
 
 /**********************************************************************/
 /* Sequential write functions                                         */
 /**********************************************************************/
 
-int fdt_create (void * buf, int bufsize);
-int fdt_add_reservemap_entry (void * fdt, uint64_t addr, uint64_t size);
-int fdt_finish_reservemap (void * fdt);
-int fdt_begin_node (void * fdt, const char * name);
-int fdt_property (void * fdt, const char * name, const void * val, int len);
-static inline int fdt_property_cell (void * fdt, const char * name, uint32_t val)
+int fdt_create(void *buf, int bufsize);
+int fdt_add_reservemap_entry(void *fdt, uint64_t addr, uint64_t size);
+int fdt_finish_reservemap(void *fdt);
+int fdt_begin_node(void *fdt, const char *name);
+int fdt_property(void *fdt, const char *name, const void *val, int len);
+static inline int fdt_property_cell(void *fdt, const char *name, uint32_t val)
 {
-  val = cpu_to_fdt32 (val);
-  return fdt_property (fdt, name, &val, sizeof (val) );
+	val = cpu_to_fdt32(val);
+	return fdt_property(fdt, name, &val, sizeof(val));
 }
 #define fdt_property_string(fdt, name, str) \
-  fdt_property(fdt, name, str, strlen(str)+1)
-int fdt_end_node (void * fdt);
-int fdt_finish (void * fdt);
+	fdt_property(fdt, name, str, strlen(str)+1)
+int fdt_end_node(void *fdt);
+int fdt_finish(void *fdt);
 
 /**********************************************************************/
 /* Read-write functions                                               */
 /**********************************************************************/
 
-int fdt_open_into (const void * fdt, void * buf, int bufsize);
-int fdt_pack (void * fdt);
+int fdt_open_into(const void *fdt, void *buf, int bufsize);
+int fdt_pack(void *fdt);
 
 /**
  * fdt_add_mem_rsv - add one memory reserve map entry
@@ -815,17 +815,17 @@ int fdt_pack (void * fdt);
  * therefore change the indexes of some entries in the table.
  *
  * returns:
- *  0, on success
- *  -FDT_ERR_NOSPACE, there is insufficient free space in the blob to
- *    contain the new reservation entry
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE,
- *  -FDT_ERR_BADLAYOUT,
- *  -FDT_ERR_TRUNCATED, standard meanings
+ *	0, on success
+ *	-FDT_ERR_NOSPACE, there is insufficient free space in the blob to
+ *		contain the new reservation entry
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE,
+ *	-FDT_ERR_BADLAYOUT,
+ *	-FDT_ERR_TRUNCATED, standard meanings
  */
-int fdt_add_mem_rsv (void * fdt, uint64_t address, uint64_t size);
+int fdt_add_mem_rsv(void *fdt, uint64_t address, uint64_t size);
 
 /**
  * fdt_del_mem_rsv - remove a memory reserve map entry
@@ -839,17 +839,17 @@ int fdt_add_mem_rsv (void * fdt, uint64_t address, uint64_t size);
  * therefore change the indexes of some entries in the table.
  *
  * returns:
- *  0, on success
- *  -FDT_ERR_NOTFOUND, there is no entry of the given index (i.e. there
- *    are less than n+1 reserve map entries)
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE,
- *  -FDT_ERR_BADLAYOUT,
- *  -FDT_ERR_TRUNCATED, standard meanings
+ *	0, on success
+ *	-FDT_ERR_NOTFOUND, there is no entry of the given index (i.e. there
+ *		are less than n+1 reserve map entries)
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE,
+ *	-FDT_ERR_BADLAYOUT,
+ *	-FDT_ERR_TRUNCATED, standard meanings
  */
-int fdt_del_mem_rsv (void * fdt, int n);
+int fdt_del_mem_rsv(void *fdt, int n);
 
 /**
  * fdt_set_name - change the name of a given node
@@ -867,15 +867,15 @@ int fdt_del_mem_rsv (void * fdt, int n);
  * therefore change the offsets of some existing nodes.
  *
  * returns:
- *  0, on success
- *  -FDT_ERR_NOSPACE, there is insufficient free space in the blob
- *    to contain the new name
- *  -FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE, standard meanings
+ *	0, on success
+ *	-FDT_ERR_NOSPACE, there is insufficient free space in the blob
+ *		to contain the new name
+ *	-FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE, standard meanings
  */
-int fdt_set_name (void * fdt, int nodeoffset, const char * name);
+int fdt_set_name(void *fdt, int nodeoffset, const char *name);
 
 /**
  * fdt_setprop - create or change a property
@@ -893,20 +893,20 @@ int fdt_set_name (void * fdt, int nodeoffset, const char * name);
  * therefore change the offsets of some existing nodes.
  *
  * returns:
- *  0, on success
- *  -FDT_ERR_NOSPACE, there is insufficient free space in the blob to
- *    contain the new property value
- *  -FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
- *  -FDT_ERR_BADLAYOUT,
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE,
- *  -FDT_ERR_BADLAYOUT,
- *  -FDT_ERR_TRUNCATED, standard meanings
+ *	0, on success
+ *	-FDT_ERR_NOSPACE, there is insufficient free space in the blob to
+ *		contain the new property value
+ *	-FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
+ *	-FDT_ERR_BADLAYOUT,
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE,
+ *	-FDT_ERR_BADLAYOUT,
+ *	-FDT_ERR_TRUNCATED, standard meanings
  */
-int fdt_setprop (void * fdt, int nodeoffset, const char * name,
-                 const void * val, int len);
+int fdt_setprop(void *fdt, int nodeoffset, const char *name,
+		const void *val, int len);
 
 /**
  * fdt_setprop_cell - set a property to a single cell value
@@ -924,23 +924,23 @@ int fdt_setprop (void * fdt, int nodeoffset, const char * name,
  * therefore change the offsets of some existing nodes.
  *
  * returns:
- *  0, on success
- *  -FDT_ERR_NOSPACE, there is insufficient free space in the blob to
- *    contain the new property value
- *  -FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
- *  -FDT_ERR_BADLAYOUT,
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE,
- *  -FDT_ERR_BADLAYOUT,
- *  -FDT_ERR_TRUNCATED, standard meanings
+ *	0, on success
+ *	-FDT_ERR_NOSPACE, there is insufficient free space in the blob to
+ *		contain the new property value
+ *	-FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
+ *	-FDT_ERR_BADLAYOUT,
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE,
+ *	-FDT_ERR_BADLAYOUT,
+ *	-FDT_ERR_TRUNCATED, standard meanings
  */
-static inline int fdt_setprop_cell (void * fdt, int nodeoffset, const char * name,
-                                    uint32_t val)
+static inline int fdt_setprop_cell(void *fdt, int nodeoffset, const char *name,
+				   uint32_t val)
 {
-  val = cpu_to_fdt32 (val);
-  return fdt_setprop (fdt, nodeoffset, name, &val, sizeof (val) );
+	val = cpu_to_fdt32(val);
+	return fdt_setprop(fdt, nodeoffset, name, &val, sizeof(val));
 }
 
 /**
@@ -959,20 +959,20 @@ static inline int fdt_setprop_cell (void * fdt, int nodeoffset, const char * nam
  * therefore change the offsets of some existing nodes.
  *
  * returns:
- *  0, on success
- *  -FDT_ERR_NOSPACE, there is insufficient free space in the blob to
- *    contain the new property value
- *  -FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
- *  -FDT_ERR_BADLAYOUT,
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE,
- *  -FDT_ERR_BADLAYOUT,
- *  -FDT_ERR_TRUNCATED, standard meanings
+ *	0, on success
+ *	-FDT_ERR_NOSPACE, there is insufficient free space in the blob to
+ *		contain the new property value
+ *	-FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
+ *	-FDT_ERR_BADLAYOUT,
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE,
+ *	-FDT_ERR_BADLAYOUT,
+ *	-FDT_ERR_TRUNCATED, standard meanings
  */
 #define fdt_setprop_string(fdt, nodeoffset, name, str) \
-  fdt_setprop((fdt), (nodeoffset), (name), (str), strlen(str)+1)
+	fdt_setprop((fdt), (nodeoffset), (name), (str), strlen(str)+1)
 
 /**
  * fdt_delprop - delete a property
@@ -986,17 +986,17 @@ static inline int fdt_setprop_cell (void * fdt, int nodeoffset, const char * nam
  * change the offsets of some existing nodes.
  *
  * returns:
- *  0, on success
- *  -FDT_ERR_NOTFOUND, node does not have the named property
- *  -FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
- *  -FDT_ERR_BADLAYOUT,
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE,
- *  -FDT_ERR_TRUNCATED, standard meanings
+ *	0, on success
+ *	-FDT_ERR_NOTFOUND, node does not have the named property
+ *	-FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
+ *	-FDT_ERR_BADLAYOUT,
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE,
+ *	-FDT_ERR_TRUNCATED, standard meanings
  */
-int fdt_delprop (void * fdt, int nodeoffset, const char * name);
+int fdt_delprop(void *fdt, int nodeoffset, const char *name);
 
 /**
  * fdt_add_subnode_namelen - creates a new node based on substring
@@ -1010,8 +1010,8 @@ int fdt_delprop (void * fdt, int nodeoffset, const char * name);
  * creating subnodes based on a portion of a larger string, such as a
  * full path.
  */
-int fdt_add_subnode_namelen (void * fdt, int parentoffset,
-                             const char * name, int namelen);
+int fdt_add_subnode_namelen(void *fdt, int parentoffset,
+			    const char *name, int namelen);
 
 /**
  * fdt_add_subnode - creates a new node
@@ -1027,22 +1027,22 @@ int fdt_add_subnode_namelen (void * fdt, int parentoffset,
  * change the offsets of some existing nodes.
 
  * returns:
- *  structure block offset of the created nodeequested subnode (>=0), on success
- *  -FDT_ERR_NOTFOUND, if the requested subnode does not exist
- *  -FDT_ERR_BADOFFSET, if parentoffset did not point to an FDT_BEGIN_NODE tag
- *  -FDT_ERR_EXISTS, if the node at parentoffset already has a subnode of
- *    the given name
- *  -FDT_ERR_NOSPACE, if there is insufficient free space in the
- *    blob to contain the new node
- *  -FDT_ERR_NOSPACE
- *  -FDT_ERR_BADLAYOUT
+ *	structure block offset of the created nodeequested subnode (>=0), on success
+ *	-FDT_ERR_NOTFOUND, if the requested subnode does not exist
+ *	-FDT_ERR_BADOFFSET, if parentoffset did not point to an FDT_BEGIN_NODE tag
+ *	-FDT_ERR_EXISTS, if the node at parentoffset already has a subnode of
+ *		the given name
+ *	-FDT_ERR_NOSPACE, if there is insufficient free space in the
+ *		blob to contain the new node
+ *	-FDT_ERR_NOSPACE
+ *	-FDT_ERR_BADLAYOUT
  *      -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE,
- *  -FDT_ERR_TRUNCATED, standard meanings.
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE,
+ *	-FDT_ERR_TRUNCATED, standard meanings.
  */
-int fdt_add_subnode (void * fdt, int parentoffset, const char * name);
+int fdt_add_subnode(void *fdt, int parentoffset, const char *name);
 
 /**
  * fdt_del_node - delete a node (subtree)
@@ -1056,21 +1056,21 @@ int fdt_add_subnode (void * fdt, int parentoffset, const char * name);
  * change the offsets of some existing nodes.
  *
  * returns:
- *  0, on success
- *  -FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
- *  -FDT_ERR_BADLAYOUT,
- *  -FDT_ERR_BADMAGIC,
- *  -FDT_ERR_BADVERSION,
- *  -FDT_ERR_BADSTATE,
- *  -FDT_ERR_BADSTRUCTURE,
- *  -FDT_ERR_TRUNCATED, standard meanings
+ *	0, on success
+ *	-FDT_ERR_BADOFFSET, nodeoffset did not point to FDT_BEGIN_NODE tag
+ *	-FDT_ERR_BADLAYOUT,
+ *	-FDT_ERR_BADMAGIC,
+ *	-FDT_ERR_BADVERSION,
+ *	-FDT_ERR_BADSTATE,
+ *	-FDT_ERR_BADSTRUCTURE,
+ *	-FDT_ERR_TRUNCATED, standard meanings
  */
-int fdt_del_node (void * fdt, int nodeoffset);
+int fdt_del_node(void *fdt, int nodeoffset);
 
 /**********************************************************************/
 /* Debugging / informational functions                                */
 /**********************************************************************/
 
-const char * fdt_strerror (int errval);
+const char *fdt_strerror(int errval);
 
 #endif /* _LIBFDT_H */

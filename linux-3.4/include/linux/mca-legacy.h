@@ -22,7 +22,7 @@
  * See Documentation/mca.txt or one of the existing drivers for
  * more information.
  */
-#define MCA_NOTFOUND  (-1)
+#define MCA_NOTFOUND	(-1)
 
 
 
@@ -31,20 +31,20 @@
  * devices.  Returns MCA_NOTFOUND if id not found.  Also checks the
  * integrated adapters.
  */
-extern int mca_find_adapter (int id, int start);
-extern int mca_find_unused_adapter (int id, int start);
+extern int mca_find_adapter(int id, int start);
+extern int mca_find_unused_adapter(int id, int start);
 
-extern int mca_mark_as_used (int slot);
-extern void mca_mark_as_unused (int slot);
+extern int mca_mark_as_used(int slot);
+extern void mca_mark_as_unused(int slot);
 
 /* gets a byte out of POS register (stored in memory) */
-extern unsigned char mca_read_stored_pos (int slot, int reg);
+extern unsigned char mca_read_stored_pos(int slot, int reg);
 
 /* This can be expanded later.  Right now, it gives us a way of
  * getting meaningful information into the MCA_info structure,
  * so we can have a more interesting /proc/mca.
  */
-extern void mca_set_adapter_name (int slot, char * name);
+extern void mca_set_adapter_name(int slot, char* name);
 
 /* These routines actually mess with the hardware POS registers.  They
  * temporarily disable the device (and interrupts), so make sure you know
@@ -58,9 +58,9 @@ extern void mca_set_adapter_name (int slot, char * name);
  */
 
 /* read a byte from the specified POS register. */
-extern unsigned char mca_read_pos (int slot, int reg);
+extern unsigned char mca_read_pos(int slot, int reg);
 
 /* write a byte to the specified POS register. */
-extern void mca_write_pos (int slot, int reg, unsigned char byte);
+extern void mca_write_pos(int slot, int reg, unsigned char byte);
 
 #endif
