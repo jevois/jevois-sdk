@@ -12,6 +12,10 @@ OPENCV3_LICENSE_FILES = LICENSE
 OPENCV3_SUPPORTS_IN_SOURCE_BUILD = NO
 
 OPENCV3_DEPENDENCIES = opencv_contrib # download the contribs before we configure and build here
+OPENCV3_DEPENDENCIES += tesseract-ocr
+OPENCV3_DEPENDENCIES += protobuf
+OPENCV3_DEPENDENCIES += openblas
+OPENCV3_DEPENDENCIES += jpeg-turbo
 
 # Uses __atomic_fetch_add_4
 ifeq ($(BR2_TOOLCHAIN_HAS_LIBATOMIC),y)

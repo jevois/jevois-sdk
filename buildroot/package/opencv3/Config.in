@@ -8,6 +8,7 @@ menuconfig BR2_PACKAGE_OPENCV3
 	depends on !BR2_PACKAGE_OPENCV
 	depends on BR2_PACKAGE_OPENCV_CONTRIB # get the contribs before opencv, they will build with opencv
 	select BR2_PACKAGE_ZLIB
+	select BR2_PACKAGE_PROTOBUF_C
 
 	help
 	  OpenCV (Open Source Computer Vision) is a library of programming
