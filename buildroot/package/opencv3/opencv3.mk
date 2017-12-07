@@ -13,7 +13,7 @@ OPENCV3_SUPPORTS_IN_SOURCE_BUILD = NO
 
 OPENCV3_DEPENDENCIES = opencv_contrib # download the contribs before we configure and build here
 OPENCV3_DEPENDENCIES += tesseract-ocr
-OPENCV3_DEPENDENCIES += protobuf
+OPENCV3_DEPENDENCIES += protobuf-c
 OPENCV3_DEPENDENCIES += openblas
 OPENCV3_DEPENDENCIES += jpeg-turbo
 

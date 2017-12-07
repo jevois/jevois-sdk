@@ -39,7 +39,7 @@ unsigned int uvc_gadget_trace_param;
 #define UVC_STRING_STREAMING_IDX		1
 
 static struct usb_string uvc_en_us_strings[] = {
-	[UVC_STRING_CONTROL_IDX].s = "Video Control",
+  [UVC_STRING_CONTROL_IDX].s = "JeVois-A33 Video Camera",
 	[UVC_STRING_STREAMING_IDX].s = "Video Streaming",
 	{  }
 };
