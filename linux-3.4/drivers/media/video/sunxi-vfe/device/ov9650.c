@@ -576,7 +576,7 @@ static int sensor_g_gain(struct v4l2_subdev *sd, __s32 *value)
 
 static int sensor_s_gain(struct v4l2_subdev *sd, int value)
 {
-  int ret; unsigned char val; unsigned int rgain; int m;
+  int ret; unsigned char val; unsigned int rgain;
 
   rgain = 0;
   if (value > 31) { rgain |= 0x10; value = value >> 1; }
@@ -623,8 +623,15 @@ static int sensor_s_autoexp(struct v4l2_subdev *sd, enum v4l2_exposure_auto_type
 
 static int sensor_g_exposure_absolute(struct v4l2_subdev *sd, __s32 *value)
 {
-  struct sensor_info *info = to_state(sd);
+  int ret; struct sensor_info *info = to_state(sd); unsigned char val; unsigned int exposure;
 
+  SENSOR_READ(REG_COM1);
+  exposure = val & 0x03;
+  SENSOR_READ(REG_AECH);
+  exposure |= (val << 2);
+  SENSOR_READ(REG_AECHM);
+  exposure |= ((val & 0x3f) << 10);
+  info->exp = (exposure * info->trow) / 100;
   *value = info->exp;
   return 0;
 }
@@ -642,6 +649,8 @@ static int sensor_s_exposure_absolute(struct v4l2_subdev *sd, int value)
   val = (exposure >> 2) & 0xff; SENSOR_WRITE(REG_AECH);
   val = (exposure >> 10) & 0x3f; SENSOR_WRITE(REG_AECHM);
 
+  info->exp = (exposure * info->trow) / 100;
+  
   return 0;
 }
 
@@ -661,7 +670,7 @@ static int sensor_s_autowb(struct v4l2_subdev *sd, int value)
   SENSOR_READ(REG_COM8);
   if (value) val |= COM8_AWB; else val &= ~COM8_AWB;
   SENSOR_WRITE(REG_COM8);
-  info->autowb = value;
+  if (value) info->autowb = 1; else info->autowb = 0;
   return 0;
 }
 
@@ -1288,6 +1297,7 @@ static int sensor_init(struct v4l2_subdev *sd, u32 val)
   if (ret < 0) { vfe_dev_err("write sensor_default_regs error\n"); return ret; }
 
   sensor_s_band_filter(sd, info->band_filter);
+  sensor_s_autowb(sd, info->autowb);
 
   if (info->stby_mode == 0) info->init_first_flag = 0;
   
@@ -1733,8 +1743,8 @@ static int sensor_g_ctrl(struct v4l2_subdev *sd, struct v4l2_control *ctrl)
   case V4L2_CID_AUTOGAIN: ret = sensor_g_autogain(sd, &ctrl->value); break;
   case V4L2_CID_EXPOSURE_AUTO: ret = sensor_g_autoexp(sd, &ctrl->value); break;
 
-  case V4L2_CID_DO_WHITE_BALANCE:
-  case V4L2_CID_AUTO_N_PRESET_WHITE_BALANCE: return sensor_g_wb(sd, &ctrl->value);
+  case V4L2_CID_DO_WHITE_BALANCE: ctrl->value = 0; ret = 0; break;
+  case V4L2_CID_AUTO_N_PRESET_WHITE_BALANCE: ret = sensor_g_wb(sd, &ctrl->value); break;
 
   case V4L2_CID_AUTO_WHITE_BALANCE: ret = sensor_g_autowb(sd, &ctrl->value); break;
   case V4L2_CID_RED_BALANCE: ret = sensor_g_wb_red(sd, &ctrl->value); break;
@@ -1763,6 +1773,12 @@ static int sensor_s_ctrl(struct v4l2_subdev *sd, struct v4l2_control *ctrl)
   case V4L2_CID_EXPOSURE_AUTO: return sensor_s_autoexp(sd, (enum v4l2_exposure_auto_type)ctrl->value);
 
   case V4L2_CID_DO_WHITE_BALANCE:
+  {
+    int oldval; sensor_g_autowb(sd, &oldval);
+    sensor_s_autowb(sd, 1);
+    return sensor_s_autowb(sd, oldval);
+  }
+  
   case V4L2_CID_AUTO_N_PRESET_WHITE_BALANCE:
     return sensor_s_wb(sd, (enum v4l2_auto_n_preset_white_balance) ctrl->value);
 

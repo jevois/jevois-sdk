@@ -59,6 +59,10 @@ static bool use_storage = 1;
 module_param(use_storage, bool, S_IRUGO);
 MODULE_PARM_DESC(use_storage, "Add access to microSD over USB when true");
 
+static bool max_bandwidth = 1;
+module_param(max_bandwidth, bool, S_IRUGO);
+MODULE_PARM_DESC(max_bandwidth, "Request maximum USB isochronous bandwidth when true");
+
 /* --------------------------------------------------------------------------
  * Device descriptor
  */
@@ -607,7 +611,8 @@ static int __init webcam_config_bind(struct usb_configuration *c)
 
   status = uvc_bind_config(c, uvc_control_cls,
                            (const struct uvc_descriptor_header * const *)uvc_hs_streaming_cls,
-                           (const struct uvc_descriptor_header * const *)uvc_hs_streaming_cls);
+                           (const struct uvc_descriptor_header * const *)uvc_hs_streaming_cls,
+			   max_bandwidth);
   if (status < 0) return status;
 
 #ifdef JEVOIS_SERIAL

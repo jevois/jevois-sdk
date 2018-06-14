@@ -349,7 +349,7 @@ static int alarmtimer_resume(struct device *dev)
 
 static void alarmtimer_shutdown(struct platform_device *dev)
 {
-        return 0;
+        return;
 }
 #endif
 

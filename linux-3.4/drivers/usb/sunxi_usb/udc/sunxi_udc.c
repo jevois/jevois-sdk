@@ -821,7 +821,7 @@ static void sunxi_udc_handle_ep0(struct sunxi_udc *dev)
   /* clear setup end */
   if (USBC_Dev_Ctrl_IsSetupEnd(g_sunxi_udc_io.usb_bsp_hdle))
   {
-    DMSG_PANIC("handle_ep0: ep0 setup end req=%lx\n", req);
+    DMSG_PANIC("handle_ep0: ep0 setup end req=%p\n", req);
 
     sunxi_udc_nuke(dev, ep, 0);
     USBC_Dev_Ctrl_ClearSetupEnd(g_sunxi_udc_io.usb_bsp_hdle);
@@ -1056,7 +1056,6 @@ static void sunxi_udc_stop_dma_work(struct sunxi_udc *dev, u32 unlock)
 
 void sunxi_udc_dma_completion(struct sunxi_udc *dev, struct sunxi_udc_ep *ep, struct sunxi_udc_request *req)
 {
-  unsigned long		flags 			= 0;
   __u8  			old_ep_index 		= 0;
   __u32 			dma_transmit_len	= 0;
   int 			is_complete		= 0;
@@ -1435,7 +1434,9 @@ static int sunxi_udc_ep_enable(struct usb_ep *_ep, const struct usb_endpoint_des
 
   spin_lock_irqsave(&ep->dev->lock, flags);
 
-  if (ep->num == 4) _ep->maxpacket = 3072;
+  if (max & (1 << 12)) _ep->maxpacket = (max & 0x7ff) * 3;
+  else if (max & (1 << 11)) _ep->maxpacket = (max & 0x7ff) * 2;
+  else _ep->maxpacket = max & 0x7ff;
   
   ep->desc = desc;
   ep->halted = 0;

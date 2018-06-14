@@ -128,7 +128,7 @@ static struct usb_endpoint_descriptor uvc_streaming_ep = {
 
 
 
-    .wMaxPacketSize      = cpu_to_le16(1024 | (1<<12)),
+	.wMaxPacketSize      = cpu_to_le16(1024 | (1<<12)),
 	.bInterval		     = 1,
 };
 
@@ -603,11 +603,16 @@ int __init
 uvc_bind_config(struct usb_configuration *c,
 		const struct uvc_descriptor_header * const *control,
 		const struct uvc_descriptor_header * const *fs_streaming,
-		const struct uvc_descriptor_header * const *hs_streaming)
+		const struct uvc_descriptor_header * const *hs_streaming,
+		bool max_bandwidth)
 {
 	struct uvc_device *uvc;
 	int ret = 0;
 
+	if (max_bandwidth == 0)
+	  uvc_streaming_ep.wMaxPacketSize = cpu_to_le16(1024);
+
+	
 	/* TODO Check if the USB device controller supports the required
 	 * features.
 	 */
