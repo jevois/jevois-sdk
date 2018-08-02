@@ -1,4 +1,5 @@
 
+/* These definitions are from kernel 4.4 in ov9650.c, with additions from datasheet and others */
 
 #define REG_GAIN		0x00	/* Gain control, AGC[7:0] */
 #define REG_BLUE		0x01	/* AWB - Blue chanel gain */

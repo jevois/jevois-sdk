@@ -1775,8 +1775,10 @@ static int sensor_s_ctrl(struct v4l2_subdev *sd, struct v4l2_control *ctrl)
   case V4L2_CID_DO_WHITE_BALANCE:
   {
     int oldval; sensor_g_autowb(sd, &oldval);
+    if (oldval) return 0;
     sensor_s_autowb(sd, 1);
-    return sensor_s_autowb(sd, oldval);
+    mdelay(600);
+    return sensor_s_autowb(sd, 0);
   }
   
   case V4L2_CID_AUTO_N_PRESET_WHITE_BALANCE:

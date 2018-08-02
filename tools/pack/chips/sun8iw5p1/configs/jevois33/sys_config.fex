@@ -970,17 +970,38 @@ vip_dev0_dvdd            = "axp22_eldo2"
 vip_dev0_dvdd_vol        = 1800000
 vip_dev0_afvdd           = "axp22_dldo3"
 vip_dev0_afvdd_vol       = 2800000
-;;;vip_dev0_power_en        =
-
-;;; FIXME test use the led for debug
 vip_dev0_power_en        = port:PG10<1><default><default><0>
-
 vip_dev0_reset           = port:PE17<1><default><default><0>
 vip_dev0_pwdn            = port:PE16<1><default><default><0>
 vip_dev0_flash_en        =
 vip_dev0_flash_mode      =
 vip_dev0_af_pwdn         =
 
+;;; JEVOIS this is for the ov7725
+;vip_dev0_mname           = "ov7725"
+;vip_dev0_pos             = "front"
+;vip_dev0_lane            = 1
+;vip_dev0_twi_id          = 2
+;vip_dev0_twi_addr        = 0x42
+;vip_dev0_isp_used        = 0
+;vip_dev0_fmt             = 0
+;vip_dev0_stby_mode       = 1
+;vip_dev0_vflip           = 0
+;vip_dev0_hflip           = 0
+;vip_dev0_iovdd           = "axp22_dldo3"
+;vip_dev0_iovdd_vol       = 2800000
+;vip_dev0_avdd            = "axp22_ldoio0"
+;vip_dev0_avdd_vol        = 3300000
+;vip_dev0_dvdd            = "axp22_eldo2"
+;vip_dev0_dvdd_vol        = 1800000
+;vip_dev0_afvdd           = "axp22_dldo3"
+;vip_dev0_afvdd_vol       = 2800000
+;vip_dev0_power_en        = port:PG10<1><default><default><0>
+;vip_dev0_reset           = port:PE17<1><default><default><0>
+;vip_dev0_pwdn            = port:PE16<1><default><default><0>
+;vip_dev0_flash_en        =
+;vip_dev0_flash_mode      =
+;vip_dev0_af_pwdn         =
 
 ;;vip_dev1_mname           = "gc2035"
 ;;vip_dev1_pos             = "front"

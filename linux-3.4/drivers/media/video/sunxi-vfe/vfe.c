@@ -96,6 +96,8 @@ struct mutex probe_hdl_lock;
 struct file* fp_dbg = NULL;
 static char LogFileName[128] = "/system/etc/hawkview/log.bin";
 
+static char jevois_sensor[32] = "";
+
 module_param_string(ccm, ccm, sizeof(ccm), S_IRUGO|S_IWUSR);
 module_param(i2c_addr,uint, S_IRUGO|S_IWUSR);
 
@@ -104,6 +106,8 @@ module_param(act_slave,uint, S_IRUGO|S_IWUSR);
 module_param(define_sensor_list,uint, S_IRUGO|S_IWUSR);
 module_param(vfe_i2c_dbg,uint, S_IRUGO|S_IWUSR);
 module_param(isp_log,uint, S_IRUGO|S_IWUSR);
+
+module_param_string(sensor, jevois_sensor, sizeof(jevois_sensor), S_IRUGO|S_IWUSR);
 
 static uint turbo = 0;
 module_param(turbo, uint, S_IRUGO|S_IWUSR);
@@ -3708,7 +3712,7 @@ static int vidioc_s_parm(struct file *file, void *priv,
 }
 
 
-static long vidioc_default(struct file *file, void *fh, bool valid_prio, unsigned int cmd, void *arg)
+static long vidioc_default(struct file *file, void *fh, bool valid_prio, int cmd, void *arg)
 {
   struct vfe_dev *dev = video_drvdata(file);
   return v4l2_subdev_call(dev->sd, core, ioctl, cmd, arg);
@@ -5084,6 +5088,39 @@ static int vfe_probe(struct platform_device *pdev)
 		goto error;
 	}
 
+
+	if (strcmp(jevois_sensor, "ov9650") == 0)
+	{
+	  strcpy(dev->ccm_cfg[0]->ccm, jevois_sensor);
+	  dev->ccm_cfg[0]->i2c_addr = 0x60;
+	  dev->ccm_cfg[0]->power.iovdd_vol = 2800000;
+	  dev->ccm_cfg[0]->power.avdd_vol = 2800000;
+	  dev->ccm_cfg[0]->power.dvdd_vol = 1800000;
+	}
+	else if (strcmp(jevois_sensor, "ov2640") == 0)
+	{
+	  strcpy(dev->ccm_cfg[0]->ccm, jevois_sensor);
+	  dev->ccm_cfg[0]->i2c_addr = 0x60;
+	  dev->ccm_cfg[0]->power.iovdd_vol = 2800000;
+	  dev->ccm_cfg[0]->power.avdd_vol = 2800000;
+	  dev->ccm_cfg[0]->power.dvdd_vol = 1300000;
+	}
+	else if (strcmp(jevois_sensor, "ov7725") == 0)
+	{
+	  strcpy(dev->ccm_cfg[0]->ccm, jevois_sensor);
+	  dev->ccm_cfg[0]->i2c_addr = 0x42;
+	  dev->ccm_cfg[0]->power.iovdd_vol = 2800000;
+	  dev->ccm_cfg[0]->power.avdd_vol = 3300000;
+	  dev->ccm_cfg[0]->power.dvdd_vol = 1800000;
+	}
+	else
+	{
+	  vfe_err("Incorrect JeVois sensor module param specified -- ABORT\n");
+	  ret = -123;
+	  goto error;
+	}
+
+	
 	if(vips!=0xffff)
 	{
 		printk("vips input 0x%x\n",vips);

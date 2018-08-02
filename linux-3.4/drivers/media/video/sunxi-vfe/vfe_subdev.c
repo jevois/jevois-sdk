@@ -182,11 +182,9 @@ int vfe_gpio_write(struct v4l2_subdev *sd, enum gpio_type gpio_type, unsigned in
 			break;
 		case PWDN:
 			gpio = dev->gpio->pwdn_io;
-			force_value_flag = 0;
 			break;
 		case RESET:
 			gpio = dev->gpio->reset_io;
-			force_value_flag = 0;
 			break;
 		case AF_PWDN:
 			gpio = dev->gpio->af_pwdn_io;

@@ -29,7 +29,7 @@
  */
 
 /* big enough to hold our biggest descriptor */
-#define USB_BUFSIZ	16384
+#define USB_BUFSIZ	32768
 
 static struct usb_composite_driver *composite;
 static int (*composite_gadget_bind)(struct usb_composite_dev *cdev);
