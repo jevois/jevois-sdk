@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-OPENCV3_VERSION = 3.4.2
+OPENCV3_VERSION = 4.0.0-alpha
 OPENCV3_SITE = $(call github,opencv,opencv,$(OPENCV3_VERSION))
 OPENCV3_INSTALL_STAGING = YES
 OPENCV3_LICENSE = BSD-3-Clause
@@ -27,6 +27,7 @@ endif
 
 # OpenCV component options
 OPENCV3_CONF_OPTS += \
+    -DOPENCV_ENABLE_PKG_CONFIG=ON \
 	-DBUILD_DOCS=OFF \
 	-DBUILD_PERF_TESTS=$(if $(BR2_PACKAGE_OPENCV3_BUILD_PERF_TESTS),ON,OFF) \
 	-DBUILD_TESTS=$(if $(BR2_PACKAGE_OPENCV3_BUILD_TESTS),ON,OFF) \

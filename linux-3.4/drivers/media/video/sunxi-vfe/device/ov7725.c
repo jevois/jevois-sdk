@@ -314,7 +314,7 @@ static int sensor_g_exposure_absolute(struct v4l2_subdev *sd, __s32 *value)
   exposure = val;
   SENSOR_READ(AECH);
   exposure |= (val << 8);
-  info->exp = (exposure * info->trow) / 100;
+  info->exp = (exposure * info->trow + 50) / 100;
   *value = info->exp;
   return 0;
 }
@@ -323,7 +323,7 @@ static int sensor_s_exposure_absolute(struct v4l2_subdev *sd, int value)
 {
   int ret; struct sensor_info *info = to_state(sd); unsigned char val; unsigned int exposure;
 
-  exposure = (value * 100) / info->trow;
+  exposure = (value * 100 + 50) / info->trow;
   if (exposure < 1) exposure = 1; else if (exposure > info->exp_max_lines) exposure = info->exp_max_lines;
   
   vfe_dev_dbg("OV7725 set exp: value=%d expo=%u em=%d tr=%d\n", value, exposure, info->exp_max_lines, info->trow);
@@ -331,7 +331,7 @@ static int sensor_s_exposure_absolute(struct v4l2_subdev *sd, int value)
   val = (exposure >> 8); SENSOR_WRITE(AECH);
   val = (exposure & 0xff); SENSOR_WRITE(AEC);
 
-  info->exp = (exposure * info->trow) / 100;
+  info->exp = (exposure * info->trow + 50) / 100;
   
   return 0;
 }
@@ -460,7 +460,7 @@ static int sensor_g_sharpness(struct v4l2_subdev *sd, __s32 *value)
 
 static int sensor_s_sharpness(struct v4l2_subdev *sd, int value)
 {
-  int ret; struct sensor_info *info = to_state(sd); unsigned char val;
+  /*int ret;*/ struct sensor_info *info = to_state(sd); /*unsigned char val;*/
 
   /* fixme this chip has auto sharpness
 
@@ -901,8 +901,8 @@ static long sensor_ioctl(struct v4l2_subdev *sd, unsigned int cmd, void *arg)
 
   switch (cmd)
   {
-  case _IOW('V', 192, short): val = data[1]; SENSOR_WRITE(data[0]); break;
-  case _IOWR('V', 193, short): SENSOR_READ(data[0]); data[1] = val; break;
+  case _IOW('V', 192, int): val = data[2]; SENSOR_WRITE(data[0]); break;
+  case _IOWR('V', 193, int): SENSOR_READ(data[0]); data[1] = 0; data[2] = val; data[3] = 0; break;
   default: return -EINVAL;
   }
 

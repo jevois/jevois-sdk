@@ -5113,6 +5113,14 @@ static int vfe_probe(struct platform_device *pdev)
 	  dev->ccm_cfg[0]->power.avdd_vol = 3300000;
 	  dev->ccm_cfg[0]->power.dvdd_vol = 1800000;
 	}
+	else if (strcmp(jevois_sensor, "ar0135") == 0)
+	{
+	  strcpy(dev->ccm_cfg[0]->ccm, jevois_sensor);
+	  dev->ccm_cfg[0]->i2c_addr = 0x20;
+	  dev->ccm_cfg[0]->power.iovdd_vol = 2800000;
+	  dev->ccm_cfg[0]->power.avdd_vol = 2800000;
+	  dev->ccm_cfg[0]->power.dvdd_vol = 1800000;
+	}
 	else
 	{
 	  vfe_err("Incorrect JeVois sensor module param specified -- ABORT\n");
