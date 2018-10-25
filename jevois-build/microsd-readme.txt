@@ -41,3 +41,7 @@ In the BOOT partition of JeVois, you can:
 
 - create an empty file BOOT:usbserialtty if you wish to get a login prompt on the serial-over-USB port instead of the
   JeVois console. Has no effect if BOOT:nousbserial is also present.
+
+- to use a differentg sensor, put its name in a file named BOOT:sensor - for example, if BOOT:sensor exists and contains
+  a single line "ov7725" then JeVois will attempt to use an Omnivision ov7725 sensor.
+  
