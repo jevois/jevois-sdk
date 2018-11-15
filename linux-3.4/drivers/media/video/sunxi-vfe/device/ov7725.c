@@ -879,7 +879,8 @@ static int sensor_init(struct v4l2_subdev *sd, u32 val)
   info->tpf.denominator = 30;    /* 30fps */
   info->sharpness = 6;
   info->exp = 500;
-  
+  info->jevois = JEVOIS_SENSOR_COLOR;
+
   vfe_dev_dbg("Writing sensor default regs\n");
   ret = sensor_write_array(sd, sensor_default_regs, ARRAY_SIZE(sensor_default_regs));
   if (ret < 0) { vfe_dev_err("write sensor_default_regs error\n"); return ret; }
@@ -898,11 +899,13 @@ static long sensor_ioctl(struct v4l2_subdev *sd, unsigned int cmd, void *arg)
 {
   int ret; unsigned char val;
   unsigned char *data = (unsigned char *)arg;
+  struct sensor_info *info = to_state(sd);
 
   switch (cmd)
   {
   case _IOW('V', 192, int): val = data[2]; SENSOR_WRITE(data[0]); break;
   case _IOWR('V', 193, int): SENSOR_READ(data[0]); data[1] = 0; data[2] = val; data[3] = 0; break;
+  case _IOWR('V', 198, int): *((unsigned int *)arg) = info->jevois; break;
   default: return -EINVAL;
   }
 

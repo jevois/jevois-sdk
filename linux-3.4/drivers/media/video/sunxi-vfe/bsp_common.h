@@ -128,6 +128,7 @@ enum bus_pixeltype
   BUS_FMT_SGBRG,
   BUS_FMT_SGRBG,
   BUS_FMT_SRGGB,
+  BUS_FMT_GREY,
 };
 
 enum pixel_fmt
@@ -167,6 +168,7 @@ enum pixel_fmt
   PIX_FMT_SGBRG_12,
   PIX_FMT_SGRBG_12,
   PIX_FMT_SRGGB_12,
+  PIX_FMT_Y8_8 = 0x6000,
   PIX_FMT_NONE = 0xffff,
 };
 
@@ -182,6 +184,7 @@ enum pixel_fmt_type {
   YUV420_SPL,
   YUV420_MB,
   BAYER_RGB,
+  GREY,
 };
 
 enum bit_width

@@ -394,6 +394,12 @@ static struct vfe_fmt formats[] = {
 		.depth        = 8,
 		.planes_cnt   = 1,
 	},
+	{
+		.name         = "GREY 8bit",
+		.fourcc       = V4L2_PIX_FMT_GREY,
+		.depth        = 8,
+		.planes_cnt   = 1,
+	},
 };
 
 static enum v4l2_mbus_pixelcode try_yuv422_bus[] = {
@@ -462,6 +468,11 @@ static enum v4l2_mbus_pixelcode try_bayer_rgb_bus[] = {
 };
 
 #define N_TRY_BAYER ARRAY_SIZE(try_bayer_rgb_bus)
+
+static enum v4l2_mbus_pixelcode try_grey_bus[] = {
+	V4L2_MBUS_FMT_Y8_1X8,
+};
+#define N_TRY_GREY ARRAY_SIZE(try_grey_bus)
 
 static enum v4l2_mbus_pixelcode try_rgb565_bus[] = {
 	V4L2_MBUS_FMT_RGB565_16X1,
@@ -1785,6 +1796,8 @@ static enum pixel_fmt pix_fmt_v4l2_to_common(unsigned int pix_fmt)
 			return PIX_FMT_YVU422SP_8;
 		case V4L2_PIX_FMT_SBGGR8:
 			return PIX_FMT_SBGGR_8;
+		case V4L2_PIX_FMT_GREY:
+			return PIX_FMT_Y8_8;
 		case V4L2_PIX_FMT_SGBRG8:
 			return PIX_FMT_SGBRG_8;
 		case V4L2_PIX_FMT_SGRBG8:
@@ -1925,6 +1938,20 @@ static enum v4l2_mbus_pixelcode *try_fmt_internal(struct vfe_dev *dev,struct v4l
       ret = v4l2_subdev_call(dev->sd,video,try_mbus_fmt,&ccm_fmt);
       if (ret >= 0) {
         vfe_dbg(0,"try bayer bus ok when pix fmt is bayer rgb at %s!\n",__func__);
+        break;
+      }
+    }
+    if (ret < 0) {
+      vfe_err("try bayer bus error when pix fmt is bayer rgb at %s!\n",__func__);
+      return NULL;
+    }
+  } else if (pix_fmt_type == GREY) {
+    for(bus_pix_code = try_grey_bus; bus_pix_code < try_grey_bus + N_TRY_GREY; bus_pix_code++) {
+      ccm_fmt.code  = *bus_pix_code;
+      ccm_fmt.field = f->fmt.pix.field;
+      ret = v4l2_subdev_call(dev->sd,video,try_mbus_fmt,&ccm_fmt);
+      if (ret >= 0) {
+        vfe_dbg(0,"try grey bus ok when pix fmt is grey at %s!\n",__func__);
         break;
       }
     }

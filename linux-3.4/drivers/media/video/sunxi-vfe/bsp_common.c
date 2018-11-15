@@ -39,7 +39,9 @@ enum bus_pixeltype find_bus_type(enum bus_pixelcode code) {
     case BUS_FMT_SBGGR10_10X1:
     case BUS_FMT_SBGGR12_12X1:
       return BUS_FMT_SBGGR;
-    case BUS_FMT_SGBRG8_1X8:
+    case BUS_FMT_Y8_1X8:
+      return BUS_FMT_GREY;
+  case BUS_FMT_SGBRG8_1X8:
     case BUS_FMT_SGBRG10_DPCM8_1X8:
     case BUS_FMT_SGBRG10_1X10:
     case BUS_FMT_SGBRG12_1X12:
@@ -102,6 +104,7 @@ enum bit_width find_bus_width(enum bus_pixelcode code) {
     case BUS_FMT_YUYV8_2X8:
     case BUS_FMT_YVYU8_2X8:     
     case BUS_FMT_SBGGR8_1X8:
+    case BUS_FMT_Y8_1X8:
     case BUS_FMT_SBGGR10_DPCM8_1X8:     
     case BUS_FMT_SGBRG8_1X8:
     case BUS_FMT_SGBRG10_DPCM8_1X8:
@@ -109,7 +112,7 @@ enum bit_width find_bus_width(enum bus_pixelcode code) {
     case BUS_FMT_SGRBG10_DPCM8_1X8: 
     case BUS_FMT_SRGGB8_1X8:
     case BUS_FMT_SRGGB10_DPCM8_1X8:
-      return W_8BIT;  
+     return W_8BIT;  
     case BUS_FMT_YUYV10_2X10: 
     case BUS_FMT_YVYU10_2X10:
     case BUS_FMT_SBGGR10_1X10:
@@ -149,6 +152,7 @@ enum bit_width find_bus_precision(enum bus_pixelcode code) {
     case BUS_FMT_SGRBG8_8X1:      
     case BUS_FMT_SRGGB8_8X1:  
     case BUS_FMT_SBGGR8_1X8:
+    case BUS_FMT_Y8_1X8:
     case BUS_FMT_SGBRG8_1X8:      
     case BUS_FMT_SGRBG8_1X8:      
     case BUS_FMT_SRGGB8_1X8:    
@@ -246,6 +250,8 @@ enum pixel_fmt_type find_pixel_fmt_type(enum pixel_fmt code)
     case PIX_FMT_SGRBG_12:
     case PIX_FMT_SRGGB_12:
       return BAYER_RGB;
+    case PIX_FMT_Y8_8:
+      return GREY;
     default:
       return BAYER_RGB;
   }

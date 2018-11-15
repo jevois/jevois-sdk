@@ -294,6 +294,7 @@ int bsp_csi_set_fmt(unsigned int sel, struct bus_info *bus_info, struct frame_in
     case PIX_FMT_SGBRG_12:
     case PIX_FMT_SGRBG_12:
     case PIX_FMT_SRGGB_12:
+    case PIX_FMT_Y8_8:
       fmt_cfg[ch].input_fmt = CSI_RAW;
       if (bus_precision[ch] == W_8BIT)
         fmt_cfg[ch].output_fmt = (is_buf_itl[ch] == 1)? CSI_FRAME_RAW_8:CSI_FIELD_RAW_8;
@@ -526,6 +527,7 @@ int bsp_csi_set_size(unsigned int sel, struct bus_info *bus_info, struct frame_i
       case PIX_FMT_SGBRG_12:
       case PIX_FMT_SGRBG_12:
       case PIX_FMT_SRGGB_12:
+      case PIX_FMT_Y8_8:
         line_stride_y_ch[ch] = frame_info->ch_size[ch].width <<((bus_precision[ch] == W_8BIT)?0:1);
         buf_height_y_ch[ch] = frame_info->ch_size[ch].height;
         break;

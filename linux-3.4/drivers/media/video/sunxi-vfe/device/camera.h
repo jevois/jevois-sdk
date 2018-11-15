@@ -97,6 +97,11 @@ struct sensor_info {
   unsigned int exp_max_lines;
   unsigned int trow;
   unsigned int mbus_code;
+  int jevois;
 };
+
+#define JEVOIS_SENSOR_COLOR    0x00
+#define JEVOIS_SENSOR_MONO     0x01
+#define JEVOIS_SENSOR_ICM20948 0x02
 
 #endif

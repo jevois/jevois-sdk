@@ -126,7 +126,7 @@ static struct regval_list sensor_default_regs[] = {
 };
 
 static struct reg_list_a8_d8 imu_default_regs[] = {
-  { 0x03, 0x40 },
+  { 0x03, 0x60 },
   { 0x06, 0x01 },
 };
 
@@ -541,16 +541,26 @@ static int sensor_reset(struct v4l2_subdev *sd, u32 val)
   return 0;
 }
 
+static int imu_detect(struct v4l2_subdev *sd)
+{
+  int ret; unsigned char imuval;
+
+  IMU_READ(0x00);
+
+  if (imuval != 0xEA) { vfe_dev_print("No IMU detected.\n"); return 1; }
+
+  vfe_dev_print("IMU ICM-20948 ready\n");
+  return 0;
+}
+  
 static int sensor_detect(struct v4l2_subdev *sd)
 {
-  int ret; unsigned short val; unsigned char imuval;
-  int tmp;
+  int ret; unsigned short val; int tmp;
+  struct sensor_info *info = to_state(sd);
 
   vfe_dev_print("sensor detect start\n");
 
   SENSOR_READ(0x3000);
-
-  vfe_dev_print("Register 0x3000 has value 0x%x\n", val);
 
   if (val == 0x754) vfe_dev_print("Detected Aptina AR0135 camera\n");
   else if (val == 0x2406) vfe_dev_print("Detected Aptina AR0134 camera\n");
@@ -559,22 +569,21 @@ static int sensor_detect(struct v4l2_subdev *sd)
   SENSOR_READ(0x301a); tmp = val; val |= (1 << 5); SENSOR_WRITE(0x301a);
   
   SENSOR_READ(0x31fa);
-  if (val & (0x4 << 8)) vfe_dev_print("Sensor is COLOR\n"); else vfe_dev_print("Sensor is MONO\n");
+  if (val & (0x4 << 8)) { vfe_dev_print("Sensor is COLOR\n"); info->jevois = JEVOIS_SENSOR_COLOR; }
+  else { vfe_dev_print("Sensor is MONO\n"); info->jevois = JEVOIS_SENSOR_MONO; }
 
   val = tmp; SENSOR_WRITE(0x301a);
 
-  IMU_READ(0x00);
-  vfe_dev_print("IMU whoami is 0x%x\n", imuval);
-  if (imuval != 0xEA) return 1;
-  vfe_dev_print("IMU ICM-20948 ready\n");
-
+  if (imu_detect(sd)) vfe_dev_print("Sensor has no IMU\n");
+  else info->jevois |= JEVOIS_SENSOR_ICM20948;
+  
   return 0;
 }
 
 static int sensor_init(struct v4l2_subdev *sd, u32 val)
 {
-  int ret;
-  struct sensor_info *info = to_state(sd);
+  int ret; struct sensor_info *info = to_state(sd);
+  unsigned char imuval;
   
   vfe_dev_dbg("sensor_init 0x%x\n", val);
   
@@ -612,14 +621,23 @@ static int sensor_init(struct v4l2_subdev *sd, u32 val)
   ret = sensor_write_array(sd, sensor_default_regs, ARRAY_SIZE(sensor_default_regs));
   if (ret < 0) { vfe_dev_err("write sensor_default_regs error\n"); return ret; }
 
-  vfe_dev_dbg("Writing IMU default regs\n");
-  ret = imu_write_array(sd, imu_default_regs, ARRAY_SIZE(imu_default_regs));
-  if (ret < 0) { vfe_dev_err("write imu_default_regs error\n"); return ret; }
-
   if (info->stby_mode == 0) info->init_first_flag = 0;
   
   info->preview_first_flag = 1;
 
+  if (info->jevois & JEVOIS_SENSOR_ICM20948)
+  {
+    vfe_dev_dbg("Writing IMU default regs\n");
+    ret = imu_write_array(sd, imu_default_regs, ARRAY_SIZE(imu_default_regs));
+    if (ret < 0) { vfe_dev_err("write imu_default_regs error\n"); return ret; }
+
+    ret = imu_load_dmp(sd);
+    if (ret) { vfe_dev_err("FAIL to load IMU DMP code\n"); return ret; }
+
+    imuval = 0x80 | 0x40;
+    IMU_WRITE(0x03);
+  }
+  
   return 0;
 }
 
@@ -627,6 +645,7 @@ static long sensor_ioctl(struct v4l2_subdev *sd, unsigned int cmd, void *arg)
 {
   int ret; unsigned short val; unsigned char imuval;
   unsigned short * data = (unsigned short *)arg;
+  struct sensor_info *info = to_state(sd);
 
   switch (cmd)
   {
@@ -636,27 +655,20 @@ static long sensor_ioctl(struct v4l2_subdev *sd, unsigned int cmd, void *arg)
   case _IOWR('V', 195, int): IMU_READ(data[0] & 0xff); data[1] = imuval; break;
   case _IOW('V', 196, struct jevois_data):
   {
-    struct jevois_data kdata;
-    int rc = copy_from_user((void *)&kdata, (void *)data, sizeof(struct jevois_data));
-    if (rc) { vfe_dev_err("IOCTL 196: copy_from_user error %d\n", rc); return -EINVAL; }
-    ret = imu_write_a8_d8_array(sd, kdata.addr, kdata.size, kdata.data);
+    struct jevois_data * kdata = (struct jevois_data *)arg;
+    ret = imu_write_a8_d8_array(sd, kdata->addr, kdata->size, kdata->data);
   }
   break;
 
   case _IOWR('V', 197, struct jevois_data):
   {
-    struct jevois_data kdata;
-    int rc = copy_from_user((void *)&kdata, (void *)data, sizeof(struct jevois_data));
-
-    if (rc) { vfe_dev_err("IOCTL 196: copy_from_user error %d\n", rc); return -EINVAL; }
-
-    ret = imu_read_a8_d8_array(sd, kdata.addr, kdata.size, kdata.data);
-
-    rc = copy_to_user((void *)data, (void *)&kdata, sizeof(struct jevois_data));
-    if (rc) { vfe_dev_err("IOCTL 197: copy_to_user error %d\n", rc); return -EINVAL; }
+    struct jevois_data * kdata = (struct jevois_data *)arg;
+    ret = imu_read_a8_d8_array(sd, kdata->addr, kdata->size, kdata->data);
   }
   break;
 
+  case _IOWR('V', 198, int): *((unsigned int *)arg) = info->jevois; break;
+    
   default:
     return -EINVAL;
   }
@@ -751,9 +763,14 @@ static struct sensor_win_size sensor_win_sizes[] = {
 
 static int sensor_enum_fmt(struct v4l2_subdev *sd, unsigned index, enum v4l2_mbus_pixelcode *code)
 {
+  struct sensor_info *info = to_state(sd);
+
   switch (index)
   {
-  case 0: *code = V4L2_MBUS_FMT_SBGGR8_1X8; return 0;
+  case 0:
+    if (info->jevois & JEVOIS_SENSOR_MONO) *code = V4L2_MBUS_FMT_Y8_1X8;
+    else *code = V4L2_MBUS_FMT_SBGGR8_1X8;
+    return 0;
     
   default: return -EINVAL;
   }
@@ -764,15 +781,21 @@ static int sensor_try_fmt_internal(struct v4l2_subdev *sd,
                                    struct sensor_win_size **ret_wsize)
 {
   struct sensor_win_size *wsize;
-
-  switch (fmt->code)
+  struct sensor_info *info = to_state(sd);
+ 
+  if (info->jevois & JEVOIS_SENSOR_MONO)
   {
-  case V4L2_MBUS_FMT_SBGGR8_1X8:
-    break;
-
-  default:
-    vfe_dev_dbg("sensor_try_fmt_internal: v4l2_mbus_framefmt code %x not found\n", fmt->code);
-    return -1;
+    if (fmt->code != V4L2_MBUS_FMT_Y8_1X8)
+    {
+      return -1;
+    }
+  }
+  else
+  {
+    if (fmt->code != V4L2_MBUS_FMT_SBGGR8_1X8)
+    {
+      return -1;
+    }
   }
   
   fmt->field = V4L2_FIELD_NONE;
@@ -808,7 +831,7 @@ static int sensor_g_mbus_config(struct v4l2_subdev *sd, struct v4l2_mbus_config 
 static int sensor_s_fmt(struct v4l2_subdev *sd, struct v4l2_mbus_framefmt *fmt)
 {
   int ret; struct sensor_info *info = to_state(sd); unsigned short val; struct sensor_win_size * wsize; 
-  unsigned int com2, href;
+  int binfac = 1;
 
   ret = sensor_try_fmt_internal(sd, fmt, &wsize);
   if (ret) return ret;
@@ -825,19 +848,35 @@ static int sensor_s_fmt(struct v4l2_subdev *sd, struct v4l2_mbus_framefmt *fmt)
   
   vfe_dev_dbg("sensor_s_fmt: using mbus_code = %x. Writing format setup registers.\n", fmt->code);
 
-  int binfac = 1;
   if (wsize->width < 1280)
   {
     SENSOR_READ(0x3032); val |= 0x0002; SENSOR_WRITE(0x3032);
-    SENSOR_READ(0x306e); val |= (1 << 4); SENSOR_WRITE(0x306e);
-    SENSOR_READ(0x30b0); val &= ~(1 << 7); SENSOR_WRITE(0x30b0);
+
+    if (info->jevois & JEVOIS_SENSOR_MONO)
+    {
+      SENSOR_READ(0x30b0); val |= (1 << 7); SENSOR_WRITE(0x30b0);
+    }
+    else
+    {
+      SENSOR_READ(0x306e); val |= (1 << 4); SENSOR_WRITE(0x306e);
+      SENSOR_READ(0x30b0); val &= ~(1 << 7); SENSOR_WRITE(0x30b0);
+    }
+
     binfac = 2;
   }
   else
   {
     SENSOR_READ(0x3032); val &= ~0x0002; SENSOR_WRITE(0x3032);
-    SENSOR_READ(0x306e); val &= ~(1 << 4); SENSOR_WRITE(0x306e);
-    SENSOR_READ(0x30b0); val &= ~(1 << 7); SENSOR_WRITE(0x30b0);
+    if (info->jevois & JEVOIS_SENSOR_MONO)
+    {
+      SENSOR_READ(0x30b0); val |= (1 << 7); SENSOR_WRITE(0x30b0);
+    }
+    else      
+    {
+      SENSOR_READ(0x306e); val &= ~(1 << 4); SENSOR_WRITE(0x306e);
+      SENSOR_READ(0x30b0); val &= ~(1 << 7); SENSOR_WRITE(0x30b0);
+    }
+
     binfac = 1;
   }
 
