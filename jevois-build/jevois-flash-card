@@ -249,7 +249,7 @@ if [ ! -f sdcard/usr/lib/python3.6/site-packages/cv2.so ]; then
     # There is a flaw in the buildroot building of opencv, where the library file name still shows up as compiled for
     # whatever the host architecture was, even though it has been correctly cross-compiled for the JeVois ARM
     # processor. Here we fix that and also move the library to the python site-packages:
-    mv sdcard/usr/python/3.6/cv2.cpython-36m-x86_64-linux-gnu.so sdcard/usr/lib/python3.6/site-packages/cv2.so
+    mv sdcard/usr/python/cv2/python-3.6/cv2.cpython-36m-x86_64-linux-gnu.so sdcard/usr/lib/python3.6/site-packages/cv2.so
 fi
     
 # Do not activate a console on ttyS0 by default in inittab, we do it in rcS above if needed, or in jevois.sh:
