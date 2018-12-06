@@ -5130,7 +5130,7 @@ static int vfe_probe(struct platform_device *pdev)
 	  dev->ccm_cfg[0]->i2c_addr = 0x60;
 	  dev->ccm_cfg[0]->power.iovdd_vol = 2800000;
 	  dev->ccm_cfg[0]->power.avdd_vol = 2800000;
-	  dev->ccm_cfg[0]->power.dvdd_vol = 1300000;
+	  dev->ccm_cfg[0]->power.dvdd_vol = 1200000;
 	}
 	else if (strcmp(jevois_sensor, "ov7725") == 0)
 	{

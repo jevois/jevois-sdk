@@ -76,8 +76,6 @@ MODULE_LICENSE("GPL");
 #define I2C_ADDR 0x60
 #define SENSOR_NAME "ov9650"
 
-struct sensor_format_struct;
-
 static inline struct sensor_info *to_state(struct v4l2_subdev *sd)
 {
   return container_of(sd, struct sensor_info, sd);
