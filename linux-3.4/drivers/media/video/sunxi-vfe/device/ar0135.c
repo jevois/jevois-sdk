@@ -327,7 +327,7 @@ static int sensor_g_wb_blue(struct v4l2_subdev *sd, int *value)
 
 static int sensor_s_wb_red(struct v4l2_subdev *sd, int value)
 {
-  int ret; unsigned short val = value & 0xffff;
+  int ret; unsigned short val = value & 0xff;
   SENSOR_WRITE(0x305a);
   return 0;
 }
@@ -580,12 +580,12 @@ static int sensor_detect(struct v4l2_subdev *sd)
   return 0;
 }
 
-static int sensor_init(struct v4l2_subdev *sd, u32 val)
+static int sensor_init(struct v4l2_subdev *sd, u32 valx)
 {
   int ret; struct sensor_info *info = to_state(sd);
-  unsigned char imuval;
+  unsigned char imuval; unsigned short val;
   
-  vfe_dev_dbg("sensor_init 0x%x\n", val);
+  vfe_dev_dbg("sensor_init 0x%x\n", valx);
   
   ret = sensor_detect(sd);
   if (ret) { vfe_dev_err("Sensor chip found is not a target chip for this driver\n"); return ret; }
@@ -621,6 +621,8 @@ static int sensor_init(struct v4l2_subdev *sd, u32 val)
   ret = sensor_write_array(sd, sensor_default_regs, ARRAY_SIZE(sensor_default_regs));
   if (ret < 0) { vfe_dev_err("write sensor_default_regs error\n"); return ret; }
 
+  if (info->jevois & JEVOIS_SENSOR_MONO) { val = 0x20; SENSOR_WRITE(0x305c); }
+  
   if (info->stby_mode == 0) info->init_first_flag = 0;
   
   info->preview_first_flag = 1;
@@ -855,6 +857,7 @@ static int sensor_s_fmt(struct v4l2_subdev *sd, struct v4l2_mbus_framefmt *fmt)
     if (info->jevois & JEVOIS_SENSOR_MONO)
     {
       SENSOR_READ(0x30b0); val |= (1 << 7); SENSOR_WRITE(0x30b0);
+      SENSOR_READ(0x306e); val &= ~(1 << 4); SENSOR_WRITE(0x306e);
     }
     else
     {
@@ -870,6 +873,7 @@ static int sensor_s_fmt(struct v4l2_subdev *sd, struct v4l2_mbus_framefmt *fmt)
     if (info->jevois & JEVOIS_SENSOR_MONO)
     {
       SENSOR_READ(0x30b0); val |= (1 << 7); SENSOR_WRITE(0x30b0);
+      SENSOR_READ(0x306e); val &= ~(1 << 4); SENSOR_WRITE(0x306e);
     }
     else      
     {
@@ -892,8 +896,9 @@ static int sensor_s_fmt(struct v4l2_subdev *sd, struct v4l2_mbus_framefmt *fmt)
   val += 23; SENSOR_WRITE(0x300a);
   val = 1388; SENSOR_WRITE(0x300c);
   
-  val = wsize->hoffset; SENSOR_WRITE(0x3004);
-  val += wsize->width * binfac + 1; SENSOR_WRITE(0x3008);
+  int xoff = 0; if (info->jevois & JEVOIS_SENSOR_MONO) xoff = 5;
+  val = wsize->hoffset + xoff; SENSOR_WRITE(0x3004);
+  val += wsize->width * binfac + ((val & 1) ? 1 : 0); SENSOR_WRITE(0x3008);
   
   return 0;
 }

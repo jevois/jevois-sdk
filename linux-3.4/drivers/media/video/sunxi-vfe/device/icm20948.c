@@ -146,37 +146,74 @@ static int imu_write_array(struct v4l2_subdev *sd, struct reg_list_a8_d8 *regs, 
   }
   return 0;
 }
-
 static int imu_load_dmp(struct v4l2_subdev *sd)
 {
-  int ret; unsigned char * data;
+  int ret, i; unsigned char currbank = 0xff, bank, val; unsigned short addr;
   int const siz = sizeof(dmp3_image);
-
-
-
-  
-
+  unsigned char dmp_addr[2];
   
   vfe_dev_err("%s loading %d bytes of DMP code...\n", __func__, siz);
-  
-  ret = imu_write_a8_d8(sd, 0x7c, 0x90);
-  if (ret) { vfe_dev_err("%s set DMP start addr failed\n", __func__); return ret; }
 
-  ret = imu_write_a8_d8_array(sd, 0x7d, siz, &dmp3_image[0]);
-  if (ret) { vfe_dev_err("%s DMP code upload failed\n", __func__); return ret; }
+  ret = imu_write_a8_d8(sd, 0x7f, 0);
+  if (ret) { vfe_dev_err("%s DMP code upload failed to set IMU bank to 0\n", __func__); return ret; }
+ 
+  addr = 0x90;
+  for (i = 0; i < siz; i += 16)
+  {
+    bank = addr >> 8;
+    if (bank != currbank)
+    { 
+      ret = imu_write_a8_d8(sd, 0x7e, bank);
+      if (ret) { vfe_dev_err("%s DMP code upload failed to set bank to %u\n", __func__, bank); return ret; }
+      currbank = bank;
+    }
+
+    ret = imu_write_a8_d8(sd, 0x7c, addr & 0xff);
+    if (ret) { vfe_dev_err("%s set DMP addr to %u failed\n", __func__, addr); return ret; }
+    
+    ret = imu_write_a8_d8_array(sd, 0x7d, 16, &dmp3_image[i]);
+    if (ret) { vfe_dev_err("%s DMP code upload failed at byte %d of %u\n", __func__, addr, siz); return ret; }
+
+    addr += 16;
+  }
+
+#ifdef JEVOIS_IMU_VERIFY_UPLOAD
+  addr = 0x90; currbank = 0xff;
+  for (i = 0; i < siz; ++i)
+  {
+    bank = addr >> 8;
+    if (bank != currbank)
+    { 
+      ret = imu_write_a8_d8(sd, 0x7e, bank);
+      if (ret) { vfe_dev_err("%s DMP code verify failed to set bank to %u\n", __func__, bank); return ret; }
+      currbank = bank;
+    }
+
+    ret = imu_write_a8_d8(sd, 0x7c, addr & 0xff);
+    if (ret) { vfe_dev_err("%s set DMP verify addr to %u failed\n", __func__, addr); return ret; }
+    
+    ret = imu_read_a8_d8(sd, 0x7d, &val);
+    if (ret) { vfe_dev_err("%s DMP code verify failed at byte %d of %u\n", __func__, i, siz); return ret; }
+    if (val != dmp3_image[i])
+    { vfe_dev_err("%s DMP code verify error addr %u: %u != %u\n", __func__, addr, val, dmp3_image[i]); return ret; }
+
+    ++addr;
+  }
+#endif
+  
+  ret = imu_write_a8_d8(sd, 0x7e, 0);
+  if (ret) { vfe_dev_err("%s DMP code upload failed to reset bank to 0\n", __func__); return ret; }
+
+  ret = imu_write_a8_d8(sd, 0x7f, (2 << 4));
+  if (ret) { vfe_dev_err("%s failed to switch to bank 2\n", __func__); return ret; }
+  dmp_addr[0] = (0x1000 >> 8) & 0xff; dmp_addr[1] = 0x1000 & 0xff;
+  ret = imu_write_a8_d8_array(sd, 0x50, 2, &dmp_addr[0]);
+  if (ret) { vfe_dev_err("%s failed to write DMP start address\n", __func__); return ret; }
+  ret = imu_write_a8_d8(sd, 0x7f, (0 << 4));
+  if (ret) { vfe_dev_err("%s failed to switch to bank 0\n", __func__); return ret; }
+
   
   vfe_dev_err("%s loaded %d bytes of DMP code.\n", __func__, siz);
-  /*
-  ret = imu_write_a8_d8(sd, 0x7c, 0x90);
-  if (ret) { vfe_dev_err("%s set DMP start addr failed\n", __func__); return ret; }
-
-  data = (unsigned char *)kmalloc(siz, GFP_KERNEL);
-
-  ret = imu_read_a8_d8_array(sd, 0x7d, siz, data);
-  if (ret) vfe_dev_err("%s failed to read DMP data back from IMU\n", __func__);
-  else if (memcmp(data, &dmp3_image[0], siz)) vfe_dev_err("%s write verify failed!\n", __func__);
-  */
-  kfree(data);
   
   return ret;
 }

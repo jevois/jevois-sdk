@@ -1614,7 +1614,7 @@ static int sensor_s_parm(struct v4l2_subdev *sd, struct v4l2_streamparm *parms)
   default: return -EINVAL;
   }
 
-  if (ratex100 > 1200*100) return -EINVAL;
+  if (ratex100 > 120*100) return -EINVAL;
   else if (ratex100 > 60*100) { basex100 = 12000; if (prescaler < 8) return -EINVAL; else prescaler >>= 3; }
   else if (ratex100 > 30*100) { basex100 = 6000; if (prescaler < 4) return -EINVAL; else prescaler >>= 2; }
   else if (ratex100 > 15*100) { basex100 = 3000; if (prescaler < 2) return -EINVAL; else prescaler >>= 1; }
