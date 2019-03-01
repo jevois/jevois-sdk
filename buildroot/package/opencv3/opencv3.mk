@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-OPENCV3_VERSION = 4.0.0
+OPENCV3_VERSION = 4.0.1
 OPENCV3_SITE = $(call github,opencv,opencv,$(OPENCV3_VERSION))
 OPENCV3_INSTALL_STAGING = YES
 OPENCV3_LICENSE = BSD-3-Clause
@@ -210,7 +210,6 @@ OPENCV3_CONF_OPTS += \
 OPENCV3_CONF_OPTS += \
 	-DWITH_1394=OFF \
 	-DWITH_CLP=OFF \
-	-DWITH_EIGEN=OFF \
 	-DWITH_GDAL=OFF \
 	-DWITH_GPHOTO2=OFF \
 	-DWITH_MATLAB=OFF \
@@ -226,17 +225,20 @@ OPENCV3_CONF_OPTS += \
 	-DWITH_WEBP=OFF \
 	-DWITH_XINE=OFF
 
+# removed from 4.0.1
+#	-DWITH_EIGEN=OFF \
 
 # JeVois extra options:
 OPENCV3_CONF_OPTS += \
     -DWITH_EIGEN=ON \
     -DBUILD_opencv_python2=OFF \
     -DBUILD_NEW_PYTHON_SUPPORT=ON \
-    -DENABLE_FAST_MATH=1 \
     -DWITH_OPENMP=ON \
     -DENABLE_CXX11=ON \
 	-DWITH_LAPACK=ON \
 
+# removed from 4.0.1
+#    -DENABLE_FAST_MATH=1 \
 
 OPENCV3_DEPENDENCIES += zlib
 
