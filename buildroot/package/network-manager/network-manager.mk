@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-NETWORK_MANAGER_VERSION_MAJOR = 1.8
+NETWORK_MANAGER_VERSION_MAJOR = 1.18
 NETWORK_MANAGER_VERSION = $(NETWORK_MANAGER_VERSION_MAJOR).0
 NETWORK_MANAGER_SOURCE = NetworkManager-$(NETWORK_MANAGER_VERSION).tar.xz
 NETWORK_MANAGER_SITE = http://ftp.gnome.org/pub/GNOME/sources/NetworkManager/$(NETWORK_MANAGER_VERSION_MAJOR)
@@ -75,9 +75,11 @@ ifeq ($(BR2_PACKAGE_DHCPCD),y)
 NETWORK_MANAGER_CONF_OPTS += --with-dhcpcd=/sbin/dhcpcd
 endif
 
-# uClibc by default doesn't have backtrace support, so don't use it
-ifeq ($(BR2_TOOLCHAIN_USES_UCLIBC),y)
-NETWORK_MANAGER_CONF_OPTS += --disable-crashtrace
+ifeq ($(BR2_PACKAGE_NETWORK_MANAGER_OVS),y)
+NETWORK_MANAGER_CONF_OPTS += --enable-ovs
+NETWORK_MANAGER_DEPENDENCIES += jansson
+else
+NETWORK_MANAGER_CONF_OPTS += --disable-ovs
 endif
 
 define NETWORK_MANAGER_INSTALL_INIT_SYSV

@@ -4,14 +4,20 @@
 #
 ################################################################################
 
-LIBDRM_VERSION = 2.4.82
+LIBDRM_VERSION = 2.4.98
 LIBDRM_SOURCE = libdrm-$(LIBDRM_VERSION).tar.bz2
-LIBDRM_SITE = http://dri.freedesktop.org/libdrm
+LIBDRM_SITE = https://dri.freedesktop.org/libdrm
 LIBDRM_LICENSE = MIT
 LIBDRM_INSTALL_STAGING = YES
+
+# patch 0003-configure-Makefile.am-use-pkg-config-to-discover-lib.patch
+# touching configure.ac/Makefile.am (and host-xutil_util-macros dependency)
+LIBDRM_AUTORECONF = YES
+
 LIBDRM_DEPENDENCIES = \
 	libpthread-stubs \
-	host-pkgconf
+	host-pkgconf \
+	host-xutil_util-macros
 
 LIBDRM_CONF_OPTS = \
 	--disable-cairo-tests \
@@ -109,6 +115,9 @@ endif
 
 ifeq ($(BR2_PACKAGE_LIBDRM_INSTALL_TESTS),y)
 LIBDRM_CONF_OPTS += --enable-install-test-programs
+ifeq ($(BR2_PACKAGE_CUNIT),y)
+LIBDRM_DEPENDENCIES += cunit
+endif
 endif
 
 $(eval $(autotools-package))

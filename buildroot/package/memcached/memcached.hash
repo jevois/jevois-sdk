@@ -1,4 +1,6 @@
-# From http://www.memcached.org/files/memcached-1.4.37.tar.gz.sha1
-sha1 6a6c2ab70e9470fef939afff1cb58b7602077611  memcached-1.4.37.tar.gz
-# Calculated based on the hash above
-sha256 2f335ab9110ce39036c5271ef39a582a852e424bc9659e421844073cfdf8606b  memcached-1.4.37.tar.gz
+# From http://www.memcached.org/files/memcached-1.5.12.tar.gz.sha1
+sha1 f67096ba64b0c47668bcad5b680010c4f8987d4c  memcached-1.5.12.tar.gz
+
+# Locally computed
+sha256 c02f97d5685617b209fbe25f3464317b234d765b427d254c2413410a5c095b29  memcached-1.5.12.tar.gz
+sha256 bc887c4ad8051fe690ace9528fe37a2e0bb362e6d963331d82e845ca9b585a0c  COPYING

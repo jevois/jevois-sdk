@@ -11,7 +11,7 @@ config BR2_PACKAGE_NFS_UTILS
 	help
 	  The NFS Linux kernel server.
 
-	  http://sourceforge.net/projects/nfs
+	  http://linux-nfs.org/
 
 if BR2_PACKAGE_NFS_UTILS
 
@@ -24,6 +24,12 @@ config BR2_PACKAGE_NFS_UTILS_RPC_LOCKD
 	bool "rpc.lockd"
 	help
 	  NFS lock manager for Linux kernels older than 2.4
+
+config BR2_PACKAGE_NFS_UTILS_RPC_NFSD
+	bool "rpc.nfsd"
+	default y
+	help
+	  NFS server
 
 config BR2_PACKAGE_NFS_UTILS_RPC_RQUOTAD
 	bool "rpc.rquotad"

@@ -4,12 +4,19 @@
 #
 ################################################################################
 
+# no 5.9.2 package available, fall back to 5.9.1 version
+ifeq ($(BR2_PACKAGE_QT5_VERSION_LATEST),y)
+QT5WEBKIT_VERSION = 5.9.1
+QT5WEBKIT_SITE = https://download.qt.io/official_releases/qt/5.9/5.9.1/submodules
+else
 QT5WEBKIT_VERSION = $(QT5_VERSION)
-QT5WEBKIT_SITE = $(QT5_SITE)
+QT5WEBKIT_SITE = https://download.qt.io/community_releases/5.6/$(QT5_VERSION)
+endif
+
 QT5WEBKIT_SOURCE = qtwebkit-opensource-src-$(QT5WEBKIT_VERSION).tar.xz
 QT5WEBKIT_DEPENDENCIES = \
 	host-bison host-flex host-gperf host-python host-ruby \
-	qt5base sqlite
+	leveldb qt5base sqlite
 QT5WEBKIT_INSTALL_STAGING = YES
 
 QT5WEBKIT_LICENSE_FILES = Source/WebCore/LICENSE-LGPL-2 Source/WebCore/LICENSE-LGPL-2.1
@@ -38,7 +45,7 @@ endef
 QT5WEBKIT_PRE_CONFIGURE_HOOKS += QT5WEBKIT_PYTHON2_SYMLINK
 
 define QT5WEBKIT_CONFIGURE_CMDS
-	(cd $(@D); $(TARGET_MAKE_ENV) $(QT5WEBKIT_ENV) $(HOST_DIR)/bin/qmake)
+	(cd $(@D); $(TARGET_MAKE_ENV) $(QT5WEBKIT_ENV) $(HOST_DIR)/bin/qmake WEBKIT_CONFIG+=use_system_leveldb)
 endef
 
 define QT5WEBKIT_BUILD_CMDS
@@ -47,7 +54,6 @@ endef
 
 define QT5WEBKIT_INSTALL_STAGING_CMDS
 	$(TARGET_MAKE_ENV) $(QT5WEBKIT_ENV) $(MAKE) -C $(@D) install
-	$(QT5_LA_PRL_FILES_FIXUP)
 endef
 
 ifeq ($(BR2_PACKAGE_QT5DECLARATIVE_QUICK),y)

@@ -4,8 +4,8 @@
 #
 ################################################################################
 
-LCDPROC_VERSION = 0.5.7
-LCDPROC_SITE = http://downloads.sourceforge.net/project/lcdproc/lcdproc/$(LCDPROC_VERSION)
+LCDPROC_VERSION = 0.5.9
+LCDPROC_SITE = https://github.com/lcdproc/lcdproc/releases/download/v$(LCDPROC_VERSION)
 LCDPROC_LICENSE = GPL-2.0+
 LCDPROC_LICENSE_FILES = COPYING
 LCDPROC_MAKE = $(MAKE1)
@@ -18,7 +18,9 @@ endif
 
 LCDPROC_DEPENDENCIES = freetype ncurses zlib
 
-LCDPROC_CONF_ENV += ac_cv_path_FT2_CONFIG=$(STAGING_DIR)/usr/bin/freetype-config
+LCDPROC_CONF_ENV += \
+	ac_cv_mtab_file=/etc/mtab \
+	ac_cv_path_FT2_CONFIG=$(STAGING_DIR)/usr/bin/freetype-config
 
 ifeq ($(BR2_PACKAGE_LIBPNG),y)
 LCDPROC_DEPENDENCIES += libpng

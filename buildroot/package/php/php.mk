@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-PHP_VERSION = 7.1.7
+PHP_VERSION = 7.3.5
 PHP_SITE = http://www.php.net/distributions
 PHP_SOURCE = php-$(PHP_VERSION).tar.xz
 PHP_INSTALL_STAGING = YES
@@ -22,7 +22,6 @@ PHP_CONF_OPTS = \
 	--disable-phpdbg \
 	--disable-rpath
 PHP_CONF_ENV = \
-	ac_cv_func_strcasestr=yes \
 	EXTRA_LIBS="$(PHP_EXTRA_LIBS)"
 
 ifeq ($(BR2_STATIC_LIBS),y)
@@ -137,7 +136,7 @@ endif
 
 ifeq ($(BR2_PACKAGE_PHP_EXT_LIBXML2),y)
 PHP_CONF_ENV += php_cv_libxml_build_works=yes
-PHP_CONF_OPTS += --enable-libxml --with-libxml-dir=${STAGING_DIR}/usr
+PHP_CONF_OPTS += --enable-libxml --with-libxml-dir=$(STAGING_DIR)/usr
 PHP_DEPENDENCIES += libxml2
 endif
 
@@ -151,6 +150,10 @@ PHP_CONF_OPTS += \
 	--with-xmlrpc \
 	$(if $(BR2_PACKAGE_LIBICONV),--with-iconv-dir=$(STAGING_DIR)/usr)
 PHP_DEPENDENCIES += $(if $(BR2_PACKAGE_LIBICONV),libiconv)
+endif
+
+ifeq ($(BR2_PACKAGE_PHP_EXT_ZIP),y)
+PHP_DEPENDENCIES += libzip
 endif
 
 ifneq ($(BR2_PACKAGE_PHP_EXT_ZLIB)$(BR2_PACKAGE_PHP_EXT_ZIP),)
@@ -196,6 +199,12 @@ endif
 ifeq ($(BR2_PACKAGE_PHP_EXT_MYSQLI),y)
 PHP_CONF_OPTS += --with-mysqli
 endif
+
+ifeq ($(BR2_PACKAGE_PHP_EXT_PGSQL),y)
+PHP_CONF_OPTS += --with-pgsql=$(STAGING_DIR)/usr
+PHP_DEPENDENCIES += postgresql
+endif
+
 ifeq ($(BR2_PACKAGE_PHP_EXT_SQLITE),y)
 PHP_CONF_OPTS += --with-sqlite3=$(STAGING_DIR)/usr
 PHP_DEPENDENCIES += sqlite
@@ -228,14 +237,24 @@ ifneq ($(BR2_PACKAGE_PHP_EXT_MYSQLI)$(BR2_PACKAGE_PHP_EXT_PDO_MYSQL),)
 PHP_CONF_OPTS += --with-mysql-sock=$(MYSQL_SOCKET)
 endif
 
-define PHP_DISABLE_PCRE_JIT
-	$(SED) '/^#define SUPPORT_JIT/d' $(@D)/ext/pcre/pcrelib/config.h
+define PHP_DISABLE_VALGRIND
+	$(SED) '/^#define HAVE_VALGRIND/d' $(@D)/main/php_config.h
 endef
+PHP_POST_CONFIGURE_HOOKS += PHP_DISABLE_VALGRIND
 
 ### Use external PCRE if it's available
-ifeq ($(BR2_PACKAGE_PCRE),y)
+ifeq ($(BR2_PACKAGE_PCRE2),y)
 PHP_CONF_OPTS += --with-pcre-regex=$(STAGING_DIR)/usr
-PHP_DEPENDENCIES += pcre
+PHP_DEPENDENCIES += pcre2
+
+ifeq ($(BR2_PACKAGE_PCRE2_JIT),y)
+PHP_CONF_OPTS += --with-pcre-jit=yes
+PHP_CONF_ENV += ac_cv_have_pcre2_jit=yes
+else
+PHP_CONF_OPTS += --with-pcre-jit=no
+PHP_CONF_ENV += ac_cv_have_pcre2_jit=no
+endif
+
 else
 # The bundled pcre library is not configurable through ./configure options,
 # and by default is configured to be thread-safe, so it wants pthreads. So
@@ -244,13 +263,15 @@ ifeq ($(BR2_TOOLCHAIN_HAS_THREADS),)
 PHP_CFLAGS += -DSLJIT_SINGLE_THREADED=1
 endif
 # check ext/pcre/pcrelib/sljit/sljitConfigInternal.h for supported archs
-ifeq ($(BR2_i386)$(BR2_x86_64)$(BR2_arm)$(BR2_armeb)$(BR2_aarch64)$(BR2_mips)$(BR2_mipsel)$(BR2_mips64)$(BR2_mips64el)$(BR2_powerpc)$(BR2_sparc),)
-PHP_POST_CONFIGURE_HOOKS += PHP_DISABLE_PCRE_JIT
+ifeq ($(BR2_i386)$(BR2_x86_64)$(BR2_arm)$(BR2_armeb)$(BR2_aarch64)$(BR2_mips)$(BR2_mipsel)$(BR2_mips64)$(BR2_mips64el)$(BR2_powerpc)$(BR2_sparc),y)
+PHP_CONF_OPTS += --with-pcre-jit
+else
+PHP_CONF_OPTS += --without-pcre-jit
 endif
 endif
 
 ifeq ($(BR2_PACKAGE_PHP_EXT_CURL),y)
-PHP_CONF_OPTS += --with-curl=$(STAGING_DIR)/usr
+PHP_CONF_OPTS += --with-curl
 PHP_DEPENDENCIES += libcurl
 endif
 

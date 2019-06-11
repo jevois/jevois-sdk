@@ -1,0 +1,11 @@
+config BR2_PACKAGE_PYTHON_SCIPY
+	bool "python-scipy"
+    depends on BR2_PACKAGE_CLAPACK
+    depends on BR2_PACKAGE_PYTHON_NUMPY_ARCH_SUPPORTS
+    select BR2_PACKAGE_PYTHON_NUMPY
+    depends on BR2_TOOLCHAIN_BUILDROOT_FORTRAN
+    
+    help
+	  Python scientific library.
+
+	  https://github.com/scipy/scipy

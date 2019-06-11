@@ -5,9 +5,8 @@
 
 import re
 
-from base import _CheckFunction
-# Notice: ignore 'imported but unused' from pyflakes for check functions.
-from lib import NewlineAtEof
+from checkpackagelib.base import _CheckFunction
+from checkpackagelib.lib import NewlineAtEof           # noqa: F401
 
 
 class ApplyOrder(_CheckFunction):

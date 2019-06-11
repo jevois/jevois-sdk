@@ -1,0 +1,19 @@
+Index: python3-3.7.3/Lib/ctypes/util.py
+===================================================================
+--- python3-3.7.3.orig/Lib/ctypes/util.py
++++ python3-3.7.3/Lib/ctypes/util.py
+@@ -307,9 +307,12 @@ elif os.name == "posix":
+             return result
+ 
+         def find_library(name):
++            # JEVOIS: on buildroot, we do not have ldconfig, gcc, or dump, but we know all libs are in /usr/lib
++            # So here we just return the so name
++            return 'lib%s.so' % name
+             # See issue #9998
+-            return _findSoname_ldconfig(name) or \
+-                   _get_soname(_findLib_gcc(name) or _findLib_ld(name))
++            #return _findSoname_ldconfig(name) or \
++            #       _get_soname(_findLib_gcc(name) or _findLib_ld(name))
+ 
+ ################################################################
+ # test code

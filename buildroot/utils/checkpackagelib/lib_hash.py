@@ -5,12 +5,11 @@
 
 import re
 
-from base import _CheckFunction
-# Notice: ignore 'imported but unused' from pyflakes for check functions.
-from lib import ConsecutiveEmptyLines
-from lib import EmptyLastLine
-from lib import NewlineAtEof
-from lib import TrailingSpace
+from checkpackagelib.base import _CheckFunction
+from checkpackagelib.lib import ConsecutiveEmptyLines  # noqa: F401
+from checkpackagelib.lib import EmptyLastLine          # noqa: F401
+from checkpackagelib.lib import NewlineAtEof           # noqa: F401
+from checkpackagelib.lib import TrailingSpace          # noqa: F401
 
 
 def _empty_line_or_comment(text):

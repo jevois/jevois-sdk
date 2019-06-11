@@ -24,9 +24,25 @@ NFS_UTILS_CONF_OPTS = \
 	--with-statedir=/run/nfs \
 	--with-rpcgen=internal
 
+HOST_NFS_UTILS_CONF_OPTS = \
+	--disable-nfsv4 \
+	--disable-nfsv41 \
+	--disable-gss \
+	--disable-uuid \
+	--disable-ipv6 \
+	--without-tcp-wrappers \
+	--with-statedir=/run/nfs \
+	--disable-caps \
+	--disable-tirpc \
+	--without-systemd \
+	--with-rpcgen=internal
+HOST_NFS_UTILS_DEPENDENCIES = host-pkgconf host-libtirpc
+
 NFS_UTILS_TARGETS_$(BR2_PACKAGE_NFS_UTILS_RPCDEBUG) += usr/sbin/rpcdebug
 NFS_UTILS_TARGETS_$(BR2_PACKAGE_NFS_UTILS_RPC_LOCKD) += usr/sbin/rpc.lockd
 NFS_UTILS_TARGETS_$(BR2_PACKAGE_NFS_UTILS_RPC_RQUOTAD) += usr/sbin/rpc.rquotad
+NFS_UTILS_TARGETS_$(BR2_PACKAGE_NFS_UTILS_RPC_NFSD) += usr/sbin/exportfs \
+	usr/sbin/rpc.mountd usr/sbin/rpc.nfsd usr/lib/systemd/system/nfs-server.service
 
 ifeq ($(BR2_PACKAGE_LIBCAP),y)
 NFS_UTILS_CONF_OPTS += --enable-caps
@@ -43,7 +59,7 @@ NFS_UTILS_CONF_OPTS += --disable-tirpc
 endif
 
 define NFS_UTILS_INSTALL_FIXUP
-	rm -f $(NFS_UTILS_TARGETS_)
+	cd $(TARGET_DIR) && rm -f $(NFS_UTILS_TARGETS_)
 	touch $(TARGET_DIR)/etc/exports
 	$(INSTALL) -D -m 644 \
 		$(@D)/utils/mount/nfsmount.conf $(TARGET_DIR)/etc/nfsmount.conf
@@ -57,16 +73,23 @@ else
 NFS_UTILS_CONF_OPTS += --without-systemd
 endif
 
+ifeq ($(BR2_PACKAGE_NFS_UTILS_RPC_NFSD),y)
 define NFS_UTILS_INSTALL_INIT_SYSV
 	$(INSTALL) -D -m 0755 package/nfs-utils/S60nfs \
 		$(TARGET_DIR)/etc/init.d/S60nfs
 endef
 
+define NFS_UTILS_INSTALL_INIT_SYSTEMD_NFSD
+	ln -fs ../../../../usr/lib/systemd/system/nfs-server.service \
+		$(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/nfs-server.service
+endef
+endif
+
 define NFS_UTILS_INSTALL_INIT_SYSTEMD
 	mkdir -p $(TARGET_DIR)/etc/systemd/system/multi-user.target.wants
 
-	ln -fs ../../../../usr/lib/systemd/system/nfs-server.service \
-		$(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/nfs-server.service
+	$(NFS_UTILS_INSTALL_INIT_SYSTEMD_NFSD)
+
 	ln -fs ../../../../usr/lib/systemd/system/nfs-client.target \
 		$(TARGET_DIR)/etc/systemd/system/multi-user.target.wants/nfs-client.target
 
@@ -89,4 +112,13 @@ endef
 # nfsiostat is interpreted python, so remove it unless it's in the target
 NFS_UTILS_POST_INSTALL_TARGET_HOOKS += $(if $(BR2_PACKAGE_PYTHON),,NFS_UTILS_REMOVE_NFSIOSTAT)
 
+define HOST_NFS_UTILS_BUILD_CMDS
+	$(MAKE) -C $(@D)/tools/rpcgen
+endef
+
+define HOST_NFS_UTILS_INSTALL_CMDS
+	$(INSTALL) -D -m 0755 $(@D)/tools/rpcgen/rpcgen $(HOST_DIR)/bin/rpcgen
+endef
+
 $(eval $(autotools-package))
+$(eval $(host-autotools-package))

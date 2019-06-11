@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-OPENCV3_VERSION = 4.0.1
+OPENCV3_VERSION = 4.1.0
 OPENCV3_SITE = $(call github,opencv,opencv,$(OPENCV3_VERSION))
 OPENCV3_INSTALL_STAGING = YES
 OPENCV3_LICENSE = BSD-3-Clause
@@ -18,16 +18,22 @@ OPENCV3_DEPENDENCIES += openblas
 OPENCV3_DEPENDENCIES += jpeg-turbo
 OPENCV3_DEPENDENCIES += lapack
 
+OPENCV3_CXXFLAGS = $(TARGET_CXXFLAGS) -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -ftree-vectorize -Ofast -funsafe-math-optimizations -mfp16-format=ieee
+
 # Uses __atomic_fetch_add_4
 ifeq ($(BR2_TOOLCHAIN_HAS_LIBATOMIC),y)
-OPENCV3_CONF_OPTS += -DCMAKE_CXX_FLAGS="$(TARGET_CXXFLAGS) -latomic -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -ftree-vectorize -Ofast -funsafe-math-optimizations -mfp16-format=ieee"
-else
-OPENCV3_CONF_OPTS += -DCMAKE_CXX_FLAGS="$(TARGET_CXXFLAGS) -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -ftree-vectorize -Ofast -funsafe-math-optimizations -mfp16-format=ieee"
+OPENCV3_CXXFLAGS += -latomic
+endif
+
+# Fix c++11 build with missing std::exception_ptr
+ifeq ($(BR2_TOOLCHAIN_HAS_GCC_BUG_64735),y)
+OPENCV3_CXXFLAGS += -DCV__EXCEPTION_PTR=0
 endif
 
 # OpenCV component options
 OPENCV3_CONF_OPTS += \
     -DOPENCV_ENABLE_PKG_CONFIG=ON \
+	-DCMAKE_CXX_FLAGS="$(OPENCV3_CXXFLAGS)" \
 	-DBUILD_DOCS=OFF \
 	-DBUILD_PERF_TESTS=$(if $(BR2_PACKAGE_OPENCV3_BUILD_PERF_TESTS),ON,OFF) \
 	-DBUILD_TESTS=$(if $(BR2_PACKAGE_OPENCV3_BUILD_TESTS),ON,OFF) \
@@ -113,7 +119,14 @@ OPENCV3_CONF_OPTS += \
 # * PowerPC support is turned off since its only effect is altering CFLAGS,
 #   adding '-mcpu=G3 -mtune=G5' to them, which is already handled by Buildroot.
 OPENCV3_CONF_OPTS += \
-	-DENABLE_POWERPC=OFF
+	-DENABLE_POWERPC=OFF \
+	-DENABLE_NEON=$(if $(BR2_ARM_CPU_HAS_NEON),ON,OFF)
+
+ifeq ($(BR2_ARCH_IS_64):$(BR2_ARM_CPU_HAS_VFPV3),:y)
+OPENCV3_CONF_OPTS += -DENABLE_VFPV3=ON
+else
+OPENCV3_CONF_OPTS += -DENABLE_VFPV3=OFF
+endif
 
 # Cuda stuff
 OPENCV3_CONF_OPTS += \
@@ -186,7 +199,6 @@ OPENCV3_CONF_OPTS += \
 	-DWITH_CSTRIPES=OFF \
 	-DWITH_DSHOW=OFF \
 	-DWITH_MSMF=OFF \
-	-DWITH_PTHREADS_PF=OFF \
 	-DWITH_VFW=OFF \
 	-DWITH_VIDEOINPUT=OFF \
 	-DWITH_WIN32UI=OFF
@@ -298,7 +310,7 @@ else
 OPENCV3_CONF_OPTS += -DWITH_OPENGL=OFF
 endif
 
-OPENCV3_CONF_OPTS += -DWITH_OPENMP=$(if $(BR2_GCC_ENABLE_OPENMP),ON,OFF)
+OPENCV3_CONF_OPTS += -DWITH_OPENMP=$(if $(BR2_TOOLCHAIN_HAS_OPENMP),ON,OFF)
 
 ifeq ($(BR2_PACKAGE_OPENCV3_WITH_PNG),y)
 OPENCV3_CONF_OPTS += -DWITH_PNG=ON
@@ -307,18 +319,11 @@ else
 OPENCV3_CONF_OPTS += -DWITH_PNG=OFF
 endif
 
-ifeq ($(BR2_PACKAGE_OPENCV3_WITH_QT)$(BR2_PACKAGE_OPENCV3_WITH_QT5),)
-OPENCV3_CONF_OPTS += -DWITH_QT=OFF
-endif
-
-ifeq ($(BR2_PACKAGE_OPENCV3_WITH_QT),y)
-OPENCV3_CONF_OPTS += -DWITH_QT=4
-OPENCV3_DEPENDENCIES += qt
-endif
-
 ifeq ($(BR2_PACKAGE_OPENCV3_WITH_QT5),y)
 OPENCV3_CONF_OPTS += -DWITH_QT=5
 OPENCV3_DEPENDENCIES += qt5base
+else
+OPENCV3_CONF_OPTS += -DWITH_QT=OFF
 endif
 
 ifeq ($(BR2_PACKAGE_OPENCV3_WITH_TIFF),y)
@@ -365,6 +370,7 @@ OPENCV3_CONF_OPTS += \
 	-DPYTHON3_NUMPY_VERSION=$(PYTHON_NUMPY_VERSION)
 OPENCV3_DEPENDENCIES += python3
 endif
+OPENCV3_CONF_ENV += $(PKG_PYTHON_DISTUTILS_ENV)
 OPENCV3_DEPENDENCIES += python-numpy
 else
 OPENCV3_CONF_OPTS += \

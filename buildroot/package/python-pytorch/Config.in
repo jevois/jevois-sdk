@@ -1,0 +1,5 @@
+config BR2_PACKAGE_PYTHON_PYTORCH
+	bool "python-pytorch"
+	help
+      PyTorch deep neural network framework
+	  https://github.com/pytorch/pytorch/

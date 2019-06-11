@@ -5,6 +5,9 @@ config BR2_PACKAGE_LUAJIT_ARCH_SUPPORTS
 		BR2_powerpc || BR2_arm || BR2_armeb || \
 		((BR2_mips || BR2_mipsel) && !BR2_MIPS_SOFT_FLOAT && \
 		!BR2_MIPS_CPU_MIPS32R6 && !BR2_MIPS_CPU_MIPS64R6)
+	# -m32 flag is used for 32bit builds and host-luajit has
+	# limited architecture support
+	depends on BR2_HOSTARCH = "x86_64" || BR2_HOSTARCH = "x86"
 
 config BR2_PACKAGE_LUAJIT
 	bool "luajit"
@@ -32,6 +35,11 @@ config BR2_PACKAGE_PROVIDES_LUAINTERPRETER
 
 config BR2_PACKAGE_LUAINTERPRETER_ABI_VERSION
 	default "5.1"
+
+config BR2_PACKAGE_LUAJIT_COMPAT52
+	bool "Lua 5.2 compatibility"
+	help
+	  Compile with Lua 5.2 compatibility.
 
 endif
 
