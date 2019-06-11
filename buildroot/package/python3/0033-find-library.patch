@@ -1,19 +1,23 @@
-Index: python3-3.7.3/Lib/ctypes/util.py
+Index: host-python3-3.7.3/Lib/ctypes/util.py
 ===================================================================
---- python3-3.7.3.orig/Lib/ctypes/util.py
-+++ python3-3.7.3/Lib/ctypes/util.py
-@@ -307,9 +307,12 @@ elif os.name == "posix":
+--- host-python3-3.7.3.orig/Lib/ctypes/util.py
++++ host-python3-3.7.3/Lib/ctypes/util.py
+@@ -307,9 +307,15 @@ elif os.name == "posix":
              return result
  
          def find_library(name):
-+            # JEVOIS: on buildroot, we do not have ldconfig, gcc, or dump, but we know all libs are in /usr/lib
-+            # So here we just return the so name
-+            return 'lib%s.so' % name
-             # See issue #9998
+-            # See issue #9998
 -            return _findSoname_ldconfig(name) or \
 -                   _get_soname(_findLib_gcc(name) or _findLib_ld(name))
-+            #return _findSoname_ldconfig(name) or \
-+            #       _get_soname(_findLib_gcc(name) or _findLib_ld(name))
++            # JEVOIS: on buildroot, we do not have ldconfig, gcc, or dump, but we know all libs are in /usr/lib,
++            # so here we just return the so name. We do this on the platform build only. We use the standard
++            # method on the host build of python3, which is needed to further build some packages.
++            if os.uname().machine == 'x86_64':  # host-python3 buildroot package
++                # See issue #9998
++                return _findSoname_ldconfig(name) or \
++                    _get_soname(_findLib_gcc(name) or _findLib_ld(name))
++            else:                               # python3 buildroot package
++                return 'lib%s.so' % name
  
  ################################################################
  # test code
