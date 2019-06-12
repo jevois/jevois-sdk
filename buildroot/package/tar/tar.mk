@@ -10,6 +10,7 @@ TAR_SITE = $(BR2_GNU_MIRROR)/tar
 # busybox installs in /bin, so we need tar to install as well in /bin
 # so that we don't end up with two different tar
 TAR_CONF_OPTS = --exec-prefix=/
+TAR_CONF_ENV = FORCE_UNSAFE_CONFIGURE=1
 TAR_LICENSE = GPL-3.0+
 TAR_LICENSE_FILES = COPYING
 
