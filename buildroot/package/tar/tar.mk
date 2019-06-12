@@ -46,6 +46,7 @@ HOST_TAR_CONF_OPTS = --without-selinux
 # we are built before ccache
 HOST_TAR_CONF_ENV = \
 	CC="$(HOSTCC_NOCCACHE)" \
-	CXX="$(HOSTCXX_NOCCACHE)"
+	CXX="$(HOSTCXX_NOCCACHE)" \
+    FORCE_UNSAFE_CONFIGURE=1
 
 $(eval $(host-autotools-package))
