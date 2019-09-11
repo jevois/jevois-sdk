@@ -97,6 +97,7 @@ struct file* fp_dbg = NULL;
 static char LogFileName[128] = "/system/etc/hawkview/log.bin";
 
 static char jevois_sensor[32] = "";
+static int jevois_detect_ok = 0;
 
 module_param_string(ccm, ccm, sizeof(ccm), S_IRUGO|S_IWUSR);
 module_param(i2c_addr,uint, S_IRUGO|S_IWUSR);
@@ -4606,6 +4607,10 @@ static int vfe_sensor_check(struct vfe_dev *dev)
 	csi_cci_init_helper(dev->vip_sel);
 #endif
 	ret = v4l2_subdev_call(sd,core, init, 0);
+
+    if (ret == 0) { vfe_print("jevois: sensor detect ok\n"); jevois_detect_ok = 1; }
+    else vfe_print("jevois: sensor detect FAILED\n");
+    
 	if(dev->power->stby_mode == NORM_STBY){
 		if(ret < 0)
 		{
@@ -4632,6 +4637,7 @@ static int vfe_sensor_check(struct vfe_dev *dev)
 #ifdef USE_SPECIFIC_CCI
 	csi_cci_exit_helper(dev->vip_sel);
 #endif
+
 	return ret;
 }
 
@@ -4944,6 +4950,8 @@ static void probe_work_handle(struct work_struct *work)
 		{
 			vfe_err("vfe sensor register check error at input_num = %d\n",input_num);
 			dev->device_valid_flag[input_num] = 0;
+            jevois_detect_ok = 0;
+			goto snesor_register_end;
 		}
 		else{
 			dev->device_valid_flag[input_num] = 1;
@@ -4971,6 +4979,9 @@ static void probe_work_handle(struct work_struct *work)
 		vfe_dbg(0,"dev->ccm_cfg[%d]->power.dvdd = %p\n",input_num,dev->ccm_cfg[input_num]->power.dvdd);
 		vfe_dbg(0,"dev->ccm_cfg[%d]->power.afvdd = %p\n",input_num,dev->ccm_cfg[input_num]->power.afvdd);
 	}
+
+    if (jevois_detect_ok == 0) goto gazool;
+    
 	dev->input = -1;
 	/*video device register */
 	ret = -ENOMEM;
@@ -5020,20 +5031,20 @@ static void probe_work_handle(struct work_struct *work)
 	mutex_unlock(&probe_hdl_lock);
 	return ;
 
-	probe_hdl_rel_vdev:
+ probe_hdl_rel_vdev:
 	video_device_release(vfd);
 	vfe_print("video_device_release @ probe_hdl!\n");
-	probe_hdl_unreg_dev:
+ probe_hdl_unreg_dev:
+ gazool:
 	vfe_print("v4l2_device_unregister @ probe_hdl!\n");
 	v4l2_device_unregister(&dev->v4l2_dev);
-	probe_hdl_free_dev:
+ probe_hdl_free_dev:
 	vfe_print("vfe_resource_release @ probe_hdl!\n");
 #ifdef USE_SPECIFIC_CCI
 	csi_cci_exit_helper(dev->vip_sel);
 	vfe_clk_close(dev);
 #endif
-	vfe_print("vfe_exit @ probe_hdl!\n");
-
+	vfe_resource_release(dev);
 	vfe_err("Failed to install at probe handle\n");
 	mutex_unlock(&probe_hdl_lock);
 	return ;
@@ -5048,7 +5059,7 @@ static int vfe_probe(struct platform_device *pdev)
 	int input_num;
 	unsigned int i;
 
-	vfe_dbg(0,"vfe_probe\n");
+	vfe_print("vfe_probe start, jevois_sensor=%s\n", jevois_sensor);
 
 	/*request mem for dev*/
 	dev = kzalloc(sizeof(struct vfe_dev), GFP_KERNEL);
@@ -5155,7 +5166,8 @@ static int vfe_probe(struct platform_device *pdev)
 	  goto error;
 	}
 
-	
+	vfe_print("VFE ready to probe sensor...\n");
+    
 	if(vips!=0xffff)
 	{
 		printk("vips input 0x%x\n",vips);
@@ -5239,15 +5251,19 @@ static int vfe_probe(struct platform_device *pdev)
 	sema_init(&dev->standby_seq_sema,1);
 
 	schedule_delayed_work(&dev->probe_work,msecs_to_jiffies(1));
+    flush_delayed_work(&dev->probe_work);
+    if (jevois_detect_ok != 0)
+    {
+      /* initial state */
+      dev->capture_mode = V4L2_MODE_PREVIEW;
+      vfe_print("vfe_probe success!\n");
 
-	/* initial state */
-	dev->capture_mode = V4L2_MODE_PREVIEW;
-	vfe_print("vfe_probe success!\n");
-
-	return 0;
-
-	free_resource:
-	error:
+      return 0;
+    }
+    else ret = -ENODEV;
+    
+    free_resource:
+ error:
 	vfe_err("failed to install\n");
 	return ret;
 }
@@ -5609,7 +5625,12 @@ static int __init vfe_init(void)
 		return ret;
 	}
 	vfe_print("vfe_init end\n");
-	return 0;
+
+    if (jevois_detect_ok) return 0;
+
+    vfe_exit();
+
+    return -ENODEV;
 }
 
 static void __exit vfe_exit(void)
@@ -5620,7 +5641,10 @@ static void __exit vfe_exit(void)
 	char vfe_para[16] = {0};
 	script_item_u   val;
 	script_item_value_type_e  type;
-	for(i=0; i<MAX_VFE_INPUT; i++) {
+
+	vfe_print("vfe_exit start\n");
+
+    for(i=0; i<MAX_VFE_INPUT; i++) {
 		sprintf(vfe_para, "csi%d", i);
 		type = script_get_item(vfe_para,"vip_used", &val);
 		if (SCIRPT_ITEM_VALUE_TYPE_INT != type) {
@@ -5641,11 +5665,11 @@ static void __exit vfe_exit(void)
 #endif
 	vfe_print("vfe_exit\n");
 	for(i=0; i<MAX_VFE_INPUT; i++) {
-		if(vfe_used[i])
-		{
-			platform_device_unregister(&vfe_device[i]);
-			vfe_print("platform_device_unregister[%d]\n",i);
-		}
+      if(vfe_used[i])
+      {
+        platform_device_unregister(&vfe_device[i]);
+        vfe_print("platform_device_unregister[%d]\n",i);
+      }
 	}
 	platform_driver_unregister(&vfe_driver);
 	vfe_print("platform_driver_unregister\n");

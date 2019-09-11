@@ -170,6 +170,7 @@
 #define   COM3_BAND_50H        0x04 /* 0 For Banding at 60H */
 #define   COM3_BAND_AUTO       0x02 /* Auto Banding */
 #define   COM3_SING_FR_SNAPSH  0x01 /* 0 For enable live video output after the snapshot sequence */
+#define COM4                0x0D
 #define AEC         0x10 /* AEC[9:2] Exposure Value */
 #define CLKRC       0x11 /* Internal clock */
 #define   CLKRC_EN             0x80
@@ -221,6 +222,9 @@
 #define REG32       0x32 /* Common Control 32 */
 #define   REG32_PCLK_DIV_2    0x80 /* PCLK freq divided by 2 */
 #define   REG32_PCLK_DIV_4    0xC0 /* PCLK freq divided by 4 */
+#define   REG32_UXGA          0x36
+#define   REG32_SVGA          0x09
+#define   REG32_CIF           0x89
 #define REG3D       0x3d
 #define   REG3DA_CIF    0x38
 #define   REG3DA_SVGA   0x35
