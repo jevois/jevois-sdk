@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-OPENCV_CONTRIB_VERSION = 4.1.0
+OPENCV_CONTRIB_VERSION = 4.1.1
 OPENCV_CONTRIB_SITE = $(call github,opencv,opencv_contrib,$(OPENCV_CONTRIB_VERSION))
 OPENCV_CONTRIB_INSTALL_STAGING = YES
 OPENCV_CONTRIB_LICENSE = BSD-3c
