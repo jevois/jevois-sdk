@@ -21,7 +21,7 @@ software on your Mac for EXT4 filesystem support. Most of the interesting files 
 
 In the BOOT partition of JeVois, you can:
 
-- edit uEnv.txt to enable verbose boot messages. Those will be sent to the micro-serial oprt of jevois (4-pin
+- edit uEnv.txt to enable verbose boot messages. Those will be sent to the micro-serial port of jevois (4-pin
   connector).
 
 - create an empty file BOOT:login, which will be detected by the JeVois camera when it boots up. If that file is
