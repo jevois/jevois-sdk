@@ -197,21 +197,21 @@ config BR2_PACKAGE_FFMPEG_FFSERVER
 	help
 	  On July 10th, 2016, ffserver program has been dropped.
 
-config BR2_PACKAGE_LIBUMP
-	bool "libump package removed"
-	select BR2_LEGACY
-	help
-	  The libump package was removed, it was only used as a
-	  dependency of sunxi-mali, which itself was removed.
+#config BR2_PACKAGE_LIBUMP
+#	bool "libump package removed"
+#	select BR2_LEGACY
+#	help
+#	  The libump package was removed, it was only used as a
+#	  dependency of sunxi-mali, which itself was removed.
 
-config BR2_PACKAGE_SUNXI_MALI
-	bool "sunxi-mali package removed"
-	select BR2_LEGACY
-	select BR2_PACKAGE_SUNXI_MALI_MAINLINE
-	help
-	  The sunxi-mali package was removed, as the
-	  sunxi-mali-mainline package replaces it for mainline
-	  kernels on Allwinner platforms.
+#config BR2_PACKAGE_SUNXI_MALI
+#	bool "sunxi-mali package removed"
+#	select BR2_LEGACY
+#	select BR2_PACKAGE_SUNXI_MALI_MAINLINE
+#	help
+#	  The sunxi-mali package was removed, as the
+#	  sunxi-mali-mainline package replaces it for mainline
+#	  kernels on Allwinner platforms.
 
 config BR2_BINUTILS_VERSION_2_29_X
 	bool "binutils version 2.29 support removed"
