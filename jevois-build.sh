@@ -29,5 +29,6 @@ sudo cp linux-3.4/arch/arm/boot/uImage ${destdir}/boot/
 sudo cp out/sun8iw5p1/linux/common/rootfs.ext4 ${destdir}/boot/
 sudo cp jevois-build/microsd-readme.txt ${destdir}/boot/
 sudo cp jevois-build/uEnv.txt ${destdir}/boot/
+sudo cp jevois-sdk-version.txt ${destdir}/
 
 /bin/rm -rf "${tmp}"
