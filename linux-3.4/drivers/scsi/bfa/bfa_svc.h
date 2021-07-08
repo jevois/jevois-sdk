@@ -465,7 +465,7 @@ struct bfa_fcport_s {
 	struct bfa_s		*bfa;	/*  parent BFA instance */
 	bfa_sm_t		sm;	/*  port state machine */
 	wwn_t			nwwn;	/*  node wwn of physical port */
-	wwn_t			pwwn;	/*  port wwn of physical oprt */
+	wwn_t			pwwn;	/*  port wwn of physical port */
 	enum bfa_port_speed speed_sup;
 	/*  supported speeds */
 	enum bfa_port_speed speed;	/*  current speed */

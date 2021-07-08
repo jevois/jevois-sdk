@@ -16,12 +16,12 @@ MacOSX users: The JeVois microSD card actually has 3 partitions, as detailed at
 http://http://jevois.org/doc/MicroSD.html and here you are only browsing the BOOT partition, which is the least
 interesting (but it has to be the first one for JeVois to properly start up). There are many more files in the other two
 partitions (LINUX and JEVOIS), you should be able to access the JEVOIS one while the LINUX one would require extra
-software on your Mac for EXT4 filesystem support. Most of teh interesting files are in the JEVOIS partition.
+software on your Mac for EXT4 filesystem support. Most of the interesting files are in the JEVOIS partition.
 
 
 In the BOOT partition of JeVois, you can:
 
-- edit uEnv.txt to enable verbose boot messages. Those will be sent to the micro-serial oprt of jevois (4-pin
+- edit uEnv.txt to enable verbose boot messages. Those will be sent to the micro-serial port of jevois (4-pin
   connector).
 
 - create an empty file BOOT:login, which will be detected by the JeVois camera when it boots up. If that file is

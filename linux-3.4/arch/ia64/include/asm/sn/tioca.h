@@ -490,7 +490,7 @@ struct tioca {
  * The CA aperature (ie. bus address range) mapped by the GART is segmented into
  * two parts.  The lower portion of the aperature is used for mapping 32 bit
  * PCI addresses which are managed by the dma interfaces in this file.  The
- * upper poprtion of the aperature is used for mapping 48 bit AGP addresses.
+ * upper portion of the aperature is used for mapping 48 bit AGP addresses.
  * The AGP portion of the aperature is managed by the agpgart_be.c driver
  * in drivers/linux/agp.  There are ca-specific hooks in that driver to
  * manipulate the gart, but management of the AGP portion of the aperature

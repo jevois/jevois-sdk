@@ -724,7 +724,7 @@ typedef struct _PVRSRV_SYNC_DATA_
 	IMG_UINT32					ui32LastOpDumpVal;
 	IMG_UINT32					ui32LastReadOpDumpVal;
 
-	/* Last write oprtation on this sync */
+	/* Last write opertation on this sync */
 	IMG_UINT64					ui64LastWrite;
 
 } PVRSRV_SYNC_DATA;
