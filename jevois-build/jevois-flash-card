@@ -263,7 +263,7 @@ cp -ar /var/lib/jevois-microsd/* sdcard/jevois/
 # Final fix:
 ####################################################################################################
 
-echo "#################### Flushing caches and releasing card..."
+echo "#################### Flushing caches and releasing card... This can take up to one hour..."
 
 sync
 umount sdcard/jevois

@@ -8,12 +8,12 @@ The files on this partition of the microSD card are for advanced users only. Ple
 what you are doing.
 
 Windows users: The JeVois microSD card actually has 3 partitions, as detailed at
-http://http://jevois.org/doc/MicroSD.html and here you are only browsing the BOOT partition, which is the least
+http://jevois.org/doc/MicroSD.html and here you are only browsing the BOOT partition, which is the least
 interesting (but it has to be the first one for JeVois to properly start up). There are many more files in the other two
 partitions (LINUX and JEVOIS) but those may not be vidible on Windows computers.
 
 MacOSX users: The JeVois microSD card actually has 3 partitions, as detailed at
-http://http://jevois.org/doc/MicroSD.html and here you are only browsing the BOOT partition, which is the least
+http://jevois.org/doc/MicroSD.html and here you are only browsing the BOOT partition, which is the least
 interesting (but it has to be the first one for JeVois to properly start up). There are many more files in the other two
 partitions (LINUX and JEVOIS), you should be able to access the JEVOIS one while the LINUX one would require extra
 software on your Mac for EXT4 filesystem support. Most of teh interesting files are in the JEVOIS partition.
@@ -42,6 +42,11 @@ In the BOOT partition of JeVois, you can:
 - create an empty file BOOT:usbserialtty if you wish to get a login prompt on the serial-over-USB port instead of the
   JeVois console. Has no effect if BOOT:nousbserial is also present.
 
-- to use a differentg sensor, put its name in a file named BOOT:sensor - for example, if BOOT:sensor exists and contains
+- to use a different sensor, put its name in a file named BOOT:sensor - for example, if BOOT:sensor exists and contains
   a single line "ov7725" then JeVois will attempt to use an Omnivision ov7725 sensor.
   
+For more information, see:
+
+http://jevois.org/doc/Debugging.html
+http://jevois.org/doc/UserSerial.html
+http://jevois.org/doc/Sensors.html
