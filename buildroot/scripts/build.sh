@@ -52,7 +52,7 @@ INCDIR=${STAGING_DIR}/usr/include
 TARGET_DIR=${LICHEE_BR_OUT}/target
 TARGET_SYSROOT_OPT="--sysroot=${STAGING_DIR}"
 
-CROSS_COMPILE=arm-linux-gnueabi-
+CROSS_COMPILE=arm-linux-gnueabihf-
 
 TARGET_AR=${CROSS_COMPILE}ar
 TARGET_AS=${CROSS_COMPILE}as

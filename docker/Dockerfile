@@ -12,10 +12,10 @@ RUN apt update && apt -y upgrade && apt -y dist-upgrade
 
 RUN DEBIAN_FRONTEND=noninteractive apt -y install \
   build-essential cmake libboost-all-dev autoconf libgtk2.0-dev libjpeg-dev libpng-dev libtiff5-dev \
-  libxine2-dev libv4l-dev libtbb-dev libfaac-dev python3-numpy python3-pip libgtk-3-dev libopenblas-dev libturbojpeg \
-  checkinstall protobuf-compiler libprotobuf-dev libprotoc-dev libtesseract-dev tesseract-ocr-all libleptonica-dev git \
-  build-essential subversion mercurial doxygen-gui graphviz libjpeg-turbo8-dev autoconf libeigen3-dev screen \
-  lib32stdc++6 gawk pkg-config libdc1394-dev libavcodec-dev pylint \
+  libxine2-dev libv4l-dev libtbb-dev libfaac-dev python3-numpy python3-pip libgtk-3-dev libopenblas-base-dev \
+  libturbojpeg checkinstall protobuf-compiler libprotobuf-dev libprotoc-dev libtesseract-dev tesseract-ocr-all \
+  libleptonica-dev git build-essential subversion mercurial doxygen-gui graphviz libjpeg-turbo8-dev autoconf \
+  libeigen3-dev screen lib32stdc++6 gawk pkg-config libdc1394-dev libavcodec-dev pylint \
   libavformat-dev libswscale-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev \
   libvorbis-dev libxvidcore-dev x264 v4l-utils unzip python3-dev libturbojpeg libgles2-mesa-dev ncftp \
   emacs libturbojpeg-dev u-boot-tools dpkg-dev flex curl wput libdmtx-dev python-is-python3 libhtml-parser-perl bzip2 \
@@ -52,6 +52,11 @@ RUN rm -rf gcc4.7-xenial* bazel*
 RUN locale-gen en_US.UTF-8
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8' TERM=screen
 
+# Instructions to user:
+RUN echo 'echo "Welcome to JeVois-SDK build container\n"' > /etc/profile.d/welcome.sh
+RUN echo 'echo "To rebuild everything, just run: ./rebuild-os.sh -y"' >> /etc/profile.d/welcome.sh
+RUN echo 'echo "The resulting .deb packages will be in the current directory.\n"' >> /etc/profile.d/welcome.sh
+
 # Switch to normal user:
 RUN useradd -c 'jevois' -m -d /home/jevois -s /bin/bash jevois
 RUN sed -i -e '/\%sudo/ c \%sudo ALL=(ALL) NOPASSWD: ALL' /etc/sudoers
@@ -63,11 +68,5 @@ WORKDIR /home/jevois
 COPY rebuild-os.sh .
 COPY rebuild-host-opencv.sh .
 
-# Instructions to user:
-RUN echo 'echo "Welcome to JeVois-SDK build container"' > /etc/profile.d/welcome.sh
-RUN echo 'echo ""' >> /etc/profile.d/welcome.sh
-RUN echo 'echo "To rebuild everything, just run: ./rebuild-os.sh -y"' >> /etc/profile.d/welcome.sh
-RUN echo 'echo "The resulting .deb packages will be in the current directory."' >> /etc/profile.d/welcome.sh
-
-ENTRYPOINT ["/bin/bash", "-l", "-c"]
+ENTRYPOINT ["/bin/bash", "-l"]
 

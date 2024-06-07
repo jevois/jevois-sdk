@@ -54,7 +54,7 @@ compilers=${depends//,/}
 # Those should already be installed in th ejvsdk docker. They are listed here so we can also have them as dependencies
 # in our deb packages:
 packages=( build-essential cmake libboost-all-dev autoconf libgtk2.0-dev libjpeg-dev libpng-dev libtiff5-dev
-  libxine2-dev libv4l-dev libtbb-dev ${qt4lib} libfaac-dev python3-numpy python3-pip libgtk-3-dev libatlas-base-dev
+  libxine2-dev libv4l-dev libtbb-dev ${qt4lib} libfaac-dev python3-numpy python3-pip libgtk-3-dev libopenblas-base-dev
   libturbojpeg checkinstall protobuf-compiler libprotobuf-dev libprotoc-dev libtesseract-dev tesseract-ocr-all
   libleptonica-dev git build-essential subversion mercurial doxygen-gui graphviz libjpeg-turbo8-dev autoconf
   libeigen3-dev screen lib32stdc++6 gawk libgtk2.0-dev pkg-config libdc1394-dev libjpeg-dev libpng-dev libtiff5-dev
