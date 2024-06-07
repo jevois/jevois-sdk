@@ -22,43 +22,14 @@ arch=`dpkg --print-architecture`
 
 ####################################################################################################
 # Compiler packages and dependencies
-if [ ${uburel} = "15.10" ]; then
-    compilers="gcc-5 g++-5 gfortran-5"
-    qt4lib="libqt4-dev"
-elif [ ${uburel} = "16.04" ]; then
-    # for 16.04 we need a ppa:
-    compilers="gcc-7 g++-7 gfortran-7"
-    if [ ! -x /usr/bin/gcc-7 -o ! -x /usr/bin/g++-7 -o ! -x /usr/bin/gfortran-7 ]; then
-	    sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test # needed for gcc-6 on 16.04
-	    sudo apt-get update
-    fi
-    qt4lib="libqt4-dev"
-elif [ ${uburel} = "17.04" ]; then
-    compilers="gcc-7 g++-7 gfortran-7"
-    qt4lib="libqt4-dev libavresample-dev"
-elif [ ${uburel} = "17.10" ]; then
-    compilers="gcc-7 g++-7 gfortran-7"
-    qt4lib="libqt4-dev libavresample-dev"
-elif [ ${uburel} = "18.04" -o ${uburel} = "19.04" ]; then
-    compilers="gcc-8 g++-8 gfortran-8"
-    qt4lib="libqt4-dev libavresample-dev"
-elif [ ${uburel} = "20.04" ]; then
-    compilers="gcc-10 g++-10 gfortran-10"
-    qt4lib="libavresample-dev" # no more qt4 on 20.04; we already have qt5-default in the list below
-elif [ ${uburel} = "24.04" ]; then
-    compilers="gcc-10 g++-10 gfortran-10" # we stick to gcc-10 for jevois, jevois-pro moved to gcc-14
-    qt4lib=""
-else
-    echo "Unsupported ubuntu version -- ABORT"
-    exit 1
-fi
+compilers="gcc-10 g++-10 gfortran-10" # we stick to gcc-10 for jevois, jevois-pro moved to gcc-14
 
 packages=( build-essential python-is-python3 ${compilers} cmake libboost-all-dev autoconf libeigen3-dev libgtk2.0-dev
     libdc1394-dev libjpeg-dev libpng-dev libtiff5-dev libavcodec-dev libavformat-dev libxine2-dev libgstreamer1.0-dev
-    libgstreamer-plugins-base1.0-dev libv4l-dev libtbb-dev ${qt4lib} libfaac-dev libmp3lame-dev
+    libgstreamer-plugins-base1.0-dev libv4l-dev libtbb-dev libfaac-dev libmp3lame-dev
     libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev x264 v4l-utils unzip
-    python${pyver}-dev python3-numpy python3-pip libgtk-3-dev libopenblas-base-dev libturbojpeg checkinstall
-    protobuf-compiler libprotobuf-dev libtesseract-dev tesseract-ocr-all libleptonica-dev libatlas-base-dev
+    python${pyver}-dev python3-numpy python3-pip libgtk-3-dev libopenblas-openmp-dev libturbojpeg checkinstall
+    protobuf-compiler libprotobuf-dev libtesseract-dev tesseract-ocr-all libleptonica-dev liblapacke-dev
     pylint libopenjp2-7-dev libopenjpip7 )
 
 # Install packages unless they are already installed:
@@ -95,18 +66,9 @@ if [ ! -f /usr/lib/x86_64-linux-gnu/libturbojpeg.so ]; then
     sudo ln -s /usr/lib/x86_64-linux-gnu/libturbojpeg.so.0.?.0 /usr/lib/x86_64-linux-gnu/libturbojpeg.so
 fi
 
-if [ ${uburel} = "16.04" ]; then
-    # And we need cmake to use gcc6
-    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 50 --slave /usr/bin/g++ g++ /usr/bin/g++-5 --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-5
-    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 100 --slave /usr/bin/g++ g++ /usr/bin/g++-7 --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-7
-    sudo update-alternatives --set gcc /usr/bin/gcc-7
-elif [ ${uburel} = "18.04" -o ${uburel} = "19.04" ]; then
-    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 100 --slave /usr/bin/g++ g++ /usr/bin/g++-8 --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-8
-    sudo update-alternatives --set gcc /usr/bin/gcc-8
-else
-    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 100 --slave /usr/bin/g++ g++ /usr/bin/g++-10 --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-10
-    sudo update-alternatives --set gcc /usr/bin/gcc-10
-fi
+# Use our desired gcc version as default:
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 100 --slave /usr/bin/g++ g++ /usr/bin/g++-10 --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-10
+sudo update-alternatives --set gcc /usr/bin/gcc-10
 
 ####################################################################################################
 # Opencv installation and packing

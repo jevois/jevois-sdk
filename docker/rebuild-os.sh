@@ -16,52 +16,25 @@ function question { if [ $usedef -eq 1 ]; then REPLY="y"; else read -p "${1}? [Y
 
 basedir=`pwd`
 
-# needed by buildroot on ubu 19.04:
+# needed by buildroot on ubu >= 19.04:
 export FORCE_UNSAFE_CONFIGURE=1
 
-# Select gcc version for host builds:
-if [ "${uburel}" = "15.10" ]; then
-	depends="gcc-5, g++-5, gfortran-5";
-    crossdep="gcc-7-cross-base"
-    qt4lib="libqt4-dev libfaac-dev"
-elif [ "${uburel}" = "16.04" ]; then
-	depends="gcc-6, g++-6, gfortran-6";
-    crossdep=""
-    qt4lib="libqt4-dev libfaac-dev"
-elif [ "${uburel}" = "17.10" ]; then
-	depends="gcc-7, g++-7, gfortran-7";
-    qt4lib="libqt4-dev libfaac-dev"
-elif [ "${uburel}" = "18.04" -o "${uburel}" = "19.04" ]; then
-	depends="gcc-8, g++-8, gfortran-8";
-    crossdep="gcc-7-cross-base"
-    qt4lib="libqt4-dev libfaac-dev"
-elif [ "${uburel}" = "20.04" ]; then
-	depends="gcc-10, g++-10, gfortran-10";
-    crossdep="gcc-10-cross-base"
-    qt4lib=""
-elif [ "${uburel}" = "24.04" ]; then
-    # While jevois-pro moved to gcc-14, here we stick with gcc-10 and c++-20/2a as we have too much legacy code...
-	depends="gcc-10, g++-10, gfortran-10, python-is-python3";
-    crossdep="gcc-10-cross-base"
-    qt4lib=""
-else
-    echo "Unsupported Ubuntu version -- ABORT"
-    exit 1
-fi
+# While jevois-pro moved to gcc-14, here we stick with gcc-10 and c++-20/2a as we have too much legacy code...
+depends="gcc-10, g++-10, gfortran-10, gcc-10-cross-base"
 
 compilers=${depends//,/}
 
-# Those should already be installed in th ejvsdk docker. They are listed here so we can also have them as dependencies
+# Those should already be installed in the jvsdk docker. They are listed here so we can also have them as dependencies
 # in our deb packages:
 packages=( build-essential cmake libboost-all-dev autoconf libgtk2.0-dev libjpeg-dev libpng-dev libtiff5-dev
-  libxine2-dev libv4l-dev libtbb-dev ${qt4lib} libfaac-dev python3-numpy python3-pip libgtk-3-dev libopenblas-base-dev
+  libxine2-dev libv4l-dev libtbb-dev libfaac-dev python3-numpy python3-pip libgtk-3-dev libopenblas-openmp-dev
   libturbojpeg checkinstall protobuf-compiler libprotobuf-dev libprotoc-dev libtesseract-dev tesseract-ocr-all
   libleptonica-dev git build-essential subversion mercurial doxygen-gui graphviz libjpeg-turbo8-dev autoconf
   libeigen3-dev screen lib32stdc++6 gawk libgtk2.0-dev pkg-config libdc1394-dev libjpeg-dev libpng-dev libtiff5-dev
   libavcodec-dev libavformat-dev libswscale-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev
   libtheora-dev libvorbis-dev libxvidcore-dev x264 v4l-utils unzip python3-dev libgtk-3-dev libturbojpeg
   libgles2-mesa-dev ncftp emacs libturbojpeg-dev u-boot-tools dpkg-dev flex curl wput libdmtx-dev python-is-python3
-  libhtml-parser-perl bzip2 lsb-release )
+  libhtml-parser-perl bzip2 lsb-release liblapacke-dev ${compilers})
 
 ####################################################################################################
 question "Install build packages"
@@ -73,7 +46,7 @@ if [ "X$REPLY" != "Xn" ]; then
     sudo apt -y autoremove
 
     # get cross-compiler installed if not already here:
-    if [ ! -x /usr/bin/arm-linux-gnueabi-gcc ]; then
+    if [ ! -x /opt/gcc-linaro-arm-linux-gnueabihf-*/bin/arm-linux-gnueabihf-gcc ]; then
 
         # We need gcc-4.7-arm-linux-gnueabi to compile our kernel. If we have a newer version, remove it:
         sudo apt -y remove libc6-armel-cross linux-libc-dev-armel-cross binutils-arm-linux-gnueabi \
@@ -81,17 +54,12 @@ if [ "X$REPLY" != "Xn" ]; then
              gcc-8-cross-base gcc-9-cross-base gcc-10-cross-base gcc-11-cross-base gcc-12-cross-base gcc-13-cross-base \
              gcc-14-cross-base
         sudo apt -y autoremove
-
-        wget http://jevois.org/data/gcc4.7-xenial.tbz
-        tar jxvf gcc4.7-xenial.tbz
-        dpkg -i gcc4.7-xenial/*.deb
-        /bin/rm -rf gcc4.7-xenial gcc4.7-xenial.tbz
-        sudo ln -fs /usr/bin/arm-linux-gnueabi-gcc-4.7 /usr/bin/arm-linux-gnueabi-gcc
+        wget http://jevois.org/pkg/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2
+        sudo tar jxf gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2 -C /opt
+        /bin/rm -f gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2
+        export PATH="/opt/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux/bin:${PATH}"
     fi
-    
-    # get compilers
-    sudo apt -y install $compilers
-    
+        
     # Install packages unless they are already installed:
     failed=""
     for pack in "${packages[@]}"; do
@@ -133,7 +101,7 @@ question "Rebuild opencv deb"
 if [ "X$REPLY" != "Xn" ]; then
     ./rebuild-host-opencv.sh
     mv opencv-*/opencv-*/build/jevois-opencv*.deb .
-    #sudo rm -rf opencv-*
+    sudo rm -rf opencv-*
 fi
 
 # Fix compilation error with libjpeg-turbo8
@@ -162,7 +130,11 @@ fi
 question "Rebuild jevois contribs"
 if [ "X$REPLY" != "Xn" ]; then
     # Need bazel for jevois contrib tensorflow:
-    sudo dpkg -i bazel_3.7.2-linux-x86_64.deb
+    if [ ! -x /usr/bin/bazel-3.7.2 ]; then
+        wget http://jevois.org/data/bazel_3.7.2-linux-x86_64.deb
+        sudo dpkg -i bazel_3.7.2-linux-x86_64.deb
+        /bin/rm -f bazel_3.7.2-linux-x86_64.deb
+    fi
     
     # Re-install all the jevois contrib libraries:
     cd jevois/Contrib
@@ -235,9 +207,7 @@ EOF
 	    exit 8
     fi
     
-    depends="build-essential, ${depends}, jevois-sdk (>= ${ver}), libc6-armel-cross, libgcc1-armel-cross, libgomp1-armel-cross, binutils-arm-linux-gnueabi, linux-libc-dev-armel-cross, libc6-dev-armel-cross, ${gccdep}, gawk, libgtk2.0-dev, u-boot-tools, lib32stdc++6, pkg-config, libdmtx-dev"
-
-    if [ "X${crossdep}" != "X" ]; then depends="${depends}, ${crossdep}"; fi
+    depends="build-essential, ${depends}, jevois-sdk (>= ${ver}), u-boot-tools, lib32stdc++6, pkg-config, libdmtx-dev"
 
     # for now, we only need opencv (for TBB includes) and linux-headers from build/, and let's take host/ and target/ --
     # everything else can go:
@@ -253,7 +223,7 @@ EOF
 
     sudo mkdir deb/DEBIAN
 
-    cat >/tmp/control <<EOF
+    cat <<EOF | sudo tee deb/DEBIAN/control
 Package: jevois-sdk-dev
 Architecture: ${arch}
 Maintainer: Laurent Itti
@@ -264,30 +234,34 @@ Depends: ${depends}
 Description: JeVois Smart Machine Vision, Software Development Kit development system
  Development utilities and libraries needed to cross-compile JeVois smart machine vision software
  .
- Provides cross-compilers, libraries compiled for the ARM processor inside JeVois, embedded Linux kernel
- bootloaders, and utilities to allow building machine vision modules for the JeVois hardware platform.
+ Provides libraries compiled for the ARM processor inside JeVois, embedded Linux kernel, bootloader,
+ and utilities to allow building machine vision modules for the JeVois-A33 hardware platform.
 EOF
 
-    sudo mv /tmp/control deb/DEBIAN/
     echo "==== control file is:"
     cat deb/DEBIAN/control
     echo "==== control file end"
     
-    cat > /tmp/postinst <<EOF
+    cat <<EOF | sudo tee deb/DEBIAN/postinst
 #!/bin/sh
 
-if [ ! -f /usr/bin/arm-linux-gnueabi-gcc -a ! -h /usr/bin/arm-linux-gnueabi-gcc ]; then
-  if [ -x /usr/bin/arm-linux-gnueabi-gcc-4.7 ]; then
-    ln -fs /usr/bin/arm-linux-gnueabi-gcc-4.7 /usr/bin/arm-linux-gnueabi-gcc
-  elif [ -x /usr/bin/arm-linux-gnueabi-gcc-5 ]; then
-    ln -fs /usr/bin/arm-linux-gnueabi-gcc-5 /usr/bin/arm-linux-gnueabi-gcc
-  else
-    echo "WARNING: make sure arm-linux-gnueabi-gcc with version 5 or less is installed"
-  fi
-fi
+if [ ! -x /opt/gcc-linaro-arm-linux-gnueabihf-*/bin/arm-linux-gnueabihf-gcc ]; then
+  echo "We need gcc-4.7-arm-linux-gnueabi to compile our kernel - installing..."
+  apt -y remove libc6-armel-cross linux-libc-dev-armel-cross binutils-arm-linux-gnueabi \
+      cpp-5-arm-linux-gnueabi gcc-5-arm-linux-gnueabi-base gcc-5-cross-base gcc-6-cross-base gcc-7-cross-base \
+      gcc-8-cross-base gcc-9-cross-base gcc-10-cross-base gcc-11-cross-base gcc-12-cross-base gcc-13-cross-base \
+      gcc-14-cross-base
+  apt -y autoremove
+  wget http://jevois.org/pkg/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2
+
+  if [ ! -d /opt ]; then mkdir /opt; done
+
+  tar jxf gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2 -C /opt
+  /bin/rm -f gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2
+  echo "Add this to your .bashrc:"
+  echo ' export PATH="/opt/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux/bin:${PATH}"'
 EOF
-    
-    sudo mv /tmp/postinst deb/DEBIAN/
+
     sudo chmod a+x deb/DEBIAN/postinst
 
     sudo dpkg-deb --build deb jevois-sdk-dev_${pkgver}_${arch}.deb
@@ -325,9 +299,38 @@ fi
 ####################################################################################################
 question "Rebuild jevois-sdk deb"
 if [ "X$REPLY" != "Xn" ]; then
-    cd "${basedir}"
-    sudo cp Makefile description-pak /usr/share/
     cd /usr/share
+
+    cat <<EOF | sudo tee Makefile
+# This makefile is here just so that we can use checkinstall to create the jevois-sdk debian package
+
+# keep this in exact sync with jevois-build.sh
+
+.PHONY: all clean
+
+all:
+	( cd jevois-sdk && ./jevois-build.sh /tmp/jevois-build )
+	@echo "All done"
+
+clean:
+	rm -rf /tmp/jevois-build
+
+install:
+	mkdir -p /var/lib/jevois-build/boot
+	install /tmp/jevois-build/boot/u-boot.fex /var/lib/jevois-build/boot
+	install /tmp/jevois-build/boot/boot0_sdcard.fex /var/lib/jevois-build/boot
+	install /tmp/jevois-build/boot/script.bin /var/lib/jevois-build/boot
+	install jevois-sdk/linux-3.4/arch/arm/boot/uImage /var/lib/jevois-build/boot
+	install jevois-sdk/out/sun8iw5p1/linux/common/rootfs.ext4 /var/lib/jevois-build/boot
+	install jevois-sdk/jevois-build/microsd-readme.txt /var/lib/jevois-build/boot
+	install jevois-sdk/jevois-build/uEnv.txt /var/lib/jevois-build/boot
+	install jevois-sdk/jevois-build/jevois-flash-card /usr/bin
+	install jevois-sdk/jevois-sdk-version.txt /var/lib/jevois-build
+EOF
+
+    cat <<EOF | sudo tee description-pak
+Software development kit (SDK) for JeVois smart embedded machine vision
+EOF
 
     sudo make all
 

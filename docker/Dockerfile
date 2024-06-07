@@ -12,18 +12,18 @@ RUN apt update && apt -y upgrade && apt -y dist-upgrade
 
 RUN DEBIAN_FRONTEND=noninteractive apt -y install \
   build-essential cmake libboost-all-dev autoconf libgtk2.0-dev libjpeg-dev libpng-dev libtiff5-dev \
-  libxine2-dev libv4l-dev libtbb-dev libfaac-dev python3-numpy python3-pip libgtk-3-dev libopenblas-base-dev \
+  libxine2-dev libv4l-dev libtbb-dev libfaac-dev python3-numpy python3-pip libgtk-3-dev libopenblas-openmp-dev \
   libturbojpeg checkinstall protobuf-compiler libprotobuf-dev libprotoc-dev libtesseract-dev tesseract-ocr-all \
   libleptonica-dev git build-essential subversion mercurial doxygen-gui graphviz libjpeg-turbo8-dev autoconf \
-  libeigen3-dev screen lib32stdc++6 gawk pkg-config libdc1394-dev libavcodec-dev pylint \
+  libeigen3-dev screen lib32stdc++6 gawk pkg-config libdc1394-dev libavcodec-dev pylint liblapacke-dev \
   libavformat-dev libswscale-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev \
   libvorbis-dev libxvidcore-dev x264 v4l-utils unzip python3-dev libturbojpeg libgles2-mesa-dev ncftp \
   emacs libturbojpeg-dev u-boot-tools dpkg-dev flex curl wput libdmtx-dev python-is-python3 libhtml-parser-perl bzip2 \
   lsb-release wget locales sudo libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libopenjp2-7-dev libopenjpip7 \
-  cpio rsync bc
+  cpio rsync bc python3.12-dev
 
 # Remove default cross-compiler:
-RUN apt -y remove gcc-8-cross-base gcc-9-cross-base gcc-10-cross-base || true
+RUN apt -y remove gcc-10-cross-base gcc-11-cross-base gcc-12-cross-base gcc-13-cross-base gcc-14-cross-base || true
 
 # Install g++-10 which we will use to compile JeVois code:
 RUN DEBIAN_FRONTEND=noninteractive apt -y install \
@@ -33,20 +33,20 @@ RUN DEBIAN_FRONTEND=noninteractive apt -y install \
 # Set g++-10 as default:
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 100 --slave /usr/bin/g++ g++ /usr/bin/g++-10 \
   --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-10 && update-alternatives --set gcc /usr/bin/gcc-10
+RUN sudo update-alternatives --set gcc /usr/bin/gcc-10
 
 # Get old ARM cross-compiler for buildroot and kernel:
-RUN wget http://jevois.org/data/gcc4.7-xenial.tbz
-RUN tar jxvf gcc4.7-xenial.tbz
-RUN dpkg -i gcc4.7-xenial/*.deb
-RUN ln -fs /usr/bin/arm-linux-gnueabi-gcc-4.7 /usr/bin/arm-linux-gnueabi-gcc
+RUN wget http://jevois.org/pkg/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2
+RUN tar jxf gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2 -C /opt
+RUN rm -f gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2
 
 # Get bazel 3.7.2 to compile tensorflow:
 RUN wget http://jevois.org/data/bazel_3.7.2-linux-x86_64.deb
 RUN dpkg -i bazel_3.7.2-linux-x86_64.deb
+RUN rm -f bazel_3.7.2-linux-x86_64.deb
 
 # Clean up:
 RUN apt -y autoremove
-RUN rm -rf gcc4.7-xenial* bazel*
 
 # Generate a US locale:
 RUN locale-gen en_US.UTF-8
@@ -63,6 +63,12 @@ RUN sed -i -e '/\%sudo/ c \%sudo ALL=(ALL) NOPASSWD: ALL' /etc/sudoers
 RUN usermod -a -G sudo jevois
 USER jevois
 WORKDIR /home/jevois
+
+# Setup the linaro toolchain path:
+RUN echo 'export PATH=/opt/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux/bin:${PATH}' >> .bashrc
+
+# Enable terminal colors:
+run echo 'TERM=xterm-256color' >> .bashrc
 
 # Copy the build scripts:
 COPY rebuild-os.sh .
