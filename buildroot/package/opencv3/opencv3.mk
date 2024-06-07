@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-OPENCV3_VERSION = 4.9.0
+OPENCV3_VERSION = 4.10.0
 OPENCV3_SITE = $(call github,opencv,opencv,$(OPENCV3_VERSION))
 OPENCV3_INSTALL_STAGING = YES
 OPENCV3_LICENSE = BSD-3-Clause

@@ -1,0 +1,73 @@
+
+# Install docker as described here (we chose the apt-based install for Ubuntu):
+# https://docs.docker.com/engine/install/ubuntu/
+#
+# Then build with: cd jevois-sdk/docker/ && docker build -t jvsdk .
+#
+# Once built: docker run -it jvsdk
+
+FROM ubuntu:24.04
+
+RUN apt update && apt -y upgrade && apt -y dist-upgrade
+
+RUN DEBIAN_FRONTEND=noninteractive apt -y install \
+  build-essential cmake libboost-all-dev autoconf libgtk2.0-dev libjpeg-dev libpng-dev libtiff5-dev \
+  libxine2-dev libv4l-dev libtbb-dev libfaac-dev python3-numpy python3-pip libgtk-3-dev libopenblas-dev libturbojpeg \
+  checkinstall protobuf-compiler libprotobuf-dev libprotoc-dev libtesseract-dev tesseract-ocr-all libleptonica-dev git \
+  build-essential subversion mercurial doxygen-gui graphviz libjpeg-turbo8-dev autoconf libeigen3-dev screen \
+  lib32stdc++6 gawk pkg-config libdc1394-dev libavcodec-dev pylint \
+  libavformat-dev libswscale-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev \
+  libvorbis-dev libxvidcore-dev x264 v4l-utils unzip python3-dev libturbojpeg libgles2-mesa-dev ncftp \
+  emacs libturbojpeg-dev u-boot-tools dpkg-dev flex curl wput libdmtx-dev python-is-python3 libhtml-parser-perl bzip2 \
+  lsb-release wget locales sudo libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libopenjp2-7-dev libopenjpip7 \
+  cpio rsync bc
+
+# Remove default cross-compiler:
+RUN apt -y remove gcc-8-cross-base gcc-9-cross-base gcc-10-cross-base || true
+
+# Install g++-10 which we will use to compile JeVois code:
+RUN DEBIAN_FRONTEND=noninteractive apt -y install \
+  gcc-10 g++-10 gfortran-10 gcc-10-cross-base libc6-armel-cross libgcc1-armel-cross libgomp1-armel-cross \
+  binutils-arm-linux-gnueabi linux-libc-dev-armel-cross libc6-dev-armel-cross
+
+# Set g++-10 as default:
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 100 --slave /usr/bin/g++ g++ /usr/bin/g++-10 \
+  --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-10 && update-alternatives --set gcc /usr/bin/gcc-10
+
+# Get old ARM cross-compiler for buildroot and kernel:
+RUN wget http://jevois.org/data/gcc4.7-xenial.tbz
+RUN tar jxvf gcc4.7-xenial.tbz
+RUN dpkg -i gcc4.7-xenial/*.deb
+RUN ln -fs /usr/bin/arm-linux-gnueabi-gcc-4.7 /usr/bin/arm-linux-gnueabi-gcc
+
+# Get bazel 3.7.2 to compile tensorflow:
+RUN wget http://jevois.org/data/bazel_3.7.2-linux-x86_64.deb
+RUN dpkg -i bazel_3.7.2-linux-x86_64.deb
+
+# Clean up:
+RUN apt -y autoremove
+RUN rm -rf gcc4.7-xenial* bazel*
+
+# Generate a US locale:
+RUN locale-gen en_US.UTF-8
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8' TERM=screen
+
+# Switch to normal user:
+RUN useradd -c 'jevois' -m -d /home/jevois -s /bin/bash jevois
+RUN sed -i -e '/\%sudo/ c \%sudo ALL=(ALL) NOPASSWD: ALL' /etc/sudoers
+RUN usermod -a -G sudo jevois
+USER jevois
+WORKDIR /home/jevois
+
+# Copy the build scripts:
+COPY rebuild-os.sh .
+COPY rebuild-host-opencv.sh .
+
+# Instructions to user:
+RUN echo 'echo "Welcome to JeVois-SDK build container"' > /etc/profile.d/welcome.sh
+RUN echo 'echo ""' >> /etc/profile.d/welcome.sh
+RUN echo 'echo "To rebuild everything, just run: ./rebuild-os.sh -y"' >> /etc/profile.d/welcome.sh
+RUN echo 'echo "The resulting .deb packages will be in the current directory."' >> /etc/profile.d/welcome.sh
+
+ENTRYPOINT ["/bin/bash", "-l", "-c"]
+
