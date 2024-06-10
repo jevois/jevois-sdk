@@ -34,7 +34,7 @@ packages=( build-essential cmake libboost-all-dev autoconf libgtk2.0-dev libjpeg
   libavcodec-dev libavformat-dev libswscale-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev
   libtheora-dev libvorbis-dev libxvidcore-dev x264 v4l-utils unzip python3-dev libgtk-3-dev libturbojpeg
   libgles2-mesa-dev ncftp emacs libturbojpeg-dev u-boot-tools dpkg-dev flex curl wput libdmtx-dev python-is-python3
-  libhtml-parser-perl bzip2 lsb-release liblapacke-dev ${compilers})
+  libhtml-parser-perl bzip2 lsb-release liblapacke-dev ${compilers} lib32z1)
 
 ####################################################################################################
 question "Install build packages"
@@ -45,21 +45,6 @@ if [ "X$REPLY" != "Xn" ]; then
     sudo apt -y upgrade
     sudo apt -y autoremove
 
-    # get cross-compiler installed if not already here:
-    if [ ! -x /opt/gcc-linaro-arm-linux-gnueabihf-*/bin/arm-linux-gnueabihf-gcc ]; then
-
-        # We need gcc-4.7-arm-linux-gnueabi to compile our kernel. If we have a newer version, remove it:
-        sudo apt -y remove libc6-armel-cross linux-libc-dev-armel-cross binutils-arm-linux-gnueabi \
-             cpp-5-arm-linux-gnueabi gcc-5-arm-linux-gnueabi-base gcc-5-cross-base gcc-6-cross-base gcc-7-cross-base \
-             gcc-8-cross-base gcc-9-cross-base gcc-10-cross-base gcc-11-cross-base gcc-12-cross-base gcc-13-cross-base \
-             gcc-14-cross-base
-        sudo apt -y autoremove
-        wget http://jevois.org/pkg/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2
-        sudo tar jxf gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2 -C /opt
-        /bin/rm -f gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2
-        export PATH="/opt/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux/bin:${PATH}"
-    fi
-        
     # Install packages unless they are already installed:
     failed=""
     for pack in "${packages[@]}"; do
@@ -112,8 +97,6 @@ fi
 ####################################################################################################
 question "Update JeVois software to latest version"
 if [ "X$REPLY" != "Xn" ]; then
-    if [ ! -x /usr/bin/git ]; then sudo apt -y install git; fi
-    
     for dis in jevois jevoisbase samplemodule samplepythonmodule jevois-tutorials jevois-inventor jevoisextra; do
 	    echo "Updating JeVois source code: ${dis} ..."
 	    if [ ! -d ${dis} ]; then
@@ -155,33 +138,52 @@ fi
 ####################################################################################################
 question "Rebuild jevois-sdk-dev deb"
 if [ "X$REPLY" != "Xn" ]; then
-    question "Nuke any old jevois-sdk install"
-    if [ "X$REPLY" != "Xn" ]; then
-	    sudo /bin/rm -rf /usr/share/jevois-sdk
-	    cd /usr/share
-	    sudo git clone https://github.com/jevois/jevois-sdk.git -b ${gitbranch}
+    gcc47="gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux"
+    
+    # If we already have the kernel cross-compiler, preserve it:
+    if [ -x /usr/share/jevois-sdk/${gcc47}/bin/arm-linux-gnueabihf-gcc ]; then
+        sudo mv /usr/share/jevois-sdk/${gcc47} /usr/share/
+    fi
+        
+    # Nuke and re-download the repo:
+	sudo /bin/rm -rf /usr/share/jevois-sdk
+	cd /usr/share
+	sudo git clone https://github.com/jevois/jevois-sdk.git -b ${gitbranch}
 
-	    cd jevois-sdk
-	    sudo rm -rf out
+    # Get old cross-compiler for the kernel if not already here:
+    if [ ! -x /usr/share/jevois-sdk/${gcc47}/bin/arm-linux-gnueabihf-gcc ]; then
+        # Did we save it?
+        if [ -x /usr/share/${gcc47}/bin/arm-linux-gnueabihf-gcc ]; then
+            sudo mv /usr/share/${gcc47} /usr/share/jevois-sdk
+        else
+            sudo wget http://jevois.org/pkg/${gcc47}.tar.bz2
+            sudo tar jxf ${gcc47}.tar.bz2 -C /usr/share/jevois-sdk
+            sudo /bin/rm -f ${gcc47}.tar.bz2
+        fi
+    fi
         
-	    # Configure buildroot:
-	    cd buildroot
-	    sudo make distclean
-	    sudo cp configs/sun8i_defconfig .config
-	    cd ..
+	cd jevois-sdk
+	sudo /bin/rm -rf out
+    
+    export PATH="${gcc47}/bin:${PATH}"
+    export LICHEE_TOOLCHAIN_PATH="${gcc47}/bin"
+    export LICHEE_CROSS_COMPILER="${gcc47}/bin/arm-linux-gnueabihf-"
+    
+	# Configure buildroot:
+	cd /usr/share/jevois-sdk/buildroot
+	sudo -E make distclean
+	sudo cp configs/sun8i_defconfig .config
+	cd ..
         
-	    # Configure kernel:
-	    cd linux-3.4
-	    sudo make distclean
-	    sudo cp config-jevois .config
-	    cd ..
-        
-        # We need python (and not just python3) for that build...
-        sudo apt -y install python-is-python3
-        
-	    # configure sunxi build system: choose sun8iw5p1, linux, kernel 3.4, jevois-a33
-	    #echo "Select the following when asked: 0 for sun8iw5p1, 2 for linux, 0 for kernel-3.4, 1 for jevois-a33"
-	    sudo cat <<EOF | sudo ./build.sh config
+	# Configure kernel:
+	cd linux-3.4
+	sudo -E make distclean
+	sudo cp config-jevois .config
+	cd ..
+    
+	# configure sunxi build system: choose sun8iw5p1, linux, kernel 3.4, jevois-a33
+	#echo "Select the following when asked: 0 for sun8iw5p1, 2 for linux, 0 for kernel-3.4, 1 for jevois-a33"
+	sudo cat <<EOF | sudo ./build.sh config
 0            
 2
 0
@@ -191,26 +193,18 @@ EOF
 
     # build it
     cd /usr/share/jevois-sdk
-    sudo ./build.sh # the first run may give some error
-    sudo ./build.sh
-    sudo ./build.sh pack
-
-    sudo ./jevois-build.sh
     
-    # Build debian package
-    if [ -x /usr/bin/arm-linux-gnueabi-gcc-4.7 ]; then
-	    gccdep="gcc-4.7-arm-linux-gnueabi"
-    elif [ -x /usr/bin/arm-linux-gnueabi-gcc-5 ]; then
-	    gccdep="gcc-5-arm-linux-gnueabi"
-    else
-	    echo "ooops where is gcc-4.7-arm-linux-gnueabi ?"
-	    exit 8
-    fi
-    
-    depends="build-essential, ${depends}, jevois-sdk (>= ${ver}), u-boot-tools, lib32stdc++6, pkg-config, libdmtx-dev"
+    sudo -E ./build.sh # the first run may give some error
+    sudo -E ./build.sh
+    sudo -E ./build.sh pack
 
-    # for now, we only need opencv (for TBB includes) and linux-headers from build/, and let's take host/ and target/ --
-    # everything else can go:
+    sudo -E ./jevois-build.sh
+    
+    depends="build-essential, ${depends}, jevois-sdk (>= ${ver}), u-boot-tools, lib32stdc++6, lib32z1, \
+pkg-config, libdmtx-dev"
+
+    # for now, we only need opencv (for TBB includes), cross-compiler, and linux-headers from build/, and let's take
+    # host/ and target/ -- everything else can go:
     brdir="out/sun8iw5p1/linux/common/buildroot"
     debdir="deb/usr/share/jevois-sdk/${brdir}"
     sudo rm -rf deb
@@ -218,8 +212,9 @@ EOF
     sudo cp -ar ${brdir}/host  ${debdir}/
     sudo cp -ar ${brdir}/target  ${debdir}/
     sudo mkdir ${debdir}/build
-    sudo cp -ar ${brdir}/build/opencv3-*  ${debdir}/build/
-    sudo cp -ar ${brdir}/build/linux-headers-*  ${debdir}/build/
+    sudo cp -ar ${brdir}/build/opencv3-* ${debdir}/build/
+    sudo cp -ar ${brdir}/build/linux-headers-* ${debdir}/build/
+    sudo cp -ar /usr/share/jevois-sdk/${gcc47} ${debdir}/build/
 
     sudo mkdir deb/DEBIAN
 
@@ -242,28 +237,6 @@ EOF
     cat deb/DEBIAN/control
     echo "==== control file end"
     
-    cat <<EOF | sudo tee deb/DEBIAN/postinst
-#!/bin/sh
-
-if [ ! -x /opt/gcc-linaro-arm-linux-gnueabihf-*/bin/arm-linux-gnueabihf-gcc ]; then
-  echo "We need gcc-4.7-arm-linux-gnueabi to compile our kernel - installing..."
-  apt -y remove libc6-armel-cross linux-libc-dev-armel-cross binutils-arm-linux-gnueabi \
-      cpp-5-arm-linux-gnueabi gcc-5-arm-linux-gnueabi-base gcc-5-cross-base gcc-6-cross-base gcc-7-cross-base \
-      gcc-8-cross-base gcc-9-cross-base gcc-10-cross-base gcc-11-cross-base gcc-12-cross-base gcc-13-cross-base \
-      gcc-14-cross-base
-  apt -y autoremove
-  wget http://jevois.org/pkg/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2
-
-  if [ ! -d /opt ]; then mkdir /opt; done
-
-  tar jxf gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2 -C /opt
-  /bin/rm -f gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2
-  echo "Add this to your .bashrc:"
-  echo ' export PATH="/opt/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux/bin:${PATH}"'
-EOF
-
-    sudo chmod a+x deb/DEBIAN/postinst
-
     sudo dpkg-deb --build deb jevois-sdk-dev_${pkgver}_${arch}.deb
     sudo mv *.deb "${basedir}/"
     sudo rm -rf deb

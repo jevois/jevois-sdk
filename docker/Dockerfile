@@ -2,9 +2,9 @@
 # Install docker as described here (we chose the apt-based install for Ubuntu):
 # https://docs.docker.com/engine/install/ubuntu/
 #
-# Then build with: cd jevois-sdk/docker/ && docker build -t jvsdk .
+# Then build with: cd jevois-sdk/docker/ && docker build -t jevois/jevois-sdk:1.21.0 .
 #
-# Once built: docker run -it jvsdk
+# Once built: docker run -it jevois/jevois-sdk:1.21.0
 
 FROM ubuntu:24.04
 
@@ -37,7 +37,8 @@ RUN sudo update-alternatives --set gcc /usr/bin/gcc-10
 
 # Get old ARM cross-compiler for buildroot and kernel:
 RUN wget http://jevois.org/pkg/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2
-RUN tar jxf gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2 -C /opt
+RUN mkdir -p /usr/share/jevois-sdk
+RUN tar jxf gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2 -C /usr/share/jevois-sdk
 RUN rm -f gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux.tar.bz2
 
 # Get bazel 3.7.2 to compile tensorflow:
