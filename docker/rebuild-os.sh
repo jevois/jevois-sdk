@@ -165,9 +165,9 @@ if [ "X$REPLY" != "Xn" ]; then
 	cd jevois-sdk
 	sudo /bin/rm -rf out
     
-    export PATH="${gcc47}/bin:${PATH}"
-    export LICHEE_TOOLCHAIN_PATH="${gcc47}/bin"
-    export LICHEE_CROSS_COMPILER="${gcc47}/bin/arm-linux-gnueabihf-"
+    export PATH="/usr/share/jevois-sdk/${gcc47}/bin:${PATH}"
+    export LICHEE_TOOLCHAIN_PATH="/usr/share/jevois-sdk/${gcc47}/bin"
+    export LICHEE_CROSS_COMPILER="/usr/share/jevois-sdk/${gcc47}/bin/arm-linux-gnueabihf"
     
 	# Configure buildroot:
 	cd /usr/share/jevois-sdk/buildroot
@@ -189,7 +189,6 @@ if [ "X$REPLY" != "Xn" ]; then
 0
 1
 EOF
-    fi
 
     # build it
     cd /usr/share/jevois-sdk
