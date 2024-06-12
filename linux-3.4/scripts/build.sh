@@ -9,6 +9,10 @@ if [ -d "${LICHEE_TOOLCHAIN_PATH}" ]; then
 	export CROSS_COMPILE="${GCC%-*}-";
 elif [ -n "${LICHEE_CROSS_COMPILER}" ]; then
 	export CROSS_COMPILE="${LICHEE_CROSS_COMPILER}-"
+elif [ -d "/usr/share/jevois-sdk/gcc-linaro-arm-linux-gnueabi*/bin"]; then
+    LINARO="/usr/share/jevois-sdk/gcc-linaro-arm-linux-gnueabi*/bin"
+    GCC=$(find ${LINARO} -perm /a+x -a -regex '.*-gcc')
+	export CROSS_COMPILE="${GCC%-*}-"
 fi
 
 export AS=${CROSS_COMPILE}as

@@ -4,12 +4,16 @@
 #
 # This file is intended to run in the JeVois-A33 development docker
 
+set -e
+
 ver="1.21.0"
 gitbranch="master" # "master" for latest, or "v${ver}" for a given version
 pkgrel="1"
 uburel=`lsb_release -rs`
 arch=`dpkg --print-architecture`
 pkgver="${ver}-${pkgrel}ubuntu${uburel}"
+
+gcc47="gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux"
 
 if [ "x$1" = "x-y" ]; then usedef=1; else usedef=0; fi
 function question { if [ $usedef -eq 1 ]; then REPLY="y"; else read -p "${1}? [Y/n] "; fi }
@@ -46,12 +50,13 @@ if [ "X$REPLY" != "Xn" ]; then
     sudo apt -y autoremove
 
     # Install packages unless they are already installed:
+    set +e
     failed=""
     for pack in "${packages[@]}"; do
         if `dpkg --list | grep -q $pack`; then
             echo "$pack already installed"
         else
-            sudo apt-get --assume-yes install $pack
+            sudo apt -y install $pack
             if [ $? -ne 0 ]; then failed="$failed $pack"; fi
         fi
     done
@@ -69,6 +74,7 @@ if [ "X$REPLY" != "Xn" ]; then
         read -p "Abort this script now [Y/n]? "
         if [ "X$REPLY" != "Xn" ]; then exit 2; fi
     fi
+    set -e
 fi
 
 # Create the dependencies from the packages:
@@ -138,17 +144,15 @@ fi
 ####################################################################################################
 question "Rebuild jevois-sdk-dev deb"
 if [ "X$REPLY" != "Xn" ]; then
-    gcc47="gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux"
-    
     # If we already have the kernel cross-compiler, preserve it:
     if [ -x /usr/share/jevois-sdk/${gcc47}/bin/arm-linux-gnueabihf-gcc ]; then
-        sudo mv /usr/share/jevois-sdk/${gcc47} /usr/share/
+        sudo /bin/mv /usr/share/jevois-sdk/${gcc47} /usr/share/
     fi
         
     # Nuke and re-download the repo:
-	sudo /bin/rm -rf /usr/share/jevois-sdk
-	cd /usr/share
-	sudo git clone https://github.com/jevois/jevois-sdk.git -b ${gitbranch}
+    sudo /bin/rm -rf /usr/share/jevois-sdk
+    cd /usr/share
+    sudo git clone https://github.com/jevois/jevois-sdk.git -b ${gitbranch}
 
     # Get old cross-compiler for the kernel if not already here:
     if [ ! -x /usr/share/jevois-sdk/${gcc47}/bin/arm-linux-gnueabihf-gcc ]; then
@@ -162,28 +166,24 @@ if [ "X$REPLY" != "Xn" ]; then
         fi
     fi
         
-	cd jevois-sdk
-	sudo /bin/rm -rf out
+    cd jevois-sdk
+    sudo /bin/rm -rf out
     
-    export PATH="/usr/share/jevois-sdk/${gcc47}/bin:${PATH}"
-    export LICHEE_TOOLCHAIN_PATH="/usr/share/jevois-sdk/${gcc47}/bin"
-    export LICHEE_CROSS_COMPILER="/usr/share/jevois-sdk/${gcc47}/bin/arm-linux-gnueabihf"
+    # Configure buildroot:
+    cd /usr/share/jevois-sdk/buildroot
+    sudo make distclean
+    sudo /bin/cp configs/sun8i_defconfig .config
+    cd ..
     
-	# Configure buildroot:
-	cd /usr/share/jevois-sdk/buildroot
-	sudo -E make distclean
-	sudo cp configs/sun8i_defconfig .config
-	cd ..
-        
-	# Configure kernel:
-	cd linux-3.4
-	sudo -E make distclean
-	sudo cp config-jevois .config
-	cd ..
+    # Configure kernel:
+    cd linux-3.4
+    sudo make distclean
+    sudo /bin/cp config-jevois .config
+    cd ..
     
-	# configure sunxi build system: choose sun8iw5p1, linux, kernel 3.4, jevois-a33
-	#echo "Select the following when asked: 0 for sun8iw5p1, 2 for linux, 0 for kernel-3.4, 1 for jevois-a33"
-	sudo cat <<EOF | sudo ./build.sh config
+    # configure sunxi build system: choose sun8iw5p1, linux, kernel 3.4, jevois-a33
+    #echo "Select the following when asked: 0 for sun8iw5p1, 2 for linux, 0 for kernel-3.4, 1 for jevois-a33"
+    sudo cat <<EOF | sudo ./build.sh config
 0            
 2
 0
@@ -192,12 +192,12 @@ EOF
 
     # build it
     cd /usr/share/jevois-sdk
-    
-    sudo -E ./build.sh # the first run may give some error
-    sudo -E ./build.sh
-    sudo -E ./build.sh pack
 
-    sudo -E ./jevois-build.sh
+    set +e
+    sudo ./build.sh # first run may give some error
+    set -e
+    
+    sudo ./jevois-build.sh
     
     depends="build-essential, ${depends}, jevois-sdk (>= ${ver}), u-boot-tools, lib32stdc++6, lib32z1, \
 pkg-config, libdmtx-dev"
@@ -206,14 +206,14 @@ pkg-config, libdmtx-dev"
     # host/ and target/ -- everything else can go:
     brdir="out/sun8iw5p1/linux/common/buildroot"
     debdir="deb/usr/share/jevois-sdk/${brdir}"
-    sudo rm -rf deb
+    sudo /bin/rm -rf deb
     sudo mkdir -p ${debdir}
-    sudo cp -ar ${brdir}/host  ${debdir}/
-    sudo cp -ar ${brdir}/target  ${debdir}/
+    sudo /bin/cp -ar ${brdir}/host  ${debdir}/
+    sudo /bin/cp -ar ${brdir}/target  ${debdir}/
     sudo mkdir ${debdir}/build
-    sudo cp -ar ${brdir}/build/opencv3-* ${debdir}/build/
-    sudo cp -ar ${brdir}/build/linux-headers-* ${debdir}/build/
-    sudo cp -ar /usr/share/jevois-sdk/${gcc47} ${debdir}/build/
+    sudo /bin/cp -ar ${brdir}/build/opencv3-* ${debdir}/build/
+    sudo /bin/cp -ar ${brdir}/build/linux-headers-* ${debdir}/build/
+    sudo /bin/cp -ar ${gcc47} deb/usr/share/jevois-sdk/
 
     sudo mkdir deb/DEBIAN
 
@@ -246,26 +246,28 @@ fi
 ####################################################################################################
 question "Rebuild jevois and jevoisbase debs"
 if [ "X$REPLY" != "Xn" ]; then
-	cd jevois \
-	&& sudo rm -rf hbuild pbuild phbuild ppbuild ppdbuild \
-	&& ./rebuild-host.sh \
-	&& cd hbuild && sudo cpack && cd .. \
-	&& ./rebuild-platform.sh \
-	&& cd pbuild && sudo cpack && cd .. \
-	&& cd ../jevoisbase \
-	&& sudo rm -rf hbuild pbuild phbuild ppbuild ppdbuild \
-	&& ./rebuild-host.sh \
-	&& cd hbuild && sudo cpack && cd .. \
-	&& ./rebuild-platform.sh --staging \
-	&& cd pbuild && sudo cpack && cd .. \
-	&& cd ../jevoisextra \
-	&& sudo rm -rf hbuild pbuild phbuild ppbuild ppdbuild \
-	&& ./rebuild-all.sh \
-	&& cd ..
+
+    cd "${basedir}/jevois"
+    sudo rm -rf hbuild pbuild phbuild ppbuild ppdbuild
+    ./rebuild-host.sh
+    cd hbuild && sudo cpack && cd ..
+    ./rebuild-platform.sh
+    cd pbuild && sudo cpack && cd ..
+    cd ../jevoisbase
+    sudo rm -rf hbuild pbuild phbuild ppbuild ppdbuild
+    ./rebuild-host.sh
+    cd hbuild && sudo cpack && cd ..
+    ./rebuild-platform.sh --staging
+    cd pbuild && sudo cpack && cd ..
+    cd ../jevoisextra
+    sudo rm -rf hbuild pbuild phbuild ppbuild ppdbuild
+    ./rebuild-all.sh a33
+    cd ..
+
     cd "${basedir}"
-    mv jevois/*build/*.deb .
-    mv jevoisbase/*build/*.deb .
-    #mv jevoisextra/*build/*.deb .
+    /bin/mv -f jevois/*build/*.deb .
+    /bin/mv -f jevoisbase/*build/*.deb .
+    #/bin/mv jevoisextra/*build/*.deb .
 fi
 
 ####################################################################################################
@@ -285,9 +287,10 @@ all:
 	@echo "All done"
 
 clean:
-	rm -rf /tmp/jevois-build
+	/bin/rm -rf /tmp/jevois-build
 
 install:
+    /bin/rm -rf /var/lib/jevois-build/boot /var/lib/jevois-build/jevois-sdk-version.txt
 	mkdir -p /var/lib/jevois-build/boot
 	install /tmp/jevois-build/boot/u-boot.fex /var/lib/jevois-build/boot
 	install /tmp/jevois-build/boot/boot0_sdcard.fex /var/lib/jevois-build/boot
@@ -305,30 +308,29 @@ Software development kit (SDK) for JeVois smart embedded machine vision
 EOF
 
     sudo make all
-
     sudo make install
 
     sudo checkinstall \
-	 --type debian \
-	 --pkgname jevois-sdk \
-	 --provides jevois-sdk \
-	 --pkglicense "GPL v3" \
-	 --maintainer "Laurent Itti \\<jevois.org@gmail.com\\>" \
-	 --nodoc \
-	 --arch "${arch}" \
-	 --pkgsource="https://github.com/jevois/jevois-sdk/archive/${ver}.tar.gz" \
-	 --pkgaltsource="https://github.com/jevois/jevois-sdk/tree/${ver}" \
-	 --pkgversion "${pkgver}" \
-	 --reset-uids \
-	 --exclude "/home*" \
-	 --pkggroup "universe" \
-	 -y \
-	 --install=no \
-	 --pkgrelease "${pkgrel}ubuntu${uburel}" \
-	 --requires="jevois-host \(= ${pkgver}\),jevois-platform \(= ${pkgver}\),jevoisbase-host \(= ${pkgver}\),jevoisbase-platform \(= ${pkgver}\),${pkgdeps}" \
-	 make install
+     --type debian \
+     --pkgname jevois-sdk \
+     --provides jevois-sdk \
+     --pkglicense "GPL v3" \
+     --maintainer "Laurent Itti \\<jevois.org@gmail.com\\>" \
+     --nodoc \
+     --arch "${arch}" \
+     --pkgsource="https://github.com/jevois/jevois-sdk/archive/${ver}.tar.gz" \
+     --pkgaltsource="https://github.com/jevois/jevois-sdk/tree/${ver}" \
+     --pkgversion "${pkgver}" \
+     --reset-uids \
+     --exclude "/home*" \
+     --pkggroup "universe" \
+     -y \
+     --install=no \
+     --pkgrelease "${pkgrel}ubuntu${uburel}" \
+     --requires="jevois-host \(= ${pkgver}\),jevois-platform \(= ${pkgver}\),jevoisbase-host \(= ${pkgver}\),jevoisbase-platform \(= ${pkgver}\),${pkgdeps}" \
+     make install
     
-    mv jevois-sdk*.deb "${basedir}/"
+    sudo /bin/mv jevois-sdk*.deb "${basedir}/"
     sudo /bin/rm Makefile description-pak
 fi
 
