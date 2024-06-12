@@ -54,7 +54,7 @@ RUN locale-gen en_US.UTF-8
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8' TERM=screen
 
 # Instructions to user:
-RUN echo 'echo "Welcome to JeVois-SDK build container\n"' > /etc/profile.d/welcome.sh
+RUN echo 'echo "Welcome to JeVois-SDK full OS build container\n"' > /etc/profile.d/welcome.sh
 RUN echo 'echo "To rebuild everything, just run: ./rebuild-os.sh -y"' >> /etc/profile.d/welcome.sh
 RUN echo 'echo "The resulting .deb packages will be in the current directory.\n"' >> /etc/profile.d/welcome.sh
 
@@ -64,9 +64,6 @@ RUN sed -i -e '/\%sudo/ c \%sudo ALL=(ALL) NOPASSWD: ALL' /etc/sudoers
 RUN usermod -a -G sudo jevois
 USER jevois
 WORKDIR /home/jevois
-
-# Setup the linaro toolchain path:
-RUN echo 'export PATH=/opt/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux/bin:${PATH}' >> .bashrc
 
 # Enable terminal colors:
 run echo 'TERM=xterm-256color' >> .bashrc

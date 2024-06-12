@@ -93,6 +93,9 @@ cd opencv-${ver}
 mkdir build
 cd build
 
+# Opencv 4.10 fails to find mpi.h, add eplicit path:
+libarch=`uname -p` # x86_64 or aarch64
+export CXXFLAGS="-I/usr/include/${libarch}-linux-gnu -I/usr/include/${libarch}-linux-gnu/mpi"
 
 cmake \
     -D CMAKE_BUILD_TYPE=RELEASE \

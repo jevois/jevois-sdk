@@ -5,14 +5,14 @@ set -e
 export ARCH=arm
 export CROSS_COMPILE=${ARCH}-linux-gnueabi-
 if [ -d "${LICHEE_TOOLCHAIN_PATH}" ]; then
-	GCC=$(find ${LICHEE_TOOLCHAIN_PATH} -perm /a+x -a -regex '.*-gcc');
-	export CROSS_COMPILE="${GCC%-*}-";
+    GCC=$(find ${LICHEE_TOOLCHAIN_PATH} -perm /a+x -a -regex '.*-gcc');
+    export CROSS_COMPILE="${GCC%-*}-";
 elif [ -n "${LICHEE_CROSS_COMPILER}" ]; then
-	export CROSS_COMPILE="${LICHEE_CROSS_COMPILER}-"
-elif [ -d "/usr/share/jevois-sdk/gcc-linaro-arm-linux-gnueabi*/bin"]; then
+    export CROSS_COMPILE="${LICHEE_CROSS_COMPILER}-"
+elif [ -d "/usr/share/jevois-sdk/gcc-linaro-arm-linux-gnueabi*/bin" ]; then
     LINARO="/usr/share/jevois-sdk/gcc-linaro-arm-linux-gnueabi*/bin"
     GCC=$(find ${LINARO} -perm /a+x -a -regex '.*-gcc')
-	export CROSS_COMPILE="${GCC%-*}-"
+    export CROSS_COMPILE="${GCC%-*}-"
 fi
 
 export AS=${CROSS_COMPILE}as

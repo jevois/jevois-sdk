@@ -169,6 +169,8 @@ if [ "X$REPLY" != "Xn" ]; then
     cd jevois-sdk
     sudo /bin/rm -rf out
     
+    set +e # first run on buildroot may give errors...
+
     # Configure buildroot:
     cd /usr/share/jevois-sdk/buildroot
     sudo make distclean
@@ -193,7 +195,6 @@ EOF
     # build it
     cd /usr/share/jevois-sdk
 
-    set +e
     sudo ./build.sh # first run may give some error
     set -e
     
