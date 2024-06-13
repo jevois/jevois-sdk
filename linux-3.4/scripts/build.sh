@@ -1,19 +1,26 @@
 #!/bin/bash
 set -e
 
+echo "JEVOIS: starting linux-3.4/scripts/build.sh kernel build..."
+
 #Setup common variables
 export ARCH=arm
 export CROSS_COMPILE=${ARCH}-linux-gnueabi-
+
+JEVOIS_LINARO="/usr/share/jevois-sdk/gcc-linaro-arm-linux-gnueabihf-4.7-2013.04-20130415_linux/bin"
+
 if [ -d "${LICHEE_TOOLCHAIN_PATH}" ]; then
     GCC=$(find ${LICHEE_TOOLCHAIN_PATH} -perm /a+x -a -regex '.*-gcc');
     export CROSS_COMPILE="${GCC%-*}-";
 elif [ -n "${LICHEE_CROSS_COMPILER}" ]; then
     export CROSS_COMPILE="${LICHEE_CROSS_COMPILER}-"
-elif [ -d "/usr/share/jevois-sdk/gcc-linaro-arm-linux-gnueabi*/bin" ]; then
-    LINARO="/usr/share/jevois-sdk/gcc-linaro-arm-linux-gnueabi*/bin"
-    GCC=$(find ${LINARO} -perm /a+x -a -regex '.*-gcc')
+elif [ -d "${JEVOIS_LINARO}" ]; then
+    echo "JEVOIS: Linaro compiler found in ${JEVOIS_LINARO}"
+    GCC=$(find ${JEVOIS_LINARO} -perm /a+x -a -regex '.*-gcc')
     export CROSS_COMPILE="${GCC%-*}-"
 fi
+
+echo "JEVOIS: CROSS_COMPILE=${CROSS_COMPILE}"
 
 export AS=${CROSS_COMPILE}as
 export LD=${CROSS_COMPILE}ld
