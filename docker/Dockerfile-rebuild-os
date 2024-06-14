@@ -1,16 +1,14 @@
-
-# Install docker as described here (we chose the apt-based install for Ubuntu):
-# https://docs.docker.com/engine/install/ubuntu/
+# This file is mainly for JeVois development team
 #
-# Then build with: cd jevois-sdk/docker/ && docker build -t jevois/jevois-sdk:1.21.0 .
-#
-# Once built: docker run -it jevois/jevois-sdk:1.21.0
+# For most users: see README.md in this directory
 
 FROM ubuntu:24.04
 
-RUN apt update && apt -y upgrade && apt -y dist-upgrade
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN DEBIAN_FRONTEND=noninteractive apt -y install \
+RUN apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade
+
+RUN apt-get -y install \
   build-essential cmake libboost-all-dev autoconf libgtk2.0-dev libjpeg-dev libpng-dev libtiff5-dev \
   libxine2-dev libv4l-dev libtbb-dev libfaac-dev python3-numpy python3-pip libgtk-3-dev libopenblas-openmp-dev \
   libturbojpeg checkinstall protobuf-compiler libprotobuf-dev libprotoc-dev libtesseract-dev tesseract-ocr-all \
@@ -20,13 +18,13 @@ RUN DEBIAN_FRONTEND=noninteractive apt -y install \
   libvorbis-dev libxvidcore-dev x264 v4l-utils unzip python3-dev libturbojpeg libgles2-mesa-dev ncftp \
   emacs libturbojpeg-dev u-boot-tools dpkg-dev flex curl wput libdmtx-dev python-is-python3 libhtml-parser-perl bzip2 \
   lsb-release wget locales sudo libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libopenjp2-7-dev libopenjpip7 \
-  cpio rsync bc python3.12-dev
+  cpio rsync bc python3.12-dev ca-certificates gpg lib32z1
 
 # Remove default cross-compiler:
-RUN apt -y remove gcc-10-cross-base gcc-11-cross-base gcc-12-cross-base gcc-13-cross-base gcc-14-cross-base || true
+RUN apt-get -y remove gcc-10-cross-base gcc-11-cross-base gcc-12-cross-base gcc-13-cross-base gcc-14-cross-base || true
 
 # Install g++-10 which we will use to compile JeVois code:
-RUN DEBIAN_FRONTEND=noninteractive apt -y install \
+RUN apt-get -y install \
   gcc-10 g++-10 gfortran-10 gcc-10-cross-base libc6-armel-cross libgcc1-armel-cross libgomp1-armel-cross \
   binutils-arm-linux-gnueabi linux-libc-dev-armel-cross libc6-dev-armel-cross
 
@@ -47,7 +45,7 @@ RUN dpkg -i bazel_3.7.2-linux-x86_64.deb
 RUN rm -f bazel_3.7.2-linux-x86_64.deb
 
 # Clean up:
-RUN apt -y autoremove
+RUN apt-get -y autoremove
 
 # Generate a US locale:
 RUN locale-gen en_US.UTF-8
@@ -65,12 +63,12 @@ RUN usermod -a -G sudo jevois
 USER jevois
 WORKDIR /home/jevois
 
-# Enable terminal colors:
-run echo 'TERM=xterm-256color' >> .bashrc
-
 # Copy the build scripts:
 COPY rebuild-os.sh .
 COPY rebuild-host-opencv.sh .
+
+# Enable terminal colors:
+RUN echo 'TERM=xterm-256color' >> .bashrc
 
 ENTRYPOINT ["/bin/bash", "-l"]
 

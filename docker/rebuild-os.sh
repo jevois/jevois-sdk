@@ -91,7 +91,7 @@ fi
 question "Rebuild opencv deb"
 if [ "X$REPLY" != "Xn" ]; then
     ./rebuild-host-opencv.sh
-    mv opencv-*/opencv-*/build/jevois-opencv*.deb .
+    mv opencv-*/opencv-*/build/jevois-opencv*.deb debs/
     sudo rm -rf opencv-*
 fi
 
@@ -238,7 +238,7 @@ EOF
     echo "==== control file end"
     
     sudo dpkg-deb --build deb jevois-sdk-dev_${pkgver}_${arch}.deb
-    sudo mv *.deb "${basedir}/"
+    sudo mv *.deb "${basedir}/debs/"
     sudo rm -rf deb
     cd "${basedir}"
 fi
@@ -258,7 +258,7 @@ if [ "X$REPLY" != "Xn" ]; then
     sudo rm -rf hbuild pbuild phbuild ppbuild ppdbuild
     ./rebuild-host.sh
     cd hbuild && sudo cpack && cd ..
-    ./rebuild-platform.sh --staging
+    ./rebuild-platform.sh
     cd pbuild && sudo cpack && cd ..
     cd ../jevoisextra
     sudo rm -rf hbuild pbuild phbuild ppbuild ppdbuild
@@ -266,9 +266,9 @@ if [ "X$REPLY" != "Xn" ]; then
     cd ..
 
     cd "${basedir}"
-    /bin/mv -f jevois/*build/*.deb .
-    /bin/mv -f jevoisbase/*build/*.deb .
-    #/bin/mv jevoisextra/*build/*.deb .
+    /bin/mv -f jevois/*build/*.deb debs/
+    /bin/mv -f jevoisbase/*build/*.deb debs/
+    #/bin/mv jevoisextra/*build/*.deb debs/
 fi
 
 ####################################################################################################
@@ -331,7 +331,7 @@ EOF
      --requires="jevois-host \(= ${pkgver}\),jevois-platform \(= ${pkgver}\),jevoisbase-host \(= ${pkgver}\),jevoisbase-platform \(= ${pkgver}\),${pkgdeps}" \
      make install
     
-    sudo /bin/mv jevois-sdk*.deb "${basedir}/"
+    sudo /bin/mv jevois-sdk*.deb "${basedir}/debs/"
     sudo /bin/rm Makefile description-pak
 fi
 

@@ -1,0 +1,63 @@
+# This file is mainly for JeVois development team
+#
+# Most users would just: (replace VERSION by a version number, e.g., 1.21.0)
+#   docker pull jevois/jevoisA33-compile-modules:VERSION
+#   docker run -it jevois/jevoisA33-compile-modules:VERSION
+#
+# JeVois team: To create the docker image:
+#
+# Install docker as described here (we chose the apt-based install for Ubuntu):
+# https://docs.docker.com/engine/install/ubuntu/
+#
+# Then build with: docker build -t jevois/jevoisA33-compile-modules:VERSION -f Dockerfile-compile-modules .
+# Then push to docker hub: docker login && docker image push jevois/jevoisA33-compile-modules:VERSION
+#
+# Once built: docker run -it jevois/jevoisA33-compile-modules:VERSION
+
+FROM ubuntu:24.04
+
+# Install packages needed to add a deb source and generate a locale:
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install ca-certificates gpg locales
+
+# Install jevois.usc.edu apt repo:
+RUN gpg --keyserver keyserver.ubuntu.com --recv-keys DD24C027 && \
+    gpg --export DD24C027 > /etc/apt/trusted.gpg.d/jevois.gpg
+RUN echo "deb https://jevois.usc.edu/devapt noble main" > /etc/apt/sources.list.d/jevois.list
+    
+# Update package sources:
+RUN apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade
+
+# Install everything:
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install jevois-sdk-dev
+
+# Set g++-10 as default:
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 100 --slave /usr/bin/g++ g++ /usr/bin/g++-10 \
+  --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-10 && update-alternatives --set gcc /usr/bin/gcc-10
+RUN sudo update-alternatives --set gcc /usr/bin/gcc-10
+
+# Clean up:
+RUN apt-get -y autoremove
+
+# Generate a US locale:
+RUN locale-gen en_US.UTF-8
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8' TERM=screen
+
+# Instructions to user:
+RUN echo 'echo "Welcome to JeVois-SDK module build container\n"' > /etc/profile.d/welcome.sh
+RUN echo 'echo "Create new C++ module: jevois-create-module <VendorName> <ModuleName>"' >> /etc/profile.d/welcome.sh
+RUN echo 'echo "Create new Python module: jevois-create-python-module <VendorName> <ModuleName>\n"' >> /etc/profile.d/welcome.sh
+RUN echo 'echo "Then cd to module directory, edit code, and ./rebuild-host.sh && ./rebuild-platform.sh --jvpkg\n"' >> /etc/profile.d/welcome.sh
+RUN echo 'echo "Then copy the resulting .jvpkg file to JEVOIS/packages/ on your microSD.\n"' >> /etc/profile.d/welcome.sh
+
+# Switch to normal user:
+RUN useradd -c 'jevois' -m -d /home/jevois -s /bin/bash jevois
+RUN sed -i -e '/\%sudo/ c \%sudo ALL=(ALL) NOPASSWD: ALL' /etc/sudoers
+RUN usermod -a -G sudo jevois
+USER jevois
+WORKDIR /home/jevois
+
+# Enable terminal colors:
+run echo 'TERM=xterm-256color' >> .bashrc
+
+ENTRYPOINT ["/bin/bash", "-l"]
+
