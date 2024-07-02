@@ -1,13 +1,16 @@
 #!/bin/bash
 # USAGE: jevois-flash-card [-y] [device]
 # If -y is specified, assume all defaults are ok
+# if 'device' does not start with /dev/ then it is assumed to be the stem of a disk image file name to create.
+# We will create <device>.img, <device>.sha256 and <device>.zip
+#
 # This script needs to be run with root permissions (e.g., sudo jevois-flash-card)
 
 ####################################################################################################
 # Basic checks for required files and directories:
 ####################################################################################################
 
-echo "#################### JeVois microSD card builder. Copyright (C) 2017 by Laurent Itti, iLab and USC."
+echo "#################### JeVois microSD card builder. Copyright (C) 2017-2024 by Laurent Itti, iLab and USC."
 echo
 
 if [ ! -d /var/lib/jevois-microsd ]; then
@@ -67,7 +70,18 @@ else
 fi
 
 if [ "x$card" = "x" ]; then echo "Cannot write to empty card device -- ABORT"; exit 7; fi
-if [ ! -b "$card" ]; then echo "Specified card device [$card] not a block device -- ABORT"; exit 8; fi
+
+if [[ "$card" =~ ^/dev/.* ]]; then
+    if [ ! -b "$card" ]; then echo "Specified card device [$card] not a block device -- ABORT"; exit 8; fi
+else
+    echo "Initializing microSD image ${card}.img ..."
+    # Remember original name, create and setup image file, then replace 'card' by loop device instead:
+    cardname=${card}
+    dd if=/dev/zero of=${card}.img bs=1M count=7500
+    card="$(losetup --show -f ${card}.img)"
+	if [[ -z ${card} ]]; then echo "Unable to find free loop device!"; exit 23; fi
+	partprobe "${card}"
+fi
 
 # Block device may exist if card reader is present but no card is inserted; also check for card:
 dd if="$card" of=/dev/null count=1 status=none
@@ -153,6 +167,7 @@ ${p2start},${p2sec},L
 ${p3start},,c
 EOT
 sync
+partprobe "${card}"
 sleep 2
 
 ####################################################################################################
@@ -273,5 +288,14 @@ sync
 
 /bin/rm -rf sdcard
 
-echo "#################### microSD card is now loaded with JeVois software."
-echo "#################### microSD card is ready to be inserted into your JeVois smart camera."
+if [ "x${cardname}" != "x" ]; then
+    losetup -d ${card}
+    sha256sum ${cardname}.img > ${cardname}.sha256
+    zip -9 ${cardname}.zip ${cardname}.img ${cardname}.sha256
+    /bin/rm -f ${cardname}.img ${cardname}.sha256
+    echo "#################### Image /var/lib/jevois-build/${cardname}.zip loaded with JeVois software."
+    echo "#################### Flash ${cardname}.zip to physical microSD using Balena Etcher"
+else
+    echo "#################### microSD card is now loaded with JeVois software."
+    echo "#################### microSD card is ready to be inserted into your JeVois smart camera."
+fi

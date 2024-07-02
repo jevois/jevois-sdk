@@ -291,7 +291,7 @@ clean:
 	/bin/rm -rf /tmp/jevois-build
 
 install:
-    /bin/rm -rf /var/lib/jevois-build/boot /var/lib/jevois-build/jevois-sdk-version.txt
+	/bin/rm -rf /var/lib/jevois-build/boot /var/lib/jevois-build/jevois-sdk-version.txt
 	mkdir -p /var/lib/jevois-build/boot
 	install /tmp/jevois-build/boot/u-boot.fex /var/lib/jevois-build/boot
 	install /tmp/jevois-build/boot/boot0_sdcard.fex /var/lib/jevois-build/boot
@@ -335,3 +335,9 @@ EOF
     sudo /bin/rm Makefile description-pak
 fi
 
+####################################################################################################
+question "Rebuild microSD disk image"
+if [ "X$REPLY" != "Xn" ]; then
+    sudo "${basedir}/jevois-build/jevois-flash-card" -y jevois-image-${ver}-8G
+    sudo /bin/mv /var/lib/jevois-build/jevois-image-${ver}-8G.zip "${basedir}/debs/"
+fi

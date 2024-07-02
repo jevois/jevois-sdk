@@ -16,9 +16,9 @@ RUN apt-get -y install \
   libeigen3-dev screen lib32stdc++6 gawk pkg-config libdc1394-dev libavcodec-dev pylint liblapacke-dev \
   libavformat-dev libswscale-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev \
   libvorbis-dev libxvidcore-dev x264 v4l-utils unzip python3-dev libturbojpeg libgles2-mesa-dev ncftp \
-  emacs libturbojpeg-dev u-boot-tools dpkg-dev flex curl wput libdmtx-dev python-is-python3 libhtml-parser-perl bzip2 \
-  lsb-release wget locales sudo libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libopenjp2-7-dev libopenjpip7 \
-  cpio rsync bc python3.12-dev ca-certificates gpg lib32z1
+  emacs-gtk libturbojpeg-dev u-boot-tools dpkg-dev flex curl wput libdmtx-dev python-is-python3 libhtml-parser-perl \
+  bzip2 lsb-release wget locales sudo libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libopenjp2-7-dev \
+  libopenjpip7 cpio rsync bc python3.12-dev ca-certificates gpg lib32z1
 
 # Remove default cross-compiler:
 RUN apt-get -y remove gcc-10-cross-base gcc-11-cross-base gcc-12-cross-base gcc-13-cross-base gcc-14-cross-base || true

@@ -5,6 +5,8 @@ ma=4
 mi=10
 pa=0
 
+gccver="10"
+
 # Install boost first and then decide on python version:
 sudo apt install -y libboost-all-dev
 
@@ -22,7 +24,7 @@ arch=`dpkg --print-architecture`
 
 ####################################################################################################
 # Compiler packages and dependencies
-compilers="gcc-10 g++-10 gfortran-10" # we stick to gcc-10 for jevois, jevois-pro moved to gcc-14
+compilers="gcc-${gccver} g++-${gccver} gfortran-${gccver}"
 
 packages=( build-essential python-is-python3 ${compilers} cmake libboost-all-dev autoconf libeigen3-dev libgtk2.0-dev
     libdc1394-dev libjpeg-dev libpng-dev libtiff5-dev libavcodec-dev libavformat-dev libxine2-dev libgstreamer1.0-dev
@@ -67,8 +69,8 @@ if [ ! -f /usr/lib/x86_64-linux-gnu/libturbojpeg.so ]; then
 fi
 
 # Use our desired gcc version as default:
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 100 --slave /usr/bin/g++ g++ /usr/bin/g++-10 --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-10
-sudo update-alternatives --set gcc /usr/bin/gcc-10
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${gccver} 100 --slave /usr/bin/g++ g++ /usr/bin/g++-${gccver} --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-${gccver}
+sudo update-alternatives --set gcc /usr/bin/gcc-${gccver}
 
 ####################################################################################################
 # Opencv installation and packing
