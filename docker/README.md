@@ -103,14 +103,11 @@ Get the jevois-a33-rebuild-os image from docker hub
 Example for JeVois version 1.21.0:
 
     docker pull jevois/jevois-sdk-build:1.21.0
+    wget https://github.com/jevois/jevois-sdk/blob/master/docker/rebuild-os-in-docker.sh
+    chmod a+x rebuild-os-in-docker.sh
+    ./rebuild-os-in-docker.sh
     
-    docker run -it -v $(pwd)/debs:/home/jevois/debs jevois/jevois-sdk-build:1.21.0
-
-Once in the container, run:
-
-    sudo ./rebuild-os.sh -y
-    
-Once complete, exit the container with CTRL-D. The generated deb packages will be in the debs/ directory.
+Once complete, the debs and microSD image will be in debs/
 
 To rebuild the jevois-a33-rebuild-os docker image
 =================================================

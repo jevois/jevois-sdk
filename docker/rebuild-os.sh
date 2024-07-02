@@ -41,6 +41,13 @@ packages=( build-essential cmake libboost-all-dev autoconf libgtk2.0-dev libjpeg
   libhtml-parser-perl bzip2 lsb-release liblapacke-dev ${compilers} lib32z1)
 
 ####################################################################################################
+question "Nuke old debs"
+if [ "X$REPLY" != "Xn" ]; then
+    sudo rm -rf debs
+    mkdir debs
+fi
+
+####################################################################################################
 question "Install build packages"
 if [ "X$REPLY" != "Xn" ]; then
 
@@ -248,6 +255,10 @@ fi
 question "Rebuild jevois and jevoisbase debs"
 if [ "X$REPLY" != "Xn" ]; then
 
+    # Our cmake will check for jevois-sdk version:
+    sudo mkdir -p /var/lib/jevois-build
+    sudo cp /usr/share/jevois-sdk/jevois-sdk-version.txt /var/lib/jevois-build/
+
     cd "${basedir}/jevois"
     sudo rm -rf hbuild pbuild phbuild ppbuild ppdbuild
     ./rebuild-host.sh
@@ -274,8 +285,8 @@ fi
 ####################################################################################################
 question "Rebuild jevois-sdk deb"
 if [ "X$REPLY" != "Xn" ]; then
-    cd /usr/share
 
+    cd /usr/share
     cat <<EOF | sudo tee Makefile
 # This makefile is here just so that we can use checkinstall to create the jevois-sdk debian package
 
@@ -340,4 +351,10 @@ question "Rebuild microSD disk image"
 if [ "X$REPLY" != "Xn" ]; then
     sudo "${basedir}/jevois-build/jevois-flash-card" -y jevois-image-${ver}-8G
     sudo /bin/mv /var/lib/jevois-build/jevois-image-${ver}-8G.zip "${basedir}/debs/"
+fi
+
+####################################################################################################
+question "Cleanup"
+if [ "X$REPLY" != "Xn" ]; then
+    sudo rm -rf jevois jevoisbase jevoisextra jevois-inventor jevois-tutorials samplemodule samplepythonmodule
 fi
