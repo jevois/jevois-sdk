@@ -349,7 +349,7 @@ fi
 ####################################################################################################
 question "Rebuild microSD disk image"
 if [ "X$REPLY" != "Xn" ]; then
-    sudo "${basedir}/jevois-build/jevois-flash-card" -y jevois-image-${ver}-8G
+    sudo /usr/share/jevois-sdk/jevois-build/jevois-flash-card -y jevois-image-${ver}-8G
     sudo /bin/mv /var/lib/jevois-build/jevois-image-${ver}-8G.zip "${basedir}/debs/"
 fi
 
