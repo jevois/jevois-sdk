@@ -25,7 +25,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install ca-certificates gpg locale
 # Install jevois.usc.edu apt repo:
 RUN gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys DD24C027 && \
     gpg --export DD24C027 > /etc/apt/trusted.gpg.d/jevois.gpg
-RUN echo "deb https://jevois.usc.edu/devapt noble main" > /etc/apt/sources.list.d/jevois.list
+RUN echo "deb https://jevois.usc.edu/apt noble main" > /etc/apt/sources.list.d/jevois.list
     
 # Update package sources:
 RUN apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade
