@@ -75,11 +75,15 @@ if [[ "$card" =~ ^/dev/.* ]]; then
     if [ ! -b "$card" ]; then echo "Specified card device [$card] not a block device -- ABORT"; exit 8; fi
 else
     echo "Initializing microSD image ${card}.img ..."
-    # Remember original name, create and setup image file, then replace 'card' by loop device instead:
+    # Remember original name, create and setup image file, then replace 'card' by loop device:
     cardname=${card}
-    dd if=/dev/zero of=${card}.img bs=1M count=7500
+    dd if=/dev/zero of=${cardname}.img bs=1M count=7500
     card="$(losetup --show -f ${card}.img)"
-	if [[ -z ${card} ]]; then echo "Unable to find free loop device!"; exit 23; fi
+	if [[ -z ${card} ]]; then
+        losetup -D
+        card="$(losetup --show -f ${card}.img)"
+	    if [[ -z ${card} ]]; then echo "Unable to find free loop device!"; exit 23; fi
+    fi
 	partprobe "${card}"
 fi
 

@@ -38,7 +38,7 @@ packages=( build-essential cmake libboost-all-dev autoconf libgtk2.0-dev libjpeg
   libavcodec-dev libavformat-dev libswscale-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev
   libtheora-dev libvorbis-dev libxvidcore-dev x264 v4l-utils unzip python3-dev libgtk-3-dev libturbojpeg
   libgles2-mesa-dev ncftp emacs libturbojpeg-dev u-boot-tools dpkg-dev flex curl wput libdmtx-dev python-is-python3
-  libhtml-parser-perl bzip2 lsb-release liblapacke-dev ${compilers} lib32z1)
+  libhtml-parser-perl bzip2 lsb-release liblapacke-dev ${compilers} lib32z1 coreutils )
 
 ####################################################################################################
 question "Nuke old debs"
