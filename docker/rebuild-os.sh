@@ -356,5 +356,6 @@ fi
 ####################################################################################################
 question "Cleanup"
 if [ "X$REPLY" != "Xn" ]; then
+    cd "${basedir}"
     sudo rm -rf jevois jevoisbase jevoisextra jevois-inventor jevois-tutorials samplemodule samplepythonmodule
 fi
