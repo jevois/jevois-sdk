@@ -138,11 +138,16 @@ EOF
 cat > postinstall-pak <<EOF
 #!/bin/bash
 # fix missing symlinks
-for f in /usr/share/jevois-opencv-${ver}/lib/*.so.${ver}; do ln -sf $f ${f/.${ver}/}; done
+for f in /usr/share/jevois-opencv-${ver}/lib/*.so.${ver}; do ln -sf \$f \${f/.${ver}/}; done
 
 # add to ldconfig:
-echo "/usr/share/jevois-opencv-${ver}/lib" > /etc/ld.so.conf.d/jevois-opencv.conf
-echo "/usr/share/jevois-opencv-${ver}/lib/python${pyver}/dist-packages/cv2/python-${pyver}" >> /etc/ld.so.conf.d/jevois-opencv.conf
+f="/etc/ld.so.conf.d/jevois-opencv.conf"
+echo "/usr/share/jevois-opencv-${ver}/lib" > \${f}
+p="/usr/share/jevoispro-opencv-${ver}/lib/python${pyver}/dist-packages/cv2/python-${pyver}"
+if [ -d "\${p}" ]; then echo "\${p}" >> \${f}; fi
+p="/usr/share/jevoispro-opencv-${ver}/lib/python${pyver}/site-packages/cv2/python-${pyver}"
+if [ -d "\${p}" ]; then echo "\${p}" >> \${f}; fi
+
 ldconfig
 
 # Fix compilation error with libjpeg-turbo8
