@@ -137,13 +137,19 @@ EOF
 # create post install and remove scripts because --addso does not work well:
 cat > postinstall-pak <<EOF
 #!/bin/sh
+# fix missing symlinks
+for f in /usr/share/jevois-opencv-${ver}/lib/*.so.${ver}; do ln -sf $f ${f/.${ver}/}; done
+
+# add to ldconfig:
 echo "/usr/share/jevois-opencv-${ver}/lib" > /etc/ld.so.conf.d/jevois-opencv.conf
 echo "/usr/share/jevois-opencv-${ver}/lib/python${pyver}/dist-packages/cv2/python-${pyver}" >> /etc/ld.so.conf.d/jevois-opencv.conf
 ldconfig
+
 # Fix compilation error with libjpeg-turbo8
 if [ ! -f /usr/lib/x86_64-linux-gnu/libturbojpeg.so ]; then
     sudo ln -s /usr/lib/x86_64-linux-gnu/libturbojpeg.so.0.?.0 /usr/lib/x86_64-linux-gnu/libturbojpeg.so
 fi
+
 EOF
 chmod a+x postinstall-pak
 cat > postremove-pak<<EOF
