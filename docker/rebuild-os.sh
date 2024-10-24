@@ -6,7 +6,7 @@
 
 set -e
 
-ver="1.21.0"
+ver="1.22.0"
 gitbranch="master" # "master" for latest, or "v${ver}" for a given version
 pkgrel="1"
 uburel=`lsb_release -rs`

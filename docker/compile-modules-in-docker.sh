@@ -19,5 +19,5 @@ docker run --rm -it --name jevois-compile-modules --pid=host --network=host \
        --env "CI_BUILD_USER=${CI_BUILD_USER}" --env "CI_BUILD_UID=${CI_BUILD_UID}" \
        --env "CI_BUILD_GROUP=${CI_BUILD_GROUP}" --env "CI_BUILD_GID=${CI_BUILD_GID}" \
        -v /etc/localtime:/etc/localtime:ro -v /etc/timezone:/etc/timezone:ro \
-       jevois/jevois-compile-modules:1.21.0 \
+       jevois/jevois-compile-modules:1.22.0 \
        /with_the_same_user /bin/bash -l

@@ -1,8 +1,9 @@
 # This file is mainly for JeVois development team
 #
-# Most users would just: (replace VERSION by a version number, e.g., 1.21.0)
+# Most users would just: (replace VERSION by a version number, e.g., 1.22.0)
 #   docker pull jevois/jevois-compile-modules:VERSION
-#   docker run -it jevois/jevois-compile-modules:VERSION
+#   cd jevois-sdk
+#   ./docker/compile-modules-in-docker.sh
 #
 # JeVois team: To create the docker image:
 #
@@ -11,8 +12,6 @@
 #
 # Then build with: docker build -t jevois/jevois-compile-modules:VERSION -f Dockerfile-compile-modules .
 # Then push to docker hub: docker login && docker image push jevois/jevois-compile-modules:VERSION
-#
-# Once built: docker run -it jevois/jevois-compile-modules:VERSION
 
 FROM ubuntu:24.04
 

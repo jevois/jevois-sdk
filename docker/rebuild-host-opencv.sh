@@ -68,9 +68,9 @@ if [ ! -f /usr/lib/x86_64-linux-gnu/libturbojpeg.so ]; then
     sudo ln -s /usr/lib/x86_64-linux-gnu/libturbojpeg.so.0.?.0 /usr/lib/x86_64-linux-gnu/libturbojpeg.so
 fi
 
-# Use our desired gcc version as default:
-sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${gccver} 100 --slave /usr/bin/g++ g++ /usr/bin/g++-${gccver} --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-${gccver}
-sudo update-alternatives --set gcc /usr/bin/gcc-${gccver}
+# Use our desired gcc version as default: OBSOLETE: we now specify the compiler in cmake args
+#sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${gccver} 100 --slave /usr/bin/g++ g++ /usr/bin/g++-${gccver} --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-${gccver}
+#sudo update-alternatives --set gcc /usr/bin/gcc-${gccver}
 
 ####################################################################################################
 # Opencv installation and packing
@@ -100,6 +100,7 @@ libarch=`uname -p` # x86_64 or aarch64
 export CXXFLAGS="-I/usr/include/${libarch}-linux-gnu -I/usr/include/${libarch}-linux-gnu/mpi"
 
 cmake \
+    -D CMAKE_C_COMPILER=gcc-${gccver} -D CMAKE_CXX_COMPILER=g++-${gccver} \
     -D CMAKE_BUILD_TYPE=RELEASE \
     -D CMAKE_INSTALL_PREFIX=/usr/share/jevois-opencv-${ver} \
     -D CPACK_PACKAGING_PREFIX=/usr/share/jevois-opencv-${ver} \
