@@ -1,6 +1,6 @@
 # This file is mainly for JeVois development team
 #
-# Most users would just: (replace VERSION by a version number, e.g., 1.22.0)
+# Most users would just: (replace VERSION by a version number, e.g., 1.23.0)
 #   docker pull jevois/jevois-compile-modules:VERSION
 #   cd jevois-sdk
 #   ./docker/compile-modules-in-docker.sh

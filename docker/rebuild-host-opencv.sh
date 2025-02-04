@@ -68,9 +68,9 @@ if [ ! -f /usr/lib/x86_64-linux-gnu/libturbojpeg.so ]; then
     sudo ln -s /usr/lib/x86_64-linux-gnu/libturbojpeg.so.0.?.0 /usr/lib/x86_64-linux-gnu/libturbojpeg.so
 fi
 
-# Use our desired gcc version as default: OBSOLETE: we now specify the compiler in cmake args
-#sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${gccver} 100 --slave /usr/bin/g++ g++ /usr/bin/g++-${gccver} --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-${gccver}
-#sudo update-alternatives --set gcc /usr/bin/gcc-${gccver}
+# Use our desired gcc version as default:
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${gccver} 100 --slave /usr/bin/g++ g++ /usr/bin/g++-${gccver} --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-${gccver}
+sudo update-alternatives --set gcc /usr/bin/gcc-${gccver}
 
 ####################################################################################################
 # Opencv installation and packing
